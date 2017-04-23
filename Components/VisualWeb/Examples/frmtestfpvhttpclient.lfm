@@ -1,0 +1,65 @@
+object TestFpHTTPClientMain: TTestFpHTTPClientMain
+  Left = 0
+  Height = 430
+  Top = 0
+  Width = 558
+  ActiveControl = EdtURL
+  Caption = 'TestFpHTTPClientMain'
+  ClientHeight = 430
+  ClientWidth = 558
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object EdtURL: TEdit
+    Left = 8
+    Height = 23
+    Hint = 'Enter URL here'
+    Top = 7
+    Width = 408
+    TabOrder = 0
+    Text = 'http://www.google.de'
+    TextHint = 'Enter URL here'
+  end
+  object btnOpenURL: TButton
+    Left = 424
+    Height = 25
+    Top = 5
+    Width = 75
+    Caption = 'Open'
+    OnClick = btnOpenURLClick
+    TabOrder = 1
+  end
+  object Memo1: TMemo
+    Left = 9
+    Height = 324
+    Top = 40
+    Width = 536
+    Lines.Strings = (
+      'Memo1'
+    )
+    TabOrder = 2
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 407
+    Width = 558
+    Panels = <    
+      item
+        Width = 50
+      end    
+      item
+        Width = 50
+      end    
+      item
+        Width = 50
+      end>
+    SimplePanel = False
+  end
+  object VisualHTTPClient1: TVisualHTTPClient
+    HTTPversion = '1.1'
+    AllowRedirect = False
+    OnDataReceived = VisualHTTPClient1DataReceived
+    left = 472
+    top = 8
+  end
+end
