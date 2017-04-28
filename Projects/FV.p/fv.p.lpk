@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="fv"/>
+    <Type Value="RunAndDesignTime"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="src"/>
+        <OtherUnitFiles Value="src"/>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+    </CompilerOptions>
+    <Files Count="33">
+      <Item1>
+        <Filename Value="src\amismsg.inc"/>
+        <Type Value="Include"/>
+      </Item1>
+      <Item2>
+        <Filename Value="src\app.pas"/>
+        <UnitName Value="App"/>
+      </Item2>
+      <Item3>
+        <Filename Value="src\asciitab.pas"/>
+        <UnitName Value="AsciiTab"/>
+      </Item3>
+      <Item4>
+        <Filename Value="src\buildfv.pas"/>
+        <UnitName Value="buildfv"/>
+      </Item4>
+      <Item5>
+        <Filename Value="src\colorsel.pas"/>
+        <Type Value="Include"/>
+      </Item5>
+      <Item6>
+        <Filename Value="src\colortxt.pas"/>
+        <UnitName Value="ColorTxt"/>
+      </Item6>
+      <Item7>
+        <Filename Value="src\dialogs.pas"/>
+        <UnitName Value="Dialogs"/>
+      </Item7>
+      <Item8>
+        <Filename Value="src\drivers.pas"/>
+        <UnitName Value="Drivers"/>
+      </Item8>
+      <Item9>
+        <Filename Value="src\editors.pas"/>
+        <UnitName Value="Editors"/>
+      </Item9>
+      <Item10>
+        <Filename Value="src\fvcommon.pas"/>
+        <UnitName Value="FVCommon"/>
+      </Item10>
+      <Item11>
+        <Filename Value="src\fvconsts.pas"/>
+        <UnitName Value="FVConsts"/>
+      </Item11>
+      <Item12>
+        <Filename Value="src\gadgets.pas"/>
+        <UnitName Value="Gadgets"/>
+      </Item12>
+      <Item13>
+        <Filename Value="src\go32smsg.inc"/>
+        <Type Value="Include"/>
+      </Item13>
+      <Item14>
+        <Filename Value="src\histlist.pas"/>
+        <UnitName Value="HistList"/>
+      </Item14>
+      <Item15>
+        <Filename Value="src\inplong.pas"/>
+        <UnitName Value="InpLong"/>
+      </Item15>
+      <Item16>
+        <Filename Value="src\memory.pas"/>
+        <UnitName Value="Memory"/>
+      </Item16>
+      <Item17>
+        <Filename Value="src\menus.pas"/>
+        <UnitName Value="Menus"/>
+      </Item17>
+      <Item18>
+        <Filename Value="src\msgbox.pas"/>
+        <UnitName Value="MsgBox"/>
+      </Item18>
+      <Item19>
+        <Filename Value="src\outline.pas"/>
+        <UnitName Value="outline"/>
+      </Item19>
+      <Item20>
+        <Filename Value="src\platform.inc"/>
+        <Type Value="Include"/>
+      </Item20>
+      <Item21>
+        <Filename Value="src\resource.pas"/>
+        <Type Value="Include"/>
+      </Item21>
+      <Item22>
+        <Filename Value="src\statuses.pas"/>
+        <UnitName Value="Statuses"/>
+      </Item22>
+      <Item23>
+        <Filename Value="src\stddlg.pas"/>
+        <UnitName Value="StdDlg"/>
+      </Item23>
+      <Item24>
+        <Filename Value="src\str.inc"/>
+        <Type Value="Include"/>
+      </Item24>
+      <Item25>
+        <Filename Value="src\strtxt.inc"/>
+        <Type Value="Include"/>
+      </Item25>
+      <Item26>
+        <Filename Value="src\sysmsg.pas"/>
+        <UnitName Value="sysmsg"/>
+      </Item26>
+      <Item27>
+        <Filename Value="src\tabs.pas"/>
+        <UnitName Value="tabs"/>
+      </Item27>
+      <Item28>
+        <Filename Value="src\time.pas"/>
+        <UnitName Value="Time"/>
+      </Item28>
+      <Item29>
+        <Filename Value="src\timeddlg.pas"/>
+        <UnitName Value="timeddlg"/>
+      </Item29>
+      <Item30>
+        <Filename Value="src\unixsmsg.inc"/>
+        <Type Value="Include"/>
+      </Item30>
+      <Item31>
+        <Filename Value="src\validate.pas"/>
+        <UnitName Value="Validate"/>
+      </Item31>
+      <Item32>
+        <Filename Value="src\views.pas"/>
+        <UnitName Value="Views"/>
+      </Item32>
+      <Item33>
+        <Filename Value="src\w32smsg.inc"/>
+        <Type Value="Include"/>
+      </Item33>
+    </Files>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="FCL"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>
