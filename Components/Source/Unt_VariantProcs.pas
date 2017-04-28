@@ -12,22 +12,22 @@ unit Unt_VariantProcs;
 interface
 
 uses Unt_Allgfunklib;
-///<author>Rosewich</author>
+///<author>Joe Care</author>
 ///  <property>Diese Funktion wandelt einen Variant in einen String um</property>
 ///  <version>1.51.00</version>
 function Var2string(const Data:variant;markarray:boolean=false):String;
 
 ///<property>Diese Funktion berechnet die reale Größe des Variants</property>
 ///  <version>1.51.00</version>
-///  <author>Rosewich</author>
+///  <author>Joe Care</author>
 function GetRealSize(const Data:Variant):integer;
 
-///<author>Rosewich</author>
+///<author>Joe Care</author>
 ///  <version>1.51.00</version>
 ///  <property>Diese Funktion wandelt ein Variant in ein Array of Byte um</property>
 function Var2AOB(const Data:variant;{%H-}align:TDataAlign = DAL_intel):Taob;
 
-///<author>Rosewich</author>
+///<author>Joe Care</author>
 ///  <version>1.51.00</version>
 ///  <property>Diese Funktion wandelt ein Variant in Großbuchstaben um</property>
 function UpCase(s:variant):variant;overload;

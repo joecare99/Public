@@ -21,7 +21,7 @@ uses
 {$ENDIF}
 
 {$IFDEF MSWINDOWS}
-var ///<author>Rosewich</author>
+var ///<author>Joe Care</author>
   W:HWND;
 
 initialization

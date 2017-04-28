@@ -21,170 +21,170 @@ Interface
 Type
   TAob = Packed Array Of Byte;
   PAOB = ^TAob;
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   /// <version>2.01.00</version>
   /// <stereotype>Event</stereotype>
   TAoBchEvent = Procedure(Const Sender: TObject; Const OldValue, NewValue: TAob)
     Of Object;
 
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   /// <version>2.01.00</version>
   TCompResult = (cr_Lower = -1, cr_equal = 0, cr_Higher = 1);
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   /// <version>2.01.00</version>
   TComparefunc = Function(data1, data2: variant): TCompResult;
 
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   /// <version>2.01.00</version>
   TDataAlign = (DAL_Intel, DAL_Motorola);
 
 Const
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   CompareResult: Array [TCompResult] Of shortint = (-1, 0, 1);
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   Zweihoch: Array [0 .. 31] Of longword = ($1, $2, $4, $8, $10, $20, $40, $80,
     $100, $200, $400, $800, $1000, $2000, $4000, $8000, $10000, $20000, $40000,
     $80000, $100000, $200000, $400000, $800000, $1000000, $2000000, $4000000,
     $8000000, $10000000, $20000000, $40000000, $80000000);
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   Bool2Str: Array [boolean] Of String = ('False', 'True');
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   // Boolean nach Byte-Konvertierung False->0 True->1
   Bool2byte: Array [boolean] Of Byte = (0, 1);
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   // Doppel-Boolean nach Byte-Konvertierung  result =[0..3]
   DBool2byte: Array [boolean, boolean] Of Byte = ((0, 1), (2, 3));
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   // Trippel-Boolean nach Byte-Konvertierung  result =[0..7]
   TBool2byte: Array [boolean, boolean, boolean] Of Byte = (((0, 1), (2, 3)),
     ((4, 5), (6, 7)));
 
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
 Procedure delay(msec: integer);
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 Function TimeDifferenz(time0, time1: TDateTime): integer;
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 // <description> tauscht den Inhalt der Variablen Data1, Data2 </description>
 Procedure XChange(Var data1, data2: variant);
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 /// <description> tauscht die Byte-Order In der Variablen Data1</description>
 /// <output>Byte-Order-gedrehter Wert</output>
 Function lsbxmsb(data1: integer): integer; Overload;
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 /// <description> Liefert das Minimum von Data1 und Data2 </description>
 /// <output>Minimum von Data1 und Data2</output>
 Function min(data1, data2: integer): integer; overload;
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 /// <description> Liefert das Minimum von Data1 und Data2 </description>
 /// <output>Minimum von Data1 und Data2</output>
 Function min(data1, data2: variant; CompProc: TComparefunc): variant; overload;
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 /// <description> Liefert das Maximum von Data1 und Data2  </description>
 /// <output>Maximum von Data1 und Data2</output>
 Function max(data1, data2: integer): integer; overload;
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 /// <description> Liefert das Maximum von Data1 und Data2  </description>
 /// <output>Maximum von Data1 und Data2</output>
 Function max(data1, data2: variant; CompProc: TComparefunc): variant; overload;
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 /// <description> Sortiert ein array  </description>
 /// <preconditions>Unsortiertes Feld</preconditions>
 /// <postconditions>Sortiertes Feld</postconditions>
 Procedure Sort_Bubblesort(Var DataArr: variant);
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 /// <description> wandelt ein set of XXX in ein Bitarray in form eines Words um  </description>
 Function set2word(Const X): int64;
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 Procedure Word2set(Var X; l: int64);
 // wandelt einen Longint
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 Function crc32(crc: cardinal; Const buf: TAob; len: integer = -1;
   start: integer = 0): cardinal; overload;
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 Function crc32(crc: cardinal; Const buf: String; len: integer = -1;
   start: integer = 1): cardinal; overload;
 // function crc32(const data:variant):cardinal;overload;
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 Function crc64(crc: uint64; Const buf: TAob; len: integer = -1;
   start: integer = 0): uint64; overload;
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 /// <description> Berechnet einen CRC64 aus 'Buf' </description>
 Function crc64(crc: uint64; Const buf: String; len: integer = -1;
   start: integer = 1): uint64; overload;
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 /// <description> Durchsucht ein TAoB Buf nach einer Kennung src </description>
 /// <output>Startposition des gesuchten 'Src'</output>
 /// <input>Src: Die Suchkennung; Buf: das zu durchsuchende Feld; die Größe; und die Startposition</input>
 Function search(src: Array Of Byte; Const buf: TAob; size: integer;
   start: integer = 0): integer;
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 /// <description>Stellt ein Array of Byte  in Hex-Editor -Schreibweise Dar</description>
 Function AoB2String(aob: TAob): String;
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 /// <description>Führt eine Multiplikation im dword-Ring aus</description>
 Function smult(m1, m2: longword): longword; overload;
 
-// ToDo -oRosewich: Function smult64(m1, m2:Int64):int64;
+// ToDo -oJoe Care: Function smult64(m1, m2:Int64):int64;
 /// <description>Führt eine Multiplikation im int64-Ring aus</description>
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 /// <description>Führt eine Addition im dword-Ring aus</description>
 Function sPlus(m1, m2: longword): longword;
 
 /// <description>Führt eine Addition im int64-Ring aus</description>
-// ToDo -oRosewich: Function sPlus64(m1, m2:int64):int64;
+// ToDo -oJoe Care: Function sPlus64(m1, m2:int64):int64;
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 /// <description>Sucht den index des Eintrags mit dem hoechsten Wert</description>
 Function IndexOfMax(Const param: Array Of integer): integer;
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 /// <description>Sucht den index des Eintrags mit dem hoechsten Wert</description>
 Function IndexOfMaxExt(Const param: Array Of extended): integer;
 
 Const
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   msecperday = 60000 * 60 * 24; // ~ 86400000
 
 Var
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   crc64_table: Array [Byte] Of int64;
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   crc64_table_empty: boolean;
 
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
 Procedure make_crc64_table;
 
 {$IFDEF DYNAMIC_CRC_TABLE}
 
 Var
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   crc_table: Array Of cardinal;
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   crc_table_empty: boolean;
 
 {$ELSE}
 
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 const
   crc_table_empty = true;
 {$ENDIF}
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
 Procedure make_crc_table;
-/// <author>Rosewich</author>
+/// <author>Joe Care</author>
 Function Get_crc_table(i: Byte): cardinal;
 
 Implementation

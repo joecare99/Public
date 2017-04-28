@@ -13,7 +13,7 @@ Interface
 Uses Classes;
 
 Type
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.1.2</version>
   TLogKategorie =
     (
@@ -28,7 +28,7 @@ Type
     LgUser = 7,
     LgUser1 = 8,
     LgUser2 = 9);
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.1.2</version>
   ///  <stereotype>Event</stereotype>
   ///  <property>Dies ist eine Property</property>
@@ -48,14 +48,14 @@ Resourcestring
   LogHeader = 'Logfile vom %s, erstellt von %s';
 
 Const
-  ///<Author>Rosewich<\Author>
+  ///<Author>Joe Care<\Author>
   ///  <property>Dies ist eine Property</property>
   LgKat: Array[TLogKategorie] Of String =
   (LGK_NA, LGK_BeginProc, Lgk_EndProc, Lgk_IO, Lgk_Error, Lgk_ClrError,
     Lgk_Message, Lgk_Status, Lgk_User, Lgk_User, Lgk_User);
 
 Type
- ///<Author>Rosewich<\Author>
+ ///<Author>Joe Care<\Author>
   TBaseLogObject = Class abstract(TComponent)
   protected
     PFileName: String;
@@ -77,13 +77,13 @@ Type
 
   End;
 
-  ///<Author>Rosewich<\Author>
+  ///<Author>Joe Care<\Author>
   ///  <version>1.1.2</version>
   TPrivateLogObject = Class(TObject)
 
   End;
 
-  ///<Author>Rosewich<\Author>
+  ///<Author>Joe Care<\Author>
   ///  <version>1.1.2</version>
   TLoggingObject = Class(TBaseLogObject)
   private
@@ -101,7 +101,7 @@ Type
       override;
   End;
 
-///<Author>Rosewich<\Author>
+///<Author>Joe Care<\Author>
 ///  <version>1.1.2</version>
 ///  <property>Bestimmt den Objektpfad von RObject</property>
 Function getObjectPath(RObject: TObject): String;

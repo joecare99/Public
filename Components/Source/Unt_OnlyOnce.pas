@@ -11,7 +11,7 @@ Interface
 
 Uses  forms;
 
-///<author>Rosewich</author>
+///<author>Joe Care</author>
 ///  <version>1.50.02</version>
 ///  <since>15.04.2008</since>
 ///  <info>Aktiviert die Anwendung mit dem angegebenen Namen</info>
@@ -20,7 +20,7 @@ procedure SwitchToAppl(appname: PWideChar; App: TApplication);
 {$else}
 procedure SwitchToAppl(appname: PAnsiChar; App: TApplication);
 {$endif}
-///<author>Rosewich</author>
+///<author>Joe Care</author>
 ///  <version>1.50.00</version>
 ///  <since>15.04.2008</since>
 ///  <info>Prueft ob Anwendung schon gestartet ist</info>
@@ -37,7 +37,7 @@ uses
 
 
 Var
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <since>15.04.2008</since>
   ///  <version>1.50.00</version>
   ///  <info>ueber diesen globale MutexHandle findet die Pruefung statt</info>

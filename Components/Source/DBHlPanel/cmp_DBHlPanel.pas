@@ -15,7 +15,7 @@ uses
  Messages,   SysUtils, Classes, Controls, Graphics, ExtCtrls,DB,DBCtrls;
 
 type
-///<author>Rosewich</author>
+///<author>Joe Care</author>
 TDBHlPanel = class(TCustomPanel)
   private
     FDataLink: TFieldDataLink;

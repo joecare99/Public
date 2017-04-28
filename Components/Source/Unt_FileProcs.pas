@@ -29,7 +29,7 @@ Uses
   Unt_LinList;
 
 Type
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
   ///  <info>CallBack-Delegate with the Persentage,
   ///the actual file and the ability to break the
@@ -40,7 +40,7 @@ Type
   TStringArray = array of string;
 {$endif ~SUPPORTS_GENERICS}
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
   TFiles {= TStringList;
   TFilesEntry }= Class(TNamedList)
@@ -53,84 +53,84 @@ Type
     time: integer;
 {$endif ~Compiler14_up}
   End;
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
   TFileinfo = Function(pfad: String; Force: boolean = false): String Of Object;
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
   TGetInfo {= TStringLIst;
   TGetInfoEntry }= Class(TNamedList)
   public
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
     FInfoProc: TFileInfo;
   End;
 
 Type
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
   CFileInfo = Class
     abstract
     public
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
     class Function GetFileInfoStr(Path: String; Force: boolean = false): String;
       virtual; abstract;
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
     class Function DisplayName: String;
       virtual; abstract;
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
     class Function Extensions:{$ifdef SUPPORTS_GENERICS}Tarray<String>{$else}TStringArray{$endif};
       virtual; abstract;
   End;
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
 Procedure Makepath(npath: String);
 // Erstelle falls noetig den npath
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
 Function GetBackupPath(Path: String): String;
 // erzeugt aus dem angegebenen Datei-Pfad einen Backup-Datei-Pfad.
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
 Procedure MultiReName(OldName, NewName: String; repl: TSuccess = Nil; minp:
   integer = 0; maxp: integer = 100);
 // Benenne oder Verschiebe mehrere dateien
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
 Function IsEmptyDir(path: String): boolean;
 // Gibt TRUE zurueck wenn das Verzeichniss leer ist.
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
 Function GetFiles(mask, path: String; repl: TSuccess = Nil; minp: integer = 0;
   maxp: integer = 100): Tfiles;
 // Durchsuche Verzeichnisbaum ~path~ recursiv nach ~mask~
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
 Function GetDir(path: String; Sattr, FAttr: integer): TFiles;
 // Hole Directory
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
 Function GetFileInfo(path: String; force: Boolean = false): String;
 // Hole weitere Infos UEber Datei ein;
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
 Function GetVersion(filename: String): String;
 // Hole Dateiversion
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
   ///  <tested>true</Tested>
   ///  <info>Pruefe ob datei Schon benutzt wird</info>
@@ -138,33 +138,33 @@ Function FileInUse(FileName: String): boolean;
 // Pruefe ob datei Schon benutzt wird
 
 Type
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
   TGDD_Area = (gdda_Network, gdda_System, gdda_Group, gdda_User);
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
   TGDD_DataType = (gddt_Ini, gddt_Dok, gddt_Music, gddt_Pictures, gddt_Misc);
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
 Function GetDefaultDataDir(Area: TGDD_Area; DataType: TGDD_DataType): String;
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
 Procedure RegisterGetInfoProc(name: String; PinfoProc: TFileInfo);overload;
 Procedure RegisterGetInfoProc(FIClass: CFileInfo);overload;
 // Trage eine GetFileInfo-Procedur in die test-Liste ein.
 
-///<author>Rosewich</author>
+///<author>Joe Care</author>
 ///  <version>1.00.02</version>
 Procedure UnRegisterGetInfoProc(FIClass: CFileInfo);overload;
 // Trage eine GetFileInfo-Procedur in die test-Liste ein.
 
 Var
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
   GetInfoList: TGetInfo; // Globale Get_File-Info-Liste.
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
   dbg: TGetInfo;
 

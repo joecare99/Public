@@ -11,14 +11,14 @@ Unit Unt_ComboBoxExt;
 Interface
 
 Uses SysUtils, Controls, StdCtrls, DB;
-///<author>Rosewich</author>
+///<author>Joe Care</author>
 ///  <user>admin</user>
 ///  <since>16.04.2008</since>
 ///  <version>1.01.00</version>
 ///  <info>Sucht in der Combobox nach dem Eintrag mit dem eingegebenen Text</info>
 Procedure SucheComboboxWert(cbx: TComboBox; OnlyList: Boolean = true);
 
-///<author>Rosewich</author>
+///<author>Joe Care</author>
 ///  <user>admin</user>
 ///  <since>16.04.2008</since>
 ///  <version>1.01.00</version>
@@ -26,35 +26,35 @@ Procedure SucheComboboxWert(cbx: TComboBox; OnlyList: Boolean = true);
 Procedure FillCombobox(cbx: TCombobox; DS: TDataset; IDField, BezField:
   String; SubID: integer = -1; Force: boolean = false);
 
-///<author>Rosewich</author>
+///<author>Joe Care</author>
 ///  <user>admin</user>
 ///  <since>16.04.2008</since>
 ///  <version>1.01.00</version>
 ///  <info>Ermittelt von der Combobox die ID des Eintrags</info>
 Function GetComboboxID(cbx: TCombobox; OnlyList: Boolean = false): integer;
 
-///<author>Rosewich</author>
+///<author>Joe Care</author>
 ///  <user>admin</user>
 ///  <since>16.04.2008</since>
 ///  <version>1.01.00</version>
 ///  <info>Ermittelt von der Listbox die ID des Eintrags</info>
 Function GetListboxID(cbx: TListbox; OnlyList: Boolean = false): integer;
 
-///<author>Rosewich</author>
+///<author>Joe Care</author>
 ///  <user>admin</user>
 ///  <since>16.04.2008</since>
 ///  <version>1.01.00</version>
 ///  <info>Setzt die ComboBox auf den Eintrag mit gleicher ID</info>
 Procedure SetComboboxID(cbx: TCombobox; ID: integer);
 
-///<author>Rosewich</author>
+///<author>Joe Care</author>
 ///  <user>admin</user>
 ///  <since>16.04.2008</since>
 ///  <version>1.01.00</version>
 ///  <info>Setzt die Listbox auf den Eintrag mit gleicher ID</info>
 Procedure SetListboxID(cbx: TListbox; ID: integer);
 
-Var ///<author>Rosewich</author>
+Var ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>1.01.00</version>

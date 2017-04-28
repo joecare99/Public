@@ -28,13 +28,13 @@ USES
   ExtCtrls;
 
 TYPE
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   /// <version>1.01.00</version>
   /// <since>02.02.2008</since>
   TAnimationProc = PROCEDURE(Pic: TBitmap; canvas: TCanvas; I, max: integer)
     OF OBJECT;
 
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   /// <since>02.02.2008</since>
   /// <version>1.01.00</version>
 
@@ -58,7 +58,7 @@ TYPE
     PROPERTY Logo: TPicture Read FReadLogo Write FSetLogo;
   END;
 
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   /// <since>02.02.2008</since>
   /// <version>1.01.00</version>
   TAboutBoxform = CLASS(TForm)
@@ -130,7 +130,7 @@ BEGIN
 END;
 
 VAR
-  /// <author>Rosewich</author>
+  /// <author>Joe Care</author>
   reent: integer = 0;
 
 PROCEDURE TAboutBoxform.ProgramIconClick(Sender: TObject);

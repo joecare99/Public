@@ -291,19 +291,19 @@ FUNCTION TDBConfig.EnableRollBack: word;
 
 BEGIN
   result := 0;
-// Todo   -oRosewich:Rollback: Enable Rollback
+// Todo   -oJoe Care:Rollback: Enable Rollback
 END;
 
 PROCEDURE TDBConfig.RBCommit(RBLevel: Word);
 
 BEGIN
-  // ToDo -oRosewich -cLow: Rollback: Commit Entwickeln
+  // ToDo -oJoe Care -cLow: Rollback: Commit Entwickeln
 END;
 
 PROCEDURE TDBConfig.RBUndo(RBLevel: Word);
 
 BEGIN
-// Todo   -oRosewich:Rollback: Undo
+// Todo   -oJoe Care:Rollback: Undo
 END;
 //--------------------------------------------------
 

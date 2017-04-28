@@ -15,21 +15,21 @@ Uses Unt_Allgfunklib, variants, Unt_Stringprocs;
 Type
   TLinListClass = Class Of TLinLIst;
 
-  ///<author>C.Rosewich</author>
+  ///<author>C.Joe Care</author>
   ///  <since>long ago</since>
   ///  <version>1.0.0</version>
   ///  <info>Declares a linear list with some prototype functions</info>
   TLinList = Class(TObject)
   private
     { Private Deklarationen }
-///<author>C.Rosewich</author>
+///<author>C.Joe Care</author>
 ///  <since>long ago</since>
 ///  <version>1.0.0</version>
 ///  <info>Pointer to the next Entry</info>
     FNext: TLinList;
 (*
 {$IFDEF debug}
-    ///<author>C.Rosewich</author>
+    ///<author>C.Joe Care</author>
     ///  <since>long ago</since>
     ///  <version>1.0.0</version>
     ///  <info>Declares some Debug-DummyData</info>
@@ -38,7 +38,7 @@ Type
 *)
   protected
 
-    ///<author>C.Rosewich</author>
+    ///<author>C.Joe Care</author>
     ///  <since>long ago</since>
     ///  <version>1.0.0</version>
     ///  <info>returns a specific item by it's number</info>
@@ -47,68 +47,68 @@ Type
   public
     { Oeffentliche Funktionen }
 
-///<author>C.Rosewich</author>
+///<author>C.Joe Care</author>
 ///  <since>long ago</since>
 ///  <version>1.0.0</version>
 ///  <info>returns a specific item by it's number</info>
 ///  <convention>Has to be called from the first entry</convention>
     Property Items[Const Index: variant]: TLinList read GetItem; default;
 
-///<author>C.Rosewich</author>
+///<author>C.Joe Care</author>
 ///  <since>long ago</since>
 ///  <version>1.0.0</version>
 ///  <info>Creates a New Item</info>
     Constructor create(ZNext: TLinList = Nil); overload;
 
-///<author>C.Rosewich</author>
+///<author>C.Joe Care</author>
 ///  <since>long ago</since>
 ///  <version>1.0.0</version>
 ///  <info>Appends a New Item</info>
     Procedure Append(ListObj: TLinList); virtual;
 
-///<author>C.Rosewich</author>
+///<author>C.Joe Care</author>
 ///  <since>long ago</since>
 ///  <version>1.0.0</version>
 ///  <info>Appends itself to a List</info>
     Function AddTo(ListObj: TLinList): TLinList; virtual;
 
-///<author>C.Rosewich</author>
+///<author>C.Joe Care</author>
 ///  <since>long ago</since>
 ///  <version>1.0.0</version>
 ///  <info>Returns the Last Entry</info>
     Function getLast: TLinList; virtual;
 
-///<author>C.Rosewich</author>
+///<author>C.Joe Care</author>
 ///  <since>long ago</since>
 ///  <version>1.0.0</version>
 ///  <info>Returns the Next Entry</info>
     Function GetNext: TLinlist; virtual;
 
-///<author>C.Rosewich</author>
+///<author>C.Joe Care</author>
 ///  <since>long ago</since>
 ///  <version>1.0.0</version>
 ///  <info>Compares the list to the given list</info>
     Function compare(ListObj: TLinLIst): TCompResult; virtual;
 
-///<author>C.Rosewich</author>
+///<author>C.Joe Care</author>
 ///  <since>long ago</since>
 ///  <version>1.0.0</version>
 ///  <info>Returns wether the actual Entry is the Last</info>
     Function EOF: boolean;
 
-///<author>C.Rosewich</author>
+///<author>C.Joe Care</author>
 ///  <since>long ago</since>
 ///  <version>1.0.0</version>
 ///  <info>Returns the predetor from the given entry</info>
     Function GetPred(ListObj: TLinLIst): TLinList; virtual;
 
-///<author>C.Rosewich</author>
+///<author>C.Joe Care</author>
 ///  <since>long ago</since>
 ///  <version>1.0.0</version>
 ///  <info>Deletes an Item from the List</info>
     Function Delete(ListObj: TLinList): TLInLIst; virtual;
 
-///<author>C.Rosewich</author>
+///<author>C.Joe Care</author>
 ///  <since>long ago</since>
 ///  <version>1.0.0</version>
 ///  <info>Counts Items from the List</info>
