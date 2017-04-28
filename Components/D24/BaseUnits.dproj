@@ -4,7 +4,6 @@
         <MainSource>BaseUnits.dpk</MainSource>
         <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
         <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
-        <DCC_DependencyCheckOutputName>..\..\..\RAD Studio\5.0\BPL\BaseUnits.bpl</DCC_DependencyCheckOutputName>
         <ProjectVersion>18.2</ProjectVersion>
         <Config Condition="'$(Config)'==''">Release</Config>
         <Basis>True</Basis>
@@ -17,20 +16,9 @@
     <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
         <Base>true</Base>
     </PropertyGroup>
-    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
-        <Base_Win32>true</Base_Win32>
-        <CfgParent>Base</CfgParent>
-        <Base>true</Base>
-    </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
         <Cfg_1>true</Cfg_1>
         <CfgParent>Base</CfgParent>
-        <Base>true</Base>
-    </PropertyGroup>
-    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
-        <Cfg_1_Win32>true</Cfg_1_Win32>
-        <CfgParent>Cfg_1</CfgParent>
-        <Cfg_1>true</Cfg_1>
         <Base>true</Base>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
@@ -38,73 +26,34 @@
         <CfgParent>Base</CfgParent>
         <Base>true</Base>
     </PropertyGroup>
-    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
-        <Cfg_2_Win32>true</Cfg_2_Win32>
-        <CfgParent>Cfg_2</CfgParent>
-        <Cfg_2>true</Cfg_2>
-        <Base>true</Base>
-    </PropertyGroup>
     <Import Condition="'$(Base)'!='' And Exists('default.optset')" Project="default.optset"/>
     <PropertyGroup Condition="'$(Base)'!=''">
+        <DCC_Description>JC-Soft Basis Units</DCC_Description>
         <SanitizedProjectName>BaseUnits</SanitizedProjectName>
-        <DCC_DependencyCheckOutputName>D:\Dokumente und Einstellungen\All Users\Dokumente\RAD Studio\6.0\BPL\BaseUnits120.bpl</DCC_DependencyCheckOutputName>
-        <DCC_ImageBase>00400000</DCC_ImageBase>
         <RuntimeOnlyPackage>true</RuntimeOnlyPackage>
+        <VerInfo_Keys>CompanyName=JC-Soft;FileDescription=;FileVersion=1.0.0.98;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
         <GenPackage>true</GenPackage>
         <GenDll>true</GenDll>
         <CfgDependentOn>default.optset</CfgDependentOn>
     </PropertyGroup>
-    <PropertyGroup Condition="'$(Base_Win32)'!=''">
-        <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
-        <VerInfo_Build>98</VerInfo_Build>
-        <DCC_Description>KG-Soft Basis Units</DCC_Description>
-        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-        <DllSuffix>160</DllSuffix>
-        <Icon_MainIcon>BaseUnits_Icon.ico</Icon_MainIcon>
-        <VerInfo_Locale>1033</VerInfo_Locale>
-        <Debugger_DebugSourcePath>$(BDS)\LIB\KG-Soft;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
-        <VerInfo_Keys>CompanyName=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(ModuleName);FileDescription=$(ModuleName);ProductName=$(ModuleName)</VerInfo_Keys>
-    </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
-        <Version>7.0</Version>
         <DCC_DebugInformation>0</DCC_DebugInformation>
         <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
-        <DCC_OutputDRCFile>True</DCC_OutputDRCFile>
-        <DCC_ObjOutput>$(BDSCOMMONDIR)\BPL\units</DCC_ObjOutput>
-        <DCC_HppOutput>$(BDSCOMMONDIR)\BPL\units</DCC_HppOutput>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-        <VerInfo_Keys>CompanyName=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(ModuleName);FileDescription=$(ModuleName);ProductName=$(ModuleName)</VerInfo_Keys>
-        <VerInfo_Locale>1033</VerInfo_Locale>
+        <DCC_OutputDRCFile>False</DCC_OutputDRCFile>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
-        <Version>7.0</Version>
         <DCC_OutputDRCFile>True</DCC_OutputDRCFile>
-        <DCC_ObjOutput>$(BDSCOMMONDIR)\BPL\units</DCC_ObjOutput>
-        <DCC_HppOutput>$(BDSCOMMONDIR)\BPL\units</DCC_HppOutput>
-        <DCC_ResourcePath>$(BDSCOMMONDIR)\DCP;$(DCC_ResourcePath)</DCC_ResourcePath>
-        <DCC_ObjPath>$(BDSCOMMONDIR)\DCP;$(DCC_ObjPath)</DCC_ObjPath>
-        <DCC_IncludePath>$(BDSCOMMONDIR)\DCP;$(DCC_IncludePath)</DCC_IncludePath>
-    </PropertyGroup>
-    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-        <VerInfo_Keys>CompanyName=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(ModuleName);FileDescription=$(ModuleName);ProductName=$(ModuleName)</VerInfo_Keys>
-        <VerInfo_Locale>1033</VerInfo_Locale>
+        <DCC_LocalDebugSymbols>True</DCC_LocalDebugSymbols>
     </PropertyGroup>
     <ProjectExtensions>
         <Borland.Personality>Delphi.Personality.12</Borland.Personality>
         <Borland.ProjectType>Package</Borland.ProjectType>
         <BorlandProject>
             <Delphi.Personality>
-                <Parameters>
-                    <Parameters Name="DebugSourceDirs">$(BDS)\LIB\KG-Soft</Parameters>
-                </Parameters>
-                <Language>
-                    <Language Name="ActiveLang">ENU</Language>
-                    <Language Name="ProjectLang">$00000407</Language>
-                    <Language Name="RootDir">H:\Delphi_Home\Components\DXE2\</Language>
-                </Language>
+                <Parameters/>
+                <Language/>
                 <VersionInfo>
                     <VersionInfo Name="IncludeVerInfo">True</VersionInfo>
                     <VersionInfo Name="AutoIncBuild">True</VersionInfo>
@@ -118,7 +67,6 @@
                     <VersionInfo Name="Private">False</VersionInfo>
                     <VersionInfo Name="DLL">False</VersionInfo>
                     <VersionInfo Name="Locale">1031</VersionInfo>
-                    <VersionInfo Name="CodePage">1252</VersionInfo>
                 </VersionInfo>
                 <VersionInfoKeys>
                     <VersionInfoKeys Name="CompanyName"/>
@@ -135,22 +83,9 @@
                 <Source>
                     <Source Name="MainSource">BaseUnits.dpk</Source>
                 </Source>
-                <Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k160.bpl">Embarcadero C++Builder-Package für Office 2000-Server</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp160.bpl">Embarcadero C++Builder-Package für Office XP-Server</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k160.bpl">Microsoft Office 2000 Beispiele für gekapselte Komponenten für Automatisierungsserver</Excluded_Packages>
-                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp160.bpl">Microsoft Office XP Beispiele für gekapselte Komponenten für Automation Server</Excluded_Packages>
-                </Excluded_Packages>
-                <Resource_DLL_Projects>
-                    <Resource_DLL_Projects Name="Item0">Deutsch (Deutschland)*$00000407*DEU*K:\Projekte\2004\1040590 Montagelinie OM457 OM460\Software\Delphi\Source\Components\DEU</Resource_DLL_Projects>
-                    <Resource_DLL_Projects Name="Item1">Englisch (USA)*$00000409*ENU*K:\Projekte\2004\1040590 Montagelinie OM457 OM460\Software\Delphi\Source\Components\ENU</Resource_DLL_Projects>
-                </Resource_DLL_Projects>
             </Delphi.Personality>
             <ModelSupport>True</ModelSupport>
             <Platforms>
-                <Platform value="Android">False</Platform>
-                <Platform value="iOSDevice32">False</Platform>
-                <Platform value="iOSSimulator">False</Platform>
                 <Platform value="Win32">True</Platform>
             </Platforms>
         </BorlandProject>
@@ -173,45 +108,6 @@
         <DCCReference Include="..\source\unt_LogUnit.pas"/>
         <DCCReference Include="..\source\Unt_ComboBoxExt.pas"/>
         <DCCReference Include="..\source\unt_Autosave.pas"/>
-        <None Include="..\ModelSupport\default.txaPackage"/>
-        <None Include="..\ModelSupport\Basis\default.txaPackage"/>
-        <None Include="..\ModelSupport\Basis\default.txvpck"/>
-        <None Include="..\ModelSupport\DBLookUpGrid\DBLookUpGrid.txvpck"/>
-        <None Include="..\ModelSupport\DBLookUpGrid\default.txaPackage"/>
-        <None Include="..\ModelSupport\default.txvpck"/>
-        <None Include="..\ModelSupport\unt_Allgfunklib\default.txaPackage"/>
-        <None Include="..\ModelSupport\unt_Allgfunklib\default.txvpck"/>
-        <None Include="..\ModelSupport\Unt_AutoSave\default.txvpck"/>
-        <None Include="..\ModelSupport\Unt_ComboBoxExt\default.txvpck"/>
-        <None Include="..\ModelSupport\Unt_ExecCommand\default.txaPackage"/>
-        <None Include="..\ModelSupport\Unt_ExecCommand\default.txvpck"/>
-        <None Include="..\ModelSupport\Unt_FileProcs\default.txaPackage"/>
-        <None Include="..\ModelSupport\Unt_FileProcs\default.txvpck"/>
-        <None Include="..\ModelSupport\unt_LinList\default.txaPackage"/>
-        <None Include="..\ModelSupport\unt_LinList\default.txvpck"/>
-        <None Include="..\ModelSupport\unt_LogUnit\default.txaPackage"/>
-        <None Include="..\ModelSupport\unt_LogUnit\default.txvpck"/>
-        <None Include="..\ModelSupport\Unt_OnlyOnce\default.txaPackage"/>
-        <None Include="..\ModelSupport\Unt_OnlyOnce\default.txvpck"/>
-        <None Include="..\ModelSupport\unt_StringProcs\default.txaPackage"/>
-        <None Include="..\ModelSupport\unt_StringProcs\default.txvpck"/>
-        <None Include="..\ModelSupport\unt_VariantProcs\default.txaPackage"/>
-        <None Include="..\ModelSupport\unt_VariantProcs\default.txvpck"/>
-        <None Include="..\ModelSupport\Vorgabe.txvpck"/>
-        <None Include="..\ModelSupport_BaseUnits\default.txaPackage"/>
-        <None Include="..\ModelSupport_BaseUnits\default.txvpck"/>
-        <None Include="..\ModelSupport_BaseUnits\unt_Allgfunklib\default.txaPackage"/>
-        <None Include="..\ModelSupport_BaseUnits\unt_Allgfunklib\default.txvpck"/>
-        <None Include="..\ModelSupport_BaseUnits\Unt_AutoSave\default.txaPackage"/>
-        <None Include="..\ModelSupport_BaseUnits\Unt_ComboBoxExt\default.txaPackage"/>
-        <None Include="..\ModelSupport_BaseUnits\Unt_ExecCommand\default.txaPackage"/>
-        <None Include="..\ModelSupport_BaseUnits\Unt_FileProcs\default.txaPackage"/>
-        <None Include="..\ModelSupport_BaseUnits\unt_LinList\default.txaPackage"/>
-        <None Include="..\ModelSupport_BaseUnits\unt_LogUnit\default.txaPackage"/>
-        <None Include="..\ModelSupport_BaseUnits\Unt_OnlyOnce\default.txaPackage"/>
-        <None Include="..\ModelSupport_BaseUnits\unt_StringProcs\default.txaPackage"/>
-        <None Include="..\ModelSupport_BaseUnits\unt_VariantProcs\default.txaPackage"/>
-        <None Include="..\ModelSupport\Unt_DCL\default.txaPackage"/>
         <BuildConfiguration Include="Debug">
             <Key>Cfg_2</Key>
             <CfgParent>Base</CfgParent>

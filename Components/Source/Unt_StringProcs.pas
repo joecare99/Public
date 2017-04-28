@@ -2,7 +2,8 @@
 
 {$i jedi.inc}
 
-{*V 2.30.00}
+{*V 2.31.00}
+{*H 2.30.00 Anpassung an DXE2, Adding deprecated and resolving the consequences }
 {*H 2.29.00 Zerlegung von Charset in Upper- und LowerCharset }
 {*H 2.28.00 Umwandlungsfunktion: AoS2TArrayOfString }
 {*H 2.27.00 Anpassungen an FPC, teilw. Unterstützung für int64, StrReplace behandlung}
@@ -43,7 +44,7 @@ resourcestring
    Umlauts = 'Umlaute';
 
 Type
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
@@ -60,7 +61,7 @@ Type
   TSepArray = Array[TSeparators] Of integer;
   TarrayOfString = Array Of String;
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
@@ -68,14 +69,14 @@ Type
   TParseModus = (psm_Full, psm_Start,psm_StartErw, psm_End, psm_EndErw, psm_Somewhere);
 
   {$ifdef DEFAULTS_WIDESTRING}
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
   ///  <info>Typdeklaration fuer Zeichensaetze</info>
   TCharset = Set Of AnsiChar;
   {$ELSE}
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
@@ -101,25 +102,25 @@ Const
   LineEnding = vbNewLine;
   {$ENDIF}
   Ziffern = ['0'..'9'];
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
   ///  <info>ZiffernErw enthaelt die Zeichen um auch Real-Zahlen zu schreiben</info>
   ZiffernErw = Ziffern + [',', 'e', '-'];
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
   ///  <info>Whitespaces sind Zeichen die man nicht sieht</info>
   Whitespace = [' ', #0, vbcr, vbLf, vbTab, #255];
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
   ///  <info>gebraeuchliche Satzzeichen</info>
   SatzZeichen = [' ', ',', ';', '.', ':', '?', '!', vbtab];
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
@@ -127,14 +128,14 @@ Const
   SatzZeichenErw = SatzZeichen + ['/', '-', '(', ')', '"', '''', '^'];
 
   {$ifndef fpc}
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>05.09.2014</since>
   ///  <version>2.23.00</version>
   ///  <info>Alle sonstigen Zeichen</info>
   SonstigesErw   =  [char('²'), '³',char('€'),'°','§'];
   {$endif}
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
@@ -143,56 +144,56 @@ Const
     '}', '*', '+', '~', '\', '<', '>', '|', '_']
    {$ifndef fpc}   + SonstigesErw {$endif};
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
   ///  <info>Deutsche Umlaute</info>
   umlaut  =[UmlAEGr,UmlOEGr,UmlUEGr,UmlAEkl,UmlOEkl,UmlUEkl,UmlSSkl];
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>15.10.2016</since>
   ///  <version>2.30.00</version>
   ///  <info>Alle kleinen Buchstaben </info>
   LowerCharset  = ['a'..'z'] ;
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>15.10.2016</since>
   ///  <version>2.30.00</version>
   ///  <info>Alle kleinen Buchstaben + kleine dt. Umlaute</info>
   LowerCharsetErw  = LowerCharset+[UmlAEkl,UmlOEkl,UmlUEkl,UmlSSkl] ;
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>15.10.2016</since>
   ///  <version>2.30.00</version>
   ///  <info>Alle großen Buchstaben </info>
   UpperCharset  = ['A'..'Z'] ;
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>15.10.2016</since>
   ///  <version>2.30.00</version>
   ///  <info>Alle großen Buchstaben + Große dt. Umlaute</info>
   UpperCharsetErw  = UpperCharset + [UmlAEGr,UmlOEGr,UmlUEGr] ;
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
   ///  <info>Alle Buchstaben </info>
   Charset  = ['a'..'z', 'A'..'Z'] + umlaut;
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
   ///  <info>Alle Ziffern und Zeichen</info>
   AlphaNum  = Ziffern + Charset;
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
@@ -200,7 +201,7 @@ Const
   AllVisible  = AlphaNum + SatzZeichenErw + Whitespace + Sonstiges ;
 
 {$IFDEF SUPPORTS_INT64}
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
@@ -208,7 +209,7 @@ Const
 Function hex(value: int64; size: integer = -1): String; deprecated
 {$ifdef SUPPORTS_DEPRECATED_DETAILS}'Use InttoHex instead'{$endif};
 {$ELSE}
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
@@ -219,7 +220,7 @@ Function hex(value: longint; size: integer = -1): String; deprecated
 // Wandelt eine Zahl in Hex-String um
 // Obsolete !! --> inttohex()
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
@@ -227,7 +228,7 @@ Function hex(value: longint; size: integer = -1): String; deprecated
 Function hex2(h: String; len: integer = -1): {$IFDEF SUPPORTS_INT64}int64{$ELSE} integer{$ENDIF}  ; overload;
 // wandelt einen Hex-Code in eine Zahl (byte) um
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
@@ -235,7 +236,7 @@ Function hex2(h: String; len: integer = -1): {$IFDEF SUPPORTS_INT64}int64{$ELSE}
 Function deci(value: longint; size: integer = -1): String;overload;
 // Wandelt eine Zahl in Decimal-String um
 
-///<author>Rosewich</author>
+///<author>Joe Care</author>
 ///  <user>admin</user>
 ///  <since>16.04.2008</since>
 ///  <version>2.23.00</version>
@@ -243,15 +244,16 @@ Function deci(value: longint; size: integer = -1): String;overload;
 Function deci(value: int64; size: integer = -1): String;overload;
 // Wandelt eine Zahl in Decimal-String um
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
   ///  <info>Durchsucht den String nach 'Such' und ersetzt dies durch 'Ers'</info>
-Function StrReplace(Const Ostr, such, ers: String): String; overload;
+Function StrReplace(Const Ostr, such, ers: String): String; overload;{$IFDEF HAS_UNIT_STRUTILS}deprecated
+{$ifdef SUPPORTS_DEPRECATED_DETAILS}'Use StringReplace instead'{$endif};{$endif}
 //Durchsucht den String nach 'Such' und ersetzt dies durch 'Ers'.
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
@@ -260,7 +262,7 @@ Function StrReplace(Const Ostr: String; Const start: integer; Const ers:
   String): String; overload;inline;
 //Ersetzt Im String den Teil ab Stelle START durch 'Ers'.
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>16.04.2008</since>
   ///  <version>2.23.00</version>
@@ -347,7 +349,7 @@ Function ParseVar(Const Line: String; Const Args: variant; Modus: TParseModus =
 Function DateTime2DTStr(DT: TDateTime): String;
 //
 
-  ///<author>Rosewich</author>
+  ///<author>Joe Care</author>
   ///  <user>admin</user>
   ///  <since>25.09.2008</since>
   ///  <version>2.25.00</version>
@@ -599,8 +601,11 @@ Const
     (Sal: 'o'; komb: UmlOEkl),
     (Sal: UmlUEkl; komb: UmlUEkl));
 
-
+{$IFDEF SUPPORTS_INT64}
 function hex(value: int64; size: integer): String;
+{$Else}
+function hex(value: Longint; size: integer): String;
+{$ENDIF}
 // Wandelt eine Zahl in Hex-String um
 // Obsolete !! --> inttohex()
 
@@ -688,7 +693,11 @@ Var
   v: extended;
 
 Begin
-  strng := strreplace(strng, ',', '.');
+{$IFDEF HAS_UNIT_STRUTILS}
+  strng := StringReplace(strng, ',', '.',[rfReplaceAll]);
+ {$ELSE}
+  strng := StringReplace(strng, ',', '.');
+ {$ENDIF}
   val(strng, v, e);
   If noerr Or (e = 0) Then
     result := v
@@ -698,13 +707,18 @@ End;
 //-------------------------------------------------------------
 
 function StrReplace(const Ostr, such, ers: String): String;
-// Obsolete, Use
+// Obsolete, Use Sysutils.StrReplace
+{$IFnDEF HAS_UNIT_STRUTILS}
 Var
   hst: String;
   pp,dl: integer;
   once:boolean;
+  {$ENDIF}
 
 Begin
+{$IFDEF HAS_UNIT_STRUTILS}
+  result := StringReplace(Ostr, Such,Ers,[rfReplaceAll])
+ {$ELSE}
   hst := Ostr;
   once := (Pos(such,ers)>0);
   dl := length(ers)-length(such);
@@ -720,6 +734,7 @@ Begin
         pp := pos(such, hst);
     End;
   result := hst;
+  {$ENDIF}
 End;
 //-------------------------------------------------------------
 
@@ -789,7 +804,12 @@ Begin
   hst := astr;
   For i := 1 To length(asciiansi[0]) Do
     Begin
+{$IFDEF HAS_UNIT_STRUTILS}
+      hst := StringReplace(hst, asciiansi[0][i], asciiansi[1][i],[rfReplaceAll])
+ {$ELSE}
       hst := StrReplace(hst, asciiansi[0][i], asciiansi[1][i])
+ {$ENDIF}
+
     End;
   result := hst
 End;
@@ -804,7 +824,11 @@ Begin
   hst := astr;
   For i := 1 To length(asciiansi[0]) Do
     Begin
+{$IFDEF HAS_UNIT_STRUTILS}
+      hst := StringReplace(hst, asciiansi[1][i], asciiansi[0][i],[rfReplaceAll])
+ {$ELSE}
       hst := StrReplace(hst, asciiansi[1][i], asciiansi[0][i])
+ {$ENDIF}
     End;
   result := hst
 End;
@@ -1178,7 +1202,11 @@ Var
   Hst: String;
 Begin
   hst := Trim(Org);
+  {$IFDEF HAS_UNIT_STRUTILS}
+  result := StringReplace(hst, '  ', ' ',[rfReplaceAll]);
+  {$ELSE}
   result := strreplace(hst, '  ', ' ');
+  {$ENDIF}
 End;
 //-------------------------------------------------------------
 
@@ -1840,7 +1868,11 @@ Var
 
 Begin
   h2b := 0;
+  {$IFDEF HAS_UNIT_STRUTILS}
+  h := StringReplace(h, ' ', '',[rfReplaceAll]);
+  {$ELSE}
   h := StrReplace(h, ' ', '');
+  {$ENDIF}
   if len>=0 then
     h:= left(h,len);
   While (h <> '') Do
@@ -1861,7 +1893,11 @@ Var
 Begin
   NewName := text;
   For i := low(t2fstrings) To high(t2fstrings) Do
+    {$IFDEF HAS_UNIT_STRUTILS}
+    NewName := StringReplace(NewName, t2fstrings[i, 0], t2fstrings[i, 1],[rfReplaceAll]);
+    {$ELSE}
     NewName := StrReplace(NewName, t2fstrings[i, 0], t2fstrings[i, 1]);
+    {$ENDIF}
   Result := NewName;
 End;
 //-------------------------------------------------------------
@@ -1874,7 +1910,11 @@ Begin
   NewName := Text;
   For i := high(t2fstrings) Downto low(t2fstrings) Do
     If t2fstrings[i, 2] <> #0 Then
+      {$IFDEF HAS_UNIT_STRUTILS}
+      NewName := StringReplace(NewName, t2fstrings[i, 1], t2fstrings[i, 0],[rfReplaceAll]);
+      {$ELSE}
       NewName := StrReplace(NewName, t2fstrings[i, 1], t2fstrings[i, 0]);
+      {$ENDIF}
   Result := NewName;
 End;
 //-------------------------------------------------------------

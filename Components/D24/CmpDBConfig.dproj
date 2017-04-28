@@ -116,7 +116,7 @@
         <DCCReference Include="UntConfig.dcp"/>
         <DCCReference Include="vcl.dcp"/>
         <DCCReference Include="dbrtl.dcp"/>
-        <DCCReference Include="..\Cmp_DBConfig.pas"/>
+        <DCCReference Include="..\Source\DBConfig\Cmp_DBConfig.pas"/>
         <None Include="CmpDBConfig.todo"/>
         <None Include="..\ModelSupport\Cmp_DBConfig\default.txvpck"/>
         <None Include="..\ModelSupport\default.txvpck"/>

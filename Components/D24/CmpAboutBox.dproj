@@ -111,8 +111,9 @@
         <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="vcl.dcp"/>
         <DCCReference Include="vclimg.dcp"/>
-        <DCCReference Include="..\frm_Aboutbox.pas">
+        <DCCReference Include="..\Source\AboutBox\frm_Aboutbox.pas">
             <Form>AboutBoxform</Form>
+            <FormType>dfm</FormType>
         </DCCReference>
         <None Include="..\ModelSupport\default.txvpck"/>
         <None Include="..\ModelSupport\frm_Aboutbox\default.txvpck"/>

@@ -111,9 +111,8 @@
         <DCCReference Include="rtl.dcp"/>
         <DCCReference Include="vcl.dcp"/>
         <DCCReference Include="dbrtl.dcp"/>
-        <DCCReference Include="adortl.dcp"/>
         <DCCReference Include="BaseUnits.dcp"/>
-        <DCCReference Include="..\Fra_SelectVars.pas"/>
+        <DCCReference Include="..\CSource\SelectVars\Fra_SelectVars.pas"/>
         <None Include="..\ModelSupport\default.txvpck"/>
         <None Include="..\ModelSupport\Fra_SelectVars\default.txvpck"/>
         <None Include="ModelSupport_CmpSelectVars\default.txaPackage"/>
