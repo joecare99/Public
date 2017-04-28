@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="CmpAboutBox"/>
+    <Author Value="Joe Care"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="..\..\include"/>
+        <Libraries Value="$(PkgOutDir)"/>
+        <OtherUnitFiles Value="..\..\Components\Source\AboutBox"/>
+        <UnitOutputDirectory Value="..\..\bin\lib\$NameOnly($(PkgName))\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <SyntaxMode Value="Delphi"/>
+        </SyntaxOptions>
+      </Parsing>
+      <Other>
+        <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="Allgemeine Unit für ein About... . Dialog"/>
+    <License Value="LGPL"/>
+    <Version Major="1" Release="1"/>
+    <Files Count="1">
+      <Item1>
+        <Filename Value="..\Source\AboutBox\frm_aboutbox.pas"/>
+        <UnitName Value="Frm_Aboutbox"/>
+      </Item1>
+    </Files>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <Provides Count="1">
+      <Item1 Value="dcl_KGSoft"/>
+    </Provides>
+    <CustomOptions Items="ExternHelp" Version="2">
+      <_ExternHelp Items="Count"/>
+    </CustomOptions>
+  </Package>
+</CONFIG>

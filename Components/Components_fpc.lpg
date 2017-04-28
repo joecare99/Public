@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectGroup FileVersion="1">
+    <Targets Count="14">
+      <Target0 FileName="FPC\baseunits.lpk"/>
+      <Target1 FileName="FPC\CmpAboutBox.lpk"/>
+      <Target2 FileName="FPC\CmpGLScene.lpk"/>
+      <Target3 FileName="FPC\UntConfig.lpk"/>
+      <Target4 FileName="FPC\DBHlPanel.lpk"/>
+      <Target5 FileName="FPC\dcl_KGSoft.lpk"/>
+      <Target6 FileName="FPC\Compatible.lpk"/>
+      <Target7 FileName="FPC\sqldblaz_ext.lpk"/>
+      <Target8 FileName="FPC\fpvhttp.lpk"/>
+      <Target9 FileName="FPC\fpvnet.lpk"/>
+      <Target10 FileName="FPC\fpcunitStrUtils.lpi">
+        <BuildModes Count="5"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+        <Mode4 Name="Win64D"/>
+        <Mode5 Name="Win64R"/>
+      </Target10>
+      <Target11 FileName="FPC\fpcunitFileUtils.lpi">
+        <BuildModes Count="5"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+        <Mode4 Name="win64"/>
+        <Mode5 Name="win64r"/>
+      </Target11>
+      <Target12 FileName="FPC\fpcConfigTest.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target12>
+      <Target13 FileName="FPC\Prj_test.lpi">
+        <BuildModes Count="5"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+        <Mode4 Name="Win64d"/>
+        <Mode5 Name="Win64r"/>
+      </Target13>
+    </Targets>
+  </ProjectGroup>
+</CONFIG>

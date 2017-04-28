@@ -1,0 +1,51 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: mysql60conn.serrdatabasecreate
+msgid "Failed to create database: %s"
+msgstr ""
+
+#: mysql60conn.serrdatabasedrop
+msgid "Failed to drop database: %s"
+msgstr ""
+
+#: mysql60conn.serrdatabaseselectfailed
+msgid "Failed to select database: %s"
+msgstr ""
+
+#: mysql60conn.serrexecuting
+msgid "Error executing query: %s"
+msgstr ""
+
+#: mysql60conn.serrfetchingdata
+msgid "Error fetching row data: %s"
+msgstr ""
+
+#: mysql60conn.serrgettingresult
+msgid "Error getting result set: %s"
+msgstr ""
+
+#: mysql60conn.serrnodata
+msgid "No data for record"
+msgstr ""
+
+#: mysql60conn.serrnoqueryresult
+msgid "No result from query."
+msgstr ""
+
+#: mysql60conn.serrserverconnectfailed
+msgid "Server connect failed."
+msgstr ""
+
+#: mysql60conn.serrsetcharsetfailed
+msgid "Failed to set connection character set: %s"
+msgstr ""
+
+#: mysql60conn.serrsettingparameter
+msgid "Error setting parameter \"%s\""
+msgstr ""
+
+#: mysql60conn.serrversionmismatch
+msgid "%s can not work with the installed MySQL client version: Expected (%s), got (%s)."
+msgstr ""
+

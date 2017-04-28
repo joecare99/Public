@@ -1,0 +1,20 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<DCC_BplOutput>$(BDSCOMMONDIR)\BPL</DCC_BplOutput>
+			<DCC_DcpOutput>$(BDSCOMMONDIR)\DCP</DCC_DcpOutput>
+			<DCC_ImageBase>00400000</DCC_ImageBase>
+			<DllSuffix>150</DllSuffix>
+			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;WinTypes=Windows;WinProcs=Windows;$(DCC_UnitAlias)</DCC_UnitAlias>
+			<DCC_UnitSearchPath>..\..\include;$(BDSCOMMONDIR)\Bpl\units;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+			<DCC_DcuOutput>$(BDSCOMMONDIR)\Bpl\units</DCC_DcuOutput>
+			<DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
+		</PropertyGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType>OptionSet</Borland.ProjectType>
+			<BorlandProject>
+				<Delphi.Personality/>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+	</Project>

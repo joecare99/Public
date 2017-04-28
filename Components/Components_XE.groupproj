@@ -1,0 +1,278 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{0e872a90-607c-454a-b1fc-586ea736ed69}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="D_XE\BaseUnits.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\UntConfig.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\UserMgnt.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\DBLuGrid.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\DBHlPanel.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\DBHLLookUpPanel.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\CmpDBConfig.dproj">
+				<Dependencies>D_XE\UntConfig.dproj</Dependencies>
+			</Projects>
+			<Projects Include="D_XE\CmpAboutBox.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\CmpSelectVars.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\kgTCPClient_id10.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\Prisma.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\CmpGLScene.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\Compatible.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\CmpDataHandling.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\dcl_KGSoft.dproj">
+				<Dependencies>D_XE\CmpAboutBox.dproj;D_XE\BaseUnits.dproj;D_XE\UntConfig.dproj;D_XE\UserMgnt.dproj;D_XE\DBLuGrid.dproj;D_XE\DBHlPanel.dproj;D_XE\DBHLLookUpPanel.dproj;D_XE\CmpDBConfig.dproj;D_XE\CmpGLScene.dproj</Dependencies>
+			</Projects>
+			<Projects Include="D_XE\BaseUnitsTests.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\fpcConfigTest.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\Prj_test.dproj">
+				<Dependencies>D_XE\BaseUnits.dproj;D_XE\CmpAboutBox.dproj</Dependencies>
+			</Projects>
+			<Projects Include="D_XE\fpcunitFileUtils.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\fpcunitStrUtils.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\Prj_testeventlog.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<BorlandProject>
+					<Default.Personality/>
+				</BorlandProject>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="BaseUnits">
+			<MSBuild Projects="D_XE\BaseUnits.dproj"/>
+		</Target>
+		<Target Name="BaseUnits:Clean">
+			<MSBuild Projects="D_XE\BaseUnits.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="BaseUnits:Make">
+			<MSBuild Projects="D_XE\BaseUnits.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="UntConfig">
+			<MSBuild Projects="D_XE\UntConfig.dproj"/>
+		</Target>
+		<Target Name="UntConfig:Clean">
+			<MSBuild Projects="D_XE\UntConfig.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="UntConfig:Make">
+			<MSBuild Projects="D_XE\UntConfig.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="UserMgnt">
+			<MSBuild Projects="D_XE\UserMgnt.dproj"/>
+		</Target>
+		<Target Name="UserMgnt:Clean">
+			<MSBuild Projects="D_XE\UserMgnt.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="UserMgnt:Make">
+			<MSBuild Projects="D_XE\UserMgnt.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="DBLuGrid">
+			<MSBuild Projects="D_XE\DBLuGrid.dproj"/>
+		</Target>
+		<Target Name="DBLuGrid:Clean">
+			<MSBuild Projects="D_XE\DBLuGrid.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="DBLuGrid:Make">
+			<MSBuild Projects="D_XE\DBLuGrid.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="DBHlPanel">
+			<MSBuild Projects="D_XE\DBHlPanel.dproj"/>
+		</Target>
+		<Target Name="DBHlPanel:Clean">
+			<MSBuild Projects="D_XE\DBHlPanel.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="DBHlPanel:Make">
+			<MSBuild Projects="D_XE\DBHlPanel.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="DBHLLookUpPanel">
+			<MSBuild Projects="D_XE\DBHLLookUpPanel.dproj"/>
+		</Target>
+		<Target Name="DBHLLookUpPanel:Clean">
+			<MSBuild Projects="D_XE\DBHLLookUpPanel.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="DBHLLookUpPanel:Make">
+			<MSBuild Projects="D_XE\DBHLLookUpPanel.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="CmpDBConfig" DependsOnTargets="UntConfig">
+			<MSBuild Projects="D_XE\CmpDBConfig.dproj"/>
+		</Target>
+		<Target Name="CmpDBConfig:Clean" DependsOnTargets="UntConfig:Clean">
+			<MSBuild Projects="D_XE\CmpDBConfig.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="CmpDBConfig:Make" DependsOnTargets="UntConfig:Make">
+			<MSBuild Projects="D_XE\CmpDBConfig.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="CmpAboutBox">
+			<MSBuild Projects="D_XE\CmpAboutBox.dproj"/>
+		</Target>
+		<Target Name="CmpAboutBox:Clean">
+			<MSBuild Projects="D_XE\CmpAboutBox.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="CmpAboutBox:Make">
+			<MSBuild Projects="D_XE\CmpAboutBox.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="CmpSelectVars">
+			<MSBuild Projects="D_XE\CmpSelectVars.dproj"/>
+		</Target>
+		<Target Name="CmpSelectVars:Clean">
+			<MSBuild Projects="D_XE\CmpSelectVars.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="CmpSelectVars:Make">
+			<MSBuild Projects="D_XE\CmpSelectVars.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="kgTCPClient_id10">
+			<MSBuild Projects="D_XE\kgTCPClient_id10.dproj"/>
+		</Target>
+		<Target Name="kgTCPClient_id10:Clean">
+			<MSBuild Projects="D_XE\kgTCPClient_id10.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="kgTCPClient_id10:Make">
+			<MSBuild Projects="D_XE\kgTCPClient_id10.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Prisma">
+			<MSBuild Projects="D_XE\Prisma.dproj"/>
+		</Target>
+		<Target Name="Prisma:Clean">
+			<MSBuild Projects="D_XE\Prisma.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Prisma:Make">
+			<MSBuild Projects="D_XE\Prisma.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="CmpGLScene">
+			<MSBuild Projects="D_XE\CmpGLScene.dproj"/>
+		</Target>
+		<Target Name="CmpGLScene:Clean">
+			<MSBuild Projects="D_XE\CmpGLScene.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="CmpGLScene:Make">
+			<MSBuild Projects="D_XE\CmpGLScene.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Compatible">
+			<MSBuild Projects="D_XE\Compatible.dproj"/>
+		</Target>
+		<Target Name="Compatible:Clean">
+			<MSBuild Projects="D_XE\Compatible.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Compatible:Make">
+			<MSBuild Projects="D_XE\Compatible.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="CmpDataHandling">
+			<MSBuild Projects="D_XE\CmpDataHandling.dproj"/>
+		</Target>
+		<Target Name="CmpDataHandling:Clean">
+			<MSBuild Projects="D_XE\CmpDataHandling.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="CmpDataHandling:Make">
+			<MSBuild Projects="D_XE\CmpDataHandling.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="dcl_KGSoft" DependsOnTargets="CmpAboutBox;BaseUnits;UntConfig;UserMgnt;DBLuGrid;DBHlPanel;DBHLLookUpPanel;CmpDBConfig;CmpGLScene">
+			<MSBuild Projects="D_XE\dcl_KGSoft.dproj"/>
+		</Target>
+		<Target Name="dcl_KGSoft:Clean" DependsOnTargets="CmpAboutBox:Clean;BaseUnits:Clean;UntConfig:Clean;UserMgnt:Clean;DBLuGrid:Clean;DBHlPanel:Clean;DBHLLookUpPanel:Clean;CmpDBConfig:Clean;CmpGLScene:Clean">
+			<MSBuild Projects="D_XE\dcl_KGSoft.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="dcl_KGSoft:Make" DependsOnTargets="CmpAboutBox:Make;BaseUnits:Make;UntConfig:Make;UserMgnt:Make;DBLuGrid:Make;DBHlPanel:Make;DBHLLookUpPanel:Make;CmpDBConfig:Make;CmpGLScene:Make">
+			<MSBuild Projects="D_XE\dcl_KGSoft.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="BaseUnitsTests">
+			<MSBuild Projects="D_XE\BaseUnitsTests.dproj"/>
+		</Target>
+		<Target Name="BaseUnitsTests:Clean">
+			<MSBuild Projects="D_XE\BaseUnitsTests.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="BaseUnitsTests:Make">
+			<MSBuild Projects="D_XE\BaseUnitsTests.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="fpcConfigTest">
+			<MSBuild Projects="D_XE\fpcConfigTest.dproj"/>
+		</Target>
+		<Target Name="fpcConfigTest:Clean">
+			<MSBuild Projects="D_XE\fpcConfigTest.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcConfigTest:Make">
+			<MSBuild Projects="D_XE\fpcConfigTest.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Prj_test" DependsOnTargets="BaseUnits;CmpAboutBox">
+			<MSBuild Projects="D_XE\Prj_test.dproj"/>
+		</Target>
+		<Target Name="Prj_test:Clean" DependsOnTargets="BaseUnits:Clean;CmpAboutBox:Clean">
+			<MSBuild Projects="D_XE\Prj_test.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Prj_test:Make" DependsOnTargets="BaseUnits:Make;CmpAboutBox:Make">
+			<MSBuild Projects="D_XE\Prj_test.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="fpcunitFileUtils">
+			<MSBuild Projects="D_XE\fpcunitFileUtils.dproj"/>
+		</Target>
+		<Target Name="fpcunitFileUtils:Clean">
+			<MSBuild Projects="D_XE\fpcunitFileUtils.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcunitFileUtils:Make">
+			<MSBuild Projects="D_XE\fpcunitFileUtils.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="fpcunitStrUtils">
+			<MSBuild Projects="D_XE\fpcunitStrUtils.dproj"/>
+		</Target>
+		<Target Name="fpcunitStrUtils:Clean">
+			<MSBuild Projects="D_XE\fpcunitStrUtils.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcunitStrUtils:Make">
+			<MSBuild Projects="D_XE\fpcunitStrUtils.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Prj_testeventlog">
+			<MSBuild Projects="D_XE\Prj_testeventlog.dproj"/>
+		</Target>
+		<Target Name="Prj_testeventlog:Clean">
+			<MSBuild Projects="D_XE\Prj_testeventlog.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Prj_testeventlog:Make">
+			<MSBuild Projects="D_XE\Prj_testeventlog.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="BaseUnits;UntConfig;UserMgnt;DBLuGrid;DBHlPanel;DBHLLookUpPanel;CmpDBConfig;CmpAboutBox;CmpSelectVars;kgTCPClient_id10;Prisma;CmpGLScene;Compatible;CmpDataHandling;dcl_KGSoft;BaseUnitsTests;fpcConfigTest;Prj_test;fpcunitFileUtils;fpcunitStrUtils;Prj_testeventlog"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="BaseUnits:Clean;UntConfig:Clean;UserMgnt:Clean;DBLuGrid:Clean;DBHlPanel:Clean;DBHLLookUpPanel:Clean;CmpDBConfig:Clean;CmpAboutBox:Clean;CmpSelectVars:Clean;kgTCPClient_id10:Clean;Prisma:Clean;CmpGLScene:Clean;Compatible:Clean;CmpDataHandling:Clean;dcl_KGSoft:Clean;BaseUnitsTests:Clean;fpcConfigTest:Clean;Prj_test:Clean;fpcunitFileUtils:Clean;fpcunitStrUtils:Clean;Prj_testeventlog:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="BaseUnits:Make;UntConfig:Make;UserMgnt:Make;DBLuGrid:Make;DBHlPanel:Make;DBHLLookUpPanel:Make;CmpDBConfig:Make;CmpAboutBox:Make;CmpSelectVars:Make;kgTCPClient_id10:Make;Prisma:Make;CmpGLScene:Make;Compatible:Make;CmpDataHandling:Make;dcl_KGSoft:Make;BaseUnitsTests:Make;fpcConfigTest:Make;Prj_test:Make;fpcunitFileUtils:Make;fpcunitStrUtils:Make;Prj_testeventlog:Make"/>
+		</Target>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
+	</Project>

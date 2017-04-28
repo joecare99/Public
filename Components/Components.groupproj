@@ -1,0 +1,136 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{80e0c30f-18e0-42bd-a61e-08943c7f469e}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Projects Include="BaseUnits.dproj" />
+    <Projects Include="CmpAboutBox.dproj" />
+    <Projects Include="CmpDBConfig.dproj">
+      <Dependencies>UntConfig.dproj</Dependencies>
+    </Projects>
+    <Projects Include="CmpSelectVars.dproj" />
+    <Projects Include="DBHLLookUpPanel.dproj" />
+    <Projects Include="DBHlPanel.dproj" />
+    <Projects Include="DBLuGrid.dproj" />
+    <Projects Include="kgTCPClient.dproj" />
+    <Projects Include="Test\Prj_test.dproj" />
+    <Projects Include="UntConfig.dproj" />
+    <Projects Include="UserMgnt.dproj" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Default.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+<BorlandProject xmlns=""><Default.Personality></Default.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Target Name="BaseUnits">
+    <MSBuild Projects="BaseUnits.dproj" Targets="" />
+  </Target>
+  <Target Name="BaseUnits:Clean">
+    <MSBuild Projects="BaseUnits.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="BaseUnits:Make">
+    <MSBuild Projects="BaseUnits.dproj" Targets="Make" />
+  </Target>
+  <Target Name="UntConfig">
+    <MSBuild Projects="UntConfig.dproj" Targets="" />
+  </Target>
+  <Target Name="UntConfig:Clean">
+    <MSBuild Projects="UntConfig.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="UntConfig:Make">
+    <MSBuild Projects="UntConfig.dproj" Targets="Make" />
+  </Target>
+  <Target Name="UserMgnt">
+    <MSBuild Projects="UserMgnt.dproj" Targets="" />
+  </Target>
+  <Target Name="UserMgnt:Clean">
+    <MSBuild Projects="UserMgnt.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="UserMgnt:Make">
+    <MSBuild Projects="UserMgnt.dproj" Targets="Make" />
+  </Target>
+  <Target Name="DBLuGrid">
+    <MSBuild Projects="DBLuGrid.dproj" Targets="" />
+  </Target>
+  <Target Name="DBLuGrid:Clean">
+    <MSBuild Projects="DBLuGrid.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="DBLuGrid:Make">
+    <MSBuild Projects="DBLuGrid.dproj" Targets="Make" />
+  </Target>
+  <Target Name="DBHlPanel">
+    <MSBuild Projects="DBHlPanel.dproj" Targets="" />
+  </Target>
+  <Target Name="DBHlPanel:Clean">
+    <MSBuild Projects="DBHlPanel.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="DBHlPanel:Make">
+    <MSBuild Projects="DBHlPanel.dproj" Targets="Make" />
+  </Target>
+  <Target Name="DBHLLookUpPanel">
+    <MSBuild Projects="DBHLLookUpPanel.dproj" Targets="" />
+  </Target>
+  <Target Name="DBHLLookUpPanel:Clean">
+    <MSBuild Projects="DBHLLookUpPanel.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="DBHLLookUpPanel:Make">
+    <MSBuild Projects="DBHLLookUpPanel.dproj" Targets="Make" />
+  </Target>
+  <Target Name="CmpDBConfig" DependsOnTargets="UntConfig">
+    <MSBuild Projects="CmpDBConfig.dproj" Targets="" />
+  </Target>
+  <Target Name="CmpDBConfig:Clean" DependsOnTargets="UntConfig:Clean">
+    <MSBuild Projects="CmpDBConfig.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="CmpDBConfig:Make" DependsOnTargets="UntConfig:Make">
+    <MSBuild Projects="CmpDBConfig.dproj" Targets="Make" />
+  </Target>
+  <Target Name="CmpAboutBox">
+    <MSBuild Projects="CmpAboutBox.dproj" Targets="" />
+  </Target>
+  <Target Name="CmpAboutBox:Clean">
+    <MSBuild Projects="CmpAboutBox.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="CmpAboutBox:Make">
+    <MSBuild Projects="CmpAboutBox.dproj" Targets="Make" />
+  </Target>
+  <Target Name="CmpSelectVars">
+    <MSBuild Projects="CmpSelectVars.dproj" Targets="" />
+  </Target>
+  <Target Name="CmpSelectVars:Clean">
+    <MSBuild Projects="CmpSelectVars.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="CmpSelectVars:Make">
+    <MSBuild Projects="CmpSelectVars.dproj" Targets="Make" />
+  </Target>
+  <Target Name="kgTCPClient">
+    <MSBuild Projects="kgTCPClient.dproj" Targets="" />
+  </Target>
+  <Target Name="kgTCPClient:Clean">
+    <MSBuild Projects="kgTCPClient.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="kgTCPClient:Make">
+    <MSBuild Projects="kgTCPClient.dproj" Targets="Make" />
+  </Target>
+  <Target Name="Prj_test">
+    <MSBuild Projects="Test\Prj_test.dproj" Targets="" />
+  </Target>
+  <Target Name="Prj_test:Clean">
+    <MSBuild Projects="Test\Prj_test.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="Prj_test:Make">
+    <MSBuild Projects="Test\Prj_test.dproj" Targets="Make" />
+  </Target>
+  <Target Name="Build">
+    <CallTarget Targets="BaseUnits;UntConfig;UserMgnt;DBLuGrid;DBHlPanel;DBHLLookUpPanel;CmpDBConfig;CmpAboutBox;CmpSelectVars;kgTCPClient;Prj_test" />
+  </Target>
+  <Target Name="Clean">
+    <CallTarget Targets="BaseUnits:Clean;UntConfig:Clean;UserMgnt:Clean;DBLuGrid:Clean;DBHlPanel:Clean;DBHLLookUpPanel:Clean;CmpDBConfig:Clean;CmpAboutBox:Clean;CmpSelectVars:Clean;kgTCPClient:Clean;Prj_test:Clean" />
+  </Target>
+  <Target Name="Make">
+    <CallTarget Targets="BaseUnits:Make;UntConfig:Make;UserMgnt:Make;DBLuGrid:Make;DBHlPanel:Make;DBHLLookUpPanel:Make;CmpDBConfig:Make;CmpAboutBox:Make;CmpSelectVars:Make;kgTCPClient:Make;Prj_test:Make" />
+  </Target>
+  <Import Condition="Exists('$(MSBuildBinPath)\Borland.Group.Targets')" Project="$(MSBuildBinPath)\Borland.Group.Targets" />
+</Project>

@@ -1,0 +1,33 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+	<PersonalityInfo>
+		<Option>
+			<Option Name="Personality">Default.Personality</Option>
+			<Option Name="ProjectType"></Option>
+			<Option Name="Version">1.0</Option>
+			<Option Name="GUID">{332BD34C-041F-4C57-BFDC-768776CA43E9}</Option>
+		</Option>
+	</PersonalityInfo>
+	<Default.Personality>  <Projects>
+      <Projects Name="BaseUnits.bpl">BaseUnits.bdsproj</Projects>
+      <Projects Name="UntConfig.bpl">UntConfig.bdsproj</Projects>
+      <Projects Name="UserMgnt.bpl">UserMgnt.bdsproj</Projects>
+      <Projects Name="DBLuGrid.bpl">DBLuGrid.bdsproj</Projects>
+      <Projects Name="DBHlPanel.bpl">DBHlPanel.bdsproj</Projects>
+      <Projects Name="DBHLLookUpPanel.bpl">DBHLLookUpPanel.bdsproj</Projects>
+      <Projects Name="CmpDBConfig.bpl">CmpDBConfig.bdsproj</Projects>
+      <Projects Name="CmpAboutBox.bpl">CmpAboutBox.bdsproj</Projects>
+      <Projects Name="CmpSelectVars.bpl">CmpSelectVars.bdsproj</Projects>
+      <Projects Name="kgTCPClient.bpl">kgTCPClient.bdsproj</Projects>
+      <Projects Name="Prisma.bpl">Prisma.bdsproj</Projects>
+      <Projects Name="CmpGLScene.bpl">CmpGLScene.bdsproj</Projects>
+      <Projects Name="dcl_KGSoft.bpl">dcl_KGSoft.bdsproj</Projects>
+      <Projects Name="Targets">BaseUnits.bpl UntConfig.bpl UserMgnt.bpl DBLuGrid.bpl DBHlPanel.bpl DBHLLookUpPanel.bpl CmpDBConfig.bpl CmpAboutBox.bpl CmpSelectVars.bpl kgTCPClient.bpl Prisma.bpl CmpGLScene.bpl dcl_KGSoft.bpl</Projects>
+    </Projects>
+    <Dependencies>
+      <Dependency GUID="{6BD45C8A-7337-4AD1-9F39-8F8C787EC9A0}">
+        <Dependency GUID="{349ED5AA-C088-42B9-B155-5230435CB80A}"/>
+      </Dependency>
+    </Dependencies>
+  </Default.Personality>
+</BorlandProject>

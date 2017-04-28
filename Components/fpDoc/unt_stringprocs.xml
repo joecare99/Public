@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="BaseUnits"><module name="Unt_StringProcs"><short>String-Proceduren und Funktionen</short><descr>Vereinfacht das String-Handling und Parsen.</descr><element name="Umlauts"><short>Resourcenstring für Umlaute</short>
+      </element><element name="Ansi2ascii"><short>Wandelt ANSI-in ASCII (OEM) um</short>
+      </element><element name="aos2TArrayOfString"><short>Wandelt Array of String in TArrayOfString um</short>
+      </element><element name="Ascii2ansi"><short>Wandelt Ascii (OEM) in Ansi um</short>
+      </element><element name="BuildStringByFunction"><short>Baut einen String anhand der Maske und den Uebergebenen Fuellelementen</short>
+      </element><element name="CharInSet"><short>Prüft ob Char c in TCharset Cset vorkommt</short>
+      </element><element name="CleanPath"><short>Bereinigt einen Pfad-String von internen '..\' - Verweisen</short>
+      </element><element name="CountSeparators"><short>Zählt die Separatoren in Line</short>
+      </element><element name="DateTime2DTStr"><short>Wandelt einen Datetime in einen Lokale-Unabhängigen String nach Vorlage: 'YYYYMMDD; HHmmss'</short>
+      </element><element name="deci"><short>Wandelt eine Zahl in Decimal-String um</short>
+      </element><element name="DynArrayByLinesep"><short>Erzeugt ein dynamisches Array anhand Line mit Separatoren</short>
+      </element><element name="EvalCompareStr"><short>Bewertet zwei Strings zueinander;</short>
+      </element><element name="Findall"><short>Liefert ein Array mit allen Startpositionen zurueck</short>
+      </element><element name="ExtractTextBetween"><short>Extrahiert aus einem Text den Untertext Zwischen LStart und LEnd</short>
+      </element><element name="Filename2Text"><short>Wandelt einen Filenamen(Pfad) in text um</short>
+      </element><element name="Text2Filename"><short>Generiert aus einem Text einen gültigen File(Pfad)-Namen</short>
+      </element><element name="getLastSepBy"><short>Liefert das Letzte Separat-Teil einen Strings</short>
+      </element><element name="getnextwcfunc"><short>Ermittelt die Nächste-WildCard-Function</short>
+      </element><element name="GetSoundex"><short>Ermittelt Soundex-String eines Textes(Wortes)</short>
+      </element><element name="hex"><short>Wandelt eine Zahl in Hex-String um</short>
+      </element><element name="hex2"><short>wandelt einen Hex-Code in eine Zahl um </short>
+      </element><element name="left"><short>Ermittelt n-Zeichen von Links</short>
+      </element><element name="right"><short>Ermittelt n-Zeichen von Rechts</short>
+      </element><element name="Middle"><short>Kopiert rest des Strings ab angegebener Stelle</short>
+      </element><element name="LowCase"><short>Wandelt String in Kleinbuchstaben um</short>
+      </element>
+    <element name="umlaut"><short>Deutsche Umlaute</short>
+      </element><element name="LowerCharset"><short>Alle kleinen Buchstaben</short>
+      </element><element name="Charset"><short>Alle Buchstaben + dt. Umlaute</short>
+      </element><element name="UpperCharsetErw"><short>Alle großen Buchstaben + Große dt. Umlaute</short>
+      </element><element name="AlphaNum"><short>Alle Ziffern und Zeichen</short>
+      </element><element name="Ziffern"><short>Ziffern (0..9)</short>
+      </element><element name="TSeparators"><short>Liste der Separatoren</short>
+      </element><element name="TParseModus"><short>Moegliche Parse-modi fuer ParseStr (und ParseVar)</short>
+      </element><element name="TCharset"><short>Typdeklaration fuer Zeichensaetze</short>
+      </element><element name="ZiffernErw"><short>ZiffernErw enthaelt die Zeichen um auch Real-Zahlen zu schreiben</short>
+      </element><element name="Whitespace"><short>Whitespaces sind Zeichen die man nicht sieht</short>
+      </element><element name="SatzZeichen"><short>gebraeuchliche Satzzeichen</short>
+      </element><element name="SatzZeichenErw"><short>Alle Satzzeichen</short>
+      </element><element name="Sonstiges"><short>Alle sonstigen Zeichen</short>
+      </element><element name="AllVisible"><short>Alle Ziffern, Zeichen und Unsichtbares</short>
+      </element><element name="StrReplace"><short>Durchsucht den String nach 'Such' und ersetzt dies durch 'Ers'</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

@@ -1,0 +1,216 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{EE74D960-0B09-435F-891D-404F9FBD2605}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="2010\BaseUnits.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\UntConfig.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\CmpDBConfig.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\UserMgnt.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\CmpAboutBox.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\CmpGLScene.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\CmpSelectVars.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\DBHLLookUpPanel.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\DBHlPanel.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\DBLuGrid.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\DBForms.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\Compatible.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\dcl_KGSoft.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\fpcunitStrUtils.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\fpcConfigTest.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="2010\fpcunitFileUtils.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="BaseUnits">
+			<MSBuild Projects="2010\BaseUnits.dproj"/>
+		</Target>
+		<Target Name="BaseUnits:Clean">
+			<MSBuild Targets="Clean" Projects="2010\BaseUnits.dproj"/>
+		</Target>
+		<Target Name="BaseUnits:Make">
+			<MSBuild Targets="Make" Projects="2010\BaseUnits.dproj"/>
+		</Target>
+		<Target Name="UntConfig">
+			<MSBuild Projects="2010\UntConfig.dproj"/>
+		</Target>
+		<Target Name="UntConfig:Clean">
+			<MSBuild Targets="Clean" Projects="2010\UntConfig.dproj"/>
+		</Target>
+		<Target Name="UntConfig:Make">
+			<MSBuild Targets="Make" Projects="2010\UntConfig.dproj"/>
+		</Target>
+		<Target Name="CmpDBConfig">
+			<MSBuild Projects="2010\CmpDBConfig.dproj"/>
+		</Target>
+		<Target Name="CmpDBConfig:Clean">
+			<MSBuild Targets="Clean" Projects="2010\CmpDBConfig.dproj"/>
+		</Target>
+		<Target Name="CmpDBConfig:Make">
+			<MSBuild Targets="Make" Projects="2010\CmpDBConfig.dproj"/>
+		</Target>
+		<Target Name="UserMgnt">
+			<MSBuild Projects="2010\UserMgnt.dproj"/>
+		</Target>
+		<Target Name="UserMgnt:Clean">
+			<MSBuild Targets="Clean" Projects="2010\UserMgnt.dproj"/>
+		</Target>
+		<Target Name="UserMgnt:Make">
+			<MSBuild Targets="Make" Projects="2010\UserMgnt.dproj"/>
+		</Target>
+		<Target Name="CmpAboutBox">
+			<MSBuild Projects="2010\CmpAboutBox.dproj"/>
+		</Target>
+		<Target Name="CmpAboutBox:Clean">
+			<MSBuild Targets="Clean" Projects="2010\CmpAboutBox.dproj"/>
+		</Target>
+		<Target Name="CmpAboutBox:Make">
+			<MSBuild Targets="Make" Projects="2010\CmpAboutBox.dproj"/>
+		</Target>
+		<Target Name="CmpGLScene">
+			<MSBuild Projects="2010\CmpGLScene.dproj"/>
+		</Target>
+		<Target Name="CmpGLScene:Clean">
+			<MSBuild Targets="Clean" Projects="2010\CmpGLScene.dproj"/>
+		</Target>
+		<Target Name="CmpGLScene:Make">
+			<MSBuild Targets="Make" Projects="2010\CmpGLScene.dproj"/>
+		</Target>
+		<Target Name="CmpSelectVars">
+			<MSBuild Projects="2010\CmpSelectVars.dproj"/>
+		</Target>
+		<Target Name="CmpSelectVars:Clean">
+			<MSBuild Targets="Clean" Projects="2010\CmpSelectVars.dproj"/>
+		</Target>
+		<Target Name="CmpSelectVars:Make">
+			<MSBuild Targets="Make" Projects="2010\CmpSelectVars.dproj"/>
+		</Target>
+		<Target Name="DBHLLookUpPanel">
+			<MSBuild Projects="2010\DBHLLookUpPanel.dproj"/>
+		</Target>
+		<Target Name="DBHLLookUpPanel:Clean">
+			<MSBuild Targets="Clean" Projects="2010\DBHLLookUpPanel.dproj"/>
+		</Target>
+		<Target Name="DBHLLookUpPanel:Make">
+			<MSBuild Targets="Make" Projects="2010\DBHLLookUpPanel.dproj"/>
+		</Target>
+		<Target Name="DBHlPanel">
+			<MSBuild Projects="2010\DBHlPanel.dproj"/>
+		</Target>
+		<Target Name="DBHlPanel:Clean">
+			<MSBuild Targets="Clean" Projects="2010\DBHlPanel.dproj"/>
+		</Target>
+		<Target Name="DBHlPanel:Make">
+			<MSBuild Targets="Make" Projects="2010\DBHlPanel.dproj"/>
+		</Target>
+		<Target Name="DBLuGrid">
+			<MSBuild Projects="2010\DBLuGrid.dproj"/>
+		</Target>
+		<Target Name="DBLuGrid:Clean">
+			<MSBuild Targets="Clean" Projects="2010\DBLuGrid.dproj"/>
+		</Target>
+		<Target Name="DBLuGrid:Make">
+			<MSBuild Targets="Make" Projects="2010\DBLuGrid.dproj"/>
+		</Target>
+		<Target Name="DBForms">
+			<MSBuild Projects="2010\DBForms.dproj"/>
+		</Target>
+		<Target Name="DBForms:Clean">
+			<MSBuild Targets="Clean" Projects="2010\DBForms.dproj"/>
+		</Target>
+		<Target Name="DBForms:Make">
+			<MSBuild Targets="Make" Projects="2010\DBForms.dproj"/>
+		</Target>
+		<Target Name="Compatible">
+			<MSBuild Projects="2010\Compatible.dproj"/>
+		</Target>
+		<Target Name="Compatible:Clean">
+			<MSBuild Targets="Clean" Projects="2010\Compatible.dproj"/>
+		</Target>
+		<Target Name="Compatible:Make">
+			<MSBuild Targets="Make" Projects="2010\Compatible.dproj"/>
+		</Target>
+		<Target Name="dcl_KGSoft">
+			<MSBuild Projects="2010\dcl_KGSoft.dproj"/>
+		</Target>
+		<Target Name="dcl_KGSoft:Clean">
+			<MSBuild Targets="Clean" Projects="2010\dcl_KGSoft.dproj"/>
+		</Target>
+		<Target Name="dcl_KGSoft:Make">
+			<MSBuild Targets="Make" Projects="2010\dcl_KGSoft.dproj"/>
+		</Target>
+		<Target Name="fpcunitStrUtils">
+			<MSBuild Projects="2010\fpcunitStrUtils.dproj"/>
+		</Target>
+		<Target Name="fpcunitStrUtils:Clean">
+			<MSBuild Targets="Clean" Projects="2010\fpcunitStrUtils.dproj"/>
+		</Target>
+		<Target Name="fpcunitStrUtils:Make">
+			<MSBuild Targets="Make" Projects="2010\fpcunitStrUtils.dproj"/>
+		</Target>
+		<Target Name="fpcConfigTest">
+			<MSBuild Projects="2010\fpcConfigTest.dproj"/>
+		</Target>
+		<Target Name="fpcConfigTest:Clean">
+			<MSBuild Targets="Clean" Projects="2010\fpcConfigTest.dproj"/>
+		</Target>
+		<Target Name="fpcConfigTest:Make">
+			<MSBuild Targets="Make" Projects="2010\fpcConfigTest.dproj"/>
+		</Target>
+		<Target Name="fpcunitFileUtils">
+			<MSBuild Projects="2010\fpcunitFileUtils.dproj"/>
+		</Target>
+		<Target Name="fpcunitFileUtils:Clean">
+			<MSBuild Targets="Clean" Projects="2010\fpcunitFileUtils.dproj"/>
+		</Target>
+		<Target Name="fpcunitFileUtils:Make">
+			<MSBuild Targets="Make" Projects="2010\fpcunitFileUtils.dproj"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="BaseUnits;UntConfig;CmpDBConfig;UserMgnt;CmpAboutBox;CmpGLScene;CmpSelectVars;DBHLLookUpPanel;DBHlPanel;DBLuGrid;DBForms;Compatible;dcl_KGSoft;fpcunitStrUtils;fpcConfigTest;fpcunitFileUtils"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="BaseUnits:Clean;UntConfig:Clean;CmpDBConfig:Clean;UserMgnt:Clean;CmpAboutBox:Clean;CmpGLScene:Clean;CmpSelectVars:Clean;DBHLLookUpPanel:Clean;DBHlPanel:Clean;DBLuGrid:Clean;DBForms:Clean;Compatible:Clean;dcl_KGSoft:Clean;fpcunitStrUtils:Clean;fpcConfigTest:Clean;fpcunitFileUtils:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="BaseUnits:Make;UntConfig:Make;CmpDBConfig:Make;UserMgnt:Make;CmpAboutBox:Make;CmpGLScene:Make;CmpSelectVars:Make;DBHLLookUpPanel:Make;DBHlPanel:Make;DBLuGrid:Make;DBForms:Make;Compatible:Make;dcl_KGSoft:Make;fpcunitStrUtils:Make;fpcConfigTest:Make;fpcunitFileUtils:Make"/>
+		</Target>
+		<Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+	</Project>

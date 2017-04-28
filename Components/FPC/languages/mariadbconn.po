@@ -1,0 +1,51 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: mariadbconn.serrdatabasecreate
+msgid "Failed to create database: %s"
+msgstr ""
+
+#: mariadbconn.serrdatabasedrop
+msgid "Failed to drop database: %s"
+msgstr ""
+
+#: mariadbconn.serrdatabaseselectfailed
+msgid "Failed to select database: %s"
+msgstr ""
+
+#: mariadbconn.serrexecuting
+msgid "Error executing query: %s"
+msgstr ""
+
+#: mariadbconn.serrfetchingdata
+msgid "Error fetching row data: %s"
+msgstr ""
+
+#: mariadbconn.serrgettingresult
+msgid "Error getting result set: %s"
+msgstr ""
+
+#: mariadbconn.serrnodata
+msgid "No data for record"
+msgstr ""
+
+#: mariadbconn.serrnoqueryresult
+msgid "No result from query."
+msgstr ""
+
+#: mariadbconn.serrserverconnectfailed
+msgid "Server connect failed."
+msgstr ""
+
+#: mariadbconn.serrsetcharsetfailed
+msgid "Failed to set connection character set: %s"
+msgstr ""
+
+#: mariadbconn.serrsettingparameter
+msgid "Error setting parameter \"%s\""
+msgstr ""
+
+#: mariadbconn.serrversionmismatch
+msgid "%s can not work with the installed MySQL client version: Expected (%s), got (%s)."
+msgstr ""
+

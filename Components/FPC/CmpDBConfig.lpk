@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="CmpDBConfig"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="..\Source\DBConfig"/>
+        <OtherUnitFiles Value="..\Source\DBConfig"/>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <SyntaxMode Value="Delphi"/>
+        </SyntaxOptions>
+      </Parsing>
+    </CompilerOptions>
+    <Files Count="1">
+      <Item1>
+        <Filename Value="..\Source\DBConfig\cmp_dbconfig.pas"/>
+        <UnitName Value="Cmp_DBConfig"/>
+      </Item1>
+    </Files>
+    <LazDoc Paths="..\FPDoc"/>
+    <RequiredPkgs Count="3">
+      <Item1>
+        <PackageName Value="BaseUnits"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="UntConfig"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="LCL"/>
+      </Item3>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

@@ -1,0 +1,49 @@
+package UserMgnt;
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'KG-Soft Benutzer-/Rechteverwaltung'}
+{$LIBSUFFIX '150'}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  dbrtl,
+  BaseUnits,
+  vcldb,
+  VclSmp,
+  UntConfig,
+  vcl,
+  vclactnband,
+  vclx,
+  adortl;
+
+contains
+  Frm_Userconf in '..\Frm_Userconf.pas',
+  frm_Security in '..\frm_Security.pas',
+  Frm_login in '..\Frm_login.pas',
+  Unt_UserMgntBase in '..\Unt_UserMgntBase.pas',
+  Unt_UserRechte in '..\Unt_UserRechte.pas';
+
+end.

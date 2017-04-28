@@ -1,0 +1,15 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: mysql6dyn.serralreadyloaded
+msgid "MySQL interface already initialized from library %s."
+msgstr ""
+
+#: mysql6dyn.serrdefaultsfailed
+msgid "Can not load default MySQL library (\"%s\" or \"%s\"). Check your installation."
+msgstr ""
+
+#: mysql6dyn.serrloadfailed
+msgid "Can not load MySQL library \"%s\". Please check your installation."
+msgstr ""
+

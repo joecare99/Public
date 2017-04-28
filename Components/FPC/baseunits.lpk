@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="BaseUnits"/>
+    <Author Value="Joe Care"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="..\..\include"/>
+        <Libraries Value="$(PkgOutDir)"/>
+        <OtherUnitFiles Value=".;..\Source"/>
+        <UnitOutputDirectory Value="..\..\bin\lib\$NameOnly($(PkgName))\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <SyntaxMode Value="Delphi"/>
+        </SyntaxOptions>
+      </Parsing>
+      <Other>
+        <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="Basis units (mostly non-visual)"/>
+    <License Value="LGPL"/>
+    <Version Major="1" Release="1" Build="127"/>
+    <Files Count="9">
+      <Item1>
+        <Filename Value="..\Source\Unt_Allgfunklib.pas"/>
+        <UnitName Value="Unt_Allgfunklib"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\Source\Unt_StringProcs.pas"/>
+        <UnitName Value="Unt_StringProcs"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <UnitName Value="Unt_VariantProcs"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\Source\Unt_Autosave.pas"/>
+        <UnitName Value="Unt_Autosave"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\Source\Unt_FileProcs.pas"/>
+        <UnitName Value="Unt_FileProcs"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\Source\Unt_ComboBoxExt.pas"/>
+        <UnitName Value="Unt_ComboBoxExt"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\Source\Unt_ExecCommand.pas"/>
+        <UnitName Value="Unt_ExecCommand"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\Source\Unt_LinList.pas"/>
+        <UnitName Value="Unt_LinList"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\Source\Unt_LogUnit.pas"/>
+        <UnitName Value="Unt_LogUnit"/>
+      </Item9>
+    </Files>
+    <LazDoc Paths="..\fpDoc"/>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <IncludePath Value="..\..\include"/>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <CustomOptions Items="ExternHelp" Version="2">
+      <_ExternHelp Items="Count"/>
+    </CustomOptions>
+  </Package>
+</CONFIG>

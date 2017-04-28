@@ -1,0 +1,15 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: mariadbdyn.serralreadyloaded
+msgid "MySQL interface already initialized from library %s."
+msgstr ""
+
+#: mariadbdyn.serrdefaultsfailed
+msgid "Can not load default MySQL library (\"%s\" or \"%s\"). Check your installation."
+msgstr ""
+
+#: mariadbdyn.serrloadfailed
+msgid "Can not load MySQL library \"%s\". Please check your installation."
+msgstr ""
+

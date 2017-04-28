@@ -1,0 +1,156 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{0e872a90-607c-454a-b1fc-586ea736ed69}</ProjectGuid>
+  </PropertyGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Projects Include="2007\BaseUnits.dproj" />
+    <Projects Include="2007\CmpAboutBox.dproj" />
+    <Projects Include="2007\CmpDBConfig.dproj">
+      <Dependencies>2007\UntConfig.dproj</Dependencies>
+    </Projects>
+    <Projects Include="2007\CmpGLScene.dproj" />
+    <Projects Include="2007\CmpSelectVars.dproj" />
+    <Projects Include="2007\DBHLLookUpPanel.dproj" />
+    <Projects Include="2007\DBHlPanel.dproj" />
+    <Projects Include="2007\DBLuGrid.dproj" />
+    <Projects Include="2007\dcl_KGSoft.dproj" />
+    <Projects Include="2007\kgTCPClient_id10.dproj" />
+    <Projects Include="2007\Prisma.dproj" />
+    <Projects Include="2007\UntConfig.dproj" />
+    <Projects Include="2007\UserMgnt.dproj" />
+  </ItemGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Default.Personality</Borland.Personality>
+    <Borland.ProjectType />
+    <BorlandProject>
+<BorlandProject xmlns=""><Default.Personality></Default.Personality></BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Target Name="BaseUnits">
+    <MSBuild Projects="2007\BaseUnits.dproj" Targets="" />
+  </Target>
+  <Target Name="BaseUnits:Clean">
+    <MSBuild Projects="2007\BaseUnits.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="BaseUnits:Make">
+    <MSBuild Projects="2007\BaseUnits.dproj" Targets="Make" />
+  </Target>
+  <Target Name="UntConfig">
+    <MSBuild Projects="2007\UntConfig.dproj" Targets="" />
+  </Target>
+  <Target Name="UntConfig:Clean">
+    <MSBuild Projects="2007\UntConfig.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="UntConfig:Make">
+    <MSBuild Projects="2007\UntConfig.dproj" Targets="Make" />
+  </Target>
+  <Target Name="UserMgnt">
+    <MSBuild Projects="2007\UserMgnt.dproj" Targets="" />
+  </Target>
+  <Target Name="UserMgnt:Clean">
+    <MSBuild Projects="2007\UserMgnt.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="UserMgnt:Make">
+    <MSBuild Projects="2007\UserMgnt.dproj" Targets="Make" />
+  </Target>
+  <Target Name="DBLuGrid">
+    <MSBuild Projects="2007\DBLuGrid.dproj" Targets="" />
+  </Target>
+  <Target Name="DBLuGrid:Clean">
+    <MSBuild Projects="2007\DBLuGrid.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="DBLuGrid:Make">
+    <MSBuild Projects="2007\DBLuGrid.dproj" Targets="Make" />
+  </Target>
+  <Target Name="DBHlPanel">
+    <MSBuild Projects="2007\DBHlPanel.dproj" Targets="" />
+  </Target>
+  <Target Name="DBHlPanel:Clean">
+    <MSBuild Projects="2007\DBHlPanel.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="DBHlPanel:Make">
+    <MSBuild Projects="2007\DBHlPanel.dproj" Targets="Make" />
+  </Target>
+  <Target Name="DBHLLookUpPanel">
+    <MSBuild Projects="2007\DBHLLookUpPanel.dproj" Targets="" />
+  </Target>
+  <Target Name="DBHLLookUpPanel:Clean">
+    <MSBuild Projects="2007\DBHLLookUpPanel.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="DBHLLookUpPanel:Make">
+    <MSBuild Projects="2007\DBHLLookUpPanel.dproj" Targets="Make" />
+  </Target>
+  <Target Name="CmpDBConfig" DependsOnTargets="UntConfig">
+    <MSBuild Projects="2007\CmpDBConfig.dproj" Targets="" />
+  </Target>
+  <Target Name="CmpDBConfig:Clean" DependsOnTargets="UntConfig:Clean">
+    <MSBuild Projects="2007\CmpDBConfig.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="CmpDBConfig:Make" DependsOnTargets="UntConfig:Make">
+    <MSBuild Projects="2007\CmpDBConfig.dproj" Targets="Make" />
+  </Target>
+  <Target Name="CmpAboutBox">
+    <MSBuild Projects="2007\CmpAboutBox.dproj" Targets="" />
+  </Target>
+  <Target Name="CmpAboutBox:Clean">
+    <MSBuild Projects="2007\CmpAboutBox.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="CmpAboutBox:Make">
+    <MSBuild Projects="2007\CmpAboutBox.dproj" Targets="Make" />
+  </Target>
+  <Target Name="CmpSelectVars">
+    <MSBuild Projects="2007\CmpSelectVars.dproj" Targets="" />
+  </Target>
+  <Target Name="CmpSelectVars:Clean">
+    <MSBuild Projects="2007\CmpSelectVars.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="CmpSelectVars:Make">
+    <MSBuild Projects="2007\CmpSelectVars.dproj" Targets="Make" />
+  </Target>
+  <Target Name="kgTCPClient_id10">
+    <MSBuild Projects="2007\kgTCPClient_id10.dproj" Targets="" />
+  </Target>
+  <Target Name="kgTCPClient_id10:Clean">
+    <MSBuild Projects="2007\kgTCPClient_id10.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="kgTCPClient_id10:Make">
+    <MSBuild Projects="2007\kgTCPClient_id10.dproj" Targets="Make" />
+  </Target>
+  <Target Name="Prisma">
+    <MSBuild Projects="2007\Prisma.dproj" Targets="" />
+  </Target>
+  <Target Name="Prisma:Clean">
+    <MSBuild Projects="2007\Prisma.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="Prisma:Make">
+    <MSBuild Projects="2007\Prisma.dproj" Targets="Make" />
+  </Target>
+  <Target Name="CmpGLScene">
+    <MSBuild Projects="2007\CmpGLScene.dproj" Targets="" />
+  </Target>
+  <Target Name="CmpGLScene:Clean">
+    <MSBuild Projects="2007\CmpGLScene.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="CmpGLScene:Make">
+    <MSBuild Projects="2007\CmpGLScene.dproj" Targets="Make" />
+  </Target>
+  <Target Name="dcl_KGSoft">
+    <MSBuild Projects="2007\dcl_KGSoft.dproj" Targets="" />
+  </Target>
+  <Target Name="dcl_KGSoft:Clean">
+    <MSBuild Projects="2007\dcl_KGSoft.dproj" Targets="Clean" />
+  </Target>
+  <Target Name="dcl_KGSoft:Make">
+    <MSBuild Projects="2007\dcl_KGSoft.dproj" Targets="Make" />
+  </Target>
+  <Target Name="Build">
+    <CallTarget Targets="BaseUnits;UntConfig;UserMgnt;DBLuGrid;DBHlPanel;DBHLLookUpPanel;CmpDBConfig;CmpAboutBox;CmpSelectVars;kgTCPClient_id10;Prisma;CmpGLScene;dcl_KGSoft" />
+  </Target>
+  <Target Name="Clean">
+    <CallTarget Targets="BaseUnits:Clean;UntConfig:Clean;UserMgnt:Clean;DBLuGrid:Clean;DBHlPanel:Clean;DBHLLookUpPanel:Clean;CmpDBConfig:Clean;CmpAboutBox:Clean;CmpSelectVars:Clean;kgTCPClient_id10:Clean;Prisma:Clean;CmpGLScene:Clean;dcl_KGSoft:Clean" />
+  </Target>
+  <Target Name="Make">
+    <CallTarget Targets="BaseUnits:Make;UntConfig:Make;UserMgnt:Make;DBLuGrid:Make;DBHlPanel:Make;DBHLLookUpPanel:Make;CmpDBConfig:Make;CmpAboutBox:Make;CmpSelectVars:Make;kgTCPClient_id10:Make;Prisma:Make;CmpGLScene:Make;dcl_KGSoft:Make" />
+  </Target>
+  <Import Condition="Exists('$(MSBuildBinPath)\Borland.Group.Targets')" Project="$(MSBuildBinPath)\Borland.Group.Targets" />
+</Project>

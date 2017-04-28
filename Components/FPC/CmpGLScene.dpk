@@ -1,0 +1,43 @@
+package CmpGLScene;
+
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
+
+{$R *.res}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO ON}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS ON}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO ON}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DESCRIPTION 'KG-Soft: OpenGL - Scene - Zeichenfläche'}
+{$LIBSUFFIX '150'}
+{$RUNONLY}
+{$IMPLICITBUILD ON}
+
+requires
+  rtl,
+  vcl;
+
+contains
+  Cmp_OpenGLScene in '..\Cmp_OpenGLScene.pas',
+  Cmp_OpenGLSBaseObjects in '..\Cmp_OpenGLSBaseObjects.pas',
+  Cmp_OpenGLErwObjects in '..\Cmp_OpenGLErwObjects.pas';
+
+end.

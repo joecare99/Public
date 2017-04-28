@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <Name Value="dcl_KGSoft"/>
+    <Type Value="DesignTime"/>
+    <Author Value="Joe Care"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="..\..\include"/>
+        <Libraries Value="$(PkgOutDir)"/>
+        <OtherUnitFiles Value="..\..\Components"/>
+        <UnitOutputDirectory Value="..\..\bin\lib\$NameOnly($(PkgName))\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <SyntaxMode Value="Delphi"/>
+        </SyntaxOptions>
+      </Parsing>
+      <Other>
+        <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
+      </Other>
+    </CompilerOptions>
+    <Description Value="Einbindung aller KGSoft-Komponenten"/>
+    <License Value="LGPL"/>
+    <Version Major="1" Release="1"/>
+    <Files Count="1">
+      <Item1>
+        <Filename Value="../Unt_DCL.pas"/>
+        <HasRegisterProc Value="True"/>
+        <AddToUsesPkgSection Value="False"/>
+        <UnitName Value="Unt_DCL"/>
+      </Item1>
+    </Files>
+    <RequiredPkgs Count="7">
+      <Item1>
+        <PackageName Value="CmpDBConfig"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="DBHlPanel"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="CmpGLScene"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="UntConfig"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="CmpAboutBox"/>
+      </Item5>
+      <Item6>
+        <PackageName Value="BaseUnits"/>
+      </Item6>
+      <Item7>
+        <PackageName Value="LCL"/>
+      </Item7>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <CustomOptions Items="ExternHelp" Version="2">
+      <_ExternHelp Items="Count"/>
+    </CustomOptions>
+  </Package>
+</CONFIG>

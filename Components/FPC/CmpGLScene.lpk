@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <Name Value="CmpGLScene"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="..\..\include"/>
+        <Libraries Value="$(PkgOutDir)"/>
+        <OtherUnitFiles Value="../Source/OpenGLScene"/>
+        <UnitOutputDirectory Value="..\..\bin\lib\$NameOnly($(PkgName))\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <SyntaxMode Value="Delphi"/>
+        </SyntaxOptions>
+      </Parsing>
+      <Other>
+        <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
+      </Other>
+    </CompilerOptions>
+    <Version Major="1"/>
+    <Files Count="3">
+      <Item1>
+        <Filename Value="../Source/OpenGLScene/Cmp_OpenGLScene.pas"/>
+        <UnitName Value="Cmp_OpenGLScene"/>
+      </Item1>
+      <Item2>
+        <Filename Value="../Source/OpenGLScene/Cmp_OpenGLSBaseObjects.pas"/>
+        <UnitName Value="Cmp_OpenGLSBaseObjects"/>
+      </Item2>
+      <Item3>
+        <Filename Value="../Source/OpenGLScene/Cmp_OpenGLErwObjects.pas"/>
+        <UnitName Value="Cmp_OpenGLErwObjects"/>
+      </Item3>
+    </Files>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="lazopenglcontext"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <CustomOptions Items="ExternHelp" Version="2">
+      <_ExternHelp Items="Count"/>
+    </CustomOptions>
+  </Package>
+</CONFIG>

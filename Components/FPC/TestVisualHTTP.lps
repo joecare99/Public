@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="12">
+      <Unit0>
+        <Filename Value="TestVisualHTTP.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="35" Y="7"/>
+        <UsageCount Value="52"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\Source\VisualWeb\Examples\frmtestfpvhttpclient.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="TestFpHTTPClientMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="FrmTestFpvHTTPClient"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="9"/>
+        <CursorPos X="67" Y="15"/>
+        <UsageCount Value="52"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\Source\VisualWeb\visualhttp.pas"/>
+        <ComponentName Value="Form1"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="VisualHTTP"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="63" Y="7"/>
+        <UsageCount Value="25"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\fcl-web\src\base\fphttpclient.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="277"/>
+        <CursorPos X="8" Y="285"/>
+        <UsageCount Value="15"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\Source\VisualWeb\visualhttpclient.pas"/>
+        <UnitName Value="VisualHTTPClient"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="34" Y="8"/>
+        <UsageCount Value="15"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\fcl-web\src\base\fphttpserver.pp"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="16" Y="186"/>
+        <UsageCount Value="15"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="12"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="CmpGLScene.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="41" Y="4"/>
+        <UsageCount Value="12"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\fcl-net\src\sslsockets.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="17"/>
+        <CursorPos X="54" Y="22"/>
+        <UsageCount Value="8"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\openssl\src\openssl.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3491"/>
+        <CursorPos X="3" Y="3513"/>
+        <UsageCount Value="8"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\openssl\src\fpopenssl.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="352"/>
+        <UsageCount Value="8"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\inc\threadh.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="11" Y="160"/>
+        <UsageCount Value="8"/>
+      </Unit11>
+    </Units>
+    <JumpHistory HistoryIndex="-1"/>
+  </ProjectSession>
+</CONFIG>
