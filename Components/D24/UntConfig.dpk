@@ -36,6 +36,7 @@ requires
   BaseUnits;
 
 contains
-  Unt_Config in '..\source\Unt_Config.pas';
+  Unt_Config in '..\Source\Config\Unt_Config.pas',
+  Unt_ConfigExt in '..\Source\Config\Unt_ConfigExt.pas';
 
 end.

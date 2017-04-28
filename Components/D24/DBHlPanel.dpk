@@ -36,6 +36,6 @@ requires
   vcldb;
 
 contains
-  Unt_DBHlPanel in '..\Unt_DBHlPanel.pas';
+  cmp_DBHlPanel in '..\Source\DBHlPanel\cmp_DBHlPanel.pas';
 
 end.

@@ -37,6 +37,6 @@ requires
   vcldb;
 
 contains
-  Cmp_DBLookUpGrid in '..\Cmp_DBLookUpGrid.pas';
+  Cmp_DBLookUpGrid in '..\Source\DBLookUpGrid\Cmp_DBLookUpGrid.pas';
 
 end.

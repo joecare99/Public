@@ -39,14 +39,13 @@ requires
   UntConfig,
   vcl,
   vclactnband,
-  vclx,
-  adortl;
+  vclx;
 
 contains
-  Frm_Userconf in '..\Frm_Userconf.pas',
-  frm_Security in '..\frm_Security.pas',
-  Frm_login in '..\Frm_login.pas',
-  Unt_UserMgntBase in '..\Unt_UserMgntBase.pas',
-  Unt_UserRechte in '..\Unt_UserRechte.pas';
+  Frm_Userconf in '..\CSource\UserMgnt\Frm_Userconf.pas',
+  frm_Security in '..\CSource\UserMgnt\frm_Security.pas',
+  Frm_login in '..\CSource\UserMgnt\Frm_login.pas',
+  Unt_UserMgntBase in '..\CSource\UserMgnt\Unt_UserMgntBase.pas',
+  Unt_UserRechte in '..\CSource\UserMgnt\Unt_UserRechte.pas';
 
 end.

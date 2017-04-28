@@ -36,6 +36,6 @@ requires
   vcldb;
 
 contains
-  Unt_DBHLLookUpPanel in '..\Unt_DBHLLookUpPanel.pas';
+  Cmp_DBHLLookUpPanel in '..\Source\DBHlLookUpPanel\Cmp_DBHLLookUpPanel.pas';
 
 end.

@@ -1,215 +1,202 @@
-﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-		<PropertyGroup>
-			<ProjectGuid>{e495b81b-a2b7-4f0a-9124-f8613bc426d4}</ProjectGuid>
-			<MainSource>DBLuGrid.dpk</MainSource>
-			<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
-			<DCC_DependencyCheckOutputName>C:\Dokumente und Einstellungen\All Users\Dokumente\RAD Studio\5.0\BPL\DBLuGrid100.bpl</DCC_DependencyCheckOutputName>
-			<ProjectVersion>13.4</ProjectVersion>
-			<Config Condition="'$(Config)'==''">Release</Config>
-			<Basis>True</Basis>
-			<AppType>Package</AppType>
-			<FrameworkType>VCL</FrameworkType>
-			<Base>True</Base>
-			<Platform Condition="'$(Platform)'==''">Win32</Platform>
-			<TargetedPlatforms>3</TargetedPlatforms>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
-			<Base_Win64>true</Base_Win64>
-			<CfgParent>Base</CfgParent>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
-			<Base_Win32>true</Base_Win32>
-			<CfgParent>Base</CfgParent>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
-			<Cfg_1>true</Cfg_1>
-			<CfgParent>Base</CfgParent>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
-			<Cfg_1_Win32>true</Cfg_1_Win32>
-			<CfgParent>Cfg_1</CfgParent>
-			<Cfg_1>true</Cfg_1>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
-			<Cfg_2>true</Cfg_2>
-			<CfgParent>Base</CfgParent>
-			<Base>true</Base>
-		</PropertyGroup>
-		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
-			<Cfg_2_Win32>true</Cfg_2_Win32>
-			<CfgParent>Cfg_2</CfgParent>
-			<Cfg_2>true</Cfg_2>
-			<Base>true</Base>
-		</PropertyGroup>
-		<Import Condition="'$(Base)'!='' And Exists('default.optset')" Project="default.optset"/>
-		<PropertyGroup Condition="'$(Base)'!=''">
-			<RuntimeOnlyPackage>true</RuntimeOnlyPackage>
-			<DCC_Description>DB Lookup-Grid</DCC_Description>
-			<GenPackage>true</GenPackage>
-			<GenDll>true</GenDll>
-			<DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win;$(DCC_Namespace)</DCC_Namespace>
-			<DCC_DcuOutput>$(BDSCOMMONDIR)\BPL\$(platform)\UNITS</DCC_DcuOutput>
-			<DCC_BplOutput>$(BDSCOMMONDIR)\BPL\$(platform)</DCC_BplOutput>
-			<DCC_UnitSearchPath>$(BDSCOMMONDIR)\DCP\$(platform);$(BDSCOMMONDIR)\BPL\$(platform)\units;..\..\include;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
-			<DCC_DcpOutput>$(BDSCOMMONDIR)\DCP\$(platform)</DCC_DcpOutput>
-			<DCC_DependencyCheckOutputName>D:\Dokumente und Einstellungen\All Users\Dokumente\RAD Studio\6.0\BPL\BaseUnits120.bpl</DCC_DependencyCheckOutputName>
-			<DCC_ImageBase>00400000</DCC_ImageBase>
-			<CfgDependentOn>default.optset</CfgDependentOn>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Base_Win64)'!=''">
-			<VerInfo_Build>98</VerInfo_Build>
-			<VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
-			<DCC_Description>KG-Soft Basis Units</DCC_Description>
-			<DllSuffix>160</DllSuffix>
-			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-			<DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
-			<VerInfo_Locale>1033</VerInfo_Locale>
-			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-			<Icon_MainIcon>DBLuGrid_Icon.ico</Icon_MainIcon>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Base_Win32)'!=''">
-			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-			<VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
-			<DCC_Description>KG-Soft Basis Units</DCC_Description>
-			<DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
-			<Icon_MainIcon>DBLuGrid_Icon.ico</Icon_MainIcon>
-			<Debugger_DebugSourcePath>$(BDSCOMMONDIR)\BPL\UNITS;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
-			<VerInfo_Locale>1033</VerInfo_Locale>
-			<DllSuffix>160</DllSuffix>
-			<VerInfo_Build>98</VerInfo_Build>
-			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_1)'!=''">
-			<VerInfo_Build>98</VerInfo_Build>
-			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.98;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-			<VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
-			<DCC_Description>KG-Soft Basis Units</DCC_Description>
-			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-			<DllSuffix>160</DllSuffix>
-			<VerInfo_Locale>1031</VerInfo_Locale>
-			<Version>7.0</Version>
-			<DCC_DebugInformation>False</DCC_DebugInformation>
-			<DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
-			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
-			<DCC_OutputDRCFile>True</DCC_OutputDRCFile>
-			<DCC_ObjOutput>$(BDSCOMMONDIR)\BPL\UNITS</DCC_ObjOutput>
-			<DCC_HppOutput>$(BDSCOMMONDIR)\BPL\UNITS</DCC_HppOutput>
-			<DCC_ResourcePath>$(BDSCOMMONDIR)\DCP;$(DCC_ResourcePath)</DCC_ResourcePath>
-			<DCC_ObjPath>$(BDSCOMMONDIR)\DCP;$(DCC_ObjPath)</DCC_ObjPath>
-			<DCC_IncludePath>$(BDSCOMMONDIR)\DCP;$(DCC_IncludePath)</DCC_IncludePath>
-			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-			<VerInfo_Locale>1033</VerInfo_Locale>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_2)'!=''">
-			<DCC_Description>KG-Soft Basis Units</DCC_Description>
-			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.98;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-			<VerInfo_Build>98</VerInfo_Build>
-			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-			<VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
-			<DllSuffix>160</DllSuffix>
-			<VerInfo_Locale>1031</VerInfo_Locale>
-			<Version>7.0</Version>
-			<DCC_OutputDRCFile>True</DCC_OutputDRCFile>
-			<DCC_ObjOutput>$(BDSCOMMONDIR)\BPL\UNITS</DCC_ObjOutput>
-			<DCC_HppOutput>$(BDSCOMMONDIR)\BPL\UNITS</DCC_HppOutput>
-			<DCC_ResourcePath>$(BDSCOMMONDIR)\DCP;$(DCC_ResourcePath)</DCC_ResourcePath>
-			<DCC_ObjPath>$(BDSCOMMONDIR)\DCP;$(DCC_ObjPath)</DCC_ObjPath>
-			<DCC_IncludePath>$(BDSCOMMONDIR)\DCP;$(DCC_IncludePath)</DCC_IncludePath>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-			<VerInfo_Locale>1033</VerInfo_Locale>
-		</PropertyGroup>
-		<ItemGroup>
-			<DelphiCompile Include="$(MainSource)">
-				<MainSource>MainSource</MainSource>
-			</DelphiCompile>
-			<DCCReference Include="rtl.dcp"/>
-			<DCCReference Include="vcl.dcp"/>
-			<DCCReference Include="dbrtl.dcp"/>
-			<DCCReference Include="vcldb.dcp"/>
-			<DCCReference Include="..\Cmp_DBLookUpGrid.pas"/>
-			<None Include="ModelSupport_DBLuGrid\default.txaPackage"/>
-			<BuildConfiguration Include="Debug">
-				<Key>Cfg_2</Key>
-				<CfgParent>Base</CfgParent>
-			</BuildConfiguration>
-			<BuildConfiguration Include="Base">
-				<Key>Base</Key>
-				<DependentOn>default.optset</DependentOn>
-			</BuildConfiguration>
-			<BuildConfiguration Include="Release">
-				<Key>Cfg_1</Key>
-				<CfgParent>Base</CfgParent>
-			</BuildConfiguration>
-		</ItemGroup>
-		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
-		<ProjectExtensions>
-			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
-			<Borland.ProjectType>Package</Borland.ProjectType>
-			<BorlandProject>
-				<Delphi.Personality>
-					<Parameters>
-						<Parameters Name="DebugSourceDirs">$(BDSCOMMONDIR)\BPL\UNITS</Parameters>
-					</Parameters>
-					<VersionInfo>
-						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
-						<VersionInfo Name="AutoIncBuild">True</VersionInfo>
-						<VersionInfo Name="MajorVer">1</VersionInfo>
-						<VersionInfo Name="MinorVer">0</VersionInfo>
-						<VersionInfo Name="Release">0</VersionInfo>
-						<VersionInfo Name="Build">143</VersionInfo>
-						<VersionInfo Name="Debug">False</VersionInfo>
-						<VersionInfo Name="PreRelease">True</VersionInfo>
-						<VersionInfo Name="Special">False</VersionInfo>
-						<VersionInfo Name="Private">False</VersionInfo>
-						<VersionInfo Name="DLL">False</VersionInfo>
-						<VersionInfo Name="Locale">1031</VersionInfo>
-						<VersionInfo Name="CodePage">1252</VersionInfo>
-					</VersionInfo>
-					<VersionInfoKeys>
-						<VersionInfoKeys Name="CompanyName"/>
-						<VersionInfoKeys Name="FileDescription"/>
-						<VersionInfoKeys Name="FileVersion">1.0.0.143</VersionInfoKeys>
-						<VersionInfoKeys Name="InternalName"/>
-						<VersionInfoKeys Name="LegalCopyright"/>
-						<VersionInfoKeys Name="LegalTrademarks"/>
-						<VersionInfoKeys Name="OriginalFilename"/>
-						<VersionInfoKeys Name="ProductName"/>
-						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
-						<VersionInfoKeys Name="Comments"/>
-					</VersionInfoKeys>
-					<Source>
-						<Source Name="MainSource">DBLuGrid.dpk</Source>
-					</Source>
-					<Excluded_Packages>
-						<Excluded_Packages Name="C:\Documents and Settings\All Users\Documents\RAD Studio\9.0\BPL\Win32\dcl_KGSoft160.bpl">KG-Soft: Visuelle Komponen</Excluded_Packages>
-						<Excluded_Packages Name="C:\Documents and Settings\All Users\Documents\RAD Studio\9.0\Bpl\win32\UserMgnt160.bpl">KG-Soft Benutzer-/Rechteverwaltung</Excluded_Packages>
-						<Excluded_Packages Name="C:\Documents and Settings\All Users\Documents\RAD Studio\9.0\Bpl\Win64\CmpAboutBox160.bpl">KG-Soft Basis Units</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\bcboffice2k160.bpl">Embarcadero C++Builder-Package für Office 2000-Server</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\bcbofficexp160.bpl">Embarcadero C++Builder-Package für Office XP-Server</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k160.bpl">Microsoft Office 2000 Beispiele für gekapselte Komponenten für Automatisierungsserver</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\dclofficexp160.bpl">Microsoft Office XP Beispiele für gekapselte Komponenten für Automation Server</Excluded_Packages>
-					</Excluded_Packages>
-				</Delphi.Personality>
-				<ModelSupport>True</ModelSupport>
-				<Platforms>
-					<Platform value="Win64">True</Platform>
-					<Platform value="Win32">True</Platform>
-				</Platforms>
-			</BorlandProject>
-			<ProjectFileVersion>12</ProjectFileVersion>
-		</ProjectExtensions>
-		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
-	</Project>
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{e495b81b-a2b7-4f0a-9124-f8613bc426d4}</ProjectGuid>
+        <MainSource>DBLuGrid.dpk</MainSource>
+        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+        <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+        <DCC_DependencyCheckOutputName>C:\Dokumente und Einstellungen\All Users\Dokumente\RAD Studio\5.0\BPL\DBLuGrid100.bpl</DCC_DependencyCheckOutputName>
+        <ProjectVersion>18.2</ProjectVersion>
+        <Config Condition="'$(Config)'==''">Release</Config>
+        <Basis>True</Basis>
+        <AppType>Package</AppType>
+        <FrameworkType>VCL</FrameworkType>
+        <Base>True</Base>
+        <Platform Condition="'$(Platform)'==''">Win32</Platform>
+        <TargetedPlatforms>1</TargetedPlatforms>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+        <Base_Win32>true</Base_Win32>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+        <Cfg_1>true</Cfg_1>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
+        <Cfg_1_Win32>true</Cfg_1_Win32>
+        <CfgParent>Cfg_1</CfgParent>
+        <Cfg_1>true</Cfg_1>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+        <Cfg_2>true</Cfg_2>
+        <CfgParent>Base</CfgParent>
+        <Base>true</Base>
+    </PropertyGroup>
+    <PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
+        <Cfg_2_Win32>true</Cfg_2_Win32>
+        <CfgParent>Cfg_2</CfgParent>
+        <Cfg_2>true</Cfg_2>
+        <Base>true</Base>
+    </PropertyGroup>
+    <Import Condition="'$(Base)'!='' And Exists('default.optset')" Project="default.optset"/>
+    <PropertyGroup Condition="'$(Base)'!=''">
+        <SanitizedProjectName>DBLuGrid</SanitizedProjectName>
+        <RuntimeOnlyPackage>true</RuntimeOnlyPackage>
+        <DCC_Description>DB Lookup-Grid</DCC_Description>
+        <GenPackage>true</GenPackage>
+        <GenDll>true</GenDll>
+        <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win;$(DCC_Namespace)</DCC_Namespace>
+        <DCC_DcuOutput>$(BDSCOMMONDIR)\BPL\$(platform)\UNITS</DCC_DcuOutput>
+        <DCC_BplOutput>$(BDSCOMMONDIR)\BPL\$(platform)</DCC_BplOutput>
+        <DCC_UnitSearchPath>$(BDSCOMMONDIR)\DCP\$(platform);$(BDSCOMMONDIR)\BPL\$(platform)\units;..\..\include;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+        <DCC_DcpOutput>$(BDSCOMMONDIR)\DCP\$(platform)</DCC_DcpOutput>
+        <DCC_DependencyCheckOutputName>D:\Dokumente und Einstellungen\All Users\Dokumente\RAD Studio\6.0\BPL\BaseUnits120.bpl</DCC_DependencyCheckOutputName>
+        <DCC_ImageBase>00400000</DCC_ImageBase>
+        <CfgDependentOn>default.optset</CfgDependentOn>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
+        <DCC_Description>KG-Soft Basis Units</DCC_Description>
+        <DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <Icon_MainIcon>DBLuGrid_Icon.ico</Icon_MainIcon>
+        <Debugger_DebugSourcePath>$(BDSCOMMONDIR)\BPL\UNITS;$(Debugger_DebugSourcePath)</Debugger_DebugSourcePath>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+        <DllSuffix>160</DllSuffix>
+        <VerInfo_Build>98</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(ModuleName);FileDescription=$(ModuleName);ProductName=$(ModuleName)</VerInfo_Keys>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1)'!=''">
+        <VerInfo_Build>98</VerInfo_Build>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.98;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
+        <DCC_Description>KG-Soft Basis Units</DCC_Description>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <DllSuffix>160</DllSuffix>
+        <VerInfo_Locale>1031</VerInfo_Locale>
+        <Version>7.0</Version>
+        <DCC_DebugInformation>0</DCC_DebugInformation>
+        <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+        <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+        <DCC_OutputDRCFile>True</DCC_OutputDRCFile>
+        <DCC_ObjOutput>$(BDSCOMMONDIR)\BPL\UNITS</DCC_ObjOutput>
+        <DCC_HppOutput>$(BDSCOMMONDIR)\BPL\UNITS</DCC_HppOutput>
+        <DCC_ResourcePath>$(BDSCOMMONDIR)\DCP;$(DCC_ResourcePath)</DCC_ResourcePath>
+        <DCC_ObjPath>$(BDSCOMMONDIR)\DCP;$(DCC_ObjPath)</DCC_ObjPath>
+        <DCC_IncludePath>$(BDSCOMMONDIR)\DCP;$(DCC_IncludePath)</DCC_IncludePath>
+        <DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+        <VerInfo_Keys>CompanyName=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(ModuleName);FileDescription=$(ModuleName);ProductName=$(ModuleName)</VerInfo_Keys>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2)'!=''">
+        <DCC_Description>KG-Soft Basis Units</DCC_Description>
+        <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.98;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+        <VerInfo_Build>98</VerInfo_Build>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
+        <DllSuffix>160</DllSuffix>
+        <VerInfo_Locale>1031</VerInfo_Locale>
+        <Version>7.0</Version>
+        <DCC_OutputDRCFile>True</DCC_OutputDRCFile>
+        <DCC_ObjOutput>$(BDSCOMMONDIR)\BPL\UNITS</DCC_ObjOutput>
+        <DCC_HppOutput>$(BDSCOMMONDIR)\BPL\UNITS</DCC_HppOutput>
+        <DCC_ResourcePath>$(BDSCOMMONDIR)\DCP;$(DCC_ResourcePath)</DCC_ResourcePath>
+        <DCC_ObjPath>$(BDSCOMMONDIR)\DCP;$(DCC_ObjPath)</DCC_ObjPath>
+        <DCC_IncludePath>$(BDSCOMMONDIR)\DCP;$(DCC_IncludePath)</DCC_IncludePath>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
+        <VerInfo_Keys>CompanyName=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(ModuleName);FileDescription=$(ModuleName);ProductName=$(ModuleName)</VerInfo_Keys>
+        <VerInfo_Locale>1033</VerInfo_Locale>
+    </PropertyGroup>
+    <ItemGroup>
+        <DelphiCompile Include="$(MainSource)">
+            <MainSource>MainSource</MainSource>
+        </DelphiCompile>
+        <DCCReference Include="rtl.dcp"/>
+        <DCCReference Include="vcl.dcp"/>
+        <DCCReference Include="dbrtl.dcp"/>
+        <DCCReference Include="vcldb.dcp"/>
+        <DCCReference Include="..\Source\DBLookUpGrid\Cmp_DBLookUpGrid.pas"/>
+        <None Include="ModelSupport_DBLuGrid\default.txaPackage"/>
+        <BuildConfiguration Include="Debug">
+            <Key>Cfg_2</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Base">
+            <Key>Base</Key>
+            <DependentOn>default.optset</DependentOn>
+        </BuildConfiguration>
+        <BuildConfiguration Include="Release">
+            <Key>Cfg_1</Key>
+            <CfgParent>Base</CfgParent>
+        </BuildConfiguration>
+    </ItemGroup>
+    <Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+    <ProjectExtensions>
+        <Borland.Personality>Delphi.Personality.12</Borland.Personality>
+        <Borland.ProjectType>Package</Borland.ProjectType>
+        <BorlandProject>
+            <Delphi.Personality>
+                <Parameters>
+                    <Parameters Name="DebugSourceDirs">$(BDSCOMMONDIR)\BPL\UNITS</Parameters>
+                </Parameters>
+                <VersionInfo>
+                    <VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+                    <VersionInfo Name="AutoIncBuild">True</VersionInfo>
+                    <VersionInfo Name="MajorVer">1</VersionInfo>
+                    <VersionInfo Name="MinorVer">0</VersionInfo>
+                    <VersionInfo Name="Release">0</VersionInfo>
+                    <VersionInfo Name="Build">143</VersionInfo>
+                    <VersionInfo Name="Debug">False</VersionInfo>
+                    <VersionInfo Name="PreRelease">True</VersionInfo>
+                    <VersionInfo Name="Special">False</VersionInfo>
+                    <VersionInfo Name="Private">False</VersionInfo>
+                    <VersionInfo Name="DLL">False</VersionInfo>
+                    <VersionInfo Name="Locale">1031</VersionInfo>
+                    <VersionInfo Name="CodePage">1252</VersionInfo>
+                </VersionInfo>
+                <VersionInfoKeys>
+                    <VersionInfoKeys Name="CompanyName"/>
+                    <VersionInfoKeys Name="FileDescription"/>
+                    <VersionInfoKeys Name="FileVersion">1.0.0.143</VersionInfoKeys>
+                    <VersionInfoKeys Name="InternalName"/>
+                    <VersionInfoKeys Name="LegalCopyright"/>
+                    <VersionInfoKeys Name="LegalTrademarks"/>
+                    <VersionInfoKeys Name="OriginalFilename"/>
+                    <VersionInfoKeys Name="ProductName"/>
+                    <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+                    <VersionInfoKeys Name="Comments"/>
+                </VersionInfoKeys>
+                <Source>
+                    <Source Name="MainSource">DBLuGrid.dpk</Source>
+                </Source>
+                <Excluded_Packages>
+                    <Excluded_Packages Name="C:\Documents and Settings\All Users\Documents\RAD Studio\9.0\BPL\Win32\dcl_KGSoft160.bpl">KG-Soft: Visuelle Komponen</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Documents and Settings\All Users\Documents\RAD Studio\9.0\Bpl\win32\UserMgnt160.bpl">KG-Soft Benutzer-/Rechteverwaltung</Excluded_Packages>
+                    <Excluded_Packages Name="C:\Documents and Settings\All Users\Documents\RAD Studio\9.0\Bpl\Win64\CmpAboutBox160.bpl">KG-Soft Basis Units</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcboffice2k160.bpl">Embarcadero C++Builder-Package für Office 2000-Server</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\bcbofficexp160.bpl">Embarcadero C++Builder-Package für Office XP-Server</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dcloffice2k160.bpl">Microsoft Office 2000 Beispiele für gekapselte Komponenten für Automatisierungsserver</Excluded_Packages>
+                    <Excluded_Packages Name="$(BDSBIN)\dclofficexp160.bpl">Microsoft Office XP Beispiele für gekapselte Komponenten für Automation Server</Excluded_Packages>
+                </Excluded_Packages>
+            </Delphi.Personality>
+            <ModelSupport>True</ModelSupport>
+            <Platforms>
+                <Platform value="Android">False</Platform>
+                <Platform value="iOSDevice32">False</Platform>
+                <Platform value="iOSSimulator">False</Platform>
+                <Platform value="Win32">True</Platform>
+            </Platforms>
+        </BorlandProject>
+        <ProjectFileVersion>12</ProjectFileVersion>
+    </ProjectExtensions>
+    <Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
+</Project>
