@@ -1,0 +1,150 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="fv2"/>
+    <Type Value="RunAndDesignTime"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="..\source\fv2"/>
+        <OtherUnitFiles Value="..\source\fv2"/>
+        <UnitOutputDirectory Value="..\units\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <IncludeAssertionCode Value="True"/>
+        </SyntaxOptions>
+      </Parsing>
+      <CodeGeneration>
+        <SmartLinkUnit Value="True"/>
+        <RelocatableUnit Value="True"/>
+        <Checks>
+          <IOChecks Value="True"/>
+          <RangeChecks Value="True"/>
+          <OverflowChecks Value="True"/>
+          <StackChecks Value="True"/>
+        </Checks>
+        <VerifyObjMethodCallValidity Value="True"/>
+      </CodeGeneration>
+    </CompilerOptions>
+    <Files Count="26">
+      <Item1>
+        <Filename Value="..\source\Fv2\fv2common.pas"/>
+        <UnitName Value="fv2common"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\source\Fv2\fv2consts.pas"/>
+        <UnitName Value="fv2consts"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\source\Fv2\fv2drivers.pas"/>
+        <UnitName Value="fv2drivers"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\source\Fv2\fv2sysmsg.pas"/>
+        <UnitName Value="fv2sysmsg"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\source\Fv2\fv2views.pas"/>
+        <UnitName Value="fv2views"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\source\Fv2\platform.inc"/>
+        <Type Value="Include"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\source\fv2\go32smsg.inc"/>
+        <Type Value="Include"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\source\fv2\unixsmsg.inc"/>
+        <Type Value="Include"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\source\fv2\w32smsg.inc"/>
+        <Type Value="Include"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\source\Fv2\fv2recthelper.pas"/>
+        <UnitName Value="fv2RectHelper"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\source\Fv2\fv2dialogs.pas"/>
+        <UnitName Value="fv2dialogs"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\source\Fv2\fv2msgbox.pas"/>
+        <UnitName Value="fv2msgbox"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\source\Fv2\fv2validate.pas"/>
+        <UnitName Value="fv2validate"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\source\Fv2\fv2app.pas"/>
+        <UnitName Value="fv2app"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\source\Fv2\fv2menus.pas"/>
+        <UnitName Value="fv2menus"/>
+      </Item15>
+      <Item16>
+        <AddToUsesPkgSection Value="False"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\source\Fv2\fv2editors.pas"/>
+        <UnitName Value="fv2editors"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\source\Fv2\fv2stddlg.pas"/>
+        <UnitName Value="fv2stddlg"/>
+      </Item18>
+      <Item19>
+        <Filename Value="..\source\Fv2\fv2dos.pas"/>
+        <UnitName Value="fv2dos"/>
+      </Item19>
+      <Item20>
+        <Filename Value="..\source\Fv2\fv2forms.pas"/>
+        <UnitName Value="fv2forms"/>
+      </Item20>
+      <Item21>
+        <Filename Value="..\source\Fv2\fv2asciitab.pas"/>
+        <UnitName Value="fv2asciitab"/>
+      </Item21>
+      <Item22>
+        <Filename Value="..\source\Fv2\fv2gadgets.pas"/>
+        <UnitName Value="fv2gadgets"/>
+      </Item22>
+      <Item23>
+        <Filename Value="..\source\Fv2\fv2time.pas"/>
+        <UnitName Value="fv2time"/>
+      </Item23>
+      <Item24>
+        <Filename Value="..\source\Fv2\fv2timeddlg.pas"/>
+        <UnitName Value="fv2timeddlg"/>
+      </Item24>
+      <Item25>
+        <Filename Value="..\source\Fv2\fv2visconsts.pas"/>
+        <UnitName Value="fv2VisConsts"/>
+      </Item25>
+      <Item26>
+        <Filename Value="..\source\Fv2\fv2appext.pas"/>
+        <UnitName Value="fv2appext"/>
+      </Item26>
+    </Files>
+    <LazDoc Paths="..\source\Fv2\FPDoc"/>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="FCL"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fv2"><module name="fv2drivers"><element name="MoveChar"><short>Fills Dest with Char C and Attribut Attr</short><descr>Moves characters into a buffer for use with a view's WriteBuf or
+WriteLine. Dest must be a TDrawBuffer (or an equivalent array of Words).
+The low bytes of the first Count Sw_Words of Dest are set to C, or
+remain unchanged if Ord(C) is zero. The high bytes of the Words are
+set to Attr, or remain unchanged if Attr is zero. </descr>
+      </element><element name="ClearScreen"><short>Clears the current screen</short>
+      </element><element name="InitVideo"><short>Initializes the video manager</short><descr>Initializes the video manager, Saves the current screen mode in
+StartupMode, and switches to the mode indicated by ScreenMode.      </descr>
+      </element><element name="DoneVideo"><short>Terminates the video manager</short><descr>Terminates the video manager by restoring the initial screen mode
+(given by StartupMode), clearing the screen, and restoring the cursor.
+Called automatically by TApplication.Done.   </descr>
+      </element><element name="DetectVideo"><short>Detects the current video mode</short><descr>Detects the current video mode without initializing or otherwise changing the current screen.   </descr>
+      </element><element name="donekeyboard"><short>Restores keyboard to original state</short><descr>Restores keyboard to original state. FV's keyboard routines may not
+be used after a call to this. Read(ln)/write(ln) can be used again.   </descr>
+      </element><element name="initkeyboard"><short>Initializes the keyboard</short><descr>Initializes the keyboard. Before it is called read(ln)/write(ln)
+are functional, after it is called FV's keyboard routines are
+functional.                                                       </descr>
+      </element><element name="InitSysError"><short>Initialize the Error-Handling</short><descr>Error handling is not yet implemented so this simply sets
+SysErrActive=True (ie it lies) and exits.   </descr>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

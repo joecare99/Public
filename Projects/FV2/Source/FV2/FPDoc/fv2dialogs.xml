@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fv2"><module name="fv2dialogs"><element name="TInputLine"><short>TInputLine (FV) Creates a user-control for entering data.</short>
+      </element><topic name="1"/><element name="TInputLine.MaxLen"><short>Max input length</short>
+      </element><element name="TInputLine.CurPos"><short>Cursor position</short>
+      </element><element name="TInputLine.FirstPos"><short>First position</short>
+      </element><element name="TInputLine.SelStart"><short>Selected start</short>
+      </element><element name="TInputLine.SelEnd"><short>Selected end</short>
+      </element><element name="TInputLine.Data"><short>Input line data</short>
+      </element><element name="TInputLine.Validator"><short>Validator of view</short>
+      </element><element name="TButton"><short>TButton (FV) creates a Button-control which can be pressed by the user</short>
+      </element><element name="TButton.AmDefault"><short>If default button</short>
+      </element><element name="TButton.Flags"><short>Button flags</short>
+      </element><element name="TButton.Command"><short>Button command </short>
+      </element><element name="TButton.Title"><short>Button title</short>
+      </element><element name="TStaticText"><short>TStaticText (FV) is a visual control that displays a static text.</short>
+      </element><element name="TStaticText.Create" link="TStaticText"><short>TStaticText (FV) creates a visual control that displays a static text.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fv2"><module name="fv2views"><topic name="fv2view"/><topic name="fv2views"/><element name="sfVisible"><descr>View visible mask</descr><short>View visible mask</short>
+      </element><element name="sfCursorVis"><short>Cursor visible</short>
+      </element><element name="sfCursorIns"><short>Cursor insert mode</short>
+      </element>
+    <element name="NewMessage"><descr>NewMessage sets up an event record including the new fields and calls Receiver.HandleEvent to handle the event. Message returns nil if Receiver is nil, or if the event is not handled successfully.  </descr><short>Creates a new Message</short>
+      </element><element name="GetVideoBuffer"><short>returns a Pointer to the Actual Videobuffer  </short>
+      </element>
+    <element name="TView"><short>TView (FV) is the base-class for all visual components</short>
+      </element>
+    <element name="TView.MakeGlobal"><short>MakeGlobal calculates the global coordinates for given local coordiantes</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

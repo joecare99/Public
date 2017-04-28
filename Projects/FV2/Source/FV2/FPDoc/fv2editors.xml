@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="prj_Testfv2App"><module name="fv2editors"><element name="TabStopDialog"><short>This is a local function that brings up a dialog box that allows the user to set their own tab stops.</short>
+      </element><element name="TEditor.CurPtr"><short>Pointer to actual ...</short>
+      </element><element name="TEditor.GapLen"><short>Length of the gap ...</short>
+      </element><element name="TEditor.BufSize"><short>Size of the Buffer</short>
+      </element><element name="TEditor.CurPos"><short>Actual Cursor-Positition (1,1) is the start.</short>
+      </element><element name="TEditor.Center_Text"><short>This procedure will center the current line of text.</short><descr>This procedure will center the current line of text. 
+Centering is based on the current Right_Margin. 
+If the Line_Length exceeds the Right_Margin, or the
+line is just a blank line, we exit and do nothing. </descr>
+      </element><element name="TEditor.Center_Text.Spaces"><short>Array to hold spaces we'll insert.</short>
+      </element><element name="TEditor.LineEnd"><short>Get the End Of Line-Position</short>
+      </element><element name="TEditor.CharPos"><short>Gets the exact Position in the Line Including Tabs</short>
+      </element><element name="TEditor.CharPtr"><short>Get Line-offset for a given Position (including Tabs)</short>
+      </element>
+    <element name="TEditor.Update_Place_Markers"><short>This procedure updates the position of the place markers as the user inserts and deletes text in the document. </short>
+      </element><element name="TEditor.Tab_Key"><short>This function determines if we are in overstrike or insert mode, and then moves the cursor if overstrike, or adds spaces if insert.</short>
+      </element><element name="TEditor.Set_Tabs"><short>This procedure will bring up a dialog box that allows the user to set tab stops. </short>
+      </element><element name="EdNil"><short>EditorDialog-dummy-parameter</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
