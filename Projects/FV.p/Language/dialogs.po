@@ -1,0 +1,55 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: dialogs.slcancel
+msgid "Cancel"
+msgstr ""
+
+#: dialogs.slclose
+msgid "~C~lose"
+msgstr ""
+
+#: dialogs.slcloseall
+msgid "Cl~o~se all"
+msgstr ""
+
+#: dialogs.slhelp
+msgid "~H~elp"
+msgstr ""
+
+#: dialogs.slname
+msgid "~N~ame"
+msgstr ""
+
+#: dialogs.slno
+msgid "~N~o"
+msgstr ""
+
+#: dialogs.slok
+msgid "O~k~"
+msgstr ""
+
+#: dialogs.slopen
+msgid "~O~pen"
+msgstr ""
+
+#: dialogs.slsave
+msgid "~S~ave"
+msgstr ""
+
+#: dialogs.slsaveall
+msgid "Save a~l~l"
+msgstr ""
+
+#: dialogs.slsaveas
+msgid "S~a~ve as..."
+msgstr ""
+
+#: dialogs.slsavefileas
+msgid "~S~ave file as"
+msgstr ""
+
+#: dialogs.slyes
+msgid "~Y~es"
+msgstr ""
+

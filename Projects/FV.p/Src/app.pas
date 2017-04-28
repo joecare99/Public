@@ -64,8 +64,10 @@ USES
      {$ENDIF}
    {$ENDIF}
 
- //  Dos,
- //  Video,
+   {$IFnDEF PPC_DELPHI}
+   Dos,
+   Video,
+   {$ENDIF}
    FVCommon, {Memory,}                                { GFV standard units }
    Objects, Drivers, Views, Menus, HistList, Dialogs,
    msgbox, fvconsts;

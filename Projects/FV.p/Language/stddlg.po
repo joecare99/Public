@@ -1,0 +1,129 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: stddlg.schangedirectory
+msgid "Change Directory"
+msgstr ""
+
+#: stddlg.sdeletefile
+msgid ""
+"Delete file?\n"
+"\n"
+"#3%s\n"
+msgstr ""
+
+#: stddlg.sdirectory
+msgid "Directory"
+msgstr ""
+
+#: stddlg.sdrives
+msgid "Drives"
+msgstr ""
+
+#: stddlg.sinvaliddirectory
+msgid "Invalid directory."
+msgstr ""
+
+#: stddlg.sinvaliddriveordir
+msgid "Invalid drive or directory."
+msgstr ""
+
+#: stddlg.sinvalidfilename
+msgid "Invalid file name."
+msgstr ""
+
+#: stddlg.slchdir
+msgid "~C~hdir"
+msgstr ""
+
+#: stddlg.slclear
+msgid "C~l~ear"
+msgstr ""
+
+#: stddlg.sldirectoryname
+msgid "Directory ~n~ame"
+msgstr ""
+
+#: stddlg.sldirectorytree
+msgid "Directory ~t~ree"
+msgstr ""
+
+#: stddlg.slfiles
+msgid "~F~iles"
+msgstr ""
+
+#: stddlg.slreplace
+msgid "~R~eplace"
+msgstr ""
+
+#: stddlg.slrevert
+msgid "~R~evert"
+msgstr ""
+
+#: stddlg.smapr
+msgid "Apr"
+msgstr ""
+
+#: stddlg.smaug
+msgid "Aug"
+msgstr ""
+
+#: stddlg.smdec
+msgid "Dec"
+msgstr ""
+
+#: stddlg.smfeb
+msgid "Feb"
+msgstr ""
+
+#: stddlg.smjan
+msgid "Jan"
+msgstr ""
+
+#: stddlg.smjul
+msgid "Jul"
+msgstr ""
+
+#: stddlg.smjun
+msgid "Jun"
+msgstr ""
+
+#: stddlg.smmar
+msgid "Mar"
+msgstr ""
+
+#: stddlg.smmay
+msgid "May"
+msgstr ""
+
+#: stddlg.smnov
+msgid "Nov"
+msgstr ""
+
+#: stddlg.smoct
+msgid "Oct"
+msgstr ""
+
+#: stddlg.smsep
+msgid "Sep"
+msgstr ""
+
+#: stddlg.sopen
+msgid "Open"
+msgstr ""
+
+#: stddlg.sreplacefile
+msgid ""
+"Replace file?\n"
+"\n"
+"#3%s\n"
+msgstr ""
+
+#: stddlg.ssaveas
+msgid "Save As"
+msgstr ""
+
+#: stddlg.stoomanyfiles
+msgid "Too many files."
+msgstr ""
+

@@ -1,0 +1,142 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: editors.sclipboard
+msgid "Clipboard"
+msgstr ""
+
+#: editors.sfilecreateerror
+msgid "Error creating file %s"
+msgstr ""
+
+#: editors.sfilereaderror
+msgid "Error reading file %s"
+msgstr ""
+
+#: editors.sfileuntitled
+msgid "Save untitled file?"
+msgstr ""
+
+#: editors.sfilewriteerror
+msgid "Error writing to file %s"
+msgstr ""
+
+#: editors.sfind
+msgid "Find"
+msgstr ""
+
+#: editors.sjumpto
+msgid "Jump To"
+msgstr ""
+
+#: editors.slcasesensitive
+msgid "~C~ase sensitive"
+msgstr ""
+
+#: editors.slcurrentline
+msgid "~C~urrent line"
+msgstr ""
+
+#: editors.slentiredocument
+msgid "~E~ntire document"
+msgstr ""
+
+#: editors.sllinenumber
+msgid "~L~ine number"
+msgstr ""
+
+#: editors.slnewtext
+msgid "~N~ew text"
+msgstr ""
+
+#: editors.slpromptonreplace
+msgid "~P~rompt on replace"
+msgstr ""
+
+#: editors.slreplace
+msgid "~R~eplace"
+msgstr ""
+
+#: editors.slreplaceall
+msgid "~R~eplace all"
+msgstr ""
+
+#: editors.sltexttofind
+msgid "~T~ext to find"
+msgstr ""
+
+#: editors.slwholewordsonly
+msgid "~W~hole words only"
+msgstr ""
+
+#: editors.smodified
+msgid ""
+"#3%s\n"
+"\n"
+"#3has been modified.  Save?\n"
+msgstr ""
+
+#: editors.soutofmemory
+msgid "Not enough memory for this operation."
+msgstr ""
+
+#: editors.spastenotpossible
+msgid "Wordwrap on:  Paste not possible in current margins when at end of line."
+msgstr ""
+
+#: editors.sreformatdocument
+msgid "Reformat Document"
+msgstr ""
+
+#: editors.sreformatnotpossible
+msgid "Paragraph reformat not possible while trying to wrap current line with current margins."
+msgstr ""
+
+#: editors.sreformattingthedocument
+msgid "Reformatting the document:"
+msgstr ""
+
+#: editors.sreplacenotpossible
+msgid "Wordwrap on:  Replace not possible in current margins when at end of line."
+msgstr ""
+
+#: editors.sreplacethisoccurence
+msgid "Replace this occurrence?"
+msgstr ""
+
+#: editors.srightmargin
+msgid "Right Margin"
+msgstr ""
+
+#: editors.ssearchstringnotfound
+msgid "Search string not found."
+msgstr ""
+
+#: editors.sselectwheretobegin
+msgid "Please select where to begin."
+msgstr ""
+
+#: editors.ssetting
+msgid "Setting:"
+msgstr ""
+
+#: editors.stabsettings
+msgid "Tab Settings"
+msgstr ""
+
+#: editors.sunknowndialog
+msgid "Unknown dialog requested!"
+msgstr ""
+
+#: editors.suntitled
+msgid "Untitled"
+msgstr ""
+
+#: editors.swordwrapnotpossible
+msgid "Wordwrap on:  Wordwrap not possible in current margins with continuous line."
+msgstr ""
+
+#: editors.swordwrapoff
+msgid "You must turn on wordwrap before you can reformat."
+msgstr ""
+

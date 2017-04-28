@@ -1,0 +1,19 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: msgbox.sconfirm
+msgid "Confirm"
+msgstr ""
+
+#: msgbox.serror
+msgid "Error"
+msgstr ""
+
+#: msgbox.sinformation
+msgid "Information"
+msgstr ""
+
+#: msgbox.swarning
+msgid "Warning"
+msgstr ""
+

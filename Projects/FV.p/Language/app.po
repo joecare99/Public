@@ -1,0 +1,31 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: app.rschangedir
+msgid "~C~hange dir..."
+msgstr ""
+
+#: app.rsexit
+msgid "E~x~it"
+msgstr ""
+
+#: app.rsnew
+msgid "~N~ew"
+msgstr ""
+
+#: app.rsopen
+msgid "~O~pen..."
+msgstr ""
+
+#: app.rsosshell
+msgid "OS shell"
+msgstr ""
+
+#: app.stypeexitonreturn
+msgid "Type EXIT to return..."
+msgstr ""
+
+#: app.svideofailed
+msgid "Video initialization failed."
+msgstr ""
+
