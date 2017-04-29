@@ -1,15 +1,26 @@
 ﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 		<PropertyGroup>
-			<ProjectGuid>{d0a9fb9b-d169-4460-be07-e12b715fa2c2}</ProjectGuid>
+			<ProjectGuid>{645BD81B-C9E8-4146-85D1-9B1235C1FD77}</ProjectGuid>
 			<MainSource>CmpSendRecCli.dpk</MainSource>
-			<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-			<Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
-			<DCC_DependencyCheckOutputName>..\..\..\..\..\..\..\RAD Studio\5.0\BPL\CmpSendRecCli.bpl</DCC_DependencyCheckOutputName>
-			<ProjectVersion>12.0</ProjectVersion>
+			<Base>True</Base>
 			<Config Condition="'$(Config)'==''">Debug</Config>
+			<TargetedPlatforms>1</TargetedPlatforms>
+			<AppType>Package</AppType>
+			<FrameworkType>VCL</FrameworkType>
+			<ProjectVersion>13.4</ProjectVersion>
+			<Platform Condition="'$(Platform)'==''">Win32</Platform>
 		</PropertyGroup>
-		<PropertyGroup Condition="'$(Config)'=='Basis' or '$(Base)'!=''">
+		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+			<Base_Win64>true</Base_Win64>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+			<Base_Win32>true</Base_Win32>
+			<CfgParent>Base</CfgParent>
 			<Base>true</Base>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
@@ -22,73 +33,76 @@
 			<CfgParent>Base</CfgParent>
 			<Base>true</Base>
 		</PropertyGroup>
+		<Import Condition="'$(Base)'!='' And Exists('default.optset')" Project="default.optset"/>
 		<PropertyGroup Condition="'$(Base)'!=''">
-			<DCC_DcuOutput>$(BDSCOMMONDIR)\BPL\Units</DCC_DcuOutput>
-			<DCC_UnitSearchPath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL\Units;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
-			<DCC_BplOutput>$(BDSCOMMONDIR)\BPL</DCC_BplOutput>
-			<DCC_DcpOutput>$(BDSCOMMONDIR)\DCP</DCC_DcpOutput>
 			<DCC_ImageBase>00400000</DCC_ImageBase>
-			<DesignOnlyPackage>false</DesignOnlyPackage>
-			<DCC_Description>KG-Soft Send-Rec-Client mit Auftragsfachverw.</DCC_Description>
-			<DCC_DependencyCheckOutputName>D:\Dokumente und Einstellungen\All Users\Dokumente\RAD Studio\6.0\BPL\CmpSendRecCli120.bpl</DCC_DependencyCheckOutputName>
-			<DllSuffix>120</DllSuffix>
-			<DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
-			<GenDll>true</GenDll>
-			<DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
 			<GenPackage>true</GenPackage>
+			<DCC_Description>JC-Soft Send-Rec-Client mit Auftragsfachverw. Unit</DCC_Description>
+			<DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
+			<DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
+			<VerInfo_Locale>1031</VerInfo_Locale>
+			<DCC_N>false</DCC_N>
+			<DCC_S>false</DCC_S>
+			<GenDll>true</GenDll>
+			<DCC_E>false</DCC_E>
+			<DCC_F>false</DCC_F>
+			<DCC_K>false</DCC_K>
+			<CfgDependentOn>default.optset</CfgDependentOn>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base_Win64)'!=''">
+			<Icon_MainIcon>CmpSendRecCli_Icon.ico</Icon_MainIcon>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base_Win32)'!=''">
+			<Icon_MainIcon>CmpSendRecCli_Icon.ico</Icon_MainIcon>
+			<DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+			<VerInfo_Locale>1033</VerInfo_Locale>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''">
-			<Version>7.0</Version>
-			<DCC_DebugInformation>False</DCC_DebugInformation>
-			<DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+			<DCC_DebugInformation>false</DCC_DebugInformation>
 			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
-			<DCC_ExeOutput>..\bin</DCC_ExeOutput>
-			<DCC_ObjOutput>..\..\bin\units</DCC_ObjOutput>
-			<DCC_HppOutput>..\..\bin\units</DCC_HppOutput>
-			<DCC_BplOutput>$(BDSCOMMONDIR)\BPL</DCC_BplOutput>
-			<DCC_DcpOutput>$(BDSCOMMONDIR)\DCP</DCC_DcpOutput>
 			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">
-			<Version>7.0</Version>
-			<DCC_ExeOutput>..\bin</DCC_ExeOutput>
-			<DCC_ObjOutput>$(BDSCOMMONDIR)\BPL\Units</DCC_ObjOutput>
-			<DCC_HppOutput>$(BDSCOMMONDIR)\BPL\Units</DCC_HppOutput>
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+			<DCC_Optimize>false</DCC_Optimize>
+			<DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
 		</PropertyGroup>
 		<ItemGroup>
-			<DelphiCompile Include="CmpSendRecCli.dpk">
+			<DelphiCompile Include="$(MainSource)">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
 			<DCCReference Include="rtl.dcp"/>
 			<DCCReference Include="vcl.dcp"/>
 			<DCCReference Include="untTCP_Global.dcp"/>
 			<DCCReference Include="UntConfig.dcp"/>
-			<DCCReference Include="..\..\Simu3\Fra_SendRecCli.pas"/>
-			<BuildConfiguration Include="Basis">
-				<Key>Base</Key>
-			</BuildConfiguration>
+			<DCCReference Include="..\CSource\Simu3\Fra_SendRecCli.pas"/>
 			<BuildConfiguration Include="Debug">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Base">
+				<Key>Base</Key>
+				<DependentOn>default.optset</DependentOn>
 			</BuildConfiguration>
 			<BuildConfiguration Include="Release">
 				<Key>Cfg_1</Key>
 				<CfgParent>Base</CfgParent>
 			</BuildConfiguration>
 		</ItemGroup>
-		<Import Project="$(BDS)\Bin\CodeGear.Delphi.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')"/>
 		<ProjectExtensions>
 			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
 			<Borland.ProjectType>Package</Borland.ProjectType>
 			<BorlandProject>
 				<Delphi.Personality>
-					<Parameters>
-						<Parameters Name="UseLauncher">False</Parameters>
-						<Parameters Name="LoadAllSymbols">True</Parameters>
-						<Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
-					</Parameters>
+					<Source>
+						<Source Name="MainSource">CmpSendRecCli.dpk</Source>
+					</Source>
 					<VersionInfo>
-						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">False</VersionInfo>
 						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
 						<VersionInfo Name="MajorVer">1</VersionInfo>
 						<VersionInfo Name="MinorVer">0</VersionInfo>
@@ -99,7 +113,7 @@
 						<VersionInfo Name="Special">False</VersionInfo>
 						<VersionInfo Name="Private">False</VersionInfo>
 						<VersionInfo Name="DLL">False</VersionInfo>
-						<VersionInfo Name="Locale">1033</VersionInfo>
+						<VersionInfo Name="Locale">1031</VersionInfo>
 						<VersionInfo Name="CodePage">1252</VersionInfo>
 					</VersionInfo>
 					<VersionInfoKeys>
@@ -114,15 +128,14 @@
 						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
 						<VersionInfoKeys Name="Comments"/>
 					</VersionInfoKeys>
-					<Excluded_Packages>
-						<Excluded_Packages Name="d:\programme\borland\bds\4.0\LIB\KG-Soft\UserMgnt.bpl">KG-Soft Benutzer-/Rechteverwaltung</Excluded_Packages>
-						<Excluded_Packages Name="d:\programme\borland\bds\4.0\lib\KG-Soft\CmpDBConfig.bpl">KG-Soft Datenbank gesttzte Konfiguration</Excluded_Packages>
-					</Excluded_Packages>
-					<Source>
-						<Source Name="MainSource">CmpSendRecCli.dpk</Source>
-					</Source>
 				</Delphi.Personality>
+				<Platforms>
+					<Platform value="Win64">False</Platform>
+					<Platform value="Win32">True</Platform>
+				</Platforms>
 			</BorlandProject>
 			<ProjectFileVersion>12</ProjectFileVersion>
 		</ProjectExtensions>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
 	</Project>

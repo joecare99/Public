@@ -5,28 +5,27 @@ package UserMgnt;
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO OFF}
+{$DEBUGINFO ON}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
-{$LOCALSYMBOLS OFF}
+{$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION ON}
+{$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
-{$REFERENCEINFO OFF}
+{$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES OFF}
+{$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE RELEASE}
+{$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'KG-Soft Basis Units'}
-{$LIBSUFFIX '160'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 
@@ -39,14 +38,13 @@ requires
   UntConfig,
   vcl,
   vclactnband,
-  vclx,
-  adortl;
+  vclx;
 
 contains
-  Frm_Userconf in '..\Frm_Userconf.pas',
-  frm_Security in '..\frm_Security.pas',
-  Frm_login in '..\Frm_login.pas',
-  Unt_UserMgntBase in '..\Unt_UserMgntBase.pas',
-  Unt_UserRechte in '..\Unt_UserRechte.pas';
+  Frm_Userconf in '..\CSource\UserMgnt\Frm_Userconf.pas',
+  frm_Security in '..\CSource\UserMgnt\frm_Security.pas',
+  Frm_login in '..\CSource\UserMgnt\Frm_login.pas',
+  Unt_UserMgntBase in '..\CSource\UserMgnt\Unt_UserMgntBase.pas',
+  Unt_UserRechte in '..\CSource\UserMgnt\Unt_UserRechte.pas';
 
 end.

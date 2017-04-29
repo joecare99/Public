@@ -1,32 +1,32 @@
 package CmpSelectVars;
 
 {$R *.res}
+{$R *.otares}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO OFF}
+{$DEBUGINFO ON}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
-{$LOCALSYMBOLS OFF}
+{$LOCALSYMBOLS ON}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION ON}
+{$OPTIMIZATION OFF}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
-{$REFERENCEINFO OFF}
+{$REFERENCEINFO ON}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES OFF}
+{$STACKFRAMES ON}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE RELEASE}
+{$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
-{$DESCRIPTION 'KG-Soft Select Variable-Frame'}
-{$LIBSUFFIX '160'}
+{$DESCRIPTION 'JC-Soft Select Variable-Frame Unit'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 
@@ -34,10 +34,9 @@ requires
   rtl,
   vcl,
   dbrtl,
-  adortl,
   BaseUnits;
 
 contains
-  Fra_SelectVars in '..\Fra_SelectVars.pas';
+  Fra_SelectVars in '..\CSource\SelectVars\Fra_SelectVars.pas';
 
 end.

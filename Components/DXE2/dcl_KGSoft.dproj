@@ -1,18 +1,14 @@
 ﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
 		<PropertyGroup>
-			<ProjectGuid>{bf38c75a-1252-4ab4-9b57-8a2a00c19950}</ProjectGuid>
+			<ProjectGuid>{DF7678A5-03F2-4C90-937C-A2C1AE68D7F0}</ProjectGuid>
 			<MainSource>dcl_KGSoft.dpk</MainSource>
-			<Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
-			<DCC_DependencyCheckOutputName>..\..\..\..\..\..\..\RAD Studio\5.0\BPL\dcl_KGSoft100.bpl</DCC_DependencyCheckOutputName>
-			<ProjectVersion>13.4</ProjectVersion>
-			<Config Condition="'$(Config)'==''">Release</Config>
-			<Basis>True</Basis>
+			<Base>True</Base>
+			<Config Condition="'$(Config)'==''">Debug</Config>
+			<TargetedPlatforms>1</TargetedPlatforms>
 			<AppType>Package</AppType>
 			<FrameworkType>None</FrameworkType>
-			<Base>True</Base>
+			<ProjectVersion>13.4</ProjectVersion>
 			<Platform Condition="'$(Platform)'==''">Win32</Platform>
-			<TargetedPlatforms>3</TargetedPlatforms>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
 			<Base>true</Base>
@@ -32,84 +28,49 @@
 			<CfgParent>Base</CfgParent>
 			<Base>true</Base>
 		</PropertyGroup>
-		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
-			<Cfg_1_Win32>true</Cfg_1_Win32>
-			<CfgParent>Cfg_1</CfgParent>
-			<Cfg_1>true</Cfg_1>
-			<Base>true</Base>
-		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
 			<Cfg_2>true</Cfg_2>
 			<CfgParent>Base</CfgParent>
 			<Base>true</Base>
 		</PropertyGroup>
-		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_2)'=='true') or '$(Cfg_2_Win32)'!=''">
-			<Cfg_2_Win32>true</Cfg_2_Win32>
-			<CfgParent>Cfg_2</CfgParent>
-			<Cfg_2>true</Cfg_2>
-			<Base>true</Base>
-		</PropertyGroup>
 		<Import Condition="'$(Base)'!='' And Exists('default.optset')" Project="default.optset"/>
 		<PropertyGroup Condition="'$(Base)'!=''">
-			<DCC_UsePackage>rtl;$(DCC_UsePackage)</DCC_UsePackage>
 			<DesignOnlyPackage>true</DesignOnlyPackage>
-			<VerInfo_Build>98</VerInfo_Build>
-			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.98;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-			<VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
-			<DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;System.Win;$(DCC_Namespace)</DCC_Namespace>
-			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
-			<VerInfo_Locale>1031</VerInfo_Locale>
-			<DCC_DcuOutput>$(BDSCOMMONDIR)\BPL\$(platform)\UNITS</DCC_DcuOutput>
-			<DCC_BplOutput>$(BDSCOMMONDIR)\BPL\$(platform)</DCC_BplOutput>
-			<DCC_UnitSearchPath>$(BDSCOMMONDIR)\BPL\$(platform);$(BDSCOMMONDIR)\DCP\$(platform);$(BDSCOMMONDIR)\BPL\$(platform)\units;..\..\include;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
-			<DCC_DcpOutput>$(BDSCOMMONDIR)\DCP\$(platform)</DCC_DcpOutput>
-			<DCC_DependencyCheckOutputName>D:\Dokumente und Einstellungen\All Users\Dokumente\RAD Studio\6.0\BPL\BaseUnits120.bpl</DCC_DependencyCheckOutputName>
-			<DCC_ImageBase>00400000</DCC_ImageBase>
-			<DCC_Description>KG-Soft Visuelle Komponenten</DCC_Description>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
 			<GenPackage>true</GenPackage>
+			<DCC_ImageBase>00400000</DCC_ImageBase>
+			<DCC_Description>JC-Soft Visuelle Komponenten</DCC_Description>
+			<DCC_Namespace>System;Xml;Data;Datasnap;Web;Soap;$(DCC_Namespace)</DCC_Namespace>
 			<DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
+			<DCC_N>false</DCC_N>
+			<DCC_S>false</DCC_S>
 			<GenDll>true</GenDll>
-			<DllSuffix>160</DllSuffix>
-			<DCC_OutputDRCFile>true</DCC_OutputDRCFile>
+			<DCC_K>false</DCC_K>
+			<VerInfo_Locale>1031</VerInfo_Locale>
+			<DCC_E>false</DCC_E>
+			<DCC_F>false</DCC_F>
 			<CfgDependentOn>default.optset</CfgDependentOn>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base_Win64)'!=''">
-			<DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
-			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-			<VerInfo_Locale>1033</VerInfo_Locale>
-			<DCC_UsePackage>vclactnband;vclimg;VclSmp;vcldb;vcl;$(DCC_UsePackage)</DCC_UsePackage>
-			<Icon_MainIcon>dcl_KGSoft_Icon.ico</Icon_MainIcon>
+			<Icon_MainIcon>dcl_KGSoft_Icon1.ico</Icon_MainIcon>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base_Win32)'!=''">
-			<DCC_UsePackage>vclactnband;vclimg;bdertl;VclSmp;vcldbx;vcldb;DBHLLookUpPanel;DBLuGrid;DBHlPanel;UserMgnt;UntConfig;CmpSelectVars;CmpAboutBox;CmpGLScene;CmpDBConfig;vcl;adortl;$(DCC_UsePackage)</DCC_UsePackage>
-			<Icon_MainIcon>dcl_KGSoft_Icon.ico</Icon_MainIcon>
-			<DCC_Namespace>Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+			<Icon_MainIcon>dcl_KGSoft_Icon1.ico</Icon_MainIcon>
+			<DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
 			<VerInfo_Locale>1033</VerInfo_Locale>
 			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''">
-			<Version>7.0</Version>
-			<DCC_DebugInformation>False</DCC_DebugInformation>
-			<DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+			<DCC_DebugInformation>false</DCC_DebugInformation>
 			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
 			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
 		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
-			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-			<VerInfo_Locale>1033</VerInfo_Locale>
-		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">
-			<Version>7.0</Version>
-			<DCC_ObjOutput>$(BDSCOMMONDIR)\BPL\Units</DCC_ObjOutput>
-			<DCC_HppOutput>$(BDSCOMMONDIR)\BPL\Units</DCC_HppOutput>
-			<DCC_ResourcePath>$(BDSCOMMONDIR)\DCP;$(DCC_ResourcePath)</DCC_ResourcePath>
-			<DCC_ObjPath>$(BDSCOMMONDIR)\DCP;$(DCC_ObjPath)</DCC_ObjPath>
-			<DCC_IncludePath>$(BDSCOMMONDIR)\DCP;$(DCC_IncludePath)</DCC_IncludePath>
-		</PropertyGroup>
-		<PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
-			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-			<DCC_Description>KG-Soft </DCC_Description>
-			<VerInfo_Locale>1033</VerInfo_Locale>
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+			<DCC_Optimize>false</DCC_Optimize>
+			<DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
 		</PropertyGroup>
 		<ItemGroup>
 			<DelphiCompile Include="$(MainSource)">
@@ -131,7 +92,6 @@
 			<DCCReference Include="DBHLLookUpPanel.dcp"/>
 			<DCCReference Include="vclimg.dcp"/>
 			<DCCReference Include="..\Unt_DCL.pas"/>
-			<None Include="ModelSupport_dcl_KGSoft\default.txaPackage"/>
 			<BuildConfiguration Include="Debug">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>
@@ -145,20 +105,21 @@
 				<CfgParent>Base</CfgParent>
 			</BuildConfiguration>
 		</ItemGroup>
-		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
 		<ProjectExtensions>
 			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
 			<Borland.ProjectType>Package</Borland.ProjectType>
 			<BorlandProject>
 				<Delphi.Personality>
-					<Parameters/>
+					<Source>
+						<Source Name="MainSource">dcl_KGSoft.dpk</Source>
+					</Source>
 					<VersionInfo>
-						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
-						<VersionInfo Name="AutoIncBuild">True</VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">False</VersionInfo>
+						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
 						<VersionInfo Name="MajorVer">1</VersionInfo>
 						<VersionInfo Name="MinorVer">0</VersionInfo>
 						<VersionInfo Name="Release">0</VersionInfo>
-						<VersionInfo Name="Build">41</VersionInfo>
+						<VersionInfo Name="Build">0</VersionInfo>
 						<VersionInfo Name="Debug">False</VersionInfo>
 						<VersionInfo Name="PreRelease">False</VersionInfo>
 						<VersionInfo Name="Special">False</VersionInfo>
@@ -170,7 +131,7 @@
 					<VersionInfoKeys>
 						<VersionInfoKeys Name="CompanyName"/>
 						<VersionInfoKeys Name="FileDescription"/>
-						<VersionInfoKeys Name="FileVersion">1.0.0.41</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
 						<VersionInfoKeys Name="InternalName"/>
 						<VersionInfoKeys Name="LegalCopyright"/>
 						<VersionInfoKeys Name="LegalTrademarks"/>
@@ -179,27 +140,15 @@
 						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
 						<VersionInfoKeys Name="Comments"/>
 					</VersionInfoKeys>
-					<Source>
-						<Source Name="MainSource">dcl_KGSoft.dpk</Source>
-					</Source>
-					<Excluded_Packages>
-						<Excluded_Packages Name="C:\Documents and Settings\All Users\Documents\RAD Studio\9.0\BPL\Win32\dcl_KGSoft160.bpl">KG-Soft: Visuelle Komponen</Excluded_Packages>
-						<Excluded_Packages Name="C:\Documents and Settings\All Users\Documents\RAD Studio\9.0\Bpl\win32\UserMgnt160.bpl">KG-Soft Basis Units</Excluded_Packages>
-						<Excluded_Packages Name="C:\Documents and Settings\All Users\Documents\RAD Studio\9.0\Bpl\Win64\CmpAboutBox160.bpl">KG-Soft Basis Units</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\bcboffice2k160.bpl">Embarcadero C++Builder-Package für Office 2000-Server</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\bcbofficexp160.bpl">Embarcadero C++Builder-Package für Office XP-Server</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k160.bpl">Microsoft Office 2000 Beispiele für gekapselte Komponenten für Automatisierungsserver</Excluded_Packages>
-						<Excluded_Packages Name="$(BDSBIN)\dclofficexp160.bpl">Microsoft Office XP Beispiele für gekapselte Komponenten für Automation Server</Excluded_Packages>
-					</Excluded_Packages>
 				</Delphi.Personality>
-				<ModelSupport>True</ModelSupport>
 				<Platforms>
-					<Platform value="Win64">True</Platform>
+					<Platform value="Win64">False</Platform>
 					<Platform value="OSX32">False</Platform>
 					<Platform value="Win32">True</Platform>
 				</Platforms>
 			</BorlandProject>
 			<ProjectFileVersion>12</ProjectFileVersion>
 		</ProjectExtensions>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
 		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
 	</Project>
