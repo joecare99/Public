@@ -1,8 +1,7 @@
 package dcl_KGSoft;
 
 {$R *.res}
-{$R *.otares}
-{$R '..\unt_dcl.res'}
+{$R '..\ressourcen\unt_dcl.res'}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
@@ -28,6 +27,7 @@ package dcl_KGSoft;
 {$DEFINE DEBUG}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'JC-Soft Visuelle Komponenten'}
+{$LIBSUFFIX '160'}
 {$DESIGNONLY}
 {$IMPLICITBUILD OFF}
 
@@ -48,6 +48,6 @@ requires
   vclimg;
 
 contains
-  Unt_DCL in '..\Unt_DCL.pas';
+  Unt_DCL in '..\Source\Unt_DCL.pas';
 
 end.

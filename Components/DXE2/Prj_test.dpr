@@ -2,8 +2,9 @@ program Prj_test;
 
 uses
   Forms,
+  unt_CDate in 'c:\unt_CDate.pas',
   Frm_test in '..\Test\Frm_test.pas' {Form1},
-  Unt_FileProcs in '..\Unt_FileProcs.pas';
+  Unt_FileProcs in '..\source\Unt_FileProcs.pas';
 
 {$R *.res}
 

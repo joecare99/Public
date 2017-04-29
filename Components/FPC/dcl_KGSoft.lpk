@@ -10,7 +10,7 @@
       <SearchPaths>
         <IncludeFiles Value="..\..\include"/>
         <Libraries Value="$(PkgOutDir)"/>
-        <OtherUnitFiles Value="..\..\Components"/>
+        <OtherUnitFiles Value="..\Source"/>
         <UnitOutputDirectory Value="..\..\bin\lib\$NameOnly($(PkgName))\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -27,9 +27,8 @@
     <Version Major="1" Release="1"/>
     <Files Count="1">
       <Item1>
-        <Filename Value="../Unt_DCL.pas"/>
+        <Filename Value="../Source/Unt_DCL.pas"/>
         <HasRegisterProc Value="True"/>
-        <AddToUsesPkgSection Value="False"/>
         <UnitName Value="Unt_DCL"/>
       </Item1>
     </Files>

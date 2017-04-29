@@ -1,32 +1,32 @@
 package kgTCPClient_id10;
 
 {$R *.res}
-{$R *.otares}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
-{$DEBUGINFO ON}
+{$DEBUGINFO OFF}
 {$EXTENDEDSYNTAX ON}
 {$IMPORTEDDATA ON}
 {$IOCHECKS ON}
-{$LOCALSYMBOLS ON}
+{$LOCALSYMBOLS OFF}
 {$LONGSTRINGS ON}
 {$OPENSTRINGS ON}
-{$OPTIMIZATION OFF}
+{$OPTIMIZATION ON}
 {$OVERFLOWCHECKS OFF}
 {$RANGECHECKS OFF}
-{$REFERENCEINFO ON}
+{$REFERENCEINFO OFF}
 {$SAFEDIVIDE OFF}
-{$STACKFRAMES ON}
+{$STACKFRAMES OFF}
 {$TYPEDADDRESS OFF}
 {$VARSTRINGCHECKS ON}
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DEFINE DEBUG}
+{$DEFINE RELEASE}
 {$ENDIF IMPLICITBUILDING}
 {$DESCRIPTION 'JC-Soft Unit'}
+{$LIBSUFFIX '160'}
 {$IMPLICITBUILD OFF}
 
 requires
@@ -34,7 +34,7 @@ requires
   vcl;
 
 contains
-  unt_kgTCPClient in '..\unt_kgTCPClient.pas',
-  Cmp_SimMotor in '..\Cmp_SimMotor.pas';
+  unt_kgTCPClient in '..\CSource\TCPSPSClient\unt_kgTCPClient.pas',
+  Cmp_SimMotor in '..\CSource\Cmp_SimMotor.pas';
 
 end.

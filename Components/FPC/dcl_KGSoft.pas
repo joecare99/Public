@@ -7,7 +7,8 @@ unit dcl_KGSoft;
 interface
 
 uses
-  Unt_DCL, LazarusPackageIntf;
+  Unt_DCL,
+  LazarusPackageIntf;
 
 implementation
 
