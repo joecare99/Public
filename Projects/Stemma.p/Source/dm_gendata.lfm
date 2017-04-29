@@ -1,0 +1,138 @@
+object dmGenData: TdmGenData
+  OnCreate = DataModuleCreate
+  OldCreateOrder = False
+  Height = 355
+  HorizontalOffset = 497
+  VerticalOffset = 353
+  Width = 459
+  object TMG: TDbf
+    FilePath = 'C:\Data\'
+    IndexDefs = <>
+    TableName = 'MARCHI_T.DBF'
+    TableLevel = 25
+    FilterOptions = []
+    left = 196
+    top = 44
+  end
+  object dsNames: TDataSource
+    left = 40
+    top = 72
+  end
+  object Database: TSQLConnector
+    Connected = False
+    LoginPrompt = False
+    AfterConnect = DatabaseAfterConnect
+    DatabaseName = 'mysql'
+    KeepConnection = False
+    Transaction = SQLTransaction1
+    UserName = 'root'
+    CharSet = 'UTF8'
+    HostName = 'Diskstation'
+    Options = []
+    ConnectorType = 'MySQL 5.7'
+    left = 16
+    top = 16
+  end
+  object Query1: TSQLQuery
+    FieldDefs = <>
+    Database = Database
+    Transaction = SQLTransaction1
+    Options = []
+    Params = <>
+    left = 16
+    top = 200
+  end
+  object Query2: TSQLQuery
+    FieldDefs = <>
+    Database = Database
+    Transaction = SQLTransaction1
+    Options = []
+    Params = <>
+    left = 48
+    top = 200
+  end
+  object Query3: TSQLQuery
+    FieldDefs = <>
+    Database = Database
+    Transaction = SQLTransaction1
+    Options = []
+    Params = <>
+    left = 80
+    top = 200
+  end
+  object Query4: TSQLQuery
+    FieldDefs = <>
+    Database = Database
+    Transaction = SQLTransaction1
+    Options = []
+    Params = <>
+    left = 112
+    top = 200
+  end
+  object Query5: TSQLQuery
+    FieldDefs = <>
+    Database = Database
+    Transaction = SQLTransaction1
+    Options = []
+    Params = <>
+    left = 150
+    top = 200
+  end
+  object qryNames: TSQLQuery
+    FieldDefs = <>
+    Database = Database
+    Transaction = SQLTransaction1
+    ReadOnly = True
+    SQL.Strings = (
+      'select no, concat(I2, '' '', I1) as Name from N;'
+    )
+    Options = []
+    Params = <>
+    left = 88
+    top = 8
+  end
+  object qryInternal: TSQLQuery
+    FieldDefs = <>
+    Database = Database
+    Transaction = SQLTransaction1
+    SQL.Strings = (
+      'select no, concat(I2, '' '', I1) as Name from N;'
+    )
+    Options = []
+    Params = <>
+    left = 248
+    top = 8
+  end
+  object qrySysInfo: TSQLQuery
+    FieldDefs = <>
+    Database = Database
+    Transaction = SQLTransaction1
+    SQL.Strings = (
+      'select no, concat(I2, '' '', I1) as Name from N;'
+    )
+    Options = []
+    Params = <>
+    left = 320
+    top = 8
+  end
+  object qryInternal2: TSQLQuery
+    FieldDefs = <>
+    Database = Database
+    Transaction = SQLTransaction1
+    SQL.Strings = (
+      'select no, concat(I2, '' '', I1) as Name from N;'
+    )
+    Options = []
+    Params = <>
+    left = 256
+    top = 56
+  end
+  object SQLTransaction1: TSQLTransaction
+    Active = False
+    Action = caCommitRetaining
+    Database = Database
+    Options = []
+    left = 144
+    top = 8
+  end
+end

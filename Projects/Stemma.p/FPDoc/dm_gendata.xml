@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Stemma"><module name="dm_GenData"><element name="TdmGenData.PopulateCitations"><short>Tabelle mit Zitaten Füllen</short><descr>Fr:
+Populate le tableau de citations
+</descr>
+      </element><element name="TdmGenData.GetCode"><short>Entnehme Code &amp; Nummer aus FiLo (Stack)</short>
+      </element><element name="TdmGenData.PutCode"><short>Lege Code &amp; Nummer auf FiLo (Stack)</short>
+      </element>
+    <element name="TdmGenData.CountAllRecordsTMG"><short>Counts all Records of the TMG-Database</short>
+      </element><element name="TdmGenData.CountAllRecordsTMG.filename"><short>Full filename to TMG-database-stub (without _?.DBF)</short>
+      </element><element name="TdmGenData.CountAllRecordsTMG.Result"><short>Accululated Record-Number</short>
+      </element><element name="TdmGenData.PopulateParents"><short>Fills the Parent-Stringgrid with all Parents</short>
+      </element><element name="TdmGenData.GetTypeName"><short>Get the Name of the Type-ID</short>
+      </element><element name="TdmGenData.GetTypePhrase"><short>Get the (Default-)Phrase of the Type with the Type-ID</short>
+      </element><element name="TdmGenData.GetTypeList"><short>Fill the List with all Types of a Kind</short>
+      </element><element name="TdmGenData.GetCitationBestQuality"><short>Get the best Quality of a Citation-kind</short>
+      </element><element name="TdmGenData.CopyCitation"><short>Copy the citation</short>
+      </element><element name="TdmGenData.GetChildExists"><short>Check if Childs exists</short>
+      </element><element name="TdmGenData.ReadCfgConnection"><short>Reads DB-Connection settings from the configuration-storage (file, registry ...)</short>
+      </element><element name="TdmGenData.WriteCfgConnection"><short>Writes DB-Connection settings to the configuration-storage (file, registry ...)</short>
+      </element><element name="TdmGenData.ReadCfgProject"><short>Reads project-settings from the configuration-storage (file, registry ...)</short>
+      </element><element name="TdmGenData.WriteCfgProject"><short>Writes project-settings to the configuration-storage (file, registry ...)</short>
+      </element><element name="TdmGenData.ReadCfgLastPerson"/><element name="TdmGenData.GetIndBaseData"><short>Get (base-)data of a person</short>
+      </element><element name="TdmGenData.CheckIndSharedEventExists"><short>Check if there is are primary events with other primary witnesses</short>
+      </element><element name="TdmGenData.CheckIndRelationExist"><short>Check if there are any primary relatives</short>
+      </element><topic name="Datamodule"/><topic name="Datamodule, Relation"/><topic name="Datamodule, Configuration"/><element name="TdmGenData.AddNewIndividual"><short>Adds a new Individual with given data and returns the ID</short>
+      </element><element name="TdmGenData.CopyIndividual"><short>Append a copy of an existing Individual and returns the ID</short>
+      </element><element name="TdmGenData.GetLivingOfInd"><short>Returns the 'Living'-status of an Individual</short>
+      </element><element name="TdmGenData.GetSexOfInd"><short>Returns the 'Sex'-status of an Individual</short>
+      </element><element name="TdmGenData.GetDataOfInd"><short>Returns the (base-)data of an Individual</short>
+      </element><element name="TdmGenData.SaveModificationTime"><short>Sets the modification-time of an Individual </short>
+      </element><element name="TdmGenData.DeleteDBProject"><short>Deletes an Project</short>
+      </element><element name="TdmGenData.CreateDBProject"><short>Creates a new project and fills the type-table with basic data</short>
+      </element><element name="TdmGenData.CountAllRecords"><short>Counts all records in the project</short>
+      </element><element name="TdmGenData.RepairProjectDB"><short>Triggers an repair-request for every table in the project</short>
+      </element><element name="TdmGenData.SetDBHostUserPass"><short>Sets the DB-connection data and opens the DB-connection</short>
+      </element><element name="TdmGenData.GetDBSchema"><short>Returns the actual project-name </short>
+      </element><element name="TdmGenData.CopyIndName"><short>copies the name of an indivitual to a new individual</short>
+      </element><element name="TdmGenData.CheckIndParentExists"><short>Checks if individual has parents</short>
+      </element><element name="TdmGenData.GetIndividuumName"><short>Returns the full name of an individulal (XML)</short>
+      </element><element name="TdmGenData.IsValidIndividuum"><short>Checks if individual exists</short>
+      </element><element name="TdmGenData.PopulateNameTable"><short>Fills the Name table</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

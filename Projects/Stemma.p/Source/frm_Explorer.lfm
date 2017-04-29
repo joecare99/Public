@@ -1,0 +1,98 @@
+object frmExplorer: TfrmExplorer
+  Left = 542
+  Height = 242
+  Top = 135
+  Width = 320
+  ActiveControl = Recherche
+  BorderIcons = []
+  Caption = 'Explorateur'
+  ClientHeight = 242
+  ClientWidth = 320
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object Index: TStringGrid
+    Left = 8
+    Height = 200
+    Top = 8
+    Width = 304
+    ColCount = 7
+    Columns = <    
+      item
+        Title.Caption = 'Id'
+      end    
+      item
+        Title.Caption = 'Nom'
+      end    
+      item
+        Title.Caption = 'Naiss.'
+      end    
+      item
+        Title.Caption = 'Décès'
+      end    
+      item
+        Title.Caption = '*'
+        Visible = False
+      end    
+      item
+        Title.Caption = 'Ordre'
+        Visible = False
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = PopupMenu1
+    TabOrder = 1
+    OnDblClick = IndexDblClick
+    OnDrawCell = IndexDrawCell
+    ColWidths = (
+      1
+      64
+      64
+      64
+      64
+      0
+      0
+    )
+  end
+  object Recherche: TEdit
+    Left = 8
+    Height = 23
+    Top = 215
+    Width = 304
+    OnChange = RechercheChange
+    OnKeyPress = RechercheKeyPress
+    TabOrder = 0
+  end
+  object O: TEdit
+    Left = 80
+    Height = 23
+    Top = 200
+    Width = 80
+    TabOrder = 2
+    Text = 'O'
+    Visible = False
+  end
+  object PopupMenu1: TPopupMenu
+    left = 288
+    top = 200
+    object MenuItem3: TMenuItem
+      Caption = 'Tri par &prénom'
+      OnClick = MenuItem3Click
+    end
+    object MenuItem4: TMenuItem
+      Caption = 'Tri par &nom'
+      OnClick = MenuItem4Click
+    end
+    object MenuItem5: TMenuItem
+      Caption = 'Tri par nai&ssance'
+      OnClick = MenuItem5Click
+    end
+    object MenuItem6: TMenuItem
+      Caption = 'Tri par &décès'
+      OnClick = MenuItem6Click
+    end
+  end
+end

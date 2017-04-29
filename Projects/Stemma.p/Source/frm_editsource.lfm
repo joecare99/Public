@@ -1,0 +1,305 @@
+object EditSource: TEditSource
+  Left = 228
+  Height = 522
+  Top = 73
+  Width = 624
+  ActiveControl = Titre
+  BorderIcons = []
+  BorderStyle = bsDialog
+  Caption = 'Modification de source'
+  ClientHeight = 522
+  ClientWidth = 624
+  Menu = MainMenu1
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object TableauDepots: TStringGrid
+    Left = 88
+    Height = 120
+    Top = 216
+    Width = 528
+    ColCount = 4
+    Columns = <    
+      item
+        ReadOnly = True
+        Title.Caption = 'Dépot'
+        Width = 200
+      end    
+      item
+        Title.Caption = 'Mémo'
+        Width = 306
+      end    
+      item
+        Title.Caption = '# dépot'
+        Visible = False
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goEditing, goSmoothScroll]
+    PopupMenu = PopupMenu2
+    TabOrder = 6
+    OnDblClick = TableauDepotsDblClick
+    OnEditingDone = TableauDepotsEditingDone
+    ColWidths = (
+      1
+      200
+      306
+      0
+    )
+  end
+  object No: TEdit
+    Left = 504
+    Height = 23
+    Top = 184
+    Width = 80
+    TabStop = False
+    TabOrder = 7
+    Text = 'No'
+    Visible = False
+  end
+  object Label8: TLabel
+    Left = 16
+    Height = 15
+    Top = 80
+    Width = 39
+    Caption = 'Auteur:'
+    ParentColor = False
+  end
+  object A: TEdit
+    Left = 88
+    Height = 23
+    Top = 80
+    Width = 96
+    OnEditingDone = AEditingDone
+    TabOrder = 2
+    Text = 'A'
+  end
+  object NomA: TEdit
+    Left = 191
+    Height = 23
+    Top = 80
+    Width = 424
+    ReadOnly = True
+    TabOrder = 3
+    Text = 'Nom de A'
+  end
+  object Label3: TLabel
+    Left = 16
+    Height = 15
+    Top = 112
+    Width = 38
+    Caption = 'Mémo:'
+    ParentColor = False
+  end
+  object M: TMemo
+    Left = 88
+    Height = 58
+    Top = 112
+    Width = 528
+    Lines.Strings = (
+      'M'
+    )
+    OnEditingDone = MEditingDone
+    ScrollBars = ssAutoVertical
+    TabOrder = 4
+  end
+  object Label7: TLabel
+    Left = 16
+    Height = 15
+    Top = 216
+    Width = 37
+    Caption = 'Dépots'
+    ParentColor = False
+  end
+  object Label9: TLabel
+    Left = 16
+    Height = 15
+    Top = 48
+    Width = 63
+    Caption = 'Description:'
+    ParentColor = False
+  end
+  object Desc: TEdit
+    Left = 87
+    Height = 23
+    Top = 48
+    Width = 528
+    OnKeyDown = DescKeyDown
+    TabOrder = 1
+    Text = 'Desc'
+  end
+  object Titre: TEdit
+    Left = 87
+    Height = 23
+    Top = 16
+    Width = 527
+    TabOrder = 0
+    Text = 'Titre'
+  end
+  object Label10: TLabel
+    Left = 16
+    Height = 15
+    Top = 16
+    Width = 27
+    Caption = 'Titre:'
+    ParentColor = False
+  end
+  object Label11: TLabel
+    Left = 16
+    Height = 15
+    Top = 184
+    Width = 98
+    Caption = 'Qualité par défaut:'
+    ParentColor = False
+  end
+  object Q: TSpinEdit
+    Left = 125
+    Height = 23
+    Top = 184
+    Width = 50
+    MaxValue = 10
+    TabOrder = 5
+  end
+  object TableauExhibits: TStringGrid
+    Left = 88
+    Height = 96
+    Top = 352
+    Width = 528
+    Columns = <    
+      item
+        Title.Caption = '*'
+        Width = 17
+      end    
+      item
+        Title.Caption = 'Titre'
+        Width = 443
+      end    
+      item
+        Title.Caption = 'Type'
+        Visible = False
+      end    
+      item
+        Title.Caption = 'Format'
+        Width = 46
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = PopupMenu3
+    TabOrder = 8
+    OnDblClick = Modifier2Click
+    ColWidths = (
+      1
+      17
+      443
+      0
+      46
+    )
+  end
+  object Label12: TLabel
+    Left = 16
+    Height = 15
+    Top = 352
+    Width = 64
+    Caption = 'Documents:'
+    ParentColor = False
+  end
+  object btnOK: TBitBtn
+    Left = 424
+    Height = 40
+    Top = 456
+    Width = 86
+    Default = True
+    DefaultCaption = True
+    Kind = bkOK
+    ModalResult = 1
+    OnClick = btnOKClick
+    TabOrder = 9
+  end
+  object btnCancel: TBitBtn
+    Left = 528
+    Height = 40
+    Top = 456
+    Width = 86
+    Cancel = True
+    DefaultCaption = True
+    Kind = bkCancel
+    ModalResult = 2
+    TabOrder = 10
+  end
+  object PopupMenu2: TPopupMenu
+    left = 32
+    top = 248
+    object Ajouter1: TMenuItem
+      Caption = '&Ajouter'
+      ShortCut = 115
+      OnClick = Ajouter1Click
+    end
+    object Modifier1: TMenuItem
+      Caption = '&Modifier'
+      ShortCut = 116
+      OnClick = TableauDepotsEditingDone
+    end
+    object Supprimer1: TMenuItem
+      Caption = '&Supprimer'
+      ShortCut = 117
+      OnClick = Supprimer1Click
+    end
+  end
+  object MainMenu1: TMainMenu
+    left = 16
+    top = 287
+    object MenuItem6: TMenuItem
+      Caption = 'Repeat'
+      ShortCut = 114
+      OnClick = MenuItem6Click
+    end
+    object MenuItem5: TMenuItem
+      Caption = '&Quit'
+      ShortCut = 121
+      OnClick = MenuItem5Click
+    end
+    object MenuItem1: TMenuItem
+      Caption = '&Dépots'
+      object MenuItem2: TMenuItem
+        Caption = '&Ajouter'
+        ShortCut = 115
+        OnClick = Ajouter1Click
+      end
+      object MenuItem3: TMenuItem
+        Caption = '&Modifier'
+        ShortCut = 116
+        OnClick = TableauDepotsEditingDone
+      end
+      object MenuItem4: TMenuItem
+        Caption = '&Supprimer'
+        ShortCut = 117
+        OnClick = Supprimer1Click
+      end
+    end
+  end
+  object PopupMenu3: TPopupMenu
+    left = 74
+    top = 412
+    object Ajouter2: TMenuItem
+      Caption = '&Ajouter'
+      OnClick = Ajouter2Click
+    end
+    object Modifier2: TMenuItem
+      Caption = '&Modifier'
+      OnClick = Modifier2Click
+    end
+    object Supprimer2: TMenuItem
+      Caption = '&Supprimer'
+      OnClick = Supprimer2Click
+    end
+    object MenuItem9: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem10: TMenuItem
+      Caption = 'Visualiser'
+      OnClick = MenuItem10Click
+    end
+  end
+end

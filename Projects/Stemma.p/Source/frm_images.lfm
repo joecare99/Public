@@ -1,0 +1,23 @@
+object FormImage: TFormImage
+  Left = 478
+  Height = 240
+  Top = 371
+  Width = 320
+  BorderIcons = []
+  Caption = 'Image principale'
+  ClientHeight = 240
+  ClientWidth = 320
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object Im: TImage
+    Left = 0
+    Height = 90
+    Top = 0
+    Width = 90
+    Proportional = True
+    Stretch = True
+  end
+end

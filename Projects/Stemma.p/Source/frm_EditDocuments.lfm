@@ -1,0 +1,183 @@
+object frmEditDocuments: TfrmEditDocuments
+  Left = 452
+  Height = 188
+  Top = 302
+  Width = 497
+  BorderIcons = []
+  BorderStyle = bsDialog
+  Caption = 'Modification de document'
+  ClientHeight = 188
+  ClientWidth = 497
+  Menu = MainMenu1
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object Button1: TButton
+    Left = 336
+    Height = 25
+    Top = 176
+    Width = 75
+    Caption = 'Ok'
+    Default = True
+    ModalResult = 1
+    OnClick = Button1Click
+    TabOrder = 7
+  end
+  object Button2: TButton
+    Left = 416
+    Height = 25
+    Top = 176
+    Width = 75
+    Cancel = True
+    Caption = 'Annul.'
+    ModalResult = 2
+    TabOrder = 4
+  end
+  object Label1: TLabel
+    Left = 104
+    Height = 30
+    Top = 8
+    Width = 28
+    Caption = 'No'
+    ParentColor = False
+    Visible = False
+  end
+  object No: TEdit
+    Left = 133
+    Height = 38
+    Top = 8
+    Width = 80
+    TabOrder = 6
+    Text = 'No'
+    Visible = False
+  end
+  object Primaire: TCheckBox
+    Left = 16
+    Height = 34
+    Top = 8
+    Width = 110
+    Caption = 'Primaire'
+    TabOrder = 3
+    TabStop = False
+    Visible = False
+  end
+  object Label2: TLabel
+    Left = 16
+    Height = 30
+    Top = 11
+    Width = 46
+    Caption = 'Titre:'
+    ParentColor = False
+  end
+  object Titre: TEdit
+    Left = 64
+    Height = 38
+    Top = 8
+    Width = 424
+    TabOrder = 0
+    Text = 'Titre'
+  end
+  object Label3: TLabel
+    Left = 16
+    Height = 30
+    Top = 36
+    Width = 110
+    Caption = 'Description:'
+    ParentColor = False
+  end
+  object Description: TMemo
+    Left = 64
+    Height = 66
+    Top = 56
+    Width = 424
+    Lines.Strings = (
+      'Description'
+    )
+    TabOrder = 1
+  end
+  object Label4: TLabel
+    Left = 16
+    Height = 30
+    Top = 128
+    Width = 65
+    Caption = 'Fichier:'
+    ParentColor = False
+  end
+  object Fichier: TEdit
+    Left = 64
+    Height = 38
+    Top = 128
+    Width = 421
+    OnDblClick = FichierDblClick
+    TabOrder = 2
+    Text = 'Fichier'
+  end
+  object Button3: TButton
+    Left = 64
+    Height = 25
+    Top = 176
+    Width = 75
+    Caption = 'Visualiser'
+    OnClick = Button3Click
+    TabOrder = 5
+  end
+  object Type1: TEdit
+    Left = 405
+    Height = 38
+    Top = 8
+    Width = 80
+    TabStop = False
+    TabOrder = 8
+    Text = 'Type1'
+    Visible = False
+  end
+  object Label5: TLabel
+    Left = 376
+    Height = 30
+    Top = 8
+    Width = 43
+    Caption = 'Type'
+    ParentColor = False
+    Visible = False
+  end
+  object N: TEdit
+    Left = 405
+    Height = 38
+    Top = 36
+    Width = 80
+    TabStop = False
+    TabOrder = 9
+    Text = 'Type1'
+    Visible = False
+  end
+  object Z: TMemo
+    Left = 256
+    Height = 34
+    Top = 136
+    Width = 112
+    Lines.Strings = (
+      'Descriptio'
+      'n'
+    )
+    TabOrder = 10
+    Visible = False
+  end
+  object OpenDialog: TOpenDialog
+    Title = 'Sélection de l''image'
+    Filter = '''Tous les fichier|*.*|Images|*.jpg;*.jpeg;*.gif'''
+    FilterIndex = 2
+    Options = [ofFileMustExist, ofEnableSizing, ofViewDetail, ofAutoPreview]
+    left = 248
+    top = 8
+  end
+  object MainMenu1: TMainMenu
+    left = 195
+    top = 168
+    object MenuItem1: TMenuItem
+      Caption = '&Quit'
+      ShortCut = 121
+      OnClick = MenuItem1Click
+    end
+  end
+end

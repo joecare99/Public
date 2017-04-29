@@ -1,0 +1,61 @@
+object frmEventUsage: TfrmEventUsage
+  Left = 281
+  Height = 365
+  Top = 365
+  Width = 437
+  BorderIcons = []
+  Caption = 'Utilisation'
+  ClientHeight = 365
+  ClientWidth = 437
+  OnResize = FormResize
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object TableauUtilisation: TStringGrid
+    Left = 8
+    Height = 312
+    Top = 8
+    Width = 419
+    Columns = <    
+      item
+        Title.Caption = 'Événement'
+        Width = 75
+      end    
+      item
+        Title.Caption = 'Témoin'
+        Width = 183
+      end    
+      item
+        Title.Caption = '#'
+      end    
+      item
+        Title.Caption = 'Date'
+        Width = 75
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    RowCount = 100
+    TabOrder = 0
+    OnDblClick = TableauUtilisationDblClick
+    ColWidths = (
+      1
+      75
+      183
+      64
+      75
+    )
+  end
+  object Button1: TBitBtn
+    Left = 336
+    Height = 33
+    Top = 328
+    Width = 91
+    Default = True
+    DefaultCaption = True
+    Kind = bkOK
+    ModalResult = 1
+    TabOrder = 1
+  end
+end

@@ -1,0 +1,759 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="10"/>
+    <PathDelim Value="\"/>
+    <General>
+      <MainUnit Value="0"/>
+      <Title Value="Stemma"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <XPManifest>
+        <DpiAware Value="True"/>
+      </XPManifest>
+      <Icon Value="0"/>
+    </General>
+    <LazDoc Paths="..\FPDoc" PackageName="Stemma"/>
+    <i18n>
+      <EnableI18N Value="True"/>
+      <OutDir Value="..\po"/>
+    </i18n>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <MinorVersionNr Value="9"/>
+      <RevisionNr Value="5"/>
+      <Language Value="0C0C"/>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="3" Active="Debug">
+      <Item1 Name="Default" Default="True"/>
+      <Item2 Name="Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($Project(infofile))"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\Source;..;..\Source\tools"/>
+            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <IncludeAssertionCode Value="True"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <RelocatableUnit Value="True"/>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
+              <UseExternalDbgSyms Value="True"/>
+            </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($Project(infofile))"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\Source;..;..\Source\tools"/>
+            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <RelocatableUnit Value="True"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item3>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+        <CommandLineParams Value="--lang de"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="6">
+      <Item1>
+        <PackageName Value="SQLDBLaz"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="HighDPI"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="anchordocking"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="FCL"/>
+        <MinVersion Major="1" Valid="True"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="DBFLaz"/>
+        <MinVersion Minor="1" Release="1" Valid="True"/>
+      </Item5>
+      <Item6>
+        <PackageName Value="LCL"/>
+      </Item6>
+    </RequiredPackages>
+    <Units Count="59">
+      <Unit0>
+        <Filename Value="Stemma.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="6" Y="33"/>
+        <UsageCount Value="210"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\Source\frm_Main.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmStemmaMainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1695"/>
+        <CursorPos X="56" Y="1734"/>
+        <UsageCount Value="210"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\Source\fmutils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="FMUtils"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="322"/>
+        <CursorPos X="10" Y="339"/>
+        <UsageCount Value="208"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\Source\frm_connectdb.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmConnectDb"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_ConnectDB"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="45" Y="15"/>
+        <UsageCount Value="207"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\Source\frm_Names.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmNames"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="16"/>
+        <CursorPos X="39" Y="91"/>
+        <ComponentState Value="1"/>
+        <UsageCount Value="205"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\Source\frm_Explorer.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmExplorer"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="46" Y="24"/>
+        <UsageCount Value="226"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\Source\frm_parents.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmParents"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="130"/>
+        <CursorPos X="105" Y="158"/>
+        <UsageCount Value="212"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\Source\frm_History.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmHistory"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="27"/>
+        <CursorPos Y="78"/>
+        <UsageCount Value="207"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\Source\frm_Children.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmChildren"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="60"/>
+        <CursorPos X="3" Y="64"/>
+        <UsageCount Value="205"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\Source\frm_siblings.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSiblings"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Siblings"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="18"/>
+        <UsageCount Value="243"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmEvents"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="354"/>
+        <CursorPos X="54" Y="374"/>
+        <UsageCount Value="242"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\Source\frm_documents.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmDocuments"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Documents"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="103"/>
+        <CursorPos X="36" Y="128"/>
+        <UsageCount Value="282"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\Source\frm_ancesters.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormAncetres"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Ancesters"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="34"/>
+        <CursorPos X="63" Y="53"/>
+        <UsageCount Value="278"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="..\Source\frm_descendants.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormDescendants"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Descendants"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="65"/>
+        <CursorPos X="87" Y="105"/>
+        <UsageCount Value="276"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\Source\frm_EditDocuments.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmEditDocuments"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="183"/>
+        <CursorPos X="16" Y="228"/>
+        <ComponentState Value="1"/>
+        <UsageCount Value="273"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="..\Source\tools\frm_ShowImage.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmShowImage"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="44"/>
+        <CursorPos X="31" Y="3"/>
+        <UsageCount Value="272"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\Source\frm_images.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormImage"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Images"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="42"/>
+        <CursorPos X="68" Y="75"/>
+        <UsageCount Value="225"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="..\Source\frm_EditParents.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmEditParents"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="603"/>
+        <CursorPos X="33" Y="646"/>
+        <UsageCount Value="221"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="..\Source\frm_EditCitations.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="EditCitations"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="104"/>
+        <CursorPos X="30" Y="116"/>
+        <UsageCount Value="321"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="..\Source\frm_EditName.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmEditName"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="547"/>
+        <CursorPos Y="564"/>
+        <UsageCount Value="223"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="..\Source\frm_EditEvents.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmEditEvents"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="114" Y="27"/>
+        <UsageCount Value="204"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="..\Source\frm_EditWitness.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmEditWitness"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="264"/>
+        <CursorPos X="59" Y="281"/>
+        <UsageCount Value="200"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="..\Source\frm_places.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormLieux"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Places"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="257"/>
+        <CursorPos X="37" Y="294"/>
+        <UsageCount Value="208"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="..\Source\frm_Usage.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmEventUsage"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="6"/>
+        <CursorPos X="18" Y="32"/>
+        <UsageCount Value="201"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="..\Source\frm_sources.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormSources"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Sources"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="240"/>
+        <CursorPos X="57" Y="247"/>
+        <UsageCount Value="201"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="..\Source\frm_repositories.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmRepository"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Repositories"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="22"/>
+        <CursorPos X="53" Y="39"/>
+        <ComponentState Value="1"/>
+        <UsageCount Value="218"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="..\Source\frm_editsource.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="EditSource"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_EditSource"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="352"/>
+        <CursorPos X="67" Y="395"/>
+        <UsageCount Value="217"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="..\Source\frm_Types.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmTypes"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="17"/>
+        <CursorPos X="48" Y="43"/>
+        <UsageCount Value="201"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="..\Source\frm_edittypes.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="EditType"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_EditTypes"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="57"/>
+        <CursorPos X="95" Y="81"/>
+        <ComponentState Value="1"/>
+        <UsageCount Value="200"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="..\Source\frm_About.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="apropos"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="41"/>
+        <CursorPos X="61" Y="57"/>
+        <UsageCount Value="282"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="..\Source\tools\frm_SelectPerson.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FormSelectPersonne"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="5"/>
+        <CursorPos X="46" Y="53"/>
+        <UsageCount Value="207"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="dmGenData"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+        <UnitName Value="dm_GenData"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="120"/>
+        <CursorPos X="36" Y="125"/>
+        <UsageCount Value="203"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="..\Source\traduction.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Traduction"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="25"/>
+        <CursorPos X="64" Y="25"/>
+        <UsageCount Value="203"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="..\..\Indy10\Lib\System\IdStream.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="29" Y="21"/>
+        <UsageCount Value="42"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="..\..\..\Delphi\Examples\Source\Prj_TestDocking\frm_dockingmain.pas"/>
+        <ComponentName Value="frmMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_DockingMain"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="77"/>
+        <CursorPos X="69" Y="246"/>
+        <UsageCount Value="40"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\objpas\sysutils\osutilsh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="28"/>
+        <CursorPos X="34" Y="50"/>
+        <UsageCount Value="4"/>
+      </Unit35>
+      <Unit36>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\win\sysutils.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="299"/>
+        <CursorPos X="24" Y="1211"/>
+        <UsageCount Value="4"/>
+      </Unit36>
+      <Unit37>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\objpas\sysutils\osutil.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="81"/>
+        <CursorPos X="19" Y="102"/>
+        <UsageCount Value="4"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="C:\lazarus\lcl\graphics.pp"/>
+        <UnitName Value="Graphics"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2361"/>
+        <CursorPos X="52" Y="2368"/>
+        <UsageCount Value="10"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="C:\lazarus\lcl\include\customform.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2895"/>
+        <CursorPos X="60" Y="2911"/>
+        <UsageCount Value="8"/>
+      </Unit39>
+      <Unit40>
+        <Filename Value="C:\lazarus\lcl\interfaces\win32\win32wsforms.pp"/>
+        <UnitName Value="Win32WSForms"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="695"/>
+        <CursorPos Y="720"/>
+        <UsageCount Value="0"/>
+      </Unit40>
+      <Unit41>
+        <Filename Value="C:\lazarus\lcl\include\wincontrol.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="7343"/>
+        <CursorPos Y="7364"/>
+        <UsageCount Value="8"/>
+      </Unit41>
+      <Unit42>
+        <Filename Value="C:\lazarus\lcl\include\spinedit.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="197"/>
+        <CursorPos Y="218"/>
+        <UsageCount Value="87"/>
+      </Unit42>
+      <Unit43>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\fcl-db\src\base\dsparams.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="168"/>
+        <CursorPos X="30" Y="197"/>
+        <UsageCount Value="42"/>
+      </Unit43>
+      <Unit44>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\fcl-base\src\inifiles.pp"/>
+        <UnitName Value="IniFiles"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="173"/>
+        <CursorPos X="62" Y="200"/>
+        <UsageCount Value="5"/>
+      </Unit44>
+      <Unit45>
+        <Filename Value="C:\lazarus\lcl\dialogs.pp"/>
+        <UnitName Value="Dialogs"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="540"/>
+        <CursorPos X="89" Y="557"/>
+        <UsageCount Value="23"/>
+      </Unit45>
+      <Unit46>
+        <Filename Value="..\Source\tools\frm_selectdialog.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmSelectDialog"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_SelectDialog"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="51" Y="43"/>
+        <UsageCount Value="89"/>
+      </Unit46>
+      <Unit47>
+        <Filename Value="C:\lazarus\components\anchordocking\anchordocking.pas"/>
+        <UnitName Value="AnchorDocking"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2702"/>
+        <CursorPos X="3" Y="2707"/>
+        <UsageCount Value="14"/>
+      </Unit47>
+      <Unit48>
+        <Filename Value="..\..\..\Delphi\Components\Source\Unt_StringProcs.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1892"/>
+        <CursorPos X="90" Y="1914"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit48>
+      <Unit49>
+        <Filename Value="..\..\..\Delphi\Components\FPC\dcl_KGSoft.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="11" Y="10"/>
+        <UsageCount Value="11"/>
+      </Unit49>
+      <Unit50>
+        <Filename Value="..\..\..\Delphi\Components\Source\Unt_DCL.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="65" Y="11"/>
+        <UsageCount Value="11"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit50>
+      <Unit51>
+        <Filename Value="..\..\..\Delphi\Components\FPC\DBHLLookUpPanel.dpk"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="116" Y="20"/>
+        <UsageCount Value="11"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit51>
+      <Unit52>
+        <Filename Value="..\..\..\Delphi\Components\Source\DBHlLookUpPanel\Cmp_DBHLLookUpPanel.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="217"/>
+        <CursorPos X="49" Y="226"/>
+        <UsageCount Value="11"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit52>
+      <Unit53>
+        <Filename Value="..\..\..\Delphi\Components\Source\DBHlPanel\cmp_DBHlPanel.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="177"/>
+        <CursorPos X="3" Y="217"/>
+        <UsageCount Value="11"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit53>
+      <Unit54>
+        <Filename Value="C:\lazarus\lcl\extctrls.pp"/>
+        <UnitName Value="ExtCtrls"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="992"/>
+        <CursorPos X="15" Y="1015"/>
+        <UsageCount Value="8"/>
+      </Unit54>
+      <Unit55>
+        <Filename Value="..\..\..\Delphi\Components\FPC\DBLuGrid.dpk"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="11"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit55>
+      <Unit56>
+        <Filename Value="..\..\..\Delphi\Components\Source\DBLookUpGrid\Cmp_DBLookUpGrid.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="139"/>
+        <CursorPos X="44" Y="225"/>
+        <UsageCount Value="11"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit56>
+      <Unit57>
+        <Filename Value="C:\lazarus\lcl\dbgrids.pas"/>
+        <UnitName Value="DBGrids"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="260"/>
+        <CursorPos X="29" Y="283"/>
+        <UsageCount Value="11"/>
+      </Unit57>
+      <Unit58>
+        <Filename Value="C:\lazarus\lcl\grids.pas"/>
+        <UnitName Value="Grids"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="115"/>
+        <CursorPos X="153" Y="39"/>
+        <UsageCount Value="11"/>
+      </Unit58>
+    </Units>
+    <JumpHistory HistoryIndex="-1"/>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($Project(infofile))"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="..\Source;..;..\Source\tools"/>
+      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+    </SearchPaths>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+      <RelocatableUnit Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <LinkSmart Value="True"/>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Watches Count="3">
+      <Item1>
+        <Expression Value="temp"/>
+      </Item1>
+      <Item2>
+        <Expression Value="nom"/>
+      </Item2>
+      <Item3>
+        <Expression Value="compte"/>
+        <Enabled Value="False"/>
+      </Item3>
+    </Watches>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

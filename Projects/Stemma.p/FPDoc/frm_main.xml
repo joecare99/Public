@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Stemma"><module name="frm_Main"><short>Stemma - Hauptformular - Unit</short><element name="TfrmStemmaMainForm"><short>Stemma - Hauptformular</short>
+      </element><element name="TfrmStemmaMainForm.actAdd"><short>Action Add ...</short><descr>De-/Aktiviert den Bereich Hinzufügen (Add)</descr>
+      </element><element name="TfrmStemmaMainForm.actFileConnDB"><short>Action Connect DB</short>
+      </element><element name="TfrmStemmaMainForm.actFileCreateProject"><short>Action: Create New Project</short>
+      </element><element name="TfrmStemmaMainForm.actFileCloseProject"><short>Action Close Project</short>
+      </element><element name="TfrmStemmaMainForm.FExtraWindows"><short>Array mit allen Extra-Fenstern</short>
+      </element><element name="TfrmStemmaMainForm.FMenuHistory"><short>Array mit allen History-Menüpunkten</short>
+      </element><element name="TfrmStemmaMainForm.FBitmap"><short>Hintergrund-Bitmap für Coolbar</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

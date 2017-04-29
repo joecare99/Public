@@ -1,0 +1,77 @@
+object frmDocuments: TfrmDocuments
+  Left = 672
+  Height = 83
+  Top = 98
+  Width = 374
+  ActiveControl = tblDocuments
+  BorderIcons = []
+  Caption = 'Documents'
+  ClientHeight = 83
+  ClientWidth = 374
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object tblDocuments: TStringGrid
+    Left = 0
+    Height = 200
+    Top = 0
+    Width = 304
+    Columns = <    
+      item
+        Title.Caption = '*'
+      end    
+      item
+        Title.Caption = 'Titre'
+      end    
+      item
+        Title.Caption = 'Type'
+      end    
+      item
+        Title.Caption = 'Format'
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = pmnDocuments
+    TabOrder = 0
+    OnDblClick = mnuModifyClick
+    OnDrawCell = tblDocumentsDrawCell
+    OnSelection = tblDocumentsSelection
+    ColWidths = (
+      1
+      64
+      64
+      64
+      64
+    )
+  end
+  object pmnDocuments: TPopupMenu
+    left = 346
+    top = 55
+    object mnuSetMain: TMenuItem
+      Caption = '&Primaire'
+      ShortCut = 8248
+      OnClick = mnuSetMainClick
+    end
+    object mnuSeparator: TMenuItem
+      Caption = '-'
+    end
+    object mnuAppend: TMenuItem
+      Caption = 'Ajouter'
+      ShortCut = 115
+      OnClick = mnuAppendClick
+    end
+    object mnuModify: TMenuItem
+      Caption = 'Modifier'
+      ShortCut = 116
+      OnClick = mnuModifyClick
+    end
+    object mnuDelete: TMenuItem
+      Caption = 'Supprimer'
+      ShortCut = 117
+      OnClick = mnuDeleteClick
+    end
+  end
+end

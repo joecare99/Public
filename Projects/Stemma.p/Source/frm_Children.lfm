@@ -1,0 +1,85 @@
+object frmChildren: TfrmChildren
+  Left = 598
+  Height = 167
+  Top = 398
+  Width = 416
+  ActiveControl = TableauEnfants
+  BorderIcons = []
+  Caption = 'Enfants'
+  ClientHeight = 167
+  ClientWidth = 416
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  PopupMenu = PopupMenuEnfant
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object TableauEnfants: TStringGrid
+    Left = 0
+    Height = 240
+    Top = 0
+    Width = 678
+    ColCount = 7
+    Columns = <    
+      item
+        Title.Caption = '*'
+      end    
+      item
+        Title.Caption = 'Type'
+      end    
+      item
+        Title.Caption = 'Enfant'
+      end    
+      item
+        Title.Caption = 'Q'
+      end    
+      item
+        Title.Caption = 'IdEnfant'
+        Visible = False
+      end    
+      item
+        Title.Caption = '+'
+      end>
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = PopupMenuEnfant
+    TabOrder = 0
+    OnDblClick = TableauEnfantsDblClick
+    OnDrawCell = TableauEnfantsDrawCell
+    ColWidths = (
+      4
+      64
+      64
+      64
+      64
+      0
+      64
+    )
+  end
+  object PopupMenuEnfant: TPopupMenu
+    left = 377
+    top = 70
+    object MenuItem1: TMenuItem
+      Caption = '&Aller à'
+      OnClick = MenuItem1Click
+    end
+    object MenuItem2: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem3: TMenuItem
+      Caption = 'Ajouter'
+      ShortCut = 115
+      OnClick = MenuItem3Click
+    end
+    object MenuItem4: TMenuItem
+      Caption = 'Modifier'
+      ShortCut = 116
+      OnClick = TableauEnfantsDblClick
+    end
+    object MenuItem5: TMenuItem
+      Caption = 'Supprimer'
+      ShortCut = 117
+      OnClick = MenuItem5Click
+    end
+  end
+end

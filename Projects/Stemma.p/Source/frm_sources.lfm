@@ -1,0 +1,122 @@
+object FormSources: TFormSources
+  Left = 429
+  Height = 588
+  Top = 136
+  Width = 752
+  BorderIcons = []
+  Caption = 'FormSources'
+  ClientHeight = 588
+  ClientWidth = 752
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object TableauSources: TStringGrid
+    Left = 8
+    Height = 536
+    Top = 8
+    Width = 1080
+    ColCount = 8
+    Columns = <    
+      item
+        ReadOnly = True
+        Title.Caption = '#'
+        Width = 50
+      end    
+      item
+        Title.Caption = 'Titre'
+        Width = 186
+      end    
+      item
+        Title.Caption = 'Description'
+        Width = 366
+      end    
+      item
+        Title.Caption = 'Mémo'
+        Width = 186
+      end    
+      item
+        Title.Caption = 'Auteur'
+        Width = 186
+      end    
+      item
+        Title.Caption = 'Q'
+        Width = 20
+      end    
+      item
+        ReadOnly = True
+        Title.Caption = 'Utilisation'
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goEditing, goSmoothScroll]
+    PopupMenu = PopupMenu1
+    RowCount = 100
+    TabOrder = 0
+    OnDblClick = TableauSourcesDblClick
+    OnEditingDone = TableauSourcesEditingDone
+    ColWidths = (
+      1
+      50
+      186
+      366
+      186
+      186
+      20
+      64
+    )
+  end
+  object Button1: TButton
+    Left = 1013
+    Height = 25
+    Top = 552
+    Width = 75
+    Cancel = True
+    Caption = 'Ok'
+    Default = True
+    ModalResult = 1
+    TabOrder = 1
+  end
+  object PopupMenu1: TPopupMenu
+    left = 207
+    top = 552
+    object MenuItem5: TMenuItem
+      Caption = '&Tri'
+      object MenuItem7: TMenuItem
+        Caption = 'par &numéro'
+        OnClick = MenuItem7Click
+      end
+      object MenuItem9: TMenuItem
+        Caption = 'par &titre'
+        OnClick = MenuItem9Click
+      end
+    end
+    object MenuItem6: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem8: TMenuItem
+      Caption = 'Utilisation'
+      OnClick = MenuItem8Click
+    end
+    object MenuItem1: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem2: TMenuItem
+      Caption = 'Ajouter'
+      ShortCut = 115
+      OnClick = MenuItem2Click
+    end
+    object MenuItem3: TMenuItem
+      Caption = 'Modifier'
+      ShortCut = 116
+      OnClick = TableauSourcesDblClick
+    end
+    object MenuItem4: TMenuItem
+      Caption = 'Supprimer'
+      ShortCut = 117
+      OnClick = MenuItem4Click
+    end
+  end
+end

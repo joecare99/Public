@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Stemma"><module name="FMUtils"><element name="InterpreteDate"><short>Datum interpretieren</short>
+      </element><element name="PopulateCitations" link="TdmGenData.PopulateCitations"><short>Tabelle mit Zutaten füllen</short>
+      </element><element name="SaveFormPosition"><short>Speichere Position des Dialogs</short>
+      </element><element name="SaveGridPosition"><short>Speichere Position des StringGrids</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

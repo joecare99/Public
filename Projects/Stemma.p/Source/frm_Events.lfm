@@ -1,0 +1,101 @@
+object frmEvents: TfrmEvents
+  Left = 768
+  Height = 240
+  Top = 295
+  Width = 320
+  ActiveControl = TableauEvenements
+  BorderIcons = []
+  Caption = 'Événements'
+  ClientHeight = 240
+  ClientWidth = 320
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object TableauEvenements: TStringGrid
+    Left = 0
+    Height = 240
+    Top = 0
+    Width = 678
+    ColCount = 9
+    Columns = <    
+      item
+        Title.Caption = '*'
+      end    
+      item
+        Title.Caption = 'Type'
+      end    
+      item
+        Title.Caption = 'Date'
+      end    
+      item
+        Title.Caption = 'Description'
+      end    
+      item
+        Title.Caption = 'Q'
+      end    
+      item
+        Title.Caption = 'Âge'
+      end    
+      item
+        Title.Caption = 'No'
+        Visible = False
+      end    
+      item
+        Title.Caption = 'W*'
+        Visible = False
+      end>
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = PopupMenuEvenements
+    TabOrder = 0
+    OnDblClick = TableauEvenementsDblClick
+    OnDrawCell = TableauEvenementsDrawCell
+    ColWidths = (
+      4
+      64
+      64
+      64
+      64
+      64
+      64
+      0
+      0
+    )
+  end
+  object PopupMenuEvenements: TPopupMenu
+    left = 272
+    top = 126
+    object MenuItem1: TMenuItem
+      Caption = '&Aller à'
+      OnClick = MenuItem1Click
+    end
+    object MenuItem2: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem3: TMenuItem
+      Caption = 'Ajouter'
+      ShortCut = 115
+      OnClick = MenuItem3Click
+    end
+    object MenuItem4: TMenuItem
+      Caption = 'Modifier'
+      ShortCut = 116
+      OnClick = TableauEvenementsDblClick
+    end
+    object MenuItem5: TMenuItem
+      Caption = 'Supprimer'
+      ShortCut = 117
+      OnClick = MenuItem5Click
+    end
+    object MenuItem6: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem7: TMenuItem
+      Caption = 'Primaire'
+      ShortCut = 8248
+      OnClick = MenuItem7Click
+    end
+  end
+end

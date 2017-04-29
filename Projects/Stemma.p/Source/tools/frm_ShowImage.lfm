@@ -1,0 +1,67 @@
+object frmShowImage: TfrmShowImage
+  Left = 754
+  Height = 262
+  Top = 412
+  Width = 328
+  ActiveControl = Memo
+  BorderIcons = [biSystemMenu]
+  Caption = 'frmShowImage'
+  ClientHeight = 262
+  ClientWidth = 328
+  Menu = MainMenu1
+  OnResize = FormResize
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object Image: TImage
+    Left = 0
+    Height = 240
+    Top = 0
+    Width = 320
+    Proportional = True
+    Stretch = True
+  end
+  object Memo: TMemo
+    Left = 8
+    Height = 186
+    Top = 8
+    Width = 312
+    Lines.Strings = (
+      'Memo'
+    )
+    ScrollBars = ssVertical
+    TabOrder = 0
+  end
+  object btnOK: TBitBtn
+    Left = 144
+    Height = 38
+    Top = 200
+    Width = 85
+    Default = True
+    DefaultCaption = True
+    Kind = bkOK
+    ModalResult = 1
+    TabOrder = 1
+  end
+  object btnCancel: TBitBtn
+    Left = 232
+    Height = 38
+    Top = 200
+    Width = 85
+    Cancel = True
+    DefaultCaption = True
+    Kind = bkCancel
+    ModalResult = 2
+    TabOrder = 2
+  end
+  object MainMenu1: TMainMenu
+    left = 57
+    top = 192
+    object mniQuit: TMenuItem
+      Caption = '&Quit'
+      ShortCut = 121
+      OnClick = mniQuitClick
+    end
+  end
+end

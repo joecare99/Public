@@ -1,0 +1,534 @@
+object frmEditEvents: TfrmEditEvents
+  Left = 217
+  Height = 695
+  Top = 2
+  Width = 630
+  ActiveControl = PD
+  BorderIcons = []
+  BorderStyle = bsDialog
+  Caption = 'Modification d''un événement'
+  ClientHeight = 695
+  ClientWidth = 630
+  Menu = MainMenu1
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object M: TMemo
+    Left = 88
+    Height = 58
+    Top = 280
+    Width = 528
+    Lines.Strings = (
+      'M'
+    )
+    OnEditingDone = MEditingDone
+    ScrollBars = ssAutoVertical
+    TabOrder = 10
+  end
+  object Label4: TLabel
+    Left = 16
+    Height = 15
+    Top = 344
+    Width = 38
+    Caption = 'Phrase:'
+    ParentColor = False
+  end
+  object P2: TMemo
+    Left = 88
+    Height = 58
+    Top = 344
+    Width = 528
+    Lines.Strings = (
+      'P'
+    )
+    ReadOnly = True
+    ScrollBars = ssAutoVertical
+    TabOrder = 11
+    TabStop = False
+  end
+  object Label5: TLabel
+    Left = 16
+    Height = 15
+    Top = 152
+    Width = 24
+    Caption = 'Date'
+    ParentColor = False
+  end
+  object Label9: TLabel
+    Left = 88
+    Height = 15
+    Top = 152
+    Width = 85
+    Caption = 'de présentation:'
+    ParentColor = False
+  end
+  object Label10: TLabel
+    Left = 352
+    Height = 15
+    Top = 152
+    Width = 30
+    Caption = 'de tri:'
+    ParentColor = False
+  end
+  object PD: TEdit
+    Left = 88
+    Height = 23
+    Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
+    Top = 168
+    Width = 264
+    OnEditingDone = PDEditingDone
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 2
+    Text = 'PD'
+  end
+  object PD2: TEdit
+    Left = 88
+    Height = 23
+    Top = 176
+    Width = 232
+    ReadOnly = True
+    TabStop = False
+    TabOrder = 13
+    Text = 'PD2'
+    Visible = False
+  end
+  object SD: TEdit
+    Left = 352
+    Height = 23
+    Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
+    Top = 168
+    Width = 264
+    OnEditingDone = SDEditingDone
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 3
+    Text = 'SD'
+  end
+  object SD2: TEdit
+    Left = 384
+    Height = 23
+    Top = 176
+    Width = 232
+    ReadOnly = True
+    TabStop = False
+    TabOrder = 15
+    Text = 'SD2'
+    Visible = False
+  end
+  object TableauCitations: TStringGrid
+    Left = 88
+    Height = 120
+    Top = 408
+    Width = 528
+    ColCount = 4
+    Columns = <    
+      item
+        Title.Caption = 'Source'
+        Width = 100
+      end    
+      item
+        Title.Caption = 'Description'
+        Width = 391
+      end    
+      item
+        Title.Caption = 'Q'
+        Width = 15
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = PopupMenu2
+    TabOrder = 14
+    TabStop = False
+    OnDblClick = TableauCitationsDblClick
+    ColWidths = (
+      1
+      100
+      391
+      15
+    )
+  end
+  object Label7: TLabel
+    Left = 16
+    Height = 15
+    Top = 408
+    Width = 60
+    Caption = 'Références:'
+    ParentColor = False
+  end
+  object Y: TComboBox
+    Left = 88
+    Height = 23
+    Top = 16
+    Width = 96
+    AutoComplete = True
+    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+    ItemHeight = 15
+    OnChange = YChange
+    Style = csDropDownList
+    TabOrder = 0
+    TabStop = False
+  end
+  object Label1: TLabel
+    Left = 16
+    Height = 15
+    Top = 16
+    Width = 28
+    Caption = 'Type:'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 16
+    Height = 15
+    Top = 280
+    Width = 38
+    Caption = 'Mémo:'
+    ParentColor = False
+  end
+  object Role: TEdit
+    Left = 448
+    Height = 23
+    Top = 8
+    Width = 80
+    TabStop = False
+    TabOrder = 12
+    Text = 'Role'
+    Visible = False
+  end
+  object Label8: TLabel
+    Left = 16
+    Height = 15
+    Top = 200
+    Width = 25
+    Caption = 'Lieu:'
+    ParentColor = False
+  end
+  object L1: TEdit
+    Left = 88
+    Height = 23
+    Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
+    Top = 224
+    Width = 264
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 6
+    Text = 'PD'
+  end
+  object L2: TEdit
+    Left = 352
+    Height = 23
+    Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
+    Top = 224
+    Width = 264
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 7
+    Text = 'PD'
+  end
+  object L3: TEdit
+    Left = 88
+    Height = 23
+    Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
+    Top = 248
+    Width = 264
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 8
+    Text = 'PD'
+  end
+  object L4: TEdit
+    Left = 352
+    Height = 23
+    Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
+    Top = 248
+    Width = 264
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 9
+    Text = 'PD'
+  end
+  object L0: TEdit
+    Left = 128
+    Height = 23
+    Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
+    Top = 200
+    Width = 488
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 5
+    Text = 'PD'
+  end
+  object X: TEdit
+    Left = 360
+    Height = 23
+    Top = 9
+    Width = 80
+    TabStop = False
+    TabOrder = 16
+    Text = 'X'
+    Visible = False
+  end
+  object TableauTemoins: TStringGrid
+    Left = 88
+    Height = 104
+    Top = 48
+    Width = 528
+    Columns = <    
+      item
+        Title.Caption = 'Rôle'
+        Width = 75
+      end    
+      item
+        Title.Caption = '#'
+        Width = 75
+      end    
+      item
+        Title.Caption = 'Nom'
+        Width = 356
+      end    
+      item
+        Title.Caption = 'X'
+        Visible = False
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = PopupMenu1
+    TabOrder = 1
+    TabStop = False
+    OnDblClick = TableauTemoinsDblClick
+    OnDrawCell = TableauTemoinsDrawCell
+    ColWidths = (
+      1
+      75
+      75
+      356
+      0
+    )
+  end
+  object Label11: TLabel
+    Left = 16
+    Height = 15
+    Top = 48
+    Width = 48
+    Caption = 'Témoins:'
+    ParentColor = False
+  end
+  object YY: TEdit
+    Left = 296
+    Height = 23
+    Top = 9
+    Width = 56
+    TabStop = False
+    TabOrder = 17
+    Text = 'YY'
+    Visible = False
+  end
+  object Label6: TLabel
+    Left = 24
+    Height = 15
+    Top = 360
+    Width = 42
+    Caption = '(défaut)'
+    ParentColor = False
+    Visible = False
+  end
+  object LA: TEdit
+    Left = 88
+    Height = 23
+    Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
+    Top = 200
+    Width = 40
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 4
+    Text = 'PD'
+  end
+  object Label12: TLabel
+    Left = 16
+    Height = 15
+    Top = 536
+    Width = 64
+    Caption = 'Documents:'
+    ParentColor = False
+  end
+  object TableauExhibits: TStringGrid
+    Left = 88
+    Height = 96
+    Top = 536
+    Width = 528
+    Columns = <    
+      item
+        Title.Caption = '*'
+        Width = 17
+      end    
+      item
+        Title.Caption = 'Titre'
+        Width = 443
+      end    
+      item
+        Title.Caption = 'Type'
+        Visible = False
+      end    
+      item
+        Title.Caption = 'Format'
+        Width = 46
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = PopupMenu3
+    TabOrder = 18
+    OnDblClick = Modifier2Click
+    ColWidths = (
+      1
+      17
+      443
+      0
+      46
+    )
+  end
+  object Button1: TBitBtn
+    Left = 461
+    Height = 25
+    Top = 640
+    Width = 75
+    Caption = 'Ok'
+    Default = True
+    ModalResult = 1
+    OnClick = Button1Click
+    TabOrder = 19
+  end
+  object Button2: TBitBtn
+    Left = 541
+    Height = 25
+    Top = 640
+    Width = 75
+    Cancel = True
+    Caption = 'Annul.'
+    ModalResult = 2
+    TabOrder = 20
+  end
+  object No: TSpinEdit
+    Left = 536
+    Height = 23
+    Top = 8
+    Width = 80
+    TabStop = False
+    TabOrder = 21
+    Visible = False
+  end
+  object PopupMenu1: TPopupMenu
+    left = 68
+    top = 106
+    object AjouterTemoin: TMenuItem
+      Caption = '&Ajouter'
+      ShortCut = 115
+      OnClick = AjouterTemoinClick
+    end
+    object ModifierTemoin: TMenuItem
+      Caption = '&Modifier'
+      ShortCut = 116
+      OnClick = TableauTemoinsDblClick
+    end
+    object SupprimerTemoin: TMenuItem
+      Caption = '&Supprimer'
+      ShortCut = 117
+      OnClick = SupprimerTemoinClick
+    end
+  end
+  object PopupMenu2: TPopupMenu
+    left = 64
+    top = 480
+    object Ajouter1: TMenuItem
+      Caption = '&Ajouter'
+      ShortCut = 118
+      OnClick = Ajouter1Click
+    end
+    object Modifier1: TMenuItem
+      Caption = '&Modifier'
+      ShortCut = 119
+      OnClick = TableauCitationsDblClick
+    end
+    object Supprimer1: TMenuItem
+      Caption = '&Supprimer'
+      ShortCut = 120
+      OnClick = Supprimer1Click
+    end
+  end
+  object MainMenu1: TMainMenu
+    left = 16
+    top = 456
+    object MenuItem12: TMenuItem
+      Caption = 'Repeat'
+      ShortCut = 114
+      OnClick = MenuItem12Click
+    end
+    object MenuItem11: TMenuItem
+      Caption = '&Quit'
+      ShortCut = 121
+      OnClick = MenuItem11Click
+    end
+    object MenuItem1: TMenuItem
+      Caption = '&Témoins'
+      object MenuItem3: TMenuItem
+        Caption = '&Ajouter'
+        ShortCut = 115
+        OnClick = AjouterTemoinClick
+      end
+      object MenuItem4: TMenuItem
+        Caption = '&Modifier'
+        ShortCut = 116
+        OnClick = TableauTemoinsDblClick
+      end
+      object MenuItem5: TMenuItem
+        Caption = '&Supprimer'
+        ShortCut = 117
+        OnClick = SupprimerTemoinClick
+      end
+    end
+    object MenuItem2: TMenuItem
+      Caption = '&Références'
+      object MenuItem6: TMenuItem
+        Caption = '&Ajouter'
+        ShortCut = 118
+        OnClick = Ajouter1Click
+      end
+      object MenuItem7: TMenuItem
+        Caption = '&Modifier'
+        ShortCut = 119
+        OnClick = TableauCitationsDblClick
+      end
+      object MenuItem8: TMenuItem
+        Caption = '&Supprimer'
+        ShortCut = 120
+        OnClick = Supprimer1Click
+      end
+    end
+  end
+  object PopupMenu3: TPopupMenu
+    left = 48
+    top = 600
+    object Ajouter2: TMenuItem
+      Caption = '&Ajouter'
+      OnClick = Ajouter2Click
+    end
+    object Modifier2: TMenuItem
+      Caption = '&Modifier'
+      OnClick = Modifier2Click
+    end
+    object Supprimer2: TMenuItem
+      Caption = '&Supprimer'
+      OnClick = Supprimer2Click
+    end
+    object MenuItem9: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem10: TMenuItem
+      Caption = 'Visualiser'
+      OnClick = MenuItem10Click
+    end
+  end
+end

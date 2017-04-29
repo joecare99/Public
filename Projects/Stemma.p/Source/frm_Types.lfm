@@ -1,0 +1,98 @@
+object frmTypes: TfrmTypes
+  Left = 498
+  Height = 536
+  Top = 192
+  Width = 752
+  ActiveControl = TableauTypes
+  BorderIcons = []
+  Caption = 'Types d''événements'
+  ClientHeight = 536
+  ClientWidth = 752
+  OnResize = FormResize
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object TableauTypes: TStringGrid
+    Left = 8
+    Height = 488
+    Top = 8
+    Width = 1080
+    ColCount = 6
+    Columns = <    
+      item
+        ReadOnly = True
+        Title.Caption = '#'
+        Width = 40
+      end    
+      item
+        Title.Caption = 'Titre'
+        Width = 186
+      end    
+      item
+        Title.Caption = 'Type'
+        Width = 40
+      end    
+      item
+        Title.Caption = 'Phrase'
+        Width = 728
+      end    
+      item
+        ReadOnly = True
+        Title.Caption = 'Utilisation'
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goEditing, goSmoothScroll]
+    PopupMenu = PopupMenu1
+    RowCount = 100
+    TabOrder = 0
+    OnDblClick = MenuItem4Click
+    OnEditingDone = TableauTypesEditingDone
+    ColWidths = (
+      1
+      40
+      186
+      40
+      728
+      64
+    )
+  end
+  object Button1: TButton
+    Left = 1016
+    Height = 25
+    Top = 504
+    Width = 75
+    Cancel = True
+    Caption = 'Ok'
+    Default = True
+    ModalResult = 1
+    TabOrder = 1
+  end
+  object PopupMenu1: TPopupMenu
+    left = 104
+    top = 480
+    object MenuItem8: TMenuItem
+      Caption = 'Utilisation'
+      OnClick = MenuItem8Click
+    end
+    object MenuItem1: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem2: TMenuItem
+      Caption = 'Ajouter'
+      ShortCut = 115
+      OnClick = MenuItem2Click
+    end
+    object MenuItem4: TMenuItem
+      Caption = 'Modifier'
+      ShortCut = 116
+      OnClick = MenuItem4Click
+    end
+    object MenuItem3: TMenuItem
+      Caption = 'Supprimer'
+      ShortCut = 117
+      OnClick = MenuItem3Click
+    end
+  end
+end

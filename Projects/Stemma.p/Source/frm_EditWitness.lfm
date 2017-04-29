@@ -1,0 +1,191 @@
+object frmEditWitness: TfrmEditWitness
+  Left = 221
+  Height = 287
+  Top = 370
+  Width = 628
+  ActiveControl = Role
+  BorderIcons = []
+  BorderStyle = bsDialog
+  Caption = 'Modification d''un témoin'
+  ClientHeight = 287
+  ClientWidth = 628
+  Menu = MainMenu1
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object P: TMemo
+    Left = 88
+    Height = 58
+    Top = 88
+    Width = 528
+    Lines.Strings = (
+      'P'
+    )
+    OnEditingDone = PEditingDone
+    ScrollBars = ssAutoVertical
+    TabOrder = 3
+  end
+  object Label6: TLabel
+    Left = 24
+    Height = 30
+    Top = 104
+    Width = 72
+    Caption = '(défaut)'
+    ParentColor = False
+    Visible = False
+  end
+  object Label4: TLabel
+    Left = 16
+    Height = 30
+    Top = 88
+    Width = 67
+    Caption = 'Phrase:'
+    ParentColor = False
+  end
+  object P2: TMemo
+    Left = 88
+    Height = 58
+    Top = 160
+    Width = 528
+    Lines.Strings = (
+      'P2'
+    )
+    ReadOnly = True
+    ScrollBars = ssAutoVertical
+    TabOrder = 1
+    TabStop = False
+  end
+  object P1: TMemo
+    Left = 88
+    Height = 58
+    Top = 88
+    Width = 528
+    Lines.Strings = (
+      'P'
+    )
+    ReadOnly = True
+    ScrollBars = ssAutoVertical
+    TabOrder = 2
+    TabStop = False
+    Visible = False
+  end
+  object Label2: TLabel
+    Left = 16
+    Height = 30
+    Top = 20
+    Width = 72
+    Caption = 'Témoin:'
+    ParentColor = False
+  end
+  object NomI: TEdit
+    Left = 192
+    Height = 38
+    Top = 16
+    Width = 424
+    ReadOnly = True
+    TabStop = False
+    TabOrder = 4
+    Text = 'Nom de I'
+  end
+  object Label5: TLabel
+    Left = 16
+    Height = 30
+    Top = 160
+    Width = 79
+    Caption = 'Résultat:'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 17
+    Height = 30
+    Top = 48
+    Width = 45
+    Caption = 'Rôle:'
+    ParentColor = False
+  end
+  object Role: TComboBox
+    Left = 88
+    Height = 38
+    Top = 48
+    Width = 96
+    AutoComplete = True
+    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+    ItemHeight = 30
+    OnChange = RoleChange
+    Style = csDropDownList
+    TabOrder = 0
+  end
+  object btnOK: TBitBtn
+    Left = 432
+    Height = 40
+    Top = 224
+    Width = 91
+    Default = True
+    DefaultCaption = True
+    Kind = bkOK
+    ModalResult = 1
+    OnClick = btnOKClick
+    TabOrder = 5
+  end
+  object btnCancel: TBitBtn
+    Left = 528
+    Height = 40
+    Top = 224
+    Width = 88
+    Cancel = True
+    DefaultCaption = True
+    Kind = bkCancel
+    ModalResult = 2
+    TabOrder = 6
+  end
+  object I: TSpinEdit
+    Left = 88
+    Height = 38
+    Top = 16
+    Width = 96
+    OnEditingDone = IEditingDone
+    TabOrder = 7
+  end
+  object E: TSpinEdit
+    Left = 536
+    Height = 38
+    Top = 36
+    Width = 80
+    TabStop = False
+    TabOrder = 8
+    Visible = False
+  end
+  object X: TSpinEdit
+    Left = 536
+    Height = 38
+    Top = 64
+    Width = 80
+    TabStop = False
+    TabOrder = 9
+    Visible = False
+  end
+  object No: TSpinEdit
+    Left = 536
+    Height = 38
+    Top = 8
+    Width = 80
+    TabStop = False
+    TabOrder = 10
+    Visible = False
+  end
+  object MainMenu1: TMainMenu
+    left = 25
+    top = 200
+    object MenuItem2: TMenuItem
+      Caption = 'Repeat'
+      ShortCut = 114
+      OnClick = MenuItem2Click
+    end
+    object MenuItem1: TMenuItem
+      Caption = '&Quit'
+      ShortCut = 121
+      OnClick = MenuItem1Click
+    end
+  end
+end

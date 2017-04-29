@@ -1,0 +1,353 @@
+object frmEditParents: TfrmEditParents
+  Left = 428
+  Height = 418
+  Top = 186
+  Width = 625
+  ActiveControl = Y
+  BorderIcons = []
+  BorderStyle = bsDialog
+  Caption = 'Modification de Relation'
+  ClientHeight = 418
+  ClientWidth = 625
+  Menu = MainMenu1
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object Button1: TButton
+    Left = 461
+    Height = 25
+    Top = 408
+    Width = 75
+    Caption = 'Ok'
+    Default = True
+    ModalResult = 1
+    OnClick = Button1Click
+    TabOrder = 7
+  end
+  object Y: TComboBox
+    Left = 88
+    Height = 38
+    Top = 16
+    Width = 96
+    AutoComplete = True
+    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+    ItemHeight = 30
+    OnChange = YChange
+    Style = csDropDownList
+    TabOrder = 0
+  end
+  object Label1: TLabel
+    Left = 16
+    Height = 30
+    Top = 16
+    Width = 48
+    Caption = 'Type:'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 16
+    Height = 30
+    Top = 52
+    Width = 64
+    Caption = 'Parent:'
+    ParentColor = False
+  end
+  object NomB: TEdit
+    Left = 192
+    Height = 38
+    Top = 48
+    Width = 424
+    ReadOnly = True
+    TabStop = False
+    TabOrder = 11
+    Text = 'Nom de B'
+  end
+  object Label3: TLabel
+    Left = 16
+    Height = 30
+    Top = 104
+    Width = 65
+    Caption = 'Mémo:'
+    ParentColor = False
+  end
+  object M: TMemo
+    Left = 88
+    Height = 58
+    Top = 104
+    Width = 528
+    Lines.Strings = (
+      'M'
+    )
+    OnEditingDone = MEditingDone
+    ScrollBars = ssAutoVertical
+    TabOrder = 3
+  end
+  object Label4: TLabel
+    Left = 16
+    Height = 30
+    Top = 168
+    Width = 67
+    Caption = 'Phrase:'
+    ParentColor = False
+  end
+  object P: TMemo
+    Left = 88
+    Height = 58
+    Top = 168
+    Width = 528
+    Lines.Strings = (
+      'P'
+    )
+    OnDblClick = PDblClick
+    OnEditingDone = PEditingDone
+    ScrollBars = ssAutoVertical
+    TabOrder = 4
+  end
+  object Label5: TLabel
+    Left = 16
+    Height = 30
+    Top = 232
+    Width = 103
+    Caption = 'Date de tri:'
+    ParentColor = False
+  end
+  object SD: TEdit
+    Left = 88
+    Height = 38
+    Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
+    Top = 232
+    Width = 232
+    OnEditingDone = SDEditingDone
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 5
+    Text = 'SD'
+  end
+  object Y2: TComboBox
+    Left = 192
+    Height = 38
+    Top = 16
+    Width = 96
+    ItemHeight = 30
+    OnChange = YChange
+    TabOrder = 8
+    TabStop = False
+    Text = 'Y'
+    Visible = False
+  end
+  object P2: TMemo
+    Left = 88
+    Height = 58
+    Top = 168
+    Width = 528
+    Lines.Strings = (
+      'P'
+    )
+    OnDblClick = P2DblClick
+    ReadOnly = True
+    ScrollBars = ssAutoVertical
+    TabOrder = 9
+    TabStop = False
+    Visible = False
+  end
+  object Label6: TLabel
+    Left = 24
+    Height = 30
+    Top = 184
+    Width = 72
+    Caption = '(défaut)'
+    ParentColor = False
+    Visible = False
+  end
+  object P1: TMemo
+    Left = 88
+    Height = 58
+    Top = 168
+    Width = 528
+    Lines.Strings = (
+      'P'
+    )
+    OnDblClick = PDblClick
+    OnEditingDone = PEditingDone
+    ScrollBars = ssAutoVertical
+    TabOrder = 10
+    TabStop = False
+    Visible = False
+  end
+  object SD2: TEdit
+    Left = 72
+    Height = 38
+    Top = 256
+    Width = 232
+    ReadOnly = True
+    TabStop = False
+    TabOrder = 12
+    Text = 'SD2'
+    Visible = False
+  end
+  object TableauCitations: TStringGrid
+    Left = 88
+    Height = 120
+    Top = 272
+    Width = 528
+    ColCount = 4
+    Columns = <    
+      item
+        Title.Caption = 'Source'
+        Width = 100
+      end    
+      item
+        Title.Caption = 'Description'
+        Width = 391
+      end    
+      item
+        Title.Caption = 'Q'
+        Width = 15
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = PopupMenu2
+    TabOrder = 6
+    OnDblClick = TableauCitationsDblClick
+    ColWidths = (
+      1
+      100
+      391
+      15
+    )
+  end
+  object Label7: TLabel
+    Left = 16
+    Height = 30
+    Top = 280
+    Width = 106
+    Caption = 'Références:'
+    ParentColor = False
+  end
+  object Label8: TLabel
+    Left = 17
+    Height = 30
+    Top = 76
+    Width = 65
+    Caption = 'Enfant:'
+    ParentColor = False
+  end
+  object NomA: TEdit
+    Left = 192
+    Height = 38
+    Top = 72
+    Width = 424
+    ReadOnly = True
+    TabStop = False
+    TabOrder = 13
+    Text = 'Nom de A'
+  end
+  object B: TMaskEdit
+    Left = 88
+    Height = 38
+    Top = 48
+    Width = 96
+    CharCase = ecNormal
+    MaxLength = 6
+    TabOrder = 1
+    OnEditingDone = BEditingDone
+    EditMask = '######;0; '
+    Text = 'B'
+    SpaceChar = ' '
+  end
+  object A: TMaskEdit
+    Left = 88
+    Height = 38
+    Top = 72
+    Width = 96
+    CharCase = ecNormal
+    MaxLength = 6
+    TabOrder = 2
+    OnEditingDone = AEditingDone
+    EditMask = '######;0; '
+    Text = 'A'
+    SpaceChar = ' '
+  end
+  object X: TEdit
+    Left = 448
+    Height = 38
+    Top = 9
+    Width = 80
+    TabStop = False
+    TabOrder = 14
+    Text = 'No'
+    Visible = False
+  end
+  object Button2: TButton
+    Left = 541
+    Height = 25
+    Top = 408
+    Width = 75
+    Cancel = True
+    Caption = 'Annul.'
+    ModalResult = 2
+    TabOrder = 15
+  end
+  object No: TSpinEdit
+    Left = 536
+    Height = 38
+    Top = 8
+    Width = 80
+    TabStop = False
+    TabOrder = 16
+    Visible = False
+  end
+  object PopupMenu2: TPopupMenu
+    left = 80
+    top = 376
+    object Ajouter1: TMenuItem
+      Caption = '&Ajouter'
+      ShortCut = 118
+      OnClick = Ajouter1Click
+    end
+    object Modifier1: TMenuItem
+      Caption = '&Modifier'
+      ShortCut = 119
+      OnClick = TableauCitationsDblClick
+    end
+    object Supprimer1: TMenuItem
+      Caption = '&Supprimer'
+      ShortCut = 120
+      OnClick = Supprimer1Click
+    end
+  end
+  object MainMenu1: TMainMenu
+    left = 24
+    top = 336
+    object MenuItem6: TMenuItem
+      Caption = 'Repeat'
+      ShortCut = 114
+      OnClick = MenuItem6Click
+    end
+    object MenuItem5: TMenuItem
+      Caption = '&Quit'
+      ShortCut = 121
+      OnClick = MenuItem5Click
+    end
+    object MenuItem1: TMenuItem
+      Caption = '&Références'
+      object MenuItem2: TMenuItem
+        Caption = '&Ajouter'
+        ShortCut = 118
+        OnClick = Ajouter1Click
+      end
+      object MenuItem3: TMenuItem
+        Caption = '&Modifier'
+        ShortCut = 119
+        OnClick = TableauCitationsDblClick
+      end
+      object MenuItem4: TMenuItem
+        Caption = '&Supprimer'
+        ShortCut = 120
+        OnClick = Supprimer1Click
+      end
+    end
+  end
+end

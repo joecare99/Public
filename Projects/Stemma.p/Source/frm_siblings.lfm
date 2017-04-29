@@ -1,0 +1,63 @@
+object frmSiblings: TfrmSiblings
+  Left = 768
+  Height = 240
+  Top = 480
+  Width = 320
+  ActiveControl = TableauFratrie
+  BorderIcons = []
+  Caption = 'Fratrie'
+  ClientHeight = 240
+  ClientWidth = 320
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object TableauFratrie: TStringGrid
+    Left = 0
+    Height = 240
+    Top = 0
+    Width = 678
+    Columns = <    
+      item
+        Title.Caption = 'Frère/Soeur'
+      end    
+      item
+        Title.Caption = 'IdEnfant'
+        Visible = False
+      end    
+      item
+        Title.Caption = 'Q'
+      end    
+      item
+        Title.Caption = '+'
+      end>
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = PopupMenuFratrie
+    TabOrder = 0
+    OnDblClick = MenuItem1Click
+    ColWidths = (
+      4
+      64
+      0
+      64
+      64
+    )
+  end
+  object PopupMenuFratrie: TPopupMenu
+    left = 292
+    top = 98
+    object MenuItem1: TMenuItem
+      Caption = '&Aller à'
+      OnClick = MenuItem1Click
+    end
+    object MenuItem2: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem3: TMenuItem
+      Caption = 'Ajouter'
+      ShortCut = 115
+    end
+  end
+end

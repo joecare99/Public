@@ -1,0 +1,90 @@
+object FormSelectPersonne: TFormSelectPersonne
+  Left = 471
+  Height = 341
+  Top = 237
+  Width = 456
+  ActiveControl = Liste
+  BorderStyle = bsDialog
+  Caption = 'FormSelectPersonne'
+  ClientHeight = 341
+  ClientWidth = 456
+  Menu = MainMenu1
+  OnShow = FormShow
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object edtName: TEdit
+    Left = 96
+    Height = 38
+    Hint = 'Name'
+    Top = 240
+    Width = 352
+    ReadOnly = True
+    TabStop = False
+    TabOrder = 0
+  end
+  object Label1: TLabel
+    Left = 8
+    Height = 30
+    Top = 216
+    Width = 24
+    Caption = 'ou'
+    ParentColor = False
+  end
+  object Liste: TStringGrid
+    Left = 8
+    Height = 200
+    Top = 8
+    Width = 440
+    ColCount = 2
+    Columns = <    
+      item
+        Title.Caption = '#'
+      end    
+      item
+        Title.Caption = 'Name'
+        Width = 355
+      end>
+    FixedCols = 0
+    TabOrder = 1
+    OnSelection = ListeSelection
+  end
+  object btnCancel: TBitBtn
+    Left = 363
+    Height = 38
+    Top = 280
+    Width = 85
+    Cancel = True
+    DefaultCaption = True
+    Kind = bkCancel
+    ModalResult = 2
+    TabOrder = 2
+  end
+  object btnOK: TBitBtn
+    Left = 275
+    Height = 38
+    Top = 280
+    Width = 85
+    Default = True
+    DefaultCaption = True
+    Kind = bkOK
+    ModalResult = 1
+    TabOrder = 3
+  end
+  object edtNumber: TSpinEdit
+    Left = 8
+    Height = 38
+    Top = 240
+    Width = 80
+    OnEditingDone = edtNumberEditingDone
+    TabOrder = 4
+  end
+  object MainMenu1: TMainMenu
+    left = 32
+    top = 272
+    object mniQuit: TMenuItem
+      Caption = '&Quit'
+      ShortCut = 121
+      OnClick = mniQuitClick
+    end
+  end
+end

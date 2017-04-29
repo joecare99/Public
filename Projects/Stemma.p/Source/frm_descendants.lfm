@@ -1,0 +1,35 @@
+object FormDescendants: TFormDescendants
+  Left = 507
+  Height = 240
+  Top = 379
+  Width = 320
+  BorderIcons = []
+  Caption = 'Descendants'
+  ClientHeight = 240
+  ClientWidth = 320
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object Arbre: TTreeView
+    Left = 0
+    Height = 97
+    Top = 0
+    Width = 121
+    DefaultItemHeight = 18
+    PopupMenu = PopupMenuParent
+    ReadOnly = True
+    TabOrder = 0
+    OnDblClick = ArbreDblClick
+    Options = [tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
+  end
+  object PopupMenuParent: TPopupMenu
+    left = 292
+    top = 98
+    object MenuItem1: TMenuItem
+      Caption = '&Aller à'
+      OnClick = MenuItem1Click
+    end
+  end
+end

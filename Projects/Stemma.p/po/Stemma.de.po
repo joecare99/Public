@@ -1,0 +1,3808 @@
+# Joe Care, 2017.
+msgid ""
+msgstr ""
+"Project-Id-Version: Stemma\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2017-03-11 00:06+0100\n"
+"Last-Translator: Joe Care\n"
+"Language-Team: JC-Soft\n"
+"Language: de\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+"X-Generator: Poedit 1.8.12\n"
+"X-Poedit-SourceCharset: UTF-8\n"
+
+#: tapropos.lblactversion.caption
+msgid "lblActVersion"
+msgstr ""
+
+#: tapropos.lblauthor.caption
+msgctxt "tapropos.lblauthor.caption"
+msgid "par François Marchi"
+msgstr ""
+
+#: tapropos.lblcompdate.caption
+msgctxt "tapropos.lblcompdate.caption"
+msgid "Label6"
+msgstr ""
+
+#: tapropos.lbldate.caption
+msgctxt "tapropos.lbldate.caption"
+msgid "date:"
+msgstr "Datum:"
+
+#: tapropos.lblprogname.caption
+#, fuzzy
+msgctxt "tapropos.lblprogname.caption"
+msgid "Stemma"
+msgstr "Stammbaum"
+
+#: tapropos.lblversion.caption
+#, fuzzy
+msgctxt "tapropos.lblversion.caption"
+msgid "version:"
+msgstr "Version:"
+
+#: tapropos.lblwebadress.caption
+msgctxt "tapropos.lblwebadress.caption"
+msgid "http://www.genealogiequebec.info"
+msgstr ""
+
+#: tconnexiondb.hostname.text
+msgctxt "tconnexiondb.hostname.text"
+msgid "Edit1"
+msgstr ""
+
+#: tconnexiondb.label1.caption
+msgctxt "tconnexiondb.label1.caption"
+msgid "Usager"
+msgstr ""
+
+#: tconnexiondb.label2.caption
+msgctxt "tconnexiondb.label2.caption"
+msgid "Serveur"
+msgstr ""
+
+#: tconnexiondb.label3.caption
+msgctxt "tconnexiondb.label3.caption"
+msgid "Mot de passe"
+msgstr "Passwort"
+
+#: tconnexiondb.ok.caption
+msgctxt "tconnexiondb.ok.caption"
+msgid "Ok"
+msgstr "Ok"
+
+#: tconnexiondb.password.text
+msgctxt "TCONNEXIONDB.PASSWORD.TEXT"
+msgid "Edit1"
+msgstr ""
+
+#: tconnexiondb.usager.text
+msgctxt "TCONNEXIONDB.USAGER.TEXT"
+msgid "Edit1"
+msgstr ""
+
+#: teditcitations.button1.caption
+msgctxt "TEDITCITATIONS.BUTTON1.CAPTION"
+msgid "Ok"
+msgstr "Ok"
+
+#: teditcitations.button2.caption
+msgctxt "teditcitations.button2.caption"
+msgid "Annul."
+msgstr "Abbruch"
+
+#: teditcitations.code.text
+msgid "Code"
+msgstr ""
+
+#: teditcitations.label1.caption
+msgid "Source:"
+msgstr ""
+
+#: teditcitations.label2.caption
+msgctxt "teditcitations.label2.caption"
+msgid "Description:"
+msgstr ""
+
+#: teditcitations.label3.caption
+msgid "Qualité:"
+msgstr ""
+
+#: teditcitations.menuitem1.caption
+msgctxt "teditcitations.menuitem1.caption"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: teditcitations.menuitem2.caption
+msgctxt "teditcitations.menuitem2.caption"
+msgid "Repeat"
+msgstr "Wiederholung"
+
+#: teditcitations.source1.text
+msgid "Source1"
+msgstr ""
+
+#: teditevenement.ajouter1.caption
+msgctxt "TEDITEVENEMENT.AJOUTER1.CAPTION"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: teditevenement.ajouter2.caption
+msgctxt "TEDITEVENEMENT.AJOUTER2.CAPTION"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: teditevenement.ajoutertemoin.caption
+msgctxt "teditevenement.ajoutertemoin.caption"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: teditevenement.button1.caption
+#, fuzzy
+msgctxt "TEDITEVENEMENT.BUTTON1.CAPTION"
+msgid "Ok"
+msgstr "Ok"
+
+#: teditevenement.button2.caption
+msgctxt "TEDITEVENEMENT.BUTTON2.CAPTION"
+msgid "Annul."
+msgstr "Abbruch"
+
+#: teditevenement.l0.hint
+msgctxt "TEDITEVENEMENT.L0.HINT"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: teditevenement.l0.text
+msgctxt "TEDITEVENEMENT.L0.TEXT"
+msgid "PD"
+msgstr ""
+
+#: teditevenement.l1.hint
+msgctxt "TEDITEVENEMENT.L1.HINT"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: teditevenement.l1.text
+msgctxt "TEDITEVENEMENT.L1.TEXT"
+msgid "PD"
+msgstr ""
+
+#: teditevenement.l2.hint
+msgctxt "TEDITEVENEMENT.L2.HINT"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: teditevenement.l2.text
+msgctxt "TEDITEVENEMENT.L2.TEXT"
+msgid "PD"
+msgstr ""
+
+#: teditevenement.l3.hint
+msgctxt "TEDITEVENEMENT.L3.HINT"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: teditevenement.l3.text
+msgctxt "TEDITEVENEMENT.L3.TEXT"
+msgid "PD"
+msgstr ""
+
+#: teditevenement.l4.hint
+msgctxt "TEDITEVENEMENT.L4.HINT"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: teditevenement.l4.text
+msgctxt "TEDITEVENEMENT.L4.TEXT"
+msgid "PD"
+msgstr ""
+
+#: teditevenement.la.hint
+msgctxt "TEDITEVENEMENT.LA.HINT"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: teditevenement.la.text
+msgctxt "TEDITEVENEMENT.LA.TEXT"
+msgid "PD"
+msgstr ""
+
+#: teditevenement.label1.caption
+msgctxt "teditevenement.label1.caption"
+msgid "Type:"
+msgstr "Art:"
+
+#: teditevenement.label10.caption
+msgctxt "teditevenement.label10.caption"
+msgid "de tri:"
+msgstr ""
+
+#: teditevenement.label11.caption
+msgctxt "teditevenement.label11.caption"
+msgid "Témoins:"
+msgstr ""
+
+#: teditevenement.label12.caption
+msgctxt "teditevenement.label12.caption"
+msgid "Documents:"
+msgstr ""
+
+#: teditevenement.label3.caption
+msgctxt "teditevenement.label3.caption"
+msgid "Mémo:"
+msgstr "Notitz:"
+
+#: teditevenement.label4.caption
+msgctxt "teditevenement.label4.caption"
+msgid "Phrase:"
+msgstr "Satz:"
+
+#: teditevenement.label5.caption
+msgctxt "teditevenement.label5.caption"
+msgid "Date"
+msgstr "Datum"
+
+#: teditevenement.label6.caption
+msgctxt "teditevenement.label6.caption"
+msgid "(défaut)"
+msgstr "(Fehler)"
+
+#: teditevenement.label7.caption
+msgctxt "teditevenement.label7.caption"
+msgid "Références:"
+msgstr ""
+
+#: teditevenement.label8.caption
+msgctxt "teditevenement.label8.caption"
+msgid "Lieu:"
+msgstr "Ort:"
+
+#: teditevenement.label9.caption
+msgctxt "teditevenement.label9.caption"
+msgid "de présentation:"
+msgstr ""
+
+#: teditevenement.menuitem1.caption
+msgctxt "teditevenement.menuitem1.caption"
+msgid "&Témoins"
+msgstr ""
+
+#: teditevenement.menuitem10.caption
+msgctxt "teditevenement.menuitem10.caption"
+msgid "Visualiser"
+msgstr ""
+
+#: teditevenement.menuitem11.caption
+msgctxt "TEDITEVENEMENT.MENUITEM11.CAPTION"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: teditevenement.menuitem12.caption
+msgctxt "TEDITEVENEMENT.MENUITEM12.CAPTION"
+msgid "Repeat"
+msgstr "Wiederholung"
+
+#: teditevenement.menuitem2.caption
+msgctxt "teditevenement.menuitem2.caption"
+msgid "&Références"
+msgstr ""
+
+#: teditevenement.menuitem3.caption
+msgctxt "TEDITEVENEMENT.MENUITEM3.CAPTION"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: teditevenement.menuitem4.caption
+msgctxt "TEDITEVENEMENT.MENUITEM4.CAPTION"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: teditevenement.menuitem5.caption
+msgctxt "TEDITEVENEMENT.MENUITEM5.CAPTION"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: teditevenement.menuitem6.caption
+msgctxt "TEDITEVENEMENT.MENUITEM6.CAPTION"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: teditevenement.menuitem7.caption
+msgctxt "TEDITEVENEMENT.MENUITEM7.CAPTION"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: teditevenement.menuitem8.caption
+msgctxt "TEDITEVENEMENT.MENUITEM8.CAPTION"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: teditevenement.menuitem9.caption
+msgctxt "TEDITEVENEMENT.MENUITEM9.CAPTION"
+msgid "-"
+msgstr ""
+
+#: teditevenement.modifier1.caption
+msgctxt "TEDITEVENEMENT.MODIFIER1.CAPTION"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: teditevenement.modifier2.caption
+msgctxt "TEDITEVENEMENT.MODIFIER2.CAPTION"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: teditevenement.modifiertemoin.caption
+msgctxt "teditevenement.modifiertemoin.caption"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: teditevenement.no.text
+msgctxt "TEDITEVENEMENT.NO.TEXT"
+msgid "No"
+msgstr "Nein"
+
+#: teditevenement.pd.hint
+msgctxt "teditevenement.pd.hint"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: teditevenement.pd.text
+msgctxt "teditevenement.pd.text"
+msgid "PD"
+msgstr ""
+
+#: teditevenement.pd2.text
+msgctxt "teditevenement.pd2.text"
+msgid "PD2"
+msgstr ""
+
+#: teditevenement.role.text
+msgctxt "teditevenement.role.text"
+msgid "Role"
+msgstr "Beteiligung"
+
+#: teditevenement.sd.hint
+msgctxt "TEDITEVENEMENT.SD.HINT"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: teditevenement.sd.text
+msgctxt "teditevenement.sd.text"
+msgid "SD"
+msgstr ""
+
+#: teditevenement.sd2.text
+msgctxt "teditevenement.sd2.text"
+msgid "SD2"
+msgstr ""
+
+#: teditevenement.supprimer1.caption
+msgctxt "TEDITEVENEMENT.SUPPRIMER1.CAPTION"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: teditevenement.supprimer2.caption
+msgctxt "TEDITEVENEMENT.SUPPRIMER2.CAPTION"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: teditevenement.supprimertemoin.caption
+msgctxt "teditevenement.supprimertemoin.caption"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: teditevenement.x.text
+msgctxt "teditevenement.x.text"
+msgid "X"
+msgstr ""
+
+#: teditevenement.yy.text
+msgctxt "teditevenement.yy.text"
+msgid "YY"
+msgstr ""
+
+#: teditexhibits.button1.caption
+#, fuzzy
+msgctxt "TEDITEXHIBITS.BUTTON1.CAPTION"
+msgid "Ok"
+msgstr "Ok"
+
+#: teditexhibits.button2.caption
+msgctxt "TEDITEXHIBITS.BUTTON2.CAPTION"
+msgid "Annul."
+msgstr "Abbruch"
+
+#: teditexhibits.button3.caption
+msgctxt "TEDITEXHIBITS.BUTTON3.CAPTION"
+msgid "Visualiser"
+msgstr ""
+
+#: teditexhibits.fichier.text
+msgctxt "teditexhibits.fichier.text"
+msgid "Fichier"
+msgstr "Datei"
+
+#: teditexhibits.label1.caption
+msgctxt "TEDITEXHIBITS.LABEL1.CAPTION"
+msgid "No"
+msgstr "Nein"
+
+#: teditexhibits.label2.caption
+msgctxt "teditexhibits.label2.caption"
+msgid "Titre:"
+msgstr "Titel"
+
+#: teditexhibits.label3.caption
+msgctxt "TEDITEXHIBITS.LABEL3.CAPTION"
+msgid "Description:"
+msgstr ""
+
+#: teditexhibits.label4.caption
+msgctxt "teditexhibits.label4.caption"
+msgid "Fichier:"
+msgstr "Datei:"
+
+#: teditexhibits.label5.caption
+msgctxt "teditexhibits.label5.caption"
+msgid "Type"
+msgstr "Art"
+
+#: teditexhibits.menuitem1.caption
+msgctxt "TEDITEXHIBITS.MENUITEM1.CAPTION"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: teditexhibits.n.text
+msgctxt "TEDITEXHIBITS.N.TEXT"
+msgid "Type1"
+msgstr ""
+
+#: teditexhibits.no.text
+msgctxt "TEDITEXHIBITS.NO.TEXT"
+msgid "No"
+msgstr "Nein"
+
+#: teditexhibits.opendialog.title
+msgctxt "teditexhibits.opendialog.title"
+msgid "Sélection de l'image"
+msgstr ""
+
+#: teditexhibits.primaire.caption
+msgctxt "teditexhibits.primaire.caption"
+msgid "Primaire"
+msgstr ""
+
+#: teditexhibits.titre.text
+msgctxt "teditexhibits.titre.text"
+msgid "Titre"
+msgstr "Titel"
+
+#: teditexhibits.type1.text
+msgctxt "teditexhibits.type1.text"
+msgid "Type1"
+msgstr ""
+
+#: teditnom.ajout.text
+msgctxt "TEDITNOM.AJOUT.TEXT"
+msgid "X"
+msgstr ""
+
+#: teditnom.ajouter1.caption
+msgctxt "TEDITNOM.AJOUTER1.CAPTION"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: teditnom.edtname.text
+msgctxt "teditnom.edtname.text"
+msgid "edtName"
+msgstr ""
+
+#: teditnom.label1.caption
+msgctxt "TEDITNOM.LABEL1.CAPTION"
+msgid "Type:"
+msgstr "Art:"
+
+#: teditnom.label10.caption
+msgctxt "TEDITNOM.LABEL10.CAPTION"
+msgid "de tri:"
+msgstr ""
+
+#: teditnom.label2.caption
+msgctxt "teditnom.label2.caption"
+msgid "Individu:"
+msgstr ""
+
+#: teditnom.label3.caption
+msgctxt "TEDITNOM.LABEL3.CAPTION"
+msgid "Mémo:"
+msgstr "Notitz:"
+
+#: teditnom.label4.caption
+msgctxt "TEDITNOM.LABEL4.CAPTION"
+msgid "Phrase:"
+msgstr "Satz:"
+
+#: teditnom.label5.caption
+msgctxt "TEDITNOM.LABEL5.CAPTION"
+msgid "Date"
+msgstr "Datum"
+
+#: teditnom.label6.caption
+msgctxt "TEDITNOM.LABEL6.CAPTION"
+msgid "(défaut)"
+msgstr "(Fehler)"
+
+#: teditnom.label7.caption
+msgctxt "TEDITNOM.LABEL7.CAPTION"
+msgid "Références:"
+msgstr ""
+
+#: teditnom.label9.caption
+msgctxt "TEDITNOM.LABEL9.CAPTION"
+msgid "de présentation:"
+msgstr ""
+
+#: teditnom.lblname8.caption
+msgctxt "teditnom.lblname8.caption"
+msgid "Nom:"
+msgstr ""
+
+#: teditnom.menuitem1.caption
+msgctxt "teditnom.menuitem1.caption"
+msgid "Ajouter &Titre"
+msgstr "&Titel hinzufügen"
+
+#: teditnom.menuitem10.caption
+msgctxt "TEDITNOM.MENUITEM10.CAPTION"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: teditnom.menuitem11.caption
+msgctxt "TEDITNOM.MENUITEM11.CAPTION"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: teditnom.menuitem12.caption
+msgctxt "TEDITNOM.MENUITEM12.CAPTION"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: teditnom.menuitem13.caption
+msgctxt "TEDITNOM.MENUITEM13.CAPTION"
+msgid "Ajouter &Nom"
+msgstr "&Name hinzufügen"
+
+#: teditnom.menuitem14.caption
+msgctxt "TEDITNOM.MENUITEM14.CAPTION"
+msgid "Ajouter &Titre"
+msgstr "&Titel hinzufügen"
+
+#: teditnom.menuitem15.caption
+msgctxt "TEDITNOM.MENUITEM15.CAPTION"
+msgid "Ajouter &Prénom"
+msgstr "&Vorname hinzufügen"
+
+#: teditnom.menuitem2.caption
+msgctxt "teditnom.menuitem2.caption"
+msgid "Ajouter &Prénom"
+msgstr "&Vorname hinzufügen"
+
+#: teditnom.menuitem3.caption
+msgctxt "teditnom.menuitem3.caption"
+msgid "Ajouter &Nom"
+msgstr "&Name hinzufügen"
+
+#: teditnom.menuitem4.caption
+msgctxt "teditnom.menuitem4.caption"
+msgid "Ajouter &Suffixe"
+msgstr "&Suffix hinzufügen"
+
+#: teditnom.menuitem5.caption
+msgctxt "TEDITNOM.MENUITEM5.CAPTION"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: teditnom.menuitem6.caption
+msgctxt "TEDITNOM.MENUITEM6.CAPTION"
+msgid "Repeat"
+msgstr "Wiederholung"
+
+#: teditnom.menuitem7.caption
+msgctxt "teditnom.menuitem7.caption"
+msgid "Nom"
+msgstr "Name"
+
+#: teditnom.menuitem8.caption
+msgctxt "teditnom.menuitem8.caption"
+msgid "Ajouter Suffi&xe"
+msgstr "&Suffix hinzufügen"
+
+#: teditnom.menuitem9.caption
+msgctxt "TEDITNOM.MENUITEM9.CAPTION"
+msgid "&Références"
+msgstr ""
+
+#: teditnom.modifier1.caption
+msgctxt "TEDITNOM.MODIFIER1.CAPTION"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: teditnom.pd.hint
+msgctxt "TEDITNOM.PD.HINT"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: teditnom.pd.text
+msgctxt "TEDITNOM.PD.TEXT"
+msgid "PD"
+msgstr ""
+
+#: teditnom.pd2.text
+msgctxt "TEDITNOM.PD2.TEXT"
+msgid "PD2"
+msgstr ""
+
+#: teditnom.sd.hint
+msgctxt "TEDITNOM.SD.HINT"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: teditnom.sd.text
+msgctxt "TEDITNOM.SD.TEXT"
+msgid "SD"
+msgstr ""
+
+#: teditnom.sd2.text
+msgctxt "TEDITNOM.SD2.TEXT"
+msgid "SD2"
+msgstr ""
+
+#: teditnom.supprimer1.caption
+msgctxt "TEDITNOM.SUPPRIMER1.CAPTION"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: teditnom.x.text
+msgctxt "TEDITNOM.X.TEXT"
+msgid "X"
+msgstr ""
+
+#: teditnom.y2.text
+msgctxt "TEDITNOM.Y2.TEXT"
+msgid "Y"
+msgstr ""
+
+#: teditparents.a.text
+msgctxt "teditparents.a.text"
+msgid "A"
+msgstr ""
+
+#: teditparents.ajouter1.caption
+msgctxt "TEDITPARENTS.AJOUTER1.CAPTION"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: teditparents.b.text
+msgctxt "teditparents.b.text"
+msgid "B"
+msgstr ""
+
+#: teditparents.button1.caption
+#, fuzzy
+msgctxt "TEDITPARENTS.BUTTON1.CAPTION"
+msgid "Ok"
+msgstr "Ok"
+
+#: teditparents.button2.caption
+msgctxt "TEDITPARENTS.BUTTON2.CAPTION"
+msgid "Annul."
+msgstr "Abbruch"
+
+#: teditparents.label1.caption
+msgctxt "TEDITPARENTS.LABEL1.CAPTION"
+msgid "Type:"
+msgstr "Art:"
+
+#: teditparents.label2.caption
+msgctxt "teditparents.label2.caption"
+msgid "Parent:"
+msgstr ""
+
+#: teditparents.label3.caption
+msgctxt "TEDITPARENTS.LABEL3.CAPTION"
+msgid "Mémo:"
+msgstr "Notitz:"
+
+#: teditparents.label4.caption
+msgctxt "TEDITPARENTS.LABEL4.CAPTION"
+msgid "Phrase:"
+msgstr "Satz:"
+
+#: teditparents.label5.caption
+msgctxt "teditparents.label5.caption"
+msgid "Date de tri:"
+msgstr ""
+
+#: teditparents.label6.caption
+msgctxt "TEDITPARENTS.LABEL6.CAPTION"
+msgid "(défaut)"
+msgstr "(Fehler)"
+
+#: teditparents.label7.caption
+msgctxt "TEDITPARENTS.LABEL7.CAPTION"
+msgid "Références:"
+msgstr ""
+
+#: teditparents.label8.caption
+msgctxt "teditparents.label8.caption"
+msgid "Enfant:"
+msgstr "Kinder:"
+
+#: teditparents.menuitem1.caption
+msgctxt "TEDITPARENTS.MENUITEM1.CAPTION"
+msgid "&Références"
+msgstr ""
+
+#: teditparents.menuitem2.caption
+msgctxt "TEDITPARENTS.MENUITEM2.CAPTION"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: teditparents.menuitem3.caption
+msgctxt "TEDITPARENTS.MENUITEM3.CAPTION"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: teditparents.menuitem4.caption
+msgctxt "TEDITPARENTS.MENUITEM4.CAPTION"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: teditparents.menuitem5.caption
+msgctxt "TEDITPARENTS.MENUITEM5.CAPTION"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: teditparents.menuitem6.caption
+msgctxt "TEDITPARENTS.MENUITEM6.CAPTION"
+msgid "Repeat"
+msgstr "Wiederholung"
+
+#: teditparents.modifier1.caption
+msgctxt "TEDITPARENTS.MODIFIER1.CAPTION"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: teditparents.no.text
+msgctxt "TEDITPARENTS.NO.TEXT"
+msgid "No"
+msgstr "Nein"
+
+#: teditparents.noma.text
+msgctxt "teditparents.noma.text"
+msgid "Nom de A"
+msgstr ""
+
+#: teditparents.nomb.text
+msgctxt "teditparents.nomb.text"
+msgid "Nom de B"
+msgstr ""
+
+#: teditparents.sd.hint
+msgctxt "TEDITPARENTS.SD.HINT"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: teditparents.sd.text
+msgctxt "TEDITPARENTS.SD.TEXT"
+msgid "SD"
+msgstr ""
+
+#: teditparents.sd2.text
+msgctxt "TEDITPARENTS.SD2.TEXT"
+msgid "SD2"
+msgstr ""
+
+#: teditparents.supprimer1.caption
+msgctxt "TEDITPARENTS.SUPPRIMER1.CAPTION"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: teditparents.x.text
+msgctxt "TEDITPARENTS.X.TEXT"
+msgid "No"
+msgstr "Nein"
+
+#: teditparents.y2.text
+msgctxt "TEDITPARENTS.Y2.TEXT"
+msgid "Y"
+msgstr ""
+
+#: teditsource.a.text
+msgctxt "TEDITSOURCE.A.TEXT"
+msgid "A"
+msgstr ""
+
+#: teditsource.ajouter1.caption
+msgctxt "TEDITSOURCE.AJOUTER1.CAPTION"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: teditsource.ajouter2.caption
+msgctxt "TEDITSOURCE.AJOUTER2.CAPTION"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: teditsource.desc.text
+msgid "Desc"
+msgstr ""
+
+#: teditsource.label10.caption
+msgctxt "TEDITSOURCE.LABEL10.CAPTION"
+msgid "Titre:"
+msgstr "Titel"
+
+#: teditsource.label11.caption
+msgid "Qualité par défaut:"
+msgstr "Standard-Qualität:"
+
+#: teditsource.label12.caption
+msgctxt "TEDITSOURCE.LABEL12.CAPTION"
+msgid "Documents:"
+msgstr ""
+
+#: teditsource.label3.caption
+msgctxt "TEDITSOURCE.LABEL3.CAPTION"
+msgid "Mémo:"
+msgstr "Notitz:"
+
+#: teditsource.label7.caption
+msgid "Dépots"
+msgstr ""
+
+#: teditsource.label8.caption
+msgid "Auteur:"
+msgstr "Autor:"
+
+#: teditsource.label9.caption
+msgctxt "TEDITSOURCE.LABEL9.CAPTION"
+msgid "Description:"
+msgstr ""
+
+#: teditsource.menuitem1.caption
+msgctxt "teditsource.menuitem1.caption"
+msgid "&Dépots"
+msgstr ""
+
+#: teditsource.menuitem10.caption
+msgctxt "TEDITSOURCE.MENUITEM10.CAPTION"
+msgid "Visualiser"
+msgstr ""
+
+#: teditsource.menuitem2.caption
+msgctxt "TEDITSOURCE.MENUITEM2.CAPTION"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: teditsource.menuitem3.caption
+msgctxt "TEDITSOURCE.MENUITEM3.CAPTION"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: teditsource.menuitem4.caption
+msgctxt "TEDITSOURCE.MENUITEM4.CAPTION"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: teditsource.menuitem5.caption
+msgctxt "TEDITSOURCE.MENUITEM5.CAPTION"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: teditsource.menuitem6.caption
+msgctxt "TEDITSOURCE.MENUITEM6.CAPTION"
+msgid "Repeat"
+msgstr "Wiederholung"
+
+#: teditsource.menuitem9.caption
+msgctxt "TEDITSOURCE.MENUITEM9.CAPTION"
+msgid "-"
+msgstr ""
+
+#: teditsource.modifier1.caption
+msgctxt "TEDITSOURCE.MODIFIER1.CAPTION"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: teditsource.modifier2.caption
+msgctxt "TEDITSOURCE.MODIFIER2.CAPTION"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: teditsource.no.text
+msgctxt "TEDITSOURCE.NO.TEXT"
+msgid "No"
+msgstr "Nein"
+
+#: teditsource.noma.text
+msgctxt "TEDITSOURCE.NOMA.TEXT"
+msgid "Nom de A"
+msgstr ""
+
+#: teditsource.supprimer1.caption
+msgctxt "TEDITSOURCE.SUPPRIMER1.CAPTION"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: teditsource.supprimer2.caption
+msgctxt "TEDITSOURCE.SUPPRIMER2.CAPTION"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: teditsource.titre.text
+msgctxt "TEDITSOURCE.TITRE.TEXT"
+msgid "Titre"
+msgstr "Titel"
+
+#: tedittemoin.e.text
+msgid "E"
+msgstr ""
+
+#: tedittemoin.i.text
+msgid "I"
+msgstr ""
+
+#: tedittemoin.label2.caption
+msgctxt "tedittemoin.label2.caption"
+msgid "Témoin:"
+msgstr "Zeuge"
+
+#: tedittemoin.label3.caption
+msgctxt "tedittemoin.label3.caption"
+msgid "Rôle:"
+msgstr "Beteiligung:"
+
+#: tedittemoin.label4.caption
+msgctxt "TEDITTEMOIN.LABEL4.CAPTION"
+msgid "Phrase:"
+msgstr "Satz:"
+
+#: tedittemoin.label5.caption
+msgctxt "tedittemoin.label5.caption"
+msgid "Résultat:"
+msgstr ""
+
+#: tedittemoin.label6.caption
+msgctxt "TEDITTEMOIN.LABEL6.CAPTION"
+msgid "(défaut)"
+msgstr "(Fehler)"
+
+#: tedittemoin.menuitem1.caption
+msgctxt "TEDITTEMOIN.MENUITEM1.CAPTION"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: tedittemoin.menuitem2.caption
+msgctxt "TEDITTEMOIN.MENUITEM2.CAPTION"
+msgid "Repeat"
+msgstr "Wiederholung"
+
+#: tedittemoin.no.text
+msgctxt "TEDITTEMOIN.NO.TEXT"
+msgid "No"
+msgstr "Nein"
+
+#: tedittemoin.nomi.text
+msgctxt "tedittemoin.nomi.text"
+msgid "Nom de I"
+msgstr ""
+
+#: tedittemoin.x.text
+msgctxt "TEDITTEMOIN.X.TEXT"
+msgid "X"
+msgstr ""
+
+#: tedittype.button1.caption
+#, fuzzy
+msgctxt "TEDITTYPE.BUTTON1.CAPTION"
+msgid "Ok"
+msgstr "Ok"
+
+#: tedittype.button2.caption
+msgctxt "TEDITTYPE.BUTTON2.CAPTION"
+msgid "Annul."
+msgstr "Abbruch"
+
+#: tedittype.label10.caption
+msgctxt "TEDITTYPE.LABEL10.CAPTION"
+msgid "Titre:"
+msgstr "Titel"
+
+#: tedittype.label11.caption
+msgctxt "TEDITTYPE.LABEL11.CAPTION"
+msgid "Type:"
+msgstr "Art:"
+
+#: tedittype.label3.caption
+msgctxt "TEDITTYPE.LABEL3.CAPTION"
+msgid "Phrase:"
+msgstr "Satz:"
+
+#: tedittype.menuitem1.caption
+msgctxt "TEDITTYPE.MENUITEM1.CAPTION"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: tedittype.menuitem2.caption
+msgctxt "TEDITTYPE.MENUITEM2.CAPTION"
+msgid "Repeat"
+msgstr "Wiederholung"
+
+#: tedittype.no.text
+msgctxt "TEDITTYPE.NO.TEXT"
+msgid "No"
+msgstr "Nein"
+
+#: tedittype.t.text
+msgid "T"
+msgstr ""
+
+#: tformancetres.menuitem1.caption
+msgctxt "tformancetres.menuitem1.caption"
+msgid "&Aller à"
+msgstr "&gehen"
+
+#: tformdepots.button1.caption
+#, fuzzy
+msgctxt "TFORMDEPOTS.BUTTON1.CAPTION"
+msgid "Ok"
+msgstr "Ok"
+
+#: tformdepots.menuitem1.caption
+msgctxt "tformdepots.menuitem1.caption"
+msgid "-"
+msgstr ""
+
+#: tformdepots.menuitem2.caption
+msgctxt "tformdepots.menuitem2.caption"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tformdepots.menuitem3.caption
+msgctxt "tformdepots.menuitem3.caption"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tformdepots.menuitem4.caption
+msgctxt "tformdepots.menuitem4.caption"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tformdepots.menuitem8.caption
+msgctxt "tformdepots.menuitem8.caption"
+msgid "Utilisation"
+msgstr "Verwendung"
+
+#: tformdescendants.menuitem1.caption
+msgctxt "TFORMDESCENDANTS.MENUITEM1.CAPTION"
+msgid "&Aller à"
+msgstr "&gehen"
+
+#: tformenfants.menuitem1.caption
+msgctxt "TFORMENFANTS.MENUITEM1.CAPTION"
+msgid "&Aller à"
+msgstr "&gehen"
+
+#: tformenfants.menuitem2.caption
+msgctxt "TFORMENFANTS.MENUITEM2.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformenfants.menuitem3.caption
+msgctxt "TFORMENFANTS.MENUITEM3.CAPTION"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tformenfants.menuitem4.caption
+msgctxt "TFORMENFANTS.MENUITEM4.CAPTION"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tformenfants.menuitem5.caption
+msgctxt "TFORMENFANTS.MENUITEM5.CAPTION"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tformevenements.menuitem1.caption
+msgctxt "TFORMEVENEMENTS.MENUITEM1.CAPTION"
+msgid "&Aller à"
+msgstr "&gehen"
+
+#: tformevenements.menuitem2.caption
+msgctxt "TFORMEVENEMENTS.MENUITEM2.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformevenements.menuitem3.caption
+msgctxt "TFORMEVENEMENTS.MENUITEM3.CAPTION"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tformevenements.menuitem4.caption
+msgctxt "TFORMEVENEMENTS.MENUITEM4.CAPTION"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tformevenements.menuitem5.caption
+msgctxt "TFORMEVENEMENTS.MENUITEM5.CAPTION"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tformevenements.menuitem6.caption
+msgctxt "TFORMEVENEMENTS.MENUITEM6.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformevenements.menuitem7.caption
+msgctxt "TFORMEVENEMENTS.MENUITEM7.CAPTION"
+msgid "Primaire"
+msgstr ""
+
+#: tformexhibits.menuitem1.caption
+msgctxt "tformexhibits.menuitem1.caption"
+msgid "&Primaire"
+msgstr ""
+
+#: tformexhibits.menuitem2.caption
+msgctxt "TFORMEXHIBITS.MENUITEM2.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformexhibits.menuitem3.caption
+msgctxt "TFORMEXHIBITS.MENUITEM3.CAPTION"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tformexhibits.menuitem4.caption
+msgctxt "TFORMEXHIBITS.MENUITEM4.CAPTION"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tformexhibits.menuitem5.caption
+msgctxt "TFORMEXHIBITS.MENUITEM5.CAPTION"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tformexplorateur.menuitem3.caption
+msgctxt "tformexplorateur.menuitem3.caption"
+msgid "Tri par &prénom"
+msgstr ""
+
+#: tformexplorateur.menuitem4.caption
+msgctxt "tformexplorateur.menuitem4.caption"
+msgid "Tri par &nom"
+msgstr ""
+
+#: tformexplorateur.menuitem5.caption
+msgctxt "tformexplorateur.menuitem5.caption"
+msgid "Tri par nai&ssance"
+msgstr ""
+
+#: tformexplorateur.menuitem6.caption
+msgctxt "tformexplorateur.menuitem6.caption"
+msgid "Tri par &décès"
+msgstr ""
+
+#: tformexplorateur.o.text
+msgctxt "tformexplorateur.o.text"
+msgid "O"
+msgstr ""
+
+#: tformfratrie.menuitem1.caption
+msgctxt "TFORMFRATRIE.MENUITEM1.CAPTION"
+msgid "&Aller à"
+msgstr "&gehen"
+
+#: tformfratrie.menuitem2.caption
+msgctxt "TFORMFRATRIE.MENUITEM2.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformfratrie.menuitem3.caption
+msgctxt "TFORMFRATRIE.MENUITEM3.CAPTION"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tformlieux.button1.caption
+#, fuzzy
+msgctxt "TFORMLIEUX.BUTTON1.CAPTION"
+msgid "Ok"
+msgstr "Ok"
+
+#: tformlieux.menuitem1.caption
+msgid "Tri par..."
+msgstr ""
+
+#: tformlieux.menuitem10.caption
+msgctxt "TFORMLIEUX.MENUITEM10.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformlieux.menuitem11.caption
+msgctxt "TFORMLIEUX.MENUITEM11.CAPTION"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tformlieux.menuitem2.caption
+msgid "Détail"
+msgstr ""
+
+#: tformlieux.menuitem3.caption
+msgid "Ville"
+msgstr "Ort"
+
+#: tformlieux.menuitem4.caption
+msgid "Région"
+msgstr ""
+
+#: tformlieux.menuitem5.caption
+msgid "Province"
+msgstr ""
+
+#: tformlieux.menuitem6.caption
+msgid "Pays"
+msgstr ""
+
+#: tformlieux.menuitem7.caption
+msgid "Fusionner avec...  "
+msgstr "Vereinigen mit..."
+
+#: tformlieux.menuitem8.caption
+msgctxt "TFORMLIEUX.MENUITEM8.CAPTION"
+msgid "Utilisation"
+msgstr "Verwendung"
+
+#: tformlieux.menuitem9.caption
+msgctxt "TFORMLIEUX.MENUITEM9.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformlieux.o.text
+msgctxt "TFORMLIEUX.O.TEXT"
+msgid "O"
+msgstr ""
+
+#: tformnoms.label1.caption
+msgctxt "tformnoms.label1.caption"
+msgid "Dernière modification le "
+msgstr ""
+
+#: tformnoms.menuitem1.caption
+msgctxt "TFORMNOMS.MENUITEM1.CAPTION"
+msgid "&Primaire"
+msgstr ""
+
+#: tformnoms.menuitem2.caption
+msgctxt "TFORMNOMS.MENUITEM2.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformnoms.menuitem3.caption
+msgctxt "TFORMNOMS.MENUITEM3.CAPTION"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tformnoms.menuitem4.caption
+msgctxt "TFORMNOMS.MENUITEM4.CAPTION"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tformnoms.menuitem5.caption
+msgctxt "TFORMNOMS.MENUITEM5.CAPTION"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tformnoms.modifie.caption
+msgctxt "tformnoms.modifie.caption"
+msgid "YYYY/MM/DD"
+msgstr "YYYY-MM-DD"
+
+#: tformparents.menuitem1.caption
+msgctxt "TFORMPARENTS.MENUITEM1.CAPTION"
+msgid "&Aller à"
+msgstr "&gehen"
+
+#: tformparents.menuitem2.caption
+msgctxt "TFORMPARENTS.MENUITEM2.CAPTION"
+msgid "Primaire"
+msgstr ""
+
+#: tformparents.menuitem3.caption
+msgctxt "TFORMPARENTS.MENUITEM3.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformparents.menuitem4.caption
+msgctxt "TFORMPARENTS.MENUITEM4.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformparents.menuitem5.caption
+msgctxt "TFORMPARENTS.MENUITEM5.CAPTION"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tformparents.menuitem6.caption
+msgctxt "TFORMPARENTS.MENUITEM6.CAPTION"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tformparents.menuitem7.caption
+msgctxt "TFORMPARENTS.MENUITEM7.CAPTION"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tformparents.mnddiv1.caption
+msgctxt "tformparents.mnddiv1.caption"
+msgid "-"
+msgstr ""
+
+#: tformparents.mnddiv2.caption
+msgctxt "tformparents.mnddiv2.caption"
+msgid "-"
+msgstr ""
+
+#: tformparents.mniadd.caption
+msgctxt "tformparents.mniadd.caption"
+msgid "Add"
+msgstr "Anfügen"
+
+#: tformparents.mnidelete.caption
+msgctxt "tformparents.mnidelete.caption"
+msgid "Delete"
+msgstr ""
+
+#: tformparents.mniedit.caption
+msgctxt "tformparents.mniedit.caption"
+msgid "Edit"
+msgstr ""
+
+#: tformparents.mnigoto.caption
+msgctxt "tformparents.mnigoto.caption"
+msgid "&Go to"
+msgstr ""
+
+#: tformparents.mniprimary.caption
+msgctxt "tformparents.mniprimary.caption"
+msgid "&Primary"
+msgstr ""
+
+#: tformselectpersonne.edtname.hint
+msgctxt "tformselectpersonne.edtname.hint"
+msgid "Name"
+msgstr "Name"
+
+#: tformselectpersonne.label1.caption
+msgid "ou"
+msgstr ""
+
+#: tformselectpersonne.mniquit.caption
+#, fuzzy
+msgctxt "tformselectpersonne.mniquit.caption"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: tformsources.button1.caption
+#, fuzzy
+msgctxt "TFORMSOURCES.BUTTON1.CAPTION"
+msgid "Ok"
+msgstr "Ok"
+
+#: tformsources.menuitem1.caption
+msgctxt "TFORMSOURCES.MENUITEM1.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformsources.menuitem2.caption
+msgctxt "TFORMSOURCES.MENUITEM2.CAPTION"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tformsources.menuitem3.caption
+msgctxt "TFORMSOURCES.MENUITEM3.CAPTION"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tformsources.menuitem4.caption
+msgctxt "TFORMSOURCES.MENUITEM4.CAPTION"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tformsources.menuitem5.caption
+msgid "&Tri"
+msgstr ""
+
+#: tformsources.menuitem6.caption
+msgctxt "TFORMSOURCES.MENUITEM6.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformsources.menuitem7.caption
+msgid "par &numéro"
+msgstr ""
+
+#: tformsources.menuitem8.caption
+msgctxt "TFORMSOURCES.MENUITEM8.CAPTION"
+msgid "Utilisation"
+msgstr "Verwendung"
+
+#: tformsources.menuitem9.caption
+msgid "par &titre"
+msgstr ""
+
+#: tformtypes.button1.caption
+#, fuzzy
+msgctxt "TFORMTYPES.BUTTON1.CAPTION"
+msgid "Ok"
+msgstr "Ok"
+
+#: tformtypes.menuitem1.caption
+msgctxt "TFORMTYPES.MENUITEM1.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tformtypes.menuitem2.caption
+msgctxt "TFORMTYPES.MENUITEM2.CAPTION"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tformtypes.menuitem3.caption
+msgctxt "TFORMTYPES.MENUITEM3.CAPTION"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tformtypes.menuitem4.caption
+msgctxt "TFORMTYPES.MENUITEM4.CAPTION"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tformtypes.menuitem8.caption
+msgctxt "TFORMTYPES.MENUITEM8.CAPTION"
+msgid "Utilisation"
+msgstr "Verwendung"
+
+#: tformutilisation.button1.caption
+#, fuzzy
+msgctxt "TFORMUTILISATION.BUTTON1.CAPTION"
+msgid "Ok"
+msgstr "Ok"
+
+#: tfrmchildren.menuitem1.caption
+#, fuzzy
+msgctxt "tfrmchildren.menuitem1.caption"
+msgid "&Aller à"
+msgstr "&gehen"
+
+#: tfrmchildren.menuitem2.caption
+msgctxt "tfrmchildren.menuitem2.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmchildren.menuitem3.caption
+#, fuzzy
+msgctxt "tfrmchildren.menuitem3.caption"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tfrmchildren.menuitem4.caption
+#, fuzzy
+msgctxt "tfrmchildren.menuitem4.caption"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmchildren.menuitem5.caption
+#, fuzzy
+msgctxt "tfrmchildren.menuitem5.caption"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tfrmconnectdb.edthostname.editlabel.caption
+msgid "Hostname:"
+msgstr ""
+
+#: tfrmconnectdb.edthostname.texthint
+msgid "Hostname"
+msgstr ""
+
+#: tfrmconnectdb.edtpassword.editlabel.caption
+msgid "Password:"
+msgstr ""
+
+#: tfrmconnectdb.edtpassword.texthint
+msgid "Password"
+msgstr ""
+
+#: tfrmconnectdb.edtuser.editlabel.caption
+msgid "Username:"
+msgstr ""
+
+#: tfrmconnectdb.edtuser.texthint
+msgid "Username"
+msgstr ""
+
+#: tfrmdocuments.mnuappend.caption
+#, fuzzy
+msgctxt "tfrmdocuments.mnuappend.caption"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tfrmdocuments.mnudelete.caption
+#, fuzzy
+msgctxt "tfrmdocuments.mnudelete.caption"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tfrmdocuments.mnumodify.caption
+#, fuzzy
+msgctxt "tfrmdocuments.mnumodify.caption"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmdocuments.mnuseparator.caption
+msgctxt "tfrmdocuments.mnuseparator.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmdocuments.mnusetmain.caption
+msgctxt "tfrmdocuments.mnusetmain.caption"
+msgid "&Primaire"
+msgstr ""
+
+#: tfrmeditdocuments.button1.caption
+#, fuzzy
+msgctxt "tfrmeditdocuments.button1.caption"
+msgid "Ok"
+msgstr "Ok"
+
+#: tfrmeditdocuments.button2.caption
+#, fuzzy
+msgctxt "tfrmeditdocuments.button2.caption"
+msgid "Annul."
+msgstr "Abbruch"
+
+#: tfrmeditdocuments.button3.caption
+msgctxt "tfrmeditdocuments.button3.caption"
+msgid "Visualiser"
+msgstr ""
+
+#: tfrmeditdocuments.fichier.text
+#, fuzzy
+msgctxt "tfrmeditdocuments.fichier.text"
+msgid "Fichier"
+msgstr "Datei"
+
+#: tfrmeditdocuments.label1.caption
+#, fuzzy
+msgctxt "tfrmeditdocuments.label1.caption"
+msgid "No"
+msgstr "Nein"
+
+#: tfrmeditdocuments.label2.caption
+#, fuzzy
+msgctxt "tfrmeditdocuments.label2.caption"
+msgid "Titre:"
+msgstr "Titel"
+
+#: tfrmeditdocuments.label3.caption
+msgctxt "tfrmeditdocuments.label3.caption"
+msgid "Description:"
+msgstr ""
+
+#: tfrmeditdocuments.label4.caption
+#, fuzzy
+msgctxt "tfrmeditdocuments.label4.caption"
+msgid "Fichier:"
+msgstr "Datei:"
+
+#: tfrmeditdocuments.label5.caption
+#, fuzzy
+msgctxt "tfrmeditdocuments.label5.caption"
+msgid "Type"
+msgstr "Art"
+
+#: tfrmeditdocuments.menuitem1.caption
+#, fuzzy
+msgctxt "tfrmeditdocuments.menuitem1.caption"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: tfrmeditdocuments.n.text
+msgctxt "tfrmeditdocuments.n.text"
+msgid "Type1"
+msgstr ""
+
+#: tfrmeditdocuments.no.text
+#, fuzzy
+msgctxt "tfrmeditdocuments.no.text"
+msgid "No"
+msgstr "Nein"
+
+#: tfrmeditdocuments.opendialog.title
+msgctxt "tfrmeditdocuments.opendialog.title"
+msgid "Sélection de l'image"
+msgstr ""
+
+#: tfrmeditdocuments.primaire.caption
+msgctxt "tfrmeditdocuments.primaire.caption"
+msgid "Primaire"
+msgstr ""
+
+#: tfrmeditdocuments.titre.text
+#, fuzzy
+msgctxt "tfrmeditdocuments.titre.text"
+msgid "Titre"
+msgstr "Titel"
+
+#: tfrmeditdocuments.type1.text
+msgctxt "tfrmeditdocuments.type1.text"
+msgid "Type1"
+msgstr ""
+
+#: tfrmeditevents.ajouter1.caption
+#, fuzzy
+msgctxt "tfrmeditevents.ajouter1.caption"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: tfrmeditevents.ajouter2.caption
+#, fuzzy
+msgctxt "tfrmeditevents.ajouter2.caption"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: tfrmeditevents.ajoutertemoin.caption
+#, fuzzy
+msgctxt "tfrmeditevents.ajoutertemoin.caption"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: tfrmeditevents.button1.caption
+#, fuzzy
+msgctxt "tfrmeditevents.button1.caption"
+msgid "Ok"
+msgstr "Ok"
+
+#: tfrmeditevents.button2.caption
+#, fuzzy
+msgctxt "tfrmeditevents.button2.caption"
+msgid "Annul."
+msgstr "Abbruch"
+
+#: tfrmeditevents.l0.hint
+msgctxt "tfrmeditevents.l0.hint"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: tfrmeditevents.l0.text
+msgctxt "tfrmeditevents.l0.text"
+msgid "PD"
+msgstr ""
+
+#: tfrmeditevents.l1.hint
+msgctxt "tfrmeditevents.l1.hint"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: tfrmeditevents.l1.text
+msgctxt "tfrmeditevents.l1.text"
+msgid "PD"
+msgstr ""
+
+#: tfrmeditevents.l2.hint
+msgctxt "tfrmeditevents.l2.hint"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: tfrmeditevents.l2.text
+msgctxt "tfrmeditevents.l2.text"
+msgid "PD"
+msgstr ""
+
+#: tfrmeditevents.l3.hint
+msgctxt "tfrmeditevents.l3.hint"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: tfrmeditevents.l3.text
+msgctxt "tfrmeditevents.l3.text"
+msgid "PD"
+msgstr ""
+
+#: tfrmeditevents.l4.hint
+msgctxt "tfrmeditevents.l4.hint"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: tfrmeditevents.l4.text
+msgctxt "tfrmeditevents.l4.text"
+msgid "PD"
+msgstr ""
+
+#: tfrmeditevents.la.hint
+msgctxt "tfrmeditevents.la.hint"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: tfrmeditevents.la.text
+msgctxt "tfrmeditevents.la.text"
+msgid "PD"
+msgstr ""
+
+#: tfrmeditevents.label1.caption
+#, fuzzy
+msgctxt "tfrmeditevents.label1.caption"
+msgid "Type:"
+msgstr "Art:"
+
+#: tfrmeditevents.label10.caption
+msgctxt "tfrmeditevents.label10.caption"
+msgid "de tri:"
+msgstr ""
+
+#: tfrmeditevents.label11.caption
+msgctxt "tfrmeditevents.label11.caption"
+msgid "Témoins:"
+msgstr ""
+
+#: tfrmeditevents.label12.caption
+msgctxt "tfrmeditevents.label12.caption"
+msgid "Documents:"
+msgstr ""
+
+#: tfrmeditevents.label3.caption
+#, fuzzy
+msgctxt "tfrmeditevents.label3.caption"
+msgid "Mémo:"
+msgstr "Notitz:"
+
+#: tfrmeditevents.label4.caption
+#, fuzzy
+msgctxt "tfrmeditevents.label4.caption"
+msgid "Phrase:"
+msgstr "Satz:"
+
+#: tfrmeditevents.label5.caption
+#, fuzzy
+msgctxt "tfrmeditevents.label5.caption"
+msgid "Date"
+msgstr "Datum"
+
+#: tfrmeditevents.label6.caption
+#, fuzzy
+msgctxt "tfrmeditevents.label6.caption"
+msgid "(défaut)"
+msgstr "(Fehler)"
+
+#: tfrmeditevents.label7.caption
+msgctxt "tfrmeditevents.label7.caption"
+msgid "Références:"
+msgstr ""
+
+#: tfrmeditevents.label8.caption
+#, fuzzy
+msgctxt "tfrmeditevents.label8.caption"
+msgid "Lieu:"
+msgstr "Ort:"
+
+#: tfrmeditevents.label9.caption
+msgctxt "tfrmeditevents.label9.caption"
+msgid "de présentation:"
+msgstr ""
+
+#: tfrmeditevents.menuitem1.caption
+msgctxt "tfrmeditevents.menuitem1.caption"
+msgid "&Témoins"
+msgstr ""
+
+#: tfrmeditevents.menuitem10.caption
+msgctxt "tfrmeditevents.menuitem10.caption"
+msgid "Visualiser"
+msgstr ""
+
+#: tfrmeditevents.menuitem11.caption
+#, fuzzy
+msgctxt "tfrmeditevents.menuitem11.caption"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: tfrmeditevents.menuitem12.caption
+#, fuzzy
+msgctxt "tfrmeditevents.menuitem12.caption"
+msgid "Repeat"
+msgstr "Wiederholung"
+
+#: tfrmeditevents.menuitem2.caption
+msgctxt "tfrmeditevents.menuitem2.caption"
+msgid "&Références"
+msgstr ""
+
+#: tfrmeditevents.menuitem3.caption
+#, fuzzy
+msgctxt "tfrmeditevents.menuitem3.caption"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: tfrmeditevents.menuitem4.caption
+#, fuzzy
+msgctxt "tfrmeditevents.menuitem4.caption"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmeditevents.menuitem5.caption
+#, fuzzy
+msgctxt "tfrmeditevents.menuitem5.caption"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: tfrmeditevents.menuitem6.caption
+#, fuzzy
+msgctxt "tfrmeditevents.menuitem6.caption"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: tfrmeditevents.menuitem7.caption
+#, fuzzy
+msgctxt "tfrmeditevents.menuitem7.caption"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmeditevents.menuitem8.caption
+#, fuzzy
+msgctxt "tfrmeditevents.menuitem8.caption"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: tfrmeditevents.menuitem9.caption
+msgctxt "tfrmeditevents.menuitem9.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmeditevents.modifier1.caption
+#, fuzzy
+msgctxt "tfrmeditevents.modifier1.caption"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmeditevents.modifier2.caption
+#, fuzzy
+msgctxt "tfrmeditevents.modifier2.caption"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmeditevents.modifiertemoin.caption
+#, fuzzy
+msgctxt "tfrmeditevents.modifiertemoin.caption"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmeditevents.pd.hint
+msgctxt "tfrmeditevents.pd.hint"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: tfrmeditevents.pd.text
+msgctxt "tfrmeditevents.pd.text"
+msgid "PD"
+msgstr ""
+
+#: tfrmeditevents.pd2.text
+msgctxt "tfrmeditevents.pd2.text"
+msgid "PD2"
+msgstr ""
+
+#: tfrmeditevents.role.text
+#, fuzzy
+msgctxt "tfrmeditevents.role.text"
+msgid "Role"
+msgstr "Beteiligung"
+
+#: tfrmeditevents.sd.hint
+msgctxt "tfrmeditevents.sd.hint"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: tfrmeditevents.sd.text
+msgctxt "tfrmeditevents.sd.text"
+msgid "SD"
+msgstr ""
+
+#: tfrmeditevents.sd2.text
+msgctxt "tfrmeditevents.sd2.text"
+msgid "SD2"
+msgstr ""
+
+#: tfrmeditevents.supprimer1.caption
+#, fuzzy
+msgctxt "tfrmeditevents.supprimer1.caption"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: tfrmeditevents.supprimer2.caption
+#, fuzzy
+msgctxt "tfrmeditevents.supprimer2.caption"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: tfrmeditevents.supprimertemoin.caption
+#, fuzzy
+msgctxt "tfrmeditevents.supprimertemoin.caption"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: tfrmeditevents.x.text
+msgctxt "tfrmeditevents.x.text"
+msgid "X"
+msgstr ""
+
+#: tfrmeditevents.yy.text
+msgctxt "tfrmeditevents.yy.text"
+msgid "YY"
+msgstr ""
+
+#: tfrmeditname.ajout.text
+msgctxt "tfrmeditname.ajout.text"
+msgid "X"
+msgstr ""
+
+#: tfrmeditname.ajouter1.caption
+#, fuzzy
+msgctxt "tfrmeditname.ajouter1.caption"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: tfrmeditname.cbxsex.itemsex[0].caption
+msgid "Unknown"
+msgstr ""
+
+#: tfrmeditname.cbxsex.itemsex[1].caption
+msgid "Maskulin"
+msgstr ""
+
+#: tfrmeditname.cbxsex.itemsex[2].caption
+msgid "Feminin"
+msgstr ""
+
+#: tfrmeditname.edtname.text
+msgctxt "tfrmeditname.edtname.text"
+msgid "edtName"
+msgstr ""
+
+#: tfrmeditname.lbldate.caption
+#, fuzzy
+msgctxt "tfrmeditname.lbldate.caption"
+msgid "Date"
+msgstr "Datum"
+
+#: tfrmeditname.lbldefault.caption
+#, fuzzy
+msgctxt "tfrmeditname.lbldefault.caption"
+msgid "(défaut)"
+msgstr "(Fehler)"
+
+#: tfrmeditname.lblforpresentation.caption
+msgctxt "tfrmeditname.lblforpresentation.caption"
+msgid "de présentation:"
+msgstr ""
+
+#: tfrmeditname.lblforsorting.caption
+msgctxt "tfrmeditname.lblforsorting.caption"
+msgid "de tri:"
+msgstr ""
+
+#: tfrmeditname.lblindividuum.caption
+msgctxt "tfrmeditname.lblindividuum.caption"
+msgid "Individu:"
+msgstr ""
+
+#: tfrmeditname.lblmemo.caption
+#, fuzzy
+msgctxt "tfrmeditname.lblmemo.caption"
+msgid "Mémo:"
+msgstr "Notitz:"
+
+#: tfrmeditname.lblname8.caption
+msgctxt "tfrmeditname.lblname8.caption"
+msgid "Nom:"
+msgstr ""
+
+#: tfrmeditname.lblphrase.caption
+#, fuzzy
+msgctxt "tfrmeditname.lblphrase.caption"
+msgid "Phrase:"
+msgstr "Satz:"
+
+#: tfrmeditname.lblsources.caption
+msgctxt "tfrmeditname.lblsources.caption"
+msgid "Références:"
+msgstr ""
+
+#: tfrmeditname.lbltype.caption
+#, fuzzy
+msgctxt "tfrmeditname.lbltype.caption"
+msgid "Type:"
+msgstr "Art:"
+
+#: tfrmeditname.menuitem1.caption
+#, fuzzy
+msgctxt "tfrmeditname.menuitem1.caption"
+msgid "Ajouter &Titre"
+msgstr "&Titel hinzufügen"
+
+#: tfrmeditname.menuitem10.caption
+#, fuzzy
+msgctxt "tfrmeditname.menuitem10.caption"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: tfrmeditname.menuitem11.caption
+#, fuzzy
+msgctxt "tfrmeditname.menuitem11.caption"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmeditname.menuitem12.caption
+#, fuzzy
+msgctxt "tfrmeditname.menuitem12.caption"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: tfrmeditname.menuitem13.caption
+#, fuzzy
+msgctxt "tfrmeditname.menuitem13.caption"
+msgid "Ajouter &Nom"
+msgstr "&Name hinzufügen"
+
+#: tfrmeditname.menuitem14.caption
+#, fuzzy
+msgctxt "tfrmeditname.menuitem14.caption"
+msgid "Ajouter &Titre"
+msgstr "&Titel hinzufügen"
+
+#: tfrmeditname.menuitem15.caption
+#, fuzzy
+msgctxt "tfrmeditname.menuitem15.caption"
+msgid "Ajouter &Prénom"
+msgstr "&Vorname hinzufügen"
+
+#: tfrmeditname.menuitem2.caption
+#, fuzzy
+msgctxt "tfrmeditname.menuitem2.caption"
+msgid "Ajouter &Prénom"
+msgstr "&Vorname hinzufügen"
+
+#: tfrmeditname.menuitem3.caption
+#, fuzzy
+msgctxt "tfrmeditname.menuitem3.caption"
+msgid "Ajouter &Nom"
+msgstr "&Name hinzufügen"
+
+#: tfrmeditname.menuitem4.caption
+#, fuzzy
+msgctxt "tfrmeditname.menuitem4.caption"
+msgid "Ajouter &Suffixe"
+msgstr "&Suffix hinzufügen"
+
+#: tfrmeditname.menuitem5.caption
+#, fuzzy
+msgctxt "tfrmeditname.menuitem5.caption"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: tfrmeditname.menuitem6.caption
+#, fuzzy
+msgctxt "tfrmeditname.menuitem6.caption"
+msgid "Repeat"
+msgstr "Wiederholung"
+
+#: tfrmeditname.menuitem7.caption
+#, fuzzy
+msgctxt "tfrmeditname.menuitem7.caption"
+msgid "Nom"
+msgstr "Name"
+
+#: tfrmeditname.menuitem8.caption
+#, fuzzy
+msgctxt "tfrmeditname.menuitem8.caption"
+msgid "Ajouter Suffi&xe"
+msgstr "&Suffix hinzufügen"
+
+#: tfrmeditname.menuitem9.caption
+msgctxt "tfrmeditname.menuitem9.caption"
+msgid "&Références"
+msgstr ""
+
+#: tfrmeditname.modifier1.caption
+#, fuzzy
+msgctxt "tfrmeditname.modifier1.caption"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmeditname.pd.hint
+msgctxt "tfrmeditname.pd.hint"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: tfrmeditname.pd.text
+msgctxt "tfrmeditname.pd.text"
+msgid "PD"
+msgstr ""
+
+#: tfrmeditname.pd2.text
+msgctxt "tfrmeditname.pd2.text"
+msgid "PD2"
+msgstr ""
+
+#: tfrmeditname.sd.hint
+msgctxt "tfrmeditname.sd.hint"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: tfrmeditname.sd.text
+msgctxt "tfrmeditname.sd.text"
+msgid "SD"
+msgstr ""
+
+#: tfrmeditname.sd2.text
+msgctxt "tfrmeditname.sd2.text"
+msgid "SD2"
+msgstr ""
+
+#: tfrmeditname.supprimer1.caption
+#, fuzzy
+msgctxt "tfrmeditname.supprimer1.caption"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: tfrmeditname.x.text
+msgctxt "tfrmeditname.x.text"
+msgid "X"
+msgstr ""
+
+#: tfrmeditparents.a.text
+msgctxt "tfrmeditparents.a.text"
+msgid "A"
+msgstr ""
+
+#: tfrmeditparents.ajouter1.caption
+#, fuzzy
+msgctxt "tfrmeditparents.ajouter1.caption"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: tfrmeditparents.b.text
+msgctxt "tfrmeditparents.b.text"
+msgid "B"
+msgstr ""
+
+#: tfrmeditparents.button1.caption
+#, fuzzy
+msgctxt "tfrmeditparents.button1.caption"
+msgid "Ok"
+msgstr "Ok"
+
+#: tfrmeditparents.button2.caption
+#, fuzzy
+msgctxt "tfrmeditparents.button2.caption"
+msgid "Annul."
+msgstr "Abbruch"
+
+#: tfrmeditparents.label1.caption
+#, fuzzy
+msgctxt "tfrmeditparents.label1.caption"
+msgid "Type:"
+msgstr "Art:"
+
+#: tfrmeditparents.label2.caption
+msgctxt "tfrmeditparents.label2.caption"
+msgid "Parent:"
+msgstr ""
+
+#: tfrmeditparents.label3.caption
+#, fuzzy
+msgctxt "tfrmeditparents.label3.caption"
+msgid "Mémo:"
+msgstr "Notitz:"
+
+#: tfrmeditparents.label4.caption
+#, fuzzy
+msgctxt "tfrmeditparents.label4.caption"
+msgid "Phrase:"
+msgstr "Satz:"
+
+#: tfrmeditparents.label5.caption
+msgctxt "tfrmeditparents.label5.caption"
+msgid "Date de tri:"
+msgstr ""
+
+#: tfrmeditparents.label6.caption
+#, fuzzy
+msgctxt "tfrmeditparents.label6.caption"
+msgid "(défaut)"
+msgstr "(Fehler)"
+
+#: tfrmeditparents.label7.caption
+msgctxt "tfrmeditparents.label7.caption"
+msgid "Références:"
+msgstr ""
+
+#: tfrmeditparents.label8.caption
+#, fuzzy
+msgctxt "tfrmeditparents.label8.caption"
+msgid "Enfant:"
+msgstr "Kinder:"
+
+#: tfrmeditparents.menuitem1.caption
+msgctxt "tfrmeditparents.menuitem1.caption"
+msgid "&Références"
+msgstr ""
+
+#: tfrmeditparents.menuitem2.caption
+#, fuzzy
+msgctxt "tfrmeditparents.menuitem2.caption"
+msgid "&Ajouter"
+msgstr "&Anfügen"
+
+#: tfrmeditparents.menuitem3.caption
+#, fuzzy
+msgctxt "tfrmeditparents.menuitem3.caption"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmeditparents.menuitem4.caption
+#, fuzzy
+msgctxt "tfrmeditparents.menuitem4.caption"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: tfrmeditparents.menuitem5.caption
+#, fuzzy
+msgctxt "tfrmeditparents.menuitem5.caption"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: tfrmeditparents.menuitem6.caption
+#, fuzzy
+msgctxt "tfrmeditparents.menuitem6.caption"
+msgid "Repeat"
+msgstr "Wiederholung"
+
+#: tfrmeditparents.modifier1.caption
+#, fuzzy
+msgctxt "tfrmeditparents.modifier1.caption"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmeditparents.noma.text
+msgctxt "tfrmeditparents.noma.text"
+msgid "Nom de A"
+msgstr ""
+
+#: tfrmeditparents.nomb.text
+msgctxt "tfrmeditparents.nomb.text"
+msgid "Nom de B"
+msgstr ""
+
+#: tfrmeditparents.sd.hint
+msgctxt "tfrmeditparents.sd.hint"
+msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
+msgstr ""
+
+#: tfrmeditparents.sd.text
+msgctxt "tfrmeditparents.sd.text"
+msgid "SD"
+msgstr ""
+
+#: tfrmeditparents.sd2.text
+msgctxt "tfrmeditparents.sd2.text"
+msgid "SD2"
+msgstr ""
+
+#: tfrmeditparents.supprimer1.caption
+#, fuzzy
+msgctxt "tfrmeditparents.supprimer1.caption"
+msgid "&Supprimer"
+msgstr "Löschen"
+
+#: tfrmeditparents.x.text
+#, fuzzy
+msgctxt "tfrmeditparents.x.text"
+msgid "No"
+msgstr "Nein"
+
+#: tfrmeditparents.y2.text
+msgctxt "tfrmeditparents.y2.text"
+msgid "Y"
+msgstr ""
+
+#: tfrmeditwitness.label2.caption
+#, fuzzy
+msgctxt "tfrmeditwitness.label2.caption"
+msgid "Témoin:"
+msgstr "Zeuge"
+
+#: tfrmeditwitness.label3.caption
+#, fuzzy
+msgctxt "tfrmeditwitness.label3.caption"
+msgid "Rôle:"
+msgstr "Beteiligung:"
+
+#: tfrmeditwitness.label4.caption
+#, fuzzy
+msgctxt "tfrmeditwitness.label4.caption"
+msgid "Phrase:"
+msgstr "Satz:"
+
+#: tfrmeditwitness.label5.caption
+msgctxt "tfrmeditwitness.label5.caption"
+msgid "Résultat:"
+msgstr ""
+
+#: tfrmeditwitness.label6.caption
+#, fuzzy
+msgctxt "tfrmeditwitness.label6.caption"
+msgid "(défaut)"
+msgstr "(Fehler)"
+
+#: tfrmeditwitness.menuitem1.caption
+#, fuzzy
+msgctxt "tfrmeditwitness.menuitem1.caption"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: tfrmeditwitness.menuitem2.caption
+#, fuzzy
+msgctxt "tfrmeditwitness.menuitem2.caption"
+msgid "Repeat"
+msgstr "Wiederholung"
+
+#: tfrmeditwitness.nomi.text
+msgctxt "tfrmeditwitness.nomi.text"
+msgid "Nom de I"
+msgstr ""
+
+#: tfrmevents.menuitem1.caption
+#, fuzzy
+msgctxt "tfrmevents.menuitem1.caption"
+msgid "&Aller à"
+msgstr "&gehen"
+
+#: tfrmevents.menuitem2.caption
+msgctxt "tfrmevents.menuitem2.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmevents.menuitem3.caption
+#, fuzzy
+msgctxt "tfrmevents.menuitem3.caption"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tfrmevents.menuitem4.caption
+#, fuzzy
+msgctxt "tfrmevents.menuitem4.caption"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmevents.menuitem5.caption
+#, fuzzy
+msgctxt "tfrmevents.menuitem5.caption"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tfrmevents.menuitem6.caption
+msgctxt "tfrmevents.menuitem6.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmevents.menuitem7.caption
+msgctxt "tfrmevents.menuitem7.caption"
+msgid "Primaire"
+msgstr ""
+
+#: tfrmexplorer.menuitem3.caption
+msgctxt "tfrmexplorer.menuitem3.caption"
+msgid "Tri par &prénom"
+msgstr ""
+
+#: tfrmexplorer.menuitem4.caption
+msgctxt "tfrmexplorer.menuitem4.caption"
+msgid "Tri par &nom"
+msgstr ""
+
+#: tfrmexplorer.menuitem5.caption
+msgctxt "tfrmexplorer.menuitem5.caption"
+msgid "Tri par nai&ssance"
+msgstr ""
+
+#: tfrmexplorer.menuitem6.caption
+msgctxt "tfrmexplorer.menuitem6.caption"
+msgid "Tri par &décès"
+msgstr ""
+
+#: tfrmexplorer.o.text
+msgctxt "tfrmexplorer.o.text"
+msgid "O"
+msgstr ""
+
+#: tfrmnames.label1.caption
+msgctxt "tfrmnames.label1.caption"
+msgid "Dernière modification le "
+msgstr ""
+
+#: tfrmnames.menuitem1.caption
+msgctxt "tfrmnames.menuitem1.caption"
+msgid "&Primaire"
+msgstr ""
+
+#: tfrmnames.menuitem2.caption
+msgctxt "tfrmnames.menuitem2.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmnames.menuitem3.caption
+#, fuzzy
+msgctxt "tfrmnames.menuitem3.caption"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tfrmnames.menuitem4.caption
+#, fuzzy
+msgctxt "tfrmnames.menuitem4.caption"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmnames.menuitem5.caption
+#, fuzzy
+msgctxt "tfrmnames.menuitem5.caption"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tfrmnames.modifie.caption
+#, fuzzy
+msgctxt "tfrmnames.modifie.caption"
+msgid "YYYY/MM/DD"
+msgstr "YYYY-MM-DD"
+
+#: tfrmparents.mnddiv1.caption
+msgctxt "tfrmparents.mnddiv1.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmparents.mnddiv2.caption
+msgctxt "tfrmparents.mnddiv2.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmparents.mniadd.caption
+msgctxt "tfrmparents.mniadd.caption"
+msgid "Add"
+msgstr "Anfügen"
+
+#: tfrmparents.mnidelete.caption
+msgctxt "tfrmparents.mnidelete.caption"
+msgid "Delete"
+msgstr ""
+
+#: tfrmparents.mniedit.caption
+msgctxt "tfrmparents.mniedit.caption"
+msgid "Edit"
+msgstr ""
+
+#: tfrmparents.mnigoto.caption
+msgctxt "tfrmparents.mnigoto.caption"
+msgid "&Go to"
+msgstr ""
+
+#: tfrmparents.mniprimary.caption
+msgctxt "tfrmparents.mniprimary.caption"
+msgid "&Primary"
+msgstr ""
+
+#: tfrmrepository.button1.caption
+#, fuzzy
+msgctxt "tfrmrepository.button1.caption"
+msgid "Ok"
+msgstr "Ok"
+
+#: tfrmrepository.menuitem1.caption
+msgctxt "tfrmrepository.menuitem1.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmrepository.menuitem2.caption
+#, fuzzy
+msgctxt "tfrmrepository.menuitem2.caption"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tfrmrepository.menuitem3.caption
+#, fuzzy
+msgctxt "tfrmrepository.menuitem3.caption"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tfrmrepository.menuitem4.caption
+#, fuzzy
+msgctxt "tfrmrepository.menuitem4.caption"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmrepository.menuitem8.caption
+#, fuzzy
+msgctxt "tfrmrepository.menuitem8.caption"
+msgid "Utilisation"
+msgstr "Verwendung"
+
+#: tfrmselectdialog.combobox1.hint
+msgid "Please select ..."
+msgstr ""
+
+#: tfrmshowimage.mniquit.caption
+#, fuzzy
+msgctxt "tfrmshowimage.mniquit.caption"
+msgid "&Quit"
+msgstr "&Beenden"
+
+#: tfrmsiblings.menuitem1.caption
+#, fuzzy
+msgctxt "tfrmsiblings.menuitem1.caption"
+msgid "&Aller à"
+msgstr "&gehen"
+
+#: tfrmsiblings.menuitem2.caption
+msgctxt "tfrmsiblings.menuitem2.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmsiblings.menuitem3.caption
+#, fuzzy
+msgctxt "tfrmsiblings.menuitem3.caption"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tfrmstemmamainform.actadd.caption
+msgctxt "tfrmstemmamainform.actadd.caption"
+msgid "Add"
+msgstr "Anfügen"
+
+#: tfrmstemmamainform.actaddbrother.caption
+msgid "Brot&her"
+msgstr ""
+
+#: tfrmstemmamainform.actadddaughter.caption
+msgid "D&aughter"
+msgstr ""
+
+#: tfrmstemmamainform.actaddevbaptism.caption
+msgid "&Baptism"
+msgstr ""
+
+#: tfrmstemmamainform.actaddevbirth.caption
+msgid "Bir&th"
+msgstr ""
+
+#: tfrmstemmamainform.actaddevburial.caption
+msgid "B&urial"
+msgstr ""
+
+#: tfrmstemmamainform.actaddevdeath.caption
+msgid "&Death"
+msgstr ""
+
+#: tfrmstemmamainform.actaddfather.caption
+msgid "&Father"
+msgstr ""
+
+#: tfrmstemmamainform.actaddmother.caption
+msgid "&Mother"
+msgstr ""
+
+#: tfrmstemmamainform.actaddsister.caption
+msgid "S&ister"
+msgstr ""
+
+#: tfrmstemmamainform.actaddson.caption
+msgid "S&on"
+msgstr ""
+
+#: tfrmstemmamainform.actaddspouse.caption
+msgid "&Spouse"
+msgstr ""
+
+#: tfrmstemmamainform.actaddunrelated.caption
+msgid "Un&related"
+msgstr ""
+
+#: tfrmstemmamainform.acteditcopy.caption
+msgctxt "tfrmstemmamainform.acteditcopy.caption"
+msgid "&Kopieren"
+msgstr ""
+
+#: tfrmstemmamainform.acteditcopy.hint
+msgctxt "tfrmstemmamainform.acteditcopy.hint"
+msgid "Kopieren"
+msgstr ""
+
+#: tfrmstemmamainform.acteditcopychild.caption
+msgctxt "tfrmstemmamainform.acteditcopychild.caption"
+msgid "Copy &Child"
+msgstr "Kopiere &Kind"
+
+#: tfrmstemmamainform.acteditcopyevent.caption
+msgctxt "tfrmstemmamainform.acteditcopyevent.caption"
+msgid "Copy &Event"
+msgstr "Kopiere &Erreigniss"
+
+#: tfrmstemmamainform.acteditcopyname.caption
+msgctxt "tfrmstemmamainform.acteditcopyname.caption"
+msgid "Copy &Name"
+msgstr "Kopiere &Name"
+
+#: tfrmstemmamainform.acteditcopyparent.caption
+msgctxt "tfrmstemmamainform.acteditcopyparent.caption"
+msgid "Copy Pa&rent"
+msgstr "Kopiere E&ltern"
+
+#: tfrmstemmamainform.acteditcopyperson.caption
+msgctxt "tfrmstemmamainform.acteditcopyperson.caption"
+msgid "Copy &Person"
+msgstr "Kopie &Person"
+
+#: tfrmstemmamainform.acteditcut.caption
+msgctxt "tfrmstemmamainform.acteditcut.caption"
+msgid "&Ausschneiden"
+msgstr "&Ausschneiden"
+
+#: tfrmstemmamainform.acteditcut.hint
+msgctxt "tfrmstemmamainform.acteditcut.hint"
+msgid "Ausschneiden"
+msgstr "Ausschneiden"
+
+#: tfrmstemmamainform.acteditdeleteperson.caption
+msgctxt "tfrmstemmamainform.acteditdeleteperson.caption"
+msgid "&Delete Person"
+msgstr ""
+
+#: tfrmstemmamainform.acteditpaste.caption
+msgctxt "tfrmstemmamainform.acteditpaste.caption"
+msgid "&Einfügen"
+msgstr ""
+
+#: tfrmstemmamainform.acteditpaste.hint
+msgctxt "tfrmstemmamainform.acteditpaste.hint"
+msgid "Einfügen"
+msgstr ""
+
+#: tfrmstemmamainform.actfilecloseproject.caption
+msgctxt "tfrmstemmamainform.actfilecloseproject.caption"
+msgid "actFileCloseProject"
+msgstr "Projekt Schliessen"
+
+#: tfrmstemmamainform.actfileconndb.caption
+msgctxt "tfrmstemmamainform.actfileconndb.caption"
+msgid "Connect to DB"
+msgstr "Verbinde zur DB"
+
+#: tfrmstemmamainform.actfilecreateproject.caption
+msgctxt "tfrmstemmamainform.actfilecreateproject.caption"
+msgid "Create Project"
+msgstr "Erstelle Projekt"
+
+#: tfrmstemmamainform.actfiledeleteproject.caption
+msgctxt "tfrmstemmamainform.actfiledeleteproject.caption"
+msgid "Delete Project"
+msgstr ""
+
+#: tfrmstemmamainform.actfileexit.caption
+msgctxt "tfrmstemmamainform.actfileexit.caption"
+msgid "&Beenden"
+msgstr "&Beenden"
+
+#: tfrmstemmamainform.actfileexit.hint
+msgctxt "tfrmstemmamainform.actfileexit.hint"
+msgid "Beenden"
+msgstr "Beenden"
+
+#: tfrmstemmamainform.actfileimportproject.caption
+msgctxt "tfrmstemmamainform.actfileimportproject.caption"
+msgid "Import Project"
+msgstr ""
+
+#: tfrmstemmamainform.actfileopenproject.caption
+msgctxt "tfrmstemmamainform.actfileopenproject.caption"
+msgid "Open Project"
+msgstr ""
+
+#: tfrmstemmamainform.acthelpabout.caption
+msgid "actHelpAbout"
+msgstr ""
+
+#: tfrmstemmamainform.acthelpshowdebug.caption
+msgctxt "tfrmstemmamainform.acthelpshowdebug.caption"
+msgid "Show Debug"
+msgstr ""
+
+#: tfrmstemmamainform.actnavdatasetfirst.caption
+msgctxt "tfrmstemmamainform.actnavdatasetfirst.caption"
+msgid "&Erster"
+msgstr ""
+
+#: tfrmstemmamainform.actnavdatasetfirst.hint
+msgctxt "tfrmstemmamainform.actnavdatasetfirst.hint"
+msgid "Erster"
+msgstr ""
+
+#: tfrmstemmamainform.actnavdatasetlast.caption
+msgctxt "tfrmstemmamainform.actnavdatasetlast.caption"
+msgid "&Letzter"
+msgstr ""
+
+#: tfrmstemmamainform.actnavdatasetlast.hint
+msgctxt "tfrmstemmamainform.actnavdatasetlast.hint"
+msgid "Letzter"
+msgstr ""
+
+#: tfrmstemmamainform.actnavdatasetnext.caption
+msgctxt "tfrmstemmamainform.actnavdatasetnext.caption"
+msgid "&Nächster"
+msgstr ""
+
+#: tfrmstemmamainform.actnavdatasetnext.hint
+msgctxt "tfrmstemmamainform.actnavdatasetnext.hint"
+msgid "Nächster"
+msgstr ""
+
+#: tfrmstemmamainform.actnavdatasetprior.caption
+msgctxt "tfrmstemmamainform.actnavdatasetprior.caption"
+msgid "&Vorgänger"
+msgstr ""
+
+#: tfrmstemmamainform.actnavdatasetprior.hint
+msgctxt "tfrmstemmamainform.actnavdatasetprior.hint"
+msgid "Vorgänger"
+msgstr ""
+
+#: tfrmstemmamainform.actnavigation.caption
+msgctxt "tfrmstemmamainform.actnavigation.caption"
+msgid "Navigation"
+msgstr "Navigation"
+
+#: tfrmstemmamainform.actnavnumber.caption
+msgid "By Number"
+msgstr ""
+
+#: tfrmstemmamainform.actnavshowhistory.caption
+msgid "Complete &History"
+msgstr ""
+
+#: tfrmstemmamainform.actutils.caption
+msgid "Utils"
+msgstr ""
+
+#: tfrmstemmamainform.actutilscompression.caption
+msgid "actUtilsCompression"
+msgstr ""
+
+#: tfrmstemmamainform.actutilseventtypes.caption
+msgid "actUtilsEventTypes"
+msgstr ""
+
+#: tfrmstemmamainform.actutilsplaces.caption
+msgid "actUtilsPlaces"
+msgstr ""
+
+#: tfrmstemmamainform.actutilsrepository.caption
+msgid "actUtilsRepository"
+msgstr ""
+
+#: tfrmstemmamainform.actutilssources.caption
+msgid "actUtilsSources"
+msgstr ""
+
+#: tfrmstemmamainform.actwinacesters.caption
+msgid "actWinAcesters"
+msgstr ""
+
+#: tfrmstemmamainform.actwinbrothers.caption
+msgid "actWinBrothers"
+msgstr ""
+
+#: tfrmstemmamainform.actwinchildren.caption
+msgid "actWinChildren"
+msgstr ""
+
+#: tfrmstemmamainform.actwindescendens.caption
+msgid "actWinDescendens"
+msgstr ""
+
+#: tfrmstemmamainform.actwindocuments.caption
+msgid "Documents"
+msgstr ""
+
+#: tfrmstemmamainform.actwindows.caption
+msgctxt "tfrmstemmamainform.actwindows.caption"
+msgid "Windows"
+msgstr "Fenster"
+
+#: tfrmstemmamainform.actwinevents.caption
+msgid "Events"
+msgstr ""
+
+#: tfrmstemmamainform.actwinexplorer.caption
+msgctxt "tfrmstemmamainform.actwinexplorer.caption"
+msgid "Explorer"
+msgstr ""
+
+#: tfrmstemmamainform.actwinimages.caption
+msgid "actWinImages"
+msgstr ""
+
+#: tfrmstemmamainform.actwinnameandattr.caption
+msgid "Name && Attributes "
+msgstr ""
+
+#: tfrmstemmamainform.actwinparents.caption
+msgid "Parents"
+msgstr ""
+
+#: tfrmstemmamainform.checkbox1.caption
+msgctxt "tfrmstemmamainform.checkbox1.caption"
+msgid "CheckBox1"
+msgstr ""
+
+#: tfrmstemmamainform.importer_projet.caption
+msgctxt "tfrmstemmamainform.importer_projet.caption"
+msgid "&Importer projet"
+msgstr ""
+
+#: tfrmstemmamainform.menuitem49.caption
+#, fuzzy
+#| msgid "À &Propos"
+msgctxt "tfrmstemmamainform.menuitem49.caption"
+msgid "&About"
+msgstr "Ü&ber..."
+
+#: tfrmstemmamainform.menuitem51.caption
+#, fuzzy
+msgctxt "tfrmstemmamainform.menuitem51.caption"
+msgid "&TMG v.4.0d"
+msgstr "&TMG v.4.0d"
+
+#: tfrmstemmamainform.menuitem56.caption
+msgctxt "tfrmstemmamainform.menuitem56.caption"
+msgid "&Parametres"
+msgstr ""
+
+#: tfrmstemmamainform.menuitem57.caption
+msgctxt "tfrmstemmamainform.menuitem57.caption"
+msgid "Fichiers PDF"
+msgstr ""
+
+#: tfrmstemmamainform.menuitem58.caption
+msgctxt "tfrmstemmamainform.menuitem58.caption"
+msgid "&Langue"
+msgstr ""
+
+#: tfrmstemmamainform.menuitem61.caption
+#, fuzzy
+msgctxt "tfrmstemmamainform.menuitem61.caption"
+msgid "&Fermer projet"
+msgstr "Project s&chliessen"
+
+#: tfrmstemmamainform.menuitem62.caption
+msgctxt "tfrmstemmamainform.menuitem62.caption"
+msgid "&Exporter projet"
+msgstr ""
+
+#: tfrmstemmamainform.menuitem63.caption
+msgctxt "tfrmstemmamainform.menuitem63.caption"
+msgid "Site &Web"
+msgstr ""
+
+#: tfrmstemmamainform.mndappenddivider39.caption
+msgctxt "tfrmstemmamainform.mndappenddivider39.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmstemmamainform.mnddivitem19.caption
+msgctxt "tfrmstemmamainform.mnddivitem19.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmstemmamainform.mndeditdivider45.caption
+msgctxt "tfrmstemmamainform.mndeditdivider45.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmstemmamainform.mndeditdivider52.caption
+msgctxt "tfrmstemmamainform.mndeditdivider52.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmstemmamainform.mndfiledivider1.caption
+msgctxt "tfrmstemmamainform.mndfiledivider1.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmstemmamainform.mndfiledivider4.caption
+msgctxt "tfrmstemmamainform.mndfiledivider4.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmstemmamainform.mndfiledivider54.caption
+msgctxt "tfrmstemmamainform.mndfiledivider54.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmstemmamainform.mndhelpdiv1.caption
+msgctxt "tfrmstemmamainform.mndhelpdiv1.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmstemmamainform.mndnavdivider20.caption
+msgctxt "tfrmstemmamainform.mndnavdivider20.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmstemmamainform.mndutilsdivider64.caption
+msgctxt "tfrmstemmamainform.mndutilsdivider64.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmstemmamainform.mndwindowdivider12.caption
+msgctxt "tfrmstemmamainform.mndwindowdivider12.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmstemmamainform.mndwindowdivider22.caption
+msgctxt "tfrmstemmamainform.mndwindowdivider22.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmstemmamainform.mniancetres.caption
+msgctxt "tfrmstemmamainform.mniancetres.caption"
+msgid "&Ancêtres"
+msgstr "&Vorfahren"
+
+#: tfrmstemmamainform.mnidescendants.caption
+msgctxt "tfrmstemmamainform.mnidescendants.caption"
+msgid "&Descendants"
+msgstr ""
+
+#: tfrmstemmamainform.mniedit.caption
+msgctxt "tfrmstemmamainform.mniedit.caption"
+msgid "&Edit"
+msgstr ""
+
+#: tfrmstemmamainform.mnienfants.caption
+#, fuzzy
+msgctxt "tfrmstemmamainform.mnienfants.caption"
+msgid "Enf&ants"
+msgstr "Kinder:"
+
+#: tfrmstemmamainform.mnifile.caption
+msgctxt "tfrmstemmamainform.mnifile.caption"
+msgid "&File"
+msgstr ""
+
+#: tfrmstemmamainform.mnifratrie.caption
+msgctxt "tfrmstemmamainform.mnifratrie.caption"
+msgid "&Fratrie"
+msgstr ""
+
+#: tfrmstemmamainform.mnihelp.caption
+#, fuzzy
+#| msgid "&Aide"
+msgctxt "tfrmstemmamainform.mnihelp.caption"
+msgid "&Help"
+msgstr "&Hilfe"
+
+#: tfrmstemmamainform.mniimage.caption
+#, fuzzy
+msgctxt "tfrmstemmamainform.mniimage.caption"
+msgid "&Image"
+msgstr "&Bild"
+
+#: tfrmstemmamainform.mninavold1.caption
+msgctxt "tfrmstemmamainform.mninavold1.caption"
+msgid "New Item27"
+msgstr ""
+
+#: tfrmstemmamainform.mninavold1.hint
+msgctxt "tfrmstemmamainform.mninavold1.hint"
+msgid "0"
+msgstr ""
+
+#: tfrmstemmamainform.mninavold2.caption
+msgctxt "tfrmstemmamainform.mninavold2.caption"
+msgid "New Item28"
+msgstr ""
+
+#: tfrmstemmamainform.mninavold2.hint
+msgctxt "tfrmstemmamainform.mninavold2.hint"
+msgid "0"
+msgstr ""
+
+#: tfrmstemmamainform.mninavold3.caption
+msgctxt "tfrmstemmamainform.mninavold3.caption"
+msgid "New Item29"
+msgstr ""
+
+#: tfrmstemmamainform.mninavold3.hint
+msgctxt "tfrmstemmamainform.mninavold3.hint"
+msgid "0"
+msgstr ""
+
+#: tfrmstemmamainform.mninavold4.caption
+msgctxt "tfrmstemmamainform.mninavold4.caption"
+msgid "New Item30"
+msgstr ""
+
+#: tfrmstemmamainform.mninavold4.hint
+msgctxt "tfrmstemmamainform.mninavold4.hint"
+msgid "0"
+msgstr ""
+
+#: tfrmstemmamainform.mninavold5.caption
+msgctxt "tfrmstemmamainform.mninavold5.caption"
+msgid "New Item31"
+msgstr ""
+
+#: tfrmstemmamainform.mninavold5.hint
+msgctxt "tfrmstemmamainform.mninavold5.hint"
+msgid "0"
+msgstr ""
+
+#: tfrmstemmamainform.mniutilitem28.caption
+#, fuzzy
+msgctxt "tfrmstemmamainform.mniutilitem28.caption"
+msgid "&Sources"
+msgstr "&Quellen"
+
+#: tfrmstemmamainform.mniutilitem29.caption
+msgctxt "tfrmstemmamainform.mniutilitem29.caption"
+msgid "&Lieux"
+msgstr ""
+
+#: tfrmstemmamainform.mniutilitem30.caption
+msgctxt "tfrmstemmamainform.mniutilitem30.caption"
+msgid "&Dépots"
+msgstr ""
+
+#: tfrmstemmamainform.mniutilitem31.caption
+msgctxt "tfrmstemmamainform.mniutilitem31.caption"
+msgid "&Types d'événements"
+msgstr ""
+
+#: tfrmstemmamainform.mniutilitem65.caption
+#, fuzzy
+msgctxt "tfrmstemmamainform.mniutilitem65.caption"
+msgid "Compression"
+msgstr "Kompression"
+
+#: tfrmstemmamainform.mniutilitem66.caption
+msgctxt "tfrmstemmamainform.mniutilitem66.caption"
+msgid "Réparation Naiss.-Décès"
+msgstr "Reparatur Naiss. - Tod"
+
+#: tfrmstemmamainform.mniutilitem67.caption
+msgctxt "tfrmstemmamainform.mniutilitem67.caption"
+msgid "Nettoyage des items orphelins"
+msgstr "Bereinigung der verwaiste Elemente"
+
+#: tfrmstemmamainform.mniutilitem68.caption
+msgctxt "tfrmstemmamainform.mniutilitem68.caption"
+msgid "Réparation Nom pour tri"
+msgstr ""
+
+#: tfrmstemmamainform.mniutilitem69.caption
+msgctxt "tfrmstemmamainform.mniutilitem69.caption"
+msgid "Ajouter les date de tri de relations"
+msgstr "Die Sortierung nach Datum der Beziehungen hinzufügen"
+
+#: tfrmstemmamainform.supprimer_projet.caption
+#, fuzzy
+msgctxt "tfrmstemmamainform.supprimer_projet.caption"
+msgid "Supprimer projet"
+msgstr "Lösche Projekt"
+
+#: tfrmstemmamainform.toolbar1.caption
+msgctxt "tfrmstemmamainform.toolbar1.caption"
+msgid "ToolBar1"
+msgstr ""
+
+#: tfrmstemmamainform.toolbar2.caption
+msgid "ToolBar2"
+msgstr ""
+
+#: tfrmstemmamainform.toolbar3.caption
+msgid "ToolBar3"
+msgstr ""
+
+#: tfrmstemmamainform.toolbutton4.caption
+msgctxt "tfrmstemmamainform.toolbutton4.caption"
+msgid "ToolButton4"
+msgstr ""
+
+#: tfrmstemmamainform.toolbutton8.caption
+msgctxt "tfrmstemmamainform.toolbutton8.caption"
+msgid "ToolButton8"
+msgstr ""
+
+#: tfrmstemmamainform.toolbutton9.caption
+msgid "ToolButton9"
+msgstr ""
+
+#: tfrmtypes.button1.caption
+#, fuzzy
+msgctxt "tfrmtypes.button1.caption"
+msgid "Ok"
+msgstr "Ok"
+
+#: tfrmtypes.menuitem1.caption
+msgctxt "tfrmtypes.menuitem1.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmtypes.menuitem2.caption
+#, fuzzy
+msgctxt "tfrmtypes.menuitem2.caption"
+msgid "Ajouter"
+msgstr "Anfügen"
+
+#: tfrmtypes.menuitem3.caption
+#, fuzzy
+msgctxt "tfrmtypes.menuitem3.caption"
+msgid "Supprimer"
+msgstr "Löschen"
+
+#: tfrmtypes.menuitem4.caption
+#, fuzzy
+msgctxt "tfrmtypes.menuitem4.caption"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmtypes.menuitem8.caption
+#, fuzzy
+msgctxt "tfrmtypes.menuitem8.caption"
+msgid "Utilisation"
+msgstr "Verwendung"
+
+#: tprincipale.actadd.caption
+msgctxt "tprincipale.actadd.caption"
+msgid "Add"
+msgstr "Anfügen"
+
+#: tprincipale.acteditcopy.caption
+msgctxt "tprincipale.acteditcopy.caption"
+msgid "&Kopieren"
+msgstr ""
+
+#: tprincipale.acteditcopy.hint
+msgctxt "tprincipale.acteditcopy.hint"
+msgid "Kopieren"
+msgstr ""
+
+#: tprincipale.acteditcopychild.caption
+msgctxt "tprincipale.acteditcopychild.caption"
+msgid "Copy &Child"
+msgstr "Kopiere &Kind"
+
+#: tprincipale.acteditcopyevent.caption
+msgctxt "tprincipale.acteditcopyevent.caption"
+msgid "Copy &Event"
+msgstr "Kopiere &Erreigniss"
+
+#: tprincipale.acteditcopyname.caption
+msgctxt "tprincipale.acteditcopyname.caption"
+msgid "Copy &Name"
+msgstr "Kopiere &Name"
+
+#: tprincipale.acteditcopyparent.caption
+msgctxt "tprincipale.acteditcopyparent.caption"
+msgid "Copy Pa&rent"
+msgstr "Kopiere E&ltern"
+
+#: tprincipale.acteditcopyperson.caption
+#, fuzzy
+msgctxt "tprincipale.acteditcopyperson.caption"
+msgid "Copy &Person"
+msgstr "Kopie &Person"
+
+#: tprincipale.acteditcut.caption
+msgctxt "tprincipale.acteditcut.caption"
+msgid "&Ausschneiden"
+msgstr "&Ausschneiden"
+
+#: tprincipale.acteditcut.hint
+msgctxt "tprincipale.acteditcut.hint"
+msgid "Ausschneiden"
+msgstr "Ausschneiden"
+
+#: tprincipale.acteditdeleteperson.caption
+msgctxt "tprincipale.acteditdeleteperson.caption"
+msgid "&Delete Person"
+msgstr ""
+
+#: tprincipale.acteditpaste.caption
+msgctxt "tprincipale.acteditpaste.caption"
+msgid "&Einfügen"
+msgstr ""
+
+#: tprincipale.acteditpaste.hint
+msgctxt "tprincipale.acteditpaste.hint"
+msgid "Einfügen"
+msgstr ""
+
+#: tprincipale.actfilecloseproject.caption
+msgctxt "tprincipale.actfilecloseproject.caption"
+msgid "actFileCloseProject"
+msgstr "Projekt Schliessen"
+
+#: tprincipale.actfileconndb.caption
+msgctxt "tprincipale.actfileconndb.caption"
+msgid "Connect to DB"
+msgstr "Verbinde zur DB"
+
+#: tprincipale.actfilecreateproject.caption
+msgctxt "tprincipale.actfilecreateproject.caption"
+msgid "Create Project"
+msgstr "Erstelle Projekt"
+
+#: tprincipale.actfiledeleteproject.caption
+msgctxt "tprincipale.actfiledeleteproject.caption"
+msgid "Delete Project"
+msgstr ""
+
+#: tprincipale.actfileexit.caption
+msgctxt "tprincipale.actfileexit.caption"
+msgid "&Beenden"
+msgstr "&Beenden"
+
+#: tprincipale.actfileexit.hint
+msgctxt "tprincipale.actfileexit.hint"
+msgid "Beenden"
+msgstr "Beenden"
+
+#: tprincipale.actfileimportproject.caption
+msgctxt "tprincipale.actfileimportproject.caption"
+msgid "Import Project"
+msgstr ""
+
+#: tprincipale.actfileopenproject.caption
+msgctxt "tprincipale.actfileopenproject.caption"
+msgid "Open Project"
+msgstr ""
+
+#: tprincipale.acthelpshowdebug.caption
+msgctxt "tprincipale.acthelpshowdebug.caption"
+msgid "Show Debug"
+msgstr ""
+
+#: tprincipale.actnavdatasetfirst.caption
+msgctxt "tprincipale.actnavdatasetfirst.caption"
+msgid "&Erster"
+msgstr ""
+
+#: tprincipale.actnavdatasetfirst.hint
+msgctxt "tprincipale.actnavdatasetfirst.hint"
+msgid "Erster"
+msgstr ""
+
+#: tprincipale.actnavdatasetlast.caption
+msgctxt "tprincipale.actnavdatasetlast.caption"
+msgid "&Letzter"
+msgstr ""
+
+#: tprincipale.actnavdatasetlast.hint
+msgctxt "tprincipale.actnavdatasetlast.hint"
+msgid "Letzter"
+msgstr ""
+
+#: tprincipale.actnavdatasetnext.caption
+msgctxt "tprincipale.actnavdatasetnext.caption"
+msgid "&Nächster"
+msgstr ""
+
+#: tprincipale.actnavdatasetnext.hint
+msgctxt "tprincipale.actnavdatasetnext.hint"
+msgid "Nächster"
+msgstr ""
+
+#: tprincipale.actnavdatasetprior.caption
+msgctxt "tprincipale.actnavdatasetprior.caption"
+msgid "&Vorgänger"
+msgstr ""
+
+#: tprincipale.actnavdatasetprior.hint
+msgctxt "tprincipale.actnavdatasetprior.hint"
+msgid "Vorgänger"
+msgstr ""
+
+#: tprincipale.actnavigation.caption
+msgctxt "tprincipale.actnavigation.caption"
+msgid "Navigation"
+msgstr "Navigation"
+
+#: tprincipale.actwindows.caption
+msgctxt "tprincipale.actwindows.caption"
+msgid "Windows"
+msgstr "Fenster"
+
+#: tprincipale.actwinexplorer.caption
+msgctxt "tprincipale.actwinexplorer.caption"
+msgid "Explorer"
+msgstr ""
+
+#: tprincipale.checkbox1.caption
+msgctxt "tprincipale.checkbox1.caption"
+msgid "CheckBox1"
+msgstr ""
+
+#: tprincipale.importer_projet.caption
+msgctxt "tprincipale.importer_projet.caption"
+msgid "&Importer projet"
+msgstr ""
+
+#: tprincipale.individu.text
+msgctxt "tprincipale.individu.text"
+msgid "Individu"
+msgstr ""
+
+#: tprincipale.menuitem49.caption
+#, fuzzy
+#| msgid "À &Propos"
+msgctxt "tprincipale.menuitem49.caption"
+msgid "&About"
+msgstr "Ü&ber..."
+
+#: tprincipale.menuitem51.caption
+msgctxt "tprincipale.menuitem51.caption"
+msgid "&TMG v.4.0d"
+msgstr "&TMG v.4.0d"
+
+#: tprincipale.menuitem56.caption
+msgctxt "tprincipale.menuitem56.caption"
+msgid "&Parametres"
+msgstr ""
+
+#: tprincipale.menuitem57.caption
+msgctxt "tprincipale.menuitem57.caption"
+msgid "Fichiers PDF"
+msgstr ""
+
+#: tprincipale.menuitem58.caption
+msgctxt "tprincipale.menuitem58.caption"
+msgid "&Langue"
+msgstr ""
+
+#: tprincipale.menuitem61.caption
+msgctxt "tprincipale.menuitem61.caption"
+msgid "&Fermer projet"
+msgstr "Project s&chliessen"
+
+#: tprincipale.menuitem62.caption
+msgctxt "tprincipale.menuitem62.caption"
+msgid "&Exporter projet"
+msgstr ""
+
+#: tprincipale.menuitem63.caption
+msgctxt "tprincipale.menuitem63.caption"
+msgid "Site &Web"
+msgstr ""
+
+#: tprincipale.mndappenddivider39.caption
+msgctxt "tprincipale.mndappenddivider39.caption"
+msgid "-"
+msgstr ""
+
+#: tprincipale.mnddivitem19.caption
+msgctxt "tprincipale.mnddivitem19.caption"
+msgid "-"
+msgstr ""
+
+#: tprincipale.mndeditdivider45.caption
+msgctxt "tprincipale.mndeditdivider45.caption"
+msgid "-"
+msgstr ""
+
+#: tprincipale.mndeditdivider52.caption
+msgctxt "tprincipale.mndeditdivider52.caption"
+msgid "-"
+msgstr ""
+
+#: tprincipale.mndfiledivider1.caption
+msgctxt "tprincipale.mndfiledivider1.caption"
+msgid "-"
+msgstr ""
+
+#: tprincipale.mndfiledivider4.caption
+msgctxt "tprincipale.mndfiledivider4.caption"
+msgid "-"
+msgstr ""
+
+#: tprincipale.mndfiledivider54.caption
+msgctxt "tprincipale.mndfiledivider54.caption"
+msgid "-"
+msgstr ""
+
+#: tprincipale.mndhelpdiv1.caption
+msgctxt "tprincipale.mndhelpdiv1.caption"
+msgid "-"
+msgstr ""
+
+#: tprincipale.mndnavdivider20.caption
+msgctxt "tprincipale.mndnavdivider20.caption"
+msgid "-"
+msgstr ""
+
+#: tprincipale.mndutilsdivider64.caption
+msgctxt "tprincipale.mndutilsdivider64.caption"
+msgid "-"
+msgstr ""
+
+#: tprincipale.mndwindowdivider12.caption
+msgctxt "tprincipale.mndwindowdivider12.caption"
+msgid "-"
+msgstr ""
+
+#: tprincipale.mndwindowdivider22.caption
+msgctxt "tprincipale.mndwindowdivider22.caption"
+msgid "-"
+msgstr ""
+
+#: tprincipale.mniadditem33.caption
+#, fuzzy
+msgctxt "tprincipale.mniadditem33.caption"
+msgid "&Père"
+msgstr "&Vater"
+
+#: tprincipale.mniadditem34.caption
+#, fuzzy
+msgctxt "tprincipale.mniadditem34.caption"
+msgid "&Mère"
+msgstr "&Mutter"
+
+#: tprincipale.mniadditem35.caption
+#, fuzzy
+msgctxt "tprincipale.mniadditem35.caption"
+msgid "&Frère"
+msgstr "&Bruder"
+
+#: tprincipale.mniadditem36.caption
+#, fuzzy
+msgctxt "tprincipale.mniadditem36.caption"
+msgid "&Soeur"
+msgstr "&Schwester"
+
+#: tprincipale.mniadditem37.caption
+#, fuzzy
+msgctxt "tprincipale.mniadditem37.caption"
+msgid "F&ils"
+msgstr "Verbindung"
+
+#: tprincipale.mniadditem38.caption
+#, fuzzy
+msgctxt "tprincipale.mniadditem38.caption"
+msgid "Fi&lle"
+msgstr "Tochter"
+
+#: tprincipale.mniadditem40.caption
+#, fuzzy
+msgctxt "tprincipale.mniadditem40.caption"
+msgid "&Naissance"
+msgstr "Geburt"
+
+#: tprincipale.mniadditem41.caption
+msgctxt "tprincipale.mniadditem41.caption"
+msgid "&Baptême"
+msgstr "&Taufe"
+
+#: tprincipale.mniadditem42.caption
+msgctxt "tprincipale.mniadditem42.caption"
+msgid "&Décès"
+msgstr ""
+
+#: tprincipale.mniadditem43.caption
+msgctxt "tprincipale.mniadditem43.caption"
+msgid "Sép&ulture"
+msgstr ""
+
+#: tprincipale.mniadditem44.caption
+msgctxt "tprincipale.mniadditem44.caption"
+msgid "Con&joint"
+msgstr ""
+
+#: tprincipale.mniadditem50.caption
+msgctxt "tprincipale.mniadditem50.caption"
+msgid "Non &relié"
+msgstr ""
+
+#: tprincipale.mniancetres.caption
+msgctxt "tprincipale.mniancetres.caption"
+msgid "&Ancêtres"
+msgstr "&Vorfahren"
+
+#: tprincipale.mnidescendants.caption
+msgctxt "tprincipale.mnidescendants.caption"
+msgid "&Descendants"
+msgstr ""
+
+#: tprincipale.mniedit.caption
+msgctxt "tprincipale.mniedit.caption"
+msgid "&Edit"
+msgstr ""
+
+#: tprincipale.mnienfants.caption
+msgctxt "tprincipale.mnienfants.caption"
+msgid "Enf&ants"
+msgstr "Kinder:"
+
+#: tprincipale.mnievenements.caption
+msgctxt "tprincipale.mnievenements.caption"
+msgid "É&vénements"
+msgstr ""
+
+#: tprincipale.mniexhibits.caption
+msgctxt "tprincipale.mniexhibits.caption"
+msgid "D&ocuments"
+msgstr "D&okumente"
+
+#: tprincipale.mnifile.caption
+msgctxt "tprincipale.mnifile.caption"
+msgid "&File"
+msgstr ""
+
+#: tprincipale.mnifratrie.caption
+msgctxt "tprincipale.mnifratrie.caption"
+msgid "&Fratrie"
+msgstr ""
+
+#: tprincipale.mnihelp.caption
+#, fuzzy
+#| msgid "&Aide"
+msgctxt "tprincipale.mnihelp.caption"
+msgid "&Help"
+msgstr "&Hilfe"
+
+#: tprincipale.mniimage.caption
+msgctxt "tprincipale.mniimage.caption"
+msgid "&Image"
+msgstr "&Bild"
+
+#: tprincipale.mninavitem18.caption
+msgctxt "tprincipale.mninavitem18.caption"
+msgid "&Numéro"
+msgstr ""
+
+#: tprincipale.mninavitem21.caption
+#, fuzzy
+msgctxt "tprincipale.mninavitem21.caption"
+msgid "&Historique complet"
+msgstr "Vollständige &Historie"
+
+#: tprincipale.mninavitem24.caption
+msgctxt "tprincipale.mninavitem24.caption"
+msgid "Élément précédent de l'explorateur"
+msgstr "Vorheriges Element im Explorer"
+
+#: tprincipale.mninavitem25.caption
+msgctxt "tprincipale.mninavitem25.caption"
+msgid "Élément suivant de l'explorateur"
+msgstr ""
+
+#: tprincipale.mninavold1.caption
+msgctxt "tprincipale.mninavold1.caption"
+msgid "New Item27"
+msgstr ""
+
+#: tprincipale.mninavold1.hint
+msgctxt "tprincipale.mninavold1.hint"
+msgid "0"
+msgstr ""
+
+#: tprincipale.mninavold2.caption
+msgctxt "tprincipale.mninavold2.caption"
+msgid "New Item28"
+msgstr ""
+
+#: tprincipale.mninavold2.hint
+msgctxt "tprincipale.mninavold2.hint"
+msgid "0"
+msgstr ""
+
+#: tprincipale.mninavold3.caption
+msgctxt "tprincipale.mninavold3.caption"
+msgid "New Item29"
+msgstr ""
+
+#: tprincipale.mninavold3.hint
+msgctxt "tprincipale.mninavold3.hint"
+msgid "0"
+msgstr ""
+
+#: tprincipale.mninavold4.caption
+msgctxt "tprincipale.mninavold4.caption"
+msgid "New Item30"
+msgstr ""
+
+#: tprincipale.mninavold4.hint
+msgctxt "tprincipale.mninavold4.hint"
+msgid "0"
+msgstr ""
+
+#: tprincipale.mninavold5.caption
+msgctxt "tprincipale.mninavold5.caption"
+msgid "New Item31"
+msgstr ""
+
+#: tprincipale.mninavold5.hint
+msgctxt "tprincipale.mninavold5.hint"
+msgid "0"
+msgstr ""
+
+#: tprincipale.mninoms.caption
+msgctxt "tprincipale.mninoms.caption"
+msgid "&Noms et Attributs"
+msgstr "&Namen und Eigenschaften"
+
+#: tprincipale.mniparents.caption
+msgctxt "tprincipale.mniparents.caption"
+msgid "&Parents"
+msgstr "&Eltern"
+
+#: tprincipale.mniutilitem28.caption
+#, fuzzy
+msgctxt "tprincipale.mniutilitem28.caption"
+msgid "&Sources"
+msgstr "&Quellen"
+
+#: tprincipale.mniutilitem29.caption
+msgctxt "tprincipale.mniutilitem29.caption"
+msgid "&Lieux"
+msgstr ""
+
+#: tprincipale.mniutilitem30.caption
+msgctxt "tprincipale.mniutilitem30.caption"
+msgid "&Dépots"
+msgstr ""
+
+#: tprincipale.mniutilitem31.caption
+msgctxt "tprincipale.mniutilitem31.caption"
+msgid "&Types d'événements"
+msgstr ""
+
+#: tprincipale.mniutilitem65.caption
+#, fuzzy
+msgctxt "tprincipale.mniutilitem65.caption"
+msgid "Compression"
+msgstr "Kompression"
+
+#: tprincipale.mniutilitem66.caption
+#, fuzzy
+msgctxt "tprincipale.mniutilitem66.caption"
+msgid "Réparation Naiss.-Décès"
+msgstr "Reparatur Naiss. - Tod"
+
+#: tprincipale.mniutilitem67.caption
+#, fuzzy
+msgctxt "tprincipale.mniutilitem67.caption"
+msgid "Nettoyage des items orphelins"
+msgstr "Bereinigung der verwaiste Elemente"
+
+#: tprincipale.mniutilitem68.caption
+msgctxt "tprincipale.mniutilitem68.caption"
+msgid "Réparation Nom pour tri"
+msgstr ""
+
+#: tprincipale.mniutilitem69.caption
+#, fuzzy
+msgctxt "tprincipale.mniutilitem69.caption"
+msgid "Ajouter les date de tri de relations"
+msgstr "Die Sortierung nach Datum der Beziehungen hinzufügen"
+
+#: tprincipale.mniutils.caption
+msgctxt "tprincipale.mniutils.caption"
+msgid "&Utils"
+msgstr ""
+
+#: tprincipale.supprimer_projet.caption
+msgctxt "tprincipale.supprimer_projet.caption"
+msgid "Supprimer projet"
+msgstr "Lösche Projekt"
+
+#: tprincipale.toolbar1.caption
+msgctxt "tprincipale.toolbar1.caption"
+msgid "ToolBar1"
+msgstr ""
+
+#: tprincipale.toolbutton3.caption
+msgctxt "tprincipale.toolbutton3.caption"
+msgid "ToolButton3"
+msgstr ""
+
+#: tprincipale.toolbutton4.caption
+msgctxt "tprincipale.toolbutton4.caption"
+msgid "ToolButton4"
+msgstr ""
+
+#: tprincipale.toolbutton8.caption
+msgctxt "tprincipale.toolbutton8.caption"
+msgid "ToolButton8"
+msgstr ""
+
+#: traduction.rsmenuhistorycaption
+msgid "&%d- %s (%d)"
+msgstr ""
+
+#: traduction.sareyousuretoquit
+msgid "Are you syre you want to quit STEMMA?"
+msgstr "Sind sie sicher, daß sie STEMMA beenden möchten ?"
+
+#: traduction.sconfirmation
+msgid "Confirmation"
+msgstr ""
+
+#: traduction.sdatabasename
+msgid "Database name"
+msgstr ""
+
+#: traduction.senterdbname
+msgid "Enter the database name to be created"
+msgstr ""
+
+#: traduction.sfamilyname
+#, fuzzy
+msgctxt "traduction.sfamilyname"
+msgid "Name"
+msgstr "Name"
+
+#: traduction.sgivenname
+msgid "First name"
+msgstr ""
+
+#: traduction.ssuffix
+msgid "Suffix"
+msgstr ""
+
+#: traduction.stitle
+msgid "Title"
+msgstr ""
+
+#: traduction.sunabletoconnecttodb
+msgid "Couldn't connect to MySQL database %s."
+msgstr "Kann nicht zu MySQL-Datenbank '%s' verbinden."
+
+#: tshowimage.button1.caption
+#, fuzzy
+msgctxt "TSHOWIMAGE.BUTTON1.CAPTION"
+msgid "Ok"
+msgstr "Ok"
+
+#: tshowimage.button2.caption
+msgctxt "TSHOWIMAGE.BUTTON2.CAPTION"
+msgid "Annul."
+msgstr "Abbruch"
+
+#: tshowimage.menuitem1.caption
+msgctxt "TSHOWIMAGE.MENUITEM1.CAPTION"
+msgid "&Quit"
+msgstr "&Beenden"
+

@@ -1,0 +1,30 @@
+object frmHistory: TfrmHistory
+  Left = 763
+  Height = 240
+  Top = 230
+  Width = 323
+  ActiveControl = ListeHistorique
+  BorderIcons = []
+  Caption = 'Historique de navigation'
+  ClientHeight = 240
+  ClientWidth = 323
+  FormStyle = fsStayOnTop
+  OnClose = FormClose
+  OnDblClick = FormDblClick
+  OnKeyPress = FormKeyPress
+  OnResize = FormResize
+  OnShow = FormShow
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object ListeHistorique: TListBox
+    Left = 0
+    Height = 240
+    Top = 0
+    Width = 324
+    ExtendedSelect = False
+    ItemHeight = 0
+    OnDblClick = FormDblClick
+    OnKeyPress = FormKeyPress
+    TabOrder = 0
+  end
+end

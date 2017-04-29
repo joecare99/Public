@@ -1,0 +1,48 @@
+object frmSelectDialog: TfrmSelectDialog
+  Left = 0
+  Height = 142
+  Top = 0
+  Width = 432
+  ActiveControl = ComboBox1
+  Caption = 'frmSelectDialog'
+  ClientHeight = 142
+  ClientWidth = 432
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object ComboBox1: TComboBox
+    Left = 10
+    Height = 23
+    Hint = 'Please select ...'
+    Top = 45
+    Width = 414
+    Anchors = [akTop, akLeft, akRight]
+    ItemHeight = 15
+    ParentShowHint = False
+    ShowHint = True
+    TabOrder = 0
+  end
+  object ButtonPanel1: TButtonPanel
+    Left = 6
+    Height = 46
+    Top = 90
+    Width = 420
+    AutoSize = False
+    OKButton.Name = 'OKButton'
+    OKButton.DefaultCaption = True
+    HelpButton.Name = 'HelpButton'
+    HelpButton.DefaultCaption = True
+    CloseButton.Name = 'CloseButton'
+    CloseButton.DefaultCaption = True
+    CancelButton.Name = 'CancelButton'
+    CancelButton.DefaultCaption = True
+    TabOrder = 1
+    ShowButtons = [pbOK, pbCancel]
+  end
+  object StaticText1: TStaticText
+    Left = 10
+    Height = 35
+    Top = 4
+    Width = 413
+    TabOrder = 2
+  end
+end

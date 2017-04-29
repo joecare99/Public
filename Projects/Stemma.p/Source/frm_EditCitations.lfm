@@ -1,0 +1,158 @@
+object EditCitations: TEditCitations
+  Left = 452
+  Height = 191
+  Top = 384
+  Width = 498
+  ActiveControl = S
+  BorderIcons = []
+  BorderStyle = bsDialog
+  Caption = 'Modification de citation'
+  ClientHeight = 191
+  ClientWidth = 498
+  Menu = MainMenu1
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object Button1: TButton
+    Left = 336
+    Height = 25
+    Top = 176
+    Width = 75
+    Caption = 'Ok'
+    Default = True
+    ModalResult = 1
+    OnClick = Button1Click
+    TabOrder = 4
+  end
+  object Button2: TButton
+    Left = 416
+    Height = 25
+    Top = 176
+    Width = 75
+    Cancel = True
+    Caption = 'Annul.'
+    ModalResult = 2
+    TabOrder = 6
+  end
+  object Source: TComboBox
+    Left = 131
+    Height = 23
+    Top = 16
+    Width = 352
+    AutoComplete = True
+    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+    DropDownCount = 9
+    ItemHeight = 15
+    OnEditingDone = SourceEditingDone
+    Style = csDropDownList
+    TabOrder = 1
+  end
+  object Code: TEdit
+    Left = 160
+    Height = 23
+    Top = 176
+    Width = 80
+    TabStop = False
+    TabOrder = 7
+    Text = 'Code'
+    Visible = False
+  end
+  object Source1: TComboBox
+    Left = 8
+    Height = 23
+    Top = 178
+    Width = 144
+    ItemHeight = 15
+    TabOrder = 5
+    TabStop = False
+    Text = 'Source1'
+    Visible = False
+  end
+  object Label1: TLabel
+    Left = 16
+    Height = 15
+    Top = 16
+    Width = 39
+    Caption = 'Source:'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 16
+    Height = 15
+    Top = 48
+    Width = 63
+    Caption = 'Description:'
+    ParentColor = False
+  end
+  object Memo: TMemo
+    Left = 72
+    Height = 90
+    Top = 72
+    Width = 412
+    Lines.Strings = (
+      'Memo'
+    )
+    TabOrder = 3
+  end
+  object Q: TSpinEdit
+    Left = 433
+    Height = 23
+    Top = 41
+    Width = 50
+    MaxValue = 10
+    TabOrder = 2
+  end
+  object Label3: TLabel
+    Left = 376
+    Height = 15
+    Top = 48
+    Width = 41
+    Caption = 'Qualité:'
+    ParentColor = False
+  end
+  object S: TMaskEdit
+    Left = 64
+    Height = 23
+    Top = 16
+    Width = 64
+    CharCase = ecNormal
+    MaxLength = 6
+    TabOrder = 0
+    OnEditingDone = SEditingDone
+    EditMask = '######;0; '
+    SpaceChar = ' '
+  end
+  object No: TSpinEdit
+    Left = 248
+    Height = 23
+    Top = 176
+    Width = 80
+    TabStop = False
+    TabOrder = 8
+    Visible = False
+  end
+  object N: TSpinEdit
+    Left = 8
+    Height = 23
+    Top = 144
+    Width = 56
+    TabStop = False
+    TabOrder = 9
+    Visible = False
+  end
+  object MainMenu1: TMainMenu
+    left = 20
+    top = 103
+    object MenuItem2: TMenuItem
+      Caption = 'Repeat'
+      ShortCut = 114
+      OnClick = MenuItem2Click
+    end
+    object MenuItem1: TMenuItem
+      Caption = '&Quit'
+      ShortCut = 121
+      OnClick = MenuItem1Click
+    end
+  end
+end
