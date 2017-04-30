@@ -1,0 +1,24 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<DCC_ExeOutput>..\..\bin\$(platform)\</DCC_ExeOutput>
+			<DCC_UsePackage>vclimg;vcl;vclx;dbrtl;Rave90VCL;bdertl;rtl;xmlrtl;vclactnband;VclSmp;svnui;svn;TeeUI;Tee;TeeDB;vcldb;vcldbx;vcltouch;dsnap;dsnapcon;vclib;ibxpress;adortl;IndyCore;IndySystem;IndyProtocols;inet;intrawebdb_110_150;Intraweb_110_150;vclie;websnap;webdsnap;inetdb;inetdbbde;inetdbxpress;soaprtl;vclribbon;dbexpress;DbxCommonDriver;DataSnapIndy10ServerTransport;DataSnapProviderClient;DbxClientDriver;DataSnapClient;dbxcds;DataSnapServer;AzureCloud;DBXInterBaseDriver;DBXMySQLDriver;DBXFirebirdDriver;DBXSybaseASEDriver;DBXSybaseASADriver;DBXOracleDriver;DBXMSSQLDriver;DBXInformixDriver;DBXDb2Driver;CodeSiteExpressVcl;DBHLLookUpPanel;DBLuGrid;DBHlPanel;UserMgnt;UntConfig;CmpSelectVars;CmpAboutBox;CmpGLScene;CmpDBConfig;$(DCC_UsePackage)</DCC_UsePackage>
+			<DCC_ImageBase>00400000</DCC_ImageBase>
+			<DCC_UnitSearchPath>$(BDSCOMMONDIR)\BPL\$(platform)\units;..\..\include;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+			<DCC_BplOutput>$(BDSCOMMONDIR)\BPL\$(platform)</DCC_BplOutput>
+			<DCC_UnitAlias>WinTypes=Windows;WinProcs=Windows;DbiTypes=BDE;DbiProcs=BDE;DbiErrs=BDE;WinTypes=Windows;WinProcs=Windows;$(DCC_UnitAlias)</DCC_UnitAlias>
+			<DCC_Description>KG-Soft Basis Units</DCC_Description>
+			<DCC_DcpOutput>$(BDSCOMMONDIR)\DCP\$(platform)</DCC_DcpOutput>
+			<DCC_OutputNeverBuildDcps>true</DCC_OutputNeverBuildDcps>
+			<DCC_OutputDRCFile>true</DCC_OutputDRCFile>
+			<DllSuffix>160</DllSuffix>
+			<DCC_DcuOutput>..\..\bin\$(platform)\units_xe2</DCC_DcuOutput>
+		</PropertyGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType>OptionSet</Borland.ProjectType>
+			<BorlandProject>
+				<Delphi.Personality/>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+	</Project>

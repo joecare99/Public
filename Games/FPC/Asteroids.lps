@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Release1"/>
+    <Units Count="8">
+      <Unit0>
+        <Filename Value="Asteroids.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="18" Y="33"/>
+        <UsageCount Value="315"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="213"/>
+        <CursorPos X="27" Y="233"/>
+        <UsageCount Value="315"/>
+        <Loaded Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Main"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="104"/>
+        <CursorPos X="128" Y="109"/>
+        <UsageCount Value="315"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uSettings.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Settings"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="315"/>
+        <CursorPos Y="321"/>
+        <UsageCount Value="315"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uKeys.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="21" Y="10"/>
+        <UsageCount Value="315"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uInfo.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Info"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="103"/>
+        <CursorPos X="26" Y="113"/>
+        <UsageCount Value="315"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uDlg_EnterName.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="46" Y="6"/>
+        <UsageCount Value="315"/>
+        <Loaded Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uHighscores.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Highscores"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="64"/>
+        <CursorPos X="33" Y="68"/>
+        <UsageCount Value="315"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit7>
+    </Units>
+    <JumpHistory HistoryIndex="-1"/>
+  </ProjectSession>
+</CONFIG>

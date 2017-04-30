@@ -1,0 +1,206 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{30E3ECFE-E84D-4C62-8FFD-852BCC28AE7D}</ProjectGuid>
+			<MainSource>Sokoban.dpr</MainSource>
+			<Basis>True</Basis>
+			<Config Condition="'$(Config)'==''">Release</Config>
+			<AppType>Application</AppType>
+			<FrameworkType>VCL</FrameworkType>
+			<DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+			<ProjectVersion>13.4</ProjectVersion>
+			<Base>True</Base>
+			<Platform Condition="'$(Platform)'==''">Win64</Platform>
+			<TargetedPlatforms>3</TargetedPlatforms>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Base' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win64' and '$(Base)'=='true') or '$(Base_Win64)'!=''">
+			<Base_Win64>true</Base_Win64>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Base)'=='true') or '$(Base_Win32)'!=''">
+			<Base_Win32>true</Base_Win32>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+			<Cfg_1>true</Cfg_1>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<Import Condition="'$(Base)'!='' And Exists('default.optset')" Project="default.optset"/>
+		<PropertyGroup Condition="'$(Base)'!=''">
+			<VerInfo_PreRelease>true</VerInfo_PreRelease>
+			<VerInfo_Keys>CompanyName=Ben Ruyl;FileDescription=Sokoban for Windows;FileVersion=3.0.1.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=Sokoban;ProductVersion=1.0.0.0;Comments=;Creator=Ben Ruyl</VerInfo_Keys>
+			<Manifest_File>None</Manifest_File>
+			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+			<DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;Xml.Win;$(DCC_Namespace)</DCC_Namespace>
+			<Icon_MainIcon>Sokoban_Icon.ico</Icon_MainIcon>
+			<VerInfo_MajorVer>3</VerInfo_MajorVer>
+			<VerInfo_Release>1</VerInfo_Release>
+			<VerInfo_Locale>1033</VerInfo_Locale>
+			<DCC_UsePackage>IntrawebDB_72_90;dclOfficeXP;vclshlctrls;$(DCC_UsePackage)</DCC_UsePackage>
+			<DCC_SymbolReferenceInfo>1</DCC_SymbolReferenceInfo>
+			<DCC_ImageBase>00400000</DCC_ImageBase>
+			<DCC_Description>Sokoban</DCC_Description>
+			<DCC_N>true</DCC_N>
+			<DCC_S>false</DCC_S>
+			<DCC_K>false</DCC_K>
+			<DCC_E>false</DCC_E>
+			<DCC_F>false</DCC_F>
+			<CfgDependentOn>default.optset</CfgDependentOn>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Base_Win64)'!=''">
+			<DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;$(DCC_Namespace)</DCC_Namespace>
+			<Icon_MainIcon>Sokoban_Icon.ico</Icon_MainIcon>
+			<Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+		</PropertyGroup>
+		<Import Condition="'$(Base_Win32)'!='' And Exists('win32.optset')" Project="win32.optset"/>
+		<PropertyGroup Condition="'$(Base_Win32)'!=''">
+			<Icon_MainIcon>Sokoban_Icon.ico</Icon_MainIcon>
+			<DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+			<Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+			<CfgDependentOn>win32.optset</CfgDependentOn>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_Alignment>2</DCC_Alignment>
+			<DCC_ImportedDataReferences>false</DCC_ImportedDataReferences>
+			<DCC_AssertionsAtRuntime>false</DCC_AssertionsAtRuntime>
+			<DCC_LocalDebugSymbols>false</DCC_LocalDebugSymbols>
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+			<DCC_DebugInformation>false</DCC_DebugInformation>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<Manifest_File>None</Manifest_File>
+			<DCC_Alignment>2</DCC_Alignment>
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+			<DCC_Optimize>false</DCC_Optimize>
+			<DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+		</PropertyGroup>
+		<ItemGroup>
+			<DelphiCompile Include="$(MainSource)">
+				<MainSource>MainSource</MainSource>
+			</DelphiCompile>
+			<DCCReference Include="..\Sokoban\MainUnit.pas">
+				<Form>frmSokoban</Form>
+			</DCCReference>
+			<DCCReference Include="..\Sokoban\AboutUnit.pas">
+				<Form>AboutBox</Form>
+			</DCCReference>
+			<DCCReference Include="..\Sokoban\ThumbUnit.pas">
+				<Form>frmThumbnails</Form>
+			</DCCReference>
+			<DCCReference Include="..\Sokoban\SkinUnit.pas"/>
+			<DCCReference Include="..\Sokoban\PathFUnit.pas"/>
+			<DCCReference Include="..\Sokoban\SkinInfoUnit.pas">
+				<Form>frmSkinInfo</Form>
+			</DCCReference>
+			<DCCReference Include="..\Sokoban\LevInfoUnit.pas">
+				<Form>frmLevInfo</Form>
+			</DCCReference>
+			<DCCReference Include="..\Sokoban\DetailsUnit.pas">
+				<Form>frmGameDetails</Form>
+			</DCCReference>
+			<DCCReference Include="..\Sokoban\SettingsUnit.pas"/>
+			<DCCReference Include="..\Sokoban\LoadLevelsetUnit.pas"/>
+			<DCCReference Include="..\Sokoban\sokoengine.pas"/>
+			<None Include="..\Sokoban\ModelSupport\MainUnit\MainUnit.txvpck">
+				<ContainerId>File</ContainerId>
+			</None>
+			<None Include="..\Sokoban\ModelSupport\LevInfoUnit\LevInfoUnit.txvpck">
+				<ContainerId>File</ContainerId>
+			</None>
+			<None Include="..\Sokoban\ModelSupport\ThumbUnit\ThumbUnit.txvpck">
+				<ContainerId>File</ContainerId>
+			</None>
+			<None Include="..\Sokoban\ModelSupport\AboutUnit\AboutUnit.txvpck">
+				<ContainerId>File</ContainerId>
+			</None>
+			<None Include="..\Sokoban\ModelSupport\SkinUnit\SkinUnit.txvpck">
+				<ContainerId>File</ContainerId>
+			</None>
+			<None Include="..\Sokoban\ModelSupport\PathFUnit\PathFUnit.txvpck">
+				<ContainerId>File</ContainerId>
+			</None>
+			<None Include="..\Sokoban\ModelSupport\SkinInfoUnit\SkinInfoUnit.txvpck">
+				<ContainerId>File</ContainerId>
+			</None>
+			<None Include="..\Sokoban\ModelSupport\default.txvpck">
+				<ContainerId>File</ContainerId>
+			</None>
+			<BuildConfiguration Include="Debug">
+				<Key>Cfg_2</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Base">
+				<Key>Base</Key>
+				<DependentOn>default.optset</DependentOn>
+			</BuildConfiguration>
+			<BuildConfiguration Include="Release">
+				<Key>Cfg_1</Key>
+				<CfgParent>Base</CfgParent>
+			</BuildConfiguration>
+		</ItemGroup>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Delphi.Personality>
+					<Source>
+						<Source Name="MainSource">Sokoban.dpr</Source>
+					</Source>
+					<VersionInfo>
+						<VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+						<VersionInfo Name="AutoIncBuild">False</VersionInfo>
+						<VersionInfo Name="MajorVer">3</VersionInfo>
+						<VersionInfo Name="MinorVer">0</VersionInfo>
+						<VersionInfo Name="Release">1</VersionInfo>
+						<VersionInfo Name="Build">0</VersionInfo>
+						<VersionInfo Name="Debug">False</VersionInfo>
+						<VersionInfo Name="PreRelease">True</VersionInfo>
+						<VersionInfo Name="Special">False</VersionInfo>
+						<VersionInfo Name="Private">False</VersionInfo>
+						<VersionInfo Name="DLL">False</VersionInfo>
+						<VersionInfo Name="Locale">1033</VersionInfo>
+						<VersionInfo Name="CodePage">1252</VersionInfo>
+					</VersionInfo>
+					<VersionInfoKeys>
+						<VersionInfoKeys Name="CompanyName">Ben Ruyl</VersionInfoKeys>
+						<VersionInfoKeys Name="FileDescription">Sokoban for Windows</VersionInfoKeys>
+						<VersionInfoKeys Name="FileVersion">3.0.1.0</VersionInfoKeys>
+						<VersionInfoKeys Name="InternalName"/>
+						<VersionInfoKeys Name="LegalCopyright"/>
+						<VersionInfoKeys Name="LegalTrademarks"/>
+						<VersionInfoKeys Name="OriginalFilename"/>
+						<VersionInfoKeys Name="ProductName">Sokoban</VersionInfoKeys>
+						<VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+						<VersionInfoKeys Name="Comments"/>
+						<VersionInfoKeys Name="Creator">Ben Ruyl</VersionInfoKeys>
+					</VersionInfoKeys>
+					<Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\bcboffice2k160.bpl">Embarcadero C++Builder-Package für Office 2000-Server</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\bcbofficexp160.bpl">Embarcadero C++Builder-Package für Office XP-Server</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dcloffice2k160.bpl">Microsoft Office 2000 Beispiele für gekapselte Komponenten für Automatisierungsserver</Excluded_Packages>
+						<Excluded_Packages Name="$(BDSBIN)\dclofficexp160.bpl">Microsoft Office XP Beispiele für gekapselte Komponenten für Automation Server</Excluded_Packages>
+					</Excluded_Packages>
+				</Delphi.Personality>
+				<Platforms>
+					<Platform value="Win64">True</Platform>
+					<Platform value="Win32">True</Platform>
+				</Platforms>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+		<Import Condition="Exists('$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj')" Project="$(APPDATA)\Embarcadero\$(BDSAPPDATABASEDIR)\$(PRODUCTVERSION)\UserTools.proj"/>
+	</Project>

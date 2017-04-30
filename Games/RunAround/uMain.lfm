@@ -1,0 +1,257 @@
+object frm_game: Tfrm_game
+  Left = 183
+  Height = 750
+  Top = 50
+  Width = 1129
+  Caption = 'Run Around'
+  ClientHeight = 750
+  ClientWidth = 1129
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  OnMouseMove = FormMouseMove
+  LCLVersion = '1.2.6.0'
+  object lbl_enemy: TLabel
+    Left = 576
+    Height = 13
+    Top = 333
+    Width = 162
+    Caption = 'Avoid this block.  It is your enemy'
+    ParentColor = False
+  end
+  object lbl_player: TLabel
+    Left = 61
+    Height = 13
+    Top = 33
+    Width = 180
+    Caption = 'This block is controlled by your mouse'
+    ParentColor = False
+  end
+  object lbl_6: TLabel
+    Left = 312
+    Height = 23
+    Top = 208
+    Width = 199
+    Caption = 'Enter your name below:'
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Times New Roman'
+    ParentColor = False
+    ParentFont = False
+  end
+  object shp_player: TShape
+    Left = 224
+    Height = 17
+    Top = 64
+    Width = 17
+  end
+  object shp_enemy: TShape
+    Left = 696
+    Height = 41
+    Top = 360
+    Width = 42
+  end
+  object Label1: TLabel
+    Left = 8
+    Height = 13
+    Top = 421
+    Width = 114
+    Caption = 'www.delphibasics.co.nr'
+    ParentColor = False
+  end
+  object Game_panel: TPanel
+    Left = 0
+    Height = 113
+    Top = 637
+    Width = 1129
+    Align = alBottom
+    ClientHeight = 113
+    ClientWidth = 1129
+    TabOrder = 0
+    object lbl1: TLabel
+      Left = 22
+      Height = 36
+      Top = 14
+      Width = 85
+      Caption = 'Level:'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -32
+      Font.Name = 'Times New Roman'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label2: TLabel
+      Left = 326
+      Height = 36
+      Top = 14
+      Width = 87
+      Caption = 'Score:'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -32
+      Font.Name = 'Times New Roman'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object lbl_level: TLabel
+      Tag = 1
+      Left = 125
+      Height = 36
+      Top = 14
+      Width = 16
+      Caption = '1'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -32
+      Font.Name = 'Times New Roman'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object lbl_score: TLabel
+      Left = 431
+      Height = 36
+      Top = 14
+      Width = 16
+      Caption = '0'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -32
+      Font.Name = 'Times New Roman'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+    end
+    object lbl_scoremax: TLabel
+      Left = 489
+      Height = 31
+      Top = 62
+      Width = 14
+      Caption = '0'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -27
+      Font.Name = 'Times New Roman'
+      ParentColor = False
+      ParentFont = False
+    end
+    object lbl_levelmax: TLabel
+      Tag = 1
+      Left = 183
+      Height = 33
+      Top = 62
+      Width = 14
+      Caption = '1'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -29
+      Font.Name = 'Times New Roman'
+      ParentColor = False
+      ParentFont = False
+    end
+    object lbl_3: TLabel
+      Left = 22
+      Height = 31
+      Top = 64
+      Width = 155
+      Caption = 'Highest Level:'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -27
+      Font.Name = 'Times New Roman'
+      ParentColor = False
+      ParentFont = False
+    end
+    object lbl_4: TLabel
+      Left = 326
+      Height = 31
+      Top = 65
+      Width = 157
+      Caption = 'Highest Score:'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -27
+      Font.Name = 'Times New Roman'
+      ParentColor = False
+      ParentFont = False
+    end
+    object lbl_5: TLabel
+      Left = 590
+      Height = 27
+      Top = 14
+      Width = 199
+      Caption = 'The record holder is:'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -24
+      Font.Name = 'Times New Roman'
+      ParentColor = False
+      ParentFont = False
+    end
+    object lbl_name: TLabel
+      Left = 590
+      Height = 21
+      Top = 70
+      Width = 187
+      Caption = 'Nobody at the moment...'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -19
+      Font.Name = 'Times New Roman'
+      ParentColor = False
+      ParentFont = False
+    end
+  end
+  object btn_start: TButton
+    Left = 360
+    Height = 25
+    Top = 28
+    Width = 89
+    Caption = 'Start the Game'
+    OnClick = btn_startClick
+    TabOrder = 1
+  end
+  object btn_restart: TButton
+    Left = 352
+    Height = 25
+    Top = 28
+    Width = 105
+    Caption = 'Restart the Game'
+    OnClick = btn_restartClick
+    TabOrder = 2
+  end
+  object edt_name: TEdit
+    Left = 312
+    Height = 21
+    Top = 248
+    Width = 209
+    TabOrder = 3
+  end
+  object tmr_enemy: TTimer
+    Enabled = False
+    Interval = 5
+    OnTimer = tmr_enemyTimer
+    left = 24
+    top = 312
+  end
+  object tmr_level: TTimer
+    Enabled = False
+    Interval = 3000
+    OnTimer = tmr_levelTimer
+    left = 24
+    top = 272
+  end
+  object tmr_score: TTimer
+    Enabled = False
+    Interval = 150
+    OnTimer = tmr_scoreTimer
+    left = 24
+    top = 232
+  end
+end

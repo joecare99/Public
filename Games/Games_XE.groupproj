@@ -1,0 +1,156 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{9F9C5A8C-D95B-4A53-BBAB-F733CE2D875B}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="D_XE\Sokoban.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\prj_SokoLevelConvert.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="..\Grafik\D_XE\BOLO.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="..\Grafik\D_XE\fpcTestWernerEng.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="..\Grafik\D_XE\RATE_MAL.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="..\Grafik\D_XE\WERNER1.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="..\Grafik\D_XE\Werner_Levedit.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="..\Grafik\spiele\SuperHirn.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="..\Grafik\spiele\tetris\D_XE\TETRIS.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="..\Grafik\spiele\BREAKOUT\BREAKOUT.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\Asteroids.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="Sokoban">
+			<MSBuild Projects="D_XE\Sokoban.dproj"/>
+		</Target>
+		<Target Name="Sokoban:Clean">
+			<MSBuild Projects="D_XE\Sokoban.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Sokoban:Make">
+			<MSBuild Projects="D_XE\Sokoban.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="prj_SokoLevelConvert">
+			<MSBuild Projects="D_XE\prj_SokoLevelConvert.dproj"/>
+		</Target>
+		<Target Name="prj_SokoLevelConvert:Clean">
+			<MSBuild Projects="D_XE\prj_SokoLevelConvert.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="prj_SokoLevelConvert:Make">
+			<MSBuild Projects="D_XE\prj_SokoLevelConvert.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="BOLO">
+			<MSBuild Projects="..\Grafik\D_XE\BOLO.dproj"/>
+		</Target>
+		<Target Name="BOLO:Clean">
+			<MSBuild Projects="..\Grafik\D_XE\BOLO.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="BOLO:Make">
+			<MSBuild Projects="..\Grafik\D_XE\BOLO.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="fpcTestWernerEng">
+			<MSBuild Projects="..\Grafik\D_XE\fpcTestWernerEng.dproj"/>
+		</Target>
+		<Target Name="fpcTestWernerEng:Clean">
+			<MSBuild Projects="..\Grafik\D_XE\fpcTestWernerEng.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestWernerEng:Make">
+			<MSBuild Projects="..\Grafik\D_XE\fpcTestWernerEng.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="RATE_MAL">
+			<MSBuild Projects="..\Grafik\D_XE\RATE_MAL.dproj"/>
+		</Target>
+		<Target Name="RATE_MAL:Clean">
+			<MSBuild Projects="..\Grafik\D_XE\RATE_MAL.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="RATE_MAL:Make">
+			<MSBuild Projects="..\Grafik\D_XE\RATE_MAL.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="WERNER1">
+			<MSBuild Projects="..\Grafik\D_XE\WERNER1.dproj"/>
+		</Target>
+		<Target Name="WERNER1:Clean">
+			<MSBuild Projects="..\Grafik\D_XE\WERNER1.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="WERNER1:Make">
+			<MSBuild Projects="..\Grafik\D_XE\WERNER1.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Werner_Levedit">
+			<MSBuild Projects="..\Grafik\D_XE\Werner_Levedit.dproj"/>
+		</Target>
+		<Target Name="Werner_Levedit:Clean">
+			<MSBuild Projects="..\Grafik\D_XE\Werner_Levedit.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Werner_Levedit:Make">
+			<MSBuild Projects="..\Grafik\D_XE\Werner_Levedit.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="SuperHirn">
+			<MSBuild Projects="..\Grafik\spiele\SuperHirn.dproj"/>
+		</Target>
+		<Target Name="SuperHirn:Clean">
+			<MSBuild Projects="..\Grafik\spiele\SuperHirn.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="SuperHirn:Make">
+			<MSBuild Projects="..\Grafik\spiele\SuperHirn.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="TETRIS">
+			<MSBuild Projects="..\Grafik\spiele\tetris\D_XE\TETRIS.dproj"/>
+		</Target>
+		<Target Name="TETRIS:Clean">
+			<MSBuild Projects="..\Grafik\spiele\tetris\D_XE\TETRIS.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="TETRIS:Make">
+			<MSBuild Projects="..\Grafik\spiele\tetris\D_XE\TETRIS.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="BREAKOUT">
+			<MSBuild Projects="..\Grafik\spiele\BREAKOUT\BREAKOUT.dproj"/>
+		</Target>
+		<Target Name="BREAKOUT:Clean">
+			<MSBuild Projects="..\Grafik\spiele\BREAKOUT\BREAKOUT.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="BREAKOUT:Make">
+			<MSBuild Projects="..\Grafik\spiele\BREAKOUT\BREAKOUT.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Asteroids">
+			<MSBuild Projects="D_XE\Asteroids.dproj"/>
+		</Target>
+		<Target Name="Asteroids:Clean">
+			<MSBuild Projects="D_XE\Asteroids.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Asteroids:Make">
+			<MSBuild Projects="D_XE\Asteroids.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="Sokoban;prj_SokoLevelConvert;BOLO;fpcTestWernerEng;RATE_MAL;WERNER1;Werner_Levedit;SuperHirn;TETRIS;BREAKOUT;Asteroids"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="Sokoban:Clean;prj_SokoLevelConvert:Clean;BOLO:Clean;fpcTestWernerEng:Clean;RATE_MAL:Clean;WERNER1:Clean;Werner_Levedit:Clean;SuperHirn:Clean;TETRIS:Clean;BREAKOUT:Clean;Asteroids:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="Sokoban:Make;prj_SokoLevelConvert:Make;BOLO:Make;fpcTestWernerEng:Make;RATE_MAL:Make;WERNER1:Make;Werner_Levedit:Make;SuperHirn:Make;TETRIS:Make;BREAKOUT:Make;Asteroids:Make"/>
+		</Target>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
+	</Project>
