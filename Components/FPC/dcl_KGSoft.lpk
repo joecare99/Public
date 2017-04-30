@@ -32,28 +32,31 @@
         <UnitName Value="Unt_DCL"/>
       </Item1>
     </Files>
-    <RequiredPkgs Count="7">
+    <RequiredPkgs Count="8">
       <Item1>
-        <PackageName Value="CmpDBConfig"/>
+        <PackageName Value="BaseUnits"/>
       </Item1>
       <Item2>
-        <PackageName Value="DBHlPanel"/>
+        <PackageName Value="CmpAboutBox"/>
       </Item2>
       <Item3>
-        <PackageName Value="CmpGLScene"/>
+        <PackageName Value="UntConfig"/>
       </Item3>
       <Item4>
-        <PackageName Value="UntConfig"/>
+        <PackageName Value="CmpDBConfig"/>
       </Item4>
       <Item5>
-        <PackageName Value="CmpAboutBox"/>
+        <PackageName Value="DBHlPanel"/>
       </Item5>
       <Item6>
-        <PackageName Value="BaseUnits"/>
+        <PackageName Value="DBHLLookUpPanel"/>
       </Item6>
       <Item7>
-        <PackageName Value="LCL"/>
+        <PackageName Value="CmpGLScene"/>
       </Item7>
+      <Item8>
+        <PackageName Value="LCL"/>
+      </Item8>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

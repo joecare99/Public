@@ -332,7 +332,7 @@ const
   { Set to FALSE if not allowed, or TRUE if allowed.  }
   Allow_Reformat: boolean = True;
 
-  EditorDialog: TEditorDialog = {$ifdef fpc} @{$endif}DefEditorDialog;
+  EditorDialog: TEditorDialog = {$ifdef fpc}@{$endif}DefEditorDialog;
   EditorFlags: word = efBackupFiles + efPromptOnReplace;
   FindStr: string[80] = '';
   ReplaceStr: string[80] = '';
@@ -3582,7 +3582,7 @@ end; { TEditWindow.Init }
 constructor TEditWindow.Load(aOwner: TGroup; var S: TStream);
 begin
   inherited Load(aOwner, S);
-  GetSubViewPtr(S, Editor);
+  GetSubViewPtr(S, TView(Editor));
 end; { TEditWindow.Load }
 
 

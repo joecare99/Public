@@ -489,7 +489,7 @@ end;
 constructor TDeskTop.Load(aOwner: TGroup; var S: TStream);
 begin
   inherited Load(aOwner, S);                                 { Call ancestor }
-  GetSubViewPtr(S, Background);                      { Load background }
+  GetSubViewPtr(S, Tview(Background));                      { Load background }
   S.Read(TileColumnsFirst, SizeOf(TileColumnsFirst));{ Read data }
 end;
 

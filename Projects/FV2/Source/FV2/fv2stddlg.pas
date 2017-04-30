@@ -182,7 +182,7 @@ public
     WildCard: TWildStr;
     DirectoryName: String;
     property HistoryID:Word read GetHistoryID Write SetHistoryID;
-    constructor Create(aOwner:TGroup;AWildCard: TWildStr; const ATitle,
+    constructor Create(aOwner:TGroup;AWildCard: String; const ATitle,
       InputName: String; AOptions: Word; aHistoryId: Byte);
     constructor Load(var S: TStream);
     destructor Destroy; override;
@@ -1388,9 +1388,9 @@ begin
   if not assigned( TDialog.Load(nil,S)) then
     Fail;
   WildCard := S.ReadAnsiString;
-  GetSubViewPtr(S, ilFileName);
-  GetSubViewPtr(S, lvFileList);
-  GetSubViewPtr(S, FileHistory);
+  GetSubViewPtr(S, TView(ilFileName));
+  GetSubViewPtr(S, TView(lvFileList));
+  GetSubViewPtr(S, TView(FileHistory));
   ReadDirectory;
   if (DosError <> 0) then
   begin
@@ -1917,10 +1917,10 @@ end;
 constructor TChDirDialog.Load(var S: TStream);
 begin
   inherited Load(nil, S);
-  GetSubViewPtr(S, DirList);
-  GetSubViewPtr(S, DirInput);
-  GetSubViewPtr(S, OkButton);
-  GetSubViewPtr(S, ChDirbutton);
+  GetSubViewPtr(S, TView(DirList));
+  GetSubViewPtr(S, TView(DirInput));
+  GetSubViewPtr(S, TView(OkButton));
+  GetSubViewPtr(S, TView(ChDirbutton));
   SetUpDialog;
 end;
 

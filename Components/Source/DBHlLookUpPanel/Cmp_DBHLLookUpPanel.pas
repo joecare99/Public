@@ -1,11 +1,20 @@
 unit Cmp_DBHLLookUpPanel;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
+
 {*V 1.6.0 }
 {*H 1.5.0 Anpassung an Themes}
 interface
 
 uses
-   Windows, SysUtils, Classes, Messages, Controls, Graphics, ExtCtrls,DB,DBCtrls;
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf, LCLType, LMessages,
+{$ENDIF}
+  SysUtils, Classes, Messages, Controls, Graphics, ExtCtrls,DB,DBCtrls;
 
 type
   TBeforePaintEvent=Procedure(Sender:TObject;Reference,Data:string) of object;
@@ -85,7 +94,12 @@ type
 
 implementation
 
-uses VDBConsts;
+{$IFnDEF FPC}
+uses
+  VDBConsts;
+{$ELSE}
+{$ENDIF}
+
 
 { TDBText }
 
@@ -206,7 +220,7 @@ procedure TDBHLLookUpPanel.Paint;
 
 const
   Alignments: array[TAlignment] of Longint = (DT_LEFT, DT_RIGHT, DT_CENTER);
-  VerticalAlignments: array[TVerticalAlignment] of Longint = (DT_TOP, DT_BOTTOM, DT_VCENTER);
+//  VerticalAlignments: array[TVerticalAlignment] of Longint = (DT_TOP, DT_BOTTOM, DT_VCENTER);
 var
   Rect: TRect;
   TopColor, BottomColor: TColor;

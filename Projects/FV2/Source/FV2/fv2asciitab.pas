@@ -268,8 +268,8 @@ end;
 constructor TASCIIChart.Load(aOwner: TGroup; var S: TStream);
 begin
   Inherited Load(aOwner,S);
-  GetSubViewPtr(S,Table);
-  GetSubViewPtr(S,Report);
+  GetSubViewPtr(S,TView(Table));
+  GetSubViewPtr(S,TView(Report));
 end;
 
 procedure TASCIIChart.Store(var S: TStream);

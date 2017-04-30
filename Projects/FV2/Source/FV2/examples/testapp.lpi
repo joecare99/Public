@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="10"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <MainUnitHasUsesSectionForAllUnits Value="False"/>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+        <LRSInOutputDirectory Value="False"/>
+      </Flags>
+      <MainUnit Value="0"/>
+    </General>
+    <BuildModes Count="3" Active="Debug">
+      <Item1 Name="default" Default="True"/>
+      <Item2 Name="Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\..\..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($Project(InfoFile))"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="..\include"/>
+            <UnitOutputDirectory Value="..\..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <IncludeAssertionCode Value="True"/>
+              <UseAnsiStrings Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
+              <UseExternalDbgSyms Value="True"/>
+            </Debugging>
+          </Linking>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\..\..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($Project(InfoFile))"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value=".."/>
+            <UnitOutputDirectory Value="..\..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <UseAnsiStrings Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+          </Linking>
+        </CompilerOptions>
+      </Item3>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|ppw|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+        <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="1">
+      <Item1>
+        <PackageName Value="fv2"/>
+      </Item1>
+    </RequiredPackages>
+    <Units Count="8">
+      <Unit0>
+        <Filename Value="testapp.pas"/>
+        <IsPartOfProject Value="True"/>
+        <TopLine Value="419"/>
+        <CursorPos X="165" Y="427"/>
+        <UsageCount Value="47"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\fv2menus.pas"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="91"/>
+        <CursorPos X="26" Y="125"/>
+        <UsageCount Value="23"/>
+        <Loaded Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\fv2stddlg.pas"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="148"/>
+        <CursorPos X="55" Y="185"/>
+        <UsageCount Value="23"/>
+        <Loaded Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\fv2views.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2172"/>
+        <CursorPos X="20" Y="2187"/>
+        <UsageCount Value="19"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\fv2app.pas"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="843"/>
+        <CursorPos Y="870"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\fv2editors.pas"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="309"/>
+        <CursorPos X="45" Y="335"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\fv2msgbox.pas"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="84" Y="155"/>
+        <UsageCount Value="14"/>
+        <Loaded Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\..\FPC\fv2.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="37" Y="16"/>
+        <UsageCount Value="13"/>
+        <Loaded Value="True"/>
+      </Unit7>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="101" TopLine="76"/>
+      </Position1>
+      <Position2>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="102" Column="20" TopLine="76"/>
+      </Position2>
+      <Position3>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="452" TopLine="419"/>
+      </Position3>
+      <Position4>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="101" TopLine="75"/>
+      </Position4>
+      <Position5>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="121" TopLine="76"/>
+      </Position5>
+      <Position6>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="101" TopLine="76"/>
+      </Position6>
+      <Position7>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="102" TopLine="76"/>
+      </Position7>
+      <Position8>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="103" TopLine="76"/>
+      </Position8>
+      <Position9>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="106" TopLine="76"/>
+      </Position9>
+      <Position10>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="107" TopLine="76"/>
+      </Position10>
+      <Position11>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="108" TopLine="76"/>
+      </Position11>
+      <Position12>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="109" TopLine="76"/>
+      </Position12>
+      <Position13>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="110" TopLine="76"/>
+      </Position13>
+      <Position14>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="112" Column="48" TopLine="76"/>
+      </Position14>
+      <Position15>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="458" Column="37" TopLine="419"/>
+      </Position15>
+      <Position16>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="452" TopLine="419"/>
+      </Position16>
+      <Position17>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="453" TopLine="419"/>
+      </Position17>
+      <Position18>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="454" TopLine="419"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\fv2app.pas"/>
+        <Caret Line="869" TopLine="843"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\fv2app.pas"/>
+        <Caret Line="870" TopLine="843"/>
+      </Position20>
+      <Position21>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="456" Column="22" TopLine="419"/>
+      </Position21>
+      <Position22>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="452" TopLine="419"/>
+      </Position22>
+      <Position23>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="453" TopLine="419"/>
+      </Position23>
+      <Position24>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="454" TopLine="419"/>
+      </Position24>
+      <Position25>
+        <Filename Value="..\fv2app.pas"/>
+        <Caret Line="869" TopLine="843"/>
+      </Position25>
+      <Position26>
+        <Filename Value="..\fv2app.pas"/>
+        <Caret Line="870" TopLine="843"/>
+      </Position26>
+      <Position27>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="454" TopLine="419"/>
+      </Position27>
+      <Position28>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="454" TopLine="419"/>
+      </Position28>
+      <Position29>
+        <Filename Value="testapp.pas"/>
+        <Caret Line="39" Column="9" TopLine="12"/>
+      </Position29>
+      <Position30>
+        <Filename Value="..\..\..\FPC\fv2.pas"/>
+      </Position30>
+    </JumpHistory>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="..\..\..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($Project(InfoFile))"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value=".."/>
+      <UnitOutputDirectory Value="..\..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <UseAnsiStrings Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
+  </CompilerOptions>
+  <Debugging>
+    <BreakPoints Count="1">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="testapp.pas"/>
+        <Line Value="452"/>
+      </Item1>
+    </BreakPoints>
+    <Exceptions Count="2">
+      <Item1>
+        <Name Value="ECodetoolError"/>
+      </Item1>
+      <Item2>
+        <Name Value="EFOpenError"/>
+      </Item2>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

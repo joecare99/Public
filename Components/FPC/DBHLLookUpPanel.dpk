@@ -1,6 +1,11 @@
 package DBHLLookUpPanel;
 
-{$R *.res}
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
+
+{.$R *.res}
+{$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
 {$ALIGN 8}
 {$ASSERTIONS ON}
 {$BOOLEVAL OFF}
@@ -22,8 +27,10 @@ package DBHLLookUpPanel;
 {$WRITEABLECONST OFF}
 {$MINENUMSIZE 1}
 {$IMAGEBASE $400000}
-{$DESCRIPTION 'KG-Soft Basis Units'}
-{$LIBSUFFIX '140'}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'JC-Soft Unit'}
+{$LIBSUFFIX '160'}
 {$RUNONLY}
 {$IMPLICITBUILD OFF}
 
@@ -34,6 +41,6 @@ requires
   vcldb;
 
 contains
-  Unt_DBHLLookUpPanel in '..\Unt_DBHLLookUpPanel.pas';
+  Cmp_DBHLLookUpPanel in '..\Source\DBHlLookUpPanel\Cmp_DBHLLookUpPanel.pas';
 
 end.

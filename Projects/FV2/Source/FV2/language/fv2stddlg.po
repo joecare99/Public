@@ -1,0 +1,129 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: fv2stddlg.schangedirectory
+msgid "Change Directory"
+msgstr ""
+
+#: fv2stddlg.sdeletefile
+msgid ""
+"Delete file?\n"
+"\n"
+"#3%s\n"
+msgstr ""
+
+#: fv2stddlg.sdirectory
+msgid "Directory"
+msgstr ""
+
+#: fv2stddlg.sdrives
+msgid "Drives"
+msgstr ""
+
+#: fv2stddlg.sinvaliddirectory
+msgid "Invalid directory."
+msgstr ""
+
+#: fv2stddlg.sinvaliddriveordir
+msgid "Invalid drive or directory."
+msgstr ""
+
+#: fv2stddlg.sinvalidfilename
+msgid "Invalid file name."
+msgstr ""
+
+#: fv2stddlg.slchdir
+msgid "~C~hdir"
+msgstr ""
+
+#: fv2stddlg.slclear
+msgid "C~l~ear"
+msgstr ""
+
+#: fv2stddlg.sldirectoryname
+msgid "Directory ~n~ame"
+msgstr ""
+
+#: fv2stddlg.sldirectorytree
+msgid "Directory ~t~ree"
+msgstr ""
+
+#: fv2stddlg.slfiles
+msgid "~F~iles"
+msgstr ""
+
+#: fv2stddlg.slreplace
+msgid "~R~eplace"
+msgstr ""
+
+#: fv2stddlg.slrevert
+msgid "~R~evert"
+msgstr ""
+
+#: fv2stddlg.smapr
+msgid "Apr"
+msgstr ""
+
+#: fv2stddlg.smaug
+msgid "Aug"
+msgstr ""
+
+#: fv2stddlg.smdec
+msgid "Dec"
+msgstr ""
+
+#: fv2stddlg.smfeb
+msgid "Feb"
+msgstr ""
+
+#: fv2stddlg.smjan
+msgid "Jan"
+msgstr ""
+
+#: fv2stddlg.smjul
+msgid "Jul"
+msgstr ""
+
+#: fv2stddlg.smjun
+msgid "Jun"
+msgstr ""
+
+#: fv2stddlg.smmar
+msgid "Mar"
+msgstr ""
+
+#: fv2stddlg.smmay
+msgid "May"
+msgstr ""
+
+#: fv2stddlg.smnov
+msgid "Nov"
+msgstr ""
+
+#: fv2stddlg.smoct
+msgid "Oct"
+msgstr ""
+
+#: fv2stddlg.smsep
+msgid "Sep"
+msgstr ""
+
+#: fv2stddlg.sopen
+msgid "Open"
+msgstr ""
+
+#: fv2stddlg.sreplacefile
+msgid ""
+"Replace file?\n"
+"\n"
+"#3%s\n"
+msgstr ""
+
+#: fv2stddlg.ssaveas
+msgid "Save As"
+msgstr ""
+
+#: fv2stddlg.stoomanyfiles
+msgid "Too many files."
+msgstr ""
+

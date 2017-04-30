@@ -10,8 +10,8 @@ uses Cmp_OpenGLScene,
      Cmp_DBConfig,
     // Unt_UserRechte,
       cmp_DBHLLookUpPanel,
-      Cmp_DBLookUpGrid,
       cmp_DBHlPanel,
+     //Cmp_DBLookUpGrid,
      //Fra_SelectVars,
      Frm_Aboutbox;
 
@@ -34,8 +34,8 @@ begin
 //    TFraSelectVars,
     TAboutBox ]);
   {$IFDEF FPC}
-  RegisterComponents('Data Controls', [//TDBLookUpGrid,TDBHLLookUpPanel,
-    TDBHlPanel]);
+  RegisterComponents('Data Controls', [//TDBLookUpGrid,
+  TDBHLLookUpPanel, TDBHlPanel]);
   {$ELSE}
   RegisterComponents('Datensteuerung', [TDBLookUpGrid,TDBHLLookUpPanel,
     TDBHlPanel]);

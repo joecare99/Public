@@ -1,0 +1,142 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: fv2editors.sclipboard
+msgid "Clipboard"
+msgstr ""
+
+#: fv2editors.sfilecreateerror
+msgid "Error creating file %s"
+msgstr ""
+
+#: fv2editors.sfilereaderror
+msgid "Error reading file %s"
+msgstr ""
+
+#: fv2editors.sfileuntitled
+msgid "Save untitled file?"
+msgstr ""
+
+#: fv2editors.sfilewriteerror
+msgid "Error writing to file %s"
+msgstr ""
+
+#: fv2editors.sfind
+msgid "Find"
+msgstr ""
+
+#: fv2editors.sjumpto
+msgid "Jump To"
+msgstr ""
+
+#: fv2editors.slcasesensitive
+msgid "~C~ase sensitive"
+msgstr ""
+
+#: fv2editors.slcurrentline
+msgid "~C~urrent line"
+msgstr ""
+
+#: fv2editors.slentiredocument
+msgid "~E~ntire document"
+msgstr ""
+
+#: fv2editors.sllinenumber
+msgid "~L~ine number"
+msgstr ""
+
+#: fv2editors.slnewtext
+msgid "~N~ew text"
+msgstr ""
+
+#: fv2editors.slpromptonreplace
+msgid "~P~rompt on replace"
+msgstr ""
+
+#: fv2editors.slreplace
+msgid "~R~eplace"
+msgstr ""
+
+#: fv2editors.slreplaceall
+msgid "~R~eplace all"
+msgstr ""
+
+#: fv2editors.sltexttofind
+msgid "~T~ext to find"
+msgstr ""
+
+#: fv2editors.slwholewordsonly
+msgid "~W~hole words only"
+msgstr ""
+
+#: fv2editors.smodified
+msgid ""
+"#3%s\n"
+"\n"
+"#3has been modified.  Save?\n"
+msgstr ""
+
+#: fv2editors.soutofmemory
+msgid "Not enough memory for this operation."
+msgstr ""
+
+#: fv2editors.spastenotpossible
+msgid "Wordwrap on:  Paste not possible in current margins when at end of line."
+msgstr ""
+
+#: fv2editors.sreformatdocument
+msgid "Reformat Document"
+msgstr ""
+
+#: fv2editors.sreformatnotpossible
+msgid "Paragraph reformat not possible while trying to wrap current line with current margins."
+msgstr ""
+
+#: fv2editors.sreformattingthedocument
+msgid "Reformatting the document:"
+msgstr ""
+
+#: fv2editors.sreplacenotpossible
+msgid "Wordwrap on:  Replace not possible in current margins when at end of line."
+msgstr ""
+
+#: fv2editors.sreplacethisoccurence
+msgid "Replace this occurence?"
+msgstr ""
+
+#: fv2editors.srightmargin
+msgid "Right Margin"
+msgstr ""
+
+#: fv2editors.ssearchstringnotfound
+msgid "Search string not found."
+msgstr ""
+
+#: fv2editors.sselectwheretobegin
+msgid "Please select where to begin."
+msgstr ""
+
+#: fv2editors.ssetting
+msgid "Setting:"
+msgstr ""
+
+#: fv2editors.stabsettings
+msgid "Tab Settings"
+msgstr ""
+
+#: fv2editors.sunknowndialog
+msgid "Unknown dialog requested!"
+msgstr ""
+
+#: fv2editors.suntitled
+msgid "Untitled"
+msgstr ""
+
+#: fv2editors.swordwrapnotpossible
+msgid "Wordwrap on:  Wordwrap not possible in current margins with continuous line."
+msgstr ""
+
+#: fv2editors.swordwrapoff
+msgid "You must turn on wordwrap before you can reformat."
+msgstr ""
+

@@ -3,7 +3,8 @@ program fpc_TestFV2units;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, fv2testrunner, testfv2driver,testfv2tcanvas, testfv2Views;
+  Interfaces, Forms, fpcunittestrunner, fv2testrunner, testfv2driver,
+  testfv2tcanvas, testfv2Views;
 
 {$R *.res}
 

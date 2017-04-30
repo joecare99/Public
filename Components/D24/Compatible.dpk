@@ -2,8 +2,32 @@ package Compatible;
 
 {$R *.res}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}
-{$i package.inc}
-{$DESCRIPTION 'JC-Soft Compatibility Unit'}
+{$ALIGN 8}
+{$ASSERTIONS ON}
+{$BOOLEVAL OFF}
+{$DEBUGINFO OFF}
+{$EXTENDEDSYNTAX ON}
+{$IMPORTEDDATA ON}
+{$IOCHECKS ON}
+{$LOCALSYMBOLS OFF}
+{$LONGSTRINGS ON}
+{$OPENSTRINGS ON}
+{$OPTIMIZATION ON}
+{$OVERFLOWCHECKS OFF}
+{$RANGECHECKS OFF}
+{$REFERENCEINFO OFF}
+{$SAFEDIVIDE OFF}
+{$STACKFRAMES OFF}
+{$TYPEDADDRESS OFF}
+{$VARSTRINGCHECKS ON}
+{$WRITEABLECONST OFF}
+{$MINENUMSIZE 1}
+{$IMAGEBASE $400000}
+{$DEFINE RELEASE}
+{$ENDIF IMPLICITBUILDING}
+{$DESCRIPTION 'Compatibilitäts - Units'}
+{$LIBSUFFIX '240'}
+{$RUNONLY}
 {$IMPLICITBUILD OFF}
 
 requires
@@ -12,11 +36,11 @@ requires
   vclimg;
 
 contains
-  unt_pasmouse in '..\..\idee\Grafik\unt_pasmouse.pas',
-  Win32Crt in '..\..\idee\Grafik\Win32Crt.pas',
-  graph in '..\..\idee\Grafik\graph.pas' {GForm},
-  int_Graph in '..\..\idee\Grafik\int_Graph.pas',
-  unt_FARBGR in '..\..\idee\Grafik\unt_FARBGR.PAS',
-  Fra_Graph in '..\..\idee\Grafik\Fra_Graph.pas' {FraGraph: TFrame};
+  Fra_Graph in '..\..\Idee\Grafik\Fra_Graph.pas' {FraGraph: TFrame},
+  graph in '..\..\Idee\Grafik\graph.pas' {GraphForm},
+  int_Graph in '..\..\Idee\Grafik\int_Graph.pas',
+  unt_FARBGR in '..\..\Idee\Grafik\unt_FARBGR.PAS',
+  unt_pasmouse in '..\..\Idee\Grafik\unt_pasmouse.pas',
+  Win32Crt in '..\..\Idee\Grafik\Win32Crt.pas';
 
 end.

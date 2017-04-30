@@ -150,10 +150,12 @@
         <ComponentName Value="frmStemmaMainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
+        <IsVisibleTab Value="True"/>
         <TopLine Value="1695"/>
         <CursorPos X="56" Y="1734"/>
         <UsageCount Value="210"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\Source\fmutils.pas"/>
@@ -443,7 +445,6 @@
         <ComponentName Value="frmTypes"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="17"/>
         <CursorPos X="48" Y="43"/>
@@ -612,7 +613,7 @@
         <UnitName Value="frm_SelectDialog"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="51" Y="43"/>
-        <UsageCount Value="89"/>
+        <UsageCount Value="92"/>
       </Unit46>
       <Unit47>
         <Filename Value="C:\lazarus\components\anchordocking\anchordocking.pas"/>

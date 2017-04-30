@@ -19,6 +19,11 @@ functional.                                                       </descr>
       </element><element name="InitSysError"><short>Initialize the Error-Handling</short><descr>Error handling is not yet implemented so this simply sets
 SysErrActive=True (ie it lies) and exits.   </descr>
       </element>
+    <element name="CStrLen"><short>Returns the length of string S</short><descr>Returns the length of string S, where S is a control string using tilde characters ('~') to designate shortcut characters. The tildes are excluded from the length of the string, as they will not appear on the screen. For example, given the string '~B~roccoli' as its parameter, CStrLen returns 8.</descr>
+      </element><element name="MoveStr"><short>Moves a string into a buffer</short><descr>Moves a string into a buffer for use with a view's WriteBuf or WriteLine. Dest must be a TDrawBuffer (or an equivalent array of Sw_Words). The characters in Str are moved into the low bytes of corresponding Sw_Words in Dest. The high bytes of the Sw_Words are set to Attr, or remain unchanged if Attr is zero.     </descr>
+      </element><element name="VideoBuf" link="#video.VideoBuf"><short>VideoBuf maps video.VideoBuf</short><example file="Returns the pointer to the actual videobuffer, so that video unit does not"/><descr>Returns the pointer to the actual videobuffer, so that video unit does not have to be included directly   </descr>
+      </element><element name="UpdateScreen"><short>Draws the VideoBuffer to the Screen</short><descr>Force specifies whether the whole screen has to be redrawn, or (if target platform supports it) its parts only</descr>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

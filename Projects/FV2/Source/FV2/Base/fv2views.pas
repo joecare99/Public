@@ -525,8 +525,8 @@ TYPE
       PROCEDURE EventError (Var Event: TEvent); virtual;
       PROCEDURE HandleEvent (Var Event: TEvent); override;
       PROCEDURE ChangeBounds (Var Bounds: TRect); override;
-      PROCEDURE GetSubViewPtr (Var S: TStream; Var P);
-      PROCEDURE PutSubViewPtr (Var S: TStream; P: TView);
+      procedure GetSubViewPtr(const S: TStream; out P: TView);
+      procedure PutSubViewPtr(const S: TStream; P: TView);
       function ClipChilds: boolean; virtual;
       procedure BeforeInsert({%H-}P: TView); virtual;
       procedure AfterInsert({%H-}P: TView); virtual;
@@ -1246,7 +1246,7 @@ END;
 function TView.NextView: TView;
 BEGIN
    If assigned(owner) and (Self = TGroup(Owner).Last) Then result := Nil      { This is last view }
-     Else Result := Next;                           { Return our next }
+     Else Result := {%H-}Next;                           { Return our next }
 END;
 
 {--TView--------------------------------------------------------------------}
@@ -2118,6 +2118,7 @@ begin
   inherited;
   Options := Options OR (ofSelectable + ofBuffered); { Set options }
   GetExtent(Clip);                                   { Get clip extents }
+  FCanvas:=TTCanvas.Create(Clip);
   EventMask := $FFFF;                                { See all events }
 end;
 
@@ -2158,6 +2159,7 @@ BEGIN
    for TComponent(P) in self do                        { Start on last }
      P.Hide;                                          { Hide each view }
    Hide;                                              { Hide the view }
+   FreeAndNil(FCanvas);
    Inherited Destroy;                                    { Call ancestor }
 END;
 
@@ -2644,26 +2646,25 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  GetSubViewPtr -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 20May98 LdB     }
 {---------------------------------------------------------------------------}
-procedure TGroup.GetSubViewPtr(var S: TStream; var P);
+procedure TGroup.GetSubViewPtr(const S: TStream; out P:TView);
 VAR Index, I: Sw_Word; Q: TView;
 BEGIN
    Index := 0;                                        { Zero index value }
    S.Read(Index, SizeOf(Index));                      { Read view index }
-   If (Index > 0) Then Begin                          { Valid index }
-     Q := Last;                                       { Start on last }
-     For I := 1 To Index Do Q := Q.Next;             { Loop for count }
-     Pointer(P) := Q;                                 { Return the view }
-   End Else Pointer(P) := Nil;                        { Return nil }
+   If (Index > 0) Then
+     P := TView(Components[index-1])
+   Else
+   P := Nil;                        { Return nil }
 END;
 
 {--TGroup-------------------------------------------------------------------}
 {  PutSubViewPtr -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 20May98 LdB     }
 {---------------------------------------------------------------------------}
-procedure TGroup.PutSubViewPtr(var S: TStream; P: TView);
+procedure TGroup.PutSubViewPtr(const S: TStream; P: TView);
 VAR Index: Sw_Word;
 BEGIN
    If (P = Nil) Then Index := 0 Else                  { Nil view, Index = 0 }
-     Index := IndexOf(P);                             { Calc view index }
+     Index := IndexOf(P)+1;                             { Calc view index }
    S.Write(Index, SizeOf(Index));                     { Write the index }
 END;
 
@@ -2678,9 +2679,13 @@ END;
 function TGroup.Indexof(P: TView): Sw_Integer;
 VAR I: Sw_Integer;
 BEGIN
-   Result := -1;
-   for i := 0 to ComponentCount-1 do                  { Subviews exist }
-     if P = Components[I] then exit(I)                { Return index }
+   result := -1;
+   for I := 0 to ComponentCount-1 do
+     if Components[I] = P then
+       begin
+         Result := I;
+         break;
+       end;
 END;
 
 {--TGroup-------------------------------------------------------------------}
@@ -3924,7 +3929,7 @@ BEGIN
    ZoomRect.TopLeft.Y:=S.ReadDWord;                          { Read zoom area y1 }
    ZoomRect.BottomRight.X:=S.ReadDWord;                          { Read zoom area x2 }
    ZoomRect.BottomRight.Y:=S.ReadDWord;                          { Read zoom area y2 }
-   GetSubViewPtr(S, Frame);                           { Now read frame object }
+   GetSubViewPtr(S, Tview(Frame));                           { Now read frame object }
    Title := S.ReadAnsiString;                                { Read title }
 END;
 

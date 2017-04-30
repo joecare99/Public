@@ -3833,7 +3833,7 @@ begin
     Fail;
   S.Read(NewCommand,SizeOf(NewCommand));
   S.Read(EditCommand,SizeOf(EditCommand));
-  GetSubViewPtr(S,ListBox);
+  GetSubViewPtr(S,TView(ListBox));
 end;
 
 {****************************************************************************}

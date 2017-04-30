@@ -2,13 +2,19 @@
   This source is only used to compile and install the package.
  }
 
-unit DBHlPanel;
+unit DBHLLookUpPanel;
 
 interface
 
 uses
-  cmp_DBHlPanel;
+  Cmp_DBHLLookUpPanel, LazarusPackageIntf;
 
 implementation
 
+procedure Register;
+begin
+end;
+
+initialization
+  RegisterPackage('DBHLLookUpPanel', @Register);
 end.

@@ -288,6 +288,7 @@ TYPE
    PEvent = ^TEvent;
 
    TVideoMode = Video.TVideoMode;                     { Screen mode }
+   PVideoBuf = Video.PVideoBuf;
 
 {---------------------------------------------------------------------------}
 {                    ERROR HANDLER FUNCTION DEFINITION                      }
@@ -308,6 +309,20 @@ procedure GiveUpTimeSlice;
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                          BUFFER MOVE ROUTINES                             }
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
+
+{-VideoBuf-----------------------------------------------------------
+Returns the pointer to the actual videobuffer, so that video unit does not
+have to be included directly
+------------------------------------------------------------------}
+Function VideoBuf:PVideoBuf;inline;
+
+{-UpdateScreen-----------------------------------------------------
+Draws the VideoBuffer to the Screen
+Force specifies whether the whole screen has to be redrawn, or (if target
+platform supports it) its parts only
+------------------------------------------------------------------}
+Procedure UpdateScreen(Force: Boolean);inline;
+
 
 {-CStrLen------------------------------------------------------------
 Returns the length of string S, where S is a control string using tilde
@@ -891,7 +906,7 @@ end;
 {  DetectMouse -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 19May98 LdB       }
 FUNCTION DetectMouse: Byte;inline;
 begin
-  DetectMouse:=Mouse.DetectMouse;
+  result := Mouse.DetectMouse;
 end;
 
 {***************************************************************************}
@@ -901,6 +916,16 @@ end;
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                           BUFFER MOVE ROUTINES                            }
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
+
+function VideoBuf: PVideoBuf;
+begin
+  result := video.VideoBuf;
+end;
+
+procedure UpdateScreen(Force: Boolean);
+begin
+  video.UpdateScreen(Force);
+end;
 
 {---------------------------------------------------------------------------}
 {  CStrLen -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 25May96 LdB           }
@@ -1349,7 +1374,7 @@ function InitVideo:boolean;
 var StoreScreenMode : TVideoMode;
 
 begin
-  initvideo:=false;
+  result :=false;
   if VideoInitialized then
     begin
       StoreScreenMode:=ScreenMode;
@@ -1382,7 +1407,7 @@ begin
   ScreenWidth:=Video.ScreenWidth;
   ScreenHeight:=Video.ScreenHeight;
   VideoInitialized:=true;
-  initvideo:=true;
+  result :=true;
 end;
 
 {---------------------------------------------------------------------------}

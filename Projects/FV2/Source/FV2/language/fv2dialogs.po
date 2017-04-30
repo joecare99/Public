@@ -1,0 +1,55 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: fv2dialogs.slcancel
+msgid "Cancel"
+msgstr ""
+
+#: fv2dialogs.slclose
+msgid "~C~lose"
+msgstr ""
+
+#: fv2dialogs.slcloseall
+msgid "Cl~o~se all"
+msgstr ""
+
+#: fv2dialogs.slhelp
+msgid "~H~elp"
+msgstr ""
+
+#: fv2dialogs.slname
+msgid "~N~ame"
+msgstr ""
+
+#: fv2dialogs.slno
+msgid "~N~o"
+msgstr ""
+
+#: fv2dialogs.slok
+msgid "O~k~"
+msgstr ""
+
+#: fv2dialogs.slopen
+msgid "~O~pen"
+msgstr ""
+
+#: fv2dialogs.slsave
+msgid "~S~ave"
+msgstr ""
+
+#: fv2dialogs.slsaveall
+msgid "Save a~l~l"
+msgstr ""
+
+#: fv2dialogs.slsaveas
+msgid "S~a~ve as..."
+msgstr ""
+
+#: fv2dialogs.slsavefileas
+msgid "~S~ave file as"
+msgstr ""
+
+#: fv2dialogs.slyes
+msgid "~Y~es"
+msgstr ""
+

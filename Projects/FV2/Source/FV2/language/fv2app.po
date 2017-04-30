@@ -1,0 +1,11 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: fv2app.stypeexitonreturn
+msgid "Type EXIT to return..."
+msgstr ""
+
+#: fv2app.svideofailed
+msgid "Video initialization failed."
+msgstr ""
+

@@ -1,5 +1,9 @@
 unit Cmp_DBLookUpGrid;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
+
 {$R-}
 
 interface
@@ -11,16 +15,24 @@ type
   TValueLookUpEvent=function(Sender:Tobject;DBValue:string;Column:TColumn):string of object;
   TIDLookUpEvent=function(Sender:Tobject;Value:string;Column:TColumn):string of object;
 
+  {$IFDEF FPC}
+  TDBGridInplaceLUEdit = class(TPickListCellEditor)
+  {$ELSE}
   TDBGridInplaceLUEdit = class(TInplaceEditList)
+  {$ENDIF}
   private
     FDataList: TDBLookupListBox;
     FUseDataList: Boolean;
     FLookupSource: TDatasource;
   protected
+    {$IFDEF FPC}
+    procedure CloseUp; override;
+    {$ELSE}
     procedure CloseUp(Accept: Boolean); override;
     procedure DoEditButtonClick; override;
-    procedure DropDown; override;
     procedure UpdateContents; override;
+    {$ENDIF}
+    procedure DropDown; override;
   public
     constructor Create(Owner: TComponent); override;
     property  DataList: TDBLookupListBox read FDataList;
@@ -38,10 +50,14 @@ type
     { Protected-Deklarationen }
     procedure DrawCell(ACol, ARow: Integer; ARect: TRect;
       AState: TGridDrawState); override;
+    {$IFDEF FPC}
+    function CreateEditor: TWinControl; virtual;
+    {$ELSE}
     function CreateEditor: TInplaceEdit; override;
+    {$ENDIF}
     function GetEditText(ACol, ARow: Integer): string; override;
     procedure SetEditText(ACol, ARow: Integer; const Value: string); override;
-    function CanEditAcceptKey(Key: Char): Boolean; override;
+    function CanEditAcceptKey(Key: Char): Boolean; virtual;
   public
     property Canvas;
     property SelectedRows;
@@ -53,7 +69,13 @@ type
     property Color;
     property Columns stored False; //StoreColumns;
     property Constraints;
+    {$IFNDEF FPC}
     property Ctl3D;
+    property ImeMode;
+    property ImeName;
+    property ParentCtl3D;
+    {$ELSE}
+    {$ENDIF}
     property DataSource;
     property DefaultDrawing;
     property DragCursor;
@@ -62,12 +84,9 @@ type
     property Enabled;
     property FixedColor;
     property Font;
-    property ImeMode;
-    property ImeName;
     property Options;
     property ParentBiDiMode;
     property ParentColor;
-    property ParentCtl3D;
     property ParentFont;
     property ParentShowHint;
     property PopupMenu;
@@ -81,7 +100,9 @@ type
     property OnColEnter;
     property OnColExit;
     property OnColumnMoved;
+    {$IFNDEF FPC}
     property OnDrawDataCell;  { obsolete }
+    {$ENDIF}
     property OnDrawColumnCell;
     property OnDblClick;
     property OnDragDrop;
@@ -106,7 +127,13 @@ type
 
 implementation
 
-uses windows,variants,graphics,math,forms,messages, ADOInt;
+uses
+{$IFnDEF FPC}
+  ADOInt, windows,
+{$ELSE}
+  LCLIntf, LCLType, LMessages,
+{$ENDIF}
+  variants,graphics,math,forms,messages;
 
 var
   DrawBitmap: graphics.TBitmap;
@@ -187,7 +214,11 @@ begin
   FLookupSource := TDataSource.Create(Self);
 end;
 
+{$IFDEF FPC}
+procedure TDBGridInplaceLUEdit.CloseUp;
+{$ELSE}
 procedure TDBGridInplaceLUEdit.CloseUp(Accept: Boolean);
+{$ENDIF}
 var
   MasterField: TField;
   ListValue: Variant;
@@ -207,7 +238,7 @@ begin
       FDataList.ListSource := nil;
     FLookupSource.Dataset := nil;
     Invalidate;
-    if Accept then
+ {$IFDEF FPC}    if Accept then     {$ENDIF}
       if ActiveList = DataList then
         with TDBLookUpGrid(Grid), Columns[SelectedIndex].Field do
         begin
@@ -227,10 +258,12 @@ begin
   end
 end;
 
+{$IFNDEF FPC}
 procedure TDBGridInplaceLUEdit.DoEditButtonClick;
 begin
   TDBLookUpGrid(Grid).EditButtonClick;
 end;
+{$ENDIF}
 
 procedure TDBGridInplaceLUEdit.DropDown;
 var
@@ -261,6 +294,7 @@ begin
   inherited DropDown;
 end;
 
+{$IFNDEF FPC}
 procedure TDBGridInplaceLUEdit.UpdateContents;
 var
   Column: TColumn;
@@ -284,10 +318,15 @@ begin
   ImeMode := Column.ImeMode;
   ImeName := Column.ImeName;
 end;
+{$ENDIF}
 
 {TDBLookUpGrid}
 
+{$IFDEF FPC}
+function TDBLookUpGrid.CreateEditor: TWinControl;
+{$ELSE}
 function TDBLookUpGrid.CreateEditor: TInplaceEdit;
+{$ENDIF}
 begin
   result:=TDBGridInplaceLUEdit.Create(self);
 end;

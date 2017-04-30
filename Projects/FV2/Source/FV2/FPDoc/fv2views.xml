@@ -10,6 +10,8 @@
       </element>
     <element name="TView.MakeGlobal"><short>MakeGlobal calculates the global coordinates for given local coordiantes</short>
       </element>
+    <element name="TGroup"><short>TGroup is a Container for TView-Components</short><descr>instead of a Buffer like in FV it now has a Canvas-Property on which child-TView-Components can draw on.</descr>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

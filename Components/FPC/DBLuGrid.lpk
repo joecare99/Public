@@ -2,34 +2,30 @@
 <CONFIG>
   <Package Version="4">
     <PathDelim Value="\"/>
-    <Name Value="DBHlPanel"/>
+    <Name Value="DBLuGrid"/>
+    <Type Value="RunAndDesignTime"/>
     <Author Value="Joe Care"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <IncludeFiles Value="..;..\..\include"/>
-        <OtherUnitFiles Value="..\Source\DBHlPanel"/>
-        <UnitOutputDirectory Value="..\..\bin\lib\$NameOnly($(PkgName))\$(TargetCPU)-$(TargetOS)"/>
+        <IncludeFiles Value="C:\projekte\Delphi\Components\Source\DBLookUpGrid\"/>
+        <OtherUnitFiles Value="C:\projekte\Delphi\Components\Source\DBLookUpGrid\"/>
+        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)\"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>
           <SyntaxMode Value="Delphi"/>
         </SyntaxOptions>
       </Parsing>
-      <CodeGeneration>
-        <SmartLinkUnit Value="True"/>
-      </CodeGeneration>
-      <Other>
-        <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-      </Other>
     </CompilerOptions>
-    <Description Value="Stellt ein Panel mit DB-Verbindung, das je nach wert die Farbe wechseln kann. "/>
+    <Description Value="A DB-Grid that automaticly looks up ID's an displayes the corresponding Descriptions, also enables editing/selection with a dropdown-combobox"/>
+    <License Value="LGPL"/>
     <Version Major="1"/>
     <Files Count="1">
       <Item1>
-        <Filename Value="..\Source\DBHlPanel\cmp_DBHlPanel.pas"/>
-        <UnitName Value="cmp_DBHlPanel"/>
+        <Filename Value="..\Source\DBLookUpGrid\Cmp_DBLookUpGrid.pas"/>
+        <UnitName Value="Cmp_DBLookUpGrid"/>
       </Item1>
     </Files>
     <RequiredPkgs Count="1">
@@ -43,8 +39,5 @@
     <PublishOptions>
       <Version Value="2"/>
     </PublishOptions>
-    <CustomOptions Items="ExternHelp" Version="2">
-      <_ExternHelp Items="Count"/>
-    </CustomOptions>
   </Package>
 </CONFIG>
