@@ -317,6 +317,7 @@ TYPE
      FSize     : TPoint;                           { View size }
      function GetHeight: integer;
      function GetLeft: integer;
+     function GetParent: TGroup;
      function GetTop: integer;
      function GetWidth: integer;
      procedure SetHeight(AValue: integer);
@@ -347,6 +348,7 @@ TYPE
       BackgroundChar : Char;
       property Origin   : TPoint read FOrigin write SetOrigin;                           { View origin }
       property Size     : TPoint read FSize write SetSize;                           { View size }
+      Property Parent   : TGroup read GetParent;
 
       constructor create(Aowner: TComponent; Bounds: TRect);reintroduce;
       constructor Load(aOwner: TComponent; var S: TStream);
@@ -433,8 +435,8 @@ TYPE
 
       FUNCTION Exposed: Boolean;   { This needs help!!!!! }
 
-      PROCEDURE WriteBuf (X, Y, W, H: Sw_Integer; Var Buf);
-      PROCEDURE WriteLine (X, Y, W, H: Sw_Integer; Var Buf);
+      PROCEDURE WriteBuf (X, Y, W, H: Sw_Integer; var Buf);
+      PROCEDURE WriteLine (X, Y, W, H: Sw_Integer; var Buf);
       PROCEDURE WriteStr (X, Y: Sw_Integer; Str: String; Color: Byte);
       PROCEDURE WriteChar (X, Y: Sw_Integer; C: Char; Color: Byte;
         Count: Sw_Integer);
@@ -452,10 +454,10 @@ TYPE
       procedure DrawUnderRect(var R: TRect);
       procedure DrawUnderView(DoShadow: Boolean);
       procedure do_WriteView(x1,x2,y:Sw_Integer; var Buf);
-      procedure do_WriteViewRec1(x1, x2, y0, offset: Sw_integer; aGroup: TGroup;
-        shadowCounter: Sw_integer);
-      procedure do_WriteViewRec2(x1, x2, y0, offset: Sw_integer; p: TView;
-        shadowCounter: Sw_integer);
+//      procedure do_WriteViewRec1(x1, x2, y0, offset: Sw_integer; aGroup: TGroup;
+//        shadowCounter: Sw_integer);
+//      procedure do_WriteViewRec2(x1, x2, y0, offset: Sw_integer; p: TView;
+//        shadowCounter: Sw_integer);
       function do_ExposedRec1(x1, x2, Y0: Sw_integer; G: TGroup): boolean;
       function do_ExposedRec2(x1, x2, y0: Sw_integer): boolean;
    END;
@@ -1066,6 +1068,12 @@ end;
 function TView.GetLeft: integer;
 begin
   result := FOrigin.x;
+end;
+
+function TView.GetParent: TGroup;
+begin
+  if Owner.InheritsFrom(TGroup) then
+    result := TGroup(Owner);
 end;
 
 function TView.GetHeight: integer;
@@ -2339,7 +2347,8 @@ END;
 procedure TGroup.Draw;
 BEGIN
    DrawSubViews;
-   WriteBuf(0,0,Size.X,Size.Y,FCanvas.CBuffer[0]);
+//   WriteBuf(0,0,Size.X,Size.Y,FCanvas);
+   Fcanvas.Flush(rect(0,0,ScreenMode.Col,ScreenMode.Row),false);
 END;
 
 
@@ -2647,7 +2656,7 @@ END;
 {  GetSubViewPtr -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 20May98 LdB     }
 {---------------------------------------------------------------------------}
 procedure TGroup.GetSubViewPtr(const S: TStream; out P:TView);
-VAR Index, I: Sw_Word; Q: TView;
+VAR Index: Sw_Word;
 BEGIN
    Index := 0;                                        { Zero index value }
    S.Read(Index, SizeOf(Index));                      { Read view index }
@@ -4294,7 +4303,7 @@ begin
   until cur=nil;
 end;
 
-
+(* Very old code ...
 procedure TView.do_WriteViewRec1(x1, x2, y0, offset: Sw_integer; aGroup: TGroup;
   shadowCounter: Sw_integer);
 var
@@ -4424,22 +4433,14 @@ begin
   else
 
 end;
-
+*)
 
 procedure TView.do_WriteView(x1, x2, y: Sw_Integer; var Buf);
+
 begin
   if (y>=0) and (y<Size.Y) then
-   begin
-     if x1<0 then
-      x1:=0;
-     if x2>Size.X then
-      x2:=Size.X;
-     if x1<x2 then
-      begin
-        staticVar1:=@Buf;
-        do_writeViewRec2( x1, x2,y,x1, Self, 0 );
-      end;
-   end;
+    if assigned(parent) then
+      parent.canvas.CopyBuffer(x1+Left,y+top,x2-x1,Buf);
 end;
 
 

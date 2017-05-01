@@ -41,6 +41,8 @@ type
     FCBuffer: array of TVideoCell;
     FLocks: integer;
     FPenPos: TPoint;
+    FClipping:Boolean;
+    FClipRect:TRect;
     FBrush: TFV2CustomBrush;
     FPen: TFV2CustomPen;
     FFont: TFV2CustomFont;
@@ -84,6 +86,10 @@ type
     // using TPen
     procedure MoveTo(p: TPoint); virtual;
     procedure Lineto(p: TPoint); virtual;
+    // BufferRoutines
+    procedure CopyBuffer(x,y,l:integer; var Buf);
+    Procedure BrushCopy(r:Trect; out NewBrush:TFV2CustomBrush);
+    Procedure DrawBrush(pos:Tpoint;const aBrush:TFV2CustomBrush);
     // properties
     property LockCount: integer read FLocks;
     property Font: TFV2CustomFont read GetFont write SetFont;
@@ -193,12 +199,12 @@ end;
 
 function TTCanvas.GetBuffer: PVideoBuf;
 begin
-  Result := @FCBuffer;
+  Result := @FCBuffer[0];
 end;
 
 function TTCanvas.GetClipping: boolean;
 begin
-
+  result := FClipping
 end;
 
 function TTCanvas.GetClipRect: TRect;
@@ -250,12 +256,12 @@ end;
 
 procedure TTCanvas.SetClipping(AValue: boolean);
 begin
-
+  FClipping := AValue;
 end;
 
 procedure TTCanvas.SetClipRect(AValue: TRect);
 begin
-
+  FClipRect := AValue;
 end;
 
 procedure TTCanvas.SetColor(x, y: integer; AValue: TFVColor);
@@ -271,7 +277,7 @@ end;
 
 procedure TTCanvas.SetHeight(AValue: integer);
 begin
-
+  FSize.y := Avalue
 end;
 
 procedure TTCanvas.SetPen(AValue: TFV2CustomPen);
@@ -294,7 +300,7 @@ end;
 
 procedure TTCanvas.SetWidth(AValue: integer);
 begin
-
+  FSize.x := Avalue
 end;
 
 procedure TTCanvas.TextOut(x, y: integer; Text: string);
@@ -377,7 +383,7 @@ begin
   FPenpos := p;
 end;
 
-procedure TTCanvas.LineTo(p: TPoint);
+procedure TTCanvas.Lineto(p: TPoint);
 var
   i: integer;
 begin
@@ -434,6 +440,21 @@ begin
   end;
   Fpen.LastPenpos := FPenpos;
   FPenpos := p;
+end;
+
+procedure TTCanvas.CopyBuffer(x, y, l: integer; var Buf);
+begin
+
+end;
+
+procedure TTCanvas.BrushCopy(r: Trect; out NewBrush: TFV2CustomBrush);
+begin
+
+end;
+
+procedure TTCanvas.DrawBrush(pos: Tpoint; const aBrush: TFV2CustomBrush);
+begin
+
 end;
 
 end.
