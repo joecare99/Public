@@ -1,0 +1,151 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joe Care\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.12\n"
+"Language: de_DE@formal\n"
+
+#: fv2editors.sclipboard
+msgid "Clipboard"
+msgstr "Zwischenablage"
+
+#: fv2editors.sfilecreateerror
+msgid "Error creating file %s"
+msgstr "Fehler beim Erstellen von Datei %s"
+
+#: fv2editors.sfilereaderror
+msgid "Error reading file %s"
+msgstr "Fehler beim Lesen von Datei %s"
+
+#: fv2editors.sfileuntitled
+msgid "Save untitled file?"
+msgstr "Unbenannte Datei speichern ?"
+
+#: fv2editors.sfilewriteerror
+msgid "Error writing to file %s"
+msgstr "Fehler beim Schreiben von Datei %s"
+
+#: fv2editors.sfind
+msgid "Find"
+msgstr "Suchen"
+
+#: fv2editors.sjumpto
+msgid "Jump To"
+msgstr "Springe zu"
+
+#: fv2editors.slcasesensitive
+msgid "~C~ase sensitive"
+msgstr "Mit ~G~roß- und Kleinschreibung"
+
+#: fv2editors.slcurrentline
+msgid "~C~urrent line"
+msgstr "A~k~tuelle Zeile"
+
+#: fv2editors.slentiredocument
+msgid "~E~ntire document"
+msgstr "Ganz~e~s Dokument"
+
+#: fv2editors.sllinenumber
+msgid "~L~ine number"
+msgstr "Zei~l~e Nummer"
+
+#: fv2editors.slnewtext
+msgid "~N~ew text"
+msgstr "~N~euer Text"
+
+#: fv2editors.slpromptonreplace
+msgid "~P~rompt on replace"
+msgstr "Mit ~B~estätigung"
+
+#: fv2editors.slreplace
+msgid "~R~eplace"
+msgstr "E~r~setzen"
+
+#: fv2editors.slreplaceall
+msgid "~R~eplace all"
+msgstr "Alles e~r~setzen"
+
+#: fv2editors.sltexttofind
+msgid "~T~ext to find"
+msgstr "Zu suchender ~T~ext"
+
+#: fv2editors.slwholewordsonly
+msgid "~W~hole words only"
+msgstr "Nur ganze ~W~orte"
+
+#: fv2editors.smodified
+msgid ""
+"#3%s\n"
+"\n"
+"#3has been modified.  Save?\n"
+msgstr ""
+
+#: fv2editors.soutofmemory
+msgid "Not enough memory for this operation."
+msgstr "Nicht genügend Speicher für diese Operation."
+
+#: fv2editors.spastenotpossible
+msgid "Wordwrap on:  Paste not possible in current margins when at end of line."
+msgstr "Zeilenumbruch an: Einfügen am Ende der Zeile nicht möglich mit den aktuellen Randeinstellungen."
+
+#: fv2editors.sreformatdocument
+msgid "Reformat Document"
+msgstr "Dokument neuformatieren"
+
+#: fv2editors.sreformatnotpossible
+msgid "Paragraph reformat not possible while trying to wrap current line with current margins."
+msgstr "Absatz formatieren nicht möglich bei dem Versuch, die aktuelle Zeile mit aktuellen Ränder umzubrechen."
+
+#: fv2editors.sreformattingthedocument
+msgid "Reformatting the document:"
+msgstr ""
+
+#: fv2editors.sreplacenotpossible
+msgid "Wordwrap on:  Replace not possible in current margins when at end of line."
+msgstr ""
+
+#: fv2editors.sreplacethisoccurence
+msgid "Replace this occurence?"
+msgstr ""
+
+#: fv2editors.srightmargin
+msgid "Right Margin"
+msgstr "Rechter Rand"
+
+#: fv2editors.ssearchstringnotfound
+msgid "Search string not found."
+msgstr "Suchstring nicht gefunden."
+
+#: fv2editors.sselectwheretobegin
+msgid "Please select where to begin."
+msgstr "Bitte wählen Sie wo angefangen werden soll."
+
+#: fv2editors.ssetting
+msgid "Setting:"
+msgstr "Einstellung:"
+
+#: fv2editors.stabsettings
+msgid "Tab Settings"
+msgstr "Tabulatoreinstellungen"
+
+#: fv2editors.sunknowndialog
+msgid "Unknown dialog requested!"
+msgstr ""
+
+#: fv2editors.suntitled
+msgid "Untitled"
+msgstr "Ohne Titel"
+
+#: fv2editors.swordwrapnotpossible
+msgid "Wordwrap on:  Wordwrap not possible in current margins with continuous line."
+msgstr "Zeilenumbruch an: Zeilenumbruch bei aktuellen Randeinstellungen mit durchgehender Zeile nicht möglich."
+
+#: fv2editors.swordwrapoff
+msgid "You must turn on wordwrap before you can reformat."
+msgstr "Sie müssen Zeilenumbruch einschalten bevor Sie neu formatieren können."

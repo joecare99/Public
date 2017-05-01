@@ -16,18 +16,18 @@ uses
 
 type
   TAboutBox = class(TForm)
-    Panel1: TPanel;
-    Comments: TLabel;
+    pnlClient: TPanel;
+    lblComments: TLabel;
     OKButton: TButton;
-    Image1: TImage;
-    Panel2: TPanel;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
+    imgGameGlyph: TImage;
+    pnlImage: TPanel;
+    lblThisGameIs: TLabel;
+    lblSpecialThanks: TLabel;
+    lblAuthor: TLabel;
     ActSkinLab: TLabel;
     ActLevLab: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
+    lblLicence: TLabel;
+    lblPoint: TLabel;
     Label6: TLabel;
     Label7: TLabel;
     Label8: TLabel;

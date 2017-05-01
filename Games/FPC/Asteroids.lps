@@ -2,9 +2,9 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
-    <BuildModes Active="Release1"/>
-    <Units Count="8">
+    <Version Value="10"/>
+    <BuildModes Active="Release"/>
+    <Units Count="10">
       <Unit0>
         <Filename Value="Asteroids.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -15,9 +15,10 @@
       <Unit1>
         <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="8"/>
-        <TopLine Value="213"/>
-        <CursorPos X="27" Y="233"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="124"/>
+        <CursorPos X="25" Y="176"/>
         <UsageCount Value="315"/>
         <Loaded Value="True"/>
       </Unit1>
@@ -28,8 +29,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="104"/>
-        <CursorPos X="128" Y="109"/>
+        <CursorPos X="29" Y="15"/>
         <UsageCount Value="315"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -41,7 +41,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="315"/>
+        <TopLine Value="312"/>
         <CursorPos Y="321"/>
         <UsageCount Value="315"/>
         <Loaded Value="True"/>
@@ -50,11 +50,14 @@
       <Unit4>
         <Filename Value="..\..\Grafik\spiele\asteroids_src\uKeys.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="Keys"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="4"/>
         <CursorPos X="21" Y="10"/>
         <UsageCount Value="315"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\..\Grafik\spiele\asteroids_src\uInfo.pas"/>
@@ -63,8 +66,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="103"/>
-        <CursorPos X="26" Y="113"/>
+        <CursorPos X="59" Y="14"/>
         <UsageCount Value="315"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -72,11 +74,14 @@
       <Unit6>
         <Filename Value="..\..\Grafik\spiele\asteroids_src\uDlg_EnterName.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="Dlg_EnterName"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="3"/>
         <CursorPos X="46" Y="6"/>
         <UsageCount Value="315"/>
         <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit6>
       <Unit7>
         <Filename Value="..\..\Grafik\spiele\asteroids_src\uHighscores.pas"/>
@@ -85,13 +90,149 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="64"/>
-        <CursorPos X="33" Y="68"/>
+        <CursorPos X="64" Y="72"/>
         <UsageCount Value="315"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit7>
+      <Unit8>
+        <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\objpas\math.pp"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="1067"/>
+        <CursorPos X="11" Y="1070"/>
+        <UsageCount Value="16"/>
+        <Loaded Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\inc\mathh.inc"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="18"/>
+        <CursorPos X="16" Y="99"/>
+        <UsageCount Value="16"/>
+        <Loaded Value="True"/>
+      </Unit9>
     </Units>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="389" TopLine="363"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="390" TopLine="363"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="391" TopLine="363"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="392" TopLine="363"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="386" TopLine="363"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="168" Column="9" TopLine="143"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="386" TopLine="360"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="172" Column="28" TopLine="143"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="168" Column="31" TopLine="143"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="170" TopLine="143"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="168" Column="43" TopLine="143"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="169" Column="26" TopLine="143"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="171" TopLine="143"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="170" TopLine="143"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="172" TopLine="143"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="171" TopLine="143"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="154" Column="28" TopLine="124"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="386" Column="11" TopLine="360"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="169" Column="24" TopLine="149"/>
+      </Position19>
+      <Position20>
+        <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\objpas\math.pp"/>
+        <Caret Line="379" Column="12" TopLine="350"/>
+      </Position20>
+      <Position21>
+        <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\objpas\math.pp"/>
+        <Caret Line="1070" Column="11" TopLine="1067"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="171" Column="9" TopLine="149"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="170" Column="29" TopLine="145"/>
+      </Position23>
+      <Position24>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="172" TopLine="145"/>
+      </Position24>
+      <Position25>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="169" Column="27" TopLine="143"/>
+      </Position25>
+      <Position26>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="168" Column="35" TopLine="143"/>
+      </Position26>
+      <Position27>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="171" Column="41" TopLine="143"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="169" TopLine="143"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="173" Column="7" TopLine="143"/>
+      </Position29>
+      <Position30>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Caret Line="172" Column="28" TopLine="147"/>
+      </Position30>
+    </JumpHistory>
   </ProjectSession>
 </CONFIG>

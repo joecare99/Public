@@ -84,7 +84,7 @@ object frm_game: Tfrm_game
     object Label2: TLabel
       Left = 328
       Top = 16
-      Width = 87
+      Width = 86
       Height = 36
       Caption = 'Score:'
       Font.Charset = ANSI_CHARSET

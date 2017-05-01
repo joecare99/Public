@@ -1,0 +1,138 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joe Care\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 1.8.12\n"
+"Language: de_DE@formal\n"
+
+#: fv2stddlg.schangedirectory
+msgid "Change Directory"
+msgstr ""
+
+#: fv2stddlg.sdeletefile
+msgid ""
+"Delete file?\n"
+"\n"
+"#3%s\n"
+msgstr ""
+
+#: fv2stddlg.sdirectory
+msgid "Directory"
+msgstr ""
+
+#: fv2stddlg.sdrives
+msgid "Drives"
+msgstr ""
+
+#: fv2stddlg.sinvaliddirectory
+msgid "Invalid directory."
+msgstr ""
+
+#: fv2stddlg.sinvaliddriveordir
+msgid "Invalid drive or directory."
+msgstr ""
+
+#: fv2stddlg.sinvalidfilename
+msgid "Invalid file name."
+msgstr ""
+
+#: fv2stddlg.slchdir
+msgid "~C~hdir"
+msgstr ""
+
+#: fv2stddlg.slclear
+msgid "C~l~ear"
+msgstr ""
+
+#: fv2stddlg.sldirectoryname
+msgid "Directory ~n~ame"
+msgstr ""
+
+#: fv2stddlg.sldirectorytree
+msgid "Directory ~t~ree"
+msgstr ""
+
+#: fv2stddlg.slfiles
+msgid "~F~iles"
+msgstr ""
+
+#: fv2stddlg.slreplace
+msgid "~R~eplace"
+msgstr ""
+
+#: fv2stddlg.slrevert
+msgid "~R~evert"
+msgstr ""
+
+#: fv2stddlg.smapr
+msgid "Apr"
+msgstr "Apr"
+
+#: fv2stddlg.smaug
+msgid "Aug"
+msgstr "Aug"
+
+#: fv2stddlg.smdec
+msgid "Dec"
+msgstr "Dez"
+
+#: fv2stddlg.smfeb
+msgid "Feb"
+msgstr "Feb"
+
+#: fv2stddlg.smjan
+msgid "Jan"
+msgstr "Jan"
+
+#: fv2stddlg.smjul
+msgid "Jul"
+msgstr "Jul"
+
+#: fv2stddlg.smjun
+msgid "Jun"
+msgstr "Jun"
+
+#: fv2stddlg.smmar
+msgid "Mar"
+msgstr "Mrz"
+
+#: fv2stddlg.smmay
+msgid "May"
+msgstr "Mai"
+
+#: fv2stddlg.smnov
+msgid "Nov"
+msgstr "Nov"
+
+#: fv2stddlg.smoct
+msgid "Oct"
+msgstr "Okt"
+
+#: fv2stddlg.smsep
+msgid "Sep"
+msgstr "Sep"
+
+#: fv2stddlg.sopen
+msgid "Open"
+msgstr ""
+
+#: fv2stddlg.sreplacefile
+msgid ""
+"Replace file?\n"
+"\n"
+"#3%s\n"
+msgstr ""
+
+#: fv2stddlg.ssaveas
+msgid "Save As"
+msgstr ""
+
+#: fv2stddlg.stoomanyfiles
+msgid "Too many files."
+msgstr ""

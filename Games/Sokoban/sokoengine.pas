@@ -7,7 +7,7 @@ unit SokoEngine;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes,types, SysUtils;
 
 type
   TPartType = (ptWall, ptNone, ptPlayer, ptCrate, ptEmpty); //, ptReachable

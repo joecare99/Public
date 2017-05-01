@@ -18,7 +18,7 @@ uses
   Messages, Graphics, Controls, Forms,
   Buttons, ActnList, StdCtrls, Menus,
    ExtCtrls, ComCtrls, Classes,
-  SysUtils, Dialogs, SokoEngine, PathFUnit;
+  SysUtils, Dialogs, SokoEngine, PathFUnit, System.Actions, System.ImageList;
 
 type
   TSkinData = record

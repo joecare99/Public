@@ -80,7 +80,6 @@ uses unt_cdate, LoadLevelsetUnit;
 {$ELSE}
 {$R *.dfm}
 const LineEnding=#13#10;
-
 {$ENDIF}
 
 resourcestring
