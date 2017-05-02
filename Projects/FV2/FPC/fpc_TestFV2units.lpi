@@ -24,11 +24,11 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\fpc_TestFV2units"/>
+            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($Project(Infofile))"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-            <OtherUnitFiles Value="..\Test;..\source\FvUnitTestGui"/>
+            <OtherUnitFiles Value="..\Source\Test"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -60,11 +60,11 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\fpc_TestFV2units"/>
+            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($Project(Infofile))"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-            <OtherUnitFiles Value="..\Test;..\source\FvUnitTestGui"/>
+            <OtherUnitFiles Value="..\Source\Test"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -116,17 +116,15 @@
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Test\testfv2driver.pas"/>
+        <Filename Value="..\source\test\testfv2driver.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="testfv2Driver"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\Test\testfv2views.pas"/>
+        <Filename Value="..\source\test\testfv2views.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="testfv2Views"/>
       </Unit2>
       <Unit3>
-        <Filename Value="..\Test\testfv2tcanvas.pas"/>
+        <Filename Value="..\source\test\testfv2tcanvas.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
     </Units>
@@ -135,11 +133,11 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\fpc_TestFV2units"/>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($Project(Infofile))"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-      <OtherUnitFiles Value="..\Test;..\source\FvUnitTestGui"/>
+      <OtherUnitFiles Value="..\Source\Test"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Parsing>
