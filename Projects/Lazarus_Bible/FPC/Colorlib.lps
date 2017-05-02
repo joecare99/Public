@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="3">
+      <Unit0>
+        <Filename Value="Colorlib.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="3"/>
+        <CursorPos X="56" Y="27"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="ColorForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_CLRFORM"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="54" Y="9"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.lfm"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="33"/>
+        <CursorPos X="30" Y="35"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit2>
+    </Units>
+    <JumpHistory Count="17" HistoryIndex="16">
+      <Position1>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="22" Column="45" TopLine="3"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="20" Column="5" TopLine="3"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="13" Column="40" TopLine="3"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="19" Column="58" TopLine="15"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="23" Column="62" TopLine="15"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="57" Column="15" TopLine="54"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="56" Column="15" TopLine="53"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="54" Column="5" TopLine="53"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="55" Column="5" TopLine="54"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="54" Column="5" TopLine="53"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="24" Column="14" TopLine="12"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="27" TopLine="12"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="85" Column="33" TopLine="71"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="28" Column="28" TopLine="13"/>
+      </Position15>
+      <Position16>
+        <Filename Value="Colorlib.dpr"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\source\COLORDLL\Frm_CLRFORM.PAS"/>
+        <Caret Line="82" Column="42" TopLine="71"/>
+      </Position17>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

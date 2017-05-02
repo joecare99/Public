@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Release"/>
+    <Units Count="4">
+      <Unit0>
+        <Filename Value="Direxec.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="42" Y="17"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\DIREXEC\Frm_DirExecMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_DirExecMAIN"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="27"/>
+        <CursorPos X="65" Y="44"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\DIREX\Frm_DIRDLG.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DirDlgForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_DIRDLG"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="35" Y="11"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\source\DIREXEC\Frm_DirExecMAIN.lfm"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit3>
+    </Units>
+    <JumpHistory Count="9" HistoryIndex="8">
+      <Position1>
+        <Filename Value="..\source\DIREX\Frm_DIRDLG.PAS"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\DIREX\Frm_DIRDLG.PAS"/>
+        <Caret Line="80" Column="20" TopLine="17"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\DIREX\Frm_DIRDLG.PAS"/>
+        <Caret Line="88" TopLine="61"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\DIREXEC\Frm_DirExecMAIN.PAS"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\DIREXEC\Frm_DirExecMAIN.PAS"/>
+        <Caret Line="47" Column="43" TopLine="33"/>
+      </Position5>
+      <Position6>
+        <Filename Value="Direxec.dpr"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\DIREXEC\Frm_DirExecMAIN.PAS"/>
+        <Caret Line="56" Column="39" TopLine="36"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\DIREXEC\Frm_DirExecMAIN.PAS"/>
+        <Caret Line="15" Column="13" TopLine="2"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\DIREX\Frm_DIRDLG.PAS"/>
+        <Caret Line="80" Column="25" TopLine="62"/>
+      </Position9>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

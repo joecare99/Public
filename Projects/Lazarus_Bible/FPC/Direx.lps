@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="6">
+      <Unit0>
+        <Filename Value="Direx.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos Y="20"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\DIREX\Frm_DirExMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="31" Y="21"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\DIREX\Frm_DIRDLG.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="DirDlgForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="51"/>
+        <CursorPos X="39" Y="58"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\Programme\lazarus\lcl\filectrl.pp"/>
+        <UnitName Value="FileCtrl"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\source\DIREX\Frm_DIRDLG.lfm"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+        <HasResources Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="4"/>
+        <CursorPos X="20" Y="21"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit5>
+    </Units>
+    <JumpHistory Count="10" HistoryIndex="9">
+      <Position1>
+        <Filename Value="..\source\DIREX\Frm_DIRDLG.PAS"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\DIREX\Frm_DIRDLG.PAS"/>
+        <Caret Line="24" Column="5" TopLine="3"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\DIREX\Frm_DIRDLG.PAS"/>
+        <Caret Line="16" Column="42" TopLine="12"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\DIREX\Frm_DIRDLG.PAS"/>
+        <Caret Line="24" Column="31" TopLine="7"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\DIREX\Frm_DIRDLG.PAS"/>
+        <Caret Line="27" Column="15" TopLine="8"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\DIREX\Frm_DIRDLG.PAS"/>
+        <Caret Line="80" Column="20" TopLine="51"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\DIREX\Frm_DirExMAIN.PAS"/>
+        <Caret Line="49" Column="24" TopLine="33"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\DIREX\Frm_DirExMAIN.PAS"/>
+        <Caret Line="50" Column="19" TopLine="33"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+        <Caret Line="21" Column="20" TopLine="21"/>
+      </Position10>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

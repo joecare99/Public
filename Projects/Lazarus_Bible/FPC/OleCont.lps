@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="3">
+      <Unit0>
+        <Filename Value="OleCont.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="18"/>
+        <CursorPos X="80" Y="27"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="C:\Programme\lazarus\fpc\2.6.4\source\packages\winunits-base\src\ole2.pp"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+    </Units>
+    <JumpHistory Count="3" HistoryIndex="2">
+      <Position1>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+        <Caret Line="13" Column="38" TopLine="3"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+        <Caret Line="11" Column="16" TopLine="3"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+        <Caret Line="21" Column="20" TopLine="21"/>
+      </Position3>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

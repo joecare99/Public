@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="3">
+      <Unit0>
+        <Filename Value="Constraint.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="40" Y="13"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\Constraint\frm_ConstraintMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="22"/>
+        <CursorPos X="3" Y="15"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\Constraint\frm_ConstraintMain.lfm"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="49" Y="14"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit2>
+    </Units>
+    <JumpHistory Count="3" HistoryIndex="2">
+      <Position1>
+        <Filename Value="..\source\Constraint\frm_ConstraintMain.pas"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\Constraint\frm_ConstraintMain.pas"/>
+        <Caret Line="21" Column="39" TopLine="13"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\Constraint\frm_ConstraintMain.pas"/>
+        <Caret Line="30" Column="20" TopLine="14"/>
+      </Position3>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

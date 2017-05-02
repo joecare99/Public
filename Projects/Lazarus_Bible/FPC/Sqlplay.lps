@@ -1,0 +1,244 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="14">
+      <Unit0>
+        <Filename Value="Sqlplay.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="51"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\SQLPLAY\Frm_SqlplayMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="55"/>
+        <CursorPos X="40" Y="77"/>
+        <UsageCount Value="51"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\SQLPLAY\Frm_SQLOPENDB.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="OpenForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="38"/>
+        <CursorPos X="29" Y="44"/>
+        <UsageCount Value="51"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\lazarus\fpc\2.6.4\source\packages\fcl-db\src\sqldb\sqldb.pp"/>
+        <TopLine Value="574"/>
+        <UsageCount Value="7"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\Components\Source\MySQLLib6\registersqldb_ext.pas"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="47"/>
+        <CursorPos X="13" Y="67"/>
+        <UsageCount Value="25"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysqlconn6.inc"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="1408"/>
+        <CursorPos X="45" Y="1424"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mariadbdyn.pas"/>
+        <EditorIndex Value="11"/>
+        <CursorPos X="44" Y="12"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysql6.inc"/>
+        <EditorIndex Value="12"/>
+        <TopLine Value="1825"/>
+        <CursorPos X="16" Y="79"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\graph\src\win32\graph.pp"/>
+        <UnitName Value="Graph"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="65" Y="8"/>
+        <UsageCount Value="18"/>
+        <Loaded Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\..\Components\Source\MySQLLib6\sqldb_ext.pas"/>
+        <EditorIndex Value="5"/>
+        <CursorPos Y="365"/>
+        <UsageCount Value="18"/>
+        <Loaded Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mariadbconn.pas"/>
+        <EditorIndex Value="9"/>
+        <CursorPos X="10" Y="9"/>
+        <UsageCount Value="18"/>
+        <Loaded Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysql6dyn.pas"/>
+        <EditorIndex Value="10"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="C:\lazarus\components\sqldb\registersqldb.pas"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="104"/>
+        <CursorPos X="23" Y="124"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="C:\lazarus\packager\registration\lazaruspackageintf.pas"/>
+        <UnitName Value="LazarusPackageIntf"/>
+        <EditorIndex Value="8"/>
+        <CursorPos X="24" Y="20"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit13>
+    </Units>
+    <JumpHistory Count="29" HistoryIndex="28">
+      <Position1>
+        <Filename Value="..\source\SQLPLAY\Frm_SQLOPENDB.PAS"/>
+        <Caret Line="52" Column="15" TopLine="28"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\SQLPLAY\Frm_SqlplayMAIN.PAS"/>
+        <Caret Line="52" Column="3" TopLine="33"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\SQLPLAY\Frm_SqlplayMAIN.PAS"/>
+        <Caret Line="51" Column="3" TopLine="32"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\SQLPLAY\Frm_SQLOPENDB.PAS"/>
+        <Caret Line="53" Column="15" TopLine="28"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\SQLPLAY\Frm_SQLOPENDB.PAS"/>
+        <Caret Line="55" Column="18" TopLine="28"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\SQLPLAY\Frm_SqlplayMAIN.PAS"/>
+        <Caret Line="55" Column="3" TopLine="36"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\SQLPLAY\Frm_SqlplayMAIN.PAS"/>
+        <Caret Line="52" Column="41" TopLine="51"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\SQLPLAY\Frm_SqlplayMAIN.PAS"/>
+        <Caret Line="51" Column="41" TopLine="50"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\SQLPLAY\Frm_SqlplayMAIN.PAS"/>
+        <Caret Line="52" Column="41" TopLine="51"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\source\SQLPLAY\Frm_SqlplayMAIN.PAS"/>
+        <Caret Line="59" Column="3" TopLine="42"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\..\Components\Source\MySQLLib6\registersqldb_ext.pas"/>
+        <Caret Line="41" Column="12" TopLine="11"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysqlconn6.inc"/>
+        <Caret Line="512" Column="16" TopLine="488"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysqlconn6.inc"/>
+        <Caret Line="533" Column="17" TopLine="509"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysqlconn6.inc"/>
+        <Caret Line="1440" Column="80" TopLine="1422"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysqlconn6.inc"/>
+        <Caret Line="88" Column="33" TopLine="72"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysqlconn6.inc"/>
+        <Caret Line="11" Column="50" TopLine="4"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysqlconn6.inc"/>
+        <Caret Line="551" Column="56" TopLine="535"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysqlconn6.inc"/>
+        <Caret Line="557" Column="7" TopLine="540"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysqlconn6.inc"/>
+        <Caret Line="583" Column="44" TopLine="570"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysqlconn6.inc"/>
+        <Caret Line="1367" Column="18" TopLine="1357"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysqlconn6.inc"/>
+        <Caret Line="582" Column="27" TopLine="567"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\..\Components\Source\MySQLLib6\registersqldb_ext.pas"/>
+        <Caret Line="41" Column="17" TopLine="20"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\..\Components\Source\MySQLLib6\registersqldb_ext.pas"/>
+        <Caret Line="37" Column="42" TopLine="16"/>
+      </Position23>
+      <Position24>
+        <Filename Value="C:\lazarus\components\sqldb\registersqldb.pas"/>
+        <Caret Line="538" Column="7" TopLine="521"/>
+      </Position24>
+      <Position25>
+        <Filename Value="..\..\Components\Source\MySQLLib6\registersqldb_ext.pas"/>
+        <Caret Line="47" Column="5" TopLine="16"/>
+      </Position25>
+      <Position26>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysqlconn6.inc"/>
+        <Caret Line="1429" Column="44" TopLine="1413"/>
+      </Position26>
+      <Position27>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysqlconn6.inc"/>
+        <Caret Line="554" Column="7" TopLine="538"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\..\Components\Source\MySQLLib6\mysqlconn6.inc"/>
+        <Caret Line="1367" Column="21" TopLine="1351"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\..\Components\Source\MySQLLib6\registersqldb_ext.pas"/>
+        <Caret Line="37" Column="47" TopLine="22"/>
+      </Position29>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

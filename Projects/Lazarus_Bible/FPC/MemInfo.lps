@@ -1,0 +1,141 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="5">
+      <Unit0>
+        <Filename Value="MemInfo.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos Y="17"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_MemInfoMain"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="44"/>
+        <CursorPos X="38" Y="59"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.lfm"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\Programme\lazarus\components\tachart\tacustomseries.pas"/>
+        <UnitName Value="TACustomSeries"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="166"/>
+        <CursorPos X="63" Y="186"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\Programme\lazarus\components\tachart\tachartutils.pas"/>
+        <UnitName Value="TAChartUtils"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="17"/>
+        <CursorPos X="12" Y="34"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
+    </Units>
+    <JumpHistory Count="20" HistoryIndex="19">
+      <Position1>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="5" Column="18"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="60" Column="15" TopLine="36"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="16" Column="20"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="48" Column="19" TopLine="33"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="58" Column="8" TopLine="37"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="68" Column="44" TopLine="37"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="13" Column="3"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="53" Column="23" TopLine="26"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="23" Column="20" TopLine="10"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="61" Column="51"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="60" Column="51" TopLine="33"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="64" Column="51" TopLine="37"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="65" Column="51" TopLine="38"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="64" Column="51" TopLine="37"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="65" Column="51" TopLine="38"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="66" Column="51" TopLine="39"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="67" Column="51" TopLine="40"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="68" Column="51" TopLine="41"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="69" Column="51" TopLine="42"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\source\MemInfo\frm_MemInfoMain.pas"/>
+        <Caret Line="70" Column="51" TopLine="43"/>
+      </Position20>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

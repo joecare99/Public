@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="4">
+      <Unit0>
+        <Filename Value="Splashin.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\SPLASHIN\Frm_SplashinMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="37"/>
+        <CursorPos X="63" Y="54"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\SPLASHIN\Frm_SPLASH.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="SplashForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="13" Y="15"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\objpas\sysutils\sysutilh.inc"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="10" Y="29"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit3>
+    </Units>
+    <JumpHistory Count="8" HistoryIndex="7">
+      <Position1>
+        <Filename Value="..\source\SPLASHIN\Frm_SPLASH.PAS"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\SPLASHIN\Frm_SplashinMAIN.PAS"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\SPLASHIN\Frm_SplashinMAIN.PAS"/>
+        <Caret Line="15" Column="13"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\SPLASHIN\Frm_SplashinMAIN.PAS"/>
+        <Caret Line="54" Column="22" TopLine="29"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\SPLASHIN\Frm_SplashinMAIN.PAS"/>
+        <Caret Line="55" Column="61" TopLine="29"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\SPLASHIN\Frm_SplashinMAIN.PAS"/>
+        <Caret Line="58" Column="71" TopLine="33"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\SPLASHIN\Frm_SplashinMAIN.PAS"/>
+        <Caret Line="63" Column="12" TopLine="33"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\SPLASHIN\Frm_SplashinMAIN.PAS"/>
+        <Caret Line="67" Column="70" TopLine="35"/>
+      </Position8>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

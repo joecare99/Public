@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Release1"/>
+    <Units Count="5">
+      <Unit0>
+        <Filename Value="Addpage.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="31" Y="9"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\Addpage\Frm_AddpageMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_AddpageMAIN"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos Y="3"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="C:\Programme\lazarus\lcl\comctrls.pp"/>
+        <TopLine Value="553"/>
+        <CursorPos X="18" Y="566"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\source\ADDPAGE\Frm_AddpageMAIN.lfm"/>
+        <CursorPos X="24" Y="25"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\lazarus\lcl\comctrls.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="549"/>
+        <CursorPos X="14" Y="566"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+    </Units>
+    <JumpHistory Count="5" HistoryIndex="4">
+      <Position1>
+        <Filename Value="Addpage.dpr"/>
+        <Caret Line="18" Column="25"/>
+      </Position1>
+      <Position2>
+        <Filename Value="Addpage.dpr"/>
+        <Caret Line="7" Column="18"/>
+      </Position2>
+      <Position3>
+        <Filename Value="Addpage.dpr"/>
+        <Caret Line="14" Column="3"/>
+      </Position3>
+      <Position4>
+        <Filename Value="Addpage.dpr"/>
+        <Caret Line="10" Column="40"/>
+      </Position4>
+      <Position5>
+        <Filename Value="Addpage.dpr"/>
+        <Caret Line="14" Column="3"/>
+      </Position5>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

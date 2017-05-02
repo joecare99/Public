@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Release11"/>
+    <Units Count="9">
+      <Unit0>
+        <Filename Value="Calc32_2.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="40" Y="19"/>
+        <UsageCount Value="37"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\Calc32\Frm_CALC2.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="CalcForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_CALC2"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="40" Y="5"/>
+        <UsageCount Value="37"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\Calc32\Frm_Calc2ABOUT.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AboutForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="21" Y="13"/>
+        <UsageCount Value="37"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\Program Files (x86)\laz4android\packager\registration\registerfcl.pas"/>
+        <UnitName Value="RegisterFCL"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="31"/>
+        <CursorPos X="22" Y="45"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\Program Files (x86)\laz4android\packager\registration\lazaruspackageintf.pas"/>
+        <UnitName Value="LazarusPackageIntf"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="13"/>
+        <CursorPos X="3" Y="27"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\Program Files (x86)\laz4android\lcl\interfacebase.pp"/>
+        <UnitName Value="InterfaceBase"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="43" Y="15"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="C:\Program Files (x86)\laz4android\lcl\interfaces\win32\win32wsdialogs.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="21"/>
+        <CursorPos X="69" Y="22"/>
+        <UsageCount Value="10"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="C:\Program Files (x86)\laz4android\components\debuggerintf\dbgintfdebuggerbase.pp"/>
+        <UnitName Value="DbgIntfDebuggerBase"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="25"/>
+        <CursorPos X="3" Y="39"/>
+        <UsageCount Value="10"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="C:\Program Files (x86)\laz4android\lcl\maps.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="882"/>
+        <CursorPos X="33" Y="12"/>
+        <UsageCount Value="10"/>
+      </Unit8>
+    </Units>
+    <JumpHistory Count="9" HistoryIndex="8">
+      <Position1>
+        <Filename Value="Calc32_2.dpr"/>
+      </Position1>
+      <Position2>
+        <Filename Value="Calc32_2.dpr"/>
+        <Caret Line="19" Column="40"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\CALC32\Frm_CALC2.PAS"/>
+        <Caret Line="24" Column="41"/>
+      </Position3>
+      <Position4>
+        <Filename Value="C:\Program Files (x86)\laz4android\packager\registration\lazaruspackageintf.pas"/>
+      </Position4>
+      <Position5>
+        <Filename Value="C:\Program Files (x86)\laz4android\packager\registration\registerfcl.pas"/>
+        <Caret Line="39" Column="31" TopLine="31"/>
+      </Position5>
+      <Position6>
+        <Filename Value="C:\Program Files (x86)\laz4android\lcl\interfacebase.pp"/>
+      </Position6>
+      <Position7>
+        <Filename Value="C:\Program Files (x86)\laz4android\lcl\interfacebase.pp"/>
+        <Caret Line="27" Column="57" TopLine="16"/>
+      </Position7>
+      <Position8>
+        <Filename Value="C:\Program Files (x86)\laz4android\lcl\interfacebase.pp"/>
+        <Caret Line="30" Column="58" TopLine="16"/>
+      </Position8>
+      <Position9>
+        <Filename Value="C:\Program Files (x86)\laz4android\lcl\interfacebase.pp"/>
+        <Caret Line="30" Column="60" TopLine="16"/>
+      </Position9>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

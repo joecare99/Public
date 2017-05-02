@@ -1,0 +1,145 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="5">
+      <Unit0>
+        <Filename Value="Dropfile.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="40" Y="15"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_DropFileMAIN"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="49"/>
+        <CursorPos X="20" Y="6"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="C:\Programme\lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="755"/>
+        <CursorPos X="19" Y="765"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\Programme\lazarus\lcl\controls.pp"/>
+        <UnitName Value="Controls"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="1860"/>
+        <CursorPos X="52" Y="1875"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\Programme\lazarus\fpc\2.6.4\source\packages\winunits-base\src\shellapi.pp"/>
+        <UnitName Value="ShellApi"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="1049"/>
+        <CursorPos X="10" Y="1066"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
+    </Units>
+    <JumpHistory Count="20" HistoryIndex="19">
+      <Position1>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="7" Column="13" TopLine="2"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="11" Column="30" TopLine="6"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="33" Column="44" TopLine="16"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="15" Column="35" TopLine="4"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="81" TopLine="49"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="88" Column="33" TopLine="65"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="99" TopLine="70"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="81" Column="29" TopLine="70"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="29" Column="15" TopLine="12"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="22" Column="23" TopLine="12"/>
+      </Position11>
+      <Position12>
+        <Filename Value="C:\Programme\lazarus\lcl\forms.pp"/>
+        <Caret Line="765" Column="19" TopLine="755"/>
+      </Position12>
+      <Position13>
+        <Filename Value="C:\Programme\lazarus\lcl\controls.pp"/>
+        <Caret Line="2109" Column="75" TopLine="2093"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="22" Column="23" TopLine="12"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="86" Column="8" TopLine="70"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="102" Column="9" TopLine="71"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="92" Column="41" TopLine="77"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="94" Column="35" TopLine="79"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="35" Column="5" TopLine="18"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\source\DROPFILE\Frm_DropFileMAIN.PAS"/>
+        <Caret Line="29" Column="80"/>
+      </Position20>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

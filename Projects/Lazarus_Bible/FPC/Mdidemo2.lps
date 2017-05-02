@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="5">
+      <Unit0>
+        <Filename Value="Mdidemo2.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos Y="20"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\Mdidemo2\Frm_MDIDemo2MAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_MDIDemo2MAIN"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="187"/>
+        <CursorPos X="41" Y="210"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\Mdidemo2\CHILD2.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <UnitName Value="CHILD2"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="3" Y="15"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\source\Mdidemo2\frm_MDIDemo2ABOUT.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AboutForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_MDIDemo2ABOUT"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="29"/>
+        <CursorPos X="9" Y="51"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\source\Mdidemo2\Childbmp.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <UnitName Value="Childbmp"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="42"/>
+        <CursorPos X="60" Y="52"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
+    </Units>
+    <JumpHistory Count="7" HistoryIndex="6">
+      <Position1>
+        <Filename Value="..\source\Mdidemo2\Frm_MDIDemo2MAIN.PAS"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\Mdidemo2\CHILD2.PAS"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\Mdidemo2\Childbmp.pas"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\Mdidemo2\frm_MDIDemo2ABOUT.PAS"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\Mdidemo2\Frm_MDIDemo2MAIN.PAS"/>
+        <Caret Line="171" Column="40" TopLine="154"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\Mdidemo2\frm_MDIDemo2ABOUT.PAS"/>
+        <Caret Line="13" Column="21"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\Mdidemo2\Frm_MDIDemo2MAIN.PAS"/>
+        <Caret Line="112" Column="41" TopLine="108"/>
+      </Position7>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

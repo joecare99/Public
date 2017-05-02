@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="2">
+      <Unit0>
+        <Filename Value="Sketch.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="15" Y="14"/>
+        <UsageCount Value="36"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\Sketch\Frm_SketchMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="17"/>
+        <CursorPos X="52" Y="30"/>
+        <UsageCount Value="36"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+    </Units>
+    <JumpHistory Count="5" HistoryIndex="4">
+      <Position1>
+        <Filename Value="..\source\SKETCH\Frm_SketchMAIN.PAS"/>
+        <Caret Line="18" Column="75"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\SKETCH\Frm_SketchMAIN.PAS"/>
+        <Caret Line="11" Column="12"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\SKETCH\Frm_SketchMAIN.PAS"/>
+        <Caret Line="26" Column="7" TopLine="13"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\SKETCH\Frm_SketchMAIN.PAS"/>
+        <Caret Line="30" Column="49" TopLine="17"/>
+      </Position4>
+      <Position5>
+        <Filename Value="Sketch.dpr"/>
+      </Position5>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

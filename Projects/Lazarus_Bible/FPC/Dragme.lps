@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="2">
+      <Unit0>
+        <Filename Value="Dragme.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos Y="18"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\DRAGME\Frm_DragMeMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_DragMeMAIN"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="12"/>
+        <CursorPos X="12" Y="29"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+    </Units>
+    <JumpHistory Count="3" HistoryIndex="2">
+      <Position1>
+        <Filename Value="..\source\DRAGME\Frm_DragMeMAIN.PAS"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\DRAGME\Frm_DragMeMAIN.PAS"/>
+        <Caret Line="16" Column="29"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\DRAGME\Frm_DragMeMAIN.PAS"/>
+        <Caret Line="29" Column="7" TopLine="12"/>
+      </Position3>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

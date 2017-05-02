@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="2">
+      <Unit0>
+        <Filename Value="PowerTest.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos Y="7"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\POWER\unt_powertest.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="unt_PowerTest"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="15"/>
+        <CursorPos X="53" Y="58"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+    </Units>
+    <JumpHistory Count="1">
+      <Position1>
+        <Filename Value="..\source\POWER\unt_powertest.pas"/>
+        <Caret Line="35" TopLine="18"/>
+      </Position1>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

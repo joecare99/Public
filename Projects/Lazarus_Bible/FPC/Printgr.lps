@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="2">
+      <Unit0>
+        <Filename Value="Printgr.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\PRINTGR\Frm_PrintgrMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="32" Y="8"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+    </Units>
+    <JumpHistory Count="4" HistoryIndex="3">
+      <Position1>
+        <Filename Value="..\source\PRINTGR\Frm_PrintgrMAIN.PAS"/>
+        <Caret Line="12" Column="15"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\PRINTGR\Frm_PrintgrMAIN.PAS"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\PRINTGR\Frm_PrintgrMAIN.PAS"/>
+        <Caret Line="11" Column="24"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\PRINTGR\Frm_PrintgrMAIN.PAS"/>
+        <Caret Line="16" Column="26" TopLine="8"/>
+      </Position4>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="8">
+      <Unit0>
+        <Filename Value="MayTemp.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="14" Y="10"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\MayTemp\Frm_MayMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="97"/>
+        <CursorPos X="68" Y="101"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\MayTemp\Frm_MayMain.lfm"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\Programme\lazarus\components\tachart\tacustomseries.pas"/>
+        <UnitName Value="TACustomSeries"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="173"/>
+        <CursorPos X="49" Y="184"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\Programme\lazarus\components\tachart\tachartutils.pas"/>
+        <UnitName Value="TAChartUtils"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="609"/>
+        <CursorPos X="37" Y="21"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\Programme\lazarus\components\tachart\tagraph.pas"/>
+        <UnitName Value="TAGraph"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="207"/>
+        <CursorPos X="10" Y="1820"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="C:\Programme\lazarus\components\tachart\tagraph.lrs"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="4"/>
+        <CursorPos X="40" Y="18"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit7>
+    </Units>
+    <JumpHistory Count="11" HistoryIndex="10">
+      <Position1>
+        <Filename Value="..\source\MayTemp\Frm_MayMain.pas"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\MayTemp\Frm_MayMain.pas"/>
+        <Caret Line="7" Column="42"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\MayTemp\Frm_MayMain.pas"/>
+        <Caret Line="18" Column="42"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\MayTemp\Frm_MayMain.pas"/>
+        <Caret Line="104" Column="69" TopLine="86"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\MayTemp\Frm_MayMain.pas"/>
+        <Caret Line="41" Column="33" TopLine="11"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\MayTemp\Frm_MayMain.pas"/>
+        <Caret Line="122" Column="7" TopLine="94"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\MayTemp\Frm_MayMain.pas"/>
+        <Caret Line="60" Column="23" TopLine="44"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\MayTemp\Frm_MayMain.pas"/>
+        <Caret Line="107" Column="15" TopLine="82"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\MayTemp\Frm_MayMain.pas"/>
+        <Caret Line="102" Column="66" TopLine="82"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\source\MayTemp\Frm_MayMain.pas"/>
+        <Caret Line="13" Column="51"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\source\MayTemp\Frm_MayMain.pas"/>
+        <Caret Line="82" Column="10" TopLine="54"/>
+      </Position11>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

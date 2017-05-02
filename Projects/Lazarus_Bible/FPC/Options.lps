@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="4">
+      <Unit0>
+        <Filename Value="Options.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="25" Y="18"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\OPTIONS\Frm_OptionsMain.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="49" Y="15"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\Inidata\Inidata.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="123"/>
+        <CursorPos X="90" Y="139"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\include\jedi.inc"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="53" Y="3"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+    </Units>
+    <JumpHistory Count="9" HistoryIndex="8">
+      <Position1>
+        <Filename Value="..\source\Inidata\Inidata.pas"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\Inidata\Inidata.pas"/>
+        <Caret Line="129" Column="53"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\Inidata\Inidata.pas"/>
+        <Caret Line="125" Column="56" TopLine="105"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\Inidata\Inidata.pas"/>
+        <Caret Line="143" Column="45" TopLine="124"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\Inidata\Inidata.pas"/>
+        <Caret Line="18" Column="9"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\Inidata\Inidata.pas"/>
+        <Caret Line="140" Column="57" TopLine="124"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\Inidata\Inidata.pas"/>
+        <Caret Line="176" Column="47" TopLine="157"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\Inidata\Inidata.pas"/>
+        <Caret Line="140" Column="105" TopLine="124"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\Inidata\Inidata.pas"/>
+        <Caret Line="173" Column="89" TopLine="157"/>
+      </Position9>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

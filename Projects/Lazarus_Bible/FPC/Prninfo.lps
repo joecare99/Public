@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Default"/>
+    <Units Count="5">
+      <Unit0>
+        <Filename Value="Prninfo.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\PRNINFO\Frm_PrnInfoMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="3"/>
+        <CursorPos X="27" Y="16"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\rtl-extra\src\win\printer.pp"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="9" Y="19"/>
+        <UsageCount Value="10"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\rtl-extra\src\inc\printerh.inc"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\lazarus\lcl\printers.pas"/>
+        <UnitName Value="Printers"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="45" Y="21"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit4>
+    </Units>
+    <JumpHistory Count="7" HistoryIndex="6">
+      <Position1>
+        <Filename Value="..\source\PRNINFO\Frm_PrnInfoMAIN.PAS"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\PRNINFO\Frm_PrnInfoMAIN.PAS"/>
+        <Caret Line="43" Column="16" TopLine="26"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\PRNINFO\Frm_PrnInfoMAIN.PAS"/>
+        <Caret Line="48" Column="12" TopLine="31"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\PRNINFO\Frm_PrnInfoMAIN.PAS"/>
+        <Caret Line="49" Column="15" TopLine="32"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\PRNINFO\Frm_PrnInfoMAIN.PAS"/>
+        <Caret Line="15" Column="13" TopLine="4"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\PRNINFO\Frm_PrnInfoMAIN.PAS"/>
+        <Caret Line="11" Column="13" TopLine="7"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\PRNINFO\Frm_PrnInfoMAIN.PAS"/>
+        <Caret Line="38" Column="11" TopLine="31"/>
+      </Position7>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

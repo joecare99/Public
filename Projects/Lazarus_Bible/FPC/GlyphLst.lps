@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Release"/>
+    <Units Count="4">
+      <Unit0>
+        <Filename Value="GlyphLst.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="34" Y="14"/>
+        <UsageCount Value="41"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_GlyphListMain"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="134"/>
+        <CursorPos X="75" Y="147"/>
+        <UsageCount Value="41"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="C:\lazarus\lcl\graphics.pp"/>
+        <UnitName Value="Graphics"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="1144"/>
+        <CursorPos X="15" Y="1155"/>
+        <UsageCount Value="19"/>
+        <Loaded Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="47"/>
+        <CursorPos X="41" Y="64"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit3>
+    </Units>
+    <JumpHistory Count="11" HistoryIndex="10">
+      <Position1>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <Caret Line="100" Column="46" TopLine="78"/>
+      </Position1>
+      <Position2>
+        <Filename Value="GlyphLst.dpr"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <Caret Line="93" Column="3" TopLine="86"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <Caret Line="119" Column="27" TopLine="110"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <Caret Line="130" Column="9" TopLine="130"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <Caret Line="129" Column="9" TopLine="129"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <Caret Line="166" Column="33" TopLine="151"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <Caret Line="160" Column="72" TopLine="143"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <Caret Line="27" Column="46" TopLine="10"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <Caret Line="29" Column="25" TopLine="12"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <Caret Line="144" Column="65" TopLine="134"/>
+      </Position11>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

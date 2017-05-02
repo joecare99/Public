@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Release"/>
+    <Units Count="3">
+      <Unit0>
+        <Filename Value="TestCDlg.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos Y="19"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\COLORDLG\COLORDLG.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="ColorDlgForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="COLORDLG"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="25" Y="2"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\COLORDLG\Frm_TestCdlgMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_TestCdlgMAIN"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="29" Y="9"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+    </Units>
+    <JumpHistory Count="9" HistoryIndex="8">
+      <Position1>
+        <Filename Value="..\source\COLORDLG\COLORDLG.PAS"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\COLORDLG\Frm_TestCdlgMAIN.PAS"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\COLORDLG\Frm_TestCdlgMAIN.PAS"/>
+        <Caret Line="13" Column="21"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\COLORDLG\Frm_TestCdlgMAIN.PAS"/>
+        <Caret Line="12" Column="40"/>
+      </Position4>
+      <Position5>
+        <Filename Value="TestCDlg.dpr"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\COLORDLG\COLORDLG.PAS"/>
+        <Caret Line="59" Column="56" TopLine="44"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\COLORDLG\COLORDLG.PAS"/>
+        <Caret Line="20" Column="39"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\COLORDLG\Frm_TestCdlgMAIN.PAS"/>
+        <Caret Line="15" Column="13"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\COLORDLG\COLORDLG.PAS"/>
+        <Caret Line="7" Column="23"/>
+      </Position9>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

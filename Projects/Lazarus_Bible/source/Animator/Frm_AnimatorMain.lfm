@@ -1,0 +1,127 @@
+object MainForm: TMainForm
+  Left = 203
+  Height = 248
+  Top = 126
+  Width = 582
+  Caption = 'Animator Demonstration'
+  ClientHeight = 248
+  ClientWidth = 582
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnCreate = FormCreate
+  LCLVersion = '1.2.6.0'
+  object Label1: TLabel
+    Left = 384
+    Height = 24
+    Top = 136
+    Width = 139
+    Caption = 'Animation Status'
+    Font.Color = clWindowText
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    ParentColor = False
+    ParentFont = False
+  end
+  object RadioGroup1: TRadioGroup
+    Left = 8
+    Height = 209
+    Top = 24
+    Width = 185
+    AutoFill = True
+    Caption = 'Choose Animation '
+    ChildSizing.LeftRightSpacing = 6
+    ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+    ChildSizing.EnlargeVertical = crsHomogenousChildResize
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 1
+    ClientHeight = 191
+    ClientWidth = 181
+    ItemIndex = 0
+    Items.Strings = (
+      'aviCopyFile'
+      'aviCopyFiles'
+      'aviDeleteFile'
+      'aviEmptyRecycle'
+      'aviFindComputer'
+      'aviFindFile'
+      'aviFindFolder'
+      'aviRecycleFile'
+    )
+    OnClick = GoBitBtnClick
+    TabOrder = 0
+  end
+  object GoBitBtn: TBitBtn
+    Left = 240
+    Height = 25
+    Top = 121
+    Width = 75
+    Caption = 'Go   '
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000120B0000120B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      3333333333FFFFF3333333333000003333333333F777773FF333333008877700
+      33333337733FFF773F33330887000777033333733F777FFF73F330880FAFAF07
+      703337F37733377FF7F33080F00000F07033373733777337F73F087F00A2200F
+      77037F3737333737FF7F080A0A2A220A07037F737F3333737F7F0F0F0AAAA20F
+      07037F737F3333737F7F0F0A0FAA2A0A08037F737FF33373737F0F7F00FFA00F
+      780373F737FFF737F3733080F00000F0803337F73377733737F330F80FAFAF08
+      8033373F773337733733330F8700078803333373FF77733F733333300FFF8800
+      3333333773FFFF77333333333000003333333333377777333333
+    }
+    NumGlyphs = 2
+    OnClick = GoBitBtnClick
+    TabOrder = 1
+  end
+  object StopBitBtn: TBitBtn
+    Left = 240
+    Height = 25
+    Top = 152
+    Width = 75
+    Caption = 'Stop '
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000120B0000120B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      3333333333FFFFF3333333333000003333333333F777773FF333333008877700
+      33333337733FFF773F33330887000777033333733F777FFF73F330880F9F9F07
+      703337F37733377FF7F33080F00000F07033373733777337F73F087F0091100F
+      77037F3737333737FF7F08090919110907037F737F3333737F7F0F0F0999910F
+      07037F737F3333737F7F0F090F99190908037F737FF33373737F0F7F00FF900F
+      780373F737FFF737F3733080F00000F0803337F73377733737F330F80F9F9F08
+      8033373F773337733733330F8700078803333373FF77733F733333300FFF8800
+      3333333773FFFF77333333333000003333333333377777333333
+    }
+    NumGlyphs = 2
+    OnClick = StopBitBtnClick
+    TabOrder = 2
+  end
+  object BitBtn1: TBitBtn
+    Left = 240
+    Height = 25
+    Top = 192
+    Width = 75
+    Kind = bkClose
+    TabOrder = 4
+  end
+  object StatusText: TStaticText
+    Left = 344
+    Height = 49
+    Top = 168
+    Width = 225
+    Alignment = taCenter
+    BorderStyle = sbsSunken
+    Caption = '(stopped)'
+    Font.Color = clPurple
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    ParentFont = False
+    TabOrder = 3
+  end
+end

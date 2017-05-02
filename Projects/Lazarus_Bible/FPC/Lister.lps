@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="3">
+      <Unit0>
+        <Filename Value="Lister.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos Y="17"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\LISTER\Frm_ListerMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ListerMAIN"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="71"/>
+        <CursorPos Y="91"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="C:\lazarus\lcl\printers.pas"/>
+        <UnitName Value="Printers"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="514"/>
+        <CursorPos X="23" Y="483"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit2>
+    </Units>
+    <JumpHistory Count="8" HistoryIndex="7">
+      <Position1>
+        <Filename Value="..\source\LISTER\Frm_ListerMAIN.PAS"/>
+        <Caret Line="12" Column="32"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\LISTER\Frm_ListerMAIN.PAS"/>
+        <Caret Line="14" Column="58" TopLine="4"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\LISTER\Frm_ListerMAIN.PAS"/>
+        <Caret Line="66" Column="9" TopLine="49"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\LISTER\Frm_ListerMAIN.PAS"/>
+        <Caret Line="11" Column="40"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\LISTER\Frm_ListerMAIN.PAS"/>
+        <Caret Line="11" Column="40"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\LISTER\Frm_ListerMAIN.PAS"/>
+        <Caret Line="89" Column="36" TopLine="62"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\LISTER\Frm_ListerMAIN.PAS"/>
+        <Caret Line="10" Column="12"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\LISTER\Frm_ListerMAIN.PAS"/>
+        <Caret Line="90" Column="22" TopLine="71"/>
+      </Position8>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Release"/>
+    <Units Count="2">
+      <Unit0>
+        <Filename Value="Capslock2.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos Y="19"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\Capslock\Frm_Capslock2MAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_Capslock2MAIN"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="7"/>
+        <CursorPos X="28" Y="8"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+    </Units>
+    <JumpHistory Count="5" HistoryIndex="4">
+      <Position1>
+        <Filename Value="..\source\CAPSLOCK\Frm_Capslock2MAIN.PAS"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\CAPSLOCK\Frm_Capslock2MAIN.PAS"/>
+        <Caret Line="41" Column="26" TopLine="32"/>
+      </Position2>
+      <Position3>
+        <Filename Value="Capslock2.dpr"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\Capslock\Frm_Capslock2MAIN.PAS"/>
+        <Caret Line="40" Column="38" TopLine="32"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\Capslock\Frm_Capslock2MAIN.PAS"/>
+        <Caret Line="24" Column="48" TopLine="7"/>
+      </Position5>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

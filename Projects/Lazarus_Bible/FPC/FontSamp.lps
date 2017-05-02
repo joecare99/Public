@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Release"/>
+    <Units Count="5">
+      <Unit0>
+        <Filename Value="FontSamp.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="40" Y="11"/>
+        <UsageCount Value="30"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\FontSamp\frm_fontsampMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="58"/>
+        <CursorPos X="13" Y="68"/>
+        <UsageCount Value="30"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\FontSamp\Frm_fontSampABOUT.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="33" Y="9"/>
+        <UsageCount Value="30"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\source\FontSamp\PREVIEW.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="PreviewForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="124"/>
+        <CursorPos X="47" Y="5"/>
+        <UsageCount Value="30"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\source\FontSamp\DRAWPAGE.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="2"/>
+        <CursorPos X="51" Y="25"/>
+        <UsageCount Value="30"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
+    </Units>
+    <JumpHistory Count="15" HistoryIndex="14">
+      <Position1>
+        <Filename Value="..\source\FONTSAMP\frm_fontsampMAIN.PAS"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\FONTSAMP\Frm_fontSampABOUT.PAS"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\FONTSAMP\frm_fontsampMAIN.PAS"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\FONTSAMP\Frm_fontSampABOUT.PAS"/>
+        <Caret Line="23" Column="47"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\FONTSAMP\frm_fontsampMAIN.PAS"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\FONTSAMP\Frm_fontSampABOUT.PAS"/>
+        <Caret Line="12" Column="18"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\FONTSAMP\frm_fontsampMAIN.PAS"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\FONTSAMP\frm_fontsampMAIN.PAS"/>
+        <Caret Line="12" Column="34" TopLine="9"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\FONTSAMP\PREVIEW.PAS"/>
+        <Caret Line="5" Column="57"/>
+      </Position9>
+      <Position10>
+        <Filename Value="Fontsamp.dpr"/>
+      </Position10>
+      <Position11>
+        <Filename Value="Fontsamp.dpr"/>
+        <Caret Line="17" Column="2"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\source\FONTSAMP\DRAWPAGE.PAS"/>
+        <Caret Line="147" Column="33" TopLine="127"/>
+      </Position12>
+      <Position13>
+        <Filename Value="Fontsamp.dpr"/>
+        <Caret Line="17" Column="2"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\source\FONTSAMP\DRAWPAGE.PAS"/>
+        <Caret Line="138" TopLine="127"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\source\FontSamp\DRAWPAGE.PAS"/>
+        <Caret Line="18" Column="8"/>
+      </Position15>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

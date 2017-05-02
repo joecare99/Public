@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="9">
+      <Unit0>
+        <Filename Value="BarTest.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos Y="20"/>
+        <UsageCount Value="62"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\Barchart\Frm_BartestMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmBarChartMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="24"/>
+        <CursorPos X="22" Y="51"/>
+        <UsageCount Value="62"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\BARCHART\Frm_BartestMain.lfm"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="5"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\Programme\lazarus\components\tachart\tagraph.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="346"/>
+        <UsageCount Value="5"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\Idee\Grafik\Win32Crt.pas"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="18"/>
+        <CursorPos X="19" Y="35"/>
+        <UsageCount Value="31"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\Programme\lazarus\fpc\2.6.4\source\rtl\win\wininc\struct.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1040"/>
+        <CursorPos Y="1053"/>
+        <UsageCount Value="21"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="Calc32_2.dpr"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="10" Y="12"/>
+        <UsageCount Value="18"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\source\DDECOLOR\Frm_CLIMAIN.PAS"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="9"/>
+        <CursorPos X="45" Y="14"/>
+        <UsageCount Value="18"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\source\DDE1\Frm_CLIENT.PAS"/>
+        <HasResources Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="9"/>
+        <CursorPos X="21" Y="20"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit8>
+    </Units>
+    <JumpHistory Count="17" HistoryIndex="16">
+      <Position1>
+        <Filename Value="..\source\BARCHART\Frm_BartestMain.pas"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\BARCHART\Frm_BartestMain.pas"/>
+        <Caret Line="11" Column="33"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\BARCHART\Frm_BartestMain.pas"/>
+        <Caret Line="13" Column="2" TopLine="8"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\BARCHART\Frm_BartestMain.pas"/>
+        <Caret Line="45" Column="46" TopLine="40"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\BARCHART\Frm_BartestMain.pas"/>
+        <Caret Line="46" Column="22" TopLine="40"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\BARCHART\Frm_BartestMain.pas"/>
+        <Caret Line="50" Column="22" TopLine="44"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\BARCHART\Frm_BartestMain.pas"/>
+        <Caret Line="51" Column="22" TopLine="45"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\BARCHART\Frm_BartestMain.pas"/>
+        <Caret Line="50" Column="22" TopLine="44"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\BARCHART\Frm_BartestMain.pas"/>
+        <Caret Line="49" Column="22" TopLine="10"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\source\BARCHART\Frm_BartestMain.pas"/>
+        <Caret Line="50" Column="22" TopLine="23"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\..\Idee\Grafik\Win32Crt.pas"/>
+        <Caret Line="296" Column="33" TopLine="267"/>
+      </Position11>
+      <Position12>
+        <Filename Value="Calc32_2.dpr"/>
+      </Position12>
+      <Position13>
+        <Filename Value="Calc32_2.dpr"/>
+        <Caret Line="12" Column="10"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\source\DDECOLOR\Frm_CLIMAIN.PAS"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\source\DDECOLOR\Frm_CLIMAIN.PAS"/>
+        <Caret Line="21" Column="21" TopLine="21"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\source\DDE1\Frm_CLIENT.PAS"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\source\DDE1\Frm_CLIENT.PAS"/>
+        <Caret Line="21" Column="21" TopLine="21"/>
+      </Position17>
+    </JumpHistory>
+  </ProjectSession>
+  <Debugging>
+    <BreakPoints Count="1">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\source\BARCHART\Frm_BartestMain.pas"/>
+        <Line Value="54"/>
+      </Item1>
+    </BreakPoints>
+  </Debugging>
+</CONFIG>
