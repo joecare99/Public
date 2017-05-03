@@ -36,7 +36,7 @@ implementation
 {$ENDIF}
 procedure TfrmAboutMain.btnClickMeClick(Sender: TObject);
 begin
-  AboutForm.ShowModal;
+  frmAbout.ShowModal;
 end;
 
 end.

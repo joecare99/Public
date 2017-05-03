@@ -1,0 +1,40 @@
+object MainForm: TMainForm
+  Left = 305
+  Top = 220
+  Caption = 'Exception Instance'
+  ClientHeight = 155
+  ClientWidth = 262
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  PixelsPerInch = 96
+  object Button1: TButton
+    Left = 24
+    Top = 16
+    Width = 177
+    Height = 81
+    Caption = 'Click me'
+    TabOrder = 0
+    OnClick = Button1Click
+  end
+  object ScrollBar1: TScrollBar
+    Left = 24
+    Top = 120
+    Width = 177
+    Height = 17
+    PageSize = 0
+    TabOrder = 1
+  end
+  object ScrollBar2: TScrollBar
+    Left = 228
+    Top = 16
+    Width = 13
+    Height = 121
+    Kind = sbVertical
+    PageSize = 0
+    TabOrder = 2
+  end
+end

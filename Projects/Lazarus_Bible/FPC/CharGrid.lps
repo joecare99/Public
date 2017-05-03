@@ -4,11 +4,11 @@
     <PathDelim Value="\"/>
     <Version Value="10"/>
     <BuildModes Active="Default"/>
-    <Units Count="5">
+    <Units Count="9">
       <Unit0>
         <Filename Value="CharGrid.dpr"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="58"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\source\CharGrid\Frm_CharGridMAIN.PAS"/>
@@ -16,10 +16,9 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="77"/>
-        <CursorPos X="58" Y="89"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="76"/>
+        <CursorPos X="94" Y="101"/>
+        <UsageCount Value="58"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -30,26 +29,65 @@
         <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="58"/>
       </Unit2>
       <Unit3>
         <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\inc\ustringh.inc"/>
         <EditorIndex Value="1"/>
         <TopLine Value="101"/>
         <CursorPos X="15" Y="136"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
         <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\inc\ustrings.inc"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="1225"/>
         <CursorPos X="20" Y="2066"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="..\source\DDECOLOR\Frm_CLIMAIN.PAS"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="21" Y="20"/>
+        <UsageCount Value="6"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="79" Y="22"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\source\DingX\DingButtonXControl_TLB.pas"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="153"/>
+        <CursorPos X="24" Y="180"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\source\EXWIN\unt_Exwin.pas"/>
+        <UnitName Value="unt_ExWin"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="2" Y="22"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit8>
     </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
+    <JumpHistory Count="5" HistoryIndex="4">
       <Position1>
         <Filename Value="..\source\CharGrid\Frm_CharGridMAIN.PAS"/>
         <Caret Line="89" Column="46" TopLine="77"/>
@@ -58,6 +96,15 @@
         <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\inc\ustrings.inc"/>
         <Caret Line="2114" Column="21" TopLine="2107"/>
       </Position2>
+      <Position3>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\DingX\DingButtonXControl_TLB.pas"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\EXWIN\unt_Exwin.pas"/>
+      </Position5>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

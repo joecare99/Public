@@ -13,7 +13,7 @@ uses
   LCLIntf, LCLType,
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ComCtrls, ToolWin, StdCtrls, Buttons, ImgList, System.ImageList;
+  ComCtrls, ToolWin, StdCtrls, Buttons, ImgList;
 
 type
   TMainForm = class(TForm)

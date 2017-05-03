@@ -11,7 +11,8 @@ object MainForm: TMainForm
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnShow = FormShow
-  LCLVersion = '1.4.0.4'
+  LCLVersion = '1.6.4.0'
+  Visible = False
   object CoolBar1: TCoolBar
     Left = 0
     Height = 106

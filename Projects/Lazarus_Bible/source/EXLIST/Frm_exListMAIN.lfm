@@ -1,0 +1,59 @@
+object MainForm: TMainForm
+  Left = 201
+  Top = 98
+  Caption = 'Default Exception Handler'
+  ClientHeight = 231
+  ClientWidth = 487
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clBlack
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  Position = poScreenCenter
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  object ListBox1: TListBox
+    Left = 16
+    Top = 24
+    Width = 353
+    Height = 185
+    ItemHeight = 13
+    TabOrder = 0
+  end
+  object Button1: TButton
+    Left = 384
+    Top = 24
+    Width = 89
+    Height = 33
+    Caption = 'Exception 1'
+    TabOrder = 1
+    OnClick = Button1Click
+  end
+  object Button2: TButton
+    Left = 384
+    Top = 72
+    Width = 89
+    Height = 33
+    Caption = 'Exception 2'
+    TabOrder = 2
+    OnClick = Button2Click
+  end
+  object Button3: TButton
+    Left = 384
+    Top = 120
+    Width = 89
+    Height = 33
+    Caption = 'Exception 3'
+    TabOrder = 3
+    OnClick = Button3Click
+  end
+  object BitBtn1: TBitBtn
+    Left = 384
+    Top = 176
+    Width = 89
+    Height = 33
+    TabOrder = 4
+    Kind = bkClose
+  end
+end

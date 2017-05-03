@@ -1,0 +1,13 @@
+object MainForm: TMainForm
+  Left = 224
+  Height = 174
+  Top = 145
+  Width = 437
+  Caption = 'Data Module Test'
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Menu = DataModule1.MainMenu1
+  LCLVersion = '1.2.6.0'
+end

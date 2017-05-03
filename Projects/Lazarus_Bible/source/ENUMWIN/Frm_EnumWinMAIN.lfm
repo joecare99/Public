@@ -1,0 +1,50 @@
+object MainForm: TMainForm
+  Left = 200
+  Height = 273
+  Top = 99
+  Width = 427
+  Caption = 'Enumerate Window Titles'
+  ClientHeight = 273
+  ClientWidth = 427
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  LCLVersion = '1.4.0.4'
+  object Label1: TLabel
+    Left = 40
+    Height = 16
+    Top = 24
+    Width = 77
+    Caption = 'Window titles'
+    Font.Color = clBtnText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    ParentColor = False
+    ParentFont = False
+  end
+  object ListBox1: TListBox
+    Left = 40
+    Height = 217
+    Top = 40
+    Width = 241
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'Tahoma'
+    ItemHeight = 0
+    ParentFont = False
+    Sorted = True
+    TabOrder = 0
+  end
+  object BitBtn1: TBitBtn
+    Left = 312
+    Height = 33
+    Top = 224
+    Width = 89
+    Anchors = [akRight, akBottom]
+    Kind = bkClose
+    TabOrder = 1
+  end
+end

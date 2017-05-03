@@ -82,7 +82,7 @@ begin
   FileListBox.Drive := DriveComboBox.text[1];
   FileListBox.Directory := DirectoryListBox.Path;
   {$ELSE}
-  DirectoryListBox.Drive := DriveComboBox.;
+  DirectoryListBox.Drive := DriveComboBox.Text[1];
   FileListBox.Drive := DriveComboBox.Drive;
   FileListBox.Directory := DirectoryListBox.Directory;
   {$ENDIF}

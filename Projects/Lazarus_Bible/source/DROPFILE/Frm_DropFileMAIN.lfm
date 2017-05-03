@@ -1,0 +1,59 @@
+object MainForm: TMainForm
+  Left = 201
+  Height = 290
+  Top = 100
+  Width = 463
+  AllowDropFiles = True
+  Caption = 'Drag and Drop File Demonstration'
+  ClientHeight = 290
+  ClientWidth = 463
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnDropFiles = FormDropFiles
+  LCLVersion = '1.4.0.4'
+  object Label1: TLabel
+    Left = 328
+    Height = 121
+    Top = 40
+    Width = 121
+    AutoSize = False
+    Caption = 'Drag and drop files from the Windows Explorer to the Memo window.'
+    ParentColor = False
+    WordWrap = True
+  end
+  object FileNameLabel: TLabel
+    Left = 24
+    Height = 16
+    Top = 8
+    Width = 56
+    Caption = '[untitled]'
+    ParentColor = False
+  end
+  object Memo1: TMemo
+    Left = 24
+    Height = 225
+    Top = 32
+    Width = 289
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Courier New'
+    Lines.Strings = (
+      'Memo1'
+    )
+    ParentFont = False
+    TabOrder = 0
+    WordWrap = False
+  end
+  object BitBtn1: TBitBtn
+    Left = 328
+    Height = 33
+    Top = 224
+    Width = 89
+    Kind = bkClose
+    TabOrder = 1
+  end
+end

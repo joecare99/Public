@@ -1,0 +1,39 @@
+object MainForm: TMainForm
+  Left = 214
+  Top = 139
+  Caption = 'Enumerate Fonts'
+  ClientHeight = 278
+  ClientWidth = 422
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  object Label1: TLabel
+    Left = 24
+    Top = 8
+    Width = 80
+    Height = 16
+    Caption = 'Font names:'
+  end
+  object ListBox1: TListBox
+    Left = 24
+    Top = 24
+    Width = 273
+    Height = 233
+    ItemHeight = 16
+    Sorted = True
+    TabOrder = 0
+  end
+  object BitBtn1: TBitBtn
+    Left = 320
+    Top = 224
+    Width = 89
+    Height = 33
+    TabOrder = 1
+    Kind = bkClose
+  end
+end

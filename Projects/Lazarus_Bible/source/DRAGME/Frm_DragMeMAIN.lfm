@@ -1,0 +1,55 @@
+object MainForm: TMainForm
+  Left = 205
+  Height = 173
+  Top = 134
+  Width = 307
+  Caption = 'Drag and Drop Graphics'
+  ClientHeight = 173
+  ClientWidth = 307
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  OnCreate = FormCreate
+  LCLVersion = '1.4.0.4'
+  object Shape1: TShape
+    Left = 208
+    Height = 65
+    Top = 24
+    Width = 65
+    Brush.Color = clBlue
+    OnMouseDown = ShapeMouseDown
+    OnMouseMove = ShapeMouseMove
+    OnMouseUp = ShapeMouseUp
+  end
+  object Shape2: TShape
+    Left = 128
+    Height = 65
+    Top = 24
+    Width = 65
+    Brush.Color = clRed
+    OnMouseDown = ShapeMouseDown
+    OnMouseMove = ShapeMouseMove
+    OnMouseUp = ShapeMouseUp
+    Shape = stCircle
+  end
+  object Shape3: TShape
+    Left = 40
+    Height = 65
+    Top = 24
+    Width = 65
+    Brush.Color = clYellow
+    OnMouseDown = ShapeMouseDown
+    OnMouseMove = ShapeMouseMove
+    OnMouseUp = ShapeMouseUp
+    Shape = stRoundRect
+  end
+  object BitBtn1: TBitBtn
+    Left = 208
+    Height = 33
+    Top = 120
+    Width = 89
+    Kind = bkClose
+    TabOrder = 0
+  end
+end
