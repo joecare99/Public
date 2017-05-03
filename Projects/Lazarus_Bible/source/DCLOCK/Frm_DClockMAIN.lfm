@@ -1,0 +1,35 @@
+object MainForm: TMainForm
+  Left = 200
+  Top = 99
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsSingle
+  Caption = 'Digital Clock'
+  ClientHeight = 98
+  ClientWidth = 282
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  PixelsPerInch = 96
+  object TimeLabel: TLabel
+    Left = 40
+    Top = 32
+    Width = 209
+    Height = 36
+    Caption = '00:00:00 AM'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -32
+    Font.Name = 'Courier New'
+    Font.Style = [fsBold]
+    ParentFont = False
+    Transparent = True
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 8
+    Top = 8
+  end
+end

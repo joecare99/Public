@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -14,6 +14,7 @@
       <Title Value="Calc32"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -204,12 +205,13 @@
         <ComponentName Value="CalcForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_CALC"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\source\Calc32\Frm_CalcABOUT.pas"/>
+        <Filename Value="..\source\Calc32\Frm_CalcABOUT.PAS"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit2>
     </Units>
   </ProjectOptions>

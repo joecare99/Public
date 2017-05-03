@@ -1,0 +1,48 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{ab1dda8c-8d36-476d-9c27-6586eb9514e2}</ProjectGuid>
+    <MainSource>Filemenu.dpr</MainSource>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+    <Basis>True</Basis>
+  </PropertyGroup>
+  		<PropertyGroup Condition="'$(Config)'=='Basis' or '$(Base)'!=''">
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Release' or '$(Cfg_1)'!=''">
+			<Cfg_1>true</Cfg_1>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
+			<Cfg_2>true</Cfg_2>
+			<CfgParent>Base</CfgParent>
+			<Base>true</Base>
+		</PropertyGroup>
+		<Import Project="default.optset" Condition="'$(Base)'!='' And Exists('default.optset')"/>
+		<PropertyGroup Condition="'$(Base)'!=''">
+			<DCC_DependencyCheckOutputName>..\bin\ConsSysMen.exe</DCC_DependencyCheckOutputName>
+			<Version>7.0</Version>
+			<CfgDependentOn>default.optset</CfgDependentOn>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1)'!=''">
+			<DCC_DebugInformation>False</DCC_DebugInformation>
+			<DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+			<DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_2)'!=''">
+			<DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
+		</PropertyGroup>
+
+  <Import Project="$(MSBuildBinPath)\Borland.Delphi.Targets" />
+  <ItemGroup>
+    <DelphiCompile Include="Filemenu.dpr">
+      <MainSource>MainSource</MainSource>
+    </DelphiCompile>
+    <DCCReference Include="..\Frm_FileMenuMAIN.PAS">
+      <Form>MainForm</Form>
+    </DCCReference>
+  </ItemGroup>
+</Project>

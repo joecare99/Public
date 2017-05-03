@@ -1,0 +1,50 @@
+object ClientForm: TClientForm
+  Left = 328
+  Top = 385
+  Caption = 'Client1'
+  ClientHeight = 143
+  ClientWidth = 486
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  object Edit1: TEdit
+    Left = 16
+    Top = 24
+    Width = 353
+    Height = 24
+    TabOrder = 0
+    Text = 'Edit1'
+  end
+  object BitBtn1: TBitBtn
+    Left = 280
+    Top = 64
+    Width = 89
+    Height = 33
+    Kind = bkClose
+    NumGlyphs = 2
+    TabOrder = 1
+  end
+  object DdeClientItem1: TDdeClientItem
+    DdeConv = DdeClientConv1
+    OnChange = DdeClientItem1Change
+    Left = 136
+    Top = 56
+  end
+  object DdeClientConv1: TDdeClientConv
+    DdeService = 'server1'
+    DdeTopic = 'server1'
+    OnClose = DdeClientConv1Close
+    OnOpen = DdeClientConv1Open
+    Left = 56
+    Top = 56
+    LinkInfo = (
+      'Service server1'
+      'Topic server1'
+    )
+  end
+end

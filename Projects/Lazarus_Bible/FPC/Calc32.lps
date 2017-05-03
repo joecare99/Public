@@ -2,15 +2,14 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <BuildModes Active="Release"/>
     <Units Count="4">
       <Unit0>
         <Filename Value="Calc32.dpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <CursorPos X="29" Y="8"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
@@ -20,33 +19,136 @@
         <ComponentName Value="CalcForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_CALC"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <CursorPos X="3" Y="13"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="432"/>
+        <CursorPos X="71" Y="293"/>
+        <UsageCount Value="23"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\source\Calc32\Frm_CalcABOUT.pas"/>
+        <Filename Value="..\source\Calc32\Frm_CalcABOUT.PAS"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="21" Y="13"/>
-        <UsageCount Value="23"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="8"/>
+        <CursorPos X="3" Y="57"/>
+        <UsageCount Value="26"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\source\Calc2\Frm_CalcABOUT.pas"/>
         <HasResources Value="True"/>
         <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
     </Units>
-    <JumpHistory Count="1">
+    <JumpHistory Count="25" HistoryIndex="24">
       <Position1>
         <Filename Value="Calc32.dpr"/>
       </Position1>
+      <Position2>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="13" Column="3"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\Calc32\Frm_CalcABOUT.PAS"/>
+        <Caret Line="13" Column="21"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\Calc32\Frm_CalcABOUT.PAS"/>
+        <Caret Line="52" Column="8" TopLine="2"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="492" Column="50" TopLine="384"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="491" Column="50" TopLine="439"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="492" Column="50" TopLine="440"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="491" Column="50" TopLine="439"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="492" Column="50" TopLine="440"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="491" Column="50" TopLine="439"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="492" Column="50" TopLine="440"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="440" Column="51" TopLine="399"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="145" Column="3" TopLine="119"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="323" Column="6" TopLine="296"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="437" Column="8" TopLine="410"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="446" Column="17" TopLine="419"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="459" Column="18" TopLine="432"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="481" Column="22" TopLine="446"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="137" Column="15" TopLine="100"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="129" Column="15" TopLine="103"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="145" Column="29" TopLine="67"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="499" Column="52" TopLine="460"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="417" Column="21" TopLine="391"/>
+      </Position23>
+      <Position24>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="355" Column="13" TopLine="313"/>
+      </Position24>
+      <Position25>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="289" Column="9" TopLine="275"/>
+      </Position25>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

@@ -1,0 +1,68 @@
+object frmBarChartMain: TfrmBarChartMain
+  Left = 383
+  Height = 279
+  Top = 202
+  Width = 369
+  Caption = 'BarChart Test Program'
+  ClientHeight = 279
+  ClientWidth = 369
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnCreate = FormCreate
+  LCLVersion = '1.4.0.3'
+  object BitBtn1: TBitBtn
+    Left = 288
+    Height = 25
+    Top = 248
+    Width = 75
+    Kind = bkClose
+    NumGlyphs = 2
+    TabOrder = 0
+  end
+  object Chart1: TChart
+    Left = 8
+    Height = 234
+    Top = 8
+    Width = 355
+    AxisList = <    
+      item
+        Minors = <>
+        Title.LabelFont.Orientation = 900
+      end    
+      item
+        Alignment = calBottom
+        Minors = <>
+      end>
+    Foot.Brush.Color = clBtnFace
+    Foot.Font.Color = clBlue
+    Title.Brush.Color = clBtnFace
+    Title.Font.Color = clBlue
+    Title.Text.Strings = (
+      'TChart'
+    )
+    ParentColor = False
+    object Series1: TBarSeries
+      Marks.Arrow.Visible = True
+      BarBrush.Color = clRed
+    end
+    object Series2: TBarSeries
+      Marks.Arrow.Visible = True
+      BarBrush.Color = clRed
+    end
+  end
+  object Timer1: TTimer
+    Interval = 500
+    OnTimer = Timer1Timer
+    left = 248
+    top = 248
+  end
+  object ChartToolset1: TChartToolset
+    left = 132
+    top = 246
+    object ChartToolset1DataPointDistanceTool1: TDataPointDistanceTool
+      Marks.Format = '%0:.9g'
+    end
+  end
+end

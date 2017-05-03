@@ -1,0 +1,51 @@
+object MainForm: TMainForm
+  Left = 194
+  Top = 114
+  Caption = 'Component Stream Demonstration'
+  ClientHeight = 230
+  ClientWidth = 342
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  object CreateButton: TButton
+    Left = 24
+    Top = 24
+    Width = 89
+    Height = 33
+    Caption = 'Create'
+    TabOrder = 0
+    OnClick = CreateButtonClick
+  end
+  object WriteButton: TButton
+    Left = 24
+    Top = 72
+    Width = 89
+    Height = 33
+    Caption = 'Write'
+    TabOrder = 1
+    OnClick = WriteButtonClick
+  end
+  object ReadButton: TButton
+    Left = 24
+    Top = 120
+    Width = 89
+    Height = 33
+    Caption = 'Read'
+    TabOrder = 2
+    OnClick = ReadButtonClick
+  end
+  object CloseBitBtn: TBitBtn
+    Left = 24
+    Top = 168
+    Width = 89
+    Height = 33
+    TabOrder = 3
+    Kind = bkClose
+  end
+end

@@ -1,0 +1,138 @@
+object MainForm: TMainForm
+  Left = 193
+  Top = 149
+  Caption = 'ComboBox Styles'
+  ClientHeight = 242
+  ClientWidth = 499
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  PixelsPerInch = 96
+  object Label1: TLabel
+    Left = 64
+    Top = 8
+    Width = 45
+    Height = 16
+    Caption = 'Simple'
+  end
+  object Label2: TLabel
+    Left = 208
+    Top = 8
+    Width = 71
+    Height = 16
+    Caption = 'Drop Down'
+  end
+  object Label3: TLabel
+    Left = 360
+    Top = 8
+    Width = 99
+    Height = 16
+    Caption = 'Drop Down List'
+  end
+  object SimpleCB: TComboBox
+    Left = 16
+    Top = 32
+    Width = 145
+    Height = 161
+    Style = csSimple
+    ItemHeight = 16
+    TabOrder = 0
+    Items.Strings = (
+      'Australia'
+      'Canada'
+      'France'
+      'Germany'
+      'Great Britain'
+      'Mexico'
+      'Sweden'
+      'United States'
+    )
+  end
+  object DropDownCB: TComboBox
+    Left = 176
+    Top = 32
+    Width = 145
+    Height = 24
+    ItemHeight = 16
+    TabOrder = 1
+    Items.Strings = (
+      'Georgia'
+      'Maryland'
+      'Montana'
+      'Nevada'
+      'New Hampshire'
+      'Ohio'
+      'Pennsylvania'
+      'Texas'
+      'Virginia'
+    )
+  end
+  object DropDownListCB: TComboBox
+    Left = 336
+    Top = 32
+    Width = 145
+    Height = 24
+    Style = csDropDownList
+    ItemHeight = 16
+    TabOrder = 2
+    Items.Strings = (
+      'Philadelphia'
+      'Peterborough'
+      'Baltimore'
+      'Phoenix'
+      'San Antonio'
+      'Key West'
+      'San Francisco'
+      'Atlanta'
+    )
+  end
+  object CancelBitBtn: TBitBtn
+    Left = 184
+    Top = 192
+    Width = 89
+    Height = 33
+    TabOrder = 3
+    OnClick = CancelBitBtnClick
+    Kind = bkCancel
+  end
+  object OKBitBtn: TBitBtn
+    Left = 288
+    Top = 192
+    Width = 89
+    Height = 33
+    TabOrder = 4
+    OnClick = OKBitBtnClick
+    Kind = bkOK
+  end
+  object CloseBitBtn: TBitBtn
+    Left = 392
+    Top = 192
+    Width = 81
+    Height = 33
+    Caption = '&Close'
+    TabOrder = 5
+    OnClick = CloseBitBtnClick
+    Glyph.Data = {
+      DE010000424DDE01000000000000760000002800000024000000120000000100
+      0400000000006801000000000000000000001000000010000000000000000000
+      8000008000000080800080000000800080008080000080808000C0C0C0000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00377777777788
+      F8F878F7777777777333333F00004444400777FFF444447777777777F333FF7F
+      000033334D5008FFF4333377777777773337777F0000333345D50FFFF4333333
+      337F777F3337F33F000033334D5D0FFFF43333333377877F3337F33F00003333
+      45D50FEFE4333333337F787F3337F33F000033334D5D0FFFF43333333377877F
+      3337F33F0000333345D50FEFE4333333337F787F3337F33F000033334D5D0FFF
+      F43333333377877F3337F33F0000333345D50FEFE4333333337F787F3337F33F
+      000033334D5D0EFEF43333333377877F3337F33F0000333345D50FEFE4333333
+      337F787F3337F33F000033334D5D0EFEF43333333377877F3337F33F00003333
+      4444444444333333337F7F7FFFF7F33F00003333333333333333333333777777
+      7777333F00003333330000003333333333333FFFFFF3333F00003333330AAAA0
+      333333333333777777F3333F00003333330000003333333333337FFFF7F3333F
+      0000
+    }
+    NumGlyphs = 2
+  end
+end

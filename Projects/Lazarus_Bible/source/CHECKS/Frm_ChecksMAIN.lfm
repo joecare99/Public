@@ -1,0 +1,95 @@
+object MainForm: TMainForm
+  Left = 199
+  Top = 99
+  Caption = 'Checkmark Demonstration'
+  ClientHeight = 166
+  ClientWidth = 289
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  Menu = MainMenu1
+  PixelsPerInch = 96
+  object ShowButton: TButton
+    Left = 184
+    Top = 24
+    Width = 89
+    Height = 33
+    Caption = 'Show level'
+    TabOrder = 0
+    OnClick = ShowButtonClick
+  end
+  object MainMenu1: TMainMenu
+    Left = 72
+    Top = 88
+    object FileMenu: TMenuItem
+      Caption = '&File'
+      ShortCut = 112
+      object FileExit: TMenuItem
+        Caption = 'E&xit'
+        ShortCut = 32856
+        OnClick = FileExitClick
+      end
+    end
+    object LevelMenu: TMenuItem
+      Caption = '&Level'
+      object Level1: TMenuItem
+        Caption = 'Level &1'
+        ShortCut = 32817
+        OnClick = LevelClick
+      end
+      object Level2: TMenuItem
+        Caption = 'Level &2'
+        ShortCut = 32818
+        OnClick = LevelClick
+      end
+      object Level3: TMenuItem
+        Caption = 'Level &3'
+        ShortCut = 32819
+        OnClick = LevelClick
+      end
+      object Level4: TMenuItem
+        Caption = 'Level &4'
+        ShortCut = 32820
+        OnClick = LevelClick
+      end
+      object Level5: TMenuItem
+        Caption = 'Level &5'
+        Checked = True
+        ShortCut = 32821
+        OnClick = LevelClick
+      end
+      object Level6: TMenuItem
+        Caption = 'Level &6'
+        ShortCut = 32822
+        OnClick = LevelClick
+      end
+      object Level7: TMenuItem
+        Caption = 'Level &7'
+        ShortCut = 32823
+        OnClick = LevelClick
+      end
+      object Level8: TMenuItem
+        Caption = 'Level &8'
+        ShortCut = 32824
+        OnClick = LevelClick
+      end
+      object Level9: TMenuItem
+        Caption = 'Level &9'
+        ShortCut = 32825
+        OnClick = LevelClick
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object LevelInsert: TMenuItem
+        Caption = '&Insert'
+        Checked = True
+        ShortCut = 45
+        OnClick = LevelInsertClick
+      end
+    end
+  end
+end

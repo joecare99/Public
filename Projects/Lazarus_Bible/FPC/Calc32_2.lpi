@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -14,7 +14,6 @@
       <Title Value="Calc32_2"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
-      <Icon Value="-1"/>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -251,7 +250,6 @@
         <ComponentName Value="CalcForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_CALC2"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\source\Calc32\Frm_Calc2ABOUT.PAS"/>

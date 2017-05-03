@@ -2,7 +2,7 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <BuildModes Active="Release"/>
     <Units Count="2">
       <Unit0>
@@ -19,7 +19,6 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_Capslock2MAIN"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="7"/>

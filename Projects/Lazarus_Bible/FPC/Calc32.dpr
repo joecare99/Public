@@ -16,6 +16,8 @@ uses
 {$E EXE}
 {$ENDIF}
 
+{$R *.res}
+
 begin
 Application.Initialize;
   Application.Title := 'Demo: Calc32';

@@ -1,0 +1,113 @@
+object MainForm: TMainForm
+  Left = 200
+  Height = 108
+  Top = 109
+  Width = 349
+  ActiveControl = BitBtn1
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'CapsLock and Other Keyboard Toggles'
+  ClientHeight = 108
+  ClientWidth = 349
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  KeyPreview = True
+  OnActivate = FormActivate
+  OnKeyDown = FormKeyDown
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object Label1: TLabel
+    Left = 12
+    Height = 42
+    Top = 19
+    Width = 192
+    AutoSize = False
+    Caption = 'Press the CapsLock, NumLock, ScrollLock, and Ins keys.'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'Tahoma'
+    ParentColor = False
+    ParentFont = False
+    WordWrap = True
+  end
+  object Bevel1: TBevel
+    Left = 7
+    Height = 65
+    Top = 8
+    Width = 201
+  end
+  object BitBtn1: TBitBtn
+    Left = 240
+    Height = 41
+    Top = 24
+    Width = 89
+    Kind = bkClose
+    TabOrder = 0
+  end
+  object StatusPanel: TPanel
+    Left = 0
+    Height = 20
+    Top = 88
+    Width = 349
+    Align = alBottom
+    BevelOuter = bvLowered
+    ClientHeight = 20
+    ClientWidth = 349
+    TabOrder = 1
+    object Pnl_Num: TPanel
+      Left = 41
+      Height = 18
+      Top = 1
+      Width = 40
+      Align = alLeft
+      Caption = 'Num'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 0
+    end
+    object Pnl_Caps: TPanel
+      Left = 1
+      Height = 18
+      Top = 1
+      Width = 40
+      Align = alLeft
+      Caption = 'Caps'
+      Enabled = False
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 1
+    end
+    object Pnl_Scrl: TPanel
+      Left = 81
+      Height = 18
+      Top = 1
+      Width = 40
+      Align = alLeft
+      Caption = 'Scrl'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 2
+    end
+    object Pnl_Ins: TPanel
+      Left = 121
+      Height = 18
+      Top = 1
+      Width = 40
+      Align = alLeft
+      Caption = 'Ins'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 3
+    end
+  end
+end
