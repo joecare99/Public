@@ -1,0 +1,166 @@
+object DirDlgForm: TDirDlgForm
+  Left = 203
+  Height = 238
+  Top = 109
+  Width = 502
+  Caption = 'Directory Dialog'
+  ClientHeight = 238
+  ClientWidth = 502
+  Color = clBtnFace
+  Font.Color = clBlack
+  Font.Height = -11
+  Font.Name = 'Arial'
+  LCLVersion = '1.4.0.4'
+  object FileNameLabel: TLabel
+    Left = 8
+    Height = 14
+    Top = 8
+    Width = 53
+    Caption = 'File &Name'
+    FocusControl = FileNameEdit
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object DirectoriesLabel: TLabel
+    Left = 221
+    Height = 14
+    Top = 8
+    Width = 61
+    Anchors = [akTop, akRight]
+    Caption = '&Directories'
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object DirLabel: TLabel
+    Left = 221
+    Height = 14
+    Top = 27
+    Width = 169
+    Anchors = [akTop, akRight]
+    AutoSize = False
+    Caption = 'V:\...\Delphi\Delphi Bible\DXE2'
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object ListFilesLabel: TLabel
+    Left = 8
+    Height = 14
+    Top = 169
+    Width = 94
+    Anchors = [akLeft, akBottom]
+    Caption = 'List files of &Type:'
+    FocusControl = FilterComboBox
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object DrivesLabel: TLabel
+    Left = 221
+    Height = 14
+    Top = 169
+    Width = 35
+    Anchors = [akRight, akBottom]
+    Caption = 'Dri&ves'
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object FilterComboBox: TFilterComboBox
+    Left = 8
+    Height = 22
+    Top = 185
+    Width = 200
+    Anchors = [akLeft, akRight, akBottom]
+    Filter = 'All files (*.*)|*.*|Executable files (*.exe)|*.exe|Executable files (*.com)|*.com|Dos batch files (*.bat)|*.bat|Dos Pif files (*.pif)|*.pif|Windows help files (*.hlp)|*.hlp|Windows bitmap files (*.bmp)|*.bmp|Text files (*.txt)|*.txt'
+    ItemIndex = 0
+    TabOrder = 1
+  end
+  object FileNameEdit: TEdit
+    Left = 8
+    Height = 22
+    Top = 24
+    Width = 200
+    Anchors = [akTop, akLeft, akRight]
+    TabOrder = 0
+    Text = '*.*'
+  end
+  object OkBitBtn: TBitBtn
+    Left = 405
+    Height = 49
+    Top = 16
+    Width = 89
+    Anchors = [akTop, akRight]
+    Caption = 'O&k'
+    Kind = bkOK
+    TabOrder = 2
+  end
+  object CancelBitBtn: TBitBtn
+    Left = 405
+    Height = 49
+    Top = 80
+    Width = 89
+    Anchors = [akTop, akRight]
+    Caption = '&Cancel'
+    Kind = bkCancel
+    TabOrder = 5
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 215
+    Width = 502
+    Panels = <>
+  end
+  object FileListBox: TFileListBox
+    Left = 8
+    Height = 105
+    Top = 52
+    Width = 200
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Directory = 'C:\Programme\lazarus'
+    ItemHeight = 14
+    OnDblClick = FileListBoxDblClick
+    TabOrder = 3
+  end
+  object DirectoryListBox: TShellTreeView
+    Left = 212
+    Height = 107
+    Top = 50
+    Width = 172
+    Anchors = [akTop, akRight, akBottom]
+    FileSortType = fstNone
+    TabOrder = 6
+    ObjectTypes = [otFolders]
+  end
+  object DriveComboBox: TDirectoryEdit
+    Left = 211
+    Height = 22
+    Top = 185
+    Width = 171
+    ShowHidden = False
+    ButtonWidth = 23
+    NumGlyphs = 1
+    Anchors = [akRight, akBottom]
+    MaxLength = 0
+    TabOrder = 7
+    OnChange = DriveComboBoxChange
+  end
+end
