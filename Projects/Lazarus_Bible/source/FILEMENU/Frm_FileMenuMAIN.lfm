@@ -1,0 +1,80 @@
+object MainForm: TMainForm
+  Left = 199
+  Top = 99
+  Caption = 'Dynamic File Menu'
+  ClientHeight = 133
+  ClientWidth = 311
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  Menu = MainMenu1
+  PixelsPerInch = 96
+  object OpenButton: TButton
+    Left = 72
+    Top = 24
+    Width = 185
+    Height = 33
+    Caption = 'Add filename to Menu'
+    TabOrder = 0
+    OnClick = OpenButtonClick
+  end
+  object BitBtn1: TBitBtn
+    Left = 120
+    Top = 80
+    Width = 89
+    Height = 33
+    Kind = bkClose
+    TabOrder = 1
+  end
+  object MainMenu1: TMainMenu
+    Left = 24
+    Top = 16
+    object FileMenu: TMenuItem
+      Caption = '&File'
+      object FileOpen: TMenuItem
+        Caption = '&Open'
+        OnClick = OpenButtonClick
+      end
+      object FileSep1: TMenuItem
+        Caption = '-'
+      end
+      object FileExit: TMenuItem
+        Caption = 'E&xit'
+        ShortCut = 32856
+        OnClick = FileExitClick
+      end
+      object FileSep2: TMenuItem
+        Caption = '-'
+        Visible = False
+      end
+      object FileName1: TMenuItem
+        Caption = '&1 name'
+        Visible = False
+        OnClick = FileName1Click
+      end
+      object FileName2: TMenuItem
+        Caption = '&2 name'
+        Visible = False
+        OnClick = FileName1Click
+      end
+      object FileName3: TMenuItem
+        Caption = '&3 name'
+        Visible = False
+        OnClick = FileName1Click
+      end
+      object FileName4: TMenuItem
+        Caption = '&4 name'
+        Visible = False
+        OnClick = FileName1Click
+      end
+    end
+  end
+  object OpenDialog: TOpenDialog
+    Filter = 'All fies (*.*)|*.*'
+    Left = 24
+    Top = 72
+  end
+end
