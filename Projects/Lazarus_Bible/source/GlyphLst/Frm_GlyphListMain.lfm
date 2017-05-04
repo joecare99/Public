@@ -1,0 +1,49 @@
+object MainForm: TMainForm
+  Left = 244
+  Height = 261
+  Top = 124
+  Width = 405
+  Caption = 'Glyph List'
+  ClientHeight = 261
+  ClientWidth = 405
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnClose = FormClose
+  OnCreate = FormCreate
+  LCLVersion = '1.4.0.4'
+  object PathLabel: TLabel
+    Left = 40
+    Height = 13
+    Top = 32
+    Width = 47
+    Caption = 'Path label'
+    ParentColor = False
+  end
+  object BitBtn1: TBitBtn
+    Left = 305
+    Height = 25
+    Top = 220
+    Width = 75
+    Anchors = [akRight, akBottom]
+    Kind = bkClose
+    TabOrder = 0
+  end
+  object GlyphList: TStringGrid
+    Left = 18
+    Height = 158
+    Top = 45
+    Width = 366
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    ColCount = 2
+    DefaultColWidth = 128
+    FixedCols = 0
+    FixedRows = 0
+    TabOrder = 1
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'MS Sans Serif'
+    OnDrawCell = GlyphListDrawCell
+  end
+end

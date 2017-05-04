@@ -1,0 +1,23 @@
+object Form1: TForm1
+  Left = 192
+  Top = 115
+  Caption = 'Hello Delphi Programmer!'
+  ClientHeight = 155
+  ClientWidth = 306
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  PixelsPerInch = 96
+  object CloseButton: TButton
+    Left = 112
+    Top = 56
+    Width = 89
+    Height = 33
+    Caption = 'Close'
+    TabOrder = 0
+    OnClick = CloseButtonClick
+  end
+end
