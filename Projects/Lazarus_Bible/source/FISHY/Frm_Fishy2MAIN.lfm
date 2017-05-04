@@ -1,0 +1,113 @@
+object MainForm: TMainForm
+  Left = 192
+  Height = 226
+  Top = 101
+  Width = 439
+  ActiveControl = Panel1
+  Caption = 'Fishy Database'
+  ClientHeight = 226
+  ClientWidth = 439
+  Color = clBtnFace
+  Font.Color = clBlack
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  LCLVersion = '1.4.0.4'
+  object Panel1: TPanel
+    Left = 0
+    Height = 41
+    Top = 0
+    Width = 439
+    Align = alTop
+    ClientHeight = 41
+    ClientWidth = 439
+    TabOrder = 0
+    object DBNavigator: TDBNavigator
+      Left = 6
+      Height = 25
+      Top = 10
+      Width = 240
+      BevelOuter = bvNone
+      ChildSizing.EnlargeHorizontal = crsScaleChilds
+      ChildSizing.EnlargeVertical = crsScaleChilds
+      ChildSizing.ShrinkHorizontal = crsScaleChilds
+      ChildSizing.ShrinkVertical = crsScaleChilds
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 100
+      ClientHeight = 25
+      ClientWidth = 240
+      DataSource = DataSource1
+      Options = []
+      TabOrder = 0
+    end
+    object BitBtn1: TBitBtn
+      Left = 336
+      Height = 25
+      Top = 8
+      Width = 89
+      Kind = bkClose
+      TabOrder = 1
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Height = 185
+    Top = 41
+    Width = 439
+    Align = alClient
+    BevelInner = bvLowered
+    BorderWidth = 4
+    Caption = 'Panel2'
+    ClientHeight = 185
+    ClientWidth = 439
+    TabOrder = 1
+    object ScrollBox: TScrollBox
+      Left = 6
+      Height = 173
+      Top = 6
+      Width = 427
+      HorzScrollBar.Range = 224
+      VertScrollBar.Range = 46
+      Align = alClient
+      AutoScroll = False
+      BorderStyle = bsNone
+      ClientHeight = 156
+      ClientWidth = 427
+      TabOrder = 0
+      object DBImage1: TDBImage
+        Left = 223
+        Height = 160
+        Top = 10
+        Width = 200
+        DataField = 'BMP'
+        DataSource = DataSource1
+        OnDblClick = DBImage1DblClick
+      end
+      object DBGrid1: TDBGrid
+        Left = 8
+        Height = 161
+        Top = 8
+        Width = 209
+        Color = clWindow
+        Columns = <>
+        DataSource = DataSource1
+        TabOrder = 0
+        TitleFont.Color = clBlack
+        TitleFont.Height = -11
+        TitleFont.Name = 'MS Sans Serif'
+      end
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = ADOTable1
+    left = 375
+    top = 165
+  end
+  object ADOTable1: TSQLQuery
+    FieldDefs = <>
+    Params = <>
+    left = 336
+    top = 160
+  end
+end

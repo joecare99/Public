@@ -1,0 +1,176 @@
+object MainForm: TMainForm
+  Left = 192
+  Height = 246
+  Top = 101
+  Width = 445
+  ActiveControl = Panel1
+  Caption = 'Fishy Database'
+  ClientHeight = 246
+  ClientWidth = 445
+  Color = clBtnFace
+  Font.Color = clBlack
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  LCLVersion = '1.4.0.4'
+  object Panel1: TPanel
+    Left = 0
+    Height = 41
+    Top = 0
+    Width = 445
+    Align = alTop
+    ClientHeight = 41
+    ClientWidth = 445
+    TabOrder = 0
+    object DBNavigator: TDBNavigator
+      Left = 8
+      Height = 25
+      Top = 8
+      Width = 240
+      BevelOuter = bvNone
+      ChildSizing.EnlargeHorizontal = crsScaleChilds
+      ChildSizing.EnlargeVertical = crsScaleChilds
+      ChildSizing.ShrinkHorizontal = crsScaleChilds
+      ChildSizing.ShrinkVertical = crsScaleChilds
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 100
+      ClientHeight = 25
+      ClientWidth = 240
+      DataSource = DataSource1
+      Options = []
+      TabOrder = 0
+    end
+    object BitBtn1: TBitBtn
+      Left = 336
+      Height = 25
+      Top = 8
+      Width = 89
+      Kind = bkClose
+      TabOrder = 1
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Height = 205
+    Top = 41
+    Width = 445
+    Align = alClient
+    BevelInner = bvLowered
+    BorderWidth = 4
+    Caption = 'Panel2'
+    ClientHeight = 205
+    ClientWidth = 445
+    TabOrder = 1
+    object ScrollBox: TScrollBox
+      Left = 6
+      Height = 193
+      Top = 6
+      Width = 433
+      HorzScrollBar.Range = 224
+      VertScrollBar.Range = 46
+      Align = alClient
+      AutoScroll = False
+      BorderStyle = bsNone
+      ClientHeight = 176
+      ClientWidth = 433
+      TabOrder = 0
+      object DBImage1: TDBImage
+        Left = 224
+        Height = 160
+        Top = 8
+        Width = 200
+        DataField = 'BMP'
+        DataSource = DataSource1
+        OnDblClick = DBImage1DblClick
+      end
+      object DBGrid1: TDBGrid
+        Left = 8
+        Height = 161
+        Top = 8
+        Width = 209
+        Color = clWindow
+        Columns = <>
+        DataSource = DataSource1
+        TabOrder = 0
+        TitleFont.Color = clBlack
+        TitleFont.Height = -11
+        TitleFont.Name = 'MS Sans Serif'
+      end
+    end
+  end
+  object DataSource1: TDataSource
+    DataSet = Table1
+    left = 375
+    top = 165
+  end
+  object Table1: TSQLQuery
+    FieldDefs = <    
+      item
+        Name = 'NAME'
+        DataType = ftString
+        Precision = 0
+        Size = 10
+      end    
+      item
+        Name = 'SIZE'
+        DataType = ftSmallint
+        Precision = 0
+        Size = 0
+      end    
+      item
+        Name = 'WEIGHT'
+        DataType = ftSmallint
+        Precision = 0
+        Size = 0
+      end    
+      item
+        Name = 'AREA'
+        DataType = ftString
+        Precision = 0
+        Size = 20
+      end    
+      item
+        Name = 'BMP'
+        DataType = ftTypedBinary
+        Precision = 0
+        Size = 1
+      end>
+    Params = <>
+    left = 316
+    top = 165
+    object Table1NAME: TStringField
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'NAME'
+      Index = 0
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      Size = 10
+    end
+    object Table1AREA: TStringField
+      DisplayWidth = 20
+      FieldKind = fkData
+      FieldName = 'AREA'
+      Index = 1
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+    end
+    object Table1BMP: TBlobField
+      DisplayWidth = 10
+      FieldKind = fkData
+      FieldName = 'BMP'
+      Index = 2
+      LookupCache = False
+      ProviderFlags = [pfInUpdate, pfInWhere]
+      ReadOnly = False
+      Required = False
+      BlobType = ftBlob
+      Size = 1
+    end
+  end
+end
