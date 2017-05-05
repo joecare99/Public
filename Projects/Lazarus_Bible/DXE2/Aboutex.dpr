@@ -5,21 +5,21 @@ program Aboutex;
 {$ENDIF}
 
 uses
-{$IFnDEF FPC}
-{$ELSE}
+  {$IFnDEF FPC}
+  {$ELSE}
   Interfaces,
-{$ENDIF}
+  {$ENDIF }
   Forms,
-  ABOUT in '..\source\ABOUTEX\ABOUT.PAS' {AboutForm} ,
-  Frm_AboutExMAIN in '..\source\ABOUTEX\Frm_AboutExMAIN.PAS' {MainForm};
+  Frm_ABOUT in '..\source\ABOUTEX\frm_About.PAS' {frmAbout},
+  Frm_AboutExMAIN in '..\source\ABOUTEX\Frm_AboutExMAIN.PAS' {frmAboutMain};
 
 {$E EXE}
 {$R *.res}
 
 begin
   Application.Title := 'Demo: AboutEx';
-  Application.CreateForm(TMainForm, MainForm);
-  Application.CreateForm(TAboutForm, AboutForm);
+  Application.CreateForm(TfrmAboutMain, frmAboutMain);
+  Application.CreateForm(TfrmAbout, frmAbout);
   Application.Run;
 
 end.

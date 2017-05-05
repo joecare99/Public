@@ -2,7 +2,7 @@ program Actions;
 
 uses
   Forms,
-  Frm_ActionsMain in '..\source\Actions\Frm_ActionsMain.pas' {Form1};
+  Frm_ActionsMain in '..\source\Actions\Frm_ActionsMain.pas' {FrmActionsMain};
 
 {$E EXE}
 
@@ -11,6 +11,6 @@ uses
 begin
   Application.Initialize;
   Application.Title := 'Demo: Actions';
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TFrmActionsMain, FrmActionsMain);
   Application.Run;
 end.

@@ -41,9 +41,14 @@
         <GenPackage>true</GenPackage>
         <GenDll>true</GenDll>
         <DCC_OutputDRCFile>true</DCC_OutputDRCFile>
+        <VerInfo_Build>0</VerInfo_Build>
         <CfgDependentOn>default.optset</CfgDependentOn>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Base_Win32)'!=''">
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
+        <VerInfo_Locale>1031</VerInfo_Locale>
+        <DllSuffix>240</DllSuffix>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_1)'!=''">
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
@@ -52,10 +57,17 @@
         <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
         <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
         <DCC_OutputDRCFile>false</DCC_OutputDRCFile>
+        <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
+        <VerInfo_Locale>1031</VerInfo_Locale>
+        <DllSuffix>240</DllSuffix>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2)'!=''">
         <DCC_OutputDRCFile>True</DCC_OutputDRCFile>
         <DCC_LocalDebugSymbols>True</DCC_LocalDebugSymbols>
+        <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
+        <VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
+        <VerInfo_Locale>1031</VerInfo_Locale>
+        <DllSuffix>240</DllSuffix>
     </PropertyGroup>
     <Import Condition="Exists('$(BDS)\Bin\CodeGear.Delphi.Targets')" Project="$(BDS)\Bin\CodeGear.Delphi.Targets"/>
     <ProjectExtensions>

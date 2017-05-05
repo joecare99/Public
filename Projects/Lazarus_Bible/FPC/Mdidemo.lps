@@ -2,9 +2,9 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <BuildModes Active="Default"/>
-    <Units Count="4">
+    <Units Count="5">
       <Unit0>
         <Filename Value="Mdidemo.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -19,7 +19,6 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <CursorPos X="30" Y="9"/>
         <UsageCount Value="25"/>
@@ -47,14 +46,24 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="3"/>
-        <CursorPos X="27" Y="3"/>
+        <CursorPos X="22" Y="45"/>
         <UsageCount Value="25"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+        <HasResources Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="20" Y="21"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
     </Units>
-    <JumpHistory Count="5" HistoryIndex="4">
+    <JumpHistory Count="7" HistoryIndex="6">
       <Position1>
         <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
       </Position1>
@@ -73,6 +82,13 @@
         <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
         <Caret Line="13" Column="21"/>
       </Position5>
+      <Position6>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+        <Caret Line="21" Column="20" TopLine="21"/>
+      </Position7>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

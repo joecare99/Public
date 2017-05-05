@@ -14,14 +14,13 @@ uses
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls,
   Forms, Dialogs, Menus, StdCtrls, Buttons, ExtCtrls,
-  Clipbrd, ActnList, Frm_CalcABOUT;
+  Clipbrd, ActnList, Frm_CalcABOUT, System.Actions;
 
 type
 
   { TCalcForm }
 
   TCalcForm = class(TForm)
-    ActionList1: TActionList;
     BinBevel: TPanel;
     DecBevel: TPanel;
     HexBevel: TPanel;
@@ -74,6 +73,7 @@ type
     Paste1: TMenuItem;
     Copy1: TMenuItem;
     BitBtn1: TBitBtn;
+    ActionList1: TActionList;
     procedure CalcExitMenuItemClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure ButtonDigitClick(Sender: TObject);

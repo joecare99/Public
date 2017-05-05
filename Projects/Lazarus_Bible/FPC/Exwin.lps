@@ -2,14 +2,14 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
-    <BuildModes Active="Debug"/>
-    <Units Count="4">
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="5">
       <Unit0>
         <Filename Value="Exwin.dpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos Y="3"/>
-        <UsageCount Value="65"/>
+        <UsageCount Value="83"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
@@ -17,21 +17,19 @@
         <Filename Value="..\source\EXWIN\unt_Exwin.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="unt_ExWin"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="31"/>
-        <CursorPos X="34" Y="37"/>
-        <UsageCount Value="65"/>
+        <TopLine Value="4"/>
+        <CursorPos X="3" Y="42"/>
+        <UsageCount Value="83"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\..\include\jedi.inc"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="1303"/>
         <CursorPos X="64" Y="1313"/>
-        <UsageCount Value="31"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="29"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
       <Unit3>
@@ -39,10 +37,23 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="2837"/>
         <CursorPos X="46" Y="2849"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="5"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="..\source\LISTER\Frm_ListerMAIN.PAS"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="37" Y="18"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
     </Units>
-    <JumpHistory Count="4" HistoryIndex="3">
+    <JumpHistory Count="7" HistoryIndex="6">
       <Position1>
         <Filename Value="Exwin.dpr"/>
       </Position1>
@@ -51,12 +62,24 @@
         <Caret Line="22" Column="34"/>
       </Position2>
       <Position3>
-        <Filename Value="..\..\include\jedi.inc"/>
+        <Filename Value="..\source\EXWIN\unt_Exwin.pas"/>
+        <Caret Line="24"/>
       </Position3>
       <Position4>
         <Filename Value="..\source\EXWIN\unt_Exwin.pas"/>
-        <Caret Line="24"/>
+        <Caret Line="37" Column="29" TopLine="4"/>
       </Position4>
+      <Position5>
+        <Filename Value="..\source\EXWIN\unt_Exwin.pas"/>
+        <Caret Line="22" Column="2"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\LISTER\Frm_ListerMAIN.PAS"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\EXWIN\unt_Exwin.pas"/>
+        <Caret Line="42" Column="3" TopLine="4"/>
+      </Position7>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

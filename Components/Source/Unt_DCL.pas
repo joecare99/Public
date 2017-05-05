@@ -8,11 +8,13 @@ interface
 
 uses Cmp_OpenGLScene,
      Cmp_DBConfig,
-    // Unt_UserRechte,
       cmp_DBHLLookUpPanel,
       cmp_DBHlPanel,
-     //Cmp_DBLookUpGrid,
-     //Fra_SelectVars,
+ {$IFNDEF FPC}
+      Cmp_DBLookUpGrid,
+      Fra_SelectVars,
+      Unt_UserRechte,
+ {$endif}
      Frm_Aboutbox;
 
 procedure Register;
@@ -30,8 +32,10 @@ begin
   RegisterComponents('Projekt', [
     TConfig,
     TDBConfig,
-//    TUser,
-//    TFraSelectVars,
+{$IFNDEF FPC}
+    TUser,
+    TFraSelectVars,
+ {$endif}
     TAboutBox ]);
   {$IFDEF FPC}
   RegisterComponents('Data Controls', [//TDBLookUpGrid,
