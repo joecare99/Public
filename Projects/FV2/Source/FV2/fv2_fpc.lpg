@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="3">
+    <Targets Count="4">
       <Target0 FileName="..\..\FPC\fv2.lpk"/>
       <Target1 FileName="..\..\FPC\fpc_TestFV2units.lpi">
         <BuildModes Count="3"/>
@@ -15,6 +15,10 @@
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target2>
+      <Target3 FileName="..\..\..\..\Lazarus\FpcTrunk\packages\fv\examples\testapp.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target3>
     </Targets>
   </ProjectGroup>
 </CONFIG>

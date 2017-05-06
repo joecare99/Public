@@ -342,7 +342,7 @@ implementation
 
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
 
-uses  Video, Mouse{,Resource},fv2VisConsts, fv2RectHelper;
+uses  Video, Mouse{,Resource},fv2VisConsts, fv2RectHelper,fv2tCanvas;
 
 resourcestring
   sVideoFailed = 'Video initialization failed.';
@@ -481,6 +481,8 @@ begin
   InitBackground;                                    { Create background }
   if (Background <> nil) then
     Insert(Background);    { Insert background }
+  if not assigned(aOwner) then
+    ScreenCanvas:=GetCanvas;
 end;
 
 {--TDesktop-----------------------------------------------------------------}

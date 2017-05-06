@@ -1420,7 +1420,12 @@ BEGIN
    I:= Items;
    while i <> nil  do
      begin
-     if not assigned(i.Owner) or (i.Owner <> P) then
+     if not assigned(i.Owner) then
+       if assigned(Aowner) then
+         aOwner.InsertComponent(i)
+       else
+         p.InsertComponent(i);
+     if not assigned(i.parent) or (i.parent <> P) then
      P.Insert(I);
      i := TMenuItem(i.Next{%H-});
      end;

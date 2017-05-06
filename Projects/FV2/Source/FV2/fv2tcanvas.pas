@@ -29,8 +29,22 @@ type
   { TFV2CustomBrush }
 
   TFV2CustomBrush = record
-    BrushSize: Tpoint;
+  private
+    FBrushSize: Tpoint;
+    procedure SetBrushSize(AValue: Tpoint);
+  public
     BrushData: array of TVideoCell;
+    function GetDrawCell(p: Tpoint): TVideoCell;
+    PRocedure SetDrawCell(p:TPoint;ACell:TVideoCell);
+    property DrawCell[p:TPoint]:TVideoCell read GetDrawCell write SetDrawCell; default;
+    Property BrushSize: Tpoint read FBrushSize write SetBrushSize;
+  end;
+
+  TTCanvas = class;
+
+  iHasCanvas=interface
+    ['{DF13C329-3B40-4B52-874F-1D26CF1FB095}']
+    function GetCanvas:TTCanvas;
   end;
 
   { TTCanvas }
@@ -105,16 +119,32 @@ type
     property CBuffer: PVideoBuf read GetBuffer;
   end;
 
+
+var ScreenCanvas:TTCanvas;
+
 implementation
 
 uses fv2drivers, fv2RectHelper, fv2VisConsts;
 
 { TFV2CustomBrush }
 
-function GetDrawCell(const brush: TFV2CustomBrush; p: Tpoint): TVideoCell;
+procedure TFV2CustomBrush.SetBrushSize(AValue: Tpoint);
 begin
-  Result := brush.BrushData[(p.x mod brush.BrushSize.x) +
-    (p.y mod brush.BrushSize.y) * brush.BrushSize.x];
+  if FBrushSize=AValue then Exit;
+  FBrushSize:=AValue;
+    setlength(BrushData,AValue.x*AValue.y);
+end;
+
+function TFV2CustomBrush.GetDrawCell( p: Tpoint): TVideoCell;
+begin
+  Result := BrushData[(p.x mod BrushSize.x) +
+    (p.y mod BrushSize.y) * BrushSize.x];
+end;
+
+procedure TFV2CustomBrush.SetDrawCell(p: TPoint; ACell: TVideoCell);
+begin
+  BrushData[(p.x mod BrushSize.x) +
+    (p.y mod BrushSize.y) * BrushSize.x]:=ACell;
 end;
 
 { TFV2CustomFont }
@@ -165,7 +195,7 @@ begin
       if (x < oldSize.x) and (y < oldSize.y) then
         FCBuffer[x + y * FSize.y] := lTempBuffer[x + y * oldSize.x]
       else
-        FCBuffer[x + y * FSize.y] := GetDrawCell(FBrush, point(x, y));
+        FCBuffer[x + y * FSize.y] := FBrush[ point(x, y)];
     end;
   setlength(lTempBuffer, 0);
 end;
@@ -374,7 +404,7 @@ begin
   r.Intersect(Rect(0, 0, FSize.x, FSize.y));
   for y := r.top to r.Bottom - 1 do
     for x := r.Left to r.Right - 1 do
-      FCBuffer[x + y * FSize.x] := GetDrawCell(FBrush, point(x, y));
+      FCBuffer[x + y * FSize.x] := FBrush[point(x, y)];
 end;
 
 procedure TTCanvas.MoveTo(p: TPoint);
@@ -443,18 +473,30 @@ begin
 end;
 
 procedure TTCanvas.CopyBuffer(x, y, l: integer; var Buf);
+var
+  xx: Integer;
 begin
-
+  for xx := 0 to l -1 do
+    Pixels[x+xx,y] := TVideoBuf(Buf)[xx];
 end;
 
 procedure TTCanvas.BrushCopy(r: Trect; out NewBrush: TFV2CustomBrush);
+var
+  y, x: Integer;
 begin
-
+  NewBrush.BrushSize:=r.Size;
+  for y := 0 to NewBrush.BrushSize.y -1 do
+    for x := 0 to NewBrush.BrushSize.x -1 do
+      NewBrush[point(x,y)]:=Pixels[x+r.Left,y+r.Top];
 end;
 
 procedure TTCanvas.DrawBrush(pos: Tpoint; const aBrush: TFV2CustomBrush);
+var
+  x, y: Integer;
 begin
-
+  for y := 0 to aBrush.BrushSize.y -1 do
+    for x := 0 to aBrush.BrushSize.x -1 do
+      Pixels[x+pos.x,y+pos.y] := aBrush[point(x,y)];
 end;
 
 end.

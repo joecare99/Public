@@ -1,0 +1,118 @@
+object MainForm: TMainForm
+  Left = 243
+  Height = 210
+  Top = 119
+  Width = 412
+  Caption = 'List Fonts'
+  ClientHeight = 210
+  ClientWidth = 412
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  OnCreate = FormCreate
+  LCLVersion = '1.4.0.4'
+  object Bevel1: TBevel
+    Left = 224
+    Height = 33
+    Top = 80
+    Width = 177
+  end
+  object Label1: TLabel
+    Left = 16
+    Height = 16
+    Top = 24
+    Width = 40
+    Caption = 'Fonts:'
+    ParentColor = False
+  end
+  object SampleLabel: TLabel
+    Left = 16
+    Height = 16
+    Top = 176
+    Width = 127
+    Caption = 'A B C 1 2 3 ! @ # { }'
+    Font.Color = clBlack
+    Font.Height = -19
+    Font.Name = 'System'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Label3: TLabel
+    Left = 112
+    Height = 16
+    Top = 24
+    Width = 33
+    Caption = 'Size:'
+    ParentColor = False
+  end
+  object FontNameLabel: TLabel
+    Left = 232
+    Height = 16
+    Top = 88
+    Width = 49
+    Caption = 'System'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 224
+    Height = 16
+    Top = 56
+    Width = 84
+    Caption = 'Selected font'
+    ParentColor = False
+  end
+  object FontListBox: TListBox
+    Left = 16
+    Height = 113
+    Top = 48
+    Width = 193
+    ItemHeight = 0
+    OnClick = FontListBoxDblClick
+    OnDblClick = FontListBoxDblClick
+    OnKeyDown = FontListBoxKeyDown
+    Sorted = True
+    TabOrder = 0
+  end
+  object SpinEdit1: TSpinEdit
+    Left = 152
+    Height = 24
+    Top = 16
+    Width = 57
+    MaxValue = 72
+    MinValue = 8
+    OnChange = SpinEdit1Change
+    TabOrder = 1
+    Value = 14
+  end
+  object CloseBitBtn: TBitBtn
+    Left = 312
+    Height = 33
+    Top = 128
+    Width = 89
+    Cancel = True
+    Caption = '&Close'
+    Glyph.Data = {
+      DE010000424DDE01000000000000760000002800000024000000120000000100
+      0400000000006801000000000000000000001000000010000000000000000000
+      8000008000000080800080000000800080008080000080808000C0C0C0000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00377777777788
+      F8F878F7777777777333333F00004444400777FFF444447777777777F333FF7F
+      000033334D5008FFF4333377777777773337777F0000333345D50FFFF4333333
+      337F777F3337F33F000033334D5D0FFFF43333333377877F3337F33F00003333
+      45D50FEFE4333333337F787F3337F33F000033334D5D0FFFF43333333377877F
+      3337F33F0000333345D50FEFE4333333337F787F3337F33F000033334D5D0FFF
+      F43333333377877F3337F33F0000333345D50FEFE4333333337F787F3337F33F
+      000033334D5D0EFEF43333333377877F3337F33F0000333345D50FEFE4333333
+      337F787F3337F33F000033334D5D0EFEF43333333377877F3337F33F00003333
+      4444444444333333337F7F7FFFF7F33F00003333333333333333333333777777
+      7777333F00003333330000003333333333333FFFFFF3333F00003333330AAAA0
+      333333333333777777F3333F00003333330000003333333333337FFFF7F3333F
+      0000
+    }
+    NumGlyphs = 2
+    OnClick = CloseBitBtnClick
+    TabOrder = 2
+  end
+end

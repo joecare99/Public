@@ -21,14 +21,46 @@ type
     procedure TestHookUp;
   end;
 
+  { TTestView }
+
+  TTestView=Class(TView)
+    procedure Draw; override;
+  end;
+
+
 implementation
 
-uses fv2app,fv2drivers;
+uses fv2app,fv2drivers, Dialogs;
+
+type
+
+   { TMyDesktop }
+
+   TMyDesktop=Class(TDeskTop)
+    Function GetPalette: PPalette; override;
+  end;
+
+{ TMyDesktop }
+
+function TMyDesktop.GetPalette: PPalette;
+CONST P: String[Length(CAppColor)] = CAppColor;
+BEGIN
+   GetPalette := PPalette(@P);
+end;
+
+
+{ TTestView }
+
+procedure TTestView.Draw;
+begin
+  inherited Draw;
+
+end;
 
 procedure TTestfv2Views.SetUp;
 begin
   InitVideo;
-  FDesktop := TDeskTop.Create(nil,rect(0,0,79,50));
+  FDesktop := TMyDesktop.Create(nil,rect(0,0,79,50));
 end;
 
 procedure TTestfv2Views.TearDown;
@@ -49,16 +81,24 @@ var
   evt: TEvent;
   I: Integer;
 begin
+
   FDesktop.setstate(sfVisible,true);
   FDesktop.setstate(sfExposed,true);
   FDesktop.Draw;
   FDesktop.DrawView;
+  CheckEquals(6, MessageDlg('Please Verify', 'There is a gray background on the Screen',
+    mtConfirmation, mbYesNo, 0), 'Err: No confirm');
+
   LV:= TFrame.Create(FDesktop,rect(5,5,60,20));
-  for I := 0 to 100 do
-    begin
-      FDesktop.GetEvent(evt);
-      FDesktop.HandleEvent(evt);
-    end;
+  lv.parent := FDesktop;
+  lv.setstate(sfVisible,true);
+  lv.setstate(sfExposed,true);
+  lv.BackgroundChar:=' ';
+
+  FDesktop.Draw;
+  FDesktop.DrawView;
+  CheckEquals(6, MessageDlg('Please Verify', 'There is a LightGray filled rectangle with black borderline on a gray background on the Screen',
+    mtConfirmation, mbYesNo, 0), 'Err: No confirm');
 end;
 
 

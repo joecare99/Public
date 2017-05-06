@@ -59,9 +59,14 @@ const
 {$endif}
 
 type
+
+  { TSearchRecC }
+
   TSearchRecC = Class(TCollectionItem)
      public
      S:TSearchRec;
+     protected
+       function GetDisplayName:ansiString;override;
   end;
 
   { TFileInputLine is a special input line that is used by      }
@@ -577,6 +582,13 @@ begin
   end;
 end;
 
+{ TSearchRecC }
+
+function TSearchRecC.GetDisplayName: ansiString;
+begin
+  Result:=S.Name;
+end;
+
 {****************************************************************************}
 { TDirValidator Object                        }
 {****************************************************************************}
@@ -919,6 +931,7 @@ var
 begin
   NumFiles := 0;
   FileList := TFileCollection.Create(TSearchRecC);
+  try
   AWildCard := ExpandFileName(AWildCard);
   Dir := ExtractFilePath(AWildCard);
   if pos(ListSeparator,AWildCard)>0 then
@@ -1008,6 +1021,10 @@ begin
     event.Data:=0;
     Event.InfoPtr := List.Objects[0];
     TView(Owner).HandleEvent(Event);
+  end;
+
+  finally
+    freeandnil(filelist);
   end;
 end;
 
@@ -2197,12 +2214,15 @@ var sl:TStrings;
   e: TCollectionItem;
 begin
   sl:=TStringList.Create;
+  try
   for e in alist do
     begin
-      sl.AddObject(e.ToString,e);
+      sl.AddObject(e.DisplayName,e);
     end;
   inherited NewList(sl);
-  freeandnil(sl);
+  finally
+   freeandnil(sl);
+ end;
   SearchPos := 0;
 end;
 

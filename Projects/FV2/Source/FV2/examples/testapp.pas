@@ -135,7 +135,7 @@ Var
    WasSet : boolean;
 {$endif DEBUG}
 var
-  views: TComponent;
+  lview: TView;
   flag: Boolean;
 begin
   inherited Idle;
@@ -157,8 +157,8 @@ begin
 {$endif DEBUG}
 
   flag:=false;
-  for views in Desktop do
-    if IsTileable(views) then
+  for lview in Desktop do
+    if IsTileable(lview) then
       begin
        flag := true;
        break;

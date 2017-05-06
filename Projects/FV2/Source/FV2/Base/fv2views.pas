@@ -310,11 +310,12 @@ TYPE
 {                    TView OBJECT - ANCESTOR VIEW OBJECT                    }
 {---------------------------------------------------------------------------}
    PView = ^TView deprecated 'use TView';
-   TView = class(TComponent)
+   TView = class(TComponent,iHasCanvas)
    private
      Fnext : TView;
      FOrigin   : TPoint;                           { View origin }
      FSize     : TPoint;                           { View size }
+     FParent   : TGroup;
      function GetHeight: integer;
      function GetLeft: integer;
      function GetParent: TGroup;
@@ -324,9 +325,12 @@ TYPE
      procedure SetLeft(AValue: integer);
      procedure SetNext(AValue: TView);
      procedure SetOrigin(AValue: TPoint);
+     procedure SetParent(AValue: TGroup);
      procedure SetSize(AValue: TPoint);
      procedure SetTop(AValue: integer);
      procedure SetWidth(AValue: integer);
+   protected
+     function GetCanvas: TTCanvas;virtual;
    published
      property Left :integer read GetLeft write SetLeft;
      property Top :integer read GetTop write SetTop;
@@ -348,7 +352,8 @@ TYPE
       BackgroundChar : Char;
       property Origin   : TPoint read FOrigin write SetOrigin;                           { View origin }
       property Size     : TPoint read FSize write SetSize;                           { View size }
-      Property Parent   : TGroup read GetParent;
+      Property Parent   : TGroup read GetParent write SetParent;
+      Property Canvas   : TTCanvas read GetCanvas;
 
       constructor create(Aowner: TComponent; Bounds: TRect);reintroduce;
       constructor Load(aOwner: TComponent; var S: TStream);
@@ -471,12 +476,14 @@ TYPE
   { TGroupEnumerator }
 
   TGroupEnumerator = class
-  private
+  protected
     FGroup: TGroup;
+    FLowToHigh:boolean;
     FPosition: Integer;
-  public
-    constructor Create(AGroup: TGroup);
     function GetCurrent: TView;
+  public
+    constructor Create(AGroup: TGroup; aLowToHigh: boolean);
+    function GetEnumerator: TGroupEnumerator;
     function MoveNext: Boolean;
     property Current: TView read GetCurrent;
   end;
@@ -485,13 +492,20 @@ TYPE
    TGroup = class(TView)
    private
      FCanvas:TTCanvas;
+     FViews: TFPList;    // the child views
+     function GetViews(index: integer): TView;
+     function GetViewsCount: integer;
      procedure SetLast(AValue: TView);
-      public
+   protected
+     Function GetCanvas:TTCanvas;override;
+   public
          Phase   : (phFocused, phPreProcess, phPostProcess);
          EndState: Word;                              { Modal result }
          Current : TView;                             { Selected subview }
 //         Buffer  : PVideoBuf;                         { Speed up buffer }
-        property canvas:TTCanvas read Fcanvas ;
+      property Canvas;
+      property Views[index:integer]:TView read GetViews;
+      Property ViewsCount:integer read GetViewsCount;
       constructor create(aOwner: TComponent; Bounds: TRect);
       constructor Load(aOwner: TComponent; var S: TStream);
       DESTRUCTOR Destroy; Override;
@@ -534,6 +548,10 @@ TYPE
       procedure AfterInsert({%H-}P: TView); virtual;
       procedure BeforeDelete({%H-}P: TView); virtual;
       procedure AfterDelete({%H-}P: TView); virtual;
+      // enumerators
+      function GetEnumerator: TGroupEnumerator;
+      function GetEnumeratorReverse: TGroupEnumerator;
+
       property Last : TView read GetLast write SetLast;                             { 1st view inserted }
 
       PRIVATE
@@ -541,10 +559,12 @@ TYPE
          Clip    : TRect;
       FUNCTION Indexof (P: TView): Sw_Integer;
       FUNCTION FindNext (Forwards: Boolean): TView;
-      FUNCTION FirstMatch (AState: Word; AOptions: Word): TView;
+      FUNCTION FirstMatch (AState: Word; AOptions: Word): TView;deprecated;
       PROCEDURE ResetCurrent;
       PROCEDURE RemoveView (P: TView);
-      PROCEDURE InsertView (P, {%H-}Target: TView);
+      PROCEDURE InsertView (P, {%H-}Target: TView); overload;
+      PROCEDURE InsertView (P : TView;Index:integer); overload;
+      PROCEDURE InsertView (P : TView); overload;
       PROCEDURE SetCurrent (P: TView; Mode: SelectMode);
       procedure DrawSubViews;
    END;
@@ -996,25 +1016,6 @@ BEGIN
  $endif DEBUG}
 END;
 
-{ TGroupEnumerator }
-
-constructor TGroupEnumerator.Create(AGroup: TGroup);
-begin
-  FGroup := AGroup;
-  FPosition:=0;
-end;
-
-function TGroupEnumerator.GetCurrent: TView;
-begin
-  result := TView(FGroup.Components[FPosition])
-end;
-
-function TGroupEnumerator.MoveNext: Boolean;
-begin
-  inc(FPosition);
-  result:= FPosition< FGroup.ComponentCount;
-end;
-
 {***************************************************************************}
 {                              OBJECT METHODS                               }
 {***************************************************************************}
@@ -1027,6 +1028,16 @@ procedure TView.SetOrigin(AValue: TPoint);
 begin
   if FOrigin.Equals(AValue) then Exit;
   FOrigin:=AValue;
+end;
+
+procedure TView.SetParent(AValue: TGroup);
+begin
+  if Fparent = AValue then exit;
+  if assigned(FParent) then
+    Fparent.RemoveView(self);
+  if assigned(AValue) then
+    Avalue.InsertView(Self);
+  FParent := AValue;
 end;
 
 procedure TView.SetSize(AValue: TPoint);
@@ -1072,13 +1083,20 @@ end;
 
 function TView.GetParent: TGroup;
 begin
-  if Owner.InheritsFrom(TGroup) then
-    result := TGroup(Owner);
+  result := FParent;
 end;
 
 function TView.GetHeight: integer;
 begin
   result := FSize.y;
+end;
+
+function TView.GetCanvas: TTCanvas;
+begin
+  if assigned(Parent) then
+    result:=Parent.canvas
+  else
+    result:=ScreenCanvas;
 end;
 
 function TView.GetTop: integer;
@@ -1109,7 +1127,8 @@ BEGIN
    Inherited Create(Aowner);                                    { Call ancestor }
    DragMode := dmLimitLoY;                            { Default drag mode }
    HelpCtx := hcNoContext;                            { Clear help context }
-   State := sfVisible;                                { Default state }
+   State := sfVisible;  { Default state }
+   FParent :=nil;
    EventMask := evMouseDown + evKeyDown + evCommand;  { Default event masks }
    BackgroundChar := ' ';
    SetBounds(Bounds);                                 { Set view bounds }
@@ -2109,13 +2128,69 @@ END;
 {                       TView OBJECT PRIVATE METHODS                        }
 {***************************************************************************}
 
+
+{ TGroupEnumerator }
+
+constructor TGroupEnumerator.Create(AGroup: TGroup; aLowToHigh: boolean);
+begin
+  FGroup := AGroup;
+  FLowToHigh:=aLowToHigh;
+  if aLowToHigh then
+  FPosition:=-1
+  else
+  FPosition:=AGroup.ViewsCount;
+end;
+
+function TGroupEnumerator.GetCurrent: TView;
+begin
+  result := FGroup.Views[FPosition]
+end;
+
+function TGroupEnumerator.GetEnumerator: TGroupEnumerator;
+begin
+  result := self;
+end;
+
+function TGroupEnumerator.MoveNext: Boolean;
+begin
+  if FLowToHigh then
+  begin
+  inc(FPosition);
+  result:= FPosition< FGroup.ViewsCount;
+  end
+  else
+  begin
+  dec(FPosition);
+  result:= FPosition>=0;
+  end;
+end;
+
+
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                          TGroup OBJECT METHODS                            }
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 
 procedure TGroup.SetLast(AValue: TView);
 begin
-  InsertComponent(AValue);
+  InsertView(AValue);
+end;
+
+function TGroup.GetViews(index: integer): TView;
+begin
+  if assigned(FViews) then
+  result := TView(FViews[index])
+  else
+  result := nil;
+end;
+
+function TGroup.GetViewsCount: integer;
+begin
+  result := FViews.Count;
+end;
+
+function TGroup.GetCanvas: TTCanvas;
+begin
+  Result:=FCanvas;
 end;
 
 {--TGroup-------------------------------------------------------------------}
@@ -2127,6 +2202,7 @@ begin
   Options := Options OR (ofSelectable + ofBuffered); { Set options }
   GetExtent(Clip);                                   { Get clip extents }
   FCanvas:=TTCanvas.Create(Clip);
+  FViews:=TFPList.Create;
   EventMask := $FFFF;                                { See all events }
 end;
 
@@ -2140,8 +2216,10 @@ VAR I: Sw_Word;
     OwnerSave: TGroup;
 
 BEGIN
-   Inherited;                                 { Call ancestor }
+   Inherited;                                         { Call ancestor }
    GetExtent(Clip);                                   { Get view extents }
+   FCanvas:=TTCanvas.Create(Clip);
+   FViews:=TFPList.Create;
    OwnerSave := OwnerGroup;                           { Save current group }
    OwnerGroup := Self;                               { We are current group }
    Count := 0;                                        { Zero count value }
@@ -2164,9 +2242,12 @@ END;
 destructor TGroup.Destroy;
 VAR P : TView;
 BEGIN
-   for TComponent(P) in self do                        { Start on last }
-     P.Hide;                                          { Hide each view }
-   Hide;                                              { Hide the view }
+   for pointer(P) in self.FViews do                        { Start on last }
+     begin
+       P.Hide;                                          { Hide each view }
+     end;
+   Hide;                                            { Hide the view }
+   FreeandNil(FViews);
    FreeAndNil(FCanvas);
    Inherited Destroy;                                    { Call ancestor }
 END;
@@ -2176,16 +2257,16 @@ END;
 {---------------------------------------------------------------------------}
 function TGroup.First: TView;
 BEGIN
-  if ComponentCount >0 then
-    result:=TView(Components[0])                       { Return first view }
+  if FViews.Count >0 then
+    result:=TView(FViews.First)                       { Return first view }
   else
     result := nil;
 END;
 
 function TGroup.GetLast: TView;
 begin
-  if ComponentCount>0 then
-    result := TView(Components[ComponentCount-1])
+  if FViews.Count>0 then
+    result := TView(FViews.Last)
   else
     result := nil;
 end;
@@ -2228,7 +2309,7 @@ function TGroup.DataSize: Sw_Word;
 VAR  P: TView;
 BEGIN
    result := 0;                                        { Zero totals count }
-   for TComponent(P) in self do                            { Loop trough subviews }
+   for P in self do                                  { Loop trough subviews }
       result := result + P.DataSize;                  { Add view size }
 END;
 
@@ -2273,7 +2354,7 @@ END;
 function TGroup.Valid(Command: Sw_Word): Boolean;
 
 var
-  zView: TComponent;
+  zView: TView;
 BEGIN
    result := True;                                     { Preset valid }
    If (Command = cmReleasedFocus) Then Begin          { Release focus cmd }
@@ -2282,7 +2363,7 @@ BEGIN
          result := Current.Valid(Command);            { Validate command }
    End Else begin
      for zView in self do
-       result := result and  TView(zView).Valid(Command)     { Check first valid }
+       result := result and  zView.Valid(Command)     { Check first valid }
    end;
 END;
 
@@ -2293,8 +2374,8 @@ function TGroup.FocusNext(Forwards: Boolean): Boolean;
 VAR P: TView;
 BEGIN
    P := FindNext(Forwards);                           { Find next view }
-   FocusNext := True;                                 { Preset true }
-   If (P <> Nil) Then FocusNext := P.Focus;          { Check next focus }
+   result := True;                                 { Preset true }
+   If (P <> Nil) Then result := P.Focus;          { Check next focus }
 END;
 
 
@@ -2302,7 +2383,7 @@ procedure TGroup.DrawSubViews;
 
 var p : TView;
 begin
-  for TComponent(P) in self do
+  for P in self do
       P.DrawView;
 end;
 
@@ -2334,11 +2415,11 @@ END;
 procedure TGroup.Awaken;
 
 var
-  zView: TComponent;
+  zView: TView;
 
 BEGIN
    For zView in self do
-      TView(zView).Awaken;{ Awaken each view }
+      zView.Awaken;{ Awaken each view }
 END;
 
 {--TGroup-------------------------------------------------------------------}
@@ -2358,12 +2439,10 @@ END;
 procedure TGroup.SelectDefaultView;
 VAR P: TView;
 BEGIN
-   P := Last;                                         { Start at last }
-   While (P <> Nil) Do Begin
+   for P in self do
      If P.GetState(sfDefault) Then Begin             { Search 1st default }
        P.Select;                                     { Select default view }
-       P := Nil;                                      { Force kick out }
-     End Else P := P.PrevView;                       { Prior subview }
+       break;                                      { Force kick out }
    End;
 END;
 
@@ -2394,6 +2473,16 @@ begin
   { abstract }
 end;
 
+function TGroup.GetEnumerator: TGroupEnumerator;
+begin
+  result := TGroupEnumerator.Create(self,true);
+end;
+
+function TGroup.GetEnumeratorReverse: TGroupEnumerator;
+begin
+  result := TGroupEnumerator.Create(self,false);
+end;
+
 {--TGroup-------------------------------------------------------------------}
 {  Insert -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 29Sep99 LdB            }
 {---------------------------------------------------------------------------}
@@ -2401,10 +2490,10 @@ procedure TGroup.Insert(P: TView);
 var
   PP: TView;
 BEGIN
-  if not assigned(p.Owner) or (P.Owner <> self) then
+  if not assigned(p.Parent) or (P.parent <> self) then
    begin
      BeforeInsert(P);
-     inherited InsertComponent(P);
+     InsertView(P,0);
      AfterInsert(P);
      PP := P.Prev{%H-};
      if assigned(PP) and (PP.Fnext = P) then
@@ -2421,7 +2510,7 @@ BEGIN
    BeforeDelete(P);
    SaveState := P.State;                             { Save state }
    P.Hide;                                           { Hide the view }
-   RemoveComponent(P);
+   FViews.Remove(P);
    if SaveState and sfVisible <> 0 then
      P.Show;
    AfterDelete(P);
@@ -2491,14 +2580,14 @@ procedure TGroup.SetState(AState: Word; Enable: Boolean);
     END;
 
 var
-  zview: TComponent;
+  zview: TView;
 BEGIN
    Inherited SetState(AState, Enable);                { Call ancestor }
    Case AState Of
      sfActive, sfDragging: Begin
          Lock;                                        { Lock the view }
          For zview in self do
-           TView(zview).SetState(AState,Enable);      { Set each subview }
+           zview.SetState(AState,Enable);      { Set each subview }
          UnLock;                                      { Unlock the view }
        End;
      sfFocused: Begin
@@ -2516,10 +2605,10 @@ END;
 {  GetData -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 29Mar98 LdB           }
 {---------------------------------------------------------------------------}
 procedure TGroup.GetData(const Rec: TStream);
-VAR  P: TComponent;
+VAR  P: TView;
 BEGIN
    for P in self do
-     TView(P).GetData(rec);              { Get data }
+     P.GetData(rec);              { Get data }
 END;
 
 {--TGroup-------------------------------------------------------------------}
@@ -2543,7 +2632,7 @@ procedure TGroup.Store(var S: TStream);
    END;
 
 VAR Count: Word; OwnerSave: TGroup;
-  z: TComponent;
+  z: TView;
 
 BEGIN
    inherited Store(S);                                    { Call view store }
@@ -2552,7 +2641,7 @@ BEGIN
    Count := IndexOf(Last);                            { Subview count }
    S.Write(Count, SizeOf(Count));                     { Write the count }
    For z in self do
-    DoPut(TView(z));                                   { Put each in stream }
+    DoPut(z);                                   { Put each in stream }
    PutSubViewPtr(S, Current);                         { Current on stream }
    OwnerGroup := OwnerSave;                           { Restore ownergroup }
 END;
@@ -2592,14 +2681,14 @@ procedure TGroup.HandleEvent(var Event: TEvent);
    END;
 
 var
-  z: TComponent;
+  z: TView;
 BEGIN
    Inherited HandleEvent(Event);                      { Call ancestor }
    If (Event.What = evNothing) Then Exit;             { No valid event exit }
    If (Event.What AND FocusedEvents <> 0) Then Begin  { Focused event }
      Phase := phPreProcess;                           { Set pre process }
      For z in self do
-       DoHandleEvent(TView(z));                         { Pass to each view }
+       DoHandleEvent(z);                         { Pass to each view }
      Phase := phFocused;                              { Set focused }
      DoHandleEvent(Current);                          { Pass to current }
      Phase := phPostProcess;                          { Set post process }
@@ -2626,7 +2715,7 @@ END;
 {---------------------------------------------------------------------------}
 procedure TGroup.ChangeBounds(var Bounds: TRect);
 VAR D: TPoint;
-  z: TComponent;
+  z: TView;
 
    PROCEDURE DoCalcChange (P: TView);
    VAR R: TRect;
@@ -2647,7 +2736,7 @@ BEGIN
      GetExtent(Clip);                                 { Get new clip extents }
      Lock;                                            { Lock drawing }
      For z in self do
-       DoCalcChange(Tview(z));                          { Change each view }
+       DoCalcChange(z);                          { Change each view }
      UnLock;                                          { Unlock drawing }
    End;
 END;
@@ -2661,7 +2750,7 @@ BEGIN
    Index := 0;                                        { Zero index value }
    S.Read(Index, SizeOf(Index));                      { Read view index }
    If (Index > 0) Then
-     P := TView(Components[index-1])
+     P := Views[index-1]
    Else
    P := Nil;                        { Return nil }
 END;
@@ -2688,42 +2777,29 @@ END;
 function TGroup.Indexof(P: TView): Sw_Integer;
 VAR I: Sw_Integer;
 BEGIN
-   result := -1;
-   for I := 0 to ComponentCount-1 do
-     if Components[I] = P then
-       begin
-         Result := I;
-         break;
-       end;
+   result := FViews.IndexOf(p);
 END;
 
 {--TGroup-------------------------------------------------------------------}
 {  FindNext -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 23Sep99 LdB          }
 {---------------------------------------------------------------------------}
 function TGroup.FindNext(Forwards: Boolean): TView;
-VAR P: TView;
-  Flag: Boolean;
+VAR idx: Integer;
 BEGIN
    Result := Nil;    { Preset nil return }
-   Flag := false;
-   for TComponent(P) in self do
-     Begin                             { Has current view }
-     if P = Current then
-      begin
-        flag := true;  		       	     	    { Start on current }
-        if not forwards and assigned(result) then
-          exit;
-      end
-    else
-      if ((P.State AND (sfVisible+sfDisabled) = sfVisible) AND
-            (P.Options AND ofSelectable <> 0)) then    { Not singular select }
-        begin
-          if not assigned(result) or flag then
-            result:=P;
-          if forwards and flag then
-            exit;            { Return result }
-        end;
-   End;
+   idx := FViews.indexof(Current);
+   repeat
+     if Forwards then
+       inc(idx)
+     else
+       dec(idx);
+
+     if (idx>=0) and (idx<FViews.Count) then
+      if ((views[idx].State AND (sfVisible or sfDisabled) = sfVisible) AND
+            (views[idx].Options AND ofSelectable <> 0)) then    { Not singular select }
+           result:=views[idx];
+   until (result <>nil) or (idx<0) or (idx>=FViews.Count)
+
 END;
 
 {--TGroup-------------------------------------------------------------------}
@@ -2741,7 +2817,7 @@ var
   zView: TView;
 BEGIN
   result := nil;
-  for TComponent(zView) in self do
+  for zView in self do
     if Matches(zView) then
        begin
          result := zView;                 { Return first match }
@@ -2767,7 +2843,7 @@ END;
 procedure TGroup.RemoveView(P: TView);
 //VAR Q: TView;
 BEGIN
-  inherited RemoveComponent(P);
+  FViews.Remove(P);
    //If (P <> Nil) AND (Last <> Nil) Then Begin         { Check view is valid }
    //  Q := Last;                                       { Start on last view }
    //  While (Q.Next <> P) AND (Q.Next <> Last) Do
@@ -2787,7 +2863,7 @@ END;
 procedure TGroup.InsertView(P, Target: TView);
 BEGIN
    If (P <> Nil) Then Begin                           { Check view is valid }
-     InsertComponent(P);
+     InsertView(P,FViews.indexof(target)+1);
 (*     P.Owner := Self;                               { Views owner is us }
      If (Target <> Nil) Then Begin                    { Valid target }
        Target := Target.Prev;                        { 1st part of chain }
@@ -2802,6 +2878,30 @@ BEGIN
      End; *)
    End;
 END;
+
+procedure TGroup.InsertView(P: TView; Index: integer);
+var
+  SaveState: Word;
+begin
+   If (P <> Nil) Then Begin                           { Check view is valid }
+     If (P.Options AND ofCenterX <> 0) Then           { Centre on x axis }
+       P.FOrigin.x := (Size.X - P.Size.X) div 2;
+     If (P.Options AND ofCenterY <> 0) Then           { Centre on y axis }
+       P.FOrigin.Y := (Size.Y - P.Size.Y) div 2;
+     SaveState := P.State;                           { Save view state }
+     P.Hide;                                         { Make sure hidden }
+     FViews.Insert(index,P);
+     p.FParent:=self;
+     If (SaveState AND sfVisible <> 0) Then P.Show;   { Show the view }
+     If (State AND sfActive <> 0) Then                { Was active before }
+       P.SetState(sfActive , True);                   { Make active again }
+   end;
+end;
+
+procedure TGroup.InsertView(P: TView);
+begin
+  Insertview(P,FViews.count);
+end;
 
 {--TGroup-------------------------------------------------------------------}
 {  SetCurrent -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 23Sep99 LdB        }
@@ -2859,7 +2959,7 @@ begin
   FrameMask[0]:=InitFrame[n];
   FillChar(FrameMask[1],Size.X-2,InitFrame[n+1]);
   FrameMask[Size.X-1]:=InitFrame[n+2];
-  for Tcomponent(CurrView) in TGroup(Owner) do
+  for CurrView in TGroup(Owner) do
    if (CurrView=TView(Self)) then
       break
    else
@@ -2931,10 +3031,11 @@ const
   ClickC:array[boolean] of char=('*',#15);
 var
   CFrame, CTitle: Word;
-  F, I, L: Sw_Integer;
+  F, I, L, OwnerNumber: Sw_Integer;
   B: TDrawBuffer;
   Title: TTitleStr;
   Min, Max: TPoint;
+  OwnerFlags: Byte;
 
 begin
   if State and sfDragging <> 0 then
@@ -2958,20 +3059,30 @@ begin
   CFrame := GetColor(CFrame);
   CTitle := GetColor(CTitle);
   L := Width - 10;
-  if TWindow(Owner).Flags and (wfClose+wfZoom) <> 0 then
+  if owner.InheritsFrom(Twindow) then
+  begin
+    OwnerFlags := TWindow(Owner).Flags;
+    OwnerNumber := TWindow(Owner).Number;
+  end
+  else
+  begin
+    OwnerFlags := (wfClose+wfZoom);
+    OwnerNumber:= wnNoNumber;
+  end;
+  if OwnerFlags and (wfClose+wfZoom) <> 0 then
    Dec(L,6);
   FrameLine(B, 0, F, Byte(CFrame));
-  if (TWindow(Owner).Number <> wnNoNumber) and
-     (TWindow(Owner).Number < 10) then
+  if (OwnerNumber <> wnNoNumber) and
+     (OwnerNumber < 10) then
    begin
      Dec(L,4);
-     if TWindow(Owner).Flags and wfZoom <> 0 then
+     if OwnerFlags and wfZoom <> 0 then
       I := 7
      else
       I := 3;
-     WordRec(B[Width - I]).Lo := TWindow(Owner).Number + $30;
+     WordRec(B[Width - I]).Lo := OwnerNumber + $30;
    end;
-  if Owner <> nil then
+  if assigned(Owner) and  owner.InheritsFrom(Twindow) then
    Title := TWindow(Owner).GetTitle(L)
   else
    Title := '';
@@ -2989,12 +3100,12 @@ begin
    end;
   if State and sfActive <> 0 then
   begin
-    if TWindow(Owner).Flags and wfClose <> 0 then
+    if OwnerFlags and wfClose <> 0 then
       if FrameMode and fmCloseClicked = 0 then
         MoveCStr(B[2], '[~Ч~]', CFrame)
       else
         MoveCStr(B[2], '[~'+ClickC[LowAscii]+'~]', CFrame);
-    if TWindow(Owner).Flags and wfZoom <> 0 then
+    if OwnerFlags and wfZoom <> 0 then
     begin
       MoveCStr(B[Width - 5], '[~'+LargeC[LowAscii]+'~]', CFrame);
       TView(Owner).SizeLimits(Min, Max);
@@ -3013,7 +3124,7 @@ begin
   end;
   FrameLine(B, Size.Y - 1, F + 6, Byte(CFrame));
   if State and sfActive <> 0 then
-    if TWindow(Owner).Flags and wfGrow <> 0 then
+    if OwnerFlags and wfGrow <> 0 then
       MoveCStr(B[Width - 2], '~ды~', CFrame);
   WriteLine(0, Size.Y - 1, Size.X, 1, B);
 end;

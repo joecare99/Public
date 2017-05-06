@@ -1,0 +1,52 @@
+object MainForm: TMainForm
+  Left = 254
+  Top = 134
+  Caption = 'List Text Files'
+  ClientHeight = 254
+  ClientWidth = 427
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  Menu = MainMenu
+  PixelsPerInch = 96
+  object MemoText: TMemo
+    Left = 0
+    Top = 0
+    Width = 427
+    Height = 254
+    Align = alClient
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Courier New'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    ScrollBars = ssBoth
+    TabOrder = 0
+  end
+  object MainMenu: TMainMenu
+    Left = 8
+    Top = 8
+    object File1: TMenuItem
+      Caption = '&File'
+      object Open1: TMenuItem
+        Caption = '&Open'
+        ShortCut = 114
+        OnClick = Open1Click
+      end
+      object Exit1: TMenuItem
+        Caption = 'E&xit'
+        OnClick = Exit1Click
+      end
+    end
+  end
+  object OpenDialog: TOpenDialog
+    Filter = 'Text files (*.txt)|*.txt|Pascal files (*.pas)|*.pas|C and C++ files (*.c??, *.h)|*.c??,*.h|All files (*.*)|*.*'
+    Left = 48
+    Top = 8
+  end
+end
