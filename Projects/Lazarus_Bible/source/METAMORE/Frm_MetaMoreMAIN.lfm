@@ -1,0 +1,57 @@
+object MainForm: TMainForm
+  Left = 236
+  Top = 139
+  Caption = 'MainForm'
+  ClientHeight = 254
+  ClientWidth = 427
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  Menu = MainMenu1
+  PixelsPerInch = 96
+  object Image1: TImage
+    Left = 0
+    Top = 0
+    Width = 427
+    Height = 254
+    Align = alClient
+    Center = True
+  end
+  object MainMenu1: TMainMenu
+    Left = 24
+    Top = 8
+    object FileMenu: TMenuItem
+      Caption = '&File'
+      object FileOpen: TMenuItem
+        Caption = '&Open...'
+        OnClick = FileOpenClick
+      end
+      object FileSaveAs: TMenuItem
+        Caption = 'Save as...'
+        OnClick = FileSaveAsClick
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object FileExit: TMenuItem
+        Caption = 'E&xit'
+        OnClick = FileExitClick
+      end
+    end
+  end
+  object OpenDialog1: TOpenDialog
+    DefaultExt = 'wmf'
+    Filter = 'Meta files (*.Wmf)|*.Wmf|Bitmap files (*.Bmp)|*.Bmp|Icon files (*.Ico)|*.Ico|All files (*.*)|*.*'
+    Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist]
+    Left = 96
+    Top = 8
+  end
+  object SaveDialog1: TSaveDialog
+    Options = [ofOverwritePrompt, ofPathMustExist]
+    Left = 168
+    Top = 8
+  end
+end

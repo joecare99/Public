@@ -1,0 +1,27 @@
+object ChildForm: TChildForm
+  Left = 308
+  Top = 207
+  Caption = 'MDI Child'
+  ClientHeight = 273
+  ClientWidth = 427
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  Position = poDefault
+  Visible = True
+  OnClose = FormClose
+  PixelsPerInch = 96
+  object Memo1: TMemo
+    Left = 0
+    Top = 0
+    Width = 427
+    Height = 273
+    Align = alClient
+    ScrollBars = ssBoth
+    TabOrder = 0
+  end
+end

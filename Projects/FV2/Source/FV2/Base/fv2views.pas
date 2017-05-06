@@ -324,12 +324,12 @@ TYPE
      procedure SetHeight(AValue: integer);
      procedure SetLeft(AValue: integer);
      procedure SetNext(AValue: TView);
-     procedure SetOrigin(AValue: TPoint);
      procedure SetParent(AValue: TGroup);
      procedure SetSize(AValue: TPoint);
      procedure SetTop(AValue: integer);
      procedure SetWidth(AValue: integer);
    protected
+     procedure SetOrigin(AValue: TPoint);virtual;
      function GetCanvas: TTCanvas;virtual;
    published
      property Left :integer read GetLeft write SetLeft;
@@ -498,6 +498,7 @@ TYPE
      procedure SetLast(AValue: TView);
    protected
      Function GetCanvas:TTCanvas;override;
+      procedure SetOrigin(AValue: TPoint);override;
    public
          Phase   : (phFocused, phPreProcess, phPostProcess);
          EndState: Word;                              { Modal result }
@@ -1605,9 +1606,10 @@ begin
   if assigned(Owner) then
   with Tgroup(Owner) do
     begin
-  Clip.Intersect(R);
-  DrawSubViews;
-  GetExtent(Clip);
+      GetExtent(Clip);
+      Clip.Intersect(R);
+      DrawSubViews;
+      GetExtent(Clip);
     end;
 end;
 
@@ -2193,6 +2195,16 @@ begin
   Result:=FCanvas;
 end;
 
+procedure TGroup.SetOrigin(AValue: TPoint);
+var
+  r: TRect;
+begin
+  inherited SetOrigin(AValue);
+  GetExtent(r);
+  if assigned(FCanvas) then
+    FCanvas.Resize(r);
+end;
+
 {--TGroup-------------------------------------------------------------------}
 {  Init -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 15Jul99 LdB              }
 {---------------------------------------------------------------------------}
@@ -2242,7 +2254,7 @@ END;
 destructor TGroup.Destroy;
 VAR P : TView;
 BEGIN
-   for pointer(P) in self.FViews do                        { Start on last }
+   for P in self do                        { Start on last }
      begin
        P.Hide;                                          { Hide each view }
      end;
@@ -2429,7 +2441,10 @@ procedure TGroup.Draw;
 BEGIN
    DrawSubViews;
 //   WriteBuf(0,0,Size.X,Size.Y,FCanvas);
-   Fcanvas.Flush(rect(0,0,ScreenMode.Col,ScreenMode.Row),false);
+   if assigned(Parent) then
+     parent.Canvas.CopyBuffer(left,top,fcanvas)
+   else
+     Fcanvas.Flush(rect(0,0,ScreenMode.Col,ScreenMode.Row),false);
 END;
 
 

@@ -348,7 +348,8 @@ end;
 
 destructor TMenuItem.destroy;
 begin
-  freeandnil(SubMenu);
+
+  //freeandnil(SubMenu);
   inherited destroy;
 end;
 
@@ -1491,6 +1492,7 @@ function NewSubMenu(Name: TMenuStr; AHelpCtx: Word; SubMenu: TMenu;
   Next: TMenuItem): TMenuItem;
 VAR P: TMenuItem;
   r: TRect;
+  q: TView;
 BEGIN
    If (Name <> '') AND (SubMenu <> Nil) Then Begin
      P := TMenuItem.create(nil,r);                                            { Allocate memory }
@@ -1499,6 +1501,12 @@ BEGIN
        P.caption := Name;                       { Hold submenu name }
        P.HelpCtx := AHelpCtx;                        { Set help context }
        P.SubMenu := SubMenu;                         { Hold next submenu }
+       q:=SubMenu;
+       while assigned(q) do
+         begin
+           p.InsertComponent(q);
+           q:=q.next;
+         end;
      End;
      NewSubMenu := P;                                 { Return submenu }
    End Else NewSubMenu := Next;                       { Return next item }

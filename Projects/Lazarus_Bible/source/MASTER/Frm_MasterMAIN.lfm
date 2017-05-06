@@ -1,0 +1,257 @@
+object MainForm: TMainForm
+  Left = 263
+  Height = 283
+  Top = 171
+  Width = 373
+  ActiveControl = Panel1
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Master-Detail Database Demonstration'
+  ClientHeight = 283
+  ClientWidth = 373
+  Color = clBtnFace
+  Font.Color = clBlack
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  LCLVersion = '1.4.0.4'
+  object Panel1: TPanel
+    Left = 0
+    Height = 41
+    Top = 0
+    Width = 373
+    Align = alTop
+    ClientHeight = 41
+    ClientWidth = 373
+    TabOrder = 0
+    object DBNavigator: TDBNavigator
+      Left = 8
+      Height = 25
+      Top = 8
+      Width = 240
+      BevelOuter = bvNone
+      ChildSizing.EnlargeHorizontal = crsScaleChilds
+      ChildSizing.EnlargeVertical = crsScaleChilds
+      ChildSizing.ShrinkHorizontal = crsScaleChilds
+      ChildSizing.ShrinkVertical = crsScaleChilds
+      ChildSizing.Layout = cclLeftToRightThenTopToBottom
+      ChildSizing.ControlsPerLine = 100
+      ClientHeight = 25
+      ClientWidth = 240
+      DataSource = MasterSource
+      Options = []
+      TabOrder = 0
+    end
+    object BitBtn1: TBitBtn
+      Left = 272
+      Height = 25
+      Top = 8
+      Width = 89
+      Kind = bkClose
+      TabOrder = 1
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Height = 242
+    Top = 41
+    Width = 373
+    Align = alClient
+    BevelInner = bvLowered
+    BorderWidth = 4
+    Caption = 'Panel2'
+    ClientHeight = 242
+    ClientWidth = 373
+    TabOrder = 1
+    object ScrollBox: TScrollBox
+      Left = 6
+      Height = 230
+      Top = 6
+      Width = 361
+      HorzScrollBar.Range = 302
+      VertScrollBar.Range = 134
+      Align = alClient
+      AutoScroll = False
+      BorderStyle = bsNone
+      ClientHeight = 213
+      ClientWidth = 344
+      TabOrder = 0
+      object Label1: TLabel
+        Left = 278
+        Height = 13
+        Top = 6
+        Width = 61
+        Caption = 'CUR_PRICE'
+        FocusControl = EditCUR_PRICE
+        ParentColor = False
+      end
+      object Label2: TLabel
+        Left = 73
+        Height = 13
+        Top = 6
+        Width = 59
+        Caption = 'EXCHANGE'
+        FocusControl = EditEXCHANGE
+        ParentColor = False
+      end
+      object Label3: TLabel
+        Left = 154
+        Height = 13
+        Top = 6
+        Width = 52
+        Caption = 'CO_NAME'
+        FocusControl = EditCO_NAME
+        ParentColor = False
+      end
+      object Label4: TLabel
+        Left = 12
+        Height = 13
+        Top = 6
+        Width = 44
+        Caption = 'SYMBOL'
+        FocusControl = EditSYMBOL
+        ParentColor = False
+      end
+      object Label5: TLabel
+        Left = 14
+        Height = 13
+        Top = 48
+        Width = 59
+        Caption = 'P_E_RATIO'
+        FocusControl = EditP_E_RATIO
+        ParentColor = False
+      end
+      object Label6: TLabel
+        Left = 95
+        Height = 13
+        Top = 48
+        Width = 52
+        Caption = 'YRL_LOW'
+        FocusControl = EditYRL_LOW
+        ParentColor = False
+      end
+      object Label7: TLabel
+        Left = 177
+        Height = 13
+        Top = 48
+        Width = 54
+        Caption = 'YRL_HIGH'
+        FocusControl = EditYRL_HIGH
+        ParentColor = False
+      end
+      object EditCUR_PRICE: TDBEdit
+        Left = 278
+        Height = 21
+        Top = 21
+        Width = 50
+        DataField = 'CUR_PRICE'
+        DataSource = MasterSource
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 0
+      end
+      object EditEXCHANGE: TDBEdit
+        Left = 73
+        Height = 21
+        Top = 21
+        Width = 40
+        DataField = 'EXCHANGE'
+        DataSource = MasterSource
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 1
+      end
+      object EditCO_NAME: TDBEdit
+        Left = 154
+        Height = 21
+        Top = 21
+        Width = 100
+        DataField = 'CO_NAME'
+        DataSource = MasterSource
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 2
+      end
+      object EditSYMBOL: TDBEdit
+        Left = 12
+        Height = 21
+        Top = 21
+        Width = 35
+        DataField = 'SYMBOL'
+        DataSource = MasterSource
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 3
+      end
+      object EditP_E_RATIO: TDBEdit
+        Left = 14
+        Height = 21
+        Top = 63
+        Width = 50
+        DataField = 'P_E_RATIO'
+        DataSource = MasterSource
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 4
+      end
+      object EditYRL_LOW: TDBEdit
+        Left = 95
+        Height = 21
+        Top = 63
+        Width = 50
+        DataField = 'YRL_LOW'
+        DataSource = MasterSource
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 5
+      end
+      object EditYRL_HIGH: TDBEdit
+        Left = 177
+        Height = 21
+        Top = 63
+        Width = 50
+        DataField = 'YRL_HIGH'
+        DataSource = MasterSource
+        CharCase = ecNormal
+        MaxLength = 0
+        TabOrder = 6
+      end
+      object DBGrid1: TDBGrid
+        Left = 8
+        Height = 129
+        Top = 96
+        Width = 345
+        Color = clWindow
+        Columns = <>
+        DataSource = DetailSource
+        TabOrder = 7
+        TitleFont.Color = clBlack
+        TitleFont.Height = -11
+        TitleFont.Name = 'MS Sans Serif'
+      end
+    end
+  end
+  object MasterSource: TDataSource
+    DataSet = MasterTable
+    left = 127
+    top = 189
+  end
+  object DetailSource: TDataSource
+    DataSet = DetailTable
+    left = 293
+    top = 189
+  end
+  object MasterTable: TSQLQuery
+    FieldDefs = <>
+    Params = <>
+    left = 52
+    top = 189
+  end
+  object DetailTable: TSQLQuery
+    FieldDefs = <>
+    Params = <>
+    left = 218
+    top = 189
+  end
+end

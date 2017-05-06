@@ -1,0 +1,72 @@
+object MainForm: TMainForm
+  Left = 275
+  Top = 136
+  Caption = 'Memo Pad'
+  ClientHeight = 254
+  ClientWidth = 427
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  Menu = MainMenu1
+  PopupMenu = PopupMenu1
+  OnActivate = FormActivate
+  OnClose = FormClose
+  PixelsPerInch = 96
+  object MemoLabel: TLabel
+    Left = 16
+    Top = 32
+    Width = 52
+    Height = 16
+    Caption = 'Memos:'
+  end
+  object Memo1: TMemo
+    Left = 16
+    Top = 56
+    Width = 393
+    Height = 169
+    TabOrder = 0
+  end
+  object MainMenu1: TMainMenu
+    Left = 304
+    object File1: TMenuItem
+      Caption = '&File'
+      object Save1: TMenuItem
+        Caption = '&Save'
+        ShortCut = 113
+        OnClick = Save1Click
+      end
+      object Exit1: TMenuItem
+        Caption = 'E&xit'
+        OnClick = Exit1Click
+      end
+    end
+    object Help1: TMenuItem
+      Caption = '&Help'
+      object About1: TMenuItem
+        Caption = '&About'
+        ShortCut = 112
+        OnClick = About1Click
+      end
+    end
+  end
+  object PopupMenu1: TPopupMenu
+    Left = 376
+    object About2: TMenuItem
+      Caption = '&About'
+      ShortCut = 112
+      OnClick = About1Click
+    end
+    object Save2: TMenuItem
+      Caption = '&Save'
+      ShortCut = 113
+      OnClick = Save1Click
+    end
+    object Exit2: TMenuItem
+      Caption = 'E&xit'
+      OnClick = Exit1Click
+    end
+  end
+end

@@ -1,0 +1,80 @@
+object MainForm: TMainForm
+  Left = 242
+  Height = 384
+  Top = 73
+  Width = 632
+  Caption = 'Program Memory Information'
+  ClientHeight = 384
+  ClientWidth = 632
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  LCLVersion = '1.4.0.4'
+  object Label1: TLabel
+    Left = 88
+    Height = 24
+    Top = 344
+    Width = 242
+    Caption = 'Program Memory Allocations'
+    Font.Color = clTeal
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    ParentColor = False
+    ParentFont = False
+  end
+  object Button1: TButton
+    Left = 440
+    Height = 32
+    Top = 344
+    Width = 75
+    Caption = 'Show Info'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object BitBtn1: TBitBtn
+    Left = 542
+    Height = 32
+    Top = 344
+    Width = 75
+    Kind = bkClose
+    TabOrder = 1
+  end
+  object Chart1: TChart
+    Left = 0
+    Height = 336
+    Top = 0
+    Width = 628
+    AxisList = <    
+      item
+        Minors = <>
+        Title.LabelFont.Orientation = 900
+      end    
+      item
+        Alignment = calBottom
+        Minors = <>
+      end>
+    Foot.Brush.Color = clBtnFace
+    Foot.Font.Color = clBlue
+    Title.Brush.Color = clBtnFace
+    Title.Font.Color = clBlue
+    Title.Text.Strings = (
+      'TAChart'
+    )
+    ParentColor = False
+    object Series1: TLineSeries
+    end
+    object Series2: TLineSeries
+    end
+    object Series3: TLineSeries
+    end
+    object Series4: TLineSeries
+    end
+    object Series5: TLineSeries
+    end
+    object Series6: TLineSeries
+    end
+    object Series7: TLineSeries
+    end
+  end
+end

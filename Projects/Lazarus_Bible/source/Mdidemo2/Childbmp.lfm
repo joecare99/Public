@@ -1,0 +1,27 @@
+object ChildBmpForm: TChildBmpForm
+  Left = 220
+  Top = 219
+  Caption = 'ChildBmpForm'
+  ClientHeight = 354
+  ClientWidth = 537
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  FormStyle = fsMDIChild
+  Position = poDefault
+  Visible = True
+  OnClose = FormClose
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  object Image1: TImage
+    Left = 0
+    Top = 0
+    Width = 537
+    Height = 354
+    Align = alClient
+    Stretch = True
+  end
+end

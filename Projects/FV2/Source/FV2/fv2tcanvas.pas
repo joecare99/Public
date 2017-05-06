@@ -101,7 +101,8 @@ type
     procedure MoveTo(p: TPoint); virtual;
     procedure Lineto(p: TPoint); virtual;
     // BufferRoutines
-    procedure CopyBuffer(x,y,l:integer; var Buf);
+    procedure CopyBuffer(x,y,l:integer; var Buf);overload;
+    procedure CopyBuffer(x, y: integer; const SourceCanvas: TTCanvas); overload;
     Procedure BrushCopy(r:Trect; out NewBrush:TFV2CustomBrush);
     Procedure DrawBrush(pos:Tpoint;const aBrush:TFV2CustomBrush);
     // properties
@@ -478,6 +479,15 @@ var
 begin
   for xx := 0 to l -1 do
     Pixels[x+xx,y] := TVideoBuf(Buf)[xx];
+end;
+
+procedure TTCanvas.CopyBuffer(x, y: integer; const SourceCanvas:TTCanvas);
+var
+  yy, xx: Integer;
+begin
+  for yy := 0 to SourceCanvas.Height -1 do
+    for xx := 0 to SourceCanvas.Width -1 do
+      Pixels[x+xx,y+yy] := SourceCanvas.Pixels[xx,yy];
 end;
 
 procedure TTCanvas.BrushCopy(r: Trect; out NewBrush: TFV2CustomBrush);

@@ -1,0 +1,98 @@
+object MainForm: TMainForm
+  Left = 261
+  Height = 254
+  Top = 155
+  Width = 427
+  Caption = 'MDI Demonstration'
+  ClientHeight = 254
+  ClientWidth = 427
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  FormStyle = fsMDIForm
+  Menu = MainMenu1
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object MainMenu1: TMainMenu
+    left = 40
+    top = 8
+    object FileMenu: TMenuItem
+      Caption = '&File'
+      OnClick = FileMenuClick
+      object FileNew: TMenuItem
+        Caption = '&New'
+        OnClick = FileNewClick
+      end
+      object FileOpen: TMenuItem
+        Caption = '&Open...'
+        OnClick = FileOpenClick
+      end
+      object FileClose: TMenuItem
+        Caption = '&Close'
+        OnClick = FileCloseClick
+      end
+      object N3: TMenuItem
+        Caption = '-'
+      end
+      object FileSave: TMenuItem
+        Caption = '&Save'
+        OnClick = FileSaveClick
+      end
+      object FileSaveAs: TMenuItem
+        Caption = '&Save as...'
+        OnClick = FileSaveAsClick
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object FileExit: TMenuItem
+        Caption = 'E&xit'
+        OnClick = FileExitClick
+      end
+    end
+    object WindowMenu: TMenuItem
+      Caption = '&Window'
+      OnClick = WindowMenuClick
+      object WindowCascade: TMenuItem
+        Caption = '&Cascade'
+        OnClick = WindowCascadeClick
+      end
+      object WindowTile: TMenuItem
+        Caption = '&Tile'
+        OnClick = WindowTileClick
+      end
+      object WindowArrangeIcons: TMenuItem
+        Caption = '&Arrange icons'
+        OnClick = WindowArrangeIconsClick
+      end
+      object WindowMinimizeAll: TMenuItem
+        Caption = '&Minimize all'
+        OnClick = WindowMinimizeAllClick
+      end
+      object N2: TMenuItem
+        Caption = '-'
+      end
+      object WindowCloseAll: TMenuItem
+        Caption = 'Close all'
+        OnClick = WindowCloseAllClick
+      end
+    end
+    object HelpMenu: TMenuItem
+      Caption = '&Help'
+      object HelpAbout: TMenuItem
+        Caption = '&About'
+        OnClick = HelpAboutClick
+      end
+    end
+  end
+  object OpenDialog: TOpenDialog
+    Filter = 'All files (*.*)|*.*'
+    left = 112
+    top = 8
+  end
+  object SaveDialog: TSaveDialog
+    left = 192
+    top = 8
+  end
+end

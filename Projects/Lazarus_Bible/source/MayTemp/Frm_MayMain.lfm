@@ -1,0 +1,86 @@
+object MainForm: TMainForm
+  Left = 205
+  Height = 437
+  Top = 132
+  Width = 727
+  Caption = 'May Temperatures'
+  ClientHeight = 437
+  ClientWidth = 727
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnActivate = FormActivate
+  OnCreate = FormCreate
+  LCLVersion = '1.2.6.0'
+  object Chart1: TChart
+    Left = 8
+    Height = 345
+    Top = 24
+    Width = 713
+    AxisList = <    
+      item
+        TickLength = 8
+        Minors = <>
+        Title.LabelFont.Orientation = 900
+        Title.Caption = 'Temperature (F)'
+      end    
+      item
+        TickLength = 6
+        Alignment = calBottom
+        Minors = <>
+        Title.Caption = 'Date'
+      end>
+    Foot.Brush.Color = clBtnFace
+    Foot.Font.Color = clBlue
+    Title.Brush.Color = clBtnFace
+    Title.Font.Color = clBlue
+    Title.Text.Strings = (
+      'Key West Temperatures May 1871 - 1996'
+    )
+    ParentColor = False
+    object Series3: TLineSeries
+      Marks.Visible = False
+      Title = 'Record High'
+      OnDrawPointer = Series3DrawPointer
+      Pointer.Visible = False
+    end
+    object Series4: TLineSeries
+      Marks.Visible = False
+      Title = 'Record Low'
+      LinePen.Color = clBlue
+      Pointer.Visible = False
+    end
+    object Series1: TLineSeries
+      Marks.Visible = False
+      Title = 'Normal High'
+      LinePen.Color = 33023
+      Pointer.Visible = False
+    end
+    object Series2: TLineSeries
+      Marks.Visible = False
+      Title = 'Normal Low'
+      Pointer.Visible = False
+    end
+    object Series5: TLineSeries
+      Marks.Visible = False
+      Title = 'Coldest Maximum'
+      LinePen.Color = clWhite
+      Pointer.Visible = False
+    end
+    object Series6: TLineSeries
+      Marks.Visible = False
+      Title = 'Coldest Minimum'
+      LinePen.Color = clGray
+      Pointer.Visible = False
+    end
+  end
+  object BitBtn1: TBitBtn
+    Left = 600
+    Height = 25
+    Top = 392
+    Width = 75
+    Kind = bkClose
+    TabOrder = 1
+  end
+end
