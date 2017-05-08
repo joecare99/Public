@@ -1,0 +1,30 @@
+object MainForm: TMainForm
+  Left = 258
+  Top = 162
+  Caption = 'Stay On Top Demo'
+  ClientHeight = 254
+  ClientWidth = 427
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  Menu = MainMenu1
+  PixelsPerInch = 96
+  object MainMenu1: TMainMenu
+    Left = 48
+    Top = 8
+    object Demo1: TMenuItem
+      Caption = '&Demo'
+      object Stayontop1: TMenuItem
+        Caption = '&Stay on top'
+        OnClick = Stayontop1Click
+      end
+      object Exit1: TMenuItem
+        Caption = 'E&xit'
+        OnClick = Exit1Click
+      end
+    end
+  end
+end

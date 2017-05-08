@@ -1,0 +1,43 @@
+object MainForm: TMainForm
+  Left = 260
+  Top = 194
+  Caption = 'OLE Container Demonstration'
+  ClientHeight = 333
+  ClientWidth = 510
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  Menu = MainMenu1
+  PixelsPerInch = 96
+  object OleContainer1: TActiveXContainer
+    Left = 0
+    Top = 0
+    Width = 510
+    Height = 333
+    Align = alClient
+    Caption = 'OleContainer1'
+    TabOrder = 0
+  end
+  object MainMenu1: TMainMenu
+    Left = 64
+    Top = 80
+    object File1: TMenuItem
+      Caption = 'File'
+      object Exit1: TMenuItem
+        Caption = 'Exit'
+        OnClick = Exit1Click
+      end
+    end
+    object Edit1: TMenuItem
+      Caption = 'Edit'
+      GroupIndex = 1
+      object InsertObject1: TMenuItem
+        Caption = 'Insert Object...'
+        OnClick = InsertObject1Click
+      end
+    end
+  end
+end

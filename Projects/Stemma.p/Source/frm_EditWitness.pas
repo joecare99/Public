@@ -57,19 +57,6 @@ implementation
 
 uses frm_EditEvents, frm_Main, dm_GenData,Traduction, frm_Explorer;
 
-procedure AppendWitness(Role,Phrase:string;idInd,idEvent,idPref:integer);
-begin
-  with dmGenData.Query1 do begin
-    SQL.text:='INSERT INTO W (R, I, P, E, X) VALUES (:Role, :idInd, :Phrase, :idEvent, :Pref)';
-    ParamByName('Role').AsString:=Role;
-    ParamByName('Phrase').AsString:=Phrase;
-    ParamByName('idInd').AsInteger:=idInd;
-    ParamByName('idEvent').AsInteger:=idEvent;
-    ParamByName('Pref').AsInteger:=idPref;
-    ExecSQL;
-  end;
-end;
-
 procedure FillResourceList(const items: TStrings; const lidType: PtrInt);
 var
   temp: string;
@@ -195,16 +182,21 @@ end;
 
 procedure TfrmEditWitness.btnOKClick(Sender: TObject);
 var
-   reorder:boolean;
-   j:integer;
+   lidInd:integer;
+   lDate, lEvType: String;
+
+
 begin
+  lidInd := i.Value;
+
+
   dmGenData.Query1.SQL.Clear;
   if no.Value=0 then
      begin
      If Label6.Visible then
-        AppendWitness(Role.Items[Role.ItemIndex],'',i.Value,e.Value,1)
+        dmGenData.AppendWitness(Role.Items[Role.ItemIndex],'',lidInd,e.Value,1)
      else
-        AppendWitness(Role.Items[Role.ItemIndex],trim(p.Text),i.Value,e.Value,1);
+        dmGenData.AppendWitness(Role.Items[Role.ItemIndex],trim(p.Text),lidInd,e.Value,1);
   end
   else
      begin
@@ -218,7 +210,8 @@ begin
   end;
   if no.Value=0 then
      no.Value:=dmGenData.GetLastIDOfTable('W');
-  // Sauvegarder les modifications pour tout les témoins de l'événements
+  // fr: Sauvegarder les modifications pour tout les témoins de l'événements
+  // en: Save the changes for all the witnesses to the events
   dmGenData.Query3.SQL.Text:='SELECT W.I FROM W WHERE W.E='+E.Text;
   dmGenData.Query3.Open;
   dmGenData.Query3.First;
@@ -227,52 +220,24 @@ begin
      dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
      dmGenData.Query3.Next;
   end;
-  // Modifier la ligne de l'explorateur si naissance frmStemmaMainForm ou décès principal
+  // fr: Modifier la ligne de l'explorateur si naissance frmStemmaMainForm ou décès principal
+  // en: Change the line of Explorer if birth frmStemmaMainForm or main death
   dmGenData.Query1.SQL.Text:='SELECT Y.Y, E.X, E.PD FROM Y JOIN E on E.Y=Y.no WHERE E.no='+E.Text;
   dmGenData.Query1.Open;
+  lDate := dmGenData.Query1.Fields[2].AsString;
+  lEvType:=dmGenData.Query1.Fields[0].AsString;
+
+  if (lEvType='B') then
+    dmGenData.UpdateNameI3(lDate, lidInd)
+  else  if (lEvType='D') then
+    dmGenData.UpdateNameI4(lDate, lidInd);
+
   if frmStemmaMainForm.mniExplorateur.Checked and
-     ((dmGenData.Query1.Fields[0].AsString='B') or ((dmGenData.Query1.Fields[0].AsString='D'))) and
+     ((lEvType='B') or ((lEvType='D'))) and
      (dmGenData.Query1.Fields[1].AsInteger=1) and (X.Text='1') then
-     begin
-     reorder:=false;
-     for j:=1 to frmExplorer.Index.RowCount-1 do
-        if frmExplorer.Index.Cells[0,j]=I.text then
-           begin
-           if (dmGenData.Query1.Fields[0].AsString='B') then
-              begin
-              frmExplorer.Index.Cells[3,j]:=ConvertDate(dmGenData.Query1.Fields[2].AsString,1);
-              if (frmExplorer.O.text='3') then
-                 begin
-                 frmExplorer.Index.Cells[6,j]:=ConvertDate(dmGenData.Query1.Fields[2].AsString,1);
-                 // UPDATE N.I3!!!
-                 dmGenData.Query2.SQL.Clear;
-                 dmGenData.Query2.SQL.Add('UPDATE N SET I3='''+UTF8toANSI(dmGenData.Query1.Fields[2].AsString)+
-                     ''' WHERE N.I=I.Text');
-                 dmGenData.Query2.ExecSQL;
-                 reorder:=true;
-              end;
-           end;
-           if (dmGenData.Query1.Fields[0].AsString='D') then
-              begin
-              frmExplorer.Index.Cells[4,j]:=ConvertDate(dmGenData.Query1.Fields[2].AsString,1);
-              if (frmExplorer.O.text='4') then
-                 begin
-                 frmExplorer.Index.Cells[6,j]:=ConvertDate(dmGenData.Query1.Fields[2].AsString,1);
-                 // UPDATE N.I4!!!
-                 dmGenData.Query2.SQL.Clear;
-                 dmGenData.Query2.SQL.Add('UPDATE N SET I4='''+UTF8toANSI(dmGenData.Query1.Fields[2].AsString)+
-                    ''' WHERE N.I=I.Text');
-                 dmGenData.Query2.ExecSQL;
-                 reorder:=true;
-              end;
-           end;
-        end;
-     if reorder then
-        begin
-        frmExplorer.Index.SortColRow(true,6);
-        frmExplorer.TrouveIndividu;
-     end;
-  end;
+
+     frmExplorer.UpdateIndexDates(lEvType, lDate, lidInd);
+
 end;
 
 procedure TfrmEditWitness.IEditingDone(Sender: TObject);

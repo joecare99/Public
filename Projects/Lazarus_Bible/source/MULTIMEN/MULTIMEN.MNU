@@ -1,0 +1,25 @@
+#include multimen.inc
+
+id_Menu MENU 
+BEGIN
+  POPUP "&File"
+  BEGIN
+    MENUITEM "E&xit", cm_FileExit
+  END
+  POPUP "&Edit"
+  BEGIN
+    MENUITEM "&Undo", 201
+    MENUITEM "&Redo", 202
+    POPUP "&Search"
+    BEGIN
+      MENUITEM "&Ignore case", 301, CHECKED
+      POPUP "&Find"
+      BEGIN
+        MENUITEM "&Previous", 401
+        MENUITEM "&Whole words", 402
+        MENUITEM "&Partial words", 403
+      END
+      MENUITEM "&Replace", 303
+    END
+  END
+END

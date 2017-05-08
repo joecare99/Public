@@ -622,13 +622,16 @@ begin
   frmStemmaMainForm.DataHist.Cells[1, 0] := M.Text;
 end;
 
+
+
 procedure NomSaveData;
 var
   j: integer;
-  parent1, parent2, no_eve, nocode, lNewIndID: longint;
+  parent1, parent2, no_eve, nocode, lidInd, lidName: longint;
   nom, i1, i2, i3, i4, temp, dateev, tagName: string;
   existe: boolean;
   sSex: Char;
+  lidEvType: PtrInt;
 
 begin
   nom := frmEditName.X.Text;
@@ -664,8 +667,10 @@ begin
   frmStemmaMainForm.DataHist.Cells[0, 0] := 'N';
   frmStemmaMainForm.DataHist.Cells[1, 0] := nom;
 
+  lidName := frmEditName.no.Value;
+  lidInd := frmEditName.I.Value;
 
-  if frmEditName.no.Value = 0 then
+  if lidName = 0 then
   begin
     //    dmGenData.GetCode(code, temp);
     case frmEditName.cbxSex.ItemIndex of
@@ -677,13 +682,13 @@ begin
     case frmEditName.EditType of
       eNET_NewUnrelated:
       begin
-        lNewIndID:=dmGenData.AddNewIndividual(sSex,'?',0);
-        frmEditName.I.Value:=lNewIndID ;
+        lidInd:=dmGenData.AddNewIndividual(sSex,'?',0);
+        frmEditName.I.Value:=lidInd ;
       end;
       eNET_AddFather, eNET_AddMother:
       begin
-        lNewIndID:=dmGenData.AddNewIndividual(sSex,'?',0);
-        frmEditName.I.Value := lNewIndID;
+        lidInd:=dmGenData.AddNewIndividual(sSex,'?',0);
+        frmEditName.I.Value := lidInd;
         // Valide si principal...
         dmGenData.Query2.SQL.Text :=
           'SELECT R.no, R.B FROM R JOIN I ON R.B=I.no WHERE I.S=:sex AND R.X=1 AND R.A=:idInd';
@@ -698,7 +703,7 @@ begin
         else
           temp := '0';
 
-        dmGenData.RelationInsertData(10,frmStemmaMainForm.iId,frmEditName.i.Value,temp,'100000000300000000');
+        dmGenData.RelationInsertData(10,frmStemmaMainForm.iId,lidInd,temp,'100000000300000000');
         // Demande si on veut unir les parents
         if (temp = '1') then
         begin
@@ -713,7 +718,7 @@ begin
           dmGenData.Query1.Open;
           if not dmGenData.Query1.EOF then
           begin
-            parent1 := frmEditName.I.Value;
+            parent1 := lidInd;
             parent2 := dmGenData.Query1.Fields[1].AsInteger;
             // Vérifier qu'il n'y a pas déjà une union entre ces deux parents
             dmGenData.Query2.SQL.Text :=
@@ -786,8 +791,8 @@ begin
       eNET_AddSpouse:
       begin
         // Trouve le sexe de la personne actuelle dans nocode...
-        lNewIndID:=dmGenData.AddNewIndividual(sSex,'?',0);
-        frmEditName.I.Value := lNewIndID;
+        lidInd:=dmGenData.AddNewIndividual(sSex,'?',0);
+        frmEditName.I.Value := lidInd;
         dmGenData.Query1.SQL.Clear;
         dmGenData.Query1.SQL.Add(
           'INSERT INTO E (Y, X, L, PD, SD) VALUES (300, 1, 1, ''100000000030000000000'', ''100000000030000000000'')');
@@ -807,7 +812,7 @@ begin
         //        dmGenData.PutCode(code,dmGenData.GetLastIDOfTable('W'););
         dmGenData.Query1.SQL.Text :=
           'INSERT INTO W (I, E, X, R) VALUES (:idInd , :idEvent ,1 , ''CONJOINT'')';
-        dmGenData.Query1.ParamByName('idInd').AsInteger := frmEditName.I.Value;
+        dmGenData.Query1.ParamByName('idInd').AsInteger := lidInd;
         dmGenData.Query1.ExecSQL;
         //dmGenData.Query1.SQL.Clear;
         //dmGenData.Query1.SQL.Add('SHOW TABLE STATUS WHERE NAME=''E''');
@@ -819,8 +824,8 @@ begin
       end;
       eNET_AddBrother, eNET_AddSister:
       begin
-        lNewIndID:=dmGenData.AddNewIndividual(sSex,'?',0);
-        frmEditName.I.Value := lNewIndID;
+        lidInd:=dmGenData.AddNewIndividual(sSex,'?',0);
+        frmEditName.I.Value := lidInd;
         // Recherche parent principaux
         dmGenData.Query2.SQL.Text:='SELECT R.no, R.B FROM R WHERE R.X=1 AND R.A=' +
           frmStemmaMainForm.sID;
@@ -830,7 +835,7 @@ begin
         begin
           dmGenData.Query1.SQL.Clear;
           dmGenData.Query1.SQL.Add('INSERT INTO R (Y, A, B, X, SD) VALUES (10, ' +
-            frmEditName.I.Text + ', ' + dmGenData.Query2.Fields[1].AsString +
+            inttostr(lidInd) + ', ' + dmGenData.Query2.Fields[1].AsString +
             ', 1, ''100000000030000000000'')');
           dmGenData.Query1.ExecSQL;
           dmGenData.Query1.SQL.Clear;
@@ -848,11 +853,11 @@ begin
       end;
       eNET_AddSon, eNET_AddDaughter:
       begin
-        lNewIndID:=dmGenData.AddNewIndividual(sSex,'?',0);
-        frmEditName.I.Value := lNewIndID;
+        lidInd:=dmGenData.AddNewIndividual(sSex,'?',0);
+        frmEditName.I.Value := lidInd;
         dmGenData.Query1.SQL.Text :=
           'INSERT INTO R (Y, A, B, X, SD) VALUES (10, :idInd, :idInd2,1, ''100000000030000000000'')';
-        dmGenData.Query1.ParamByName('idInd').AsInteger := frmEditName.I.Value;
+        dmGenData.Query1.ParamByName('idInd').AsInteger := lidInd;
         dmGenData.Query1.ParamByName('idInd2').AsInteger := frmStemmaMainForm.iID;
         dmGenData.Query1.ExecSQL;
         frmEditName.RelID := dmGenData.GetLastIDOfTable('R');
@@ -863,7 +868,7 @@ begin
         begin
           dmGenData.Query1.SQL.Text :=
             'INSERT INTO R (Y, A, B, X, SD) VALUES (10, :idInd, :idInd2,1, ''100000000030000000000'')';
-          dmGenData.Query1.ParamByName('idInd').AsInteger := frmEditName.I.Value;
+          dmGenData.Query1.ParamByName('idInd').AsInteger := lidInd;
           dmGenData.Query1.ParamByName('idInd2').AsInteger := nocode;
           dmGenData.Query1.ExecSQL;
           // ajouter les citations du nom à la relation
@@ -874,25 +879,31 @@ begin
       else
 
     end; (*case *)
-    i3 := dmGenData.GetI3(frmEditName.I.Value);
-    i4 := dmGenData.GetI4(frmEditName.I.Value);
-    temp := 'INSERT INTO N (Y, I, M, N, I1, I2, PD, SD, P, I3, I4, X) VALUES ' +
-      '( :idEvType, :idInd, :M, :Name, :i1, :i2, :PDate, :SDate, :P, :i3, :i4, :X)';
-  end  (* if frmEditName.no.Text='0' *)
+    i3 := dmGenData.GetI3(lidInd);
+    i4 := dmGenData.GetI4(lidInd);
+  end  (* if inttostr(lidName)='0' *)
   else
   begin
     // Si on déplace un nom primaire d'individu, le nom devient secondaire.
     if (frmEditName.X.Text = '1') and
-      ((frmStemmaMainForm.sID <> frmEditName.I.Text) and not
-      (frmEditName.I.Text = '0') and not (frmEditName.Ajout.Text = '1')) then
+      ((frmStemmaMainForm.iID <> lidInd) and not
+      (lidInd = 0) and not (frmEditName.Ajout.Text = '1')) then
       frmEditName.X.Text := '0';
-    temp :=
-      'UPDATE N SET Y=:idEvType, I=:idInd, M=:M, N=:Name, I1=:I1, I2=:I2, PD=:PDate, SD=:SDate, P=:P, X=:X WHERE no=:idName';
   end;
+  lidEvType := PtrInt( frmEditName.Y.Items.Objects[frmEditName.Y.ItemIndex]);
+
+
+
+
+  if lidName = 0 then
+  temp := 'INSERT INTO N (Y, I, M, N, I1, I2, PD, SD, P, I3, I4, X) VALUES ' +
+    '( :idEvType, :idInd, :M, :Name, :i1, :i2, :PDate, :SDate, :P, :i3, :i4, :X)'
+  else
+  temp :=
+    'UPDATE N SET Y=:idEvType, I=:idInd, M=:M, N=:Name, I1=:I1, I2=:I2, PD=:PDate, SD=:SDate, P=:P, X=:X WHERE no=:idName';
   dmGenData.Query1.SQL.Text := temp;
-  dmGenData.Query1.ParamByName('idEvType').AsInteger :=PtrInt(
-    frmEditName.Y.Items.Objects[frmEditName.Y.ItemIndex]);
-  dmGenData.Query1.ParamByName('idInd').AsInteger := frmEditName.I.Value;
+  dmGenData.Query1.ParamByName('idEvType').AsInteger :=lidEvType;
+  dmGenData.Query1.ParamByName('idInd').AsInteger := lidInd;
   dmGenData.Query1.ParamByName('M').AsString := trim(frmEditName.M.Text);
   dmGenData.Query1.ParamByName('Name').AsString := nom;
   dmGenData.Query1.ParamByName('i1').AsString := i1;
@@ -903,17 +914,19 @@ begin
     dmGenData.Query1.ParamByName('P').AsString := ''
   else
     dmGenData.Query1.ParamByName('P').AsString := trim(frmEditName.P.Text);
-  if frmEditName.no.Text = '0' then
+  if lidName = 0 then
   begin
     dmGenData.Query1.ParamByName('i3').AsString := i3;
     dmGenData.Query1.ParamByName('i4').AsString := i4;
   end
   else
-    dmGenData.Query1.ParamByName('idName').AsInteger := frmEditName.no.Value;
+    dmGenData.Query1.ParamByName('idName').AsInteger := lidName;
   dmGenData.Query1.ParamByName('X').AsString := frmEditName.X.Text;
   dmGenData.Query1.ExecSQL;
+  if lidName=0 then
+    lidName := dmGenData.GetLastIDOfTable('N');
   // Sauvegarder les modifications
-  dmGenData.SaveModificationTime(frmEditName.I.Value);
+  dmGenData.SaveModificationTime(lidInd);
   // UPDATE DÉCÈS si la date est il y a 100 ans !!!
   if (copy(frmEditName.PD2.Text, 1, 1) = '1') and not
     (frmEditName.PD2.Text = '100000000030000000000') then
@@ -926,99 +939,21 @@ begin
     dateev := FormatDateTime('YYYY', now);
   if ((StrToInt(FormatDateTime('YYYY', now)) - StrToInt(dateev)) > 100) then
   begin
-    dmGenData.Query2.SQL.Text:='UPDATE I SET V=''N'' WHERE no=' + frmEditName.I.Text;
-    dmGenData.Query2.ExecSQL;
-    frmNames.PopulateNom(frmNames);
+    dmGenData.UpdateIndividualVivant(lidInd,'N',frmEditName);
   end;
-  if not (frmEditName.I.Text = frmStemmaMainForm.sID) then
+  if not (frmEditName.I.Value = frmStemmaMainForm.iID) then
     dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
   // Modifier la ligne de l'explorateur
   if frmStemmaMainForm.mniExplorateur.Checked then
-    if frmEditName.no.Text <> '0' then
-    begin
-      for j := 1 to frmExplorer.Index.RowCount - 1 do
-        if frmExplorer.Index.Cells[0, j] = frmEditName.no.Text then
-        begin
-          frmExplorer.Index.Cells[1, j] := frmEditName.I.Text;
-          if frmExplorer.O.Text = '1' then
-            frmExplorer.Index.Cells[2, j] := DecodeName(nom, 1)
-          else
-            frmExplorer.Index.Cells[2, j] := DecodeName(nom, 2);
-          if frmExplorer.O.Text = '1' then
-            frmExplorer.Index.Cells[6, j] := RemoveUTF8(i2 + ' ' + i1);
-          if frmExplorer.O.Text = '2' then
-            frmExplorer.Index.Cells[6, j] := RemoveUTF8(i1 + ', ' + i2);
-          if (frmExplorer.O.Text = '1') or (frmExplorer.O.Text = '2') then
-          begin
-            //                 frmExplorer.Index.SortColRow(true,6);
-            frmExplorer.TrouveIndividu;
-          end;
-          break;
-        end;
-    end
+    if lidName <> 0 then
+      frmExplorer.UpdateIndex(i2, i1, nom, lidName, lidInd, j)
     else
-    begin
-      if frmExplorer.O.Text = '1' then
-        temp := RemoveUTF8(i2 + ' ' + i1);
-      if frmExplorer.O.Text = '2' then
-        temp := RemoveUTF8(i1 + ', ' + i2);
-      if frmExplorer.O.Text = '3' then
-        temp := dmGenData.geti3(frmEditName.I.Value);
-      if frmExplorer.O.Text = '4' then
-        temp := dmGenData.geti4(frmEditName.I.Value);
-      if length(temp) > 0 then
-      begin
-        j := frmExplorer.Index.Row;
-        if AnsiCompareText((copy(frmExplorer.Index.Cells[6, j],
-          1, length(temp))), temp) > 0 then
-        begin
-          while (AnsiCompareText(
-              (copy(frmExplorer.Index.Cells[6, j], 1, length(temp))), temp) > 0) and
-            (j > 1) do
-          begin
-            Application.ProcessMessages;
-            j := j - 1;
-          end;
-          j := j + 1;
-        end
-        else
-        begin
-          while (AnsiCompareText(
-              (copy(frmExplorer.Index.Cells[6, j], 1, length(temp))), temp) < 0) and
-            (j < frmExplorer.index.rowcount - 1) do
-          begin
-            Application.ProcessMessages;
-            j := j + 1;
-          end;
-          j := j - 1;
-        end;
-      end;
-      frmExplorer.Index.InsertColRow(False, j);
-      dmGenData.Query1.SQL.Text:='SHOW TABLE STATUS WHERE NAME=''N''';
-      dmGenData.Query1.Open;
-      dmGenData.Query1.First;
-      frmEditName.no.Text := IntToStr(dmGenData.Query1.Fields[10].AsInteger - 1);
-      frmExplorer.Index.Cells[0, j] := frmEditName.no.Text;
-      frmExplorer.Index.Cells[1, j] := frmEditName.I.Text;
-      if frmExplorer.O.Text = '1' then
-        frmExplorer.Index.Cells[2, j] := DecodeName(nom, 1)
-      else
-        frmExplorer.Index.Cells[2, j] := DecodeName(nom, 2);
-      frmExplorer.Index.Cells[3, j] := ConvertDate(i3, 1);
-      frmExplorer.Index.Cells[4, j] := ConvertDate(i4, 1);
-      if frmEditName.X.Text = '1' then
-        frmExplorer.Index.Cells[5, j] := '*'
-      else
-        frmExplorer.Index.Cells[5, j] := '';
-      frmExplorer.Index.Cells[6, j] := temp;
-      frmExplorer.Index.Row := j;
-      //        frmExplorer.Index.SortColRow(true,6);
-      //        TrouveIndividu;
-    end;
-  if frmEditName.no.Value = 0 then
+    frmExplorer.AppendIndex(i2, i1, nom, lidName, lidInd, frmEditName.X.Text = '1');
+  if lidName = 0 then
   begin
-    frmEditName.no.Value := dmGenData.GetLastIDOfTable('N');
+    lidName := dmGenData.GetLastIDOfTable('N');
   end;
+  frmEditName.no.Value := lidName;
 end;
 
 procedure TfrmEditName.btnOKClick(Sender: TObject);

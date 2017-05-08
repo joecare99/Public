@@ -74,11 +74,19 @@ type
     function GetI4(idInd: integer): string;
     function GetSexOfInd(const nID: longint): string;
     function GetLivingOfInd(const nID: longint): string;
+    procedure UpdateIndividualVivant(var lidInd: integer;vv:char; const Sender: TObject
+      );
     function CopyIndividual(const nID: longint): longint;
     function AddNewIndividual(sex, living: string; interest: integer): longint;
     procedure RepairRelDateByIndDate(const OnProgress: TNotifyEvent);
     procedure SaveModificationTime(no: integer); overload;
     procedure SaveModificationTime(no: string); overload; deprecated;
+    procedure UpdateNameI3(const lDate: String; var lidInd: integer);
+    procedure UpdateNameI4(const lDate: String; var lidInd: integer);
+
+    // Explorer
+    procedure FillExplorerIndex(const aGrid: TStringGrid; Order: integer;
+      const OnProgress: TNotifyEvent=nil);
 
     // Name Methods
     procedure PopulateNameTable(const lidInd: longint; tblName: TStringGrid);
@@ -100,8 +108,13 @@ type
     procedure AppendBrotherSisters(const Liste: TStringGrid; idInd: integer);
     procedure AppendSpousesSpouses(const Liste: TStringGrid; idInd: integer);
     function CheckIndRelationExist(idInd: integer): boolean;
+    procedure UpdateRelationSortdate(var lidInd: integer; var lDate: string);
     procedure PopulateParents(aSG: TStringGrid; idChild: longint); overload;
     procedure PopulateParents(aSG: TStringGrid; NStr: string); overload; deprecated;
+
+    //Witness
+    function AppendWitness(Role, Phrase: string; idInd, idEvent,
+      idPref: integer):integer;
 
     // Citation Methods
     procedure CopyCitation(AType: string; idLink, idNewLink: integer);
@@ -729,6 +742,64 @@ begin
   end;
 end;
 
+procedure TdmGenData.FillExplorerIndex(const aGrid: TStringGrid;Order:integer;
+  const OnProgress: TNotifyEvent = nil);
+var
+  row: integer;
+begin
+  with Query5, aGrid do
+  begin
+    SQL.Clear;
+    case Order of
+      1: SQL.add('SELECT no, I, N, I1, I2, I3, I4, X FROM N ORDER BY I2, I1, I3, I4');
+      2: SQL.add('SELECT no, I, N, I1, I2, I3, I4, X FROM N ORDER BY I1, I2, I3, I4');
+      3: SQL.add('SELECT no, I, N, I1, I2, I3, I4, X FROM N ORDER BY I3, I4, I1, I2');
+      4: SQL.add('SELECT no, I, N, I1, I2, I3, I4, X FROM N ORDER BY I4, I3, I1, I2');
+    end;
+    Open;
+    First;
+    row := 1;
+    RowCount := RecordCount + 1;
+    tag := -RowCount;
+    if Assigned(OnProgress) then
+      OnProgress(Query5);
+    while not EOF do
+    begin
+      Cells[0, row] := Fields[0].AsString;
+      Objects[0, Row] := TObject(ptrint(Fields[0].AsInteger));
+      Cells[1, row] := Fields[1].AsString;
+      Objects[1, Row] := TObject(ptrint(Fields[1].AsInteger));
+      // Change col 2 selon Order
+      case Order of
+        1: Cells[2, row] := (DecodeName(Fields[2].AsString, 1));
+        2: Cells[2, row] := (DecodeName(Fields[2].AsString, 2));
+        3: Cells[2, row] := (DecodeName(Fields[2].AsString, 2));
+        4: Cells[2, row] := (DecodeName(Fields[2].AsString, 2));
+      end;
+      Cells[3, row] := ConvertDate(Fields[5].AsString, 1);
+      Cells[4, row] := ConvertDate(Fields[6].AsString, 1);
+      if Fields[7].AsBoolean then
+        Cells[5, row] := '*'
+      else
+        Cells[5, row] := '';
+      // Change col 6 selon Order
+      case Order of
+        1: Cells[6, row] := Fields[4].AsString + ' ' + Fields[3].AsString;
+        2: Cells[6, row] := RemoveUTF8(Fields[3].AsString) +
+            ', ' + RemoveUTF8(Fields[4].AsString);
+        3: Cells[6, row] := ConvertDate(Fields[5].AsString, 1);
+        4: Cells[6, row] := ConvertDate(Fields[6].AsString, 1);
+      end;
+      row := row + 1;
+      Next;
+      tag := row;
+      if Assigned(OnProgress) then
+        OnProgress(Query5);
+    end;
+    Close;
+  end;
+end;
+
 
 procedure TdmGenData.PopulateNameTable(const lidInd: longint; tblName: TStringGrid);
 var
@@ -844,6 +915,28 @@ begin
     Close;
   end;
   qryInternal2.Close;
+end;
+
+procedure TdmGenData.UpdateNameI4(const lDate: String; var lidInd: integer);
+begin
+  // UPDATE N.I4!!!
+  with qryInternal do begin
+    SQL.text:='UPDATE N SET I4=:I4 WHERE N.I=:idInd';
+    ParamByName('idInd').AsInteger:=lidInd;
+    ParamByName('I4').AsString:=lDate;
+    ExecSQL;
+  end;
+end;
+
+procedure TdmGenData.UpdateNameI3(const lDate: String; var lidInd: integer);
+begin
+  // UPDATE N.I3!!!
+   with qryInternal do begin
+SQL.text:='UPDATE N SET I3=:I3 WHERE N.I=:idInd';
+     ParamByName('idInd').AsInteger:=lidInd;
+     ParamByName('I3').AsString:=lDate;
+     ExecSQL;
+   end;
 end;
 
 
@@ -1043,7 +1136,7 @@ begin
       'CREATE TABLE Y ' + // Type-Ressourcen
       '(no SMALLINT(5) UNSIGNED AUTO_INCREMENT PRIMARY KEY COMMENT ''ID'', ' +
       'T VARCHAR(35) COMMENT ''Description'',' + 'Y CHAR(1) COMMENT ''Type'',' +
-      'LN CHAR(2) COMMENT ''Language'',' + 'P MEDIUMTEXT NULL COMMENT ''Phrase'',' +
+      'LN VARCHAR(2) COMMENT ''Language'',' + 'P MEDIUMTEXT NULL COMMENT ''Phrase'',' +
       'R MEDIUMTEXT NULL COMMENT ''Fields'') COMMENT=''Ressources'';');
     temp.add(
       'CREATE TABLE L ' + // Places
@@ -1138,8 +1231,8 @@ begin
       'M TEXT NULL) COMMENT=''Citations'' ;');
     temp.add('CREATE INDEX N ON C (N);');
     temp.add('CREATE INDEX S ON C (S);');
-    // Populer par défaut la table "Types" à partir d'un fichier texte (TDATA.TXT)
-
+    // fr: Populer par défaut la table "Types" à partir d'un fichier texte (TDATA.TXT)
+    // en: Fill "Types"-table with default data/texts from a file (TDATA.TXT)
 
     if FileExists(DataPath + DirectorySeparator + 'tdata.txt') then
     begin
@@ -1148,11 +1241,38 @@ begin
       while not EOF(tdata) do
       begin
         readln(tdata, buffer);
-        temp.add('INSERT INTO Y (ln, no, Y, T, R, P) VALUES (''fr'',' +
+        temp.add('INSERT INTO Y (ln, no, Y, T, R, P) VALUES (''FR'',' +
           buffer + ');');
       end;
       Closefile(tdata);
     end;
+
+    if FileExists(DataPath + DirectorySeparator + 'tdata_en.txt') then
+     begin
+       assignfile(tdata, DataPath + DirectorySeparator + 'tdata_en.txt');
+       reset(tdata{%H-});
+       while not EOF(tdata) do
+       begin
+         readln(tdata, buffer);
+         temp.add('INSERT INTO Y (ln, no, Y, T, R, P) VALUES (''EN'',' +
+           buffer + ');');
+       end;
+       Closefile(tdata);
+     end;
+
+    if FileExists(DataPath + DirectorySeparator + 'tdata_de.txt') then
+     begin
+       assignfile(tdata, DataPath + DirectorySeparator + 'tdata_de.txt');
+       reset(tdata{%H-});
+       while not EOF(tdata) do
+       begin
+         readln(tdata, buffer);
+         temp.add('INSERT INTO Y (ln, no, Y, T, R, P) VALUES (''DE'',' +
+           buffer + ');');
+       end;
+       Closefile(tdata);
+     end;
+
 
     qryInternal.Tag := -temp.Count + 1;
     if assigned(onProgress) then
@@ -1161,7 +1281,8 @@ begin
     if assigned(onProgress) then
       onProgress(qryInternal);
 
-    // Créer les tables
+    // fr: Créer les tables
+    // en: Create the tables
     with qryInternal do
       for i := 0 to temp.Count - 1 do
       begin
@@ -1237,6 +1358,26 @@ begin
   if TryStrToInt(NStr, no) then
     PopulateParents(aSG, no);
 end;
+
+
+function TdmGenData.AppendWitness(Role, Phrase: string; idInd, idEvent,
+  idPref: integer): integer;
+begin
+ with qryInternal do begin
+   SQL.text:='INSERT INTO W (R, I, P, E, X) VALUES (:Role, :idInd, :Phrase, :idEvent, :Pref)';
+   ParamByName('Role').AsString:=Role;
+   ParamByName('Phrase').AsString:=Phrase;
+   ParamByName('idInd').AsInteger:=idInd;
+   ParamByName('idEvent').AsInteger:=idEvent;
+   ParamByName('Pref').AsInteger:=idPref;
+   ExecSQL;
+   SQL.Text := 'SELECT @@identity';
+   Open;
+   Result := qryInternal.Fields[0].AsInteger;
+   Close;
+ end;
+end;
+
 
 procedure TdmGenData.PopulateCitations(Tableau: TStringGrid; Code: string;
   NStr: string);
@@ -1370,6 +1511,19 @@ begin
   end;
 end;
 
+procedure TdmGenData.UpdateIndividualVivant(var lidInd: integer; vv: char;
+  const Sender: TObject);
+begin
+  with qryInternal do begin
+SQL.Text:='UPDATE I SET V=:VChar WHERE no=:idInd';
+    ParamByName('idInd').AsInteger:= lidInd;
+    ParamByName('VChar').AsString:= vv;
+    ExecSQL;
+  end;
+  NamesChanged(sender);
+end;
+
+
 procedure TdmGenData.RepairRelDateByIndDate(const OnProgress: TNotifyEvent);
 begin
   qryInternal2.SQL.Text := 'SELECT no, I, I3 FROM N WHERE X=1';
@@ -1403,12 +1557,28 @@ begin
   // fr: Vérifier qu'il n'y a pas de parents primaires
   // fr: Vérifier qu'il n'y a pas d'enfants primaires
   // en: Check that there is no primary relatives
-  dmGenData.Query1.SQL.Text :=
-    'SELECT R.no FROM R WHERE R.X=1 AND (R.A=:idInd OR R.B=:idInd )';
-  dmGenData.Query1.ParamByName('idInd').AsInteger := idInd;
-  dmGenData.Query1.Open;
-  Result := not dmGenData.Query1.EOF;
+  with qryInternal do begin
+  SQL.Text :=
+      'SELECT R.no FROM R WHERE R.X=1 AND (R.A=:idInd OR R.B=:idInd )';
+    ParamByName('idInd').AsInteger := idInd;
+    Open;
+    Result := not EOF;
+    close;
+  end;
 end;
+
+// fr: Update date de tri de relation
+// en: Update sort-date of relationship
+procedure  TdmGenData.UpdateRelationSortdate(var lidInd: integer; var lDate: string);
+begin
+  with qryInternal do begin
+  SQL.text:='UPDATE R SET SD=:SDate WHERE A=:idInd AND (SD=''100000000030000000000'' OR SD ='''')';
+    ParamByName('SDate').AsString:=lDate;
+    ParamByName('idInd').AsInteger:=lidInd;
+    ExecSQL;
+  end;
+end;
+
 
 procedure TdmGenData.CopyEvent(const idEvent: integer);
 var

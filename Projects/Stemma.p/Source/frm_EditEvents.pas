@@ -123,6 +123,7 @@ uses
   frm_Documents, frm_ShowImage, frm_Names, frm_EditDocuments, Traduction;
 
 
+
 {$R *.lfm}
 
 { TfrmEditEvents }
@@ -881,9 +882,9 @@ end;
 
 procedure TfrmEditEvents.Button1Click(Sender: TObject);
 var
-  Individu,Lieu1,Lieu2,dateev:string;
+  Lieu1,Lieu2,dateev, lEvType, lDate:string;
   reorder, valide:boolean;
-  j,idPlace:integer;
+  lidInd,j,idPlace:integer;
 begin
   // Vérifie qu'il y a au moins 1 témoin
   valide:=TableauTemoins.RowCount>1;
@@ -985,11 +986,11 @@ begin
      dmGenData.Query3.SQL.Text:='SELECT W.I, W.X FROM W WHERE W.E='+no.Text;
      dmGenData.Query3.Open;
      dmGenData.Query3.First;
-     individu:='0';
+     lidInd:=0;
      While not dmGenData.Query3.EOF do
         begin
         if dmGenData.Query3.Fields[1].AsBoolean then
-           individu:=dmGenData.Query3.Fields[0].AsString;
+           lidInd:=dmGenData.Query3.Fields[0].AsInteger;
         dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
         // UPDATE DÉCÈS si la date est il y a 100 ans !!!
         if (copy(PD2.text,1,1)='1') and not (PD2.text='100000000030000000000') then
@@ -1001,9 +1002,9 @@ begin
               dateev:=FormatDateTime('YYYY',now);
         if ((StrtoInt(FormatDateTime('YYYY',now))-StrtoInt(dateev))>100) then
            begin
-           dmGenData.Query2.SQL.Text:='UPDATE I SET V=''N'' WHERE no='+individu;
+           dmGenData.Query2.SQL.Text:='UPDATE I SET V=''N'' WHERE no='+inttostr(lidInd);
            dmGenData.Query2.ExecSQL;
-           If (frmStemmaMainForm.mniNoms.Checked) and (individu=frmStemmaMainForm.sID) then
+           If (frmStemmaMainForm.mniNoms.Checked) and (lidInd=frmStemmaMainForm.iID) then
               frmNames.PopulateNom(Sender);
         end;
         dmGenData.Query3.Next;
@@ -1011,64 +1012,27 @@ begin
      // Modifier la ligne de l'explorateur si naissance frmStemmaMainForm ou décès principal
      dmGenData.Query1.SQL.Text:='SELECT Y.Y, E.X, E.PD FROM Y JOIN E on E.Y=Y.no WHERE E.no='+no.Text;
      dmGenData.Query1.Open;
-     if  (StrToInt(individu)>0) and
-        ((dmGenData.Query1.Fields[0].AsString='B') or ((dmGenData.Query1.Fields[0].AsString='D'))) and
+     lEvType:=dmGenData.Query1.Fields[0].AsString;
+     lDate:= dmGenData.Query1.Fields[2].AsString;
+     if (lEvType='B') then
+        begin
+    dmGenData.UpdateNameI3(lDate, lidInd);
+                                             // fr: Update date de tri de relation
+                 // en: Update sort-date of relationship
+                 dmGenData.UpdateRelationSortdate(lidInd, lDate);
+        end
+  else  if (lEvType='D') then
+     begin
+    dmGenData.UpdateNameI4(lDate, lidInd);
+    // UPDATE DÉCÈS!!!
+     dmGenData.UpdateIndividualVivant(lidInd,'N', Sender);
+     end;
+     if  (lidInd>0) and
+        ((lEvType='B') or ((lEvType='D'))) and
         (dmGenData.Query1.Fields[1].AsInteger=1) and (X.Text='1') then
         begin
-        reorder:=false;
-        for j:=1 to frmExplorer.Index.RowCount-1 do
-           if frmExplorer.Index.Cells[1,j]=individu then
-              begin
-              if (dmGenData.Query1.Fields[0].AsString='B') then
-                 begin
-                 if frmStemmaMainForm.mniExplorateur.Checked then
-                    begin
-                    frmExplorer.Index.Cells[3,j]:=ConvertDate(dmGenData.Query1.Fields[2].AsString,1);
-                    if (frmExplorer.O.text='3') then
-                       begin
-                       frmExplorer.Index.Cells[6,j]:=ConvertDate(dmGenData.Query1.Fields[2].AsString,1);
-                       reorder:=true;
-                    end;
-                 end;
-                 // UPDATE N.I3!!!
-                 dmGenData.Query2.SQL.Clear;
-                 dmGenData.Query2.SQL.Add('UPDATE N SET I3='''+UTF8toANSI(dmGenData.Query1.Fields[2].AsString)+
-                     ''' WHERE N.I='+individu);
-                 dmGenData.Query2.ExecSQL;
-                 // Update date de tri de relation
-                 dmGenData.Query2.SQL.Clear;
-                 dmGenData.Query2.SQL.Add('UPDATE R SET SD='''+UTF8toANSI(dmGenData.Query1.Fields[2].AsString)+
-                     ''' WHERE A='+individu+' AND (SD=''100000000030000000000'' OR SD ='''')');
-                 dmGenData.Query2.ExecSQL;
-              end;
-              if (dmGenData.Query1.Fields[0].AsString='D') then
-                 begin
-                 if frmStemmaMainForm.mniExplorateur.Checked then
-                    begin
-                    frmExplorer.Index.Cells[4,j]:=ConvertDate(dmGenData.Query1.Fields[2].AsString,1);
-                    if (frmExplorer.O.text='4') then
-                       begin
-                       frmExplorer.Index.Cells[6,j]:=ConvertDate(dmGenData.Query1.Fields[2].AsString,1);
-                       reorder:=true;
-                    end;
-                 end;
-                 // UPDATE N.I4!!!
-                 dmGenData.Query2.SQL.Clear;
-                 dmGenData.Query2.SQL.Add('UPDATE N SET I4='''+UTF8toANSI(dmGenData.Query1.Fields[2].AsString)+
-                    ''' WHERE N.I='+individu);
-                 dmGenData.Query2.ExecSQL;
-                 // UPDATE DÉCÈS!!!
-                 dmGenData.Query2.SQL.Text:='UPDATE I SET V=''N'' WHERE no='+individu;
-                 dmGenData.Query2.ExecSQL;
-                 If frmStemmaMainForm.mniNoms.Checked then
-                    frmNames.PopulateNom(Sender);
-              end;
-           end;
-        if reorder then
-           begin
-           frmExplorer.Index.SortColRow(true,6);
-           frmExplorer.TrouveIndividu;
-        end;
+        if frmStemmaMainForm.mniExplorateur.Checked then
+          frmExplorer.UpdateIndexDates(lEvType,lDate,lidInd);
      end;
   end;
 end;

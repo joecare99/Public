@@ -1,0 +1,1368 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{628C6686-845D-4866-B3B6-62C483A5492E}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="D25\Aboutex.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Actions.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Addpage.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Animator.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\BarTest2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\BarTest.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Bitview2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Bitview.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Calc32.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Calc32_2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Capslock2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Capslock.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Cclient.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Chargrid.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Checks.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Colorlib.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Combos.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Compstrm.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Constraint.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Contcomp.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\CoolDemo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Cserver.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Daynames.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Dclock.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\DingButtonXControl.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\DingPkg.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Direx.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Direxec.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\DMTest.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Client1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Client2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Server1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Server2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\TestCDlg.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\TestDing.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Testdll.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\BarChartp.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Dragme.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Dropfile.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Enumfon.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Enumwin.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Except1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Except2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Except3.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Exlist.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Telname.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Todo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Toolbar1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Toolbar2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Toolbar3.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\UpDownDemo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\VideoPlayer.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\WinesCalc.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\WinesChart.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\WinesDemo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\WinesEntry.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\YesNoTest.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Fancy.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Filemenu.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Nonclien.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\OleWord2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Readme.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Keyinfo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Lister.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Mdidemo2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Memopad.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Metamore.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\OleCont.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Options.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Palette.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Polyflow.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\PowerTest.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Sketch.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Splashin.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Status.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Exwin.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Master.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\MayTemp.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\MemInfo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Report1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Strlist.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Strres.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Tabs.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Listfont.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Prninfo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Sysmenu.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Fishy.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Listtext.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\OleWord1.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Multimen.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\MouseExcept.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Sqlplay.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Fishy2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Keycount.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Hello.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Mdidemo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\PageTab.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\PageTabOD.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\PicDialogs.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Spinbutt.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\TabEdit.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Glyphlst.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Ontop.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Findrepl.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Fontsamp.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\StaticDemo.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Objlist.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Runme.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Syscolor.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\StatusOD.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Msgdlg.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Printgr.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="Aboutex">
+        <MSBuild Projects="D25\Aboutex.dproj"/>
+    </Target>
+    <Target Name="Aboutex:Clean">
+        <MSBuild Projects="D25\Aboutex.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Aboutex:Make">
+        <MSBuild Projects="D25\Aboutex.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Actions">
+        <MSBuild Projects="D25\Actions.dproj"/>
+    </Target>
+    <Target Name="Actions:Clean">
+        <MSBuild Projects="D25\Actions.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Actions:Make">
+        <MSBuild Projects="D25\Actions.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Addpage">
+        <MSBuild Projects="D25\Addpage.dproj"/>
+    </Target>
+    <Target Name="Addpage:Clean">
+        <MSBuild Projects="D25\Addpage.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Addpage:Make">
+        <MSBuild Projects="D25\Addpage.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Animator">
+        <MSBuild Projects="D25\Animator.dproj"/>
+    </Target>
+    <Target Name="Animator:Clean">
+        <MSBuild Projects="D25\Animator.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Animator:Make">
+        <MSBuild Projects="D25\Animator.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BarTest2">
+        <MSBuild Projects="D25\BarTest2.dproj"/>
+    </Target>
+    <Target Name="BarTest2:Clean">
+        <MSBuild Projects="D25\BarTest2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BarTest2:Make">
+        <MSBuild Projects="D25\BarTest2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BarTest">
+        <MSBuild Projects="D25\BarTest.dproj"/>
+    </Target>
+    <Target Name="BarTest:Clean">
+        <MSBuild Projects="D25\BarTest.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BarTest:Make">
+        <MSBuild Projects="D25\BarTest.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Bitview2">
+        <MSBuild Projects="D25\Bitview2.dproj"/>
+    </Target>
+    <Target Name="Bitview2:Clean">
+        <MSBuild Projects="D25\Bitview2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Bitview2:Make">
+        <MSBuild Projects="D25\Bitview2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Bitview">
+        <MSBuild Projects="D25\Bitview.dproj"/>
+    </Target>
+    <Target Name="Bitview:Clean">
+        <MSBuild Projects="D25\Bitview.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Bitview:Make">
+        <MSBuild Projects="D25\Bitview.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Calc32">
+        <MSBuild Projects="D25\Calc32.dproj"/>
+    </Target>
+    <Target Name="Calc32:Clean">
+        <MSBuild Projects="D25\Calc32.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Calc32:Make">
+        <MSBuild Projects="D25\Calc32.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Calc32_2">
+        <MSBuild Projects="D25\Calc32_2.dproj"/>
+    </Target>
+    <Target Name="Calc32_2:Clean">
+        <MSBuild Projects="D25\Calc32_2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Calc32_2:Make">
+        <MSBuild Projects="D25\Calc32_2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Capslock2">
+        <MSBuild Projects="D25\Capslock2.dproj"/>
+    </Target>
+    <Target Name="Capslock2:Clean">
+        <MSBuild Projects="D25\Capslock2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Capslock2:Make">
+        <MSBuild Projects="D25\Capslock2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Capslock">
+        <MSBuild Projects="D25\Capslock.dproj"/>
+    </Target>
+    <Target Name="Capslock:Clean">
+        <MSBuild Projects="D25\Capslock.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Capslock:Make">
+        <MSBuild Projects="D25\Capslock.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Cclient">
+        <MSBuild Projects="D25\Cclient.dproj"/>
+    </Target>
+    <Target Name="Cclient:Clean">
+        <MSBuild Projects="D25\Cclient.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Cclient:Make">
+        <MSBuild Projects="D25\Cclient.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Chargrid">
+        <MSBuild Projects="D25\Chargrid.dproj"/>
+    </Target>
+    <Target Name="Chargrid:Clean">
+        <MSBuild Projects="D25\Chargrid.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Chargrid:Make">
+        <MSBuild Projects="D25\Chargrid.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Checks">
+        <MSBuild Projects="D25\Checks.dproj"/>
+    </Target>
+    <Target Name="Checks:Clean">
+        <MSBuild Projects="D25\Checks.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Checks:Make">
+        <MSBuild Projects="D25\Checks.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Colorlib">
+        <MSBuild Projects="D25\Colorlib.dproj"/>
+    </Target>
+    <Target Name="Colorlib:Clean">
+        <MSBuild Projects="D25\Colorlib.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Colorlib:Make">
+        <MSBuild Projects="D25\Colorlib.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Combos">
+        <MSBuild Projects="D25\Combos.dproj"/>
+    </Target>
+    <Target Name="Combos:Clean">
+        <MSBuild Projects="D25\Combos.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Combos:Make">
+        <MSBuild Projects="D25\Combos.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Compstrm">
+        <MSBuild Projects="D25\Compstrm.dproj"/>
+    </Target>
+    <Target Name="Compstrm:Clean">
+        <MSBuild Projects="D25\Compstrm.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Compstrm:Make">
+        <MSBuild Projects="D25\Compstrm.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Constraint">
+        <MSBuild Projects="D25\Constraint.dproj"/>
+    </Target>
+    <Target Name="Constraint:Clean">
+        <MSBuild Projects="D25\Constraint.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Constraint:Make">
+        <MSBuild Projects="D25\Constraint.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Contcomp">
+        <MSBuild Projects="D25\Contcomp.dproj"/>
+    </Target>
+    <Target Name="Contcomp:Clean">
+        <MSBuild Projects="D25\Contcomp.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Contcomp:Make">
+        <MSBuild Projects="D25\Contcomp.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="CoolDemo">
+        <MSBuild Projects="D25\CoolDemo.dproj"/>
+    </Target>
+    <Target Name="CoolDemo:Clean">
+        <MSBuild Projects="D25\CoolDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="CoolDemo:Make">
+        <MSBuild Projects="D25\CoolDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Cserver">
+        <MSBuild Projects="D25\Cserver.dproj"/>
+    </Target>
+    <Target Name="Cserver:Clean">
+        <MSBuild Projects="D25\Cserver.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Cserver:Make">
+        <MSBuild Projects="D25\Cserver.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Daynames">
+        <MSBuild Projects="D25\Daynames.dproj"/>
+    </Target>
+    <Target Name="Daynames:Clean">
+        <MSBuild Projects="D25\Daynames.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Daynames:Make">
+        <MSBuild Projects="D25\Daynames.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Dclock">
+        <MSBuild Projects="D25\Dclock.dproj"/>
+    </Target>
+    <Target Name="Dclock:Clean">
+        <MSBuild Projects="D25\Dclock.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Dclock:Make">
+        <MSBuild Projects="D25\Dclock.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DingButtonXControl">
+        <MSBuild Projects="D25\DingButtonXControl.dproj"/>
+    </Target>
+    <Target Name="DingButtonXControl:Clean">
+        <MSBuild Projects="D25\DingButtonXControl.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DingButtonXControl:Make">
+        <MSBuild Projects="D25\DingButtonXControl.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DingPkg">
+        <MSBuild Projects="D25\DingPkg.dproj"/>
+    </Target>
+    <Target Name="DingPkg:Clean">
+        <MSBuild Projects="D25\DingPkg.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DingPkg:Make">
+        <MSBuild Projects="D25\DingPkg.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Direx">
+        <MSBuild Projects="D25\Direx.dproj"/>
+    </Target>
+    <Target Name="Direx:Clean">
+        <MSBuild Projects="D25\Direx.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Direx:Make">
+        <MSBuild Projects="D25\Direx.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Direxec">
+        <MSBuild Projects="D25\Direxec.dproj"/>
+    </Target>
+    <Target Name="Direxec:Clean">
+        <MSBuild Projects="D25\Direxec.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Direxec:Make">
+        <MSBuild Projects="D25\Direxec.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="DMTest">
+        <MSBuild Projects="D25\DMTest.dproj"/>
+    </Target>
+    <Target Name="DMTest:Clean">
+        <MSBuild Projects="D25\DMTest.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="DMTest:Make">
+        <MSBuild Projects="D25\DMTest.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Client1">
+        <MSBuild Projects="D25\Client1.dproj"/>
+    </Target>
+    <Target Name="Client1:Clean">
+        <MSBuild Projects="D25\Client1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Client1:Make">
+        <MSBuild Projects="D25\Client1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Client2">
+        <MSBuild Projects="D25\Client2.dproj"/>
+    </Target>
+    <Target Name="Client2:Clean">
+        <MSBuild Projects="D25\Client2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Client2:Make">
+        <MSBuild Projects="D25\Client2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Server1">
+        <MSBuild Projects="D25\Server1.dproj"/>
+    </Target>
+    <Target Name="Server1:Clean">
+        <MSBuild Projects="D25\Server1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Server1:Make">
+        <MSBuild Projects="D25\Server1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Server2">
+        <MSBuild Projects="D25\Server2.dproj"/>
+    </Target>
+    <Target Name="Server2:Clean">
+        <MSBuild Projects="D25\Server2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Server2:Make">
+        <MSBuild Projects="D25\Server2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TestCDlg">
+        <MSBuild Projects="D25\TestCDlg.dproj"/>
+    </Target>
+    <Target Name="TestCDlg:Clean">
+        <MSBuild Projects="D25\TestCDlg.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestCDlg:Make">
+        <MSBuild Projects="D25\TestCDlg.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TestDing">
+        <MSBuild Projects="D25\TestDing.dproj"/>
+    </Target>
+    <Target Name="TestDing:Clean">
+        <MSBuild Projects="D25\TestDing.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TestDing:Make">
+        <MSBuild Projects="D25\TestDing.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Testdll">
+        <MSBuild Projects="D25\Testdll.dproj"/>
+    </Target>
+    <Target Name="Testdll:Clean">
+        <MSBuild Projects="D25\Testdll.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Testdll:Make">
+        <MSBuild Projects="D25\Testdll.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="BarChartp">
+        <MSBuild Projects="D25\BarChartp.dproj"/>
+    </Target>
+    <Target Name="BarChartp:Clean">
+        <MSBuild Projects="D25\BarChartp.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="BarChartp:Make">
+        <MSBuild Projects="D25\BarChartp.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Dragme">
+        <MSBuild Projects="D25\Dragme.dproj"/>
+    </Target>
+    <Target Name="Dragme:Clean">
+        <MSBuild Projects="D25\Dragme.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Dragme:Make">
+        <MSBuild Projects="D25\Dragme.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Dropfile">
+        <MSBuild Projects="D25\Dropfile.dproj"/>
+    </Target>
+    <Target Name="Dropfile:Clean">
+        <MSBuild Projects="D25\Dropfile.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Dropfile:Make">
+        <MSBuild Projects="D25\Dropfile.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Enumfon">
+        <MSBuild Projects="D25\Enumfon.dproj"/>
+    </Target>
+    <Target Name="Enumfon:Clean">
+        <MSBuild Projects="D25\Enumfon.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Enumfon:Make">
+        <MSBuild Projects="D25\Enumfon.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Enumwin">
+        <MSBuild Projects="D25\Enumwin.dproj"/>
+    </Target>
+    <Target Name="Enumwin:Clean">
+        <MSBuild Projects="D25\Enumwin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Enumwin:Make">
+        <MSBuild Projects="D25\Enumwin.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Except1">
+        <MSBuild Projects="D25\Except1.dproj"/>
+    </Target>
+    <Target Name="Except1:Clean">
+        <MSBuild Projects="D25\Except1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Except1:Make">
+        <MSBuild Projects="D25\Except1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Except2">
+        <MSBuild Projects="D25\Except2.dproj"/>
+    </Target>
+    <Target Name="Except2:Clean">
+        <MSBuild Projects="D25\Except2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Except2:Make">
+        <MSBuild Projects="D25\Except2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Except3">
+        <MSBuild Projects="D25\Except3.dproj"/>
+    </Target>
+    <Target Name="Except3:Clean">
+        <MSBuild Projects="D25\Except3.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Except3:Make">
+        <MSBuild Projects="D25\Except3.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Exlist">
+        <MSBuild Projects="D25\Exlist.dproj"/>
+    </Target>
+    <Target Name="Exlist:Clean">
+        <MSBuild Projects="D25\Exlist.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Exlist:Make">
+        <MSBuild Projects="D25\Exlist.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Telname">
+        <MSBuild Projects="D25\Telname.dproj"/>
+    </Target>
+    <Target Name="Telname:Clean">
+        <MSBuild Projects="D25\Telname.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Telname:Make">
+        <MSBuild Projects="D25\Telname.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Todo">
+        <MSBuild Projects="D25\Todo.dproj"/>
+    </Target>
+    <Target Name="Todo:Clean">
+        <MSBuild Projects="D25\Todo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Todo:Make">
+        <MSBuild Projects="D25\Todo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Toolbar1">
+        <MSBuild Projects="D25\Toolbar1.dproj"/>
+    </Target>
+    <Target Name="Toolbar1:Clean">
+        <MSBuild Projects="D25\Toolbar1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Toolbar1:Make">
+        <MSBuild Projects="D25\Toolbar1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Toolbar2">
+        <MSBuild Projects="D25\Toolbar2.dproj"/>
+    </Target>
+    <Target Name="Toolbar2:Clean">
+        <MSBuild Projects="D25\Toolbar2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Toolbar2:Make">
+        <MSBuild Projects="D25\Toolbar2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Toolbar3">
+        <MSBuild Projects="D25\Toolbar3.dproj"/>
+    </Target>
+    <Target Name="Toolbar3:Clean">
+        <MSBuild Projects="D25\Toolbar3.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Toolbar3:Make">
+        <MSBuild Projects="D25\Toolbar3.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="UpDownDemo">
+        <MSBuild Projects="D25\UpDownDemo.dproj"/>
+    </Target>
+    <Target Name="UpDownDemo:Clean">
+        <MSBuild Projects="D25\UpDownDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="UpDownDemo:Make">
+        <MSBuild Projects="D25\UpDownDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="VideoPlayer">
+        <MSBuild Projects="D25\VideoPlayer.dproj"/>
+    </Target>
+    <Target Name="VideoPlayer:Clean">
+        <MSBuild Projects="D25\VideoPlayer.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="VideoPlayer:Make">
+        <MSBuild Projects="D25\VideoPlayer.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="WinesCalc">
+        <MSBuild Projects="D25\WinesCalc.dproj"/>
+    </Target>
+    <Target Name="WinesCalc:Clean">
+        <MSBuild Projects="D25\WinesCalc.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="WinesCalc:Make">
+        <MSBuild Projects="D25\WinesCalc.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="WinesChart">
+        <MSBuild Projects="D25\WinesChart.dproj"/>
+    </Target>
+    <Target Name="WinesChart:Clean">
+        <MSBuild Projects="D25\WinesChart.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="WinesChart:Make">
+        <MSBuild Projects="D25\WinesChart.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="WinesDemo">
+        <MSBuild Projects="D25\WinesDemo.dproj"/>
+    </Target>
+    <Target Name="WinesDemo:Clean">
+        <MSBuild Projects="D25\WinesDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="WinesDemo:Make">
+        <MSBuild Projects="D25\WinesDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="WinesEntry">
+        <MSBuild Projects="D25\WinesEntry.dproj"/>
+    </Target>
+    <Target Name="WinesEntry:Clean">
+        <MSBuild Projects="D25\WinesEntry.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="WinesEntry:Make">
+        <MSBuild Projects="D25\WinesEntry.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="YesNoTest">
+        <MSBuild Projects="D25\YesNoTest.dproj"/>
+    </Target>
+    <Target Name="YesNoTest:Clean">
+        <MSBuild Projects="D25\YesNoTest.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="YesNoTest:Make">
+        <MSBuild Projects="D25\YesNoTest.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Fancy">
+        <MSBuild Projects="D25\Fancy.dproj"/>
+    </Target>
+    <Target Name="Fancy:Clean">
+        <MSBuild Projects="D25\Fancy.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Fancy:Make">
+        <MSBuild Projects="D25\Fancy.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Filemenu">
+        <MSBuild Projects="D25\Filemenu.dproj"/>
+    </Target>
+    <Target Name="Filemenu:Clean">
+        <MSBuild Projects="D25\Filemenu.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Filemenu:Make">
+        <MSBuild Projects="D25\Filemenu.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Nonclien">
+        <MSBuild Projects="D25\Nonclien.dproj"/>
+    </Target>
+    <Target Name="Nonclien:Clean">
+        <MSBuild Projects="D25\Nonclien.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Nonclien:Make">
+        <MSBuild Projects="D25\Nonclien.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="OleWord2">
+        <MSBuild Projects="D25\OleWord2.dproj"/>
+    </Target>
+    <Target Name="OleWord2:Clean">
+        <MSBuild Projects="D25\OleWord2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OleWord2:Make">
+        <MSBuild Projects="D25\OleWord2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Readme">
+        <MSBuild Projects="D25\Readme.dproj"/>
+    </Target>
+    <Target Name="Readme:Clean">
+        <MSBuild Projects="D25\Readme.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Readme:Make">
+        <MSBuild Projects="D25\Readme.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Keyinfo">
+        <MSBuild Projects="D25\Keyinfo.dproj"/>
+    </Target>
+    <Target Name="Keyinfo:Clean">
+        <MSBuild Projects="D25\Keyinfo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Keyinfo:Make">
+        <MSBuild Projects="D25\Keyinfo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Lister">
+        <MSBuild Projects="D25\Lister.dproj"/>
+    </Target>
+    <Target Name="Lister:Clean">
+        <MSBuild Projects="D25\Lister.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Lister:Make">
+        <MSBuild Projects="D25\Lister.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Mdidemo2">
+        <MSBuild Projects="D25\Mdidemo2.dproj"/>
+    </Target>
+    <Target Name="Mdidemo2:Clean">
+        <MSBuild Projects="D25\Mdidemo2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Mdidemo2:Make">
+        <MSBuild Projects="D25\Mdidemo2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Memopad">
+        <MSBuild Projects="D25\Memopad.dproj"/>
+    </Target>
+    <Target Name="Memopad:Clean">
+        <MSBuild Projects="D25\Memopad.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Memopad:Make">
+        <MSBuild Projects="D25\Memopad.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Metamore">
+        <MSBuild Projects="D25\Metamore.dproj"/>
+    </Target>
+    <Target Name="Metamore:Clean">
+        <MSBuild Projects="D25\Metamore.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Metamore:Make">
+        <MSBuild Projects="D25\Metamore.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="OleCont">
+        <MSBuild Projects="D25\OleCont.dproj"/>
+    </Target>
+    <Target Name="OleCont:Clean">
+        <MSBuild Projects="D25\OleCont.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OleCont:Make">
+        <MSBuild Projects="D25\OleCont.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Options">
+        <MSBuild Projects="D25\Options.dproj"/>
+    </Target>
+    <Target Name="Options:Clean">
+        <MSBuild Projects="D25\Options.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Options:Make">
+        <MSBuild Projects="D25\Options.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Palette">
+        <MSBuild Projects="D25\Palette.dproj"/>
+    </Target>
+    <Target Name="Palette:Clean">
+        <MSBuild Projects="D25\Palette.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Palette:Make">
+        <MSBuild Projects="D25\Palette.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Polyflow">
+        <MSBuild Projects="D25\Polyflow.dproj"/>
+    </Target>
+    <Target Name="Polyflow:Clean">
+        <MSBuild Projects="D25\Polyflow.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Polyflow:Make">
+        <MSBuild Projects="D25\Polyflow.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PowerTest">
+        <MSBuild Projects="D25\PowerTest.dproj"/>
+    </Target>
+    <Target Name="PowerTest:Clean">
+        <MSBuild Projects="D25\PowerTest.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PowerTest:Make">
+        <MSBuild Projects="D25\PowerTest.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Sketch">
+        <MSBuild Projects="D25\Sketch.dproj"/>
+    </Target>
+    <Target Name="Sketch:Clean">
+        <MSBuild Projects="D25\Sketch.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Sketch:Make">
+        <MSBuild Projects="D25\Sketch.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Splashin">
+        <MSBuild Projects="D25\Splashin.dproj"/>
+    </Target>
+    <Target Name="Splashin:Clean">
+        <MSBuild Projects="D25\Splashin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Splashin:Make">
+        <MSBuild Projects="D25\Splashin.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Status">
+        <MSBuild Projects="D25\Status.dproj"/>
+    </Target>
+    <Target Name="Status:Clean">
+        <MSBuild Projects="D25\Status.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Status:Make">
+        <MSBuild Projects="D25\Status.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Exwin">
+        <MSBuild Projects="D25\Exwin.dproj"/>
+    </Target>
+    <Target Name="Exwin:Clean">
+        <MSBuild Projects="D25\Exwin.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Exwin:Make">
+        <MSBuild Projects="D25\Exwin.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Master">
+        <MSBuild Projects="D25\Master.dproj"/>
+    </Target>
+    <Target Name="Master:Clean">
+        <MSBuild Projects="D25\Master.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Master:Make">
+        <MSBuild Projects="D25\Master.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MayTemp">
+        <MSBuild Projects="D25\MayTemp.dproj"/>
+    </Target>
+    <Target Name="MayTemp:Clean">
+        <MSBuild Projects="D25\MayTemp.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MayTemp:Make">
+        <MSBuild Projects="D25\MayTemp.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MemInfo">
+        <MSBuild Projects="D25\MemInfo.dproj"/>
+    </Target>
+    <Target Name="MemInfo:Clean">
+        <MSBuild Projects="D25\MemInfo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MemInfo:Make">
+        <MSBuild Projects="D25\MemInfo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Report1">
+        <MSBuild Projects="D25\Report1.dproj"/>
+    </Target>
+    <Target Name="Report1:Clean">
+        <MSBuild Projects="D25\Report1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Report1:Make">
+        <MSBuild Projects="D25\Report1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Strlist">
+        <MSBuild Projects="D25\Strlist.dproj"/>
+    </Target>
+    <Target Name="Strlist:Clean">
+        <MSBuild Projects="D25\Strlist.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Strlist:Make">
+        <MSBuild Projects="D25\Strlist.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Strres">
+        <MSBuild Projects="D25\Strres.dproj"/>
+    </Target>
+    <Target Name="Strres:Clean">
+        <MSBuild Projects="D25\Strres.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Strres:Make">
+        <MSBuild Projects="D25\Strres.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Tabs">
+        <MSBuild Projects="D25\Tabs.dproj"/>
+    </Target>
+    <Target Name="Tabs:Clean">
+        <MSBuild Projects="D25\Tabs.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Tabs:Make">
+        <MSBuild Projects="D25\Tabs.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Listfont">
+        <MSBuild Projects="D25\Listfont.dproj"/>
+    </Target>
+    <Target Name="Listfont:Clean">
+        <MSBuild Projects="D25\Listfont.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Listfont:Make">
+        <MSBuild Projects="D25\Listfont.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Prninfo">
+        <MSBuild Projects="D25\Prninfo.dproj"/>
+    </Target>
+    <Target Name="Prninfo:Clean">
+        <MSBuild Projects="D25\Prninfo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Prninfo:Make">
+        <MSBuild Projects="D25\Prninfo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Sysmenu">
+        <MSBuild Projects="D25\Sysmenu.dproj"/>
+    </Target>
+    <Target Name="Sysmenu:Clean">
+        <MSBuild Projects="D25\Sysmenu.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Sysmenu:Make">
+        <MSBuild Projects="D25\Sysmenu.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Fishy">
+        <MSBuild Projects="D25\Fishy.dproj"/>
+    </Target>
+    <Target Name="Fishy:Clean">
+        <MSBuild Projects="D25\Fishy.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Fishy:Make">
+        <MSBuild Projects="D25\Fishy.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Listtext">
+        <MSBuild Projects="D25\Listtext.dproj"/>
+    </Target>
+    <Target Name="Listtext:Clean">
+        <MSBuild Projects="D25\Listtext.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Listtext:Make">
+        <MSBuild Projects="D25\Listtext.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="OleWord1">
+        <MSBuild Projects="D25\OleWord1.dproj"/>
+    </Target>
+    <Target Name="OleWord1:Clean">
+        <MSBuild Projects="D25\OleWord1.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="OleWord1:Make">
+        <MSBuild Projects="D25\OleWord1.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Multimen">
+        <MSBuild Projects="D25\Multimen.dproj"/>
+    </Target>
+    <Target Name="Multimen:Clean">
+        <MSBuild Projects="D25\Multimen.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Multimen:Make">
+        <MSBuild Projects="D25\Multimen.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="MouseExcept">
+        <MSBuild Projects="D25\MouseExcept.dproj"/>
+    </Target>
+    <Target Name="MouseExcept:Clean">
+        <MSBuild Projects="D25\MouseExcept.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="MouseExcept:Make">
+        <MSBuild Projects="D25\MouseExcept.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Sqlplay">
+        <MSBuild Projects="D25\Sqlplay.dproj"/>
+    </Target>
+    <Target Name="Sqlplay:Clean">
+        <MSBuild Projects="D25\Sqlplay.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Sqlplay:Make">
+        <MSBuild Projects="D25\Sqlplay.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Fishy2">
+        <MSBuild Projects="D25\Fishy2.dproj"/>
+    </Target>
+    <Target Name="Fishy2:Clean">
+        <MSBuild Projects="D25\Fishy2.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Fishy2:Make">
+        <MSBuild Projects="D25\Fishy2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Keycount">
+        <MSBuild Projects="D25\Keycount.dproj"/>
+    </Target>
+    <Target Name="Keycount:Clean">
+        <MSBuild Projects="D25\Keycount.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Keycount:Make">
+        <MSBuild Projects="D25\Keycount.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Hello">
+        <MSBuild Projects="D25\Hello.dproj"/>
+    </Target>
+    <Target Name="Hello:Clean">
+        <MSBuild Projects="D25\Hello.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Hello:Make">
+        <MSBuild Projects="D25\Hello.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Mdidemo">
+        <MSBuild Projects="D25\Mdidemo.dproj"/>
+    </Target>
+    <Target Name="Mdidemo:Clean">
+        <MSBuild Projects="D25\Mdidemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Mdidemo:Make">
+        <MSBuild Projects="D25\Mdidemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PageTab">
+        <MSBuild Projects="D25\PageTab.dproj"/>
+    </Target>
+    <Target Name="PageTab:Clean">
+        <MSBuild Projects="D25\PageTab.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PageTab:Make">
+        <MSBuild Projects="D25\PageTab.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PageTabOD">
+        <MSBuild Projects="D25\PageTabOD.dproj"/>
+    </Target>
+    <Target Name="PageTabOD:Clean">
+        <MSBuild Projects="D25\PageTabOD.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PageTabOD:Make">
+        <MSBuild Projects="D25\PageTabOD.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="PicDialogs">
+        <MSBuild Projects="D25\PicDialogs.dproj"/>
+    </Target>
+    <Target Name="PicDialogs:Clean">
+        <MSBuild Projects="D25\PicDialogs.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="PicDialogs:Make">
+        <MSBuild Projects="D25\PicDialogs.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Spinbutt">
+        <MSBuild Projects="D25\Spinbutt.dproj"/>
+    </Target>
+    <Target Name="Spinbutt:Clean">
+        <MSBuild Projects="D25\Spinbutt.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Spinbutt:Make">
+        <MSBuild Projects="D25\Spinbutt.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="TabEdit">
+        <MSBuild Projects="D25\TabEdit.dproj"/>
+    </Target>
+    <Target Name="TabEdit:Clean">
+        <MSBuild Projects="D25\TabEdit.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="TabEdit:Make">
+        <MSBuild Projects="D25\TabEdit.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Glyphlst">
+        <MSBuild Projects="D25\Glyphlst.dproj"/>
+    </Target>
+    <Target Name="Glyphlst:Clean">
+        <MSBuild Projects="D25\Glyphlst.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Glyphlst:Make">
+        <MSBuild Projects="D25\Glyphlst.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Ontop">
+        <MSBuild Projects="D25\Ontop.dproj"/>
+    </Target>
+    <Target Name="Ontop:Clean">
+        <MSBuild Projects="D25\Ontop.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Ontop:Make">
+        <MSBuild Projects="D25\Ontop.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Findrepl">
+        <MSBuild Projects="D25\Findrepl.dproj"/>
+    </Target>
+    <Target Name="Findrepl:Clean">
+        <MSBuild Projects="D25\Findrepl.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Findrepl:Make">
+        <MSBuild Projects="D25\Findrepl.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Fontsamp">
+        <MSBuild Projects="D25\Fontsamp.dproj"/>
+    </Target>
+    <Target Name="Fontsamp:Clean">
+        <MSBuild Projects="D25\Fontsamp.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Fontsamp:Make">
+        <MSBuild Projects="D25\Fontsamp.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="StaticDemo">
+        <MSBuild Projects="D25\StaticDemo.dproj"/>
+    </Target>
+    <Target Name="StaticDemo:Clean">
+        <MSBuild Projects="D25\StaticDemo.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="StaticDemo:Make">
+        <MSBuild Projects="D25\StaticDemo.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Objlist">
+        <MSBuild Projects="D25\Objlist.dproj"/>
+    </Target>
+    <Target Name="Objlist:Clean">
+        <MSBuild Projects="D25\Objlist.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Objlist:Make">
+        <MSBuild Projects="D25\Objlist.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Runme">
+        <MSBuild Projects="D25\Runme.dproj"/>
+    </Target>
+    <Target Name="Runme:Clean">
+        <MSBuild Projects="D25\Runme.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Runme:Make">
+        <MSBuild Projects="D25\Runme.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Syscolor">
+        <MSBuild Projects="D25\Syscolor.dproj"/>
+    </Target>
+    <Target Name="Syscolor:Clean">
+        <MSBuild Projects="D25\Syscolor.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Syscolor:Make">
+        <MSBuild Projects="D25\Syscolor.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="StatusOD">
+        <MSBuild Projects="D25\StatusOD.dproj"/>
+    </Target>
+    <Target Name="StatusOD:Clean">
+        <MSBuild Projects="D25\StatusOD.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="StatusOD:Make">
+        <MSBuild Projects="D25\StatusOD.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Msgdlg">
+        <MSBuild Projects="D25\Msgdlg.dproj"/>
+    </Target>
+    <Target Name="Msgdlg:Clean">
+        <MSBuild Projects="D25\Msgdlg.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Msgdlg:Make">
+        <MSBuild Projects="D25\Msgdlg.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Printgr">
+        <MSBuild Projects="D25\Printgr.dproj"/>
+    </Target>
+    <Target Name="Printgr:Clean">
+        <MSBuild Projects="D25\Printgr.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Printgr:Make">
+        <MSBuild Projects="D25\Printgr.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="Aboutex;Actions;Addpage;Animator;BarTest2;BarTest;Bitview2;Bitview;Calc32;Calc32_2;Capslock2;Capslock;Cclient;Chargrid;Checks;Colorlib;Combos;Compstrm;Constraint;Contcomp;CoolDemo;Cserver;Daynames;Dclock;DingButtonXControl;DingPkg;Direx;Direxec;DMTest;Client1;Client2;Server1;Server2;TestCDlg;TestDing;Testdll;BarChartp;Dragme;Dropfile;Enumfon;Enumwin;Except1;Except2;Except3;Exlist;Telname;Todo;Toolbar1;Toolbar2;Toolbar3;UpDownDemo;VideoPlayer;WinesCalc;WinesChart;WinesDemo;WinesEntry;YesNoTest;Fancy;Filemenu;Nonclien;OleWord2;Readme;Keyinfo;Lister;Mdidemo2;Memopad;Metamore;OleCont;Options;Palette;Polyflow;PowerTest;Sketch;Splashin;Status;Exwin;Master;MayTemp;MemInfo;Report1;Strlist;Strres;Tabs;Listfont;Prninfo;Sysmenu;Fishy;Listtext;OleWord1;Multimen;MouseExcept;Sqlplay;Fishy2;Keycount;Hello;Mdidemo;PageTab;PageTabOD;PicDialogs;Spinbutt;TabEdit;Glyphlst;Ontop;Findrepl;Fontsamp;StaticDemo;Objlist;Runme;Syscolor;StatusOD;Msgdlg;Printgr"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="Aboutex:Clean;Actions:Clean;Addpage:Clean;Animator:Clean;BarTest2:Clean;BarTest:Clean;Bitview2:Clean;Bitview:Clean;Calc32:Clean;Calc32_2:Clean;Capslock2:Clean;Capslock:Clean;Cclient:Clean;Chargrid:Clean;Checks:Clean;Colorlib:Clean;Combos:Clean;Compstrm:Clean;Constraint:Clean;Contcomp:Clean;CoolDemo:Clean;Cserver:Clean;Daynames:Clean;Dclock:Clean;DingButtonXControl:Clean;DingPkg:Clean;Direx:Clean;Direxec:Clean;DMTest:Clean;Client1:Clean;Client2:Clean;Server1:Clean;Server2:Clean;TestCDlg:Clean;TestDing:Clean;Testdll:Clean;BarChartp:Clean;Dragme:Clean;Dropfile:Clean;Enumfon:Clean;Enumwin:Clean;Except1:Clean;Except2:Clean;Except3:Clean;Exlist:Clean;Telname:Clean;Todo:Clean;Toolbar1:Clean;Toolbar2:Clean;Toolbar3:Clean;UpDownDemo:Clean;VideoPlayer:Clean;WinesCalc:Clean;WinesChart:Clean;WinesDemo:Clean;WinesEntry:Clean;YesNoTest:Clean;Fancy:Clean;Filemenu:Clean;Nonclien:Clean;OleWord2:Clean;Readme:Clean;Keyinfo:Clean;Lister:Clean;Mdidemo2:Clean;Memopad:Clean;Metamore:Clean;OleCont:Clean;Options:Clean;Palette:Clean;Polyflow:Clean;PowerTest:Clean;Sketch:Clean;Splashin:Clean;Status:Clean;Exwin:Clean;Master:Clean;MayTemp:Clean;MemInfo:Clean;Report1:Clean;Strlist:Clean;Strres:Clean;Tabs:Clean;Listfont:Clean;Prninfo:Clean;Sysmenu:Clean;Fishy:Clean;Listtext:Clean;OleWord1:Clean;Multimen:Clean;MouseExcept:Clean;Sqlplay:Clean;Fishy2:Clean;Keycount:Clean;Hello:Clean;Mdidemo:Clean;PageTab:Clean;PageTabOD:Clean;PicDialogs:Clean;Spinbutt:Clean;TabEdit:Clean;Glyphlst:Clean;Ontop:Clean;Findrepl:Clean;Fontsamp:Clean;StaticDemo:Clean;Objlist:Clean;Runme:Clean;Syscolor:Clean;StatusOD:Clean;Msgdlg:Clean;Printgr:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="Aboutex:Make;Actions:Make;Addpage:Make;Animator:Make;BarTest2:Make;BarTest:Make;Bitview2:Make;Bitview:Make;Calc32:Make;Calc32_2:Make;Capslock2:Make;Capslock:Make;Cclient:Make;Chargrid:Make;Checks:Make;Colorlib:Make;Combos:Make;Compstrm:Make;Constraint:Make;Contcomp:Make;CoolDemo:Make;Cserver:Make;Daynames:Make;Dclock:Make;DingButtonXControl:Make;DingPkg:Make;Direx:Make;Direxec:Make;DMTest:Make;Client1:Make;Client2:Make;Server1:Make;Server2:Make;TestCDlg:Make;TestDing:Make;Testdll:Make;BarChartp:Make;Dragme:Make;Dropfile:Make;Enumfon:Make;Enumwin:Make;Except1:Make;Except2:Make;Except3:Make;Exlist:Make;Telname:Make;Todo:Make;Toolbar1:Make;Toolbar2:Make;Toolbar3:Make;UpDownDemo:Make;VideoPlayer:Make;WinesCalc:Make;WinesChart:Make;WinesDemo:Make;WinesEntry:Make;YesNoTest:Make;Fancy:Make;Filemenu:Make;Nonclien:Make;OleWord2:Make;Readme:Make;Keyinfo:Make;Lister:Make;Mdidemo2:Make;Memopad:Make;Metamore:Make;OleCont:Make;Options:Make;Palette:Make;Polyflow:Make;PowerTest:Make;Sketch:Make;Splashin:Make;Status:Make;Exwin:Make;Master:Make;MayTemp:Make;MemInfo:Make;Report1:Make;Strlist:Make;Strres:Make;Tabs:Make;Listfont:Make;Prninfo:Make;Sysmenu:Make;Fishy:Make;Listtext:Make;OleWord1:Make;Multimen:Make;MouseExcept:Make;Sqlplay:Make;Fishy2:Make;Keycount:Make;Hello:Make;Mdidemo:Make;PageTab:Make;PageTabOD:Make;PicDialogs:Make;Spinbutt:Make;TabEdit:Make;Glyphlst:Make;Ontop:Make;Findrepl:Make;Fontsamp:Make;StaticDemo:Make;Objlist:Make;Runme:Make;Syscolor:Make;StatusOD:Make;Msgdlg:Make;Printgr:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

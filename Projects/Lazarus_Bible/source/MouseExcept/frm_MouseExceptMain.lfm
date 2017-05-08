@@ -1,0 +1,37 @@
+object MainForm: TMainForm
+  Left = 205
+  Top = 132
+  Caption = 'Custom Exceptions'
+  ClientHeight = 260
+  ClientWidth = 401
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OnMouseDown = FormMouseDown
+  OnPaint = FormPaint
+  PixelsPerInch = 96
+  object Label1: TLabel
+    Left = 72
+    Top = 144
+    Width = 263
+    Height = 24
+    Caption = 'Click inside the rectangle to exit'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clMaroon
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+  end
+  object BitBtn1: TBitBtn
+    Left = 296
+    Top = 208
+    Width = 75
+    Height = 25
+    TabOrder = 0
+    Kind = bkClose
+  end
+end

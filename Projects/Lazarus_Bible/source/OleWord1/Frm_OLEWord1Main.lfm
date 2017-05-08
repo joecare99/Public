@@ -1,0 +1,23 @@
+object MainForm: TMainForm
+  Left = 202
+  Top = 132
+  Caption = 'OLE Object Demonstration for Word 95 and Earlier'
+  ClientHeight = 188
+  ClientWidth = 406
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  PixelsPerInch = 96
+  object Button1: TButton
+    Left = 72
+    Top = 40
+    Width = 265
+    Height = 89
+    Caption = 'Click to Create and Print a Word Document'
+    TabOrder = 0
+    OnClick = Button1Click
+  end
+end

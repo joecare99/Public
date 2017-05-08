@@ -284,7 +284,6 @@ type
     FExtraWindows: array of TCustomForm;
     FMenuHistory: array of TMenuItem;
     FBitmap: TBitmap;
-    procedure UpdateProgressBar(Sender: TObject);
     procedure DockMasterCreateControl(Sender: TObject; aName: string;
       var AControl: TControl; DoDisableAutoSizing: boolean);
     function GetIDStr: string;
@@ -300,6 +299,7 @@ type
     procedure UpdateMenuHistory;
   public
     ProgressBar: TProgressBar;
+    procedure UpdateProgressBar(Sender: TObject);
     property iID: longint read GetiID write SetiID;
     property sID: string read GetIDStr write SetiIDStr;
     { public declarations }
@@ -1631,7 +1631,7 @@ begin
     if mniAncetres.Checked then
       PopulateAncetres;
     if mniExplorateur.Checked then
-      frmExplorer.TrouveIndividu;
+      frmExplorer.FindIndividual;
     if mniDescendants.Checked then
       PopulateDescendants;
     if mniImage.Checked then
@@ -1774,19 +1774,19 @@ end;
 
 procedure TfrmStemmaMainForm.mniNavItem24Click(Sender: TObject);
 begin
-  if (frmExplorer.Index.Row > 1) then
+  if (frmExplorer.grdIndex.Row > 1) then
   begin
-    frmExplorer.Index.Row := frmExplorer.Index.Row - 1;
-    frmStemmaMainForm.iID := PtrInt(frmExplorer.Index.Objects[1, frmExplorer.Index.Row]);
+    frmExplorer.grdIndex.Row := frmExplorer.grdIndex.Row - 1;
+    frmStemmaMainForm.iID := PtrInt(frmExplorer.grdIndex.Objects[1, frmExplorer.grdIndex.Row]);
   end;
 end;
 
 procedure TfrmStemmaMainForm.mniNavItem25Click(Sender: TObject);
 begin
-  if (frmExplorer.Index.Row < frmExplorer.Index.RowCount) then
+  if (frmExplorer.grdIndex.Row < frmExplorer.grdIndex.RowCount) then
   begin
-    frmExplorer.Index.Row := frmExplorer.Index.Row + 1;
-    frmStemmaMainForm.iID := ptrint(frmExplorer.Index.objects[1, frmExplorer.Index.Row]);
+    frmExplorer.grdIndex.Row := frmExplorer.grdIndex.Row + 1;
+    frmStemmaMainForm.iID := ptrint(frmExplorer.grdIndex.objects[1, frmExplorer.grdIndex.Row]);
   end;
 end;
 
@@ -1980,8 +1980,7 @@ end;
 
 procedure TfrmStemmaMainForm.mniEditCopyNameClick(Sender: TObject);
 var
-  temp, i1, i2, i3, i4: string;
-  j: integer;
+  i1, i2, i3, i4: string;
   LastNID, lidName: longint;
 begin
   // Copier nom
@@ -1991,59 +1990,9 @@ begin
     LastNID := dmGenData.CopyName(lidName, i4, i3, i2, i1);
     dmGenData.CopyCitation('N', lidName, LastNID);
     // fr: Ajoute le nom dans l'explorateur...
+    // en: Add Name to Explorer ...
     if actWinExplorer.Checked then
-    begin
-      if frmExplorer.O.Text = '1' then
-        temp := RemoveUTF8(i2 + ' ' + i1);
-      if frmExplorer.O.Text = '2' then
-        temp := RemoveUTF8(i1 + ', ' + i2);
-      if frmExplorer.O.Text = '3' then
-        temp := i3;
-      if frmExplorer.O.Text = '4' then
-        temp := i4;
-      if length(temp) > 0 then
-      begin
-        j := frmExplorer.Index.Row;
-        if AnsiCompareText((copy(frmExplorer.Index.Cells[6, j],
-          1, length(temp))), temp) > 0 then
-        begin
-          while (AnsiCompareText(
-              (copy(frmExplorer.Index.Cells[6, j], 1, length(temp))), temp) > 0) and
-            (j > 1) do
-          begin
-            Application.ProcessMessages;
-            j := j - 1;
-          end;
-          j := j + 1;
-        end
-        else
-        begin
-          while (AnsiCompareText(
-              (copy(frmExplorer.Index.Cells[6, j], 1, length(temp))), temp) < 0) and
-            (j < frmExplorer.index.rowcount - 1) do
-          begin
-            Application.ProcessMessages;
-            j := j + 1;
-          end;
-          j := j - 1;
-        end;
-      end;
-      frmExplorer.Index.InsertColRow(False, j);
-      frmExplorer.Index.Cells[0, j] :=
-        IntToStr(dmGenData.Query2.Fields[10].AsInteger - 1);
-      frmExplorer.Index.Cells[1, j] := frmStemmaMainForm.sID;
-      if frmExplorer.O.Text = '1' then
-        frmExplorer.Index.Cells[2, j] :=
-          DecodeName(dmGenData.Query1.Fields[2].AsString, 1)
-      else
-        frmExplorer.Index.Cells[2, j] :=
-          DecodeName(dmGenData.Query1.Fields[2].AsString, 2);
-      frmExplorer.Index.Cells[3, j] := ConvertDate(i3, 1);
-      frmExplorer.Index.Cells[4, j] := ConvertDate(i4, 1);
-      frmExplorer.Index.Cells[5, j] := '';
-      frmExplorer.Index.Cells[6, j] := temp;
-      frmExplorer.Index.Row := j;
-    end;
+      frmExplorer.AddNameToExplorer(i1, i2, i3, i4);
     dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
     frmNames.PopulateNom(Sender);
   end;
@@ -2147,58 +2096,7 @@ begin
     end;
     // Ajoute le nom dans l'explorateur...
     if mniExplorateur.Checked then
-    begin
-      if frmExplorer.O.Text = '1' then
-        temp := RemoveUTF8(i2 + ' ' + i1);
-      if frmExplorer.O.Text = '2' then
-        temp := RemoveUTF8(i1 + ', ' + i2);
-      if frmExplorer.O.Text = '3' then
-        temp := i3;
-      if frmExplorer.O.Text = '4' then
-        temp := i4;
-      if length(temp) > 0 then
-      begin
-        j := frmExplorer.Index.Row;
-        if AnsiCompareText((copy(frmExplorer.Index.Cells[6, j],
-          1, length(temp))), temp) > 0 then
-        begin
-          while (AnsiCompareText(
-              (copy(frmExplorer.Index.Cells[6, j], 1, length(temp))), temp) > 0) and
-            (j > 1) do
-          begin
-            Application.ProcessMessages;
-            j := j - 1;
-          end;
-          j := j + 1;
-        end
-        else
-        begin
-          while (AnsiCompareText(
-              (copy(frmExplorer.Index.Cells[6, j], 1, length(temp))), temp) < 0) and
-            (j < frmExplorer.index.rowcount - 1) do
-          begin
-            Application.ProcessMessages;
-            j := j + 1;
-          end;
-          j := j - 1;
-        end;
-      end;
-      frmExplorer.Index.InsertColRow(False, j);
-      frmExplorer.Index.Cells[0, j] :=
-        IntToStr(dmGenData.Query2.Fields[10].AsInteger - 1);
-      frmExplorer.Index.Cells[1, j] := IntToStr(nouveau);
-      if frmExplorer.O.Text = '1' then
-        frmExplorer.Index.Cells[2, j] :=
-          DecodeName(dmGenData.Query1.Fields[2].AsString, 1)
-      else
-        frmExplorer.Index.Cells[2, j] :=
-          DecodeName(dmGenData.Query1.Fields[2].AsString, 2);
-      frmExplorer.Index.Cells[3, j] := ConvertDate(i3, 1);
-      frmExplorer.Index.Cells[4, j] := ConvertDate(i4, 1);
-      frmExplorer.Index.Cells[5, j] := '';
-      frmExplorer.Index.Cells[6, j] := temp;
-      frmExplorer.Index.Row := j;
-    end;
+       frmExplorer.AddNameToExplorer(i1,i2,i3,i4);
     dmGenData.Query1.Next;
   end;
   // Copie tous les documents
@@ -4196,7 +4094,7 @@ begin  // Repair Birth-Death
   if frmStemmaMainForm.mniExplorateur.Checked then
   begin
     frmExplorer.PopulateIndex(StrToInt(frmExplorer.O.Text));
-    frmExplorer.TrouveIndividu;
+    frmExplorer.FindIndividual;
   end;
   Screen.Cursor := MyCursor;
 end;
@@ -4259,7 +4157,7 @@ begin
   if frmStemmaMainForm.mniExplorateur.Checked then
   begin
     frmExplorer.PopulateIndex(StrToInt(frmExplorer.O.Text));
-    frmExplorer.TrouveIndividu;
+    frmExplorer.FindIndividual;
   end;
   Screen.Cursor := MyCursor;
 end;

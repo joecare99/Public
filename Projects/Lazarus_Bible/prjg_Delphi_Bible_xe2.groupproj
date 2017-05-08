@@ -1,0 +1,708 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{628C6686-845D-4866-B3B6-62C483A5492E}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="DXE2\Aboutex.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Actions.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Contcomp.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\CoolDemo.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Cserver.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Daynames.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Dclock.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\DingButtonXControl.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\DingPkg.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Direx.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Direxec.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\DMTest.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Server1.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Server2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\TestCDlg.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\TestDing.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Testdll.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\BarChartp.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Addpage.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Animator.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\BarTest2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\BarTest.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Bitview2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Bitview.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Calc32.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Calc32_2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Capslock2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Capslock.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Cclient.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Chargrid.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Checks.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Client1.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Client2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Colorlib.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Combos.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Compstrm.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Constraint.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Dragme.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Dropfile.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Enumfon.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Enumwin.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Except1.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Except2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Except3.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Exlist.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Telname.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Todo.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Toolbar1.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Toolbar2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Toolbar3.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\UpDownDemo.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\VideoPlayer.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\WinesCalc.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\WinesChart.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\WinesDemo.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\WinesEntry.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\YesNoTest.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="Aboutex">
+			<MSBuild Projects="DXE2\Aboutex.dproj"/>
+		</Target>
+		<Target Name="Aboutex:Clean">
+			<MSBuild Projects="DXE2\Aboutex.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Aboutex:Make">
+			<MSBuild Projects="DXE2\Aboutex.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Actions">
+			<MSBuild Projects="DXE2\Actions.dproj"/>
+		</Target>
+		<Target Name="Actions:Clean">
+			<MSBuild Projects="DXE2\Actions.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Actions:Make">
+			<MSBuild Projects="DXE2\Actions.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Contcomp">
+			<MSBuild Projects="DXE2\Contcomp.dproj"/>
+		</Target>
+		<Target Name="Contcomp:Clean">
+			<MSBuild Projects="DXE2\Contcomp.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Contcomp:Make">
+			<MSBuild Projects="DXE2\Contcomp.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="CoolDemo">
+			<MSBuild Projects="DXE2\CoolDemo.dproj"/>
+		</Target>
+		<Target Name="CoolDemo:Clean">
+			<MSBuild Projects="DXE2\CoolDemo.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="CoolDemo:Make">
+			<MSBuild Projects="DXE2\CoolDemo.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Cserver">
+			<MSBuild Projects="DXE2\Cserver.dproj"/>
+		</Target>
+		<Target Name="Cserver:Clean">
+			<MSBuild Projects="DXE2\Cserver.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Cserver:Make">
+			<MSBuild Projects="DXE2\Cserver.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Daynames">
+			<MSBuild Projects="DXE2\Daynames.dproj"/>
+		</Target>
+		<Target Name="Daynames:Clean">
+			<MSBuild Projects="DXE2\Daynames.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Daynames:Make">
+			<MSBuild Projects="DXE2\Daynames.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Dclock">
+			<MSBuild Projects="DXE2\Dclock.dproj"/>
+		</Target>
+		<Target Name="Dclock:Clean">
+			<MSBuild Projects="DXE2\Dclock.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Dclock:Make">
+			<MSBuild Projects="DXE2\Dclock.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="DingButtonXControl">
+			<MSBuild Projects="DXE2\DingButtonXControl.dproj"/>
+		</Target>
+		<Target Name="DingButtonXControl:Clean">
+			<MSBuild Projects="DXE2\DingButtonXControl.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="DingButtonXControl:Make">
+			<MSBuild Projects="DXE2\DingButtonXControl.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="DingPkg">
+			<MSBuild Projects="DXE2\DingPkg.dproj"/>
+		</Target>
+		<Target Name="DingPkg:Clean">
+			<MSBuild Projects="DXE2\DingPkg.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="DingPkg:Make">
+			<MSBuild Projects="DXE2\DingPkg.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Direx">
+			<MSBuild Projects="DXE2\Direx.dproj"/>
+		</Target>
+		<Target Name="Direx:Clean">
+			<MSBuild Projects="DXE2\Direx.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Direx:Make">
+			<MSBuild Projects="DXE2\Direx.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Direxec">
+			<MSBuild Projects="DXE2\Direxec.dproj"/>
+		</Target>
+		<Target Name="Direxec:Clean">
+			<MSBuild Projects="DXE2\Direxec.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Direxec:Make">
+			<MSBuild Projects="DXE2\Direxec.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="DMTest">
+			<MSBuild Projects="DXE2\DMTest.dproj"/>
+		</Target>
+		<Target Name="DMTest:Clean">
+			<MSBuild Projects="DXE2\DMTest.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="DMTest:Make">
+			<MSBuild Projects="DXE2\DMTest.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Server1">
+			<MSBuild Projects="DXE2\Server1.dproj"/>
+		</Target>
+		<Target Name="Server1:Clean">
+			<MSBuild Projects="DXE2\Server1.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Server1:Make">
+			<MSBuild Projects="DXE2\Server1.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Server2">
+			<MSBuild Projects="DXE2\Server2.dproj"/>
+		</Target>
+		<Target Name="Server2:Clean">
+			<MSBuild Projects="DXE2\Server2.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Server2:Make">
+			<MSBuild Projects="DXE2\Server2.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="TestCDlg">
+			<MSBuild Projects="DXE2\TestCDlg.dproj"/>
+		</Target>
+		<Target Name="TestCDlg:Clean">
+			<MSBuild Projects="DXE2\TestCDlg.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="TestCDlg:Make">
+			<MSBuild Projects="DXE2\TestCDlg.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="TestDing">
+			<MSBuild Projects="DXE2\TestDing.dproj"/>
+		</Target>
+		<Target Name="TestDing:Clean">
+			<MSBuild Projects="DXE2\TestDing.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="TestDing:Make">
+			<MSBuild Projects="DXE2\TestDing.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Testdll">
+			<MSBuild Projects="DXE2\Testdll.dproj"/>
+		</Target>
+		<Target Name="Testdll:Clean">
+			<MSBuild Projects="DXE2\Testdll.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Testdll:Make">
+			<MSBuild Projects="DXE2\Testdll.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="BarChartp">
+			<MSBuild Projects="DXE2\BarChartp.dproj"/>
+		</Target>
+		<Target Name="BarChartp:Clean">
+			<MSBuild Projects="DXE2\BarChartp.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="BarChartp:Make">
+			<MSBuild Projects="DXE2\BarChartp.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Addpage">
+			<MSBuild Projects="DXE2\Addpage.dproj"/>
+		</Target>
+		<Target Name="Addpage:Clean">
+			<MSBuild Projects="DXE2\Addpage.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Addpage:Make">
+			<MSBuild Projects="DXE2\Addpage.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Animator">
+			<MSBuild Projects="DXE2\Animator.dproj"/>
+		</Target>
+		<Target Name="Animator:Clean">
+			<MSBuild Projects="DXE2\Animator.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Animator:Make">
+			<MSBuild Projects="DXE2\Animator.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="BarTest2">
+			<MSBuild Projects="DXE2\BarTest2.dproj"/>
+		</Target>
+		<Target Name="BarTest2:Clean">
+			<MSBuild Projects="DXE2\BarTest2.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="BarTest2:Make">
+			<MSBuild Projects="DXE2\BarTest2.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="BarTest">
+			<MSBuild Projects="DXE2\BarTest.dproj"/>
+		</Target>
+		<Target Name="BarTest:Clean">
+			<MSBuild Projects="DXE2\BarTest.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="BarTest:Make">
+			<MSBuild Projects="DXE2\BarTest.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Bitview2">
+			<MSBuild Projects="DXE2\Bitview2.dproj"/>
+		</Target>
+		<Target Name="Bitview2:Clean">
+			<MSBuild Projects="DXE2\Bitview2.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Bitview2:Make">
+			<MSBuild Projects="DXE2\Bitview2.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Bitview">
+			<MSBuild Projects="DXE2\Bitview.dproj"/>
+		</Target>
+		<Target Name="Bitview:Clean">
+			<MSBuild Projects="DXE2\Bitview.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Bitview:Make">
+			<MSBuild Projects="DXE2\Bitview.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Calc32">
+			<MSBuild Projects="DXE2\Calc32.dproj"/>
+		</Target>
+		<Target Name="Calc32:Clean">
+			<MSBuild Projects="DXE2\Calc32.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Calc32:Make">
+			<MSBuild Projects="DXE2\Calc32.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Calc32_2">
+			<MSBuild Projects="DXE2\Calc32_2.dproj"/>
+		</Target>
+		<Target Name="Calc32_2:Clean">
+			<MSBuild Projects="DXE2\Calc32_2.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Calc32_2:Make">
+			<MSBuild Projects="DXE2\Calc32_2.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Capslock2">
+			<MSBuild Projects="DXE2\Capslock2.dproj"/>
+		</Target>
+		<Target Name="Capslock2:Clean">
+			<MSBuild Projects="DXE2\Capslock2.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Capslock2:Make">
+			<MSBuild Projects="DXE2\Capslock2.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Capslock">
+			<MSBuild Projects="DXE2\Capslock.dproj"/>
+		</Target>
+		<Target Name="Capslock:Clean">
+			<MSBuild Projects="DXE2\Capslock.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Capslock:Make">
+			<MSBuild Projects="DXE2\Capslock.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Cclient">
+			<MSBuild Projects="DXE2\Cclient.dproj"/>
+		</Target>
+		<Target Name="Cclient:Clean">
+			<MSBuild Projects="DXE2\Cclient.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Cclient:Make">
+			<MSBuild Projects="DXE2\Cclient.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Chargrid">
+			<MSBuild Projects="DXE2\Chargrid.dproj"/>
+		</Target>
+		<Target Name="Chargrid:Clean">
+			<MSBuild Projects="DXE2\Chargrid.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Chargrid:Make">
+			<MSBuild Projects="DXE2\Chargrid.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Checks">
+			<MSBuild Projects="DXE2\Checks.dproj"/>
+		</Target>
+		<Target Name="Checks:Clean">
+			<MSBuild Projects="DXE2\Checks.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Checks:Make">
+			<MSBuild Projects="DXE2\Checks.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Client1">
+			<MSBuild Projects="DXE2\Client1.dproj"/>
+		</Target>
+		<Target Name="Client1:Clean">
+			<MSBuild Projects="DXE2\Client1.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Client1:Make">
+			<MSBuild Projects="DXE2\Client1.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Client2">
+			<MSBuild Projects="DXE2\Client2.dproj"/>
+		</Target>
+		<Target Name="Client2:Clean">
+			<MSBuild Projects="DXE2\Client2.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Client2:Make">
+			<MSBuild Projects="DXE2\Client2.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Colorlib">
+			<MSBuild Projects="DXE2\Colorlib.dproj"/>
+		</Target>
+		<Target Name="Colorlib:Clean">
+			<MSBuild Projects="DXE2\Colorlib.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Colorlib:Make">
+			<MSBuild Projects="DXE2\Colorlib.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Combos">
+			<MSBuild Projects="DXE2\Combos.dproj"/>
+		</Target>
+		<Target Name="Combos:Clean">
+			<MSBuild Projects="DXE2\Combos.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Combos:Make">
+			<MSBuild Projects="DXE2\Combos.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Compstrm">
+			<MSBuild Projects="DXE2\Compstrm.dproj"/>
+		</Target>
+		<Target Name="Compstrm:Clean">
+			<MSBuild Projects="DXE2\Compstrm.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Compstrm:Make">
+			<MSBuild Projects="DXE2\Compstrm.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Constraint">
+			<MSBuild Projects="DXE2\Constraint.dproj"/>
+		</Target>
+		<Target Name="Constraint:Clean">
+			<MSBuild Projects="DXE2\Constraint.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Constraint:Make">
+			<MSBuild Projects="DXE2\Constraint.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Dragme">
+			<MSBuild Projects="DXE2\Dragme.dproj"/>
+		</Target>
+		<Target Name="Dragme:Clean">
+			<MSBuild Projects="DXE2\Dragme.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Dragme:Make">
+			<MSBuild Projects="DXE2\Dragme.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Dropfile">
+			<MSBuild Projects="DXE2\Dropfile.dproj"/>
+		</Target>
+		<Target Name="Dropfile:Clean">
+			<MSBuild Projects="DXE2\Dropfile.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Dropfile:Make">
+			<MSBuild Projects="DXE2\Dropfile.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Enumfon">
+			<MSBuild Projects="DXE2\Enumfon.dproj"/>
+		</Target>
+		<Target Name="Enumfon:Clean">
+			<MSBuild Projects="DXE2\Enumfon.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Enumfon:Make">
+			<MSBuild Projects="DXE2\Enumfon.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Enumwin">
+			<MSBuild Projects="DXE2\Enumwin.dproj"/>
+		</Target>
+		<Target Name="Enumwin:Clean">
+			<MSBuild Projects="DXE2\Enumwin.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Enumwin:Make">
+			<MSBuild Projects="DXE2\Enumwin.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Except1">
+			<MSBuild Projects="DXE2\Except1.dproj"/>
+		</Target>
+		<Target Name="Except1:Clean">
+			<MSBuild Projects="DXE2\Except1.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Except1:Make">
+			<MSBuild Projects="DXE2\Except1.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Except2">
+			<MSBuild Projects="DXE2\Except2.dproj"/>
+		</Target>
+		<Target Name="Except2:Clean">
+			<MSBuild Projects="DXE2\Except2.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Except2:Make">
+			<MSBuild Projects="DXE2\Except2.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Except3">
+			<MSBuild Projects="DXE2\Except3.dproj"/>
+		</Target>
+		<Target Name="Except3:Clean">
+			<MSBuild Projects="DXE2\Except3.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Except3:Make">
+			<MSBuild Projects="DXE2\Except3.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Exlist">
+			<MSBuild Projects="DXE2\Exlist.dproj"/>
+		</Target>
+		<Target Name="Exlist:Clean">
+			<MSBuild Projects="DXE2\Exlist.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Exlist:Make">
+			<MSBuild Projects="DXE2\Exlist.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Telname">
+			<MSBuild Projects="DXE2\Telname.dproj"/>
+		</Target>
+		<Target Name="Telname:Clean">
+			<MSBuild Projects="DXE2\Telname.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Telname:Make">
+			<MSBuild Projects="DXE2\Telname.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Todo">
+			<MSBuild Projects="DXE2\Todo.dproj"/>
+		</Target>
+		<Target Name="Todo:Clean">
+			<MSBuild Projects="DXE2\Todo.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Todo:Make">
+			<MSBuild Projects="DXE2\Todo.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Toolbar1">
+			<MSBuild Projects="DXE2\Toolbar1.dproj"/>
+		</Target>
+		<Target Name="Toolbar1:Clean">
+			<MSBuild Projects="DXE2\Toolbar1.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Toolbar1:Make">
+			<MSBuild Projects="DXE2\Toolbar1.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Toolbar2">
+			<MSBuild Projects="DXE2\Toolbar2.dproj"/>
+		</Target>
+		<Target Name="Toolbar2:Clean">
+			<MSBuild Projects="DXE2\Toolbar2.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Toolbar2:Make">
+			<MSBuild Projects="DXE2\Toolbar2.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Toolbar3">
+			<MSBuild Projects="DXE2\Toolbar3.dproj"/>
+		</Target>
+		<Target Name="Toolbar3:Clean">
+			<MSBuild Projects="DXE2\Toolbar3.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Toolbar3:Make">
+			<MSBuild Projects="DXE2\Toolbar3.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="UpDownDemo">
+			<MSBuild Projects="DXE2\UpDownDemo.dproj"/>
+		</Target>
+		<Target Name="UpDownDemo:Clean">
+			<MSBuild Projects="DXE2\UpDownDemo.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="UpDownDemo:Make">
+			<MSBuild Projects="DXE2\UpDownDemo.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="VideoPlayer">
+			<MSBuild Projects="DXE2\VideoPlayer.dproj"/>
+		</Target>
+		<Target Name="VideoPlayer:Clean">
+			<MSBuild Projects="DXE2\VideoPlayer.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="VideoPlayer:Make">
+			<MSBuild Projects="DXE2\VideoPlayer.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="WinesCalc">
+			<MSBuild Projects="DXE2\WinesCalc.dproj"/>
+		</Target>
+		<Target Name="WinesCalc:Clean">
+			<MSBuild Projects="DXE2\WinesCalc.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="WinesCalc:Make">
+			<MSBuild Projects="DXE2\WinesCalc.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="WinesChart">
+			<MSBuild Projects="DXE2\WinesChart.dproj"/>
+		</Target>
+		<Target Name="WinesChart:Clean">
+			<MSBuild Projects="DXE2\WinesChart.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="WinesChart:Make">
+			<MSBuild Projects="DXE2\WinesChart.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="WinesDemo">
+			<MSBuild Projects="DXE2\WinesDemo.dproj"/>
+		</Target>
+		<Target Name="WinesDemo:Clean">
+			<MSBuild Projects="DXE2\WinesDemo.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="WinesDemo:Make">
+			<MSBuild Projects="DXE2\WinesDemo.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="WinesEntry">
+			<MSBuild Projects="DXE2\WinesEntry.dproj"/>
+		</Target>
+		<Target Name="WinesEntry:Clean">
+			<MSBuild Projects="DXE2\WinesEntry.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="WinesEntry:Make">
+			<MSBuild Projects="DXE2\WinesEntry.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="YesNoTest">
+			<MSBuild Projects="DXE2\YesNoTest.dproj"/>
+		</Target>
+		<Target Name="YesNoTest:Clean">
+			<MSBuild Projects="DXE2\YesNoTest.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="YesNoTest:Make">
+			<MSBuild Projects="DXE2\YesNoTest.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="Aboutex;Actions;Contcomp;CoolDemo;Cserver;Daynames;Dclock;DingButtonXControl;DingPkg;Direx;Direxec;DMTest;Server1;Server2;TestCDlg;TestDing;Testdll;BarChartp;Addpage;Animator;BarTest2;BarTest;Bitview2;Bitview;Calc32;Calc32_2;Capslock2;Capslock;Cclient;Chargrid;Checks;Client1;Client2;Colorlib;Combos;Compstrm;Constraint;Dragme;Dropfile;Enumfon;Enumwin;Except1;Except2;Except3;Exlist;Telname;Todo;Toolbar1;Toolbar2;Toolbar3;UpDownDemo;VideoPlayer;WinesCalc;WinesChart;WinesDemo;WinesEntry;YesNoTest"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="Aboutex:Clean;Actions:Clean;Contcomp:Clean;CoolDemo:Clean;Cserver:Clean;Daynames:Clean;Dclock:Clean;DingButtonXControl:Clean;DingPkg:Clean;Direx:Clean;Direxec:Clean;DMTest:Clean;Server1:Clean;Server2:Clean;TestCDlg:Clean;TestDing:Clean;Testdll:Clean;BarChartp:Clean;Addpage:Clean;Animator:Clean;BarTest2:Clean;BarTest:Clean;Bitview2:Clean;Bitview:Clean;Calc32:Clean;Calc32_2:Clean;Capslock2:Clean;Capslock:Clean;Cclient:Clean;Chargrid:Clean;Checks:Clean;Client1:Clean;Client2:Clean;Colorlib:Clean;Combos:Clean;Compstrm:Clean;Constraint:Clean;Dragme:Clean;Dropfile:Clean;Enumfon:Clean;Enumwin:Clean;Except1:Clean;Except2:Clean;Except3:Clean;Exlist:Clean;Telname:Clean;Todo:Clean;Toolbar1:Clean;Toolbar2:Clean;Toolbar3:Clean;UpDownDemo:Clean;VideoPlayer:Clean;WinesCalc:Clean;WinesChart:Clean;WinesDemo:Clean;WinesEntry:Clean;YesNoTest:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="Aboutex:Make;Actions:Make;Contcomp:Make;CoolDemo:Make;Cserver:Make;Daynames:Make;Dclock:Make;DingButtonXControl:Make;DingPkg:Make;Direx:Make;Direxec:Make;DMTest:Make;Server1:Make;Server2:Make;TestCDlg:Make;TestDing:Make;Testdll:Make;BarChartp:Make;Addpage:Make;Animator:Make;BarTest2:Make;BarTest:Make;Bitview2:Make;Bitview:Make;Calc32:Make;Calc32_2:Make;Capslock2:Make;Capslock:Make;Cclient:Make;Chargrid:Make;Checks:Make;Client1:Make;Client2:Make;Colorlib:Make;Combos:Make;Compstrm:Make;Constraint:Make;Dragme:Make;Dropfile:Make;Enumfon:Make;Enumwin:Make;Except1:Make;Except2:Make;Except3:Make;Exlist:Make;Telname:Make;Todo:Make;Toolbar1:Make;Toolbar2:Make;Toolbar3:Make;UpDownDemo:Make;VideoPlayer:Make;WinesCalc:Make;WinesChart:Make;WinesDemo:Make;WinesEntry:Make;YesNoTest:Make"/>
+		</Target>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
+	</Project>

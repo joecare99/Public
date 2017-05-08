@@ -56,6 +56,14 @@ implementation
 uses
   frm_Main,Traduction, dm_GenData, frm_Explorer;
 
+procedure UpdateNamesPrefered(const idNamePref, idNameUnPref: integer);
+begin
+  dmGenData.Query1.SQL.Text:='UPDATE N SET X=0 WHERE N.no='+inttostr(idNameUnPref);
+  dmGenData.Query1.ExecSQL;
+  dmGenData.Query1.SQL.Text:='UPDATE N SET X=1 WHERE N.no='+inttostr(idNamePref);
+  dmGenData.Query1.ExecSQL;
+end;
+
 
 {$R *.lfm}
 
@@ -146,45 +154,30 @@ end;
 
 procedure TfrmNames.MenuItem1Click(Sender: TObject);
 var
-  n,j:integer;
-  temp:string;
+  temp:integer;
+  lidName: Integer;
 begin
      If TableauNoms.Cells[1,TableauNoms.row]='*' then
         ShowMessage(Traduction.Items[128])
      else
         begin
+        lidName:=ptrint(TableauNoms.Objects[0,TableauNoms.row]);
+
+        // Get idName of prefered name
         dmGenData.Query1.SQL.Text:='SELECT no FROM N WHERE N.X=1 AND N.I='+
                                   frmStemmaMainForm.sID;
         dmGenData.Query1.Open;
-        temp:=dmGenData.Query1.Fields[0].AsString;
-        dmGenData.Query1.SQL.Text:='UPDATE N SET X=0 WHERE N.no='+temp;
-        dmGenData.Query1.ExecSQL;
-        dmGenData.Query1.SQL.Text:='UPDATE N SET X=1 WHERE N.no='+
-                                  TableauNoms.Cells[0,TableauNoms.row];
-        dmGenData.Query1.ExecSQL;
+        temp:=dmGenData.Query1.Fields[0].AsInteger;
+
+        UpdateNamesPrefered( temp,lidName);
         // Modifie la date de modification
         // Modifie l'explorateur si affiché
         if frmStemmaMainForm.mniExplorateur.Checked then
-           begin
-           n:=0;
-           for j:=1 to frmExplorer.Index.RowCount do
-              begin
-              if frmExplorer.Index.Cells[0,j]=TableauNoms.Cells[0,TableauNoms.row] then
-                 begin
-                 frmExplorer.Index.Cells[5,j]:='*';
-                 n:=n+1;
-              end;
-              if frmExplorer.Index.Cells[0,j]=temp then
-                 begin
-                 frmExplorer.Index.Cells[5,j]:='';
-                 n:=n+1;
-              end;
-              if n=2 then break;
-           end;
-        end;
+           frmExplorer.UpdatePreferedMark(temp,lidName);
+
         //frmExplorer.Index.Repaint;
         dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
-        frmExplorer.TrouveIndividu;
+        frmExplorer.FindIndividual;
      end;
 end;
 
@@ -200,27 +193,20 @@ end;
 
 procedure TfrmNames.MenuItem5Click(Sender: TObject);  // Supprimer
 var
-  j:integer;
+  lidName: Integer;
 begin
   if TableauNoms.Row>0 then
      if TableauNoms.Cells[1,TableauNoms.Row]='' then
         if Application.MessageBox(Pchar(Traduction.Items[129]+
            TableauNoms.Cells[4,TableauNoms.Row]+Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
            begin
-           dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE Y=''N'' AND N='+TableauNoms.Cells[0,TableauNoms.Row];
+           lidName:=ptrint(TableauNoms.Objects[0,TableauNoms.Row]);
+           dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE Y=''N'' AND N='+inttostr(lidName);
            dmGenData.Query1.ExecSQL;
-           dmGenData.Query1.SQL.Text:='DELETE FROM N WHERE no='+TableauNoms.Cells[0,TableauNoms.Row];
+           dmGenData.Query1.SQL.Text:='DELETE FROM N WHERE no='+inttostr(lidName);
            dmGenData.Query1.ExecSQL;
            if frmStemmaMainForm.mniExplorateur.Checked then
-              for j:=1 to frmExplorer.Index.RowCount-1 do
-                  begin
-                  if frmExplorer.Index.Cells[0,j]=TableauNoms.Cells[0,TableauNoms.Row] then
-                     begin
-                     frmExplorer.Index.DeleteRow(j);
-                     break;
-                  end;
-                  Application.ProcessMessages;
-              end;
+              frmExplorer.DeleteIndex(lidName);
            TableauNoms.DeleteRow(TableauNoms.Row);
            dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
         end;

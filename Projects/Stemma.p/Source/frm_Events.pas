@@ -77,6 +77,7 @@ begin
       TableauEvenements.Cells[2,row]:=dmGenData.Query2.Fields[0].AsString;
       TableauEvenements.Cells[3,row]:=ConvertDate(dmGenData.Query1.Fields[3].AsString,1);
      // Trouver # d'un autre principal témoin de l'événement
+     dmGenData.Query2.close;
      dmGenData.Query2.SQL.Text:='SELECT I FROM W WHERE X=1 AND E='+dmGenData.Query1.Fields[0].AsString;
      dmGenData.Query2.Open;
       TableauEvenements.Cells[7,row]:='0';
@@ -206,9 +207,10 @@ end;
 
 procedure TfrmEvents.MenuItem7Click(Sender: TObject);
 var
-  temoins1, temoins2:string;
+  temoins1, temoins2, lEvType, lDate:string;
   redraw, resort:boolean;
   j:integer;
+  lidInd: LongInt;
 begin
    redraw:=false;
    if TableauEvenements.Row>0 then
@@ -218,6 +220,8 @@ begin
                                 ' AND E.no='+TableauEvenements.Cells[0,TableauEvenements.Row];
       dmGenData.Query1.Open;
       dmGenData.Query1.First;
+      lEvType:=dmGenData.Query1.Fields[4].AsString;
+      lidInd :=dmGenData.Query1.Fields[2].AsInteger;
       if not dmGenData.Query1.eof then
          begin
          // si primaire, enlève le primaire de la base de données et du tableau.
@@ -227,40 +231,8 @@ begin
             dmGenData.Query2.ExecSQL;
             TableauEvenements.Cells[1,TableauEvenements.Row]:='';
             redraw:=true;
-            If dmGenData.Query1.Fields[4].AsString='B' then
-               begin
-               dmGenData.Query2.SQL.Text:='UPDATE N SET I3='''' WHERE N.I='+dmGenData.Query1.Fields[2].AsString;
-               dmGenData.Query2.ExecSQL;
-               resort:=false;
-               if frmStemmaMainForm.mniExplorateur.Checked then
-                  for j:=1 to frmExplorer.Index.RowCount-1 do
-                        if frmExplorer.Index.Cells[1,j]=dmGenData.Query1.Fields[2].AsString then
-                           begin
-                           frmExplorer.Index.Cells[3,j]:='';
-                           if frmExplorer.O.text='3' then
-                              begin
-                              frmExplorer.Index.Cells[6,j]:='';
-                              resort:=true;
-                           end;
-                        end;
-            end;
-            If dmGenData.Query1.Fields[4].AsString='D' then
-               begin
-               dmGenData.Query2.SQL.Text:='UPDATE N SET I4='''' WHERE N.I='+dmGenData.Query1.Fields[2].AsString;
-               dmGenData.Query2.ExecSQL;
-               resort:=false;
-               if frmStemmaMainForm.mniExplorateur.Checked then
-                  for j:=1 to frmExplorer.Index.RowCount-1 do
-                        if frmExplorer.Index.Cells[1,j]=dmGenData.Query1.Fields[2].AsString then
-                           begin
-                           frmExplorer.Index.Cells[4,j]:='';
-                           if frmExplorer.O.text='4' then
-                              begin
-                              frmExplorer.Index.Cells[6,j]:='';
-                              resort:=true;
-                           end;
-                        end;
-            end;
+            if frmStemmaMainForm.mniExplorateur.Checked then
+               frmExplorer.UpdateIndexDates(lEvType,'',lidInd);
          end
          // sinon
          else
@@ -276,7 +248,10 @@ begin
                temoins1:=temoins1+'|'+dmGenData.Query2.Fields[0].AsString;
                dmGenData.Query2.Next;
             end;
+
+
             dmGenData.Query2.SQL.Clear;
+            // Todo: Error: dmGenData.Query1.eof := true => No Data !!!
             if dmGenData.Query1.Fields[4].AsString='X' then
                dmGenData.Query2.SQL.add('SELECT E.no, W.I FROM E JOIN W on W.E=E.no WHERE W.X=1 AND E.X=1 AND E.Y='
                                          +dmGenData.Query1.Fields[3].AsString+' AND W.I='+frmStemmaMainForm.sID)
@@ -306,51 +281,30 @@ begin
                end;
                dmGenData.Query2.next;
             end;
-            // mets le tag primaire à l'événement sélectionné dans la base de données et dans le tableau
+
+            // fr: mets le tag primaire à l'événement sélectionné dans la base de données et dans le tableau
+            // en: put the primary tag to the event selected in the database and the table
             dmGenData.Query2.SQL.Text:='UPDATE E SET X=1 WHERE no='+TableauEvenements.Cells[0,TableauEvenements.Row];
             dmGenData.Query2.ExecSQL;
+
             TableauEvenements.Cells[1,TableauEvenements.Row]:='*';
-            If dmGenData.Query1.Fields[4].AsString='B' then
+            If lEvType='B' then
                begin
-               dmGenData.Query2.SQL.Clear;
-               dmGenData.Query2.SQL.Add('UPDATE N SET I3='''+dmGenData.GetI3(dmGenData.Query1.Fields[2].AsInteger)+
-                  ''' WHERE N.I='+dmGenData.Query1.Fields[2].AsString);
-               dmGenData.Query2.ExecSQL;
-               resort:=false;
+                lDate := dmGenData.GetI3(lidInd);
+                dmGenData.UpdateNameI3(lDate,lidInd);
                if frmStemmaMainForm.mniExplorateur.Checked then
-                  for j:=1 to frmExplorer.Index.RowCount-1 do
-                        if frmExplorer.Index.Cells[1,j]=dmGenData.Query1.Fields[2].AsString then
-                           begin
-                           frmExplorer.Index.Cells[3,j]:=ConvertDate(dmGenData.GetI3(dmGenData.Query1.Fields[2].AsInteger),1);
-                           if frmExplorer.O.text='3' then
-                              begin
-                              frmExplorer.Index.Cells[6,j]:=frmExplorer.Index.Cells[3,j];
-                              resort:=true;
-                           end;
-                        end;
-            end;
-            If dmGenData.Query1.Fields[4].AsString='D' then
+                 frmExplorer.UpdateIndexDates(lEvType,lDate,lidInd);
+            end else If lEvType='D' then
                begin
-               dmGenData.Query2.SQL.Clear;
-               dmGenData.Query2.SQL.Add('UPDATE N SET I4='''+dmGenData.GetI4(dmGenData.Query1.Fields[2].AsInteger)+
-                  ''' WHERE N.I='+dmGenData.Query1.Fields[2].AsString);
-               dmGenData.Query2.ExecSQL;
-               resort:=false;
+               lDate := dmGenData.GetI3(lidInd);
+               dmGenData.UpdateNameI4(lDate,lidInd);
                if frmStemmaMainForm.mniExplorateur.Checked then
-                  for j:=1 to frmExplorer.Index.RowCount-1 do
-                        if frmExplorer.Index.Cells[1,j]=dmGenData.Query1.Fields[2].AsString then
-                           begin
-                           frmExplorer.Index.Cells[4,j]:=ConvertDate(dmGenData.GetI4(dmGenData.Query1.Fields[2].AsInteger),1);
-                           if frmExplorer.O.text='4' then
-                              begin
-                              frmExplorer.Index.Cells[6,j]:=frmExplorer.Index.Cells[4,j];
-                              resort:=true;
-                           end;
-                        end;
+                 frmExplorer.UpdateIndexDates(lEvType,lDate,lidInd);
             end;
          end;
       end;
-      // Sauvegarder les modifications pour tout les témoins de l'événements
+      // fr: Sauvegarder les modifications pour tout les témoins de l'événements
+      // en: Save the changes for all the witnesses to the events
       dmGenData.Query3.SQL.Text:='SELECT W.I, W.X FROM W WHERE W.E='+TableauEvenements.Cells[0,TableauEvenements.Row];
       dmGenData.Query3.Open;
       dmGenData.Query3.First;
@@ -361,11 +315,6 @@ begin
       end;
    end;
    if redraw then PopulateEvents(Sender);
-   if resort then
-      begin
-      frmExplorer.Index.SortColRow(true,6);
-      frmExplorer.TrouveIndividu;
-   end;
 end;
 
 procedure TfrmEvents.TableauEvenementsDblClick(Sender: TObject);

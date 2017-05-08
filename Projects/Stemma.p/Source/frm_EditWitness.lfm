@@ -28,18 +28,18 @@ object frmEditWitness: TfrmEditWitness
   end
   object Label6: TLabel
     Left = 24
-    Height = 30
+    Height = 15
     Top = 104
-    Width = 72
+    Width = 42
     Caption = '(défaut)'
     ParentColor = False
     Visible = False
   end
   object Label4: TLabel
     Left = 16
-    Height = 30
+    Height = 15
     Top = 88
-    Width = 67
+    Width = 38
     Caption = 'Phrase:'
     ParentColor = False
   end
@@ -72,15 +72,15 @@ object frmEditWitness: TfrmEditWitness
   end
   object Label2: TLabel
     Left = 16
-    Height = 30
+    Height = 15
     Top = 20
-    Width = 72
+    Width = 43
     Caption = 'Témoin:'
     ParentColor = False
   end
   object NomI: TEdit
     Left = 192
-    Height = 38
+    Height = 23
     Top = 16
     Width = 424
     ReadOnly = True
@@ -90,28 +90,28 @@ object frmEditWitness: TfrmEditWitness
   end
   object Label5: TLabel
     Left = 16
-    Height = 30
+    Height = 15
     Top = 160
-    Width = 79
+    Width = 45
     Caption = 'Résultat:'
     ParentColor = False
   end
   object Label3: TLabel
     Left = 17
-    Height = 30
+    Height = 15
     Top = 48
-    Width = 45
+    Width = 26
     Caption = 'Rôle:'
     ParentColor = False
   end
   object Role: TComboBox
     Left = 88
-    Height = 38
+    Height = 23
     Top = 48
     Width = 96
     AutoComplete = True
     AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-    ItemHeight = 30
+    ItemHeight = 15
     OnChange = RoleChange
     Style = csDropDownList
     TabOrder = 0
@@ -141,7 +141,7 @@ object frmEditWitness: TfrmEditWitness
   end
   object I: TSpinEdit
     Left = 88
-    Height = 38
+    Height = 23
     Top = 16
     Width = 96
     OnEditingDone = IEditingDone
@@ -149,7 +149,7 @@ object frmEditWitness: TfrmEditWitness
   end
   object E: TSpinEdit
     Left = 536
-    Height = 38
+    Height = 23
     Top = 36
     Width = 80
     TabStop = False
@@ -158,7 +158,7 @@ object frmEditWitness: TfrmEditWitness
   end
   object X: TSpinEdit
     Left = 536
-    Height = 38
+    Height = 23
     Top = 64
     Width = 80
     TabStop = False
@@ -167,7 +167,7 @@ object frmEditWitness: TfrmEditWitness
   end
   object No: TSpinEdit
     Left = 536
-    Height = 38
+    Height = 23
     Top = 8
     Width = 80
     TabStop = False

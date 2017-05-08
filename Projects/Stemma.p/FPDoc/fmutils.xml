@@ -4,6 +4,13 @@
       </element><element name="SaveFormPosition"><short>Speichere Position des Dialogs</short>
       </element><element name="SaveGridPosition"><short>Speichere Position des StringGrids</short>
       </element>
+    <element name="DecodeName"><short>Decode a Name to visible form</short>
+      </element><element name="DecodeName.Name"><short>XML or TMG - Encoded Name</short>
+      </element><element name="DecodeName.format"><short>Format to which decode the name to:</short><descr><p>1: Title Givenname Familyname Suffix<br/>
+e.G: Dr. Peter Mustermann sen.</p><p>2: Familyname Suffix, Givenname (Title)<br/>
+e.G: Mustermann sen., Peter (Dr.)</p>
+        </descr>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

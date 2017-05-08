@@ -1,0 +1,31 @@
+object MainForm: TMainForm
+  Left = 263
+  Top = 202
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Nonclient Area Message Handling'
+  ClientHeight = 152
+  ClientWidth = 376
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  PixelsPerInch = 96
+  object Label1: TLabel
+    Left = 56
+    Top = 48
+    Width = 254
+    Height = 48
+    Alignment = taCenter
+    Caption = 'Double click the title bar using the right mouse button'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    WordWrap = True
+  end
+end

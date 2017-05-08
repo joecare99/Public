@@ -1,0 +1,136 @@
+// ************************************************************************ //
+// WARNUNG                                                                    
+// -------                                                                    
+// Diese Datei wird von dem Typbibliotheks-Importer oder dem Typbibliothekseditor 
+// erzeugt. Außer Syntaxfehlern analysiert der Editor an der Datei vorgenommene 
+// Änderungen. Wenn Sie aber Änderungen mit dem Editor vornehmen, wird diese  
+// Datei neu erzeugt und Kommentare oder Formatänderungen gehen verloren.     
+// ************************************************************************ //
+// Datei erzeugt am 16.02.2013 10:07:58 (- $Rev: 12980 $, 1881866296).
+
+[
+  uuid(199D9A87-CC89-11D1-AC07-C54ACBC13325), 
+  version(1.0), 
+  helpstring("DingButtonXControl Library"), 
+  control
+    
+]
+library DingButtonXControl
+{
+
+  importlib("stdole32.tlb");
+  importlib("OLEPRO32.DLL");
+
+  interface IDingButtonX;
+  dispinterface IDingButtonXEvents;
+  coclass DingButtonX;
+
+
+  [
+    uuid(199D9A8B-CC89-11D1-AC07-C54ACBC13325), 
+    version(1.0), 
+    helpstring("\0\0\x1FPO :i\x10\b\0+00\x19\0/C:\\\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0")
+  ]
+  enum TxDragMode
+  {
+    [helpstring("dmManual\0\0\0\0\x03@\x1D\0\0\0J\0\x03(\0\x01\0\x03@\x1D\0\x04"), readonly, source]
+    dmManual = 0, 
+    [helpstring("dmAutomatic\0\x03@\x1D\0\0\0J\0\x03(\0\x01\0\x03@\x1D\0\x04"), readonly, source]
+    dmAutomatic = 1
+  };
+
+  [
+    uuid(199D9A8C-CC89-11D1-AC07-C54ACBC13325), 
+    version(1.0), 
+    helpstring("\0\0\x1FPO :i\x10\b\0+00\x19\0/C:\\\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0")
+  ]
+  enum TxMouseButton
+  {
+    [helpstring("mbLeft\0atic\0\x03@\x1D\0\0\0J\0\x03(\0\x01\0\x03@\x1D\0\x04"), bindable]
+    mbLeft = 0, 
+    [helpstring("mbRight\0tic\0\x03@\x1D\0\0\0J\0\x03(\0\x01\0\x03@\x1D\0\x04"), bindable]
+    mbRight = 1, 
+    [helpstring("mbMiddle\0ic\0\x03@\x1D\0\0\0J\0\x03(\0\x01\0\x03@\x1D\0\x04"), bindable]
+    mbMiddle = 2
+  };
+
+  [
+    uuid(199D9A88-CC89-11D1-AC07-C54ACBC13325), 
+    version(1.0), 
+    helpstring("Dispatch interface for DingButtonX Control\0"), 
+    hidden, 
+    dual, 
+    oleautomation
+  ]
+  interface IDingButtonX: IDispatch
+  {
+    [id(0x00000001)]
+    HRESULT _stdcall Click(void);
+    [propget, id(0x00000002)]
+    HRESULT _stdcall Cancel([out, retval] VARIANT_BOOL* Value);
+    [propput, id(0x00000002)]
+    HRESULT _stdcall Cancel([in] VARIANT_BOOL Value);
+    [propget, id(0x00000003)]
+    HRESULT _stdcall Caption([out, retval] BSTR* Value);
+    [propput, id(0x00000003)]
+    HRESULT _stdcall Caption([in] BSTR Value);
+    [propget, id(0x00000004)]
+    HRESULT _stdcall Default([out, retval] VARIANT_BOOL* Value);
+    [propput, id(0x00000004)]
+    HRESULT _stdcall Default([in] VARIANT_BOOL Value);
+    [propget, id(0x00000005)]
+    HRESULT _stdcall DragCursor([out, retval] short* Value);
+    [propput, id(0x00000005)]
+    HRESULT _stdcall DragCursor([in] short Value);
+    [propget, id(0x00000006)]
+    HRESULT _stdcall DragMode([out, retval] enum TxDragMode* Value);
+    [propput, id(0x00000006)]
+    HRESULT _stdcall DragMode([in] enum TxDragMode Value);
+    [propget, id(0x00000007)]
+    HRESULT _stdcall Enabled([out, retval] VARIANT_BOOL* Value);
+    [propput, id(0x00000007)]
+    HRESULT _stdcall Enabled([in] VARIANT_BOOL Value);
+    [propget, id(0x00000008)]
+    HRESULT _stdcall Font([out, retval] Font** Value);
+    [propput, id(0x00000008)]
+    HRESULT _stdcall Font([in] Font* Value);
+    [propget, id(0x00000009)]
+    HRESULT _stdcall Visible([out, retval] VARIANT_BOOL* Value);
+    [propput, id(0x00000009)]
+    HRESULT _stdcall Visible([in] VARIANT_BOOL Value);
+    [propget, id(0x0000000A)]
+    HRESULT _stdcall Cursor([out, retval] short* Value);
+    [propput, id(0x0000000A)]
+    HRESULT _stdcall Cursor([in] short Value);
+    [id(0xFFFFFDD8)]
+    HRESULT _stdcall AboutBox(void);
+  };
+
+  [
+    uuid(199D9A89-CC89-11D1-AC07-C54ACBC13325), 
+    version(1.0), 
+    helpstring("Events interface for DingButtonX Control\0\0\0")
+  ]
+  dispinterface IDingButtonXEvents
+  {
+    properties:
+    methods:
+    [id(0x00000001)]
+    void OnClick(void);
+    [id(0x00000002)]
+    void OnKeyPress([in, out] short* Key);
+  };
+
+  [
+    uuid(199D9A8A-CC89-11D1-AC07-C54ACBC13325), 
+    version(1.0), 
+    helpstring("DingButtonXControl\0\x19\0/C:\\\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0\0"), 
+    control
+  ]
+  coclass DingButtonX
+  {
+    [default] interface IDingButtonX;
+    [default, source] dispinterface IDingButtonXEvents;
+  };
+
+};

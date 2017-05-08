@@ -344,7 +344,7 @@ object frmNames: TfrmNames
   end
   object Interet: TSpinEdit
     Left = 64
-    Height = 38
+    Height = 23
     Top = 113
     Width = 42
     MaxValue = 10
@@ -353,17 +353,17 @@ object frmNames: TfrmNames
   end
   object Label1: TLabel
     Left = 120
-    Height = 30
+    Height = 15
     Top = 120
-    Width = 229
+    Width = 130
     Caption = 'Dernière modification le '
     ParentColor = False
   end
   object Modifie: TLabel
     Left = 256
-    Height = 30
+    Height = 15
     Top = 120
-    Width = 132
+    Width = 76
     Caption = 'YYYY/MM/DD'
     ParentColor = False
   end

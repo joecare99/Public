@@ -37,7 +37,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source;..;..\Source\tools"/>
+            <OtherUnitFiles Value="..\Source;..;..\Source\tools;..\Source\ExtraWnd"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -136,7 +136,7 @@
         <PackageName Value="LCL"/>
       </Item6>
     </RequiredPackages>
-    <Units Count="59">
+    <Units Count="60">
       <Unit0>
         <Filename Value="Stemma.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -150,9 +150,8 @@
         <ComponentName Value="frmStemmaMainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <TopLine Value="1695"/>
-        <CursorPos X="56" Y="1734"/>
+        <TopLine Value="415"/>
+        <CursorPos Y="442"/>
         <UsageCount Value="210"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -161,10 +160,11 @@
         <Filename Value="..\Source\fmutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="FMUtils"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="322"/>
-        <CursorPos X="10" Y="339"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="4"/>
+        <CursorPos X="117" Y="16"/>
         <UsageCount Value="208"/>
+        <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\Source\frm_connectdb.pas"/>
@@ -183,21 +183,26 @@
         <ComponentName Value="frmNames"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="16"/>
-        <CursorPos X="39" Y="91"/>
-        <ComponentState Value="1"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="150"/>
+        <CursorPos X="24" Y="176"/>
         <UsageCount Value="205"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit4>
       <Unit5>
-        <Filename Value="..\Source\frm_Explorer.pas"/>
+        <Filename Value="..\Source\ExtraWnd\frm_explorer.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmExplorer"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="46" Y="24"/>
+        <UnitName Value="frm_Explorer"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="418"/>
+        <CursorPos X="24" Y="435"/>
         <UsageCount Value="226"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\Source\frm_parents.pas"/>
@@ -249,10 +254,13 @@
         <ComponentName Value="frmEvents"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="354"/>
-        <CursorPos X="54" Y="374"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="47"/>
+        <CursorPos X="61" Y="66"/>
         <UsageCount Value="242"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit10>
       <Unit11>
         <Filename Value="..\Source\frm_documents.pas"/>
@@ -353,10 +361,12 @@
         <ComponentName Value="frmEditName"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="547"/>
-        <CursorPos Y="564"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="924"/>
+        <CursorPos X="63" Y="949"/>
         <UsageCount Value="223"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit19>
       <Unit20>
         <Filename Value="..\Source\frm_EditEvents.pas"/>
@@ -364,9 +374,12 @@
         <ComponentName Value="frmEditEvents"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="114" Y="27"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="1002"/>
+        <CursorPos X="50" Y="1028"/>
         <UsageCount Value="204"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit20>
       <Unit21>
         <Filename Value="..\Source\frm_EditWitness.pas"/>
@@ -374,10 +387,12 @@
         <ComponentName Value="frmEditWitness"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="264"/>
-        <CursorPos X="59" Y="281"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="203"/>
+        <CursorPos X="45" Y="233"/>
         <UsageCount Value="200"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit21>
       <Unit22>
         <Filename Value="..\Source\frm_places.pas"/>
@@ -492,10 +507,12 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
         <UnitName Value="dm_GenData"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="120"/>
-        <CursorPos X="36" Y="125"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="882"/>
+        <CursorPos X="70" Y="1514"/>
         <UsageCount Value="203"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit31>
       <Unit32>
         <Filename Value="..\Source\traduction.pas"/>
@@ -510,7 +527,7 @@
         <Filename Value="..\..\Indy10\Lib\System\IdStream.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="29" Y="21"/>
-        <UsageCount Value="42"/>
+        <UsageCount Value="40"/>
       </Unit33>
       <Unit34>
         <Filename Value="..\..\..\Delphi\Examples\Source\Prj_TestDocking\frm_dockingmain.pas"/>
@@ -521,28 +538,28 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="77"/>
         <CursorPos X="69" Y="246"/>
-        <UsageCount Value="40"/>
+        <UsageCount Value="38"/>
       </Unit34>
       <Unit35>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\objpas\sysutils\osutilsh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="28"/>
         <CursorPos X="34" Y="50"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="2"/>
       </Unit35>
       <Unit36>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\win\sysutils.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="299"/>
         <CursorPos X="24" Y="1211"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="2"/>
       </Unit36>
       <Unit37>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\objpas\sysutils\osutil.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="81"/>
         <CursorPos X="19" Y="102"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="2"/>
       </Unit37>
       <Unit38>
         <Filename Value="C:\lazarus\lcl\graphics.pp"/>
@@ -550,14 +567,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="2361"/>
         <CursorPos X="52" Y="2368"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="8"/>
       </Unit38>
       <Unit39>
         <Filename Value="C:\lazarus\lcl\include\customform.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="2895"/>
         <CursorPos X="60" Y="2911"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="6"/>
       </Unit39>
       <Unit40>
         <Filename Value="C:\lazarus\lcl\interfaces\win32\win32wsforms.pp"/>
@@ -565,28 +582,28 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="695"/>
         <CursorPos Y="720"/>
-        <UsageCount Value="0"/>
+        <UsageCount Value="8"/>
       </Unit40>
       <Unit41>
         <Filename Value="C:\lazarus\lcl\include\wincontrol.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="7343"/>
         <CursorPos Y="7364"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="6"/>
       </Unit41>
       <Unit42>
         <Filename Value="C:\lazarus\lcl\include\spinedit.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="197"/>
         <CursorPos Y="218"/>
-        <UsageCount Value="87"/>
+        <UsageCount Value="85"/>
       </Unit42>
       <Unit43>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\fcl-db\src\base\dsparams.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="168"/>
         <CursorPos X="30" Y="197"/>
-        <UsageCount Value="42"/>
+        <UsageCount Value="40"/>
       </Unit43>
       <Unit44>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\fcl-base\src\inifiles.pp"/>
@@ -594,7 +611,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="173"/>
         <CursorPos X="62" Y="200"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="3"/>
       </Unit44>
       <Unit45>
         <Filename Value="C:\lazarus\lcl\dialogs.pp"/>
@@ -602,7 +619,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="540"/>
         <CursorPos X="89" Y="557"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="21"/>
       </Unit45>
       <Unit46>
         <Filename Value="..\Source\tools\frm_selectdialog.pas"/>
@@ -613,7 +630,7 @@
         <UnitName Value="frm_SelectDialog"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="51" Y="43"/>
-        <UsageCount Value="92"/>
+        <UsageCount Value="108"/>
       </Unit46>
       <Unit47>
         <Filename Value="C:\lazarus\components\anchordocking\anchordocking.pas"/>
@@ -621,34 +638,34 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="2702"/>
         <CursorPos X="3" Y="2707"/>
-        <UsageCount Value="14"/>
+        <UsageCount Value="12"/>
       </Unit47>
       <Unit48>
         <Filename Value="..\..\..\Delphi\Components\Source\Unt_StringProcs.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1892"/>
         <CursorPos X="90" Y="1914"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="7"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit48>
       <Unit49>
         <Filename Value="..\..\..\Delphi\Components\FPC\dcl_KGSoft.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="11" Y="10"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="9"/>
       </Unit49>
       <Unit50>
         <Filename Value="..\..\..\Delphi\Components\Source\Unt_DCL.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="65" Y="11"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="9"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit50>
       <Unit51>
         <Filename Value="..\..\..\Delphi\Components\FPC\DBHLLookUpPanel.dpk"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="116" Y="20"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="9"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit51>
       <Unit52>
@@ -656,7 +673,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="217"/>
         <CursorPos X="49" Y="226"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="9"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit52>
       <Unit53>
@@ -664,7 +681,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="177"/>
         <CursorPos X="3" Y="217"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="9"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit53>
       <Unit54>
@@ -673,12 +690,12 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="992"/>
         <CursorPos X="15" Y="1015"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="6"/>
       </Unit54>
       <Unit55>
         <Filename Value="..\..\..\Delphi\Components\FPC\DBLuGrid.dpk"/>
         <EditorIndex Value="-1"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="9"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit55>
       <Unit56>
@@ -686,7 +703,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="139"/>
         <CursorPos X="44" Y="225"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="9"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit56>
       <Unit57>
@@ -695,7 +712,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="260"/>
         <CursorPos X="29" Y="283"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="9"/>
       </Unit57>
       <Unit58>
         <Filename Value="C:\lazarus\lcl\grids.pas"/>
@@ -703,10 +720,139 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="115"/>
         <CursorPos X="153" Y="39"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="9"/>
       </Unit58>
+      <Unit59>
+        <Filename Value="C:\lazarus\fpc\3.0.2\source\packages\fcl-db\src\sqldb\sqldb.pp"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="3448"/>
+        <CursorPos Y="3474"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit59>
     </Units>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="291" Column="74" TopLine="44"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="60" TopLine="44"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="61" TopLine="44"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="62" TopLine="44"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\Source\frm_Main.pas"/>
+        <Caret Line="442" TopLine="415"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="62" TopLine="44"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="63" TopLine="44"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="64" TopLine="44"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="65" TopLine="44"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="66" TopLine="44"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="67" TopLine="44"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="68" TopLine="44"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="70" TopLine="44"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="71" TopLine="44"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="74" TopLine="44"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="75" TopLine="44"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="76" TopLine="44"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="77" TopLine="44"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="78" TopLine="44"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="80" TopLine="44"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="81" TopLine="44"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="82" TopLine="44"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="83" TopLine="44"/>
+      </Position23>
+      <Position24>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="84" TopLine="44"/>
+      </Position24>
+      <Position25>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="87" TopLine="44"/>
+      </Position25>
+      <Position26>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="89" TopLine="44"/>
+      </Position26>
+      <Position27>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="90" TopLine="45"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="91" TopLine="46"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="92" TopLine="47"/>
+      </Position29>
+      <Position30>
+        <Filename Value="..\Source\frm_Events.pas"/>
+        <Caret Line="91" TopLine="47"/>
+      </Position30>
+    </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
