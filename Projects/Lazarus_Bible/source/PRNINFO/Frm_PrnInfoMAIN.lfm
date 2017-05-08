@@ -1,0 +1,33 @@
+object MainForm: TMainForm
+  Left = 227
+  Height = 154
+  Top = 137
+  Width = 316
+  ActiveControl = CloseBitBtn
+  Caption = 'Printer and Font Information'
+  ClientHeight = 154
+  ClientWidth = 316
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object PrintButton: TButton
+    Left = 72
+    Height = 65
+    Top = 24
+    Width = 185
+    Caption = 'Click to &Print information'
+    OnClick = PrintButtonClick
+    TabOrder = 0
+  end
+  object CloseBitBtn: TBitBtn
+    Left = 120
+    Height = 33
+    Top = 112
+    Width = 89
+    Kind = bkClose
+    TabOrder = 1
+  end
+end

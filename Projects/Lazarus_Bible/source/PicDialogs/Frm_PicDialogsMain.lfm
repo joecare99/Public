@@ -1,0 +1,55 @@
+object MainForm: TMainForm
+  Left = 234
+  Height = 277
+  Top = 185
+  Width = 470
+  Caption = 'Picture Dialogs'
+  ClientHeight = 257
+  ClientWidth = 470
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Menu = MainMenu1
+  LCLVersion = '1.2.6.0'
+  object Image1: TImage
+    Left = 0
+    Height = 257
+    Top = 0
+    Width = 470
+    Align = alClient
+  end
+  object OpenPictureDialog1: TOpenPictureDialog
+    Filter = 'All (*.bmp;*.ico;*.emf;*.wmf;*.jpg)|*.bmp;*.ico;*.emf;*.wmf;*.jpg;*.jpeg|Bitmaps (*.bmp)|*.bmp|Icons (*.ico)|*.ico|Enhanced Metafiles (*.emf)|*.emf|Metafiles (*.wmf)|*.wmf|JPEG-Image (*.jpg)|*.jpg'
+    left = 48
+    top = 40
+  end
+  object SavePictureDialog1: TSavePictureDialog
+    Filter = 'All (*.bmp;*.ico;*.emf;*.wmf;*.jpg)|*.bmp;*.ico;*.emf;*.wmf;*.jpg;*.jpeg|Bitmaps (*.bmp)|*.bmp|Icons (*.ico)|*.ico|Enhanced Metafiles (*.emf)|*.emf|Metafiles (*.wmf)|*.wmf|JPEG-Image (*.jpg)|*.jpg'
+    left = 168
+    top = 40
+  end
+  object MainMenu1: TMainMenu
+    left = 288
+    top = 40
+    object File1: TMenuItem
+      Caption = '&File'
+      object Open1: TMenuItem
+        Caption = '&Open...'
+        OnClick = Open1Click
+      end
+      object Save1: TMenuItem
+        Caption = '&Save...'
+        Enabled = False
+        OnClick = Save1Click
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object Exit1: TMenuItem
+        Caption = 'E&xit'
+        OnClick = Exit1Click
+      end
+    end
+  end
+end

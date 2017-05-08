@@ -1,0 +1,281 @@
+object MainForm: TMainForm
+  Left = 218
+  Height = 212
+  Top = 180
+  Width = 398
+  Caption = 'Owner Draw PageControl demonstration'
+  ClientHeight = 212
+  ClientWidth = 398
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  LCLVersion = '1.2.6.0'
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 212
+    Top = 0
+    Width = 398
+    ActivePage = TabSheet1
+    Align = alClient
+    MultiLine = True
+    TabIndex = 0
+    TabOrder = 0
+    Options = [nboMultiLine]
+    object TabSheet1: TTabSheet
+      Caption = 'TabSheet1'
+      ClientHeight = 150
+      ClientWidth = 390
+      object Label1: TLabel
+        Left = 120
+        Height = 37
+        Top = 48
+        Width = 164
+        Caption = 'TabSheet1'
+        Font.Color = clTeal
+        Font.Height = -32
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'TabSheet2'
+      ClientHeight = 0
+      ClientWidth = 0
+      object Label2: TLabel
+        Left = 120
+        Height = 37
+        Top = 48
+        Width = 166
+        Caption = 'TabSheet2'
+        Font.Color = clTeal
+        Font.Height = -32
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'TabSheet3'
+      ClientHeight = 0
+      ClientWidth = 0
+      object Label3: TLabel
+        Left = 120
+        Height = 37
+        Top = 48
+        Width = 166
+        Caption = 'TabSheet3'
+        Font.Color = clTeal
+        Font.Height = -32
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object TabSheet4: TTabSheet
+      Caption = 'TabSheet4'
+      ClientHeight = 0
+      ClientWidth = 0
+      object Label4: TLabel
+        Left = 120
+        Height = 37
+        Top = 48
+        Width = 166
+        Caption = 'TabSheet4'
+        Font.Color = clTeal
+        Font.Height = -32
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object TabSheet5: TTabSheet
+      Caption = 'TabSheet5'
+      ClientHeight = 0
+      ClientWidth = 0
+      object Label5: TLabel
+        Left = 120
+        Height = 37
+        Top = 48
+        Width = 166
+        Caption = 'TabSheet5'
+        Font.Color = clTeal
+        Font.Height = -32
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object TabSheet6: TTabSheet
+      Caption = 'TabSheet6'
+      ClientHeight = 0
+      ClientWidth = 0
+      object Label6: TLabel
+        Left = 120
+        Height = 37
+        Top = 48
+        Width = 166
+        Caption = 'TabSheet6'
+        Font.Color = clTeal
+        Font.Height = -32
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object TabSheet7: TTabSheet
+      Caption = 'TabSheet7'
+      ClientHeight = 0
+      ClientWidth = 0
+      object Label7: TLabel
+        Left = 120
+        Height = 37
+        Top = 48
+        Width = 166
+        Caption = 'TabSheet7'
+        Font.Color = clTeal
+        Font.Height = -32
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object TabSheet8: TTabSheet
+      Caption = 'TabSheet8'
+      ClientHeight = 0
+      ClientWidth = 0
+      object Label8: TLabel
+        Left = 120
+        Height = 37
+        Top = 48
+        Width = 166
+        Caption = 'TabSheet8'
+        Font.Color = clTeal
+        Font.Height = -32
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object TabSheet9: TTabSheet
+      Caption = 'TabSheet9'
+      ClientHeight = 0
+      ClientWidth = 0
+      object Label9: TLabel
+        Left = 120
+        Height = 37
+        Top = 48
+        Width = 166
+        Caption = 'TabSheet9'
+        Font.Color = clTeal
+        Font.Height = -32
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object TabSheet10: TTabSheet
+      Caption = 'TabSheet10'
+      ClientHeight = 150
+      ClientWidth = 390
+      object Label10: TLabel
+        Left = 120
+        Height = 37
+        Top = 48
+        Width = 183
+        Caption = 'TabSheet10'
+        Font.Color = clTeal
+        Font.Height = -32
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object TabSheet11: TTabSheet
+      Caption = 'TabSheet11'
+      ClientHeight = 0
+      ClientWidth = 0
+      object Label11: TLabel
+        Left = 120
+        Height = 37
+        Top = 48
+        Width = 181
+        Caption = 'TabSheet11'
+        Font.Color = clTeal
+        Font.Height = -32
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object TabSheet12: TTabSheet
+      Caption = 'TabSheet12'
+      ClientHeight = 0
+      ClientWidth = 0
+      object Label12: TLabel
+        Left = 120
+        Height = 37
+        Top = 48
+        Width = 183
+        Caption = 'TabSheet12'
+        Font.Color = clTeal
+        Font.Height = -32
+        Font.Name = 'MS Sans Serif'
+        Font.Style = [fsBold]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+  end
+  object ImageList1: TImageList
+    left = 16
+    top = 168
+    Bitmap = {
+      4C69010000001000000010000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      000000000000000000000000000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFF000000FF00000000000000FFFFFFFFFFFFFFFFFF000000FF0000
+      00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FF000000FFFFFF
+      FFFFFFFFFFFFFFFFFFFF00000000000000FFFFFFFFFFFFFFFFFF00FFFFFF00FF
+      FFFFFFFFFFFF000000FFFFFFFFFFFFFFFFFFFFFFFFFF00FFFFFF00FFFFFFFFFF
+      FFFF000000FFFFFFFFFF00000000000000FF000000FFFFFFFFFF00FFFFFF00FF
+      FFFF00FFFFFFFFFFFFFFFFFFFFFF000000FFFFFFFFFF00FFFFFF00FFFFFF00FF
+      FFFFFFFFFFFFFFFFFFFF00000000000000FF000000FF00FFFFFF000000FF0000
+      00FF00FFFFFFFFFFFFFFFFFFFFFF000000FF00FFFFFF000000FF000000FF00FF
+      FFFFFFFFFFFFFFFFFFFF00000000000000FF000000FF00FFFFFF00FFFFFF0000
+      00FF00FFFFFFFFFFFFFFFFFFFFFF000000FF00FFFFFF00FFFFFF000000FF00FF
+      FFFFFFFFFFFFFFFFFFFF00000000000000FF000000FFFFFFFFFF00FFFFFF00FF
+      FFFF00FFFFFFFFFFFFFFFFFFFFFF000000FFFFFFFFFF00FFFFFF00FFFFFF00FF
+      FFFFFFFFFFFFFFFFFFFF00000000000000FFFFFFFFFFFFFFFFFF00FFFFFF00FF
+      FFFFFFFFFFFF000000FFFFFFFFFFFFFFFFFFFFFFFFFF00FFFFFF00FFFFFFFFFF
+      FFFF000000FFFFFFFFFF00000000000000FFFFFFFFFFFFFFFFFF000000FF0000
+      00FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF000000FF000000FFFFFF
+      FFFFFFFFFFFFFFFFFFFF00000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFF0000FFFFFFFFFFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFF00000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFF0000FFFFFFFFFFFF0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFF00000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFF0000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFF00000000000000FFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
+      FFFFFFFFFFFFFFFFFFFF0000000000000000000000FF000000FF000000FF0000
+      00FF000000FF000000FF000000FF000000FF000000FF000000FF000000FF0000
+      00FF000000FF0000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000000000000000000000000000000000000000
+      0000000000000000000000000000
+    }
+  end
+end

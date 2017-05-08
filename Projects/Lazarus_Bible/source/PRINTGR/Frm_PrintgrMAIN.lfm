@@ -1,0 +1,39 @@
+object MainForm: TMainForm
+  Left = 248
+  Height = 246
+  Top = 141
+  Width = 427
+  Caption = 'Graphics Printing Demonstration'
+  ClientHeight = 246
+  ClientWidth = 427
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Menu = MainMenu1
+  OnPaint = FormPaint
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object MainMenu1: TMainMenu
+    left = 56
+    top = 24
+    object File1: TMenuItem
+      Caption = '&File'
+      object Print1: TMenuItem
+        Caption = '&Print...'
+        OnClick = Print1Click
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object Exit1: TMenuItem
+        Caption = 'E&xit'
+        OnClick = Exit1Click
+      end
+    end
+  end
+  object PrintDialog1: TPrintDialog
+    left = 144
+    top = 24
+  end
+end

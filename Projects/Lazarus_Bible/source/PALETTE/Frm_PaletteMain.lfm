@@ -1,0 +1,289 @@
+object MainForm: TMainForm
+  Left = 270
+  Height = 122
+  Top = 192
+  Width = 360
+  ActiveControl = TabSet1
+  Caption = 'Paged Palette Demonstration'
+  ClientHeight = 122
+  ClientWidth = 360
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object Bevel1: TBevel
+    Left = 40
+    Height = 50
+    Top = 56
+    Width = 50
+  end
+  object Label1: TLabel
+    Left = 48
+    Height = 37
+    Top = 64
+    Width = 33
+    Alignment = taCenter
+    AutoSize = False
+    Caption = 'a'
+    Font.Color = clBlack
+    Font.Height = -32
+    Font.Name = 'MS Sans Serif'
+    ParentColor = False
+    ParentFont = False
+  end
+  object TabSet1: TTabControl
+    Left = 0
+    Height = 21
+    Top = 0
+    Width = 360
+    OnChange = TabSet1Click
+    TabIndex = 0
+    Tabs.Strings = (
+      'First'
+      'Second'
+      'Third'
+      'Fourth'
+      'Fifth'
+    )
+    Align = alTop
+    TabOrder = 0
+  end
+  object Notebook1: TNotebook
+    Left = 0
+    Height = 25
+    Top = 21
+    Width = 360
+    PageIndex = 3
+    Align = alTop
+    TabOrder = 1
+    TabStop = True
+    object First: TPage
+      object SpeedButton2: TSpeedButton
+        Left = 16
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'a'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton3: TSpeedButton
+        Left = 57
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'b'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton4: TSpeedButton
+        Left = 98
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'c'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton5: TSpeedButton
+        Left = 139
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'd'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton6: TSpeedButton
+        Left = 180
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'e'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton7: TSpeedButton
+        Left = 221
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'f'
+        OnClick = SpeedButton1Click
+      end
+    end
+    object Second: TPage
+      object SpeedButton8: TSpeedButton
+        Left = 16
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'g'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton9: TSpeedButton
+        Left = 57
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'h'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton10: TSpeedButton
+        Left = 98
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'i'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton11: TSpeedButton
+        Left = 139
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'j'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton12: TSpeedButton
+        Left = 180
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'k'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton13: TSpeedButton
+        Left = 221
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'l'
+        OnClick = SpeedButton1Click
+      end
+    end
+    object Third: TPage
+      object SpeedButton14: TSpeedButton
+        Left = 16
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'm'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton15: TSpeedButton
+        Left = 57
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'n'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton16: TSpeedButton
+        Left = 98
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'o'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton17: TSpeedButton
+        Left = 139
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'p'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton18: TSpeedButton
+        Left = 180
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'q'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton19: TSpeedButton
+        Left = 221
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'r'
+        OnClick = SpeedButton1Click
+      end
+    end
+    object Fourth: TPage
+      object SpeedButton20: TSpeedButton
+        Left = 16
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 's'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton21: TSpeedButton
+        Left = 57
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 't'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton22: TSpeedButton
+        Left = 98
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'u'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton23: TSpeedButton
+        Left = 139
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'v'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton24: TSpeedButton
+        Left = 180
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'w'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton25: TSpeedButton
+        Left = 221
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'x'
+        OnClick = SpeedButton1Click
+      end
+    end
+    object Fifth: TPage
+      object SpeedButton26: TSpeedButton
+        Left = 16
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'y'
+        OnClick = SpeedButton1Click
+      end
+      object SpeedButton1: TSpeedButton
+        Left = 57
+        Height = 22
+        Top = 0
+        Width = 23
+        Caption = 'z'
+        OnClick = SpeedButton1Click
+      end
+    end
+  end
+  object BitBtn1: TBitBtn
+    Left = 248
+    Height = 33
+    Top = 72
+    Width = 89
+    Kind = bkClose
+    TabOrder = 2
+  end
+end

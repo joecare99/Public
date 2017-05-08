@@ -1,0 +1,33 @@
+object MainForm: TMainForm
+  Left = 201
+  Top = 131
+  Caption = 'MainForm'
+  ClientHeight = 216
+  ClientWidth = 426
+  Color = clBlack
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  Menu = MainMenu1
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  object MainMenu1: TMainMenu
+    Left = 48
+    Top = 72
+    object Demo1: TMenuItem
+      Caption = 'Demo'
+      object Exit1: TMenuItem
+        Caption = 'E&xit'
+        OnClick = Exit1Click
+      end
+    end
+  end
+  object Timer1: TTimer
+    Interval = 10
+    OnTimer = Timer1Timer
+    Left = 104
+    Top = 72
+  end
+end
