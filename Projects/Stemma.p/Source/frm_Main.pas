@@ -312,14 +312,14 @@ implementation
 
 {$R *.lfm}
 
-uses AnchorDocking, AnchorDockOptionsDlg, dm_GenData, Traduction,frm_SelectDialog;
+uses AnchorDocking, AnchorDockOptionsDlg, dm_GenData, cls_Translation,frm_SelectDialog;
 
 { TfrmStemmaMainForm }
 
 procedure TfrmStemmaMainForm.QuitterClick(Sender: TObject);
 begin
-  if Application.MessageBox(PChar(Traduction.Items[0]),
-    PChar(Traduction.Items[1]), MB_YESNO) = idYes then
+  if Application.MessageBox(PChar(Translation.Items[0]),
+    PChar(Translation.Items[1]), MB_YESNO) = idYes then
     frmStemmaMainForm.Close;
 end;
 
@@ -585,7 +585,7 @@ begin
       lPassword,
       Success);
     if not Success then
-      ShowMessage(Traduction.Items[2]);
+      ShowMessage(Translation.Items[2]);
   end;
 end;
 
@@ -715,7 +715,7 @@ var
   success, lConnected: boolean;
 begin
   dmGenData.ReadCfgProject(db, lConnected);
-  if InputQuery(Traduction.Items[3], Traduction.Items[4], db) then
+  if InputQuery(Translation.Items[3], Translation.Items[4], db) then
   begin
     // Avant de créer le projet, fermer le project actif
     // Créer la base de données          CREATE DATABASE `stemma_data`
@@ -737,7 +737,7 @@ begin
       mniAddItem50Click(Sender);
     except
       //        Showmessage('Base de données déjà existante.');
-      ShowMessage(Traduction.Items[5]);
+      ShowMessage(Translation.Items[5]);
       dmGenData.SetDBSchema(db, success);
       { TODO 12 : Doit vérifier si c'est le bon format... - fonction car utilisée à plus d'un endroi }
     end;
@@ -804,72 +804,72 @@ begin
   // Récupère l'historique d'individu
   OldIndividu.Items.Clear;
   OldIndividu.Items.LoadFromFile('HistP.data');
-  Traduction.LoadFromFile(dmgendata.ReadCfgString('Parametres', 'Langue', 'francais'));
+  Translation.LoadFromFile(dmgendata.ReadCfgString('Parametres', 'Langue', 'francais'));
   CoolBar1.AutosizeBands;
-  mniFile.Caption := Traduction.Items[248];
-  mniFileConnect.Caption := Traduction.Items[249];
-  mniCreateProject.Caption := Traduction.Items[250];
-  mniOpenProject.Caption := Traduction.Items[251];
-  Importer_projet.Caption := Traduction.Items[252];
-  Supprimer_projet.Caption := Traduction.Items[254];
-  Quitter.Caption := Traduction.Items[256];
-  mniEdit.Caption := Traduction.Items[257];
-  mniEditCopy.Caption := Traduction.Items[258];
-  mniEditCut.Caption := Traduction.Items[259];
-  mniEditPaste.Caption := Traduction.Items[260];
-  mniWindows.Caption := Traduction.Items[285];
-  mniNoms.Caption := Traduction.Items[287];
-  mniEvenements.Caption := Traduction.Items[288];
-  mniParents.Caption := Traduction.Items[289];
-  mniExhibits.Caption := Traduction.Items[290];
-  mniExplorateur.Caption := Traduction.Items[286];
-  mniEnfants.Caption := Traduction.Items[291];
-  mniFratrie.Caption := Traduction.Items[292];
-  mniAncetres.Caption := Traduction.Items[294];
-  mniNavigation.Caption := Traduction.Items[276];
-  mniNavNumber18.Caption := Traduction.Items[277];
-  mniNavHistory21.Caption := Traduction.Items[280];
-  mniDescendants.Caption := Traduction.Items[295];
-  mniNavPrevious24.Caption := Traduction.Items[278];
-  mniNavNext25.Caption := Traduction.Items[279];
-  mniImage.Caption := Traduction.Items[293];
-  mniUtils.Caption := Traduction.Items[281];
-  mniUtilItem28.Caption := Traduction.Items[282];
-  mniUtilItem29.Caption := Traduction.Items[283];
-  mniUtilItem30.Caption := Traduction.Items[233];
-  mniUtilItem31.Caption := Traduction.Items[284];
-  mniAdd.Caption := Traduction.Items[224];
-  mniAddFather33.Caption := Traduction.Items[264];
-  mniAddMother34.Caption := Traduction.Items[265];
-  mniAddBrother35.Caption := Traduction.Items[266];
-  mniAddSister36.Caption := Traduction.Items[267];
-  mniAddSon37.Caption := Traduction.Items[268];
-  mniAddItem38.Caption := Traduction.Items[269];
-  mniAddItem40.Caption := Traduction.Items[272];
-  mniAddItem41.Caption := Traduction.Items[273];
-  mniAddItem42.Caption := Traduction.Items[274];
-  mniAddItem43.Caption := Traduction.Items[275];
-  mniAddItem44.Caption := Traduction.Items[270];
-  mniEditCopyName.Caption := Traduction.Items[261];
-  MenuItem47.Caption := Traduction.Items[262];
-  mniHelp.Caption := Traduction.Items[296];
-  MenuItem49.Caption := Traduction.Items[297];
-  mniAddItem50.Caption := Traduction.Items[271];
-  MenuItem51.Caption := Traduction.Items[253];
-  MenuItem53.Caption := Traduction.Items[263];
-  MenuItem55.Caption := Traduction.Items[308];
-  MenuItem56.Caption := Traduction.Items[302];
-  MenuItem57.Caption := Traduction.Items[303];
-  MenuItem58.Caption := Traduction.Items[255];
-  MenuItem59.Caption := Traduction.Items[309];
-  MenuItem60.Caption := Traduction.Items[310];
-  MenuItem62.Caption := Traduction.Items[321];
-  MenuItem63.Caption := Traduction.Items[322];
-  mniUtilItem65.Caption := Traduction.Items[335];
-  mniUtilItem66.Caption := Traduction.Items[336];
-  mniUtilItem67.Caption := Traduction.Items[338];
-  mniUtilItem68.Caption := Traduction.Items[339];
-  mniUtilItem69.Caption := Traduction.Items[340];
+  mniFile.Caption := Translation.Items[248];
+  mniFileConnect.Caption := Translation.Items[249];
+  mniCreateProject.Caption := Translation.Items[250];
+  mniOpenProject.Caption := Translation.Items[251];
+  Importer_projet.Caption := Translation.Items[252];
+  Supprimer_projet.Caption := Translation.Items[254];
+  Quitter.Caption := Translation.Items[256];
+  mniEdit.Caption := Translation.Items[257];
+  mniEditCopy.Caption := Translation.Items[258];
+  mniEditCut.Caption := Translation.Items[259];
+  mniEditPaste.Caption := Translation.Items[260];
+  mniWindows.Caption := Translation.Items[285];
+  mniNoms.Caption := Translation.Items[287];
+  mniEvenements.Caption := Translation.Items[288];
+  mniParents.Caption := Translation.Items[289];
+  mniExhibits.Caption := Translation.Items[290];
+  mniExplorateur.Caption := Translation.Items[286];
+  mniEnfants.Caption := Translation.Items[291];
+  mniFratrie.Caption := Translation.Items[292];
+  mniAncetres.Caption := Translation.Items[294];
+  mniNavigation.Caption := Translation.Items[276];
+  mniNavNumber18.Caption := Translation.Items[277];
+  mniNavHistory21.Caption := Translation.Items[280];
+  mniDescendants.Caption := Translation.Items[295];
+  mniNavPrevious24.Caption := Translation.Items[278];
+  mniNavNext25.Caption := Translation.Items[279];
+  mniImage.Caption := Translation.Items[293];
+  mniUtils.Caption := Translation.Items[281];
+  mniUtilItem28.Caption := Translation.Items[282];
+  mniUtilItem29.Caption := Translation.Items[283];
+  mniUtilItem30.Caption := Translation.Items[233];
+  mniUtilItem31.Caption := Translation.Items[284];
+  mniAdd.Caption := Translation.Items[224];
+  mniAddFather33.Caption := Translation.Items[264];
+  mniAddMother34.Caption := Translation.Items[265];
+  mniAddBrother35.Caption := Translation.Items[266];
+  mniAddSister36.Caption := Translation.Items[267];
+  mniAddSon37.Caption := Translation.Items[268];
+  mniAddItem38.Caption := Translation.Items[269];
+  mniAddItem40.Caption := Translation.Items[272];
+  mniAddItem41.Caption := Translation.Items[273];
+  mniAddItem42.Caption := Translation.Items[274];
+  mniAddItem43.Caption := Translation.Items[275];
+  mniAddItem44.Caption := Translation.Items[270];
+  mniEditCopyName.Caption := Translation.Items[261];
+  MenuItem47.Caption := Translation.Items[262];
+  mniHelp.Caption := Translation.Items[296];
+  MenuItem49.Caption := Translation.Items[297];
+  mniAddItem50.Caption := Translation.Items[271];
+  MenuItem51.Caption := Translation.Items[253];
+  MenuItem53.Caption := Translation.Items[263];
+  MenuItem55.Caption := Translation.Items[308];
+  MenuItem56.Caption := Translation.Items[302];
+  MenuItem57.Caption := Translation.Items[303];
+  MenuItem58.Caption := Translation.Items[255];
+  MenuItem59.Caption := Translation.Items[309];
+  MenuItem60.Caption := Translation.Items[310];
+  MenuItem62.Caption := Translation.Items[321];
+  MenuItem63.Caption := Translation.Items[322];
+  mniUtilItem65.Caption := Translation.Items[335];
+  mniUtilItem66.Caption := Translation.Items[336];
+  mniUtilItem67.Caption := Translation.Items[338];
+  mniUtilItem68.Caption := Translation.Items[339];
+  mniUtilItem69.Caption := Translation.Items[340];
 
   GetFormPosition(Sender as TForm, 0, 0, 70, 1000);
   dmgendata.ReadCfgProject(lDBSchema, lConnected);
@@ -878,7 +878,7 @@ begin
     dmGenData.ReadCfgConnection(lDBHostName, lDBUser, lDBPassword);
     dmGenData.SetDBHostUserPass(lDBHostName, lDBUser, lDBPassword, bSuccess);
     if not bSuccess then
-      ShowMessage(Traduction.Items[2])
+      ShowMessage(Translation.Items[2])
     else
     begin
       frmStemmaMainForm.MenuItem61.Enabled := True;
@@ -886,7 +886,7 @@ begin
       dmGenData.SetDBSchema(lDBSchema, bSuccess);
     end;
     if not bSuccess then
-      ShowMessage(Traduction.Items[2])
+      ShowMessage(Translation.Items[2])
     else
     begin
       frmStemmaMainForm.Caption := 'Stemma - ' + lDBSchema;
@@ -935,7 +935,7 @@ var
       begin
         oldrestant := restant;
         StatusBar.Panels[1].Text :=
-          Traduction.Items[13] + TimeToStr(restant);
+          Translation.Items[13] + TimeToStr(restant);
         Application.ProcessMessages;
       end;
       if dmGenData.TMG.Fields[1].IsNull then
@@ -963,7 +963,7 @@ var
       'INSERT IGNORE INTO A (S, D, M) VALUES (:idSource, :idDepot, :Note)';
     dmGenData.TMG.Active := True;
     dmGenData.TMG.Open;
-    StatusBar.Panels[1].Text := Traduction.Items[8];
+    StatusBar.Panels[1].Text := Translation.Items[8];
     while not (dmGenData.TMG.EOF) do
     begin
       ProgressBar.Position := ProgressBar.Position + 1;
@@ -992,7 +992,7 @@ var
     insert := 'INSERT IGNORE INTO D (no, T, M, D, I) VALUES (';
     dmGenData.TMG.Active := True;
     dmGenData.TMG.Open;
-    StatusBar.Panels[1].Text := Traduction.Items[9];
+    StatusBar.Panels[1].Text := Translation.Items[9];
     while not (dmGenData.TMG.EOF) do
     begin
       ProgressBar.Position := ProgressBar.Position + 1;
@@ -1032,7 +1032,7 @@ var
       begin
         oldrestant := restant;
         StatusBar.Panels[1].Text :=
-          Traduction.Items[10] + TimeToStr(restant);
+          Translation.Items[10] + TimeToStr(restant);
         Application.ProcessMessages;
       end;
       if dmGenData.TMG.Fields[8].IsNull then
@@ -1073,7 +1073,7 @@ var
       begin
         oldrestant := restant;
         StatusBar.Panels[1].Text :=
-          Traduction.Items[11] + TimeToStr(restant);
+          Translation.Items[11] + TimeToStr(restant);
         Application.ProcessMessages;
       end;
       if (dmGenData.TMG.Fields[0].Value = 'F') then
@@ -1119,7 +1119,7 @@ var
       begin
         oldrestant := restant;
         StatusBar.Panels[1].Text :=
-          Traduction.Items[12] + TimeToStr(restant);
+          Translation.Items[12] + TimeToStr(restant);
         Application.ProcessMessages;
       end;
       if dmGenData.TMG.Fields[10].Value = 'Y' then
@@ -1164,7 +1164,7 @@ var
       begin
         oldrestant := restant;
         StatusBar.Panels[1].Text :=
-          Traduction.Items[14] + TimeToStr(restant);
+          Translation.Items[14] + TimeToStr(restant);
       end;
       Application.ProcessMessages;
       if dmGenData.TMG.Fields[3].IsNull then
@@ -1244,7 +1244,7 @@ var
       begin
         oldrestant := restant;
         StatusBar.Panels[1].Text :=
-          Traduction.Items[15] + TimeToStr(restant);
+          Translation.Items[15] + TimeToStr(restant);
         Application.ProcessMessages;
       end;
       if dmGenData.TMG.Fields[3].IsNull then
@@ -1330,7 +1330,7 @@ var
       begin
         oldrestant := restant;
         StatusBar.Panels[1].Text :=
-          Traduction.Items[16] + TimeToStr(restant);
+          Translation.Items[16] + TimeToStr(restant);
         Application.ProcessMessages;
       end;
       if dmGenData.TMG.Fields[4].IsNull then
@@ -1368,7 +1368,7 @@ var
       begin
         oldrestant := restant;
         StatusBar.Panels[1].Text :=
-          Traduction.Items[17] + TimeToStr(restant);
+          Translation.Items[17] + TimeToStr(restant);
         Application.ProcessMessages;
       end;
       if dmGenData.TMG.Fields[2].IsNull then
@@ -1425,7 +1425,7 @@ var
       begin
         oldrestant := restant;
         StatusBar.Panels[1].Text :=
-          Traduction.Items[18] + TimeToStr(restant);
+          Translation.Items[18] + TimeToStr(restant);
         Application.ProcessMessages;
       end;
       if dmGenData.TMG.Fields[54].IsNull then
@@ -1479,7 +1479,7 @@ var
           dmGenData.TMG.Open;
           dmGenData.Query1.SQL.Text := 'INSERT IGNORE INTO Y (no, Y, P, T, R) '+
           'VALUES (:idType, :Type, :Phrase, :Title, :Fields)';
-          StatusBar.SimpleText := Traduction.Items[7];
+          StatusBar.SimpleText := Translation.Items[7];
           debut := now;
           oldrestant := 0;
           while not (dmGenData.TMG.EOF) do
@@ -1534,7 +1534,7 @@ var
 begin
   Ini := TIniFile.Create(iniFileName);
   db := ini.ReadString('DB', 'DB', 'Stemma_data');
-  if InputQuery(Traduction.Items[3], Traduction.Items[4], db) then
+  if InputQuery(Translation.Items[3], Translation.Items[4], db) then
   begin
     // Créer la base de données          CREATE DATABASE `stemma_data`
     try
@@ -1553,7 +1553,7 @@ begin
       OpenDialog1.InitialDir := 'C:\';
       OpenDialog1.DefaultExt := '*.Dbf';
       OpenDialog1.Filter := 'Base de données (*.dbf)|*.dbf';
-      OpenDialog1.Title := Traduction.Items[6];
+      OpenDialog1.Title := Translation.Items[6];
       if OpenDialog1.Execute then
       begin
         ProgressBar.Visible := True;
@@ -1583,7 +1583,7 @@ begin
         ImportDocuments;
       end;
     except
-      ShowMessage(Traduction.Items[19]);
+      ShowMessage(Translation.Items[19]);
       dmGenData.SetDBSchema(db, success);
     end;
   end;
@@ -1650,8 +1650,8 @@ begin
   begin
     if frmStemmaMainForm.iID <> 0 then
     begin
-      ShowMessage(Traduction.Items[22] + IntToStr(frmStemmaMainForm.iID) +
-        Traduction.Items[23]);
+      ShowMessage(Translation.Items[22] + IntToStr(frmStemmaMainForm.iID) +
+        Translation.Items[23]);
       frmStemmaMainForm.iID := PtrInt(OldIndividu.Items.Objects[0]);
     end;
   end;
@@ -1742,13 +1742,13 @@ procedure TfrmStemmaMainForm.mniNavNumber18Click(Sender: TObject);
 var
   i: string;
 begin
-  i := InputBox(Traduction.Items[20], Traduction.Items[21], '');
+  i := InputBox(Translation.Items[20], Translation.Items[21], '');
   try
     if length(i) > 0 then
       if StrToInt(i) > 0 then
         iID := StrToInt(i);
   except
-    ShowMessage(Traduction.Items[22] + i + Traduction.Items[23]);
+    ShowMessage(Translation.Items[22] + i + Translation.Items[23]);
   end;
 end;
 
@@ -1879,7 +1879,7 @@ begin
   RowCount := 2;
     Cells[0, RowCount - 1] := '0';
     Cells[1, RowCount - 1] :=
-      Traduction.Items[317];
+      Translation.Items[317];
   end;
   dmGenData.AppendBrotherSisters(FormSelectPersonne.Liste, frmStemmaMainForm.iID);
   // fr: Sélectionne toutes les autres personnes en union avec cette personne
@@ -1904,7 +1904,7 @@ begin
   RowCount := 2;
     Cells[0, RowCount - 1] := '0';
     Cells[1, RowCount - 1] :=
-      Traduction.Items[317];
+      Translation.Items[317];
   end;
   // Sélectionne toutes les autres personnes ayant des enfants principaux avec cette personne
   dmGenData.AppendBrotherSisters(FormSelectPersonne.Liste, frmStemmaMainForm.iID);
@@ -1982,11 +1982,12 @@ procedure TfrmStemmaMainForm.mniEditCopyNameClick(Sender: TObject);
 var
   i1, i2, i3, i4: string;
   LastNID, lidName: longint;
+
 begin
   // Copier nom
   if mniNoms.Checked then
   begin
-    lidName := ptrint(frmNames.TableauNoms.Objects[0, frmNames.TableauNoms.Row]);
+    lidName:=frmNames.idName;
     LastNID := dmGenData.CopyName(lidName, i4, i3, i2, i1);
     dmGenData.CopyCitation('N', lidName, LastNID);
     // fr: Ajoute le nom dans l'explorateur...
@@ -2212,17 +2213,17 @@ begin
   valide := valide and not dmGenData.CheckIndSourceExist(frmStemmaMainForm.iID);
   if not valide then
   begin
-    Application.MessageBox(PChar(Traduction.Items[307]),
-      PChar(Traduction.Items[124]), MB_OK);
+    Application.MessageBox(PChar(Translation.Items[307]),
+      PChar(Translation.Items[124]), MB_OK);
   end
   else
   begin
     dmGenData.Query1.SQL.Text := 'SELECT N.N FROM N WHERE N.X=1 AND N.I=' +
       frmStemmaMainForm.sID;
     dmGenData.Query1.Open;
-    if Application.MessageBox(PChar(Traduction.Items[60] +
-      DecodeName(dmGenData.Query1.Fields[0].AsString, 1) + Traduction.Items[28]),
-      PChar(Traduction.Items[1]), MB_YESNO) = idYes then
+    if Application.MessageBox(PChar(Translation.Items[60] +
+      DecodeName(dmGenData.Query1.Fields[0].AsString, 1) + Translation.Items[28]),
+      PChar(Translation.Items[1]), MB_YESNO) = idYes then
     begin
       // Supprime la personne
       dmGenData.Query1.SQL.Text := 'DELETE FROM I WHERE no=' + frmStemmaMainForm.sID;
@@ -2307,11 +2308,11 @@ var
 begin
   OpenDialog1.InitialDir := ExcludeTrailingPathDelimiter(ExtractFilePath(ParamStr(0)));
   OpenDialog1.DefaultExt := '*.data';
-  OpenDialog1.Filter := Traduction.Items[306] + ' (*.data)|*.data';
-  OpenDialog1.Title := Traduction.Items[141];
+  OpenDialog1.Filter := Translation.Items[306] + ' (*.data)|*.data';
+  OpenDialog1.Title := Translation.Items[141];
   if OpenDialog1.Execute then
   begin
-    Traduction.Items.LoadFromFile(OpenDialog1.FileName);
+    Translation.LoadFromFile(OpenDialog1.FileName);
     Ini := TIniFile.Create(iniFileName);
     Ini.WriteString('Parametres', 'Langue', ExtractFileName(OpenDialog1.FileName));
     Ini.Free;
@@ -2329,8 +2330,8 @@ begin
     'C:\Program Files (x86)\Adobe\Reader 10.0\Reader\AcroRd32.exe')));
   sExeExt := ExtractFileExt(ParamStr(0));
   OpenDialog1.DefaultExt := sExeExt;
-  OpenDialog1.Filter := Traduction.Items[305] + ' (*' + sExeExt + ')|*' + sExeExt;
-  OpenDialog1.Title := Traduction.Items[304];
+  OpenDialog1.Filter := Translation.Items[305] + ' (*' + sExeExt + ')|*' + sExeExt;
+  OpenDialog1.Title := Translation.Items[304];
   if OpenDialog1.Execute then
   begin
     Ini.WriteString('Parametres', 'PDF', OpenDialog1.FileName);
@@ -2412,24 +2413,24 @@ begin
   time_delay := 1000;
   // Demander ces variables et enregistrer dans IniFiles
   server := ini.ReadString('Webexport', 'server', 'localhost');
-  continue := InputQuery(Traduction.Items[327], Traduction.Items[328], server);
+  continue := InputQuery(Translation.Items[327], Translation.Items[328], server);
   if continue then
   begin
     db := ini.ReadString('Webexport', 'db', 'genealo_data');
-    continue := InputQuery(Traduction.Items[329], Traduction.Items[330], db);
+    continue := InputQuery(Translation.Items[329], Translation.Items[330], db);
     if continue then
     begin
       user := ini.ReadString('Webexport', 'user', 'root');
-      continue := InputQuery(Traduction.Items[331], Traduction.Items[332], user);
+      continue := InputQuery(Translation.Items[331], Translation.Items[332], user);
       if continue then
       begin
         password := ini.ReadString('Webexport', 'password', '');
-        continue := InputQuery(Traduction.Items[333],
-          Traduction.Items[334], password);
+        continue := InputQuery(Translation.Items[333],
+          Translation.Items[334], password);
         if continue then
         begin
           SelectDirectoryDialog1.InitialDir := ini.ReadString('Webexport', 'dir', '');
-          SelectDirectoryDialog1.Title := Traduction.Items[326];
+          SelectDirectoryDialog1.Title := Translation.Items[326];
           continue := SelectDirectoryDialog1.Execute;
         end;
       end;
@@ -2450,7 +2451,7 @@ begin
     ProgressBar.Visible := True;
     ProgressBar.Max := 0;
     ProgressBar.Position := 1;
-    StatusBar.Panels[1].Text := Traduction.Items[323];
+    StatusBar.Panels[1].Text := Translation.Items[323];
     dmGenData.Query1.SQL.Text := 'SELECT no FROM I WHERE NOT V=''O'' ';
     dmGenData.Query1.Open;
     ProgressBar.Max := dmGenData.Query1.RecordCount;
@@ -2486,7 +2487,7 @@ begin
     writeln(file1, '</urlset>');
     closefile(file1);
 
-    StatusBar.Panels[1].Text := Traduction.Items[324];
+    StatusBar.Panels[1].Text := Translation.Items[324];
     // fr: Exporter projet, créer fichiers index
     // en: Export project, create index files
     dmGenData.Query1.SQL.Text :=
@@ -2846,7 +2847,7 @@ begin
     writeln(buttonsfile, '</HTML>');
     closefile(buttonsfile);
 
-    StatusBar.Panels[1].Text := Traduction.Items[325];
+    StatusBar.Panels[1].Text := Translation.Items[325];
     ProgressBar.max := dmGenData.CountAllRecords;
     ProgressBar.Position := 1;
     max_request := 5000;
@@ -4193,7 +4194,7 @@ var
   i: integer;
 begin
   db := '';
-  if InputQuery(Traduction.Items[3], Traduction.Items[24], db) then
+  if InputQuery(Translation.Items[3], Translation.Items[24], db) then
   begin
     if (dmGenData.DB_Connected and (AnsiCompareStr(db, dmGenData.GetDBSchema) = 0)) then
     begin
@@ -4229,7 +4230,7 @@ begin
   try
   dmGenData.GetDBSchemas(sList);
   db:=odb;
-  if SelectDialog(Traduction.Items[3], Traduction.Items[25],Slist, db) then
+  if SelectDialog(Translation.Items[3], Translation.Items[25],Slist, db) then
   begin
     try
       // Avant d'ouvrir le projet, fermer le project actif
@@ -4263,7 +4264,7 @@ begin
             ToggleVisExtraWindow(self, FExtraWindows[i]);
       end;
     except
-      ShowMessage(Traduction.Items[26]);
+      ShowMessage(Translation.Items[26]);
     end;
   end;
   finally

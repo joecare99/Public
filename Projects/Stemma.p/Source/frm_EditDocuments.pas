@@ -49,7 +49,7 @@ var
 implementation
 
 uses
-  frm_Main,Traduction, dm_GenData, frm_ShowImage, frm_Names;
+  frm_Main,cls_Translation, dm_GenData, frm_ShowImage, frm_Names;
 
 { TfrmEditDocuments }
 
@@ -58,18 +58,18 @@ var
   code,nocode:string;
 begin
   frmEditDocuments.ActiveControl:=frmEditDocuments.Titre;
-  Caption:=Traduction.Items[178];
-  Label2.Caption:=Traduction.Items[179];
-  Label3.Caption:=Traduction.Items[162];
-  Label4.Caption:=Traduction.Items[180];
-  Button1.Caption:=Traduction.Items[152];
-  Button2.Caption:=Traduction.Items[164];
-  Button3.Caption:=Traduction.Items[181];
+  Caption:=Translation.Items[178];
+  Label2.Caption:=Translation.Items[179];
+  Label3.Caption:=Translation.Items[162];
+  Label4.Caption:=Translation.Items[180];
+  Button1.Caption:=Translation.Items[152];
+  Button2.Caption:=Translation.Items[164];
+  Button3.Caption:=Translation.Items[181];
   dmGenData.GetCode(code,nocode);
   N.Text:=nocode;
   if code='A' then
      begin
-     frmEditDocuments.Caption:=Traduction.Items[33];
+     frmEditDocuments.Caption:=Translation.Items[33];
      No.Text:='0';
      Titre.text:='';
      Description.Text:='';
@@ -117,7 +117,7 @@ var
 begin
   if length(Fichier.Text)=0 then
      begin
-     frmShowImage.Caption:=Traduction.Items[34];
+     frmShowImage.Caption:=Translation.Items[34];
      frmShowImage.Image.Visible:=false;
      frmShowImage.Memo.Visible:=true;
      frmShowImage.btnOK.Visible:=true;

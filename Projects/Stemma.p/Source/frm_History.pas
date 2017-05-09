@@ -31,7 +31,7 @@ var
 implementation
 
 uses
-  frm_Main,Traduction, dm_GenData;
+  frm_Main,cls_Translation, dm_GenData;
 
 {$R *.lfm}
 
@@ -71,7 +71,7 @@ procedure TfrmHistory.FormShow(Sender: TObject);
 var
   i:integer;
 begin
-  Caption:=Traduction.Items[206];
+  Caption:=Translation.Items[206];
   GetFormPosition(Sender as TForm,0,0,70,1000);
   for i:=0 to frmStemmaMainForm.OldIndividu.Items.Count-1 do
     ListeHistorique.AddItem(dmGenData.GetIndividuumName(ptrint(frmStemmaMainForm.OldIndividu.Items.Objects[i])),frmStemmaMainForm.OldIndividu.Items.Objects[i]);

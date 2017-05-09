@@ -31,7 +31,7 @@ var
 implementation
 
 uses
-  frm_Main, Traduction, dm_GenData, frm_Documents;
+  frm_Main, cls_Translation, dm_GenData, frm_Documents;
 
 {$R *.lfm}
 
@@ -54,9 +54,9 @@ begin
        begin
        FormImage.Im.Picture.LoadFromFile(dmGenData.Query2.Fields[0].AsString);
        if no=0 then
-          FormImage.Caption:=Traduction.Items[117]
+          FormImage.Caption:=Translation.Items[117]
        else
-         FormImage.Caption:=Traduction.Items[118];
+         FormImage.Caption:=Translation.Items[118];
      end;
   end
   else
@@ -76,7 +76,7 @@ end;
 
 procedure TFormImage.FormShow(Sender: TObject);
 begin
-  Caption:=Traduction.Items[117];
+  Caption:=Translation.Items[117];
   GetFormPosition(Sender as TForm,100,100,200,200);
   if frmStemmaMainForm.mniExhibits.Checked then
     if frmDocuments.tblDocuments.Cells[1,frmDocuments.tblDocuments.Row]='*' then

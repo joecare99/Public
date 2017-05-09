@@ -17,7 +17,7 @@ frm_Documents, frm_Ancesters, frm_Descendants, frm_EditDocuments, frm_ShowImage,
 frm_EditName, frm_EditEvents, frm_EditWitness,
   frm_Places, frm_Usage, frm_Sources, 
 frm_Repositories, frm_EditSource, frm_Types, frm_EditTypes,
-  frm_About, frm_SelectPerson, dm_GenData, Traduction,uScaleDPI, 
+  frm_About, frm_SelectPerson, dm_GenData, cls_Translation,uScaleDPI, 
 frm_SelectDialog;
 
 {$R *.res}

@@ -29,7 +29,7 @@ var
 
 implementation
 
-uses Traduction, frm_Places, frm_Sources, frm_Main, dm_GenData, frm_EditSource, frm_Types;
+uses cls_Translation, frm_Places, frm_Sources, frm_Main, dm_GenData, frm_EditSource, frm_Types;
 
 { TfrmEventUsage }
 
@@ -47,11 +47,11 @@ var
   temp, code, nocode:string;
   auteur:boolean;
 begin
-  Caption:=Traduction.Items[158];
-  TableauUtilisation.Columns[0].Title.Caption:=Traduction.Items[134];
-  TableauUtilisation.Columns[1].Title.Caption:=Traduction.Items[135];
+  Caption:=Translation.Items[158];
+  TableauUtilisation.Columns[0].Title.Caption:=Translation.Items[134];
+  TableauUtilisation.Columns[1].Title.Caption:=Translation.Items[135];
   TableauUtilisation.Columns[2].Title.Caption:='#';
-  TableauUtilisation.Columns[3].Title.Caption:=Traduction.Items[136];
+  TableauUtilisation.Columns[3].Title.Caption:=Translation.Items[136];
   TableauUtilisation.ColWidths[1]:=75;
   TableauUtilisation.ColWidths[2]:=183;
   TableauUtilisation.ColWidths[3]:=64;
@@ -77,10 +77,10 @@ begin
   end;
   if code='D' then
      begin
-     TableauUtilisation.Columns[0].Title.Caption:=Traduction.Items[137];
-     TableauUtilisation.Columns[1].Title.Caption:=Traduction.Items[138];
-     TableauUtilisation.Columns[2].Title.Caption:=Traduction.Items[139];
-     TableauUtilisation.Columns[3].Title.Caption:=Traduction.Items[140];
+     TableauUtilisation.Columns[0].Title.Caption:=Translation.Items[137];
+     TableauUtilisation.Columns[1].Title.Caption:=Translation.Items[138];
+     TableauUtilisation.Columns[2].Title.Caption:=Translation.Items[139];
+     TableauUtilisation.Columns[3].Title.Caption:=Translation.Items[140];
      TableauUtilisation.ColWidths[1]:=64;
      TableauUtilisation.ColWidths[2]:=134;
      TableauUtilisation.ColWidths[3]:=64;

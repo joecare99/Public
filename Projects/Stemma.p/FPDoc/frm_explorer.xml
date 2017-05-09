@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Stemma"><module name="frm_Explorer"><element name="TfrmExplorer.PopulateIndex"><short>Populate Index will fill the index-grid with all names from every individual, their birth and death-dates if there are any</short>
+      </element><element name="TfrmExplorer.AddNameToExplorer"><short>Will put a single name to the index-grid of the explorer.</short>
+      </element><element name="TfrmExplorer.UpdateIndexDates"><short>... will update the dates of a specific entry of the index</short>
+      </element><element name="TfrmExplorer.FormClose"><short>on close the position of the form and the index-grid will be saved</short>
+      </element><element name="TfrmExplorer.FormShow"><short>on show the translation of the grid-title and the menu is loaded, then the position of the form and the position of the grid-columns id restored, the the index is filled and at last the individual is searchtd and displayed</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

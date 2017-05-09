@@ -118,7 +118,7 @@ var
 implementation
 
 uses
-  frm_Names, frm_Main, Traduction, dm_GenData, frm_Explorer;
+  frm_Main, cls_Translation, dm_GenData, frm_Explorer;
 
 procedure FillNameTable( const suffixe: string; const nom: string;
   const prenom: string; const titre: string);
@@ -267,38 +267,38 @@ var
 begin
   frmEditName.ActiveControl := frmEditName.TableauNoms;
   frmStemmaMainForm.DataHist.Row := 0;
-  Caption := Traduction.Items[182];
+  Caption := Translation.Items[182];
 //  btnOK.Caption := Traduction.Items[152];
 //  btnCancel.Caption := Traduction.Items[164];
-  lblType.Caption := Traduction.Items[166];
-  lblIndividuum.Caption := Traduction.Items[183];
-  lblMemo.Caption := Traduction.Items[171];
-  lblPhrase.Caption := Traduction.Items[172];
-  lblDate.Caption := Traduction.Items[144];
-  lblDefault.Caption := Traduction.Items[173];
-  lblSources.Caption := Traduction.Items[174];
-  lblName8.Caption := Traduction.Items[184];
-  lblForPresentation.Caption := Traduction.Items[168];
-  lblForSorting.Caption := Traduction.Items[169];
+  lblType.Caption := Translation.Items[166];
+  lblIndividuum.Caption := Translation.Items[183];
+  lblMemo.Caption := Translation.Items[171];
+  lblPhrase.Caption := Translation.Items[172];
+  lblDate.Caption := Translation.Items[144];
+  lblDefault.Caption := Translation.Items[173];
+  lblSources.Caption := Translation.Items[174];
+  lblName8.Caption := Translation.Items[184];
+  lblForPresentation.Caption := Translation.Items[168];
+  lblForSorting.Caption := Translation.Items[169];
   TableauNoms.RowCount:=1;
  // TableauNoms.ColCount:=3;
-  TableauNoms.Columns[0].Title.Caption := Traduction.Items[185];
-  TableauNoms.Columns[1].title.Caption := Traduction.Items[155];
+  TableauNoms.Columns[0].Title.Caption := Translation.Items[185];
+  TableauNoms.Columns[1].title.Caption := Translation.Items[155];
   TableauCitations.RowCount:=1;
-  TableauCitations.Columns[0].Title.Caption := Traduction.Items[138];
-  TableauCitations.Columns[1].Title.Caption := Traduction.Items[155];
-  TableauCitations.Columns[2].Title.Caption := Traduction.Items[177];
-  MenuItem1.Caption := Traduction.Items[229];
-  MenuItem2.Caption := Traduction.Items[230];
-  MenuItem3.Caption := Traduction.Items[231];
-  MenuItem4.Caption := Traduction.Items[232];
-  MenuItem9.Caption := Traduction.Items[228];
-  MenuItem10.Caption := Traduction.Items[224];
-  MenuItem11.Caption := Traduction.Items[225];
-  MenuItem12.Caption := Traduction.Items[226];
-  Ajouter1.Caption := Traduction.Items[224];
-  Modifier1.Caption := Traduction.Items[225];
-  Supprimer1.Caption := Traduction.Items[226];
+  TableauCitations.Columns[0].Title.Caption := Translation.Items[138];
+  TableauCitations.Columns[1].Title.Caption := Translation.Items[155];
+  TableauCitations.Columns[2].Title.Caption := Translation.Items[177];
+  MenuItem1.Caption := Translation.Items[229];
+  MenuItem2.Caption := Translation.Items[230];
+  MenuItem3.Caption := Translation.Items[231];
+  MenuItem4.Caption := Translation.Items[232];
+  MenuItem9.Caption := Translation.Items[228];
+  MenuItem10.Caption := Translation.Items[224];
+  MenuItem11.Caption := Translation.Items[225];
+  MenuItem12.Caption := Translation.Items[226];
+  Ajouter1.Caption := Translation.Items[224];
+  Modifier1.Caption := Translation.Items[225];
+  Supprimer1.Caption := Translation.Items[226];
   // Populate le ComboBox
   dmGenData.GetTypeList(Y.Items,'N');
   TableauNoms.RowCount := 5;
@@ -309,7 +309,7 @@ begin
     begin
       TableauNoms.RowCount := 1;
       frmEditName.Caption :=
-        Traduction.Items[318] + dmGenData.GetIndividuumName(
+        Translation.Items[318] + dmGenData.GetIndividuumName(
         frmStemmaMainForm.iID);
       if dmGenData.GetSexOfInd(frmStemmaMainForm.iID) ='M' then
         cbxSex.ItemIndex:=2
@@ -356,7 +356,7 @@ begin
       else
         TableauNoms.RowCount := 1;
       frmEditName.Caption :=
-        Traduction.Items[315] + dmGenData.GetIndividuumName(
+        Translation.Items[315] + dmGenData.GetIndividuumName(
         frmStemmaMainForm.iID);
     end;
     eNET_AddDaughter: // fr: fille
@@ -400,7 +400,7 @@ begin
       else
         TableauNoms.RowCount := 1;
       frmEditName.Caption :=
-        Traduction.Items[316] + dmGenData.GetIndividuumName(
+        Translation.Items[316] + dmGenData.GetIndividuumName(
         frmStemmaMainForm.iID);
     end;
     eNET_AddBrother:  // fr: frère
@@ -436,7 +436,7 @@ begin
       else
         TableauNoms.RowCount := 1;
       frmEditName.Caption :=
-        Traduction.Items[313] + dmGenData.GetIndividuumName(
+        Translation.Items[313] + dmGenData.GetIndividuumName(
         frmStemmaMainForm.iID);
     end;
     eNET_AddSister: // soeur
@@ -471,7 +471,7 @@ begin
       else
         TableauNoms.RowCount := 1;
       frmEditName.Caption :=
-        Traduction.Items[337] + dmGenData.GetIndividuumName(
+        Translation.Items[337] + dmGenData.GetIndividuumName(
         frmStemmaMainForm.iID);
     end;
     eNET_AddFather:  // fr: Père
@@ -504,21 +504,21 @@ begin
       else
         TableauNoms.RowCount := 1;
       frmEditName.Caption :=
-        Traduction.Items[311] + dmGenData.GetIndividuumName(
+        Translation.Items[311] + dmGenData.GetIndividuumName(
         frmStemmaMainForm.iID);
     end;
     eNET_AddMother:  // Mère
     begin
        cbxSex.ItemIndex:=2;
       frmEditName.Caption :=
-        Traduction.Items[312] + dmGenData.GetIndividuumName(
+        Translation.Items[312] + dmGenData.GetIndividuumName(
         frmStemmaMainForm.iID);
       TableauNoms.RowCount := 1;
     end;
     eNET_NewUnrelated:  // Non-Relié
     begin
        cbxSex.ItemIndex:=0;
-      frmEditName.Caption := Traduction.Items[35];
+      frmEditName.Caption := Translation.Items[35];
       TableauNoms.RowCount := 1;
     end;
       //        if length(frmEditName.Caption)=0 then
@@ -529,7 +529,7 @@ begin
     else
     begin
       TableauNoms.RowCount := 1;
-      frmEditName.Caption := Traduction.Items[36];
+      frmEditName.Caption := Translation.Items[36];
       I.Value := frmStemmaMainForm.iID;
       X.Text := '0';
     end;
@@ -734,11 +734,11 @@ begin
             end;
             if not existe then
               // GetName(parent1) montre '???' car le nom n'a pas encore été enregistré, utiliser le nom dans 'nom'
-              if Application.MessageBox(PChar(Traduction.Items[300] +
-                DecodeName(nom, 1) + Traduction.Items[299] +
+              if Application.MessageBox(PChar(Translation.Items[300] +
+                DecodeName(nom, 1) + Translation.Items[299] +
                 DecodeName(dmGenData.Query1.Fields[2].AsString, 1) +
-                Traduction.Items[28]), PChar(
-                Traduction.Items[1]), MB_YESNO) = idYes then
+                Translation.Items[28]), PChar(
+                Translation.Items[1]), MB_YESNO) = idYes then
               begin
                 // Unir les parents
                 // Ajouter l'événement mariage
@@ -1084,7 +1084,7 @@ begin
   // Ajouter Titre
   if TableauNoms.RowCount > 1 then
     existe := TableauNoms.Cells[1, TableauNoms.RowCount - 1] =
-      Traduction.Items[40]
+      Translation.Items[40]
   else
     existe := False;
   if not existe then
@@ -1096,7 +1096,7 @@ begin
         TableauNoms.Cells[1, j] := TableauNoms.Cells[1, j - 1];
         TableauNoms.Cells[2, j] := TableauNoms.Cells[2, j - 1];
       end;
-    TableauNoms.Cells[1, 1] := Traduction.Items[40];
+    TableauNoms.Cells[1, 1] := Translation.Items[40];
     TableauNoms.Cells[2, 1] := '';
     TableauNoms.Row := 1;
     TableauNoms.Col := 2;
@@ -1113,7 +1113,7 @@ begin
   existe := False;
   if TableauNoms.RowCount > 1 then
     for j := 1 to TableauNoms.RowCount - 1 do
-      existe := existe or (TableauNoms.Cells[1, j] = Traduction.Items[38]);
+      existe := existe or (TableauNoms.Cells[1, j] = Translation.Items[38]);
   if not existe then
   begin
     TableauNoms.RowCount := TableauNoms.RowCount + 1;
@@ -1125,7 +1125,7 @@ begin
           TableauNoms.Cells[1, j] := TableauNoms.Cells[1, j - 1];
           TableauNoms.Cells[2, j] := TableauNoms.Cells[2, j - 1];
         end;
-      TableauNoms.Cells[1, 2] := Traduction.Items[38];
+      TableauNoms.Cells[1, 2] := Translation.Items[38];
       TableauNoms.Cells[2, 2] := '';
       TableauNoms.Row := 2;
     end
@@ -1137,7 +1137,7 @@ begin
           TableauNoms.Cells[1, j] := TableauNoms.Cells[1, j - 1];
           TableauNoms.Cells[2, j] := TableauNoms.Cells[2, j - 1];
         end;
-      TableauNoms.Cells[1, 1] := Traduction.Items[38];
+      TableauNoms.Cells[1, 1] := Translation.Items[38];
       TableauNoms.Cells[2, 1] := '';
       TableauNoms.Row := 1;
     end;
@@ -1155,24 +1155,24 @@ begin
   existe := False;
   if TableauNoms.RowCount > 1 then
     for j := 1 to TableauNoms.RowCount - 1 do
-      existe := existe or (TableauNoms.Cells[1, j] = Traduction.Items[37]);
+      existe := existe or (TableauNoms.Cells[1, j] = Translation.Items[37]);
   if not existe then
   begin
     TableauNoms.RowCount := TableauNoms.RowCount + 1;
     if TableauNoms.Cells[1, TableauNoms.RowCount - 2] =
-      Traduction.Items[39] then
+      Translation.Items[39] then
     begin
       TableauNoms.Cells[1, TableauNoms.RowCount - 1] :=
         TableauNoms.Cells[1, TableauNoms.RowCount - 2];
       TableauNoms.Cells[2, TableauNoms.RowCount - 1] :=
         TableauNoms.Cells[2, TableauNoms.RowCount - 2];
-      TableauNoms.Cells[1, TableauNoms.RowCount - 2] := Traduction.Items[37];
+      TableauNoms.Cells[1, TableauNoms.RowCount - 2] := Translation.Items[37];
       TableauNoms.Cells[2, TableauNoms.RowCount - 2] := '';
       TableauNoms.Row := TableauNoms.RowCount - 2;
     end
     else
     begin
-      TableauNoms.Cells[1, TableauNoms.RowCount - 1] := Traduction.Items[37];
+      TableauNoms.Cells[1, TableauNoms.RowCount - 1] := Translation.Items[37];
       TableauNoms.Cells[2, TableauNoms.RowCount - 1] := '';
       TableauNoms.Row := TableauNoms.RowCount - 1;
     end;
@@ -1188,13 +1188,13 @@ begin
   // Ajouter Suffixe
   if TableauNoms.RowCount > 1 then
     existe := TableauNoms.Cells[1, TableauNoms.RowCount - 1] =
-      Traduction.Items[39]
+      Translation.Items[39]
   else
     existe := False;
   if not existe then
   begin
     TableauNoms.RowCount := TableauNoms.RowCount + 1;
-    TableauNoms.Cells[1, TableauNoms.RowCount - 1] := Traduction.Items[39];
+    TableauNoms.Cells[1, TableauNoms.RowCount - 1] := Translation.Items[39];
     TableauNoms.Cells[2, TableauNoms.RowCount - 1] := '';
     TableauNoms.Row := TableauNoms.RowCount - 1;
     TableauNoms.Col := 2;
@@ -1422,9 +1422,9 @@ end;
 procedure TfrmEditName.Supprimer1Click(Sender: TObject);
 begin
   if TableauCitations.Row > 0 then
-    if Application.MessageBox(PChar(Traduction.Items[31] +
+    if Application.MessageBox(PChar(Translation.Items[31] +
       TableauCitations.Cells[1, TableauCitations.Row] +
-      Traduction.Items[28]), PChar(Traduction.Items[1]),
+      Translation.Items[28]), PChar(Translation.Items[1]),
       MB_YESNO) = idYes then
     begin
       dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE no=' +

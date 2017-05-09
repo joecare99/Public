@@ -46,7 +46,7 @@ var
 implementation
 
 uses
-  frm_Main,Traduction, dm_GenData;
+  frm_Main,cls_Translation, dm_GenData;
 
 {$R *.lfm}
 
@@ -68,15 +68,15 @@ end;
 
 procedure TfrmParents.FormShow(Sender: TObject);
 begin
-  Caption:=Traduction.Items[130];
-  TableauParents.Cells[2,0]:=Traduction.Items[185];
-  TableauParents.Cells[3,0]:=Traduction.Items[216];
-  TableauParents.Cells[4,0]:=Traduction.Items[177];
-  mniGoTo.Caption:=Traduction.Items[222];
-  mniPrimary.Caption:=Traduction.Items[234];
-  mniAdd.Caption:=Traduction.Items[224];
-  mniEdit.Caption:=Traduction.Items[225];
-  mniDelete.Caption:=Traduction.Items[226];
+  Caption:=Translation.Items[130];
+  TableauParents.Cells[2,0]:=Translation.Items[185];
+  TableauParents.Cells[3,0]:=Translation.Items[216];
+  TableauParents.Cells[4,0]:=Translation.Items[177];
+  mniGoTo.Caption:=Translation.Items[222];
+  mniPrimary.Caption:=Translation.Items[234];
+  mniAdd.Caption:=Translation.Items[224];
+  mniEdit.Caption:=Translation.Items[225];
+  mniDelete.Caption:=Translation.Items[226];
   GetFormPosition(Sender as TForm,0,0,70,1000);
   GetGridPosition(TableauParents as TStringGrid,4);
   dmGenData.PopulateParents(frmParents.TableauParents,frmStemmaMainForm.iID);
@@ -127,7 +127,7 @@ begin
                                   TableauParents.Cells[0,TableauParents.row];
         dmGenData.Query1.ExecSQL;
         // Modifie la date de modification
-        dmGenData.SaveModificationTime(TableauParents.Cells[5,TableauParents.row]);
+        dmGenData.SaveModificationTime(ptrint(TableauParents.Objects[5,TableauParents.row]));
         dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
         dmGenData.PopulateParents(frmParents.TableauParents,frmStemmaMainForm.iID);
      end;
@@ -148,9 +148,9 @@ procedure TfrmParents.mniDeleteClick(Sender: TObject);
 begin
   // Supprimer un parent
   if TableauParents.Row>0 then
-     if Application.MessageBox(Pchar(Traduction.Items[131]+
+     if Application.MessageBox(Pchar(Translation.Items[131]+
            TableauParents.Cells[3,TableauParents.Row]+
-           Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+           Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
         begin
         dmGenData.SaveModificationTime(ptrint(TableauParents.objects[5,TableauParents.Row]));
         dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE Y=''R'' AND N='+TableauParents.Cells[0,TableauParents.Row];

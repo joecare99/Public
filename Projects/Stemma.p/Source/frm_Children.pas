@@ -47,7 +47,7 @@ var
 implementation
 
 uses
-  frm_Main, Traduction, dm_GenData;
+  frm_Main, cls_Translation, dm_GenData;
 
 
 {$R *.lfm}
@@ -101,7 +101,7 @@ begin
      dmGenData.Query1.Next;
      row:=row+1;
   end;
-  frmChildren.Caption:=Traduction.Items[57]+' ('+IntToStr(principaux)+' & '+IntToStr(frmChildren.TableauEnfants.RowCount-1-principaux)+')'
+  frmChildren.Caption:=Translation.Items[57]+' ('+IntToStr(principaux)+' & '+IntToStr(frmChildren.TableauEnfants.RowCount-1-principaux)+')'
 end;
 
 procedure TfrmChildren.FormClose(Sender: TObject; var CloseAction: TCloseAction
@@ -120,14 +120,14 @@ end;
 
 procedure TfrmChildren.FormShow(Sender: TObject);
 begin
-  Caption:=Traduction.Items[57];
-  TableauEnfants.Cells[2,0]:=Traduction.Items[185];
-  TableauEnfants.Cells[3,0]:=Traduction.Items[200];
-  TableauEnfants.Cells[4,0]:=Traduction.Items[177];
-  MenuItem1.Caption:=Traduction.Items[222];
-  MenuItem3.Caption:=Traduction.Items[224];
-  MenuItem4.Caption:=Traduction.Items[225];
-  MenuItem5.Caption:=Traduction.Items[226];
+  Caption:=Translation.Items[57];
+  TableauEnfants.Cells[2,0]:=Translation.Items[185];
+  TableauEnfants.Cells[3,0]:=Translation.Items[200];
+  TableauEnfants.Cells[4,0]:=Translation.Items[177];
+  MenuItem1.Caption:=Translation.Items[222];
+  MenuItem3.Caption:=Translation.Items[224];
+  MenuItem4.Caption:=Translation.Items[225];
+  MenuItem5.Caption:=Translation.Items[226];
   GetFormPosition(Sender as TForm,0,0,70,1000);
   GetGridPosition(TableauEnfants as TStringGrid,5);
   PopulateEnfants(sender);
@@ -154,9 +154,9 @@ procedure TfrmChildren.MenuItem5Click(Sender: TObject);
 begin
   // Supprimer un enfant
   if TableauEnfants.Row>0 then
-     if Application.MessageBox(Pchar(Traduction.Items[58]+
+     if Application.MessageBox(Pchar(Translation.Items[58]+
            TableauEnfants.Cells[3,TableauEnfants.Row]+
-           Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+           Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
         begin
         dmGenData.SaveModificationTime(strtoint(TableauEnfants.Cells[5,TableauEnfants.Row]));
         dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE Y=''R'' AND N='+TableauEnfants.Cells[0,TableauEnfants.Row];

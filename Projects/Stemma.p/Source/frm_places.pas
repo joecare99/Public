@@ -50,7 +50,7 @@ var
 
 implementation
 
-uses frm_Main, Traduction, dm_GenData, frm_Usage;
+uses frm_Main, cls_Translation, dm_GenData, frm_Usage;
 
 {$R *.lfm}
 
@@ -70,24 +70,24 @@ var
   LA, L0,L1,L2,L3,L4,Lieu:string;
   MyCursor: TCursor;
 begin
-  Caption:=Traduction.Items[207];
-  Button1.Caption:=Traduction.Items[152];
-  TableauLieux.Cells[2,0]:=Traduction.Items[208];
-  TableauLieux.Cells[3,0]:=Traduction.Items[209];
-  TableauLieux.Cells[4,0]:=Traduction.Items[210];
-  TableauLieux.Cells[5,0]:=Traduction.Items[211];
-  TableauLieux.Cells[6,0]:=Traduction.Items[212];
-  TableauLieux.Cells[7,0]:=Traduction.Items[213];
-  TableauLieux.Cells[8,0]:=Traduction.Items[158];
-  MenuItem1.Caption:=Traduction.Items[239];
-  MenuItem2.Caption:=Traduction.Items[240];
-  MenuItem3.Caption:=Traduction.Items[241];
-  MenuItem4.Caption:=Traduction.Items[242];
-  MenuItem5.Caption:=Traduction.Items[243];
-  MenuItem6.Caption:=Traduction.Items[244];
-  MenuItem7.Caption:=Traduction.Items[245];
-  MenuItem8.Caption:=Traduction.Items[223];
-  MenuItem11.Caption:=Traduction.Items[226];
+  Caption:=Translation.Items[207];
+  Button1.Caption:=Translation.Items[152];
+  TableauLieux.Cells[2,0]:=Translation.Items[208];
+  TableauLieux.Cells[3,0]:=Translation.Items[209];
+  TableauLieux.Cells[4,0]:=Translation.Items[210];
+  TableauLieux.Cells[5,0]:=Translation.Items[211];
+  TableauLieux.Cells[6,0]:=Translation.Items[212];
+  TableauLieux.Cells[7,0]:=Translation.Items[213];
+  TableauLieux.Cells[8,0]:=Translation.Items[158];
+  MenuItem1.Caption:=Translation.Items[239];
+  MenuItem2.Caption:=Translation.Items[240];
+  MenuItem3.Caption:=Translation.Items[241];
+  MenuItem4.Caption:=Translation.Items[242];
+  MenuItem5.Caption:=Translation.Items[243];
+  MenuItem6.Caption:=Translation.Items[244];
+  MenuItem7.Caption:=Translation.Items[245];
+  MenuItem8.Caption:=Translation.Items[223];
+  MenuItem11.Caption:=Translation.Items[226];
   MyCursor := Screen.Cursor;
   Screen.Cursor := crHourGlass;
   frmStemmaMainForm.ProgressBar.Position:=0;
@@ -207,9 +207,9 @@ begin
               Lieu:=trim(TableauLieux.Cells[7,TableauLieux.Row])
            else
               Lieu:=Lieu+', '+trim(TableauLieux.Cells[7,TableauLieux.Row]);
-        if Application.MessageBox(Pchar(Traduction.Items[125]+
+        if Application.MessageBox(Pchar(Translation.Items[125]+
               Lieu+
-              Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+              Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
            begin
            dmGenData.Query1.SQL.Text:='DELETE FROM L WHERE no='+TableauLieux.Cells[0,TableauLieux.Row];
            dmGenData.Query1.ExecSQL;
@@ -275,15 +275,15 @@ begin
         Lieu:=trim(TableauLieux.Cells[7,TableauLieux.Row])
      else
         Lieu:=Lieu+', '+trim(TableauLieux.Cells[7,TableauLieux.Row]);
-  no := InputBox(Traduction.Items[119],Traduction.Items[120]+Lieu+Traduction.Items[121],'');
+  no := InputBox(Translation.Items[119],Translation.Items[120]+Lieu+Translation.Items[121],'');
   if StrtoInt(no)>0 then
      begin
      dmGenData.Query1.SQL.Text:='SELECT L.no, L.L FROM L WHERE L.no='+no;
      dmGenData.Query1.Open;
      Lieu2:=DecodeChanged(dmGenData.Query1.Fields[1].AsString);
      if Lieu2<>Lieu then
-        Application.MessageBox(Pchar(Traduction.Items[122]+
-           Lieu+Traduction.Items[123]+Lieu2+')'),pchar(Traduction.Items[124]),0)
+        Application.MessageBox(Pchar(Translation.Items[122]+
+           Lieu+Translation.Items[123]+Lieu2+')'),pchar(Translation.Items[124]),0)
      else
         begin
         dmGenData.Query1.SQL.Text:='UPDATE E SET L='+no+

@@ -120,7 +120,7 @@ implementation
 
 uses
   frm_Events, frm_Main, dm_GenData, frm_Explorer, frm_EditCitations, frm_EditWitness,
-  frm_Documents, frm_ShowImage, frm_Names, frm_EditDocuments, Traduction;
+  frm_Documents, frm_ShowImage, frm_Names, frm_EditDocuments, cls_Translation;
 
 
 
@@ -249,45 +249,45 @@ var
 begin
   frmEditEvents.ActiveControl:=frmEditEvents.PD;
   frmStemmaMainForm.DataHist.Row:=0;
-  Caption:=Traduction.Items[165];
-  Button1.Caption:=Traduction.Items[152];
-  Button2.Caption:=Traduction.Items[164];
-  Label1.Caption:=Traduction.Items[166];
-  Label3.Caption:=Traduction.Items[171];
-  Label4.Caption:=Traduction.Items[172];
-  Label5.Caption:=Traduction.Items[144];
-  Label6.Caption:=Traduction.Items[173];
-  Label7.Caption:=Traduction.Items[174];
-  Label8.Caption:=Traduction.Items[170];
-  Label9.Caption:=Traduction.Items[168];
-  Label10.Caption:=Traduction.Items[169];
-  Label11.Caption:=Traduction.Items[167];
-  Label12.Caption:=Traduction.Items[298];
-  TableauTemoins.Cells[1,0]:=Traduction.Items[175];
-  TableauTemoins.Cells[3,0]:=Traduction.Items[176];
-  TableauCitations.Cells[1,0]:=Traduction.Items[138];
-  TableauCitations.Cells[2,0]:=Traduction.Items[155];
-  TableauCitations.Cells[3,0]:=Traduction.Items[177];
-  TableauExhibits.Cells[2,0]:=Traduction.Items[154];
-  TableauExhibits.Cells[4,0]:=Traduction.Items[201];
-  Ajouter1.Caption:=Traduction.Items[224];
-  Modifier1.Caption:=Traduction.Items[225];
-  Supprimer1.Caption:=Traduction.Items[226];
-  Ajouter2.Caption:=Traduction.Items[224];
-  Modifier2.Caption:=Traduction.Items[225];
-  Supprimer2.Caption:=Traduction.Items[226];
-  AjouterTemoin.Caption:=Traduction.Items[224];
-  ModifierTemoin.Caption:=Traduction.Items[225];
-  SupprimerTemoin.Caption:=Traduction.Items[226];
-  MenuItem1.Caption:=Traduction.Items[227];
-  MenuItem2.Caption:=Traduction.Items[228];
-  MenuItem3.Caption:=Traduction.Items[224];
-  MenuItem4.Caption:=Traduction.Items[225];
-  MenuItem5.Caption:=Traduction.Items[226];
-  MenuItem6.Caption:=Traduction.Items[224];
-  MenuItem7.Caption:=Traduction.Items[225];
-  MenuItem8.Caption:=Traduction.Items[226];
-  MenuItem10.Caption:=Traduction.Items[181];
+  Caption:=Translation.Items[165];
+  Button1.Caption:=Translation.Items[152];
+  Button2.Caption:=Translation.Items[164];
+  Label1.Caption:=Translation.Items[166];
+  Label3.Caption:=Translation.Items[171];
+  Label4.Caption:=Translation.Items[172];
+  Label5.Caption:=Translation.Items[144];
+  Label6.Caption:=Translation.Items[173];
+  Label7.Caption:=Translation.Items[174];
+  Label8.Caption:=Translation.Items[170];
+  Label9.Caption:=Translation.Items[168];
+  Label10.Caption:=Translation.Items[169];
+  Label11.Caption:=Translation.Items[167];
+  Label12.Caption:=Translation.Items[298];
+  TableauTemoins.Cells[1,0]:=Translation.Items[175];
+  TableauTemoins.Cells[3,0]:=Translation.Items[176];
+  TableauCitations.Cells[1,0]:=Translation.Items[138];
+  TableauCitations.Cells[2,0]:=Translation.Items[155];
+  TableauCitations.Cells[3,0]:=Translation.Items[177];
+  TableauExhibits.Cells[2,0]:=Translation.Items[154];
+  TableauExhibits.Cells[4,0]:=Translation.Items[201];
+  Ajouter1.Caption:=Translation.Items[224];
+  Modifier1.Caption:=Translation.Items[225];
+  Supprimer1.Caption:=Translation.Items[226];
+  Ajouter2.Caption:=Translation.Items[224];
+  Modifier2.Caption:=Translation.Items[225];
+  Supprimer2.Caption:=Translation.Items[226];
+  AjouterTemoin.Caption:=Translation.Items[224];
+  ModifierTemoin.Caption:=Translation.Items[225];
+  SupprimerTemoin.Caption:=Translation.Items[226];
+  MenuItem1.Caption:=Translation.Items[227];
+  MenuItem2.Caption:=Translation.Items[228];
+  MenuItem3.Caption:=Translation.Items[224];
+  MenuItem4.Caption:=Translation.Items[225];
+  MenuItem5.Caption:=Translation.Items[226];
+  MenuItem6.Caption:=Translation.Items[224];
+  MenuItem7.Caption:=Translation.Items[225];
+  MenuItem8.Caption:=Translation.Items[226];
+  MenuItem10.Caption:=Translation.Items[181];
   // Populate le ComboBox
 
   if FEditType <> eEET_EditExisting then
@@ -310,7 +310,7 @@ begin
   // Populate la form
   if FEditType <> eEET_EditExisting then
      begin
-     frmEditEvents.Caption:=Traduction.Items[30];
+     frmEditEvents.Caption:=Translation.Items[30];
      TableauTemoins.RowCount:=2;
      TableauTemoins.Cells[0,1]:='0';
      case FEditType of
@@ -467,9 +467,9 @@ begin
      begin
      dmGenData.Query2.SQL.Text:='SELECT X.Z, X.F FROM X WHERE X.no='+TableauExhibits.Cells[0,TableauExhibits.Row];
      dmGenData.Query2.Open;
-     if TableauExhibits.Cells[4,TableauExhibits.Row]=Traduction.Items[34] then
+     if TableauExhibits.Cells[4,TableauExhibits.Row]=Translation.Items[34] then
         begin
-        frmShowImage.Caption:=Traduction.Items[34];
+        frmShowImage.Caption:=Translation.Items[34];
         frmShowImage.Image.Visible:=false;
         frmShowImage.Memo.Visible:=true;
         frmShowImage.btnOK.Visible:=true;
@@ -890,7 +890,7 @@ begin
   valide:=TableauTemoins.RowCount>1;
   if not valide then
      begin
-     Application.MessageBox(pchar(Traduction.Items[301]),pchar(Traduction.Items[124]),MB_OK)
+     Application.MessageBox(pchar(Translation.Items[301]),pchar(Translation.Items[124]),MB_OK)
   end
   else
      begin
@@ -1025,7 +1025,7 @@ begin
      begin
     dmGenData.UpdateNameI4(lDate, lidInd);
     // UPDATE DÉCÈS!!!
-     dmGenData.UpdateIndividualVivant(lidInd,'N', Sender);
+     dmGenData.UpdateIndividualVivant(lidInd,'N',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Sender);
      end;
      if  (lidInd>0) and
         ((lEvType='B') or ((lEvType='D'))) and
@@ -1090,8 +1090,8 @@ end;
 procedure TfrmEditEvents.Supprimer1Click(Sender: TObject);
 begin
   If TableauCitations.Row>0 then
-     if Application.MessageBox(Pchar(Traduction.Items[31]+
-        TableauCitations.Cells[1,TableauCitations.Row]+Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+     if Application.MessageBox(Pchar(Translation.Items[31]+
+        TableauCitations.Cells[1,TableauCitations.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
         begin
         dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE no='+TableauCitations.Cells[0,TableauCitations.Row];
         dmGenData.Query1.ExecSQL;
@@ -1112,8 +1112,8 @@ procedure TfrmEditEvents.Supprimer2Click(Sender: TObject);
 begin
   // Supprimer le document de l'événement
   If TableauExhibits.Row>0 then
-     if Application.MessageBox(Pchar(Traduction.Items[60]+
-        TableauExhibits.Cells[2,TableauExhibits.Row]+Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+     if Application.MessageBox(Pchar(Translation.Items[60]+
+        TableauExhibits.Cells[2,TableauExhibits.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
         begin
         dmGenData.Query1.SQL.Text:='DELETE FROM X WHERE no='+TableauExhibits.Cells[0,TableauExhibits.Row];
         dmGenData.Query1.ExecSQL;
@@ -1136,9 +1136,9 @@ end;
 procedure TfrmEditEvents.SupprimerTemoinClick(Sender: TObject);
 begin
   If (TableauTemoins.RowCount>1) and (TableauTemoins.Row>0) then  // Il faudra qu'il reste au moins un témoin
-     if Application.MessageBox(Pchar(Traduction.Items[32]+
+     if Application.MessageBox(Pchar(Translation.Items[32]+
         TableauTemoins.Cells[3,TableauTemoins.Row]+' ('+
-        TableauTemoins.Cells[1,TableauTemoins.Row]+')'+Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+        TableauTemoins.Cells[1,TableauTemoins.Row]+')'+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
         begin
         // Exécuter SAVEMODIFICATIONTIME pour le témoin supprimer
         dmGenData.SaveModificationTime(strtoint(TableauTemoins.Cells[2,TableauTemoins.Row]));

@@ -37,7 +37,7 @@ var
 implementation
 
 uses
-  Traduction;
+  cls_Translation;
 
 {$R *.lfm}
 
@@ -50,11 +50,11 @@ end;
 
 procedure Tapropos.FormShow(Sender: TObject);
 begin
-  Caption:=Traduction.Items[142];
-  lblVersion.Caption:=Traduction.Items[143];
-  lblDate.Caption:=Traduction.Items[144];
-  lblAuthor.Caption:=Traduction.Items[145];
-//  btnClose.Caption:=Traduction.Items[148];
+  Caption:=Translation.Items[142];
+  lblVersion.Caption:=Translation.Items[143];
+  lblDate.Caption:=Translation.Items[144];
+  lblAuthor.Caption:=Translation.Items[145];
+//  btnClose.Caption:=Translation.Items[148];
   lblActVersion.caption:='0.9.5';
   lblCompDate.caption:='2012/2/17';
 end;

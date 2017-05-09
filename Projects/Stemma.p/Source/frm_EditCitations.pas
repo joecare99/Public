@@ -61,7 +61,7 @@ var
 implementation
 
 uses
-  frm_Main, Traduction, dm_GenData;
+  frm_Main, cls_Translation, dm_GenData;
 
 {$R *.lfm}
 
@@ -74,12 +74,12 @@ var
 begin
    EditCitations.ActiveControl:=EditCitations.S;
    frmStemmaMainForm.DataHist.Row:=0;
-   Caption:=Traduction.Items[160];
-   Label1.Caption:=Traduction.Items[161];
-   Label2.Caption:=Traduction.Items[162];
-   Label3.Caption:=Traduction.Items[163];
-   Button1.Caption:=Traduction.Items[152];
-   Button2.Caption:=Traduction.Items[164];
+   Caption:=Translation.Items[160];
+   Label1.Caption:=Translation.Items[161];
+   Label2.Caption:=Translation.Items[162];
+   Label3.Caption:=Translation.Items[163];
+   Button1.Caption:=Translation.Items[152];
+   Button2.Caption:=Translation.Items[164];
    // Populate Citations
    // GET TYPE AND NO FROM CALLER
    // Populate le ComboBox
@@ -101,7 +101,7 @@ begin
 //   dmGenData.GetCode(codex,nocode);
    if FEditType=eCET_New then
       begin
-      EditCitations.Caption:=Traduction.Items[29];
+      EditCitations.Caption:=Translation.Items[29];
       No.Value:=0;
       Source.ItemIndex:=0;
       Source1.ItemIndex:=Source.ItemIndex;

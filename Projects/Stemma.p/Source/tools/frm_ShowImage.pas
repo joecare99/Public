@@ -34,7 +34,7 @@ var
 implementation
 
 uses
-  traduction;
+  cls_Translation;
 
 {$R *.lfm}
 
@@ -54,10 +54,10 @@ end;
 
 procedure TfrmShowImage.FormShow(Sender: TObject);
 begin
-  mniQuit.Caption:=Traduction.Items[256];
-  Caption:=Traduction.Items[217];
-  btnOK.Caption:=Traduction.Items[152];
-  btnCancel.Caption:=Traduction.Items[164];
+  mniQuit.Caption:=Translation.Items[256];
+  Caption:=Translation.Items[217];
+  btnOK.Caption:=Translation.Items[152];
+  btnCancel.Caption:=Translation.Items[164];
 end;
 
 procedure TfrmShowImage.mniQuitClick(Sender: TObject);

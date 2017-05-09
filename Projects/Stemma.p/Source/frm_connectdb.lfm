@@ -28,7 +28,7 @@ object frmConnectDb: TfrmConnectDb
   end
   object edtHostName: TLabeledEdit
     Left = 8
-    Height = 38
+    Height = 23
     Top = 24
     Width = 331
     EditLabel.AnchorSideLeft.Control = edtHostName
@@ -36,8 +36,8 @@ object frmConnectDb: TfrmConnectDb
     EditLabel.AnchorSideRight.Side = asrBottom
     EditLabel.AnchorSideBottom.Control = edtHostName
     EditLabel.Left = 8
-    EditLabel.Height = 30
-    EditLabel.Top = -9
+    EditLabel.Height = 15
+    EditLabel.Top = 6
     EditLabel.Width = 331
     EditLabel.Caption = 'Hostname:'
     EditLabel.ParentColor = False
@@ -46,7 +46,7 @@ object frmConnectDb: TfrmConnectDb
   end
   object edtUser: TLabeledEdit
     Left = 8
-    Height = 38
+    Height = 23
     Top = 62
     Width = 331
     EditLabel.AnchorSideLeft.Control = edtUser
@@ -54,8 +54,8 @@ object frmConnectDb: TfrmConnectDb
     EditLabel.AnchorSideRight.Side = asrBottom
     EditLabel.AnchorSideBottom.Control = edtUser
     EditLabel.Left = 8
-    EditLabel.Height = 30
-    EditLabel.Top = 29
+    EditLabel.Height = 15
+    EditLabel.Top = 44
     EditLabel.Width = 331
     EditLabel.Caption = 'Username:'
     EditLabel.ParentColor = False
@@ -64,7 +64,7 @@ object frmConnectDb: TfrmConnectDb
   end
   object edtPassword: TLabeledEdit
     Left = 8
-    Height = 38
+    Height = 23
     Top = 101
     Width = 331
     EchoMode = emPassword
@@ -73,8 +73,8 @@ object frmConnectDb: TfrmConnectDb
     EditLabel.AnchorSideRight.Side = asrBottom
     EditLabel.AnchorSideBottom.Control = edtPassword
     EditLabel.Left = 8
-    EditLabel.Height = 30
-    EditLabel.Top = 68
+    EditLabel.Height = 15
+    EditLabel.Top = 83
     EditLabel.Width = 331
     EditLabel.Caption = 'Password:'
     EditLabel.ParentColor = False

@@ -15,6 +15,60 @@ msgstr ""
 "X-Generator: Poedit 1.8.12\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
+#: cls_translation.rsmenuhistorycaption
+msgctxt "cls_translation.rsmenuhistorycaption"
+msgid "&%d- %s (%d)"
+msgstr ""
+
+#: cls_translation.sareyousuretoquit
+#, fuzzy
+msgctxt "cls_translation.sareyousuretoquit"
+msgid "Are you syre you want to quit STEMMA?"
+msgstr "Are you sure you want to quit STEMMA?"
+
+#: cls_translation.sconfirmation
+#, fuzzy
+msgctxt "cls_translation.sconfirmation"
+msgid "Confirmation"
+msgstr "Confirmation"
+
+#: cls_translation.sdatabasename
+msgctxt "cls_translation.sdatabasename"
+msgid "Database name"
+msgstr ""
+
+#: cls_translation.senterdbname
+msgctxt "cls_translation.senterdbname"
+msgid "Enter the database name to be created"
+msgstr ""
+
+#: cls_translation.sfamilyname
+#, fuzzy
+msgctxt "cls_translation.sfamilyname"
+msgid "Name"
+msgstr "Name"
+
+#: cls_translation.sgivenname
+msgctxt "cls_translation.sgivenname"
+msgid "First name"
+msgstr ""
+
+#: cls_translation.ssuffix
+msgctxt "cls_translation.ssuffix"
+msgid "Suffix"
+msgstr ""
+
+#: cls_translation.stitle
+msgctxt "cls_translation.stitle"
+msgid "Title"
+msgstr ""
+
+#: cls_translation.sunabletoconnecttodb
+#, fuzzy
+msgctxt "cls_translation.sunabletoconnecttodb"
+msgid "Couldn't connect to MySQL database %s."
+msgstr "Couldn't connect to MySQL database %s."
+
 #: tapropos.lblactversion.caption
 msgid "lblActVersion"
 msgstr ""
@@ -2464,45 +2518,44 @@ msgctxt "tfrmexplorer.o.text"
 msgid "O"
 msgstr ""
 
-#: tfrmnames.label1.caption
-msgctxt "tfrmnames.label1.caption"
-msgid "Dernière modification le "
+#: tfrmnames.lbllastmodification.caption
+msgid "Last modification at:"
 msgstr ""
 
-#: tfrmnames.menuitem1.caption
-msgctxt "tfrmnames.menuitem1.caption"
-msgid "&Primaire"
-msgstr ""
-
-#: tfrmnames.menuitem2.caption
+#: tfrmnames.lblmodificationdate.caption
 #, fuzzy
-msgctxt "tfrmnames.menuitem2.caption"
-msgid "-"
-msgstr "-"
+msgctxt "tfrmnames.lblmodificationdate.caption"
+msgid "YYYY/MM/DD"
+msgstr "YYYY-MM-DD"
 
-#: tfrmnames.menuitem3.caption
+#: tfrmnames.mnuadd.caption
 #, fuzzy
-msgctxt "tfrmnames.menuitem3.caption"
+msgctxt "tfrmnames.mnuadd.caption"
 msgid "Ajouter"
 msgstr "Add"
 
-#: tfrmnames.menuitem4.caption
+#: tfrmnames.mnudelete.caption
 #, fuzzy
-msgctxt "tfrmnames.menuitem4.caption"
-msgid "Modifier"
-msgstr "Modify"
-
-#: tfrmnames.menuitem5.caption
-#, fuzzy
-msgctxt "tfrmnames.menuitem5.caption"
+msgctxt "tfrmnames.mnudelete.caption"
 msgid "Supprimer"
 msgstr "Delete"
 
-#: tfrmnames.modifie.caption
+#: tfrmnames.mnumodify.caption
 #, fuzzy
-msgctxt "tfrmnames.modifie.caption"
-msgid "YYYY/MM/DD"
-msgstr "YYYY-MM-DD"
+msgctxt "tfrmnames.mnumodify.caption"
+msgid "Modifier"
+msgstr "Modify"
+
+#: tfrmnames.mnuseparator.caption
+#, fuzzy
+msgctxt "tfrmnames.mnuseparator.caption"
+msgid "-"
+msgstr "-"
+
+#: tfrmnames.mnusetprimary.caption
+msgctxt "tfrmnames.mnusetprimary.caption"
+msgid "&Primaire"
+msgstr ""
 
 #: tfrmparents.mnddiv1.caption
 #, fuzzy
@@ -3774,22 +3827,27 @@ msgid "ToolButton8"
 msgstr ""
 
 #: traduction.rsmenuhistorycaption
+msgctxt "traduction.rsmenuhistorycaption"
 msgid "&%d- %s (%d)"
 msgstr ""
 
 #: traduction.sareyousuretoquit
+msgctxt "traduction.sareyousuretoquit"
 msgid "Are you syre you want to quit STEMMA?"
 msgstr "Are you sure you want to quit STEMMA?"
 
 #: traduction.sconfirmation
+msgctxt "traduction.sconfirmation"
 msgid "Confirmation"
 msgstr "Confirmation"
 
 #: traduction.sdatabasename
+msgctxt "traduction.sdatabasename"
 msgid "Database name"
 msgstr ""
 
 #: traduction.senterdbname
+msgctxt "traduction.senterdbname"
 msgid "Enter the database name to be created"
 msgstr ""
 
@@ -3800,18 +3858,22 @@ msgid "Name"
 msgstr "Name"
 
 #: traduction.sgivenname
+msgctxt "traduction.sgivenname"
 msgid "First name"
 msgstr ""
 
 #: traduction.ssuffix
+msgctxt "traduction.ssuffix"
 msgid "Suffix"
 msgstr ""
 
 #: traduction.stitle
+msgctxt "traduction.stitle"
 msgid "Title"
 msgstr ""
 
 #: traduction.sunabletoconnecttodb
+msgctxt "traduction.sunabletoconnecttodb"
 msgid "Couldn't connect to MySQL database %s."
 msgstr "Couldn't connect to MySQL database %s."
 

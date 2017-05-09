@@ -87,6 +87,8 @@ type
     // Explorer
     procedure FillExplorerIndex(const aGrid: TStringGrid; Order: integer;
       const OnProgress: TNotifyEvent=nil);
+    procedure FillIndexBySearchtext(const lGrid: TStringGrid;
+      const lSearchText: String; const lOnProgress: TNotifyEvent);
 
     // Name Methods
     procedure PopulateNameTable(const lidInd: longint; tblName: TStringGrid);
@@ -192,7 +194,7 @@ const
 
 implementation
 
-uses FMUtils, Traduction;
+uses FMUtils, cls_Translation;
 
 {$R *.lfm}
 procedure TdmGenData.GetCode(out code: string; out no: integer);
@@ -800,6 +802,57 @@ begin
   end;
 end;
 
+procedure TdmGenData.FillIndexBySearchtext(const lGrid: TStringGrid;
+  const lSearchText: String; const lOnProgress: TNotifyEvent);
+var
+  row: integer;
+begin
+  with Query5 do
+    begin
+   SQL.text:= 'SELECT no, I, N, I1, I2, I3, I4, X FROM N WHERE MATCH (N) AGAINST (:SearchText IN BOOLEAN MODE) ORDER BY I1, I2';
+   ParamByName('Searchtext').AsString:=lSearchText;
+   Open;
+   First;
+  row := 1;
+  if not  EOF then
+  begin
+    lGrid.RowCount :=  RecordCount + 1;
+     tag := -lGrid.RowCount;
+    if Assigned(lOnProgress) then
+      lOnProgress(Query5);
+     tag := 0;
+    if Assigned(lOnProgress) then
+      lOnProgress(Query5);
+
+    while not  EOF do
+    begin
+      lGrid.Cells[0, row] :=  Fields[0].AsString;
+      lGrid.Cells[1, row] :=  Fields[1].AsString;
+      lGrid.Cells[2, row] :=
+        DecodeName( Fields[2].AsString, 2);
+      lGrid.Cells[3, row] :=
+        ConvertDate( Fields[5].AsString, 1);
+      lGrid.Cells[4, row] :=
+        ConvertDate( Fields[6].AsString, 1);
+      if  Fields[7].AsBoolean then
+        lGrid.Cells[5, row] := '*'
+      else
+        lGrid.Cells[5, row] := '';
+      lGrid.Cells[6, row] :=
+        RemoveUTF8( Fields[3].AsString) + ', ' +
+        RemoveUTF8( Fields[4].AsString);
+      row := row + 1;
+       Next;
+        tag := row;
+      if Assigned(lOnProgress) then
+        lOnProgress(dmGenData.Query5);
+    end;
+    close;
+  end;
+    end;
+end;
+
+
 
 procedure TdmGenData.PopulateNameTable(const lidInd: longint; tblName: TStringGrid);
 var
@@ -1347,7 +1400,7 @@ begin
       row := row + 1;
     end;
   end;
-  aSG.Parent.Caption := Traduction.Items[130] + ' (' +
+  aSG.Parent.Caption := Translation.Items[130] + ' (' +
     IntToStr(aSG.RowCount - 1) + ')';
 end;
 

@@ -55,7 +55,7 @@ var
 
 implementation
 
-uses frm_EditEvents, frm_Main, dm_GenData,Traduction, frm_Explorer;
+uses frm_EditEvents, frm_Main, dm_GenData,cls_Translation, frm_Explorer;
 
 procedure FillResourceList(const items: TStrings; const lidType: PtrInt);
 var
@@ -126,14 +126,14 @@ var
 begin
   ActiveControl:=frmEditWitness.I;
   frmStemmaMainForm.DataHist.Row:=0;
-  Caption:=Traduction.Items[195];
-  btnOK.Caption:=Traduction.Items[152];
-  btnCancel.Caption:=Traduction.Items[164];
-  Label2.Caption:=Traduction.Items[196];
-  Label3.Caption:=Traduction.Items[197];
-  Label4.Caption:=Traduction.Items[172];
-  Label5.Caption:=Traduction.Items[198];
-  Label6.Caption:=Traduction.Items[173];
+  Caption:=Translation.Items[195];
+  btnOK.Caption:=Translation.Items[152];
+  btnCancel.Caption:=Translation.Items[164];
+  Label2.Caption:=Translation.Items[196];
+  Label3.Caption:=Translation.Items[197];
+  Label4.Caption:=Translation.Items[172];
+  Label5.Caption:=Translation.Items[198];
+  Label6.Caption:=Translation.Items[173];
   // Populate le ComboBox
   FillResourceList(Role.Items, ptrint(
   frmEditEvents.Y.Items.Objects[frmEditEvents.Y.ItemIndex]));
@@ -141,7 +141,7 @@ begin
  // dmGenData.GetCode(code,nocode);
   if no.Value=0 then
      begin
-     Caption:=Traduction.Items[48];
+     Caption:=Translation.Items[48];
      I.Value:=-1;
      NomI.Text:='';
      No.Value:=0;

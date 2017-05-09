@@ -13,6 +13,56 @@ msgstr ""
 "X-Generator: Poedit 1.8.12\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
+#: cls_translation.rsmenuhistorycaption
+msgctxt "cls_translation.rsmenuhistorycaption"
+msgid "&%d- %s (%d)"
+msgstr ""
+
+#: cls_translation.sareyousuretoquit
+msgctxt "cls_translation.sareyousuretoquit"
+msgid "Are you syre you want to quit STEMMA?"
+msgstr ""
+
+#: cls_translation.sconfirmation
+msgctxt "cls_translation.sconfirmation"
+msgid "Confirmation"
+msgstr ""
+
+#: cls_translation.sdatabasename
+msgctxt "cls_translation.sdatabasename"
+msgid "Database name"
+msgstr ""
+
+#: cls_translation.senterdbname
+msgctxt "cls_translation.senterdbname"
+msgid "Enter the database name to be created"
+msgstr ""
+
+#: cls_translation.sfamilyname
+msgctxt "cls_translation.sfamilyname"
+msgid "Name"
+msgstr ""
+
+#: cls_translation.sgivenname
+msgctxt "cls_translation.sgivenname"
+msgid "First name"
+msgstr ""
+
+#: cls_translation.ssuffix
+msgctxt "cls_translation.ssuffix"
+msgid "Suffix"
+msgstr ""
+
+#: cls_translation.stitle
+msgctxt "cls_translation.stitle"
+msgid "Title"
+msgstr ""
+
+#: cls_translation.sunabletoconnecttodb
+msgctxt "cls_translation.sunabletoconnecttodb"
+msgid "Couldn't connect to MySQL database %s."
+msgstr ""
+
 #: tapropos.lblactversion.caption
 msgid "lblActVersion"
 msgstr ""
@@ -2336,39 +2386,38 @@ msgctxt "TFRMEXPLORER.O.TEXT"
 msgid "O"
 msgstr ""
 
-#: tfrmnames.label1.caption
-msgctxt "TFRMNAMES.LABEL1.CAPTION"
-msgid "Dernière modification le "
+#: tfrmnames.lbllastmodification.caption
+msgid "Last modification at:"
 msgstr ""
 
-#: tfrmnames.menuitem1.caption
-msgctxt "TFRMNAMES.MENUITEM1.CAPTION"
-msgid "&Primaire"
+#: tfrmnames.lblmodificationdate.caption
+msgctxt "TFRMNAMES.LBLMODIFICATIONDATE.CAPTION"
+msgid "YYYY/MM/DD"
 msgstr ""
 
-#: tfrmnames.menuitem2.caption
-msgctxt "TFRMNAMES.MENUITEM2.CAPTION"
-msgid "-"
-msgstr ""
-
-#: tfrmnames.menuitem3.caption
-msgctxt "TFRMNAMES.MENUITEM3.CAPTION"
+#: tfrmnames.mnuadd.caption
+msgctxt "TFRMNAMES.MNUADD.CAPTION"
 msgid "Ajouter"
 msgstr ""
 
-#: tfrmnames.menuitem4.caption
-msgctxt "TFRMNAMES.MENUITEM4.CAPTION"
-msgid "Modifier"
-msgstr ""
-
-#: tfrmnames.menuitem5.caption
-msgctxt "TFRMNAMES.MENUITEM5.CAPTION"
+#: tfrmnames.mnudelete.caption
+msgctxt "TFRMNAMES.MNUDELETE.CAPTION"
 msgid "Supprimer"
 msgstr ""
 
-#: tfrmnames.modifie.caption
-msgctxt "TFRMNAMES.MODIFIE.CAPTION"
-msgid "YYYY/MM/DD"
+#: tfrmnames.mnumodify.caption
+msgctxt "TFRMNAMES.MNUMODIFY.CAPTION"
+msgid "Modifier"
+msgstr ""
+
+#: tfrmnames.mnuseparator.caption
+msgctxt "TFRMNAMES.MNUSEPARATOR.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tfrmnames.mnusetprimary.caption
+msgctxt "TFRMNAMES.MNUSETPRIMARY.CAPTION"
+msgid "&Primaire"
 msgstr ""
 
 #: tfrmparents.mnddiv1.caption
@@ -3598,22 +3647,27 @@ msgid "ToolButton8"
 msgstr ""
 
 #: traduction.rsmenuhistorycaption
+msgctxt "traduction.rsmenuhistorycaption"
 msgid "&%d- %s (%d)"
 msgstr ""
 
 #: traduction.sareyousuretoquit
+msgctxt "traduction.sareyousuretoquit"
 msgid "Are you syre you want to quit STEMMA?"
 msgstr ""
 
 #: traduction.sconfirmation
+msgctxt "traduction.sconfirmation"
 msgid "Confirmation"
 msgstr ""
 
 #: traduction.sdatabasename
+msgctxt "traduction.sdatabasename"
 msgid "Database name"
 msgstr ""
 
 #: traduction.senterdbname
+msgctxt "traduction.senterdbname"
 msgid "Enter the database name to be created"
 msgstr ""
 
@@ -3623,18 +3677,22 @@ msgid "Name"
 msgstr ""
 
 #: traduction.sgivenname
+msgctxt "traduction.sgivenname"
 msgid "First name"
 msgstr ""
 
 #: traduction.ssuffix
+msgctxt "traduction.ssuffix"
 msgid "Suffix"
 msgstr ""
 
 #: traduction.stitle
+msgctxt "traduction.stitle"
 msgid "Title"
 msgstr ""
 
 #: traduction.sunabletoconnecttodb
+msgctxt "traduction.sunabletoconnecttodb"
 msgid "Couldn't connect to MySQL database %s."
 msgstr ""
 

@@ -44,7 +44,7 @@ var
 implementation
 
 uses
-  frm_Main, Traduction, dm_GenData;
+  frm_Main, cls_Translation, dm_GenData;
 
 {$R *.lfm}
 
@@ -66,14 +66,14 @@ end;
 
 procedure TfrmDocuments.FormShow(Sender: TObject);
 begin
-  Caption:=Traduction.Items[65];
-  mnuSetMain.Caption:=Traduction.Items[234];
-  mnuAppend.Caption:=Traduction.Items[224];
-  mnuModify.Caption:=Traduction.Items[225];
-  mnuDelete.Caption:=Traduction.Items[226];
-  tblDocuments.Cells[2,0]:=Traduction.Items[154];
-  tblDocuments.Cells[3,0]:=Traduction.Items[185];
-  tblDocuments.Cells[4,0]:=Traduction.Items[201];
+  Caption:=Translation.Items[65];
+  mnuSetMain.Caption:=Translation.Items[234];
+  mnuAppend.Caption:=Translation.Items[224];
+  mnuModify.Caption:=Translation.Items[225];
+  mnuDelete.Caption:=Translation.Items[226];
+  tblDocuments.Cells[2,0]:=Translation.Items[154];
+  tblDocuments.Cells[3,0]:=Translation.Items[185];
+  tblDocuments.Cells[4,0]:=Translation.Items[201];
   GetFormPosition(Sender as TForm,0,0,200,200);
   GetGridPosition(frmDocuments.tblDocuments as TStringGrid,4);
   PopulateDocuments(tblDocuments,'I',frmStemmaMainForm.iID);
@@ -101,7 +101,7 @@ begin
      PopulateDocuments(tblDocuments,'I',frmStemmaMainForm.iID);
   end
   else
-     ShowMessage(Traduction.Items[61]);
+     ShowMessage(Translation.Items[61]);
 end;
 
 procedure TfrmDocuments.mnuAppendClick(Sender: TObject);
@@ -117,8 +117,8 @@ procedure TfrmDocuments.mnuDeleteClick(Sender: TObject);
 begin
   // Supprimer un exhibit
   if tblDocuments.Row>0 then
-     if Application.MessageBox(Pchar(Traduction.Items[62]+
-        tblDocuments.Cells[2,tblDocuments.Row]+Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+     if Application.MessageBox(Pchar(Translation.Items[62]+
+        tblDocuments.Cells[2,tblDocuments.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
         begin
         dmGenData.Query1.SQL.Text:='DELETE FROM X WHERE no='+tblDocuments.Cells[0,tblDocuments.Row];
         dmGenData.Query1.ExecSQL;
@@ -189,7 +189,7 @@ begin
         desc:=dmGenData.Query1.Fields[3].AsString;
         if length(titre)=0 then
            if length(desc)=0 then
-              Tableau.Cells[2,row]:=Traduction.Items[63]
+              Tableau.Cells[2,row]:=Translation.Items[63]
            else
               Tableau.Cells[2,row]:=desc
         else
@@ -199,9 +199,9 @@ begin
               Tableau.Cells[2,row]:=titre+', '+desc;
         Tableau.Cells[3,row]:=dmGenData.Query1.Fields[5].AsString;
         if length(dmGenData.Query1.Fields[4].AsString)=0 then
-           Tableau.Cells[4,row]:=Traduction.Items[34]
+           Tableau.Cells[4,row]:=Translation.Items[34]
         else
-           Tableau.Cells[4,row]:=Traduction.Items[64];
+           Tableau.Cells[4,row]:=Translation.Items[64];
         dmGenData.Query1.Next;
         row:=row+1;
      end;
@@ -230,7 +230,7 @@ begin
      desc:=dmGenData.Query1.Fields[3].AsString;
      if length(titre)=0 then
         if length(desc)=0 then
-           Tableau.Cells[2,row]:=Traduction.Items[63]
+           Tableau.Cells[2,row]:=Translation.Items[63]
         else
            Tableau.Cells[2,row]:=desc
      else
@@ -240,14 +240,14 @@ begin
            Tableau.Cells[2,row]:=titre+', '+desc;
      Tableau.Cells[3,row]:=dmGenData.Query1.Fields[5].AsString;
      if length(dmGenData.Query1.Fields[4].AsString)=0 then
-        Tableau.Cells[4,row]:=Traduction.Items[34]
+        Tableau.Cells[4,row]:=Translation.Items[34]
      else
-        Tableau.Cells[4,row]:=Traduction.Items[64];
+        Tableau.Cells[4,row]:=Translation.Items[64];
      dmGenData.Query1.Next;
      row:=row+1;
   end;
   if code='I' then
-     frmDocuments.Caption:=Traduction.Items[65]+' ('+IntToStr(Tableau.RowCount-1)+')';
+     frmDocuments.Caption:=Translation.Items[65]+' ('+IntToStr(Tableau.RowCount-1)+')';
 end;
 end.
 

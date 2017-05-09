@@ -40,7 +40,7 @@ var
 implementation
 
 uses
-  frm_Main, Traduction, dm_GenData, frm_Usage, frm_EditTypes;
+  frm_Main, cls_Translation, dm_GenData, frm_Usage, frm_EditTypes;
 
 {$R *.lfm}
 
@@ -59,16 +59,16 @@ var
   i:integer;
   MyCursor: TCursor;
 begin
-  Caption:=Traduction.Items[220];
-  Button1.Caption:=Traduction.Items[152];
-  TableauTypes.Cells[2,0]:=Traduction.Items[154];
-  TableauTypes.Cells[3,0]:=Traduction.Items[185];
-  TableauTypes.Cells[4,0]:=Traduction.Items[221];
-  TableauTypes.Cells[5,0]:=Traduction.Items[158];
-  MenuItem8.Caption:=Traduction.Items[223];
-  MenuItem2.Caption:=Traduction.Items[224];
-  MenuItem4.Caption:=Traduction.Items[225];
-  MenuItem3.Caption:=Traduction.Items[226];
+  Caption:=Translation.Items[220];
+  Button1.Caption:=Translation.Items[152];
+  TableauTypes.Cells[2,0]:=Translation.Items[154];
+  TableauTypes.Cells[3,0]:=Translation.Items[185];
+  TableauTypes.Cells[4,0]:=Translation.Items[221];
+  TableauTypes.Cells[5,0]:=Translation.Items[158];
+  MenuItem8.Caption:=Translation.Items[223];
+  MenuItem2.Caption:=Translation.Items[224];
+  MenuItem4.Caption:=Translation.Items[225];
+  MenuItem3.Caption:=Translation.Items[226];
   MyCursor := Screen.Cursor;
   Screen.Cursor := crHourGlass;
   frmStemmaMainForm.ProgressBar.Position:=0;
@@ -121,8 +121,8 @@ procedure TfrmTypes.MenuItem3Click(Sender: TObject);    // Supprimer
 begin
   if TableauTypes.Row>0 then
      if StrtoInt(TableauTypes.Cells[5,TableauTypes.Row])=0 then
-        if Application.MessageBox(Pchar(Traduction.Items[133]+
-           TableauTypes.Cells[2,TableauTypes.Row]+Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+        if Application.MessageBox(Pchar(Translation.Items[133]+
+           TableauTypes.Cells[2,TableauTypes.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
            begin
               dmGenData.Query1.SQL.Text:='DELETE FROM Y WHERE no='+TableauTypes.Cells[1,TableauTypes.Row];
               dmGenData.Query1.ExecSQL;

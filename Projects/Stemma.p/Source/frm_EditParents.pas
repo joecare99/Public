@@ -78,7 +78,7 @@ var
 implementation
 
 uses
-  frm_parents, frm_Children, frm_Main, Traduction, dm_GenData, frm_Names;
+  frm_parents, frm_Children, frm_Main, cls_Translation, dm_GenData, frm_Names;
 
 { TfrmEditParents }
 
@@ -89,27 +89,27 @@ var
 begin
   { TODO 20 : Lorsque l'on est dans A ou B, ESC ne fonctionne pas - By design Lazarus}
   frmStemmaMainForm.DataHist.Row:=0;
-  Caption:=Traduction.Items[186];
-  Button1.Caption:=Traduction.Items[152];
-  Button2.Caption:=Traduction.Items[164];
-  Label1.Caption:=Traduction.Items[166];
-  Label2.Caption:=Traduction.Items[187];
-  Label3.Caption:=Traduction.Items[171];
-  Label4.Caption:=Traduction.Items[172];
-  Label5.Caption:=Traduction.Items[189];
-  Label6.Caption:=Traduction.Items[173];
-  Label7.Caption:=Traduction.Items[174];
-  Label8.Caption:=Traduction.Items[188];
-  TableauCitations.Cells[1,0]:=Traduction.Items[138];
-  TableauCitations.Cells[2,0]:=Traduction.Items[155];
-  TableauCitations.Cells[3,0]:=Traduction.Items[177];
-  MenuItem1.Caption:=Traduction.Items[228];
-  MenuItem2.Caption:=Traduction.Items[224];
-  MenuItem3.Caption:=Traduction.Items[225];
-  MenuItem4.Caption:=Traduction.Items[226];
-  Ajouter1.Caption:=Traduction.Items[224];
-  Modifier1.Caption:=Traduction.Items[225];
-  Supprimer1.Caption:=Traduction.Items[226];
+  Caption:=Translation.Items[186];
+  Button1.Caption:=Translation.Items[152];
+  Button2.Caption:=Translation.Items[164];
+  Label1.Caption:=Translation.Items[166];
+  Label2.Caption:=Translation.Items[187];
+  Label3.Caption:=Translation.Items[171];
+  Label4.Caption:=Translation.Items[172];
+  Label5.Caption:=Translation.Items[189];
+  Label6.Caption:=Translation.Items[173];
+  Label7.Caption:=Translation.Items[174];
+  Label8.Caption:=Translation.Items[188];
+  TableauCitations.Cells[1,0]:=Translation.Items[138];
+  TableauCitations.Cells[2,0]:=Translation.Items[155];
+  TableauCitations.Cells[3,0]:=Translation.Items[177];
+  MenuItem1.Caption:=Translation.Items[228];
+  MenuItem2.Caption:=Translation.Items[224];
+  MenuItem3.Caption:=Translation.Items[225];
+  MenuItem4.Caption:=Translation.Items[226];
+  Ajouter1.Caption:=Translation.Items[224];
+  Modifier1.Caption:=Translation.Items[225];
+  Supprimer1.Caption:=Translation.Items[226];
   // Populate le ComboBox
   dmGenData.Query2.SQL.Text:='SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.Y=''R''';
   dmGenData.Query2.Open;
@@ -138,7 +138,7 @@ begin
      if Code='E' then
         begin
         frmEditParents.ActiveControl:=frmEditParents.A;
-        frmEditParents.Caption:=Traduction.Items[41];
+        frmEditParents.Caption:=Translation.Items[41];
         B.Text:=frmStemmaMainForm.sID;
         NomB.Text:=DecodeName(dmGenData.Query2.Fields[0].AsString,1);
         A.Text:='0';
@@ -147,7 +147,7 @@ begin
      else
      begin
         frmEditParents.ActiveControl:=frmEditParents.B;
-        frmEditParents.Caption:=Traduction.Items[42];
+        frmEditParents.Caption:=Translation.Items[42];
         A.Text:=frmStemmaMainForm.sID;
         NomA.Text:=DecodeName(dmGenData.Query2.Fields[0].AsString,1);
         B.Text:='0';
@@ -452,10 +452,10 @@ begin
            dmGenData.Query1.Next;
         end;
         if not existe then
-           if Application.MessageBox(Pchar(Traduction.Items[300]+
-                 frmEditParents.nomB.Text+Traduction.Items[299]+
+           if Application.MessageBox(Pchar(Translation.Items[300]+
+                 frmEditParents.nomB.Text+Translation.Items[299]+
                  DecodeName(temp,1)+
-                 Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+                 Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
               begin
               // Unir les parents
               // Ajouter l'événement mariage
@@ -609,8 +609,8 @@ end;
 procedure TfrmEditParents.Supprimer1Click(Sender: TObject);
 begin
   If TableauCitations.Row>0 then
-     if Application.MessageBox(Pchar(Traduction.Items[31]+
-        TableauCitations.Cells[1,TableauCitations.Row]+Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+     if Application.MessageBox(Pchar(Translation.Items[31]+
+        TableauCitations.Cells[1,TableauCitations.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
         begin
         dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE no='+TableauCitations.Cells[0,TableauCitations.Row];
         dmGenData.Query1.ExecSQL;

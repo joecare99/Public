@@ -51,7 +51,7 @@ implementation
 // shortcut pour sortir sans menu
 
 uses
-  frm_Main,Traduction, dm_GenData, frm_Usage, frm_EditSource;
+  frm_Main,cls_Translation, dm_GenData, frm_Usage, frm_EditSource;
 
 {$R *.lfm}
 
@@ -82,21 +82,21 @@ var
 begin
   GetFormPosition(FormSources,0,0,70,1000);
   GetGridPosition(FormSources.TableauSources as TStringGrid,6);
-  Caption:=Traduction.Items[218];
-  Button1.Caption:=Traduction.Items[152];
-  TableauSources.Cells[2,0]:=Traduction.Items[154];
-  TableauSources.Cells[3,0]:=Traduction.Items[155];
-  TableauSources.Cells[4,0]:=Traduction.Items[156];
-  TableauSources.Cells[5,0]:=Traduction.Items[219];
-  TableauSources.Cells[6,0]:=Traduction.Items[177];
-  TableauSources.Cells[7,0]:=Traduction.Items[158];
-  MenuItem2.Caption:=Traduction.Items[224];
-  MenuItem3.Caption:=Traduction.Items[225];
-  MenuItem4.Caption:=Traduction.Items[226];
-  MenuItem5.Caption:=Traduction.Items[239];
-  MenuItem7.Caption:=Traduction.Items[246];
-  MenuItem8.Caption:=Traduction.Items[223];
-  MenuItem9.Caption:=Traduction.Items[247];
+  Caption:=Translation.Items[218];
+  Button1.Caption:=Translation.Items[152];
+  TableauSources.Cells[2,0]:=Translation.Items[154];
+  TableauSources.Cells[3,0]:=Translation.Items[155];
+  TableauSources.Cells[4,0]:=Translation.Items[156];
+  TableauSources.Cells[5,0]:=Translation.Items[219];
+  TableauSources.Cells[6,0]:=Translation.Items[177];
+  TableauSources.Cells[7,0]:=Translation.Items[158];
+  MenuItem2.Caption:=Translation.Items[224];
+  MenuItem3.Caption:=Translation.Items[225];
+  MenuItem4.Caption:=Translation.Items[226];
+  MenuItem5.Caption:=Translation.Items[239];
+  MenuItem7.Caption:=Translation.Items[246];
+  MenuItem8.Caption:=Translation.Items[223];
+  MenuItem9.Caption:=Translation.Items[247];
   MyCursor := Screen.Cursor;
   Screen.Cursor := crHourGlass;
   frmStemmaMainForm.ProgressBar.Position:=0;
@@ -155,9 +155,9 @@ begin
   // Supprimer une source
   if TableauSources.Row>0 then
      if TableauSources.Cells[7,TableauSources.Row]='0' then
-        if Application.MessageBox(Pchar(Traduction.Items[132]+
+        if Application.MessageBox(Pchar(Translation.Items[132]+
               TableauSources.Cells[2,TableauSources.Row]+
-              Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+              Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
            begin
            // Supprimer tous les exhibits et association dépots de cette source
            dmGenData.Query1.SQL.Text:='DELETE FROM X WHERE A=''S'' AND N='+TableauSources.Cells[1,TableauSources.Row];

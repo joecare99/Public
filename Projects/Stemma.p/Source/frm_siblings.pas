@@ -36,7 +36,7 @@ var
 implementation
 
 uses
-  frm_Main,Traduction, dm_GenData;
+  frm_Main,cls_Translation, dm_GenData;
 
 {$R *.lfm}
 
@@ -130,7 +130,7 @@ begin
         frmSiblings.TableauFratrie.RowCount:=frmSiblings.TableauFratrie.RowCount-1;
      dmGenData.Query1.Next;
   end;
-  frmSiblings.Caption:=Traduction.Items[116]+' ('+IntToStr(frmSiblings.TableauFratrie.RowCount-1)+')';
+  frmSiblings.Caption:=Translation.Items[116]+' ('+IntToStr(frmSiblings.TableauFratrie.RowCount-1)+')';
 end;
 
 procedure TfrmSiblings.FormClose(Sender: TObject; var CloseAction: TCloseAction
@@ -149,12 +149,12 @@ end;
 
 procedure TfrmSiblings.FormShow(Sender: TObject);
 begin
-  Caption:=Traduction.Items[116];
-  TableauFratrie.Cells[1,0]:=Traduction.Items[205];
+  Caption:=Translation.Items[116];
+  TableauFratrie.Cells[1,0]:=Translation.Items[205];
   TableauFratrie.Cells[2,0]:='#';
-  TableauFratrie.Cells[3,0]:=Traduction.Items[177];
-  MenuItem1.Caption:=Traduction.Items[222];
-  MenuItem3.Caption:=Traduction.Items[224];
+  TableauFratrie.Cells[3,0]:=Translation.Items[177];
+  MenuItem1.Caption:=Translation.Items[222];
+  MenuItem3.Caption:=Translation.Items[224];
   GetFormPosition(Sender as TForm,0,0,70,1000);
   GetGridPosition(frmSiblings.TableauFratrie as TStringGrid,4);
   PopulateFratrie;

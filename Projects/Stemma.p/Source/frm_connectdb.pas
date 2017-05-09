@@ -34,7 +34,7 @@ var
 implementation
 
 uses
-  dm_GenData, Traduction;
+  dm_GenData, cls_Translation;
 
 {$R *.lfm}
 

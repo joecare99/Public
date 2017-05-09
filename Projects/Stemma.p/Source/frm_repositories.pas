@@ -40,7 +40,7 @@ var
 implementation
 
 uses
-  frm_Main, Traduction, dm_GenData, frm_Usage;
+  frm_Main, cls_Translation, dm_GenData, frm_Usage;
 
 { TfrmRepository }
 
@@ -134,17 +134,17 @@ var
   MyCursor: TCursor;
   lidInd: Longint;
 begin
-  Caption:=Traduction.Items[153];
-  TableauDepots.Cells[2,0]:=Traduction.Items[154];
-  TableauDepots.Cells[3,0]:=Traduction.Items[155];
-  TableauDepots.Cells[4,0]:=Traduction.Items[156];
-  TableauDepots.Cells[5,0]:=Traduction.Items[157];
-  TableauDepots.Cells[6,0]:=Traduction.Items[158];
-  Button1.Caption:=Traduction.Items[152];
-  MenuItem8.Caption:=Traduction.Items[223];
-  MenuItem2.Caption:=Traduction.Items[224];
-  MenuItem3.Caption:=Traduction.Items[226];
-  MenuItem4.Caption:=Traduction.Items[225];
+  Caption:=Translation.Items[153];
+  TableauDepots.Cells[2,0]:=Translation.Items[154];
+  TableauDepots.Cells[3,0]:=Translation.Items[155];
+  TableauDepots.Cells[4,0]:=Translation.Items[156];
+  TableauDepots.Cells[5,0]:=Translation.Items[157];
+  TableauDepots.Cells[6,0]:=Translation.Items[158];
+  Button1.Caption:=Translation.Items[152];
+  MenuItem8.Caption:=Translation.Items[223];
+  MenuItem2.Caption:=Translation.Items[224];
+  MenuItem3.Caption:=Translation.Items[226];
+  MenuItem4.Caption:=Translation.Items[225];
   MyCursor := Screen.Cursor;
   Screen.Cursor := crHourGlass;
   try
@@ -198,9 +198,9 @@ begin
   // Supprimer un Dépot
   if TableauDepots.Row>0 then
      if TableauDepots.Cells[6,TableauDepots.Row]='0' then
-        if Application.MessageBox(Pchar(Traduction.Items[27]+
+        if Application.MessageBox(Pchar(Translation.Items[27]+
            TableauDepots.Cells[2,TableauDepots.Row]+
-           Traduction.Items[28]),Pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+           Translation.Items[28]),Pchar(Translation.Items[1]),MB_YESNO)=IDYES then
            begin
            // Supprimer toutes les associations dépots de cette source
            dmGenData.Query1.SQL.Text:='DELETE FROM A WHERE D='+TableauDepots.Cells[1,TableauDepots.Row];

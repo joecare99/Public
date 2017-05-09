@@ -42,7 +42,7 @@ var
 implementation
 
 uses
-  frm_Types, frm_Main, Traduction, dm_GenData;
+  frm_Types, frm_Main, cls_Translation, dm_GenData;
 
 { TEditType }
 
@@ -51,25 +51,25 @@ var
   code,nocode:string;
 begin
   frmStemmaMainForm.DataHist.Row:=0;
-  Caption:=Traduction.Items[199];
-  Button1.Caption:=Traduction.Items[152];
-  Button2.Caption:=Traduction.Items[164];
-  Label11.Caption:=Traduction.Items[166];
-  Label3.Caption:=Traduction.Items[172];
+  Caption:=Translation.Items[199];
+  Button1.Caption:=Translation.Items[152];
+  Button2.Caption:=Translation.Items[164];
+  Label11.Caption:=Translation.Items[166];
+  Label3.Caption:=Translation.Items[172];
   // Populate le Combo-Box    ('B','D','M','N','R','X','Z')
   Y.Items.Clear;
-  Y.Items.Add(Traduction.Items[49]);
-  Y.Items.Add(Traduction.Items[50]);
-  Y.Items.Add(Traduction.Items[51]);
-  Y.Items.Add(Traduction.Items[52]);
-  Y.Items.Add(Traduction.Items[53]);
-  Y.Items.Add(Traduction.Items[54]);
-  Y.Items.Add(Traduction.Items[55]);
+  Y.Items.Add(Translation.Items[49]);
+  Y.Items.Add(Translation.Items[50]);
+  Y.Items.Add(Translation.Items[51]);
+  Y.Items.Add(Translation.Items[52]);
+  Y.Items.Add(Translation.Items[53]);
+  Y.Items.Add(Translation.Items[54]);
+  Y.Items.Add(Translation.Items[55]);
   // Populate la form
   dmGenData.getcode(code,nocode);
   if code='A' then
      begin
-     EditType.Caption:=Traduction.Items[56];
+     EditType.Caption:=Translation.Items[56];
      No.Text:='0';
      T.Text:='';
      P.Text:='';

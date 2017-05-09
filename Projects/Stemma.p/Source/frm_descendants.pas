@@ -35,7 +35,7 @@ var
 implementation
 
 uses
-  frm_Main, Traduction, dm_GenData;
+  frm_Main, cls_Translation, dm_GenData;
 
 {$R *.lfm}
 
@@ -88,8 +88,8 @@ end;
 
 procedure TFormDescendants.FormShow(Sender: TObject);
 begin
-  Caption:=Traduction.Items[159];
-  MenuItem1.Caption:=Traduction.Items[222];
+  Caption:=Translation.Items[159];
+  MenuItem1.Caption:=Translation.Items[222];
   GetFormPosition(Sender as TForm,0,0,200,200);
   PopulateDescendants;
 end;

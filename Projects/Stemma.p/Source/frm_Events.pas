@@ -48,7 +48,7 @@ var
 implementation
 
 uses
-  frm_Main,Traduction, dm_GenData,frm_EditEvents, frm_Explorer, frm_Documents;
+  frm_Main,cls_Translation, dm_GenData,frm_EditEvents, frm_Explorer, frm_Documents;
 
 { TfrmEvents }
 
@@ -148,7 +148,7 @@ begin
      dmGenData.Query1.Next;
      row:=row+1;
   end;
-   Caption:=Traduction.Items[59]+' ('+IntToStr( TableauEvenements.RowCount-1)+')';
+   Caption:=Translation.Items[59]+' ('+IntToStr( TableauEvenements.RowCount-1)+')';
 end;
 
 procedure TfrmEvents.MenuItem1Click(Sender: TObject);
@@ -176,9 +176,9 @@ begin
   // Supprimer un événement
   if TableauEvenements.Row>0 then
      if TableauEvenements.Cells[1,TableauEvenements.Row]='' then
-        if Application.MessageBox(Pchar(Traduction.Items[60]+
+        if Application.MessageBox(Pchar(Translation.Items[60]+
            TableauEvenements.Cells[2,TableauEvenements.Row]+'-'+TableauEvenements.Cells[4,TableauEvenements.Row]+
-           Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+           Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
            begin
            // Modifie la date de dernière modification pour tous les témoins
            dmGenData.Query3.SQL.Text:='SELECT W.I, W.X FROM W WHERE W.E='+TableauEvenements.Cells[0,TableauEvenements.Row];
@@ -369,16 +369,16 @@ end;
 
 procedure TfrmEvents.FormShow(Sender: TObject);
 begin
-  Caption:=Traduction.Items[59];
-  TableauEvenements.Cells[2,0]:=Traduction.Items[185];
-  TableauEvenements.Cells[3,0]:=Traduction.Items[136];
-  TableauEvenements.Cells[4,0]:=Traduction.Items[155];
-  TableauEvenements.Cells[5,0]:=Traduction.Items[177];
-  MenuItem1.Caption:=Traduction.Items[222];
-  MenuItem3.Caption:=Traduction.Items[224];
-  MenuItem4.Caption:=Traduction.Items[225];
-  MenuItem5.Caption:=Traduction.Items[226];
-  MenuItem7.Caption:=Traduction.Items[234];
+  Caption:=Translation.Items[59];
+  TableauEvenements.Cells[2,0]:=Translation.Items[185];
+  TableauEvenements.Cells[3,0]:=Translation.Items[136];
+  TableauEvenements.Cells[4,0]:=Translation.Items[155];
+  TableauEvenements.Cells[5,0]:=Translation.Items[177];
+  MenuItem1.Caption:=Translation.Items[222];
+  MenuItem3.Caption:=Translation.Items[224];
+  MenuItem4.Caption:=Translation.Items[225];
+  MenuItem5.Caption:=Translation.Items[226];
+  MenuItem7.Caption:=Translation.Items[234];
   GetFormPosition(Sender as TForm,0,0,70,1000);
   GetGridPosition(TableauEvenements as TStringGrid,7);
   dmGenData.OnModifyEvent:=@PopulateEvents;

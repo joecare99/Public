@@ -37,7 +37,7 @@ var
 implementation
 
 uses
-  Traduction,dm_GenData;
+  cls_Translation,dm_GenData;
 
 {$R *.lfm}
 
@@ -45,12 +45,12 @@ uses
 
 procedure TFormSelectPersonne.FormShow(Sender: TObject);
 begin
-  Caption:=Traduction.Items[316];
-  Label1.Caption:=Traduction.Items[115];
-  btnOK.Caption:=Traduction.Items[152];
-  btnCancel.Caption:=Traduction.Items[164];
+  Caption:=Translation.Items[316];
+  Label1.Caption:=Translation.Items[115];
+  btnOK.Caption:=Translation.Items[152];
+  btnCancel.Caption:=Translation.Items[164];
   edtNumber.value:=0;
-  edtName.Text:=Traduction.Items[317];
+  edtName.Text:=Translation.Items[317];
 end;
 
 procedure TFormSelectPersonne.ListeSelection(Sender: TObject; aCol,

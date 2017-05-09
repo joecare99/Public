@@ -15,6 +15,59 @@ msgstr ""
 "X-Generator: Poedit 1.8.12\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
+#: cls_translation.rsmenuhistorycaption
+msgctxt "cls_translation.rsmenuhistorycaption"
+msgid "&%d- %s (%d)"
+msgstr ""
+
+#: cls_translation.sareyousuretoquit
+#, fuzzy
+msgctxt "cls_translation.sareyousuretoquit"
+msgid "Are you syre you want to quit STEMMA?"
+msgstr "Sind sie sicher, daß sie STEMMA beenden möchten ?"
+
+#: cls_translation.sconfirmation
+msgctxt "cls_translation.sconfirmation"
+msgid "Confirmation"
+msgstr ""
+
+#: cls_translation.sdatabasename
+msgctxt "cls_translation.sdatabasename"
+msgid "Database name"
+msgstr ""
+
+#: cls_translation.senterdbname
+msgctxt "cls_translation.senterdbname"
+msgid "Enter the database name to be created"
+msgstr ""
+
+#: cls_translation.sfamilyname
+#, fuzzy
+msgctxt "cls_translation.sfamilyname"
+msgid "Name"
+msgstr "Name"
+
+#: cls_translation.sgivenname
+msgctxt "cls_translation.sgivenname"
+msgid "First name"
+msgstr ""
+
+#: cls_translation.ssuffix
+msgctxt "cls_translation.ssuffix"
+msgid "Suffix"
+msgstr ""
+
+#: cls_translation.stitle
+msgctxt "cls_translation.stitle"
+msgid "Title"
+msgstr ""
+
+#: cls_translation.sunabletoconnecttodb
+#, fuzzy
+msgctxt "cls_translation.sunabletoconnecttodb"
+msgid "Couldn't connect to MySQL database %s."
+msgstr "Kann nicht zu MySQL-Datenbank '%s' verbinden."
+
 #: tapropos.lblactversion.caption
 msgid "lblActVersion"
 msgstr ""
@@ -2441,44 +2494,43 @@ msgctxt "tfrmexplorer.o.text"
 msgid "O"
 msgstr ""
 
-#: tfrmnames.label1.caption
-msgctxt "tfrmnames.label1.caption"
-msgid "Dernière modification le "
+#: tfrmnames.lbllastmodification.caption
+msgid "Last modification at:"
 msgstr ""
 
-#: tfrmnames.menuitem1.caption
-msgctxt "tfrmnames.menuitem1.caption"
-msgid "&Primaire"
-msgstr ""
-
-#: tfrmnames.menuitem2.caption
-msgctxt "tfrmnames.menuitem2.caption"
-msgid "-"
-msgstr ""
-
-#: tfrmnames.menuitem3.caption
+#: tfrmnames.lblmodificationdate.caption
 #, fuzzy
-msgctxt "tfrmnames.menuitem3.caption"
+msgctxt "tfrmnames.lblmodificationdate.caption"
+msgid "YYYY/MM/DD"
+msgstr "YYYY-MM-DD"
+
+#: tfrmnames.mnuadd.caption
+#, fuzzy
+msgctxt "tfrmnames.mnuadd.caption"
 msgid "Ajouter"
 msgstr "Anfügen"
 
-#: tfrmnames.menuitem4.caption
+#: tfrmnames.mnudelete.caption
 #, fuzzy
-msgctxt "tfrmnames.menuitem4.caption"
-msgid "Modifier"
-msgstr "Bearbeiten"
-
-#: tfrmnames.menuitem5.caption
-#, fuzzy
-msgctxt "tfrmnames.menuitem5.caption"
+msgctxt "tfrmnames.mnudelete.caption"
 msgid "Supprimer"
 msgstr "Löschen"
 
-#: tfrmnames.modifie.caption
+#: tfrmnames.mnumodify.caption
 #, fuzzy
-msgctxt "tfrmnames.modifie.caption"
-msgid "YYYY/MM/DD"
-msgstr "YYYY-MM-DD"
+msgctxt "tfrmnames.mnumodify.caption"
+msgid "Modifier"
+msgstr "Bearbeiten"
+
+#: tfrmnames.mnuseparator.caption
+msgctxt "tfrmnames.mnuseparator.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmnames.mnusetprimary.caption
+msgctxt "tfrmnames.mnusetprimary.caption"
+msgid "&Primaire"
+msgstr ""
 
 #: tfrmparents.mnddiv1.caption
 msgctxt "tfrmparents.mnddiv1.caption"
@@ -3749,22 +3801,27 @@ msgid "ToolButton8"
 msgstr ""
 
 #: traduction.rsmenuhistorycaption
+msgctxt "traduction.rsmenuhistorycaption"
 msgid "&%d- %s (%d)"
 msgstr ""
 
 #: traduction.sareyousuretoquit
+msgctxt "traduction.sareyousuretoquit"
 msgid "Are you syre you want to quit STEMMA?"
 msgstr "Sind sie sicher, daß sie STEMMA beenden möchten ?"
 
 #: traduction.sconfirmation
+msgctxt "traduction.sconfirmation"
 msgid "Confirmation"
 msgstr ""
 
 #: traduction.sdatabasename
+msgctxt "traduction.sdatabasename"
 msgid "Database name"
 msgstr ""
 
 #: traduction.senterdbname
+msgctxt "traduction.senterdbname"
 msgid "Enter the database name to be created"
 msgstr ""
 
@@ -3775,18 +3832,22 @@ msgid "Name"
 msgstr "Name"
 
 #: traduction.sgivenname
+msgctxt "traduction.sgivenname"
 msgid "First name"
 msgstr ""
 
 #: traduction.ssuffix
+msgctxt "traduction.ssuffix"
 msgid "Suffix"
 msgstr ""
 
 #: traduction.stitle
+msgctxt "traduction.stitle"
 msgid "Title"
 msgstr ""
 
 #: traduction.sunabletoconnecttodb
+msgctxt "traduction.sunabletoconnecttodb"
 msgid "Couldn't connect to MySQL database %s."
 msgstr "Kann nicht zu MySQL-Datenbank '%s' verbinden."
 

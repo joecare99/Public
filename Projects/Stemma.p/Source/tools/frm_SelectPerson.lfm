@@ -14,7 +14,7 @@ object FormSelectPersonne: TFormSelectPersonne
   Visible = False
   object edtName: TEdit
     Left = 96
-    Height = 38
+    Height = 23
     Hint = 'Name'
     Top = 240
     Width = 352
@@ -24,9 +24,9 @@ object FormSelectPersonne: TFormSelectPersonne
   end
   object Label1: TLabel
     Left = 8
-    Height = 30
+    Height = 15
     Top = 216
-    Width = 24
+    Width = 14
     Caption = 'ou'
     ParentColor = False
   end
@@ -72,7 +72,7 @@ object FormSelectPersonne: TFormSelectPersonne
   end
   object edtNumber: TSpinEdit
     Left = 8
-    Height = 38
+    Height = 23
     Top = 240
     Width = 80
     OnEditingDone = edtNumberEditingDone

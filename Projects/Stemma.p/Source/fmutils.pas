@@ -38,7 +38,7 @@ Function AutoQuote(orgStr:string):String;
 implementation
 
 uses
-  Traduction, dm_GenData;
+  cls_Translation, dm_GenData;
 
 procedure SaveModificationTime(no: string);
 var
@@ -418,9 +418,9 @@ var
   i, PosStart1, PosStart2, PosEnd1, PosEnd2, PosSeparateur:integer;
   Continue:boolean;
 begin
-   if AnsiPos('[L='+Traduction.Items[320]+']',uppercase(phrase))>0 then
+   if AnsiPos('[L='+Translation.Items[320]+']',uppercase(phrase))>0 then
       begin
-      phrase:=copy(phrase,AnsiPos('[L='+Traduction.Items[320]+']',uppercase(phrase))+4+length(Traduction.Items[320]),length(phrase));
+      phrase:=copy(phrase,AnsiPos('[L='+Translation.Items[320]+']',uppercase(phrase))+4+length(Translation.Items[320]),length(phrase));
       if AnsiPos('[L=',uppercase(phrase))>0 then
          phrase:=copy(phrase,1,AnsiPos('[L=',uppercase(phrase)));
    end;
@@ -576,9 +576,9 @@ begin
             dmGenData.Query4.ParamByName('idEvent').AsString:=Evenement;
             dmGenData.Query4.Open;
             Remplace:=dmGenData.Query4.Fields[0].AsString;
-            if AnsiPos('[L='+Traduction.Items[320]+']',uppercase(Remplace))>0 then
+            if AnsiPos('[L='+Translation.Items[320]+']',uppercase(Remplace))>0 then
                begin
-               Remplace:=copy(Remplace,AnsiPos('[L='+Traduction.Items[320]+']',uppercase(Remplace))+4+length(Traduction.Items[320]),length(Remplace));
+               Remplace:=copy(Remplace,AnsiPos('[L='+Translation.Items[320]+']',uppercase(Remplace))+4+length(Translation.Items[320]),length(Remplace));
                if AnsiPos('[L=',uppercase(Remplace))>0 then
                   Remplace:=copy(Remplace,1,AnsiPos('[L=',uppercase(Remplace)));
             end;
@@ -602,9 +602,9 @@ begin
             dmGenData.Query4.ParamByName('idEvent').AsString:=Evenement;
             dmGenData.Query4.Open;
             if dmGenData.Query4.Fields[0].AsString='F' then
-               Remplace:=Traduction.Items[66]
+               Remplace:=Translation.Items[66]
             else
-               Remplace:=Traduction.Items[67];
+               Remplace:=Translation.Items[67];
          end;
          if Code='PP' then
             begin
@@ -615,9 +615,9 @@ begin
             dmGenData.Query4.ParamByName('idEvent').AsString:=Evenement;
             dmGenData.Query4.Open;
             if dmGenData.Query4.Fields[0].AsString='F' then
-               Remplace:=Traduction.Items[68]
+               Remplace:=Translation.Items[68]
             else
-               Remplace:=Traduction.Items[69];
+               Remplace:=Translation.Items[69];
          end;
          if Code='PO' then
             begin
@@ -651,12 +651,12 @@ begin
             if not dmGenData.Query4.EOF then
                begin
                if Sexe='F' then
-                  Remplace:=Traduction.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
+                  Remplace:=Translation.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
                else
-                  Remplace:=Traduction.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                  Remplace:=Translation.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
                dmGenData.Query4.Next;
                if not dmGenData.Query4.EOF then
-                  Remplace:=Remplace+Traduction.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                  Remplace:=Remplace+Translation.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
             end
             else
                Remplace:='';
@@ -679,12 +679,12 @@ begin
             if not dmGenData.Query4.EOF then
                begin
                if sexe='F' then
-                  Remplace:=Traduction.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
+                  Remplace:=Translation.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
                else
-                  Remplace:=Traduction.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                  Remplace:=Translation.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
                dmGenData.Query4.Next;
                if not dmGenData.Query4.EOF then
-                  Remplace:=Remplace+Traduction.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                  Remplace:=Remplace+Translation.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
             end
             else
                Remplace:='';
@@ -700,12 +700,12 @@ begin
             if not dmGenData.Query4.EOF then
                begin
                if Sexe='F' then
-                  Remplace:=Traduction.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
+                  Remplace:=Translation.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
                else
-                  Remplace:=Traduction.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                  Remplace:=Translation.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
                dmGenData.Query4.Next;
                if not dmGenData.Query4.EOF then
-                  Remplace:=Remplace+Traduction.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                  Remplace:=Remplace+Translation.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
             end
             else
                Remplace:='';
@@ -721,12 +721,12 @@ begin
             if not dmGenData.Query4.EOF then
                begin
                if sexe='F' then
-                  Remplace:=Traduction.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
+                  Remplace:=Translation.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
                else
-                  Remplace:=Traduction.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                  Remplace:=Translation.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
                dmGenData.Query4.Next;
                if not dmGenData.Query4.EOF then
-                  Remplace:=Remplace+Traduction.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                  Remplace:=Remplace+Translation.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
             end
             else
                Remplace:='';
@@ -818,9 +818,9 @@ begin
             dmGenData.Query4.ParamByName('idEvent').AsString:=Evenement;
             dmGenData.Query4.Open;
             Remplace:=dmGenData.Query4.Fields[0].AsString;
-            if AnsiPos('[L='+Traduction.Items[320]+']',uppercase(Remplace))>0 then
+            if AnsiPos('[L='+Translation.Items[320]+']',uppercase(Remplace))>0 then
                begin
-               Remplace:=copy(Remplace,AnsiPos('[L='+Traduction.Items[320]+']',uppercase(Remplace))+4+length(Traduction.Items[320]),length(Remplace));
+               Remplace:=copy(Remplace,AnsiPos('[L='+Translation.Items[320]+']',uppercase(Remplace))+4+length(Translation.Items[320]),length(Remplace));
                if AnsiPos('[L=',uppercase(Remplace))>0 then
                   Remplace:=copy(Remplace,1,AnsiPos('[L=',uppercase(Remplace))-1);
             end;
@@ -838,9 +838,9 @@ begin
             dmGenData.Query4.ParamByName('idind').AsInteger:=idSujet;
             dmGenData.Query4.Open;
             if dmGenData.Query4.Fields[0].AsString='F' then
-               Remplace:=Traduction.Items[66]
+               Remplace:=Translation.Items[66]
             else
-               Remplace:=Traduction.Items[67];
+               Remplace:=Translation.Items[67];
          end;
          if Code='PP' then
             begin
@@ -848,9 +848,9 @@ begin
             dmGenData.Query4.ParamByName('idind').AsInteger:=idSujet;
             dmGenData.Query4.Open;
             if dmGenData.Query4.Fields[0].AsString='F' then
-               Remplace:=Traduction.Items[68]
+               Remplace:=Translation.Items[68]
             else
-               Remplace:=Traduction.Items[69];
+               Remplace:=Translation.Items[69];
          end;
          if Code='PO' then
             begin
@@ -889,12 +889,12 @@ begin
             if not dmGenData.Query4.EOF then
                begin
                if sexe='F' then
-                  Remplace:=Traduction.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
+                  Remplace:=Translation.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
                else
-                  Remplace:=Traduction.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                  Remplace:=Translation.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
                dmGenData.Query4.Next;
                if not dmGenData.Query4.EOF then
-                  Remplace:=Remplace+Traduction.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                  Remplace:=Remplace+Translation.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
             end
             else
                Remplace:='';
@@ -913,12 +913,12 @@ begin
                if not dmGenData.Query4.EOF then
                   begin
                   if sexe='F' then
-                     Remplace:=Traduction.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
+                     Remplace:=Translation.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
                   else
-                     Remplace:=Traduction.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                     Remplace:=Translation.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
                   dmGenData.Query4.Next;
                   if not dmGenData.Query4.EOF then
-                     Remplace:=Remplace+Traduction.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                     Remplace:=Remplace+Translation.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
                end
                else
                   Remplace:='';
@@ -937,12 +937,12 @@ begin
                if not dmGenData.Query4.EOF then
                   begin
                   if sexe='F' then
-                     Remplace:=Traduction.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
+                     Remplace:=Translation.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
                   else
-                     Remplace:=Traduction.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                     Remplace:=Translation.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
                   dmGenData.Query4.Next;
                   if not dmGenData.Query4.EOF then
-                     Remplace:=Remplace+Traduction.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                     Remplace:=Remplace+Translation.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
                end
                else
                   Remplace:='';
@@ -964,12 +964,12 @@ begin
                   if not dmGenData.Query4.EOF then
                      begin
                      if sexe='F' then
-                        Remplace:=Traduction.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
+                        Remplace:=Translation.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
                      else
-                        Remplace:=Traduction.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                        Remplace:=Translation.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
                      dmGenData.Query4.Next;
                      if not dmGenData.Query4.EOF then
-                        Remplace:=Remplace+Traduction.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                        Remplace:=Remplace+Translation.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
                   end
                   else
                      Remplace:='';
@@ -988,7 +988,7 @@ begin
                   Remplace:=temp
                else
                   if dmGenData.Query4.EOF then
-                     Remplace:=Remplace+Traduction.Items[72]+temp
+                     Remplace:=Remplace+Translation.Items[72]+temp
                   else
                      Remplace:=Remplace+', '+temp;
             end;
@@ -1007,7 +1007,7 @@ begin
                   Remplace:=temp
                else
                   if dmGenData.Query4.EOF then
-                     Remplace:=Remplace+Traduction.Items[72]+temp
+                     Remplace:=Remplace+Translation.Items[72]+temp
                   else
                      Remplace:=Remplace+', '+temp;
             end;
@@ -1040,9 +1040,9 @@ begin
             dmGenData.Query4.SQL.Text:='SELECT M FROM N WHERE no='+Evenement;
             dmGenData.Query4.Open;
             Remplace:=dmGenData.Query4.Fields[0].AsString;
-            if AnsiPos('[L='+Traduction.Items[320]+']',uppercase(Remplace))>0 then
+            if AnsiPos('[L='+Translation.Items[320]+']',uppercase(Remplace))>0 then
                begin
-               Remplace:=copy(Remplace,AnsiPos('[L='+Traduction.Items[320]+']',uppercase(Remplace))+4+length(Traduction.Items[320]),length(Remplace));
+               Remplace:=copy(Remplace,AnsiPos('[L='+Translation.Items[320]+']',uppercase(Remplace))+4+length(Translation.Items[320]),length(Remplace));
                if AnsiPos('[L=',uppercase(Remplace))>0 then
                   Remplace:=copy(Remplace,1,AnsiPos('[L=',uppercase(Remplace)));
             end;
@@ -1058,18 +1058,18 @@ begin
             dmGenData.Query4.SQL.Text:='SELECT I.S FROM N JOIN I ON N.I=I.no WHERE N.no='+Evenement;
             dmGenData.Query4.Open;
             if dmGenData.Query4.Fields[0].AsString='F' then
-               Remplace:=Traduction.Items[66]
+               Remplace:=Translation.Items[66]
             else
-               Remplace:=Traduction.Items[67];
+               Remplace:=Translation.Items[67];
          end;
          if Code='PP' then
             begin
             dmGenData.Query4.SQL.Text:='SELECT I.S FROM N JOIN I ON N.I=I.no WHERE N.no='+Evenement;
             dmGenData.Query4.Open;
             if dmGenData.Query4.Fields[0].AsString='F' then
-               Remplace:=Traduction.Items[68]
+               Remplace:=Translation.Items[68]
             else
-               Remplace:=Traduction.Items[69];
+               Remplace:=Translation.Items[69];
          end;
 //         if Code='PO' then JAMAIS DANS TYPE 'N'
 //         if Code='P2' then JAMAIS DANS TYPE 'N'
@@ -1085,12 +1085,12 @@ begin
             if not dmGenData.Query4.EOF then
                begin
                if sexe='F' then
-                  Remplace:=Traduction.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
+                  Remplace:=Translation.Items[70]+DecodeName(dmGenData.Query4.Fields[0].AsString,1)
                else
-                  Remplace:=Traduction.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                  Remplace:=Translation.Items[71]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
                dmGenData.Query4.Next;
                if not dmGenData.Query4.EOF then
-                  Remplace:=Remplace+Traduction.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
+                  Remplace:=Remplace+Translation.Items[72]+DecodeName(dmGenData.Query4.Fields[0].AsString,1);
             end
             else
                Remplace:='';
@@ -1142,9 +1142,9 @@ var
   RoleRecherche, Remplace, temp, Sexe, lSex:string;
   PosEnd1, PosSep1, PosSep2, PosSep3, compte:integer;
 begin
-   if AnsiPos('<L='+Traduction.Items[319]+'>',uppercase(phrase))>0 then
+   if AnsiPos('<L='+Translation.Items[319]+'>',uppercase(phrase))>0 then
       begin
-      phrase:=copy(phrase,AnsiPos('<L='+Traduction.Items[319]+'>',uppercase(phrase))+5,length(phrase));
+      phrase:=copy(phrase,AnsiPos('<L='+Translation.Items[319]+'>',uppercase(phrase))+5,length(phrase));
       if AnsiPos('</L>',uppercase(phrase))>0 then
          phrase:=copy(phrase,1,AnsiPos('</L>',uppercase(phrase)));
    end;
@@ -1191,15 +1191,15 @@ begin
             dmGenData.Query4.ParamByName('idEvent').AsInteger:=Evenement;
             dmGenData.Query4.Open;
             Remplace:=dmGenData.Query4.Fields[0].AsString;
-            if AnsiPos('<L='+Traduction.Items[320]+']',uppercase(Remplace))>0 then
+            if AnsiPos('<L='+Translation.Items[320]+']',uppercase(Remplace))>0 then
                begin
-               Remplace:=copy(Remplace,AnsiPos('<L='+Traduction.Items[320]+'>',uppercase(Remplace))+4+length(Traduction.Items[320]),length(Remplace));
+               Remplace:=copy(Remplace,AnsiPos('<L='+Translation.Items[320]+'>',uppercase(Remplace))+4+length(Translation.Items[320]),length(Remplace));
                if AnsiPos('</L>',uppercase(Remplace))>0 then
                   Remplace:=copy(Remplace,1,AnsiPos('</L>',uppercase(Remplace)));
             end;
-            if AnsiPos('[L='+Traduction.Items[320]+']',uppercase(Remplace))>0 then
+            if AnsiPos('[L='+Translation.Items[320]+']',uppercase(Remplace))>0 then
                begin
-               Remplace:=copy(Remplace,AnsiPos('[L='+Traduction.Items[320]+']',uppercase(Remplace))+4+length(Traduction.Items[320]),length(Remplace));
+               Remplace:=copy(Remplace,AnsiPos('[L='+Translation.Items[320]+']',uppercase(Remplace))+4+length(Translation.Items[320]),length(Remplace));
                if AnsiPos('[L=',uppercase(Remplace))>0 then
                   Remplace:=copy(Remplace,1,AnsiPos('[L=',uppercase(Remplace)));
             end;
@@ -1211,9 +1211,9 @@ begin
             // Remplace par le Pronom
 
             if dmGenData.GetSexOfInd(idIndividual)='F' then
-               Remplace:=Traduction.Items[66] // Female pronoun
+               Remplace:=Translation.Items[66] // Female pronoun
             else
-               Remplace:=Traduction.Items[67]; // Male pronoun
+               Remplace:=Translation.Items[67]; // Male pronoun
             phrase:=Copy(phrase,1,char-1)+remplace+
                     Copy(phrase,char+2,length(phrase));
          end;
@@ -1276,7 +1276,7 @@ begin
                         if compte=0 then
                            remplace:=temp;
                         if compte=1 then
-                           remplace:=temp+Traduction.Items[72]+remplace;
+                           remplace:=temp+Translation.Items[72]+remplace;
                         if compte>1 then
                            remplace:=temp+', '+remplace;
                         dmGenData.Query4.Next;
@@ -1330,7 +1330,7 @@ begin
                            if compte=0 then
                               remplace:=temp;
                            if compte=1 then
-                              remplace:=temp+Traduction.Items[72]+remplace;
+                              remplace:=temp+Translation.Items[72]+remplace;
                            if compte>1 then
                               remplace:=temp+', '+remplace;
                            compte:=compte+1;
@@ -1378,7 +1378,7 @@ begin
                         if length(remplace)=0 then
                            remplace:=dmGenData.GetIndividuumName(dmGenData.Query3.Fields[1].AsInteger)
                         else
-                           remplace:=remplace+Traduction.Items[72]+dmGenData.GetIndividuumName(dmGenData.Query3.Fields[1].AsInteger);
+                           remplace:=remplace+Translation.Items[72]+dmGenData.GetIndividuumName(dmGenData.Query3.Fields[1].AsInteger);
                         dmGenData.Query3.Next;
                      end;
                   end;
@@ -1400,7 +1400,7 @@ begin
                            if compte=0 then
                               remplace:=temp;
                            if compte=1 then
-                              remplace:=temp+Traduction.Items[72]+remplace;
+                              remplace:=temp+Translation.Items[72]+remplace;
                            if compte>1 then
                               remplace:=temp+', '+remplace;
                            compte:=compte+1;
@@ -1449,7 +1449,7 @@ begin
                         if length(remplace)=0 then
                            remplace:=dmGenData.GetIndividuumName(dmGenData.Query3.Fields[1].AsInteger)
                         else
-                           remplace:=remplace+Traduction.Items[72]+dmGenData.GetIndividuumName(dmGenData.Query3.Fields[1].AsInteger);
+                           remplace:=remplace+Translation.Items[72]+dmGenData.GetIndividuumName(dmGenData.Query3.Fields[1].AsInteger);
                         dmGenData.Query3.Next;
                      end;
                   end;
@@ -1473,7 +1473,7 @@ begin
                               if compte=0 then
                                  remplace:=temp;
                               if compte=1 then
-                                    remplace:=temp+Traduction.Items[72]+remplace;
+                                    remplace:=temp+Translation.Items[72]+remplace;
                               if compte>1 then
                                     remplace:=temp+', '+remplace;
                               compte:=compte+1;
@@ -1919,141 +1919,141 @@ begin
             Jour2:=IntToStr(StrtoInt(Jour2));
             Annee1:=IntToStr(StrtoInt(Annee1));
             Annee2:=IntToStr(StrtoInt(Annee2));
-            if StrToInt(Jour1)=1 then Jour1:=Traduction.Items[74];
-            if StrToInt(Jour2)=1 then Jour2:=Traduction.Items[74];
+            if StrToInt(Jour1)=1 then Jour1:=Translation.Items[74];
+            if StrToInt(Jour2)=1 then Jour2:=Translation.Items[74];
             case StrToInt(mois1) of
-               1:mois1:=Traduction.Items[75];
-               2:mois1:=Traduction.Items[76];
-               3:mois1:=Traduction.Items[77];
-               4:mois1:=Traduction.Items[78];
-               5:mois1:=Traduction.Items[79];
-               6:mois1:=Traduction.Items[80];
-               7:mois1:=Traduction.Items[81];
-               8:mois1:=Traduction.Items[82];
-               9:mois1:=Traduction.Items[83];
-               10:mois1:=Traduction.Items[84];
-               11:mois1:=Traduction.Items[85];
-               12:mois1:=Traduction.Items[86];
+               1:mois1:=Translation.Items[75];
+               2:mois1:=Translation.Items[76];
+               3:mois1:=Translation.Items[77];
+               4:mois1:=Translation.Items[78];
+               5:mois1:=Translation.Items[79];
+               6:mois1:=Translation.Items[80];
+               7:mois1:=Translation.Items[81];
+               8:mois1:=Translation.Items[82];
+               9:mois1:=Translation.Items[83];
+               10:mois1:=Translation.Items[84];
+               11:mois1:=Translation.Items[85];
+               12:mois1:=Translation.Items[86];
             end;
             case StrToInt(mois2) of
-               1:mois2:=Traduction.Items[75];
-               2:mois2:=Traduction.Items[76];
-               3:mois2:=Traduction.Items[77];
-               4:mois2:=Traduction.Items[78];
-               5:mois2:=Traduction.Items[79];
-               6:mois2:=Traduction.Items[80];
-               7:mois2:=Traduction.Items[81];
-               8:mois2:=Traduction.Items[82];
-               9:mois2:=Traduction.Items[83];
-               10:mois2:=Traduction.Items[84];
-               11:mois2:=Traduction.Items[85];
-               12:mois2:=Traduction.Items[86];
+               1:mois2:=Translation.Items[75];
+               2:mois2:=Translation.Items[76];
+               3:mois2:=Translation.Items[77];
+               4:mois2:=Translation.Items[78];
+               5:mois2:=Translation.Items[79];
+               6:mois2:=Translation.Items[80];
+               7:mois2:=Translation.Items[81];
+               8:mois2:=Translation.Items[82];
+               9:mois2:=Translation.Items[83];
+               10:mois2:=Translation.Items[84];
+               11:mois2:=Translation.Items[85];
+               12:mois2:=Translation.Items[86];
             end;
             case style of
                0:case type1 of
-                    0:ConvertDate:=Traduction.Items[87]+Jour1+' '+Mois1+' '+Annee1;
-                    1:ConvertDate:=Traduction.Items[88]+Annee1;
-                    2:ConvertDate:=Traduction.Items[88]+Mois1;
-                    3:ConvertDate:=Traduction.Items[89]+Jour1;
-                    4:ConvertDate:=Traduction.Items[88]+Mois1+' '+Annee1;
-                    5:ConvertDate:=Traduction.Items[89]+Jour1+
-                                   Traduction.Items[90]+Annee1;
-                    6:ConvertDate:=Traduction.Items[89]+Jour1+' '+Mois1;
+                    0:ConvertDate:=Translation.Items[87]+Jour1+' '+Mois1+' '+Annee1;
+                    1:ConvertDate:=Translation.Items[88]+Annee1;
+                    2:ConvertDate:=Translation.Items[88]+Mois1;
+                    3:ConvertDate:=Translation.Items[89]+Jour1;
+                    4:ConvertDate:=Translation.Items[88]+Mois1+' '+Annee1;
+                    5:ConvertDate:=Translation.Items[89]+Jour1+
+                                   Translation.Items[90]+Annee1;
+                    6:ConvertDate:=Translation.Items[89]+Jour1+' '+Mois1;
                  end;
                1:case type1 of
-                    0:ConvertDate:=Traduction.Items[91]+Jour1+' '+Mois1+' '+Annee1;
-                    1:ConvertDate:=Traduction.Items[92]+Annee1;
-                    2:ConvertDate:=Traduction.Items[92]+Mois1;
-                    3:ConvertDate:=Traduction.Items[93]+Jour1;
-                    4:ConvertDate:=Traduction.Items[92]+Mois1+' '+Annee1;
-                    5:ConvertDate:=Traduction.Items[93]+Jour1+Traduction.Items[90]+Annee1;
-                    6:ConvertDate:=Traduction.Items[93]+Jour1+' '+Mois1;
+                    0:ConvertDate:=Translation.Items[91]+Jour1+' '+Mois1+' '+Annee1;
+                    1:ConvertDate:=Translation.Items[92]+Annee1;
+                    2:ConvertDate:=Translation.Items[92]+Mois1;
+                    3:ConvertDate:=Translation.Items[93]+Jour1;
+                    4:ConvertDate:=Translation.Items[92]+Mois1+' '+Annee1;
+                    5:ConvertDate:=Translation.Items[93]+Jour1+Translation.Items[90]+Annee1;
+                    6:ConvertDate:=Translation.Items[93]+Jour1+' '+Mois1;
                  end;
                2:case type1 of
-                    0:ConvertDate:=Traduction.Items[91]+Jour1+' '+Mois1+' '+Annee1;
-                    1:ConvertDate:=Traduction.Items[92]+Annee1;
-                    2:ConvertDate:=Traduction.Items[92]+Mois1;
-                    3:ConvertDate:=Traduction.Items[93]+Jour1;
-                    4:ConvertDate:=Traduction.Items[92]+Mois1+' '+Annee1;
-                    5:ConvertDate:=Traduction.Items[93]+Jour1+Traduction.Items[90]+Annee1;
-                    6:ConvertDate:=Traduction.Items[93]+Jour1+' '+Mois1;
+                    0:ConvertDate:=Translation.Items[91]+Jour1+' '+Mois1+' '+Annee1;
+                    1:ConvertDate:=Translation.Items[92]+Annee1;
+                    2:ConvertDate:=Translation.Items[92]+Mois1;
+                    3:ConvertDate:=Translation.Items[93]+Jour1;
+                    4:ConvertDate:=Translation.Items[92]+Mois1+' '+Annee1;
+                    5:ConvertDate:=Translation.Items[93]+Jour1+Translation.Items[90]+Annee1;
+                    6:ConvertDate:=Translation.Items[93]+Jour1+' '+Mois1;
                  end;
                3:case type1 of
-                    0:ConvertDate:=Traduction.Items[94]+Jour1+' '+Mois1+' '+Annee1;
-                    1:ConvertDate:=Traduction.Items[95]+Annee1;
-                    2:ConvertDate:=Traduction.Items[95]+Mois1;
-                    3:ConvertDate:=Traduction.Items[96]+Jour1;
-                    4:ConvertDate:=Traduction.Items[95]+Mois1+' '+Annee1;
-                    5:ConvertDate:=Traduction.Items[96]+Jour1+Traduction.Items[90]+Annee1;
-                    6:ConvertDate:=Traduction.Items[96]+Jour1+' '+Mois1;
+                    0:ConvertDate:=Translation.Items[94]+Jour1+' '+Mois1+' '+Annee1;
+                    1:ConvertDate:=Translation.Items[95]+Annee1;
+                    2:ConvertDate:=Translation.Items[95]+Mois1;
+                    3:ConvertDate:=Translation.Items[96]+Jour1;
+                    4:ConvertDate:=Translation.Items[95]+Mois1+' '+Annee1;
+                    5:ConvertDate:=Translation.Items[96]+Jour1+Translation.Items[90]+Annee1;
+                    6:ConvertDate:=Translation.Items[96]+Jour1+' '+Mois1;
                  end;
                4:case type1 of
-                    0:ConvertDate:=Traduction.Items[97]+Jour1+' '+Mois1+' '+Annee1;
-                    1:ConvertDate:=Traduction.Items[98]+Annee1;
-                    2:ConvertDate:=Traduction.Items[98]+Mois1;
-                    3:ConvertDate:=Traduction.Items[99]+Jour1;
-                    4:ConvertDate:=Traduction.Items[98]+Mois1+' '+Annee1;
-                    5:ConvertDate:=Traduction.Items[99]+Jour1+Traduction.Items[90]+Annee1;
-                    6:ConvertDate:=Traduction.Items[99]+Jour1+' '+Mois1;
+                    0:ConvertDate:=Translation.Items[97]+Jour1+' '+Mois1+' '+Annee1;
+                    1:ConvertDate:=Translation.Items[98]+Annee1;
+                    2:ConvertDate:=Translation.Items[98]+Mois1;
+                    3:ConvertDate:=Translation.Items[99]+Jour1;
+                    4:ConvertDate:=Translation.Items[98]+Mois1+' '+Annee1;
+                    5:ConvertDate:=Translation.Items[99]+Jour1+Translation.Items[90]+Annee1;
+                    6:ConvertDate:=Translation.Items[99]+Jour1+' '+Mois1;
                  end;
                5:begin
                  case type1 of
-                    0:temp1:=Traduction.Items[100]+Jour1+' '+Mois1+' '+Annee1;
-                    1:temp1:=Traduction.Items[101]+Annee1;
-                    2:temp1:=Traduction.Items[101]+Mois1;
-                    3:temp1:=Traduction.Items[102]+Jour1;
-                    4:temp1:=Traduction.Items[101]+Mois1+' '+Annee1;
-                    5:temp1:=Traduction.Items[102]+Jour1+Traduction.Items[90]+Annee1;
-                    6:temp1:=Traduction.Items[102]+Jour1+' '+Mois1;
+                    0:temp1:=Translation.Items[100]+Jour1+' '+Mois1+' '+Annee1;
+                    1:temp1:=Translation.Items[101]+Annee1;
+                    2:temp1:=Translation.Items[101]+Mois1;
+                    3:temp1:=Translation.Items[102]+Jour1;
+                    4:temp1:=Translation.Items[101]+Mois1+' '+Annee1;
+                    5:temp1:=Translation.Items[102]+Jour1+Translation.Items[90]+Annee1;
+                    6:temp1:=Translation.Items[102]+Jour1+' '+Mois1;
                  end;
                  case type2 of
-                    0:ConvertDate:=temp1+Traduction.Items[103]+Jour2+' '+Mois2+' '+Annee2;
-                    1:ConvertDate:=temp1+Traduction.Items[72]+Annee2;
-                    2:ConvertDate:=temp1+Traduction.Items[72]+Mois2;
-                    3:ConvertDate:=temp1+Traduction.Items[104]+Jour2;
-                    4:ConvertDate:=temp1+Traduction.Items[72]+Mois2+' '+Annee2;
-                    5:ConvertDate:=temp1+Traduction.Items[104]+Jour2+Traduction.Items[90]+Annee2;
-                    6:ConvertDate:=temp1+Traduction.Items[104]+Jour2+' '+Mois2;
+                    0:ConvertDate:=temp1+Translation.Items[103]+Jour2+' '+Mois2+' '+Annee2;
+                    1:ConvertDate:=temp1+Translation.Items[72]+Annee2;
+                    2:ConvertDate:=temp1+Translation.Items[72]+Mois2;
+                    3:ConvertDate:=temp1+Translation.Items[104]+Jour2;
+                    4:ConvertDate:=temp1+Translation.Items[72]+Mois2+' '+Annee2;
+                    5:ConvertDate:=temp1+Translation.Items[104]+Jour2+Translation.Items[90]+Annee2;
+                    6:ConvertDate:=temp1+Translation.Items[104]+Jour2+' '+Mois2;
                  end;
                  end;
                6:begin
                  case type1 of
-                    0:temp1:=Traduction.Items[94]+Jour1+' '+Mois1+' '+Annee1;
-                    1:temp1:=Traduction.Items[95]+Annee1;
-                    2:temp1:=Traduction.Items[95]+Mois1;
-                    3:temp1:=Traduction.Items[96]+Jour1;
-                    4:temp1:=Traduction.Items[95]+Mois1+' '+Annee1;
-                    5:temp1:=Traduction.Items[96]+Jour1+Traduction.Items[90]+Annee1;
-                    6:temp1:=Traduction.Items[96]+Jour1+' '+Mois1;
+                    0:temp1:=Translation.Items[94]+Jour1+' '+Mois1+' '+Annee1;
+                    1:temp1:=Translation.Items[95]+Annee1;
+                    2:temp1:=Translation.Items[95]+Mois1;
+                    3:temp1:=Translation.Items[96]+Jour1;
+                    4:temp1:=Translation.Items[95]+Mois1+' '+Annee1;
+                    5:temp1:=Translation.Items[96]+Jour1+Translation.Items[90]+Annee1;
+                    6:temp1:=Translation.Items[96]+Jour1+' '+Mois1;
                  end;
                  case type2 of
-                    0:ConvertDate:=temp1+Traduction.Items[105]+Jour2+' '+Mois2+' '+Annee2;
-                    1:ConvertDate:=temp1+Traduction.Items[106]+Annee2;
-                    2:ConvertDate:=temp1+Traduction.Items[106]+Mois2;
-                    3:ConvertDate:=temp1+Traduction.Items[107]+Jour2;
-                    4:ConvertDate:=temp1+Traduction.Items[106]+Mois2+' '+Annee2;
-                    5:ConvertDate:=temp1+Traduction.Items[107]+Jour2+Traduction.Items[90]+Annee2;
-                    6:ConvertDate:=temp1+Traduction.Items[107]+Jour2+' '+Mois2;
+                    0:ConvertDate:=temp1+Translation.Items[105]+Jour2+' '+Mois2+' '+Annee2;
+                    1:ConvertDate:=temp1+Translation.Items[106]+Annee2;
+                    2:ConvertDate:=temp1+Translation.Items[106]+Mois2;
+                    3:ConvertDate:=temp1+Translation.Items[107]+Jour2;
+                    4:ConvertDate:=temp1+Translation.Items[106]+Mois2+' '+Annee2;
+                    5:ConvertDate:=temp1+Translation.Items[107]+Jour2+Translation.Items[90]+Annee2;
+                    6:ConvertDate:=temp1+Translation.Items[107]+Jour2+' '+Mois2;
                  end;
                  end;
                7:begin
                  case type1 of
-                    0:temp1:=Traduction.Items[108]+Jour1+' '+Mois1+' '+Annee1;
-                    1:temp1:=Traduction.Items[109]+Annee1;
-                    2:temp1:=Traduction.Items[109]+Mois1;
-                    3:temp1:=Traduction.Items[110]+Jour1;
-                    4:temp1:=Traduction.Items[109]+Mois1+' '+Annee1;
-                    5:temp1:=Traduction.Items[110]+Jour1+Traduction.Items[90]+Annee1;
-                    6:temp1:=Traduction.Items[110]+Jour1+' '+Mois1;
+                    0:temp1:=Translation.Items[108]+Jour1+' '+Mois1+' '+Annee1;
+                    1:temp1:=Translation.Items[109]+Annee1;
+                    2:temp1:=Translation.Items[109]+Mois1;
+                    3:temp1:=Translation.Items[110]+Jour1;
+                    4:temp1:=Translation.Items[109]+Mois1+' '+Annee1;
+                    5:temp1:=Translation.Items[110]+Jour1+Translation.Items[90]+Annee1;
+                    6:temp1:=Translation.Items[110]+Jour1+' '+Mois1;
                  end;
                  case type2 of
-                    0:ConvertDate:=temp1+Traduction.Items[111]+Jour2+' '+Mois2+' '+Annee2;
-                    1:ConvertDate:=temp1+Traduction.Items[112]+Annee2;
-                    2:ConvertDate:=temp1+Traduction.Items[112]+Mois2;
-                    3:ConvertDate:=temp1+Traduction.Items[113]+Jour2;
-                    4:ConvertDate:=temp1+Traduction.Items[112]+Mois2+' '+Annee2;
-                    5:ConvertDate:=temp1+Traduction.Items[113]+Jour2+Traduction.Items[90]+Annee2;
-                    6:ConvertDate:=temp1+Traduction.Items[113]+Jour2+' '+Mois2;
+                    0:ConvertDate:=temp1+Translation.Items[111]+Jour2+' '+Mois2+' '+Annee2;
+                    1:ConvertDate:=temp1+Translation.Items[112]+Annee2;
+                    2:ConvertDate:=temp1+Translation.Items[112]+Mois2;
+                    3:ConvertDate:=temp1+Translation.Items[113]+Jour2;
+                    4:ConvertDate:=temp1+Translation.Items[112]+Mois2+' '+Annee2;
+                    5:ConvertDate:=temp1+Translation.Items[113]+Jour2+Translation.Items[90]+Annee2;
+                    6:ConvertDate:=temp1+Translation.Items[113]+Jour2+' '+Mois2;
                  end;
                  end;
             end;
@@ -2080,13 +2080,13 @@ begin
             end;
             case style of
                0:ConvertDate:='<'+temp1;
-               1:ConvertDate:=Traduction.Items[114]+temp1;
-               2:ConvertDate:=Traduction.Items[114]+temp1;
+               1:ConvertDate:=Translation.Items[114]+temp1;
+               2:ConvertDate:=Translation.Items[114]+temp1;
                3:ConvertDate:=temp1;
                4:ConvertDate:='>'+temp1;
                5:ConvertDate:=temp1+' - '+temp2;
-               6:ConvertDate:=temp1+Traduction.Items[115]+temp2;
-               7:ConvertDate:=temp1+Traduction.Items[112]+temp2;
+               6:ConvertDate:=temp1+Translation.Items[115]+temp2;
+               7:ConvertDate:=temp1+Translation.Items[112]+temp2;
             end;
          end;
       end;

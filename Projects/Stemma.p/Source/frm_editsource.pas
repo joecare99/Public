@@ -79,7 +79,7 @@ var
 implementation
 
 uses
-  frm_Main, Traduction, dm_GenData, frm_Sources, frm_Usage, frm_Documents, frm_ShowImage,
+  frm_Main, cls_Translation, dm_GenData, frm_Sources, frm_Usage, frm_Documents, frm_ShowImage,
   frm_EditDocuments;
 
 { TEditSource }
@@ -112,37 +112,37 @@ var
 begin
   EditSource.ActiveControl:=EditSource.Titre;
   frmStemmaMainForm.DataHist.Row:=0;
-  Caption:=Traduction.Items[190];
-  btnOK.Caption:=Traduction.Items[152];
-  btnCancel.Caption:=Traduction.Items[164];
-  Label3.Caption:=Traduction.Items[171];
-  Label7.Caption:=Traduction.Items[193];
-  Label8.Caption:=Traduction.Items[191];
-  Label9.Caption:=Traduction.Items[162];
-  Label10.Caption:=Traduction.Items[179];
-  Label11.Caption:=Traduction.Items[192];
-  Label12.Caption:=Traduction.Items[298];
-  TableauDepots.Cells[1,0]:=Traduction.Items[194];
-  TableauDepots.Cells[2,0]:=Traduction.Items[156];
-  TableauExhibits.Cells[2,0]:=Traduction.Items[154];
-  TableauExhibits.Cells[4,0]:=Traduction.Items[201];
-  Ajouter1.Caption:=Traduction.Items[224];
-  Modifier1.Caption:=Traduction.Items[225];
-  Supprimer1.Caption:=Traduction.Items[226];
-  Ajouter2.Caption:=Traduction.Items[224];
-  Modifier2.Caption:=Traduction.Items[225];
-  Supprimer2.Caption:=Traduction.Items[226];
-  MenuItem1.Caption:=Traduction.Items[233];
-  MenuItem2.Caption:=Traduction.Items[224];
-  MenuItem3.Caption:=Traduction.Items[225];
-  MenuItem4.Caption:=Traduction.Items[226];
-  MenuItem10.Caption:=Traduction.Items[181];
+  Caption:=Translation.Items[190];
+  btnOK.Caption:=Translation.Items[152];
+  btnCancel.Caption:=Translation.Items[164];
+  Label3.Caption:=Translation.Items[171];
+  Label7.Caption:=Translation.Items[193];
+  Label8.Caption:=Translation.Items[191];
+  Label9.Caption:=Translation.Items[162];
+  Label10.Caption:=Translation.Items[179];
+  Label11.Caption:=Translation.Items[192];
+  Label12.Caption:=Translation.Items[298];
+  TableauDepots.Cells[1,0]:=Translation.Items[194];
+  TableauDepots.Cells[2,0]:=Translation.Items[156];
+  TableauExhibits.Cells[2,0]:=Translation.Items[154];
+  TableauExhibits.Cells[4,0]:=Translation.Items[201];
+  Ajouter1.Caption:=Translation.Items[224];
+  Modifier1.Caption:=Translation.Items[225];
+  Supprimer1.Caption:=Translation.Items[226];
+  Ajouter2.Caption:=Translation.Items[224];
+  Modifier2.Caption:=Translation.Items[225];
+  Supprimer2.Caption:=Translation.Items[226];
+  MenuItem1.Caption:=Translation.Items[233];
+  MenuItem2.Caption:=Translation.Items[224];
+  MenuItem3.Caption:=Translation.Items[225];
+  MenuItem4.Caption:=Translation.Items[226];
+  MenuItem10.Caption:=Translation.Items[181];
   // Populate la form
   dmGenData.Query1.SQL.Clear;
   dmGenData.GetCode(Code,nocode);
   if code='A' then
      begin
-     EditSource.Caption:=Traduction.Items[43];
+     EditSource.Caption:=Translation.Items[43];
      Titre.Text:='';
      Desc.Text:='';
      A.Text:='';
@@ -212,9 +212,9 @@ begin
      begin
      dmGenData.Query2.SQL.Text:='SELECT X.Z, X.F FROM X WHERE X.no='+TableauExhibits.Cells[0,TableauExhibits.Row];
      dmGenData.Query2.Open;
-     if TableauExhibits.Cells[4,TableauExhibits.Row]=Traduction.Items[34] then
+     if TableauExhibits.Cells[4,TableauExhibits.Row]=Translation.Items[34] then
         begin
-        frmShowImage.Caption:=Traduction.Items[34];
+        frmShowImage.Caption:=Translation.Items[34];
         frmShowImage.Image.Visible:=false;
         frmShowImage.Memo.Visible:=true;
         frmShowImage.btnOK.Visible:=true;
@@ -312,8 +312,8 @@ procedure TEditSource.Supprimer1Click(Sender: TObject);
 begin
   // Supprimer un Dépot
   if TableauDepots.Row>0 then
-     if Application.MessageBox(Pchar(Traduction.Items[44]+
-        TableauDepots.Cells[1,TableauDepots.Row]+Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+     if Application.MessageBox(Pchar(Translation.Items[44]+
+        TableauDepots.Cells[1,TableauDepots.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
         begin
         dmGenData.Query1.SQL.Text:='DELETE FROM A WHERE no='+TableauDepots.Cells[0,TableauDepots.Row];
         dmGenData.Query1.ExecSQL;
@@ -325,8 +325,8 @@ procedure TEditSource.Supprimer2Click(Sender: TObject);
 begin
   // Supprimer un document à la source
   If TableauExhibits.Row>0 then
-     if Application.MessageBox(Pchar(Traduction.Items[60]+
-        TableauExhibits.Cells[2,TableauExhibits.Row]+Traduction.Items[28]),pchar(Traduction.Items[1]),MB_YESNO)=IDYES then
+     if Application.MessageBox(Pchar(Translation.Items[60]+
+        TableauExhibits.Cells[2,TableauExhibits.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
         begin
         dmGenData.Query1.SQL.Text:='DELETE FROM X WHERE no='+TableauExhibits.Cells[0,TableauExhibits.Row];
         dmGenData.Query1.ExecSQL;
@@ -342,7 +342,7 @@ begin
   if TableauDepots.Row>0 then
      begin
      d:='0';
-     if InputQuery(Traduction.Items[45],Traduction.Items[46],d) then
+     if InputQuery(Translation.Items[45],Translation.Items[46],d) then
         begin
         dmGenData.Query1.SQL.Text:='SELECT D.T FROM D WHERE D.no='+d;
         dmGenData.Query1.Open;
@@ -390,7 +390,7 @@ var
 begin
   // Ajouter un dépot
   d:='0';
-  if InputQuery(Traduction.Items[47],Traduction.Items[46],d) then
+  if InputQuery(Translation.Items[47],Translation.Items[46],d) then
      begin
      dmGenData.Query1.SQL.Text:='SELECT D.T FROM D WHERE D.no='+d;
      dmGenData.Query1.Open;
