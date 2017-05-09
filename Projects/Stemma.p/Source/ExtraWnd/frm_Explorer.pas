@@ -58,11 +58,14 @@ var
 implementation
 
 uses
-  frm_Main, dm_GenData, Traduction;
+  frm_Main, dm_GenData, cls_Translation;
 
 
-
+{$IFDEF FPC}
 {$R *.lfm}
+{$ELSE}
+{$R *.dfm}
+{$ENDIF}
 
 { TfrmExplorer }
 
@@ -106,12 +109,10 @@ begin
   if length(temp) > 0 then
   begin
     j := grdIndex.Row;
-    if AnsiCompareText((copy(grdIndex.Cells[6, j], 1, length(temp))),
-      temp) > 0 then
+    if AnsiCompareText((copy(grdIndex.Cells[6, j], 1, length(temp))), temp) > 0 then
     begin
-      while (AnsiCompareText(
-          (copy(grdIndex.Cells[6, j], 1, length(temp))), temp) > 0) and
-        (j > 1) do
+      while (AnsiCompareText((copy(grdIndex.Cells[6, j], 1, length(temp))),
+          temp) > 0) and (j > 1) do
       begin
         j := j - 1;
       end;
@@ -119,9 +120,8 @@ begin
     end
     else
     begin
-      while (AnsiCompareText(
-          (copy(grdIndex.Cells[6, j], 1, length(temp))), temp) < 0) and
-        (j < grdindex.rowcount - 1) do
+      while (AnsiCompareText((copy(grdIndex.Cells[6, j], 1, length(temp))),
+          temp) < 0) and (j < grdindex.rowcount - 1) do
       begin
         j := j + 1;
       end;
@@ -166,7 +166,6 @@ begin
         if (O.Text = '3') then
         begin
           grdIndex.Cells[6, j] := ConvertDate(lDate, 1);
-
           reorder := True;
         end;
       end;
@@ -176,7 +175,6 @@ begin
         if (O.Text = '4') then
         begin
           grdIndex.Cells[6, j] := ConvertDate(lDate, 1);
-
           reorder := True;
         end;
       end;
@@ -205,15 +203,15 @@ end;
 
 procedure TfrmExplorer.FormShow(Sender: TObject);
 begin
-  Caption := Traduction.Items[202];
+  Caption := Translation.Items[202];
   grdIndex.Cells[1, 0] := '#';
-  grdIndex.Cells[2, 0] := Traduction.Items[176];
-  grdIndex.Cells[3, 0] := Traduction.Items[203];
-  grdIndex.Cells[4, 0] := Traduction.Items[204];
-  MenuItem3.Caption := Traduction.Items[235];
-  MenuItem4.Caption := Traduction.Items[236];
-  MenuItem5.Caption := Traduction.Items[237];
-  MenuItem6.Caption := Traduction.Items[238];
+  grdIndex.Cells[2, 0] := Translation.Items[176];
+  grdIndex.Cells[3, 0] := Translation.Items[203];
+  grdIndex.Cells[4, 0] := Translation.Items[204];
+  MenuItem3.Caption := Translation.Items[235];
+  MenuItem4.Caption := Translation.Items[236];
+  MenuItem5.Caption := Translation.Items[237];
+  MenuItem6.Caption := Translation.Items[238];
   GetFormPosition(Sender as TForm, 0, 0, 70, 1000);
   GetGridPosition(grdIndex as TStringGrid, 4);
   PopulateIndex(2);
@@ -269,8 +267,8 @@ begin
     i := grdIndex.Row;
     if AnsiCompareText((copy(grdIndex.Cells[6, i], 1, length(temp))), temp) > 0 then
     begin
-      while (AnsiCompareText((copy(grdIndex.Cells[6, i], 1, length(temp))), temp) > 0) and
-        (i > 1) do
+      while (AnsiCompareText((copy(grdIndex.Cells[6, i], 1, length(temp))), temp) >
+          0) and (i > 1) do
       begin
         Application.ProcessMessages;
         i := i - 1;
@@ -278,8 +276,8 @@ begin
     end
     else
     begin
-      while (AnsiCompareText((copy(grdIndex.Cells[6, i], 1, length(temp))), temp) < 0) and
-        (i < grdIndex.rowcount - 1) do
+      while (AnsiCompareText((copy(grdIndex.Cells[6, i], 1, length(temp))), temp) <
+          0) and (i < grdIndex.rowcount - 1) do
       begin
         Application.ProcessMessages;
         i := i + 1;
@@ -299,8 +297,7 @@ begin
     i := 0;
     // Rechercher le nom  principal
     while ((ptrint(grdIndex.Objects[1, i]) <> frmStemmaMainForm.iID) or
-        (self.grdIndex.Cells[5, i] = '')) and
-      (i < self.grdindex.rowcount - 1) do
+        (self.grdIndex.Cells[5, i] = '')) and (i < self.grdindex.rowcount - 1) do
       i := i + 1;
     if (ptrint(grdIndex.objects[1, i]) = frmStemmaMainForm.iID) then
       self.grdIndex.Row := i
@@ -313,54 +310,28 @@ end;
 
 procedure TfrmExplorer.edtSearchKeyPress(Sender: TObject; var Key: char);
 var
-  row: integer;
   MyCursor: TCursor;
+  lOnProgress: TNotifyEvent;
+  lSearchText: String;
+  lGrid: TStringGrid;
 begin
   if (Key = chr(13)) and (length(edtSearch.Text) > 3) then
-  begin
-    MyCursor := Screen.Cursor;
-    Screen.Cursor := crHourGlass;
-    dmGenData.Query5.SQL.Clear;
-    dmGenData.Query5.SQL.add(
-      'SELECT no, I, N, I1, I2, I3, I4, X FROM N WHERE MATCH (N) AGAINST (''' +
-      edtSearch.Text + ''' IN BOOLEAN MODE) ORDER BY I1, I2');
-    dmGenData.Query5.Open;
-    dmGenData.Query5.First;
-    row := 1;
-    if not dmGenData.Query5.EOF then
     begin
-      frmExplorer.grdIndex.RowCount := dmGenData.Query5.RecordCount + 1;
-      frmStemmaMainForm.ProgressBar.Max := frmExplorer.grdIndex.RowCount;
-      frmStemmaMainForm.ProgressBar.Position := 0;
+      MyCursor := Screen.Cursor;
+      Screen.Cursor := crHourGlass;
       frmStemmaMainForm.ProgressBar.Visible := True;
-      while not dmGenData.Query5.EOF do
-      begin
-        frmExplorer.grdIndex.Cells[0, row] := dmGenData.Query5.Fields[0].AsString;
-        frmExplorer.grdIndex.Cells[1, row] := dmGenData.Query5.Fields[1].AsString;
-        frmExplorer.grdIndex.Cells[2, row] :=
-          DecodeName(dmGenData.Query5.Fields[2].AsString, 2);
-        frmExplorer.grdIndex.Cells[3, row] :=
-          ConvertDate(dmGenData.Query5.Fields[5].AsString, 1);
-        frmExplorer.grdIndex.Cells[4, row] :=
-          ConvertDate(dmGenData.Query5.Fields[6].AsString, 1);
-        if dmGenData.Query5.Fields[7].AsBoolean then
-          frmExplorer.grdIndex.Cells[5, row] := '*'
-        else
-          frmExplorer.grdIndex.Cells[5, row] := '';
-        frmExplorer.grdIndex.Cells[6, row] :=
-          RemoveUTF8(dmGenData.Query5.Fields[3].AsString) + ', ' + RemoveUTF8(
-          dmGenData.Query5.Fields[4].AsString);
-        row := row + 1;
-        dmGenData.Query5.Next;
-        frmStemmaMainForm.ProgressBar.Position :=
-          frmStemmaMainForm.ProgressBar.Position + 1;
-      end;
-      frmStemmaMainForm.ProgressBar.Visible := False;
-      edtSearchChange(Sender);
-      Screen.Cursor := MyCursor;
+      lOnProgress:=TNotifyEvent(@frmStemmaMainForm.UpdateProgressBar);
+      lSearchText := edtSearch.Text;
+      lGrid := grdIndex;
+
+      dmGenData.FillIndexBySearchtext(lGrid, lSearchText, lOnProgress);
+        frmStemmaMainForm.ProgressBar.Visible := False;
+        edtSearchChange(Sender);
+        Screen.Cursor := MyCursor;
+
+      FindIndividual;
     end;
-    FindIndividual;
-  end;
+
 end;
 
 procedure TfrmExplorer.UpdatePreferedMark(const idNamePref, idNameUnPref: integer);
@@ -407,97 +378,98 @@ begin
     end;
 end;
 
-procedure TfrmExplorer.UpdateIndex(var i2: string; var i1: string; var nom: string;
-  var lidName: longint; var lidInd: longint; j: integer);
+procedure TfrmExplorer.UpdateIndex(var i2: string; var i1: string;
+  var nom: string; var lidName: longint; var lidInd: longint; j: integer);
 begin
-  for j := 1 to frmExplorer.grdIndex.RowCount - 1 do
-    if frmExplorer.grdIndex.Cells[0, j] = inttostr(lidName) then
+  for j := 1 to grdIndex.RowCount - 1 do
+    if grdIndex.Cells[0, j] = IntToStr(lidName) then
     begin
-      frmExplorer.grdIndex.Cells[1, j] := inttostr(lidInd);
-      frmExplorer.grdIndex.Objects[1, j] := tobject(ptrint(lidInd));
-      if frmExplorer.O.Text = '1' then
-        frmExplorer.grdIndex.Cells[2, j] := DecodeName(nom, 1)
+      grdIndex.Cells[1, j] := IntToStr(lidInd);
+      grdIndex.Objects[1, j] := TObject(ptrint(lidInd));
+      if O.Text = '1' then
+        grdIndex.Cells[2, j] := DecodeName(nom, 1)
       else
-        frmExplorer.grdIndex.Cells[2, j] := DecodeName(nom, 2);
-      if frmExplorer.O.Text = '1' then
-        frmExplorer.grdIndex.Cells[6, j] := RemoveUTF8(i2 + ' ' + i1);
-      if frmExplorer.O.Text = '2' then
-        frmExplorer.grdIndex.Cells[6, j] := RemoveUTF8(i1 + ', ' + i2);
-      if (frmExplorer.O.Text = '1') or (frmExplorer.O.Text = '2') then
+        grdIndex.Cells[2, j] := DecodeName(nom, 2);
+      if O.Text = '1' then
+        grdIndex.Cells[6, j] := RemoveUTF8(i2 + ' ' + i1);
+      if O.Text = '2' then
+        grdIndex.Cells[6, j] := RemoveUTF8(i1 + ', ' + i2);
+      if (O.Text = '1') or (O.Text = '2') then
       begin
         //                 frmExplorer.grdIndex.SortColRow(true,6);
-        frmExplorer.FindIndividual;
+        FindIndividual;
       end;
       break;
     end;
 end;
 
-procedure TfrmExplorer.AppendIndex( const i2, i1, nom: string;  var lidName: longint;  const lidInd: longint;Pref:boolean);
-var temp, i4, i3: string;
-   j: integer;
+procedure TfrmExplorer.AppendIndex(const i2, i1, nom: string;
+  var lidName: longint; const lidInd: longint; Pref: boolean);
+var
+  temp, i4, i3: string;
+  j: integer;
 begin
-   i3 := dmGenData.geti3(lidInd);
-   i4 := dmGenData.geti4(lidInd);
+  i3 := dmGenData.geti3(lidInd);
+  i4 := dmGenData.geti4(lidInd);
 
-      if frmExplorer.O.Text = '1' then
-        temp := RemoveUTF8(i2 + ' ' + i1);
-      if frmExplorer.O.Text = '2' then
-        temp := RemoveUTF8(i1 + ', ' + i2);
-      if frmExplorer.O.Text = '3' then
-        temp := i3;
-      if frmExplorer.O.Text = '4' then
-        temp := i4;
+  if O.Text = '1' then
+    temp := RemoveUTF8(i2 + ' ' + i1);
+  if O.Text = '2' then
+    temp := RemoveUTF8(i1 + ', ' + i2);
+  if O.Text = '3' then
+    temp := i3;
+  if O.Text = '4' then
+    temp := i4;
 
-      if length(temp) > 0 then
+  if length(temp) > 0 then
+  begin
+    j := grdIndex.Row;
+    if AnsiCompareText((copy(grdIndex.Cells[6, j], 1, length(temp))),
+      temp) > 0 then
+    begin
+      while (AnsiCompareText(
+          (copy(grdIndex.Cells[6, j], 1, length(temp))), temp) > 0) and
+        (j > 1) do
       begin
-        j := frmExplorer.grdIndex.Row;
-        if AnsiCompareText((copy(frmExplorer.grdIndex.Cells[6, j],
-          1, length(temp))), temp) > 0 then
-        begin
-          while (AnsiCompareText(
-              (copy(frmExplorer.grdIndex.Cells[6, j], 1, length(temp))), temp) > 0) and
-            (j > 1) do
-          begin
-            Application.ProcessMessages;
-            j := j - 1;
-          end;
-          j := j + 1;
-        end
-        else
-        begin
-          while (AnsiCompareText(
-              (copy(frmExplorer.grdIndex.Cells[6, j], 1, length(temp))), temp) < 0) and
-            (j < frmExplorer.grdindex.rowcount - 1) do
-          begin
-            Application.ProcessMessages;
-            j := j + 1;
-          end;
-          j := j - 1;
-        end;
-      end
-      else
-        exit;
-      frmExplorer.grdIndex.InsertColRow(False, j);
+        Application.ProcessMessages;
+        j := j - 1;
+      end;
+      j := j + 1;
+    end
+    else
+    begin
+      while (AnsiCompareText(
+          (copy(grdIndex.Cells[6, j], 1, length(temp))), temp) < 0) and
+        (j < grdindex.rowcount - 1) do
+      begin
+        Application.ProcessMessages;
+        j := j + 1;
+      end;
+      j := j - 1;
+    end;
+  end
+  else
+    exit;
+  grdIndex.InsertColRow(False, j);
 
-      frmExplorer.grdIndex.Cells[0, j] := inttostr(lidName);
-      frmExplorer.grdIndex.Objects[0, j] := tobject(ptrint(lidName));
-      frmExplorer.grdIndex.Cells[1, j] := inttostr(lidInd);
-      frmExplorer.grdIndex.Objects[1, j] := tobject(ptrint(lidInd));
-      if frmExplorer.O.Text = '1' then
-        frmExplorer.grdIndex.Cells[2, j] := DecodeName(nom, 1)
-      else
-        frmExplorer.grdIndex.Cells[2, j] := DecodeName(nom, 2);
-      frmExplorer.grdIndex.Cells[3, j] := ConvertDate(i3, 1);
-      frmExplorer.grdIndex.Cells[4, j] := ConvertDate(i4, 1);
-      if Pref then
-        frmExplorer.grdIndex.Cells[5, j] := '*'
-      else
-        frmExplorer.grdIndex.Cells[5, j] := '';
-      frmExplorer.grdIndex.Cells[6, j] := temp;
-      frmExplorer.grdIndex.Row := j;
-      //        frmExplorer.Index.SortColRow(true,6);
-      //        TrouveIndividu;
-
+  grdIndex.Cells[0, j] := IntToStr(lidName);
+  grdIndex.Objects[0, j] := TObject(ptrint(lidName));
+  grdIndex.Cells[1, j] := IntToStr(lidInd);
+  grdIndex.Objects[1, j] := TObject(ptrint(lidInd));
+  if O.Text = '1' then
+    grdIndex.Cells[2, j] := DecodeName(nom, 1)
+  else
+    grdIndex.Cells[2, j] := DecodeName(nom, 2);
+  grdIndex.Cells[3, j] := ConvertDate(i3, 1);
+  grdIndex.Cells[4, j] := ConvertDate(i4, 1);
+  if Pref then
+    grdIndex.Cells[5, j] := '*'
+  else
+    grdIndex.Cells[5, j] := '';
+  grdIndex.Cells[6, j] := temp;
+  grdIndex.Row := j;
+  //         Index.SortColRow(true,6);
+  //        TrouveIndividu;
 end;
 
 end.
