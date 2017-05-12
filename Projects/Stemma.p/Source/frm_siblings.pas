@@ -18,7 +18,7 @@ type
     MenuItem3: TMenuItem;
     PopupMenuFratrie: TPopupMenu;
     TableauFratrie: TStringGrid;
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
@@ -136,8 +136,8 @@ end;
 procedure TfrmSiblings.FormClose(Sender: TObject; var CloseAction: TCloseAction
   );
 begin
-  SaveFormPosition(Sender as TForm);
-  SaveGridPosition(TableauFratrie as TStringGrid,4);
+  dmGenData.WriteCfgFormPosition(Self);
+  dmGenData.WriteCfgGridPosition(TableauFratrie as TStringGrid,4);
 end;
 
 procedure TfrmSiblings.FormResize(Sender: TObject);
@@ -155,8 +155,8 @@ begin
   TableauFratrie.Cells[3,0]:=Translation.Items[177];
   MenuItem1.Caption:=Translation.Items[222];
   MenuItem3.Caption:=Translation.Items[224];
-  GetFormPosition(Sender as TForm,0,0,70,1000);
-  GetGridPosition(frmSiblings.TableauFratrie as TStringGrid,4);
+  dmGenData.ReadCfgFormPosition(Sender as TForm,0,0,70,1000);
+  dmGenData.ReadCfgGridPosition(frmSiblings.TableauFratrie as TStringGrid,4);
   PopulateFratrie;
 end;
 

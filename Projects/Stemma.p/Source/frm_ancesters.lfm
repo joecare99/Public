@@ -5,7 +5,7 @@ object FormAncetres: TFormAncetres
   Width = 320
   ActiveControl = Arbre
   BorderIcons = []
-  Caption = 'Ancêtres'
+  Caption = 'Ancesters'
   ClientHeight = 240
   ClientWidth = 320
   OnClose = FormClose

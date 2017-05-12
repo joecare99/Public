@@ -5,8 +5,7 @@ unit frm_History;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  FMUtils;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls;
 
 type
 
@@ -14,7 +13,7 @@ type
 
   TfrmHistory = class(TForm)
     ListeHistorique: TListBox;
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
     procedure FormDblClick(Sender: TObject);
     procedure FormKeyPress(Sender: TObject; var Key: char);
     procedure FormResize(Sender: TObject);
@@ -46,12 +45,11 @@ end;
 procedure TfrmHistory.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
-  SaveFormPosition(Sender as TForm);
+  dmGenData.WriteCfgFormPosition(Sender as TForm);
 end;
 
 procedure TfrmHistory.FormDblClick(Sender: TObject);
-var
-  no:string;
+
 begin
   frmStemmaMainForm.iID:=PtrInt(ListeHistorique.Items.Objects[ListeHistorique.ItemIndex]);
   frmHistory.Close;
@@ -72,7 +70,7 @@ var
   i:integer;
 begin
   Caption:=Translation.Items[206];
-  GetFormPosition(Sender as TForm,0,0,70,1000);
+  dmGenData.ReadCfgFormPosition(Sender as TForm,0,0,70,1000);
   for i:=0 to frmStemmaMainForm.OldIndividu.Items.Count-1 do
     ListeHistorique.AddItem(dmGenData.GetIndividuumName(ptrint(frmStemmaMainForm.OldIndividu.Items.Objects[i])),frmStemmaMainForm.OldIndividu.Items.Objects[i]);
 end;

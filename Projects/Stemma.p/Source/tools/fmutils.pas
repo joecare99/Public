@@ -5,12 +5,12 @@ unit FMUtils;
 interface
 
 uses
-  Classes, SysUtils, Forms, IniFiles, Grids, StrUtils;
+  Classes, SysUtils, Forms, Grids, StrUtils;
 
-procedure SaveFormPosition(Sender: TForm);
-procedure SaveGridPosition(Sender: TStringGrid;cols: integer);
-procedure GetGridPosition(Sender: TStringGrid;cols: integer);
-procedure GetFormPosition(Sender: TForm;a:integer;b:integer;c:integer;d:integer);
+procedure SaveFormPosition(Sender: TForm); deprecated 'use dmGenData.WriteCfgFormPosition';
+procedure SaveGridPosition(Sender: TStringGrid;cols: integer);deprecated 'use dmGenData.WriteCfgGridPosition';
+procedure GetGridPosition(Sender: TStringGrid;cols: integer);deprecated 'use dmGenData.ReadCfgGridPosition';
+procedure GetFormPosition(Sender: TForm;a:integer;b:integer;c:integer;d:integer);deprecated 'use dmGenData.ReadCfgFormPosition';
 procedure SaveModificationTime(no:integer);overload;deprecated 'use dmGenData.SaveModificationTime';
 procedure SaveModificationTime(no:string);overload ;deprecated 'use dmGenData.SaveModificationTime';
 procedure PopulateCitations(Tableau:TStringGrid;Code:string;no:integer);overload;deprecated'use dmGenData.PopulateCitations';
@@ -1743,6 +1743,27 @@ begin
    DecodePhrase:=UpperCase(Copy(DecodePhrase,1,1))+Copy(DecodePhrase,2,Length(DecodePhrase));
 end;
 
+procedure SaveFormPosition(Sender: TForm);
+begin
+  dmGenData.WriteCfgFormPosition(sender);
+end;
+
+procedure SaveGridPosition(Sender: TStringGrid; cols: integer);
+begin
+  dmGenData.WriteCfgGridPosition(sender,cols);
+end;
+
+procedure GetGridPosition(Sender: TStringGrid; cols: integer);
+begin
+   dmGenData.ReadCfgGridPosition(sender,cols);
+end;
+
+procedure GetFormPosition(Sender: TForm; a: integer; b: integer; c: integer;
+  d: integer);
+begin
+  dmGenData.ReadCfgFormPosition(sender,a,b,c,d);
+end;
+
 procedure SaveModificationTime(no:integer);
 begin
   dmGenData.SaveModificationTime(no);
@@ -2091,52 +2112,6 @@ begin
          end;
       end;
    end;
-end;
-
-procedure SaveFormPosition(Sender: TForm);
-var
-     ini:TIniFile;
-begin
-     Ini := TIniFile.Create(iniFileName);
-     ini.WriteInteger(Sender.Name,'Haut',Sender.Top);
-     ini.WriteInteger(Sender.Name,'Gauche',Sender.Left);
-     ini.WriteInteger(Sender.Name,'Hauteur',Sender.Height);
-     ini.WriteInteger(Sender.Name,'Largeur',Sender.Width);
-     Ini.Free;
-end;
-
-procedure SaveGridPosition(Sender: TStringGrid; cols:integer);
-var
-     ini:TIniFile;
-     i:integer;
-begin
-     Ini := TIniFile.Create(iniFileName);
-     For i:= 0 to cols-1 do
-        ini.WriteInteger(Sender.Name,inttostr(i),Sender.Columns[i].width);
-     Ini.Free;
-end;
-
-procedure GetFormPosition(Sender: TForm;a:integer;b:integer;c:integer;d:integer);
-var
-   ini:TIniFile;
-begin
-     Ini := TIniFile.Create(iniFileName);
-     Sender.Top := ini.ReadInteger(Sender.Name,'Haut',a);
-     Sender.Left := ini.ReadInteger(Sender.Name,'Gauche',b);
-     Sender.Height := ini.ReadInteger(Sender.Name,'Hauteur',c);
-     Sender.Width := ini.ReadInteger(Sender.Name,'Largeur',d);
-     Ini.Free;
-end;
-
-procedure GetGridPosition(Sender: TStringGrid;cols:integer);
-var
-   ini:TIniFile;
-   i: integer;
-begin
-     Ini := TIniFile.Create(iniFileName);
-     For i:= 0 to cols-1 do
-        Sender.Columns[i].Width :=ini.ReadInteger(Sender.Name,inttostr(i),15);
-     Ini.Free;
 end;
 
 procedure PopulateCitations(Tableau: TStringGrid; Code: string; Nstr: String);

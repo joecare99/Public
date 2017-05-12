@@ -6,7 +6,7 @@ object frmEditEvents: TfrmEditEvents
   ActiveControl = PD
   BorderIcons = []
   BorderStyle = bsDialog
-  Caption = 'Modification d''un événement'
+  Caption = 'Edit Events'
   ClientHeight = 695
   ClientWidth = 630
   Menu = MainMenu1

@@ -34,7 +34,7 @@ object frmDocuments: TfrmDocuments
     ExtendedSelect = False
     MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
-    PopupMenu = pmnDocuments
+    PopupMenu = mnuDocuments
     TabOrder = 0
     OnDblClick = mnuModifyClick
     OnDrawCell = tblDocumentsDrawCell
@@ -47,31 +47,50 @@ object frmDocuments: TfrmDocuments
       64
     )
   end
-  object pmnDocuments: TPopupMenu
+  object mnuDocuments: TPopupMenu
     left = 346
     top = 55
-    object mnuSetMain: TMenuItem
-      Caption = '&Primaire'
-      ShortCut = 8248
-      OnClick = mnuSetMainClick
+    object mniSetPrefered: TMenuItem
+      Action = actDocumentsSetPrefered
     end
-    object mnuSeparator: TMenuItem
+    object mniSeparator: TMenuItem
       Caption = '-'
     end
-    object mnuAppend: TMenuItem
-      Caption = 'Ajouter'
-      ShortCut = 115
-      OnClick = mnuAppendClick
+    object mniAdd: TMenuItem
+      Action = actDocumentsAdd
     end
-    object mnuModify: TMenuItem
-      Caption = 'Modifier'
-      ShortCut = 116
-      OnClick = mnuModifyClick
+    object mniEdit: TMenuItem
+      Action = actDocumentsEdit
     end
-    object mnuDelete: TMenuItem
-      Caption = 'Supprimer'
-      ShortCut = 117
-      OnClick = mnuDeleteClick
+    object mniDelete: TMenuItem
+      Action = actDocumentsDelete
+    end
+  end
+  object ActionList1: TActionList
+    left = 312
+    top = 56
+    object actDocumentsSetPrefered: TAction
+      Category = 'Documents'
+      Caption = 'Set &Prefered'
+      OnExecute = actDocumentsSetPreferedExecute
+      OnUpdate = actDocumentsSetPreferedUpdate
+    end
+    object actDocumentsAdd: TAction
+      Category = 'Documents'
+      Caption = '&Add'
+      OnExecute = actDocumentsAddExecute
+      OnUpdate = actDocumentsAddUpdate
+    end
+    object actDocumentsEdit: TAction
+      Category = 'Documents'
+      Caption = '&Edit'
+      OnExecute = mnuModifyClick
+    end
+    object actDocumentsDelete: TAction
+      Category = 'Documents'
+      Caption = 'De&lete'
+      OnExecute = actDocumentsDeleteExecute
+      OnUpdate = actDocumentsDeleteUpdate
     end
   end
 end

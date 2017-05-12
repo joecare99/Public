@@ -1583,32 +1583,29 @@ msgstr ""
 msgid "Username"
 msgstr ""
 
-#: tfrmdocuments.mnuappend.caption
-#, fuzzy
-msgctxt "tfrmdocuments.mnuappend.caption"
-msgid "Ajouter"
-msgstr "Anfügen"
-
-#: tfrmdocuments.mnudelete.caption
-#, fuzzy
-msgctxt "tfrmdocuments.mnudelete.caption"
-msgid "Supprimer"
-msgstr "Löschen"
-
-#: tfrmdocuments.mnumodify.caption
-#, fuzzy
-msgctxt "tfrmdocuments.mnumodify.caption"
-msgid "Modifier"
-msgstr "Bearbeiten"
-
-#: tfrmdocuments.mnuseparator.caption
-msgctxt "tfrmdocuments.mnuseparator.caption"
-msgid "-"
+#: tfrmdocuments.actdocumentsadd.caption
+msgctxt "tfrmdocuments.actdocumentsadd.caption"
+msgid "&Add"
 msgstr ""
 
-#: tfrmdocuments.mnusetmain.caption
-msgctxt "tfrmdocuments.mnusetmain.caption"
-msgid "&Primaire"
+#: tfrmdocuments.actdocumentsdelete.caption
+msgctxt "tfrmdocuments.actdocumentsdelete.caption"
+msgid "De&lete"
+msgstr ""
+
+#: tfrmdocuments.actdocumentsedit.caption
+msgctxt "tfrmdocuments.actdocumentsedit.caption"
+msgid "&Edit"
+msgstr ""
+
+#: tfrmdocuments.actdocumentssetprefered.caption
+msgctxt "tfrmdocuments.actdocumentssetprefered.caption"
+msgid "Set &Prefered"
+msgstr ""
+
+#: tfrmdocuments.mniseparator.caption
+msgctxt "tfrmdocuments.mniseparator.caption"
+msgid "-"
 msgstr ""
 
 #: tfrmeditdocuments.button1.caption
@@ -2210,21 +2207,11 @@ msgctxt "tfrmeditname.x.text"
 msgid "X"
 msgstr ""
 
-#: tfrmeditparents.a.text
-msgctxt "tfrmeditparents.a.text"
-msgid "A"
-msgstr ""
-
 #: tfrmeditparents.ajouter1.caption
 #, fuzzy
 msgctxt "tfrmeditparents.ajouter1.caption"
 msgid "&Ajouter"
 msgstr "&Anfügen"
-
-#: tfrmeditparents.b.text
-msgctxt "tfrmeditparents.b.text"
-msgid "B"
-msgstr ""
 
 #: tfrmeditparents.button1.caption
 #, fuzzy
@@ -2471,6 +2458,56 @@ msgctxt "tfrmexplorer.o.text"
 msgid "O"
 msgstr ""
 
+#: tfrmnames.actnamesadd.caption
+msgctxt "tfrmnames.actnamesadd.caption"
+msgid "&Add"
+msgstr ""
+
+#: tfrmnames.actnamesdelete.caption
+msgctxt "tfrmnames.actnamesdelete.caption"
+msgid "De&lete"
+msgstr ""
+
+#: tfrmnames.actnamesedit.caption
+msgctxt "tfrmnames.actnamesedit.caption"
+msgid "&Edit"
+msgstr ""
+
+#: tfrmnames.actnamessetprefered.caption
+msgctxt "tfrmnames.actnamessetprefered.caption"
+msgid "Set &Prefered"
+msgstr ""
+
+#: tfrmnames.cbxliving.itemsex[0].caption
+msgctxt "tfrmnames.cbxliving.itemsex[0].caption"
+msgid "unknown"
+msgstr ""
+
+#: tfrmnames.cbxliving.itemsex[1].caption
+msgctxt "tfrmnames.cbxliving.itemsex[1].caption"
+msgid "living"
+msgstr ""
+
+#: tfrmnames.cbxliving.itemsex[2].caption
+msgctxt "tfrmnames.cbxliving.itemsex[2].caption"
+msgid "dead"
+msgstr ""
+
+#: tfrmnames.cbxsex.itemsex[0].caption
+msgctxt "tfrmnames.cbxsex.itemsex[0].caption"
+msgid "unknown"
+msgstr ""
+
+#: tfrmnames.cbxsex.itemsex[1].caption
+msgctxt "tfrmnames.cbxsex.itemsex[1].caption"
+msgid "Female"
+msgstr ""
+
+#: tfrmnames.cbxsex.itemsex[2].caption
+msgctxt "tfrmnames.cbxsex.itemsex[2].caption"
+msgid "Male"
+msgstr ""
+
 #: tfrmnames.lbllastmodification.caption
 msgid "Last modification at:"
 msgstr ""
@@ -2481,32 +2518,14 @@ msgctxt "tfrmnames.lblmodificationdate.caption"
 msgid "YYYY/MM/DD"
 msgstr "YYYY-MM-DD"
 
-#: tfrmnames.mnuadd.caption
-#, fuzzy
-msgctxt "tfrmnames.mnuadd.caption"
-msgid "Ajouter"
-msgstr "Anfügen"
-
-#: tfrmnames.mnudelete.caption
-#, fuzzy
-msgctxt "tfrmnames.mnudelete.caption"
-msgid "Supprimer"
-msgstr "Löschen"
-
-#: tfrmnames.mnumodify.caption
-#, fuzzy
-msgctxt "tfrmnames.mnumodify.caption"
-msgid "Modifier"
-msgstr "Bearbeiten"
-
-#: tfrmnames.mnuseparator.caption
-msgctxt "tfrmnames.mnuseparator.caption"
+#: tfrmnames.mniseparator.caption
+msgctxt "tfrmnames.mniseparator.caption"
 msgid "-"
 msgstr ""
 
-#: tfrmnames.mnusetprimary.caption
-msgctxt "tfrmnames.mnusetprimary.caption"
-msgid "&Primaire"
+#: tfrmnames.toolbar1.caption
+msgctxt "tfrmnames.toolbar1.caption"
+msgid "ToolBar1"
 msgstr ""
 
 #: tfrmparents.mnddiv1.caption
@@ -2721,7 +2740,7 @@ msgstr ""
 
 #: tfrmstemmamainform.actfilecloseproject.caption
 msgctxt "tfrmstemmamainform.actfilecloseproject.caption"
-msgid "actFileCloseProject"
+msgid "&Close Project"
 msgstr ""
 
 #: tfrmstemmamainform.actfileconndb.caption
@@ -2736,7 +2755,7 @@ msgstr ""
 
 #: tfrmstemmamainform.actfiledeleteproject.caption
 msgctxt "tfrmstemmamainform.actfiledeleteproject.caption"
-msgid "Delete Project"
+msgid "De&lete Project"
 msgstr ""
 
 #: tfrmstemmamainform.actfileexit.caption
@@ -2749,9 +2768,21 @@ msgctxt "tfrmstemmamainform.actfileexit.hint"
 msgid "Beenden"
 msgstr ""
 
+#: tfrmstemmamainform.actfileexportproject.caption
+msgid "&Export Project"
+msgstr ""
+
+#: tfrmstemmamainform.actfileexporttowebsite.caption
+msgid "&Website"
+msgstr ""
+
+#: tfrmstemmamainform.actfileimportfromtmg.caption
+msgid "frm &TMG v4.0"
+msgstr ""
+
 #: tfrmstemmamainform.actfileimportproject.caption
 msgctxt "tfrmstemmamainform.actfileimportproject.caption"
-msgid "Import Project"
+msgid "&Import Project"
 msgstr ""
 
 #: tfrmstemmamainform.actfileopenproject.caption
@@ -2896,22 +2927,12 @@ msgctxt "tfrmstemmamainform.checkbox1.caption"
 msgid "CheckBox1"
 msgstr ""
 
-#: tfrmstemmamainform.importer_projet.caption
-msgctxt "tfrmstemmamainform.importer_projet.caption"
-msgid "&Importer projet"
-msgstr ""
-
 #: tfrmstemmamainform.menuitem49.caption
 #, fuzzy
 #| msgid "À &Propos"
 msgctxt "tfrmstemmamainform.menuitem49.caption"
 msgid "&About"
 msgstr "Ü&ber..."
-
-#: tfrmstemmamainform.menuitem51.caption
-msgctxt "tfrmstemmamainform.menuitem51.caption"
-msgid "&TMG v.4.0d"
-msgstr ""
 
 #: tfrmstemmamainform.menuitem56.caption
 msgctxt "tfrmstemmamainform.menuitem56.caption"
@@ -2926,22 +2947,6 @@ msgstr ""
 #: tfrmstemmamainform.menuitem58.caption
 msgctxt "tfrmstemmamainform.menuitem58.caption"
 msgid "&Langue"
-msgstr ""
-
-#: tfrmstemmamainform.menuitem61.caption
-#, fuzzy
-msgctxt "tfrmstemmamainform.menuitem61.caption"
-msgid "&Fermer projet"
-msgstr "Project s&chliessen"
-
-#: tfrmstemmamainform.menuitem62.caption
-msgctxt "tfrmstemmamainform.menuitem62.caption"
-msgid "&Exporter projet"
-msgstr ""
-
-#: tfrmstemmamainform.menuitem63.caption
-msgctxt "tfrmstemmamainform.menuitem63.caption"
-msgid "Site &Web"
 msgstr ""
 
 #: tfrmstemmamainform.mndappenddivider39.caption
@@ -3142,11 +3147,6 @@ msgstr ""
 msgctxt "tfrmstemmamainform.mniutilitem69.caption"
 msgid "Ajouter les date de tri de relations"
 msgstr "Neue Datum sortieren Beziehungen"
-
-#: tfrmstemmamainform.supprimer_projet.caption
-msgctxt "tfrmstemmamainform.supprimer_projet.caption"
-msgid "Supprimer projet"
-msgstr ""
 
 #: tfrmstemmamainform.toolbar1.caption
 msgctxt "tfrmstemmamainform.toolbar1.caption"

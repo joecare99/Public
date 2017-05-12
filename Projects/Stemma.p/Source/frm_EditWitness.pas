@@ -232,7 +232,7 @@ begin
   else  if (lEvType='D') then
     dmGenData.UpdateNameI4(lDate, lidInd);
 
-  if frmStemmaMainForm.mniExplorateur.Checked and
+  if frmStemmaMainForm.actWinExplorer.Checked and
      ((lEvType='B') or ((lEvType='D'))) and
      (dmGenData.Query1.Fields[1].AsInteger=1) and (X.Text='1') then
 

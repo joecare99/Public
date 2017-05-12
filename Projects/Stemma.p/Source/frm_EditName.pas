@@ -13,6 +13,7 @@ type
   enumNameEditType = (
     eNET_EditExisting,
     eNET_NewUnrelated,
+    eNET_NameVariation,
     eNET_AddFather,
     eNET_AddMother,
     eNET_AddSpouse,
@@ -98,8 +99,10 @@ type
   private
     FEditType: enumNameEditType;
     FRelID: integer;
+    function GetIdInd: integer;
     function GetIdName: integer;
     procedure SetEditType(AValue: enumNameEditType);
+    procedure SetIdInd(AValue: integer);
     procedure SetIdName(AValue: integer);
     procedure SetRelID(AValue: integer);
     { private declarations }
@@ -107,6 +110,7 @@ type
     { public declarations }
     property EditType: enumNameEditType read FEditType write SetEditType;
     property RelID: integer read FRelID write SetRelID;
+    property idInd:integer read GetIdInd write SetIdInd;
     property idName:integer read GetIdName write SetIdName;
   end;
 
@@ -236,9 +240,20 @@ begin
   FEditType := AValue;
 end;
 
+procedure TfrmEditName.SetIdInd(AValue: integer);
+begin
+  if AValue= i.Value then exit;
+  i.Value:=AValue;
+end;
+
 function TfrmEditName.GetIdName: integer;
 begin
   result := no.Value;
+end;
+
+function TfrmEditName.GetIdInd: integer;
+begin
+  result := i.Value;
 end;
 
 procedure TfrmEditName.SetIdName(AValue: integer);
@@ -281,7 +296,7 @@ begin
   lblForPresentation.Caption := Translation.Items[168];
   lblForSorting.Caption := Translation.Items[169];
   TableauNoms.RowCount:=1;
- // TableauNoms.ColCount:=3;
+//  TableauNoms.Columns.c:=3;
   TableauNoms.Columns[0].Title.Caption := Translation.Items[185];
   TableauNoms.Columns[1].title.Caption := Translation.Items[155];
   TableauCitations.RowCount:=1;
@@ -304,7 +319,17 @@ begin
   TableauNoms.RowCount := 5;
   // Populate la form
   Ajout.Text := '0';
+  i.Value:=0;
   case FEditType of
+    eNET_NameVariation:
+      begin
+        TableauNoms.RowCount := 1;
+        i.Value:=frmStemmaMainForm.iID;
+        if dmGenData.GetSexOfInd(idInd) ='M' then
+          cbxSex.ItemIndex:=1
+        else
+          cbxSex.ItemIndex:=2;
+      end;
     eNET_AddSpouse: //New unrelated
     begin
       TableauNoms.RowCount := 1;
@@ -536,8 +561,6 @@ begin
 
   end;
   I.ReadOnly := True;
-  I.Value := 0;
-  X.Text := '1';
   btnOK.Enabled := True;
   if FEditType <> eNET_EditExisting then
   begin
@@ -939,12 +962,12 @@ begin
     dateev := FormatDateTime('YYYY', now);
   if ((StrToInt(FormatDateTime('YYYY', now)) - StrToInt(dateev)) > 100) then
   begin
-    dmGenData.UpdateIndividualVivant(lidInd,'N',frmEditName);
+    dmGenData.UpdateIndLiving(lidInd,'N',frmEditName);
   end;
   if not (frmEditName.I.Value = frmStemmaMainForm.iID) then
     dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
   // Modifier la ligne de l'explorateur
-  if frmStemmaMainForm.mniExplorateur.Checked then
+  if frmStemmaMainForm.actWinExplorer.Checked then
     if lidName <> 0 then
       frmExplorer.UpdateIndex(i2, i1, nom, lidName, lidInd, j)
     else
@@ -1404,7 +1427,7 @@ begin
   if length(P.Text) = 0 then
     P.Text := P1.Text;
   lblDefault.Visible := (P.Text = P1.Text);
-  P2.Text := DecodePhrase(frmStemmaMainForm.sID, 'TEMOIN', P.Text, 'N', No.Text);
+  P2.Text := DecodePhrase(frmStemmaMainForm.iID, 'TEMOIN', P.Text, 'N', No.Value);
   frmStemmaMainForm.DataHist.InsertColRow(False, 0);
   frmStemmaMainForm.DataHist.Cells[0, 0] := 'P';
   frmStemmaMainForm.DataHist.Cells[1, 0] := P.Text;

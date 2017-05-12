@@ -22,7 +22,7 @@ type
     MenuItem7: TMenuItem;
     PopupMenuEvenements: TPopupMenu;
     TableauEvenements: TStringGrid;
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
@@ -31,7 +31,7 @@ type
     procedure MenuItem7Click(Sender: TObject);
     procedure TableauEvenementsDblClick(Sender: TObject);
     procedure TableauEvenementsDrawCell(Sender: TObject; aCol, aRow: Integer;
-      aRect: TRect; aState: TGridDrawState);
+      aRect: TRect; {%H-}aState: TGridDrawState);
   private
     function GetidEvent: Integer;
     { private declarations }
@@ -166,7 +166,7 @@ begin
      begin
      PopulateEvents(Sender);
      // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
-     if frmStemmaMainForm.mniExhibits.Checked then
+     if frmStemmaMainForm.actWinDocuments.Checked then
         PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
   end;
 end;
@@ -200,7 +200,7 @@ begin
            dmGenData.Query1.ExecSQL;
            TableauEvenements.DeleteRow(TableauEvenements.Row);
            // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
-           if frmStemmaMainForm.mniExhibits.Checked then
+           if frmStemmaMainForm.actWinDocuments.Checked then
               PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
         end;
 end;
@@ -208,8 +208,7 @@ end;
 procedure TfrmEvents.MenuItem7Click(Sender: TObject);
 var
   temoins1, temoins2, lEvType, lDate:string;
-  redraw, resort:boolean;
-  j:integer;
+  redraw :boolean;
   lidInd: LongInt;
 begin
    redraw:=false;
@@ -231,7 +230,7 @@ begin
             dmGenData.Query2.ExecSQL;
             TableauEvenements.Cells[1,TableauEvenements.Row]:='';
             redraw:=true;
-            if frmStemmaMainForm.mniExplorateur.Checked then
+            if frmStemmaMainForm.actWinExplorer.Checked then
                frmExplorer.UpdateIndexDates(lEvType,'',lidInd);
          end
          // sinon
@@ -292,13 +291,13 @@ begin
                begin
                 lDate := dmGenData.GetI3(lidInd);
                 dmGenData.UpdateNameI3(lDate,lidInd);
-               if frmStemmaMainForm.mniExplorateur.Checked then
+               if frmStemmaMainForm.actWinExplorer.Checked then
                  frmExplorer.UpdateIndexDates(lEvType,lDate,lidInd);
             end else If lEvType='D' then
                begin
                lDate := dmGenData.GetI3(lidInd);
                dmGenData.UpdateNameI4(lDate,lidInd);
-               if frmStemmaMainForm.mniExplorateur.Checked then
+               if frmStemmaMainForm.actWinExplorer.Checked then
                  frmExplorer.UpdateIndexDates(lEvType,lDate,lidInd);
             end;
          end;
@@ -325,7 +324,7 @@ begin
         begin
         PopulateEvents(Sender);
         // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
-        if frmStemmaMainForm.mniExhibits.Checked then
+        if frmStemmaMainForm.actWinDocuments.Checked then
            PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
      end;
 end;
@@ -356,8 +355,8 @@ end;
 procedure TfrmEvents.FormClose(Sender: TObject;
   var CloseAction: TCloseAction);
 begin
-  SaveFormPosition(Sender as TForm);
-  SaveGridPosition(TableauEvenements as TStringGrid,7);
+  dmGenData.WriteCfgFormPosition(self);
+  dmGenData.WriteCfgGridPosition(TableauEvenements as TStringGrid,7);
 end;
 
 procedure TfrmEvents.FormResize(Sender: TObject);
@@ -379,8 +378,8 @@ begin
   MenuItem4.Caption:=Translation.Items[225];
   MenuItem5.Caption:=Translation.Items[226];
   MenuItem7.Caption:=Translation.Items[234];
-  GetFormPosition(Sender as TForm,0,0,70,1000);
-  GetGridPosition(TableauEvenements as TStringGrid,7);
+  dmGenData.ReadCfgFormPosition(Sender as TForm,0,0,70,1000);
+  dmGenData.ReadCfgGridPosition(TableauEvenements as TStringGrid,7);
   dmGenData.OnModifyEvent:=@PopulateEvents;
   PopulateEvents(Sender);
 end;

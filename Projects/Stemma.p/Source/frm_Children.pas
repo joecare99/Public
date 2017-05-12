@@ -20,7 +20,7 @@ type
     MenuItem5: TMenuItem;
     PopupMenuEnfant: TPopupMenu;
     TableauEnfants: TStringGrid;
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
@@ -28,7 +28,7 @@ type
     procedure MenuItem5Click(Sender: TObject);
     procedure TableauEnfantsDblClick(Sender: TObject);
     procedure TableauEnfantsDrawCell(Sender: TObject; aCol, aRow: Integer;
-      aRect: TRect; aState: TGridDrawState);
+      aRect: TRect; {%H-}aState: TGridDrawState);
   private
     function GetIdChild: integer;
     function GetIdRelation: integer;
@@ -59,7 +59,7 @@ var
   row, principaux:integer;
   naissance,deces, lName:string;
   lidParent: LongInt;
-  bRelExists: Boolean;
+
 begin
   dmGenData.Query1.close;
   dmGenData.Query1.SQL.text:='SELECT R.no, R.X, R.Y, R.A FROM R WHERE R.B=:idInd ORDER BY R.X DESC, R.SD, R.Y';
@@ -107,8 +107,8 @@ end;
 procedure TfrmChildren.FormClose(Sender: TObject; var CloseAction: TCloseAction
   );
 begin
-  SaveFormPosition(Sender as TForm);
-  SaveGridPosition(TableauEnfants as TStringGrid,5);
+  dmGenData.WriteCfgFormPosition(Self);
+  dmGenData.WriteCfgGridPosition(TableauEnfants as TStringGrid,5);
 end;
 
 procedure TfrmChildren.FormResize(Sender: TObject);
@@ -128,8 +128,8 @@ begin
   MenuItem3.Caption:=Translation.Items[224];
   MenuItem4.Caption:=Translation.Items[225];
   MenuItem5.Caption:=Translation.Items[226];
-  GetFormPosition(Sender as TForm,0,0,70,1000);
-  GetGridPosition(TableauEnfants as TStringGrid,5);
+  dmGenData.ReadCfgFormPosition(Sender as TForm,0,0,70,1000);
+  dmGenData.ReadCfgGridPosition(TableauEnfants as TStringGrid,5);
   PopulateEnfants(sender);
 end;
 

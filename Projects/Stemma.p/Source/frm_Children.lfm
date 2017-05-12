@@ -5,7 +5,7 @@ object frmChildren: TfrmChildren
   Width = 416
   ActiveControl = TableauEnfants
   BorderIcons = []
-  Caption = 'Enfants'
+  Caption = 'Children'
   ClientHeight = 167
   ClientWidth = 416
   OnClose = FormClose

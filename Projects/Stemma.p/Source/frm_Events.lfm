@@ -5,7 +5,7 @@ object frmEvents: TfrmEvents
   Width = 320
   ActiveControl = TableauEvenements
   BorderIcons = []
-  Caption = 'Événements'
+  Caption = 'Events'
   ClientHeight = 240
   ClientWidth = 320
   OnClose = FormClose

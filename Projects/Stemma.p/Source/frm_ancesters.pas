@@ -91,7 +91,7 @@ procedure TFormAncetres.FormShow(Sender: TObject);
 begin
   Caption:=Translation.Items[146];
   MenuItem1.Caption:=Translation.Items[222];
-  GetFormPosition(Sender as TForm,0,0,200,200);
+  dmGenData.ReadCfgFormPosition(Sender as TForm,0,0,200,200);
   PopulateAncetres;
 end;
 

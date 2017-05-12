@@ -46,6 +46,9 @@ type
     actAddEvDeath: TAction;
     actAddEvBurial: TAction;
     actHelpAbout: TAction;
+    actFileExportProject: TAction;
+    actFileExportToWebsite: TAction;
+    actFileImportFromTMG: TAction;
     actWinDescendens: TAction;
     actWinAcesters: TAction;
     actWinImages: TAction;
@@ -92,9 +95,9 @@ type
     MenuItem58: TMenuItem;
     MenuItem59: TMenuItem;
     MenuItem60: TMenuItem;
-    MenuItem61: TMenuItem;
-    MenuItem62: TMenuItem;
-    MenuItem63: TMenuItem;
+    mniFileCloseProject: TMenuItem;
+    mniFileExportProject: TMenuItem;
+    mniFileExportToWebsite: TMenuItem;
     mndUtilsDivider64: TMenuItem;
     mniUtilItem65: TMenuItem;
     mniUtilItem66: TMenuItem;
@@ -125,7 +128,7 @@ type
     mniHelp: TMenuItem;
     MenuItem49: TMenuItem;
     mniAddItem50: TMenuItem;
-    MenuItem51: TMenuItem;
+    mniFileImportFromTMG: TMenuItem;
     mndEditDivider52: TMenuItem;
     MenuItem53: TMenuItem;
     mndNavDivider20: TMenuItem;
@@ -161,7 +164,7 @@ type
     mniExplorateur: TMenuItem;
     mniEnfants: TMenuItem;
     mniFratrie: TMenuItem;
-    Supprimer_projet: TMenuItem;
+    mniFileDeleteProject: TMenuItem;
     mndFileDivider1: TMenuItem;
     mniEditCopy: TMenuItem;
     mniEditCut: TMenuItem;
@@ -202,6 +205,8 @@ type
     procedure actFileCreateProjectUpdate(Sender: TObject);
     procedure actFileCloseProjectUpdate(Sender: TObject);
     procedure actFileDeleteProjectUpdate(Sender: TObject);
+    procedure actFileExportProjectUpdate(Sender: TObject);
+    procedure actFileImportFromTMGUpdate(Sender: TObject);
     procedure actHelpShowDebugExecute(Sender: TObject);
     procedure actFileImportProjectUpdate(Sender: TObject);
     procedure actUtilsUpdate(Sender: TObject);
@@ -225,7 +230,7 @@ type
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure FormShowHint(Sender: TObject; HintInfo: PHintInfo);
-    procedure Importer_projetClick(Sender: TObject);
+    procedure actFileImportFromTMGExecute(Sender: TObject);
     procedure IndividuChange(Sender: TObject);
     procedure JvXPStyleManager1ThemeChanged(Sender: TObject);
     procedure mniParentsClick(Sender: TObject);
@@ -264,9 +269,9 @@ type
     procedure MenuItem58Click(Sender: TObject);
     procedure MenuItem57Click(Sender: TObject);
     procedure MenuItem59Click(Sender: TObject);
-    procedure MenuItem60Click(Sender: TObject);
+    procedure actFileCloseProjectExecute(Sender: TObject);
     procedure MenuItem61Click(Sender: TObject);
-    procedure MenuItem63Click(Sender: TObject);
+    procedure actFileExportToWebsiteExecute(Sender: TObject);
     procedure mniUtilItem65Click(Sender: TObject);
     procedure mniUtilItem66Click(Sender: TObject);
     procedure mniUtilItem67Click(Sender: TObject);
@@ -274,7 +279,7 @@ type
     procedure mniUtilItem69Click(Sender: TObject);
     procedure mniEvenementsClick(Sender: TObject);
     procedure OldClick(Sender: TObject);
-    procedure Supprimer_projetClick(Sender: TObject);
+    procedure actFileDeleteProjectExecute(Sender: TObject);
     procedure mniNomsClick(Sender: TObject);
     procedure actFileOpenExecute(Sender: TObject);
     procedure QuitterClick(Sender: TObject);
@@ -395,8 +400,8 @@ begin
   begin
     lExtrawindow.Visible := False;
     DockMaster.MakeDockable(lExtrawindow, True, True);
-    //   if lExtrawindow.Parent is TAnchorDockHostSite then
-    //      TAnchorDockHostSite(lExtrawindow.Parent).OnClose := @OnCloseSite;
+    if lExtrawindow.Parent is TAnchorDockHostSite then
+         TAnchorDockHostSite(lExtrawindow.Parent).OnClose := lExtrawindow.OnClose;
   end
   else
   begin
@@ -646,6 +651,16 @@ begin
   TAction(Sender).Enabled := dmGenData.DB_Connected;
 end;
 
+procedure TfrmStemmaMainForm.actFileExportProjectUpdate(Sender: TObject);
+begin
+  actFileExportProject.Enabled:=dmGenData.DB_Connected and dmGenData.ProjectIsOpen;
+end;
+
+procedure TfrmStemmaMainForm.actFileImportFromTMGUpdate(Sender: TObject);
+begin
+  actFileImportFromTMG.Enabled:=dmGenData.DB_Connected;
+end;
+
 procedure TfrmStemmaMainForm.actHelpShowDebugExecute(Sender: TObject);
 begin
   pnlDebug.Visible := TAction(Sender).Checked;
@@ -811,7 +826,7 @@ begin
   mniCreateProject.Caption := Translation.Items[250];
   mniOpenProject.Caption := Translation.Items[251];
   Importer_projet.Caption := Translation.Items[252];
-  Supprimer_projet.Caption := Translation.Items[254];
+  mniFileDeleteProject.Caption := Translation.Items[254];
   Quitter.Caption := Translation.Items[256];
   mniEdit.Caption := Translation.Items[257];
   mniEditCopy.Caption := Translation.Items[258];
@@ -855,7 +870,7 @@ begin
   mniHelp.Caption := Translation.Items[296];
   MenuItem49.Caption := Translation.Items[297];
   mniAddItem50.Caption := Translation.Items[271];
-  MenuItem51.Caption := Translation.Items[253];
+  mniFileImportFromTMG.Caption := Translation.Items[253];
   MenuItem53.Caption := Translation.Items[263];
   MenuItem55.Caption := Translation.Items[308];
   MenuItem56.Caption := Translation.Items[302];
@@ -863,15 +878,15 @@ begin
   MenuItem58.Caption := Translation.Items[255];
   MenuItem59.Caption := Translation.Items[309];
   MenuItem60.Caption := Translation.Items[310];
-  MenuItem62.Caption := Translation.Items[321];
-  MenuItem63.Caption := Translation.Items[322];
+  mniFileExportProject.Caption := Translation.Items[321];
+  mniFileExportToWebsite.Caption := Translation.Items[322];
   mniUtilItem65.Caption := Translation.Items[335];
   mniUtilItem66.Caption := Translation.Items[336];
   mniUtilItem67.Caption := Translation.Items[338];
   mniUtilItem68.Caption := Translation.Items[339];
   mniUtilItem69.Caption := Translation.Items[340];
 
-  GetFormPosition(Sender as TForm, 0, 0, 70, 1000);
+  dmGenData.ReadCfgFormPosition(Sender as TForm, 0, 0, 70, 1000);
   dmgendata.ReadCfgProject(lDBSchema, lConnected);
   if lConnected then
   begin
@@ -881,8 +896,6 @@ begin
       ShowMessage(Translation.Items[2])
     else
     begin
-      frmStemmaMainForm.MenuItem61.Enabled := True;
-      frmStemmaMainForm.MenuItem62.Enabled := True;
       dmGenData.SetDBSchema(lDBSchema, bSuccess);
     end;
     if not bSuccess then
@@ -908,7 +921,7 @@ begin
 end;
 
 
-procedure TfrmStemmaMainForm.Importer_projetClick(Sender: TObject);
+procedure TfrmStemmaMainForm.actFileImportFromTMGExecute(Sender: TObject);
 var
   ini: TIniFile;
   db, buffer, buffer2, buffer3, buffer5, role, insert, pd,
@@ -2001,8 +2014,8 @@ end;
 
 procedure TfrmStemmaMainForm.MenuItem47Click(Sender: TObject);
 var
-  i1, i2, i3, i4, temp: string;
-  nouveau, j: integer;
+  i1, i2, i3, i4: string;
+  nouveau: integer;
 begin
   // Copier individu
   nouveau := dmGenData.CopyIndividual(frmStemmaMainForm.iID);
@@ -2360,7 +2373,7 @@ begin
   end;
 end;
 
-procedure TfrmStemmaMainForm.MenuItem60Click(Sender: TObject);
+procedure TfrmStemmaMainForm.actFileCloseProjectExecute(Sender: TObject);
 var
   LastRID: longint;
   lidRelation, lidInd, lidNewInd: integer;
@@ -2399,7 +2412,7 @@ begin
   frmStemmaMainForm.iID := 0;
 end;
 
-procedure TfrmStemmaMainForm.MenuItem63Click(Sender: TObject);
+procedure TfrmStemmaMainForm.actFileExportToWebsiteExecute(Sender: TObject);
 var
   MyCursor: Tcursor;
   max_request, nb_file, time_delay: integer;
@@ -4092,7 +4105,7 @@ begin  // Repair Birth-Death
 
   dmGenData.RepairIndBirthDeath(@RepairProgress);
   ProgressBar.Visible := False;
-  if frmStemmaMainForm.mniExplorateur.Checked then
+  if frmStemmaMainForm.actWinExplorer.Checked then
   begin
     frmExplorer.PopulateIndex(StrToInt(frmExplorer.O.Text));
     frmExplorer.FindIndividual;
@@ -4155,7 +4168,7 @@ begin
     Application.ProcessMessages;
   end;
   ProgressBar.Visible := False;
-  if frmStemmaMainForm.mniExplorateur.Checked then
+  if frmStemmaMainForm.actWinExplorer.Checked then
   begin
     frmExplorer.PopulateIndex(StrToInt(frmExplorer.O.Text));
     frmExplorer.FindIndividual;
@@ -4188,7 +4201,7 @@ begin
     iID := (Sender as TMenuItem).tag;
 end;
 
-procedure TfrmStemmaMainForm.Supprimer_projetClick(Sender: TObject);
+procedure TfrmStemmaMainForm.actFileDeleteProjectExecute(Sender: TObject);
 var
   db: string;
   i: integer;

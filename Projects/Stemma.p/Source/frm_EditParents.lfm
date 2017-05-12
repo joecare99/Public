@@ -23,7 +23,7 @@ object frmEditParents: TfrmEditParents
     Default = True
     ModalResult = 1
     OnClick = Button1Click
-    TabOrder = 10
+    TabOrder = 8
   end
   object Y: TComboBox
     Left = 88
@@ -60,7 +60,7 @@ object frmEditParents: TfrmEditParents
     Width = 424
     ReadOnly = True
     TabStop = False
-    TabOrder = 11
+    TabOrder = 9
     Text = 'Nom de B'
   end
   object Label3: TLabel
@@ -81,7 +81,7 @@ object frmEditParents: TfrmEditParents
     )
     OnEditingDone = MEditingDone
     ScrollBars = ssAutoVertical
-    TabOrder = 3
+    TabOrder = 1
   end
   object Label4: TLabel
     Left = 16
@@ -102,7 +102,7 @@ object frmEditParents: TfrmEditParents
     OnDblClick = PDblClick
     OnEditingDone = PEditingDone
     ScrollBars = ssAutoVertical
-    TabOrder = 4
+    TabOrder = 2
   end
   object Label5: TLabel
     Left = 16
@@ -121,7 +121,7 @@ object frmEditParents: TfrmEditParents
     OnEditingDone = SDEditingDone
     ParentShowHint = False
     ShowHint = True
-    TabOrder = 5
+    TabOrder = 3
     Text = 'SD'
   end
   object Y2: TComboBox
@@ -131,7 +131,7 @@ object frmEditParents: TfrmEditParents
     Width = 96
     ItemHeight = 15
     OnChange = YChange
-    TabOrder = 7
+    TabOrder = 5
     TabStop = False
     Text = 'Y'
     Visible = False
@@ -147,7 +147,7 @@ object frmEditParents: TfrmEditParents
     OnDblClick = P2DblClick
     ReadOnly = True
     ScrollBars = ssAutoVertical
-    TabOrder = 8
+    TabOrder = 6
     TabStop = False
     Visible = False
   end
@@ -171,7 +171,7 @@ object frmEditParents: TfrmEditParents
     OnDblClick = PDblClick
     OnEditingDone = PEditingDone
     ScrollBars = ssAutoVertical
-    TabOrder = 9
+    TabOrder = 7
     TabStop = False
     Visible = False
   end
@@ -182,7 +182,7 @@ object frmEditParents: TfrmEditParents
     Width = 232
     ReadOnly = True
     TabStop = False
-    TabOrder = 12
+    TabOrder = 10
     Text = 'SD2'
     Visible = False
   end
@@ -209,7 +209,7 @@ object frmEditParents: TfrmEditParents
     MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
     PopupMenu = PopupMenu2
-    TabOrder = 6
+    TabOrder = 4
     OnDblClick = TableauCitationsDblClick
     ColWidths = (
       1
@@ -241,34 +241,8 @@ object frmEditParents: TfrmEditParents
     Width = 424
     ReadOnly = True
     TabStop = False
-    TabOrder = 13
+    TabOrder = 11
     Text = 'Nom de A'
-  end
-  object B: TMaskEdit
-    Left = 88
-    Height = 23
-    Top = 48
-    Width = 96
-    CharCase = ecNormal
-    MaxLength = 6
-    TabOrder = 1
-    OnEditingDone = BEditingDone
-    EditMask = '######;0; '
-    Text = 'B'
-    SpaceChar = ' '
-  end
-  object A: TMaskEdit
-    Left = 88
-    Height = 23
-    Top = 72
-    Width = 96
-    CharCase = ecNormal
-    MaxLength = 6
-    TabOrder = 2
-    OnEditingDone = AEditingDone
-    EditMask = '######;0; '
-    Text = 'A'
-    SpaceChar = ' '
   end
   object X: TEdit
     Left = 448
@@ -276,7 +250,7 @@ object frmEditParents: TfrmEditParents
     Top = 9
     Width = 80
     TabStop = False
-    TabOrder = 14
+    TabOrder = 12
     Text = 'No'
     Visible = False
   end
@@ -288,7 +262,7 @@ object frmEditParents: TfrmEditParents
     Cancel = True
     Caption = 'Annul.'
     ModalResult = 2
-    TabOrder = 15
+    TabOrder = 13
   end
   object No: TSpinEdit
     Left = 536
@@ -296,8 +270,26 @@ object frmEditParents: TfrmEditParents
     Top = 8
     Width = 80
     TabStop = False
-    TabOrder = 16
+    TabOrder = 14
     Visible = False
+  end
+  object B: TSpinEdit
+    Left = 88
+    Height = 23
+    Top = 48
+    Width = 96
+    OnEditingDone = BEditingDone
+    ReadOnly = True
+    TabOrder = 15
+  end
+  object A: TSpinEdit
+    Left = 88
+    Height = 23
+    Top = 72
+    Width = 96
+    OnEditingDone = AEditingDone
+    ReadOnly = True
+    TabOrder = 16
   end
   object PopupMenu2: TPopupMenu
     left = 80

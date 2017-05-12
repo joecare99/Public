@@ -80,8 +80,8 @@ var
   MyCursor: TCursor;
   temp:string;
 begin
-  GetFormPosition(FormSources,0,0,70,1000);
-  GetGridPosition(FormSources.TableauSources as TStringGrid,6);
+  dmGenData.ReadCfgFormPosition(FormSources,0,0,70,1000);
+  dmGenData.ReadCfgGridPosition(FormSources.TableauSources as TStringGrid,6);
   Caption:=Translation.Items[218];
   Button1.Caption:=Translation.Items[152];
   TableauSources.Cells[2,0]:=Translation.Items[154];

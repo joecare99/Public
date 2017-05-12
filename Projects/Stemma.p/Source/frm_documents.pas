@@ -6,30 +6,38 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Grids, Menus,
-  FMUtils, frm_EditDocuments, frm_Images, LCLType;
+  frm_EditDocuments, frm_Images, LCLType, ActnList;
 
 type
 
   { TfrmDocuments }
 
   TfrmDocuments = class(TForm)
-    mnuSetMain: TMenuItem;
-    mnuSeparator: TMenuItem;
-    mnuAppend: TMenuItem;
-    mnuModify: TMenuItem;
-    mnuDelete: TMenuItem;
-    pmnDocuments: TPopupMenu;
+    actDocumentsDelete: TAction;
+    actDocumentsEdit: TAction;
+    actDocumentsAdd: TAction;
+    actDocumentsSetPrefered: TAction;
+    ActionList1: TActionList;
+    mniSetPrefered: TMenuItem;
+    mniSeparator: TMenuItem;
+    mniAdd: TMenuItem;
+    mniEdit: TMenuItem;
+    mniDelete: TMenuItem;
+    mnuDocuments: TPopupMenu;
     tblDocuments: TStringGrid;
+    procedure actDocumentsAddUpdate(Sender: TObject);
+    procedure actDocumentsDeleteUpdate(Sender: TObject);
+    procedure actDocumentsSetPreferedUpdate(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure mnuSetMainClick(Sender: TObject);
-    procedure mnuAppendClick(Sender: TObject);
-    procedure mnuDeleteClick(Sender: TObject);
+    procedure actDocumentsSetPreferedExecute(Sender: TObject);
+    procedure actDocumentsAddExecute(Sender: TObject);
+    procedure actDocumentsDeleteExecute(Sender: TObject);
     procedure mnuModifyClick(Sender: TObject);
     procedure tblDocumentsDrawCell(Sender: TObject; aCol, aRow: Integer;
-      aRect: TRect; aState: TGridDrawState);
-    procedure tblDocumentsSelection(Sender: TObject; aCol, aRow: Integer);
+      aRect: TRect; {%H-}aState: TGridDrawState);
+    procedure tblDocumentsSelection(Sender: TObject; {%H-}aCol, aRow: Integer);
   private
     { private declarations }
   public
@@ -53,8 +61,24 @@ uses
 procedure TfrmDocuments.FormClose(Sender: TObject; var CloseAction: TCloseAction
   );
 begin
-  SaveFormPosition(Sender as TForm);
-  SaveGridPosition(tblDocuments as TStringGrid,4);
+  dmGenData.WriteCfgFormPosition(Self);
+  dmGenData.WriteCfgGridPosition(tblDocuments as TStringGrid,4);
+end;
+
+procedure TfrmDocuments.actDocumentsSetPreferedUpdate(Sender: TObject);
+begin
+  actDocumentsSetPrefered.Enabled:=tblDocuments.Cells[1,tblDocuments.Row]<> '*';
+end;
+
+procedure TfrmDocuments.actDocumentsAddUpdate(Sender: TObject);
+begin
+  actDocumentsAdd.Enabled:=true;
+end;
+
+procedure TfrmDocuments.actDocumentsDeleteUpdate(Sender: TObject);
+begin
+  actDocumentsDelete.Enabled:=(tblDocuments.Cells[1,tblDocuments.row]<>'*') or
+    (tblDocuments.RowCount<3);
 end;
 
 procedure TfrmDocuments.FormResize(Sender: TObject);
@@ -67,19 +91,19 @@ end;
 procedure TfrmDocuments.FormShow(Sender: TObject);
 begin
   Caption:=Translation.Items[65];
-  mnuSetMain.Caption:=Translation.Items[234];
-  mnuAppend.Caption:=Translation.Items[224];
-  mnuModify.Caption:=Translation.Items[225];
-  mnuDelete.Caption:=Translation.Items[226];
+  mniSetPrefered.Caption:=Translation.Items[234];
+  mniAdd.Caption:=Translation.Items[224];
+  mniEdit.Caption:=Translation.Items[225];
+  mniDelete.Caption:=Translation.Items[226];
   tblDocuments.Cells[2,0]:=Translation.Items[154];
   tblDocuments.Cells[3,0]:=Translation.Items[185];
   tblDocuments.Cells[4,0]:=Translation.Items[201];
-  GetFormPosition(Sender as TForm,0,0,200,200);
-  GetGridPosition(frmDocuments.tblDocuments as TStringGrid,4);
+  dmGenData.ReadCfgFormPosition(Sender as TForm,0,0,200,200);
+  dmGenData.ReadCfgGridPosition(frmDocuments.tblDocuments as TStringGrid,4);
   PopulateDocuments(tblDocuments,'I',frmStemmaMainForm.iID);
 end;
 
-procedure TfrmDocuments.mnuSetMainClick(Sender: TObject);
+procedure TfrmDocuments.actDocumentsSetPreferedExecute(Sender: TObject);
 begin
   if tblDocuments.Cells[3,tblDocuments.row]='I' then
      begin
@@ -104,7 +128,7 @@ begin
      ShowMessage(Translation.Items[61]);
 end;
 
-procedure TfrmDocuments.mnuAppendClick(Sender: TObject);
+procedure TfrmDocuments.actDocumentsAddExecute(Sender: TObject);
 begin
   // Ajouter un exhibit
   dmGenData.PutCode('I',frmStemmaMainForm.iID);
@@ -113,7 +137,7 @@ begin
       PopulateDocuments(tblDocuments,'I',frmStemmaMainForm.iID);
 end;
 
-procedure TfrmDocuments.mnuDeleteClick(Sender: TObject);
+procedure TfrmDocuments.actDocumentsDeleteExecute(Sender: TObject);
 begin
   // Supprimer un exhibit
   if tblDocuments.Row>0 then
@@ -123,7 +147,7 @@ begin
         dmGenData.Query1.SQL.Text:='DELETE FROM X WHERE no='+tblDocuments.Cells[0,tblDocuments.Row];
         dmGenData.Query1.ExecSQL;
         tblDocuments.DeleteRow(tblDocuments.Row);
-        if frmStemmaMainForm.mniImage.Checked then
+        if frmStemmaMainForm.actWinImages.Checked then
            begin
            if tblDocuments.Row>0 then
               tblDocumentsSelection(Sender,0,tblDocuments.Row)

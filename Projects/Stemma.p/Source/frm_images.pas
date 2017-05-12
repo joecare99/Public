@@ -5,8 +5,7 @@ unit frm_Images;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  FMUtils;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls;
 
 type
 
@@ -14,7 +13,7 @@ type
 
   TFormImage = class(TForm)
     Im: TImage;
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -65,7 +64,7 @@ end;
 
 procedure TFormImage.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  SaveFormPosition(Sender as TForm);
+  dmGenData.WriteCfgFormPosition(Sender as TForm);
 end;
 
 procedure TFormImage.FormResize(Sender: TObject);
@@ -77,8 +76,8 @@ end;
 procedure TFormImage.FormShow(Sender: TObject);
 begin
   Caption:=Translation.Items[117];
-  GetFormPosition(Sender as TForm,100,100,200,200);
-  if frmStemmaMainForm.mniExhibits.Checked then
+  dmGenData.ReadCfgFormPosition(Sender as TForm,100,100,200,200);
+  if frmStemmaMainForm.actWinDocuments.Checked then
     if frmDocuments.tblDocuments.Cells[1,frmDocuments.tblDocuments.Row]='*' then
        PopulateImage(0)
     else

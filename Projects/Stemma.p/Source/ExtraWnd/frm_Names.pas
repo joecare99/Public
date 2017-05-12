@@ -6,40 +6,57 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Grids,
-  StdCtrls, ExtCtrls, Spin, Menus, FMUtils, frm_EditName, LCLType;
+  StdCtrls, ExtCtrls, Spin, Menus, FMUtils, frm_EditName, LCLType, Buttons,
+  ComboEx, ActnList, ComCtrls, Types;
 
 type
 
   { TfrmNames }
 
   TfrmNames = class(TForm)
+    actNamesDelete: TAction;
+    actNamesEdit: TAction;
+    actNamesAdd: TAction;
+    actNamesSetPrefered: TAction;
+    alsNames: TActionList;
+    cbxSex: TComboBoxEx;
+    cbxLiving: TComboBoxEx;
+    ilIcons: TImageList;
     lblLastModification: TLabel;
-    mnuSetPrimary: TMenuItem;
-    mnuSeparator: TMenuItem;
-    mnuAdd: TMenuItem;
-    mnuModify: TMenuItem;
-    mnuDelete: TMenuItem;
+    mniNamesSetPrefered: TMenuItem;
+    mniSeparator: TMenuItem;
+    mniNamesAdd: TMenuItem;
+    mniNamesEdit: TMenuItem;
+    mniNamesDelete: TMenuItem;
     lblModificationDate: TLabel;
-    PopupMenuEnfant: TPopupMenu;
-    imgSex: TImage;
+    mnuNames: TPopupMenu;
     edtInterest: TSpinEdit;
-    imgLiving: TImage;
     grdNames: TStringGrid;
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    Panel1: TPanel;
+    ToolBar1: TToolBar;
+    procedure actNamesDeleteUpdate(Sender: TObject);
+    procedure actNamesSetPreferedUpdate(Sender: TObject);
+    procedure cbxLivingChange(Sender: TObject);
+    procedure cbxSexChange(Sender: TObject);
+    procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure edtInterestChange(Sender: TObject);
-    procedure mnuSetPrimaryClick(Sender: TObject);
-    procedure mnuAddClick(Sender: TObject);
-    procedure mnuDeleteClick(Sender: TObject);
-    procedure imgSexDblClick(Sender: TObject);
-    procedure grdNamesDblClick(Sender: TObject);
+    procedure actNamesSetPreferedExecute(Sender: TObject);
+    procedure actNamesAddExecute(Sender: TObject);
+    procedure actNamesDeleteExecute(Sender: TObject);
+    procedure cbxLivingDblClick(Sender: TObject);
+    procedure actNamesEditExecute(Sender: TObject);
+    procedure grdNamesContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
     procedure grdNamesDrawCell(Sender: TObject; aCol, aRow: Integer;
-      aRect: TRect; aState: TGridDrawState);
+      aRect: TRect; {%H-}aState: TGridDrawState);
+    procedure grdNamesResize(Sender: TObject);
     procedure imgLivingDblClick(Sender: TObject);
   private
     function GetIdName: integer;
     procedure ModifyIndividual(Sender: TObject);
+    procedure SetImageIcon(const lcbxEx: TComboBoxEx; const DataId: string);
     { private declarations }
   public
     { public declarations }
@@ -56,66 +73,72 @@ implementation
 uses
   frm_Main,cls_Translation, dm_GenData, frm_Explorer;
 
-procedure UpdateNamesPrefered(const idNamePref, idNameUnPref: integer);
-begin
-  dmGenData.Query1.SQL.Text:='UPDATE N SET X=0 WHERE N.no='+inttostr(idNameUnPref);
-  dmGenData.Query1.ExecSQL;
-  dmGenData.Query1.SQL.Text:='UPDATE N SET X=1 WHERE N.no='+inttostr(idNamePref);
-  dmGenData.Query1.ExecSQL;
-end;
-
-
 {$R *.lfm}
+
+const
+  imgIdChar='?FMON';
+  resFilenames:array[0..4]of string=('inconnu','feminin','masculin','vivant','mort');
 
 { TfrmNames }
 
 procedure TfrmNames.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
      dmGenData.OnModifyIndividual:=nil;
-     SaveFormPosition(Sender as TForm);
-     SaveGridPosition(grdNames as TStringGrid,5);
+     dmGenData.WriteCfgFormPosition(self);
+     dmGenData.WriteCfgGridPosition(grdNames as TStringGrid,5);
+end;
+
+procedure TfrmNames.cbxSexChange(Sender: TObject);
+begin
+  if cbxSex.ItemIndex <> cbxSex.tag then
+    begin
+      cbxSex.Tag := cbxSex.ItemIndex;
+      dmGenData.UpdateIndSex(frmStemmaMainForm.iID,imgIdChar[cbxSex.tag+1],sender);
+      dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
+    end;
+end;
+
+procedure TfrmNames.cbxLivingChange(Sender: TObject);
+begin
+   if cbxLiving.ItemIndex <> cbxLiving.tag then
+    begin
+      cbxLiving.Tag := cbxLiving.ItemIndex;
+  dmGenData.UpdateIndLiving(frmStemmaMainForm.iID,imgIdChar[cbxLiving.Tag*cbxLiving.Tag*3+1-(cbxLiving.Tag div 2)*8],sender);
+     dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
+    end;
+end;
+
+procedure TfrmNames.actNamesSetPreferedUpdate(Sender: TObject);
+begin
+  actNamesSetPrefered.Checked:=grdNames.Cells[1,grdNames.Row] = '*';
+  actNamesSetPrefered.Enabled:=not actNamesSetPrefered.Checked;
+end;
+
+procedure TfrmNames.actNamesDeleteUpdate(Sender: TObject);
+begin
+  actNamesDelete.Enabled:=not (grdNames.Cells[1,grdNames.Row] = '*') or
+    (grdNames.RowCount<3);
 end;
 
 procedure TfrmNames.FormResize(Sender: TObject);
 begin
-  grdNames.Width := (Sender as Tform).Width-17;
-  grdNames.Height := (Sender as Tform).Height-41;
-  grdNames.Columns[3].Width := (Sender as Tform).Width-207;
-  imgSex.Top := (Sender as Tform).Height-32;
-  imgLiving.Top := (Sender as Tform).Height-32;
-  edtInterest.Top := (Sender as Tform).Height-29;
-  lblLastModification.Top := (Sender as Tform).Height-25;
-  lblModificationDate.Top := (Sender as Tform).Height-25;
+
 end;
 
 procedure TfrmNames.PopulateNom(Sender: TObject);
 var
-  filename, sSex, sLiving, sDate, sTypeName:string;
+  sSex, sLiving, sDate:string;
   iInterest, lidInd: LongInt;
+
+
 begin
   lidInd:= frmStemmaMainForm.iID;
   dmGenData.PopulateNameTable(lidInd,grdNames);
 
   if dmGenData.GetDataOfInd(frmStemmaMainForm.iID,sSex,sLiving,sDate,iInterest) then
-  begin
-  If sSex[1]='M' then
-     filename:=resPath+'\masculin.ico'
-  else
-     If sSex[1]='F' then
-        filename:=resPath+'\feminin.ico'
-     else
-        filename:=resPath+'\inconnu.ico';
-   imgSex.hint:=sSex;
-   imgSex.Picture.Icon.LoadFromFile(filename);
-
-   imgLiving.Hint:=sLiving;
-  If  imgLiving.Hint[1]='O' then
-     filename:=resPath+'\vivant.ico'
-  else If  imgLiving.Hint[1]='N' then
-     filename:=resPath+'\mort.ico'
-  else
-     filename:=resPath+'\inconnu.ico';
-   imgLiving.Picture.Icon.LoadFromFile(filename);
+   begin
+   SetImageIcon(cbxSex, sSex);
+   SetImageIcon(cbxLiving, sLiving);
    edtInterest.Value := iInterest;
    lblModificationDate.Caption:=ConvertDate('1'+sDate+'030000000000',1);
    Caption:=Translation.Items[126]+' ('+IntToStr( grdNames.RowCount-1)+
@@ -132,12 +155,12 @@ begin
   grdNames.Cells[4,0]:=Translation.Items[176];
   grdNames.Cells[5,0]:=Translation.Items[177];
   lblLastModification.Caption:=Translation.Items[215];
-  mnuSetPrimary.Caption:=Translation.Items[234];
-  mnuAdd.Caption:=Translation.Items[224];
-  mnuModify.Caption:=Translation.Items[225];
-  mnuDelete.Caption:=Translation.Items[226];
-  GetFormPosition(Sender as TForm,0,0,70,1000);
-  GetGridPosition(grdNames as TStringGrid,5);
+  mniNamesSetPrefered.Caption:=Translation.Items[234];
+  mniNamesAdd.Caption:=Translation.Items[224];
+  mniNamesEdit.Caption:=Translation.Items[225];
+  mniNamesDelete.Caption:=Translation.Items[226];
+  dmGenData.ReadCfgFormPosition(Sender as TForm,0,0,70,1000);
+  dmGenData.ReadCfgGridPosition(grdNames as TStringGrid,5);
   dmGenData.OnModifyIndividual:=@ModifyIndividual;
   PopulateNom(Sender);
 end;
@@ -145,34 +168,29 @@ end;
 procedure TfrmNames.edtInterestChange(Sender: TObject);
 begin
   // Enregistrer la modification
-  dmGenData.Query1.SQL.Clear;
-  dmGenData.Query1.SQL.Add('UPDATE I SET I='+InttoStr(edtInterest.Value)+' WHERE no='+
-                            frmStemmaMainForm.sID);
-  dmGenData.Query1.ExecSQL;
+  dmGenData.UpdateIndInterrest(frmStemmaMainForm.iID,edtInterest.Value,sender);
   dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
 end;
 
-procedure TfrmNames.mnuSetPrimaryClick(Sender: TObject);
+procedure TfrmNames.actNamesSetPreferedExecute(Sender: TObject);
 var
   temp:integer;
   lidName: Integer;
+  lidInd:integer;
 begin
      If grdNames.Cells[1,grdNames.row]='*' then
         ShowMessage(Translation.Items[128])
      else
         begin
-        lidName:=ptrint(grdNames.Objects[0,grdNames.row]);
+        temp:=ptrint(grdNames.Objects[0,grdNames.row]);
+	lidInd:=frmStemmaMainForm.iID;
 
-        // Get idName of prefered name
-        dmGenData.Query1.SQL.Text:='SELECT no FROM N WHERE N.X=1 AND N.I='+
-                                  frmStemmaMainForm.sID;
-        dmGenData.Query1.Open;
-        temp:=dmGenData.Query1.Fields[0].AsInteger;
+        lidName:=dmGenData.getidNameofInd(lidInd);
 
-        UpdateNamesPrefered( temp,lidName);
+        dmGenData.UpdateNamesPrefered( temp,lidName);
         // lblModificationDate la date de modification
         // lblModificationDate l'explorateur si affiché
-        if frmStemmaMainForm.mniExplorateur.Checked then
+        if frmStemmaMainForm.actWinExplorer.Checked then
            frmExplorer.UpdatePreferedMark(temp,lidName);
 
         //frmExplorer.Index.Repaint;
@@ -181,17 +199,17 @@ begin
      end;
 end;
 
-procedure TfrmNames.mnuAddClick(Sender: TObject);  // Ajouter
+procedure TfrmNames.actNamesAddExecute(Sender: TObject);  // Ajouter
 begin
 //     dmGenData.PutCode('A',0);
-  frmEditName.EditType:=eNET_NewUnrelated;
+  frmEditName.EditType:=eNET_NameVariation;
      if frmEditName.Showmodal = mrOK then
         begin
          PopulateNom(Sender);
      end;
 end;
 
-procedure TfrmNames.mnuDeleteClick(Sender: TObject);  // Supprimer
+procedure TfrmNames.actNamesDeleteExecute(Sender: TObject);  // Supprimer
 var
   lidName: Integer;
 begin
@@ -201,44 +219,25 @@ begin
            grdNames.Cells[4,grdNames.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
            begin
            lidName:=ptrint(grdNames.Objects[0,grdNames.Row]);
-           dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE Y=''N'' AND N='+inttostr(lidName);
-           dmGenData.Query1.ExecSQL;
-           dmGenData.Query1.SQL.Text:='DELETE FROM N WHERE no='+inttostr(lidName);
-           dmGenData.Query1.ExecSQL;
-           if frmStemmaMainForm.mniExplorateur.Checked then
+           dmGenData.DeleteCitationb_TypeId('N',lidName);
+           dmGenData.DeleteName(lidName);
+           if frmStemmaMainForm.actWinExplorer.Checked then
               frmExplorer.DeleteIndex(lidName);
            grdNames.DeleteRow(grdNames.Row);
            dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
         end;
 end;
 
-procedure TfrmNames.imgSexDblClick(Sender: TObject);
-var
-  filename:string;
+procedure TfrmNames.cbxLivingDblClick(Sender: TObject);
+
 begin
-  Case imgSex.Hint[1] of
-     'M':begin
-         imgSex.Hint:='F';
-         filename:=resPath+'\feminin.ico';
-         end;
-     'F':begin
-         imgSex.Hint:='?';
-         filename:=resPath+'\inconnu.ico';
-         end;
-     '?':begin
-         imgSex.Hint:='M';
-         filename:=resPath+'\masculin.ico';
-         end;
-  end;
-  imgSex.Picture.Icon.LoadFromFile(filename);
-  // Enregistrer la modification
-  dmGenData.Query1.SQL.Text:='UPDATE I SET S='''+imgSex.Hint+''' WHERE no='+
-                            frmStemmaMainForm.sID;
-  dmGenData.Query1.ExecSQL;
+  cbxSex.Tag := (cbxSex.Tag+1) mod 3;
+  cbxSex.ItemIndex :=cbxSex.Tag;
+  dmGenData.UpdateIndSex(frmStemmaMainForm.iID,imgIdChar[cbxSex.Tag+1],sender);
   dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
 end;
 
-procedure TfrmNames.grdNamesDblClick(Sender: TObject);
+procedure TfrmNames.actNamesEditExecute(Sender: TObject);
 var
   lidName: Longint;
 begin
@@ -248,9 +247,18 @@ begin
      frmEditName.idName:=lidName;
      If frmEditName.Showmodal=mrOK then
           PopulateNom(Sender);
-
-
      end;
+end;
+
+procedure TfrmNames.grdNamesContextPopup(Sender: TObject; MousePos: TPoint;
+  var Handled: Boolean);
+var
+  mC: Classes.TPoint;
+begin
+  mC:= grdNames.MouseToCell(MousePos);
+  grdNames.Row:=mc.y;
+  mnuNames.PopUp;
+  Handled:=true;
 end;
 
 procedure TfrmNames.grdNamesDrawCell(Sender: TObject; aCol, aRow: Integer;
@@ -273,32 +281,26 @@ begin
   end;
 end;
 
-procedure TfrmNames.imgLivingDblClick(Sender: TObject);
+procedure TfrmNames.grdNamesResize(Sender: TObject);
 var
-  filename:string;
+  ww: Integer;
 begin
-  Case imgLiving.Hint[1] of
-     'O':begin
-         imgLiving.Hint:='N';
-         filename:=resPath+'\mort.ico';
-         end;
-     'N':begin
-         imgLiving.Hint:='?';
-         filename:=resPath+'\inconnu.ico';
-         end;
-     '?':begin
-         imgLiving.Hint:='O';
-         filename:=resPath+'\vivant.ico';
-         end;
-  end;
-  imgLiving.Picture.Icon.LoadFromFile(filename);
-  // Enregistrer la modification
-  dmGenData.Query1.SQL.text:='UPDATE I SET V=:living  WHERE no=:idInd';
-  dmGenData.Query1.ParamByName('living').AsString:= imgLiving.Hint;
-  dmGenData.Query1.ParamByName('idInd').AsInteger:=frmStemmaMainForm.iID;
-  dmGenData.Query1.ExecSQL;
+  if grdNames.ColCount>5 then
+    begin
+  ww := grdNames.Columns[0].Width+grdNames.Columns[1].Width+grdNames.Columns[2].Width+grdNames.Columns[4].Width+grdNames.ColCount+2;
+  grdNames.Columns[3].Width := grdNames.Width-ww;
+    end;
+end;
+
+procedure TfrmNames.imgLivingDblClick(Sender: TObject);
+
+begin
+  cbxLiving.Tag := (cbxLiving.Tag+1) mod 3;
+  cbxLiving.ItemIndex :=cbxLiving.Tag;
+  dmGenData.UpdateIndSex(frmStemmaMainForm.iID,imgIdChar[cbxLiving.Tag*cbxLiving.Tag*3+1-(cbxLiving.Tag div 2)*8],sender);
   dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
 end;
+
 
 function TfrmNames.GetIdName: integer;
 begin
@@ -308,6 +310,24 @@ end;
 procedure TfrmNames.ModifyIndividual(Sender: TObject);
 begin
     PopulateNom(Sender);
+end;
+
+procedure TfrmNames.SetImageIcon(const lcbxEx: TComboBoxEx; const DataId: string);
+var
+  i, imgid: Integer;
+begin
+  imgid:=-1;
+  for i := 1 to length(imgIdChar) do
+    if DataId=imgIdChar[i] then
+      begin
+      imgid:=i-1-(i div 4)*2;
+      break
+      end;
+  if imgid>=0 then
+    begin
+    lcbxEx.tag := imgid;
+    lcbxEx.ItemIndex:=imgid;
+    end;
 end;
 
 

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Grids, Menus,
-  FMUtils, frm_EditParents, LCLType;
+  frm_EditParents, LCLType;
 
 type
 
@@ -22,7 +22,7 @@ type
     mniDelete: TMenuItem;
     PopupMenuParent: TPopupMenu;
     TableauParents: TStringGrid;
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure mniGoToClick(Sender: TObject);
@@ -31,7 +31,7 @@ type
     procedure mniDeleteClick(Sender: TObject);
     procedure TableauParentsDblClick(Sender: TObject);
     procedure TableauParentsDrawCell(Sender: TObject; aCol, aRow: Integer;
-      aRect: TRect; aState: TGridDrawState);
+      aRect: TRect; {%H-}aState: TGridDrawState);
   private
     function GetIdRelation: integer;
     { private declarations }
@@ -55,8 +55,8 @@ uses
 procedure TfrmParents.FormClose(Sender: TObject; var CloseAction: TCloseAction
   );
 begin
-  SaveFormPosition(Sender as TForm);
-  SaveGridPosition(TableauParents as TStringGrid,4);
+  dmGenData.WriteCfgFormPosition(self);
+  dmGenData.WriteCfgGridPosition(TableauParents as TStringGrid,4);
 end;
 
 procedure TfrmParents.FormResize(Sender: TObject);
@@ -77,8 +77,8 @@ begin
   mniAdd.Caption:=Translation.Items[224];
   mniEdit.Caption:=Translation.Items[225];
   mniDelete.Caption:=Translation.Items[226];
-  GetFormPosition(Sender as TForm,0,0,70,1000);
-  GetGridPosition(TableauParents as TStringGrid,4);
+  dmGenData.ReadCfgFormPosition(Sender as TForm,0,0,70,1000);
+  dmGenData.ReadCfgGridPosition(TableauParents as TStringGrid,4);
   dmGenData.PopulateParents(frmParents.TableauParents,frmStemmaMainForm.iID);
 end;
 
@@ -153,8 +153,7 @@ begin
            Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
         begin
         dmGenData.SaveModificationTime(ptrint(TableauParents.objects[5,TableauParents.Row]));
-        dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE Y=''R'' AND N='+TableauParents.Cells[0,TableauParents.Row];
-        dmGenData.Query1.ExecSQL;
+        dmGenData.DeleteCitationb_TypeId('R',ptrint(TableauParents.Objects[0,TableauParents.Row]));
         dmGenData.Query1.SQL.Text:='DELETE FROM R WHERE no='+TableauParents.Cells[0,TableauParents.Row];
         dmGenData.Query1.ExecSQL;
         TableauParents.DeleteRow(TableauParents.Row);

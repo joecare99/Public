@@ -6,15 +6,16 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Grids, Menus, FMUtils, StrUtils, frm_EditCitations, LCLType, MaskEdit, Spin;
+  Grids, Menus, FMUtils, StrUtils, frm_EditCitations, LCLType, Spin;
 
 type
 
   { TfrmEditParents }
 
   TfrmEditParents = class(TForm)
+    A: TSpinEdit;
     Ajouter1: TMenuItem;
-    A: TMaskEdit;
+    B: TSpinEdit;
     Button2: TButton;
     Label6: TLabel;
     Label7: TLabel;
@@ -34,7 +35,6 @@ type
     P1: TMemo;
     P2: TMemo;
     PopupMenu2: TPopupMenu;
-    B: TMaskEdit;
     SD: TEdit;
     Button1: TButton;
     Label2: TLabel;
@@ -199,7 +199,7 @@ begin
      P.Text:=P1.Text;
      Label6.Visible:=true;
   end;
-  P2.Text:=DecodePhrase(A.Text,'ENFANT',P.Text,'R',No.Text);
+  P2.Text:=DecodePhrase(A.Value,'ENFANT',P.Text,'R',No.Value);
   Button1.Enabled:=((StrToInt(A.Text)>0) and (StrToInt(B.Text)>0));
   TableauCitations.Enabled:=Button1.Enabled;
   MenuItem5.Enabled:=Button1.Enabled;
@@ -365,7 +365,7 @@ begin
   dmGenData.Query1.Open;
   dmGenData.Query1.First;
   NomB.Text:=DecodeName(dmGenData.Query1.Fields[0].AsString,1);
-  P2.Text:=DecodePhrase(A.Text,'ENFANT',P.Text,'R',No.Text);
+  P2.Text:=DecodePhrase(A.Value,'ENFANT',P.Text,'R',No.Value);
   dmGenData.Query1.SQL.Text:='SELECT I.S FROM I WHERE I.no='+B.Text;
   dmGenData.Query1.Open;
   if dmGenData.Query1.eof then
@@ -388,7 +388,7 @@ begin
   dmGenData.Query1.Open;
   dmGenData.Query1.First;
   NomA.Text:=DecodeName(dmGenData.Query1.Fields[0].AsString,1);
-  P2.Text:=DecodePhrase(A.Text,'ENFANT',P.Text,'R',No.Text);
+  P2.Text:=DecodePhrase(A.Value,'ENFANT',P.Text,'R',No.Value);
   Button1.Enabled:=((StrToInt(A.Text)>0) and (StrToInt(B.Text)>0));
   TableauCitations.Enabled:=Button1.Enabled;
   MenuItem5.Enabled:=Button1.Enabled;
@@ -404,7 +404,7 @@ begin
   dmGenData.PutCode('R',no.text);
   dmGenData.PutCode('A',no.text);
   If EditCitations.Showmodal=mrOK then
-     dmGenData.PopulateCitations(TableauCitations,'R',No.Text);
+     dmGenData.PopulateCitations(TableauCitations,'R',No.Value);
 end;
 
 procedure ParentsSaveData;
@@ -530,8 +530,8 @@ begin
      frmEditParents.no.text:=InttoStr(dmGenData.GetLastIDOfTable('R'));
   end;
   // Sauvegarder les modifications
-  if StrtoInt(frmEditParents.A.Text)>0 then dmGenData.SaveModificationTime(frmEditParents.A.Text);
-  if StrtoInt(frmEditParents.B.Text)>0 then dmGenData.SaveModificationTime(frmEditParents.B.Text);
+  if StrtoInt(frmEditParents.A.Text)>0 then dmGenData.SaveModificationTime(frmEditParents.A.Value);
+  if StrtoInt(frmEditParents.B.Text)>0 then dmGenData.SaveModificationTime(frmEditParents.B.Value);
   // UPDATE DÉCÈS si la date est il y a 100 ans !!!
   if (copy(frmEditParents.SD2.text,1,1)='1') and not (frmEditParents.SD2.text='100000000030000000000') then
      dateev:=Copy(frmEditParents.SD2.text,2,4)
@@ -543,7 +543,7 @@ begin
      dmGenData.Query2.ExecSQL;
      dmGenData.Query2.SQL.Text:='UPDATE I SET V=''N'' WHERE no='+frmEditParents.B.Text;
      dmGenData.Query2.ExecSQL;
-     If (frmStemmaMainForm.mniNoms.Checked) then
+     If (frmStemmaMainForm.actWinNameAndAttr.Checked) then
                frmNames.PopulateNom(frmParents);
   end;
 end;
@@ -616,8 +616,8 @@ begin
         dmGenData.Query1.ExecSQL;
         TableauCitations.DeleteRow(TableauCitations.Row);
         // Sauvegarder les modifications
-        if StrtoInt(A.Text)>0 then dmGenData.SaveModificationTime(A.Text);
-        if StrtoInt(B.Text)>0 then dmGenData.SaveModificationTime(B.Text);
+        if StrtoInt(A.Text)>0 then dmGenData.SaveModificationTime(A.Value);
+        if StrtoInt(B.Text)>0 then dmGenData.SaveModificationTime(B.Value);
      end;
 end;
 

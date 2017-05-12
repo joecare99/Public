@@ -826,31 +826,23 @@ object frmStemmaMainForm: TfrmStemmaMainForm
           0000000000000000000000000000000000000000000000000000
         }
       end
-      object MenuItem61: TMenuItem
-        Caption = '&Fermer projet'
-        Enabled = False
-        OnClick = MenuItem61Click
+      object mniFileCloseProject: TMenuItem
+        Action = actFileCloseProject
       end
       object Importer_projet: TMenuItem
-        Caption = '&Importer projet'
-        Enabled = False
-        object MenuItem51: TMenuItem
-          Caption = '&TMG v.4.0d'
-          OnClick = Importer_projetClick
+        Action = actFileImportProject
+        object mniFileImportFromTMG: TMenuItem
+          Action = actFileImportFromTMG
         end
       end
-      object MenuItem62: TMenuItem
-        Caption = '&Exporter projet'
-        Enabled = False
-        object MenuItem63: TMenuItem
-          Caption = 'Site &Web'
-          OnClick = MenuItem63Click
+      object mniFileExportProject: TMenuItem
+        Action = actFileExportProject
+        object mniFileExportToWebsite: TMenuItem
+          Action = actFileExportToWebsite
         end
       end
-      object Supprimer_projet: TMenuItem
-        Caption = 'Supprimer projet'
-        Enabled = False
-        OnClick = Supprimer_projetClick
+      object mniFileDeleteProject: TMenuItem
+        Action = actFileDeleteProject
       end
       object mndFileDivider4: TMenuItem
         Caption = '-'
@@ -1118,7 +1110,7 @@ object frmStemmaMainForm: TfrmStemmaMainForm
           0000000000000000000000000000000000000000000000000000000000000000
           0000000000000000000000000000000000000000000000000000
         }
-        OnClick = MenuItem60Click
+        OnClick = actFileCloseProjectExecute
       end
       object MenuItem47: TMenuItem
         Action = actEditCopyPerson
@@ -1785,7 +1777,8 @@ object frmStemmaMainForm: TfrmStemmaMainForm
     end
     object actFileCloseProject: TAction
       Category = 'File'
-      Caption = 'actFileCloseProject'
+      Caption = '&Close Project'
+      OnExecute = actFileCloseProjectExecute
       OnUpdate = actFileCloseProjectUpdate
     end
     object actEditCopy: TEditCopy
@@ -1850,14 +1843,14 @@ object frmStemmaMainForm: TfrmStemmaMainForm
     end
     object actFileImportProject: TAction
       Category = 'File'
-      Caption = 'Import Project'
-      OnExecute = Importer_projetClick
+      Caption = '&Import Project'
+      DisableIfNoHandler = False
       OnUpdate = actFileImportProjectUpdate
     end
     object actFileDeleteProject: TAction
       Category = 'File'
-      Caption = 'Delete Project'
-      OnExecute = Supprimer_projetClick
+      Caption = 'De&lete Project'
+      OnExecute = actFileDeleteProjectExecute
       OnUpdate = actFileDeleteProjectUpdate
     end
     object actNavDataSetFirst: TDataSetFirst
@@ -2057,6 +2050,23 @@ object frmStemmaMainForm: TfrmStemmaMainForm
     object actHelpAbout: TAction
       Category = 'Help'
       Caption = 'actHelpAbout'
+    end
+    object actFileExportProject: TAction
+      Category = 'File'
+      Caption = '&Export Project'
+      DisableIfNoHandler = False
+      OnUpdate = actFileExportProjectUpdate
+    end
+    object actFileExportToWebsite: TAction
+      Category = 'File'
+      Caption = '&Website'
+      OnExecute = actFileExportToWebsiteExecute
+    end
+    object actFileImportFromTMG: TAction
+      Category = 'File'
+      Caption = 'frm &TMG v4.0'
+      OnExecute = actFileImportFromTMGExecute
+      OnUpdate = actFileImportFromTMGUpdate
     end
   end
   object imlStandardImages: TImageList

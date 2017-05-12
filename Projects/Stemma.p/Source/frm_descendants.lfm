@@ -3,6 +3,7 @@ object FormDescendants: TFormDescendants
   Height = 240
   Top = 379
   Width = 320
+  ActiveControl = Arbre
   BorderIcons = []
   Caption = 'Descendants'
   ClientHeight = 240

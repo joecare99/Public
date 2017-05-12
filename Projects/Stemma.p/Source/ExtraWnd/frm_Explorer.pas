@@ -21,12 +21,12 @@ type
     PopupMenu1: TPopupMenu;
     edtSearch: TEdit;
     grdIndex: TStringGrid;
-    procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
+    procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure grdIndexDblClick(Sender: TObject);
     procedure grdIndexDrawCell(Sender: TObject; aCol, aRow: integer;
-      aRect: TRect; aState: TGridDrawState);
+      aRect: TRect; {%H-}aState: TGridDrawState);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
@@ -188,8 +188,8 @@ end;
 
 procedure TfrmExplorer.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  SaveFormPosition(Sender as TForm);
-  SaveGridPosition(grdIndex as TStringGrid, 4);
+  dmGenData.WriteCfgFormPosition(self);
+  dmGenData.writecfgGridPosition(grdIndex as TStringGrid, 4);
 end;
 
 procedure TfrmExplorer.FormResize(Sender: TObject);
@@ -212,8 +212,8 @@ begin
   MenuItem4.Caption := Translation.Items[236];
   MenuItem5.Caption := Translation.Items[237];
   MenuItem6.Caption := Translation.Items[238];
-  GetFormPosition(Sender as TForm, 0, 0, 70, 1000);
-  GetGridPosition(grdIndex as TStringGrid, 4);
+  dmGenData.ReadCfgFormPosition(Sender as TForm, 0, 0, 70, 1000);
+  dmGenData.ReadCfgGridPosition(grdIndex as TStringGrid, 4);
   PopulateIndex(2);
   FindIndividual;
 end;

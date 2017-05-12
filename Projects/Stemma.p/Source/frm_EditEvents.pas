@@ -874,7 +874,7 @@ begin
         begin
         PopulateDocuments(TableauExhibits,'E',strtoint(no.text));
         // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
-        if frmStemmaMainForm.mniExhibits.Checked then
+        if frmStemmaMainForm.actWinDocuments.Checked then
            PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
      end;
   end;
@@ -883,8 +883,8 @@ end;
 procedure TfrmEditEvents.Button1Click(Sender: TObject);
 var
   Lieu1,Lieu2,dateev, lEvType, lDate:string;
-  reorder, valide:boolean;
-  lidInd,j,idPlace:integer;
+  valide:boolean;
+  lidInd,idPlace:integer;
 begin
   // Vérifie qu'il y a au moins 1 témoin
   valide:=TableauTemoins.RowCount>1;
@@ -1004,7 +1004,7 @@ begin
            begin
            dmGenData.Query2.SQL.Text:='UPDATE I SET V=''N'' WHERE no='+inttostr(lidInd);
            dmGenData.Query2.ExecSQL;
-           If (frmStemmaMainForm.mniNoms.Checked) and (lidInd=frmStemmaMainForm.iID) then
+           If (frmStemmaMainForm.actWinNameAndAttr.Checked) and (lidInd=frmStemmaMainForm.iID) then
               frmNames.PopulateNom(Sender);
         end;
         dmGenData.Query3.Next;
@@ -1025,13 +1025,13 @@ begin
      begin
     dmGenData.UpdateNameI4(lDate, lidInd);
     // UPDATE DÉCÈS!!!
-     dmGenData.UpdateIndividualVivant(lidInd,'N',                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         Sender);
+     dmGenData.UpdateIndLiving(lidInd,'N',Sender);
      end;
      if  (lidInd>0) and
         ((lEvType='B') or ((lEvType='D'))) and
         (dmGenData.Query1.Fields[1].AsInteger=1) and (X.Text='1') then
         begin
-        if frmStemmaMainForm.mniExplorateur.Checked then
+        if frmStemmaMainForm.actWinExplorer.Checked then
           frmExplorer.UpdateIndexDates(lEvType,lDate,lidInd);
      end;
   end;
@@ -1058,7 +1058,7 @@ begin
      begin
      PopulateDocuments(TableauExhibits,'E',idEvent);
      // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
-     if frmStemmaMainForm.mniExhibits.Checked then
+     if frmStemmaMainForm.actWinDocuments.Checked then
         PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
   end;
 end;
@@ -1128,7 +1128,7 @@ begin
            dmGenData.Query3.Next;
         end;
         // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
-        if frmStemmaMainForm.mniExhibits.Checked then
+        if frmStemmaMainForm.actWinDocuments.Checked then
            PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
      end;
 end;
