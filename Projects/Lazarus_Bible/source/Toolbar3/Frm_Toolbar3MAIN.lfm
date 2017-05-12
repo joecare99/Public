@@ -1,0 +1,160 @@
+object MainForm: TMainForm
+  Left = 200
+  Height = 162
+  Top = 94
+  Width = 410
+  Caption = 'Floating Toolbar Demonstration'
+  ClientHeight = 162
+  ClientWidth = 410
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  OnCreate = FormCreate
+  OnMouseMove = FormMouseMove
+  OnMouseUp = FormMouseUp
+  LCLVersion = '1.4.0.4'
+  object Bevel1: TBevel
+    Left = 96
+    Height = 113
+    Top = 24
+    Width = 153
+  end
+  object Label1: TLabel
+    Left = 112
+    Height = 49
+    Top = 48
+    Width = 121
+    AutoSize = False
+    Caption = 'Click and drag the top of the floating toolbar at left. '
+    ParentColor = False
+    WordWrap = True
+  end
+  object FloatingToolbar: TPanel
+    Left = 15
+    Height = 121
+    Top = 19
+    Width = 66
+    BevelInner = bvRaised
+    BorderStyle = bsSingle
+    ClientHeight = 117
+    ClientWidth = 62
+    TabOrder = 0
+    OnMouseDown = FloatingToolbarMouseDown
+    object SpeedButton1: TSpeedButton
+      Tag = 1
+      Left = 5
+      Height = 25
+      Top = 17
+      Width = 25
+      Caption = '1'
+      OnClick = SpeedButton1Click
+    end
+    object SpeedButton2: TSpeedButton
+      Tag = 2
+      Left = 32
+      Height = 25
+      Top = 17
+      Width = 25
+      Caption = '2'
+      OnClick = SpeedButton1Click
+    end
+    object SpeedButton3: TSpeedButton
+      Tag = 3
+      Left = 5
+      Height = 25
+      Top = 41
+      Width = 25
+      Caption = '3'
+      OnClick = SpeedButton1Click
+    end
+    object SpeedButton4: TSpeedButton
+      Tag = 4
+      Left = 32
+      Height = 25
+      Top = 41
+      Width = 25
+      Caption = '4'
+      OnClick = SpeedButton1Click
+    end
+    object SpeedButton5: TSpeedButton
+      Tag = 5
+      Left = 5
+      Height = 25
+      Top = 65
+      Width = 25
+      Caption = '5'
+      OnClick = SpeedButton1Click
+    end
+    object SpeedButton6: TSpeedButton
+      Tag = 6
+      Left = 32
+      Height = 25
+      Top = 65
+      Width = 25
+      Caption = '6'
+      OnClick = SpeedButton1Click
+    end
+    object SpeedButton7: TSpeedButton
+      Tag = 7
+      Left = 5
+      Height = 25
+      Top = 89
+      Width = 25
+      Caption = '7'
+      OnClick = SpeedButton1Click
+    end
+    object SpeedButton8: TSpeedButton
+      Tag = 8
+      Left = 32
+      Height = 25
+      Top = 89
+      Width = 25
+      Caption = '8'
+      OnClick = SpeedButton1Click
+    end
+  end
+  object BitBtn1: TBitBtn
+    Left = 288
+    Height = 33
+    Top = 104
+    Width = 89
+    Kind = bkClose
+    TabOrder = 1
+  end
+  object AllowDraggingCB: TCheckBox
+    Left = 272
+    Height = 20
+    Top = 32
+    Width = 115
+    Caption = 'Allow dragging'
+    Checked = True
+    OnClick = AllowDraggingCBClick
+    State = cbChecked
+    TabOrder = 2
+  end
+  object ResetBitBtn: TBitBtn
+    Left = 288
+    Height = 33
+    Top = 64
+    Width = 89
+    Caption = 'Reset'
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      0400000000000001000000000000000000001000000010000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      333333333333333333FF33333333333330003FF3FFFFF3333777003000003333
+      300077F777773F333777E00BFBFB033333337773333F7F33333FE0BFBF000333
+      330077F3337773F33377E0FBFBFBF033330077F3333FF7FFF377E0BFBF000000
+      333377F3337777773F3FE0FBFBFBFBFB039977F33FFFFFFF7377E0BF00000000
+      339977FF777777773377000BFB03333333337773FF733333333F333000333333
+      3300333777333333337733333333333333003333333333333377333333333333
+      333333333333333333FF33333333333330003333333333333777333333333333
+      3000333333333333377733333333333333333333333333333333
+    }
+    NumGlyphs = 2
+    OnClick = ResetBitBtnClick
+    TabOrder = 3
+  end
+end
