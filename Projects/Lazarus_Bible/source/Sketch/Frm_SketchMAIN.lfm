@@ -1,0 +1,36 @@
+object MainForm: TMainForm
+  Left = 193
+  Height = 246
+  Top = 99
+  Width = 427
+  Caption = 'Sketch With the Mouse'
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Menu = MainMenu1
+  OnCreate = FormCreate
+  OnDblClick = FormDblClick
+  OnMouseDown = FormMouseDown
+  OnMouseMove = FormMouseMove
+  OnMouseUp = FormMouseUp
+  LCLVersion = '1.4.0.4'
+  object MainMenu1: TMainMenu
+    left = 56
+    top = 8
+    object Demo1: TMenuItem
+      Caption = '&Demo'
+      object Erase1: TMenuItem
+        Caption = '&Erase'
+        OnClick = Erase1Click
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object Exit1: TMenuItem
+        Caption = 'E&xit'
+        OnClick = Exit1Click
+      end
+    end
+  end
+end

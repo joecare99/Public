@@ -1,0 +1,26 @@
+object MainForm: TMainForm
+  Left = 242
+  Height = 118
+  Top = 177
+  Width = 348
+  ActiveControl = ExitButton
+  Caption = 'Splashin Demo'
+  ClientHeight = 118
+  ClientWidth = 348
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  OnCreate = FormCreate
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object ExitButton: TButton
+    Left = 96
+    Height = 73
+    Top = 24
+    Width = 145
+    Caption = 'E&xit'
+    OnClick = ExitButtonClick
+    TabOrder = 0
+  end
+end

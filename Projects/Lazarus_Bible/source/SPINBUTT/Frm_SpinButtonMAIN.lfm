@@ -1,0 +1,110 @@
+object MainForm: TMainForm
+  Left = 200
+  Height = 158
+  Top = 100
+  Width = 357
+  Caption = 'Spin Buttons'
+  ClientHeight = 158
+  ClientWidth = 357
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  OnCreate = FormCreate
+  LCLVersion = '1.2.6.0'
+  object Label1: TLabel
+    Left = 64
+    Height = 16
+    Top = 96
+    Width = 71
+    Caption = 'SpinButton'
+    ParentColor = False
+  end
+  object SpinEdit: TLabel
+    Left = 240
+    Height = 16
+    Top = 72
+    Width = 54
+    Caption = 'SpinEdit'
+    ParentColor = False
+  end
+  object SpinLabel: TLabel
+    Left = 16
+    Height = 27
+    Top = 32
+    Width = 41
+    Alignment = taCenter
+    AutoSize = False
+    Caption = '0'
+    Font.Color = clBlack
+    Font.Height = -24
+    Font.Name = 'Courier New'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object Bevel1: TBevel
+    Left = 8
+    Height = 81
+    Top = 8
+    Width = 177
+  end
+  object Bevel2: TBevel
+    Left = 192
+    Height = 57
+    Top = 8
+    Width = 153
+  end
+  object SpinEdit1: TSpinEdit
+    Left = 208
+    Height = 24
+    Top = 24
+    Width = 121
+    MaxValue = 0
+    TabOrder = 0
+  end
+  object BitBtn1: TBitBtn
+    Left = 112
+    Height = 49
+    Top = 24
+    Width = 57
+    Caption = 'Clear'
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      0400000000000001000000000000000000001000000010000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00500005000555
+      555557777F777555F55500000000555055557777777755F75555005500055055
+      555577F5777F57555555005550055555555577FF577F5FF55555500550050055
+      5555577FF77577FF555555005050110555555577F757777FF555555505099910
+      555555FF75777777FF555005550999910555577F5F77777775F5500505509990
+      3055577F75F77777575F55005055090B030555775755777575755555555550B0
+      B03055555F555757575755550555550B0B335555755555757555555555555550
+      BBB35555F55555575F555550555555550BBB55575555555575F5555555555555
+      50BB555555555555575F555555555555550B5555555555555575
+    }
+    Layout = blGlyphTop
+    NumGlyphs = 2
+    OnClick = BitBtn1Click
+    TabOrder = 2
+  end
+  object BitBtn2: TBitBtn
+    Left = 216
+    Height = 33
+    Top = 104
+    Width = 89
+    Kind = bkClose
+    TabOrder = 1
+  end
+  object UpDown1: TUpDown
+    Left = 56
+    Height = 49
+    Top = 24
+    Width = 29
+    Min = 0
+    Position = 0
+    TabOrder = 3
+    Wrap = False
+    OnChanging = UpDown1Changing
+  end
+end

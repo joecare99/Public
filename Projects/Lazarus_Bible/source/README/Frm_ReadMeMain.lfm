@@ -1,0 +1,39 @@
+object MainForm: TMainForm
+  Left = 238
+  Height = 375
+  Top = 141
+  Width = 462
+  BorderStyle = bsDialog
+  Caption = 'Readme'
+  ClientHeight = 375
+  ClientWidth = 462
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  OnActivate = FormActivate
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  LCLVersion = '1.2.6.0'
+  object Memo1: TMemo
+    Left = 8
+    Height = 329
+    Top = 8
+    Width = 446
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Courier'
+    ParentFont = False
+    ReadOnly = True
+    ScrollBars = ssBoth
+    TabOrder = 0
+  end
+  object BitBtn1: TBitBtn
+    Left = 184
+    Height = 25
+    Top = 344
+    Width = 89
+    Kind = bkClose
+    TabOrder = 1
+  end
+end

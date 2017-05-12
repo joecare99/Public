@@ -1,0 +1,49 @@
+object TestForm: TTestForm
+  Left = 251
+  Height = 127
+  Top = 175
+  Width = 367
+  Caption = 'Call ReadMe'
+  ClientHeight = 127
+  ClientWidth = 367
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -16
+  Font.Name = 'System'
+  OnCreate = FormCreate
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object Bevel1: TBevel
+    Left = 10
+    Height = 101
+    Top = 10
+    Width = 211
+  end
+  object Label1: TLabel
+    Left = 20
+    Height = 81
+    Top = 20
+    Width = 191
+    AutoSize = False
+    Caption = 'Click the button to call README.EXE and display README.TXT in the current directory.'
+    ParentColor = False
+    WordWrap = True
+  end
+  object ClickMeButton: TButton
+    Left = 240
+    Height = 41
+    Top = 20
+    Width = 111
+    Caption = 'Click me!'
+    OnClick = ClickMeButtonClick
+    TabOrder = 0
+  end
+  object BitBtn1: TBitBtn
+    Left = 240
+    Height = 41
+    Top = 70
+    Width = 111
+    Kind = bkClose
+    TabOrder = 1
+  end
+end

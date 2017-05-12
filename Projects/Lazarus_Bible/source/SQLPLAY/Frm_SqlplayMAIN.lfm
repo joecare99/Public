@@ -1,0 +1,143 @@
+object MainForm: TMainForm
+  Left = 225
+  Height = 329
+  Top = 162
+  Width = 440
+  ActiveControl = OpenBitBtn
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'SQL Play'
+  ClientHeight = 329
+  ClientWidth = 440
+  Color = clBtnFace
+  Font.Color = clBlack
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnClose = FormClose
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object Bevel1: TBevel
+    Left = 8
+    Height = 249
+    Top = 40
+    Width = 425
+    Shape = bsFrame
+  end
+  object DBNavigator1: TDBNavigator
+    Left = 200
+    Height = 25
+    Top = 8
+    Width = 232
+    BevelOuter = bvNone
+    ChildSizing.EnlargeHorizontal = crsScaleChilds
+    ChildSizing.EnlargeVertical = crsScaleChilds
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 100
+    ClientHeight = 25
+    ClientWidth = 232
+    DataSource = DataSource1
+    Options = []
+    TabOrder = 4
+    VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbEdit, nbPost, nbCancel, nbRefresh]
+  end
+  object DBGrid1: TDBGrid
+    Left = 16
+    Height = 129
+    Top = 48
+    Width = 409
+    Color = clWindow
+    Columns = <>
+    DataSource = DataSource1
+    TabOrder = 5
+    TitleFont.Color = clBlack
+    TitleFont.Height = -11
+    TitleFont.Name = 'MS Sans Serif'
+  end
+  object Memo1: TMemo
+    Left = 16
+    Height = 97
+    Top = 184
+    Width = 409
+    Lines.Strings = (
+      '1. Open a database and dataset table'
+      '2. Insert SQL statements here'
+      '3. Click Perform to issue the statements'
+      '    to the table'
+    )
+    ScrollBars = ssVertical
+    TabOrder = 2
+  end
+  object PerformBitBtn: TBitBtn
+    Left = 248
+    Height = 25
+    Top = 296
+    Width = 89
+    Caption = '&Perform'
+    Enabled = False
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000120B0000120B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333303333
+      333333333337FF3333333333330003333333333333777F333333333333080333
+      3333333F33777FF33F3333B33B000B33B3333373F777773F7333333BBB0B0BBB
+      33333337737F7F77F333333BBB0F0BBB33333337337373F73F3333BBB0F7F0BB
+      B333337F3737F73F7F3333BB0FB7BF0BB3333F737F37F37F73FFBBBB0BF7FB0B
+      BBB3773F7F37337F377333BB0FBFBF0BB333337F73F333737F3333BBB0FBF0BB
+      B3333373F73FF7337333333BBB000BBB33333337FF777337F333333BBBBBBBBB
+      3333333773FF3F773F3333B33BBBBB33B33333733773773373333333333B3333
+      333333333337F33333333333333B333333333333333733333333
+    }
+    NumGlyphs = 2
+    OnClick = PerformBitBtnClick
+    TabOrder = 1
+  end
+  object CloseBitBtn: TBitBtn
+    Left = 344
+    Height = 25
+    Top = 296
+    Width = 89
+    Kind = bkClose
+    TabOrder = 3
+  end
+  object OpenBitBtn: TBitBtn
+    Left = 152
+    Height = 25
+    Top = 296
+    Width = 89
+    Caption = '&Open...'
+    Default = True
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000130B0000130B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033333333B333
+      333B33FF33337F3333F73BB3777BB7777BB3377FFFF77FFFF77333B000000000
+      0B3333777777777777333330FFFFFFFF07333337F33333337F333330FFFFFFFF
+      07333337F3FF3FFF7F333330F00F000F07333337F77377737F333330FFFFFFFF
+      07333FF7F3FFFF3F7FFFBBB0F0000F0F0BB37777F7777373777F3BB0FFFFFFFF
+      0BBB3777F3FF3FFF77773330F00F000003333337F773777773333330FFFF0FF0
+      33333337F3FF7F37F3333330F08F0F0B33333337F7737F77FF333330FFFF003B
+      B3333337FFFF77377FF333B000000333BB33337777777F3377FF3BB3333BB333
+      3BB33773333773333773B333333B3333333B7333333733333337
+    }
+    NumGlyphs = 2
+    OnClick = OpenBitBtnClick
+    TabOrder = 0
+  end
+  object DataSource1: TDataSource
+    left = 8
+    top = 296
+  end
+  object Query1: TSQLQuery
+    FieldDefs = <>
+    Database = OpenForm.Session
+    Transaction = OpenForm.SQLTransaction1
+    Options = []
+    Params = <>
+    left = 40
+    top = 296
+  end
+end
