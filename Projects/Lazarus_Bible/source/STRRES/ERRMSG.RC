@@ -1,0 +1,10 @@
+STRINGTABLE LOADONCALL MOVEABLE DISCARDABLE
+BEGIN
+  0,  "No error. Trust me."
+  1,  "You can't be serious."
+  2,  "Now you've done it."
+  3,  "Your disk files are history."
+  4,  "File not found. In fact, EVERYTHING is missing!"
+  5,  "Serious internal error. Don't tell anyone."
+  6,  "Feature unavailable. And you paid for this?"
+END
