@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Stemma\n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-03-11 00:02+0100\n"
+"PO-Revision-Date: 2017-05-12 21:45+0200\n"
 "Last-Translator: Joe Care\n"
 "Language-Team: JC-Soft\n"
 "Language: en\n"
@@ -12,7 +12,7 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-"X-Generator: Poedit 1.8.12\n"
+"X-Generator: Poedit 2.0.1\n"
 "X-Poedit-SourceCharset: UTF-8\n"
 
 #: cls_translation.rsmenuhistorycaption
@@ -35,12 +35,12 @@ msgstr "Confirmation"
 #: cls_translation.sdatabasename
 msgctxt "cls_translation.sdatabasename"
 msgid "Database name"
-msgstr ""
+msgstr "Database name"
 
 #: cls_translation.senterdbname
 msgctxt "cls_translation.senterdbname"
 msgid "Enter the database name to be created"
-msgstr ""
+msgstr "Enter the database name to be created"
 
 #: cls_translation.sfamilyname
 #, fuzzy
@@ -51,7 +51,7 @@ msgstr "Name"
 #: cls_translation.sgivenname
 msgctxt "cls_translation.sgivenname"
 msgid "First name"
-msgstr ""
+msgstr "First name"
 
 #: cls_translation.ssuffix
 msgctxt "cls_translation.ssuffix"
@@ -61,7 +61,7 @@ msgstr ""
 #: cls_translation.stitle
 msgctxt "cls_translation.stitle"
 msgid "Title"
-msgstr ""
+msgstr "Title"
 
 #: cls_translation.sunabletoconnecttodb
 #, fuzzy
@@ -74,10 +74,9 @@ msgid "lblActVersion"
 msgstr ""
 
 #: tapropos.lblauthor.caption
-#, fuzzy
 msgctxt "tapropos.lblauthor.caption"
 msgid "par François Marchi"
-msgstr "by François Marchi"
+msgstr "by François Marchi & Joe Care"
 
 #: tapropos.lblcompdate.caption
 msgctxt "tapropos.lblcompdate.caption"
@@ -90,10 +89,9 @@ msgid "date:"
 msgstr "Date:"
 
 #: tapropos.lblprogname.caption
-#, fuzzy
 msgctxt "tapropos.lblprogname.caption"
 msgid "Stemma"
-msgstr "FamilyTree"
+msgstr "Stemma"
 
 #: tapropos.lblversion.caption
 #, fuzzy
@@ -401,7 +399,7 @@ msgstr "&Modify"
 #: teditevenement.no.text
 msgctxt "TEDITEVENEMENT.NO.TEXT"
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: teditevenement.pd.hint
 msgctxt "teditevenement.pd.hint"
@@ -486,7 +484,7 @@ msgstr "File"
 #: teditexhibits.label1.caption
 msgctxt "TEDITEXHIBITS.LABEL1.CAPTION"
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: teditexhibits.label2.caption
 msgctxt "teditexhibits.label2.caption"
@@ -521,7 +519,7 @@ msgstr ""
 #: teditexhibits.no.text
 msgctxt "TEDITEXHIBITS.NO.TEXT"
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: teditexhibits.opendialog.title
 msgctxt "teditexhibits.opendialog.title"
@@ -531,7 +529,7 @@ msgstr ""
 #: teditexhibits.primaire.caption
 msgctxt "teditexhibits.primaire.caption"
 msgid "Primaire"
-msgstr ""
+msgstr "Set &prefered"
 
 #: teditexhibits.titre.text
 msgctxt "teditexhibits.titre.text"
@@ -839,17 +837,17 @@ msgstr "&Modify"
 #: teditparents.no.text
 msgctxt "TEDITPARENTS.NO.TEXT"
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: teditparents.noma.text
 msgctxt "teditparents.noma.text"
 msgid "Nom de A"
-msgstr ""
+msgstr "Name of A"
 
 #: teditparents.nomb.text
 msgctxt "teditparents.nomb.text"
 msgid "Nom de B"
-msgstr ""
+msgstr "Name of B"
 
 #: teditparents.sd.hint
 msgctxt "TEDITPARENTS.SD.HINT"
@@ -875,7 +873,7 @@ msgstr "&Delete"
 #: teditparents.x.text
 msgctxt "TEDITPARENTS.X.TEXT"
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: teditparents.y2.text
 msgctxt "TEDITPARENTS.Y2.TEXT"
@@ -987,12 +985,12 @@ msgstr "&Modify"
 #: teditsource.no.text
 msgctxt "TEDITSOURCE.NO.TEXT"
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: teditsource.noma.text
 msgctxt "TEDITSOURCE.NOMA.TEXT"
 msgid "Nom de A"
-msgstr ""
+msgstr "Name of A"
 
 #: teditsource.supprimer1.caption
 #, fuzzy
@@ -1057,12 +1055,12 @@ msgstr "Repeat"
 #: tedittemoin.no.text
 msgctxt "TEDITTEMOIN.NO.TEXT"
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: tedittemoin.nomi.text
 msgctxt "tedittemoin.nomi.text"
 msgid "Nom de I"
-msgstr ""
+msgstr "Name of I"
 
 #: tedittemoin.x.text
 msgctxt "TEDITTEMOIN.X.TEXT"
@@ -1107,7 +1105,7 @@ msgstr "Repeat"
 #: tedittype.no.text
 msgctxt "TEDITTYPE.NO.TEXT"
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: tedittype.t.text
 msgid "T"
@@ -1214,12 +1212,12 @@ msgstr "-"
 #: tformevenements.menuitem7.caption
 msgctxt "TFORMEVENEMENTS.MENUITEM7.CAPTION"
 msgid "Primaire"
-msgstr ""
+msgstr "Set &prefered"
 
 #: tformexhibits.menuitem1.caption
 msgctxt "tformexhibits.menuitem1.caption"
 msgid "&Primaire"
-msgstr ""
+msgstr "Set &prefered"
 
 #: tformexhibits.menuitem2.caption
 #, fuzzy
@@ -1351,7 +1349,7 @@ msgstr ""
 #: tformnoms.menuitem1.caption
 msgctxt "TFORMNOMS.MENUITEM1.CAPTION"
 msgid "&Primaire"
-msgstr ""
+msgstr "Set &prefered"
 
 #: tformnoms.menuitem2.caption
 #, fuzzy
@@ -1387,7 +1385,7 @@ msgstr "&Go to"
 #: tformparents.menuitem2.caption
 msgctxt "TFORMPARENTS.MENUITEM2.CAPTION"
 msgid "Primaire"
-msgstr ""
+msgstr "Set &prefered"
 
 #: tformparents.menuitem3.caption
 #, fuzzy
@@ -1451,7 +1449,7 @@ msgstr "&Go to"
 #: tformparents.mniprimary.caption
 msgctxt "tformparents.mniprimary.caption"
 msgid "&Primary"
-msgstr ""
+msgstr "Set &prefered"
 
 #: tformselectpersonne.edtname.hint
 msgctxt "tformselectpersonne.edtname.hint"
@@ -1585,19 +1583,19 @@ msgstr "Delete"
 
 #: tfrmconnectdb.edthostname.editlabel.caption
 msgid "Hostname:"
-msgstr ""
+msgstr "Hostname:"
 
 #: tfrmconnectdb.edthostname.texthint
 msgid "Hostname"
-msgstr ""
+msgstr "Hostname"
 
 #: tfrmconnectdb.edtpassword.editlabel.caption
 msgid "Password:"
-msgstr ""
+msgstr "Password:"
 
 #: tfrmconnectdb.edtpassword.texthint
 msgid "Password"
-msgstr ""
+msgstr "Password"
 
 #: tfrmconnectdb.edtuser.editlabel.caption
 msgid "Username:"
@@ -1610,12 +1608,12 @@ msgstr ""
 #: tfrmdocuments.actdocumentsadd.caption
 msgctxt "tfrmdocuments.actdocumentsadd.caption"
 msgid "&Add"
-msgstr ""
+msgstr "&Add"
 
 #: tfrmdocuments.actdocumentsdelete.caption
 msgctxt "tfrmdocuments.actdocumentsdelete.caption"
 msgid "De&lete"
-msgstr ""
+msgstr "De&lete"
 
 #: tfrmdocuments.actdocumentsedit.caption
 #, fuzzy
@@ -1626,7 +1624,7 @@ msgstr "&Edit"
 #: tfrmdocuments.actdocumentssetprefered.caption
 msgctxt "tfrmdocuments.actdocumentssetprefered.caption"
 msgid "Set &Prefered"
-msgstr ""
+msgstr "Set &prefered"
 
 #: tfrmdocuments.mniseparator.caption
 #, fuzzy
@@ -1661,7 +1659,7 @@ msgstr "File"
 #: tfrmeditdocuments.label1.caption
 msgctxt "tfrmeditdocuments.label1.caption"
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: tfrmeditdocuments.label2.caption
 #, fuzzy
@@ -1701,7 +1699,7 @@ msgstr ""
 #: tfrmeditdocuments.no.text
 msgctxt "tfrmeditdocuments.no.text"
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: tfrmeditdocuments.opendialog.title
 msgctxt "tfrmeditdocuments.opendialog.title"
@@ -1711,7 +1709,7 @@ msgstr ""
 #: tfrmeditdocuments.primaire.caption
 msgctxt "tfrmeditdocuments.primaire.caption"
 msgid "Primaire"
-msgstr ""
+msgstr "Set &prefered"
 
 #: tfrmeditdocuments.titre.text
 #, fuzzy
@@ -2044,7 +2042,7 @@ msgstr "&Add"
 
 #: tfrmeditname.cbxsex.itemsex[0].caption
 msgid "Unknown"
-msgstr ""
+msgstr "Unknown"
 
 #: tfrmeditname.cbxsex.itemsex[1].caption
 msgid "Maskulin"
@@ -2355,12 +2353,12 @@ msgstr "&Modify"
 #: tfrmeditparents.noma.text
 msgctxt "tfrmeditparents.noma.text"
 msgid "Nom de A"
-msgstr ""
+msgstr "Name of A"
 
 #: tfrmeditparents.nomb.text
 msgctxt "tfrmeditparents.nomb.text"
 msgid "Nom de B"
-msgstr ""
+msgstr "Name of B"
 
 #: tfrmeditparents.sd.hint
 msgctxt "tfrmeditparents.sd.hint"
@@ -2386,7 +2384,7 @@ msgstr "&Delete"
 #: tfrmeditparents.x.text
 msgctxt "tfrmeditparents.x.text"
 msgid "No"
-msgstr ""
+msgstr "No"
 
 #: tfrmeditparents.y2.text
 msgctxt "tfrmeditparents.y2.text"
@@ -2438,7 +2436,35 @@ msgstr "Repeat"
 #: tfrmeditwitness.nomi.text
 msgctxt "tfrmeditwitness.nomi.text"
 msgid "Nom de I"
+msgstr "Name of I"
+
+#: tfrmevents.acteventsadd.caption
+#, fuzzy
+msgctxt "tfrmevents.acteventsadd.caption"
+msgid "&Add"
+msgstr "&Add"
+
+#: tfrmevents.acteventsdelete.caption
+#, fuzzy
+msgctxt "tfrmevents.acteventsdelete.caption"
+msgid "De&lete"
+msgstr "De&lete"
+
+#: tfrmevents.acteventsedit.caption
+#, fuzzy
+msgctxt "tfrmevents.acteventsedit.caption"
+msgid "&Edit"
+msgstr "&Edit"
+
+#: tfrmevents.acteventsgoto.caption
+msgid "Go to"
 msgstr ""
+
+#: tfrmevents.acteventssetprefered.caption
+#, fuzzy
+msgctxt "tfrmevents.acteventssetprefered.caption"
+msgid "Set &Prefered"
+msgstr "Set &prefered"
 
 #: tfrmevents.menuitem1.caption
 #, fuzzy
@@ -2479,42 +2505,64 @@ msgstr "-"
 #: tfrmevents.menuitem7.caption
 msgctxt "tfrmevents.menuitem7.caption"
 msgid "Primaire"
+msgstr "Set &prefered"
+
+#: tfrmevents.toolbar1.caption
+msgctxt "tfrmevents.toolbar1.caption"
+msgid "ToolBar1"
 msgstr ""
 
-#: tfrmexplorer.menuitem3.caption
-msgctxt "tfrmexplorer.menuitem3.caption"
-msgid "Tri par &prénom"
+#: tfrmexplorer.actexplorerorderbybirth.caption
+msgid "Order by &Birth"
 msgstr ""
 
-#: tfrmexplorer.menuitem4.caption
-msgctxt "tfrmexplorer.menuitem4.caption"
-msgid "Tri par &nom"
+#: tfrmexplorer.actexplorerorderbydeath.caption
+msgid "Order by &Death"
 msgstr ""
 
-#: tfrmexplorer.menuitem5.caption
-msgctxt "tfrmexplorer.menuitem5.caption"
-msgid "Tri par nai&ssance"
+#: tfrmexplorer.actexplorerorderbyfamilyname.caption
+msgid "Order by &Familyname"
 msgstr ""
 
-#: tfrmexplorer.menuitem6.caption
-msgctxt "tfrmexplorer.menuitem6.caption"
-msgid "Tri par &décès"
+#: tfrmexplorer.actexplorerorderbyfirstname.caption
+msgid "Order by &First name"
 msgstr ""
 
-#: tfrmexplorer.o.text
-msgctxt "tfrmexplorer.o.text"
-msgid "O"
+#: tfrmexplorer.btnexplorerorderbybirth.caption
+msgid "&Birth"
+msgstr ""
+
+#: tfrmexplorer.btnexplorerorderbydeath.caption
+#, fuzzy
+msgctxt "tfrmexplorer.btnexplorerorderbydeath.caption"
+msgid "&Death"
+msgstr "&Death"
+
+#: tfrmexplorer.btnexplorerorderbyfamilyname.caption
+msgid "&Family N."
+msgstr ""
+
+#: tfrmexplorer.btnexplorerorderbyfirstname.caption
+msgid "&First N."
+msgstr ""
+
+#: tfrmexplorer.edtsearch.texthint
+msgid "<Search Person>"
+msgstr ""
+
+#: tfrmexplorer.tlbexplorerorderby.caption
+msgid "Order By"
 msgstr ""
 
 #: tfrmnames.actnamesadd.caption
 msgctxt "tfrmnames.actnamesadd.caption"
 msgid "&Add"
-msgstr ""
+msgstr "&Add"
 
 #: tfrmnames.actnamesdelete.caption
 msgctxt "tfrmnames.actnamesdelete.caption"
 msgid "De&lete"
-msgstr ""
+msgstr "De&lete"
 
 #: tfrmnames.actnamesedit.caption
 #, fuzzy
@@ -2525,17 +2573,17 @@ msgstr "&Edit"
 #: tfrmnames.actnamessetprefered.caption
 msgctxt "tfrmnames.actnamessetprefered.caption"
 msgid "Set &Prefered"
-msgstr ""
+msgstr "Set &prefered"
 
 #: tfrmnames.cbxliving.itemsex[0].caption
 msgctxt "tfrmnames.cbxliving.itemsex[0].caption"
 msgid "unknown"
-msgstr ""
+msgstr "unknown"
 
 #: tfrmnames.cbxliving.itemsex[1].caption
 msgctxt "tfrmnames.cbxliving.itemsex[1].caption"
 msgid "living"
-msgstr ""
+msgstr "living"
 
 #: tfrmnames.cbxliving.itemsex[2].caption
 msgctxt "tfrmnames.cbxliving.itemsex[2].caption"
@@ -2545,21 +2593,21 @@ msgstr ""
 #: tfrmnames.cbxsex.itemsex[0].caption
 msgctxt "tfrmnames.cbxsex.itemsex[0].caption"
 msgid "unknown"
-msgstr ""
+msgstr "unknown"
 
 #: tfrmnames.cbxsex.itemsex[1].caption
 msgctxt "tfrmnames.cbxsex.itemsex[1].caption"
 msgid "Female"
-msgstr ""
+msgstr "Female"
 
 #: tfrmnames.cbxsex.itemsex[2].caption
 msgctxt "tfrmnames.cbxsex.itemsex[2].caption"
 msgid "Male"
-msgstr ""
+msgstr "Male"
 
 #: tfrmnames.lbllastmodification.caption
 msgid "Last modification at:"
-msgstr ""
+msgstr "Last modification at:"
 
 #: tfrmnames.lblmodificationdate.caption
 #, fuzzy
@@ -2613,7 +2661,7 @@ msgstr "&Go to"
 #: tfrmparents.mniprimary.caption
 msgctxt "tfrmparents.mniprimary.caption"
 msgid "&Primary"
-msgstr ""
+msgstr "Set &prefered"
 
 #: tfrmrepository.button1.caption
 #, fuzzy
@@ -2689,7 +2737,7 @@ msgstr ""
 
 #: tfrmstemmamainform.actadddaughter.caption
 msgid "D&aughter"
-msgstr ""
+msgstr "D&aughter"
 
 #: tfrmstemmamainform.actaddevbaptism.caption
 msgid "&Baptism"
@@ -2704,8 +2752,9 @@ msgid "B&urial"
 msgstr ""
 
 #: tfrmstemmamainform.actaddevdeath.caption
+msgctxt "tfrmstemmamainform.actaddevdeath.caption"
 msgid "&Death"
-msgstr ""
+msgstr "&Death"
 
 #: tfrmstemmamainform.actaddfather.caption
 msgid "&Father"
@@ -2717,19 +2766,19 @@ msgstr "&Mother"
 
 #: tfrmstemmamainform.actaddsister.caption
 msgid "S&ister"
-msgstr ""
+msgstr "S&ister"
 
 #: tfrmstemmamainform.actaddson.caption
 msgid "S&on"
-msgstr ""
+msgstr "S&on"
 
 #: tfrmstemmamainform.actaddspouse.caption
 msgid "&Spouse"
-msgstr ""
+msgstr "&Spouse"
 
 #: tfrmstemmamainform.actaddunrelated.caption
 msgid "Un&related"
-msgstr ""
+msgstr "Un&related"
 
 #: tfrmstemmamainform.acteditcopy.caption
 msgctxt "tfrmstemmamainform.acteditcopy.caption"
@@ -2794,7 +2843,7 @@ msgstr "Paste"
 #: tfrmstemmamainform.actfilecloseproject.caption
 msgctxt "tfrmstemmamainform.actfilecloseproject.caption"
 msgid "&Close Project"
-msgstr ""
+msgstr "&Close Project"
 
 #: tfrmstemmamainform.actfileconndb.caption
 msgctxt "tfrmstemmamainform.actfileconndb.caption"
@@ -2825,15 +2874,17 @@ msgstr ""
 
 #: tfrmstemmamainform.actfileexportproject.caption
 msgid "&Export Project"
-msgstr ""
+msgstr "&Export Project"
 
 #: tfrmstemmamainform.actfileexporttowebsite.caption
 msgid "&Website"
-msgstr ""
+msgstr "&Website"
 
 #: tfrmstemmamainform.actfileimportfromtmg.caption
-msgid "frm &TMG v4.0"
-msgstr ""
+#, fuzzy
+#| msgid "frm &TMG v4.0"
+msgid "from &TMG v4.0"
+msgstr "frm &TMG v4.0"
 
 #: tfrmstemmamainform.actfileimportproject.caption
 #, fuzzy
@@ -2848,13 +2899,13 @@ msgid "Open Project"
 msgstr "Open Project"
 
 #: tfrmstemmamainform.acthelpabout.caption
-msgid "actHelpAbout"
+msgid "About ..."
 msgstr ""
 
 #: tfrmstemmamainform.acthelpshowdebug.caption
 msgctxt "tfrmstemmamainform.acthelpshowdebug.caption"
 msgid "Show Debug"
-msgstr ""
+msgstr "Show Debug"
 
 #: tfrmstemmamainform.actnavdatasetfirst.caption
 msgctxt "tfrmstemmamainform.actnavdatasetfirst.caption"
@@ -2907,46 +2958,43 @@ msgstr ""
 
 #: tfrmstemmamainform.actnavshowhistory.caption
 msgid "Complete &History"
-msgstr ""
+msgstr "Complete &History"
 
 #: tfrmstemmamainform.actutils.caption
 msgid "Utils"
 msgstr ""
 
 #: tfrmstemmamainform.actutilscompression.caption
-msgid "actUtilsCompression"
+msgctxt "tfrmstemmamainform.actutilscompression.caption"
+msgid "Compression"
 msgstr ""
 
 #: tfrmstemmamainform.actutilseventtypes.caption
-msgid "actUtilsEventTypes"
+msgid "Event-Types"
 msgstr ""
 
 #: tfrmstemmamainform.actutilsplaces.caption
-msgid "actUtilsPlaces"
+msgid "Places"
 msgstr ""
 
 #: tfrmstemmamainform.actutilsrepository.caption
-msgid "actUtilsRepository"
+msgid "Repository"
 msgstr ""
 
 #: tfrmstemmamainform.actutilssources.caption
-msgid "actUtilsSources"
+msgid "Sources"
 msgstr ""
 
-#: tfrmstemmamainform.actwinacesters.caption
-msgid "actWinAcesters"
-msgstr ""
-
-#: tfrmstemmamainform.actwinbrothers.caption
-msgid "actWinBrothers"
+#: tfrmstemmamainform.actwinancesters.caption
+msgid "Ancesters"
 msgstr ""
 
 #: tfrmstemmamainform.actwinchildren.caption
-msgid "actWinChildren"
+msgid "Children"
 msgstr ""
 
 #: tfrmstemmamainform.actwindescendens.caption
-msgid "actWinDescendens"
+msgid "Descendens"
 msgstr ""
 
 #: tfrmstemmamainform.actwindocuments.caption
@@ -2968,7 +3016,7 @@ msgid "Explorer"
 msgstr "Explorer"
 
 #: tfrmstemmamainform.actwinimages.caption
-msgid "actWinImages"
+msgid "Images"
 msgstr ""
 
 #: tfrmstemmamainform.actwinnameandattr.caption
@@ -2979,15 +3027,26 @@ msgstr "Name && Attributes "
 msgid "Parents"
 msgstr "Parents"
 
+#: tfrmstemmamainform.actwinsiblings.caption
+msgid "Siblings"
+msgstr ""
+
+#: tfrmstemmamainform.btnseparator1.caption
+msgid "btnSeparator1"
+msgstr ""
+
+#: tfrmstemmamainform.btnseparator2.caption
+msgid "btnSeparator2"
+msgstr ""
+
+#: tfrmstemmamainform.btnwinimages.caption
+msgid "btnWinImages"
+msgstr ""
+
 #: tfrmstemmamainform.checkbox1.caption
 msgctxt "tfrmstemmamainform.checkbox1.caption"
 msgid "CheckBox1"
 msgstr ""
-
-#: tfrmstemmamainform.menuitem49.caption
-msgctxt "tfrmstemmamainform.menuitem49.caption"
-msgid "&About"
-msgstr "&About"
 
 #: tfrmstemmamainform.menuitem56.caption
 msgctxt "tfrmstemmamainform.menuitem56.caption"
@@ -3076,45 +3135,20 @@ msgctxt "tfrmstemmamainform.mndwindowdivider22.caption"
 msgid "-"
 msgstr "-"
 
-#: tfrmstemmamainform.mniancetres.caption
-msgctxt "tfrmstemmamainform.mniancetres.caption"
-msgid "&Ancêtres"
-msgstr "&Ancestors"
-
-#: tfrmstemmamainform.mnidescendants.caption
-msgctxt "tfrmstemmamainform.mnidescendants.caption"
-msgid "&Descendants"
-msgstr ""
-
 #: tfrmstemmamainform.mniedit.caption
 msgctxt "tfrmstemmamainform.mniedit.caption"
 msgid "&Edit"
 msgstr "&Edit"
 
-#: tfrmstemmamainform.mnienfants.caption
-msgctxt "tfrmstemmamainform.mnienfants.caption"
-msgid "Enf&ants"
-msgstr "&Children"
-
 #: tfrmstemmamainform.mnifile.caption
 msgctxt "tfrmstemmamainform.mnifile.caption"
 msgid "&File"
-msgstr ""
-
-#: tfrmstemmamainform.mnifratrie.caption
-msgctxt "tfrmstemmamainform.mnifratrie.caption"
-msgid "&Fratrie"
-msgstr ""
+msgstr "&File"
 
 #: tfrmstemmamainform.mnihelp.caption
 msgctxt "tfrmstemmamainform.mnihelp.caption"
 msgid "&Help"
 msgstr "&Help"
-
-#: tfrmstemmamainform.mniimage.caption
-msgctxt "tfrmstemmamainform.mniimage.caption"
-msgid "&Image"
-msgstr "&Image"
 
 #: tfrmstemmamainform.mninavold1.caption
 msgctxt "tfrmstemmamainform.mninavold1.caption"
@@ -3233,10 +3267,6 @@ msgstr ""
 #: tfrmstemmamainform.toolbutton8.caption
 msgctxt "tfrmstemmamainform.toolbutton8.caption"
 msgid "ToolButton8"
-msgstr ""
-
-#: tfrmstemmamainform.toolbutton9.caption
-msgid "ToolButton9"
 msgstr ""
 
 #: tfrmtypes.button1.caption
@@ -3382,7 +3412,7 @@ msgstr "Open Project"
 #: tprincipale.acthelpshowdebug.caption
 msgctxt "tprincipale.acthelpshowdebug.caption"
 msgid "Show Debug"
-msgstr ""
+msgstr "Show Debug"
 
 #: tprincipale.actnavdatasetfirst.caption
 msgctxt "tprincipale.actnavdatasetfirst.caption"
@@ -3599,7 +3629,7 @@ msgstr ""
 #: tprincipale.mniadditem40.caption
 msgctxt "tprincipale.mniadditem40.caption"
 msgid "&Naissance"
-msgstr ""
+msgstr "&birth"
 
 #: tprincipale.mniadditem41.caption
 msgctxt "tprincipale.mniadditem41.caption"
@@ -3634,7 +3664,7 @@ msgstr "&Ancestors"
 #: tprincipale.mnidescendants.caption
 msgctxt "TPRINCIPALE.MNIDESCENDANTS.CAPTION"
 msgid "&Descendants"
-msgstr ""
+msgstr "&Descendants"
 
 #: tprincipale.mniedit.caption
 msgctxt "tprincipale.mniedit.caption"
@@ -3659,7 +3689,7 @@ msgstr "D&ocuments"
 #: tprincipale.mnifile.caption
 msgctxt "tprincipale.mnifile.caption"
 msgid "&File"
-msgstr ""
+msgstr "&File"
 
 #: tprincipale.mnifratrie.caption
 msgctxt "TPRINCIPALE.MNIFRATRIE.CAPTION"
@@ -3851,12 +3881,12 @@ msgstr "Confirmation"
 #: traduction.sdatabasename
 msgctxt "traduction.sdatabasename"
 msgid "Database name"
-msgstr ""
+msgstr "Database name"
 
 #: traduction.senterdbname
 msgctxt "traduction.senterdbname"
 msgid "Enter the database name to be created"
-msgstr ""
+msgstr "Enter the database name to be created"
 
 #: traduction.sfamilyname
 #, fuzzy
@@ -3867,7 +3897,7 @@ msgstr "Name"
 #: traduction.sgivenname
 msgctxt "traduction.sgivenname"
 msgid "First name"
-msgstr ""
+msgstr "First name"
 
 #: traduction.ssuffix
 msgctxt "traduction.ssuffix"
@@ -3877,7 +3907,7 @@ msgstr ""
 #: traduction.stitle
 msgctxt "traduction.stitle"
 msgid "Title"
-msgstr ""
+msgstr "Title"
 
 #: traduction.sunabletoconnecttodb
 msgctxt "traduction.sunabletoconnecttodb"

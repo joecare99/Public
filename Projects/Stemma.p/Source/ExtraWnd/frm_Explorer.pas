@@ -6,27 +6,41 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Grids,
-  StdCtrls, Menus, FMUtils;
+  StdCtrls, Menus, Spin, ActnList, ExtCtrls, ComCtrls, FMUtils;
 
 type
 
   { TfrmExplorer }
 
   TfrmExplorer = class(TForm)
-    O: TEdit;
-    MenuItem3: TMenuItem;
-    MenuItem4: TMenuItem;
-    MenuItem5: TMenuItem;
-    MenuItem6: TMenuItem;
-    PopupMenu1: TPopupMenu;
+    actExplorerOrderByFirstname: TAction;
+    actExplorerOrderByFamilyname: TAction;
+    actExplorerOrderByBirth: TAction;
+    actExplorerOrderByDeath: TAction;
+    alsExplorer: TActionList;
+    mniExplorerOrderByFirstname: TMenuItem;
+    mniExplorerOrderByFamilyname: TMenuItem;
+    mniExplorerOrderByBirth: TMenuItem;
+    mniExplorerOrderByDeath: TMenuItem;
+    O: TSpinEdit;
+    mnuExplorer: TPopupMenu;
     edtSearch: TEdit;
     grdIndex: TStringGrid;
+    pnlBottom: TPanel;
+    tlbExplorerOrderBy: TToolBar;
+    btnExplorerOrderByFirstname: TToolButton;
+    btnExplorerOrderByBirth: TToolButton;
+    btnExplorerOrderByFamilyname: TToolButton;
+    btnExplorerOrderByDeath: TToolButton;
+    procedure actExplorerOrderByActUpdate(Sender: TObject);
     procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
-    procedure FormResize(Sender: TObject);
+    procedure grdIndexResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure grdIndexDblClick(Sender: TObject);
     procedure grdIndexDrawCell(Sender: TObject; aCol, aRow: integer;
       aRect: TRect; {%H-}aState: TGridDrawState);
+    procedure grdIndexHeaderClick(Sender: TObject; IsColumn: Boolean;
+      Index: Integer);
     procedure MenuItem3Click(Sender: TObject);
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
@@ -83,7 +97,7 @@ begin
     Application.ProcessMessages;
 
     lGrid := grdIndex;
-    self.O.Text := IntToStr(Order);
+    O.Value := Order;
     lOnProgress := @frmStemmaMainForm.UpdateProgressBar;
 
     dmGenData.FillExplorerIndex(lGrid, Order, lOnProgress);
@@ -98,14 +112,15 @@ var
   j: integer;
   temp: string;
 begin
-  if O.Text = '1' then
-    temp := RemoveUTF8(i2 + ' ' + i1);
-  if O.Text = '2' then
+  case  O.value of
+    1:  temp := RemoveUTF8(i2 + ' ' + i1);
+    2:  temp := RemoveUTF8(i1 + ', ' + i2);
+    3:  temp := i3;
+    4:  temp := i4;
+    else
     temp := RemoveUTF8(i1 + ', ' + i2);
-  if O.Text = '3' then
-    temp := i3;
-  if O.Text = '4' then
-    temp := i4;
+  end;
+
   if length(temp) > 0 then
   begin
     j := grdIndex.Row;
@@ -192,13 +207,24 @@ begin
   dmGenData.writecfgGridPosition(grdIndex as TStringGrid, 4);
 end;
 
-procedure TfrmExplorer.FormResize(Sender: TObject);
+procedure TfrmExplorer.actExplorerOrderByActUpdate(Sender: TObject);
 begin
-  grdIndex.Height := frmExplorer.Height - 42;
-  grdIndex.Width := frmExplorer.Width - 16;
-  edtSearch.Width := frmExplorer.Width - 16;
-  edtSearch.Top := frmExplorer.Height - 27;
-  grdIndex.Columns[1].Width := frmExplorer.Width - 156;
+  if sender.InheritsFrom(TAction) then
+  with sender as TAction do begin
+    checked := O.Value = tag;
+    enabled := not   Checked;
+  end;
+end;
+
+procedure TfrmExplorer.grdIndexResize(Sender: TObject);
+var
+  ww: Integer;
+begin
+  if grdIndex.ColCount >3 then
+  begin
+  ww:=grdIndex.Columns[0].Width + grdIndex.Columns[2].Width+grdIndex.Columns[3].Width + grdIndex.ColCount;
+  grdIndex.Columns[1].Width := grdIndex.Width - ww;
+  end;
 end;
 
 procedure TfrmExplorer.FormShow(Sender: TObject);
@@ -208,10 +234,10 @@ begin
   grdIndex.Cells[2, 0] := Translation.Items[176];
   grdIndex.Cells[3, 0] := Translation.Items[203];
   grdIndex.Cells[4, 0] := Translation.Items[204];
-  MenuItem3.Caption := Translation.Items[235];
-  MenuItem4.Caption := Translation.Items[236];
-  MenuItem5.Caption := Translation.Items[237];
-  MenuItem6.Caption := Translation.Items[238];
+  mniExplorerOrderByFirstname.Caption := Translation.Items[235];
+  mniExplorerOrderByFamilyname.Caption := Translation.Items[236];
+  mniExplorerOrderByBirth.Caption := Translation.Items[237];
+  mniExplorerOrderByDeath.Caption := Translation.Items[238];
   dmGenData.ReadCfgFormPosition(Sender as TForm, 0, 0, 70, 1000);
   dmGenData.ReadCfgGridPosition(grdIndex as TStringGrid, 4);
   PopulateIndex(2);
@@ -233,6 +259,19 @@ begin
     (Sender as TStringGrid).Canvas.TextOut(aRect.Left + 2, aRect.Top + 2,
       (Sender as TStringGrid).Cells[aCol, aRow]);
   end;
+end;
+
+procedure TfrmExplorer.grdIndexHeaderClick(Sender: TObject; IsColumn: Boolean;
+  Index: Integer);
+begin
+  if IsColumn then
+    if index in [3,4] then
+      o.Value := index
+    else
+      if index = 2 then
+        if o.Value in [3,4] then
+          o.Value := 2;
+  PopulateIndex(o.Value);
 end;
 
 procedure TfrmExplorer.MenuItem3Click(Sender: TObject);
@@ -386,17 +425,21 @@ begin
     begin
       grdIndex.Cells[1, j] := IntToStr(lidInd);
       grdIndex.Objects[1, j] := TObject(ptrint(lidInd));
-      if O.Text = '1' then
-        grdIndex.Cells[2, j] := DecodeName(nom, 1)
-      else
-        grdIndex.Cells[2, j] := DecodeName(nom, 2);
-      if O.Text = '1' then
+      case o.Value of
+        1:begin
+        grdIndex.Cells[2, j] := DecodeName(nom, 1);
         grdIndex.Cells[6, j] := RemoveUTF8(i2 + ' ' + i1);
-      if O.Text = '2' then
+        end;
+        2:begin
+        grdIndex.Cells[2, j] := DecodeName(nom, 2);
         grdIndex.Cells[6, j] := RemoveUTF8(i1 + ', ' + i2);
-      if (O.Text = '1') or (O.Text = '2') then
+         end
+        else
+         grdIndex.Cells[2, j] := DecodeName(nom, 2);
+      end;
+      if (O.Value in [1,2]) then
       begin
-        //                 frmExplorer.grdIndex.SortColRow(true,6);
+        //   frmExplorer.grdIndex.SortColRow(true,6);
         FindIndividual;
       end;
       break;
@@ -411,16 +454,19 @@ var
 begin
   i3 := dmGenData.geti3(lidInd);
   i4 := dmGenData.geti4(lidInd);
+  case o.Value of
 
-  if O.Text = '1' then
+  1:
     temp := RemoveUTF8(i2 + ' ' + i1);
-  if O.Text = '2' then
+  2:
     temp := RemoveUTF8(i1 + ', ' + i2);
-  if O.Text = '3' then
+  3:
     temp := i3;
-  if O.Text = '4' then
+  4:
     temp := i4;
-
+  else
+    temp := RemoveUTF8(i1 + ', ' + i2);
+   end;
   if length(temp) > 0 then
   begin
     j := grdIndex.Row;

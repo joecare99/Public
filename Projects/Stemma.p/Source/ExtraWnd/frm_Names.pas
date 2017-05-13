@@ -21,17 +21,17 @@ type
     alsNames: TActionList;
     cbxSex: TComboBoxEx;
     cbxLiving: TComboBoxEx;
+    edtInterest: TSpinEdit;
+    grdNames: TStringGrid;
     ilIcons: TImageList;
     lblLastModification: TLabel;
+    lblModificationDate: TLabel;
     mniNamesSetPrefered: TMenuItem;
     mniSeparator: TMenuItem;
     mniNamesAdd: TMenuItem;
     mniNamesEdit: TMenuItem;
     mniNamesDelete: TMenuItem;
-    lblModificationDate: TLabel;
     mnuNames: TPopupMenu;
-    edtInterest: TSpinEdit;
-    grdNames: TStringGrid;
     Panel1: TPanel;
     ToolBar1: TToolBar;
     procedure actNamesDeleteUpdate(Sender: TObject);
@@ -39,6 +39,7 @@ type
     procedure cbxLivingChange(Sender: TObject);
     procedure cbxSexChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
+    procedure FormCreate(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure edtInterestChange(Sender: TObject);
@@ -73,11 +74,15 @@ implementation
 uses
   frm_Main,cls_Translation, dm_GenData, frm_Explorer;
 
+{$IFDEF FPC}
 {$R *.lfm}
+{$ELSE}
+{$R *.dfm}
+{$ENDIF}
 
 const
   imgIdChar='?FMON';
-  resFilenames:array[0..4]of string=('inconnu','feminin','masculin','vivant','mort');
+  resFilenames:array[0..4]of string=('unknown','female','male','living','dead');
 
 { TfrmNames }
 
@@ -86,6 +91,28 @@ begin
      dmGenData.OnModifyIndividual:=nil;
      dmGenData.WriteCfgFormPosition(self);
      dmGenData.WriteCfgGridPosition(grdNames as TStringGrid,5);
+end;
+
+procedure TfrmNames.FormCreate(Sender: TObject);
+var
+  i: Integer;
+  licon:TIcon;
+begin
+ if directoryexists(resPath) then
+   for i := 0 to length(resFilenames)-1 do
+     begin
+       if fileexists(resPath+DirectorySeparator+resFilenames[i]+'.ico') then
+         begin
+           licon.create;
+           try
+           licon.LoadFromFile(resPath+DirectorySeparator+resFilenames[i]+'.ico');
+           ilIcons.Delete(i);
+           ilIcons.InsertIcon(i,licon);
+           finally
+             freeandnil(licon);
+           end;
+         end;
+     end;
 end;
 
 procedure TfrmNames.cbxSexChange(Sender: TObject);

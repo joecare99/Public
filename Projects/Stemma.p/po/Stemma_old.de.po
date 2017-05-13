@@ -2394,6 +2394,30 @@ msgctxt "tfrmeditwitness.nomi.text"
 msgid "Nom de I"
 msgstr ""
 
+#: tfrmevents.acteventsadd.caption
+msgctxt "tfrmevents.acteventsadd.caption"
+msgid "&Add"
+msgstr ""
+
+#: tfrmevents.acteventsdelete.caption
+msgctxt "tfrmevents.acteventsdelete.caption"
+msgid "De&lete"
+msgstr ""
+
+#: tfrmevents.acteventsedit.caption
+msgctxt "tfrmevents.acteventsedit.caption"
+msgid "&Edit"
+msgstr ""
+
+#: tfrmevents.acteventsgoto.caption
+msgid "Go to"
+msgstr ""
+
+#: tfrmevents.acteventssetprefered.caption
+msgctxt "tfrmevents.acteventssetprefered.caption"
+msgid "Set &Prefered"
+msgstr ""
+
 #: tfrmevents.menuitem1.caption
 #, fuzzy
 msgctxt "tfrmevents.menuitem1.caption"
@@ -2433,29 +2457,50 @@ msgctxt "tfrmevents.menuitem7.caption"
 msgid "Primaire"
 msgstr ""
 
-#: tfrmexplorer.menuitem3.caption
-msgctxt "tfrmexplorer.menuitem3.caption"
-msgid "Tri par &prénom"
+#: tfrmevents.toolbar1.caption
+msgctxt "tfrmevents.toolbar1.caption"
+msgid "ToolBar1"
 msgstr ""
 
-#: tfrmexplorer.menuitem4.caption
-msgctxt "tfrmexplorer.menuitem4.caption"
-msgid "Tri par &nom"
+#: tfrmexplorer.actexplorerorderbybirth.caption
+msgid "Order by &Birth"
 msgstr ""
 
-#: tfrmexplorer.menuitem5.caption
-msgctxt "tfrmexplorer.menuitem5.caption"
-msgid "Tri par nai&ssance"
+#: tfrmexplorer.actexplorerorderbydeath.caption
+msgid "Order by &Death"
 msgstr ""
 
-#: tfrmexplorer.menuitem6.caption
-msgctxt "tfrmexplorer.menuitem6.caption"
-msgid "Tri par &décès"
+#: tfrmexplorer.actexplorerorderbyfamilyname.caption
+msgid "Order by &Familyname"
 msgstr ""
 
-#: tfrmexplorer.o.text
-msgctxt "tfrmexplorer.o.text"
-msgid "O"
+#: tfrmexplorer.actexplorerorderbyfirstname.caption
+msgid "Order by &First name"
+msgstr ""
+
+#: tfrmexplorer.btnexplorerorderbybirth.caption
+msgid "&Birth"
+msgstr ""
+
+#: tfrmexplorer.btnexplorerorderbydeath.caption
+msgctxt "tfrmexplorer.btnexplorerorderbydeath.caption"
+msgid "&Death"
+msgstr ""
+
+#: tfrmexplorer.btnexplorerorderbyfamilyname.caption
+msgid "&Family N."
+msgstr ""
+
+#: tfrmexplorer.btnexplorerorderbyfirstname.caption
+msgid "&First N."
+msgstr ""
+
+#: tfrmexplorer.edtsearch.texthint
+msgid "<Search Person>"
+msgstr ""
+
+#: tfrmexplorer.tlbexplorerorderby.caption
+msgid "Order By"
 msgstr ""
 
 #: tfrmnames.actnamesadd.caption
@@ -2651,6 +2696,7 @@ msgid "B&urial"
 msgstr ""
 
 #: tfrmstemmamainform.actaddevdeath.caption
+msgctxt "tfrmstemmamainform.actaddevdeath.caption"
 msgid "&Death"
 msgstr ""
 
@@ -2777,7 +2823,7 @@ msgid "&Website"
 msgstr ""
 
 #: tfrmstemmamainform.actfileimportfromtmg.caption
-msgid "frm &TMG v4.0"
+msgid "from &TMG v4.0"
 msgstr ""
 
 #: tfrmstemmamainform.actfileimportproject.caption
@@ -2791,7 +2837,7 @@ msgid "Open Project"
 msgstr ""
 
 #: tfrmstemmamainform.acthelpabout.caption
-msgid "actHelpAbout"
+msgid "About ..."
 msgstr ""
 
 #: tfrmstemmamainform.acthelpshowdebug.caption
@@ -2857,39 +2903,36 @@ msgid "Utils"
 msgstr ""
 
 #: tfrmstemmamainform.actutilscompression.caption
-msgid "actUtilsCompression"
+msgctxt "tfrmstemmamainform.actutilscompression.caption"
+msgid "Compression"
 msgstr ""
 
 #: tfrmstemmamainform.actutilseventtypes.caption
-msgid "actUtilsEventTypes"
+msgid "Event-Types"
 msgstr ""
 
 #: tfrmstemmamainform.actutilsplaces.caption
-msgid "actUtilsPlaces"
+msgid "Places"
 msgstr ""
 
 #: tfrmstemmamainform.actutilsrepository.caption
-msgid "actUtilsRepository"
+msgid "Repository"
 msgstr ""
 
 #: tfrmstemmamainform.actutilssources.caption
-msgid "actUtilsSources"
+msgid "Sources"
 msgstr ""
 
-#: tfrmstemmamainform.actwinacesters.caption
-msgid "actWinAcesters"
-msgstr ""
-
-#: tfrmstemmamainform.actwinbrothers.caption
-msgid "actWinBrothers"
+#: tfrmstemmamainform.actwinancesters.caption
+msgid "Ancesters"
 msgstr ""
 
 #: tfrmstemmamainform.actwinchildren.caption
-msgid "actWinChildren"
+msgid "Children"
 msgstr ""
 
 #: tfrmstemmamainform.actwindescendens.caption
-msgid "actWinDescendens"
+msgid "Descendens"
 msgstr ""
 
 #: tfrmstemmamainform.actwindocuments.caption
@@ -2911,7 +2954,7 @@ msgid "Explorer"
 msgstr ""
 
 #: tfrmstemmamainform.actwinimages.caption
-msgid "actWinImages"
+msgid "Images"
 msgstr ""
 
 #: tfrmstemmamainform.actwinnameandattr.caption
@@ -2922,17 +2965,26 @@ msgstr ""
 msgid "Parents"
 msgstr ""
 
+#: tfrmstemmamainform.actwinsiblings.caption
+msgid "Siblings"
+msgstr ""
+
+#: tfrmstemmamainform.btnseparator1.caption
+msgid "btnSeparator1"
+msgstr ""
+
+#: tfrmstemmamainform.btnseparator2.caption
+msgid "btnSeparator2"
+msgstr ""
+
+#: tfrmstemmamainform.btnwinimages.caption
+msgid "btnWinImages"
+msgstr ""
+
 #: tfrmstemmamainform.checkbox1.caption
 msgctxt "tfrmstemmamainform.checkbox1.caption"
 msgid "CheckBox1"
 msgstr ""
-
-#: tfrmstemmamainform.menuitem49.caption
-#, fuzzy
-#| msgid "À &Propos"
-msgctxt "tfrmstemmamainform.menuitem49.caption"
-msgid "&About"
-msgstr "Ü&ber..."
 
 #: tfrmstemmamainform.menuitem56.caption
 msgctxt "tfrmstemmamainform.menuitem56.caption"
@@ -3009,34 +3061,14 @@ msgctxt "tfrmstemmamainform.mndwindowdivider22.caption"
 msgid "-"
 msgstr ""
 
-#: tfrmstemmamainform.mniancetres.caption
-msgctxt "tfrmstemmamainform.mniancetres.caption"
-msgid "&Ancêtres"
-msgstr ""
-
-#: tfrmstemmamainform.mnidescendants.caption
-msgctxt "tfrmstemmamainform.mnidescendants.caption"
-msgid "&Descendants"
-msgstr ""
-
 #: tfrmstemmamainform.mniedit.caption
 msgctxt "tfrmstemmamainform.mniedit.caption"
 msgid "&Edit"
 msgstr ""
 
-#: tfrmstemmamainform.mnienfants.caption
-msgctxt "tfrmstemmamainform.mnienfants.caption"
-msgid "Enf&ants"
-msgstr ""
-
 #: tfrmstemmamainform.mnifile.caption
 msgctxt "tfrmstemmamainform.mnifile.caption"
 msgid "&File"
-msgstr ""
-
-#: tfrmstemmamainform.mnifratrie.caption
-msgctxt "tfrmstemmamainform.mnifratrie.caption"
-msgid "&Fratrie"
 msgstr ""
 
 #: tfrmstemmamainform.mnihelp.caption
@@ -3045,11 +3077,6 @@ msgstr ""
 msgctxt "tfrmstemmamainform.mnihelp.caption"
 msgid "&Help"
 msgstr "&Hilfe"
-
-#: tfrmstemmamainform.mniimage.caption
-msgctxt "tfrmstemmamainform.mniimage.caption"
-msgid "&Image"
-msgstr ""
 
 #: tfrmstemmamainform.mninavold1.caption
 msgctxt "tfrmstemmamainform.mninavold1.caption"
@@ -3169,10 +3196,6 @@ msgstr ""
 #: tfrmstemmamainform.toolbutton8.caption
 msgctxt "tfrmstemmamainform.toolbutton8.caption"
 msgid "ToolButton8"
-msgstr ""
-
-#: tfrmstemmamainform.toolbutton9.caption
-msgid "ToolButton9"
 msgstr ""
 
 #: tfrmtypes.button1.caption

@@ -50,9 +50,9 @@ type
     actFileExportToWebsite: TAction;
     actFileImportFromTMG: TAction;
     actWinDescendens: TAction;
-    actWinAcesters: TAction;
+    actWinAncesters: TAction;
     actWinImages: TAction;
-    actWinBrothers: TAction;
+    actWinSiblings: TAction;
     actWinChildren: TAction;
     actUtilsCompression: TAction;
     actUtilsEventTypes: TAction;
@@ -163,7 +163,7 @@ type
     mndWindowDivider12: TMenuItem;
     mniExplorateur: TMenuItem;
     mniEnfants: TMenuItem;
-    mniFratrie: TMenuItem;
+    mniWinSiblings: TMenuItem;
     mniFileDeleteProject: TMenuItem;
     mndFileDivider1: TMenuItem;
     mniEditCopy: TMenuItem;
@@ -182,11 +182,16 @@ type
     tbtFileExit: TToolButton;
     ToolBar2: TToolBar;
     ToolBar3: TToolBar;
-    tbtnWinExplorer: TToolButton;
-    ToolButton1: TToolButton;
-    ToolButton10: TToolButton;
-    ToolButton11: TToolButton;
-    ToolButton12: TToolButton;
+    btnWinExplorer: TToolButton;
+    btnWinParents: TToolButton;
+    btnWinNameandAttr: TToolButton;
+    btnWinEvents: TToolButton;
+    btnWinDocuments: TToolButton;
+    btnWinChildren: TToolButton;
+    btnWinSiblings: TToolButton;
+    btnWinImages: TToolButton;
+    btnSeparator2: TToolButton;
+    btnWinDescendens: TToolButton;
     ToolButton2: TToolButton;
     ToolButton3: TToolButton;
     ToolButton4: TToolButton;
@@ -198,7 +203,8 @@ type
     ToolButton7: TToolButton;
     ToolButton8: TToolButton;
     tbtEditCopyName: TToolButton;
-    ToolButton9: TToolButton;
+    btnSeparator1: TToolButton;
+    btnWinAncesters: TToolButton;
     procedure actAddFatherUpdate(Sender: TObject);
     procedure actAddSpouseUpdate(Sender: TObject);
     procedure actAddUpdate(Sender: TObject);
@@ -238,13 +244,13 @@ type
     procedure mniExplorateurClick(Sender: TObject);
     procedure mniEnfantsClick(Sender: TObject);
     procedure mniFratrieClick(Sender: TObject);
-    procedure mniAncetresClick(Sender: TObject);
+    procedure actWinAncestersExecute(Sender: TObject);
     procedure mniNavNumber18Click(Sender: TObject);
     procedure actNavShowHistoryExecute(Sender: TObject);
-    procedure mniDescendantsClick(Sender: TObject);
+    procedure actWinDescendensExecute(Sender: TObject);
     procedure mniNavItem24Click(Sender: TObject);
     procedure mniNavItem25Click(Sender: TObject);
-    procedure mniImageClick(Sender: TObject);
+    procedure actWinImagesExecute(Sender: TObject);
     procedure mniUtilItem28Click(Sender: TObject);
     procedure mniUtilItem29Click(Sender: TObject);
     procedure mniUtilItem30Click(Sender: TObject);
@@ -262,7 +268,7 @@ type
     procedure actAddSpouseExecute(Sender: TObject);
     procedure mniEditCopyNameClick(Sender: TObject);
     procedure MenuItem47Click(Sender: TObject);
-    procedure MenuItem49Click(Sender: TObject);
+    procedure actHelpAboutExecute(Sender: TObject);
     procedure mniAddItem50Click(Sender: TObject);
     procedure MenuItem53Click(Sender: TObject);
     procedure MenuItem55Click(Sender: TObject);
@@ -839,7 +845,7 @@ begin
   mniExhibits.Caption := Translation.Items[290];
   mniExplorateur.Caption := Translation.Items[286];
   mniEnfants.Caption := Translation.Items[291];
-  mniFratrie.Caption := Translation.Items[292];
+  mniWinSiblings.Caption := Translation.Items[292];
   mniAncetres.Caption := Translation.Items[294];
   mniNavigation.Caption := Translation.Items[276];
   mniNavNumber18.Caption := Translation.Items[277];
@@ -1639,7 +1645,7 @@ begin
       PopulateDocuments(frmDocuments.tblDocuments, 'I', frmStemmaMainForm.iID);
     if mniEnfants.Checked then
       frmChildren.PopulateEnfants(Sender);
-    if mniFratrie.Checked then
+    if mniWinSiblings.Checked then
       PopulateFratrie;
     if mniAncetres.Checked then
       PopulateAncetres;
@@ -1736,7 +1742,7 @@ begin
   end;
 end;
 
-procedure TfrmStemmaMainForm.mniAncetresClick(Sender: TObject);
+procedure TfrmStemmaMainForm.actWinAncestersExecute(Sender: TObject);
 begin
   if not (Sender as TMenuItem).Checked then
   begin
@@ -1770,7 +1776,7 @@ begin
   frmHistory.ShowModal;
 end;
 
-procedure TfrmStemmaMainForm.mniDescendantsClick(Sender: TObject);
+procedure TfrmStemmaMainForm.actWinDescendensExecute(Sender: TObject);
 begin
   if not (Sender as TMenuItem).Checked then
   begin
@@ -1803,7 +1809,7 @@ begin
   end;
 end;
 
-procedure TfrmStemmaMainForm.mniImageClick(Sender: TObject);
+procedure TfrmStemmaMainForm.actWinImagesExecute(Sender: TObject);
 begin
   if not (Sender as TMenuItem).Checked then
   begin
@@ -2196,7 +2202,7 @@ begin
   frmStemmaMainForm.iID := nouveau;
 end;
 
-procedure TfrmStemmaMainForm.MenuItem49Click(Sender: TObject);
+procedure TfrmStemmaMainForm.actHelpAboutExecute(Sender: TObject);
 begin
   apropos.Showmodal;
 end;

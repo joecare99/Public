@@ -136,7 +136,7 @@
         <PackageName Value="LCL"/>
       </Item6>
     </RequiredPackages>
-    <Units Count="58">
+    <Units Count="49">
       <Unit0>
         <Filename Value="Stemma.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -151,8 +151,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="421"/>
-        <CursorPos Y="447"/>
+        <TopLine Value="1721"/>
+        <CursorPos Y="1747"/>
         <UsageCount Value="210"/>
       </Unit1>
       <Unit2>
@@ -181,10 +181,9 @@
         <ComponentName Value="frmNames"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="230"/>
-        <CursorPos X="17" Y="260"/>
+        <TopLine Value="41"/>
+        <CursorPos X="31" Y="63"/>
         <UsageCount Value="205"/>
       </Unit4>
       <Unit5>
@@ -194,7 +193,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
-        <CursorPos X="51" Y="24"/>
+        <TopLine Value="199"/>
+        <CursorPos X="38" Y="215"/>
         <UsageCount Value="226"/>
       </Unit5>
       <Unit6>
@@ -239,14 +239,16 @@
         <UsageCount Value="243"/>
       </Unit9>
       <Unit10>
-        <Filename Value="..\Source\frm_Events.pas"/>
+        <Filename Value="..\Source\ExtraWnd\frm_events.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmEvents"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Events"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="275"/>
-        <CursorPos X="19" Y="300"/>
+        <TopLine Value="261"/>
+        <CursorPos Y="284"/>
         <UsageCount Value="242"/>
       </Unit10>
       <Unit11>
@@ -480,8 +482,8 @@
         <ResourceBaseClass Value="DataModule"/>
         <UnitName Value="dm_GenData"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="1601"/>
-        <CursorPos Y="1627"/>
+        <TopLine Value="1771"/>
+        <CursorPos X="31" Y="1797"/>
         <UsageCount Value="203"/>
       </Unit31>
       <Unit32>
@@ -496,7 +498,7 @@
         <Filename Value="..\..\Indy10\Lib\System\IdStream.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="29" Y="21"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="30"/>
       </Unit33>
       <Unit34>
         <Filename Value="..\..\..\Delphi\Examples\Source\Prj_TestDocking\frm_dockingmain.pas"/>
@@ -507,7 +509,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="77"/>
         <CursorPos X="69" Y="246"/>
-        <UsageCount Value="30"/>
+        <UsageCount Value="28"/>
       </Unit34>
       <Unit35>
         <Filename Value="C:\lazarus\lcl\graphics.pp"/>
@@ -515,7 +517,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="2361"/>
         <CursorPos X="52" Y="2368"/>
-        <UsageCount Value="0"/>
+        <UsageCount Value="8"/>
       </Unit35>
       <Unit36>
         <Filename Value="C:\lazarus\lcl\interfaces\win32\win32wsforms.pp"/>
@@ -523,21 +525,21 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="695"/>
         <CursorPos Y="720"/>
-        <UsageCount Value="0"/>
+        <UsageCount Value="8"/>
       </Unit36>
       <Unit37>
         <Filename Value="C:\lazarus\lcl\include\spinedit.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="197"/>
         <CursorPos Y="218"/>
-        <UsageCount Value="77"/>
+        <UsageCount Value="75"/>
       </Unit37>
       <Unit38>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\fcl-db\src\base\dsparams.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="168"/>
         <CursorPos X="30" Y="197"/>
-        <UsageCount Value="32"/>
+        <UsageCount Value="30"/>
       </Unit38>
       <Unit39>
         <Filename Value="C:\lazarus\lcl\dialogs.pp"/>
@@ -545,7 +547,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="540"/>
         <CursorPos X="89" Y="557"/>
-        <UsageCount Value="13"/>
+        <UsageCount Value="11"/>
       </Unit39>
       <Unit40>
         <Filename Value="..\Source\tools\frm_selectdialog.pas"/>
@@ -556,7 +558,7 @@
         <UnitName Value="frm_SelectDialog"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="51" Y="43"/>
-        <UsageCount Value="184"/>
+        <UsageCount Value="199"/>
       </Unit40>
       <Unit41>
         <Filename Value="C:\lazarus\components\anchordocking\anchordocking.pas"/>
@@ -564,126 +566,60 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="229"/>
         <CursorPos X="3" Y="255"/>
-        <UsageCount Value="14"/>
+        <UsageCount Value="12"/>
       </Unit41>
       <Unit42>
         <Filename Value="..\..\..\Delphi\Components\Source\Unt_StringProcs.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1892"/>
         <CursorPos X="90" Y="1914"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="7"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit42>
       <Unit43>
-        <Filename Value="..\..\..\Delphi\Components\FPC\dcl_KGSoft.pas"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="11" Y="10"/>
-        <UsageCount Value="1"/>
-      </Unit43>
-      <Unit44>
-        <Filename Value="..\..\..\Delphi\Components\Source\Unt_DCL.pas"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="65" Y="11"/>
-        <UsageCount Value="1"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit44>
-      <Unit45>
-        <Filename Value="..\..\..\Delphi\Components\FPC\DBHLLookUpPanel.dpk"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="116" Y="20"/>
-        <UsageCount Value="1"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit45>
-      <Unit46>
-        <Filename Value="..\..\..\Delphi\Components\Source\DBHlLookUpPanel\Cmp_DBHLLookUpPanel.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="217"/>
-        <CursorPos X="49" Y="226"/>
-        <UsageCount Value="1"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit46>
-      <Unit47>
-        <Filename Value="..\..\..\Delphi\Components\Source\DBHlPanel\cmp_DBHlPanel.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="177"/>
-        <CursorPos X="3" Y="217"/>
-        <UsageCount Value="1"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit47>
-      <Unit48>
-        <Filename Value="..\..\..\Delphi\Components\FPC\DBLuGrid.dpk"/>
-        <EditorIndex Value="-1"/>
-        <UsageCount Value="1"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit48>
-      <Unit49>
-        <Filename Value="..\..\..\Delphi\Components\Source\DBLookUpGrid\Cmp_DBLookUpGrid.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="139"/>
-        <CursorPos X="44" Y="225"/>
-        <UsageCount Value="1"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit49>
-      <Unit50>
-        <Filename Value="C:\lazarus\lcl\dbgrids.pas"/>
-        <UnitName Value="DBGrids"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="260"/>
-        <CursorPos X="29" Y="283"/>
-        <UsageCount Value="1"/>
-      </Unit50>
-      <Unit51>
-        <Filename Value="C:\lazarus\lcl\grids.pas"/>
-        <UnitName Value="Grids"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="115"/>
-        <CursorPos X="153" Y="39"/>
-        <UsageCount Value="1"/>
-      </Unit51>
-      <Unit52>
         <Filename Value="C:\lazarus\fpc\3.0.2\source\packages\fcl-db\src\sqldb\sqldb.pp"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="3448"/>
         <CursorPos Y="3474"/>
-        <UsageCount Value="36"/>
-      </Unit52>
-      <Unit53>
+        <UsageCount Value="34"/>
+      </Unit43>
+      <Unit44>
         <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\objpas\sysutils\sysutilh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="294"/>
         <CursorPos X="13" Y="320"/>
-        <UsageCount Value="21"/>
-      </Unit53>
-      <Unit54>
+        <UsageCount Value="19"/>
+      </Unit44>
+      <Unit45>
         <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\objpas\sysutils\sysutils.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="154"/>
         <CursorPos X="16" Y="160"/>
-        <UsageCount Value="21"/>
-      </Unit54>
-      <Unit55>
+        <UsageCount Value="19"/>
+      </Unit45>
+      <Unit46>
         <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\inc\objpash.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="176"/>
         <CursorPos X="40" Y="195"/>
-        <UsageCount Value="21"/>
-      </Unit55>
-      <Unit56>
+        <UsageCount Value="19"/>
+      </Unit46>
+      <Unit47>
         <Filename Value="C:\lazarus\lcl\controls.pp"/>
         <UnitName Value="Controls"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="2246"/>
         <CursorPos X="29" Y="2272"/>
-        <UsageCount Value="16"/>
-      </Unit56>
-      <Unit57>
+        <UsageCount Value="14"/>
+      </Unit47>
+      <Unit48>
         <Filename Value="C:\lazarus\lcl\imglist.pp"/>
         <UnitName Value="ImgList"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="162"/>
         <CursorPos X="19" Y="191"/>
-        <UsageCount Value="16"/>
-      </Unit57>
+        <UsageCount Value="14"/>
+      </Unit48>
     </Units>
     <JumpHistory HistoryIndex="-1"/>
   </ProjectOptions>

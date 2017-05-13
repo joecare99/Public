@@ -593,47 +593,82 @@ object frmStemmaMainForm: TfrmStemmaMainForm
       AnchorSideLeft.Control = CoolBar1
       AnchorSideTop.Control = CoolBar1
       Left = 402
-      Height = 26
+      Height = 24
       Top = 5
-      Width = 150
+      Width = 244
       Align = alNone
+      AutoSize = True
       BorderSpacing.Left = 400
       BorderSpacing.Top = 3
       Caption = 'ToolBar2'
+      Images = imlStandardImages
       TabOrder = 1
       OnPaint = ToolBar1Paint
-      object tbtnWinExplorer: TToolButton
+      object btnWinExplorer: TToolButton
         Left = 1
         Top = 2
         Action = actWinExplorer
       end
-      object ToolButton9: TToolButton
+      object btnSeparator1: TToolButton
         Left = 24
         Height = 22
         Top = 2
         Width = 8
-        Caption = 'ToolButton9'
+        Caption = 'btnSeparator1'
         Style = tbsSeparator
       end
-      object ToolButton10: TToolButton
+      object btnWinNameandAttr: TToolButton
         Left = 32
         Top = 2
         Action = actWinNameAndAttr
       end
-      object ToolButton11: TToolButton
+      object btnWinEvents: TToolButton
         Left = 55
         Top = 2
         Action = actWinEvents
       end
-      object ToolButton1: TToolButton
+      object btnWinParents: TToolButton
         Left = 78
         Top = 2
         Action = actWinParents
       end
-      object ToolButton12: TToolButton
+      object btnWinDocuments: TToolButton
         Left = 101
         Top = 2
         Action = actWinDocuments
+      end
+      object btnWinChildren: TToolButton
+        Left = 124
+        Top = 2
+        Action = actWinChildren
+      end
+      object btnWinSiblings: TToolButton
+        Left = 147
+        Top = 2
+        Action = actWinSiblings
+      end
+      object btnWinImages: TToolButton
+        Left = 170
+        Top = 2
+        Caption = 'btnWinImages'
+      end
+      object btnSeparator2: TToolButton
+        Left = 193
+        Height = 22
+        Top = 2
+        Width = 5
+        Caption = 'btnSeparator2'
+        Style = tbsSeparator
+      end
+      object btnWinAncesters: TToolButton
+        Left = 198
+        Top = 2
+        Action = actWinAncesters
+      end
+      object btnWinDescendens: TToolButton
+        Left = 221
+        Top = 2
+        Action = actWinDescendens
       end
     end
     object ToolBar3: TToolBar
@@ -642,7 +677,7 @@ object frmStemmaMainForm: TfrmStemmaMainForm
       Left = 203
       Height = 26
       Top = 5
-      Width = 170
+      Width = 149
       Align = alNone
       BorderSpacing.Left = 201
       BorderSpacing.Top = 3
@@ -1612,22 +1647,19 @@ object frmStemmaMainForm: TfrmStemmaMainForm
         }
       end
       object mniEnfants: TMenuItem
-        Caption = 'Enf&ants'
-        OnClick = mniEnfantsClick
+        Action = actWinChildren
       end
-      object mniFratrie: TMenuItem
-        Caption = '&Fratrie'
-        OnClick = mniFratrieClick
+      object mniWinSiblings: TMenuItem
+        Action = actWinSiblings
       end
       object mniImage: TMenuItem
-        Caption = '&Image'
-        OnClick = mniImageClick
+        Action = actWinImages
       end
       object mndWindowDivider22: TMenuItem
         Caption = '-'
       end
       object mniAncetres: TMenuItem
-        Caption = '&Ancêtres'
+        Action = actWinAncesters
         Bitmap.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
           2000000000000004000064000000640000000000000000000000000000000000
@@ -1664,11 +1696,9 @@ object frmStemmaMainForm: TfrmStemmaMainForm
           2DFF515191FF2D2D6CFF915B51FF6C362DFF515191FF2D2D6CFF915B51FF6C36
           2DFF515191FF2D2D6CFF915B51FF6C362DFF515191FF2D2D6CFF
         }
-        ImageIndex = 26
-        OnClick = mniAncetresClick
       end
       object mniDescendants: TMenuItem
-        Caption = '&Descendants'
+        Action = actWinDescendens
         Bitmap.Data = {
           36040000424D3604000000000000360000002800000010000000100000000100
           2000000000000004000064000000640000000000000000000000000000009F9F
@@ -1705,8 +1735,6 @@ object frmStemmaMainForm: TfrmStemmaMainForm
           00000000000000000000E0E0E07F084000FF118000FF118000FF118000FF0840
           00FF2525256C0000000500000000000000000000000000000000
         }
-        ImageIndex = 27
-        OnClick = mniDescendantsClick
       end
     end
     object mniHelp: TMenuItem
@@ -1720,8 +1748,7 @@ object frmStemmaMainForm: TfrmStemmaMainForm
         Enabled = False
       end
       object MenuItem49: TMenuItem
-        Caption = '&About'
-        OnClick = MenuItem49Click
+        Action = actHelpAbout
       end
     end
   end
@@ -2006,50 +2033,66 @@ object frmStemmaMainForm: TfrmStemmaMainForm
     end
     object actUtilsRepository: TAction
       Category = 'Utils'
-      Caption = 'actUtilsRepository'
+      Caption = 'Repository'
     end
     object actUtilsSources: TAction
       Category = 'Utils'
-      Caption = 'actUtilsSources'
+      Caption = 'Sources'
     end
     object actUtilsPlaces: TAction
       Category = 'Utils'
-      Caption = 'actUtilsPlaces'
+      Caption = 'Places'
     end
     object actUtilsEventTypes: TAction
       Category = 'Utils'
-      Caption = 'actUtilsEventTypes'
+      Caption = 'Event-Types'
     end
     object actUtilsCompression: TAction
       Category = 'Utils'
-      Caption = 'actUtilsCompression'
+      Caption = 'Compression'
     end
     object actWinChildren: TAction
+      Tag = 5
       Category = 'Windows'
-      Caption = 'actWinChildren'
+      Caption = 'Children'
       ImageIndex = 25
+      OnExecute = mniEnfantsClick
+      OnUpdate = actWinExtraUpdate
     end
-    object actWinBrothers: TAction
+    object actWinSiblings: TAction
+      Tag = 6
       Category = 'Windows'
-      Caption = 'actWinBrothers'
+      Caption = 'Siblings'
+      OnExecute = mniFratrieClick
+      OnUpdate = actWinExtraUpdate
     end
     object actWinImages: TAction
+      Tag = 7
       Category = 'Windows'
-      Caption = 'actWinImages'
+      Caption = 'Images'
+      OnExecute = actWinImagesExecute
+      OnUpdate = actWinExtraUpdate
     end
-    object actWinAcesters: TAction
+    object actWinAncesters: TAction
+      Tag = 8
       Category = 'Windows'
-      Caption = 'actWinAcesters'
+      Caption = 'Ancesters'
       ImageIndex = 26
+      OnExecute = actWinAncestersExecute
+      OnUpdate = actWinExtraUpdate
     end
     object actWinDescendens: TAction
+      Tag = 9
       Category = 'Windows'
-      Caption = 'actWinDescendens'
+      Caption = 'Descendens'
       ImageIndex = 27
+      OnExecute = actWinDescendensExecute
+      OnUpdate = actWinExtraUpdate
     end
     object actHelpAbout: TAction
       Category = 'Help'
-      Caption = 'actHelpAbout'
+      Caption = 'About ...'
+      OnExecute = actHelpAboutExecute
     end
     object actFileExportProject: TAction
       Category = 'File'
@@ -2064,7 +2107,7 @@ object frmStemmaMainForm: TfrmStemmaMainForm
     end
     object actFileImportFromTMG: TAction
       Category = 'File'
-      Caption = 'frm &TMG v4.0'
+      Caption = 'from &TMG v4.0'
       OnExecute = actFileImportFromTMGExecute
       OnUpdate = actFileImportFromTMGUpdate
     end

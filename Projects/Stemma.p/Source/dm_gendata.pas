@@ -108,6 +108,7 @@ type
     function CopyIndName(const idInd, idNewInd: longint): longint;
 
     // Event Methods
+    procedure FillTableEvents(const idInd: integer; const lgrdEvents: TStringGrid);
     procedure CopyEvent(const idEvent: integer);
     function GetEventType(const lIdEvent: integer): string;
     function CheckIndSharedEventExists(idInd: integer): boolean;
@@ -1793,6 +1794,106 @@ begin
   end;
 end;
 
+procedure TdmGenData.FillTableEvents(const idInd:integer;const lgrdEvents: TStringGrid);
+var
+  temoin: string;
+  memo: string;
+  lieu: string;
+  row: integer;
+  age: integer;
+begin
+   Query1.close;
+   Query1.SQL.text:='SELECT E.no, E.X, E.Y, E.PD, E.L, E.SD, W.X, E.M FROM E JOIN W on W.E=E.no WHERE W.I=:idInd ORDER BY E.SD';
+   Query1.ParamByName('idInd').AsInteger:=idInd;
+   Query1.Open;
+   Query1.First;
+  row:=1;
+  lgrdEvents.RowCount:= Query1.RecordCount+1;
+  assert(  Query1.Fields.Count=8,'Query should have 8 Fields');
+  While not  Query1.EOF do
+  begin
+     lgrdEvents.Cells[0,row]:= Query1.Fields[0].AsString;
+     if  Query1.Fields[1].AsBoolean and  Query1.Fields[6].AsBoolean then
+         lgrdEvents.Cells[1,row]:='*'
+     else
+         lgrdEvents.Cells[1,row]:='';
+      Query2.SQL.Text:='SELECT T FROM Y WHERE no='+ Query1.Fields[2].AsString;
+      Query2.Open;
+      lgrdEvents.Cells[2,row]:= Query2.Fields[0].AsString;
+      lgrdEvents.Cells[3,row]:=ConvertDate( Query1.Fields[3].AsString,1);
+     // Trouver # d'un autre principal témoin de l'événement
+      Query2.close;
+      Query2.SQL.Text:='SELECT I FROM W WHERE X=1 AND E='+ Query1.Fields[0].AsString;
+      Query2.Open;
+      lgrdEvents.Cells[7,row]:='0';
+     temoin:='';
+     While not  Query2.EOF do
+         begin
+         // Trouver les témoins principaux de l'événement
+         If not ( Query2.Fields[0].AsInteger=idInd) then
+            begin
+            if StrToInt( lgrdEvents.Cells[7,row])=0 then
+                lgrdEvents.Cells[7,row]:= Query2.Fields[0].AsString;
+             Query3.SQL.Text:='SELECT N FROM N WHERE X=1 AND I='+ Query2.Fields[0].AsString;
+             Query3.Open;
+            if length(temoin)>0 then
+               temoin:=temoin+' & '+DecodeName( Query3.Fields[0].AsString,1)+' ['+ Query2.Fields[0].AsString+']'
+            else
+               temoin:=DecodeName( Query3.Fields[0].AsString,1)+' ['+ Query2.Fields[0].AsString+']';
+         end;
+          Query2.Next;
+     end;
+     // Implanter la description
+      Query2.SQL.Text:='SELECT L FROM L WHERE no='+ Query1.Fields[4].AsString;
+      Query2.Open;
+     Lieu:=DecodeChanged( Query2.Fields[0].AsString);
+     Memo:= Query1.Fields[7].AsString;
+     If length(Lieu)>0 then
+        if length(Memo)>0 then
+           if length(temoin)>0 then
+               lgrdEvents.Cells[4,row]:=Temoin+'; '+Lieu+'; '+Memo
+           else
+               lgrdEvents.Cells[4,row]:=Lieu+'; '+Memo
+        else
+           if length(temoin)>0 then
+               lgrdEvents.Cells[4,row]:=Temoin+'; '+Lieu
+           else
+               lgrdEvents.Cells[4,row]:=Lieu
+     else
+           if length(Memo)>0 then
+              if length(temoin)>0 then
+                  lgrdEvents.Cells[4,row]:=Temoin+'; '+Memo
+              else
+                  lgrdEvents.Cells[4,row]:=Memo
+           else
+              if length(temoin)>0 then
+                  lgrdEvents.Cells[4,row]:=Temoin
+              else
+                  lgrdEvents.Cells[4,row]:='';
+      Query2.SQL.Text:='SELECT Q FROM C WHERE Y=''E'' AND N='+ lgrdEvents.Cells[0,row]+' ORDER BY Q DESC';
+      Query2.Open;
+      lgrdEvents.Cells[5,row]:= Query2.Fields[0].AsString;
+     // Calculer l'âge
+      Query2.SQL.Text:='SELECT I3 FROM N WHERE X=1 AND I='+inttostr(idInd);
+      Query2.Open;
+     if ((Copy( Query2.Fields[0].AsString,1,1)='1') AND
+         (Copy( Query1.Fields[5].AsString,1,1)='1')) then
+         age:=StrToInt(Copy( Query1.Fields[5].AsString,2,4))
+               -StrtoInt(Copy( Query2.Fields[0].AsString,2,4))
+     else
+        age:=-1;
+     if (age>=0) AND (age<200) then
+          lgrdEvents.Cells[6,row]:=InttoStr(age)
+     else
+         lgrdEvents.Cells[6,row]:='';
+     if  Query1.Fields[6].AsBoolean then
+         lgrdEvents.Cells[8,row]:='*'
+     else
+         lgrdEvents.Cells[8,row]:='';
+      Query1.Next;
+     row:=row+1;
+  end;
+end;
 
 procedure TdmGenData.CopyEvent(const idEvent: integer);
 var

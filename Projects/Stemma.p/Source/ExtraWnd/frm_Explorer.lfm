@@ -1,23 +1,26 @@
 object frmExplorer: TfrmExplorer
   Left = 542
-  Height = 242
+  Height = 391
   Top = 135
-  Width = 320
-  ActiveControl = edtSearch
+  Width = 476
+  ActiveControl = grdIndex
   BorderIcons = []
   Caption = 'Explorer'
-  ClientHeight = 242
-  ClientWidth = 320
+  ClientHeight = 391
+  ClientWidth = 476
   OnClose = FormClose
-  OnResize = FormResize
   OnShow = FormShow
   LCLVersion = '1.6.4.0'
   Visible = False
   object grdIndex: TStringGrid
-    Left = 8
-    Height = 200
-    Top = 8
-    Width = 304
+    Left = 5
+    Height = 322
+    Top = 29
+    Width = 466
+    Align = alClient
+    BorderSpacing.Left = 2
+    BorderSpacing.Right = 2
+    BorderSpacing.Around = 3
     ColCount = 7
     Columns = <    
       item
@@ -43,10 +46,12 @@ object frmExplorer: TfrmExplorer
     ExtendedSelect = False
     MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
-    PopupMenu = PopupMenu1
-    TabOrder = 1
+    PopupMenu = mnuExplorer
+    TabOrder = 0
     OnDblClick = grdIndexDblClick
     OnDrawCell = grdIndexDrawCell
+    OnHeaderClick = grdIndexHeaderClick
+    OnResize = grdIndexResize
     ColWidths = (
       1
       64
@@ -57,42 +62,121 @@ object frmExplorer: TfrmExplorer
       0
     )
   end
-  object edtSearch: TEdit
-    Left = 8
-    Height = 23
-    Top = 215
-    Width = 304
-    OnChange = edtSearchChange
-    OnKeyPress = edtSearchKeyPress
-    TabOrder = 0
-  end
-  object O: TEdit
+  object O: TSpinEdit
     Left = 80
     Height = 23
     Top = 200
     Width = 80
-    TabOrder = 2
-    Text = 'O'
+    TabOrder = 1
     Visible = False
   end
-  object PopupMenu1: TPopupMenu
-    left = 288
-    top = 200
-    object MenuItem3: TMenuItem
-      Caption = 'Tri par &prénom'
-      OnClick = MenuItem3Click
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 37
+    Top = 354
+    Width = 476
+    Align = alBottom
+    ClientHeight = 37
+    ClientWidth = 476
+    TabOrder = 2
+    object edtSearch: TEdit
+      Left = 4
+      Height = 23
+      Top = 7
+      Width = 468
+      Align = alClient
+      BorderSpacing.Top = 3
+      BorderSpacing.Bottom = 3
+      BorderSpacing.Around = 3
+      OnChange = edtSearchChange
+      OnKeyPress = edtSearchKeyPress
+      TabOrder = 0
+      TextHint = '<Search Person>'
     end
-    object MenuItem4: TMenuItem
-      Caption = 'Tri par &nom'
-      OnClick = MenuItem4Click
+  end
+  object tlbExplorerOrderBy: TToolBar
+    Left = 0
+    Height = 26
+    Top = 0
+    Width = 476
+    ButtonWidth = 60
+    Caption = 'Order By'
+    List = True
+    ShowCaptions = True
+    TabOrder = 3
+    Transparent = True
+    object btnExplorerOrderByFirstname: TToolButton
+      Left = 1
+      Top = 2
+      Action = actExplorerOrderByFirstname
+      Caption = '&First N.'
+      Style = tbsCheck
     end
-    object MenuItem5: TMenuItem
-      Caption = 'Tri par nai&ssance'
-      OnClick = MenuItem5Click
+    object btnExplorerOrderByFamilyname: TToolButton
+      Left = 61
+      Top = 2
+      Action = actExplorerOrderByFamilyname
+      Caption = '&Family N.'
     end
-    object MenuItem6: TMenuItem
-      Caption = 'Tri par &décès'
-      OnClick = MenuItem6Click
+    object btnExplorerOrderByBirth: TToolButton
+      Left = 121
+      Top = 2
+      Action = actExplorerOrderByBirth
+      Caption = '&Birth'
+    end
+    object btnExplorerOrderByDeath: TToolButton
+      Left = 181
+      Top = 2
+      Action = actExplorerOrderByDeath
+      Caption = '&Death'
+    end
+  end
+  object mnuExplorer: TPopupMenu
+    left = 264
+    top = 144
+    object mniExplorerOrderByFirstname: TMenuItem
+      Action = actExplorerOrderByFirstname
+    end
+    object mniExplorerOrderByFamilyname: TMenuItem
+      Action = actExplorerOrderByFamilyname
+    end
+    object mniExplorerOrderByBirth: TMenuItem
+      Action = actExplorerOrderByBirth
+    end
+    object mniExplorerOrderByDeath: TMenuItem
+      Action = actExplorerOrderByDeath
+    end
+  end
+  object alsExplorer: TActionList
+    left = 224
+    top = 144
+    object actExplorerOrderByFirstname: TAction
+      Tag = 1
+      Category = 'Explorer'
+      Caption = 'Order by &First name'
+      OnExecute = MenuItem3Click
+      OnUpdate = actExplorerOrderByActUpdate
+    end
+    object actExplorerOrderByFamilyname: TAction
+      Tag = 2
+      Category = 'Explorer'
+      Caption = 'Order by &Familyname'
+      OnExecute = MenuItem4Click
+      OnUpdate = actExplorerOrderByActUpdate
+    end
+    object actExplorerOrderByBirth: TAction
+      Tag = 3
+      Category = 'Explorer'
+      Caption = 'Order by &Birth'
+      OnExecute = MenuItem5Click
+      OnUpdate = actExplorerOrderByActUpdate
+    end
+    object actExplorerOrderByDeath: TAction
+      Tag = 4
+      Category = 'Explorer'
+      Caption = 'Order by &Death'
+      OnExecute = MenuItem6Click
+      OnUpdate = actExplorerOrderByActUpdate
     end
   end
 end

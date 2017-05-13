@@ -3,21 +3,21 @@ object frmEvents: TfrmEvents
   Height = 240
   Top = 295
   Width = 320
-  ActiveControl = TableauEvenements
+  ActiveControl = grdEvents
   BorderIcons = []
   Caption = 'Events'
   ClientHeight = 240
   ClientWidth = 320
   OnClose = FormClose
-  OnResize = FormResize
   OnShow = FormShow
   LCLVersion = '1.6.4.0'
   Visible = False
-  object TableauEvenements: TStringGrid
+  object grdEvents: TStringGrid
     Left = 0
-    Height = 240
-    Top = 0
-    Width = 678
+    Height = 212
+    Top = 28
+    Width = 320
+    Align = alClient
     ColCount = 9
     Columns = <    
       item
@@ -50,8 +50,9 @@ object frmEvents: TfrmEvents
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goRowSelect, goSmoothScroll]
     PopupMenu = PopupMenuEvenements
     TabOrder = 0
-    OnDblClick = TableauEvenementsDblClick
-    OnDrawCell = TableauEvenementsDrawCell
+    OnDblClick = grdEventsDblClick
+    OnDrawCell = grdEventsDrawCell
+    OnResize = grdEventsResize
     ColWidths = (
       4
       64
@@ -64,9 +65,17 @@ object frmEvents: TfrmEvents
       0
     )
   end
+  object ToolBar1: TToolBar
+    Left = 0
+    Height = 28
+    Top = 0
+    Width = 320
+    Caption = 'ToolBar1'
+    TabOrder = 1
+  end
   object PopupMenuEvenements: TPopupMenu
-    left = 272
-    top = 126
+    left = 280
+    top = 128
     object MenuItem1: TMenuItem
       Caption = '&Aller à'
       OnClick = MenuItem1Click
@@ -82,7 +91,7 @@ object frmEvents: TfrmEvents
     object MenuItem4: TMenuItem
       Caption = 'Modifier'
       ShortCut = 116
-      OnClick = TableauEvenementsDblClick
+      OnClick = grdEventsDblClick
     end
     object MenuItem5: TMenuItem
       Caption = 'Supprimer'
@@ -96,6 +105,30 @@ object frmEvents: TfrmEvents
       Caption = 'Primaire'
       ShortCut = 8248
       OnClick = MenuItem7Click
+    end
+  end
+  object ActionList1: TActionList
+    left = 243
+    top = 127
+    object actEventsGoto: TAction
+      Category = 'Events'
+      Caption = 'Go to'
+    end
+    object actEventsAdd: TAction
+      Category = 'Events'
+      Caption = '&Add'
+    end
+    object actEventsEdit: TAction
+      Category = 'Events'
+      Caption = '&Edit'
+    end
+    object actEventsDelete: TAction
+      Category = 'Events'
+      Caption = 'De&lete'
+    end
+    object actEventsSetPrefered: TAction
+      Category = 'Events'
+      Caption = 'Set &Prefered'
     end
   end
 end

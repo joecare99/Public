@@ -9,6 +9,7 @@ object frmNames: TfrmNames
   ClientHeight = 176
   ClientWidth = 477
   OnClose = FormClose
+  OnCreate = FormCreate
   OnResize = FormResize
   OnShow = FormShow
   Position = poDesktopCenter
