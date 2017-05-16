@@ -37,7 +37,9 @@ var
   X, Y: Integer;
   Dcc:Word;
 begin
+  DetectVideo;
   InitVideo;
+  try
   CheckNotEquals(PtrUint(nil),PtrUInt(video.VideoBuf),'VideoBuffer should be assigned');
   MoveStr(video.VideoBuf^,'This is a Test',$17,0);
   for X := 0 to FCanvas.Width do
@@ -50,11 +52,14 @@ begin
 //ToDo: Test the results
 //ToDo: Test-text must not be changed
 //", and in the middle are many Characters, White on blue
-DoneVideo;
   CheckEquals(6, MessageDlg('Please Verify', '"This is a Test" is still readable',
     mtConfirmation, mbYesNo, 0), 'Err: Over written Backgroound');
   CheckEquals(6, MessageDlg('Please Verify', 'In the middle are many Characters in white on blue',
     mtConfirmation, mbYesNo, 0), 'Something went wrong');
+
+  finally
+  DoneVideo;
+  end;
 end;
 
 procedure TTestTCanvas.TestPixels2;
@@ -65,6 +70,7 @@ var
 begin
   DetectVideo;
     InitVideo;
+    try
     vm.col:=fv2drivers.ScreenMode.Col;
      vm.Row:=fv2drivers.ScreenMode.Row;
      vm.Color:=true;
@@ -89,11 +95,15 @@ begin
   //ToDo: Test the results
   //ToDo: Test-text must not be changed
   //", and in the middle are many Characters, White on blue
-  DoneVideo;
+  //DoneVideo;
     CheckEquals(6, MessageDlg('Please Verify', '"This is a Test" is still readable',
       mtConfirmation, mbYesNo, 0), 'Err: Over written Backgroound');
     CheckEquals(6, MessageDlg('Please Verify', 'In the middle are coloured blocks',
       mtConfirmation, mbYesNo, 0), 'Something went wrong');
+
+    finally
+    DoneVideo;
+    end;
 end;
 
 procedure TTestTCanvas.TestSetvideomode;
@@ -105,7 +115,11 @@ begin
   vm.Row:=fv2drivers.ScreenMode.Row;
   vm.Color:=true;
   SetVideoMode(vm);
-
+  MoveStr(video.VideoBuf^,'<- Top Left',$17,0*ScreenMode.col);
+   MoveStr(video.VideoBuf^,'<- Bottom Left',$17,(vm.Row-1)*ScreenMode.col);
+   MoveStr(video.VideoBuf^,'Top Right ->',$17,ScreenMode.col-12);
+   MoveStr(video.VideoBuf^,'Bottom Right>',$17,vm.Row*ScreenMode.col-13);
+    UpdateScreen(False);
   CheckEquals(6, MessageDlg('Please Verify', 'The Console is now '+inttostr(vm.Col)+'x'+inttostr(vm.Row),
     mtConfirmation, mbYesNo, 0), 'Err: No confirm');
 
@@ -113,18 +127,27 @@ begin
   vm.Row:=50;
   vm.Color:=true;
   SetVideoMode(vm);
-
-  CheckEquals(6, MessageDlg('Please Verify', 'The Console is now '+inttostr(vm.Col)+'x60',
+  MoveStr(video.VideoBuf^,'<- Top Left',$17,0*ScreenMode.col);
+  MoveStr(video.VideoBuf^,'<- Bottom Left',$17,(vm.Row-1)*ScreenMode.col);
+  MoveStr(video.VideoBuf^,'Top Right ->',$17,ScreenMode.col-12);
+  MoveStr(video.VideoBuf^,'Bottom Right>',$17,vm.Row*ScreenMode.col-13);
+   UpdateScreen(False);
+  CheckEquals(6, MessageDlg('Please Verify', 'The Console is now '+inttostr(vm.Col)+'x'+inttostr(vm.Row),
     mtConfirmation, mbYesNo, 0), 'Err: No confirm');
 
 
-  vm.col:=121;
+  vm.col:=80;
   vm.Row:=63;
   vm.Color:=true;
   SetVideoMode(vm);
 
   GetVideoMode(vm2);
-  CheckEquals(6, MessageDlg('Please Verify', 'The Console is now '+inttostr(vm.Col)+'x60',
+  MoveStr(video.VideoBuf^,'<- Top Left',$17,0*ScreenMode.col);
+  MoveStr(video.VideoBuf^,'<- Bottom Left',$17,(vm.Row-1)*ScreenMode.col);
+  MoveStr(video.VideoBuf^,'Top Right ->',$17,ScreenMode.col-12);
+  MoveStr(video.VideoBuf^,'Bottom Right>',$17,vm.Row*ScreenMode.col-13);
+   UpdateScreen(False);
+  CheckEquals(6, MessageDlg('Please Verify', 'The Console is now '+inttostr(vm.Col)+'x'+inttostr(vm.Row),
     mtConfirmation, mbYesNo, 0), 'Err: No confirm');
 
   vm.col:=fv2drivers.ScreenMode.Col;
@@ -141,7 +164,9 @@ procedure TTestTCanvas.TestRectangle;
 var
   i, j: Integer;
 begin
+  DetectVideo;
   InitVideo;
+  try
   for i := 0 to FCanvas.Height  - 1 do
   begin
     //MoveChar(LBuffer^, chMiddleFill, $08, 50, (i+6) *
@@ -169,9 +194,11 @@ begin
     end;
   end;
   Fcanvas.Flush(rect(0,0,ScreenMode.Col,ScreenMode.Row),false);
-  DoneVideo;
   CheckEquals(6, MessageDlg('Please Verify', 'There is a blue rectangle with a white boarder',
     mtConfirmation, mbYesNo, 0), 'Err: No confirm');
+  finally
+    DoneVideo;
+  end;
 end;
 
 procedure TTestTCanvas.TestOutText;
@@ -309,12 +336,11 @@ begin
     end;
   end;
   lCanvas2.Flush(rect(0,0,ScreenMode.Col,ScreenMode.Row),false);
-  CheckEquals(6, MessageDlg('Please Verify', 'In a blue rectangle with a white boarder are coloured Numbers starting with 1 an Test with a highlight ''T''',
+  CheckEquals(6, MessageDlg('Please Verify', 'A blue rectangle in front of a red with a yellow boarder',
     mtConfirmation, mbYesNo, 0), 'Err: No confirm');
   Fcanvas.Flush(lCanvas2.ClipRect,false);
-  CheckEquals(6, MessageDlg('Please Verify', 'In a blue rectangle with a white boarder are coloured Numbers starting with 1 an Test with a highlight ''T''',
+  CheckEquals(6, MessageDlg('Please Verify', 'A blue rectangle behind a red with a yellow boarder',
     mtConfirmation, mbYesNo, 0), 'Err: No confirm');
-
   finally
     freeandnil(lCanvas2);
     DoneVideo;
@@ -328,7 +354,15 @@ var aBrush:TFV2CustomBrush;
   vm: TVideoMode;
   Attrs:word;
   i, t: Integer;
+  OffsetDt:array[0..11,0..8] of integer ;
+  po:array[0..11] of  TPoint;
 begin
+  for i := 0 to 11 do
+   for t := 0 to 8 do
+    begin
+      po[i]:=point(round(cos(i/6*pi)*2.2+3.0),round(sin(i/6*pi)*2.2+3.0));
+      offsetdt[i,t]:=(((t mod 3)+po[i].x ) mod 3) + (((t div 3)+po[i].y)mod 3)*3;
+    end;
   InitVideo;
   try
   vm.col:=fv2drivers.ScreenMode.Col;
@@ -342,7 +376,7 @@ begin
   for t := 0 to 50 do
   begin
   for i := 0 to 8 do
-    aBrush.BrushData[(i+t) mod 9 ] :=Attrs or byte(FrameChars_437[InitFrame[i]]);
+    aBrush.BrushData[i ] :=Attrs or byte(FrameChars_437[InitFrame[OffsetDt[t mod 12,i]]]);
   Fcanvas.Brush := aBrush;
   FCanvas.FillRect(rect(0,0,FCanvas.Width,FCanvas.Height));
   Fcanvas.Flush(rect(0,0,ScreenMode.col,ScreenMode.row),false);

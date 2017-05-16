@@ -984,6 +984,7 @@ var
 begin
   with Query1 do
   begin
+    close;
     SQL.Text := 'SELECT no, X, Y, PD, SD, N FROM N WHERE I=:idInd ORDER BY X DESC, SD';
     ParamByName('idInd').AsInteger := lidInd;
     Open;
@@ -1796,12 +1797,14 @@ end;
 
 procedure TdmGenData.FillTableEvents(const idInd:integer;const lgrdEvents: TStringGrid);
 var
-  temoin: string;
-  memo: string;
-  lieu: string;
+  lWitness: string;
+  lMemo: string;
+  lPlace, lBirth: string;
   row: integer;
-  age: integer;
+  lAge: integer;
+  lidWitness, lidEvent: LongInt;
 begin
+   lBirth:=GetI3(idInd);
    Query1.close;
    Query1.SQL.text:='SELECT E.no, E.X, E.Y, E.PD, E.L, E.SD, W.X, E.M FROM E JOIN W on W.E=E.no WHERE W.I=:idInd ORDER BY E.SD';
    Query1.ParamByName('idInd').AsInteger:=idInd;
@@ -1812,78 +1815,109 @@ begin
   assert(  Query1.Fields.Count=8,'Query should have 8 Fields');
   While not  Query1.EOF do
   begin
-     lgrdEvents.Cells[0,row]:= Query1.Fields[0].AsString;
+      // idEvent
+     lidEvent :=Query1.Fields[0].AsInteger;
+     lgrdEvents.Cells[0,row]:= inttostr(lidEvent);
+     lgrdEvents.objects[0,row]:= Tobject(ptrint(lidEvent));
+
+     // Prefered
      if  Query1.Fields[1].AsBoolean and  Query1.Fields[6].AsBoolean then
          lgrdEvents.Cells[1,row]:='*'
      else
          lgrdEvents.Cells[1,row]:='';
-      Query2.SQL.Text:='SELECT T FROM Y WHERE no='+ Query1.Fields[2].AsString;
+
+      Query2.SQL.Text:='SELECT T FROM Y WHERE no=:idType and ln=:Lang';
+      Query2.ParamByName('idType').AsInteger:=Query1.Fields[2].AsInteger;
+      Query2.ParamByName('Lang').AsString:=Translation.lnCode;
       Query2.Open;
+      if Query2.EOF then
+        begin
+          Query2.Close;
+          Query2.SQL.Text:='SELECT T FROM Y WHERE no=:idType';
+          Query2.ParamByName('idType').AsInteger:=Query1.Fields[2].AsInteger;
+          Query2.Open;
+        end;
       lgrdEvents.Cells[2,row]:= Query2.Fields[0].AsString;
-      lgrdEvents.Cells[3,row]:=ConvertDate( Query1.Fields[3].AsString,1);
-     // Trouver # d'un autre principal témoin de l'événement
+      lgrdEvents.Objects[2,row]:=tobject(ptrint(Query1.Fields[2].AsInteger));
       Query2.close;
-      Query2.SQL.Text:='SELECT I FROM W WHERE X=1 AND E='+ Query1.Fields[0].AsString;
+
+      lgrdEvents.Cells[3,row]:=ConvertDate( Query1.Fields[3].AsString,1);
+
+     // Trouver # d'un autre principal témoin de l'événement
+      Query2.SQL.Text:='SELECT I FROM W WHERE X=1 AND E=:idEvent';
+      Query2.ParamByName('idEvent').AsInteger:=lidEvent;
       Query2.Open;
       lgrdEvents.Cells[7,row]:='0';
-     temoin:='';
+      lgrdEvents.Objects[7,row]:=tobject(ptrint(0));
+     lWitness:='';
      While not  Query2.EOF do
          begin
          // Trouver les témoins principaux de l'événement
          If not ( Query2.Fields[0].AsInteger=idInd) then
             begin
-            if StrToInt( lgrdEvents.Cells[7,row])=0 then
-                lgrdEvents.Cells[7,row]:= Query2.Fields[0].AsString;
-             Query3.SQL.Text:='SELECT N FROM N WHERE X=1 AND I='+ Query2.Fields[0].AsString;
-             Query3.Open;
-            if length(temoin)>0 then
-               temoin:=temoin+' & '+DecodeName( Query3.Fields[0].AsString,1)+' ['+ Query2.Fields[0].AsString+']'
+              lidWitness:= Query2.Fields[0].AsInteger;
+              if ptrint( lgrdEvents.Cells[7,row])=0 then
+                begin
+                  lgrdEvents.Cells[7,row]:=inttostr(lidWitness);
+                  lgrdEvents.Objects[7,row]:=tobject(ptrint(lidWitness));
+                end;
+            // Get Name of Witnesses
+            if length(lWitness)>0 then
+               lWitness:=lWitness+' & '+format('%s [%d]', [GetIndividuumName(lidWitness),lidWitness])
             else
-               temoin:=DecodeName( Query3.Fields[0].AsString,1)+' ['+ Query2.Fields[0].AsString+']';
+               lWitness:=format('%s [%d]', [GetIndividuumName(lidWitness),lidWitness]);
          end;
           Query2.Next;
      end;
+     Query2.close;
+
      // Implanter la description
-      Query2.SQL.Text:='SELECT L FROM L WHERE no='+ Query1.Fields[4].AsString;
+      Query2.SQL.Text:='SELECT L FROM L WHERE no=:idPlace';
+      Query2.ParamByName('idPlace').AsInteger := Query1.Fields[4].AsInteger;
       Query2.Open;
-     Lieu:=DecodeChanged( Query2.Fields[0].AsString);
-     Memo:= Query1.Fields[7].AsString;
-     If length(Lieu)>0 then
-        if length(Memo)>0 then
-           if length(temoin)>0 then
-               lgrdEvents.Cells[4,row]:=Temoin+'; '+Lieu+'; '+Memo
+     lPlace:=DecodeChanged( Query2.Fields[0].AsString);
+     lMemo:= Query1.Fields[7].AsString;
+     If length(lPlace)>0 then
+        if length(lMemo)>0 then
+           if length(lWitness)>0 then
+               lgrdEvents.Cells[4,row]:=lWitness+'; '+lPlace+'; '+lMemo
            else
-               lgrdEvents.Cells[4,row]:=Lieu+'; '+Memo
+               lgrdEvents.Cells[4,row]:=lPlace+'; '+lMemo
         else
-           if length(temoin)>0 then
-               lgrdEvents.Cells[4,row]:=Temoin+'; '+Lieu
+           if length(lWitness)>0 then
+               lgrdEvents.Cells[4,row]:=lWitness+'; '+lPlace
            else
-               lgrdEvents.Cells[4,row]:=Lieu
+               lgrdEvents.Cells[4,row]:=lPlace
      else
-           if length(Memo)>0 then
-              if length(temoin)>0 then
-                  lgrdEvents.Cells[4,row]:=Temoin+'; '+Memo
+           if length(lMemo)>0 then
+              if length(lWitness)>0 then
+                  lgrdEvents.Cells[4,row]:=lWitness+'; '+lMemo
               else
-                  lgrdEvents.Cells[4,row]:=Memo
+                  lgrdEvents.Cells[4,row]:=lMemo
            else
-              if length(temoin)>0 then
-                  lgrdEvents.Cells[4,row]:=Temoin
+              if length(lWitness)>0 then
+                  lgrdEvents.Cells[4,row]:=lWitness
               else
                   lgrdEvents.Cells[4,row]:='';
-      Query2.SQL.Text:='SELECT Q FROM C WHERE Y=''E'' AND N='+ lgrdEvents.Cells[0,row]+' ORDER BY Q DESC';
+     Query2.Close;
+
+      Query2.SQL.Text:='SELECT Q FROM C WHERE Y=''E'' AND N=:idEvent ORDER BY Q DESC';
+      query2.ParamByName('idEvent').asinteger:=lidEvent;
       Query2.Open;
       lgrdEvents.Cells[5,row]:= Query2.Fields[0].AsString;
+      Query2.Close;
+
      // Calculer l'âge
-      Query2.SQL.Text:='SELECT I3 FROM N WHERE X=1 AND I='+inttostr(idInd);
-      Query2.Open;
-     if ((Copy( Query2.Fields[0].AsString,1,1)='1') AND
+
+     if ((Copy( lBirth,1,1)='1') AND
          (Copy( Query1.Fields[5].AsString,1,1)='1')) then
-         age:=StrToInt(Copy( Query1.Fields[5].AsString,2,4))
-               -StrtoInt(Copy( Query2.Fields[0].AsString,2,4))
+           //Todo -ojc : find a better Age-calculating method.
+         lAge:=StrToInt(Copy( Query1.Fields[5].AsString,2,4))
+               -StrtoInt(Copy( lBirth,2,4))
      else
-        age:=-1;
-     if (age>=0) AND (age<200) then
-          lgrdEvents.Cells[6,row]:=InttoStr(age)
+        lAge:=-1;
+     if (lAge>=0) AND (lAge<130) then  //Todo -ojc : Make the Max-lAge configurable
+          lgrdEvents.Cells[6,row]:=InttoStr(lAge)
      else
          lgrdEvents.Cells[6,row]:='';
      if  Query1.Fields[6].AsBoolean then

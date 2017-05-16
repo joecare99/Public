@@ -4,7 +4,7 @@ msgstr ""
 "Project-Id-Version: Stemma\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2017-05-12 21:33+0200\n"
+"PO-Revision-Date: 2017-05-13 13:29+0200\n"
 "Last-Translator: Joe Care\n"
 "Language-Team: JC-Soft\n"
 "Language: de\n"
@@ -21,6 +21,58 @@ msgctxt "cls_translation.rsmenuhistorycaption"
 msgid "&%d- %s (%d)"
 msgstr " (bei %d,%d, Stream-Offset %d)"
 
+#: cls_translation.saddachild
+msgid "Add a child"
+msgstr ""
+
+#: cls_translation.saddacitation
+msgid "Add a citation"
+msgstr ""
+
+#: cls_translation.saddadocument
+msgid "Add a Document"
+msgstr ""
+
+#: cls_translation.saddaname
+msgid "Add a name"
+msgstr ""
+
+#: cls_translation.saddanevent
+msgid "Add an event"
+msgstr ""
+
+#: cls_translation.saddanindividual
+msgid "Add an individual"
+msgstr ""
+
+#: cls_translation.saddaparent
+msgid "Add a parent"
+msgstr ""
+
+#: cls_translation.saddfirstname
+msgid "Add &first name"
+msgstr ""
+
+#: cls_translation.saddingasisterto
+msgid "Adding a sister to "
+msgstr ""
+
+#: cls_translation.saddtitle
+msgid "Add &title"
+msgstr ""
+
+#: cls_translation.sareyousuretodelcitation
+msgid "Are you sure you want to delete citation \""
+msgstr ""
+
+#: cls_translation.sareyousuretodelrepository
+msgid "Are you sure you want to delete repository \""
+msgstr ""
+
+#: cls_translation.sareyousuretodelwitness
+msgid "Are you sure you want to delete witness \""
+msgstr ""
+
 #: cls_translation.sareyousuretoquit
 #, fuzzy
 msgctxt "cls_translation.sareyousuretoquit"
@@ -32,15 +84,36 @@ msgctxt "cls_translation.sconfirmation"
 msgid "Confirmation"
 msgstr "Bestätigung"
 
+#: cls_translation.sdatabasealreadyexist
+msgid "Database already exist."
+msgstr ""
+
 #: cls_translation.sdatabasename
 #, fuzzy
 msgctxt "cls_translation.sdatabasename"
 msgid "Database name"
 msgstr "Es ist keine Hilfedatenbank installiert"
 
+#: cls_translation.sdatabasenotfound
+msgid "Database not found."
+msgstr ""
+
+#: cls_translation.sdocuments
+msgctxt "cls_translation.sdocuments"
+msgid "Documents"
+msgstr ""
+
 #: cls_translation.senterdbname
 msgctxt "cls_translation.senterdbname"
 msgid "Enter the database name to be created"
+msgstr ""
+
+#: cls_translation.senterthedatabasename
+msgid "Enter the database name"
+msgstr ""
+
+#: cls_translation.senterthedatabasetodel
+msgid "Enter the database name to delete"
 msgstr ""
 
 #: cls_translation.sfamilyname
@@ -54,6 +127,48 @@ msgstr "--name programe       Setzen des Programmnamens auf \"progname\". Ist ni
 msgctxt "cls_translation.sgivenname"
 msgid "First name"
 msgstr "Erster"
+
+#: cls_translation.sgoto
+#, fuzzy
+msgctxt "cls_translation.sgoto"
+msgid "&Go to"
+msgstr "&Gehe zu..."
+
+#: cls_translation.slocationofthetmg40dd
+msgid "Location of the TMG 4.0d database"
+msgstr ""
+
+#: cls_translation.snumberoftheindividua
+msgid "Number of the individual"
+msgstr ""
+
+#: cls_translation.sremovaloforphanrecor
+msgid "Removal of orphan records"
+msgstr ""
+
+#: cls_translation.srepairnamesforsortin
+msgid "Repair names (for sorting)"
+msgstr ""
+
+#: cls_translation.srepairrelationsortda
+msgid "Repair relation sort date"
+msgstr ""
+
+#: cls_translation.srepositorymodificati
+msgid "Depository modification"
+msgstr ""
+
+#: cls_translation.sstep112eventtypeimpo
+msgid "Step 1/12 - Event type importation"
+msgstr ""
+
+#: cls_translation.sstep212sourcereposit
+msgid "Step 2/12 - Source-repository association importation"
+msgstr ""
+
+#: cls_translation.sstep312repositoryimp
+msgid "Step 3/12 - Repository importation"
+msgstr ""
 
 #: cls_translation.ssuffix
 msgctxt "cls_translation.ssuffix"
@@ -2454,56 +2569,38 @@ msgid "&Edit"
 msgstr "Bearbeiten"
 
 #: tfrmevents.acteventsgoto.caption
-msgid "Go to"
-msgstr ""
+#, fuzzy
+msgctxt "tfrmevents.acteventsgoto.caption"
+msgid "&Go to"
+msgstr "&Gehe zu..."
 
 #: tfrmevents.acteventssetprefered.caption
 msgctxt "tfrmevents.acteventssetprefered.caption"
 msgid "Set &Prefered"
 msgstr ""
 
-#: tfrmevents.menuitem1.caption
-#, fuzzy
-msgctxt "tfrmevents.menuitem1.caption"
-msgid "&Aller à"
-msgstr "&gehen"
+#: tfrmevents.btnseparator1.caption
+msgctxt "tfrmevents.btnseparator1.caption"
+msgid "btnSeparator1"
+msgstr ""
 
-#: tfrmevents.menuitem2.caption
-msgctxt "tfrmevents.menuitem2.caption"
+#: tfrmevents.btnseparator2.caption
+msgctxt "tfrmevents.btnseparator2.caption"
+msgid "btnSeparator2"
+msgstr ""
+
+#: tfrmevents.mniseparator1.caption
+msgctxt "tfrmevents.mniseparator1.caption"
 msgid "-"
 msgstr ""
 
-#: tfrmevents.menuitem3.caption
-#, fuzzy
-msgctxt "tfrmevents.menuitem3.caption"
-msgid "Ajouter"
-msgstr "Anfügen"
-
-#: tfrmevents.menuitem4.caption
-#, fuzzy
-msgctxt "tfrmevents.menuitem4.caption"
-msgid "Modifier"
-msgstr "Bearbeiten"
-
-#: tfrmevents.menuitem5.caption
-#, fuzzy
-msgctxt "tfrmevents.menuitem5.caption"
-msgid "Supprimer"
-msgstr "Löschen"
-
-#: tfrmevents.menuitem6.caption
-msgctxt "tfrmevents.menuitem6.caption"
+#: tfrmevents.mniseparator2.caption
+msgctxt "tfrmevents.mniseparator2.caption"
 msgid "-"
 msgstr ""
 
-#: tfrmevents.menuitem7.caption
-msgctxt "tfrmevents.menuitem7.caption"
-msgid "Primaire"
-msgstr "Setze &bevorzugt"
-
-#: tfrmevents.toolbar1.caption
-msgctxt "tfrmevents.toolbar1.caption"
-msgid "ToolBar1"
+#: tfrmevents.tlbevents.caption
+msgid "tlbEvents"
 msgstr ""
 
 #: tfrmexplorer.actexplorerorderbybirth.caption
@@ -2541,7 +2638,7 @@ msgstr ""
 
 #: tfrmexplorer.edtsearch.texthint
 msgid "<Search Person>"
-msgstr ""
+msgstr "<Suche Person>"
 
 #: tfrmexplorer.tlbexplorerorderby.caption
 msgid "Order By"
@@ -2989,6 +3086,7 @@ msgid "Descendens"
 msgstr ""
 
 #: tfrmstemmamainform.actwindocuments.caption
+msgctxt "tfrmstemmamainform.actwindocuments.caption"
 msgid "Documents"
 msgstr ""
 
@@ -3023,10 +3121,12 @@ msgid "Siblings"
 msgstr ""
 
 #: tfrmstemmamainform.btnseparator1.caption
+msgctxt "tfrmstemmamainform.btnseparator1.caption"
 msgid "btnSeparator1"
 msgstr ""
 
 #: tfrmstemmamainform.btnseparator2.caption
+msgctxt "tfrmstemmamainform.btnseparator2.caption"
 msgid "btnSeparator2"
 msgstr ""
 

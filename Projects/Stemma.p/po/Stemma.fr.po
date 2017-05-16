@@ -18,6 +18,58 @@ msgctxt "cls_translation.rsmenuhistorycaption"
 msgid "&%d- %s (%d)"
 msgstr ""
 
+#: cls_translation.saddachild
+msgid "Add a child"
+msgstr ""
+
+#: cls_translation.saddacitation
+msgid "Add a citation"
+msgstr ""
+
+#: cls_translation.saddadocument
+msgid "Add a Document"
+msgstr ""
+
+#: cls_translation.saddaname
+msgid "Add a name"
+msgstr ""
+
+#: cls_translation.saddanevent
+msgid "Add an event"
+msgstr ""
+
+#: cls_translation.saddanindividual
+msgid "Add an individual"
+msgstr ""
+
+#: cls_translation.saddaparent
+msgid "Add a parent"
+msgstr ""
+
+#: cls_translation.saddfirstname
+msgid "Add &first name"
+msgstr ""
+
+#: cls_translation.saddingasisterto
+msgid "Adding a sister to "
+msgstr ""
+
+#: cls_translation.saddtitle
+msgid "Add &title"
+msgstr ""
+
+#: cls_translation.sareyousuretodelcitation
+msgid "Are you sure you want to delete citation \""
+msgstr ""
+
+#: cls_translation.sareyousuretodelrepository
+msgid "Are you sure you want to delete repository \""
+msgstr ""
+
+#: cls_translation.sareyousuretodelwitness
+msgid "Are you sure you want to delete witness \""
+msgstr ""
+
 #: cls_translation.sareyousuretoquit
 msgctxt "cls_translation.sareyousuretoquit"
 msgid "Are you syre you want to quit STEMMA?"
@@ -28,14 +80,35 @@ msgctxt "cls_translation.sconfirmation"
 msgid "Confirmation"
 msgstr ""
 
+#: cls_translation.sdatabasealreadyexist
+msgid "Database already exist."
+msgstr ""
+
 #: cls_translation.sdatabasename
 msgctxt "cls_translation.sdatabasename"
 msgid "Database name"
 msgstr ""
 
+#: cls_translation.sdatabasenotfound
+msgid "Database not found."
+msgstr ""
+
+#: cls_translation.sdocuments
+msgctxt "cls_translation.sdocuments"
+msgid "Documents"
+msgstr ""
+
 #: cls_translation.senterdbname
 msgctxt "cls_translation.senterdbname"
 msgid "Enter the database name to be created"
+msgstr "Entrez le nom de la base de données à créer"
+
+#: cls_translation.senterthedatabasename
+msgid "Enter the database name"
+msgstr ""
+
+#: cls_translation.senterthedatabasetodel
+msgid "Enter the database name to delete"
 msgstr ""
 
 #: cls_translation.sfamilyname
@@ -46,6 +119,47 @@ msgstr ""
 #: cls_translation.sgivenname
 msgctxt "cls_translation.sgivenname"
 msgid "First name"
+msgstr ""
+
+#: cls_translation.sgoto
+msgctxt "cls_translation.sgoto"
+msgid "&Go to"
+msgstr ""
+
+#: cls_translation.slocationofthetmg40dd
+msgid "Location of the TMG 4.0d database"
+msgstr ""
+
+#: cls_translation.snumberoftheindividua
+msgid "Number of the individual"
+msgstr ""
+
+#: cls_translation.sremovaloforphanrecor
+msgid "Removal of orphan records"
+msgstr ""
+
+#: cls_translation.srepairnamesforsortin
+msgid "Repair names (for sorting)"
+msgstr ""
+
+#: cls_translation.srepairrelationsortda
+msgid "Repair relation sort date"
+msgstr ""
+
+#: cls_translation.srepositorymodificati
+msgid "Depository modification"
+msgstr ""
+
+#: cls_translation.sstep112eventtypeimpo
+msgid "Step 1/12 - Event type importation"
+msgstr ""
+
+#: cls_translation.sstep212sourcereposit
+msgid "Step 2/12 - Source-repository association importation"
+msgstr ""
+
+#: cls_translation.sstep312repositoryimp
+msgid "Step 3/12 - Repository importation"
 msgstr ""
 
 #: cls_translation.ssuffix
@@ -2494,7 +2608,8 @@ msgid "&Edit"
 msgstr ""
 
 #: tfrmevents.acteventsgoto.caption
-msgid "Go to"
+msgctxt "tfrmevents.acteventsgoto.caption"
+msgid "&Go to"
 msgstr ""
 
 #: tfrmevents.acteventssetprefered.caption
@@ -2502,45 +2617,28 @@ msgctxt "tfrmevents.acteventssetprefered.caption"
 msgid "Set &Prefered"
 msgstr ""
 
-#: tfrmevents.menuitem1.caption
-msgctxt "tfrmevents.menuitem1.caption"
-msgid "&Aller à"
-msgstr "&Aller à"
+#: tfrmevents.btnseparator1.caption
+msgctxt "tfrmevents.btnseparator1.caption"
+msgid "btnSeparator1"
+msgstr ""
 
-#: tfrmevents.menuitem2.caption
-msgctxt "tfrmevents.menuitem2.caption"
+#: tfrmevents.btnseparator2.caption
+msgctxt "tfrmevents.btnseparator2.caption"
+msgid "btnSeparator2"
+msgstr ""
+
+#: tfrmevents.mniseparator1.caption
+msgctxt "tfrmevents.mniseparator1.caption"
 msgid "-"
 msgstr ""
 
-#: tfrmevents.menuitem3.caption
-msgctxt "tfrmevents.menuitem3.caption"
-msgid "Ajouter"
-msgstr "Ajouter"
-
-#: tfrmevents.menuitem4.caption
-msgctxt "tfrmevents.menuitem4.caption"
-msgid "Modifier"
-msgstr "Modifier"
-
-#: tfrmevents.menuitem5.caption
-msgctxt "tfrmevents.menuitem5.caption"
-msgid "Supprimer"
-msgstr "Supprimer"
-
-#: tfrmevents.menuitem6.caption
-msgctxt "tfrmevents.menuitem6.caption"
+#: tfrmevents.mniseparator2.caption
+msgctxt "tfrmevents.mniseparator2.caption"
 msgid "-"
 msgstr ""
 
-#: tfrmevents.menuitem7.caption
-#, fuzzy
-msgctxt "tfrmevents.menuitem7.caption"
-msgid "Primaire"
-msgstr "Primaire"
-
-#: tfrmevents.toolbar1.caption
-msgctxt "tfrmevents.toolbar1.caption"
-msgid "ToolBar1"
+#: tfrmevents.tlbevents.caption
+msgid "tlbEvents"
 msgstr ""
 
 #: tfrmexplorer.actexplorerorderbybirth.caption
@@ -2636,7 +2734,7 @@ msgstr ""
 
 #: tfrmnames.lbllastmodification.caption
 msgid "Last modification at:"
-msgstr ""
+msgstr "Dernière modification à:"
 
 #: tfrmnames.lblmodificationdate.caption
 msgctxt "tfrmnames.lblmodificationdate.caption"
@@ -2912,7 +3010,7 @@ msgstr ""
 
 #: tfrmstemmamainform.acthelpabout.caption
 msgid "About ..."
-msgstr ""
+msgstr "À propos"
 
 #: tfrmstemmamainform.acthelpshowdebug.caption
 msgctxt "tfrmstemmamainform.acthelpshowdebug.caption"
@@ -3010,6 +3108,7 @@ msgid "Descendens"
 msgstr ""
 
 #: tfrmstemmamainform.actwindocuments.caption
+msgctxt "tfrmstemmamainform.actwindocuments.caption"
 msgid "Documents"
 msgstr ""
 
@@ -3044,10 +3143,12 @@ msgid "Siblings"
 msgstr ""
 
 #: tfrmstemmamainform.btnseparator1.caption
+msgctxt "tfrmstemmamainform.btnseparator1.caption"
 msgid "btnSeparator1"
 msgstr ""
 
 #: tfrmstemmamainform.btnseparator2.caption
+msgctxt "tfrmstemmamainform.btnseparator2.caption"
 msgid "btnSeparator2"
 msgstr ""
 
@@ -3867,7 +3968,7 @@ msgstr ""
 #: traduction.sareyousuretoquit
 msgctxt "traduction.sareyousuretoquit"
 msgid "Are you syre you want to quit STEMMA?"
-msgstr ""
+msgstr "Êtes-vous prêt à quitter STEMMA?"
 
 #: traduction.sconfirmation
 msgctxt "traduction.sconfirmation"
@@ -3880,9 +3981,10 @@ msgid "Database name"
 msgstr ""
 
 #: traduction.senterdbname
+#, fuzzy
 msgctxt "traduction.senterdbname"
 msgid "Enter the database name to be created"
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: traduction.sfamilyname
 msgctxt "traduction.sfamilyname"

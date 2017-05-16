@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Grids, Menus,
-  FMUtils, LCLType, ActnList, ComCtrls;
+  LCLType, ActnList, ComCtrls;
 
 type
 
@@ -18,26 +18,35 @@ type
     actEventsEdit: TAction;
     actEventsDelete: TAction;
     actEventsSetPrefered: TAction;
-    ActionList1: TActionList;
-    MenuItem1: TMenuItem;
-    MenuItem2: TMenuItem;
-    MenuItem3: TMenuItem;
-    MenuItem4: TMenuItem;
-    MenuItem5: TMenuItem;
-    MenuItem6: TMenuItem;
-    MenuItem7: TMenuItem;
-    PopupMenuEvenements: TPopupMenu;
+    alsEvents: TActionList;
+    mniEventsGoto: TMenuItem;
+    mniSeparator1: TMenuItem;
+    mniEventsAdd: TMenuItem;
+    mniEventsEdit: TMenuItem;
+    mniEventsDelete: TMenuItem;
+    mniSeparator2: TMenuItem;
+    mniEventsSetPrefered: TMenuItem;
+    mnuEvents: TPopupMenu;
     grdEvents: TStringGrid;
-    ToolBar1: TToolBar;
+    tlbEvents: TToolBar;
+    btnEventsGoto: TToolButton;
+    btnSeparator1: TToolButton;
+    btnEventsAdd: TToolButton;
+    btnEventsEdit: TToolButton;
+    btnEventsDelete: TToolButton;
+    btnSeparator2: TToolButton;
+    btnEventsSetPrefered: TToolButton;
+    procedure actEventsDeleteUpdate(Sender: TObject);
+    procedure actEventsSetPreferedUpdate(Sender: TObject);
     procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure grdEventsResize(Sender: TObject);
-    procedure MenuItem1Click(Sender: TObject);
-    procedure MenuItem3Click(Sender: TObject);
-    procedure MenuItem5Click(Sender: TObject);
-    procedure MenuItem7Click(Sender: TObject);
-    procedure grdEventsDblClick(Sender: TObject);
+    procedure actEventsGotoExecute(Sender: TObject);
+    procedure actEventsAddExecute(Sender: TObject);
+    procedure actEventsDeleteExecute(Sender: TObject);
+    procedure actEventsSetPreferedExecute(Sender: TObject);
+    procedure actEventsEditExecute(Sender: TObject);
     procedure grdEventsDrawCell(Sender: TObject; aCol, aRow: Integer;
       aRect: TRect; {%H-}aState: TGridDrawState);
   private
@@ -71,16 +80,16 @@ begin
    Caption:=Translation.Items[59]+' ('+IntToStr( grdEvents.RowCount-1)+')';
 end;
 
-procedure TfrmEvents.MenuItem1Click(Sender: TObject);
+procedure TfrmEvents.actEventsGotoExecute(Sender: TObject);
 begin
   if grdEvents.Row>0 then
      If StrToInt(grdEvents.Cells[7,grdEvents.Row])>0 then
         frmStemmaMainForm.iID:=Ptrint(grdEvents.objects[7,grdEvents.Row]);
 end;
 
-procedure TfrmEvents.MenuItem3Click(Sender: TObject);
+procedure TfrmEvents.actEventsAddExecute(Sender: TObject);
 begin
-  dmGenData.PutCode('A',0);
+ // dmGenData.PutCode('A',0);
   frmEditEvents.EditType:=eEET_New;
   if frmEditEvents.Showmodal = mrOK then
      begin
@@ -91,7 +100,7 @@ begin
   end;
 end;
 
-procedure TfrmEvents.MenuItem5Click(Sender: TObject);
+procedure TfrmEvents.actEventsDeleteExecute(Sender: TObject);
 begin
   // Supprimer un événement
   if grdEvents.Row>0 then
@@ -125,7 +134,7 @@ begin
         end;
 end;
 
-procedure TfrmEvents.MenuItem7Click(Sender: TObject);
+procedure TfrmEvents.actEventsSetPreferedExecute(Sender: TObject);
 var
   temoins1, temoins2, lEvType, lDate:string;
   redraw :boolean;
@@ -236,7 +245,7 @@ begin
    if redraw then PopulateEvents(Sender);
 end;
 
-procedure TfrmEvents.grdEventsDblClick(Sender: TObject);
+procedure TfrmEvents.actEventsEditExecute(Sender: TObject);
 begin
   frmEditEvents.EditType:=eEET_EditExisting;
   If grdEvents.Row>0 then
@@ -279,6 +288,18 @@ begin
   dmGenData.WriteCfgGridPosition(grdEvents as TStringGrid,7);
 end;
 
+procedure TfrmEvents.actEventsDeleteUpdate(Sender: TObject);
+begin
+  //Todo:
+end;
+
+procedure TfrmEvents.actEventsSetPreferedUpdate(Sender: TObject);
+begin
+  actEventsSetPrefered.Checked:=grdEvents.Cells[1,grdEvents.Row]='*';
+  actEventsSetPrefered.Enabled:=not actEventsSetPrefered.Checked;
+end;
+
+
 procedure TfrmEvents.FormResize(Sender: TObject);
 begin
 
@@ -291,11 +312,11 @@ begin
   grdEvents.Cells[3,0]:=Translation.Items[136];
   grdEvents.Cells[4,0]:=Translation.Items[155];
   grdEvents.Cells[5,0]:=Translation.Items[177];
-  MenuItem1.Caption:=Translation.Items[222];
-  MenuItem3.Caption:=Translation.Items[224];
-  MenuItem4.Caption:=Translation.Items[225];
-  MenuItem5.Caption:=Translation.Items[226];
-  MenuItem7.Caption:=Translation.Items[234];
+  mniEventsGoto.Caption:=Translation.Items[222];
+  mniEventsAdd.Caption:=Translation.Items[224];
+  mniEventsEdit.Caption:=Translation.Items[225];
+  mniEventsDelete.Caption:=Translation.Items[226];
+  mniEventsSetPrefered.Caption:=Translation.Items[234];
   dmGenData.ReadCfgFormPosition(Sender as TForm,0,0,70,1000);
   dmGenData.ReadCfgGridPosition(grdEvents as TStringGrid,7);
   dmGenData.OnModifyEvent:=@PopulateEvents;
@@ -303,8 +324,17 @@ begin
 end;
 
 procedure TfrmEvents.grdEventsResize(Sender: TObject);
+var
+  ww: Integer;
 begin
-  grdEvents.Columns[3].Width := grdEvents.Width-233;
+  if grdEvents.ColCount>5 then
+     begin
+       ww:=grdEvents.Columns[0].Width+grdEvents.Columns[1].Width+grdEvents.Columns[2].Width +grdEvents.Columns[4].Width+grdEvents.ColCount+grdEvents.Columns[5].Width+1;
+       if grdEvents.Width-ww > 120 then
+       grdEvents.Columns[3].Width := grdEvents.Width-ww
+       else
+       grdEvents.Columns[3].Width :=120;
+     end;
 end;
 
 {$R *.lfm}

@@ -10,11 +10,11 @@ interface
 
 uses
 {$IFnDEF FPC}
-  Windows,
+  Windows, Messages,
 {$ELSE}
   LCLIntf, LCLType, LMessages,
 {$ENDIF}
-  SysUtils, Classes, Messages, Controls, Graphics, ExtCtrls,DB,DBCtrls;
+  SysUtils, Classes, Controls, Graphics, ExtCtrls,DB,DBCtrls;
 
 type
   TBeforePaintEvent=Procedure(Sender:TObject;Reference,Data:string) of object;
@@ -37,7 +37,11 @@ type
     procedure SetDataField(const Value: string);
     procedure SetRefField(const Value: string);
     procedure SetDataSource(Value: TDataSource);
+    {$IFDEF FPC}
     procedure CMGetDataLink(var Message: TMessage); message CM_GETDATALINK;
+    {$ELSE}
+    procedure CMGetDataLink(var Message: TMessage); message CM_GETDATALINK;
+    {$ENDIF}
   protected
     function GetPanelColor: TColor;
     procedure Loaded; override;

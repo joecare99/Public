@@ -36,7 +36,7 @@ object frmEvents: TfrmEvents
         Title.Caption = 'Q'
       end    
       item
-        Title.Caption = 'Âge'
+        Title.Caption = 'Age'
       end    
       item
         Title.Caption = 'No'
@@ -48,9 +48,9 @@ object frmEvents: TfrmEvents
       end>
     MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goRowSelect, goSmoothScroll]
-    PopupMenu = PopupMenuEvenements
+    PopupMenu = mnuEvents
     TabOrder = 0
-    OnDblClick = grdEventsDblClick
+    OnDblClick = actEventsEditExecute
     OnDrawCell = grdEventsDrawCell
     OnResize = grdEventsResize
     ColWidths = (
@@ -65,70 +65,112 @@ object frmEvents: TfrmEvents
       0
     )
   end
-  object ToolBar1: TToolBar
+  object tlbEvents: TToolBar
     Left = 0
     Height = 28
     Top = 0
     Width = 320
-    Caption = 'ToolBar1'
+    Caption = 'tlbEvents'
+    ParentShowHint = False
+    ShowCaptions = True
+    ShowHint = True
     TabOrder = 1
+    object btnEventsGoto: TToolButton
+      Left = 1
+      Top = 2
+      Action = actEventsGoto
+    end
+    object btnSeparator1: TToolButton
+      Left = 38
+      Height = 22
+      Top = 2
+      Width = 8
+      Caption = 'btnSeparator1'
+      Style = tbsSeparator
+    end
+    object btnEventsAdd: TToolButton
+      Left = 46
+      Top = 2
+      Action = actEventsAdd
+    end
+    object btnEventsEdit: TToolButton
+      Left = 76
+      Top = 2
+      Action = actEventsEdit
+    end
+    object btnEventsDelete: TToolButton
+      Left = 104
+      Top = 2
+      Action = actEventsDelete
+    end
+    object btnSeparator2: TToolButton
+      Left = 145
+      Height = 22
+      Top = 2
+      Width = 8
+      Caption = 'btnSeparator2'
+      Style = tbsSeparator
+    end
+    object btnEventsSetPrefered: TToolButton
+      Left = 153
+      Top = 2
+      Action = actEventsSetPrefered
+    end
   end
-  object PopupMenuEvenements: TPopupMenu
+  object mnuEvents: TPopupMenu
     left = 280
     top = 128
-    object MenuItem1: TMenuItem
-      Caption = '&Aller à'
-      OnClick = MenuItem1Click
+    object mniEventsGoto: TMenuItem
+      Action = actEventsGoto
     end
-    object MenuItem2: TMenuItem
+    object mniSeparator1: TMenuItem
       Caption = '-'
     end
-    object MenuItem3: TMenuItem
-      Caption = 'Ajouter'
-      ShortCut = 115
-      OnClick = MenuItem3Click
+    object mniEventsAdd: TMenuItem
+      Action = actEventsAdd
     end
-    object MenuItem4: TMenuItem
-      Caption = 'Modifier'
-      ShortCut = 116
-      OnClick = grdEventsDblClick
+    object mniEventsEdit: TMenuItem
+      Action = actEventsEdit
     end
-    object MenuItem5: TMenuItem
-      Caption = 'Supprimer'
-      ShortCut = 117
-      OnClick = MenuItem5Click
+    object mniEventsDelete: TMenuItem
+      Action = actEventsDelete
     end
-    object MenuItem6: TMenuItem
+    object mniSeparator2: TMenuItem
       Caption = '-'
     end
-    object MenuItem7: TMenuItem
-      Caption = 'Primaire'
-      ShortCut = 8248
-      OnClick = MenuItem7Click
+    object mniEventsSetPrefered: TMenuItem
+      Action = actEventsSetPrefered
     end
   end
-  object ActionList1: TActionList
+  object alsEvents: TActionList
     left = 243
     top = 127
     object actEventsGoto: TAction
       Category = 'Events'
-      Caption = 'Go to'
+      Caption = '&Go to'
+      OnExecute = actEventsGotoExecute
     end
     object actEventsAdd: TAction
       Category = 'Events'
       Caption = '&Add'
+      OnExecute = actEventsAddExecute
     end
     object actEventsEdit: TAction
       Category = 'Events'
       Caption = '&Edit'
+      OnExecute = actEventsEditExecute
     end
     object actEventsDelete: TAction
       Category = 'Events'
       Caption = 'De&lete'
+      OnExecute = actEventsDeleteExecute
+      OnUpdate = actEventsDeleteUpdate
     end
     object actEventsSetPrefered: TAction
       Category = 'Events'
       Caption = 'Set &Prefered'
+      OnExecute = actEventsSetPreferedExecute
+      OnUpdate = actEventsSetPreferedUpdate
     end
   end
 end

@@ -15,18 +15,48 @@ type
   Fitems:Tstrings;
 private
   function GetItems(index: integer): String;
+  function GetlnCode: string;
 public
   constructor Create;
   destructor Destroy;override;
   procedure LoadFromFile(aLanguage:string;out Success:boolean);overload;
   procedure LoadFromFile(aLanguage:string);overload;
+  property lnCode:string read GetlnCode;
   property Items[index:integer]:String read GetItems;
 end;
 
 resourcestring
   rsMenuHistoryCaption = '&%d- %s (%d)';
-
+  SAddAChild = 'Add a child';
+  SAddACitation = 'Add a citation';
+  SAddADocument = 'Add a Document';
+  SAddAName = 'Add a name';
+  SAddAnEvent = 'Add an event';
+  SAddAnIndividual = 'Add an individual';
+  SAddAParent = 'Add a parent';
+  SAddFirstName = 'Add &first name';
+  SAddingASisterTo = 'Adding a sister to ';
+  SAddTitle = 'Add &title';
+  SAreYouSureToDelCitation = 'Are you sure you want to delete citation "';
+  SAreYouSureToDelRepository = 'Are you sure you want to delete repository "';
+  SAreYouSureToDelWitness = 'Are you sure you want to delete witness "';
   SAreYouSureToQuit	= 'Are you syre you want to quit STEMMA?';
+  SDatabaseAlreadyExist = 'Database already exist.';
+  SDatabaseNotFound = 'Database not found.';
+  SDocuments = 'Documents';
+  SEnterTheDatabaseName = 'Enter the database name';
+  SEnterTheDatabaseToDel = 'Enter the database name to delete';
+  SGoTo = '&Go to';
+  SLocationOfTheTMG40dD = 'Location of the TMG 4.0d database';
+  SNumberOfTheIndividua = 'Number of the individual';
+  SRemovalOfOrphanRecor = 'Removal of orphan records';
+  SRepairNamesForSortin = 'Repair names (for sorting)';
+  SRepairRelationSortDa = 'Repair relation sort date';
+  SRepositoryModificati = 'Depository modification';
+  SStep112EventTypeImpo = 'Step 1/12 - Event type importation';
+  SStep212SourceReposit = 'Step 2/12 - Source-repository association '
+    +'importation';
+  SStep312RepositoryImp = 'Step 3/12 - Repository importation';
   SUnableToConnectToDB 	= 'Couldn''t connect to MySQL database %s.';
   SConfirmation		= 'Confirmation';
   SDatabaseName 	= 'Database name';
@@ -40,20 +70,49 @@ var Translation:TTranslation;
 
 implementation
 
+uses LCLTranslator;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 constructor TTranslation.Create;
 begin
  Fitems:=TStringList.Create;
-  FItems.Add(SAreYouSureToQuit);
+  FItems.Add(SAreYouSureToQuit); {0}
 FItems.Add(SConfirmation);
 FItems.Add(SUnableToConnectToDB);
 FItems.Add(SDatabaseName);
 FItems.Add(SEnterDBName);
-FItems.Add('Database already existing.');
-FItems.Add('Location of the TMG 4.0d database');
-FItems.Add('Step 1/12 - Event type importation');
-FItems.Add('Step 2/12 - Source-repository association importation');
-FItems.Add('Step 3/12 - Repository importation');
-FItems.Add('Step 4/12 - Event Importation - Time to completion ');
+FItems.Add(SDatabaseAlreadyExist);
+FItems.Add(SLocationOfTheTMG40dD);
+FItems.Add(SStep112EventTypeImpo);
+FItems.Add(SStep212SourceReposit);
+FItems.Add(SStep312RepositoryImp);
+FItems.Add('Step 4/12 - Event Importation - Time to completion '); {10}
 FItems.Add('Step 5/12 - Citation importation - Time to completion ');
 FItems.Add('Step 6/12 - Individual importation - Time to completion ');
 FItems.Add('Step 7/12 - Place importation - Time to completion ');
@@ -63,37 +122,37 @@ FItems.Add('Step 10/12 - Relation importation - Time to completion ');
 FItems.Add('Step 11/12 - Source importation - Time to completion ');
 FItems.Add('Step 12/12 - Exhibits importation - Time to completion ');
 FItems.Add('Error: STEMMA Database already existing or impossible to open imported database.');
-FItems.Add('Number of the individual');
+FItems.Add(SNumberOfTheIndividua); {20}
 FItems.Add('Enter the number of the desired individual');
 FItems.Add('The individual ');
 FItems.Add(' has not been found.');
-FItems.Add('Enter the database name to delete');
-FItems.Add('Enter the database name');
-FItems.Add('Database not found.');
-FItems.Add('Are you sure you want to delete repository "');
+FItems.Add(SEnterTheDatabaseToDel);
+FItems.Add(SEnterTheDatabaseName);
+FItems.Add(SDatabaseNotFound);
+FItems.Add(SAreYouSureToDelRepository);
 FItems.Add('" ?');
-FItems.Add('Add a citation');
-FItems.Add('Add an event');
-FItems.Add('Are you sure you want to delete citation "');
-FItems.Add('Are you sure you want to delete witness "');
-FItems.Add('Add an exhibit');
+FItems.Add(SAddACitation);
+FItems.Add(SAddAnEvent); {30}
+FItems.Add(SAreYouSureToDelCitation);
+FItems.Add(SAreYouSureToDelWitness);
+FItems.Add(SAddADocument);
 FItems.Add('Text');
-FItems.Add('Add an individual');
-FItems.Add('Add a name');
+FItems.Add(SAddAnIndividual);
+FItems.Add(SAddAName);
 FItems.Add(SFamilyName);
 FItems.Add(SGivenName);
 FItems.Add(SSuffix);
-FItems.Add(STitle);
-FItems.Add('Add a child');
-FItems.Add('Add a parent');
+FItems.Add(STitle);   {40}
+FItems.Add(SAddAChild);
+FItems.Add(SAddAParent);
 FItems.Add('Add a source');
 FItems.Add('Are you sure you want to delete the link to the depository "');
-FItems.Add('Depository modification');
+FItems.Add(SRepositoryModificati);
 FItems.Add('Enter the depository #');
 FItems.Add('Add a depository');
 FItems.Add('Add a witness');
 FItems.Add('B - Birth events');
-FItems.Add('D - Death events');
+FItems.Add('D - Death events');{50}
 FItems.Add('M - Union events');
 FItems.Add('X - Other events');
 FItems.Add('N - Names');
@@ -103,17 +162,17 @@ FItems.Add('Add an event, name or relation type');
 FItems.Add('Children');
 FItems.Add('Are you sure you want to delete the link to the child "');
 FItems.Add('Events');
-FItems.Add('Are you sure you want to delete "');
+FItems.Add('Are you sure you want to delete "');{60}
 FItems.Add('Only the exhibits associated to an individual (type "I") can be modified this way');
 FItems.Add('Are you sure you want to delete exhibit "');
 FItems.Add('NO TITLE, NO DESCRIPTION');
 FItems.Add('image');
-FItems.Add('Exhibits');
+FItems.Add(SDocuments);
 FItems.Add('she');
 FItems.Add('he');
 FItems.Add('her');
 FItems.Add('his');
-FItems.Add('daughter of ');
+FItems.Add('daughter of '); {70}
 FItems.Add('son of ');
 FItems.Add(' and ');
 FItems.Add('TO BE PROGRAMMED');
@@ -123,7 +182,7 @@ FItems.Add('fébruary');
 FItems.Add('march');
 FItems.Add('april');
 FItems.Add('may');
-FItems.Add('june');
+FItems.Add('june');           {80}
 FItems.Add('july');
 FItems.Add('august');
 FItems.Add('september');
@@ -133,7 +192,7 @@ FItems.Add('december');
 FItems.Add('before the ');
 FItems.Add('before ');
 FItems.Add('before a ');
-FItems.Add(' of the year ');
+FItems.Add(' of the year ');    {90}
 FItems.Add('circa the ');
 FItems.Add('circa ');
 FItems.Add('circa a ');
@@ -143,7 +202,7 @@ FItems.Add('a ');
 FItems.Add('after the ');
 FItems.Add('after ');
 FItems.Add('after a ');
-FItems.Add('between the ');
+FItems.Add('between the ');       {100}
 FItems.Add('between ');
 FItems.Add('between a ');
 FItems.Add(' and the ');
@@ -153,17 +212,17 @@ FItems.Add(' or in ');
 FItems.Add(' or a ');
 FItems.Add('from ');
 FItems.Add('from ');
-FItems.Add('from a ');
+FItems.Add('from a ');          {110}
 FItems.Add(' to ');
 FItems.Add(' to ');
 FItems.Add(' to a ');
 FItems.Add('c.');
 FItems.Add(' or ');
 FItems.Add('Siblings');
-FItems.Add('Principal exhibit');
-FItems.Add('Selected exhibit');
+FItems.Add('Main document');
+FItems.Add('Selected document');
 FItems.Add('Merge with...');
-FItems.Add('Enter the place # with "');
+FItems.Add('Enter the place # with "'); {120}
 FItems.Add('" should merge');
 FItems.Add('Not the same place (');
 FItems.Add(') vs (');
@@ -173,7 +232,7 @@ FItems.Add('Names');
 FItems.Add(') and attributes');
 FItems.Add('To remove a primary name, select the new primary name.');
 FItems.Add('Are you sure you want to delete the name "');
-FItems.Add('Parents');
+FItems.Add('Parents'); {130}
 FItems.Add('Are you sure you want to delete the link to the  parent "');
 FItems.Add('Are you sure you want to delete source "');
 FItems.Add('Are you sure you want to delete "');
@@ -183,17 +242,17 @@ FItems.Add('Date');
 FItems.Add('# Source');
 FItems.Add('Source');
 FItems.Add('# Author');
-FItems.Add('Author');
+FItems.Add('Author');    {140}
 FItems.Add('Select the desired language file');
 FItems.Add('About');
 FItems.Add('Version:');
 FItems.Add('Date:');
-FItems.Add('by François Marchi');
+FItems.Add('by François Marchi & Joe Care');
 FItems.Add('Ancestors');
 FItems.Add('Connexion to database');
 FItems.Add('Close');
 FItems.Add('User:');
-FItems.Add('Server:');
+FItems.Add('Server:');    {150}
 FItems.Add('Password:');
 FItems.Add('Ok');
 FItems.Add('Repositories');
@@ -203,7 +262,7 @@ FItems.Add('Memo');
 FItems.Add('Individual');
 FItems.Add('Usage');
 FItems.Add('Descendants');
-FItems.Add('Citation modification');
+FItems.Add('Citation modification'); {160}
 FItems.Add('Source:');
 FItems.Add('Description:');
 FItems.Add('Quality:');
@@ -213,7 +272,7 @@ FItems.Add('Type:');
 FItems.Add('Witnesses:');
 FItems.Add('(presentation):');
 FItems.Add('(sort):');
-FItems.Add('Place:');
+FItems.Add('Place:');               {170}
 FItems.Add('Memo:');
 FItems.Add('Sentence:');
 FItems.Add('(default)');
@@ -223,7 +282,7 @@ FItems.Add('Name');
 FItems.Add('Q');
 FItems.Add('Exhibit modification');
 FItems.Add('Title:');
-FItems.Add('File:');
+FItems.Add('File:');              {180}
 FItems.Add('Visualise');
 FItems.Add('Name modification');
 FItems.Add('Individual:');
@@ -233,7 +292,7 @@ FItems.Add('Relation modification');
 FItems.Add('Parent:');
 FItems.Add('Child:');
 FItems.Add('Sort date:');
-FItems.Add('Source modification');
+FItems.Add('Source modification'); {190}
 FItems.Add('Author:');
 FItems.Add('Default Quality:');
 FItems.Add('Repositories:');
@@ -243,7 +302,7 @@ FItems.Add('Witness:');
 FItems.Add('Role:');
 FItems.Add('Result:');
 FItems.Add('Event type modification');
-FItems.Add('Child');
+FItems.Add('Child');               {200}
 FItems.Add('Format');
 FItems.Add('Explorer');
 FItems.Add('Birth');
@@ -253,7 +312,7 @@ FItems.Add('Navigation history');
 FItems.Add('Places');
 FItems.Add('Preposition');
 FItems.Add('Detail');
-FItems.Add('City');
+FItems.Add('City');                 {210}
 FItems.Add('Region');
 FItems.Add('State');
 FItems.Add('Country');
@@ -263,17 +322,17 @@ FItems.Add('Parent');
 FItems.Add('Exhibit display');
 FItems.Add('Sources');
 FItems.Add('Author');
-FItems.Add('Event types');
+FItems.Add('Event types');{220}
 FItems.Add('Phrase');
-FItems.Add('&Go to');
+FItems.Add(SGoTo);
 FItems.Add('&Usage');
 FItems.Add('&Add');
 FItems.Add('&Modify');
 FItems.Add('&Delete');
 FItems.Add('&Witnesses');
 FItems.Add('&Citations');
-FItems.Add('Add &title');
-FItems.Add('Add &first name');
+FItems.Add(SAddTitle);
+FItems.Add(SAddFirstName);
 FItems.Add('Add &surname');
 FItems.Add('Add suffi&x');
 FItems.Add('&Repositories');
@@ -283,7 +342,7 @@ FItems.Add('Sort by &surname');
 FItems.Add('Sort by &birth');
 FItems.Add('Sort by &death');
 FItems.Add('&Sort');
-FItems.Add('by &detail');
+FItems.Add('by &detail'); {240}
 FItems.Add('by &city');
 FItems.Add('by &region');
 FItems.Add('by &state');
@@ -293,7 +352,7 @@ FItems.Add('by &number');
 FItems.Add('by &title');
 FItems.Add('&File');
 FItems.Add('Conne&xion');
-FItems.Add('&Create project');
+FItems.Add('&Create project');{250}
 FItems.Add('&Open project');
 FItems.Add('&Import project');
 FItems.Add('&TMG v. 4.0d');
@@ -380,10 +439,10 @@ FItems.Add('Enter the username password');
 FItems.Add('Password');
 FItems.Add('Database compression');
 FItems.Add('Repair Birth-Death');
-FItems.Add('Adding a sister to ');
-FItems.Add('Removal of orphan records');
-FItems.Add('Repair names (for sorting)');
-FItems.Add('Repair relation sort date');
+FItems.Add(SAddingASisterTo);
+FItems.Add(SRemovalOfOrphanRecor);
+FItems.Add(SRepairNamesForSortin);
+FItems.Add(SRepairRelationSortDa);
 end;
 
 destructor TTranslation.Destroy;
@@ -397,12 +456,18 @@ begin
   result := Fitems[index];
 end;
 
+function TTranslation.GetlnCode: string;
+begin
+  result := GetDefaultLang;
+end;
+
 procedure TTranslation.LoadFromFile(aLanguage: string; out Success: boolean); overload;
 begin
   Success:=false;
   if FileExists(aLanguage) then
     begin
       Fitems.LoadFromFile(aLanguage);
+      LCLTranslator.SetDefaultLang(copy(aLanguage,1,2),'');
       Success:=true;
     end;
 end;
