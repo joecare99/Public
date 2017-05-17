@@ -122,7 +122,7 @@ begin
   if TableauTypes.Row>0 then
      if StrtoInt(TableauTypes.Cells[5,TableauTypes.Row])=0 then
         if Application.MessageBox(Pchar(Translation.Items[133]+
-           TableauTypes.Cells[2,TableauTypes.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+           TableauTypes.Cells[2,TableauTypes.Row]+Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
            begin
               dmGenData.Query1.SQL.Text:='DELETE FROM Y WHERE no='+TableauTypes.Cells[1,TableauTypes.Row];
               dmGenData.Query1.ExecSQL;

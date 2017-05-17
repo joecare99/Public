@@ -455,7 +455,7 @@ begin
            if Application.MessageBox(Pchar(Translation.Items[300]+
                  frmEditParents.nomB.Text+Translation.Items[299]+
                  DecodeName(temp,1)+
-                 Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+                 Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
               begin
               // Unir les parents
               // Ajouter l'événement mariage
@@ -610,7 +610,7 @@ procedure TfrmEditParents.Supprimer1Click(Sender: TObject);
 begin
   If TableauCitations.Row>0 then
      if Application.MessageBox(Pchar(Translation.Items[31]+
-        TableauCitations.Cells[1,TableauCitations.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+        TableauCitations.Cells[1,TableauCitations.Row]+Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
         begin
         dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE no='+TableauCitations.Cells[0,TableauCitations.Row];
         dmGenData.Query1.ExecSQL;

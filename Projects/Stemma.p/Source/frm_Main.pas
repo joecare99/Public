@@ -329,8 +329,7 @@ uses AnchorDocking, AnchorDockOptionsDlg, dm_GenData, cls_Translation,frm_Select
 
 procedure TfrmStemmaMainForm.QuitterClick(Sender: TObject);
 begin
-  if Application.MessageBox(PChar(Translation.Items[0]),
-    PChar(Translation.Items[1]), MB_YESNO) = idYes then
+  if MessageDlg(SConfirmation,SAreYouSureToQuit,mtConfirmation,mbYesNo,0) = mrYes then
     frmStemmaMainForm.Close;
 end;
 
@@ -1669,8 +1668,7 @@ begin
   begin
     if frmStemmaMainForm.iID <> 0 then
     begin
-      ShowMessage(Translation.Items[22] + IntToStr(frmStemmaMainForm.iID) +
-        Translation.Items[23]);
+      ShowMessage(format(STheIndividualNotFound,[frmStemmaMainForm.iID]));
       frmStemmaMainForm.iID := PtrInt(OldIndividu.Items.Objects[0]);
     end;
   end;
@@ -1900,7 +1898,7 @@ begin
     Cells[1, RowCount - 1] :=
       Translation.Items[317];
   end;
-  dmGenData.AppendBrotherSisters(FormSelectPersonne.Liste, frmStemmaMainForm.iID);
+  dmGenData.AppendSiblings(FormSelectPersonne.Liste, frmStemmaMainForm.iID);
   // fr: Sélectionne toutes les autres personnes en union avec cette personne
   // en: Selects all the other people in union with this person
   dmGenData.AppendSpousesSpouses(FormSelectPersonne.Liste, frmStemmaMainForm.iID);
@@ -1926,7 +1924,7 @@ begin
       Translation.Items[317];
   end;
   // Sélectionne toutes les autres personnes ayant des enfants principaux avec cette personne
-  dmGenData.AppendBrotherSisters(FormSelectPersonne.Liste, frmStemmaMainForm.iID);
+  dmGenData.AppendSiblings(FormSelectPersonne.Liste, frmStemmaMainForm.iID);
   // Sélectionne toutes les autres personnes en union avec cette personne
   dmGenData.AppendSpousesSpouses(FormSelectPersonne.Liste, frmStemmaMainForm.iID);
 
@@ -2240,9 +2238,8 @@ begin
     dmGenData.Query1.SQL.Text := 'SELECT N.N FROM N WHERE N.X=1 AND N.I=' +
       frmStemmaMainForm.sID;
     dmGenData.Query1.Open;
-    if Application.MessageBox(PChar(Translation.Items[60] +
-      DecodeName(dmGenData.Query1.Fields[0].AsString, 1) + Translation.Items[28]),
-      PChar(Translation.Items[1]), MB_YESNO) = idYes then
+    if MessageDlg(SConfirmation,format(SAreYouSureToDelete,
+     [DecodeName(dmGenData.Query1.Fields[0].AsString, 1)]),mtConfirmation,mbYesNo,0) = mrYes then
     begin
       // Supprime la personne
       dmGenData.Query1.SQL.Text := 'DELETE FROM I WHERE no=' + frmStemmaMainForm.sID;

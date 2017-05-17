@@ -243,7 +243,7 @@ begin
   if grdNames.Row>0 then
      if grdNames.Cells[1,grdNames.Row]='' then
         if Application.MessageBox(Pchar(Translation.Items[129]+
-           grdNames.Cells[4,grdNames.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+           grdNames.Cells[4,grdNames.Row]+Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
            begin
            lidName:=ptrint(grdNames.Objects[0,grdNames.Row]);
            dmGenData.DeleteCitationb_TypeId('N',lidName);

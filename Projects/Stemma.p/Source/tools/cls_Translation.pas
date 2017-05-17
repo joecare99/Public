@@ -29,26 +29,43 @@ resourcestring
   rsMenuHistoryCaption = '&%d- %s (%d)';
   SAddAChild = 'Add a child';
   SAddACitation = 'Add a citation';
+  SAddADepository = 'Add a depository';
   SAddADocument = 'Add a Document';
   SAddAName = 'Add a name';
   SAddAnEvent = 'Add an event';
+  SAddAnEventNameOrRela = 'Add an event, name or relation type';
   SAddAnIndividual = 'Add an individual';
   SAddAParent = 'Add a parent';
+  SAddASource = 'Add a source';
+  SAddAWitness = 'Add a witness';
   SAddFirstName = 'Add &first name';
   SAddingASisterTo = 'Adding a sister to ';
   SAddTitle = 'Add &title';
   SAreYouSureToDelCitation = 'Are you sure you want to delete citation "';
+  SAreYouSureToDelDoc = 'Are you sure you want to delete exhibit "';
+  SAreYouSureToDelete   = 'Are you sure you want to delete "%s" ?';
+  SAreYouSureToDelLnkToChld = 'Are you sure you want to delete the link to the'
+    +' child "';
+  SAreYouSureToDelLnkToRep = 'Are you sure you want to delete the link to the '
+    +'depository "';
   SAreYouSureToDelRepository = 'Are you sure you want to delete repository "';
   SAreYouSureToDelWitness = 'Are you sure you want to delete witness "';
   SAreYouSureToQuit	= 'Are you syre you want to quit STEMMA?';
+  SChildren = 'Children';
   SDatabaseAlreadyExist = 'Database already exist.';
   SDatabaseNotFound = 'Database not found.';
   SDocuments = 'Documents';
   SEnterTheDatabaseName = 'Enter the database name';
   SEnterTheDatabaseToDel = 'Enter the database name to delete';
+  SEvents = 'Events';
   SGoTo = '&Go to';
   SLocationOfTheTMG40dD = 'Location of the TMG 4.0d database';
+  SMonthFebruary = 'february';
+  SMonthJanuary = 'january';
+  SNOTITLENODESCRIPTION = 'NO TITLE, NO DESCRIPTION';
   SNumberOfTheIndividua = 'Number of the individual';
+  SOnlyTheExhibitsAssoc = 'Only the exhibits associated to an individual (type'
+    +' "I") can be modified this way';
   SRemovalOfOrphanRecor = 'Removal of orphan records';
   SRepairNamesForSortin = 'Repair names (for sorting)';
   SRepairRelationSortDa = 'Repair relation sort date';
@@ -57,6 +74,8 @@ resourcestring
   SStep212SourceReposit = 'Step 2/12 - Source-repository association '
     +'importation';
   SStep312RepositoryImp = 'Step 3/12 - Repository importation';
+  STheIndividualNotFound = 'The individual %s has not been found.';
+  STOBEPROGRAMMED = 'TO BE PROGRAMMED';
   SUnableToConnectToDB 	= 'Couldn''t connect to MySQL database %s.';
   SConfirmation		= 'Confirmation';
   SDatabaseName 	= 'Database name';
@@ -102,7 +121,7 @@ uses LCLTranslator;
 constructor TTranslation.Create;
 begin
  Fitems:=TStringList.Create;
-  FItems.Add(SAreYouSureToQuit); {0}
+  FItems.Add(''); {0}
 FItems.Add(SConfirmation);
 FItems.Add(SUnableToConnectToDB);
 FItems.Add(SDatabaseName);
@@ -124,8 +143,8 @@ FItems.Add('Step 12/12 - Exhibits importation - Time to completion ');
 FItems.Add('Error: STEMMA Database already existing or impossible to open imported database.');
 FItems.Add(SNumberOfTheIndividua); {20}
 FItems.Add('Enter the number of the desired individual');
-FItems.Add('The individual ');
-FItems.Add(' has not been found.');
+FItems.Add('');
+FItems.Add('');
 FItems.Add(SEnterTheDatabaseToDel);
 FItems.Add(SEnterTheDatabaseName);
 FItems.Add(SDatabaseNotFound);
@@ -145,12 +164,12 @@ FItems.Add(SSuffix);
 FItems.Add(STitle);   {40}
 FItems.Add(SAddAChild);
 FItems.Add(SAddAParent);
-FItems.Add('Add a source');
-FItems.Add('Are you sure you want to delete the link to the depository "');
+FItems.Add(SAddASource);
+FItems.Add(SAreYouSureToDelLnkToRep);
 FItems.Add(SRepositoryModificati);
 FItems.Add('Enter the depository #');
-FItems.Add('Add a depository');
-FItems.Add('Add a witness');
+FItems.Add(SAddADepository);
+FItems.Add(SAddAWitness);
 FItems.Add('B - Birth events');
 FItems.Add('D - Death events');{50}
 FItems.Add('M - Union events');
@@ -158,14 +177,14 @@ FItems.Add('X - Other events');
 FItems.Add('N - Names');
 FItems.Add('R - Filiations');
 FItems.Add('Z - Other relations');
-FItems.Add('Add an event, name or relation type');
-FItems.Add('Children');
-FItems.Add('Are you sure you want to delete the link to the child "');
-FItems.Add('Events');
-FItems.Add('Are you sure you want to delete "');{60}
-FItems.Add('Only the exhibits associated to an individual (type "I") can be modified this way');
-FItems.Add('Are you sure you want to delete exhibit "');
-FItems.Add('NO TITLE, NO DESCRIPTION');
+FItems.Add(SAddAnEventNameOrRela);
+FItems.Add(SChildren);
+FItems.Add(SAreYouSureToDelLnkToChld);
+FItems.Add(SEvents);
+FItems.Add(''); {60}
+FItems.Add(SOnlyTheExhibitsAssoc);
+FItems.Add(SAreYouSureToDelDoc);
+FItems.Add(SNOTITLENODESCRIPTION);
 FItems.Add('image');
 FItems.Add(SDocuments);
 FItems.Add('she');
@@ -175,10 +194,10 @@ FItems.Add('his');
 FItems.Add('daughter of '); {70}
 FItems.Add('son of ');
 FItems.Add(' and ');
-FItems.Add('TO BE PROGRAMMED');
+FItems.Add(STOBEPROGRAMMED);
 FItems.Add('first');
-FItems.Add('january');
-FItems.Add('fébruary');
+FItems.Add(SMonthJanuary);
+FItems.Add(SMonthFebruary);
 FItems.Add('march');
 FItems.Add('april');
 FItems.Add('may');

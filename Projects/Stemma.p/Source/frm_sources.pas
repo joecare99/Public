@@ -157,7 +157,7 @@ begin
      if TableauSources.Cells[7,TableauSources.Row]='0' then
         if Application.MessageBox(Pchar(Translation.Items[132]+
               TableauSources.Cells[2,TableauSources.Row]+
-              Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+              Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
            begin
            // Supprimer tous les exhibits et association dépots de cette source
            dmGenData.Query1.SQL.Text:='DELETE FROM X WHERE A=''S'' AND N='+TableauSources.Cells[1,TableauSources.Row];

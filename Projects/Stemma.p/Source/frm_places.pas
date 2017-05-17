@@ -209,7 +209,7 @@ begin
               Lieu:=Lieu+', '+trim(TableauLieux.Cells[7,TableauLieux.Row]);
         if Application.MessageBox(Pchar(Translation.Items[125]+
               Lieu+
-              Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+              Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
            begin
            dmGenData.Query1.SQL.Text:='DELETE FROM L WHERE no='+TableauLieux.Cells[0,TableauLieux.Row];
            dmGenData.Query1.ExecSQL;

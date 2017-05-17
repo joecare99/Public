@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Stemma"><module name="frm_Events"><element name="TfrmEvents.PopulateEvents"><short>Used to Update/Fill the Form</short>
+      </element><element name="TfrmEvents.actEventsGotoExecute"><short>Method, when the user selects "Go To"</short>
+      </element><element name="TfrmEvents.actEventsAddExecute"><short>Method, when the user selects "Add"</short>
+      </element><element name="TfrmEvents.actEventsDeleteExecute"><short>Method, when the user selects "Delete"</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

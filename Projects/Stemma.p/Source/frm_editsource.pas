@@ -313,7 +313,7 @@ begin
   // Supprimer un Dépot
   if TableauDepots.Row>0 then
      if Application.MessageBox(Pchar(Translation.Items[44]+
-        TableauDepots.Cells[1,TableauDepots.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+        TableauDepots.Cells[1,TableauDepots.Row]+Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
         begin
         dmGenData.Query1.SQL.Text:='DELETE FROM A WHERE no='+TableauDepots.Cells[0,TableauDepots.Row];
         dmGenData.Query1.ExecSQL;
@@ -325,8 +325,8 @@ procedure TEditSource.Supprimer2Click(Sender: TObject);
 begin
   // Supprimer un document à la source
   If TableauExhibits.Row>0 then
-     if Application.MessageBox(Pchar(Translation.Items[60]+
-        TableauExhibits.Cells[2,TableauExhibits.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+     if MessageDlg(SConfirmation,format(SAreYouSureToDelete,[TableauExhibits.Cells[2,TableauExhibits.Row]])
+     ,mtConfirmation,mbYesNo,0) =mrYES  then
         begin
         dmGenData.Query1.SQL.Text:='DELETE FROM X WHERE no='+TableauExhibits.Cells[0,TableauExhibits.Row];
         dmGenData.Query1.ExecSQL;

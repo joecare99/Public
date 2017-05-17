@@ -136,11 +136,11 @@
         <PackageName Value="LCL"/>
       </Item6>
     </RequiredPackages>
-    <Units Count="50">
+    <Units Count="52">
       <Unit0>
         <Filename Value="Stemma.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="13"/>
         <CursorPos X="20" Y="9"/>
         <UsageCount Value="210"/>
         <Loaded Value="True"/>
@@ -151,16 +151,18 @@
         <ComponentName Value="frmStemmaMainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1721"/>
-        <CursorPos Y="1747"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="2215"/>
+        <CursorPos X="68" Y="2242"/>
         <UsageCount Value="210"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\Source\tools\fmutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="FMUtils"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="10"/>
         <TopLine Value="9"/>
         <CursorPos X="10" Y="35"/>
         <UsageCount Value="208"/>
@@ -183,10 +185,12 @@
         <ComponentName Value="frmNames"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="41"/>
-        <CursorPos X="31" Y="63"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="219"/>
+        <CursorPos X="85" Y="246"/>
         <UsageCount Value="205"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\Source\ExtraWnd\frm_Explorer.pas"/>
@@ -205,9 +209,12 @@
         <ComponentName Value="frmParents"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="3" Y="9"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="127"/>
+        <CursorPos X="54" Y="153"/>
         <UsageCount Value="212"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit6>
       <Unit7>
         <Filename Value="..\Source\frm_History.pas"/>
@@ -225,17 +232,20 @@
         <ComponentName Value="frmChildren"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="80"/>
-        <CursorPos X="33" Y="131"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="133"/>
+        <CursorPos X="54" Y="159"/>
         <UsageCount Value="205"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit8>
       <Unit9>
-        <Filename Value="..\Source\frm_Siblings.pas"/>
+        <Filename Value="..\Source\frm_siblings.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmSiblings"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Siblings"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="51" Y="21"/>
         <UsageCount Value="243"/>
@@ -247,39 +257,45 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frm_Events"/>
-        <CursorPos X="3" Y="9"/>
+        <TopLine Value="63"/>
+        <CursorPos X="84" Y="68"/>
         <UsageCount Value="242"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit10>
       <Unit11>
-        <Filename Value="..\Source\frm_Documents.pas"/>
+        <Filename Value="..\Source\frm_documents.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmDocuments"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
+        <UnitName Value="frm_Documents"/>
+        <EditorIndex Value="1"/>
         <TopLine Value="124"/>
-        <CursorPos X="42" Y="151"/>
+        <CursorPos X="90" Y="145"/>
         <UsageCount Value="282"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit11>
       <Unit12>
-        <Filename Value="..\Source\frm_Ancesters.pas"/>
+        <Filename Value="..\Source\frm_ancesters.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormAncetres"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Ancesters"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="61"/>
         <CursorPos X="33" Y="94"/>
         <UsageCount Value="278"/>
       </Unit12>
       <Unit13>
-        <Filename Value="..\Source\frm_Descendants.pas"/>
+        <Filename Value="..\Source\frm_descendants.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormDescendants"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Descendants"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="65"/>
         <CursorPos X="33" Y="93"/>
@@ -291,10 +307,9 @@
         <ComponentName Value="frmEditDocuments"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="14"/>
         <TopLine Value="42"/>
         <CursorPos X="33" Y="68"/>
-        <ComponentState Value="1"/>
         <UsageCount Value="273"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -311,11 +326,12 @@
         <UsageCount Value="272"/>
       </Unit15>
       <Unit16>
-        <Filename Value="..\Source\frm_Images.pas"/>
+        <Filename Value="..\Source\frm_images.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormImage"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Images"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="41"/>
         <CursorPos X="6" Y="80"/>
@@ -327,10 +343,11 @@
         <ComponentName Value="frmEditParents"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="521"/>
-        <CursorPos X="45" Y="546"/>
+        <EditorIndex Value="15"/>
+        <CursorPos X="39" Y="24"/>
         <UsageCount Value="221"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit17>
       <Unit18>
         <Filename Value="..\Source\frm_EditCitations.pas"/>
@@ -360,9 +377,9 @@
         <ComponentName Value="frmEditEvents"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="7"/>
-        <TopLine Value="72"/>
-        <CursorPos X="63" Y="93"/>
+        <EditorIndex Value="16"/>
+        <TopLine Value="1089"/>
+        <CursorPos X="108" Y="1115"/>
         <UsageCount Value="204"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -379,11 +396,12 @@
         <UsageCount Value="200"/>
       </Unit21>
       <Unit22>
-        <Filename Value="..\Source\frm_Places.pas"/>
+        <Filename Value="..\Source\frm_places.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormLieux"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Places"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="47"/>
         <CursorPos X="23" Y="72"/>
@@ -401,22 +419,24 @@
         <UsageCount Value="201"/>
       </Unit23>
       <Unit24>
-        <Filename Value="..\Source\frm_Sources.pas"/>
+        <Filename Value="..\Source\frm_sources.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormSources"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Sources"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="57"/>
         <CursorPos X="33" Y="83"/>
         <UsageCount Value="201"/>
       </Unit24>
       <Unit25>
-        <Filename Value="..\Source\frm_Repositories.pas"/>
+        <Filename Value="..\Source\frm_repositories.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmRepository"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Repositories"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="158"/>
         <CursorPos X="53" Y="203"/>
@@ -424,15 +444,18 @@
         <UsageCount Value="218"/>
       </Unit25>
       <Unit26>
-        <Filename Value="..\Source\frm_EditSource.pas"/>
+        <Filename Value="..\Source\frm_editsource.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="EditSource"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="56"/>
-        <CursorPos X="66" Y="75"/>
+        <UnitName Value="frm_EditSource"/>
+        <EditorIndex Value="17"/>
+        <TopLine Value="302"/>
+        <CursorPos X="107" Y="328"/>
         <UsageCount Value="217"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit26>
       <Unit27>
         <Filename Value="..\Source\frm_Types.pas"/>
@@ -446,11 +469,12 @@
         <UsageCount Value="201"/>
       </Unit27>
       <Unit28>
-        <Filename Value="..\Source\frm_EditTypes.pas"/>
+        <Filename Value="..\Source\frm_edittypes.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="EditType"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_EditTypes"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="27"/>
         <CursorPos X="41" Y="51"/>
@@ -487,9 +511,9 @@
         <ResourceBaseClass Value="DataModule"/>
         <UnitName Value="dm_GenData"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="968"/>
-        <CursorPos X="11" Y="987"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="1883"/>
+        <CursorPos X="22" Y="1921"/>
         <UsageCount Value="203"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -497,9 +521,9 @@
       <Unit32>
         <Filename Value="..\Source\tools\cls_Translation.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="420"/>
-        <CursorPos X="27" Y="460"/>
+        <EditorIndex Value="11"/>
+        <TopLine Value="112"/>
+        <CursorPos X="67" Y="90"/>
         <UsageCount Value="203"/>
         <Loaded Value="True"/>
       </Unit32>
@@ -507,7 +531,7 @@
         <Filename Value="..\..\Indy10\Lib\System\IdStream.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="29" Y="21"/>
-        <UsageCount Value="27"/>
+        <UsageCount Value="25"/>
       </Unit33>
       <Unit34>
         <Filename Value="..\..\..\Delphi\Examples\Source\Prj_TestDocking\frm_dockingmain.pas"/>
@@ -518,7 +542,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="77"/>
         <CursorPos X="69" Y="246"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="23"/>
       </Unit34>
       <Unit35>
         <Filename Value="C:\lazarus\lcl\graphics.pp"/>
@@ -526,7 +550,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="2361"/>
         <CursorPos X="52" Y="2368"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="3"/>
       </Unit35>
       <Unit36>
         <Filename Value="C:\lazarus\lcl\interfaces\win32\win32wsforms.pp"/>
@@ -534,29 +558,30 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="695"/>
         <CursorPos Y="720"/>
-        <UsageCount Value="5"/>
+        <UsageCount Value="3"/>
       </Unit36>
       <Unit37>
         <Filename Value="C:\lazarus\lcl\include\spinedit.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="197"/>
         <CursorPos Y="218"/>
-        <UsageCount Value="72"/>
+        <UsageCount Value="70"/>
       </Unit37>
       <Unit38>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\fcl-db\src\base\dsparams.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="168"/>
         <CursorPos X="30" Y="197"/>
-        <UsageCount Value="27"/>
+        <UsageCount Value="25"/>
       </Unit38>
       <Unit39>
         <Filename Value="C:\lazarus\lcl\dialogs.pp"/>
         <UnitName Value="Dialogs"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="540"/>
-        <CursorPos X="89" Y="557"/>
-        <UsageCount Value="8"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="481"/>
+        <CursorPos X="10" Y="507"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
       </Unit39>
       <Unit40>
         <Filename Value="..\Source\tools\frm_selectdialog.pas"/>
@@ -575,14 +600,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="229"/>
         <CursorPos X="3" Y="255"/>
-        <UsageCount Value="9"/>
+        <UsageCount Value="7"/>
       </Unit41>
       <Unit42>
         <Filename Value="..\..\..\Delphi\Components\Source\Unt_StringProcs.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="1892"/>
         <CursorPos X="90" Y="1914"/>
-        <UsageCount Value="4"/>
+        <UsageCount Value="2"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit42>
       <Unit43>
@@ -590,28 +615,28 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="3448"/>
         <CursorPos Y="3474"/>
-        <UsageCount Value="31"/>
+        <UsageCount Value="29"/>
       </Unit43>
       <Unit44>
         <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\objpas\sysutils\sysutilh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="294"/>
         <CursorPos X="13" Y="320"/>
-        <UsageCount Value="16"/>
+        <UsageCount Value="14"/>
       </Unit44>
       <Unit45>
         <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\objpas\sysutils\sysutils.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="154"/>
         <CursorPos X="16" Y="160"/>
-        <UsageCount Value="16"/>
+        <UsageCount Value="14"/>
       </Unit45>
       <Unit46>
         <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\inc\objpash.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="176"/>
         <CursorPos X="40" Y="195"/>
-        <UsageCount Value="16"/>
+        <UsageCount Value="14"/>
       </Unit46>
       <Unit47>
         <Filename Value="C:\lazarus\lcl\controls.pp"/>
@@ -619,7 +644,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="2246"/>
         <CursorPos X="29" Y="2272"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="9"/>
       </Unit47>
       <Unit48>
         <Filename Value="C:\lazarus\lcl\imglist.pp"/>
@@ -627,106 +652,155 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="162"/>
         <CursorPos X="19" Y="191"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="9"/>
       </Unit48>
       <Unit49>
         <Filename Value="C:\lazarus\lcl\defaulttranslator.pas"/>
         <UnitName Value="DefaultTranslator"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="12"/>
         <CursorPos X="16" Y="31"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="33"/>
         <Loaded Value="True"/>
       </Unit49>
+      <Unit50>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="1750"/>
+        <CursorPos X="62" Y="1767"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit50>
+      <Unit51>
+        <Filename Value="C:\lazarus\lcl\include\application.inc"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="228"/>
+        <CursorPos X="22" Y="234"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit51>
     </Units>
-    <JumpHistory Count="22" HistoryIndex="21">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="..\Source\ExtraWnd\frm_events.pas"/>
-        <Caret Line="97" Column="31" TopLine="73"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="2002" TopLine="1970"/>
       </Position1>
       <Position2>
-        <Filename Value="..\Source\ExtraWnd\frm_events.pas"/>
-        <Caret Line="98" Column="31" TopLine="74"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="145" Column="20" TopLine="128"/>
       </Position2>
       <Position3>
-        <Filename Value="..\Source\ExtraWnd\frm_events.pas"/>
-        <Caret Line="99" Column="31" TopLine="75"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="678" Column="30" TopLine="674"/>
       </Position3>
       <Position4>
-        <Filename Value="..\Source\ExtraWnd\frm_events.pas"/>
-        <Caret Line="100" Column="31" TopLine="76"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="2069" TopLine="2034"/>
       </Position4>
       <Position5>
-        <Filename Value="..\Source\ExtraWnd\frm_events.pas"/>
-        <Caret Line="101" Column="31" TopLine="77"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="2008" Column="11" TopLine="1980"/>
       </Position5>
       <Position6>
-        <Filename Value="..\Source\ExtraWnd\frm_events.pas"/>
-        <Caret Line="102" Column="31" TopLine="78"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="463" Column="19" TopLine="453"/>
       </Position6>
       <Position7>
-        <Filename Value="..\Source\ExtraWnd\frm_events.pas"/>
-        <Caret Line="103" Column="31" TopLine="79"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="1858" Column="18" TopLine="1835"/>
       </Position7>
       <Position8>
-        <Filename Value="..\Source\ExtraWnd\frm_events.pas"/>
-        <Caret Line="105" Column="31" TopLine="81"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="1638" TopLine="1619"/>
       </Position8>
       <Position9>
-        <Filename Value="..\Source\ExtraWnd\frm_events.pas"/>
-        <Caret Line="293" Column="3" TopLine="275"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="746" TopLine="700"/>
       </Position9>
       <Position10>
-        <Filename Value="..\Source\ExtraWnd\frm_events.pas"/>
-        <Caret Line="84" Column="39" TopLine="275"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="536" TopLine="612"/>
       </Position10>
       <Position11>
-        <Filename Value="..\Source\ExtraWnd\frm_events.pas"/>
-        <Caret Line="301" Column="10" TopLine="249"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="557" TopLine="531"/>
       </Position11>
       <Position12>
-        <Filename Value="..\Source\tools\cls_Translation.pas"/>
-        <Caret Line="43" Column="12"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="749" TopLine="705"/>
       </Position12>
       <Position13>
-        <Filename Value="..\Source\tools\cls_Translation.pas"/>
-        <Caret Line="24" Column="38" TopLine="4"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="1832" Column="11" TopLine="1792"/>
       </Position13>
       <Position14>
         <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="1829" Column="69" TopLine="1818"/>
+        <Caret Line="1885" Column="43" TopLine="1897"/>
       </Position14>
       <Position15>
         <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="1857" Column="47" TopLine="1821"/>
+        <Caret Line="2090" TopLine="2064"/>
       </Position15>
       <Position16>
         <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="1846" Column="67" TopLine="1801"/>
+        <Caret Line="2135" Column="17" TopLine="2182"/>
       </Position16>
       <Position17>
         <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="1910" Column="36" TopLine="1882"/>
+        <Caret Line="1744" TopLine="1718"/>
       </Position17>
       <Position18>
         <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="1867" Column="86" TopLine="1840"/>
+        <Caret Line="1703" TopLine="1701"/>
       </Position18>
       <Position19>
-        <Filename Value="..\Source\ExtraWnd\frm_events.pas"/>
-        <Caret Line="299" Column="65" TopLine="128"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="1823" Column="19" TopLine="1799"/>
       </Position19>
       <Position20>
-        <Filename Value="..\Source\frm_EditDocuments.pas"/>
-        <Caret Line="78" Column="36" TopLine="52"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="1642" TopLine="1604"/>
       </Position20>
       <Position21>
-        <Filename Value="..\Source\frm_EditEvents.pas"/>
-        <Caret Line="47" Column="38" TopLine="40"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="537" TopLine="499"/>
       </Position21>
       <Position22>
-        <Filename Value="..\Source\frm_EditEvents.pas"/>
-        <Caret Line="93" Column="63" TopLine="72"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="2188" Column="26" TopLine="2225"/>
       </Position22>
+      <Position23>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="252" TopLine="239"/>
+      </Position23>
+      <Position24>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="1864" TopLine="1812"/>
+      </Position24>
+      <Position25>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="852" TopLine="819"/>
+      </Position25>
+      <Position26>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="802" TopLine="763"/>
+      </Position26>
+      <Position27>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="1901" Column="38" TopLine="1866"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="1889" Column="37" TopLine="1867"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="2142" Column="38" TopLine="2118"/>
+      </Position29>
+      <Position30>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="1661" TopLine="1635"/>
+      </Position30>
     </JumpHistory>
   </ProjectOptions>
   <CompilerOptions>

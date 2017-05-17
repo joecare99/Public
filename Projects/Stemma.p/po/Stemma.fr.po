@@ -26,6 +26,10 @@ msgstr ""
 msgid "Add a citation"
 msgstr ""
 
+#: cls_translation.saddadepository
+msgid "Add a depository"
+msgstr ""
+
 #: cls_translation.saddadocument
 msgid "Add a Document"
 msgstr ""
@@ -38,12 +42,24 @@ msgstr ""
 msgid "Add an event"
 msgstr ""
 
+#: cls_translation.saddaneventnameorrela
+msgid "Add an event, name or relation type"
+msgstr ""
+
 #: cls_translation.saddanindividual
 msgid "Add an individual"
 msgstr ""
 
 #: cls_translation.saddaparent
 msgid "Add a parent"
+msgstr ""
+
+#: cls_translation.saddasource
+msgid "Add a source"
+msgstr ""
+
+#: cls_translation.saddawitness
+msgid "Add a witness"
 msgstr ""
 
 #: cls_translation.saddfirstname
@@ -62,6 +78,22 @@ msgstr ""
 msgid "Are you sure you want to delete citation \""
 msgstr ""
 
+#: cls_translation.sareyousuretodeldoc
+msgid "Are you sure you want to delete exhibit \""
+msgstr ""
+
+#: cls_translation.sareyousuretodelete
+msgid "Are you sure you want to delete \"%s\" ?"
+msgstr ""
+
+#: cls_translation.sareyousuretodellnktochld
+msgid "Are you sure you want to delete the link to the child \""
+msgstr ""
+
+#: cls_translation.sareyousuretodellnktorep
+msgid "Are you sure you want to delete the link to the depository \""
+msgstr ""
+
 #: cls_translation.sareyousuretodelrepository
 msgid "Are you sure you want to delete repository \""
 msgstr ""
@@ -73,6 +105,11 @@ msgstr ""
 #: cls_translation.sareyousuretoquit
 msgctxt "cls_translation.sareyousuretoquit"
 msgid "Are you syre you want to quit STEMMA?"
+msgstr ""
+
+#: cls_translation.schildren
+msgctxt "cls_translation.schildren"
+msgid "Children"
 msgstr ""
 
 #: cls_translation.sconfirmation
@@ -111,6 +148,11 @@ msgstr ""
 msgid "Enter the database name to delete"
 msgstr ""
 
+#: cls_translation.sevents
+msgctxt "cls_translation.sevents"
+msgid "Events"
+msgstr ""
+
 #: cls_translation.sfamilyname
 msgctxt "cls_translation.sfamilyname"
 msgid "Name"
@@ -130,8 +172,24 @@ msgstr ""
 msgid "Location of the TMG 4.0d database"
 msgstr ""
 
+#: cls_translation.smonthfebruary
+msgid "february"
+msgstr ""
+
+#: cls_translation.smonthjanuary
+msgid "january"
+msgstr ""
+
+#: cls_translation.snotitlenodescription
+msgid "NO TITLE, NO DESCRIPTION"
+msgstr ""
+
 #: cls_translation.snumberoftheindividua
 msgid "Number of the individual"
+msgstr ""
+
+#: cls_translation.sonlytheexhibitsassoc
+msgid "Only the exhibits associated to an individual (type \"I\") can be modified this way"
 msgstr ""
 
 #: cls_translation.sremovaloforphanrecor
@@ -167,10 +225,18 @@ msgctxt "cls_translation.ssuffix"
 msgid "Suffix"
 msgstr ""
 
+#: cls_translation.stheindividualnotfound
+msgid "The individual %s has not been found."
+msgstr ""
+
 #: cls_translation.stitle
 msgctxt "cls_translation.stitle"
 msgid "Title"
 msgstr "Titre"
+
+#: cls_translation.stobeprogrammed
+msgid "TO BE PROGRAMMED"
+msgstr ""
 
 #: cls_translation.sunabletoconnecttodb
 msgctxt "cls_translation.sunabletoconnecttodb"
@@ -3100,6 +3166,7 @@ msgid "Ancesters"
 msgstr ""
 
 #: tfrmstemmamainform.actwinchildren.caption
+msgctxt "tfrmstemmamainform.actwinchildren.caption"
 msgid "Children"
 msgstr ""
 
@@ -3118,6 +3185,7 @@ msgid "Windows"
 msgstr ""
 
 #: tfrmstemmamainform.actwinevents.caption
+msgctxt "tfrmstemmamainform.actwinevents.caption"
 msgid "Events"
 msgstr ""
 

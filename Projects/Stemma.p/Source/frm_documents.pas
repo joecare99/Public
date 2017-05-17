@@ -142,7 +142,7 @@ begin
   // Supprimer un exhibit
   if tblDocuments.Row>0 then
      if Application.MessageBox(Pchar(Translation.Items[62]+
-        tblDocuments.Cells[2,tblDocuments.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+        tblDocuments.Cells[2,tblDocuments.Row]+Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
         begin
         dmGenData.Query1.SQL.Text:='DELETE FROM X WHERE no='+tblDocuments.Cells[0,tblDocuments.Row];
         dmGenData.Query1.ExecSQL;

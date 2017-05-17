@@ -156,7 +156,7 @@ begin
   if TableauEnfants.Row>0 then
      if Application.MessageBox(Pchar(Translation.Items[58]+
            TableauEnfants.Cells[3,TableauEnfants.Row]+
-           Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+           Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
         begin
         dmGenData.SaveModificationTime(strtoint(TableauEnfants.Cells[5,TableauEnfants.Row]));
         dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE Y=''R'' AND N='+TableauEnfants.Cells[0,TableauEnfants.Row];

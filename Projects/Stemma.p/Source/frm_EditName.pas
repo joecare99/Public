@@ -761,7 +761,7 @@ begin
                 DecodeName(nom, 1) + Translation.Items[299] +
                 DecodeName(dmGenData.Query1.Fields[2].AsString, 1) +
                 Translation.Items[28]), PChar(
-                Translation.Items[1]), MB_YESNO) = idYes then
+                SConfirmation), MB_YESNO) = idYes then
               begin
                 // Unir les parents
                 // Ajouter l'événement mariage
@@ -1447,7 +1447,7 @@ begin
   if TableauCitations.Row > 0 then
     if Application.MessageBox(PChar(Translation.Items[31] +
       TableauCitations.Cells[1, TableauCitations.Row] +
-      Translation.Items[28]), PChar(Translation.Items[1]),
+      Translation.Items[28]), PChar(SConfirmation),
       MB_YESNO) = idYes then
     begin
       dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE no=' +

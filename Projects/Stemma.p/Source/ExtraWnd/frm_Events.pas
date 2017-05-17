@@ -67,8 +67,6 @@ implementation
 uses
   frm_Main,cls_Translation, dm_GenData,frm_EditEvents, frm_Explorer, frm_Documents;
 
-
-
 { TfrmEvents }
 
 procedure TfrmEvents.PopulateEvents(Sender: TObject);
@@ -101,32 +99,17 @@ begin
 end;
 
 procedure TfrmEvents.actEventsDeleteExecute(Sender: TObject);
+var
+  lidEvent: Integer;
 begin
   // Supprimer un événement
   if grdEvents.Row>0 then
      if grdEvents.Cells[1,grdEvents.Row]='' then
-        if Application.MessageBox(Pchar(Translation.Items[60]+
-           grdEvents.Cells[2,grdEvents.Row]+'-'+grdEvents.Cells[4,grdEvents.Row]+
-           Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+        if MessageDlg(SConfirmation,format(SAreYouSureToDelete,[grdEvents.Cells[2,grdEvents.Row]+
+           '-'+grdEvents.Cells[4,grdEvents.Row]]),mtConfirmation,mbYesNo,0) =mrYES then
            begin
-           // Modifie la date de dernière modification pour tous les témoins
-           dmGenData.Query3.SQL.Text:='SELECT W.I, W.X FROM W WHERE W.E='+grdEvents.Cells[0,grdEvents.Row];
-           dmGenData.Query3.Open;
-           dmGenData.Query3.First;
-           While not dmGenData.Query3.EOF do
-              begin
-              dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
-              dmGenData.Query3.Next;
-           end;
-           // Supprimer tous les exhibits de cet événement
-           dmGenData.Query1.SQL.Text:='DELETE FROM X WHERE A=''E'' AND N='+grdEvents.Cells[0,grdEvents.Row];
-           dmGenData.Query1.ExecSQL;
-           dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE Y=''E'' AND N='+grdEvents.Cells[0,grdEvents.Row];
-           dmGenData.Query1.ExecSQL;
-           dmGenData.Query1.SQL.Text:='DELETE FROM W WHERE E='+grdEvents.Cells[0,grdEvents.Row];
-           dmGenData.Query1.ExecSQL;
-           dmGenData.Query1.SQL.Text:='DELETE FROM E WHERE no='+grdEvents.Cells[0,grdEvents.Row];
-           dmGenData.Query1.ExecSQL;
+           lidEvent := ptrint(grdEvents.objects[0,grdEvents.Row]);
+           dmGenData.DeleteEventComplete(lidEvent);
            grdEvents.DeleteRow(grdEvents.Row);
            // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
            if frmStemmaMainForm.actWinDocuments.Checked then

@@ -1091,7 +1091,7 @@ procedure TfrmEditEvents.Supprimer1Click(Sender: TObject);
 begin
   If TableauCitations.Row>0 then
      if Application.MessageBox(Pchar(Translation.Items[31]+
-        TableauCitations.Cells[1,TableauCitations.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+        TableauCitations.Cells[1,TableauCitations.Row]+Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
         begin
         dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE no='+TableauCitations.Cells[0,TableauCitations.Row];
         dmGenData.Query1.ExecSQL;
@@ -1112,8 +1112,8 @@ procedure TfrmEditEvents.Supprimer2Click(Sender: TObject);
 begin
   // Supprimer le document de l'événement
   If TableauExhibits.Row>0 then
-     if Application.MessageBox(Pchar(Translation.Items[60]+
-        TableauExhibits.Cells[2,TableauExhibits.Row]+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+     if  MessageDlg(SConfirmation,format(SAreYouSureToDelete,[TableauExhibits.Cells[2,TableauExhibits.Row]])
+     ,mtConfirmation,mbYesNo,0) =mrYES then
         begin
         dmGenData.Query1.SQL.Text:='DELETE FROM X WHERE no='+TableauExhibits.Cells[0,TableauExhibits.Row];
         dmGenData.Query1.ExecSQL;
@@ -1138,7 +1138,7 @@ begin
   If (TableauTemoins.RowCount>1) and (TableauTemoins.Row>0) then  // Il faudra qu'il reste au moins un témoin
      if Application.MessageBox(Pchar(Translation.Items[32]+
         TableauTemoins.Cells[3,TableauTemoins.Row]+' ('+
-        TableauTemoins.Cells[1,TableauTemoins.Row]+')'+Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+        TableauTemoins.Cells[1,TableauTemoins.Row]+')'+Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
         begin
         // Exécuter SAVEMODIFICATIONTIME pour le témoin supprimer
         dmGenData.SaveModificationTime(strtoint(TableauTemoins.Cells[2,TableauTemoins.Row]));

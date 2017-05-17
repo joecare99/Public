@@ -200,7 +200,7 @@ begin
      if TableauDepots.Cells[6,TableauDepots.Row]='0' then
         if Application.MessageBox(Pchar(Translation.Items[27]+
            TableauDepots.Cells[2,TableauDepots.Row]+
-           Translation.Items[28]),Pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+           Translation.Items[28]),Pchar(SConfirmation),MB_YESNO)=IDYES then
            begin
            // Supprimer toutes les associations dépots de cette source
            dmGenData.Query1.SQL.Text:='DELETE FROM A WHERE D='+TableauDepots.Cells[1,TableauDepots.Row];

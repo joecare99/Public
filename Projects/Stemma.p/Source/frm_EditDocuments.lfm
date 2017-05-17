@@ -3,6 +3,7 @@ object frmEditDocuments: TfrmEditDocuments
   Height = 188
   Top = 302
   Width = 497
+  ActiveControl = Titre
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de document'

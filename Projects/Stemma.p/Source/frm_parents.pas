@@ -150,7 +150,7 @@ begin
   if TableauParents.Row>0 then
      if Application.MessageBox(Pchar(Translation.Items[131]+
            TableauParents.Cells[3,TableauParents.Row]+
-           Translation.Items[28]),pchar(Translation.Items[1]),MB_YESNO)=IDYES then
+           Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
         begin
         dmGenData.SaveModificationTime(ptrint(TableauParents.objects[5,TableauParents.Row]));
         dmGenData.DeleteCitationb_TypeId('R',ptrint(TableauParents.Objects[0,TableauParents.Row]));

@@ -40,6 +40,8 @@ Populate le tableau de citations
       </element><element name="TdmGenData.IsValidIndividuum"><short>Checks if individual exists</short>
       </element><element name="TdmGenData.PopulateNameTable"><short>Fills the Name table</short>
       </element>
+    <element name="TdmGenData.UpdateWitnessModDatebyEvent"><short>Updates the Modification-date of all witnesses related to an event</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>
