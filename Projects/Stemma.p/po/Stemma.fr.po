@@ -19,64 +19,72 @@ msgid "&%d- %s (%d)"
 msgstr ""
 
 #: cls_translation.saddachild
+#, fuzzy
 msgid "Add a child"
-msgstr ""
+msgstr "&Ajouter"
 
 #: cls_translation.saddacitation
+#, fuzzy
 msgid "Add a citation"
-msgstr ""
+msgstr "&Ajouter"
 
 #: cls_translation.saddadepository
+#, fuzzy
 msgid "Add a depository"
-msgstr ""
+msgstr "&Ajouter"
 
 #: cls_translation.saddadocument
+#, fuzzy
 msgid "Add a Document"
-msgstr ""
+msgstr "&Ajouter"
 
 #: cls_translation.saddaname
+#, fuzzy
 msgid "Add a name"
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: cls_translation.saddanevent
+#, fuzzy
 msgid "Add an event"
-msgstr ""
+msgstr "&Ajouter"
 
 #: cls_translation.saddaneventnameorrela
 msgid "Add an event, name or relation type"
-msgstr ""
+msgstr "Ajouter un type d’événement, de nom ou de relation"
 
 #: cls_translation.saddanindividual
+#, fuzzy
 msgid "Add an individual"
-msgstr ""
+msgstr "&Ajouter"
 
 #: cls_translation.saddaparent
+#, fuzzy
 msgid "Add a parent"
-msgstr ""
+msgstr "&Ajouter"
 
 #: cls_translation.saddasource
+#, fuzzy
 msgid "Add a source"
-msgstr ""
+msgstr "&Ajouter"
 
 #: cls_translation.saddawitness
+#, fuzzy
 msgid "Add a witness"
-msgstr ""
+msgstr "&Ajouter"
 
 #: cls_translation.saddfirstname
+#, fuzzy
 msgid "Add &first name"
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: cls_translation.saddingasisterto
 msgid "Adding a sister to "
-msgstr ""
+msgstr "Ajout d’une soeur de"
 
 #: cls_translation.saddtitle
+#, fuzzy
 msgid "Add &title"
-msgstr ""
-
-#: cls_translation.sareyousuretodelcitation
-msgid "Are you sure you want to delete citation \""
-msgstr ""
+msgstr "Titre"
 
 #: cls_translation.sareyousuretodeldoc
 msgid "Are you sure you want to delete exhibit \""
@@ -84,7 +92,7 @@ msgstr ""
 
 #: cls_translation.sareyousuretodelete
 msgid "Are you sure you want to delete \"%s\" ?"
-msgstr ""
+msgstr "Êtes-vous sûr de vouloir supprimer cette vente?"
 
 #: cls_translation.sareyousuretodellnktochld
 msgid "Are you sure you want to delete the link to the child \""
@@ -102,14 +110,23 @@ msgstr ""
 msgid "Are you sure you want to delete witness \""
 msgstr ""
 
-#: cls_translation.sareyousuretoquit
-msgctxt "cls_translation.sareyousuretoquit"
-msgid "Are you syre you want to quit STEMMA?"
+#: cls_translation.sareyousuretodelx
+msgid "Are you sure you want to delete %s \"%s%\" ?"
 msgstr ""
+
+#: cls_translation.sareyousuretoquit
+#, fuzzy
+msgctxt "cls_translation.sareyousuretoquit"
+msgid "Are you sure you want to quit STEMMA?"
+msgstr "Êtes-vous prêt à quitter STEMMA?"
 
 #: cls_translation.schildren
 msgctxt "cls_translation.schildren"
 msgid "Children"
+msgstr ""
+
+#: cls_translation.scitation
+msgid "Citation"
 msgstr ""
 
 #: cls_translation.sconfirmation
@@ -118,22 +135,25 @@ msgid "Confirmation"
 msgstr ""
 
 #: cls_translation.sdatabasealreadyexist
+#, fuzzy
 msgid "Database already exist."
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: cls_translation.sdatabasename
+#, fuzzy
 msgctxt "cls_translation.sdatabasename"
 msgid "Database name"
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: cls_translation.sdatabasenotfound
 msgid "Database not found."
-msgstr ""
+msgstr "Base de données introuvable."
 
 #: cls_translation.sdocuments
+#, fuzzy
 msgctxt "cls_translation.sdocuments"
 msgid "Documents"
-msgstr ""
+msgstr "Documents:"
 
 #: cls_translation.senterdbname
 msgctxt "cls_translation.senterdbname"
@@ -141,12 +161,13 @@ msgid "Enter the database name to be created"
 msgstr "Entrez le nom de la base de données à créer"
 
 #: cls_translation.senterthedatabasename
+#, fuzzy
 msgid "Enter the database name"
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: cls_translation.senterthedatabasetodel
 msgid "Enter the database name to delete"
-msgstr ""
+msgstr "Entrez le nom de base de données à supprimer"
 
 #: cls_translation.sevents
 msgctxt "cls_translation.sevents"
@@ -154,14 +175,16 @@ msgid "Events"
 msgstr ""
 
 #: cls_translation.sfamilyname
+#, fuzzy
 msgctxt "cls_translation.sfamilyname"
 msgid "Name"
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: cls_translation.sgivenname
+#, fuzzy
 msgctxt "cls_translation.sgivenname"
 msgid "First name"
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: cls_translation.sgoto
 msgctxt "cls_translation.sgoto"
@@ -181,15 +204,21 @@ msgid "january"
 msgstr ""
 
 #: cls_translation.snotitlenodescription
+#, fuzzy
 msgid "NO TITLE, NO DESCRIPTION"
-msgstr ""
+msgstr "Titre"
 
 #: cls_translation.snumberoftheindividua
 msgid "Number of the individual"
-msgstr ""
+msgstr "Numéro de la personne"
 
 #: cls_translation.sonlytheexhibitsassoc
 msgid "Only the exhibits associated to an individual (type \"I\") can be modified this way"
+msgstr ""
+
+#: cls_translation.sparents
+msgctxt "cls_translation.sparents"
+msgid "Parents"
 msgstr ""
 
 #: cls_translation.sremovaloforphanrecor
@@ -205,8 +234,9 @@ msgid "Repair relation sort date"
 msgstr ""
 
 #: cls_translation.srepositorymodificati
+#, fuzzy
 msgid "Depository modification"
-msgstr ""
+msgstr "Dernière modification à:"
 
 #: cls_translation.sstep112eventtypeimpo
 msgid "Step 1/12 - Event type importation"
@@ -251,7 +281,7 @@ msgstr ""
 #, fuzzy
 msgctxt "tapropos.lblauthor.caption"
 msgid "par François Marchi"
-msgstr "par François Marchi"
+msgstr "Qualité par défaut:"
 
 #: tapropos.lblcompdate.caption
 msgctxt "tapropos.lblcompdate.caption"
@@ -259,15 +289,16 @@ msgid "Label6"
 msgstr ""
 
 #: tapropos.lbldate.caption
+#, fuzzy
 msgctxt "tapropos.lbldate.caption"
 msgid "date:"
-msgstr ""
+msgstr "Date"
 
 #: tapropos.lblprogname.caption
 #, fuzzy
 msgctxt "tapropos.lblprogname.caption"
 msgid "Stemma"
-msgstr "Stemma"
+msgstr "Êtes-vous prêt à quitter STEMMA?"
 
 #: tapropos.lblversion.caption
 msgctxt "tapropos.lblversion.caption"
@@ -303,7 +334,7 @@ msgstr "Mot de passe"
 #: tconnexiondb.ok.caption
 msgctxt "tconnexiondb.ok.caption"
 msgid "Ok"
-msgstr ""
+msgstr "Ok"
 
 #: tconnexiondb.password.text
 msgctxt "TCONNEXIONDB.PASSWORD.TEXT"
@@ -315,20 +346,6 @@ msgctxt "TCONNEXIONDB.USAGER.TEXT"
 msgid "Edit1"
 msgstr ""
 
-#: teditcitations.button1.caption
-msgctxt "TEDITCITATIONS.BUTTON1.CAPTION"
-msgid "Ok"
-msgstr "Ok"
-
-#: teditcitations.button2.caption
-msgctxt "teditcitations.button2.caption"
-msgid "Annul."
-msgstr "Annul."
-
-#: teditcitations.code.text
-msgid "Code"
-msgstr ""
-
 #: teditcitations.label1.caption
 msgid "Source:"
 msgstr ""
@@ -336,7 +353,7 @@ msgstr ""
 #: teditcitations.label2.caption
 msgctxt "teditcitations.label2.caption"
 msgid "Description:"
-msgstr ""
+msgstr "Description:"
 
 #: teditcitations.label3.caption
 msgid "Qualité:"
@@ -350,10 +367,6 @@ msgstr "&Quit"
 #: teditcitations.menuitem2.caption
 msgctxt "teditcitations.menuitem2.caption"
 msgid "Repeat"
-msgstr ""
-
-#: teditcitations.source1.text
-msgid "Source1"
 msgstr ""
 
 #: teditevenement.ajouter1.caption
@@ -507,7 +520,6 @@ msgid "Visualiser"
 msgstr "Visualiser"
 
 #: teditevenement.menuitem11.caption
-#, fuzzy
 msgctxt "TEDITEVENEMENT.MENUITEM11.CAPTION"
 msgid "&Quit"
 msgstr "&Quit"
@@ -679,9 +691,10 @@ msgid "Fichier:"
 msgstr "Fichier:"
 
 #: teditexhibits.label5.caption
+#, fuzzy
 msgctxt "teditexhibits.label5.caption"
 msgid "Type"
-msgstr ""
+msgstr "Type:"
 
 #: teditexhibits.menuitem1.caption
 msgctxt "TEDITEXHIBITS.MENUITEM1.CAPTION"
@@ -735,13 +748,11 @@ msgid "edtName"
 msgstr ""
 
 #: teditnom.label1.caption
-#, fuzzy
 msgctxt "TEDITNOM.LABEL1.CAPTION"
 msgid "Type:"
 msgstr "Type:"
 
 #: teditnom.label10.caption
-#, fuzzy
 msgctxt "TEDITNOM.LABEL10.CAPTION"
 msgid "de tri:"
 msgstr "de tri:"
@@ -762,25 +773,21 @@ msgid "Phrase:"
 msgstr "Phrase:"
 
 #: teditnom.label5.caption
-#, fuzzy
 msgctxt "TEDITNOM.LABEL5.CAPTION"
 msgid "Date"
 msgstr "Date"
 
 #: teditnom.label6.caption
-#, fuzzy
 msgctxt "TEDITNOM.LABEL6.CAPTION"
 msgid "(défaut)"
 msgstr "(défaut)"
 
 #: teditnom.label7.caption
-#, fuzzy
 msgctxt "TEDITNOM.LABEL7.CAPTION"
 msgid "Références:"
 msgstr "Références:"
 
 #: teditnom.label9.caption
-#, fuzzy
 msgctxt "TEDITNOM.LABEL9.CAPTION"
 msgid "de présentation:"
 msgstr "de présentation:"
@@ -796,19 +803,16 @@ msgid "Ajouter &Titre"
 msgstr "Ajouter &Titre"
 
 #: teditnom.menuitem10.caption
-#, fuzzy
 msgctxt "TEDITNOM.MENUITEM10.CAPTION"
 msgid "&Ajouter"
 msgstr "&Ajouter"
 
 #: teditnom.menuitem11.caption
-#, fuzzy
 msgctxt "TEDITNOM.MENUITEM11.CAPTION"
 msgid "&Modifier"
 msgstr "&Modifier"
 
 #: teditnom.menuitem12.caption
-#, fuzzy
 msgctxt "TEDITNOM.MENUITEM12.CAPTION"
 msgid "&Supprimer"
 msgstr "&Supprimer"
@@ -844,7 +848,6 @@ msgid "Ajouter &Suffixe"
 msgstr "Ajouter &Suffixe"
 
 #: teditnom.menuitem5.caption
-#, fuzzy
 msgctxt "TEDITNOM.MENUITEM5.CAPTION"
 msgid "&Quit"
 msgstr "&Quit"
@@ -865,19 +868,16 @@ msgid "Ajouter Suffi&xe"
 msgstr "Ajouter Suffi&xe"
 
 #: teditnom.menuitem9.caption
-#, fuzzy
 msgctxt "TEDITNOM.MENUITEM9.CAPTION"
 msgid "&Références"
 msgstr "&Références"
 
 #: teditnom.modifier1.caption
-#, fuzzy
 msgctxt "TEDITNOM.MODIFIER1.CAPTION"
 msgid "&Modifier"
 msgstr "&Modifier"
 
 #: teditnom.pd.hint
-#, fuzzy
 msgctxt "TEDITNOM.PD.HINT"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -893,7 +893,6 @@ msgid "PD2"
 msgstr ""
 
 #: teditnom.sd.hint
-#, fuzzy
 msgctxt "TEDITNOM.SD.HINT"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -909,7 +908,6 @@ msgid "SD2"
 msgstr ""
 
 #: teditnom.supprimer1.caption
-#, fuzzy
 msgctxt "TEDITNOM.SUPPRIMER1.CAPTION"
 msgid "&Supprimer"
 msgstr "&Supprimer"
@@ -930,30 +928,27 @@ msgid "A"
 msgstr ""
 
 #: teditparents.ajouter1.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.AJOUTER1.CAPTION"
 msgid "&Ajouter"
 msgstr "&Ajouter"
 
 #: teditparents.b.text
+#, fuzzy
 msgctxt "teditparents.b.text"
 msgid "B"
-msgstr ""
+msgstr "Nom de B"
 
 #: teditparents.button1.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.BUTTON1.CAPTION"
 msgid "Ok"
 msgstr "Ok"
 
 #: teditparents.button2.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.BUTTON2.CAPTION"
 msgid "Annul."
 msgstr "Annul."
 
 #: teditparents.label1.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.LABEL1.CAPTION"
 msgid "Type:"
 msgstr "Type:"
@@ -964,13 +959,11 @@ msgid "Parent:"
 msgstr ""
 
 #: teditparents.label3.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.LABEL3.CAPTION"
 msgid "Mémo:"
 msgstr "Mémo:"
 
 #: teditparents.label4.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.LABEL4.CAPTION"
 msgid "Phrase:"
 msgstr "Phrase:"
@@ -981,13 +974,11 @@ msgid "Date de tri:"
 msgstr "Date de tri:"
 
 #: teditparents.label6.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.LABEL6.CAPTION"
 msgid "(défaut)"
 msgstr "(défaut)"
 
 #: teditparents.label7.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.LABEL7.CAPTION"
 msgid "Références:"
 msgstr "Références:"
@@ -998,31 +989,26 @@ msgid "Enfant:"
 msgstr ""
 
 #: teditparents.menuitem1.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.MENUITEM1.CAPTION"
 msgid "&Références"
 msgstr "&Références"
 
 #: teditparents.menuitem2.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.MENUITEM2.CAPTION"
 msgid "&Ajouter"
 msgstr "&Ajouter"
 
 #: teditparents.menuitem3.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.MENUITEM3.CAPTION"
 msgid "&Modifier"
 msgstr "&Modifier"
 
 #: teditparents.menuitem4.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.MENUITEM4.CAPTION"
 msgid "&Supprimer"
 msgstr "&Supprimer"
 
 #: teditparents.menuitem5.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.MENUITEM5.CAPTION"
 msgid "&Quit"
 msgstr "&Quit"
@@ -1033,7 +1019,6 @@ msgid "Repeat"
 msgstr ""
 
 #: teditparents.modifier1.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.MODIFIER1.CAPTION"
 msgid "&Modifier"
 msgstr "&Modifier"
@@ -1055,7 +1040,6 @@ msgid "Nom de B"
 msgstr "Nom de B"
 
 #: teditparents.sd.hint
-#, fuzzy
 msgctxt "TEDITPARENTS.SD.HINT"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -1071,7 +1055,6 @@ msgid "SD2"
 msgstr ""
 
 #: teditparents.supprimer1.caption
-#, fuzzy
 msgctxt "TEDITPARENTS.SUPPRIMER1.CAPTION"
 msgid "&Supprimer"
 msgstr "&Supprimer"
@@ -1093,13 +1076,11 @@ msgid "A"
 msgstr ""
 
 #: teditsource.ajouter1.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.AJOUTER1.CAPTION"
 msgid "&Ajouter"
 msgstr "&Ajouter"
 
 #: teditsource.ajouter2.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.AJOUTER2.CAPTION"
 msgid "&Ajouter"
 msgstr "&Ajouter"
@@ -1109,7 +1090,6 @@ msgid "Desc"
 msgstr "Desc"
 
 #: teditsource.label10.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.LABEL10.CAPTION"
 msgid "Titre:"
 msgstr "Titre:"
@@ -1119,13 +1099,11 @@ msgid "Qualité par défaut:"
 msgstr "Qualité par défaut:"
 
 #: teditsource.label12.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.LABEL12.CAPTION"
 msgid "Documents:"
 msgstr "Documents:"
 
 #: teditsource.label3.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.LABEL3.CAPTION"
 msgid "Mémo:"
 msgstr "Mémo:"
@@ -1139,7 +1117,6 @@ msgid "Auteur:"
 msgstr ""
 
 #: teditsource.label9.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.LABEL9.CAPTION"
 msgid "Description:"
 msgstr "Description:"
@@ -1150,31 +1127,26 @@ msgid "&Dépots"
 msgstr "&Dépots"
 
 #: teditsource.menuitem10.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.MENUITEM10.CAPTION"
 msgid "Visualiser"
 msgstr "Visualiser"
 
 #: teditsource.menuitem2.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.MENUITEM2.CAPTION"
 msgid "&Ajouter"
 msgstr "&Ajouter"
 
 #: teditsource.menuitem3.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.MENUITEM3.CAPTION"
 msgid "&Modifier"
 msgstr "&Modifier"
 
 #: teditsource.menuitem4.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.MENUITEM4.CAPTION"
 msgid "&Supprimer"
 msgstr "&Supprimer"
 
 #: teditsource.menuitem5.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.MENUITEM5.CAPTION"
 msgid "&Quit"
 msgstr "&Quit"
@@ -1190,13 +1162,11 @@ msgid "-"
 msgstr ""
 
 #: teditsource.modifier1.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.MODIFIER1.CAPTION"
 msgid "&Modifier"
 msgstr "&Modifier"
 
 #: teditsource.modifier2.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.MODIFIER2.CAPTION"
 msgid "&Modifier"
 msgstr "&Modifier"
@@ -1213,19 +1183,16 @@ msgid "Nom de A"
 msgstr "Nom de A"
 
 #: teditsource.supprimer1.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.SUPPRIMER1.CAPTION"
 msgid "&Supprimer"
 msgstr "&Supprimer"
 
 #: teditsource.supprimer2.caption
-#, fuzzy
 msgctxt "TEDITSOURCE.SUPPRIMER2.CAPTION"
 msgid "&Supprimer"
 msgstr "&Supprimer"
 
 #: teditsource.titre.text
-#, fuzzy
 msgctxt "TEDITSOURCE.TITRE.TEXT"
 msgid "Titre"
 msgstr "Titre"
@@ -1235,8 +1202,9 @@ msgid "E"
 msgstr ""
 
 #: tedittemoin.i.text
+#, fuzzy
 msgid "I"
-msgstr ""
+msgstr "Nom de I"
 
 #: tedittemoin.label2.caption
 msgctxt "tedittemoin.label2.caption"
@@ -1249,7 +1217,6 @@ msgid "Rôle:"
 msgstr "Rôle:"
 
 #: tedittemoin.label4.caption
-#, fuzzy
 msgctxt "TEDITTEMOIN.LABEL4.CAPTION"
 msgid "Phrase:"
 msgstr "Phrase:"
@@ -1260,13 +1227,11 @@ msgid "Résultat:"
 msgstr "Résultat:"
 
 #: tedittemoin.label6.caption
-#, fuzzy
 msgctxt "TEDITTEMOIN.LABEL6.CAPTION"
 msgid "(défaut)"
 msgstr "(défaut)"
 
 #: tedittemoin.menuitem1.caption
-#, fuzzy
 msgctxt "TEDITTEMOIN.MENUITEM1.CAPTION"
 msgid "&Quit"
 msgstr "&Quit"
@@ -1293,37 +1258,31 @@ msgid "X"
 msgstr ""
 
 #: tedittype.button1.caption
-#, fuzzy
 msgctxt "TEDITTYPE.BUTTON1.CAPTION"
 msgid "Ok"
 msgstr "Ok"
 
 #: tedittype.button2.caption
-#, fuzzy
 msgctxt "TEDITTYPE.BUTTON2.CAPTION"
 msgid "Annul."
 msgstr "Annul."
 
 #: tedittype.label10.caption
-#, fuzzy
 msgctxt "TEDITTYPE.LABEL10.CAPTION"
 msgid "Titre:"
 msgstr "Titre:"
 
 #: tedittype.label11.caption
-#, fuzzy
 msgctxt "TEDITTYPE.LABEL11.CAPTION"
 msgid "Type:"
 msgstr "Type:"
 
 #: tedittype.label3.caption
-#, fuzzy
 msgctxt "TEDITTYPE.LABEL3.CAPTION"
 msgid "Phrase:"
 msgstr "Phrase:"
 
 #: tedittype.menuitem1.caption
-#, fuzzy
 msgctxt "TEDITTYPE.MENUITEM1.CAPTION"
 msgid "&Quit"
 msgstr "&Quit"
@@ -1349,7 +1308,6 @@ msgid "&Aller à"
 msgstr "&Aller à"
 
 #: tformdepots.button1.caption
-#, fuzzy
 msgctxt "TFORMDEPOTS.BUTTON1.CAPTION"
 msgid "Ok"
 msgstr "Ok"
@@ -1440,7 +1398,6 @@ msgid "-"
 msgstr ""
 
 #: tformevenements.menuitem7.caption
-#, fuzzy
 msgctxt "TFORMEVENEMENTS.MENUITEM7.CAPTION"
 msgid "Primaire"
 msgstr "Primaire"
@@ -1511,7 +1468,6 @@ msgid "Ajouter"
 msgstr "Ajouter"
 
 #: tformlieux.button1.caption
-#, fuzzy
 msgctxt "TFORMLIEUX.BUTTON1.CAPTION"
 msgid "Ok"
 msgstr "Ok"
@@ -1610,7 +1566,6 @@ msgid "&Aller à"
 msgstr "&Aller à"
 
 #: tformparents.menuitem2.caption
-#, fuzzy
 msgctxt "TFORMPARENTS.MENUITEM2.CAPTION"
 msgid "Primaire"
 msgstr "Primaire"
@@ -1676,22 +1631,21 @@ msgid "&Primary"
 msgstr "&Primaire"
 
 #: tformselectpersonne.edtname.hint
+#, fuzzy
 msgctxt "tformselectpersonne.edtname.hint"
 msgid "Name"
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: tformselectpersonne.label1.caption
 msgid "ou"
 msgstr "ou"
 
 #: tformselectpersonne.mniquit.caption
-#, fuzzy
 msgctxt "tformselectpersonne.mniquit.caption"
 msgid "&Quit"
 msgstr "&Quit"
 
 #: tformsources.button1.caption
-#, fuzzy
 msgctxt "TFORMSOURCES.BUTTON1.CAPTION"
 msgid "Ok"
 msgstr "Ok"
@@ -1717,8 +1671,9 @@ msgid "Supprimer"
 msgstr "Supprimer"
 
 #: tformsources.menuitem5.caption
+#, fuzzy
 msgid "&Tri"
-msgstr ""
+msgstr "Tri par &prénom"
 
 #: tformsources.menuitem6.caption
 msgctxt "TFORMSOURCES.MENUITEM6.CAPTION"
@@ -1739,7 +1694,6 @@ msgid "par &titre"
 msgstr "par &titre"
 
 #: tformtypes.button1.caption
-#, fuzzy
 msgctxt "TFORMTYPES.BUTTON1.CAPTION"
 msgid "Ok"
 msgstr "Ok"
@@ -1770,10 +1724,79 @@ msgid "Utilisation"
 msgstr "Utilisation"
 
 #: tformutilisation.button1.caption
-#, fuzzy
 msgctxt "TFORMUTILISATION.BUTTON1.CAPTION"
 msgid "Ok"
 msgstr "Ok"
+
+#: tfraedtcitations.actedtcitationadd.caption
+msgctxt "tfraedtcitations.actedtcitationadd.caption"
+msgid "&Add"
+msgstr "&Ajouter"
+
+#: tfraedtcitations.actedtcitationdelete.caption
+msgctxt "tfraedtcitations.actedtcitationdelete.caption"
+msgid "&Delete"
+msgstr ""
+
+#: tfraedtcitations.actedtcitationedit.caption
+msgctxt "tfraedtcitations.actedtcitationedit.caption"
+msgid "&Edit"
+msgstr ""
+
+#: tfraedtcitations.lblcitations.caption
+msgctxt "tfraedtcitations.lblcitations.caption"
+msgid "Citations:"
+msgstr ""
+
+#: tfraedtcitations.mnicitationadd.caption
+msgctxt "tfraedtcitations.mnicitationadd.caption"
+msgid "&Ajouter"
+msgstr "&Ajouter"
+
+#: tfraedtcitations.mnicitationdelete.caption
+msgctxt "tfraedtcitations.mnicitationdelete.caption"
+msgid "&Supprimer"
+msgstr "&Supprimer"
+
+#: tfraedtcitations.mnicitationedit.caption
+msgctxt "tfraedtcitations.mnicitationedit.caption"
+msgid "&Modifier"
+msgstr "&Modifier"
+
+#: tframe1.actedtcitationadd.caption
+msgctxt "tframe1.actedtcitationadd.caption"
+msgid "&Add"
+msgstr "&Ajouter"
+
+#: tframe1.actedtcitationdelete.caption
+msgctxt "tframe1.actedtcitationdelete.caption"
+msgid "&Delete"
+msgstr ""
+
+#: tframe1.actedtcitationedit.caption
+msgctxt "tframe1.actedtcitationedit.caption"
+msgid "&Edit"
+msgstr ""
+
+#: tframe1.lblcitations.caption
+msgctxt "tframe1.lblcitations.caption"
+msgid "Citations:"
+msgstr ""
+
+#: tframe1.mnicitationadd.caption
+msgctxt "tframe1.mnicitationadd.caption"
+msgid "&Ajouter"
+msgstr "&Ajouter"
+
+#: tframe1.mnicitationdelete.caption
+msgctxt "tframe1.mnicitationdelete.caption"
+msgid "&Supprimer"
+msgstr "&Supprimer"
+
+#: tframe1.mnicitationedit.caption
+msgctxt "tframe1.mnicitationedit.caption"
+msgid "&Modifier"
+msgstr "&Modifier"
 
 #: tfrmchildren.menuitem1.caption
 msgctxt "tfrmchildren.menuitem1.caption"
@@ -1850,19 +1873,16 @@ msgid "-"
 msgstr ""
 
 #: tfrmeditdocuments.button1.caption
-#, fuzzy
 msgctxt "tfrmeditdocuments.button1.caption"
 msgid "Ok"
 msgstr "Ok"
 
 #: tfrmeditdocuments.button2.caption
-#, fuzzy
 msgctxt "tfrmeditdocuments.button2.caption"
 msgid "Annul."
 msgstr "Annul."
 
 #: tfrmeditdocuments.button3.caption
-#, fuzzy
 msgctxt "tfrmeditdocuments.button3.caption"
 msgid "Visualiser"
 msgstr "Visualiser"
@@ -1879,13 +1899,11 @@ msgid "No"
 msgstr "No"
 
 #: tfrmeditdocuments.label2.caption
-#, fuzzy
 msgctxt "tfrmeditdocuments.label2.caption"
 msgid "Titre:"
 msgstr "Titre:"
 
 #: tfrmeditdocuments.label3.caption
-#, fuzzy
 msgctxt "tfrmeditdocuments.label3.caption"
 msgid "Description:"
 msgstr "Description:"
@@ -1896,12 +1914,12 @@ msgid "Fichier:"
 msgstr "Fichier:"
 
 #: tfrmeditdocuments.label5.caption
+#, fuzzy
 msgctxt "tfrmeditdocuments.label5.caption"
 msgid "Type"
-msgstr ""
+msgstr "Type:"
 
 #: tfrmeditdocuments.menuitem1.caption
-#, fuzzy
 msgctxt "tfrmeditdocuments.menuitem1.caption"
 msgid "&Quit"
 msgstr "&Quit"
@@ -1923,13 +1941,11 @@ msgid "Sélection de l'image"
 msgstr "Sélection de l'image"
 
 #: tfrmeditdocuments.primaire.caption
-#, fuzzy
 msgctxt "tfrmeditdocuments.primaire.caption"
 msgid "Primaire"
 msgstr "Primaire"
 
 #: tfrmeditdocuments.titre.text
-#, fuzzy
 msgctxt "tfrmeditdocuments.titre.text"
 msgid "Titre"
 msgstr "Titre"
@@ -1939,38 +1955,17 @@ msgctxt "tfrmeditdocuments.type1.text"
 msgid "Type1"
 msgstr ""
 
-#: tfrmeditevents.ajouter1.caption
-#, fuzzy
-msgctxt "tfrmeditevents.ajouter1.caption"
-msgid "&Ajouter"
-msgstr "&Ajouter"
-
 #: tfrmeditevents.ajouter2.caption
-#, fuzzy
 msgctxt "tfrmeditevents.ajouter2.caption"
 msgid "&Ajouter"
 msgstr "&Ajouter"
 
 #: tfrmeditevents.ajoutertemoin.caption
-#, fuzzy
 msgctxt "tfrmeditevents.ajoutertemoin.caption"
 msgid "&Ajouter"
 msgstr "&Ajouter"
 
-#: tfrmeditevents.button1.caption
-#, fuzzy
-msgctxt "tfrmeditevents.button1.caption"
-msgid "Ok"
-msgstr "Ok"
-
-#: tfrmeditevents.button2.caption
-#, fuzzy
-msgctxt "tfrmeditevents.button2.caption"
-msgid "Annul."
-msgstr "Annul."
-
 #: tfrmeditevents.l0.hint
-#, fuzzy
 msgctxt "tfrmeditevents.l0.hint"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -1981,7 +1976,6 @@ msgid "PD"
 msgstr ""
 
 #: tfrmeditevents.l1.hint
-#, fuzzy
 msgctxt "tfrmeditevents.l1.hint"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -1992,7 +1986,6 @@ msgid "PD"
 msgstr ""
 
 #: tfrmeditevents.l2.hint
-#, fuzzy
 msgctxt "tfrmeditevents.l2.hint"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -2003,7 +1996,6 @@ msgid "PD"
 msgstr ""
 
 #: tfrmeditevents.l3.hint
-#, fuzzy
 msgctxt "tfrmeditevents.l3.hint"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -2014,7 +2006,6 @@ msgid "PD"
 msgstr ""
 
 #: tfrmeditevents.l4.hint
-#, fuzzy
 msgctxt "tfrmeditevents.l4.hint"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -2025,7 +2016,6 @@ msgid "PD"
 msgstr ""
 
 #: tfrmeditevents.la.hint
-#, fuzzy
 msgctxt "tfrmeditevents.la.hint"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -2036,58 +2026,44 @@ msgid "PD"
 msgstr ""
 
 #: tfrmeditevents.label1.caption
-#, fuzzy
 msgctxt "tfrmeditevents.label1.caption"
 msgid "Type:"
 msgstr "Type:"
 
 #: tfrmeditevents.label10.caption
-#, fuzzy
 msgctxt "tfrmeditevents.label10.caption"
 msgid "de tri:"
 msgstr "de tri:"
 
 #: tfrmeditevents.label11.caption
-#, fuzzy
 msgctxt "tfrmeditevents.label11.caption"
 msgid "Témoins:"
 msgstr "Témoins:"
 
 #: tfrmeditevents.label12.caption
-#, fuzzy
 msgctxt "tfrmeditevents.label12.caption"
 msgid "Documents:"
 msgstr "Documents:"
 
 #: tfrmeditevents.label3.caption
-#, fuzzy
 msgctxt "tfrmeditevents.label3.caption"
 msgid "Mémo:"
 msgstr "Mémo:"
 
 #: tfrmeditevents.label4.caption
-#, fuzzy
 msgctxt "tfrmeditevents.label4.caption"
 msgid "Phrase:"
 msgstr "Phrase:"
 
 #: tfrmeditevents.label5.caption
-#, fuzzy
 msgctxt "tfrmeditevents.label5.caption"
 msgid "Date"
 msgstr "Date"
 
 #: tfrmeditevents.label6.caption
-#, fuzzy
 msgctxt "tfrmeditevents.label6.caption"
 msgid "(défaut)"
 msgstr "(défaut)"
-
-#: tfrmeditevents.label7.caption
-#, fuzzy
-msgctxt "tfrmeditevents.label7.caption"
-msgid "Références:"
-msgstr "Références:"
 
 #: tfrmeditevents.label8.caption
 msgctxt "tfrmeditevents.label8.caption"
@@ -2095,7 +2071,6 @@ msgid "Lieu:"
 msgstr "Lieu:"
 
 #: tfrmeditevents.label9.caption
-#, fuzzy
 msgctxt "tfrmeditevents.label9.caption"
 msgid "de présentation:"
 msgstr "de présentation:"
@@ -2106,13 +2081,11 @@ msgid "&Témoins"
 msgstr "&Témoins"
 
 #: tfrmeditevents.menuitem10.caption
-#, fuzzy
 msgctxt "tfrmeditevents.menuitem10.caption"
 msgid "Visualiser"
 msgstr "Visualiser"
 
 #: tfrmeditevents.menuitem11.caption
-#, fuzzy
 msgctxt "tfrmeditevents.menuitem11.caption"
 msgid "&Quit"
 msgstr "&Quit"
@@ -2123,44 +2096,22 @@ msgid "Repeat"
 msgstr ""
 
 #: tfrmeditevents.menuitem2.caption
-#, fuzzy
 msgctxt "tfrmeditevents.menuitem2.caption"
 msgid "&Références"
 msgstr "&Références"
 
 #: tfrmeditevents.menuitem3.caption
-#, fuzzy
 msgctxt "tfrmeditevents.menuitem3.caption"
 msgid "&Ajouter"
 msgstr "&Ajouter"
 
 #: tfrmeditevents.menuitem4.caption
-#, fuzzy
 msgctxt "tfrmeditevents.menuitem4.caption"
 msgid "&Modifier"
 msgstr "&Modifier"
 
 #: tfrmeditevents.menuitem5.caption
-#, fuzzy
 msgctxt "tfrmeditevents.menuitem5.caption"
-msgid "&Supprimer"
-msgstr "&Supprimer"
-
-#: tfrmeditevents.menuitem6.caption
-#, fuzzy
-msgctxt "tfrmeditevents.menuitem6.caption"
-msgid "&Ajouter"
-msgstr "&Ajouter"
-
-#: tfrmeditevents.menuitem7.caption
-#, fuzzy
-msgctxt "tfrmeditevents.menuitem7.caption"
-msgid "&Modifier"
-msgstr "&Modifier"
-
-#: tfrmeditevents.menuitem8.caption
-#, fuzzy
-msgctxt "tfrmeditevents.menuitem8.caption"
 msgid "&Supprimer"
 msgstr "&Supprimer"
 
@@ -2169,26 +2120,21 @@ msgctxt "tfrmeditevents.menuitem9.caption"
 msgid "-"
 msgstr ""
 
-#: tfrmeditevents.modifier1.caption
-#, fuzzy
-msgctxt "tfrmeditevents.modifier1.caption"
-msgid "&Modifier"
-msgstr "&Modifier"
-
 #: tfrmeditevents.modifier2.caption
-#, fuzzy
 msgctxt "tfrmeditevents.modifier2.caption"
 msgid "&Modifier"
 msgstr "&Modifier"
 
 #: tfrmeditevents.modifiertemoin.caption
-#, fuzzy
 msgctxt "tfrmeditevents.modifiertemoin.caption"
 msgid "&Modifier"
 msgstr "&Modifier"
 
+#: tfrmeditevents.panel1.caption
+msgid "Panel1"
+msgstr ""
+
 #: tfrmeditevents.pd.hint
-#, fuzzy
 msgctxt "tfrmeditevents.pd.hint"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -2209,7 +2155,6 @@ msgid "Role"
 msgstr "Rôle:"
 
 #: tfrmeditevents.sd.hint
-#, fuzzy
 msgctxt "tfrmeditevents.sd.hint"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -2224,20 +2169,12 @@ msgctxt "tfrmeditevents.sd2.text"
 msgid "SD2"
 msgstr ""
 
-#: tfrmeditevents.supprimer1.caption
-#, fuzzy
-msgctxt "tfrmeditevents.supprimer1.caption"
-msgid "&Supprimer"
-msgstr "&Supprimer"
-
 #: tfrmeditevents.supprimer2.caption
-#, fuzzy
 msgctxt "tfrmeditevents.supprimer2.caption"
 msgid "&Supprimer"
 msgstr "&Supprimer"
 
 #: tfrmeditevents.supprimertemoin.caption
-#, fuzzy
 msgctxt "tfrmeditevents.supprimertemoin.caption"
 msgid "&Supprimer"
 msgstr "&Supprimer"
@@ -2257,12 +2194,6 @@ msgctxt "tfrmeditname.ajout.text"
 msgid "X"
 msgstr ""
 
-#: tfrmeditname.ajouter1.caption
-#, fuzzy
-msgctxt "tfrmeditname.ajouter1.caption"
-msgid "&Ajouter"
-msgstr "&Ajouter"
-
 #: tfrmeditname.cbxsex.itemsex[0].caption
 msgid "Unknown"
 msgstr ""
@@ -2281,25 +2212,21 @@ msgid "edtName"
 msgstr ""
 
 #: tfrmeditname.lbldate.caption
-#, fuzzy
 msgctxt "tfrmeditname.lbldate.caption"
 msgid "Date"
 msgstr "Date"
 
 #: tfrmeditname.lbldefault.caption
-#, fuzzy
 msgctxt "tfrmeditname.lbldefault.caption"
 msgid "(défaut)"
 msgstr "(défaut)"
 
 #: tfrmeditname.lblforpresentation.caption
-#, fuzzy
 msgctxt "tfrmeditname.lblforpresentation.caption"
 msgid "de présentation:"
 msgstr "de présentation:"
 
 #: tfrmeditname.lblforsorting.caption
-#, fuzzy
 msgctxt "tfrmeditname.lblforsorting.caption"
 msgid "de tri:"
 msgstr "de tri:"
@@ -2310,7 +2237,6 @@ msgid "Individu:"
 msgstr "Individu:"
 
 #: tfrmeditname.lblmemo.caption
-#, fuzzy
 msgctxt "tfrmeditname.lblmemo.caption"
 msgid "Mémo:"
 msgstr "Mémo:"
@@ -2321,78 +2247,86 @@ msgid "Nom:"
 msgstr "Nom:"
 
 #: tfrmeditname.lblphrase.caption
-#, fuzzy
 msgctxt "tfrmeditname.lblphrase.caption"
 msgid "Phrase:"
 msgstr "Phrase:"
 
-#: tfrmeditname.lblsources.caption
-#, fuzzy
-msgctxt "tfrmeditname.lblsources.caption"
-msgid "Références:"
-msgstr "Références:"
-
 #: tfrmeditname.lbltype.caption
-#, fuzzy
 msgctxt "tfrmeditname.lbltype.caption"
 msgid "Type:"
 msgstr "Type:"
 
 #: tfrmeditname.menuitem1.caption
+#, fuzzy
+#| msgid "Ajouter &Titre"
 msgctxt "tfrmeditname.menuitem1.caption"
-msgid "Ajouter &Titre"
+msgid "Add &Title"
 msgstr "Ajouter &Titre"
 
 #: tfrmeditname.menuitem10.caption
 #, fuzzy
+#| msgid "&Ajouter"
 msgctxt "tfrmeditname.menuitem10.caption"
-msgid "&Ajouter"
+msgid "&Add"
 msgstr "&Ajouter"
 
 #: tfrmeditname.menuitem11.caption
 #, fuzzy
+#| msgid "&Modifier"
 msgctxt "tfrmeditname.menuitem11.caption"
-msgid "&Modifier"
+msgid "&Edit"
 msgstr "&Modifier"
 
 #: tfrmeditname.menuitem12.caption
 #, fuzzy
+#| msgid "&Supprimer"
 msgctxt "tfrmeditname.menuitem12.caption"
-msgid "&Supprimer"
+msgid "&Delete"
 msgstr "&Supprimer"
 
 #: tfrmeditname.menuitem13.caption
+#, fuzzy
+#| msgid "Ajouter &Nom"
 msgctxt "tfrmeditname.menuitem13.caption"
-msgid "Ajouter &Nom"
+msgid "Add &Surname"
 msgstr "Ajouter &Nom"
 
 #: tfrmeditname.menuitem14.caption
+#, fuzzy
+#| msgid "Ajouter &Titre"
 msgctxt "tfrmeditname.menuitem14.caption"
-msgid "Ajouter &Titre"
+msgid "Add &Title"
 msgstr "Ajouter &Titre"
 
 #: tfrmeditname.menuitem15.caption
+#, fuzzy
+#| msgid "Ajouter &Prénom"
 msgctxt "tfrmeditname.menuitem15.caption"
-msgid "Ajouter &Prénom"
+msgid "Add &First name"
 msgstr "Ajouter &Prénom"
 
 #: tfrmeditname.menuitem2.caption
+#, fuzzy
+#| msgid "Ajouter &Prénom"
 msgctxt "tfrmeditname.menuitem2.caption"
-msgid "Ajouter &Prénom"
+msgid "Add &First name"
 msgstr "Ajouter &Prénom"
 
 #: tfrmeditname.menuitem3.caption
+#, fuzzy
+#| msgid "Ajouter &Nom"
 msgctxt "tfrmeditname.menuitem3.caption"
-msgid "Ajouter &Nom"
+msgid "Add &Surname"
 msgstr "Ajouter &Nom"
 
 #: tfrmeditname.menuitem4.caption
+#, fuzzy
+#| msgid "Ajouter &Suffixe"
 msgctxt "tfrmeditname.menuitem4.caption"
-msgid "Ajouter &Suffixe"
+msgid "Add &Sufix"
 msgstr "Ajouter &Suffixe"
 
 #: tfrmeditname.menuitem5.caption
-#, fuzzy
 msgctxt "tfrmeditname.menuitem5.caption"
 msgid "&Quit"
 msgstr "&Quit"
@@ -2403,29 +2337,27 @@ msgid "Repeat"
 msgstr ""
 
 #: tfrmeditname.menuitem7.caption
+#, fuzzy
+#| msgid "Nom"
 msgctxt "tfrmeditname.menuitem7.caption"
-msgid "Nom"
+msgid "Name"
 msgstr "Nom"
 
 #: tfrmeditname.menuitem8.caption
+#, fuzzy
+#| msgid "Ajouter Suffi&xe"
 msgctxt "tfrmeditname.menuitem8.caption"
-msgid "Ajouter Suffi&xe"
+msgid "Add Sufi&x"
 msgstr "Ajouter Suffi&xe"
 
 #: tfrmeditname.menuitem9.caption
 #, fuzzy
+#| msgid "&Références"
 msgctxt "tfrmeditname.menuitem9.caption"
-msgid "&Références"
+msgid "&Citations"
 msgstr "&Références"
 
-#: tfrmeditname.modifier1.caption
-#, fuzzy
-msgctxt "tfrmeditname.modifier1.caption"
-msgid "&Modifier"
-msgstr "&Modifier"
-
 #: tfrmeditname.pd.hint
-#, fuzzy
 msgctxt "tfrmeditname.pd.hint"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -2441,7 +2373,6 @@ msgid "PD2"
 msgstr ""
 
 #: tfrmeditname.sd.hint
-#, fuzzy
 msgctxt "tfrmeditname.sd.hint"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -2456,106 +2387,78 @@ msgctxt "tfrmeditname.sd2.text"
 msgid "SD2"
 msgstr ""
 
-#: tfrmeditname.supprimer1.caption
-#, fuzzy
-msgctxt "tfrmeditname.supprimer1.caption"
-msgid "&Supprimer"
-msgstr "&Supprimer"
-
 #: tfrmeditname.x.text
 msgctxt "tfrmeditname.x.text"
 msgid "X"
 msgstr ""
 
-#: tfrmeditparents.ajouter1.caption
+#: tfrmeditparents.fraedtcitations1.popupmenu2.ajouter1.caption
 #, fuzzy
-msgctxt "tfrmeditparents.ajouter1.caption"
+msgctxt "tfrmeditparents.fraedtcitations1.popupmenu2.ajouter1.caption"
 msgid "&Ajouter"
 msgstr "&Ajouter"
 
-#: tfrmeditparents.button1.caption
+#: tfrmeditparents.fraedtcitations1.popupmenu2.modifier1.caption
 #, fuzzy
-msgctxt "tfrmeditparents.button1.caption"
-msgid "Ok"
-msgstr "Ok"
+msgctxt "tfrmeditparents.fraedtcitations1.popupmenu2.modifier1.caption"
+msgid "&Modifier"
+msgstr "&Modifier"
 
-#: tfrmeditparents.button2.caption
+#: tfrmeditparents.fraedtcitations1.popupmenu2.supprimer1.caption
 #, fuzzy
-msgctxt "tfrmeditparents.button2.caption"
-msgid "Annul."
-msgstr "Annul."
-
-#: tfrmeditparents.label1.caption
-#, fuzzy
-msgctxt "tfrmeditparents.label1.caption"
-msgid "Type:"
-msgstr "Type:"
-
-#: tfrmeditparents.label2.caption
-msgctxt "tfrmeditparents.label2.caption"
-msgid "Parent:"
-msgstr ""
+msgctxt "tfrmeditparents.fraedtcitations1.popupmenu2.supprimer1.caption"
+msgid "&Supprimer"
+msgstr "&Supprimer"
 
 #: tfrmeditparents.label3.caption
 #, fuzzy
+#| msgid "Mémo:"
 msgctxt "tfrmeditparents.label3.caption"
-msgid "Mémo:"
+msgid "Note:"
 msgstr "Mémo:"
 
 #: tfrmeditparents.label4.caption
-#, fuzzy
 msgctxt "tfrmeditparents.label4.caption"
 msgid "Phrase:"
 msgstr "Phrase:"
 
 #: tfrmeditparents.label5.caption
+#, fuzzy
+#| msgid "Date de tri:"
 msgctxt "tfrmeditparents.label5.caption"
-msgid "Date de tri:"
+msgid "Date (sorting):"
 msgstr "Date de tri:"
 
 #: tfrmeditparents.label6.caption
 #, fuzzy
+#| msgid "(défaut)"
 msgctxt "tfrmeditparents.label6.caption"
-msgid "(défaut)"
+msgid "(default)"
 msgstr "(défaut)"
 
-#: tfrmeditparents.label7.caption
-#, fuzzy
-msgctxt "tfrmeditparents.label7.caption"
-msgid "Références:"
-msgstr "Références:"
-
-#: tfrmeditparents.label8.caption
-msgctxt "tfrmeditparents.label8.caption"
-msgid "Enfant:"
+#: tfrmeditparents.lblchild.caption
+msgid "Child:"
 msgstr ""
+
+#: tfrmeditparents.lblparent.caption
+msgctxt "tfrmeditparents.lblparent.caption"
+msgid "Parent:"
+msgstr ""
+
+#: tfrmeditparents.lbltype.caption
+#, fuzzy
+msgctxt "tfrmeditparents.lbltype.caption"
+msgid "Type:"
+msgstr "Type:"
 
 #: tfrmeditparents.menuitem1.caption
 #, fuzzy
+#| msgid "&Références"
 msgctxt "tfrmeditparents.menuitem1.caption"
-msgid "&Références"
+msgid "&Citiations:"
 msgstr "&Références"
 
-#: tfrmeditparents.menuitem2.caption
-#, fuzzy
-msgctxt "tfrmeditparents.menuitem2.caption"
-msgid "&Ajouter"
-msgstr "&Ajouter"
-
-#: tfrmeditparents.menuitem3.caption
-#, fuzzy
-msgctxt "tfrmeditparents.menuitem3.caption"
-msgid "&Modifier"
-msgstr "&Modifier"
-
-#: tfrmeditparents.menuitem4.caption
-#, fuzzy
-msgctxt "tfrmeditparents.menuitem4.caption"
-msgid "&Supprimer"
-msgstr "&Supprimer"
-
 #: tfrmeditparents.menuitem5.caption
-#, fuzzy
 msgctxt "tfrmeditparents.menuitem5.caption"
 msgid "&Quit"
 msgstr "&Quit"
@@ -2565,11 +2468,9 @@ msgctxt "tfrmeditparents.menuitem6.caption"
 msgid "Repeat"
 msgstr ""
 
-#: tfrmeditparents.modifier1.caption
-#, fuzzy
-msgctxt "tfrmeditparents.modifier1.caption"
-msgid "&Modifier"
-msgstr "&Modifier"
+#: tfrmeditparents.no.hint
+msgid "idRelation"
+msgstr ""
 
 #: tfrmeditparents.noma.text
 msgctxt "tfrmeditparents.noma.text"
@@ -2582,36 +2483,23 @@ msgid "Nom de B"
 msgstr "Nom de B"
 
 #: tfrmeditparents.sd.hint
-#, fuzzy
 msgctxt "tfrmeditparents.sd.hint"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
-
-#: tfrmeditparents.sd.text
-msgctxt "tfrmeditparents.sd.text"
-msgid "SD"
-msgstr ""
 
 #: tfrmeditparents.sd2.text
 msgctxt "tfrmeditparents.sd2.text"
 msgid "SD2"
 msgstr ""
 
-#: tfrmeditparents.supprimer1.caption
-#, fuzzy
-msgctxt "tfrmeditparents.supprimer1.caption"
-msgid "&Supprimer"
-msgstr "&Supprimer"
+#: tfrmeditparents.x.caption
+msgctxt "tfrmeditparents.x.caption"
+msgid "Prefered"
+msgstr ""
 
-#: tfrmeditparents.x.text
-#, fuzzy
-msgctxt "tfrmeditparents.x.text"
-msgid "No"
-msgstr "No"
-
-#: tfrmeditparents.y2.text
-msgctxt "tfrmeditparents.y2.text"
-msgid "Y"
+#: tfrmeditparents.x.hint
+msgctxt "tfrmeditparents.x.hint"
+msgid "Prefered"
 msgstr ""
 
 #: tfrmeditwitness.label2.caption
@@ -2625,7 +2513,6 @@ msgid "Rôle:"
 msgstr "Rôle:"
 
 #: tfrmeditwitness.label4.caption
-#, fuzzy
 msgctxt "tfrmeditwitness.label4.caption"
 msgid "Phrase:"
 msgstr "Phrase:"
@@ -2636,13 +2523,11 @@ msgid "Résultat:"
 msgstr "Résultat:"
 
 #: tfrmeditwitness.label6.caption
-#, fuzzy
 msgctxt "tfrmeditwitness.label6.caption"
 msgid "(défaut)"
 msgstr "(défaut)"
 
 #: tfrmeditwitness.menuitem1.caption
-#, fuzzy
 msgctxt "tfrmeditwitness.menuitem1.caption"
 msgid "&Quit"
 msgstr "&Quit"
@@ -2658,7 +2543,6 @@ msgid "Nom de I"
 msgstr "Nom de I"
 
 #: tfrmevents.acteventsadd.caption
-#, fuzzy
 msgctxt "tfrmevents.acteventsadd.caption"
 msgid "&Add"
 msgstr "&Ajouter"
@@ -2669,9 +2553,11 @@ msgid "De&lete"
 msgstr ""
 
 #: tfrmevents.acteventsedit.caption
+#, fuzzy
+#| msgid "&Modifier"
 msgctxt "tfrmevents.acteventsedit.caption"
 msgid "&Edit"
-msgstr ""
+msgstr "&Modifier"
 
 #: tfrmevents.acteventsgoto.caption
 msgctxt "tfrmevents.acteventsgoto.caption"
@@ -2720,8 +2606,9 @@ msgid "Order by &Familyname"
 msgstr ""
 
 #: tfrmexplorer.actexplorerorderbyfirstname.caption
+#, fuzzy
 msgid "Order by &First name"
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: tfrmexplorer.btnexplorerorderbybirth.caption
 msgid "&Birth"
@@ -2817,6 +2704,25 @@ msgctxt "tfrmnames.toolbar1.caption"
 msgid "ToolBar1"
 msgstr ""
 
+#: tfrmnames.toolbutton4.caption
+msgctxt "tfrmnames.toolbutton4.caption"
+msgid "ToolButton4"
+msgstr ""
+
+#: tfrmparents.actparentcopy.caption
+msgid "Copy &Parent"
+msgstr ""
+
+#: tfrmparents.actparentgoto.caption
+msgctxt "tfrmparents.actparentgoto.caption"
+msgid "&Go to"
+msgstr ""
+
+#: tfrmparents.actparentsetprefered.caption
+msgctxt "tfrmparents.actparentsetprefered.caption"
+msgid "Set &Prefered"
+msgstr ""
+
 #: tfrmparents.mnddiv1.caption
 msgctxt "tfrmparents.mnddiv1.caption"
 msgid "-"
@@ -2842,18 +2748,15 @@ msgctxt "tfrmparents.mniedit.caption"
 msgid "Edit"
 msgstr ""
 
-#: tfrmparents.mnigoto.caption
-msgctxt "tfrmparents.mnigoto.caption"
-msgid "&Go to"
+#: tfrmparents.tlbparents.caption
+msgid "tlbParents"
 msgstr ""
 
-#: tfrmparents.mniprimary.caption
-msgctxt "tfrmparents.mniprimary.caption"
-msgid "&Primary"
-msgstr "&Primaire"
+#: tfrmparents.toolbutton1.caption
+msgid "ToolButton1"
+msgstr ""
 
 #: tfrmrepository.button1.caption
-#, fuzzy
 msgctxt "tfrmrepository.button1.caption"
 msgid "Ok"
 msgstr "Ok"
@@ -2888,7 +2791,6 @@ msgid "Please select ..."
 msgstr ""
 
 #: tfrmshowimage.mniquit.caption
-#, fuzzy
 msgctxt "tfrmshowimage.mniquit.caption"
 msgid "&Quit"
 msgstr "&Quit"
@@ -2983,9 +2885,10 @@ msgid "Copy &Event"
 msgstr ""
 
 #: tfrmstemmamainform.acteditcopyname.caption
+#, fuzzy
 msgctxt "tfrmstemmamainform.acteditcopyname.caption"
 msgid "Copy &Name"
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: tfrmstemmamainform.acteditcopyparent.caption
 msgctxt "tfrmstemmamainform.acteditcopyparent.caption"
@@ -3061,8 +2964,9 @@ msgid "&Website"
 msgstr ""
 
 #: tfrmstemmamainform.actfileimportfromtmg.caption
+#, fuzzy
 msgid "from &TMG v4.0"
-msgstr ""
+msgstr "&TMG v.4.0d"
 
 #: tfrmstemmamainform.actfileimportproject.caption
 msgctxt "tfrmstemmamainform.actfileimportproject.caption"
@@ -3146,8 +3050,9 @@ msgid "Compression"
 msgstr ""
 
 #: tfrmstemmamainform.actutilseventtypes.caption
+#, fuzzy
 msgid "Event-Types"
-msgstr ""
+msgstr "&Types d'événements"
 
 #: tfrmstemmamainform.actutilsplaces.caption
 msgid "Places"
@@ -3175,9 +3080,10 @@ msgid "Descendens"
 msgstr ""
 
 #: tfrmstemmamainform.actwindocuments.caption
+#, fuzzy
 msgctxt "tfrmstemmamainform.actwindocuments.caption"
 msgid "Documents"
-msgstr ""
+msgstr "Documents:"
 
 #: tfrmstemmamainform.actwindows.caption
 msgctxt "tfrmstemmamainform.actwindows.caption"
@@ -3199,10 +3105,12 @@ msgid "Images"
 msgstr ""
 
 #: tfrmstemmamainform.actwinnameandattr.caption
+#, fuzzy
 msgid "Name && Attributes "
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: tfrmstemmamainform.actwinparents.caption
+msgctxt "tfrmstemmamainform.actwinparents.caption"
 msgid "Parents"
 msgstr ""
 
@@ -3220,29 +3128,22 @@ msgctxt "tfrmstemmamainform.btnseparator2.caption"
 msgid "btnSeparator2"
 msgstr ""
 
-#: tfrmstemmamainform.btnwinimages.caption
-msgid "btnWinImages"
-msgstr ""
-
 #: tfrmstemmamainform.checkbox1.caption
 msgctxt "tfrmstemmamainform.checkbox1.caption"
 msgid "CheckBox1"
 msgstr ""
 
 #: tfrmstemmamainform.menuitem56.caption
-#, fuzzy
 msgctxt "tfrmstemmamainform.menuitem56.caption"
 msgid "&Parametres"
 msgstr "&Parametres"
 
 #: tfrmstemmamainform.menuitem57.caption
-#, fuzzy
 msgctxt "tfrmstemmamainform.menuitem57.caption"
 msgid "Fichiers PDF"
 msgstr "Fichiers PDF"
 
 #: tfrmstemmamainform.menuitem58.caption
-#, fuzzy
 msgctxt "tfrmstemmamainform.menuitem58.caption"
 msgid "&Langue"
 msgstr "&Langue"
@@ -3308,9 +3209,11 @@ msgid "-"
 msgstr ""
 
 #: tfrmstemmamainform.mniedit.caption
+#, fuzzy
+#| msgid "&Modifier"
 msgctxt "tfrmstemmamainform.mniedit.caption"
 msgid "&Edit"
-msgstr ""
+msgstr "&Modifier"
 
 #: tfrmstemmamainform.mnifile.caption
 msgctxt "tfrmstemmamainform.mnifile.caption"
@@ -3402,7 +3305,7 @@ msgstr "Compression"
 #, fuzzy
 msgctxt "tfrmstemmamainform.mniutilitem66.caption"
 msgid "Réparation Naiss.-Décès"
-msgstr "Réparation Naiss.-Décès"
+msgstr "Tri par &décès"
 
 #: tfrmstemmamainform.mniutilitem67.caption
 #, fuzzy
@@ -3414,7 +3317,7 @@ msgstr "Nettoyage des items orphelins"
 #, fuzzy
 msgctxt "tfrmstemmamainform.mniutilitem68.caption"
 msgid "Réparation Nom pour tri"
-msgstr "Réparation Nom pour tri"
+msgstr "Tri par &nom"
 
 #: tfrmstemmamainform.mniutilitem69.caption
 #, fuzzy
@@ -3446,7 +3349,6 @@ msgid "ToolButton8"
 msgstr ""
 
 #: tfrmtypes.button1.caption
-#, fuzzy
 msgctxt "tfrmtypes.button1.caption"
 msgid "Ok"
 msgstr "Ok"
@@ -3502,9 +3404,10 @@ msgid "Copy &Event"
 msgstr ""
 
 #: tprincipale.acteditcopyname.caption
+#, fuzzy
 msgctxt "tprincipale.acteditcopyname.caption"
 msgid "Copy &Name"
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: tprincipale.acteditcopyparent.caption
 msgctxt "tprincipale.acteditcopyparent.caption"
@@ -3657,9 +3560,10 @@ msgid "Individu"
 msgstr "Individu"
 
 #: tprincipale.menuitem49.caption
+#, fuzzy
 msgctxt "tprincipale.menuitem49.caption"
 msgid "&About"
-msgstr ""
+msgstr "À propos"
 
 #: tprincipale.menuitem51.caption
 msgctxt "tprincipale.menuitem51.caption"
@@ -3827,9 +3731,11 @@ msgid "&Descendants"
 msgstr ""
 
 #: tprincipale.mniedit.caption
+#, fuzzy
+#| msgid "&Modifier"
 msgctxt "tprincipale.mniedit.caption"
 msgid "&Edit"
-msgstr ""
+msgstr "&Modifier"
 
 #: tprincipale.mnienfants.caption
 msgctxt "tprincipale.mnienfants.caption"
@@ -3978,7 +3884,7 @@ msgstr "Compression"
 #, fuzzy
 msgctxt "tprincipale.mniutilitem66.caption"
 msgid "Réparation Naiss.-Décès"
-msgstr "Réparation Naiss.-Décès"
+msgstr "Tri par &décès"
 
 #: tprincipale.mniutilitem67.caption
 #, fuzzy
@@ -3990,7 +3896,7 @@ msgstr "Nettoyage des items orphelins"
 #, fuzzy
 msgctxt "tprincipale.mniutilitem68.caption"
 msgid "Réparation Nom pour tri"
-msgstr "Réparation Nom pour tri"
+msgstr "Tri par &nom"
 
 #: tprincipale.mniutilitem69.caption
 #, fuzzy
@@ -4044,25 +3950,27 @@ msgid "Confirmation"
 msgstr ""
 
 #: traduction.sdatabasename
+#, fuzzy
 msgctxt "traduction.sdatabasename"
 msgid "Database name"
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: traduction.senterdbname
-#, fuzzy
 msgctxt "traduction.senterdbname"
 msgid "Enter the database name to be created"
 msgstr "Entrez le nom de la base de données à créer"
 
 #: traduction.sfamilyname
+#, fuzzy
 msgctxt "traduction.sfamilyname"
 msgid "Name"
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: traduction.sgivenname
+#, fuzzy
 msgctxt "traduction.sgivenname"
 msgid "First name"
-msgstr ""
+msgstr "Entrez le nom de la base de données à créer"
 
 #: traduction.ssuffix
 msgctxt "traduction.ssuffix"
@@ -4080,7 +3988,6 @@ msgid "Couldn't connect to MySQL database %s."
 msgstr ""
 
 #: tshowimage.button1.caption
-#, fuzzy
 msgctxt "TSHOWIMAGE.BUTTON1.CAPTION"
 msgid "Ok"
 msgstr "Ok"

@@ -65,7 +65,36 @@ object frmNames: TfrmNames
     Top = 0
     Width = 477
     Caption = 'ToolBar1'
+    ShowCaptions = True
     TabOrder = 1
+    object ToolButton1: TToolButton
+      Left = 1
+      Top = 2
+      Action = actNamesAdd
+    end
+    object ToolButton2: TToolButton
+      Left = 31
+      Top = 2
+      Action = actNamesEdit
+    end
+    object ToolButton3: TToolButton
+      Left = 59
+      Top = 2
+      Action = actNamesDelete
+    end
+    object ToolButton4: TToolButton
+      Left = 100
+      Height = 22
+      Top = 2
+      Width = 8
+      Caption = 'ToolButton4'
+      Style = tbsSeparator
+    end
+    object ToolButton5: TToolButton
+      Left = 108
+      Top = 2
+      Action = actNamesSetPrefered
+    end
   end
   object Panel1: TPanel
     Left = 0

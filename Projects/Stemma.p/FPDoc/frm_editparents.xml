@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Stemma"><module name="frm_EditParents"><element name="TenumEditRelation"><short>TenumEditRelation describes the Editing-Mode of the EditParent-Dialog</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

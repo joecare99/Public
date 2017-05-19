@@ -46,7 +46,7 @@ procedure TFormAncetres.FormClose(Sender: TObject; var CloseAction: TCloseAction
 begin
   if CloseAction <> caMinimize then
      begin
-  SaveFormPosition(Sender as TForm);
+  dmGenData.WriteCfgFormPosition(self);
      end;
 end;
 

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Spin, MaskEdit, Menus, StrUtils, Math;
+  Spin, Menus, ExtCtrls, Buttons,  Math;
 
 type
   enumCitationEditType=(
@@ -15,8 +15,8 @@ type
   { TEditCitations }
 
   TEditCitations = class(TForm)
-    Button1: TButton;
-    Button2: TButton;
+    Button1: TBitBtn;
+    Button2: TBitBtn;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -25,11 +25,10 @@ type
     MenuItem2: TMenuItem;
     N: TSpinEdit;
     No: TSpinEdit;
-    S: TMaskEdit;
     Memo: TMemo;
+    pnlBottom: TPanel;
+    S: TSpinEdit;
     Source: TComboBox;
-    Code: TEdit;
-    Source1: TComboBox;
     Q: TSpinEdit;
     procedure Button1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -63,6 +62,18 @@ implementation
 uses
   frm_Main, cls_Translation, dm_GenData;
 
+function GetSourceQuality(const lidSource: Integer): LongInt;
+var
+  lQuality: LongInt;
+begin
+  dmGenData.Query1.SQL.Text:='SELECT S.Q FROM S WHERE S.no=:idSource';
+  dmGenData.Query1.ParamByName('idSource').AsInteger:=lidSource;
+  dmGenData.Query1.Open;
+  dmGenData.Query1.First;
+  lQuality:=dmGenData.Query1.Fields[0].AsInteger;
+  Result:=lQuality;
+end;
+
 {$R *.lfm}
 
 { TEditCitations }
@@ -71,6 +82,7 @@ procedure TEditCitations.FormShow(Sender: TObject);
 var
   i:integer;
   sourcenumber:string;
+  LStr: TStrings;
 begin
    EditCitations.ActiveControl:=EditCitations.S;
    frmStemmaMainForm.DataHist.Row:=0;
@@ -83,18 +95,18 @@ begin
    // Populate Citations
    // GET TYPE AND NO FROM CALLER
    // Populate le ComboBox
+   LStr:=Source.Items;
    dmGenData.Query2.SQL.Text:='SELECT S.no, S.T FROM S ORDER BY S.no';
    dmGenData.Query2.Open;
    dmGenData.Query2.First;
-   Source.Items.Clear;
-   Source1.Items.Clear;
+   Lstr.Clear;
    while not dmGenData.Query2.EOF do
       begin
       sourcenumber:=dmGenData.Query2.Fields[0].AsString;
       i:=trunc(log10(dmGenData.Query2.RecordCount+1))+1;
       while length(sourcenumber)<i do sourcenumber:='0'+sourcenumber;
-      Source.Items.Add(sourcenumber+'- '+dmGenData.Query2.Fields[1].AsString);
-      Source1.Items.Add(dmGenData.Query2.Fields[0].AsString);
+      LStr.AddObject(sourcenumber+'- '+dmGenData.Query2.Fields[1].AsString,
+      TObject(PtrInt(dmGenData.Query2.Fields[0].AsInteger)));
       dmGenData.Query2.Next;
    end;
    // Populate la form
@@ -104,10 +116,8 @@ begin
       EditCitations.Caption:=Translation.Items[29];
       No.Value:=0;
       Source.ItemIndex:=0;
-      Source1.ItemIndex:=Source.ItemIndex;
       Memo.Text:='';
-//      dmGenData.GetCode(codex,nocode);
-      Code.text:=FTypeCode;
+//      dmGenData.GetCode(codex,nocode)
       Q.Value:=0;
       S.Text:='';
    end
@@ -117,15 +127,13 @@ begin
       dmGenData.Query1.SQL.Text:='SELECT C.no, C.Y, C.N, C.S, C.M, C.Q FROM C WHERE C.no='+No.Text;
       dmGenData.Query1.Open;
       dmGenData.Query1.First;
-      for i:=0 to Source1.Items.Count-1 do
-         if Source1.Items[i]=dmGenData.Query1.Fields[3].AsString then
-            Source.ItemIndex:=i;
-      Source1.ItemIndex:=Source.ItemIndex;
+      Source.ItemIndex:=Source.Items.IndexOfObject(TObject(ptrint(dmGenData.Query1.Fields[3].AsInteger)));
       Memo.Text:=dmGenData.Query1.Fields[4].AsString;
-      Code.Text:=dmGenData.Query1.Fields[1].AsString;
+      FTypeCode:=dmGenData.Query1.Fields[1].AsString;
       N.value:=dmGenData.Query1.Fields[2].AsInteger;
       Q.Value:=dmGenData.Query1.Fields[5].AsInteger;
-      S.Text:=Source1.Items[Source1.ItemIndex];
+      if  Source.ItemIndex >=0 then
+        S.Value:=ptrint(Source.Items.Objects[Source.ItemIndex]);
    end;
 end;
 
@@ -177,27 +185,19 @@ begin
 end;
 
 procedure TEditCitations.SEditingDone(Sender: TObject);
-var
-  i:integer;
+
 begin
-  if length(S.Text)>0 then
-     if StrToInt(S.Text)>0 then
+     if S.Value > 0 then
         begin
-        for i:=0 to Source1.Items.Count-1 do
-           if Source1.Items[i]=S.Text then
-              Source.ItemIndex:=i;
-        Source1.ItemIndex:=Source.ItemIndex;
+        Source.ItemIndex:=Source.Items.IndexOfObject(TObject(ptrint(s.value)));
      end;
 end;
 
 procedure TEditCitations.SourceEditingDone(Sender: TObject);
+
 begin
-   Source1.ItemIndex:=Source.ItemIndex;
-   S.Text:=Source1.Items[Source1.ItemIndex];
-   dmGenData.Query1.SQL.Text:='SELECT S.Q FROM S WHERE S.no='+Source1.Items[Source1.ItemIndex];
-   dmGenData.Query1.Open;
-   dmGenData.Query1.First;
-   Q.Value:=dmGenData.Query1.Fields[0].AsInteger;
+   S.Value:=ptrint(Source.Items.Objects[Source.ItemIndex]);
+   Q.Value:=GetSourceQuality(S.value);
 end;
 
 procedure TEditCitations.SetEditType(AValue: enumCitationEditType);
@@ -236,18 +236,25 @@ end;
 
 procedure TEditCitations.Button1Click(Sender: TObject);
 begin
-  dmGenData.Query1.SQL.Clear;
-  if no.text<>'0' then
-     dmGenData.Query1.SQL.Add('UPDATE C SET S='+Source1.Items[Source1.ItemIndex]+
-        ', M='''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Memo.Text),'\','\\'),'"','\"'),'''','\''')+
-        ''', Q='+IntToStr(Q.Value)+' WHERE no='+no.text)
+  dmGenData.Query1.Close;
+  if no.Value=0 then
+    begin
+     dmGenData.Query1.SQL.Text:='INSERT INTO C (S, M, Q, Y, N) VALUES ( :idSource, :Memo, :Q, :Type, :N)';
+     dmGenData.Query1.ParamByName('Type').AsString:=FTypeCode;
+     dmGenData.Query1.ParamByName('N').AsString:=N.Text;
+    end
   else
-     dmGenData.Query1.SQL.Add('INSERT INTO C (S, M, Q, Y, N) VALUES ( '+Source1.Items[Source1.ItemIndex]+
-        ', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Memo.Text),'\','\\'),'"','\"'),'''','\''')+
-        ''', '+IntToStr(Q.Value)+', '''+Code.Text+''', '''+N.Text+''' )');
+    begin
+     dmGenData.Query1.SQL.Text:='UPDATE C SET S=:idSource, M=:Memo, Q=:Q  WHERE no=:idCitation';
+     dmGenData.Query1.ParamByName('idCitation').AsInteger:=no.Value;
+    end;
+    dmGenData.Query1.ParamByName('idSource').AsInteger:=ptrint(Source.Items.Objects[Source.ItemIndex]);
+    dmGenData.Query1.ParamByName('Memo').AsString:=Memo.Text;
+    dmGenData.Query1.ParamByName('Q').AsInteger:=Q.Value;
   dmGenData.Query1.ExecSQL;
+
   // Sauvegarder les dates de modifications
-  if Code.Text='R' then
+  if FTypeCode='R' then
      begin
      dmGenData.Query3.SQL.Text:='SELECT R.A, R.B FROM R WHERE R.no='+N.Text;
      dmGenData.Query3.Open;
@@ -255,14 +262,14 @@ begin
      dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
      dmGenData.SaveModificationTime(dmGenData.Query3.Fields[1].AsInteger);
   end;
-  if Code.Text='N' then
+  if FTypeCode='N' then
      begin
      dmGenData.Query3.SQL.Text:='SELECT N.I FROM N WHERE N.no='+N.Text;
      dmGenData.Query3.Open;
      dmGenData.Query3.First;
      dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
   end;
-  if Code.Text='E' then
+  if FTypeCode='E' then
      begin
      dmGenData.Query3.SQL.Text:='SELECT W.I FROM W WHERE W.E='+N.Text;
      dmGenData.Query3.Open;

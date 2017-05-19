@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Grids, Spin, Menus, FMUtils, StrUtils, LCLType, Buttons, Process, IniFiles;
+  Grids, Spin, Menus, FMUtils, StrUtils, LCLType, Buttons, ExtCtrls, Process,
+  IniFiles;
 
 type
 
@@ -31,6 +32,7 @@ type
     MenuItem9: TMenuItem;
     Modifier1: TMenuItem;
     Modifier2: TMenuItem;
+    pnlBottom: TPanel;
     PopupMenu2: TPopupMenu;
     PopupMenu3: TPopupMenu;
     Q: TSpinEdit;

@@ -1,14 +1,14 @@
 object frmEditEvents: TfrmEditEvents
   Left = 217
-  Height = 695
+  Height = 759
   Top = 2
-  Width = 630
+  Width = 636
   ActiveControl = PD
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Edit Events'
-  ClientHeight = 695
-  ClientWidth = 630
+  ClientHeight = 759
+  ClientWidth = 636
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
@@ -113,50 +113,9 @@ object frmEditEvents: TfrmEditEvents
     Width = 232
     ReadOnly = True
     TabStop = False
-    TabOrder = 15
+    TabOrder = 14
     Text = 'SD2'
     Visible = False
-  end
-  object TableauCitations: TStringGrid
-    Left = 88
-    Height = 120
-    Top = 408
-    Width = 528
-    ColCount = 4
-    Columns = <    
-      item
-        Title.Caption = 'Source'
-        Width = 100
-      end    
-      item
-        Title.Caption = 'Description'
-        Width = 391
-      end    
-      item
-        Title.Caption = 'Q'
-        Width = 15
-      end>
-    ExtendedSelect = False
-    MouseWheelOption = mwGrid
-    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
-    PopupMenu = PopupMenu2
-    TabOrder = 14
-    TabStop = False
-    OnDblClick = TableauCitationsDblClick
-    ColWidths = (
-      1
-      100
-      391
-      15
-    )
-  end
-  object Label7: TLabel
-    Left = 16
-    Height = 15
-    Top = 408
-    Width = 60
-    Caption = 'Références:'
-    ParentColor = False
   end
   object Y: TComboBox
     Left = 88
@@ -266,7 +225,7 @@ object frmEditEvents: TfrmEditEvents
     Top = 9
     Width = 80
     TabStop = False
-    TabOrder = 16
+    TabOrder = 15
     Text = 'X'
     Visible = False
   end
@@ -322,7 +281,7 @@ object frmEditEvents: TfrmEditEvents
     Top = 9
     Width = 56
     TabStop = False
-    TabOrder = 17
+    TabOrder = 16
     Text = 'YY'
     Visible = False
   end
@@ -346,70 +305,43 @@ object frmEditEvents: TfrmEditEvents
     TabOrder = 4
     Text = 'PD'
   end
-  object Label12: TLabel
-    Left = 16
-    Height = 15
-    Top = 536
-    Width = 64
-    Caption = 'Documents:'
-    ParentColor = False
-  end
-  object TableauExhibits: TStringGrid
-    Left = 88
-    Height = 96
-    Top = 536
-    Width = 528
-    Columns = <    
-      item
-        Title.Caption = '*'
-        Width = 17
-      end    
-      item
-        Title.Caption = 'Titre'
-        Width = 443
-      end    
-      item
-        Title.Caption = 'Type'
-        Visible = False
-      end    
-      item
-        Title.Caption = 'Format'
-        Width = 46
-      end>
-    ExtendedSelect = False
-    MouseWheelOption = mwGrid
-    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
-    PopupMenu = PopupMenu3
-    TabOrder = 18
-    OnDblClick = Modifier2Click
-    ColWidths = (
-      1
-      17
-      443
-      0
-      46
-    )
-  end
-  object Button1: TBitBtn
-    Left = 461
-    Height = 25
-    Top = 640
-    Width = 75
-    Caption = 'Ok'
-    Default = True
-    ModalResult = 1
-    OnClick = Button1Click
-    TabOrder = 19
-  end
-  object Button2: TBitBtn
-    Left = 541
-    Height = 25
-    Top = 640
-    Width = 75
-    Cancel = True
-    Caption = 'Annul.'
-    ModalResult = 2
-    TabOrder = 20
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 52
+    Top = 687
+    Width = 636
+    Align = alBottom
+    BevelOuter = bvNone
+    ClientHeight = 52
+    ClientWidth = 636
+    TabOrder = 17
+    object Button1: TBitBtn
+      Left = 404
+      Height = 40
+      Top = 6
+      Width = 110
+      Align = alRight
+      BorderSpacing.Around = 6
+      Default = True
+      DefaultCaption = True
+      Kind = bkOK
+      ModalResult = 1
+      OnClick = Button1Click
+      TabOrder = 0
+    end
+    object Button2: TBitBtn
+      Left = 520
+      Height = 40
+      Top = 6
+      Width = 110
+      Align = alRight
+      BorderSpacing.Around = 6
+      Cancel = True
+      DefaultCaption = True
+      Kind = bkCancel
+      ModalResult = 2
+      TabOrder = 1
+    end
   end
   object No: TSpinEdit
     Left = 536
@@ -417,8 +349,91 @@ object frmEditEvents: TfrmEditEvents
     Top = 8
     Width = 80
     TabStop = False
-    TabOrder = 21
+    TabOrder = 18
     Visible = False
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 139
+    Top = 548
+    Width = 636
+    Align = alBottom
+    Caption = 'Panel1'
+    ClientHeight = 139
+    ClientWidth = 636
+    TabOrder = 19
+    object Label12: TLabel
+      Left = 16
+      Height = 15
+      Top = 8
+      Width = 64
+      Caption = 'Documents:'
+      ParentColor = False
+    end
+    object TableauExhibits: TStringGrid
+      Left = 88
+      Height = 128
+      Top = 8
+      Width = 528
+      Columns = <      
+        item
+          Title.Caption = '*'
+          Width = 17
+        end      
+        item
+          Title.Caption = 'Titre'
+          Width = 443
+        end      
+        item
+          Title.Caption = 'Type'
+          Visible = False
+        end      
+        item
+          Title.Caption = 'Format'
+          Width = 46
+        end>
+      ExtendedSelect = False
+      MouseWheelOption = mwGrid
+      Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+      PopupMenu = PopupMenu3
+      TabOrder = 0
+      OnDblClick = Modifier2Click
+      ColWidths = (
+        1
+        17
+        443
+        0
+        46
+      )
+    end
+  end
+  inline fraEdtCitations1: TfraEdtCitations
+    Height = 136
+    Top = 412
+    Width = 636
+    Align = alBottom
+    ClientHeight = 136
+    ClientWidth = 636
+    TabOrder = 20
+    inherited TableauCitations: TStringGrid
+      Height = 130
+      Width = 540
+    end
+    inherited pnlCitationLeft: TPanel
+      Height = 136
+      ClientHeight = 136
+    end
+    inherited ActionList1: TActionList
+      inherited actEdtCitationAdd: TAction
+        OnExecute = nil
+      end
+      inherited actEdtCitationEdit: TAction
+        OnExecute = nil
+      end
+      inherited actEdtCitationDelete: TAction
+        OnExecute = nil
+      end
+    end
   end
   object PopupMenu1: TPopupMenu
     left = 68
@@ -439,28 +454,9 @@ object frmEditEvents: TfrmEditEvents
       OnClick = SupprimerTemoinClick
     end
   end
-  object PopupMenu2: TPopupMenu
-    left = 64
-    top = 480
-    object Ajouter1: TMenuItem
-      Caption = '&Ajouter'
-      ShortCut = 118
-      OnClick = Ajouter1Click
-    end
-    object Modifier1: TMenuItem
-      Caption = '&Modifier'
-      ShortCut = 119
-      OnClick = TableauCitationsDblClick
-    end
-    object Supprimer1: TMenuItem
-      Caption = '&Supprimer'
-      ShortCut = 120
-      OnClick = Supprimer1Click
-    end
-  end
   object MainMenu1: TMainMenu
     left = 16
-    top = 456
+    top = 72
     object MenuItem12: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114
@@ -492,24 +488,18 @@ object frmEditEvents: TfrmEditEvents
     object MenuItem2: TMenuItem
       Caption = '&Références'
       object MenuItem6: TMenuItem
-        Caption = '&Ajouter'
-        ShortCut = 118
-        OnClick = Ajouter1Click
+        Action = fraEdtCitations.actEdtCitationAdd
       end
       object MenuItem7: TMenuItem
-        Caption = '&Modifier'
-        ShortCut = 119
-        OnClick = TableauCitationsDblClick
+        Action = fraEdtCitations.actEdtCitationEdit
       end
       object MenuItem8: TMenuItem
-        Caption = '&Supprimer'
-        ShortCut = 120
-        OnClick = Supprimer1Click
+        Action = fraEdtCitations.actEdtCitationDelete
       end
     end
   end
   object PopupMenu3: TPopupMenu
-    left = 48
+    left = 40
     top = 600
     object Ajouter2: TMenuItem
       Caption = '&Ajouter'

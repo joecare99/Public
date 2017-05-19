@@ -53,6 +53,7 @@ implementation
 uses
   frm_Main,cls_Translation, dm_GenData, frm_Usage, frm_EditSource;
 
+
 {$R *.lfm}
 
 { TFormSources }
@@ -69,16 +70,16 @@ procedure TFormSources.FormClose(Sender: TObject; var CloseAction: TCloseAction)
 begin
   if CloseAction <> caMinimize then
      begin
-       SaveFormPosition(Sender as TForm);
-       SaveGridPosition(TableauSources as TStringGrid,6);
+       dmGenData.WriteCfgFormPosition(self);
+       dmGenData.WriteCfgGridPosition(TableauSources as TStringGrid,6);
      end;
 end;
 
 procedure TFormSources.FormShow(Sender: TObject);
 var
-  i:integer;
   MyCursor: TCursor;
-  temp:string;
+  lTable: TStringGrid;
+  lNotification: TNotifyEvent;
 begin
   dmGenData.ReadCfgFormPosition(FormSources,0,0,70,1000);
   dmGenData.ReadCfgGridPosition(FormSources.TableauSources as TStringGrid,6);
@@ -102,41 +103,9 @@ begin
   frmStemmaMainForm.ProgressBar.Position:=0;
   frmStemmaMainForm.ProgressBar.Visible:=True;
   Application.Processmessages;
-  dmGenData.Query1.SQL.Clear;
-//  dmGenData.Query1.SQL.add('SELECT S.no, S.T, S.D, S.M, S.A, S.Q, COUNT(C.S) FROM S LEFT JOIN C on C.S=S.no GROUP by S.no');
-  dmGenData.Query1.SQL.add('SELECT S.no, S.T, S.D, S.M, S.A, S.Q FROM S ORDER BY S.no');
-  dmGenData.Query1.Open;
-  dmGenData.Query1.First;
-  TableauSources.RowCount:=dmGenData.Query1.RecordCount+1;
-  frmStemmaMainForm.ProgressBar.Max:=TableauSources.RowCount;
-  i:=0;
-  While not dmGenData.Query1.Eof do
-     begin
-     i:=i+1;
-     TableauSources.Cells[0,i]:='0';
-     TableauSources.Cells[1,i]:=dmGenData.Query1.Fields[0].AsString;
-     TableauSources.Cells[2,i]:=dmGenData.Query1.Fields[1].AsString;
-     TableauSources.Cells[3,i]:=dmGenData.Query1.Fields[2].AsString;
-     TableauSources.Cells[4,i]:=dmGenData.Query1.Fields[3].AsString;
-     TableauSources.Cells[5,i]:=dmGenData.Query1.Fields[4].AsString;
-     TableauSources.Cells[6,i]:=dmGenData.Query1.Fields[5].AsString;
-//     TableauSources.Cells[7,i]:=dmGenData.Query1.Fields[6].AsString;
-     TableauSources.Cells[7,i]:='?';
-     temp:=TableauSources.Cells[5,i];
-     if (length(temp)>0) then
-        if (temp[1] in ['0'..'9']) then
-           if StrtoInt(temp)>0 then
-              begin
-              dmGenData.Query2.SQL.Text:='SELECT N.I, N.N FROM N WHERE N.X=1 AND N.I='+temp;
-              dmGenData.Query2.Open;
-              TableauSources.Cells[5,i]:=DecodeName(dmGenData.Query2.Fields[1].AsString,1)+
-                                         ' ('+temp+')';
-              TableauSources.Cells[0,i]:=temp;
-           end;
-     dmGenData.Query1.Next;
-     frmStemmaMainForm.ProgressBar.Position:=frmStemmaMainForm.ProgressBar.Position+1;
-     Application.ProcessMessages;
-  end;
+  lTable:=TableauSources;
+  lNotification:=@frmStemmaMainForm.UpdateProgressBar;
+  dmGenData.FillSourcesTable(lNotification, lTable);
   frmStemmaMainForm.ProgressBar.Visible:=False;
   Screen.Cursor := MyCursor;
 End;
@@ -159,13 +128,7 @@ begin
               TableauSources.Cells[2,TableauSources.Row]+
               Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
            begin
-           // Supprimer tous les exhibits et association dépots de cette source
-           dmGenData.Query1.SQL.Text:='DELETE FROM X WHERE A=''S'' AND N='+TableauSources.Cells[1,TableauSources.Row];
-           dmGenData.Query1.ExecSQL;
-           dmGenData.Query1.SQL.Text:='DELETE FROM A WHERE S='+TableauSources.Cells[1,TableauSources.Row];
-           dmGenData.Query1.ExecSQL;
-           dmGenData.Query1.SQL.Text:='DELETE FROM S WHERE no='+TableauSources.Cells[1,TableauSources.Row];
-           dmGenData.Query1.ExecSQL;
+           dmGenData.DeleteSourceFull(ptrint( TableauSources.Objects[1,TableauSources.Row]));
            TableauSources.DeleteRow(TableauSources.Row);
         end;
 end;
@@ -176,15 +139,15 @@ begin
 end;
 
 procedure TFormSources.MenuItem8Click(Sender: TObject);
+var
+  lSourceCitCount: LongInt;
+  lidSource: PtrInt;
 begin
   if TableauSources.Cells[7,TableauSources.Row]='?' then
      begin
-     dmGenData.Query1.SQL.Clear;
-     dmGenData.Query1.SQL.add('SELECT COUNT(C.S) FROM S LEFT JOIN C on C.S=S.no WHERE S.no='+
-               TableauSources.Cells[1,TableauSources.Row]);
-     dmGenData.Query1.Open;
-     dmGenData.Query1.First;
-     TableauSources.Cells[7,TableauSources.Row]:=dmGenData.Query1.Fields[0].AsString;
+     lidSource :=ptrint( TableauSources.Objects[1,TableauSources.Row]);
+     lSourceCitCount:=dmGenData.GetSourceCitCount(lidSource);
+     TableauSources.Cells[7,TableauSources.Row]:=inttostr(lSourceCitCount);
   end
   else
      begin

@@ -205,28 +205,42 @@ object EditSource: TEditSource
     Caption = 'Documents:'
     ParentColor = False
   end
-  object btnOK: TBitBtn
-    Left = 424
-    Height = 40
-    Top = 456
-    Width = 86
-    Default = True
-    DefaultCaption = True
-    Kind = bkOK
-    ModalResult = 1
-    OnClick = btnOKClick
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 52
+    Top = 450
+    Width = 624
+    Align = alBottom
+    ClientHeight = 52
+    ClientWidth = 624
     TabOrder = 9
-  end
-  object btnCancel: TBitBtn
-    Left = 528
-    Height = 40
-    Top = 456
-    Width = 86
-    Cancel = True
-    DefaultCaption = True
-    Kind = bkCancel
-    ModalResult = 2
-    TabOrder = 10
+    object btnOK: TBitBtn
+      Left = 391
+      Height = 38
+      Top = 7
+      Width = 110
+      Align = alRight
+      BorderSpacing.Around = 6
+      Default = True
+      DefaultCaption = True
+      Kind = bkOK
+      ModalResult = 1
+      OnClick = btnOKClick
+      TabOrder = 0
+    end
+    object btnCancel: TBitBtn
+      Left = 507
+      Height = 38
+      Top = 7
+      Width = 110
+      Align = alRight
+      BorderSpacing.Around = 6
+      Cancel = True
+      DefaultCaption = True
+      Kind = bkCancel
+      ModalResult = 2
+      TabOrder = 1
+    end
   end
   object PopupMenu2: TPopupMenu
     left = 32
@@ -249,7 +263,7 @@ object EditSource: TEditSource
   end
   object MainMenu1: TMainMenu
     left = 16
-    top = 287
+    top = 8
     object MenuItem6: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114

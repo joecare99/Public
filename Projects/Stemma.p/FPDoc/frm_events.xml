@@ -3,6 +3,7 @@
       </element><element name="TfrmEvents.actEventsGotoExecute"><short>Method, when the user selects "Go To"</short>
       </element><element name="TfrmEvents.actEventsAddExecute"><short>Method, when the user selects "Add"</short>
       </element><element name="TfrmEvents.actEventsDeleteExecute"><short>Method, when the user selects "Delete"</short>
+      </element><element name="TfrmEvents.actEventsSetPreferedExecute"><short>Method, when the user selects "Set prefered"</short>
       </element>
     </module>
   </package>

@@ -1,0 +1,105 @@
+object fraEdtCitations: TfraEdtCitations
+  Left = 0
+  Height = 170
+  Top = 0
+  Width = 660
+  ClientHeight = 170
+  ClientWidth = 660
+  OnResize = FrameResize
+  TabOrder = 0
+  object TableauCitations: TStringGrid
+    Left = 93
+    Height = 164
+    Top = 3
+    Width = 564
+    Align = alClient
+    BorderSpacing.Around = 3
+    ColCount = 4
+    Columns = <    
+      item
+        Title.Caption = 'Source'
+        Width = 100
+      end    
+      item
+        Title.Caption = 'Description'
+        Width = 391
+      end    
+      item
+        Title.Caption = 'Q'
+        Width = 15
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = PopupMenu2
+    TabOrder = 0
+    ColWidths = (
+      1
+      100
+      391
+      15
+    )
+  end
+  object pnlCitationLeft: TPanel
+    Left = 0
+    Height = 170
+    Top = 0
+    Width = 90
+    Align = alLeft
+    BevelOuter = bvNone
+    ClientHeight = 170
+    ClientWidth = 90
+    TabOrder = 1
+    object lblCitations: TLabel
+      Left = 5
+      Height = 15
+      Top = 3
+      Width = 80
+      Align = alTop
+      Alignment = taRightJustify
+      BorderSpacing.Left = 5
+      BorderSpacing.Top = 3
+      BorderSpacing.Right = 5
+      Caption = 'Citations:'
+      ParentColor = False
+    end
+  end
+  object PopupMenu2: TPopupMenu
+    left = 32
+    top = 32
+    object mniCitationAdd: TMenuItem
+      Caption = '&Ajouter'
+      ShortCut = 118
+      OnClick = mniCitationAddClick
+    end
+    object mniCitationEdit: TMenuItem
+      Caption = '&Modifier'
+      ShortCut = 119
+      OnClick = mniCitationEditClick
+    end
+    object mniCitationDelete: TMenuItem
+      Caption = '&Supprimer'
+      ShortCut = 120
+      OnClick = mniCitationDeleteClick
+    end
+  end
+  object ActionList1: TActionList
+    left = 33
+    top = 94
+    object actEdtCitationAdd: TAction
+      Category = 'EdtCitation'
+      Caption = '&Add'
+      OnExecute = mniCitationAddClick
+    end
+    object actEdtCitationEdit: TAction
+      Category = 'EdtCitation'
+      Caption = '&Edit'
+      OnExecute = mniCitationEditClick
+    end
+    object actEdtCitationDelete: TAction
+      Category = 'EdtCitation'
+      Caption = '&Delete'
+      OnExecute = mniCitationDeleteClick
+    end
+  end
+end

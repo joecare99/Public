@@ -74,10 +74,6 @@ msgstr ""
 msgid "Add &title"
 msgstr ""
 
-#: cls_translation.sareyousuretodelcitation
-msgid "Are you sure you want to delete citation \""
-msgstr ""
-
 #: cls_translation.sareyousuretodeldoc
 msgid "Are you sure you want to delete exhibit \""
 msgstr ""
@@ -102,14 +98,22 @@ msgstr ""
 msgid "Are you sure you want to delete witness \""
 msgstr ""
 
+#: cls_translation.sareyousuretodelx
+msgid "Are you sure you want to delete %s \"%s%\" ?"
+msgstr ""
+
 #: cls_translation.sareyousuretoquit
 msgctxt "cls_translation.sareyousuretoquit"
-msgid "Are you syre you want to quit STEMMA?"
+msgid "Are you sure you want to quit STEMMA?"
 msgstr ""
 
 #: cls_translation.schildren
 msgctxt "cls_translation.schildren"
 msgid "Children"
+msgstr ""
+
+#: cls_translation.scitation
+msgid "Citation"
 msgstr ""
 
 #: cls_translation.sconfirmation
@@ -190,6 +194,11 @@ msgstr ""
 
 #: cls_translation.sonlytheexhibitsassoc
 msgid "Only the exhibits associated to an individual (type \"I\") can be modified this way"
+msgstr ""
+
+#: cls_translation.sparents
+msgctxt "cls_translation.sparents"
+msgid "Parents"
 msgstr ""
 
 #: cls_translation.sremovaloforphanrecor
@@ -312,20 +321,6 @@ msgctxt "TCONNEXIONDB.USAGER.TEXT"
 msgid "Edit1"
 msgstr ""
 
-#: teditcitations.button1.caption
-msgctxt "TEDITCITATIONS.BUTTON1.CAPTION"
-msgid "Ok"
-msgstr ""
-
-#: teditcitations.button2.caption
-msgctxt "teditcitations.button2.caption"
-msgid "Annul."
-msgstr ""
-
-#: teditcitations.code.text
-msgid "Code"
-msgstr ""
-
 #: teditcitations.label1.caption
 msgid "Source:"
 msgstr ""
@@ -347,10 +342,6 @@ msgstr ""
 #: teditcitations.menuitem2.caption
 msgctxt "teditcitations.menuitem2.caption"
 msgid "Repeat"
-msgstr ""
-
-#: teditcitations.source1.text
-msgid "Source1"
 msgstr ""
 
 #: teditevenement.ajouter1.caption
@@ -1700,6 +1691,76 @@ msgctxt "TFORMUTILISATION.BUTTON1.CAPTION"
 msgid "Ok"
 msgstr ""
 
+#: tfraedtcitations.actedtcitationadd.caption
+msgctxt "TFRAEDTCITATIONS.ACTEDTCITATIONADD.CAPTION"
+msgid "&Add"
+msgstr ""
+
+#: tfraedtcitations.actedtcitationdelete.caption
+msgctxt "TFRAEDTCITATIONS.ACTEDTCITATIONDELETE.CAPTION"
+msgid "&Delete"
+msgstr ""
+
+#: tfraedtcitations.actedtcitationedit.caption
+msgctxt "TFRAEDTCITATIONS.ACTEDTCITATIONEDIT.CAPTION"
+msgid "&Edit"
+msgstr ""
+
+#: tfraedtcitations.lblcitations.caption
+msgctxt "TFRAEDTCITATIONS.LBLCITATIONS.CAPTION"
+msgid "Citations:"
+msgstr ""
+
+#: tfraedtcitations.mnicitationadd.caption
+msgctxt "TFRAEDTCITATIONS.MNICITATIONADD.CAPTION"
+msgid "&Ajouter"
+msgstr ""
+
+#: tfraedtcitations.mnicitationdelete.caption
+msgctxt "TFRAEDTCITATIONS.MNICITATIONDELETE.CAPTION"
+msgid "&Supprimer"
+msgstr ""
+
+#: tfraedtcitations.mnicitationedit.caption
+msgctxt "TFRAEDTCITATIONS.MNICITATIONEDIT.CAPTION"
+msgid "&Modifier"
+msgstr ""
+
+#: tframe1.actedtcitationadd.caption
+msgctxt "TFRAME1.ACTEDTCITATIONADD.CAPTION"
+msgid "&Add"
+msgstr ""
+
+#: tframe1.actedtcitationdelete.caption
+msgctxt "tframe1.actedtcitationdelete.caption"
+msgid "&Delete"
+msgstr ""
+
+#: tframe1.actedtcitationedit.caption
+msgctxt "TFRAME1.ACTEDTCITATIONEDIT.CAPTION"
+msgid "&Edit"
+msgstr ""
+
+#: tframe1.lblcitations.caption
+msgctxt "tframe1.lblcitations.caption"
+msgid "Citations:"
+msgstr ""
+
+#: tframe1.mnicitationadd.caption
+msgctxt "TFRAME1.MNICITATIONADD.CAPTION"
+msgid "&Ajouter"
+msgstr ""
+
+#: tframe1.mnicitationdelete.caption
+msgctxt "TFRAME1.MNICITATIONDELETE.CAPTION"
+msgid "&Supprimer"
+msgstr ""
+
+#: tframe1.mnicitationedit.caption
+msgctxt "TFRAME1.MNICITATIONEDIT.CAPTION"
+msgid "&Modifier"
+msgstr ""
+
 #: tfrmchildren.menuitem1.caption
 msgctxt "TFRMCHILDREN.MENUITEM1.CAPTION"
 msgid "&Aller à"
@@ -1854,11 +1915,6 @@ msgctxt "TFRMEDITDOCUMENTS.TYPE1.TEXT"
 msgid "Type1"
 msgstr ""
 
-#: tfrmeditevents.ajouter1.caption
-msgctxt "TFRMEDITEVENTS.AJOUTER1.CAPTION"
-msgid "&Ajouter"
-msgstr ""
-
 #: tfrmeditevents.ajouter2.caption
 msgctxt "TFRMEDITEVENTS.AJOUTER2.CAPTION"
 msgid "&Ajouter"
@@ -1867,16 +1923,6 @@ msgstr ""
 #: tfrmeditevents.ajoutertemoin.caption
 msgctxt "TFRMEDITEVENTS.AJOUTERTEMOIN.CAPTION"
 msgid "&Ajouter"
-msgstr ""
-
-#: tfrmeditevents.button1.caption
-msgctxt "TFRMEDITEVENTS.BUTTON1.CAPTION"
-msgid "Ok"
-msgstr ""
-
-#: tfrmeditevents.button2.caption
-msgctxt "TFRMEDITEVENTS.BUTTON2.CAPTION"
-msgid "Annul."
 msgstr ""
 
 #: tfrmeditevents.l0.hint
@@ -1979,11 +2025,6 @@ msgctxt "TFRMEDITEVENTS.LABEL6.CAPTION"
 msgid "(défaut)"
 msgstr ""
 
-#: tfrmeditevents.label7.caption
-msgctxt "TFRMEDITEVENTS.LABEL7.CAPTION"
-msgid "Références:"
-msgstr ""
-
 #: tfrmeditevents.label8.caption
 msgctxt "TFRMEDITEVENTS.LABEL8.CAPTION"
 msgid "Lieu:"
@@ -2034,29 +2075,9 @@ msgctxt "TFRMEDITEVENTS.MENUITEM5.CAPTION"
 msgid "&Supprimer"
 msgstr ""
 
-#: tfrmeditevents.menuitem6.caption
-msgctxt "TFRMEDITEVENTS.MENUITEM6.CAPTION"
-msgid "&Ajouter"
-msgstr ""
-
-#: tfrmeditevents.menuitem7.caption
-msgctxt "TFRMEDITEVENTS.MENUITEM7.CAPTION"
-msgid "&Modifier"
-msgstr ""
-
-#: tfrmeditevents.menuitem8.caption
-msgctxt "TFRMEDITEVENTS.MENUITEM8.CAPTION"
-msgid "&Supprimer"
-msgstr ""
-
 #: tfrmeditevents.menuitem9.caption
 msgctxt "TFRMEDITEVENTS.MENUITEM9.CAPTION"
 msgid "-"
-msgstr ""
-
-#: tfrmeditevents.modifier1.caption
-msgctxt "TFRMEDITEVENTS.MODIFIER1.CAPTION"
-msgid "&Modifier"
 msgstr ""
 
 #: tfrmeditevents.modifier2.caption
@@ -2067,6 +2088,10 @@ msgstr ""
 #: tfrmeditevents.modifiertemoin.caption
 msgctxt "TFRMEDITEVENTS.MODIFIERTEMOIN.CAPTION"
 msgid "&Modifier"
+msgstr ""
+
+#: tfrmeditevents.panel1.caption
+msgid "Panel1"
 msgstr ""
 
 #: tfrmeditevents.pd.hint
@@ -2104,11 +2129,6 @@ msgctxt "TFRMEDITEVENTS.SD2.TEXT"
 msgid "SD2"
 msgstr ""
 
-#: tfrmeditevents.supprimer1.caption
-msgctxt "TFRMEDITEVENTS.SUPPRIMER1.CAPTION"
-msgid "&Supprimer"
-msgstr ""
-
 #: tfrmeditevents.supprimer2.caption
 msgctxt "TFRMEDITEVENTS.SUPPRIMER2.CAPTION"
 msgid "&Supprimer"
@@ -2132,11 +2152,6 @@ msgstr ""
 #: tfrmeditname.ajout.text
 msgctxt "TFRMEDITNAME.AJOUT.TEXT"
 msgid "X"
-msgstr ""
-
-#: tfrmeditname.ajouter1.caption
-msgctxt "TFRMEDITNAME.AJOUTER1.CAPTION"
-msgid "&Ajouter"
 msgstr ""
 
 #: tfrmeditname.cbxsex.itemsex[0].caption
@@ -2196,11 +2211,6 @@ msgctxt "TFRMEDITNAME.LBLPHRASE.CAPTION"
 msgid "Phrase:"
 msgstr ""
 
-#: tfrmeditname.lblsources.caption
-msgctxt "TFRMEDITNAME.LBLSOURCES.CAPTION"
-msgid "Références:"
-msgstr ""
-
 #: tfrmeditname.lbltype.caption
 msgctxt "TFRMEDITNAME.LBLTYPE.CAPTION"
 msgid "Type:"
@@ -2208,52 +2218,52 @@ msgstr ""
 
 #: tfrmeditname.menuitem1.caption
 msgctxt "TFRMEDITNAME.MENUITEM1.CAPTION"
-msgid "Ajouter &Titre"
+msgid "Add &Title"
 msgstr ""
 
 #: tfrmeditname.menuitem10.caption
 msgctxt "TFRMEDITNAME.MENUITEM10.CAPTION"
-msgid "&Ajouter"
+msgid "&Add"
 msgstr ""
 
 #: tfrmeditname.menuitem11.caption
 msgctxt "TFRMEDITNAME.MENUITEM11.CAPTION"
-msgid "&Modifier"
+msgid "&Edit"
 msgstr ""
 
 #: tfrmeditname.menuitem12.caption
 msgctxt "TFRMEDITNAME.MENUITEM12.CAPTION"
-msgid "&Supprimer"
+msgid "&Delete"
 msgstr ""
 
 #: tfrmeditname.menuitem13.caption
 msgctxt "TFRMEDITNAME.MENUITEM13.CAPTION"
-msgid "Ajouter &Nom"
+msgid "Add &Surname"
 msgstr ""
 
 #: tfrmeditname.menuitem14.caption
 msgctxt "TFRMEDITNAME.MENUITEM14.CAPTION"
-msgid "Ajouter &Titre"
+msgid "Add &Title"
 msgstr ""
 
 #: tfrmeditname.menuitem15.caption
 msgctxt "TFRMEDITNAME.MENUITEM15.CAPTION"
-msgid "Ajouter &Prénom"
+msgid "Add &First name"
 msgstr ""
 
 #: tfrmeditname.menuitem2.caption
 msgctxt "TFRMEDITNAME.MENUITEM2.CAPTION"
-msgid "Ajouter &Prénom"
+msgid "Add &First name"
 msgstr ""
 
 #: tfrmeditname.menuitem3.caption
 msgctxt "TFRMEDITNAME.MENUITEM3.CAPTION"
-msgid "Ajouter &Nom"
+msgid "Add &Surname"
 msgstr ""
 
 #: tfrmeditname.menuitem4.caption
 msgctxt "TFRMEDITNAME.MENUITEM4.CAPTION"
-msgid "Ajouter &Suffixe"
+msgid "Add &Sufix"
 msgstr ""
 
 #: tfrmeditname.menuitem5.caption
@@ -2268,22 +2278,17 @@ msgstr ""
 
 #: tfrmeditname.menuitem7.caption
 msgctxt "TFRMEDITNAME.MENUITEM7.CAPTION"
-msgid "Nom"
+msgid "Name"
 msgstr ""
 
 #: tfrmeditname.menuitem8.caption
 msgctxt "TFRMEDITNAME.MENUITEM8.CAPTION"
-msgid "Ajouter Suffi&xe"
+msgid "Add Sufi&x"
 msgstr ""
 
 #: tfrmeditname.menuitem9.caption
 msgctxt "TFRMEDITNAME.MENUITEM9.CAPTION"
-msgid "&Références"
-msgstr ""
-
-#: tfrmeditname.modifier1.caption
-msgctxt "TFRMEDITNAME.MODIFIER1.CAPTION"
-msgid "&Modifier"
+msgid "&Citations"
 msgstr ""
 
 #: tfrmeditname.pd.hint
@@ -2316,44 +2321,29 @@ msgctxt "TFRMEDITNAME.SD2.TEXT"
 msgid "SD2"
 msgstr ""
 
-#: tfrmeditname.supprimer1.caption
-msgctxt "TFRMEDITNAME.SUPPRIMER1.CAPTION"
-msgid "&Supprimer"
-msgstr ""
-
 #: tfrmeditname.x.text
 msgctxt "TFRMEDITNAME.X.TEXT"
 msgid "X"
 msgstr ""
 
-#: tfrmeditparents.ajouter1.caption
-msgctxt "TFRMEDITPARENTS.AJOUTER1.CAPTION"
+#: tfrmeditparents.fraedtcitations1.popupmenu2.ajouter1.caption
+msgctxt "TFRMEDITPARENTS.FRAEDTCITATIONS1.POPUPMENU2.AJOUTER1.CAPTION"
 msgid "&Ajouter"
 msgstr ""
 
-#: tfrmeditparents.button1.caption
-msgctxt "TFRMEDITPARENTS.BUTTON1.CAPTION"
-msgid "Ok"
+#: tfrmeditparents.fraedtcitations1.popupmenu2.modifier1.caption
+msgctxt "TFRMEDITPARENTS.FRAEDTCITATIONS1.POPUPMENU2.MODIFIER1.CAPTION"
+msgid "&Modifier"
 msgstr ""
 
-#: tfrmeditparents.button2.caption
-msgctxt "TFRMEDITPARENTS.BUTTON2.CAPTION"
-msgid "Annul."
-msgstr ""
-
-#: tfrmeditparents.label1.caption
-msgctxt "TFRMEDITPARENTS.LABEL1.CAPTION"
-msgid "Type:"
-msgstr ""
-
-#: tfrmeditparents.label2.caption
-msgctxt "TFRMEDITPARENTS.LABEL2.CAPTION"
-msgid "Parent:"
+#: tfrmeditparents.fraedtcitations1.popupmenu2.supprimer1.caption
+msgctxt "TFRMEDITPARENTS.FRAEDTCITATIONS1.POPUPMENU2.SUPPRIMER1.CAPTION"
+msgid "&Supprimer"
 msgstr ""
 
 #: tfrmeditparents.label3.caption
 msgctxt "TFRMEDITPARENTS.LABEL3.CAPTION"
-msgid "Mémo:"
+msgid "Note:"
 msgstr ""
 
 #: tfrmeditparents.label4.caption
@@ -2363,42 +2353,31 @@ msgstr ""
 
 #: tfrmeditparents.label5.caption
 msgctxt "TFRMEDITPARENTS.LABEL5.CAPTION"
-msgid "Date de tri:"
+msgid "Date (sorting):"
 msgstr ""
 
 #: tfrmeditparents.label6.caption
 msgctxt "TFRMEDITPARENTS.LABEL6.CAPTION"
-msgid "(défaut)"
+msgid "(default)"
 msgstr ""
 
-#: tfrmeditparents.label7.caption
-msgctxt "TFRMEDITPARENTS.LABEL7.CAPTION"
-msgid "Références:"
+#: tfrmeditparents.lblchild.caption
+msgid "Child:"
 msgstr ""
 
-#: tfrmeditparents.label8.caption
-msgctxt "TFRMEDITPARENTS.LABEL8.CAPTION"
-msgid "Enfant:"
+#: tfrmeditparents.lblparent.caption
+msgctxt "TFRMEDITPARENTS.LBLPARENT.CAPTION"
+msgid "Parent:"
+msgstr ""
+
+#: tfrmeditparents.lbltype.caption
+msgctxt "TFRMEDITPARENTS.LBLTYPE.CAPTION"
+msgid "Type:"
 msgstr ""
 
 #: tfrmeditparents.menuitem1.caption
 msgctxt "TFRMEDITPARENTS.MENUITEM1.CAPTION"
-msgid "&Références"
-msgstr ""
-
-#: tfrmeditparents.menuitem2.caption
-msgctxt "TFRMEDITPARENTS.MENUITEM2.CAPTION"
-msgid "&Ajouter"
-msgstr ""
-
-#: tfrmeditparents.menuitem3.caption
-msgctxt "TFRMEDITPARENTS.MENUITEM3.CAPTION"
-msgid "&Modifier"
-msgstr ""
-
-#: tfrmeditparents.menuitem4.caption
-msgctxt "TFRMEDITPARENTS.MENUITEM4.CAPTION"
-msgid "&Supprimer"
+msgid "&Citiations:"
 msgstr ""
 
 #: tfrmeditparents.menuitem5.caption
@@ -2411,9 +2390,8 @@ msgctxt "TFRMEDITPARENTS.MENUITEM6.CAPTION"
 msgid "Repeat"
 msgstr ""
 
-#: tfrmeditparents.modifier1.caption
-msgctxt "TFRMEDITPARENTS.MODIFIER1.CAPTION"
-msgid "&Modifier"
+#: tfrmeditparents.no.hint
+msgid "idRelation"
 msgstr ""
 
 #: tfrmeditparents.noma.text
@@ -2431,29 +2409,19 @@ msgctxt "TFRMEDITPARENTS.SD.HINT"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
 msgstr ""
 
-#: tfrmeditparents.sd.text
-msgctxt "TFRMEDITPARENTS.SD.TEXT"
-msgid "SD"
-msgstr ""
-
 #: tfrmeditparents.sd2.text
 msgctxt "TFRMEDITPARENTS.SD2.TEXT"
 msgid "SD2"
 msgstr ""
 
-#: tfrmeditparents.supprimer1.caption
-msgctxt "TFRMEDITPARENTS.SUPPRIMER1.CAPTION"
-msgid "&Supprimer"
+#: tfrmeditparents.x.caption
+msgctxt "TFRMEDITPARENTS.X.CAPTION"
+msgid "Prefered"
 msgstr ""
 
-#: tfrmeditparents.x.text
-msgctxt "TFRMEDITPARENTS.X.TEXT"
-msgid "No"
-msgstr ""
-
-#: tfrmeditparents.y2.text
-msgctxt "TFRMEDITPARENTS.Y2.TEXT"
-msgid "Y"
+#: tfrmeditparents.x.hint
+msgctxt "tfrmeditparents.x.hint"
+msgid "Prefered"
 msgstr ""
 
 #: tfrmeditwitness.label2.caption
@@ -2655,6 +2623,25 @@ msgctxt "TFRMNAMES.TOOLBAR1.CAPTION"
 msgid "ToolBar1"
 msgstr ""
 
+#: tfrmnames.toolbutton4.caption
+msgctxt "TFRMNAMES.TOOLBUTTON4.CAPTION"
+msgid "ToolButton4"
+msgstr ""
+
+#: tfrmparents.actparentcopy.caption
+msgid "Copy &Parent"
+msgstr ""
+
+#: tfrmparents.actparentgoto.caption
+msgctxt "TFRMPARENTS.ACTPARENTGOTO.CAPTION"
+msgid "&Go to"
+msgstr ""
+
+#: tfrmparents.actparentsetprefered.caption
+msgctxt "TFRMPARENTS.ACTPARENTSETPREFERED.CAPTION"
+msgid "Set &Prefered"
+msgstr ""
+
 #: tfrmparents.mnddiv1.caption
 msgctxt "TFRMPARENTS.MNDDIV1.CAPTION"
 msgid "-"
@@ -2680,14 +2667,12 @@ msgctxt "TFRMPARENTS.MNIEDIT.CAPTION"
 msgid "Edit"
 msgstr ""
 
-#: tfrmparents.mnigoto.caption
-msgctxt "TFRMPARENTS.MNIGOTO.CAPTION"
-msgid "&Go to"
+#: tfrmparents.tlbparents.caption
+msgid "tlbParents"
 msgstr ""
 
-#: tfrmparents.mniprimary.caption
-msgctxt "TFRMPARENTS.MNIPRIMARY.CAPTION"
-msgid "&Primary"
+#: tfrmparents.toolbutton1.caption
+msgid "ToolButton1"
 msgstr ""
 
 #: tfrmrepository.button1.caption
@@ -3039,6 +3024,7 @@ msgid "Name && Attributes "
 msgstr ""
 
 #: tfrmstemmamainform.actwinparents.caption
+msgctxt "tfrmstemmamainform.actwinparents.caption"
 msgid "Parents"
 msgstr ""
 
@@ -3054,10 +3040,6 @@ msgstr ""
 #: tfrmstemmamainform.btnseparator2.caption
 msgctxt "tfrmstemmamainform.btnseparator2.caption"
 msgid "btnSeparator2"
-msgstr ""
-
-#: tfrmstemmamainform.btnwinimages.caption
-msgid "btnWinImages"
 msgstr ""
 
 #: tfrmstemmamainform.checkbox1.caption

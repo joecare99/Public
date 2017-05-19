@@ -45,6 +45,8 @@ type
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure GetCode(out code: string; out no: integer); overload;
+    function GetEventExtType(idEvent, idInd: integer; out EvType,
+      TypeType: string): boolean;
     procedure PutCode(code: string; no: integer); overload;
     procedure GetCode(out code: string; out no: string); overload; deprecated;
     procedure PutCode(code: string; no: string); overload; deprecated;
@@ -87,8 +89,8 @@ type
 
     // Name
     function getIdNameofInd(const lidInd: integer): integer;
-    procedure UpdateNameI3(const lDate: string; var lidInd: integer);
-    procedure UpdateNameI4(const lDate: string; var lidInd: integer);
+    procedure UpdateNameI3(const lDate: string; const lidInd: integer);
+    procedure UpdateNameI4(const lDate: string; const lidInd: integer);
     procedure UpdateNamesPrefered(const idNamePref, idNameUnPref: integer);
     function GetIndividuumName(idInd: integer): string;
     function GetIndividuumName(NStr: string): string; overload; deprecated 'use integer-variant';
@@ -120,6 +122,9 @@ type
     procedure UpdateRelationSortdate(var lidInd: integer; var lDate: string);
     procedure PopulateParents(aSG: TStringGrid; idChild: longint); overload;
     procedure PopulateParents(aSG: TStringGrid; NStr: string); overload; deprecated 'use integer-variant';
+    procedure DeleteRelation(const lidRelation: PtrInt);
+    procedure DeleteRelationFull(const lidInd: integer;
+      const lidIndChild: integer; const lidRelation: integer);
 
     // Event Methods
     procedure FillTableEvents(const idInd: integer; const lgrdEvents: TStringGrid);
@@ -128,20 +133,28 @@ type
     procedure DeleteEventComplete(const lidEvent: Integer);
     function GetEventType(const lIdEvent: integer): string;
     function CheckIndSharedEventExists(idInd: integer): boolean;
+    procedure ResetEventPrefered(lidEvent: integer);
+    procedure ResetEventPref(lidEvent: Integer);
+    procedure SetEventPref(lidEvent: integer);
+    function SetEventPrefered(const lidEvent, lidInd: integer): boolean;
 
     //Witness
     function AppendWitness(Role, Phrase: string;
       idInd, idEvent, idPref: integer): integer;
+    function GetWitnessListbyEvent(lidEvent: integer): string;
     procedure UpdateWitnessModDatebyEvent(lidEvent: integer);
+    procedure UpdateWitnessModbyEvent(lidEvent: integer);
     procedure DeleteWitnessbyEvent(const lidEvent: integer);
 
     // Citation Methods
-    procedure CopyCitation(AType: string; idLink, idNewLink: integer);
+    procedure CopyCitation(AType: string; idLink, idNewLink: integer);overload;
+    procedure CopyCitation(AType: string; idLink:integer;ANewType: string; idNewLink: integer);overload;
     function GetCitationBestQuality(sType: string; idLink: integer): string;
     procedure PopulateCitations(Tableau: TStringGrid; Code: string;
       idName: integer); overload;
     procedure PopulateCitations(Tableau: TStringGrid; Code: string; NStr: string);
       overload; deprecated;
+    procedure DeleteCitation(const lidCitation: Integer);
     procedure DeleteCitationb_TypeId(const aType:String;const id: Integer);
     procedure DeleteCitationsbyType_ID(const aType: Char; const aID: Integer);
 
@@ -159,6 +172,10 @@ type
 
     // Source Methods
     function CheckIndSourceExist(idInd: integer): boolean;
+    procedure DeleteSourceFull(const lidSource: integer);
+    procedure FillSourcesTable(const lNotification: TNotifyEvent;
+      const lTable: TStringGrid);
+    function GetSourceCitCount(const lidSource: integer): integer;
 
     // Repository Methods
     function CheckIndDepositExist(idInd: integer): boolean;
@@ -331,6 +348,15 @@ begin
   Host := FInifile.ReadString(CIniKeyDatabase, CIniKeyHostname, 'localhost');
   User := FInifile.ReadString(CIniKeyDatabase, CIniKeyUsername, 'root');
   Password := FInifile.ReadString(CIniKeyDatabase, CIniKeyPassword, '');
+end;
+
+procedure TdmGenData.SetEventPref(lidEvent: integer);
+begin
+  // fr: mets le tag primaire à l'événement sélectionné dans la base de données et dans le tableau
+   // en: put the primary tag to the event selected in the database and the table
+   dmGenData.Query2.SQL.Text := 'UPDATE E SET X=1 WHERE no=:idEvent';
+   dmGenData.Query2.ParamByName('idEvent').AsInteger := lidEvent;
+   dmGenData.Query2.ExecSQL;
 end;
 
 procedure TdmGenData.WriteCfgConnection(Host, User, Password: string);
@@ -802,6 +828,12 @@ end;
 {$region Citation}
 procedure TdmGenData.CopyCitation(AType: string; idLink, idNewLink: integer);
 begin
+  CopyCitation(AType,idLink,AType,idNewLink);
+end;
+
+procedure TdmGenData.CopyCitation(AType: string; idLink: integer;
+  ANewType: string; idNewLink: integer);
+begin
   with qryInternal2 do
   begin
     SQL.Text := 'SELECT Y, N, S, Q, M FROM C WHERE Y=:Type AND N=:idLink';
@@ -815,10 +847,10 @@ begin
       SQL.Text :=
         'INSERT IGNORE INTO C (Y, N, S, Q, M) VALUES (:Type, :idLink, :S, :Q,' +
         ' :M)';
-      ParamByName('Type').AsString := qryInternal2.Fields[0].AsString;
+      ParamByName('Type').AsString := ANewType;
       ParamByName('idLink').AsInteger := idNewLink;
-      ParamByName('S').AsString := qryInternal2.Fields[2].AsString;
-      ParamByName('Q').AsString := qryInternal2.Fields[3].AsString;
+      ParamByName('S').AsInteger := qryInternal2.Fields[2].AsInteger;
+      ParamByName('Q').AsInteger := qryInternal2.Fields[3].AsInteger;
       ParamByName('M').AsString := qryInternal2.Fields[4].AsString;
       ExecSQL;
       Close;
@@ -837,8 +869,6 @@ begin
     ExecSQL;
   end;
 end;
-
-
 
 procedure TdmGenData.PopulateCitations(Tableau: TStringGrid; Code: string;
   idName: integer);
@@ -888,6 +918,17 @@ begin
     Close;
   end;
 end;
+
+procedure TdmGenData.DeleteCitation(const lidCitation: Integer);
+begin
+  with dmGenData.Query1 do begin
+Close;
+    SQL.Text:='DELETE FROM C WHERE no=idCitation';
+    ParamByName('idCitation').AsInteger:=  lidCitation;
+    ExecSQL;
+  end;
+end;
+
 {$endregion ~Citation}
 
 function TdmGenData.CheckIndParentExists(const lidInd: longint): boolean;
@@ -1241,7 +1282,7 @@ begin
   qryInternal2.Close;
 end;
 
-procedure TdmGenData.UpdateNameI4(const lDate: string; var lidInd: integer);
+procedure TdmGenData.UpdateNameI4(const lDate: string; const lidInd: integer);
 begin
   // UPDATE N.I4!!!
   with qryInternal do
@@ -1253,7 +1294,7 @@ begin
   end;
 end;
 
-procedure TdmGenData.UpdateNameI3(const lDate: string; var lidInd: integer);
+procedure TdmGenData.UpdateNameI3(const lDate: string; const lidInd: integer);
 begin
   // UPDATE N.I3!!!
   with qryInternal do
@@ -1797,6 +1838,26 @@ begin
     PopulateParents(aSG, no);
 end;
 
+procedure TdmGenData.DeleteRelationFull(const lidInd: integer; const lidIndChild: integer;
+  const lidRelation: integer);
+begin
+       DeleteCitationsbyType_ID('R',lidRelation);
+     DeleteRelation(lidRelation);
+     SaveModificationTime(lidIndChild);
+     SaveModificationTime(lidInd);
+
+end;
+
+procedure TdmGenData.DeleteRelation(const lidRelation: PtrInt);
+begin
+  with qryInternal do begin
+    Close;
+    SQL.Text:='DELETE FROM R WHERE no=:idRelation';
+    ParamByName('idRelation').AsInteger:=lidRelation;
+    ExecSQL;
+  end;
+end;
+
 {$endRegion ~Relation}
 // Witness-Methods
 {$region Witness (W)}
@@ -1839,6 +1900,25 @@ begin
   end;
 end;
 
+
+procedure TdmGenData.UpdateWitnessModbyEvent(lidEvent: integer);
+begin
+  with Query3 do begin
+        // fr: Sauvegarder les modifications pour tout les témoins de l'événements
+        // en: Save the changes for all the witnesses to the events
+        SQL.Text := 'SELECT W.I, W.X FROM W WHERE W.E=:idevent';
+        ParamByName('idEvent').AsInteger := lidEvent;
+        Open;
+        First;
+        while not EOF do
+        begin
+          SaveModificationTime(Fields[0].AsInteger);
+          Next;
+        end;
+      end;
+end;
+
+
 procedure TdmGenData.DeleteWitnessbyEvent(const lidEvent:integer);
 begin
   with dmGenData.Query1 do begin
@@ -1846,6 +1926,28 @@ begin
     SQL.Text:='DELETE FROM W WHERE E=:idEvent';
     ParamByName('idEvent').AsInteger:=lidEvent;
     ExecSQL;
+  end;
+end;
+
+function TdmGenData.GetWitnessListbyEvent(lidEvent: integer): string;
+var
+  temoins1: string;
+begin
+  with qryInternal do begin
+    close;
+    SQL.Text :=
+      'SELECT W.I FROM W WHERE W.X=1 AND W.E=:idEvent ORDER BY W.I';
+    ParamByName('idEvent').AsInteger := lidEvent;
+    Open;
+    First;
+    temoins1 := '';
+    while not EOF do
+    begin
+      temoins1 := temoins1 + '|' + Fields[0].AsString;
+      Next;
+    end;
+    Close;
+    Result:=temoins1;
   end;
 end;
 
@@ -1858,7 +1960,7 @@ procedure TdmGenData.FillTableEvents(const idInd:integer;const lgrdEvents: TStri
 var
   lWitness: string;
   lMemo: string;
-  lPlace, lBirth, TypeDescription: string;
+  lPlace, lBirth: string;
   row: integer;
   lAge: integer;
   lidWitness, lidEvent, lidType: LongInt;
@@ -1991,6 +2093,28 @@ begin
   end;
 end;
 
+function TdmGenData.GetEventExtType(idEvent,idInd:integer;out EvType,TypeType: string): boolean;
+var
+  lEventFound: boolean;
+begin
+  with qryInternal do begin
+  Close;
+      SQL.Text :=
+        'SELECT E.Y, Y.Y FROM E JOIN W on W.E=E.no JOIN Y on E.Y'
+          +'=Y.no WHERE W.X=1 AND W.I=:idInd AND E.no=:idEvent';
+      ParamByName('idInd').AsInteger := idInd;
+      ParamByName('idEvent').AsInteger := idEvent;
+      Open;
+      First;
+      TypeType := Fields[1].AsString;
+      lEventFound := not EOF;
+      EvType := Fields[0].AsString;
+      Close;
+    Result:=lEventFound;
+  end;
+end;
+
+
 procedure TdmGenData.DeleteEvent(const lidEvent: Integer);
 begin
   dmGenData.Query1.SQL.Text:='DELETE FROM E WHERE no=:idEvent';
@@ -2082,6 +2206,94 @@ begin
   EventChanged(self);
 
 end;
+
+procedure TdmGenData.ResetEventPref(lidEvent: Integer);
+begin
+  with qryInternal do begin
+   // fr: si primaire, enlève le primaire de la base de données et du tableau.
+       // en: if prefered, removes the prefered-setting of the database.
+       close;
+       SQL.Text := 'UPDATE E SET X=0 WHERE no=:idEvent';
+       ParamByName('idEvent').AsInteger := lidEvent;
+       ExecSQL;
+   end;
+end;
+
+procedure TdmGenData.ResetEventPrefered(lidEvent: integer);
+begin
+  ResetEventPref(lidEvent);
+  UpdateWitnessModDatebyEvent(lidEvent);
+end;
+
+function TdmGenData.SetEventPrefered(const lidEvent, lidInd: integer): boolean;
+var
+  redraw, lEventFound: boolean;
+  lDate: string;
+  lTypeType: string;
+  lEvType: string;
+  temoins2: string;
+  temoins1: string;
+  lidEvent2: LongInt;
+begin
+  redraw := False;
+  lEventFound:=GetEventExtType(lidEvent,lidInd,lEvType, lTypeType);
+  if lEventFound then
+
+  begin
+    // trouve si autre événement du même types avec même témoins primaires qui est primaire
+    temoins1:=GetWitnessListbyEvent(lidEvent);
+
+    with dmGenData.Query2 do begin
+      Close;
+      // Todo: Error: dmGenData.Query1.eof := true => No Data !!!
+      if lTypeType = 'X' then
+      begin
+        SQL.Text :=
+          'SELECT E.no, W.I FROM E JOIN W on W.E=E.no WHERE W.X=1 AND E.X=1 AND E.Y=:Type AND W.I=:idInd';
+        ParamByName('Type').AsString := lEvType;
+      end
+      else
+      begin
+        SQL.Text :=
+          'SELECT E.no, W.I FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no WHERE W.X=1 AND E.X=1 AND Y.Y=:Type AND W.I=:idInd';
+        ParamByName('Type').AsString := lTypeType;
+      end;
+      ParamByName('idInd').AsInteger := lidInd;
+      Open;
+      First;
+      while not EOF do
+      begin
+        lidEvent2 := Fields[0].AsInteger;
+        temoins2 := GetWitnessListbyEvent(lidEvent2);
+
+        // Enlève son tag primaire
+        if temoins1 = temoins2 then
+        begin
+          ResetEventPref(lidEvent2);
+          redraw := True;
+        end;
+        Next;
+      end;
+    end;
+
+    SetEventPref(lidEvent);
+
+    if lTypeType = 'B' then
+    begin
+      lDate := dmGenData.GetI3(lidInd);
+      UpdateNameI3(lDate, lidInd);
+    end
+    else if lTypeType = 'D' then
+    begin
+      lDate := dmGenData.GetI3(lidInd);
+      UpdateNameI4(lDate, lidInd);
+    end;
+  end;
+
+  UpdateWitnessModDatebyEvent(lidevent);
+  Result := redraw;
+end;
+
 {$Endregion Events}
 // Document Methods
 {$region Documents}
@@ -2137,7 +2349,7 @@ begin
   begin
     SQL.Text := 'SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.Y=:type and ln=:Lang';
     ParamByName('type').AsString := aType;
-    ParamByName('Lang').AsString:=Translation.lnCode;
+    ParamByName('Lang').AsString:=uppercase(Translation.lnCode);
     Open;
     First; // Todo: Fallback-Language
     while not EOF do
@@ -2166,7 +2378,7 @@ begin
   begin
     SQL.Text := 'SELECT T FROM Y WHERE no=:idType and ln=:Lang';
     ParamByName('idType').AsInteger := idType;
-    ParamByName('Lang').AsString:=Translation.lnCode;
+    ParamByName('Lang').AsString:=uppercase(Translation.lnCode);
     Open;
     if  EOF then
       begin
@@ -2187,7 +2399,7 @@ begin
   begin
     SQL.Text := 'SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.no=:idType and ln=:Lang';
     ParamByName('idType').AsInteger := idType;
-    ParamByName('Lang').AsString:=Translation.lnCode;
+    ParamByName('Lang').AsString:=uppercase(Translation.lnCode);
     Open;
     if  EOF then
       begin
@@ -2203,7 +2415,7 @@ begin
 end;
 
 {$endregion ~Type}
-
+{$region Source}
 function TdmGenData.CheckIndSourceExist(idInd: integer): boolean;
 
 begin
@@ -2219,6 +2431,86 @@ begin
   end;
 end;
 
+function TdmGenData.GetSourceCitCount(const lidSource: integer): integer;
+var
+  lSourceCitCount: LongInt;
+begin
+  dmGenData.Query1.Close;
+  dmGenData.Query1.SQL.Text:='SELECT COUNT(C.S) FROM S LEFT JOIN C on C.S=S.no WHERE S.no=:idSource';
+  dmGenData.Query1.ParamByName('idSource').AsInteger:=lidSource;
+  dmGenData.Query1.Open;
+  lSourceCitCount:= dmGenData.Query1.Fields[0].AsInteger;
+  Result:=lSourceCitCount;
+end;
+
+procedure TdmGenData.DeleteSourceFull(const lidSource: integer);
+begin
+  // Supprimer tous les exhibits et association dépots de cette source
+  dmGenData.Query1.SQL.Text:='DELETE FROM X WHERE A=:Type AND N=:idSource';
+  dmGenData.Query1.ParamByName('Type').AsString:='S';
+  dmGenData.Query1.ParamByName('idSource').AsInteger:=lidSource;
+  dmGenData.Query1.ExecSQL;
+  dmGenData.Query1.SQL.Text:='DELETE FROM A WHERE S=:idSource';
+  dmGenData.Query1.ParamByName('idSource').AsInteger:=lidSource;
+  dmGenData.Query1.ExecSQL;
+  dmGenData.Query1.SQL.Text:='DELETE FROM S WHERE no=:idSource';
+  dmGenData.Query1.ParamByName('idSource').AsInteger:=lidSource;
+  dmGenData.Query1.ExecSQL;
+end;
+
+procedure TdmGenData.FillSourcesTable(const lNotification: TNotifyEvent;
+  const lTable: TStringGrid);
+var
+  temp: string;
+  i: integer;
+  lidIndSrc: Longint;
+begin
+    with dmGenData.Query1 do begin
+      close;
+    //  dmGenData.Query1.SQL.add('SELECT S.no, S.T, S.D, S.M, S.A, S.Q, COUNT(C.S) FROM S LEFT JOIN C on C.S=S.no GROUP by S.no');
+      SQL.text:='SELECT S.no, S.T, S.D, S.M, S.A, S.Q FROM S ORDER BY S.no';
+      Open;
+      First;
+      lTable.RowCount:=RecordCount+1;
+      Tag:=-lTable.RowCount;
+      if assigned(lNotification) then
+         lNotification(dmGenData.Query1);
+      i:=0;
+      While not Eof do
+         begin
+         i:=i+1;
+         lTable.Cells[0,i]:=inttostr(i);
+         lTable.Cells[1,i]:=Fields[0].AsString;
+         lTable.Objects[1,i]:=tobject(ptrint(Fields[0].AsInteger));
+         lTable.Cells[2,i]:=Fields[1].AsString;
+         lTable.Cells[3,i]:=Fields[2].AsString;
+         lTable.Cells[4,i]:=Fields[3].AsString;
+         temp:=Fields[4].AsString;
+         lTable.Cells[6,i]:=Fields[5].AsString;
+         lTable.Objects[6,i]:=tobject(ptrint(Fields[5].AsInteger));
+    //     lTable.Cells[7,i]:=dmGenData.Query1.Fields[6].AsString;
+         lTable.Cells[7,i]:='?';
+         if  tryStrtoint(temp,lidIndSrc) then
+                begin
+                  lTable.Cells[5,i]:= dmgendata.GetIndividuumName(lidIndSrc)+
+                                             ' ('+temp+')';
+                  lTable.Objects[5,i]:=TObject(ptrint(lidIndSrc));
+               end
+         else
+           begin
+             lTable.Cells[5,i]:=temp;
+             lTable.Objects[5,i]:=nil;
+           end;
+         Next;
+         Tag:=i;
+         if assigned(lNotification) then
+            lNotification(dmGenData.Query1);
+      end;
+    end;
+end;
+
+{$endregion ~Source}
+{$region deposit}
 function TdmGenData.CheckIndDepositExist(idInd: integer): boolean;
 
 begin
@@ -2234,7 +2526,7 @@ begin
   end;
 end;
 
-
+{$endregion ~deposit}
 
 function TdmGenData.CountAllRecordsTMG(const filename: string): longint;
 var

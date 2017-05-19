@@ -121,10 +121,11 @@ procedure TfrmTypes.MenuItem3Click(Sender: TObject);    // Supprimer
 begin
   if TableauTypes.Row>0 then
      if StrtoInt(TableauTypes.Cells[5,TableauTypes.Row])=0 then
-        if Application.MessageBox(Pchar(Translation.Items[133]+
-           TableauTypes.Cells[2,TableauTypes.Row]+Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
+        if MessageDlg(SConfirmation,format(SAreYouSureToDelete,[TableauTypes.Cells[2,TableauTypes.Row]]),mtConfirmation,mbYesNo,0)=mryes  then
            begin
-              dmGenData.Query1.SQL.Text:='DELETE FROM Y WHERE no='+TableauTypes.Cells[1,TableauTypes.Row];
+              dmGenData.Query1.close;
+              dmGenData.Query1.SQL.Text:='DELETE FROM Y WHERE no=:idtype';
+               dmGenData.Query1.ParamByName('idType').AsInteger:=ptrint(TableauTypes.Objects[1,TableauTypes.Row]);
               dmGenData.Query1.ExecSQL;
               TableauTypes.DeleteRow(TableauTypes.Row);
         end;

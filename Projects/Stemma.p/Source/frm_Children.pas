@@ -49,7 +49,6 @@ implementation
 uses
   frm_Main, cls_Translation, dm_GenData;
 
-
 {$R *.lfm}
 
 { TfrmChildren }
@@ -142,8 +141,10 @@ end;
 procedure TfrmChildren.MenuItem3Click(Sender: TObject);
 begin
   // Ajouter un enfant
-  dmGenData.PutCode('E',0);
-  dmGenData.PutCode('A',0);
+  //dmGenData.PutCode('E',0);
+  //dmGenData.PutCode('A',0);
+    frmEditParents.EditMode:=eERT_appendChild;
+
   if frmEditParents.Showmodal = mrOK then
      begin
      PopulateEnfants(sender);
@@ -151,6 +152,7 @@ begin
 end;
 
 procedure TfrmChildren.MenuItem5Click(Sender: TObject);
+
 begin
   // Supprimer un enfant
   if TableauEnfants.Row>0 then
@@ -158,13 +160,8 @@ begin
            TableauEnfants.Cells[3,TableauEnfants.Row]+
            Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
         begin
-        dmGenData.SaveModificationTime(strtoint(TableauEnfants.Cells[5,TableauEnfants.Row]));
-        dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE Y=''R'' AND N='+TableauEnfants.Cells[0,TableauEnfants.Row];
-        dmGenData.Query1.ExecSQL;
-        dmGenData.Query1.SQL.Text:='DELETE FROM R WHERE no='+TableauEnfants.Cells[0,TableauEnfants.Row];
-        dmGenData.Query1.ExecSQL;
+        dmGenData.DeleteRelationFull(frmStemmaMainForm.iID, ptrint(TableauEnfants.objects[5,TableauEnfants.Row]), idRelation);
         TableauEnfants.DeleteRow(TableauEnfants.Row);
-        dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
      end;
 end;
 
@@ -172,7 +169,8 @@ procedure TfrmChildren.TableauEnfantsDblClick(Sender: TObject);
 begin
   If TableauEnfants.Row>0 then
      begin
-     dmGenData.PutCode('E',0);
+     //dmGenData.PutCode('E',0);
+      frmEditParents.EditMode:=eERT_editChild;
      If frmEditParents.Showmodal=mrOK then
         PopulateEnfants(sender);
   end;

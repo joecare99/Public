@@ -34,6 +34,11 @@ type
     mnuNames: TPopupMenu;
     Panel1: TPanel;
     ToolBar1: TToolBar;
+    ToolButton1: TToolButton;
+    ToolButton2: TToolButton;
+    ToolButton3: TToolButton;
+    ToolButton4: TToolButton;
+    ToolButton5: TToolButton;
     procedure actNamesDeleteUpdate(Sender: TObject);
     procedure actNamesSetPreferedUpdate(Sender: TObject);
     procedure cbxLivingChange(Sender: TObject);
@@ -265,13 +270,12 @@ begin
 end;
 
 procedure TfrmNames.actNamesEditExecute(Sender: TObject);
-var
-  lidName: Longint;
+
 begin
-  If (grdNames.Row>0) and trystrtoint(grdNames.Cells[0, grdNames.Row],lidName) then
+  If (grdNames.Row>0) and (idName>0) then
      begin
      frmEditName.EditType:=eNET_EditExisting;
-     frmEditName.idName:=lidName;
+     frmEditName.idName:=idName;
      If frmEditName.Showmodal=mrOK then
           PopulateNom(Sender);
      end;

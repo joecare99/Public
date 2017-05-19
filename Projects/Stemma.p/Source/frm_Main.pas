@@ -10,7 +10,7 @@ uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Menus,
   ComCtrls, ExtCtrls, StdCtrls, FMUtils, frm_ConnectDB,
   IniFiles, frm_Names, dbf, StrUtils, Math, DateUtils, frm_Explorer,
-  frm_parents, frm_History, frm_Children, frm_Siblings, frm_Events, frm_Documents, frm_Ancesters,
+  frm_Parents, frm_History, frm_Children, frm_Siblings, frm_Events, frm_Documents, frm_Ancesters,
   frm_Descendants, frm_Images, frm_Places, frm_Sources, frm_Repositories, frm_Types, LCLType, Grids,
   ActnList, StdActns, Buttons, DBActns, Spin, frm_About, frm_EditName,
   frm_SelectPerson, frm_EditEvents;
@@ -227,6 +227,7 @@ type
     procedure actWinExplorerExecute(Sender: TObject);
     procedure actWinExtraUpdate(Sender: TObject);
     procedure actWinParentsExecute(Sender: TObject);
+    procedure btnWinImagesClick(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
     procedure ConnexionClick(Sender: TObject);
     procedure CoolBar1Change(Sender: TObject);
@@ -242,8 +243,8 @@ type
     procedure mniParentsClick(Sender: TObject);
     procedure mniExhibitsClick(Sender: TObject);
     procedure mniExplorateurClick(Sender: TObject);
-    procedure mniEnfantsClick(Sender: TObject);
-    procedure mniFratrieClick(Sender: TObject);
+    procedure actWinChildrenExecute(Sender: TObject);
+    procedure actWinSiblingsExecute(Sender: TObject);
     procedure actWinAncestersExecute(Sender: TObject);
     procedure mniNavNumber18Click(Sender: TObject);
     procedure actNavShowHistoryExecute(Sender: TObject);
@@ -478,7 +479,7 @@ end;
 procedure TfrmStemmaMainForm.DockMasterCreateControl(Sender: TObject;
   aName: string; var AControl: TControl; DoDisableAutoSizing: boolean);
 
-  procedure CreateForm(Caption: string; NewBounds: TRect);
+  procedure CreateForm(Caption: string; {%H-}NewBounds: TRect);
   begin
     //  AControl:=CreateSimpleForm(aName,Caption,NewBounds,DoDisableAutoSizing);
   end;
@@ -507,7 +508,7 @@ procedure TfrmStemmaMainForm.FormClose(Sender: TObject; var CloseAction: TCloseA
 var
   i: integer;
 begin
-  SaveFormPosition(Sender as TForm);
+  dmGenData.WriteCfgFormPosition(self);
   dmGenData.WriteCfgProject(dmGenData.GetDBSchema, dmGenData.ProjectIsOpen);
   if (dmGenData.DB_Connected) and dmGenData.ProjectIsOpen then
   begin
@@ -639,6 +640,11 @@ end;
 procedure TfrmStemmaMainForm.actWinParentsExecute(Sender: TObject);
 begin
   ToggleVisExtraWindow(Sender, frmParents);
+end;
+
+procedure TfrmStemmaMainForm.btnWinImagesClick(Sender: TObject);
+begin
+
 end;
 
 procedure TfrmStemmaMainForm.actFileCreateProjectUpdate(Sender: TObject);
@@ -1636,23 +1642,23 @@ begin
     UpdateMenuHistory;
 
     frmNames.PopulateNom(Sender);
-    if mniEvenements.Checked then
+    if actWinEvents.Checked then
       dmGenData.EventChanged(Sender);
-    if mniParents.Checked then
-      dmGenData.PopulateParents(frmParents.TableauParents, frmStemmaMainForm.iID);
-    if mniExhibits.Checked then
+    if actWinParents.Checked then
+      dmGenData.PopulateParents(frmParents.tblParents, frmStemmaMainForm.iID);
+    if actWinDocuments.Checked then
       PopulateDocuments(frmDocuments.tblDocuments, 'I', frmStemmaMainForm.iID);
-    if mniEnfants.Checked then
+    if actWinChildren.Checked then
       frmChildren.PopulateEnfants(Sender);
-    if mniWinSiblings.Checked then
+    if actWinSiblings.Checked then
       PopulateFratrie;
-    if mniAncetres.Checked then
+    if actWinAncesters.Checked then
       PopulateAncetres;
-    if mniExplorateur.Checked then
+    if actWinExplorer.Checked then
       frmExplorer.FindIndividual;
-    if mniDescendants.Checked then
+    if actWinDescendens.Checked then
       PopulateDescendants;
-    if mniImage.Checked then
+    if actWinImages.Checked then
       if frmDocuments.tblDocuments.RowCount > 1 then
         if frmDocuments.tblDocuments.Cells[1,
           frmDocuments.tblDocuments.Row] = '*' then
@@ -1712,47 +1718,19 @@ begin
 
 end;
 
-procedure TfrmStemmaMainForm.mniEnfantsClick(Sender: TObject);
+procedure TfrmStemmaMainForm.actWinChildrenExecute(Sender: TObject);
 begin
-  if not (Sender as TMenuItem).Checked then
-  begin
-    DockMaster.MakeDockable(frmChildren, True, True);
-    (Sender as TMenuItem).Checked := True;
-  end
-  else
-  begin
-    frmChildren.Close;
-    (Sender as TMenuItem).Checked := False;
-  end;
+  ToggleVisExtraWindow(Sender, frmChildren);
 end;
 
-procedure TfrmStemmaMainForm.mniFratrieClick(Sender: TObject);
+procedure TfrmStemmaMainForm.actWinSiblingsExecute(Sender: TObject);
 begin
-  if not (Sender as TMenuItem).Checked then
-  begin
-    DockMaster.MakeDockable(frmDocuments, True, True);
-    (Sender as TMenuItem).Checked := True;
-  end
-  else
-  begin
-    frmDocuments.Close;
-    (Sender as TMenuItem).Checked := False;
-  end;
+  ToggleVisExtraWindow(Sender, frmDocuments);
 end;
 
 procedure TfrmStemmaMainForm.actWinAncestersExecute(Sender: TObject);
 begin
-  if not (Sender as TMenuItem).Checked then
-  begin
-    DockMaster.MakeDockable(FormAncetres, True, True);
-
-    (Sender as TMenuItem).Checked := True;
-  end
-  else
-  begin
-    FormAncetres.Close;
-    (Sender as TMenuItem).Checked := False;
-  end;
+  ToggleVisExtraWindow(Sender, FormAncetres);
 end;
 
 procedure TfrmStemmaMainForm.mniNavNumber18Click(Sender: TObject);
@@ -1776,17 +1754,7 @@ end;
 
 procedure TfrmStemmaMainForm.actWinDescendensExecute(Sender: TObject);
 begin
-  if not (Sender as TMenuItem).Checked then
-  begin
-    DockMaster.MakeDockable(FormDescendants, True, True);
-
-    (Sender as TMenuItem).Checked := True;
-  end
-  else
-  begin
-    FormDescendants.Close;
-    (Sender as TMenuItem).Checked := False;
-  end;
+  ToggleVisExtraWindow(Sender, FormDescendants);
 end;
 
 procedure TfrmStemmaMainForm.mniNavItem24Click(Sender: TObject);
@@ -1809,17 +1777,7 @@ end;
 
 procedure TfrmStemmaMainForm.actWinImagesExecute(Sender: TObject);
 begin
-  if not (Sender as TMenuItem).Checked then
-  begin
-    DockMaster.MakeDockable(FormImage, True, True);
-
-    (Sender as TMenuItem).Checked := True;
-  end
-  else
-  begin
-    FormImage.Close;
-    (Sender as TMenuItem).Checked := False;
-  end;
+  ToggleVisExtraWindow(Sender, FormImage);
 end;
 
 procedure TfrmStemmaMainForm.mniUtilItem28Click(Sender: TObject);
@@ -2356,24 +2314,11 @@ begin
 end;
 
 procedure TfrmStemmaMainForm.MenuItem59Click(Sender: TObject);
-var
-  RelLastID: QWord;
-  lidRelation: integer;
+
 begin
   // Copier Parent
-  if mniParents.Checked then
-  begin
-    lidRelation := frmParents.idRelation;
-
-    RelLastID := dmGenData.CopyRelation(frmParents.idRelation);
-    dmGenData.SaveModificationTime(dmGenData.Query1.Fields[2].AsInteger);
-
-    // en: Copy Citation
-    dmGenData.CopyCitation('R', lidRelation, RelLastID);
-
-    dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
-    dmGenData.PopulateParents(frmParents.TableauParents, frmStemmaMainForm.iID);
-  end;
+  if actWinParents.Checked then
+    frmParents.CopyParent(Sender);
 end;
 
 procedure TfrmStemmaMainForm.actFileCloseProjectExecute(Sender: TObject);

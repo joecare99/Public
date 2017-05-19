@@ -41,7 +41,7 @@ resourcestring
   SAddFirstName = 'Add &first name';
   SAddingASisterTo = 'Adding a sister to ';
   SAddTitle = 'Add &title';
-  SAreYouSureToDelCitation = 'Are you sure you want to delete citation "';
+  SAreYouSureToDelX = 'Are you sure you want to delete %s "%s%" ?';
   SAreYouSureToDelDoc = 'Are you sure you want to delete exhibit "';
   SAreYouSureToDelete   = 'Are you sure you want to delete "%s" ?';
   SAreYouSureToDelLnkToChld = 'Are you sure you want to delete the link to the'
@@ -50,8 +50,9 @@ resourcestring
     +'depository "';
   SAreYouSureToDelRepository = 'Are you sure you want to delete repository "';
   SAreYouSureToDelWitness = 'Are you sure you want to delete witness "';
-  SAreYouSureToQuit	= 'Are you syre you want to quit STEMMA?';
+  SAreYouSureToQuit	= 'Are you sure you want to quit STEMMA?';
   SChildren = 'Children';
+  SCitation = 'Citation';
   SDatabaseAlreadyExist = 'Database already exist.';
   SDatabaseNotFound = 'Database not found.';
   SDocuments = 'Documents';
@@ -66,6 +67,7 @@ resourcestring
   SNumberOfTheIndividua = 'Number of the individual';
   SOnlyTheExhibitsAssoc = 'Only the exhibits associated to an individual (type'
     +' "I") can be modified this way';
+  SParents = 'Parents';
   SRemovalOfOrphanRecor = 'Removal of orphan records';
   SRepairNamesForSortin = 'Repair names (for sorting)';
   SRepairRelationSortDa = 'Repair relation sort date';
@@ -152,7 +154,7 @@ FItems.Add(SAreYouSureToDelRepository);
 FItems.Add('" ?');
 FItems.Add(SAddACitation);
 FItems.Add(SAddAnEvent); {30}
-FItems.Add(SAreYouSureToDelCitation);
+FItems.Add(SAreYouSureToDelX);
 FItems.Add(SAreYouSureToDelWitness);
 FItems.Add(SAddADocument);
 FItems.Add('Text');
@@ -251,8 +253,8 @@ FItems.Add('Names');
 FItems.Add(') and attributes');
 FItems.Add('To remove a primary name, select the new primary name.');
 FItems.Add('Are you sure you want to delete the name "');
-FItems.Add('Parents'); {130}
-FItems.Add('Are you sure you want to delete the link to the  parent "');
+FItems.Add(SParents); {130}
+FItems.Add('Are you sure you want to delete the link to the parent "');
 FItems.Add('Are you sure you want to delete source "');
 FItems.Add('Are you sure you want to delete "');
 FItems.Add('Event');

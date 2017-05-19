@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Grids, Menus, FMUtils, StrUtils, LCLType, Buttons, Spin, IniFiles, Process;
+  Grids, Menus, FMUtils, fra_Citations, StrUtils, LCLType, Buttons, Spin,
+  ExtCtrls, IniFiles, Process;
 
 type
  enumEventEditType = (
@@ -19,10 +20,10 @@ type
 
   { TfrmEditEvents }
   TfrmEditEvents = class(TForm)
-    Ajouter1: TMenuItem;
     Ajouter2: TMenuItem;
     Button1: TBitBtn;
     Button2: TBitBtn;
+    fraEdtCitations1: TfraEdtCitations;
     L3: TEdit;
     L4: TEdit;
     L0: TEdit;
@@ -35,7 +36,6 @@ type
     Label4: TLabel;
     Label5: TLabel;
     Label6: TLabel;
-    Label7: TLabel;
     Label8: TLabel;
     Label9: TLabel;
     M: TMemo;
@@ -55,9 +55,9 @@ type
     Modifier2: TMenuItem;
     ModifierTemoin: TMenuItem;
     AjouterTemoin: TMenuItem;
-    Modifier1: TMenuItem;
     No: TSpinEdit;
-    PopupMenu2: TPopupMenu;
+    Panel1: TPanel;
+    pnlBottom: TPanel;
     PopupMenu3: TPopupMenu;
     Supprimer2: TMenuItem;
     SupprimerTemoin: TMenuItem;
@@ -68,13 +68,11 @@ type
     P2: TMemo;
     PD: TEdit;
     PD2: TEdit;
-    Supprimer1: TMenuItem;
     TableauExhibits: TStringGrid;
     TableauTemoins: TStringGrid;
     X: TEdit;
     SD: TEdit;
     SD2: TEdit;
-    TableauCitations: TStringGrid;
     YY: TEdit;
     Y: TComboBox;
     procedure Ajouter1Click(Sender: TObject);
@@ -119,7 +117,7 @@ var
 implementation
 
 uses
-  frm_Events, frm_Main, dm_GenData, frm_Explorer, frm_EditCitations, frm_EditWitness,
+  frm_Events, frm_Main, dm_GenData, frm_Explorer, frm_EditWitness,
   frm_Documents, frm_ShowImage, frm_Names, frm_EditDocuments, cls_Translation;
 
 
@@ -130,12 +128,7 @@ uses
 
 procedure TfrmEditEvents.TableauCitationsDblClick(Sender: TObject);
 begin
-  if TableauCitations.Row>0 then
-     begin
-     dmGenData.PutCode('E',TableauCitations.Cells[0,TableauCitations.Row]);
-     If EditCitations.Showmodal=mrOK then
-        dmGenData.PopulateCitations(TableauCitations,'E',strtoint(No.Text));
-  end;
+
 end;
 
 procedure TfrmEditEvents.TableauTemoinsDblClick(Sender: TObject);
@@ -257,7 +250,7 @@ begin
   Label4.Caption:=Translation.Items[172];
   Label5.Caption:=Translation.Items[144];
   Label6.Caption:=Translation.Items[173];
-  Label7.Caption:=Translation.Items[174];
+
   Label8.Caption:=Translation.Items[170];
   Label9.Caption:=Translation.Items[168];
   Label10.Caption:=Translation.Items[169];
@@ -265,14 +258,11 @@ begin
   Label12.Caption:=Translation.Items[298];
   TableauTemoins.Cells[1,0]:=Translation.Items[175];
   TableauTemoins.Cells[3,0]:=Translation.Items[176];
-  TableauCitations.Cells[1,0]:=Translation.Items[138];
-  TableauCitations.Cells[2,0]:=Translation.Items[155];
-  TableauCitations.Cells[3,0]:=Translation.Items[177];
+
   TableauExhibits.Cells[2,0]:=Translation.Items[154];
   TableauExhibits.Cells[4,0]:=Translation.Items[201];
-  Ajouter1.Caption:=Translation.Items[224];
-  Modifier1.Caption:=Translation.Items[225];
-  Supprimer1.Caption:=Translation.Items[226];
+  fraEdtCitations1.Clear;
+  fraEdtCitations1.CType:='E';
   Ajouter2.Caption:=Translation.Items[224];
   Modifier2.Caption:=Translation.Items[225];
   Supprimer2.Caption:=Translation.Items[226];
@@ -439,10 +429,10 @@ begin
   end;
   P2.Text:=DecodePhrase(frmStemmaMainForm.iID,Role.Text,Phrase,'E',No.Value);
   // Populate le tableau de citations
-  if no.text='0' then
-     TableauCitations.RowCount:=1
+  if no.Value=0 then
+     fraEdtCitations1.clear
   else
-     dmGenData.PopulateCitations(TableauCitations,'E',strtoint(No.Text));
+     fraEdtCitations1.LinkID:=no.Value;
   // Populate le tableau de documents
   if no.text='0' then
      TableauExhibits.RowCount:=1
@@ -1039,12 +1029,7 @@ end;
 
 procedure TfrmEditEvents.Ajouter1Click(Sender: TObject);
 begin
-  If no.text='0' then
-     Button1Click(Sender);
-  dmGenData.PutCode('E',no.text);
-  dmGenData.PutCode('A',no.text);
-  If EditCitations.Showmodal=mrOK then
-     dmGenData.PopulateCitations(TableauCitations,'E',idEvent);
+
 end;
 
 procedure TfrmEditEvents.Ajouter2Click(Sender: TObject);
@@ -1089,23 +1074,23 @@ end;
 
 procedure TfrmEditEvents.Supprimer1Click(Sender: TObject);
 begin
-  If TableauCitations.Row>0 then
-     if Application.MessageBox(Pchar(Translation.Items[31]+
-        TableauCitations.Cells[1,TableauCitations.Row]+Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
-        begin
-        dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE no='+TableauCitations.Cells[0,TableauCitations.Row];
-        dmGenData.Query1.ExecSQL;
-        TableauCitations.DeleteRow(TableauCitations.Row);
-        // Sauvegarder les modifications pour tout les témoins de l'événements
-        dmGenData.Query3.SQL.Text:='SELECT W.I, W.X FROM W WHERE W.E='+no.Text;
-        dmGenData.Query3.Open;
-        dmGenData.Query3.First;
-        While not dmGenData.Query3.EOF do
-           begin
-           dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
-           dmGenData.Query3.Next;
-        end;
-     end;
+  //If TableauCitations.Row>0 then
+  //   if Application.MessageBox(Pchar(Translation.Items[31]+
+  //      TableauCitations.Cells[1,TableauCitations.Row]+Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
+  //      begin
+  //      dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE no='+TableauCitations.Cells[0,TableauCitations.Row];
+  //      dmGenData.Query1.ExecSQL;
+  //      TableauCitations.DeleteRow(TableauCitations.Row);
+  //      // Sauvegarder les modifications pour tout les témoins de l'événements
+  //      dmGenData.Query3.SQL.Text:='SELECT W.I, W.X FROM W WHERE W.E='+no.Text;
+  //      dmGenData.Query3.Open;
+  //      dmGenData.Query3.First;
+  //      While not dmGenData.Query3.EOF do
+  //         begin
+  //         dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
+  //         dmGenData.Query3.Next;
+  //      end;
+  //   end;
 end;
 
 procedure TfrmEditEvents.Supprimer2Click(Sender: TObject);

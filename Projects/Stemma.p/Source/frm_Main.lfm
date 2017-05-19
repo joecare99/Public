@@ -650,7 +650,7 @@ object frmStemmaMainForm: TfrmStemmaMainForm
       object btnWinImages: TToolButton
         Left = 170
         Top = 2
-        Caption = 'btnWinImages'
+        Action = actWinImages
       end
       object btnSeparator2: TToolButton
         Left = 193
@@ -2092,14 +2092,14 @@ object frmStemmaMainForm: TfrmStemmaMainForm
       Category = 'Windows'
       Caption = 'Children'
       ImageIndex = 25
-      OnExecute = mniEnfantsClick
+      OnExecute = actWinChildrenExecute
       OnUpdate = actWinExtraUpdate
     end
     object actWinSiblings: TAction
       Tag = 6
       Category = 'Windows'
       Caption = 'Siblings'
-      OnExecute = mniFratrieClick
+      OnExecute = actWinSiblingsExecute
       OnUpdate = actWinExtraUpdate
     end
     object actWinImages: TAction

@@ -1,13 +1,13 @@
 object frmEditDocuments: TfrmEditDocuments
   Left = 452
-  Height = 188
+  Height = 273
   Top = 302
   Width = 497
   ActiveControl = Titre
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de document'
-  ClientHeight = 188
+  ClientHeight = 273
   ClientWidth = 497
   Menu = MainMenu1
   OnShow = FormShow

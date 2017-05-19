@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Grids,
-  StdCtrls, Menus, frm_EditCitations, FMUtils, LCLType, Spin, Buttons,
-  ExtCtrls, ComboEx;
+  StdCtrls, Menus, fra_Citations, FMUtils, LCLType, Spin,
+  Buttons, ExtCtrls, ComboEx;
 
 type
   enumNameEditType = (
@@ -24,11 +24,11 @@ type
   { TfrmEditName }
 
   TfrmEditName = class(TForm)
-    Ajouter1: TMenuItem;
     btnOK: TBitBtn;
     btnCancel: TBitBtn;
     cbxSex: TComboBoxEx;
     edtName: TEdit;
+    fraEdtCitations1: TfraEdtCitations;
     I: TSpinEdit;
     imglSex: TImageList;
     lblType: TLabel;
@@ -38,7 +38,6 @@ type
     lblPhrase: TLabel;
     lblDate: TLabel;
     lblDefault: TLabel;
-    lblSources: TLabel;
     lblName8: TLabel;
     lblForPresentation: TLabel;
     M: TMemo;
@@ -58,7 +57,6 @@ type
     MenuItem7: TMenuItem;
     MenuItem8: TMenuItem;
     MenuItem9: TMenuItem;
-    Modifier1: TMenuItem;
     No: TSpinEdit;
     pnlBottom: TPanel;
     X: TEdit;
@@ -66,13 +64,10 @@ type
     P2: TMemo;
     P1: TMemo;
     PD: TEdit;
-    PopupMenu2: TPopupMenu;
     PopupMenuNom: TPopupMenu;
     SD: TEdit;
     PD2: TEdit;
     SD2: TEdit;
-    Supprimer1: TMenuItem;
-    TableauCitations: TStringGrid;
     TableauNoms: TStringGrid;
     Ajout: TEdit;
     Y: TComboBox;
@@ -88,6 +83,8 @@ type
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
     procedure MenuItem6Click(Sender: TObject);
+    procedure mniCitationEditClick(Sender: TObject);
+    procedure NomSaveData(Sender: Tobject);
     procedure P2DblClick(Sender: TObject);
     procedure PDblClick(Sender: TObject);
     procedure PDEditingDone(Sender: TObject);
@@ -113,8 +110,6 @@ type
     property idInd:integer read GetIdInd write SetIdInd;
     property idName:integer read GetIdName write SetIdName;
   end;
-
-procedure NomSaveData;
 
 var
   frmEditName: TfrmEditName;
@@ -213,12 +208,7 @@ end;
 
 procedure TfrmEditName.TableauCitationsDblClick(Sender: TObject);
 begin
-  if TableauCitations.Row > 0 then
-  begin
-    dmGenData.PutCode('N', StrToInt(TableauCitations.Cells[0, TableauCitations.Row]));
-    if EditCitations.Showmodal = mrOk then
-      dmGenData.PopulateCitations(TableauCitations, 'N', No.Value);
-  end;
+
 end;
 
 procedure TfrmEditName.YChange(Sender: TObject);
@@ -291,7 +281,6 @@ begin
   lblPhrase.Caption := Translation.Items[172];
   lblDate.Caption := Translation.Items[144];
   lblDefault.Caption := Translation.Items[173];
-  lblSources.Caption := Translation.Items[174];
   lblName8.Caption := Translation.Items[184];
   lblForPresentation.Caption := Translation.Items[168];
   lblForSorting.Caption := Translation.Items[169];
@@ -299,10 +288,9 @@ begin
 //  TableauNoms.Columns.c:=3;
   TableauNoms.Columns[0].Title.Caption := Translation.Items[185];
   TableauNoms.Columns[1].title.Caption := Translation.Items[155];
-  TableauCitations.RowCount:=1;
-  TableauCitations.Columns[0].Title.Caption := Translation.Items[138];
-  TableauCitations.Columns[1].Title.Caption := Translation.Items[155];
-  TableauCitations.Columns[2].Title.Caption := Translation.Items[177];
+  fraEdtCitations1.Clear;
+  fraEdtCitations1.CType:='N';
+  fraEdtCitations1.OnSaveData:=@NomSaveData;
   MenuItem1.Caption := Translation.Items[229];
   MenuItem2.Caption := Translation.Items[230];
   MenuItem3.Caption := Translation.Items[231];
@@ -311,9 +299,6 @@ begin
   MenuItem10.Caption := Translation.Items[224];
   MenuItem11.Caption := Translation.Items[225];
   MenuItem12.Caption := Translation.Items[226];
-  Ajouter1.Caption := Translation.Items[224];
-  Modifier1.Caption := Translation.Items[225];
-  Supprimer1.Caption := Translation.Items[226];
   // Populate le ComboBox
   dmGenData.GetTypeList(Y.Items,'N');
   TableauNoms.RowCount := 5;
@@ -565,7 +550,7 @@ begin
   if FEditType <> eNET_EditExisting then
   begin
 
-    TableauCitations.RowCount := 1;
+    fraEdtCitations1.clear;
     No.Value := 0;
     M.Text := '';
     P.Text := '';
@@ -601,7 +586,7 @@ begin
       else cbxSex.ItemIndex:=0
     end;
     btnOK.Enabled := True;
-    TableauCitations.Enabled := True;
+    fraEdtCitations1.Enabled := True;
     M.Text := dmGenData.Query1.Fields[4].AsString;
     P.Text := dmGenData.Query1.Fields[5].AsString;
     P1.Text :=dmGenData.GetTypePhrase(PtrInt(Y.Items.Objects[Y.ItemIndex]));
@@ -617,7 +602,7 @@ begin
     SD.Text := ConvertDate(dmGenData.Query1.Fields[7].AsString, 1);
     X.Text := dmGenData.Query1.Fields[8].AsString;
     // Populate le tableau de citations
-    dmGenData.PopulateCitations(TableauCitations, 'N', No.Value);
+    fraEdtCitations1.LinkID:=no.Value;
   end;
 end;
 
@@ -626,12 +611,12 @@ begin
   if StrToInt(I.Text) > 0 then
   begin
     btnOK.Enabled := True;
-    TableauCitations.Enabled := True;
+    fraEdtCitations1.Enabled := True;
   end
   else
   begin
     btnOK.Enabled := False;
-    TableauCitations.Enabled := True;
+    fraEdtCitations1.Enabled := True;
   end;
   frmStemmaMainForm.DataHist.InsertColRow(False, 0);
   frmStemmaMainForm.DataHist.Cells[0, 0] := 'I';
@@ -647,7 +632,7 @@ end;
 
 
 
-procedure NomSaveData;
+procedure TfrmEditName.NomSaveData(Sender:Tobject);
 var
   j: integer;
   parent1, parent2, no_eve, nocode, lidInd, lidName: longint;
@@ -979,13 +964,18 @@ begin
   frmEditName.no.Value := lidName;
 end;
 
+procedure TfrmEditName.Ajouter1Click(Sender: TObject);
+begin
+
+end;
+
 procedure TfrmEditName.btnOKClick(Sender: TObject);
 
 begin
   if frmEditName.ActiveControl is TEdit and assigned(
     (frmEditName.ActiveControl as TEdit).OnEditingDone) then
     (frmEditName.ActiveControl as TEdit).OnEditingDone(frmEditName.ActiveControl);
-  NomSaveData;
+  NomSaveData(sender);
   case FEditType of
     eNET_EditExisting:
     begin
@@ -1086,18 +1076,7 @@ begin
 
 end;
 
-procedure TfrmEditName.Ajouter1Click(Sender: TObject);
-begin
-  if btnOK.Enabled then
-  begin
-    if no.Value = 0 then
-      NomSaveData;
-    dmGenData.PutCode('N', no.Value);
-    dmGenData.PutCode('A', no.Value);
-    if EditCitations.Showmodal = mrOk then
-      dmGenData.PopulateCitations(TableauCitations, 'N', No.Value);
-  end;
-end;
+
 
 procedure TfrmEditName.MenuItem1Click(Sender: TObject);
 var
@@ -1405,6 +1384,11 @@ begin
     frmStemmaMainForm.DataHist.Row := j + 1;
 end;
 
+procedure TfrmEditName.mniCitationEditClick(Sender: TObject);
+begin
+
+end;
+
 procedure TfrmEditName.PDblClick(Sender: TObject);
 begin
   P2.Visible := True;
@@ -1444,18 +1428,7 @@ end;
 
 procedure TfrmEditName.Supprimer1Click(Sender: TObject);
 begin
-  if TableauCitations.Row > 0 then
-    if Application.MessageBox(PChar(Translation.Items[31] +
-      TableauCitations.Cells[1, TableauCitations.Row] +
-      Translation.Items[28]), PChar(SConfirmation),
-      MB_YESNO) = idYes then
-    begin
-      dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE no=' +
-        TableauCitations.Cells[0, TableauCitations.Row];
-      dmGenData.Query1.ExecSQL;
-      TableauCitations.DeleteRow(TableauCitations.Row);
-      dmGenData.SaveModificationTime(I.Value);
-    end;
+
 end;
 
 end.

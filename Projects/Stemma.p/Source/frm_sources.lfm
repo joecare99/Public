@@ -1,12 +1,13 @@
 object FormSources: TFormSources
   Left = 429
-  Height = 588
+  Height = 590
   Top = 136
-  Width = 752
+  Width = 1097
+  ActiveControl = TableauSources
   BorderIcons = []
   Caption = 'FormSources'
-  ClientHeight = 588
-  ClientWidth = 752
+  ClientHeight = 590
+  ClientWidth = 1097
   OnClose = FormClose
   OnResize = FormResize
   OnShow = FormShow
@@ -26,7 +27,7 @@ object FormSources: TFormSources
         Width = 50
       end    
       item
-        Title.Caption = 'Titre'
+        Title.Caption = 'Title'
         Width = 186
       end    
       item
@@ -34,11 +35,11 @@ object FormSources: TFormSources
         Width = 366
       end    
       item
-        Title.Caption = 'Mémo'
+        Title.Caption = 'Memo'
         Width = 186
       end    
       item
-        Title.Caption = 'Auteur'
+        Title.Caption = 'Author'
         Width = 186
       end    
       item
@@ -47,7 +48,7 @@ object FormSources: TFormSources
       end    
       item
         ReadOnly = True
-        Title.Caption = 'Utilisation'
+        Title.Caption = 'Usage'
       end>
     ExtendedSelect = False
     MouseWheelOption = mwGrid

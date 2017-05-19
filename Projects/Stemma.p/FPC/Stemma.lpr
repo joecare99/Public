@@ -10,7 +10,7 @@ uses
   Interfaces, // this includes the LCL widgetset
   Forms, dbflaz, anchordockpkg, frm_Main, FMUtils, frm_ConnectDB,
   frm_Names, frm_Explorer,
-frm_parents, frm_History, frm_Children, frm_Siblings,
+frm_Parents, frm_History, frm_Children, frm_Siblings,
   frm_Events, 
 frm_Documents, frm_Ancesters, frm_Descendants, frm_EditDocuments, frm_ShowImage,
   frm_Images, frm_EditParents, frm_EditCitations,
@@ -18,7 +18,7 @@ frm_EditName, frm_EditEvents, frm_EditWitness,
   frm_Places, frm_Usage, frm_Sources, 
 frm_Repositories, frm_EditSource, frm_Types, frm_EditTypes,
   frm_About, frm_SelectPerson, dm_GenData, cls_Translation,uScaleDPI, 
-frm_SelectDialog;
+frm_SelectDialog, fra_Citations;
 
 {$R *.res}
 

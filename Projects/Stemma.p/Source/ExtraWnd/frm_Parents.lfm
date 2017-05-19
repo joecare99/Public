@@ -1,0 +1,133 @@
+object frmParents: TfrmParents
+  Left = 598
+  Height = 290
+  Top = 443
+  Width = 500
+  ActiveControl = tblParents
+  BorderIcons = []
+  Caption = 'Parents'
+  ClientHeight = 290
+  ClientWidth = 500
+  OnClose = FormClose
+  OnShow = FormShow
+  PopupMenu = PopupMenuParent
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object tblParents: TStringGrid
+    Left = 0
+    Height = 264
+    Top = 26
+    Width = 500
+    Align = alClient
+    ColCount = 6
+    Columns = <    
+      item
+        Title.Caption = '*'
+      end    
+      item
+        Title.Caption = 'Type'
+      end    
+      item
+        Title.Caption = 'Parent'
+      end    
+      item
+        Title.Caption = 'Q'
+      end    
+      item
+        Title.Caption = 'IdParent'
+        Visible = False
+      end>
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = PopupMenuParent
+    TabOrder = 0
+    OnDblClick = tblParentsDblClick
+    OnDrawCell = tblParentsDrawCell
+    OnResize = tblParentsResize
+    ColWidths = (
+      4
+      64
+      64
+      64
+      64
+      0
+    )
+  end
+  object tlbParents: TToolBar
+    Left = 0
+    Height = 26
+    Top = 0
+    Width = 500
+    Caption = 'tlbParents'
+    ShowCaptions = True
+    TabOrder = 1
+    object btnParentGoto: TToolButton
+      Left = 1
+      Top = 2
+      Action = actParentGoto
+    end
+    object ToolButton1: TToolButton
+      Left = 38
+      Height = 22
+      Top = 2
+      Width = 8
+      Caption = 'ToolButton1'
+      Style = tbsSeparator
+    end
+    object btnParentSetPrefered: TToolButton
+      Left = 46
+      Top = 2
+      Action = actParentSetPrefered
+    end
+  end
+  object PopupMenuParent: TPopupMenu
+    left = 377
+    top = 70
+    object mniParentGoto: TMenuItem
+      Action = actParentGoto
+    end
+    object mndDiv1: TMenuItem
+      Caption = '-'
+    end
+    object mniParentSetPrefered: TMenuItem
+      Action = actParentSetPrefered
+    end
+    object mndDiv2: TMenuItem
+      Caption = '-'
+    end
+    object mniAdd: TMenuItem
+      Caption = 'Add'
+      ShortCut = 115
+      OnClick = mniAddClick
+    end
+    object mniEdit: TMenuItem
+      Caption = 'Edit'
+      ShortCut = 116
+      OnClick = tblParentsDblClick
+    end
+    object mniDelete: TMenuItem
+      Caption = 'Delete'
+      ShortCut = 117
+      OnClick = mniDeleteClick
+    end
+  end
+  object ActionList1: TActionList
+    left = 344
+    top = 72
+    object actParentGoto: TAction
+      Category = 'Parent'
+      Caption = '&Go to'
+      OnExecute = actParentGotoExecute
+    end
+    object actParentSetPrefered: TAction
+      Category = 'Parent'
+      Caption = 'Set &Prefered'
+      OnExecute = actParentSetPreferedExecute
+    end
+    object actParentCopy: TAction
+      Category = 'Parent'
+      Caption = 'Copy &Parent'
+      OnExecute = CopyParent
+    end
+  end
+end
