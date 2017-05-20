@@ -3,6 +3,7 @@ object frmEditParents: TfrmEditParents
   Height = 506
   Top = 186
   Width = 625
+  ActiveControl = M
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de Relation'

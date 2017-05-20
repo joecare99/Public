@@ -76,11 +76,12 @@ type
     FEditMode: TenumEditRelation;
     function GetIdRelation: integer;
     procedure SetEditMode(AValue: TenumEditRelation);
+    procedure SetIdRelation(AValue: integer);
     { private declarations }
   public
     { public declarations }
     property EditMode:TenumEditRelation read FEditMode write SetEditMode;
-    property idRelation:integer read GetIdRelation;
+    property idRelation:integer read GetIdRelation write SetIdRelation;
   end;
 
 var
@@ -89,7 +90,7 @@ var
 implementation
 
 uses
-  frm_Parents, frm_Children, frm_Main, cls_Translation, dm_GenData, frm_Names;
+   frm_Main, cls_Translation, dm_GenData, frm_Names;
 
 { TfrmEditParents }
 
@@ -126,10 +127,7 @@ begin
      fraEdtCitations1.Clear;
 
      Y.ItemIndex:=0;
-     No.Text:='0';
-     dmGenData.Query2.SQL.Text:='SELECT N.N FROM N WHERE N.X=1 AND N.I='+frmStemmaMainForm.sID;
-     dmGenData.Query2.Open;
-     dmGenData.Query2.First;
+     No.Value:=0;
      X.Checked:=False;
      //dmGenData.GetCode(code,nocode);
      if FEditMode=eERT_appendChild then
@@ -137,18 +135,22 @@ begin
         ActiveControl:=idA;
         Caption:=Translation.Items[41];
         idB.Value:=frmStemmaMainForm.iID;
-        NomB.Text:=dmGenData.GetIndividuumName(frmStemmaMainForm.iID);
+        NomB.Text:=DecodeName(dmGenData.GetIndividuumName(frmStemmaMainForm.iID),1);
+        idB.ReadOnly :=true;
         idA.Value:=0;
         NomA.Text:='';
+        idA.ReadOnly :=false;
      end
      else
      begin
         ActiveControl:=idB;
         Caption:=Translation.Items[42];
         idA.Value:=frmStemmaMainForm.iID;
-        NomA.Text:=dmGenData.GetIndividuumName(frmStemmaMainForm.iID);
+        NomA.Text:=decodename(dmGenData.GetIndividuumName(frmStemmaMainForm.iID),1);
+        idA.ReadOnly :=true;
         idB.Value:=0;
         NomB.Text:='';
+        idB.ReadOnly :=false;
      end;
      M.Text:='';
      P.Text:='';
@@ -157,47 +159,35 @@ begin
   end
   else
      begin
+     idA.ReadOnly :=true;
+     idB.ReadOnly :=true;
      ActiveControl:=idA;
-     dmGenData.Query1.SQL.Clear;
-     if FEditMode=eERT_editParent then
-        dmGenData.Query1.SQL.Add('SELECT R.no, R.Y, R.B, R.M, R.X, R.SD, R.P, N.N, R.A FROM R JOIN N on R.B=N.I WHERE N.X=1 AND R.no='+
-                                   inttostr(frmParents.idRelation))
-     else
-       dmGenData.Query1.SQL.Add('SELECT R.no, R.Y, R.B, R.M, R.X, R.SD, R.P, N.N, R.A FROM R JOIN N on R.B=N.I WHERE N.X=1 AND R.no='+
-                                  inttostr(ptrint( frmChildren.TableauEnfants.Objects[0,frmChildren.TableauEnfants.Row])));
+     dmGenData.Query1.Close;
+     dmGenData.Query1.SQL.text:='SELECT R.Y, R.X, R.A, R.B, R.M, R.P, R.SD FROM R WHERE R.no=:idRelation';
+     dmGenData.Query1.ParamByName('idRelation').AsInteger:=idRelation;
      dmGenData.Query1.Open;
-     dmGenData.Query1.First;
-
-     Y.ItemIndex:=y.Items.IndexOfObject(TObject(ptrint(dmGenData.Query1.Fields[1].AsInteger)));
-     No.Value:=dmGenData.Query1.Fields[0].AsInteger;
-     X.Checked:=dmGenData.Query1.Fields[4].AsBoolean;
-     idA.Text:=dmGenData.Query1.Fields[8].AsString;
-     idB.Text:=dmGenData.Query1.Fields[2].AsString;
-     NomB.Text:=DecodeName(dmGenData.Query1.Fields[7].AsString,1);
-     dmGenData.Query2.SQL.Text:='SELECT N.N FROM N WHERE N.X=1 AND N.I='+idA.Text;
-     dmGenData.Query2.Open;
-     dmGenData.Query2.First;
-     NomA.Text:=DecodeName(dmGenData.Query2.Fields[0].AsString,1);
-     M.Text:=dmGenData.Query1.Fields[3].AsString;
-     P.Text:=dmGenData.Query1.Fields[6].AsString;
-     SD2.Text:=dmGenData.Query1.Fields[5].AsString;
-     SD.Text:=ConvertDate(dmGenData.Query1.Fields[5].AsString,1);
+     Y.ItemIndex:=y.Items.IndexOfObject(TObject(ptrint(dmGenData.Query1.Fields[0].AsInteger)));
+     X.Checked:=dmGenData.Query1.Fields[1].AsBoolean;
+     idA.Value:=dmGenData.Query1.Fields[2].AsInteger;
+     idB.Value:=dmGenData.Query1.Fields[3].AsInteger;
+     NomB.Text:=DecodeName(dmGenData.GetIndividuumName(idb.Value),1);
+     NomA.Text:=DecodeName(dmGenData.GetIndividuumName(ida.Value),1);
+     M.Text:=dmGenData.Query1.Fields[4].AsString;
+     P.Text:=dmGenData.Query1.Fields[5].AsString;
+     SD2.Text:=dmGenData.Query1.Fields[6].AsString;
+     SD.Text:=ConvertDate(dmGenData.Query1.Fields[6].AsString,1);
+     dmGenData.Query1.Close;
      // Populate le tableau de citations
      fraEdtCitations1.LinkID:=No.Value;
   end;
-  dmGenData.Query2.close;
-  dmGenData.Query2.SQL.Text:='SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.no=:idType';
-  dmGenData.Query2.ParamByName('idType').AsInteger:=ptrint(Y.Items.Objects[Y.ItemIndex]);
-  dmGenData.Query2.Open;
-  dmGenData.Query2.First;
-  P1.Text:=dmGenData.Query2.Fields[2].AsString;
+  P1.Text:=dmGenData.GetTypePhrase(ptrint(Y.Items.Objects[Y.ItemIndex]));
   if length(P.Text)=0 then
      begin
      P.Text:=P1.Text;
      Label6.Visible:=true;
   end;
   P2.Text:=DecodePhrase(idA.Value,'ENFANT',P.Text,'R',No.Value);
-  btnParentOK.Enabled:=((StrToInt(idA.Text)>0) and (StrToInt(idB.Text)>0));
+  btnParentOK.Enabled:=(idA.Value>0) and (idB.Value>0);
   fraEdtCitations1.Enabled:=btnParentOK.Enabled;
   MenuItem5.Enabled:=btnParentOK.Enabled;
 end;
@@ -358,10 +348,7 @@ end;
 
 procedure TfrmEditParents.idBEditingDone(Sender: TObject);
 begin
-  dmGenData.Query1.SQL.Text:='SELECT N.N FROM N WHERE N.X=1 AND N.I='+idB.Text;
-  dmGenData.Query1.Open;
-  dmGenData.Query1.First;
-  NomB.Text:=DecodeName(dmGenData.Query1.Fields[0].AsString,1);
+  NomB.Text:=DecodeName(dmGenData.GetIndividuumName(idB.Value),1);
   P2.Text:=DecodePhrase(idA.Value,'ENFANT',P.Text,'R',No.Value);
   dmGenData.Query1.SQL.Text:='SELECT I.S FROM I WHERE I.no='+idB.Text;
   dmGenData.Query1.Open;
@@ -371,7 +358,7 @@ begin
      if dmGenData.Query1.Fields[0].AsString='?' then
         btnParentOK.Enabled:=false
      else
-        btnParentOK.Enabled:=((StrToInt(idA.Text)>0) and (StrToInt(idB.Text)>0));
+        btnParentOK.Enabled:=(idA.Value>0) and (idB.Value>0);
   fraEdtCitations1.Enabled:=btnParentOK.Enabled;
   MenuItem5.Enabled:=btnParentOK.Enabled;
   frmStemmaMainForm.DataHist.InsertColRow(false,0);
@@ -381,10 +368,7 @@ end;
 
 procedure TfrmEditParents.idAEditingDone(Sender: TObject);
 begin
-  dmGenData.Query1.SQL.Text:='SELECT N.N FROM N WHERE N.X=1 AND N.I='+idA.Text;
-  dmGenData.Query1.Open;
-  dmGenData.Query1.First;
-  NomA.Text:=DecodeName(dmGenData.Query1.Fields[0].AsString,1);
+  NomA.Text:=DecodeName(dmGenData.GetIndividuumName(idA.Value),1);
   P2.Text:=DecodePhrase(idA.Value,'ENFANT',P.Text,'R',No.Value);
   btnParentOK.Enabled:=((StrToInt(idA.Text)>0) and (StrToInt(idB.Text)>0));
   fraEdtCitations1.Enabled:=btnParentOK.Enabled;
@@ -527,7 +511,7 @@ begin
      dmGenData.Query2.SQL.Text:='UPDATE I SET V=''N'' WHERE no='+idB.Text;
      dmGenData.Query2.ExecSQL;
      If (frmStemmaMainForm.actWinNameAndAttr.Checked) then
-               frmNames.PopulateNom(frmParents);
+       frmNames.PopulateNom(self);
   end;
 end;
 
@@ -639,6 +623,13 @@ procedure TfrmEditParents.SetEditMode(AValue: TenumEditRelation);
 begin
   if FEditMode=AValue then Exit;
   FEditMode:=AValue;
+end;
+
+procedure TfrmEditParents.SetIdRelation(AValue: integer);
+begin
+  if no.Value=AValue then Exit;
+  no.Value:=AValue;
+
 end;
 
 function TfrmEditParents.GetIdRelation: integer;

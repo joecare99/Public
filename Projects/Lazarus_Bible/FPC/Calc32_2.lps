@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="10"/>
     <BuildModes Active="Release"/>
-    <Units Count="9">
+    <Units Count="11">
       <Unit0>
         <Filename Value="Calc32_2.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -19,9 +19,9 @@
         <ComponentName Value="CalcForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <CursorPos X="40" Y="5"/>
+        <TopLine Value="461"/>
+        <CursorPos X="49" Y="38"/>
         <UsageCount Value="37"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -33,7 +33,7 @@
         <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="4"/>
         <CursorPos X="21" Y="13"/>
         <UsageCount Value="37"/>
         <Loaded Value="True"/>
@@ -91,8 +91,27 @@
         <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="..\source\DDECOLOR\Frm_CLIMAIN.PAS"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="21" Y="20"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\source\DingX\DingButtonXControl_TLB.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="154"/>
+        <CursorPos X="142" Y="169"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit10>
     </Units>
-    <JumpHistory Count="3" HistoryIndex="2">
+    <JumpHistory Count="6" HistoryIndex="5">
       <Position1>
         <Filename Value="Calc32_2.dpr"/>
       </Position1>
@@ -104,6 +123,16 @@
         <Filename Value="..\source\CALC32\Frm_CALC2.PAS"/>
         <Caret Line="24" Column="41"/>
       </Position3>
+      <Position4>
+        <Filename Value="..\source\DDECOLOR\Frm_CLIMAIN.PAS"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\DDECOLOR\Frm_CLIMAIN.PAS"/>
+        <Caret Line="21" Column="21" TopLine="21"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\DingX\DingButtonXControl_TLB.pas"/>
+      </Position6>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

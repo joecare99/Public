@@ -1,10 +1,10 @@
-object MainForm: TMainForm
+object frmAboutMain: TfrmAboutMain
   Left = 583
   Height = 127
   Top = 247
   Width = 272
   HorzScrollBar.Visible = False
-  ActiveControl = Button1
+  ActiveControl = btnClickMe
   Caption = 'About Box Example'
   ClientHeight = 127
   ClientWidth = 272
@@ -12,14 +12,15 @@ object MainForm: TMainForm
   Font.Color = clWindowText
   Font.Height = -13
   Font.Name = 'System'
-  LCLVersion = '1.4.0.3'
-  object Button1: TButton
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object btnClickMe: TButton
     Left = 48
     Height = 73
     Top = 24
     Width = 185
     Caption = 'Click Me!'
-    OnClick = Button1Click
+    OnClick = btnClickMeClick
     TabOrder = 0
   end
 end

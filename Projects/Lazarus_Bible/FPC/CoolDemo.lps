@@ -2,9 +2,9 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <BuildModes Active="Debug"/>
-    <Units Count="3">
+    <Units Count="5">
       <Unit0>
         <Filename Value="CoolDemo.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -19,10 +19,8 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="frm_CooldemoMain"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="62"/>
+        <TopLine Value="43"/>
         <CursorPos X="33" Y="88"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
@@ -39,8 +37,30 @@
         <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="20" Y="21"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\source\PageTab\Frm_PageTabMain.pas"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="8"/>
+        <CursorPos X="48" Y="13"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
     </Units>
-    <JumpHistory Count="6" HistoryIndex="5">
+    <JumpHistory Count="7" HistoryIndex="6">
       <Position1>
         <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
         <Caret Line="65" Column="89" TopLine="57"/>
@@ -65,6 +85,9 @@
         <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
         <Caret Line="87" TopLine="62"/>
       </Position6>
+      <Position7>
+        <Filename Value="..\source\PageTab\Frm_PageTabMain.pas"/>
+      </Position7>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

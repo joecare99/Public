@@ -2,20 +2,44 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <BuildModes Active="Default"/>
-    <Units Count="3">
+    <Units Count="10">
       <Unit0>
         <Filename Value="AboutEx.dpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="46" Y="6"/>
+        <CursorPos X="34" Y="12"/>
         <UsageCount Value="23"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\source\AboutEx\ABOUT.PAS"/>
+        <Filename Value="..\source\AboutEx\Frm_AboutExMAIN.PAS"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmAboutMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="30" Y="21"/>
+        <UsageCount Value="23"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\AboutEx\frm_About.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmAbout"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ABOUT"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="38" Y="22"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\source\AboutEx\ABOUT.PAS"/>
         <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
@@ -25,19 +49,98 @@
         <CursorPos Y="53"/>
         <UsageCount Value="20"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit1>
-      <Unit2>
-        <Filename Value="..\source\AboutEx\Frm_AboutExMAIN.PAS"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="MainForm"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\source\AboutEx\Frm_AboutExMAIN.lfm"/>
+        <EditorIndex Value="5"/>
+        <CursorPos X="43" Y="7"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\source\Animator\CmpAnimator.pas"/>
+        <UnitName Value="cmpAnimator"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="137"/>
+        <CursorPos X="3" Y="162"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\source\Barchart\Frm_BartestMain.pas"/>
+        <ComponentName Value="frmBarChartMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="36" Y="13"/>
-        <UsageCount Value="23"/>
+        <EditorIndex Value="6"/>
+        <CursorPos X="40" Y="16"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit2>
+      </Unit6>
+      <Unit7>
+        <Filename Value="BarTest2.lpr"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="3" Y="11"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\source\DDECOLOR\Frm_CLIMAIN.PAS"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="102" Y="20"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\source\DingX\DingButtonXControl_TLB.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="155"/>
+        <CursorPos X="24" Y="180"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit9>
     </Units>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory Count="9" HistoryIndex="8">
+      <Position1>
+        <Filename Value="AboutEx.dpr"/>
+        <Caret Line="9" Column="22"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\AboutEx\frm_About.PAS"/>
+        <Caret Line="18" Column="45" TopLine="15"/>
+      </Position2>
+      <Position3>
+        <Filename Value="AboutEx.dpr"/>
+        <Caret Line="29" Column="32"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\Animator\CmpAnimator.pas"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\Barchart\Frm_BartestMain.pas"/>
+      </Position5>
+      <Position6>
+        <Filename Value="BarTest2.lpr"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\Barchart\Frm_BartestMain.pas"/>
+        <Caret Line="16" Column="40"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\Animator\CmpAnimator.pas"/>
+        <Caret Line="162" Column="3" TopLine="137"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\Barchart\Frm_BartestMain.pas"/>
+        <Caret Line="16" Column="40"/>
+      </Position9>
+    </JumpHistory>
   </ProjectSession>
 </CONFIG>

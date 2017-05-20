@@ -11,7 +11,9 @@ uses
 {$ENDIF}
   Forms,
   Frm_PageTabMain in '..\Source\PageTab\Frm_PageTabMain.pas' {MainForm}; 
-{$E EXE} 
+{$IFNDEF FPC}
+{$E EXE}
+{$ENDIF}
 {$R *.res}
 begin 
   Application.Initialize; 

@@ -122,6 +122,12 @@ type
     procedure UpdateRelationSortdate(var lidInd: integer; var lDate: string);
     procedure PopulateParents(aSG: TStringGrid; idChild: longint); overload;
     procedure PopulateParents(aSG: TStringGrid; NStr: string); overload; deprecated 'use integer-variant';
+    procedure FillChildrenList(const LTable: TStringGrid;
+      const lidInd: integer; out principaux: integer);
+    procedure ResetRelationPrefered(const lidInd, lidIndRel: integer;
+      const lidRelation: Integer);
+    procedure SetRelationPrefered(const lidInd: LongInt;
+      const lidIndRel: integer; const lidRelation: Integer);
     procedure DeleteRelation(const lidRelation: PtrInt);
     procedure DeleteRelationFull(const lidInd: integer;
       const lidIndChild: integer; const lidRelation: integer);
@@ -1836,6 +1842,100 @@ var
 begin
   if TryStrToInt(NStr, no) then
     PopulateParents(aSG, no);
+end;
+
+procedure TdmGenData.FillChildrenList(const LTable: TStringGrid; const lidInd: integer;
+  out principaux: integer);
+var
+  lidParent: longint;
+  lName: string;
+  deces: string;
+  naissance: string;
+  row: integer;
+begin
+  dmGenData.Query1.Close;
+  dmGenData.Query1.SQL.Text :=
+    'SELECT R.no, R.X, R.Y, R.A FROM R WHERE R.B=:idInd ORDER BY R.X DESC, R.SD, R.Y';
+  dmGenData.Query1.ParamByName('idInd').AsInteger := lidInd;
+  dmGenData.Query1.Open;
+  dmGenData.Query1.First;
+  row := 1;
+  principaux := 0;
+  lTable.RowCount := dmGenData.Query1.RecordCount + 1;
+  while not dmGenData.Query1.EOF do
+  begin
+    lTable.Cells[0, row] := dmGenData.Query1.Fields[0].AsString;
+    lTable.Objects[0, row] := TObject(ptrint(dmGenData.Query1.Fields[0].AsInteger));
+
+    if dmGenData.Query1.Fields[1].AsBoolean then
+    begin
+      lTable.Cells[1, row] := '*';
+      principaux := principaux + 1;
+    end
+    else
+      lTable.Cells[1, row] := '';
+
+    lTable.Cells[2, row] := dmGenData.GetTypeName(dmGenData.Query1.Fields[2].AsInteger);
+    lTable.Objects[2, row] := TObject(ptrint(dmGenData.Query1.Fields[2].AsInteger));
+
+    lidParent := dmGenData.Query1.Fields[3].AsInteger;
+    dmGenData.GetIndBaseData(lidParent, lName, naissance, deces);
+
+    lTable.Cells[3, row] := format('%s (%s - %s)', [DecodeName(lName, 1), naissance, deces]);
+    lTable.Objects[3, row] := TObject(ptrint(lidParent));
+
+    lTable.Cells[4, row] := dmGenData.GetCitationBestQuality(
+      'R', ptrint(lTable.Objects[0, row]));
+    lTable.Cells[5, row] := dmGenData.Query1.Fields[3].AsString;
+
+    if dmGenData.CheckIndChildExists(lidParent) then
+      lTable.Cells[6, row] := '+'
+    else
+      lTable.Cells[6, row] := '';
+    dmGenData.Query1.Next;
+    row := row + 1;
+  end;
+end;
+
+procedure TdmGenData.SetRelationPrefered(const lidInd: LongInt; const lidIndRel: integer;
+  const lidRelation: Integer);
+var
+  s: string;
+begin
+  If dmGenData.IsValidIndividuum(lidIndRel) then
+     begin
+     S:=dmGenData.GetSexOfInd(lidIndRel);
+     dmGenData.Query1.Close;
+     dmGenData.Query1.SQL.Text:='SELECT R.no, R.B FROM R JOIN I ON R.B=I.no WHERE I.S=:Sex AND R.X=1 AND R.A=:idind';
+     dmGenData.Query1.ParamByName('idInd').AsInteger:= lidInd;
+     dmGenData.Query1.ParamByName('Sex').AsString:= S;
+     dmGenData.Query1.Open;
+     If not dmGenData.Query1.EOF then
+        begin
+        dmGenData.Query2.SQL.Text:='UPDATE R SET X=0 WHERE no=idRelation';
+        dmGenData.Query2.ParamByName('idRelation').AsInteger:= dmGenData.Query1.Fields[0].AsInteger;
+        dmGenData.Query2.ExecSQL;
+        dmGenData.SaveModificationTime(dmGenData.Query1.Fields[1].AsInteger);
+     end;
+  end;
+  dmGenData.Query1.Close;
+  dmGenData.Query1.SQL.Text:='UPDATE R SET X=1 WHERE no=:idRelation';
+  dmGenData.Query1.ParamByName('idRelation').AsInteger:= lidRelation;
+  dmGenData.Query1.ExecSQL;
+  // Modifie la date de modification
+  dmGenData.SaveModificationTime(lidIndRel);
+  dmGenData.SaveModificationTime(lidind);
+end;
+
+procedure TdmGenData.ResetRelationPrefered(const lidInd,lidIndRel: integer;
+  const lidRelation: Integer);
+begin
+  dmGenData.Query1.SQL.Text:='UPDATE R SET X=0 WHERE no=:idRelation';
+     dmGenData.Query1.ParamByName('idRelation').AsInteger:=lidRelation;
+     dmGenData.Query1.ExecSQL;
+     // Modifie la date de modification
+     dmGenData.SaveModificationTime(lidIndRel);
+     dmGenData.SaveModificationTime(lidInd);
 end;
 
 procedure TdmGenData.DeleteRelationFull(const lidInd: integer; const lidIndChild: integer;

@@ -15,9 +15,9 @@ object frmChildren: TfrmChildren
   LCLVersion = '1.6.4.0'
   Visible = False
   object TableauEnfants: TStringGrid
-    Left = 0
+    Left = 16
     Height = 240
-    Top = 0
+    Top = 16
     Width = 678
     ColCount = 7
     Columns = <    
@@ -80,6 +80,13 @@ object frmChildren: TfrmChildren
       Caption = 'Supprimer'
       ShortCut = 117
       OnClick = MenuItem5Click
+    end
+  end
+  object alsChildren: TActionList
+    left = 372
+    top = 33
+    object Action1: TAction
+      Caption = 'Action1'
     end
   end
 end

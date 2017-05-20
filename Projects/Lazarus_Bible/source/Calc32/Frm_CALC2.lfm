@@ -444,7 +444,6 @@ object CalcForm: TCalcForm
     Top = 248
     Width = 104
     Kind = bkClose
-    NumGlyphs = 2
     TabOrder = 0
   end
   object CalcMainMenu: TMainMenu

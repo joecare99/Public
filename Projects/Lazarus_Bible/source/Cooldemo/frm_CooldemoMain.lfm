@@ -3,6 +3,7 @@ object MainForm: TMainForm
   Height = 231
   Top = 245
   Width = 535
+  ActiveControl = BitBtn1
   Caption = 'CoolBar Demonstration'
   ClientHeight = 231
   ClientWidth = 535
@@ -32,6 +33,7 @@ object MainForm: TMainForm
         Width = 100
       end    
       item
+        Break = False
         Text = 'Date Selector'
         Width = 531
       end>

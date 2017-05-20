@@ -10,8 +10,8 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_AboutExMAIN in '..\source\ABOUTEX\frm_aboutexmain.pas',
-  About in '..\source\ABOUTEX\About.pas' {MainForm};
+  Frm_AboutExMAIN in '..\source\ABOUTEX\frm_AboutExMain.pas',
+  frm_about in '..\source\ABOUTEX\frm_About.pas';
 
 {$IFnDEF FPC}
 {$E EXE}
@@ -24,6 +24,7 @@ begin
   Application.Initialize;
   {$ENDIF}
   Application.Title := 'Demo: AboutEx';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmAboutMain, frmAboutMain);
+  Application.CreateForm(TfrmAbout, frmAbout);
   Application.Run;
 end.

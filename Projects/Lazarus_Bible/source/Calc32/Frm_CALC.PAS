@@ -8,13 +8,13 @@ interface
 
 uses
 {$IFnDEF FPC}
-  Mask, Windows,
+  Mask, Windows,System.Actions
 {$ELSE}
   LCLIntf, LCLType,
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls,
   Forms, Dialogs, Menus, StdCtrls, Buttons, ExtCtrls,
-  Clipbrd, ActnList, Frm_CalcABOUT, System.Actions;
+  Clipbrd, ActnList, Frm_CalcABOUT ;
 
 type
 

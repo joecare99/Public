@@ -1,57 +1,64 @@
 object MainForm: TMainForm
   Left = 192
+  Height = 247
   Top = 132
+  Width = 565
+  ActiveControl = PageControl1
   Caption = 'Page and Tab Controls'
   ClientHeight = 247
   ClientWidth = 565
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
-  Font.Style = []
-  PixelsPerInch = 96
+  LCLVersion = '1.6.4.0'
+  Visible = False
   object PageControl1: TPageControl
     Left = 40
+    Height = 145
     Top = 32
     Width = 217
-    Height = 145
-    ActivePage = TabSheet1
+    ActivePage = TabSheet3
+    TabIndex = 2
     TabOrder = 0
     object TabSheet1: TTabSheet
       Caption = 'TabSheet1'
+      ClientHeight = 119
+      ClientWidth = 209
       object CheckBox1: TCheckBox
         Left = 32
+        Height = 19
         Top = 24
-        Width = 97
-        Height = 17
+        Width = 75
         Caption = 'CheckBox1'
         TabOrder = 0
       end
       object CheckBox2: TCheckBox
         Left = 32
+        Height = 19
         Top = 48
-        Width = 97
-        Height = 17
+        Width = 75
         Caption = 'CheckBox2'
         TabOrder = 1
       end
       object CheckBox3: TCheckBox
         Left = 32
+        Height = 19
         Top = 72
-        Width = 97
-        Height = 17
+        Width = 75
         Caption = 'CheckBox3'
         TabOrder = 2
       end
     end
     object TabSheet2: TTabSheet
       Caption = 'TabSheet2'
+      ClientHeight = 119
+      ClientWidth = 209
       object RadioButton1: TRadioButton
         Left = 16
+        Height = 19
         Top = 24
-        Width = 113
-        Height = 17
+        Width = 85
         Caption = 'RadioButton1'
         Checked = True
         TabOrder = 0
@@ -59,98 +66,112 @@ object MainForm: TMainForm
       end
       object RadioButton2: TRadioButton
         Left = 16
+        Height = 19
         Top = 48
-        Width = 113
-        Height = 17
+        Width = 85
         Caption = 'RadioButton2'
         TabOrder = 1
       end
       object RadioButton3: TRadioButton
         Left = 16
+        Height = 19
         Top = 72
-        Width = 113
-        Height = 17
+        Width = 85
         Caption = 'RadioButton3'
         TabOrder = 2
       end
       object Button1: TButton
         Left = 120
+        Height = 25
         Top = 40
         Width = 75
-        Height = 25
         Caption = 'Next...'
-        TabOrder = 3
         OnClick = Button1Click
+        TabOrder = 3
       end
     end
     object TabSheet3: TTabSheet
       Caption = 'TabSheet3'
+      ClientHeight = 119
+      ClientWidth = 209
       object DateTimePicker1: TDateTimePicker
         Left = 8
-        Top = 16
-        Width = 186
         Height = 21
-        Date = 35860.4848896991
-        Time = 35860.4848896991
+        Top = 16
+        Width = 79
+        CenturyFrom = 1941
+        MaxDate = 2958465
+        MinDate = -53780
         TabOrder = 0
+        TrailingSeparator = False
+        LeadingZeros = True
+        Kind = dtkDate
+        TimeFormat = tf24
+        TimeDisplay = tdHMS
+        DateMode = dmComboBox
+        Date = 35860
+        Time = 0.484889699102496
+        UseDefaultSeparators = True
+        HideDateTimeParts = []
+        MonthNames = 'Long'
       end
       object Button2: TButton
         Left = 48
+        Height = 33
         Top = 64
         Width = 105
-        Height = 33
         Caption = 'Go to first page'
-        TabOrder = 1
         OnClick = Button2Click
+        TabOrder = 1
       end
     end
   end
   object TabControl1: TTabControl
     Left = 272
+    Height = 145
     Top = 32
     Width = 241
-    Height = 145
     HotTrack = True
-    TabOrder = 1
+    OnChange = TabControl1Change
+    TabIndex = 0
     Tabs.Strings = (
       'Tab 1'
       'Tab 2'
       'Tab 3'
       'Tab 4'
     )
-    TabIndex = 0
-    OnChange = TabControl1Change
+    TabOrder = 1
     object Edit1: TEdit
       Left = 16
+      Height = 21
       Top = 40
       Width = 209
-      Height = 21
       TabOrder = 0
       Text = 'Edit1 Tab 1'
     end
     object Edit2: TEdit
       Left = 16
+      Height = 21
       Top = 72
       Width = 209
-      Height = 21
       TabOrder = 1
       Text = 'Edit2 Tab 1'
     end
     object Edit3: TEdit
       Left = 16
+      Height = 21
       Top = 104
       Width = 209
-      Height = 21
       TabOrder = 2
       Text = 'Edit3 Tab 1'
     end
   end
   object BitBtn1: TBitBtn
     Left = 464
+    Height = 25
     Top = 200
     Width = 75
-    Height = 25
-    TabOrder = 2
     Kind = bkClose
+    TabOrder = 2
   end
-end
+end
