@@ -1,0 +1,15 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tform1.caption
+msgid "Test Component-Stream"
+msgstr ""
+
+#: tform1.speedbutton1.caption
+msgid ">"
+msgstr ""
+
+#: tform1.speedbutton2.caption
+msgid "<"
+msgstr ""
+

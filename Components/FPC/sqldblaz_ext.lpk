@@ -8,6 +8,7 @@
       <Version Value="11"/>
       <SearchPaths>
         <IncludeFiles Value="../Source/MySQLLib6"/>
+        <Libraries Value="$(PkgOutDir)"/>
         <OtherUnitFiles Value="../Source/MySQLLib6"/>
         <UnitOutputDirectory Value="../../bin/lib/$NameOnly($(PkgName))/$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
@@ -24,7 +25,7 @@
 "/>
     <License Value="Modified LGPL-2
 
-With the exception of the unit registersqldb, which is GPL-2. This unit contains code for the IDE and is usually not used by programs."/>
+With the exception of the unit registersqldb, which is GPL-2. "/>
     <Version Minor="8"/>
     <Files Count="7">
       <Item1>

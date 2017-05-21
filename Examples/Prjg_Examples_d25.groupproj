@@ -1,0 +1,108 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <ProjectGuid>{8CD4608B-7BE9-4318-B053-CB456B2EC54D}</ProjectGuid>
+    </PropertyGroup>
+    <ItemGroup>
+        <Projects Include="D25\prj_TestStringList.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\prj_TestSingletonObj.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\prj_ShapedControls.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\prj_CountSurround.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\prj_CopyString.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\prj_MemoEmptyLine.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Prj_Homework.dproj">
+            <Dependencies/>
+        </Projects>
+    </ItemGroup>
+    <ProjectExtensions>
+        <Borland.Personality>Default.Personality.12</Borland.Personality>
+        <Borland.ProjectType/>
+        <BorlandProject>
+            <Default.Personality/>
+        </BorlandProject>
+    </ProjectExtensions>
+    <Target Name="prj_TestStringList">
+        <MSBuild Projects="D25\prj_TestStringList.dproj"/>
+    </Target>
+    <Target Name="prj_TestStringList:Clean">
+        <MSBuild Projects="D25\prj_TestStringList.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="prj_TestStringList:Make">
+        <MSBuild Projects="D25\prj_TestStringList.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="prj_TestSingletonObj">
+        <MSBuild Projects="D25\prj_TestSingletonObj.dproj"/>
+    </Target>
+    <Target Name="prj_TestSingletonObj:Clean">
+        <MSBuild Projects="D25\prj_TestSingletonObj.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="prj_TestSingletonObj:Make">
+        <MSBuild Projects="D25\prj_TestSingletonObj.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="prj_ShapedControls">
+        <MSBuild Projects="D25\prj_ShapedControls.dproj"/>
+    </Target>
+    <Target Name="prj_ShapedControls:Clean">
+        <MSBuild Projects="D25\prj_ShapedControls.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="prj_ShapedControls:Make">
+        <MSBuild Projects="D25\prj_ShapedControls.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="prj_CountSurround">
+        <MSBuild Projects="D25\prj_CountSurround.dproj"/>
+    </Target>
+    <Target Name="prj_CountSurround:Clean">
+        <MSBuild Projects="D25\prj_CountSurround.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="prj_CountSurround:Make">
+        <MSBuild Projects="D25\prj_CountSurround.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="prj_CopyString">
+        <MSBuild Projects="D25\prj_CopyString.dproj"/>
+    </Target>
+    <Target Name="prj_CopyString:Clean">
+        <MSBuild Projects="D25\prj_CopyString.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="prj_CopyString:Make">
+        <MSBuild Projects="D25\prj_CopyString.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="prj_MemoEmptyLine">
+        <MSBuild Projects="D25\prj_MemoEmptyLine.dproj"/>
+    </Target>
+    <Target Name="prj_MemoEmptyLine:Clean">
+        <MSBuild Projects="D25\prj_MemoEmptyLine.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="prj_MemoEmptyLine:Make">
+        <MSBuild Projects="D25\prj_MemoEmptyLine.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Prj_Homework">
+        <MSBuild Projects="D25\Prj_Homework.dproj"/>
+    </Target>
+    <Target Name="Prj_Homework:Clean">
+        <MSBuild Projects="D25\Prj_Homework.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Prj_Homework:Make">
+        <MSBuild Projects="D25\Prj_Homework.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Build">
+        <CallTarget Targets="prj_TestStringList;prj_TestSingletonObj;prj_ShapedControls;prj_CountSurround;prj_CopyString;prj_MemoEmptyLine;Prj_Homework"/>
+    </Target>
+    <Target Name="Clean">
+        <CallTarget Targets="prj_TestStringList:Clean;prj_TestSingletonObj:Clean;prj_ShapedControls:Clean;prj_CountSurround:Clean;prj_CopyString:Clean;prj_MemoEmptyLine:Clean;Prj_Homework:Clean"/>
+    </Target>
+    <Target Name="Make">
+        <CallTarget Targets="prj_TestStringList:Make;prj_TestSingletonObj:Make;prj_ShapedControls:Make;prj_CountSurround:Make;prj_CopyString:Make;prj_MemoEmptyLine:Make;Prj_Homework:Make"/>
+    </Target>
+    <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
+</Project>

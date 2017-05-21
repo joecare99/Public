@@ -37,7 +37,11 @@ Type
   TSuccess = Function(Perc: real; Afile: String): boolean Of Object;
 
 {$ifndef SUPPORTS_GENERICS}
+{$if declared(TStringArray)}
+  TStringArray = SysUtils.TStringArray;
+  {$ELSE}
   TStringArray = array of string;
+  {$ENDIF}
 {$endif ~SUPPORTS_GENERICS}
 
   ///<author>Joe Care</author>

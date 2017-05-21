@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -25,7 +25,7 @@
       <MinorVersionNr Value="1"/>
       <BuildNr Value="8"/>
       <Language Value="0407"/>
-      <StringTable CompanyName="JC-Soft" ProductVersion=""/>
+      <StringTable CompanyName="JC-Soft"/>
     </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
@@ -59,8 +59,9 @@
         <IsPartOfProject Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\Source\Unt_Config.pas"/>
+        <Filename Value="..\Source\AboutBox\frm_Aboutbox.pas"/>
         <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
       </Unit2>
     </Units>
   </ProjectOptions>
@@ -72,7 +73,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-      <OtherUnitFiles Value="..\Test;..;..\Source"/>
+      <OtherUnitFiles Value="..\Test;..;..\Source\AboutBox"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Parsing>

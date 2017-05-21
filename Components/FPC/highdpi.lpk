@@ -9,6 +9,7 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
+        <Libraries Value="$(PkgOutDir)"/>
         <OtherUnitFiles Value="..\Source\HighDPI"/>
         <UnitOutputDirectory Value="..\..\bin\lib\$NameOnly($(PkgName))\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>

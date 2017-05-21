@@ -4,17 +4,12 @@
 
 unit DBHLLookUpPanel;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  Cmp_DBHLLookUpPanel, LazarusPackageIntf;
+  Cmp_DBHLLookUpPanel;
 
 implementation
 
-procedure Register;
-begin
-end;
-
-initialization
-  RegisterPackage('DBHLLookUpPanel', @Register);
 end.

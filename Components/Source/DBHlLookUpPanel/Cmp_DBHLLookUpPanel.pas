@@ -38,7 +38,7 @@ type
     procedure SetRefField(const Value: string);
     procedure SetDataSource(Value: TDataSource);
     {$IFDEF FPC}
-    procedure CMGetDataLink(var Message: TMessage); message CM_GETDATALINK;
+    procedure CMGetDataLink(var Message: TLMessage); message CM_GETDATALINK;
     {$ELSE}
     procedure CMGetDataLink(var Message: TMessage); message CM_GETDATALINK;
     {$ENDIF}
@@ -203,7 +203,11 @@ begin
   result:=color;
 end;
 
+{$IFDEF FPC}
+procedure TDBHLLookUpPanel.CMGetDataLink(var Message: TLMessage);
+{$ELSE}
 procedure TDBHLLookUpPanel.CMGetDataLink(var Message: TMessage);
+{$ENDIF}
 begin
   Message.Result := Integer(FDataLink1);
 end;

@@ -10,7 +10,7 @@
       <SearchPaths>
         <IncludeFiles Value="..\..\include"/>
         <Libraries Value="$(PkgOutDir)"/>
-        <OtherUnitFiles Value=".;..\Source"/>
+        <OtherUnitFiles Value="..\Source"/>
         <UnitOutputDirectory Value="..\..\bin\lib\$NameOnly($(PkgName))\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>

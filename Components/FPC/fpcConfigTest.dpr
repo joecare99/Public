@@ -27,8 +27,7 @@ uses
 {$ENDIF}
   Forms,
   GUITestRunner,
-  TestUnt_Config in '..\TestUnt_Config.pas',
-  Unt_Config in '..\source\Unt_Config.pas';
+  TestUnt_Config in '..\TestUnt_Config.pas';
 
 {$R *.res}
 

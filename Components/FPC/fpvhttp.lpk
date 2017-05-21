@@ -2,6 +2,7 @@
 <CONFIG>
   <Package Version="4">
     <Name Value="fpvhttp"/>
+    <Type Value="RunAndDesignTime"/>
     <AddToProjectUsesSection Value="True"/>
     <Author Value="Joe Care"/>
     <CompilerOptions>
@@ -17,9 +18,6 @@
           <UseAnsiStrings Value="False"/>
         </SyntaxOptions>
       </Parsing>
-      <Other>
-        <CompilerPath Value="$(CompPath)"/>
-      </Other>
     </CompilerOptions>
     <Description Value="Visual representation of fpHttp*-Compomnents of FCL-web"/>
     <Version Minor="2"/>
@@ -34,7 +32,7 @@
         <UnitName Value="visualhttpclient"/>
       </Item2>
     </Files>
-    <Type Value="RunAndDesignTime"/>
+    <LazDoc Paths="../FPDoc"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="LCL"/>

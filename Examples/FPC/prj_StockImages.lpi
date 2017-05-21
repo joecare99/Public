@@ -1,0 +1,172 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="9"/>
+    <PathDelim Value="\"/>
+    <General>
+      <MainUnit Value="0"/>
+      <Title Value="prj_StockImages"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <Icon Value="0"/>
+      <ActiveWindowIndexAtStart Value="1"/>
+    </General>
+    <VersionInfo>
+      <Language Value=""/>
+      <CharSet Value=""/>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="1">
+      <Item1 Name="default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+      <IncludeFileFilter Value="*.(pas|pp|inc|lfm|lpr|lrs|lpi|lpk|sh|xml)"/>
+      <ExcludeFileFilter Value="*.(bak|ppu|ppw|o|so);*~;backup"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+        <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+    </RequiredPackages>
+    <Units Count="10">
+      <Unit0>
+        <Filename Value="prj_StockImages.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="project1"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="1"/>
+        <CursorPos Y="13"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\trunk\stock_images\frm_stockimagetest.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Frm_StockImageTestMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_StockImageTest"/>
+        <IsVisibleTab Value="True"/>
+        <WindowIndex Value="1"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\lcl\lcltype.pp"/>
+        <UnitName Value="LCLType"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="1585"/>
+        <CursorPos X="15" Y="1604"/>
+        <UsageCount Value="11"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\lcl\interfaces\gtk2\gtk2themes.pas"/>
+        <UnitName Value="Gtk2Themes"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="151"/>
+        <CursorPos X="39" Y="166"/>
+        <UsageCount Value="11"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\lcl\interfaces\win32\win32themes.pas"/>
+        <UnitName Value="Win32Themes"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="153"/>
+        <CursorPos X="37" Y="176"/>
+        <UsageCount Value="11"/>
+        <Bookmarks Count="1">
+          <Item0 X="15" Y="163" ID="1"/>
+        </Bookmarks>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\lcl\interfaces\win32\win32extra.pas"/>
+        <UnitName Value="Win32Extra"/>
+        <IsVisibleTab Value="True"/>
+        <UsageCount Value="11"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\fpc\rtl\win\wininc\func.inc"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="42"/>
+        <CursorPos X="10" Y="61"/>
+        <UsageCount Value="11"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\lcl\interfaces\qt\qtthemes.pas"/>
+        <UnitName Value="QtThemes"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="338"/>
+        <CursorPos X="55" Y="359"/>
+        <UsageCount Value="11"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\lcl\interfaces\qt\qt45.pas"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="10480"/>
+        <CursorPos X="5" Y="10499"/>
+        <UsageCount Value="11"/>
+        <Bookmarks Count="1">
+          <Item0 X="35" Y="10466" ID="2"/>
+        </Bookmarks>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\lcl\interfaces\qt\qtwinapi.inc"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="4865"/>
+        <CursorPos X="70" Y="4875"/>
+        <UsageCount Value="11"/>
+      </Unit9>
+    </Units>
+    <JumpHistory HistoryIndex="-1"/>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
+      <OtherUnitFiles Value="..\Source;..\trunk\stock_images"/>
+      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <AllowLabel Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <LinkSmart Value="True"/>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

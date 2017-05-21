@@ -8,7 +8,8 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <IncludeFiles Value="..;..\..\include"/>
+        <IncludeFiles Value="..\..\include"/>
+        <Libraries Value="$(PkgOutDir)"/>
         <OtherUnitFiles Value="..\Source\DBHlPanel"/>
         <UnitOutputDirectory Value="..\..\bin\lib\$NameOnly($(PkgName))\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>

@@ -3,15 +3,15 @@
   <Package Version="4">
     <PathDelim Value="\"/>
     <Name Value="DBHLLookUpPanel"/>
-    <Type Value="RunAndDesignTime"/>
     <Author Value="Joe Care"/>
     <CompilerOptions>
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <IncludeFiles Value="C:\projekte\Delphi\Components\Source\DBHlLookUpPanel\"/>
-        <OtherUnitFiles Value="C:\projekte\Delphi\Components\Source\DBHlLookUpPanel\"/>
-        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)\"/>
+        <IncludeFiles Value="..\Source\DBHlLookUpPanel"/>
+        <Libraries Value="$(PkgOutDir)"/>
+        <OtherUnitFiles Value="..\Source\DBHlLookUpPanel"/>
+        <UnitOutputDirectory Value="..\..\bin\lib\$NameOnly($(PkgName))\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>

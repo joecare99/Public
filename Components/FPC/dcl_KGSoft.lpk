@@ -10,7 +10,6 @@
       <SearchPaths>
         <IncludeFiles Value="..\..\include"/>
         <Libraries Value="$(PkgOutDir)"/>
-        <OtherUnitFiles Value="..\Source"/>
         <UnitOutputDirectory Value="..\..\bin\lib\$NameOnly($(PkgName))\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -32,6 +31,7 @@
         <UnitName Value="Unt_DCL"/>
       </Item1>
     </Files>
+    <LazDoc Paths="../FPDoc"/>
     <RequiredPkgs Count="8">
       <Item1>
         <PackageName Value="BaseUnits"/>

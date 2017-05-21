@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Prj_Homework"><module name="Prj_Homework"><short>A Program by Thaddy as an example for a homework</short><element name="proc1"><short>The procedure proc1 makes a beep (normaly a sound)</short>
+      </element><element name="proc2" link="#prj_homework.proc1"><short>Procedure proc2 calls proc1 </short>
+      </element><element name="func1"><short>The function func1 results a random boolean with both a 50% chance of true or false</short>
+      </element><element name="func2.Result"><short>the function func2 </short>
+      </element><element name="func2"><short>The function func2 always returns a true-value</short>
+      </element><element name="f"><short>The char-variable f is needed to iterate through the string e and for display on each step</short>
+      </element><element name="a"><short>the variable a get assigned the value of function func1 and later compared to variable b</short>
+      </element><element name="b"><short>First variable b will be assigned the value of function func1, and later b will be used to iterate from false to true</short>
+      </element><element name="c"><short>the integer-variable c with the default-value of 100 is compared to the rounded value of d</short>
+      </element><element name="d"><short>the float-variable d with single accuracy and the default value of 100.1 is rounded and then compared to the variable c</short>
+      </element><element name="e"><short>the string-variable e with the default value of 'Finished homework' is used in the end of the program to be iterated trough by f</short>
+      </element><descr><p>First the program initialises the random function.</p><p>then the program compares the rounded value of <b>d </b> to the value of <b>c</b>.&lt;br/&gt;
+-&gt; this comparison always results in true, so the inner block is executed.
+  </p><p>in the inner block </p><p><b>b</b> gets assinged the value of function <b>func1</b> &lt;br/&gt;
+-&gt; that will be a boolean with a 50% chance of each true or false.</p><p>then <b>b</b> will be compared to the result of function <b>func2</b>&lt;br/&gt;
+-&gt; function <b>func2</b> always returns true, so you have a 50% chance for executing the then or else-path of the program.</p><p>in the (true) then-path the case-command get executed which takes the value of <b>b</b> and...</p><p>in case of a true-value it executes <b>proc1</b> and
+&lt;br/&gt;
+in case of a false-value it executes <b>proc2</b>. 
+&lt;br/&gt;
+since you only get here when <b>b</b> equals <b>func2 </b>(=true) the false branch never gets executed.&lt;br/&gt;
+by callin <b>proc1 </b>the program beeps.  </p><p>in the else-branch of the comparison of <b>b</b> to the value of <b>func2</b>, &lt;br/&gt;
+    <b>b</b> is now used to iterate from false to true.
+  </p>
+For every iteration :
+  <p>2) middle block
+  </p><p><b>b</b> is then compared to the result of <b>func1</b>, which is a new boolean with 50%chance of each true or false. &lt;br/&gt;
+  if the comparison succeds the most inner block is executed otherwise the iteration is continued.</p><p>3) most inner block&lt;br/&gt;
+   <b>a</b> is assigned a result of function <b>func1</b> (random value above-mentioned ).&lt;br/&gt;
+    This value is compared to the value of <b>b</b>. &lt;br/&gt;
+    This inner block is repeated until the value <b>a</b> equals the value of <b>b</b>
+        </p><p>Then the middle block is repeated.</p>
+After the iteration the else-branch is finished.&lt;br/&gt;
+<p>In the next command, char-variable <b>f</b> will be used to iterate through the string-variable <b>e</b>.&lt;br/&gt;
+So for every character of the String 'Finished homework' the write-command is called with that character.&lt;br/&gt;
+Meaning the string is printed to the Screen letter by letter.</p><p>At least with <b>readln</b> the program request the user to enter something, followed by a &lt;&lt;return&gt;&gt;.
+  </p><p>Then the program terminates.</p>
+      </descr>
+    </module>
+  </package>
+</fpdoc-descriptions>

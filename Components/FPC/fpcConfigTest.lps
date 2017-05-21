@@ -2,34 +2,32 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <BuildModes Active="Default"/>
-    <Units Count="4">
+    <Units Count="6">
       <Unit0>
         <Filename Value="fpcConfigTest.dpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <CursorPos X="52" Y="24"/>
-        <UsageCount Value="20"/>
+        <CursorPos X="35" Y="30"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\Test\TestUnt_Config.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="55"/>
-        <CursorPos X="33" Y="91"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="2"/>
+        <CursorPos X="45" Y="20"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\Source\Unt_Config.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\Unt_Config.pas"/>
@@ -38,7 +36,52 @@
         <CursorPos X="11" Y="333"/>
         <UsageCount Value="20"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="..\Test\Frm_test.pas"/>
+        <HasResources Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="14"/>
+        <CursorPos X="64" Y="14"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\Source\AboutBox\frm_Aboutbox.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit5>
     </Units>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory Count="6" HistoryIndex="5">
+      <Position1>
+        <Filename Value="fpcConfigTest.dpr"/>
+        <Caret Line="30" Column="35"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\Test\TestUnt_Config.pas"/>
+        <Caret Line="20" Column="45" TopLine="2"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\Test\Frm_test.pas"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\Test\Frm_test.pas"/>
+        <Caret Line="14" Column="64" TopLine="14"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\Test\Frm_test.pas"/>
+        <Caret Line="23" Column="60" TopLine="16"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\Test\Frm_test.pas"/>
+        <Caret Line="14" Column="64" TopLine="14"/>
+      </Position6>
+    </JumpHistory>
   </ProjectSession>
 </CONFIG>
