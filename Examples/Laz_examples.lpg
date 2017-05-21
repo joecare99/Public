@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="11">
+    <Targets Count="16">
       <Target0 FileName="FPC\addrbook.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="default" Compile="True"/>
@@ -57,6 +57,26 @@
         <BuildModes Count="1"/>
         <Mode1 Name="default"/>
       </Target10>
+      <Target11 FileName="FPC\ComDialogs.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target11>
+      <Target12 FileName="FPC\EditTest.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target12>
+      <Target13 FileName="FPC\GroupBox.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target13>
+      <Target14 FileName="FPC\GroupBoxNested.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target14>
+      <Target15 FileName="FPC\HelloWrld.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target15>
     </Targets>
   </ProjectGroup>
 </CONFIG>
