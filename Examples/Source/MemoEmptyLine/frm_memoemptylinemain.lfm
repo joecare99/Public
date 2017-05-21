@@ -1,0 +1,157 @@
+object Form1: TForm1
+  Left = 207
+  Height = 242
+  Top = 361
+  Width = 594
+  Caption = 'Form1'
+  ClientHeight = 242
+  ClientWidth = 594
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '1.4.0.4'
+  object Memo1: TMemo
+    Left = 0
+    Height = 176
+    Top = 0
+    Width = 320
+    Lines.Strings = (
+      'This is a default Text in Memo1'
+    )
+    OnChange = Memo1Change
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+  end
+  object btnClearMemo: TButton
+    Left = 8
+    Height = 25
+    Top = 184
+    Width = 75
+    Caption = 'Clear'
+    OnClick = btnClearMemoClick
+    TabOrder = 1
+  end
+  object btnMemoAdd: TButton
+    Left = 92
+    Height = 25
+    Top = 184
+    Width = 75
+    Caption = 'Add'
+    OnClick = btnMemoAddClick
+    TabOrder = 2
+  end
+  object btnSetText: TButton
+    Left = 176
+    Height = 25
+    Top = 184
+    Width = 75
+    Caption = 'set Text'
+    OnClick = btnSetTextClick
+    TabOrder = 3
+  end
+  object btnAddText: TButton
+    Left = 256
+    Height = 25
+    Top = 184
+    Width = 75
+    Caption = 'AddText'
+    OnClick = btnAddTextClick
+    TabOrder = 4
+  end
+  object btnInsertText: TButton
+    Left = 336
+    Height = 25
+    Top = 184
+    Width = 75
+    Caption = 'Insert'
+    OnClick = btnInsertTextClick
+    TabOrder = 5
+  end
+  object lblShowText: TLabel
+    Left = 325
+    Height = 13
+    Top = 8
+    Width = 66
+    Caption = 'lblShowText'
+    ParentColor = False
+  end
+  object btnTrimText: TButton
+    Left = 416
+    Height = 25
+    Top = 184
+    Width = 75
+    Caption = 'Trim !!'
+    OnClick = btnTrimTextClick
+    TabOrder = 6
+  end
+  object lblLineCount: TLabel
+    Left = 331
+    Height = 13
+    Top = 167
+    Width = 69
+    Caption = 'lblLineCount'
+    ParentColor = False
+  end
+  object btnClearTS: TButton
+    Left = 8
+    Height = 25
+    Top = 212
+    Width = 75
+    Caption = 'Clear'
+    OnClick = btnClearTSClick
+    TabOrder = 7
+  end
+  object btnTSAdd: TButton
+    Left = 92
+    Height = 25
+    Top = 212
+    Width = 75
+    Caption = 'Add'
+    OnClick = btnTSAddClick
+    TabOrder = 8
+  end
+  object btnSetTextTS: TButton
+    Left = 176
+    Height = 25
+    Top = 212
+    Width = 75
+    Caption = 'set Text'
+    OnClick = btnSetTextTSClick
+    TabOrder = 9
+  end
+  object btnAddTextTS: TButton
+    Left = 256
+    Height = 25
+    Top = 212
+    Width = 75
+    Caption = 'AddText'
+    OnClick = btnAddTextTSClick
+    TabOrder = 10
+  end
+  object btnInsertTextTS: TButton
+    Left = 336
+    Height = 25
+    Top = 212
+    Width = 75
+    Caption = 'Insert'
+    OnClick = btnInsertTextTSClick
+    TabOrder = 11
+  end
+  object btnTrimTextTS: TButton
+    Left = 416
+    Height = 25
+    Top = 212
+    Width = 75
+    Caption = 'Trim !!'
+    OnClick = btnTrimTextTSClick
+    TabOrder = 12
+  end
+  object btnUpdate: TButton
+    Left = 519
+    Height = 25
+    Top = 184
+    Width = 75
+    Caption = 'btnUpdate'
+    OnClick = Memo1Change
+    TabOrder = 13
+  end
+end

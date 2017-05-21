@@ -1,0 +1,112 @@
+object frmAES: TfrmAES
+  Left = 350
+  Height = 461
+  Top = 206
+  Width = 629
+  ActiveControl = memKey
+  Caption = 'AES Verschlüsselung'
+  ClientHeight = 461
+  ClientWidth = 629
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object Label1: TLabel
+    Left = 16
+    Height = 13
+    Top = 8
+    Width = 43
+    Caption = 'Schlüssel'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 16
+    Height = 13
+    Top = 95
+    Width = 22
+    Caption = 'Text'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 16
+    Height = 13
+    Top = 209
+    Width = 62
+    Caption = 'Verschlüsselt'
+    ParentColor = False
+  end
+  object Label4: TLabel
+    Left = 16
+    Height = 13
+    Top = 323
+    Width = 62
+    Caption = 'Entschlüsselt'
+    ParentColor = False
+  end
+  object memKey: TMemo
+    Left = 16
+    Height = 62
+    Top = 27
+    Width = 473
+    Lines.Strings = (
+      '000102030405060708090a0b0c0d0e0f'
+    )
+    ScrollBars = ssBoth
+    TabOrder = 0
+  end
+  object memText: TMemo
+    Left = 16
+    Height = 89
+    Top = 114
+    Width = 473
+    Lines.Strings = (
+      '00112233445566778899aabbccddeeff'
+    )
+    ScrollBars = ssBoth
+    TabOrder = 1
+  end
+  object memEncrypt: TMemo
+    Left = 16
+    Height = 89
+    Top = 228
+    Width = 473
+    ScrollBars = ssBoth
+    TabOrder = 2
+  end
+  object memDecrypt: TMemo
+    Left = 16
+    Height = 89
+    Top = 342
+    Width = 473
+    ScrollBars = ssBoth
+    TabOrder = 3
+  end
+  object cmdStart: TButton
+    Left = 504
+    Height = 25
+    Top = 25
+    Width = 75
+    Caption = 'Starten'
+    OnClick = cmdStartClick
+    TabOrder = 4
+  end
+  object cmdEncrypt: TButton
+    Left = 504
+    Height = 25
+    Top = 64
+    Width = 105
+    Caption = 'Datei verschlüsseln'
+    OnClick = cmdEncryptClick
+    TabOrder = 5
+  end
+  object oOpen: TOpenDialog
+    left = 520
+    top = 120
+  end
+  object oSave: TSaveDialog
+    left = 520
+    top = 168
+  end
+end

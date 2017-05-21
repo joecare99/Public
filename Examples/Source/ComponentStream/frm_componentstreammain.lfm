@@ -1,0 +1,38 @@
+object Form1: TForm1
+  Left = 329
+  Height = 433
+  Top = 344
+  Width = 689
+  Caption = 'Test Component-Stream'
+  ClientHeight = 433
+  ClientWidth = 689
+  OnCreate = FormCreate
+  LCLVersion = '1.4.0.4'
+  object Memo1: TMemo
+    Left = 448
+    Height = 416
+    Top = 8
+    Width = 232
+    Lines.Strings = (
+      'Memo1'
+    )
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+  end
+  object SpeedButton1: TSpeedButton
+    Left = 416
+    Height = 22
+    Top = 8
+    Width = 23
+    Caption = '>'
+    OnClick = SpeedButton1Click
+  end
+  object SpeedButton2: TSpeedButton
+    Left = 416
+    Height = 22
+    Top = 32
+    Width = 23
+    Caption = '<'
+    OnClick = SpeedButton2Click
+  end
+end

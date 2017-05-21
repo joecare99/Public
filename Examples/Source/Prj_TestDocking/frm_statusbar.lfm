@@ -1,0 +1,27 @@
+object frmStatusbar: TfrmStatusbar
+  Left = 375
+  Height = 23
+  Top = 387
+  Width = 831
+  Align = alBottom
+  Caption = 'frmStatusbar'
+  ClientHeight = 23
+  ClientWidth = 831
+  OnCreate = FormCreate
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 0
+    Width = 831
+    Panels = <    
+      item
+        Width = 50
+      end    
+      item
+        Width = 200
+      end>
+    SimplePanel = False
+  end
+end

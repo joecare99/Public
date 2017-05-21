@@ -1,0 +1,46 @@
+object Form1: TForm1
+  Left = 0
+  Height = 240
+  Top = 0
+  Width = 320
+  ActiveControl = Button1
+  Caption = 'Form1'
+  ClientHeight = 240
+  ClientWidth = 320
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object Button1: TButton
+    Left = 12
+    Height = 46
+    Top = 10
+    Width = 100
+    Caption = 'Button1'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  inline Frame1_1: TfraCloseButtons
+    Height = 136
+    Top = 104
+    Align = alBottom
+    ClientHeight = 136
+    TabOrder = 1
+    inherited BitBtn1: TBitBtn
+      Top = 8
+    end
+    inherited BitBtn2: TBitBtn
+      Top = 8
+    end
+    inherited StatusBar1: TStatusBar
+      Top = 113
+    end
+  end
+  object Button2: TButton
+    Left = 12
+    Height = 48
+    Top = 56
+    Width = 100
+    Caption = 'Button2'
+    OnClick = Button2Click
+    TabOrder = 2
+  end
+end

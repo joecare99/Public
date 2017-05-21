@@ -1,0 +1,37 @@
+object DebugPanelForm: TDebugPanelForm
+  Left = 70
+  Height = 45
+  Top = 258
+  Width = 383
+  Caption = 'DebugPanelForm'
+  ClientHeight = 45
+  ClientWidth = 383
+  OnCreate = FormCreate
+  LCLVersion = '1.4.0.4'
+  object Button1: TButton
+    Left = 296
+    Height = 25
+    Top = 8
+    Width = 75
+    Caption = 'Button1'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object Edit1: TEdit
+    Left = 8
+    Height = 23
+    Top = 11
+    Width = 132
+    TabOrder = 1
+    Text = 'Edit1'
+  end
+  object Edit2: TEdit
+    Left = 160
+    Height = 23
+    Top = 11
+    Width = 128
+    OnClick = Edit2Click
+    TabOrder = 2
+    Text = 'Edit2'
+  end
+end

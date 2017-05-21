@@ -1,0 +1,31 @@
+object Form1: TForm1
+  Left = 0
+  Height = 363
+  Top = 0
+  Width = 413
+  Caption = 'Form1'
+  ClientHeight = 363
+  ClientWidth = 413
+  Visible = False
+  object CmdBox1: TCmdBox
+    Left = 20
+    Height = 328
+    Top = 17
+    Width = 381
+    CaretColor = clWhite
+    CaretType = cartLine
+    CaretWidth = 1
+    CaretHeight = 12
+    CaretYShift = 3
+    LineCount = 1000
+    Font.Color = clSilver
+    BackGroundColor = clBlack
+    TabWidth = 60
+    HistoryMax = 10
+    InputSelColor = clBlue
+    InputSelBackGround = clWhite
+    CaretInterval = 500
+    EscapeCodeType = esctCmdBox
+    GraphicalCharacterWidth = 10
+  end
+end

@@ -1,0 +1,27 @@
+object frmDialog2: TfrmDialog2
+  Left = 0
+  Height = 240
+  Top = 0
+  Width = 320
+  ActiveControl = Frame1_1.BitBtn1
+  Caption = 'frmDialog2'
+  ClientHeight = 240
+  ClientWidth = 320
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  inline Frame1_1: TfraCloseButtons
+    Height = 136
+    Top = 104
+    Align = alBottom
+    ClientHeight = 136
+    inherited BitBtn1: TBitBtn
+      Top = 8
+    end
+    inherited BitBtn2: TBitBtn
+      Top = 8
+    end
+    inherited StatusBar1: TStatusBar
+      Top = 113
+    end
+  end
+end

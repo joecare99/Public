@@ -1,0 +1,113 @@
+object Form1: TForm1
+  Left = 380
+  Height = 291
+  Top = 571
+  Width = 320
+  Caption = 'Form1'
+  ClientHeight = 291
+  ClientWidth = 320
+  OnCreate = FormCreate
+  LCLVersion = '1.4.0.4'
+  object MPlayerControl1: TMPlayerControl
+    Left = 16
+    Height = 88
+    Top = 96
+    Width = 296
+    Loop = 0
+    Volume = 0
+    OnPlaying = MPlayerControl1Playing
+  end
+  object TrackBar1: TTrackBar
+    Left = 17
+    Height = 25
+    Top = 193
+    Width = 295
+    Max = 100
+    Position = 0
+    TabOrder = 1
+  end
+  object SpeedButton1: TSpeedButton
+    Left = 19
+    Height = 22
+    Top = 225
+    Width = 23
+    Caption = '|<'
+    OnClick = SpeedButton1Click
+  end
+  object SpeedButton2: TSpeedButton
+    Left = 49
+    Height = 22
+    Top = 226
+    Width = 23
+    Caption = '<<'
+  end
+  object SpeedButton3: TSpeedButton
+    Left = 81
+    Height = 22
+    Top = 224
+    Width = 23
+    Caption = '>'
+    OnClick = SpeedButton3Click
+  end
+  object SpeedButton4: TSpeedButton
+    Left = 136
+    Height = 22
+    Top = 226
+    Width = 23
+    Caption = '>>'
+  end
+  object SpeedButton5: TSpeedButton
+    Left = 111
+    Height = 22
+    Top = 225
+    Width = 23
+    Caption = '[]'
+    OnClick = SpeedButton5Click
+  end
+  object SpeedButton6: TSpeedButton
+    Left = 294
+    Height = 22
+    Top = 13
+    Width = 23
+    Caption = '?'
+    OnClick = SpeedButton6Click
+  end
+  object LabeledEdit1: TLabeledEdit
+    Left = 16
+    Height = 23
+    Top = 72
+    Width = 272
+    EditLabel.AnchorSideLeft.Control = LabeledEdit1
+    EditLabel.AnchorSideRight.Control = LabeledEdit1
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = LabeledEdit1
+    EditLabel.Left = 16
+    EditLabel.Height = 15
+    EditLabel.Top = 54
+    EditLabel.Width = 272
+    EditLabel.Caption = 'LabeledEdit1'
+    EditLabel.ParentColor = False
+    TabOrder = 2
+    Text = 'LabeledEdit1'
+  end
+  object SpeedButton7: TSpeedButton
+    Left = 294
+    Height = 22
+    Top = 72
+    Width = 23
+    Caption = '...'
+    OnClick = SpeedButton7Click
+  end
+  object LazComponentQueue1: TLazComponentQueue
+    left = 41
+    top = 39
+  end
+  object AboutBox1: TAboutBox
+    left = 223
+    top = 37
+  end
+  object OpenDialog1: TOpenDialog
+    left = 136
+    top = 17
+  end
+end

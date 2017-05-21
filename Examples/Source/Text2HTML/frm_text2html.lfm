@@ -1,0 +1,48 @@
+object Form1: TForm1
+  Left = 300
+  Height = 336
+  Top = 465
+  Width = 886
+  Caption = 'Form1'
+  ClientHeight = 336
+  ClientWidth = 886
+  LCLVersion = '1.4.2.0'
+  object IpHtmlPanel1: TIpHtmlPanel
+    Left = 520
+    Height = 173
+    Top = 7
+    Width = 355
+    FixedTypeface = 'Courier New'
+    DefaultTypeFace = 'default'
+    DefaultFontSize = 12
+    FlagErrors = False
+    PrintSettings.MarginLeft = 0.5
+    PrintSettings.MarginTop = 0.5
+    PrintSettings.MarginRight = 0.5
+    PrintSettings.MarginBottom = 0.5
+    TabOrder = 0
+  end
+  object Memo1: TMemo
+    Left = 5
+    Height = 193
+    Top = 7
+    Width = 403
+    Font.CharSet = ANSI_CHARSET
+    Font.Height = -16
+    Font.Name = 'Courier New'
+    Font.Pitch = fpFixed
+    Font.Quality = fqDraft
+    Lines.Strings = (
+      '{** procedure Execute'
+      ''
+      '  This procedure will :'
+      '        - Go Up '#9'| And'#9'|'
+      #9'- Go Do'#9'| or'#9'|'
+      '  '#9'- And Running '#9'| again'#9'|     '
+    )
+    OnChange = Memo1Change
+    ParentFont = False
+    ScrollBars = ssAutoBoth
+    TabOrder = 1
+  end
+end

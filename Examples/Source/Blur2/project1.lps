@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="7">
+      <Unit0>
+        <Filename Value="project1.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="21"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="frm_testblurmain2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmTestBlurMain2"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_TestBlurMain2"/>
+        <CursorPos X="43" Y="21"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\Blur1\frm_testblurmain.pas"/>
+        <ComponentName Value="frmTestBlurMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_TestBlurMain"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="8"/>
+        <CursorPos X="31" Y="15"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="120"/>
+        <CursorPos X="40" Y="148"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\lazarus\lcl\controls.pp"/>
+        <UnitName Value="Controls"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="1841"/>
+        <CursorPos X="50" Y="1882"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\lazarus\lcl\lclclasses.pp"/>
+        <UnitName Value="LCLClasses"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="93"/>
+        <CursorPos X="3" Y="95"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="C:\lazarus\lcl\include\control.inc"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="4085"/>
+        <CursorPos X="41" Y="4094"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit6>
+    </Units>
+    <JumpHistory Count="7" HistoryIndex="6">
+      <Position1>
+        <Filename Value="..\Blur1\frm_testblurmain.pas"/>
+        <Caret Line="15" Column="31" TopLine="8"/>
+      </Position1>
+      <Position2>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <Caret Line="708" Column="20" TopLine="680"/>
+      </Position2>
+      <Position3>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <Caret Line="404" Column="32" TopLine="376"/>
+      </Position3>
+      <Position4>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <Caret Line="148" Column="40" TopLine="120"/>
+      </Position4>
+      <Position5>
+        <Filename Value="C:\lazarus\lcl\controls.pp"/>
+        <Caret Line="1031" Column="26" TopLine="991"/>
+      </Position5>
+      <Position6>
+        <Filename Value="C:\lazarus\lcl\controls.pp"/>
+        <Caret Line="1191" Column="27" TopLine="1160"/>
+      </Position6>
+      <Position7>
+        <Filename Value="C:\lazarus\lcl\include\control.inc"/>
+        <Caret Line="4094" Column="41" TopLine="4085"/>
+      </Position7>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

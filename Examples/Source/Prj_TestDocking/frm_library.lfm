@@ -1,0 +1,58 @@
+object frmLibrary: TfrmLibrary
+  Left = 784
+  Height = 500
+  Top = 249
+  Width = 243
+  ActiveControl = PageControl1
+  Align = alRight
+  Caption = 'Bibliothek'
+  ClientHeight = 500
+  ClientWidth = 243
+  OnCreate = FormCreate
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 500
+    Top = 0
+    Width = 243
+    ActivePage = TabSheet1
+    Align = alClient
+    TabIndex = 0
+    TabOrder = 0
+    object TabSheet1: TTabSheet
+      Caption = 'TabSheet1'
+      ClientHeight = 472
+      ClientWidth = 235
+      object TreeView1: TTreeView
+        Left = 0
+        Height = 472
+        Top = 0
+        Width = 235
+        Align = alClient
+        DefaultItemHeight = 18
+        Images = ImageList1
+        TabOrder = 0
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'TabSheet2'
+      ClientHeight = 472
+      ClientWidth = 235
+      object ListView1: TListView
+        Left = 0
+        Height = 472
+        Top = 0
+        Width = 235
+        Align = alClient
+        Columns = <>
+        SmallImages = ImageList1
+        TabOrder = 0
+      end
+    end
+  end
+  object ImageList1: TImageList
+    left = 126
+    top = 87
+  end
+end

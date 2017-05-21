@@ -1,0 +1,38 @@
+object FraMeldeEintraege: TFraMeldeEintraege
+  Left = 0
+  Height = 421
+  Top = 0
+  Width = 635
+  ClientHeight = 421
+  ClientWidth = 635
+  OnEnter = FrameEnter
+  TabOrder = 0
+  object Label1: TLabel
+    Left = 0
+    Height = 15
+    Top = 0
+    Width = 635
+    Align = alTop
+    Alignment = taRightJustify
+    Caption = 'MeldeEinträge'
+    ParentColor = False
+  end
+  object TreeView1: TTreeView
+    Left = 0
+    Height = 406
+    Top = 15
+    Width = 152
+    Align = alLeft
+    DefaultItemHeight = 18
+    TabOrder = 0
+  end
+  object StringGrid1: TStringGrid
+    Left = 152
+    Height = 406
+    Top = 15
+    Width = 483
+    Align = alClient
+    TabOrder = 1
+    OnSelectCell = StringGrid1SelectCell
+  end
+end

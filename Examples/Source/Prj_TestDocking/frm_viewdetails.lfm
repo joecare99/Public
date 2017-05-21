@@ -1,0 +1,22 @@
+object frmViewDetails: TfrmViewDetails
+  Left = 255
+  Height = 546
+  Top = 395
+  Width = 759
+  ActiveControl = PageControl1
+  Caption = 'Details'
+  ClientHeight = 546
+  ClientWidth = 759
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 546
+    Top = 0
+    Width = 759
+    Align = alClient
+    TabOrder = 0
+    OnChange = PageControl1Change
+    OnChanging = PageControl1Changing
+  end
+end

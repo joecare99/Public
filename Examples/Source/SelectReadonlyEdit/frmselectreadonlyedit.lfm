@@ -1,0 +1,52 @@
+object FrmSelectROEditMain: TFrmSelectROEditMain
+  Left = 448
+  Height = 240
+  Top = 465
+  Width = 320
+  Caption = 'FrmSelectROEditMain'
+  ClientHeight = 240
+  ClientWidth = 320
+  LCLVersion = '1.4.2.0'
+  object LabeledEdit1: TLabeledEdit
+    Left = 16
+    Height = 23
+    Top = 24
+    Width = 80
+    EditLabel.AnchorSideLeft.Control = LabeledEdit1
+    EditLabel.AnchorSideRight.Control = LabeledEdit1
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = LabeledEdit1
+    EditLabel.Left = 16
+    EditLabel.Height = 15
+    EditLabel.Top = 6
+    EditLabel.Width = 80
+    EditLabel.Caption = 'LabeledEdit1'
+    EditLabel.ParentColor = False
+    TabOrder = 0
+    Text = 'Fixed Text1'
+    OnChange = LabeledEdit1Change
+    OnKeyPress = LabeledEdit1KeyPress
+  end
+  object Memo1: TMemo
+    Left = 136
+    Height = 90
+    Top = 8
+    Width = 150
+    Lines.Strings = (
+      'Memo1'
+    )
+    TabOrder = 1
+  end
+  object Edit1: TEdit
+    Left = 13
+    Height = 15
+    Top = 68
+    Width = 107
+    AutoSize = False
+    BorderStyle = bsNone
+    ParentColor = True
+    ReadOnly = True
+    TabOrder = 2
+    Text = 'Selectable Text'
+  end
+end
