@@ -8,7 +8,7 @@
       <Unit0>
         <Filename Value="fpcunitFileUtils.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
+        <WindowIndex Value="-1"/>
         <CursorPos X="30" Y="12"/>
         <UsageCount Value="67"/>
       </Unit0>
@@ -16,10 +16,10 @@
         <Filename Value="..\Test\test_FileUtils.pas"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="-1"/>
         <TopLine Value="141"/>
         <CursorPos X="9" Y="146"/>
         <UsageCount Value="67"/>
+        <Loaded Value="True"/>
       </Unit1>
     </Units>
     <JumpHistory HistoryIndex="-1"/>

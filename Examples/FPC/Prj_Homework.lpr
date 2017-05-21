@@ -35,17 +35,18 @@ begin
   if round(d) = c then
   begin
     b := func1;
-    if b = func2 then
+    if b = func1 then
       case b of
         True: proc1;
         False: proc2;
-      end
+
     else
       for b := False to True do
-        while b = func1 do
+        while b = func2 do
           repeat
             a := func1;
           until a = b;
+    end;
     for f in e do
       Write(f);
   end;

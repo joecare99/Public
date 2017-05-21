@@ -25,8 +25,10 @@
 unit registersqldb_ext;
 
 {$mode objfpc}{$H+}
-{$IF FPC_FULLVERSION>= 30000}
+{$IF FPC_FULLVERSION>=30000}
+{$IF FPC_FULLVERSION<=30100}
 {$DEFINE HASMYSQL57CONNECTION}
+{$ENDIF}
 {$DEFINE HASMYSQL60CONNECTION}
 {$DEFINE HASMariaDBCONNECTION}
 {$ENDIF}
@@ -71,7 +73,7 @@ end;
 
 procedure Register;
 begin
-  RegisterUnit('sqldb',@RegisterUnitSQLdb);
+
 end;
 
 initialization

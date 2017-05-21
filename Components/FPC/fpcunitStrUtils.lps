@@ -8,14 +8,15 @@
       <Unit0>
         <Filename Value="fpcunitStrUtils.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="1"/>
+        <IsVisibleTab Value="True"/>
         <CursorPos X="49" Y="13"/>
         <UsageCount Value="53"/>
+        <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\Test\test_StrUtils.pas"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="170"/>
@@ -40,48 +41,22 @@
       </Unit3>
       <Unit4>
         <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
-        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="187"/>
         <CursorPos X="20" Y="216"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\..\include\jedi.inc"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="1432"/>
         <CursorPos X="32" Y="1476"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit5>
     </Units>
-    <General>
-      <ActiveWindowIndexAtStart Value="1"/>
-    </General>
-    <JumpHistory Count="5" HistoryIndex="4">
-      <Position1>
-        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
-        <Caret Line="213" Column="2" TopLine="187"/>
-      </Position1>
-      <Position2>
-        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
-        <Caret Line="217" Column="14" TopLine="191"/>
-      </Position2>
-      <Position3>
-        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
-        <Caret Line="3" Column="7"/>
-      </Position3>
-      <Position4>
-        <Filename Value="..\..\include\jedi.inc"/>
-        <Caret Line="1476" Column="32" TopLine="1432"/>
-      </Position4>
-      <Position5>
-        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
-        <Caret Line="217" Column="14" TopLine="191"/>
-      </Position5>
-    </JumpHistory>
+    <JumpHistory HistoryIndex="-1"/>
   </ProjectSession>
   <Debugging>
     <BreakPoints Count="1">

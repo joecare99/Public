@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="29">
+    <Targets Count="31">
       <Target0 FileName="FPC\addrbook.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="default" Compile="True"/>
@@ -136,9 +136,19 @@
         <Mode3 Name="Release"/>
       </Target27>
       <Target28 FileName="FPC\prj_CompileErr.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="Default"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+      </Target28>
+      <Target29 FileName="FPC\Prj_Homework.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
-      </Target28>
+      </Target29>
+      <Target30 FileName="FPC\Prj_Homework0.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target30>
     </Targets>
   </ProjectGroup>
 </CONFIG>

@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectGroup FileVersion="1">
+    <Targets Count="11">
+      <Target0 FileName="FPC\addrbook.lpi">
+        <BuildModes Count="4"/>
+        <Mode1 Name="default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+        <Mode4 Name="Release1"/>
+      </Target0>
+      <Target1 FileName="FPC\AffineTransforms.lpi">
+        <BuildModes Count="4"/>
+        <Mode1 Name="default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+        <Mode4 Name="Release1"/>
+      </Target1>
+      <Target2 FileName="FPC\childsizinglayout.lpi">
+        <BuildModes Count="4"/>
+        <Mode1 Name="default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+        <Mode4 Name="Release1"/>
+      </Target2>
+      <Target3 FileName="FPC\bidi.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target3>
+      <Target4 FileName="FPC\canvastest.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="default" Compile="True"/>
+        <Mode2 Name="CustomDrawn"/>
+        <Mode3 Name="Cocoa"/>
+      </Target4>
+      <Target5 FileName="FPC\cleandir.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target5>
+      <Target6 FileName="FPC\cleandirs.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target6>
+      <Target7 FileName="FPC\confcleandirs.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target7>
+      <Target8 FileName="FPC\bitbutton.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target8>
+      <Target9 FileName="FPC\checkbox.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target9>
+      <Target10 FileName="FPC\combobox.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target10>
+    </Targets>
+  </ProjectGroup>
+</CONFIG>
