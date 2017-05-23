@@ -55,12 +55,15 @@ resourcestring
   SCitation = 'Citation';
   SDatabaseAlreadyExist = 'Database already exist.';
   SDatabaseNotFound = 'Database not found.';
+  SDispNameAndLiveDate = '%s (%s - %s)';
+  SDispNameIdAndLiveDate = '%s [%d] (%s - %s)';
   SDocuments = 'Documents';
   SEnterTheDatabaseName = 'Enter the database name';
   SEnterTheDatabaseToDel = 'Enter the database name to delete';
   SEvents = 'Events';
   SGoTo = '&Go to';
   SLocationOfTheTMG40dD = 'Location of the TMG 4.0d database';
+  SMarriedWith =' & %s (of %d)';
   SMonthFebruary = 'february';
   SMonthJanuary = 'january';
   SNOTITLENODESCRIPTION = 'NO TITLE, NO DESCRIPTION';

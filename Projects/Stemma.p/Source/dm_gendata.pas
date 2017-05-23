@@ -6,7 +6,8 @@ interface
 
 uses
   Classes, SysUtils, forms, FileUtil, dbf, DB, sqldb,
-  mysql57conn, Grids, Controls, IniFiles;
+  mysql57conn, mysql56conn, Grids, Controls, ComCtrls,
+  IniFiles;
 
 type
 
@@ -128,6 +129,11 @@ type
       const lidRelation: Integer);
     procedure SetRelationPrefered(const lidInd: LongInt;
       const lidIndRel: integer; const lidRelation: Integer);
+    function GetRelationChildExists(const lidChild: LongInt): Boolean;
+    procedure AppendRelationTreeVParents(const lTreeView: TTreeView);
+    procedure AppendRelationTreeVChildren(const lTreeView: TTreeView);
+    procedure FillSiblingsTable(const lTable: TStringGrid; const lidInd: LongInt);
+    function GetIndSpouse(const idInd: LongInt; out Spouse: string): integer;
     procedure DeleteRelation(const lidRelation: PtrInt);
     procedure DeleteRelationFull(const lidInd: integer;
       const lidIndChild: integer; const lidRelation: integer);
@@ -1821,7 +1827,7 @@ begin
       aSG.Objects[2, row] := TObject(Ptrint(Fields[2].AsInteger));
 
       GetIndBaseData(Fields[3].AsInteger, pName, pBirth, pDeath);
-      aSG.Cells[3, row] := format('%s (%s - %s)', [pName, pBirth, pDeath]);
+      aSG.Cells[3, row] := format(SDispNameAndLiveDate, [pName, pBirth, pDeath]);
       aSG.Objects[3, row] := TObject(Ptrint(Fields[3].AsInteger));
 
       GetCitationBestQuality(sBestQuality, row);
@@ -1936,6 +1942,192 @@ begin
      // Modifie la date de modification
      dmGenData.SaveModificationTime(lidIndRel);
      dmGenData.SaveModificationTime(lidInd);
+end;
+
+function TdmGenData.GetRelationChildExists(const lidChild: LongInt): Boolean;
+var
+  lChildsExist: Boolean;
+begin
+  dmGenData.Query2.SQL.Text:='SELECT top(1) no FROM R WHERE X=1 AND B=:idInd';
+  dmGenData.Query2.ParamByName('idInd').AsInteger:=lidChild;
+  dmGenData.Query2.Open;
+  lChildsExist:= not dmGenData.Query2.EOF;
+  Result:=lChildsExist;
+end;
+
+procedure TdmGenData.FillSiblingsTable(const lTable: TStringGrid; const lidInd: LongInt);
+var
+  lChildsExist: Boolean;
+  lidRelation: LongInt;
+  lidChild: LongInt;
+  conjoint: string;
+  deces: string;
+  naissance: string;
+  nbmarriage: integer;
+  row: integer;
+  p2: integer;
+  p1: integer;
+begin
+  p1:=0;
+  p2:=0;
+  dmGenData.Query1.SQL.Text:='SELECT R.B FROM R WHERE X=1 AND A=:idInd ORDER BY SD';
+  dmGenData.Query1.ParamByName('idInd').AsInteger:=lidInd;
+  dmGenData.Query1.Open;
+  if not dmGenData.Query1.EOF then
+     begin
+     p1:=dmGenData.Query1.Fields[0].AsInteger;
+     dmGenData.Query1.Next;
+  end;
+  if not dmGenData.Query1.EOF then
+     p2:=dmGenData.Query1.Fields[0].AsInteger;
+  dmGenData.Query1.Close;
+  dmGenData.Query1.SQL.text:='SELECT R.no, R.A, N.N, N.I3, N.I4 FROM R JOIN N on N.I=R.A '+
+  'WHERE N.X=1 AND R.X=1 AND (R.B=:idind1 OR R.B=:idind2) ORDER BY R.SD, N.I';
+  dmGenData.Query1.ParamByName('idInd1').AsInteger:=p1;
+  dmGenData.Query1.ParamByName('idInd2').AsInteger:=p2;
+  dmGenData.Query1.Open;
+  dmGenData.Query1.First;
+  row:=1;
+  lTable.RowCount:=dmGenData.Query1.RecordCount+1;
+  While not dmGenData.Query1.EOF do
+  begin
+     // Enlève les doublons et le sujet
+     if (not (dmGenData.Query1.Fields[1].AsInteger=lidInd)) and
+        (not (dmGenData.Query1.Fields[1].AsInteger=ptrint(lTable.Objects[2,row-1]))) then
+        begin
+        lidRelation:=dmGenData.Query1.Fields[0].AsInteger;
+        lTable.Cells[0,row]:=inttostr(lidRelation);
+        lTable.Objects[0,row]:=TObject(PtrInt(lidRelation));
+
+        if Copy(dmGenData.Query1.Fields[3].AsString,1,1)='1' then
+           naissance:=Copy(dmGenData.Query1.Fields[3].AsString,2,4)
+        else
+           naissance:='';
+
+        if Copy(dmGenData.Query1.Fields[4].AsString,1,1)='1' then
+           deces:=Copy(dmGenData.Query1.Fields[4].AsString,2,4)
+        else
+           deces:='';
+
+        lTable.Cells[1,row]:=DecodeName(dmGenData.Query1.Fields[2].AsString,1)+' ('+
+                                                    naissance+' - '+deces+')';
+        // Trouver conjoint + nombre de conjoints
+        lidChild:=dmGenData.Query1.Fields[1].AsInteger;
+        nbmarriage:=GetIndSpouse(lidChild, conjoint);
+        if length(conjoint)>0 then
+           lTable.Cells[1,row]:=lTable.Cells[1,row]+' '+format(SMarriedWith,[conjoint,nbmarriage])
+        else
+
+
+
+        lTable.Cells[2,row]:=IntToStr(lidChild);
+        lTable.Objects[2,row]:=TObject(ptrint(lidChild));
+
+        lTable.Cells[3,row]:=dmGenData.GetCitationBestQuality('R',lidRelation);
+
+        lChildsExist:=GetRelationChildExists(lidChild);
+        If lChildsExist then
+           lTable.Cells[4,row]:='+'
+        else
+           lTable.Cells[4,row]:='';
+        row:=row+1;
+     end
+     else
+        lTable.RowCount:=lTable.RowCount-1;
+     dmGenData.Query1.Next;
+  end;
+end;
+
+function TdmGenData.GetIndSpouse(const idInd: LongInt; out Spouse: string): integer;
+var
+  lidEvent,lidSpouse: LongInt;
+  nbmarriage: integer;
+begin
+  Spouse:='';
+  dmGenData.Query2.Close;
+  dmGenData.Query2.SQL.text:='SELECT E.no FROM (E JOIN Y on E.Y=Y.no) JOIN W on W.E=E.no WHERE W.X=1 AND E.X=1 AND Y.Y=''M'' AND W.I=:idInd';
+  dmGenData.Query2.ParamByName('idInd').AsInteger:=idInd;
+  dmGenData.Query2.Open;
+  nbmarriage:=dmGenData.Query2.RecordCount;
+  if not dmGenData.Query2.EOF then
+     begin
+     lidEvent:=dmGenData.Query2.Fields[0].AsInteger;
+     dmGenData.Query2.SQL.Text:='SELECT W.I, N.N FROM W JOIN N on W.I=N.I WHERE W.X=1 AND N.X=1 AND W.E=:idEvent AND NOT W.I=:idInd';
+     dmGenData.Query2.ParamByName('idEvent').AsInteger:=lidEvent;
+     dmGenData.Query2.ParamByName('idInd').AsInteger:=idInd;
+     dmGenData.Query2.Open;
+     lidSpouse:=dmGenData.Query2.Fields[0].AsInteger;
+     Spouse:=DecodeName(dmGenData.GetIndividuumName(lidSpouse),1);
+  end;
+  Result:=nbmarriage;
+end;
+
+procedure TdmGenData.AppendRelationTreeVParents(const lTreeView: TTreeView);
+var
+  idInd: Integer;
+  deces: string;
+  naissance: string;
+begin
+  if not lTreeView.Selected.HasChildren then
+  with qryInternal2 do begin
+    idInd:=ptrint(Tobject(lTreeView.Selected.Data));
+     SQL.Text:='SELECT R.B, N.N, N.I3, N.I4 FROM R JOIN N on R.B=N.I WHERE R.X=1 AND N.X=1 AND R.A=:idInd';
+     ParamByName('idInd').AsInteger:=idInd;
+     Open;
+     First;
+    while not  EOF do
+       begin
+       if Copy( Fields[2].AsString,1,1)='1' then
+          naissance:=Copy( Fields[2].AsString,2,4)
+       else
+          naissance:='';
+       if Copy( Fields[3].AsString,1,1)='1' then
+          deces:=Copy( Fields[3].AsString,2,4)
+       else
+          deces:='';
+       lTreeView.Items.AddChildObject(
+         lTreeView.Selected,
+         format(SDispNameIdAndLiveDate,[
+            DecodeName( Fields[1].AsString,1),
+             Fields[0].AsInteger,
+            naissance, deces]),
+            pointer(Tobject(ptrint( Fields[0].AsInteger))));
+        Next;
+    end;
+  lTreeView.Selected.Expand(true);
+  end;
+end;
+
+procedure TdmGenData.AppendRelationTreeVChildren(const lTreeView: TTreeView);
+var
+  deces: string;
+  naissance: string;
+  lidInd: PtrInt;
+begin
+  if not lTreeView.Selected.HasChildren then
+  begin
+    lidInd:=ptrint(Tobject(lTreeView.Selected.data));
+    dmGenData.Query1.SQL.Text:='SELECT R.A, N.N, N.I3, N.I4 FROM R JOIN N on R.A=N.I WHERE R.X=1 AND N.X=1 AND R.B=:idInd ORDER BY N.I3';
+    dmGenData.Query1.ParamByName('idInd').AsInteger:=lidInd;
+    dmGenData.Query1.Open;
+    dmGenData.Query1.First;
+    while not dmGenData.Query1.EOF do
+       begin
+       if Copy(dmGenData.Query1.Fields[2].AsString,1,1)='1' then
+          naissance:=Copy(dmGenData.Query1.Fields[2].AsString,2,4)
+       else
+          naissance:='';
+       if Copy(dmGenData.Query1.Fields[3].AsString,1,1)='1' then
+          deces:=Copy(dmGenData.Query1.Fields[3].AsString,2,4)
+       else
+          deces:='';
+       lTreeView.Items.AddChild(lTreeView.Selected,DecodeName(dmGenData.Query1.Fields[1].AsString,1)+
+                                                   ' ['+dmGenData.Query1.Fields[0].AsString+'] ('+
+                                                   naissance+'-'+deces+')');
+       dmGenData.Query1.Next;
+    end;
+  end;
+  lTreeView.Selected.Expand(true);
 end;
 
 procedure TdmGenData.DeleteRelationFull(const lidInd: integer; const lidIndChild: integer;
@@ -2217,9 +2409,12 @@ end;
 
 procedure TdmGenData.DeleteEvent(const lidEvent: Integer);
 begin
-  dmGenData.Query1.SQL.Text:='DELETE FROM E WHERE no=:idEvent';
-    dmGenData.Query1.ParamByName('idEvent').AsInteger:=lidEvent;
-    dmGenData.Query1.ExecSQL;
+    with qryInternal do begin
+      close;
+   SQL.Text:='DELETE FROM E WHERE no=:idEvent';
+     ParamByName('idEvent').AsInteger:=lidEvent;
+     ExecSQL;
+    end;
 end;
 
 procedure TdmGenData.DeleteEventComplete(const lidEvent: Integer);

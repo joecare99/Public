@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Grids, Menus,
-  FMUtils, frm_EditParents, LCLType, ActnList;
+  frm_EditParents, LCLType, ActnList;
 
 type
 
@@ -73,9 +73,7 @@ end;
 
 procedure TfrmChildren.FormResize(Sender: TObject);
 begin
-  TableauEnfants.Width := (Sender as TForm).Width;
-  TableauEnfants.Height := (Sender as TForm).Height;
-  TableauEnfants.Columns[2].Width := (Sender as TForm).Width - 142;
+  TableauEnfants.Columns[2].Width := TableauEnfants.Width - 142;
 end;
 
 procedure TfrmChildren.FormShow(Sender: TObject);

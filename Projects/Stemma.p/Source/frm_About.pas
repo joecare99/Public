@@ -55,8 +55,8 @@ begin
   lblDate.Caption:=Translation.Items[144];
   lblAuthor.Caption:=Translation.Items[145];
 //  btnClose.Caption:=Translation.Items[148];
-  lblActVersion.caption:='0.9.5';
-  lblCompDate.caption:='2012/2/17';
+  lblActVersion.caption:='0.9.5a';
+  lblCompDate.caption:='2017/05/22';
 end;
 
 procedure Tapropos.lblWebAdressClick(Sender: TObject);

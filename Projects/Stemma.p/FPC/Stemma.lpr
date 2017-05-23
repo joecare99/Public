@@ -12,13 +12,13 @@ uses
   frm_Names, frm_Explorer,
 frm_Parents, frm_History, frm_Children, frm_Siblings,
   frm_Events, 
-frm_Documents, frm_Ancesters, frm_Descendants, frm_EditDocuments, frm_ShowImage,
+frm_Documents, frm_Ancestors, frm_Descendants, frm_EditDocuments, frm_ShowImage,
   frm_Images, frm_EditParents, frm_EditCitations,
 frm_EditName, frm_EditEvents, frm_EditWitness,
   frm_Places, frm_Usage, frm_Sources, 
 frm_Repositories, frm_EditSource, frm_Types, frm_EditTypes,
   frm_About, frm_SelectPerson, dm_GenData, cls_Translation,uScaleDPI, 
-frm_SelectDialog, fra_Citations;
+frm_SelectDialog, fra_Citations, untWebexport;
 
 {$R *.res}
 
@@ -47,8 +47,8 @@ begin
   Application.CreateForm(TfrmSiblings, frmSiblings);
   Application.CreateForm(TfrmEvents, frmEvents);
   Application.CreateForm(TfrmDocuments, frmDocuments);
-  Application.CreateForm(TFormAncetres, FormAncetres);
-  Application.CreateForm(TFormDescendants, FormDescendants);
+  Application.CreateForm(TfrmAncestors, frmAncestors);
+  Application.CreateForm(TfrmDescendants, frmDescendants);
   Application.CreateForm(TfrmEditDocuments, frmEditDocuments);
   Application.CreateForm(TfrmShowImage, frmShowImage);
   Application.CreateForm(TFormImage, FormImage);

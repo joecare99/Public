@@ -3,27 +3,27 @@ object frmSiblings: TfrmSiblings
   Height = 240
   Top = 480
   Width = 320
-  ActiveControl = TableauFratrie
+  ActiveControl = tblSiblings
   BorderIcons = []
   Caption = 'Fratrie'
   ClientHeight = 240
   ClientWidth = 320
   OnClose = FormClose
-  OnResize = FormResize
   OnShow = FormShow
   LCLVersion = '1.6.4.0'
   Visible = False
-  object TableauFratrie: TStringGrid
+  object tblSiblings: TStringGrid
     Left = 0
-    Height = 240
-    Top = 0
-    Width = 678
+    Height = 214
+    Top = 26
+    Width = 320
+    Align = alClient
     Columns = <    
       item
-        Title.Caption = 'Frère/Soeur'
+        Title.Caption = 'Sibling'
       end    
       item
-        Title.Caption = 'IdEnfant'
+        Title.Caption = 'idChild'
         Visible = False
       end    
       item
@@ -34,9 +34,10 @@ object frmSiblings: TfrmSiblings
       end>
     MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goRowSelect, goSmoothScroll]
-    PopupMenu = PopupMenuFratrie
+    PopupMenu = mnuSiblings
     TabOrder = 0
     OnDblClick = MenuItem1Click
+    OnResize = tblSiblingsResize
     ColWidths = (
       4
       64
@@ -45,19 +46,31 @@ object frmSiblings: TfrmSiblings
       64
     )
   end
-  object PopupMenuFratrie: TPopupMenu
+  object tlbSiblings: TToolBar
+    Left = 0
+    Height = 26
+    Top = 0
+    Width = 320
+    Caption = 'Siblings'
+    TabOrder = 1
+  end
+  object mnuSiblings: TPopupMenu
     left = 292
     top = 98
     object MenuItem1: TMenuItem
-      Caption = '&Aller à'
+      Caption = '&Go to'
       OnClick = MenuItem1Click
     end
     object MenuItem2: TMenuItem
       Caption = '-'
     end
     object MenuItem3: TMenuItem
-      Caption = 'Ajouter'
+      Caption = '&Add'
       ShortCut = 115
     end
+  end
+  object alsSiblings: TActionList
+    left = 264
+    top = 96
   end
 end

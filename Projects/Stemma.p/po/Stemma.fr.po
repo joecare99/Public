@@ -149,6 +149,14 @@ msgstr "Entrez le nom de la base de données à créer"
 msgid "Database not found."
 msgstr "Base de données introuvable."
 
+#: cls_translation.sdispnameandlivedate
+msgid "%s (%s - %s)"
+msgstr ""
+
+#: cls_translation.sdispnameidandlivedate
+msgid "%s [%d] (%s - %s)"
+msgstr ""
+
 #: cls_translation.sdocuments
 #, fuzzy
 msgctxt "cls_translation.sdocuments"
@@ -193,6 +201,10 @@ msgstr ""
 
 #: cls_translation.slocationofthetmg40dd
 msgid "Location of the TMG 4.0d database"
+msgstr ""
+
+#: cls_translation.smarriedwith
+msgid " & %s (of %d)"
 msgstr ""
 
 #: cls_translation.smonthfebruary
@@ -1303,8 +1315,10 @@ msgid "T"
 msgstr ""
 
 #: tformancetres.menuitem1.caption
+#, fuzzy
+#| msgid "&Aller à"
 msgctxt "tformancetres.menuitem1.caption"
-msgid "&Aller à"
+msgid "&Go To"
 msgstr "&Aller à"
 
 #: tformdepots.button1.caption
@@ -1798,30 +1812,69 @@ msgctxt "tframe1.mnicitationedit.caption"
 msgid "&Modifier"
 msgstr "&Modifier"
 
-#: tfrmchildren.menuitem1.caption
-msgctxt "tfrmchildren.menuitem1.caption"
-msgid "&Aller à"
+#: tfrmancestors.actancestorsexpand.caption
+msgctxt "tfrmancestors.actancestorsexpand.caption"
+msgid "E&xpand"
+msgstr ""
+
+#: tfrmancestors.actancestorsgoto.caption
+#, fuzzy
+#| msgid "&Aller à"
+msgctxt "tfrmancestors.actancestorsgoto.caption"
+msgid "&Go To"
 msgstr "&Aller à"
 
-#: tfrmchildren.menuitem2.caption
-msgctxt "tfrmchildren.menuitem2.caption"
+#: tfrmancestors.mniancestorssep.caption
+msgctxt "tfrmancestors.mniancestorssep.caption"
 msgid "-"
 msgstr ""
 
-#: tfrmchildren.menuitem3.caption
-msgctxt "tfrmchildren.menuitem3.caption"
-msgid "Ajouter"
-msgstr "Ajouter"
+#: tfrmchildren.actchildrenadd.caption
+#, fuzzy
+msgctxt "tfrmchildren.actchildrenadd.caption"
+msgid "&Add"
+msgstr "&Ajouter"
 
-#: tfrmchildren.menuitem4.caption
-msgctxt "tfrmchildren.menuitem4.caption"
-msgid "Modifier"
-msgstr "Modifier"
+#: tfrmchildren.actchildrenadd.hint
+msgid "Append a Child"
+msgstr ""
 
-#: tfrmchildren.menuitem5.caption
-msgctxt "tfrmchildren.menuitem5.caption"
-msgid "Supprimer"
-msgstr "Supprimer"
+#: tfrmchildren.actchildrendelete.caption
+msgctxt "tfrmchildren.actchildrendelete.caption"
+msgid "&Delete"
+msgstr ""
+
+#: tfrmchildren.actchildrendelete.hint
+msgid "Detatch the selected Child from the Parent"
+msgstr ""
+
+#: tfrmchildren.actchildrenedit.caption
+msgctxt "tfrmchildren.actchildrenedit.caption"
+msgid "&Edit"
+msgstr ""
+
+#: tfrmchildren.actchildrenedit.hint
+msgid "Modify the scelected Child"
+msgstr ""
+
+#: tfrmchildren.actchildrengoto.caption
+msgctxt "tfrmchildren.actchildrengoto.caption"
+msgid "&Go to"
+msgstr ""
+
+#: tfrmchildren.mnichildrensep1.caption
+msgctxt "tfrmchildren.mnichildrensep1.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmchildren.toolbar1.caption
+msgctxt "tfrmchildren.toolbar1.caption"
+msgid "ToolBar1"
+msgstr ""
+
+#: tfrmchildren.toolbutton2.caption
+msgid "ToolButton2"
+msgstr ""
 
 #: tfrmconnectdb.edthostname.editlabel.caption
 msgid "Hostname:"
@@ -1846,6 +1899,24 @@ msgstr ""
 #: tfrmconnectdb.edtuser.texthint
 msgid "Username"
 msgstr ""
+
+#: tfrmdescendants.actdescendantsexpand.caption
+msgctxt "tfrmdescendants.actdescendantsexpand.caption"
+msgid "E&xpand"
+msgstr ""
+
+#: tfrmdescendants.actdescendantsgoto.caption
+#, fuzzy
+#| msgid "&Aller à"
+msgctxt "tfrmdescendants.actdescendantsgoto.caption"
+msgid "&Go To"
+msgstr "&Aller à"
+
+#: tfrmdescendants.mnidescendantsgoto.caption
+#, fuzzy
+msgctxt "tfrmdescendants.mnidescendantsgoto.caption"
+msgid "&Aller à"
+msgstr "&Aller à"
 
 #: tfrmdocuments.actdocumentsadd.caption
 msgctxt "tfrmdocuments.actdocumentsadd.caption"
@@ -2646,9 +2717,11 @@ msgid "De&lete"
 msgstr ""
 
 #: tfrmnames.actnamesedit.caption
+#, fuzzy
+#| msgid "&Modifier"
 msgctxt "tfrmnames.actnamesedit.caption"
 msgid "&Edit"
-msgstr ""
+msgstr "&Modifier"
 
 #: tfrmnames.actnamessetprefered.caption
 msgctxt "tfrmnames.actnamessetprefered.caption"
@@ -2796,8 +2869,10 @@ msgid "&Quit"
 msgstr "&Quit"
 
 #: tfrmsiblings.menuitem1.caption
+#, fuzzy
+#| msgid "&Aller à"
 msgctxt "tfrmsiblings.menuitem1.caption"
-msgid "&Aller à"
+msgid "&Go to"
 msgstr "&Aller à"
 
 #: tfrmsiblings.menuitem2.caption
@@ -2806,9 +2881,16 @@ msgid "-"
 msgstr ""
 
 #: tfrmsiblings.menuitem3.caption
+#, fuzzy
+#| msgid "Ajouter"
 msgctxt "tfrmsiblings.menuitem3.caption"
-msgid "Ajouter"
+msgid "&Add"
 msgstr "Ajouter"
+
+#: tfrmsiblings.tlbsiblings.caption
+msgctxt "tfrmsiblings.tlbsiblings.caption"
+msgid "Siblings"
+msgstr ""
 
 #: tfrmstemmamainform.actadd.caption
 msgctxt "tfrmstemmamainform.actadd.caption"
@@ -3115,6 +3197,7 @@ msgid "Parents"
 msgstr ""
 
 #: tfrmstemmamainform.actwinsiblings.caption
+msgctxt "tfrmstemmamainform.actwinsiblings.caption"
 msgid "Siblings"
 msgstr ""
 

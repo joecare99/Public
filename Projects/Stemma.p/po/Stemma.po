@@ -134,6 +134,14 @@ msgstr ""
 msgid "Database not found."
 msgstr ""
 
+#: cls_translation.sdispnameandlivedate
+msgid "%s (%s - %s)"
+msgstr ""
+
+#: cls_translation.sdispnameidandlivedate
+msgid "%s [%d] (%s - %s)"
+msgstr ""
+
 #: cls_translation.sdocuments
 msgctxt "cls_translation.sdocuments"
 msgid "Documents"
@@ -174,6 +182,10 @@ msgstr ""
 
 #: cls_translation.slocationofthetmg40dd
 msgid "Location of the TMG 4.0d database"
+msgstr ""
+
+#: cls_translation.smarriedwith
+msgid " & %s (of %d)"
 msgstr ""
 
 #: cls_translation.smonthfebruary
@@ -1269,7 +1281,7 @@ msgstr ""
 
 #: tformancetres.menuitem1.caption
 msgctxt "tformancetres.menuitem1.caption"
-msgid "&Aller à"
+msgid "&Go To"
 msgstr ""
 
 #: tformdepots.button1.caption
@@ -1761,29 +1773,65 @@ msgctxt "TFRAME1.MNICITATIONEDIT.CAPTION"
 msgid "&Modifier"
 msgstr ""
 
-#: tfrmchildren.menuitem1.caption
-msgctxt "TFRMCHILDREN.MENUITEM1.CAPTION"
-msgid "&Aller à"
+#: tfrmancestors.actancestorsexpand.caption
+msgctxt "tfrmancestors.actancestorsexpand.caption"
+msgid "E&xpand"
 msgstr ""
 
-#: tfrmchildren.menuitem2.caption
-msgctxt "TFRMCHILDREN.MENUITEM2.CAPTION"
+#: tfrmancestors.actancestorsgoto.caption
+msgctxt "TFRMANCESTORS.ACTANCESTORSGOTO.CAPTION"
+msgid "&Go To"
+msgstr ""
+
+#: tfrmancestors.mniancestorssep.caption
+msgctxt "TFRMANCESTORS.MNIANCESTORSSEP.CAPTION"
 msgid "-"
 msgstr ""
 
-#: tfrmchildren.menuitem3.caption
-msgctxt "TFRMCHILDREN.MENUITEM3.CAPTION"
-msgid "Ajouter"
+#: tfrmchildren.actchildrenadd.caption
+msgctxt "TFRMCHILDREN.ACTCHILDRENADD.CAPTION"
+msgid "&Add"
 msgstr ""
 
-#: tfrmchildren.menuitem4.caption
-msgctxt "TFRMCHILDREN.MENUITEM4.CAPTION"
-msgid "Modifier"
+#: tfrmchildren.actchildrenadd.hint
+msgid "Append a Child"
 msgstr ""
 
-#: tfrmchildren.menuitem5.caption
-msgctxt "TFRMCHILDREN.MENUITEM5.CAPTION"
-msgid "Supprimer"
+#: tfrmchildren.actchildrendelete.caption
+msgctxt "TFRMCHILDREN.ACTCHILDRENDELETE.CAPTION"
+msgid "&Delete"
+msgstr ""
+
+#: tfrmchildren.actchildrendelete.hint
+msgid "Detatch the selected Child from the Parent"
+msgstr ""
+
+#: tfrmchildren.actchildrenedit.caption
+msgctxt "TFRMCHILDREN.ACTCHILDRENEDIT.CAPTION"
+msgid "&Edit"
+msgstr ""
+
+#: tfrmchildren.actchildrenedit.hint
+msgid "Modify the scelected Child"
+msgstr ""
+
+#: tfrmchildren.actchildrengoto.caption
+msgctxt "TFRMCHILDREN.ACTCHILDRENGOTO.CAPTION"
+msgid "&Go to"
+msgstr ""
+
+#: tfrmchildren.mnichildrensep1.caption
+msgctxt "TFRMCHILDREN.MNICHILDRENSEP1.CAPTION"
+msgid "-"
+msgstr ""
+
+#: tfrmchildren.toolbar1.caption
+msgctxt "TFRMCHILDREN.TOOLBAR1.CAPTION"
+msgid "ToolBar1"
+msgstr ""
+
+#: tfrmchildren.toolbutton2.caption
+msgid "ToolButton2"
 msgstr ""
 
 #: tfrmconnectdb.edthostname.editlabel.caption
@@ -1808,6 +1856,21 @@ msgstr ""
 
 #: tfrmconnectdb.edtuser.texthint
 msgid "Username"
+msgstr ""
+
+#: tfrmdescendants.actdescendantsexpand.caption
+msgctxt "TFRMDESCENDANTS.ACTDESCENDANTSEXPAND.CAPTION"
+msgid "E&xpand"
+msgstr ""
+
+#: tfrmdescendants.actdescendantsgoto.caption
+msgctxt "TFRMDESCENDANTS.ACTDESCENDANTSGOTO.CAPTION"
+msgid "&Go To"
+msgstr ""
+
+#: tfrmdescendants.mnidescendantsgoto.caption
+msgctxt "TFRMDESCENDANTS.MNIDESCENDANTSGOTO.CAPTION"
+msgid "&Aller à"
 msgstr ""
 
 #: tfrmdocuments.actdocumentsadd.caption
@@ -2716,7 +2779,7 @@ msgstr ""
 
 #: tfrmsiblings.menuitem1.caption
 msgctxt "TFRMSIBLINGS.MENUITEM1.CAPTION"
-msgid "&Aller à"
+msgid "&Go to"
 msgstr ""
 
 #: tfrmsiblings.menuitem2.caption
@@ -2726,7 +2789,12 @@ msgstr ""
 
 #: tfrmsiblings.menuitem3.caption
 msgctxt "TFRMSIBLINGS.MENUITEM3.CAPTION"
-msgid "Ajouter"
+msgid "&Add"
+msgstr ""
+
+#: tfrmsiblings.tlbsiblings.caption
+msgctxt "tfrmsiblings.tlbsiblings.caption"
+msgid "Siblings"
 msgstr ""
 
 #: tfrmstemmamainform.actadd.caption
@@ -3029,6 +3097,7 @@ msgid "Parents"
 msgstr ""
 
 #: tfrmstemmamainform.actwinsiblings.caption
+msgctxt "tfrmstemmamainform.actwinsiblings.caption"
 msgid "Siblings"
 msgstr ""
 

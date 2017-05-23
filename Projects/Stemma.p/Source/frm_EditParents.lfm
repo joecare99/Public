@@ -206,9 +206,6 @@ object frmEditParents: TfrmEditParents
     inherited pnlCitationLeft: TPanel
       Height = 155
       ClientHeight = 155
-      inherited lblCitations: TLabel
-        Top = 21
-      end
     end
     inherited PopupMenu2: TPopupMenu
       left = 108

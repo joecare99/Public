@@ -34,6 +34,8 @@ function getI3(nstr:string):string;overload;deprecated 'use dmGenData.getI3';
 function getI4(nstr:string):string;overload;deprecated 'use dmGenData.getI4';
 function getName(nstr:string):string;overload;deprecated 'use dmGenData.GetIndividuumName';
 Function AutoQuote(orgStr:string):String;
+function GetTableColWidthSum(const lTable: TStringGrid; const lIgnCol: Integer
+  ): Integer;
 
 implementation
 
@@ -2206,6 +2208,18 @@ begin
    end;
    If length(nomcomplet) = 0 then nomcomplet := '???';
    Result := nomcomplet;
+end;
+
+function GetTableColWidthSum(const lTable: TStringGrid; const lIgnCol: Integer
+  ): Integer;
+var
+  lMaxTblSize, i: Integer;
+begin
+  lMaxTblSize:=0;
+  for i := 0 to lTable.ColCount-1 do
+    if i <> lIgnCol then
+       lMaxTblSize:=lMaxTblSize+lTable.Columns[i].Width;
+  Result:=lMaxTblSize;
 end;
 
 end.

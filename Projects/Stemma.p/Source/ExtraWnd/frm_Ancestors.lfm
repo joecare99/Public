@@ -1,0 +1,61 @@
+object frmAncestors: TfrmAncestors
+  Left = 768
+  Height = 355
+  Top = 339
+  Width = 416
+  ActiveControl = trvAncestors
+  BorderIcons = []
+  Caption = 'Ancesters'
+  ClientHeight = 355
+  ClientWidth = 416
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  PopupMenu = mnuAncestors
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object trvAncestors: TTreeView
+    Left = 0
+    Height = 355
+    Top = 0
+    Width = 416
+    Align = alClient
+    DefaultItemHeight = 18
+    PopupMenu = mnuAncestors
+    ReadOnly = True
+    RightClickSelect = True
+    TabOrder = 0
+    OnContextPopup = trvAncestorsContextPopup
+    OnDblClick = actAncestorsExpandExecute
+    Options = [tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoRightClickSelect, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
+  end
+  object mnuAncestors: TPopupMenu
+    left = 292
+    top = 98
+    object mniAncestorsExpand: TMenuItem
+      Action = actAncestorsExpand
+    end
+    object mniAncestorsSep: TMenuItem
+      Caption = '-'
+    end
+    object mniAncestorsGoto: TMenuItem
+      Action = actAncestorsGoTo
+    end
+  end
+  object alsAncestors: TActionList
+    left = 248
+    top = 111
+    object actAncestorsExpand: TAction
+      Category = 'Ancestors'
+      Caption = 'E&xpand'
+      OnExecute = actAncestorsExpandExecute
+      OnUpdate = actAncestorsExpandUpdate
+    end
+    object actAncestorsGoTo: TAction
+      Category = 'Ancestors'
+      Caption = '&Go To'
+      OnExecute = actAncestorsGoToExecute
+      OnUpdate = actAncestorsGoToUpdate
+    end
+  end
+end

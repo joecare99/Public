@@ -1,0 +1,53 @@
+object frmDescendants: TfrmDescendants
+  Left = 507
+  Height = 240
+  Top = 379
+  Width = 320
+  ActiveControl = trvDescendants
+  BorderIcons = []
+  Caption = 'Descendants'
+  ClientHeight = 240
+  ClientWidth = 320
+  OnClose = FormClose
+  OnResize = FormResize
+  OnShow = FormShow
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object trvDescendants: TTreeView
+    Left = 0
+    Height = 240
+    Top = 0
+    Width = 320
+    Align = alClient
+    DefaultItemHeight = 18
+    PopupMenu = mnuDescendants
+    ReadOnly = True
+    TabOrder = 0
+    OnDblClick = actDescendantsExpandExecute
+    Options = [tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
+  end
+  object mnuDescendants: TPopupMenu
+    left = 292
+    top = 98
+    object mniDescendantsGoto: TMenuItem
+      Caption = '&Aller à'
+      OnClick = actDescendantsGotoExecute
+    end
+  end
+  object alsDescendants: TActionList
+    left = 256
+    top = 98
+    object actDescendantsExpand: TAction
+      Category = 'Descendants'
+      Caption = 'E&xpand'
+      OnExecute = actDescendantsExpandExecute
+      OnUpdate = actDescendantsExpandUpdate
+    end
+    object actDescendantsGoto: TAction
+      Category = 'Descendants'
+      Caption = '&Go To'
+      OnExecute = actDescendantsGotoExecute
+      OnUpdate = actDescendantsGotoUpdate
+    end
+  end
+end
