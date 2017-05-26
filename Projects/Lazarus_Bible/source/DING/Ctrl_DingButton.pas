@@ -12,7 +12,7 @@ uses
 {$ELSE}
   LCLIntf, LCLType, LCLVersion,
 {$ENDIF}
-  Windows,        SysUtils, Classes, Graphics, Controls,
+  LMessages,  SysUtils, Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls;
 
 type
@@ -39,7 +39,11 @@ end;
 
 procedure TDingButton.Click;
 begin
+  {$IFDEF FPC}
+  Beep;
+  {$ELSE}
   MessageBeep(0);
+  {$ENDIF}
   inherited Click;
 end;
 

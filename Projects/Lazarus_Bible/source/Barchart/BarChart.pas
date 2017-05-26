@@ -1,9 +1,11 @@
 UNIT BarChart;
 
+{$MODE Delphi}
+
 INTERFACE
 
 USES
-  Windows,
+  LCLIntf, LCLType, LMessages,
   Messages,
   SysUtils,
   Classes,

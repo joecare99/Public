@@ -98,7 +98,11 @@ var
 begin
   Datapath := 'Data';
   for k := 0 to 2 do
+    {$IFDEF FPC}
+    if DirectoryExists(Datapath) then
+    {$ELSE}
     if DirPathExists(Datapath) then
+    {$ENDIF}
       break
     else Datapath:='..'+DirectorySeparator + Datapath;
   ProgFilesDir := GetEnvironmentVariable('ProgramFiles');
@@ -110,7 +114,7 @@ begin
       (glyphPath, [ProgFilesDir, GetEnvironmentVariable('CommonProgramFiles'),DataPath]
       ); { Show path above ListBox }
     { Start scan }
-    K := FindFirstUTF8(PathLabel.Caption + '\*.*',faAnyFile,SearchRec); { *Converted from FindFirst* }
+    K := FindFirst(PathLabel.Caption + '\*.*',faAnyFile,SearchRec); { *Converted from FindFirst* }
     try
       while K = 0 do { Scan directory for file names }
         begin
@@ -129,10 +133,10 @@ begin
       //          raise ; { Pass any exceptions up call chain }
               end;
             end;
-          K := FindNextUTF8(SearchRec); { *Converted from FindNext* } { Continue directory scan }
+          K := FindNext(SearchRec); { *Converted from FindNext* } { Continue directory scan }
         end;
     finally
-      FindCloseUTF8(SearchRec); { *Converted from FindClose* }
+      FindClose(SearchRec); { *Converted from FindClose* }
     end;
   finally
     Screen.Cursor := crDefault; { Restore normal cursor }

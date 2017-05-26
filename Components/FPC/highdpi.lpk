@@ -11,7 +11,7 @@
       <SearchPaths>
         <Libraries Value="$(PkgOutDir)"/>
         <OtherUnitFiles Value="..\Source\HighDPI"/>
-        <UnitOutputDirectory Value="..\..\bin\lib\$NameOnly($(PkgName))\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\bin\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Description Value="Anpassung des Layouts an high-DPI - Umgebungen"/>

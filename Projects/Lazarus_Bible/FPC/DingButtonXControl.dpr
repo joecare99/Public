@@ -8,8 +8,7 @@ uses
   ComServ,
   DingButtonXControl_TLB in '..\source\DingX\DingButtonXControl_TLB.pas',
   DingButtonImpl1 in '..\source\DingX\DingButtonImpl1.pas' {DingButtonX: CoClass},
-  Frm_DingAbout in '..\source\DingX\Frm_DingAbout.pas' {DingButtonXAbout},
-  Ctrl_DingButton in '..\source\DING\Ctrl_DingButton.pas';
+  Frm_DingAbout in '..\source\DingX\Frm_DingAbout.pas' {DingButtonXAbout};
 
 {$E ocx}
 

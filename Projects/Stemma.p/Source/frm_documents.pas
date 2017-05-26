@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Grids, Menus,
-  frm_EditDocuments, frm_Images, LCLType, ActnList;
+  frm_EditDocuments, frm_Images, LCLType, ActnList, ComCtrls, Types;
 
 type
 
@@ -25,23 +25,36 @@ type
     mniDelete: TMenuItem;
     mnuDocuments: TPopupMenu;
     tblDocuments: TStringGrid;
+    ToolBar1: TToolBar;
+    btnDocumentsSetPrefered: TToolButton;
+    btnDocumentsSep: TToolButton;
+    btnDocumentsAdd: TToolButton;
+    btnDocumentsEdit: TToolButton;
+    btnDocumentsDelete: TToolButton;
     procedure actDocumentsAddUpdate(Sender: TObject);
     procedure actDocumentsDeleteUpdate(Sender: TObject);
     procedure actDocumentsSetPreferedUpdate(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
-    procedure FormResize(Sender: TObject);
+    procedure tblDocumemntsResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure actDocumentsSetPreferedExecute(Sender: TObject);
     procedure actDocumentsAddExecute(Sender: TObject);
     procedure actDocumentsDeleteExecute(Sender: TObject);
     procedure mnuModifyClick(Sender: TObject);
+    procedure tblDocumentsContextPopup(Sender: TObject; MousePos: TPoint;
+      var Handled: Boolean);
     procedure tblDocumentsDrawCell(Sender: TObject; aCol, aRow: Integer;
       aRect: TRect; {%H-}aState: TGridDrawState);
+    procedure tblDocumentsPrepareCanvas(sender: TObject; aCol, aRow: Integer;
+      aState: TGridDrawState);
     procedure tblDocumentsSelection(Sender: TObject; {%H-}aCol, aRow: Integer);
   private
+    function GetidDocument: integer;
+    procedure SetidDocument(AValue: integer);
     { private declarations }
   public
     { public declarations }
+    property idDocument:integer read GetidDocument write SetidDocument;
   end; 
 
 procedure PopulateDocuments(Tableau:TStringGrid;Code:string;no:integer);
@@ -81,7 +94,7 @@ begin
     (tblDocuments.RowCount<3);
 end;
 
-procedure TfrmDocuments.FormResize(Sender: TObject);
+procedure TfrmDocuments.tblDocumemntsResize(Sender: TObject);
 begin
   tblDocuments.Width := (Sender as Tform).Width;
   tblDocuments.Height := (Sender as Tform).Height;
@@ -168,6 +181,13 @@ begin
      end;
 end;
 
+procedure TfrmDocuments.tblDocumentsContextPopup(Sender: TObject;
+  MousePos: TPoint; var Handled: Boolean);
+begin
+   tblDocuments.Row:=tblDocuments.MouseToCell(MousePos).y;
+   Handled:=false;
+end;
+
 procedure TfrmDocuments.tblDocumentsDrawCell(Sender: TObject; aCol,
   aRow: Integer; aRect: TRect; aState: TGridDrawState);
 begin
@@ -178,6 +198,12 @@ begin
   end;
 end;
 
+procedure TfrmDocuments.tblDocumentsPrepareCanvas(sender: TObject; aCol,
+  aRow: Integer; aState: TGridDrawState);
+begin
+
+end;
+
 procedure TfrmDocuments.tblDocumentsSelection(Sender: TObject; aCol,
   aRow: Integer);
 begin
@@ -185,6 +211,16 @@ begin
      PopulateImage(0)
   else
      PopulateImage(StrToInt(tblDocuments.Cells[0,aRow]));
+end;
+
+function TfrmDocuments.GetidDocument: integer;
+begin
+  result := PtrInt(tblDocuments.Objects[0,tblDocuments.Row]);
+end;
+
+procedure TfrmDocuments.SetidDocument(AValue: integer);
+begin
+   tblDocuments.Cols[];
 end;
 
 procedure PopulateDocuments(Tableau:TStringGrid;code:string;no:integer);
@@ -205,10 +241,13 @@ begin
      While not dmGenData.Query1.EOF do
      begin
         Tableau.Cells[0,row]:=dmGenData.Query1.Fields[0].AsString;
+        Tableau.Objects[0,row]:=ptrint(dmGenData.Query1.Fields[0].AsInteger);
+
         if dmGenData.Query1.Fields[1].AsBoolean then
            Tableau.Cells[1,row]:='*'
         else
            Tableau.Cells[1,row]:='';
+
         titre:=dmGenData.Query1.Fields[2].AsString;
         desc:=dmGenData.Query1.Fields[3].AsString;
         if length(titre)=0 then

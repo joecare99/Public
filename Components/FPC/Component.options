@@ -6,8 +6,8 @@
     <SearchPaths>
       <IncludeFiles Value="..\..\include"/>
       <Libraries Value="$(PkgOutDir)"/>
-      <OtherUnitFiles Value=".;..\..\Components"/>
-      <UnitOutputDirectory Value="..\..\bin\lib\$NameOnly($(PkgName))\$(TargetCPU)-$(TargetOS)"/>
+      <OtherUnitFiles Value="..\Source"/>
+      <UnitOutputDirectory Value="..\..\bin\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)-$(LCLWidgetType)"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
@@ -18,7 +18,7 @@
       <CompilerMessages>
         <MsgFileName Value=""/>
       </CompilerMessages>
-      <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
+      <CustomOptions Value="-dPUREPASCAL"/>
     </Other>
   </CompilerOptions>
 </CONFIG>

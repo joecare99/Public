@@ -11,7 +11,7 @@
         <IncludeFiles Value="../../include;../Source/VisualWeb"/>
         <Libraries Value="$(PkgOutDir)"/>
         <OtherUnitFiles Value="../Source/VisualWeb"/>
-        <UnitOutputDirectory Value="../../bin/lib/$NameOnly($(PkgName))/$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="../../bin/lib/$(PkgName)/$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>

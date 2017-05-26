@@ -12,7 +12,7 @@ object MainForm: TMainForm
   Font.Name = 'System'
   FormStyle = fsMDIForm
   Menu = MainMenu1
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.6.4.0'
   Visible = False
   object MainMenu1: TMainMenu
     left = 40

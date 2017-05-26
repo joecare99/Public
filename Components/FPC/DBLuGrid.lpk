@@ -9,9 +9,9 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <IncludeFiles Value="C:\projekte\Delphi\Components\Source\DBLookUpGrid\"/>
-        <OtherUnitFiles Value="C:\projekte\Delphi\Components\Source\DBLookUpGrid\"/>
-        <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)\"/>
+        <IncludeFiles Value="..\Source\DBLookUpGrid\"/>
+        <OtherUnitFiles Value="..\Components\Source\DBLookUpGrid\"/>
+        <UnitOutputDirectory Value="..\..\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)\"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>

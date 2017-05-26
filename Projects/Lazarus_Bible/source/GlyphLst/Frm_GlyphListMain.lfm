@@ -12,7 +12,8 @@ object MainForm: TMainForm
   Font.Name = 'MS Sans Serif'
   OnClose = FormClose
   OnCreate = FormCreate
-  LCLVersion = '1.4.0.4'
+  LCLVersion = '1.7'
+  Visible = False
   object PathLabel: TLabel
     Left = 40
     Height = 13

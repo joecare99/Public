@@ -2,6 +2,8 @@ program Mdidemo;
 
 {$IFDEF FPC}
   {$MODE Delphi}
+{$ELSE}
+  {$E EXE}
 {$ENDIF}
 
 uses 
@@ -13,7 +15,6 @@ uses
   Frm_MDIDemoMAIN in '..\Source\MDIDEMO\Frm_MDIDemoMAIN.PAS' {MainForm}, 
   CHILD1 in '..\Source\MDIDEMO\CHILD1.PAS' {ChildForm}, 
   Frm_MDIDemoABOUT in '..\Source\MDIDEMO\Frm_MDIDemoABOUT.PAS' {AboutForm}; 
-{$E EXE} 
 {$R *.res}
 begin
   Application.Initialize;

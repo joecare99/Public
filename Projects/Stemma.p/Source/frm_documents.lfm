@@ -1,23 +1,23 @@
 object frmDocuments: TfrmDocuments
   Left = 672
-  Height = 83
+  Height = 315
   Top = 98
-  Width = 374
+  Width = 451
   ActiveControl = tblDocuments
   BorderIcons = []
   Caption = 'Documents'
-  ClientHeight = 83
-  ClientWidth = 374
+  ClientHeight = 315
+  ClientWidth = 451
   OnClose = FormClose
-  OnResize = FormResize
   OnShow = FormShow
   LCLVersion = '1.6.4.0'
   Visible = False
   object tblDocuments: TStringGrid
     Left = 0
-    Height = 200
-    Top = 0
-    Width = 304
+    Height = 289
+    Top = 26
+    Width = 451
+    Align = alClient
     Columns = <    
       item
         Title.Caption = '*'
@@ -36,8 +36,11 @@ object frmDocuments: TfrmDocuments
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
     PopupMenu = mnuDocuments
     TabOrder = 0
+    OnContextPopup = tblDocumentsContextPopup
     OnDblClick = mnuModifyClick
     OnDrawCell = tblDocumentsDrawCell
+    OnPrepareCanvas = tblDocumentsPrepareCanvas
+    OnResize = tblDocumemntsResize
     OnSelection = tblDocumentsSelection
     ColWidths = (
       1
@@ -46,6 +49,43 @@ object frmDocuments: TfrmDocuments
       64
       64
     )
+  end
+  object ToolBar1: TToolBar
+    Left = 0
+    Height = 26
+    Top = 0
+    Width = 451
+    Caption = 'ToolBar1'
+    ShowCaptions = True
+    TabOrder = 1
+    object btnDocumentsSetPrefered: TToolButton
+      Left = 1
+      Top = 2
+      Action = actDocumentsSetPrefered
+    end
+    object btnDocumentsSep: TToolButton
+      Left = 72
+      Height = 22
+      Top = 2
+      Width = 8
+      Caption = '&Add'
+      Style = tbsSeparator
+    end
+    object btnDocumentsAdd: TToolButton
+      Left = 80
+      Top = 2
+      Action = actDocumentsAdd
+    end
+    object btnDocumentsEdit: TToolButton
+      Left = 110
+      Top = 2
+      Action = actDocumentsEdit
+    end
+    object btnDocumentsDelete: TToolButton
+      Left = 138
+      Top = 2
+      Action = actDocumentsDelete
+    end
   end
   object mnuDocuments: TPopupMenu
     left = 346

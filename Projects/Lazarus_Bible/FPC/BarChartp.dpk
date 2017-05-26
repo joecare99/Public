@@ -1,5 +1,7 @@
 package BarChartp;
 
+{$MODE Delphi}
+
 {$R *.res}
 {$R '..\source\BARCHART\BarPkg.res'}
 {$IFDEF IMPLICITBUILDING This IFDEF should not be used by users}

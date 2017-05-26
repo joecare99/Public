@@ -4,12 +4,12 @@
     <PathDelim Value="\"/>
     <Version Value="10"/>
     <BuildModes Active="Default"/>
-    <Units Count="5">
+    <Units Count="7">
       <Unit0>
         <Filename Value="Mdidemo.dpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="58" Y="5"/>
-        <UsageCount Value="25"/>
+        <CursorPos X="11" Y="6"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
@@ -19,9 +19,10 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="1"/>
-        <CursorPos X="30" Y="9"/>
-        <UsageCount Value="25"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="32"/>
+        <CursorPos X="32" Y="40"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -32,9 +33,9 @@
         <ComponentName Value="ChildForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="4"/>
         <CursorPos X="3" Y="15"/>
-        <UsageCount Value="25"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -45,9 +46,10 @@
         <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="3"/>
-        <CursorPos X="22" Y="45"/>
-        <UsageCount Value="25"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="5"/>
+        <CursorPos X="21" Y="13"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -55,15 +57,37 @@
       <Unit4>
         <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
         <HasResources Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="21"/>
         <CursorPos X="20" Y="21"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\Grafik\spiele\frm_infectiousboard.pas"/>
+        <ComponentName Value="frmInfectiousBoard"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_InfectiousBoard"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="50"/>
+        <CursorPos X="6" Y="66"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\Utils\FPC\WriteCDate2.dpr"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="10" Y="18"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit4>
+      </Unit6>
     </Units>
-    <JumpHistory Count="7" HistoryIndex="6">
+    <JumpHistory Count="9" HistoryIndex="8">
       <Position1>
         <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
       </Position1>
@@ -83,12 +107,19 @@
         <Caret Line="13" Column="21"/>
       </Position5>
       <Position6>
-        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+        <Filename Value="..\source\MDIDEMO\Frm_MDIDemoABOUT.PAS"/>
+        <Caret Line="45" Column="22"/>
       </Position6>
       <Position7>
-        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
-        <Caret Line="21" Column="20" TopLine="21"/>
+        <Filename Value="Mdidemo.dpr"/>
+        <Caret Line="5" Column="58"/>
       </Position7>
+      <Position8>
+        <Filename Value="..\..\Grafik\spiele\frm_infectiousboard.pas"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\..\Utils\FPC\WriteCDate2.dpr"/>
+      </Position9>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

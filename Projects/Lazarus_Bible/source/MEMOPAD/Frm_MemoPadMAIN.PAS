@@ -71,12 +71,7 @@ end;
 
 procedure TMainForm.FormActivate(Sender: TObject);
 begin
-    {$IFDEF FPC}
-    if FileExistsUTF8('memos.txt')
-    {$ELSE}
-    if FileExists('memos.txt')
-
-  {$ENDIF}  then Memo1.Lines.LoadFromFile('memos.txt')
+    if FileExists('memos.txt') then Memo1.Lines.LoadFromFile('memos.txt')
     else Memo1.Lines.SaveToFile('memos.txt');
 end;
 

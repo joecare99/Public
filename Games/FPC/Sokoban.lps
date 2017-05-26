@@ -3,8 +3,8 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="10"/>
-    <BuildModes Active="Debug"/>
-    <Units Count="44">
+    <BuildModes Active="Default"/>
+    <Units Count="45">
       <Unit0>
         <Filename Value="Sokoban.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -20,7 +20,8 @@
         <ComponentName Value="frmSokoban"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <CursorPos X="30" Y="942"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="43"/>
         <UsageCount Value="225"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -32,10 +33,8 @@
         <ComponentName Value="AboutBox"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="21"/>
-        <CursorPos X="61" Y="60"/>
+        <TopLine Value="22"/>
+        <CursorPos X="56" Y="31"/>
         <UsageCount Value="225"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -78,9 +77,8 @@
         <ComponentName Value="frmSkinInfo"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="-1"/>
-        <WindowIndex Value="1"/>
+        <WindowIndex Value="-1"/>
         <CursorPos X="38" Y="5"/>
         <UsageCount Value="225"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -89,9 +87,8 @@
         <Filename Value="..\Sokoban\LevInfoUnit.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="-1"/>
-        <WindowIndex Value="1"/>
+        <WindowIndex Value="-1"/>
         <UsageCount Value="225"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit7>
@@ -118,7 +115,7 @@
       <Unit10>
         <Filename Value="..\Sokoban\LoadLevelsetUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="1"/>
         <TopLine Value="10"/>
         <CursorPos Y="35"/>
         <UsageCount Value="225"/>
@@ -129,6 +126,7 @@
         <Filename Value="..\Sokoban\sokoengine.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="SokoEngine"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <TopLine Value="39"/>
         <CursorPos X="31" Y="91"/>
@@ -138,9 +136,8 @@
       </Unit11>
       <Unit12>
         <Filename Value="..\..\Components\Source\xmlintf.pas"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="-1"/>
-        <WindowIndex Value="1"/>
+        <WindowIndex Value="-1"/>
         <TopLine Value="7"/>
         <CursorPos X="27" Y="20"/>
         <UsageCount Value="189"/>
@@ -166,7 +163,7 @@
       <Unit16>
         <Filename Value="..\..\Components\Source\ComCtrlsEx.pas"/>
         <CursorPos X="37" Y="56"/>
-        <UsageCount Value="0"/>
+        <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit16>
       <Unit17>
@@ -175,7 +172,6 @@
       </Unit17>
       <Unit18>
         <Filename Value="C:\lazarus\lcl\stdctrls.pp"/>
-        <IsVisibleTab Value="True"/>
         <WindowIndex Value="1"/>
         <TopLine Value="375"/>
         <CursorPos X="14" Y="391"/>
@@ -183,7 +179,6 @@
       </Unit18>
       <Unit19>
         <Filename Value="C:\lazarus\lcl\controls.pp"/>
-        <IsVisibleTab Value="True"/>
         <WindowIndex Value="1"/>
         <TopLine Value="2156"/>
         <CursorPos X="14" Y="2105"/>
@@ -203,9 +198,8 @@
       </Unit21>
       <Unit22>
         <Filename Value="..\Sokoban\MainUnit.lfm"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="-1"/>
-        <WindowIndex Value="1"/>
+        <WindowIndex Value="-1"/>
         <TopLine Value="161"/>
         <CursorPos X="27" Y="190"/>
         <UsageCount Value="76"/>
@@ -213,7 +207,6 @@
       </Unit22>
       <Unit23>
         <Filename Value="C:\lazarus\lcl\menus.pp"/>
-        <IsVisibleTab Value="True"/>
         <WindowIndex Value="1"/>
         <TopLine Value="93"/>
         <CursorPos X="36" Y="108"/>
@@ -232,7 +225,6 @@
       </Unit25>
       <Unit26>
         <Filename Value="C:\lazarus\lcl\comboex.pas"/>
-        <IsVisibleTab Value="True"/>
         <WindowIndex Value="1"/>
         <TopLine Value="190"/>
         <CursorPos X="19" Y="207"/>
@@ -244,7 +236,6 @@
       </Unit27>
       <Unit28>
         <Filename Value="C:\lazarus\fpc\2.6.4\source\rtl\objpas\sysutils\sysutilh.inc"/>
-        <IsVisibleTab Value="True"/>
         <WindowIndex Value="1"/>
         <TopLine Value="235"/>
         <CursorPos X="3" Y="254"/>
@@ -252,20 +243,17 @@
       </Unit28>
       <Unit29>
         <Filename Value="C:\lazarus\fpc\2.6.4\source\rtl\objpas\classes\lists.inc"/>
-        <IsVisibleTab Value="True"/>
         <WindowIndex Value="1"/>
         <UsageCount Value="9"/>
       </Unit29>
       <Unit30>
         <Filename Value="C:\lazarus\fpc\2.6.4\source\rtl\inc\objpas.inc"/>
-        <IsVisibleTab Value="True"/>
         <WindowIndex Value="1"/>
         <CursorPos X="28" Y="5"/>
         <UsageCount Value="9"/>
       </Unit30>
       <Unit31>
         <Filename Value="C:\lazarus\lcl\lclmessageglue.pas"/>
-        <IsVisibleTab Value="True"/>
         <WindowIndex Value="1"/>
         <CursorPos X="33" Y="23"/>
         <UsageCount Value="9"/>
@@ -364,6 +352,15 @@
         <UsageCount Value="9"/>
         <DefaultSyntaxHighlighter Value="XML"/>
       </Unit43>
+      <Unit44>
+        <Filename Value="..\..\Grafik\test\testcardbase.pas"/>
+        <UnitName Value="testCardBase"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="285"/>
+        <CursorPos X="44" Y="301"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit44>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
@@ -408,83 +405,83 @@
       </Position10>
       <Position11>
         <Filename Value="..\Sokoban\MainUnit.pas"/>
-        <Caret Line="273" Column="3" TopLine="1270"/>
+        <Caret Line="198" Column="23" TopLine="157"/>
       </Position11>
       <Position12>
         <Filename Value="..\Sokoban\MainUnit.pas"/>
-        <Caret Line="198" Column="23" TopLine="157"/>
+        <Caret Line="731" Column="3" TopLine="729"/>
       </Position12>
       <Position13>
         <Filename Value="..\Sokoban\MainUnit.pas"/>
-        <Caret Line="731" Column="3" TopLine="729"/>
+        <Caret Line="732" Column="36" TopLine="705"/>
       </Position13>
       <Position14>
         <Filename Value="..\Sokoban\MainUnit.pas"/>
-        <Caret Line="732" Column="36" TopLine="705"/>
+        <Caret Line="958" Column="9" TopLine="923"/>
       </Position14>
       <Position15>
-        <Filename Value="..\Sokoban\MainUnit.pas"/>
-        <Caret Line="958" Column="9" TopLine="923"/>
+        <Filename Value="..\Sokoban\PathFUnit.pas"/>
+        <Caret Line="465" Column="30" TopLine="455"/>
       </Position15>
       <Position16>
         <Filename Value="..\Sokoban\PathFUnit.pas"/>
-        <Caret Line="465" Column="30" TopLine="455"/>
+        <Caret Line="470" TopLine="455"/>
       </Position16>
       <Position17>
         <Filename Value="..\Sokoban\PathFUnit.pas"/>
-        <Caret Line="470" TopLine="455"/>
+        <Caret Line="471" TopLine="455"/>
       </Position17>
       <Position18>
         <Filename Value="..\Sokoban\PathFUnit.pas"/>
-        <Caret Line="471" TopLine="455"/>
+        <Caret Line="477" TopLine="455"/>
       </Position18>
       <Position19>
         <Filename Value="..\Sokoban\PathFUnit.pas"/>
-        <Caret Line="477" TopLine="455"/>
+        <Caret Line="479" TopLine="455"/>
       </Position19>
       <Position20>
         <Filename Value="..\Sokoban\PathFUnit.pas"/>
-        <Caret Line="479" TopLine="455"/>
+        <Caret Line="480" TopLine="455"/>
       </Position20>
       <Position21>
         <Filename Value="..\Sokoban\PathFUnit.pas"/>
-        <Caret Line="480" TopLine="455"/>
+        <Caret Line="481" TopLine="455"/>
       </Position21>
       <Position22>
         <Filename Value="..\Sokoban\PathFUnit.pas"/>
-        <Caret Line="481" TopLine="455"/>
+        <Caret Line="482" TopLine="455"/>
       </Position22>
       <Position23>
         <Filename Value="..\Sokoban\PathFUnit.pas"/>
-        <Caret Line="482" TopLine="455"/>
+        <Caret Line="461" Column="33" TopLine="455"/>
       </Position23>
       <Position24>
         <Filename Value="..\Sokoban\PathFUnit.pas"/>
-        <Caret Line="461" Column="33" TopLine="455"/>
+        <Caret Line="470" TopLine="455"/>
       </Position24>
       <Position25>
         <Filename Value="..\Sokoban\PathFUnit.pas"/>
-        <Caret Line="470" TopLine="455"/>
+        <Caret Line="249" Column="27" TopLine="234"/>
       </Position25>
       <Position26>
         <Filename Value="..\Sokoban\PathFUnit.pas"/>
-        <Caret Line="249" Column="27" TopLine="234"/>
+        <Caret Line="823" Column="19" TopLine="801"/>
       </Position26>
       <Position27>
         <Filename Value="..\Sokoban\PathFUnit.pas"/>
-        <Caret Line="823" Column="19" TopLine="801"/>
+        <Caret Line="824" Column="30" TopLine="801"/>
       </Position27>
       <Position28>
-        <Filename Value="..\Sokoban\PathFUnit.pas"/>
-        <Caret Line="824" Column="30" TopLine="801"/>
+        <Filename Value="..\Sokoban\MainUnit.pas"/>
+        <Caret Line="958" Column="9" TopLine="923"/>
       </Position28>
       <Position29>
         <Filename Value="..\Sokoban\MainUnit.pas"/>
-        <Caret Line="958" Column="9" TopLine="923"/>
+        <Caret Line="913" Column="57" TopLine="903"/>
       </Position29>
       <Position30>
         <Filename Value="..\Sokoban\MainUnit.pas"/>
-        <Caret Line="913" Column="57" TopLine="903"/>
+        <Caret Column="43"/>
       </Position30>
     </JumpHistory>
   </ProjectSession>

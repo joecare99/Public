@@ -11,7 +11,7 @@
         <IncludeFiles Value="../../include;$path($(CompPath))/../../source/packages/fcl-net/src/$(srcOS)"/>
         <Libraries Value="$(PkgOutDir)"/>
         <OtherUnitFiles Value="../Source/VisualNet;$path($(CompPath))/../../source/packages/fcl-net/src"/>
-        <UnitOutputDirectory Value="../../bin/lib/$NameOnly($(PkgName))/$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="../../bin/lib/$(PkgName)/$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>

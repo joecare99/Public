@@ -3,11 +3,10 @@
   <ProjectGroup FileVersion="1">
     <Targets Count="12">
       <Target0 FileName="FPC\Asteroids.lpi">
-        <BuildModes Count="4"/>
+        <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
-        <Mode4 Name="Release1"/>
       </Target0>
       <Target1 FileName="FPC\prj_SokoLevelConvert.lpi">
         <BuildModes Count="4"/>
@@ -31,15 +30,15 @@
         <Mode3 Name="Release"/>
         <Mode4 Name="Release1"/>
       </Target4>
-      <Target5 FileName="..\Grafik\FPC\prj_FreeCell.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
-      </Target5>
-      <Target6 FileName="..\Grafik\FPC\Prj_Infectious.lpi">
+      <Target5 FileName="..\Grafik\FPC\Prj_Infectious.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
+      </Target5>
+      <Target6 FileName="..\Grafik\FPC\prj_FreeCell.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
       </Target6>
       <Target7 FileName="..\Grafik\FPC\fpcTestCardBase.lpi">
         <BuildModes Count="3"/>

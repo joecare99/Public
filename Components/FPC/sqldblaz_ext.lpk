@@ -10,7 +10,7 @@
         <IncludeFiles Value="../Source/MySQLLib6"/>
         <Libraries Value="$(PkgOutDir)"/>
         <OtherUnitFiles Value="../Source/MySQLLib6"/>
-        <UnitOutputDirectory Value="../../bin/lib/$NameOnly($(PkgName))/$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="../../bin/lib/$(PkgName)/$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>

@@ -2,12 +2,13 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <BuildModes Active="Default"/>
-    <Units Count="5">
+    <Units Count="6">
       <Unit0>
         <Filename Value="DingButtonXControl.dpr"/>
         <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
         <CursorPos X="27" Y="4"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
@@ -17,8 +18,8 @@
         <Filename Value="..\source\DingX\DingButtonXControl_TLB.pas"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="163"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="164"/>
         <CursorPos X="24" Y="180"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
@@ -27,7 +28,6 @@
       <Unit2>
         <Filename Value="..\source\DingX\DingButtonImpl1.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -43,17 +43,49 @@
       </Unit3>
       <Unit4>
         <Filename Value="..\source\DING\Ctrl_DingButton.pas"/>
-        <IsPartOfProject Value="True"/>
         <EditorIndex Value="4"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="85"/>
+        <CursorPos X="23" Y="104"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit5>
     </Units>
-    <JumpHistory Count="1">
+    <JumpHistory Count="6" HistoryIndex="5">
       <Position1>
         <Filename Value="..\source\DingX\DingButtonXControl_TLB.pas"/>
       </Position1>
+      <Position2>
+        <Filename Value="..\source\DingX\DingButtonXControl_TLB.pas"/>
+        <Caret Line="180" Column="24"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <Caret Line="79" Column="27" TopLine="79"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <Caret Line="113" Column="19" TopLine="98"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <Caret Line="135" Column="7" TopLine="119"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\GlyphLst\Frm_GlyphListMain.pas"/>
+        <Caret Line="104" Column="23" TopLine="85"/>
+      </Position6>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

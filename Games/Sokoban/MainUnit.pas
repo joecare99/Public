@@ -11,14 +11,15 @@ interface
 uses
 {$IFnDEF FPC}
   JPeg,  msxmldom, xmldom, ActnMan, ActnCtrls, ActnMenus, ToolWin, ImgList,
-  XPStyleActnCtrls, StdStyleActnCtrls, ActnPopup, Windows, PlatformDefaultStyleActnCtrls, XMLIntf, XMLDoc,
+  XPStyleActnCtrls, StdStyleActnCtrls, ActnPopup, Windows, PlatformDefaultStyleActnCtrls, XMLIntf, XMLDoc
+  , System.Actions, System.ImageList,
 {$ELSE}
   LCLIntf, LCLType,  FileUtil, ComboEx, DOM, XMLWrite,
 {$ENDIF}
   Messages, Graphics, Controls, Forms,
   Buttons, ActnList, StdCtrls, Menus,
    ExtCtrls, ComCtrls, Classes,
-  SysUtils, Dialogs, SokoEngine, PathFUnit, System.Actions, System.ImageList;
+  SysUtils, Dialogs, SokoEngine, PathFUnit;
 
 type
   TSkinData = record

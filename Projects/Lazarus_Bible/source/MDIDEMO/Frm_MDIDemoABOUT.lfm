@@ -1,32 +1,35 @@
 object AboutForm: TAboutForm
   Left = 238
+  Height = 213
   Top = 154
+  Width = 298
   ActiveControl = OKButton
   BorderStyle = bsDialog
   Caption = 'About'
   ClientHeight = 213
   ClientWidth = 298
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -13
   Font.Name = 'System'
-  Font.Style = []
   Position = poScreenCenter
-  PixelsPerInch = 96
+  LCLVersion = '1.6.4.0'
+  Visible = False
   object Panel1: TPanel
     Left = 8
+    Height = 161
     Top = 8
     Width = 281
-    Height = 161
     BevelInner = bvRaised
     BevelOuter = bvLowered
+    ClientHeight = 161
+    ClientWidth = 281
     TabOrder = 0
     object ProgramIcon: TImage
       Left = 8
+      Height = 57
       Top = 8
       Width = 65
-      Height = 57
       Picture.Data = {
         07544269746D617076020000424D760200000000000076000000280000002000
         0000200000000100040000000000000200000000000000000000100000000000
@@ -54,73 +57,72 @@ object AboutForm: TAboutForm
     end
     object ProductName: TLabel
       Left = 88
+      Height = 13
       Top = 16
       Width = 109
-      Height = 13
       Caption = 'MDI Demonstration'
-      Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
+      ParentColor = False
       ParentFont = False
     end
     object Version: TLabel
       Left = 88
+      Height = 13
       Top = 40
       Width = 72
-      Height = 13
       Caption = 'Version 1.00'
-      Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
+      ParentColor = False
       ParentFont = False
     end
     object Copyright: TLabel
       Left = 8
+      Height = 13
       Top = 80
       Width = 216
-      Height = 13
       Caption = 'Copyright © 1995, 1998 by Tom Swan'
-      Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
+      ParentColor = False
       ParentFont = False
     end
     object Comments: TLabel
       Left = 8
+      Height = 33
       Top = 112
       Width = 265
-      Height = 33
       AutoSize = False
       Caption = 'A three-module MDI demonstation program and shell.'
-      Font.Charset = DEFAULT_CHARSET
       Font.Color = clBlack
       Font.Height = -11
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
+      ParentColor = False
       ParentFont = False
       WordWrap = True
     end
   end
   object OKButton: TBitBtn
     Left = 111
+    Height = 27
     Top = 178
     Width = 77
-    Height = 27
-    Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
-    ParentFont = False
-    TabOrder = 1
     Kind = bkOK
     Margin = 2
+    ParentFont = False
     Spacing = -1
+    TabOrder = 1
   end
-end
+end

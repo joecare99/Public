@@ -1,32 +1,34 @@
 object MainForm: TMainForm
   Left = 275
+  Height = 254
   Top = 136
+  Width = 427
   Caption = 'Memo Pad'
   ClientHeight = 254
   ClientWidth = 427
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -13
   Font.Name = 'System'
-  Font.Style = []
   Menu = MainMenu1
-  PopupMenu = PopupMenu1
   OnActivate = FormActivate
   OnClose = FormClose
-  PixelsPerInch = 96
+  PopupMenu = PopupMenu1
+  LCLVersion = '1.7'
+  Visible = False
   object MemoLabel: TLabel
     Left = 16
+    Height = 16
     Top = 32
     Width = 52
-    Height = 16
     Caption = 'Memos:'
+    ParentColor = False
   end
   object Memo1: TMemo
     Left = 16
+    Height = 169
     Top = 56
     Width = 393
-    Height = 169
     TabOrder = 0
   end
   object MainMenu1: TMainMenu
@@ -69,4 +71,4 @@ object MainForm: TMainForm
       OnClick = Exit1Click
     end
   end
-end
+end
