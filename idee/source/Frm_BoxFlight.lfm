@@ -1,0 +1,99 @@
+object Form6: TForm6
+  Left = 349
+  Height = 756
+  Top = 91
+  Width = 1005
+  ActiveControl = TrackBar1
+  ClientHeight = 756
+  ClientWidth = 1005
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnResize = FormResize
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object PaintBox1: TPaintBox
+    Left = 8
+    Height = 400
+    Top = 320
+    Width = 400
+    OnPaint = PaintBox1Paint
+  end
+  object PaintBox2: TPaintBox
+    Left = 8
+    Height = 296
+    Top = 8
+    Width = 992
+    Anchors = [akTop, akLeft, akRight]
+    OnMouseMove = PaintBox2MouseMove
+  end
+  object TrackBar1: TTrackBar
+    Left = -8
+    Height = 25
+    Top = 728
+    Width = 1002
+    Position = 0
+    TabOrder = 0
+  end
+  object BitBtn1: TBitBtn
+    Left = 672
+    Height = 25
+    Top = 408
+    Width = 75
+    Caption = 'BitBtn1'
+    TabOrder = 1
+  end
+  object ScrollBar1: TScrollBar
+    Left = 414
+    Height = 16
+    Top = 320
+    Width = 337
+    Max = 255
+    PageSize = 0
+    Position = 127
+    TabOrder = 2
+  end
+  object CheckBox1: TCheckBox
+    Left = 414
+    Height = 19
+    Top = 342
+    Width = 78
+    Caption = 'CheckBox1'
+    TabOrder = 3
+  end
+  object CheckBox2: TCheckBox
+    Left = 512
+    Height = 19
+    Top = 342
+    Width = 78
+    Caption = 'CheckBox2'
+    Checked = True
+    State = cbChecked
+    TabOrder = 4
+  end
+  object Label1: TLabel
+    Left = 960
+    Height = 15
+    Top = 323
+    Width = 34
+    Anchors = [akTop, akRight]
+    Caption = 'Label1'
+    ParentColor = False
+  end
+  object BitBtn2: TBitBtn
+    Left = 888
+    Height = 46
+    Top = 544
+    Width = 112
+    DefaultCaption = True
+    Kind = bkClose
+    ModalResult = 11
+    OnClick = BitBtn2Click
+    TabOrder = 5
+  end
+  object Timer1: TTimer
+    Interval = 40
+    OnTimer = Timer1Timer
+    left = 584
+    top = 377
+  end
+end

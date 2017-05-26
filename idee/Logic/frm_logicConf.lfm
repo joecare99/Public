@@ -1,0 +1,101 @@
+object FrmLogicConf: TFrmLogicConf
+  Left = 115
+  Height = 365
+  Top = 88
+  Width = 715
+  Caption = 'FrmLogicConf'
+  ClientHeight = 365
+  ClientWidth = 715
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  LCLVersion = '1.2.6.0'
+  object StringGrid1: TStringGrid
+    Left = 0
+    Height = 324
+    Top = 41
+    Width = 715
+    Align = alClient
+    DefaultRowHeight = 14
+    FixedCols = 0
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing]
+    TabOrder = 0
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'Tahoma'
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 41
+    Top = 0
+    Width = 715
+    Align = alTop
+    Caption = 'Panel1'
+    ClientHeight = 41
+    ClientWidth = 715
+    TabOrder = 1
+    object Bevel1: TBevel
+      Left = 110
+      Height = 25
+      Top = 6
+      Width = 41
+    end
+    object SpeedButton1: TSpeedButton
+      Left = 114
+      Height = 20
+      Top = 9
+      Width = 34
+      Flat = True
+      OnClick = SpeedButton1Click
+    end
+    object StaticText1: TStaticText
+      Left = 14
+      Height = 17
+      Top = 0
+      Width = 56
+      Caption = 'Kategorien'
+      TabOrder = 0
+    end
+    object SpinEdit1: TSpinEdit
+      Left = 14
+      Height = 21
+      Top = 11
+      Width = 90
+      MaxValue = 10
+      MinValue = 1
+      OnChange = SpinEdit1Change
+      TabOrder = 1
+      Value = 1
+    end
+    object StaticText2: TStaticText
+      Left = 157
+      Height = 17
+      Top = 0
+      Width = 48
+      Caption = 'Elemente'
+      TabOrder = 2
+    end
+    object SpinEdit2: TSpinEdit
+      Left = 157
+      Height = 21
+      Top = 11
+      Width = 90
+      MaxValue = 15
+      MinValue = 1
+      OnChange = SpinEdit2Change
+      TabOrder = 3
+      Value = 1
+    end
+    object BitBtn1: TBitBtn
+      Left = 599
+      Height = 39
+      Top = 1
+      Width = 115
+      Align = alRight
+      Kind = bkOK
+      OnClick = BitBtn1Click
+      TabOrder = 4
+    end
+  end
+end

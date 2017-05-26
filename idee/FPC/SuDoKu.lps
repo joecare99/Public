@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="3">
+      <Unit0>
+        <Filename Value="SuDoKu.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="../Sudoku/Frm_SudokuMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <TopLine Value="527"/>
+        <CursorPos X="60" Y="557"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="../source/cls_crtbasegamehmi.pas"/>
+        <UnitName Value="cls_CrtBaseGameHMI"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="11" Y="14"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit2>
+    </Units>
+    <JumpHistory Count="3" HistoryIndex="2">
+      <Position1>
+        <Filename Value="../source/cls_crtbasegamehmi.pas"/>
+      </Position1>
+      <Position2>
+        <Filename Value="../source/cls_crtbasegamehmi.pas"/>
+        <Caret Line="100" Column="48" TopLine="81"/>
+      </Position2>
+      <Position3>
+        <Filename Value="../source/cls_crtbasegamehmi.pas"/>
+        <Caret Line="14" Column="11"/>
+      </Position3>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

@@ -1,0 +1,60 @@
+object GraphForm: TGraphForm
+  Left = 726
+  Height = 448
+  Top = 411
+  Width = 632
+  Caption = 'GraphForm'
+  ClientHeight = 448
+  ClientWidth = 632
+  Color = clNavy
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
+  OnMouseMove = FormMouseMove
+  OnPaint = FormPaint
+  OnResize = FormResize
+  OnShow = FormShow
+  PopupMenu = PopupMenu1
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object PopupMenu1: TPopupMenu
+    left = 392
+    top = 392
+    object Clear1: TMenuItem
+      Caption = 'Clear'
+      OnClick = Clear1Click
+    end
+    object BildSpeichern1: TMenuItem
+      Caption = 'Bild Speichern'
+      OnClick = BildSpeichern1Click
+    end
+    object Aktualisieren1: TMenuItem
+      Caption = 'Aktualisieren'
+      OnClick = Aktualisieren1Click
+    end
+    object N1: TMenuItem
+      Caption = '-'
+    end
+    object Schliessen1: TMenuItem
+      Caption = 'Schliessen'
+      OnClick = Schliessen1Click
+    end
+    object Test1: TMenuItem
+      Caption = 'Test'
+      OnClick = Test1Click
+    end
+  end
+  object SavePictureDialog1: TSavePictureDialog
+    DefaultExt = '.bmp'
+    left = 408
+    top = 232
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    left = 440
+    top = 296
+  end
+end

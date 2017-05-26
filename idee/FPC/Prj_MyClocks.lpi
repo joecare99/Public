@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="10"/>
+    <PathDelim Value="\"/>
+    <General>
+      <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
+      <Title Value="Prj_MyClocks"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <Icon Value="0"/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="1">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="6">
+      <Item1>
+        <PackageName Value="UntConfig"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="DateTimeCtrls"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="rxnew"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="LazOpenGLContext"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="BGRABitmapPack"/>
+      </Item5>
+      <Item6>
+        <PackageName Value="LCL"/>
+      </Item6>
+    </RequiredPackages>
+    <Units Count="4">
+      <Unit0>
+        <Filename Value="Prj_MyClocks.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="prj_MyClocks"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\MyClocks\frm_myclocksmain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_MyClocksMain"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\MyClocks\cmp_oneclock.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="OneClock"/>
+        <UnitName Value="cmp_OneClock"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\source\MyClocks\frm_myclockdef.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmMyClockDef"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_MyClockDef"/>
+      </Unit3>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\Prj_MyClocks"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="..\source\MyClocks"/>
+      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+    </SearchPaths>
+    <Linking>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

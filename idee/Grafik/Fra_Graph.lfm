@@ -1,0 +1,46 @@
+object FraGraph: TFraGraph
+  Left = 0
+  Height = 336
+  Top = 0
+  Width = 458
+  Color = clBlack
+  OnResize = FrameResize
+  ParentColor = False
+  PopupMenu = PopupMenu1
+  TabOrder = 0
+  DesignLeft = 68
+  DesignTop = 72
+  object PopupMenu1: TPopupMenu
+    left = 208
+    top = 256
+    object Clear1: TMenuItem
+      Caption = 'Clear'
+      OnClick = Clear1Click1
+    end
+    object BildSpeichern1: TMenuItem
+      Caption = 'Bild Speichern'
+      OnClick = BildSpeichern1Click
+    end
+    object Aktualisieren1: TMenuItem
+      Caption = 'Aktualisieren'
+      OnClick = Aktualisieren1Click
+    end
+    object N1: TMenuItem
+      Caption = '-'
+    end
+    object Schliessen1: TMenuItem
+      Caption = 'Schliessen'
+      OnClick = Schliessen1Click
+    end
+  end
+  object SavePictureDialog1: TSavePictureDialog
+    DefaultExt = '.bmp'
+    left = 224
+    top = 96
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    left = 256
+    top = 160
+  end
+end

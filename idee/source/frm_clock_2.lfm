@@ -1,0 +1,56 @@
+object FrmClock: TFrmClock
+  Left = 1253
+  Height = 178
+  Top = 199
+  Width = 186
+  ActiveControl = Button1
+  AlphaBlend = True
+  AlphaBlendValue = 196
+  BorderStyle = bsNone
+  Caption = 'JCs Clock'
+  ClientHeight = 178
+  ClientWidth = 186
+  Color = clNone
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  FormStyle = fsStayOnTop
+  OnActivate = FormActivate
+  OnCreate = FormCreate
+  OnMouseEnter = FormMouseEnter
+  OnMouseLeave = FormMouseLeave
+  OnMouseMove = FormMouseMove
+  OnPaint = FormPaint
+  OnResize = FormResize
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object Image2: TImage
+    Left = 8
+    Height = 176
+    Top = 0
+    Width = 168
+    Visible = False
+  end
+  object Image1: TImage
+    Left = 8
+    Height = 176
+    Top = 2
+    Width = 168
+    OnMouseMove = Image1MouseMove
+  end
+  object Button1: TBitBtn
+    Left = 34
+    Height = 18
+    Top = 26
+    Width = 16
+    Caption = 'X'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object Timer1: TTimer
+    Interval = 300
+    OnTimer = Timer1Timer
+    left = 280
+    top = 224
+  end
+end
