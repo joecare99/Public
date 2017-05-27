@@ -47,6 +47,10 @@ TYPE
   TRows = 1 .. HIGH(Word);
   // TAlignment = (alLeft, alRight, alCenter);
   TCGAColor = integer;
+{$if declared(_CHAR_INFO)}
+  TCHAR_INFO=_CHAR_INFO;
+{$endIf}
+
 
 CONST
   /// <author>C.Rosewich</author>
@@ -297,6 +301,9 @@ TYPE
     PROCEDURE AppIdle(Sender: TObject; VAR Done: Boolean);
     /// <author>C.Rosewich</author>
     FUNCTION MousePos: TPoint;
+    /// <author>J.Care</author>
+    procedure WriteConsoleOutput(var buf; const coordbufSize,
+      coordBufCoord: tpoint; scrrect: TRect); // screen buffer source rectangle
   END;
 
 VAR
@@ -1607,7 +1614,7 @@ BEGIN
   coordBufCoord.X := 0;
   coordBufCoord.Y := 0;
 
-  WriteConsoleOutput(Console.OutHandle, // screen buffer to read from
+  WriteConsoleOutputA(Console.OutHandle, // screen buffer to read from
     @Val, // buffer to copy into
     coordBufSize, // col-row size of chiBuffer
     coordBufCoord, // top left dest. cell in chiBuffer
@@ -1736,6 +1743,28 @@ function TConsole.MousePos: TPoint;
 BEGIN
   result := point(LastMEvent.dwMousePosition.X, LastMEvent.dwMousePosition.Y);
 END;
+
+procedure TConsole.WriteConsoleOutput( var buf;const coordbufSize,
+  coordBufCoord: tpoint;scrrect:TRect);
+
+function recttoSmallrect(r:TRect):TSmallRect;
+begin
+  result.Top := r.Top;
+  result.Left := r.Left;
+  result.Bottom := r.Bottom;
+  result.Right := r.Right;
+end;
+
+var
+  smr: TSmallRect;
+begin
+  smr := recttoSmallrect(scrrect);
+  WriteConsoleOutputA(Console.OutHandle, // screen buffer to read from
+    @buf, // buffer to copy into
+    TCoord( PointToSmallPoint(coordbufSize)), // col-row size of chiBuffer
+    TCoord(PointToSmallPoint(coordBufCoord)), // top left dest. cell in chiBuffer
+    smr);
+end;
 
 INITIALIZATION
 

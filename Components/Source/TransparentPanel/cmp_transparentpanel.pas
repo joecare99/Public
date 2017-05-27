@@ -5,7 +5,7 @@ unit cmp_transparentpanel;
 interface
 
 uses
-  Classes,  types, SysUtils,{$IFDEF FPC}  LMessages,LCLType, {$ELSE}  Messages, {$ENDIF} Forms, Controls, Graphics{$IFDEF MSWINDOWS} , Windows {$ELSE}  {$ENDIF};
+  Classes,   SysUtils,{$IFDEF FPC}  LMessages,LCLType, {$ELSE}  Messages, {$ENDIF} Forms, Controls, Graphics  ;
 
 type
 
@@ -14,32 +14,31 @@ type
   TTransparentPanel = class(TCustomControl)
 
   private
-    fBuffer: Graphics.TBitmap;
+    fBuffer: TBitmap;
     fBufferChanged: boolean;
     FNoBGR: Boolean;
     procedure SetNoBGR(AValue: Boolean);
   protected
-    function getBuffer: Graphics.TBitmap; virtual;
-    procedure SetColor(Value: TColor); override;
     {$IFDEF FPC}
     procedure WMWindowPosChanged(var Message: TLMWindowPosChanged);
       message LM_WINDOWPOSCHANGED;
-    procedure WMEraseBkgnd(var Message: TLMEraseBkgnd); message LM_ERASEBKGND;
+//    procedure WMEraseBkgnd(var Message: TLMEraseBkgnd); message LM_ERASEBKGND;
     {$ELSE}
     procedure WMWindowPosChanged(var Message: TLMWindowPosChanged);
       message WM_WINDOWPOSCHANGED;
-    procedure WMEraseBkgnd(var Message: TLMEraseBkgnd); message WM_ERASEBKGND;
+//    procedure WMEraseBkgnd(var Message: TLMEraseBkgnd); message WM_ERASEBKGND;
     {$ENDIF}
     procedure CreateParams(var Params: TCreateParams);override;
     procedure Paint; override;
     procedure Resize; override;
-    procedure redrawBackgroundBuffer(var buffer: Graphics.TBitmap); virtual;
+    procedure redrawBackgroundBuffer; virtual;
     function getBufferChanged: boolean; virtual;
     procedure setBufferChanged(val: boolean); virtual;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure Invalidate; override;
+    function getBuffer: Graphics.TBitmap; virtual;
   published
     property NoBGR:Boolean read FNoBGR write SetNoBGR;
     property OnPaint;
@@ -63,6 +62,8 @@ procedure Register;
 
 implementation
 
+uses windows,types;
+
 procedure Register;
 
 begin
@@ -70,13 +71,6 @@ begin
 end;
 
 { TTransparentPanel }
-
-procedure TTransparentPanel.SetColor(Value: TColor);
-
-begin
-  inherited SetColor(Value);
-  RecreateWnd(Self);
-end;
 
 procedure TTransparentPanel.SetNoBGR(AValue: Boolean);
 begin
@@ -93,42 +87,27 @@ end;
 procedure TTransparentPanel.WMWindowPosChanged(var Message: TLMWindowPosChanged);
 
 begin
-  setBufferChanged(True);
-  Invalidate;
-  inherited;
-end;
-
-procedure TTransparentPanel.WMEraseBkgnd(var Message: TLMEraseBkgnd);
-
-begin
-  Message.Result := 1;
+//  Invalidate;
+   if csDesigning in ComponentState then
+    exit;
+  Canvas.CopyRect(rect(0,0,Width,Height),fBuffer.Canvas,rect(left,top,Left+Width,top+Height));
+//  inherited;
 end;
 
 procedure TTransparentPanel.CreateParams(var Params: TCreateParams);
 
 begin
   inherited CreateParams(Params);
-  {$IFDEF MSWINDOWS}
-  params.exstyle := params.exstyle or WS_EX_TRANSPARENT;
-  {$ELSE}
-  params.exstyle := params.exstyle or WS_EX_TRANSPARENT;
-  {$ENDIF}
+//  ControlStyle:=ControlStyle - [csOpaque];
 end;
 
 procedure TTransparentPanel.Paint;
 
+
 begin
-  if csDesigning in ComponentState then
+   if csDesigning in ComponentState then
     exit;
-  if not FNoBgr then
-    begin
-  if getBufferChanged then
-  begin
-    redrawBackgroundBuffer(fBuffer);
-    setBufferChanged(False);
-  end;
-  Canvas.Draw(0, 0, fBuffer);
-    end;
+  Canvas.CopyRect(rect(0,0,Width,Height),fBuffer.Canvas,rect(left,top,Left+Width,top+Height));
   if assigned(OnPaint) then
     OnPaint(Self);
 end;
@@ -138,33 +117,30 @@ procedure TTransparentPanel.Resize;
 begin
   if csDesigning in ComponentState then
     exit;
-  setBufferChanged(True);
   Invalidate;
   inherited Resize;
 end;
 
-procedure TTransparentPanel.redrawBackgroundBuffer(var buffer: Graphics.TBitmap);
+procedure TTransparentPanel.redrawBackgroundBuffer;
 
 var
-  rDest: TRect;
-  bmp: Graphics.TBitmap;
+  OldViz: Boolean;
 begin
-  bmp := Graphics.TBitmap.Create;
-  try
-    bmp.PixelFormat := pf24bit;
-    bmp.Width := Parent.Width;
-    bmp.Height := Parent.Height;
-    bmp.TransparentColor := Self.Color;
-    bmp.Canvas.brush.Color := TCustomForm(parent).Color;
-    bmp.Canvas.FillRect(types.rect(0, 0, bmp.Width, bmp.Height));
-    SendMessage(parent.Handle, WM_PAINT, bmp.Canvas.handle, 0);
+  if csDesigning in ComponentState then
+    exit;
+  with fBuffer do
+  begin
+    PixelFormat := pf24bit;
+    Width := Parent.Width;
+    Height := Parent.Height;
+    Canvas.brush.Color := clMaroon;
+    Canvas.FillRect(types.rect(0, 0, Width, Height));
+    OldViz:=    self.Visible;
+    self.Visible:=false;
+
+    SendMessage(parent.handle, LM_PAINT, Canvas.handle, 0);
     Application.ProcessMessages;
-    buffer.Width := Self.Width;
-    buffer.Height := Self.Height;
-    rDest := types.Rect(0, 0, Width, Height);
-    buffer.Canvas.CopyRect(rDest, bmp.Canvas, BoundsRect);
-  finally
-    FreeAndNil(bmp);
+    self.Visible:=OldViz;
   end;//finally
 end;
 
@@ -183,13 +159,14 @@ end;
 procedure TTransparentPanel.Invalidate;
 
 begin
-  if assigned(parent) and parent.HandleAllocated then
+  if assigned(parent) and parent.HandleAllocated and parent.Visible then
   begin
-    InvalidateRect(parent.Handle, BoundsRect, True);
-    inherited Invalidate;
-  end
-  else
-    inherited Invalidate;
+    if (fBuffer.Width <> Parent.Width) or
+       (fBuffer.Height <> Parent.Height) then
+       redrawBackgroundBuffer;
+//    InvalidateRect(parent.Handle, BoundsRect, True);
+  end;
+  inherited;
 end;
 
 constructor TTransparentPanel.Create(AOwner: TComponent);
@@ -209,7 +186,7 @@ end;
 destructor TTransparentPanel.Destroy;
 
 begin
-  fBuffer.Free;
+  freeandnil(fBuffer);
   inherited Destroy;
 end;
 

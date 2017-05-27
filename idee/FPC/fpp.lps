@@ -1,0 +1,370 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="36">
+      <Unit0>
+        <Filename Value="fpp.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="481"/>
+        <CursorPos X="35" Y="508"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpcompil.pas"/>
+        <UnitName Value="FPCompil"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="23"/>
+        <CursorPos X="54" Y="44"/>
+        <UsageCount Value="11"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\wutils.pas"/>
+        <UnitName Value="WUtils"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="107"/>
+        <CursorPos X="10" Y="133"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpcygwin.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="56" Y="79"/>
+        <UsageCount Value="11"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\globtype.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="19" Y="102"/>
+        <UsageCount Value="11"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\fpcdefs.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="72"/>
+        <CursorPos X="26" Y="79"/>
+        <UsageCount Value="11"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\globals.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="29"/>
+        <CursorPos X="7" Y="46"/>
+        <UsageCount Value="11"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\x86_64\cpuinfo.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="7"/>
+        <CursorPos X="50" Y="25"/>
+        <UsageCount Value="11"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\cgutils.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="16"/>
+        <CursorPos X="7" Y="33"/>
+        <UsageCount Value="11"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\x86\cpubase.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="32"/>
+        <CursorPos X="36" Y="47"/>
+        <UsageCount Value="11"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpdebug.pas"/>
+        <UnitName Value="FPDebug"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="175"/>
+        <CursorPos X="19" Y="191"/>
+        <UsageCount Value="11"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\gdbint\src\gdbint.pp"/>
+        <UnitName Value="GdbInt"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="8"/>
+        <CursorPos X="46" Y="25"/>
+        <UsageCount Value="10"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\gdbint\src\gdbver.inc"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\views.pas"/>
+        <UnitName Value="Views"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="19"/>
+        <CursorPos X="21" Y="37"/>
+        <UsageCount Value="11"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\editors.pas"/>
+        <UnitName Value="Editors"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="281"/>
+        <CursorPos X="30" Y="298"/>
+        <UsageCount Value="11"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpsymbol.pas"/>
+        <UnitName Value="FPSymbol"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1229"/>
+        <CursorPos X="52" Y="1245"/>
+        <UsageCount Value="11"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\outline.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="23"/>
+        <CursorPos X="18" Y="39"/>
+        <UsageCount Value="11"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\globdir.inc"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="102"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\wviews.pas"/>
+        <UnitName Value="WViews"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="133"/>
+        <CursorPos X="58" Y="150"/>
+        <UsageCount Value="10"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\dialogs.pas"/>
+        <UnitName Value="Dialogs"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="331"/>
+        <CursorPos X="53" Y="336"/>
+        <UsageCount Value="10"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\weditor.pas"/>
+        <UnitName Value="WEditor"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="6783"/>
+        <CursorPos X="12" Y="6809"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\platform.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="329"/>
+        <UsageCount Value="10"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\validate.pas"/>
+        <UnitName Value="Validate"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="126"/>
+        <CursorPos X="16" Y="129"/>
+        <UsageCount Value="10"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\vesa.pas"/>
+        <UnitName Value="VESA"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\sysmsg.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="64"/>
+        <CursorPos X="47" Y="77"/>
+        <UsageCount Value="10"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\fv.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos Y="16"/>
+        <UsageCount Value="10"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\buildfv.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\w32smsg.inc"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="10"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpusrscr.pas"/>
+        <UnitName Value="FPUsrScr"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="924"/>
+        <CursorPos X="55" Y="952"/>
+        <UsageCount Value="10"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="C:\lazarus\fpc\3.0.2\source\packages\rtl-console\src\win\video.pp"/>
+        <UnitName Value="Video"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="706"/>
+        <CursorPos X="56" Y="564"/>
+        <UsageCount Value="10"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\win\dos.pp"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="331"/>
+        <CursorPos X="45" Y="29"/>
+        <UsageCount Value="10"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="..\source\fv\Src\app.pas"/>
+        <UnitName Value="App"/>
+        <TopLine Value="32"/>
+        <CursorPos X="45" Y="51"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="..\source\fv\Src\platform.inc"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="338"/>
+        <CursorPos X="22" Y="356"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
+        <UnitName Value="FPViews"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="3882"/>
+        <CursorPos X="50" Y="3898"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\inc\systemh.inc"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="313"/>
+        <CursorPos X="3" Y="339"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\inc\dosh.inc"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="74"/>
+        <CursorPos X="11" Y="100"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit35>
+    </Units>
+    <JumpHistory Count="21" HistoryIndex="20">
+      <Position1>
+        <Filename Value="..\source\fv\Src\app.pas"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\fv\Src\app.pas"/>
+        <Caret Line="41" Column="10" TopLine="20"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\weditor.pas"/>
+        <Caret Line="6878" Column="59"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\weditor.pas"/>
+        <Caret Line="6809" Column="13" TopLine="6783"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\weditor.pas"/>
+        <Caret Line="15" Column="8" TopLine="250"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\weditor.pas"/>
+        <Caret Line="6809" Column="17" TopLine="6783"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\weditor.pas"/>
+        <Caret Line="15" Column="8"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\weditor.pas"/>
+        <Caret Line="6809" Column="13" TopLine="6783"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
+      </Position9>
+      <Position10>
+        <Filename Value="fpp.pas"/>
+        <Caret Line="30" Column="14" TopLine="20"/>
+      </Position10>
+      <Position11>
+        <Filename Value="fpp.pas"/>
+        <Caret Line="507" Column="35" TopLine="481"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
+        <Caret Line="557" Column="3" TopLine="531"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
+        <Caret Line="569" Column="3" TopLine="543"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
+        <Caret Line="4420" Column="59" TopLine="4395"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
+        <Caret Line="4015" Column="33" TopLine="3989"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
+        <Caret Line="4010" Column="5" TopLine="3984"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
+        <Caret Line="4015" Column="11" TopLine="3989"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
+        <Caret Line="4013" Column="21" TopLine="3987"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
+        <Caret Line="3145" Column="24" TopLine="3119"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
+        <Caret Line="3812" Column="25" TopLine="3786"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
+        <Caret Line="3145" Column="11" TopLine="3119"/>
+      </Position21>
+    </JumpHistory>
+  </ProjectSession>
+  <Debugging>
+    <BreakPoints Count="1">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\dialogs.pas"/>
+        <Line Value="2854"/>
+      </Item1>
+    </BreakPoints>
+  </Debugging>
+</CONFIG>

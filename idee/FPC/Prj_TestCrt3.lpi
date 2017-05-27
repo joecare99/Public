@@ -4,15 +4,19 @@
     <Version Value="10"/>
     <PathDelim Value="\"/>
     <General>
+      <Flags>
+        <MainUnitHasUsesSectionForAllUnits Value="False"/>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+      </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="prj_testTransPanel"/>
+      <Title Value="Prj_TestCrt3"/>
+      <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
-      <UseXPManifest Value="True"/>
-      <XPManifest>
-        <DpiAware Value="True"/>
-      </XPManifest>
-      <Icon Value="0"/>
+      <Resources Count="1">
+        <Resource_0 FileName="..\..\Glyphs\Joe_Care_h48.png" Type="RCDATA" ResourceName="JOE_CARE_H48"/>
+      </Resources>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -27,16 +31,17 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($project(Infofile))"/>
+            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\testTransparentPanel"/>
+            <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
+            <OtherUnitFiles Value="..\source\crt;..\..\Projekte\kams\Utils"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
               <IncludeAssertionCode Value="True"/>
+              <AllowLabel Value="False"/>
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
@@ -46,15 +51,18 @@
               <OverflowChecks Value="True"/>
               <StackChecks Value="True"/>
             </Checks>
-            <VerifyObjMethodCallValidity Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <DebugInfoType Value="dsDwarf2Set"/>
               <UseHeaptrc Value="True"/>
-              <TrashVariables Value="True"/>
               <UseExternalDbgSyms Value="True"/>
             </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
           </Linking>
         </CompilerOptions>
       </Item2>
@@ -63,13 +71,18 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($project(Infofile))"/>
+            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\testTransparentPanel"/>
+            <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
+            <OtherUnitFiles Value="..\grafik;..\..\Projekte\kams\Utils;..\source\Crt"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <AllowLabel Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
             <Optimizations>
@@ -82,6 +95,7 @@
             </Debugging>
             <LinkSmart Value="True"/>
             <Options>
+              <LinkerOptions Value="s"/>
               <Win32>
                 <GraphicApplication Value="True"/>
               </Win32>
@@ -98,37 +112,23 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="3">
+    <RequiredPackages Count="1">
       <Item1>
-        <PackageName Value="bgracontrols"/>
+        <PackageName Value="Compatible"/>
       </Item1>
-      <Item2>
-        <PackageName Value="cmpTranspPanel"/>
-      </Item2>
-      <Item3>
-        <PackageName Value="LCL"/>
-      </Item3>
     </RequiredPackages>
     <Units Count="3">
       <Unit0>
-        <Filename Value="prj_testTransPanel.lpr"/>
+        <Filename Value="Prj_TestCrt3.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Source\testTransparentPanel\frm_testtrpanelmain.pas"/>
+        <Filename Value="..\source\Crt\unt_testcrt3.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="FrmTrPanelMain"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="frm_TestTrPanelMain"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\Source\testTransparentPanel\unit1.pas"/>
+        <Filename Value="..\..\Projekte\kams\Utils\Unt_CharConst.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Unit1"/>
       </Unit2>
     </Units>
   </ProjectOptions>
@@ -136,25 +136,28 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($project(Infofile))"/>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source\testTransparentPanel"/>
+      <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
+      <OtherUnitFiles Value="..\grafik;..\..\Projekte\kams\Utils"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <AllowLabel Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <LinkSmart Value="True"/>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions Count="3">
-      <Item1>
-        <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-    </Exceptions>
-  </Debugging>
 </CONFIG>

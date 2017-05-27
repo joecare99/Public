@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="10"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
+      <Title Value="fpp"/>
+      <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <Icon Value="0"/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="1">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="1">
+      <Item1>
+        <PackageName Value="fv_p"/>
+      </Item1>
+    </RequiredPackages>
+    <Units Count="1">
+      <Unit0>
+        <Filename Value="fpp.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit0>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$nameonly($project(infofile))"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir);..\..\..\Lazarus\FpcTrunk\compiler;..\..\..\Lazarus\FpcTrunk\compiler\$(TARGETCPU);..\..\..\Lazarus\FpcTrunk\ide;..\..\..\Lazarus\FpcTrunk\packages\gdbint\src"/>
+      <OtherUnitFiles Value="..\..\..\Lazarus\FpcTrunk\ide;..\..\..\Lazarus\FpcTrunk\compiler;..\..\..\Lazarus\FpcTrunk\compiler\$(TARGETCPU);..\..\..\Lazarus\FpcTrunk\compiler\x86;..\..\..\Lazarus\FpcTrunk\compiler\systems;..\..\..\Lazarus\FpcTrunk\packages\gdbint\src"/>
+      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <AllowLabel Value="False"/>
+        <UseAnsiStrings Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <LinkSmart Value="True"/>
+    </Linking>
+    <Other>
+      <CustomOptions Value="-d$(TARGETCPU) -dNODEBUG"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>
