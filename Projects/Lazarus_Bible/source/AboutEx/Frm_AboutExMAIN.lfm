@@ -5,7 +5,7 @@ object frmAboutMain: TfrmAboutMain
   Width = 272
   HorzScrollBar.Visible = False
   ActiveControl = btnClickMe
-  Caption = 'About Box Example'
+  Caption = 'About Box Example '
   ClientHeight = 127
   ClientWidth = 272
   Color = clBtnFace
@@ -19,7 +19,7 @@ object frmAboutMain: TfrmAboutMain
     Height = 73
     Top = 24
     Width = 185
-    Caption = 'Click Me!'
+    Caption = 'Click Me! ...'
     OnClick = btnClickMeClick
     TabOrder = 0
   end

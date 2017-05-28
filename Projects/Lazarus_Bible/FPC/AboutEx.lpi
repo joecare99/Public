@@ -13,14 +13,17 @@
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
+    <LazDoc Paths="..\FPDoc"/>
     <i18n>
-      <EnableI18N LFM="False"/>
+      <EnableI18N Value="True"/>
+      <OutDir Value="..\Language"/>
     </i18n>
     <VersionInfo>
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
-      <BuildNr Value="9"/>
+      <BuildNr Value="10"/>
       <Language Value="0407"/>
+      <StringTable ProductVersion="0.0.0.9"/>
     </VersionInfo>
     <BuildModes Count="5">
       <Item1 Name="Default" Default="True"/>

@@ -1,0 +1,65 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: frm_cooldemomain.sbacknforwardbtn_ed
+msgid "%s Back and Forward Buttons"
+msgstr ""
+
+#: frm_cooldemomain.sbeginanimation
+msgid "Begin Animation"
+msgstr ""
+
+#: frm_cooldemomain.sbuttonselecteds
+msgid "Button selected: %s"
+msgstr ""
+
+#: frm_cooldemomain.sdisable
+msgid "Disable"
+msgstr ""
+
+#: frm_cooldemomain.senable
+msgid "Enable"
+msgstr ""
+
+#: frm_cooldemomain.sstopanimation
+msgctxt "frm_cooldemomain.sstopanimation"
+msgid "Stop Animation"
+msgstr ""
+
+#: tmainform.animate1.caption
+msgid "Animate1"
+msgstr ""
+
+#: tmainform.bitbtn1.caption
+msgid "Enable Back and Forward Buttons"
+msgstr ""
+
+#: tmainform.button1.caption
+msgctxt "TMAINFORM.BUTTON1.CAPTION"
+msgid "Stop Animation"
+msgstr ""
+
+#: tmainform.coolbar1.bands[1].text
+msgid "Date Selector"
+msgstr ""
+
+#: tmainform.toolbutton1.caption
+msgid "Back"
+msgstr ""
+
+#: tmainform.toolbutton2.caption
+msgid "Forward"
+msgstr ""
+
+#: tmainform.toolbutton3.caption
+msgid "ToolButton3"
+msgstr ""
+
+#: tmainform.toolbutton4.caption
+msgid "Stop"
+msgstr ""
+
+#: tmainform.toolbutton5.caption
+msgid "Refresh"
+msgstr ""
+

@@ -3,6 +3,7 @@ object MainForm: TMainForm
   Height = 248
   Top = 126
   Width = 582
+  ActiveControl = RadioGroup1.RadioButton0
   Caption = 'Animator Demonstration'
   ClientHeight = 248
   ClientWidth = 582
@@ -11,7 +12,8 @@ object MainForm: TMainForm
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
-  LCLVersion = '1.2.6.0'
+  LCLVersion = '1.6.4.0'
+  Visible = False
   object Label1: TLabel
     Left = 384
     Height = 24

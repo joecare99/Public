@@ -1,0 +1,74 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joe Care\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"X-Generator: Poedit 2.0.2\n"
+
+#: frm_cooldemomain.sbacknforwardbtn_ed
+msgid "%s Back and Forward Buttons"
+msgstr "%s der Tasten Zurück und Vor"
+
+#: frm_cooldemomain.sbeginanimation
+msgid "Begin Animation"
+msgstr "Animation starten"
+
+#: frm_cooldemomain.sbuttonselecteds
+msgid "Button selected: %s"
+msgstr "Taste ausgewählt: %s"
+
+#: frm_cooldemomain.sdisable
+msgid "Disable"
+msgstr "Deaktivieren"
+
+#: frm_cooldemomain.senable
+msgid "Enable"
+msgstr "Aktivieren"
+
+#: frm_cooldemomain.sstopanimation
+msgctxt "frm_cooldemomain.sstopanimation"
+msgid "Stop Animation"
+msgstr "Animation stoppen"
+
+#: tmainform.animate1.caption
+msgid "Animate1"
+msgstr ""
+
+#: tmainform.bitbtn1.caption
+msgid "Enable Back and Forward Buttons"
+msgstr "Aktivieren Sie die Tasten zurück und vorwärts"
+
+#: tmainform.button1.caption
+msgctxt "TMAINFORM.BUTTON1.CAPTION"
+msgid "Stop Animation"
+msgstr "Animation stoppen"
+
+#: tmainform.coolbar1.bands[1].text
+msgid "Date Selector"
+msgstr "Datum wählen"
+
+#: tmainform.toolbutton1.caption
+msgid "Back"
+msgstr "Zurück"
+
+#: tmainform.toolbutton2.caption
+msgid "Forward"
+msgstr "Vor"
+
+#: tmainform.toolbutton3.caption
+msgid "ToolButton3"
+msgstr ""
+
+#: tmainform.toolbutton4.caption
+msgid "Stop"
+msgstr "Anhalten"
+
+#: tmainform.toolbutton5.caption
+msgid "Refresh"
+msgstr "Aktualisieren"

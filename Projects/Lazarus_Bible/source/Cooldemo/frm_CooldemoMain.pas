@@ -13,11 +13,17 @@ uses
   LCLIntf, LCLType,
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ComCtrls, ToolWin, StdCtrls, Buttons, ImgList;
+  ComCtrls, ToolWin, StdCtrls, Buttons, ImgList, ExtCtrls, BGRASpriteAnimation;
 
 type
+
+  { TMainForm }
+
   TMainForm = class(TForm)
+    Animate1: TBGRASpriteAnimation;
     CoolBar1: TCoolBar;
+    Image1: TImage;
+    Panel1: TPanel;
     ToolBar1: TToolBar;
     NavigatorImages: TImageList;
     NavigatorHotImages: TImageList;
@@ -34,8 +40,13 @@ type
     DateTimePicker1: TDateTimePicker;
     XPManifest1: TXPManifest;
     {$ENDIF}
+    procedure Animate1Click(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure Image1Click(Sender: TObject);
+    procedure Panel1Click(Sender: TObject);
+    procedure ToolBar1Paint(Sender: TObject);
     procedure ToolButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -52,8 +63,17 @@ implementation
 {$IFnDEF FPC}
   {$R *.dfm}
 {$ELSE}
+  uses BGRAAnimatedGif,BGRABitmapTypes,BGRABitmap;
   {$R *.lfm}
 {$ENDIF}
+
+resourcestring
+  SBacknForwardBtn_ED = '%s Back and Forward Buttons';
+  SBeginAnimation = 'Begin Animation';
+  SButtonSelectedS = 'Button selected: %s';
+  SDisable = 'Disable';
+  SEnable = 'Enable';
+  SStopAnimation = 'Stop Animation';
 
 procedure TMainForm.BitBtn1Click(Sender: TObject);
 var
@@ -64,9 +84,14 @@ begin
   ToolButton1.Enabled := not TF;
   ToolButton2.Enabled := not TF;
   if TF
-    then S := 'Enable'
-    else S := 'Disable';
-  BitBtn1.Caption := S + ' Back and Forward Buttons';
+    then S := SEnable
+    else S := SDisable;
+  BitBtn1.Caption := format(SBacknForwardBtn_ED, [s]);
+end;
+
+procedure TMainForm.Animate1Click(Sender: TObject);
+begin
+
 end;
 
 procedure TMainForm.Button1Click(Sender: TObject);
@@ -74,9 +99,60 @@ begin
   {$IFNDEF FPC}
   Animate1.Active := not Animate1.Active;
   if Animate1.Active
-    then Button1.Caption := 'Stop Animation'
-    else Button1.Caption := 'Begin Animation';
-  {$ENDIF}
+    {$ELSE}
+    Animate1.AnimStatic := not Animate1.AnimStatic;
+    if not Animate1.AnimStatic
+    {$ENDIF}
+    then Button1.Caption := SStopAnimation
+    else Button1.Caption := SBeginAnimation;
+end;
+
+procedure TMainForm.FormCreate(Sender: TObject);
+  var
+   TempGif: TBGRAAnimatedGif;
+   TempBitmap: TBitmap;
+   n: integer;
+
+ begin
+   TempGif := TBGRAAnimatedGif.Create;
+   try
+   TempGif.LoadFromResourceName(HINSTANCE,'COOL');
+   TempBitmap := TBitmap.Create;
+   TempBitmap.Width:=TempGif.Width * TempGif.Count;
+   TempBitmap.Height:=TempGif.Height;
+   TempBitmap.PixelFormat:=pf32bit;
+
+   for n := 0 to TempGif.Count do
+   begin
+     TempGif.CurrentImage := n;
+     TempBitmap.Canvas.Draw(TempGif.Width * n, 0, TempGif.Bitmap);
+   end;
+
+   Animate1.Sprite.Assign(TempBitmap);
+   Animate1.SpriteCount := TempGif.Count;
+
+   finally
+
+     freeandnil(TempGif);
+     freeandnil(TempBitmap);
+   end;
+   Image1.Picture.Bitmap.Assign(CoolBar1.Bitmap);
+   ToolBar1.ControlStyle:=ToolBar1.ControlStyle-[csOpaque]+[csParentBackground];
+end;
+
+procedure TMainForm.Image1Click(Sender: TObject);
+begin
+
+end;
+
+procedure TMainForm.Panel1Click(Sender: TObject);
+begin
+
+end;
+
+procedure TMainForm.ToolBar1Paint(Sender: TObject);
+begin
+
 end;
 
 procedure TMainForm.FormShow(Sender: TObject);
@@ -89,7 +165,7 @@ end;
 procedure TMainForm.ToolButton1Click(Sender: TObject);
 begin
   with Sender as TToolButton do
-    ShowMessage('Button selected: ' + Caption);
+    ShowMessage(format(SButtonSelectedS, [Caption]));
 end;
 
 end.

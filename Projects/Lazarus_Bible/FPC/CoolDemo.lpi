@@ -14,9 +14,13 @@
       <Title Value="CoolDemo"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
+      <Resources Count="1">
+        <Resource_0 FileName="..\Data\COOL.gif" Type="RCDATA" ResourceName="COOL"/>
+      </Resources>
     </General>
     <i18n>
-      <EnableI18N LFM="False"/>
+      <EnableI18N Value="True"/>
+      <OutDir Value="..\Language"/>
     </i18n>
     <VersionInfo>
       <StringTable ProductVersion=""/>
@@ -31,7 +35,7 @@
             <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="..\..\include;..\source\$NameOnly($(ProjFile))"/>
+            <IncludeFiles Value="..\..\include;..\source\$NameOnly($(ProjFile));$(ProjOutDir)"/>
             <OtherUnitFiles Value="..\Source;..\source\$NameOnly($(ProjFile))"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
@@ -118,10 +122,13 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="LCL"/>
+        <PackageName Value="bgracontrols"/>
       </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>

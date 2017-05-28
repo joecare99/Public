@@ -3,6 +3,7 @@ object MainForm: TMainForm
   Height = 375
   Top = 141
   Width = 462
+  ActiveControl = mmText
   BorderStyle = bsDialog
   Caption = 'Readme'
   ClientHeight = 375
@@ -14,8 +15,9 @@ object MainForm: TMainForm
   OnActivate = FormActivate
   OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.2.6.0'
-  object Memo1: TMemo
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object mmText: TMemo
     Left = 8
     Height = 329
     Top = 8
@@ -28,7 +30,7 @@ object MainForm: TMainForm
     ScrollBars = ssBoth
     TabOrder = 0
   end
-  object BitBtn1: TBitBtn
+  object btnClose: TBitBtn
     Left = 184
     Height = 25
     Top = 344

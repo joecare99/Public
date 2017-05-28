@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="AboutEx"><module name="Frm_AboutExMAIN"><element name="TfrmAboutMain"><short>About-Box-Example - Mainform</short>
+      </element><element name="TfrmAboutMain.btnClickMe"><short>Button to open the About-Dialog</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

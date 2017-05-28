@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -15,8 +15,10 @@
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
+    <LazDoc Paths="..\FPDoc"/>
     <i18n>
-      <EnableI18N LFM="False"/>
+      <EnableI18N Value="True"/>
+      <OutDir Value="..\Language"/>
     </i18n>
     <VersionInfo>
       <StringTable ProductVersion=""/>
@@ -208,7 +210,6 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_AddpageMAIN"/>
       </Unit1>
     </Units>
   </ProjectOptions>

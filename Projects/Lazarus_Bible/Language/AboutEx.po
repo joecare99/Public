@@ -1,0 +1,23 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tfrmabout.lblcomments.caption
+msgid "Beta Test Version. !!! CONFIDENTIAL !!! Do not copy. Do not trade. All rights reserved. This means you. Violators shot at dawn."
+msgstr ""
+
+#: tfrmabout.lblcopyright.caption
+msgid "Copyright © 2001 by the Ugly Ducking"
+msgstr ""
+
+#: tfrmabout.lblproductname.caption
+msgid "Ducky Calc "
+msgstr ""
+
+#: tfrmabout.lblversion.caption
+msgid "Code name Siberia AKA DuckCalc98"
+msgstr ""
+
+#: tfrmaboutmain.btnclickme.caption
+msgid "Click Me! ..."
+msgstr ""
+

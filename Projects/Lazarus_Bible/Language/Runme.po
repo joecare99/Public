@@ -1,0 +1,19 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: frm_runmetest.defdatadir
+msgid "Data"
+msgstr ""
+
+#: frm_runmetest.readmefile
+msgid "Readme.Txt"
+msgstr ""
+
+#: ttestform.clickmebutton.caption
+msgid "Click me! ..."
+msgstr ""
+
+#: ttestform.label1.caption
+msgid "Click the button to call README.EXE and display README.TXT in the current directory."
+msgstr ""
+

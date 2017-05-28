@@ -5,30 +5,34 @@ object frmAbout: TfrmAbout
   Width = 329
   ActiveControl = btnOK
   BorderStyle = bsDialog
-  Caption = 'About This Program'
+  Caption = 'About this program'
   ClientHeight = 213
   ClientWidth = 329
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -13
   Font.Name = 'System'
+  OnCreate = FormCreate
   Position = poScreenCenter
   LCLVersion = '1.6.4.0'
   Visible = False
   object pnlAboutText: TPanel
-    Left = 8
+    Left = 5
     Height = 161
-    Top = 8
-    Width = 305
+    Top = 5
+    Width = 319
+    Align = alTop
+    BorderSpacing.Around = 5
     BevelInner = bvRaised
     BevelOuter = bvLowered
     ClientHeight = 161
-    ClientWidth = 305
+    ClientWidth = 319
     TabOrder = 0
+    OnClick = pnlAboutTextClick
     object imgProgramIcon: TImage
-      Left = 8
+      Left = 2
       Height = 57
-      Top = 8
+      Top = 2
       Width = 65
       Picture.Data = {
         07544269746D617076020000424D760200000000000076000000280000002000
@@ -56,11 +60,11 @@ object frmAbout: TfrmAbout
       Stretch = True
     end
     object lblProductName: TLabel
-      Left = 88
+      Left = 82
       Height = 13
-      Top = 16
-      Width = 66
-      Caption = 'Ducky Calc'
+      Top = 10
+      Width = 70
+      Caption = 'Ducky Calc '
       Color = clBtnFace
       Font.Color = clBlack
       Font.Height = -11
@@ -71,9 +75,9 @@ object frmAbout: TfrmAbout
       Transparent = False
     end
     object lblVersion: TLabel
-      Left = 88
+      Left = 82
       Height = 13
-      Top = 40
+      Top = 34
       Width = 208
       Caption = 'Code name Siberia AKA DuckCalc98'
       Color = clBtnFace
@@ -86,9 +90,9 @@ object frmAbout: TfrmAbout
       Transparent = False
     end
     object lblCopyright: TLabel
-      Left = 8
+      Left = 4
       Height = 13
-      Top = 80
+      Top = 74
       Width = 219
       Caption = 'Copyright © 2001 by the Ugly Ducking'
       Color = clBtnFace
@@ -101,11 +105,12 @@ object frmAbout: TfrmAbout
       Transparent = False
     end
     object lblComments: TLabel
-      Left = 8
-      Height = 49
-      Top = 104
-      Width = 265
-      AutoSize = False
+      Left = 5
+      Height = 39
+      Top = 117
+      Width = 309
+      Align = alBottom
+      BorderSpacing.Around = 3
       Caption = 'Beta Test Version. !!! CONFIDENTIAL !!! Do not copy. Do not trade. All rights reserved. This means you. Violators shot at dawn.'
       Color = clBtnFace
       Font.Color = clBlack
@@ -116,6 +121,7 @@ object frmAbout: TfrmAbout
       ParentFont = False
       Transparent = False
       WordWrap = True
+      OnClick = lblCommentsClick
     end
   end
   object btnOK: TBitBtn
@@ -131,6 +137,7 @@ object frmAbout: TfrmAbout
     Kind = bkOK
     Margin = 2
     ModalResult = 1
+    OnClick = btnOKClick
     ParentFont = False
     Spacing = -1
     TabOrder = 1

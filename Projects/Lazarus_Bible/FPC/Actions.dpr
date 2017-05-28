@@ -9,6 +9,7 @@ uses
 {$ELSE}
   Interfaces,
 {$ENDIF}
+  DefaultTranslator,
   Forms,
   Frm_ActionsMain in '..\source\Actions\Frm_ActionsMain.pas' {Form1};
 

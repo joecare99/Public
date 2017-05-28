@@ -13,20 +13,26 @@ uses
   LCLIntf, LCLType,
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls,
-  Forms, Dialogs, Menus, ActnList, StdCtrls;
+  Forms, Dialogs, Menus, ActnList, StdCtrls, Buttons;
 
 type
+
+  { TFrmActionsMain }
+
   TFrmActionsMain = class(TForm)
-    MainMenu1: TMainMenu;
-    Edit1: TEdit;
-    Button1: TButton;
-    Label1: TLabel;
-    ActionList1: TActionList;
-    Demo1: TMenuItem;
-    Exit1: TMenuItem;
-    ExitAction: TAction;
-    procedure ExitActionExecute(Sender: TObject);
-    procedure ExitActionUpdate(Sender: TObject);
+    btnDemoQuit: TBitBtn;
+    mnuMain: TMainMenu;
+    edtEnterQuit: TEdit;
+    lblHint: TLabel;
+    alsDemoActions: TActionList;
+    mniDemo: TMenuItem;
+    mniDemoExit: TMenuItem;
+    actDemoExit: TAction;
+    procedure edtEnterQuitChange(Sender: TObject);
+    procedure actDemoExitExecute(Sender: TObject);
+    procedure actDemoExitUpdate(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure lblHintClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -44,16 +50,31 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-procedure TFrmActionsMain.ExitActionExecute(Sender: TObject);
+procedure TFrmActionsMain.actDemoExitExecute(Sender: TObject);
 begin
   Close;  // Exit program
 end;
 
-procedure TFrmActionsMain.ExitActionUpdate(Sender: TObject);
+procedure TFrmActionsMain.edtEnterQuitChange(Sender: TObject);
+begin
+
+end;
+
+procedure TFrmActionsMain.actDemoExitUpdate(Sender: TObject);
 
 begin
-// Set Flag True if user types Quit into Edit1
-  ExitAction.Enabled := ( Lowercase(Edit1.Text) = 'quit');
+// Set Flag True if user types Quit into edtEnterQuit
+  actDemoExit.Enabled := ( Lowercase(edtEnterQuit.Text) = 'quit');
+end;
+
+procedure TFrmActionsMain.FormCreate(Sender: TObject);
+begin
+
+end;
+
+procedure TFrmActionsMain.lblHintClick(Sender: TObject);
+begin
+
 end;
 
 end.

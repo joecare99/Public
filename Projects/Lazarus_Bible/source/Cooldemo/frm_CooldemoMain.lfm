@@ -11,26 +11,23 @@ object MainForm: TMainForm
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
+  OnCreate = FormCreate
   OnShow = FormShow
   LCLVersion = '1.6.4.0'
   Visible = False
   object CoolBar1: TCoolBar
     Left = 0
-    Height = 106
+    Height = 65
     Top = 0
     Width = 535
     AutoSize = True
     Bands = <    
       item
+        Break = False
         Control = ToolBar1
         MinHeight = 26
         ParentColor = False
         Width = 455
-      end    
-      item
-        Break = False
-        MinHeight = 39
-        Width = 100
       end    
       item
         Break = False
@@ -182,6 +179,7 @@ object MainForm: TMainForm
       ShowCaptions = True
       TabOrder = 0
       Transparent = True
+      OnPaint = ToolBar1Paint
       object ToolButton1: TToolButton
         Left = 1
         Top = 2
@@ -248,6 +246,54 @@ object MainForm: TMainForm
     Caption = 'Stop Animation'
     OnClick = Button1Click
     TabOrder = 3
+  end
+  object Panel1: TPanel
+    AnchorSideTop.Control = Owner
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 465
+    Height = 43
+    Top = 0
+    Width = 70
+    Anchors = [akTop, akRight]
+    ClientHeight = 43
+    ClientWidth = 70
+    TabOrder = 4
+    OnClick = Panel1Click
+    object Image1: TImage
+      Left = 1
+      Height = 41
+      Top = 1
+      Width = 68
+      Align = alClient
+      OnClick = Image1Click
+    end
+    object Animate1: TBGRASpriteAnimation
+      Left = 1
+      Height = 39
+      Top = 1
+      Width = 67
+      AnimInvert = False
+      AnimPosition = 1
+      AnimRepeat = 0
+      AnimRepeatLap = 0
+      AnimSpeed = 40
+      AnimStatic = False
+      AutoSize = False
+      Center = True
+      Proportional = True
+      SpriteCount = 1
+      SpriteFillOpacity = 255
+      SpriteFlipMode = flNone
+      SpriteKeyColor = clNone
+      SpriteResampleFilter = rfLinear
+      SpriteResampleMode = rmSimpleStretch
+      SpriteRotation = rtNone
+      Stretch = True
+      Tile = False
+      Caption = 'Animate1'
+      OnClick = Animate1Click
+    end
   end
   object NavigatorImages: TImageList
     Height = 20

@@ -3,6 +3,7 @@ object TestForm: TTestForm
   Height = 127
   Top = 175
   Width = 367
+  ActiveControl = ClickMeButton
   Caption = 'Call ReadMe'
   ClientHeight = 127
   ClientWidth = 367
@@ -11,7 +12,7 @@ object TestForm: TTestForm
   Font.Height = -16
   Font.Name = 'System'
   OnCreate = FormCreate
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.6.4.0'
   Visible = False
   object Bevel1: TBevel
     Left = 10
@@ -34,7 +35,7 @@ object TestForm: TTestForm
     Height = 41
     Top = 20
     Width = 111
-    Caption = 'Click me!'
+    Caption = 'Click me! ...'
     OnClick = ClickMeButtonClick
     TabOrder = 0
   end

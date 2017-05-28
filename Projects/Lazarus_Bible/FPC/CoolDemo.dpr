@@ -9,6 +9,7 @@ uses
 {$ELSE}
   Interfaces,
 {$ENDIF}
+  DefaultTranslator,
   Forms,
   frm_CooldemoMain in '..\source\CoolDemo\frm_CooldemoMain.pas' {MainForm};
 

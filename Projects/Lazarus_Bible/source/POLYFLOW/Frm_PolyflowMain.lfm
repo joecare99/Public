@@ -1,21 +1,22 @@
 object MainForm: TMainForm
   Left = 201
+  Height = 216
   Top = 131
+  Width = 426
   Caption = 'MainForm'
   ClientHeight = 216
   ClientWidth = 426
   Color = clBlack
-  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
-  Font.Style = []
   Menu = MainMenu1
   OnCreate = FormCreate
-  PixelsPerInch = 96
+  LCLVersion = '1.6.4.0'
+  Visible = False
   object MainMenu1: TMainMenu
-    Left = 48
-    Top = 72
+    left = 48
+    top = 72
     object Demo1: TMenuItem
       Caption = 'Demo'
       object Exit1: TMenuItem
@@ -27,7 +28,7 @@ object MainForm: TMainForm
   object Timer1: TTimer
     Interval = 10
     OnTimer = Timer1Timer
-    Left = 104
-    Top = 72
+    left = 104
+    top = 72
   end
-end
+end

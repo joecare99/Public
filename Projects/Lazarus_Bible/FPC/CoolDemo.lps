@@ -4,12 +4,13 @@
     <PathDelim Value="\"/>
     <Version Value="10"/>
     <BuildModes Active="Debug"/>
-    <Units Count="5">
+    <Units Count="7">
       <Unit0>
         <Filename Value="CoolDemo.dpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos Y="19"/>
-        <UsageCount Value="21"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="55" Y="9"/>
+        <UsageCount Value="31"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
@@ -20,9 +21,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="43"/>
-        <CursorPos X="33" Y="88"/>
-        <UsageCount Value="21"/>
+        <TopLine Value="119"/>
+        <CursorPos X="42" Y="122"/>
+        <UsageCount Value="31"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -34,7 +35,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="44" Y="12"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit2>
       <Unit3>
@@ -42,7 +43,7 @@
         <HasResources Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="20" Y="21"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
       <Unit4>
@@ -50,17 +51,34 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="8"/>
         <CursorPos X="48" Y="13"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
+        <UsageCount Value="9"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="..\..\Examples\Source\testTransparentPanel\frm_testtrpanelmain.pas"/>
+        <ComponentName Value="FrmTrPanelMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_TestTrPanelMain"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="28"/>
+        <CursorPos X="50" Y="56"/>
+        <UsageCount Value="15"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\Idee\source\Crt\unt_testcrt3.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="127"/>
+        <CursorPos X="56" Y="157"/>
+        <UsageCount Value="15"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit6>
     </Units>
-    <JumpHistory Count="7" HistoryIndex="6">
+    <JumpHistory Count="25" HistoryIndex="24">
       <Position1>
         <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
         <Caret Line="65" Column="89" TopLine="57"/>
@@ -86,8 +104,81 @@
         <Caret Line="87" TopLine="62"/>
       </Position6>
       <Position7>
-        <Filename Value="..\source\PageTab\Frm_PageTabMain.pas"/>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="88" Column="33" TopLine="43"/>
       </Position7>
+      <Position8>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="92" Column="33" TopLine="47"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="93" Column="33" TopLine="48"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="80" Column="3" TopLine="49"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="96" Column="3" TopLine="55"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="100" Column="34" TopLine="64"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="97" TopLine="65"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="103" Column="3" TopLine="55"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="114" Column="27" TopLine="70"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="102" Column="35" TopLine="74"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="108" Column="23" TopLine="82"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="104" Column="55" TopLine="82"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="124" Column="111" TopLine="87"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="131" Column="111" TopLine="94"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="85" Column="3" TopLine="83"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="128" Column="50" TopLine="101"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="133" Column="14" TopLine="82"/>
+      </Position23>
+      <Position24>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="71" Column="12" TopLine="45"/>
+      </Position24>
+      <Position25>
+        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Caret Line="83" Column="88" TopLine="77"/>
+      </Position25>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>
