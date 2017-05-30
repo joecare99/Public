@@ -65,7 +65,7 @@ var
 implementation
 
 uses
-  frm_Main, cls_Translation, dm_GenData;
+  frm_Main, cls_Translation, dm_GenData, FMUtils;
 
 {$R *.lfm}
 
@@ -96,9 +96,8 @@ end;
 
 procedure TfrmDocuments.tblDocumemntsResize(Sender: TObject);
 begin
-  tblDocuments.Width := (Sender as Tform).Width;
-  tblDocuments.Height := (Sender as Tform).Height;
-  tblDocuments.Columns[1].Width := (Sender as Tform).Width-122;
+  if assigned(tblDocuments.Columns) then
+    tblDocuments.Columns[1].Width := tblDocuments.Width-fmutils.GetTableColWidthSum(tblDocuments,1);
 end;
 
 procedure TfrmDocuments.FormShow(Sender: TObject);
@@ -219,8 +218,13 @@ begin
 end;
 
 procedure TfrmDocuments.SetidDocument(AValue: integer);
+var
+  id: Integer;
 begin
-   tblDocuments.Cols[];
+  id :=
+   tblDocuments.Cols[0].IndexOfObject(TObject(ptrint(AValue)));
+  if id>=0 then
+     tblDocuments.Row:=id;;
 end;
 
 procedure PopulateDocuments(Tableau:TStringGrid;code:string;no:integer);
@@ -241,7 +245,7 @@ begin
      While not dmGenData.Query1.EOF do
      begin
         Tableau.Cells[0,row]:=dmGenData.Query1.Fields[0].AsString;
-        Tableau.Objects[0,row]:=ptrint(dmGenData.Query1.Fields[0].AsInteger);
+        Tableau.Objects[0,row]:=Tobject(ptrint(dmGenData.Query1.Fields[0].AsInteger));
 
         if dmGenData.Query1.Fields[1].AsBoolean then
            Tableau.Cells[1,row]:='*'

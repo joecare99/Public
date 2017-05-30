@@ -1,0 +1,90 @@
+object frmHistory: TfrmHistory
+  Left = 763
+  Height = 240
+  Top = 230
+  Width = 323
+  ActiveControl = lstHistory
+  BorderIcons = []
+  Caption = 'Historique de navigation'
+  ClientHeight = 240
+  ClientWidth = 323
+  FormStyle = fsStayOnTop
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnKeyPress = FormKeyPress
+  OnShow = FormShow
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object lstHistory: TListBox
+    Left = 0
+    Height = 214
+    Top = 26
+    Width = 323
+    Align = alClient
+    ExtendedSelect = False
+    ItemHeight = 0
+    OnClick = lstHistoryClick
+    OnDblClick = actHistoryGotoExecute
+    OnKeyPress = FormKeyPress
+    OnResize = lstHistoryResize
+    TabOrder = 0
+  end
+  object tlbHistory: TToolBar
+    Left = 0
+    Height = 26
+    Top = 0
+    Width = 323
+    Caption = 'tlbHistory'
+    ShowCaptions = True
+    TabOrder = 1
+    object btnHistoryClose: TToolButton
+      Left = 1
+      Top = 2
+      Action = actHistoryClose
+    end
+    object btnHistorySep1: TToolButton
+      Left = 38
+      Height = 22
+      Top = 2
+      Width = 8
+      Caption = 'btnHistorySep1'
+      Style = tbsSeparator
+    end
+    object btnHistoryGoto: TToolButton
+      Left = 46
+      Top = 2
+      Action = actHistoryGoto
+    end
+  end
+  object alsHistory: TActionList
+    left = 192
+    top = 88
+    object actHistoryGoto: TAction
+      Category = 'History'
+      Caption = '&Go To'
+      Hint = 'Goes to the selected Persion'
+      OnExecute = actHistoryGotoExecute
+      ShortCut = 16455
+    end
+    object actHistoryClose: TAction
+      Category = 'History'
+      Caption = '&Close'
+      Hint = 'Closes the History-Window'
+      OnExecute = actHistoryCloseExecute
+      ShortCut = 27
+    end
+  end
+  object PopupMenu1: TPopupMenu
+    left = 152
+    top = 88
+    object MenuItem1: TMenuItem
+      Action = actHistoryGoto
+    end
+    object MenuItem2: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem3: TMenuItem
+      Action = actHistoryClose
+    end
+  end
+end

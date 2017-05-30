@@ -1940,11 +1940,22 @@ msgctxt "tfrmdocuments.actdocumentssetprefered.caption"
 msgid "Set &Prefered"
 msgstr "Set &prefered"
 
+#: tfrmdocuments.btndocumentssep.caption
+#, fuzzy
+msgctxt "tfrmdocuments.btndocumentssep.caption"
+msgid "&Add"
+msgstr "&Add"
+
 #: tfrmdocuments.mniseparator.caption
 #, fuzzy
 msgctxt "tfrmdocuments.mniseparator.caption"
 msgid "-"
 msgstr "-"
+
+#: tfrmdocuments.toolbar1.caption
+msgctxt "tfrmdocuments.toolbar1.caption"
+msgid "ToolBar1"
+msgstr ""
 
 #: tfrmeditdocuments.button1.caption
 #, fuzzy
@@ -2743,6 +2754,39 @@ msgstr "<Search Person>"
 #: tfrmexplorer.tlbexplorerorderby.caption
 msgid "Order By"
 msgstr "Order By"
+
+#: tfrmhistory.acthistoryclose.caption
+msgid "&Close"
+msgstr ""
+
+#: tfrmhistory.acthistoryclose.hint
+msgid "Closes the History-Window"
+msgstr ""
+
+#: tfrmhistory.acthistorygoto.caption
+#, fuzzy
+#| msgid "&Aller à"
+msgctxt "tfrmhistory.acthistorygoto.caption"
+msgid "&Go To"
+msgstr "&Go to"
+
+#: tfrmhistory.acthistorygoto.hint
+msgid "Goes to the selected Persion"
+msgstr ""
+
+#: tfrmhistory.btnhistorysep1.caption
+msgid "btnHistorySep1"
+msgstr ""
+
+#: tfrmhistory.menuitem2.caption
+#, fuzzy
+msgctxt "tfrmhistory.menuitem2.caption"
+msgid "-"
+msgstr "-"
+
+#: tfrmhistory.tlbhistory.caption
+msgid "tlbHistory"
+msgstr ""
 
 #: tfrmnames.actnamesadd.caption
 msgctxt "tfrmnames.actnamesadd.caption"

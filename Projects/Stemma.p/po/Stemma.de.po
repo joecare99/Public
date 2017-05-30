@@ -1941,9 +1941,20 @@ msgctxt "tfrmdocuments.actdocumentssetprefered.caption"
 msgid "Set &Prefered"
 msgstr ""
 
+#: tfrmdocuments.btndocumentssep.caption
+#, fuzzy
+msgctxt "tfrmdocuments.btndocumentssep.caption"
+msgid "&Add"
+msgstr "Anfügen"
+
 #: tfrmdocuments.mniseparator.caption
 msgctxt "tfrmdocuments.mniseparator.caption"
 msgid "-"
+msgstr ""
+
+#: tfrmdocuments.toolbar1.caption
+msgctxt "tfrmdocuments.toolbar1.caption"
+msgid "ToolBar1"
 msgstr ""
 
 #: tfrmeditdocuments.button1.caption
@@ -2713,6 +2724,38 @@ msgstr "<Suche Person>"
 #, fuzzy
 msgid "Order By"
 msgstr "--lcl-no-transient    Transiente Reihenfolge für modale Formulare nicht setzen."
+
+#: tfrmhistory.acthistoryclose.caption
+msgid "&Close"
+msgstr ""
+
+#: tfrmhistory.acthistoryclose.hint
+msgid "Closes the History-Window"
+msgstr ""
+
+#: tfrmhistory.acthistorygoto.caption
+#, fuzzy
+#| msgid "&Aller à"
+msgctxt "tfrmhistory.acthistorygoto.caption"
+msgid "&Go To"
+msgstr "&Gehe zu"
+
+#: tfrmhistory.acthistorygoto.hint
+msgid "Goes to the selected Persion"
+msgstr ""
+
+#: tfrmhistory.btnhistorysep1.caption
+msgid "btnHistorySep1"
+msgstr ""
+
+#: tfrmhistory.menuitem2.caption
+msgctxt "tfrmhistory.menuitem2.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmhistory.tlbhistory.caption
+msgid "tlbHistory"
+msgstr ""
 
 #: tfrmnames.actnamesadd.caption
 #, fuzzy

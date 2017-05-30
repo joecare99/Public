@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="12">
+    <Targets Count="14">
       <Target0 FileName="FPC\Asteroids.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
@@ -75,6 +75,14 @@
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target11>
+      <Target12 FileName="..\Diverses\FPC\Swat.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target12>
+      <Target13 FileName="FPC\WinCub.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target13>
     </Targets>
   </ProjectGroup>
 </CONFIG>

@@ -1797,9 +1797,11 @@ msgid "E&xpand"
 msgstr ""
 
 #: tfrmancestors.actancestorsgoto.caption
+#, fuzzy
+#| msgid "&Aller à"
 msgctxt "tfrmancestors.actancestorsgoto.caption"
 msgid "&Go To"
-msgstr ""
+msgstr "&gehen"
 
 #: tfrmancestors.mniancestorssep.caption
 msgctxt "tfrmancestors.mniancestorssep.caption"
@@ -1811,17 +1813,8 @@ msgctxt "tfrmchildren.actchildrenadd.caption"
 msgid "&Add"
 msgstr ""
 
-#: tfrmchildren.actchildrenadd.hint
-msgid "Append a Child"
-msgstr ""
-
-#: tfrmchildren.actchildrendelete.caption
-msgctxt "tfrmchildren.actchildrendelete.caption"
-msgid "&Delete"
-msgstr ""
-
-#: tfrmchildren.actchildrendelete.hint
-msgid "Detatch the selected Child from the Parent"
+#: tfrmchildren.actchildrendetach.caption
+msgid "&Detach"
 msgstr ""
 
 #: tfrmchildren.actchildrenedit.caption
@@ -1829,27 +1822,23 @@ msgctxt "tfrmchildren.actchildrenedit.caption"
 msgid "&Edit"
 msgstr ""
 
-#: tfrmchildren.actchildrenedit.hint
-msgid "Modify the scelected Child"
-msgstr ""
-
 #: tfrmchildren.actchildrengoto.caption
 msgctxt "tfrmchildren.actchildrengoto.caption"
-msgid "&Go to"
+msgid "&Go To"
 msgstr ""
 
-#: tfrmchildren.mnichildrensep1.caption
-msgctxt "tfrmchildren.mnichildrensep1.caption"
+#: tfrmchildren.btnchildrensep.caption
+msgid "btnChildrenSep"
+msgstr ""
+
+#: tfrmchildren.mnichildrensep.caption
+msgctxt "tfrmchildren.mnichildrensep.caption"
 msgid "-"
 msgstr ""
 
 #: tfrmchildren.toolbar1.caption
 msgctxt "tfrmchildren.toolbar1.caption"
 msgid "ToolBar1"
-msgstr ""
-
-#: tfrmchildren.toolbutton2.caption
-msgid "ToolButton2"
 msgstr ""
 
 #: tfrmconnectdb.edthostname.editlabel.caption
@@ -1882,9 +1871,11 @@ msgid "E&xpand"
 msgstr ""
 
 #: tfrmdescendants.actdescendantsgoto.caption
+#, fuzzy
+#| msgid "&Aller à"
 msgctxt "tfrmdescendants.actdescendantsgoto.caption"
 msgid "&Go To"
-msgstr ""
+msgstr "&gehen"
 
 #: tfrmdescendants.mnidescendantsgoto.caption
 #, fuzzy
@@ -1912,9 +1903,19 @@ msgctxt "tfrmdocuments.actdocumentssetprefered.caption"
 msgid "Set &Prefered"
 msgstr ""
 
+#: tfrmdocuments.btndocumentssep.caption
+msgctxt "tfrmdocuments.btndocumentssep.caption"
+msgid "&Add"
+msgstr ""
+
 #: tfrmdocuments.mniseparator.caption
 msgctxt "tfrmdocuments.mniseparator.caption"
 msgid "-"
+msgstr ""
+
+#: tfrmdocuments.toolbar1.caption
+msgctxt "tfrmdocuments.toolbar1.caption"
+msgid "ToolBar1"
 msgstr ""
 
 #: tfrmeditdocuments.button1.caption
@@ -2700,10 +2701,44 @@ msgstr ""
 msgid "Order By"
 msgstr ""
 
+#: tfrmhistory.acthistoryclose.caption
+msgid "&Close"
+msgstr ""
+
+#: tfrmhistory.acthistoryclose.hint
+msgid "Closes the History-Window"
+msgstr ""
+
+#: tfrmhistory.acthistorygoto.caption
+#, fuzzy
+#| msgid "&Aller à"
+msgctxt "tfrmhistory.acthistorygoto.caption"
+msgid "&Go To"
+msgstr "&gehen"
+
+#: tfrmhistory.acthistorygoto.hint
+msgid "Goes to the selected Persion"
+msgstr ""
+
+#: tfrmhistory.btnhistorysep1.caption
+msgid "btnHistorySep1"
+msgstr ""
+
+#: tfrmhistory.menuitem2.caption
+msgctxt "tfrmhistory.menuitem2.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmhistory.tlbhistory.caption
+msgid "tlbHistory"
+msgstr ""
+
 #: tfrmnames.actnamesadd.caption
+#, fuzzy
+#| msgid "&Ajouter"
 msgctxt "tfrmnames.actnamesadd.caption"
 msgid "&Add"
-msgstr ""
+msgstr "&Anfügen"
 
 #: tfrmnames.actnamesdelete.caption
 msgctxt "tfrmnames.actnamesdelete.caption"
@@ -2711,9 +2746,11 @@ msgid "De&lete"
 msgstr ""
 
 #: tfrmnames.actnamesedit.caption
+#, fuzzy
+#| msgid "&Modifier"
 msgctxt "tfrmnames.actnamesedit.caption"
 msgid "&Edit"
-msgstr ""
+msgstr "Bearbeiten"
 
 #: tfrmnames.actnamessetprefered.caption
 msgctxt "tfrmnames.actnamessetprefered.caption"

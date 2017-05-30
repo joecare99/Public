@@ -29,7 +29,7 @@ object dmGenData: TdmGenData
     CharSet = 'UTF8'
     HostName = 'Diskstation'
     Options = []
-    ConnectorType = 'MySQL 5.6'
+    ConnectorType = 'MySQL 5.7'
     left = 16
     top = 16
   end

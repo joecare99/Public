@@ -2216,7 +2216,7 @@ var
   lMaxTblSize, i: Integer;
 begin
   lMaxTblSize:=0;
-  for i := 0 to lTable.ColCount-1 do
+  for i := 0 to lTable.Columns.Count-1 do
     if i <> lIgnCol then
        lMaxTblSize:=lMaxTblSize+lTable.Columns[i].Width;
   Result:=lMaxTblSize;

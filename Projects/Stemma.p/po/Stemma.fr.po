@@ -1845,9 +1845,11 @@ msgid "&Edit"
 msgstr ""
 
 #: tfrmchildren.actchildrengoto.caption
+#, fuzzy
+#| msgid "&Aller à"
 msgctxt "tfrmchildren.actchildrengoto.caption"
 msgid "&Go To"
-msgstr ""
+msgstr "&Aller à"
 
 #: tfrmchildren.btnchildrensep.caption
 msgid "btnChildrenSep"
@@ -1925,9 +1927,20 @@ msgctxt "tfrmdocuments.actdocumentssetprefered.caption"
 msgid "Set &Prefered"
 msgstr ""
 
+#: tfrmdocuments.btndocumentssep.caption
+#, fuzzy
+msgctxt "tfrmdocuments.btndocumentssep.caption"
+msgid "&Add"
+msgstr "&Ajouter"
+
 #: tfrmdocuments.mniseparator.caption
 msgctxt "tfrmdocuments.mniseparator.caption"
 msgid "-"
+msgstr ""
+
+#: tfrmdocuments.toolbar1.caption
+msgctxt "tfrmdocuments.toolbar1.caption"
+msgid "ToolBar1"
 msgstr ""
 
 #: tfrmeditdocuments.button1.caption
@@ -2691,6 +2704,38 @@ msgstr ""
 
 #: tfrmexplorer.tlbexplorerorderby.caption
 msgid "Order By"
+msgstr ""
+
+#: tfrmhistory.acthistoryclose.caption
+msgid "&Close"
+msgstr ""
+
+#: tfrmhistory.acthistoryclose.hint
+msgid "Closes the History-Window"
+msgstr ""
+
+#: tfrmhistory.acthistorygoto.caption
+#, fuzzy
+#| msgid "&Aller à"
+msgctxt "tfrmhistory.acthistorygoto.caption"
+msgid "&Go To"
+msgstr "&Aller à"
+
+#: tfrmhistory.acthistorygoto.hint
+msgid "Goes to the selected Persion"
+msgstr ""
+
+#: tfrmhistory.btnhistorysep1.caption
+msgid "btnHistorySep1"
+msgstr ""
+
+#: tfrmhistory.menuitem2.caption
+msgctxt "tfrmhistory.menuitem2.caption"
+msgid "-"
+msgstr ""
+
+#: tfrmhistory.tlbhistory.caption
+msgid "tlbHistory"
 msgstr ""
 
 #: tfrmnames.actnamesadd.caption

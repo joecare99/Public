@@ -23,7 +23,7 @@ object frmDocuments: TfrmDocuments
         Title.Caption = '*'
       end    
       item
-        Title.Caption = 'Titre'
+        Title.Caption = 'Title'
       end    
       item
         Title.Caption = 'Type'

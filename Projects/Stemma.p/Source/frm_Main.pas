@@ -327,6 +327,19 @@ implementation
 uses AnchorDocking, AnchorDockOptionsDlg, dm_GenData, cls_Translation,
   frm_SelectDialog, untWebexport;
 
+procedure UpdateHistoryChInd(const Items:TStrings;const lNewInd: LongInt);
+var
+  i: integer;
+begin
+  if Items.Count > 1 then
+     for i := 1 to Items.Count - 1 do
+       if Items[i] = inttostr(lNewInd) then
+       begin
+         Items.Delete(i);
+         break;
+       end;
+   Items.InsertObject(0, inttostr(lNewInd),TObject(Ptrint(lNewInd)));
+end;
 
 { TfrmStemmaMainForm }
 
@@ -435,7 +448,7 @@ begin
       with FMenuHistory[nr] do
       begin
         Visible := True;
-        tag := StrToInt(OldIndividu.Items[nr]);
+        tag := ptrint(OldIndividu.Items.Objects[nr]);
         lName := dmGenData.GetIndividuumName(tag);
         lVisName := DecodeName(lName, 1);
         Caption := Format(rsMenuHistoryCaption, [nr + 1, lVisName, tag]);
@@ -780,6 +793,7 @@ var
   bSuccess, lConnected: boolean;
   i, lLastPerson: integer;
   DPIFak: single;
+  lid: Longint;
 begin
   DPIFak := ScreenInfo.PixelsPerInchY / DesignTimeDPI * 1.1;
   if DPIFak < 1.4 then
@@ -833,6 +847,9 @@ begin
   // Récupère l'historique d'individu
   OldIndividu.Items.Clear;
   OldIndividu.Items.LoadFromFile('HistP.data');
+  for i := 0 to OldIndividu.Items.Count-1 do
+    if tryStrToint(OldIndividu.Items[i],lid) then
+      OldIndividu.Items.Objects[i]:=TObject(PtrInt(lid));
   Translation.LoadFromFile(dmgendata.ReadCfgString('Parametres', 'Langue', 'francais'));
   CoolBar1.AutosizeBands;
   mniFile.Caption := Translation.Items[248];
@@ -1623,8 +1640,8 @@ end;
 
 procedure TfrmStemmaMainForm.IndividuChange(Sender: TObject);
 var
-  i: integer;
   lFullName: string;
+  lNewInd: LongInt;
 begin
   if dmGenData.IsValidIndividuum(iId) then
   begin
@@ -1633,15 +1650,8 @@ begin
     Caption := 'Stemma - ' + dmGenData.GetDBSchema + ' - ' +
       (DecodeName(lFullName, 1)) + ' [' + frmStemmaMainForm.sID + ']';
 
-    if OldIndividu.Items.Count > 1 then
-      for i := 1 to OldIndividu.Items.Count - 1 do
-        if OldIndividu.Items[i] = sID then
-        begin
-          OldIndividu.Items.Delete(i);
-          break;
-        end;
-    OldIndividu.Items.Insert(0, sID);
-
+    lNewInd:=iID;
+    UpdateHistoryChInd(OldIndividu.Items, lNewInd);
     UpdateMenuHistory;
 
     frmNames.PopulateNom(Sender);
