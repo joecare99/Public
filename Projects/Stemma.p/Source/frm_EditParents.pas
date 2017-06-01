@@ -21,6 +21,7 @@ type
   TfrmEditParents = class(TForm)
     Ajouter1: TMenuItem;
     idA: TSpinEdit;
+
     idB: TSpinEdit;
     btnParentOK: TBitBtn;
     btnParentCancel: TBitBtn;

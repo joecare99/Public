@@ -6,41 +6,62 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, Menus, StrUtils, IniFiles, Process;
+  ExtCtrls, Menus, Spin, Buttons, StrUtils, IniFiles, Process;
 
 type
-
+  TenumDocumentsEditMode=(
+    eDEM_AddDocument,
+    eDEM_EditDocument);
   { TfrmEditDocuments }
 
   TfrmEditDocuments = class(TForm)
-    Button1: TButton;
-    Button2: TButton;
-    Button3: TButton;
-    Z: TMemo;
-    Label3: TLabel;
-    Description: TMemo;
-    Label4: TLabel;
-    Label5: TLabel;
+    Button1: TBitBtn;
+    btnDisplay: TButton;
+    Button2: TBitBtn;
+    edtidDocument: TSpinEdit;
+    edtidLink: TSpinEdit;
+    pnlBottom: TPanel;
+    btnSelectFile: TSpeedButton;
+    edtDocumentInfo: TMemo;
+    lblDocumentDescription: TLabel;
+    edtDescription: TMemo;
+    lblFilename: TLabel;
+    lblDocumentType: TLabel;
     MainMenu1: TMainMenu;
     MenuItem1: TMenuItem;
-    Type1: TEdit;
+    edtDocumentType: TEdit;
     OpenDialog: TOpenDialog;
-    Titre: TEdit;
-    Label2: TLabel;
-    Primaire: TCheckBox;
-    No: TEdit;
-    Label1: TLabel;
-    Fichier: TEdit;
-    N: TEdit;
+    edtDocumentTitle: TEdit;
+    lblDocumentsTitle: TLabel;
+    chbDocumentPrefered: TCheckBox;
+    lblDocuments1: TLabel;
+    edtFilename: TEdit;
     procedure Button1Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
-    procedure FichierDblClick(Sender: TObject);
+    procedure btnDisplayClick(Sender: TObject);
+    procedure edtFilenameChange(Sender: TObject);
+    procedure edtFilenameDblClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure lblDocumentDescriptionClick(Sender: TObject);
+    procedure lblDocumentsTitleClick(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
+    procedure edtDocumentTitleChange(Sender: TObject);
   private
+    FEditMode: TenumDocumentsEditMode;
+    function GetdocType: String;
+    function GetidDocument: integer;
+    function GetidLinkID: integer;
+    procedure SetdocType(AValue: String);
+    procedure SetEditMode(AValue: TenumDocumentsEditMode);
+    procedure SetidDocument(AValue: integer);
+    procedure SetidLinkID(AValue: integer);
     { private declarations }
   public
     { public declarations }
+    property EditMode:TenumDocumentsEditMode read FEditMode write SetEditMode;
+    property docType:String read GetdocType write SetdocType;
+    property idLinkID:integer read GetidLinkID write SetidLinkID;
+    property idDocument:integer read GetidDocument write SetidDocument;
   end; 
 
 var
@@ -55,45 +76,48 @@ uses
 
 procedure TfrmEditDocuments.FormShow(Sender: TObject);
 var
-  code,nocode:string;
+   lDocumentTitle, lDocumentDescription, lFileName, lDocType,
+    lDocumentInfo:string;
+
+  lPrefered: Boolean;
 begin
-  frmEditDocuments.ActiveControl:=frmEditDocuments.Titre;
-  Caption:=Translation.Items[178];
-  Label2.Caption:=Translation.Items[179];
-  Label3.Caption:=Translation.Items[162];
-  Label4.Caption:=Translation.Items[180];
-  Button1.Caption:=Translation.Items[152];
-  Button2.Caption:=Translation.Items[164];
-  Button3.Caption:=Translation.Items[181];
-  dmGenData.GetCode(code,nocode);
-  N.Text:=nocode;
-  if code='A' then
+  frmEditDocuments.ActiveControl:=edtDocumentTitle;
+  //dmGenData.GetCode(code,nocode);
+  //edtidLink.Text:=nocode;
+  if FEditMode=eDEM_AddDocument then
      begin
-     frmEditDocuments.Caption:=Translation.Items[33];
-     No.Text:='0';
-     Titre.text:='';
-     Description.Text:='';
-     Fichier.Text:='';
-     Primaire.Checked:=false;
-     dmGenData.GetCode(code,nocode);
-     Type1.Text:=code;
-     Z.Text:='';
+     Caption:=SAddADocument;
+     edtidDocument.Value:=0;
+     edtDocumentTitle.text:='';
+     edtDescription.Text:='';
+     edtFilename.Text:='';
+     chbDocumentPrefered.Checked:=false;
+     edtDocumentInfo.Text:='';
      end
   else
      begin
-     dmGenData.Query1.SQL.Clear;
-     dmGenData.Query1.SQL.add('SELECT X.no, X.X, X.T, X.D, X.F, X.Z, X.A FROM X WHERE (X.no='+
-                               N.Text+')');
-     dmGenData.Query1.Open;
-     dmGenData.Query1.First;
-     No.Text:=dmGenData.Query1.Fields[0].AsString;
-     Primaire.Checked:=dmGenData.Query1.Fields[1].AsBoolean;
-     Titre.Text:=dmGenData.Query1.Fields[2].AsString;
-     Description.Text:=dmGenData.Query1.Fields[3].AsString;
-     Fichier.Text:=dmGenData.Query1.Fields[4].AsString;
-     Type1.Text:=dmGenData.Query1.Fields[6].AsString;
-     Z.Text:=dmGenData.Query1.Fields[5].AsString;
+     Caption:=SDocumentModification;
+//     edtidDocument.Value:=dmGenData.Query1.Fields[0].AsInteger;
+
+     dmGenData.SelectDocumentData(idDocument,lPrefered,  lDocumentInfo, lDocType,
+       lFileName, lDocumentDescription, lDocumentTitle);
+     chbDocumentPrefered.Checked:=lPrefered;
+edtDocumentTitle.Text:=lDocumentTitle;
+edtDescription.Text:=lDocumentDescription;
+edtFilename.Text:=lFileName;
+edtDocumentType.Text:=lDocType;
+edtDocumentInfo.Text:=lDocumentInfo;
   end;
+end;
+
+procedure TfrmEditDocuments.lblDocumentDescriptionClick(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmEditDocuments.lblDocumentsTitleClick(Sender: TObject);
+begin
+
 end;
 
 procedure TfrmEditDocuments.MenuItem1Click(Sender: TObject);
@@ -102,51 +126,100 @@ begin
   ModalResult:=mrOk;
 end;
 
-procedure TfrmEditDocuments.FichierDblClick(Sender: TObject);
+procedure TfrmEditDocuments.edtDocumentTitleChange(Sender: TObject);
 begin
-  OpenDialog.FileName:=Fichier.Text;
-  OpenDialog.InitialDir:=ExtractFilePath(Fichier.Text);
-  if OpenDialog.Execute then
-     Fichier.Text:=OpenDialog.FileName;
+
 end;
 
-procedure TfrmEditDocuments.Button3Click(Sender: TObject);
+function TfrmEditDocuments.GetidDocument: integer;
+begin
+  result := edtidDocument.value;
+end;
+
+function TfrmEditDocuments.GetidLinkID: integer;
+begin
+  result:= edtidLink.Value;
+end;
+
+function TfrmEditDocuments.GetdocType: String;
+begin
+  result := edtDocumentType.Text;
+end;
+
+procedure TfrmEditDocuments.SetdocType(AValue: String);
+begin
+  if edtDocumentType.Text=AValue then Exit;
+  edtDocumentType.Text:=AValue;
+end;
+
+procedure TfrmEditDocuments.SetEditMode(AValue: TenumDocumentsEditMode);
+begin
+  if FEditMode=AValue then Exit;
+  FEditMode:=AValue;
+end;
+
+procedure TfrmEditDocuments.SetidDocument(AValue: integer);
+begin
+  if edtidDocument.value = AValue then exit;
+  edtidDocument.value:= AValue;
+end;
+
+procedure TfrmEditDocuments.SetidLinkID(AValue: integer);
+begin
+  if edtidLink.Value=AValue then Exit;
+  edtidLink.Value:=AValue;
+end;
+
+procedure TfrmEditDocuments.edtFilenameDblClick(Sender: TObject);
+begin
+  OpenDialog.FileName:=edtFilename.Text;
+  OpenDialog.InitialDir:=ExtractFilePath(edtFilename.Text);
+  if OpenDialog.Execute then
+     edtFilename.Text:=OpenDialog.FileName;
+end;
+
+procedure TfrmEditDocuments.FormCreate(Sender: TObject);
+begin
+
+end;
+
+procedure TfrmEditDocuments.btnDisplayClick(Sender: TObject);
 var
   ini:TIniFile;
   pdf:string;
 begin
-  if length(Fichier.Text)=0 then
+  if length(edtFilename.Text)=0 then
      begin
      frmShowImage.Caption:=Translation.Items[34];
      frmShowImage.Image.Visible:=false;
      frmShowImage.Memo.Visible:=true;
      frmShowImage.btnOK.Visible:=true;
      frmShowImage.btnCancel.Visible:=true;
-     if no.text='0' then
+     if edtidDocument.text='0' then
         frmShowImage.Memo.Text:=''
      else
-        frmShowImage.Memo.Text:=Z.Text;
+        frmShowImage.Memo.Text:=edtDocumentInfo.Text;
      if frmShowImage.Showmodal=mrOk then
         begin
-        if no.text='0' then
+        if edtidDocument.text='0' then
            Button1Click(Sender);
-        Z.Text:=frmShowImage.Memo.Text;
+        edtDocumentInfo.Text:=frmShowImage.Memo.Text;
         dmGenData.Query2.SQL.Clear;
         dmGenData.Query2.SQL.Add('UPDATE X SET Z='''+
            AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(frmShowImage.Memo.Text),'"','\"'),'''','\''')+
-           ''' WHERE X.no='+no.text);
+           ''' WHERE X.no='+edtidDocument.text);
         dmGenData.Query2.ExecSQL;
         // Enregistrer la date de la dernière modification pour tout les individus reliés
         // à cet exhibits.
-        if type1.Text='I' then
+        if edtDocumentType.Text='I' then
            begin
            dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
         end;
-        if type1.Text='E' then
+        if edtDocumentType.Text='E' then
            begin
            dmGenData.Query3.SQL.Clear;
            dmGenData.Query3.SQL.Add('SELECT W.I FROM (W JOIN E on W.E=E.no) JOIN X on X.N=E.no WHERE X.no='+
-                                     no.Text);
+                                     edtidDocument.Text);
            dmGenData.Query3.Open;
            dmGenData.Query3.First;
            while not dmGenData.Query3.EOF do
@@ -160,13 +233,13 @@ begin
   end
   else
         begin
-        if AnsiPos('.PDF',Fichier.Text)>0 then
+        if AnsiPos('.PDF',edtFilename.Text)>0 then
            begin
            Ini := TIniFile.Create(iniFileName);
            pdf := ini.ReadString('Parametres','PDF','C:\Program Files (x86)\Adobe\Reader 10.0\Reader\AcroRd32.exe');
            with TProcess.Create(nil) do
            try
-              Parameters.text:=pdf+' '+Fichier.Text;
+              Parameters.text:=pdf+' '+edtFilename.Text;
               Execute;
               ini.WriteString('Parametres','PDF',pdf);
            finally
@@ -176,48 +249,53 @@ begin
         end
         else
            begin
-           frmShowImage.Caption:=Fichier.Text;
+           frmShowImage.Caption:=edtFilename.Text;
            frmShowImage.Memo.Visible:=false;
            frmShowImage.btnOK.Visible:=false;
            frmShowImage.btnCancel.Visible:=false;
            frmShowImage.Image.Visible:=true;
-           frmShowImage.Image.Picture.LoadFromFile(Fichier.Text);
+           frmShowImage.Image.Picture.LoadFromFile(edtFilename.Text);
            frmShowImage.Showmodal;
         end;
      end;
 end;
 
+procedure TfrmEditDocuments.edtFilenameChange(Sender: TObject);
+begin
+
+end;
+
 procedure TfrmEditDocuments.Button1Click(Sender: TObject);
 begin
   dmGenData.Query1.SQL.Clear;
-  if no.text='0' then
+  if idDocument=0 then
      dmGenData.Query1.SQL.Add('INSERT INTO X (X, T, D, F, A, N) VALUES ( 0, '''+
-       AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Titre.Text),'"','\"'),'''','\''')+
-       ''', '''+AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Description.Text),'"','\"'),'''','\''')+
-       ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Fichier.Text),'\','\\'),'"','\"'),'''','\''')+
-       ''', '''+Type1.text+''', '+N.Text+')')
+       AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtDocumentTitle.Text),'"','\"'),'''','\''')+
+       ''', '''+AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtDescription.Text),'"','\"'),'''','\''')+
+       ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtFilename.Text),'\','\\'),'"','\"'),'''','\''')+
+       ''', '''+edtDocumentType.text+''', '+edtidLink.Text+')')
   else
      dmGenData.Query1.SQL.Add('UPDATE X SET T='''+
-       AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Titre.Text),'"','\"'),'''','\''')+
-       ''', D='''+AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Description.Text),'"','\"'),'''','\''')+
-       ''', F='''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Fichier.Text),'\','\\'),'"','\"'),'''','\''')+
-       ''' WHERE X.no='+no.text);
+       AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtDocumentTitle.Text),'"','\"'),'''','\''')+
+       ''', D='''+AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtDescription.Text),'"','\"'),'''','\''')+
+       ''', F='''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtFilename.Text),'\','\\'),'"','\"'),'''','\''')+
+       ''' WHERE X.no='+edtidDocument.text);
   dmGenData.Query1.ExecSQL;
   // Enregistrer la date de la dernière modification pour tout les individus reliés
   // à cet exhibits.
-  if no.text='0' then
+  if idDocument=0 then
      begin
-     no.text:=InttoStr(dmGenData.GetLastIDOfTable('X'));
+     edtidDocument.text:=InttoStr(dmGenData.GetLastIDOfTable('X'));
   end;
-  if type1.Text='I' then
+  if edtDocumentType.Text='I' then
      begin
      dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
   end;
-  if type1.Text='E' then
+  if edtDocumentType.Text='E' then
      begin
      dmGenData.Query3.SQL.Clear;
      dmGenData.Query3.SQL.Add('SELECT W.I FROM (W JOIN E on W.E=E.no) JOIN X on X.N=E.no WHERE X.no='+
-                                no.Text);
+                                edtidDocument.Text);
      dmGenData.Query3.Open;
      dmGenData.Query3.First;
      while not dmGenData.Query3.EOF do

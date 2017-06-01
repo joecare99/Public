@@ -437,7 +437,7 @@ begin
   if no.text='0' then
      TableauExhibits.RowCount:=1
   else
-     PopulateDocuments(TableauExhibits,'E',strtoint(No.Text));
+     dmGenData.PopulateDocuments(TableauExhibits,'E',strtoint(No.Text));
 end;
 
 procedure TfrmEditEvents.MEditingDone(Sender: TObject);
@@ -859,13 +859,15 @@ begin
   // Modifier un document de l'événement
   If TableauExhibits.Row>0 then
      begin
-     dmGenData.PutCode('E',TableauExhibits.Cells[0,TableauExhibits.Row]);
+//     dmGenData.PutCode('E',);
+     frmEditDocuments.EditMode:=eDEM_EditDocument;
+     frmEditDocuments.idDocument:=ptrint(TableauExhibits.Objects[0,TableauExhibits.Row]);
      If frmEditDocuments.Showmodal=mrOK then
         begin
-        PopulateDocuments(TableauExhibits,'E',strtoint(no.text));
+        dmGenData.PopulateDocuments(TableauExhibits,'E',strtoint(no.text));
         // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
         if frmStemmaMainForm.actWinDocuments.Checked then
-           PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
+           dmGenData.PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
      end;
   end;
 end;
@@ -1037,14 +1039,17 @@ begin
   // Ajouter un document à l'événement
   If no.text='0' then
      Button1Click(Sender);
-  dmGenData.PutCode('E',no.text);
-  dmGenData.PutCode('A',no.text);
+  //dmGenData.PutCode('E',no.text);
+  //dmGenData.PutCode('A',no.text);
+  frmEditDocuments.EditMode:=eDEM_AddDocument;
+  frmEditDocuments.docType:='E';
+  frmEditDocuments.idLinkID:=idEvent;
   If frmEditDocuments.Showmodal=mrOK then
      begin
-     PopulateDocuments(TableauExhibits,'E',idEvent);
+     dmGenData.PopulateDocuments(TableauExhibits,'E',idEvent);
      // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
      if frmStemmaMainForm.actWinDocuments.Checked then
-        PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
+        dmGenData.PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
   end;
 end;
 
@@ -1114,7 +1119,7 @@ begin
         end;
         // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
         if frmStemmaMainForm.actWinDocuments.Checked then
-           PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
+           dmGenData.PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
      end;
 end;
 

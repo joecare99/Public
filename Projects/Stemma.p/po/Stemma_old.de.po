@@ -140,6 +140,14 @@ msgstr ""
 msgid "%s [%d] (%s - %s)"
 msgstr ""
 
+#: cls_translation.sdocument
+msgid "Document"
+msgstr ""
+
+#: cls_translation.sdocumentmodification
+msgid "Exhibit modification"
+msgstr ""
+
 #: cls_translation.sdocuments
 msgctxt "cls_translation.sdocuments"
 msgid "Documents"
@@ -1715,6 +1723,39 @@ msgctxt "TFORMUTILISATION.BUTTON1.CAPTION"
 msgid "Ok"
 msgstr "Ok"
 
+#: tfradocuments.actdocumentsadd.caption
+msgctxt "tfradocuments.actdocumentsadd.caption"
+msgid "&Add"
+msgstr ""
+
+#: tfradocuments.actdocumentsdelete.caption
+#, fuzzy
+#| msgid "&Supprimer"
+msgctxt "tfradocuments.actdocumentsdelete.caption"
+msgid "&Delete"
+msgstr "Löschen"
+
+#: tfradocuments.actdocumentsdisplay.caption
+msgid "Dis&play"
+msgstr ""
+
+#: tfradocuments.actdocumentsedit.caption
+#, fuzzy
+#| msgid "&Modifier"
+msgctxt "tfradocuments.actdocumentsedit.caption"
+msgid "&Edit"
+msgstr "Bearbeiten"
+
+#: tfradocuments.label12.caption
+msgctxt "tfradocuments.label12.caption"
+msgid "Documents:"
+msgstr ""
+
+#: tfradocuments.menuitem9.caption
+msgctxt "tfradocuments.menuitem9.caption"
+msgid "-"
+msgstr ""
+
 #: tfraedtcitations.actedtcitationadd.caption
 msgctxt "tfraedtcitations.actedtcitationadd.caption"
 msgid "&Add"
@@ -1823,9 +1864,11 @@ msgid "&Edit"
 msgstr ""
 
 #: tfrmchildren.actchildrengoto.caption
+#, fuzzy
+#| msgid "&Aller à"
 msgctxt "tfrmchildren.actchildrengoto.caption"
 msgid "&Go To"
-msgstr ""
+msgstr "&gehen"
 
 #: tfrmchildren.btnchildrensep.caption
 msgid "btnChildrenSep"
@@ -1918,54 +1961,53 @@ msgctxt "tfrmdocuments.toolbar1.caption"
 msgid "ToolBar1"
 msgstr ""
 
-#: tfrmeditdocuments.button1.caption
-#, fuzzy
-msgctxt "tfrmeditdocuments.button1.caption"
-msgid "Ok"
-msgstr "Ok"
-
-#: tfrmeditdocuments.button2.caption
-#, fuzzy
-msgctxt "tfrmeditdocuments.button2.caption"
-msgid "Annul."
-msgstr "Abbruch"
-
-#: tfrmeditdocuments.button3.caption
-msgctxt "tfrmeditdocuments.button3.caption"
-msgid "Visualiser"
+#: tfrmeditdocuments.btndisplay.caption
+msgid "Display"
 msgstr ""
 
-#: tfrmeditdocuments.fichier.text
-#, fuzzy
-msgctxt "tfrmeditdocuments.fichier.text"
-msgid "Fichier"
-msgstr "Datei"
-
-#: tfrmeditdocuments.label1.caption
-#, fuzzy
-msgctxt "tfrmeditdocuments.label1.caption"
-msgid "No"
-msgstr "Nein"
-
-#: tfrmeditdocuments.label2.caption
-msgctxt "tfrmeditdocuments.label2.caption"
-msgid "Titre:"
+#: tfrmeditdocuments.chbdocumentprefered.caption
+msgctxt "tfrmeditdocuments.chbdocumentprefered.caption"
+msgid "Prefered"
 msgstr ""
 
-#: tfrmeditdocuments.label3.caption
-msgctxt "tfrmeditdocuments.label3.caption"
+#: tfrmeditdocuments.edtdescription.hint
+msgid "Description of the Document"
+msgstr ""
+
+#: tfrmeditdocuments.edtdocumenttitle.texthint
+msgid "The title of the Document"
+msgstr ""
+
+#: tfrmeditdocuments.edtdocumenttype.text
+msgid "edtDocumentType"
+msgstr ""
+
+#: tfrmeditdocuments.edtfilename.texthint
+msgid "Enter/Select a filename of a Document"
+msgstr ""
+
+#: tfrmeditdocuments.lbldocumentdescription.caption
+msgctxt "tfrmeditdocuments.lbldocumentdescription.caption"
 msgid "Description:"
 msgstr ""
 
-#: tfrmeditdocuments.label4.caption
+#: tfrmeditdocuments.lbldocuments1.caption
 #, fuzzy
-msgctxt "tfrmeditdocuments.label4.caption"
-msgid "Fichier:"
-msgstr "Datei:"
+msgctxt "tfrmeditdocuments.lbldocuments1.caption"
+msgid "No"
+msgstr "Nein"
 
-#: tfrmeditdocuments.label5.caption
-msgctxt "tfrmeditdocuments.label5.caption"
+#: tfrmeditdocuments.lbldocumentstitle.caption
+msgid "Title:"
+msgstr ""
+
+#: tfrmeditdocuments.lbldocumenttype.caption
+msgctxt "tfrmeditdocuments.lbldocumenttype.caption"
 msgid "Type"
+msgstr ""
+
+#: tfrmeditdocuments.lblfilename.caption
+msgid "File:"
 msgstr ""
 
 #: tfrmeditdocuments.menuitem1.caption
@@ -1974,35 +2016,9 @@ msgctxt "tfrmeditdocuments.menuitem1.caption"
 msgid "&Quit"
 msgstr "&Beenden"
 
-#: tfrmeditdocuments.n.text
-msgctxt "tfrmeditdocuments.n.text"
-msgid "Type1"
-msgstr ""
-
-#: tfrmeditdocuments.no.text
-#, fuzzy
-msgctxt "tfrmeditdocuments.no.text"
-msgid "No"
-msgstr "Nein"
-
 #: tfrmeditdocuments.opendialog.title
 msgctxt "tfrmeditdocuments.opendialog.title"
 msgid "Sélection de l'image"
-msgstr ""
-
-#: tfrmeditdocuments.primaire.caption
-msgctxt "tfrmeditdocuments.primaire.caption"
-msgid "Primaire"
-msgstr ""
-
-#: tfrmeditdocuments.titre.text
-msgctxt "tfrmeditdocuments.titre.text"
-msgid "Titre"
-msgstr ""
-
-#: tfrmeditdocuments.type1.text
-msgctxt "tfrmeditdocuments.type1.text"
-msgid "Type1"
 msgstr ""
 
 #: tfrmeditevents.ajouter2.caption

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="WinCub"><module name="Cls_ColCub"><element name="TColCubEngine"><short>Engine-Class for the ColorCub-MiniGame</short>
+      </element><element name="TColCubEngine.Initialize"><short>Initializes the Playfield with given Cols and Rows</short>
+      </element><element name="TColCubEngine.Shuffle"><short>Shuffles the Playfield and starts the Game</short>
+      </element><element name="TColCubEngine.MoveCol"><short>User-Move: Moves the Column by Index</short>
+      </element><element name="TColCubEngine.MoveRow"><short>User-Move: Moves the given Row by Index</short>
+      </element><element name="TColCubEngine.IsComplete"><short>Is Complete computes if all the tiles are in the right place</short>
+      </element><element name="TColCubEngine.Rows"><short>Configuration-Value Rows sets the Number of Rows in the Playfield</short>
+      </element><element name="TColCubEngine.Cols"><short>Configuration-Value Cols sets the Number of Columns in the Playfield</short>
+      </element><element name="TColCubEngine.Tile"><short>Property Tile gives the id of the tile for a (X,Y)-Position</short>
+      </element><element name="TColCubEngine.Moves"><short>Moves gives the Number of User-Moves</short>
+      </element><element name="TColCubEngine.EditMode"><short>Editmode=true is for editing the Playfield</short>
+      </element><element name="MaxShuffle"><short>MaxShuffle sets the number of shuffeling-steps </short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

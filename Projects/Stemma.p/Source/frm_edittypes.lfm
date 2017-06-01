@@ -3,6 +3,7 @@ object EditType: TEditType
   Height = 366
   Top = 153
   Width = 617
+  ActiveControl = T
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de type d''événement'

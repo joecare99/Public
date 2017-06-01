@@ -193,7 +193,7 @@ begin
      // Populate les dépots
      PopulateDepots;
      // Populate le tableau de documents
-     PopulateDocuments(TableauExhibits,'S',ID);
+     dmGenData.PopulateDocuments(TableauExhibits,'S',ID);
   end;
 end;
 
@@ -209,56 +209,7 @@ var
   ini:TIniFile;
   pdf:string;
 begin
-  // Visualiser un document de la source
-  if TableauExhibits.Row>0 then
-     begin
-     dmGenData.Query2.SQL.Text:='SELECT X.Z, X.F FROM X WHERE X.no='+TableauExhibits.Cells[0,TableauExhibits.Row];
-     dmGenData.Query2.Open;
-     if TableauExhibits.Cells[4,TableauExhibits.Row]=Translation.Items[34] then
-        begin
-        frmShowImage.Caption:=Translation.Items[34];
-        frmShowImage.Image.Visible:=false;
-        frmShowImage.Memo.Visible:=true;
-        frmShowImage.btnOK.Visible:=true;
-        frmShowImage.btnCancel.Visible:=true;
-        frmShowImage.Memo.Text:=dmGenData.Query2.Fields[0].AsString;
-        if frmShowImage.Showmodal=mrOk then
-           begin
-           dmGenData.Query2.SQL.Clear;
-           dmGenData.Query2.SQL.Add('UPDATE X SET Z='''+
-              AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(frmShowImage.Memo.Text),'"','\"'),'''','\''')+
-              ''' WHERE X.no='+TableauExhibits.Cells[0,TableauExhibits.Row]);
-           dmGenData.Query2.ExecSQL;
-        end;
-     end
-     else
-        begin
-        if AnsiPos('.PDF',dmGenData.Query2.Fields[1].AsString)>0 then
-           begin
-           Ini := TIniFile.Create(iniFileName);
-           pdf := ini.ReadString('Parametres','PDF','C:\Program Files (x86)\Adobe\Reader 10.0\Reader\AcroRd32.exe');
-           with TProcess.Create(nil) do
-           try
-              Parameters.Text:=pdf+' '+dmGenData.Query2.Fields[1].AsString;
-              Execute;
-              ini.WriteString('Parametres','PDF',pdf);
-           finally
-              Free;
-           end;
-           Ini.Free;
-        end
-        else
-           begin
-           frmShowImage.Caption:=dmGenData.Query2.Fields[1].AsString;
-           frmShowImage.Memo.Visible:=false;
-           frmShowImage.btnOK.Visible:=false;
-           frmShowImage.btnCancel.Visible:=false;
-           frmShowImage.Image.Visible:=true;
-           frmShowImage.Image.Picture.LoadFromFile(dmGenData.Query2.Fields[1].AsString);
-           frmShowImage.Showmodal;
-        end;
-     end;
-  end;
+
 end;
 
 procedure TEditSource.MenuItem5Click(Sender: TObject);
@@ -301,13 +252,7 @@ end;
 
 procedure TEditSource.Modifier2Click(Sender: TObject);
 begin
-  // Modifier un document à la source
-  If TableauExhibits.Row>0 then
-     begin
-     dmGenData.PutCode('S',TableauExhibits.Cells[0,TableauExhibits.Row]);
-     If frmEditDocuments.Showmodal=mrOK then
-        PopulateDocuments(TableauExhibits,'S',id);
-     end;
+
 end;
 
 procedure TEditSource.Supprimer1Click(Sender: TObject);
@@ -325,15 +270,7 @@ end;
 
 procedure TEditSource.Supprimer2Click(Sender: TObject);
 begin
-  // Supprimer un document à la source
-  If TableauExhibits.Row>0 then
-     if MessageDlg(SConfirmation,format(SAreYouSureToDelete,[TableauExhibits.Cells[2,TableauExhibits.Row]])
-     ,mtConfirmation,mbYesNo,0) =mrYES  then
-        begin
-        dmGenData.Query1.SQL.Text:='DELETE FROM X WHERE no='+TableauExhibits.Cells[0,TableauExhibits.Row];
-        dmGenData.Query1.ExecSQL;
-        TableauExhibits.DeleteRow(TableauExhibits.Row);
-     end;
+
 end;
 
 procedure TEditSource.TableauDepotsDblClick(Sender: TObject);
@@ -413,13 +350,7 @@ end;
 
 procedure TEditSource.Ajouter2Click(Sender: TObject);
 begin
-  // Ajouter un document à la source
-  If id=0 then
-     btnOKClick(Sender);
-  dmGenData.PutCode('S',no.text);
-  dmGenData.PutCode('A',no.text);
-  If frmEditDocuments.Showmodal=mrOK then
-     PopulateDocuments(TableauExhibits,'S',id);
+
 end;
 
 procedure TEditSource.btnOKClick(Sender: TObject);

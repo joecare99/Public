@@ -45,6 +45,8 @@ var
 
 begin
   NameValueSeparator:=' ';
+  result := FileExists(FileName);
+  if not result then exit;
   LoadFromFile(Filename);
 end;
 

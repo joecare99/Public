@@ -71,6 +71,10 @@ implementation
 
 { TPathFinder }
 
+{$IFNDEF FPC}
+
+{$ENDIF}
+
 function KDist(p1,p2:Tpoint):integer;inline;
 
 begin

@@ -66,19 +66,19 @@ object frmSokoban: TfrmSokoban
         ImageIndex = -1
         MinHeight = 24
         ParentColor = False
-        Width = 646
+        Width = 648
       end
       item
         Control = StandardBar
         ImageIndex = -1
         MinHeight = 22
-        Width = 646
+        Width = 648
       end>
     PopupMenu = ToolbarMenu
     object StandardBar: TToolBar
-      Left = 11
+      Left = 9
       Top = 26
-      Width = 637
+      Width = 635
       Height = 22
       AutoSize = True
       Caption = 'StandardBar'
@@ -205,16 +205,16 @@ object frmSokoban: TfrmSokoban
       end
     end
     object ActionMainMenuBar1: TActionMainMenuBar
-      Left = 11
+      Left = 9
       Top = 0
-      Width = 637
+      Width = 635
       Height = 24
       UseSystemFont = False
       ActionManager = ActionManager1
       Caption = 'ActionMainMenuBar1'
-      ColorMap.HighlightColor = clWhite
+      ColorMap.HighlightColor = 14410210
       ColorMap.BtnSelectedColor = clBtnFace
-      ColorMap.UnusedColor = clWhite
+      ColorMap.UnusedColor = 14410210
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clWindowText
       Font.Height = -11

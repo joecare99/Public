@@ -39,6 +39,7 @@ type
     procedure SetDB_Connected(AValue: boolean);
     procedure SetOnModifyEvent(AValue: TNotifyEvent);
     procedure SetOnModifyIndividual(AValue: TNotifyEvent);
+
     { private declarations }
   public
     { public declarations }
@@ -171,9 +172,16 @@ type
     procedure DeleteCitationsbyType_ID(const aType: Char; const aID: Integer);
 
     // Documents Methods
+    procedure PopulateDocuments(Tableau:TStringGrid;Code:string;no:integer);
     procedure CopyDocumentbyType_ID(const aType: string; const aID,
       aNewID: integer);
+    procedure SelectDocumentData(const lidDocument: Integer; out
+      lPrefered: Boolean; out lDocumentInfo, lDocType, lFileName,
+      lDocumentDescription, lDocumentTitle: string);
+     procedure UpdateDocument_SRPrefered(const lidInd: LongInt;
+      const lNewPref: Boolean; const lidDocument: Integer);
     procedure DeleteDocumentsbyType_ID(const aType: Char; const aID: Integer);
+    procedure DeleteDocument(const lidDocument: Integer);
 
     // Type Methods
     procedure GetTypeList(const aList: TStrings; aType: string;
@@ -276,6 +284,8 @@ begin
     ExecSQL;
   end;
 end;
+
+
 
 destructor TdmGenData.Destroy;
 begin
@@ -2592,6 +2602,150 @@ end;
 {$Endregion Events}
 // Document Methods
 {$region Documents}
+procedure TdmGenData.PopulateDocuments(Tableau: TStringGrid; Code: string;
+  no: integer);
+
+var
+    row:integer;
+    titre,desc:string;
+  begin
+    if code='I' then
+       begin
+       dmGenData.Query1.SQL.Clear;
+       // Ajouter les exhibits de l'individu
+       dmGenData.Query1.SQL.add('SELECT X.no, X.X, X.T, X.D, X.F, X.A FROM X WHERE (X.A=''I'' AND X.N='+
+                                 inttostr(no)+')'+' ORDER BY X.T');
+       dmGenData.Query1.Open;
+       dmGenData.Query1.First;
+       row:=1;
+       Tableau.RowCount:=dmGenData.Query1.RecordCount+1;
+       While not dmGenData.Query1.EOF do
+       begin
+          Tableau.Cells[0,row]:=dmGenData.Query1.Fields[0].AsString;
+          Tableau.Objects[0,row]:=Tobject(ptrint(dmGenData.Query1.Fields[0].AsInteger));
+
+          if dmGenData.Query1.Fields[1].AsBoolean then
+             Tableau.Cells[1,row]:='*'
+          else
+             Tableau.Cells[1,row]:='';
+
+          titre:=dmGenData.Query1.Fields[2].AsString;
+          desc:=dmGenData.Query1.Fields[3].AsString;
+          if length(titre)=0 then
+             if length(desc)=0 then
+                Tableau.Cells[2,row]:=Translation.Items[63]
+             else
+                Tableau.Cells[2,row]:=desc
+          else
+             if length(desc)=0 then
+                Tableau.Cells[2,row]:=titre
+             else
+                Tableau.Cells[2,row]:=titre+', '+desc;
+          Tableau.Cells[3,row]:=dmGenData.Query1.Fields[5].AsString;
+          if length(dmGenData.Query1.Fields[4].AsString)=0 then
+             Tableau.Cells[4,row]:=Translation.Items[34]
+          else
+             Tableau.Cells[4,row]:=Translation.Items[64];
+          dmGenData.Query1.Next;
+          row:=row+1;
+       end;
+    end
+    else
+      Tableau.RowCount:=1;
+    // Ajouter les exhibits des événements
+    dmGenData.Query1.SQL.Clear;
+    if code='I' then
+       dmGenData.Query1.SQL.add('SELECT X.no, X.X, X.T, X.D, X.F, X.A FROM (X JOIN E on X.N=E.no) JOIN W on W.E=E.no WHERE (X.A=''E'' AND W.I='+
+                                 inttostr(no)+')'+' ORDER BY X.T');
+    if code='E' then
+       dmGenData.Query1.SQL.add('SELECT X.no, X.X, X.T, X.D, X.F, X.A FROM X WHERE X.A=''E'' AND X.N='+
+                                 inttostr(no)+' ORDER BY X.T');
+    if code='S' then
+       dmGenData.Query1.SQL.add('SELECT X.no, X.X, X.T, X.D, X.F, X.A FROM X WHERE X.A=''S'' AND X.N='+
+                                 inttostr(no)+' ORDER BY X.T');
+    dmGenData.Query1.Open;
+    dmGenData.Query1.First;
+    Tableau.RowCount:=Tableau.RowCount+dmGenData.Query1.RecordCount;
+    While not dmGenData.Query1.EOF do
+    begin
+       Tableau.Cells[0,row]:=dmGenData.Query1.Fields[0].AsString;
+       Tableau.Cells[1,row]:='';
+       titre:=dmGenData.Query1.Fields[2].AsString;
+       desc:=dmGenData.Query1.Fields[3].AsString;
+       if length(titre)=0 then
+          if length(desc)=0 then
+             Tableau.Cells[2,row]:=Translation.Items[63]
+          else
+             Tableau.Cells[2,row]:=desc
+       else
+          if length(desc)=0 then
+             Tableau.Cells[2,row]:=titre
+          else
+             Tableau.Cells[2,row]:=titre+', '+desc;
+       Tableau.Cells[3,row]:=dmGenData.Query1.Fields[5].AsString;
+       if length(dmGenData.Query1.Fields[4].AsString)=0 then
+          Tableau.Cells[4,row]:=Translation.Items[34]
+       else
+          Tableau.Cells[4,row]:=Translation.Items[64];
+       dmGenData.Query1.Next;
+       row:=row+1;
+    end;
+end;
+
+procedure TdmGenData.SelectDocumentData(const lidDocument: Integer;out lPrefered: Boolean;
+   out lDocumentInfo,lDocType,lFileName, lDocumentDescription, lDocumentTitle: string);
+begin
+  with qryInternal do
+  begin
+   Close;
+   SQL.text:=
+    'SELECT X.no, X.X, X.T, X.D, X.F, X.Z, X.A FROM X WHERE (X.no=:idDocument)';
+   ParamByName('idDocument').AsInteger:=lidDocument;
+   Open;
+   First;
+  lPrefered := Fields[1].AsBoolean;
+  lDocumentTitle:= Fields[2].AsString;
+  lDocumentDescription:= Fields[3].AsString;
+  lFileName:= Fields[4].AsString;
+  lDocType:= Fields[6].AsString;
+  lDocumentInfo:= Fields[5].AsString;
+  end;
+end;
+
+procedure TdmGenData.DeleteDocument(const lidDocument: Integer);
+begin
+  with Query1 do begin
+  Close;
+    SQL.Text:='DELETE FROM X WHERE no=:idDocument';
+    ParamByName('idDocument').AsInteger:=lidDocument;
+    ExecSQL;
+  end;
+end;
+
+procedure TdmGenData.UpdateDocument_SRPrefered(const lidInd: LongInt;
+  const lNewPref: Boolean; const lidDocument: Integer);
+begin
+  with Query1 do begin
+    If not lNewPref then
+      begin
+       Close;
+       SQL.text:='UPDATE X SET X=0 WHERE X.no=:idDocument';
+       ParamByName('idDocument').AsInteger:=lidDocument;
+       ExecSQL;
+      end
+    else
+       begin
+       Close;
+       SQL.text:='UPDATE X SET X=0 WHERE X.A=''I'' AND X.N=:idInd';
+       ParamByName('idInd').AsInteger:=lidInd;
+       ExecSQL;
+       SQL.text:='UPDATE X SET X=1 WHERE X.no=:idDocument';
+       ParamByName('idDocument').AsInteger:=lidDocument;
+       ExecSQL;
+    end;
+  end;
+end;
+
 procedure TdmGenData.CopyDocumentbyType_ID(const aType:string; const aID,aNewID: integer);
 begin
   // en: Copy Documents of Event

@@ -64,7 +64,7 @@ end;
 
 procedure TFormImage.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
-  dmGenData.WriteCfgFormPosition(Sender as TForm);
+  dmGenData.WriteCfgFormPosition(self);
 end;
 
 procedure TFormImage.FormResize(Sender: TObject);

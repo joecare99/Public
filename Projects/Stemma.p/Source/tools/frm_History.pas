@@ -61,7 +61,6 @@ begin
       lHList.Items.AddObject(
          Format('%d. %s [%d]',[i+1,lName,lId]),
            TObject(PtrInt(lID)));
-
     end;
 end;
 

@@ -6,7 +6,7 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  DefaultTranslator,sysutils,
+  DefaultTranslator,SysUtils, types,
   Interfaces, // this includes the LCL widgetset
   Forms, dbflaz, anchordockpkg, frm_Main, FMUtils, frm_ConnectDB,
   frm_Names, frm_Explorer,
@@ -18,7 +18,7 @@ frm_EditName, frm_EditEvents, frm_EditWitness,
   frm_Places, frm_Usage, frm_Sources, 
 frm_Repositories, frm_EditSource, frm_Types, frm_EditTypes,
   frm_About, frm_SelectPerson, dm_GenData, cls_Translation,uScaleDPI, 
-frm_SelectDialog, fra_Citations, untWebexport;
+frm_SelectDialog, fra_Citations, untWebexport, fra_Documents;
 
 {$R *.res}
 

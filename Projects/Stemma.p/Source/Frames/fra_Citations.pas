@@ -69,7 +69,7 @@ end;
 procedure TfraEdtCitations.mniCitationAddClick(Sender: TObject);
 begin
     if assigned(FOnSaveData) and (FLinkID=0) then
-      FOnSaveData(sender);
+    FOnSaveData(sender);
 
     if FLinkID=0 then exit;
     EditCitations.TypeCode:=FCType;

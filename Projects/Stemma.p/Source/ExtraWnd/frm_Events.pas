@@ -94,7 +94,7 @@ begin
     PopulateEvents(Sender);
     // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
     if frmStemmaMainForm.actWinDocuments.Checked then
-      PopulateDocuments(frmDocuments.tblDocuments, 'I', frmStemmaMainForm.iID);
+      dmGenData.PopulateDocuments(frmDocuments.tblDocuments, 'I', frmStemmaMainForm.iID);
   end;
 end;
 
@@ -114,7 +114,7 @@ begin
         grdEvents.DeleteRow(grdEvents.Row);
         // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
         if frmStemmaMainForm.actWinDocuments.Checked then
-          PopulateDocuments(frmDocuments.tblDocuments, 'I', frmStemmaMainForm.iID);
+          dmGenData.PopulateDocuments(frmDocuments.tblDocuments, 'I', frmStemmaMainForm.iID);
       end;
 end;
 
@@ -160,7 +160,7 @@ begin
       PopulateEvents(Sender);
       // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
       if frmStemmaMainForm.actWinDocuments.Checked then
-        PopulateDocuments(frmDocuments.tblDocuments, 'I', frmStemmaMainForm.iID);
+        dmGenData.PopulateDocuments(frmDocuments.tblDocuments, 'I', frmStemmaMainForm.iID);
     end;
 end;
 

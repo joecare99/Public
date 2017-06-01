@@ -57,7 +57,9 @@ resourcestring
   SDatabaseNotFound = 'Database not found.';
   SDispNameAndLiveDate = '%s (%s - %s)';
   SDispNameIdAndLiveDate = '%s [%d] (%s - %s)';
+  SDocumentModification = 'Exhibit modification';
   SDocuments = 'Documents';
+  SDocument = 'Document';
   SEnterTheDatabaseName = 'Enter the database name';
   SEnterTheDatabaseToDel = 'Enter the database name to delete';
   SEvents = 'Events';
@@ -304,7 +306,7 @@ FItems.Add('Citations:');
 FItems.Add('Role');
 FItems.Add('Name');
 FItems.Add('Q');
-FItems.Add('Exhibit modification');
+FItems.Add(SDocumentModification);
 FItems.Add('Title:');
 FItems.Add('File:');              {180}
 FItems.Add('Visualise');

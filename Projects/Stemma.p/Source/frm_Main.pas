@@ -1660,7 +1660,7 @@ begin
     if actWinParents.Checked then
       dmGenData.PopulateParents(frmParents.tblParents, frmStemmaMainForm.iID);
     if actWinDocuments.Checked then
-      PopulateDocuments(frmDocuments.tblDocuments, 'I', frmStemmaMainForm.iID);
+      dmGenData.PopulateDocuments(frmDocuments.tblDocuments, 'I', frmStemmaMainForm.iID);
     if actWinChildren.Checked then
       frmChildren.PopulateEnfants(Sender);
     if actWinSiblings.Checked then

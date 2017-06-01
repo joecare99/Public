@@ -33,31 +33,22 @@
       </Item1>
     </Files>
     <LazDoc Paths="../FPDoc"/>
-    <RequiredPkgs Count="8">
+    <RequiredPkgs Count="5">
       <Item1>
-        <PackageName Value="BaseUnits"/>
+        <PackageName Value="CmpAboutBox"/>
       </Item1>
       <Item2>
-        <PackageName Value="CmpAboutBox"/>
+        <PackageName Value="CmpDBConfig"/>
       </Item2>
       <Item3>
-        <PackageName Value="UntConfig"/>
+        <PackageName Value="DBHlPanel"/>
       </Item3>
       <Item4>
-        <PackageName Value="CmpDBConfig"/>
+        <PackageName Value="DBHLLookUpPanel"/>
       </Item4>
       <Item5>
-        <PackageName Value="DBHlPanel"/>
-      </Item5>
-      <Item6>
-        <PackageName Value="DBHLLookUpPanel"/>
-      </Item6>
-      <Item7>
         <PackageName Value="CmpGLScene"/>
-      </Item7>
-      <Item8>
-        <PackageName Value="LCL"/>
-      </Item8>
+      </Item5>
     </RequiredPkgs>
     <UsageOptions>
       <UnitPath Value="$(PkgOutDir)"/>

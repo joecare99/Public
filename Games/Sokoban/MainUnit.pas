@@ -11,8 +11,9 @@ interface
 uses
 {$IFnDEF FPC}
   JPeg,  msxmldom, xmldom, ActnMan, ActnCtrls, ActnMenus, ToolWin, ImgList,
-  XPStyleActnCtrls, StdStyleActnCtrls, ActnPopup, Windows, PlatformDefaultStyleActnCtrls, XMLIntf, XMLDoc
-  , System.Actions, System.ImageList,
+  XPStyleActnCtrls, StdStyleActnCtrls, ActnPopup, Windows,
+  PlatformDefaultStyleActnCtrls, XMLIntf, XMLDoc,
+
 {$ELSE}
   LCLIntf, LCLType,  FileUtil, ComboEx, DOM, XMLWrite,
 {$ENDIF}

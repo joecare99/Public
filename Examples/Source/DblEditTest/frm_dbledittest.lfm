@@ -4,5 +4,7 @@ object Form1: TForm1
   Top = 200
   Width = 320
   Caption = 'Form1'
-  LCLVersion = '1.8.0.1'
+  ClientHeight = 240
+  ClientWidth = 320
+  Visible = False
 end
