@@ -1,0 +1,114 @@
+object fraDocuments: TfraDocuments
+  Left = 0
+  Height = 240
+  Top = 0
+  Width = 920
+  BorderSpacing.Around = 3
+  ClientHeight = 240
+  ClientWidth = 920
+  TabOrder = 0
+  object tblDocuments: TStringGrid
+    Left = 90
+    Height = 240
+    Top = 0
+    Width = 830
+    Align = alClient
+    Columns = <    
+      item
+        Title.Caption = '*'
+        Width = 17
+      end    
+      item
+        Title.Caption = 'Title'
+        Width = 443
+      end    
+      item
+        Title.Caption = 'Type'
+        Visible = False
+      end    
+      item
+        Title.Caption = 'Format'
+        Width = 46
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    PopupMenu = mnuDocuments
+    TabOrder = 0
+    OnResize = tblDocumentsResize
+    ColWidths = (
+      1
+      17
+      443
+      0
+      46
+    )
+  end
+  object pnlDocumentsLeft: TPanel
+    Left = 0
+    Height = 240
+    Top = 0
+    Width = 90
+    Align = alLeft
+    BevelOuter = bvNone
+    ClientHeight = 240
+    ClientWidth = 90
+    TabOrder = 1
+    object Label12: TLabel
+      Left = 5
+      Height = 15
+      Top = 3
+      Width = 80
+      Align = alTop
+      Alignment = taRightJustify
+      BorderSpacing.Left = 5
+      BorderSpacing.Top = 3
+      BorderSpacing.Right = 5
+      Caption = 'Documents:'
+      ParentColor = False
+    end
+  end
+  object mnuDocuments: TPopupMenu
+    left = 40
+    top = 104
+    object Ajouter2: TMenuItem
+      Action = actDocumentsAdd
+    end
+    object Modifier2: TMenuItem
+      Action = actDocumentsEdit
+    end
+    object Supprimer2: TMenuItem
+      Action = actDocumentsDelete
+    end
+    object MenuItem9: TMenuItem
+      Caption = '-'
+    end
+    object MenuItem10: TMenuItem
+      Action = actDocumentsDisplay
+    end
+  end
+  object alsDocuments: TActionList
+    left = 40
+    top = 40
+    object actDocumentsAdd: TAction
+      Category = 'Documents'
+      Caption = '&Add'
+      OnExecute = actDocumentsAddExecute
+    end
+    object actDocumentsEdit: TAction
+      Category = 'Documents'
+      Caption = '&Edit'
+      OnExecute = actDocumentsEditExecute
+    end
+    object actDocumentsDelete: TAction
+      Category = 'Documents'
+      Caption = '&Delete'
+      OnExecute = actDocumentsDeleteExecute
+    end
+    object actDocumentsDisplay: TAction
+      Category = 'Documents'
+      Caption = 'Dis&play'
+      OnExecute = actDocumentsDisplayExecute
+    end
+  end
+end

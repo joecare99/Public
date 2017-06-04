@@ -13,6 +13,7 @@
         <DpiAware Value="True"/>
       </XPManifest>
       <Icon Value="0"/>
+      <ActiveWindowIndexAtStart Value="1"/>
     </General>
     <LazDoc Paths="..\FPDoc" PackageName="Stemma"/>
     <i18n>
@@ -213,12 +214,11 @@
         <UsageCount Value="212"/>
       </Unit6>
       <Unit7>
-        <Filename Value="..\Source\tools\frm_history.pas"/>
+        <Filename Value="..\Source\tools\frm_History.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmHistory"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="frm_History"/>
         <EditorIndex Value="12"/>
         <CursorPos X="28" Y="56"/>
         <UsageCount Value="207"/>
@@ -308,7 +308,6 @@
         <ComponentName Value="frmEditDocuments"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="19"/>
         <TopLine Value="262"/>
         <CursorPos X="49" Y="282"/>
@@ -347,6 +346,7 @@
         <ComponentName Value="frmEditParents"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="22"/>
         <CursorPos X="111" Y="8"/>
         <UsageCount Value="221"/>
@@ -728,10 +728,9 @@
       </Unit55>
       <Unit56>
         <Filename Value="%Macro:|Rec|Makro 3"/>
-        <EditorIndex Value="23"/>
+        <EditorIndex Value="-1"/>
         <CursorPos Y="3"/>
         <UsageCount Value="14"/>
-        <Loaded Value="True"/>
       </Unit56>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
