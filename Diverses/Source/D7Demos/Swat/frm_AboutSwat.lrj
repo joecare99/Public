@@ -1,0 +1,10 @@
+{"version":1,"strings":[
+{"hash":5953633,"name":"tfrmaboutswat.productname.caption","sourcebytes":[83,119,97,116,33],"value":"Swat!"},
+{"hash":28564548,"name":"tfrmaboutswat.hits.caption","sourcebytes":[53,32,112,116,115,32,112,101,114,32,104,105,116],"value":"5 pts per hit"},
+{"hash":67424776,"name":"tfrmaboutswat.copyright.caption","sourcebytes":[67,111,112,121,114,105,103,104,116,32,194,169,32,49,57,57,56],"value":"Copyright \u00A9 1998"},
+{"hash":13806277,"name":"tfrmaboutswat.comments.caption","sourcebytes":[68,101,108,112,104,105,32,69,120,97,109,112,108,101],"value":"Delphi Example"},
+{"hash":229557077,"name":"tfrmaboutswat.escape.caption","sourcebytes":[45,49,32,112,116,115,32,112,101,114,32,101,115,99,97,112,101],"value":"-1 pts per escape"},
+{"hash":188639107,"name":"tfrmaboutswat.miss.caption","sourcebytes":[45,50,32,112,116,115,32,112,101,114,32,109,105,115,115],"value":"-2 pts per miss"},
+{"hash":266251292,"name":"tfrmaboutswat.label1.caption","sourcebytes":[66,111,114,108,97,110,100,32,73,110,116,101,114,110,97,116,105,111,110,97,108],"value":"Borland International"},
+{"hash":1339,"name":"tfrmaboutswat.okbutton.caption","sourcebytes":[79,75],"value":"OK"}
+]}

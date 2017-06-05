@@ -1,0 +1,150 @@
+object frmSwatOptionDlg: TfrmSwatOptionDlg
+  Left = 194
+  Height = 233
+  Top = 110
+  Width = 384
+  BorderStyle = bsDialog
+  Caption = 'Options'
+  ClientHeight = 233
+  ClientWidth = 384
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.8.0.1'
+  Visible = False
+  object bvlValues: TBevel
+    Left = 8
+    Height = 217
+    Top = 8
+    Width = 281
+    Shape = bsFrame
+  end
+  object lblSlow: TLabel
+    Left = 36
+    Height = 13
+    Top = 72
+    Width = 23
+    Caption = 'Slow'
+    ParentColor = False
+  end
+  object lblFast: TLabel
+    Left = 241
+    Height = 13
+    Top = 72
+    Width = 20
+    Caption = 'Fast'
+    ParentColor = False
+  end
+  object lblLow: TLabel
+    Left = 36
+    Height = 13
+    Top = 144
+    Width = 20
+    Caption = 'Low'
+    ParentColor = False
+  end
+  object lblHigh: TLabel
+    Left = 239
+    Height = 13
+    Top = 144
+    Width = 22
+    Caption = 'High'
+    ParentColor = False
+  end
+  object lblSpeed: TLabel
+    Left = 133
+    Height = 13
+    Top = 24
+    Width = 31
+    Caption = '&Speed'
+    FocusControl = SpeedSet
+    ParentColor = False
+  end
+  object lblPopulation: TLabel
+    Left = 123
+    Height = 13
+    Top = 96
+    Width = 50
+    Caption = '&Population'
+    FocusControl = PopulationSet
+    ParentColor = False
+  end
+  object lblGameTime: TLabel
+    Left = 121
+    Height = 13
+    Top = 168
+    Width = 54
+    Caption = '&Game Time'
+    FocusControl = GameTimeSet
+    ParentColor = False
+  end
+  object SpeedSet: TTrackBar
+    Left = 36
+    Height = 25
+    Top = 40
+    Width = 225
+    Max = 30
+    Position = 0
+    TabOrder = 0
+  end
+  object PopulationSet: TTrackBar
+    Left = 36
+    Height = 25
+    Top = 112
+    Width = 225
+    Max = 35
+    Position = 0
+    TabOrder = 1
+  end
+  object GameTimeSet: TEdit
+    Left = 116
+    Height = 21
+    Top = 184
+    Width = 65
+    TabOrder = 2
+    Text = '150'
+  end
+  object pnlRight: TPanel
+    Left = 286
+    Height = 233
+    Top = 0
+    Width = 98
+    Align = alRight
+    BevelOuter = bvNone
+    ClientHeight = 233
+    ClientWidth = 98
+    TabOrder = 3
+    object btnOK: TBitBtn
+      Left = 6
+      Height = 60
+      Top = 6
+      Width = 86
+      Align = alTop
+      BorderSpacing.Around = 6
+      Default = True
+      DefaultCaption = True
+      Kind = bkOK
+      Layout = blGlyphTop
+      ModalResult = 1
+      OnClick = btnOKClick
+      TabOrder = 0
+    end
+    object CancelBtn: TBitBtn
+      Left = 6
+      Height = 60
+      Top = 72
+      Width = 86
+      Align = alTop
+      BorderSpacing.Around = 6
+      Cancel = True
+      DefaultCaption = True
+      Kind = bkCancel
+      Layout = blGlyphTop
+      ModalResult = 2
+      TabOrder = 1
+    end
+  end
+end

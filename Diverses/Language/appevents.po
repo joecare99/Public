@@ -1,0 +1,171 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: frm_appeventsmain.sactionexecuted
+msgid "Action executed"
+msgstr ""
+
+#: frm_appeventsmain.sdropfilesexecuted
+msgid "Drop files executed:"
+msgstr ""
+
+#: frm_appeventsmain.seventonactionexecute
+msgid "Event OnActionExecute"
+msgstr ""
+
+#: frm_appeventsmain.seventonactionupdate
+msgid "Event OnActionUpdate"
+msgstr ""
+
+#: frm_appeventsmain.seventonactivate
+msgid "Event OnActivate"
+msgstr ""
+
+#: frm_appeventsmain.seventondeactivate
+msgid "Event OnDeactivate"
+msgstr ""
+
+#: frm_appeventsmain.seventonexceptions
+msgid "Event OnException: %s"
+msgstr ""
+
+#: frm_appeventsmain.seventonhelp
+msgid "Event OnHelp"
+msgstr ""
+
+#: frm_appeventsmain.seventonhint
+msgid "Event OnHint"
+msgstr ""
+
+#: frm_appeventsmain.seventonidle
+msgid "Event OnIdle"
+msgstr ""
+
+#: frm_appeventsmain.seventonidleend
+msgid "Event OnIdle End"
+msgstr ""
+
+#: frm_appeventsmain.seventonminimize
+msgid "Event OnMinimize"
+msgstr ""
+
+#: frm_appeventsmain.seventonrestore
+msgid "Event OnRestore"
+msgstr ""
+
+#: frm_appeventsmain.seventonshortcut
+msgid "Event OnShortCut"
+msgstr ""
+
+#: frm_appeventsmain.seventonshowhint
+msgid "Event OnShowHint"
+msgstr ""
+
+#: frm_appeventsmain.seventuserinputd
+msgid "Event UserInput %d"
+msgstr ""
+
+#: frm_appeventsmain.sexceptionraised
+msgctxt "frm_appeventsmain.sexceptionraised"
+msgid "This is an exception"
+msgstr ""
+
+#: frm_appeventsmain.sxdyd
+msgid "X:= %d |Y:= %d"
+msgstr ""
+
+#: main.sexceptionraised
+msgctxt "main.sexceptionraised"
+msgid "This is an exception"
+msgstr ""
+
+#: tfrmappeventsmain.action.caption
+msgctxt "TFRMAPPEVENTSMAIN.ACTION.CAPTION"
+msgid "Action1"
+msgstr ""
+
+#: tfrmappeventsmain.hintbutton.caption
+msgctxt "TFRMAPPEVENTSMAIN.HINTBUTTON.CAPTION"
+msgid "Hint button test (move mouse here)"
+msgstr ""
+
+#: tfrmappeventsmain.hintbutton.hint
+msgctxt "TFRMAPPEVENTSMAIN.HINTBUTTON.HINT"
+msgid "This is a hint"
+msgstr ""
+
+#: tfrmappeventsmain.lblonactionupdate.caption
+msgctxt "TFRMAPPEVENTSMAIN.LBLONACTIONUPDATE.CAPTION"
+msgid "OnActionUpdate:"
+msgstr ""
+
+#: tfrmappeventsmain.lblonidle.caption
+msgctxt "TFRMAPPEVENTSMAIN.LBLONIDLE.CAPTION"
+msgid "OnIdle:"
+msgstr ""
+
+#: tfrmappeventsmain.lblonmessage.caption
+msgctxt "TFRMAPPEVENTSMAIN.LBLONMESSAGE.CAPTION"
+msgid "OnMessage:"
+msgstr ""
+
+#: tfrmappeventsmain.lblother.caption
+msgctxt "TFRMAPPEVENTSMAIN.LBLOTHER.CAPTION"
+msgid "Other Application Events:"
+msgstr ""
+
+#: tfrmappeventsmain.menuaction.caption
+msgctxt "TFRMAPPEVENTSMAIN.MENUACTION.CAPTION"
+msgid "&Action"
+msgstr ""
+
+#: tfrmappeventsmain.menuexception.caption
+msgctxt "TFRMAPPEVENTSMAIN.MENUEXCEPTION.CAPTION"
+msgid "&Raise Exception"
+msgstr ""
+
+#: tmainform.action.caption
+msgctxt "tmainform.action.caption"
+msgid "Action1"
+msgstr ""
+
+#: tmainform.hintbutton.caption
+msgctxt "tmainform.hintbutton.caption"
+msgid "Hint button test (move mouse here)"
+msgstr ""
+
+#: tmainform.hintbutton.hint
+msgctxt "tmainform.hintbutton.hint"
+msgid "This is a hint"
+msgstr ""
+
+#: tmainform.lblonactionupdate.caption
+msgctxt "tmainform.lblonactionupdate.caption"
+msgid "OnActionUpdate:"
+msgstr ""
+
+#: tmainform.lblonidle.caption
+msgctxt "tmainform.lblonidle.caption"
+msgid "OnIdle:"
+msgstr ""
+
+#: tmainform.lblonmessage.caption
+msgctxt "tmainform.lblonmessage.caption"
+msgid "OnMessage:"
+msgstr ""
+
+#: tmainform.lblother.caption
+msgctxt "tmainform.lblother.caption"
+msgid "Other Application Events:"
+msgstr ""
+
+#: tmainform.menuaction.caption
+msgctxt "tmainform.menuaction.caption"
+msgid "&Action"
+msgstr ""
+
+#: tmainform.menuexception.caption
+msgctxt "tmainform.menuexception.caption"
+msgid "&Raise Exception"
+msgstr ""
+

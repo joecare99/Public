@@ -1,0 +1,129 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tcustomdrawform.background1.caption
+msgid "&Background"
+msgstr ""
+
+#: tcustomdrawform.bdiagonal1.caption
+msgid "&BDiagonal"
+msgstr ""
+
+#: tcustomdrawform.bitmap1.caption
+msgid "Bi&tmap"
+msgstr ""
+
+#: tcustomdrawform.brushstyle1.caption
+msgid "&Brush Style"
+msgstr ""
+
+#: tcustomdrawform.buttoncolor1.caption
+msgid "&Button Color..."
+msgstr ""
+
+#: tcustomdrawform.buttonsize1.caption
+msgid "Button &Size..."
+msgstr ""
+
+#: tcustomdrawform.clear1.caption
+msgid "&Clear"
+msgstr ""
+
+#: tcustomdrawform.color1.caption
+msgctxt "TCUSTOMDRAWFORM.COLOR1.CAPTION"
+msgid "&Color..."
+msgstr ""
+
+#: tcustomdrawform.color2.caption
+msgctxt "tcustomdrawform.color2.caption"
+msgid "&Color..."
+msgstr ""
+
+#: tcustomdrawform.cross1.caption
+msgid "C&ross"
+msgstr ""
+
+#: tcustomdrawform.customdraw1.caption
+msgid "&Custom Draw"
+msgstr ""
+
+#: tcustomdrawform.defaultdrawing1.caption
+msgid "&Default Drawing"
+msgstr ""
+
+#: tcustomdrawform.diagcross1.caption
+msgid "&DiagCross"
+msgstr ""
+
+#: tcustomdrawform.drawing1.caption
+msgid "Custom &Drawing"
+msgstr ""
+
+#: tcustomdrawform.exit1.caption
+msgid "E&xit"
+msgstr ""
+
+#: tcustomdrawform.fdiagonal1.caption
+msgid "&FDiagonal"
+msgstr ""
+
+#: tcustomdrawform.file1.caption
+msgid "&File"
+msgstr ""
+
+#: tcustomdrawform.font1.caption
+msgid "&Font"
+msgstr ""
+
+#: tcustomdrawform.font2.caption
+msgid "&Font..."
+msgstr ""
+
+#: tcustomdrawform.horizontal1.caption
+msgid "&Horizontal"
+msgstr ""
+
+#: tcustomdrawform.n2.caption
+msgid "-"
+msgstr ""
+
+#: tcustomdrawform.none1.caption
+msgid "&None"
+msgstr ""
+
+#: tcustomdrawform.oncustomdraw1.caption
+msgid "On&CustomDraw"
+msgstr ""
+
+#: tcustomdrawform.oncustomdrawitem1.caption
+msgid "OnCustomDraw&Item"
+msgstr ""
+
+#: tcustomdrawform.selection1.caption
+msgid "&Selection..."
+msgstr ""
+
+#: tcustomdrawform.selectionbackground1.caption
+msgid "Selection Ba&ckground"
+msgstr ""
+
+#: tcustomdrawform.solid1.caption
+msgid "&Solid"
+msgstr ""
+
+#: tcustomdrawform.stretch1.caption
+msgid "&Stretch"
+msgstr ""
+
+#: tcustomdrawform.tile1.caption
+msgid "&Tile"
+msgstr ""
+
+#: tcustomdrawform.treeview1.caption
+msgid "&TreeView"
+msgstr ""
+
+#: tcustomdrawform.vertical1.caption
+msgid "&Vertical"
+msgstr ""
+
