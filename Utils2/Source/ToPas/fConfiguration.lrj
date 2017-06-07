@@ -1,0 +1,5 @@
+{"version":1,"strings":[
+{"hash":315429,"name":"tconfigviewer.label1.caption","sourcebytes":[70,105,108,101],"value":"File"},
+{"hash":2857157,"name":"tconfigviewer.save1.caption","sourcebytes":[38,83,97,118,101],"value":"&Save"},
+{"hash":2868399,"name":"tconfigviewer.undo1.caption","sourcebytes":[38,85,110,100,111],"value":"&Undo"}
+]}

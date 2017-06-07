@@ -1,0 +1,5 @@
+{"version":1,"strings":[
+{"hash":128359092,"name":"tscopeview.swsorted.caption","sourcebytes":[115,111,114,116,101,100],"value":"sorted"},
+{"hash":140145445,"name":"tscopeview.butranslate.caption","sourcebytes":[84,114,97,110,115,108,97,116,101],"value":"Translate"},
+{"hash":378116,"name":"tscopeview.buunit.caption","sourcebytes":[85,110,105,116],"value":"Unit"}
+]}

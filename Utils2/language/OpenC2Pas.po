@@ -1,0 +1,74 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: cls_translator.rscode
+msgid "Code %s"
+msgstr ""
+
+#: cls_translator.rscompletetran
+msgid "Complete translation of \"return\" not yet implemented (\"Exit\" after \"Result\", and \"begin\"..\"end\" if it is necessary)"
+msgstr ""
+
+#: cls_translator.rsendofstateme
+msgid "End of statement not found"
+msgstr ""
+
+#: cls_translator.rserror
+msgid "[Error] %s"
+msgstr ""
+
+#: cls_translator.rsexceptionina
+msgid "Exception in AddChar procedure"
+msgstr ""
+
+#: cls_translator.rshexadecimalt
+msgid "Hexadecimal translation not yet implemented"
+msgstr ""
+
+#: cls_translator.rshint
+msgid "[Hint] %s"
+msgstr ""
+
+#: cls_translator.rsitisabitoper
+msgid "It is a bit operator or a reference operator? (not yet implemented)"
+msgstr ""
+
+#: cls_translator.rsoctalconvers
+msgid "Octal conversion not yet implemented"
+msgstr ""
+
+#: cls_translator.rssourceistool
+msgid "Source is too long"
+msgstr ""
+
+#: cls_translator.rstoomanyerror
+msgid "Too many errors"
+msgstr ""
+
+#: cls_translator.rstranslationi
+msgid "Translation is too long"
+msgstr ""
+
+#: cls_translator.rswarning
+msgid "[Warning] %s"
+msgstr ""
+
+#: frm_c2pasmain.rscredits
+msgid ""
+"The OpenSource C/C++ to Pascal Translator\n"
+"http://c2pas.sourceforge.net\n"
+"\n"
+"Translator unit:\n"
+"%s\n"
+"\n"
+"Windows user interface:\n"
+"Copyright (c) 2002 Alberto Berardi\n"
+"\n"
+"Special thanks to:\n"
+"SynEdit team, SourceForge\n"
+msgstr ""
+
+#: frm_c2pasmain.rsfileloaded
+msgid "File loaded"
+msgstr ""
+

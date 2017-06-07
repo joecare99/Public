@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="10"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <MainUnitHasUsesSectionForAllUnits Value="False"/>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+        <MainUnitHasScaledStatement Value="False"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
+      <Title Value="WinToPas"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+    </General>
+    <LazDoc Paths="..\FPDoc"/>
+    <i18n>
+      <EnableI18N Value="True"/>
+      <OutDir Value="..\language"/>
+    </i18n>
+    <BuildModes Count="3">
+      <Item1 Name="Default" Default="True"/>
+      <Item2 Name="Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
+            <OtherUnitFiles Value="..\Source\ToPas"/>
+            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <IncludeAssertionCode Value="True"/>
+              <AllowLabel Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
+              <UseExternalDbgSyms Value="True"/>
+            </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
+            <OtherUnitFiles Value="..\Source\ToPas"/>
+            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <AllowLabel Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item3>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+    </RequiredPackages>
+    <Units Count="21">
+      <Unit0>
+        <Filename Value="WinToPas.dpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\Source\ToPas\fScanLog.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="ScanLog"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\Source\ToPas\uUI.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\Source\ToPas\uParseC.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\Source\ToPas\uTablesC.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\Source\ToPas\uXStrings.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\Source\ToPas\uMacros.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\Source\ToPas\uScanC.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\Source\ToPas\fTypes.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\Source\ToPas\uToPas.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\Source\ToPas\uDirectives.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\Source\ToPas\uFiles.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\Source\ToPas\uHashList.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="..\Source\ToPas\uTablesPrep.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\Source\ToPas\uTokenC.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="..\Source\ToPas\fScopeView.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="ScopeView"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\Source\ToPas\uLineScan.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="..\Source\ToPas\fConfiguration.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="ConfigViewer"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="..\Source\ToPas\fSymView.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="SymView"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="..\Source\ToPas\uTranslator.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="..\Source\ToPas\fMacros.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MacroChecker"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit20>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
+      <OtherUnitFiles Value="..\Source\ToPas"/>
+      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <AllowLabel Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <LinkSmart Value="True"/>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

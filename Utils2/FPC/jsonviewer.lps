@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <Units Count="6">
+      <Unit0>
+        <Filename Value="jsonviewer.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="jsonviewer"/>
+        <UsageCount Value="20"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="C:\lazarus\tools\jsonviewer\frmmain.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frmmain"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="179"/>
+        <CursorPos X="27" Y="197"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="C:\lazarus\tools\jsonviewer\frmnewboolean.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="NewBooleanForm"/>
+        <ResourceBaseClass Value="Form"/>
+        <UsageCount Value="20"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\lazarus\tools\jsonviewer\frmnewinteger.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="NewNumberForm"/>
+        <ResourceBaseClass Value="Form"/>
+        <UsageCount Value="20"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\lazarus\tools\jsonviewer\frmnewstring.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="NewStringForm"/>
+        <ResourceBaseClass Value="Form"/>
+        <UsageCount Value="20"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\lazarus\tools\jsonviewer\msgjsonviewer.pp"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+      </Unit5>
+    </Units>
+  </ProjectSession>
+</CONFIG>

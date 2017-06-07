@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <Version Value="10"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="7">
+      <Unit0>
+        <Filename Value="LazWinToPas.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="../Source/lazWinToPas/fScanLog.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="ScanLog"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="785"/>
+        <CursorPos X="62" Y="808"/>
+        <UsageCount Value="20"/>
+        <Bookmarks Count="1">
+          <Item0 X="17" Y="799" ID="2"/>
+        </Bookmarks>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="../Source/lazWinToPas/fTypes.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="TypeDefList"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="6"/>
+        <CursorPos X="21" Y="10"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../Source/lazWinToPas/fScopeView.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="ScopeView"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <CursorPos X="21" Y="13"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="../Source/lazWinToPas/fConfiguration.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="ConfigViewer"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="15"/>
+        <TopLine Value="71"/>
+        <CursorPos X="47" Y="96"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="../Source/lazWinToPas/fSymView.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="SymView"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="5"/>
+        <CursorPos X="21" Y="10"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="../Source/lazWinToPas/fMacros.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MacroChecker"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="20" Y="8"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit6>
+    </Units>
+  </ProjectSession>
+  <Debugging>
+    <BreakPoints Count="1">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="../Source/lazWinToPas/fScanLog.pas"/>
+        <Line Value="334"/>
+      </Item1>
+    </BreakPoints>
+  </Debugging>
+</CONFIG>

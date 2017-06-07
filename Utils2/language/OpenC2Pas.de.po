@@ -1,0 +1,94 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joe Care\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"X-Generator: Poedit 2.0.2\n"
+
+#: cls_translator.rscode
+msgid "Code %s"
+msgstr "Codenummer: %s"
+
+#: cls_translator.rscompletetran
+msgid "Complete translation of \"return\" not yet implemented (\"Exit\" after \"Result\", and \"begin\"..\"end\" if it is necessary)"
+msgstr "Vollständige Übersetzung von \"return\" ist nicht implementiert (\"Exit\" nach \"Result\" und \"begin\"...\" Ende\", wenn es notwendig ist)"
+
+#: cls_translator.rsendofstateme
+msgid "End of statement not found"
+msgstr "Ende der Anweisung nicht gefunden"
+
+#: cls_translator.rserror
+msgid "[Error] %s"
+msgstr "[Fehler] %s"
+
+#: cls_translator.rsexceptionina
+msgid "Exception in AddChar procedure"
+msgstr "Ausnahme in AddChar Methode"
+
+#: cls_translator.rshexadecimalt
+msgid "Hexadecimal translation not yet implemented"
+msgstr "Hexadezimale Übersetzung noch nicht implementiert"
+
+#: cls_translator.rshint
+msgid "[Hint] %s"
+msgstr "[Hinweis] %s"
+
+#: cls_translator.rsitisabitoper
+msgid "It is a bit operator or a reference operator? (not yet implemented)"
+msgstr "Es ist eine Referenz oder eine Bit-Operator? (noch nicht implementiert)"
+
+#: cls_translator.rsoctalconvers
+msgid "Octal conversion not yet implemented"
+msgstr "Oktal Umstellung noch nicht implementiert"
+
+#: cls_translator.rssourceistool
+msgid "Source is too long"
+msgstr "Quelle ist zu lang"
+
+#: cls_translator.rstoomanyerror
+msgid "Too many errors"
+msgstr "Zu viele Fehler"
+
+#: cls_translator.rstranslationi
+msgid "Translation is too long"
+msgstr "Übersetzung ist zu lang"
+
+#: cls_translator.rswarning
+msgid "[Warning] %s"
+msgstr "[Warnung] %s"
+
+#: frm_c2pasmain.rscredits
+msgid ""
+"The OpenSource C/C++ to Pascal Translator\n"
+"http://c2pas.sourceforge.net\n"
+"\n"
+"Translator unit:\n"
+"%s\n"
+"\n"
+"Windows user interface:\n"
+"Copyright (c) 2002 Alberto Berardi\n"
+"\n"
+"Special thanks to:\n"
+"SynEdit team, SourceForge\n"
+msgstr ""
+"Der OpenSource C/C++ nach Pascal Übersetzer\n"
+" http://c2pas.sourceforge.net\n"
+"\n"
+"Übersetzer Einheit: \n"
+"%s \n"
+"\n"
+"Windows-Benutzeroberfläche: \n"
+"Copyright (c) 2002 Alberto Berardi \n"
+"\n"
+"Spezeller Dank an: \n"
+"SynEdit Team, SourceForge\n"
+
+#: frm_c2pasmain.rsfileloaded
+msgid "File loaded"
+msgstr "Datei geladen"

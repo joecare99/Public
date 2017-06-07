@@ -1,0 +1,75 @@
+object MacroChecker: TMacroChecker
+  Left = 516
+  Height = 453
+  Top = 113
+  Width = 421
+  Caption = 'Macro Checker'
+  ClientHeight = 453
+  ClientWidth = 421
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  LCLVersion = '1.8.0.1'
+  Visible = False
+  object edMac: TMemo
+    Left = 0
+    Height = 105
+    Top = 348
+    Width = 421
+    Align = alBottom
+    Lines.Strings = (
+      'edMac'
+    )
+    TabOrder = 0
+  end
+  object pnlConst: TGroupBox
+    Left = 0
+    Height = 315
+    Top = 33
+    Width = 129
+    Align = alLeft
+    Caption = 'constants'
+    TabOrder = 1
+  end
+  object pnlProc: TGroupBox
+    Left = 272
+    Height = 315
+    Top = 33
+    Width = 149
+    Align = alRight
+    Caption = 'procedures'
+    TabOrder = 2
+  end
+  object pnlUnk: TGroupBox
+    Left = 129
+    Height = 315
+    Top = 33
+    Width = 143
+    Align = alClient
+    Caption = 'unclassified'
+    ClientHeight = 297
+    ClientWidth = 139
+    TabOrder = 3
+    object lbMac: TListBox
+      Left = 0
+      Height = 297
+      Top = 0
+      Width = 139
+      Align = alClient
+      ItemHeight = 0
+      OnClick = lbMacClick
+      Options = [lboDrawFocusRect]
+      TabOrder = 0
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 33
+    Top = 0
+    Width = 421
+    Align = alTop
+    Caption = 'Panel1'
+    TabOrder = 4
+  end
+end

@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="9"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="13">
+      <Unit0>
+        <Filename Value="lazdatadesktop.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="lazdatadesktop"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="35" Y="5"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="C:\Program Files (x86)\laz4android\tools\lazdatadesktop\frmmain.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frmmain"/>
+        <IsVisibleTab Value="True"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="C:\Program Files (x86)\laz4android\tools\lazdatadesktop\dicteditor.pp"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\Program Files (x86)\laz4android\tools\lazdatadesktop\frmimportdd.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="ImportDDform"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UsageCount Value="20"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\Program Files (x86)\laz4android\tools\lazdatadesktop\frmgeneratesql.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="GenerateSQLForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UsageCount Value="20"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\Program Files (x86)\laz4android\tools\lazdatadesktop\frmsqlconnect.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="SQLConnectionForm"/>
+        <ResourceBaseClass Value="Form"/>
+        <UsageCount Value="20"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="C:\Program Files (x86)\laz4android\tools\lazdatadesktop\ddfiles.pp"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="C:\Program Files (x86)\laz4android\tools\lazdatadesktop\conneditor.pp"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="C:\Program Files (x86)\laz4android\tools\lazdatadesktop\datapanel.pp"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="C:\Program Files (x86)\laz4android\tools\lazdatadesktop\querypanel.pp"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="C:\Program Files (x86)\laz4android\tools\lazdatadesktop\README.txt"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="None"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="C:\Program Files (x86)\laz4android\tools\lazdatadesktop\frmselectconnectiontype.pp"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="SelectConnectionTypeForm"/>
+        <ResourceBaseClass Value="Form"/>
+        <UsageCount Value="20"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="C:\Program Files (x86)\laz4android\tools\lazdatadesktop\lazdatadeskstr.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+      </Unit12>
+    </Units>
+    <JumpHistory Count="1">
+      <Position1>
+        <Filename Value="lazdatadesktop.lpr"/>
+      </Position1>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>
