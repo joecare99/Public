@@ -1,0 +1,161 @@
+object Form2: TForm2
+  Left = 356
+  Height = 437
+  Top = 162
+  Width = 625
+  Caption = 'Form2'
+  ClientHeight = 437
+  ClientWidth = 625
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  LCLVersion = '1.2.6.0'
+  object Label1: TLabel
+    Left = 498
+    Height = 58
+    Top = 71
+    Width = 83
+    Anchors = [akTop, akRight]
+    Caption = 'AoB'
+    Font.Color = clWindowText
+    Font.Height = -48
+    Font.Name = 'Tahoma'
+    ParentColor = False
+    ParentFont = False
+  end
+  object Memo1: TMemo
+    Left = 0
+    Height = 129
+    Top = 0
+    Width = 462
+    Anchors = [akTop, akLeft, akRight]
+    Lines.Strings = (
+      'Memo1'
+    )
+    ScrollBars = ssVertical
+    TabOrder = 0
+  end
+  object Button1: TButton
+    Left = 465
+    Height = 25
+    Top = 8
+    Width = 75
+    Anchors = [akTop, akRight]
+    Caption = 'Zufall->AoB'
+    OnClick = Button1Click
+    TabOrder = 1
+  end
+  object Button2: TButton
+    Left = 546
+    Height = 25
+    Top = 8
+    Width = 75
+    Anchors = [akTop, akRight]
+    Caption = 'Text->AoB'
+    OnClick = Button2Click
+    TabOrder = 2
+  end
+  object Edit1: TEdit
+    Left = 466
+    Height = 21
+    Top = 40
+    Width = 150
+    Anchors = [akTop, akRight]
+    TabOrder = 3
+    Text = 'Dies ist ein Text der in ein Array Of Byte-Feld umgewandelt wird.'
+  end
+  object Memo2: TMemo
+    Left = 0
+    Height = 291
+    Top = 136
+    Width = 462
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Lines.Strings = (
+      'Memo2'
+    )
+    ScrollBars = ssBoth
+    TabOrder = 4
+  end
+  object Button3: TButton
+    Left = 466
+    Height = 25
+    Top = 136
+    Width = 75
+    Anchors = [akTop, akRight]
+    Caption = 'Show Crc64 t.'
+    OnClick = Button3Click
+    TabOrder = 5
+  end
+  object Button4: TButton
+    Left = 546
+    Height = 25
+    Top = 136
+    Width = 75
+    Anchors = [akTop, akRight]
+    Caption = 'Show crc32 t.'
+    OnClick = Button4Click
+    TabOrder = 6
+  end
+  object Button5: TButton
+    Left = 465
+    Height = 25
+    Top = 167
+    Width = 75
+    Anchors = [akTop, akRight]
+    Caption = 'Crc64(AoB)'
+    OnClick = Button5Click
+    TabOrder = 7
+  end
+  object Button6: TButton
+    Left = 546
+    Height = 25
+    Top = 167
+    Width = 75
+    Anchors = [akTop, akRight]
+    Caption = 'crc32(AoB)'
+    OnClick = Button6Click
+    TabOrder = 8
+  end
+  object Edit2: TEdit
+    Left = 466
+    Height = 21
+    Top = 200
+    Width = 155
+    Anchors = [akTop, akRight]
+    Color = clBtnFace
+    ReadOnly = True
+    TabOrder = 9
+    Text = 'Edit2'
+  end
+  object Button7: TButton
+    Left = 465
+    Height = 25
+    Top = 227
+    Width = 156
+    Anchors = [akTop, akRight]
+    Caption = 'Crc64(AoB) 2 Teile'
+    OnClick = Button7Click
+    TabOrder = 10
+  end
+  object Button8: TButton
+    Left = 466
+    Height = 25
+    Top = 256
+    Width = 155
+    Anchors = [akTop, akRight]
+    Caption = 'Sort1'
+    OnClick = Button8Click
+    TabOrder = 11
+  end
+  object Button9: TButton
+    Left = 466
+    Height = 25
+    Top = 288
+    Width = 155
+    Anchors = [akTop, akRight]
+    Caption = 'Delay 1000'
+    OnClick = Button9Click
+    TabOrder = 12
+  end
+end

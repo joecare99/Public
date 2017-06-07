@@ -1,0 +1,18 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<DCC_Alignment>2</DCC_Alignment>
+			<DCC_UnitSearchPath>$(BDSCommonDir)\BPL\units;..\..\include;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
+			<DCC_BplOutput>$(BDSCOMMONDIR)\BPL\</DCC_BplOutput>
+			<DCC_ExeOutput>..\..\bin\</DCC_ExeOutput>
+			<DCC_DcuOutput>..\..\bin\units_xe</DCC_DcuOutput>
+			<DCC_DcpOutput>$(BDSCOMMONDIR)\DCP\</DCC_DcpOutput>
+		</PropertyGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Delphi.Personality.12</Borland.Personality>
+			<Borland.ProjectType>OptionSet</Borland.ProjectType>
+			<BorlandProject>
+				<Delphi.Personality/>
+			</BorlandProject>
+			<ProjectFileVersion>12</ProjectFileVersion>
+		</ProjectExtensions>
+	</Project>

@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="8">
+      <Unit0>
+        <Filename Value="FileMove.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="3" Y="9"/>
+        <UsageCount Value="134"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="C:\unt_CDate.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="55" Y="9"/>
+        <UsageCount Value="134"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\Unt_FileMove.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="175"/>
+        <CursorPos X="56" Y="104"/>
+        <UsageCount Value="134"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="1889"/>
+        <CursorPos X="24" Y="1919"/>
+        <UsageCount Value="134"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\objpas\sysutils\filutilh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="125"/>
+        <CursorPos X="10" Y="150"/>
+        <UsageCount Value="9"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\Lazarus\Lazarus-CCR\components\virtualtreeview-new\trunk\VirtualTrees.pas"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="13"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\..\Lazarus\Indy10\Lib\System\IdStream.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="13"/>
+        <CursorPos X="3" Y="29"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\..\Lazarus\Indy10\Lib\System\IdGlobal.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1941"/>
+        <CursorPos X="3" Y="1956"/>
+        <UsageCount Value="10"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit7>
+    </Units>
+    <JumpHistory Count="3" HistoryIndex="2">
+      <Position1>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="115" Column="100" TopLine="84"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1893" Column="22" TopLine="1888"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1899" Column="54" TopLine="1883"/>
+      </Position3>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

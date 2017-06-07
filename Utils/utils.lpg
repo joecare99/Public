@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectGroup FileVersion="1">
+    <Targets Count="10">
+      <Target0 FileName="FPC\WriteCDate.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="Default"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+      </Target0>
+      <Target1 FileName="FPC\WriteCDate2.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+      </Target1>
+      <Target2 FileName="FPC\TSTINSDS.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target2>
+      <Target3 FileName="FPC\Prj_TstVarProcs.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target3>
+      <Target4 FileName="FPC\Prj_TstFileUnt.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target4>
+      <Target5 FileName="FPC\Prj_TstAllgFuncLib.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target5>
+      <Target6 FileName="FPC\Prj_testSvnFilemove.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+      </Target6>
+      <Target7 FileName="FPC\Prj_GetKeyCode.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target7>
+      <Target8 FileName="FPC\FileMove.lpi">
+        <BuildModes Count="4"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+        <Mode4 Name="Win64"/>
+      </Target8>
+      <Target9 FileName="FPC\a2dType.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target9>
+    </Targets>
+  </ProjectGroup>
+</CONFIG>

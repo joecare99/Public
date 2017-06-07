@@ -1,0 +1,168 @@
+﻿	<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+		<PropertyGroup>
+			<ProjectGuid>{2105BA0C-9287-4B1C-81CF-A7390998C35F}</ProjectGuid>
+		</PropertyGroup>
+		<ItemGroup>
+			<Projects Include="D_XE\WriteCDate2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\WriteCDate.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\Filter.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\a2dType.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\Prj_FindBDS.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\Prj_GetKeyCode.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\Prj_TstAllgFuncLib.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\Prj_TstFileUnt.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\Prj_TstVarProcs.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\TSTINSDS.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\PrjDetectVMware.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\Prj_TestException.dproj">
+				<Dependencies/>
+			</Projects>
+		</ItemGroup>
+		<ProjectExtensions>
+			<Borland.Personality>Default.Personality.12</Borland.Personality>
+			<Borland.ProjectType/>
+			<BorlandProject>
+				<Default.Personality/>
+			</BorlandProject>
+		</ProjectExtensions>
+		<Target Name="WriteCDate2">
+			<MSBuild Projects="D_XE\WriteCDate2.dproj"/>
+		</Target>
+		<Target Name="WriteCDate2:Clean">
+			<MSBuild Projects="D_XE\WriteCDate2.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="WriteCDate2:Make">
+			<MSBuild Projects="D_XE\WriteCDate2.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="WriteCDate">
+			<MSBuild Projects="D_XE\WriteCDate.dproj"/>
+		</Target>
+		<Target Name="WriteCDate:Clean">
+			<MSBuild Projects="D_XE\WriteCDate.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="WriteCDate:Make">
+			<MSBuild Projects="D_XE\WriteCDate.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Filter">
+			<MSBuild Projects="D_XE\Filter.dproj"/>
+		</Target>
+		<Target Name="Filter:Clean">
+			<MSBuild Projects="D_XE\Filter.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Filter:Make">
+			<MSBuild Projects="D_XE\Filter.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="a2dType">
+			<MSBuild Projects="D_XE\a2dType.dproj"/>
+		</Target>
+		<Target Name="a2dType:Clean">
+			<MSBuild Projects="D_XE\a2dType.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="a2dType:Make">
+			<MSBuild Projects="D_XE\a2dType.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Prj_FindBDS">
+			<MSBuild Projects="D_XE\Prj_FindBDS.dproj"/>
+		</Target>
+		<Target Name="Prj_FindBDS:Clean">
+			<MSBuild Projects="D_XE\Prj_FindBDS.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Prj_FindBDS:Make">
+			<MSBuild Projects="D_XE\Prj_FindBDS.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Prj_GetKeyCode">
+			<MSBuild Projects="D_XE\Prj_GetKeyCode.dproj"/>
+		</Target>
+		<Target Name="Prj_GetKeyCode:Clean">
+			<MSBuild Projects="D_XE\Prj_GetKeyCode.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Prj_GetKeyCode:Make">
+			<MSBuild Projects="D_XE\Prj_GetKeyCode.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Prj_TstAllgFuncLib">
+			<MSBuild Projects="D_XE\Prj_TstAllgFuncLib.dproj"/>
+		</Target>
+		<Target Name="Prj_TstAllgFuncLib:Clean">
+			<MSBuild Projects="D_XE\Prj_TstAllgFuncLib.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Prj_TstAllgFuncLib:Make">
+			<MSBuild Projects="D_XE\Prj_TstAllgFuncLib.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Prj_TstFileUnt">
+			<MSBuild Projects="D_XE\Prj_TstFileUnt.dproj"/>
+		</Target>
+		<Target Name="Prj_TstFileUnt:Clean">
+			<MSBuild Projects="D_XE\Prj_TstFileUnt.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Prj_TstFileUnt:Make">
+			<MSBuild Projects="D_XE\Prj_TstFileUnt.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Prj_TstVarProcs">
+			<MSBuild Projects="D_XE\Prj_TstVarProcs.dproj"/>
+		</Target>
+		<Target Name="Prj_TstVarProcs:Clean">
+			<MSBuild Projects="D_XE\Prj_TstVarProcs.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Prj_TstVarProcs:Make">
+			<MSBuild Projects="D_XE\Prj_TstVarProcs.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="TSTINSDS">
+			<MSBuild Projects="D_XE\TSTINSDS.dproj"/>
+		</Target>
+		<Target Name="TSTINSDS:Clean">
+			<MSBuild Projects="D_XE\TSTINSDS.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="TSTINSDS:Make">
+			<MSBuild Projects="D_XE\TSTINSDS.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="PrjDetectVMware">
+			<MSBuild Projects="D_XE\PrjDetectVMware.dproj"/>
+		</Target>
+		<Target Name="PrjDetectVMware:Clean">
+			<MSBuild Projects="D_XE\PrjDetectVMware.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="PrjDetectVMware:Make">
+			<MSBuild Projects="D_XE\PrjDetectVMware.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Prj_TestException">
+			<MSBuild Projects="D_XE\Prj_TestException.dproj"/>
+		</Target>
+		<Target Name="Prj_TestException:Clean">
+			<MSBuild Projects="D_XE\Prj_TestException.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Prj_TestException:Make">
+			<MSBuild Projects="D_XE\Prj_TestException.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Build">
+			<CallTarget Targets="WriteCDate2;WriteCDate;Filter;a2dType;Prj_FindBDS;Prj_GetKeyCode;Prj_TstAllgFuncLib;Prj_TstFileUnt;Prj_TstVarProcs;TSTINSDS;PrjDetectVMware;Prj_TestException"/>
+		</Target>
+		<Target Name="Clean">
+			<CallTarget Targets="WriteCDate2:Clean;WriteCDate:Clean;Filter:Clean;a2dType:Clean;Prj_FindBDS:Clean;Prj_GetKeyCode:Clean;Prj_TstAllgFuncLib:Clean;Prj_TstFileUnt:Clean;Prj_TstVarProcs:Clean;TSTINSDS:Clean;PrjDetectVMware:Clean;Prj_TestException:Clean"/>
+		</Target>
+		<Target Name="Make">
+			<CallTarget Targets="WriteCDate2:Make;WriteCDate:Make;Filter:Make;a2dType:Make;Prj_FindBDS:Make;Prj_GetKeyCode:Make;Prj_TstAllgFuncLib:Make;Prj_TstFileUnt:Make;Prj_TstVarProcs:Make;TSTINSDS:Make;PrjDetectVMware:Make;Prj_TestException:Make"/>
+		</Target>
+		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
+	</Project>

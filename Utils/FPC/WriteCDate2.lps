@@ -1,0 +1,162 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="9">
+      <Unit0>
+        <Filename Value="WriteCDate2.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <CursorPos X="8" Y="11"/>
+        <UsageCount Value="34"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\Unt_WriteCDDate2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="40" Y="8"/>
+        <UsageCount Value="34"/>
+        <Loaded Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="C:\unt_CDate.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="33"/>
+        <Loaded Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="1175"/>
+        <CursorPos X="30" Y="1185"/>
+        <UsageCount Value="16"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\objpas\sysutils\sysstrh.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="48"/>
+        <CursorPos X="10" Y="72"/>
+        <UsageCount Value="9"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\Components\Source\VisualNet\fpsock2.pp"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="60" Y="22"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\Components\Source\VisualNet\visualsocket.pas"/>
+        <UnitName Value="VisualSocket"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="29" Y="8"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="TSTINSDS.dpr"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="3" Y="11"/>
+        <UsageCount Value="10"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="18" Y="5"/>
+        <UsageCount Value="10"/>
+      </Unit8>
+    </Units>
+    <JumpHistory Count="21" HistoryIndex="20">
+      <Position1>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="2317" Column="19" TopLine="2289"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="2219" Column="14" TopLine="2196"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="952" Column="10" TopLine="929"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="261" Column="10" TopLine="238"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="336" Column="25" TopLine="312"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="1361" Column="14" TopLine="1337"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="625" Column="12" TopLine="601"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="346" Column="23" TopLine="322"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="2161" Column="19" TopLine="2138"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="326" Column="21" TopLine="302"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="255" Column="16" TopLine="234"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="833" Column="10" TopLine="809"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="1098" Column="10" TopLine="1074"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="1966" Column="20" TopLine="1943"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="2235" Column="10" TopLine="2213"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="179" Column="12" TopLine="156"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="1796" Column="13" TopLine="1772"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="276" Column="14" TopLine="248"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="1179" Column="17" TopLine="1176"/>
+      </Position19>
+      <Position20>
+        <Filename Value="WriteCDate2.dpr"/>
+        <Caret Line="19" Column="25"/>
+      </Position20>
+      <Position21>
+        <Filename Value="C:\unt_CDate.pas"/>
+        <Caret Line="10" Column="6"/>
+      </Position21>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

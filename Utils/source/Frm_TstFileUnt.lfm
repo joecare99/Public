@@ -1,0 +1,139 @@
+object Form1: TForm1
+  Left = 267
+  Height = 613
+  Top = 208
+  Width = 862
+  Caption = 'Form1'
+  ClientHeight = 613
+  ClientWidth = 862
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  LCLVersion = '1.2.6.0'
+  object Label1: TLabel
+    Left = 640
+    Height = 13
+    Top = 64
+    Width = 32
+    Anchors = [akTop, akRight]
+    Caption = 'Label1'
+    ParentColor = False
+  end
+  object Label2: TLabel
+    Left = 640
+    Height = 13
+    Top = 88
+    Width = 32
+    Anchors = [akTop, akRight]
+    Caption = 'Label2'
+    ParentColor = False
+  end
+  object Label3: TLabel
+    Left = 640
+    Height = 13
+    Top = 112
+    Width = 32
+    Anchors = [akTop, akRight]
+    Caption = 'Label3'
+    ParentColor = False
+  end
+  object Memo1: TMemo
+    Left = 16
+    Height = 497
+    Top = 56
+    Width = 593
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Lines.Strings = (
+      'Memo1'
+    )
+    TabOrder = 0
+  end
+  object Button1: TButton
+    Left = 424
+    Height = 25
+    Top = 16
+    Width = 75
+    Caption = 'Button1'
+    OnClick = Button1Click
+    TabOrder = 1
+  end
+  object Edit1: TEdit
+    Left = 16
+    Height = 21
+    Top = 16
+    Width = 81
+    TabOrder = 2
+    Text = '*.mp3'
+  end
+  object Edit2: TEdit
+    Left = 104
+    Height = 21
+    Top = 16
+    Width = 313
+    TabOrder = 3
+    Text = 'w:\daten\accustic'
+  end
+  object Button2: TButton
+    Left = 640
+    Height = 25
+    Top = 144
+    Width = 185
+    Caption = 'GetBackupPath'
+    OnClick = Button2Click
+    TabOrder = 4
+  end
+  object Edit3: TEdit
+    Left = 624
+    Height = 21
+    Top = 184
+    Width = 137
+    TabOrder = 5
+    Text = 'Edit3'
+  end
+  object Button3: TButton
+    Left = 768
+    Height = 25
+    Top = 184
+    Width = 75
+    Caption = 'Button3'
+    OnClick = Button3Click
+    TabOrder = 6
+  end
+  object Button4: TButton
+    Left = 624
+    Height = 25
+    Top = 211
+    Width = 75
+    Caption = 'IsEmptyDir'
+    OnClick = Button4Click
+    TabOrder = 7
+  end
+  object Button5: TButton
+    Left = 705
+    Height = 25
+    Top = 211
+    Width = 75
+    Caption = 'MakeDir'
+    OnClick = Button5Click
+    TabOrder = 8
+  end
+  object Button6: TButton
+    Left = 623
+    Height = 25
+    Top = 242
+    Width = 75
+    Caption = 'GetVersion'
+    OnClick = Button6Click
+    TabOrder = 9
+  end
+  object Button7: TButton
+    Left = 704
+    Height = 25
+    Top = 240
+    Width = 75
+    Caption = 'getFileInfo'
+    OnClick = Button7Click
+    TabOrder = 10
+  end
+end
