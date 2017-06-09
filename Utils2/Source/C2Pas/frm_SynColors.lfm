@@ -3,6 +3,7 @@ object Form_SynColors: TForm_SynColors
   Height = 215
   Top = 142
   Width = 281
+  ActiveControl = LB_Attri
   BorderStyle = bsDialog
   Caption = 'Colors'
   ClientHeight = 215
@@ -15,7 +16,7 @@ object Form_SynColors: TForm_SynColors
   OnDestroy = FormDestroy
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.1'
+  Visible = False
   object Label1: TLabel
     Left = 104
     Height = 13

@@ -1,0 +1,14 @@
+#1.2ðt	__int8=-1ðt	__int16=-2ðt	__int32=-4ðt	__int64=-8ð[shapiro.1985.c]ðM1	P(X)\
+	j=write(1,X,1)ðM2	C\
+	39ðv2	M:[5000]i=<todo: parse expression>ðv3	u:*i=Mðv3	N:[5000]iðv3	R:i=22ðv3	a:[4]iðv3	l:[]i=<todo: parse expression>ðv3	m:[]i=<todo: parse expression>ðv3	b:*i=Nðv4	d:*i=Nðv4	c:iðv4	e:iðv4	f:iðv4	g:iðv4	i:iðv4	j:iðv4	k:iðv4	s:iðp4	main:()i{(
+	for(=([(M,=(i,-(*(39,R),1))),24);|(f,>=(d,b));???;{(
+		=(c,[(M,=(g,i)));
+		=(i,e);
+		for(=(=(s,f),0);<(s,4);++(s);if(&&(&&(&&(>=(=(k,+([(m,s),g)),0),<(k,*(39,R))),!=([(l,s),%(k,39))),||(!([(M,k)),&&(!(j),!=(>=(c,16),>=([(M,k),16)))));=([(a,++(f)),s);););
+		if(f;{(
+			=(f,[(M,=(e,+([(m,=(s,[(a,/(((rand),+(1,/(2147483647,f)))))),g))));
+			=(j,?(<(j,f),f,?(<(j,f),f))
+		};
+	};
+};
+;ð

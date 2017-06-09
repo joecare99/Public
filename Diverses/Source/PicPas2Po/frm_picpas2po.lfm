@@ -1,0 +1,71 @@
+object frmPicPas2PoMain: TfrmPicPas2PoMain
+  Left = 0
+  Height = 482
+  Top = 0
+  Width = 642
+  Caption = 'frmPicPas2PoMain'
+  ClientHeight = 482
+  ClientWidth = 642
+  Visible = False
+  object edtPasFile: TMemo
+    Left = 8
+    Height = 354
+    Top = 100
+    Width = 320
+    Lines.Strings = (
+      'edtPasFile'
+    )
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+  end
+  object edtSourceDir: TLabeledEdit
+    Left = 9
+    Height = 23
+    Top = 24
+    Width = 487
+    EditLabel.AnchorSideLeft.Control = edtSourceDir
+    EditLabel.AnchorSideRight.Control = edtSourceDir
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = edtSourceDir
+    EditLabel.Left = 9
+    EditLabel.Height = 15
+    EditLabel.Top = 6
+    EditLabel.Width = 487
+    EditLabel.Caption = 'edtSourceDir'
+    EditLabel.ParentColor = False
+    TabOrder = 1
+    Text = 'edtSourceDir'
+    OnChange = edtSourceDirChange
+  end
+  object btnSelectDir: TSpeedButton
+    Left = 504
+    Height = 22
+    Top = 25
+    Width = 23
+    OnClick = btnSelectDirClick
+  end
+  object Memo2: TMemo
+    Left = 352
+    Height = 358
+    Top = 96
+    Width = 274
+    Lines.Strings = (
+      'Memo2'
+    )
+    ScrollBars = ssAutoBoth
+    TabOrder = 2
+  end
+  object cbxSelectFile: TComboBox
+    Left = 9
+    Height = 23
+    Top = 56
+    Width = 294
+    ItemHeight = 15
+    TabOrder = 3
+    Text = 'cbxSelectFile'
+  end
+  object SelectDirectoryDialog1: TSelectDirectoryDialog
+    left = 310
+    top = 87
+  end
+end

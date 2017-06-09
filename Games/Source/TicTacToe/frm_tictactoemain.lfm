@@ -1,0 +1,178 @@
+object frmTicTacToe: TfrmTicTacToe
+  Left = 465
+  Height = 270
+  Top = 225
+  Width = 239
+  ActiveControl = Button1
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Tic Tac Toe'
+  ClientHeight = 270
+  ClientWidth = 239
+  OnCreate = FormCreate
+  Visible = False
+  object pnlPlayfield: TPanel
+    Left = 16
+    Height = 208
+    Top = 48
+    Width = 208
+    ClientHeight = 208
+    ClientWidth = 208
+    Color = clBlack
+    ParentColor = False
+    TabOrder = 0
+    object Button1: TButton
+      Left = 0
+      Height = 64
+      Top = 0
+      Width = 64
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -27
+      Font.Name = 'Arial Narrow'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      OnClick = ButClick
+      ParentFont = False
+      TabOrder = 0
+    end
+    object Button2: TButton
+      Left = 72
+      Height = 64
+      Top = 0
+      Width = 64
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -27
+      Font.Name = 'Arial Narrow'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      OnClick = ButClick
+      ParentFont = False
+      TabOrder = 1
+    end
+    object Button3: TButton
+      Left = 144
+      Height = 64
+      Top = 0
+      Width = 64
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -27
+      Font.Name = 'Arial Narrow'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      OnClick = ButClick
+      ParentFont = False
+      TabOrder = 2
+    end
+    object Button4: TButton
+      Left = 0
+      Height = 64
+      Top = 72
+      Width = 64
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -27
+      Font.Name = 'Arial Narrow'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      OnClick = ButClick
+      ParentFont = False
+      TabOrder = 3
+    end
+    object Button5: TButton
+      Left = 72
+      Height = 64
+      Top = 72
+      Width = 64
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -27
+      Font.Name = 'Arial Narrow'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      OnClick = ButClick
+      ParentFont = False
+      TabOrder = 4
+    end
+    object Button6: TButton
+      Left = 144
+      Height = 64
+      Top = 72
+      Width = 64
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -27
+      Font.Name = 'Arial Narrow'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      OnClick = ButClick
+      ParentFont = False
+      TabOrder = 5
+    end
+    object Button7: TButton
+      Left = 0
+      Height = 64
+      Top = 144
+      Width = 64
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -27
+      Font.Name = 'Arial Narrow'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      OnClick = ButClick
+      ParentFont = False
+      TabOrder = 6
+    end
+    object Button8: TButton
+      Left = 72
+      Height = 64
+      Top = 144
+      Width = 64
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -27
+      Font.Name = 'Arial Narrow'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      OnClick = ButClick
+      ParentFont = False
+      TabOrder = 7
+    end
+    object Button9: TButton
+      Left = 144
+      Height = 64
+      Top = 144
+      Width = 64
+      Font.CharSet = ANSI_CHARSET
+      Font.Height = -27
+      Font.Name = 'Arial Narrow'
+      Font.Pitch = fpVariable
+      Font.Quality = fqDraft
+      Font.Style = [fsBold]
+      OnClick = ButClick
+      ParentFont = False
+      TabOrder = 8
+    end
+  end
+  object btnFirst: TButton
+    Left = 16
+    Height = 25
+    Top = 8
+    Width = 96
+    Caption = 'PC beginnt'
+    OnClick = PCstarts
+    TabOrder = 1
+  end
+  object btnRestart: TButton
+    Left = 128
+    Height = 25
+    Top = 8
+    Width = 96
+    Caption = 'nochmal'
+    OnClick = Restart
+    TabOrder = 2
+  end
+end

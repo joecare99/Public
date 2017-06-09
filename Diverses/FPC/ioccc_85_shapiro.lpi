@@ -7,7 +7,6 @@
       <Flags>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
-        <MainUnitHasScaledStatement Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
@@ -108,8 +107,9 @@
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Source\ioccc\unt_ioccc_85_shapiro.pas"/>
+        <Filename Value="..\Source\ioccc\unt_iopcc.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="Unt_iopcc"/>
       </Unit1>
     </Units>
   </ProjectOptions>

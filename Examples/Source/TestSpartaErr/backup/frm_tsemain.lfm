@@ -1,0 +1,25 @@
+object frmTSEMain: TfrmTSEMain
+  Left = 0
+  Height = 240
+  Top = 0
+  Width = 320
+  ActiveControl = btnOK
+  Caption = 'frmTSEMain'
+  ClientHeight = 240
+  ClientWidth = 320
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object btnOK: TBitBtn
+    Left = 44
+    Height = 148
+    Top = 47
+    Width = 226
+    Cancel = True
+    Default = True
+    DefaultCaption = True
+    Kind = bkOK
+    ModalResult = 1
+    OnClick = btnOKClick
+    TabOrder = 0
+  end
+end

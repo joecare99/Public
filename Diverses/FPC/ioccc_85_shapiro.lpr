@@ -1,6 +1,6 @@
 program ioccc_85_shapiro;
-
-uses unt_ioccc_85_shapiro;
+{$apptype console}
+uses unt_iopcc;
 
 begin
   main

@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <EditorMacros Count="1">
+    <Macro1 Name="intr_Var">
+      <Code Value="begin
+ecSelLineEnd;
+ecCut;
+ecChar('l');
+ecChar('V');
+ecChar('a');
+ecChar('r');
+ecChar(';');
+ecLineStart;
+ecChar('l');
+ecChar('V');
+ecChar('a');
+ecChar('r');
+ecChar(':');
+ecChar('=');
+ecPaste;
+ecLineStart;
+ecCompleteCode;
+end.
+"/>
+    </Macro1>
+  </EditorMacros>
+</CONFIG>

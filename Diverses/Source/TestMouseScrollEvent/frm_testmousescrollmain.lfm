@@ -1,0 +1,43 @@
+object Form1: TForm1
+  Left = 0
+  Height = 398
+  Top = 0
+  Width = 459
+  ActiveControl = ButtonPanel1.CloseButton
+  Caption = 'Form1'
+  ClientHeight = 398
+  ClientWidth = 459
+  LCLVersion = '1.6.4.0'
+  Visible = False
+  object ButtonPanel1: TButtonPanel
+    Left = 6
+    Height = 34
+    Top = 358
+    Width = 447
+    OKButton.Name = 'OKButton'
+    OKButton.DefaultCaption = True
+    HelpButton.Name = 'HelpButton'
+    HelpButton.DefaultCaption = True
+    CloseButton.Name = 'CloseButton'
+    CloseButton.DefaultCaption = True
+    CancelButton.Name = 'CancelButton'
+    CancelButton.DefaultCaption = True
+    TabOrder = 0
+    ShowButtons = [pbClose]
+  end
+  inline Frame2_1: TFrame2
+    Height = 352
+    Width = 459
+    Align = alClient
+    ClientHeight = 352
+    ClientWidth = 459
+    TabOrder = 1
+    inherited Frame1_1: TFrame1
+      Height = 352
+      Width = 459
+      Align = alClient
+      ClientHeight = 352
+      ClientWidth = 459
+    end
+  end
+end

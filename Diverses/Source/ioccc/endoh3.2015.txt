@@ -1,0 +1,18 @@
+#1.2
+t	__int8=-1
+t	__int16=-2
+t	__int32=-4
+t	__int64=-8
+[endoh3.2015.c]
+t3	U=+s
+v3	main:[32768]"U"
+v3	n:"U"
+v3	r:[8]"U"
+p3	__attribute__:(__attribute__;)i
+M4	R(x)\
+	A(r[ 7-(n >>x& 7)], (n>> x>>3 )%8)
+M7	A(v,i)\
+	(i ?i<2 ?C(v ):i \
+	-4?v+=2, C(i- 6?v- 2:v+ *C(v -2)) :C(v -=2) :&v)
+M5	C(x)\
+	(U*) ((/*             |IO|             -dpd  */char*) main +(x) )/*|             |CC|             ll*/

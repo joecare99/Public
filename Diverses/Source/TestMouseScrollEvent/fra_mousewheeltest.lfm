@@ -1,0 +1,29 @@
+object Frame1: TFrame1
+  Left = 0
+  Height = 240
+  Top = 0
+  Width = 320
+  ClientHeight = 240
+  ClientWidth = 320
+  OnMouseWheel = FrameMouseWheel
+  TabOrder = 0
+  object Memo1: TMemo
+    Left = 9
+    Height = 104
+    Top = 120
+    Width = 295
+    Lines.Strings = (
+      'Memo1'
+    )
+    TabOrder = 0
+  end
+  object Panel1: TPanel
+    Left = 9
+    Height = 104
+    Top = 7
+    Width = 293
+    Caption = 'Panel1'
+    TabOrder = 1
+    OnMouseWheel = Panel1MouseWheel
+  end
+end

@@ -3,7 +3,7 @@ program LazWinToPas;
 {$MODE Delphi}
 
 uses
-  Forms, Interfaces,
+  Forms, uToPas, uHashList, uXStrings, uFiles, uMacros, uTablesC, Interfaces,
   fScanLog in 'fScanLog.pas' {ScanLog},
   fTypes in 'fTypes.pas' {TypeDefList},
   fScopeView in 'fScopeView.pas' {ScopeView},

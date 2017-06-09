@@ -48,25 +48,22 @@
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Source\C2Pas\frm_c2pasmain.pas"/>
+        <Filename Value="..\Source\C2Pas\frm_C2PasMain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmC2PasMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="frm_C2PasMain"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\Source\C2Pas\cls_translator.pas"/>
+        <Filename Value="..\Source\C2Pas\cls_Translator.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="cls_Translator"/>
       </Unit2>
       <Unit3>
-        <Filename Value="..\Source\C2Pas\frm_syncolors.pas"/>
+        <Filename Value="..\Source\C2Pas\frm_SynColors.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form_SynColors"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="frm_SynColors"/>
       </Unit3>
     </Units>
   </ProjectOptions>

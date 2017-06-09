@@ -29,25 +29,34 @@ uses
 //);}
 {$endif}
 
-function iff(b: boolean; i1, i2: integer): integer;
+type TValues=integer;
+     TDir= 0..3;
 
-begin
-  if b then
-    Result := i1
-  else
-    Result := i2;
-end;
-
-var
-  Labyrinth: array[0..999] of integer;  // Former Mu
 
 const
+  T1k = 1024;
   Cg = 39;
   {$ifdef ShowGen}
   Scc = '   ''---'' , |-,-|';
   {$endif}
-  DirStoppArray: array[0..3] of integer = (0, -1, Cg - 1, -1); // former l
-  Dir: array[0..3] of integer = (1, -Cg, -1, Cg); // former m
+  SOut = '|_|  _  |';
+  DirStoppArray: array[TDir] of TValues = (0, -3, Cg - 1, -1); // former l
+  Dir: array[TDir] of TValues = (1, Cg, -1, -Cg); // former m
+
+
+var
+  Labyrinth: array[0..T1k] of TValues;  // Former Mu
+
+  function pp_(var aValue:TValues):TValues;
+  begin
+   pp_:=aValue;
+   inc(AValue);
+  end;
+
+  procedure WOut(idx:TValues);
+  begin
+  Write(Copy(SOut+LineEnding, idx + 1, 2 + idx div 8));
+  end;
 
 procedure Main;
 
@@ -55,18 +64,18 @@ const
   Ru: integer = 22;  // Must be writable for the out-Routine
 
 var
-  LabOutIdx: integer = 0;             // former u
-  Fifo: array[0..999] of integer;     // former Nu
-  PosibDir: array[0..3] of integer;    // former  a
-  FifoPopIdx: integer = 0; // Pop-Idx , former d
-  FifoPushIdx: integer = 0; // Push-Idx, former b
+  LabOutIdx: TValues = 0;             // former u
+  Fifo: array[0..T1k] of TValues;     // former Nu
+  PosibDir: array[0..3] of TValues;    // former  a
+  FifoPopIdx: TValues = 0; // Pop-Idx , former d
+  FifoPushIdx: TValues = 0; // Push-Idx, former b
   ActCellData, // former c
   NextCell,  // former e
   NextCellData, // former f(2)
   ActCell, // former g
   StoredCell, // former i
-  ActDir: integer; // former s
-  DirCount: integer = 0; // former f(1)
+  ActDir: TValues; // former s
+  DirCount: TValues = 0; // former f(1)
   // j become redundand !
 
 begin
@@ -74,7 +83,7 @@ begin
   Labyrinth[0] := 2;   // Setze Endpunkt mit Ausgang
   StoredCell := Cg * Ru - 1;  // Anfangspunkt unten rechts
   NextCell := StoredCell;
-  Labyrinth[StoredCell] := 24; // Setze Eingang und belegt
+  Labyrinth[StoredCell] := T1k+8; // Setze Eingang und belegt
   while (DirCount <> 0) or (FifoPushIdx >= FifoPopIdx) do
   begin
     {$IFDEF SingleTask}
@@ -85,71 +94,57 @@ begin
     {$ENDIF}
     ActCellData := Labyrinth[ActCell];
     // Calculate Valid directions and store them in PosibDir
-    ActDir := 0;
     DirCount := 0;
-    while (ActDir < 4) do
+    for ActDir in DirStoppArray do
     begin
-      NextCell := Dir[ActDir] + ActCell;
+      NextCell := Dir[ActDir and 3] + ActCell;
       if ((NextCell >= 0)
         and (NextCell < Cg * Ru)
-        and (DirStoppArray[ActDir] <> (NextCell mod Cg))
-        and ((ActCellData and 16) <> (Labyrinth[NextCell] and 16))) then
+        and (ActDir <> (NextCell mod Cg))
+        and ((ActCellData and T1k) <> (Labyrinth[NextCell] and T1k))) then
       begin
-        PosibDir[DirCount] := ActDir;
-        DirCount := DirCount + 1;
+        PosibDir[pp_(DirCount)] := ActDir;
       end;
-      ActDir := ActDir + 1;
     end;
     if (DirCount <> 0) then
     begin
-      ActDir := PosibDir[random(DirCount)];
-      NextCell := Dir[ActDir] + ActCell;  // Calc Destination Cell
-      NextCellData := Labyrinth[NextCell];
-      NextCellData := NextCellData or 16;
+      ActDir := PosibDir[random(DirCount)] and 3;  // Calc Destination Cell
+      NextCell := Dir[ActDir] + ActCell;
       // Remove Wall between Cells
       Labyrinth[ActCell] := ActCellData or 1 shl ActDir;
-      Labyrinth[NextCell] := NextCellData or (1 shl ((ActDir + 2) mod 4));
+      Labyrinth[NextCell] := Labyrinth[NextCell] or T1k or (1 shl ((ActDir + 2) mod 4));
       // Push Cell to the Fifo
-      Fifo[FifoPushIdx] := NextCell;
-      FifoPushIdx := FifoPushIdx + 1;
+      Fifo[pp_(FifoPushIdx)] := NextCell;
     end
     else
     begin
       // Pop Cell from the Fifo
-      NextCell := iff(FifoPushIdx > FifoPopIdx, Fifo[FifoPopIdx], NextCell);
-      FifoPopIdx := FifoPopIdx + 1;
+      if FifoPushIdx >= FifoPopIdx then
+         NextCell :=  Fifo[pp_(FifoPopIdx)];
     end;
     {$ifdef ShowGen}
     gotoxy((ActCell mod Cg) * 2 + 1, ActCell div Cg + 1);
     Write(copy(Scc, (Labyrinth[ActCell] and $0e) + 1, 2));
-    sleep(100);
+    sleep(30);
     {$endif}
   end;
   {$ifdef ShowGen}
   gotoxy(1, 1);
   {$endif}
   // Output Routine
-  Write('  ');
-  ActDir := Cg - 1;
-  while (ActDir > 0) do
+  // Write the top-row separately
+  Wout(6);
+  for ActCell := 1 to Cg-1 do
+    Wout(4);
+  // Write the rest
+  Wout(9);
+  for ActCell := 1 to Ru do
   begin
-    Write(' ');
-    ActDir := ActDir - 1;
-    Write('_');
-  end;
-  while (Ru > 0) do
-  begin
-    writeln;
-    Ru := Ru - 1;
-    Write('|');
-    NextCell := Cg;
-    while (NextCell > 0) do
+    for NextCell := 1 to Cg do
     begin
-      NextCell := NextCell - 1;
-      Write(copy('_ ', ((Labyrinth[LabOutIdx] div 8) mod 2) + 1, 1));
-      LabOutIdx := LabOutIdx + 1;
-      Write(copy('| ', ((Labyrinth[LabOutIdx] div 4) mod 2) + 1, 1));
+      wout(Labyrinth[pp_(LabOutIdx)] and 6);
     end;
+   wout(8); // Write the last column and the linebreak separately
   end;
  {$IFDEF WaitAtEnd}
   readln;
