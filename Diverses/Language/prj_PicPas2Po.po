@@ -1,0 +1,89 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tfrmpicpas2pomain.actfileopenpas.caption
+msgid "actFileOpenPas"
+msgstr ""
+
+#: tfrmpicpas2pomain.actfileopenpo.caption
+msgid "actFileOpenPo"
+msgstr ""
+
+#: tfrmpicpas2pomain.actfilesavepas.caption
+msgid "actFileSavePas"
+msgstr ""
+
+#: tfrmpicpas2pomain.actfilesavepo.caption
+msgid "actFileSavePo"
+msgstr ""
+
+#: tfrmpicpas2pomain.actfileselectdir.caption
+msgid "Select &Directory"
+msgstr ""
+
+#: tfrmpicpas2pomain.actprocesspas2po.caption
+msgid "actProcessPas2Po"
+msgstr ""
+
+#: tfrmpicpas2pomain.actprocesspo2pas.caption
+msgid "actProcessPo2Pas"
+msgstr ""
+
+#: tfrmpicpas2pomain.btnfileopenpas.caption
+msgctxt "tfrmpicpas2pomain.btnfileopenpas.caption"
+msgid "L"
+msgstr ""
+
+#: tfrmpicpas2pomain.btnfileopenpo.caption
+msgctxt "tfrmpicpas2pomain.btnfileopenpo.caption"
+msgid "L"
+msgstr ""
+
+#: tfrmpicpas2pomain.btnfilesavepas.caption
+msgctxt "tfrmpicpas2pomain.btnfilesavepas.caption"
+msgid "S"
+msgstr ""
+
+#: tfrmpicpas2pomain.btnfilesavepo.caption
+msgctxt "tfrmpicpas2pomain.btnfilesavepo.caption"
+msgid "S"
+msgstr ""
+
+#: tfrmpicpas2pomain.btnprocesspas2po.caption
+msgid ">"
+msgstr ""
+
+#: tfrmpicpas2pomain.btnprocesspo2pas.caption
+msgid "<"
+msgstr ""
+
+#: tfrmpicpas2pomain.btnselectdir.caption
+msgid "..."
+msgstr ""
+
+#: tfrmpicpas2pomain.caption
+msgid "frmPicPas2PoMain"
+msgstr ""
+
+#: tfrmpicpas2pomain.cbxselectfile.text
+msgid "cbxSelectFile"
+msgstr ""
+
+#: tfrmpicpas2pomain.cbxselectlanguage.text
+msgid "Deutsch,de"
+msgstr ""
+
+#: tfrmpicpas2pomain.edtprojectname.text
+msgid "PicPas"
+msgstr ""
+
+#: tfrmpicpas2pomain.edtsourcedir.editlabel.caption
+msgctxt "tfrmpicpas2pomain.edtsourcedir.editlabel.caption"
+msgid "edtSourceDir"
+msgstr ""
+
+#: tfrmpicpas2pomain.edtsourcedir.text
+msgctxt "tfrmpicpas2pomain.edtsourcedir.text"
+msgid "C:\\projekte\\Lazarus\\PicPas\\language"
+msgstr ""
+

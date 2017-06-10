@@ -1,0 +1,41 @@
+object Form1: TForm1
+  Left = 0
+  Height = 345
+  Top = 0
+  Width = 644
+  ActiveControl = Button1
+  Caption = 'Form1'
+  ClientHeight = 345
+  ClientWidth = 644
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  LCLVersion = '1.6.0.1'
+  Visible = False
+  object Image1: TImage
+    Left = 8
+    Height = 305
+    Top = 8
+    Width = 409
+    OnClick = Image1Click
+  end
+  object Button1: TButton
+    Left = 440
+    Height = 25
+    Top = 216
+    Width = 75
+    Caption = 'Button1'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object Button2: TButton
+    Left = 440
+    Height = 25
+    Top = 184
+    Width = 75
+    Caption = 'Button2'
+    OnClick = Button2Click
+    TabOrder = 1
+  end
+end

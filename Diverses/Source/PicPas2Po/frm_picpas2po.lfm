@@ -1,71 +1,306 @@
 object frmPicPas2PoMain: TfrmPicPas2PoMain
-  Left = 0
-  Height = 482
-  Top = 0
-  Width = 642
+  Left = 1159
+  Height = 558
+  Top = 226
+  Width = 641
   Caption = 'frmPicPas2PoMain'
-  ClientHeight = 482
-  ClientWidth = 642
-  Visible = False
-  object edtPasFile: TMemo
-    Left = 8
-    Height = 354
-    Top = 100
-    Width = 320
-    Lines.Strings = (
-      'edtPasFile'
-    )
-    ScrollBars = ssAutoBoth
+  ClientHeight = 558
+  ClientWidth = 641
+  OnCreate = FormCreate
+  OnResize = FormResize
+  OnShow = FormShow
+  LCLVersion = '1.8.0.2'
+  object pnlRight: TPanel
+    Left = 355
+    Height = 515
+    Top = 43
+    Width = 286
+    Align = alRight
+    BevelOuter = bvNone
+    ClientHeight = 515
+    ClientWidth = 286
     TabOrder = 0
+    object pnlRightTop: TPanel
+      Left = 0
+      Height = 32
+      Top = 0
+      Width = 286
+      Align = alTop
+      BevelOuter = bvNone
+      ClientHeight = 32
+      ClientWidth = 286
+      TabOrder = 0
+      object cbxSelectLanguage: TComboBox
+        Left = 3
+        Height = 23
+        Top = 3
+        Width = 228
+        Align = alClient
+        BorderSpacing.Around = 3
+        ItemHeight = 15
+        ItemIndex = 4
+        Items.Strings = (
+          'Unspecific'
+          'English,en'
+          'Spain,es'
+          '???,??'
+          'Deutsch,de'
+        )
+        TabOrder = 0
+        Text = 'Deutsch,de'
+      end
+      object btnFileSavePo: TSpeedButton
+        Left = 260
+        Height = 26
+        Top = 3
+        Width = 23
+        Action = actFileSavePo
+        Align = alRight
+        BorderSpacing.Around = 3
+        Caption = 'S'
+      end
+      object btnFileOpenPo: TSpeedButton
+        Left = 234
+        Height = 26
+        Top = 3
+        Width = 23
+        Action = actFileOpenPo
+        Align = alRight
+        BorderSpacing.Around = 3
+        Caption = 'L'
+      end
+    end
+    object edtPoFile: TMemo
+      Left = 3
+      Height = 473
+      Top = 35
+      Width = 280
+      Align = alClient
+      BorderSpacing.Around = 3
+      Lines.Strings = (
+        'Memo2'
+      )
+      ScrollBars = ssAutoBoth
+      TabOrder = 1
+      WordWrap = False
+    end
+    object Label2: TLabel
+      Left = 3
+      Height = 1
+      Top = 511
+      Width = 280
+      Align = alBottom
+      BorderSpacing.Around = 3
+      ParentColor = False
+    end
   end
-  object edtSourceDir: TLabeledEdit
-    Left = 9
-    Height = 23
-    Top = 24
-    Width = 487
-    EditLabel.AnchorSideLeft.Control = edtSourceDir
-    EditLabel.AnchorSideRight.Control = edtSourceDir
-    EditLabel.AnchorSideRight.Side = asrBottom
-    EditLabel.AnchorSideBottom.Control = edtSourceDir
-    EditLabel.Left = 9
-    EditLabel.Height = 15
-    EditLabel.Top = 6
-    EditLabel.Width = 487
-    EditLabel.Caption = 'edtSourceDir'
-    EditLabel.ParentColor = False
+  object pnlTop: TPanel
+    Left = 0
+    Height = 43
+    Top = 0
+    Width = 641
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 43
+    ClientWidth = 641
     TabOrder = 1
-    Text = 'edtSourceDir'
-    OnChange = edtSourceDirChange
+    object edtSourceDir: TLabeledEdit
+      Left = 9
+      Height = 23
+      Top = 20
+      Width = 485
+      Anchors = [akTop, akLeft, akRight]
+      EditLabel.AnchorSideLeft.Control = edtSourceDir
+      EditLabel.AnchorSideRight.Control = edtSourceDir
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = edtSourceDir
+      EditLabel.Left = 9
+      EditLabel.Height = 15
+      EditLabel.Top = 2
+      EditLabel.Width = 485
+      EditLabel.Caption = 'edtSourceDir'
+      EditLabel.ParentColor = False
+      TabOrder = 0
+      Text = 'C:\projekte\Lazarus\PicPas\language'
+      OnChange = edtSourceDirChange
+      OnExit = edtSourceDirExit
+    end
+    object pnlTopRight: TPanel
+      Left = 494
+      Height = 43
+      Top = 0
+      Width = 147
+      Align = alRight
+      BevelOuter = bvNone
+      ClientHeight = 43
+      ClientWidth = 147
+      TabOrder = 1
+      object edtProjectName: TEdit
+        Left = 40
+        Height = 23
+        Top = 20
+        Width = 101
+        TabOrder = 0
+        Text = 'PicPas'
+      end
+      object btnSelectDir: TSpeedButton
+        Left = 8
+        Height = 23
+        Top = 20
+        Width = 23
+        Action = actFileSelectDir
+        Caption = '...'
+      end
+    end
   end
-  object btnSelectDir: TSpeedButton
-    Left = 504
-    Height = 22
-    Top = 25
-    Width = 23
-    OnClick = btnSelectDirClick
-  end
-  object Memo2: TMemo
-    Left = 352
-    Height = 358
-    Top = 96
-    Width = 274
-    Lines.Strings = (
-      'Memo2'
-    )
-    ScrollBars = ssAutoBoth
+  object pnlLeft: TPanel
+    Left = 0
+    Height = 515
+    Top = 43
+    Width = 321
+    Align = alLeft
+    BevelOuter = bvNone
+    ClientHeight = 515
+    ClientWidth = 321
     TabOrder = 2
+    object edtPasFile: TMemo
+      Left = 3
+      Height = 473
+      Top = 35
+      Width = 315
+      Align = alClient
+      BorderSpacing.Around = 3
+      Lines.Strings = (
+        'edtPasFile'
+      )
+      OnKeyUp = edtPasFileKeyUp
+      ScrollBars = ssAutoBoth
+      TabOrder = 0
+      WordWrap = False
+    end
+    object Label1: TLabel
+      Left = 3
+      Height = 1
+      Top = 511
+      Width = 315
+      Align = alBottom
+      BorderSpacing.Around = 3
+      ParentColor = False
+    end
+    object pnlLeftTop: TPanel
+      Left = 0
+      Height = 32
+      Top = 0
+      Width = 321
+      Align = alTop
+      BevelOuter = bvNone
+      ClientHeight = 32
+      ClientWidth = 321
+      TabOrder = 1
+      object cbxSelectFile: TComboBox
+        Left = 3
+        Height = 23
+        Top = 3
+        Width = 263
+        Align = alClient
+        BorderSpacing.Around = 3
+        ItemHeight = 15
+        OnSelect = cbxSelectFileClick
+        TabOrder = 0
+        Text = 'cbxSelectFile'
+      end
+      object btnFileOpenPas: TSpeedButton
+        Left = 269
+        Height = 26
+        Top = 3
+        Width = 23
+        Action = actFileOpenPas
+        Align = alRight
+        BorderSpacing.Around = 3
+        Caption = 'L'
+      end
+      object btnFileSavePas: TSpeedButton
+        Left = 295
+        Height = 26
+        Top = 3
+        Width = 23
+        Action = actFileSavePas
+        Align = alRight
+        BorderSpacing.Around = 3
+        Caption = 'S'
+      end
+    end
   end
-  object cbxSelectFile: TComboBox
-    Left = 9
-    Height = 23
-    Top = 56
-    Width = 294
-    ItemHeight = 15
+  object pnlProcessing: TPanel
+    Left = 321
+    Height = 515
+    Top = 43
+    Width = 34
+    Align = alClient
+    BevelOuter = bvNone
+    ClientHeight = 515
+    ClientWidth = 34
     TabOrder = 3
-    Text = 'cbxSelectFile'
+    object btnProcessPas2Po: TBitBtn
+      Left = 0
+      Height = 108
+      Top = 120
+      Width = 30
+      Action = actProcessPas2Po
+      Caption = '>'
+      OnClick = actProcessPas2PoExecute
+      TabOrder = 0
+    end
+    object btnProcessPo2Pas: TSpeedButton
+      Left = 0
+      Height = 37
+      Top = 304
+      Width = 30
+      Action = actProcessPo2Pas
+      Caption = '<'
+    end
   end
   object SelectDirectoryDialog1: TSelectDirectoryDialog
-    left = 310
-    top = 87
+    left = 328
+    top = 104
+  end
+  object alsPicPas2Po: TActionList
+    left = 312
+    top = 152
+    object actFileSelectDir: TAction
+      Category = 'File'
+      Caption = 'Select &Directory'
+      OnExecute = actFileSelectDirExecute
+    end
+    object actFileOpenPas: TAction
+      Category = 'File'
+      Caption = 'actFileOpenPas'
+      OnExecute = actFileOpenPasExecute
+      OnUpdate = actFileOpenPasUpdate
+    end
+    object actFileSavePas: TAction
+      Category = 'File'
+      Caption = 'actFileSavePas'
+    end
+    object actFileOpenPo: TAction
+      Category = 'File'
+      Caption = 'actFileOpenPo'
+      OnExecute = actFileOpenPoExecute
+    end
+    object actFileSavePo: TAction
+      Category = 'File'
+      Caption = 'actFileSavePo'
+      OnExecute = actFileSavePoExecute
+    end
+    object actProcessPas2Po: TAction
+      Category = 'Process'
+      Caption = 'actProcessPas2Po'
+      OnExecute = actProcessPas2PoExecute
+    end
+    object actProcessPo2Pas: TAction
+      Category = 'Process'
+      Caption = 'actProcessPo2Pas'
+      OnExecute = actProcessPo2PasExecute
+    end
   end
 end

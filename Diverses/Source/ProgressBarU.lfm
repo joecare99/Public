@@ -1,0 +1,38 @@
+object ProgessForm: TProgessForm
+  Left = 215
+  Height = 47
+  Top = 184
+  Width = 331
+  BorderIcons = []
+  BorderStyle = bsSingle
+  Caption = 'ProgessForm'
+  ClientHeight = 47
+  ClientWidth = 331
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  LCLVersion = '1.6.0.1'
+  Visible = False
+  object Label1: TLabel
+    Left = 144
+    Height = 13
+    Top = 24
+    Width = 41
+    Alignment = taCenter
+    AutoSize = False
+    Caption = '0 %'
+    Font.Color = clWindowText
+    Font.Height = -9
+    Font.Name = 'MS Sans Serif'
+    ParentColor = False
+    ParentFont = False
+  end
+  object ProgressBar1: TProgressBar
+    Left = 8
+    Height = 9
+    Top = 8
+    Width = 321
+    TabOrder = 0
+  end
+end

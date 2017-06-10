@@ -1,0 +1,84 @@
+object Laby: TLaby
+  Left = 419
+  Height = 985
+  Top = 78
+  Width = 1329
+  ActiveControl = btnClose
+  Align = alClient
+  Caption = 'Laby'
+  ClientHeight = 985
+  ClientWidth = 1329
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Position = poScreenCenter
+  LCLVersion = '1.6.0.1'
+  Visible = False
+  object LabImage: TImage
+    Left = 8
+    Height = 933
+    Hint = 'Ayala Gilad'
+    Top = 8
+    Width = 1313
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Center = True
+    OnClick = LabImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Label1: TLabel
+    Left = 0
+    Height = 13
+    Top = 972
+    Width = 32
+    Caption = 'Label1'
+    ParentColor = False
+  end
+  object btnClose: TButton
+    Left = 304
+    Height = 20
+    Top = 947
+    Width = 313
+    Caption = 'Close'
+    OnClick = btnCloseClick
+    TabOrder = 0
+  end
+  object btnOK: TButton
+    Left = 0
+    Height = 20
+    Top = 946
+    Width = 298
+    Caption = 'OK'
+    OnClick = btnOKClick
+    TabOrder = 1
+  end
+  object Button1: TButton
+    Left = 623
+    Height = 25
+    Top = 952
+    Width = 75
+    Caption = 'Print'
+    OnClick = Button1Click
+    TabOrder = 2
+  end
+  object Button2: TButton
+    Left = 704
+    Height = 25
+    Top = 952
+    Width = 75
+    Caption = 'Save'
+    OnClick = Button2Click
+    TabOrder = 3
+  end
+  object Timer1: TTimer
+    Interval = 2000
+    OnTimer = Timer1Timer
+    left = 8
+    top = 448
+  end
+  object SavePictureDialog1: TSavePictureDialog
+    left = 40
+    top = 448
+  end
+end
