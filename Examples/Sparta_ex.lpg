@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectGroup FileVersion="1">
+    <Targets Count="9">
+      <Target0 FileName="FPC\TArrayProjectDouble.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target0>
+      <Target1 FileName="FPC\TArrayProjectSingle.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target1>
+      <Target2 FileName="FPC\TComparerProject.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target2>
+      <Target3 FileName="FPC\THashMapProject.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target3>
+      <Target4 FileName="FPC\THashMapCaseInsensitive.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target4>
+      <Target5 FileName="FPC\THashMapExtendedEqualityComparer.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target5>
+      <Target6 FileName="FPC\TObjectListProject.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target6>
+      <Target7 FileName="FPC\TQueueProject.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target7>
+      <Target8 FileName="FPC\TStackProject.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target8>
+    </Targets>
+  </ProjectGroup>
+</CONFIG>

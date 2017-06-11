@@ -17,11 +17,9 @@
       <Icon Value="0"/>
     </General>
     <i18n>
-      <EnableI18N LFM="False"/>
+      <EnableI18N Value="True"/>
+      <OutDir Value="..\Language"/>
     </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
@@ -114,7 +112,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="8">
+    <Units Count="10">
       <Unit0>
         <Filename Value="Asteroids.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -165,6 +163,14 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit7>
+      <Unit8>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\Credits.txt"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\..\Grafik\spiele\asteroids_src\CharEdges.txt"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

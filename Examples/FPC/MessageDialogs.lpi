@@ -33,6 +33,7 @@
       <Unit0>
         <Filename Value="MessageDialogs.pp"/>
         <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
         <CursorPos X="48" Y="35"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
@@ -42,8 +43,8 @@
         <Filename Value="../Source/MessageDialogs/frm_messagedialogsmain.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Frm_MessageDialogsMain"/>
-        <EditorIndex Value="1"/>
-        <CursorPos X="17" Y="20"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="132" Y="24"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit1>
