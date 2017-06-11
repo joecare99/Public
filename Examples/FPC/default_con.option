@@ -22,10 +22,5 @@
     <Linking>
       <LinkSmart Value="True"/>
     </Linking>
-    <Other>
-      <CompilerMessages>
-        <MsgFileName Value=""/>
-      </CompilerMessages>
-    </Other>
   </CompilerOptions>
 </CONFIG>
