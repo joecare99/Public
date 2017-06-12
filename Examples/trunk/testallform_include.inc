@@ -177,7 +177,7 @@ const
     );
 
   taDlgImplemented: Array[taDialogs] of Boolean = (
-    False, //tadTcalculatordialog,
+    true, //tadTcalculatordialog,
     False, //tadTcalendardialog,
     False, //tadTcolordialog,
     False, //tadTfinddialog,

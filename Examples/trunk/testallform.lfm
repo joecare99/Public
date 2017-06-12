@@ -1,6 +1,6 @@
 object Form1: TForm1
   Left = 484
-  Height = 405
+  Height = 385
   Top = 128
   Width = 621
   Caption = 'Test Many (but not all) Components'
@@ -9,11 +9,12 @@ object Form1: TForm1
   Menu = MainMenu1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.7'
+  LCLVersion = '1.8.0.2'
+  Visible = False
   object BottomPnl: TPanel
     Left = 0
     Height = 41
-    Top = 344
+    Top = 324
     Width = 621
     Align = alBottom
     BevelInner = bvLowered
@@ -34,7 +35,7 @@ object Form1: TForm1
   end
   object TestPnl: TPanel
     Left = 0
-    Height = 344
+    Height = 324
     Top = 0
     Width = 384
     Align = alClient
@@ -43,17 +44,17 @@ object Form1: TForm1
   end
   object EventsPnl: TPanel
     Left = 384
-    Height = 344
+    Height = 324
     Top = 0
     Width = 237
     Align = alRight
     BevelInner = bvLowered
-    ClientHeight = 344
+    ClientHeight = 324
     ClientWidth = 237
     TabOrder = 2
     object EventsLB: TListBox
       Left = 2
-      Height = 340
+      Height = 320
       Top = 2
       Width = 233
       Align = alClient

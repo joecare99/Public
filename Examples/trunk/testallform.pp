@@ -27,7 +27,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtCtrls,
-  Menus, Buttons, StdCtrls, LclProc, LCLType, ContNrs,
+  Menus, Buttons, StdCtrls, LclProc, LCLType, ContNrs, ExtDlgs,
 
   Arrow, ButtonPanel;
 

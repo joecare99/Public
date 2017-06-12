@@ -1,0 +1,56 @@
+object Main: TMain
+  Left = 458
+  Height = 690
+  Top = 0
+  Width = 1024
+  HorzScrollBar.Smooth = True
+  HorzScrollBar.Tracking = True
+  VertScrollBar.Smooth = True
+  VertScrollBar.Tracking = True
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Asteroids'
+  ClientHeight = 690
+  ClientWidth = 1024
+  Color = clBlack
+  Font.Color = clWhite
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnActivate = App_Continue
+  OnClose = FormClose
+  OnDeactivate = App_Pause
+  OnKeyDown = Form_KeyDown
+  OnKeyPress = Form_KeyPress
+  OnKeyUp = Form_KeyUp
+  OnPaint = Form_Paint
+  OnShow = Form_Show
+  Position = poScreenCenter
+  Visible = False
+  object Timer_Start: TTimer
+    Enabled = False
+    Interval = 10
+    OnTimer = Handle_Start
+    left = 96
+    top = 16
+  end
+  object AppEvents: TApplicationProperties
+    OnActivate = App_Continue
+    OnDeactivate = App_Pause
+    OnIdle = AppEventsIdle
+    OnMinimize = App_Pause
+    OnRestore = App_Continue
+    left = 32
+    top = 16
+  end
+  object Timer_FPS: TTimer
+    Enabled = False
+    OnTimer = Handle_FPS
+    left = 160
+    top = 16
+  end
+  object IdleTimer1: TIdleTimer
+    Interval = 10
+    left = 200
+    top = 16
+  end
+end

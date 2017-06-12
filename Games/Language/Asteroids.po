@@ -1,0 +1,163 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: thighscores.listview.columns[0].caption
+msgid "player"
+msgstr ""
+
+#: thighscores.listview.columns[1].caption
+msgid "score"
+msgstr ""
+
+#: thighscores.listview.columns[2].caption
+msgid "levels"
+msgstr ""
+
+#: tsettings.box_accel.caption
+msgid "(F5) &accelerate if FPS < 100"
+msgstr ""
+
+#: tsettings.box_beep.caption
+msgid "(F3) &beep if shots launch and hit"
+msgstr ""
+
+#: tsettings.box_firstp.caption
+msgid "(F2) &first person shooter mode"
+msgstr ""
+
+#: tsettings.box_limit.caption
+msgid "(F4) &limit frame rate to 100 FPS"
+msgstr ""
+
+#: tsettings.box_showfps.caption
+msgid "(F7) activate FPS &display"
+msgstr ""
+
+#: tsettings.box_showparts.caption
+msgid "(F6) &use partial 2D polygons"
+msgstr ""
+
+#: tsettings.box_stop.caption
+msgid "(F1) &stop game if it looses focus"
+msgstr ""
+
+#: tsettings.btnkeys.caption
+msgid "&keys"
+msgstr ""
+
+#: tsettings.labelblink.caption
+msgid "bli&nk delay:"
+msgstr ""
+
+#: tsettings.labelsparks.caption
+msgid "spa&rks:"
+msgstr ""
+
+#: uhighscores.rscouldnotrepl
+msgid "Could not replace highscores. Check if %s is write-protected."
+msgstr ""
+
+#: umain.cfps
+msgid "FPS "
+msgstr ""
+
+#: umain.cpxf
+msgid "PXF "
+msgstr ""
+
+#: umain.cscore
+msgid "Score "
+msgstr ""
+
+#: umain.ctemp
+msgid "Temp  "
+msgstr ""
+
+#: usettings.caccel
+msgid "Accel"
+msgstr ""
+
+#: usettings.cbeep
+msgid "Beep"
+msgstr ""
+
+#: usettings.cblink
+msgid "Blink"
+msgstr ""
+
+#: usettings.ccolor1
+msgid "Color1"
+msgstr ""
+
+#: usettings.ccolor2
+msgid "Color2"
+msgstr ""
+
+#: usettings.cfirstp
+msgid "FirstP"
+msgstr ""
+
+#: usettings.cfps
+msgid "FPS"
+msgstr ""
+
+#: usettings.cfull
+msgid "FullScreen"
+msgstr ""
+
+#: usettings.ckeyaccel
+msgid "KeyAccel"
+msgstr ""
+
+#: usettings.ckeyfire
+msgid "KeyFire"
+msgstr ""
+
+#: usettings.ckeyleft
+msgid "KeyLeft"
+msgstr ""
+
+#: usettings.ckeyright
+msgid "KeyRight"
+msgstr ""
+
+#: usettings.ckeys
+msgid "Keys"
+msgstr ""
+
+#: usettings.climit
+msgid "Limit"
+msgstr ""
+
+#: usettings.cparts
+msgid "Parts"
+msgstr ""
+
+#: usettings.csettings
+msgid "Settings"
+msgstr ""
+
+#: usettings.csparks
+msgid "Sparks"
+msgstr ""
+
+#: usettings.cstartup
+msgid "StartUp"
+msgstr ""
+
+#: usettings.cstop
+msgid "Stop"
+msgstr ""
+
+#: usettings.cwidth
+msgid "Width"
+msgstr ""
+
+#: usettings.rsblinkdelay
+msgid "blink delay:%s%s"
+msgstr ""
+
+#: usettings.rssparks
+msgid "sparks:%s%s"
+msgstr ""
+

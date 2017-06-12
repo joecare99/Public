@@ -31,7 +31,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-            <OtherUnitFiles Value="..\..\Grafik\spiele\Source;..\..\Grafik\spiele\asteroids_src"/>
+            <OtherUnitFiles Value="..\..\Grafik\spiele\Source;..\source\asteroids"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -71,7 +71,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-            <OtherUnitFiles Value="..\..\Grafik\spiele\Source;..\..\Grafik\spiele\asteroids_src"/>
+            <OtherUnitFiles Value="..\..\Grafik\spiele\Source;..\source\asteroids"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -118,57 +118,57 @@
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
+        <Filename Value="..\source\asteroids\uGame.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\..\Grafik\spiele\asteroids_src\uMain.pas"/>
+        <Filename Value="..\source\asteroids\uMain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Main"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit2>
       <Unit3>
-        <Filename Value="..\..\Grafik\spiele\asteroids_src\uSettings.pas"/>
+        <Filename Value="..\source\asteroids\uSettings.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Settings"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit3>
       <Unit4>
-        <Filename Value="..\..\Grafik\spiele\asteroids_src\uKeys.pas"/>
+        <Filename Value="..\source\asteroids\uKeys.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Keys"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit4>
       <Unit5>
-        <Filename Value="..\..\Grafik\spiele\asteroids_src\uInfo.pas"/>
+        <Filename Value="..\source\asteroids\uInfo.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Info"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit5>
       <Unit6>
-        <Filename Value="..\..\Grafik\spiele\asteroids_src\uDlg_EnterName.pas"/>
+        <Filename Value="..\source\asteroids\uDlg_EnterName.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Dlg_EnterName"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit6>
       <Unit7>
-        <Filename Value="..\..\Grafik\spiele\asteroids_src\uHighscores.pas"/>
+        <Filename Value="..\source\asteroids\uHighscores.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Highscores"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit7>
       <Unit8>
-        <Filename Value="..\..\Grafik\spiele\asteroids_src\Credits.txt"/>
+        <Filename Value="..\source\asteroids\Credits.txt"/>
         <IsPartOfProject Value="True"/>
       </Unit8>
       <Unit9>
-        <Filename Value="..\..\Grafik\spiele\asteroids_src\CharEdges.txt"/>
+        <Filename Value="..\source\asteroids\CharEdges.txt"/>
         <IsPartOfProject Value="True"/>
       </Unit9>
     </Units>
@@ -181,7 +181,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-      <OtherUnitFiles Value="..\..\Grafik\spiele\Source;..\..\Grafik\spiele\asteroids_src"/>
+      <OtherUnitFiles Value="..\..\Grafik\spiele\Source;..\source\asteroids"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Parsing>

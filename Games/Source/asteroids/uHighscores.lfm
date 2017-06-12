@@ -1,0 +1,66 @@
+object Highscores: THighscores
+  Left = 405
+  Height = 288
+  Top = 345
+  Width = 384
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsToolWindow
+  Caption = 'highscores'
+  ClientHeight = 288
+  ClientWidth = 384
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  KeyPreview = True
+  OnCreate = Form_Create
+  OnDestroy = Form_Destroy
+  OnKeyPress = Form_KeyPress
+  Position = poScreenCenter
+  LCLVersion = '1.8.0.2'
+  Visible = False
+  object PanelList: TPanel
+    Left = 16
+    Height = 256
+    Top = 16
+    Width = 352
+    BevelOuter = bvLowered
+    ClientHeight = 256
+    ClientWidth = 352
+    TabOrder = 0
+    object ListView: TListView
+      Left = 1
+      Height = 254
+      Top = 1
+      Width = 350
+      Align = alClient
+      BorderStyle = bsNone
+      Columns = <      
+        item
+          Caption = 'player'
+          Width = 128
+        end      
+        item
+          Alignment = taRightJustify
+          Caption = 'score'
+          Width = 96
+        end      
+        item
+          Alignment = taRightJustify
+          Caption = 'levels'
+          Width = 96
+        end>
+      ColumnClick = False
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Times New Roman'
+      ParentColor = True
+      ParentFont = False
+      ReadOnly = True
+      RowSelect = True
+      TabOrder = 0
+      ViewStyle = vsReport
+    end
+  end
+end

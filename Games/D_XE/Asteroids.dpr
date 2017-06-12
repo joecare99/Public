@@ -1,13 +1,13 @@
 Program	Asteroids;
 uses
   Forms,
-  uGame in '..\..\Grafik\spiele\asteroids_src\uGame.pas',
-  uMain in '..\..\Grafik\spiele\asteroids_src\uMain.pas' {Main},
-  uSettings in '..\..\Grafik\spiele\asteroids_src\uSettings.pas' {Settings},
-  uKeys in '..\..\Grafik\spiele\asteroids_src\uKeys.pas' {Keys},
-  uInfo in '..\..\Grafik\spiele\asteroids_src\uInfo.pas' {Info},
-  uDlg_EnterName in '..\..\Grafik\spiele\asteroids_src\uDlg_EnterName.pas' {Dlg_EnterName},
-  uHighscores in '..\..\Grafik\spiele\asteroids_src\uHighscores.pas' {Highscores};
+  uGame in '..\source\asteroids\uGame.pas',
+  uMain in '..\source\asteroids\uMain.pas' {Main},
+  uSettings in '..\source\asteroids\uSettings.pas' {Settings},
+  uKeys in '..\source\asteroids\uKeys.pas' {Keys},
+  uInfo in '..\source\asteroids\uInfo.pas' {Info},
+  uDlg_EnterName in '..\source\asteroids\uDlg_EnterName.pas' {Dlg_EnterName},
+  uHighscores in '..\source\asteroids\uHighscores.pas' {Highscores};
 
 {$R *.RES}
 

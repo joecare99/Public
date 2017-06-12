@@ -1,0 +1,31 @@
+object Info: TInfo
+  Left = 384
+  Height = 312
+  Top = 397
+  Width = 444
+  BorderIcons = [biSystemMenu]
+  BorderStyle = bsToolWindow
+  Caption = 'info'
+  ClientHeight = 312
+  ClientWidth = 444
+  Color = clBtnFace
+  Font.CharSet = ANSI_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Times New Roman'
+  OnCreate = Form_Create
+  OnDestroy = Form_Destroy
+  OnKeyDown = Form_KeyDown
+  OnKeyUp = Form_KeyUp
+  OnPaint = Form_Paint
+  OnShow = Form_Show
+  Position = poScreenCenter
+  Visible = False
+  object Timer: TTimer
+    Enabled = False
+    Interval = 1
+    OnTimer = Handle_Timer
+    left = 16
+    top = 16
+  end
+end

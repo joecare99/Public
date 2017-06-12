@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="21">
+    <Targets Count="29">
       <Target0 FileName="FPC\addrbook.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="default" Compile="True"/>
@@ -97,6 +97,39 @@
         <BuildModes Count="1"/>
         <Mode1 Name="default"/>
       </Target20>
+      <Target21 FileName="FPC\notebk.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target21>
+      <Target22 FileName="FPC\NotebookTest.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target22>
+      <Target23 FileName="FPC\progressbar.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target23>
+      <Target24 FileName="FPC\ScrollBar.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target24>
+      <Target25 FileName="FPC\SpeedTest.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target25>
+      <Target26 FileName="FPC\SynEdit1.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target26>
+      <Target27 FileName="FPC\TabOrder.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target27>
+      <Target28 FileName="FPC\TestAll.lpi">
+        <BuildModes Count="2"/>
+        <Mode1 Name="Debug" Compile="True"/>
+        <Mode2 Name="Release"/>
+      </Target28>
     </Targets>
   </ProjectGroup>
 </CONFIG>

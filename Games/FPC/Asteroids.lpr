@@ -9,13 +9,13 @@ uses
   {$IFDEF FPC}
   Interfaces,
   {$ENDIF}
-  uGame in 'uGame.pas',
-  uMain in 'uMain.pas' {Main},
-  uSettings in 'uSettings.pas' {Settings},
-  uKeys in 'uKeys.pas' {Keys},
-  uInfo in 'uInfo.pas' {Info},
-  uDlg_EnterName in 'uDlg_EnterName.pas' {Dlg_EnterName},
-  uHighscores in 'uHighscores.pas' {Highscores};
+  uGame in '..\source\asteroids\uGame.pas',
+  uMain in '..\source\asteroids\uMain.pas' {Main},
+  uSettings in '..\source\asteroids\uSettings.pas' {Settings},
+  uKeys in '..\source\asteroids\uKeys.pas' {Keys},
+  uInfo in '..\source\asteroids\uInfo.pas' {Info},
+  uDlg_EnterName in '..\source\asteroids\uDlg_EnterName.pas' {Dlg_EnterName},
+  uHighscores in '..\source\asteroids\uHighscores.pas' {Highscores};
 
 
 {$R *.res}

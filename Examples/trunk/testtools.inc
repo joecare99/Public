@@ -841,6 +841,7 @@ type
     lbl: TLabel;
     procedure OnBtnClick(Sender: TObject);
   end;
+
 { TMsgDlgDummmy }
 procedure TMsgDlgDummmy.OnBtnClick(Sender: TObject);
 var
@@ -934,10 +935,71 @@ end;
 
 
 {---------------- CalculatorDialog; ----------------}
+type
+  { TCalcDlgDummmy }
+  TCalcDlgDummmy = class
+    mm:TMemo;
+    procedure OnChange(Sender: TObject);
+    procedure OnDisplayChange(Sender: TObject);
+    procedure OnCalcKey(Sender: TObject; var Key: char);
+    procedure OnShow(Sender: TObject);
+  end;
+
+{ TCalcDlgDummmy }
+procedure TCalcDlgDummmy.OnChange(Sender: TObject);
+
+begin
+  mm.Append('OnChange');
+end;
+
+procedure TCalcDlgDummmy.OnDisplayChange(Sender: TObject);
+begin
+  mm.Append('OnDisplayChange');
+end;
+
+procedure TCalcDlgDummmy.OnCalcKey(Sender: TObject; var Key: char);
+begin
+  mm.Append('OnCalcKey: Key'+Key);
+end;
+
+procedure TCalcDlgDummmy.OnShow(Sender: TObject);
+begin
+  mm.Append('OnShow');
+end;
 
 procedure TForm1.TestCalculatorDialog;
+var
+  lCalDlg: TCalculatorDialog;
+  lCalDlgDmy: TCalcDlgDummmy;
+  lMemo: TMemo;
 begin
   Clear;
+  lMemo:=TMemo.Create(self);
+  with lMemo do
+    begin
+      Parent:=TestPnl;
+      Align:=alClient;
+    end;
+  lCalDlg:=TCalculatorDialog.Create(self);
+  try
+    lCalDlgDmy:=TCalcDlgDummmy.Create;
+    lCalDlgDmy.mm:=lMemo;
+    try
+    lCalDlg.OnCalcKey:=@lCalDlgDmy.onCalcKey;
+    lCalDlg.OnChange:=@lCalDlgDmy.onChange;
+    lCalDlg.OnDisplayChange:=@lCalDlgDmy.onDisplayChange;
+//    lCalDlg.OnCanClose:=;
+//    lCalDlg.OnClose:=;
+    lCalDlg.OnShow:=@lCalDlgDmy.onShow;
+    if lCalDlg.Execute then
+      MessageDlg('Information','You pressed OK to leave the Calculator',mtInformation,[mbOK],0);
+
+  finally
+    freeandnil(lCalDlgDmy);
+  end;
+  finally
+    FreeAndNil(lCalDlg)
+  end;
 end;
 {---------------- End of CalculatorDialog; ---------}
 

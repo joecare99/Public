@@ -1,0 +1,172 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joe Care\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"X-Generator: Poedit 2.0.2\n"
+
+#: thighscores.listview.columns[0].caption
+msgid "player"
+msgstr "Spieler"
+
+#: thighscores.listview.columns[1].caption
+msgid "score"
+msgstr "Wertung"
+
+#: thighscores.listview.columns[2].caption
+msgid "levels"
+msgstr "Levels"
+
+#: tsettings.box_accel.caption
+msgid "(F5) &accelerate if FPS < 100"
+msgstr "(F5) & beschleunigen, wenn FPS < 100"
+
+#: tsettings.box_beep.caption
+msgid "(F3) &beep if shots launch and hit"
+msgstr "(F3) &Ton bei Schuß, und Treffer"
+
+#: tsettings.box_firstp.caption
+msgid "(F2) &first person shooter mode"
+msgstr "(F2) &Erst-Personen-Schützen-Modus"
+
+#: tsettings.box_limit.caption
+msgid "(F4) &limit frame rate to 100 FPS"
+msgstr "(F4) & Limit Framerate auf 100 Bilder pro Sekunde"
+
+#: tsettings.box_showfps.caption
+msgid "(F7) activate FPS &display"
+msgstr "(F7) aktivieren FPS & Anzeigen"
+
+#: tsettings.box_showparts.caption
+msgid "(F6) &use partial 2D polygons"
+msgstr "(F6) & verwenden teilweise 2D Polygone"
+
+#: tsettings.box_stop.caption
+msgid "(F1) &stop game if it looses focus"
+msgstr "(F1) &Spiel stoppen, wenn es Fokus verliert"
+
+#: tsettings.btnkeys.caption
+msgid "&keys"
+msgstr "&Tasten"
+
+#: tsettings.labelblink.caption
+msgid "bli&nk delay:"
+msgstr ""
+
+#: tsettings.labelsparks.caption
+msgid "spa&rks:"
+msgstr "Fun&ken:"
+
+#: uhighscores.rscouldnotrepl
+msgid "Could not replace highscores. Check if %s is write-protected."
+msgstr "Bestenliste konnte nicht ersetzt werden. Überprüfen Sie, ob %s schreibgeschützt ist."
+
+#: umain.cfps
+msgid "FPS "
+msgstr "Bps "
+
+#: umain.cpxf
+msgid "PXF "
+msgstr "PXF "
+
+#: umain.cscore
+msgid "Score "
+msgstr "Wertung "
+
+#: umain.ctemp
+msgid "Temp  "
+msgstr "Temp."
+
+#: usettings.caccel
+msgid "Accel"
+msgstr "Beschl."
+
+#: usettings.cbeep
+msgid "Beep"
+msgstr "Piepston"
+
+#: usettings.cblink
+msgid "Blink"
+msgstr ""
+
+#: usettings.ccolor1
+msgid "Color1"
+msgstr "Farbe1"
+
+#: usettings.ccolor2
+msgid "Color2"
+msgstr "Farbe2"
+
+#: usettings.cfirstp
+msgid "FirstP"
+msgstr "ErstP"
+
+#: usettings.cfps
+msgid "FPS"
+msgstr "Bps"
+
+#: usettings.cfull
+msgid "FullScreen"
+msgstr "Vollbild"
+
+#: usettings.ckeyaccel
+msgid "KeyAccel"
+msgstr "Taste Beschl."
+
+#: usettings.ckeyfire
+msgid "KeyFire"
+msgstr "Taste Schuß"
+
+#: usettings.ckeyleft
+msgid "KeyLeft"
+msgstr "Taste Links"
+
+#: usettings.ckeyright
+msgid "KeyRight"
+msgstr "Taste Rechts"
+
+#: usettings.ckeys
+msgid "Keys"
+msgstr "Tasten"
+
+#: usettings.climit
+msgid "Limit"
+msgstr "Grenze"
+
+#: usettings.cparts
+msgid "Parts"
+msgstr "Teile"
+
+#: usettings.csettings
+msgid "Settings"
+msgstr "Einstellungen"
+
+#: usettings.csparks
+msgid "Sparks"
+msgstr "Funken"
+
+#: usettings.cstartup
+msgid "StartUp"
+msgstr "Startvorgang"
+
+#: usettings.cstop
+msgid "Stop"
+msgstr "Ende"
+
+#: usettings.cwidth
+msgid "Width"
+msgstr "Breite"
+
+#: usettings.rsblinkdelay
+msgid "blink delay:%s%s"
+msgstr "Blinkverzögerung:%s%s"
+
+#: usettings.rssparks
+msgid "sparks:%s%s"
+msgstr "Funken: %s %s"
