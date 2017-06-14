@@ -357,7 +357,7 @@ remain unchanged if Ord(C) is zero. The high bytes of the Sw_Words are
 set to Attr, or remain unchanged if Attr is zero.
 25May96 LdB
 ---------------------------------------------------------------------}
-PROCEDURE MoveChar (out Dest; C: Char; Attr: Byte; Count: Sw_Word);
+PROCEDURE MoveChar ({$ifopt H+}out{$else}var{$Endif} Dest; C: Char; Attr: Byte; Count: Sw_Word);
 
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                        KEYBOARD SUPPORT ROUTINES                          }
@@ -974,7 +974,7 @@ END;
 {---------------------------------------------------------------------------}
 {  MoveChar -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 10Jul99 LdB          }
 {---------------------------------------------------------------------------}
-procedure MoveChar(out Dest; C: Char; Attr: Byte; Count: Sw_Word);
+procedure MoveChar({$ifopt H+}out{$else}var{$Endif} Dest; C: Char; Attr: Byte; Count: Sw_Word);
 VAR I: Word; P: PWord;
 BEGIN
    For I := 1 To Count Do Begin
@@ -1567,7 +1567,7 @@ begin
    ResultLength := 0;                                 { Zero result length }
    FormatIndex := 1;                                  { Format index to 1 }
    HandleParameter(0);                                { Handle parameter }
-   Result[0] := Chr(ResultLength);                    { Set string length }
+   setlength(Result,ResultLength);                    { Set string length }
 end;
 
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}

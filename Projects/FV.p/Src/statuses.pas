@@ -55,7 +55,6 @@ interface
 {$i platform.inc}
 
 {$ifdef PPC_FPC}
-  {$H-}
 {$else}
   {$F+,O+,E+,N+}
 {$endif}
@@ -65,8 +64,8 @@ interface
 {$endif}
 
 uses
-
   FVCommon, FVConsts, Objects, Drivers, Views, Dialogs;
+
 {  Resource;}
 
 const
@@ -74,19 +73,19 @@ const
   evStatus = $8000;
     { evStatus represents the event class all status views know how to
       respond to. }
-    {#X Statuses }
+  {#X Statuses }
 
 
-  CStatus    =  #1#2#3;
+  CStatus = #1#2#3;
 {$ifndef cdPrintDoc}
-{#F+}
+  {#F+}
 {ÝTStatus.CStatus palette
 ßßßßßßßßßßßßßßßßßßßßßßßßß}
-{#F-}
+  {#F-}
 {$endif cdPrintDoc}
 { Status views use the default palette, CStatus, to map onto the first three
 entries in the standard window palette. }
-{#F+}
+  {#F+}
 {              1    2    3
            ÉÍÍÍÍÑÍÍÍÍÑÍÍÍÍ»
  CStatus   º  1 ³  2 ³  3 º
@@ -94,20 +93,20 @@ entries in the standard window palette. }
 Normal TextÄÄÄÙ    ³    ³
 OtherÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ    ³
 Highlighted TextÄÄÄÄÄÄÄÄÙ }
-{#F-}
-{#X TStatus }
+  {#F-}
+  {#X TStatus }
 
-  CAppStatus =  #2#5#4;
+  CAppStatus = #2#5#4;
 {$ifndef cdPrintDoc}
-{#F+}
+  {#F+}
 {ÝTAppStatus.CAppStatus palette
 ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß}
-{#F-}
+  {#F-}
 {$endif cdPrintDoc}
 { Status views which are inserted into the application rather than a dialog
 or window use the default palette, CAppStatus, to map onto the application
 object's palette. }
-{#F+}
+  {#F+}
 {                 1    2    3
               ÉÍÍÍÍÑÍÍÍÍÑÍÍÍÍ»
  CAppStatus   º  2 ³  5 ³  4 º
@@ -115,20 +114,20 @@ object's palette. }
 Normal TextÄÄÄÄÄÄÙ    ³    ³
 OtherÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ    ³
 Highlighted TextÄÄÄÄÄÄÄÄÄÄÄÙ }
-{#F-}
-    {#X tvStatus TAppStatus }
+  {#F-}
+  {#X tvStatus TAppStatus }
 
 
   CBarGauge = CStatus + #16#19;
 {$ifndef cdPrintDoc}
-{#F+}
+  {#F+}
 {ÝTBarGauge.CBarGauge palette
 ßßßßßßßßßßßßßßßßßßßßßßßßßßßßß}
-{#F-}
+  {#F-}
 {$endif cdPrintDoc}
 { TBarGauge's use the default palette, CBarGauge, to map onto the dialog or
 window owner's palette. }
-{#F+}
+  {#F+}
 {                 1    2    3   4    5
               ÉÍÍÍÍÑÍÍÍÍÑÍÍÍÍÑÍÍÍÍÑÍÍÍÍ»
  CAppStatus   º  2 ³  5 ³  4 ³ 16 ³ 19 º
@@ -136,21 +135,21 @@ window owner's palette. }
 Normal TextÄÄÄÄÄÄÙ    ³    ³    ³    ÀÄÄÄÄ filled in bar
 OtherÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÄÙ    ³    ÀÄÄÄÄÄÄÄÄÄ empty bar
 Highlighted TextÄÄÄÄÄÄÄÄÄÄÄÙ }
-{#F-}
-    {#X tvStatus TBarGauge }
+  {#F-}
+  {#X tvStatus TBarGauge }
 
 
-{#T sdXXXX }
+  {#T sdXXXX }
 {$ifndef cdPrintDoc}
-{#F+}
+  {#F+}
 {ÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜÜ
 Ý sdXXXX constants   (STDDLG unit) Þ
 ßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßßß}
-{#F-}
+  {#F-}
 {$endif cdNoPrintDoc}
 { sdXXXX constants are used to determine the types of buttons displayed in a
 #TStatusDlg# or #TStatusMessageDlg#. }
-{#F+}
+  {#F+}
 {    Constant      ³ Value ³ Meaning
 ÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍØÍÍÍÍÍÍÍØÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍÍ
   sdNone          ³ $0000 ³ no buttons
@@ -159,20 +158,20 @@ Highlighted TextÄÄÄÄÄÄÄÄÄÄÄÙ }
   sdResumeButton  ³ $0004 ³ show Resume button
   sdAllButtons    ³ $0008 ³ show Cancel, Pause and Resume
                   ³       ³   buttons }
-{#Z+}
-  sdNone                 = $0000;
-  sdCancelButton         = $0001;
-  sdPauseButton          = $0002;
-  sdResumeButton         = $0004;
-  sdAllButtons           = sdCancelButton or sdPauseButton or sdResumeButton;
-{#Z-}
+  {#Z+}
+  sdNone = $0000;
+  sdCancelButton = $0001;
+  sdPauseButton = $0002;
+  sdResumeButton = $0004;
+  sdAllButtons = sdCancelButton or sdPauseButton or sdResumeButton;
+  {#Z-}
   {#X tvStatus TStatusDlg TStatusMessageDlg }
 
-  SpinChars : String[4] = '³/Ä\';
+  SpinChars: string[4] = '³/Ä\';
     { SpinChars are the characters used by a #TSpinnerGauge# when it is drawn.
       Only one character is displayed at a time.  The string is cycled
       through then started over again until the view is disposed. }
-    {#X tvStatus }
+  {#X tvStatus }
 
   sfPause = $F000;
     { sfPause is an additional state flag used internally by status views to
@@ -183,7 +182,7 @@ type
   {#Z+}
   PStatus = ^TStatus;
   {#Z-}
-  TStatus = Object(TParamText)
+  TStatus = object(TParamText)
     { TStatus is the base object type from which all status views descend.
       Status views are used to display information that will change at
       run-time based upon some state or process in the application, such as
@@ -191,34 +190,34 @@ type
 
       All status views that are to be inserted into the application should
       descend from #TAppStatus# for proper color mapping. }
-    Command : Word;
+    Command: word;
       { Command is the only command the status view will respond to.  When
         the status view receives an evStatus event it checks the value of the
         Event.Command field against Command before handling the event. }
-      {#X HandleEvent }
-    constructor Init (R : TRect; ACommand : Word; AText : String;
-                      AParamCount : Integer);
+    {#X HandleEvent }
+    constructor Init(R: TRect; ACommand: word; AText: string;
+      AParamCount: integer);
       { Init calls the inherited constructor then sets #Command# to ACommand.
 
         If an error occurs Init fails. }
-      {#X Load }
-    constructor Load (var S : TStream);
+    {#X Load }
+    constructor Load(var S: TStream);
       { Load calls the inherited constructor then reads #Command# from the
         stream.
 
         If an error occurs Load fails. }
-      {#X Store Init }
-    function Cancel : Boolean; virtual;
+    {#X Store Init }
+    function Cancel: boolean; virtual;
       { Cancel should prompt the user when necessary for validation of
         canceling the process which the status view is displaying.  If the
         user elects to continue the process Cancel must return False,
         otherwise Cancel must return True. }
-      {#X Pause Resume }
-    function GetPalette : PPalette; virtual;
+    {#X Pause Resume }
+    function GetPalette: PPalette; virtual;
       { GetPalette returns a pointer to the default status view palette,
         #CStatus#. }
-      {#X TAppStatus CAppStatus }
-    procedure HandleEvent (var Event : TEvent); virtual;
+    {#X TAppStatus CAppStatus }
+    procedure HandleEvent(var Event: TEvent); virtual;
       { HandleEvent captures any #evStatus# messages with its command value
         equal to #Command#, then calls #Update# with Data set to
         Event.InfoPtr.  If the State field has its #sfPause# bit set, the
@@ -229,7 +228,7 @@ type
         #Status# view's sfPause bit of the State flag is set by calling
         SetState.  In the paused state, the status view does not respond to
         its associated command. }
-      {#X Resume sdXXXX Cancel }
+    {#X Resume sdXXXX Cancel }
     procedure Reset; virtual;
       { Reset causes the status view to be reset to its beginning or default
         value, then be redrawn.  Reset is used after an event is aborted
@@ -239,34 +238,34 @@ type
         sends an evStatus message to the application with Event.Command set
         to cmStatusPause and Event.InfoPtr set to #Status#^.Command.  The
         Status view's sfPause bit is turned off by calling SetState. }
-      {#X Pause sdXXXX Cancel }
-    procedure Store (var S : TStream); { store should never be virtual;}
+    {#X Pause sdXXXX Cancel }
+    procedure Store(var S: TStream); { store should never be virtual;}
       { Store calls the inherited Store method then writes #Command# to the
         stream. }
-      {#X Load }
-    procedure Update (Data : Pointer); virtual;
+    {#X Load }
+    procedure Update(Data: Pointer); virtual;
       { Update changes the status' displayed text as necessary based on
         Data. }
-      {#X Command HandleEvent }
+    {#X Command HandleEvent }
   end;  { of TStatus }
 
 
   {#Z+}
   PStatusDlg = ^TStatusDlg;
   {#Z-}
-  TStatusDlg = Object(TDialog)
+  TStatusDlg = object(TDialog)
     { A TStatusDlg displays a status view and optional buttons.  It may be
       used to display any status message and optionally provide end user
       cancelation or pausing of an ongoing operation, such as printing.
 
       All status views that are to be inserted into a window or dialog should
       descend from #TStatus# for proper color mapping. }
-    Status : PStatus;
+    Status: PStatus;
       { Status is the key status view for the dialog.  When a cmStatusPause
         command is broadcast in response to pressing the pause button,
         Event.InfoPtr is set to point to the command associated with Status. }
-      {#X TStatus cmXXXX }
-    constructor Init (ATitle : TTitleStr; AStatus : PStatus; AFlags : Word);
+    {#X TStatus cmXXXX }
+    constructor Init(ATitle: TTitleStr; AStatus: PStatus; AFlags: word);
       { Init calls the inherited constructor to create the dialog and sets
         the EventMask to handle #evStatus# events.  AStatus is assigned to
         #Status# and inserted into the dialog at position 2,2.
@@ -277,18 +276,18 @@ type
         which buttons to display.
 
         If an error occurs Init fails. }
-      {#X TStatus.Pause TStatus.Resume }
-    constructor Load (var S : TStream);
+    {#X TStatus.Pause TStatus.Resume }
+    constructor Load(var S: TStream);
       { Load calls the inherited constructor then loads #Status#.
 
         If an error occurs Load fails. }
-      {#X Store }
-    procedure Cancel (ACommand : Word); virtual;
+    {#X Store }
+    procedure Cancel(ACommand: word); virtual;
       { Cancel sends an evStatus message to the Application object with
         command set to cmCancel and InfoPtr set to the calling status view's
         command, then calls the inherited Cancel method. }
-      {#X TBSDDialog.Cancel }
-    procedure HandleEvent (var Event : TEvent); virtual;
+    {#X TBSDDialog.Cancel }
+    procedure HandleEvent(var Event: TEvent); virtual;
       { All evStatus events are accepted by the dialog and sent to each
         subview in Z-order until cleared.
 
@@ -306,28 +305,28 @@ type
         button is used, the application should respond to the evStatus event
         (with Event.Command of cmStatusPause) appropriately, then dispatch a
         cmStatusResume evStatus event when ready to resume activity. }
-      {#X TStatus.Command }
-    procedure InsertButtons (AFlags : Word); virtual;
+    {#X TStatus.Command }
+    procedure InsertButtons(AFlags: word); virtual;
       { InsertButtons enlarges the dialog to the necessary size and inserts
         the buttons specified in AFlags into the last row of the dialog. }
-    procedure Store (var S : TStream); { store should never be virtual;}
+    procedure Store(var S: TStream); { store should never be virtual;}
       { Store calls the inherited Store method then writes #Status# to the
         stream. }
-      {#X Load }
+    {#X Load }
   end;  { of TStatusDlg }
 
 
   {#Z+}
   PStatusMessageDlg = ^TStatusMessageDlg;
   {#Z-}
-  TStatusMessageDlg = Object(TStatusDlg)
+  TStatusMessageDlg = object(TStatusDlg)
     { A TStatusMessageDlg displays a message as static text with a status
       view on the line below it.
 
       All status views that are to be inserted into a window or dialog should
       descend from #TStatus# for proper color mapping. }
-    constructor Init (ATitle : TTitleStr; AStatus : PStatus; AFlags : Word;
-                      AMessage : String);
+    constructor Init(ATitle: TTitleStr; AStatus: PStatus; AFlags: word;
+      AMessage: string);
       { Init calls the inherited constructor then inserts a TStaticText view
         containing AMessage at the top line of the dialog.
 
@@ -346,56 +345,56 @@ type
   {#Z+}
   PGauge = ^TGauge;
   {#Z-}
-  TGauge = Object(TStatus)
+  TGauge = object(TStatus)
     { A gauge is used to represent the current numerical position within a
       range of values.  When Current equals Max a gauge dispatches an
       #evStatus# event with the command set to cmStatusDone to the
       Application object. }
-    Min : LongInt;
-      { Min is the minimum value which #Current# may be set to. }
-      {#X Max }
-    Max : LongInt;
-      { Max is the maximum value which #Current# may be set to. }
-      {#X Min }
-    Current : LongInt;
-      { Current is the current value represented in the gauge. }
-      {#X Max Min }
-    constructor Init (R : TRect; ACommand : Word; AMin, AMax : LongInt);
+    Min: longint;
+    { Min is the minimum value which #Current# may be set to. }
+    {#X Max }
+    Max: longint;
+    { Max is the maximum value which #Current# may be set to. }
+    {#X Min }
+    Current: longint;
+    { Current is the current value represented in the gauge. }
+    {#X Max Min }
+    constructor Init(R: TRect; ACommand: word; AMin, AMax: longint);
       { Init calls the inherited constructor then sets #Min# and #Max# to
         AMin and AMax, respectively.  #Current# is set to AMin.
 
         If an error occurs Init fails. }
-      {#X Load }
-    constructor Load (var S : TStream);
+    {#X Load }
+    constructor Load(var S: TStream);
       { Load calls the inherited constructor then reads #Min#, #Max# and
         #Current# from the stream.
 
         If an error occurs Load fails. }
-      {#X Init Store }
+    {#X Init Store }
     procedure Draw; virtual;
-      { Draw writes the following to the screen: }
-{#F+}
+    { Draw writes the following to the screen: }
+    {#F+}
 {
 Min = XXX  Max = XXX  Current = XXX }
-{#F-}
-      { where XXX are the current values of the corresponding variables. }
-    procedure GetData (var Rec); virtual;
+    {#F-}
+    { where XXX are the current values of the corresponding variables. }
+    procedure GetData(var Rec); virtual;
       { GetData assumes Rec is a #TGaugeRec# and returns the current settings
         of the gauge. }
-      {#X SetData }
+    {#X SetData }
     procedure Reset; virtual;
-      { Reset sets #Current# to #Min# then redraws the status view. }
-      {#X TStatus.Reset }
-    procedure SetData (var Rec); virtual;
+    { Reset sets #Current# to #Min# then redraws the status view. }
+    {#X TStatus.Reset }
+    procedure SetData(var Rec); virtual;
       { SetData assumes Rec is a #TGaugeRec# and sets the gauge's variables
         accordingly. }
-      {#X GetData }
-    procedure Store (var S : TStream); { store should never be virtual;}
+    {#X GetData }
+    procedure Store(var S: TStream); { store should never be virtual;}
       { Store calls the inherited Store method then writes #Min#, #Max# and
         #Current# to the stream. }
-      {#X Load }
-    procedure Update (Data : Pointer); virtual;
-      { Update increments #Current#. }
+    {#X Load }
+    procedure Update(Data: Pointer); virtual;
+    { Update increments #Current#. }
   end;  { of TGauge }
 
 
@@ -405,51 +404,51 @@ Min = XXX  Max = XXX  Current = XXX }
   TGaugeRec = record
     { A TGaugeRec is used to set and get a #TGauge#'s variables. }
     {#X TGauge.GetData TGauge.SetData }
-    Min, Max, Current : LongInt;
+    Min, Max, Current: longint;
   end;  { of TGaugeRec }
 
 
   {#Z+}
   PArrowGauge = ^TArrowGauge;
   {#Z-}
-  TArrowGauge = Object(TGauge)
+  TArrowGauge = object(TGauge)
     { An arrow gauge draws a progressively larger series of arrows across the
       view.  If Right is True, the arrows are right facing, '>', and are
       drawn from left to right.  If Right is False, the arrows are left
       facing, '<', and are drawn from right to left. }
-    Right : Boolean;
+    Right: boolean;
       { Right determines the direction of arrow used and the direction which
         the status view is filled.  If Right is True, the arrows are right
         facing, '>', and are drawn from left to right.  If Right is False,
         the arrows are left facing, '<', and are drawn from right to left. }
-      {#X Draw }
-    constructor Init (R : TRect; ACommand : Word; AMin, AMax : Word;
-                      RightArrow : Boolean);
+    {#X Draw }
+    constructor Init(R: TRect; ACommand: word; AMin, AMax: word;
+      RightArrow: boolean);
       { Init calls the inherited constructor then sets #Right# to RightArrow.
 
         If an error occurs Init fails. }
-      {#X Load }
-    constructor Load (var S : TStream);
+    {#X Load }
+    constructor Load(var S: TStream);
       { Load calls the inherited constructor then reads #Right# from the
         stream.
 
         If an error occurs Load fails. }
-      {#X Init Store }
+    {#X Init Store }
     procedure Draw; virtual;
-      { Draw fills the Current / Max percent of the view with arrows. }
-      {#X Right }
-    procedure GetData (var Rec); virtual;
+    { Draw fills the Current / Max percent of the view with arrows. }
+    {#X Right }
+    procedure GetData(var Rec); virtual;
       { GetData assumes Rec is a #TArrowGaugeRec# and returns the current
         settings of the views variables. }
-      {#X SetData }
-    procedure SetData (var Rec); virtual;
+    {#X SetData }
+    procedure SetData(var Rec); virtual;
       { SetData assumes Rec is a #TArrowGaugeRec# and sets the view's
         variables accordingly. }
-      {#X GetData }
-    procedure Store (var S : TStream); { store should never be virtual;}
+    {#X GetData }
+    procedure Store(var S: TStream); { store should never be virtual;}
       { Store calls the inherited Store method then writes #Right# to the
         stream. }
-      {#X Load }
+    {#X Load }
   end;  { of TArrowGauge }
 
 
@@ -460,30 +459,30 @@ Min = XXX  Max = XXX  Current = XXX }
     { A TArrowGaugeRec is used to set and get the variables of a
       #TArrowGauge#. }
     {#X TArrowGauge.GetData TArrowGauge.SetData }
-    Min, Max, Count : LongInt;
-    Right : Boolean;
+    Min, Max, Count: longint;
+    Right: boolean;
   end;  { of TGaugeRec }
 
 
   {#Z+}
   PPercentGauge = ^TPercentGauge;
   {#Z-}
-  TPercentGauge = Object(TGauge)
+  TPercentGauge = object(TGauge)
     { A TPercentGauge displays a numerical percentage as returned by
       #Percent# followed by a '%' sign. }
-    function Percent : Integer; virtual;
-      { Percent returns the whole number value of (Current / Max) * 100. }
-      {#X TGauge.Current TGauge.Max }
+    function Percent: integer; virtual;
+    { Percent returns the whole number value of (Current / Max) * 100. }
+    {#X TGauge.Current TGauge.Max }
     procedure Draw; virtual;
-      { Draw writes the current percentage to the screen. }
-      {#X Percent }
+    { Draw writes the current percentage to the screen. }
+    {#X Percent }
   end;  { of TPercentGauge }
 
 
   {#Z+}
   PBarGauge = ^TBarGauge;
   {#Z-}
-  TBarGauge = Object(TPercentGauge)
+  TBarGauge = object(TPercentGauge)
     { A TBarGauge displays a bar which increases in size from the left to
       the right of the view as Current increases.  A numeric percentage
       representing the value of (Current / Max) * 100 is displayed in the
@@ -492,8 +491,8 @@ Min = XXX  Max = XXX  Current = XXX }
     procedure Draw; virtual;
       { Draw draws the bar and percentage to the screen representing the
         current status of the view's variables. }
-      {#X TGauge.Update }
-    function GetPalette : PPalette; virtual;
+    {#X TGauge.Update }
+    function GetPalette: PPalette; virtual;
       { GetPalette returns a pointer to the default status view palette,
         #CBarStatus#. }
   end;  { of TBarGauge }
@@ -502,88 +501,88 @@ Min = XXX  Max = XXX  Current = XXX }
   {#Z+}
   PSpinnerGauge = ^TSpinnerGauge;
   {#Z-}
-  TSpinnerGauge = Object(TGauge)
+  TSpinnerGauge = object(TGauge)
     { A TSpinnerGauge displays a series of characters in one spot on the
       screen giving the illusion of a spinning line. }
-    constructor Init (X, Y : Integer; ACommand : Word);
+    constructor Init(X, Y: integer; ACommand: word);
       { Init calls the inherited constructor with AMin set to 0 and AMax set
         to 4. }
     procedure Draw; virtual;
       { Draw uses the #SpinChars# variable to draw the view's Current
         character. }
-      {#X Update }
-    procedure HandleEvent (var Event : TEvent); virtual;
+    {#X Update }
+    procedure HandleEvent(var Event: TEvent); virtual;
       { HandleEvent calls TStatus.HandleEvent so that a cmStatusDone event
         is not generated when Current equals Max. }
-      {#X TGauge.Current TGauge.Max }
-    procedure Update (Data : Pointer); virtual;
+    {#X TGauge.Current TGauge.Max }
+    procedure Update(Data: Pointer); virtual;
       { Update increments Current until Current equals Max, when it resets
         Current to Min. }
-      {#X Draw HandleEvent }
+    {#X Draw HandleEvent }
   end;  { of TSpinnerGauge }
 
 
   {#Z+}
   PAppStatus = ^TAppStatus;
   {#Z-}
-  TAppStatus = Object(TStatus)
+  TAppStatus = object(TStatus)
     { TAppStatus is a base object which implements color control for status
       views that are normally inserted in the Application object. }
     {#X TStatus }
-    function GetPalette : PPalette; virtual;
+    function GetPalette: PPalette; virtual;
       { GetPalette returns a pointer to the default application status view
         palette, #CAppStatus#. }
-      {#X TStatus CStatus }
+    {#X TStatus CStatus }
   end;  { of TAppStatus }
 
 
   {#Z+}
   PHeapMaxAvail = ^THeapMaxAvail;
   {#Z-}
-  THeapMaxAvail = Object(TAppStatus)
+  THeapMaxAvail = object(TAppStatus)
     { A THeapMaxAvail displays the largest available contiguous area of heap
       memory.  It responds to a cmStatusUpdate event by calling MaxAvail and
       comparing the result to #Max#, then updating the view if necessary. }
     {#X THeapMemAvail }
-    constructor Init (X, Y : Integer);
+    constructor Init(X, Y: integer);
       { Init creates the view with the following text:
 
         MaxAvail = xxxx
 
         where xxxx is the result returned by MaxAvail. }
-    procedure Update (Data : Pointer); virtual;
+    procedure Update(Data: Pointer); virtual;
       { Update changes #Mem# to the current MemAvail and redraws the status
         if necessary. }
-      private
-    Max : LongInt;
-      { Max is the last reported value from MaxAvail. }
-      {#X Update }
+  private
+    Max: longint;
+    { Max is the last reported value from MaxAvail. }
+    {#X Update }
   end;  { of THeapMaxAvail }
 
 
   {#Z+}
   PHeapMemAvail = ^THeapMemAvail;
   {#Z-}
-  THeapMemAvail = Object(TAppStatus)
+  THeapMemAvail = object(TAppStatus)
     { A THeapMemAvail displays the total amount of heap memory available to
       the application.  It responds to a cmStatusUpdate event by calling
       MemAvail and comparing the result to #Max#, then updating the view if
       necessary. }
     {#X THeapMaxAvail }
-    constructor Init (X, Y : Integer);
+    constructor Init(X, Y: integer);
       { Init creates the view with the following text:
 
         MemAvail = xxxx
 
         where xxxx is the result returned by MemAvail. }
-      {#X Load }
-    procedure Update (Data : Pointer); virtual;
+    {#X Load }
+    procedure Update(Data: Pointer); virtual;
       { Update changes #Mem# to the current MemAvail and redraws the status
         if necessary. }
-      private
-    Mem : LongInt;
-      { Mem is the last available value reported by MemAvail. }
-      {#X Update }
+  private
+    Mem: longint;
+    { Mem is the last available value reported by MemAvail. }
+    {#X Update }
   end;  { of THeapMemAvail }
 
 
@@ -591,71 +590,72 @@ Min = XXX  Max = XXX  Current = XXX }
 {#Z+}
 {$endif cdPrintDoc}
 const
-  RStatus    : TStreamRec = (
-     ObjType : idStatus;
-     VmtLink : Ofs(TypeOf(TStatus)^);
-     Load    : @TStatus.Load;
-     Store   : @TStatus.Store);
+  RStatus: TStreamRec = (
+    ObjType: idStatus;
+    VmtLink: Ofs(TypeOf(TStatus)^);
+    Load: @TStatus.Load;
+    Store: @TStatus.Store);
 
-  RStatusDlg : TStreamRec = (
-     ObjType : idStatusDlg;
-     VmtLink : Ofs(TypeOf(TStatusDlg)^);
-     Load    : @TStatusDlg.Load;
-     Store   : @TStatusDlg.Store);
+  RStatusDlg: TStreamRec = (
+    ObjType: idStatusDlg;
+    VmtLink: Ofs(TypeOf(TStatusDlg)^);
+    Load: @TStatusDlg.Load;
+    Store: @TStatusDlg.Store);
 
-  RStatusMessageDlg : TStreamRec = (
-     ObjType : idStatusMessageDlg;
-     VmtLink : Ofs(TypeOf(TStatusMessageDlg)^);
-     Load    : @TStatusMessageDlg.Load;
-     Store   : @TStatusMessageDlg.Store);
+  RStatusMessageDlg: TStreamRec = (
+    ObjType: idStatusMessageDlg;
+    VmtLink: Ofs(TypeOf(TStatusMessageDlg)^);
+    Load: @TStatusMessageDlg.Load;
+    Store: @TStatusMessageDlg.Store);
 
-  RGauge  : TStreamRec = (
-     ObjType : idGauge;
-     VmtLink : Ofs(TypeOf(TGauge)^);
-     Load    : @TGauge.Load;
-     Store   : @TGauge.Store);
+  RGauge: TStreamRec = (
+    ObjType: idGauge;
+    VmtLink: Ofs(TypeOf(TGauge)^);
+    Load: @TGauge.Load;
+    Store: @TGauge.Store);
 
-  RArrowGauge  : TStreamRec = (
-     ObjType : idArrowGauge;
-     VmtLink : Ofs(TypeOf(TArrowGauge)^);
-     Load    : @TArrowGauge.Load;
-     Store   : @TArrowGauge.Store);
+  RArrowGauge: TStreamRec = (
+    ObjType: idArrowGauge;
+    VmtLink: Ofs(TypeOf(TArrowGauge)^);
+    Load: @TArrowGauge.Load;
+    Store: @TArrowGauge.Store);
 
-  RBarGauge  : TStreamRec = (
-     ObjType : idBarGauge;
-     VmtLink : Ofs(TypeOf(TBarGauge)^);
-     Load    : @TBarGauge.Load;
-     Store   : @TBarGauge.Store);
+  RBarGauge: TStreamRec = (
+    ObjType: idBarGauge;
+    VmtLink: Ofs(TypeOf(TBarGauge)^);
+    Load: @TBarGauge.Load;
+    Store: @TBarGauge.Store);
 
-  RPercentGauge  : TStreamRec = (
-     ObjType : idPercentGauge;
-     VmtLink : Ofs(TypeOf(TPercentGauge)^);
-     Load    : @TPercentGauge.Load;
-     Store   : @TPercentGauge.Store);
+  RPercentGauge: TStreamRec = (
+    ObjType: idPercentGauge;
+    VmtLink: Ofs(TypeOf(TPercentGauge)^);
+    Load: @TPercentGauge.Load;
+    Store: @TPercentGauge.Store);
 
-  RSpinnerGauge  : TStreamRec = (
-     ObjType : idSpinnerGauge;
-     VmtLink : Ofs(TypeOf(TSpinnerGauge)^);
-     Load    : @TSpinnerGauge.Load;
-     Store   : @TSpinnerGauge.Store);
+  RSpinnerGauge: TStreamRec = (
+    ObjType: idSpinnerGauge;
+    VmtLink: Ofs(TypeOf(TSpinnerGauge)^);
+    Load: @TSpinnerGauge.Load;
+    Store: @TSpinnerGauge.Store);
 
-  RAppStatus  : TStreamRec = (
-     ObjType : idAppStatus;
-     VmtLink : Ofs(TypeOf(TAppStatus)^);
-     Load    : @TAppStatus.Load;
-     Store   : @TAppStatus.Store);
+  RAppStatus: TStreamRec = (
+    ObjType: idAppStatus;
+    VmtLink: Ofs(TypeOf(TAppStatus)^);
+    Load: @TAppStatus.Load;
+    Store: @TAppStatus.Store);
 
-  RHeapMinAvail  : TStreamRec = (
-     ObjType : idHeapMinAvail;
-     VmtLink : Ofs(TypeOf(THeapMaxAvail)^);
-     Load    : @THeapMaxAvail.Load;
-     Store   : @THeapMaxAvail.Store);
+  RHeapMinAvail: TStreamRec = (
+    ObjType: idHeapMinAvail;
+    VmtLink: Ofs(TypeOf(THeapMaxAvail)^);
+    Load: @THeapMaxAvail.Load;
+    Store: @THeapMaxAvail.Store);
 
-  RHeapMemAvail  : TStreamRec = (
-     ObjType : idHeapMemAvail;
-     VmtLink : Ofs(TypeOf(THeapMemAvail)^);
-     Load    : @THeapMemAvail.Load;
-     Store   : @THeapMemAvail.Store);
+  RHeapMemAvail: TStreamRec = (
+    ObjType: idHeapMemAvail;
+    VmtLink: Ofs(TypeOf(THeapMemAvail)^);
+    Load: @THeapMemAvail.Load;
+    Store: @THeapMemAvail.Store);
+
 {$ifndef cdPrintDoc}
 {#Z-}
 {$endif cdPrintDoc}
@@ -689,8 +689,9 @@ uses
 {****************************************************************************}
 { TAppStatus.GetPalette                                                      }
 {****************************************************************************}
-function TAppStatus.GetPalette : PPalette;
-const P : String[Length(CAppStatus)] = CAppStatus;
+function TAppStatus.GetPalette: PPalette;
+const
+  P: string{$ifopt H-}[Length(CAppStatus)]{$endif} = CAppStatus;
 begin
   GetPalette := PPalette(@P);
 end;
@@ -701,10 +702,10 @@ end;
 {****************************************************************************}
 { TArrowGauge.Init                                                           }
 {****************************************************************************}
-constructor TArrowGauge.Init (R : TRect; ACommand : Word; AMin, AMax : Word;
-                              RightArrow : Boolean);
+constructor TArrowGauge.Init(R: TRect; ACommand: word; AMin, AMax: word;
+  RightArrow: boolean);
 begin
-  if not TGauge.Init(R,ACommand,AMin,AMax) then
+  if not TGauge.Init(R, ACommand, AMin, AMax) then
     Fail;
   Right := RightArrow;
 end;
@@ -712,11 +713,11 @@ end;
 {****************************************************************************}
 { TArrowGauge.Load                                                           }
 {****************************************************************************}
-constructor TArrowGauge.Load (var S : TStream);
+constructor TArrowGauge.Load(var S: TStream);
 begin
   if not TGauge.Load(S) then
     Fail;
-  S.Read(Right,SizeOf(Right));
+  S.Read(Right, SizeOf(Right));
   if (S.Status <> stOk) then
   begin
     TGauge.Done;
@@ -728,25 +729,27 @@ end;
 { TArrowGauge.Draw                                                           }
 {****************************************************************************}
 procedure TArrowGauge.Draw;
-const Arrows : array[0..1] of Char = '<>';
+const
+  Arrows: array[0..1] of char = '<>';
 var
-  B : TDrawBuffer;
-  C : Word;
-  Len : Byte;
+  B: TDrawBuffer;
+  C: word;
+  Len: byte;
 begin
   C := GetColor(1);
-  Len := Round(Size.X * Current/(Max - Min));
-  MoveChar(B,' ',C,Size.X);
+  Len := Round(Size.X * Current / (Max - Min));
+  MoveChar(B, ' ', C, Size.X);
   if Right then
-    MoveChar(B,Arrows[Byte(Right)],C,Len)
-  else MoveChar(B[Size.X - Len],Arrows[Byte(Right)],C,Len);
-  WriteLine(0,0,Size.X,1,B);
+    MoveChar(B, Arrows[byte(Right)], C, Len)
+  else
+    MoveChar(B[Size.X - Len], Arrows[byte(Right)], C, Len);
+  WriteLine(0, 0, Size.X, 1, B);
 end;
 
 {****************************************************************************}
 { TArrowGauge.GetData                                                        }
 {****************************************************************************}
-procedure TArrowGauge.GetData (var Rec);
+procedure TArrowGauge.GetData(var Rec);
 begin
   PArrowGaugeRec(Rec)^.Min := Min;
   PArrowGaugeRec(Rec)^.Max := Max;
@@ -757,7 +760,7 @@ end;
 {****************************************************************************}
 { TArrowGauge.SetData                                                        }
 {****************************************************************************}
-procedure TArrowGauge.SetData (var Rec);
+procedure TArrowGauge.SetData(var Rec);
 begin
   Min := PArrowGaugeRec(Rec)^.Min;
   Max := PArrowGaugeRec(Rec)^.Max;
@@ -768,10 +771,10 @@ end;
 {****************************************************************************}
 { TArrowGauge.Store                                                          }
 {****************************************************************************}
-procedure TArrowGauge.Store (var S : TStream);
+procedure TArrowGauge.Store(var S: TStream);
 begin
   TGauge.Store(S);
-  S.Write(Right,SizeOf(Right));
+  S.Write(Right, SizeOf(Right));
 end;
 
 {****************************************************************************}
@@ -782,34 +785,38 @@ end;
 {****************************************************************************}
 procedure TBarGauge.Draw;
 var
-  B : TDrawBuffer;
-  C : Word;
-  FillSize : Word;
-  PercentDone : LongInt;
-  S : String[4];
+  B: TDrawBuffer;
+  C: word;
+  FillSize: word;
+  PercentDone: longint;
+  S: string
+{$ifopt H-}
+  [4]
+{$endif}
+  ;
 begin
   { fill entire view }
-  MoveChar(B,' ',GetColor(4),Size.X);
+  MoveChar(B, ' ', GetColor(4), Size.X);
   { make progress bar }
   C := GetColor(5);
   FillSize := Round(Size.X * (Current / Max));
-  MoveChar(B,' ',C,FillSize);
+  MoveChar(B, ' ', C, FillSize);
   { display percent done }
   PercentDone := Percent;
-  FormatStr(S,'%d%%',PercentDone);
+  FormatStr(S, '%d%%', PercentDone);
   if PercentDone < 50 then
     C := GetColor(4);
   FillSize := (Size.X - Length(S)) div 2;
-  MoveStr(B[FillSize],S,C);
-  WriteLine(0,0,Size.X,Size.Y,B);
+  MoveStr(B[FillSize], S, C);
+  WriteLine(0, 0, Size.X, Size.Y, B);
 end;
 
 {****************************************************************************}
 { TBarGauge.GetPalette                                                       }
 {****************************************************************************}
-function TBarGauge.GetPalette : PPalette;
+function TBarGauge.GetPalette: PPalette;
 const
-  S : String[Length(CBarGauge)] = CBarGauge;
+  S: string{$ifopt H-}[Length(CBarGauge)]{$endif} = CBarGauge;
 begin
   GetPalette := PPalette(@S);
 end;
@@ -820,9 +827,9 @@ end;
 {****************************************************************************}
 { TGauge.Init                                                                }
 {****************************************************************************}
-constructor TGauge.Init (R : TRect; ACommand : Word; AMin, AMax : LongInt);
+constructor TGauge.Init(R: TRect; ACommand: word; AMin, AMax: longint);
 begin
-  if not TStatus.Init(R,ACommand,'',1) then
+  if not TStatus.Init(R, ACommand, '', 1) then
     Fail;
   Min := AMin;
   Max := AMax;
@@ -832,13 +839,13 @@ end;
 {****************************************************************************}
 { TGauge.Load                                                                }
 {****************************************************************************}
-constructor TGauge.Load (var S : TStream);
+constructor TGauge.Load(var S: TStream);
 begin
   if not TStatus.Load(S) then
     Fail;
-  S.Read(Min,SizeOf(Min));
-  S.Read(Max,SizeOf(Max));
-  S.Read(Current,SizeOf(Current));
+  S.Read(Min, SizeOf(Min));
+  S.Read(Max, SizeOf(Max));
+  S.Read(Current, SizeOf(Current));
   if S.Status <> stOk then
   begin
     TStatus.Done;
@@ -851,22 +858,22 @@ end;
 {****************************************************************************}
 procedure TGauge.Draw;
 var
-  S : String;
-  B : TDrawBuffer;
+  S: string;
+  B: TDrawBuffer;
 begin
   { Blank the gauge }
-  MoveChar(B,' ',GetColor(1),Size.X);
-  WriteBuf(0,0,Size.X,Size.Y,B);
+  MoveChar(B, ' ', GetColor(1), Size.X);
+  WriteBuf(0, 0, Size.X, Size.Y, B);
   { write current status }
-  FormatStr(S,'%d',Current);
-  MoveStr(B,S,GetColor(1));
-  WriteBuf(0,0,Size.X,Size.Y,B);
+  FormatStr(S, '%d', Current);
+  MoveStr(B, S, GetColor(1));
+  WriteBuf(0, 0, Size.X, Size.Y, B);
 end;
 
 {****************************************************************************}
 { TGauge.GetData                                                             }
 {****************************************************************************}
-procedure TGauge.GetData (var Rec);
+procedure TGauge.GetData(var Rec);
 begin
   TGaugeRec(Rec).Min := Min;
   TGaugeRec(Rec).Max := Max;
@@ -885,7 +892,7 @@ end;
 {****************************************************************************}
 { TGauge.SetData                                                             }
 {****************************************************************************}
-procedure TGauge.SetData (var Rec);
+procedure TGauge.SetData(var Rec);
 begin
   Min := TGaugeRec(Rec).Min;
   Max := TGaugeRec(Rec).Max;
@@ -895,25 +902,26 @@ end;
 {****************************************************************************}
 { TGauge.Store                                                               }
 {****************************************************************************}
-procedure TGauge.Store (var S : TStream);
+procedure TGauge.Store(var S: TStream);
 begin
   TStatus.Store(S);
-  S.Write(Min,SizeOf(Min));
-  S.Write(Max,SizeOf(Max));
-  S.Write(Current,SizeOf(Current));
+  S.Write(Min, SizeOf(Min));
+  S.Write(Max, SizeOf(Max));
+  S.Write(Current, SizeOf(Current));
 end;
 
 {****************************************************************************}
 { TGauge.Update                                                              }
 {****************************************************************************}
-procedure TGauge.Update (Data : Pointer);
+procedure TGauge.Update(Data: Pointer);
 begin
   if Current < Max then
   begin
     Inc(Current);
     DrawView;
   end
-  else Message(@Self,evStatus,cmStatusDone,@Self);
+  else
+    Message(@Self, evStatus, cmStatusDone, @Self);
 end;
 
 {****************************************************************************}
@@ -922,12 +930,12 @@ end;
 {****************************************************************************}
 { THeapMaxAvail.Init                                                         }
 {****************************************************************************}
-constructor THeapMaxAvail.Init (X, Y : Integer);
+constructor THeapMaxAvail.Init(X, Y: integer);
 var
-  R : TRect;
+  R: TRect;
 begin
-  R.Assign(X,Y,X+20,Y+1);
-  if not TAppStatus.Init(R,cmStatusUpdate,' MaxAvail = %d',1) then
+  R.Assign(X, Y, X + 20, Y + 1);
+  if not TAppStatus.Init(R, cmStatusUpdate, ' MaxAvail = %d', 1) then
     Fail;
   Max := -1;
 end;
@@ -935,9 +943,9 @@ end;
 {****************************************************************************}
 { THeapMaxAvail.Update                                                       }
 {****************************************************************************}
-procedure THeapMaxAvail.Update (Data : Pointer);
+procedure THeapMaxAvail.Update(Data: Pointer);
 var
-  M : LongInt;
+  M: longint;
 begin
   M := MaxAvail;
   if (Max <> M) then
@@ -953,12 +961,12 @@ end;
 {****************************************************************************}
 { THeapMemAvail.Init                                                         }
 {****************************************************************************}
-constructor THeapMemAvail.Init (X, Y : Integer);
+constructor THeapMemAvail.Init(X, Y: integer);
 var
-  R : TRect;
+  R: TRect;
 begin
-  R.Assign(X,Y,X+20,Y+1);
-  if not TAppStatus.Init(R,cmStatusUpdate,' MemAvail = %d',1) then
+  R.Assign(X, Y, X + 20, Y + 1);
+  if not TAppStatus.Init(R, cmStatusUpdate, ' MemAvail = %d', 1) then
     Fail;
   Mem := -1;
 end;
@@ -966,10 +974,10 @@ end;
 {****************************************************************************}
 { THeapMemAvail.Update                                                       }
 {****************************************************************************}
-procedure THeapMemAvail.Update (Data : Pointer);
-  { Total bytes available on the heap.  May not be contiguous. }
+procedure THeapMemAvail.Update(Data: Pointer);
+{ Total bytes available on the heap.  May not be contiguous. }
 var
-  M : LongInt;
+  M: longint;
 begin
   M := MemAvail;
   if (Mem <> M) then
@@ -987,28 +995,28 @@ end;
 {****************************************************************************}
 procedure TPercentGauge.Draw;
 var
-  B : TDrawBuffer;
-  C : Word;
-  S : String;
-  PercentDone : LongInt;
-  FillSize : Integer;
+  B: TDrawBuffer;
+  C: word;
+  S: string;
+  PercentDone: longint;
+  FillSize: integer;
 begin
   C := GetColor(1);
-  MoveChar(B,' ',C,Size.X);
-  WriteLine(0,0,Size.X,Size.Y,B);
+  MoveChar(B, ' ', C, Size.X);
+  WriteLine(0, 0, Size.X, Size.Y, B);
   PercentDone := Percent;
-  FormatStr(S,'%d%%',PercentDone);
-  MoveStr(B[(Size.X - Byte(S[0])) div 2],S,C);
-  WriteLine(0,0,Size.X,Size.Y,B);
+  FormatStr(S, '%d%%', PercentDone);
+  MoveStr(B[(Size.X - length(S)) div 2], S, C);
+  WriteLine(0, 0, Size.X, Size.Y, B);
 end;
 
 {****************************************************************************}
 { TPercentGauge.Percent                                                      }
 {****************************************************************************}
-function TPercentGauge.Percent : Integer;
+function TPercentGauge.Percent: integer;
   { Returns percent as a whole integer Current of Max }
 begin
-  Percent := Round((Current/Max) * 100);
+  Percent := Round((Current / Max) * 100);
 end;
 
 {****************************************************************************}
@@ -1018,11 +1026,12 @@ end;
 {****************************************************************************}
 { TSpinnerGauge.Init                                                         }
 {****************************************************************************}
-constructor TSpinnerGauge.Init (X, Y : Integer; ACommand : Word);
-var R : TRect;
+constructor TSpinnerGauge.Init(X, Y: integer; ACommand: word);
+var
+  R: TRect;
 begin
-  R.Assign(X,Y,X+1,Y+1);
-  if not TGauge.Init(R,ACommand,1,4) then
+  R.Assign(X, Y, X + 1, Y + 1);
+  if not TGauge.Init(R, ACommand, 1, 4) then
     Fail;
 end;
 
@@ -1031,20 +1040,20 @@ end;
 {****************************************************************************}
 procedure TSpinnerGauge.Draw;
 var
-  B : TDrawBuffer;
-  C : Word;
+  B: TDrawBuffer;
+  C: word;
 begin
   C := GetColor(1);
-  MoveChar(B,' ',C,Size.X);
-  WriteLine(0,0,Size.X,Size.Y,B);
-  MoveChar(B[Size.X div 2],SpinChars[Current],C,1);
-  WriteLine(0,0,Size.X,Size.Y,B);
+  MoveChar(B, ' ', C, Size.X);
+  WriteLine(0, 0, Size.X, Size.Y, B);
+  MoveChar(B[Size.X div 2], SpinChars[Current], C, 1);
+  WriteLine(0, 0, Size.X, Size.Y, B);
 end;
 
 {****************************************************************************}
 { TSpinnerGauge.HandleEvent                                                  }
 {****************************************************************************}
-procedure TSpinnerGauge.HandleEvent (var Event : TEvent);
+procedure TSpinnerGauge.HandleEvent(var Event: TEvent);
 begin
   TStatus.HandleEvent(Event);
 end;
@@ -1052,11 +1061,12 @@ end;
 {****************************************************************************}
 { TSpinnerGauge.Update                                                       }
 {****************************************************************************}
-procedure TSpinnerGauge.Update (Data : Pointer);
+procedure TSpinnerGauge.Update(Data: Pointer);
 begin
   if Current = Max then
     Current := Min
-  else Inc(Current);
+  else
+    Inc(Current);
   DrawView;
 end;
 
@@ -1066,10 +1076,10 @@ end;
 {****************************************************************************}
 { TStatus.Init                                                               }
 {****************************************************************************}
-constructor TStatus.Init (R : TRect; ACommand : Word; AText : String;
-                          AParamCount : Integer);
+constructor TStatus.Init(R: TRect; ACommand: word; AText: string;
+  AParamCount: integer);
 begin
-  if (not TParamText.Init(R,AText,AParamCount)) then
+  if (not TParamText.Init(R, AText, AParamCount)) then
     Fail;
   EventMask := EventMask or evStatus;
   Command := ACommand;
@@ -1078,11 +1088,11 @@ end;
 {****************************************************************************}
 { TStatus.Load                                                               }
 {****************************************************************************}
-constructor TStatus.Load (var S : TStream);
+constructor TStatus.Load(var S: TStream);
 begin
   if not TParamText.Load(S) then
     Fail;
-  S.Read(Command,SizeOf(Command));
+  S.Read(Command, SizeOf(Command));
   if (S.Status <> stOk) then
   begin
     TParamText.Done;
@@ -1093,7 +1103,7 @@ end;
 {****************************************************************************}
 { TStatus.Cancel                                                             }
 {****************************************************************************}
-function TStatus.Cancel : Boolean;
+function TStatus.Cancel: boolean;
 begin
   Cancel := True;
 end;
@@ -1101,9 +1111,9 @@ end;
 {****************************************************************************}
 { TStatus.GetPalette                                                         }
 {****************************************************************************}
-function TStatus.GetPalette : PPalette;
+function TStatus.GetPalette: PPalette;
 const
-  P : String[Length(CStatus)] = CStatus;
+  P: string{$ifopt H-}[Length(CStatus)]{$endif} = CStatus;
 begin
   GetPalette := PPalette(@P);
 end;
@@ -1111,7 +1121,7 @@ end;
 {****************************************************************************}
 { TStatus.HandleEvent                                                        }
 {****************************************************************************}
-procedure TStatus.HandleEvent (var Event : TEvent);
+procedure TStatus.HandleEvent(var Event: TEvent);
 begin
   if (Event.What = evCommand) and (Event.Command = cmStatusPause) then
   begin
@@ -1119,29 +1129,29 @@ begin
     ClearEvent(Event);
   end;
   case Event.What of
-    evStatus :
+    evStatus:
       case Event.Command of
-        cmStatusDone :
+        cmStatusDone:
           if (Event.InfoPtr = @Self) then
           begin
-            Message(Owner,evStatus,cmStatusDone,@Self);
+            Message(Owner, evStatus, cmStatusDone, @Self);
             ClearEvent(Event);
           end;
-        cmStatusUpdate :
+        cmStatusUpdate:
           if (Event.InfoWord = Command) and ((State and sfPause) = 0) then
           begin
             Update(Event.InfoPtr);
-            { ClearEvent(Event); } { don't clear the event so multiple }
-                            { status views can respond to the same event }
+            { ClearEvent(Event); }{ don't clear the event so multiple }
+            { status views can respond to the same event }
           end;
-        cmStatusResume :
-          if (Event.InfoWord = Command) and
-             ((State and sfPause) = sfPause) then
+        cmStatusResume:
+          if (Event.InfoWord = Command) and ((State and sfPause) =
+            sfPause) then
           begin
             Resume;
             ClearEvent(Event);
           end;
-        cmStatusPause :
+        cmStatusPause:
           if (Event.InfoWord = Command) and ((State and sfPause) = 0) then
           begin
             Pause;
@@ -1157,7 +1167,7 @@ end;
 {****************************************************************************}
 procedure TStatus.Pause;
 begin
-  SetState(sfPause,True);
+  SetState(sfPause, True);
 end;
 
 {****************************************************************************}
@@ -1173,25 +1183,25 @@ end;
 {****************************************************************************}
 procedure TStatus.Resume;
 begin
-  SetState(sfPause,False);
+  SetState(sfPause, False);
 end;
 
 {****************************************************************************}
 { TStatus.Store                                                              }
 {****************************************************************************}
-procedure TStatus.Store (var S : TStream);
+procedure TStatus.Store(var S: TStream);
 begin
   TParamText.Store(S);
-  S.Write(Command,SizeOf(Command));
+  S.Write(Command, SizeOf(Command));
 end;
 
 {****************************************************************************}
 { TStatus.Update                                                             }
 {****************************************************************************}
-procedure TStatus.Update (Data : Pointer);
+procedure TStatus.Update(Data: Pointer);
 begin
   DisposeStr(Text);
-  Text := NewStr(String(Data^));
+  Text := NewStr(string(Data^));
   DrawView;
 end;
 
@@ -1201,24 +1211,24 @@ end;
 {****************************************************************************}
 { TStatusDlg.Init                                                            }
 {****************************************************************************}
-constructor TStatusDlg.Init (ATitle : TTitleStr; AStatus : PStatus;
-                             AFlags : Word);
+constructor TStatusDlg.Init(ATitle: TTitleStr; AStatus: PStatus;
+  AFlags: word);
 var
-  R : TRect;
-  i : LongInt;
-  Buttons : Byte;
+  R: TRect;
+  i: longint;
+  Buttons: byte;
 begin
   if (AStatus = nil) then
     Fail;
   R.A := AStatus^.Origin;
   R.B := AStatus^.Size;
-  Inc(R.B.Y,R.A.Y+4);
-  Inc(R.B.X,R.A.X+5);
-  if not TDialog.Init(R,ATitle) then
+  Inc(R.B.Y, R.A.Y + 4);
+  Inc(R.B.X, R.A.X + 5);
+  if not TDialog.Init(R, ATitle) then
     Fail;
   EventMask := EventMask or evStatus;
   Status := AStatus;
-  Status^.MoveTo(2,2);
+  Status^.MoveTo(2, 2);
   Insert(Status);
   InsertButtons(AFlags);
 end;
@@ -1226,15 +1236,15 @@ end;
 {****************************************************************************}
 { TStatusDlg.Load                                                            }
 {****************************************************************************}
-constructor TStatusDlg.Load (var S : TStream);
+constructor TStatusDlg.Load(var S: TStream);
 begin
   if not TDialog.Load(S) then
     Fail;
-  GetSubViewPtr(S,Status);
+  GetSubViewPtr(S, Status);
   if (S.Status <> stOk) then
   begin
     if (Status <> nil) then
-      Dispose(Status,Done);
+      Dispose(Status, Done);
     TDialog.Done;
     Fail;
   end;
@@ -1243,7 +1253,7 @@ end;
 {****************************************************************************}
 { TStatusDlg.Cancel                                                          }
 {****************************************************************************}
-procedure TStatusDlg.Cancel (ACommand : Word);
+procedure TStatusDlg.Cancel(ACommand: word);
 begin
   if Status^.Cancel then
     TDialog.Cancel(ACommand);
@@ -1252,36 +1262,36 @@ end;
 {****************************************************************************}
 { TStatusDlg.HandleEvent                                                     }
 {****************************************************************************}
-procedure TStatusDlg.HandleEvent (var Event : TEvent);
+procedure TStatusDlg.HandleEvent(var Event: TEvent);
 begin
   case Event.What of
-    evStatus :
+    evStatus:
       case Event.Command of
-        cmStatusDone :
+        cmStatusDone:
           if Event.InfoPtr = Status then
           begin
             TDialog.Cancel(cmOk);
             ClearEvent(Event);
           end;
       end;
-      { else let TDialog.HandleEvent send to all subviews for handling }
-    evBroadcast, evCommand :
+    { else let TDialog.HandleEvent send to all subviews for handling }
+    evBroadcast, evCommand:
       case Event.Command of
-        cmCancel, cmClose :
-          begin
-            Cancel(cmCancel);
-            ClearEvent(Event);
-          end;
-        cmStatusPause :
-          begin
-            Status^.Pause;
-            ClearEvent(Event);
-          end;
-        cmStatusResume :
-          begin
-            Status^.Resume;
-            ClearEvent(Event);
-          end;
+        cmCancel, cmClose:
+        begin
+          Cancel(cmCancel);
+          ClearEvent(Event);
+        end;
+        cmStatusPause:
+        begin
+          Status^.Pause;
+          ClearEvent(Event);
+        end;
+        cmStatusResume:
+        begin
+          Status^.Resume;
+          ClearEvent(Event);
+        end;
       end;
   end;
   TDialog.HandleEvent(Event);
@@ -1290,24 +1300,25 @@ end;
 {****************************************************************************}
 { TStatusDlg.InsertButtons                                                   }
 {****************************************************************************}
-procedure TStatusDlg.InsertButtons (AFlags : Word);
+procedure TStatusDlg.InsertButtons(AFlags: word);
 var
-  R : TRect;
-  P : PButton;
-  Buttons : Byte;
-  X, Y, Gap : Integer;
-  i : Word;
+  R: TRect;
+  P: PButton;
+  Buttons: byte;
+  X, Y, Gap: integer;
+  i: word;
 begin
-  Buttons := Byte(((AFlags and sdCancelButton) = sdCancelButton));
+  Buttons := byte(((AFlags and sdCancelButton) = sdCancelButton));
   { do this Inc twice, once for Pause and once for Resume buttons }
-  Inc(Buttons,2 * Byte(((AFlags and sdPauseButton) = sdPauseButton)));
+  Inc(Buttons, 2 * byte(((AFlags and sdPauseButton) = sdPauseButton)));
   if Buttons > 0 then
   begin
     Status^.GrowMode := gfGrowHiX;
     { resize dialog to hold all requested buttons }
     if Size.X < ((Buttons * 12) + 2) then
-      GrowTo((Buttons * 12) + 2,Size.Y + 2)
-    else GrowTo(Size.X,Size.Y + 2);
+      GrowTo((Buttons * 12) + 2, Size.Y + 2)
+    else
+      GrowTo(Size.X, Size.Y + 2);
     { find correct starting position for first button }
     Gap := Size.X - (Buttons * 10) - 2;
     Gap := Gap div Succ(Buttons);
@@ -1318,17 +1329,17 @@ begin
     { insert buttons }
     if ((AFlags and sdCancelButton) = sdCancelButton) then
     begin
-      P := NewButton(X,Y,10,2,'Cancel',cmCancel,hcCancel,bfDefault);
+      P := NewButton(X, Y, 10, 2, 'Cancel', cmCancel, hcCancel, bfDefault);
       P^.GrowMode := gfGrowHiY or gfGrowLoY;
-      Inc(X,12 + Gap);
+      Inc(X, 12 + Gap);
     end;
     if ((AFlags and sdPauseButton) = sdPauseButton) then
     begin
-      P := NewButton(X,Y,10,2,'~P~ause',cmStatusPause,hcStatusPause,bfNormal);
+      P := NewButton(X, Y, 10, 2, '~P~ause', cmStatusPause, hcStatusPause, bfNormal);
       P^.GrowMode := gfGrowHiY or gfGrowLoY;
-      Inc(X,12 + Gap);
-      P := NewButton(X,Y,10,2,'~R~esume',cmStatusResume,hcStatusResume,
-                     bfBroadcast);
+      Inc(X, 12 + Gap);
+      P := NewButton(X, Y, 10, 2, '~R~esume', cmStatusResume, hcStatusResume,
+        bfBroadcast);
       P^.GrowMode := gfGrowHiY or gfGrowLoY;
     end;
   end;  { of if }
@@ -1338,10 +1349,10 @@ end;
 {****************************************************************************}
 { TStatusDlg.Store                                                           }
 {****************************************************************************}
-procedure TStatusDlg.Store (var S : TStream);
+procedure TStatusDlg.Store(var S: TStream);
 begin
   TDialog.Store(S);
-  PutSubViewPtr(S,Status);
+  PutSubViewPtr(S, Status);
 end;
 
 {****************************************************************************}
@@ -1350,14 +1361,14 @@ end;
 {****************************************************************************}
 { TStatusMessageDlg.Init                                                     }
 {****************************************************************************}
-constructor TStatusMessageDlg.Init (ATitle : TTitleStr; AStatus : PStatus;
-                                    AFlags : Word; AMessage : String);
+constructor TStatusMessageDlg.Init(ATitle: TTitleStr; AStatus: PStatus;
+  AFlags: word; AMessage: string);
 var
-  P : PStaticText;
-  X, Y : Integer;
-  R : TRect;
+  P: PStaticText;
+  X, Y: integer;
+  R: TRect;
 begin
-  if not TStatusDlg.Init(ATitle,AStatus,AFlags) then
+  if not TStatusDlg.Init(ATitle, AStatus, AFlags) then
     Fail;
   Status^.GrowMode := gfGrowLoY or gfGrowHiY;
   GetExtent(R);
@@ -1367,15 +1378,15 @@ begin
   Y := R.B.Y - R.A.Y;
   if Y < Size.Y then
     Y := Size.Y;
-  GrowTo(X,Y);
-  R.Assign(2,2,Size.X-2,Size.Y-3);
-  P := New(PStaticText,Init(R,AMessage));
+  GrowTo(X, Y);
+  R.Assign(2, 2, Size.X - 2, Size.Y - 3);
+  P := New(PStaticText, Init(R, AMessage));
   if (P = nil) then
   begin
     TStatusDlg.Done;
     Fail;
   end;
-  GrowTo(Size.X,Size.Y + P^.Size.Y + 1);
+  GrowTo(Size.X, Size.Y + P^.Size.Y + 1);
   Insert(P);
 end;
 

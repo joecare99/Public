@@ -699,7 +699,7 @@ FUNCTION TMenuView.GetPalette: PPalette;
 {$IFDEF PPC_DELPHI3}                                  { DELPHI3+ COMPILER }
 CONST P: String = CMenuView;                          { Possible huge string }
 {$ELSE}                                               { OTHER COMPILERS }
-CONST P: String[Length(CMenuView)] = CMenuView;       { Always normal string }
+CONST P: String{$ifopt H-}[Length(CMenuView)]{$endif} = CMenuView;       { Always normal string }
 {$ENDIF}
 BEGIN
    GetPalette := PPalette(@P);                        { Return palette }
@@ -1246,7 +1246,7 @@ FUNCTION TStatusLine.GetPalette: PPalette;
 {$IFDEF PPC_DELPHI3}                                  { DELPHI3+ COMPILER }
 CONST P: String = CStatusLine;                        { Possible huge string }
 {$ELSE}                                               { OTHER COMPILERS }
-CONST P: String[Length(CStatusLine)] = CStatusLine;   { Always normal string }
+CONST P: String{$ifopt H-}[Length(CStatusLine)]{$endif} = CStatusLine;   { Always normal string }
 {$ENDIF}
 BEGIN
    GetPalette := PPalette(@P);                        { Return palette }

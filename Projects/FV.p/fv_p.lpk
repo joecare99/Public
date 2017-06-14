@@ -10,8 +10,19 @@
       <SearchPaths>
         <IncludeFiles Value="src"/>
         <OtherUnitFiles Value="src"/>
-        <UnitOutputDirectory Value="..\..\lib\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <AllowLabel Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
+      <Other>
+        <Verbosity>
+          <ShowAll Value="True"/>
+          <ShowUsedFiles Value="True"/>
+        </Verbosity>
+      </Other>
     </CompilerOptions>
     <Description Value="Free Vision + 
 patched Version of Free Vision to be able to b compiled in objFpc-Mode"/>

@@ -173,7 +173,7 @@ FOR FPC THESE ARE THE TRANSLATIONS
 {  FPC 64 BIT COMPILER added - Update 28Nov2010 PM                          }
 {---------------------------------------------------------------------------}
 {$IFDEF FPC}
-  {$mode objfpc}
+  {_$mode objfpc}
 
   {$UNDEF PROC_Real}
   {$DEFINE PROC_Protected}

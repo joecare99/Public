@@ -972,6 +972,7 @@ var
   lCalDlg: TCalculatorDialog;
   lCalDlgDmy: TCalcDlgDummmy;
   lMemo: TMemo;
+  lBtn: TButton;
 begin
   Clear;
   lMemo:=TMemo.Create(self);
@@ -980,19 +981,26 @@ begin
       Parent:=TestPnl;
       Align:=alClient;
     end;
+  lBtn:=TButton.Create(self);
+  with lBtn do
+    begin
+      parent := TestPnl;
+      Align:=alBottom;
+      AutoSize:=true;
+      Caption:='Show Calculator;
+    end
   lCalDlg:=TCalculatorDialog.Create(self);
   try
     lCalDlgDmy:=TCalcDlgDummmy.Create;
     lCalDlgDmy.mm:=lMemo;
     try
+    lbtn.OnClick:=@lCalDlgDmy.onClick;
     lCalDlg.OnCalcKey:=@lCalDlgDmy.onCalcKey;
     lCalDlg.OnChange:=@lCalDlgDmy.onChange;
     lCalDlg.OnDisplayChange:=@lCalDlgDmy.onDisplayChange;
 //    lCalDlg.OnCanClose:=;
 //    lCalDlg.OnClose:=;
     lCalDlg.OnShow:=@lCalDlgDmy.onShow;
-    if lCalDlg.Execute then
-      MessageDlg('Information','You pressed OK to leave the Calculator',mtInformation,[mbOK],0);
 
   finally
     freeandnil(lCalDlgDmy);

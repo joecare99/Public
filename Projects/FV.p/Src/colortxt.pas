@@ -13,7 +13,6 @@ unit ColorTxt;
 {$i platform.inc}
 
 {$ifdef PPC_FPC}
-  {$H-}
 {$else}
   {$F+,O+,E+,N+}
 {$endif}
@@ -25,63 +24,64 @@ unit ColorTxt;
 interface
 
 uses
-  objects, drivers, views, dialogs, app, fvconsts;
+  objects, drivers, views, Dialogs, app, fvconsts;
 
 type
   PColoredText = ^TColoredText;
+
   TColoredText = object(TStaticText)
-    Attr : Byte;
-    constructor Init(var Bounds: TRect; const AText: String; Attribute : Byte);
+    Attr: byte;
+    constructor Init(var Bounds: TRect; const AText: string; Attribute: byte);
     constructor Load(var S: TStream);
-    function GetTheColor : byte; virtual;
+    function GetTheColor: byte; virtual;
     procedure Draw; virtual;
     procedure Store(var S: TStream);
   end;
 
 const
   RColoredText: TStreamRec = (
-     ObjType: idColoredText;
-     VmtLink: Ofs(TypeOf(TColoredText)^);
-     Load:    @TColoredText.Load;
-     Store:   @TColoredText.Store
-  );
+    ObjType: idColoredText;
+    VmtLink: Ofs(TypeOf(TColoredText)^);
+    Load: @TColoredText.Load;
+    Store: @TColoredText.Store
+    );
 
 implementation
 
-constructor TColoredText.Init(var Bounds: TRect; const AText: String;
-                                  Attribute : Byte);
+constructor TColoredText.Init(var Bounds: TRect; const AText: string;
+  Attribute: byte);
 begin
-TStaticText.Init(Bounds, AText);
-Attr := Attribute;
+  TStaticText.Init(Bounds, AText);
+  Attr := Attribute;
 end;
 
 constructor TColoredText.Load(var S: TStream);
 begin
-TStaticText.Load(S);
-S.Read(Attr, Sizeof(Attr));
+  TStaticText.Load(S);
+  S.Read(Attr, Sizeof(Attr));
 end;
 
 procedure TColoredText.Store(var S: TStream);
 begin
-TStaticText.Store(S);
-S.Write(Attr, Sizeof(Attr));
+  TStaticText.Store(S);
+  S.Write(Attr, Sizeof(Attr));
 end;
 
-function TColoredText.GetTheColor : byte;
+function TColoredText.GetTheColor: byte;
 begin
-if AppPalette = apColor then
-  GetTheColor := Attr
-else
-  GetTheColor := GetColor(1);
+  if AppPalette = apColor then
+    GetTheColor := Attr
+  else
+    GetTheColor := GetColor(1);
 end;
 
 procedure TColoredText.Draw;
 var
-  Color: Byte;
-  Center: Boolean;
+  Color: byte;
+  Center: boolean;
   I, J, L, P, Y: Sw_Integer;
   B: TDrawBuffer;
-  S: String;
+  S: string;
 begin
   Color := GetTheColor;
   GetText(S);
@@ -102,19 +102,29 @@ begin
       I := P;
       repeat
         J := P;
-        while (P <= L) and (S[P] = ' ') do Inc(P);
-        while (P <= L) and (S[P] <> ' ') and (S[P] <> #13) do Inc(P);
+        while (P <= L) and (S[P] = ' ') do
+          Inc(P);
+        while (P <= L) and (S[P] <> ' ') and (S[P] <> #13) do
+          Inc(P);
       until (P > L) or (P >= I + Size.X) or (S[P] = #13);
       if P > I + Size.X then
-        if J > I then P := J else P := I + Size.X;
-      if Center then J := (Size.X - P + I) div 2 else J := 0;
+        if J > I then
+          P := J
+        else
+          P := I + Size.X;
+      if Center then
+        J := (Size.X - P + I) div 2
+      else
+        J := 0;
       MoveBuf(B[J], S[I], Color, P - I);
-      while (P <= L) and (S[P] = ' ') do Inc(P);
+      while (P <= L) and (S[P] = ' ') do
+        Inc(P);
       if (P <= L) and (S[P] = #13) then
       begin
         Center := False;
         Inc(P);
-        if (P <= L) and (S[P] = #10) then Inc(P);
+        if (P <= L) and (S[P] = #10) then
+          Inc(P);
       end;
     end;
     WriteLine(0, Y, Size.X, 1, B);

@@ -3,7 +3,6 @@ unit Editors;
 {$i platform.inc}
 
 {$ifdef PPC_FPC}
-  {$H-}
 {$else}
   {$F+,O+,E+,N+}
 {$endif}
@@ -380,27 +379,27 @@ CONST
   REditor   : TStreamRec = (ObjType : 70;
                             VmtLink : Ofs (TypeOf (TEditor)^);
                                Load : @TEditor.Load;
-                              Store : @TEditor.Store);
+                              Store : @TEditor.Store{%H-});
 
   RMemo     : TStreamRec = (ObjType : 71;
                             VmtLink : Ofs (TypeOf (TMemo)^);
                                Load : @TMemo.Load;
-                              Store : @TMemo.Store);
+                              Store : @TMemo.Store{%H-});
 
   RFileEditor : TStreamRec = (ObjType : 72;
                               VmtLink : Ofs (TypeOf (TFileEditor)^);
                                  Load : @TFileEditor.Load;
-                                Store : @TFileEditor.Store);
+                                Store : @TFileEditor.Store{%H-});
 
   RIndicator : TStreamRec = (ObjType : 73;
                              VmtLink : Ofs (TypeOf (TIndicator)^);
                                 Load : @TIndicator.Load;
-                               Store : @TIndicator.Store);
+                               Store : @TIndicator.Store{%H-});
 
   REditWindow : TStreamRec = (ObjType : 74;
                               VmtLink : Ofs (TypeOf (TEditWindow)^);
                                  Load : @TEditWindow.Load;
-                                Store : @TEditWindow.Store);
+                                Store : @TEditWindow.Store{%H-});
 
 procedure RegisterEditors;
 
@@ -1072,7 +1071,7 @@ Var
 begin
   BMMakeTable(str,bt);
   len:=length(str);
-  s2[0]:=chr(len);       { sets the length to that of the search String }
+  setlength(s2,len);       { sets the length to that of the search String }
   found:=False;
   numb:=pred(len);
   While (not found) and (numb<(size-len)) do
@@ -1121,7 +1120,7 @@ begin
     exit;
   end;
   { create uppercased string }
-  s[0]:=chr(len);
+  setlength(s,len);
   for x:=1 to len do
    begin
      if str[x] in ['a'..'z'] then
@@ -1184,7 +1183,7 @@ VAR
   Color : Byte;
   Frame : Char;
   L     : array[0..1] of Longint;
-  S     : String[15];
+  S     : String{$ifopt H-}[15]{$endif};
   B     : TDrawBuffer;
 begin
   if State and sfDragging = 0 then
@@ -3202,11 +3201,11 @@ VAR
   E        : Sw_Word;                { End of current line.                }
   Index    : Sw_Integer;             { Loop counter.                       }
   Position : Sw_Integer;             { CurPos.X position.                  }
-  S        : Sw_Word;                { Start of current line.              }
+//  S        : Sw_Word;                { Start of current line.              }
   Spaces   : array [1..80] of Char;  { Array to hold spaces for insertion. }
 begin
   E := LineEnd (CurPtr);
-  S := LineStart (CurPtr);
+//  S := LineStart (CurPtr);
   { Find the current horizontal cursor position. }
   { Now loop through the Tab_Settings string and }
   { find the next available tab stop.            }

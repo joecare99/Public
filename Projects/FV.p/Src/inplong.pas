@@ -1,4 +1,4 @@
-Unit InpLong;
+unit InpLong;
 
 (*--
 TInputLong is a derivitave of TInputline designed to accept LongInt
@@ -66,7 +66,6 @@ Valid returns False.
 {$i platform.inc}
 
 {$ifdef PPC_FPC}
-  {$H-}
 {$else}
   {$F+,O+,E+,N+}
 {$endif}
@@ -75,231 +74,255 @@ Valid returns False.
   {$S-}
 {$endif}
 
-Interface
-uses objects, drivers, views, dialogs, msgbox, fvconsts;
+interface
+
+uses objects, drivers, views, Dialogs, msgbox, fvconsts;
 
 {flags for TInputLong constructor}
 const
   ilHex = 1;          {will enable hex input with leading '$'}
   ilBlankEqZero = 2;  {No input (blank) will be interpreted as '0'}
   ilDisplayHex = 4;   {Number displayed as hex when possible}
-Type
-  TInputLong = Object(TInputLine)
-    ILOptions : Word;
-    LLim, ULim : LongInt;
-    constructor Init(var R : TRect; AMaxLen : Sw_Integer;
-        LowerLim, UpperLim : LongInt; Flgs : Word);
-    constructor Load(var S : TStream);
-    procedure Store(var S : TStream);
-    FUNCTION DataSize : Sw_Word; virtual;
-    PROCEDURE GetData(var Rec); virtual;
-    PROCEDURE SetData(var Rec); virtual;
-    FUNCTION RangeCheck : Boolean; virtual;
-    PROCEDURE Error; virtual;
-    PROCEDURE HandleEvent(var Event : TEvent); virtual;
-    FUNCTION Valid(Cmd : Word) : Boolean; virtual;
-    end;
+
+type
+  TInputLong = object(TInputLine)
+    ILOptions: word;
+    LLim, ULim: longint;
+    constructor Init(var R: TRect; AMaxLen: Sw_Integer;
+      LowerLim, UpperLim: longint; Flgs: word);
+    constructor Load(var S: TStream);
+    procedure Store(var S: TStream);
+    function DataSize: Sw_Word; virtual;
+    procedure GetData(var Rec); virtual;
+    procedure SetData(var Rec); virtual;
+    function RangeCheck: boolean; virtual;
+    procedure Error; virtual;
+    procedure HandleEvent(var Event: TEvent); virtual;
+    function Valid(Cmd: word): boolean; virtual;
+  end;
   PInputLong = ^TInputLong;
 
 const
-  RInputLong : TStreamRec = (
+  RInputLong: TStreamRec = (
     ObjType: idInputLong;
     VmtLink: Ofs(Typeof(TInputLong)^);
-    Load : @TInputLong.Load;
-    Store : @TInputLong.Store);
+    Load: @TInputLong.Load;
+    Store: @TInputLong.Store);
 
-Implementation
+implementation
 
 {-----------------TInputLong.Init}
-constructor TInputLong.Init(var R : TRect; AMaxLen : Sw_Integer;
-        LowerLim, UpperLim : LongInt; Flgs : Word);
+constructor TInputLong.Init(var R: TRect; AMaxLen: Sw_Integer;
+  LowerLim, UpperLim: longint; Flgs: word);
 begin
-if not TInputLine.Init(R, AMaxLen) then fail;
-ULim := UpperLim;
-LLim := LowerLim;
-if Flgs and ilDisplayHex <> 0 then Flgs := Flgs or ilHex;
-ILOptions := Flgs;
-if ILOptions and ilBlankEqZero <> 0 then Data^ := '0';
+  if not TInputLine.Init(R, AMaxLen) then
+    fail;
+  ULim := UpperLim;
+  LLim := LowerLim;
+  if Flgs and ilDisplayHex <> 0 then
+    Flgs := Flgs or ilHex;
+  ILOptions := Flgs;
+  if ILOptions and ilBlankEqZero <> 0 then
+    Data^ := '0';
 end;
 
 {-------------------TInputLong.Load}
-constructor TInputLong.Load(var S : TStream);
+constructor TInputLong.Load(var S: TStream);
 begin
-TInputLine.Load(S);
-S.Read(ILOptions, Sizeof(ILOptions));
-S.Read(LLim, Sizeof(LLim));
-S.Read(ULim, Sizeof(ULim));
+  TInputLine.Load(S);
+  S.Read(ILOptions, Sizeof(ILOptions));
+  S.Read(LLim, Sizeof(LLim));
+  S.Read(ULim, Sizeof(ULim));
 end;
 
 {-------------------TInputLong.Store}
-procedure TInputLong.Store(var S : TStream);
+procedure TInputLong.Store(var S: TStream);
 begin
-TInputLine.Store(S);
-S.Write(ILOptions, Sizeof(ILOptions));
-S.Write(LLim, Sizeof(LLim));
-S.Write(ULim, Sizeof(ULim));
+  TInputLine.Store(S);
+  S.Write(ILOptions, Sizeof(ILOptions));
+  S.Write(LLim, Sizeof(LLim));
+  S.Write(ULim, Sizeof(ULim));
 end;
 
 {-------------------TInputLong.DataSize}
-FUNCTION TInputLong.DataSize:Sw_Word;
+function TInputLong.DataSize: Sw_Word;
 begin
-DataSize := Sizeof(LongInt);
+  DataSize := Sizeof(longint);
 end;
 
 {-------------------TInputLong.GetData}
-PROCEDURE TInputLong.GetData(var Rec);
-var code : Integer;
-begin
-Val(Data^, LongInt(Rec), code);
-end;
-
-FUNCTION Hex2(B : Byte) : String;
-Const
-  HexArray : array[0..15] of char = '0123456789ABCDEF';
-begin
-Hex2[0] := #2;
-Hex2[1] := HexArray[B shr 4];
-Hex2[2] := HexArray[B and $F];
-end;
-
-FUNCTION Hex4(W : Word) : String;
-begin Hex4 := Hex2(Hi(W))+Hex2(Lo(W)); end;
-
-FUNCTION Hex8(L : LongInt) : String;
-begin Hex8 := Hex4(LongRec(L).Hi)+Hex4(LongRec(L).Lo); end;
-
-function FormHexStr(L : LongInt) : String;
+procedure TInputLong.GetData(var Rec);
 var
-  Minus : boolean;
-  S : string[20];
+  code: integer;
 begin
-Minus := L < 0;
-if Minus then L := -L;
-S := Hex8(L);
-while (Length(S) > 1) and (S[1] = '0') do Delete(S, 1, 1);
-S := '$' + S;
-if Minus then System.Insert('-', S, 2);
-FormHexStr := S;
+  Val(Data^, longint(Rec), code);
+end;
+
+function Hex2(B: byte): string;
+const
+  HexArray: array[0..15] of char = '0123456789ABCDEF';
+begin
+  setlength(Hex2, 2);
+  Hex2[1] := HexArray[B shr 4];
+  Hex2[2] := HexArray[B and $F];
+end;
+
+function Hex4(W: word): string;
+begin
+  Hex4 := Hex2(Hi(W)) + Hex2(Lo(W));
+end;
+
+function Hex8(L: longint): string;
+begin
+  Hex8 := Hex4(LongRec(L).Hi) + Hex4(LongRec(L).Lo);
+end;
+
+function FormHexStr(L: longint): string;
+var
+  Minus: boolean;
+  S: string[20];
+begin
+  Minus := L < 0;
+  if Minus then
+    L := -L;
+  S := Hex8(L);
+  while (Length(S) > 1) and (S[1] = '0') do
+    Delete(S, 1, 1);
+  S := '$' + S;
+  if Minus then
+    System.Insert('-', S, 2);
+  FormHexStr := S;
 end;
 
 {-------------------TInputLong.SetData}
-PROCEDURE TInputLong.SetData(var Rec);
+procedure TInputLong.SetData(var Rec);
 var
-  L : LongInt;
-  S : string;
+  L: longint;
+  S: string;
 begin
-L := LongInt(Rec);
-if L > ULim then L := ULim
-else if L < LLim then L := LLim;
-if ILOptions and ilDisplayHex <> 0 then
-  S := FormHexStr(L)
-else
-  Str(L : -1, S);
-if Length(S) > MaxLen then S[0] := chr(MaxLen);
-Data^ := S;
+  L := longint(Rec);
+  if L > ULim then
+    L := ULim
+  else if L < LLim then
+    L := LLim;
+  if ILOptions and ilDisplayHex <> 0 then
+    S := FormHexStr(L)
+  else
+    Str(L: -1, S);
+  if Length(S) > MaxLen then
+    setlength(S, MaxLen);
+  Data^ := S;
 end;
 
 {-------------------TInputLong.RangeCheck}
-FUNCTION TInputLong.RangeCheck : Boolean;
+function TInputLong.RangeCheck: boolean;
 var
-  L : LongInt;
-  code : Integer;
+  L: longint;
+  code: integer;
 begin
-if (Data^ = '') and (ILOptions and ilBlankEqZero <> 0) then
-  Data^ := '0';
-Val(Data^, L, code);
-RangeCheck := (Code = 0) and (L >= LLim) and (L <= ULim);
+  if (Data^ = '') and (ILOptions and ilBlankEqZero <> 0) then
+    Data^ := '0';
+  Val(Data^, L, code);
+  RangeCheck := (Code = 0) and (L >= LLim) and (L <= ULim);
 end;
 
 {-------------------TInputLong.Error}
-PROCEDURE TInputLong.Error;
+procedure TInputLong.Error;
 var
-  SU, SL : string[40];
-  PMyLabel : PLabel;
-  Labl : string;
-  I : Integer;
+  SU, SL: string[40];
+  PMyLabel: PLabel;
+  Labl: string;
+  I: integer;
 
-  function FindIt(P : PView) : boolean;{$ifdef PPC_BP}far;{$endif}
+  function FindIt(P: PView): boolean;
+{$ifdef PPC_BP}
+  far;
+{$endif}
   begin
-  FindIt := (Typeof(P^) = Typeof(TLabel)) and (PLabel(P)^.Link = PView(@Self));
+    FindIt := (Typeof(P^) = Typeof(TLabel)) and (PLabel(P)^.Link = PView(@Self));
   end;
 
 begin
-Str(LLim : -1, SL);
-Str(ULim : -1, SU);
-if ILOptions and ilHex <> 0 then
+  Str(LLim: -1, SL);
+  Str(ULim: -1, SU);
+  if ILOptions and ilHex <> 0 then
   begin
-  SL := SL+'('+FormHexStr(LLim)+')';
-  SU := SU+'('+FormHexStr(ULim)+')';
+    SL := SL + '(' + FormHexStr(LLim) + ')';
+    SU := SU + '(' + FormHexStr(ULim) + ')';
   end;
-if Owner <> Nil then
-  PMyLabel := PLabel(Owner^.FirstThat(@FindIt))
-else PMyLabel := Nil;
-if PMyLabel <> Nil then PMyLabel^.GetText(Labl)
-else Labl := '';
-if Labl <> '' then
+  if Owner <> nil then
+    PMyLabel := PLabel(Owner^.FirstThat(@FindIt))
+  else
+    PMyLabel := nil;
+  if PMyLabel <> nil then
+    PMyLabel^.GetText(Labl)
+  else
+    Labl := '';
+  if Labl <> '' then
   begin
-  I := Pos('~', Labl);
-  while I > 0 do
-    begin
-    System.Delete(Labl, I, 1);
     I := Pos('~', Labl);
+    while I > 0 do
+    begin
+      System.Delete(Labl, I, 1);
+      I := Pos('~', Labl);
     end;
-  Labl := '"'+Labl+'"';
+    Labl := '"' + Labl + '"';
   end;
-MessageBox(Labl + ^M^J'Value not within range '+SL+' to '+SU, Nil,
-                            mfError+mfOKButton);
+  MessageBox(Labl + ^M^J'Value not within range ' + SL + ' to ' + SU, nil,
+    mfError + mfOKButton);
 end;
 
 {-------------------TInputLong.HandleEvent}
-PROCEDURE TInputLong.HandleEvent(var Event : TEvent);
+procedure TInputLong.HandleEvent(var Event: TEvent);
 begin
-if (Event.What = evKeyDown) then
+  if (Event.What = evKeyDown) then
   begin
     case Event.KeyCode of
-       kbTab, kbShiftTab
-          : if not RangeCheck then
-              begin
-              Error;
-              SelectAll(True);
-              ClearEvent(Event);
-              end;
-      end;
-  if Event.CharCode <> #0 then  {a character key}
+      kbTab, kbShiftTab: if not RangeCheck then
+        begin
+          Error;
+          SelectAll(True);
+          ClearEvent(Event);
+        end;
+    end;
+    if Event.CharCode <> #0 then  {a character key}
     begin
-    Event.Charcode := Upcase(Event.Charcode);
-    case Event.Charcode of
-      '0'..'9', #1..#$1B : ;       {acceptable}
+      Event.Charcode := Upcase(Event.Charcode);
+      case Event.Charcode of
+        '0'..'9', #1..#$1B: ;       {acceptable}
 
-      '-'       : if (LLim >= 0) or (CurPos <> 0) then
-                        ClearEvent(Event);
-      '$'       : if ILOptions and ilHex = 0 then ClearEvent(Event);
-      'A'..'F'  : if Pos('$', Data^) = 0 then ClearEvent(Event);
+        '-': if (LLim >= 0) or (CurPos <> 0) then
+            ClearEvent(Event);
+        '$': if ILOptions and ilHex = 0 then
+            ClearEvent(Event);
+        'A'..'F': if Pos('$', Data^) = 0 then
+            ClearEvent(Event);
 
-      else ClearEvent(Event);
+        else
+          ClearEvent(Event);
       end;
     end;
   end;
-TInputLine.HandleEvent(Event);
+  TInputLine.HandleEvent(Event);
 end;
 
 {-------------------TInputLong.Valid}
-FUNCTION TInputLong.Valid(Cmd : Word) : Boolean;
+function TInputLong.Valid(Cmd: word): boolean;
 var
-  Rslt : boolean;
+  Rslt: boolean;
 begin
-Rslt := TInputLine.Valid(Cmd);
-if Rslt and (Cmd <> 0) and (Cmd <> cmCancel) then
+  Rslt := TInputLine.Valid(Cmd);
+  if Rslt and (Cmd <> 0) and (Cmd <> cmCancel) then
   begin
-  Rslt := RangeCheck;
-  if not Rslt then
+    Rslt := RangeCheck;
+    if not Rslt then
     begin
-    Error;
-    Select;
-    SelectAll(True);
+      Error;
+      Select;
+      SelectAll(True);
     end;
   end;
-Valid := Rslt;
+  Valid := Rslt;
 end;
 
 end.

@@ -40,7 +40,7 @@ unit StdDlg;
 {$i platform.inc}
 
 {$ifdef PPC_FPC}
-  {$H-}
+  {$modeswitch result}
 {$else}
   {$F+,O+,E+,N+}
 {$endif}
@@ -67,11 +67,11 @@ unit StdDlg;
 interface
 
 uses
-  FVConsts, Objects, Drivers, Views, Dialogs, Validate, Dos;
+  FVConsts, Objects, Drivers, Views, Dialogs, Validate, sysutils;
 
 const
   MaxDir   = 255;   { Maximum length of a DirStr. }
-  MaxFName = 255; { Maximum length of a FNameStr. }
+  MaxFName = 255; { Maximum length of a String. }
 
   DirSeparator : Char = system.DirectorySeparator;
 
@@ -88,21 +88,17 @@ const
 type
   { TSearchRec }
 
-  {  Record used to store directory information by TFileDialog
-     This is a part of Dos.Searchrec for Bp !! }
+  {  Record used to store Directory information by TFileDialog
+     This is a part of Dos.TSearchRec for Bp !! }
 
-  TSearchRec =
-{$ifndef FPC_REQUIRES_PROPER_ALIGNMENT}
-  packed
-{$endif FPC_REQUIRES_PROPER_ALIGNMENT}
-  record
-    Attr: Longint;
-    Time: Longint;
-    Size: Longint;
-    Name: string[MaxFName];
-  end;
+
   PSearchRec = ^TSearchRec;
-
+  {$ifopt H+}
+  PlString = PAnsiString;  // redefine PString !!
+  PString = PansiString deprecated; // redefine PString !!
+  {$else}
+  PlString = PString;
+  {$endif}
 type
 
   { TFileInputLine is a special input line that is used by      }
@@ -162,7 +158,7 @@ type
     function GetText(Item,MaxLen: Sw_Integer): String; virtual;
     function GetKey(var S: String): Pointer; virtual;
     procedure HandleEvent(var Event: TEvent); virtual;
-    procedure ReadDirectory(AWildCard: PathStr);
+    procedure ReadDirectory(AWildCard: String);
     procedure SetData(var Rec); virtual;
   end;
 
@@ -181,7 +177,7 @@ type
 
   { TFileDialog is a standard file name input dialog      }
 
-  TWildStr = PathStr;
+  TWildStr = String;
 
 const
   fdOkButton      = $0001;      { Put an OK button in the dialog }
@@ -189,7 +185,7 @@ const
   fdReplaceButton = $0004;      { Put a Replace button in the dialog }
   fdClearButton   = $0008;      { Put a Clear button in the dialog }
   fdHelpButton    = $0010;      { Put a Help button in the dialog }
-  fdNoLoadDir     = $0100;      { Do not load the current directory }
+  fdNoLoadDir     = $0100;      { Do not load the current Directory }
             { contents into the dialog at Init. }
             { This means you intend to change the }
             { WildCard by using SetData or store }
@@ -199,7 +195,7 @@ type
 
   PFileHistory = ^TFileHistory;
   TFileHistory = object(THistory)
-    CurDir : PString;
+    CurDir : PlString;
     procedure HandleEvent(var Event: TEvent);virtual;
     destructor Done; virtual;
     procedure AdaptHistoryToDir(Dir : string);
@@ -211,27 +207,27 @@ type
     FileList: PFileList;
     FileHistory: PFileHistory;
     WildCard: TWildStr;
-    Directory: PString;
+    zDirectory: PlString;
     constructor Init(AWildCard: TWildStr; const ATitle,
       InputName: String; AOptions: Word; HistoryId: Byte);
     constructor Load(var S: TStream);
     destructor Done; virtual;
     procedure GetData(var Rec); virtual;
-    procedure GetFileName(var S: PathStr);
+    procedure GetFileName({$ifopt H+}out{$else}var{$Endif} S: string);
     procedure HandleEvent(var Event: TEvent); virtual;
     procedure SetData(var Rec); virtual;
     procedure Store(var S: TStream);
     function Valid(Command: Word): Boolean; virtual;
   private
-    procedure ReadDirectory;
+    function ReadDirectory:integer;
   end;
 
   { TDirEntry }
 
   PDirEntry = ^TDirEntry;
   TDirEntry = record
-    DisplayText: PString;
-    Directory: PString;
+    DisplayText: PlString;
+    zDirectory: PlString;
   end;  { of TDirEntry }
 
   { TDirCollection is a collection of TDirEntry's used by       }
@@ -249,18 +245,18 @@ type
 
   PDirListBox = ^TDirListBox;
   TDirListBox = object(TListBox)
-    Dir: DirStr;
+    Dir: String;
     Cur: Word;
     constructor Init(var Bounds: TRect; AScrollBar: PScrollBar);
     destructor Done; virtual;
     function GetText(Item,MaxLen: Sw_Integer): String; virtual;
     procedure HandleEvent(var Event: TEvent); virtual;
     function IsSelected(Item: Sw_Integer): Boolean; virtual;
-    procedure NewDirectory(var ADir: DirStr);
+    procedure NewDirectory(const ADir: String);
     procedure SetState(AState: Word; Enable: Boolean); virtual;
   end;
 
-  { TChDirDialog is a standard change directory dialog. }
+  { TChDirDialog is a standard change Directory dialog. }
 
 const
   cdNormal     = $0000; { Option to use dialog immediately }
@@ -289,7 +285,7 @@ type
 
   PEditChDirDialog = ^TEditChDirDialog;
   TEditChDirDialog = Object(TChDirDialog)
-    { TEditChDirDialog allows setting/getting the starting directory.  The
+    { TEditChDirDialog allows setting/getting the starting faDirectory.  The
       transfer record is a DirStr. }
     function DataSize : Sw_Word; virtual;
     procedure GetData (var Rec); virtual;
@@ -302,13 +298,13 @@ type
   {#Z-}
   TDirValidator = Object(TFilterValidator)
     constructor Init;
-    function IsValid(const S: string): Boolean; virtual;
+    function IsValid(const {%H-}S: string): Boolean; virtual;
     function IsValidInput(var S: string; SuppressFill: Boolean): Boolean;
       virtual;
   end;  { of TDirValidator }
 
 
-  FileConfirmFunc = function (AFile : FNameStr) : Boolean;
+  FileConfirmFunc = function (AFile : String) : Boolean;
     { Functions of type FileConfirmFunc's are used to prompt the end user for
       confirmation of an operation.
 
@@ -348,44 +344,44 @@ const
 
   { TStream registration records }
 
-function Contains(S1, S2: String): Boolean;
+function Contains(const S1, S2: String): Boolean;
   { Contains returns true if S1 contains any characters in S2. }
 
-function DriveValid(Drive: Char): Boolean;
+function DriveValid(const Drive: String): Boolean;
   { DriveValid returns True if Drive is a valid DOS drive.  Drive valid works
-    by attempting to change the current directory to Drive, then restoring
-    the original directory. }
+    by attempting to change the current faDirectory to Drive, then restoring
+    the original faDirectory. }
 
-function ExtractDir(AFile: FNameStr): DirStr;
+//function ExtractDir(const AFile: String): String;deprecated;
   { ExtractDir returns the path of AFile terminated with a trailing '\'.  If
-    AFile contains no directory information, an empty string is returned. }
+    AFile contains no faDirectory information, an empty string is returned. }
 
-function ExtractFileName(AFile: FNameStr): NameStr;
-  { ExtractFileName returns the file name without any directory or file
+//function ExtractFileName(const AFile: String): String;deprecated;
+  { ExtractFileName returns the file name without any faDirectory or file
     extension information. }
 
 function Equal(const S1, S2: String; Count: Sw_word): Boolean;
   { Equal returns True if S1 equals S2 for up to Count characters.  Equal is
     case-insensitive. }
 
-function FileExists (AFile : FNameStr) : Boolean;
+//function FileExists (AFile : String) : Boolean;deprecated;
   { FileExists looks for the file specified in AFile.  If AFile is present
     FileExists returns true, otherwise FileExists returns False.
 
-    The search is performed relative to the current system directory, but
+    The search is performed relative to the current system faDirectory, but
     other directories may be searched by prefacing a file name with a valid
-    directory path.
+    faDirectory path.
 
     There is no check for a vaild file name or drive.  Errrors are handled
     internally and not reported in DosError.  Critical errors are left to
     the system's critical error handler. }
   {#X OpenFile }
 
-function GetCurDir: DirStr;
-  { GetCurDir returns the current directory.  The directory returned always
+function GetCurDir: string;
+  { GetCurDir returns the current faDirectory.  The faDirectory returned always
     ends with a trailing backslash '\'. }
 
-function GetCurDrive: Char;
+function GetCurDrive: String;deprecated;
   { GetCurDrive returns the letter of the current drive as reported by the
     operating system. }
 
@@ -396,7 +392,7 @@ function IsList(const S: String): Boolean;
   { IsList returns True if S contains list separator (;) char }
 
 function IsDir(const S: String): Boolean;
-  { IsDir returns True if S is a valid DOS directory. }
+  { IsDir returns True if S is a valid DOS faDirectory. }
 
 {procedure MakeResources;}
   { MakeResources places a language specific version of all resources
@@ -409,7 +405,7 @@ function NoWildChars(S: String): String;
   { NoWildChars deletes the wild card characters ? and * from the string S
     and returns the result. }
 
-function OpenFile (var AFile : FNameStr; HistoryID : Byte) : Boolean;
+function OpenFile (var AFile : string; HistoryID : Byte) : Boolean;
   { OpenFile prompts the user to select a file using the file specifications
     in AFile as the starting file and path.  Wildcards are accepted.  If the
     user accepts a file OpenFile returns True, otherwise OpenFile returns
@@ -417,23 +413,23 @@ function OpenFile (var AFile : FNameStr; HistoryID : Byte) : Boolean;
 
     Note: The file returned may or may not exist. }
 
-function OpenNewFile (var AFile: FNameStr; HistoryID: Byte): Boolean;
-  { OpenNewFile allows the user to select a directory from disk and enter a
+function OpenNewFile (var AFile: String; HistoryID: Byte): Boolean;
+  { OpenNewFile allows the user to select a faDirectory from disk and enter a
     new file name.  If the file name entered is an existing file the user is
     optionally prompted for confirmation of replacing the file based on the
     value in #CheckOnReplace#.  If a file name is successfully entered,
     OpenNewFile returns True. }
   {#X OpenFile }
 
-function PathValid(var Path: PathStr): Boolean;
+function PathValid(var Path: String): Boolean;
   { PathValid returns True if Path is a valid DOS path name.  Path may be a
-    file or directory name.  Trailing '\'s are removed. }
+    file or faDirectory name.  Trailing '\'s are removed. }
 
 procedure RegisterStdDlg;
   { RegisterStdDlg registers all objects in the StdDlg unit for stream
     usage. }
 
-function SaveAs (var AFile : FNameStr; HistoryID : Word) : Boolean;
+function SaveAs (var AFile : String; HistoryID : Word) : Boolean;
   { SaveAs prompts the user for a file name using AFile as a template.  If
     AFile already exists and CheckOnReplace is True, the user is prompted
     to replace the file.
@@ -441,31 +437,31 @@ function SaveAs (var AFile : FNameStr; HistoryID : Word) : Boolean;
     If a valid file name is entered SaveAs returns True, other SaveAs returns
     False. }
 
-function SelectDir (var ADir : DirStr; HistoryID : Byte) : Boolean;
-  { SelectDir prompts the user to select a directory using ADir as the
-    starting directory.  If a directory is selected, SelectDir returns True.
-    The directory returned is gauranteed to exist. }
+function SelectDir (var ADir : string; HistoryID : Byte) : Boolean;
+  { SelectDir prompts the user to select a faDirectory using ADir as the
+    starting faDirectory.  If a faDirectory is selected, SelectDir returns True.
+    The faDirectory returned is gauranteed to exist. }
 
-function ShrinkPath (AFile : FNameStr; MaxLen : Byte) : FNameStr;
+function ShrinkPath (AFile : String; MaxLen : Byte) : String;
   { ShrinkPath returns a file name with a maximu length of MaxLen.
     Internal directories are removed and replaced with elipses as needed to
     make the file name fit in MaxLen.
 
     AFile must be a valid path name. }
 
-function StdDeleteFile (AFile : FNameStr) : Boolean;
+function StdDeleteFile (AFile : String) : Boolean;
   { StdDeleteFile returns True if the end user elects to delete the file,
     otherwise it returns False.
 
     DeleteFile is only called when CheckOnDelete is True. }
 
-function StdReplaceFile (AFile : FNameStr) : Boolean;
+function StdReplaceFile (AFile : String) : Boolean;
   { StdReplaceFile returns True if the end user elects to replace the existing
     AFile with the new AFile, otherwise it returns False.
 
     ReplaceFile is only called when CheckOnReplace is True. }
 
-function ValidFileName(var FileName: PathStr): Boolean;
+function ValidFileName(var FileName: String): Boolean;
   { ValidFileName returns True if FileName is a valid DOS file name. }
 
 
@@ -481,12 +477,12 @@ const
       CheckOnReplace is set to True by default. }
 
   CheckOnDelete : Boolean = True;
-    { CheckOnDelete is used by file and directory functions.  If a file
+    { CheckOnDelete is used by file and faDirectory functions.  If a file
       exists, it is optionally deleted based on the value of CheckOnDelete.
 
-      If CheckOnDelete is False the file or directory is deleted without
+      If CheckOnDelete is False the file or faDirectory is deleted without
       asking the user.  If CheckOnDelete is True, the end user is asked to
-      delete the file/directory using a call to DeleteFile.
+      delete the file/faDirectory using a call to DeleteFile.
 
       CheckOnDelete is set to True by default. }
 
@@ -497,70 +493,70 @@ const
      ObjType: idFileInputLine;
      VmtLink: Ofs(TypeOf(TFileInputLine)^);
      Load:    @TFileInputLine.Load;
-     Store:   @TFileInputLine.Store
+     Store:   @TFileInputLine.Store{%H-}
   );
 
   RFileCollection: TStreamRec = (
      ObjType: idFileCollection;
      VmtLink: Ofs(TypeOf(TFileCollection)^);
      Load:    @TFileCollection.Load;
-     Store:   @TFileCollection.Store
+     Store:   @TFileCollection.Store{%H-}
   );
 
   RFileList: TStreamRec = (
      ObjType: idFileList;
      VmtLink: Ofs(TypeOf(TFileList)^);
      Load:    @TFileList.Load;
-     Store:   @TFileList.Store
+     Store:   @TFileList.Store{%H-}
   );
 
   RFileInfoPane: TStreamRec = (
      ObjType: idFileInfoPane;
      VmtLink: Ofs(TypeOf(TFileInfoPane)^);
      Load:    @TFileInfoPane.Load;
-     Store:   @TFileInfoPane.Store
+     Store:   @TFileInfoPane.Store{%H-}
   );
 
   RFileDialog: TStreamRec = (
      ObjType: idFileDialog;
      VmtLink: Ofs(TypeOf(TFileDialog)^);
      Load:    @TFileDialog.Load;
-     Store:   @TFileDialog.Store
+     Store:   @TFileDialog.Store{%H-}
   );
 
   RDirCollection: TStreamRec = (
      ObjType: idDirCollection;
      VmtLink: Ofs(TypeOf(TDirCollection)^);
      Load:    @TDirCollection.Load;
-     Store:   @TDirCollection.Store
+     Store:   @TDirCollection.Store{%H-}
   );
 
   RDirListBox: TStreamRec = (
      ObjType: idDirListBox;
      VmtLink: Ofs(TypeOf(TDirListBox)^);
      Load:    @TDirListBox.Load;
-     Store:   @TDirListBox.Store
+     Store:   @TDirListBox.Store{%H-}
   );
 
   RChDirDialog: TStreamRec = (
      ObjType: idChDirDialog;
      VmtLink: Ofs(TypeOf(TChDirDialog)^);
      Load:    @TChDirDialog.Load;
-     Store:   @TChDirDialog.Store
+     Store:   @TChDirDialog.Store{%H-}
   );
 
   RSortedListBox: TStreamRec = (
      ObjType: idSortedListBox;
      VmtLink: Ofs(TypeOf(TSortedListBox)^);
      Load:    @TSortedListBox.Load;
-     Store:   @TSortedListBox.Store
+     Store:   @TSortedListBox.Store{%H-}
   );
 
   REditChDirDialog : TStreamRec = (
     ObjType : idEditChDirDialog;
     VmtLink : Ofs(TypeOf(TEditChDirDialog)^);
     Load    : @TEditChDirDialog.Load;
-    Store   : @TEditChDirDialog.Store);
+    Store   : @TEditChDirDialog.Store{%H-});
 
 
 implementation
@@ -570,22 +566,22 @@ implementation
 {****************************************************************************}
 
 uses
-  App, {Memory,} HistList, MsgBox{, Resource};
+  App, {Memory,} HistList, MsgBox, dateutils{, Resource};
 
 type
 
   PStringRec = record
     { PStringRec is needed for properly displaying PStrings using
       MessageBox. }
-    AString : PString;
+    AString : PlString;
   end;
 
-resourcestring  sChangeDirectory='Change Directory';
+resourcestring  sChangeDirectory='Change faDirectory';
                 sDeleteFile='Delete file?'#13#10#13#3'%s';
-                sDirectory='Directory';
+                sDirectory='faDirectory';
                 sDrives='Drives';
-                sInvalidDirectory='Invalid directory.';
-                sInvalidDriveOrDir='Invalid drive or directory.';
+                sInvalidDirectory='Invalid faDirectory.';
+                sInvalidDriveOrDir='Invalid drive or faDirectory.';
                 sInvalidFileName='Invalid file name.';
                 sOpen='Open';
                 sReplaceFile='Replace file?'#13#10#13#3'%s';
@@ -607,8 +603,8 @@ resourcestring  sChangeDirectory='Change Directory';
 
                 slChDir='~C~hdir';
                 slClear='C~l~ear';
-                slDirectoryName='Directory ~n~ame';
-                slDirectoryTree='Directory ~t~ree';
+                slDirectoryName='faDirectory ~n~ame';
+                slDirectoryTree='faDirectory ~t~ree';
                 slFiles='~F~iles';
                 slReplace='~R~eplace';
                 slRevert='~R~evert';
@@ -623,7 +619,7 @@ resourcestring  sChangeDirectory='Change Directory';
 {$define NetDrive}
 {$endif OS_WINDOWS}
 
-procedure RemoveDoubleDirSep(var ExpPath : PathStr);
+procedure RemoveDoubleDirSep(var ExpPath : String);
 var
   p: longint;
 {$ifdef NetDrive}
@@ -652,13 +648,14 @@ begin
 {$endif NetDrive}
 end;
 
-function PathValid (var Path: PathStr): Boolean;
+function PathValid(var Path: String): Boolean;
 var
-  ExpPath: PathStr;
-  SR: SearchRec;
+  ExpPath: String;
+  SR: TSearchRec=({%H-});
+  DosError: LongInt;
 begin
   RemoveDoubleDirSep(Path);
-  ExpPath := FExpand(Path);
+  ExpPath := ExpandFileName(Path);
 {$ifdef HAS_DOS_DRIVES}
   if (Length(ExpPath) <= 3) then
     PathValid := DriveValid(ExpPath[1])
@@ -667,12 +664,12 @@ begin
   begin
     { do not change '/' into '' }
     if (Length(ExpPath)>1) and (ExpPath[Length(ExpPath)] = DirSeparator) then
-      Dec(ExpPath[0]);
+      setlength(ExpPath,pred(Length(ExpPath)));
     // This function is called on current directories.
     // If the current dir starts with a . on Linux it is is hidden.
     // That's why we allow hidden dirs below (bug 6173)
-    FindFirst(ExpPath, Directory+hidden, SR);
-    PathValid := (DosError = 0) and (SR.Attr and Directory <> 0);
+    DosError := FindFirst(ExpPath, faDirectory+faHidden, SR);
+    PathValid := (DosError = 0) and (SR.Attr and faDirectory <> 0);
 {$ifdef NetDrive}
     if (DosError<>0) and (length(ExpPath)>2) and
        (ExpPath[1]='\') and (ExpPath[2]='\')then
@@ -682,7 +679,7 @@ begin
       {$ifdef fpc}
         FindClose(SR);
       {$endif}
-        FindFirst(ExpPath+'\*',AnyFile,SR);
+        FindFirst(ExpPath+'\*',faAnyFile,SR);
         PathValid:=(DosError = 0);
       end;
 {$endif NetDrive}
@@ -748,7 +745,7 @@ begin
   if (Event.What = evBroadcast) and (Event.Command = cmFileFocused) and
     (State and sfSelected = 0) then
   begin
-     if PSearchRec(Event.InfoPtr)^.Attr and Directory <> 0 then
+     if PSearchRec(Event.InfoPtr)^.Attr and faDirectory <> 0 then
        begin
           Data^ := PSearchRec(Event.InfoPtr)^.Name + DirSeparator +
             PFileDialog(Owner)^.WildCard;
@@ -767,11 +764,17 @@ end;
 { TFileCollection.Compare                     }
 {****************************************************************************}
   function uppername(const s : string) : string;
+   {$If not declared(uppercase)}
   var
     i  : Sw_integer;
     in_name : boolean;
+    {$endif}
   begin
+    {$If declared(uppercase)}
+    result := uppercase(s);
+    {$else}
      in_name:=true;
+     setlength(uppername,length(s));
      for i:=length(s) downto 1 do
       if in_name and (s[i] in ['a'..'z']) then
         uppername[i]:=char(byte(s[i])-32)
@@ -781,7 +784,7 @@ end;
           if s[i] = DirSeparator then
             in_name:=false;
        end;
-     uppername[0]:=s[0];
+      {$endif}
   end;
 
 function TFileCollection.Compare(Key1, Key2: Pointer): Sw_Integer;
@@ -789,10 +792,10 @@ begin
   if PSearchRec(Key1)^.Name = PSearchRec(Key2)^.Name then Compare := 0
   else if PSearchRec(Key1)^.Name = '..' then Compare := 1
   else if PSearchRec(Key2)^.Name = '..' then Compare := -1
-  else if (PSearchRec(Key1)^.Attr and Directory <> 0) and
-     (PSearchRec(Key2)^.Attr and Directory = 0) then Compare := 1
-  else if (PSearchRec(Key2)^.Attr and Directory <> 0) and
-     (PSearchRec(Key1)^.Attr and Directory = 0) then Compare := -1
+  else if (PSearchRec(Key1)^.Attr and faDirectory <> 0) and
+     (PSearchRec(Key2)^.Attr and faDirectory = 0) then Compare := 1
+  else if (PSearchRec(Key2)^.Attr and faDirectory <> 0) and
+     (PSearchRec(Key1)^.Attr and faDirectory = 0) then Compare := -1
   else if UpperName(PSearchRec(Key1)^.Name) > UpperName(PSearchRec(Key2)^.Name) then
     Compare := 1
 {$ifdef unix}
@@ -843,16 +846,16 @@ const
 
 function MatchesMask(What, Mask: string): boolean;
 
-  function upper(const s : string) : string;
+  function upper(const s : string) : string;deprecated;
   var
     i  : Sw_integer;
   begin
+     setlength(result,length(s));
      for i:=1 to length(s) do
       if s[i] in ['a'..'z'] then
-       upper[i]:=char(byte(s[i])-32)
+       result[i]:=char(byte(s[i])-32)
       else
-       upper[i]:=s[i];
-     upper[0]:=s[0];
+       result[i]:=s[i];
   end;
 
   Function CmpStr(const hstr1,hstr2:string):boolean;
@@ -910,16 +913,20 @@ function MatchesMask(What, Mask: string): boolean;
   end;
 
 var
-  D1,D2 : DirStr;
-  N1,N2 : NameStr;
-  E1,E2 : Extstr;
+//  D1,D2,
+  N1,N2,
+  E1,E2 : String;
 begin
 {$ifdef Unix}
-  FSplit(What,D1,N1,E1);
-  FSplit(Mask,D2,N2,E2);
+  N1:=SysUtils.ExtractFileName(What);
+  N2:=SysUtils.ExtractFileName(Mask);
+  E1:=SysUtils.ExtractFileExt(What);
+  E2:=SysUtils.ExtractFileExt(Mask);
 {$else}
-  FSplit(Upper(What),D1,N1,E1);
-  FSplit(Upper(Mask),D2,N2,E2);
+  N1:=SysUtils.ExtractFileName(uppername(What));
+  N2:=SysUtils.ExtractFileName(uppername(Mask));
+  E1:=SysUtils.ExtractFileExt(uppername(What));
+  E2:=SysUtils.ExtractFileExt(uppername(Mask));
 {$endif}
   MatchesMask:=CmpStr(N2,N1) and CmpStr(E2,E1);
 end;
@@ -968,22 +975,26 @@ end;
 
 function TFileList.GetKey(var S: String): Pointer;
 const
-  SR: TSearchRec = ();
+  SR: TSearchRec = ({%H-});
 
-procedure UpStr(var S: String);
+procedure UpStr(var S: String);deprecated;
 var
   I: Sw_Integer;
 begin
+  {$if declared(uppercase)}
+  s := Uppercase(s);
+  {$else}
   for I := 1 to Length(S) do S[I] := UpCase(S[I]);
+  {$endif}
 end;
 
 begin
   if (HandleDir{ShiftState and $03 <> 0}) or ((S <> '') and (S[1]='.')) then
-    SR.Attr := Directory
+    SR.Attr := faDirectory
   else SR.Attr := 0;
   SR.Name := S;
 {$ifndef Unix}
-  UpStr(SR.Name);
+  sr.Name := uppername(SR.Name);
 {$endif Unix}
   GetKey := @SR;
 end;
@@ -995,10 +1006,10 @@ var
 begin
   SR := PSearchRec(List^.At(Item));
   S := SR^.Name;
-  if SR^.Attr and Directory <> 0 then
+  if SR^.Attr and faDirectory <> 0 then
   begin
-    S[Length(S)+1] := DirSeparator;
-    Inc(S[0]);
+    SetLength(S,succ(length(s)));
+    S[succ(Length(S))] := DirSeparator;
   end;
   GetText := S;
 end;
@@ -1027,27 +1038,30 @@ begin
   else TSortedListBox.HandleEvent(Event);
 end;
 
-procedure TFileList.ReadDirectory(AWildCard: PathStr);
+procedure TFileList.ReadDirectory(AWildCard: String);
 const
-  FindAttr = ReadOnly + Archive;
+  FindAttr = faReadOnly + faArchive;
   PrevDir  = '..';
 var
-  S: SearchRec;
+  S: tSearchRec;
   P: PSearchRec;
   FileList: PFileCollection;
   NumFiles: Word;
   FindStr,
   WildName : string;
-  Dir: DirStr;
-  Ext: ExtStr;
-  Name: NameStr;
+  Dir,
+  Ext,
+  Name: string;
   Event : TEvent;
-  Tmp: PathStr;
+  Tmp: string;
+  DosError: LongInt;
 begin
   NumFiles := 0;
   FileList := New(PFileCollection, Init(5, 5));
-  AWildCard := FExpand(AWildCard);
-  FSplit(AWildCard, Dir, Name, Ext);
+  AWildCard := ExpandFileName(AWildCard);
+  Dir := sysutils.ExtractFileDir(AWildCard);
+  name := sysutils.ExtractFileName(AWildCard);
+  ext := sysutils.ExtractFileExt(AWildCard);
   if pos(ListSeparator,AWildCard)>0 then
    begin
      WildName:=Copy(AWildCard,length(Dir)+1,255);
@@ -1058,11 +1072,11 @@ begin
      WildName:=Name+Ext;
      FindStr:=AWildCard;
    end;
-  FindFirst(FindStr, FindAttr, S);
+  DosError :=FindFirst(FindStr, FindAttr, S);
   P := PSearchRec(@P);
   while assigned(P) and (DosError = 0) do
    begin
-     if (S.Attr and Directory = 0) and
+     if (S.Attr and faDirectory = 0) and
         MatchesMaskList(S.Name,WildName) then
      begin
 {       P := MemAlloc(SizeOf(P^));
@@ -1083,10 +1097,10 @@ begin
  {$endif}
 
   Tmp := Dir + AllFiles;
-  FindFirst(Tmp, Directory, S);
+  FindFirst(Tmp, faDirectory, S);
   while (P <> nil) and (DosError = 0) do
   begin
-    if (S.Attr and Directory <> 0) and (S.Name <> '.') and (S.Name <> '..') then
+    if (S.Attr and faDirectory <> 0) and (S.Name <> '.') and (S.Name <> '..') then
     begin
 {      P := MemAlloc(SizeOf(P^));
       if P <> nil then
@@ -1113,7 +1127,7 @@ begin
     if P <> nil then
     begin}
       new(p);
-      FindFirst(Tmp, Directory, S);
+      FindFirst(Tmp, faDirectory, S);
       FindNext(S);
       if (DosError = 0) and (S.Name = PrevDir) then
        begin
@@ -1127,7 +1141,7 @@ begin
          P^.Name := PrevDir;
          P^.Size := 0;
          P^.Time := $210000;
-         P^.Attr := Directory;
+         P^.Attr := faDirectory;
        end;
       FileList^.Insert(PSearchRec(P));
      {$ifdef fpc}
@@ -1150,7 +1164,7 @@ end;
 procedure TFileList.SetData(var Rec);
 begin
   with PFileDialog(Owner)^ do
-    Self.ReadDirectory(Directory^ + WildCard);
+    Self.ReadDirectory(zDirectory^ + WildCard);
 end;
 
 {****************************************************************************}
@@ -1174,37 +1188,36 @@ var
   B: TDrawBuffer;
   D: String[9];
   M: String[3];
-  PM: Boolean;
   Color: Word;
-  Time: DateTime;
-  Path: PathStr;
+  Time: TDateTime;
+  Path,
   FmtId: String;
   Params: array[0..7] of PtruInt;
-  Str: String[80];
+  Str: String{$ifopt H-}[80]{$endif};
 const
   sDirectoryLine = ' %-12s %-9s %3s %2d, %4d  %2d:%02d%cm';
   sFileLine      = ' %-12s %-9d %3s %2d, %4d  %2d:%02d%cm';
   InValidFiles : array[0..2] of string[12] = ('','.','..');
 var
-  Month: array[1..12] of String[3];
+  lsMonth: array[1..12] of String[3];
 begin
-  Month[1] := smJan;
-  Month[2] := smFeb;
-  Month[3] := smMar;
-  Month[4] := smApr;
-  Month[5] := smMay;
-  Month[6] := smJun;
-  Month[7] := smJul;
-  Month[8] := smAug;
-  Month[9] := smSep;
-  Month[10] := smOct;
-  Month[11] := smNov;
-  Month[12] := smDec;
+  lsMonth[1] := smJan;
+  lsMonth[2] := smFeb;
+  lsMonth[3] := smMar;
+  lsMonth[4] := smApr;
+  lsMonth[5] := smMay;
+  lsMonth[6] := smJun;
+  lsMonth[7] := smJul;
+  lsMonth[8] := smAug;
+  lsMonth[9] := smSep;
+  lsMonth[10] := smOct;
+  lsMonth[11] := smNov;
+  lsMonth[12] := smDec;
   { Display path }
-  if (PFileDialog(Owner)^.Directory <> nil) then
-    Path := PFileDialog(Owner)^.Directory^
+  if (PFileDialog(Owner)^.zDirectory <> nil) then
+    Path := PFileDialog(Owner)^.zDirectory^
   else Path := '';
-  Path := FExpand(Path+PFileDialog(Owner)^.WildCard);
+  Path := sysutils.ExpandFileName(Path+PFileDialog(Owner)^.WildCard);
   { avoid B Buffer overflow PM }
   Path := ShrinkPath(Path, Size.X - 1);
   Color := GetColor($01);
@@ -1218,7 +1231,7 @@ begin
 
   { Display file }
   Params[0] := ptruint(@S.Name);
-  if S.Attr and Directory <> 0 then
+  if S.Attr and faDirectory <> 0 then
   begin
     FmtId := sDirectoryLine;
     D := sDirectory;
@@ -1228,19 +1241,24 @@ begin
     FmtId := sFileLine;
     Params[1] := S.Size;
   end;
-  UnpackTime(S.Time, Time);
-  M := Month[Time.Month];
+  Time:=FileDateToDateTime(S.Time);
+  M := lsMonth[Monthof(Time)];
   Params[2] := ptruint(@M);
-  Params[3] := Time.Day;
-  Params[4] := Time.Year;
-  PM := Time.Hour >= 12;
-  Time.Hour := Time.Hour mod 12;
-  if Time.Hour = 0 then Time.Hour := 12;
-  Params[5] := Time.Hour;
-  Params[6] := Time.Min;
-  if PM then
+  Params[3] := Dayof(Time);
+  Params[4] := Yearof (Time);
+  if FormatSettings.DecimalSeparator='.' then
+  begin
+  if hourof(Time) >= 12 then
     Params[7] := Byte('p')
   else Params[7] := Byte('a');
+  Params[5] := (HourOf(Time)+11) mod 12 +1;
+  end
+  else
+  begin
+    Params[5] := HourOf(Time);
+    Params[7] := Byte(' ')
+  end;
+  Params[6] := MinuteOf(Time);
   FormatStr(Str, FmtId, Params);
   MoveStr(B, Str, Color);
   WriteLine(0, 1, Size.X, 1, B);
@@ -1252,7 +1270,7 @@ end;
 
 function TFileInfoPane.GetPalette: PPalette;
 const
-  P: String[Length(CInfoPane)] = CInfoPane;
+  P: String{$ifopt H-}[Length(CInfoPane)]{$endif} = CInfoPane;
 begin
   GetPalette := PPalette(@P);
 end;
@@ -1289,7 +1307,7 @@ end;
     RTrim := Copy(S, 1, I);
   end;
 
-  function RelativePath(var S: PathStr): Boolean;
+  function RelativePath(var S: String): Boolean;
   begin
     S := LTrim(RTrim(S));
     {$ifdef HASAMIGA}
@@ -1365,7 +1383,8 @@ begin
       if C = cmOk then
       begin
         Rslt := HistoryWindow^.GetSelection;
-        if Length(Rslt) > Link^.MaxLen then Rslt[0] := Char(Link^.MaxLen);
+        if Length(Rslt) > Link^.MaxLen then
+          setlength(Rslt,Link^.MaxLen);
         Link^.Data^ := Rslt;
         Link^.SelectAll(True);
         Link^.DrawView;
@@ -1413,7 +1432,7 @@ begin
           if S<>'' then
             S2:=S+S2
           else
-            S2:=FExpand(S2);
+            S2:=ExpandFileName(S2);
         { simply full path
           we should simplify relative to Dir ! }
         HistoryAdd(HistoryId,S2);
@@ -1509,6 +1528,8 @@ begin
 end;
 
 constructor TFileDialog.Load(var S: TStream);
+var
+  DosError: Integer;
 begin
   if not TDialog.Load(S) then
     Fail;
@@ -1521,7 +1542,7 @@ begin
   GetSubViewPtr(S, FileName);
   GetSubViewPtr(S, FileList);
   GetSubViewPtr(S, FileHistory);
-  ReadDirectory;
+  DosError:=ReadDirectory;
   if (DosError <> 0) then
   begin
     TDialog.Done;
@@ -1531,40 +1552,42 @@ end;
 
 destructor TFileDialog.Done;
 begin
-  DisposeStr(Directory);
+  DisposeStr(zDirectory);
   TDialog.Done;
 end;
 
 procedure TFileDialog.GetData(var Rec);
 begin
-  GetFilename(PathStr(Rec));
+  GetFilename(String(Rec));
 end;
 
-procedure TFileDialog.GetFileName(var S: PathStr);
+procedure TFileDialog.GetFileName({$ifopt H+}out{$else}var{$Endif} S: string);
 
 var
-  Path: PathStr;
-  Name: NameStr;
-  Ext: ExtStr;
+  Path,
+  Name,
+  Ext,
   TWild : string;
-  TPath: PathStr;
-  TName: NameStr;
-  TExt: NameStr;
+
+  TName,
+  TExt: string;
   i : Sw_integer;
 begin
   S := FileName^.Data^;
   if RelativePath(S) then
     begin
-      if (Directory <> nil) then
-   S := FExpand(Directory^ + S);
+      if (zDirectory <> nil) then
+   S := ExpandFileName(zDirectory^ + S);
     end
   else
-    S := FExpand(S);
+    S := ExpandFileName(S);
   if Pos(ListSeparator,S)=0 then
    begin
-     If FileExists(S) then
+     If sysutils.FileExists(S) then
        exit;
-     FSplit(S, Path, Name, Ext);
+     Name:=sysutils.ExtractFileName(S);
+     Ext:=sysutils.ExtractFileExt(S);
+     path:=sysutils.ExtractFilePath(S);
      if ((Name = '') or (Ext = '')) and not IsDir(S) then
      begin
        TWild:=WildCard;
@@ -1572,7 +1595,8 @@ begin
     i:=Pos(ListSeparator,TWild);
     if i=0 then
      i:=length(TWild)+1;
-    FSplit(Copy(TWild,1,i-1), TPath, TName, TExt);
+    TName:=sysutils.ExtractFileName(Copy(TWild,1,i-1));
+    TExt:=sysutils.ExtractFileExt(Copy(TWild,1,i-1));
     if ((Name = '') and (Ext = '')) then
       S := Path + TName + TExt
     else
@@ -1586,7 +1610,7 @@ begin
        else
          S := Path + Name + NoWildChars(TExt);
           end;
-    if FileExists(S) then
+    if SysUtils.FileExists(S) then
      break;
     System.Delete(TWild,1,i);
        until TWild='';
@@ -1618,18 +1642,18 @@ end;
 procedure TFileDialog.SetData(var Rec);
 begin
   TDialog.SetData(Rec);
-  if (PathStr(Rec) <> '') and (IsWild(TWildStr(Rec))) then
+  if (String(Rec) <> '') and (IsWild(TWildStr(Rec))) then
   begin
     Valid(cmFileInit);
     FileName^.Select;
   end;
 end;
 
-procedure TFileDialog.ReadDirectory;
+function TFileDialog.ReadDirectory: integer;
 begin
   FileList^.ReadDirectory(WildCard);
   FileHistory^.AdaptHistoryToDir(GetCurDir);
-  Directory := NewStr(GetCurDir);
+  zDirectory := NewStr(GetCurDir);
 end;
 
 procedure TFileDialog.Store(var S: TStream);
@@ -1643,12 +1667,12 @@ end;
 
 function TFileDialog.Valid(Command: Word): Boolean;
 var
-  FName: PathStr;
-  Dir: DirStr;
-  Name: NameStr;
-  Ext: ExtStr;
+  FName,
+  Dir,
+  Name,
+  Ext:string;
 
-  function CheckDirectory(var S: PathStr): Boolean;
+  function CheckDirectory(var S: String): Boolean;
   begin
     if not PathValid(S) then
     begin
@@ -1688,7 +1712,8 @@ var
     else
       NormalizeDir:=Path;
   end;
-function NormalizeDirF(var S: openstring): boolean;
+
+function NormalizeDirF(var S: string): boolean;
 begin
   S:=NormalizeDir(S);
   NormalizeDirF:=true;
@@ -1704,23 +1729,26 @@ begin
   if TDialog.Valid(Command) then
   begin
     GetFileName(FName);
+
     if (Command <> cmCancel) and (Command <> cmFileClear) then
     begin
       if IsWild(FName) or IsList(FName) then
       begin
-        FSplit(FName, Dir, Name, Ext);
+        Name:= SysUtils.ExtractFileName(Fname);
+        Ext:= SysUtils.ExtractFileext(Fname);
+        Dir:= SysUtils.ExtractFilepath(Fname);
         if CheckDirectory(Dir) then
         begin
           FileHistory^.AdaptHistoryToDir(Dir);
-          DisposeStr(Directory);
-          Directory := NewStr(Dir);
+          DisposeStr(zDirectory);
+          zDirectory := NewStr(Dir);
           if Pos(ListSeparator,FName)>0 then
            WildCard:=Copy(FName,length(Dir)+1,255)
           else
            WildCard := Name+Ext;
           if Command <> cmFileInit then
             FileList^.Select;
-          FileList^.ReadDirectory(Directory^+WildCard);
+          FileList^.ReadDirectory(zDirectory^+WildCard);
         end;
       end
     else
@@ -1732,10 +1760,10 @@ begin
           if CheckDirectory(FName) then
           begin
             FileHistory^.AdaptHistoryToDir(CompleteDir(FName));
-            DisposeStr(Directory);
-            Directory := NewSTr(CompleteDir(FName));
+            DisposeStr(zDirectory);
+            zDirectory := NewSTr(CompleteDir(FName));
             if Command <> cmFileInit then FileList^.Select;
-            FileList^.ReadDirectory(Directory^+WildCard);
+            FileList^.ReadDirectory(zDirectory^+WildCard);
           end
         end
       else
@@ -1758,8 +1786,8 @@ var
   DirItem: PDirEntry;
 begin
   New(DirItem);
-  DirItem^.DisplayText := S.ReadStr;
-  DirItem^.Directory := S.ReadStr;
+  DirItem^.DisplayText^ := S.StrRead;
+  DirItem^.zDirectory^ := S.StrRead;
   GetItem := DirItem;
 end;
 
@@ -1768,7 +1796,7 @@ var
   DirItem: PDirEntry absolute Item;
 begin
   DisposeStr(DirItem^.DisplayText);
-  DisposeStr(DirItem^.Directory);
+  DisposeStr(DirItem^.zDirectory);
   Dispose(DirItem);
 end;
 
@@ -1776,15 +1804,15 @@ procedure TDirCollection.PutItem(var S: TStream; Item: Pointer);
 var
   DirItem: PDirEntry absolute Item;
 begin
-  S.WriteStr(DirItem^.DisplayText);
-  S.WriteStr(DirItem^.Directory);
+  S.StrWrite(@DirItem^.DisplayText[1]);
+  S.StrWrite(@DirItem^.zDirectory[1]);
 end;
 
 { TDirListBox }
 
 const
   DrivesS: String = '';
-  Drives: PString = @DrivesS;
+  Drives: PlString = @DrivesS;
 
 constructor TDirListBox.Init(var Bounds: TRect; AScrollBar:
   PScrollBar);
@@ -1831,7 +1859,7 @@ begin
   IsSelected := Inherited IsSelected(Item);
 end;
 
-procedure TDirListBox.NewDirectory(var ADir: DirStr);
+procedure TDirListBox.NewDirectory(const ADir: String);
 const
   PathDir       = 'ÀÄÂ';
   FirstDir     =   'ÀÂÄ';
@@ -1840,25 +1868,26 @@ const
   IndentSize    = '  ';
 var
   AList: PCollection;
-  NewDir, Dirct: DirStr;
+  NewDir, Dirct: String;
   C, OldC: Char;
   S, Indent: String[80];
-  P: PString;
+  P: PlString;
   NewCur: Word;
   isFirst: Boolean;
-  SR: SearchRec;
+  SR: TSearchRec;
   I: Sw_Integer;
+  DosError: LongInt;
 
   function NewDirEntry(const DisplayText, Directory: String): PDirEntry;{$ifdef PPC_BP}near;{$endif}
   var
     DirEntry: PDirEntry;
   begin
     New(DirEntry);
-    DirEntry^.DisplayText := NewStr(DisplayText);
+    DirEntry^.DisplayText^ := DisplayText;
     If Directory='' then
-      DirEntry^.Directory := NewStr(DirSeparator)
+      DirEntry^.zDirectory^ := DirSeparator {.}
     else
-      DirEntry^.Directory := NewStr(Directory);
+      DirEntry^.zDirectory^ := Directory;
     NewDirEntry := DirEntry;
   end;
 
@@ -1926,10 +1955,10 @@ begin
     NewCur := AList^.Count-1;
     isFirst := True;
     NewDir := Dirct + AllFiles;
-    FindFirst(NewDir, Directory, SR);
+    DosError :=FindFirst(NewDir, faDirectory, SR);
     while DosError = 0 do
     begin
-      if (SR.Attr and Directory <> 0) and
+      if (SR.Attr and faDirectory <> 0) and
          (SR.Name <> '.') and (SR.Name <> '..') then
       begin
    if isFirst then
@@ -1983,7 +2012,7 @@ begin
   Options := Options or ofCentered;
 
   R.Assign(3, 3, 30, 4);
-  DirInput := New(PInputLine, Init(R, FileNameLen+4));
+  DirInput := New(PInputLine, Init(R));
   Insert(DirInput);
   R.Assign(2, 2, 17, 3);
   Control := New(PLabel, Init(R,slDirectoryName, DirInput));
@@ -2055,7 +2084,7 @@ end;
 {****************************************************************************}
 procedure TChDirDialog.HandleEvent(var Event: TEvent);
 var
-  CurDir: DirStr;
+  CurDir: String;
   P: PDirEntry;
 begin
   TDialog.HandleEvent(Event);
@@ -2067,9 +2096,9 @@ begin
      cmChangeDir:
        begin
          P := DirList^.List^.At(DirList^.Focused);
-         if (P^.Directory^ = Drives^)
-            or DriveValid(P^.Directory^[1]) then
-           CurDir := P^.Directory^
+         if (P^.zDirectory^ = Drives^)
+            or DriveValid(P^.zDirectory^[1]) then
+           CurDir := P^.zDirectory^
          else Exit;
        end;
    else
@@ -2099,7 +2128,7 @@ end;
 {****************************************************************************}
 procedure TChDirDialog.SetUpDialog;
 var
-  CurDir: DirStr;
+  CurDir: String;
 begin
   if DirList <> nil then
   begin
@@ -2132,14 +2161,14 @@ end;
 {****************************************************************************}
 function TChDirDialog.Valid(Command: Word): Boolean;
 var
-  P: PathStr;
+  P: String;
 begin
   Valid := True;
   if Command = cmOk then
   begin
-    P := FExpand(DirInput^.Data^);
+    P := ExpandFileName(DirInput^.Data^);
     if (Length(P) > 3) and (P[Length(P)] = DirSeparator) then
-      Dec(P[0]);
+      setlength(P,length(P)-1);
     {$push}{$I-}
     ChDir(P);
     if (IOResult <> 0) then
@@ -2159,7 +2188,7 @@ end;
 {****************************************************************************}
 function TEditChDirDialog.DataSize : Sw_Word;
 begin
-  DataSize := SizeOf(DirStr);
+  DataSize := SizeOf(String);
 end;
 
 {****************************************************************************}
@@ -2167,7 +2196,7 @@ end;
 {****************************************************************************}
 procedure TEditChDirDialog.GetData (var Rec);
 var
-  CurDir : DirStr absolute Rec;
+  CurDir : String absolute Rec;
 begin
   if (DirInput = nil) then
     CurDir := ''
@@ -2188,7 +2217,7 @@ end;
 {****************************************************************************}
 procedure TEditChDirDialog.SetData (var Rec);
 var
-  CurDir : DirStr absolute Rec;
+  CurDir : String absolute Rec;
 begin
   if DirList <> nil then
   begin
@@ -2255,7 +2284,7 @@ begin
    Dec(SearchPos);
           if SearchPos = 0 then
             HandleDir:= ((GetShiftState and $3) <> 0) or (Event.CharCode in ['A'..'Z']);
-   CurString[0] := Char(SearchPos);
+     setlength(CurString,SearchPos);
       end
       else if (Event.CharCode = '.') then
         SearchPos := Pos('.',CurString)
@@ -2264,7 +2293,7 @@ begin
    Inc(SearchPos);
           if SearchPos = 1 then
             HandleDir := ((GetShiftState and 3) <> 0) or (Event.CharCode in ['A'..'Z']);
-   CurString[0] := Char(SearchPos);
+    setlength(CurString,SearchPos);
    CurString[SearchPos] := Event.CharCode;
       end;
       K := GetKey(CurString);
@@ -2315,7 +2344,7 @@ end;
 {****************************************************************************}
 { Contains                          }
 {****************************************************************************}
-function Contains(S1, S2: String): Boolean;
+function Contains(const S1, S2: String): Boolean;
   { Contains returns true if S1 contains any characters in S2. }
 var
   i : Byte;
@@ -2332,14 +2361,14 @@ end;
 {****************************************************************************}
 { StdDeleteFile                           }
 {****************************************************************************}
-function StdDeleteFile (AFile : FNameStr) : Boolean;
+function StdDeleteFile (AFile : String) : Boolean;
 var
   Rec : PStringRec;
 begin
   if CheckOnDelete then
   begin
     AFile := ShrinkPath(AFile,33);
-    Rec.AString := PString(@AFile);
+    Rec.AString := PlString(@AFile);
     StdDeleteFile := (MessageBox(^C + sDeleteFile,
                @Rec,mfConfirmation or mfOkCancel) = cmOk);
   end
@@ -2349,21 +2378,11 @@ end;
 {****************************************************************************}
 { DriveValid                         }
 {****************************************************************************}
-function DriveValid(Drive: Char): Boolean;
+function DriveValid(const Drive: String): Boolean;
 {$ifdef HAS_DOS_DRIVES}
-var
-  D: Char;
+
 begin
-  D := GetCurDrive;
-  {$push}{$I-}
-  ChDir(Drive+':');
-  if (IOResult = 0) then
-  begin
-    DriveValid := True;
-    ChDir(D+':')
-  end
-  else DriveValid := False;
-  {$pop}
+  sysutils.DirectoryExists(Drive+':'+DirectorySeparator);
 end;
 {$else HAS_DOS_DRIVES}
 begin
@@ -2390,70 +2409,48 @@ end;
 {****************************************************************************}
 { ExtractDir                         }
 {****************************************************************************}
-function ExtractDir(AFile: FNameStr): DirStr;
+function ExtractDir(const AFile: String): String;
   { ExtractDir returns the path of AFile terminated with a trailing '\'.  If
-    AFile contains no directory information, an empty string is returned. }
-var
-  D: DirStr;
-  N: NameStr;
-  E: ExtStr;
+    AFile contains no faDirectory information, an empty string is returned. }
+
 begin
-  FSplit(AFile,D,N,E);
-  if D = '' then
-  begin
-    ExtractDir := '';
-    Exit;
-  end;
-  if (D[Byte(D[0])] <> DirSeparator)
-  {$ifdef HASAMIGA}
-    and (D[Byte(D[0])] <> DriveSeparator)
-  {$endif}
-  then
-    D := D + DirSeparator;
-  ExtractDir := D;
+  ExtractDir := sysutils.ExtractFileDir(AFile);
 end;
 
 {****************************************************************************}
 { ExtractFileName                       }
 {****************************************************************************}
-function ExtractFileName(AFile: FNameStr): NameStr;
-var
-  D: DirStr;
-  N: NameStr;
-  E: ExtStr;
+function ExtractFileName(const AFile: String): String;
+
 begin
-  FSplit(AFile,D,N,E);
-  ExtractFileName := N;
+  Result := sysutils.ExtractFileName(AFile);
 end;
 
 {****************************************************************************}
 { FileExists                         }
 {****************************************************************************}
-function FileExists (AFile : FNameStr) : Boolean;
+function FileExists (AFile : String) : Boolean;
 begin
-  FileExists := (FSearch(AFile,'') <> '');
+  result := Sysutils.FileExists(AFile);
 end;
 
 {****************************************************************************}
 { GetCurDir                        }
 {****************************************************************************}
-function GetCurDir: DirStr;
+function GetCurDir: string;
 var
-  CurDir: DirStr;
+  CurDir: String;
 begin
   GetDir(0, CurDir);
   if (Length(CurDir) > 3) then
-  begin
-    Inc(CurDir[0]);
-    CurDir[Length(CurDir)] := DirSeparator;
-  end;
+    CurDir:= CurDir + DirSeparator;
   GetCurDir := CurDir;
 end;
 
 {****************************************************************************}
 { GetCurDrive                       }
 {****************************************************************************}
-function GetCurDrive: Char;
+function GetCurDrive: String;
 {$ifdef go32v2}
 var
   Regs : Registers;
@@ -2464,7 +2461,7 @@ begin
 end;
 {$else not go32v2}
 var
-  D : DirStr;
+  D : String;
 begin
   D:=GetCurDir;
   if (Length(D)>1) and (D[2]=':') then
@@ -2484,8 +2481,9 @@ end;
 {****************************************************************************}
 function IsDir(const S: String): Boolean;
 var
-  SR: SearchRec;
+  SR: TSearchRec;
   lIs: boolean;
+  DosError: LongInt;
 begin
   lIs:=false;
 {$ifdef Unix}
@@ -2500,9 +2498,9 @@ begin
 {$endif}
   if lIs=false then
   begin
-    FindFirst(S, Directory, SR);
+    DosError:=FindFirst(S, faDirectory, SR);
     if DosError = 0 then
-      lIs := (SR.Attr and Directory) <> 0
+      lIs := (SR.Attr and faDirectory) <> 0
     else
       lIs := False;
    {$ifdef fpc}
@@ -2583,12 +2581,12 @@ var
   i : Sw_Word;
 begin
   repeat
-    i := Pos('?',S);
+    i := Pos(WildChars[0],S);
     if (i > 0) then
       System.Delete(S,i,1);
   until (i = 0);
   repeat
-    i := Pos('*',S);
+    i := Pos(WildChars[1],S);
     if (i > 0) then
       System.Delete(S,i,1);
   until (i = 0);
@@ -2598,7 +2596,7 @@ end;
 {****************************************************************************}
 { OpenFile                          }
 {****************************************************************************}
-function OpenFile (var AFile : FNameStr; HistoryID : Byte) : Boolean;
+function OpenFile(var AFile: string; HistoryID: Byte): Boolean;
 var
   Dlg : PFileDialog;
 begin
@@ -2616,8 +2614,8 @@ end;
 {****************************************************************************}
 { OpenNewFile                       }
 {****************************************************************************}
-function OpenNewFile (var AFile: FNameStr; HistoryID: Byte): Boolean;
-  { OpenNewFile allows the user to select a directory from disk and enter a
+function OpenNewFile (var AFile: String; HistoryID: Byte): Boolean;
+  { OpenNewFile allows the user to select a Directory from disk and enter a
     new file name.  If the file name entered is an existing file the user is
     optionally prompted for confirmation of replacing the file based on the
     value in #CheckOnReplace#.  If a file name is successfully entered,
@@ -2629,7 +2627,7 @@ begin
   begin
     if not ValidFileName(AFile) then
       Exit;
-    if FileExists(AFile) then
+    if sysutils.FileExists(AFile) then
       if (not CheckOnReplace) or (not ReplaceFile(AFile)) then
    Exit;
     OpenNewFile := True;
@@ -2655,14 +2653,14 @@ end;
 {****************************************************************************}
 { StdReplaceFile                         }
 {****************************************************************************}
-function StdReplaceFile (AFile : FNameStr) : Boolean;
+function StdReplaceFile (AFile : String) : Boolean;
 var
   Rec : PStringRec;
 begin
   if CheckOnReplace then
   begin
     AFile := ShrinkPath(AFile,33);
-    Rec.AString := PString(@AFile);
+    Rec.AString := PlString(@AFile);
     StdReplaceFile :=
        (MessageBox(^C + sReplaceFile,
          @Rec,mfConfirmation or mfOkCancel) = cmOk);
@@ -2673,7 +2671,7 @@ end;
 {****************************************************************************}
 { SaveAs                           }
 {****************************************************************************}
-function SaveAs (var AFile : FNameStr; HistoryID : Word) : Boolean;
+function SaveAs (var AFile : String; HistoryID : Word) : Boolean;
 var
   Dlg : PFileDialog;
 begin
@@ -2684,23 +2682,23 @@ begin
   PHistory(Dlg^.FileName^.Next^.Next)^.HistoryID := HistoryID;
   Dlg^.HelpCtx := hcSaveAs;
   if (Application^.ExecuteDialog(Dlg,@AFile) = cmFileOpen) and
-     ((not FileExists(AFile)) or ReplaceFile(AFile)) then
+     ((not sysutils.FileExists(AFile)) or ReplaceFile(AFile)) then
     SaveAs := True;
 end;
 
 {****************************************************************************}
 { SelectDir                        }
 {****************************************************************************}
-function SelectDir (var ADir : DirStr; HistoryID : Byte) : Boolean;
+function SelectDir(var ADir: string; HistoryID: Byte): Boolean;
 var
-  Dir: DirStr;
+  Dir: String;
   Dlg : PEditChDirDialog;
-  Rec : DirStr;
+  Rec : String;
 begin
   {$push}{$I-}
   GetDir(0,Dir);
   {$pop}
-  Rec := FExpand(ADir);
+  Rec := ExpandFileName(ADir);
   Dlg := New(PEditChDirDialog,Init(cdHelpButton,HistoryID));
   if (Application^.ExecuteDialog(Dlg,@Rec) = cmOk) then
   begin
@@ -2716,18 +2714,22 @@ end;
 {****************************************************************************}
 { ShrinkPath                         }
 {****************************************************************************}
-function ShrinkPath (AFile : FNameStr; MaxLen : Byte) : FNameStr;
+function ShrinkPath (AFile : String; MaxLen : Byte) : String;
 var
   Filler: string;
-  D1 : DirStr;
-  N1 : NameStr;
-  E1 : ExtStr;
+  D1 : String;
+  N1 : String;
+  E1 : String;
   i  : Sw_Word;
 
 begin
   if Length(AFile) > MaxLen then
   begin
-    FSplit(FExpand(AFile),D1,N1,E1);
+    AFile:=   ExpandFileName(AFile);
+    D1:= sysutils.ExtractFileDir(AFile);
+    N1:= sysutils.ExtractFileName(AFile);
+    E1:= sysutils.ExtractFileName(AFile);
+
     AFile := Copy(D1,1,3) + '..' + DirSeparator;
     i := Pred(Length(D1));
     while (i > 0) and (D1[i] <> DirSeparator) do
@@ -2756,12 +2758,12 @@ end;
 {****************************************************************************}
 { ValidFileName                           }
 {****************************************************************************}
-function ValidFileName(var FileName: PathStr): Boolean;
+function ValidFileName(var FileName: String): Boolean;
 var
-  IllegalChars: string[12];
-  Dir: DirStr;
-  Name: NameStr;
-  Ext: ExtStr;
+  lsIllegalChars: string[12];
+  lsDir: String;
+  lsName: String;
+
 begin
 {$ifdef PPC_FPC}
 {$ifdef go32v2}
@@ -2772,7 +2774,7 @@ begin
     IllegalChars := ';,=+<>|"[] '+DirSeparator;
 {$else not go32v2}
 {$ifdef OS_WINDOWS}
-    IllegalChars := ';,=+<>|"[]'+DirSeparator;
+    lsIllegalChars := ';,=+<>|"[]'+DirSeparator;
 {$else not go32v2 and not OS_WINDOWS }
     IllegalChars := ';,=+<>|"[] '+DirSeparator;
 {$endif not OS_WINDOWS}
@@ -2780,12 +2782,13 @@ begin
 {$else not PPC_FPC}
   IllegalChars := ';,=+<>|"[] '+DirSeparator;
 {$endif PPC_FPC}
-  ValidFileName := True;
-  FSplit(FileName, Dir, Name, Ext);
-  if not ((Dir = '') or PathValid(Dir)) or
-     Contains(Name, IllegalChars) or
-     Contains(Dir, IllegalChars) then
-    ValidFileName := False;
+  Result := True;
+  lsName:=ExtractFileName(FileName);
+  lsDir:=ExtractFileDir(Filename);
+  if not ((lsDir = '') or PathValid(lsDir)) or
+     Contains(lsName, lsIllegalChars) or
+     Contains(lsDir, lsIllegalChars) then
+    Result := False;
 end;
 
 {****************************************************************************}

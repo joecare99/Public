@@ -390,8 +390,8 @@ TYPE
       PROCEDURE KeyEvent (Var Event: TEvent);
       PROCEDURE GetEvent (Var Event: TEvent); Virtual;
       PROCEDURE PutEvent (Var Event: TEvent); Virtual;
-      PROCEDURE GetExtent (out Extent: TRect);
-      procedure GetBounds(out Bounds: TRect);
+      PROCEDURE GetExtent ({$ifopt H+}out{$else}var{$Endif} Extent: TRect);
+      procedure GetBounds({$ifopt H+}out{$else}var{$Endif} Bounds: TRect);
       procedure SetBounds(const Bounds: TRect);
       PROCEDURE GetClipRect (Var Clip: TRect);
       PROCEDURE ClearEvent (Var Event: TEvent);
@@ -1116,9 +1116,9 @@ begin
      repeat
        p:=cur^.GetPalette;
        if (p<>Nil) then
-        if ord(p^[0])<>0 then
+        if length(p^)<>0 then
          begin
-           if color>ord(p^[0]) then
+           if color>length(p^) then
             begin
               MapColor:=errorAttr;
               Exit;
@@ -1763,7 +1763,7 @@ END;
 {--TView--------------------------------------------------------------------}
 {  GetExtent -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB         }
 {---------------------------------------------------------------------------}
-procedure TView.GetExtent(out Extent: TRect);
+procedure TView.GetExtent({$ifopt H+}out{$else}var{$Endif} Extent: TRect);
 BEGIN
    Extent.A.X := 0;                                   { Zero x field }
    Extent.A.Y := 0;                                   { Zero y field }
@@ -1774,7 +1774,7 @@ END;
 {--TView--------------------------------------------------------------------}
 {  GetBounds -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB         }
 {---------------------------------------------------------------------------}
-procedure TView.GetBounds(out Bounds: TRect);
+procedure TView.GetBounds({$ifopt H+}out{$else}var{$Endif} Bounds: TRect);
 BEGIN
    Bounds.A := Origin;                                { Get first corner }
    Bounds.B.X := Origin.X + Size.X;                   { Calc corner x value }
@@ -2900,7 +2900,7 @@ end;
 {  GetPalette -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Jul99 LdB        }
 {---------------------------------------------------------------------------}
 FUNCTION TFrame.GetPalette: PPalette;
-CONST P: String[Length(CFrame)] = CFrame;             { Always normal string }
+CONST P: String{$ifopt H-}[Length(CFrame)]{$endif} = CFrame;             { Always normal string }
 BEGIN
    GetPalette := PPalette(@P);                        { Return palette }
 END;
@@ -3043,7 +3043,7 @@ END;
 {  GetPalette -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 22May98 LdB        }
 {---------------------------------------------------------------------------}
 FUNCTION TScrollBar.GetPalette: PPalette;
-CONST P: String[Length(CScrollBar)] = CScrollBar;     { Always normal string }
+CONST P: String{$ifopt H-}[Length(CScrollBar)]{$endif} = CScrollBar;     { Always normal string }
 BEGIN
    GetPalette := PPalette(@P);                        { Return palette }
 END;
@@ -3362,7 +3362,7 @@ END;
 {  GetPalette -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 26Jul99 LdB        }
 {---------------------------------------------------------------------------}
 FUNCTION TScroller.GetPalette: PPalette;
-CONST P: String[Length(CScroller)] = CScroller;       { Always normal string }
+CONST P: String{$ifopt H-}[Length(CScroller)]{$endif} = CScroller;       { Always normal string }
 BEGIN
    GetPalette := PPalette(@P);                        { Scroller palette }
 END;
@@ -3494,7 +3494,7 @@ END;
 {  GetPalette -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 28May98 LdB        }
 {---------------------------------------------------------------------------}
 FUNCTION TListViewer.GetPalette: PPalette;
-CONST P: String[Length(CListViewer)] = CListViewer;   { Always normal string }
+CONST P: String{$ifopt H-}[Length(CListViewer)]{$endif} = CListViewer;   { Always normal string }
 BEGIN
    GetPalette := PPalette(@P);                        { Return palette }
 END;
@@ -3834,7 +3834,7 @@ END;
 {  GetPalette -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB        }
 {---------------------------------------------------------------------------}
 function TWindow.GetPalette: PPalette;
-CONST  P: ARRAY [wpBlueWindow..wpGrayWindow] Of String[Length(CBlueWindow)] =
+CONST  P: ARRAY [wpBlueWindow..wpGrayWindow] Of String{$ifopt H-}[Length(CBlueWindow)]{$endif} =
   (CBlueWindow, CCyanWindow, CGrayWindow);            { Always normal string }
 BEGIN
    GetPalette := PPalette(@P[Palette]);               { Return palette }

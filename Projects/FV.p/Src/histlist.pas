@@ -1,24 +1,24 @@
 {********[ SOURCE FILE OF GRAPHICAL FREE VISION ]**********}
-{                                                          }
+
 {   System independent GRAPHICAL clone of HISTLIST.PAS     }
-{                                                          }
+
 {   Interface Copyright (c) 1992 Borland International     }
-{                                                          }
+
 {   Copyright (c) 1996, 1997, 1998, 1999 by Leon de Boer   }
 {   ldeboer@attglobal.net  - primary e-mail address        }
 {   ldeboer@starwon.com.au - backup e-mail address         }
-{                                                          }
+
 {****************[ THIS CODE IS FREEWARE ]*****************}
-{                                                          }
+
 {     This sourcecode is released for the purpose to       }
 {   promote the pascal language on all platforms. You may  }
 {   redistribute it and/or modify with the following       }
 {   DISCLAIMER.                                            }
-{                                                          }
+
 {     This SOURCE CODE is distributed "AS IS" WITHOUT      }
 {   WARRANTIES AS TO PERFORMANCE OF MERCHANTABILITY OR     }
 {   ANY OTHER WARRANTIES WHETHER EXPRESSED OR IMPLIED.     }
-{                                                          }
+
 {*****************[ SUPPORTED PLATFORMS ]******************}
 {     16 and 32 Bit compilers                              }
 {        DOS      - Turbo Pascal 7.0 +      (16 Bit)       }
@@ -31,7 +31,7 @@
 {                 - Speedsoft Sybil 2.0+    (32 Bit)       }
 {                 - FPC 0.9912+             (32 Bit)       }
 {        OS2      - Virtual Pascal 1.0+     (32 Bit)       }
-{                                                          }
+
 {******************[ REVISION HISTORY ]********************}
 {  Version  Date        Fix                                }
 {  -------  ---------   ---------------------------------  }
@@ -44,10 +44,11 @@
 {  1.51     03 Nov 99   FPC windows support added          }
 {**********************************************************}
 
-UNIT HistList;
+unit HistList;
 
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
-                                  INTERFACE
+interface
+
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
 
 {====Include file to sort compiler platform out =====================}
@@ -57,25 +58,25 @@ UNIT HistList;
 {==== Compiler directives ===========================================}
 
 {$IFNDEF PPC_FPC}{ FPC doesn't support these switches }
-  {$F-} { Short calls are okay }
-  {$A+} { Word Align Data }
-  {$B-} { Allow short circuit boolean evaluations }
-  {$O+} { This unit may be overlaid }
-  {$G+} { 286 Code optimization - if you're on an 8088 get a real computer }
-  {$P-} { Normal string variables }
-  {$N-} { No 80x87 code generation }
-  {$E+} { Emulation is on }
+  {$F-}{ Short calls are okay }
+  {$A+}{ Word Align Data }
+  {$B-}{ Allow short circuit boolean evaluations }
+  {$O+}{ This unit may be overlaid }
+  {$G+}{ 286 Code optimization - if you're on an 8088 get a real computer }
+  {$P-}{ Normal string variables }
+  {$N-}{ No 80x87 code generation }
+  {$E+}{ Emulation is on }
 {$ENDIF}
 
-{$X+} { Extended syntax is ok }
-{$R-} { Disable range checking }
-{$S-} { Disable Stack Checking }
-{$I-} { Disable IO Checking }
-{$Q-} { Disable Overflow Checking }
-{$V-} { Turn off strict VAR strings }
+{$X+}{ Extended syntax is ok }
+{$R-}{ Disable range checking }
+{$S-}{ Disable Stack Checking }
+{$I-}{ Disable IO Checking }
+{$Q-}{ Disable Overflow Checking }
+{$V-}{ Turn off strict VAR strings }
 {====================================================================}
 
-USES FVCommon, Objects;                                 { Standard GFV units }
+uses FVCommon, Objects;                                 { Standard GFV units }
 
 {***************************************************************************}
 {                            INTERFACE ROUTINES                             }
@@ -89,13 +90,13 @@ USES FVCommon, Objects;                                 { Standard GFV units }
 Initializes the history system usually called from Application.Init
 30Sep99 LdB
 ---------------------------------------------------------------------}
-PROCEDURE InitHistory;
+procedure InitHistory;
 
 {-DoneHistory--------------------------------------------------------
 Destroys the history system usually called from Application.Done
 30Sep99 LdB
 ---------------------------------------------------------------------}
-PROCEDURE DoneHistory;
+procedure DoneHistory;
 
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                          HISTORY ITEM ROUTINES                            }
@@ -105,27 +106,27 @@ PROCEDURE DoneHistory;
 Returns the number of strings in the history list with ID number Id.
 30Sep99 LdB
 ---------------------------------------------------------------------}
-FUNCTION HistoryCount (Id: Byte): Word;
+function HistoryCount(Id: byte): word;
 
 {-HistoryStr---------------------------------------------------------
 Returns the Index'th string in the history list with ID number Id.
 30Sep99 LdB
 ---------------------------------------------------------------------}
-FUNCTION HistoryStr (Id: Byte; Index: Sw_Integer): String;
+function HistoryStr(Id: byte; Index: Sw_Integer): string;
 
 {-ClearHistory-------------------------------------------------------
 Removes all strings from all history lists.
 30Sep99 LdB
 ---------------------------------------------------------------------}
-PROCEDURE ClearHistory;
+procedure ClearHistory;
 
 {-HistoryAdd---------------------------------------------------------
 Adds the string Str to the history list indicated by Id.
 30Sep99 LdB
 ---------------------------------------------------------------------}
-PROCEDURE HistoryAdd (Id: Byte; Const Str: String);
+procedure HistoryAdd(Id: byte; const Str: string);
 
-function HistoryRemove(Id: Byte; Index: Sw_Integer): boolean;
+function HistoryRemove(Id: byte; Index: Sw_Integer): boolean;
 
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {              HISTORY STREAM STORAGE AND RETREIVAL ROUTINES                }
@@ -138,7 +139,7 @@ of the block read. Use LoadHistory to restore a history block saved
 with StoreHistory
 30Sep99 LdB
 ---------------------------------------------------------------------}
-PROCEDURE LoadHistory (Var S: TStream);
+procedure LoadHistory(var S: TStream);
 
 {-StoreHistory--------------------------------------------------------
 Writes the currently used portion of the history block to the stream
@@ -146,7 +147,7 @@ S, first writing the length of the block then the block itself. Use
 the LoadHistory procedure to restore the history block.
 30Sep99 LdB
 ---------------------------------------------------------------------}
-PROCEDURE StoreHistory (Var S: TStream);
+procedure StoreHistory(var S: TStream);
 
 {***************************************************************************}
 {                        INITIALIZED PUBLIC VARIABLES                       }
@@ -154,13 +155,14 @@ PROCEDURE StoreHistory (Var S: TStream);
 {---------------------------------------------------------------------------}
 {                 INITIALIZED DOS/DPMI/WIN/NT/OS2 VARIABLES                 }
 {---------------------------------------------------------------------------}
-CONST
-   HistorySize: sw_integer = 64*1024;                    { Maximum history size }
-   HistoryUsed: sw_integer = 0;                          { History used }
-   HistoryBlock: Pointer = Nil;                       { Storage block }
+const
+  HistorySize: sw_integer = 64 * 1024;                    { Maximum history size }
+  HistoryUsed: sw_integer = 0;                          { History used }
+  HistoryBlock: Pointer = nil;                       { Storage block }
 
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
-                                IMPLEMENTATION
+implementation
+
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
 
 {***************************************************************************}
@@ -181,9 +183,9 @@ CONST
 {---------------------------------------------------------------------------}
 {                UNINITIALIZED DOS/DPMI/WIN/NT/OS2 VARIABLES                }
 {---------------------------------------------------------------------------}
-VAR
-   CurId: Byte;                                       { Current history id }
-   CurString: PString;                                { Current string }
+var
+  CurId: byte;                                       { Current history id }
+  CurString: PString;                                { Current string }
 
 {***************************************************************************}
 {                          PRIVATE UNIT ROUTINES                            }
@@ -192,84 +194,92 @@ VAR
 {---------------------------------------------------------------------------}
 {  StartId -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Sep99 LdB           }
 {---------------------------------------------------------------------------}
-PROCEDURE StartId (Id: Byte);
-BEGIN
-   CurId := Id;                                       { Set current id }
-   CurString := HistoryBlock;                         { Set current string }
-END;
+procedure StartId(Id: byte);
+begin
+  CurId := Id;                                       { Set current id }
+  CurString := HistoryBlock;                         { Set current string }
+end;
 
 {---------------------------------------------------------------------------}
 {  DeleteString -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Sep99 LdB      }
 {---------------------------------------------------------------------------}
-PROCEDURE DeleteString;
-VAR Len: Sw_Integer; P, P2: PChar;
-BEGIN
-   P := PChar(CurString);                             { Current string }
-   P2 := PChar(CurString);                            { Current string }
-   Len := PByte(P2)^+3;                               { Length of data }
-   Dec(P, 2);                                         { Correct position }
-   Inc(P2, PByte(P2)^+1);                             { Next hist record }
-   { Shuffle history }
-   Move(P2^, P^, Pointer(HistoryBlock) + HistoryUsed - Pointer(P2) );
-   Dec(HistoryUsed, Len);                             { Adjust history used }
-END;
+procedure DeleteString;
+var
+  Len: Sw_Integer;
+  P, P2: PChar;
+begin
+  P := PChar(CurString);                             { Current string }
+  P2 := PChar(CurString);                            { Current string }
+  Len := PByte(P2)^ + 3;                               { Length of data }
+  Dec(P, 2);                                         { Correct position }
+  Inc(P2, PByte(P2)^ + 1);                             { Next hist record }
+  { Shuffle history }
+  Move(P2^, P^, Pointer(HistoryBlock) + HistoryUsed - Pointer(P2));
+  Dec(HistoryUsed, Len);                             { Adjust history used }
+end;
 
 {---------------------------------------------------------------------------}
 {  AdvanceStringPtr -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Sep99 LdB  }
 {---------------------------------------------------------------------------}
-PROCEDURE AdvanceStringPtr;
-VAR P: PChar;
-BEGIN
-   While (CurString <> Nil) Do Begin
-     If (Pointer(CurString) >= Pointer(HistoryBlock) + HistoryUsed) Then Begin{ Last string check }
-       CurString := Nil;                              { Clear current string }
-       Exit;                                          { Now exit }
-     End;
-     Inc(PChar(CurString), PByte(CurString)^+1);      { Move to next string }
-     If (Pointer(CurString) >= Pointer(HistoryBlock) + HistoryUsed) Then Begin{ Last string check }
-       CurString := Nil;                              { Clear current string }
-       Exit;                                          { Now exit }
-     End;
-     P := PChar(CurString);                        { Transfer record ptr }
-     Inc(PChar(CurString), 2);                        { Move to string }
-     if (P^<>#0) then
-       RunError(215);
-     Inc(P);
-     If (P^ = Chr(CurId)) Then Exit;                    { Found the string }
-   End;
-END;
+procedure AdvanceStringPtr;
+var
+  P: PChar;
+begin
+  while (CurString <> nil) do
+  begin
+    if (Pointer(CurString) >= Pointer(HistoryBlock) + HistoryUsed) then
+    begin{ Last string check }
+      CurString := nil;                              { Clear current string }
+      Exit;                                          { Now exit }
+    end;
+    Inc(PChar(CurString), PByte(CurString)^ + 1);      { Move to next string }
+    if (Pointer(CurString) >= Pointer(HistoryBlock) + HistoryUsed) then
+    begin{ Last string check }
+      CurString := nil;                              { Clear current string }
+      Exit;                                          { Now exit }
+    end;
+    P := PChar(CurString);                        { Transfer record ptr }
+    Inc(PChar(CurString), 2);                        { Move to string }
+    if (P^ <> #0) then
+      RunError(215);
+    Inc(P);
+    if (P^ = Chr(CurId)) then
+      Exit;                    { Found the string }
+  end;
+end;
 
 {---------------------------------------------------------------------------}
 {  InsertString -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Sep99 LdB      }
 {---------------------------------------------------------------------------}
-PROCEDURE InsertString (Id: Byte; Const Str: String);
-VAR P, P1, P2: PChar;
-BEGIN
-  while (HistoryUsed+Length(Str)+3>HistorySize) do
-   begin
-       P:=PChar(HistoryBlock);
-       while Pointer(P)<Pointer(HistoryBlock)+HistorySize do
-         begin
-           if Pointer(P)+Length(PShortString(P+2)^)+6+Length(Str) >
-              Pointer(HistoryBlock)+HistorySize then
-             begin
-               Dec(HistoryUsed,Length(PShortString(P+2)^)+3);
-               FillChar(P^,Pointer(HistoryBlock)+HistorySize-Pointer(P),#0);
-               break;
-             end;
-           Inc(P,Length(PShortString(P+2)^)+3);
-         end;
-   end;
-   P1 := PChar(HistoryBlock)+1;                     { First history record }
-   P2 := P1+Length(Str)+3;                          { History record after }
-   Move(P1^, P2^, HistoryUsed - 1);                 { Shuffle history data }
-   P1^:=#0;                         { Set marker byte }
-   Inc(P1);
-   P1^:=Chr(Id);                          { Set history id }
-   Inc(P1);
-   Move(Str[0], P1^, Length(Str)+1);  { Set history string }
-   Inc(HistoryUsed, Length(Str)+3);                 { Inc history used }
-END;
+procedure InsertString(Id: byte; const Str: string);
+var
+  P, P1, P2: PChar;
+begin
+  while (HistoryUsed + Length(Str) + 3 > HistorySize) do
+  begin
+    P := PChar(HistoryBlock);
+    while Pointer(P) < Pointer(HistoryBlock) + HistorySize do
+    begin
+      if Pointer(P) + Length(PShortString(P + 2)^) + 6 + Length(Str) >
+        Pointer(HistoryBlock) + HistorySize then
+      begin
+        Dec(HistoryUsed, Length(PShortString(P + 2)^) + 3);
+        FillChar(P^, Pointer(HistoryBlock) + HistorySize - Pointer(P), #0);
+        break;
+      end;
+      Inc(P, Length(PShortString(P + 2)^) + 3);
+    end;
+  end;
+  P1 := PChar(HistoryBlock) + 1;                     { First history record }
+  P2 := P1 + Length(Str) + 3;                          { History record after }
+  Move(P1^, P2^, HistoryUsed - 1);                 { Shuffle history data }
+  P1^ := #0;                         { Set marker byte }
+  Inc(P1);
+  P1^ := Chr(Id);                          { Set history id }
+  Inc(P1);
+  Move(Str[1], P1^, Length(Str) + 1);  { Set history string }
+  Inc(HistoryUsed, Length(Str) + 3);                 { Inc history used }
+end;
 
 {***************************************************************************}
 {                            INTERFACE ROUTINES                             }
@@ -282,24 +292,24 @@ END;
 {---------------------------------------------------------------------------}
 {  InitHistory -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Sep99 LdB       }
 {---------------------------------------------------------------------------}
-PROCEDURE InitHistory;
-BEGIN
-   if HistorySize>0 then
-     GetMem(HistoryBlock, HistorySize);                 { Allocate block }
-   ClearHistory;                                      { Clear the history }
-END;
+procedure InitHistory;
+begin
+  if HistorySize > 0 then
+    GetMem(HistoryBlock, HistorySize);                 { Allocate block }
+  ClearHistory;                                      { Clear the history }
+end;
 
 {---------------------------------------------------------------------------}
 {  DoneHistory -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Sep99 LdB       }
 {---------------------------------------------------------------------------}
-PROCEDURE DoneHistory;
-BEGIN
-   If (HistoryBlock <> Nil) Then                      { History block valid }
-     begin
-       FreeMem(HistoryBlock);              { Release history block }
-       HistoryBlock:=nil;
-     end;
-END;
+procedure DoneHistory;
+begin
+  if (HistoryBlock <> nil) then                      { History block valid }
+  begin
+    FreeMem(HistoryBlock);              { Release history block }
+    HistoryBlock := nil;
+  end;
+end;
 
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                          HISTORY ITEM ROUTINES                            }
@@ -308,77 +318,91 @@ END;
 {---------------------------------------------------------------------------}
 {  HistoryCount -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Sep99 LdB      }
 {---------------------------------------------------------------------------}
-FUNCTION HistoryCount(Id: Byte): Word;
-VAR Count: Word;
-BEGIN
-   StartId(Id);                                       { Set to first record }
-   Count := 0;                                        { Clear count }
-   If (HistoryBlock <> Nil) Then Begin                { History initalized }
-     AdvanceStringPtr;                                { Move to first string }
-     While (CurString <> Nil) Do Begin
-       Inc(Count);                                    { Add one to count }
-       AdvanceStringPtr;                              { Move to next string }
-     End;
-  End;
+function HistoryCount(Id: byte): word;
+var
+  Count: word;
+begin
+  StartId(Id);                                       { Set to first record }
+  Count := 0;                                        { Clear count }
+  if (HistoryBlock <> nil) then
+  begin                { History initalized }
+    AdvanceStringPtr;                                { Move to first string }
+    while (CurString <> nil) do
+    begin
+      Inc(Count);                                    { Add one to count }
+      AdvanceStringPtr;                              { Move to next string }
+    end;
+  end;
   HistoryCount := Count;                              { Return history count }
-END;
+end;
 
 {---------------------------------------------------------------------------}
 {  HistoryStr -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Sep99 LdB        }
 {---------------------------------------------------------------------------}
-FUNCTION HistoryStr(Id: Byte; Index: Sw_Integer): String;
-VAR I: Sw_Integer;
-BEGIN
-   StartId(Id);                                       { Set to first record }
-   If (HistoryBlock <> Nil) Then Begin                { History initalized }
-     For I := 0 To Index Do AdvanceStringPtr;         { Find indexed string }
-     If (CurString <> Nil) Then
-       HistoryStr := CurString^ Else                  { Return string }
-       HistoryStr := '';                              { Index not found }
-   End Else HistoryStr := '';                         { History uninitialized }
-END;
+function HistoryStr(Id: byte; Index: Sw_Integer): string;
+var
+  I: Sw_Integer;
+begin
+  StartId(Id);                                       { Set to first record }
+  if (HistoryBlock <> nil) then
+  begin                { History initalized }
+    for I := 0 to Index do
+      AdvanceStringPtr;         { Find indexed string }
+    if (CurString <> nil) then
+      HistoryStr := CurString^
+    else                  { Return string }
+      HistoryStr := '';                              { Index not found }
+  end
+  else
+    HistoryStr := '';                         { History uninitialized }
+end;
 
 {---------------------------------------------------------------------------}
 {  ClearHistory -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Sep99 LdB      }
 {---------------------------------------------------------------------------}
-PROCEDURE ClearHistory;
-BEGIN
-   If (HistoryBlock <> Nil) Then Begin                { History initiated }
-     PChar(HistoryBlock)^ := #0;                      { Clear first byte }
-     HistoryUsed := 1;        { Set position }
-   End;
-END;
+procedure ClearHistory;
+begin
+  if (HistoryBlock <> nil) then
+  begin                { History initiated }
+    PChar(HistoryBlock)^ := #0;                      { Clear first byte }
+    HistoryUsed := 1;        { Set position }
+  end;
+end;
 
 {---------------------------------------------------------------------------}
 {  HistoryAdd -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Sep99 LdB        }
 {---------------------------------------------------------------------------}
-PROCEDURE HistoryAdd (Id: Byte; Const Str: String);
-BEGIN
-   If (Str = '') Then Exit;                           { Empty string exit }
-   If (HistoryBlock = Nil) Then Exit;                 { History uninitialized }
-   StartId(Id);                                       { Set current data }
-   AdvanceStringPtr;                                  { Find the string }
-   While (CurString <> nil) Do Begin
-     If (Str = CurString^) Then DeleteString;         { Delete duplicates }
-     AdvanceStringPtr;                                { Find next string }
-   End;
-   InsertString(Id, Str);                             { Add new history item }
-END;
+procedure HistoryAdd(Id: byte; const Str: string);
+begin
+  if (Str = '') then
+    Exit;                           { Empty string exit }
+  if (HistoryBlock = nil) then
+    Exit;                 { History uninitialized }
+  StartId(Id);                                       { Set current data }
+  AdvanceStringPtr;                                  { Find the string }
+  while (CurString <> nil) do
+  begin
+    if (Str = CurString^) then
+      DeleteString;         { Delete duplicates }
+    AdvanceStringPtr;                                { Find next string }
+  end;
+  InsertString(Id, Str);                             { Add new history item }
+end;
 
-function HistoryRemove(Id: Byte; Index: Sw_Integer): boolean;
+function HistoryRemove(Id: byte; Index: Sw_Integer): boolean;
 var
   I: Sw_Integer;
 begin
   StartId(Id);
   for I := 0 to Index do
-   AdvanceStringPtr;                                  { Find the string }
+    AdvanceStringPtr;                                  { Find the string }
   if CurString <> nil then
-    begin
-       DeleteString;
-       HistoryRemove:=true;
-    end
+  begin
+    DeleteString;
+    HistoryRemove := True;
+  end
   else
-    HistoryRemove:=false;
+    HistoryRemove := False;
 end;
 
 
@@ -389,28 +413,39 @@ end;
 {---------------------------------------------------------------------------}
 {  LoadHistory -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Sep99 LdB       }
 {---------------------------------------------------------------------------}
-PROCEDURE LoadHistory (Var S: TStream);
-VAR Size: sw_integer;
-BEGIN
-   S.Read(Size, sizeof(Size));                        { Read history size }
-   If (HistoryBlock <> Nil) Then Begin                { History initialized }
-     If (Size <= HistorySize) Then Begin
-       S.Read(HistoryBlock^, Size);                   { Read the history }
-       HistoryUsed := Size;                           { History used }
-     End Else S.Seek(S.GetPos + Size);                { Move stream position }
-   End Else S.Seek(S.GetPos + Size);                  { Move stream position }
-END;
+procedure LoadHistory(var S: TStream);
+var
+  Size: sw_integer;
+begin
+  S.Read(Size, sizeof(Size));                        { Read history size }
+  if (HistoryBlock <> nil) then
+  begin                { History initialized }
+    if (Size <= HistorySize) then
+    begin
+      S.Read(HistoryBlock^, Size);                   { Read the history }
+      HistoryUsed := Size;                           { History used }
+    end
+    else
+      S.Seek(S.GetPos + Size);                { Move stream position }
+  end
+  else
+    S.Seek(S.GetPos + Size);                  { Move stream position }
+end;
 
 {---------------------------------------------------------------------------}
 {  StoreHistory -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Sep99 LdB      }
 {---------------------------------------------------------------------------}
-PROCEDURE StoreHistory (Var S: TStream);
-VAR Size: sw_integer;
-BEGIN
-   If (HistoryBlock = Nil) Then Size := 0 Else        { No history data }
-     Size := HistoryUsed;                             { Size of history data }
-   S.Write(Size, sizeof(Size));                       { Write history size }
-   If (Size > 0) Then S.Write(HistoryBlock^, Size);   { Write history data }
-END;
+procedure StoreHistory(var S: TStream);
+var
+  Size: sw_integer;
+begin
+  if (HistoryBlock = nil) then
+    Size := 0
+  else        { No history data }
+    Size := HistoryUsed;                             { Size of history data }
+  S.Write(Size, sizeof(Size));                       { Write history size }
+  if (Size > 0) then
+    S.Write(HistoryBlock^, Size);   { Write history data }
+end;
 
-END.
+end.

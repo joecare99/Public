@@ -406,7 +406,7 @@ end;
 
 function Toutlineviewer.getpalette:Ppalette;
 
-const p:string[length(Coutlineviewer)]=Coutlineviewer;
+const p:string{$ifopt H-}[length(Coutlineviewer)]{$endif}=Coutlineviewer;
 
 begin
   getpalette:=@p;

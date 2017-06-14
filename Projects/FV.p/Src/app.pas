@@ -452,7 +452,7 @@ END;
 {  GetPalette -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB        }
 {---------------------------------------------------------------------------}
 FUNCTION TBackGround.GetPalette: PPalette;
-CONST P: String[Length(CBackGround)] = CbackGround;   { Always normal string }
+CONST P: String{$ifopt H-}[Length(CBackGround)]{$ENDIF} = CbackGround;   { Always normal string }
 BEGIN
    GetPalette := PPalette(@P);                        { Return palette }
 END;
