@@ -75,7 +75,7 @@
         <Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
         <VerInfo_Keys>CompanyName=;FileDescription=$(MSBuildProjectName);FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=$(MSBuildProjectName);ProductVersion=1.0.0.0;Comments=;ProgramID=com.embarcadero.$(ModuleName)</VerInfo_Keys>
         <UWP_DelphiLogo150>$(BDS)\bin\Artwork\Windows\UWP\delphi_UwpDefault_150.png</UWP_DelphiLogo150>
-        <DCC_Namespace>Winapi;System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
+        <DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
         <Icon_MainIcon>Asteroids_Icon.ico</Icon_MainIcon>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
     </PropertyGroup>
@@ -93,6 +93,10 @@
         <DCC_Define>DEBUG;$(DCC_Define)</DCC_Define>
         <DCC_Optimize>false</DCC_Optimize>
         <DCC_GenerateStackFrames>true</DCC_GenerateStackFrames>
+        <DCC_OutputDependencies>true</DCC_OutputDependencies>
+        <DCC_OutputXMLDocumentation>true</DCC_OutputXMLDocumentation>
+        <DCC_DebugDCUs>true</DCC_DebugDCUs>
+        <DCC_SymbolReferenceInfo>2</DCC_SymbolReferenceInfo>
     </PropertyGroup>
     <PropertyGroup Condition="'$(Cfg_2_Win32)'!=''">
         <AppEnableRuntimeThemes>true</AppEnableRuntimeThemes>
@@ -108,23 +112,23 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\..\Grafik\spiele\asteroids_src\uGame.pas"/>
-        <DCCReference Include="..\..\Grafik\spiele\asteroids_src\uMain.pas">
+        <DCCReference Include="..\source\asteroids\uGame.pas"/>
+        <DCCReference Include="..\source\asteroids\uMain.pas">
             <Form>Main</Form>
         </DCCReference>
-        <DCCReference Include="..\..\Grafik\spiele\asteroids_src\uSettings.pas">
+        <DCCReference Include="..\source\asteroids\uSettings.pas">
             <Form>Settings</Form>
         </DCCReference>
-        <DCCReference Include="..\..\Grafik\spiele\asteroids_src\uKeys.pas">
+        <DCCReference Include="..\source\asteroids\uKeys.pas">
             <Form>Keys</Form>
         </DCCReference>
-        <DCCReference Include="..\..\Grafik\spiele\asteroids_src\uInfo.pas">
+        <DCCReference Include="..\source\asteroids\uInfo.pas">
             <Form>Info</Form>
         </DCCReference>
-        <DCCReference Include="..\..\Grafik\spiele\asteroids_src\uDlg_EnterName.pas">
+        <DCCReference Include="..\source\asteroids\uDlg_EnterName.pas">
             <Form>Dlg_EnterName</Form>
         </DCCReference>
-        <DCCReference Include="..\..\Grafik\spiele\asteroids_src\uHighscores.pas">
+        <DCCReference Include="..\source\asteroids\uHighscores.pas">
             <Form>Highscores</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

@@ -4,9 +4,9 @@ object Info: TInfo
   BorderIcons = [biSystemMenu]
   BorderStyle = bsToolWindow
   Caption = 'info'
-  ClientHeight = 192
-  ClientWidth = 384
-  Color = clBtnFace
+  ClientHeight = 296
+  ClientWidth = 449
+  Color = clBackground
   Font.Charset = ANSI_CHARSET
   Font.Color = clWindowText
   Font.Height = -11

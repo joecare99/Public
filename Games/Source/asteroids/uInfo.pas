@@ -126,12 +126,15 @@ begin
 end;
 
 procedure tInfo.Handle_Timer(Sender: TObject);
-{$IFDEF FPC}
 var
+{$IFDEF FPC}
   Time: int64;
 {$ELSE}
-var
+{$if declared(GetTickCount64)}
+    Time :int64;
+  {$else}
   Time: cardinal;
+{$ENDIF}
 {$ENDIF}
 begin
   Timer.Enabled := False; {would cause a stack overflow because of App.ProcMsg}
@@ -140,7 +143,11 @@ begin
     {$IFDEF FPC}
     Time := GetTickCount64;
     {$ELSE}
+    {$if declared(GetTickCount64)}
+    Time := GetTickCount64;
+    {$else}
     Time := GetTickCount;
+    {$endif}
     {$ENDIF}
     if MovingUp then
       ySpeed := ySpeed - 0.01
@@ -162,8 +169,11 @@ begin
     Inc(Time, 10);
     {$IFDEF FPC}
     while (GetTickCount64 < Time) do
+    {$ELSE}{$if declared(GetTickCount64)}
+    while (GetTickCount64 < Time) do
     {$ELSE}
       while (GetTickCount < Time) do
+    {$ENDIF}
     {$ENDIF}
     ; {keep the loop at 100 fps}
   until quit or not Info.Visible;
@@ -187,7 +197,7 @@ begin
     Limit :=  bmInfoText.Height - ClientHeight; {get max. ypos}
 
     Brush.Color := Color; {set background color}
-    Brush.Style := bsClear;
+    Brush.Style := bsSolid;
     FillRect(rect(0, 0,  bmInfoText.Width,  bmInfoText.Height));
 //    Brush.Color := clWhite; {set background color}
     Font.Color := clWhite;
