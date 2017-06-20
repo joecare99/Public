@@ -3,7 +3,7 @@ object EditSource: TEditSource
   Height = 522
   Top = 73
   Width = 624
-  ActiveControl = Titre
+  ActiveControl = edtSourceTitle
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de source'
@@ -12,7 +12,6 @@ object EditSource: TEditSource
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
   Visible = False
   object TableauDepots: TStringGrid
     Left = 88
@@ -38,7 +37,7 @@ object EditSource: TEditSource
     MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goEditing, goSmoothScroll]
     PopupMenu = PopupMenu2
-    TabOrder = 6
+    TabOrder = 4
     OnDblClick = TableauDepotsDblClick
     OnEditingDone = TableauDepotsEditingDone
     ColWidths = (
@@ -48,43 +47,7 @@ object EditSource: TEditSource
       0
     )
   end
-  object No: TEdit
-    Left = 504
-    Height = 23
-    Top = 184
-    Width = 80
-    TabStop = False
-    TabOrder = 7
-    Text = 'No'
-    Visible = False
-  end
-  object Label8: TLabel
-    Left = 16
-    Height = 15
-    Top = 80
-    Width = 39
-    Caption = 'Auteur:'
-    ParentColor = False
-  end
-  object A: TEdit
-    Left = 88
-    Height = 23
-    Top = 80
-    Width = 96
-    OnEditingDone = AEditingDone
-    TabOrder = 2
-    Text = 'A'
-  end
-  object NomA: TEdit
-    Left = 191
-    Height = 23
-    Top = 80
-    Width = 424
-    ReadOnly = True
-    TabOrder = 3
-    Text = 'Nom de A'
-  end
-  object Label3: TLabel
+  object lblSourceInformation: TLabel
     Left = 16
     Height = 15
     Top = 112
@@ -92,7 +55,7 @@ object EditSource: TEditSource
     Caption = 'Mémo:'
     ParentColor = False
   end
-  object M: TMemo
+  object edtSourceInformation: TMemo
     Left = 88
     Height = 58
     Top = 112
@@ -100,19 +63,19 @@ object EditSource: TEditSource
     Lines.Strings = (
       'M'
     )
-    OnEditingDone = MEditingDone
+    OnEditingDone = edtSourceInformationEditingDone
     ScrollBars = ssAutoVertical
-    TabOrder = 4
+    TabOrder = 2
   end
-  object Label7: TLabel
+  object lblRepository: TLabel
     Left = 16
     Height = 15
     Top = 216
-    Width = 37
-    Caption = 'Dépots'
+    Width = 59
+    Caption = 'Repository:'
     ParentColor = False
   end
-  object Label9: TLabel
+  object lblSourceDescription: TLabel
     Left = 16
     Height = 15
     Top = 48
@@ -120,32 +83,32 @@ object EditSource: TEditSource
     Caption = 'Description:'
     ParentColor = False
   end
-  object Desc: TEdit
+  object edtSourceDescription: TEdit
     Left = 87
     Height = 23
     Top = 48
     Width = 528
-    OnKeyDown = DescKeyDown
+    OnKeyDown = edtSourceDescriptionKeyDown
     TabOrder = 1
-    Text = 'Desc'
+    Text = 'edtSourceDescription'
   end
-  object Titre: TEdit
+  object edtSourceTitle: TEdit
     Left = 87
     Height = 23
     Top = 16
     Width = 527
     TabOrder = 0
-    Text = 'Titre'
+    Text = 'edtSourceTitle'
   end
-  object Label10: TLabel
+  object lblSourceTitle: TLabel
     Left = 16
     Height = 15
     Top = 16
-    Width = 27
-    Caption = 'Titre:'
+    Width = 26
+    Caption = 'Title:'
     ParentColor = False
   end
-  object Label11: TLabel
+  object lblSourceQuality: TLabel
     Left = 16
     Height = 15
     Top = 184
@@ -159,61 +122,17 @@ object EditSource: TEditSource
     Top = 184
     Width = 50
     MaxValue = 10
-    TabOrder = 5
-  end
-  object TableauExhibits: TStringGrid
-    Left = 88
-    Height = 96
-    Top = 352
-    Width = 528
-    Columns = <    
-      item
-        Title.Caption = '*'
-        Width = 17
-      end    
-      item
-        Title.Caption = 'Titre'
-        Width = 443
-      end    
-      item
-        Title.Caption = 'Type'
-        Visible = False
-      end    
-      item
-        Title.Caption = 'Format'
-        Width = 46
-      end>
-    ExtendedSelect = False
-    MouseWheelOption = mwGrid
-    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
-    PopupMenu = PopupMenu3
-    TabOrder = 8
-    OnDblClick = Modifier2Click
-    ColWidths = (
-      1
-      17
-      443
-      0
-      46
-    )
-  end
-  object Label12: TLabel
-    Left = 16
-    Height = 15
-    Top = 352
-    Width = 64
-    Caption = 'Documents:'
-    ParentColor = False
+    TabOrder = 3
   end
   object pnlBottom: TPanel
     Left = 0
     Height = 52
-    Top = 450
+    Top = 470
     Width = 624
     Align = alBottom
     ClientHeight = 52
     ClientWidth = 624
-    TabOrder = 9
+    TabOrder = 5
     object btnOK: TBitBtn
       Left = 391
       Height = 38
@@ -240,6 +159,68 @@ object EditSource: TEditSource
       Kind = bkCancel
       ModalResult = 2
       TabOrder = 1
+    end
+  end
+  inline fraDocuments1: TfraDocuments
+    Left = 3
+    Height = 128
+    Top = 339
+    Width = 618
+    Align = alBottom
+    ClientHeight = 128
+    ClientWidth = 618
+    TabOrder = 6
+    inherited tblDocuments: TStringGrid
+      Height = 128
+      Width = 528
+    end
+    inherited pnlDocumentsLeft: TPanel
+      Height = 128
+      ClientHeight = 128
+    end
+  end
+  object No: TSpinEdit
+    Left = 504
+    Height = 23
+    Top = 184
+    Width = 80
+    MaxValue = 0
+    TabStop = False
+    TabOrder = 7
+    Visible = False
+  end
+  inline fraIndividualwithRole1: TfraIndividualwithRole
+    AnchorSideLeft.Control = fraDocuments1
+    AnchorSideTop.Control = edtSourceDescription
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = fraDocuments1
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = edtSourceInformation
+    Left = 3
+    Height = 35
+    Top = 74
+    Width = 618
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BorderSpacing.Top = 3
+    BorderSpacing.Bottom = 3
+    ClientHeight = 35
+    ClientWidth = 618
+    TabOrder = 8
+    inherited edtIndividId: TSpinEdit
+      Height = 29
+    end
+    inherited pnlLeft: TPanel
+      Height = 35
+      BevelOuter = bvNone
+      ClientHeight = 35
+      inherited lblIndividRole: TLabel
+        Left = 3
+        Top = 3
+        Width = 84
+      end
+    end
+    inherited cbxIndividName: TComboBox
+      Width = 423
     end
   end
   object PopupMenu2: TPopupMenu
@@ -291,29 +272,6 @@ object EditSource: TEditSource
         ShortCut = 117
         OnClick = Supprimer1Click
       end
-    end
-  end
-  object PopupMenu3: TPopupMenu
-    left = 74
-    top = 412
-    object Ajouter2: TMenuItem
-      Caption = '&Ajouter'
-      OnClick = Ajouter2Click
-    end
-    object Modifier2: TMenuItem
-      Caption = '&Modifier'
-      OnClick = Modifier2Click
-    end
-    object Supprimer2: TMenuItem
-      Caption = '&Supprimer'
-      OnClick = Supprimer2Click
-    end
-    object MenuItem9: TMenuItem
-      Caption = '-'
-    end
-    object MenuItem10: TMenuItem
-      Caption = 'Visualiser'
-      OnClick = MenuItem10Click
     end
   end
 end

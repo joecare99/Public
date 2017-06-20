@@ -22,7 +22,7 @@ type
     edtName: TEdit;
     Liste: TStringGrid;
     procedure FormShow(Sender: TObject);
-    procedure ListeSelection(Sender: TObject; aCol, aRow: Integer);
+    procedure ListeSelection(Sender: TObject; {%H-}aCol, aRow: Integer);
     procedure mniQuitClick(Sender: TObject);
     procedure edtNumberEditingDone(Sender: TObject);
   private

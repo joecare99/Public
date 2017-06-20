@@ -75,7 +75,6 @@ type
     SD2: TEdit;
     YY: TEdit;
     Y: TComboBox;
-    procedure Ajouter1Click(Sender: TObject);
     procedure Ajouter2Click(Sender: TObject);
     procedure AjouterTemoinClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
@@ -90,10 +89,9 @@ type
     procedure Supprimer1Click(Sender: TObject);
     procedure Supprimer2Click(Sender: TObject);
     procedure SupprimerTemoinClick(Sender: TObject);
-    procedure TableauCitationsDblClick(Sender: TObject);
     procedure TableauTemoinsDblClick(Sender: TObject);
     procedure TableauTemoinsDrawCell(Sender: TObject; aCol, aRow: Integer;
-      aRect: TRect; aState: TGridDrawState);
+      aRect: TRect; {%H-}aState: TGridDrawState);
     procedure YChange(Sender: TObject);
   private
     FEditType: enumEventEditType;
@@ -125,11 +123,6 @@ uses
 {$R *.lfm}
 
 { TfrmEditEvents }
-
-procedure TfrmEditEvents.TableauCitationsDblClick(Sender: TObject);
-begin
-
-end;
 
 procedure TfrmEditEvents.TableauTemoinsDblClick(Sender: TObject);
 begin
@@ -1027,11 +1020,6 @@ begin
           frmExplorer.UpdateIndexDates(lEvType,lDate,lidInd);
      end;
   end;
-end;
-
-procedure TfrmEditEvents.Ajouter1Click(Sender: TObject);
-begin
-
 end;
 
 procedure TfrmEditEvents.Ajouter2Click(Sender: TObject);

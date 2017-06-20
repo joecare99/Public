@@ -17,8 +17,8 @@ frm_Documents, frm_Ancestors, frm_Descendants, frm_EditDocuments, frm_ShowImage,
 frm_EditName, frm_EditEvents, frm_EditWitness,
   frm_Places, frm_Usage, frm_Sources, 
 frm_Repositories, frm_EditSource, frm_Types, frm_EditTypes,
-  frm_About, frm_SelectPerson, dm_GenData, cls_Translation,uScaleDPI, 
-frm_SelectDialog, fra_Citations, untWebexport, fra_Documents;
+  frm_About, frm_SelectPerson, dm_GenData, cls_Translation,//uScaleDPI, 
+frm_SelectDialog, fra_Citations, untWebexport, fra_Documents, fra_Individual;
 
 {$R *.res}
 
@@ -34,6 +34,7 @@ end;
 
 
 begin
+  Application.Scaled:=True;
   Application.Initialize;
   OnGetApplicationName:=@GetApplicationName;
   OnGetVendorName:=@GetVendorName;
@@ -67,7 +68,7 @@ begin
   Application.CreateForm(Tapropos, apropos);
   Application.CreateForm(TFormSelectPersonne, FormSelectPersonne);
   Application.CreateForm(TdmGenData, dmGenData);
-  HighDPI(-1);
+//  HighDPI(-1);
   Application.CreateForm(TfrmSelectDialog, frmSelectDialog);
   Application.Run;
 end.

@@ -12,7 +12,7 @@ object frmEditEvents: TfrmEditEvents
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '1.8.0.2'
   Visible = False
   object M: TMemo
     Left = 88

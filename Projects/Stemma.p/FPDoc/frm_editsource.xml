@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Stemma"><module name="frm_EditSource"><element name="TEnumSourceEditMode" link="#TEditSource.EditMode"><short>Describes the mode of operation of the Source-Editor</short>
+      </element><element name="TEnumSourceEditMode.esem_EditExisting"><short>Editmode := esem_EditExisting is used to Modify an existing Source </short>
+      </element><element name="TEnumSourceEditMode.esem_AddNew"><short>Editmode := esem_AddNew is used to Creaate a new Source and Add/Link it to a Client-Type</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

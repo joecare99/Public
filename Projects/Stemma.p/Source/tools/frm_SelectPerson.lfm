@@ -10,7 +10,7 @@ object FormSelectPersonne: TFormSelectPersonne
   ClientWidth = 456
   Menu = MainMenu1
   OnShow = FormShow
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '1.8.0.2'
   Visible = False
   object edtName: TEdit
     Left = 96

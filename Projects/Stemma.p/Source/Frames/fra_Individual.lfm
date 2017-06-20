@@ -1,0 +1,95 @@
+object fraIndividualwithRole: TfraIndividualwithRole
+  Left = 0
+  Height = 30
+  Top = 0
+  Width = 620
+  ClientHeight = 30
+  ClientWidth = 620
+  TabOrder = 0
+  object edtIndividId: TSpinEdit
+    Left = 93
+    Height = 24
+    Top = 3
+    Width = 96
+    Align = alLeft
+    BorderSpacing.Around = 3
+    MaxValue = 0
+    OnEditingDone = edtIndividIdEditingDone
+    PopupMenu = mnuIndividual
+    TabOrder = 0
+  end
+  object pnlLeft: TPanel
+    Left = 0
+    Height = 30
+    Top = 0
+    Width = 90
+    Align = alLeft
+    ClientHeight = 30
+    ClientWidth = 90
+    TabOrder = 1
+    object lblIndividRole: TLabel
+      Left = 4
+      Height = 15
+      Top = 4
+      Width = 82
+      Align = alTop
+      Alignment = taRightJustify
+      BorderSpacing.Around = 3
+      Caption = '<Role>'
+      ParentColor = False
+    end
+  end
+  object cbxIndividName: TComboBox
+    Left = 192
+    Height = 23
+    Top = 3
+    Width = 425
+    Align = alClient
+    AutoComplete = True
+    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+    AutoDropDown = True
+    BorderSpacing.Around = 3
+    ItemHeight = 15
+    PopupMenu = mnuIndividual
+    TabOrder = 2
+  end
+  object mnuIndividual: TPopupMenu
+    left = 16
+    top = 8
+    object MenuItem1: TMenuItem
+      Action = actIndividualNew
+    end
+    object MenuItem2: TMenuItem
+      Action = actIndividualSelect
+    end
+    object MenuItem3: TMenuItem
+      Action = actIndividualEdit
+    end
+    object MenuItem4: TMenuItem
+      Action = actIndividualUnlink
+    end
+  end
+  object alsIndividual: TActionList
+    left = 57
+    top = 10
+    object actIndividualNew: TAction
+      Category = 'Individual'
+      Caption = '&New'
+    end
+    object actIndividualSelect: TAction
+      Category = 'Individual'
+      Caption = '&Select'
+      Enabled = False
+    end
+    object actIndividualEdit: TAction
+      Category = 'Individual'
+      Caption = '&Edit'
+      Enabled = False
+    end
+    object actIndividualUnlink: TAction
+      Category = 'Individual'
+      Caption = '&Unlink'
+      Enabled = False
+    end
+  end
+end

@@ -1059,65 +1059,46 @@ msgctxt "TEDITPARENTS.Y2.TEXT"
 msgid "Y"
 msgstr ""
 
-#: teditsource.a.text
-msgctxt "TEDITSOURCE.A.TEXT"
-msgid "A"
-msgstr ""
-
 #: teditsource.ajouter1.caption
 msgctxt "TEDITSOURCE.AJOUTER1.CAPTION"
 msgid "&Ajouter"
 msgstr ""
 
-#: teditsource.ajouter2.caption
-msgctxt "TEDITSOURCE.AJOUTER2.CAPTION"
-msgid "&Ajouter"
+#: teditsource.edtsourcedescription.text
+msgid "edtSourceDescription"
 msgstr ""
 
-#: teditsource.desc.text
-msgid "Desc"
+#: teditsource.edtsourcetitle.text
+msgid "edtSourceTitle"
 msgstr ""
 
-#: teditsource.label10.caption
-msgctxt "TEDITSOURCE.LABEL10.CAPTION"
-msgid "Titre:"
+#: teditsource.lblrepository.caption
+msgid "Repository:"
 msgstr ""
 
-#: teditsource.label11.caption
-msgid "Qualité par défaut:"
+#: teditsource.lblsourcedescription.caption
+msgctxt "teditsource.lblsourcedescription.caption"
+msgid "Description:"
 msgstr ""
 
-#: teditsource.label12.caption
-msgctxt "TEDITSOURCE.LABEL12.CAPTION"
-msgid "Documents:"
-msgstr ""
-
-#: teditsource.label3.caption
-msgctxt "TEDITSOURCE.LABEL3.CAPTION"
+#: teditsource.lblsourceinformation.caption
+msgctxt "teditsource.lblsourceinformation.caption"
 msgid "Mémo:"
 msgstr ""
 
-#: teditsource.label7.caption
-msgid "Dépots"
+#: teditsource.lblsourcequality.caption
+msgctxt "teditsource.lblsourcequality.caption"
+msgid "Qualité par défaut:"
 msgstr ""
 
-#: teditsource.label8.caption
-msgid "Auteur:"
-msgstr ""
-
-#: teditsource.label9.caption
-msgctxt "TEDITSOURCE.LABEL9.CAPTION"
-msgid "Description:"
+#: teditsource.lblsourcetitle.caption
+msgctxt "teditsource.lblsourcetitle.caption"
+msgid "Title:"
 msgstr ""
 
 #: teditsource.menuitem1.caption
 msgctxt "teditsource.menuitem1.caption"
 msgid "&Dépots"
-msgstr ""
-
-#: teditsource.menuitem10.caption
-msgctxt "TEDITSOURCE.MENUITEM10.CAPTION"
-msgid "Visualiser"
 msgstr ""
 
 #: teditsource.menuitem2.caption
@@ -1145,29 +1126,9 @@ msgctxt "TEDITSOURCE.MENUITEM6.CAPTION"
 msgid "Repeat"
 msgstr ""
 
-#: teditsource.menuitem9.caption
-msgctxt "TEDITSOURCE.MENUITEM9.CAPTION"
-msgid "-"
-msgstr ""
-
 #: teditsource.modifier1.caption
 msgctxt "TEDITSOURCE.MODIFIER1.CAPTION"
 msgid "&Modifier"
-msgstr ""
-
-#: teditsource.modifier2.caption
-msgctxt "TEDITSOURCE.MODIFIER2.CAPTION"
-msgid "&Modifier"
-msgstr ""
-
-#: teditsource.no.text
-msgctxt "TEDITSOURCE.NO.TEXT"
-msgid "No"
-msgstr ""
-
-#: teditsource.noma.text
-msgctxt "TEDITSOURCE.NOMA.TEXT"
-msgid "Nom de A"
 msgstr ""
 
 #: teditsource.supprimer1.caption
@@ -1175,14 +1136,16 @@ msgctxt "TEDITSOURCE.SUPPRIMER1.CAPTION"
 msgid "&Supprimer"
 msgstr ""
 
-#: teditsource.supprimer2.caption
-msgctxt "TEDITSOURCE.SUPPRIMER2.CAPTION"
-msgid "&Supprimer"
+#: teditsource.tableaudepots.columns[0].title.caption
+msgid "Dépot"
 msgstr ""
 
-#: teditsource.titre.text
-msgctxt "TEDITSOURCE.TITRE.TEXT"
-msgid "Titre"
+#: teditsource.tableaudepots.columns[1].title.caption
+msgid "Mémo"
+msgstr ""
+
+#: teditsource.tableaudepots.columns[2].title.caption
+msgid "# dépot"
 msgstr ""
 
 #: tedittemoin.e.text
@@ -1624,6 +1587,16 @@ msgstr ""
 msgid "ou"
 msgstr ""
 
+#: tformselectpersonne.liste.columns[0].title.caption
+msgctxt "tformselectpersonne.liste.columns[0].title.caption"
+msgid "#"
+msgstr ""
+
+#: tformselectpersonne.liste.columns[1].title.caption
+msgctxt "tformselectpersonne.liste.columns[1].title.caption"
+msgid "Name"
+msgstr ""
+
 #: tformselectpersonne.mniquit.caption
 msgctxt "TFORMSELECTPERSONNE.MNIQUIT.CAPTION"
 msgid "&Quit"
@@ -1773,6 +1746,27 @@ msgstr ""
 #: tfraedtcitations.mnicitationedit.caption
 msgctxt "TFRAEDTCITATIONS.MNICITATIONEDIT.CAPTION"
 msgid "&Modifier"
+msgstr ""
+
+#: tfraindividualwithrole.actindividualedit.caption
+msgctxt "tfraindividualwithrole.actindividualedit.caption"
+msgid "&Edit"
+msgstr ""
+
+#: tfraindividualwithrole.actindividualnew.caption
+msgid "&New"
+msgstr ""
+
+#: tfraindividualwithrole.actindividualselect.caption
+msgid "&Select"
+msgstr ""
+
+#: tfraindividualwithrole.actindividualunlink.caption
+msgid "&Unlink"
+msgstr ""
+
+#: tfraindividualwithrole.lblindividrole.caption
+msgid "<Role>"
 msgstr ""
 
 #: tframe1.actedtcitationadd.caption
@@ -1968,6 +1962,7 @@ msgid "No"
 msgstr ""
 
 #: tfrmeditdocuments.lbldocumentstitle.caption
+msgctxt "tfrmeditdocuments.lbldocumentstitle.caption"
 msgid "Title:"
 msgstr ""
 
@@ -2150,11 +2145,6 @@ msgctxt "TFRMEDITEVENTS.MENUITEM5.CAPTION"
 msgid "&Supprimer"
 msgstr ""
 
-#: tfrmeditevents.menuitem9.caption
-msgctxt "TFRMEDITEVENTS.MENUITEM9.CAPTION"
-msgid "-"
-msgstr ""
-
 #: tfrmeditevents.modifier2.caption
 msgctxt "TFRMEDITEVENTS.MODIFIER2.CAPTION"
 msgid "&Modifier"
@@ -2212,6 +2202,43 @@ msgstr ""
 #: tfrmeditevents.supprimertemoin.caption
 msgctxt "TFRMEDITEVENTS.SUPPRIMERTEMOIN.CAPTION"
 msgid "&Supprimer"
+msgstr ""
+
+#: tfrmeditevents.tableauexhibits.columns[0].title.caption
+msgid "*"
+msgstr ""
+
+#: tfrmeditevents.tableauexhibits.columns[1].title.caption
+msgctxt "tfrmeditevents.tableauexhibits.columns[1].title.caption"
+msgid "Titre"
+msgstr ""
+
+#: tfrmeditevents.tableauexhibits.columns[2].title.caption
+msgctxt "tfrmeditevents.tableauexhibits.columns[2].title.caption"
+msgid "Type"
+msgstr ""
+
+#: tfrmeditevents.tableauexhibits.columns[3].title.caption
+msgid "Format"
+msgstr ""
+
+#: tfrmeditevents.tableautemoins.columns[0].title.caption
+msgid "Rôle"
+msgstr ""
+
+#: tfrmeditevents.tableautemoins.columns[1].title.caption
+msgctxt "tfrmeditevents.tableautemoins.columns[1].title.caption"
+msgid "#"
+msgstr ""
+
+#: tfrmeditevents.tableautemoins.columns[2].title.caption
+msgctxt "tfrmeditevents.tableautemoins.columns[2].title.caption"
+msgid "Nom"
+msgstr ""
+
+#: tfrmeditevents.tableautemoins.columns[3].title.caption
+msgctxt "tfrmeditevents.tableautemoins.columns[3].title.caption"
+msgid "X"
 msgstr ""
 
 #: tfrmeditevents.x.text
@@ -3158,6 +3185,15 @@ msgctxt "TFRMSTEMMAMAINFORM.CHECKBOX1.CAPTION"
 msgid "CheckBox1"
 msgstr ""
 
+#: tfrmstemmamainform.datahist.columns[0].title.caption
+msgid "Code"
+msgstr ""
+
+#: tfrmstemmamainform.datahist.columns[1].title.caption
+msgctxt "tfrmstemmamainform.datahist.columns[1].title.caption"
+msgid "No"
+msgstr ""
+
 #: tfrmstemmamainform.menuitem56.caption
 msgctxt "TFRMSTEMMAMAINFORM.MENUITEM56.CAPTION"
 msgid "&Parametres"
@@ -3171,66 +3207,6 @@ msgstr ""
 #: tfrmstemmamainform.menuitem58.caption
 msgctxt "TFRMSTEMMAMAINFORM.MENUITEM58.CAPTION"
 msgid "&Langue"
-msgstr ""
-
-#: tfrmstemmamainform.mndappenddivider39.caption
-msgctxt "TFRMSTEMMAMAINFORM.MNDAPPENDDIVIDER39.CAPTION"
-msgid "-"
-msgstr ""
-
-#: tfrmstemmamainform.mnddivitem19.caption
-msgctxt "TFRMSTEMMAMAINFORM.MNDDIVITEM19.CAPTION"
-msgid "-"
-msgstr ""
-
-#: tfrmstemmamainform.mndeditdivider45.caption
-msgctxt "TFRMSTEMMAMAINFORM.MNDEDITDIVIDER45.CAPTION"
-msgid "-"
-msgstr ""
-
-#: tfrmstemmamainform.mndeditdivider52.caption
-msgctxt "TFRMSTEMMAMAINFORM.MNDEDITDIVIDER52.CAPTION"
-msgid "-"
-msgstr ""
-
-#: tfrmstemmamainform.mndfiledivider1.caption
-msgctxt "TFRMSTEMMAMAINFORM.MNDFILEDIVIDER1.CAPTION"
-msgid "-"
-msgstr ""
-
-#: tfrmstemmamainform.mndfiledivider4.caption
-msgctxt "TFRMSTEMMAMAINFORM.MNDFILEDIVIDER4.CAPTION"
-msgid "-"
-msgstr ""
-
-#: tfrmstemmamainform.mndfiledivider54.caption
-msgctxt "TFRMSTEMMAMAINFORM.MNDFILEDIVIDER54.CAPTION"
-msgid "-"
-msgstr ""
-
-#: tfrmstemmamainform.mndhelpdiv1.caption
-msgctxt "TFRMSTEMMAMAINFORM.MNDHELPDIV1.CAPTION"
-msgid "-"
-msgstr ""
-
-#: tfrmstemmamainform.mndnavdivider20.caption
-msgctxt "TFRMSTEMMAMAINFORM.MNDNAVDIVIDER20.CAPTION"
-msgid "-"
-msgstr ""
-
-#: tfrmstemmamainform.mndutilsdivider64.caption
-msgctxt "TFRMSTEMMAMAINFORM.MNDUTILSDIVIDER64.CAPTION"
-msgid "-"
-msgstr ""
-
-#: tfrmstemmamainform.mndwindowdivider12.caption
-msgctxt "TFRMSTEMMAMAINFORM.MNDWINDOWDIVIDER12.CAPTION"
-msgid "-"
-msgstr ""
-
-#: tfrmstemmamainform.mndwindowdivider22.caption
-msgctxt "TFRMSTEMMAMAINFORM.MNDWINDOWDIVIDER22.CAPTION"
-msgid "-"
 msgstr ""
 
 #: tfrmstemmamainform.mniedit.caption

@@ -227,22 +227,17 @@ type
     procedure actWinExplorerExecute(Sender: TObject);
     procedure actWinExtraUpdate(Sender: TObject);
     procedure actWinParentsExecute(Sender: TObject);
-    procedure btnWinImagesClick(Sender: TObject);
     procedure CheckBox1Change(Sender: TObject);
     procedure ConnexionClick(Sender: TObject);
-    procedure CoolBar1Change(Sender: TObject);
     procedure actFileCreateProjectExecute(Sender: TObject);
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure FormShowHint(Sender: TObject; HintInfo: PHintInfo);
     procedure actFileImportFromTMGExecute(Sender: TObject);
     procedure IndividuChange(Sender: TObject);
-    procedure JvXPStyleManager1ThemeChanged(Sender: TObject);
     procedure mniParentsClick(Sender: TObject);
     procedure mniExhibitsClick(Sender: TObject);
-    procedure mniExplorateurClick(Sender: TObject);
     procedure actWinChildrenExecute(Sender: TObject);
     procedure actWinSiblingsExecute(Sender: TObject);
     procedure actWinAncestersExecute(Sender: TObject);
@@ -475,7 +470,7 @@ var
   acontrol: TControl;
   i: integer;
 begin
-  if Sender is TAnchorDockHostSite then
+  if (Sender is TAnchorDockHostSite) and (CloseAction <> caMinimize) then
     for i := TAnchorDockHostSite(Sender).ControlCount - 1 downto 0 do
     begin
       acontrol := TAnchorDockHostSite(Sender).Controls[i];
@@ -523,6 +518,7 @@ procedure TfrmStemmaMainForm.FormClose(Sender: TObject; var CloseAction: TCloseA
 var
   i: integer;
 begin
+  if CloseAction=caMinimize then exit;
   dmGenData.WriteCfgFormPosition(self);
   dmGenData.WriteCfgProject(dmGenData.GetDBSchema, dmGenData.ProjectIsOpen);
   if (dmGenData.DB_Connected) and dmGenData.ProjectIsOpen then
@@ -575,7 +571,7 @@ begin
   CoolBar1.Bitmap := FBitmap;
   CoolBar1.Bitmap.PixelFormat := pf24bit;
   CoolBar1.Bitmap.Width := 5;
-  CoolBar1.Bitmap.Height := scaley(CoolBar1.Height, DesignTimeDPI);
+  CoolBar1.Bitmap.Height := scaley(CoolBar1.Height, DesignTimePPI);
   with CoolBar1.Bitmap.Canvas do
     for i := 0 to CoolBar1.Bitmap.Height - 1 do
     begin
@@ -615,11 +611,6 @@ begin
   end;
 end;
 
-procedure TfrmStemmaMainForm.CoolBar1Change(Sender: TObject);
-begin
-
-end;
-
 procedure TfrmStemmaMainForm.CheckBox1Change(Sender: TObject);
 begin
   // Test-
@@ -655,11 +646,6 @@ end;
 procedure TfrmStemmaMainForm.actWinParentsExecute(Sender: TObject);
 begin
   ToggleVisExtraWindow(Sender, frmParents);
-end;
-
-procedure TfrmStemmaMainForm.btnWinImagesClick(Sender: TObject);
-begin
-
 end;
 
 procedure TfrmStemmaMainForm.actFileCreateProjectUpdate(Sender: TObject);
@@ -795,7 +781,7 @@ var
   DPIFak: single;
   lid: Longint;
 begin
-  DPIFak := ScreenInfo.PixelsPerInchY / DesignTimeDPI * 1.1;
+  DPIFak := ScreenInfo.PixelsPerInchY / DesignTimePPI * 1.1;
   if DPIFak < 1.4 then
   begin
     MainMenu.Images := imlStandardImages;
@@ -945,12 +931,6 @@ begin
     end;
   end;
 end;
-
-procedure TfrmStemmaMainForm.FormShowHint(Sender: TObject; HintInfo: PHintInfo);
-begin
-
-end;
-
 
 procedure TfrmStemmaMainForm.actFileImportFromTMGExecute(Sender: TObject);
 var
@@ -1693,11 +1673,6 @@ begin
   end;
 end;
 
-procedure TfrmStemmaMainForm.JvXPStyleManager1ThemeChanged(Sender: TObject);
-begin
-
-end;
-
 procedure TfrmStemmaMainForm.mniParentsClick(Sender: TObject);
 begin
   if not (Sender as TMenuItem).Checked then
@@ -1724,11 +1699,6 @@ begin
     frmDocuments.Close;
     (Sender as TMenuItem).Checked := False;
   end;
-end;
-
-procedure TfrmStemmaMainForm.mniExplorateurClick(Sender: TObject);
-begin
-
 end;
 
 procedure TfrmStemmaMainForm.actWinChildrenExecute(Sender: TObject);
