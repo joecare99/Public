@@ -1,0 +1,112 @@
+object fraDate: TfraDate
+  Left = 0
+  Height = 60
+  Top = 0
+  Width = 643
+  ClientHeight = 60
+  ClientWidth = 643
+  TabOrder = 0
+  DesignLeft = 1553
+  DesignTop = 112
+  object pnlDateLeft: TPanel
+    Left = 3
+    Height = 54
+    Top = 3
+    Width = 80
+    Align = alLeft
+    BorderSpacing.Around = 3
+    BevelOuter = bvNone
+    ClientHeight = 54
+    ClientWidth = 80
+    TabOrder = 0
+    object lblDate: TLabel
+      Left = 3
+      Height = 15
+      Top = 3
+      Width = 74
+      Align = alTop
+      Alignment = taRightJustify
+      BorderSpacing.Around = 3
+      Caption = 'Date:'
+      ParentColor = False
+    end
+  end
+  object pnlDateRight: TPanel
+    Left = 365
+    Height = 54
+    Top = 3
+    Width = 263
+    Align = alRight
+    BorderSpacing.Right = 12
+    BorderSpacing.Around = 3
+    BevelOuter = bvNone
+    ClientHeight = 54
+    ClientWidth = 263
+    TabOrder = 1
+    object edtDateForSorting: TEdit
+      Left = 3
+      Height = 24
+      Hint = '[YYYYMMDD or YYYY.MM.DD or YYYY/MM/DD]'
+      Top = 24
+      Width = 260
+      Align = alClient
+      BorderSpacing.Left = 3
+      BorderSpacing.Top = 6
+      BorderSpacing.Bottom = 6
+      OnEditingDone = edtDateForSortingEditingDone
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      TextHint = '<Date for Sorting>'
+    end
+    object lblForSorting: TLabel
+      Left = 3
+      Height = 15
+      Top = 3
+      Width = 257
+      Align = alTop
+      BorderSpacing.Around = 3
+      Caption = 'for sorting:'
+      ParentColor = False
+    end
+  end
+  object pnlDateClient: TPanel
+    Left = 86
+    Height = 54
+    Top = 3
+    Width = 276
+    Align = alClient
+    BorderSpacing.Around = 3
+    BevelOuter = bvNone
+    ClientHeight = 54
+    ClientWidth = 276
+    TabOrder = 2
+    object edtDateForPresentation: TEdit
+      Left = 3
+      Height = 27
+      Hint = '[''bet.'' or ''ca.'' or ''<'' or ''from'' or ''>''][YYYYMMDD or YYYY.MM.DD or YYYY/MM/DD][''til'' or ''and'' or ''or''][YYYYMMDD or YYYY.MM.DD or YYYY/MM/DD]'
+      Top = 24
+      Width = 270
+      Align = alClient
+      BorderSpacing.Left = 3
+      BorderSpacing.Top = 6
+      BorderSpacing.Right = 3
+      BorderSpacing.Bottom = 3
+      OnEditingDone = edtDateForPresentationEditingDone
+      ParentShowHint = False
+      ShowHint = True
+      TabOrder = 0
+      TextHint = '<Date>'
+    end
+    object lblForPresentation: TLabel
+      Left = 3
+      Height = 15
+      Top = 3
+      Width = 270
+      Align = alTop
+      BorderSpacing.Around = 3
+      Caption = 'for presentation:'
+      ParentColor = False
+    end
+  end
+end

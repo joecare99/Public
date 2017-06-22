@@ -1,0 +1,62 @@
+object fraPhrase: TfraPhrase
+  Left = 0
+  Height = 72
+  Top = 0
+  Width = 642
+  ClientHeight = 72
+  ClientWidth = 642
+  TabOrder = 0
+  DesignLeft = 1554
+  DesignTop = 206
+  object pnlPhraseLeft: TPanel
+    Left = 3
+    Height = 66
+    Top = 3
+    Width = 80
+    Align = alLeft
+    BorderSpacing.Around = 3
+    BevelOuter = bvNone
+    ClientHeight = 66
+    ClientWidth = 80
+    TabOrder = 0
+    object lblPhrase: TLabel
+      Left = 3
+      Height = 15
+      Top = 3
+      Width = 74
+      Align = alTop
+      Alignment = taRightJustify
+      BorderSpacing.Around = 3
+      Caption = 'Phrase:'
+      ParentColor = False
+    end
+    object lblPhraseDefault: TLabel
+      Left = 0
+      Height = 15
+      Top = 21
+      Width = 80
+      Align = alTop
+      Alignment = taCenter
+      Caption = '(default)'
+      ParentColor = False
+      Visible = False
+    end
+  end
+  object edtPhrase: TMemo
+    Left = 86
+    Height = 66
+    Top = 3
+    Width = 541
+    Align = alClient
+    BorderSpacing.Right = 12
+    BorderSpacing.Around = 3
+    Lines.Strings = (
+      ''
+    )
+    OnDblClick = edtPhraseDblClick
+    ReadOnly = True
+    ScrollBars = ssAutoVertical
+    TabOrder = 1
+    TabStop = False
+  end
+end
