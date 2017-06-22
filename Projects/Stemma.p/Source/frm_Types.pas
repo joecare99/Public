@@ -111,7 +111,7 @@ end;
 procedure TfrmTypes.MenuItem2Click(Sender: TObject);    // Ajouter
 begin
      dmGenData.PutCode('A',0);
-     if EditType.Showmodal = mrOK then
+     if frmEditType.Showmodal = mrOK then
         begin
         FormShow(Sender);
      end;
@@ -121,7 +121,7 @@ procedure TfrmTypes.MenuItem3Click(Sender: TObject);    // Supprimer
 begin
   if TableauTypes.Row>0 then
      if StrtoInt(TableauTypes.Cells[5,TableauTypes.Row])=0 then
-        if MessageDlg(SConfirmation,format(SAreYouSureToDelete,[TableauTypes.Cells[2,TableauTypes.Row]]),mtConfirmation,mbYesNo,0)=mryes  then
+        if MessageDlg(SConfirmation,format(rsAreYouSureToDelete,[TableauTypes.Cells[2,TableauTypes.Row]]),mtConfirmation,mbYesNo,0)=mryes  then
            begin
               dmGenData.Query1.close;
               dmGenData.Query1.SQL.Text:='DELETE FROM Y WHERE no=:idtype';
@@ -134,7 +134,7 @@ end;
 procedure TfrmTypes.MenuItem4Click(Sender: TObject);      // Modifier
 begin
   if TableauTypes.Row>0 then
-     if EditType.Showmodal = mrOK then
+     if frmEditType.Showmodal = mrOK then
         begin
         dmGenData.Query1.SQL.Text:='SELECT Y.no, Y.T, Y.Y, Y.P FROM Y WHERE Y.no='+
            TableauTypes.Cells[0,TableauTypes.Row];

@@ -45,7 +45,6 @@ type
     procedure cbxSexChange(Sender: TObject);
     procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
     procedure FormCreate(Sender: TObject);
-    procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure edtInterestChange(Sender: TObject);
     procedure actNamesSetPreferedExecute(Sender: TObject);
@@ -152,11 +151,6 @@ begin
     (grdNames.RowCount<3);
 end;
 
-procedure TfrmNames.FormResize(Sender: TObject);
-begin
-
-end;
-
 procedure TfrmNames.PopulateNom(Sender: TObject);
 var
   sSex, sLiving, sDate:string;
@@ -234,7 +228,7 @@ end;
 procedure TfrmNames.actNamesAddExecute(Sender: TObject);  // Ajouter
 begin
 //     dmGenData.PutCode('A',0);
-  frmEditName.EditType:=eNET_NameVariation;
+  frmEditName.EditMode:=eNET_NameVariation;
      if frmEditName.Showmodal = mrOK then
         begin
          PopulateNom(Sender);
@@ -274,7 +268,7 @@ procedure TfrmNames.actNamesEditExecute(Sender: TObject);
 begin
   If (grdNames.Row>0) and (idName>0) then
      begin
-     frmEditName.EditType:=eNET_EditExisting;
+     frmEditName.EditMode:=eNET_EditExisting;
      frmEditName.idName:=idName;
      If frmEditName.Showmodal=mrOK then
           PopulateNom(Sender);

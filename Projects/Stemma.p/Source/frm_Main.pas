@@ -309,6 +309,7 @@ type
     procedure UpdateProgressBar(Sender: TObject);
     property iID: longint read GetiID write SetiID;
     property sID: string read GetIDStr write SetiIDStr;
+    procedure AppendHistoryData(const lHistType: string; const lHistData: string);
     { public declarations }
   end;
 
@@ -336,11 +337,22 @@ begin
    Items.InsertObject(0, inttostr(lNewInd),TObject(Ptrint(lNewInd)));
 end;
 
+procedure TfrmStemmaMainForm.AppendHistoryData(const lHistType: string; const lHistData: string);
+begin
+  with Datahist do begin
+  InsertColRow(false,0);
+  Cells[0,0]:=lHistType;
+  Cells[1,0]:=lHistData;
+  end;
+end;
+
+
+
 { TfrmStemmaMainForm }
 
 procedure TfrmStemmaMainForm.QuitterClick(Sender: TObject);
 begin
-  if MessageDlg(SConfirmation,SAreYouSureToQuit,mtConfirmation,mbYesNo,0) = mrYes then
+  if MessageDlg(SConfirmation,rsAreYouSureToQuit,mtConfirmation,mbYesNo,0) = mrYes then
     frmStemmaMainForm.Close;
 end;
 
@@ -447,7 +459,7 @@ begin
         lName := dmGenData.GetIndividuumName(tag);
         lVisName := DecodeName(lName, 1);
         Caption := Format(rsMenuHistoryCaption, [nr + 1, lVisName, tag]);
-        Hint := Format(SDispNameAndLiveDate, [lVisName, '', '']);
+        Hint := Format(rsDispNameAndLiveDate, [lVisName, '', '']);
       end
     else
     begin
@@ -1765,7 +1777,7 @@ end;
 
 procedure TfrmStemmaMainForm.mniUtilItem28Click(Sender: TObject);
 begin
-  FormSources.ShowModal;
+  frmSources.ShowModal;
 end;
 
 procedure TfrmStemmaMainForm.mniUtilItem29Click(Sender: TObject);
@@ -1787,7 +1799,7 @@ procedure TfrmStemmaMainForm.actAddFatherExecute(Sender: TObject);
 begin
   // fr: Ajouter un père
   // en: Add a father to person
-  frmEditName.EditType := eNET_AddFather;
+  frmEditName.EditMode := eNET_AddFather;
   // Code('P',0)
   if frmEditName.Showmodal = mrOk then
     frmStemmaMainForm.iID := frmEditName.I.Value;
@@ -1797,7 +1809,7 @@ procedure TfrmStemmaMainForm.actAddMotherExecute(Sender: TObject);
 begin
   // fr: Ajouter une mère
   // en: Add a mother to person
-  frmEditName.EditType := eNET_AddMother;
+  frmEditName.EditMode := eNET_AddMother;
   // Code('M',0)
   if frmEditName.Showmodal = mrOk then
     frmStemmaMainForm.iID := frmEditName.I.Value;
@@ -1810,7 +1822,7 @@ begin
   if dmGenData.CheckIndParentExists(frmStemmaMainForm.iID) then
   begin
     // Ajouter un frère
-    frmEditName.EditType := eNET_AddBrother;
+    frmEditName.EditMode := eNET_AddBrother;
     // Code('F',0)
     if frmEditName.Showmodal = mrOk then
       frmStemmaMainForm.iID := frmEditName.I.Value;
@@ -1823,7 +1835,7 @@ begin
   if dmGenData.CheckIndParentExists(frmStemmaMainForm.iID) then
   begin
     // Ajouter une soeur
-    frmEditName.EditType := eNET_AddSister;
+    frmEditName.EditMode := eNET_AddSister;
     // Code('S',0)
     if frmEditName.Showmodal = mrOk then
       frmStemmaMainForm.iID := frmEditName.I.Value;
@@ -1849,7 +1861,7 @@ begin
     // Ajouter un fils
     //     dmGenData.PutCode('I',FormSelectPersonne.edtNumber.text);
     //     dmGenData.PutCode('A',0);
-    frmEditName.EditType := eNET_AddSister;
+    frmEditName.EditMode := eNET_AddSister;
     if frmEditName.Showmodal = mrOk then
       frmStemmaMainForm.iID := frmEditName.I.Value;
   end;
@@ -1874,7 +1886,7 @@ begin
     // Ajouter un fille
     //     dmGenData.PutCode('L',FormSelectPersonne.edtNumber.text);
     //     dmGenData.PutCode('A',0);
-    frmEditName.EditType := eNET_AddDaughter;
+    frmEditName.EditMode := eNET_AddDaughter;
     if frmEditName.Showmodal = mrOk then
       frmStemmaMainForm.iID := frmEditName.I.Value;
   end;
@@ -1930,7 +1942,7 @@ begin
     //     else
     //        dmGenData.PutCode('J','M');
     //     dmGenData.PutCode('A',0);
-    frmEditName.EditType := eNET_AddSpouse;
+    frmEditName.EditMode := eNET_AddSpouse;
     if frmEditName.Showmodal = mrOk then
       frmStemmaMainForm.iID := frmEditName.I.Value;
   end;
@@ -2151,7 +2163,7 @@ begin
   // Ajouter un individu non-relié
   //  dmGenData.PutCode('R',0);
   //  dmGenData.PutCode('A',0);
-  frmEditName.EditType := eNET_NewUnrelated;
+  frmEditName.EditMode := eNET_NewUnrelated;
   if frmEditName.Showmodal = mrOk then
     frmStemmaMainForm.iID := frmEditName.I.Value;
 end;
@@ -2179,7 +2191,7 @@ begin
     dmGenData.Query1.SQL.Text := 'SELECT N.N FROM N WHERE N.X=1 AND N.I=' +
       frmStemmaMainForm.sID;
     dmGenData.Query1.Open;
-    if MessageDlg(SConfirmation,format(SAreYouSureToDelete,
+    if MessageDlg(SConfirmation,format(rsAreYouSureToDelete,
      [DecodeName(dmGenData.Query1.Fields[0].AsString, 1)]),mtConfirmation,mbYesNo,0) = mrYes then
     begin
       // Supprime la personne

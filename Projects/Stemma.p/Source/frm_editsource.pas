@@ -6,34 +6,35 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Grids, Spin, Menus, FMUtils, fra_Documents, fra_Individual, StrUtils, LCLType,
-  Buttons, ExtCtrls, Process, IniFiles;
+  Grids, Spin, Menus, fra_Documents, fra_Individual, StrUtils, LCLType,
+  Buttons, ExtCtrls, IniFiles;
 
 type
   TEnumSourceEditMode=
     (esem_EditExisting,
      esem_AddNew);
-  { TEditSource }
+  { TfrmEditSource }
 
-  TEditSource = class(TForm)
+  TfrmEditSource = class(TForm)
     Ajouter1: TMenuItem;
     btnOK: TBitBtn;
     btnCancel: TBitBtn;
     fraDocuments1: TfraDocuments;
     fraIndividualwithRole1: TfraIndividualwithRole;
     lblSourceQuality: TLabel;
-    MainMenu1: TMainMenu;
-    MenuItem1: TMenuItem;
-    MenuItem2: TMenuItem;
-    MenuItem3: TMenuItem;
-    MenuItem4: TMenuItem;
-    MenuItem5: TMenuItem;
-    MenuItem6: TMenuItem;
+    mnuSourceMain: TMainMenu;
+    mniRepositories: TMenuItem;
+    mniRepositoryAdd: TMenuItem;
+    mniRepositoryEdit: TMenuItem;
+    mniRepositoryDelete: TMenuItem;
+    mniSourceClose: TMenuItem;
+    mniSourceRepeat: TMenuItem;
     Modifier1: TMenuItem;
     No: TSpinEdit;
     pnlBottom: TPanel;
     PopupMenu2: TPopupMenu;
     Q: TSpinEdit;
+    Splitter1: TSplitter;
     Supprimer1: TMenuItem;
     edtSourceTitle: TEdit;
     lblSourceTitle: TLabel;
@@ -48,58 +49,60 @@ type
     procedure edtSourceDescriptionKeyDown(Sender: TObject; var Key: Word; {%H-}Shift: TShiftState);
     procedure FormShow(Sender: TObject);
     procedure edtSourceInformationEditingDone(Sender: TObject);
-    procedure MenuItem10Click(Sender: TObject);
-    procedure MenuItem5Click(Sender: TObject);
-    procedure MenuItem6Click(Sender: TObject);
+    procedure mniSourceRepeatClick(Sender: TObject);
     procedure Supprimer1Click(Sender: TObject);
     procedure TableauDepotsDblClick(Sender: TObject);
     procedure TableauDepotsEditingDone(Sender: TObject);
   private
+    FEditMode: TEnumSourceEditMode;
     function GetID: LongInt;
+    procedure SetEditMode(AValue: TEnumSourceEditMode);
+    procedure SetidSource(AValue: LongInt);
     { private declarations }
   public
     { public declarations }
-    property idSource:LongInt read GetID;
+    property idSource:LongInt read GetID write SetidSource;
+    Property EditMode:TEnumSourceEditMode read FEditMode write SetEditMode;
   end; 
 
 procedure PopulateDepots;
 
 var
-  EditSource: TEditSource;
+  frmEditSource: TfrmEditSource;
 
 implementation
 
 uses
-  frm_Main, cls_Translation, dm_GenData, frm_Sources, frm_Usage, frm_Documents, frm_ShowImage,
-  frm_EditDocuments;
+  frm_Main, cls_Translation, dm_GenData, frm_Sources, frm_Usage,LCLIntf;
 
-{ TEditSource }
+
+{ TfrmEditSource }
 
 procedure PopulateDepots;
 var
   i:integer;
 begin
      // Populate les dépots
-     dmGenData.Query1.SQL.Text:='SELECT A.no, A.S, A.D, A.M, D.T FROM A JOIN D ON D.no=A.D WHERE A.S='+EditSource.no.text;
+     dmGenData.Query1.SQL.Text:='SELECT A.no, A.S, A.D, A.M, D.T FROM A JOIN D ON D.no=A.D WHERE A.S='+frmEditSource.no.text;
      dmGenData.Query1.Open;
      dmGenData.Query1.First;
-     EditSource.TableauDepots.RowCount:=dmGenData.Query1.RecordCount+1;
+     frmEditSource.TableauDepots.RowCount:=dmGenData.Query1.RecordCount+1;
      i:=1;
      while not dmGenData.Query1.eof do
         begin
-        EditSource.TableauDepots.Cells[0,i]:=dmGenData.Query1.Fields[0].AsString;
-        EditSource.TableauDepots.Cells[1,i]:=dmGenData.Query1.Fields[4].AsString;
-        EditSource.TableauDepots.Cells[2,i]:=dmGenData.Query1.Fields[3].AsString;
-        EditSource.TableauDepots.Cells[3,i]:=dmGenData.Query1.Fields[2].AsString;
+        frmEditSource.TableauDepots.Cells[0,i]:=dmGenData.Query1.Fields[0].AsString;
+        frmEditSource.TableauDepots.Cells[1,i]:=dmGenData.Query1.Fields[4].AsString;
+        frmEditSource.TableauDepots.Cells[2,i]:=dmGenData.Query1.Fields[3].AsString;
+        frmEditSource.TableauDepots.Cells[3,i]:=dmGenData.Query1.Fields[2].AsString;
         dmGenData.Query1.Next;
         i:=i+1;
      end;
 end;
 
-procedure TEditSource.FormShow(Sender: TObject);
+procedure TfrmEditSource.FormShow(Sender: TObject);
 var
   temp, code, nocode:string;
-  auteur:boolean;
+
   tInt: LongInt;
 begin
   ActiveControl:=edtSourceTitle;
@@ -116,20 +119,21 @@ begin
   TableauDepots.Cells[1,0]:=Translation.Items[194];
   TableauDepots.Cells[2,0]:=Translation.Items[156];
 
-  Ajouter1.Caption:=Translation.Items[224];
-  Modifier1.Caption:=Translation.Items[225];
-  Supprimer1.Caption:=Translation.Items[226];
+  Ajouter1.Caption:=rsAdd;
+  Modifier1.Caption:=rsModify;
+  Supprimer1.Caption:=rsDelete;
 
-  MenuItem1.Caption:=Translation.Items[233];
-  MenuItem2.Caption:=Translation.Items[224];
-  MenuItem3.Caption:=Translation.Items[225];
-  MenuItem4.Caption:=Translation.Items[226];
+  mniRepositories.Caption:=rsRepositories;
+  mniRepositoryAdd.Caption:=rsUsage;
+  mniRepositoryEdit.Caption:=rsModify;
+  mniRepositoryDelete.Caption:=rsDelete;
+
   fraDocuments1.DocType:='S';
 
   // Populate la form
   dmGenData.Query1.SQL.Clear;
-  dmGenData.GetCode(Code,nocode);
-  if code='A' then
+
+  if FEditMode=esem_AddNew then
      begin
      Caption:=Translation.Items[43];
      edtSourceTitle.Text:='';
@@ -144,7 +148,7 @@ begin
      begin
      if code='S' then
         dmGenData.Query1.SQL.Add('SELECT S.no, S.T, S.D, S.M, S.Q, S.A FROM S WHERE S.no='+
-                                     FormSources.TableauSources.Cells[1,FormSources.TableauSources.Row])
+                                     frmSources.TableauSources.Cells[1,frmSources.TableauSources.Row])
      else
         dmGenData.Query1.SQL.Add('SELECT S.no, S.T, S.D, S.M, S.Q, S.A FROM S WHERE S.no='+
                                      frmEventUsage.TableauUtilisation.Cells[0,frmEventUsage.TableauUtilisation.Row]);
@@ -167,33 +171,19 @@ begin
   fraDocuments1.idLink:=idSource;
 end;
 
-procedure TEditSource.edtSourceInformationEditingDone(Sender: TObject);
+procedure TfrmEditSource.edtSourceInformationEditingDone(Sender: TObject);
 begin
   frmStemmaMainForm.DataHist.InsertColRow(false,0);
   frmStemmaMainForm.DataHist.Cells[0,0]:='M';
   frmStemmaMainForm.DataHist.Cells[1,0]:=edtSourceInformation.Text;
 end;
 
-procedure TEditSource.MenuItem10Click(Sender: TObject);
-var
-  ini:TIniFile;
-  pdf:string;
-begin
-
-end;
-
-procedure TEditSource.MenuItem5Click(Sender: TObject);
-begin
-  btnOKClick(Sender);
-  ModalResult:=mrOk;
-end;
-
-procedure TEditSource.MenuItem6Click(Sender: TObject);
+procedure TfrmEditSource.mniSourceRepeatClick(Sender: TObject);
 var
   j:integer;
   found:boolean;
 begin
-  if EditSource.ActiveControl.Name='M' then
+  if frmEditSource.ActiveControl.Name='M' then
      begin
      found:=false;
      For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
@@ -220,7 +210,7 @@ begin
   end;
 end;
 
-procedure TEditSource.Supprimer1Click(Sender: TObject);
+procedure TfrmEditSource.Supprimer1Click(Sender: TObject);
 begin
   // Supprimer un Dépot
   if TableauDepots.Row>0 then
@@ -233,7 +223,7 @@ begin
      end;
 end;
 
-procedure TEditSource.TableauDepotsDblClick(Sender: TObject);
+procedure TfrmEditSource.TableauDepotsDblClick(Sender: TObject);
 var
   d:string;
 begin
@@ -257,7 +247,7 @@ begin
   end;
 end;
 
-procedure TEditSource.Ajouter1Click(Sender: TObject);
+procedure TfrmEditSource.Ajouter1Click(Sender: TObject);
 var
   d:string;
 begin
@@ -282,53 +272,22 @@ begin
   end;
 end;
 
-procedure TEditSource.btnOKClick(Sender: TObject);
+procedure TfrmEditSource.btnOKClick(Sender: TObject);
 var
-  temp:string;
-  auteur:boolean;
+  lsAuthor :string;
+
 begin
-  dmGenData.Query1.SQL.Clear;
-  auteur:=fraIndividualwithRole1.idInd>0;
-  if no.text='0' then
-     begin
-     if auteur then
-        dmGenData.Query1.SQL.Add('INSERT INTO S (T, D, M, A, Q) VALUES ('''+
-           AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtSourceTitle.text),'\','\\'),'"','\"'),'''','\''')+
-           ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtSourceDescription.text),'\','\\'),'"','\"'),'''','\''')+
-           ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtSourceInformation.text),'\','\\'),'"','\"'),'''','\''')+
-           ''', '''+IntToStr(fraIndividualwithRole1.idInd)+''', '+InttoStr(Q.Value)+')')
-     else
-        dmGenData.Query1.SQL.Add('INSERT INTO S (T, D, M, A, Q) VALUES ('''+
-           AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtSourceTitle.text),'\','\\'),'"','\"'),'''','\''')+
-           ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtSourceDescription.text),'\','\\'),'"','\"'),'''','\''')+
-           ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtSourceInformation.text),'\','\\'),'"','\"'),'''','\''')+
-           ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(fraIndividualwithRole1.IndName),'\','\\'),'"','\"'),'''','\''')+
-           ''', '+InttoStr(Q.Value)+')');
-  end
+  if fraIndividualwithRole1.idInd>0 then
+    lsAuthor:=IntToStr(fraIndividualwithRole1.idInd)
   else
-    begin
-     if auteur then
-        dmGenData.Query1.SQL.Add('UPDATE S SET T='''+
-           AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtSourceTitle.text),'\','\\'),'"','\"'),'''','\''')+
-           ''', D='''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtSourceDescription.text),'\','\\'),'"','\"'),'''','\''')+
-           ''', M='''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtSourceInformation.text),'\','\\'),'"','\"'),'''','\''')+
-           ''', A='''+IntToStr(fraIndividualwithRole1.idInd)+''', Q='+InttoStr(Q.Value)+' WHERE no='+no.text)
-     else
-        dmGenData.Query1.SQL.Add('UPDATE S SET T='''+
-           AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtSourceTitle.text),'\','\\'),'"','\"'),'''','\''')+
-           ''', D='''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtSourceDescription.text),'\','\\'),'"','\"'),'''','\''')+
-           ''', M='''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtSourceInformation.text),'\','\\'),'"','\"'),'''','\''')+
-           ''', A='''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(fraIndividualwithRole1.IndName),'\','\\'),'"','\"'),'''','\''')+
-           ''', Q='+InttoStr(Q.Value)+' WHERE no='+no.text);
-    end;
-  dmGenData.Query1.ExecSQL;
-  if no.text='0' then
-     begin
-     no.text:=InttoStr(dmGenData.GetLastIDOfTable('S'));
-  end;
+    lsAuthor:=fraIndividualwithRole1.IndName;
+
+  no.Value :=dmGenData.SaveSourceData(idSource, Q.Value, edtSourceTitle.text, edtSourceDescription.text,
+    edtSourceInformation.text, lsAuthor);
+
 end;
 
-procedure TEditSource.edtSourceDescriptionKeyDown(Sender: TObject; var Key: Word;
+procedure TfrmEditSource.edtSourceDescriptionKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   if Key=VK_F3 then
@@ -336,7 +295,7 @@ begin
 end;
 
 
-procedure TEditSource.TableauDepotsEditingDone(Sender: TObject);
+procedure TfrmEditSource.TableauDepotsEditingDone(Sender: TObject);
 begin
   if no.text='0' then
      btnOKClick(Sender);
@@ -358,12 +317,24 @@ begin
   end;
 end;
 
-function TEditSource.GetID: LongInt;
+function TfrmEditSource.GetID: LongInt;
 begin
   result := no.Value;
 end;
 
-{ TEditSource }
+procedure TfrmEditSource.SetEditMode(AValue: TEnumSourceEditMode);
+begin
+  if FEditMode=AValue then Exit;
+  FEditMode:=AValue;
+end;
+
+procedure TfrmEditSource.SetidSource(AValue: LongInt);
+begin
+  if (GetID = AValue) then exit;
+  no.Value:=AValue;
+end;
+
+{ TfrmEditSource }
 
 
 {$R *.lfm}

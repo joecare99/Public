@@ -17,7 +17,7 @@ uses
   ProgressBarU in '..\source\ProgressBarU.pas' {ProgessForm},
   LabyU3 in '..\source\LabyU3.pas' {Laby},
   unt_Lists in '..\source\unt_Lists.pas',
-  unt_Point2d in '..\source\unt_Point2d.pas',
+  unt_Point2d in '..\source\Labyrinth\unt_Point2d.pas',
   Fra_WindRose in '..\Source\Fra_WindRose.pas' {FraWindRose: TFrame};
 
 begin

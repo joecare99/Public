@@ -10,9 +10,9 @@ uses
 
 type
 
-  { TEditType }
+  { TfrmEditType }
 
-  TEditType = class(TForm)
+  TfrmEditType = class(TForm)
     Button1: TButton;
     Button2: TButton;
     MainMenu1: TMainMenu;
@@ -37,16 +37,16 @@ type
   end; 
 
 var
-  EditType: TEditType;
+  frmEditType: TfrmEditType;
 
 implementation
 
 uses
   frm_Types, frm_Main, cls_Translation, dm_GenData;
 
-{ TEditType }
+{ TfrmEditType }
 
-procedure TEditType.FormShow(Sender: TObject);
+procedure TfrmEditType.FormShow(Sender: TObject);
 var
   code,nocode:string;
 begin
@@ -66,10 +66,9 @@ begin
   Y.Items.Add(Translation.Items[54]);
   Y.Items.Add(Translation.Items[55]);
   // Populate la form
-  dmGenData.getcode(code,nocode);
   if code='A' then
      begin
-     EditType.Caption:=Translation.Items[56];
+     frmEditType.Caption:=Translation.Items[56];
      No.Text:='0';
      T.Text:='';
      P.Text:='';
@@ -90,18 +89,18 @@ begin
   end;
 end;
 
-procedure TEditType.MenuItem1Click(Sender: TObject);
+procedure TfrmEditType.MenuItem1Click(Sender: TObject);
 begin
   Button1Click(Sender);
   ModalResult:=mrOk;
 end;
 
-procedure TEditType.MenuItem2Click(Sender: TObject);
+procedure TfrmEditType.MenuItem2Click(Sender: TObject);
 var
   i:integer;
   found:boolean;
 begin
-  if EditType.ActiveControl.Name='P' then
+  if frmEditType.ActiveControl.Name='P' then
      begin
      found:=false;
      For i:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
@@ -131,14 +130,14 @@ begin
   if found then frmStemmaMainForm.DataHist.Row:=i+1;
 end;
 
-procedure TEditType.PEditingDone(Sender: TObject);
+procedure TfrmEditType.PEditingDone(Sender: TObject);
 begin
   frmStemmaMainForm.DataHist.InsertColRow(false,0);
   frmStemmaMainForm.DataHist.Cells[0,0]:='P';
   frmStemmaMainForm.DataHist.Cells[1,0]:=P.Text;
 end;
 
-procedure TEditType.Button1Click(Sender: TObject);
+procedure TfrmEditType.Button1Click(Sender: TObject);
 var
   temp, role, roles:string;
   pos1,pos2:integer;

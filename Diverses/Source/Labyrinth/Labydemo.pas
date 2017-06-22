@@ -100,7 +100,7 @@ begin
     imax:=round(i*2*pi);
     for j:= 1 to imax do
       begin
-        hp:=unt_point2d.getdir(i,j);
+        hp:=unt_Point2d.getdir(i,j);
         image1.Canvas.Pixels[hp.x+40,hp.y+40]:=rgb(i*3,i*2{%H-}+round(j/imax*90) ,round(j/imax*250));
         image1.Canvas.Pixels[j,hp.x+120]:=rgb(i*3,i*2{%H-}+round(j/imax*90) ,round(j/imax*250));
         image1.Canvas.Pixels[j,hp.y+200]:=rgb(i*3,i*2{%H-}+round(j/imax*90) ,round(j/imax*250));

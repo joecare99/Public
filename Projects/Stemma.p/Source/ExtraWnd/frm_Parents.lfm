@@ -11,7 +11,7 @@ object frmParents: TfrmParents
   OnClose = FormClose
   OnShow = FormShow
   PopupMenu = PopupMenuParent
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '1.8.0.2'
   Visible = False
   object tblParents: TStringGrid
     Left = 0
@@ -23,15 +23,19 @@ object frmParents: TfrmParents
     Columns = <    
       item
         Title.Caption = '*'
+        Width = 64
       end    
       item
         Title.Caption = 'Type'
+        Width = 64
       end    
       item
         Title.Caption = 'Parent'
+        Width = 64
       end    
       item
         Title.Caption = 'Q'
+        Width = 64
       end    
       item
         Title.Caption = 'IdParent'
@@ -70,7 +74,6 @@ object frmParents: TfrmParents
       Left = 38
       Height = 22
       Top = 2
-      Width = 8
       Caption = 'ToolButton1'
       Style = tbsSeparator
     end

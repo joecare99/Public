@@ -6,33 +6,40 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Grids,
-  StdCtrls, Menus, FMUtils, StrUtils, LCLType;
+  StdCtrls, Menus, FMUtils, StrUtils, LCLType, ActnList;
 
 type
 
-  { TFormSources }
+  { TfrmSources }
 
-  TFormSources = class(TForm)
+  TfrmSources = class(TForm)
+    actSourceDelete: TAction;
+    actSourceEdit: TAction;
+    actSourceUsage: TAction;
+    actSourceAdd: TAction;
+    actSourceSortTitle: TAction;
+    actSourceSortNumber: TAction;
+    alsSource: TActionList;
     Button1: TButton;
-    MenuItem1: TMenuItem;
-    MenuItem2: TMenuItem;
-    MenuItem3: TMenuItem;
-    MenuItem4: TMenuItem;
-    MenuItem5: TMenuItem;
-    MenuItem6: TMenuItem;
-    MenuItem7: TMenuItem;
-    MenuItem8: TMenuItem;
-    MenuItem9: TMenuItem;
-    PopupMenu1: TPopupMenu;
+    mniSourceSep2: TMenuItem;
+    mniSourceAdd: TMenuItem;
+    mniSourceEdit: TMenuItem;
+    mniSourceDelete: TMenuItem;
+    mniSourceSort: TMenuItem;
+    mniSourceSep1: TMenuItem;
+    mniSourceSortNumber: TMenuItem;
+    mniSourceUsage: TMenuItem;
+    mniSourceSortTitle: TMenuItem;
+    mnuSource: TPopupMenu;
     TableauSources: TStringGrid;
     procedure FormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure MenuItem2Click(Sender: TObject);
-    procedure MenuItem4Click(Sender: TObject);
-    procedure MenuItem7Click(Sender: TObject);
-    procedure MenuItem8Click(Sender: TObject);
-    procedure MenuItem9Click(Sender: TObject);
+    procedure mniSourceAddClick(Sender: TObject);
+    procedure mniSourceDeleteClick(Sender: TObject);
+    procedure mniSourceSortNumberClick(Sender: TObject);
+    procedure mniSourceUsageClick(Sender: TObject);
+    procedure mniSourceSortTitleClick(Sender: TObject);
     procedure TableauSourcesDblClick(Sender: TObject);
     procedure TableauSourcesEditingDone(Sender: TObject);
   private
@@ -42,7 +49,7 @@ type
   end; 
 
 var
-  FormSources: TFormSources;
+  frmSources: TfrmSources;
 
 implementation
 
@@ -56,9 +63,9 @@ uses
 
 {$R *.lfm}
 
-{ TFormSources }
+{ TfrmSources }
 
-procedure TFormSources.FormResize(Sender: TObject);
+procedure TfrmSources.FormResize(Sender: TObject);
 begin
   TableauSources.Width := (Sender as Tform).Width-16;
   TableauSources.Height := (Sender as Tform).Height-51;
@@ -66,7 +73,7 @@ begin
   Button1.Left:= (Sender as Tform).Width-80;
 end;
 
-procedure TFormSources.FormClose(Sender: TObject; var CloseAction: TCloseAction);
+procedure TfrmSources.FormClose(Sender: TObject; var CloseAction: TCloseAction);
 begin
   if CloseAction <> caMinimize then
      begin
@@ -75,14 +82,14 @@ begin
      end;
 end;
 
-procedure TFormSources.FormShow(Sender: TObject);
+procedure TfrmSources.FormShow(Sender: TObject);
 var
   MyCursor: TCursor;
   lTable: TStringGrid;
   lNotification: TNotifyEvent;
 begin
-  dmGenData.ReadCfgFormPosition(FormSources,0,0,70,1000);
-  dmGenData.ReadCfgGridPosition(FormSources.TableauSources as TStringGrid,6);
+  dmGenData.ReadCfgFormPosition(frmSources,0,0,70,1000);
+  dmGenData.ReadCfgGridPosition(frmSources.TableauSources as TStringGrid,6);
   Caption:=Translation.Items[218];
   Button1.Caption:=Translation.Items[152];
   TableauSources.Cells[2,0]:=Translation.Items[154];
@@ -91,13 +98,13 @@ begin
   TableauSources.Cells[5,0]:=Translation.Items[219];
   TableauSources.Cells[6,0]:=Translation.Items[177];
   TableauSources.Cells[7,0]:=Translation.Items[158];
-  MenuItem2.Caption:=Translation.Items[224];
-  MenuItem3.Caption:=Translation.Items[225];
-  MenuItem4.Caption:=Translation.Items[226];
-  MenuItem5.Caption:=Translation.Items[239];
-  MenuItem7.Caption:=Translation.Items[246];
-  MenuItem8.Caption:=Translation.Items[223];
-  MenuItem9.Caption:=Translation.Items[247];
+  mniSourceAdd.Caption:=Translation.Items[224];
+  mniSourceEdit.Caption:=Translation.Items[225];
+  mniSourceDelete.Caption:=Translation.Items[226];
+  mniSourceSort.Caption:=Translation.Items[239];
+  mniSourceSortNumber.Caption:=Translation.Items[246];
+  mniSourceUsage.Caption:=Translation.Items[223];
+  mniSourceSortTitle.Caption:=Translation.Items[247];
   MyCursor := Screen.Cursor;
   Screen.Cursor := crHourGlass;
   frmStemmaMainForm.ProgressBar.Position:=0;
@@ -110,16 +117,16 @@ begin
   Screen.Cursor := MyCursor;
 End;
 
-procedure TFormSources.MenuItem2Click(Sender: TObject);
+procedure TfrmSources.mniSourceAddClick(Sender: TObject);
 begin
   // Ajouter une source
-  dmGenData.PutCode('S',0);
-  dmGenData.PutCode('A',0);
-  if EditSource.Showmodal = mrOK then
+  frmEditSource.EditMode:=esem_AddNew;
+  if frmEditSource.Showmodal = mrOK then
+     // Reinitialize Form
      Formshow(Sender);
 end;
 
-procedure TFormSources.MenuItem4Click(Sender: TObject);
+procedure TfrmSources.mniSourceDeleteClick(Sender: TObject);
 begin
   // Supprimer une source
   if TableauSources.Row>0 then
@@ -133,12 +140,12 @@ begin
         end;
 end;
 
-procedure TFormSources.MenuItem7Click(Sender: TObject);
+procedure TfrmSources.mniSourceSortNumberClick(Sender: TObject);
 begin
   TableauSources.SortColRow(true,1);
 end;
 
-procedure TFormSources.MenuItem8Click(Sender: TObject);
+procedure TfrmSources.mniSourceUsageClick(Sender: TObject);
 var
   lSourceCitCount: LongInt;
   lidSource: PtrInt;
@@ -156,20 +163,21 @@ begin
   end;
 end;
 
-procedure TFormSources.MenuItem9Click(Sender: TObject);
+procedure TfrmSources.mniSourceSortTitleClick(Sender: TObject);
 begin
   TableauSources.SortColRow(true,2);
 end;
 
-procedure TFormSources.TableauSourcesDblClick(Sender: TObject);
+procedure TfrmSources.TableauSourcesDblClick(Sender: TObject);
 var
   temp:string;
   auteur:boolean;
 begin
-  dmGenData.PutCode('S',0);
   if TableauSources.Row>0 then
      begin
-     If EditSource.Showmodal=mrOK then
+     frmEditSource.EditMode:=esem_EditExisting;
+     frmEditSource.idSource:=ptrint( TableauSources.Objects[1,TableauSources.Row]);
+     If frmEditSource.Showmodal=mrOK then
         // Ne pas repopuler toute la table, seulement la source modifiée.
         // FormShow(Sender);
        begin
@@ -204,7 +212,7 @@ begin
   //     frmStemmaMainForm.sID:=TableauSources.Cells[0,TableauSources.Row];
 end;
 
-procedure TFormSources.TableauSourcesEditingDone(Sender: TObject);
+procedure TfrmSources.TableauSourcesEditingDone(Sender: TObject);
 var
   temp:string;
   auteur:boolean;

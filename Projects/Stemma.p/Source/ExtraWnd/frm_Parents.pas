@@ -74,7 +74,7 @@ end;
 
 procedure TfrmParents.FormShow(Sender: TObject);
 begin
-  Caption := SParents;
+  Caption := rsParents;
   tblParents.Cells[2, 0] := Translation.Items[185];
   tblParents.Cells[3, 0] := Translation.Items[216];
   tblParents.Cells[4, 0] := Translation.Items[177];

@@ -27,8 +27,13 @@ type
     MenuItem4: TMenuItem;
     pnlLeft: TPanel;
     mnuIndividual: TPopupMenu;
+    procedure actIndividualActionUpdate(Sender: TObject);
+    procedure actIndividualEditExecute(Sender: TObject);
+    procedure actIndividualNewExecute(Sender: TObject);
+    procedure cbxIndividNameChange(Sender: TObject);
     procedure edtIndividIdEditingDone(Sender: TObject);
   private
+    FChangeTime: QWord;
     function GetIdInd: integer;
     function GetIndName: TCaption;
     function GetRole: TCaption;
@@ -46,7 +51,7 @@ implementation
 
 {$R *.lfm}
 
-uses dm_GenData,FMUtils;
+uses dm_GenData,FMUtils,frm_EditName,frm_SelectPerson;
 { TfraIndividualwithRole }
 
 procedure TfraIndividualwithRole.edtIndividIdEditingDone(Sender: TObject);
@@ -54,6 +59,35 @@ procedure TfraIndividualwithRole.edtIndividIdEditingDone(Sender: TObject);
 begin
    cbxIndividName.Text:=
      DecodeName(dmGenData.GetIndividuumName(edtIndividId.Value),1);
+end;
+
+procedure TfraIndividualwithRole.cbxIndividNameChange(Sender: TObject);
+begin
+  FChangeTime:=GetTickCount64;
+end;
+
+procedure TfraIndividualwithRole.actIndividualNewExecute(Sender: TObject);
+begin
+  if idInd >0 then exit;
+  frmEditName.EditMode:=eNET_NewUnrelated;
+  frmEditName.IndName:=IndName;
+  if frmEditName.showmodal=mrOK then
+     idInd:=frmEditName.idInd;
+end;
+
+procedure TfraIndividualwithRole.actIndividualEditExecute(Sender: TObject);
+begin
+  if idInd <=0 then exit;
+  frmEditName.EditMode:=eNET_EditExisting;
+  frmEditName.idInd := idInd;
+  if frmEditName.showmodal=mrOK then
+     idInd:=frmEditName.idInd;
+end;
+
+procedure TfraIndividualwithRole.actIndividualActionUpdate(Sender: TObject);
+begin
+  actIndividualNew.Enabled:=idInd <=0;
+  actIndividualEdit.Enabled:=idInd >0;
 end;
 
 function TfraIndividualwithRole.GetIdInd: integer;
@@ -81,7 +115,6 @@ begin
   else
     cbxIndividName.Text:='';
 end;
-
 
 procedure TfraIndividualwithRole.SetIndName(AValue: TCaption);
 begin

@@ -1,0 +1,39 @@
+object Fmain: TFmain
+  Left = 597
+  Height = 240
+  Top = 334
+  Width = 320
+  ActiveControl = Button1
+  Caption = 'LOrga 0.0.1 by Thomas Schütz'
+  ClientHeight = 240
+  ClientWidth = 320
+  OnClose = FormClose
+  Position = poDesktopCenter
+  LCLVersion = '1.8.0.2'
+  Visible = False
+  object Button1: TButton
+    Left = 21
+    Height = 41
+    Top = 24
+    Width = 250
+    Caption = 'Termin hinzufügen'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object Button2: TButton
+    Left = 85
+    Height = 41
+    Top = 88
+    Width = 186
+    Caption = 'Termin anzeigen'
+    OnClick = Button2Click
+    TabOrder = 1
+  end
+  object SpinEdit1: TSpinEdit
+    Left = 21
+    Height = 23
+    Top = 96
+    Width = 56
+    TabOrder = 2
+  end
+end

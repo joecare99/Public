@@ -1,15 +1,17 @@
 object FraWindRose: TFraWindRose
   Left = 0
+  Height = 240
   Top = 0
   Width = 320
-  Height = 240
-  TabOrder = 0
+  ClientHeight = 240
+  ClientWidth = 320
   OnResize = FrameResize
+  TabOrder = 0
   object Image1: TImage
     Left = 0
+    Height = 240
     Top = 0
     Width = 320
-    Height = 240
     Align = alClient
   end
-end
+end

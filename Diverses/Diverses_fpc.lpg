@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="17">
+    <Targets Count="19">
       <Target0 FileName="FPC\Clrscr.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="Default"/>
@@ -89,9 +89,21 @@
         <Mode3 Name="Release"/>
       </Target15>
       <Target16 FileName="FPC\iopcc_17_2.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="Default"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+      </Target16>
+      <Target17 FileName="FPC\iopcc_17_2_b.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+      </Target17>
+      <Target18 FileName="FPC\Prj_WritePascal4.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
-      </Target16>
+      </Target18>
     </Targets>
   </ProjectGroup>
 </CONFIG>

@@ -1,18 +1,18 @@
-object EditSource: TEditSource
-  Left = 228
+object frmEditSource: TfrmEditSource
+  Left = 1012
   Height = 522
-  Top = 73
+  Top = 635
   Width = 624
   ActiveControl = edtSourceTitle
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de source'
-  ClientHeight = 522
+  ClientHeight = 502
   ClientWidth = 624
-  Menu = MainMenu1
+  Menu = mnuSourceMain
   OnShow = FormShow
   Position = poScreenCenter
-  Visible = False
+  LCLVersion = '1.8.0.2'
   object TableauDepots: TStringGrid
     Left = 88
     Height = 120
@@ -127,7 +127,7 @@ object EditSource: TEditSource
   object pnlBottom: TPanel
     Left = 0
     Height = 52
-    Top = 470
+    Top = 450
     Width = 624
     Align = alBottom
     ClientHeight = 52
@@ -164,19 +164,30 @@ object EditSource: TEditSource
   inline fraDocuments1: TfraDocuments
     Left = 3
     Height = 128
-    Top = 339
+    Top = 319
     Width = 618
     Align = alBottom
     ClientHeight = 128
     ClientWidth = 618
     TabOrder = 6
+    DesignLeft = 0
+    DesignTop = 0
     inherited tblDocuments: TStringGrid
-      Height = 128
-      Width = 528
+      Left = 96
+      Height = 122
+      Width = 507
     end
     inherited pnlDocumentsLeft: TPanel
-      Height = 128
-      ClientHeight = 128
+      Left = 3
+      Height = 122
+      Top = 3
+      Width = 90
+      BorderSpacing.Around = 3
+      ClientHeight = 122
+      ClientWidth = 90
+      inherited Label12: TLabel
+        Width = 80
+      end
     end
   end
   object No: TSpinEdit
@@ -206,13 +217,18 @@ object EditSource: TEditSource
     ClientHeight = 35
     ClientWidth = 618
     TabOrder = 8
+    DesignLeft = 0
+    DesignTop = 0
     inherited edtIndividId: TSpinEdit
+      Left = 96
       Height = 29
     end
     inherited pnlLeft: TPanel
-      Height = 35
+      Height = 29
+      Width = 90
       BevelOuter = bvNone
-      ClientHeight = 35
+      ClientHeight = 29
+      ClientWidth = 90
       inherited lblIndividRole: TLabel
         Left = 3
         Top = 3
@@ -220,8 +236,28 @@ object EditSource: TEditSource
       end
     end
     inherited cbxIndividName: TComboBox
-      Width = 423
+      Left = 195
+      Width = 408
+      OnChange = nil
     end
+    inherited alsIndividual: TActionList
+      inherited actIndividualNew: TAction
+        OnExecute = nil
+        OnUpdate = nil
+      end
+      inherited actIndividualEdit: TAction
+        OnExecute = nil
+      end
+    end
+  end
+  object Splitter1: TSplitter
+    Cursor = crVSplit
+    Left = 0
+    Height = 5
+    Top = 311
+    Width = 624
+    Align = alBottom
+    ResizeAnchor = akBottom
   end
   object PopupMenu2: TPopupMenu
     left = 32
@@ -242,32 +278,31 @@ object EditSource: TEditSource
       OnClick = Supprimer1Click
     end
   end
-  object MainMenu1: TMainMenu
+  object mnuSourceMain: TMainMenu
     left = 16
     top = 8
-    object MenuItem6: TMenuItem
+    object mniSourceRepeat: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114
-      OnClick = MenuItem6Click
+      OnClick = mniSourceRepeatClick
     end
-    object MenuItem5: TMenuItem
+    object mniSourceClose: TMenuItem
       Caption = '&Quit'
       ShortCut = 121
-      OnClick = MenuItem5Click
     end
-    object MenuItem1: TMenuItem
+    object mniRepositories: TMenuItem
       Caption = '&Dépots'
-      object MenuItem2: TMenuItem
+      object mniRepositoryAdd: TMenuItem
         Caption = '&Ajouter'
         ShortCut = 115
         OnClick = Ajouter1Click
       end
-      object MenuItem3: TMenuItem
+      object mniRepositoryEdit: TMenuItem
         Caption = '&Modifier'
         ShortCut = 116
         OnClick = TableauDepotsEditingDone
       end
-      object MenuItem4: TMenuItem
+      object mniRepositoryDelete: TMenuItem
         Caption = '&Supprimer'
         ShortCut = 117
         OnClick = Supprimer1Click

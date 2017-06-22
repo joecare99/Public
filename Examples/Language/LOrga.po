@@ -1,0 +1,19 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: umain.cfps
+msgid "FPS "
+msgstr ""
+
+#: umain.cpxf
+msgid "PXF "
+msgstr ""
+
+#: umain.cscore
+msgid "Score "
+msgstr ""
+
+#: umain.ctemp
+msgid "Temp  "
+msgstr ""
+

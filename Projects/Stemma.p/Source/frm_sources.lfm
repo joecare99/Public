@@ -1,18 +1,17 @@
-object FormSources: TFormSources
+object frmSources: TfrmSources
   Left = 429
   Height = 590
   Top = 136
   Width = 1097
   ActiveControl = TableauSources
   BorderIcons = []
-  Caption = 'FormSources'
+  Caption = 'Form: Sources'
   ClientHeight = 590
   ClientWidth = 1097
   OnClose = FormClose
   OnResize = FormResize
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
   Visible = False
   object TableauSources: TStringGrid
     Left = 8
@@ -49,11 +48,12 @@ object FormSources: TFormSources
       item
         ReadOnly = True
         Title.Caption = 'Usage'
+        Width = 64
       end>
     ExtendedSelect = False
     MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goEditing, goSmoothScroll]
-    PopupMenu = PopupMenu1
+    PopupMenu = mnuSource
     RowCount = 100
     TabOrder = 0
     OnDblClick = TableauSourcesDblClick
@@ -80,44 +80,72 @@ object FormSources: TFormSources
     ModalResult = 1
     TabOrder = 1
   end
-  object PopupMenu1: TPopupMenu
+  object mnuSource: TPopupMenu
     left = 207
     top = 552
-    object MenuItem5: TMenuItem
-      Caption = '&Tri'
-      object MenuItem7: TMenuItem
-        Caption = 'par &numéro'
-        OnClick = MenuItem7Click
+    object mniSourceSort: TMenuItem
+      Caption = '&Sort'
+      object mniSourceSortNumber: TMenuItem
+        Caption = 'by &Number'
+        OnClick = mniSourceSortNumberClick
       end
-      object MenuItem9: TMenuItem
-        Caption = 'par &titre'
-        OnClick = MenuItem9Click
+      object mniSourceSortTitle: TMenuItem
+        Caption = 'by &Title'
+        OnClick = mniSourceSortTitleClick
       end
     end
-    object MenuItem6: TMenuItem
+    object mniSourceSep1: TMenuItem
       Caption = '-'
     end
-    object MenuItem8: TMenuItem
-      Caption = 'Utilisation'
-      OnClick = MenuItem8Click
+    object mniSourceUsage: TMenuItem
+      Caption = '&Usage'
+      OnClick = mniSourceUsageClick
     end
-    object MenuItem1: TMenuItem
+    object mniSourceSep2: TMenuItem
       Caption = '-'
     end
-    object MenuItem2: TMenuItem
-      Caption = 'Ajouter'
+    object mniSourceAdd: TMenuItem
+      Caption = '&Add ...'
       ShortCut = 115
-      OnClick = MenuItem2Click
+      OnClick = mniSourceAddClick
     end
-    object MenuItem3: TMenuItem
-      Caption = 'Modifier'
+    object mniSourceEdit: TMenuItem
+      Caption = '&Edit ...'
       ShortCut = 116
       OnClick = TableauSourcesDblClick
     end
-    object MenuItem4: TMenuItem
-      Caption = 'Supprimer'
+    object mniSourceDelete: TMenuItem
+      Caption = '&Delete'
       ShortCut = 117
-      OnClick = MenuItem4Click
+      OnClick = mniSourceDeleteClick
+    end
+  end
+  object alsSource: TActionList
+    left = 240
+    top = 552
+    object actSourceSortNumber: TAction
+      Category = 'SourceSort'
+      Caption = '&by Number'
+    end
+    object actSourceSortTitle: TAction
+      Category = 'SourceSort'
+      Caption = 'by &Title'
+    end
+    object actSourceUsage: TAction
+      Category = 'Source'
+      Caption = '&Usage'
+    end
+    object actSourceAdd: TAction
+      Category = 'Source'
+      Caption = 'actSourceAdd'
+    end
+    object actSourceEdit: TAction
+      Category = 'Source'
+      Caption = 'actSourceEdit'
+    end
+    object actSourceDelete: TAction
+      Category = 'Source'
+      Caption = 'actSourceDelete'
     end
   end
 end

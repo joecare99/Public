@@ -1,7 +1,7 @@
 object frmEventUsage: TfrmEventUsage
-  Left = 281
+  Left = 376
   Height = 365
-  Top = 365
+  Top = 282
   Width = 437
   BorderIcons = []
   Caption = 'Utilisation'
@@ -10,8 +10,7 @@ object frmEventUsage: TfrmEventUsage
   OnResize = FormResize
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
-  Visible = False
+  LCLVersion = '1.8.0.2'
   object TableauUtilisation: TStringGrid
     Left = 8
     Height = 312
@@ -28,6 +27,7 @@ object frmEventUsage: TfrmEventUsage
       end    
       item
         Title.Caption = '#'
+        Width = 64
       end    
       item
         Title.Caption = 'Date'

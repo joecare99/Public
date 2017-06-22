@@ -45,8 +45,6 @@ type
       var Handled: Boolean);
     procedure tblDocumentsDrawCell(Sender: TObject; aCol, aRow: Integer;
       aRect: TRect; {%H-}aState: TGridDrawState);
-    procedure tblDocumentsPrepareCanvas(sender: TObject; aCol, aRow: Integer;
-      aState: TGridDrawState);
     procedure tblDocumentsSelection(Sender: TObject; {%H-}aCol, aRow: Integer);
   private
     function GetidDocument: integer;
@@ -102,7 +100,7 @@ end;
 
 procedure TfrmDocuments.FormShow(Sender: TObject);
 begin
-  Caption:=Format(SDocuments,[]);
+  Caption:=Format(rsDocuments,[]);
   tblDocuments.Cells[2,0]:=Translation.Items[154];
   tblDocuments.Cells[3,0]:=Translation.Items[185];
   tblDocuments.Cells[4,0]:=Translation.Items[201];
@@ -128,7 +126,7 @@ begin
      dmGenData.PopulateDocuments(tblDocuments,'I',frmStemmaMainForm.iID);
   end
   else
-     ShowMessage(SOnlyTheExhibitsAssoc);
+     ShowMessage(rsOnlyTheExhibitsAssoc);
 end;
 
 procedure TfrmDocuments.actDocumentsAddExecute(Sender: TObject);
@@ -193,12 +191,6 @@ begin
      (Sender as TStringGrid).Canvas.Font.Bold := true;
      (Sender as TStringGrid).Canvas.TextOut(aRect.Left+2,aRect.Top+2,(Sender as TStringGrid).Cells[aCol,aRow]);
   end;
-end;
-
-procedure TfrmDocuments.tblDocumentsPrepareCanvas(sender: TObject; aCol,
-  aRow: Integer; aState: TGridDrawState);
-begin
-
 end;
 
 procedure TfrmDocuments.tblDocumentsSelection(Sender: TObject; aCol,

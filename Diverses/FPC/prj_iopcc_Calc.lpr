@@ -13,7 +13,7 @@ begin
   for j in tt do
     Write( format( '%d ,', [j and 3] ) );
   writeln;
-  $21200100
+//  $21200100
   for ch in '_|_  |  ' do
   write( format( '%x ,', [ord(ch )] ));
 

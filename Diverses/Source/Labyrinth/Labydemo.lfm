@@ -11,7 +11,7 @@ object Form1: TForm1
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
-  LCLVersion = '1.6.0.1'
+  LCLVersion = '1.8.0.2'
   Visible = False
   object Image1: TImage
     Left = 8

@@ -152,7 +152,7 @@ Type
   End;
 
 {$IFnDEF FPC}
-  {$R *.dfm}
+  {$R *.lfm}
 {$ELSE}
   {$R *.lfm}
 {$ENDIF}

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -18,9 +18,6 @@
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="4">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
@@ -32,7 +29,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="..\..\include;..\source;$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source"/>
+            <OtherUnitFiles Value="..\Source;..\Source\Labyrinth"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -167,7 +164,7 @@
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Source\Labydemo3.pas"/>
+        <Filename Value="..\Source\Labyrinth\Labydemo3.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -179,7 +176,7 @@
         <HasResources Value="True"/>
       </Unit2>
       <Unit3>
-        <Filename Value="..\Source\LabyU3.pas"/>
+        <Filename Value="..\Source\Labyrinth\LabyU3.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Laby"/>
         <HasResources Value="True"/>
@@ -190,15 +187,15 @@
         <IsPartOfProject Value="True"/>
       </Unit4>
       <Unit5>
-        <Filename Value="..\Source\unt_Point2d.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit5>
-      <Unit6>
         <Filename Value="..\Source\Fra_WindRose.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FraWindRose"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\Source\Labyrinth\unt_Point2d.pas"/>
+        <IsPartOfProject Value="True"/>
       </Unit6>
     </Units>
   </ProjectOptions>

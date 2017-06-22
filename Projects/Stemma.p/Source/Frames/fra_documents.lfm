@@ -7,12 +7,16 @@ object fraDocuments: TfraDocuments
   ClientHeight = 240
   ClientWidth = 920
   TabOrder = 0
+  DesignLeft = 188
+  DesignTop = 284
   object tblDocuments: TStringGrid
-    Left = 90
-    Height = 240
-    Top = 0
-    Width = 830
+    Left = 83
+    Height = 234
+    Top = 3
+    Width = 822
     Align = alClient
+    BorderSpacing.Right = 12
+    BorderSpacing.Around = 3
     Columns = <    
       item
         Title.Caption = '*'
@@ -48,17 +52,17 @@ object fraDocuments: TfraDocuments
     Left = 0
     Height = 240
     Top = 0
-    Width = 90
+    Width = 80
     Align = alLeft
     BevelOuter = bvNone
     ClientHeight = 240
-    ClientWidth = 90
+    ClientWidth = 80
     TabOrder = 1
     object Label12: TLabel
       Left = 5
       Height = 15
       Top = 3
-      Width = 80
+      Width = 70
       Align = alTop
       Alignment = taRightJustify
       BorderSpacing.Left = 5

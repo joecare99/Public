@@ -1,19 +1,18 @@
-object EditType: TEditType
-  Left = 240
+object frmEditType: TfrmEditType
+  Left = 885
   Height = 366
-  Top = 153
+  Top = 409
   Width = 617
   ActiveControl = T
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de type d''événement'
-  ClientHeight = 366
+  ClientHeight = 346
   ClientWidth = 617
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
-  Visible = False
+  LCLVersion = '1.8.0.2'
   object Button1: TButton
     Left = 456
     Height = 25

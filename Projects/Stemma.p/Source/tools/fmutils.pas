@@ -7,14 +7,14 @@ interface
 uses
   Classes, SysUtils, Forms, Grids, StrUtils;
 
-procedure SaveFormPosition(Sender: TForm); deprecated 'use dmGenData.WriteCfgFormPosition';
-procedure SaveGridPosition(Sender: TStringGrid;cols: integer);deprecated 'use dmGenData.WriteCfgGridPosition';
-procedure GetGridPosition(Sender: TStringGrid;cols: integer);deprecated 'use dmGenData.ReadCfgGridPosition';
-procedure GetFormPosition(Sender: TForm;a:integer;b:integer;c:integer;d:integer);deprecated 'use dmGenData.ReadCfgFormPosition';
-procedure SaveModificationTime(no:integer);overload;deprecated 'use dmGenData.SaveModificationTime';
-procedure SaveModificationTime(no:string);overload ;deprecated 'use dmGenData.SaveModificationTime';
-procedure PopulateCitations(Tableau:TStringGrid;Code:string;no:integer);overload;deprecated'use dmGenData.PopulateCitations';
-procedure PopulateCitations(Tableau:TStringGrid;Code:string;Nstr:String);overload;deprecated'use dmGenData.PopulateCitations';
+procedure SaveFormPosition(Sender: TForm); deprecated {$ifndef NoFormat}'use dmGenData.WriteCfgFormPosition'{$endif};
+procedure SaveGridPosition(Sender: TStringGrid;cols: integer);deprecated {$ifndef NoFormat}'use dmGenData.WriteCfgGridPosition'{$endif};
+procedure GetGridPosition(Sender: TStringGrid;cols: integer);deprecated {$ifndef NoFormat}'use dmGenData.ReadCfgGridPosition'{$endif};
+procedure GetFormPosition(Sender: TForm;a:integer;b:integer;c:integer;d:integer);deprecated {$ifndef NoFormat}'use dmGenData.ReadCfgFormPosition'{$endif};
+procedure SaveModificationTime(no:integer);overload;deprecated {$ifndef NoFormat}'use dmGenData.SaveModificationTime'{$endif};
+procedure SaveModificationTime(no:string);overload ;deprecated {$ifndef NoFormat}'use dmGenData.SaveModificationTime'{$endif};
+procedure PopulateCitations(Tableau:TStringGrid;Code:string;no:integer);overload;deprecated{$ifndef NoFormat}'use dmGenData.PopulateCitations'{$endif};
+procedure PopulateCitations(Tableau:TStringGrid;Code:string;Nstr:String);overload;deprecated{$ifndef NoFormat}'use dmGenData.PopulateCitations'{$endif};
 function DecodeName(Name:string;format:byte):string;
 procedure DecodePlace(Place: string; out article,detail,sCity,region,province,sCountry: string);
 function DecodeChanged(Place:string):string;
@@ -27,12 +27,12 @@ function DecodePhraseStemma(idIndividual:integer;role:string;phrase:string;TypeE
 function DecodePhraseStemma(sIndividual:string;role:string;phrase:string;TypeEvenement:string;evenement:string;char:integer):string;overload;deprecated;
 function CalculateAge(Date1:string;Date2:string;format:byte):string;
 function InterpreteDate(Date:string;format:byte):string;
-function getI3(no:integer):string;overload;deprecated 'use dmGenData.getI3';
-function getI4(no:integer):string;overload; deprecated 'use dmGenData.getI4';
-function getName(no:integer):string;overload; deprecated 'use dmGenData.GetIndividuumName';
-function getI3(nstr:string):string;overload;deprecated 'use dmGenData.getI3';
-function getI4(nstr:string):string;overload;deprecated 'use dmGenData.getI4';
-function getName(nstr:string):string;overload;deprecated 'use dmGenData.GetIndividuumName';
+function getI3(no:integer):string;overload;deprecated {$ifndef NoFormat}'use dmGenData.getI3'{$endif};
+function getI4(no:integer):string;overload; deprecated {$ifndef NoFormat}'use dmGenData.getI4'{$endif};
+function getName(no:integer):string;overload; deprecated {$ifndef NoFormat}'use dmGenData.GetIndividuumName'{$endif};
+function getI3(nstr:string):string;overload;deprecated {$ifndef NoFormat}'use dmGenData.getI3'{$endif};
+function getI4(nstr:string):string;overload;deprecated {$ifndef NoFormat}'use dmGenData.getI4'{$endif};
+function getName(nstr:string):string;overload;deprecated {$ifndef NoFormat}'use dmGenData.GetIndividuumName'{$endif};
 Function AutoQuote(orgStr:string):String;
 function GetTableColWidthSum(const lTable: TStringGrid; const lIgnCol: Integer
   ): Integer;
@@ -1904,212 +1904,212 @@ end;
 
 function ConvertDate(Date:string;format:byte):string;
 var
-   temp1, temp2, annee1, annee2, mois1, mois2, jour1, jour2: string;
-   type1, type2, style : integer;
+   lsTemp1, lsTemp2, lYear1, lYear2, lMonth1, lMonth2, lDay1, lDay2: string;
+   liType1, liType2, liStyle : integer;
 begin
    if copy(Date,1,1)<>'1' then
       ConvertDate := Copy(Date,2,length(Date))
    else
       begin
-      annee1:=copy(Date,2,4);
-      mois1 :=copy(Date,6,2);
-      jour1 :=copy(Date,8,2);
-      annee2:=copy(Date,12,4);
-      mois2 :=copy(Date,16,2);
-      jour2 :=copy(Date,18,2);
-      tryStrToInt(copy(Date,11,1),style);
-      type1:=0;
-      type2:=0;
-      if ((mois1='00') and (jour1='00')) then type1:=1 else    // annee seulement
-      if ((annee1='0000') and (jour1='00')) then type1:=2 else // mois seulement
-      if ((mois1='00') and (annee1='0000')) then type1:=3 else // jour seulement
-      if (jour1='00') then type1:=4 else                       // manque jour seulement
-      if (mois1='00') then type1:=5 else                       // manque mois seulement
-      if (annee1='0000') then type1:=6;                        // manque annee seulement
-      if ((mois2='00') and (jour2='00')) then type2:=1 else    // annee seulement
-      if ((annee2='0000') and (jour2='00')) then type2:=2 else // mois seulement
-      if ((mois2='00') and (annee2='0000')) then type2:=3 else // jour seulement
-      if (jour2='00') then type2:=4 else                       // manque jour seulement
-      if (mois2='00') then type2:=5 else                       // manque mois seulement
-      if (annee2='0000') then type2:=6;                        // manque annee seulement
+      lYear1:=copy(Date,2,4);
+      lMonth1 :=copy(Date,6,2);
+      lDay1 :=copy(Date,8,2);
+      lYear2:=copy(Date,12,4);
+      lMonth2 :=copy(Date,16,2);
+      lDay2 :=copy(Date,18,2);
+      tryStrToInt(copy(Date,11,1),liStyle);
+      liType1:=0;
+      liType2:=0;
+      if ((lMonth1='00') and (lDay1='00')) then liType1:=1 else    // annee seulement
+      if ((lYear1='0000') and (lDay1='00')) then liType1:=2 else // mois seulement
+      if ((lMonth1='00') and (lYear1='0000')) then liType1:=3 else // jour seulement
+      if (lDay1='00') then liType1:=4 else                       // manque jour seulement
+      if (lMonth1='00') then liType1:=5 else                       // manque mois seulement
+      if (lYear1='0000') then liType1:=6;                        // manque annee seulement
+      if ((lMonth2='00') and (lDay2='00')) then liType2:=1 else    // annee seulement
+      if ((lYear2='0000') and (lDay2='00')) then liType2:=2 else // mois seulement
+      if ((lMonth2='00') and (lYear2='0000')) then liType2:=3 else // jour seulement
+      if (lDay2='00') then liType2:=4 else                       // manque jour seulement
+      if (lMonth2='00') then liType2:=5 else                       // manque mois seulement
+      if (lYear2='0000') then liType2:=6;                        // manque annee seulement
       if Copy(Date,1,21)='100000000030000000000' then
          ConvertDate :=''
       else
          begin
          If format=0 then
             begin
-            Jour1:=IntToStr(StrtoInt(Jour1));
-            Jour2:=IntToStr(StrtoInt(Jour2));
-            Annee1:=IntToStr(StrtoInt(Annee1));
-            Annee2:=IntToStr(StrtoInt(Annee2));
-            if StrToInt(Jour1)=1 then Jour1:=Translation.Items[74];
-            if StrToInt(Jour2)=1 then Jour2:=Translation.Items[74];
-            case StrToInt(mois1) of
-               1:mois1:=Translation.Items[75];
-               2:mois1:=Translation.Items[76];
-               3:mois1:=Translation.Items[77];
-               4:mois1:=Translation.Items[78];
-               5:mois1:=Translation.Items[79];
-               6:mois1:=Translation.Items[80];
-               7:mois1:=Translation.Items[81];
-               8:mois1:=Translation.Items[82];
-               9:mois1:=Translation.Items[83];
-               10:mois1:=Translation.Items[84];
-               11:mois1:=Translation.Items[85];
-               12:mois1:=Translation.Items[86];
+            lDay1:=IntToStr(StrtoInt(lDay1));
+            lDay2:=IntToStr(StrtoInt(lDay2));
+            lYear1:=IntToStr(StrtoInt(lYear1));
+            lYear2:=IntToStr(StrtoInt(lYear2));
+            if StrToInt(lDay1)=1 then lDay1:=Translation.Items[74];
+            if StrToInt(lDay2)=1 then lDay2:=Translation.Items[74];
+            case StrToInt(lMonth1) of
+               1:lMonth1:=Translation.Items[75];
+               2:lMonth1:=Translation.Items[76];
+               3:lMonth1:=Translation.Items[77];
+               4:lMonth1:=Translation.Items[78];
+               5:lMonth1:=Translation.Items[79];
+               6:lMonth1:=Translation.Items[80];
+               7:lMonth1:=Translation.Items[81];
+               8:lMonth1:=Translation.Items[82];
+               9:lMonth1:=Translation.Items[83];
+               10:lMonth1:=Translation.Items[84];
+               11:lMonth1:=Translation.Items[85];
+               12:lMonth1:=Translation.Items[86];
             end;
-            case StrToInt(mois2) of
-               1:mois2:=Translation.Items[75];
-               2:mois2:=Translation.Items[76];
-               3:mois2:=Translation.Items[77];
-               4:mois2:=Translation.Items[78];
-               5:mois2:=Translation.Items[79];
-               6:mois2:=Translation.Items[80];
-               7:mois2:=Translation.Items[81];
-               8:mois2:=Translation.Items[82];
-               9:mois2:=Translation.Items[83];
-               10:mois2:=Translation.Items[84];
-               11:mois2:=Translation.Items[85];
-               12:mois2:=Translation.Items[86];
+            case StrToInt(lMonth2) of
+               1:lMonth2:=Translation.Items[75];
+               2:lMonth2:=Translation.Items[76];
+               3:lMonth2:=Translation.Items[77];
+               4:lMonth2:=Translation.Items[78];
+               5:lMonth2:=Translation.Items[79];
+               6:lMonth2:=Translation.Items[80];
+               7:lMonth2:=Translation.Items[81];
+               8:lMonth2:=Translation.Items[82];
+               9:lMonth2:=Translation.Items[83];
+               10:lMonth2:=Translation.Items[84];
+               11:lMonth2:=Translation.Items[85];
+               12:lMonth2:=Translation.Items[86];
             end;
-            case style of
-               0:case type1 of
-                    0:ConvertDate:=Translation.Items[87]+Jour1+' '+Mois1+' '+Annee1;
-                    1:ConvertDate:=Translation.Items[88]+Annee1;
-                    2:ConvertDate:=Translation.Items[88]+Mois1;
-                    3:ConvertDate:=Translation.Items[89]+Jour1;
-                    4:ConvertDate:=Translation.Items[88]+Mois1+' '+Annee1;
-                    5:ConvertDate:=Translation.Items[89]+Jour1+
-                                   Translation.Items[90]+Annee1;
-                    6:ConvertDate:=Translation.Items[89]+Jour1+' '+Mois1;
+            case liStyle of
+               0:case liType1 of
+                    0:ConvertDate:=rsDateBeforeThe+lDay1+' '+lMonth1+' '+lYear1;
+                    1:ConvertDate:=Translation.Items[88]+lYear1;
+                    2:ConvertDate:=Translation.Items[88]+lMonth1;
+                    3:ConvertDate:=Translation.Items[89]+lDay1;
+                    4:ConvertDate:=Translation.Items[88]+lMonth1+' '+lYear1;
+                    5:ConvertDate:=Translation.Items[89]+lDay1+
+                                   Translation.Items[90]+lYear1;
+                    6:ConvertDate:=Translation.Items[89]+lDay1+' '+lMonth1;
                  end;
-               1:case type1 of
-                    0:ConvertDate:=Translation.Items[91]+Jour1+' '+Mois1+' '+Annee1;
-                    1:ConvertDate:=Translation.Items[92]+Annee1;
-                    2:ConvertDate:=Translation.Items[92]+Mois1;
-                    3:ConvertDate:=Translation.Items[93]+Jour1;
-                    4:ConvertDate:=Translation.Items[92]+Mois1+' '+Annee1;
-                    5:ConvertDate:=Translation.Items[93]+Jour1+Translation.Items[90]+Annee1;
-                    6:ConvertDate:=Translation.Items[93]+Jour1+' '+Mois1;
+               1:case liType1 of
+                    0:ConvertDate:=Translation.Items[91]+lDay1+' '+lMonth1+' '+lYear1;
+                    1:ConvertDate:=Translation.Items[92]+lYear1;
+                    2:ConvertDate:=Translation.Items[92]+lMonth1;
+                    3:ConvertDate:=Translation.Items[93]+lDay1;
+                    4:ConvertDate:=Translation.Items[92]+lMonth1+' '+lYear1;
+                    5:ConvertDate:=Translation.Items[93]+lDay1+Translation.Items[90]+lYear1;
+                    6:ConvertDate:=Translation.Items[93]+lDay1+' '+lMonth1;
                  end;
-               2:case type1 of
-                    0:ConvertDate:=Translation.Items[91]+Jour1+' '+Mois1+' '+Annee1;
-                    1:ConvertDate:=Translation.Items[92]+Annee1;
-                    2:ConvertDate:=Translation.Items[92]+Mois1;
-                    3:ConvertDate:=Translation.Items[93]+Jour1;
-                    4:ConvertDate:=Translation.Items[92]+Mois1+' '+Annee1;
-                    5:ConvertDate:=Translation.Items[93]+Jour1+Translation.Items[90]+Annee1;
-                    6:ConvertDate:=Translation.Items[93]+Jour1+' '+Mois1;
+               2:case liType1 of
+                    0:ConvertDate:=Translation.Items[91]+lDay1+' '+lMonth1+' '+lYear1;
+                    1:ConvertDate:=Translation.Items[92]+lYear1;
+                    2:ConvertDate:=Translation.Items[92]+lMonth1;
+                    3:ConvertDate:=Translation.Items[93]+lDay1;
+                    4:ConvertDate:=Translation.Items[92]+lMonth1+' '+lYear1;
+                    5:ConvertDate:=Translation.Items[93]+lDay1+Translation.Items[90]+lYear1;
+                    6:ConvertDate:=Translation.Items[93]+lDay1+' '+lMonth1;
                  end;
-               3:case type1 of
-                    0:ConvertDate:=Translation.Items[94]+Jour1+' '+Mois1+' '+Annee1;
-                    1:ConvertDate:=Translation.Items[95]+Annee1;
-                    2:ConvertDate:=Translation.Items[95]+Mois1;
-                    3:ConvertDate:=Translation.Items[96]+Jour1;
-                    4:ConvertDate:=Translation.Items[95]+Mois1+' '+Annee1;
-                    5:ConvertDate:=Translation.Items[96]+Jour1+Translation.Items[90]+Annee1;
-                    6:ConvertDate:=Translation.Items[96]+Jour1+' '+Mois1;
+               3:case liType1 of
+                    0:ConvertDate:=Translation.Items[94]+lDay1+' '+lMonth1+' '+lYear1;
+                    1:ConvertDate:=Translation.Items[95]+lYear1;
+                    2:ConvertDate:=Translation.Items[95]+lMonth1;
+                    3:ConvertDate:=Translation.Items[96]+lDay1;
+                    4:ConvertDate:=Translation.Items[95]+lMonth1+' '+lYear1;
+                    5:ConvertDate:=Translation.Items[96]+lDay1+Translation.Items[90]+lYear1;
+                    6:ConvertDate:=Translation.Items[96]+lDay1+' '+lMonth1;
                  end;
-               4:case type1 of
-                    0:ConvertDate:=Translation.Items[97]+Jour1+' '+Mois1+' '+Annee1;
-                    1:ConvertDate:=Translation.Items[98]+Annee1;
-                    2:ConvertDate:=Translation.Items[98]+Mois1;
-                    3:ConvertDate:=Translation.Items[99]+Jour1;
-                    4:ConvertDate:=Translation.Items[98]+Mois1+' '+Annee1;
-                    5:ConvertDate:=Translation.Items[99]+Jour1+Translation.Items[90]+Annee1;
-                    6:ConvertDate:=Translation.Items[99]+Jour1+' '+Mois1;
+               4:case liType1 of
+                    0:ConvertDate:=Translation.Items[97]+lDay1+' '+lMonth1+' '+lYear1;
+                    1:ConvertDate:=Translation.Items[98]+lYear1;
+                    2:ConvertDate:=Translation.Items[98]+lMonth1;
+                    3:ConvertDate:=Translation.Items[99]+lDay1;
+                    4:ConvertDate:=Translation.Items[98]+lMonth1+' '+lYear1;
+                    5:ConvertDate:=Translation.Items[99]+lDay1+Translation.Items[90]+lYear1;
+                    6:ConvertDate:=Translation.Items[99]+lDay1+' '+lMonth1;
                  end;
                5:begin
-                 case type1 of
-                    0:temp1:=Translation.Items[100]+Jour1+' '+Mois1+' '+Annee1;
-                    1:temp1:=Translation.Items[101]+Annee1;
-                    2:temp1:=Translation.Items[101]+Mois1;
-                    3:temp1:=Translation.Items[102]+Jour1;
-                    4:temp1:=Translation.Items[101]+Mois1+' '+Annee1;
-                    5:temp1:=Translation.Items[102]+Jour1+Translation.Items[90]+Annee1;
-                    6:temp1:=Translation.Items[102]+Jour1+' '+Mois1;
+                 case liType1 of
+                    0:lsTemp1:=Translation.Items[100]+lDay1+' '+lMonth1+' '+lYear1;
+                    1:lsTemp1:=Translation.Items[101]+lYear1;
+                    2:lsTemp1:=Translation.Items[101]+lMonth1;
+                    3:lsTemp1:=Translation.Items[102]+lDay1;
+                    4:lsTemp1:=Translation.Items[101]+lMonth1+' '+lYear1;
+                    5:lsTemp1:=Translation.Items[102]+lDay1+Translation.Items[90]+lYear1;
+                    6:lsTemp1:=Translation.Items[102]+lDay1+' '+lMonth1;
                  end;
-                 case type2 of
-                    0:ConvertDate:=temp1+Translation.Items[103]+Jour2+' '+Mois2+' '+Annee2;
-                    1:ConvertDate:=temp1+Translation.Items[72]+Annee2;
-                    2:ConvertDate:=temp1+Translation.Items[72]+Mois2;
-                    3:ConvertDate:=temp1+Translation.Items[104]+Jour2;
-                    4:ConvertDate:=temp1+Translation.Items[72]+Mois2+' '+Annee2;
-                    5:ConvertDate:=temp1+Translation.Items[104]+Jour2+Translation.Items[90]+Annee2;
-                    6:ConvertDate:=temp1+Translation.Items[104]+Jour2+' '+Mois2;
+                 case liType2 of
+                    0:ConvertDate:=lsTemp1+Translation.Items[103]+lDay2+' '+lMonth2+' '+lYear2;
+                    1:ConvertDate:=lsTemp1+Translation.Items[72]+lYear2;
+                    2:ConvertDate:=lsTemp1+Translation.Items[72]+lMonth2;
+                    3:ConvertDate:=lsTemp1+Translation.Items[104]+lDay2;
+                    4:ConvertDate:=lsTemp1+Translation.Items[72]+lMonth2+' '+lYear2;
+                    5:ConvertDate:=lsTemp1+Translation.Items[104]+lDay2+Translation.Items[90]+lYear2;
+                    6:ConvertDate:=lsTemp1+Translation.Items[104]+lDay2+' '+lMonth2;
                  end;
                  end;
                6:begin
-                 case type1 of
-                    0:temp1:=Translation.Items[94]+Jour1+' '+Mois1+' '+Annee1;
-                    1:temp1:=Translation.Items[95]+Annee1;
-                    2:temp1:=Translation.Items[95]+Mois1;
-                    3:temp1:=Translation.Items[96]+Jour1;
-                    4:temp1:=Translation.Items[95]+Mois1+' '+Annee1;
-                    5:temp1:=Translation.Items[96]+Jour1+Translation.Items[90]+Annee1;
-                    6:temp1:=Translation.Items[96]+Jour1+' '+Mois1;
+                 case liType1 of
+                    0:lsTemp1:=Translation.Items[94]+lDay1+' '+lMonth1+' '+lYear1;
+                    1:lsTemp1:=Translation.Items[95]+lYear1;
+                    2:lsTemp1:=Translation.Items[95]+lMonth1;
+                    3:lsTemp1:=Translation.Items[96]+lDay1;
+                    4:lsTemp1:=Translation.Items[95]+lMonth1+' '+lYear1;
+                    5:lsTemp1:=Translation.Items[96]+lDay1+Translation.Items[90]+lYear1;
+                    6:lsTemp1:=Translation.Items[96]+lDay1+' '+lMonth1;
                  end;
-                 case type2 of
-                    0:ConvertDate:=temp1+Translation.Items[105]+Jour2+' '+Mois2+' '+Annee2;
-                    1:ConvertDate:=temp1+Translation.Items[106]+Annee2;
-                    2:ConvertDate:=temp1+Translation.Items[106]+Mois2;
-                    3:ConvertDate:=temp1+Translation.Items[107]+Jour2;
-                    4:ConvertDate:=temp1+Translation.Items[106]+Mois2+' '+Annee2;
-                    5:ConvertDate:=temp1+Translation.Items[107]+Jour2+Translation.Items[90]+Annee2;
-                    6:ConvertDate:=temp1+Translation.Items[107]+Jour2+' '+Mois2;
+                 case liType2 of
+                    0:ConvertDate:=lsTemp1+Translation.Items[105]+lDay2+' '+lMonth2+' '+lYear2;
+                    1:ConvertDate:=lsTemp1+Translation.Items[106]+lYear2;
+                    2:ConvertDate:=lsTemp1+Translation.Items[106]+lMonth2;
+                    3:ConvertDate:=lsTemp1+Translation.Items[107]+lDay2;
+                    4:ConvertDate:=lsTemp1+Translation.Items[106]+lMonth2+' '+lYear2;
+                    5:ConvertDate:=lsTemp1+Translation.Items[107]+lDay2+Translation.Items[90]+lYear2;
+                    6:ConvertDate:=lsTemp1+Translation.Items[107]+lDay2+' '+lMonth2;
                  end;
                  end;
                7:begin
-                 case type1 of
-                    0:temp1:=Translation.Items[108]+Jour1+' '+Mois1+' '+Annee1;
-                    1:temp1:=Translation.Items[109]+Annee1;
-                    2:temp1:=Translation.Items[109]+Mois1;
-                    3:temp1:=Translation.Items[110]+Jour1;
-                    4:temp1:=Translation.Items[109]+Mois1+' '+Annee1;
-                    5:temp1:=Translation.Items[110]+Jour1+Translation.Items[90]+Annee1;
-                    6:temp1:=Translation.Items[110]+Jour1+' '+Mois1;
+                 case liType1 of
+                    0:lsTemp1:=Translation.Items[108]+lDay1+' '+lMonth1+' '+lYear1;
+                    1:lsTemp1:=Translation.Items[109]+lYear1;
+                    2:lsTemp1:=Translation.Items[109]+lMonth1;
+                    3:lsTemp1:=Translation.Items[110]+lDay1;
+                    4:lsTemp1:=Translation.Items[109]+lMonth1+' '+lYear1;
+                    5:lsTemp1:=Translation.Items[110]+lDay1+Translation.Items[90]+lYear1;
+                    6:lsTemp1:=Translation.Items[110]+lDay1+' '+lMonth1;
                  end;
-                 case type2 of
-                    0:ConvertDate:=temp1+Translation.Items[111]+Jour2+' '+Mois2+' '+Annee2;
-                    1:ConvertDate:=temp1+Translation.Items[112]+Annee2;
-                    2:ConvertDate:=temp1+Translation.Items[112]+Mois2;
-                    3:ConvertDate:=temp1+Translation.Items[113]+Jour2;
-                    4:ConvertDate:=temp1+Translation.Items[112]+Mois2+' '+Annee2;
-                    5:ConvertDate:=temp1+Translation.Items[113]+Jour2+Translation.Items[90]+Annee2;
-                    6:ConvertDate:=temp1+Translation.Items[113]+Jour2+' '+Mois2;
+                 case liType2 of
+                    0:ConvertDate:=lsTemp1+Translation.Items[111]+lDay2+' '+lMonth2+' '+lYear2;
+                    1:ConvertDate:=lsTemp1+Translation.Items[112]+lYear2;
+                    2:ConvertDate:=lsTemp1+Translation.Items[112]+lMonth2;
+                    3:ConvertDate:=lsTemp1+Translation.Items[113]+lDay2;
+                    4:ConvertDate:=lsTemp1+Translation.Items[112]+lMonth2+' '+lYear2;
+                    5:ConvertDate:=lsTemp1+Translation.Items[113]+lDay2+Translation.Items[90]+lYear2;
+                    6:ConvertDate:=lsTemp1+Translation.Items[113]+lDay2+' '+lMonth2;
                  end;
                  end;
             end;
          end
          else
             begin
-            case type1 of
-               0:temp1:=Annee1+'/'+Mois1+'/'+Jour1;
-               1:temp1:=Annee1;
-               2:temp1:='.../'+Mois1+'/...';
-               3:temp1:='.../.../'+Jour1;
-               4:temp1:=Annee1+'/'+Mois1+'/...';
-               5:temp1:=Annee1+'/.../'+Jour1;
-               6:temp1:='.../'+Mois1+'/'+Jour1;
+            case liType1 of
+               0:lsTemp1:=lYear1+'/'+lMonth1+'/'+lDay1;
+               1:lsTemp1:=lYear1;
+               2:lsTemp1:='.../'+lMonth1+'/...';
+               3:lsTemp1:='.../.../'+lDay1;
+               4:lsTemp1:=lYear1+'/'+lMonth1+'/...';
+               5:lsTemp1:=lYear1+'/.../'+lDay1;
+               6:lsTemp1:='.../'+lMonth1+'/'+lDay1;
             end;
-            case type2 of
-               0:temp2:=Annee2+'/'+Mois2+'/'+Jour2;
-               1:temp2:=Annee2;
-               2:temp2:='.../'+Mois2+'/...';
-               3:temp2:='.../.../'+Jour2;
-               4:temp2:=Annee2+'/'+Mois2+'/...';
-               5:temp2:=Annee2+'/.../'+Jour2;
-               6:temp2:='.../'+Mois2+'/'+Jour2;
+            case liType2 of
+               0:lsTemp2:=lYear2+'/'+lMonth2+'/'+lDay2;
+               1:lsTemp2:=lYear2;
+               2:lsTemp2:='.../'+lMonth2+'/...';
+               3:lsTemp2:='.../.../'+lDay2;
+               4:lsTemp2:=lYear2+'/'+lMonth2+'/...';
+               5:lsTemp2:=lYear2+'/.../'+lDay2;
+               6:lsTemp2:='.../'+lMonth2+'/'+lDay2;
             end;
-            case style of
-               0:ConvertDate:='<'+temp1;
-               1:ConvertDate:=Translation.Items[114]+temp1;
-               2:ConvertDate:=Translation.Items[114]+temp1;
-               3:ConvertDate:=temp1;
-               4:ConvertDate:='>'+temp1;
-               5:ConvertDate:=temp1+' - '+temp2;
-               6:ConvertDate:=temp1+Translation.Items[115]+temp2;
-               7:ConvertDate:=temp1+Translation.Items[112]+temp2;
+            case liStyle of
+               0:ConvertDate:='<'+lsTemp1;
+               1:ConvertDate:=Translation.Items[114]+lsTemp1;
+               2:ConvertDate:=Translation.Items[114]+lsTemp1;
+               3:ConvertDate:=lsTemp1;
+               4:ConvertDate:='>'+lsTemp1;
+               5:ConvertDate:=lsTemp1+' - '+lsTemp2;
+               6:ConvertDate:=lsTemp1+Translation.Items[115]+lsTemp2;
+               7:ConvertDate:=lsTemp1+Translation.Items[112]+lsTemp2;
             end;
          end;
       end;

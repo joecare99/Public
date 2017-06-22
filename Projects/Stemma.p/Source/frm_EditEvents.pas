@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Grids, Menus, FMUtils, fra_Citations, StrUtils, LCLType, Buttons, Spin,
-  ExtCtrls, IniFiles, Process;
+  Grids, Menus, FMUtils, fra_Citations, fra_Documents, StrUtils, LCLType,
+  Buttons, Spin, ExtCtrls, IniFiles, Process,fra_Phrase, fra_Date;
 
 type
  enumEventEditType = (
@@ -20,28 +20,23 @@ type
 
   { TfrmEditEvents }
   TfrmEditEvents = class(TForm)
-    Ajouter2: TMenuItem;
     Button1: TBitBtn;
     Button2: TBitBtn;
+    fraDate1: TfraDate;
+    fraDocuments1: TfraDocuments;
     fraEdtCitations1: TfraEdtCitations;
+    fraPhrase1: TfraPhrase;
     L3: TEdit;
     L4: TEdit;
     L0: TEdit;
     LA: TEdit;
     Label1: TLabel;
-    Label10: TLabel;
     Label11: TLabel;
-    Label12: TLabel;
     Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    Label6: TLabel;
     Label8: TLabel;
-    Label9: TLabel;
     M: TMemo;
-    MainMenu1: TMainMenu;
+    mnuEventsMain: TMainMenu;
     MenuItem1: TMenuItem;
-    MenuItem10: TMenuItem;
     MenuItem11: TMenuItem;
     MenuItem12: TMenuItem;
     MenuItem2: TMenuItem;
@@ -51,43 +46,31 @@ type
     MenuItem6: TMenuItem;
     MenuItem7: TMenuItem;
     MenuItem8: TMenuItem;
-    MenuItem9: TMenuItem;
-    Modifier2: TMenuItem;
     ModifierTemoin: TMenuItem;
     AjouterTemoin: TMenuItem;
     No: TSpinEdit;
-    Panel1: TPanel;
     pnlBottom: TPanel;
-    PopupMenu3: TPopupMenu;
-    Supprimer2: TMenuItem;
+    Splitter1: TSplitter;
     SupprimerTemoin: TMenuItem;
     L1: TEdit;
     L2: TEdit;
-    PopupMenu1: TPopupMenu;
+    mnuWitnes: TPopupMenu;
     Role: TEdit;
-    P2: TMemo;
-    PD: TEdit;
-    PD2: TEdit;
-    TableauExhibits: TStringGrid;
     TableauTemoins: TStringGrid;
     X: TEdit;
-    SD: TEdit;
-    SD2: TEdit;
     YY: TEdit;
     Y: TComboBox;
-    procedure Ajouter2Click(Sender: TObject);
+
     procedure AjouterTemoinClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure MEditingDone(Sender: TObject);
-    procedure MenuItem10Click(Sender: TObject);
+
     procedure MenuItem11Click(Sender: TObject);
     procedure MenuItem12Click(Sender: TObject);
-    procedure Modifier2Click(Sender: TObject);
-    procedure PDEditingDone(Sender: TObject);
-    procedure SDEditingDone(Sender: TObject);
-    procedure Supprimer1Click(Sender: TObject);
-    procedure Supprimer2Click(Sender: TObject);
+
+//    procedure Supprimer1Click(Sender: TObject);
+
     procedure SupprimerTemoinClick(Sender: TObject);
     procedure TableauTemoinsDblClick(Sender: TObject);
     procedure TableauTemoinsDrawCell(Sender: TObject; aCol, aRow: Integer;
@@ -184,8 +167,8 @@ begin
         dmGenData.SaveModificationTime(strtoint(TableauTemoins.Cells[2,j]));
      end;
   end;
-  If Label6.Visible Then
-     P2.Text:=DecodePhrase(frmStemmaMainForm.iID,Role.Text,phrase,'E',No.Value);
+  If fraPhrase1.isDefault Then
+     fraPhrase1.Text:=DecodePhrase(frmStemmaMainForm.iID,Role.Text,phrase,'E',No.Value);
 end;
 
 function TfrmEditEvents.GetID: longint;
@@ -204,19 +187,6 @@ begin
   FEditType:=AValue;
 end;
 
-procedure TfrmEditEvents.PDEditingDone(Sender: TObject);
-begin
-  PD2.Text:=InterpreteDate(PD.Text,1);
-  PD.Text:=ConvertDate(PD2.Text,1);
-  SD.Text:=PD.Text;
-  SD2.Text:=PD2.Text;
-  if PD2.Text<>'100000000030000000000' then
-     begin
-     frmStemmaMainForm.DataHist.InsertColRow(false,0);
-     frmStemmaMainForm.DataHist.Cells[0,0]:='PD';
-     frmStemmaMainForm.DataHist.Cells[1,0]:=PD2.Text;
-  end;
-end;
 
 procedure TfrmEditEvents.FormShow(Sender: TObject);
 var
@@ -233,32 +203,33 @@ var
   end;
 
 begin
-  frmEditEvents.ActiveControl:=frmEditEvents.PD;
+  ActiveControl:=fraDate1.edtDateForPresentation;
   frmStemmaMainForm.DataHist.Row:=0;
   Caption:=Translation.Items[165];
   Button1.Caption:=Translation.Items[152];
   Button2.Caption:=Translation.Items[164];
   Label1.Caption:=Translation.Items[166];
   Label3.Caption:=Translation.Items[171];
-  Label4.Caption:=Translation.Items[172];
-  Label5.Caption:=Translation.Items[144];
-  Label6.Caption:=Translation.Items[173];
+  //Label4.Caption:=Translation.Items[172];
+  //Label5.Caption:=Translation.Items[144];
+  //Label6.Caption:=Translation.Items[173];
 
   Label8.Caption:=Translation.Items[170];
-  Label9.Caption:=Translation.Items[168];
-  Label10.Caption:=Translation.Items[169];
+  //Label9.Caption:=Translation.Items[168];
+  //Label10.Caption:=Translation.Items[169];
   Label11.Caption:=Translation.Items[167];
-  Label12.Caption:=Translation.Items[298];
+  //Label12.Caption:=Translation.Items[298];
   TableauTemoins.Cells[1,0]:=Translation.Items[175];
   TableauTemoins.Cells[3,0]:=Translation.Items[176];
 
-  TableauExhibits.Cells[2,0]:=Translation.Items[154];
-  TableauExhibits.Cells[4,0]:=Translation.Items[201];
+
+  fraDocuments1.tblDocuments.Cells[2,0]:=Translation.Items[154];
+  fraDocuments1.tblDocuments.Cells[4,0]:=Translation.Items[201];
   fraEdtCitations1.Clear;
   fraEdtCitations1.CType:='E';
-  Ajouter2.Caption:=Translation.Items[224];
-  Modifier2.Caption:=Translation.Items[225];
-  Supprimer2.Caption:=Translation.Items[226];
+  //fraDocuments1.mniDocumentAdd.Caption:=Translation.Items[224];
+  //fraDocuments1.mniDocumentEdit.Caption:=Translation.Items[225];
+  //fraDocuments1.mniDocumentUnlink.Caption:=Translation.Items[226];
   AjouterTemoin.Caption:=Translation.Items[224];
   ModifierTemoin.Caption:=Translation.Items[225];
   SupprimerTemoin.Caption:=Translation.Items[226];
@@ -270,7 +241,7 @@ begin
   MenuItem6.Caption:=Translation.Items[224];
   MenuItem7.Caption:=Translation.Items[225];
   MenuItem8.Caption:=Translation.Items[226];
-  MenuItem10.Caption:=Translation.Items[181];
+  //mniDocumentView.Caption:=Translation.Items[181];
   // Populate le ComboBox
 
   if FEditType <> eEET_EditExisting then
@@ -369,13 +340,11 @@ begin
      TableauTemoins.Cells[3,1]:=dmGenData.GetIndividuumName(frmStemmaMainForm.iID);
      TableauTemoins.Cells[4,1]:='1';
      M.Text:='';
-     P2.Text:='';
-     PD.Text:='';
-     PD2.Text:=InterpreteDate('',1);
-     SD.Text:='';
-     SD2.Text:=PD2.Text;
-     No.Text:='0';
+     fraPhrase1.clear;
+     fraDate1.clear;
+     No.Value:=0;
      Role.Text:=TableauTemoins.Cells[1,1];
+
      LA.Text:='';
      L0.Text:='';
      L1.Text:='';
@@ -383,7 +352,7 @@ begin
      L3.Text:='';
      L4.Text:='';
      YY.Text:='';
-     Label6.Visible:=true;
+     fraPhrase1.isDefault:=true;
   end
   else
      begin
@@ -404,10 +373,8 @@ begin
      L2.Text:=sRegion;
      L3.text:=sProvince;
      L4.text:=sCountry;
-     PD2.Text:=dmGenData.Query1.Fields[5].AsString;
-     PD.Text:=ConvertDate(dmGenData.Query1.Fields[5].AsString,1);
-     SD2.Text:=dmGenData.Query1.Fields[6].AsString;
-     SD.Text:=ConvertDate(dmGenData.Query1.Fields[6].AsString,1);
+     fraDate1.Date:=dmGenData.Query1.Fields[5].AsString;
+     fraDate1.SortDate:=dmGenData.Query1.Fields[6].AsString;
      // Aller chercher P, Role et témoins de W
      phrase:=PopulateTemoins(no.Text);
   end;
@@ -417,98 +384,29 @@ begin
   dmGenData.Query2.First;
   if length(phrase)=0 then
      begin
-     Label6.Visible:=true;
+     fraPhrase1.isDefault:=true;
      phrase:=dmGenData.Query2.Fields[2].AsString;
   end;
-  P2.Text:=DecodePhrase(frmStemmaMainForm.iID,Role.Text,Phrase,'E',No.Value);
+  fraPhrase1.Text:=DecodePhrase(frmStemmaMainForm.iID,Role.Text,Phrase,'E',No.Value);
   // Populate le tableau de citations
   if no.Value=0 then
      fraEdtCitations1.clear
   else
      fraEdtCitations1.LinkID:=no.Value;
   // Populate le tableau de documents
+  fraDocuments1.DocType:='E';
+  fraDocuments1.idLink:=No.Value;
   if no.text='0' then
-     TableauExhibits.RowCount:=1
+     fraDocuments1.clear
   else
-     dmGenData.PopulateDocuments(TableauExhibits,'E',strtoint(No.Text));
+     fraDocuments1.Populate;
 end;
 
 procedure TfrmEditEvents.MEditingDone(Sender: TObject);
 begin
-  frmStemmaMainForm.DataHist.InsertColRow(false,0);
-  frmStemmaMainForm.DataHist.Cells[0,0]:='M';
-  frmStemmaMainForm.DataHist.Cells[1,0]:=M.Text;
+  frmStemmaMainForm.AppendHistoryData('M',M.Text);
 end;
 
-procedure TfrmEditEvents.MenuItem10Click(Sender: TObject);
-var
-  ini:TIniFile;
-  pdf:string;
-begin
-  // Visualiser un exhibits
-  if TableauExhibits.Row>0 then
-     begin
-     dmGenData.Query2.SQL.Text:='SELECT X.Z, X.F FROM X WHERE X.no='+TableauExhibits.Cells[0,TableauExhibits.Row];
-     dmGenData.Query2.Open;
-     if TableauExhibits.Cells[4,TableauExhibits.Row]=Translation.Items[34] then
-        begin
-        frmShowImage.Caption:=Translation.Items[34];
-        frmShowImage.Image.Visible:=false;
-        frmShowImage.Memo.Visible:=true;
-        frmShowImage.btnOK.Visible:=true;
-        frmShowImage.btnCancel.Visible:=true;
-        frmShowImage.Memo.Text:=dmGenData.Query2.Fields[0].AsString;
-        if frmShowImage.Showmodal=mrOk then
-           begin
-           dmGenData.Query2.SQL.Clear;
-           dmGenData.Query2.SQL.Add('UPDATE X SET Z='''+
-              AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(frmShowImage.Memo.Text),'"','\"'),'''','\''')+
-              ''' WHERE X.no='+TableauExhibits.Cells[0,TableauExhibits.Row]);
-           dmGenData.Query2.ExecSQL;
-           // Enregistrer la date de la dernière modification pour tout les individus reliés
-           // à cet exhibits.
-           dmGenData.Query3.SQL.Clear;
-           dmGenData.Query3.SQL.Add('SELECT W.I FROM (W JOIN E on W.E=E.no) JOIN X on X.N=E.no WHERE X.no='+
-                                        TableauExhibits.Cells[0,TableauExhibits.Row]);
-           dmGenData.Query3.Open;
-           dmGenData.Query3.First;
-           while not dmGenData.Query3.EOF do
-              begin
-              dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
-              dmGenData.Query3.Next;
-           end;
-           frmNames.PopulateNom(Sender);
-        end;
-     end
-     else
-        begin
-        if AnsiPos('.PDF',dmGenData.Query2.Fields[1].AsString)>0 then
-           begin
-           Ini := TIniFile.Create(iniFileName);
-           pdf := ini.ReadString('Parametres','PDF','C:\Program Files (x86)\Adobe\Reader 10.0\Reader\AcroRd32.exe');
-           with TProcess.Create(nil) do
-           try
-              Parameters.text:=pdf+' '+dmGenData.Query2.Fields[1].AsString;
-              Execute;
-              ini.WriteString('Parametres','PDF',pdf);
-           finally
-              Free;
-           end;
-           Ini.Free;
-        end
-        else
-           begin
-           frmShowImage.Caption:=dmGenData.Query2.Fields[1].AsString;
-           frmShowImage.Memo.Visible:=false;
-           frmShowImage.btnOK.Visible:=false;
-           frmShowImage.btnCancel.Visible:=false;
-           frmShowImage.Image.Visible:=true;
-           frmShowImage.Image.Picture.LoadFromFile(dmGenData.Query2.Fields[1].AsString);
-           frmShowImage.Showmodal;
-        end;
-     end;
-  end;
-end;
 
 procedure TfrmEditEvents.MenuItem11Click(Sender: TObject);
 begin
@@ -772,8 +670,7 @@ begin
           begin
           if frmStemmaMainForm.DataHist.Cells[0,j]='SD' then
              begin
-             SD.text:=ConvertDate(frmStemmaMainForm.DataHist.Cells[1,j],1);
-             SDEditingDone(Sender);
+             fraDate1.SortDate:=ConvertDate(frmStemmaMainForm.DataHist.Cells[1,j],1);
              found:=true;
              break;
           end;
@@ -784,8 +681,7 @@ begin
              begin
              if frmStemmaMainForm.DataHist.Cells[0,j]='SD' then
                 begin
-                SD.text:=ConvertDate(frmStemmaMainForm.DataHist.Cells[1,j],1);
-                SDEditingDone(Sender);
+                fraDate1.SortDate:=ConvertDate(frmStemmaMainForm.DataHist.Cells[1,j],1);
                 found:=true;
                 break;
              end;
@@ -799,8 +695,7 @@ begin
           begin
           if frmStemmaMainForm.DataHist.Cells[0,j]='PD' then
              begin
-             PD.text:=ConvertDate(frmStemmaMainForm.DataHist.Cells[1,j],1);
-             PDEditingDone(Sender);
+             fraDate1.Date:=ConvertDate(frmStemmaMainForm.DataHist.Cells[1,j],1);
              found:=true;
              break;
           end;
@@ -811,8 +706,7 @@ begin
              begin
              if frmStemmaMainForm.DataHist.Cells[0,j]='PD' then
                 begin
-                PD.text:=ConvertDate(frmStemmaMainForm.DataHist.Cells[1,j],1);
-                PDEditingDone(Sender);
+                fraDate1.Date:=ConvertDate(frmStemmaMainForm.DataHist.Cells[1,j],1);
                 found:=true;
                 break;
              end;
@@ -847,29 +741,13 @@ begin
     if found then frmStemmaMainForm.DataHist.Row:=j+1;
 end;
 
-procedure TfrmEditEvents.Modifier2Click(Sender: TObject);
-begin
-  // Modifier un document de l'événement
-  If TableauExhibits.Row>0 then
-     begin
-//     dmGenData.PutCode('E',);
-     frmEditDocuments.EditMode:=eDEM_EditDocument;
-     frmEditDocuments.idDocument:=ptrint(TableauExhibits.Objects[0,TableauExhibits.Row]);
-     If frmEditDocuments.Showmodal=mrOK then
-        begin
-        dmGenData.PopulateDocuments(TableauExhibits,'E',strtoint(no.text));
-        // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
-        if frmStemmaMainForm.actWinDocuments.Checked then
-           dmGenData.PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
-     end;
-  end;
-end;
 
 procedure TfrmEditEvents.Button1Click(Sender: TObject);
 var
-  Lieu1,Lieu2,dateev, lEvType, lDate:string;
+  Lieu1,Lieu2,dateev, lEvType, lDate, lSortDate,  lInfo:string;
   valide:boolean;
-  lidInd,idPlace:integer;
+  lidInd,idPlace, lIdPlace, lidEvent,result:integer;
+  lPrefered: boolean;
 begin
   // Vérifie qu'il y a au moins 1 témoin
   valide:=TableauTemoins.RowCount>1;
@@ -879,10 +757,7 @@ begin
   end
   else
      begin
-     if frmEditEvents.ActiveControl=PD then
-        PDEditingDone(Sender);
-     if frmEditEvents.ActiveControl=SD then
-        SDEditingDone(Sender);
+     fraDate1.Finishediting(Sender,ActiveControl);
      // Trouve le lieu équivalent !!!
      LA.Text:=trim(LA.Text);
      L0.Text:=trim(L0.Text);
@@ -939,27 +814,19 @@ begin
         frmStemmaMainForm.DataHist.Cells[0,0]:='L';
         frmStemmaMainForm.DataHist.Cells[1,0]:=inttostr(idPlace);
         frmStemmaMainForm.DataHist.Objects[1,0]:=TObject(ptrint(idPlace));
-     end;
-     dmGenData.Query1.SQL.Clear;
-     if no.text='0' then
-        begin
-        dmGenData.Query1.SQL.Add('INSERT INTO E (Y, L, M, PD, SD, X) VALUES (:idType '+
-          ', '+inttostr(idPlace)+', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(trim(M.Text)),'\','\\'),'"','\"'),'''','\''')+
-          ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(PD2.Text),'\','\\'),'"','\"'),'''','\''')+
-          ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(SD2.Text),'\','\\'),'"','\"'),'''','\''')+
-          ''', '+X.Text+')')
-     end
-     else
-        dmGenData.Query1.SQL.Add('UPDATE E SET Y=:idType '+
-          ', L='+inttostr(idPlace)+', M='''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(trim(M.Text)),'\','\\'),'"','\"'),'''','\''')+
-          ''', PD='''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(PD2.Text),'\','\\'),'"','\"'),'''','\''')+
-          ''', SD='''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(SD2.Text),'\','\\'),'"','\"'),'''','\''')+
-          ''' WHERE no='+no.text);
-     dmGenData.Query1.ParamByName('idType').AsInteger:=idEventType;
-     dmGenData.Query1.ExecSQL;
-     if no.text='0' then
-        begin
-        no.text:=InttoStr(dmGenData.GetLastIDOfTable('E'));
+     end;  {SetVarInitHere}
+     lIdPlace:=idPlace;
+     lInfo:=trim(M.Text);
+     lDate:=fraDate1.Date;
+     lSortDate:=fraDate1.SortDate;
+     lPrefered:=X.Text='1';
+     lidEvent:=no.Value;;
+     result:=dmGenData.SaveEventData(lPrefered, lidEvent, lIdPlace, lInfo, lDate,
+       lSortDate,idEventType);
+
+        if No.Value=0 then
+           begin
+            No.Value:=result;
         // Ajoute le témoin qui a été ajouté par défaut dans le tableau
         dmGenData.Query1.SQL.Clear;
         dmGenData.Query1.SQL.Add('INSERT INTO W (R, I, P, E, X) VALUES ('''+UTF8ToANSI(TableauTemoins.Cells[1,1])+
@@ -977,12 +844,13 @@ begin
         if dmGenData.Query3.Fields[1].AsBoolean then
            lidInd:=dmGenData.Query3.Fields[0].AsInteger;
         dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
+
         // UPDATE DÉCÈS si la date est il y a 100 ans !!!
-        if (copy(PD2.text,1,1)='1') and not (PD2.text='100000000030000000000') then
-           dateev:=Copy(PD2.text,2,4)
+        if (copy(fraDate1.Date,1,1)='1') and not (fraDate1.Date='100000000030000000000') then
+           dateev:=Copy(fraDate1.Date,2,4)
         else
-           if (copy(SD2.text,1,1)='1') and not (SD2.text='100000000030000000000') then
-              dateev:=Copy(SD2.text,2,4)
+           if (copy(fraDate1.SortDate,1,1)='1') and not (fraDate1.SortDate='100000000030000000000') then
+              dateev:=Copy(fraDate1.SortDate,2,4)
            else
               dateev:=FormatDateTime('YYYY',now);
         if ((StrtoInt(FormatDateTime('YYYY',now))-StrtoInt(dateev))>100) then
@@ -992,6 +860,7 @@ begin
            If (frmStemmaMainForm.actWinNameAndAttr.Checked) and (lidInd=frmStemmaMainForm.iID) then
               frmNames.PopulateNom(Sender);
         end;
+
         dmGenData.Query3.Next;
      end;
      // Modifier la ligne de l'explorateur si naissance frmStemmaMainForm ou décès principal
@@ -1022,25 +891,6 @@ begin
   end;
 end;
 
-procedure TfrmEditEvents.Ajouter2Click(Sender: TObject);
-begin
-  // Ajouter un document à l'événement
-  If no.text='0' then
-     Button1Click(Sender);
-  //dmGenData.PutCode('E',no.text);
-  //dmGenData.PutCode('A',no.text);
-  frmEditDocuments.EditMode:=eDEM_AddDocument;
-  frmEditDocuments.docType:='E';
-  frmEditDocuments.idLinkID:=idEvent;
-  If frmEditDocuments.Showmodal=mrOK then
-     begin
-     dmGenData.PopulateDocuments(TableauExhibits,'E',idEvent);
-     // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
-     if frmStemmaMainForm.actWinDocuments.Checked then
-        dmGenData.PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
-  end;
-end;
-
 procedure TfrmEditEvents.AjouterTemoinClick(Sender: TObject);
 begin
   // Ajouter un témoin à l'événement
@@ -1051,64 +901,6 @@ begin
   frmEditWitness.idEvent:=no.value;
   If frmEditWitness.Showmodal=mrOK then
      PopulateTemoins(no.text);
-end;
-
-procedure TfrmEditEvents.SDEditingDone(Sender: TObject);
-begin
-  SD2.Text:=InterpreteDate(SD.Text,1);
-  SD.Text:=ConvertDate(SD2.Text,1);
-  if SD2.Text<>'100000000030000000000' then
-     begin
-     frmStemmaMainForm.DataHist.InsertColRow(false,0);
-     frmStemmaMainForm.DataHist.Cells[0,0]:='SD';
-     frmStemmaMainForm.DataHist.Cells[1,0]:=SD2.Text;
-  end;
-end;
-
-procedure TfrmEditEvents.Supprimer1Click(Sender: TObject);
-begin
-  //If TableauCitations.Row>0 then
-  //   if Application.MessageBox(Pchar(Translation.Items[31]+
-  //      TableauCitations.Cells[1,TableauCitations.Row]+Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
-  //      begin
-  //      dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE no='+TableauCitations.Cells[0,TableauCitations.Row];
-  //      dmGenData.Query1.ExecSQL;
-  //      TableauCitations.DeleteRow(TableauCitations.Row);
-  //      // Sauvegarder les modifications pour tout les témoins de l'événements
-  //      dmGenData.Query3.SQL.Text:='SELECT W.I, W.X FROM W WHERE W.E='+no.Text;
-  //      dmGenData.Query3.Open;
-  //      dmGenData.Query3.First;
-  //      While not dmGenData.Query3.EOF do
-  //         begin
-  //         dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
-  //         dmGenData.Query3.Next;
-  //      end;
-  //   end;
-end;
-
-procedure TfrmEditEvents.Supprimer2Click(Sender: TObject);
-begin
-  // Supprimer le document de l'événement
-  If TableauExhibits.Row>0 then
-     if  MessageDlg(SConfirmation,format(SAreYouSureToDelete,[TableauExhibits.Cells[2,TableauExhibits.Row]])
-     ,mtConfirmation,mbYesNo,0) =mrYES then
-        begin
-        dmGenData.Query1.SQL.Text:='DELETE FROM X WHERE no='+TableauExhibits.Cells[0,TableauExhibits.Row];
-        dmGenData.Query1.ExecSQL;
-        TableauExhibits.DeleteRow(TableauExhibits.Row);
-        // Sauvegarder les modifications pour tout les témoins de l'événements
-        dmGenData.Query3.SQL.Text:='SELECT W.I, W.X FROM W WHERE W.E='+no.Text;
-        dmGenData.Query3.Open;
-        dmGenData.Query3.First;
-        While not dmGenData.Query3.EOF do
-           begin
-           dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
-           dmGenData.Query3.Next;
-        end;
-        // Devrait modifier la fenêtre des exhibits aussi si elle est affichée (modifier et supprimer aussi)
-        if frmStemmaMainForm.actWinDocuments.Checked then
-           dmGenData.PopulateDocuments(frmDocuments.tblDocuments,'I',frmStemmaMainForm.iID);
-     end;
 end;
 
 procedure TfrmEditEvents.SupprimerTemoinClick(Sender: TObject);

@@ -13,7 +13,8 @@ object Laby: TLaby
   Font.Name = 'MS Sans Serif'
   OnResize = FormResize
   Position = poScreenCenter
-  LCLVersion = '1.4.0.3'
+  LCLVersion = '1.8.0.2'
+  Visible = False
   object LabImage: TImage
     Left = 8
     Height = 479
@@ -30,7 +31,7 @@ object Laby: TLaby
     Left = 0
     Height = 13
     Top = 517
-    Width = 37
+    Width = 32
     Anchors = [akLeft, akBottom]
     Caption = 'Label1'
     ParentColor = False

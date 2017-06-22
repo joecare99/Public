@@ -18,7 +18,8 @@ frm_EditName, frm_EditEvents, frm_EditWitness,
   frm_Places, frm_Usage, frm_Sources, 
 frm_Repositories, frm_EditSource, frm_Types, frm_EditTypes,
   frm_About, frm_SelectPerson, dm_GenData, cls_Translation,//uScaleDPI, 
-frm_SelectDialog, fra_Citations, untWebexport, fra_Documents, fra_Individual;
+frm_SelectDialog, fra_Citations, untWebexport, fra_Documents, fra_Individual,
+fra_Phrase, fra_Date;
 
 {$R *.res}
 
@@ -60,11 +61,11 @@ begin
   Application.CreateForm(TfrmEditWitness, frmEditWitness);
   Application.CreateForm(TFormLieux, FormLieux);
   Application.CreateForm(TfrmEventUsage, frmEventUsage);
-  Application.CreateForm(TFormSources, FormSources);
+  Application.CreateForm(TfrmSources, frmSources);
   Application.CreateForm(TfrmRepository, frmRepository);
-  Application.CreateForm(TEditSource, EditSource);
+  Application.CreateForm(TfrmEditSource, frmEditSource);
   Application.CreateForm(TfrmTypes, frmTypes);
-  Application.CreateForm(TEditType, EditType);
+  Application.CreateForm(TfrmEditType, frmEditType);
   Application.CreateForm(Tapropos, apropos);
   Application.CreateForm(TFormSelectPersonne, FormSelectPersonne);
   Application.CreateForm(TdmGenData, dmGenData);

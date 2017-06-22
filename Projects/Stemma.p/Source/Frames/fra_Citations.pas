@@ -24,7 +24,6 @@ type
     PopupMenu2: TPopupMenu;
     mniCitationDelete: TMenuItem;
     TableauCitations: TStringGrid;
-    procedure actEdtCitationAddExecute(Sender: TObject);
     procedure FrameResize(Sender: TObject);
     procedure mniCitationAddClick(Sender: TObject);
     procedure mniCitationDeleteClick(Sender: TObject);
@@ -61,11 +60,6 @@ begin
   TableauCitations.Cells[3,0]:=Translation.Items[177];
 end;
 
-procedure TfraEdtCitations.actEdtCitationAddExecute(Sender: TObject);
-begin
-
-end;
-
 procedure TfraEdtCitations.mniCitationAddClick(Sender: TObject);
 begin
     if assigned(FOnSaveData) and (FLinkID=0) then
@@ -84,7 +78,7 @@ var
   lidCitation: Integer;
 begin
   if TableauCitations.Row > 0 then
-    if MessageDlg(SConfirmation,format(SAreYouSureToDelX,[SCitation,TableauCitations.Cells[1, TableauCitations.Row]]),mtConfirmation,mbYesNo,0)=mrYes then
+    if MessageDlg(SConfirmation,format(rsAreYouSureToDelX,[rsCitation,TableauCitations.Cells[1, TableauCitations.Row]]),mtConfirmation,mbYesNo,0)=mrYes then
     begin
       lidCitation:=ptrint(TableauCitations.Objects[0, TableauCitations.Row]);
       dmGenData.DeleteCitation(lidCitation);

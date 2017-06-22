@@ -1,0 +1,519 @@
+object Fcaldata: TFcaldata
+  Left = 582
+  Height = 474
+  Top = 209
+  Width = 634
+  Caption = 'Fcaldata'
+  ClientHeight = 474
+  ClientWidth = 634
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Position = poDesktopCenter
+  LCLVersion = '1.6.4.0'
+  object ButtonOkay: TButton
+    Left = 352
+    Height = 27
+    Top = 429
+    Width = 105
+    Caption = 'Okay'
+    OnClick = ButtonOkayClick
+    TabOrder = 15
+  end
+  object ButtonCancel: TButton
+    Left = 480
+    Height = 27
+    Top = 429
+    Width = 105
+    Caption = 'Abbrechen'
+    OnClick = ButtonCancelClick
+    TabOrder = 16
+  end
+  object EditRemind: TComboBox
+    Left = 169
+    Height = 30
+    Top = 322
+    Width = 189
+    ItemHeight = 0
+    ItemIndex = 0
+    Items.Strings = (
+      'Keine Erinnerung'
+      'Benutzerdefiniert'
+      '0 Minuten vorher'
+      '5 Minuten vorher'
+      '15 Minuten vorher'
+      '30 Minuten vorher'
+      '1 Stunde vorher'
+      '2 Stunden vorher'
+      '12 Stunden vorher'
+      '1 Tag vorher'
+      '2 Tage vorher'
+      '1 Woche vorher'
+    )
+    OnChange = EditRemindChange
+    Style = csDropDownList
+    TabOrder = 12
+    Text = 'Keine Erinnerung'
+  end
+  object EditRemindDate: TDateTimePicker
+    Left = 366
+    Height = 26
+    Top = 322
+    Width = 107
+    CenturyFrom = 1941
+    DateDisplayOrder = ddoYMD
+    MaxDate = 2958465
+    MinDate = -53780
+    TabOrder = 13
+    DateSeparator = '-'
+    TrailingSeparator = False
+    TextForNullDate = 'NULL'
+    LeadingZeros = True
+    Kind = dtkDate
+    TimeSeparator = ':'
+    TimeFormat = tf24
+    TimeDisplay = tdHM
+    DateMode = dmComboBox
+    Date = 1.7E308
+    Time = 1.7E308
+    UseDefaultSeparators = False
+    HideDateTimeParts = []
+    MonthNames = 'Long'
+  end
+  object EditRemindTime: TDateTimePicker
+    Left = 482
+    Height = 26
+    Top = 323
+    Width = 61
+    CenturyFrom = 1941
+    DateDisplayOrder = ddoYMD
+    MaxDate = 2958465
+    MinDate = 36526
+    TabOrder = 14
+    DateSeparator = '-'
+    TrailingSeparator = False
+    TextForNullDate = 'NULL'
+    LeadingZeros = True
+    Kind = dtkTime
+    TimeSeparator = ':'
+    TimeFormat = tf24
+    TimeDisplay = tdHM
+    DateMode = dmComboBox
+    Date = 36526
+    Time = 0
+    UseDefaultSeparators = False
+    HideDateTimeParts = []
+    MonthNames = 'Long'
+  end
+  object LabelRemindTime: TLabel
+    Left = 554
+    Height = 17
+    Top = 328
+    Width = 23
+    Caption = 'Uhr'
+    Font.Height = -13
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object LabelFullDays: TLabel
+    Left = 16
+    Height = 17
+    Top = 214
+    Width = 66
+    Caption = 'Ganztägig'
+    Font.Height = -13
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object EditFullDays: TCheckBox
+    Left = 169
+    Height = 22
+    Top = 214
+    Width = 22
+    OnChange = EditFullDaysChange
+    TabOrder = 6
+  end
+  object LabelStart: TLabel
+    Left = 16
+    Height = 17
+    Top = 246
+    Width = 45
+    Caption = 'Beginn'
+    Font.Height = -13
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object EditStartDate: TDateTimePicker
+    Left = 169
+    Height = 26
+    Top = 241
+    Width = 107
+    CenturyFrom = 1941
+    DateDisplayOrder = ddoYMD
+    MaxDate = 2958465
+    MinDate = 36526
+    TabOrder = 7
+    DateSeparator = '-'
+    TrailingSeparator = False
+    TextForNullDate = 'NULL'
+    LeadingZeros = True
+    Kind = dtkDate
+    TimeSeparator = ':'
+    TimeFormat = tf24
+    TimeDisplay = tdHM
+    DateMode = dmComboBox
+    Date = 36526
+    Time = 0
+    UseDefaultSeparators = False
+    HideDateTimeParts = []
+    MonthNames = 'Long'
+    OnChange = EditStartDateChange
+  end
+  object EditStartTime: TDateTimePicker
+    Left = 297
+    Height = 26
+    Top = 241
+    Width = 61
+    CenturyFrom = 1941
+    DateDisplayOrder = ddoYMD
+    MaxDate = 2958465
+    MinDate = 36526
+    TabOrder = 8
+    DateSeparator = '-'
+    TrailingSeparator = False
+    TextForNullDate = 'NULL'
+    LeadingZeros = True
+    Kind = dtkTime
+    TimeSeparator = ':'
+    TimeFormat = tf24
+    TimeDisplay = tdHM
+    DateMode = dmComboBox
+    Date = 36526
+    Time = 0
+    UseDefaultSeparators = False
+    HideDateTimeParts = []
+    MonthNames = 'Long'
+    OnChange = EditStartTimeChange
+  end
+  object LabelStartTime: TLabel
+    Left = 367
+    Height = 17
+    Top = 246
+    Width = 23
+    Caption = 'Uhr'
+    Font.Height = -13
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object EditConnected: TCheckBox
+    Left = 413
+    Height = 24
+    Top = 260
+    Width = 97
+    Caption = 'Verbunden'
+    Checked = True
+    OnChange = EditConnectedChange
+    State = cbChecked
+    TabOrder = 9
+  end
+  object LabelFinish: TLabel
+    Left = 16
+    Height = 17
+    Top = 286
+    Width = 32
+    Caption = 'Ende'
+    Font.Height = -13
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object EditFinishDate: TDateTimePicker
+    Left = 169
+    Height = 26
+    Top = 281
+    Width = 107
+    CenturyFrom = 1941
+    DateDisplayOrder = ddoYMD
+    MaxDate = 2958465
+    MinDate = 36526
+    TabOrder = 10
+    DateSeparator = '-'
+    TrailingSeparator = False
+    TextForNullDate = 'NULL'
+    LeadingZeros = True
+    Kind = dtkDate
+    TimeSeparator = ':'
+    TimeFormat = tf24
+    TimeDisplay = tdHM
+    DateMode = dmComboBox
+    Date = 36526
+    Time = 0
+    UseDefaultSeparators = False
+    HideDateTimeParts = []
+    MonthNames = 'Long'
+    OnChange = EditFinishDateChange
+  end
+  object EditFinishTime: TDateTimePicker
+    Left = 297
+    Height = 26
+    Top = 281
+    Width = 61
+    CenturyFrom = 1941
+    DateDisplayOrder = ddoYMD
+    MaxDate = 2958465
+    MinDate = 36526
+    TabOrder = 11
+    DateSeparator = '-'
+    TrailingSeparator = False
+    TextForNullDate = 'NULL'
+    LeadingZeros = True
+    Kind = dtkTime
+    TimeSeparator = ':'
+    TimeFormat = tf24
+    TimeDisplay = tdHM
+    DateMode = dmComboBox
+    Date = 36526
+    Time = 0
+    UseDefaultSeparators = False
+    HideDateTimeParts = []
+    MonthNames = 'Long'
+    OnChange = EditFinishTimeChange
+  end
+  object LabelFinishTime: TLabel
+    Left = 367
+    Height = 17
+    Top = 286
+    Width = 23
+    Caption = 'Uhr'
+    Font.Height = -13
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object EditType: TComboBox
+    Left = 16
+    Height = 30
+    Top = 13
+    Width = 131
+    ItemHeight = 0
+    ItemIndex = 0
+    Items.Strings = (
+      'Termin'
+      'Aufgabe'
+    )
+    OnChange = EditTypeChange
+    Style = csDropDownList
+    TabOrder = 0
+    Text = 'Termin'
+  end
+  object LabelCategory: TLabel
+    Left = 16
+    Height = 17
+    Top = 99
+    Width = 63
+    Caption = 'Kategorie'
+    Font.Height = -13
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object EditCategory: TComboBox
+    Left = 169
+    Height = 29
+    Top = 94
+    Width = 200
+    Font.Height = -13
+    Font.Name = 'Sans'
+    ItemHeight = 0
+    OnChange = EditCategoryChange
+    ParentFont = False
+    TabOrder = 3
+  end
+  object EditCategoryColor: TButton
+    Left = 385
+    Height = 27
+    Top = 94
+    Width = 200
+    Caption = 'Kategoriefarbe'
+    OnClick = EditCategoryColorClick
+    TabOrder = 4
+  end
+  object LabelRemind: TLabel
+    Left = 16
+    Height = 17
+    Top = 326
+    Width = 70
+    Caption = 'Erinnerung'
+    Font.Height = -13
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object EditTitle: TEdit
+    Left = 169
+    Height = 30
+    Top = 13
+    Width = 416
+    TabOrder = 1
+    Text = 'EditTitle'
+  end
+  object LabelLocation: TLabel
+    Left = 16
+    Height = 17
+    Top = 58
+    Width = 20
+    Caption = 'Ort'
+    Font.Height = -13
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object EditLocation: TEdit
+    Left = 169
+    Height = 30
+    Top = 53
+    Width = 416
+    TabOrder = 2
+    Text = 'EditLocation'
+  end
+  object LabelDescription: TLabel
+    Left = 16
+    Height = 17
+    Top = 133
+    Width = 88
+    Caption = 'Beschreibung'
+    Font.Height = -13
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object EditDescription: TMemo
+    Left = 169
+    Height = 72
+    Top = 132
+    Width = 416
+    Lines.Strings = (
+      ''
+    )
+    TabOrder = 5
+    WantReturns = False
+  end
+  object LabelRepeat: TLabel
+    Left = 16
+    Height = 17
+    Top = 369
+    Width = 118
+    Caption = 'Wiederholung alle'
+    Font.Height = -13
+    Font.Name = 'Sans'
+    ParentColor = False
+    ParentFont = False
+  end
+  object EditRepeatRhythm: TSpinEdit
+    Left = 169
+    Height = 30
+    Top = 362
+    Width = 53
+    MaxValue = 400
+    TabOrder = 17
+  end
+  object EditRepeatType: TComboBox
+    Left = 231
+    Height = 34
+    Top = 362
+    Width = 127
+    ItemHeight = 0
+    Items.Strings = (
+      '(keine)'
+      'Tage'
+      'Werktage'
+      'Wochen'
+      'Monate'
+      'Jahre'
+    )
+    OnChange = EditRepeatTypeChange
+    Style = csDropDownList
+    TabOrder = 18
+  end
+  object EditRepeatEnd: TComboBox
+    Left = 367
+    Height = 30
+    Top = 362
+    Width = 106
+    ItemHeight = 0
+    ItemIndex = 0
+    Items.Strings = (
+      'bis'
+      'Anzahl:'
+    )
+    OnChange = EditRepeatEndChange
+    Style = csDropDownList
+    TabOrder = 19
+    Text = 'bis'
+  end
+  object EditRepeatDate: TDateTimePicker
+    Left = 482
+    Height = 26
+    Top = 362
+    Width = 107
+    CenturyFrom = 1941
+    DateDisplayOrder = ddoYMD
+    MaxDate = 73415
+    MinDate = 36526
+    TabOrder = 20
+    DateSeparator = '-'
+    TrailingSeparator = False
+    TextForNullDate = 'NULL'
+    LeadingZeros = True
+    Kind = dtkDate
+    TimeSeparator = ':'
+    TimeFormat = tf24
+    TimeDisplay = tdHMS
+    DateMode = dmComboBox
+    Date = 36526
+    Time = 0
+    UseDefaultSeparators = False
+    HideDateTimeParts = []
+    MonthNames = 'Long'
+  end
+  object EditRepeatNumber: TSpinEdit
+    Left = 480
+    Height = 30
+    Top = 362
+    Width = 107
+    MaxValue = 10000
+    MinValue = 1
+    TabOrder = 21
+    Value = 1
+  end
+  object DialogCategoryColor: TColorDialog
+    Color = clBlack
+    CustomColors.Strings = (
+      'ColorA=000000'
+      'ColorB=000080'
+      'ColorC=008000'
+      'ColorD=008080'
+      'ColorE=800000'
+      'ColorF=800080'
+      'ColorG=808000'
+      'ColorH=808080'
+      'ColorI=C0C0C0'
+      'ColorJ=0000FF'
+      'ColorK=00FF00'
+      'ColorL=00FFFF'
+      'ColorM=FF0000'
+      'ColorN=FF00FF'
+      'ColorO=FFFF00'
+      'ColorP=FFFFFF'
+      'ColorQ=C0DCC0'
+      'ColorR=F0CAA6'
+      'ColorS=F0FBFF'
+      'ColorT=A4A0A0'
+    )
+    left = 80
+    top = 408
+  end
+end

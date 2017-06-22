@@ -10,7 +10,7 @@ object frmDocuments: TfrmDocuments
   ClientWidth = 451
   OnClose = FormClose
   OnShow = FormShow
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '1.8.0.2'
   Visible = False
   object tblDocuments: TStringGrid
     Left = 0
@@ -21,15 +21,19 @@ object frmDocuments: TfrmDocuments
     Columns = <    
       item
         Title.Caption = '*'
+        Width = 64
       end    
       item
         Title.Caption = 'Title'
+        Width = 64
       end    
       item
         Title.Caption = 'Type'
+        Width = 64
       end    
       item
         Title.Caption = 'Format'
+        Width = 64
       end>
     ExtendedSelect = False
     MouseWheelOption = mwGrid
@@ -39,7 +43,6 @@ object frmDocuments: TfrmDocuments
     OnContextPopup = tblDocumentsContextPopup
     OnDblClick = mnuModifyClick
     OnDrawCell = tblDocumentsDrawCell
-    OnPrepareCanvas = tblDocumentsPrepareCanvas
     OnResize = tblDocumemntsResize
     OnSelection = tblDocumentsSelection
     ColWidths = (
@@ -67,7 +70,6 @@ object frmDocuments: TfrmDocuments
       Left = 72
       Height = 22
       Top = 2
-      Width = 8
       Caption = '&Add'
       Style = tbsSeparator
     end

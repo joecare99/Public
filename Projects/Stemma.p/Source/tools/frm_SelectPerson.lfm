@@ -10,31 +10,14 @@ object FormSelectPersonne: TFormSelectPersonne
   ClientWidth = 456
   Menu = MainMenu1
   OnShow = FormShow
-  LCLVersion = '1.8.0.2'
   Visible = False
-  object edtName: TEdit
-    Left = 96
-    Height = 23
-    Hint = 'Name'
-    Top = 240
-    Width = 352
-    ReadOnly = True
-    TabStop = False
-    TabOrder = 0
-  end
-  object Label1: TLabel
-    Left = 8
-    Height = 15
-    Top = 216
-    Width = 14
-    Caption = 'ou'
-    ParentColor = False
-  end
   object Liste: TStringGrid
-    Left = 8
-    Height = 200
-    Top = 8
-    Width = 440
+    Left = 6
+    Height = 220
+    Top = 6
+    Width = 444
+    Align = alClient
+    BorderSpacing.Around = 6
     ColCount = 2
     Columns = <    
       item
@@ -45,38 +28,82 @@ object FormSelectPersonne: TFormSelectPersonne
         Width = 355
       end>
     FixedCols = 0
-    TabOrder = 1
+    TabOrder = 0
     OnSelection = ListeSelection
   end
-  object btnCancel: TBitBtn
-    Left = 363
-    Height = 38
-    Top = 280
-    Width = 85
-    Cancel = True
-    DefaultCaption = True
-    Kind = bkCancel
-    ModalResult = 2
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 54
+    Top = 287
+    Width = 456
+    Align = alBottom
+    BevelOuter = bvLowered
+    ClientHeight = 54
+    ClientWidth = 456
+    TabOrder = 1
+    object btnCancel: TBitBtn
+      Left = 339
+      Height = 40
+      Top = 7
+      Width = 110
+      Align = alRight
+      BorderSpacing.Around = 6
+      Cancel = True
+      DefaultCaption = True
+      Kind = bkCancel
+      ModalResult = 2
+      TabOrder = 0
+    end
+    object btnOK: TBitBtn
+      Left = 223
+      Height = 40
+      Top = 7
+      Width = 110
+      Align = alRight
+      BorderSpacing.Around = 6
+      Default = True
+      DefaultCaption = True
+      Kind = bkOK
+      ModalResult = 1
+      TabOrder = 1
+    end
+  end
+  object pnlAllmostBottom: TPanel
+    Left = 0
+    Height = 55
+    Top = 232
+    Width = 456
+    Align = alBottom
+    BevelOuter = bvNone
+    ClientHeight = 55
+    ClientWidth = 456
     TabOrder = 2
-  end
-  object btnOK: TBitBtn
-    Left = 275
-    Height = 38
-    Top = 280
-    Width = 85
-    Default = True
-    DefaultCaption = True
-    Kind = bkOK
-    ModalResult = 1
-    TabOrder = 3
-  end
-  object edtNumber: TSpinEdit
-    Left = 8
-    Height = 23
-    Top = 240
-    Width = 80
-    OnEditingDone = edtNumberEditingDone
-    TabOrder = 4
+    object edtNumber: TSpinEdit
+      Left = 24
+      Height = 23
+      Top = 27
+      Width = 80
+      OnEditingDone = edtNumberEditingDone
+      TabOrder = 0
+    end
+    object Label1: TLabel
+      Left = 8
+      Height = 15
+      Top = 32
+      Width = 14
+      Caption = 'ou'
+      ParentColor = False
+    end
+    object edtName: TEdit
+      Left = 112
+      Height = 23
+      Hint = 'Name'
+      Top = 27
+      Width = 352
+      ReadOnly = True
+      TabStop = False
+      TabOrder = 1
+    end
   end
   object MainMenu1: TMainMenu
     left = 32

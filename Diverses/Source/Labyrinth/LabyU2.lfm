@@ -13,7 +13,6 @@ object Laby: TLaby
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Position = poScreenCenter
-  LCLVersion = '1.6.0.1'
   Visible = False
   object LabImage: TImage
     Left = 8

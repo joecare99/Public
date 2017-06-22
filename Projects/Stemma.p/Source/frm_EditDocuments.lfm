@@ -1,20 +1,18 @@
 object frmEditDocuments: TfrmEditDocuments
-  Left = 452
+  Left = 816
   Height = 273
-  Top = 302
+  Top = 229
   Width = 497
   ActiveControl = edtDocumentTitle
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de document'
-  ClientHeight = 273
+  ClientHeight = 253
   ClientWidth = 497
   Menu = MainMenu1
-  OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
-  Visible = False
+  LCLVersion = '1.8.0.2'
   object lblDocuments1: TLabel
     Left = 104
     Height = 15
@@ -41,14 +39,12 @@ object frmEditDocuments: TfrmEditDocuments
     Width = 26
     Caption = 'Title:'
     ParentColor = False
-    OnClick = lblDocumentsTitleClick
   end
   object edtDocumentTitle: TEdit
     Left = 64
     Height = 23
     Top = 8
     Width = 424
-    OnChange = edtDocumentTitleChange
     TabOrder = 0
     TextHint = 'The title of the Document'
   end
@@ -59,7 +55,6 @@ object frmEditDocuments: TfrmEditDocuments
     Width = 63
     Caption = 'Description:'
     ParentColor = False
-    OnClick = lblDocumentDescriptionClick
   end
   object edtDescription: TMemo
     Left = 64
@@ -85,7 +80,6 @@ object frmEditDocuments: TfrmEditDocuments
     Height = 23
     Top = 128
     Width = 392
-    OnChange = edtFilenameChange
     OnDblClick = edtFilenameDblClick
     TabOrder = 2
     TextHint = 'Enter/Select a filename of a Document'

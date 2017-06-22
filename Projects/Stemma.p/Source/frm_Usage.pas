@@ -19,9 +19,14 @@ type
     procedure FormShow(Sender: TObject);
     procedure TableauUtilisationDblClick(Sender: TObject);
   private
+    function GetActIDInd: integer;
+    function GetActIdSource: integer;
+    procedure SetActIDInd(AValue: integer);
     { private declarations }
   public
     { public declarations }
+    Property ActIDInd:integer read GetActIDInd write SetActIDInd;
+    Property ActIdSource:integer read GetActIdSource ;
   end; 
 
 var
@@ -57,7 +62,7 @@ begin
   TableauUtilisation.ColWidths[3]:=64;
   TableauUtilisation.ColWidths[4]:=75;
   dmGenData.GetCode(code,nocode);
-  if code='L' then
+  case code of 'L':
      begin
      dmGenData.Query1.SQL.Text:='SELECT E.no, Y.T, N.N, W.I, E.PD FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no JOIN N on W.I=N.I WHERE N.X=1 AND E.L='+
         FormLieux.TableauLieux.Cells[0,FormLieux.TableauLieux.Row];
@@ -75,7 +80,7 @@ begin
         dmGenData.Query1.Next;
      end;
   end;
-  if code='D' then
+  'D':
      begin
      TableauUtilisation.Columns[0].Title.Caption:=Translation.Items[137];
      TableauUtilisation.Columns[1].Title.Caption:=Translation.Items[138];
@@ -115,10 +120,10 @@ begin
         dmGenData.Query1.Next;
      end;
   end;
-  if code='S' then
+  'S':
      begin
      dmGenData.Query1.SQL.Text:='SELECT E.no, Y.T, N.N, W.I, E.PD FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no JOIN N on W.I=N.I JOIN C on C.N=E.no WHERE C.Y=''E'' AND N.X=1 AND C.S='+
-        FormSources.TableauSources.Cells[1,FormSources.TableauSources.Row];
+        FrmSources.TableauSources.Cells[1,frmSources.TableauSources.Row];
      dmGenData.Query1.Open;
      i:=1;
      TableauUtilisation.RowCount:=dmGenData.Query1.RecordCount+1;
@@ -133,7 +138,7 @@ begin
         dmGenData.Query1.Next;
      end;
      dmGenData.Query1.SQL.Text:='SELECT R.no, Y.T, N.N, R.A, R.SD FROM R JOIN Y on R.Y=Y.no JOIN N on R.A=N.I JOIN C on C.N=R.no WHERE C.Y=''R'' AND N.X=1 AND C.S='+
-        FormSources.TableauSources.Cells[1,FormSources.TableauSources.Row];
+        FrmSources.TableauSources.Cells[1,FrmSources.TableauSources.Row];
      dmGenData.Query1.Open;
      TableauUtilisation.RowCount:=TableauUtilisation.RowCount+dmGenData.Query1.RecordCount;
      while not dmGenData.Query1.EOF do
@@ -147,7 +152,7 @@ begin
         dmGenData.Query1.Next;
      end;
      dmGenData.Query1.SQL.Text:='SELECT N.no, Y.T, N.N, N.I, N.PD FROM N JOIN Y on N.Y=Y.no JOIN C on C.N=N.no WHERE C.Y=''N'' AND N.X=1 AND C.S='+
-        FormSources.TableauSources.Cells[1,FormSources.TableauSources.Row];
+        FrmSources.TableauSources.Cells[1,FrmSources.TableauSources.Row];
      dmGenData.Query1.Open;
      TableauUtilisation.RowCount:=TableauUtilisation.RowCount+dmGenData.Query1.RecordCount;
      while not dmGenData.Query1.EOF do
@@ -161,7 +166,7 @@ begin
         dmGenData.Query1.Next;
      end;
   end;
-  if code='T' then
+  'T':
      begin
      dmGenData.Query1.SQL.Text:='SELECT E.no, Y.T, N.N, W.I, E.PD FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no JOIN N on W.I=N.I JOIN C on C.N=E.no WHERE C.Y=''E'' AND N.X=1 AND E.Y='+
         FrmTypes.TableauTypes.Cells[1,FrmTypes.TableauTypes.Row];
@@ -206,6 +211,9 @@ begin
         i:=i+1;
         dmGenData.Query1.Next;
      end;
+  end
+  else;
+
   end;
 end;
 
@@ -215,13 +223,39 @@ var
 begin
   if tableauUtilisation.Row>0 then
      begin
-     dmGenData.GetCode(Code,nocode);
+//     dmGenData.GetCode(Code,nocode);
      if code='D' then
-        EditSource.showmodal
+        begin
+          frmEditSource.EditMode:=esem_EditExisting;
+          frmEditSource.idSource:=ActIdSource;
+          frmEditSource.showmodal;
+
+        end
      else
-        frmStemmaMainForm.iID:=ptrint(TableauUtilisation.objects[3,TableauUtilisation.Row]);
+        frmStemmaMainForm.iID:=ActIDInd;
   end;
 end;
+
+function TfrmEventUsage.GetActIDInd: integer;
+begin
+  result:=ptrint(TableauUtilisation.objects[3,TableauUtilisation.Row]);
+end;
+
+function TfrmEventUsage.GetActIdSource: integer;
+begin
+  result := ptrint(TableauUtilisation.objects[3,TableauUtilisation.Row]);
+end;
+
+procedure TfrmEventUsage.SetActIDInd(AValue: integer);
+var
+  NewRow: Integer;
+begin
+  if ptrint(TableauUtilisation.objects[3,TableauUtilisation.Row])=AValue then Exit;
+  NewRow:=TableauUtilisation.Cols[3].IndexOfObject(TObject(ptrint(AValue)));
+  if NewRow>-1 then
+    TableauUtilisation.Row:=NewRow;
+end;
+
 
 {$R *.lfm}
 

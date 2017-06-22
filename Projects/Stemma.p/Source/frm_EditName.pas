@@ -6,11 +6,11 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Grids,
-  StdCtrls, Menus, fra_Citations, FMUtils, LCLType, Spin,
+  StdCtrls, Menus, fra_Citations, fra_Phrase, fra_Date, FMUtils, LCLType, Spin,
   Buttons, ExtCtrls, ComboEx;
 
 type
-  enumNameEditType = (
+  TEnumNameEditMode = (
     eNET_EditExisting,
     eNET_NewUnrelated,
     eNET_NameVariation,
@@ -28,18 +28,15 @@ type
     btnCancel: TBitBtn;
     cbxSex: TComboBoxEx;
     edtName: TEdit;
+    fraDate1: TfraDate;
     fraEdtCitations1: TfraEdtCitations;
+    fraPhrase1: TfraPhrase;
     I: TSpinEdit;
     imglSex: TImageList;
     lblType: TLabel;
-    lblForSorting: TLabel;
     lblIndividuum: TLabel;
     lblMemo: TLabel;
-    lblPhrase: TLabel;
-    lblDate: TLabel;
-    lblDefault: TLabel;
     lblName8: TLabel;
-    lblForPresentation: TLabel;
     M: TMemo;
     MainMenu1: TMainMenu;
     MenuItem1: TMenuItem;
@@ -59,21 +56,14 @@ type
     MenuItem9: TMenuItem;
     No: TSpinEdit;
     pnlBottom: TPanel;
+    Splitter1: TSplitter;
+    Splitter2: TSplitter;
     X: TEdit;
-    P: TMemo;
-    P2: TMemo;
-    P1: TMemo;
-    PD: TEdit;
     PopupMenuNom: TPopupMenu;
-    SD: TEdit;
-    PD2: TEdit;
-    SD2: TEdit;
     TableauNoms: TStringGrid;
     Ajout: TEdit;
     Y: TComboBox;
-    procedure Ajouter1Click(Sender: TObject);
     procedure btnOKClick(Sender: TObject);
-    procedure edtNameExit(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure IEditingDone(Sender: TObject);
     procedure MEditingDone(Sender: TObject);
@@ -83,29 +73,29 @@ type
     procedure MenuItem4Click(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
     procedure MenuItem6Click(Sender: TObject);
-    procedure mniCitationEditClick(Sender: TObject);
     procedure NomSaveData(Sender: Tobject);
     procedure P2DblClick(Sender: TObject);
     procedure PDblClick(Sender: TObject);
     procedure PDEditingDone(Sender: TObject);
     procedure PEditingDone(Sender: TObject);
     procedure SDEditingDone(Sender: TObject);
-    procedure Supprimer1Click(Sender: TObject);
-    procedure TableauCitationsDblClick(Sender: TObject);
     procedure YChange(Sender: TObject);
   private
-    FEditType: enumNameEditType;
+    FEditMode: TEnumNameEditMode;
     FRelID: integer;
     function GetIdInd: integer;
     function GetIdName: integer;
-    procedure SetEditType(AValue: enumNameEditType);
+    function GetIndName: string;
+    procedure SetEditMode(AValue: TEnumNameEditMode);
     procedure SetIdInd(AValue: integer);
     procedure SetIdName(AValue: integer);
+    procedure SetIndName(AValue: string);
     procedure SetRelID(AValue: integer);
     { private declarations }
   public
     { public declarations }
-    property EditType: enumNameEditType read FEditType write SetEditType;
+    property EditMode: TEnumNameEditMode read FEditMode write SetEditMode;
+    Property IndName:string read GetIndName write SetIndName;
     property RelID: integer read FRelID write SetRelID;
     property idInd:integer read GetIdInd write SetIdInd;
     property idName:integer read GetIdName write SetIdName;
@@ -129,25 +119,25 @@ begin
   j := 1;
       if length(titre) > 0 then
       begin
-        TableauNoms.Cells[1, j] := STitle;
+        TableauNoms.Cells[1, j] := rsNameTitle;
         TableauNoms.Cells[2, j] := titre;
         j := j + 1;
       end;
       if length(prenom) > 0 then
       begin
-        TableauNoms.Cells[1, j] := SGivenName;
+        TableauNoms.Cells[1, j] := rsNameGivenName;
         TableauNoms.Cells[2, j] := prenom;
         j := j + 1;
       end;
       if length(nom) > 0 then
       begin
-        TableauNoms.Cells[1, j] := SFamilyName;
+        TableauNoms.Cells[1, j] := rsNameSurName;
         TableauNoms.Cells[2, j] := nom;
         j := j + 1;
       end;
       if length(suffixe) > 0 then
       begin
-        TableauNoms.Cells[1, j] := SSuffix;
+        TableauNoms.Cells[1, j] := rsNameSuffix;
         TableauNoms.Cells[2, j] := Suffixe;
         j := j + 1;
       end;
@@ -206,28 +196,24 @@ end;
 
 { TfrmEditName }
 
-procedure TfrmEditName.TableauCitationsDblClick(Sender: TObject);
-begin
-
-end;
-
 procedure TfrmEditName.YChange(Sender: TObject);
 begin
-  P1.Text :=dmGenData.GetTypePhrase(PtrInt(Y.Items.Objects[Y.ItemIndex]));
-  if lblDefault.Visible then
+  fraPhrase1.Text:=dmGenData.GetTypePhrase(PtrInt(Y.Items.Objects[Y.ItemIndex]));
+  if fraPhrase1.isDefault then
   begin
-    P.Text := dmGenData.Query1.Fields[0].AsString;
-    P2.Text := DecodePhrase(frmStemmaMainForm.iID, 'PRINCIPAL', P.Text, 'N', No.Value);
+    fraPhrase1.edtPhrase.Text := DecodePhrase(frmStemmaMainForm.iID, 'PRINCIPAL', fraPhrase1.Text, 'N', No.Value);
   end
   else
-    lblDefault.Visible := (P.Text = P1.Text);
+    fraPhrase1.isDefault := (fraPhrase1.Text = fraPhrase1.edtPhrase.Text);
 end;
 
-procedure TfrmEditName.SetEditType(AValue: enumNameEditType);
+procedure TfrmEditName.SetEditMode(AValue: TEnumNameEditMode);
 begin
-  if FEditType = AValue then
+  if FEditMode = AValue then
     Exit;
-  FEditType := AValue;
+  FEditMode := AValue;
+  if FEditMode = eNET_NewUnrelated then
+     edtName.text :='';
 end;
 
 procedure TfrmEditName.SetIdInd(AValue: integer);
@@ -241,6 +227,11 @@ begin
   result := no.Value;
 end;
 
+function TfrmEditName.GetIndName: string;
+begin
+  result := edtName.text;
+end;
+
 function TfrmEditName.GetIdInd: integer;
 begin
   result := i.Value;
@@ -252,17 +243,17 @@ begin
   no.Value:=AValue;
 end;
 
+procedure TfrmEditName.SetIndName(AValue: string);
+begin
+  if uppercase(edtName.text) = (AValue) then exit;
+  edtName.text := AValue;
+end;
+
 procedure TfrmEditName.SetRelID(AValue: integer);
 begin
   if FRelID = AValue then
     Exit;
   FRelID := AValue;
-end;
-
-procedure TfrmEditName.P2DblClick(Sender: TObject);
-begin
-  P.Visible := True;
-  P2.Visible := False;
 end;
 
 procedure TfrmEditName.FormShow(Sender: TObject);
@@ -278,12 +269,12 @@ begin
   lblType.Caption := Translation.Items[166];
   lblIndividuum.Caption := Translation.Items[183];
   lblMemo.Caption := Translation.Items[171];
-  lblPhrase.Caption := Translation.Items[172];
-  lblDate.Caption := Translation.Items[144];
-  lblDefault.Caption := Translation.Items[173];
+  //lblPhrase.Caption := Translation.Items[172];
+  //lblDate.Caption := Translation.Items[144];
+  //lblDefault.Caption := Translation.Items[173];
   lblName8.Caption := Translation.Items[184];
-  lblForPresentation.Caption := Translation.Items[168];
-  lblForSorting.Caption := Translation.Items[169];
+  //lblForPresentation.Caption := Translation.Items[168];
+  //lblForSorting.Caption := Translation.Items[169];
   TableauNoms.RowCount:=1;
 //  TableauNoms.Columns.c:=3;
   TableauNoms.Columns[0].Title.Caption := Translation.Items[185];
@@ -305,7 +296,7 @@ begin
   // Populate la form
   Ajout.Text := '0';
   i.Value:=0;
-  case FEditType of
+  case FEditMode of
     eNET_NameVariation:
       begin
         TableauNoms.RowCount := 1;
@@ -357,7 +348,7 @@ begin
         if length(nom) > 0 then
         begin
           TableauNoms.RowCount := 2;
-          TableauNoms.Cells[1, 1] := SFamilyName;
+          TableauNoms.Cells[1, 1] := rsNameSurName;
           TableauNoms.Cells[2, 1] := nom;
         end
         else
@@ -401,7 +392,7 @@ begin
         if length(nom) > 0 then
         begin
           TableauNoms.RowCount := 2;
-          TableauNoms.Cells[1, 1] := SFamilyName;
+          TableauNoms.Cells[1, 1] := rsNameSurName;
           TableauNoms.Cells[2, 1] := nom;
         end
         else
@@ -440,7 +431,7 @@ begin
       if length(nom) > 0 then
       begin
         TableauNoms.RowCount := 2;
-        TableauNoms.Cells[1, 1] := SFamilyName;
+        TableauNoms.Cells[1, 1] := rsNameSurName;
         TableauNoms.Cells[2, 1] := nom;
       end
       else
@@ -475,7 +466,7 @@ begin
       if length(nom) > 0 then
       begin
         TableauNoms.RowCount := 2;
-        TableauNoms.Cells[1, 1] := SFamilyName;
+        TableauNoms.Cells[1, 1] := rsNameSurName;
         TableauNoms.Cells[2, 1] := nom;
       end
       else
@@ -508,7 +499,7 @@ begin
       if length(nom) > 0 then
       begin
         TableauNoms.RowCount := 2;
-        TableauNoms.Cells[1, 1] := SFamilyName;
+        TableauNoms.Cells[1, 1] := rsNameSurName;
         TableauNoms.Cells[2, 1] := nom;
       end
       else
@@ -547,7 +538,7 @@ begin
   end;
   I.ReadOnly := True;
   btnOK.Enabled := True;
-  if FEditType <> eNET_EditExisting then
+  if FEditMode <> eNET_EditExisting then
   begin
 
     fraEdtCitations1.clear;
@@ -652,22 +643,22 @@ begin
     for j := 1 to frmEditName.TableauNoms.RowCount - 1 do
       if length(trim(frmEditName.TableauNoms.Cells[2, j])) > 0 then
       begin
-        if frmEditName.TableauNoms.Cells[1, j] = STitle then
+        if frmEditName.TableauNoms.Cells[1, j] = rsNameTitle then
           tagName := CTagNameTitle
-        else if frmEditName.TableauNoms.Cells[1, j] = SFamilyName then
+        else if frmEditName.TableauNoms.Cells[1, j] = rsNameSurName then
           tagName := CTagNameFamilyName
-        else if frmEditName.TableauNoms.Cells[1, j] = SGivenName then
+        else if frmEditName.TableauNoms.Cells[1, j] = rsNameGivenName then
           tagName := CTagNameGivenName
-        else if frmEditName.TableauNoms.Cells[1, j] = SSuffix then
+        else if frmEditName.TableauNoms.Cells[1, j] = rsNameSuffix then
           tagName := CTagNameSuffix
         else
           tagName := 'AKA';
 
         nom := nom + '<' + tagName + '>' + trim(frmEditName.TableauNoms.Cells[2, j]) +
           '</' + tagName + '>';
-        if frmEditName.TableauNoms.Cells[1, j] = SFamilyName then
+        if frmEditName.TableauNoms.Cells[1, j] = rsNameSurName then
           i1 := RemoveUTF8(trim(frmEditName.TableauNoms.Cells[2, j]));
-        if frmEditName.TableauNoms.Cells[1, j] = SGivenName then
+        if frmEditName.TableauNoms.Cells[1, j] = rsNameGivenName then
           i2 := RemoveUTF8(trim(frmEditName.TableauNoms.Cells[2, j]));
       end;
 
@@ -687,7 +678,7 @@ begin
       else sSex:= '?'
     end;
 
-    case frmEditName.EditType of
+    case frmEditName.EditMode of
       eNET_NewUnrelated:
       begin
         lidInd:=dmGenData.AddNewIndividual(sSex,'?',0);
@@ -701,7 +692,7 @@ begin
         dmGenData.Query2.SQL.Text :=
           'SELECT R.no, R.B FROM R JOIN I ON R.B=I.no WHERE I.S=:sex AND R.X=1 AND R.A=:idInd';
         dmGenData.Query2.ParamByName('idInd').AsInteger := frmStemmaMainForm.iID;
-        if frmEditName.EditType = eNET_AddFather then
+        if frmEditName.EditMode = eNET_AddFather then
           dmGenData.Query2.ParamByName('sex').AsString := 'M'
         else
           dmGenData.Query2.ParamByName('sex').AsString := 'F';
@@ -715,7 +706,7 @@ begin
         // Demande si on veut unir les parents
         if (temp = '1') then
         begin
-          if frmEditName.EditType = eNET_AddMother then
+          if frmEditName.EditMode = eNET_AddMother then
             temp := 'M'
           else
             temp := 'F';
@@ -964,11 +955,6 @@ begin
   frmEditName.no.Value := lidName;
 end;
 
-procedure TfrmEditName.Ajouter1Click(Sender: TObject);
-begin
-
-end;
-
 procedure TfrmEditName.btnOKClick(Sender: TObject);
 
 begin
@@ -976,7 +962,7 @@ begin
     (frmEditName.ActiveControl as TEdit).OnEditingDone) then
     (frmEditName.ActiveControl as TEdit).OnEditingDone(frmEditName.ActiveControl);
   NomSaveData(sender);
-  case FEditType of
+  case FEditMode of
     eNET_EditExisting:
     begin
       dmGenData.Query1.SQL.Text := 'SELECT S, Q, M FROM C WHERE Y=''N'' AND N=:idInd';
@@ -1071,13 +1057,6 @@ begin
   end;
 end;
 
-procedure TfrmEditName.edtNameExit(Sender: TObject);
-begin
-
-end;
-
-
-
 procedure TfrmEditName.MenuItem1Click(Sender: TObject);
 var
   j: integer;
@@ -1119,7 +1098,7 @@ begin
   if not existe then
   begin
     TableauNoms.RowCount := TableauNoms.RowCount + 1;
-    if TableauNoms.Cells[1, 1] = STitle then
+    if TableauNoms.Cells[1, 1] = rsNameTitle then
     begin
       if TableauNoms.RowCount > 3 then
         for j := TableauNoms.RowCount - 1 downto 2 do
@@ -1384,11 +1363,6 @@ begin
     frmStemmaMainForm.DataHist.Row := j + 1;
 end;
 
-procedure TfrmEditName.mniCitationEditClick(Sender: TObject);
-begin
-
-end;
-
 procedure TfrmEditName.PDblClick(Sender: TObject);
 begin
   P2.Visible := True;
@@ -1424,11 +1398,6 @@ begin
   frmStemmaMainForm.DataHist.InsertColRow(False, 0);
   frmStemmaMainForm.DataHist.Cells[0, 0] := 'SD';
   frmStemmaMainForm.DataHist.Cells[1, 0] := SD2.Text;
-end;
-
-procedure TfrmEditName.Supprimer1Click(Sender: TObject);
-begin
-
 end;
 
 end.

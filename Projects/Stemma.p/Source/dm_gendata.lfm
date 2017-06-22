@@ -21,7 +21,6 @@ object dmGenData: TdmGenData
   object Database: TSQLConnector
     Connected = False
     LoginPrompt = False
-    AfterConnect = DatabaseAfterConnect
     DatabaseName = 'mysql'
     KeepConnection = False
     Transaction = SQLTransaction1

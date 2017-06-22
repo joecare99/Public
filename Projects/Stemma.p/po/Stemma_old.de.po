@@ -11,107 +11,328 @@ msgstr ""
 "X-Generator: Poedit 1.8.12\n"
 "Language: de_DE@formal\n"
 
+#: cls_translation.rsadd
+msgctxt "cls_translation.rsadd"
+msgid "&Add"
+msgstr ""
+
+#: cls_translation.rsaddachild
+msgctxt "cls_translation.rsaddachild"
+msgid "Add a child"
+msgstr ""
+
+#: cls_translation.rsaddacitation
+msgctxt "cls_translation.rsaddacitation"
+msgid "Add a citation"
+msgstr ""
+
+#: cls_translation.rsaddadepository
+msgctxt "cls_translation.rsaddadepository"
+msgid "Add a depository"
+msgstr ""
+
+#: cls_translation.rsaddadocument
+msgctxt "cls_translation.rsaddadocument"
+msgid "Add a Document"
+msgstr ""
+
+#: cls_translation.rsaddaname
+msgctxt "cls_translation.rsaddaname"
+msgid "Add a name"
+msgstr ""
+
+#: cls_translation.rsaddanevent
+msgctxt "cls_translation.rsaddanevent"
+msgid "Add an event"
+msgstr ""
+
+#: cls_translation.rsaddaneventnameorrela
+msgctxt "cls_translation.rsaddaneventnameorrela"
+msgid "Add an event, name or relation type"
+msgstr ""
+
+#: cls_translation.rsaddanindividual
+msgctxt "cls_translation.rsaddanindividual"
+msgid "Add an individual"
+msgstr ""
+
+#: cls_translation.rsaddaparent
+msgctxt "cls_translation.rsaddaparent"
+msgid "Add a parent"
+msgstr ""
+
+#: cls_translation.rsaddasource
+msgctxt "cls_translation.rsaddasource"
+msgid "Add a source"
+msgstr ""
+
+#: cls_translation.rsaddawitness
+msgctxt "cls_translation.rsaddawitness"
+msgid "Add a witness"
+msgstr ""
+
+#: cls_translation.rsaddfirstname
+msgctxt "cls_translation.rsaddfirstname"
+msgid "Add &first name"
+msgstr ""
+
+#: cls_translation.rsaddingasisterto
+msgctxt "cls_translation.rsaddingasisterto"
+msgid "Adding a sister to "
+msgstr ""
+
+#: cls_translation.rsaddtitle
+msgctxt "cls_translation.rsaddtitle"
+msgid "Add &title"
+msgstr ""
+
+#: cls_translation.rsareyousuretodeldoc
+msgctxt "cls_translation.rsareyousuretodeldoc"
+msgid "Are you sure you want to delete exhibit \""
+msgstr ""
+
+#: cls_translation.rsareyousuretodelete
+msgctxt "cls_translation.rsareyousuretodelete"
+msgid "Are you sure you want to delete \"%s\" ?"
+msgstr ""
+
+#: cls_translation.rsareyousuretodellnktochld
+msgctxt "cls_translation.rsareyousuretodellnktochld"
+msgid "Are you sure you want to delete the link to the child \""
+msgstr ""
+
+#: cls_translation.rsareyousuretodellnktorep
+msgctxt "cls_translation.rsareyousuretodellnktorep"
+msgid "Are you sure you want to delete the link to the depository \""
+msgstr ""
+
+#: cls_translation.rsareyousuretodelrepository
+msgctxt "cls_translation.rsareyousuretodelrepository"
+msgid "Are you sure you want to delete repository \""
+msgstr ""
+
+#: cls_translation.rsareyousuretodelwitness
+msgctxt "cls_translation.rsareyousuretodelwitness"
+msgid "Are you sure you want to delete witness \""
+msgstr ""
+
+#: cls_translation.rsareyousuretodelx
+msgctxt "cls_translation.rsareyousuretodelx"
+msgid "Are you sure you want to delete %s \"%s%\" ?"
+msgstr ""
+
+#: cls_translation.rsareyousuretoquit
+msgctxt "cls_translation.rsareyousuretoquit"
+msgid "Are you sure you want to quit STEMMA?"
+msgstr ""
+
+#: cls_translation.rschildren
+msgctxt "cls_translation.rschildren"
+msgid "Children"
+msgstr ""
+
+#: cls_translation.rscitation
+msgctxt "cls_translation.rscitation"
+msgid "Citation"
+msgstr ""
+
+#: cls_translation.rsdatabasealreadyexist
+msgctxt "cls_translation.rsdatabasealreadyexist"
+msgid "Database already exist."
+msgstr ""
+
+#: cls_translation.rsdatabasenotfound
+msgctxt "cls_translation.rsdatabasenotfound"
+msgid "Database not found."
+msgstr ""
+
+#: cls_translation.rsdatebeforethe
+msgid "before the "
+msgstr ""
+
+#: cls_translation.rsdelete
+#, fuzzy
+#| msgid "&Supprimer"
+msgctxt "cls_translation.rsdelete"
+msgid "&Delete"
+msgstr "Löschen"
+
+#: cls_translation.rsdispnameandlivedate
+msgctxt "cls_translation.rsdispnameandlivedate"
+msgid "%s (%s - %s)"
+msgstr ""
+
+#: cls_translation.rsdispnameidandlivedate
+msgctxt "cls_translation.rsdispnameidandlivedate"
+msgid "%s [%d] (%s - %s)"
+msgstr ""
+
+#: cls_translation.rsdocument
+msgctxt "cls_translation.rsdocument"
+msgid "Document"
+msgstr ""
+
+#: cls_translation.rsdocumentmodification
+msgctxt "cls_translation.rsdocumentmodification"
+msgid "Exhibit modification"
+msgstr ""
+
+#: cls_translation.rsdocuments
+msgctxt "cls_translation.rsdocuments"
+msgid "Documents"
+msgstr ""
+
+#: cls_translation.rsenterdbname
+msgctxt "cls_translation.rsenterdbname"
+msgid "Enter the database name"
+msgstr ""
+
+#: cls_translation.rsenterdbnametocreate
+msgctxt "cls_translation.rsenterdbnametocreate"
+msgid "Enter the database name to be created"
+msgstr ""
+
+#: cls_translation.rsenterdbnametodel
+msgctxt "cls_translation.rsenterdbnametodel"
+msgid "Enter the database name to delete"
+msgstr ""
+
+#: cls_translation.rsenternumberofindividual
+msgid "Enter the number of the desired individual"
+msgstr ""
+
+#: cls_translation.rsenterthedepositoryno
+msgid "Enter the depository #"
+msgstr ""
+
+#: cls_translation.rsevents
+msgctxt "cls_translation.rsevents"
+msgid "Events"
+msgstr ""
+
+#: cls_translation.rsgoto
+msgctxt "cls_translation.rsgoto"
+msgid "&Go to"
+msgstr ""
+
+#: cls_translation.rslocationofthetmg40dd
+msgctxt "cls_translation.rslocationofthetmg40dd"
+msgid "Location of the TMG 4.0d database"
+msgstr ""
+
+#: cls_translation.rsmarriedwith
+msgctxt "cls_translation.rsmarriedwith"
+msgid " & %s (of %d)"
+msgstr ""
+
+#: cls_translation.rsmenubirthevents
+msgid "B - Birth events"
+msgstr ""
+
+#: cls_translation.rsmenudeathevents
+msgid "D - Death events"
+msgstr ""
+
 #: cls_translation.rsmenuhistorycaption
 msgctxt "cls_translation.rsmenuhistorycaption"
 msgid "&%d- %s (%d)"
 msgstr ""
 
-#: cls_translation.saddachild
-msgid "Add a child"
+#: cls_translation.rsmodify
+msgid "&Modify"
 msgstr ""
 
-#: cls_translation.saddacitation
-msgid "Add a citation"
+#: cls_translation.rsmonthapril
+msgid "april"
 msgstr ""
 
-#: cls_translation.saddadepository
-msgid "Add a depository"
+#: cls_translation.rsmonthfebruary
+msgctxt "cls_translation.rsmonthfebruary"
+msgid "february"
 msgstr ""
 
-#: cls_translation.saddadocument
-msgid "Add a Document"
+#: cls_translation.rsmonthjanuary
+msgctxt "cls_translation.rsmonthjanuary"
+msgid "january"
 msgstr ""
 
-#: cls_translation.saddaname
-msgid "Add a name"
+#: cls_translation.rsmonthjune
+msgid "june"
 msgstr ""
 
-#: cls_translation.saddanevent
-msgid "Add an event"
+#: cls_translation.rsmonthmarch
+msgid "march"
 msgstr ""
 
-#: cls_translation.saddaneventnameorrela
-msgid "Add an event, name or relation type"
+#: cls_translation.rsmonthmay
+msgid "may"
 msgstr ""
 
-#: cls_translation.saddanindividual
-msgid "Add an individual"
+#: cls_translation.rsnamegivenname
+msgctxt "cls_translation.rsnamegivenname"
+msgid "First name"
 msgstr ""
 
-#: cls_translation.saddaparent
-msgid "Add a parent"
+#: cls_translation.rsnamesuffix
+msgctxt "cls_translation.rsnamesuffix"
+msgid "Suffix"
 msgstr ""
 
-#: cls_translation.saddasource
-msgid "Add a source"
+#: cls_translation.rsnamesurname
+msgctxt "cls_translation.rsnamesurname"
+msgid "Name"
 msgstr ""
 
-#: cls_translation.saddawitness
-msgid "Add a witness"
+#: cls_translation.rsnametitle
+msgctxt "cls_translation.rsnametitle"
+msgid "Title"
 msgstr ""
 
-#: cls_translation.saddfirstname
-msgid "Add &first name"
+#: cls_translation.rsnotitlenodescription
+msgctxt "cls_translation.rsnotitlenodescription"
+msgid "NO TITLE, NO DESCRIPTION"
 msgstr ""
 
-#: cls_translation.saddingasisterto
-msgid "Adding a sister to "
+#: cls_translation.rsnumberoftheindividua
+msgctxt "cls_translation.rsnumberoftheindividua"
+msgid "Number of the individual"
 msgstr ""
 
-#: cls_translation.saddtitle
-msgid "Add &title"
+#: cls_translation.rsonlytheexhibitsassoc
+msgctxt "cls_translation.rsonlytheexhibitsassoc"
+msgid "Only the exhibits associated to an individual (type \"I\") can be modified this way"
 msgstr ""
 
-#: cls_translation.sareyousuretodeldoc
-msgid "Are you sure you want to delete exhibit \""
+#: cls_translation.rsparents
+msgctxt "cls_translation.rsparents"
+msgid "Parents"
 msgstr ""
 
-#: cls_translation.sareyousuretodelete
-msgid "Are you sure you want to delete \"%s\" ?"
+#: cls_translation.rsremovaloforphanrecor
+msgctxt "cls_translation.rsremovaloforphanrecor"
+msgid "Removal of orphan records"
 msgstr ""
 
-#: cls_translation.sareyousuretodellnktochld
-msgid "Are you sure you want to delete the link to the child \""
+#: cls_translation.rsrepositories
+msgid "&Repositories"
 msgstr ""
 
-#: cls_translation.sareyousuretodellnktorep
-msgid "Are you sure you want to delete the link to the depository \""
+#: cls_translation.rssiblings
+msgctxt "cls_translation.rssiblings"
+msgid "Siblings"
 msgstr ""
 
-#: cls_translation.sareyousuretodelrepository
-msgid "Are you sure you want to delete repository \""
+#: cls_translation.rstext
+msgid "Text"
 msgstr ""
 
-#: cls_translation.sareyousuretodelwitness
-msgid "Are you sure you want to delete witness \""
+#: cls_translation.rstobeprogrammed
+msgctxt "cls_translation.rstobeprogrammed"
+msgid "TO BE PROGRAMMED"
 msgstr ""
 
-#: cls_translation.sareyousuretodelx
-msgid "Are you sure you want to delete %s \"%s%\" ?"
-msgstr ""
-
-#: cls_translation.sareyousuretoquit
-msgctxt "cls_translation.sareyousuretoquit"
-msgid "Are you sure you want to quit STEMMA?"
-msgstr ""
-
-#: cls_translation.schildren
-msgctxt "cls_translation.schildren"
-msgid "Children"
-msgstr ""
-
-#: cls_translation.scitation
-msgid "Citation"
+#: cls_translation.rsusage
+msgid "&Usage"
 msgstr ""
 
 #: cls_translation.sconfirmation
@@ -119,108 +340,9 @@ msgctxt "cls_translation.sconfirmation"
 msgid "Confirmation"
 msgstr ""
 
-#: cls_translation.sdatabasealreadyexist
-msgid "Database already exist."
-msgstr ""
-
 #: cls_translation.sdatabasename
 msgctxt "cls_translation.sdatabasename"
 msgid "Database name"
-msgstr ""
-
-#: cls_translation.sdatabasenotfound
-msgid "Database not found."
-msgstr ""
-
-#: cls_translation.sdispnameandlivedate
-msgid "%s (%s - %s)"
-msgstr ""
-
-#: cls_translation.sdispnameidandlivedate
-msgid "%s [%d] (%s - %s)"
-msgstr ""
-
-#: cls_translation.sdocument
-msgid "Document"
-msgstr ""
-
-#: cls_translation.sdocumentmodification
-msgid "Exhibit modification"
-msgstr ""
-
-#: cls_translation.sdocuments
-msgctxt "cls_translation.sdocuments"
-msgid "Documents"
-msgstr ""
-
-#: cls_translation.senterdbname
-msgctxt "cls_translation.senterdbname"
-msgid "Enter the database name to be created"
-msgstr ""
-
-#: cls_translation.senterthedatabasename
-msgid "Enter the database name"
-msgstr ""
-
-#: cls_translation.senterthedatabasetodel
-msgid "Enter the database name to delete"
-msgstr ""
-
-#: cls_translation.sevents
-msgctxt "cls_translation.sevents"
-msgid "Events"
-msgstr ""
-
-#: cls_translation.sfamilyname
-msgctxt "cls_translation.sfamilyname"
-msgid "Name"
-msgstr ""
-
-#: cls_translation.sgivenname
-msgctxt "cls_translation.sgivenname"
-msgid "First name"
-msgstr ""
-
-#: cls_translation.sgoto
-msgctxt "cls_translation.sgoto"
-msgid "&Go to"
-msgstr ""
-
-#: cls_translation.slocationofthetmg40dd
-msgid "Location of the TMG 4.0d database"
-msgstr ""
-
-#: cls_translation.smarriedwith
-msgid " & %s (of %d)"
-msgstr ""
-
-#: cls_translation.smonthfebruary
-msgid "february"
-msgstr ""
-
-#: cls_translation.smonthjanuary
-msgid "january"
-msgstr ""
-
-#: cls_translation.snotitlenodescription
-msgid "NO TITLE, NO DESCRIPTION"
-msgstr ""
-
-#: cls_translation.snumberoftheindividua
-msgid "Number of the individual"
-msgstr ""
-
-#: cls_translation.sonlytheexhibitsassoc
-msgid "Only the exhibits associated to an individual (type \"I\") can be modified this way"
-msgstr ""
-
-#: cls_translation.sparents
-msgctxt "cls_translation.sparents"
-msgid "Parents"
-msgstr ""
-
-#: cls_translation.sremovaloforphanrecor
-msgid "Removal of orphan records"
 msgstr ""
 
 #: cls_translation.srepairnamesforsortin
@@ -247,22 +369,8 @@ msgstr ""
 msgid "Step 3/12 - Repository importation"
 msgstr ""
 
-#: cls_translation.ssuffix
-msgctxt "cls_translation.ssuffix"
-msgid "Suffix"
-msgstr ""
-
 #: cls_translation.stheindividualnotfound
 msgid "The individual %s has not been found."
-msgstr ""
-
-#: cls_translation.stitle
-msgctxt "cls_translation.stitle"
-msgid "Title"
-msgstr ""
-
-#: cls_translation.stobeprogrammed
-msgid "TO BE PROGRAMMED"
 msgstr ""
 
 #: cls_translation.sunabletoconnecttodb
@@ -1100,33 +1208,37 @@ msgctxt "teditsource.lblsourcetitle.caption"
 msgid "Title:"
 msgstr ""
 
-#: teditsource.menuitem1.caption
-msgctxt "teditsource.menuitem1.caption"
+#: teditsource.mnirepositories.caption
+msgctxt "teditsource.mnirepositories.caption"
 msgid "&Dépots"
 msgstr ""
 
-#: teditsource.menuitem2.caption
-msgctxt "TEDITSOURCE.MENUITEM2.CAPTION"
+#: teditsource.mnirepositoryadd.caption
+#, fuzzy
+msgctxt "teditsource.mnirepositoryadd.caption"
 msgid "&Ajouter"
 msgstr "&Anfügen"
 
-#: teditsource.menuitem3.caption
-msgctxt "TEDITSOURCE.MENUITEM3.CAPTION"
-msgid "&Modifier"
-msgstr "Bearbeiten"
-
-#: teditsource.menuitem4.caption
-msgctxt "TEDITSOURCE.MENUITEM4.CAPTION"
+#: teditsource.mnirepositorydelete.caption
+#, fuzzy
+msgctxt "teditsource.mnirepositorydelete.caption"
 msgid "&Supprimer"
 msgstr "Löschen"
 
-#: teditsource.menuitem5.caption
-msgctxt "TEDITSOURCE.MENUITEM5.CAPTION"
+#: teditsource.mnirepositoryedit.caption
+#, fuzzy
+msgctxt "teditsource.mnirepositoryedit.caption"
+msgid "&Modifier"
+msgstr "Bearbeiten"
+
+#: teditsource.mnisourceclose.caption
+#, fuzzy
+msgctxt "teditsource.mnisourceclose.caption"
 msgid "&Quit"
 msgstr "&Beenden"
 
-#: teditsource.menuitem6.caption
-msgctxt "TEDITSOURCE.MENUITEM6.CAPTION"
+#: teditsource.mnisourcerepeat.caption
+msgctxt "teditsource.mnisourcerepeat.caption"
 msgid "Repeat"
 msgstr ""
 
@@ -1727,9 +1839,24 @@ msgctxt "tfradocuments.label12.caption"
 msgid "Documents:"
 msgstr ""
 
-#: tfradocuments.menuitem9.caption
-msgctxt "tfradocuments.menuitem9.caption"
-msgid "-"
+#: tfradocuments.tbldocuments.columns[0].title.caption
+msgctxt "tfradocuments.tbldocuments.columns[0].title.caption"
+msgid "*"
+msgstr ""
+
+#: tfradocuments.tbldocuments.columns[1].title.caption
+msgctxt "tfradocuments.tbldocuments.columns[1].title.caption"
+msgid "Title"
+msgstr ""
+
+#: tfradocuments.tbldocuments.columns[2].title.caption
+msgctxt "tfradocuments.tbldocuments.columns[2].title.caption"
+msgid "Type"
+msgstr ""
+
+#: tfradocuments.tbldocuments.columns[3].title.caption
+msgctxt "tfradocuments.tbldocuments.columns[3].title.caption"
+msgid "Format"
 msgstr ""
 
 #: tfraedtcitations.actedtcitationadd.caption
@@ -1773,6 +1900,20 @@ msgstr "Löschen"
 msgctxt "tfraedtcitations.mnicitationedit.caption"
 msgid "&Modifier"
 msgstr "Bearbeiten"
+
+#: tfraedtcitations.tableaucitations.columns[0].title.caption
+msgid "Source"
+msgstr ""
+
+#: tfraedtcitations.tableaucitations.columns[1].title.caption
+msgctxt "tfraedtcitations.tableaucitations.columns[1].title.caption"
+msgid "Description"
+msgstr ""
+
+#: tfraedtcitations.tableaucitations.columns[2].title.caption
+msgctxt "tfraedtcitations.tableaucitations.columns[2].title.caption"
+msgid "Q"
+msgstr ""
 
 #: tfraindividualwithrole.actindividualedit.caption
 #, fuzzy
@@ -1962,9 +2103,24 @@ msgctxt "tfrmdocuments.btndocumentssep.caption"
 msgid "&Add"
 msgstr ""
 
-#: tfrmdocuments.mniseparator.caption
-msgctxt "tfrmdocuments.mniseparator.caption"
-msgid "-"
+#: tfrmdocuments.tbldocuments.columns[0].title.caption
+msgctxt "tfrmdocuments.tbldocuments.columns[0].title.caption"
+msgid "*"
+msgstr ""
+
+#: tfrmdocuments.tbldocuments.columns[1].title.caption
+msgctxt "tfrmdocuments.tbldocuments.columns[1].title.caption"
+msgid "Title"
+msgstr ""
+
+#: tfrmdocuments.tbldocuments.columns[2].title.caption
+msgctxt "tfrmdocuments.tbldocuments.columns[2].title.caption"
+msgid "Type"
+msgstr ""
+
+#: tfrmdocuments.tbldocuments.columns[3].title.caption
+msgctxt "tfrmdocuments.tbldocuments.columns[3].title.caption"
+msgid "Format"
 msgstr ""
 
 #: tfrmdocuments.toolbar1.caption
@@ -2266,6 +2422,7 @@ msgid "&Supprimer"
 msgstr "Löschen"
 
 #: tfrmeditevents.tableauexhibits.columns[0].title.caption
+msgctxt "tfrmeditevents.tableauexhibits.columns[0].title.caption"
 msgid "*"
 msgstr ""
 
@@ -2280,6 +2437,7 @@ msgid "Type"
 msgstr ""
 
 #: tfrmeditevents.tableauexhibits.columns[3].title.caption
+msgctxt "tfrmeditevents.tableauexhibits.columns[3].title.caption"
 msgid "Format"
 msgstr ""
 
@@ -2513,6 +2671,16 @@ msgctxt "tfrmeditname.sd2.text"
 msgid "SD2"
 msgstr ""
 
+#: tfrmeditname.tableaunoms.columns[0].title.caption
+msgctxt "tfrmeditname.tableaunoms.columns[0].title.caption"
+msgid "Type"
+msgstr ""
+
+#: tfrmeditname.tableaunoms.columns[1].title.caption
+msgctxt "tfrmeditname.tableaunoms.columns[1].title.caption"
+msgid "Description"
+msgstr ""
+
 #: tfrmeditname.x.text
 msgctxt "tfrmeditname.x.text"
 msgid "X"
@@ -2707,14 +2875,43 @@ msgctxt "tfrmevents.btnseparator2.caption"
 msgid "btnSeparator2"
 msgstr ""
 
-#: tfrmevents.mniseparator1.caption
-msgctxt "tfrmevents.mniseparator1.caption"
-msgid "-"
+#: tfrmevents.grdevents.columns[0].title.caption
+msgctxt "tfrmevents.grdevents.columns[0].title.caption"
+msgid "*"
 msgstr ""
 
-#: tfrmevents.mniseparator2.caption
-msgctxt "tfrmevents.mniseparator2.caption"
-msgid "-"
+#: tfrmevents.grdevents.columns[1].title.caption
+msgctxt "tfrmevents.grdevents.columns[1].title.caption"
+msgid "Type"
+msgstr ""
+
+#: tfrmevents.grdevents.columns[2].title.caption
+msgctxt "tfrmevents.grdevents.columns[2].title.caption"
+msgid "Date"
+msgstr ""
+
+#: tfrmevents.grdevents.columns[3].title.caption
+msgctxt "tfrmevents.grdevents.columns[3].title.caption"
+msgid "Description"
+msgstr ""
+
+#: tfrmevents.grdevents.columns[4].title.caption
+msgctxt "tfrmevents.grdevents.columns[4].title.caption"
+msgid "Q"
+msgstr ""
+
+#: tfrmevents.grdevents.columns[5].title.caption
+msgid "Age"
+msgstr ""
+
+#: tfrmevents.grdevents.columns[6].title.caption
+#, fuzzy
+msgctxt "tfrmevents.grdevents.columns[6].title.caption"
+msgid "No"
+msgstr "Nein"
+
+#: tfrmevents.grdevents.columns[7].title.caption
+msgid "W*"
 msgstr ""
 
 #: tfrmevents.tlbevents.caption
@@ -2848,6 +3045,33 @@ msgctxt "tfrmnames.cbxsex.itemsex[2].caption"
 msgid "Male"
 msgstr ""
 
+#: tfrmnames.grdnames.columns[0].title.caption
+msgctxt "tfrmnames.grdnames.columns[0].title.caption"
+msgid "*"
+msgstr ""
+
+#: tfrmnames.grdnames.columns[1].title.caption
+msgctxt "tfrmnames.grdnames.columns[1].title.caption"
+msgid "Type"
+msgstr ""
+
+#: tfrmnames.grdnames.columns[2].title.caption
+msgctxt "tfrmnames.grdnames.columns[2].title.caption"
+msgid "Date"
+msgstr ""
+
+#: tfrmnames.grdnames.columns[3].title.caption
+#, fuzzy
+#| msgid "Nom"
+msgctxt "tfrmnames.grdnames.columns[3].title.caption"
+msgid "Name"
+msgstr "Name"
+
+#: tfrmnames.grdnames.columns[4].title.caption
+msgctxt "tfrmnames.grdnames.columns[4].title.caption"
+msgid "Q"
+msgstr ""
+
 #: tfrmnames.lbllastmodification.caption
 msgid "Last modification at:"
 msgstr ""
@@ -2857,11 +3081,6 @@ msgstr ""
 msgctxt "tfrmnames.lblmodificationdate.caption"
 msgid "YYYY/MM/DD"
 msgstr "YYYY-MM-DD"
-
-#: tfrmnames.mniseparator.caption
-msgctxt "tfrmnames.mniseparator.caption"
-msgid "-"
-msgstr ""
 
 #: tfrmnames.toolbar1.caption
 msgctxt "tfrmnames.toolbar1.caption"
@@ -2887,16 +3106,6 @@ msgctxt "tfrmparents.actparentsetprefered.caption"
 msgid "Set &Prefered"
 msgstr ""
 
-#: tfrmparents.mnddiv1.caption
-msgctxt "tfrmparents.mnddiv1.caption"
-msgid "-"
-msgstr ""
-
-#: tfrmparents.mnddiv2.caption
-msgctxt "tfrmparents.mnddiv2.caption"
-msgid "-"
-msgstr ""
-
 #: tfrmparents.mniadd.caption
 msgctxt "tfrmparents.mniadd.caption"
 msgid "Add"
@@ -2910,6 +3119,29 @@ msgstr ""
 #: tfrmparents.mniedit.caption
 msgctxt "tfrmparents.mniedit.caption"
 msgid "Edit"
+msgstr ""
+
+#: tfrmparents.tblparents.columns[0].title.caption
+msgctxt "tfrmparents.tblparents.columns[0].title.caption"
+msgid "*"
+msgstr ""
+
+#: tfrmparents.tblparents.columns[1].title.caption
+msgctxt "tfrmparents.tblparents.columns[1].title.caption"
+msgid "Type"
+msgstr ""
+
+#: tfrmparents.tblparents.columns[2].title.caption
+msgid "Parent"
+msgstr ""
+
+#: tfrmparents.tblparents.columns[3].title.caption
+msgctxt "tfrmparents.tblparents.columns[3].title.caption"
+msgid "Q"
+msgstr ""
+
+#: tfrmparents.tblparents.columns[4].title.caption
+msgid "IdParent"
 msgstr ""
 
 #: tfrmparents.tlbparents.caption
@@ -3478,11 +3710,6 @@ msgctxt "tfrmtypes.button1.caption"
 msgid "Ok"
 msgstr "Ok"
 
-#: tfrmtypes.menuitem1.caption
-msgctxt "tfrmtypes.menuitem1.caption"
-msgid "-"
-msgstr ""
-
 #: tfrmtypes.menuitem2.caption
 #, fuzzy
 msgctxt "tfrmtypes.menuitem2.caption"
@@ -3504,6 +3731,31 @@ msgstr "Bearbeiten"
 #: tfrmtypes.menuitem8.caption
 #, fuzzy
 msgctxt "tfrmtypes.menuitem8.caption"
+msgid "Utilisation"
+msgstr "Verwendung"
+
+#: tfrmtypes.tableautypes.columns[0].title.caption
+msgctxt "tfrmtypes.tableautypes.columns[0].title.caption"
+msgid "#"
+msgstr ""
+
+#: tfrmtypes.tableautypes.columns[1].title.caption
+msgctxt "tfrmtypes.tableautypes.columns[1].title.caption"
+msgid "Titre"
+msgstr ""
+
+#: tfrmtypes.tableautypes.columns[2].title.caption
+msgctxt "tfrmtypes.tableautypes.columns[2].title.caption"
+msgid "Type"
+msgstr ""
+
+#: tfrmtypes.tableautypes.columns[3].title.caption
+msgid "Phrase"
+msgstr ""
+
+#: tfrmtypes.tableautypes.columns[4].title.caption
+#, fuzzy
+msgctxt "tfrmtypes.tableautypes.columns[4].title.caption"
 msgid "Utilisation"
 msgstr "Verwendung"
 

@@ -38,14 +38,9 @@ type
     edtFilename: TEdit;
     procedure Button1Click(Sender: TObject);
     procedure btnDisplayClick(Sender: TObject);
-    procedure edtFilenameChange(Sender: TObject);
     procedure edtFilenameDblClick(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure lblDocumentDescriptionClick(Sender: TObject);
-    procedure lblDocumentsTitleClick(Sender: TObject);
     procedure MenuItem1Click(Sender: TObject);
-    procedure edtDocumentTitleChange(Sender: TObject);
   private
     FEditMode: TenumDocumentsEditMode;
     function GetdocType: String;
@@ -86,7 +81,7 @@ begin
   //edtidLink.Text:=nocode;
   if FEditMode=eDEM_AddDocument then
      begin
-     Caption:=SAddADocument;
+     Caption:=rsAddADocument;
      edtidDocument.Value:=0;
      edtDocumentTitle.text:='';
      edtDescription.Text:='';
@@ -96,7 +91,7 @@ begin
      end
   else
      begin
-     Caption:=SDocumentModification;
+     Caption:=rsDocumentModification;
 //     edtidDocument.Value:=dmGenData.Query1.Fields[0].AsInteger;
 
      dmGenData.SelectDocumentData(idDocument,lPrefered,  lDocumentInfo, lDocType,
@@ -110,25 +105,10 @@ edtDocumentInfo.Text:=lDocumentInfo;
   end;
 end;
 
-procedure TfrmEditDocuments.lblDocumentDescriptionClick(Sender: TObject);
-begin
-
-end;
-
-procedure TfrmEditDocuments.lblDocumentsTitleClick(Sender: TObject);
-begin
-
-end;
-
 procedure TfrmEditDocuments.MenuItem1Click(Sender: TObject);
 begin
   Button1Click(Sender);
   ModalResult:=mrOk;
-end;
-
-procedure TfrmEditDocuments.edtDocumentTitleChange(Sender: TObject);
-begin
-
 end;
 
 function TfrmEditDocuments.GetidDocument: integer;
@@ -176,11 +156,6 @@ begin
   OpenDialog.InitialDir:=ExtractFilePath(edtFilename.Text);
   if OpenDialog.Execute then
      edtFilename.Text:=OpenDialog.FileName;
-end;
-
-procedure TfrmEditDocuments.FormCreate(Sender: TObject);
-begin
-
 end;
 
 procedure TfrmEditDocuments.btnDisplayClick(Sender: TObject);
@@ -258,11 +233,6 @@ begin
            frmShowImage.Showmodal;
         end;
      end;
-end;
-
-procedure TfrmEditDocuments.edtFilenameChange(Sender: TObject);
-begin
-
 end;
 
 procedure TfrmEditDocuments.Button1Click(Sender: TObject);

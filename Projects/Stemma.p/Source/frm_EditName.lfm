@@ -1,20 +1,19 @@
 object frmEditName: TfrmEditName
-  Left = 219
+  Left = 264
   Height = 622
-  Top = 93
+  Top = 563
   Width = 629
   ActiveControl = Y
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de Nom'
-  ClientHeight = 622
+  ClientHeight = 602
   ClientWidth = 629
   KeyPreview = True
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
-  Visible = False
+  LCLVersion = '1.8.0.2'
   object lblType: TLabel
     Left = 16
     Height = 15
@@ -63,105 +62,6 @@ object frmEditName: TfrmEditName
     ScrollBars = ssAutoVertical
     TabOrder = 2
   end
-  object P: TMemo
-    Left = 88
-    Height = 59
-    Top = 288
-    Width = 528
-    Lines.Strings = (
-      'P'
-    )
-    OnDblClick = PDblClick
-    OnEditingDone = PEditingDone
-    ScrollBars = ssAutoVertical
-    TabOrder = 3
-  end
-  object lblDefault: TLabel
-    Left = 24
-    Height = 15
-    Top = 304
-    Width = 42
-    Caption = '(défaut)'
-    ParentColor = False
-    Visible = False
-  end
-  object lblPhrase: TLabel
-    Left = 16
-    Height = 15
-    Top = 288
-    Width = 38
-    Caption = 'Phrase:'
-    ParentColor = False
-  end
-  object P2: TMemo
-    Left = 88
-    Height = 59
-    Top = 288
-    Width = 528
-    Lines.Strings = (
-      'P'
-    )
-    OnDblClick = P2DblClick
-    ReadOnly = True
-    ScrollBars = ssAutoVertical
-    TabOrder = 6
-    TabStop = False
-    Visible = False
-  end
-  object lblDate: TLabel
-    Left = 16
-    Height = 15
-    Top = 352
-    Width = 24
-    Caption = 'Date'
-    ParentColor = False
-  end
-  object PD: TEdit
-    Left = 88
-    Height = 23
-    Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
-    Top = 376
-    Width = 272
-    OnEditingDone = PDEditingDone
-    ParentShowHint = False
-    ShowHint = True
-    TabOrder = 4
-    Text = 'PD'
-  end
-  object PD2: TEdit
-    Left = 88
-    Height = 23
-    Top = 393
-    Width = 232
-    ReadOnly = True
-    TabStop = False
-    TabOrder = 8
-    Text = 'PD2'
-    Visible = False
-  end
-  object SD: TEdit
-    Left = 360
-    Height = 23
-    Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
-    Top = 376
-    Width = 256
-    OnEditingDone = SDEditingDone
-    ParentShowHint = False
-    ShowHint = True
-    TabOrder = 5
-    Text = 'SD'
-  end
-  object SD2: TEdit
-    Left = 384
-    Height = 23
-    Top = 393
-    Width = 232
-    ReadOnly = True
-    TabStop = False
-    TabOrder = 9
-    Text = 'SD2'
-    Visible = False
-  end
   object TableauNoms: TStringGrid
     Left = 88
     Height = 114
@@ -197,44 +97,13 @@ object frmEditName: TfrmEditName
     Caption = 'Nom:'
     ParentColor = False
   end
-  object P1: TMemo
-    Left = 88
-    Height = 59
-    Top = 288
-    Width = 528
-    Lines.Strings = (
-      'P'
-    )
-    OnDblClick = P2DblClick
-    ReadOnly = True
-    ScrollBars = ssAutoVertical
-    TabOrder = 7
-    TabStop = False
-    Visible = False
-  end
-  object lblForPresentation: TLabel
-    Left = 88
-    Height = 15
-    Top = 352
-    Width = 85
-    Caption = 'de présentation:'
-    ParentColor = False
-  end
-  object lblForSorting: TLabel
-    Left = 360
-    Height = 15
-    Top = 352
-    Width = 30
-    Caption = 'de tri:'
-    ParentColor = False
-  end
   object X: TEdit
     Left = 536
     Height = 23
     Top = 36
     Width = 80
     TabStop = False
-    TabOrder = 10
+    TabOrder = 3
     Text = 'X'
     Visible = False
   end
@@ -244,7 +113,7 @@ object frmEditName: TfrmEditName
     Top = 8
     Width = 80
     TabStop = False
-    TabOrder = 11
+    TabOrder = 4
     Text = 'X'
     Visible = False
   end
@@ -257,7 +126,7 @@ object frmEditName: TfrmEditName
     MaxValue = 1000000000
     OnEditingDone = IEditingDone
     ReadOnly = True
-    TabOrder = 12
+    TabOrder = 5
   end
   object No: TSpinEdit
     Left = 536
@@ -265,7 +134,7 @@ object frmEditName: TfrmEditName
     Top = 8
     Width = 80
     TabStop = False
-    TabOrder = 13
+    TabOrder = 6
     Visible = False
   end
   object pnlBottom: TPanel
@@ -277,7 +146,7 @@ object frmEditName: TfrmEditName
     BevelOuter = bvNone
     ClientHeight = 52
     ClientWidth = 629
-    TabOrder = 14
+    TabOrder = 7
     object btnOK: TBitBtn
       Left = 397
       Height = 40
@@ -314,8 +183,7 @@ object frmEditName: TfrmEditName
     Height = 23
     Top = 77
     Width = 423
-    OnExit = edtNameExit
-    TabOrder = 15
+    TabOrder = 8
     Text = 'edtName'
   end
   object cbxSex: TComboBoxEx
@@ -340,7 +208,7 @@ object frmEditName: TfrmEditName
       end>
     ItemIndex = 0
     ReadOnly = True
-    TabOrder = 16
+    TabOrder = 9
   end
   inline fraEdtCitations1: TfraEdtCitations
     Height = 150
@@ -349,15 +217,92 @@ object frmEditName: TfrmEditName
     Align = alBottom
     ClientHeight = 150
     ClientWidth = 629
-    TabOrder = 17
+    TabOrder = 10
     inherited TableauCitations: TStringGrid
       Height = 144
-      Width = 533
+      Width = 528
     end
     inherited pnlCitationLeft: TPanel
-      Height = 150
-      ClientHeight = 150
+      Height = 144
+      ClientHeight = 144
     end
+  end
+  inline fraPhrase1: TfraPhrase
+    Height = 42
+    Top = 288
+    Width = 629
+    Align = alBottom
+    ClientHeight = 42
+    ClientWidth = 629
+    TabOrder = 11
+    DesignLeft = 1113
+    DesignTop = 160
+    inherited pnlPhraseLeft: TPanel
+      Height = 36
+      ClientHeight = 36
+    end
+    object P2: TMemo[1]
+      Left = 86
+      Height = 36
+      Top = 3
+      Width = 528
+      Align = alClient
+      BorderSpacing.Right = 12
+      BorderSpacing.Around = 3
+      Lines.Strings = (
+        'P'
+      )
+      ReadOnly = True
+      ScrollBars = ssAutoVertical
+      TabOrder = 1
+      TabStop = False
+    end
+  end
+  object Splitter1: TSplitter
+    Cursor = crVSplit
+    Left = 0
+    Height = 5
+    Top = 395
+    Width = 629
+    Align = alBottom
+    ResizeAnchor = akBottom
+  end
+  inline fraDate1: TfraDate
+    Top = 335
+    Width = 629
+    Align = alBottom
+    ClientWidth = 629
+    TabOrder = 13
+    DesignLeft = 332
+    DesignTop = 438
+    inherited pnlDateRight: TPanel
+      Left = 351
+      inherited edtDateForSorting: TEdit
+        OnEditingDone = nil
+      end
+    end
+    inherited pnlDateClient: TPanel
+      Width = 262
+      ClientWidth = 262
+      inherited edtDateForPresentation: TEdit
+        Height = 24
+        Width = 256
+        BorderSpacing.Bottom = 6
+        OnEditingDone = nil
+      end
+      inherited lblForPresentation: TLabel
+        Width = 256
+      end
+    end
+  end
+  object Splitter2: TSplitter
+    Cursor = crVSplit
+    Left = 0
+    Height = 5
+    Top = 330
+    Width = 629
+    Align = alBottom
+    ResizeAnchor = akBottom
   end
   object PopupMenuNom: TPopupMenu
     left = 80
@@ -380,8 +325,8 @@ object frmEditName: TfrmEditName
     end
   end
   object MainMenu1: TMainMenu
-    left = 32
-    top = 376
+    left = 256
+    top = 65528
     object MenuItem6: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114
@@ -397,17 +342,14 @@ object frmEditName: TfrmEditName
       object MenuItem10: TMenuItem
         Caption = '&Add'
         ShortCut = 118
-        OnClick = Ajouter1Click
       end
       object MenuItem11: TMenuItem
         Caption = '&Edit'
         ShortCut = 119
-        OnClick = TableauCitationsDblClick
       end
       object MenuItem12: TMenuItem
         Caption = '&Delete'
         ShortCut = 120
-        OnClick = Supprimer1Click
       end
     end
     object MenuItem7: TMenuItem

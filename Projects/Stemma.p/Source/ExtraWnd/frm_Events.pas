@@ -39,7 +39,6 @@ type
     procedure actEventsDeleteUpdate(Sender: TObject);
     procedure actEventsSetPreferedUpdate(Sender: TObject);
     procedure FormClose(Sender: TObject; var {%H-}CloseAction: TCloseAction);
-    procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure grdEventsResize(Sender: TObject);
     procedure actEventsGotoExecute(Sender: TObject);
@@ -105,7 +104,7 @@ begin
   // Supprimer un événement
   if grdEvents.Row > 0 then
     if grdEvents.Cells[1, grdEvents.Row] = '' then
-      if MessageDlg(SConfirmation, format(SAreYouSureToDelete,
+      if MessageDlg(SConfirmation, format(rsAreYouSureToDelete,
         [grdEvents.Cells[2, grdEvents.Row] + '-' + grdEvents.Cells[4, grdEvents.Row]]),
         mtConfirmation, mbYesNo, 0) = mrYes then
       begin
@@ -206,11 +205,6 @@ begin
   actEventsSetPrefered.Enabled := not actEventsSetPrefered.Checked;
 end;
 
-
-procedure TfrmEvents.FormResize(Sender: TObject);
-begin
-
-end;
 
 procedure TfrmEvents.FormShow(Sender: TObject);
 begin

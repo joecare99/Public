@@ -7,12 +7,15 @@ object fraEdtCitations: TfraEdtCitations
   ClientWidth = 660
   OnResize = FrameResize
   TabOrder = 0
+  DesignLeft = 878
+  DesignTop = 128
   object TableauCitations: TStringGrid
-    Left = 93
+    Left = 86
     Height = 164
     Top = 3
-    Width = 564
+    Width = 559
     Align = alClient
+    BorderSpacing.Right = 12
     BorderSpacing.Around = 3
     ColCount = 4
     Columns = <    
@@ -41,20 +44,21 @@ object fraEdtCitations: TfraEdtCitations
     )
   end
   object pnlCitationLeft: TPanel
-    Left = 0
-    Height = 170
-    Top = 0
-    Width = 90
+    Left = 3
+    Height = 164
+    Top = 3
+    Width = 80
     Align = alLeft
+    BorderSpacing.Around = 3
     BevelOuter = bvNone
-    ClientHeight = 170
-    ClientWidth = 90
+    ClientHeight = 164
+    ClientWidth = 80
     TabOrder = 1
     object lblCitations: TLabel
       Left = 5
       Height = 15
       Top = 3
-      Width = 80
+      Width = 70
       Align = alTop
       Alignment = taRightJustify
       BorderSpacing.Left = 5

@@ -10,10 +10,9 @@ object frmNames: TfrmNames
   ClientWidth = 477
   OnClose = FormClose
   OnCreate = FormCreate
-  OnResize = FormResize
   OnShow = FormShow
   Position = poDesktopCenter
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '1.8.0.2'
   Visible = False
   object grdNames: TStringGrid
     Left = 5
@@ -28,18 +27,23 @@ object frmNames: TfrmNames
     Columns = <    
       item
         Title.Caption = '*'
+        Width = 64
       end    
       item
         Title.Caption = 'Type'
+        Width = 64
       end    
       item
         Title.Caption = 'Date'
+        Width = 64
       end    
       item
         Title.Caption = 'Name'
+        Width = 64
       end    
       item
         Title.Caption = 'Q'
+        Width = 64
       end>
     MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goDblClickAutoSize, goSmoothScroll]
@@ -86,7 +90,6 @@ object frmNames: TfrmNames
       Left = 100
       Height = 22
       Top = 2
-      Width = 8
       Caption = 'ToolButton4'
       Style = tbsSeparator
     end

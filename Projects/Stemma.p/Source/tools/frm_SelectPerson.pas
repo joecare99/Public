@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Grids, Menus, Buttons, Spin;
+  Grids, Menus, Buttons, Spin, ExtCtrls;
 
 type
 
@@ -15,12 +15,14 @@ type
   TFormSelectPersonne = class(TForm)
     btnCancel: TBitBtn;
     btnOK: TBitBtn;
+    edtName: TEdit;
     edtNumber: TSpinEdit;
     Label1: TLabel;
     MainMenu1: TMainMenu;
     mniQuit: TMenuItem;
-    edtName: TEdit;
     Liste: TStringGrid;
+    pnlAllmostBottom: TPanel;
+    pnlBottom: TPanel;
     procedure FormShow(Sender: TObject);
     procedure ListeSelection(Sender: TObject; {%H-}aCol, aRow: Integer);
     procedure mniQuitClick(Sender: TObject);

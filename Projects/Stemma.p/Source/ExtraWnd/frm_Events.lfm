@@ -10,7 +10,7 @@ object frmEvents: TfrmEvents
   ClientWidth = 320
   OnClose = FormClose
   OnShow = FormShow
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '1.8.0.2'
   Visible = False
   object grdEvents: TStringGrid
     Left = 0
@@ -22,21 +22,27 @@ object frmEvents: TfrmEvents
     Columns = <    
       item
         Title.Caption = '*'
+        Width = 64
       end    
       item
         Title.Caption = 'Type'
+        Width = 64
       end    
       item
         Title.Caption = 'Date'
+        Width = 64
       end    
       item
         Title.Caption = 'Description'
+        Width = 64
       end    
       item
         Title.Caption = 'Q'
+        Width = 64
       end    
       item
         Title.Caption = 'Age'
+        Width = 64
       end    
       item
         Title.Caption = 'No'
@@ -84,7 +90,6 @@ object frmEvents: TfrmEvents
       Left = 38
       Height = 22
       Top = 2
-      Width = 8
       Caption = 'btnSeparator1'
       Style = tbsSeparator
     end
@@ -107,7 +112,6 @@ object frmEvents: TfrmEvents
       Left = 145
       Height = 22
       Top = 2
-      Width = 8
       Caption = 'btnSeparator2'
       Style = tbsSeparator
     end
