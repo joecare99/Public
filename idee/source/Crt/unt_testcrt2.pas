@@ -1,4 +1,4 @@
-unit unt_testcrt3;
+unit unt_testcrt2;
 
 {$IFDEF FPC}
   {$MODE Delphi}
@@ -12,6 +12,7 @@ uses
 {$ELSE}
 {$ENDIF}
     SysUtils,
+
     Win32Crt;
 
 procedure Execute;
@@ -26,13 +27,14 @@ const
 implementation
 
 uses
- {$IFnDEF FPC}     Windows,   {$ENDIF}
-    types,
+    Windows,
     Graphics;
+//    Math,
+//    Unt_CharConst;
 
 const
-    maxanim = 500;
-    Filler = #$b0#$b1#$b2#$db;
+    maxanim = 2000;
+    Filler=#$b0#$b1#$b2#$db;
 
 type
     TColorKmpn = record
@@ -42,35 +44,15 @@ type
     end;
 
     TColIndex = record
-        ci: TCHAR_INFO;
+        ci: _CHAR_INFO;
         cc: TColorKmpn;
     end;
 
 var
     i, j, k, l, found: integer;
     cc: TColorKmpn;
-    chi: TCHAR_INFO;
+    chi: _char_info;
     ColIdx: array of TColIndex;
-
-
-function CalcTPxColor(const i, j: integer; const lComp_2, lComp_1, lComp2, lComp1: word): TColorKmpn;
-    inline;
-begin
-    Result.r := (i and $4) shr $2 * lComp_2 + (i and $8) shr $3 * lComp_1 +
-        (j and $4) shr $2 * lComp2 + (J and $8) shr $3 * lComp1;
-    Result.g := (i and $2) shr $1 * lComp_2 + (i and $8) shr $3 * lComp_1 +
-        (j and $2) shr $1 * lComp2 + (J and $8) shr $3 * lComp1;
-    Result.b := (i and $1) shr $0 * lComp_2 + (i and $8) shr $3 * lComp_1 +
-        (j and $1) shr $0 * lComp2 + (J and $8) shr $3 * lComp1;
-end;
-
-
-function max(n1, n2: integer): integer; inline;
-begin
-    Result := n1;
-    if n2 > n1 then
-        Result := n2;
-end;
 
 function ColorComp(c1, c2: TColorKmpn): extended;
     inline;
@@ -82,6 +64,17 @@ begin
     g := abs(c1.g - c2.g);
     b := abs(c1.b - c2.b);
     Result := 1024 - (r + b + g + max(r, max(b, g))) / 1024;
+end;
+
+function CalcTPxColor(const i, j: integer; const lComp_2, lComp_1, lComp2, lComp1: word): TColorKmpn;
+    inline;
+begin
+    Result.r := (i and $4) shr $2 * lComp_2 + (i and $8) shr $3 * lComp_1 +
+        (j and $4) shr $2 * lComp2 + (J and $8) shr $3 * lComp1;
+    Result.g := (i and $2) shr $1 * lComp_2 + (i and $8) shr $3 * lComp_1 +
+        (j and $2) shr $1 * lComp2 + (J and $8) shr $3 * lComp1;
+    Result.b := (i and $1) shr $0 * lComp_2 + (i and $8) shr $3 * lComp_1 +
+        (j and $1) shr $0 * lComp2 + (J and $8) shr $3 * lComp1;
 end;
 
 function ColorHash(const c: TColorKmpn): word;
@@ -132,13 +125,13 @@ begin
 end;
 
 type
-    TchinfArr = array of TCHAR_INFO;
+    TchinfArr = array of _CHAR_INFO;
 
 procedure FlushScreen(const sb: TchinfArr);
 
 var
-    srctReadRect: TRect;
-    coordBufSize, coordBufCoord: TPoint;
+    srctReadRect: TSmallRect;
+    coordBufSize, coordBufCoord: TCoord;
 begin
     srctReadRect.Top := 0; // top left: row 0, col 0
     srctReadRect.Left := 0;
@@ -151,8 +144,9 @@ begin
     coordBufCoord.x := 0;
     coordBufCoord.y := 0;
 
-    console.WriteConsoleOutput(
-        sb[0], // buffer to copy into
+    WriteConsoleOutput(
+        console.OutHandle, // screen buffer to read from
+        @sb[0], // buffer to copy into
         coordbufSize, // col-row size of chiBuffer
         coordBufCoord, // top left dest. cell in chiBuffer
         srctReadRect); // screen buffer source rectangle
@@ -162,25 +156,23 @@ procedure Execute;
 
 var
     mb, bew: extended;
-    rc: TColorKmpn;
+    //  rc: TColorKmpn;
     istcol: array[0..79, 0..49] of TColorKmpn;
-
+    hashtab: array[0..32768] of word;
     sb: TchinfArr;
-    bmp: TPortableNetworkGraphic;
+    Chh: Word;
 
 begin
-    bmp := TPortableNetworkGraphic.Create;
-    bmp.LoadFromResourceName(HINSTANCE, 'JOE_CARE_H48');
       try
         TextMode(co80 + font8x8);
         // init
         for I := 0 to 15 do
             for J := 0 to 15 do
-                for K := 4 downto 1 do
+                for K := 1 to 2 do
                   begin
                     chi.AsciiChar := filler[K];
                     chi.Attributes := i + J * 16;
-                    cc := CalcTPxColor(i, j, CComp[K, -2], CComp[K, -1], CComp[K, 2], CComp[K, 1]);
+                     cc := CalcTPxColor(i, j, CComp[K, -2], CComp[K, -1], CComp[K, 2], CComp[K, 1]);
 
                     // append Coloridx
                     found := -1;
@@ -220,34 +212,38 @@ begin
         fillchar(istcol{%H-}, sizeof(istcol), byte(0));
         writeln('Press Enter to Start');
         readln;
-        GotoY(49);
         setlength(sb, 80 * 50);
-        //          For I := 0 To maxanim Do
+        for I := 0 to maxanim do
           begin
             for J := 0 to 79 do
                 for K := 0 to 49 do
                   begin
-                    rc.c := bmp.Canvas.Pixels[J div 2 + 6, K];
-                    if (J > 0) and (k > 0) then
-                        rc := ColorSubtr(rc, istcol[j - 1, k - 1]);
-                    if K > 0 then
-                        rc := ColorSubtr(rc, istcol[j, k - 1]);
-                    if J > 0 then
-                        cc := ColorSubtr(rc, istcol[j - 1, k])
+                    if k > (i - maxanim + 50) then
+                      begin
+                        cc.r := trunc(J * (1.5 + sin(I / 50) * 1.5)) + random(15);
+                        cc.g := trunc((79 - J) * (1.5 + cos(I / 50) * 1.5)) +
+                            random(15);
+                        cc.b := K * 5 + random(10);
+                      end
                     else
-                        cc := rc;
-                    // cc := ColorSubtr(rc, istcol[j , k]);
-                    chi := colidx[hashtab[colorhash(cc)]].ci;
+                        cc.c := clblack;
+                    If (J > 0) And (k > 0) Then
+                      cc := ColorSubtr(cc, istcol[j - 1, k - 1]);
+                    if K > 0 then
+                        cc := ColorSubtr(cc, istcol[j, k - 1]);
+                    if J > 0 then
+                        cc := ColorSubtr(cc, istcol[j - 1, k]);
+                    cc := ColorSubtr(cc, istcol[j, k]);
+                    Chh := colorhash(cc);
+                    chi := colidx[hashtab[chh]].ci;
                     sb[j + k * 80] := chi;
-                    istcol[j, k] := colidx[hashtab[colorhash(cc)]].cc;
+                    istcol[j, k] := colidx[hashtab[chh]].cc;
                   end;
             FlushScreen(sb);
             delay(10);
           end;
         writeln('Press Enter ...');
         readln;
-        FreeAndNil(bmp);
-
       except
         On E: Exception do
             Writeln(E.ClassName, ': ', E.Message);

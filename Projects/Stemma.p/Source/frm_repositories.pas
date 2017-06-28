@@ -213,8 +213,10 @@ end;
 
 procedure TfrmRepository.MenuItem8Click(Sender: TObject);
 begin
-  dmGenData.PutCode('D',TableauDepots.Cells[1,TableauDepots.Row]);
-  frmEventUsage.ShowModal;
+//  dmGenData.PutCode('D',);
+  frmShowUsage.UsageOf:=eSU_Repositories;
+  frmShowUsage.idLink:=ptrint(TableauDepots.Objects[1,TableauDepots.Row]);
+  frmShowUsage.ShowModal;
 end;
 
 {$R *.lfm}

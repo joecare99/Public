@@ -19,7 +19,7 @@ frm_EditName, frm_EditEvents, frm_EditWitness,
 frm_Repositories, frm_EditSource, frm_Types, frm_EditTypes,
   frm_About, frm_SelectPerson, dm_GenData, cls_Translation,//uScaleDPI, 
 frm_SelectDialog, fra_Citations, untWebexport, fra_Documents, fra_Individual,
-fra_Phrase, fra_Date;
+fra_Phrase, fra_Date, untGedComExImport;
 
 {$R *.res}
 
@@ -59,8 +59,8 @@ begin
   Application.CreateForm(TfrmEditName, frmEditName);
   Application.CreateForm(TfrmEditEvents, frmEditEvents);
   Application.CreateForm(TfrmEditWitness, frmEditWitness);
-  Application.CreateForm(TFormLieux, FormLieux);
-  Application.CreateForm(TfrmEventUsage, frmEventUsage);
+  Application.CreateForm(TfrmPlace, frmPlace);
+  Application.CreateForm(TfrmShowUsage, frmShowUsage);
   Application.CreateForm(TfrmSources, frmSources);
   Application.CreateForm(TfrmRepository, frmRepository);
   Application.CreateForm(TfrmEditSource, frmEditSource);

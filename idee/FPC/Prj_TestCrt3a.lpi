@@ -11,7 +11,7 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="Prj_TestCrt2"/>
+      <Title Value="Prj_TestCrt3a"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -29,7 +29,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-            <OtherUnitFiles Value="..\grafik;..\..\Projekte\kams\Utils"/>
+            <OtherUnitFiles Value="..\source\crt;..\..\Projekte\kams\Utils"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -74,7 +74,9 @@
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
               <AllowLabel Value="False"/>
+              <UseAnsiStrings Value="False"/>
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
@@ -92,9 +94,7 @@
             </Debugging>
             <LinkSmart Value="True"/>
             <Options>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
+              <LinkerOptions Value="s"/>
             </Options>
           </Linking>
         </CompilerOptions>
@@ -110,19 +110,19 @@
     </RunParams>
     <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="Compatible"/>
+        <PackageName Value="LCL"/>
       </Item1>
       <Item2>
-        <PackageName Value="LCL"/>
+        <PackageName Value="Compatible"/>
       </Item2>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>
-        <Filename Value="Prj_TestCrt2.dpr"/>
+        <Filename Value="Prj_TestCrt3a.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\source\Crt\unt_testcrt2.pas"/>
+        <Filename Value="..\source\Crt\unt_TestTCol02.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
     </Units>

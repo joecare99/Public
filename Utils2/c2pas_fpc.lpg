@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectGroup FileVersion="1">
+    <Targets Count="5">
+      <Target0 FileName="FPC\cToPas.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target0>
+      <Target1 FileName="FPC\OpenC2Pas.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target1>
+      <Target2 FileName="FPC\OpenC2Pas_mini.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+      </Target2>
+      <Target3 FileName="FPC\WinToPas.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+      </Target3>
+      <Target4 FileName="FPC\LazWinToPas.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+      </Target4>
+    </Targets>
+  </ProjectGroup>
+</CONFIG>

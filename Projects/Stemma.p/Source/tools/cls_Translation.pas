@@ -56,7 +56,7 @@ resourcestring
   rsDatabaseAlreadyExist = 'Database already exist.';
   rsDatabaseNotFound = 'Database not found.';
   rsDateBeforeThe = 'before the ';
-  rsDelete = '&Delete';
+  rsCmdDelete = '&Delete';
   rsDispNameAndLiveDate = '%s (%s - %s)';
   rsDispNameIdAndLiveDate = '%s [%d] (%s - %s)';
   rsDocumentModification = 'Exhibit modification';
@@ -93,7 +93,7 @@ resourcestring
   rsRemovalOfOrphanRecor = 'Removal of orphan records';
   rsRepositories = '&Repositories';
   rsSiblings = 'Siblings';
-  rsUsage = '&Usage';
+  rsCmdUsageOf = '&Usage';
   SRepairNamesForSortin = 'Repair names (for sorting)';
   SRepairRelationSortDa = 'Repair relation sort date';
   SRepositoryModificati = 'Depository modification';
@@ -107,9 +107,31 @@ resourcestring
   SUnableToConnectToDB 	= 'Couldn''t connect to MySQL database %s.';
   SConfirmation		= 'Confirmation';
   SDatabaseName 	= 'Database name';
+  rsPlaces = 'Places';
+  rsDetail = 'Detail';
+  rsCity = 'City';
+  rsRegion = 'Region';
+  rsCmdMerge = '&Merge';
+  rsCmdOk = 'Ok';
+  rsSort = '&Sort';
+  rsSortByDetail = 'by &detail';
+
+
+
 var Translation:TTranslation;
+
+
+
 implementation
+
+
+
 uses LCLTranslator;
+
+
+
+
+
 constructor TTranslation.Create;
 begin
  Fitems:=TStringList.Create;
@@ -265,7 +287,7 @@ FItems.Add('Close');
 FItems.Add('User:');
 FItems.Add('Server:');    {150}
 FItems.Add('Password:');
-FItems.Add('Ok');
+FItems.Add(rsCmdOk);
 FItems.Add('Repositories');
 FItems.Add('Title');
 FItems.Add('Description');
@@ -320,11 +342,11 @@ FItems.Add('Birth');
 FItems.Add('Death');
 FItems.Add('Sibling');
 FItems.Add('Navigation history');
-FItems.Add('Places');
+FItems.Add(rsPlaces);
 FItems.Add('Preposition');
-FItems.Add('Detail');
-FItems.Add('City');                 {210}
-FItems.Add('Region');
+FItems.Add(rsDetail);
+FItems.Add(rsCity);                 {210}
+FItems.Add(rsRegion);
 FItems.Add('State');
 FItems.Add('Country');
 FItems.Add('Names and Attributes');
@@ -336,10 +358,10 @@ FItems.Add('Author');
 FItems.Add('Event types');{220}
 FItems.Add('Phrase');
 FItems.Add(rsGoTo);
-FItems.Add(rsUsage);
+FItems.Add(rsCmdUsageOf);
 FItems.Add(rsAdd);
 FItems.Add(rsModify);
-FItems.Add(rsDelete);
+FItems.Add(rsCmdDelete);
 FItems.Add('&Witnesses');
 FItems.Add('&Citations');
 FItems.Add(rsAddTitle);
@@ -352,13 +374,13 @@ FItems.Add('Sort by &first name');
 FItems.Add('Sort by &surname');
 FItems.Add('Sort by &birth');
 FItems.Add('Sort by &death');
-FItems.Add('&Sort');
-FItems.Add('by &detail'); {240}
+FItems.Add(rsSort);
+FItems.Add(rsSortByDetail); {240}
 FItems.Add('by &city');
 FItems.Add('by &region');
 FItems.Add('by &state');
 FItems.Add('by countr&y');
-FItems.Add('&Merge');
+FItems.Add(rsCmdMerge);
 FItems.Add('by &number');
 FItems.Add('by &title');
 FItems.Add('&File');

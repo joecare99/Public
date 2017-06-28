@@ -501,7 +501,7 @@ end;
 procedure TfrmStemmaMainForm.DockMasterCreateControl(Sender: TObject;
   aName: string; var AControl: TControl; DoDisableAutoSizing: boolean);
 
-  procedure CreateForm(Caption: string; {%H-}NewBounds: TRect);
+  procedure CreateForm({%H-}Caption: string; {%H-}NewBounds: TRect);
   begin
     //  AControl:=CreateSimpleForm(aName,Caption,NewBounds,DoDisableAutoSizing);
   end;
@@ -1782,7 +1782,7 @@ end;
 
 procedure TfrmStemmaMainForm.mniUtilItem29Click(Sender: TObject);
 begin
-  FormLieux.ShowModal;
+  frmPlace.ShowModal;
 end;
 
 procedure TfrmStemmaMainForm.mniUtilItem30Click(Sender: TObject);

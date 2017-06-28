@@ -1,4 +1,4 @@
-program Prj_TestCrt3;
+program Prj_TestCrt3a;
 
 {$IFDEF FPC}
   {$MODE Delphi}
@@ -12,10 +12,10 @@ uses
   {$IFDEF FPC}
   interfaces,
 {$ENDIF}
-  unt_testcrt3;
+  unt_TestTCol02;
 
-{$R *.res}
+{ $R *.res}
 
 begin
-  execute;
+  execute
 end.

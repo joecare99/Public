@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Grids, Spin, Menus, fra_Documents, fra_Individual, StrUtils, LCLType,
-  Buttons, ExtCtrls, IniFiles;
+  Buttons, ExtCtrls;
 
 type
   TEnumSourceEditMode=
@@ -73,7 +73,7 @@ var
 implementation
 
 uses
-  frm_Main, cls_Translation, dm_GenData, frm_Sources, frm_Usage,LCLIntf;
+  frm_Main, cls_Translation, dm_GenData, LCLIntf;
 
 
 { TfrmEditSource }
@@ -101,7 +101,7 @@ end;
 
 procedure TfrmEditSource.FormShow(Sender: TObject);
 var
-  temp, code, nocode:string;
+  temp:string;
 
   tInt: LongInt;
 begin
@@ -121,12 +121,12 @@ begin
 
   Ajouter1.Caption:=rsAdd;
   Modifier1.Caption:=rsModify;
-  Supprimer1.Caption:=rsDelete;
+  Supprimer1.Caption:=rsCmdDelete;
 
   mniRepositories.Caption:=rsRepositories;
-  mniRepositoryAdd.Caption:=rsUsage;
+  mniRepositoryAdd.Caption:=rsCmdUsageOf;
   mniRepositoryEdit.Caption:=rsModify;
-  mniRepositoryDelete.Caption:=rsDelete;
+  mniRepositoryDelete.Caption:=rsCmdDelete;
 
   fraDocuments1.DocType:='S';
 
@@ -146,15 +146,11 @@ begin
   end
   else
      begin
-     if code='S' then
-        dmGenData.Query1.SQL.Add('SELECT S.no, S.T, S.D, S.M, S.Q, S.A FROM S WHERE S.no='+
-                                     frmSources.TableauSources.Cells[1,frmSources.TableauSources.Row])
-     else
-        dmGenData.Query1.SQL.Add('SELECT S.no, S.T, S.D, S.M, S.Q, S.A FROM S WHERE S.no='+
-                                     frmEventUsage.TableauUtilisation.Cells[0,frmEventUsage.TableauUtilisation.Row]);
+     dmGenData.Query1.Close;
+     dmGenData.Query1.SQL.text:='SELECT S.no, S.T, S.D, S.M, S.Q, S.A FROM S WHERE S.no='+
+                                     inttostr(idSource);
      dmGenData.Query1.Open;
      dmGenData.Query1.First;
-     No.Text:=dmGenData.Query1.Fields[0].AsString;
      edtSourceTitle.Text:=dmGenData.Query1.Fields[1].AsString;
      edtSourceDescription.Text:=dmGenData.Query1.Fields[2].AsString;
      temp:=dmGenData.Query1.Fields[5].AsString;

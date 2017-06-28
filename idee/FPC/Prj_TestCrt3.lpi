@@ -21,9 +21,6 @@
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
@@ -85,20 +82,20 @@
           </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
+            <RelocatableUnit Value="True"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
+            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
+              <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
             <Options>
               <LinkerOptions Value="s"/>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
             </Options>
           </Linking>
         </CompilerOptions>
@@ -117,7 +114,7 @@
         <PackageName Value="Compatible"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="2">
       <Unit0>
         <Filename Value="Prj_TestCrt3.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -126,10 +123,6 @@
         <Filename Value="..\source\Crt\unt_testcrt3.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
-      <Unit2>
-        <Filename Value="..\..\Projekte\kams\Utils\Unt_CharConst.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

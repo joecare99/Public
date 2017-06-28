@@ -11,7 +11,6 @@ implementation
 uses Math;
 
 type
-//    TValue = int64;
     l0 = 0..11;
 
 const

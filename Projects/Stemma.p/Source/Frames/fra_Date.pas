@@ -44,7 +44,7 @@ implementation
 
 {$R *.lfm}
 
-uses Frm_Main;
+uses Frm_Main,FMUtils;
 
 procedure TfraDate.edtDateForPresentationEditingDone(Sender: TObject);
 
@@ -72,7 +72,7 @@ begin
     FDate := AValue;
     FSortDate := Avalue;
     edtDateForPresentation.Text := ConvertDate(FDate, 1);
-    edtDateForSorting := edtDateForPresentation.Text;
+    edtDateForSorting.Text := edtDateForPresentation.Text;
 end;
 
 function TfraDate.GetVisDate: string;

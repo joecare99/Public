@@ -158,8 +158,10 @@ begin
   end
   else
      begin
-     dmGenData.PutCode('S',TableauSources.Cells[2,TableauSources.Row]);
-     frmEventUsage.ShowModal;
+//     dmGenData.PutCode('S',TableauSources.Cells[2,TableauSources.Row]);
+     frmShowUsage.UsageOf:=eSU_Sources;
+     frmShowUsage.idLink:=ptrint(TableauSources.Objects[2,TableauSources.Row]);
+     frmShowUsage.ShowModal;
   end;
 end;
 

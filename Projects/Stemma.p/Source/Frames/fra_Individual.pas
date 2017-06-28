@@ -51,7 +51,7 @@ implementation
 
 {$R *.lfm}
 
-uses dm_GenData,FMUtils,frm_EditName,frm_SelectPerson;
+uses dm_GenData,FMUtils,frm_EditName;
 { TfraIndividualwithRole }
 
 procedure TfraIndividualwithRole.edtIndividIdEditingDone(Sender: TObject);

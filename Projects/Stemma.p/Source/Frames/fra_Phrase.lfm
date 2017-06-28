@@ -54,6 +54,7 @@ object fraPhrase: TfraPhrase
       ''
     )
     OnDblClick = edtPhraseDblClick
+    OnEditingDone = edtPhraseEditingDone
     ReadOnly = True
     ScrollBars = ssAutoVertical
     TabOrder = 1

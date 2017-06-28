@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Stemma"><module name="frm_Usage"><element name="TEnumShowUsage"><short>Enumeration of the Various Usage the Form can handle</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

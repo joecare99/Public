@@ -9,7 +9,7 @@ uses
   Menus, StrUtils;
 
 type
-
+  TenumTypeEditMode =(eTEM_AddNew,eTEM_EditExisting);
   { TfrmEditType }
 
   TfrmEditType = class(TForm)
@@ -31,9 +31,12 @@ type
     procedure MenuItem2Click(Sender: TObject);
     procedure PEditingDone(Sender: TObject);
   private
+    FEditMode: TenumTypeEditMode;
+    procedure SetEditMode(AValue: TenumTypeEditMode);
     { private declarations }
   public
     { public declarations }
+    property EditMode:TenumTypeEditMode read FEditMode write SetEditMode;
   end; 
 
 var
@@ -47,8 +50,7 @@ uses
 { TfrmEditType }
 
 procedure TfrmEditType.FormShow(Sender: TObject);
-var
-  code,nocode:string;
+
 begin
   frmStemmaMainForm.DataHist.Row:=0;
   Caption:=Translation.Items[199];
@@ -66,9 +68,9 @@ begin
   Y.Items.Add(Translation.Items[54]);
   Y.Items.Add(Translation.Items[55]);
   // Populate la form
-  if code='A' then
+  if FEditMode=eTEM_AddNew then
      begin
-     frmEditType.Caption:=Translation.Items[56];
+     Caption:=Translation.Items[56];
      No.Text:='0';
      T.Text:='';
      P.Text:='';
@@ -100,7 +102,7 @@ var
   i:integer;
   found:boolean;
 begin
-  if frmEditType.ActiveControl.Name='P' then
+  if ActiveControl.Name='P' then
      begin
      found:=false;
      For i:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
@@ -135,6 +137,12 @@ begin
   frmStemmaMainForm.DataHist.InsertColRow(false,0);
   frmStemmaMainForm.DataHist.Cells[0,0]:='P';
   frmStemmaMainForm.DataHist.Cells[1,0]:=P.Text;
+end;
+
+procedure TfrmEditType.SetEditMode(AValue: TenumTypeEditMode);
+begin
+  if FEditMode=AValue then Exit;
+  FEditMode:=AValue;
 end;
 
 procedure TfrmEditType.Button1Click(Sender: TObject);

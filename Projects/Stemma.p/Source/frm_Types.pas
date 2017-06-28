@@ -110,7 +110,8 @@ end;
 
 procedure TfrmTypes.MenuItem2Click(Sender: TObject);    // Ajouter
 begin
-     dmGenData.PutCode('A',0);
+//     dmGenData.PutCode('A',0);
+     frmEditType.EditMode:=eTEM_AddNew;
      if frmEditType.Showmodal = mrOK then
         begin
         FormShow(Sender);
@@ -133,6 +134,7 @@ end;
 
 procedure TfrmTypes.MenuItem4Click(Sender: TObject);      // Modifier
 begin
+  frmEditType.EditMode:=eTEM_EditExisting;
   if TableauTypes.Row>0 then
      if frmEditType.Showmodal = mrOK then
         begin
@@ -163,8 +165,9 @@ begin
   if TableauTypes.Row>0 then
      if StrtoInt(TableauTypes.Cells[5,TableauTypes.Row])>0 then
         begin
-        dmGenData.PutCode('T',TableauTypes.Cells[1,TableauTypes.Row]);
-        frmEventUsage.ShowModal;
+        frmShowUsage.UsageOf:=eSU_Types;
+        frmShowUsage.idLink:=ptrint(TableauTypes.Objects[1,TableauTypes.Row]);
+        frmShowUsage.ShowModal;
      end;
 end;
 

@@ -129,7 +129,7 @@ type
         procedure FillTableEvents(const idInd: integer; const lgrdEvents: TStringGrid);
         function GetEventType(const lIdEvent: integer): string;
         procedure CopyEvent(const idEvent: integer);
-        function SaveEventData(const lPrefered: boolean; const lidEvent: integer; const lIdPlace: integer; const lInfo: string; const lDate: string; const lSortDate: string; const lidType: integer): integer;
+        function SaveEventData(const pPrefered: boolean; const pidEvent: integer; const pIdPlace: integer; const pInfo: string; const pDate: string; const pSortDate: string; const pidType: integer): integer;
         procedure DeleteEvent(const lidEvent: integer);
         procedure DeleteEventComplete(const lidEvent: integer);
         function CheckIndSharedEventExists(idInd: integer): boolean;
@@ -2380,22 +2380,23 @@ begin
       end;
 end;
 
-function TdmGenData.SaveEventData(const lPrefered: boolean; const lidEvent: integer; const lIdPlace: integer; const lInfo: string; const lDate: string; const lSortDate: string; const lidType: integer): integer;
+function TdmGenData.SaveEventData(const pPrefered: boolean; const pidEvent: integer; const pIdPlace: integer; const pInfo: string; const pDate: string; const pSortDate: string; const pidType: integer): integer;
 
 begin
-    if lidEvent = 0 then
+    if pidEvent = 0 then
       begin
         dmGenData.Query1.Close;
         dmGenData.Query1.SQL.Text := 'INSERT INTO E (Y, L, M, PD, SD, X) VALUES ' +
             '(:idType, :idplace, :Info, :PD, :SD, :Pref);';
-        dmGenData.Query1.ParamByName('idType').AsInteger := lidType;
-        dmGenData.Query1.ParamByName('idplace').AsInteger := lIdPlace;
-        dmGenData.Query1.ParamByName('PD').AsString := lDate;
-        dmGenData.Query1.ParamByName('SD').AsString := lSortDate;
-        dmGenData.Query1.ParamByName('Pref').AsBoolean := lPrefered;
+        dmGenData.Query1.ParamByName('idType').AsInteger := pidType;
+        dmGenData.Query1.ParamByName('idplace').AsInteger := pIdPlace;
+        dmGenData.Query1.ParamByName('info').AsString := pInfo;
+        dmGenData.Query1.ParamByName('PD').AsString := pDate;
+        dmGenData.Query1.ParamByName('SD').AsString := pSortDate;
+        dmGenData.Query1.ParamByName('Pref').AsBoolean := pPrefered;
         dmGenData.Query1.ExecSQL;
 
-        if lidEvent = 0 then
+        if pidEvent = 0 then
             Result := dmGenData.GetLastIDOfTable('E');
 
       end
@@ -2404,11 +2405,12 @@ begin
         dmGenData.Query1.Close;
         dmGenData.Query1.SQL.Text := 'UPDATE E SET Y=:idType ' +
             ', L=:idplace, M=:info, PD=:PD, SD=:SD WHERE no=:idEvent';
-        dmGenData.Query1.ParamByName('idType').AsInteger := lidType;
-        dmGenData.Query1.ParamByName('idplace').AsInteger := lIdPlace;
-        dmGenData.Query1.ParamByName('PD').AsString := lDate;
-        dmGenData.Query1.ParamByName('SD').AsString := lSortDate;
-        Result := lidEvent;
+        dmGenData.Query1.ParamByName('info').AsString := pInfo;
+        dmGenData.Query1.ParamByName('idType').AsInteger := pidType;
+        dmGenData.Query1.ParamByName('idplace').AsInteger := pIdPlace;
+        dmGenData.Query1.ParamByName('PD').AsString := pDate;
+        dmGenData.Query1.ParamByName('SD').AsString := pSortDate;
+        Result := pidEvent;
       end;
 end;
 

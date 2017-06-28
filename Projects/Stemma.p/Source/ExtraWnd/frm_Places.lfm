@@ -1,0 +1,228 @@
+object frmPlace: TfrmPlace
+  Left = 333
+  Height = 592
+  Top = 118
+  Width = 1104
+  BorderIcons = []
+  Caption = 'Lieux'
+  ClientHeight = 592
+  ClientWidth = 1104
+  OnResize = FormResize
+  OnShow = FormShow
+  Position = poScreenCenter
+  LCLVersion = '1.8.0.2'
+  object tblPlace: TStringGrid
+    Left = 8
+    Height = 536
+    Top = 8
+    Width = 1080
+    ColCount = 9
+    Columns = <    
+      item
+        ReadOnly = True
+        Title.Caption = '#'
+        Width = 64
+      end    
+      item
+        Title.Caption = 'Article'
+        Width = 40
+      end    
+      item
+        Title.Caption = 'Détail'
+        Width = 178
+      end    
+      item
+        Title.Caption = 'Ville'
+        Width = 178
+      end    
+      item
+        Title.Caption = 'Région'
+        Width = 178
+      end    
+      item
+        Title.Caption = 'Province'
+        Width = 178
+      end    
+      item
+        ReadOnly = True
+        Title.Caption = 'Pays'
+        Width = 178
+      end    
+      item
+        Title.Caption = 'Utilisation'
+        Width = 64
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goEditing, goSmoothScroll]
+    PopupMenu = mnuPlacePopUp
+    RowCount = 100
+    TabOrder = 0
+    OnEditingDone = tblPlaceEditingDone
+    ColWidths = (
+      1
+      64
+      40
+      178
+      178
+      178
+      178
+      178
+      64
+    )
+  end
+  object edtO: TEdit
+    Left = 16
+    Height = 23
+    Top = 552
+    Width = 80
+    TabOrder = 1
+    Text = 'edtO'
+    Visible = False
+  end
+  object btnPlaceOK: TBitBtn
+    Left = 1016
+    Height = 25
+    Top = 552
+    Width = 75
+    Cancel = True
+    Caption = 'Ok'
+    Default = True
+    ModalResult = 1
+    TabOrder = 2
+  end
+  object ToolBar1: TToolBar
+    Left = 0
+    Top = 0
+    Width = 1104
+    Caption = 'ToolBar1'
+    ParentShowHint = False
+    ShowCaptions = True
+    ShowHint = True
+    TabOrder = 3
+    object ComboBox1: TComboBox
+      Left = 1
+      Height = 23
+      Top = 2
+      Width = 100
+      ItemHeight = 15
+      TabOrder = 0
+      Text = 'ComboBox1'
+    end
+    object ToolButton1: TToolButton
+      Left = 101
+      Height = 22
+      Top = 2
+      Caption = 'ToolButton1'
+      Style = tbsSeparator
+    end
+    object ToolButton2: TToolButton
+      Left = 109
+      Top = 2
+      Action = actPlaceMerge
+    end
+    object ToolButton3: TToolButton
+      Left = 151
+      Top = 2
+      Action = actPlaceDelete
+    end
+    object ToolButton4: TToolButton
+      Left = 236
+      Height = 22
+      Top = 2
+      Caption = 'ToolButton4'
+      Style = tbsSeparator
+    end
+    object ToolButton5: TToolButton
+      Left = 244
+      Top = 2
+      Action = actPlaceUsage
+    end
+  end
+  object mnuPlacePopUp: TPopupMenu
+    left = 96
+    top = 760
+    object mniPlaceSortBy: TMenuItem
+      Action = actPlaceSort
+      object mniPlaceSortDetail: TMenuItem
+        Action = actPlaceSortByDetail
+      end
+      object mniPlaceSortPlace: TMenuItem
+        Action = actPlaceSortByPlace
+      end
+      object mniPlaceSortRegion: TMenuItem
+        Action = actPlaceSortByRegion
+      end
+      object mniPlaceSortCounty: TMenuItem
+        Action = actPlaceSortByCounty
+      end
+      object mniPlaceSortCountry: TMenuItem
+        Action = actPlaceSortByCountry
+      end
+    end
+    object mniPlaceSep1: TMenuItem
+      Caption = '-'
+    end
+    object mniPlaceMerge: TMenuItem
+      Action = actPlaceMerge
+    end
+    object mniPlaceDelete: TMenuItem
+      Action = actPlaceDelete
+    end
+    object mniPlaceSep2: TMenuItem
+      Caption = '-'
+    end
+    object mniPlaceUsage: TMenuItem
+      Action = actPlaceUsage
+    end
+  end
+  object alsPlace: TActionList
+    left = 225
+    top = 552
+    object actPlaceSortByDetail: TAction
+      Category = 'PlaceSort'
+      Caption = 'by &detail'
+      OnExecute = mniPlaceSortDetailClick
+    end
+    object actPlaceSortByPlace: TAction
+      Category = 'PlaceSort'
+      Caption = 'by &city'
+      OnExecute = mniPlaceSortPlaceClick
+    end
+    object actPlaceSortByRegion: TAction
+      Category = 'PlaceSort'
+      Caption = 'by &region'
+      OnExecute = mniPlaceSortRegionClick
+    end
+    object actPlaceSortByCounty: TAction
+      Category = 'PlaceSort'
+      Caption = 'by &state'
+      OnExecute = mniPlaceSortCountyClick
+    end
+    object actPlaceSortByCountry: TAction
+      Category = 'PlaceSort'
+      Caption = 'by countr&y'
+      OnExecute = mniPlaceSortCountryClick
+    end
+    object actPlaceSort: TAction
+      Category = 'Place'
+      Caption = 'Sort By ...'
+      DisableIfNoHandler = False
+    end
+    object actPlaceMerge: TAction
+      Category = 'Place'
+      Caption = '&Merge'
+      OnExecute = mniPlaceMergeClick
+    end
+    object actPlaceDelete: TAction
+      Category = 'Place'
+      Caption = 'actPlaceDelete'
+      OnExecute = mniPlaceDeleteClick
+    end
+    object actPlaceUsage: TAction
+      Category = 'Place'
+      Caption = 'actPlaceUsage'
+      OnExecute = mniPlaceUsageClick
+    end
+  end
+end

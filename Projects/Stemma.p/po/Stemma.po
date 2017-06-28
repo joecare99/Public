@@ -138,6 +138,30 @@ msgctxt "cls_translation.rscitation"
 msgid "Citation"
 msgstr ""
 
+#: cls_translation.rscity
+msgid "City"
+msgstr ""
+
+#: cls_translation.rscmddelete
+msgctxt "cls_translation.rscmddelete"
+msgid "&Delete"
+msgstr ""
+
+#: cls_translation.rscmdmerge
+msgctxt "cls_translation.rscmdmerge"
+msgid "&Merge"
+msgstr ""
+
+#: cls_translation.rscmdok
+msgctxt "cls_translation.rscmdok"
+msgid "Ok"
+msgstr ""
+
+#: cls_translation.rscmdusageof
+msgctxt "cls_translation.rscmdusageof"
+msgid "&Usage"
+msgstr ""
+
 #: cls_translation.rsdatabasealreadyexist
 msgctxt "cls_translation.rsdatabasealreadyexist"
 msgid "Database already exist."
@@ -152,9 +176,8 @@ msgstr ""
 msgid "before the "
 msgstr ""
 
-#: cls_translation.rsdelete
-msgctxt "cls_translation.rsdelete"
-msgid "&Delete"
+#: cls_translation.rsdetail
+msgid "Detail"
 msgstr ""
 
 #: cls_translation.rsdispnameandlivedate
@@ -308,6 +331,15 @@ msgctxt "cls_translation.rsparents"
 msgid "Parents"
 msgstr ""
 
+#: cls_translation.rsplaces
+msgctxt "cls_translation.rsplaces"
+msgid "Places"
+msgstr ""
+
+#: cls_translation.rsregion
+msgid "Region"
+msgstr ""
+
 #: cls_translation.rsremovaloforphanrecor
 msgctxt "cls_translation.rsremovaloforphanrecor"
 msgid "Removal of orphan records"
@@ -322,6 +354,16 @@ msgctxt "cls_translation.rssiblings"
 msgid "Siblings"
 msgstr ""
 
+#: cls_translation.rssort
+msgctxt "cls_translation.rssort"
+msgid "&Sort"
+msgstr ""
+
+#: cls_translation.rssortbydetail
+msgctxt "cls_translation.rssortbydetail"
+msgid "by &detail"
+msgstr ""
+
 #: cls_translation.rstext
 msgid "Text"
 msgstr ""
@@ -329,10 +371,6 @@ msgstr ""
 #: cls_translation.rstobeprogrammed
 msgctxt "cls_translation.rstobeprogrammed"
 msgid "TO BE PROGRAMMED"
-msgstr ""
-
-#: cls_translation.rsusage
-msgid "&Usage"
 msgstr ""
 
 #: cls_translation.sconfirmation
@@ -1171,14 +1209,17 @@ msgid "&Ajouter"
 msgstr ""
 
 #: teditsource.edtsourcedescription.text
+msgctxt "teditsource.edtsourcedescription.text"
 msgid "edtSourceDescription"
 msgstr ""
 
 #: teditsource.edtsourcetitle.text
+msgctxt "teditsource.edtsourcetitle.text"
 msgid "edtSourceTitle"
 msgstr ""
 
 #: teditsource.lblrepository.caption
+msgctxt "teditsource.lblrepository.caption"
 msgid "Repository:"
 msgstr ""
 
@@ -1243,14 +1284,17 @@ msgid "&Supprimer"
 msgstr ""
 
 #: teditsource.tableaudepots.columns[0].title.caption
+msgctxt "teditsource.tableaudepots.columns[0].title.caption"
 msgid "Dépot"
 msgstr ""
 
 #: teditsource.tableaudepots.columns[1].title.caption
+msgctxt "teditsource.tableaudepots.columns[1].title.caption"
 msgid "Mémo"
 msgstr ""
 
 #: teditsource.tableaudepots.columns[2].title.caption
+msgctxt "teditsource.tableaudepots.columns[2].title.caption"
 msgid "# dépot"
 msgstr ""
 
@@ -1353,6 +1397,7 @@ msgid "No"
 msgstr ""
 
 #: tedittype.t.text
+msgctxt "tedittype.t.text"
 msgid "T"
 msgstr ""
 
@@ -1541,22 +1586,27 @@ msgid "Supprimer"
 msgstr ""
 
 #: tformlieux.menuitem2.caption
+msgctxt "tformlieux.menuitem2.caption"
 msgid "Détail"
 msgstr ""
 
 #: tformlieux.menuitem3.caption
+msgctxt "tformlieux.menuitem3.caption"
 msgid "Ville"
 msgstr ""
 
 #: tformlieux.menuitem4.caption
+msgctxt "tformlieux.menuitem4.caption"
 msgid "Région"
 msgstr ""
 
 #: tformlieux.menuitem5.caption
+msgctxt "tformlieux.menuitem5.caption"
 msgid "Province"
 msgstr ""
 
 #: tformlieux.menuitem6.caption
+msgctxt "tformlieux.menuitem6.caption"
 msgid "Pays"
 msgstr ""
 
@@ -1790,6 +1840,34 @@ msgctxt "TFORMUTILISATION.BUTTON1.CAPTION"
 msgid "Ok"
 msgstr ""
 
+#: tfradate.edtdateforpresentation.hint
+msgid "['bet.' or 'ca.' or '<' or 'from' or '>'][YYYYMMDD or YYYY.MM.DD or YYYY/MM/DD]['til' or 'and' or 'or'][YYYYMMDD or YYYY.MM.DD or YYYY/MM/DD]"
+msgstr ""
+
+#: tfradate.edtdateforpresentation.texthint
+msgid "<Date>"
+msgstr ""
+
+#: tfradate.edtdateforsorting.hint
+msgid "[YYYYMMDD or YYYY.MM.DD or YYYY/MM/DD]"
+msgstr ""
+
+#: tfradate.edtdateforsorting.texthint
+msgid "<Date for Sorting>"
+msgstr ""
+
+#: tfradate.lbldate.caption
+msgid "Date:"
+msgstr ""
+
+#: tfradate.lblforpresentation.caption
+msgid "for presentation:"
+msgstr ""
+
+#: tfradate.lblforsorting.caption
+msgid "for sorting:"
+msgstr ""
+
 #: tfradocuments.actdocumentsadd.caption
 msgctxt "TFRADOCUMENTS.ACTDOCUMENTSADD.CAPTION"
 msgid "&Add"
@@ -1939,6 +2017,16 @@ msgctxt "TFRAME1.MNICITATIONEDIT.CAPTION"
 msgid "&Modifier"
 msgstr ""
 
+#: tfraphrase.lblphrase.caption
+msgctxt "tfraphrase.lblphrase.caption"
+msgid "Phrase:"
+msgstr ""
+
+#: tfraphrase.lblphrasedefault.caption
+msgctxt "tfraphrase.lblphrasedefault.caption"
+msgid "(default)"
+msgstr ""
+
 #: tfrmancestors.actancestorsexpand.caption
 msgctxt "tfrmancestors.actancestorsexpand.caption"
 msgid "E&xpand"
@@ -2080,6 +2168,10 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
+#: tfrmeditdocuments.caption
+msgid "Modification de document"
+msgstr ""
+
 #: tfrmeditdocuments.chbdocumentprefered.caption
 msgctxt "TFRMEDITDOCUMENTS.CHBDOCUMENTPREFERED.CAPTION"
 msgid "Prefered"
@@ -2135,14 +2227,13 @@ msgctxt "TFRMEDITDOCUMENTS.OPENDIALOG.TITLE"
 msgid "Sélection de l'image"
 msgstr ""
 
-#: tfrmeditevents.ajouter2.caption
-msgctxt "TFRMEDITEVENTS.AJOUTER2.CAPTION"
-msgid "&Ajouter"
-msgstr ""
-
 #: tfrmeditevents.ajoutertemoin.caption
 msgctxt "TFRMEDITEVENTS.AJOUTERTEMOIN.CAPTION"
 msgid "&Ajouter"
+msgstr ""
+
+#: tfrmeditevents.caption
+msgid "Edit Events"
 msgstr ""
 
 #: tfrmeditevents.l0.hint
@@ -2210,19 +2301,9 @@ msgctxt "TFRMEDITEVENTS.LABEL1.CAPTION"
 msgid "Type:"
 msgstr ""
 
-#: tfrmeditevents.label10.caption
-msgctxt "TFRMEDITEVENTS.LABEL10.CAPTION"
-msgid "de tri:"
-msgstr ""
-
 #: tfrmeditevents.label11.caption
 msgctxt "TFRMEDITEVENTS.LABEL11.CAPTION"
 msgid "Témoins:"
-msgstr ""
-
-#: tfrmeditevents.label12.caption
-msgctxt "TFRMEDITEVENTS.LABEL12.CAPTION"
-msgid "Documents:"
 msgstr ""
 
 #: tfrmeditevents.label3.caption
@@ -2230,39 +2311,14 @@ msgctxt "TFRMEDITEVENTS.LABEL3.CAPTION"
 msgid "Mémo:"
 msgstr ""
 
-#: tfrmeditevents.label4.caption
-msgctxt "TFRMEDITEVENTS.LABEL4.CAPTION"
-msgid "Phrase:"
-msgstr ""
-
-#: tfrmeditevents.label5.caption
-msgctxt "TFRMEDITEVENTS.LABEL5.CAPTION"
-msgid "Date"
-msgstr ""
-
-#: tfrmeditevents.label6.caption
-msgctxt "TFRMEDITEVENTS.LABEL6.CAPTION"
-msgid "(défaut)"
-msgstr ""
-
 #: tfrmeditevents.label8.caption
 msgctxt "TFRMEDITEVENTS.LABEL8.CAPTION"
 msgid "Lieu:"
 msgstr ""
 
-#: tfrmeditevents.label9.caption
-msgctxt "TFRMEDITEVENTS.LABEL9.CAPTION"
-msgid "de présentation:"
-msgstr ""
-
 #: tfrmeditevents.menuitem1.caption
 msgctxt "TFRMEDITEVENTS.MENUITEM1.CAPTION"
 msgid "&Témoins"
-msgstr ""
-
-#: tfrmeditevents.menuitem10.caption
-msgctxt "TFRMEDITEVENTS.MENUITEM10.CAPTION"
-msgid "Visualiser"
 msgstr ""
 
 #: tfrmeditevents.menuitem11.caption
@@ -2295,33 +2351,9 @@ msgctxt "TFRMEDITEVENTS.MENUITEM5.CAPTION"
 msgid "&Supprimer"
 msgstr ""
 
-#: tfrmeditevents.modifier2.caption
-msgctxt "TFRMEDITEVENTS.MODIFIER2.CAPTION"
-msgid "&Modifier"
-msgstr ""
-
 #: tfrmeditevents.modifiertemoin.caption
 msgctxt "TFRMEDITEVENTS.MODIFIERTEMOIN.CAPTION"
 msgid "&Modifier"
-msgstr ""
-
-#: tfrmeditevents.panel1.caption
-msgid "Panel1"
-msgstr ""
-
-#: tfrmeditevents.pd.hint
-msgctxt "TFRMEDITEVENTS.PD.HINT"
-msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
-msgstr ""
-
-#: tfrmeditevents.pd.text
-msgctxt "TFRMEDITEVENTS.PD.TEXT"
-msgid "PD"
-msgstr ""
-
-#: tfrmeditevents.pd2.text
-msgctxt "TFRMEDITEVENTS.PD2.TEXT"
-msgid "PD2"
 msgstr ""
 
 #: tfrmeditevents.role.text
@@ -2329,49 +2361,9 @@ msgctxt "TFRMEDITEVENTS.ROLE.TEXT"
 msgid "Role"
 msgstr ""
 
-#: tfrmeditevents.sd.hint
-msgctxt "TFRMEDITEVENTS.SD.HINT"
-msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
-msgstr ""
-
-#: tfrmeditevents.sd.text
-msgctxt "TFRMEDITEVENTS.SD.TEXT"
-msgid "SD"
-msgstr ""
-
-#: tfrmeditevents.sd2.text
-msgctxt "TFRMEDITEVENTS.SD2.TEXT"
-msgid "SD2"
-msgstr ""
-
-#: tfrmeditevents.supprimer2.caption
-msgctxt "TFRMEDITEVENTS.SUPPRIMER2.CAPTION"
-msgid "&Supprimer"
-msgstr ""
-
 #: tfrmeditevents.supprimertemoin.caption
 msgctxt "TFRMEDITEVENTS.SUPPRIMERTEMOIN.CAPTION"
 msgid "&Supprimer"
-msgstr ""
-
-#: tfrmeditevents.tableauexhibits.columns[0].title.caption
-msgctxt "tfrmeditevents.tableauexhibits.columns[0].title.caption"
-msgid "*"
-msgstr ""
-
-#: tfrmeditevents.tableauexhibits.columns[1].title.caption
-msgctxt "tfrmeditevents.tableauexhibits.columns[1].title.caption"
-msgid "Titre"
-msgstr ""
-
-#: tfrmeditevents.tableauexhibits.columns[2].title.caption
-msgctxt "tfrmeditevents.tableauexhibits.columns[2].title.caption"
-msgid "Type"
-msgstr ""
-
-#: tfrmeditevents.tableauexhibits.columns[3].title.caption
-msgctxt "tfrmeditevents.tableauexhibits.columns[3].title.caption"
-msgid "Format"
 msgstr ""
 
 #: tfrmeditevents.tableautemoins.columns[0].title.caption
@@ -2425,26 +2417,6 @@ msgctxt "TFRMEDITNAME.EDTNAME.TEXT"
 msgid "edtName"
 msgstr ""
 
-#: tfrmeditname.lbldate.caption
-msgctxt "TFRMEDITNAME.LBLDATE.CAPTION"
-msgid "Date"
-msgstr ""
-
-#: tfrmeditname.lbldefault.caption
-msgctxt "TFRMEDITNAME.LBLDEFAULT.CAPTION"
-msgid "(défaut)"
-msgstr ""
-
-#: tfrmeditname.lblforpresentation.caption
-msgctxt "TFRMEDITNAME.LBLFORPRESENTATION.CAPTION"
-msgid "de présentation:"
-msgstr ""
-
-#: tfrmeditname.lblforsorting.caption
-msgctxt "TFRMEDITNAME.LBLFORSORTING.CAPTION"
-msgid "de tri:"
-msgstr ""
-
 #: tfrmeditname.lblindividuum.caption
 msgctxt "TFRMEDITNAME.LBLINDIVIDUUM.CAPTION"
 msgid "Individu:"
@@ -2458,11 +2430,6 @@ msgstr ""
 #: tfrmeditname.lblname8.caption
 msgctxt "TFRMEDITNAME.LBLNAME8.CAPTION"
 msgid "Nom:"
-msgstr ""
-
-#: tfrmeditname.lblphrase.caption
-msgctxt "TFRMEDITNAME.LBLPHRASE.CAPTION"
-msgid "Phrase:"
 msgstr ""
 
 #: tfrmeditname.lbltype.caption
@@ -2543,36 +2510,6 @@ msgstr ""
 #: tfrmeditname.menuitem9.caption
 msgctxt "TFRMEDITNAME.MENUITEM9.CAPTION"
 msgid "&Citations"
-msgstr ""
-
-#: tfrmeditname.pd.hint
-msgctxt "TFRMEDITNAME.PD.HINT"
-msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
-msgstr ""
-
-#: tfrmeditname.pd.text
-msgctxt "TFRMEDITNAME.PD.TEXT"
-msgid "PD"
-msgstr ""
-
-#: tfrmeditname.pd2.text
-msgctxt "TFRMEDITNAME.PD2.TEXT"
-msgid "PD2"
-msgstr ""
-
-#: tfrmeditname.sd.hint
-msgctxt "TFRMEDITNAME.SD.HINT"
-msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
-msgstr ""
-
-#: tfrmeditname.sd.text
-msgctxt "TFRMEDITNAME.SD.TEXT"
-msgid "SD"
-msgstr ""
-
-#: tfrmeditname.sd2.text
-msgctxt "TFRMEDITNAME.SD2.TEXT"
-msgid "SD2"
 msgstr ""
 
 #: tfrmeditname.tableaunoms.columns[0].title.caption
@@ -2686,6 +2623,154 @@ msgstr ""
 #: tfrmeditparents.x.hint
 msgctxt "tfrmeditparents.x.hint"
 msgid "Prefered"
+msgstr ""
+
+#: tfrmeditsource.ajouter1.caption
+msgctxt "tfrmeditsource.ajouter1.caption"
+msgid "&Ajouter"
+msgstr ""
+
+#: tfrmeditsource.caption
+msgid "Modification de source"
+msgstr ""
+
+#: tfrmeditsource.edtsourcedescription.text
+msgctxt "tfrmeditsource.edtsourcedescription.text"
+msgid "edtSourceDescription"
+msgstr ""
+
+#: tfrmeditsource.edtsourcetitle.text
+msgctxt "tfrmeditsource.edtsourcetitle.text"
+msgid "edtSourceTitle"
+msgstr ""
+
+#: tfrmeditsource.lblrepository.caption
+msgctxt "tfrmeditsource.lblrepository.caption"
+msgid "Repository:"
+msgstr ""
+
+#: tfrmeditsource.lblsourcedescription.caption
+msgctxt "tfrmeditsource.lblsourcedescription.caption"
+msgid "Description:"
+msgstr ""
+
+#: tfrmeditsource.lblsourceinformation.caption
+msgctxt "tfrmeditsource.lblsourceinformation.caption"
+msgid "Mémo:"
+msgstr ""
+
+#: tfrmeditsource.lblsourcequality.caption
+msgctxt "tfrmeditsource.lblsourcequality.caption"
+msgid "Qualité par défaut:"
+msgstr ""
+
+#: tfrmeditsource.lblsourcetitle.caption
+msgctxt "tfrmeditsource.lblsourcetitle.caption"
+msgid "Title:"
+msgstr ""
+
+#: tfrmeditsource.mnirepositories.caption
+msgctxt "tfrmeditsource.mnirepositories.caption"
+msgid "&Dépots"
+msgstr ""
+
+#: tfrmeditsource.mnirepositoryadd.caption
+msgctxt "tfrmeditsource.mnirepositoryadd.caption"
+msgid "&Ajouter"
+msgstr ""
+
+#: tfrmeditsource.mnirepositorydelete.caption
+msgctxt "tfrmeditsource.mnirepositorydelete.caption"
+msgid "&Supprimer"
+msgstr ""
+
+#: tfrmeditsource.mnirepositoryedit.caption
+msgctxt "tfrmeditsource.mnirepositoryedit.caption"
+msgid "&Modifier"
+msgstr ""
+
+#: tfrmeditsource.mnisourceclose.caption
+msgctxt "tfrmeditsource.mnisourceclose.caption"
+msgid "&Quit"
+msgstr ""
+
+#: tfrmeditsource.mnisourcerepeat.caption
+msgctxt "tfrmeditsource.mnisourcerepeat.caption"
+msgid "Repeat"
+msgstr ""
+
+#: tfrmeditsource.modifier1.caption
+msgctxt "tfrmeditsource.modifier1.caption"
+msgid "&Modifier"
+msgstr ""
+
+#: tfrmeditsource.supprimer1.caption
+msgctxt "tfrmeditsource.supprimer1.caption"
+msgid "&Supprimer"
+msgstr ""
+
+#: tfrmeditsource.tableaudepots.columns[0].title.caption
+msgctxt "tfrmeditsource.tableaudepots.columns[0].title.caption"
+msgid "Dépot"
+msgstr ""
+
+#: tfrmeditsource.tableaudepots.columns[1].title.caption
+msgctxt "tfrmeditsource.tableaudepots.columns[1].title.caption"
+msgid "Mémo"
+msgstr ""
+
+#: tfrmeditsource.tableaudepots.columns[2].title.caption
+msgctxt "tfrmeditsource.tableaudepots.columns[2].title.caption"
+msgid "# dépot"
+msgstr ""
+
+#: tfrmedittype.button1.caption
+msgctxt "tfrmedittype.button1.caption"
+msgid "Ok"
+msgstr ""
+
+#: tfrmedittype.button2.caption
+msgctxt "tfrmedittype.button2.caption"
+msgid "Annul."
+msgstr ""
+
+#: tfrmedittype.caption
+msgid "Modification de type d'événement"
+msgstr ""
+
+#: tfrmedittype.label10.caption
+msgctxt "tfrmedittype.label10.caption"
+msgid "Titre:"
+msgstr ""
+
+#: tfrmedittype.label11.caption
+msgctxt "tfrmedittype.label11.caption"
+msgid "Type:"
+msgstr ""
+
+#: tfrmedittype.label3.caption
+msgctxt "tfrmedittype.label3.caption"
+msgid "Phrase:"
+msgstr ""
+
+#: tfrmedittype.menuitem1.caption
+msgctxt "tfrmedittype.menuitem1.caption"
+msgid "&Quit"
+msgstr ""
+
+#: tfrmedittype.menuitem2.caption
+msgctxt "tfrmedittype.menuitem2.caption"
+msgid "Repeat"
+msgstr ""
+
+#: tfrmedittype.no.text
+msgctxt "tfrmedittype.no.text"
+msgid "No"
+msgstr ""
+
+#: tfrmedittype.t.text
+msgctxt "tfrmedittype.t.text"
+msgid "T"
 msgstr ""
 
 #: tfrmeditwitness.label2.caption
@@ -2803,6 +2888,31 @@ msgstr ""
 
 #: tfrmevents.tlbevents.caption
 msgid "tlbEvents"
+msgstr ""
+
+#: tfrmeventusage.caption
+msgctxt "tfrmeventusage.caption"
+msgid "Utilisation"
+msgstr ""
+
+#: tfrmeventusage.tableauutilisation.columns[0].title.caption
+msgctxt "tfrmeventusage.tableauutilisation.columns[0].title.caption"
+msgid "Événement"
+msgstr ""
+
+#: tfrmeventusage.tableauutilisation.columns[1].title.caption
+msgctxt "tfrmeventusage.tableauutilisation.columns[1].title.caption"
+msgid "Témoin"
+msgstr ""
+
+#: tfrmeventusage.tableauutilisation.columns[2].title.caption
+msgctxt "tfrmeventusage.tableauutilisation.columns[2].title.caption"
+msgid "#"
+msgstr ""
+
+#: tfrmeventusage.tableauutilisation.columns[3].title.caption
+msgctxt "tfrmeventusage.tableauutilisation.columns[3].title.caption"
+msgid "Date"
 msgstr ""
 
 #: tfrmexplorer.actexplorerorderbybirth.caption
@@ -3027,7 +3137,117 @@ msgid "tlbParents"
 msgstr ""
 
 #: tfrmparents.toolbutton1.caption
+msgctxt "tfrmparents.toolbutton1.caption"
 msgid "ToolButton1"
+msgstr ""
+
+#: tfrmplace.actplacedelete.caption
+msgid "actPlaceDelete"
+msgstr ""
+
+#: tfrmplace.actplacemerge.caption
+msgctxt "tfrmplace.actplacemerge.caption"
+msgid "&Merge"
+msgstr ""
+
+#: tfrmplace.actplacesort.caption
+msgid "Sort By ..."
+msgstr ""
+
+#: tfrmplace.actplacesortbycountry.caption
+msgid "by countr&y"
+msgstr ""
+
+#: tfrmplace.actplacesortbycounty.caption
+msgid "by &state"
+msgstr ""
+
+#: tfrmplace.actplacesortbydetail.caption
+msgctxt "tfrmplace.actplacesortbydetail.caption"
+msgid "by &detail"
+msgstr ""
+
+#: tfrmplace.actplacesortbyplace.caption
+msgid "by &city"
+msgstr ""
+
+#: tfrmplace.actplacesortbyregion.caption
+msgid "by &region"
+msgstr ""
+
+#: tfrmplace.actplaceusage.caption
+msgid "actPlaceUsage"
+msgstr ""
+
+#: tfrmplace.btnplaceok.caption
+msgctxt "tfrmplace.btnplaceok.caption"
+msgid "Ok"
+msgstr ""
+
+#: tfrmplace.caption
+msgid "Lieux"
+msgstr ""
+
+#: tfrmplace.combobox1.text
+msgid "ComboBox1"
+msgstr ""
+
+#: tfrmplace.edto.text
+msgid "edtO"
+msgstr ""
+
+#: tfrmplace.tblplace.columns[0].title.caption
+msgctxt "tfrmplace.tblplace.columns[0].title.caption"
+msgid "#"
+msgstr ""
+
+#: tfrmplace.tblplace.columns[1].title.caption
+msgid "Article"
+msgstr ""
+
+#: tfrmplace.tblplace.columns[2].title.caption
+msgctxt "tfrmplace.tblplace.columns[2].title.caption"
+msgid "Détail"
+msgstr ""
+
+#: tfrmplace.tblplace.columns[3].title.caption
+msgctxt "tfrmplace.tblplace.columns[3].title.caption"
+msgid "Ville"
+msgstr ""
+
+#: tfrmplace.tblplace.columns[4].title.caption
+msgctxt "tfrmplace.tblplace.columns[4].title.caption"
+msgid "Région"
+msgstr ""
+
+#: tfrmplace.tblplace.columns[5].title.caption
+msgctxt "tfrmplace.tblplace.columns[5].title.caption"
+msgid "Province"
+msgstr ""
+
+#: tfrmplace.tblplace.columns[6].title.caption
+msgctxt "tfrmplace.tblplace.columns[6].title.caption"
+msgid "Pays"
+msgstr ""
+
+#: tfrmplace.tblplace.columns[7].title.caption
+msgctxt "tfrmplace.tblplace.columns[7].title.caption"
+msgid "Utilisation"
+msgstr ""
+
+#: tfrmplace.toolbar1.caption
+msgctxt "tfrmplace.toolbar1.caption"
+msgid "ToolBar1"
+msgstr ""
+
+#: tfrmplace.toolbutton1.caption
+msgctxt "tfrmplace.toolbutton1.caption"
+msgid "ToolButton1"
+msgstr ""
+
+#: tfrmplace.toolbutton4.caption
+msgctxt "tfrmplace.toolbutton4.caption"
+msgid "ToolButton4"
 msgstr ""
 
 #: tfrmrepository.button1.caption
@@ -3069,6 +3289,31 @@ msgctxt "TFRMSHOWIMAGE.MNIQUIT.CAPTION"
 msgid "&Quit"
 msgstr ""
 
+#: tfrmshowusage.caption
+msgctxt "tfrmshowusage.caption"
+msgid "Utilisation"
+msgstr ""
+
+#: tfrmshowusage.tblusage.columns[0].title.caption
+msgctxt "tfrmshowusage.tblusage.columns[0].title.caption"
+msgid "Événement"
+msgstr ""
+
+#: tfrmshowusage.tblusage.columns[1].title.caption
+msgctxt "tfrmshowusage.tblusage.columns[1].title.caption"
+msgid "Témoin"
+msgstr ""
+
+#: tfrmshowusage.tblusage.columns[2].title.caption
+msgctxt "tfrmshowusage.tblusage.columns[2].title.caption"
+msgid "#"
+msgstr ""
+
+#: tfrmshowusage.tblusage.columns[3].title.caption
+msgctxt "tfrmshowusage.tblusage.columns[3].title.caption"
+msgid "Date"
+msgstr ""
+
 #: tfrmsiblings.menuitem1.caption
 msgctxt "TFRMSIBLINGS.MENUITEM1.CAPTION"
 msgid "&Go to"
@@ -3087,6 +3332,101 @@ msgstr ""
 #: tfrmsiblings.tlbsiblings.caption
 msgctxt "tfrmsiblings.tlbsiblings.caption"
 msgid "Siblings"
+msgstr ""
+
+#: tfrmsources.actsourceadd.caption
+msgid "actSourceAdd"
+msgstr ""
+
+#: tfrmsources.actsourcedelete.caption
+msgid "actSourceDelete"
+msgstr ""
+
+#: tfrmsources.actsourceedit.caption
+msgid "actSourceEdit"
+msgstr ""
+
+#: tfrmsources.actsourcesortnumber.caption
+msgid "&by Number"
+msgstr ""
+
+#: tfrmsources.actsourcesorttitle.caption
+msgctxt "tfrmsources.actsourcesorttitle.caption"
+msgid "by &Title"
+msgstr ""
+
+#: tfrmsources.actsourceusage.caption
+msgctxt "tfrmsources.actsourceusage.caption"
+msgid "&Usage"
+msgstr ""
+
+#: tfrmsources.button1.caption
+msgctxt "tfrmsources.button1.caption"
+msgid "Ok"
+msgstr ""
+
+#: tfrmsources.mnisourceadd.caption
+msgid "&Add ..."
+msgstr ""
+
+#: tfrmsources.mnisourcedelete.caption
+msgctxt "tfrmsources.mnisourcedelete.caption"
+msgid "&Delete"
+msgstr ""
+
+#: tfrmsources.mnisourceedit.caption
+msgid "&Edit ..."
+msgstr ""
+
+#: tfrmsources.mnisourcesort.caption
+msgctxt "tfrmsources.mnisourcesort.caption"
+msgid "&Sort"
+msgstr ""
+
+#: tfrmsources.mnisourcesortnumber.caption
+msgid "by &Number"
+msgstr ""
+
+#: tfrmsources.mnisourcesorttitle.caption
+msgctxt "tfrmsources.mnisourcesorttitle.caption"
+msgid "by &Title"
+msgstr ""
+
+#: tfrmsources.mnisourceusage.caption
+msgctxt "tfrmsources.mnisourceusage.caption"
+msgid "&Usage"
+msgstr ""
+
+#: tfrmsources.tableausources.columns[0].title.caption
+msgctxt "tfrmsources.tableausources.columns[0].title.caption"
+msgid "#"
+msgstr ""
+
+#: tfrmsources.tableausources.columns[1].title.caption
+msgctxt "tfrmsources.tableausources.columns[1].title.caption"
+msgid "Title"
+msgstr ""
+
+#: tfrmsources.tableausources.columns[2].title.caption
+msgctxt "tfrmsources.tableausources.columns[2].title.caption"
+msgid "Description"
+msgstr ""
+
+#: tfrmsources.tableausources.columns[3].title.caption
+msgid "Memo"
+msgstr ""
+
+#: tfrmsources.tableausources.columns[4].title.caption
+msgid "Author"
+msgstr ""
+
+#: tfrmsources.tableausources.columns[5].title.caption
+msgctxt "tfrmsources.tableausources.columns[5].title.caption"
+msgid "Q"
+msgstr ""
+
+#: tfrmsources.tableausources.columns[6].title.caption
+msgid "Usage"
 msgstr ""
 
 #: tfrmstemmamainform.actadd.caption
@@ -3331,6 +3671,7 @@ msgid "Event-Types"
 msgstr ""
 
 #: tfrmstemmamainform.actutilsplaces.caption
+msgctxt "tfrmstemmamainform.actutilsplaces.caption"
 msgid "Places"
 msgstr ""
 
@@ -3401,6 +3742,11 @@ msgstr ""
 #: tfrmstemmamainform.btnseparator2.caption
 msgctxt "tfrmstemmamainform.btnseparator2.caption"
 msgid "btnSeparator2"
+msgstr ""
+
+#: tfrmstemmamainform.caption
+msgctxt "tfrmstemmamainform.caption"
+msgid "Stemma"
 msgstr ""
 
 #: tfrmstemmamainform.checkbox1.caption

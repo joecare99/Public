@@ -2,10 +2,11 @@ program Prj_TestCrt2;
 
 {$IFDEF FPC}
   {$MODE Delphi}
+{$ELSE}
+  {$E exe}
 {$ENDIF}
 
  {$APPTYPE CONSOLE}
-{$E exe}
 
 uses
   {$IFDEF FPC}

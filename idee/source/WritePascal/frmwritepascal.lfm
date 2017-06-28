@@ -1,0 +1,115 @@
+object Form1: TForm1
+  Left = 1087
+  Height = 367
+  Top = 94
+  Width = 458
+  ActiveControl = Edit1
+  Caption = 'Form1'
+  ClientHeight = 367
+  ClientWidth = 458
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  Visible = False
+  object Edit1: TEdit
+    Left = 14
+    Height = 23
+    Top = 10
+    Width = 130
+    OnChange = Edit1Change
+    TabOrder = 0
+    Text = 'Pascal'
+  end
+  object Memo1: TMemo
+    Left = 224
+    Height = 344
+    Top = 8
+    Width = 224
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Lines.Strings = (
+      'Memo1'
+    )
+    ScrollBars = ssAutoBoth
+    TabOrder = 1
+  end
+  object Label1: TLabel
+    Left = 17
+    Height = 15
+    Top = 42
+    Width = 34
+    Caption = 'Label1'
+    ParentColor = False
+  end
+  object btnPrintString: TButton
+    Left = 152
+    Height = 25
+    Top = 10
+    Width = 27
+    Caption = 'F'
+    OnClick = btnPrintStringClick
+    TabOrder = 2
+  end
+  object Button2: TButton
+    Left = 137
+    Height = 25
+    Top = 136
+    Width = 75
+    Caption = '>'
+    OnClick = Button2Click
+    TabOrder = 3
+  end
+  object Button3: TButton
+    Left = 136
+    Height = 25
+    Top = 192
+    Width = 75
+    Caption = '<'
+    OnClick = Button3Click
+    TabOrder = 4
+  end
+  object PaintBox1: TPaintBox
+    Left = 11
+    Height = 48
+    Top = 80
+    Width = 201
+    OnPaint = PaintBox1Paint
+  end
+  object PaintBox2: TPaintBox
+    Left = 11
+    Height = 45
+    Top = 227
+    Width = 204
+    OnPaint = PaintBox2Paint
+  end
+  object SpeedButton1: TSpeedButton
+    Left = 144
+    Height = 22
+    Top = 40
+    Width = 23
+    OnClick = SpeedButton1Click
+  end
+  object SpeedButton2: TSpeedButton
+    Left = 172
+    Height = 22
+    Top = 42
+    Width = 23
+    OnClick = SpeedButton2Click
+  end
+  object FontDialog1: TFontDialog
+    Font.CharSet = ANSI_CHARSET
+    Font.Height = -7
+    Font.Name = 'Small Fonts'
+    MinFontSize = 0
+    MaxFontSize = 0
+    left = 64
+    top = 24
+  end
+  object SavePictureDialog1: TSavePictureDialog
+    left = 136
+    top = 48
+  end
+  object OpenPictureDialog1: TOpenPictureDialog
+    left = 168
+    top = 48
+  end
+end

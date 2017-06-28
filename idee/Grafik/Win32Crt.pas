@@ -27,14 +27,15 @@ USES
 {$IFnDEF FPC}
   Windows, Messages,
 {$ELSE}
+Video,
 {$IFDEF MSWINDOWS}
-windows,
+Windows,
 {$ELSE}
 BaseUnix ,
 unix,
-LMessages,
 termio,
 crt,
+LMessages,
 {$ENDIF}
 {$ENDIF}
   classes,
@@ -1443,6 +1444,8 @@ begin
      FkeyBufferOutPtr := (fKeyBufferOutPtr +1) mod (high(FKeyBuffer)+1);
       result := FKeyBuffer[fKeyBufferOutPtr];
     end
+  else
+    result := #0;
 end;
 
 function TConsole.timagesize(ir: TRect): integer;

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Stemma"><module name="untGedComExImport"><short>Unit containing the Class for GedCom Im- and Export</short><element name="TClsGedCom"><short>Class For Gedcom Im- ans Export</short>
+      </element><element name="TClsGedCom.FStrings"><short>TStrings Storage for the GedCom-Datafile     </short>
+      </element><element name="TClsGedCom.LoadFromFile"><short>Load the Gedcom - File Auto-Charset</short>
+      </element><element name="TClsGedCom.LoadFromStream"><short>Load the Gedcom - File Auto-Charset</short>
+      </element><element name="TClsGedCom.SaveToFile"><short>Saves the Data to a Gedcom File </short>
+      </element><element name="TClsGedCom.WriteToStream"><short>Saves the Data to a Gedcom File </short>
+      </element><element name="TClsGedCom.ParseData"><short>Parse GedCom-Data from Stringlist to Database </short>
+      </element><element name="TClsGedCom.GenerateData"><short>Generate GedCom Data from DB</short>
+      <descr>1. Filter Data / 
+2. Export Header
+2.1 Prepare List of Source/Citaton
+3. Export all Individuals in filter
+3.1   For each Ind get single events
+3.1.1 For Each event get the LInks
+4. Export Families
+5. Places
+6. Citation
+7. Sources
+
+
+   </descr>
+      </element><element name="TenumGedComIDTypes.eGCIT_Individual"><short>GedCom-Individual</short>
+      </element><element name="TenumGedComIDTypes"><short>Enumeration of Possible ID in GedCom</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

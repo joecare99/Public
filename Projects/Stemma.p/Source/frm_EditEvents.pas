@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Grids, Menus, FMUtils, fra_Citations, fra_Documents, StrUtils, LCLType,
-  Buttons, Spin, ExtCtrls, IniFiles, Process,fra_Phrase, fra_Date;
+  Buttons, Spin, ExtCtrls, fra_Phrase, fra_Date;
 
 type
  enumEventEditType = (
@@ -99,7 +99,7 @@ implementation
 
 uses
   frm_Events, frm_Main, dm_GenData, frm_Explorer, frm_EditWitness,
-  frm_Documents, frm_ShowImage, frm_Names, frm_EditDocuments, cls_Translation;
+  frm_Names, cls_Translation;
 
 
 
@@ -278,6 +278,7 @@ begin
         // Mettre le bon Y.ItemIndex
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(100);
+        dmGenData.Query1.Close;
         dmGenData.Query1.SQL.Text:='SELECT E.no FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no WHERE Y.Y=''B'' AND E.X=1 AND W.X=1 AND W.I='+
            frmStemmaMainForm.sID;
         dmGenData.Query1.Open;
@@ -291,6 +292,7 @@ begin
         // Mettre le bon Y.ItemIndex
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(110);
+        dmGenData.Query1.Close;
         dmGenData.Query1.SQL.Text:='SELECT E.no FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no WHERE Y.Y=''B'' AND E.X=1 AND W.X=1 AND W.I='+
            frmStemmaMainForm.sID;
         dmGenData.Query1.Open;
@@ -305,6 +307,7 @@ begin
         // Mettre le bon Y.ItemIndex
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(200);
+        dmGenData.Query1.Close;
         dmGenData.Query1.SQL.Text:='SELECT E.no FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no WHERE Y.Y=''D'' AND E.X=1 AND W.X=1 AND W.I='+
            frmStemmaMainForm.sID;
         dmGenData.Query1.Open;
@@ -318,6 +321,7 @@ begin
         // Mettre le bon Y.ItemIndex
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(210);
+        dmGenData.Query1.Close;
         dmGenData.Query1.SQL.Text:='SELECT E.no FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no WHERE Y.Y=''D'' AND E.X=1 AND W.X=1 AND W.I='+
            frmStemmaMainForm.sID;
         dmGenData.Query1.Open;
@@ -328,6 +332,7 @@ begin
      end;
      end; {Case}
      // Trouver le type de témoin par défaut
+     dmGenData.Query1.Close;
      dmGenData.Query1.SQL.text:='SELECT Y.R FROM Y WHERE Y.no=:idType';
      dmGenData.Query1.ParamByName('idType').AsInteger:=idEventType;
      dmGenData.Query1.Open;
@@ -356,6 +361,7 @@ begin
   end
   else
      begin
+     dmGenData.Query1.Close;
      dmGenData.Query1.SQL.text:='SELECT E.no, E.Y, E.L, E.M, E.X, E.PD, E.SD, L.L FROM E JOIN L ON L.no=E.L WHERE E.no=:idEvent';
      dmGenData.Query1.ParamByName('idEvent').AsInteger:=frmEvents.idEvent;
      dmGenData.Query1.Open;
@@ -378,8 +384,9 @@ begin
      // Aller chercher P, Role et témoins de W
      phrase:=PopulateTemoins(no.Text);
   end;
+  dmGenData.Query2.Close;
   dmGenData.Query2.SQL.text:='SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.no=:idType';
-  dmGenData.Query1.ParamByName('idType').AsInteger:=idEventType;
+  dmGenData.Query2.ParamByName('idType').AsInteger:=idEventType;
   dmGenData.Query2.Open;
   dmGenData.Query2.First;
   if length(phrase)=0 then

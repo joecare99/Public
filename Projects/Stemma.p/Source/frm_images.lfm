@@ -10,7 +10,6 @@ object FormImage: TFormImage
   OnClose = FormClose
   OnResize = FormResize
   OnShow = FormShow
-  LCLVersion = '1.6.4.0'
   Visible = False
   object Im: TImage
     Left = 0

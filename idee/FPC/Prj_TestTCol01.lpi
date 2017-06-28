@@ -11,9 +11,12 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="Prj_TestCrt2"/>
+      <Title Value="Prj_TestTCol01"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
+      <Resources Count="1">
+        <Resource_0 FileName="..\..\Glyphs\Joe_Care_h48.png" Type="RCDATA" ResourceName="JOE_CARE_H48"/>
+      </Resources>
     </General>
     <i18n>
       <EnableI18N LFM="False"/>
@@ -29,7 +32,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-            <OtherUnitFiles Value="..\grafik;..\..\Projekte\kams\Utils"/>
+            <OtherUnitFiles Value="..\source\crt;..\..\Projekte\kams\Utils"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -39,12 +42,18 @@
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <RelocatableUnit Value="True"/>
             <Checks>
               <IOChecks Value="True"/>
               <RangeChecks Value="True"/>
               <OverflowChecks Value="True"/>
               <StackChecks Value="True"/>
             </Checks>
+            <Optimizations>
+              <OptimizationLevel Value="0"/>
+            </Optimizations>
+            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
@@ -52,6 +61,7 @@
               <UseHeaptrc Value="True"/>
               <UseExternalDbgSyms Value="True"/>
             </Debugging>
+            <LinkSmart Value="True"/>
             <Options>
               <Win32>
                 <GraphicApplication Value="True"/>
@@ -74,27 +84,24 @@
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
               <AllowLabel Value="False"/>
+              <UseAnsiStrings Value="False"/>
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
-            <RelocatableUnit Value="True"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
-            <SmallerCode Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <GenerateDebugInfo Value="False"/>
-              <StripSymbols Value="True"/>
             </Debugging>
             <LinkSmart Value="True"/>
             <Options>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
+              <LinkerOptions Value="s"/>
             </Options>
           </Linking>
         </CompilerOptions>
@@ -110,21 +117,28 @@
     </RunParams>
     <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="Compatible"/>
+        <PackageName Value="LCL"/>
       </Item1>
       <Item2>
-        <PackageName Value="LCL"/>
+        <PackageName Value="Compatible"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
-        <Filename Value="Prj_TestCrt2.dpr"/>
+        <Filename Value="Prj_TestTCol01.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\source\Crt\unt_testcrt2.pas"/>
+        <Filename Value="..\source\Crt\unt_TestTCol01.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="..\source\Crt\frm_TestDrawControl.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmTestDrawControl"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
