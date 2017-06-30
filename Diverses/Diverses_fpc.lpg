@@ -27,19 +27,19 @@
         <Mode3 Name="Release"/>
         <Mode4 Name="Release-x64"/>
       </Target3>
-      <Target4 FileName="FPC\Prj_ChangeBoundLoop.lpi">
-        <BuildModes Count="3"/>
-        <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
-        <Mode3 Name="Release"/>
-      </Target4>
-      <Target5 FileName="FPC\PrjLaby4.lpi">
+      <Target4 FileName="FPC\PrjLaby4.lpi">
         <BuildModes Count="5"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
         <Mode4 Name="Release1"/>
         <Mode5 Name="Release11"/>
+      </Target4>
+      <Target5 FileName="FPC\Prj_ChangeBoundLoop.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="Default"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
       </Target5>
       <Target6 FileName="FPC\PrjTest3dPoint.lpi">
         <BuildModes Count="4"/>
@@ -68,19 +68,19 @@
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target11>
-      <Target12 FileName="FPC\ioccc_85_shapiro.lpi">
-        <BuildModes Count="3"/>
-        <Mode1 Name="Default" Compile="True"/>
-        <Mode2 Name="Debug"/>
-        <Mode3 Name="Release"/>
+      <Target12 FileName="FPC\Prj_WritePascal4.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
       </Target12>
       <Target13 FileName="FPC\prj_iopcc_Calc.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target13>
-      <Target14 FileName="FPC\Prj_WritePascal4.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
+      <Target14 FileName="FPC\ioccc_85_shapiro.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
       </Target14>
       <Target15 FileName="FPC\iopcc_v3.lpi">
         <BuildModes Count="3"/>
@@ -100,9 +100,11 @@
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target17>
-      <Target18 FileName="FPC\Prj_WritePascal4.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
+      <Target18 FileName="FPC\prj_PicPas2Po.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
       </Target18>
     </Targets>
   </ProjectGroup>

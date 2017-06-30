@@ -1,0 +1,113 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tfrmc2pasminimain.about1.caption
+msgid "&About"
+msgstr ""
+
+#: tfrmc2pasminimain.caption
+msgid "OpenC2Pas (minimalist interface - translator.pas tester)"
+msgstr ""
+
+#: tfrmc2pasminimain.copytoclipboard1.caption
+msgctxt "tfrmc2pasminimain.copytoclipboard1.caption"
+msgid "&Copy to Clipboard"
+msgstr ""
+
+#: tfrmc2pasminimain.exit1.caption
+msgid "&Exit"
+msgstr ""
+
+#: tfrmc2pasminimain.file1.caption
+msgid "&File"
+msgstr ""
+
+#: tfrmc2pasminimain.loadfromfile1.caption
+msgid "&Load From C++ File..."
+msgstr ""
+
+#: tfrmc2pasminimain.n1.caption
+msgid "&?"
+msgstr ""
+
+#: tfrmc2pasminimain.new1.caption
+msgid "&New (Empty)"
+msgstr ""
+
+#: tfrmc2pasminimain.pastecodefro1.caption
+msgid "&Paste From Clipboard"
+msgstr ""
+
+#: tfrmc2pasminimain.prefcopytoclipboard.caption
+msgctxt "tfrmc2pasminimain.prefcopytoclipboard.caption"
+msgid "&Copy to Clipboard"
+msgstr ""
+
+#: tfrmc2pasminimain.preferences1.caption
+msgid "&Preferences"
+msgstr ""
+
+#: tfrmc2pasminimain.prefselectall.caption
+msgid "&Select All"
+msgstr ""
+
+#: tfrmc2pasminimain.start1.caption
+msgid "&Start"
+msgstr ""
+
+#: tfrmc2pasminimain.tlbc2padtop.caption
+msgid "ToolBar1"
+msgstr ""
+
+#: tfrmc2pasminimain.toolbutton1.caption
+msgctxt "tfrmc2pasminimain.toolbutton1.caption"
+msgid "ToolButton1"
+msgstr ""
+
+#: tfrmc2pasminimain.toolbutton2.caption
+msgctxt "tfrmc2pasminimain.toolbutton2.caption"
+msgid "ToolButton2"
+msgstr ""
+
+#: tfrmc2pasminimain.toolbutton3.caption
+msgctxt "tfrmc2pasminimain.toolbutton3.caption"
+msgid "ToolButton3"
+msgstr ""
+
+#: tfrmc2pasminimain.toolbutton4.caption
+msgctxt "tfrmc2pasminimain.toolbutton4.caption"
+msgid "ToolButton4"
+msgstr ""
+
+#: tfrmc2pasminimain.toolbutton5.caption
+msgid "ToolButton5"
+msgstr ""
+
+#: tfrmc2pasminimain.toolbutton6.caption
+msgctxt "tfrmc2pasminimain.toolbutton6.caption"
+msgid "ToolButton1"
+msgstr ""
+
+#: tfrmc2pasminimain.toolbutton7.caption
+msgctxt "tfrmc2pasminimain.toolbutton7.caption"
+msgid "ToolButton2"
+msgstr ""
+
+#: tfrmc2pasminimain.toolbutton8.caption
+msgctxt "tfrmc2pasminimain.toolbutton8.caption"
+msgid "ToolButton3"
+msgstr ""
+
+#: tfrmc2pasminimain.toolbutton9.caption
+msgctxt "tfrmc2pasminimain.toolbutton9.caption"
+msgid "ToolButton4"
+msgstr ""
+
+#: tfrmc2pasminimain.translate1.caption
+msgid "&Translate"
+msgstr ""
+
+#: tfrmc2pasminimain.translation2.caption
+msgid "&Save Translation..."
+msgstr ""
+

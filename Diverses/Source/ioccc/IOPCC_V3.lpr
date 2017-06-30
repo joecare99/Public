@@ -32,50 +32,6 @@ var
     end;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 var
     Hel: l = 0;
     Wor: l = d - D;
@@ -97,8 +53,6 @@ begin
     E[CA] := Z + 2;
     while (Wor <> 0) or (_fe >= Hel) do
       begin
-
-
 
         S := CA;
         CA := A;
@@ -134,15 +88,7 @@ begin
                 A := ll[H(Hel)];
           end;
 
-
-
-
-
       end;
-
-
-
-
 
     Q(d-2);
     for S := O to U - O do

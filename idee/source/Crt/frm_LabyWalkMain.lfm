@@ -1,0 +1,94 @@
+object Form1: TForm1
+  Left = 0
+  Height = 507
+  Top = 0
+  Width = 550
+  Caption = 'Form1'
+  ClientHeight = 507
+  ClientWidth = 550
+  OnCreate = FormCreate
+  Visible = False
+  object edtLognCode: TMemo
+    Left = 272
+    Height = 334
+    Top = 8
+    Width = 272
+    Lines.Strings = (
+      'edtLognCode'
+    )
+    TabOrder = 0
+  end
+  object edtDisplayIO: TMemo
+    Left = 8
+    Height = 136
+    Top = 40
+    Width = 108
+    Font.CharSet = ANSI_CHARSET
+    Font.Height = -13
+    Font.Name = 'Courier New'
+    Font.Pitch = fpFixed
+    Font.Quality = fqDraft
+    Font.Style = [fsBold]
+    Lines.Strings = (
+      '|\     /|'
+      '| \___/ |'
+      '| |\_/| |'
+      '| ||X|| |'
+      '| |/_\| |'
+      '| /   \ |'
+      '|/_____\|'
+    )
+    ParentFont = False
+    ScrollBars = ssAutoBoth
+    TabOrder = 1
+    WordWrap = False
+  end
+  object ToggleBox1: TToggleBox
+    Left = 16
+    Height = 41
+    Top = 192
+    Width = 91
+    Caption = '[Edit]'
+    Checked = True
+    OnClick = ToggleBox1Click
+    State = cbChecked
+    TabOrder = 2
+  end
+  object edtCharset: TEdit
+    Left = 8
+    Height = 23
+    Top = 8
+    Width = 207
+    TabOrder = 3
+    Text = '| \_/X><'
+  end
+  object ListBox1: TListBox
+    Left = 163
+    Height = 152
+    Top = 42
+    Width = 95
+    ItemHeight = 0
+    OnDblClick = ListBox1DblClick
+    TabOrder = 4
+  end
+  object SpeedButton1: TSpeedButton
+    Left = 128
+    Height = 22
+    Top = 96
+    Width = 23
+    OnClick = SpeedButton1Click
+  end
+  object SpeedButton2: TSpeedButton
+    Left = 240
+    Height = 22
+    Top = 204
+    Width = 23
+    OnClick = SpeedButton2Click
+  end
+  object Timer1: TTimer
+    Interval = 500
+    OnTimer = Timer1Timer
+    left = 125
+    top = 44
+  end
+end

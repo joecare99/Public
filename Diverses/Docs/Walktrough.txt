@@ -23,7 +23,7 @@ abcdefghijklmnopqrstuvwxyz
 Obfuscation Chars:
 0: 0ODCGQÖ
 1: l1I!|
-2: 2Z
+2: 2Z?
 3: 3
 5: 5S$§
 6: 6Gb
@@ -31,4 +31,6 @@ Obfuscation Chars:
 8: 8BEFHß
 9: 9g 
 :: :;
+': '"´`^
+°: °²³"^
 

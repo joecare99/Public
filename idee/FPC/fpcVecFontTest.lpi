@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="9"/>
     <PathDelim Value="\"/>
     <General>
-      <Flags>
-        <MainUnitHasCreateFormStatements Value="False"/>
-        <MainUnitHasTitleStatement Value="False"/>
-      </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="iopcc_v3"/>
-      <UseAppBundle Value="False"/>
+      <Title Value="fpcVecFontTest"/>
       <ResourceType Value="res"/>
+      <UseXPManifest Value="True"/>
+      <Icon Value="0"/>
     </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
@@ -21,12 +24,12 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+            <Filename Value="\projekte\delphi\bin\i386-win32\fpcVecFontTest"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-            <OtherUnitFiles Value="..\Source;..\Source\ioccc"/>
-            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <OtherUnitFiles Value="..\Source;..\test"/>
+            <UnitOutputDirectory Value="\projekte\delphi\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -41,15 +44,20 @@
               <OverflowChecks Value="True"/>
               <StackChecks Value="True"/>
             </Checks>
-            <VerifyObjMethodCallValidity Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <DebugInfoType Value="dsDwarf2Set"/>
               <UseHeaptrc Value="True"/>
-              <TrashVariables Value="True"/>
               <UseExternalDbgSyms Value="True"/>
             </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
           </Linking>
         </CompilerOptions>
       </Item2>
@@ -58,11 +66,11 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\fpcVecFontTest"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-            <OtherUnitFiles Value="..\Source"/>
+            <OtherUnitFiles Value="..\Source;..\test"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -98,35 +106,43 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <Units Count="4">
+    <RequiredPackages Count="3">
+      <Item1>
+        <PackageName Value="FPCUnitTestRunner"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="FCL"/>
+      </Item3>
+    </RequiredPackages>
+    <Units Count="3">
       <Unit0>
-        <Filename Value="iopcc_v3.pas"/>
+        <Filename Value="fpcVecFontTest.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Source\ioccc\unt_iopcc_btf.pas"/>
+        <Filename Value="..\Test\testvectfont.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="testVectFont"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\Source\ioccc\unt_iopcc_Commented.pas"/>
+        <Filename Value="..\source\cls_vecfont.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="cls_VecFont"/>
       </Unit2>
-      <Unit3>
-        <Filename Value="..\Source\ioccc\unt_iopcc.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="Unt_iopcc"/>
-      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\fpcVecFontTest"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-      <OtherUnitFiles Value="..\Source"/>
+      <OtherUnitFiles Value="..\Source;..\test"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Parsing>
@@ -146,17 +162,4 @@
       </Options>
     </Linking>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions Count="3">
-      <Item1>
-        <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-    </Exceptions>
-  </Debugging>
 </CONFIG>
