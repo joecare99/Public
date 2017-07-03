@@ -1,0 +1,89 @@
+object Form1: TForm1
+  Left = 0
+  Height = 640
+  Top = 0
+  Width = 789
+  Caption = 'Form1'
+  ClientHeight = 640
+  ClientWidth = 789
+  Menu = MainMenu1
+  Visible = False
+  object ScrollBox1: TScrollBox
+    Left = 0
+    Height = 503
+    Top = 114
+    Width = 789
+    HorzScrollBar.Page = 769
+    VertScrollBar.Page = 455
+    Align = alClient
+    ClientHeight = 499
+    ClientWidth = 785
+    TabOrder = 0
+    object FormPanel1: TFormPanel
+      Left = 72
+      Height = 232
+      Top = 96
+      Width = 324
+      BevelInner = bvRaised
+      ClientHeight = 232
+      ClientWidth = 324
+      TabOrder = 0
+      WireFrameMoveResize = True
+    end
+    object FormPanel2: TFormPanel
+      Left = 336
+      Height = 383
+      Top = 72
+      Width = 433
+      BevelInner = bvRaised
+      ClientHeight = 383
+      ClientWidth = 433
+      TabOrder = 1
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 617
+    Width = 789
+    Panels = <>
+  end
+  object ToolBar1: TToolBar
+    Left = 0
+    Height = 26
+    Top = 0
+    Width = 789
+    Caption = 'ToolBar1'
+    TabOrder = 2
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 50
+    Top = 26
+    Width = 789
+    Align = alTop
+    Caption = 'Panel1'
+    TabOrder = 3
+  end
+  object TabControl1: TTabControl
+    Left = 0
+    Height = 38
+    Top = 76
+    Width = 789
+    TabIndex = 0
+    Tabs.Strings = (
+      'Window1'
+      'Form1'
+    )
+    Align = alTop
+    TabOrder = 4
+  end
+  object MainMenu1: TMainMenu
+    left = 248
+    top = 111
+  end
+  object ActionList1: TActionList
+    left = 288
+    top = 111
+  end
+end
