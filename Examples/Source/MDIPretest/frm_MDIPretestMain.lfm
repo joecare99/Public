@@ -3,6 +3,7 @@ object Form1: TForm1
   Height = 640
   Top = 0
   Width = 789
+  ActiveControl = Memo1
   Caption = 'Form1'
   ClientHeight = 640
   ClientWidth = 789
@@ -20,15 +21,35 @@ object Form1: TForm1
     ClientWidth = 785
     TabOrder = 0
     object FormPanel1: TFormPanel
-      Left = 72
+      Left = 8
       Height = 232
-      Top = 96
+      Top = 0
       Width = 324
       BevelInner = bvRaised
       ClientHeight = 232
       ClientWidth = 324
       TabOrder = 0
-      WireFrameMoveResize = True
+      OnClick = FormPanel1Click
+      LockResize = True
+      object Memo1: TMemo
+        Left = 4
+        Height = 180
+        Top = 25
+        Width = 316
+        Align = alClient
+        BorderSpacing.Around = 2
+        Lines.Strings = (
+          'Memo1'
+        )
+        TabOrder = 2
+      end
+      object StatusBar2: TStatusBar
+        Left = 2
+        Height = 23
+        Top = 207
+        Width = 320
+        Panels = <>
+      end
     end
     object FormPanel2: TFormPanel
       Left = 336
@@ -38,7 +59,34 @@ object Form1: TForm1
       BevelInner = bvRaised
       ClientHeight = 383
       ClientWidth = 433
+      FullRepaint = False
       TabOrder = 1
+      object LabeledEdit1: TLabeledEdit
+        Left = 31
+        Height = 23
+        Top = 44
+        Width = 80
+        EditLabel.AnchorSideLeft.Control = LabeledEdit1
+        EditLabel.AnchorSideRight.Control = LabeledEdit1
+        EditLabel.AnchorSideRight.Side = asrBottom
+        EditLabel.AnchorSideBottom.Control = LabeledEdit1
+        EditLabel.Left = 31
+        EditLabel.Height = 15
+        EditLabel.Top = 26
+        EditLabel.Width = 80
+        EditLabel.Caption = 'LabeledEdit1'
+        EditLabel.ParentColor = False
+        TabOrder = 2
+        Text = 'LabeledEdit1'
+      end
+      object BitBtn1: TBitBtn
+        Left = 323
+        Height = 38
+        Top = 334
+        Width = 97
+        Caption = 'BitBtn1'
+        TabOrder = 3
+      end
     end
   end
   object StatusBar1: TStatusBar

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="32">
+    <Targets Count="34">
       <Target0 FileName="FPC\addrbook.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="default" Compile="True"/>
@@ -153,6 +153,14 @@
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target31>
+      <Target32 FileName="FPC\BTEK_FPL.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target32>
+      <Target33 FileName="FPC\BTEK_Test.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target33>
     </Targets>
   </ProjectGroup>
 </CONFIG>
