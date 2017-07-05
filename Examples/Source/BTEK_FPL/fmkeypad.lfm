@@ -1,0 +1,40 @@
+object Form1: TForm1
+  Left = 454
+  Height = 324
+  Top = 169
+  Width = 502
+  BorderStyle = bsDialog
+  Caption = 'Form1'
+  ClientHeight = 324
+  ClientWidth = 502
+  DefaultMonitor = dmPrimary
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  LCLVersion = '1.6.4.0'
+  object Button1: TButton
+    Left = 8
+    Height = 25
+    Top = 288
+    Width = 75
+    Caption = 'OK'
+    ModalResult = 1
+    TabOrder = 0
+  end
+  object Button2: TButton
+    Left = 416
+    Height = 25
+    Top = 288
+    Width = 75
+    Caption = 'CANCEL'
+    ModalResult = 2
+    TabOrder = 1
+  end
+  object TrackBar1: TTrackBar
+    Left = 132
+    Height = 35
+    Top = 77
+    Width = 228
+    Position = 0
+    TabOrder = 2
+  end
+end

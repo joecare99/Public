@@ -1,0 +1,127 @@
+object frmComplexFrameMain: TfrmComplexFrameMain
+  Left = 0
+  Height = 769
+  Top = 0
+  Width = 996
+  Caption = 'frmComplexFrameMain'
+  ClientHeight = 769
+  ClientWidth = 996
+  Visible = False
+  object ToolBar1: TToolBar
+    Left = 0
+    Height = 26
+    Top = 0
+    Width = 996
+    Caption = 'ToolBar1'
+    TabOrder = 0
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 746
+    Width = 996
+    Panels = <>
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 66
+    Top = 680
+    Width = 996
+    Align = alBottom
+    Caption = 'Panel1'
+    ClientHeight = 66
+    ClientWidth = 996
+    TabOrder = 2
+    object btnClose: TBitBtn
+      Left = 829
+      Height = 52
+      Top = 7
+      Width = 160
+      Align = alRight
+      BorderSpacing.Around = 6
+      DefaultCaption = True
+      Kind = bkClose
+      ModalResult = 11
+      TabOrder = 0
+    end
+    object btnCreateNewSale: TBitBtn
+      Left = 7
+      Height = 52
+      Top = 7
+      Width = 160
+      Align = alLeft
+      BorderSpacing.Around = 6
+      Caption = 'new Point of Sale'
+      OnClick = btnCreateNewSaleClick
+      TabOrder = 1
+    end
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 654
+    Top = 26
+    Width = 996
+    ActivePage = TabSheet1
+    Align = alClient
+    TabIndex = 0
+    TabOrder = 3
+    object TabSheet1: TTabSheet
+      Caption = 'TabSheet1'
+      ClientHeight = 626
+      ClientWidth = 988
+      inline Frame1_1: TfraComplexFrame
+        Height = 626
+        Width = 988
+        Align = alClient
+        ClientHeight = 626
+        ClientWidth = 988
+        inherited pnlBottom: TPanel
+          Top = 510
+          Width = 988
+          ClientWidth = 988
+          inherited pnlBottomRight0: TPanel
+            Left = 818
+          end
+          inherited pnlBottomRight1: TPanel
+            Left = 698
+            inherited Memo1: TMemo
+              Lines.Strings = (
+                'Memo1'
+              )
+            end
+          end
+          inherited pnlBottomRight2: TPanel
+            Left = 528
+          end
+          inherited pgcBottomClient: TPageControl
+            Width = 358
+          end
+        end
+        inherited pnlTop: TPanel
+          Width = 988
+          ClientWidth = 988
+          inherited Panel4: TPanel
+            Left = 818
+          end
+        end
+        inherited ToolBar1: TToolBar
+          Width = 988
+        end
+        inherited pnlClient: TPanel
+          Height = 380
+          Width = 988
+          ClientHeight = 380
+          ClientWidth = 988
+          inherited StatusBar1: TStatusBar
+            Top = 357
+            Width = 988
+          end
+          inherited StringGrid1: TStringGrid
+            Height = 357
+            Width = 988
+          end
+        end
+      end
+    end
+  end
+end

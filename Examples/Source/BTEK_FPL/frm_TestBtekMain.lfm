@@ -1,0 +1,37 @@
+object frmTestBtekMain: TfrmTestBtekMain
+  Left = 200
+  Height = 240
+  Top = 214
+  Width = 320
+  Caption = 'frmTestBtekMain'
+  ClientHeight = 240
+  ClientWidth = 320
+  LCLVersion = '1.8.0.3'
+  object Button1: TButton
+    Left = 20
+    Height = 25
+    Top = 21
+    Width = 75
+    Caption = 'Button1'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object Button2: TButton
+    Left = 21
+    Height = 25
+    Top = 58
+    Width = 75
+    Caption = 'Button2'
+    OnClick = Button2Click
+    TabOrder = 1
+  end
+  object Button3: TButton
+    Left = 24
+    Height = 25
+    Top = 96
+    Width = 75
+    Caption = 'Button3'
+    OnClick = Button3Click
+    TabOrder = 2
+  end
+end
