@@ -4,12 +4,13 @@
     <PathDelim Value="\"/>
     <Version Value="10"/>
     <BuildModes Active="Default"/>
-    <Units Count="7">
+    <Units Count="9">
       <Unit0>
         <Filename Value="Mdidemo.dpr"/>
         <IsPartOfProject Value="True"/>
+        <EditorIndex Value="3"/>
         <CursorPos X="11" Y="6"/>
-        <UsageCount Value="27"/>
+        <UsageCount Value="51"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
@@ -19,23 +20,24 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="32"/>
-        <CursorPos X="32" Y="40"/>
-        <UsageCount Value="27"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="193"/>
+        <CursorPos X="49" Y="213"/>
+        <UsageCount Value="51"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\source\MDIDEMO\CHILD1.PAS"/>
+        <Filename Value="..\source\MDIDEMO\frm_MDIChild1.PAS"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="ChildForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="4"/>
-        <CursorPos X="3" Y="15"/>
-        <UsageCount Value="27"/>
+        <TopLine Value="3"/>
+        <CursorPos Y="26"/>
+        <UsageCount Value="51"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -46,10 +48,9 @@
         <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="5"/>
+        <EditorIndex Value="1"/>
         <CursorPos X="21" Y="13"/>
-        <UsageCount Value="27"/>
+        <UsageCount Value="51"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -60,7 +61,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="21"/>
         <CursorPos X="20" Y="21"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="8"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit4>
       <Unit5>
@@ -69,25 +70,40 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_InfectiousBoard"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="50"/>
-        <CursorPos X="6" Y="66"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="11"/>
+        <CursorPos X="60" Y="11"/>
+        <UsageCount Value="8"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\..\Utils\FPC\WriteCDate2.dpr"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="6"/>
         <CursorPos X="10" Y="18"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="22"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit6>
+      <Unit7>
+        <Filename Value="C:\Lazarus_rc\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="501"/>
+        <CursorPos X="42" Y="526"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="C:\Lazarus_rc\fpc\3.0.2\source\rtl\win\wininc\struct.inc"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="7829"/>
+        <CursorPos X="14" Y="7862"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit8>
     </Units>
-    <JumpHistory Count="9" HistoryIndex="8">
+    <JumpHistory Count="20" HistoryIndex="19">
       <Position1>
         <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
       </Position1>
@@ -96,30 +112,76 @@
         <Caret Line="144" Column="33" TopLine="34"/>
       </Position2>
       <Position3>
-        <Filename Value="..\source\MDIDEMO\CHILD1.PAS"/>
+        <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
+        <Caret Line="94" Column="54" TopLine="81"/>
       </Position3>
       <Position4>
         <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
-        <Caret Line="94" Column="54" TopLine="81"/>
+        <Caret Line="13" Column="21"/>
       </Position4>
       <Position5>
-        <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
-        <Caret Line="13" Column="21"/>
-      </Position5>
-      <Position6>
         <Filename Value="..\source\MDIDEMO\Frm_MDIDemoABOUT.PAS"/>
         <Caret Line="45" Column="22"/>
-      </Position6>
-      <Position7>
+      </Position5>
+      <Position6>
         <Filename Value="Mdidemo.dpr"/>
         <Caret Line="5" Column="58"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\..\Utils\FPC\WriteCDate2.dpr"/>
       </Position7>
       <Position8>
-        <Filename Value="..\..\Grafik\spiele\frm_infectiousboard.pas"/>
+        <Filename Value="..\..\Utils\FPC\WriteCDate2.dpr"/>
+        <Caret Line="18" Column="10"/>
       </Position8>
       <Position9>
-        <Filename Value="..\..\Utils\FPC\WriteCDate2.dpr"/>
+        <Filename Value="..\source\MDIDEMO\frm_MDIChild1.PAS"/>
+        <Caret Line="31" Column="56" TopLine="5"/>
       </Position9>
+      <Position10>
+        <Filename Value="..\source\MDIDEMO\frm_MDIChild1.PAS"/>
+        <Caret Line="64" Column="45" TopLine="38"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\source\MDIDEMO\frm_MDIChild1.PAS"/>
+        <Caret Line="67" Column="16" TopLine="31"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\source\MDIDEMO\frm_MDIChild1.PAS"/>
+        <Caret Line="74" Column="30" TopLine="38"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\source\MDIDEMO\frm_MDIChild1.PAS"/>
+        <Caret Line="86" Column="36" TopLine="54"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\source\MDIDEMO\frm_MDIChild1.PAS"/>
+        <Caret Line="100" Column="37" TopLine="54"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
+        <Caret Line="196" Column="25" TopLine="185"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
+        <Caret Line="200" Column="20" TopLine="170"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\source\MDIDEMO\frm_MDIChild1.PAS"/>
+        <Caret Line="26" TopLine="3"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
+        <Caret Line="207" Column="28" TopLine="180"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
+        <Caret Line="218" Column="17" TopLine="190"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
+        <Caret Line="212" Column="56" TopLine="191"/>
+      </Position20>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

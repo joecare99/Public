@@ -13,17 +13,24 @@ uses
   LCLIntf, LCLType,
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ComCtrls, ToolWin, StdCtrls, Buttons, ImgList, ExtCtrls, BGRASpriteAnimation;
+  ComCtrls, ToolWin, StdCtrls, Buttons, ImgList, ExtCtrls, System.ImageList
+      {$IFDEF FPC}, BGRASpriteAnimation{$endif};
 
 type
 
   { TMainForm }
 
   TMainForm = class(TForm)
+    {$IFDEF FPC}
     Animate1: TBGRASpriteAnimation;
-    CoolBar1: TCoolBar;
     Image1: TImage;
     Panel1: TPanel;
+    {$ELSE}
+    Animate1: TAnimate;
+    DateTimePicker1: TDateTimePicker;
+    XPManifest1: TXPManifest;
+    {$ENDIF}
+    CoolBar1: TCoolBar;
     ToolBar1: TToolBar;
     NavigatorImages: TImageList;
     NavigatorHotImages: TImageList;
@@ -35,18 +42,9 @@ type
     BitBtn1: TBitBtn;
     BitBtn2: TBitBtn;
     Button1: TButton;
-    {$IFNDEF FPC}
-    Animate1: TAnimate;
-    DateTimePicker1: TDateTimePicker;
-    XPManifest1: TXPManifest;
-    {$ENDIF}
-    procedure Animate1Click(Sender: TObject);
     procedure BitBtn1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure Image1Click(Sender: TObject);
-    procedure Panel1Click(Sender: TObject);
-    procedure ToolBar1Paint(Sender: TObject);
     procedure ToolButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -89,11 +87,6 @@ begin
   BitBtn1.Caption := format(SBacknForwardBtn_ED, [s]);
 end;
 
-procedure TMainForm.Animate1Click(Sender: TObject);
-begin
-
-end;
-
 procedure TMainForm.Button1Click(Sender: TObject);
 begin
   {$IFNDEF FPC}
@@ -108,12 +101,15 @@ begin
 end;
 
 procedure TMainForm.FormCreate(Sender: TObject);
+ {$IFDEF FPC}
   var
    TempGif: TBGRAAnimatedGif;
    TempBitmap: TBitmap;
    n: integer;
+    {$ENDIF}
 
  begin
+ {$IFDEF FPC}
    TempGif := TBGRAAnimatedGif.Create;
    try
    TempGif.LoadFromResourceName(HINSTANCE,'COOL');
@@ -138,21 +134,7 @@ procedure TMainForm.FormCreate(Sender: TObject);
    end;
    Image1.Picture.Bitmap.Assign(CoolBar1.Bitmap);
    ToolBar1.ControlStyle:=ToolBar1.ControlStyle-[csOpaque]+[csParentBackground];
-end;
-
-procedure TMainForm.Image1Click(Sender: TObject);
-begin
-
-end;
-
-procedure TMainForm.Panel1Click(Sender: TObject);
-begin
-
-end;
-
-procedure TMainForm.ToolBar1Paint(Sender: TObject);
-begin
-
+    {$ENDIF}
 end;
 
 procedure TMainForm.FormShow(Sender: TObject);

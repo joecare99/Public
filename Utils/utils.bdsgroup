@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<BorlandProject>
+  <PersonalityInfo>
+    <Option>
+      <Option Name="Personality">Default.Personality</Option>
+      <Option Name="ProjectType"></Option>
+      <Option Name="Version">1.0</Option>
+      <Option Name="GUID">{5767C344-432D-4B7F-A461-E722245074D0}</Option>
+    </Option>
+  </PersonalityInfo>
+  <Default.Personality>
+    
+    
+    
+    
+    
+    <Projects>
+      <Projects Name="Prj_TstFileUnt.EXE">Prj_TstFileUnt.bdsproj</Projects>
+      <Projects Name="Filter.exe">Filter.bdsproj</Projects>
+      <Projects Name="a2dType.exe">a2dType.bdsproj</Projects>
+      <Projects Name="Prj_TstAllgFuncLib.exe">Prj_TstAllgFuncLib.bdsproj</Projects>
+      <Projects Name="Prj_TstVarProcs.exe">Prj_TstVarProcs.bdsproj</Projects>
+      <Projects Name="Prj_TstMD5.exe">..\Daten\Prj_TstMD5.bdsproj</Projects>
+      <Projects Name="Targets">Prj_TstFileUnt.EXE Filter.exe a2dType.exe Prj_TstAllgFuncLib.exe Prj_TstVarProcs.exe Prj_TstMD5.exe</Projects>
+    </Projects>
+    <Dependencies/>
+  </Default.Personality>
+  <StarTeamAssociation></StarTeamAssociation>
+  <StarTeamNonRelativeFiles></StarTeamNonRelativeFiles>
+</BorlandProject>

@@ -1,6 +1,8 @@
 UNIT BarChart;
 
+{$ifdef FPC}
 {$MODE Delphi}
+{$endif}
 
 INTERFACE
 

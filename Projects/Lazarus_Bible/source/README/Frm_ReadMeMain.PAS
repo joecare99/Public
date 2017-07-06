@@ -40,9 +40,9 @@ implementation
   {$R *.dfm}
 {$ELSE}
   {$R *.lfm}
+uses LConvEncoding;
 {$ENDIF}
 
-uses LConvEncoding;
 
 const ReadMeFile = 'Readme.Txt';
      DefDataDir ='Data';
@@ -62,11 +62,15 @@ begin
 
     sf:=TFileStream.Create(Filename,fmOpenRead);
     try
+{$IFnDEF FPC}
+      mmText.lines.LoadFromStream(sf);
+{$ELSE}
       setlength(s,sf.Size);
       sf.ReadBuffer(s[1],sf.Size);
 //      s[sf.Size+1]:=#0;
       FFileEncoding := GuessEncoding(s);
       mmText.lines.Text:=ConvertEncoding(s,FFileEncoding,EncodingUTF8);
+{$endif}
     finally
       freeandnil(sf);
     end;

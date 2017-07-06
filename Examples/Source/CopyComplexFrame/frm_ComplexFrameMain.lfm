@@ -6,6 +6,7 @@ object frmComplexFrameMain: TfrmComplexFrameMain
   Caption = 'frmComplexFrameMain'
   ClientHeight = 769
   ClientWidth = 996
+  LCLVersion = '1.8.0.3'
   Visible = False
   object ToolBar1: TToolBar
     Left = 0

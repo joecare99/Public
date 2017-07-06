@@ -24,7 +24,7 @@ begin
     if FromDPI<>-1 then
     ScaleDPI(Screen.Forms[i],FromDPI)
     else
-    ScaleDPI(Screen.Forms[i],Screen.Forms[i].DesignTimeDPI);
+    ScaleDPI(Screen.Forms[i],Screen.Forms[i].DesignTimePPI);
   end;
 end;
 
@@ -130,8 +130,8 @@ var
 begin
   for I:= 0 to Screen.FormCount -1 do
     Screen.Forms[i].AutoAdjustLayout(
-      lapAutoAdjustForDPI, Screen.Forms[i].DesignTimeDPI, Screen.PixelsPerInch,
-      Screen.Forms[i].Width, ScaleX(Screen.Forms[i].Width, Screen.Forms[i].DesignTimeDPI));
+      lapAutoAdjustForDPI, Screen.Forms[i].DesignTimePPI, Screen.PixelsPerInch,
+      Screen.Forms[i].Width, ScaleX(Screen.Forms[i].Width, Screen.Forms[i].DesignTimePPI));
 end;
 
 end.

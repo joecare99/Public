@@ -26,20 +26,20 @@ object MainForm: TMainForm
         ImageIndex = -1
         MinHeight = 26
         ParentColor = False
-        Width = 463
+        Width = 466
       end
       item
         Break = False
         Control = Animate1
         ImageIndex = -1
         MinHeight = 39
-        Width = 66
+        Width = 59
       end
       item
         Control = DateTimePicker1
         ImageIndex = -1
         Text = 'Date Selector'
-        Width = 531
+        Width = 529
       end>
     Bitmap.Data = {
       760F0000424D760F0000000000007600000028000000800000003C0000000100
@@ -169,7 +169,7 @@ object MainForm: TMainForm
     object ToolBar1: TToolBar
       Left = 11
       Top = 6
-      Width = 448
+      Width = 453
       Height = 26
       AutoSize = True
       ButtonHeight = 26
@@ -229,9 +229,9 @@ object MainForm: TMainForm
       TabOrder = 1
     end
     object Animate1: TAnimate
-      Left = 476
+      Left = 481
       Top = 0
-      Width = 55
+      Width = 50
       Height = 39
       FileName = '..\Data\COOL.AVI'
       StopFrame = 13
@@ -270,7 +270,7 @@ object MainForm: TMainForm
     Left = 68
     Top = 104
     Bitmap = {
-      494C01010500070008001E001400FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101050007000C001E001400FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000078000000280000000100200000000000004B
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -903,7 +903,7 @@ object MainForm: TMainForm
     Left = 180
     Top = 104
     Bitmap = {
-      494C01010400060008001E001400FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
+      494C0101040006000C001E001400FFFFFFFFFF10FFFFFFFFFFFFFFFF424D3600
       000000000000360000002800000078000000280000000100200000000000004B
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -3,7 +3,7 @@ object CalcForm: TCalcForm
   Top = 100
   Caption = 'Calculator 32'
   ClientHeight = 309
-  ClientWidth = 437
+  ClientWidth = 425
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
@@ -343,7 +343,7 @@ object CalcForm: TCalcForm
   object LineBevel: TBevel
     Left = 8
     Top = 129
-    Width = 401
+    Width = 411
     Height = 9
     Shape = bsBottomLine
   end
@@ -384,7 +384,7 @@ object CalcForm: TCalcForm
   object MemBevel: TPanel
     Left = 40
     Top = 8
-    Width = 369
+    Width = 379
     Height = 25
     BevelOuter = bvLowered
     TabOrder = 1
@@ -408,7 +408,7 @@ object CalcForm: TCalcForm
   object DecBevel: TPanel
     Left = 40
     Top = 40
-    Width = 369
+    Width = 379
     Height = 25
     BevelOuter = bvLowered
     TabOrder = 2
@@ -432,7 +432,7 @@ object CalcForm: TCalcForm
   object HexBevel: TPanel
     Left = 40
     Top = 72
-    Width = 369
+    Width = 379
     Height = 25
     BevelOuter = bvLowered
     TabOrder = 3
@@ -456,7 +456,7 @@ object CalcForm: TCalcForm
   object BinBevel: TPanel
     Left = 40
     Top = 104
-    Width = 369
+    Width = 379
     Height = 25
     BevelOuter = bvLowered
     TabOrder = 4

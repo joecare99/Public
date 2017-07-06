@@ -10,9 +10,9 @@ uses
 {$IFnDEF FPC}
 
 {$ELSE}
-  LCLIntf, LCLType, LCLVersion,
+  LCLIntf, LCLType, LCLVersion, LMessages,
 {$ENDIF}
-  LMessages,  SysUtils, Classes, Graphics, Controls,
+   SysUtils, Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls;
 
 type

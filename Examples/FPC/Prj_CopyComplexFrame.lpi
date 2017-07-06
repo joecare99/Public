@@ -11,9 +11,6 @@
       <UseXPManifest Value="True"/>
       <Icon Value="0"/>
     </General>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
@@ -117,12 +114,14 @@
         <Filename Value="..\Source\CopyComplexFrame\frm_ComplexFrameMain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmComplexFrameMain"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\Source\CopyComplexFrame\fra_ComplexFrame.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="fraComplexFrame"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit2>
     </Units>

@@ -7,15 +7,18 @@ unit Frm_MDIDemoMAIN;
 interface
 
 uses
-{$IFnDEF FPC}
-  Windows,
+ Windows, {$IFnDEF FPC}
+
 {$ELSE}
-  LCLIntf, LCLType,
+  LCLIntf, LCLType, LMessages,
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls,
-  Forms, Dialogs, Menus, CHILD1;
+  Forms, Dialogs, Menus, frm_MDIChild1;
 
 type
+
+  { TMainForm }
+
   TMainForm = class(TForm)
     MainMenu1: TMainMenu;
     FileMenu: TMenuItem;
@@ -25,6 +28,7 @@ type
     FileNew: TMenuItem;
     N1: TMenuItem;
     FileExit: TMenuItem;
+    ScrollBox1: TScrollBox;
     WindowMenu: TMenuItem;
     WindowCascade: TMenuItem;
     WindowTile: TMenuItem;
@@ -55,6 +59,7 @@ type
   private
   {- Private declarations }
     procedure CreateChild(const Name: string);
+    procedure wmSize(var Msg: TLMSize);message LM_Size;
   public
   {- Public declarations }
   end;
@@ -81,6 +86,9 @@ var
 begin
   Child := TChildForm.Create(Application);
   Child.Caption := Name;
+  {$IFDEF FPC}
+   Child.Parent := self;
+  {$ENDIF}
 end;
 
 procedure TMainForm.FileNewClick(Sender: TObject);
@@ -192,5 +200,47 @@ begin
     with Items[I] as TMenuItem do
       Enabled := MDIChildCount > 0;
 end;
+
+procedure TMainForm.wmSize(var Msg: TLMSize);
+
+Type  WINDOWPLACEMENT = record
+          length : UINT;
+          flags : UINT;
+          showCmd : UINT;
+          ptMinPosition : TPOINT;
+          ptMaxPosition : TPOINT;
+          rcNormalPosition : TRECT;
+       end;
+
+Var
+ L,H :integer;
+ WS :WINDOWPLACEMENT;
+begin
+  Inherited wmsize(Msg);
+  H := GetSystemMetrics(SM_CYMINSPACING);
+  If H and $0F <> 0 Then H := (H and $FFFFFFF0)+$10;//Seems we need to abey 16 byte page size in heitgh;
+  For L := 0 To ScrollBox1.ComponentCount-1 do
+  Begin
+   if (ScrollBox1.Components[L] is Tform) Then
+    With TForm(ScrollBox1.Components[l]) do
+     Begin
+      Ws.Length := SizeOf(WS);
+      GetWindowPlaceMent(Handle, @WS);
+      If WindowState= wsMinimized then
+       Begin
+        WS.ptMinPosition.y := ScrollBox1.Height-H;
+        WS.Flags := WPF_SETMINPOSITION;
+        Ws.ShowCmd := SW_MINIMIZE;
+        SetWindowPlacement(Handle, @WS);
+       End Else
+      if WS.rcNormalPosition.Top > ScrollBox1.Height Then
+       Begin
+        WS.rcNormalPosition.Top := ScrollBox1.Height-H;
+        Ws.RCNormalPosition.Bottom -=H;
+        SetWindowPlacement(Handle, @Ws);
+       end;
+     end;
+  end;
+End;
 
 end.

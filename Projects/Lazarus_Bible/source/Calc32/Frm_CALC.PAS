@@ -8,7 +8,7 @@ interface
 
 uses
 {$IFnDEF FPC}
-  Mask, Windows,System.Actions
+  Mask, Windows, Actions,
 {$ELSE}
   LCLIntf, LCLType,
 {$ENDIF}

@@ -36,7 +36,7 @@
     </PropertyGroup>
     <Import Project="Components.optset" Condition="'$(Base)'!='' And Exists('Components.optset')"/>
     <PropertyGroup Condition="'$(Base)'!=''">
-        <DllSuffix>240</DllSuffix>
+        <DllSuffix>250</DllSuffix>
         <SanitizedProjectName>BarChartp</SanitizedProjectName>
         <DCC_ExeOutput>..\bin\$(platform)</DCC_ExeOutput>
         <Manifest_File>None</Manifest_File>

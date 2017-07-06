@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="34">
+    <Targets Count="35">
       <Target0 FileName="FPC\addrbook.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="default" Compile="True"/>
@@ -161,6 +161,10 @@
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target33>
+      <Target34 FileName="FPC\Prj_CopyComplexFrame.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target34>
     </Targets>
   </ProjectGroup>
 </CONFIG>

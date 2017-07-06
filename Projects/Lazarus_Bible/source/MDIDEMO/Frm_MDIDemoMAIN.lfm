@@ -1,19 +1,28 @@
 object MainForm: TMainForm
   Left = 261
-  Height = 254
+  Height = 524
   Top = 155
-  Width = 427
+  Width = 658
   Caption = 'MDI Demonstration'
-  ClientHeight = 254
-  ClientWidth = 427
+  ClientHeight = 524
+  ClientWidth = 658
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -13
   Font.Name = 'System'
   FormStyle = fsMDIForm
   Menu = MainMenu1
-  LCLVersion = '1.6.4.0'
   Visible = False
+  object ScrollBox1: TScrollBox
+    Left = 0
+    Height = 70
+    Top = 454
+    Width = 658
+    HorzScrollBar.Page = 1
+    VertScrollBar.Page = 1
+    Align = alBottom
+    TabOrder = 0
+  end
   object MainMenu1: TMainMenu
     left = 40
     top = 8

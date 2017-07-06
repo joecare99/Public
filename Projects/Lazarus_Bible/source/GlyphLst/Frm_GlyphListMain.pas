@@ -10,10 +10,10 @@ uses
 {$IFnDEF FPC}
   Windows,
 {$ELSE}
-  LCLIntf, LCLType,
+  LCLIntf, LCLType, FileUtil,
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons, Grids, Menus, FileUtil;
+  StdCtrls, Buttons, Grids, Menus;
 
 type
 
@@ -80,6 +80,18 @@ const
 '$1:s\Borland Shared\Images\Buttons';
 {$ENDIF}
 {$IFDEF ver210} // BDS 2010
+'%1:s\CodeGear Shared\Images\Buttons';
+{$ENDIF}
+{$IFDEF ver210} // BDS 2010
+'%1:s\CodeGear Shared\Images\Buttons';
+{$ENDIF}
+{$IFDEF ver210} // BDS 2010
+'%1:s\CodeGear Shared\Images\Buttons';
+{$ENDIF}
+{$IFDEF ver310} // DXE 10.1
+'%1:s\CodeGear Shared\Images\Buttons';
+{$ENDIF}
+{$IFDEF ver320} // DXE 10.2
 '%1:s\CodeGear Shared\Images\Buttons';
 {$ENDIF}
 {$ENDIF}
