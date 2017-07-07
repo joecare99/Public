@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectGroup FileVersion="1">
+    <Targets Count="12">
+      <Target0 FileName="..\..\..\lazarus\fpc\3.0.0\source\packages\fcl-web\examples\combined\combined.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target0>
+      <Target1 FileName="..\..\Lazarus\FpcTrunk\packages\fcl-web\examples\combined\combined.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target1>
+      <Target2 FileName="..\..\Lazarus\FpcTrunk\packages\fcl-web\examples\httpapp\testhttp.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target2>
+      <Target3 FileName="..\..\Lazarus\FpcTrunk\packages\fcl-web\examples\httpclient\httpget.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target3>
+      <Target4 FileName="..\..\Lazarus\FpcTrunk\packages\fcl-web\examples\httpclient\httppost.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target4>
+      <Target5 FileName="..\..\Lazarus\FpcTrunk\packages\fcl-web\examples\httpclient\httppostfile.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target5>
+      <Target6 FileName="..\..\Lazarus\FpcTrunk\packages\fcl-web\examples\httpserver\simplehttpserver.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target6>
+      <Target7 FileName="..\..\Lazarus\FpcTrunk\packages\fcl-web\examples\jsonrpc\demo1\demo.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target7>
+      <Target8 FileName="..\..\Lazarus\FpcTrunk\packages\fcl-web\examples\jsonrpc\extdirect\extdemo.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target8>
+      <Target9 FileName="..\..\Lazarus\FpcTrunk\packages\fcl-web\examples\session\sessiondemo.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target9>
+      <Target10 FileName="..\..\Lazarus\FpcTrunk\packages\fcl-web\examples\webdata\demo\createusers.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target10>
+      <Target11 FileName="..\..\Lazarus\FpcTrunk\packages\fcl-web\examples\webdata\demo\extgrid.lpi"/>
+    </Targets>
+  </ProjectGroup>
+</CONFIG>
