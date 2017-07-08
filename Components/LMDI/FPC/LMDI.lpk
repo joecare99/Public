@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="LMDI"/>
+    <Type Value="RunAndDesignTime"/>
+    <AddToProjectUsesSection Value="True"/>
+    <Author Value="Júnior Gonçalves"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="..\src;..\incl"/>
+        <Libraries Value="$(PkgOutDir)"/>
+        <OtherUnitFiles Value="..\src"/>
+        <UnitOutputDirectory Value="..\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)-$(LCLWidgetType)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <UseAnsiStrings Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
+    </CompilerOptions>
+    <Description Value="LMDI - Lazarus MDI Interface Simulation. =)"/>
+    <License Value="LGPL Modified (see COPYING.modifiedLGPL)"/>
+    <Version Minor="1"/>
+    <Files Count="6">
+      <Item1>
+        <Filename Value="..\src\titlebar.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="titlebar"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\src\titlebar.lrs"/>
+        <Type Value="LRS"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\src\formpanel.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="formpanel"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\src\formpanel.lrs"/>
+        <Type Value="LRS"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\src\buttonsbar.pas"/>
+        <HasRegisterProc Value="True"/>
+        <UnitName Value="buttonsbar"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\src\buttonsbar.lrs"/>
+        <Type Value="LRS"/>
+      </Item6>
+    </Files>
+    <LazDoc Paths="..\FPDoc"/>
+    <RequiredPkgs Count="2">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="FCL"/>
+        <MinVersion Major="1" Valid="True"/>
+      </Item2>
+    </RequiredPkgs>
+    <UsageOptions>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+      <IgnoreBinaries Value="False"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>

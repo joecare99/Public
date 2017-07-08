@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectGroup FileVersion="1">
+    <Targets Count="2">
+      <Target0 FileName="FPC\LMDI.lpk"/>
+      <Target1 FileName="demo\mdbb-runtime\mdbb.lpi"/>
+    </Targets>
+  </ProjectGroup>
+</CONFIG>
