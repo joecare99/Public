@@ -8,12 +8,12 @@ interface
 
 uses
  {$IFnDEF FPC}
-  Windows, Messages, chart, series,
+  Windows, Messages, chart, series,  TeEngine,
 {$ELSE}
   LCLIntf, LCLType, TAGraph, TASeries, TATools, TADataTools ,
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons,  ExtCtrls, Menus, TeEngine, TeeProcs;
+  StdCtrls, Buttons,  ExtCtrls, Menus, TeeProcs;
 
 type
 

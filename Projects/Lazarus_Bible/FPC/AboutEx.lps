@@ -4,12 +4,12 @@
     <PathDelim Value="\"/>
     <Version Value="10"/>
     <BuildModes Active="Default"/>
-    <Units Count="3">
+    <Units Count="9">
       <Unit0>
         <Filename Value="AboutEx.dpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos X="39" Y="23"/>
-        <UsageCount Value="24"/>
+        <UsageCount Value="31"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
@@ -21,7 +21,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
         <CursorPos X="30" Y="30"/>
-        <UsageCount Value="24"/>
+        <UsageCount Value="31"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -33,17 +33,72 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_ABOUT"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="24"/>
         <CursorPos X="33" Y="28"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="28"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="..\source\Animator\CmpAnimator.pas"/>
+        <UnitName Value="cmpAnimator"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="17" Y="9"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\source\Barchart\Frm_BartestMain.pas"/>
+        <ComponentName Value="frmBarChartMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="37" Y="11"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\source\DDECOLOR\Frm_CLIMAIN.PAS"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="21"/>
+        <CursorPos X="21" Y="21"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\source\DDE1\Frm_CLIENT.PAS"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="3"/>
+        <CursorPos X="48" Y="3"/>
+        <UsageCount Value="9"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\source\DingX\DingButtonXControl_TLB.pas"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="163"/>
+        <CursorPos X="24" Y="180"/>
+        <UsageCount Value="14"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+        <HasResources Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="3"/>
+        <CursorPos X="20" Y="21"/>
+        <UsageCount Value="13"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit8>
     </Units>
-    <JumpHistory Count="5" HistoryIndex="4">
+    <JumpHistory Count="9" HistoryIndex="8">
       <Position1>
         <Filename Value="..\source\AboutEx\Frm_AboutExMAIN.PAS"/>
         <Caret Line="21" Column="30"/>
@@ -64,6 +119,21 @@
         <Filename Value="..\source\AboutEx\frm_About.PAS"/>
         <Caret Line="74" Column="3" TopLine="22"/>
       </Position5>
+      <Position6>
+        <Filename Value="..\source\AboutEx\Frm_AboutExMAIN.PAS"/>
+        <Caret Line="30" Column="30"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\DingX\DingButtonXControl_TLB.pas"/>
+        <Caret Line="180" Column="24" TopLine="163"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\OleCont\Frm_OleContMain.pas"/>
+        <Caret Line="21" Column="20" TopLine="21"/>
+      </Position9>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

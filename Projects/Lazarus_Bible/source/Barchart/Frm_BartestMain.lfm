@@ -11,7 +11,8 @@ object frmBarChartMain: TfrmBarChartMain
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
-  LCLVersion = '1.4.0.3'
+  LCLVersion = '1.8.0.3'
+  Visible = False
   object BitBtn1: TBitBtn
     Left = 288
     Height = 25
@@ -42,7 +43,6 @@ object frmBarChartMain: TfrmBarChartMain
     Title.Text.Strings = (
       'TChart'
     )
-    ParentColor = False
     object Series1: TBarSeries
       Marks.Arrow.Visible = True
       BarBrush.Color = clRed

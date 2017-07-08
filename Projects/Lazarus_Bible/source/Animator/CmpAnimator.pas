@@ -6,7 +6,7 @@ uses types,{$IFnDEF FPC}
 
 {$ELSE}
   windows, LMessages, LCLType,
-{$ENDIF} CommCtrl, Graphics, Messages,  classes, Controls;
+{$ENDIF} ActiveX,CommCtrl, Graphics, Messages,  classes, Controls;
 
 type
  TCommonAVI = (aviNone, aviFindFolder, aviFindFile, aviFindComputer, aviCopyFiles,

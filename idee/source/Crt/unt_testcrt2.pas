@@ -35,6 +35,7 @@ uses
 const
     maxanim = 2000;
     Filler=#$b0#$b1#$b2#$db;
+    TxtWHeight =50;
 
 type
     TColorKmpn = record
@@ -135,11 +136,11 @@ var
 begin
     srctReadRect.Top := 0; // top left: row 0, col 0
     srctReadRect.Left := 0;
-    srctReadRect.Bottom := 49; // bot. right: row 1, col 79
+    srctReadRect.Bottom := TxtWHeight-1; // bot. right: row 1, col 79
     srctReadRect.Right := 79;
 
     coordBufSize.x := 80;
-    coordBufSize.y := 50;
+    coordBufSize.y := TxtWHeight;
 
     coordBufCoord.x := 0;
     coordBufCoord.y := 0;
@@ -152,6 +153,26 @@ begin
         srctReadRect); // screen buffer source rectangle
 end;
 
+{$ifdef CPUX86_HAS_SSEUNIT}
+{$asmmode intel}
+procedure sincos(theta : double;out sinus,cosinus : double);assembler;
+  var
+    t : double;
+  asm
+    movsd qword ptr t,xmm0
+    fld qword ptr t
+    fsincos
+    fstp qword ptr [cosinus]
+    fstp qword ptr [sinus]
+    fwait
+  end;
+{$else}
+procedure sincos(theta : double;out sinus,cosinus : double);assembler;
+begin
+  sinus:=sin(theta);
+  cosinus:=cos(theta);
+end
+{$endif}
 procedure Execute;
 
 var
@@ -161,10 +182,12 @@ var
     hashtab: array[0..32768] of word;
     sb: TchinfArr;
     Chh: Word;
+    s, c: double;
 
 begin
+  if TxtWHeight > 30 then
+    TextMode(co80 + font8x8);
       try
-        TextMode(co80 + font8x8);
         // init
         for I := 0 to 15 do
             for J := 0 to 15 do
@@ -215,15 +238,16 @@ begin
         setlength(sb, 80 * 50);
         for I := 0 to maxanim do
           begin
+            sincos(i/50,s,c);
             for J := 0 to 79 do
-                for K := 0 to 49 do
+                for K := 0 to TxtWHeight-1 do
                   begin
                     if k > (i - maxanim + 50) then
                       begin
-                        cc.r := trunc(J * (1.5 + sin(I / 50) * 1.5)) + random(15);
-                        cc.g := trunc((79 - J) * (1.5 + cos(I / 50) * 1.5)) +
+                        cc.r := trunc(J * (1.5 + s * 1.5)) + random(15);
+                        cc.g := trunc((79 - J) * (1.5 + c * 1.5)) +
                             random(15);
-                        cc.b := K * 5 + random(10);
+                        cc.b := K * 245 div TxtWHeight  + random(10);
                       end
                     else
                         cc.c := clblack;

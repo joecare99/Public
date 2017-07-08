@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Prj_TestDocking"><module name="Frm_DockingMain"><element name="frmMain"/><element name="TfrmMain"><short>MainForm</short>
+      </element><element name="GetApplicationName"><short>Liefert den Applications-namen</short>
+      </element><element name="GetVendorName"><short>Liefert den Hersteller-Namen</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
