@@ -1,0 +1,127 @@
+object Form1: TForm1
+  Left = 0
+  Height = 716
+  Top = 0
+  Width = 837
+  ActiveControl = edtSourceDir
+  Caption = 'Form1'
+  ClientHeight = 716
+  ClientWidth = 837
+  OnCreate = FormCreate
+  OnResize = FormResize
+  Visible = False
+  object pnlTop: TPanel
+    Left = 0
+    Height = 43
+    Top = 0
+    Width = 837
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 43
+    ClientWidth = 837
+    TabOrder = 0
+    object edtSourceDir: TLabeledEdit
+      Left = 9
+      Height = 23
+      Top = 20
+      Width = 681
+      Anchors = [akTop, akLeft, akRight]
+      EditLabel.AnchorSideLeft.Control = edtSourceDir
+      EditLabel.AnchorSideRight.Control = edtSourceDir
+      EditLabel.AnchorSideRight.Side = asrBottom
+      EditLabel.AnchorSideBottom.Control = edtSourceDir
+      EditLabel.Left = 9
+      EditLabel.Height = 15
+      EditLabel.Top = 2
+      EditLabel.Width = 681
+      EditLabel.Caption = 'edtSourceDir'
+      EditLabel.ParentColor = False
+      TabOrder = 0
+      Text = 'C:\projekte\Lazarus\PicPas\trunk\doc'
+    end
+    object pnlTopRight: TPanel
+      Left = 690
+      Height = 43
+      Top = 0
+      Width = 147
+      Align = alRight
+      BevelOuter = bvNone
+      ClientHeight = 43
+      ClientWidth = 147
+      TabOrder = 1
+      object btnSelectDir: TSpeedButton
+        Left = 8
+        Height = 23
+        Top = 20
+        Width = 23
+        Caption = '...'
+      end
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 673
+    Top = 43
+    Width = 344
+    Align = alLeft
+    Caption = 'pnlLeft'
+    TabOrder = 1
+  end
+  object pnlProcessing: TPanel
+    Left = 344
+    Height = 673
+    Top = 43
+    Width = 80
+    Align = alClient
+    BevelOuter = bvNone
+    ClientHeight = 673
+    ClientWidth = 80
+    TabOrder = 2
+    object btnProcessPas2Po: TBitBtn
+      Left = 0
+      Height = 108
+      Top = 120
+      Width = 30
+      Caption = '>'
+      TabOrder = 0
+    end
+    object btnProcessPo2Pas: TSpeedButton
+      Left = 0
+      Height = 37
+      Top = 304
+      Width = 30
+      Caption = '<'
+    end
+  end
+  inline fraPoFile1: TfraPoFile
+    Left = 424
+    Height = 673
+    Top = 43
+    Width = 413
+    Align = alRight
+    ClientHeight = 673
+    ClientWidth = 413
+    TabOrder = 3
+    inherited pnlRightTop: TPanel
+      Width = 413
+      ClientWidth = 413
+      inherited cbxSelectLanguage: TComboBox
+        Width = 229
+      end
+      inherited tlbPoFile: TToolBar
+        Left = 339
+      end
+    end
+    inherited edtPoFile: TMemo
+      Height = 631
+      Width = 407
+      Lines.Strings = (
+        'Memo2'
+      )
+    end
+    inherited lblBottom: TLabel
+      Top = 669
+      Width = 407
+    end
+  end
+end

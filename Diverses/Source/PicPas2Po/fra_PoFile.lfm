@@ -1,0 +1,134 @@
+object fraPoFile: TfraPoFile
+  Left = 0
+  Height = 726
+  Top = 0
+  Width = 562
+  ClientHeight = 726
+  ClientWidth = 562
+  TabOrder = 0
+  object pnlRightTop: TPanel
+    Left = 0
+    Height = 32
+    Top = 0
+    Width = 562
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 32
+    ClientWidth = 562
+    TabOrder = 0
+    object cbxSelectLanguage: TComboBox
+      Left = 107
+      Height = 23
+      Top = 3
+      Width = 378
+      Align = alClient
+      BorderSpacing.Bottom = 3
+      BorderSpacing.Around = 3
+      ItemHeight = 15
+      ItemIndex = 4
+      Items.Strings = (
+        'Unspecific'
+        'English,en'
+        'Spain,es'
+        'Quechua,qu'
+        'Deutsch,de'
+      )
+      OnChange = cbxSelectLanguageChange
+      TabOrder = 0
+      Text = 'Deutsch,de'
+    end
+    object edtProjectName: TEdit
+      Left = 3
+      Height = 23
+      Top = 3
+      Width = 101
+      Align = alLeft
+      BorderSpacing.Bottom = 3
+      BorderSpacing.Around = 3
+      TabOrder = 1
+      Text = 'PicPas'
+    end
+    object tlbPoFile: TToolBar
+      Left = 488
+      Height = 26
+      Top = 3
+      Width = 71
+      Align = alRight
+      BorderSpacing.Around = 3
+      Caption = 'tlbPoFile'
+      ShowCaptions = True
+      TabOrder = 2
+      object ToolButton1: TToolButton
+        Left = 1
+        Top = 2
+        Action = actFileAutoLoad
+        Caption = 'AL'
+      end
+      object ToolButton3: TToolButton
+        Left = 24
+        Top = 2
+        Action = actFileLoad
+        Caption = 'Ld'
+      end
+      object ToolButton4: TToolButton
+        Left = 47
+        Top = 2
+        Action = actFileSave
+        Caption = 'Sv'
+      end
+    end
+  end
+  object edtPoFile: TMemo
+    Left = 3
+    Height = 684
+    Top = 35
+    Width = 556
+    Align = alClient
+    BorderSpacing.Around = 3
+    Lines.Strings = (
+      'Memo2'
+    )
+    ScrollBars = ssAutoBoth
+    TabOrder = 1
+    WordWrap = False
+  end
+  object lblBottom: TLabel
+    Left = 3
+    Height = 1
+    Top = 722
+    Width = 556
+    Align = alBottom
+    BorderSpacing.Around = 3
+    ParentColor = False
+  end
+  object alsPoFile: TActionList
+    left = 267
+    top = 298
+    object actFileSave: TAction
+      Category = 'PoFile'
+      Caption = 'Save'
+      OnExecute = actFileSaveExecute
+    end
+    object actFileOpen: TFileOpen
+      Category = 'PoFile'
+      Caption = 'Öffnen'
+      Hint = 'Öffnen'
+    end
+    object actFileSaveAs: TFileSaveAs
+      Category = 'PoFile'
+      Caption = 'Sichern &als ...'
+      Hint = 'Sichern als'
+    end
+    object actFileLoad: TAction
+      Category = 'PoFile'
+      Caption = 'Load'
+      OnExecute = actFileLoadExecute
+    end
+    object actFileAutoLoad: TAction
+      Category = 'PoFile'
+      AutoCheck = True
+      Caption = 'AutoLoad'
+      DisableIfNoHandler = False
+    end
+  end
+end
