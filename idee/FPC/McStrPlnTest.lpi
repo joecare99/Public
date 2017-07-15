@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="9"/>
+    <PathDelim Value="\"/>
+    <General>
+      <Flags>
+        <MainUnitHasUsesSectionForAllUnits Value="False"/>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
+      <Title Value="McStrPlnTest"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value="res"/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="False"/>
+    </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="1">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="2">
+      <Item1>
+        <PackageName Value="fpcunittestrunner"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
+    </RequiredPackages>
+    <Units Count="13">
+      <Unit0>
+        <Filename Value="McStrPlnTest.dpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\MineCAD\Planner\util\minecad.planner.util.Array3D.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\MineCAD\Planner\test\TestArray3D.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TestArray3D"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\MineCAD\Planner\test\TestTagClass.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TestTagClass"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\MineCAD\Planner\util\minecad.planner.util.tag.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="minecad.planner.util.tag"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\MineCAD\Planner\test\TestTDictionary.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TestTDictionary"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\MineCAD\Planner\test\TestGParameter.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TestGParameter"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\MineCAD\Planner\model\minecad.planner.model.generator.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="minecad.planner.model.generator"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\MineCAD\Planner\model\minecad.planner.model.grid.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="minecad.planner.model.grid"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\MineCAD\Planner\model\minecad.planner.model.cell.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="minecad.planner.model.cell"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\MineCAD\Planner\data\minecad.planner.data.nbtblock.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="minecad.planner.data.nbtblock"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\MineCAD\Planner\test\TestNBTBlock.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TestNBTBlock"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\MineCAD\Planner\data\dmGlobalData.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <UnitName Value="dmGlobalData"/>
+      </Unit12>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
+      <OtherUnitFiles Value="..\MineCAD\Planner\test;..\MineCAD\Planner\util;..\MineCAD\Planner\model;..\MineCAD\Planner\data"/>
+      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <AllowLabel Value="False"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <LinkSmart Value="True"/>
+      <Options>
+        <Win32>
+          <GraphicApplication Value="True"/>
+        </Win32>
+      </Options>
+    </Linking>
+    <Other>
+      <CompilerMessages>
+        <MsgFileName Value=""/>
+      </CompilerMessages>
+      <CompilerPath Value="$(CompPath)"/>
+    </Other>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
+</CONFIG>

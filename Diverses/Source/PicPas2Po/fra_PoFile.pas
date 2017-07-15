@@ -97,14 +97,7 @@ begin
         mtConfirmation, mbYesNo, 0) = mrNo) then
         exit;
     lFilename := FBaseDir + DirectorySeparator + lFilename;
-    FpoFile.SaveToFile(ChangeFileExt(lFilename, '.new'));
-    if fileexists(lFilename) then
-      begin
-        if fileexists(ChangeFileExt(lFilename, '.bak')) then
-            DeleteFile(ChangeFileExt(lFilename, '.bak'));
-        RenameFile(lFilename, ChangeFileExt(lFilename, '.bak'));
-      end;
-    RenameFile(ChangeFileExt(lFilename, '.new'), lFilename);
+    FpoFile.SaveToFile(lFilename);
 end;
 
 procedure TfraPoFile.UpdateUI(Sender: TObject);

@@ -1,30 +1,30 @@
-object Form1: TForm1
+object frmXml2PoMain: TfrmXml2PoMain
   Left = 0
   Height = 716
   Top = 0
-  Width = 837
+  Width = 1119
   ActiveControl = edtSourceDir
-  Caption = 'Form1'
+  Caption = 'frmXml2PoMain'
   ClientHeight = 716
-  ClientWidth = 837
-  OnCreate = FormCreate
+  ClientWidth = 1119
   OnResize = FormResize
+  OnShow = FormShow
   Visible = False
   object pnlTop: TPanel
     Left = 0
     Height = 43
     Top = 0
-    Width = 837
+    Width = 1119
     Align = alTop
     BevelOuter = bvNone
     ClientHeight = 43
-    ClientWidth = 837
+    ClientWidth = 1119
     TabOrder = 0
     object edtSourceDir: TLabeledEdit
       Left = 9
       Height = 23
       Top = 20
-      Width = 681
+      Width = 963
       Anchors = [akTop, akLeft, akRight]
       EditLabel.AnchorSideLeft.Control = edtSourceDir
       EditLabel.AnchorSideRight.Control = edtSourceDir
@@ -33,14 +33,15 @@ object Form1: TForm1
       EditLabel.Left = 9
       EditLabel.Height = 15
       EditLabel.Top = 2
-      EditLabel.Width = 681
+      EditLabel.Width = 963
       EditLabel.Caption = 'edtSourceDir'
       EditLabel.ParentColor = False
       TabOrder = 0
-      Text = 'C:\projekte\Lazarus\PicPas\trunk\doc'
+      Text = 'C:\projekte\Lazarus\PicPas\trunk\Docs'
+      OnChange = edtSourceDirChange
     end
     object pnlTopRight: TPanel
-      Left = 690
+      Left = 972
       Height = 43
       Top = 0
       Width = 147
@@ -58,30 +59,81 @@ object Form1: TForm1
       end
     end
   end
-  object Panel1: TPanel
+  object pnlLeft: TPanel
     Left = 0
     Height = 673
     Top = 43
-    Width = 344
+    Width = 450
     Align = alLeft
-    Caption = 'pnlLeft'
+    ClientHeight = 673
+    ClientWidth = 450
     TabOrder = 1
+    inline fraXmlFile1: TfraXmlFile
+      Left = 1
+      Height = 671
+      Top = 1
+      Width = 448
+      Align = alClient
+      ClientHeight = 671
+      ClientWidth = 448
+      inherited pnlTop: TPanel
+        Width = 448
+        ClientWidth = 448
+        inherited edtXmlFilename: TLabeledEdit
+          Width = 313
+          EditLabel.Width = 313
+        end
+        inherited pnlTopRight: TPanel
+          Left = 318
+        end
+      end
+      inherited trvXmlStructure: TTreeView
+        Height = 613
+      end
+      inherited Splitter2: TSplitter
+        Height = 619
+      end
+      inherited pnlClientClient: TPanel
+        Height = 619
+        Width = 144
+        ClientHeight = 619
+        ClientWidth = 144
+        inherited vleXmlFileEntry: TValueListEditor
+          Width = 142
+          ColWidths = (
+            64
+            74
+          )
+        end
+        inherited edtXmlFileDetail: TMemo
+          Height = 308
+          Width = 142
+          Lines.Strings = (
+            'Memo1'
+          )
+        end
+        inherited splXmlFileEntry: TSplitter
+          Width = 142
+        end
+      end
+    end
   end
   object pnlProcessing: TPanel
-    Left = 344
+    Left = 450
     Height = 673
     Top = 43
-    Width = 80
+    Width = 256
     Align = alClient
     BevelOuter = bvNone
     ClientHeight = 673
-    ClientWidth = 80
+    ClientWidth = 256
     TabOrder = 2
-    object btnProcessPas2Po: TBitBtn
+    object btnProcessXml2Po: TBitBtn
       Left = 0
       Height = 108
       Top = 120
       Width = 30
+      Action = actXmlProcessX2Po
       Caption = '>'
       TabOrder = 0
     end
@@ -90,11 +142,12 @@ object Form1: TForm1
       Height = 37
       Top = 304
       Width = 30
+      Action = actXmlProcessPo2X
       Caption = '<'
     end
   end
   inline fraPoFile1: TfraPoFile
-    Left = 424
+    Left = 706
     Height = 673
     Top = 43
     Width = 413
@@ -107,6 +160,9 @@ object Form1: TForm1
       ClientWidth = 413
       inherited cbxSelectLanguage: TComboBox
         Width = 229
+      end
+      inherited edtProjectName: TEdit
+        Text = 'ppManual'
       end
       inherited tlbPoFile: TToolBar
         Left = 339
@@ -122,6 +178,20 @@ object Form1: TForm1
     inherited lblBottom: TLabel
       Top = 669
       Width = 407
+    end
+  end
+  object alsXmlProcess: TActionList
+    left = 466
+    top = 82
+    object actXmlProcessX2Po: TAction
+      Category = 'XmlProcess'
+      Caption = 'X2Po'
+      OnExecute = actXmlProcessX2PoExecute
+    end
+    object actXmlProcessPo2X: TAction
+      Category = 'XmlProcess'
+      Caption = 'po2X'
+      OnExecute = actXmlProcessPo2XExecute
     end
   end
 end
