@@ -43,6 +43,7 @@ type
         property poFile: TpoFile read FPoFile;
         procedure AppendData(const aIdent: string; const aTrans: TStringArray);
         function LookUpIdent(const aIdent: string): integer;
+        function LookUpSource(const aIdent: string): integer;
         function GetTranslText(const id: integer): string;
         property LanguageID: integer read GetLanguageID;// write SetLanguageID
         property BaseDir: string read FBaseDir write SetBaseDir;
@@ -145,6 +146,11 @@ end;
 function TfraPoFile.LookUpIdent(const aIdent: string): integer;
 begin
     Result := FPoFile.LookUpIdent(aIdent);
+end;
+
+function TfraPoFile.LookUpSource(const aIdent: string): integer;
+begin
+    Result := FPoFile.LookUpSource(aIdent);
 end;
 
 function TfraPoFile.GetTranslText(const id: integer): string;

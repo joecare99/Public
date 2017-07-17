@@ -76,12 +76,14 @@ var
   {%H-}lPhraseStumb, lTransStumb: String;
   lid: Integer;
 begin
-  lPhraseStumb := AnalyzePhrase(Phrase,exc);
+  lPhraseStumb := AnalyzePhrase(ansistring(Phrase),exc);
   lid := fraPoFile1.LookUpIdent(path);
+  if lid <0 then
+     lid := fraPoFile1.LookUpSource(lPhraseStumb);
   if lid >=0 then
     lTransStumb:=fraPoFile1.GetTranslText(lid);
-  if lTransStumb <> '' then
-  result := BuildPhrase(lTransStumb,exc)
+  if lTransStumb <> ''  then
+    result :=DOMString( BuildPhrase(lTransStumb,exc))
   else
     result := Phrase;
 end;
@@ -110,20 +112,21 @@ var Chapter:TChapters;
                   lInterest3:= ansistring(XMLNodes[i].NodeName) = 'text:h';
                   if lInterest3 then
                     begin
-                      trystrtoint( XMLNodes[i].Attributes.GetNamedItem('text:outline-level').TextContent,lOutlLev);
+                      trystrtoint( XMLNodes[i].Attributes.GetNamedItem('text:outline-level').TextContent{%H-},lOutlLev);
                       inc(Chapter[lOutlLev]);
                       for j := lOutlLev+1 to 4 do Chapter[j]:=0;
                     end;
                   if lBailout or lBailout2 then break;
-                  if assigned(XMLNodes[i].ChildNodes) and  (XMLNodes[i].ChildNodes.Count>1) and not lInterest3 then
+                  if assigned(XMLNodes[i].ChildNodes) and  (XMLNodes[i].ChildNodes.Count>0)  then
                     ParseChilds(LNewNode,Flag1 or lInterest1,Flag2 or lInterest2, XMLNodes[i].ChildNodes)
-                  else
-                    if Flag1 and (Flag2 or lInterest2 or lInterest3) and (trim(XMLNodes[i].TextContent) <> '')   then
-                       begin
-                         if not lInterest3 then inc(Chapter[4]);
-                         ParsePhrase(LNewNode,trim(ansistring(XMLNodes[i].TextContent)),Chapter);
-                       end;
+
                 end
+             else
+               if Flag1 and Flag2  and (trim(XMLNodes[i].TextContent) <> '')   then
+                  begin
+                    if not lInterest3 then inc(Chapter[4]);
+                    ParsePhrase(parent,trim(ansistring(TDOMText(XMLNodes[i]).Data)),Chapter);
+                  end;
 
 
   end;
@@ -166,13 +169,13 @@ var Chapter:TChapters;
                     end;
                   if lBailout or (lBailout2 or lBailout2b) then
                    else
-                  if assigned(XMLNodes[i].ChildNodes) and  (XMLNodes[i].ChildNodes.Count>1) and not lInterest3 then
+                  if assigned(XMLNodes[i].ChildNodes) and  (XMLNodes[i].ChildNodes.Count>0) then
                     ParseChilds(LNewNode,Flag1 or lInterest1,Flag2 or lInterest2 or lInterest3, XMLNodes[i].ChildNodes);
                 end
-              else    if (trim(XMLNodes[i].TextContent) <> '')   then
+              else    if (trim(TDOMText(XMLNodes[i]).Data) <> '') and (flag1 or Flag2)  then
                 begin
                   if not lInterest3 then inc(Chapter[4]);
-                  XMLNodes[i].TextContent:=SetNewPhrase(LNewNode,XMLNodes[i].TextContent,Chapter);
+                  XMLNodes[i].TextContent:=SetNewPhrase(Parent,XMLNodes[i].TextContent,Chapter);
                 end;
   end;
 

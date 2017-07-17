@@ -1,0 +1,167 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tfrapofile.actfileautoload.caption
+msgid "AutoLoad"
+msgstr ""
+
+#: tfrapofile.actfileload.caption
+msgctxt "tfrapofile.actfileload.caption"
+msgid "Load"
+msgstr ""
+
+#: tfrapofile.actfileopen.caption
+msgctxt "tfrapofile.actfileopen.caption"
+msgid "Öffnen"
+msgstr ""
+
+#: tfrapofile.actfileopen.hint
+msgctxt "tfrapofile.actfileopen.hint"
+msgid "Öffnen"
+msgstr ""
+
+#: tfrapofile.actfilesave.caption
+msgctxt "tfrapofile.actfilesave.caption"
+msgid "Save"
+msgstr ""
+
+#: tfrapofile.actfilesaveas.caption
+msgctxt "tfrapofile.actfilesaveas.caption"
+msgid "Sichern &als ..."
+msgstr ""
+
+#: tfrapofile.actfilesaveas.hint
+msgctxt "tfrapofile.actfilesaveas.hint"
+msgid "Sichern als"
+msgstr ""
+
+#: tfrapofile.cbxselectlanguage.text
+msgid "Deutsch,de"
+msgstr ""
+
+#: tfrapofile.edtprojectname.text
+msgid "PicPas"
+msgstr ""
+
+#: tfrapofile.tlbpofile.caption
+msgid "tlbPoFile"
+msgstr ""
+
+#: tfrapofile.toolbutton1.caption
+msgid "AL"
+msgstr ""
+
+#: tfrapofile.toolbutton3.caption
+msgid "Ld"
+msgstr ""
+
+#: tfrapofile.toolbutton4.caption
+msgid "Sv"
+msgstr ""
+
+#: tfraxmlfile.actdosomething.caption
+msgid "actDoSomething"
+msgstr ""
+
+#: tfraxmlfile.actfileload.caption
+msgctxt "tfraxmlfile.actfileload.caption"
+msgid "Load"
+msgstr ""
+
+#: tfraxmlfile.actfileopen.caption
+msgctxt "tfraxmlfile.actfileopen.caption"
+msgid "Öffnen"
+msgstr ""
+
+#: tfraxmlfile.actfileopen.hint
+msgctxt "tfraxmlfile.actfileopen.hint"
+msgid "Öffnen"
+msgstr ""
+
+#: tfraxmlfile.actfilesave.caption
+msgctxt "tfraxmlfile.actfilesave.caption"
+msgid "Save"
+msgstr ""
+
+#: tfraxmlfile.actfilesaveas.caption
+msgctxt "tfraxmlfile.actfilesaveas.caption"
+msgid "Sichern &als ..."
+msgstr ""
+
+#: tfraxmlfile.actfilesaveas.hint
+msgctxt "tfraxmlfile.actfilesaveas.hint"
+msgid "Sichern als"
+msgstr ""
+
+#: tfraxmlfile.btnxmlfileload.caption
+msgid "L"
+msgstr ""
+
+#: tfraxmlfile.btnxmlfileopen.caption
+msgid "O"
+msgstr ""
+
+#: tfraxmlfile.btnxmlfilesave_.caption
+msgid "S"
+msgstr ""
+
+#: tfraxmlfile.edtxmlfilename.editlabel.caption
+msgid "Datei:"
+msgstr ""
+
+#: tfraxmlfile.edtxmlfilename.text
+msgid "edtXmlFilename"
+msgstr ""
+
+#: tfraxmlfile.lblcompiledon.caption
+msgid ""
+"Compiled: %s\n"
+"#9on:%s\n"
+msgstr ""
+
+#: tfrmxml2pomain.actxmlprocesspo2x.caption
+msgid "po2X"
+msgstr ""
+
+#: tfrmxml2pomain.actxmlprocessx2po.caption
+msgid "X2Po"
+msgstr ""
+
+#: tfrmxml2pomain.btnprocesspo2pas.caption
+msgid "<"
+msgstr ""
+
+#: tfrmxml2pomain.btnprocessxml2po.caption
+msgid ">"
+msgstr ""
+
+#: tfrmxml2pomain.btnselectdir.caption
+msgid "..."
+msgstr ""
+
+#: tfrmxml2pomain.edtsourcedir.editlabel.caption
+msgid "edtSourceDir"
+msgstr ""
+
+#: tfrmxml2pomain.edtsourcedir.text
+msgid "C:\\projekte\\Lazarus\\PicPas\\trunk\\Docs"
+msgstr ""
+
+#: tfrmxml2pomain.frapofile1.pnlrighttop.edtprojectname.text
+msgid "ppManual"
+msgstr ""
+
+#: unt_cdate.adate
+msgctxt "unt_cdate.adate"
+msgid "15.07.2017"
+msgstr ""
+
+#: unt_cdate.cdate
+msgctxt "unt_cdate.cdate"
+msgid "15.07.2017"
+msgstr ""
+
+#: unt_cdate.cname
+msgid "SILENT-PC2"
+msgstr ""
+

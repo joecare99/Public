@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="prj_PicPas2Po"><module name="unt_PoFile"><short>Unit to handle .po - Files for internationalization</short><element name="TPoFile"><short>Class to handle .PO - Files</short>
+      </element><element name="TPoFile.Flines"><short>Stringlist to hold the contents of the .PO - File </short>
+      </element><element name="TPoFile.GetLine"><short>Retreives a single line of the .po file</short>
+      </element><element name="TPoFile.SetLines"><short>replace the .po file with the given Stringlist</short>
+      </element><element name="TPoFile.SetLine"><short>replace a single line with the given String</short>
+      </element><element name="TPoFile.Create"><short>Constructor Create initializes the class</short>
+      </element><element name="TPoFile.Destroy"><short>Destructor Destroy finalizes the Class</short>
+      </element><element name="TPoFile.AppendData"><short>Tries to Appent the given Parameters to the .PO file (only if the Ref doesn't exist)</short>
+      </element><element name="TPoFile.LookUpIdent"><short>Checks if a given Index already exist in the .PO- File, If yes it returns the Line-Number of the Entry </short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

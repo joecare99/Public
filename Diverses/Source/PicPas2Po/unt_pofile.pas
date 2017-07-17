@@ -24,6 +24,7 @@ type
         destructor Destroy; override;
         procedure AppendData(const aRef, aIndex, aTransl: string);
         function LookUpIdent(const aIdent: string): integer;
+        function LookUpSource(const aIdent: string): integer;
         function GetTranslText(const id: integer): string;
         procedure LoadFromFile(Filename: string);
         procedure SaveToFile(Filename: string);
@@ -76,6 +77,14 @@ begin
     Result := FLines.IndexOf(cPoReferenz + ' ' + QuotedStr2(aIdent));
     if Result > 1 then
         Dec(Result); // Todo: better Search-Code
+end;
+
+function TPoFile.LookUpSource(const aIdent: string): integer;
+begin
+    // Todo: Multiline
+    Result := FLines.IndexOf(cPoMsgOrg + ' ' + QuotedStr2(aIdent));
+    if Result > 1 then
+        Dec(Result,2); // Todo: better Search-Code
 end;
 
 function TPoFile.GetTranslText(const id: integer): string;
