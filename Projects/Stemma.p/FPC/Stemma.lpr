@@ -19,7 +19,7 @@ frm_EditName, frm_EditEvents, frm_EditWitness,
 frm_Repositories, frm_EditSource, frm_Types, frm_EditTypes,
   frm_About, frm_SelectPerson, dm_GenData, cls_Translation,//uScaleDPI, 
 frm_SelectDialog, fra_Citations, untWebexport, fra_Documents, fra_Individual,
-fra_Phrase, fra_Date, untGedComExImport;
+fra_Phrase, fra_Date, untGedComExImport, fra_Memo;
 
 {$R *.res}
 

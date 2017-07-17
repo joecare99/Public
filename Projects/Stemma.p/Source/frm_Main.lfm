@@ -1,6 +1,6 @@
 object frmStemmaMainForm: TfrmStemmaMainForm
   Left = 462
-  Height = 221
+  Height = 201
   Top = 105
   Width = 1065
   ActiveControl = CheckBox1
@@ -470,11 +470,12 @@ object frmStemmaMainForm: TfrmStemmaMainForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  LCLVersion = '1.8.0.2'
+  LCLVersion = '1.8.0.3'
+  Visible = False
   object StatusBar: TStatusBar
     Left = 0
     Height = 23
-    Top = 178
+    Top = 158
     Width = 1065
     AutoHint = True
     Panels = <    
@@ -758,7 +759,7 @@ object frmStemmaMainForm: TfrmStemmaMainForm
   end
   object pnlDocksite: TPanel
     Left = 0
-    Height = 92
+    Height = 72
     Top = 86
     Width = 1065
     Align = alClient

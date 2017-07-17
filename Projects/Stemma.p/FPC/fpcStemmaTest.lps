@@ -8,7 +8,7 @@
       <Unit0>
         <Filename Value="fpcStemmaTest.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="1"/>
         <CursorPos X="77" Y="6"/>
         <UsageCount Value="56"/>
         <Loaded Value="True"/>
@@ -17,6 +17,7 @@
         <Filename Value="..\Source\test\teststemma.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="testStemma"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="95"/>
         <CursorPos Y="108"/>
         <UsageCount Value="56"/>
@@ -29,7 +30,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
         <UnitName Value="dm_GenData"/>
-        <EditorIndex Value="4"/>
+        <IsVisibleTab Value="True"/>
         <TopLine Value="1189"/>
         <CursorPos X="45" Y="1215"/>
         <UsageCount Value="56"/>
@@ -43,7 +44,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frm_ConnectDB"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="19"/>
         <CursorPos X="21" Y="52"/>
         <UsageCount Value="56"/>
@@ -59,7 +60,7 @@
       </Unit4>
       <Unit5>
         <Filename Value="C:\lazarus\fpc\3.0.2\source\packages\fcl-db\src\sqldb\sqldb.pp"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="3418"/>
         <CursorPos X="69" Y="3468"/>
         <UsageCount Value="18"/>
@@ -71,8 +72,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="ProjectGroupEditor"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="4"/>
         <TopLine Value="737"/>
         <CursorPos X="72" Y="759"/>
         <UsageCount Value="18"/>

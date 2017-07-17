@@ -309,7 +309,8 @@ type
     procedure UpdateProgressBar(Sender: TObject);
     property iID: longint read GetiID write SetiID;
     property sID: string read GetIDStr write SetiIDStr;
-    procedure AppendHistoryData(const lHistType: string; const lHistData: string);
+    procedure AppendHistoryData(const lHistType: string; const lHistData: string);overload;
+    procedure AppendHistoryData(const lHistType: string; const lHistData: integer);overload;
     { public declarations }
   end;
 
@@ -343,6 +344,18 @@ begin
   InsertColRow(false,0);
   Cells[0,0]:=lHistType;
   Cells[1,0]:=lHistData;
+  Objects[1,0]:=nil;
+  end;
+end;
+
+procedure TfrmStemmaMainForm.AppendHistoryData(const lHistType: string;
+  const lHistData: integer);
+begin
+  with Datahist do begin
+  InsertColRow(false,0);
+  Cells[0,0]:=lHistType;
+  Cells[1,0]:=inttostr(lHistData);
+  Objects[1,0]:=TObject(ptrint(lHistData));
   end;
 end;
 

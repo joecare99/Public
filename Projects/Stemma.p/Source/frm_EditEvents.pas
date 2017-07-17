@@ -7,7 +7,7 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
   Grids, Menus, FMUtils, fra_Citations, fra_Documents, StrUtils, LCLType,
-  Buttons, Spin, ExtCtrls, fra_Phrase, fra_Date;
+  Buttons, Spin, ExtCtrls, fra_Phrase, fra_Date, fra_Memo;
 
 type
  enumEventEditType = (
@@ -25,6 +25,7 @@ type
     fraDate1: TfraDate;
     fraDocuments1: TfraDocuments;
     fraEdtCitations1: TfraEdtCitations;
+    fraMemo1: TfraMemo;
     fraPhrase1: TfraPhrase;
     L3: TEdit;
     L4: TEdit;
@@ -32,9 +33,7 @@ type
     LA: TEdit;
     Label1: TLabel;
     Label11: TLabel;
-    Label3: TLabel;
     Label8: TLabel;
-    M: TMemo;
     mnuEventsMain: TMainMenu;
     MenuItem1: TMenuItem;
     MenuItem11: TMenuItem;
@@ -49,6 +48,7 @@ type
     ModifierTemoin: TMenuItem;
     AjouterTemoin: TMenuItem;
     No: TSpinEdit;
+    P2: TMemo;
     pnlBottom: TPanel;
     Splitter1: TSplitter;
     SupprimerTemoin: TMenuItem;
@@ -64,7 +64,7 @@ type
     procedure AjouterTemoinClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure MEditingDone(Sender: TObject);
+    procedure fraMemo1EditingDone(Sender: TObject);
 
     procedure MenuItem11Click(Sender: TObject);
     procedure MenuItem12Click(Sender: TObject);
@@ -209,7 +209,7 @@ begin
   Button1.Caption:=Translation.Items[152];
   Button2.Caption:=Translation.Items[164];
   Label1.Caption:=Translation.Items[166];
-  Label3.Caption:=Translation.Items[171];
+  //Label3.Caption:=Translation.Items[171];
   //Label4.Caption:=Translation.Items[172];
   //Label5.Caption:=Translation.Items[144];
   //Label6.Caption:=Translation.Items[173];
@@ -344,7 +344,7 @@ begin
      TableauTemoins.Cells[2,1]:=frmStemmaMainForm.sID;
      TableauTemoins.Cells[3,1]:=dmGenData.GetIndividuumName(frmStemmaMainForm.iID);
      TableauTemoins.Cells[4,1]:='1';
-     M.Text:='';
+     fraMemo1.Text:='';
      fraPhrase1.clear;
      fraDate1.clear;
      No.Value:=0;
@@ -369,7 +369,7 @@ begin
      FindTypeItem(dmGenData.Query1.Fields[1].AsInteger);
      No.Text:=dmGenData.Query1.Fields[0].AsString;
      X.Text:=dmGenData.Query1.Fields[4].AsString;
-     M.Text:=dmGenData.Query1.Fields[3].AsString;
+     fraMemo1.Text:=dmGenData.Query1.Fields[3].AsString;
      // Aller chercher L0-L4 de L
      sPlace:=dmGenData.Query1.Fields[7].AsString;
      DecodePlace(sPlace,sArticle ,sDetail,sCity,sRegion,sProvince,sCountry);
@@ -409,9 +409,9 @@ begin
      fraDocuments1.Populate;
 end;
 
-procedure TfrmEditEvents.MEditingDone(Sender: TObject);
+procedure TfrmEditEvents.fraMemo1EditingDone(Sender: TObject);
 begin
-  frmStemmaMainForm.AppendHistoryData('M',M.Text);
+  frmStemmaMainForm.AppendHistoryData('M',fraMemo1.Text);
 end;
 
 
@@ -727,7 +727,7 @@ begin
           begin
           if frmStemmaMainForm.DataHist.Cells[0,j]='M' then
              begin
-             M.text:=frmStemmaMainForm.DataHist.Cells[1,j];
+             fraMemo1.text:=frmStemmaMainForm.DataHist.Cells[1,j];
              found:=true;
              break;
           end;
@@ -738,7 +738,7 @@ begin
              begin
              if frmStemmaMainForm.DataHist.Cells[0,j]='M' then
                 begin
-                M.text:=frmStemmaMainForm.DataHist.Cells[1,j];
+                fraMemo1.text:=frmStemmaMainForm.DataHist.Cells[1,j];
                 found:=true;
                 break;
              end;
@@ -817,13 +817,10 @@ begin
      end;
      if idPlace>1 then
         begin
-        frmStemmaMainForm.DataHist.InsertColRow(false,0);
-        frmStemmaMainForm.DataHist.Cells[0,0]:='L';
-        frmStemmaMainForm.DataHist.Cells[1,0]:=inttostr(idPlace);
-        frmStemmaMainForm.DataHist.Objects[1,0]:=TObject(ptrint(idPlace));
+        frmStemmaMainForm.AppendHistoryData('L',idPlace);
      end;  {SetVarInitHere}
      lIdPlace:=idPlace;
-     lInfo:=trim(M.Text);
+     lInfo:=trim(fraMemo1.Text);
      lDate:=fraDate1.Date;
      lSortDate:=fraDate1.SortDate;
      lPrefered:=X.Text='1';

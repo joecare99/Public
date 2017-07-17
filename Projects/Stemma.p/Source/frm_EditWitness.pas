@@ -87,9 +87,7 @@ begin
      P.Text:=P1.Text;
   Label6.Visible:=(P.Text=P1.Text);
   P2.Text:=DecodePhrase(I.Value,Role.Items[Role.ItemIndex],P.Text,'E',E.Value);
-  frmStemmaMainForm.DataHist.InsertColRow(false,0);
-  frmStemmaMainForm.DataHist.Cells[0,0]:='P';
-  frmStemmaMainForm.DataHist.Cells[1,0]:=P.Text;
+  frmStemmaMainForm.AppendHistoryData('P',P.Text);
 end;
 
 procedure TfrmEditWitness.RoleChange(Sender: TObject);
@@ -251,9 +249,7 @@ begin
         begin
         NomI.Text:=DecodeName(dmGenData.Query1.Fields[0].AsString,1);
         P2.Text:=DecodePhrase(I.Value,Role.Text,P.Text,'E',E.Value);
-        frmStemmaMainForm.DataHist.InsertColRow(false,0);
-        frmStemmaMainForm.DataHist.Cells[0,0]:='I';
-        frmStemmaMainForm.DataHist.Cells[1,0]:=I.Text;
+        frmStemmaMainForm.AppendHistoryData('I',I.Value);
      end;
   end;
 end;

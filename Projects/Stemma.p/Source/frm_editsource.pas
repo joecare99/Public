@@ -169,9 +169,7 @@ end;
 
 procedure TfrmEditSource.edtSourceInformationEditingDone(Sender: TObject);
 begin
-  frmStemmaMainForm.DataHist.InsertColRow(false,0);
-  frmStemmaMainForm.DataHist.Cells[0,0]:='M';
-  frmStemmaMainForm.DataHist.Cells[1,0]:=edtSourceInformation.Text;
+  frmStemmaMainForm.AppendHistoryData('M',edtSourceInformation.Text);
 end;
 
 procedure TfrmEditSource.mniSourceRepeatClick(Sender: TObject);

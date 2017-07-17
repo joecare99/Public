@@ -1,6 +1,6 @@
 object frmEditType: TfrmEditType
   Left = 885
-  Height = 366
+  Height = 346
   Top = 409
   Width = 617
   ActiveControl = T
@@ -12,7 +12,8 @@ object frmEditType: TfrmEditType
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.2'
+  LCLVersion = '1.8.0.3'
+  Visible = False
   object Button1: TButton
     Left = 456
     Height = 25

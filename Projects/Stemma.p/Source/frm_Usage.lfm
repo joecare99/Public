@@ -10,7 +10,7 @@ object frmShowUsage: TfrmShowUsage
   OnResize = FormResize
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.2'
+  Visible = False
   object tblUsage: TStringGrid
     Left = 8
     Height = 312
@@ -52,7 +52,6 @@ object frmShowUsage: TfrmShowUsage
     Height = 33
     Top = 328
     Width = 91
-    Default = True
     DefaultCaption = True
     Kind = bkOK
     ModalResult = 1

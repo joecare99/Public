@@ -10,7 +10,6 @@ object frmDocuments: TfrmDocuments
   ClientWidth = 451
   OnClose = FormClose
   OnShow = FormShow
-  LCLVersion = '1.8.0.2'
   Visible = False
   object tblDocuments: TStringGrid
     Left = 0

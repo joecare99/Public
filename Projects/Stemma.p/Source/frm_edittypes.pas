@@ -134,9 +134,7 @@ end;
 
 procedure TfrmEditType.PEditingDone(Sender: TObject);
 begin
-  frmStemmaMainForm.DataHist.InsertColRow(false,0);
-  frmStemmaMainForm.DataHist.Cells[0,0]:='P';
-  frmStemmaMainForm.DataHist.Cells[1,0]:=P.Text;
+  frmStemmaMainForm.AppendHistoryData('P',P.Text);
 end;
 
 procedure TfrmEditType.SetEditMode(AValue: TenumTypeEditMode);

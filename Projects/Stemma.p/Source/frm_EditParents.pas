@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Grids, Menus, FMUtils,  fra_Citations, LCLType,
+  Grids, Menus, FMUtils,  fra_Citations, fra_Memo, LCLType,
   Spin, ExtCtrls, Buttons;
 
 type
@@ -20,6 +20,7 @@ type
 
   TfrmEditParents = class(TForm)
     Ajouter1: TMenuItem;
+    fraMemo1: TfraMemo;
     idA: TSpinEdit;
 
     idB: TSpinEdit;
@@ -38,6 +39,8 @@ type
     MenuItem6: TMenuItem;
     Modifier1: TMenuItem;
     No: TSpinEdit;
+    pnlDateLeft: TPanel;
+    pnlParentDate: TPanel;
     pnlParent: TPanel;
     pnlTop: TPanel;
     pnlParentBottom: TPanel;
@@ -47,10 +50,8 @@ type
     P2: TMemo;
     SD: TEdit;
     lblParent: TLabel;
-    Label3: TLabel;
     Label4: TLabel;
-    Label5: TLabel;
-    M: TMemo;
+    lblDate: TLabel;
     P: TMemo;
     SD2: TEdit;
     Supprimer1: TMenuItem;
@@ -58,11 +59,9 @@ type
     Y: TComboBox;
     lblType: TLabel;
     procedure idAEditingDone(Sender: TObject);
-    procedure Ajouter1Click(Sender: TObject);
     procedure idBEditingDone(Sender: TObject);
     procedure btnParentOKClick(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure MEditingDone(Sender: TObject);
     procedure MenuItem5Click(Sender: TObject);
     procedure MenuItem6Click(Sender: TObject);
     procedure P2DblClick(Sender: TObject);
@@ -70,7 +69,6 @@ type
     procedure PEditingDone(Sender: TObject);
     procedure SDEditingDone(Sender: TObject);
     procedure Supprimer1Click(Sender: TObject);
-    procedure TableauCitationsDblClick(Sender: TObject);
     procedure ParentsSaveData(Sender:Tobject);
     procedure YChange(Sender: TObject);
   private
@@ -105,9 +103,9 @@ begin
   btnParentCancel.Caption:=Translation.Items[164];
   lblType.Caption:=Translation.Items[166];
   lblParent.Caption:=Translation.Items[187];
-  Label3.Caption:=Translation.Items[171];
+//  Label3.Caption:=Translation.Items[171];
   Label4.Caption:=Translation.Items[172];
-  Label5.Caption:=Translation.Items[189];
+  lblDate.Caption:=Translation.Items[189];
   Label6.Caption:=Translation.Items[173];
   lblChild.Caption:=Translation.Items[188];
 
@@ -153,7 +151,7 @@ begin
         NomB.Text:='';
         idB.ReadOnly :=false;
      end;
-     M.Text:='';
+     fraMemo1.Text:='';
      P.Text:='';
      SD.Text:='';
      SD2.Text:=InterpreteDate('',1);;
@@ -173,7 +171,7 @@ begin
      idB.Value:=dmGenData.Query1.Fields[3].AsInteger;
      NomB.Text:=DecodeName(dmGenData.GetIndividuumName(idb.Value),1);
      NomA.Text:=DecodeName(dmGenData.GetIndividuumName(ida.Value),1);
-     M.Text:=dmGenData.Query1.Fields[4].AsString;
+     fraMemo1.Text:=dmGenData.Query1.Fields[4].AsString;
      P.Text:=dmGenData.Query1.Fields[5].AsString;
      SD2.Text:=dmGenData.Query1.Fields[6].AsString;
      SD.Text:=ConvertDate(dmGenData.Query1.Fields[6].AsString,1);
@@ -191,13 +189,6 @@ begin
   btnParentOK.Enabled:=(idA.Value>0) and (idB.Value>0);
   fraEdtCitations1.Enabled:=btnParentOK.Enabled;
   MenuItem5.Enabled:=btnParentOK.Enabled;
-end;
-
-procedure TfrmEditParents.MEditingDone(Sender: TObject);
-begin
-  frmStemmaMainForm.DataHist.InsertColRow(false,0);
-  frmStemmaMainForm.DataHist.Cells[0,0]:='M';
-  frmStemmaMainForm.DataHist.Cells[1,0]:=M.Text;
 end;
 
 procedure TfrmEditParents.MenuItem5Click(Sender: TObject);
@@ -326,7 +317,7 @@ begin
         begin
         if frmStemmaMainForm.DataHist.Cells[0,j]='M' then
            begin
-           M.text:=frmStemmaMainForm.DataHist.Cells[1,j];
+           fraMemo1.text:=frmStemmaMainForm.DataHist.Cells[1,j];
            found:=true;
            break;
         end;
@@ -337,7 +328,7 @@ begin
            begin
            if frmStemmaMainForm.DataHist.Cells[0,j]='M' then
               begin
-              M.text:=frmStemmaMainForm.DataHist.Cells[1,j];
+              fraMemo1.text:=frmStemmaMainForm.DataHist.Cells[1,j];
               found:=true;
               break;
            end;
@@ -362,9 +353,7 @@ begin
         btnParentOK.Enabled:=(idA.Value>0) and (idB.Value>0);
   fraEdtCitations1.Enabled:=btnParentOK.Enabled;
   MenuItem5.Enabled:=btnParentOK.Enabled;
-  frmStemmaMainForm.DataHist.InsertColRow(false,0);
-  frmStemmaMainForm.DataHist.Cells[0,0]:='B';
-  frmStemmaMainForm.DataHist.Cells[1,0]:=idB.Text;
+  frmStemmaMainForm.AppendHistoryData('B',idB.Value);
 end;
 
 procedure TfrmEditParents.idAEditingDone(Sender: TObject);
@@ -374,14 +363,7 @@ begin
   btnParentOK.Enabled:=((StrToInt(idA.Text)>0) and (StrToInt(idB.Text)>0));
   fraEdtCitations1.Enabled:=btnParentOK.Enabled;
   MenuItem5.Enabled:=btnParentOK.Enabled;
-  frmStemmaMainForm.DataHist.InsertColRow(false,0);
-  frmStemmaMainForm.DataHist.Cells[0,0]:='A';
-  frmStemmaMainForm.DataHist.Cells[1,0]:=idA.Text;
-end;
-
-procedure TfrmEditParents.Ajouter1Click(Sender: TObject);
-begin
-
+  frmStemmaMainForm.AppendHistoryData('A',idA.Value);
 end;
 
 procedure TfrmEditParents.ParentsSaveData(Sender: Tobject);
@@ -484,7 +466,7 @@ begin
      dmGenData.Query1.ParamByName('idType').AsInteger:=ptrint(Y.items.objects[Y.ItemIndex]);
      dmGenData.Query1.ParamByName('idIndA').AsInteger:=idA.Value;
      dmGenData.Query1.ParamByName('idIndB').AsInteger:=idB.Value;
-     dmGenData.Query1.ParamByName('M').AsString:=M.text;
+     dmGenData.Query1.ParamByName('M').AsString:=fraMemo1.text;
      dmGenData.Query1.ParamByName('SDate').AsString:=sd2.text;
      If lIsDefaultPhrase then
         dmGenData.Query1.ParamByName('P').AsString:=''
@@ -572,18 +554,14 @@ begin
      P.Text:=P1.Text;
   Label6.Visible:=(P.Text=P1.Text);
   P2.Text:=DecodePhrase(idA.Value,'ENFANT',P.Text,'R',No.Value);
-  frmStemmaMainForm.DataHist.InsertColRow(false,0);
-  frmStemmaMainForm.DataHist.Cells[0,0]:='P';
-  frmStemmaMainForm.DataHist.Cells[1,0]:=P.Text;
+  frmStemmaMainForm.AppendHistoryData('P',P.Text);
 end;
 
 procedure TfrmEditParents.SDEditingDone(Sender: TObject);
 begin
   SD2.Text:=InterpreteDate(SD.Text,1);
   SD.Text:=convertDate(SD.Text,1);
-  frmStemmaMainForm.DataHist.InsertColRow(false,0);
-  frmStemmaMainForm.DataHist.Cells[0,0]:='SD';
-  frmStemmaMainForm.DataHist.Cells[1,0]:=SD2.Text;
+  frmStemmaMainForm.AppendHistoryData('SD',SD2.Text);
 end;
 
 procedure TfrmEditParents.Supprimer1Click(Sender: TObject);
@@ -599,11 +577,6 @@ begin
   //      if StrtoInt(idA.Text)>0 then dmGenData.SaveModificationTime(idA.Value);
   //      if StrtoInt(idB.Text)>0 then dmGenData.SaveModificationTime(idB.Value);
   //   end;
-end;
-
-procedure TfrmEditParents.TableauCitationsDblClick(Sender: TObject);
-begin
-
 end;
 
 procedure TfrmEditParents.YChange(Sender: TObject);

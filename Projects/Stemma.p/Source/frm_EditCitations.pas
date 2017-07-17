@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Spin, Menus, ExtCtrls, Buttons,  Math;
+  Spin, Menus, ExtCtrls, Buttons, fra_Memo,  Math;
 
 type
   enumCitationEditType=(
@@ -17,6 +17,7 @@ type
   TEditCitations = class(TForm)
     Button1: TBitBtn;
     Button2: TBitBtn;
+    fraMemo1: TfraMemo;
     Label1: TLabel;
     Label2: TLabel;
     Label3: TLabel;
@@ -25,7 +26,6 @@ type
     MenuItem2: TMenuItem;
     N: TSpinEdit;
     No: TSpinEdit;
-    Memo: TMemo;
     pnlBottom: TPanel;
     S: TSpinEdit;
     Source: TComboBox;
@@ -116,7 +116,7 @@ begin
       EditCitations.Caption:=Translation.Items[29];
       No.Value:=0;
       Source.ItemIndex:=0;
-      Memo.Text:='';
+      fraMemo1.Text:='';
 //      dmGenData.GetCode(codex,nocode)
       Q.Value:=0;
       S.Text:='';
@@ -128,7 +128,7 @@ begin
       dmGenData.Query1.Open;
       dmGenData.Query1.First;
       Source.ItemIndex:=Source.Items.IndexOfObject(TObject(ptrint(dmGenData.Query1.Fields[3].AsInteger)));
-      Memo.Text:=dmGenData.Query1.Fields[4].AsString;
+      fraMemo1.Text:=dmGenData.Query1.Fields[4].AsString;
       FTypeCode:=dmGenData.Query1.Fields[1].AsString;
       N.value:=dmGenData.Query1.Fields[2].AsInteger;
       Q.Value:=dmGenData.Query1.Fields[5].AsInteger;
@@ -157,7 +157,7 @@ begin
         S.text:=copy(frmStemmaMainForm.DataHist.Cells[1,i],1,AnsiPos('|',frmStemmaMainForm.DataHist.Cells[1,i])-1);
         SEditingDone(Sender);
         temp:=copy(frmStemmaMainForm.DataHist.Cells[1,i],AnsiPos('|',frmStemmaMainForm.DataHist.Cells[1,i])+1,length(frmStemmaMainForm.DataHist.Cells[1,i]));
-        Memo.text:=copy(temp,1,AnsiPos('|',temp)-1);
+        fraMemo1.text:=copy(temp,1,AnsiPos('|',temp)-1);
         temp:=copy(temp,AnsiPos('|',temp)+1,length(temp));
         Q.value:=StrtoInt(copy(temp,1,length(temp)));
         frmStemmaMainForm.DataHist.Row:=i+1;
@@ -174,7 +174,7 @@ begin
            S.text:=copy(frmStemmaMainForm.DataHist.Cells[1,i],1,AnsiPos('|',frmStemmaMainForm.DataHist.Cells[1,i])-1);
            SEditingDone(Sender);
            temp:=copy(frmStemmaMainForm.DataHist.Cells[1,i],AnsiPos('|',frmStemmaMainForm.DataHist.Cells[1,i])+1,length(frmStemmaMainForm.DataHist.Cells[1,i]));
-           Memo.text:=copy(temp,1,AnsiPos('|',temp)-1);
+           fraMemo1.text:=copy(temp,1,AnsiPos('|',temp)-1);
            temp:=copy(temp,AnsiPos('|',temp)+1,length(temp));
            Q.value:=StrtoInt(copy(temp,1,length(temp)));
            frmStemmaMainForm.DataHist.Row:=i+1;
@@ -249,7 +249,7 @@ begin
      dmGenData.Query1.ParamByName('idCitation').AsInteger:=no.Value;
     end;
     dmGenData.Query1.ParamByName('idSource').AsInteger:=ptrint(Source.Items.Objects[Source.ItemIndex]);
-    dmGenData.Query1.ParamByName('Memo').AsString:=Memo.Text;
+    dmGenData.Query1.ParamByName('Memo').AsString:=fraMemo1.Text;
     dmGenData.Query1.ParamByName('Q').AsInteger:=Q.Value;
   dmGenData.Query1.ExecSQL;
 
@@ -280,9 +280,7 @@ begin
         dmGenData.Query3.Next;
      end;
   end;
-  frmStemmaMainForm.DataHist.InsertColRow(false,0);
-  frmStemmaMainForm.DataHist.Cells[0,0]:='R';
-  frmStemmaMainForm.DataHist.Cells[1,0]:=S.Text+'|'+Memo.Text+'|'+InttoStr(Q.Value);
+  frmStemmaMainForm.AppendHistoryData('R',S.Text+'|'+fraMemo1.Text+'|'+InttoStr(Q.Value));
 end;
 
 end.

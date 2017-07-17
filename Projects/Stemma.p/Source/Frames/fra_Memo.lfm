@@ -1,0 +1,47 @@
+object fraMemo: TfraMemo
+  Left = 0
+  Height = 240
+  Top = 0
+  Width = 753
+  ClientHeight = 240
+  ClientWidth = 753
+  TabOrder = 0
+  object pnlMemoLeft: TPanel
+    Left = 3
+    Height = 234
+    Top = 3
+    Width = 80
+    Align = alLeft
+    BorderSpacing.Around = 3
+    BevelOuter = bvNone
+    ClientHeight = 234
+    ClientWidth = 80
+    TabOrder = 0
+    object lblMemo: TLabel
+      Left = 3
+      Height = 15
+      Top = 3
+      Width = 74
+      Align = alTop
+      Alignment = taRightJustify
+      BorderSpacing.Around = 3
+      Caption = 'Memo:'
+      ParentColor = False
+    end
+  end
+  object edtMemoText: TMemo
+    Left = 86
+    Height = 234
+    Top = 3
+    Width = 652
+    Align = alClient
+    BorderSpacing.Right = 12
+    BorderSpacing.Around = 3
+    Lines.Strings = (
+      'M'
+    )
+    OnEditingDone = edtMemoTextEditingDone
+    ScrollBars = ssAutoVertical
+    TabOrder = 1
+  end
+end

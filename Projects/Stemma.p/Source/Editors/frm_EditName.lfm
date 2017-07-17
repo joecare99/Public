@@ -3,66 +3,16 @@ object frmEditName: TfrmEditName
   Height = 602
   Top = 563
   Width = 629
-  ActiveControl = Y
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de Nom'
   ClientHeight = 602
   ClientWidth = 629
   KeyPreview = True
-  Menu = MainMenu1
+  Menu = mnuNameMain
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.2'
   Visible = False
-  object lblType: TLabel
-    Left = 16
-    Height = 15
-    Top = 16
-    Width = 28
-    Caption = 'Type:'
-    ParentColor = False
-  end
-  object Y: TComboBox
-    Left = 88
-    Height = 23
-    Top = 16
-    Width = 96
-    AutoComplete = True
-    AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-    ItemHeight = 15
-    OnChange = YChange
-    Style = csDropDownList
-    TabOrder = 0
-  end
-  object lblIndividuum: TLabel
-    Left = 16
-    Height = 15
-    Top = 52
-    Width = 46
-    Caption = 'Individu:'
-    ParentColor = False
-  end
-  object lblMemo: TLabel
-    Left = 16
-    Height = 15
-    Top = 223
-    Width = 38
-    Caption = 'Mémo:'
-    ParentColor = False
-  end
-  object M: TMemo
-    Left = 88
-    Height = 59
-    Top = 223
-    Width = 528
-    Lines.Strings = (
-      'M'
-    )
-    OnEditingDone = MEditingDone
-    ScrollBars = ssAutoVertical
-    TabOrder = 2
-  end
   object TableauNoms: TStringGrid
     Left = 88
     Height = 114
@@ -83,7 +33,7 @@ object frmEditName: TfrmEditName
     MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goEditing, goAlwaysShowEditor, goSmoothScroll]
     PopupMenu = PopupMenuNom
-    TabOrder = 1
+    TabOrder = 0
     ColWidths = (
       1
       100
@@ -98,56 +48,16 @@ object frmEditName: TfrmEditName
     Caption = 'Nom:'
     ParentColor = False
   end
-  object X: TEdit
-    Left = 536
-    Height = 23
-    Top = 36
-    Width = 80
-    TabStop = False
-    TabOrder = 3
-    Text = 'X'
-    Visible = False
-  end
-  object Ajout: TEdit
-    Left = 448
-    Height = 23
-    Top = 8
-    Width = 80
-    TabStop = False
-    TabOrder = 4
-    Text = 'X'
-    Visible = False
-  end
-  object I: TSpinEdit
-    Left = 88
-    Height = 23
-    Top = 48
-    Width = 80
-    Color = clBtnFace
-    MaxValue = 1000000000
-    OnEditingDone = IEditingDone
-    ReadOnly = True
-    TabOrder = 5
-  end
-  object No: TSpinEdit
-    Left = 536
-    Height = 23
-    Top = 8
-    Width = 80
-    TabStop = False
-    TabOrder = 6
-    Visible = False
-  end
   object pnlBottom: TPanel
     Left = 0
     Height = 52
-    Top = 530
+    Top = 550
     Width = 629
     Align = alBottom
     BevelOuter = bvNone
     ClientHeight = 52
     ClientWidth = 629
-    TabOrder = 7
+    TabOrder = 1
     object btnOK: TBitBtn
       Left = 397
       Height = 40
@@ -156,7 +66,6 @@ object frmEditName: TfrmEditName
       Align = alRight
       Anchors = [akRight, akBottom]
       BorderSpacing.Around = 6
-      Default = True
       DefaultCaption = True
       Enabled = False
       Kind = bkOK
@@ -172,7 +81,6 @@ object frmEditName: TfrmEditName
       Align = alRight
       Anchors = [akRight, akBottom]
       BorderSpacing.Around = 6
-      Cancel = True
       DefaultCaption = True
       Kind = bkCancel
       ModalResult = 2
@@ -184,41 +92,17 @@ object frmEditName: TfrmEditName
     Height = 23
     Top = 77
     Width = 423
-    TabOrder = 8
+    TabOrder = 2
     Text = 'edtName'
-  end
-  object cbxSex: TComboBoxEx
-    Left = 320
-    Height = 26
-    Top = 46
-    Width = 104
-    Images = imglSex
-    ItemHeight = 20
-    ItemsEx = <    
-      item
-        Caption = 'Unknown'
-        ImageIndex = 0
-      end    
-      item
-        Caption = 'Maskulin'
-        ImageIndex = 1
-      end    
-      item
-        Caption = 'Feminin'
-        ImageIndex = 2
-      end>
-    ItemIndex = 0
-    ReadOnly = True
-    TabOrder = 9
   end
   inline fraEdtCitations1: TfraEdtCitations
     Height = 150
-    Top = 380
+    Top = 400
     Width = 629
     Align = alBottom
     ClientHeight = 150
     ClientWidth = 629
-    TabOrder = 10
+    TabOrder = 3
     inherited TableauCitations: TStringGrid
       Height = 144
       Width = 528
@@ -230,12 +114,12 @@ object frmEditName: TfrmEditName
   end
   inline fraPhrase1: TfraPhrase
     Height = 42
-    Top = 268
+    Top = 288
     Width = 629
     Align = alBottom
     ClientHeight = 42
     ClientWidth = 629
-    TabOrder = 11
+    TabOrder = 4
     DesignLeft = 1113
     DesignTop = 160
     inherited pnlPhraseLeft: TPanel
@@ -248,24 +132,23 @@ object frmEditName: TfrmEditName
       Lines.Strings = (
         ''
       )
-      TabOrder = 2
     end
   end
   object Splitter1: TSplitter
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 375
+    Top = 395
     Width = 629
     Align = alBottom
     ResizeAnchor = akBottom
   end
   inline fraDate1: TfraDate
-    Top = 315
+    Top = 335
     Width = 629
     Align = alBottom
     ClientWidth = 629
-    TabOrder = 13
+    TabOrder = 6
     DesignLeft = 332
     DesignTop = 438
     inherited pnlDateRight: TPanel
@@ -292,10 +175,133 @@ object frmEditName: TfrmEditName
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 310
+    Top = 330
     Width = 629
     Align = alBottom
     ResizeAnchor = akBottom
+  end
+  inline fraMemo1: TfraMemo
+    Height = 71
+    Top = 217
+    Width = 629
+    Align = alBottom
+    ClientHeight = 71
+    ClientWidth = 629
+    TabOrder = 8
+    inherited pnlMemoLeft: TPanel
+      Height = 65
+      ClientHeight = 65
+    end
+    inherited edtMemoText: TMemo
+      Height = 65
+      Width = 528
+      Lines.Strings = (
+        'M'
+      )
+    end
+  end
+  object pnlNameTop: TPanel
+    Left = 0
+    Height = 73
+    Top = 0
+    Width = 629
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 73
+    ClientWidth = 629
+    TabOrder = 9
+    object lblType: TLabel
+      Left = 16
+      Height = 15
+      Top = 16
+      Width = 28
+      Caption = 'Type:'
+      ParentColor = False
+    end
+    object EvType: TComboBox
+      Left = 88
+      Height = 23
+      Top = 16
+      Width = 96
+      AutoComplete = True
+      AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+      ItemHeight = 15
+      OnChange = EvTypeChange
+      Style = csDropDownList
+      TabOrder = 0
+    end
+    object lblIndividuum: TLabel
+      Left = 16
+      Height = 15
+      Top = 52
+      Width = 46
+      Caption = 'Individu:'
+      ParentColor = False
+    end
+    object Prefered: TEdit
+      Left = 536
+      Height = 23
+      Top = 36
+      Width = 80
+      TabStop = False
+      TabOrder = 1
+      Text = 'Prefered'
+      Visible = False
+    end
+    object Prefered2: TEdit
+      Left = 448
+      Height = 23
+      Top = 8
+      Width = 80
+      TabStop = False
+      TabOrder = 2
+      Text = 'X'
+      Visible = False
+    end
+    object idInd: TSpinEdit
+      Left = 88
+      Height = 23
+      Top = 48
+      Width = 80
+      Color = clBtnFace
+      MaxValue = 1000000000
+      OnEditingDone = idIndEditingDone
+      ReadOnly = True
+      TabOrder = 3
+    end
+    object idName: TSpinEdit
+      Left = 536
+      Height = 23
+      Top = 8
+      Width = 80
+      TabStop = False
+      TabOrder = 4
+      Visible = False
+    end
+    object cbxSex: TComboBoxEx
+      Left = 320
+      Height = 26
+      Top = 46
+      Width = 104
+      Images = imglSex
+      ItemHeight = 20
+      ItemsEx = <      
+        item
+          Caption = 'Unknown'
+          ImageIndex = 0
+        end      
+        item
+          Caption = 'Maskulin'
+          ImageIndex = 1
+        end      
+        item
+          Caption = 'Feminin'
+          ImageIndex = 2
+        end>
+      ItemIndex = 0
+      ReadOnly = True
+      TabOrder = 5
+    end
   end
   object PopupMenuNom: TPopupMenu
     left = 80
@@ -317,52 +323,52 @@ object frmEditName: TfrmEditName
       OnClick = MenuItem4Click
     end
   end
-  object MainMenu1: TMainMenu
-    left = 256
-    top = 65528
-    object MenuItem6: TMenuItem
+  object mnuNameMain: TMainMenu
+    left = 208
+    top = 88
+    object mniNameRepeat: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114
-      OnClick = MenuItem6Click
+      OnClick = mniNameRepeatClick
     end
-    object MenuItem5: TMenuItem
+    object mniNameQuit: TMenuItem
       Caption = '&Quit'
       ShortCut = 121
-      OnClick = MenuItem5Click
+      OnClick = mniNameQuitClick
     end
-    object MenuItem9: TMenuItem
+    object mniNameCitations: TMenuItem
       Caption = '&Citations'
-      object MenuItem10: TMenuItem
+      object mniNameCitationAdd: TMenuItem
         Caption = '&Add'
         ShortCut = 118
       end
-      object MenuItem11: TMenuItem
+      object mniNameCitationEdit: TMenuItem
         Caption = '&Edit'
         ShortCut = 119
       end
-      object MenuItem12: TMenuItem
+      object mniNameCitationDelete: TMenuItem
         Caption = '&Delete'
         ShortCut = 120
       end
     end
-    object MenuItem7: TMenuItem
+    object mniName: TMenuItem
       Caption = 'Name'
-      object MenuItem14: TMenuItem
+      object mniNameTitleAdd: TMenuItem
         Caption = 'Add &Title'
         ShortCut = 24660
         OnClick = MenuItem1Click
       end
-      object MenuItem15: TMenuItem
+      object mniNameGivenNameAdd: TMenuItem
         Caption = 'Add &First name'
         ShortCut = 24656
         OnClick = MenuItem2Click
       end
-      object MenuItem13: TMenuItem
+      object mniNameSurnameAdd: TMenuItem
         Caption = 'Add &Surname'
         ShortCut = 24654
         OnClick = MenuItem3Click
       end
-      object MenuItem8: TMenuItem
+      object mniNameSuffixAdd: TMenuItem
         Caption = 'Add Sufi&x'
         ShortCut = 24664
         OnClick = MenuItem4Click
@@ -372,8 +378,8 @@ object frmEditName: TfrmEditName
   object imglSex: TImageList
     Height = 24
     Width = 24
-    left = 265
-    top = 54
+    left = 272
+    top = 80
     Bitmap = {
       4C69030000001800000018000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

@@ -1,6 +1,6 @@
 object frmEditSource: TfrmEditSource
   Left = 1012
-  Height = 522
+  Height = 502
   Top = 635
   Width = 624
   ActiveControl = edtSourceTitle
@@ -12,7 +12,8 @@ object frmEditSource: TfrmEditSource
   Menu = mnuSourceMain
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.2'
+  LCLVersion = '1.8.0.3'
+  Visible = False
   object TableauDepots: TStringGrid
     Left = 88
     Height = 120
@@ -127,7 +128,7 @@ object frmEditSource: TfrmEditSource
   object pnlBottom: TPanel
     Left = 0
     Height = 52
-    Top = 450
+    Top = 430
     Width = 624
     Align = alBottom
     ClientHeight = 52
@@ -164,7 +165,7 @@ object frmEditSource: TfrmEditSource
   inline fraDocuments1: TfraDocuments
     Left = 3
     Height = 128
-    Top = 319
+    Top = 299
     Width = 618
     Align = alBottom
     ClientHeight = 128
@@ -254,7 +255,7 @@ object frmEditSource: TfrmEditSource
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 311
+    Top = 291
     Width = 624
     Align = alBottom
     ResizeAnchor = akBottom

@@ -6,8 +6,6 @@ object fraPhrase: TfraPhrase
   ClientHeight = 72
   ClientWidth = 642
   TabOrder = 0
-  DesignLeft = 1554
-  DesignTop = 206
   object pnlPhraseLeft: TPanel
     Left = 3
     Height = 66

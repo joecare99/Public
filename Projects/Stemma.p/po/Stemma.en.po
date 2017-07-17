@@ -2120,6 +2120,10 @@ msgctxt "tframe1.mnicitationedit.caption"
 msgid "&Modifier"
 msgstr "&Modify"
 
+#: tframemo.lblmemo.caption
+msgid "Memo:"
+msgstr ""
+
 #: tfraphrase.lblphrase.caption
 #, fuzzy
 msgctxt "tfraphrase.lblphrase.caption"
@@ -2359,10 +2363,6 @@ msgctxt "tfrmeditevents.ajoutertemoin.caption"
 msgid "&Ajouter"
 msgstr "&Add"
 
-#: tfrmeditevents.caption
-msgid "Edit Events"
-msgstr ""
-
 #: tfrmeditevents.l0.hint
 msgctxt "tfrmeditevents.l0.hint"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -2434,12 +2434,6 @@ msgstr "Type:"
 msgctxt "tfrmeditevents.label11.caption"
 msgid "Témoins:"
 msgstr "Witnesses:"
-
-#: tfrmeditevents.label3.caption
-#, fuzzy
-msgctxt "tfrmeditevents.label3.caption"
-msgid "Mémo:"
-msgstr "Memo:"
 
 #: tfrmeditevents.label8.caption
 #, fuzzy
@@ -2563,12 +2557,6 @@ msgstr ""
 msgctxt "tfrmeditname.lblindividuum.caption"
 msgid "Individu:"
 msgstr "Individual:"
-
-#: tfrmeditname.lblmemo.caption
-#, fuzzy
-msgctxt "tfrmeditname.lblmemo.caption"
-msgid "Mémo:"
-msgstr "Memo:"
 
 #: tfrmeditname.lblname8.caption
 msgctxt "tfrmeditname.lblname8.caption"
@@ -2702,23 +2690,11 @@ msgctxt "tfrmeditparents.fraedtcitations1.popupmenu2.supprimer1.caption"
 msgid "&Supprimer"
 msgstr "&Delete"
 
-#: tfrmeditparents.label3.caption
-#, fuzzy
-#| msgid "Mémo:"
-msgctxt "tfrmeditparents.label3.caption"
-msgid "Note:"
-msgstr "Memo:"
-
 #: tfrmeditparents.label4.caption
 #, fuzzy
 msgctxt "tfrmeditparents.label4.caption"
 msgid "Phrase:"
 msgstr "Sentence:"
-
-#: tfrmeditparents.label5.caption
-msgctxt "tfrmeditparents.label5.caption"
-msgid "Date (sorting):"
-msgstr ""
 
 #: tfrmeditparents.label6.caption
 #, fuzzy
@@ -2729,6 +2705,11 @@ msgstr "(default)"
 
 #: tfrmeditparents.lblchild.caption
 msgid "Child:"
+msgstr ""
+
+#: tfrmeditparents.lbldate.caption
+msgctxt "tfrmeditparents.lbldate.caption"
+msgid "Date (sorting):"
 msgstr ""
 
 #: tfrmeditparents.lblparent.caption
@@ -2801,10 +2782,6 @@ msgstr "Prefered"
 msgctxt "tfrmeditsource.ajouter1.caption"
 msgid "&Ajouter"
 msgstr "&Add"
-
-#: tfrmeditsource.caption
-msgid "Modification de source"
-msgstr ""
 
 #: tfrmeditsource.edtsourcedescription.text
 msgctxt "tfrmeditsource.edtsourcedescription.text"
@@ -2916,10 +2893,6 @@ msgstr "Ok"
 msgctxt "tfrmedittype.button2.caption"
 msgid "Annul."
 msgstr "Cancel"
-
-#: tfrmedittype.caption
-msgid "Modification de type d'événement"
-msgstr ""
 
 #: tfrmedittype.label10.caption
 #, fuzzy
@@ -3514,11 +3487,6 @@ msgctxt "tfrmshowimage.mniquit.caption"
 msgid "&Quit"
 msgstr "&Quit"
 
-#: tfrmshowusage.caption
-msgctxt "tfrmshowusage.caption"
-msgid "Utilisation"
-msgstr ""
-
 #: tfrmshowusage.tblusage.columns[0].title.caption
 msgctxt "tfrmshowusage.tblusage.columns[0].title.caption"
 msgid "Événement"
@@ -3983,12 +3951,6 @@ msgstr ""
 msgctxt "tfrmstemmamainform.btnseparator2.caption"
 msgid "btnSeparator2"
 msgstr ""
-
-#: tfrmstemmamainform.caption
-#, fuzzy
-msgctxt "tfrmstemmamainform.caption"
-msgid "Stemma"
-msgstr "Stemma"
 
 #: tfrmstemmamainform.checkbox1.caption
 msgctxt "tfrmstemmamainform.checkbox1.caption"

@@ -12,7 +12,6 @@ object EditCitations: TEditCitations
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
   Visible = False
   object Source: TComboBox
     Left = 131
@@ -43,16 +42,6 @@ object EditCitations: TEditCitations
     Caption = 'Description:'
     ParentColor = False
   end
-  object Memo: TMemo
-    Left = 72
-    Height = 90
-    Top = 72
-    Width = 412
-    Lines.Strings = (
-      'Memo'
-    )
-    TabOrder = 2
-  end
   object Q: TSpinEdit
     Left = 433
     Height = 23
@@ -76,17 +65,7 @@ object EditCitations: TEditCitations
     Width = 80
     MaxValue = 10000
     TabStop = False
-    TabOrder = 3
-    Visible = False
-  end
-  object N: TSpinEdit
-    Left = 8
-    Height = 23
-    Top = 144
-    Width = 56
-    MaxValue = 10000
-    TabStop = False
-    TabOrder = 4
+    TabOrder = 2
     Visible = False
   end
   object S: TSpinEdit
@@ -96,18 +75,18 @@ object EditCitations: TEditCitations
     Width = 64
     MaxValue = 10000
     OnEditingDone = SEditingDone
-    TabOrder = 5
+    TabOrder = 3
   end
   object pnlBottom: TPanel
     Left = 0
     Height = 52
-    Top = 177
+    Top = 197
     Width = 495
     Align = alBottom
     BevelOuter = bvNone
     ClientHeight = 52
     ClientWidth = 495
-    TabOrder = 6
+    TabOrder = 4
     object Button2: TBitBtn
       Left = 379
       Height = 40
@@ -115,7 +94,6 @@ object EditCitations: TEditCitations
       Width = 110
       Align = alRight
       BorderSpacing.Around = 6
-      Cancel = True
       DefaultCaption = True
       Kind = bkCancel
       ModalResult = 2
@@ -128,12 +106,41 @@ object EditCitations: TEditCitations
       Width = 110
       Align = alRight
       BorderSpacing.Around = 6
-      Default = True
       DefaultCaption = True
       Kind = bkOK
       ModalResult = 1
       OnClick = Button1Click
       TabOrder = 1
+    end
+    object N: TSpinEdit
+      Left = 8
+      Height = 23
+      Top = 1
+      Width = 56
+      MaxValue = 10000
+      TabStop = False
+      TabOrder = 2
+      Visible = False
+    end
+  end
+  inline fraMemo1: TfraMemo
+    Height = 125
+    Top = 72
+    Width = 495
+    Align = alBottom
+    ClientHeight = 125
+    ClientWidth = 495
+    TabOrder = 5
+    inherited pnlMemoLeft: TPanel
+      Height = 119
+      ClientHeight = 119
+    end
+    inherited edtMemoText: TMemo
+      Height = 119
+      Width = 394
+      Lines.Strings = (
+        'M'
+      )
     end
   end
   object MainMenu1: TMainMenu
