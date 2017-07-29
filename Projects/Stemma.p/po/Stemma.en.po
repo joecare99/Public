@@ -2530,11 +2530,6 @@ msgctxt "tfrmeditevents.yy.text"
 msgid "YY"
 msgstr ""
 
-#: tfrmeditname.ajout.text
-msgctxt "tfrmeditname.ajout.text"
-msgid "X"
-msgstr ""
-
 #: tfrmeditname.cbxsex.itemsex[0].caption
 msgid "Unknown"
 msgstr "Unknown"
@@ -2550,6 +2545,15 @@ msgstr ""
 #: tfrmeditname.edtname.text
 msgctxt "tfrmeditname.edtname.text"
 msgid "edtName"
+msgstr ""
+
+#: tfrmeditname.edtprefered.text
+msgid "edtPrefered"
+msgstr ""
+
+#: tfrmeditname.edtprefered2.text
+msgctxt "tfrmeditname.edtprefered2.text"
+msgid "X"
 msgstr ""
 
 #: tfrmeditname.lblindividuum.caption
@@ -2574,42 +2578,6 @@ msgctxt "tfrmeditname.menuitem1.caption"
 msgid "Add &Title"
 msgstr ""
 
-#: tfrmeditname.menuitem10.caption
-#, fuzzy
-#| msgid "&Ajouter"
-msgctxt "tfrmeditname.menuitem10.caption"
-msgid "&Add"
-msgstr "&Add"
-
-#: tfrmeditname.menuitem11.caption
-#, fuzzy
-#| msgid "&Modifier"
-msgctxt "tfrmeditname.menuitem11.caption"
-msgid "&Edit"
-msgstr "&Modify"
-
-#: tfrmeditname.menuitem12.caption
-#, fuzzy
-#| msgid "&Supprimer"
-msgctxt "tfrmeditname.menuitem12.caption"
-msgid "&Delete"
-msgstr "&Delete"
-
-#: tfrmeditname.menuitem13.caption
-msgctxt "tfrmeditname.menuitem13.caption"
-msgid "Add &Surname"
-msgstr ""
-
-#: tfrmeditname.menuitem14.caption
-msgctxt "tfrmeditname.menuitem14.caption"
-msgid "Add &Title"
-msgstr ""
-
-#: tfrmeditname.menuitem15.caption
-msgctxt "tfrmeditname.menuitem15.caption"
-msgid "Add &First name"
-msgstr ""
-
 #: tfrmeditname.menuitem2.caption
 msgctxt "tfrmeditname.menuitem2.caption"
 msgid "Add &First name"
@@ -2625,51 +2593,80 @@ msgctxt "tfrmeditname.menuitem4.caption"
 msgid "Add &Sufix"
 msgstr ""
 
-#: tfrmeditname.menuitem5.caption
+#: tfrmeditname.mniname.caption
 #, fuzzy
-msgctxt "tfrmeditname.menuitem5.caption"
-msgid "&Quit"
-msgstr "&Quit"
-
-#: tfrmeditname.menuitem6.caption
-#, fuzzy
-msgctxt "tfrmeditname.menuitem6.caption"
-msgid "Repeat"
-msgstr "Repeat"
-
-#: tfrmeditname.menuitem7.caption
-#, fuzzy
-#| msgid "Nom"
-msgctxt "tfrmeditname.menuitem7.caption"
+msgctxt "tfrmeditname.mniname.caption"
 msgid "Name"
 msgstr "Name"
 
-#: tfrmeditname.menuitem8.caption
-msgctxt "tfrmeditname.menuitem8.caption"
-msgid "Add Sufi&x"
-msgstr ""
+#: tfrmeditname.mninamecitationadd.caption
+#, fuzzy
+#| msgid "Ajouter"
+msgctxt "tfrmeditname.mninamecitationadd.caption"
+msgid "&Add"
+msgstr "Add"
 
-#: tfrmeditname.menuitem9.caption
+#: tfrmeditname.mninamecitationdelete.caption
+#, fuzzy
+msgctxt "tfrmeditname.mninamecitationdelete.caption"
+msgid "&Delete"
+msgstr "&Delete"
+
+#: tfrmeditname.mninamecitationedit.caption
+#, fuzzy
+#| msgid "&Modifier"
+msgctxt "tfrmeditname.mninamecitationedit.caption"
+msgid "&Edit"
+msgstr "&Modify"
+
+#: tfrmeditname.mninamecitations.caption
 #, fuzzy
 #| msgid "&Références"
-msgctxt "tfrmeditname.menuitem9.caption"
+msgctxt "tfrmeditname.mninamecitations.caption"
 msgid "&Citations"
 msgstr "&Citations:"
 
-#: tfrmeditname.tableaunoms.columns[0].title.caption
+#: tfrmeditname.mninamegivennameadd.caption
+msgctxt "tfrmeditname.mninamegivennameadd.caption"
+msgid "Add &First name"
+msgstr ""
+
+#: tfrmeditname.mninamequit.caption
 #, fuzzy
-msgctxt "tfrmeditname.tableaunoms.columns[0].title.caption"
+msgctxt "tfrmeditname.mninamequit.caption"
+msgid "&Quit"
+msgstr "&Quit"
+
+#: tfrmeditname.mninamerepeat.caption
+#, fuzzy
+msgctxt "tfrmeditname.mninamerepeat.caption"
+msgid "Repeat"
+msgstr "Repeat"
+
+#: tfrmeditname.mninamesuffixadd.caption
+msgctxt "tfrmeditname.mninamesuffixadd.caption"
+msgid "Add Sufi&x"
+msgstr ""
+
+#: tfrmeditname.mninamesurnameadd.caption
+msgctxt "tfrmeditname.mninamesurnameadd.caption"
+msgid "Add &Surname"
+msgstr ""
+
+#: tfrmeditname.mninametitleadd.caption
+msgctxt "tfrmeditname.mninametitleadd.caption"
+msgid "Add &Title"
+msgstr ""
+
+#: tfrmeditname.tblnames.columns[0].title.caption
+#, fuzzy
+msgctxt "tfrmeditname.tblnames.columns[0].title.caption"
 msgid "Type"
 msgstr "Type"
 
-#: tfrmeditname.tableaunoms.columns[1].title.caption
-msgctxt "tfrmeditname.tableaunoms.columns[1].title.caption"
+#: tfrmeditname.tblnames.columns[1].title.caption
+msgctxt "tfrmeditname.tblnames.columns[1].title.caption"
 msgid "Description"
-msgstr ""
-
-#: tfrmeditname.x.text
-msgctxt "tfrmeditname.x.text"
-msgid "X"
 msgstr ""
 
 #: tfrmeditparents.fraedtcitations1.popupmenu2.ajouter1.caption
@@ -2935,34 +2932,41 @@ msgctxt "tfrmedittype.t.text"
 msgid "T"
 msgstr ""
 
-#: tfrmeditwitness.label2.caption
-msgctxt "tfrmeditwitness.label2.caption"
-msgid "Témoin:"
-msgstr "Witness:"
-
-#: tfrmeditwitness.label3.caption
+#: tfrmeditwitness.edtname.text
 #, fuzzy
-msgctxt "tfrmeditwitness.label3.caption"
-msgid "Rôle:"
-msgstr "Role:"
+msgctxt "tfrmeditwitness.edtname.text"
+msgid "Nom de I"
+msgstr "Name of I"
 
-#: tfrmeditwitness.label4.caption
+#: tfrmeditwitness.lbldefault.caption
 #, fuzzy
-msgctxt "tfrmeditwitness.label4.caption"
+msgctxt "tfrmeditwitness.lbldefault.caption"
+msgid "(défaut)"
+msgstr "(default)"
+
+#: tfrmeditwitness.lblphrase.caption
+#, fuzzy
+msgctxt "tfrmeditwitness.lblphrase.caption"
 msgid "Phrase:"
 msgstr "Sentence:"
 
-#: tfrmeditwitness.label5.caption
+#: tfrmeditwitness.lblresult.caption
 #, fuzzy
-msgctxt "tfrmeditwitness.label5.caption"
+msgctxt "tfrmeditwitness.lblresult.caption"
 msgid "Résultat:"
 msgstr "Result"
 
-#: tfrmeditwitness.label6.caption
+#: tfrmeditwitness.lblrole.caption
 #, fuzzy
-msgctxt "tfrmeditwitness.label6.caption"
-msgid "(défaut)"
-msgstr "(default)"
+msgctxt "tfrmeditwitness.lblrole.caption"
+msgid "Rôle:"
+msgstr "Role:"
+
+#: tfrmeditwitness.lblwitness.caption
+#, fuzzy
+msgctxt "tfrmeditwitness.lblwitness.caption"
+msgid "Témoin:"
+msgstr "Witness"
 
 #: tfrmeditwitness.menuitem1.caption
 #, fuzzy
@@ -2975,11 +2979,6 @@ msgstr "&Quit"
 msgctxt "tfrmeditwitness.menuitem2.caption"
 msgid "Repeat"
 msgstr "Repeat"
-
-#: tfrmeditwitness.nomi.text
-msgctxt "tfrmeditwitness.nomi.text"
-msgid "Nom de I"
-msgstr "Name of I"
 
 #: tfrmevents.acteventsadd.caption
 #, fuzzy
@@ -3879,16 +3878,30 @@ msgid "Event-Types"
 msgstr ""
 
 #: tfrmstemmamainform.actutilsplaces.caption
+#, fuzzy
+#| msgid "Places"
 msgctxt "tfrmstemmamainform.actutilsplaces.caption"
-msgid "Places"
+msgid "&Places"
 msgstr "Places"
 
+#: tfrmstemmamainform.actutilsrepairbirthdeath.caption
+msgid "Repair &Birth-Death"
+msgstr ""
+
+#: tfrmstemmamainform.actutilsrepairnameorder.caption
+msgid "Repair &Name order"
+msgstr ""
+
 #: tfrmstemmamainform.actutilsrepository.caption
-msgid "Repository"
+#, fuzzy
+#| msgid "Repository"
+msgid "&Repository"
 msgstr "Repository"
 
 #: tfrmstemmamainform.actutilssources.caption
-msgid "Sources"
+#, fuzzy
+#| msgid "Sources"
+msgid "&Sources"
 msgstr "Sources"
 
 #: tfrmstemmamainform.actwinancesters.caption
@@ -3967,21 +3980,6 @@ msgctxt "tfrmstemmamainform.datahist.columns[1].title.caption"
 msgid "No"
 msgstr "No"
 
-#: tfrmstemmamainform.menuitem56.caption
-msgctxt "tfrmstemmamainform.menuitem56.caption"
-msgid "&Parametres"
-msgstr "&Options"
-
-#: tfrmstemmamainform.menuitem57.caption
-msgctxt "tfrmstemmamainform.menuitem57.caption"
-msgid "Fichiers PDF"
-msgstr ""
-
-#: tfrmstemmamainform.menuitem58.caption
-msgctxt "tfrmstemmamainform.menuitem58.caption"
-msgid "&Langue"
-msgstr "&Language"
-
 #: tfrmstemmamainform.mniedit.caption
 msgctxt "tfrmstemmamainform.mniedit.caption"
 msgid "&Edit"
@@ -3991,6 +3989,16 @@ msgstr "&Edit"
 msgctxt "tfrmstemmamainform.mnifile.caption"
 msgid "&File"
 msgstr "&File"
+
+#: tfrmstemmamainform.mnifileimportfromged.caption
+msgid "frm GEDCOM"
+msgstr ""
+
+#: tfrmstemmamainform.mnifileparameters.caption
+#, fuzzy
+msgctxt "tfrmstemmamainform.mnifileparameters.caption"
+msgid "&Parametres"
+msgstr "&Options"
 
 #: tfrmstemmamainform.mnihelp.caption
 msgctxt "tfrmstemmamainform.mnihelp.caption"
@@ -4047,34 +4055,12 @@ msgctxt "tfrmstemmamainform.mninavold5.hint"
 msgid "0"
 msgstr ""
 
-#: tfrmstemmamainform.mniutilitem28.caption
-msgctxt "tfrmstemmamainform.mniutilitem28.caption"
-msgid "&Sources"
-msgstr "&Sources"
-
-#: tfrmstemmamainform.mniutilitem29.caption
-msgctxt "tfrmstemmamainform.mniutilitem29.caption"
-msgid "&Lieux"
-msgstr "&Places"
-
-#: tfrmstemmamainform.mniutilitem30.caption
-msgctxt "tfrmstemmamainform.mniutilitem30.caption"
-msgid "&Dépots"
+#: tfrmstemmamainform.mniparameterslanguage.caption
+msgid "&Language"
 msgstr ""
 
-#: tfrmstemmamainform.mniutilitem31.caption
-msgctxt "tfrmstemmamainform.mniutilitem31.caption"
-msgid "&Types d'événements"
-msgstr "Event &types"
-
-#: tfrmstemmamainform.mniutilitem65.caption
-msgctxt "tfrmstemmamainform.mniutilitem65.caption"
-msgid "Compression"
-msgstr "Compression"
-
-#: tfrmstemmamainform.mniutilitem66.caption
-msgctxt "tfrmstemmamainform.mniutilitem66.caption"
-msgid "Réparation Naiss.-Décès"
+#: tfrmstemmamainform.mniparameterspdfreader.caption
+msgid "PDF-Reader"
 msgstr ""
 
 #: tfrmstemmamainform.mniutilitem67.caption
@@ -4082,11 +4068,6 @@ msgstr ""
 msgctxt "tfrmstemmamainform.mniutilitem67.caption"
 msgid "Nettoyage des items orphelins"
 msgstr "Removal of orphan records"
-
-#: tfrmstemmamainform.mniutilitem68.caption
-msgctxt "tfrmstemmamainform.mniutilitem68.caption"
-msgid "Réparation Nom pour tri"
-msgstr ""
 
 #: tfrmstemmamainform.mniutilitem69.caption
 msgctxt "tfrmstemmamainform.mniutilitem69.caption"

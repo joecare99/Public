@@ -339,15 +339,13 @@ begin
 end;
 
 procedure TfrmEditParents.idBEditingDone(Sender: TObject);
+var
+  lSex: String;
 begin
   NomB.Text:=DecodeName(dmGenData.GetIndividuumName(idB.Value),1);
   P2.Text:=DecodePhrase(idA.Value,'ENFANT',P.Text,'R',No.Value);
-  dmGenData.Query1.SQL.Text:='SELECT I.S FROM I WHERE I.no='+idB.Text;
-  dmGenData.Query1.Open;
-  if dmGenData.Query1.eof then
-     btnParentOK.Enabled:=false
-  else
-     if dmGenData.Query1.Fields[0].AsString='?' then
+  lSex := dmGenData.GetSexOfInd(idB.Value);
+  if (lSex = '') or ( lSex='?')  then
         btnParentOK.Enabled:=false
      else
         btnParentOK.Enabled:=(idA.Value>0) and (idB.Value>0);

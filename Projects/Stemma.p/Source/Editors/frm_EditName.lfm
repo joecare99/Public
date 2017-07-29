@@ -3,6 +3,7 @@ object frmEditName: TfrmEditName
   Height = 602
   Top = 563
   Width = 629
+  ActiveControl = tblNames
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de Nom'
@@ -13,7 +14,7 @@ object frmEditName: TfrmEditName
   OnShow = FormShow
   Position = poScreenCenter
   Visible = False
-  object TableauNoms: TStringGrid
+  object tblNames: TStringGrid
     Left = 88
     Height = 114
     Top = 101
@@ -218,7 +219,7 @@ object frmEditName: TfrmEditName
       Caption = 'Type:'
       ParentColor = False
     end
-    object EvType: TComboBox
+    object cbxEvType: TComboBox
       Left = 88
       Height = 23
       Top = 16
@@ -226,7 +227,7 @@ object frmEditName: TfrmEditName
       AutoComplete = True
       AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
       ItemHeight = 15
-      OnChange = EvTypeChange
+      OnChange = cbxEvTypeChange
       Style = csDropDownList
       TabOrder = 0
     end
@@ -238,17 +239,17 @@ object frmEditName: TfrmEditName
       Caption = 'Individu:'
       ParentColor = False
     end
-    object Prefered: TEdit
+    object edtPrefered: TEdit
       Left = 536
       Height = 23
       Top = 36
       Width = 80
       TabStop = False
       TabOrder = 1
-      Text = 'Prefered'
+      Text = 'edtPrefered'
       Visible = False
     end
-    object Prefered2: TEdit
+    object edtPrefered2: TEdit
       Left = 448
       Height = 23
       Top = 8
@@ -258,18 +259,18 @@ object frmEditName: TfrmEditName
       Text = 'X'
       Visible = False
     end
-    object idInd: TSpinEdit
+    object edtIdInd: TSpinEdit
       Left = 88
       Height = 23
       Top = 48
       Width = 80
       Color = clBtnFace
       MaxValue = 1000000000
-      OnEditingDone = idIndEditingDone
+      OnEditingDone = edtIdIndEditingDone
       ReadOnly = True
       TabOrder = 3
     end
-    object idName: TSpinEdit
+    object edtIdName: TSpinEdit
       Left = 536
       Height = 23
       Top = 8
@@ -299,13 +300,19 @@ object frmEditName: TfrmEditName
           ImageIndex = 2
         end>
       ItemIndex = 0
-      ReadOnly = True
       TabOrder = 5
+    end
+    object SpeedButton1: TSpeedButton
+      Left = 192
+      Height = 22
+      Top = 17
+      Width = 23
+      OnClick = mniNameRepeatClick
     end
   end
   object PopupMenuNom: TPopupMenu
-    left = 80
-    top = 191
+    Left = 80
+    Top = 191
     object MenuItem1: TMenuItem
       Caption = 'Add &Title'
       OnClick = MenuItem1Click
@@ -324,8 +331,8 @@ object frmEditName: TfrmEditName
     end
   end
   object mnuNameMain: TMainMenu
-    left = 208
-    top = 88
+    Left = 208
+    Top = 88
     object mniNameRepeat: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114
@@ -378,8 +385,8 @@ object frmEditName: TfrmEditName
   object imglSex: TImageList
     Height = 24
     Width = 24
-    left = 272
-    top = 80
+    Left = 272
+    Top = 80
     Bitmap = {
       4C69030000001800000018000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -599,5 +606,9 @@ object frmEditName: TfrmEditName
       0000000000000000000000000000000000000000000000000000000000000000
       0000000000000000000000000000
     }
+  end
+  object ActionList1: TActionList
+    Left = 247
+    Top = 24
   end
 end

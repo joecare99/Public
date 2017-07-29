@@ -85,6 +85,8 @@ type
 
         // Name
         function getIdNameofInd(const lidInd: integer): integer;
+        procedure GetNameData(const lidName: integer;out idInd,idType: LongInt; out  iName,
+          Memo, Phrase, aDate, SortDate: string;out Pref: Boolean );
         procedure UpdateNameI3(const lDate: string; const lidInd: integer);
         procedure UpdateNameI4(const lDate: string; const lidInd: integer);
         procedure UpdateNamesPrefered(const idNamePref, idNameUnPref: integer);
@@ -148,6 +150,8 @@ type
         // Citation Methods
         procedure CopyCitation(AType: string; idLink, idNewLink: integer); overload;
         procedure CopyCitation(AType: string; idLink: integer; ANewType: string; idNewLink: integer); overload;
+        procedure CopyCitationOfIndByType(const lidInd: integer; const lSourceType: string; const lidInd_Dest: integer; const lDestType: string);
+
         function GetCitationBestQuality(sType: string; idLink: integer): string;
         procedure PopulateCitations(Tableau: TStringGrid; Code: string; idName: integer); overload;
         procedure PopulateCitations(Tableau: TStringGrid; Code: string; NStr: string);
@@ -630,7 +634,10 @@ begin
         SQL.Text := 'SELECT S FROM I WHERE no=:idInd';
         ParamByName('idInd').AsInteger := nID;
         Open;
-        Result := Fields[0].AsString;
+        if not eof then
+        Result := Fields[0].AsString
+        else
+        result := '';
         Close;
       end;
 end;
@@ -642,7 +649,10 @@ begin
         SQL.Text := 'SELECT V FROM I WHERE no=:idInd';
         ParamByName('idInd').AsInteger := nID;
         Open;
-        Result := Fields[0].AsString;
+        if not eof then
+        Result := Fields[0].AsString
+        else
+        Result := '';
         Close;
       end;
 end;
@@ -784,6 +794,26 @@ begin
       end;
 end;
 
+procedure TdmGenData.GetNameData(const lidName: integer;out idInd,idType: LongInt; out  iName,
+    Memo, Phrase, aDate, SortDate: string;out Pref: Boolean );
+begin
+  with dmGenData.Query1 do begin
+    Close;
+           SQL.Text := 'SELECT N.no, N.I, N.Y, N.N, N.M, N.P, N.PD, N.SD, N.X FROM  N WHERE N.no=:idName';
+           ParamByName('idName').AsInteger := lidName;
+           Open;
+           First;
+           idInd := Fields[1].AsInteger;
+           idType:=Fields[2].AsInteger;
+           iName := Fields[3].AsString;
+           Memo:=Fields[4].AsString;
+           Phrase :=Fields[5].AsString;
+           aDate :=Fields[6].AsString;
+           SortDate :=Fields[7].AsString;
+           Pref :=Fields[8].AsBoolean;
+  end;
+end;
+
 function TdmGenData.GetIndividuumName(idInd: integer): string;
 
 begin
@@ -847,6 +877,24 @@ begin
           end;
     qryInternal.Close;
 end;
+
+procedure TdmGenData.CopyCitationOfIndByType(const lidInd: integer; const lSourceType: string; const lidInd_Dest: integer; const lDestType: string);
+begin
+    with dmGenData.Query2 do
+      begin
+        Close;
+        SQL.Text :=
+            'INSERT INTO C (Y, N, S, Q, M) ' +
+            'SELECT :DType, :idDInd, S, Q, M FROM C ' +
+            'WHERE Y=:SType AND N=:idSInd';
+        ParamByName('SType').AsString := lSourceType;
+        ParamByName('idSInd').AsInteger := lidInd;
+        ParamByName('DType').AsString := lDestType;
+        ParamByName('idDInd').AsInteger := lidInd_Dest;
+        ExecSQL;
+      end;
+end;
+
 
 procedure TdmGenData.DeleteCitationb_TypeId(const aType: string; const id: integer);
 begin
@@ -1804,7 +1852,7 @@ begin
             aSG.Cells[3, row] := format(rsDispNameAndLiveDate, [pName, pBirth, pDeath]);
             aSG.Objects[3, row] := TObject(Ptrint(Fields[3].AsInteger));
 
-            GetCitationBestQuality(sBestQuality, row);
+            sBestQuality:= GetCitationBestQuality('R', row);
             aSG.Cells[4, row] := sBestQuality;
 
             aSG.Cells[5, row] := Fields[3].AsString;

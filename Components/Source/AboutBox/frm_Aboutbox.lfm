@@ -16,7 +16,7 @@ object AboutBoxform: TAboutBoxform
   OnCreate = FormCreate
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
+  LCLVersion = '1.9.0.0'
   Visible = False
   object Panel1: TPanel
     Left = 8
@@ -514,7 +514,7 @@ object AboutBoxform: TAboutBoxform
   object Timer1: TTimer
     Interval = 4000
     OnTimer = ProgramIconClick
-    left = 224
-    top = 176
+    Left = 224
+    Top = 176
   end
 end

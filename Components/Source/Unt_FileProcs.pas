@@ -1,6 +1,7 @@
 ﻿Unit Unt_FileProcs;
 
-{*v 1.00.04 }
+{*v 1.00.06 }
+{*h 1.00.05 Class of CFileInfo }
 {*h 1.00.04 Anpassungen an FPC, Testcase }
 {*h 1.00.02 Erweitere CFileInfo um Displayname und Extensions& entsp. Register-Proc}
 {*h 1.00.01 GetBackupPath}
@@ -51,11 +52,7 @@ Type
     pfad: String;
     attr: integer;
     size : integer;
-{$ifdef Compiler14_up}
     time: TDateTime;
-{$else ~Compiler14_up}
-    time: integer;
-{$endif ~Compiler14_up}
   End;
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
@@ -74,8 +71,12 @@ Type
 Type
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
+
+  { CFileInfo }
+
   CFileInfo = Class
     abstract
+    private
     public
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
@@ -90,7 +91,13 @@ Type
   ///  <version>1.00.02</version>
     class Function Extensions:{$ifdef SUPPORTS_GENERICS}Tarray<String>{$else}TStringArray{$endif};
       virtual; abstract;
+
+    /// <author>Joe Care</author>
+    /// <since>26.10.2012</since>
+    ///  <version>1.00.06</version>
+    class function FileOpenFilter: STRING;
   End;
+  TFileInfoClass=class of CFileInfo;
 
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
@@ -157,6 +164,7 @@ Function GetDefaultDataDir(Area: TGDD_Area; DataType: TGDD_DataType): String;
   ///  <version>1.00.02</version>
 Procedure RegisterGetInfoProc(name: String; PinfoProc: TFileInfo);overload;
 Procedure RegisterGetInfoProc(FIClass: CFileInfo);overload;
+Procedure RegisterGetInfoProc(TFIClass: TFileInfoClass);overload;
 // Trage eine GetFileInfo-Procedur in die test-Liste ein.
 
 ///<author>Joe Care</author>
@@ -175,6 +183,9 @@ Var
 const
    DirSep = {$IFNDEF FPC} '\'{$else ~FPC}DirectorySeparator{$endIF ~FPC};
 
+resourcestring
+  rsAllFilesFilter = 'Alle Dateien (*.*)|*.*';
+
 Implementation
 
 {$IFNDEF UNIX}
@@ -184,7 +195,7 @@ uses shFolder;
 {$ENDIF}
 
 resourcestring
-  SKGSoft = 'KG-Soft';
+  rsJCSoft = 'JC-Soft';
 
 function FileInUse(FileName: String): boolean;
 
@@ -311,11 +322,15 @@ Begin
           nl1 := TFiles.create(sr.name, nl1);
           nl1.attr := sr.attr;
           nl1.pfad := fpath + sr.name;
+          {$ifdef FPC}
+          nl1.time := FileDateToDateTime( sr.Time);
+          {$else ~FPC}
 {$ifdef Compiler15_up}
           nl1.time := sr.TimeStamp;
 {$else ~Compiler15_up}
-          nl1.time := sr.Time;
+     nl1.time := FileDateToDateTime( sr.Time);
 {$endif Compiler15_up}
+        {$EndIF ~FPC}
         nl1.size := sr.Size;
         End;
       res := FindNext(sr); { *Converted from FindNext*  }
@@ -611,7 +626,7 @@ Begin
 
   Case DataType Of
     gddt_Ini: If area <> gdda_System Then
-        result := AreaBase + Appdata + dirsep +SKGSoft+ dirsep
+        result := AreaBase + Appdata + dirsep +rsJCSoft+ dirsep
       Else
         result := areabase;
     gddt_Dok: If area <> gdda_System Then
@@ -797,6 +812,15 @@ Begin
     End;
 End;
 
+procedure RegisterGetInfoProc(TFIClass: TFileInfoClass);
+var
+  p: TGetInfo;
+begin
+      p := Tgetinfo.create(TFIClass.DisplayName, Nil);
+      p.FInfoProc := TFIClass.GetFileInfoStr;
+      GetInfoList := p.addto(GetInfoList) As Tgetinfo;
+end;
+
 procedure UnRegisterGetInfoProc(FIClass: CFileInfo);
 
 Var
@@ -811,6 +835,21 @@ begin
       if assigned(p) then
         GetInfoList := Tgetinfo(GetInfoList.Delete(p));
     end;
+end;
+
+{ CFileInfo }
+
+class function CFileInfo.FileOpenFilter: STRING;
+VAR
+  ext: STRING;
+BEGIN
+  result := '';
+  FOR ext IN Extensions DO
+    BEGIN
+      IF result <> '' THEN
+        result := result + '|';
+      result := result + DisplayName + ' (*' + ext + ')|*' + ext;
+    END;
 end;
 
 

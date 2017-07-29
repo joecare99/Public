@@ -1,4 +1,4 @@
-unit SQLTable;
+unit cmp_SQLTable;
 
 {$mode objfpc}{$H+}
 

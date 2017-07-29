@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="10"/>
     <BuildModes Active="Default"/>
-    <Units Count="9">
+    <Units Count="3">
       <Unit0>
         <Filename Value="fpcConfigTest.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -32,96 +32,7 @@
         <UsageCount Value="20"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
-      <Unit3>
-        <Filename Value="..\Source\Unt_Config.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="-1"/>
-        <TopLine Value="-1"/>
-        <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="21"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="..\Unt_Config.pas"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="318"/>
-        <CursorPos X="11" Y="333"/>
-        <UsageCount Value="20"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="..\Test\Frm_test.pas"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="3"/>
-        <CursorPos X="60" Y="25"/>
-        <UsageCount Value="11"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="..\Source\ComCtrlsEx.pas"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="89" Y="537"/>
-        <UsageCount Value="10"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="..\..\Daten\Source\dbtree.pas"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="63"/>
-        <CursorPos X="10" Y="79"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
-      </Unit7>
-      <Unit8>
-        <Filename Value="..\..\Daten\FPC\prj_Ds2.lpr"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="4"/>
-        <CursorPos X="3" Y="7"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-      </Unit8>
     </Units>
-    <JumpHistory Count="9" HistoryIndex="8">
-      <Position1>
-        <Filename Value="fpcConfigTest.dpr"/>
-        <Caret Line="30" Column="35"/>
-      </Position1>
-      <Position2>
-        <Filename Value="..\Test\TestUnt_Config.pas"/>
-        <Caret Line="20" Column="45" TopLine="2"/>
-      </Position2>
-      <Position3>
-        <Filename Value="..\Test\Frm_test.pas"/>
-      </Position3>
-      <Position4>
-        <Filename Value="..\Test\Frm_test.pas"/>
-        <Caret Line="14" Column="64" TopLine="14"/>
-      </Position4>
-      <Position5>
-        <Filename Value="..\Test\Frm_test.pas"/>
-        <Caret Line="23" Column="60" TopLine="16"/>
-      </Position5>
-      <Position6>
-        <Filename Value="..\Test\Frm_test.pas"/>
-        <Caret Line="14" Column="64" TopLine="14"/>
-      </Position6>
-      <Position7>
-        <Filename Value="..\Test\Frm_test.pas"/>
-        <Caret Line="25" Column="60"/>
-      </Position7>
-      <Position8>
-        <Filename Value="..\..\Daten\Source\dbtree.pas"/>
-        <Caret Line="67" Column="53" TopLine="63"/>
-      </Position8>
-      <Position9>
-        <Filename Value="..\..\Daten\Source\dbtree.pas"/>
-        <Caret Line="79" Column="10" TopLine="63"/>
-      </Position9>
-    </JumpHistory>
+    <JumpHistory HistoryIndex="-1"/>
   </ProjectSession>
 </CONFIG>

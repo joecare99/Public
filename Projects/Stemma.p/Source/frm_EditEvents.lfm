@@ -12,6 +12,7 @@ object frmEditEvents: TfrmEditEvents
   Menu = mnuEventsMain
   OnShow = FormShow
   Position = poScreenCenter
+  LCLVersion = '1.9.0.0'
   Visible = False
   object Y: TComboBox
     Left = 88
@@ -187,7 +188,7 @@ object frmEditEvents: TfrmEditEvents
   object pnlBottom: TPanel
     Left = 0
     Height = 52
-    Top = 687
+    Top = 604
     Width = 633
     Align = alBottom
     BevelOuter = bvNone
@@ -232,7 +233,7 @@ object frmEditEvents: TfrmEditEvents
   end
   inline fraEdtCitations1: TfraEdtCitations
     Height = 136
-    Top = 408
+    Top = 325
     Width = 633
     Align = alBottom
     ClientHeight = 136
@@ -261,7 +262,7 @@ object frmEditEvents: TfrmEditEvents
   inline fraDocuments1: TfraDocuments
     Left = 3
     Height = 132
-    Top = 552
+    Top = 469
     Width = 627
     Align = alBottom
     ClientHeight = 132
@@ -284,14 +285,14 @@ object frmEditEvents: TfrmEditEvents
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 544
+    Top = 461
     Width = 633
     Align = alBottom
     ResizeAnchor = akBottom
   end
   inline fraPhrase1: TfraPhrase
     Height = 70
-    Top = 338
+    Top = 255
     Width = 633
     Align = alBottom
     ClientHeight = 70
@@ -309,7 +310,6 @@ object frmEditEvents: TfrmEditEvents
       Lines.Strings = (
         ''
       )
-      TabOrder = 2
     end
   end
   inline fraDate1: TfraDate
@@ -357,7 +357,7 @@ object frmEditEvents: TfrmEditEvents
   end
   inline fraMemo1: TfraMemo
     Height = 65
-    Top = 273
+    Top = 190
     Width = 633
     Align = alBottom
     ClientHeight = 65
@@ -376,8 +376,8 @@ object frmEditEvents: TfrmEditEvents
     end
   end
   object mnuWitnes: TPopupMenu
-    left = 68
-    top = 106
+    Left = 68
+    Top = 106
     object AjouterTemoin: TMenuItem
       Caption = '&Ajouter'
       ShortCut = 115
@@ -395,8 +395,8 @@ object frmEditEvents: TfrmEditEvents
     end
   end
   object mnuEventsMain: TMainMenu
-    left = 16
-    top = 72
+    Left = 16
+    Top = 72
     object MenuItem12: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114

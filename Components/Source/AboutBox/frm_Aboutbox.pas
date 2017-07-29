@@ -922,7 +922,7 @@ Begin
   Anim[12] := anim10;
   Anim[13] := anim11;
   {$ifdef FPC}
-  scaleDPI(self,DesignTimeDPI);
+  scaleDPI(self,DesignTimePPI);
   {$ENDIF}
 End;
 

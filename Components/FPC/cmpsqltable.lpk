@@ -8,15 +8,15 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\Source"/>
-        <UnitOutputDirectory Value="..\..\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)\"/>
+        <OtherUnitFiles Value="..\Source\SQLTable"/>
+        <UnitOutputDirectory Value="..\..\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Files Count="1">
       <Item1>
-        <Filename Value="..\Source\sqltable.pas"/>
+        <Filename Value="..\Source\SQLTable\cmp_sqltable.pas"/>
         <HasRegisterProc Value="True"/>
-        <UnitName Value="SQLTable"/>
+        <UnitName Value="cmp_sqltable"/>
       </Item1>
     </Files>
     <RequiredPkgs Count="1">
@@ -30,5 +30,8 @@
     <PublishOptions>
       <Version Value="2"/>
     </PublishOptions>
+    <CustomOptions Items="ExternHelp" Version="2">
+      <_ExternHelp Items="Count"/>
+    </CustomOptions>
   </Package>
 </CONFIG>

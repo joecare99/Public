@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="10"/>
     <BuildModes Active="Default"/>
-    <Units Count="7">
+    <Units Count="2">
       <Unit0>
         <Filename Value="fpcunitStrUtils.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -21,64 +21,7 @@
         <CursorPos X="28" Y="179"/>
         <UsageCount Value="23"/>
       </Unit1>
-      <Unit2>
-        <Filename Value="..\Source\Unt_StringProcs.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="1"/>
-        <TopLine Value="1844"/>
-        <CursorPos Y="1885"/>
-        <UsageCount Value="10"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="..\Source\Unt_FileProcs.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="1"/>
-        <TopLine Value="14"/>
-        <CursorPos X="8" Y="26"/>
-        <UsageCount Value="10"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="1"/>
-        <TopLine Value="187"/>
-        <CursorPos X="20" Y="216"/>
-        <UsageCount Value="10"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="..\..\include\jedi.inc"/>
-        <EditorIndex Value="-1"/>
-        <WindowIndex Value="1"/>
-        <TopLine Value="1432"/>
-        <CursorPos X="32" Y="1476"/>
-        <UsageCount Value="10"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="..\Test\TestUnt_Config.pas"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="2"/>
-        <CursorPos X="12" Y="18"/>
-        <UsageCount Value="10"/>
-        <Loaded Value="True"/>
-      </Unit6>
     </Units>
-    <JumpHistory Count="1">
-      <Position1>
-        <Filename Value="fpcunitStrUtils.lpr"/>
-        <Caret Line="13" Column="49"/>
-      </Position1>
-    </JumpHistory>
+    <JumpHistory HistoryIndex="-1"/>
   </ProjectSession>
-  <Debugging>
-    <BreakPoints Count="1">
-      <Item1>
-        <Kind Value="bpkSource"/>
-        <WatchScope Value="wpsLocal"/>
-        <WatchKind Value="wpkWrite"/>
-        <Source Value="..\Test\test_StrUtils.pas"/>
-        <Line Value="237"/>
-      </Item1>
-    </BreakPoints>
-  </Debugging>
 </CONFIG>

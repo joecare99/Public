@@ -1,12 +1,12 @@
 object frmStemmaMainForm: TfrmStemmaMainForm
   Left = 462
-  Height = 201
+  Height = 149
   Top = 105
-  Width = 1065
+  Width = 842
   ActiveControl = CheckBox1
   Caption = 'Stemma'
-  ClientHeight = 201
-  ClientWidth = 1065
+  ClientHeight = 149
+  ClientWidth = 842
   Icon.Data = {
     F63800000000010001004037000001002000E038000016000000280000004000
     00006E0000000100200000000000000000000000000000000000000000000000
@@ -470,13 +470,12 @@ object frmStemmaMainForm: TfrmStemmaMainForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  LCLVersion = '1.8.0.3'
   Visible = False
   object StatusBar: TStatusBar
     Left = 0
     Height = 23
-    Top = 158
-    Width = 1065
+    Top = 126
+    Width = 842
     AutoHint = True
     Panels = <    
       item
@@ -494,9 +493,9 @@ object frmStemmaMainForm: TfrmStemmaMainForm
   end
   object CoolBar1: TCoolBar
     Left = 0
-    Height = 36
+    Height = 34
     Top = 0
-    Width = 1065
+    Width = 842
     AutoSize = True
     BandMaximize = bmDblClick
     Bands = <    
@@ -526,11 +525,11 @@ object frmStemmaMainForm: TfrmStemmaMainForm
       AnchorSideTop.Control = CoolBar1
       Left = 24
       Height = 24
-      Top = 6
+      Top = 5
       Width = 150
       Align = alNone
       BorderSpacing.Left = 22
-      BorderSpacing.Top = 4
+      BorderSpacing.Top = 3
       Caption = 'ToolBar1'
       Images = imlStandardImages
       TabOrder = 0
@@ -590,12 +589,12 @@ object frmStemmaMainForm: TfrmStemmaMainForm
       AnchorSideTop.Control = CoolBar1
       Left = 402
       Height = 24
-      Top = 6
+      Top = 5
       Width = 247
       Align = alNone
       AutoSize = True
       BorderSpacing.Left = 400
-      BorderSpacing.Top = 4
+      BorderSpacing.Top = 3
       Caption = 'ToolBar2'
       Images = imlStandardImages
       TabOrder = 1
@@ -669,7 +668,7 @@ object frmStemmaMainForm: TfrmStemmaMainForm
       AnchorSideLeft.Control = CoolBar1
       AnchorSideTop.Control = CoolBar1
       Left = 203
-      Height = 26
+      Height = 24
       Top = 5
       Width = 170
       Align = alNone
@@ -713,11 +712,11 @@ object frmStemmaMainForm: TfrmStemmaMainForm
   object pnlDebug: TPanel
     Left = 0
     Height = 50
-    Top = 36
-    Width = 1065
+    Top = 34
+    Width = 842
     Align = alTop
     ClientHeight = 50
-    ClientWidth = 1065
+    ClientWidth = 842
     DockSite = True
     TabOrder = 3
     Visible = False
@@ -757,18 +756,10 @@ object frmStemmaMainForm: TfrmStemmaMainForm
       TabOrder = 2
     end
   end
-  object pnlDocksite: TPanel
-    Left = 0
-    Height = 72
-    Top = 86
-    Width = 1065
-    Align = alClient
-    TabOrder = 4
-  end
   object MainMenu: TMainMenu
     Images = imlStandardImages
-    left = 48
-    top = 64
+    Left = 48
+    Top = 64
     object mniFile: TMenuItem
       Caption = '&File'
       object mniFileConnect: TMenuItem
@@ -786,10 +777,13 @@ object frmStemmaMainForm: TfrmStemmaMainForm
       object mniFileCloseProject: TMenuItem
         Action = actFileCloseProject
       end
-      object Importer_projet: TMenuItem
+      object mniFileImportProject: TMenuItem
         Action = actFileImportProject
         object mniFileImportFromTMG: TMenuItem
           Action = actFileImportFromTMG
+        end
+        object mniFileImportFromGED: TMenuItem
+          Caption = 'frm GEDCOM'
         end
       end
       object mniFileExportProject: TMenuItem
@@ -804,23 +798,23 @@ object frmStemmaMainForm: TfrmStemmaMainForm
       object mndFileDivider4: TMenuItem
         Caption = '-'
       end
-      object MenuItem56: TMenuItem
+      object mniFileParameters: TMenuItem
         Caption = '&Parametres'
-        object MenuItem57: TMenuItem
-          Caption = 'Fichiers PDF'
-          OnClick = MenuItem57Click
+        object mniParametersPDFReader: TMenuItem
+          Caption = 'PDF-Reader'
+          OnClick = mniParametersPDFReaderClick
         end
-        object MenuItem58: TMenuItem
-          Caption = '&Langue'
-          OnClick = MenuItem58Click
+        object mniParametersLanguage: TMenuItem
+          Caption = '&Language'
+          OnClick = mniParametersLanguageClick
         end
       end
       object mndFileDivider54: TMenuItem
         Caption = '-'
       end
-      object Quitter: TMenuItem
+      object mniFileExit: TMenuItem
         Action = actFileExit
-        OnClick = QuitterClick
+        OnClick = mniFileExitClick
       end
     end
     object mniEdit: TMenuItem
@@ -839,30 +833,25 @@ object frmStemmaMainForm: TfrmStemmaMainForm
       end
       object mniEditCopyName: TMenuItem
         Action = actEditCopyName
-        OnClick = mniEditCopyNameClick
       end
-      object MenuItem55: TMenuItem
+      object mniEditCopyEvent: TMenuItem
         Action = actEditCopyEvent
-        OnClick = MenuItem55Click
       end
-      object MenuItem59: TMenuItem
+      object mniEditCopyParent: TMenuItem
         Action = actEditCopyParent
-        OnClick = MenuItem59Click
       end
-      object MenuItem60: TMenuItem
+      object mniEditCopyChild: TMenuItem
         Action = actEditCopyChild
-        OnClick = actFileCloseProjectExecute
       end
-      object MenuItem47: TMenuItem
+      object mniEditCopyPerson: TMenuItem
         Action = actEditCopyPerson
-        OnClick = MenuItem47Click
       end
       object mndEditDivider52: TMenuItem
         Caption = '-'
       end
-      object MenuItem53: TMenuItem
+      object mniEditDeletePerson: TMenuItem
         Action = actEditDeletePerson
-        OnClick = MenuItem53Click
+        OnClick = mniEditDeletePersonClick
       end
     end
     object mniAdd: TMenuItem
@@ -968,36 +957,36 @@ object frmStemmaMainForm: TfrmStemmaMainForm
     end
     object mniUtils: TMenuItem
       Action = actUtils
-      object mniUtilItem30: TMenuItem
-        Caption = '&Dépots'
-        OnClick = mniUtilItem30Click
+      object mniUtilRepository: TMenuItem
+        Action = actUtilsRepository
+        OnClick = mniUtilRepositoryClick
       end
-      object mniUtilItem28: TMenuItem
-        Caption = '&Sources'
-        OnClick = mniUtilItem28Click
+      object mniUtilsSources: TMenuItem
+        Action = actUtilsSources
+        OnClick = mniUtilsSourcesClick
       end
-      object mniUtilItem29: TMenuItem
-        Caption = '&Lieux'
-        OnClick = mniUtilItem29Click
+      object mniUtilsPlaces: TMenuItem
+        Action = actUtilsPlaces
+        OnClick = mniUtilsPlacesClick
       end
-      object mniUtilItem31: TMenuItem
-        Caption = '&Types d''événements'
-        OnClick = mniUtilItem31Click
+      object mniUtilsEventTypes: TMenuItem
+        Action = actUtilsEventTypes
+        OnClick = mniUtilsEventTypesClick
       end
       object mndUtilsDivider64: TMenuItem
         Caption = '-'
       end
-      object mniUtilItem65: TMenuItem
-        Caption = 'Compression'
-        OnClick = mniUtilItem65Click
+      object mniUtilsCompression: TMenuItem
+        Action = actUtilsCompression
+        OnClick = mniUtilsCompressionClick
       end
-      object mniUtilItem66: TMenuItem
-        Caption = 'Réparation Naiss.-Décès'
-        OnClick = mniUtilItem66Click
+      object mniUtilsRepairBirthDeath: TMenuItem
+        Action = actUtilsRepairBirthDeath
+        OnClick = mniUtilsRepairBirthDeathClick
       end
-      object mniUtilItem68: TMenuItem
-        Caption = 'Réparation Nom pour tri'
-        OnClick = mniUtilItem68Click
+      object mniRepairNameOrder: TMenuItem
+        Action = actUtilsRepairNameOrder
+        OnClick = mniRepairNameOrderClick
       end
       object mniUtilItem69: TMenuItem
         Caption = 'Ajouter les date de tri de relations'
@@ -1064,22 +1053,22 @@ object frmStemmaMainForm: TfrmStemmaMainForm
   end
   object SelectDirectoryDialog1: TSelectDirectoryDialog
     Options = [ofPathMustExist, ofEnableSizing, ofViewDetail]
-    left = 168
-    top = 32
+    Left = 168
+    Top = 32
   end
   object Timer1: TTimer
     OnTimer = Timer1Timer
-    left = 232
-    top = 40
+    Left = 232
+    Top = 40
   end
   object OpenDialog1: TOpenDialog
-    left = 280
-    top = 40
+    Left = 280
+    Top = 40
   end
   object ActionList1: TActionList
     Images = imlStandardImages
-    left = 16
-    top = 64
+    Left = 16
+    Top = 64
     object actAdd: TAction
       Category = 'Add'
       Caption = 'Add'
@@ -1148,16 +1137,18 @@ object frmStemmaMainForm: TfrmStemmaMainForm
     object actEditCopyName: TAction
       Category = 'Edit'
       Caption = 'Copy &Name'
-      OnExecute = mniEditCopyNameClick
+      OnExecute = actEditCopyNameExecute
     end
     object actEditCopyEvent: TAction
       Category = 'Edit'
       Caption = 'Copy &Event'
+      OnExecute = actEditCopyEventExecute
     end
     object actEditCopyParent: TAction
       Category = 'Edit'
       Caption = 'Copy Pa&rent'
       ImageIndex = 22
+      OnExecute = actEditCopyParentExecute
     end
     object actEditCopyChild: TAction
       Category = 'Edit'
@@ -1167,6 +1158,7 @@ object frmStemmaMainForm: TfrmStemmaMainForm
     object actEditCopyPerson: TAction
       Category = 'Edit'
       Caption = 'Copy &Person'
+      OnExecute = actEditCopyPersonExecute
     end
     object actEditDeletePerson: TAction
       Category = 'Edit'
@@ -1343,15 +1335,15 @@ object frmStemmaMainForm: TfrmStemmaMainForm
     end
     object actUtilsRepository: TAction
       Category = 'Utils'
-      Caption = 'Repository'
+      Caption = '&Repository'
     end
     object actUtilsSources: TAction
       Category = 'Utils'
-      Caption = 'Sources'
+      Caption = '&Sources'
     end
     object actUtilsPlaces: TAction
       Category = 'Utils'
-      Caption = 'Places'
+      Caption = '&Places'
     end
     object actUtilsEventTypes: TAction
       Category = 'Utils'
@@ -1359,7 +1351,7 @@ object frmStemmaMainForm: TfrmStemmaMainForm
     end
     object actUtilsCompression: TAction
       Category = 'Utils'
-      Caption = 'Compression'
+      Caption = 'Database Compression'
     end
     object actWinChildren: TAction
       Tag = 5
@@ -1421,10 +1413,26 @@ object frmStemmaMainForm: TfrmStemmaMainForm
       OnExecute = actFileImportFromTMGExecute
       OnUpdate = actFileImportFromTMGUpdate
     end
+    object actUtilsRepairBirthDeath: TAction
+      Category = 'Utils'
+      Caption = 'Repair &Birth-Death'
+    end
+    object actUtilsRepairNameOrder: TAction
+      Category = 'Utils'
+      Caption = 'Repair &Names (for Sorting)'
+    end
+    object actUtilsRepairRelOrder: TAction
+      Category = 'Utils'
+      Caption = 'Repair relation sort date'
+    end
+    object actUtilsRemoveOrphans: TAction
+      Category = 'Utils'
+      Caption = 'Removal of orphan records'
+    end
   end
   object imlStandardImages: TImageList
-    left = 296
-    top = 104
+    Left = 296
+    Top = 104
     Bitmap = {
       4C691C0000001000000010000000FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
       FF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFFFF00FFFF
@@ -2328,8 +2336,8 @@ object frmStemmaMainForm: TfrmStemmaMainForm
   object imlStandardImages15: TImageList
     Height = 24
     Width = 24
-    left = 400
-    top = 104
+    Left = 400
+    Top = 104
     Bitmap = {
       4C691C0000001800000018000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000100000000000000000000
@@ -4353,8 +4361,8 @@ object frmStemmaMainForm: TfrmStemmaMainForm
   object imlStandardImages20: TImageList
     Height = 32
     Width = 32
-    left = 528
-    top = 112
+    Left = 528
+    Top = 112
     Bitmap = {
       4C691C0000002000000020000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000

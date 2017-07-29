@@ -49,6 +49,10 @@ type
     actFileExportProject: TAction;
     actFileExportToWebsite: TAction;
     actFileImportFromTMG: TAction;
+    actUtilsRepairRelOrder: TAction;
+    actUtilsRemoveOrphans: TAction;
+    actUtilsRepairNameOrder: TAction;
+    actUtilsRepairBirthDeath: TAction;
     actWinDescendens: TAction;
     actWinAncesters: TAction;
     actWinImages: TAction;
@@ -87,28 +91,29 @@ type
     imlStandardImages20: TImageList;
     Individu: TSpinEdit;
     MenuItem1: TMenuItem;
+    mniFileImportFromGED: TMenuItem;
     mndHelpDiv1: TMenuItem;
     mndFileDivider54: TMenuItem;
-    MenuItem55: TMenuItem;
-    MenuItem56: TMenuItem;
-    MenuItem57: TMenuItem;
-    MenuItem58: TMenuItem;
-    MenuItem59: TMenuItem;
-    MenuItem60: TMenuItem;
+    mniEditCopyEvent: TMenuItem;
+    mniFileParameters: TMenuItem;
+    mniParametersPDFReader: TMenuItem;
+    mniParametersLanguage: TMenuItem;
+    mniEditCopyParent: TMenuItem;
+    mniEditCopyChild: TMenuItem;
     mniFileCloseProject: TMenuItem;
     mniFileExportProject: TMenuItem;
     mniFileExportToWebsite: TMenuItem;
     mndUtilsDivider64: TMenuItem;
-    mniUtilItem65: TMenuItem;
-    mniUtilItem66: TMenuItem;
+    mniUtilsCompression: TMenuItem;
+    mniUtilsRepairBirthDeath: TMenuItem;
     mniUtilItem67: TMenuItem;
-    mniUtilItem68: TMenuItem;
+    mniRepairNameOrder: TMenuItem;
     mniUtilItem69: TMenuItem;
     mniUtils: TMenuItem;
-    mniUtilItem28: TMenuItem;
-    mniUtilItem29: TMenuItem;
-    mniUtilItem30: TMenuItem;
-    mniUtilItem31: TMenuItem;
+    mniUtilsSources: TMenuItem;
+    mniUtilsPlaces: TMenuItem;
+    mniUtilRepository: TMenuItem;
+    mniUtilsEventTypes: TMenuItem;
     mniAdd: TMenuItem;
     mniAddFather33: TMenuItem;
     mniAddMother34: TMenuItem;
@@ -124,13 +129,13 @@ type
     mniAddItem44: TMenuItem;
     mndEditDivider45: TMenuItem;
     mniEditCopyName: TMenuItem;
-    MenuItem47: TMenuItem;
+    mniEditCopyPerson: TMenuItem;
     mniHelp: TMenuItem;
     MenuItem49: TMenuItem;
     mniAddItem50: TMenuItem;
     mniFileImportFromTMG: TMenuItem;
     mndEditDivider52: TMenuItem;
-    MenuItem53: TMenuItem;
+    mniEditDeletePerson: TMenuItem;
     mndNavDivider20: TMenuItem;
     mniNavHistory21: TMenuItem;
     mndWindowDivider22: TMenuItem;
@@ -149,7 +154,6 @@ type
     mndDivItem19: TMenuItem;
     OldIndividu: TListBox;
     OpenDialog1: TOpenDialog;
-    pnlDocksite: TPanel;
     pnlDebug: TPanel;
     StatusBar: TStatusBar;
     Timer1: TTimer;
@@ -173,9 +177,9 @@ type
     mniNoms: TMenuItem;
     mniEvenements: TMenuItem;
     mniOpenProject: TMenuItem;
-    Importer_projet: TMenuItem;
+    mniFileImportProject: TMenuItem;
     mndFileDivider4: TMenuItem;
-    Quitter: TMenuItem;
+    mniFileExit: TMenuItem;
     SelectDirectoryDialog1: TSelectDirectoryDialog;
     ToolBar1: TToolBar;
     tbtFileConnectDB: TToolButton;
@@ -208,6 +212,8 @@ type
     procedure actAddFatherUpdate(Sender: TObject);
     procedure actAddSpouseUpdate(Sender: TObject);
     procedure actAddUpdate(Sender: TObject);
+    procedure actEditCopyEventExecute(Sender: TObject);
+    procedure actEditCopyParentExecute(Sender: TObject);
     procedure actFileCreateProjectUpdate(Sender: TObject);
     procedure actFileCloseProjectUpdate(Sender: TObject);
     procedure actFileDeleteProjectUpdate(Sender: TObject);
@@ -247,10 +253,10 @@ type
     procedure mniNavItem24Click(Sender: TObject);
     procedure mniNavItem25Click(Sender: TObject);
     procedure actWinImagesExecute(Sender: TObject);
-    procedure mniUtilItem28Click(Sender: TObject);
-    procedure mniUtilItem29Click(Sender: TObject);
-    procedure mniUtilItem30Click(Sender: TObject);
-    procedure mniUtilItem31Click(Sender: TObject);
+    procedure mniUtilsSourcesClick(Sender: TObject);
+    procedure mniUtilsPlacesClick(Sender: TObject);
+    procedure mniUtilRepositoryClick(Sender: TObject);
+    procedure mniUtilsEventTypesClick(Sender: TObject);
     procedure actAddFatherExecute(Sender: TObject);
     procedure actAddMotherExecute(Sender: TObject);
     procedure actAddBrotherExecute(Sender: TObject);
@@ -262,29 +268,27 @@ type
     procedure mniAddItem42Click(Sender: TObject);
     procedure mniAddItem43Click(Sender: TObject);
     procedure actAddSpouseExecute(Sender: TObject);
-    procedure mniEditCopyNameClick(Sender: TObject);
-    procedure MenuItem47Click(Sender: TObject);
+    procedure actEditCopyNameExecute(Sender: TObject);
+    procedure actEditCopyPersonExecute(Sender: TObject);
     procedure actHelpAboutExecute(Sender: TObject);
     procedure mniAddItem50Click(Sender: TObject);
-    procedure MenuItem53Click(Sender: TObject);
-    procedure MenuItem55Click(Sender: TObject);
-    procedure MenuItem58Click(Sender: TObject);
-    procedure MenuItem57Click(Sender: TObject);
-    procedure MenuItem59Click(Sender: TObject);
+    procedure mniEditDeletePersonClick(Sender: TObject);
+    procedure mniParametersLanguageClick(Sender: TObject);
+    procedure mniParametersPDFReaderClick(Sender: TObject);
     procedure actFileCloseProjectExecute(Sender: TObject);
     procedure MenuItem61Click(Sender: TObject);
     procedure actFileExportToWebsiteExecute(Sender: TObject);
-    procedure mniUtilItem65Click(Sender: TObject);
-    procedure mniUtilItem66Click(Sender: TObject);
+    procedure mniUtilsCompressionClick(Sender: TObject);
+    procedure mniUtilsRepairBirthDeathClick(Sender: TObject);
     procedure mniUtilItem67Click(Sender: TObject);
-    procedure mniUtilItem68Click(Sender: TObject);
+    procedure mniRepairNameOrderClick(Sender: TObject);
     procedure mniUtilItem69Click(Sender: TObject);
     procedure mniEvenementsClick(Sender: TObject);
     procedure OldClick(Sender: TObject);
     procedure actFileDeleteProjectExecute(Sender: TObject);
     procedure mniNomsClick(Sender: TObject);
     procedure actFileOpenExecute(Sender: TObject);
-    procedure QuitterClick(Sender: TObject);
+    procedure mniFileExitClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure ToolBar1Paint(Sender: TObject);
   private
@@ -363,7 +367,7 @@ end;
 
 { TfrmStemmaMainForm }
 
-procedure TfrmStemmaMainForm.QuitterClick(Sender: TObject);
+procedure TfrmStemmaMainForm.mniFileExitClick(Sender: TObject);
 begin
   if MessageDlg(SConfirmation,rsAreYouSureToQuit,mtConfirmation,mbYesNo,0) = mrYes then
     frmStemmaMainForm.Close;
@@ -750,6 +754,25 @@ begin
   TAction(Sender).Enabled := dmGenData.DB_Connected and dmGenData.ProjectIsOpen;
 end;
 
+procedure TfrmStemmaMainForm.actEditCopyEventExecute(Sender: TObject);
+begin
+  // fr: Copier Événement
+  // en: Copy Event
+
+  if mniEvenements.Checked then
+  begin
+
+    dmGenData.CopyEvent(frmEvents.idEvent);
+  end;
+end;
+
+procedure TfrmStemmaMainForm.actEditCopyParentExecute(Sender: TObject);
+begin
+   // Copier Parent
+  if actWinParents.Checked then
+    frmParents.CopyParent(Sender);
+end;
+
 procedure TfrmStemmaMainForm.actAddSpouseUpdate(Sender: TObject);
 begin
   TAction(Sender).Enabled := dmGenData.DB_Connected and dmGenData.ProjectIsOpen;
@@ -867,9 +890,9 @@ begin
   mniFileConnect.Caption := Translation.Items[249];
   mniCreateProject.Caption := Translation.Items[250];
   mniOpenProject.Caption := Translation.Items[251];
-  Importer_projet.Caption := Translation.Items[252];
+  mniFileImportProject.Caption := Translation.Items[252];
   mniFileDeleteProject.Caption := Translation.Items[254];
-  Quitter.Caption := Translation.Items[256];
+  mniFileExit.Caption := Translation.Items[256];
   mniEdit.Caption := Translation.Items[257];
   mniEditCopy.Caption := Translation.Items[258];
   mniEditCut.Caption := Translation.Items[259];
@@ -891,10 +914,10 @@ begin
   mniNavNext25.Caption := Translation.Items[279];
   mniImage.Caption := Translation.Items[293];
   mniUtils.Caption := Translation.Items[281];
-  mniUtilItem28.Caption := Translation.Items[282];
-  mniUtilItem29.Caption := Translation.Items[283];
-  mniUtilItem30.Caption := Translation.Items[233];
-  mniUtilItem31.Caption := Translation.Items[284];
+  mniUtilsSources.Caption := Translation.Items[282];
+  mniUtilsPlaces.Caption := Translation.Items[283];
+  mniUtilRepository.Caption := Translation.Items[233];
+  mniUtilsEventTypes.Caption := Translation.Items[284];
   mniAdd.Caption := Translation.Items[224];
   mniAddFather33.Caption := Translation.Items[264];
   mniAddMother34.Caption := Translation.Items[265];
@@ -908,24 +931,24 @@ begin
   mniAddItem43.Caption := Translation.Items[275];
   mniAddItem44.Caption := Translation.Items[270];
   mniEditCopyName.Caption := Translation.Items[261];
-  MenuItem47.Caption := Translation.Items[262];
+  mniEditCopyPerson.Caption := Translation.Items[262];
   mniHelp.Caption := Translation.Items[296];
   MenuItem49.Caption := Translation.Items[297];
   mniAddItem50.Caption := Translation.Items[271];
   mniFileImportFromTMG.Caption := Translation.Items[253];
-  MenuItem53.Caption := Translation.Items[263];
-  MenuItem55.Caption := Translation.Items[308];
-  MenuItem56.Caption := Translation.Items[302];
-  MenuItem57.Caption := Translation.Items[303];
-  MenuItem58.Caption := Translation.Items[255];
-  MenuItem59.Caption := Translation.Items[309];
-  MenuItem60.Caption := Translation.Items[310];
+  mniEditDeletePerson.Caption := Translation.Items[263];
+  mniEditCopyEvent.Caption := Translation.Items[308];
+  mniFileParameters.Caption := Translation.Items[302];
+  mniParametersPDFReader.Caption := Translation.Items[303];
+  mniParametersLanguage.Caption := Translation.Items[255];
+  mniEditCopyParent.Caption := Translation.Items[309];
+  mniEditCopyChild.Caption := Translation.Items[310];
   mniFileExportProject.Caption := Translation.Items[321];
   mniFileExportToWebsite.Caption := Translation.Items[322];
-  mniUtilItem65.Caption := Translation.Items[335];
-  mniUtilItem66.Caption := Translation.Items[336];
+  mniUtilsCompression.Caption := Translation.Items[335];
+  mniUtilsRepairBirthDeath.Caption := Translation.Items[336];
   mniUtilItem67.Caption := Translation.Items[338];
-  mniUtilItem68.Caption := Translation.Items[339];
+  mniRepairNameOrder.Caption := Translation.Items[339];
   mniUtilItem69.Caption := Translation.Items[340];
 
   dmGenData.ReadCfgFormPosition(Sender as TForm, 0, 0, 70, 1000);
@@ -1788,22 +1811,22 @@ begin
   ToggleVisExtraWindow(Sender, FormImage);
 end;
 
-procedure TfrmStemmaMainForm.mniUtilItem28Click(Sender: TObject);
+procedure TfrmStemmaMainForm.mniUtilsSourcesClick(Sender: TObject);
 begin
   frmSources.ShowModal;
 end;
 
-procedure TfrmStemmaMainForm.mniUtilItem29Click(Sender: TObject);
+procedure TfrmStemmaMainForm.mniUtilsPlacesClick(Sender: TObject);
 begin
   frmPlace.ShowModal;
 end;
 
-procedure TfrmStemmaMainForm.mniUtilItem30Click(Sender: TObject);
+procedure TfrmStemmaMainForm.mniUtilRepositoryClick(Sender: TObject);
 begin
   frmRepository.ShowModal;
 end;
 
-procedure TfrmStemmaMainForm.mniUtilItem31Click(Sender: TObject);
+procedure TfrmStemmaMainForm.mniUtilsEventTypesClick(Sender: TObject);
 begin
   frmTypes.ShowModal;
 end;
@@ -1815,7 +1838,7 @@ begin
   frmEditName.EditMode := eNET_AddFather;
   // Code('P',0)
   if frmEditName.Showmodal = mrOk then
-    frmStemmaMainForm.iID := frmEditName.I.Value;
+    frmStemmaMainForm.iID := frmEditName.idInd;
 end;
 
 procedure TfrmStemmaMainForm.actAddMotherExecute(Sender: TObject);
@@ -1825,7 +1848,7 @@ begin
   frmEditName.EditMode := eNET_AddMother;
   // Code('M',0)
   if frmEditName.Showmodal = mrOk then
-    frmStemmaMainForm.iID := frmEditName.I.Value;
+    frmStemmaMainForm.iID := frmEditName.idInd;
 end;
 
 procedure TfrmStemmaMainForm.actAddBrotherExecute(Sender: TObject);
@@ -1838,7 +1861,7 @@ begin
     frmEditName.EditMode := eNET_AddBrother;
     // Code('F',0)
     if frmEditName.Showmodal = mrOk then
-      frmStemmaMainForm.iID := frmEditName.I.Value;
+      frmStemmaMainForm.iID := frmEditName.idInd;
   end;
 end;
 
@@ -1851,7 +1874,7 @@ begin
     frmEditName.EditMode := eNET_AddSister;
     // Code('S',0)
     if frmEditName.Showmodal = mrOk then
-      frmStemmaMainForm.iID := frmEditName.I.Value;
+      frmStemmaMainForm.iID := frmEditName.idInd;
   end;
 end;
 
@@ -1876,7 +1899,7 @@ begin
     //     dmGenData.PutCode('A',0);
     frmEditName.EditMode := eNET_AddSister;
     if frmEditName.Showmodal = mrOk then
-      frmStemmaMainForm.iID := frmEditName.I.Value;
+      frmStemmaMainForm.iID := frmEditName.idInd;
   end;
 end;
 
@@ -1901,7 +1924,7 @@ begin
     //     dmGenData.PutCode('A',0);
     frmEditName.EditMode := eNET_AddDaughter;
     if frmEditName.Showmodal = mrOk then
-      frmStemmaMainForm.iID := frmEditName.I.Value;
+      frmStemmaMainForm.iID := frmEditName.idInd;
   end;
 end;
 
@@ -1957,11 +1980,11 @@ begin
     //     dmGenData.PutCode('A',0);
     frmEditName.EditMode := eNET_AddSpouse;
     if frmEditName.Showmodal = mrOk then
-      frmStemmaMainForm.iID := frmEditName.I.Value;
+      frmStemmaMainForm.iID := frmEditName.idInd;
   end;
 end;
 
-procedure TfrmStemmaMainForm.mniEditCopyNameClick(Sender: TObject);
+procedure TfrmStemmaMainForm.actEditCopyNameExecute(Sender: TObject);
 var
   i1, i2, i3, i4: string;
   LastNID, lidName: longint;
@@ -1982,7 +2005,7 @@ begin
   end;
 end;
 
-procedure TfrmStemmaMainForm.MenuItem47Click(Sender: TObject);
+procedure TfrmStemmaMainForm.actEditCopyPersonExecute(Sender: TObject);
 var
   i1, i2, i3, i4: string;
   nouveau: integer;
@@ -2178,10 +2201,10 @@ begin
   //  dmGenData.PutCode('A',0);
   frmEditName.EditMode := eNET_NewUnrelated;
   if frmEditName.Showmodal = mrOk then
-    frmStemmaMainForm.iID := frmEditName.I.Value;
+    frmStemmaMainForm.iID := frmEditName.idInd;
 end;
 
-procedure TfrmStemmaMainForm.MenuItem53Click(Sender: TObject);
+procedure TfrmStemmaMainForm.mniEditDeletePersonClick(Sender: TObject);
 var
   valide: boolean;
 begin
@@ -2271,20 +2294,7 @@ begin
   end;
 end;
 
-procedure TfrmStemmaMainForm.MenuItem55Click(Sender: TObject);
-
-begin
-  // fr: Copier Événement
-  // en: Copy Event
-
-  if mniEvenements.Checked then
-  begin
-
-    dmGenData.CopyEvent(frmEvents.idEvent);
-  end;
-end;
-
-procedure TfrmStemmaMainForm.MenuItem58Click(Sender: TObject);
+procedure TfrmStemmaMainForm.mniParametersLanguageClick(Sender: TObject);
 var
   ini: TIniFile;
 begin
@@ -2301,7 +2311,7 @@ begin
   end;
 end;
 
-procedure TfrmStemmaMainForm.MenuItem57Click(Sender: TObject);
+procedure TfrmStemmaMainForm.mniParametersPDFReaderClick(Sender: TObject);
 var
   ini: TIniFile;
   sExeExt: RawByteString;
@@ -2319,14 +2329,6 @@ begin
     Ini.WriteString('Parametres', 'PDF', OpenDialog1.FileName);
   end;
   Ini.Free;
-end;
-
-procedure TfrmStemmaMainForm.MenuItem59Click(Sender: TObject);
-
-begin
-  // Copier Parent
-  if actWinParents.Checked then
-    frmParents.CopyParent(Sender);
 end;
 
 procedure TfrmStemmaMainForm.actFileCloseProjectExecute(Sender: TObject);
@@ -2434,7 +2436,7 @@ begin
   end;
 end;
 
-procedure TfrmStemmaMainForm.mniUtilItem65Click(Sender: TObject);
+procedure TfrmStemmaMainForm.mniUtilsCompressionClick(Sender: TObject);
 var
   MyCursor: Tcursor;
 begin  //fr: Compression de base de données
@@ -2450,7 +2452,7 @@ begin  //fr: Compression de base de données
   Screen.Cursor := MyCursor;
 end;
 
-procedure TfrmStemmaMainForm.mniUtilItem66Click(Sender: TObject);
+procedure TfrmStemmaMainForm.mniUtilsRepairBirthDeathClick(Sender: TObject);
 var
   MyCursor: Tcursor;
 begin  // Repair Birth-Death
@@ -2473,7 +2475,7 @@ begin
   { TODO : Nettoyage des records orphelins }
 end;
 
-procedure TfrmStemmaMainForm.mniUtilItem68Click(Sender: TObject);
+procedure TfrmStemmaMainForm.mniRepairNameOrderClick(Sender: TObject);
 var
   MyCursor: Tcursor;
   i1, i2: string;
