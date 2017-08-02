@@ -17,11 +17,13 @@ type
     pnlMemoLeft: TPanel;
     procedure edtMemoTextEditingDone(Sender: TObject);
   private
+    function GetCaption: string;
     function GetText: string;
+    procedure SetCaption(AValue: string);
     procedure SetText(AValue: string);
-
   public
     property text:string read GetText write SetText;
+    property caption:string read GetCaption write SetCaption;
   end;
 
 implementation
@@ -36,15 +38,26 @@ begin
   frmStemmaMainForm.AppendHistoryData('M',edtMemoText.Text);
 end;
 
+function TfraMemo.GetCaption: string;
+begin
+  result := lblMemo.Caption;
+end;
+
 function TfraMemo.GetText: string;
 begin
   result := edtMemoText.Text;
 end;
 
+procedure TfraMemo.SetCaption(AValue: string);
+begin
+  if lblMemo.Caption = AValue then exit;
+  lblMemo.Caption := AValue;
+end;
+
 procedure TfraMemo.SetText(AValue: string);
 begin
-  if text = edtMemoText.text then exit;
-  edtMemoText.text := text;
+  if AValue = edtMemoText.text then exit;
+  edtMemoText.text := AValue;
 end;
 
 end.

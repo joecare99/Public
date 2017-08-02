@@ -315,6 +315,9 @@ type
     property sID: string read GetIDStr write SetiIDStr;
     procedure AppendHistoryData(const lHistType: string; const lHistData: string);overload;
     procedure AppendHistoryData(const lHistType: string; const lHistData: integer);overload;
+    function RetreiveFromHistoy(const lHistType: string): string;
+    function RetreiveFromHistoyID(const lHistType: string): integer;
+    Procedure SetHistoryToActual(Sender:TObject);
     { public declarations }
   end;
 
@@ -363,7 +366,81 @@ begin
   end;
 end;
 
+function TfrmStemmaMainForm.RetreiveFromHistoy(const lHistType: string): string;
+var
 
+  found: boolean;
+  i: integer;
+begin
+  with DataHist do begin
+  Result := '';
+    found:=false;
+    For i:=Row to RowCount-1 do
+       begin
+       if Cells[0,i]=lHistType then
+          begin
+          Result:=Cells[1,i];
+          Row:=i+1;
+          found:=true;
+          break;
+       end;
+    end;
+    if not found then
+       begin
+       For i:=0 to RowCount-1 do
+          begin
+          if Cells[0,i]=lHistType then
+             begin
+             Result:=Cells[1,i];
+             Row:=i+1;
+             found:=true;
+             break;
+          end;
+       end;
+    end;
+
+  end;
+end;
+
+function TfrmStemmaMainForm.RetreiveFromHistoyID(const lHistType: string): integer;
+var
+  found: boolean;
+  i: integer;
+begin
+  with DataHist do begin
+  Result := -1;
+    found:=false;
+    For i:=Row to RowCount-1 do
+       begin
+       if Cells[0,i]=lHistType then
+          begin
+          Result:=ptrint(Objects[1,i]);
+          Row:=i+1;
+          found:=true;
+          break;
+       end;
+    end;
+    if not found then
+       begin
+       For i:=0 to RowCount-1 do
+          begin
+          if Cells[0,i]=lHistType then
+             begin
+             Result:=ptrint(Objects[1,i]);
+             Row:=i+1;
+             found:=true;
+             break;
+          end;
+       end;
+    end;
+
+  end;
+end;
+
+procedure TfrmStemmaMainForm.SetHistoryToActual(Sender: TObject);
+begin
+  DataHist.Row:=0;
+end;
 
 { TfrmStemmaMainForm }
 
@@ -1999,7 +2076,7 @@ begin
     // fr: Ajoute le nom dans l'explorateur...
     // en: Add Name to Explorer ...
     if actWinExplorer.Checked then
-      frmExplorer.AddNameToExplorer(i1, i2, i3, i4);
+      frmExplorer.AddNameToExplorer(LastNID,dmGenData.GetIndividuumName(frmStemmaMainForm.iID), i1, i2, i3, i4);
     dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
     frmNames.PopulateNom(Sender);
   end;
@@ -2007,8 +2084,9 @@ end;
 
 procedure TfrmStemmaMainForm.actEditCopyPersonExecute(Sender: TObject);
 var
-  i1, i2, i3, i4: string;
+  i1, i2, i3, i4, lFullName: string;
   nouveau: integer;
+  lLastidName: LongInt;
 begin
   // Copier individu
   nouveau := dmGenData.CopyIndividual(frmStemmaMainForm.iID);
@@ -2077,16 +2155,20 @@ begin
     i2 := dmGenData.Query1.Fields[9].AsString;
     i3 := dmGenData.Query1.Fields[10].AsString;
     i4 := dmGenData.Query1.Fields[11].AsString;
+
+    lFullName:=dmGenData.Query1.Fields[2].AsString;
     dmGenData.Query2.SQL.Clear;
     dmGenData.Query2.SQL.Add(
       'INSERT IGNORE INTO N (I, Y, N, X, M, P, PD, SD, I1, I2, I3, I4) VALUES (' +
       IntToStr(nouveau) + ', ' + dmGenData.Query1.Fields[1].AsString +
-      ', ''' + AutoQuote(dmGenData.Query1.Fields[2].AsString) + ''', ' + dmGenData.Query1.Fields[3].AsString +
+      ', ''' + AutoQuote(lFullName) + ''', ' + dmGenData.Query1.Fields[3].AsString +
       ', ''' + AutoQuote(dmGenData.Query1.Fields[4].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[5].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[6].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[7].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[8].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[9].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[10].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[11].AsString) + ''')');
     dmGenData.Query2.ExecSQL;
     dmGenData.Query2.SQL.Text := 'SHOW TABLE STATUS WHERE NAME=''N''';
     dmGenData.Query2.Open;
     dmGenData.Query2.First;
+    lLastidName:=dmGenData.Query2.Fields[10].AsInteger;
+    dmGenData.Query2.Close;
     dmGenData.Query3.SQL.Text := 'SELECT Y, N, S, Q, M FROM C WHERE Y=''N'' AND N=' +
       dmGenData.Query1.Fields[12].AsString;
     dmGenData.Query3.Open;
@@ -2095,7 +2177,7 @@ begin
       dmGenData.Query4.SQL.Clear;
       dmGenData.Query4.SQL.Add('INSERT IGNORE INTO C (Y, N, S, Q, M) VALUES (''' +
         dmGenData.Query3.Fields[0].AsString + ''', ' +
-        IntToStr(dmGenData.Query2.Fields[10].AsInteger - 1) + ', ' +
+        IntToStr(lLastidName - 1) + ', ' +
         dmGenData.Query3.Fields[2].AsString + ', ' +
         dmGenData.Query3.Fields[3].AsString + ', ''' + AutoQuote(dmGenData.Query3.Fields[4].AsString) + ''')');
       dmGenData.Query4.ExecSQL;
@@ -2103,7 +2185,7 @@ begin
     end;
     // Ajoute le nom dans l'explorateur...
     if mniExplorateur.Checked then
-       frmExplorer.AddNameToExplorer(i1,i2,i3,i4);
+       frmExplorer.AddNameToExplorer(lLastidName,lFullName,i1,i2,i3,i4);
     dmGenData.Query1.Next;
   end;
   // Copie tous les documents
@@ -2114,7 +2196,7 @@ begin
   begin
     dmGenData.Query2.SQL.Clear;
     dmGenData.Query2.SQL.Add('INSERT IGNORE INTO X (X, T, D, F, Z, A, N) VALUES (' +
-      dmGenData.Query1.Fields[0].AsString + ', ''' + AutoQuote(dmGenData.Query1.Fields[1].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[2].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[3].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[4].AsString) + ''', ''' + 'I' + ''', ' + IntToStr(nouveau) + ')');
+      dmGenData.Query1.Fields[0].AsString + ', ''' + AutoQuote(dmGenData.Query1.Fields[1].AsString) + ''', ''' + AutoQuote(lFullName) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[3].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[4].AsString) + ''', ''' + 'I' + ''', ' + IntToStr(nouveau) + ')');
     dmGenData.Query2.ExecSQL;
     dmGenData.Query1.Next;
   end;
@@ -2127,12 +2209,14 @@ begin
   begin
     dmGenData.Query2.SQL.Clear;
     dmGenData.Query2.SQL.Add('INSERT IGNORE INTO E (Y, PD, SD, L, M, X) VALUES (' +
-      dmGenData.Query1.Fields[0].AsString + ', ''' + AutoQuote(dmGenData.Query1.Fields[1].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[2].AsString) + ''', ' + dmGenData.Query1.Fields[3].AsString +
+      dmGenData.Query1.Fields[0].AsString + ', ''' + AutoQuote(dmGenData.Query1.Fields[1].AsString) + ''', ''' + AutoQuote(lFullName) + ''', ' + dmGenData.Query1.Fields[3].AsString +
       ', ''' + AutoQuote(dmGenData.Query1.Fields[4].AsString) + ''', ' + dmGenData.Query1.Fields[5].AsString + ')');
     dmGenData.Query2.ExecSQL;
     dmGenData.Query2.SQL.Text := 'SHOW TABLE STATUS WHERE NAME=''E''';
     dmGenData.Query2.Open;
     dmGenData.Query2.First;
+    lLastidName:=dmGenData.Query2.Fields[10].AsInteger;
+    dmGenData.Query2.Close;
     dmGenData.Query3.SQL.Text := 'SELECT Y, N, S, Q, M FROM C WHERE Y=''E'' AND N=' +
       dmGenData.Query1.Fields[6].AsString;
     dmGenData.Query3.Open;
@@ -2141,7 +2225,7 @@ begin
       dmGenData.Query4.SQL.Clear;
       dmGenData.Query4.SQL.Add('INSERT IGNORE INTO C (Y, N, S, Q, M) VALUES (''' +
         dmGenData.Query3.Fields[0].AsString + ''', ' +
-        IntToStr(dmGenData.Query2.Fields[10].AsInteger - 1) + ', ' +
+        IntToStr(lLastidName - 1) + ', ' +
         dmGenData.Query3.Fields[2].AsString + ', ' +
         dmGenData.Query3.Fields[3].AsString + ', ''' + AutoQuote(dmGenData.Query3.Fields[4].AsString) + ''')');
       dmGenData.Query4.ExecSQL;
@@ -2155,7 +2239,7 @@ begin
       dmGenData.Query4.SQL.Clear;
       dmGenData.Query4.SQL.Add('INSERT IGNORE INTO X (X, T, D, F, Z, A, N) VALUES (' +
         '0' + ', ''' + AutoQuote(dmGenData.Query3.Fields[1].AsString) + ''', ''' + AutoQuote(dmGenData.Query3.Fields[2].AsString) + ''', ''' + AutoQuote(dmGenData.Query3.Fields[3].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[4].AsString) + ''', ''E'', ' + IntToStr(
-        dmGenData.Query2.Fields[10].AsInteger - 1) + ')');
+        lLastidName - 1) + ')');
       dmGenData.Query4.ExecSQL;
       dmGenData.Query3.Next;
     end;
@@ -2168,12 +2252,12 @@ begin
       if frmStemmaMainForm.iID = dmGenData.Query3.Fields[0].AsInteger then
         dmGenData.Query4.SQL.Add('INSERT IGNORE INTO W (I, E, X, P, R) VALUES (' +
           IntToStr(nouveau) + ', ' +
-          IntToStr(dmGenData.Query2.Fields[10].AsInteger - 1) + ', ' +
+          IntToStr(lLastidName - 1) + ', ' +
           dmGenData.Query3.Fields[2].AsString + ', ''' + AutoQuote(dmGenData.Query3.Fields[3].AsString) + ''', ''' + AutoQuote(dmGenData.Query3.Fields[4].AsString) + ''')')
       else
         dmGenData.Query4.SQL.Add('INSERT IGNORE INTO W (I, E, X, P, R) VALUES (' +
           dmGenData.Query3.Fields[0].AsString + ', ' +
-          IntToStr(dmGenData.Query2.Fields[10].AsInteger - 1) + ', ' +
+          IntToStr(lLastidName - 1) + ', ' +
           dmGenData.Query3.Fields[2].AsString + ', ''' + AutoQuote(dmGenData.Query3.Fields[3].AsString) + ''', ''' + AutoQuote(dmGenData.Query3.Fields[4].AsString) + ''')');
       dmGenData.Query4.ExecSQL;
       dmGenData.Query4.SQL.Clear;

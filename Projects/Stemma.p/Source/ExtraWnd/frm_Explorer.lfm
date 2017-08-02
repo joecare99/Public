@@ -10,8 +10,6 @@ object frmExplorer: TfrmExplorer
   ClientWidth = 476
   OnClose = FormClose
   OnShow = FormShow
-  LCLVersion = '1.6.4.0'
-  Visible = False
   object grdIndex: TStringGrid
     Left = 5
     Height = 322
@@ -25,15 +23,19 @@ object frmExplorer: TfrmExplorer
     Columns = <    
       item
         Title.Caption = 'Id'
+        Width = 64
       end    
       item
         Title.Caption = 'Nom'
+        Width = 64
       end    
       item
         Title.Caption = 'Naiss.'
+        Width = 64
       end    
       item
         Title.Caption = 'Décès'
+        Width = 64
       end    
       item
         Title.Caption = '*'
@@ -99,6 +101,7 @@ object frmExplorer: TfrmExplorer
     Height = 26
     Top = 0
     Width = 476
+    ButtonHeight = 22
     ButtonWidth = 60
     Caption = 'Order By'
     List = True
@@ -132,8 +135,8 @@ object frmExplorer: TfrmExplorer
     end
   end
   object mnuExplorer: TPopupMenu
-    left = 264
-    top = 144
+    Left = 264
+    Top = 144
     object mniExplorerOrderByFirstname: TMenuItem
       Action = actExplorerOrderByFirstname
     end
@@ -148,8 +151,8 @@ object frmExplorer: TfrmExplorer
     end
   end
   object alsExplorer: TActionList
-    left = 224
-    top = 144
+    Left = 224
+    Top = 144
     object actExplorerOrderByFirstname: TAction
       Tag = 1
       Category = 'Explorer'

@@ -37,23 +37,18 @@ uses
 { TFormImage }
 
 procedure PopulateImage(no:integer);
+var
+  lFilename: String;
 begin
-  dmGenData.Query2.SQL.Clear;
-  if no=0 then
-    dmGenData.Query2.SQL.add('SELECT X.F FROM X WHERE X.A=''I'' AND X.X=1 AND X.N='+
-                               frmStemmaMainForm.sID)
-  else
-    dmGenData.Query2.SQL.add('SELECT X.F FROM X WHERE X.no='+inttostr(no));
-  dmGenData.Query2.Open;
-  dmGenData.Query2.First;
-  if not dmGenData.Query2.EOF then
+  lFilename:=dmGenData.GetDocumentFilename(no,frmStemmaMainForm.iID);
+  if lFilename <> '' then
      begin
-     if (length(dmGenData.Query2.Fields[0].AsString)>0) and
-        not (AnsiPos('.PDF',dmGenData.Query2.Fields[0].AsString)>0) then
+     if (length(lFilename)>0) and
+        not (AnsiPos('.PDF',lFilename)>0) and FileExists(lFilename) then
        begin
-       FormImage.Im.Picture.LoadFromFile(dmGenData.Query2.Fields[0].AsString);
+       FormImage.Im.Picture.LoadFromFile(lFilename);
        if no=0 then
-          FormImage.Caption:=Translation.Items[117]
+         FormImage.Caption:=Translation.Items[117]
        else
          FormImage.Caption:=Translation.Items[118];
      end;

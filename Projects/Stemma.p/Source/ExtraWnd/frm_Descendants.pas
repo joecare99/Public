@@ -103,7 +103,6 @@ begin
    trvDescendants.Items.AddFirst(
     nil,
     format('%s [%d]',[DecodeName(dmGenData.GetIndividuumName(lidInd),1),lidInd]));
-  dmGenData.Query1.SQL.Clear;
    trvDescendants.Selected:= trvDescendants.Items[0];
    actDescendantsExpandExecute(Sender);
 end;

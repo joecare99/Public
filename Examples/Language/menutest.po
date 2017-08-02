@@ -1,0 +1,99 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tform1.menuitem1.caption
+msgid "&File"
+msgstr ""
+
+#: tform1.menuitem1.hint
+msgid "Opens the \"File\" menu."
+msgstr ""
+
+#: tform1.menuitem10.caption
+msgid "German"
+msgstr ""
+
+#: tform1.menuitem10.hint
+msgid "Changes the language to \"German\"."
+msgstr ""
+
+#: tform1.menuitem11.caption
+msgid "New Item12"
+msgstr ""
+
+#: tform1.menuitem12.caption
+msgid "New Item13"
+msgstr ""
+
+#: tform1.menuitem13.caption
+msgid "New Item14"
+msgstr ""
+
+#: tform1.menuitem14.caption
+msgid "New Item15"
+msgstr ""
+
+#: tform1.menuitem2.caption
+msgid "&Window"
+msgstr ""
+
+#: tform1.menuitem2.hint
+msgid "Opens the \"Window\" menu."
+msgstr ""
+
+#: tform1.menuitem3.caption
+msgid "&Tools"
+msgstr ""
+
+#: tform1.menuitem3.hint
+msgid "Opens the \"Tools\" menu."
+msgstr ""
+
+#: tform1.menuitem4.caption
+msgid "&View"
+msgstr ""
+
+#: tform1.menuitem4.hint
+msgid "Opens the \"View\" menu."
+msgstr ""
+
+#: tform1.menuitem5.caption
+msgid "&Edit"
+msgstr ""
+
+#: tform1.menuitem5.hint
+msgid "Opens the \"Edit\" menu."
+msgstr ""
+
+#: tform1.menuitem6.caption
+msgid "&Help"
+msgstr ""
+
+#: tform1.menuitem6.hint
+msgid "Opens the \"Help\" menu."
+msgstr ""
+
+#: tform1.menuitem7.caption
+msgid "Language"
+msgstr ""
+
+#: tform1.menuitem7.hint
+msgid "Opens the \"Language\" sub menu."
+msgstr ""
+
+#: tform1.menuitem8.caption
+msgid "Exit"
+msgstr ""
+
+#: tform1.menuitem8.hint
+msgid "Terminates the program."
+msgstr ""
+
+#: tform1.menuitem9.caption
+msgid "English"
+msgstr ""
+
+#: tform1.menuitem9.hint
+msgid "Changes the language to \"English\"."
+msgstr ""
+

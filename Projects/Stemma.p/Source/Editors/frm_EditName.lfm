@@ -7,13 +7,13 @@ object frmEditName: TfrmEditName
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de Nom'
-  ClientHeight = 602
+  ClientHeight = 582
   ClientWidth = 629
   KeyPreview = True
   Menu = mnuNameMain
   OnShow = FormShow
   Position = poScreenCenter
-  Visible = False
+  LCLVersion = '1.9.0.0'
   object tblNames: TStringGrid
     Left = 88
     Height = 114
@@ -52,7 +52,7 @@ object frmEditName: TfrmEditName
   object pnlBottom: TPanel
     Left = 0
     Height = 52
-    Top = 550
+    Top = 530
     Width = 629
     Align = alBottom
     BevelOuter = bvNone
@@ -98,7 +98,7 @@ object frmEditName: TfrmEditName
   end
   inline fraEdtCitations1: TfraEdtCitations
     Height = 150
-    Top = 400
+    Top = 380
     Width = 629
     Align = alBottom
     ClientHeight = 150
@@ -115,7 +115,7 @@ object frmEditName: TfrmEditName
   end
   inline fraPhrase1: TfraPhrase
     Height = 42
-    Top = 288
+    Top = 268
     Width = 629
     Align = alBottom
     ClientHeight = 42
@@ -139,13 +139,13 @@ object frmEditName: TfrmEditName
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 395
+    Top = 375
     Width = 629
     Align = alBottom
     ResizeAnchor = akBottom
   end
   inline fraDate1: TfraDate
-    Top = 335
+    Top = 315
     Width = 629
     Align = alBottom
     ClientWidth = 629
@@ -176,14 +176,14 @@ object frmEditName: TfrmEditName
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 330
+    Top = 310
     Width = 629
     Align = alBottom
     ResizeAnchor = akBottom
   end
   inline fraMemo1: TfraMemo
     Height = 71
-    Top = 217
+    Top = 197
     Width = 629
     Align = alBottom
     ClientHeight = 71

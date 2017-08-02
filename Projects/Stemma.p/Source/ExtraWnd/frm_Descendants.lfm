@@ -11,15 +11,13 @@ object frmDescendants: TfrmDescendants
   OnClose = FormClose
   OnResize = FormResize
   OnShow = FormShow
-  LCLVersion = '1.6.4.0'
-  Visible = False
+  LCLVersion = '1.9.0.0'
   object trvDescendants: TTreeView
     Left = 0
     Height = 240
     Top = 0
     Width = 320
     Align = alClient
-    DefaultItemHeight = 18
     PopupMenu = mnuDescendants
     ReadOnly = True
     TabOrder = 0
@@ -27,16 +25,16 @@ object frmDescendants: TfrmDescendants
     Options = [tvoAutoItemHeight, tvoHideSelection, tvoKeepCollapsedNodes, tvoReadOnly, tvoShowButtons, tvoShowLines, tvoShowRoot, tvoToolTips, tvoThemedDraw]
   end
   object mnuDescendants: TPopupMenu
-    left = 292
-    top = 98
+    Left = 292
+    Top = 98
     object mniDescendantsGoto: TMenuItem
       Caption = '&Aller à'
       OnClick = actDescendantsGotoExecute
     end
   end
   object alsDescendants: TActionList
-    left = 256
-    top = 98
+    Left = 256
+    Top = 98
     object actDescendantsExpand: TAction
       Category = 'Descendants'
       Caption = 'E&xpand'

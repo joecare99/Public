@@ -67,6 +67,65 @@ implementation
 uses
   frm_Main,cls_Translation, dm_GenData, frm_ShowImage, frm_Names;
 
+procedure UpdateModificationByEventDocument(lidDocument:integer);
+
+begin
+  with dmGenData.Query3 do begin
+    Close;
+    SQL.Text:='SELECT W.I FROM (W JOIN E on W.E=E.no) JOIN X on X.N=E.no WHERE X.no=:idDocument';
+    ParamByName('idDocument').AsInteger:= lidDocument;
+    Open;
+    First;
+    while not EOF do
+       begin
+       dmGenData.SaveModificationTime(Fields[0].AsInteger);
+       Next;
+    end;
+    Close;
+  end;
+end;
+
+function SaveDocumentData(lidDocument: Integer; const lLinkID: Integer; const lDocumentType: TCaption;
+  const lFileName: TCaption; const lDocumentDescription: TCaption;
+  const lDocumentTitle: TCaption): Integer;
+
+begin
+  with dmGenData.Query1 do begin
+    Close;
+    if lidDocument=0 then
+       SQL.Add('INSERT INTO X (X, T, D, F, A, N) VALUES ( 0, '''+
+         AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lDocumentTitle),'"','\"'),'''','\''')+
+         ''', '''+AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lDocumentDescription),'"','\"'),'''','\''')+
+         ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lFileName),'\','\\'),'"','\"'),'''','\''')+
+         ''', '''+lDocumentType+''', '+inttostr(lLinkID)+')')
+    else
+       SQL.Add('UPDATE X SET T='''+
+         AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lDocumentTitle),'"','\"'),'''','\''')+
+         ''', D='''+AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lDocumentDescription),'"','\"'),'''','\''')+
+         ''', F='''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lFileName),'\','\\'),'"','\"'),'''','\''')+
+         ''' WHERE X.no='+inttostr(lidDocument));
+    ExecSQL;
+  end;
+  // Enregistrer la date de la dernière modification pour tout les individus reliés
+  // à cet exhibits.
+  if lidDocument=0 then
+     Result:=dmGenData.GetLastIDOfTable('X')
+  else
+     Result:=lidDocument;
+end;
+
+procedure UpdateDocumentMemo(const lidDocument: Integer;
+  const lImageMemoText: TCaption);
+begin
+  with dmGenData.Query2 do begin
+    Close;
+    SQL.Text:='UPDATE X SET Z=:MemoText WHERE X.no=:idDocument';
+    ParamByName('idDocument').AsInteger:=lidDocument;
+    ParamByName('MemoText').AsString:=lImageMemoText;
+    ExecSQL;
+  end;
+end;
+
 { TfrmEditDocuments }
 
 procedure TfrmEditDocuments.FormShow(Sender: TObject);
@@ -162,6 +221,7 @@ procedure TfrmEditDocuments.btnDisplayClick(Sender: TObject);
 var
   ini:TIniFile;
   pdf:string;
+  lImageMemoText: TCaption;
 begin
   if length(edtFilename.Text)=0 then
      begin
@@ -178,12 +238,11 @@ begin
         begin
         if edtidDocument.text='0' then
            Button1Click(Sender);
-        edtDocumentInfo.Text:=frmShowImage.Memo.Text;
-        dmGenData.Query2.SQL.Clear;
-        dmGenData.Query2.SQL.Add('UPDATE X SET Z='''+
-           AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(frmShowImage.Memo.Text),'"','\"'),'''','\''')+
-           ''' WHERE X.no='+edtidDocument.text);
-        dmGenData.Query2.ExecSQL;
+
+        lImageMemoText:=frmShowImage.Memo.Text;
+        edtDocumentInfo.Text:=lImageMemoText;
+
+        UpdateDocumentMemo(edtidDocument.Value, lImageMemoText);
         // Enregistrer la date de la dernière modification pour tout les individus reliés
         // à cet exhibits.
         if edtDocumentType.Text='I' then
@@ -192,16 +251,7 @@ begin
         end;
         if edtDocumentType.Text='E' then
            begin
-           dmGenData.Query3.SQL.Clear;
-           dmGenData.Query3.SQL.Add('SELECT W.I FROM (W JOIN E on W.E=E.no) JOIN X on X.N=E.no WHERE X.no='+
-                                     edtidDocument.Text);
-           dmGenData.Query3.Open;
-           dmGenData.Query3.First;
-           while not dmGenData.Query3.EOF do
-              begin
-              dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
-              dmGenData.Query3.Next;
-           end;
+           UpdateModificationByEventDocument(edtidDocument.Value);
            frmNames.PopulateNom(Sender);
         end;
      end;
@@ -236,43 +286,26 @@ begin
 end;
 
 procedure TfrmEditDocuments.Button1Click(Sender: TObject);
+var
+  lDocumentTitle, lDocumentDescription, lFileName, lDocumentType: TCaption;
+  lLinkID, lidDocument: Integer;
 begin
-  dmGenData.Query1.SQL.Clear;
-  if idDocument=0 then
-     dmGenData.Query1.SQL.Add('INSERT INTO X (X, T, D, F, A, N) VALUES ( 0, '''+
-       AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtDocumentTitle.Text),'"','\"'),'''','\''')+
-       ''', '''+AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtDescription.Text),'"','\"'),'''','\''')+
-       ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtFilename.Text),'\','\\'),'"','\"'),'''','\''')+
-       ''', '''+edtDocumentType.text+''', '+edtidLink.Text+')')
-  else
-     dmGenData.Query1.SQL.Add('UPDATE X SET T='''+
-       AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtDocumentTitle.Text),'"','\"'),'''','\''')+
-       ''', D='''+AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtDescription.Text),'"','\"'),'''','\''')+
-       ''', F='''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(edtFilename.Text),'\','\\'),'"','\"'),'''','\''')+
-       ''' WHERE X.no='+edtidDocument.text);
-  dmGenData.Query1.ExecSQL;
-  // Enregistrer la date de la dernière modification pour tout les individus reliés
-  // à cet exhibits.
-  if idDocument=0 then
-     begin
-     edtidDocument.text:=InttoStr(dmGenData.GetLastIDOfTable('X'));
-  end;
-  if edtDocumentType.Text='I' then
+
+  lDocumentTitle:=edtDocumentTitle.Text;
+  lDocumentDescription:=edtDescription.Text;
+  lFileName:=edtFilename.Text;
+  lDocumentType:=edtDocumentType.text;
+  lLinkID:=edtidLink.Value;
+  lidDocument:=idDocument;
+  idDocument:=SaveDocumentData(lidDocument, lLinkID, lDocumentType, lFileName,
+    lDocumentDescription, lDocumentTitle);
+  if lDocumentType='I' then
      begin
      dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
   end;
-  if edtDocumentType.Text='E' then
+  if lDocumentType='E' then
      begin
-     dmGenData.Query3.SQL.Clear;
-     dmGenData.Query3.SQL.Add('SELECT W.I FROM (W JOIN E on W.E=E.no) JOIN X on X.N=E.no WHERE X.no='+
-                                edtidDocument.Text);
-     dmGenData.Query3.Open;
-     dmGenData.Query3.First;
-     while not dmGenData.Query3.EOF do
-       begin
-       dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
-       dmGenData.Query3.Next;
-       end;
+       UpdateModificationByEventDocument(idDocument);
        frmNames.PopulateNom(Sender);
   end;
 end;

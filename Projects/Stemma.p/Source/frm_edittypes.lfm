@@ -12,8 +12,6 @@ object frmEditType: TfrmEditType
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.3'
-  Visible = False
   object Button1: TButton
     Left = 456
     Height = 25
@@ -99,8 +97,8 @@ object frmEditType: TfrmEditType
     Visible = False
   end
   object MainMenu1: TMainMenu
-    left = 31
-    top = 172
+    Left = 31
+    Top = 172
     object MenuItem2: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114

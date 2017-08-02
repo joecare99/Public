@@ -5,7 +5,7 @@ object frmStemmaMainForm: TfrmStemmaMainForm
   Width = 842
   ActiveControl = CheckBox1
   Caption = 'Stemma'
-  ClientHeight = 149
+  ClientHeight = 129
   ClientWidth = 842
   Icon.Data = {
     F63800000000010001004037000001002000E038000016000000280000004000
@@ -470,11 +470,11 @@ object frmStemmaMainForm: TfrmStemmaMainForm
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  Visible = False
+  LCLVersion = '1.9.0.0'
   object StatusBar: TStatusBar
     Left = 0
     Height = 23
-    Top = 126
+    Top = 106
     Width = 842
     AutoHint = True
     Panels = <    

@@ -52,7 +52,8 @@ type
   public
     { public declarations }
     procedure PopulateIndex(Order: integer);
-    procedure AddNameToExplorer(const i1, i2, i3, i4: string);
+    procedure AddNameToExplorer(const id: integer; const FullName, i1, i2, i3,
+      i4: string);
     procedure DeleteIndex(const idName: integer);
     procedure UpdatePreferedMark(const idNamePref, idNameUnPref: integer);
     procedure UpdateIndexDates(const lEvType: string; const lDate: string;
@@ -107,7 +108,7 @@ begin
   end;
 end;
 
-procedure TfrmExplorer.AddNameToExplorer(const i1, i2, i3, i4: string);
+procedure TfrmExplorer.AddNameToExplorer(const id:integer;const FullName, i1, i2, i3, i4: string);
 var
   j: integer;
   temp: string;
@@ -145,17 +146,19 @@ begin
   end;
   grdIndex.InsertColRow(False, j);
   grdIndex.Cells[0, j] :=
-    IntToStr(dmGenData.Query2.Fields[10].AsInteger - 1);
+    IntToStr(id - 1);
   grdIndex.Objects[0, j] :=
-    TObject(ptrint(dmGenData.Query2.Fields[10].AsInteger - 1));
+    TObject(ptrint(id - 1));
+
   grdIndex.Cells[1, j] := frmStemmaMainForm.sID;
   grdIndex.Objects[1, j] := TObject(ptrint(frmStemmaMainForm.iID));
+
   if O.Text = '1' then
     grdIndex.Cells[2, j] :=
-      DecodeName(dmGenData.Query1.Fields[2].AsString, 1)
+      DecodeName(FullName, 1)
   else
     grdIndex.Cells[2, j] :=
-      DecodeName(dmGenData.Query1.Fields[2].AsString, 2);
+      DecodeName(Fullname, 2);
   grdIndex.Cells[3, j] := ConvertDate(i3, 1);
   grdIndex.Cells[4, j] := ConvertDate(i4, 1);
   grdIndex.Cells[5, j] := '';

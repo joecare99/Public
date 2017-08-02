@@ -1,0 +1,108 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joe Care\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"X-Generator: Poedit 2.0.2\n"
+
+#: tform1.menuitem1.caption
+msgid "&File"
+msgstr "&File"
+
+#: tform1.menuitem1.hint
+msgid "Opens the \"File\" menu."
+msgstr "Opens the \"File\" menu."
+
+#: tform1.menuitem10.caption
+msgid "German"
+msgstr "German"
+
+#: tform1.menuitem10.hint
+msgid "Changes the language to \"German\"."
+msgstr "Changes the language to \"German\"."
+
+#: tform1.menuitem11.caption
+msgid "New Item12"
+msgstr ""
+
+#: tform1.menuitem12.caption
+msgid "New Item13"
+msgstr ""
+
+#: tform1.menuitem13.caption
+msgid "New Item14"
+msgstr ""
+
+#: tform1.menuitem14.caption
+msgid "New Item15"
+msgstr ""
+
+#: tform1.menuitem2.caption
+msgid "&Window"
+msgstr "&Window"
+
+#: tform1.menuitem2.hint
+msgid "Opens the \"Window\" menu."
+msgstr "Opens the \"Window\" menu."
+
+#: tform1.menuitem3.caption
+msgid "&Tools"
+msgstr "&Tools"
+
+#: tform1.menuitem3.hint
+msgid "Opens the \"Tools\" menu."
+msgstr "Opens the \"Tools\" menu."
+
+#: tform1.menuitem4.caption
+msgid "&View"
+msgstr "&View"
+
+#: tform1.menuitem4.hint
+msgid "Opens the \"View\" menu."
+msgstr "Opens the \"View\" menu."
+
+#: tform1.menuitem5.caption
+msgid "&Edit"
+msgstr "&Edit"
+
+#: tform1.menuitem5.hint
+msgid "Opens the \"Edit\" menu."
+msgstr "Opens the \"Edit\" menu."
+
+#: tform1.menuitem6.caption
+msgid "&Help"
+msgstr "&Help"
+
+#: tform1.menuitem6.hint
+msgid "Opens the \"Help\" menu."
+msgstr "Opens the \"Help\" menu."
+
+#: tform1.menuitem7.caption
+msgid "Language"
+msgstr "Language"
+
+#: tform1.menuitem7.hint
+msgid "Opens the \"Language\" sub menu."
+msgstr "Opens the \"Language\" sub menu."
+
+#: tform1.menuitem8.caption
+msgid "Exit"
+msgstr "Exit"
+
+#: tform1.menuitem8.hint
+msgid "Terminates the program."
+msgstr "Terminates the program."
+
+#: tform1.menuitem9.caption
+msgid "English"
+msgstr "English"
+
+#: tform1.menuitem9.hint
+msgid "Changes the language to \"English\"."
+msgstr "Changes the language to \"English\"."

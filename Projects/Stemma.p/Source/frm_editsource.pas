@@ -106,7 +106,7 @@ var
   tInt: LongInt;
 begin
   ActiveControl:=edtSourceTitle;
-  frmStemmaMainForm.DataHist.Row:=0;
+  frmStemmaMainForm.SetHistoryToActual(Sender);
   Caption:=Translation.Items[190];
   btnOK.Caption:=Translation.Items[152];
   btnCancel.Caption:=Translation.Items[164];
@@ -174,34 +174,17 @@ end;
 
 procedure TfrmEditSource.mniSourceRepeatClick(Sender: TObject);
 var
-  j:integer;
-  found:boolean;
+  lsResult: String;
 begin
-  if frmEditSource.ActiveControl.Name='M' then
+    if ActiveControl.Name = edtSourceInformation.Name then
+   begin
+    lsResult := frmStemmaMainForm.RetreiveFromHistoy('M');
+    if lsResult <> '' then
      begin
-     found:=false;
-     For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-        begin
-        if frmStemmaMainForm.DataHist.Cells[0,j]='M' then
-           begin
-           edtSourceInformation.text:=frmStemmaMainForm.DataHist.Cells[1,j];
-           found:=true;
-           break;
-        end;
+      edtSourceInformation.Text := lsResult;
+      edtSourceInformationEditingDone(Sender);
      end;
-     if not found then
-        begin
-        For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-           begin
-           if frmStemmaMainForm.DataHist.Cells[0,j]='M' then
-              begin
-              edtSourceInformation.text:=frmStemmaMainForm.DataHist.Cells[1,j];
-              found:=true;
-              break;
-           end;
-        end;
-     end;
-  end;
+   end
 end;
 
 procedure TfrmEditSource.Supprimer1Click(Sender: TObject);

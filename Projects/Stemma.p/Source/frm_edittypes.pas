@@ -52,7 +52,7 @@ uses
 procedure TfrmEditType.FormShow(Sender: TObject);
 
 begin
-  frmStemmaMainForm.DataHist.Row:=0;
+  frmStemmaMainForm.SetHistoryToActual(Sender);
   Caption:=Translation.Items[199];
   Button1.Caption:=Translation.Items[152];
   Button2.Caption:=Translation.Items[164];
@@ -99,37 +99,17 @@ end;
 
 procedure TfrmEditType.MenuItem2Click(Sender: TObject);
 var
-  i:integer;
-  found:boolean;
+  lsResult: String;
 begin
-  if ActiveControl.Name='P' then
+    if ActiveControl.Name = p.Name then
+   begin
+    lsResult := frmStemmaMainForm.RetreiveFromHistoy('P');
+    if lsResult <> '' then
      begin
-     found:=false;
-     For i:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-        begin
-        if frmStemmaMainForm.DataHist.Cells[0,i]='P' then
-           begin
-           P.text:=frmStemmaMainForm.DataHist.Cells[1,i];
-           PEditingDone(Sender);
-           found:=true;
-           break;
-        end;
+      P.Text := lsResult;
+      PEditingDone(Sender);
      end;
-     if not found then
-        begin
-        For i:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-           begin
-           if frmStemmaMainForm.DataHist.Cells[0,i]='P' then
-              begin
-              P.text:=frmStemmaMainForm.DataHist.Cells[1,i];
-              PEditingDone(Sender);
-              found:=true;
-              break;
-           end;
-        end;
-     end;
-  end;
-  if found then frmStemmaMainForm.DataHist.Row:=i+1;
+   end
 end;
 
 procedure TfrmEditType.PEditingDone(Sender: TObject);

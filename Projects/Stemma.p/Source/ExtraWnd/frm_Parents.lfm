@@ -11,8 +11,7 @@ object frmParents: TfrmParents
   OnClose = FormClose
   OnShow = FormShow
   PopupMenu = PopupMenuParent
-  LCLVersion = '1.8.0.2'
-  Visible = False
+  LCLVersion = '1.9.0.0'
   object tblParents: TStringGrid
     Left = 0
     Height = 264
@@ -84,8 +83,8 @@ object frmParents: TfrmParents
     end
   end
   object PopupMenuParent: TPopupMenu
-    left = 377
-    top = 70
+    Left = 377
+    Top = 70
     object mniParentGoto: TMenuItem
       Action = actParentGoto
     end
@@ -115,8 +114,8 @@ object frmParents: TfrmParents
     end
   end
   object ActionList1: TActionList
-    left = 344
-    top = 72
+    Left = 344
+    Top = 72
     object actParentGoto: TAction
       Category = 'Parent'
       Caption = '&Go to'

@@ -11,8 +11,6 @@ object frmEditParents: TfrmEditParents
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.9.0.0'
-  Visible = False
   object Label4: TLabel
     Left = 10
     Height = 15
@@ -60,9 +58,9 @@ object frmEditParents: TfrmEditParents
   end
   object P1: TMemo
     Left = 80
-    Height = 58
+    Height = 66
     Top = 160
-    Width = 528
+    Width = 536
     Lines.Strings = (
       ''
     )
@@ -104,7 +102,7 @@ object frmEditParents: TfrmEditParents
   object pnlParentBottom: TPanel
     Left = 0
     Height = 52
-    Top = 434
+    Top = 454
     Width = 625
     Align = alBottom
     BevelOuter = bvNone
@@ -131,7 +129,6 @@ object frmEditParents: TfrmEditParents
       Width = 110
       Align = alRight
       BorderSpacing.Around = 6
-      Cancel = True
       DefaultCaption = True
       Kind = bkCancel
       ModalResult = 2
@@ -140,7 +137,7 @@ object frmEditParents: TfrmEditParents
   end
   inline fraEdtCitations1: TfraEdtCitations
     Height = 155
-    Top = 279
+    Top = 299
     Width = 625
     Align = alBottom
     ClientHeight = 155
@@ -290,7 +287,7 @@ object frmEditParents: TfrmEditParents
   object pnlParentDate: TPanel
     Left = 0
     Height = 67
-    Top = 212
+    Top = 232
     Width = 625
     Align = alBottom
     BevelOuter = bvNone

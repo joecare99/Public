@@ -10,8 +10,6 @@ object frmEvents: TfrmEvents
   ClientWidth = 320
   OnClose = FormClose
   OnShow = FormShow
-  LCLVersion = '1.8.0.2'
-  Visible = False
   object grdEvents: TStringGrid
     Left = 0
     Height = 212
@@ -122,8 +120,8 @@ object frmEvents: TfrmEvents
     end
   end
   object mnuEvents: TPopupMenu
-    left = 280
-    top = 128
+    Left = 280
+    Top = 128
     object mniEventsGoto: TMenuItem
       Action = actEventsGoto
     end
@@ -147,8 +145,8 @@ object frmEvents: TfrmEvents
     end
   end
   object alsEvents: TActionList
-    left = 243
-    top = 127
+    Left = 243
+    Top = 127
     object actEventsGoto: TAction
       Category = 'Events'
       Caption = '&Go to'

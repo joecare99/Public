@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Stemma"><module name="fra_Memo"><short>Frame with a Single Memo-Field (and a label with a Caption</short><element name="TfraMemo"><short>Frame with a Single Memo-Field (and a label with a Caption</short>
+      </element><element name="TfraMemo.lblMemo"><short>The label for a caption</short>
+      </element><element name="TfraMemo.edtMemoText"><short>The memo-field</short>
+      </element><element name="TfraMemo.text"><short>Property to set the text of the Memo-field</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

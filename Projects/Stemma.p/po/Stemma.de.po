@@ -424,6 +424,7 @@ msgid "Repair names (for sorting)"
 msgstr ""
 
 #: cls_translation.srepairrelationsortda
+msgctxt "cls_translation.srepairrelationsortda"
 msgid "Repair relation sort date"
 msgstr ""
 
@@ -524,27 +525,34 @@ msgctxt "TCONNEXIONDB.USAGER.TEXT"
 msgid "Edit1"
 msgstr ""
 
-#: teditcitations.label1.caption
-#, fuzzy
-msgid "Source:"
-msgstr "Quelle hinzufügen"
+#: teditcitations.caption
+msgid "Modification de citation"
+msgstr ""
 
-#: teditcitations.label2.caption
-msgctxt "teditcitations.label2.caption"
+#: teditcitations.framemo1.pnlmemoleft.lblmemo.caption
+msgctxt "teditcitations.framemo1.pnlmemoleft.lblmemo.caption"
 msgid "Description:"
 msgstr ""
 
-#: teditcitations.label3.caption
-msgid "Qualité:"
-msgstr "Qualität:"
+#: teditcitations.lblquality.caption
+msgid "Quality:"
+msgstr ""
 
-#: teditcitations.menuitem1.caption
-msgctxt "teditcitations.menuitem1.caption"
+#: teditcitations.lblsource.caption
+#, fuzzy
+msgctxt "teditcitations.lblsource.caption"
+msgid "Source:"
+msgstr "Quelle hinzufügen"
+
+#: teditcitations.mnicitationquit.caption
+#, fuzzy
+msgctxt "teditcitations.mnicitationquit.caption"
 msgid "&Quit"
 msgstr "&Beenden"
 
-#: teditcitations.menuitem2.caption
-msgctxt "teditcitations.menuitem2.caption"
+#: teditcitations.mnicitationrepeat.caption
+#, fuzzy
+msgctxt "teditcitations.mnicitationrepeat.caption"
 msgid "Repeat"
 msgstr "Wiederholung"
 
@@ -1631,6 +1639,10 @@ msgctxt "TFORMFRATRIE.MENUITEM3.CAPTION"
 msgid "Ajouter"
 msgstr "Anfügen"
 
+#: tformimage.caption
+msgid "Image principale"
+msgstr ""
+
 #: tformlieux.button1.caption
 msgctxt "TFORMLIEUX.BUTTON1.CAPTION"
 msgid "Ok"
@@ -2212,6 +2224,10 @@ msgctxt "tfrmdescendants.actdescendantsgoto.caption"
 msgid "&Go To"
 msgstr "&Gehe zu"
 
+#: tfrmdescendants.caption
+msgid "Descendants"
+msgstr ""
+
 #: tfrmdescendants.mnidescendantsgoto.caption
 #, fuzzy
 msgctxt "tfrmdescendants.mnidescendantsgoto.caption"
@@ -2344,6 +2360,10 @@ msgctxt "tfrmeditevents.ajoutertemoin.caption"
 msgid "&Ajouter"
 msgstr "&Anfügen"
 
+#: tfrmeditevents.caption
+msgid "Edit Events"
+msgstr ""
+
 #: tfrmeditevents.l0.hint
 msgctxt "tfrmeditevents.l0.hint"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -2415,8 +2435,10 @@ msgid "Témoins:"
 msgstr ""
 
 #: tfrmeditevents.label8.caption
+#, fuzzy
+#| msgid "Lieu:"
 msgctxt "tfrmeditevents.label8.caption"
-msgid "Lieu:"
+msgid "Place:"
 msgstr "Ort:"
 
 #: tfrmeditevents.menuitem1.caption
@@ -2459,6 +2481,10 @@ msgctxt "tfrmeditevents.modifiertemoin.caption"
 msgid "&Modifier"
 msgstr "Bearbeiten"
 
+#: tfrmeditevents.panel1.caption
+msgid "Panel1"
+msgstr ""
+
 #: tfrmeditevents.role.text
 msgctxt "tfrmeditevents.role.text"
 msgid "Role"
@@ -2499,6 +2525,10 @@ msgstr "--no-xshm             Abschalten der Verwendung der Shared-Memory-Erweit
 #: tfrmeditevents.yy.text
 msgctxt "tfrmeditevents.yy.text"
 msgid "YY"
+msgstr ""
+
+#: tfrmeditname.caption
+msgid "Modification de Nom"
 msgstr ""
 
 #: tfrmeditname.cbxsex.itemsex[0].caption
@@ -2653,6 +2683,10 @@ msgctxt "tfrmeditname.tblnames.columns[1].title.caption"
 msgid "Description"
 msgstr ""
 
+#: tfrmeditparents.caption
+msgid "Modification de Relation"
+msgstr ""
+
 #: tfrmeditparents.fraedtcitations1.popupmenu2.ajouter1.caption
 #, fuzzy
 msgctxt "tfrmeditparents.fraedtcitations1.popupmenu2.ajouter1.caption"
@@ -2760,6 +2794,10 @@ msgstr ""
 msgctxt "tfrmeditsource.ajouter1.caption"
 msgid "&Ajouter"
 msgstr "&Anfügen"
+
+#: tfrmeditsource.caption
+msgid "Modification de source"
+msgstr ""
 
 #: tfrmeditsource.edtsourcedescription.text
 msgctxt "tfrmeditsource.edtsourcedescription.text"
@@ -2872,6 +2910,10 @@ msgctxt "tfrmedittype.button2.caption"
 msgid "Annul."
 msgstr "Abbruch"
 
+#: tfrmedittype.caption
+msgid "Modification de type d'événement"
+msgstr ""
+
 #: tfrmedittype.label10.caption
 #, fuzzy
 msgctxt "tfrmedittype.label10.caption"
@@ -2913,6 +2955,10 @@ msgstr "Nein"
 msgctxt "tfrmedittype.t.text"
 msgid "T"
 msgstr "Zu suchender ~T~ext"
+
+#: tfrmeditwitness.caption
+msgid "Modification d'un témoin"
+msgstr ""
 
 #: tfrmeditwitness.edtname.text
 #, fuzzy
@@ -2995,6 +3041,11 @@ msgstr ""
 #: tfrmevents.btnseparator2.caption
 msgctxt "tfrmevents.btnseparator2.caption"
 msgid "btnSeparator2"
+msgstr ""
+
+#: tfrmevents.caption
+msgctxt "tfrmevents.caption"
+msgid "Events"
 msgstr ""
 
 #: tfrmevents.grdevents.columns[0].title.caption
@@ -3105,9 +3156,41 @@ msgstr "~N~euer Text"
 msgid "&First N."
 msgstr "Erster"
 
+#: tfrmexplorer.caption
+msgctxt "tfrmexplorer.caption"
+msgid "Explorer"
+msgstr ""
+
 #: tfrmexplorer.edtsearch.texthint
 msgid "<Search Person>"
 msgstr "<Suche Person>"
+
+#: tfrmexplorer.grdindex.columns[0].title.caption
+msgid "Id"
+msgstr ""
+
+#: tfrmexplorer.grdindex.columns[1].title.caption
+#, fuzzy
+msgctxt "tfrmexplorer.grdindex.columns[1].title.caption"
+msgid "Nom"
+msgstr "Name"
+
+#: tfrmexplorer.grdindex.columns[2].title.caption
+msgid "Naiss."
+msgstr ""
+
+#: tfrmexplorer.grdindex.columns[3].title.caption
+msgid "Décès"
+msgstr ""
+
+#: tfrmexplorer.grdindex.columns[4].title.caption
+msgctxt "tfrmexplorer.grdindex.columns[4].title.caption"
+msgid "*"
+msgstr ""
+
+#: tfrmexplorer.grdindex.columns[5].title.caption
+msgid "Ordre"
+msgstr ""
 
 #: tfrmexplorer.tlbexplorerorderby.caption
 #, fuzzy
@@ -3262,6 +3345,12 @@ msgstr "&Gehe zu..."
 msgctxt "tfrmparents.actparentsetprefered.caption"
 msgid "Set &Prefered"
 msgstr ""
+
+#: tfrmparents.caption
+#, fuzzy
+msgctxt "tfrmparents.caption"
+msgid "Parents"
+msgstr "Eltern"
 
 #: tfrmparents.mniadd.caption
 msgctxt "tfrmparents.mniadd.caption"
@@ -3851,7 +3940,7 @@ msgstr ""
 
 #: tfrmstemmamainform.actutilscompression.caption
 msgctxt "tfrmstemmamainform.actutilscompression.caption"
-msgid "Compression"
+msgid "Database Compression"
 msgstr ""
 
 #: tfrmstemmamainform.actutilseventtypes.caption
@@ -3864,12 +3953,22 @@ msgctxt "tfrmstemmamainform.actutilsplaces.caption"
 msgid "&Places"
 msgstr ""
 
+#: tfrmstemmamainform.actutilsremoveorphans.caption
+msgctxt "tfrmstemmamainform.actutilsremoveorphans.caption"
+msgid "Removal of orphan records"
+msgstr ""
+
 #: tfrmstemmamainform.actutilsrepairbirthdeath.caption
 msgid "Repair &Birth-Death"
 msgstr ""
 
 #: tfrmstemmamainform.actutilsrepairnameorder.caption
-msgid "Repair &Name order"
+msgid "Repair &Names (for Sorting)"
+msgstr ""
+
+#: tfrmstemmamainform.actutilsrepairrelorder.caption
+msgctxt "tfrmstemmamainform.actutilsrepairrelorder.caption"
+msgid "Repair relation sort date"
 msgstr ""
 
 #: tfrmstemmamainform.actutilsrepository.caption
@@ -3877,6 +3976,7 @@ msgid "&Repository"
 msgstr ""
 
 #: tfrmstemmamainform.actutilssources.caption
+msgctxt "tfrmstemmamainform.actutilssources.caption"
 msgid "&Sources"
 msgstr ""
 
@@ -3941,6 +4041,12 @@ msgstr ""
 msgctxt "tfrmstemmamainform.btnseparator2.caption"
 msgid "btnSeparator2"
 msgstr ""
+
+#: tfrmstemmamainform.caption
+#, fuzzy
+msgctxt "tfrmstemmamainform.caption"
+msgid "Stemma"
+msgstr "Sind sie sicher, daß sie STEMMA beenden möchten ?"
 
 #: tfrmstemmamainform.checkbox1.caption
 msgctxt "tfrmstemmamainform.checkbox1.caption"

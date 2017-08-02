@@ -12,7 +12,6 @@ object frmEditWitness: TfrmEditWitness
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
-  Visible = False
   object pnlTop: TPanel
     Left = 0
     Height = 80
@@ -182,7 +181,6 @@ object frmEditWitness: TfrmEditWitness
       Width = 110
       Align = alRight
       BorderSpacing.Around = 6
-      Default = True
       DefaultCaption = True
       Kind = bkOK
       ModalResult = 1
@@ -196,7 +194,6 @@ object frmEditWitness: TfrmEditWitness
       Width = 110
       Align = alRight
       BorderSpacing.Around = 6
-      Cancel = True
       DefaultCaption = True
       Kind = bkCancel
       ModalResult = 2

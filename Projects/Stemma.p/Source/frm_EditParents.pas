@@ -73,6 +73,7 @@ type
     procedure YChange(Sender: TObject);
   private
     FEditMode: TenumEditRelation;
+    FidEvent: Integer;
     function GetIdRelation: integer;
     procedure SetEditMode(AValue: TenumEditRelation);
     procedure SetIdRelation(AValue: integer);
@@ -91,13 +92,37 @@ implementation
 uses
    frm_Main, cls_Translation, dm_GenData, frm_Names;
 
+procedure GetRelationData(const lidRelation: Integer; out lSortDate: String;
+  out lPhraseText: String; out lMemoText: String; out lPrefered: Boolean;
+  out lidParent: LongInt; out lidChild: LongInt; out lRelType: LongInt);
+begin
+  dmGenData.Query1.Close;
+  dmGenData.Query1.SQL.text:='SELECT R.Y, R.X, R.A, R.B, R.M, R.P, R.SD FROM R WHERE R.no=:idRelation';
+  dmGenData.Query1.ParamByName('idRelation').AsInteger:=lidRelation;
+  dmGenData.Query1.Open;
+
+  lRelType:=dmGenData.Query1.Fields[0].AsInteger;
+  lPrefered:=dmGenData.Query1.Fields[1].AsBoolean;
+  lidChild:=dmGenData.Query1.Fields[2].AsInteger;
+  lidParent:=dmGenData.Query1.Fields[3].AsInteger;
+  lMemoText:=dmGenData.Query1.Fields[4].AsString;
+  lPhraseText:=dmGenData.Query1.Fields[5].AsString;
+  lSortDate:=dmGenData.Query1.Fields[6].AsString;
+  dmGenData.Query1.Close;
+end;
+
 { TfrmEditParents }
 
 procedure TfrmEditParents.FormShow(Sender: TObject);
 
+var
+  lRelType, lidChild, lidParent: LongInt;
+  lPrefered: Boolean;
+  lMemoText, lPhraseText, lSortDate: String;
+  lidRelation: Integer;
 begin
   { TODO 20 : Lorsque l'on est dans A ou B, ESC ne fonctionne pas - By design Lazarus}
-  frmStemmaMainForm.DataHist.Row:=0;
+  frmStemmaMainForm.SetHistoryToActual(Sender);
   Caption:=Translation.Items[186];
   btnParentOK.Caption:=Translation.Items[152];
   btnParentCancel.Caption:=Translation.Items[164];
@@ -161,21 +186,20 @@ begin
      idA.ReadOnly :=true;
      idB.ReadOnly :=true;
      ActiveControl:=idA;
-     dmGenData.Query1.Close;
-     dmGenData.Query1.SQL.text:='SELECT R.Y, R.X, R.A, R.B, R.M, R.P, R.SD FROM R WHERE R.no=:idRelation';
-     dmGenData.Query1.ParamByName('idRelation').AsInteger:=idRelation;
-     dmGenData.Query1.Open;
-     Y.ItemIndex:=y.Items.IndexOfObject(TObject(ptrint(dmGenData.Query1.Fields[0].AsInteger)));
-     X.Checked:=dmGenData.Query1.Fields[1].AsBoolean;
-     idA.Value:=dmGenData.Query1.Fields[2].AsInteger;
-     idB.Value:=dmGenData.Query1.Fields[3].AsInteger;
+     lidRelation := idRelation;
+     GetRelationData(lidRelation, lSortDate, lPhraseText, lMemoText, lPrefered,
+       lidParent, lidChild, lRelType);
+     Y.ItemIndex:=y.Items.IndexOfObject(TObject(ptrint(lRelType)));
+     X.Checked:=lPrefered;
+     idA.Value:=lidChild;
+     idB.Value:=lidParent;
      NomB.Text:=DecodeName(dmGenData.GetIndividuumName(idb.Value),1);
      NomA.Text:=DecodeName(dmGenData.GetIndividuumName(ida.Value),1);
-     fraMemo1.Text:=dmGenData.Query1.Fields[4].AsString;
-     P.Text:=dmGenData.Query1.Fields[5].AsString;
-     SD2.Text:=dmGenData.Query1.Fields[6].AsString;
-     SD.Text:=ConvertDate(dmGenData.Query1.Fields[6].AsString,1);
-     dmGenData.Query1.Close;
+     fraMemo1.Text:=lMemoText;
+     P.Text:=lPhraseText;
+     SD2.Text:=lSortDate;
+     SD.Text:=ConvertDate(lSortDate,1);
+
      // Populate le tableau de citations
      fraEdtCitations1.LinkID:=No.Value;
   end;
@@ -199,143 +223,53 @@ end;
 
 procedure TfrmEditParents.MenuItem6Click(Sender: TObject);
 var
-  j:integer;
-  found:boolean;
+  lsResult:String;
+  liResult:integer;
 begin
-  if ActiveControl.Name='SD' then
+  if ActiveControl.name=SD.name then
      begin
-     found:=false;
-     For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-        begin
-        if frmStemmaMainForm.DataHist.Cells[0,j]='SD' then
-           begin
-           SD.text:=frmStemmaMainForm.DataHist.Cells[1,j];
+       lsResult := frmStemmaMainForm.RetreiveFromHistoy('SD');
+       if lsResult <>'' then
+         begin
+           SD.text:=lsResult;
            SDEditingDone(Sender);
-           found:=true;
-           break;
         end;
-     end;
-     if not found then
-        begin
-        For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-           begin
-           if frmStemmaMainForm.DataHist.Cells[0,j]='SD' then
-              begin
-              SD.text:=frmStemmaMainForm.DataHist.Cells[1,j];
-              SDEditingDone(Sender);
-              found:=true;
-              break;
-           end;
-        end;
-     end;
-  end;
-  if ActiveControl.Name='A' then
+     end
+  else if activeControl.Name=idA.Name then
      begin
-     found:=false;
-     For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-        begin
-        if frmStemmaMainForm.DataHist.Cells[0,j]='A' then
+     liResult:=frmStemmaMainForm.RetreiveFromHistoyID('A');
+        if liResult>0 then
            begin
-           idA.Value:=ptrint(frmStemmaMainForm.DataHist.Objects[1,j]);
+           idA.Value:=liResult;
            idAEditingDone(Sender);
-           found:=true;
-           break;
-        end;
-     end;
-     if not found then
-        begin
-        For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-           begin
-           if frmStemmaMainForm.DataHist.Cells[0,j]='A' then
-              begin
-              idA.Value:=ptrint(frmStemmaMainForm.DataHist.Objects[1,j]);
-              idAEditingDone(Sender);
-              found:=true;
-              break;
            end;
-        end;
-     end;
-  end;
-  if ActiveControl.Name='P' then
+     end
+  else if ActiveControl.Name=P.Name then
      begin
-     found:=false;
-     For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-        begin
-        if frmStemmaMainForm.DataHist.Cells[0,j]='P' then
+       lsResult:=frmStemmaMainForm.RetreiveFromHistoy('P');
+       if lsResult<>'' then
            begin
-           P.text:=frmStemmaMainForm.DataHist.Cells[1,j];
+           P.text:=lsResult;
            PEditingDone(Sender);
-           found:=true;
-           break;
         end;
-     end;
-     if not found then
-        begin
-        For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-           begin
-           if frmStemmaMainForm.DataHist.Cells[0,j]='P' then
-              begin
-              P.text:=frmStemmaMainForm.DataHist.Cells[1,j];
-              PEditingDone(Sender);
-              found:=true;
-              break;
-           end;
-        end;
-     end;
-  end;
-  if ActiveControl.Name='B' then
+     end
+  else if activeControl.Name=idB.Name then
      begin
-     found:=false;
-     For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-        begin
-        if frmStemmaMainForm.DataHist.Cells[0,j]='B' then
+     liResult:=frmStemmaMainForm.RetreiveFromHistoyID('B');
+        if liResult>0 then
            begin
-           idB.Value:=ptrint(frmStemmaMainForm.DataHist.Objects[1,j]);
+           idB.Value:=liResult;
            idBEditingDone(Sender);
-           found:=true;
-           break;
-        end;
-     end;
-     if not found then
-        begin
-        For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-           begin
-           if frmStemmaMainForm.DataHist.Cells[0,j]='B' then
-              begin
-              idB.Value:=ptrint(frmStemmaMainForm.DataHist.Objects[1,j]);
-              idBEditingDone(Sender);
-              found:=true;
-              break;
-           end;
-        end;
-     end;
-  end;
-  if ActiveControl.Name='M' then
+          end;
+     end
+  else if ActiveControl.Name=fraMemo1.edtMemoText.name then
      begin
-     found:=false;
-     For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-        begin
-        if frmStemmaMainForm.DataHist.Cells[0,j]='M' then
-           begin
-           fraMemo1.text:=frmStemmaMainForm.DataHist.Cells[1,j];
-           found:=true;
-           break;
-        end;
-     end;
-     if not found then
-        begin
-        For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-           begin
-           if frmStemmaMainForm.DataHist.Cells[0,j]='M' then
-              begin
-              fraMemo1.text:=frmStemmaMainForm.DataHist.Cells[1,j];
-              found:=true;
-              break;
-           end;
-        end;
-     end;
+     lsResult:=frmStemmaMainForm.RetreiveFromHistoy('M');
+     if lsResult<>'' then
+       begin
+         fraMemo1.text:=lsResult;
+       end;
   end;
-  if found then frmStemmaMainForm.DataHist.Row:=j+1;
 end;
 
 procedure TfrmEditParents.idBEditingDone(Sender: TObject);
@@ -373,6 +307,7 @@ begin
   // Si l'enfant n'idA pas de parent de ce sexe, mettre la relation prefered.
   prefered:=false;
    lStrTmp:='';
+   FidEvent := -1;
   If dmGenData.IsValidIndividuum(idB.Value) then
      begin
       lStrTmp:=dmGenData.GetSexOfInd(idB.Value);
@@ -434,6 +369,7 @@ begin
               // noter que l'on doit ajouter les références (frmStemmaMainForm.Code.Text='X')
               // sur l'événement # frmStemmaMainForm.no.Text
               dmGenData.PutCode('P',no_eve);
+              FidEvent:=no_Eve;
               // Sauvegarder les modifications
               dmGenData.SaveModificationTime(parent1);
               dmGenData.SaveModificationTime(parent2);
@@ -498,8 +434,6 @@ end;
 
 procedure TfrmEditParents.btnParentOKClick(Sender: TObject);
 var
-  nocode:string;
-  lType, lNewType: Char;
   lidRelation: Integer;
   lidNewID: Integer;
 begin
@@ -507,31 +441,13 @@ begin
   // Donc déplacer ce bloc à la fin de btnParentOK et
   // exécuter seulement si c'est vraiment une sortie par Button1 ou F10
  // dmGenData.GetCode(code,nocode);
-  if FEditMode=eERT_appendParent then
+  if FidEvent<>-1 then
      begin
-     lType := 'R';
-     lNewType:='E';
+
      lidRelation:= no.Value;
-     lidNewID:=strtoint(nocode); //??
+     lidNewID:=FidEvent;
      dmGenData.CopyCitation('R',lidRelation,'E',lidNewID);
-     dmGenData.Query1.SQL.Text:='SELECT S, Q, M FROM C WHERE Y=:Type AND N=:idRelation';
-     dmGenData.Query1.ParamByName('Type').AsString:=lType;
-     dmGenData.Query1.ParamByName('idRelation').AsInteger:=lidRelation;
-     dmGenData.Query1.Open;
-     dmGenData.Query1.First;
-     dmGenData.Query2.Close;
-     While not dmGenData.Query1.EOF do
-        begin
-        dmGenData.Query2.SQL.text:='INSERT INTO C (Y, N, S, Q, M) VALUES (:Type, :Linkid, :idSource, :Q, :M)';
-        dmGenData.Query2.ParamByName('Type').AsString:=lNewType;
-        dmGenData.Query2.ParamByName('Linkid').AsInteger:=lidNewID;
-        dmGenData.Query2.ParamByName('idSource').AsInteger:=dmGenData.Query1.Fields[0].AsInteger;
-        dmGenData.Query2.ParamByName('Q').AsInteger:=dmGenData.Query1.Fields[1].AsInteger;
-        dmGenData.Query2.ParamByName('M').AsString:=dmGenData.Query1.Fields[2].AsString;
-        dmGenData.Query2.ExecSQL;
-        dmGenData.Query1.Next;
      end;
-  end;
 end;
 
 procedure TfrmEditParents.P2DblClick(Sender: TObject);

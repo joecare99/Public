@@ -125,6 +125,7 @@ var
   lidEvent: PtrInt;
 begin
   redraw := False;
+  lTypeType:='I';
   if grdEvents.Row > 0 then
   begin
     // si c'est un témoin primaire de l'événement sélectionné

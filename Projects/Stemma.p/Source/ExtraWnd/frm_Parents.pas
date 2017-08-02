@@ -173,7 +173,7 @@ begin
   lidRelation := frmParents.idRelation;
 
   RelLastID := dmGenData.CopyRelation(frmParents.idRelation);
-  dmGenData.SaveModificationTime(dmGenData.Query1.Fields[2].AsInteger);
+  dmGenData.UpdateIndModificationTimesByRelation(RelLastID);
 
   // en: Copy Citation
   dmGenData.CopyCitation('R', lidRelation, RelLastID);

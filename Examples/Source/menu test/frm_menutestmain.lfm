@@ -1,0 +1,79 @@
+object frmMenuTestMain: TfrmMenuTestMain
+  Left = 248
+  Height = 220
+  Top = 122
+  Width = 320
+  Caption = 'frmMenuTestMain'
+  ClientHeight = 220
+  ClientWidth = 320
+  Menu = MainMenu
+  OnCreate = FormCreate
+  Visible = False
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 197
+    Width = 320
+    AutoHint = True
+    Panels = <>
+  end
+  object MainMenu: TMainMenu
+    Left = 272
+    Top = 16
+    object MenuItem1: TMenuItem
+      Caption = '&File'
+      Hint = 'Opens the "File" menu.'
+      object MenuItem8: TMenuItem
+        Caption = 'Exit'
+        Hint = 'Terminates the program.'
+        OnClick = MenuItem8Click
+      end
+    end
+    object MenuItem5: TMenuItem
+      Caption = '&Edit'
+      Hint = 'Opens the "Edit" menu.'
+      object MenuItem11: TMenuItem
+        Caption = 'New Item12'
+      end
+    end
+    object MenuItem4: TMenuItem
+      Caption = '&View'
+      Hint = 'Opens the "View" menu.'
+      object MenuItem12: TMenuItem
+        Caption = 'New Item13'
+      end
+    end
+    object MenuItem3: TMenuItem
+      Caption = '&Tools'
+      Hint = 'Opens the "Tools" menu.'
+      object MenuItem7: TMenuItem
+        Caption = 'Language'
+        Hint = 'Opens the "Language" sub menu.'
+        object MenuItem9: TMenuItem
+          Caption = 'English'
+          Hint = 'Changes the language to "English".'
+          OnClick = MenuItem9Click
+        end
+        object MenuItem10: TMenuItem
+          Caption = 'German'
+          Hint = 'Changes the language to "German".'
+          OnClick = MenuItem10Click
+        end
+      end
+    end
+    object MenuItem2: TMenuItem
+      Caption = '&Window'
+      Hint = 'Opens the "Window" menu.'
+      object MenuItem13: TMenuItem
+        Caption = 'New Item14'
+      end
+    end
+    object MenuItem6: TMenuItem
+      Caption = '&Help'
+      Hint = 'Opens the "Help" menu.'
+      object MenuItem14: TMenuItem
+        Caption = 'New Item15'
+      end
+    end
+  end
+end

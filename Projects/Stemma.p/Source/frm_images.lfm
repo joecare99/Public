@@ -10,7 +10,6 @@ object FormImage: TFormImage
   OnClose = FormClose
   OnResize = FormResize
   OnShow = FormShow
-  Visible = False
   object Im: TImage
     Left = 0
     Height = 90

@@ -49,6 +49,8 @@ type
     AjouterTemoin: TMenuItem;
     No: TSpinEdit;
     P2: TMemo;
+    Panel1: TPanel;
+    pnlPlaceLeft: TPanel;
     pnlBottom: TPanel;
     Splitter1: TSplitter;
     SupprimerTemoin: TMenuItem;
@@ -64,6 +66,7 @@ type
     procedure AjouterTemoinClick(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
+    procedure fraDate1Click(Sender: TObject);
     procedure fraMemo1EditingDone(Sender: TObject);
 
     procedure MenuItem11Click(Sender: TObject);
@@ -100,6 +103,19 @@ implementation
 uses
   frm_Events, frm_Main, dm_GenData, frm_Explorer, frm_EditWitness,
   frm_Names, cls_Translation;
+
+function GetPlaceName(const liResult: integer): string;
+var
+  temp: string;
+begin
+  with dmGenData.Query1 do begin
+SQL.Text:='SELECT L FROM L WHERE no=:idPlace';
+    ParamByName('idplace').AsInteger:=liResult;
+    Open;
+    temp:=Fields[0].AsString;
+    Result:=temp;
+  end;
+end;
 
 
 
@@ -204,7 +220,7 @@ var
 
 begin
   ActiveControl:=fraDate1.edtDateForPresentation;
-  frmStemmaMainForm.DataHist.Row:=0;
+  frmStemmaMainForm.SetHistoryToActual(Sender);
   Caption:=Translation.Items[165];
   Button1.Caption:=Translation.Items[152];
   Button2.Caption:=Translation.Items[164];
@@ -409,6 +425,11 @@ begin
      fraDocuments1.Populate;
 end;
 
+procedure TfrmEditEvents.fraDate1Click(Sender: TObject);
+begin
+
+end;
+
 procedure TfrmEditEvents.fraMemo1EditingDone(Sender: TObject);
 begin
   frmStemmaMainForm.AppendHistoryData('M',fraMemo1.Text);
@@ -423,329 +444,59 @@ end;
 
 procedure TfrmEditEvents.MenuItem12Click(Sender: TObject);
 var
-    j:integer;
-    found:boolean;
-    temp, sArticle, sDetail, sCity, sRegion, sProvince, sCountry:string;
+     liResult:integer;
+    temp, sArticle, sDetail, sCity, sRegion, sProvince, sCountry,
+      lsResult:string;
 begin
   // Traitement de F3 pour les lieus
-  if frmEditEvents.ActiveControl.Name='LA' then
+  if ActiveControl.Name=LA.Name then
      begin
-     found:=false;
-     For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-        begin
-        if frmStemmaMainForm.DataHist.Cells[0,j]='L' then
+       liResult := frmStemmaMainForm.RetreiveFromHistoyID('L');
+       if liResult<>-1 then
            begin
-           dmGenData.Query1.SQL.Text:='SELECT L FROM L WHERE no='+frmStemmaMainForm.DataHist.Cells[1,j];
-           dmGenData.Query1.Open;
-           temp:=dmGenData.Query1.Fields[0].AsString;
+           temp:=GetPlaceName(liResult);
            if ANSIPos('<'+CTagNameArticle+'>',temp)>0 then
               LA.text:=Copy(temp,ANSIPos('<'+CTagNameArticle+'>',temp)+length(CTagNameArticle)+2,AnsiPos('</'+CTagNameArticle+'>',temp)-ANSIPos('<'+CTagNameArticle+'>',temp)-length(CTagNameArticle)-2)
            else
               LA.text:='';
-           found:=true;
-           break;
         end;
-     end;
-     if not found then
-        begin
-        For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-           begin
-           if frmStemmaMainForm.DataHist.Cells[0,j]='L' then
-              begin
-              dmGenData.Query1.SQL.Text:='SELECT L FROM L WHERE no='+frmStemmaMainForm.DataHist.Cells[1,j];
-              dmGenData.Query1.Open;
-              temp:=dmGenData.Query1.Fields[0].AsString;
-              if ANSIPos('<'+CTagNameArticle+'>',temp)>0 then
-                 LA.text:=Copy(temp,ANSIPos('<'+CTagNameArticle+'>',temp)+length(CTagNameArticle)+2,AnsiPos('</'+CTagNameArticle+'>',temp)-ANSIPos('<'+CTagNameArticle+'>',temp)-length(CTagNameArticle)-2)
-              else
-                 LA.text:='';
-              found:=true;
-              break;
-           end;
-        end;
-     end;
-  end;
-  if frmEditEvents.ActiveControl.Name='L0' then
+     end
+  else if (ActiveControl.Name=L0.Name) or
+    (ActiveControl.Name=L1.Name) or
+    (ActiveControl.Name=L2.Name) or
+    (ActiveControl.Name=L3.Name) or
+    (ActiveControl.Name=L4.Name) then
      begin
-     found:=false;
-     For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-        begin
-        if frmStemmaMainForm.DataHist.Cells[0,j]='L' then
-           begin
-           dmGenData.Query1.SQL.Text:='SELECT L FROM L WHERE no='+frmStemmaMainForm.DataHist.Cells[1,j];
-           dmGenData.Query1.Open;
-           temp:=dmGenData.Query1.Fields[0].AsString;
+       liResult := frmStemmaMainForm.RetreiveFromHistoyID('L');
+       if liResult<>-1 then
+         begin
+           temp:=GetPlaceName(liResult);
            DecodePlace(temp,sArticle,sDetail,sCity,sRegion,sProvince,sCountry);
            L0.Text:=sDetail;
            L1.text:=sCity;
            L2.text:=sRegion;
            L3.text:=sProvince;
            L4.text:=sCountry;
-           found:=true;
-           break;
         end;
-     end;
-     if not found then
-        begin
-        For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-           begin
-           if frmStemmaMainForm.DataHist.Cells[0,j]='L' then
-              begin
-              dmGenData.Query1.SQL.Text:='SELECT L FROM L WHERE no='+frmStemmaMainForm.DataHist.Cells[1,j];
-              dmGenData.Query1.Open;
-              temp:=dmGenData.Query1.Fields[0].AsString;
-              DecodePlace(temp,sArticle,sDetail,sCity,sRegion,sProvince,sCountry);
-              L0.Text:=sDetail;
-              L1.text:=sCity;
-              L2.text:=sRegion;
-              L3.text:=sProvince;
-              L4.text:=sCountry;
-              found:=true;
-              break;
-           end;
-        end;
-     end;
-  end;
-  if frmEditEvents.ActiveControl.Name='L1' then
-     begin
-     found:=false;
-     For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-        begin
-        if frmStemmaMainForm.DataHist.Cells[0,j]='L' then
-           begin
-           dmGenData.Query1.SQL.Text:='SELECT L FROM L WHERE no='+frmStemmaMainForm.DataHist.Cells[1,j];
-           dmGenData.Query1.Open;
-           temp:=dmGenData.Query1.Fields[0].AsString;
-           DecodePlace(temp,sArticle,sDetail,sCity,sRegion,sProvince,sCountry);
-           L0.Text:=sDetail;
-           L1.text:=sCity;
-           L2.text:=sRegion;
-           L3.text:=sProvince;
-           L4.text:=sCountry;
-           found:=true;
-           break;
-        end;
-     end;
-     if not found then
-        begin
-        For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-           begin
-           if frmStemmaMainForm.DataHist.Cells[0,j]='L' then
-              begin
-              dmGenData.Query1.SQL.Text:='SELECT L FROM L WHERE no='+frmStemmaMainForm.DataHist.Cells[1,j];
-              dmGenData.Query1.Open;
-              temp:=dmGenData.Query1.Fields[0].AsString;
-              DecodePlace(temp,sArticle,sDetail,sCity,sRegion,sProvince,sCountry);
-              L0.Text:=sDetail;
-              L1.text:=sCity;
-              L2.text:=sRegion;
-              L3.text:=sProvince;
-              L4.text:=sCountry;
-              found:=true;
-              break;
-           end;
-        end;
-     end;
-  end;
-  if frmEditEvents.ActiveControl.Name='L2' then
-     begin
-     found:=false;
-     For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-        begin
-        if frmStemmaMainForm.DataHist.Cells[0,j]='L' then
-           begin
-           dmGenData.Query1.SQL.Text:='SELECT L FROM L WHERE no='+frmStemmaMainForm.DataHist.Cells[1,j];
-           dmGenData.Query1.Open;
-           temp:=dmGenData.Query1.Fields[0].AsString;
-           DecodePlace(temp,sArticle,sDetail,sCity,sRegion,sProvince,sCountry);
-           L0.Text:=sDetail;
-           L1.text:=sCity;
-           L2.text:=sRegion;
-           L3.text:=sProvince;
-           L4.text:=sCountry;
-           found:=true;
-           break;
-        end;
-     end;
-     if not found then
-        begin
-        For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-           begin
-           if frmStemmaMainForm.DataHist.Cells[0,j]='L' then
-              begin
-              dmGenData.Query1.SQL.Text:='SELECT L FROM L WHERE no='+frmStemmaMainForm.DataHist.Cells[1,j];
-              dmGenData.Query1.Open;
-              temp:=dmGenData.Query1.Fields[0].AsString;
-              DecodePlace(temp,sArticle,sDetail,sCity,sRegion,sProvince,sCountry);
-              L0.Text:=sDetail;
-              L1.text:=sCity;
-              L2.text:=sRegion;
-              L3.text:=sProvince;
-              L4.text:=sCountry;
-              found:=true;
-              break;
-           end;
-        end;
-     end;
-  end;
-  if frmEditEvents.ActiveControl.Name='L3' then
-     begin
-     found:=false;
-     For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-        begin
-        if frmStemmaMainForm.DataHist.Cells[0,j]='L' then
-           begin
-           dmGenData.Query1.SQL.Text:='SELECT L FROM L WHERE no='+frmStemmaMainForm.DataHist.Cells[1,j];
-           dmGenData.Query1.Open;
-           temp:=dmGenData.Query1.Fields[0].AsString;
-           DecodePlace(temp,sArticle,sDetail,sCity,sRegion,sProvince,sCountry);
-           L0.Text:=sDetail;
-           L1.text:=sCity;
-           L2.text:=sRegion;
-           L3.text:=sProvince;
-           L4.text:=sCountry;
-           found:=true;
-           break;
-        end;
-     end;
-     if not found then
-        begin
-        For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-           begin
-           if frmStemmaMainForm.DataHist.Cells[0,j]='L' then
-              begin
-              dmGenData.Query1.SQL.Text:='SELECT L FROM L WHERE no='+frmStemmaMainForm.DataHist.Cells[1,j];
-              dmGenData.Query1.Open;
-              temp:=dmGenData.Query1.Fields[0].AsString;
-              DecodePlace(temp,sArticle,sDetail,sCity,sRegion,sProvince,sCountry);
-              L0.Text:=sDetail;
-              L1.text:=sCity;
-              L2.text:=sRegion;
-              L3.text:=sProvince;
-              L4.text:=sCountry;
-              found:=true;
-              break;
-           end;
-        end;
-     end;
-  end;
-  if frmEditEvents.ActiveControl.Name='L4' then
-     begin
-     found:=false;
-     For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-        begin
-        if frmStemmaMainForm.DataHist.Cells[0,j]='L' then
-           begin
-           dmGenData.Query1.SQL.Text:='SELECT L FROM L WHERE no='+frmStemmaMainForm.DataHist.Cells[1,j];
-           dmGenData.Query1.Open;
-           temp:=dmGenData.Query1.Fields[0].AsString;
-           DecodePlace(temp,sArticle,sDetail,sCity,sRegion,sProvince,sCountry);
-           L0.Text:=sDetail;
-           L1.text:=sCity;
-           L2.text:=sRegion;
-           L3.text:=sProvince;
-           L4.text:=sCountry;
-           found:=true;
-           break;
-        end;
-     end;
-     if not found then
-        begin
-        For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-           begin
-           if frmStemmaMainForm.DataHist.Cells[0,j]='L' then
-              begin
-              dmGenData.Query1.SQL.Text:='SELECT L FROM L WHERE no='+frmStemmaMainForm.DataHist.Cells[1,j];
-              dmGenData.Query1.Open;
-              temp:=dmGenData.Query1.Fields[0].AsString;
-              DecodePlace(temp,sArticle,sDetail,sCity,sRegion,sProvince,sCountry);
-              L0.Text:=sDetail;
-              L1.text:=sCity;
-              L2.text:=sRegion;
-              L3.text:=sProvince;
-              L4.text:=sCountry;
-              found:=true;
-              break;
-           end;
-        end;
-     end;
-  end;
-    if frmEditEvents.ActiveControl.Name='SD' then
-       begin
-       found:=false;
-       For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-          begin
-          if frmStemmaMainForm.DataHist.Cells[0,j]='SD' then
-             begin
-             fraDate1.SortDate:=ConvertDate(frmStemmaMainForm.DataHist.Cells[1,j],1);
-             found:=true;
-             break;
-          end;
-       end;
-       if not found then
-          begin
-          For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-             begin
-             if frmStemmaMainForm.DataHist.Cells[0,j]='SD' then
-                begin
-                fraDate1.SortDate:=ConvertDate(frmStemmaMainForm.DataHist.Cells[1,j],1);
-                found:=true;
-                break;
-             end;
-          end;
-       end;
-    end;
-    if frmEditEvents.ActiveControl.Name='PD' then
-       begin
-       found:=false;
-       For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-          begin
-          if frmStemmaMainForm.DataHist.Cells[0,j]='PD' then
-             begin
-             fraDate1.Date:=ConvertDate(frmStemmaMainForm.DataHist.Cells[1,j],1);
-             found:=true;
-             break;
-          end;
-       end;
-       if not found then
-          begin
-          For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-             begin
-             if frmStemmaMainForm.DataHist.Cells[0,j]='PD' then
-                begin
-                fraDate1.Date:=ConvertDate(frmStemmaMainForm.DataHist.Cells[1,j],1);
-                found:=true;
-                break;
-             end;
-          end;
-       end;
-    end;
-    if frmEditEvents.ActiveControl.Name='M' then
-       begin
-       found:=false;
-       For j:=frmStemmaMainForm.DataHist.Row to frmStemmaMainForm.DataHist.RowCount-1 do
-          begin
-          if frmStemmaMainForm.DataHist.Cells[0,j]='M' then
-             begin
-             fraMemo1.text:=frmStemmaMainForm.DataHist.Cells[1,j];
-             found:=true;
-             break;
-          end;
-       end;
-       if not found then
-          begin
-          For j:=0 to frmStemmaMainForm.DataHist.RowCount-1 do
-             begin
-             if frmStemmaMainForm.DataHist.Cells[0,j]='M' then
-                begin
-                fraMemo1.text:=frmStemmaMainForm.DataHist.Cells[1,j];
-                found:=true;
-                break;
-             end;
-          end;
-       end;
-    end;
-    if found then frmStemmaMainForm.DataHist.Row:=j+1;
+     end
+   else if ActiveControl.Name = fraDate1.edtDateForSorting.Name then
+   begin
+    lsResult := frmStemmaMainForm.RetreiveFromHistoy('SD');
+    if lsResult <> '' then
+      fraDate1.SortDate := lsResult;
+   end
+  else if ActiveControl.Name = fraDate1.edtDateForPresentation.Name then
+   begin
+    lsResult := frmStemmaMainForm.RetreiveFromHistoy('PD');
+    if lsResult <> '' then
+      fraDate1.Date := lsResult;
+   end
+  else if ActiveControl.Name = fraMemo1.edtMemoText.Name then
+   begin
+    lsResult := frmStemmaMainForm.RetreiveFromHistoy('M');
+    if lsResult <> '' then
+      fraMemo1.Text := lsResult;
+   end;
 end;
 
 

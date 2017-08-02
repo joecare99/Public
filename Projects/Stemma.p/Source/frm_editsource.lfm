@@ -12,8 +12,6 @@ object frmEditSource: TfrmEditSource
   Menu = mnuSourceMain
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.3'
-  Visible = False
   object TableauDepots: TStringGrid
     Left = 88
     Height = 120
@@ -128,7 +126,7 @@ object frmEditSource: TfrmEditSource
   object pnlBottom: TPanel
     Left = 0
     Height = 52
-    Top = 430
+    Top = 450
     Width = 624
     Align = alBottom
     ClientHeight = 52
@@ -141,7 +139,6 @@ object frmEditSource: TfrmEditSource
       Width = 110
       Align = alRight
       BorderSpacing.Around = 6
-      Default = True
       DefaultCaption = True
       Kind = bkOK
       ModalResult = 1
@@ -165,7 +162,7 @@ object frmEditSource: TfrmEditSource
   inline fraDocuments1: TfraDocuments
     Left = 3
     Height = 128
-    Top = 299
+    Top = 319
     Width = 618
     Align = alBottom
     ClientHeight = 128
@@ -255,14 +252,14 @@ object frmEditSource: TfrmEditSource
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 291
+    Top = 311
     Width = 624
     Align = alBottom
     ResizeAnchor = akBottom
   end
   object PopupMenu2: TPopupMenu
-    left = 32
-    top = 248
+    Left = 32
+    Top = 248
     object Ajouter1: TMenuItem
       Caption = '&Ajouter'
       ShortCut = 115
@@ -280,8 +277,8 @@ object frmEditSource: TfrmEditSource
     end
   end
   object mnuSourceMain: TMainMenu
-    left = 16
-    top = 8
+    Left = 16
+    Top = 8
     object mniSourceRepeat: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114
