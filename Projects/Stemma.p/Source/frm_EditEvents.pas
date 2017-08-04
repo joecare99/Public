@@ -104,6 +104,34 @@ uses
   frm_Events, frm_Main, dm_GenData, frm_Explorer, frm_EditWitness,
   frm_Names, cls_Translation;
 
+procedure GetTypePhraseRole(const lidType: integer; out phrase: string;
+  out roles: string);
+begin
+  with dmGenData.Query1 do begin
+  SQL.Clear;
+    SQL.text:='SELECT Y.P, Y.R FROM Y WHERE Y.no=:idType';
+    ParamByName('idType').AsInteger:=lidType;
+    Open;
+    First;
+    phrase:=Fields[0].AsString;
+    roles:=Fields[1].AsString;
+    close;
+  end;
+end;
+
+procedure UpdateWitnessPhraseRole(const lidWitness: integer;
+  const lRole: string; const lPhrase: string);
+begin
+  with dmGenData.Query1 do begin
+  Close;
+          SQL.Text:='UPDATE W SET P=:Phrase, R=:Role WHERE W.no=:idWitness';
+          ParamByName('idWitness').AsInteger:=lidWitness;
+          ParamByName('Phrase').AsString:=lPhrase;
+          ParamByName('Role').AsString:=lRole;
+          ExecSQL;
+  end;
+end;
+
 function GetPlaceName(const liResult: integer): string;
 var
   temp: string;
@@ -158,15 +186,13 @@ end;
 
 procedure TfrmEditEvents.YChange(Sender: TObject);
 var
-  roledefaut, roles, phrase:string;
+  roledefaut, roles, phrase, lPhrase, lRole:string;
   j:integer;
+  lidType, lidWitness: integer;
 begin
-  dmGenData.Query1.SQL.Clear;
-  dmGenData.Query1.SQL.Add('SELECT Y.P, Y.R FROM Y WHERE Y.no='+inttostr(ptrint(Y.Items.Objects[Y.ItemIndex])));
-  dmGenData.Query1.Open;
-  dmGenData.Query1.First;
-  phrase:=dmGenData.Query1.Fields[0].AsString;
-  roles:=dmGenData.Query1.Fields[1].AsString;
+
+  lidType:=ptrint(Y.Items.Objects[Y.ItemIndex]);
+  GetTypePhraseRole(lidType, phrase, roles);
   if AnsiPos('|',Roles)>0 then
      RoleDefaut:=Copy(Roles,1,AnsiPos('|',Roles)-1)
   else
@@ -178,8 +204,10 @@ begin
         TableauTemoins.Cells[1,j]:=RoleDefaut;
         if TableauTemoins.Cells[2,j]=frmStemmaMainForm.sID then
            Role.Text:=RoleDefaut;
-        dmGenData.Query1.SQL.Text:='UPDATE W SET P='''', R='''+RoleDefaut+''' WHERE W.no='+TableauTemoins.Cells[0,j];
-        dmGenData.Query1.ExecSQL;
+        lidWitness:=ptrint(TableauTemoins.Objects[0,j]);
+        lPhrase := '';
+        lRole:= RoleDefaut;
+        UpdateWitnessPhraseRole(lidWitness, lRole, lPhrase);
         dmGenData.SaveModificationTime(strtoint(TableauTemoins.Cells[2,j]));
      end;
   end;

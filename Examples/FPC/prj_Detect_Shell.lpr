@@ -49,9 +49,16 @@ begin
     (LowerCase(GetParentProcessName) = 'lazarus.exe');
 end;
 
+function IsFromConsole: Boolean;
+begin
+  Result := (LowerCase(GetParentProcessName) = 'cmd.exe');
+end;
+
 begin
   if IsFromIDE then
     MessageBox(0, 'Start from IDE!', 'Info', MB_ICONEXCLAMATION)
+  else if IsFromConsole then
+    writeln('Start from Console')
   else
     MessageBox(0, 'Normal start', 'Info', MB_ICONINFORMATION);
 end.

@@ -29,9 +29,12 @@ type
     procedure TableauDepotsDblClick(Sender: TObject);
     procedure TableauDepotsEditingDone(Sender: TObject);
   private
+    function GetidAktRepository: integer;
+    procedure SetidAktRepository(AValue: integer);
     { private declarations }
   public
     { public declarations }
+    property idAktRepository:integer read GetidAktRepository write SetidAktRepository;
   end; 
 
 var
@@ -41,6 +44,48 @@ implementation
 
 uses
   frm_Main, cls_Translation, dm_GenData, frm_Usage;
+
+procedure FillRepositoryTable(const lOnUpdate: TNotifyEvent;
+  const lTblRepositories: TStringGrid);
+var
+  lidInd: Longint;
+  i: integer;
+begin
+  with dmGenData.Query1 do begin
+  Close;
+      SQL.text:='SELECT D.no, D.T, D.D, D.M, D.I, COUNT(A.D) FROM D LEFT JOIN A on D.no=A.D GROUP by D.no ORDER BY D.D';
+      Open;
+      First;
+      lTblRepositories.RowCount:=RecordCount+1;
+      tag:= -RecordCount-1;
+      if assigned(lOnUpdate) then
+        lOnUpdate(dmGenData.Query1);
+      tag:= 0;
+      if assigned(lOnUpdate) then
+        lOnUpdate(dmGenData.Query1);
+      i:=0;
+      While not Eof do
+         begin
+         i:=i+1;
+         lidInd:=Fields[4].AsInteger;
+         lTblRepositories.Cells[0,i]:=inttostr(lidind);
+         lTblRepositories.Objects[0,i]:=TObject(ptrint(lidInd));
+         lTblRepositories.Cells[1,i]:=Fields[0].AsString;
+         lTblRepositories.Objects[1,i]:=TObject(ptrint(Fields[0].AsInteger));
+         lTblRepositories.Cells[2,i]:=Fields[1].AsString;
+         lTblRepositories.Cells[3,i]:=Fields[2].AsString;
+      //   lTblRepositories.Objects[3,i]:=TObject(ptrint(dmGenData.Query1.Fields[2].AsInteger));
+         lTblRepositories.Cells[4,i]:=Fields[3].AsString;
+         lTblRepositories.Cells[5,i]:=DecodeName(dmGenData.GetIndividuumName(lidind),1);
+         lTblRepositories.Objects[5,i]:=TObject(ptrint(lidInd));
+         lTblRepositories.Cells[6,i]:=Fields[5].AsString;
+         Next;
+         tag:= tag+1;
+         if assigned(lOnUpdate) then
+           lOnUpdate(dmGenData.Query1);
+      end;
+  end;
+end;
 
 { TfrmRepository }
 
@@ -66,7 +111,7 @@ begin
      begin
      dmGenData.Query2.SQL.Text:='SELECT N.I, N.N FROM N WHERE N.X=1 AND N.I='+TableauDepots.Cells[0,TableauDepots.Row];
      dmGenData.Query2.Open;
-     depot:=(DecodeName(dmGenData.Query2.Fields[1].AsString,1)+' ('+TableauDepots.Cells[0,TableauDepots.Row]+')')=
+     depot:=(DecodeName(dmGenData.GetIndividuumName(ptrint(TableauDepots.Objects[0,TableauDepots.Row])),1)+' ('+TableauDepots.Cells[0,TableauDepots.Row]+')')=
             (TableauDepots.Cells[5,TableauDepots.Row]);
      temp:=TableauDepots.Cells[0,TableauDepots.Row];
      end;
@@ -120,6 +165,20 @@ begin
   TableauDepots.SortColRow(true,3);
 end;
 
+function TfrmRepository.GetidAktRepository: integer;
+begin
+  result := Ptrint(TableauDepots.Objects[1,TableauDepots.Row]);
+end;
+
+procedure TfrmRepository.SetidAktRepository(AValue: integer);
+var
+  lIdx: Integer;
+begin
+  lIdx:= TableauDepots.Cols[1].IndexOfObject(TObject(ptrint(AValue)));
+  if lIdx>=0 then
+    TableauDepots.Row := lIdx;
+end;
+
 procedure TfrmRepository.FormResize(Sender: TObject);
 begin
   TableauDepots.Width := (Sender as Tform).Width-16;
@@ -130,9 +189,9 @@ end;
 
 procedure TfrmRepository.FormShow(Sender: TObject);
 var
-  i:integer;
   MyCursor: TCursor;
-  lidInd: Longint;
+  lTblRepositories: TStringGrid;
+  lOnUpdate: TNotifyEvent;
 begin
   Caption:=Translation.Items[153];
   TableauDepots.Cells[2,0]:=Translation.Items[154];
@@ -151,31 +210,10 @@ begin
   frmStemmaMainForm.ProgressBar.Position:=0;
   frmStemmaMainForm.ProgressBar.Visible:=True;
   Application.Processmessages;
-  dmGenData.Query1.SQL.Clear;
-  dmGenData.Query1.SQL.add('SELECT D.no, D.T, D.D, D.M, D.I, COUNT(A.D) FROM D LEFT JOIN A on D.no=A.D GROUP by D.no ORDER BY D.D');
-  dmGenData.Query1.Open;
-  dmGenData.Query1.First;
-  TableauDepots.RowCount:=dmGenData.Query1.RecordCount+1;
-  frmStemmaMainForm.ProgressBar.Max:=TableauDepots.RowCount;
-  i:=0;
-  While not dmGenData.Query1.Eof do
-     begin
-     i:=i+1;
-     lidInd:=dmGenData.Query1.Fields[4].AsInteger;
-     TableauDepots.Cells[0,i]:=inttostr(lidind);
-     TableauDepots.Objects[0,i]:=TObject(ptrint(lidInd));
-     TableauDepots.Cells[1,i]:=dmGenData.Query1.Fields[0].AsString;
-     TableauDepots.Objects[1,i]:=TObject(ptrint(dmGenData.Query1.Fields[0].AsInteger));
-     TableauDepots.Cells[2,i]:=dmGenData.Query1.Fields[1].AsString;
-     TableauDepots.Cells[3,i]:=dmGenData.Query1.Fields[2].AsString;
-  //   TableauDepots.Objects[3,i]:=TObject(ptrint(dmGenData.Query1.Fields[2].AsInteger));
-     TableauDepots.Cells[4,i]:=dmGenData.Query1.Fields[3].AsString;
-     TableauDepots.Cells[5,i]:=DecodeName(dmGenData.GetIndividuumName(lidind),1);
-     TableauDepots.Cells[6,i]:=dmGenData.Query1.Fields[5].AsString;
-     dmGenData.Query1.Next;
-     frmStemmaMainForm.ProgressBar.Position:=frmStemmaMainForm.ProgressBar.Position+1;
-     Application.ProcessMessages;
-  end;
+
+  lTblRepositories:=TableauDepots;
+  lOnUpdate:=@frmStemmaMainForm.UpdateProgressBar;
+  FillRepositoryTable(lOnUpdate, lTblRepositories);
   frmStemmaMainForm.ProgressBar.Visible:=False;
 
   finally

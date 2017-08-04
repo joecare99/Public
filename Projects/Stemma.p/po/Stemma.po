@@ -3314,9 +3314,8 @@ msgctxt "TFRMREPOSITORY.BUTTON1.CAPTION"
 msgid "Ok"
 msgstr ""
 
-#: tfrmrepository.menuitem1.caption
-msgctxt "TFRMREPOSITORY.MENUITEM1.CAPTION"
-msgid "-"
+#: tfrmrepository.caption
+msgid "Dépots"
 msgstr ""
 
 #: tfrmrepository.menuitem2.caption
@@ -3336,6 +3335,36 @@ msgstr ""
 
 #: tfrmrepository.menuitem8.caption
 msgctxt "TFRMREPOSITORY.MENUITEM8.CAPTION"
+msgid "Utilisation"
+msgstr ""
+
+#: tfrmrepository.tableaudepots.columns[0].title.caption
+msgctxt "tfrmrepository.tableaudepots.columns[0].title.caption"
+msgid "#"
+msgstr ""
+
+#: tfrmrepository.tableaudepots.columns[1].title.caption
+msgctxt "tfrmrepository.tableaudepots.columns[1].title.caption"
+msgid "Titre"
+msgstr ""
+
+#: tfrmrepository.tableaudepots.columns[2].title.caption
+msgctxt "tfrmrepository.tableaudepots.columns[2].title.caption"
+msgid "Description"
+msgstr ""
+
+#: tfrmrepository.tableaudepots.columns[3].title.caption
+msgctxt "tfrmrepository.tableaudepots.columns[3].title.caption"
+msgid "Mémo"
+msgstr ""
+
+#: tfrmrepository.tableaudepots.columns[4].title.caption
+msgctxt "tfrmrepository.tableaudepots.columns[4].title.caption"
+msgid "Individu"
+msgstr ""
+
+#: tfrmrepository.tableaudepots.columns[5].title.caption
+msgctxt "tfrmrepository.tableaudepots.columns[5].title.caption"
 msgid "Utilisation"
 msgstr ""
 

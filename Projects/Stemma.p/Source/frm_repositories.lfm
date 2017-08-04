@@ -10,8 +10,6 @@ object frmRepository: TfrmRepository
   OnResize = FormResize
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
-  Visible = False
   object Button1: TButton
     Left = 664
     Height = 25
@@ -54,6 +52,7 @@ object frmRepository: TfrmRepository
       item
         ReadOnly = True
         Title.Caption = 'Utilisation'
+        Width = 64
       end>
     ExtendedSelect = False
     MouseWheelOption = mwGrid
@@ -74,8 +73,8 @@ object frmRepository: TfrmRepository
     )
   end
   object PopupMenu1: TPopupMenu
-    left = 235
-    top = 483
+    Left = 235
+    Top = 483
     object MenuItem8: TMenuItem
       Caption = 'Utilisation'
       OnClick = MenuItem8Click

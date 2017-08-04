@@ -7,11 +7,12 @@ object frmEditType: TfrmEditType
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de type d''événement'
-  ClientHeight = 346
+  ClientHeight = 326
   ClientWidth = 617
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
+  LCLVersion = '1.9.0.0'
   object Button1: TButton
     Left = 456
     Height = 25

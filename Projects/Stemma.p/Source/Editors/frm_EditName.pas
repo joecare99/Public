@@ -850,11 +850,7 @@ begin
           dmGenData.Query1.Open;
           dmGenData.Query1.First;
           frmEditName.RelID := dmGenData.Query1.Fields[0].AsInteger;
-          dmGenData.Query1.SQL.Clear;
-          dmGenData.Query1.SQL.Add('UPDATE I SET date=''' +
-            FormatDateTime('YYYYMMDD', now) + ''' WHERE no=' +
-            dmGenData.Query2.Fields[1].AsString);
-          dmGenData.Query1.ExecSQL;
+          dmGenData.SaveModificationTime(dmGenData.Query2.Fields[1].AsInteger);
           dmGenData.Query2.Next;
          end;
        end;

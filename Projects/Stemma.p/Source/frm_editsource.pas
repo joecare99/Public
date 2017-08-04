@@ -75,6 +75,26 @@ implementation
 uses
   frm_Main, cls_Translation, dm_GenData, LCLIntf;
 
+procedure GetSourceData(const lidSource: LongInt; out lQuality: LongInt;
+  out lInformation: string; out lDescription: string; out lTitle: string;
+  out lIndLink: string);
+begin
+  with dmGenData.Query1 do begin
+  Close;
+    SQL.text:='SELECT S.no, S.T, S.D, S.M, S.Q, S.A FROM S WHERE S.no=:idSource';
+    ParamByName('idSource').AsInteger:=lidSource;
+    Open;
+    First;
+
+    lTitle:=Fields[1].AsString;
+    lDescription:=Fields[2].AsString;
+    lIndLink:=Fields[5].AsString;
+    lInformation:=Fields[3].AsString;
+    lQuality:=Fields[4].AsInteger;
+    Close;
+  end;
+end;
+
 
 { TfrmEditSource }
 
@@ -101,9 +121,9 @@ end;
 
 procedure TfrmEditSource.FormShow(Sender: TObject);
 var
-  temp:string;
+  lIndLink, lTitle, lDescription, lInformation:string;
 
-  tInt: LongInt;
+  tInt, lQuality, lidSource: LongInt;
 begin
   ActiveControl:=edtSourceTitle;
   frmStemmaMainForm.SetHistoryToActual(Sender);
@@ -146,20 +166,17 @@ begin
   end
   else
      begin
-     dmGenData.Query1.Close;
-     dmGenData.Query1.SQL.text:='SELECT S.no, S.T, S.D, S.M, S.Q, S.A FROM S WHERE S.no='+
-                                     inttostr(idSource);
-     dmGenData.Query1.Open;
-     dmGenData.Query1.First;
-     edtSourceTitle.Text:=dmGenData.Query1.Fields[1].AsString;
-     edtSourceDescription.Text:=dmGenData.Query1.Fields[2].AsString;
-     temp:=dmGenData.Query1.Fields[5].AsString;
-     if TryStrToInt(temp,tint) then
+     lidSource:=idSource;
+     GetSourceData(lidSource, lQuality, lInformation, lDescription, lTitle,
+       lIndLink);
+     edtSourceTitle.Text:=lTitle;
+     edtSourceDescription.Text:=lDescription;
+     if TryStrToInt(lIndLink,tint) then
         fraIndividualwithRole1.idInd:=tInt
      else
-        fraIndividualwithRole1.IndName:=temp;
-     edtSourceInformation.Text:=dmGenData.Query1.Fields[3].AsString;
-     Q.Value:=dmGenData.Query1.Fields[4].AsInteger;
+        fraIndividualwithRole1.IndName:=lIndLink;
+     edtSourceInformation.Text:=lInformation;
+     Q.Value:=lQuality;
      // Populate les dépots
      PopulateDepots;
      // Populate le tableau de documents

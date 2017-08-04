@@ -73,8 +73,8 @@ object fraDocuments: TfraDocuments
     end
   end
   object mnuDocuments: TPopupMenu
-    left = 40
-    top = 104
+    Left = 40
+    Top = 104
     object Ajouter2: TMenuItem
       Action = actDocumentsAdd
     end
@@ -92,8 +92,8 @@ object fraDocuments: TfraDocuments
     end
   end
   object alsDocuments: TActionList
-    left = 40
-    top = 40
+    Left = 40
+    Top = 40
     object actDocumentsAdd: TAction
       Category = 'Documents'
       Caption = '&Add'

@@ -331,6 +331,232 @@ implementation
 uses AnchorDocking, AnchorDockOptionsDlg, dm_GenData, cls_Translation,
   frm_SelectDialog, untWebexport;
 
+procedure InsertPlace(lidPlace: LongInt;const Place:String);
+begin
+  with dmGenData.Query1 do
+       begin
+         close;
+         SQL.Text :=
+           'INSERT IGNORE INTO L (no, L) VALUES (:idPlace, :Place)';
+         ParamByName('idPlace').AsInteger := lidPlace;
+         ParamByName('Place').AsString := Place;
+         ExecSQL;
+       end;
+end;
+
+procedure InsertDepotOfSource(const lidSource: LongInt;
+  const lidRepository: LongInt; const buffer: String);
+begin
+  with dmGenData.Query1 do
+  begin
+    Close;
+    SQL.Text :=
+      'INSERT IGNORE INTO A (S, D, M) VALUES (:idSource, :idDepot, :Note)';
+    ParamByName('idSource').AsInteger := lidSource;
+    ParamByName('idDepot').AsInteger := lidRepository;
+    ParamByName('Note').AsString := buffer;
+    ExecSQL;
+  end;
+end;
+
+procedure InsertDepot(const lMemo: variant; const lDescription: String;
+  const lTitle: String; const lidIndividual: LongInt;
+  const lidRepository: LongInt);
+begin
+  with dmGenData.Query1 do begin
+Close;
+        SQL.Text := 'INSERT IGNORE INTO D (no, T, M, D, I) VALUES (:idRepository, :Title, :Memo, :Description, :idInd)';
+        ParamByName('idRepository').AsInteger:=lidRepository;
+        ParamByName('Title').AsString:=lTitle;
+        ParamByName('Memo').Value:=lMemo;
+        ParamByName('Description').AsString:=lDescription;
+        ParamByName('idInd').AsInteger:=lidIndividual;
+        ExecSQL;
+  end;
+end;
+
+procedure InsertEvent(const lPref: Integer; const lMemo: String;
+  const lSDate: String; const lPDate: String; const lidPlace: LongInt;
+  const lidType: LongInt; const lidEvent: LongInt);
+begin
+  with dmGenData.Query1 do begin
+SQL.Text :=
+           'INSERT IGNORE INTO E (no, Y, PD, SD, L, M, X) ' +
+           'VALUES (:idEvent, :idType, :PDate, SDate, :idPlace, :Note, :Pref)';
+         ParamByName('idEvent').AsInteger := lidEvent;
+         ParamByName('idType').AsInteger :=
+           lidType;
+         ParamByName('PDate').AsString := lPDate;
+         ParamByName('Sdate').AsString := lSDate;
+         ParamByName('idPlace').AsInteger :=
+           lidPlace;
+         ParamByName('Note').AsString := lMemo;
+         ParamByName('Pref').AsInteger := lPref;
+
+         ExecSQL;
+  end;
+end;
+
+function FullCopyPerson(idInd:integer): integer;
+var
+  lLastidName, lLastREntry: LongInt;
+  nouveau: integer;
+  lFullName: string;
+  i4: string;
+  i3: string;
+  i2: string;
+  i1: string;
+begin
+  with dmGenData do begin
+  // Copier individu
+    nouveau := CopyIndividual(idInd);
+
+    with Query1 do begin
+      // Copie toutes les relations
+      SQL.Text := 'SELECT Y, A, B, M, P, X, SD, no FROM R WHERE A=:idInd OR B=:idInd';
+      ParamByName('idInd').AsInteger:= idInd;
+      Open;
+      while not EOF do
+      begin
+        Query2.SQL.Clear;
+        if Fields[1].AsInteger = idInd then
+        begin
+          Query2.SQL.Add('INSERT IGNORE INTO R (Y, A, B, M, P, X, SD) VALUES (' +
+            Fields[0].AsString + ', ' + IntToStr(nouveau) +
+            ', ' + Fields[2].AsString + ', ''' +
+            AutoQuote(Fields[3].AsString) +
+            ''', ''' + AutoQuote(Fields[4].AsString) + ''', ' + Fields[5].AsString +
+            ', ''' + AutoQuote(Fields[6].AsString) + ''')');
+          SaveModificationTime(Fields[2].AsInteger);
+        end
+        else
+        begin
+          Query2.SQL.Add('INSERT IGNORE INTO R (Y, A, B, M, P, X, SD) VALUES (' +
+            Fields[0].AsString + ', ' +
+            Fields[1].AsString + ', ' + IntToStr(nouveau) +
+            ', ''' + AutoQuote(Fields[3].AsString) + ''', ''' + AutoQuote(Fields[4].AsString) + ''', ' + Fields[5].AsString +
+            ', ''' + AutoQuote(Fields[6].AsString) + ''')');
+          SaveModificationTime(Fields[1].AsInteger);
+        end;
+        lLastREntry  := GetLastIDOfTable('R');
+
+        CopyCitation('R',Fields[7].AsInteger,lLastREntry);
+        Next;
+      end;
+    end;
+
+    // Copie tous les noms
+    Query1.Close;
+    Query1.SQL.Text :=
+      'SELECT I, Y, N, X, M, P, PD, SD, I1, I2, I3, I4, no FROM N WHERE I=:idInd';
+    Query1.ParamByName('idInd').AsInteger:=idInd;
+    Query1.Open;
+    while not Query1.EOF do
+    begin
+      i1 := Query1.Fields[8].AsString;
+      i2 := Query1.Fields[9].AsString;
+      i3 := Query1.Fields[10].AsString;
+      i4 := Query1.Fields[11].AsString;
+
+      lFullName:=Query1.Fields[2].AsString;
+      Query2.SQL.Clear;
+      Query2.SQL.Add(
+        'INSERT IGNORE INTO N (I, Y, N, X, M, P, PD, SD, I1, I2, I3, I4) VALUES (' +
+        IntToStr(nouveau) + ', ' + Query1.Fields[1].AsString +
+        ', ''' + AutoQuote(lFullName) + ''', ' + Query1.Fields[3].AsString +
+        ', ''' + AutoQuote(Query1.Fields[4].AsString) + ''', ''' + AutoQuote(Query1.Fields[5].AsString) + ''', ''' + AutoQuote(Query1.Fields[6].AsString) + ''', ''' + AutoQuote(Query1.Fields[7].AsString) + ''', ''' + AutoQuote(Query1.Fields[8].AsString) + ''', ''' + AutoQuote(Query1.Fields[9].AsString) + ''', ''' + AutoQuote(Query1.Fields[10].AsString) + ''', ''' + AutoQuote(Query1.Fields[11].AsString) + ''')');
+      Query2.ExecSQL;
+      lLastidName:=GetLastIDOfTable('N');
+      CopyCitation('N',Query1.Fields[12].AsInteger,lLastidName);
+      // Ajoute le nom dans l'explorateur...
+//      if mniExplorateur.Checked then
+//         frmExplorer.AddNameToExplorer(lLastidName,lFullName,i1,i2,i3,i4);
+      Query1.Next;
+    end;
+
+    // Copie tous les documents
+    Query1.SQL.Text := 'SELECT X, T, D, F, Z, A, N FROM X WHERE A=''I'' AND N=:idInd';
+    Query1.ParamByName('idInd').AsInteger:=idInd;
+    Query1.Open;
+    while not Query1.EOF do
+    begin
+      Query2.SQL.Clear;
+      Query2.SQL.Add('INSERT IGNORE INTO X (X, T, D, F, Z, A, N) VALUES (' +
+        Query1.Fields[0].AsString + ', ''' + AutoQuote(Query1.Fields[1].AsString) + ''', ''' + AutoQuote(lFullName) + ''', ''' + AutoQuote(Query1.Fields[3].AsString) + ''', ''' + AutoQuote(Query1.Fields[4].AsString) + ''', ''' + 'I' + ''', ' + IntToStr(nouveau) + ')');
+      Query2.ExecSQL;
+      Query1.Next;
+    end;
+
+    // Copie tous les événements
+    Query1.SQL.Text :=
+      'SELECT E.Y, E.PD, E.SD, E.L, E.M, E.X, E.no FROM E JOIN W on E.no=W.E WHERE W.I=:idInd';
+      Query1.ParamByName('idInd').AsInteger:=idInd;
+    Query1.Open;
+    while not Query1.EOF do
+    begin
+      Query2.SQL.Clear;
+      Query2.SQL.Add('INSERT IGNORE INTO E (Y, PD, SD, L, M, X) VALUES (' +
+        Query1.Fields[0].AsString + ', ''' + AutoQuote(Query1.Fields[1].AsString) + ''', ''' + AutoQuote(lFullName) + ''', ' + Query1.Fields[3].AsString +
+        ', ''' + AutoQuote(Query1.Fields[4].AsString) + ''', ' + Query1.Fields[5].AsString + ')');
+      Query2.ExecSQL;
+      Query2.SQL.Text := 'SHOW TABLE STATUS WHERE NAME=''E''';
+      Query2.Open;
+      Query2.First;
+      lLastidName:=Query2.Fields[10].AsInteger;
+      Query2.Close;
+      Query3.SQL.Text := 'SELECT Y, N, S, Q, M FROM C WHERE Y=''E'' AND N=' +
+        Query1.Fields[6].AsString;
+      Query3.Open;
+      while not Query3.EOF do
+      begin
+        Query4.SQL.Clear;
+        Query4.SQL.Add('INSERT IGNORE INTO C (Y, N, S, Q, M) VALUES (''' +
+          Query3.Fields[0].AsString + ''', ' +
+          IntToStr(lLastidName - 1) + ', ' +
+          Query3.Fields[2].AsString + ', ' +
+          Query3.Fields[3].AsString + ', ''' + AutoQuote(Query3.Fields[4].AsString) + ''')');
+        Query4.ExecSQL;
+        Query3.Next;
+      end;
+      Query3.SQL.Text := 'SELECT X, T, D, F, Z FROM X WHERE A=''E'' AND N=' +
+        Query1.Fields[6].AsString;
+      Query3.Open;
+      while not Query3.EOF do
+      begin
+        Query4.SQL.Clear;
+        Query4.SQL.Add('INSERT IGNORE INTO X (X, T, D, F, Z, A, N) VALUES (' +
+          '0' + ', ''' + AutoQuote(Query3.Fields[1].AsString) + ''', ''' + AutoQuote(Query3.Fields[2].AsString) + ''', ''' + AutoQuote(Query3.Fields[3].AsString) + ''', ''' + AutoQuote(Query1.Fields[4].AsString) + ''', ''E'', ' + IntToStr(
+          lLastidName - 1) + ')');
+        Query4.ExecSQL;
+        Query3.Next;
+      end;
+      Query3.SQL.Text := 'SELECT I, E, X, P, R FROM W WHERE E=' +
+        Query1.Fields[6].AsString;
+      Query3.Open;
+      while not Query3.EOF do
+      begin
+        Query4.SQL.Clear;
+        if idInd = Query3.Fields[0].AsInteger then
+          Query4.SQL.Add('INSERT IGNORE INTO W (I, E, X, P, R) VALUES (' +
+            IntToStr(nouveau) + ', ' +
+            IntToStr(lLastidName - 1) + ', ' +
+            Query3.Fields[2].AsString + ', ''' + AutoQuote(Query3.Fields[3].AsString) + ''', ''' + AutoQuote(Query3.Fields[4].AsString) + ''')')
+        else
+          Query4.SQL.Add('INSERT IGNORE INTO W (I, E, X, P, R) VALUES (' +
+            Query3.Fields[0].AsString + ', ' +
+            IntToStr(lLastidName - 1) + ', ' +
+            Query3.Fields[2].AsString + ', ''' + AutoQuote(Query3.Fields[3].AsString) + ''', ''' + AutoQuote(Query3.Fields[4].AsString) + ''')');
+        Query4.ExecSQL;
+        SaveModificationTime(Query3.Fields[0].AsInteger);
+        Query3.Next;
+      end;
+      Query1.Next;
+    end;
+    SaveModificationTime(nouveau);
+  end;
+  Result:=nouveau;
+end;
+
 procedure UpdateHistoryChInd(const Items:TStrings;const lNewInd: LongInt);
 var
   i: integer;
@@ -1060,7 +1286,7 @@ end;
 procedure TfrmStemmaMainForm.actFileImportFromTMGExecute(Sender: TObject);
 var
   ini: TIniFile;
-  db, buffer, buffer2, buffer3, buffer5, role, insert, pd,
+  db,  role, insert, pd,
   sd, filename: string;
   i: integer;
   debut, restant, oldrestant: TDateTime;
@@ -1069,10 +1295,11 @@ var
   lMaxRecords: longint;
 
   procedure ImportPlace;
+  var
+    lidPlace: LongInt;
+    lPlace : string;
   begin
     // Importer L Lieus (_P)
-    dmGenData.Query1.SQL.Text :=
-      'INSERT IGNORE INTO L (no, L) VALUES (:idPlace, :Place)';
     dmGenData.TMG.Tablename := filename + 'P.DBF';
     dmGenData.TMG.Active := True;
     dmGenData.TMG.Open;
@@ -1088,28 +1315,26 @@ var
         Application.ProcessMessages;
       end;
       if dmGenData.TMG.Fields[1].IsNull then
-        buffer := ''
+        lPlace := ''
       else
-        buffer := '!dmGenData.TMG' + ReplaceStr(
+        lPlace := '!dmGenData.TMG' + ReplaceStr(
           dmGenData.TMG.Fields[1].Value, '$!&', '|');
-      buffer := IntToStr(dmGenData.TMG.Fields[0].Value) + ',''' + buffer + ''');';
-      with dmGenData.Query1 do
-      begin
-        ParamByName('idPlace').AsInteger := dmGenData.TMG.Fields[0].Value;
-        ParamByName('Place').AsString := buffer;
-        ExecSQL;
-      end;
+      lPlace := IntToStr(dmGenData.TMG.Fields[0].Value) + ',''' + lPlace + ''');';
+
+      lidPlace:=dmGenData.TMG.Fields[0].AsInteger;
+      InsertPlace(lidPlace,lPlace);
       dmGenData.TMG.Next;
     end;
     dmGenData.TMG.Active := False;
   end;
 
   procedure ImportSourceDepotConnection;
+  var
+    buffer: String;
+    lidRepository, lidSource: LongInt;
   begin
     // Importer A Association Source-Dépots (_W)
     dmGenData.TMG.Tablename := filename + 'W.DBF';
-    dmGenData.Query1.SQL.Text :=
-      'INSERT IGNORE INTO A (S, D, M) VALUES (:idSource, :idDepot, :Note)';
     dmGenData.TMG.Active := True;
     dmGenData.TMG.Open;
     StatusBar.Panels[1].Text := Translation.Items[8];
@@ -1122,23 +1347,22 @@ var
       else
         buffer := dmGenData.TMG.Fields[2].Value;
 
-      with dmGenData.Query1 do
-      begin
-        ParamByName('idSource').AsInteger := dmGenData.TMG.Fields[0].Value;
-        ParamByName('idDepot').AsInteger := dmGenData.TMG.Fields[1].Value;
-        ParamByName('Note').AsString := buffer;
-        ExecSQL;
-      end;
+      lidRepository:=dmGenData.TMG.Fields[1].AsInteger;
+      lidSource:=dmGenData.TMG.Fields[0].AsInteger;
+      InsertDepotOfSource(lidSource, lidRepository, buffer);
       dmGenData.TMG.Next;
     end;
     dmGenData.TMG.Active := False;
   end;
 
   procedure ImportDepots;
+  var
+    lidRepository, lidIndividual: LongInt;
+    lTitle, lDescription: String;
+    lMemo:variant;
   begin
     // Importer D Dépots (_R)
     dmGenData.TMG.Tablename := filename + 'R.DBF';
-    insert := 'INSERT IGNORE INTO D (no, T, M, D, I) VALUES (';
     dmGenData.TMG.Active := True;
     dmGenData.TMG.Open;
     StatusBar.Panels[1].Text := Translation.Items[9];
@@ -1146,29 +1370,26 @@ var
     begin
       ProgressBar.Position := ProgressBar.Position + 1;
       Application.ProcessMessages;
-      if dmGenData.TMG.Fields[3].IsNull then
-        buffer2 := ''
-      else
-        buffer2 := AnsiReplaceStr(
-          AnsiReplaceStr(dmGenData.TMG.Fields[3].Value, '"', '\"'), '''', '\''');
-      buffer := IntToStr(dmGenData.TMG.Fields[5].Value) + ',''' +
-        dmGenData.TMG.Fields[0].Value + ''',''' + buffer2 + ''',''' +
-        dmGenData.TMG.Fields[0].Value + ''',' +
-        IntToStr(dmGenData.TMG.Fields[4].Value) + ');';
-      dmGenData.Query1.SQL.Text := insert + buffer;
-      dmGenData.Query1.ExecSQL;
+
+      lidRepository:=dmGenData.TMG.Fields[5].AsInteger;
+      lTitle:=dmGenData.TMG.Fields[0].AsString;
+      lMemo:=dmGenData.TMG.Fields[3].Value;
+      lDescription:=dmGenData.TMG.Fields[0].AsString;
+      lidIndividual:=dmGenData.TMG.Fields[4].AsInteger;
+      InsertDepot(lMemo, lDescription, lTitle, lidIndividual, lidRepository);
       dmGenData.TMG.Next;
     end;
     dmGenData.TMG.Active := False;
   end;
 
   procedure ImportEvents;
+  var
+    lidEvent, lidType, lidPlace: LongInt;
+    lPDate, lSDate, lMemo: String;
+    lPref: Integer;
   begin
     // Importer E Événements (_G)
     dmGenData.TMG.Tablename := filename + 'G.DBF';
-    dmGenData.Query1.SQL.Text :=
-      'INSERT IGNORE INTO E (no, Y, PD, SD, L, M, X) ' +
-      'VALUES (:idEvent, :idType, :PDate, SDate, :idPlace, :Note, :Pref)';
     dmGenData.TMG.Active := True;
     dmGenData.TMG.Open;
     while not (dmGenData.TMG.EOF) do
@@ -1185,21 +1406,17 @@ var
         Application.ProcessMessages;
       end;
       if dmGenData.TMG.Fields[8].IsNull then
-        buffer2 := ''
+        lMemo := ''
       else
-        buffer2 := dmGenData.TMG.Fields[8].Value;
+        lMemo := dmGenData.TMG.Fields[8].Value;
 
-      dmGenData.Query1.ParamByName('idEvent').AsInteger := dmGenData.TMG.Fields[0].Value;
-      dmGenData.Query1.ParamByName('idType').AsInteger :=
-        dmGenData.TMG.Fields[1].Value + 1000;
-      dmGenData.Query1.ParamByName('PDate').AsString := dmGenData.TMG.Fields[6].Value;
-      dmGenData.Query1.ParamByName('Sdate').AsString := dmGenData.TMG.Fields[14].Value;
-      dmGenData.Query1.ParamByName('idPlace').AsInteger :=
-        dmGenData.TMG.Fields[7].Value;
-      dmGenData.Query1.ParamByName('Note').AsString := buffer2;
-      dmGenData.Query1.ParamByName('Pref').AsInteger := 0;
-
-      dmGenData.Query1.ExecSQL;
+      lidEvent:=dmGenData.TMG.Fields[0].AsInteger;
+      lidType:=dmGenData.TMG.Fields[1].AsInteger + 1000;
+      lPDate:=dmGenData.TMG.Fields[6].AsString;
+      lSDate:=dmGenData.TMG.Fields[14].AsString;
+      lidPlace:=dmGenData.TMG.Fields[7].AsInteger;
+      lPref:=0;
+      InsertEvent(lPref, lMemo, lSDate, lPDate, lidPlace, lidType, lidEvent);
       dmGenData.TMG.Next;
     end;
     dmGenData.TMG.Active := False;
@@ -1208,6 +1425,8 @@ var
   procedure ImportCitations;
   var
     j: integer;
+    buffer: String;
+    buffer2: String;
   begin
     // Importer C Citations (_S)
     dmGenData.TMG.Tablename := filename + 'S.DBF';
@@ -1252,6 +1471,8 @@ var
   end;
 
   procedure ImportIndividuals(iOffset: integer = 0);
+  var
+    buffer: String;
   begin
     // Importer I Individus (_$)
     dmGenData.TMG.Tablename := filename + '$.DBF';
@@ -1299,6 +1520,8 @@ var
   end;
 
   procedure ImportWitnesses;
+  var
+    buffer: String;
   begin
     // Importer W Témoins (_E)
     dmGenData.TMG.Tablename := filename + 'E.DBF';
@@ -1375,16 +1598,13 @@ var
   var
     I4: string;
     I3: string;
-    buffer4: string;
+    buffer4, buffer5, buffer, buffer2, buffer3: string;
   begin
     // Importer N Noms (_N)
     dmGenData.TMG.Tablename := filename + 'N.DBF';
     dmGenData.TMG.Active := True;
     dmGenData.TMG.Open;
 
-    dmGenData.Query1.SQL.Text :=
-      'INSERT IGNORE INTO N (no, I, Y, N, X, M, P, PD, SD, I1, I2, I3, I4) ' +
-      'VALUES (:idName ,:idInd, :idType, :Name, :Pref, :Note, :Phrase, :PDate, :SDate, :I1, :I2, :I3, :I4)';
     while not (dmGenData.TMG.EOF) do
     begin
       ProgressBar.Position := ProgressBar.Position + 20;
@@ -1443,6 +1663,10 @@ var
 
       with dmGenData.Query1 do
       begin
+        Close;
+        SQL.Text :=
+             'INSERT IGNORE INTO N (no, I, Y, N, X, M, P, PD, SD, I1, I2, I3, I4) ' +
+             'VALUES (:idName ,:idInd, :idType, :Name, :Pref, :Note, :Phrase, :PDate, :SDate, :I1, :I2, :I3, :I4)';
         ParamByName('idName').AsInteger := dmGenData.TMG.Fields[11].Value + nOffset;
         ParamByName('idInd').AsInteger := dmGenData.TMG.Fields[0].Value + iOffset;
         ParamByName('idType').AsInteger := dmGenData.TMG.Fields[1].Value + 1000;
@@ -1456,15 +1680,17 @@ var
         ParamByName('I2').AsString := buffer5;
         ParamByName('I3').AsString := I3;
         ParamByName('I4').AsString := I4;
+        ExecSQL;
       end;
 
-      dmGenData.Query1.ExecSQL;
       dmGenData.TMG.Next;
     end;
     dmGenData.TMG.Active := False;
   end;
 
   procedure ImportRelations;
+  var
+    buffer: String;
   begin
     // Importer R Relations (_F)
     insert := 'INSERT IGNORE INTO R (no, Y, A, B, M, X, SD, P) VALUES (';
@@ -1503,6 +1729,8 @@ var
   end;
 
   procedure ImportSources;
+  var
+    buffer, buffer2, buffer3, buffer5: String;
   begin
     // Importer S Sources (_M)
     dmGenData.TMG.Tablename := filename + 'M.DBF';
@@ -1560,6 +1788,8 @@ var
   end;
 
   procedure ImportDocuments;
+  var
+    buffer, buffer2, buffer3: String;
   begin
     // Importer X Exhibits (_I)
     dmGenData.TMG.Tablename := filename + 'I.DBF';
@@ -1619,7 +1849,7 @@ var
   procedure ImportTypes;
   var
     y: string;
-    roles: string;
+    roles, buffer, buffer2: string;
   begin
     // Importer Y Types d'événements (_T)
           // Insert Types
@@ -2084,192 +2314,9 @@ end;
 
 procedure TfrmStemmaMainForm.actEditCopyPersonExecute(Sender: TObject);
 var
-  i1, i2, i3, i4, lFullName: string;
   nouveau: integer;
-  lLastidName: LongInt;
 begin
-  // Copier individu
-  nouveau := dmGenData.CopyIndividual(frmStemmaMainForm.iID);
-  // Copie toutes les relations
-  dmGenData.Query1.SQL.Text := 'SELECT Y, A, B, M, P, X, SD, no FROM R WHERE A=' +
-    frmStemmaMainForm.sID + ' OR B=' + frmStemmaMainForm.SID;
-  dmGenData.Query1.Open;
-  while not dmGenData.Query1.EOF do
-  begin
-    dmGenData.Query2.SQL.Clear;
-    if dmGenData.Query1.Fields[1].AsInteger = frmStemmaMainForm.iID then
-    begin
-      dmGenData.Query2.SQL.Add('INSERT IGNORE INTO R (Y, A, B, M, P, X, SD) VALUES (' +
-        dmGenData.Query1.Fields[0].AsString + ', ' + IntToStr(nouveau) +
-        ', ' + dmGenData.Query1.Fields[2].AsString + ', ''' +
-        AutoQuote(dmGenData.Query1.Fields[3].AsString) +
-        ''', ''' + AutoQuote(dmGenData.Query1.Fields[4].AsString) + ''', ' + dmGenData.Query1.Fields[5].AsString +
-        ', ''' + AutoQuote(dmGenData.Query1.Fields[6].AsString) + ''')');
-      dmGenData.Query4.SQL.Clear;
-      dmGenData.Query4.SQL.Add('UPDATE I SET date=''' +
-        FormatDateTime('YYYYMMDD', now) + ''' WHERE no=' +
-        dmGenData.Query1.Fields[2].AsString);
-      dmGenData.Query4.ExecSQL;
-    end
-    else
-    begin
-      dmGenData.Query2.SQL.Add('INSERT IGNORE INTO R (Y, A, B, M, P, X, SD) VALUES (' +
-        dmGenData.Query1.Fields[0].AsString + ', ' +
-        dmGenData.Query1.Fields[1].AsString + ', ' + IntToStr(nouveau) +
-        ', ''' + AutoQuote(dmGenData.Query1.Fields[3].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[4].AsString) + ''', ' + dmGenData.Query1.Fields[5].AsString +
-        ', ''' + AutoQuote(dmGenData.Query1.Fields[6].AsString) + ''')');
-      dmGenData.Query4.SQL.Clear;
-      dmGenData.Query4.SQL.Add('UPDATE I SET date=''' +
-        FormatDateTime('YYYYMMDD', now) + ''' WHERE no=' +
-        dmGenData.Query1.Fields[1].AsString);
-      dmGenData.Query4.ExecSQL;
-    end;
-    dmGenData.Query2.ExecSQL;
-    dmGenData.Query2.SQL.Text := 'SHOW TABLE STATUS WHERE NAME=''R''';
-    dmGenData.Query2.Open;
-    dmGenData.Query2.First;
-    dmGenData.Query3.SQL.Text := 'SELECT Y, N, S, Q, M FROM C WHERE Y=''R'' AND N=' +
-      dmGenData.Query1.Fields[7].AsString;
-    dmGenData.Query3.Open;
-    while not dmGenData.Query3.EOF do
-    begin
-      dmGenData.Query4.SQL.Clear;
-      dmGenData.Query4.SQL.Add('INSERT IGNORE INTO C (Y, N, S, Q, M) VALUES (''' +
-        dmGenData.Query3.Fields[0].AsString + ''', ' +
-        IntToStr(dmGenData.Query2.Fields[10].AsInteger - 1) + ', ' +
-        dmGenData.Query3.Fields[2].AsString + ', ' +
-        dmGenData.Query3.Fields[3].AsString + ', ''' + AutoQuote(dmGenData.Query3.Fields[4].AsString) + ''')');
-      dmGenData.Query4.ExecSQL;
-      dmGenData.Query3.Next;
-    end;
-    dmGenData.Query1.Next;
-  end;
-  // Copie tous les noms
-  dmGenData.Query1.SQL.Text :=
-    'SELECT I, Y, N, X, M, P, PD, SD, I1, I2, I3, I4, no FROM N WHERE I=' +
-    frmStemmaMainForm.sID;
-  dmGenData.Query1.Open;
-  while not dmGenData.Query1.EOF do
-  begin
-    i1 := dmGenData.Query1.Fields[8].AsString;
-    i2 := dmGenData.Query1.Fields[9].AsString;
-    i3 := dmGenData.Query1.Fields[10].AsString;
-    i4 := dmGenData.Query1.Fields[11].AsString;
-
-    lFullName:=dmGenData.Query1.Fields[2].AsString;
-    dmGenData.Query2.SQL.Clear;
-    dmGenData.Query2.SQL.Add(
-      'INSERT IGNORE INTO N (I, Y, N, X, M, P, PD, SD, I1, I2, I3, I4) VALUES (' +
-      IntToStr(nouveau) + ', ' + dmGenData.Query1.Fields[1].AsString +
-      ', ''' + AutoQuote(lFullName) + ''', ' + dmGenData.Query1.Fields[3].AsString +
-      ', ''' + AutoQuote(dmGenData.Query1.Fields[4].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[5].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[6].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[7].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[8].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[9].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[10].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[11].AsString) + ''')');
-    dmGenData.Query2.ExecSQL;
-    dmGenData.Query2.SQL.Text := 'SHOW TABLE STATUS WHERE NAME=''N''';
-    dmGenData.Query2.Open;
-    dmGenData.Query2.First;
-    lLastidName:=dmGenData.Query2.Fields[10].AsInteger;
-    dmGenData.Query2.Close;
-    dmGenData.Query3.SQL.Text := 'SELECT Y, N, S, Q, M FROM C WHERE Y=''N'' AND N=' +
-      dmGenData.Query1.Fields[12].AsString;
-    dmGenData.Query3.Open;
-    while not dmGenData.Query3.EOF do
-    begin
-      dmGenData.Query4.SQL.Clear;
-      dmGenData.Query4.SQL.Add('INSERT IGNORE INTO C (Y, N, S, Q, M) VALUES (''' +
-        dmGenData.Query3.Fields[0].AsString + ''', ' +
-        IntToStr(lLastidName - 1) + ', ' +
-        dmGenData.Query3.Fields[2].AsString + ', ' +
-        dmGenData.Query3.Fields[3].AsString + ', ''' + AutoQuote(dmGenData.Query3.Fields[4].AsString) + ''')');
-      dmGenData.Query4.ExecSQL;
-      dmGenData.Query3.Next;
-    end;
-    // Ajoute le nom dans l'explorateur...
-    if mniExplorateur.Checked then
-       frmExplorer.AddNameToExplorer(lLastidName,lFullName,i1,i2,i3,i4);
-    dmGenData.Query1.Next;
-  end;
-  // Copie tous les documents
-  dmGenData.Query1.SQL.Text := 'SELECT X, T, D, F, Z, A, N FROM X WHERE A=''I'' AND N=' +
-    frmStemmaMainForm.sID;
-  dmGenData.Query1.Open;
-  while not dmGenData.Query1.EOF do
-  begin
-    dmGenData.Query2.SQL.Clear;
-    dmGenData.Query2.SQL.Add('INSERT IGNORE INTO X (X, T, D, F, Z, A, N) VALUES (' +
-      dmGenData.Query1.Fields[0].AsString + ', ''' + AutoQuote(dmGenData.Query1.Fields[1].AsString) + ''', ''' + AutoQuote(lFullName) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[3].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[4].AsString) + ''', ''' + 'I' + ''', ' + IntToStr(nouveau) + ')');
-    dmGenData.Query2.ExecSQL;
-    dmGenData.Query1.Next;
-  end;
-  // Copie tous les événements
-  dmGenData.Query1.SQL.Text :=
-    'SELECT E.Y, E.PD, E.SD, E.L, E.M, E.X, E.no FROM E JOIN W on E.no=W.E WHERE W.I=' +
-    frmStemmaMainForm.sID;
-  dmGenData.Query1.Open;
-  while not dmGenData.Query1.EOF do
-  begin
-    dmGenData.Query2.SQL.Clear;
-    dmGenData.Query2.SQL.Add('INSERT IGNORE INTO E (Y, PD, SD, L, M, X) VALUES (' +
-      dmGenData.Query1.Fields[0].AsString + ', ''' + AutoQuote(dmGenData.Query1.Fields[1].AsString) + ''', ''' + AutoQuote(lFullName) + ''', ' + dmGenData.Query1.Fields[3].AsString +
-      ', ''' + AutoQuote(dmGenData.Query1.Fields[4].AsString) + ''', ' + dmGenData.Query1.Fields[5].AsString + ')');
-    dmGenData.Query2.ExecSQL;
-    dmGenData.Query2.SQL.Text := 'SHOW TABLE STATUS WHERE NAME=''E''';
-    dmGenData.Query2.Open;
-    dmGenData.Query2.First;
-    lLastidName:=dmGenData.Query2.Fields[10].AsInteger;
-    dmGenData.Query2.Close;
-    dmGenData.Query3.SQL.Text := 'SELECT Y, N, S, Q, M FROM C WHERE Y=''E'' AND N=' +
-      dmGenData.Query1.Fields[6].AsString;
-    dmGenData.Query3.Open;
-    while not dmGenData.Query3.EOF do
-    begin
-      dmGenData.Query4.SQL.Clear;
-      dmGenData.Query4.SQL.Add('INSERT IGNORE INTO C (Y, N, S, Q, M) VALUES (''' +
-        dmGenData.Query3.Fields[0].AsString + ''', ' +
-        IntToStr(lLastidName - 1) + ', ' +
-        dmGenData.Query3.Fields[2].AsString + ', ' +
-        dmGenData.Query3.Fields[3].AsString + ', ''' + AutoQuote(dmGenData.Query3.Fields[4].AsString) + ''')');
-      dmGenData.Query4.ExecSQL;
-      dmGenData.Query3.Next;
-    end;
-    dmGenData.Query3.SQL.Text := 'SELECT X, T, D, F, Z FROM X WHERE A=''E'' AND N=' +
-      dmGenData.Query1.Fields[6].AsString;
-    dmGenData.Query3.Open;
-    while not dmGenData.Query3.EOF do
-    begin
-      dmGenData.Query4.SQL.Clear;
-      dmGenData.Query4.SQL.Add('INSERT IGNORE INTO X (X, T, D, F, Z, A, N) VALUES (' +
-        '0' + ', ''' + AutoQuote(dmGenData.Query3.Fields[1].AsString) + ''', ''' + AutoQuote(dmGenData.Query3.Fields[2].AsString) + ''', ''' + AutoQuote(dmGenData.Query3.Fields[3].AsString) + ''', ''' + AutoQuote(dmGenData.Query1.Fields[4].AsString) + ''', ''E'', ' + IntToStr(
-        lLastidName - 1) + ')');
-      dmGenData.Query4.ExecSQL;
-      dmGenData.Query3.Next;
-    end;
-    dmGenData.Query3.SQL.Text := 'SELECT I, E, X, P, R FROM W WHERE E=' +
-      dmGenData.Query1.Fields[6].AsString;
-    dmGenData.Query3.Open;
-    while not dmGenData.Query3.EOF do
-    begin
-      dmGenData.Query4.SQL.Clear;
-      if frmStemmaMainForm.iID = dmGenData.Query3.Fields[0].AsInteger then
-        dmGenData.Query4.SQL.Add('INSERT IGNORE INTO W (I, E, X, P, R) VALUES (' +
-          IntToStr(nouveau) + ', ' +
-          IntToStr(lLastidName - 1) + ', ' +
-          dmGenData.Query3.Fields[2].AsString + ', ''' + AutoQuote(dmGenData.Query3.Fields[3].AsString) + ''', ''' + AutoQuote(dmGenData.Query3.Fields[4].AsString) + ''')')
-      else
-        dmGenData.Query4.SQL.Add('INSERT IGNORE INTO W (I, E, X, P, R) VALUES (' +
-          dmGenData.Query3.Fields[0].AsString + ', ' +
-          IntToStr(lLastidName - 1) + ', ' +
-          dmGenData.Query3.Fields[2].AsString + ', ''' + AutoQuote(dmGenData.Query3.Fields[3].AsString) + ''', ''' + AutoQuote(dmGenData.Query3.Fields[4].AsString) + ''')');
-      dmGenData.Query4.ExecSQL;
-      dmGenData.Query4.SQL.Clear;
-      dmGenData.Query4.SQL.Add('UPDATE I SET date=''' +
-        FormatDateTime('YYYYMMDD', now) + ''' WHERE no=' +
-        dmGenData.Query3.Fields[0].AsString);
-      dmGenData.Query4.ExecSQL;
-      dmGenData.Query3.Next;
-    end;
-    dmGenData.Query1.Next;
-  end;
-  dmGenData.SaveModificationTime(nouveau);
+  nouveau:=FullCopyPerson(frmStemmaMainForm.iID);
   frmStemmaMainForm.iID := nouveau;
 end;
 

@@ -47,6 +47,30 @@ implementation
 uses
   frm_Types, frm_Main, cls_Translation, dm_GenData;
 
+procedure SaveTypeData(const lTitle: TCaption; const lPhrase: TCaption;
+  const lidType: TCaption; const lTypeChar: string; const roles: string);
+begin
+  dmGenData.Query1.SQL.Clear;
+    if lidType='0' then
+       dmGenData.Query1.SQL.Add('INSERT INTO Y (T, Y, P, R) VALUES ('''+
+          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lTitle),'\','\\'),'"','\"'),'''','\''')+
+          ''', '''+lTypeChar+''', '''+
+          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lPhrase),'\','\\'),'"','\"'),'''','\''')+
+          ''', '''+
+          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Roles),'\','\\'),'"','\"'),'''','\''')+
+          ''')')
+    else
+       dmGenData.Query1.SQL.Add('UPDATE Y SET T='''+
+          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lTitle),'\','\\'),'"','\"'),'''','\''')+
+          ''', Y='''+lTypeChar+
+          ''', P='''+
+          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lPhrase),'\','\\'),'"','\"'),'''','\''')+
+          ''', R='''+
+          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Roles),'\','\\'),'"','\"'),'''','\''')+
+          ''' WHERE no='+lidType);
+    dmGenData.Query1.ExecSQL;
+end;
+
 { TfrmEditType }
 
 procedure TfrmEditType.FormShow(Sender: TObject);
@@ -125,8 +149,9 @@ end;
 
 procedure TfrmEditType.Button1Click(Sender: TObject);
 var
-  temp, role, roles:string;
+  temp, role, roles, lTypeChar:string;
   pos1,pos2:integer;
+  lidType, lPhrase, lTitle: TCaption;
 begin
   roles:='';
   temp:=p.text;
@@ -157,25 +182,12 @@ begin
            roles:=role;
      temp:=Copy(temp,pos2+1,length(temp));
   end;
-  dmGenData.Query1.SQL.Clear;
-  if no.text='0' then
-     dmGenData.Query1.SQL.Add('INSERT INTO Y (T, Y, P, R) VALUES ('''+
-        AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(T.text),'\','\\'),'"','\"'),'''','\''')+
-        ''', '''+Copy(Y.Items[Y.ItemIndex],1,1)+''', '''+
-        AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(P.text),'\','\\'),'"','\"'),'''','\''')+
-        ''', '''+
-        AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Roles),'\','\\'),'"','\"'),'''','\''')+
-        ''')')
-  else
-     dmGenData.Query1.SQL.Add('UPDATE Y SET T='''+
-        AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(T.text),'\','\\'),'"','\"'),'''','\''')+
-        ''', Y='''+Copy(Y.Items[Y.ItemIndex],1,1)+
-        ''', P='''+
-        AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(P.text),'\','\\'),'"','\"'),'''','\''')+
-        ''', R='''+
-        AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Roles),'\','\\'),'"','\"'),'''','\''')+
-        ''' WHERE no='+no.text);
-  dmGenData.Query1.ExecSQL;
+
+  lidType:=no.text;
+  lPhrase:=P.text;
+  lTypeChar:=Copy(Y.Items[Y.ItemIndex],1,1);
+  lTitle:=T.text;
+  SaveTypeData(lTitle, lPhrase, lidType, lTypeChar, roles);
 end;
 
 {$R *.lfm}

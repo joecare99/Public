@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Grids, Menus, FMUtils,  fra_Citations, fra_Memo, LCLType,
+  Menus, FMUtils,  fra_Citations, fra_Memo, LCLType,
   Spin, ExtCtrls, Buttons;
 
 type
@@ -96,19 +96,21 @@ procedure GetRelationData(const lidRelation: Integer; out lSortDate: String;
   out lPhraseText: String; out lMemoText: String; out lPrefered: Boolean;
   out lidParent: LongInt; out lidChild: LongInt; out lRelType: LongInt);
 begin
-  dmGenData.Query1.Close;
-  dmGenData.Query1.SQL.text:='SELECT R.Y, R.X, R.A, R.B, R.M, R.P, R.SD FROM R WHERE R.no=:idRelation';
-  dmGenData.Query1.ParamByName('idRelation').AsInteger:=lidRelation;
-  dmGenData.Query1.Open;
+  with dmGenData.Query1 do begin
+Close;
+    SQL.text:='SELECT R.Y, R.X, R.A, R.B, R.M, R.P, R.SD FROM R WHERE R.no=:idRelation';
+    ParamByName('idRelation').AsInteger:=lidRelation;
+    Open;
 
-  lRelType:=dmGenData.Query1.Fields[0].AsInteger;
-  lPrefered:=dmGenData.Query1.Fields[1].AsBoolean;
-  lidChild:=dmGenData.Query1.Fields[2].AsInteger;
-  lidParent:=dmGenData.Query1.Fields[3].AsInteger;
-  lMemoText:=dmGenData.Query1.Fields[4].AsString;
-  lPhraseText:=dmGenData.Query1.Fields[5].AsString;
-  lSortDate:=dmGenData.Query1.Fields[6].AsString;
-  dmGenData.Query1.Close;
+    lRelType:=Fields[0].AsInteger;
+    lPrefered:=Fields[1].AsBoolean;
+    lidChild:=Fields[2].AsInteger;
+    lidParent:=Fields[3].AsInteger;
+    lMemoText:=Fields[4].AsString;
+    lPhraseText:=Fields[5].AsString;
+    lSortDate:=Fields[6].AsString;
+    Close;
+  end;
 end;
 
 { TfrmEditParents }

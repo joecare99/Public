@@ -56,13 +56,29 @@ implementation
 
 uses Dialogs, dm_GenData, FMUtils, cls_Translation, frm_EditDocuments, frm_ShowImage, lclintf;
 
+function GetDocumentInfo(const lidDocument: Integer): string;
+var
+  lMemoText: string;
+begin
+  with dmGenData.Query2 do begin
+  SQL.Text := 'SELECT X.Z FROM X WHERE X.no=:idDocument';
+          ParamByName('idDocument').AsInteger:=lidDocument;
+          Open;
+          lMemoText:=Fields[0].AsString;
+          Close;
+    Result:=lMemoText;
+  end;
+end;
+
 procedure UpdateDocumentInfo(const lidDocument: integer; const lDocumentInfo: string);
 begin
-    dmGenData.Query2.Close;
-    dmGenData.Query2.SQL.Text := 'UPDATE X SET Z=:Z WHERE X.no=:idDocument';
-    dmGenData.Query2.ParamByName('Z').AsString := lDocumentInfo;
-    dmGenData.Query2.ParamByName('idDocument').AsInteger := lidDocument;
-    dmGenData.Query2.ExecSQL;
+    with dmGenData.Query2 do begin
+    Close;
+      SQL.Text := 'UPDATE X SET Z=:Z WHERE X.no=:idDocument';
+      ParamByName('Z').AsString := lDocumentInfo;
+      ParamByName('idDocument').AsInteger := lidDocument;
+      ExecSQL;
+    end;
 end;
 
 {$R *.lfm}
@@ -119,22 +135,23 @@ end;
 
 procedure TfraDocuments.actDocumentsDisplayExecute(Sender: TObject);
 var
-    lDocumentInfo: string;
+    lDocumentInfo, lMemoText, lFileName: string;
+    lidDocument: Integer;
 
 begin
     // Visualiser un document de la source
     if tblDocuments.Row > 0 then
       begin
-        dmGenData.Query2.SQL.Text := 'SELECT X.Z, X.F FROM X WHERE X.no=' + tblDocuments.Cells[0, tblDocuments.Row];
-        dmGenData.Query2.Open;
+        lidDocument:=ptrint(tblDocuments.Objects[0, tblDocuments.Row]); // Todo: idActDocument
         if tblDocuments.Cells[4, tblDocuments.Row] = Translation.Items[34] then
           begin
+            lMemoText:=GetDocumentInfo(lidDocument);
             frmShowImage.Caption := Translation.Items[34];
             frmShowImage.Image.Visible := False;
             frmShowImage.Memo.Visible := True;
             frmShowImage.btnOK.Visible := True;
             frmShowImage.btnCancel.Visible := True;
-            frmShowImage.Memo.Text := dmGenData.Query2.Fields[0].AsString;
+            frmShowImage.Memo.Text := lMemoText;
             lDocumentInfo := frmShowImage.Memo.Text;
             if (frmShowImage.Showmodal = mrOk) and (lDocumentInfo <> frmShowImage.Memo.Text) then
               begin
@@ -144,22 +161,26 @@ begin
               end;
           end
         else
-        if uppercase(ExtractFileExt(dmGenData.Query2.Fields[1].AsString)) = '.PDF' then
+        begin
+          lFileName := dmGenData.GetDocumentFilename(lidDocument,0);
+        if uppercase(ExtractFileExt(lFileName)) = '.PDF' then
               try
-                OpenDocument(dmGenData.Query2.Fields[1].AsString);
+                OpenDocument(lFileName);
               except
 
               end
         else
           begin
-            frmShowImage.Caption := dmGenData.Query2.Fields[1].AsString;
+            frmShowImage.Caption := lFileName;
             frmShowImage.Memo.Visible := False;
             frmShowImage.btnOK.Visible := False;
             frmShowImage.btnCancel.Visible := False;
             frmShowImage.Image.Visible := True;
-            frmShowImage.Image.Picture.LoadFromFile(dmGenData.Query2.Fields[1].AsString);
+            frmShowImage.Image.Picture.LoadFromFile(lFileName);
             frmShowImage.Showmodal;
           end;
+
+        end;
       end;
 end;
 
