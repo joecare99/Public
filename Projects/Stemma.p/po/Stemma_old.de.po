@@ -2888,12 +2888,6 @@ msgctxt "tfrmedittype.menuitem2.caption"
 msgid "Repeat"
 msgstr ""
 
-#: tfrmedittype.no.text
-#, fuzzy
-msgctxt "tfrmedittype.no.text"
-msgid "No"
-msgstr "Nein"
-
 #: tfrmedittype.t.text
 msgctxt "tfrmedittype.t.text"
 msgid "T"
@@ -3594,6 +3588,10 @@ msgctxt "tfrmsources.button1.caption"
 msgid "Ok"
 msgstr "Ok"
 
+#: tfrmsources.caption
+msgid "Form: Sources"
+msgstr ""
+
 #: tfrmsources.mnisourceadd.caption
 msgid "&Add ..."
 msgstr ""
@@ -4140,6 +4138,10 @@ msgstr ""
 msgctxt "tfrmtypes.button1.caption"
 msgid "Ok"
 msgstr "Ok"
+
+#: tfrmtypes.caption
+msgid "Types d'événements"
+msgstr ""
 
 #: tfrmtypes.menuitem2.caption
 #, fuzzy

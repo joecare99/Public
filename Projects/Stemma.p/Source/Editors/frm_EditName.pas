@@ -110,6 +110,46 @@ implementation
 uses
   frm_Main, cls_Translation, dm_GenData, frm_Explorer;
 
+function SaveNameData( lidName: longint;const lPrefered: TCaption; const lidEvType: PtrInt;
+  const lPhrase: string; const lSDate: string; const lPDate: string;
+  const lMemoText: string; const i4: string; const i3: string;
+  const i2: string; const i1: string; const nom: string;
+  const lidInd: longint):integer;
+begin
+  with dmGenData.Query1 do begin
+     if lidName = 0 then
+     begin
+       SQL.Text := 'INSERT INTO N (Y, I, M, N, I1, I2, PD, SD, P, I3, I4, X) VALUES ' +
+         '( :idEvType, :idInd, :M, :Name, :i1, :i2, :PDate, :SDate, :P, :i3, :i4, :X)';
+         ParamByName('i3').AsString := i3;
+         ParamByName('i4').AsString := i4;
+     end
+     else
+     begin
+       SQL.Text :=
+         'UPDATE N SET Y=:idEvType, I=:idInd, M=:M, N=:Name, I1=:I1, I2=:I2, PD=:PDate, SD=:SDate, P=:P, X=:X WHERE no=:idName';
+       ParamByName('idName').AsInteger := lidName;
+     end;
+     ParamByName('idEvType').AsInteger := lidEvType;
+     ParamByName('idInd').AsInteger := lidInd;
+     ParamByName('M').AsString := lMemoText;
+     ParamByName('Name').AsString := nom;
+     ParamByName('i1').AsString := i1;
+     ParamByName('i2').AsString := i2;
+     ParamByName('PDate').AsString := lPDate;
+     ParamByName('SDate').AsString := lSDate;
+     ParamByName('P').AsString := lPhrase;
+     ParamByName('X').AsString := lPrefered;
+     ExecSQL;
+     if lidName = 0 then
+       result := dmGenData.GetLastIDOfTable('N')
+     else
+       Result:=lidName;
+  // Sauvegarder les modifications
+  dmGenData.SaveModificationTime(Result);
+   end;
+end;
+
 function CheckPrefParentExists(const lSex: string; var lidInd: longint): boolean;
 
 begin
@@ -630,10 +670,12 @@ procedure TfrmEditName.NomSaveData(Sender: TObject);
 var
   j: integer;
   parent1, parent2, no_eve, nocode, lidInd, lidName: longint;
-  nom, i1, i2, i3, i4, temp, dateev, tagName, lSex: string;
+  nom, i1, i2, i3, i4, temp, dateev, tagName, lSex, lMemoText, lPDate,
+    lSDate, lPhrase: string;
   existe: boolean;
   sSex: char;
   lidEvType: PtrInt;
+  lPrefered: TCaption;
 
 begin
   nom := edtPrefered.Text;
@@ -894,41 +936,18 @@ begin
   ;
   lidEvType := PtrInt(cbxEvType.Items.Objects[cbxEvType.ItemIndex]);
 
-
-
-
-  if lidName = 0 then
-    temp := 'INSERT INTO N (Y, I, M, N, I1, I2, PD, SD, P, I3, I4, X) VALUES ' +
-      '( :idEvType, :idInd, :M, :Name, :i1, :i2, :PDate, :SDate, :P, :i3, :i4, :X)'
-  else
-    temp :=
-      'UPDATE N SET Y=:idEvType, I=:idInd, M=:M, N=:Name, I1=:I1, I2=:I2, PD=:PDate, SD=:SDate, P=:P, X=:X WHERE no=:idName';
-  dmGenData.Query1.SQL.Text := temp;
-  dmGenData.Query1.ParamByName('idEvType').AsInteger := lidEvType;
-  dmGenData.Query1.ParamByName('idInd').AsInteger := lidInd;
-  dmGenData.Query1.ParamByName('M').AsString := trim(fraMemo1.Text);
-  dmGenData.Query1.ParamByName('Name').AsString := nom;
-  dmGenData.Query1.ParamByName('i1').AsString := i1;
-  dmGenData.Query1.ParamByName('i2').AsString := i2;
-  dmGenData.Query1.ParamByName('PDate').AsString := frmEditName.fraDate1.Date;
-  dmGenData.Query1.ParamByName('SDate').AsString := fraDate1.SortDate;
+  lMemoText:=trim(fraMemo1.Text);
+  lPDate:=fraDate1.Date;
+  lSDate:=fraDate1.SortDate;
   if fraPhrase1.isDefault then
-    dmGenData.Query1.ParamByName('P').AsString := ''
+    lPhrase:=''
   else
-    dmGenData.Query1.ParamByName('P').AsString := trim(fraPhrase1.Text);
-  if lidName = 0 then
-   begin
-    dmGenData.Query1.ParamByName('i3').AsString := i3;
-    dmGenData.Query1.ParamByName('i4').AsString := i4;
-   end
-  else
-    dmGenData.Query1.ParamByName('idName').AsInteger := lidName;
-  dmGenData.Query1.ParamByName('X').AsString := edtPrefered.Text;
-  dmGenData.Query1.ExecSQL;
-  if lidName = 0 then
-    lidName := dmGenData.GetLastIDOfTable('N');
-  // Sauvegarder les modifications
-  dmGenData.SaveModificationTime(lidInd);
+    lPhrase:=trim(fraPhrase1.Text);
+  lPrefered:=edtPrefered.Text;
+
+  lidName :=SaveNameData(lidName, lPrefered, lidEvType, lPhrase, lSDate, lPDate, lMemoText,
+    i4, i3, i2, i1, nom,  lidInd);
+
   // UPDATE DÉCÈS si la date est il cbxEvType a 100 ans !!!
   if (copy(frmEditName.fraDate1.Date, 1, 1) = '1') and not
     (frmEditName.fraDate1.Date = '100000000030000000000') then

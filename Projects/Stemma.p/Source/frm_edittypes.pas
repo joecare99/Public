@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Menus, StrUtils;
+  Menus, Spin;
 
 type
   TenumTypeEditMode =(eTEM_AddNew,eTEM_EditExisting);
@@ -18,7 +18,7 @@ type
     MainMenu1: TMainMenu;
     MenuItem1: TMenuItem;
     MenuItem2: TMenuItem;
-    No: TEdit;
+    No: TSpinEdit;
     Y: TComboBox;
     Label10: TLabel;
     Label11: TLabel;
@@ -32,11 +32,14 @@ type
     procedure PEditingDone(Sender: TObject);
   private
     FEditMode: TenumTypeEditMode;
+    function GetIdType: integer;
     procedure SetEditMode(AValue: TenumTypeEditMode);
+    procedure SetIdType(AValue: integer);
     { private declarations }
   public
     { public declarations }
     property EditMode:TenumTypeEditMode read FEditMode write SetEditMode;
+    property idType:integer read GetIdType write SetIdType;
   end; 
 
 var
@@ -45,36 +48,30 @@ var
 implementation
 
 uses
-  frm_Types, frm_Main, cls_Translation, dm_GenData;
+  frm_Main, cls_Translation, dm_GenData;
 
-procedure SaveTypeData(const lTitle: TCaption; const lPhrase: TCaption;
-  const lidType: TCaption; const lTypeChar: string; const roles: string);
+procedure GetSourceData(lidType: Integer; out lType: String; out lPhrase: String;
+  out lTitle: String);
 begin
-  dmGenData.Query1.SQL.Clear;
-    if lidType='0' then
-       dmGenData.Query1.SQL.Add('INSERT INTO Y (T, Y, P, R) VALUES ('''+
-          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lTitle),'\','\\'),'"','\"'),'''','\''')+
-          ''', '''+lTypeChar+''', '''+
-          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lPhrase),'\','\\'),'"','\"'),'''','\''')+
-          ''', '''+
-          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Roles),'\','\\'),'"','\"'),'''','\''')+
-          ''')')
-    else
-       dmGenData.Query1.SQL.Add('UPDATE Y SET T='''+
-          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lTitle),'\','\\'),'"','\"'),'''','\''')+
-          ''', Y='''+lTypeChar+
-          ''', P='''+
-          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lPhrase),'\','\\'),'"','\"'),'''','\''')+
-          ''', R='''+
-          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Roles),'\','\\'),'"','\"'),'''','\''')+
-          ''' WHERE no='+lidType);
-    dmGenData.Query1.ExecSQL;
+  with dmGenData.Query1 do begin
+  Close;
+    SQL.Text:='SELECT Y.no, Y.T, Y.Y, Y.P FROM Y WHERE Y.no=:idType';
+    ParamByName('idType').AsInteger:=lidType;
+    Open;
+    First;
+    lTitle:=Fields[1].AsString;
+    lPhrase:=Fields[3].AsString;
+    lType:=Fields[2].AsString;
+    Close;
+  end;
 end;
 
 { TfrmEditType }
 
 procedure TfrmEditType.FormShow(Sender: TObject);
 
+var
+  lTitle, lPhrase, lType: String;
 begin
   frmStemmaMainForm.SetHistoryToActual(Sender);
   Caption:=Translation.Items[199];
@@ -84,34 +81,30 @@ begin
   Label3.Caption:=Translation.Items[172];
   // Populate le Combo-Box    ('B','D','M','N','R','X','Z')
   Y.Items.Clear;
-  Y.Items.Add(Translation.Items[49]);
-  Y.Items.Add(Translation.Items[50]);
-  Y.Items.Add(Translation.Items[51]);
-  Y.Items.Add(Translation.Items[52]);
-  Y.Items.Add(Translation.Items[53]);
-  Y.Items.Add(Translation.Items[54]);
-  Y.Items.Add(Translation.Items[55]);
+  Y.Items.AddObject(Translation.Items[49],TObject(ptrint(ord('B'))));
+  Y.Items.AddObject(Translation.Items[50],TObject(ptrint(ord('D'))));
+  Y.Items.AddObject(Translation.Items[51],TObject(ptrint(ord('M'))));
+  Y.Items.AddObject(Translation.Items[52],TObject(ptrint(ord('N'))));
+  Y.Items.AddObject(Translation.Items[53],TObject(ptrint(ord('R'))));
+  Y.Items.AddObject(Translation.Items[54],TObject(ptrint(ord('X'))));
+  Y.Items.AddObject(Translation.Items[55],TObject(ptrint(ord('Z'))));
   // Populate la form
   if FEditMode=eTEM_AddNew then
      begin
      Caption:=Translation.Items[56];
-     No.Text:='0';
+     No.Value:=0;
      T.Text:='';
      P.Text:='';
      Y.ItemIndex:=0;
   end
   else
      begin
-     dmGenData.Query1.SQL.Text:='SELECT Y.no, Y.T, Y.Y, Y.P FROM Y WHERE Y.no='+
-                                     FrmTypes.TableauTypes.Cells[1,FrmTypes.TableauTypes.Row];
-     dmGenData.Query1.Open;
-     dmGenData.Query1.First;
-     No.Text:=dmGenData.Query1.Fields[0].AsString;
-     T.Text:=dmGenData.Query1.Fields[1].AsString;
-     P.Text:=dmGenData.Query1.Fields[3].AsString;
-     Y.ItemIndex:=0;
-     while not (Copy(Y.Items[Y.ItemIndex],1,1)=dmGenData.Query1.Fields[2].AsString) do
-        Y.ItemIndex:=Y.ItemIndex+1;
+     GetSourceData(idType, lType, lPhrase, lTitle);
+     T.Text:=lTitle;
+     P.Text:=lPhrase;
+     if Length(lType)>=1 then
+       Y.ItemIndex:=y.Items.IndexOfObject(
+         TObject(ptrint(ord(lType[1]))));
   end;
 end;
 
@@ -147,11 +140,22 @@ begin
   FEditMode:=AValue;
 end;
 
+function TfrmEditType.GetIdType: integer;
+begin
+  result := no.Value;
+end;
+
+procedure TfrmEditType.SetIdType(AValue: integer);
+begin
+  if no.Value = AValue then exit;
+  no.Value:=AValue;
+end;
+
 procedure TfrmEditType.Button1Click(Sender: TObject);
 var
   temp, role, roles, lTypeChar:string;
-  pos1,pos2:integer;
-  lidType, lPhrase, lTitle: TCaption;
+  lidType, pos1,pos2:integer;
+  lPhrase, lTitle: TCaption;
 begin
   roles:='';
   temp:=p.text;
@@ -183,11 +187,11 @@ begin
      temp:=Copy(temp,pos2+1,length(temp));
   end;
 
-  lidType:=no.text;
+  lidType:=strtoint(no.text);
   lPhrase:=P.text;
   lTypeChar:=Copy(Y.Items[Y.ItemIndex],1,1);
   lTitle:=T.text;
-  SaveTypeData(lTitle, lPhrase, lidType, lTypeChar, roles);
+  dmGenData.SaveTypeData(lidType, lTitle, lPhrase, lTypeChar, roles);
 end;
 
 {$R *.lfm}

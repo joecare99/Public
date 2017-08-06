@@ -11,8 +11,7 @@ object frmTypes: TfrmTypes
   OnResize = FormResize
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.2'
-  Visible = False
+  LCLVersion = '1.9.0.0'
   object TableauTypes: TStringGrid
     Left = 8
     Height = 488
@@ -71,8 +70,8 @@ object frmTypes: TfrmTypes
     TabOrder = 1
   end
   object PopupMenu1: TPopupMenu
-    left = 104
-    top = 480
+    Left = 104
+    Top = 480
     object MenuItem8: TMenuItem
       Caption = 'Utilisation'
       OnClick = MenuItem8Click

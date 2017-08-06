@@ -29,9 +29,12 @@ type
     procedure MenuItem8Click(Sender: TObject);
     procedure TableauTypesEditingDone(Sender: TObject);
   private
+    function GetIdAktType: integer;
+    procedure SetIdAktType(AValue: integer);
     { private declarations }
   public
     { public declarations }
+    property idAktType:integer read GetIdAktType write SetIdAktType;
   end; 
 
 var
@@ -41,6 +44,94 @@ implementation
 
 uses
   frm_Main, cls_Translation, dm_GenData, frm_Usage, frm_EditTypes;
+
+procedure FillTableTypes(const ltblTypes: TStringGrid;OnUpdate:TNotifyEvent);
+var
+  i: integer;
+begin
+    with dmGenData.Query1 do begin
+      Close;
+      SQL.Text:='SELECT Y.no, Y.T, Y.Y, Y.P FROM Y ORDER BY Y.T';
+      Open;
+      First;
+      ltblTypes.RowCount:=RecordCount+1;
+      tag := -RecordCount-1;
+      if assigned(OnUpdate) then
+         OnUpdate(dmGenData.Query1);
+      tag := 0;
+      if assigned(OnUpdate) then
+         OnUpdate(dmGenData.Query1);
+      i:=0;
+      While not Eof do
+         begin
+         i:=i+1;
+         ltblTypes.Cells[0,i]:=Fields[0].AsString;
+         ltblTypes.Cells[1,i]:=Fields[0].AsString;
+         ltblTypes.Cells[2,i]:=Fields[1].AsString;
+         ltblTypes.Cells[3,i]:=Fields[2].AsString;
+         ltblTypes.Cells[4,i]:=Fields[3].AsString;
+    // Aller chercher les utilisation
+         dmGenData.Query2.SQL.Clear;
+         if ltblTypes.Cells[3,i]='R' then
+            dmGenData.Query2.SQL.add('SELECT COUNT(R.Y) FROM R WHERE R.Y='+Fields[0].AsString)
+         else
+           if ltblTypes.Cells[3,i]='N' then
+              dmGenData.Query2.SQL.add('SELECT COUNT(N.Y) FROM N WHERE N.Y='+Fields[0].AsString)
+           else
+             dmGenData.Query2.SQL.add('SELECT COUNT(E.Y) FROM E WHERE E.Y='+Fields[0].AsString);
+         dmGenData.Query2.Open;
+         dmGenData.Query2.First;
+         ltblTypes.Cells[5,i]:=dmGenData.Query2.Fields[0].AsString;
+         tag := Tag+1;
+         if assigned(OnUpdate) then
+            OnUpdate(dmGenData.Query1);
+         Next;
+      end;
+    end;
+end;
+
+procedure DeleteType(const lidType: PtrInt);
+begin
+  with dmGenData.Query1 do begin
+close;
+                 SQL.Text:='DELETE FROM Y WHERE no=:idtype';
+                  ParamByName('idType').AsInteger:=lidType;
+                 ExecSQL;
+  end;
+end;
+
+procedure UpdateTableTypes(const ltblTypes: TStringGrid; const lidType: Integer
+  );
+var
+  lTblAktRow: Integer;
+begin
+  with dmGenData.Query1 do begin
+  lTblAktRow:=ltblTypes.Row;
+Close;
+            SQL.Text:='SELECT Y.no, Y.T, Y.Y, Y.P FROM Y WHERE Y.no=:idType';
+            ParamByName('idType').AsInteger:=lidType;
+               ltblTypes.Cells[0,lTblAktRow];
+            Open;
+            First;
+            ltblTypes.Cells[2,lTblAktRow]:=Fields[1].AsString;
+            ltblTypes.Cells[3,lTblAktRow]:=Fields[2].AsString;
+            ltblTypes.Cells[4,lTblAktRow]:=Fields[3].AsString;
+            Close;
+            // Aller chercher les utilisation
+
+            case ltblTypes.Cells[3,lTblAktRow][1] of
+             'R':SQL.Text:='SELECT COUNT(R.Y) FROM R WHERE R.Y=:idType';
+             'N':SQL.Text:='SELECT COUNT(N.Y) FROM N WHERE N.Y=:idType'
+              else
+                 SQL.Text:='SELECT COUNT(E.Y) FROM E WHERE E.Y=:idType';
+             end;
+            ParamByName('idType').AsInteger:=lidType;
+            Open;
+            First;
+            ltblTypes.Cells[5,lTblAktRow]:=Fields[0].AsString;
+            Close;
+  end;
+end;
 
 {$R *.lfm}
 
@@ -56,8 +147,8 @@ end;
 
 procedure TfrmTypes.FormShow(Sender: TObject);
 var
-  i:integer;
   MyCursor: TCursor;
+  ltblTypes: TStringGrid;
 begin
   Caption:=Translation.Items[220];
   Button1.Caption:=Translation.Items[152];
@@ -74,36 +165,9 @@ begin
   frmStemmaMainForm.ProgressBar.Position:=0;
   frmStemmaMainForm.ProgressBar.Visible:=True;
   Application.Processmessages;
-  dmGenData.Query1.SQL.Text:='SELECT Y.no, Y.T, Y.Y, Y.P FROM Y ORDER BY Y.T';
-  dmGenData.Query1.Open;
-  dmGenData.Query1.First;
-  TableauTypes.RowCount:=dmGenData.Query1.RecordCount+1;
-  frmStemmaMainForm.ProgressBar.Max:=TableauTypes.RowCount;
-  i:=0;
-  While not dmGenData.Query1.Eof do
-     begin
-     i:=i+1;
-     TableauTypes.Cells[0,i]:=dmGenData.Query1.Fields[0].AsString;
-     TableauTypes.Cells[1,i]:=dmGenData.Query1.Fields[0].AsString;
-     TableauTypes.Cells[2,i]:=dmGenData.Query1.Fields[1].AsString;
-     TableauTypes.Cells[3,i]:=dmGenData.Query1.Fields[2].AsString;
-     TableauTypes.Cells[4,i]:=dmGenData.Query1.Fields[3].AsString;
-// Aller chercher les utilisation
-     dmGenData.Query2.SQL.Clear;
-     if TableauTypes.Cells[3,i]='R' then
-        dmGenData.Query2.SQL.add('SELECT COUNT(R.Y) FROM R WHERE R.Y='+dmGenData.Query1.Fields[0].AsString)
-     else
-       if TableauTypes.Cells[3,i]='N' then
-          dmGenData.Query2.SQL.add('SELECT COUNT(N.Y) FROM N WHERE N.Y='+dmGenData.Query1.Fields[0].AsString)
-       else
-         dmGenData.Query2.SQL.add('SELECT COUNT(E.Y) FROM E WHERE E.Y='+dmGenData.Query1.Fields[0].AsString);
-     dmGenData.Query2.Open;
-     dmGenData.Query2.First;
-     TableauTypes.Cells[5,i]:=dmGenData.Query2.Fields[0].AsString;
-     dmGenData.Query1.Next;
-     frmStemmaMainForm.ProgressBar.Position:=frmStemmaMainForm.ProgressBar.Position+1;
-     Application.ProcessMessages;
-  end;
+
+  ltblTypes:=TableauTypes;
+  FillTableTypes(ltblTypes,@frmStemmaMainForm.UpdateProgressBar);
   frmStemmaMainForm.ProgressBar.Visible:=False;
   Screen.Cursor := MyCursor;
 end;
@@ -119,45 +183,25 @@ begin
 end;
 
 procedure TfrmTypes.MenuItem3Click(Sender: TObject);    // Supprimer
+
 begin
   if TableauTypes.Row>0 then
      if StrtoInt(TableauTypes.Cells[5,TableauTypes.Row])=0 then
         if MessageDlg(SConfirmation,format(rsAreYouSureToDelete,[TableauTypes.Cells[2,TableauTypes.Row]]),mtConfirmation,mbYesNo,0)=mryes  then
            begin
-              dmGenData.Query1.close;
-              dmGenData.Query1.SQL.Text:='DELETE FROM Y WHERE no=:idtype';
-               dmGenData.Query1.ParamByName('idType').AsInteger:=ptrint(TableauTypes.Objects[1,TableauTypes.Row]);
-              dmGenData.Query1.ExecSQL;
+              DeleteType(idAktType);
               TableauTypes.DeleteRow(TableauTypes.Row);
         end;
 end;
 
 procedure TfrmTypes.MenuItem4Click(Sender: TObject);      // Modifier
+
 begin
   frmEditType.EditMode:=eTEM_EditExisting;
+  frmEditType.idType:=idAktType;
   if TableauTypes.Row>0 then
      if frmEditType.Showmodal = mrOK then
-        begin
-        dmGenData.Query1.SQL.Text:='SELECT Y.no, Y.T, Y.Y, Y.P FROM Y WHERE Y.no='+
-           TableauTypes.Cells[0,TableauTypes.Row];
-        dmGenData.Query1.Open;
-        dmGenData.Query1.First;
-        TableauTypes.Cells[2,TableauTypes.Row]:=dmGenData.Query1.Fields[1].AsString;
-        TableauTypes.Cells[3,TableauTypes.Row]:=dmGenData.Query1.Fields[2].AsString;
-        TableauTypes.Cells[4,TableauTypes.Row]:=dmGenData.Query1.Fields[3].AsString;
-        // Aller chercher les utilisation
-        dmGenData.Query2.SQL.Clear;
-        if TableauTypes.Cells[3,TableauTypes.Row]='R' then
-           dmGenData.Query2.SQL.add('SELECT COUNT(R.Y) FROM R WHERE R.Y='+dmGenData.Query1.Fields[0].AsString)
-        else
-          if TableauTypes.Cells[3,TableauTypes.Row]='N' then
-             dmGenData.Query2.SQL.add('SELECT COUNT(N.Y) FROM N WHERE N.Y='+dmGenData.Query1.Fields[0].AsString)
-          else
-             dmGenData.Query2.SQL.add('SELECT COUNT(E.Y) FROM E WHERE E.Y='+dmGenData.Query1.Fields[0].AsString);
-        dmGenData.Query2.Open;
-        dmGenData.Query2.First;
-        TableauTypes.Cells[5,TableauTypes.Row]:=dmGenData.Query2.Fields[0].AsString;
-     end;
+        UpdateTableTypes(TableauTypes, idAktType);
 end;
 
 procedure TfrmTypes.MenuItem8Click(Sender: TObject);
@@ -216,6 +260,21 @@ begin
      AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Roles),'\','\\'),'"','\"'),'''','\''')+
      ''' WHERE no='+(Sender as TStringGrid).Cells[1,(Sender as TStringGrid).Row]);
   dmGenData.Query1.ExecSQL;
+end;
+
+function TfrmTypes.GetIdAktType: integer;
+begin
+  result := ptrint(TableauTypes.Objects[0,TableauTypes.Row])
+end;
+
+procedure TfrmTypes.SetIdAktType(AValue: integer);
+var
+  lIdx: Integer;
+begin
+  if GetIdAktType = AValue then exit;
+  lIdx := TableauTypes.Cols[0].IndexOfObject(TObject(ptrint(AValue)));
+  if lidx>=0 then
+     TableauTypes.Row:=lIdx;
 end;
 
 end.

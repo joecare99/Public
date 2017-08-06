@@ -7,21 +7,21 @@ interface
 uses
   Classes, SysUtils, ComCtrls;
 
-procedure ExportToWebsite(const lOnProgress: TNotifyEvent;
-  const password, user, db, server, site: string;Const SPanel:TStatusPanel ; const time_delay: integer);
+procedure ExportToWebsite(const lOnProgress: TNotifyEvent; const password, user,
+  db, server, site, BaseDir: string; const SPanel: TStatusPanel; const time_delay: integer);
 
 implementation
 
 uses FMUtils,cls_Translation,StrUtils, dm_GenData;
 
 procedure ExportToWebsite(const lOnProgress: TNotifyEvent; const password, user,
-  db, server, site: string; const SPanel: TStatusPanel; const time_delay: integer);
+  db, server, site, BaseDir: string; const SPanel: TStatusPanel; const time_delay: integer);
 var
   temp: string;
   last: string;
   First: string;
+  BaseDirwDS,
   filename: string;
-  drive: string;
   buttonsfile: textfile;
   indexfile: textfile;
   file2: textfile;
@@ -29,14 +29,14 @@ var
   nb_file: integer;
   max_request: integer;
 begin
-  drive := drive + DirectorySeparator;
+  BaseDirwDS := IncludeTrailingPathDelimiter(BaseDir);
   dmGenData.Query1.SQL.Text := 'SELECT no FROM I WHERE NOT V=''O'' ';
   dmGenData.Query1.Open;
   dmGenData.Query1.tag := -dmGenData.Query1.RecordCount;
   if assigned(lOnProgress) then
     lOnProgress(dmGenData.Query1);
   max_request := 10000;
-  filename := drive + 'sitemap.xml';
+  filename := BaseDirwDS + 'sitemap.xml';
   assignfile(file1, FileName);
   rewrite(file1);
   writeln(file1, '<?xml version="1.0" encoding="UTF-8"?>');
@@ -53,7 +53,7 @@ begin
       writeln(file1, '</urlset>');
       closefile(file1);
 
-      filename := drive + 'sitemap' + IntToStr(
+      filename := BaseDirwDS + 'sitemap' + IntToStr(
         trunc(dmGenData.Query1.tag / max_request)) + '.xml';
       assignfile(file1, FileName);
       rewrite(file1);
@@ -83,7 +83,7 @@ begin
       if Assigned(lOnProgress) then
      lOnProgress(dmGenData.Query1);
 
-  filename := drive + 'boutons.html';
+  filename := BaseDirwDS + 'boutons.html';
   assignfile(buttonsfile, FileName);
   rewrite(buttonsfile);
   writeln(buttonsfile, '<HTML>');
@@ -101,7 +101,7 @@ begin
   writeln(buttonsfile, '<HR>');
   writeln(buttonsfile, '<DL>');
   nb_file := 1;
-  filename := format('%sindex_%d.php', [drive, nb_file]);
+  filename := format('%sindex_%d.php', [BaseDirwDS, nb_file]);
   assignfile(indexfile, FileName);
   rewrite(indexfile);
   writeln(indexfile, '<HTML>');
@@ -248,7 +248,7 @@ begin
       Write(buttonsfile, ' - ' + AnsiUpperCase(leftstr(last, 3)));
       writeln(buttonsfile, '</A></DD>');
       nb_file := nb_file + 1;
-      filename := format('%sindex_%d.php', [drive, nb_file]);
+      filename := format('%sindex_%d.php', [BaseDirwDS, nb_file]);
       assignfile(indexfile, FileName);
       rewrite(indexfile);
       writeln(indexfile, '<HTML>');
@@ -448,7 +448,7 @@ begin
   max_request := 5000;
   // Exporter projet, créer fichiers php de base de données }
   // Insert file header }
-  filename := Drive + 'update.html';
+  filename := BaseDirwDS + 'update.html';
   assignfile(file2, FileName);
   rewrite(file2);
   writeln(file2, '<HTML>');
@@ -459,7 +459,7 @@ begin
   dmGenData.Query1.SQL.Text := 'SELECT no, S, D, M FROM A';
   dmGenData.Query1.Open;
   dmGenData.Query1.First;
-  filename := Drive + 'writedata_A' + IntToStr(nb_file) + '.php';
+  filename := BaseDirwDS + 'writedata_A' + IntToStr(nb_file) + '.php';
   assignfile(file1, FileName);
   rewrite(file1);
   writeln(file2, '<LI><A HREF="writedata_A' + IntToStr(nb_file) +
@@ -502,7 +502,7 @@ begin
       closefile(file1);
       // Insert file header
       nb_file := nb_file + 1;
-      filename := Drive + 'writedata_A' + IntToStr(nb_file) + '.php';
+      filename := BaseDirwDS + 'writedata_A' + IntToStr(nb_file) + '.php';
       assignfile(file1, FileName);
       rewrite(file1);
       writeln(file2, '<LI><A HREF="writedata_A' + IntToStr(
@@ -558,7 +558,7 @@ begin
   dmGenData.Query1.SQL.Text := 'SELECT no, Y, N, S, Q, M FROM C';
   dmGenData.Query1.Open;
   dmGenData.Query1.First;
-  filename := Drive + 'writedata_C' + IntToStr(nb_file) + '.php';
+  filename := BaseDirwDS + 'writedata_C' + IntToStr(nb_file) + '.php';
   assignfile(file1, FileName);
   rewrite(file1);
   writeln(file2, '<LI><A HREF="writedata_C' + IntToStr(nb_file) +
@@ -601,7 +601,7 @@ begin
       closefile(file1);
       // Insert file header
       nb_file := nb_file + 1;
-      filename := Drive + 'writedata_C' + IntToStr(nb_file) + '.php';
+      filename := BaseDirwDS + 'writedata_C' + IntToStr(nb_file) + '.php';
       assignfile(file1, FileName);
       rewrite(file1);
       writeln(file2, '<LI><A HREF="writedata_C' + IntToStr(
@@ -658,7 +658,7 @@ begin
   dmGenData.Query1.SQL.Text := 'SELECT no, T, D, M, I FROM D';
   dmGenData.Query1.Open;
   dmGenData.Query1.First;
-  filename := Drive + 'writedata_D' + IntToStr(nb_file) + '.php';
+  filename := BaseDirwDS + 'writedata_D' + IntToStr(nb_file) + '.php';
   assignfile(file1, FileName);
   rewrite(file1);
   writeln(file2, '<LI><A HREF="writedata_D' + IntToStr(nb_file) +
@@ -701,7 +701,7 @@ begin
       closefile(file1);
       // Insert file header
       nb_file := nb_file + 1;
-      filename := Drive + 'writedata_D' + IntToStr(nb_file) + '.php';
+      filename := BaseDirwDS + 'writedata_D' + IntToStr(nb_file) + '.php';
       assignfile(file1, FileName);
       rewrite(file1);
       writeln(file2, '<LI><A HREF="writedata_D' + IntToStr(
@@ -754,7 +754,7 @@ begin
   dmGenData.Query1.SQL.Text := 'SELECT no, Y, PD, SD, L, M, X FROM E';
   dmGenData.Query1.Open;
   dmGenData.Query1.First;
-  filename := Drive + 'writedata_E' + IntToStr(nb_file) + '.php';
+  filename := BaseDirwDS + 'writedata_E' + IntToStr(nb_file) + '.php';
   assignfile(file1, FileName);
   rewrite(file1);
   writeln(file2, '<LI><A HREF="writedata_E' + IntToStr(nb_file) +
@@ -797,7 +797,7 @@ begin
       closefile(file1);
       // Insert file header
       nb_file := nb_file + 1;
-      filename := Drive + 'writedata_E' + IntToStr(nb_file) + '.php';
+      filename := BaseDirwDS + 'writedata_E' + IntToStr(nb_file) + '.php';
       assignfile(file1, FileName);
       rewrite(file1);
       writeln(file2, '<LI><A HREF="writedata_E' + IntToStr(
@@ -854,7 +854,7 @@ begin
   dmGenData.Query1.SQL.Text := 'SELECT no, S, V, I, date FROM I';
   dmGenData.Query1.Open;
   dmGenData.Query1.First;
-  filename := Drive + 'writedata_I' + IntToStr(nb_file) + '.php';
+  filename := BaseDirwDS + 'writedata_I' + IntToStr(nb_file) + '.php';
   assignfile(file1, FileName);
   rewrite(file1);
   writeln(file2, '<LI><A HREF="writedata_I' + IntToStr(nb_file) +
@@ -897,7 +897,7 @@ begin
       closefile(file1);
       // Insert file header
       nb_file := nb_file + 1;
-      filename := Drive + 'writedata_I' + IntToStr(nb_file) + '.php';
+      filename := BaseDirwDS + 'writedata_I' + IntToStr(nb_file) + '.php';
       assignfile(file1, FileName);
       rewrite(file1);
       writeln(file2, '<LI><A HREF="writedata_I' + IntToStr(
@@ -948,7 +948,7 @@ begin
   dmGenData.Query1.SQL.Text := 'SELECT no, L FROM L';
   dmGenData.Query1.Open;
   dmGenData.Query1.First;
-  filename := Drive + 'writedata_L' + IntToStr(nb_file) + '.php';
+  filename := BaseDirwDS + 'writedata_L' + IntToStr(nb_file) + '.php';
   assignfile(file1, FileName);
   rewrite(file1);
   writeln(file2, '<LI><A HREF="writedata_L' + IntToStr(nb_file) +
@@ -991,7 +991,7 @@ begin
       closefile(file1);
       // Insert file header
       nb_file := nb_file + 1;
-      filename := Drive + 'writedata_L' + IntToStr(nb_file) + '.php';
+      filename := BaseDirwDS + 'writedata_L' + IntToStr(nb_file) + '.php';
       assignfile(file1, FileName);
       rewrite(file1);
       writeln(file2, '<LI><A HREF="writedata_L' + IntToStr(
@@ -1042,7 +1042,7 @@ begin
     'SELECT no, I, Y, N, X, M, P, PD, SD, I1, I2, I3, I4 FROM N';
   dmGenData.Query1.Open;
   dmGenData.Query1.First;
-  filename := Drive + 'writedata_N' + IntToStr(nb_file) + '.php';
+  filename := BaseDirwDS + 'writedata_N' + IntToStr(nb_file) + '.php';
   assignfile(file1, FileName);
   rewrite(file1);
   writeln(file2, '<LI><A HREF="writedata_N' + IntToStr(nb_file) +
@@ -1088,7 +1088,7 @@ begin
       closefile(file1);
       // Insert file header
       nb_file := nb_file + 1;
-      filename := Drive + 'writedata_N' + IntToStr(nb_file) + '.php';
+      filename := BaseDirwDS + 'writedata_N' + IntToStr(nb_file) + '.php';
       assignfile(file1, FileName);
       rewrite(file1);
       writeln(file2, '<LI><A HREF="writedata_N' + IntToStr(
@@ -1166,7 +1166,7 @@ begin
   dmGenData.Query1.SQL.Text := 'SELECT no, Y, A, B, M, X, P, SD FROM R';
   dmGenData.Query1.Open;
   dmGenData.Query1.First;
-  filename := Drive + 'writedata_R' + IntToStr(nb_file) + '.php';
+  filename := BaseDirwDS + 'writedata_R' + IntToStr(nb_file) + '.php';
   assignfile(file1, FileName);
   rewrite(file1);
   writeln(file2, '<LI><A HREF="writedata_R' + IntToStr(nb_file) +
@@ -1211,7 +1211,7 @@ begin
       closefile(file1);
       // Insert file header
       nb_file := nb_file + 1;
-      filename := Drive + 'writedata_R' + IntToStr(nb_file) + '.php';
+      filename := BaseDirwDS + 'writedata_R' + IntToStr(nb_file) + '.php';
       assignfile(file1, FileName);
       rewrite(file1);
       writeln(file2, '<LI><A HREF="writedata_R' + IntToStr(
@@ -1273,7 +1273,7 @@ begin
   dmGenData.Query1.SQL.Text := 'SELECT no, T, D, M, A, Q FROM S';
   dmGenData.Query1.Open;
   dmGenData.Query1.First;
-  filename := Drive + 'writedata_S' + IntToStr(nb_file) + '.php';
+  filename := BaseDirwDS + 'writedata_S' + IntToStr(nb_file) + '.php';
   assignfile(file1, FileName);
   rewrite(file1);
   writeln(file2, '<LI><A HREF="writedata_S' + IntToStr(nb_file) +
@@ -1316,7 +1316,7 @@ begin
       closefile(file1);
       // Insert file header
       nb_file := nb_file + 1;
-      filename := Drive + 'writedata_S' + IntToStr(nb_file) + '.php';
+      filename := BaseDirwDS + 'writedata_S' + IntToStr(nb_file) + '.php';
       assignfile(file1, FileName);
       rewrite(file1);
       writeln(file2, '<LI><A HREF="writedata_S' + IntToStr(
@@ -1371,7 +1371,7 @@ begin
   dmGenData.Query1.SQL.Text := 'SELECT no, I, E, X, P, R FROM W';
   dmGenData.Query1.Open;
   dmGenData.Query1.First;
-  filename := Drive + 'writedata_W' + IntToStr(nb_file) + '.php';
+  filename := BaseDirwDS + 'writedata_W' + IntToStr(nb_file) + '.php';
   assignfile(file1, FileName);
   rewrite(file1);
   writeln(file2, '<LI><A HREF="writedata_W' + IntToStr(nb_file) +
@@ -1414,7 +1414,7 @@ begin
       closefile(file1);
       // Insert file header
       nb_file := nb_file + 1;
-      filename := Drive + 'writedata_W' + IntToStr(nb_file) + '.php';
+      filename := BaseDirwDS + 'writedata_W' + IntToStr(nb_file) + '.php';
       assignfile(file1, FileName);
       rewrite(file1);
       writeln(file2, '<LI><A HREF="writedata_W' + IntToStr(
@@ -1472,7 +1472,7 @@ begin
   dmGenData.Query1.SQL.Text := 'SELECT no, X, T, D, F, Z, A, N FROM X';
   dmGenData.Query1.Open;
   dmGenData.Query1.First;
-  filename := Drive + 'writedata_X' + IntToStr(nb_file) + '.php';
+  filename := BaseDirwDS + 'writedata_X' + IntToStr(nb_file) + '.php';
   assignfile(file1, FileName);
   rewrite(file1);
   writeln(file2, '<LI><A HREF="writedata_X' + IntToStr(nb_file) +
@@ -1515,7 +1515,7 @@ begin
       closefile(file1);
       // Insert file header
       nb_file := nb_file + 1;
-      filename := Drive + 'writedata_X' + IntToStr(nb_file) + '.php';
+      filename := BaseDirwDS + 'writedata_X' + IntToStr(nb_file) + '.php';
       assignfile(file1, FileName);
       rewrite(file1);
       writeln(file2, '<LI><A HREF="writedata_X' + IntToStr(
@@ -1573,7 +1573,7 @@ begin
   dmGenData.Query1.SQL.Text := 'SELECT no, T, Y, P, R FROM Y';
   dmGenData.Query1.Open;
   dmGenData.Query1.First;
-  filename := Drive + 'writedata_Y' + IntToStr(nb_file) + '.php';
+  filename := BaseDirwDS + 'writedata_Y' + IntToStr(nb_file) + '.php';
   assignfile(file1, FileName);
   rewrite(file1);
   writeln(file2, '<LI><A HREF="writedata_Y' + IntToStr(nb_file) +
@@ -1616,7 +1616,7 @@ begin
       closefile(file1);
       // Insert file header
       nb_file := nb_file + 1;
-      filename := Drive + 'writedata_Y' + IntToStr(nb_file) + '.php';
+      filename := BaseDirwDS + 'writedata_Y' + IntToStr(nb_file) + '.php';
       assignfile(file1, FileName);
       rewrite(file1);
       writeln(file2, '<LI><A HREF="writedata_Y' + IntToStr(

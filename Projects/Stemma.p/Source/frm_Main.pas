@@ -331,71 +331,7 @@ implementation
 uses AnchorDocking, AnchorDockOptionsDlg, dm_GenData, cls_Translation,
   frm_SelectDialog, untWebexport;
 
-procedure InsertPlace(lidPlace: LongInt;const Place:String);
-begin
-  with dmGenData.Query1 do
-       begin
-         close;
-         SQL.Text :=
-           'INSERT IGNORE INTO L (no, L) VALUES (:idPlace, :Place)';
-         ParamByName('idPlace').AsInteger := lidPlace;
-         ParamByName('Place').AsString := Place;
-         ExecSQL;
-       end;
-end;
 
-procedure InsertDepotOfSource(const lidSource: LongInt;
-  const lidRepository: LongInt; const buffer: String);
-begin
-  with dmGenData.Query1 do
-  begin
-    Close;
-    SQL.Text :=
-      'INSERT IGNORE INTO A (S, D, M) VALUES (:idSource, :idDepot, :Note)';
-    ParamByName('idSource').AsInteger := lidSource;
-    ParamByName('idDepot').AsInteger := lidRepository;
-    ParamByName('Note').AsString := buffer;
-    ExecSQL;
-  end;
-end;
-
-procedure InsertDepot(const lMemo: variant; const lDescription: String;
-  const lTitle: String; const lidIndividual: LongInt;
-  const lidRepository: LongInt);
-begin
-  with dmGenData.Query1 do begin
-Close;
-        SQL.Text := 'INSERT IGNORE INTO D (no, T, M, D, I) VALUES (:idRepository, :Title, :Memo, :Description, :idInd)';
-        ParamByName('idRepository').AsInteger:=lidRepository;
-        ParamByName('Title').AsString:=lTitle;
-        ParamByName('Memo').Value:=lMemo;
-        ParamByName('Description').AsString:=lDescription;
-        ParamByName('idInd').AsInteger:=lidIndividual;
-        ExecSQL;
-  end;
-end;
-
-procedure InsertEvent(const lPref: Integer; const lMemo: String;
-  const lSDate: String; const lPDate: String; const lidPlace: LongInt;
-  const lidType: LongInt; const lidEvent: LongInt);
-begin
-  with dmGenData.Query1 do begin
-SQL.Text :=
-           'INSERT IGNORE INTO E (no, Y, PD, SD, L, M, X) ' +
-           'VALUES (:idEvent, :idType, :PDate, SDate, :idPlace, :Note, :Pref)';
-         ParamByName('idEvent').AsInteger := lidEvent;
-         ParamByName('idType').AsInteger :=
-           lidType;
-         ParamByName('PDate').AsString := lPDate;
-         ParamByName('Sdate').AsString := lSDate;
-         ParamByName('idPlace').AsInteger :=
-           lidPlace;
-         ParamByName('Note').AsString := lMemo;
-         ParamByName('Pref').AsInteger := lPref;
-
-         ExecSQL;
-  end;
-end;
 
 function FullCopyPerson(idInd:integer): integer;
 var
@@ -555,6 +491,21 @@ begin
     SaveModificationTime(nouveau);
   end;
   Result:=nouveau;
+end;
+
+procedure InsertCitation(const lidSource: LongInt; const lLinkID: LongInt;
+  const lMemoText: String; const lType: String; const lQuality: integer);
+begin
+  with dmGenData.Query1 do begin
+  SQL.Text := 'INSERT IGNORE INTO C (Y, N, S, M, Q) '+
+         'VALUES (:Type, :LinkID, :idSource, :Memo, :Quality)';
+    ParamByName('Type').AsString:=lType;
+    ParamByName('LinkID').AsInteger:=lLinkID;
+    ParamByName('idSource').AsInteger:=LidSource;
+    ParamByName('Memo').AsString:=lMemoText;
+    ParamByName('Quality').AsInteger:=lQuality;
+    ExecSQL;
+  end;
 end;
 
 procedure UpdateHistoryChInd(const Items:TStrings;const lNewInd: LongInt);
@@ -1322,7 +1273,7 @@ var
       lPlace := IntToStr(dmGenData.TMG.Fields[0].Value) + ',''' + lPlace + ''');';
 
       lidPlace:=dmGenData.TMG.Fields[0].AsInteger;
-      InsertPlace(lidPlace,lPlace);
+      dmGenData.InsertPlace(lidPlace,lPlace);
       dmGenData.TMG.Next;
     end;
     dmGenData.TMG.Active := False;
@@ -1349,7 +1300,7 @@ var
 
       lidRepository:=dmGenData.TMG.Fields[1].AsInteger;
       lidSource:=dmGenData.TMG.Fields[0].AsInteger;
-      InsertDepotOfSource(lidSource, lidRepository, buffer);
+      dmGenData.InsertDepotOfSource(lidSource, lidRepository, buffer);
       dmGenData.TMG.Next;
     end;
     dmGenData.TMG.Active := False;
@@ -1376,7 +1327,7 @@ var
       lMemo:=dmGenData.TMG.Fields[3].Value;
       lDescription:=dmGenData.TMG.Fields[0].AsString;
       lidIndividual:=dmGenData.TMG.Fields[4].AsInteger;
-      InsertDepot(lMemo, lDescription, lTitle, lidIndividual, lidRepository);
+      dmGenData.InsertDepot(lMemo, lDescription, lTitle, lidIndividual, lidRepository);
       dmGenData.TMG.Next;
     end;
     dmGenData.TMG.Active := False;
@@ -1416,7 +1367,7 @@ var
       lSDate:=dmGenData.TMG.Fields[14].AsString;
       lidPlace:=dmGenData.TMG.Fields[7].AsInteger;
       lPref:=0;
-      InsertEvent(lPref, lMemo, lSDate, lPDate, lidPlace, lidType, lidEvent);
+      dmGenData.InsertEvent(lPref, lMemo, lSDate, lPDate, lidPlace, lidType, lidEvent);
       dmGenData.TMG.Next;
     end;
     dmGenData.TMG.Active := False;
@@ -1424,13 +1375,13 @@ var
 
   procedure ImportCitations;
   var
-    j: integer;
-    buffer: String;
-    buffer2: String;
+    lQuality, j: integer;
+    lType: String;
+    lMemoText: String;
+    lLinkID, lidSource: LongInt;
   begin
     // Importer C Citations (_S)
     dmGenData.TMG.Tablename := filename + 'S.DBF';
-    dmGenData.Query1.SQL.Text := 'INSERT IGNORE INTO C (Y, N, S, M, Q) VALUES (';
     dmGenData.TMG.Active := True;
     dmGenData.TMG.Open;
     while not (dmGenData.TMG.EOF) do
@@ -1444,27 +1395,29 @@ var
           Translation.Items[11] + TimeToStr(restant);
         Application.ProcessMessages;
       end;
+
       if (dmGenData.TMG.Fields[0].Value = 'F') then
-        buffer := 'R'
+        lType := 'R'
       else
-        buffer := dmGenData.TMG.Fields[0].Value;
+        lType := dmGenData.TMG.Fields[0].Value;
+
       if dmGenData.TMG.Fields[3].IsNull then
-        buffer2 := ''
+        lMemoText := ''
       else
-        buffer2 := AnsiReplaceStr(
+        lMemoText := AnsiReplaceStr(
           AnsiReplaceStr(dmGenData.TMG.Fields[3].Value, '"', '\"'), '''', '\''');
-      i := 10;
+
+      lQuality := 10;
       for j := 4 to 8 do
         if not dmGenData.TMG.Fields[j].IsNull then
           if (dmGenData.TMG.Fields[j].Value = '-') then
-            i := 0
+            lQuality := 0
           else
-            i := min(i, dmGenData.TMG.Fields[j].Value);
-      buffer := '''' + buffer + ''',' + IntToStr(dmGenData.TMG.Fields[1].Value) +
-        ',' + IntToStr(dmGenData.TMG.Fields[2].Value) + ',''' +
-        buffer2 + ''',' + IntToStr(i) + ');';
-      dmGenData.Query1.SQL.Text := insert + buffer;
-      dmGenData.Query1.ExecSQL;
+            lQuality := min(lQuality, dmGenData.TMG.Fields[j].Value);
+
+      lLinkID := dmGenData.TMG.Fields[1].AsInteger;
+      lidSource := dmGenData.TMG.Fields[2].AsInteger;
+      InsertCitation(lidSource, lLinkID, lMemoText, lType, lQuality);
       dmGenData.TMG.Next;
     end;
     dmGenData.TMG.Active := False;
@@ -1476,9 +1429,7 @@ var
   begin
     // Importer I Individus (_$)
     dmGenData.TMG.Tablename := filename + '$.DBF';
-    dmGenData.Query1.SQL.Text :=
-      'INSERT IGNORE INTO I (no, S, V, I, date) ' +
-      'VALUES (:idInd, :Sex, :Living, :Importance, :Date)';
+
     dmGenData.TMG.Active := True;
     dmGenData.TMG.Open;
     while not (dmGenData.TMG.EOF) do
@@ -1503,6 +1454,9 @@ var
         3: i := 9;
       end;
 
+      dmGenData.Query1.SQL.Text :=
+      'INSERT IGNORE INTO I (no, S, V, I, date) ' +
+      'VALUES (:idInd, :Sex, :Living, :Importance, :Date)';
       dmGenData.Query1.ParamByName('idInd').AsInteger :=
         dmGenData.TMG.Fields[0].Value + iOffset;
       dmGenData.Query1.ParamByName('Sex').AsString :=
@@ -2505,7 +2459,7 @@ procedure TfrmStemmaMainForm.actFileExportToWebsiteExecute(Sender: TObject);
 var
   MyCursor: Tcursor;
   time_delay: integer;
-  server, db, user, password, drive: string;
+  server, db, user, password, BaseDir: string;
   Ini: Tinifile;
   continue: boolean;
   lOnProgress: TNotifyEvent;
@@ -2545,8 +2499,8 @@ begin
     ProgressBar.Max := 0;
     ProgressBar.Position := 1;
     lOnProgress:=@UpdateProgressBar;
-      drive := SelectDirectoryDialog1.FileName;
-  Ini.WriteString('Webexport', 'dir', drive);
+      BaseDir := SelectDirectoryDialog1.FileName;
+  Ini.WriteString('Webexport', 'dir', BaseDir);
   Ini.WriteString('Webexport', 'server', server);
   Ini.WriteString('Webexport', 'db', db);
   Ini.WriteString('Webexport', 'user', user);
@@ -2558,7 +2512,7 @@ begin
     lSPanel := StatusBar.Panels[1];
   lSPanel.Text := Translation.Items[323];
 
-    ExportToWebsite(lOnProgress, password, user, db, server,'',lSPanel, time_delay);
+    ExportToWebsite(lOnProgress, password, user, db, server,'',BaseDir,lSPanel, time_delay);
 
   finally
     Screen.Cursor := MyCursor;

@@ -92,24 +92,26 @@ implementation
 uses
    frm_Main, cls_Translation, dm_GenData, frm_Names;
 
-procedure GetRelationData(const lidRelation: Integer; out lSortDate: String;
-  out lPhraseText: String; out lMemoText: String; out lPrefered: Boolean;
-  out lidParent: LongInt; out lidChild: LongInt; out lRelType: LongInt);
+procedure SaveRelationData(const lidRelation: integer; const lPhrase: TCaption; const lSDate: TCaption;
+  const lidType: PtrInt; const prefered: boolean; const lidParent: integer;
+  const lidChild: integer; const lMemoText: string);
 begin
   with dmGenData.Query1 do begin
-Close;
-    SQL.text:='SELECT R.Y, R.X, R.A, R.B, R.M, R.P, R.SD FROM R WHERE R.no=:idRelation';
-    ParamByName('idRelation').AsInteger:=lidRelation;
-    Open;
-
-    lRelType:=Fields[0].AsInteger;
-    lPrefered:=Fields[1].AsBoolean;
-    lidChild:=Fields[2].AsInteger;
-    lidParent:=Fields[3].AsInteger;
-    lMemoText:=Fields[4].AsString;
-    lPhraseText:=Fields[5].AsString;
-    lSortDate:=Fields[6].AsString;
-    Close;
+  if lidRelation=0 then
+          SQL.text:='INSERT INTO R (Y, A, B, M, SD, P, X) VALUES (:idType, :idIndA, :idIndB, :M, :SDate, :P, :X)'
+    else
+       begin
+         SQL.text:='UPDATE R SET Y=:idType, A=:idIndA, B=:idIndB, M=:M, SD=:SDate, P=:P, X=:X where no=:idRel';
+         ParamByName('idRel').AsInteger:=lidRelation;
+       end;
+       ParamByName('idType').AsInteger:=lidType;
+       ParamByName('idIndA').AsInteger:=lidChild;
+       ParamByName('idIndB').AsInteger:=lidParent;
+       ParamByName('M').AsString:=lMemoText;
+       ParamByName('SDate').AsString:=lSDate;
+       ParamByName('P').AsString:=lPhrase;
+       ParamByName('X').AsBoolean:=prefered;
+    ExecSQL;
   end;
 end;
 
@@ -189,7 +191,7 @@ begin
      idB.ReadOnly :=true;
      ActiveControl:=idA;
      lidRelation := idRelation;
-     GetRelationData(lidRelation, lSortDate, lPhraseText, lMemoText, lPrefered,
+     dmGenData.GetRelationData(lidRelation, lSortDate, lPhraseText, lMemoText, lPrefered,
        lidParent, lidChild, lRelType);
      Y.ItemIndex:=y.Items.IndexOfObject(TObject(ptrint(lRelType)));
      X.Checked:=lPrefered;
@@ -302,9 +304,11 @@ end;
 
 procedure TfrmEditParents.ParentsSaveData(Sender: Tobject);
 var
-  lStrTmp,dateev:string;
-  parent1, parent2,no_eve:integer;
+  lStrTmp,dateev, lMemoText:string;
+  parent1, parent2,no_eve, lidRelation, lidChild, lidParent:integer;
   prefered, existe, lIsDefaultPhrase, lPrefParExists:boolean;
+  lidType: PtrInt;
+  lSDate, lPhrase: TCaption;
 begin
   // Si l'enfant n'idA pas de parent de ce sexe, mettre la relation prefered.
   prefered:=false;
@@ -392,25 +396,19 @@ begin
   end;
   dmGenData.Query1.Close;
   lIsDefaultPhrase:= Label6.Visible;
-  if no.value=0 then
-        dmGenData.Query1.SQL.text:='INSERT INTO R (Y, A, B, M, SD, P, X) VALUES (:idType, :idIndA, :idIndB, :M, :SDate, :P, :X)'
-  else
-     begin
-       dmGenData.Query1.SQL.text:='UPDATE R SET Y=:idType, A=:idIndA, B=:idIndB, M=:M, SD=:SDate, P=:P, X=:X where no=:idRel';
-       dmGenData.Query1.ParamByName('idRel').AsInteger:=no.Value;
-     end;
-     dmGenData.Query1.ParamByName('idType').AsInteger:=ptrint(Y.items.objects[Y.ItemIndex]);
-     dmGenData.Query1.ParamByName('idIndA').AsInteger:=idA.Value;
-     dmGenData.Query1.ParamByName('idIndB').AsInteger:=idB.Value;
-     dmGenData.Query1.ParamByName('M').AsString:=fraMemo1.text;
-     dmGenData.Query1.ParamByName('SDate').AsString:=sd2.text;
-     If lIsDefaultPhrase then
-        dmGenData.Query1.ParamByName('P').AsString:=''
-     else
-     dmGenData.Query1.ParamByName('P').AsString:=P.text;
-     dmGenData.Query1.ParamByName('X').AsBoolean:=prefered;
-  dmGenData.Query1.ExecSQL;
 
+  lidRelation:=no.Value;
+  lidType:=ptrint(Y.items.objects[Y.ItemIndex]);
+  lidChild:=idA.Value;
+  lidParent:=idB.Value;
+  lMemoText:=fraMemo1.text;
+  lSDate:=sd2.text;
+  If lIsDefaultPhrase then
+     lPhrase:=''
+  else
+     lPhrase:=P.text;
+  SaveRelationData(lidRelation,lPhrase, lSDate, lidType, prefered, lidParent, lidChild,
+     lMemoText);
   if no.text='0' then
      begin
      no.text:=InttoStr(dmGenData.GetLastIDOfTable('R'));

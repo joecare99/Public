@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, Menus, Spin, Buttons, StrUtils, IniFiles, Process;
+  ExtCtrls, Menus, Spin, Buttons, IniFiles, Process;
 
 type
   TenumDocumentsEditMode=(
@@ -67,64 +67,6 @@ implementation
 uses
   frm_Main,cls_Translation, dm_GenData, frm_ShowImage, frm_Names;
 
-procedure UpdateModificationByEventDocument(lidDocument:integer);
-
-begin
-  with dmGenData.Query3 do begin
-    Close;
-    SQL.Text:='SELECT W.I FROM (W JOIN E on W.E=E.no) JOIN X on X.N=E.no WHERE X.no=:idDocument';
-    ParamByName('idDocument').AsInteger:= lidDocument;
-    Open;
-    First;
-    while not EOF do
-       begin
-       dmGenData.SaveModificationTime(Fields[0].AsInteger);
-       Next;
-    end;
-    Close;
-  end;
-end;
-
-function SaveDocumentData(lidDocument: Integer; const lLinkID: Integer; const lDocumentType: TCaption;
-  const lFileName: TCaption; const lDocumentDescription: TCaption;
-  const lDocumentTitle: TCaption): Integer;
-
-begin
-  with dmGenData.Query1 do begin
-    Close;
-    if lidDocument=0 then
-       SQL.Add('INSERT INTO X (X, T, D, F, A, N) VALUES ( 0, '''+
-         AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lDocumentTitle),'"','\"'),'''','\''')+
-         ''', '''+AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lDocumentDescription),'"','\"'),'''','\''')+
-         ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lFileName),'\','\\'),'"','\"'),'''','\''')+
-         ''', '''+lDocumentType+''', '+inttostr(lLinkID)+')')
-    else
-       SQL.Add('UPDATE X SET T='''+
-         AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lDocumentTitle),'"','\"'),'''','\''')+
-         ''', D='''+AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lDocumentDescription),'"','\"'),'''','\''')+
-         ''', F='''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(lFileName),'\','\\'),'"','\"'),'''','\''')+
-         ''' WHERE X.no='+inttostr(lidDocument));
-    ExecSQL;
-  end;
-  // Enregistrer la date de la dernière modification pour tout les individus reliés
-  // à cet exhibits.
-  if lidDocument=0 then
-     Result:=dmGenData.GetLastIDOfTable('X')
-  else
-     Result:=lidDocument;
-end;
-
-procedure UpdateDocumentMemo(const lidDocument: Integer;
-  const lImageMemoText: TCaption);
-begin
-  with dmGenData.Query2 do begin
-    Close;
-    SQL.Text:='UPDATE X SET Z=:MemoText WHERE X.no=:idDocument';
-    ParamByName('idDocument').AsInteger:=lidDocument;
-    ParamByName('MemoText').AsString:=lImageMemoText;
-    ExecSQL;
-  end;
-end;
 
 { TfrmEditDocuments }
 
@@ -242,7 +184,7 @@ begin
         lImageMemoText:=frmShowImage.Memo.Text;
         edtDocumentInfo.Text:=lImageMemoText;
 
-        UpdateDocumentMemo(edtidDocument.Value, lImageMemoText);
+        dmGenData.UpdateDocumentMemo(edtidDocument.Value, lImageMemoText);
         // Enregistrer la date de la dernière modification pour tout les individus reliés
         // à cet exhibits.
         if edtDocumentType.Text='I' then
@@ -251,7 +193,7 @@ begin
         end;
         if edtDocumentType.Text='E' then
            begin
-           UpdateModificationByEventDocument(edtidDocument.Value);
+           dmGenData.UpdateModificationByEventDocument(edtidDocument.Value);
            frmNames.PopulateNom(Sender);
         end;
      end;
@@ -297,7 +239,7 @@ begin
   lDocumentType:=edtDocumentType.text;
   lLinkID:=edtidLink.Value;
   lidDocument:=idDocument;
-  idDocument:=SaveDocumentData(lidDocument, lLinkID, lDocumentType, lFileName,
+  idDocument:=dmGenData.SaveDocumentData(lidDocument, lLinkID, lDocumentType, lFileName,
     lDocumentDescription, lDocumentTitle);
   if lDocumentType='I' then
      begin
@@ -305,7 +247,7 @@ begin
   end;
   if lDocumentType='E' then
      begin
-       UpdateModificationByEventDocument(idDocument);
+       dmGenData.UpdateModificationByEventDocument(idDocument);
        frmNames.PopulateNom(Sender);
   end;
 end;
