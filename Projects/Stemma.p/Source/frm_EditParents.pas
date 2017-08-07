@@ -423,10 +423,8 @@ begin
      dateev:=FormatDateTime('YYYY',now);
   if ((StrtoInt(FormatDateTime('YYYY',now))-StrtoInt(dateev))>100) then
      begin
-     dmGenData.Query2.SQL.Text:='UPDATE I SET V=''N'' WHERE no='+idA.Text;
-     dmGenData.Query2.ExecSQL;
-     dmGenData.Query2.SQL.Text:='UPDATE I SET V=''N'' WHERE no='+idB.Text;
-     dmGenData.Query2.ExecSQL;
+       dmGenData.UpdateIndLiving(idA.Value,'N',Sender);
+       dmGenData.UpdateIndLiving(idB.Value,'N',Sender);
      If (frmStemmaMainForm.actWinNameAndAttr.Checked) then
        frmNames.PopulateNom(self);
   end;
@@ -484,8 +482,8 @@ begin
   //   if Application.MessageBox(Pchar(Translation.Items[31]+
   //      TableauCitations.Cells[1,TableauCitations.Row]+Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
   //      begin
-  //      dmGenData.Query1.SQL.Text:='DELETE FROM C WHERE no='+TableauCitations.Cells[0,TableauCitations.Row];
-  //      dmGenData.Query1.ExecSQL;
+  //      dm.Query1.SQL.Text:='DELETE FROM C WHERE no='+TableauCitations.Cells[0,TableauCitations.Row];
+  //      dm.Query1.ExecSQL;
   //      TableauCitations.DeleteRow(TableauCitations.Row);
   //      // Sauvegarder les modifications
   //      if StrtoInt(idA.Text)>0 then dmGenData.SaveModificationTime(idA.Value);
