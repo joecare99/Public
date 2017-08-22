@@ -12,6 +12,8 @@ object frmSources: TfrmSources
   OnResize = FormResize
   OnShow = FormShow
   Position = poScreenCenter
+  LCLVersion = '1.8.0.4'
+  Visible = False
   object TableauSources: TStringGrid
     Left = 8
     Height = 536
@@ -80,8 +82,8 @@ object frmSources: TfrmSources
     TabOrder = 1
   end
   object mnuSource: TPopupMenu
-    Left = 207
-    Top = 552
+    left = 207
+    top = 552
     object mniSourceSort: TMenuItem
       Caption = '&Sort'
       object mniSourceSortNumber: TMenuItem
@@ -120,8 +122,8 @@ object frmSources: TfrmSources
     end
   end
   object alsSource: TActionList
-    Left = 240
-    Top = 552
+    left = 240
+    top = 552
     object actSourceSortNumber: TAction
       Category = 'SourceSort'
       Caption = '&by Number'

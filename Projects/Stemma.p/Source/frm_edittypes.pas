@@ -50,22 +50,6 @@ implementation
 uses
   frm_Main, cls_Translation, dm_GenData;
 
-procedure GetSourceData(lidType: Integer; out lType: String; out lPhrase: String;
-  out lTitle: String);
-begin
-  with dmGenData.Query1 do begin
-  Close;
-    SQL.Text:='SELECT Y.no, Y.T, Y.Y, Y.P FROM Y WHERE Y.no=:idType';
-    ParamByName('idType').AsInteger:=lidType;
-    Open;
-    First;
-    lTitle:=Fields[1].AsString;
-    lPhrase:=Fields[3].AsString;
-    lType:=Fields[2].AsString;
-    Close;
-  end;
-end;
-
 { TfrmEditType }
 
 procedure TfrmEditType.FormShow(Sender: TObject);
@@ -99,7 +83,7 @@ begin
   end
   else
      begin
-     GetSourceData(idType, lType, lPhrase, lTitle);
+     dmgenData.GetTypeData(idType, lType, lPhrase, lTitle);
      T.Text:=lTitle;
      P.Text:=lPhrase;
      if Length(lType)>=1 then

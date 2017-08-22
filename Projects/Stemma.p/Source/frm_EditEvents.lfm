@@ -1,6 +1,6 @@
 object frmEditEvents: TfrmEditEvents
   Left = 902
-  Height = 750
+  Height = 730
   Top = 433
   Width = 631
   ActiveControl = LA
@@ -12,11 +12,12 @@ object frmEditEvents: TfrmEditEvents
   Menu = mnuEventsMain
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.9.0.0'
+  LCLVersion = '1.8.0.4'
+  Visible = False
   object Panel1: TPanel
     Left = 0
     Height = 75
-    Top = 189
+    Top = 169
     Width = 631
     Align = alBottom
     BevelOuter = bvNone
@@ -216,7 +217,7 @@ object frmEditEvents: TfrmEditEvents
   object pnlBottom: TPanel
     Left = 0
     Height = 52
-    Top = 678
+    Top = 658
     Width = 631
     Align = alBottom
     BevelOuter = bvNone
@@ -261,7 +262,7 @@ object frmEditEvents: TfrmEditEvents
   end
   inline fraEdtCitations1: TfraEdtCitations
     Height = 136
-    Top = 399
+    Top = 379
     Width = 631
     Align = alBottom
     ClientHeight = 136
@@ -290,7 +291,7 @@ object frmEditEvents: TfrmEditEvents
   inline fraDocuments1: TfraDocuments
     Left = 3
     Height = 132
-    Top = 543
+    Top = 523
     Width = 625
     Align = alBottom
     ClientHeight = 132
@@ -313,14 +314,14 @@ object frmEditEvents: TfrmEditEvents
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 535
+    Top = 515
     Width = 631
     Align = alBottom
     ResizeAnchor = akBottom
   end
   inline fraPhrase1: TfraPhrase
     Height = 70
-    Top = 329
+    Top = 309
     Width = 631
     Align = alBottom
     ClientHeight = 70
@@ -343,41 +344,46 @@ object frmEditEvents: TfrmEditEvents
   inline fraDate1: TfraDate
     AnchorSideTop.Control = TableauTemoins
     AnchorSideTop.Side = asrBottom
-    Height = 37
+    Height = 17
     Top = 152
     Width = 631
     Align = alBottom
     Anchors = [akTop, akLeft, akRight]
-    ClientHeight = 37
+    ClientHeight = 17
     ClientWidth = 631
     TabOrder = 10
     inherited pnlDateLeft: TPanel
       Left = 6
-      Height = 25
+      Height = 5
       Top = 6
       BorderSpacing.Left = 3
       BorderSpacing.Top = 3
       BorderSpacing.Bottom = 3
-      ClientHeight = 25
+      ClientHeight = 5
+      inherited lblDate: TLabel
+        Top = 2
+      end
     end
     inherited pnlDateRight: TPanel
       Left = 353
-      Height = 31
-      ClientHeight = 31
+      Height = 11
+      ClientHeight = 11
       inherited edtDateForSorting: TEdit
-        Height = 4
+        Height = 0
+        Top = 12
         BorderSpacing.Bottom = 3
         OnEditingDone = nil
       end
     end
     inherited pnlDateClient: TPanel
       Left = 89
-      Height = 31
+      Height = 11
       Width = 261
-      ClientHeight = 31
+      ClientHeight = 11
       ClientWidth = 261
       inherited edtDateForPresentation: TEdit
-        Height = 4
+        Height = 0
+        Top = 12
         Width = 255
         OnEditingDone = nil
       end
@@ -388,7 +394,7 @@ object frmEditEvents: TfrmEditEvents
   end
   inline fraMemo1: TfraMemo
     Height = 65
-    Top = 264
+    Top = 244
     Width = 631
     Align = alBottom
     ClientHeight = 65
@@ -407,8 +413,8 @@ object frmEditEvents: TfrmEditEvents
     end
   end
   object mnuWitnes: TPopupMenu
-    Left = 68
-    Top = 106
+    left = 68
+    top = 106
     object AjouterTemoin: TMenuItem
       Caption = '&Ajouter'
       ShortCut = 115
@@ -426,8 +432,8 @@ object frmEditEvents: TfrmEditEvents
     end
   end
   object mnuEventsMain: TMainMenu
-    Left = 16
-    Top = 72
+    left = 16
+    top = 72
     object MenuItem12: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114

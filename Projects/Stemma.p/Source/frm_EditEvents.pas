@@ -104,48 +104,21 @@ uses
   frm_Events, frm_Main, dm_GenData, frm_Explorer, frm_EditWitness,
   frm_Names, cls_Translation;
 
-procedure GetTypePhraseRole(const lidType: integer; out phrase: string;
-  out roles: string);
+function PreferedEventWitnessExists(const lidInd: LongInt;const lTypeKat:String): Boolean;
+
 begin
   with dmGenData.Query1 do begin
-  SQL.Clear;
-    SQL.text:='SELECT Y.P, Y.R FROM Y WHERE Y.no=:idType';
-    ParamByName('idType').AsInteger:=lidType;
+Close;
+    SQL.Text:='SELECT E.no FROM E '+
+      'JOIN W on W.E=E.no '+
+      'JOIN Y on E.Y=Y.no '+
+      'WHERE Y.Y=:TypeKat AND E.X=1 AND W.X=1 AND W.I=:idInd';
+    ParamByName('idInd').AsInteger := lidInd;
+    ParamByName('TypeKat').AsString := lTypeKat;
     Open;
-    First;
-    phrase:=Fields[0].AsString;
-    roles:=Fields[1].AsString;
-    close;
+    Result := not Eof;
   end;
 end;
-
-procedure UpdateWitnessPhraseRole(const lidWitness: integer;
-  const lRole: string; const lPhrase: string);
-begin
-  with dmGenData.Query1 do begin
-  Close;
-          SQL.Text:='UPDATE W SET P=:Phrase, R=:Role WHERE W.no=:idWitness';
-          ParamByName('idWitness').AsInteger:=lidWitness;
-          ParamByName('Phrase').AsString:=lPhrase;
-          ParamByName('Role').AsString:=lRole;
-          ExecSQL;
-  end;
-end;
-
-function GetPlaceName(const liResult: integer): string;
-var
-  temp: string;
-begin
-  with dmGenData.Query1 do begin
-SQL.Text:='SELECT L FROM L WHERE no=:idPlace';
-    ParamByName('idplace').AsInteger:=liResult;
-    Open;
-    temp:=Fields[0].AsString;
-    Result:=temp;
-  end;
-end;
-
-
 
 {$R *.lfm}
 
@@ -192,7 +165,7 @@ var
 begin
 
   lidType:=ptrint(Y.Items.Objects[Y.ItemIndex]);
-  GetTypePhraseRole(lidType, phrase, roles);
+  dmgendata.GetTypePhraseRole(lidType, phrase, roles);
   if AnsiPos('|',Roles)>0 then
      RoleDefaut:=Copy(Roles,1,AnsiPos('|',Roles)-1)
   else
@@ -207,7 +180,7 @@ begin
         lidWitness:=ptrint(TableauTemoins.Objects[0,j]);
         lPhrase := '';
         lRole:= RoleDefaut;
-        UpdateWitnessPhraseRole(lidWitness, lRole, lPhrase);
+        dmgendata.UpdateWitnessPhraseRole(lidWitness, lRole, lPhrase);
         dmGenData.SaveModificationTime(strtoint(TableauTemoins.Cells[2,j]));
      end;
   end;
@@ -234,9 +207,10 @@ end;
 
 procedure TfrmEditEvents.FormShow(Sender: TObject);
 var
-  sPlace,phrase, sArticle, sCountry, sProvince, sDetail,
-    sCity, sRegion, sEventType:string;
+  sPlace,phrase, sArticle, sState, sCountry, sDetail,
+    sCity, sRegion, sEventType, lPhrase, lRoles:string;
   lIdEvent: Integer;
+  lDSExists: Boolean;
 
   procedure FindTypeItem(FindTypeID:PtrInt);
   var   j:integer;
@@ -322,11 +296,8 @@ begin
         // Mettre le bon Y.ItemIndex
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(100);
-        dmGenData.Query1.Close;
-        dmGenData.Query1.SQL.Text:='SELECT E.no FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no WHERE Y.Y=''B'' AND E.X=1 AND W.X=1 AND W.I='+
-           frmStemmaMainForm.sID;
-        dmGenData.Query1.Open;
-        if dmGenData.Query1.Eof then
+        lDSExists:=PreferedEventWitnessExists(frmStemmaMainForm.iID, 'B');
+        if not lDSExists then
            X.Text:='1'
         else
            X.Text:='0';
@@ -336,11 +307,8 @@ begin
         // Mettre le bon Y.ItemIndex
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(110);
-        dmGenData.Query1.Close;
-        dmGenData.Query1.SQL.Text:='SELECT E.no FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no WHERE Y.Y=''B'' AND E.X=1 AND W.X=1 AND W.I='+
-           frmStemmaMainForm.sID;
-        dmGenData.Query1.Open;
-        if dmGenData.Query1.Eof then
+        lDSExists:=PreferedEventWitnessExists(frmStemmaMainForm.iID, 'B');
+        if not lDSExists then
            X.Text:='1'
         else
            X.Text:='0';
@@ -351,11 +319,8 @@ begin
         // Mettre le bon Y.ItemIndex
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(200);
-        dmGenData.Query1.Close;
-        dmGenData.Query1.SQL.Text:='SELECT E.no FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no WHERE Y.Y=''D'' AND E.X=1 AND W.X=1 AND W.I='+
-           frmStemmaMainForm.sID;
-        dmGenData.Query1.Open;
-        if dmGenData.Query1.Eof then
+        lDSExists:=PreferedEventWitnessExists(frmStemmaMainForm.iID, 'D');
+        if not lDSExists then
            X.Text:='1'
         else
            X.Text:='0';
@@ -365,26 +330,20 @@ begin
         // Mettre le bon Y.ItemIndex
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(210);
-        dmGenData.Query1.Close;
-        dmGenData.Query1.SQL.Text:='SELECT E.no FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no WHERE Y.Y=''D'' AND E.X=1 AND W.X=1 AND W.I='+
-           frmStemmaMainForm.sID;
-        dmGenData.Query1.Open;
-        if dmGenData.Query1.Eof then
+        lDSExists:=PreferedEventWitnessExists(frmStemmaMainForm.iID, 'D');
+        if not lDSExists then
            X.Text:='1'
         else
            X.Text:='0';
      end;
      end; {Case}
      // Trouver le type de témoin par défaut
-     dmGenData.Query1.Close;
-     dmGenData.Query1.SQL.text:='SELECT Y.R FROM Y WHERE Y.no=:idType';
-     dmGenData.Query1.ParamByName('idType').AsInteger:=idEventType;
-     dmGenData.Query1.Open;
-     dmGenData.Query1.First;
-     if AnsiPos('|',dmGenData.Query1.Fields[0].AsString)>0 then
-        TableauTemoins.Cells[1,1]:=ANSIToUTF8(Copy(dmGenData.Query1.Fields[0].AsString,1,AnsiPos('|',dmGenData.Query1.Fields[0].AsString)-1))
+
+     dmGenData.GetTypePhraseRole(idEventType,lPhrase,lRoles);
+     if AnsiPos('|',lRoles)>0 then
+        TableauTemoins.Cells[1,1]:=ANSIToUTF8(Copy(lRoles,1,AnsiPos('|',dmGenData.Query1.Fields[0].AsString)-1))
      else
-        TableauTemoins.Cells[1,1]:=dmGenData.Query1.Fields[0].AsString;
+        TableauTemoins.Cells[1,1]:=lRoles;
      TableauTemoins.Cells[2,1]:=frmStemmaMainForm.sID;
      TableauTemoins.Cells[3,1]:=dmGenData.GetIndividuumName(frmStemmaMainForm.iID);
      TableauTemoins.Cells[4,1]:='1';
@@ -416,13 +375,13 @@ begin
      fraMemo1.Text:=dmGenData.Query1.Fields[3].AsString;
      // Aller chercher L0-L4 de L
      sPlace:=dmGenData.Query1.Fields[7].AsString;
-     DecodePlace(sPlace,sArticle ,sDetail,sCity,sRegion,sProvince,sCountry);
+     DecodePlace(sPlace,sArticle ,sDetail,sCity,sRegion,sCountry,sState);
      LA.Text:=sArticle;
      L0.Text:=sDetail;
      L1.Text:=sCity;
      L2.Text:=sRegion;
-     L3.text:=sProvince;
-     L4.text:=sCountry;
+     L3.text:=sCountry;
+     L4.text:=sState;
      fraDate1.Date:=dmGenData.Query1.Fields[5].AsString;
      fraDate1.SortDate:=dmGenData.Query1.Fields[6].AsString;
      // Aller chercher P, Role et témoins de W
@@ -473,7 +432,7 @@ end;
 procedure TfrmEditEvents.MenuItem12Click(Sender: TObject);
 var
      liResult:integer;
-    temp, sArticle, sDetail, sCity, sRegion, sProvince, sCountry,
+    temp, sArticle, sDetail, sCity, sRegion, sCountry, sState,
       lsResult:string;
 begin
   // Traitement de F3 pour les lieus
@@ -482,7 +441,7 @@ begin
        liResult := frmStemmaMainForm.RetreiveFromHistoyID('L');
        if liResult<>-1 then
            begin
-           temp:=GetPlaceName(liResult);
+           temp:=dmgendata.GetPlaceName(liResult);
            if ANSIPos('<'+CTagNameArticle+'>',temp)>0 then
               LA.text:=Copy(temp,ANSIPos('<'+CTagNameArticle+'>',temp)+length(CTagNameArticle)+2,AnsiPos('</'+CTagNameArticle+'>',temp)-ANSIPos('<'+CTagNameArticle+'>',temp)-length(CTagNameArticle)-2)
            else
@@ -498,13 +457,13 @@ begin
        liResult := frmStemmaMainForm.RetreiveFromHistoyID('L');
        if liResult<>-1 then
          begin
-           temp:=GetPlaceName(liResult);
-           DecodePlace(temp,sArticle,sDetail,sCity,sRegion,sProvince,sCountry);
+           temp:=dmgendata.GetPlaceName(liResult);
+           DecodePlace(temp,sArticle,sDetail,sCity,sRegion,sCountry,sState);
            L0.Text:=sDetail;
            L1.text:=sCity;
            L2.text:=sRegion;
-           L3.text:=sProvince;
-           L4.text:=sCountry;
+           L3.text:=sCountry;
+           L4.text:=sState;
         end;
      end
    else if ActiveControl.Name = fraDate1.edtDateForSorting.Name then
@@ -559,16 +518,16 @@ begin
         Lieu2:=Lieu2+'<'+CTagNameDetail+'>'+L0.Text+'</'+CTagNameDetail+'>';
      L1.Text:=trim(L1.Text);
      if Length(L1.TexT)>0 then
-        Lieu2:=Lieu2+'<Ville>'+L1.Text+'</Ville>';
+        Lieu2:=Lieu2+'<' + CTagNamePlace + '>'+L1.Text+'</' + CTagNamePlace + '>';
      L2.Text:=trim(L2.Text);
      if Length(L2.TexT)>0 then
-        Lieu2:=Lieu2+'<Région>'+L2.Text+'</Région>';
+        Lieu2:=Lieu2+'<' + CTagNameRegion + '>'+L2.Text+'</' + CTagNameRegion + '>';
      L3.Text:=trim(L3.Text);
      if Length(L3.TexT)>0 then
-        Lieu2:=Lieu2+'<Province>'+L3.Text+'</Province>';
+        Lieu2:=Lieu2+'<' + CTagNameCountry + '>'+L3.Text+'</' + CTagNameCountry + '>';
      L4.Text:=trim(L4.Text);
      if Length(L4.TexT)>0 then
-        Lieu2:=Lieu2+'<Pays>'+L4.Text+'</Pays>';
+        Lieu2:=Lieu2+'<' + CTagNameState + '>'+L4.Text+'</' + CTagNameState + '>';
      Lieu1:=AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(Lieu1,'\','\\'),'"','\"'),'''','\''');
      Lieu2:=AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(Lieu2,'\','\\'),'"','\"'),'''','\''');
      dmGenData.Query1.SQL.Clear;

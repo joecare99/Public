@@ -10,7 +10,8 @@ object frmPlace: TfrmPlace
   OnResize = FormResize
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.2'
+  LCLVersion = '1.8.0.4'
+  Visible = False
   object tblPlace: TStringGrid
     Left = 8
     Height = 536

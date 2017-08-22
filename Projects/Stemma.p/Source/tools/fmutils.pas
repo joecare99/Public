@@ -25,7 +25,7 @@ procedure PopulateCitations(Tableau: TStringGrid; Code: string; Nstr: string);
   overload; deprecated{$ifndef NoFormat}'use dmGenData.PopulateCitations'{$endif};
 function DecodeName(Name: string; format: byte): string;
 procedure DecodePlace(Place: string;
-  out article, detail, sCity, region, province, sCountry: string);
+  out article, detail, sCity, region, Country, State: string);
 function DecodeChanged(Place: string): string;
 function ConvertDate(Date: string; format: byte): string;
 function RemoveUTF8(Text: string): string;
@@ -1963,7 +1963,7 @@ begin
 end;
 
 procedure DecodePlace(Place: string;
-  out article, detail, sCity, region, province, sCountry: string);
+  out article, detail, sCity, region, Country, State: string);
 var
   pos2: integer;
   pos1: integer;
@@ -1980,9 +1980,9 @@ begin
     Place := copy(Place, AnsiPos('|', Place) + 1, length(Place));
     region := copy(Place, 1, AnsiPos('|', Place) - 1);
     Place := copy(Place, AnsiPos('|', Place) + 1, length(Place));
-    province := copy(Place, 1, AnsiPos('|', Place) - 1);
+    Country := copy(Place, 1, AnsiPos('|', Place) - 1);
     Place := copy(Place, AnsiPos('|', Place) + 1, length(Place));
-    sCountry := copy(Place, 1, AnsiPos('|', Place) - 1);
+    State := copy(Place, 1, AnsiPos('|', Place) - 1);
    end
   else
    begin
@@ -1998,42 +1998,42 @@ begin
       Detail := Copy(Place, Pos1, Pos2 - Pos1)
     else
       Detail := '';
-    Pos1 := AnsiPos('<Ville>', Place) + 7;
-    Pos2 := AnsiPos('</Ville>', Place);
+    Pos1 := AnsiPos('<' + CTagNamePlace + '>', Place) + 7;
+    Pos2 := AnsiPos('</' + CTagNamePlace + '>', Place);
     if (Pos1 + Pos2) > 7 then
       sCity := Copy(Place, Pos1, Pos2 - Pos1)
     else
       sCity := '';
-    Pos1 := AnsiPos('<Région>', Place) + 9;
-    Pos2 := AnsiPos('</Région>', Place);
+    Pos1 := AnsiPos('<' + CTagNameRegion + '>', Place) + 9;
+    Pos2 := AnsiPos('</' + CTagNameRegion + '>', Place);
     if (Pos1 + Pos2) > 9 then
       Region := Copy(Place, Pos1, Pos2 - Pos1)
     else
       Region := '';
-    Pos1 := AnsiPos('<Province>', Place) + 10;
-    Pos2 := AnsiPos('</Province>', Place);
+    Pos1 := AnsiPos('<' + CTagNameCountry + '>', Place) + 10;
+    Pos2 := AnsiPos('</' + CTagNameCountry + '>', Place);
     if (Pos1 + Pos2) > 10 then
-      Province := Copy(Place, Pos1, Pos2 - Pos1)
+      Country := Copy(Place, Pos1, Pos2 - Pos1)
     else
-      Province := '';
-    Pos1 := AnsiPos('<Pays>', Place) + 6;
-    Pos2 := AnsiPos('</Pays>', Place);
+      Country := '';
+    Pos1 := AnsiPos('<' + CTagNameState + '>', Place) + 6;
+    Pos2 := AnsiPos('</' + CTagNameState + '>', Place);
     if (Pos1 + Pos2) > 6 then
-      sCountry := Copy(Place, Pos1, Pos2 - Pos1)
+      State := Copy(Place, Pos1, Pos2 - Pos1)
     else
-      sCountry := '';
+      State := '';
    end;
 end;
 
 function DecodeChanged(Place: string): string;
 var
-  article, detail, ville, region, province, pays: string;
+  lArticle, lDetails, lPlace, lRegion, lCountry, lState: string;
 begin
-  DecodePlace(Place, article, detail, ville, region, province, pays);
-  if length(detail) = 0 then
-    Place := trim(article + ' ' + ville + ', ' + region + ', ' + province + ', ' + pays)
+  DecodePlace(Place, lArticle, lDetails, lPlace, lRegion, lCountry, lState);
+  if length(lDetails) = 0 then
+    Place := trim(lArticle + ' ' + lPlace + ', ' + lRegion + ', ' + lCountry + ', ' + lState)
   else
-    Place := trim(article + ' ' + detail + ', ' + ville + ', ' + region + ', ' + province + ', ' + pays);
+    Place := trim(lArticle + ' ' + lDetails + ', ' + lPlace + ', ' + lRegion + ', ' + lCountry + ', ' + lState);
   while (AnsiPos(', , ', Place) > 0) do
    begin
     Place := copy(Place, 1, AnsiPos(', , ', Place) - 1) + copy(

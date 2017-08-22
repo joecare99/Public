@@ -12,12 +12,12 @@ object dmGenData: TdmGenData
     TableName = 'MARCHI_T.DBF'
     TableLevel = 25
     FilterOptions = []
-    Left = 196
-    Top = 44
+    left = 196
+    top = 44
   end
   object dsNames: TDataSource
-    Left = 40
-    Top = 72
+    left = 40
+    top = 72
   end
   object Database: TSQLConnector
     Connected = False
@@ -29,48 +29,48 @@ object dmGenData: TdmGenData
     CharSet = 'UTF8'
     HostName = 'Diskstation'
     ConnectorType = 'MySQL 5.7'
-    Left = 16
-    Top = 16
+    left = 16
+    top = 16
   end
   object Query1: TSQLQuery
     FieldDefs = <>
     Database = Database
     Transaction = SQLTransaction1
     Params = <>
-    Left = 16
-    Top = 200
+    left = 16
+    top = 200
   end
   object Query2: TSQLQuery
     FieldDefs = <>
     Database = Database
     Transaction = SQLTransaction1
     Params = <>
-    Left = 48
-    Top = 200
+    left = 48
+    top = 200
   end
   object Query3: TSQLQuery
     FieldDefs = <>
     Database = Database
     Transaction = SQLTransaction1
     Params = <>
-    Left = 80
-    Top = 200
+    left = 80
+    top = 200
   end
   object Query4: TSQLQuery
     FieldDefs = <>
     Database = Database
     Transaction = SQLTransaction1
     Params = <>
-    Left = 112
-    Top = 200
+    left = 112
+    top = 200
   end
   object Query5: TSQLQuery
     FieldDefs = <>
     Database = Database
     Transaction = SQLTransaction1
     Params = <>
-    Left = 150
-    Top = 200
+    left = 150
+    top = 200
   end
   object qryNames: TSQLQuery
     FieldDefs = <>
@@ -81,8 +81,8 @@ object dmGenData: TdmGenData
       'select no, concat(I2, '' '', I1) as Name from N;'
     )
     Params = <>
-    Left = 88
-    Top = 8
+    left = 88
+    top = 8
   end
   object qryInternal: TSQLQuery
     FieldDefs = <>
@@ -92,8 +92,8 @@ object dmGenData: TdmGenData
       'select no, concat(I2, '' '', I1) as Name from N;'
     )
     Params = <>
-    Left = 248
-    Top = 8
+    left = 248
+    top = 8
   end
   object qrySysInfo: TSQLQuery
     FieldDefs = <>
@@ -103,8 +103,8 @@ object dmGenData: TdmGenData
       'select no, concat(I2, '' '', I1) as Name from N;'
     )
     Params = <>
-    Left = 320
-    Top = 8
+    left = 320
+    top = 8
   end
   object qryInternal2: TSQLQuery
     FieldDefs = <>
@@ -114,14 +114,14 @@ object dmGenData: TdmGenData
       'select no, concat(I2, '' '', I1) as Name from N;'
     )
     Params = <>
-    Left = 256
-    Top = 56
+    left = 256
+    top = 56
   end
   object SQLTransaction1: TSQLTransaction
     Active = False
     Action = caCommitRetaining
     Database = Database
-    Left = 144
-    Top = 8
+    left = 144
+    top = 8
   end
 end

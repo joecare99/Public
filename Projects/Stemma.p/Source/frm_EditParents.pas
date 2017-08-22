@@ -92,29 +92,6 @@ implementation
 uses
    frm_Main, cls_Translation, dm_GenData, frm_Names;
 
-procedure SaveRelationData(const lidRelation: integer; const lPhrase: TCaption; const lSDate: TCaption;
-  const lidType: PtrInt; const prefered: boolean; const lidParent: integer;
-  const lidChild: integer; const lMemoText: string);
-begin
-  with dmGenData.Query1 do begin
-  if lidRelation=0 then
-          SQL.text:='INSERT INTO R (Y, A, B, M, SD, P, X) VALUES (:idType, :idIndA, :idIndB, :M, :SDate, :P, :X)'
-    else
-       begin
-         SQL.text:='UPDATE R SET Y=:idType, A=:idIndA, B=:idIndB, M=:M, SD=:SDate, P=:P, X=:X where no=:idRel';
-         ParamByName('idRel').AsInteger:=lidRelation;
-       end;
-       ParamByName('idType').AsInteger:=lidType;
-       ParamByName('idIndA').AsInteger:=lidChild;
-       ParamByName('idIndB').AsInteger:=lidParent;
-       ParamByName('M').AsString:=lMemoText;
-       ParamByName('SDate').AsString:=lSDate;
-       ParamByName('P').AsString:=lPhrase;
-       ParamByName('X').AsBoolean:=prefered;
-    ExecSQL;
-  end;
-end;
-
 { TfrmEditParents }
 
 procedure TfrmEditParents.FormShow(Sender: TObject);
@@ -407,7 +384,7 @@ begin
      lPhrase:=''
   else
      lPhrase:=P.text;
-  SaveRelationData(lidRelation,lPhrase, lSDate, lidType, prefered, lidParent, lidChild,
+  dmgendata.SaveRelationData(lidRelation,lPhrase, lSDate, lidType, prefered, lidParent, lidChild,
      lMemoText);
   if no.text='0' then
      begin

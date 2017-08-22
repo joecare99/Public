@@ -1,6 +1,6 @@
 object frmEditDocuments: TfrmEditDocuments
   Left = 816
-  Height = 273
+  Height = 253
   Top = 229
   Width = 497
   ActiveControl = edtDocumentTitle
@@ -12,7 +12,8 @@ object frmEditDocuments: TfrmEditDocuments
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.9.0.0'
+  LCLVersion = '1.8.0.4'
+  Visible = False
   object lblDocuments1: TLabel
     Left = 104
     Height = 15
@@ -136,7 +137,7 @@ object frmEditDocuments: TfrmEditDocuments
   object pnlBottom: TPanel
     Left = 0
     Height = 54
-    Top = 199
+    Top = 179
     Width = 497
     Align = alBottom
     BevelOuter = bvNone
@@ -192,12 +193,12 @@ object frmEditDocuments: TfrmEditDocuments
     Filter = '''Tous les fichier|*.*|Images|*.jpg;*.jpeg;*.gif'''
     FilterIndex = 2
     Options = [ofFileMustExist, ofEnableSizing, ofViewDetail, ofAutoPreview]
-    Left = 248
-    Top = 8
+    left = 248
+    top = 8
   end
   object MainMenu1: TMainMenu
-    Left = 195
-    Top = 168
+    left = 195
+    top = 168
     object MenuItem1: TMenuItem
       Caption = '&Quit'
       ShortCut = 121

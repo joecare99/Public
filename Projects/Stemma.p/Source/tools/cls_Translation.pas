@@ -86,6 +86,7 @@ resourcestring
   rsNameSuffix		= 'Suffix';
   rsNameSurName		= 'Name';
   rsNameTitle		= 'Title';
+  rsNameAKA             = 'AKA';
   rsNumberOfTheIndividua = 'Number of the individual';
   rsOnlyTheExhibitsAssoc = 'Only the exhibits associated to an individual (type'
     +' "I") can be modified this way';

@@ -22,10 +22,19 @@ type
     eNET_AddSister,
     eNET_AddSon,
     eNET_AddDaughter);
-  { TfrmEditName }
+
+  TEnumNameEntry=
+  (ene_Title = 1,
+   ene_GivenName = 2,
+   ene_Surname = 3,
+   ene_Suffix = 4,
+   ene_AKA = 5);
+
+   { TfrmEditName }
 
   TfrmEditName = class(TForm)
     ActionList1: TActionList;
+    edtPrefered: TCheckBox;
     edtPrefered2: TEdit;
     btnOK: TBitBtn;
     btnCancel: TBitBtn;
@@ -41,16 +50,16 @@ type
     lblName8: TLabel;
     lblType: TLabel;
     mnuNameMain: TMainMenu;
-    MenuItem1: TMenuItem;
+    mnuNameAddTitle: TMenuItem;
     mniNameCitationAdd: TMenuItem;
     mniNameCitationEdit: TMenuItem;
     mniNameCitationDelete: TMenuItem;
     mniNameSurnameAdd: TMenuItem;
     mniNameTitleAdd: TMenuItem;
     mniNameGivenNameAdd: TMenuItem;
-    MenuItem2: TMenuItem;
-    MenuItem3: TMenuItem;
-    MenuItem4: TMenuItem;
+    mniNameAddFirstname: TMenuItem;
+    mniNameAddSurname: TMenuItem;
+    mniNameAddSuffix: TMenuItem;
     mniNameQuit: TMenuItem;
     mniNameRepeat: TMenuItem;
     mniName: TMenuItem;
@@ -64,33 +73,39 @@ type
     Splitter2: TSplitter;
     PopupMenuNom: TPopupMenu;
     tblNames: TStringGrid;
-    edtPrefered: TEdit;
     cbxEvType: TComboBox;
     procedure btnOKClick(Sender: TObject);
+    procedure edtNameEditingDone(Sender: TObject);
     procedure FormShow(Sender: TObject);
     procedure edtIdIndEditingDone(Sender: TObject);
-    procedure MenuItem1Click(Sender: TObject);
-    procedure MenuItem2Click(Sender: TObject);
-    procedure MenuItem3Click(Sender: TObject);
-    procedure MenuItem4Click(Sender: TObject);
+    procedure mnuNameAddTitleClick(Sender: TObject);
+    procedure mniNameAddFirstnameClick(Sender: TObject);
+    procedure mniNameAddSurnameClick(Sender: TObject);
+    procedure mniNameAddSuffixClick(Sender: TObject);
     procedure mniNameQuitClick(Sender: TObject);
     procedure mniNameRepeatClick(Sender: TObject);
     procedure NomSaveData(Sender: TObject);
     procedure cbxEvTypeChange(Sender: TObject);
+    procedure tblNamesEditingDone(Sender: TObject);
+  private
+    class var FNameEntryTitle: array[ene_Title..ene_AKA] of ^String;
   private
     FEditMode: TEnumNameEditMode;
     FRelID: integer;
     procedure DecodeFullName(sFullName: string;
       out sSuffix, sFamilyName, sGivenName, sTitle: string);
     procedure FillNameTable(const suffixe: string; const nom: string;
-      const prenom: string; const titre: string);
+      const prenom: string; const titre: string; const AKA: string='');
     function GetIdInd: integer;
     function GetIdName: integer;
     function GetIndName: string;
+    function GetNameEntry(idx: TEnumNameEntry): string;
     procedure SetEditMode(AValue: TEnumNameEditMode);
     procedure SetIdInd(AValue: integer);
     procedure SetIdName(AValue: integer);
     procedure SetIndName(AValue: string);
+    procedure SetNameEntry(idx: TEnumNameEntry; AValue: string);
+    procedure NameGoto(idx: TEnumNameEntry);
     procedure SetRelID(AValue: integer);
     { private declarations }
   public
@@ -100,6 +115,7 @@ type
     property RelID: integer read FRelID write SetRelID;
     property idInd: integer read GetIdInd write SetIdInd;
     property IdName: integer read GetIdName write SetIdName;
+    property NameEntry[idx:TEnumNameEntry]:string read GetNameEntry write SetNameEntry;
   end;
 
 var
@@ -110,100 +126,23 @@ implementation
 uses
   frm_Main, cls_Translation, dm_GenData, frm_Explorer;
 
-function SaveNameData( lidName: longint;const lPrefered: TCaption; const lidEvType: PtrInt;
-  const lPhrase: string; const lSDate: string; const lPDate: string;
-  const lMemoText: string; const i4: string; const i3: string;
-  const i2: string; const i1: string; const nom: string;
-  const lidInd: longint):integer;
-begin
-  with dmGenData.Query1 do begin
-     if lidName = 0 then
-     begin
-       SQL.Text := 'INSERT INTO N (Y, I, M, N, I1, I2, PD, SD, P, I3, I4, X) VALUES ' +
-         '( :idEvType, :idInd, :M, :Name, :i1, :i2, :PDate, :SDate, :P, :i3, :i4, :X)';
-         ParamByName('i3').AsString := i3;
-         ParamByName('i4').AsString := i4;
-     end
-     else
-     begin
-       SQL.Text :=
-         'UPDATE N SET Y=:idEvType, I=:idInd, M=:M, N=:Name, I1=:I1, I2=:I2, PD=:PDate, SD=:SDate, P=:P, X=:X WHERE no=:idName';
-       ParamByName('idName').AsInteger := lidName;
-     end;
-     ParamByName('idEvType').AsInteger := lidEvType;
-     ParamByName('idInd').AsInteger := lidInd;
-     ParamByName('M').AsString := lMemoText;
-     ParamByName('Name').AsString := nom;
-     ParamByName('i1').AsString := i1;
-     ParamByName('i2').AsString := i2;
-     ParamByName('PDate').AsString := lPDate;
-     ParamByName('SDate').AsString := lSDate;
-     ParamByName('P').AsString := lPhrase;
-     ParamByName('X').AsString := lPrefered;
-     ExecSQL;
-     if lidName = 0 then
-       result := dmGenData.GetLastIDOfTable('N')
-     else
-       Result:=lidName;
-  // Sauvegarder les modifications
-  dmGenData.SaveModificationTime(Result);
-   end;
-end;
-
-function CheckPrefParentExists(const lSex: string; var lidInd: longint): boolean;
-
-begin
-  with dmGenData.Query2 do begin
-  Close;
-    SQL.Text :=
-      'SELECT R.no, R.B FROM R JOIN I ON R.B=I.no WHERE I.S=:sex AND R.X=1 AND R.A=:idInd';
-    ParamByName('idInd').AsInteger := lIdInd;
-    ParamByName('sex').AsString := lSex;
-    Open;
-    Result := not EOF;
-    Close;
-  end;
-end;
-
 { TFrmEditName }
 
 procedure TfrmEditName.FillNameTable(const suffixe: string; const nom: string;
-  const prenom: string; const titre: string);
-var
-  j: integer;
-begin
-  with frmEditName do
-     try
-      tblNames.RowCount := 5;
-      j := 1;
-      if length(titre) > 0 then
-       begin
-        tblNames.Cells[1, j] := rsNameTitle;
-        tblNames.Cells[2, j] := titre;
-        j := j + 1;
-       end;
-      if length(prenom) > 0 then
-       begin
-        tblNames.Cells[1, j] := rsNameGivenName;
-        tblNames.Cells[2, j] := prenom;
-        j := j + 1;
-       end;
-      if length(nom) > 0 then
-       begin
-        tblNames.Cells[1, j] := rsNameSurName;
-        tblNames.Cells[2, j] := nom;
-        j := j + 1;
-       end;
-      if length(suffixe) > 0 then
-       begin
-        tblNames.Cells[1, j] := rsNameSuffix;
-        tblNames.Cells[2, j] := Suffixe;
-        j := j + 1;
-       end;
-      tblNames.RowCount := j;
+  const prenom: string; const titre: string; const AKA: string='');
 
-     except
-     end;
+begin
+      tblNames.RowCount := 1; // Clear entries
+      if length(titre) > 0 then
+        NameEntry[ene_Title]:=titre;
+      if length(prenom) > 0 then
+       NameEntry[ene_GivenName]:= prenom;
+      if length(nom) > 0 then
+        NameEntry[ene_Surname]:= nom;
+      if length(suffixe) > 0 then
+        NameEntry[ene_Suffix]:= Suffixe;
+      if length(AKA) > 0 then
+        NameEntry[ene_AKA]:= aka;
 
 end;
 
@@ -277,6 +216,11 @@ begin
     fraPhrase1.isDefault := (fraPhrase1.Text = fraPhrase1.edtPhrase.Text);
 end;
 
+procedure TfrmEditName.tblNamesEditingDone(Sender: TObject);
+begin
+
+end;
+
 procedure TfrmEditName.SetEditMode(AValue: TEnumNameEditMode);
 begin
   if FEditMode = AValue then
@@ -303,6 +247,16 @@ begin
   Result := edtName.Text;
 end;
 
+function TfrmEditName.GetNameEntry(idx: TEnumNameEntry): string;
+var
+  lIdx: Integer;
+begin
+  lIdx:=tblNames.Cols[1].IndexOfObject(Tobject(ptrint(idx)));
+  result := '';
+  if lIdx>=0 then
+    result := tblNames.Cells[2,lIdx];
+end;
+
 function TfrmEditName.GetIdInd: integer;
 begin
   Result := edtIdInd.Value;
@@ -320,6 +274,35 @@ begin
   if uppercase(edtName.Text) = (AValue) then
     exit;
   edtName.Text := AValue;
+end;
+
+procedure TfrmEditName.SetNameEntry(idx: TEnumNameEntry; AValue: string);
+var
+  lIdx: Integer;
+begin
+  lIdx:=tblNames.Cols[1].IndexOfObject(Tobject(ptrint(idx)));
+  if lIdx >= 0 then
+    tblNames.Cells[2,lIdx] := AValue
+  else
+    begin
+      tblNames.RowCount := tblNames.RowCount + 1;
+      lIdx:=tblNames.RowCount-1;
+      tblNames.Cells[1, lIdx] := FNameEntryTitle[idx]^;
+      tblNames.Objects[1,lIdx] := TObject(ptrint(idx));
+      tblNames.Cells[2, lIdx] := AValue;
+    end;
+end;
+
+procedure TfrmEditName.NameGoto(idx: TEnumNameEntry);
+var
+  lIdx: Integer;
+begin
+  lIdx:=tblNames.Cols[1].IndexOfObject(Tobject(ptrint(idx)));
+  if lIdx >= 0 then
+    begin
+      tblNames.Col:=2;
+      tblNames.Row:= lIdx;
+    end;
 end;
 
 procedure TfrmEditName.SetRelID(AValue: integer);
@@ -358,10 +341,10 @@ begin
   fraEdtCitations1.CType := 'N';
   fraPhrase1.TypeCode := 'N';
   fraEdtCitations1.OnSaveData := @NomSaveData;
-  MenuItem1.Caption := Translation.Items[229];
-  MenuItem2.Caption := Translation.Items[230];
-  MenuItem3.Caption := Translation.Items[231];
-  MenuItem4.Caption := Translation.Items[232];
+  mnuNameAddTitle.Caption := Translation.Items[229];
+  mniNameAddFirstname.Caption := Translation.Items[230];
+  mniNameAddSurname.Caption := Translation.Items[231];
+  mniNameAddSuffix.Caption := Translation.Items[232];
   mniNameCitations.Caption := Translation.Items[228];
   mniNameCitationAdd.Caption := Translation.Items[224];
   mniNameCitationEdit.Caption := Translation.Items[225];
@@ -373,6 +356,7 @@ begin
   // Populate la form
   edtPrefered2.Text := '0';
   edtIdInd.Value := 0;
+
   case FEditMode of
     eNET_NameVariation:
      begin
@@ -418,11 +402,7 @@ begin
             nom := Copy(temp, Pos1, Pos2 - Pos1);
          end;
         if length(nom) > 0 then
-         begin
-          tblNames.RowCount := 2;
-          tblNames.Cells[1, 1] := rsNameSurName;
-          tblNames.Cells[2, 1] := nom;
-         end
+          NameEntry[ene_Surname]:= nom
         else
           tblNames.RowCount := 1;
        end
@@ -457,11 +437,7 @@ begin
             nom := Copy(temp, Pos1, Pos2 - Pos1);
          end;
         if length(nom) > 0 then
-         begin
-          tblNames.RowCount := 2;
-          tblNames.Cells[1, 1] := rsNameSurName;
-          tblNames.Cells[2, 1] := nom;
-         end
+          NameEntry[ene_Surname]:= nom
         else
           tblNames.RowCount := 1;
        end
@@ -493,11 +469,7 @@ begin
           nom := Copy(temp, Pos1, Pos2 - Pos1);
        end;
       if length(nom) > 0 then
-       begin
-        tblNames.RowCount := 2;
-        tblNames.Cells[1, 1] := rsNameSurName;
-        tblNames.Cells[2, 1] := nom;
-       end
+        NameEntry[ene_Surname]:= nom
       else
         tblNames.RowCount := 1;
       frmEditName.Caption :=
@@ -525,11 +497,7 @@ begin
           nom := Copy(temp, Pos1, Pos2 - Pos1);
        end;
       if length(nom) > 0 then
-       begin
-        tblNames.RowCount := 2;
-        tblNames.Cells[1, 1] := rsNameSurName;
-        tblNames.Cells[2, 1] := nom;
-       end
+        NameEntry[ene_Surname]:= nom
       else
         tblNames.RowCount := 1;
       frmEditName.Caption :=
@@ -558,11 +526,7 @@ begin
           nom := Copy(temp, Pos1, Pos2 - Pos1);
        end;
       if length(nom) > 0 then
-       begin
-        tblNames.RowCount := 2;
-        tblNames.Cells[1, 1] := rsNameSurName;
-        tblNames.Cells[2, 1] := nom;
-       end
+        NameEntry[ene_Surname]:= nom
       else
         tblNames.RowCount := 1;
       frmEditName.Caption :=
@@ -582,6 +546,7 @@ begin
       cbxSex.ItemIndex := 0;
       frmEditName.Caption := Translation.Items[35];
       tblNames.RowCount := 1;
+      edtPrefered.Checked := true;
      end;
       //        if length(frmEditName.Caption)=0 then
       //           begin
@@ -593,7 +558,7 @@ begin
       tblNames.RowCount := 1;
       frmEditName.Caption := Translation.Items[36];
       edtIdInd.Value := frmStemmaMainForm.iID;
-      edtPrefered.Text := '0';
+      edtPrefered.Checked := false;
      end;
 
    end;
@@ -645,7 +610,7 @@ begin
       DecodePhrase(frmStemmaMainForm.iID, 'PRINCIPAL', fraPhrase1.Text, 'N', edtIdName.Value);
     fraDate1.Date := lDate;
     fraDate1.SortDate := lSortDate;
-    edtPrefered.Text := boolTostr(lPref, '1', '0');
+    edtPrefered.Checked := lPref;
     // Populate le tableau de citations
     fraEdtCitations1.LinkID := edtIdName.Value;
    end;
@@ -675,37 +640,29 @@ var
   existe: boolean;
   sSex: char;
   lidEvType: PtrInt;
-  lPrefered: TCaption;
+  lPrefered: boolean;
 
 begin
-  nom := edtPrefered.Text;
   nom := '';
-  i1 := '';
-  i2 := '';
   i3 := '';
   i4 := '';
   if tblNames.RowCount > 1 then
-    for j := 1 to tblNames.RowCount - 1 do
-      if length(trim(tblNames.Cells[2, j])) > 0 then
-       begin
-        if tblNames.Cells[1, j] = rsNameTitle then
-          tagName := CTagNameTitle
-        else if tblNames.Cells[1, j] = rsNameSurName then
-          tagName := CTagNameFamilyName
-        else if tblNames.Cells[1, j] = rsNameGivenName then
-          tagName := CTagNameGivenName
-        else if tblNames.Cells[1, j] = rsNameSuffix then
-          tagName := CTagNameSuffix
-        else
-          tagName := 'AKA';
+    for j := ord(ene_Title) to ord(ene_AKA)  do
+      begin
+       case TEnumNameEntry(J) of
+         ene_Title:    tagName := CTagNameTitle;
+        ene_SurName:   tagName := CTagNameFamilyName;
+        ene_GivenName: tagName := CTagNameGivenName;
+        ene_Suffix:    tagName := CTagNameSuffix;
+        else           tagName := 'AKA';
+        end;
 
-        nom := nom + '<' + tagName + '>' + trim(tblNames.Cells[2, j]) +
+        nom := nom + '<' + tagName + '>' + trim(NameEntry[TEnumNameEntry(J)]) +
           '</' + tagName + '>';
-        if tblNames.Cells[1, j] = rsNameSurName then
-          i1 := RemoveUTF8(trim(tblNames.Cells[2, j]));
-        if tblNames.Cells[1, j] = rsNameGivenName then
-          i2 := RemoveUTF8(trim(tblNames.Cells[2, j]));
        end;
+
+  i1 := RemoveUTF8(trim(NameEntry[ene_Surname]));
+  i2 := RemoveUTF8(trim(NameEntry[ene_GivenName]));
 
   frmStemmaMainForm.AppendHistoryData('N', nom);
 
@@ -736,7 +693,7 @@ begin
 
         lSex := BoolToStr(frmEditName.EditMode = eNET_AddFather, 'M', 'F');
         lIdInd := frmStemmaMainForm.iID;
-        temp := BoolToStr(CheckPrefParentExists(lSex, lidInd), '0', '1');
+        temp := BoolToStr(dmgendata.CheckPrefParentExists(lSex, lidInd), '0', '1');
 
         dmGenData.RelationInsertData(10, frmStemmaMainForm.iId,
           lidInd, temp, '100000000300000000');
@@ -929,10 +886,9 @@ begin
     i4 := dmGenData.GetI4(lidInd);
    end  (* if inttostr(lidName)='0' *)
   else
-  if (edtPrefered.Text = '1') and ((frmStemmaMainForm.iID <> lidInd) and
+  if (edtPrefered.Checked) and ((frmStemmaMainForm.iID <> lidInd) and
     not (lidInd = 0) and not (edtPrefered2.Text = '1')) then
-    edtPrefered.Text :=
-      '0'// Si on déplace un nom primaire d'individu, le nom devient secondaire.
+    edtPrefered.Checked := false// Si on déplace un nom primaire d'individu, le nom devient secondaire.
   ;
   lidEvType := PtrInt(cbxEvType.Items.Objects[cbxEvType.ItemIndex]);
 
@@ -943,9 +899,9 @@ begin
     lPhrase:=''
   else
     lPhrase:=trim(fraPhrase1.Text);
-  lPrefered:=edtPrefered.Text;
+  lPrefered:=edtPrefered.Checked;
 
-  lidName :=SaveNameData(lidName, lPrefered, lidEvType, lPhrase, lSDate, lPDate, lMemoText,
+  lidName :=dmgendata.SaveNameData(lidName, lPrefered, lidEvType, lPhrase, lSDate, lPDate, lMemoText,
     i4, i3, i2, i1, nom,  lidInd);
 
   // UPDATE DÉCÈS si la date est il cbxEvType a 100 ans !!!
@@ -968,7 +924,7 @@ begin
       frmExplorer.UpdateIndex(i2, i1, nom, lidName, lidInd, j)
     else
       frmExplorer.AppendIndex(i2, i1, nom, lidName, lidInd,
-        edtPrefered.Text = '1');
+        edtPrefered.Checked);
   if lidName = 0 then
     lidName := dmGenData.GetLastIDOfTable('N');
   edtIdName.Value := lidName;
@@ -1009,130 +965,67 @@ begin
    end;
 end;
 
-procedure TfrmEditName.MenuItem1Click(Sender: TObject);
+procedure TfrmEditName.edtNameEditingDone(Sender: TObject);
 var
-  j: integer;
-  existe: boolean;
+  lFullname, lSurname, lGivenname: String;
+  pp: SizeInt;
 begin
-  // Ajouter Titre
-  if tblNames.RowCount > 1 then
-    existe := tblNames.Cells[1, tblNames.RowCount - 1] =
-      Translation.Items[40]
+
+  lFullname:=edtName.text;
+  pp:= pos(lFullname,',');
+  if pp >0 then
+    begin
+      lSurname := copy(lFullname,1,pp-1);
+      lGivenname :=trim(copy(lFullname,pp+1,length(lFullname)-pp))
+    end
   else
-    existe := False;
-  if not existe then
-   begin
-    tblNames.RowCount := tblNames.RowCount + 1;
-    if tblNames.RowCount > 2 then
-      for j := tblNames.RowCount - 1 downto 1 do
-       begin
-        tblNames.Cells[1, j] := tblNames.Cells[1, j - 1];
-        tblNames.Cells[2, j] := tblNames.Cells[2, j - 1];
-       end;
-    tblNames.Cells[1, 1] := Translation.Items[40];
-    tblNames.Cells[2, 1] := '';
-    tblNames.Row := 1;
-    tblNames.Col := 2;
-    frmEditName.ActiveControl := tblNames;
-   end;
+    begin
+      lSurname:=lFullname;
+      lGivenname:='';
+      pp := pos(lSurname,' ');
+      while pp>0 do
+        begin
+          lGivenname:=trim(lGivenname+' '+copy(lSurname,1,pp-1));
+          delete(lSurname,1,pp);
+          pp := pos(lSurname,' ');
+        end
+    end;
+
+  // ToDo: insert Name.
 end;
 
-procedure TfrmEditName.MenuItem2Click(Sender: TObject);
-var
-  j: integer;
-  existe: boolean;
+procedure TfrmEditName.mnuNameAddTitleClick(Sender: TObject);
+
+begin
+   // Ajouter Titre
+   NameEntry[ene_Title]:= NameEntry[ene_Title];
+   NameGoto(ene_title);
+   frmEditName.ActiveControl := tblNames;
+end;
+
+procedure TfrmEditName.mniNameAddFirstnameClick(Sender: TObject);
+
 begin
   // Ajouter Prénom
-  existe := False;
-  if tblNames.RowCount > 1 then
-    for j := 1 to tblNames.RowCount - 1 do
-      existe := existe or (tblNames.Cells[1, j] = Translation.Items[38]);
-  if not existe then
-   begin
-    tblNames.RowCount := tblNames.RowCount + 1;
-    if tblNames.Cells[1, 1] = rsNameTitle then
-     begin
-      if tblNames.RowCount > 3 then
-        for j := tblNames.RowCount - 1 downto 2 do
-         begin
-          tblNames.Cells[1, j] := tblNames.Cells[1, j - 1];
-          tblNames.Cells[2, j] := tblNames.Cells[2, j - 1];
-         end;
-      tblNames.Cells[1, 2] := Translation.Items[38];
-      tblNames.Cells[2, 2] := '';
-      tblNames.Row := 2;
-     end
-    else
-     begin
-      if tblNames.RowCount > 2 then
-        for j := tblNames.RowCount - 1 downto 1 do
-         begin
-          tblNames.Cells[1, j] := tblNames.Cells[1, j - 1];
-          tblNames.Cells[2, j] := tblNames.Cells[2, j - 1];
-         end;
-      tblNames.Cells[1, 1] := Translation.Items[38];
-      tblNames.Cells[2, 1] := '';
-      tblNames.Row := 1;
-     end;
-    tblNames.Col := 2;
-    frmEditName.ActiveControl := tblNames;
-   end;
+  NameEntry[ene_GivenName] := NameEntry[ene_GivenName];
+  NameGoto(ene_GivenName);
+  frmEditName.ActiveControl := tblNames;
 end;
 
-procedure TfrmEditName.MenuItem3Click(Sender: TObject);
-var
-  j: integer;
-  existe: boolean;
+procedure TfrmEditName.mniNameAddSurnameClick(Sender: TObject);
+
 begin
-  // Ajouter Nom
-  existe := False;
-  if tblNames.RowCount > 1 then
-    for j := 1 to tblNames.RowCount - 1 do
-      existe := existe or (tblNames.Cells[1, j] = Translation.Items[37]);
-  if not existe then
-   begin
-    tblNames.RowCount := tblNames.RowCount + 1;
-    if tblNames.Cells[1, tblNames.RowCount - 2] =
-      Translation.Items[39] then
-     begin
-      tblNames.Cells[1, tblNames.RowCount - 1] :=
-        tblNames.Cells[1, tblNames.RowCount - 2];
-      tblNames.Cells[2, tblNames.RowCount - 1] :=
-        tblNames.Cells[2, tblNames.RowCount - 2];
-      tblNames.Cells[1, tblNames.RowCount - 2] := Translation.Items[37];
-      tblNames.Cells[2, tblNames.RowCount - 2] := '';
-      tblNames.Row := tblNames.RowCount - 2;
-     end
-    else
-     begin
-      tblNames.Cells[1, tblNames.RowCount - 1] := Translation.Items[37];
-      tblNames.Cells[2, tblNames.RowCount - 1] := '';
-      tblNames.Row := tblNames.RowCount - 1;
-     end;
-    tblNames.Col := 2;
-    frmEditName.ActiveControl := tblNames;
-   end;
+  NameEntry[ene_Surname] := NameEntry[ene_Surname];
+  NameGoto(ene_Surname);
+  frmEditName.ActiveControl := tblNames;
 end;
 
-procedure TfrmEditName.MenuItem4Click(Sender: TObject);
-var
-  existe: boolean;
+procedure TfrmEditName.mniNameAddSuffixClick(Sender: TObject);
+
 begin
-  // Ajouter Suffixe
-  if tblNames.RowCount > 1 then
-    existe := tblNames.Cells[1, tblNames.RowCount - 1] =
-      Translation.Items[39]
-  else
-    existe := False;
-  if not existe then
-   begin
-    tblNames.RowCount := tblNames.RowCount + 1;
-    tblNames.Cells[1, tblNames.RowCount - 1] := Translation.Items[39];
-    tblNames.Cells[2, tblNames.RowCount - 1] := '';
-    tblNames.Row := tblNames.RowCount - 1;
-    tblNames.Col := 2;
-    frmEditName.ActiveControl := tblNames;
-   end;
+  NameEntry[ene_Suffix] := NameEntry[ene_Suffix];
+  NameGoto(ene_Suffix);
+  frmEditName.ActiveControl := tblNames;
 end;
 
 procedure TfrmEditName.mniNameQuitClick(Sender: TObject);
@@ -1190,6 +1083,13 @@ begin
       fraMemo1.Text := lsResult;
    end;
 end;
+
+initialization
+  TfrmEditName.FNameEntryTitle[ene_Title]:=@rsNameTitle;
+  TfrmEditName.FNameEntryTitle[ene_GivenName]:=@rsNameGivenName;
+  TfrmEditName.FNameEntryTitle[ene_Surname]:=@rsNameSurName;
+  TfrmEditName.FNameEntryTitle[ene_Suffix]:=@rsNameSuffix;
+  TfrmEditName.FNameEntryTitle[ene_AKA]:=@rsNameAKA;
 
 
 end.

@@ -291,6 +291,10 @@ msgstr ""
 msgid "may"
 msgstr ""
 
+#: cls_translation.rsnameaka
+msgid "AKA"
+msgstr ""
+
 #: cls_translation.rsnamegivenname
 msgctxt "cls_translation.rsnamegivenname"
 msgid "First name"
@@ -2186,10 +2190,6 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
-#: tfrmeditdocuments.caption
-msgid "Modification de document"
-msgstr ""
-
 #: tfrmeditdocuments.chbdocumentprefered.caption
 msgctxt "TFRMEDITDOCUMENTS.CHBDOCUMENTPREFERED.CAPTION"
 msgid "Prefered"
@@ -2248,10 +2248,6 @@ msgstr ""
 #: tfrmeditevents.ajoutertemoin.caption
 msgctxt "TFRMEDITEVENTS.AJOUTERTEMOIN.CAPTION"
 msgid "&Ajouter"
-msgstr ""
-
-#: tfrmeditevents.caption
-msgid "Edit Events"
 msgstr ""
 
 #: tfrmeditevents.l0.hint
@@ -2412,10 +2408,6 @@ msgctxt "TFRMEDITEVENTS.YY.TEXT"
 msgid "YY"
 msgstr ""
 
-#: tfrmeditname.caption
-msgid "Modification de Nom"
-msgstr ""
-
 #: tfrmeditname.cbxsex.itemsex[0].caption
 msgid "Unknown"
 msgstr ""
@@ -2433,8 +2425,9 @@ msgctxt "TFRMEDITNAME.EDTNAME.TEXT"
 msgid "edtName"
 msgstr ""
 
-#: tfrmeditname.edtprefered.text
-msgid "edtPrefered"
+#: tfrmeditname.edtprefered.caption
+msgctxt "tfrmeditname.edtprefered.caption"
+msgid "Prefered"
 msgstr ""
 
 #: tfrmeditname.edtprefered2.text
@@ -2457,29 +2450,23 @@ msgctxt "TFRMEDITNAME.LBLTYPE.CAPTION"
 msgid "Type:"
 msgstr ""
 
-#: tfrmeditname.menuitem1.caption
-msgctxt "TFRMEDITNAME.MENUITEM1.CAPTION"
-msgid "Add &Title"
-msgstr ""
-
-#: tfrmeditname.menuitem2.caption
-msgctxt "TFRMEDITNAME.MENUITEM2.CAPTION"
-msgid "Add &First name"
-msgstr ""
-
-#: tfrmeditname.menuitem3.caption
-msgctxt "TFRMEDITNAME.MENUITEM3.CAPTION"
-msgid "Add &Surname"
-msgstr ""
-
-#: tfrmeditname.menuitem4.caption
-msgctxt "TFRMEDITNAME.MENUITEM4.CAPTION"
-msgid "Add &Sufix"
-msgstr ""
-
 #: tfrmeditname.mniname.caption
 msgctxt "tfrmeditname.mniname.caption"
 msgid "Name"
+msgstr ""
+
+#: tfrmeditname.mninameaddfirstname.caption
+msgctxt "tfrmeditname.mninameaddfirstname.caption"
+msgid "Add &First name"
+msgstr ""
+
+#: tfrmeditname.mninameaddsuffix.caption
+msgid "Add &Suffix"
+msgstr ""
+
+#: tfrmeditname.mninameaddsurname.caption
+msgctxt "tfrmeditname.mninameaddsurname.caption"
+msgid "Add &Surname"
 msgstr ""
 
 #: tfrmeditname.mninamecitationadd.caption
@@ -2532,6 +2519,11 @@ msgctxt "tfrmeditname.mninametitleadd.caption"
 msgid "Add &Title"
 msgstr ""
 
+#: tfrmeditname.mnunameaddtitle.caption
+msgctxt "tfrmeditname.mnunameaddtitle.caption"
+msgid "Add &Title"
+msgstr ""
+
 #: tfrmeditname.tblnames.columns[0].title.caption
 msgctxt "tfrmeditname.tblnames.columns[0].title.caption"
 msgid "Type"
@@ -2540,10 +2532,6 @@ msgstr ""
 #: tfrmeditname.tblnames.columns[1].title.caption
 msgctxt "tfrmeditname.tblnames.columns[1].title.caption"
 msgid "Description"
-msgstr ""
-
-#: tfrmeditparents.caption
-msgid "Modification de Relation"
 msgstr ""
 
 #: tfrmeditparents.fraedtcitations1.popupmenu2.ajouter1.caption
@@ -2746,10 +2734,6 @@ msgstr ""
 #: tfrmedittype.button2.caption
 msgctxt "tfrmedittype.button2.caption"
 msgid "Annul."
-msgstr ""
-
-#: tfrmedittype.caption
-msgid "Modification de type d'événement"
 msgstr ""
 
 #: tfrmedittype.label10.caption
@@ -3238,10 +3222,6 @@ msgctxt "tfrmplace.btnplaceok.caption"
 msgid "Ok"
 msgstr ""
 
-#: tfrmplace.caption
-msgid "Lieux"
-msgstr ""
-
 #: tfrmplace.combobox1.text
 msgid "ComboBox1"
 msgstr ""
@@ -3441,10 +3421,6 @@ msgstr ""
 #: tfrmsources.button1.caption
 msgctxt "tfrmsources.button1.caption"
 msgid "Ok"
-msgstr ""
-
-#: tfrmsources.caption
-msgid "Form: Sources"
 msgstr ""
 
 #: tfrmsources.mnisourceadd.caption
@@ -3845,11 +3821,6 @@ msgctxt "tfrmstemmamainform.btnseparator2.caption"
 msgid "btnSeparator2"
 msgstr ""
 
-#: tfrmstemmamainform.caption
-msgctxt "tfrmstemmamainform.caption"
-msgid "Stemma"
-msgstr ""
-
 #: tfrmstemmamainform.checkbox1.caption
 msgctxt "TFRMSTEMMAMAINFORM.CHECKBOX1.CAPTION"
 msgid "CheckBox1"
@@ -3982,10 +3953,6 @@ msgstr ""
 #: tfrmtypes.button1.caption
 msgctxt "TFRMTYPES.BUTTON1.CAPTION"
 msgid "Ok"
-msgstr ""
-
-#: tfrmtypes.caption
-msgid "Types d'événements"
 msgstr ""
 
 #: tfrmtypes.menuitem2.caption

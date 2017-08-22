@@ -1,6 +1,6 @@
 object frmEditName: TfrmEditName
   Left = 264
-  Height = 602
+  Height = 582
   Top = 563
   Width = 629
   ActiveControl = tblNames
@@ -13,7 +13,7 @@ object frmEditName: TfrmEditName
   Menu = mnuNameMain
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.9.0.0'
+  Visible = False
   object tblNames: TStringGrid
     Left = 88
     Height = 114
@@ -35,6 +35,7 @@ object frmEditName: TfrmEditName
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goEditing, goAlwaysShowEditor, goSmoothScroll]
     PopupMenu = PopupMenuNom
     TabOrder = 0
+    OnEditingDone = tblNamesEditingDone
     ColWidths = (
       1
       100
@@ -93,6 +94,7 @@ object frmEditName: TfrmEditName
     Height = 23
     Top = 77
     Width = 423
+    OnEditingDone = edtNameEditingDone
     TabOrder = 2
     Text = 'edtName'
   end
@@ -239,23 +241,13 @@ object frmEditName: TfrmEditName
       Caption = 'Individu:'
       ParentColor = False
     end
-    object edtPrefered: TEdit
-      Left = 536
-      Height = 23
-      Top = 36
-      Width = 80
-      TabStop = False
-      TabOrder = 1
-      Text = 'edtPrefered'
-      Visible = False
-    end
     object edtPrefered2: TEdit
       Left = 448
       Height = 23
       Top = 8
       Width = 80
       TabStop = False
-      TabOrder = 2
+      TabOrder = 1
       Text = 'X'
       Visible = False
     end
@@ -265,18 +257,19 @@ object frmEditName: TfrmEditName
       Top = 48
       Width = 80
       Color = clBtnFace
-      MaxValue = 1000000000
+      MaxValue = 0
       OnEditingDone = edtIdIndEditingDone
       ReadOnly = True
-      TabOrder = 3
+      TabOrder = 2
     end
     object edtIdName: TSpinEdit
       Left = 536
       Height = 23
       Top = 8
       Width = 80
+      MaxValue = 0
       TabStop = False
-      TabOrder = 4
+      TabOrder = 3
       Visible = False
     end
     object cbxSex: TComboBoxEx
@@ -300,7 +293,8 @@ object frmEditName: TfrmEditName
           ImageIndex = 2
         end>
       ItemIndex = 0
-      TabOrder = 5
+      ReadOnly = True
+      TabOrder = 4
     end
     object SpeedButton1: TSpeedButton
       Left = 192
@@ -309,30 +303,40 @@ object frmEditName: TfrmEditName
       Width = 23
       OnClick = mniNameRepeatClick
     end
+    object edtPrefered: TCheckBox
+      Left = 536
+      Height = 19
+      Top = 36
+      Width = 64
+      Caption = 'Prefered'
+      TabOrder = 5
+      TabStop = False
+      Visible = False
+    end
   end
   object PopupMenuNom: TPopupMenu
-    Left = 80
-    Top = 191
-    object MenuItem1: TMenuItem
+    left = 80
+    top = 191
+    object mnuNameAddTitle: TMenuItem
       Caption = 'Add &Title'
-      OnClick = MenuItem1Click
+      OnClick = mnuNameAddTitleClick
     end
-    object MenuItem2: TMenuItem
+    object mniNameAddFirstname: TMenuItem
       Caption = 'Add &First name'
-      OnClick = MenuItem2Click
+      OnClick = mniNameAddFirstnameClick
     end
-    object MenuItem3: TMenuItem
+    object mniNameAddSurname: TMenuItem
       Caption = 'Add &Surname'
-      OnClick = MenuItem3Click
+      OnClick = mniNameAddSurnameClick
     end
-    object MenuItem4: TMenuItem
-      Caption = 'Add &Sufix'
-      OnClick = MenuItem4Click
+    object mniNameAddSuffix: TMenuItem
+      Caption = 'Add &Suffix'
+      OnClick = mniNameAddSuffixClick
     end
   end
   object mnuNameMain: TMainMenu
-    Left = 208
-    Top = 88
+    left = 208
+    top = 88
     object mniNameRepeat: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114
@@ -363,30 +367,30 @@ object frmEditName: TfrmEditName
       object mniNameTitleAdd: TMenuItem
         Caption = 'Add &Title'
         ShortCut = 24660
-        OnClick = MenuItem1Click
+        OnClick = mnuNameAddTitleClick
       end
       object mniNameGivenNameAdd: TMenuItem
         Caption = 'Add &First name'
         ShortCut = 24656
-        OnClick = MenuItem2Click
+        OnClick = mniNameAddFirstnameClick
       end
       object mniNameSurnameAdd: TMenuItem
         Caption = 'Add &Surname'
         ShortCut = 24654
-        OnClick = MenuItem3Click
+        OnClick = mniNameAddSurnameClick
       end
       object mniNameSuffixAdd: TMenuItem
         Caption = 'Add Sufi&x'
         ShortCut = 24664
-        OnClick = MenuItem4Click
+        OnClick = mniNameAddSuffixClick
       end
     end
   end
   object imglSex: TImageList
     Height = 24
     Width = 24
-    Left = 272
-    Top = 80
+    left = 272
+    top = 80
     Bitmap = {
       4C69030000001800000018000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -608,7 +612,7 @@ object frmEditName: TfrmEditName
     }
   end
   object ActionList1: TActionList
-    Left = 247
-    Top = 24
+    left = 247
+    top = 24
   end
 end

@@ -320,6 +320,10 @@ msgstr ""
 msgid "may"
 msgstr ""
 
+#: cls_translation.rsnameaka
+msgid "AKA"
+msgstr ""
+
 #: cls_translation.rsnamegivenname
 #, fuzzy
 msgctxt "cls_translation.rsnamegivenname"
@@ -2293,10 +2297,6 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
-#: tfrmeditdocuments.caption
-msgid "Modification de document"
-msgstr ""
-
 #: tfrmeditdocuments.chbdocumentprefered.caption
 msgctxt "tfrmeditdocuments.chbdocumentprefered.caption"
 msgid "Prefered"
@@ -2359,10 +2359,6 @@ msgstr "Passwort"
 msgctxt "tfrmeditevents.ajoutertemoin.caption"
 msgid "&Ajouter"
 msgstr "&Anfügen"
-
-#: tfrmeditevents.caption
-msgid "Edit Events"
-msgstr ""
 
 #: tfrmeditevents.l0.hint
 msgctxt "tfrmeditevents.l0.hint"
@@ -2527,10 +2523,6 @@ msgctxt "tfrmeditevents.yy.text"
 msgid "YY"
 msgstr ""
 
-#: tfrmeditname.caption
-msgid "Modification de Nom"
-msgstr ""
-
 #: tfrmeditname.cbxsex.itemsex[0].caption
 msgid "Unknown"
 msgstr "Unbekannt"
@@ -2548,8 +2540,9 @@ msgctxt "tfrmeditname.edtname.text"
 msgid "edtName"
 msgstr ""
 
-#: tfrmeditname.edtprefered.text
-msgid "edtPrefered"
+#: tfrmeditname.edtprefered.caption
+msgctxt "tfrmeditname.edtprefered.caption"
+msgid "Prefered"
 msgstr ""
 
 #: tfrmeditname.edtprefered2.text
@@ -2573,39 +2566,29 @@ msgctxt "tfrmeditname.lbltype.caption"
 msgid "Type:"
 msgstr "Art:"
 
-#: tfrmeditname.menuitem1.caption
-#, fuzzy
-#| msgid "Ajouter &Titre"
-msgctxt "tfrmeditname.menuitem1.caption"
-msgid "Add &Title"
-msgstr "&Titel hinzufügen"
-
-#: tfrmeditname.menuitem2.caption
-#, fuzzy
-#| msgid "Ajouter &Prénom"
-msgctxt "tfrmeditname.menuitem2.caption"
-msgid "Add &First name"
-msgstr "&Vorname hinzufügen"
-
-#: tfrmeditname.menuitem3.caption
-#, fuzzy
-#| msgid "Ajouter &Nom"
-msgctxt "tfrmeditname.menuitem3.caption"
-msgid "Add &Surname"
-msgstr "&Name hinzufügen"
-
-#: tfrmeditname.menuitem4.caption
-#, fuzzy
-#| msgid "Ajouter &Suffixe"
-msgctxt "tfrmeditname.menuitem4.caption"
-msgid "Add &Sufix"
-msgstr "&Suffix hinzufügen"
-
 #: tfrmeditname.mniname.caption
 #, fuzzy
 msgctxt "tfrmeditname.mniname.caption"
 msgid "Name"
 msgstr "Name"
+
+#: tfrmeditname.mninameaddfirstname.caption
+#, fuzzy
+#| msgid "Ajouter &Prénom"
+msgctxt "tfrmeditname.mninameaddfirstname.caption"
+msgid "Add &First name"
+msgstr "&Vorname hinzufügen"
+
+#: tfrmeditname.mninameaddsuffix.caption
+msgid "Add &Suffix"
+msgstr ""
+
+#: tfrmeditname.mninameaddsurname.caption
+#, fuzzy
+#| msgid "Ajouter &Nom"
+msgctxt "tfrmeditname.mninameaddsurname.caption"
+msgid "Add &Surname"
+msgstr "&Name hinzufügen"
 
 #: tfrmeditname.mninamecitationadd.caption
 #, fuzzy
@@ -2672,6 +2655,13 @@ msgctxt "tfrmeditname.mninametitleadd.caption"
 msgid "Add &Title"
 msgstr "&Titel hinzufügen"
 
+#: tfrmeditname.mnunameaddtitle.caption
+#, fuzzy
+#| msgid "Ajouter &Titre"
+msgctxt "tfrmeditname.mnunameaddtitle.caption"
+msgid "Add &Title"
+msgstr "&Titel hinzufügen"
+
 #: tfrmeditname.tblnames.columns[0].title.caption
 #, fuzzy
 msgctxt "tfrmeditname.tblnames.columns[0].title.caption"
@@ -2681,10 +2671,6 @@ msgstr "Art"
 #: tfrmeditname.tblnames.columns[1].title.caption
 msgctxt "tfrmeditname.tblnames.columns[1].title.caption"
 msgid "Description"
-msgstr ""
-
-#: tfrmeditparents.caption
-msgid "Modification de Relation"
 msgstr ""
 
 #: tfrmeditparents.fraedtcitations1.popupmenu2.ajouter1.caption
@@ -2909,10 +2895,6 @@ msgstr "Ok"
 msgctxt "tfrmedittype.button2.caption"
 msgid "Annul."
 msgstr "Abbruch"
-
-#: tfrmedittype.caption
-msgid "Modification de type d'événement"
-msgstr ""
 
 #: tfrmedittype.label10.caption
 #, fuzzy
@@ -3438,10 +3420,6 @@ msgctxt "tfrmplace.btnplaceok.caption"
 msgid "Ok"
 msgstr "Ok"
 
-#: tfrmplace.caption
-msgid "Lieux"
-msgstr ""
-
 #: tfrmplace.combobox1.text
 msgid "ComboBox1"
 msgstr ""
@@ -3654,10 +3632,6 @@ msgstr ""
 msgctxt "tfrmsources.button1.caption"
 msgid "Ok"
 msgstr "Ok"
-
-#: tfrmsources.caption
-msgid "Form: Sources"
-msgstr ""
 
 #: tfrmsources.mnisourceadd.caption
 msgid "&Add ..."
@@ -4071,12 +4045,6 @@ msgctxt "tfrmstemmamainform.btnseparator2.caption"
 msgid "btnSeparator2"
 msgstr ""
 
-#: tfrmstemmamainform.caption
-#, fuzzy
-msgctxt "tfrmstemmamainform.caption"
-msgid "Stemma"
-msgstr "Sind sie sicher, daß sie STEMMA beenden möchten ?"
-
 #: tfrmstemmamainform.checkbox1.caption
 msgctxt "tfrmstemmamainform.checkbox1.caption"
 msgid "CheckBox1"
@@ -4218,10 +4186,6 @@ msgstr ""
 msgctxt "tfrmtypes.button1.caption"
 msgid "Ok"
 msgstr "Ok"
-
-#: tfrmtypes.caption
-msgid "Types d'événements"
-msgstr ""
 
 #: tfrmtypes.menuitem2.caption
 msgctxt "tfrmtypes.menuitem2.caption"
