@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, Menus, Spin, Buttons, IniFiles, Process;
+  ExtCtrls, Menus, Spin, Buttons;
 
 type
   TenumDocumentsEditMode = (
@@ -65,7 +65,7 @@ var
 implementation
 
 uses
-  frm_Main, cls_Translation, dm_GenData, frm_ShowImage, frm_Names;
+  frm_Main, cls_Translation, dm_GenData, frm_ShowImage, frm_Names, LCLIntf;
 
 
 { TfrmEditDocuments }
@@ -162,8 +162,6 @@ end;
 
 procedure TfrmEditDocuments.btnDisplayClick(Sender: TObject);
 var
-  ini: TIniFile;
-  pdf: string;
   lImageMemoText: TCaption;
 begin
   if length(edtFilename.Text) = 0 then
@@ -202,20 +200,7 @@ begin
   else
   begin
     if AnsiPos('.PDF', edtFilename.Text) > 0 then
-    begin
-      Ini := TIniFile.Create(iniFileName);
-      pdf := ini.ReadString('Parametres', 'PDF',
-        'C:\Program Files (x86)\Adobe\Reader 10.0\Reader\AcroRd32.exe');
-      with TProcess.Create(nil) do
-        try
-          Parameters.Text := pdf + ' ' + edtFilename.Text;
-          Execute;
-          ini.WriteString('Parametres', 'PDF', pdf);
-        finally
-          Free;
-        end;
-      Ini.Free;
-    end
+      OpenDocument(edtFilename.Text)
     else
     begin
       frmShowImage.Caption := edtFilename.Text;

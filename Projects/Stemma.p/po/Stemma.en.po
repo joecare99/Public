@@ -2381,6 +2381,10 @@ msgctxt "tfrmeditevents.ajoutertemoin.caption"
 msgid "&Ajouter"
 msgstr "&Add"
 
+#: tfrmeditevents.caption
+msgid "Edit Events"
+msgstr ""
+
 #: tfrmeditevents.l0.hint
 msgctxt "tfrmeditevents.l0.hint"
 msgid "['v' ou 'av' ou '<' ou 'ap' ou '>'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]['au' ou 'et' ou 'ou'][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]"
@@ -2543,14 +2547,19 @@ msgctxt "tfrmeditevents.tableautemoins.columns[3].title.caption"
 msgid "X"
 msgstr ""
 
-#: tfrmeditevents.x.text
-msgctxt "tfrmeditevents.x.text"
-msgid "X"
-msgstr ""
+#: tfrmeditevents.x.caption
+#, fuzzy
+msgctxt "tfrmeditevents.x.caption"
+msgid "Prefered"
+msgstr "Prefered"
 
 #: tfrmeditevents.yy.text
 msgctxt "tfrmeditevents.yy.text"
 msgid "YY"
+msgstr ""
+
+#: tfrmeditname.caption
+msgid "Modification de Nom"
 msgstr ""
 
 #: tfrmeditname.cbxsex.itemsex[0].caption
@@ -2691,6 +2700,10 @@ msgstr "Type"
 #: tfrmeditname.tblnames.columns[1].title.caption
 msgctxt "tfrmeditname.tblnames.columns[1].title.caption"
 msgid "Description"
+msgstr ""
+
+#: tfrmeditparents.caption
+msgid "Modification de Relation"
 msgstr ""
 
 #: tfrmeditparents.fraedtcitations1.popupmenu2.ajouter1.caption
@@ -2954,9 +2967,11 @@ msgctxt "tfrmedittype.t.text"
 msgid "T"
 msgstr ""
 
-#: tfrmeditwitness.caption
-msgid "Modification d'un témoin"
-msgstr ""
+#: tfrmeditwitness.chbprefered.caption
+#, fuzzy
+msgctxt "tfrmeditwitness.chbprefered.caption"
+msgid "Prefered"
+msgstr "Prefered"
 
 #: tfrmeditwitness.edtname.text
 #, fuzzy
@@ -3572,6 +3587,10 @@ msgctxt "tfrmrepository.tableaudepots.columns[5].title.caption"
 msgid "Utilisation"
 msgstr ""
 
+#: tfrmselectdialog.caption
+msgid "frmSelectDialog"
+msgstr ""
+
 #: tfrmselectdialog.combobox1.hint
 msgid "Please select ..."
 msgstr "Please select ..."
@@ -4076,6 +4095,12 @@ msgctxt "tfrmstemmamainform.btnseparator2.caption"
 msgid "btnSeparator2"
 msgstr ""
 
+#: tfrmstemmamainform.caption
+#, fuzzy
+msgctxt "tfrmstemmamainform.caption"
+msgid "Stemma"
+msgstr "Stemma"
+
 #: tfrmstemmamainform.checkbox1.caption
 msgctxt "tfrmstemmamainform.checkbox1.caption"
 msgid "CheckBox1"
@@ -4213,6 +4238,10 @@ msgstr ""
 msgctxt "tfrmtypes.button1.caption"
 msgid "Ok"
 msgstr "Ok"
+
+#: tfrmtypes.caption
+msgid "Types d'événements"
+msgstr ""
 
 #: tfrmtypes.menuitem2.caption
 #, fuzzy

@@ -73,7 +73,7 @@ var
 implementation
 
 uses
-  frm_Main, cls_Translation, dm_GenData, LCLIntf;
+  frm_Main, frm_SelectDialog ,cls_Translation, dm_GenData, LCLIntf;
 
 procedure GetSourceData(const lidSource: longint; out lQuality: longint;
   out lInformation: string; out lDescription: string; out lTitle: string;
@@ -283,11 +283,16 @@ end;
 procedure TfrmEditSource.Ajouter1Click(Sender: TObject);
 var
   d: string;
+  lStL: TStrings;
 begin
   // Ajouter un dépot
   d := '0';
-  if InputQuery(Translation.Items[47], Translation.Items[46], d) then
+  lstl:=TStringlist.Create;
+  dmGenData.FillDepotsSL(lStL);
+  try
+  if SelectDialog(Translation.Items[47], Translation.Items[46],lStL, d) then
    begin
+
     dmGenData.Query1.SQL.Text := 'SELECT D.T FROM D WHERE D.no=' + d;
     dmGenData.Query1.Open;
     dmGenData.Query1.First;
@@ -303,6 +308,10 @@ begin
       PopulateDepots(idSource, TableauDepots);
      end;
    end;
+
+  finally
+    FreeAndNil(lStL);
+  end;
 end;
 
 procedure TfrmEditSource.btnOKClick(Sender: TObject);

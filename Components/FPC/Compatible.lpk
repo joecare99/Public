@@ -27,7 +27,7 @@
     <Description Value="Conpatibilitäts-units"/>
     <License Value="LGPL"/>
     <Version Major="1" Release="1"/>
-    <Files Count="5">
+    <Files Count="6">
       <Item1>
         <Filename Value="..\..\idee\Grafik\Win32Crt.pas"/>
         <UnitName Value="Win32Crt"/>
@@ -49,6 +49,10 @@
         <HasRegisterProc Value="True"/>
         <UnitName Value="Fra_Graph"/>
       </Item5>
+      <Item6>
+        <Filename Value="..\..\Idee\Grafik\unt_pasmouse.pas"/>
+        <UnitName Value="Unt_PasMouse"/>
+      </Item6>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

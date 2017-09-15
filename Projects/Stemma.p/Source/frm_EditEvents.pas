@@ -59,7 +59,7 @@ type
     mnuWitnes: TPopupMenu;
     Role: TEdit;
     TableauTemoins: TStringGrid;
-    X: TEdit;
+    X: TCheckBox;
     YY: TEdit;
     Y: TComboBox;
 
@@ -103,6 +103,28 @@ implementation
 uses
   frm_Events, frm_Main, dm_GenData, frm_Explorer, frm_EditWitness,
   frm_Names, cls_Translation;
+
+procedure GetEventData(var lidEvent: Integer;
+  out LidType: LongInt; out lidPlace:integer; out lPrefered: Boolean;
+  out lSDate: string; out lDate: string;
+  out lMemo: string; out sPlace: string);
+begin
+  with dmGenData.Query1 do begin
+Close;
+    SQL.text:='SELECT E.no, E.Y, E.L, E.M, E.X, E.PD, E.SD, L.L FROM E JOIN L ON L.no=E.L WHERE E.no=:idEvent';
+    ParamByName('idEvent').AsInteger:=lidEvent;
+    Open;
+    First;
+
+    LidType:=Fields[1].AsInteger;
+    lidPlace:=Fields[2].AsInteger;
+    lMemo:=Fields[3].AsString;
+    lPrefered:=Fields[4].AsBoolean;
+    lDate:=Fields[5].AsString;
+    lSDate:=Fields[6].AsString;
+    sPlace:=Fields[7].AsString;
+  end;
+end;
 
 function PreferedEventWitnessExists(const lidInd: LongInt;const lTypeKat:String): Boolean;
 
@@ -208,9 +230,11 @@ end;
 procedure TfrmEditEvents.FormShow(Sender: TObject);
 var
   sPlace,phrase, sArticle, sState, sCountry, sDetail,
-    sCity, sRegion, sEventType, lPhrase, lRoles:string;
-  lIdEvent: Integer;
-  lDSExists: Boolean;
+    sCity, sRegion, sEventType, lPhrase, lRoles, lMemo, lDate,
+    lSDate:string;
+  lidEvent, lidPlace: Integer;
+  lDSExists, lPrefered: Boolean;
+  LidType: LongInt;
 
   procedure FindTypeItem(FindTypeID:PtrInt);
   var   j:integer;
@@ -289,7 +313,7 @@ begin
      eEET_New:
         begin
         Y.ItemIndex:=0;
-        X.Text:='0';
+        X.Checked:=false;
      end;
      eEET_AddBirth:
         begin
@@ -297,10 +321,7 @@ begin
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(100);
         lDSExists:=PreferedEventWitnessExists(frmStemmaMainForm.iID, 'B');
-        if not lDSExists then
-           X.Text:='1'
-        else
-           X.Text:='0';
+        X.Checked:= not lDSExists;
      end;
      eEET_AddBaptism:
         begin
@@ -308,10 +329,7 @@ begin
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(110);
         lDSExists:=PreferedEventWitnessExists(frmStemmaMainForm.iID, 'B');
-        if not lDSExists then
-           X.Text:='1'
-        else
-           X.Text:='0';
+         X.Checked:= not lDSExists ;
      end;
      eEET_AddDeath:
 
@@ -320,10 +338,7 @@ begin
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(200);
         lDSExists:=PreferedEventWitnessExists(frmStemmaMainForm.iID, 'D');
-        if not lDSExists then
-           X.Text:='1'
-        else
-           X.Text:='0';
+         X.Checked:= not lDSExists ;
      end;
      eEET_AddBurial:
         begin
@@ -331,17 +346,14 @@ begin
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(210);
         lDSExists:=PreferedEventWitnessExists(frmStemmaMainForm.iID, 'D');
-        if not lDSExists then
-           X.Text:='1'
-        else
-           X.Text:='0';
+         X.Checked:= not lDSExists;
      end;
      end; {Case}
      // Trouver le type de témoin par défaut
 
      dmGenData.GetTypePhraseRole(idEventType,lPhrase,lRoles);
      if AnsiPos('|',lRoles)>0 then
-        TableauTemoins.Cells[1,1]:=ANSIToUTF8(Copy(lRoles,1,AnsiPos('|',dmGenData.Query1.Fields[0].AsString)-1))
+        TableauTemoins.Cells[1,1]:=ANSIToUTF8(Copy(lRoles,1,AnsiPos('|',lRoles)-1))
      else
         TableauTemoins.Cells[1,1]:=lRoles;
      TableauTemoins.Cells[2,1]:=frmStemmaMainForm.sID;
@@ -364,17 +376,13 @@ begin
   end
   else
      begin
-     dmGenData.Query1.Close;
-     dmGenData.Query1.SQL.text:='SELECT E.no, E.Y, E.L, E.M, E.X, E.PD, E.SD, L.L FROM E JOIN L ON L.no=E.L WHERE E.no=:idEvent';
-     dmGenData.Query1.ParamByName('idEvent').AsInteger:=frmEvents.idEvent;
-     dmGenData.Query1.Open;
-     dmGenData.Query1.First;
-     FindTypeItem(dmGenData.Query1.Fields[1].AsInteger);
-     No.Text:=dmGenData.Query1.Fields[0].AsString;
-     X.Text:=dmGenData.Query1.Fields[4].AsString;
-     fraMemo1.Text:=dmGenData.Query1.Fields[3].AsString;
+     lidEvent:=frmEvents.idEvent;
+     GetEventData(lidEvent, LidType,lidPlace, lPrefered,  lSDate, lDate, lMemo, sPlace);
+     FindTypeItem(LidType);
+     No.Value:=lidEvent;
+     X.Checked:=lPrefered;
+     fraMemo1.Text:=lMemo;
      // Aller chercher L0-L4 de L
-     sPlace:=dmGenData.Query1.Fields[7].AsString;
      DecodePlace(sPlace,sArticle ,sDetail,sCity,sRegion,sCountry,sState);
      LA.Text:=sArticle;
      L0.Text:=sDetail;
@@ -382,8 +390,8 @@ begin
      L2.Text:=sRegion;
      L3.text:=sCountry;
      L4.text:=sState;
-     fraDate1.Date:=dmGenData.Query1.Fields[5].AsString;
-     fraDate1.SortDate:=dmGenData.Query1.Fields[6].AsString;
+     fraDate1.Date:=lDate;
+     fraDate1.SortDate:=lSDate;
      // Aller chercher P, Role et témoins de W
      phrase:=PopulateTemoins(no.Text);
   end;
@@ -561,10 +569,10 @@ begin
      lInfo:=trim(fraMemo1.Text);
      lDate:=fraDate1.Date;
      lSortDate:=fraDate1.SortDate;
-     lPrefered:=X.Text='1';
+     lPrefered:=X.Checked;
      lidEvent:=no.Value;;
-     result:=dmGenData.SaveEventData(lPrefered, lidEvent, lIdPlace, lInfo, lDate,
-       lSortDate,idEventType);
+     result:=dmGenData.SaveEventData(lidEvent,idEventType,lIdPlace,lPrefered,  lInfo, lDate,
+       lSortDate);
 
         if No.Value=0 then
            begin
@@ -625,7 +633,7 @@ begin
      end;
      if  (lidInd>0) and
         ((lEvType='B') or ((lEvType='D'))) and
-        (dmGenData.Query1.Fields[1].AsInteger=1) and (X.Text='1') then
+        (dmGenData.Query1.Fields[1].AsInteger=1) and (X.Checked) then
         begin
         if frmStemmaMainForm.actWinExplorer.Checked then
           frmExplorer.UpdateIndexDates(lEvType,lDate,lidInd);

@@ -56,31 +56,6 @@ implementation
 
 uses Dialogs, dm_GenData, FMUtils, cls_Translation, frm_EditDocuments, frm_ShowImage, lclintf;
 
-function GetDocumentInfo(const lidDocument: Integer): string;
-var
-  lMemoText: string;
-begin
-  with dmGenData.Query2 do begin
-  SQL.Text := 'SELECT X.Z FROM X WHERE X.no=:idDocument';
-          ParamByName('idDocument').AsInteger:=lidDocument;
-          Open;
-          lMemoText:=Fields[0].AsString;
-          Close;
-    Result:=lMemoText;
-  end;
-end;
-
-procedure UpdateDocumentInfo(const lidDocument: integer; const lDocumentInfo: string);
-begin
-    with dmGenData.Query2 do begin
-    Close;
-      SQL.Text := 'UPDATE X SET Z=:Z WHERE X.no=:idDocument';
-      ParamByName('Z').AsString := lDocumentInfo;
-      ParamByName('idDocument').AsInteger := lidDocument;
-      ExecSQL;
-    end;
-end;
-
 {$R *.lfm}
 
 { TfraDocuments }
@@ -145,7 +120,7 @@ begin
         lidDocument:=ptrint(tblDocuments.Objects[0, tblDocuments.Row]); // Todo: idActDocument
         if tblDocuments.Cells[4, tblDocuments.Row] = Translation.Items[34] then
           begin
-            lMemoText:=GetDocumentInfo(lidDocument);
+            lMemoText:=dmGenData.GetDocumentInfo(lidDocument);
             frmShowImage.Caption := Translation.Items[34];
             frmShowImage.Image.Visible := False;
             frmShowImage.Memo.Visible := True;
@@ -157,7 +132,7 @@ begin
               begin
                 // Only if the memo was changed
                 lDocumentInfo := frmShowImage.Memo.Text;
-                UpdateDocumentInfo(idDocument, lDocumentInfo);
+                dmGenData.UpdateDocumentInfo(idDocument, lDocumentInfo);
               end;
           end
         else

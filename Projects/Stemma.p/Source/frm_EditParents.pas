@@ -92,6 +92,27 @@ implementation
 uses
    frm_Main, cls_Translation, dm_GenData, frm_Names;
 
+function GetRelationOtherParent(const lidChild: integer;const lpSex: String; out parent2: integer;
+  out lName: string): boolean;
+var
+  lPrefParExists: boolean;
+begin
+  with dmGenData.Query1 do begin
+  SQL.Text:='SELECT R.no, R.B, N.N FROM R JOIN I ON R.B=I.no JOIN N on N.I=R.B WHERE I.S=:Sex AND R.X=1 AND N.X=1 AND R.A=:idChild';
+         ParamByName('Sex').AsString:=lpSex;
+         ParamByName('idChild').AsInteger:=lidChild;
+         Open;
+         lPrefParExists := not EOF;
+         if lPrefParExists then
+            begin;
+            lName:=Fields[2].AsString;
+            parent2:=Fields[1].AsInteger;
+         end;
+         close;
+    Result:=lPrefParExists;
+  end;
+end;
+
 { TfrmEditParents }
 
 procedure TfrmEditParents.FormShow(Sender: TObject);
@@ -294,40 +315,33 @@ begin
   If dmGenData.IsValidIndividuum(idB.Value) then
      begin
       lStrTmp:=dmGenData.GetSexOfInd(idB.Value);
-     dmGenData.Query1.SQL.Text:='SELECT R.no, R.B FROM R JOIN I ON R.B=I.no WHERE I.S=:Sex  AND R.X=1 AND R.A=:idIndA';
-     dmgenData.Query1.ParamByName('Sex').AsString:=lStrTmp;
-     dmgenData.Query1.ParamByName('idIndA').AsInteger:=idA.Value;
-     dmGenData.Query1.Open;
-     prefered:=not dmGenData.Query1.EOF;
+      prefered:=not dmgendata.CheckPrefParentExists(lStrTmp,idA.Value);
   end;
   if X.Checked or ((no.Value=0) and prefered) then
      begin
      if lStrTmp='F' then lStrTmp:='M' else lStrTmp:='F';
-     dmGenData.Query1.SQL.Text:='SELECT R.no, R.B, N.N FROM R JOIN I ON R.B=I.no JOIN N on N.I=R.B WHERE I.S=:Sex AND R.X=1 AND N.X=1 AND R.A=:idChild';
-     dmGendata.Query1.ParamByName('Sex').AsString:=lStrTmp;
-     dmGendata.Query1.ParamByName('idChild').AsInteger:=idA.Value;
-     dmGenData.Query1.Open;
-     lPrefParExists := not dmGenData.Query1.EOF;
-     if lPrefParExists then
-        begin;
-        lStrTmp:=dmGenData.Query1.Fields[2].AsString;
-        parent2:=dmGenData.Query1.Fields[1].AsInteger;
-     end;
-     dmGenData.Query1.close;
+
+     lidChild:=idA.Value;
+     lPrefParExists:=GetRelationOtherParent(lidChild,lStrTmp, parent2, lStrTmp);
      parent1:=idB.Value; //Done -oJC : Convert to Integer
 
      If lPrefParExists then
         begin
+
+        with dmGenData.Query1 do begin
+          Close;
         // Vérifier qu'il n'y idA pas déjà une union entre ces deux parents
-        dmGenData.Query1.SQL.text:='SELECT COUNT(E.no) FROM E JOIN W ON W.E=E.no JOIN Y on E.Y=Y.no WHERE (W.I=:idParentA OR W.I=:idParentB) AND W.X=1 AND E.X=1 AND Y.Y=''M'' GROUP BY E.no';
-        dmGendata.Query1.ParamByName('idParentA').AsInteger:=idA.Value;
-        dmGendata.Query1.ParamByName('idParentB').AsInteger:=parent1;
-        dmGenData.Query1.Open;
-        existe:=false;
-        while not dmGenData.Query1.EOF do
-           begin
-           existe:=existe or (dmGenData.Query1.Fields[0].AsInteger=2);
-           dmGenData.Query1.Next;
+          SQL.text:='SELECT COUNT(E.no) FROM E JOIN W ON W.E=E.no JOIN Y on E.Y=Y.no WHERE (W.I=:idChild OR W.I=:idParentB) AND W.X=1 AND E.X=1 AND Y.Y=''M'' GROUP BY E.no';
+          ParamByName('idChild').AsInteger:=lidChild;
+          ParamByName('idParentB').AsInteger:=parent1;
+          Open;
+          existe:=false;
+          while not EOF do
+             begin
+             existe:=existe or (Fields[0].AsInteger=2);
+             Next;
+          end;
+          Close;
         end;
         if not existe then
            if Application.MessageBox(Pchar(Translation.Items[300]+
@@ -337,21 +351,14 @@ begin
               begin
               // Unir les parents
               // Ajouter l'événement mariage
-              dmGenData.Query1.SQL.text:='INSERT INTO E (Y, L, X) VALUES (300, 1, 1)';
-              dmGenData.Query1.ExecSQL;
-              no_eve:=dmGenData.GetLastIDOfTable('E');
+              no_eve:=dmgenData.SaveEventData(0,300,1,true);
               // Ajouter les témoins
-              dmGenData.Query1.SQL.text:='INSERT INTO W (I, E, X, R)'+
-                ' VALUES (:idParent, :idEvent, 1, ''CONJOINT'')';
-	      dmGenData.Query1.ParamByName('idEvent').AsInteger:=no_eve;
-	      dmGenData.Query1.ParamByName('idParent').AsInteger:=parent1;
-              dmGenData.Query1.ExecSQL;
-	      dmGenData.Query1.ParamByName('idParent').AsInteger:=parent2;
-              dmGenData.Query1.ExecSQL;
+              dmGenData.AppendWitness('CONJOINT','',parent1,no_eve,true);
+              dmGenData.AppendWitness('CONJOINT','',parent2,no_eve,true);
               // Ajouter les références
               // noter que l'on doit ajouter les références (frmStemmaMainForm.Code.Text='X')
               // sur l'événement # frmStemmaMainForm.no.Text
-              dmGenData.PutCode('P',no_eve);
+              //dmGenData.PutCode('P',no_eve);
               FidEvent:=no_Eve;
               // Sauvegarder les modifications
               dmGenData.SaveModificationTime(parent1);
@@ -371,7 +378,6 @@ begin
            end;
      end;
   end;
-  dmGenData.Query1.Close;
   lIsDefaultPhrase:= Label6.Visible;
 
   lidRelation:=no.Value;

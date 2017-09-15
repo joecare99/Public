@@ -12,6 +12,7 @@ object frmEditWitness: TfrmEditWitness
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
+  Visible = False
   object pnlTop: TPanel
     Left = 0
     Height = 80
@@ -79,8 +80,8 @@ object frmEditWitness: TfrmEditWitness
       TabOrder = 3
       Visible = False
     end
-    object edtPrefered: TSpinEdit
-      Left = 376
+    object edtWitnessNo: TSpinEdit
+      Left = 200
       Height = 23
       Top = 48
       Width = 80
@@ -89,14 +90,14 @@ object frmEditWitness: TfrmEditWitness
       TabOrder = 4
       Visible = False
     end
-    object edtWitnessNo: TSpinEdit
-      Left = 200
-      Height = 23
+    object chbPrefered: TCheckBox
+      Left = 376
+      Height = 19
       Top = 48
-      Width = 80
-      MaxValue = 0
-      TabStop = False
+      Width = 64
+      Caption = 'Prefered'
       TabOrder = 5
+      TabStop = False
       Visible = False
     end
   end
@@ -201,8 +202,8 @@ object frmEditWitness: TfrmEditWitness
     end
   end
   object MainMenu1: TMainMenu
-    Left = 25
-    Top = 200
+    left = 25
+    top = 200
     object MenuItem2: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114

@@ -11,8 +11,6 @@ object frmEditParents: TfrmEditParents
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.4'
-  Visible = False
   object Label4: TLabel
     Left = 10
     Height = 15
@@ -104,7 +102,7 @@ object frmEditParents: TfrmEditParents
   object pnlParentBottom: TPanel
     Left = 0
     Height = 52
-    Top = 434
+    Top = 454
     Width = 625
     Align = alBottom
     BevelOuter = bvNone
@@ -139,7 +137,7 @@ object frmEditParents: TfrmEditParents
   end
   inline fraEdtCitations1: TfraEdtCitations
     Height = 155
-    Top = 279
+    Top = 299
     Width = 625
     Align = alBottom
     ClientHeight = 155
@@ -155,8 +153,8 @@ object frmEditParents: TfrmEditParents
       ClientHeight = 149
     end
     inherited PopupMenu2: TPopupMenu
-      left = 108
-      top = 212
+      Left = 108
+      Top = 212
       object Ajouter1: TMenuItem[0]
         Caption = '&Ajouter'
         ShortCut = 118
@@ -289,7 +287,7 @@ object frmEditParents: TfrmEditParents
   object pnlParentDate: TPanel
     Left = 0
     Height = 67
-    Top = 212
+    Top = 232
     Width = 625
     Align = alBottom
     BevelOuter = bvNone
@@ -341,8 +339,8 @@ object frmEditParents: TfrmEditParents
     end
   end
   object MainMenu1: TMainMenu
-    left = 16
-    top = 248
+    Left = 16
+    Top = 248
     object MenuItem6: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114

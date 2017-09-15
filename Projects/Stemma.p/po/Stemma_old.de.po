@@ -292,6 +292,10 @@ msgstr ""
 msgid "may"
 msgstr ""
 
+#: cls_translation.rsnameaka
+msgid "AKA"
+msgstr ""
+
 #: cls_translation.rsnamegivenname
 msgctxt "cls_translation.rsnamegivenname"
 msgid "First name"
@@ -2243,10 +2247,6 @@ msgstr ""
 msgid "Display"
 msgstr ""
 
-#: tfrmeditdocuments.caption
-msgid "Modification de document"
-msgstr ""
-
 #: tfrmeditdocuments.chbdocumentprefered.caption
 msgctxt "tfrmeditdocuments.chbdocumentprefered.caption"
 msgid "Prefered"
@@ -2469,9 +2469,9 @@ msgctxt "tfrmeditevents.tableautemoins.columns[3].title.caption"
 msgid "X"
 msgstr ""
 
-#: tfrmeditevents.x.text
-msgctxt "tfrmeditevents.x.text"
-msgid "X"
+#: tfrmeditevents.x.caption
+msgctxt "tfrmeditevents.x.caption"
+msgid "Prefered"
 msgstr ""
 
 #: tfrmeditevents.yy.text
@@ -2500,8 +2500,9 @@ msgctxt "tfrmeditname.edtname.text"
 msgid "edtName"
 msgstr ""
 
-#: tfrmeditname.edtprefered.text
-msgid "edtPrefered"
+#: tfrmeditname.edtprefered.caption
+msgctxt "tfrmeditname.edtprefered.caption"
+msgid "Prefered"
 msgstr ""
 
 #: tfrmeditname.edtprefered2.text
@@ -2524,40 +2525,30 @@ msgctxt "tfrmeditname.lbltype.caption"
 msgid "Type:"
 msgstr ""
 
-#: tfrmeditname.menuitem1.caption
-#, fuzzy
-#| msgid "Ajouter &Titre"
-msgctxt "tfrmeditname.menuitem1.caption"
-msgid "Add &Title"
-msgstr "&Titel hinzufügen"
-
-#: tfrmeditname.menuitem2.caption
-#, fuzzy
-#| msgid "Ajouter &Prénom"
-msgctxt "tfrmeditname.menuitem2.caption"
-msgid "Add &First name"
-msgstr "&Vorname hinzufügen"
-
-#: tfrmeditname.menuitem3.caption
-#, fuzzy
-#| msgid "Ajouter &Nom"
-msgctxt "tfrmeditname.menuitem3.caption"
-msgid "Add &Surname"
-msgstr "&Name hinzufügen"
-
-#: tfrmeditname.menuitem4.caption
-#, fuzzy
-#| msgid "Ajouter &Suffixe"
-msgctxt "tfrmeditname.menuitem4.caption"
-msgid "Add &Sufix"
-msgstr "&Suffix hinzufügen"
-
 #: tfrmeditname.mniname.caption
 #, fuzzy
 #| msgid "Nom"
 msgctxt "tfrmeditname.mniname.caption"
 msgid "Name"
 msgstr "Name"
+
+#: tfrmeditname.mninameaddfirstname.caption
+#, fuzzy
+#| msgid "Ajouter &Prénom"
+msgctxt "tfrmeditname.mninameaddfirstname.caption"
+msgid "Add &First name"
+msgstr "&Vorname hinzufügen"
+
+#: tfrmeditname.mninameaddsuffix.caption
+msgid "Add &Suffix"
+msgstr ""
+
+#: tfrmeditname.mninameaddsurname.caption
+#, fuzzy
+#| msgid "Ajouter &Nom"
+msgctxt "tfrmeditname.mninameaddsurname.caption"
+msgid "Add &Surname"
+msgstr "&Name hinzufügen"
 
 #: tfrmeditname.mninamecitationadd.caption
 #, fuzzy
@@ -2621,6 +2612,13 @@ msgstr "&Name hinzufügen"
 #, fuzzy
 #| msgid "Ajouter &Titre"
 msgctxt "tfrmeditname.mninametitleadd.caption"
+msgid "Add &Title"
+msgstr "&Titel hinzufügen"
+
+#: tfrmeditname.mnunameaddtitle.caption
+#, fuzzy
+#| msgid "Ajouter &Titre"
+msgctxt "tfrmeditname.mnunameaddtitle.caption"
 msgid "Add &Title"
 msgstr "&Titel hinzufügen"
 
@@ -2857,10 +2855,6 @@ msgctxt "tfrmedittype.button2.caption"
 msgid "Annul."
 msgstr "Abbruch"
 
-#: tfrmedittype.caption
-msgid "Modification de type d'événement"
-msgstr ""
-
 #: tfrmedittype.label10.caption
 msgctxt "tfrmedittype.label10.caption"
 msgid "Titre:"
@@ -2893,8 +2887,9 @@ msgctxt "tfrmedittype.t.text"
 msgid "T"
 msgstr ""
 
-#: tfrmeditwitness.caption
-msgid "Modification d'un témoin"
+#: tfrmeditwitness.chbprefered.caption
+msgctxt "tfrmeditwitness.chbprefered.caption"
+msgid "Prefered"
 msgstr ""
 
 #: tfrmeditwitness.edtname.text
@@ -3369,10 +3364,6 @@ msgctxt "tfrmplace.btnplaceok.caption"
 msgid "Ok"
 msgstr "Ok"
 
-#: tfrmplace.caption
-msgid "Lieux"
-msgstr ""
-
 #: tfrmplace.combobox1.text
 msgid "ComboBox1"
 msgstr ""
@@ -3502,6 +3493,10 @@ msgctxt "tfrmrepository.tableaudepots.columns[5].title.caption"
 msgid "Utilisation"
 msgstr "Verwendung"
 
+#: tfrmselectdialog.caption
+msgid "frmSelectDialog"
+msgstr ""
+
 #: tfrmselectdialog.combobox1.hint
 msgid "Please select ..."
 msgstr ""
@@ -3587,10 +3582,6 @@ msgstr ""
 msgctxt "tfrmsources.button1.caption"
 msgid "Ok"
 msgstr "Ok"
-
-#: tfrmsources.caption
-msgid "Form: Sources"
-msgstr ""
 
 #: tfrmsources.mnisourceadd.caption
 msgid "&Add ..."

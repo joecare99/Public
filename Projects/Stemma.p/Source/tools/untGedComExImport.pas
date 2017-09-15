@@ -77,15 +77,28 @@ end;
 
 function TClsGedCom.LoadFromStream(aStream: TStream): boolean;
 //var lStr:String;
+var
+  lStr, lEncoding: String;
+  lSl: TStringList;
+  lEncoded: boolean;
 begin
   result := false;
   // Adjust/Guess-Encoding
-
+  setlength(lStr,aStream.Size);
+  aStream.ReadBuffer(lStr[1],aStream.size);
+  lEncoding:=GuessEncoding(lStr);
   // Transfer Data to Stringlist
-
+  lSl:=Tstringlist.Create;
+  try
+  lSl.Text:=ConvertEncodingToUTF8(lStr,lEncoding,lEncoded);
   // Do basic Hashing in the Stringlist
   // Go through the Stringlist and Mark the Entries by Their ID
   // Number Circle: LSB-LoNibble Gives the Type see TenumGedComIDTypes
+
+
+  finally
+
+  end;
 end;
 
 function TClsGedCom.SaveToFile(Filename: String): boolean;

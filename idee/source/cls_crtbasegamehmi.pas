@@ -72,19 +72,31 @@ begin
   // Header
   console.GotoXY(1,1);
   Write('#'+StringOfChar('=',78)+'#');
+   console.GotoXY(1,2);
   Write('['+StringOfChar(' ',78)+']');
+   console.GotoXY(1,3);
   Write('#'+StringOfChar('=',78)+'#');
   // playfield & Extra
-  console.GotoXY(1,3);
+  console.GotoXY(1,4);
   Write('#'+StringOfChar('=',58)+'#'+StringOfChar('=',19)+'#');
   for i := 4 to 41 do
+   begin
+     console.GotoXY(1,i+1);
    if i mod 2=0 then
    Write('['+StringOfChar(' ',58)+'!'+StringOfChar(' ',19)+']') else
    Write(']'+StringOfChar(' ',58)+'$'+StringOfChar(' ',19)+'[');
+
+   end;
+  console.GotoXY(1,43);
   Write('#'+StringOfChar('=',58)+'#'+StringOfChar('=',19)+'#');
    // Status
   for i := 43 to 48 do
+   begin
+   console.GotoXY(1,i+1);
    Write('!'+StringOfChar(' ',78)+'!');
+
+   end;
+  console.GotoXY(1,50);
   Write('+'+StringOfChar('-',78)+'+');
 end;
 

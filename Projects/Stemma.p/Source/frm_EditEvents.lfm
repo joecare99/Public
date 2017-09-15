@@ -7,13 +7,12 @@ object frmEditEvents: TfrmEditEvents
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Edit Events'
-  ClientHeight = 730
+  ClientHeight = 710
   ClientWidth = 631
   Menu = mnuEventsMain
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.4'
-  Visible = False
+  LCLVersion = '1.9.0.0'
   object Panel1: TPanel
     Left = 0
     Height = 75
@@ -24,7 +23,7 @@ object frmEditEvents: TfrmEditEvents
     Caption = 'Panel1'
     ClientHeight = 75
     ClientWidth = 631
-    TabOrder = 13
+    TabOrder = 12
     object LA: TEdit
       Left = 88
       Height = 23
@@ -148,16 +147,6 @@ object frmEditEvents: TfrmEditEvents
     Text = 'Role'
     Visible = False
   end
-  object X: TEdit
-    Left = 360
-    Height = 23
-    Top = 9
-    Width = 80
-    TabStop = False
-    TabOrder = 3
-    Text = 'X'
-    Visible = False
-  end
   object TableauTemoins: TStringGrid
     Left = 88
     Height = 104
@@ -210,7 +199,7 @@ object frmEditEvents: TfrmEditEvents
     Top = 9
     Width = 56
     TabStop = False
-    TabOrder = 4
+    TabOrder = 3
     Text = 'YY'
     Visible = False
   end
@@ -223,7 +212,7 @@ object frmEditEvents: TfrmEditEvents
     BevelOuter = bvNone
     ClientHeight = 52
     ClientWidth = 631
-    TabOrder = 5
+    TabOrder = 4
     object Button1: TBitBtn
       Left = 399
       Height = 40
@@ -257,7 +246,7 @@ object frmEditEvents: TfrmEditEvents
     Top = 8
     Width = 80
     TabStop = False
-    TabOrder = 6
+    TabOrder = 5
     Visible = False
   end
   inline fraEdtCitations1: TfraEdtCitations
@@ -267,7 +256,7 @@ object frmEditEvents: TfrmEditEvents
     Align = alBottom
     ClientHeight = 136
     ClientWidth = 631
-    TabOrder = 7
+    TabOrder = 6
     inherited TableauCitations: TStringGrid
       Height = 130
       Width = 530
@@ -296,7 +285,7 @@ object frmEditEvents: TfrmEditEvents
     Align = alBottom
     ClientHeight = 132
     ClientWidth = 625
-    TabOrder = 8
+    TabOrder = 7
     inherited tblDocuments: TStringGrid
       Left = 86
       Height = 126
@@ -326,7 +315,7 @@ object frmEditEvents: TfrmEditEvents
     Align = alBottom
     ClientHeight = 70
     ClientWidth = 631
-    TabOrder = 9
+    TabOrder = 8
     DesignLeft = 1113
     DesignTop = 160
     inherited pnlPhraseLeft: TPanel
@@ -351,7 +340,7 @@ object frmEditEvents: TfrmEditEvents
     Anchors = [akTop, akLeft, akRight]
     ClientHeight = 17
     ClientWidth = 631
-    TabOrder = 10
+    TabOrder = 9
     inherited pnlDateLeft: TPanel
       Left = 6
       Height = 5
@@ -399,7 +388,7 @@ object frmEditEvents: TfrmEditEvents
     Align = alBottom
     ClientHeight = 65
     ClientWidth = 631
-    TabOrder = 11
+    TabOrder = 10
     inherited pnlMemoLeft: TPanel
       Height = 59
       ClientHeight = 59
@@ -412,9 +401,19 @@ object frmEditEvents: TfrmEditEvents
       )
     end
   end
+  object X: TCheckBox
+    Left = 360
+    Height = 19
+    Top = 9
+    Width = 64
+    Caption = 'Prefered'
+    TabOrder = 13
+    TabStop = False
+    Visible = False
+  end
   object mnuWitnes: TPopupMenu
-    left = 68
-    top = 106
+    Left = 68
+    Top = 106
     object AjouterTemoin: TMenuItem
       Caption = '&Ajouter'
       ShortCut = 115
@@ -432,8 +431,8 @@ object frmEditEvents: TfrmEditEvents
     end
   end
   object mnuEventsMain: TMainMenu
-    left = 16
-    top = 72
+    Left = 16
+    Top = 72
     object MenuItem12: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114

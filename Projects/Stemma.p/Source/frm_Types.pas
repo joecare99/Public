@@ -162,17 +162,8 @@ begin
            roles:=role;
      temp:=Copy(temp,pos2+1,length(temp));
   end;
-  dmGenData.Query1.SQL.Clear;
-  dmGenData.Query1.SQL.Add('UPDATE Y SET T='''+
-     AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI((Sender as TStringGrid).Cells[2,(Sender as TStringGrid).Row]),'\','\\'),'"','\"'),'''','\''')+
-     ''', Y='''+
-     AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI((Sender as TStringGrid).Cells[3,(Sender as TStringGrid).Row]),'\','\\'),'"','\"'),'''','\''')+
-     ''', P='''+
-     AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI((Sender as TStringGrid).Cells[4,(Sender as TStringGrid).Row]),'\','\\'),'"','\"'),'''','\''')+
-     ''', R='''+
-     AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Roles),'\','\\'),'"','\"'),'''','\''')+
-     ''' WHERE no='+(Sender as TStringGrid).Cells[1,(Sender as TStringGrid).Row]);
-  dmGenData.Query1.ExecSQL;
+  with Sender as TStringGrid do
+    dmGendata.SaveTypeData(ptrint(Objects[1,Row]),Cells[2,Row],Cells[4,Row],Cells[3,Row],Roles);
 end;
 
 function TfrmTypes.GetIdAktType: integer;

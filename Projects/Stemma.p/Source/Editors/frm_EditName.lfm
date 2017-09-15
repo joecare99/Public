@@ -1,19 +1,19 @@
 object frmEditName: TfrmEditName
   Left = 264
-  Height = 582
+  Height = 0
   Top = 563
-  Width = 629
+  Width = 120
   ActiveControl = tblNames
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de Nom'
-  ClientHeight = 582
-  ClientWidth = 629
+  ClientHeight = 0
+  ClientWidth = 120
   KeyPreview = True
   Menu = mnuNameMain
   OnShow = FormShow
   Position = poScreenCenter
-  Visible = False
+  LCLVersion = '1.9.0.0'
   object tblNames: TStringGrid
     Left = 88
     Height = 114
@@ -53,15 +53,15 @@ object frmEditName: TfrmEditName
   object pnlBottom: TPanel
     Left = 0
     Height = 52
-    Top = 530
-    Width = 629
+    Top = -52
+    Width = 120
     Align = alBottom
     BevelOuter = bvNone
     ClientHeight = 52
-    ClientWidth = 629
+    ClientWidth = 120
     TabOrder = 1
     object btnOK: TBitBtn
-      Left = 397
+      Left = -108
       Height = 40
       Top = 6
       Width = 110
@@ -76,7 +76,7 @@ object frmEditName: TfrmEditName
       TabOrder = 0
     end
     object btnCancel: TBitBtn
-      Left = 513
+      Left = 4
       Height = 40
       Top = 6
       Width = 110
@@ -100,15 +100,15 @@ object frmEditName: TfrmEditName
   end
   inline fraEdtCitations1: TfraEdtCitations
     Height = 150
-    Top = 380
-    Width = 629
+    Top = -150
+    Width = 120
     Align = alBottom
     ClientHeight = 150
-    ClientWidth = 629
+    ClientWidth = 120
     TabOrder = 3
     inherited TableauCitations: TStringGrid
       Height = 144
-      Width = 528
+      Width = 19
     end
     inherited pnlCitationLeft: TPanel
       Height = 144
@@ -117,11 +117,11 @@ object frmEditName: TfrmEditName
   end
   inline fraPhrase1: TfraPhrase
     Height = 42
-    Top = 268
-    Width = 629
+    Top = -42
+    Width = 120
     Align = alBottom
     ClientHeight = 42
-    ClientWidth = 629
+    ClientWidth = 120
     TabOrder = 4
     DesignLeft = 1113
     DesignTop = 160
@@ -131,7 +131,7 @@ object frmEditName: TfrmEditName
     end
     inherited edtPhrase: TMemo
       Height = 36
-      Width = 528
+      Width = 19
       Lines.Strings = (
         ''
       )
@@ -141,36 +141,39 @@ object frmEditName: TfrmEditName
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 375
-    Width = 629
+    Top = -5
+    Width = 120
     Align = alBottom
     ResizeAnchor = akBottom
   end
   inline fraDate1: TfraDate
-    Top = 315
-    Width = 629
+    Top = -60
+    Width = 120
     Align = alBottom
-    ClientWidth = 629
+    ClientWidth = 120
     TabOrder = 6
     DesignLeft = 332
     DesignTop = 438
     inherited pnlDateRight: TPanel
-      Left = 351
+      Left = -158
       inherited edtDateForSorting: TEdit
         OnEditingDone = nil
       end
     end
     inherited pnlDateClient: TPanel
-      Width = 262
-      ClientWidth = 262
+      Left = 84
+      Width = 0
+      ClientWidth = 0
       inherited edtDateForPresentation: TEdit
+        Left = 0
         Height = 24
-        Width = 256
+        Width = 0
         BorderSpacing.Bottom = 6
         OnEditingDone = nil
       end
       inherited lblForPresentation: TLabel
-        Width = 256
+        Left = 0
+        Width = 0
       end
     end
   end
@@ -178,18 +181,18 @@ object frmEditName: TfrmEditName
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 310
-    Width = 629
+    Top = -5
+    Width = 120
     Align = alBottom
     ResizeAnchor = akBottom
   end
   inline fraMemo1: TfraMemo
     Height = 71
-    Top = 197
-    Width = 629
+    Top = -71
+    Width = 120
     Align = alBottom
     ClientHeight = 71
-    ClientWidth = 629
+    ClientWidth = 120
     TabOrder = 8
     inherited pnlMemoLeft: TPanel
       Height = 65
@@ -197,7 +200,7 @@ object frmEditName: TfrmEditName
     end
     inherited edtMemoText: TMemo
       Height = 65
-      Width = 528
+      Width = 19
       Lines.Strings = (
         'M'
       )
@@ -207,11 +210,11 @@ object frmEditName: TfrmEditName
     Left = 0
     Height = 73
     Top = 0
-    Width = 629
+    Width = 120
     Align = alTop
     BevelOuter = bvNone
     ClientHeight = 73
-    ClientWidth = 629
+    ClientWidth = 120
     TabOrder = 9
     object lblType: TLabel
       Left = 16
@@ -293,7 +296,6 @@ object frmEditName: TfrmEditName
           ImageIndex = 2
         end>
       ItemIndex = 0
-      ReadOnly = True
       TabOrder = 4
     end
     object SpeedButton1: TSpeedButton
@@ -315,8 +317,8 @@ object frmEditName: TfrmEditName
     end
   end
   object PopupMenuNom: TPopupMenu
-    left = 80
-    top = 191
+    Left = 80
+    Top = 191
     object mnuNameAddTitle: TMenuItem
       Caption = 'Add &Title'
       OnClick = mnuNameAddTitleClick
@@ -335,8 +337,8 @@ object frmEditName: TfrmEditName
     end
   end
   object mnuNameMain: TMainMenu
-    left = 208
-    top = 88
+    Left = 208
+    Top = 88
     object mniNameRepeat: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114
@@ -389,8 +391,8 @@ object frmEditName: TfrmEditName
   object imglSex: TImageList
     Height = 24
     Width = 24
-    left = 272
-    top = 80
+    Left = 272
+    Top = 80
     Bitmap = {
       4C69030000001800000018000000000000000000000000000000000000000000
       0000000000000000000000000000000000000000000000000000000000000000
@@ -612,7 +614,7 @@ object frmEditName: TfrmEditName
     }
   end
   object ActionList1: TActionList
-    left = 247
-    top = 24
+    Left = 247
+    Top = 24
   end
 end

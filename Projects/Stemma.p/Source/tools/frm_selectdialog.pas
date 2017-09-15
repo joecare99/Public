@@ -26,6 +26,7 @@ var
   frmSelectDialog: TfrmSelectDialog;
 
 function SelectDialog(const ACaption, APrompt : String;const List:TStrings; var Value : String) : Boolean;overload;
+function SelectDialog(const ACaption, APrompt : String;const List:TStrings; var Value : integer) : Boolean;overload;
 
 implementation
 
@@ -42,6 +43,21 @@ begin
       Value:=frmSelectDialog.ComboBox1.Text;
     end;
 end;
+
+function SelectDialog(const ACaption, APrompt: String; const List: TStrings;
+  var Value: integer): Boolean;
+begin
+  frmSelectDialog.Caption:=ACaption;
+  frmSelectDialog.StaticText1.Caption:=APrompt;
+  frmSelectDialog.ComboBox1.Items:=List;
+  frmSelectDialog.ComboBox1.ItemIndex:=frmSelectDialog.ComboBox1.Items.IndexOfObject(TObject(ptrint(Value)));
+  if frmSelectDialog.ShowModal = mrOK then
+    begin
+      result := true;
+      Value:=ptrint(frmSelectDialog.ComboBox1.Items.Objects[frmSelectDialog.ComboBox1.ItemIndex]);
+    end;
+end;
+
 
 {$R *.lfm}
 

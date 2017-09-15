@@ -46,10 +46,8 @@ type
     Filo: TStringGrid;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure GetCode(out code: string; out no: integer); overload;
-    function GetEventExtType(idEvent, idInd: integer;
-      out EvType, TypeType: string): boolean;
-    procedure PutCode(code: string; no: integer); overload;
+    procedure GetCode(out code: string; out no: integer); overload;deprecated;
+    procedure PutCode(code: string; no: integer); overload; deprecated;
     procedure GetCode(out code: string; out no: string); overload; deprecated;
     procedure PutCode(code: string; no: string); overload; deprecated;
 
@@ -134,10 +132,14 @@ type
       out lSortDate: string; out lPhraseText: string; out lMemoText: string;
       out lPrefered: boolean; out lidParent: longint; out lidChild: longint;
       out lRelType: longint);
-    procedure SaveRelationData(const idRelation: integer;
+    function SaveRelationData(const idRelation: integer;
       const lPhrase: TCaption; const lSDate: TCaption; const lidType: PtrInt;
       const prefered: boolean; const lidParent: integer;
-      const lidChild: integer; const lMemoText: string);
+      const lidChild: integer; const lMemoText: string): integer;
+    procedure InsertRelation(const lidParent: longint; const lidChild: longint;
+      const lidType: longint; const lidRelation: longint;
+  const lPhrase: string; const lSDate: string; const lNote: string;
+  lidPrefered: Boolean);
     function CopyRelation(lidRelation: integer; idNewInd: integer = 0): longint;
     function RelationInsertData(idType, IdInd, idLink: integer;
       const Note: string = ''; const Phrase: string = ''; Prefered: boolean = True;
@@ -145,7 +147,7 @@ type
     function CheckIndChildExists(const lidParent: longint): boolean;
     function CheckIndParentExists(const lidInd: longint): boolean;
     function CheckPrefParentExists(const lSex: string;
-      var lidInd: longint): boolean;
+      const lidInd: longint): boolean;
     procedure AppendSiblings(const Liste: TStringGrid; idInd: integer);
     procedure AppendSpousesSpouses(const Liste: TStringGrid; idInd: integer);
     function CheckIndRelationExist(idInd: integer): boolean;
@@ -175,23 +177,29 @@ type
     procedure FillTableEvents(const idInd: integer; const lgrdEvents: TStringGrid);
     function GetEventType(const lIdEvent: integer): string;
     procedure CopyEvent(const idEvent: integer);
-    function SaveEventData(const pPrefered: boolean; const pidEvent: integer;
-      const pIdPlace: integer; const pInfo: string; const pDate: string;
-      const pSortDate: string; const pidType: integer): integer;
+    function SaveEventData(const pidEvent: integer; const pidType: integer;
+      const pIdPlace: integer; const pPrefered: boolean;
+      const pInfo: string = ''; const pDate: string = '';
+      const pSortDate: string = ''): integer;
     procedure DeleteEvent(const lidEvent: integer);
+    function GetEventExtType(idEvent, idInd: integer;
+      out EvType, TypeType: string): boolean;
     procedure DeleteEventComplete(const lidEvent: integer);
     function CheckIndSharedEventExists(idInd: integer): boolean;
     procedure ResetEventPrefered(lidEvent: integer);
     procedure ResetEventPref(lidEvent: integer);
     procedure SetEventPref(lidEvent: integer);
     function SetEventPrefered(const lidEvent, lidInd: integer): boolean;
-    procedure InsertEvent(const lPref: integer; const lMemo: string;
-      const lSDate: string; const lPDate: string; const lidPlace: longint;
-      const lidType: longint; const lidEvent: longint);
+    procedure InsertEvent(const idEvent: longint; const idType: longint;
+      const idPlace: longint; const Prefered: boolean; const lMemo: string = '';
+      const SDate: string = ''; const PDate: string = '');
 
     //Witness
-    function AppendWitness(Role, Phrase: string;
-      idInd, idEvent, idPref: integer): integer;
+    function AppendWitness(Role, Phrase: string; idInd, idEvent: integer;
+      Pref: boolean): integer;
+    procedure InsertWitness(const Prefered: boolean; const idEvent: longint;
+      const idInd: longint; const Role: string; const Phrase: string);
+      deprecated {$IFNDEF NoFormat} 'use AppendWitness' {$ENDIF};
     function GetWitnessListbyEvent(lidEvent: integer): string;
     procedure UpdateWitnessModDatebyEvent(lidEvent: integer);
     procedure UpdateWitnessModbyEvent(lidEvent: integer);
@@ -234,6 +242,9 @@ type
     procedure PopulateDocuments(Tableau: TStringGrid; Code: string; no: integer);
     procedure CopyDocumentbyType_ID(const aType: string; const aID, aNewID: integer);
     function GetDocumentFilename(no, IdInd: integer): string;
+    function GetDocumentInfo(const lidDocument: Integer): string;
+     procedure UpdateDocumentInfo(const lidDocument: integer;
+       const lDocumentInfo: string);
     procedure SelectDocumentData(const lidDocument: integer;
       out lPrefered: boolean;
       out lDocumentInfo, lDocType, lFileName, lDocumentDescription,
@@ -263,12 +274,15 @@ type
     function GetTypeName(const idType: longint): string;
 
     // Source Methods
-    function CheckIndSourceExist(idInd: integer): boolean;
-    procedure DeleteSourceFull(const lidSource: integer);
-    function GetSourceQuality(const lidSource: integer): longint;
+    procedure InsertSource(const lidSource: longint; const lQuality: longint;
+      const lLink: string; const lNote: string; const lDescription: string;
+      const lTitle: string);
     function SaveSourceData(const pidSource: integer; const piQuality: integer;
       const psTitle: string; const psDescription: string;
       const psInformation: string; const psAuthor: string): integer;
+    function CheckIndSourceExist(idInd: integer): boolean;
+    procedure DeleteSourceFull(const lidSource: integer);
+    function GetSourceQuality(const lidSource: integer): longint;
     procedure FillSourcesTable(const lNotification: TNotifyEvent;
       const lTable: TStringGrid);
     procedure FillSourcesSL(const LStr: TStrings);
@@ -279,6 +293,7 @@ type
     procedure InsertDepot(const lMemo: variant; const lDescription: string;
       const lTitle: string; const lidIndividual: longint;
       const lidRepository: longint);
+    procedure FillDepotsSL(const LStr: TStrings);
     procedure InsertDepotOfSource(const lidSource: longint;
       const lidRepository: longint; const buffer: string);
 
@@ -365,13 +380,13 @@ end;
 procedure TdmGenData.DeleteCitationsbyType_ID(const aType: char; const aID: integer);
 begin
   with Query1 do
-  begin
+   begin
     Close;
     SQL.Text := 'DELETE FROM C WHERE Y=:Type AND N=:ID';
     ParamByName('Type').AsString := aType;
     ParamByName('ID').AsInteger := aID;
     ExecSQL;
-  end;
+   end;
 end;
 
 
@@ -388,26 +403,26 @@ procedure TdmGenData.GetCode(out code: string; out no: integer);
 begin
   with Filo do
     if RowCount > 0 then
-    begin
+     begin
       code := Cells[0, 0];
       no := StrToInt(Cells[1, 0]);
       DeleteRow(0);
-    end
+     end
     else
-    begin
+     begin
       code := '';
       no := 0;
-    end;
+     end;
 end;
 
 procedure TdmGenData.PutCode(code: string; no: integer);
 begin
   with Filo do
-  begin
+   begin
     InsertColRow(False, 0);
     Cells[0, 0] := code;
     Cells[1, 0] := IntToStr(no);
-  end;
+   end;
 end;
 
 procedure TdmGenData.GetCode(out code: string; out no: string);
@@ -415,35 +430,35 @@ procedure TdmGenData.GetCode(out code: string; out no: string);
 begin
   with Filo do
     if RowCount > 0 then
-    begin
+     begin
       code := Cells[0, 0];
       no := Cells[1, 0];
       DeleteRow(0);
-    end
+     end
     else
-    begin
+     begin
       code := '';
       no := '0';
-    end;
+     end;
 end;
 
 procedure TdmGenData.PutCode(code: string; no: string);
 begin
   with Filo do
-  begin
+   begin
     InsertColRow(False, 0);
     Cells[0, 0] := code;
     Cells[1, 0] := no;
-  end;
+   end;
 end;
 
 procedure TdmGenData.DeleteDBProject(const db: string);
 begin
-  try
+   try
     qryInternal.SQL.Text := 'DROP DATABASE `' + db + '`;';
     qryInternal.ExecSQL;
-  except
-  end;
+   except
+   end;
 end;
 
 
@@ -460,14 +475,14 @@ end;
 procedure TdmGenData.SetEventPref(lidEvent: integer);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     // fr: mets le tag primaire à l'événement sélectionné dans la base de données et dans le tableau
     // en: put the primary tag to the event selected in the database and the table
     SQL.Text := 'UPDATE E SET X=1 WHERE no=:idEvent';
     ParamByName('idEvent').AsInteger := lidEvent;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.WriteCfgConnection(Host, User, Password: string);
@@ -611,11 +626,11 @@ begin
       FDataPath := '..' + DirectorySeparator + FDataPath;
   if not DirectoryExists(FDataPath) then
     {$IFDEF MSWINDOWS}
-  begin
+   begin
     FDataPath := GetEnvironmentVariable('ProgramData') + DirectorySeparator + VendorName;
     if not DirectoryExists(FDataPath) then
       mkdir(FDataPath);
-  end;
+   end;
     {$ELSE}
         FDataPath := '';
     {$ENDIF}
@@ -645,10 +660,10 @@ end;
 procedure TdmGenData.SetDB_Connected(AValue: boolean);
 begin
   if assigned(Database) then
-  begin
+   begin
     Database.Connected := AValue;
     FProjectIsOpen := FProjectIsOpen and Database.Connected;
-  end
+   end
   else
     FProjectIsOpen := False;
 end;
@@ -672,7 +687,7 @@ procedure TdmGenData.GetIndBaseData(idInd: integer; out sName, sBirth, sDeath: s
 
 begin
   with qryInternal do
-  begin
+   begin
     sql.Text := 'SELECT N, I3, I4 FROM N WHERE X=1 AND I=:idInd';
     ParamByName('idInd').AsInteger := idInd;
     Open;
@@ -685,7 +700,7 @@ begin
       sDeath := Copy(Fields[2].AsString, 2, 4)
     else
       sDeath := '';
-  end;
+   end;
 end;
 
 procedure TdmGenData.InsertIndividuumData(const idInd: integer;
@@ -693,7 +708,7 @@ procedure TdmGenData.InsertIndividuumData(const idInd: integer;
   const Living: string);
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text :=
       'INSERT IGNORE INTO I (no, S, V, I, date) ' +
       'VALUES (:idInd, :Sex, :Living, :Importance, :Date)';
@@ -703,7 +718,7 @@ begin
     ParamByName('Importance').AsInteger := Importance;
     ParamByName('Date').AsString := Date;
     ExecSQL;
-  end;
+   end;
 end;
 
 function TdmGenData.FullCopyPerson(idInd: integer): integer;
@@ -717,43 +732,43 @@ var
   i1: string;
 begin
   with dmGenData do
-  begin
+   begin
     // Copier individu
     nouveau := CopyIndividual(idInd);
 
     with Query1 do
-    begin
+     begin
       // Copie toutes les relations
       SQL.Text := 'SELECT Y, A, B, M, P, X, SD, no FROM R WHERE A=:idInd OR B=:idInd';
       ParamByName('idInd').AsInteger := idInd;
       Open;
       while not EOF do
-      begin
+       begin
         Query2.SQL.Clear;
         if Fields[1].AsInteger = idInd then
-        begin
+         begin
           Query2.SQL.Add('INSERT IGNORE INTO R (Y, A, B, M, P, X, SD) VALUES (' +
             Fields[0].AsString + ', ' + IntToStr(nouveau) + ', ' +
             Fields[2].AsString + ', ''' + AutoQuote(Fields[3].AsString) +
             ''', ''' + AutoQuote(Fields[4].AsString) + ''', ' +
             Fields[5].AsString + ', ''' + AutoQuote(Fields[6].AsString) + ''')');
           SaveModificationTime(Fields[2].AsInteger);
-        end
+         end
         else
-        begin
+         begin
           Query2.SQL.Add('INSERT IGNORE INTO R (Y, A, B, M, P, X, SD) VALUES (' +
             Fields[0].AsString + ', ' + Fields[1].AsString + ', ' +
             IntToStr(nouveau) + ', ''' + AutoQuote(Fields[3].AsString) +
             ''', ''' + AutoQuote(Fields[4].AsString) + ''', ' +
             Fields[5].AsString + ', ''' + AutoQuote(Fields[6].AsString) + ''')');
           SaveModificationTime(Fields[1].AsInteger);
-        end;
+         end;
         lLastREntry := GetLastIDOfTable('R');
 
         CopyCitation('R', Fields[7].AsInteger, lLastREntry);
         Next;
-      end;
-    end;
+       end;
+     end;
 
     // Copie tous les noms
     Query1.Close;
@@ -762,7 +777,7 @@ begin
     Query1.ParamByName('idInd').AsInteger := idInd;
     Query1.Open;
     while not Query1.EOF do
-    begin
+     begin
       i1 := Query1.Fields[8].AsString;
       i2 := Query1.Fields[9].AsString;
       i3 := Query1.Fields[10].AsString;
@@ -789,14 +804,14 @@ begin
       //      if mniExplorateur.Checked then
       //         frmExplorer.AddNameToExplorer(lLastidName,lFullName,i1,i2,i3,i4);
       Query1.Next;
-    end;
+     end;
 
     // Copie tous les documents
     Query1.SQL.Text := 'SELECT X, T, D, F, Z, A, N FROM X WHERE A=''I'' AND N=:idInd';
     Query1.ParamByName('idInd').AsInteger := idInd;
     Query1.Open;
     while not Query1.EOF do
-    begin
+     begin
       Query2.SQL.Clear;
       Query2.SQL.Add('INSERT IGNORE INTO X (X, T, D, F, Z, A, N) VALUES (' +
         Query1.Fields[0].AsString + ', ''' + AutoQuote(Query1.Fields[1].AsString) +
@@ -806,7 +821,7 @@ begin
         IntToStr(nouveau) + ')');
       Query2.ExecSQL;
       Query1.Next;
-    end;
+     end;
 
     // Copie tous les événements
     Query1.SQL.Text :=
@@ -814,7 +829,7 @@ begin
     Query1.ParamByName('idInd').AsInteger := idInd;
     Query1.Open;
     while not Query1.EOF do
-    begin
+     begin
       Query2.SQL.Clear;
       Query2.SQL.Add('INSERT IGNORE INTO E (Y, PD, SD, L, M, X) VALUES (' +
         Query1.Fields[0].AsString + ', ''' + AutoQuote(Query1.Fields[1].AsString) +
@@ -831,7 +846,7 @@ begin
         Query1.Fields[6].AsString;
       Query3.Open;
       while not Query3.EOF do
-      begin
+       begin
         Query4.SQL.Clear;
         Query4.SQL.Add('INSERT IGNORE INTO C (Y, N, S, Q, M) VALUES (''' +
           Query3.Fields[0].AsString + ''', ' + IntToStr(lLastidName - 1) +
@@ -839,12 +854,12 @@ begin
           ', ''' + AutoQuote(Query3.Fields[4].AsString) + ''')');
         Query4.ExecSQL;
         Query3.Next;
-      end;
+       end;
       Query3.SQL.Text := 'SELECT X, T, D, F, Z FROM X WHERE A=''E'' AND N=' +
         Query1.Fields[6].AsString;
       Query3.Open;
       while not Query3.EOF do
-      begin
+       begin
         Query4.SQL.Clear;
         Query4.SQL.Add('INSERT IGNORE INTO X (X, T, D, F, Z, A, N) VALUES (' +
           '0' + ', ''' + AutoQuote(Query3.Fields[1].AsString) +
@@ -854,12 +869,12 @@ begin
           IntToStr(lLastidName - 1) + ')');
         Query4.ExecSQL;
         Query3.Next;
-      end;
+       end;
       Query3.SQL.Text := 'SELECT I, E, X, P, R FROM W WHERE E=' +
         Query1.Fields[6].AsString;
       Query3.Open;
       while not Query3.EOF do
-      begin
+       begin
         Query4.SQL.Clear;
         if idInd = Query3.Fields[0].AsInteger then
           Query4.SQL.Add('INSERT IGNORE INTO W (I, E, X, P, R) VALUES (' +
@@ -876,18 +891,18 @@ begin
         Query4.ExecSQL;
         SaveModificationTime(Query3.Fields[0].AsInteger);
         Query3.Next;
-      end;
+       end;
       Query1.Next;
-    end;
+     end;
     SaveModificationTime(nouveau);
-  end;
+   end;
   Result := nouveau;
 end;
 
 procedure TdmGenData.FullDeleteIndividuum(const idInd: longint);
 begin
   with qryInternal do
-  begin
+   begin
     // Supprime la personne
     SQL.Text := 'DELETE FROM I WHERE no=:idInd';
     ParamByName('inInd').AsInteger := idInd;
@@ -934,19 +949,19 @@ begin
     SQL.Text := 'DELETE FROM R ' + 'WHERE (R.A=:idInd) OR R.B=:idInd)';
     ParamByName('inInd').AsInteger := idInd;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.SaveModificationTime(no: integer);
 begin
   with qryInternal do
-  begin
+   begin
     // Todo -oJC: Modification-date as Datetime
     SQL.Text := 'UPDATE I SET date=:ModDate WHERE no=:idInd';
     ParamByName('ModDate').AsString := FormatDateTime('YYYYMMDD', now);
     ParamByName('idInd').AsInteger := no;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.SaveModificationTime(no: string);
@@ -960,14 +975,14 @@ end;
 procedure TdmGenData.UpdateIndModificationTimeByName(lLinkID: integer);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'UPDATE I SET I.date=:ModDate ' +
       'FROM I INNER JOIN N ON N.I = I.no ' + 'WHERE N.no=:idName';
     ParamByName('ModDate').AsString := FormatDateTime('YYYYMMDD', now);
     ParamByName('idName').AsInteger := lLinkID;
     ExecSQL;
-  end;
+   end;
   if assigned(FOnModifyIndividual) then
     FOnModifyIndividual(self);
 end;
@@ -975,14 +990,14 @@ end;
 procedure TdmGenData.UpdateIndModificationTimesByEvent(lLinkID: integer);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'UPDATE I SET I.date=:ModDate ' +
       'FROM I INNER JOIN W ON W.I = I.no ' + 'WHERE W.E=:idEvent';
     ParamByName('ModDate').AsString := FormatDateTime('YYYYMMDD', now);
     ParamByName('idEvent').AsInteger := lLinkID;
     ExecSQL;
-  end;
+   end;
   if assigned(FOnModifyIndividual) then
     FOnModifyIndividual(self);
 end;
@@ -992,34 +1007,34 @@ function TdmGenData.GetDataOfInd(const nID: longint; out sSex, sLiving, sDate: s
 
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT S, V, I, date FROM I WHERE no=:idInd';
     ParamByName('idInd').AsInteger := nID;
     Open;
     Result := not EOF;
     if Result then
-    begin
+     begin
       sSex := Fields[0].AsString;
       sLiving := Fields[1].AsString;
       iInterest := Fields[2].AsInteger;
       sDate := Fields[3].AsString;
-    end
+     end
     else
-    begin
+     begin
       sSex := '?';
       sLiving := '?';
       iInterest := 0;
       sDate := '000000000';
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.GetSexOfInd(const nID: longint): string;
 
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT S FROM I WHERE no=:idInd';
     ParamByName('idInd').AsInteger := nID;
     Open;
@@ -1028,13 +1043,13 @@ begin
     else
       Result := '';
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.GetLivingOfInd(const nID: longint): string;
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT V FROM I WHERE no=:idInd';
     ParamByName('idInd').AsInteger := nID;
     Open;
@@ -1043,20 +1058,20 @@ begin
     else
       Result := '';
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.CopyIndividual(const nID: longint): longint;
 begin
   with qryInternal2 do
-  begin
+   begin
     SQL.Text := 'SELECT S, V, I, date FROM I WHERE no=:idInd';
     ParamByName('idInd').AsInteger := nID;
     Open;
-  end;
+   end;
   if not qryInternal2.EOF then
     with qryInternal do
-    begin
+     begin
       sql.Text :=
         'Insert into I (S, V, I, Date) Values (:Sex, :Living, :Importance, :Date)';
       ParamByName('Sex').AsString := qryInternal2.Fields[0].AsString;
@@ -1068,7 +1083,7 @@ begin
       Open;
       Result := Fields[0].AsInteger;
       Close;
-    end
+     end
   else
     Result := 0;
   qryInternal2.Close;
@@ -1086,7 +1101,7 @@ var
   lidName: longint;
 begin
   with qryInternal2 do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT no, I, N FROM N';
     Open;
@@ -1097,17 +1112,17 @@ begin
     if Assigned(OnUpdate) then
       OnUpdate(qryInternal2);
     while not EOF do
-    begin
+     begin
 
       lName := Fields[2].AsString;
       lidName := Fields[0].AsInteger;
       if Copy(lName, 1, 4) = '!TMG' then
-      begin
+       begin
         lSurname := ExtractDelimited(2, lName, ['|']);
         i2 := ExtractDelimited(4, lName, ['|']);
-      end
+       end
       else
-      begin
+       begin
         Pos1 := AnsiPos('<' + CTagNameFamilyName + '>', lName) +
           length(CTagNameFamilyName) + 2;
         Pos2 := AnsiPos('</' + CTagNameFamilyName + '>', lName);
@@ -1120,29 +1135,29 @@ begin
         Pos2 := AnsiPos('</' + CTagNameGivenName + '>', lName);
         if (Pos1 + Pos2) > length(CTagNameGivenName) + 2 then
           i2 := RemoveUTF8(Copy(lName, Pos1, Pos2 - Pos1));
-      end;
+       end;
       with qryInternal do
-      begin
+       begin
         Close;
         SQL.Text := 'UPDATE N SET I1=:Surname, I2=:Givenname WHERE no=:idName';
         ParamByName('Surname').AsString := lSurname;
         ParamByName('Givenname').AsString := i2;
         ParamByName('idName').AsInteger := lidName;
         ExecSQL;
-      end;
+       end;
       Next;
       tag := tag + 1;
       if Assigned(OnUpdate) then
         OnUpdate(qryInternal2);
-    end;
-  end;
+     end;
+   end;
 end;
 
 function TdmGenData.AddNewIndividual(sex, living: string; interest: integer): longint;
 
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'INSERT INTO I (S, V, I, Date) VALUES (:sex, :living, :interest, :Date)';
     ParamByName('sex').AsString := sex;
     ParamByName('living').AsString := living;
@@ -1153,19 +1168,19 @@ begin
     Open;
     Result := qryInternal.Fields[0].AsInteger;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.UpdateIndLiving(const lidInd: integer; NewVal: char;
   const Sender: TObject);
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'UPDATE I SET V=:VChar WHERE no=:idInd';
     ParamByName('idInd').AsInteger := lidInd;
     ParamByName('VChar').AsString := NewVal;
     ExecSQL;
-  end;
+   end;
   NamesChanged(Sender);
 end;
 
@@ -1173,12 +1188,12 @@ procedure TdmGenData.UpdateIndSex(const lidInd: integer; NewVal: char;
   const Sender: TObject);
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'UPDATE I SET S=:VChar WHERE no=:idInd';
     ParamByName('idInd').AsInteger := lidInd;
     ParamByName('VChar').AsString := NewVal;
     ExecSQL;
-  end;
+   end;
   NamesChanged(Sender);
 end;
 
@@ -1186,12 +1201,12 @@ procedure TdmGenData.UpdateIndInterrest(const lidInd: integer;
   NewVal: integer; const Sender: TObject);
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'UPDATE I SET I=:IVal WHERE no=:idInd';
     ParamByName('idInd').AsInteger := lidInd;
     ParamByName('IVal').AsInteger := NewVal;
     ExecSQL;
-  end;
+   end;
   NamesChanged(Sender);
 end;
 
@@ -1208,7 +1223,7 @@ begin
     OnProgress(qryInternal2);
   while not qryInternal2.EOF do
     with qryInternal do
-    begin
+     begin
       SQL.Text := 'UPDATE R SET SD=:SDate WHERE A=:idInd AND SD=:qSDate';
       ParamByName('idInd').AsString := qryInternal2.Fields[1].AsString;
       ParamByName('SDate').AsString := qryInternal2.Fields[2].AsString;
@@ -1220,31 +1235,31 @@ begin
       qryInternal2.tag := qryInternal2.tag + 1;
       if assigned(OnProgress) then
         OnProgress(qryInternal2);
-    end;
+     end;
 end;
 
 function TdmGenData.GetFirstIndividuum: integer;
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT no FROM I LIMIT 1';
     Open;
     Result := Fields[0].AsInteger;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.IsValidIndividuum(idInd: integer): boolean;
 
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT no FROM I WHERE no=:idInd';
     ParamByName('idInd').AsInteger := idInd;
     Open;
     Result := not EOF;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.GetNameData(const lidName: integer;
@@ -1252,7 +1267,7 @@ procedure TdmGenData.GetNameData(const lidName: integer;
   out Pref: boolean);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text :=
       'SELECT N.no, N.I, N.Y, N.N, N.M, N.P, N.PD, N.SD, N.X FROM  N WHERE N.no=:idName';
@@ -1268,7 +1283,7 @@ begin
     SortDate := Fields[7].AsString;
     Pref := Fields[8].AsBoolean;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.SaveNameData(idName: longint; const Prefered: boolean;
@@ -1277,21 +1292,21 @@ function TdmGenData.SaveNameData(idName: longint; const Prefered: boolean;
   const i3: string; const i2: string; const i1: string; const lName: string;
   const lidInd: longint): integer;
 begin
-  with dmGenData.Query1 do
-  begin
+  with Query1 do
+   begin
     if idName = 0 then
-    begin
+     begin
       SQL.Text := 'INSERT INTO N (Y, I, M, N, I1, I2, PD, SD, P, I3, I4, X) VALUES ' +
         '( :idEvType, :idInd, :M, :Name, :i1, :i2, :PDate, :SDate, :P, :i3, :i4, :X)';
       ParamByName('i3').AsString := i3;
       ParamByName('i4').AsString := i4;
-    end
+     end
     else
-    begin
+     begin
       SQL.Text :=
         'UPDATE N SET Y=:idEvType, I=:idInd, M=:M, N=:Name, I1=:I1, I2=:I2, PD=:PDate, SD=:SDate, P=:P, X=:X WHERE no=:idName';
       ParamByName('idName').AsInteger := idName;
-    end;
+     end;
     ParamByName('idEvType').AsInteger := lidEvType;
     ParamByName('idInd').AsInteger := lidInd;
     ParamByName('M').AsString := lMemoText;
@@ -1309,7 +1324,7 @@ begin
       Result := idName;
     // Sauvegarder les modifications
     dmGenData.SaveModificationTime(Result);
-  end;
+   end;
 end;
 
 
@@ -1317,7 +1332,7 @@ function TdmGenData.GetIndividuumName(idInd: integer): string;
 
 begin
   with qryInternal do
-  begin
+   begin
     if Active then
       Close;
     SQL.Text :=
@@ -1331,7 +1346,7 @@ begin
     else
       Result := '';
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.GetIndividuumName(NStr: string): string;
@@ -1349,7 +1364,7 @@ procedure TdmGenData.GetCitationData(idCitation: integer; out lTypeCode: string;
   out lLinkID: integer; out lMemoText: string; out lidSource, lQuality: integer);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT C.no, C.Y, C.N, C.S, C.M, C.Q FROM C WHERE C.no=:idCitation';
     ParamByName('idCitation').AsInteger := idCitation;
@@ -1361,7 +1376,7 @@ begin
     lMemoText := Fields[4].AsString;
     lQuality := Fields[5].AsInteger;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.SaveCitationData(const lidCitation: integer;
@@ -1369,34 +1384,34 @@ function TdmGenData.SaveCitationData(const lidCitation: integer;
   const lidSource, lQuality: integer): integer;
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     if lidCitation = 0 then
-    begin
+     begin
       SQL.Text :=
         'INSERT INTO C (S, M, Q, Y, N) VALUES ( :idSource, :Memo, :Q, :Type, :N)';
       ParamByName('Type').AsString := lTypeCode;
       ParamByName('N').AsInteger := lLinkID;
-    end
+     end
     else
-    begin
+     begin
       SQL.Text := 'UPDATE C SET S=:idSource, M=:Memo, Q=:Q  WHERE no=:idCitation';
       ParamByName('idCitation').AsInteger := lidCitation;
-    end;
+     end;
     ParamByName('idSource').AsInteger := lidSource;
     ParamByName('Memo').AsString := lMemoText;
     ParamByName('Q').AsInteger := lQuality;
     ExecSQL;
     if lidCitation = 0 then
-    begin
+     begin
       sql.Text := 'Select @@identity';
       Open;
       Result := Fields[0].AsInteger;
       Close;
-    end
+     end
     else
       Result := lidCitation;
-  end;
+   end;
 end;
 
 procedure TdmGenData.InsertCitation(const idSource: longint;
@@ -1404,7 +1419,7 @@ procedure TdmGenData.InsertCitation(const idSource: longint;
   const Quality: integer);
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'INSERT IGNORE INTO C (Y, N, S, M, Q) ' +
       'VALUES (:Type, :LinkID, :idSource, :Memo, :Quality)';
     ParamByName('Type').AsString := LinkType;
@@ -1413,7 +1428,7 @@ begin
     ParamByName('Memo').AsString := MemoText;
     ParamByName('Quality').AsInteger := Quality;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.CopyCitation(AType: string; idLink, idNewLink: integer);
@@ -1425,15 +1440,15 @@ procedure TdmGenData.CopyCitation(AType: string; idLink: integer;
   ANewType: string; idNewLink: integer);
 begin
   with qryInternal2 do
-  begin
+   begin
     SQL.Text := 'SELECT Y, N, S, Q, M FROM C WHERE Y=:Type AND N=:idLink';
     ParamByName('Type').AsString := AType;
     ParamByName('idLink').AsInteger := idLink;
     Open;
-  end;
+   end;
   while not qryInternal2.EOF do
     with qryInternal do
-    begin
+     begin
       SQL.Text :=
         'INSERT IGNORE INTO C (Y, N, S, Q, M) VALUES (:Type, :idLink, :S, :Q,' +
         ' :M)';
@@ -1445,7 +1460,7 @@ begin
       ExecSQL;
       Close;
       qryInternal2.Next;
-    end;
+     end;
   qryInternal2.Close;
 end;
 
@@ -1453,7 +1468,7 @@ procedure TdmGenData.CopyCitationOfIndByType(const lidInd: integer;
   const lSourceType: string; const lidInd_Dest: integer; const lDestType: string);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text :=
       'INSERT INTO C (Y, N, S, Q, M) ' + 'SELECT :DType, :idDInd, S, Q, M FROM C ' +
@@ -1463,19 +1478,19 @@ begin
     ParamByName('DType').AsString := lDestType;
     ParamByName('idDInd').AsInteger := lidInd_Dest;
     ExecSQL;
-  end;
+   end;
 end;
 
 
 procedure TdmGenData.DeleteCitationb_TypeId(const aType: string; const id: integer);
 begin
   with Query1 do
-  begin
+   begin
     SQL.Text := 'DELETE FROM C WHERE Y=:Type AND N=:idNr';
     ParamByName('Type').AsString := aType;
     ParamByName('idNr').AsInteger := id;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.PopulateCitations(Tableau: TStringGrid; Code: string;
@@ -1484,7 +1499,7 @@ var
   row: integer;
 begin
   with qryInternal do
-  begin
+   begin
     //Fr: Populate le tableau de citations
     //de: Die Tabelle der Zitate füllen
     //en: fill the table of citations
@@ -1497,7 +1512,7 @@ begin
     row := 1;
     Tableau.RowCount := RecordCount + 1;
     while not EOF do
-    begin
+     begin
       Tableau.Cells[0, row] := Fields[0].AsString;
       Tableau.Objects[0, row] := TObject(ptrint(Fields[0].AsInteger));
       Tableau.Cells[1, row] := Fields[1].AsString;
@@ -1506,15 +1521,15 @@ begin
       Tableau.Objects[3, row] := TObject(ptrint(Fields[3].AsInteger));
       Next;
       row := row + 1;
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.GetCitationBestQuality(sType: string; idLink: integer): string;
 begin
   with qryInternal do
-  begin
+   begin
     sql.Text := 'SELECT Q FROM C WHERE Y=:Type AND N=:idLink ORDER BY Q DESC';
     ParamByName('Type').AsString := sType;
     ParamByName('idLink').AsInteger := idLink;
@@ -1524,18 +1539,18 @@ begin
     else
       Result := '';
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.DeleteCitation(const lidCitation: integer);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'DELETE FROM C WHERE no=idCitation';
     ParamByName('idCitation').AsInteger := lidCitation;
     ExecSQL;
-  end;
+   end;
 end;
 
 {$endregion ~Citation}
@@ -1545,19 +1560,19 @@ var
   lParentExists: boolean;
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT R.no, R.B FROM R WHERE R.X=1 AND R.A=:idInd';
     ParamByName('idInd').AsInteger := lidInd;
     Open;
     lParentExists := not EOF;
     Result := lParentExists;
-  end;
+   end;
 end;
 
 function TdmGenData.GetI3(idInd: integer): string;
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text :=
       'SELECT E.PD, E.SD FROM E JOIN W on E.no=W.E JOIN Y on Y.no=E.Y WHERE E.X=1 AND W.X=1 AND Y.Y=:Type AND W.I=:idInd';
     ParamByName('Type').AsString := 'B';
@@ -1565,21 +1580,21 @@ begin
     Open;
     First;
     if not EOF then
-    begin
+     begin
       if not (Copy(Fields[0].AsString, 1, 1) = '1') then
         Result := Fields[1].AsString
       else
         Result := Fields[0].AsString;
-    end
+     end
     else
       Result := '';
-  end;
+   end;
 end;
 
 function TdmGenData.GetI4(idInd: integer): string;
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text :=
       'SELECT E.PD, E.SD FROM E JOIN W on E.no=W.E JOIN Y on Y.no=E.Y WHERE E.X=1 AND W.X=1 AND Y.Y=:Type AND W.I=:idInd';
     ParamByName('Type').AsString := 'D';
@@ -1587,43 +1602,43 @@ begin
     Open;
     First;
     if not EOF then
-    begin
+     begin
       if not (Copy(Fields[0].AsString, 1, 1) = '1') then
         Result := Fields[1].AsString
       else
         Result := Fields[0].AsString;
-    end
+     end
     else
       Result := '';
-  end;
+   end;
 end;
 
 procedure TdmGenData.AppendSiblings(const Liste: TStringGrid; idInd: integer);
 
 begin
   with Liste, Query1 do
-  begin
+   begin
     SQL.Text := 'SELECT DISTINCT R.B FROM R INNER JOIN R AS P ' +
       'ON R.A=P.B WHERE R.X=1 AND P.X=1 AND P.B=:idIND AND NOT R.B=:idInd';
     ParamByName('idInd').AsInteger := idInd;
     Open;
     while not EOF do
-    begin
+     begin
       RowCount := RowCount + 1;
       Cells[0, RowCount - 1] := Fields[0].AsString;
       Objects[0, RowCount - 1] := TObject(ptrint(Fields[0].AsInteger));
       Cells[1, RowCount - 1] :=
         GetIndividuumName(Fields[0].AsInteger);
-    end;
+     end;
     Next;
-  end;
+   end;
 end;
 
 procedure TdmGenData.AppendSpousesSpouses(const Liste: TStringGrid; idInd: integer);
 
 begin
   with Liste, Query1 do
-  begin
+   begin
     SQL.Text :=
       'SELECT DISTINCT W2.I FROM W as W2 ' +
       'INNER JOIN W ON W2.E=W.I AND W2.i<>W.I ' + 'INNER JOIN E on W.E=E.no ' +
@@ -1631,7 +1646,7 @@ begin
     ParamByName('idInd').AsInteger := idInd;
     Open;
     while not EOF do
-    begin
+     begin
       RowCount := RowCount + 1;
       Cells[0, RowCount - 1] :=
         Fields[0].AsString;
@@ -1639,8 +1654,8 @@ begin
       Cells[1, RowCount - 1] :=
         GetIndividuumName(Fields[0].AsInteger);
       Next;
-    end;
-  end;
+     end;
+   end;
 end;
 
 function TdmGenData.CheckIndSharedEventExists(idInd: integer): boolean;
@@ -1649,14 +1664,14 @@ function TdmGenData.CheckIndSharedEventExists(idInd: integer): boolean;
 
 begin
   with Query1 do
-  begin
+   begin
     SQL.Text :=
       'SELECT E.no FROM E JOIN W ON E.no=W.E JOIN W as W2 ON W.E=W2.E and W.I <> W2.I WHERE E.X=1 AND W.X=1 AND W.I=:idInd';
     ParamByName('idInd').AsInteger := idInd;
     Open;
     Result := not EOF;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.FillExplorerIndex(const aGrid: TStringGrid;
@@ -1665,7 +1680,7 @@ var
   aRow: integer;
 begin
   with Query5, aGrid do
-  begin
+   begin
     SQL.Clear;
     case Order of
       1: SQL.add('SELECT no, I, N, I1, I2, I3, I4, X FROM N ORDER BY I2, I1, I3, I4');
@@ -1674,7 +1689,7 @@ begin
       4: SQL.add('SELECT no, I, N, I1, I2, I3, I4, X FROM N ORDER BY I4, I3, I1, I2')
       else
         SQL.add('SELECT no, I, N, I1, I2, I3, I4, X FROM N ORDER BY I1, I2, I3, I4');
-    end;
+     end;
     Open;
     First;
     aRow := 1;
@@ -1683,7 +1698,7 @@ begin
     if Assigned(OnProgress) then
       OnProgress(Query5);
     while not EOF do
-    begin
+     begin
       Cells[0, aRow] := Fields[0].AsString;
       Objects[0, aRow] := TObject(ptrint(Fields[0].AsInteger));
       Cells[1, aRow] := Fields[1].AsString;
@@ -1696,7 +1711,7 @@ begin
         4: Cells[2, aRow] := (DecodeName(Fields[2].AsString, 2))
         else
           Cells[2, aRow] := (DecodeName(Fields[2].AsString, 2));
-      end;
+       end;
       Cells[3, aRow] := ConvertDate(Fields[5].AsString, 1);
       Cells[4, aRow] := ConvertDate(Fields[6].AsString, 1);
       if Fields[7].AsBoolean then
@@ -1715,15 +1730,15 @@ begin
           Cells[6, aRow] :=
             RemoveUTF8(Fields[3].AsString) + ', ' + RemoveUTF8(
             Fields[4].AsString);
-      end;
+       end;
       aRow := aRow + 1;
       Next;
       tag := aRow;
       if Assigned(OnProgress) then
         OnProgress(Query5);
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.FillIndexBySearchtext(const lGrid: TStringGrid;
@@ -1732,7 +1747,7 @@ var
   row: integer;
 begin
   with Query5 do
-  begin
+   begin
     SQL.Text :=
       'SELECT no, I, N, I1, I2, I3, I4, X FROM N WHERE MATCH (N) AGAINST (:SearchText IN BOOLEAN MODE) ORDER BY I1, I2';
     ParamByName('Searchtext').AsString := lSearchText;
@@ -1740,7 +1755,7 @@ begin
     First;
     row := 1;
     if not EOF then
-    begin
+     begin
       lGrid.RowCount := RecordCount + 1;
       tag := -lGrid.RowCount;
       if Assigned(lOnProgress) then
@@ -1750,7 +1765,7 @@ begin
         lOnProgress(Query5);
 
       while not EOF do
-      begin
+       begin
         lGrid.Cells[0, row] := Fields[0].AsString;
         lGrid.Cells[1, row] := Fields[1].AsString;
         lGrid.Cells[2, row] :=
@@ -1771,10 +1786,10 @@ begin
         tag := row;
         if Assigned(lOnProgress) then
           lOnProgress(Query5);
-      end;
+       end;
       Close;
-    end;
-  end;
+     end;
+   end;
 end;
 
 
@@ -1787,7 +1802,7 @@ var
   row: integer;
 begin
   with Query1 do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT no, X, Y, PD, SD, N FROM N WHERE I=:idInd ORDER BY X DESC, SD';
     ParamByName('idInd').AsInteger := lidInd;
@@ -1796,7 +1811,7 @@ begin
     row := 1;
     tblName.RowCount := RecordCount + 1;
     while not EOF do
-    begin
+     begin
       lidName := Fields[0].AsInteger;
       tblName.Cells[0, row] := IntToStr(lidName);
       tblName.Objects[0, row] := TObject(ptrint(lidname));
@@ -1822,9 +1837,9 @@ begin
 
       Next;
       row := row + 1;
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.CopyName(const lidName: longint;
@@ -1841,7 +1856,7 @@ begin
   i3 := qryInternal2.Fields[10].AsString;
   i4 := qryInternal2.Fields[11].AsString;
   with qryInternal do
-  begin
+   begin
     SQL.Text :=
       'INSERT IGNORE INTO N (I, Y, N, X, M, P, PD, SD, I1, I2, I3, I4) VALUES (' +
       ':idInd, :Type, :Name, :Prefered, :Note, :Phrase, :PDate, :SDate, :I1, :I2, :I3, :I4)';
@@ -1862,7 +1877,7 @@ begin
     Open;
     Result := Fields[0].AsInteger;
     Close;
-  end;
+   end;
   qryInternal2.Close;
 end;
 
@@ -1874,7 +1889,7 @@ begin
   qryInternal2.ParamByName('idInd').AsInteger := idInd;
   qryInternal2.Open;
   with qryInternal do
-  begin
+   begin
     SQL.Text :=
       'INSERT IGNORE INTO N (I, Y, N, X, M, P, PD, SD, I1, I2, I3, I4) VALUES (' +
       ':idInd, :Type, :Name, :Prefered, :Note, :Phrase, :PDate, :SDate, :I1, :I2, :I3, :I4)';
@@ -1895,7 +1910,7 @@ begin
     Open;
     Result := Fields[0].AsInteger;
     Close;
-  end;
+   end;
   qryInternal2.Close;
 end;
 
@@ -1903,38 +1918,38 @@ procedure TdmGenData.UpdateNameI4(const lDate: string; const lidInd: integer);
 begin
   // UPDATE N.I4!!!
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'UPDATE N SET I4=:I4 WHERE N.I=:idInd';
     ParamByName('idInd').AsInteger := lidInd;
     ParamByName('I4').AsString := lDate;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.UpdateNameI3(const lDate: string; const lidInd: integer);
 begin
   // UPDATE N.I3!!!
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'UPDATE N SET I3=:I3 WHERE N.I=:idInd';
     ParamByName('idInd').AsInteger := lidInd;
     ParamByName('I3').AsString := lDate;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.UpdateNamesPrefered(const idNamePref, idNameUnPref: integer);
 begin
   if idNamePref <> idNameUnPref then
     with qryInternal do
-    begin
+     begin
       SQL.Text := 'UPDATE N SET X=0 WHERE N.no=:idName';
       ParamByName('idName').AsInteger := idNameUnPref;
       ExecSQL;
       SQL.Text := 'UPDATE N SET X=1 WHERE N.no=:idName';
       ParamByName('idName').AsInteger := idNamePref;
       ExecSQL;
-    end;
+     end;
 end;
 
 function TdmGenData.getIdNameofInd(const lidInd: integer): integer;
@@ -1943,41 +1958,41 @@ var
 begin
   // Get idName of prefered name
   with Query1 do
-  begin
+   begin
     SQL.Text := 'SELECT no FROM N WHERE N.X=1 AND N.I=:idInd';
     ParamByName('idInd').AsInteger := lidInd;
     Open;
     temp := Fields[0].AsInteger;
     Result := temp;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.DeleteName(const lidName: integer);
 begin
   with Query1 do
-  begin
+   begin
     SQL.Text := 'DELETE FROM N WHERE no=:idname';
     ParamByName('idName').AsInteger := lidName;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.SetDBSchema(const lDBSchema: string; out bSuccess: boolean);
 begin
   bSuccess := False;
   with Database do
-  begin
+   begin
     Connected := False;
-    try
+     try
       DatabaseName := lDBSchema;
       Connected := True;
       bSuccess := Connected;
       FProjectIsOpen := bSuccess;
-    except
+     except
       // no exception
-    end;
-  end;
+     end;
+   end;
 end;
 
 function TdmGenData.GetDBSchema: string;
@@ -1990,20 +2005,20 @@ procedure TdmGenData.SetDBHostUserPass(const lDBHostName, lDBUser, lDBPassword: 
 begin
   Success := False;
   with Database do
-  begin
+   begin
     Connected := False;
     FProjectIsOpen := False;
     HostName := lDBHostName;
     UserName := lDBUser;
     Password := lDBPassword;
     DatabaseName := 'mysql';
-    try
+     try
       Connected := True;
       Success := Connected;
-    except
+     except
       Success := False;
-    end;
-  end;
+     end;
+   end;
 end;
 
 procedure TdmGenData.RepairProjectDB(onProgress: TNotifyEvent = nil);
@@ -2019,14 +2034,14 @@ begin
     onProgress(qryInternal);
   while not EOF do
     with qryInternal do
-    begin
+     begin
       SQL.Text := 'REPAIR TABLE ' + qryInternal2.Fields[0].AsString;
       ExecSQL;
       tag := tag + 1;
       if assigned(onProgress) then
         onProgress(qryInternal);
       qryInternal2.Next;
-    end;
+     end;
 end;
 
 procedure TdmGenData.RepairIndBirthDeath(onProgress: TNotifyEvent = nil);
@@ -2044,7 +2059,7 @@ begin
     onProgress(qryInternal);
   while not qryInternal2.EOF do
     with qryInternal do
-    begin
+     begin
       i3 := getI3(qryInternal2.Fields[1].AsInteger);
       i4 := getI4(qryInternal2.Fields[1].AsInteger);
       sql.Text := 'UPDATE N SET I3=:idxBirth ,I4=:idxDeath where no=:idName';
@@ -2056,7 +2071,7 @@ begin
       if assigned(onProgress) then
         onProgress(qryInternal);
       qryInternal2.Next;
-    end;
+     end;
 end;
 
 
@@ -2082,13 +2097,13 @@ begin
   lMaxRecords := 0;
   while not EOF do
     with qryInternal do
-    begin
+     begin
       SQL.Text := 'SELECT COUNT(*) FROM ' + qryInternal2.Fields[0].AsString;
       Open;
       lMaxRecords := lMaxRecords + Fields[0].AsInteger;
       Close;
       qryInternal2.Next;
-    end;
+     end;
   Result := lMaxRecords;
 end;
 
@@ -2105,11 +2120,11 @@ begin
   if not Database.Connected then
     exit;
   with qryInternal do
-    begin
-      SQL.Text := 'CREATE DATABASE ' + db;
-      ExecSQL;
-      Tag := 0;
-    end;
+   begin
+    SQL.Text := 'CREATE DATABASE ' + db;
+    ExecSQL;
+    Tag := 0;
+   end;
   if assigned(onProgress) then
     onProgress(qryInternal);
   Database.Connected := False;
@@ -2117,7 +2132,7 @@ begin
   Database.Connected := True;
   FProjectIsOpen := True;
   temp := TStringList.Create;
-  try
+   try
     //fr: Réviser structure
     //en: Create Table-Structure
     temp.add(
@@ -2233,67 +2248,69 @@ begin
     // en: Fill "Types"-table with default data/texts from a file (TDATA.TXT)
 
     if FileExists(DataPath + DirectorySeparator + 'tdata.txt') then
-    begin
+     begin
       lFS := TFileStream.Create(DataPath + DirectorySeparator + 'tdata.txt', fmOpenRead);
-      try
+       try
         setlength(lStr, lFS.Size);
         lFS.ReadBuffer(lStr[1], lFS.Size);
-      finally
+       finally
         FreeAndNil(lFS);
-      end;
+       end;
       lEnc := GuessEncoding(lStr);
       lstrLst := TStringList.Create;
-      try
+       try
         lstrLst.Text := ConvertEncodingToUTF8(lStr, lEnc, lEncoded);
         for Buffer in lstrLst do
-          temp.add('INSERT INTO Y (id, ln, no, Y, T, R, P) VALUES (1'+copy(buffer,1,3)+',''FR'',' +
-            buffer + ');');
-      finally
+          temp.add('INSERT INTO Y (id, ln, no, Y, T, R, P) VALUES (1' +
+            copy(buffer, 1, 3) + ',''FR'',' + buffer + ');');
+       finally
         FreeAndNil(lstrLst);
-      end;
-    end;
+       end;
+     end;
 
     if FileExists(DataPath + DirectorySeparator + 'tdata_en.txt') then
-    begin
-      lFS := TFileStream.Create(DataPath + DirectorySeparator + 'tdata_en.txt', fmOpenRead);
-      try
+     begin
+      lFS := TFileStream.Create(DataPath + DirectorySeparator +
+        'tdata_en.txt', fmOpenRead);
+       try
         setlength(lStr, lFS.Size);
         lfs.ReadBuffer(lStr[1], lFS.Size);
-      finally
+       finally
         FreeAndNil(lFS);
-      end;
+       end;
       lEnc := GuessEncoding(lStr);
       lstrLst := TStringList.Create;
-      try
+       try
         lstrLst.Text := ConvertEncodingToUTF8(lStr, lEnc, lEncoded);
         for Buffer in lstrLst do
-          temp.add('INSERT INTO Y (id, ln, no, Y, T, R, P) VALUES (0'+copy(buffer,1,3)+',''EN'',' +
-            buffer + ');');
-      finally
+          temp.add('INSERT INTO Y (id, ln, no, Y, T, R, P) VALUES (0' +
+            copy(buffer, 1, 3) + ',''EN'',' + buffer + ');');
+       finally
         FreeAndNil(lstrLst);
-      end;
-    end;
+       end;
+     end;
 
     if FileExists(DataPath + DirectorySeparator + 'tdata_de.txt') then
-    begin
-      lFS := TFileStream.Create(DataPath + DirectorySeparator + 'tdata_de.txt', fmOpenRead);
-      try
+     begin
+      lFS := TFileStream.Create(DataPath + DirectorySeparator +
+        'tdata_de.txt', fmOpenRead);
+       try
         setlength(lStr, lFS.Size);
         lfs.ReadBuffer(lStr[1], lFS.Size);
-      finally
+       finally
         FreeAndNil(lFS);
-      end;
+       end;
       lEnc := GuessEncoding(lStr);
       lstrLst := TStringList.Create;
-      try
+       try
         lstrLst.Text := ConvertEncodingToUTF8(lStr, lEnc, lEncoded);
         for Buffer in lstrLst do
-          temp.add('INSERT INTO Y (id,ln, no, Y, T, R, P) VALUES (2'+copy(buffer,1,3)+',''DE'',' +
-            buffer + ');');
-      finally
+          temp.add('INSERT INTO Y (id,ln, no, Y, T, R, P) VALUES (2' +
+            copy(buffer, 1, 3) + ',''DE'',' + buffer + ');');
+       finally
         FreeAndNil(lstrLst);
-      end;
-    end;
+       end;
+     end;
 
     qryInternal.Tag := -temp.Count + 1;
     if assigned(onProgress) then
@@ -2306,16 +2323,16 @@ begin
     // en: Create the tables
     with qryInternal do
       for i := 0 to temp.Count - 1 do
-      begin
+       begin
         SQL.Text := temp[i];
         ExecSQL;
         Tag := Tag + 1;
         if assigned(onProgress) then
           onProgress(qryInternal);
-      end;
-  finally
+       end;
+   finally
     temp.Free;
-  end;
+   end;
 end;
 
 procedure TdmGenData.PopulateCitations(Tableau: TStringGrid; Code: string; NStr: string);
@@ -2334,7 +2351,7 @@ procedure TdmGenData.GetRelationData(const idRelation: integer;
   out lRelType: longint);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT R.Y, R.X, R.A, R.B, R.M, R.P, R.SD FROM R WHERE R.no=:idRelation';
     ParamByName('idRelation').AsInteger := idRelation;
@@ -2348,25 +2365,25 @@ begin
     lPhraseText := Fields[5].AsString;
     lSortDate := Fields[6].AsString;
     Close;
-  end;
+   end;
 end;
 
-procedure TdmGenData.SaveRelationData(const idRelation: integer;
+function TdmGenData.SaveRelationData(const idRelation: integer;
   const lPhrase: TCaption; const lSDate: TCaption; const lidType: PtrInt;
   const prefered: boolean; const lidParent: integer; const lidChild: integer;
-  const lMemoText: string);
+  const lMemoText: string): integer;
 begin
-  with dmGenData.Query1 do
-  begin
+  with Query1 do
+   begin
     if idRelation = 0 then
       SQL.Text :=
         'INSERT INTO R (Y, A, B, M, SD, P, X) VALUES (:idType, :idIndA, :idIndB, :M, :SDate, :P, :X)'
     else
-    begin
+     begin
       SQL.Text :=
         'UPDATE R SET Y=:idType, A=:idIndA, B=:idIndB, M=:M, SD=:SDate, P=:P, X=:X where no=:idRel';
       ParamByName('idRel').AsInteger := idRelation;
-    end;
+     end;
     ParamByName('idType').AsInteger := lidType;
     ParamByName('idIndA').AsInteger := lidChild;
     ParamByName('idIndB').AsInteger := lidParent;
@@ -2375,9 +2392,39 @@ begin
     ParamByName('P').AsString := lPhrase;
     ParamByName('X').AsBoolean := prefered;
     ExecSQL;
-  end;
+    if idRelation = 0 then
+     begin
+      SQL.Text := 'SELECT @@identity';
+      Open;
+      Result := Fields[0].AsInteger;
+      Close;
+     end
+    else
+      Result := idRelation;
+   end;
+
 end;
 
+procedure TdmGenData.InsertRelation(const lidParent: longint;
+  const lidChild: longint; const lidType: longint; const lidRelation: longint;
+  const lPhrase: string; const lSDate: string; const lNote: string; lidPrefered:Boolean);
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text := 'INSERT IGNORE INTO R (no, Y, A, B, M, X, SD, P) ' +
+      'VALUES (:idRelation, :idType, :idChild, :idParent, :Note, :Prefered, :SDate, :Phrase)';
+    ParamByName('idRelation').AsInteger := lidRelation;
+    ParamByName('idType').AsInteger := lidType;
+    ParamByName('idChild').AsInteger := lidChild;
+    ParamByName('idParent').AsInteger := lidParent;
+    ParamByName('Note').AsString := lNote;
+    ParamByName('Prefered').AsBoolean := lidPrefered;
+    ParamByName('SDate').AsString := lSDate;
+    ParamByName('Phrase').AsString := lPhrase;
+    ExecSQL;
+   end;
+end;
 
 function TdmGenData.CopyRelation(lidRelation: integer; idNewInd: integer): longint;
 var
@@ -2389,7 +2436,7 @@ begin
   qryInternal2.Open;
   idSourceInd := qryInternal2.Fields[1].AsInteger;
   with qryInternal do
-  begin
+   begin
     SQL.Text :=
       'INSERT IGNORE INTO R (Y, A, B, M, P, X, SD) VALUES (:idType, :idInd, :idLink, :Note, :Phrase, :Prefered , :SDate)';
     ParamByName('idType').AsInteger := qryInternal2.Fields[0].AsInteger;
@@ -2412,7 +2459,7 @@ begin
     First;
     Result := Fields[0].AsInteger;
     Close;
-  end;
+   end;
   SaveModificationTime(idSourceInd);
 end;
 
@@ -2421,7 +2468,7 @@ function TdmGenData.RelationInsertData(idType, IdInd, idLink: integer;
   Date: string = ''): integer;
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text :=
       'INSERT INTO R (Y, A, B, M, P, X, SD) VALUES (:idType, :idInd, :idLink, :Note, :Phrase, :Prefered, :SDate)';
     ParamByName('idType').AsInteger := idType;
@@ -2437,16 +2484,16 @@ begin
     First;
     Result := Fields[0].AsInteger;
     Close;
-  end;
+   end;
   SaveModificationTime(idInd);
 end;
 
 function TdmGenData.CheckPrefParentExists(const lSex: string;
-  var lidInd: longint): boolean;
+  const lidInd: longint): boolean;
 
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text :=
       'SELECT R.no, R.B FROM R JOIN I ON R.B=I.no WHERE I.S=:sex AND R.X=1 AND R.A=:idInd';
@@ -2455,20 +2502,20 @@ begin
     Open;
     Result := not EOF;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.CheckIndChildExists(const lidParent: longint): boolean;
 
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT no FROM R WHERE X=1 AND B=:idInd';
     ParamByName('idInd').AsInteger := lidParent;
     Open;
     Result := not EOF;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.CheckIndRelationExist(idInd: integer): boolean;
@@ -2478,50 +2525,50 @@ begin
   // fr: Vérifier qu'il n'y a pas d'enfants primaires
   // en: Check that there is no primary relatives
   with qryInternal do
-  begin
+   begin
     SQL.Text :=
       'SELECT R.no FROM R WHERE R.X=1 AND (R.A=:idInd OR R.B=:idInd )';
     ParamByName('idInd').AsInteger := idInd;
     Open;
     Result := not EOF;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.GetChild(idInd: integer): TArrayOfIntegers;
 begin
   with Query3 do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT R.A  FROM R WHERE X=1 AND R.B=:idInd';
     ParamByName('idInd').AsInteger := idind;
     Open;
     setlength(Result, RecordCount);
     while not EOF do
-    begin
+     begin
       Result[RecNo] := Fields[0].AsInteger;
       Next;
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.GetParents(idInd: integer): TArrayOfIntegers;
 begin
   with Query3 do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT R.B  FROM R WHERE X=1 AND R.A=:idInd';
     ParamByName('idInd').AsInteger := idind;
     Open;
     setlength(Result, RecordCount);
     while not EOF do
-    begin
+     begin
       Result[RecNo] := Fields[0].AsInteger;
       Next;
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 // fr: Update date de tri de relation
@@ -2529,13 +2576,13 @@ end;
 procedure TdmGenData.UpdateRelationSortdate(var lidInd: integer; var lDate: string);
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text :=
       'UPDATE R SET SD=:SDate WHERE A=:idInd AND (SD=''100000000030000000000'' OR SD ='''')';
     ParamByName('SDate').AsString := lDate;
     ParamByName('idInd').AsInteger := lidInd;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.PopulateParents(aSG: TStringGrid; idChild: longint);
@@ -2546,7 +2593,7 @@ var
   sBestQuality: RawByteString;
 begin
   with qryInternal2 do
-  begin
+   begin
     SQL.Text := 'SELECT no, X, Y, B FROM R WHERE A=:idInd ORDER BY X DESC, SD, Y, B';
     ParamByName('idInd').AsInteger := idChild;
     Open;
@@ -2554,7 +2601,7 @@ begin
     row := 1;
     aSG.RowCount := RecordCount + 1;
     while not EOF do
-    begin
+     begin
       lidRelation := Fields[0].AsInteger;
       aSG.Cells[0, row] := Fields[0].AsString;
       aSG.Objects[0, row] := TObject(ptrint(lidRelation));
@@ -2577,8 +2624,8 @@ begin
       aSG.Cells[5, row] := Fields[3].AsString;
       Next;
       row := row + 1;
-    end;
-  end;
+     end;
+   end;
   aSG.Parent.Caption := Translation.Items[130] + ' (' +
     IntToStr(aSG.RowCount - 1) + ')';
 end;
@@ -2601,7 +2648,7 @@ var
   row: integer;
 begin
   with qryInternal2 do
-  begin
+   begin
     Close;
     SQL.Text :=
       'SELECT R.no, R.X, R.Y, R.A FROM R WHERE R.B=:idInd ORDER BY R.X DESC, R.SD, R.Y';
@@ -2612,15 +2659,15 @@ begin
     principaux := 0;
     lTable.RowCount := RecordCount + 1;
     while not EOF do
-    begin
+     begin
       lTable.Cells[0, row] := Fields[0].AsString;
       lTable.Objects[0, row] := TObject(ptrint(Fields[0].AsInteger));
 
       if Fields[1].AsBoolean then
-      begin
+       begin
         lTable.Cells[1, row] := '*';
         principaux := principaux + 1;
-      end
+       end
       else
         lTable.Cells[1, row] := '';
 
@@ -2644,9 +2691,9 @@ begin
         lTable.Cells[6, row] := '';
       Next;
       row := row + 1;
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.SetRelationPrefered(const lidInd, lidIndRel: integer;
@@ -2656,11 +2703,11 @@ var
 begin
 
   with qryInternal2 do
-  begin
+   begin
     Close;
     qryInternal.Close;
     if IsValidIndividuum(lidIndRel) then
-    begin
+     begin
       S := GetSexOfInd(lidIndRel);
 
       SQL.Text :=
@@ -2669,25 +2716,25 @@ begin
       ParamByName('Sex').AsString := S;
       Open;
       if not EOF then
-      begin
+       begin
 
         qryInternal.SQL.Text := 'UPDATE R SET X=0 WHERE no=idRelation';
         qryInternal.ParamByName('idRelation').AsInteger := Fields[0].AsInteger;
         qryInternal.ExecSQL;
 
         SaveModificationTime(Fields[1].AsInteger);
-      end;
+       end;
       Close;
-    end;
-  end;
+     end;
+   end;
 
   // Set Relation Prefered
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'UPDATE R SET X=1 WHERE no=:idRelation';
     ParamByName('idRelation').AsInteger := lidRelation;
     ExecSQL;
-  end;
+   end;
 
   // Modifie la date de modification
   SaveModificationTime(lidIndRel);
@@ -2698,12 +2745,12 @@ procedure TdmGenData.ResetRelationPrefered(const lidInd, lidIndRel: integer;
   const lidRelation: integer);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'UPDATE R SET X=0 WHERE no=:idRelation';
     ParamByName('idRelation').AsInteger := lidRelation;
     ExecSQL;
-  end;
+   end;
   // Modifie la date de modification
   SaveModificationTime(lidIndRel);
   SaveModificationTime(lidInd);
@@ -2714,7 +2761,7 @@ var
   lChildsExist: boolean;
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT top(1) no FROM R WHERE X=1 AND B=:idInd';
     ParamByName('idInd').AsInteger := lidChild;
@@ -2722,7 +2769,7 @@ begin
     lChildsExist := not EOF;
     Result := lChildsExist;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.FillSiblingsTable(const lTable: TStringGrid; const lidInd: longint);
@@ -2741,22 +2788,22 @@ begin
   p1 := 0;
   p2 := 0;
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT R.B FROM R WHERE X=1 AND A=:idInd ORDER BY SD';
     ParamByName('idInd').AsInteger := lidInd;
     Open;
     if not EOF then
-    begin
+     begin
       p1 := Fields[0].AsInteger;
       Next;
-    end;
+     end;
     if not EOF then
       p2 := Fields[0].AsInteger;
     Close;
-  end;
+   end;
   with qryInternal2 do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT R.no, R.A, N.N, N.I3, N.I4 FROM R JOIN N on N.I=R.A ' +
       'WHERE N.X=1 AND R.X=1 AND (R.B=:idind1 OR R.B=:idind2) ORDER BY R.SD, N.I';
@@ -2767,11 +2814,11 @@ begin
     row := 1;
     lTable.RowCount := RecordCount + 1;
     while not EOF do
-    begin
+     begin
       // Enlève les doublons et le sujet
       if (not (Fields[1].AsInteger = lidInd)) and
         (not (Fields[1].AsInteger = ptrint(lTable.Objects[2, row - 1]))) then
-      begin
+       begin
         lidRelation := Fields[0].AsInteger;
         lTable.Cells[0, row] := IntToStr(lidRelation);
         lTable.Objects[0, row] := TObject(PtrInt(lidRelation));
@@ -2808,13 +2855,13 @@ begin
         else
           lTable.Cells[4, row] := '';
         row := row + 1;
-      end
+       end
       else
         lTable.RowCount := lTable.RowCount - 1;
       Next;
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.GetIndSpouse(const idInd: longint; out Spouse: string): integer;
@@ -2823,7 +2870,7 @@ var
   nbmarriage: integer;
 begin
   with qryInternal2 do
-  begin
+   begin
     Spouse := '';
     Close;
     SQL.Text :=
@@ -2832,7 +2879,7 @@ begin
     Open;
     nbmarriage := RecordCount;
     if not EOF then
-    begin
+     begin
       lidEvent := Fields[0].AsInteger;
       SQL.Text :=
         'SELECT W.I, N.N FROM W JOIN N on W.I=N.I WHERE W.X=1 AND N.X=1 AND W.E=:idEvent AND NOT W.I=:idInd';
@@ -2841,10 +2888,10 @@ begin
       Open;
       lidSpouse := Fields[0].AsInteger;
       Spouse := DecodeName(GetIndividuumName(lidSpouse), 1);
-    end;
+     end;
     Result := nbmarriage;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.AppendRelationTreeVParents(const lTreeView: TTreeView);
@@ -2855,7 +2902,7 @@ var
 begin
   if not lTreeView.Selected.HasChildren then
     with qryInternal2 do
-    begin
+     begin
       Close;
       idInd := ptrint(TObject(lTreeView.Selected.Data));
       SQL.Text :=
@@ -2864,7 +2911,7 @@ begin
       Open;
       First;
       while not EOF do
-      begin
+       begin
         if Copy(Fields[2].AsString, 1, 1) = '1' then
           naissance := Copy(Fields[2].AsString, 2, 4)
         else
@@ -2880,10 +2927,10 @@ begin
           naissance, deces]),
           pointer(TObject(ptrint(Fields[0].AsInteger))));
         Next;
-      end;
+       end;
       Close;
       lTreeView.Selected.Expand(True);
-    end;
+     end;
 end;
 
 procedure TdmGenData.AppendRelationTreeVChildren(const lTreeView: TTreeView);
@@ -2894,8 +2941,8 @@ var
 begin
   if not lTreeView.Selected.HasChildren then
     with qryInternal2 do
-    begin
-      begin
+     begin
+       begin
         Close;
         lidInd := ptrint(TObject(lTreeView.Selected.Data));
         SQL.Text :=
@@ -2904,7 +2951,7 @@ begin
         Open;
         First;
         while not EOF do
-        begin
+         begin
           if Copy(Fields[2].AsString, 1, 1) = '1' then
             naissance := Copy(Fields[2].AsString, 2, 4)
           else
@@ -2917,10 +2964,10 @@ begin
             DecodeName(Fields[1].AsString, 1) + ' [' +
             Fields[0].AsString + '] (' + naissance + '-' + deces + ')');
           Next;
-        end;
+         end;
         Close;
-      end;
-    end;
+       end;
+     end;
   lTreeView.Selected.Expand(True);
 end;
 
@@ -2937,18 +2984,18 @@ end;
 procedure TdmGenData.DeleteRelation(const lidRelation: PtrInt);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'DELETE FROM R WHERE no=:idRelation';
     ParamByName('idRelation').AsInteger := lidRelation;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.UpdateIndModificationTimesByRelation(lLinkID: integer);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT R.A, R.B FROM R WHERE R.no=:idRelation';
     ParamByName('idRelation').AsInteger := lLinkID;
@@ -2957,59 +3004,67 @@ begin
     SaveModificationTime(Fields[0].AsInteger);
     SaveModificationTime(Fields[1].AsInteger);
     Close;
-  end;
+   end;
 end;
 
 
 {$endRegion ~Relation}
 // Witness-Methods
 {$region Witness (W)}
-function TdmGenData.AppendWitness(Role, Phrase: string;
-  idInd, idEvent, idPref: integer): integer;
+function TdmGenData.AppendWitness(Role, Phrase: string; idInd, idEvent: integer;
+  Pref: boolean): integer;
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text :=
       'INSERT INTO W (R, I, P, E, X) VALUES (:Role, :idInd, :Phrase, :idEvent, :Pref)';
     ParamByName('Role').AsString := Role;
     ParamByName('Phrase').AsString := Phrase;
     ParamByName('idInd').AsInteger := idInd;
     ParamByName('idEvent').AsInteger := idEvent;
-    ParamByName('Pref').AsInteger := idPref;
+    ParamByName('Pref').AsBoolean := Pref;
     ExecSQL;
     SQL.Text := 'SELECT @@identity';
     Open;
     Result := qryInternal.Fields[0].AsInteger;
     Close;
-  end;
+   end;
 end;
+
+procedure TdmGenData.InsertWitness(const Prefered: boolean;
+  const idEvent: longint; const idInd: longint; const Role: string;
+  const Phrase: string);
+begin
+  AppendWitness(Role, Phrase, idInd, idEvent, Prefered);
+end;
+
 
 procedure TdmGenData.UpdateWitnessModDatebyEvent(lidEvent: integer);
 var
   lidInd: longint;
 begin
   with Query3 do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT W.I, W.X FROM W WHERE W.E=:idEvent';
     ParamByName('idEvent').AsInteger := lidEvent;
     Open;
     First;
     while not EOF do
-    begin
+     begin
       lidInd := Fields[0].AsInteger;
       SaveModificationTime(lidInd);
       Next;
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 
 procedure TdmGenData.UpdateWitnessModbyEvent(lidEvent: integer);
 begin
   with Query3 do
-  begin
+   begin
     // fr: Sauvegarder les modifications pour tout les témoins de l'événements
     // en: Save the changes for all the witnesses to the events
     SQL.Text := 'SELECT W.I, W.X FROM W WHERE W.E=:idevent';
@@ -3017,23 +3072,23 @@ begin
     Open;
     First;
     while not EOF do
-    begin
+     begin
       SaveModificationTime(Fields[0].AsInteger);
       Next;
-    end;
-  end;
+     end;
+   end;
 end;
 
 
 procedure TdmGenData.DeleteWitnessbyEvent(const lidEvent: integer);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'DELETE FROM W WHERE E=:idEvent';
     ParamByName('idEvent').AsInteger := lidEvent;
     ExecSQL;
-  end;
+   end;
 end;
 
 function TdmGenData.GetWitnessListbyEvent(lidEvent: integer): string;
@@ -3041,7 +3096,7 @@ var
   temoins1: string;
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text :=
       'SELECT W.I FROM W WHERE W.X=1 AND W.E=:idEvent ORDER BY W.I';
@@ -3050,27 +3105,27 @@ begin
     First;
     temoins1 := '';
     while not EOF do
-    begin
+     begin
       temoins1 := temoins1 + '|' + Fields[0].AsString;
       Next;
-    end;
+     end;
     Close;
     Result := temoins1;
-  end;
+   end;
 end;
 
 procedure TdmGenData.UpdateWitnessPhraseRole(const idWitness: integer;
   const Role: string; const Phrase: string);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'UPDATE W SET P=:Phrase, R=:Role WHERE W.no=:idWitness';
     ParamByName('idWitness').AsInteger := idWitness;
     ParamByName('Phrase').AsString := Phrase;
     ParamByName('Role').AsString := Role;
     ExecSQL;
-  end;
+   end;
 end;
 
 {$endRegion}
@@ -3098,7 +3153,7 @@ begin
   lgrdEvents.RowCount := Query1.RecordCount + 1;
   assert(Query1.Fields.Count = 8, 'Query should have 8 Fields');
   while not Query1.EOF do
-  begin
+   begin
     // idEvent
     lidEvent := Query1.Fields[0].AsInteger;
     lgrdEvents.Cells[0, row] := IntToStr(lidEvent);
@@ -3125,16 +3180,16 @@ begin
     lgrdEvents.Objects[7, row] := TObject(ptrint(0));
     lWitness := '';
     while not Query2.EOF do
-    begin
+     begin
       // Trouver les témoins principaux de l'événement
       if not (Query2.Fields[0].AsInteger = idInd) then
-      begin
+       begin
         lidWitness := Query2.Fields[0].AsInteger;
         if ptrint(lgrdEvents.Cells[7, row]) = 0 then
-        begin
+         begin
           lgrdEvents.Cells[7, row] := IntToStr(lidWitness);
           lgrdEvents.Objects[7, row] := TObject(ptrint(lidWitness));
-        end;
+         end;
         // Get Name of Witnesses
         if length(lWitness) > 0 then
           lWitness :=
@@ -3143,9 +3198,9 @@ begin
         else
           lWitness :=
             format('%s [%d]', [GetIndividuumName(lidWitness), lidWitness]);
-      end;
+       end;
       Query2.Next;
-    end;
+     end;
     Query2.Close;
 
     // Implanter la description
@@ -3205,20 +3260,20 @@ begin
       lgrdEvents.Cells[8, row] := '';
     Query1.Next;
     row := row + 1;
-  end;
+   end;
 end;
 
 function TdmGenData.GetEventType(const lIdEvent: integer): string;
 
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT Y.Y FROM E JOIN Y ON Y.no=E.Y WHERE E.no=:idEvent';
     ParamByName('idEvent').AsInteger := lIdEvent;
     Open;
     Result := Fields[0].AsString;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.GetEventExtType(idEvent, idInd: integer;
@@ -3227,7 +3282,7 @@ var
   lEventFound: boolean;
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text :=
       'SELECT E.Y, Y.Y FROM E JOIN W on W.E=E.no JOIN Y on E.Y' +
@@ -3241,18 +3296,18 @@ begin
     EvType := Fields[0].AsString;
     Close;
     Result := lEventFound;
-  end;
+   end;
 end;
 
-function TdmGenData.SaveEventData(const pPrefered: boolean;
-  const pidEvent: integer; const pIdPlace: integer; const pInfo: string;
-  const pDate: string; const pSortDate: string; const pidType: integer): integer;
+function TdmGenData.SaveEventData(const pidEvent: integer; const pidType: integer;
+  const pIdPlace: integer; const pPrefered: boolean; const pInfo: string;
+  const pDate: string; const pSortDate: string): integer;
 
 begin
 
   if pidEvent = 0 then
     with qryInternal do
-    begin
+     begin
       Close;
       SQL.Text := 'INSERT INTO E (Y, L, M, PD, SD, X) VALUES ' +
         '(:idType, :idplace, :Info, :PD, :SD, :Pref);';
@@ -3268,10 +3323,10 @@ begin
       First;
       Result := Fields[0].AsInteger;
       Close;
-    end
+     end
   else
     with qryInternal do
-    begin
+     begin
       Close;
       SQL.Text := 'UPDATE E SET Y=:idType ' +
         ', L=:idplace, M=:info, PD=:PD, SD=:SD WHERE no=:idEvent';
@@ -3282,19 +3337,19 @@ begin
       ParamByName('SD').AsString := pSortDate;
       ExecSQL;
       Result := pidEvent;
-    end;
+     end;
 
 end;
 
 procedure TdmGenData.DeleteEvent(const lidEvent: integer);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'DELETE FROM E WHERE no=:idEvent';
     ParamByName('idEvent').AsInteger := lidEvent;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.DeleteEventComplete(const lidEvent: integer);
@@ -3322,18 +3377,18 @@ var
 begin
 
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT Y, PD, SD, L, M, X FROM E WHERE no=:idEvent';
     ParamByName('idEvent').AsInteger := idEvent;
     Open;
     if EOF then
-    begin
+     begin
       Close;
       exit;
-    end;
-  end;
+     end;
+   end;
   with qryInternal2, qryInternal.Fields do
-  begin
+   begin
     SQL.Text :=
       'INSERT IGNORE INTO E (Y, PD, SD, L, M, X) VALUES (:Type, :PDate, :SDate, :Place, :M, :X)';
     ParamByName('Type').AsString := FieldByNumber(0).AsString;
@@ -3349,7 +3404,7 @@ begin
     idNewEvent := Fields[0].AsInteger;
     Close;
     qryInternal.Close;
-  end;
+   end;
   // en: Copy Citation of Event
   CopyCitation('E', idNewEvent, idEvent);
 
@@ -3357,14 +3412,14 @@ begin
 
   // en: Copy Witness
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT I, E, X, P, R FROM W WHERE E=:idEvent';
     ParamByName('idEvent').AsInteger := idEvent;
     Open;
-  end;
+   end;
   while not qryInternal.EOF do
     with qryInternal2 do
-    begin
+     begin
       SQL.Text :=
         'INSERT IGNORE INTO W (I, E, X, P, R) VALUES (:idInd, :idEvent, :X, :P, :R)';
       ParamByName('idInd').AsInteger := qryInternal.Fields[0].AsInteger;
@@ -3375,7 +3430,7 @@ begin
       ExecSQL;
       SaveModificationTime(qryInternal.Fields[0].AsInteger);
       qryInternal.Next;
-    end;
+     end;
   EventChanged(self);
 
 end;
@@ -3385,14 +3440,14 @@ end;
 procedure TdmGenData.ResetEventPref(lidEvent: integer);
 begin
   with qryInternal do
-  begin
+   begin
     // fr: si primaire, enlève le primaire de la base de données et du tableau.
     // en: if prefered, removes the prefered-setting of the database.
     Close;
     SQL.Text := 'UPDATE E SET X=0 WHERE no=:idEvent';
     ParamByName('idEvent').AsInteger := lidEvent;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.ResetEventPrefered(lidEvent: integer);
@@ -3415,94 +3470,116 @@ begin
   lEventFound := GetEventExtType(lidEvent, lidInd, lEvType, lTypeType);
   if lEventFound then
 
-  begin
+   begin
     // trouve si autre événement du même types avec même témoins primaires qui est primaire
     temoins1 := GetWitnessListbyEvent(lidEvent);
 
     with qryInternal2 do
-    begin
+     begin
       Close;
       // Todo: Error: Query1.eof := true => No Data !!!
       if lTypeType = 'X' then
-      begin
+       begin
         SQL.Text :=
           'SELECT E.no, W.I FROM E JOIN W on W.E=E.no WHERE W.X=1 AND E.X=1 AND E.Y=:Type AND W.I=:idInd';
         ParamByName('Type').AsString := lEvType;
-      end
+       end
       else
-      begin
+       begin
         SQL.Text :=
           'SELECT E.no, W.I FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no WHERE W.X=1 AND E.X=1 AND Y.Y=:Type AND W.I=:idInd';
         ParamByName('Type').AsString := lTypeType;
-      end;
+       end;
       ParamByName('idInd').AsInteger := lidInd;
       Open;
       First;
       while not EOF do
-      begin
+       begin
         lidEvent2 := Fields[0].AsInteger;
         temoins2 := GetWitnessListbyEvent(lidEvent2);
 
         // Enlève son tag primaire
         if temoins1 = temoins2 then
-        begin
+         begin
           ResetEventPref(lidEvent2);
           redraw := True;
-        end;
+         end;
         Next;
-      end;
-    end;
+       end;
+     end;
 
     SetEventPref(lidEvent);
 
     if lTypeType = 'B' then
-    begin
+     begin
       lDate := GetI3(lidInd);
       UpdateNameI3(lDate, lidInd);
-    end
+     end
     else if lTypeType = 'D' then
-    begin
+     begin
       lDate := GetI3(lidInd);
       UpdateNameI4(lDate, lidInd);
-    end;
-  end;
+     end;
+   end;
 
   UpdateWitnessModDatebyEvent(lidevent);
   Result := redraw;
 end;
 
-procedure TdmGenData.InsertEvent(const lPref: integer; const lMemo: string;
-  const lSDate: string; const lPDate: string; const lidPlace: longint;
-  const lidType: longint; const lidEvent: longint);
+procedure TdmGenData.InsertEvent(const idEvent: longint; const idType: longint;
+  const idPlace: longint; const Prefered: boolean; const lMemo: string;
+  const SDate: string; const PDate: string);
 begin
   with Query1 do
-  begin
+   begin
     SQL.Text :=
       'INSERT IGNORE INTO E (no, Y, PD, SD, L, M, X) ' +
       'VALUES (:idEvent, :idType, :PDate, SDate, :idPlace, :Note, :Pref)';
-    ParamByName('idEvent').AsInteger := lidEvent;
-    ParamByName('idType').AsInteger :=
-      lidType;
-    ParamByName('PDate').AsString := lPDate;
-    ParamByName('Sdate').AsString := lSDate;
-    ParamByName('idPlace').AsInteger :=
-      lidPlace;
+    ParamByName('idEvent').AsInteger := idEvent;
+    ParamByName('idType').AsInteger := idType;
+    ParamByName('PDate').AsString := PDate;
+    ParamByName('Sdate').AsString := SDate;
+    ParamByName('idPlace').AsInteger := idPlace;
     ParamByName('Note').AsString := lMemo;
-    ParamByName('Pref').AsInteger := lPref;
-
+    ParamByName('Pref').AsBoolean := Prefered;
     ExecSQL;
-  end;
+   end;
 end;
 
 {$Endregion Events}
 // Document Methods
 {$region Documents}
 
+function TdmGenData.GetDocumentInfo(const lidDocument: Integer): string;
+var
+  lMemoText: string;
+begin
+  with Query2 do begin
+  SQL.Text := 'SELECT X.Z FROM X WHERE X.no=:idDocument';
+          ParamByName('idDocument').AsInteger:=lidDocument;
+          Open;
+          lMemoText:=Fields[0].AsString;
+          Close;
+    Result:=lMemoText;
+  end;
+end;
+
+procedure TdmGenData.UpdateDocumentInfo(const lidDocument: integer; const lDocumentInfo: string);
+begin
+    with Query2 do begin
+    Close;
+      SQL.Text := 'UPDATE X SET Z=:Z WHERE X.no=:idDocument';
+      ParamByName('Z').AsString := lDocumentInfo;
+      ParamByName('idDocument').AsInteger := lidDocument;
+      ExecSQL;
+    end;
+end;
+
 procedure TdmGenData.UpdateModificationByEventDocument(lidDocument: integer);
 
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text :=
       'SELECT W.I FROM (W JOIN E on W.E=E.no) JOIN X on X.N=E.no WHERE X.no=:idDocument';
@@ -3510,12 +3587,12 @@ begin
     Open;
     First;
     while not EOF do
-    begin
+     begin
       dmGenData.SaveModificationTime(Fields[0].AsInteger);
       Next;
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.SaveDocumentData(lidDocument: integer; const lLinkID: integer;
@@ -3524,25 +3601,25 @@ function TdmGenData.SaveDocumentData(lidDocument: integer; const lLinkID: intege
 
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     if lidDocument = 0 then
-    begin
+     begin
       SQL.Text :=
         'INSERT INTO X (X, T, D, F, A, N) VALUES ( 0, :Title, :Description, :Filename, :DocType, :idLink';
       ParamByName('DocType').AsString := lDocumentType;
       ParamByName('idLink').AsInteger := lLinkID;
-    end
+     end
     else
-    begin
+     begin
       SQL.Text := 'UPDATE X SET T=:Title, D=:Description, F=:Filename WHERE X.no=:idDocument';
       ParamByName('idDocument').AsInteger := lidDocument;
-    end;
+     end;
     ParamByName('Title').AsString := lDocumentTitle;
     ParamByName('Description').AsString := lDocumentDescription;
     ParamByName('Filename').AsString := lFileName;
     ExecSQL;
-  end;
+   end;
   // Enregistrer la date de la dernière modification pour tout les individus reliés
   // à cet exhibits.
   if lidDocument = 0 then
@@ -3555,13 +3632,13 @@ procedure TdmGenData.UpdateDocumentMemo(const lidDocument: integer;
   const lImageMemoText: TCaption);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'UPDATE X SET Z=:MemoText WHERE X.no=:idDocument';
     ParamByName('idDocument').AsInteger := lidDocument;
     ParamByName('MemoText').AsString := lImageMemoText;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.PopulateDocuments(Tableau: TStringGrid; Code: string; no: integer);
@@ -3571,9 +3648,9 @@ var
   titre, desc: string;
 begin
   with qryInternal2 do
-  begin
+   begin
     if code = 'I' then
-    begin
+     begin
       Close;
       // Ajouter les exhibits de l'individu
       SQL.Text := 'SELECT X.no, X.X, X.T, X.D, X.F, X.A FROM X WHERE (X.A=''I'' AND X.N='
@@ -3583,7 +3660,7 @@ begin
       row := 1;
       Tableau.RowCount := RecordCount + 1;
       while not EOF do
-      begin
+       begin
         Tableau.Cells[0, row] := Fields[0].AsString;
         Tableau.Objects[0, row] := TObject(ptrint(Fields[0].AsInteger));
 
@@ -3611,8 +3688,8 @@ begin
           Tableau.Cells[4, row] := Translation.Items[64];
         Next;
         row := row + 1;
-      end;
-    end
+       end;
+     end
     else
       Tableau.RowCount := 1;
     // Ajouter les exhibits des événements
@@ -3632,7 +3709,7 @@ begin
     First;
     Tableau.RowCount := Tableau.RowCount + RecordCount;
     while not EOF do
-    begin
+     begin
       Tableau.Cells[0, row] := Fields[0].AsString;
       Tableau.Cells[1, row] := '';
       titre := Fields[2].AsString;
@@ -3654,9 +3731,9 @@ begin
         Tableau.Cells[4, row] := Translation.Items[64];
       Next;
       row := row + 1;
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.SelectDocumentData(const lidDocument: integer;
@@ -3664,7 +3741,7 @@ procedure TdmGenData.SelectDocumentData(const lidDocument: integer;
   lDocumentDescription, lDocumentTitle: string);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text :=
       'SELECT X.no, X.X, X.T, X.D, X.F, X.Z, X.A FROM X WHERE (X.no=:idDocument)';
@@ -3677,25 +3754,25 @@ begin
     lFileName := Fields[4].AsString;
     lDocType := Fields[6].AsString;
     lDocumentInfo := Fields[5].AsString;
-  end;
+   end;
 end;
 
 function TdmGenData.GetDocumentFilename(no, IdInd: integer): string;
 
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     if no = 0 then
-    begin
+     begin
       SQL.Text := 'SELECT X.F FROM X WHERE X.A=''I'' AND X.X=1 AND X.N=:idInd';
       ParamByName('idInd').AsInteger := IdInd;
-    end
+     end
     else
-    begin
+     begin
       SQL.Text := 'SELECT X.F FROM X WHERE X.no=:IdDocument';
       ParamByName('idDocument').AsInteger := no;
-    end;
+     end;
     Open;
     First;
     if not EOF then
@@ -3703,18 +3780,18 @@ begin
     else
       Result := '';
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.DeleteDocument(const lidDocument: integer);
 begin
   with Query1 do
-  begin
+   begin
     Close;
     SQL.Text := 'DELETE FROM X WHERE no=:idDocument';
     ParamByName('idDocument').AsInteger := lidDocument;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.UpdateDocument_SRPrefered(const lidInd: longint;
@@ -3722,14 +3799,14 @@ procedure TdmGenData.UpdateDocument_SRPrefered(const lidInd: longint;
 begin
   with Query1 do
     if not lNewPref then
-    begin
+     begin
       Close;
       SQL.Text := 'UPDATE X SET X=0 WHERE X.no=:idDocument';
       ParamByName('idDocument').AsInteger := lidDocument;
       ExecSQL;
-    end
+     end
     else
-    begin
+     begin
       Close;
       SQL.Text := 'UPDATE X SET X=0 WHERE X.A=''I'' AND X.N=:idInd';
       ParamByName('idInd').AsInteger := lidInd;
@@ -3737,7 +3814,7 @@ begin
       SQL.Text := 'UPDATE X SET X=1 WHERE X.no=:idDocument';
       ParamByName('idDocument').AsInteger := lidDocument;
       ExecSQL;
-    end;
+     end;
 end;
 
 procedure TdmGenData.CopyDocumentbyType_ID(const aType: string;
@@ -3745,15 +3822,15 @@ procedure TdmGenData.CopyDocumentbyType_ID(const aType: string;
 begin
   // en: Copy Documents of Event
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT X, T, D, F, Z FROM X WHERE A=:Type AND N=:idLink';
     ParamByName('Type').AsString := aType;
     ParamByName('idLink').AsInteger := aID;
     Open;
-  end;
+   end;
   while not qryInternal.EOF do
     with qryInternal2 do
-    begin
+     begin
       SQL.Text :=
         'INSERT IGNORE INTO X (X, T, D, F, Z, A, N) VALUES (:X, :T, :D, :F, :' +
         'Z, :LinkType, :idLink)';
@@ -3767,20 +3844,20 @@ begin
       ExecSQL;
       Close;
       qryInternal.Next;
-    end;
+     end;
   qryInternal.Close;
 end;
 
 procedure TdmGenData.DeleteDocumentsbyType_ID(const aType: char; const aID: integer);
 begin
   with Query1 do
-  begin
+   begin
     Close;
     SQL.Text := 'DELETE FROM X WHERE A=:Type AND N=:ID';
     ParamByName('Type').AsString := aType;
     ParamByName('ID').AsInteger := aID;
     ExecSQL;
-  end;
+   end;
 end;
 
 {$endregion ~Documents}
@@ -3790,7 +3867,7 @@ procedure TdmGenData.GetTypeData(idType: integer; out TypeCat: string;
   out Phrase: string; out Title: string);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT Y.no, Y.T, Y.Y, Y.P FROM Y WHERE Y.no=:idType';
     ParamByName('idType').AsInteger := idType;
@@ -3800,14 +3877,14 @@ begin
     Phrase := Fields[3].AsString;
     TypeCat := Fields[2].AsString;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.InsertType(const idType: longint; const Title: string;
   const Phrase: string; const Roles: string; const TypeCat: string);
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text :=
       'INSERT IGNORE INTO Y (no, Y, P, T, R) ' +
       'VALUES (:idType, :Type, :Phrase, :Title, :Fields)';
@@ -3817,7 +3894,7 @@ begin
     ParamByName('Title').AsString := Title;
     ParamByName('Fields').AsString := Roles;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.GetTypeList(const aList: TStrings; aType: string;
@@ -3826,26 +3903,26 @@ begin
   if not Append then
     aList.Clear;
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.Y=:type and ln=:Lang';
     ParamByName('type').AsString := aType;
     ParamByName('Lang').AsString := uppercase(Translation.lnCode);
     Open;
     if EOF then
-      begin
-        close;
-        SQL.Text := 'SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.Y=:type';
-        ParamByName('type').AsString := aType;
-        open
-      end;
+     begin
+      Close;
+      SQL.Text := 'SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.Y=:type';
+      ParamByName('type').AsString := aType;
+      Open;
+     end;
     First; // Todo: Fallback-Language
     while not EOF do
-    begin
+     begin
       aList.AddObject(Fields[1].AsString, TObject(NativeInt(Fields[0].AsInteger)));
       Next;
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.FillTableTypes(const ltblTypes: TStringGrid;
@@ -3854,7 +3931,7 @@ var
   i: integer;
 begin
   with qryInternal2 do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT Y.no, Y.T, Y.Y, Y.P FROM Y ORDER BY Y.T';
     Open;
@@ -3862,13 +3939,13 @@ begin
     ltblTypes.RowCount := RecordCount + 1;
     tag := -RecordCount - 1;
     if assigned(OnUpdate) then
-      OnUpdate(dmGenData.Query1);
+      OnUpdate(qryInternal2);
     tag := 0;
     if assigned(OnUpdate) then
-      OnUpdate(dmGenData.Query1);
+      OnUpdate(qryInternal2);
     i := 0;
     while not EOF do
-    begin
+     begin
       i := i + 1;
       ltblTypes.Cells[0, i] := Fields[0].AsString;
       ltblTypes.Cells[1, i] := Fields[0].AsString;
@@ -3876,37 +3953,37 @@ begin
       ltblTypes.Cells[3, i] := Fields[2].AsString;
       ltblTypes.Cells[4, i] := Fields[3].AsString;
       // Aller chercher les utilisation
-      dmGenData.Query2.SQL.Clear;
+      Query2.SQL.Clear;
       if ltblTypes.Cells[3, i] = 'R' then
-        dmGenData.Query2.SQL.add('SELECT COUNT(R.Y) FROM R WHERE R.Y=' +
+        Query2.SQL.add('SELECT COUNT(R.Y) FROM R WHERE R.Y=' +
           Fields[0].AsString)
       else
       if ltblTypes.Cells[3, i] = 'N' then
-        dmGenData.Query2.SQL.add('SELECT COUNT(N.Y) FROM N WHERE N.Y=' +
+        Query2.SQL.add('SELECT COUNT(N.Y) FROM N WHERE N.Y=' +
           Fields[0].AsString)
       else
-        dmGenData.Query2.SQL.add('SELECT COUNT(E.Y) FROM E WHERE E.Y=' +
+        Query2.SQL.add('SELECT COUNT(E.Y) FROM E WHERE E.Y=' +
           Fields[0].AsString);
-      dmGenData.Query2.Open;
-      dmGenData.Query2.First;
-      ltblTypes.Cells[5, i] := dmGenData.Query2.Fields[0].AsString;
+      Query2.Open;
+      Query2.First;
+      ltblTypes.Cells[5, i] := Query2.Fields[0].AsString;
       tag := Tag + 1;
       if assigned(OnUpdate) then
-        OnUpdate(dmGenData.Query1);
+        OnUpdate(qryInternal2);
       Next;
-    end;
-  end;
+     end;
+   end;
 end;
 
 procedure TdmGenData.DeleteType(const lidType: PtrInt);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'DELETE FROM Y WHERE no=:idtype';
     ParamByName('idType').AsInteger := lidType;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.UpdateTableTypes(const ltblTypes: TStringGrid;
@@ -3915,7 +3992,7 @@ var
   lTblAktRow: integer;
 begin
   with qryInternal2 do
-  begin
+   begin
     lTblAktRow := ltblTypes.Row;
     Close;
     SQL.Text := 'SELECT Y.no, Y.T, Y.Y, Y.P FROM Y WHERE Y.no=:idType';
@@ -3934,13 +4011,13 @@ begin
       'N': SQL.Text := 'SELECT COUNT(N.Y) FROM N WHERE N.Y=:idType'
       else
         SQL.Text := 'SELECT COUNT(E.Y) FROM E WHERE E.Y=:idType';
-    end;
+     end;
     ParamByName('idType').AsInteger := lidType;
     Open;
     First;
     ltblTypes.Cells[5, lTblAktRow] := Fields[0].AsString;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.GetTypeList(const aList: TStrings; aTypes: array of string);
@@ -3957,71 +4034,71 @@ function TdmGenData.GetTypeName(const idType: longint): string;
 
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT T FROM Y WHERE no=:idType and ln=:Lang';
     ParamByName('idType').AsInteger := idType;
     ParamByName('Lang').AsString := uppercase(Translation.lnCode);
     Open;
     if EOF then
-    begin
+     begin
       Close;
       SQL.Text := 'SELECT T FROM Y WHERE no=:idType';
       ParamByName('idType').AsInteger := idType;
       Open;
-    end;
+     end;
     Result := Fields[0].AsString;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.GetTypePhrase(idType: integer): string;
 
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.no=:idType and ln=:Lang';
     ParamByName('idType').AsInteger := idType;
     ParamByName('Lang').AsString := uppercase(Translation.lnCode);
     Open;
     if EOF then
-    begin
+     begin
       Close;
       SQL.Text := 'SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.no=:idType';
       ParamByName('idType').AsInteger := idType;
       Open;
-    end;
+     end;
     First;
     Result := Fields[2].AsString;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.SaveTypeData(lidType: integer; const lTitle: TCaption;
   const lPhrase: TCaption; const lTypeChar: string; const roles: string);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     if lidType = 0 then
       SQL.Text := 'INSERT INTO Y (T, Y, P, R) VALUES (:Title, :Type, :Phrase, :Role)'
     else
-    begin
+     begin
       SQL.Text := 'UPDATE Y SET T=:Title, Y=:Type, P=:Phrase, R=:Role WHERE no=:idType';
       ParamByName('idType').AsInteger := lidType;
-    end;
+     end;
     ParamByName('Title').AsString := lTitle;
     ParamByName('Type').AsString := lTypeChar;
     ParamByName('Phrase').AsString := lPhrase;
     ParamByName('Role').AsString := Roles;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.GetTypePhraseRole(const idType: integer;
   out Phrase: string; out Roles: string);
 begin
-  with dmGenData.Query1 do
-  begin
+  with qryInternal do
+   begin
     SQL.Clear;
     SQL.Text := 'SELECT Y.P, Y.R FROM Y WHERE Y.no=:idType';
     ParamByName('idType').AsInteger := idType;
@@ -4030,24 +4107,43 @@ begin
     Phrase := Fields[0].AsString;
     Roles := Fields[1].AsString;
     Close;
-  end;
+   end;
 end;
 
 {$endregion ~Type}
 {$region Source}
+procedure TdmGenData.InsertSource(const lidSource: longint;
+  const lQuality: longint; const lLink: string; const lNote: string;
+  const lDescription: string; const lTitle: string);
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text := 'INSERT IGNORE INTO S (no, T, M, D, A, Q) ' +
+      'VALUES (:idSource, :Title, :Note, :Descr, :A, :Quality);';
+    ParamByName('idSource').AsInteger := lidSource;
+    ParamByName('Title').AsString := lTitle;
+    ParamByName('Note').AsString := lNote;
+    ParamByName('Descr').AsString := lDescription;
+    ParamByName('A').AsString := lLink;
+    ParamByName('Quality').AsInteger := lQuality;
+    ExecSQL;
+   end;
+end;
+
 function TdmGenData.CheckIndSourceExist(idInd: integer): boolean;
 
 begin
   // Vérifier qu'il n'y a pas de source
   // en: Check that there is no source
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT S.no FROM S WHERE S.A=:idInd';
     ParamByName('idInd').AsInteger := idInd;
     Open;
     Result := not EOF;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.SaveSourceData(const pidSource: integer;
@@ -4057,7 +4153,7 @@ function TdmGenData.SaveSourceData(const pidSource: integer;
 begin
   if pidSource = 0 then
     with qryInternal do
-    begin
+     begin
       Close;
       sql.Text := 'INSERT INTO S (T, D, M, A, Q) VALUES ' +
         '(:Title, :Descr, :Info, :Author, :Quality)';
@@ -4068,10 +4164,10 @@ begin
       ParamByName('Quality').AsInteger := piQuality;
       ExecSQL;
       Result := GetLastIDOfTable('S');
-    end
+     end
   else
     with qryInternal do
-    begin
+     begin
       Close;
       SQL.Text :=
         'UPDATE S SET T=:Title, D=:Descr, M=:Info, A=:Author, Q=:Quality  WHERE no=:idSource';
@@ -4084,7 +4180,7 @@ begin
       ExecSQL;
       Result := pidSource;
 
-    end;
+     end;
 end;
 
 procedure TdmGenData.FillSourcesSL(const LStr: TStrings);
@@ -4093,7 +4189,7 @@ var
 
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT S.no, S.T FROM S ORDER BY S.no';
     Open;
@@ -4101,15 +4197,15 @@ begin
     Lstr.Clear;
     //   i:=trunc(log10(qryInternal.RecordCount+1))+1;
     while not EOF do
-    begin
+     begin
       sourcenumber := Fields[0].AsString;
       //while length(sourcenumber)<i do sourcenumber:='0'+sourcenumber;
       LStr.AddObject(sourcenumber + #9'- ' + Fields[1].AsString,
         TObject(PtrInt(Fields[0].AsInteger)));
       Next;
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 function TdmGenData.GetSourceCitCount(const lidSource: integer): integer;
@@ -4117,14 +4213,14 @@ var
   lSourceCitCount: longint;
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT COUNT(C.S) FROM S LEFT JOIN C on C.S=S.no WHERE S.no=:idSource';
     ParamByName('idSource').AsInteger := lidSource;
     Open;
     lSourceCitCount := Fields[0].AsInteger;
     Result := lSourceCitCount;
-  end;
+   end;
 end;
 
 function TdmGenData.GetSourceQuality(const lidSource: integer): longint;
@@ -4132,7 +4228,7 @@ var
   lQuality: longint;
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text := 'SELECT S.Q FROM S WHERE S.no=:idSource';
     ParamByName('idSource').AsInteger := lidSource;
@@ -4141,13 +4237,13 @@ begin
     lQuality := Fields[0].AsInteger;
     Result := lQuality;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.DeleteSourceFull(const lidSource: integer);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     // Supprimer tous les exhibits et association dépots de cette source
     SQL.Text := 'DELETE FROM X WHERE A=:Type AND N=:idSource';
@@ -4160,7 +4256,7 @@ begin
     SQL.Text := 'DELETE FROM S WHERE no=:idSource';
     ParamByName('idSource').AsInteger := lidSource;
     ExecSQL;
-  end;
+   end;
 end;
 
 procedure TdmGenData.FillSourcesTable(const lNotification: TNotifyEvent;
@@ -4171,7 +4267,7 @@ var
   lidIndSrc: longint;
 begin
   with qryInternal2 do
-  begin
+   begin
     Close;
     // SQL.add('SELECT S.no, S.T, S.D, S.M, S.A, S.Q, COUNT(C.S) FROM S LEFT JOIN C on C.S=S.no GROUP by S.no');
     SQL.Text := 'SELECT S.no, S.T, S.D, S.M, S.A, S.Q FROM S ORDER BY S.no';
@@ -4183,7 +4279,7 @@ begin
       lNotification(qryInternal2);
     i := 0;
     while not EOF do
-    begin
+     begin
       i := i + 1;
       lTable.Cells[0, i] := IntToStr(i);
       lTable.Cells[1, i] := Fields[0].AsString;
@@ -4197,23 +4293,23 @@ begin
       //     lTable.Cells[7,i]:= Fields[6].AsString;
       lTable.Cells[7, i] := '?';
       if tryStrtoint(temp, lidIndSrc) then
-      begin
+       begin
         lTable.Cells[5, i] :=
           GetIndividuumName(lidIndSrc) + ' (' + temp + ')';
         lTable.Objects[5, i] := TObject(ptrint(lidIndSrc));
-      end
+       end
       else
-      begin
+       begin
         lTable.Cells[5, i] := temp;
         lTable.Objects[5, i] := nil;
-      end;
+       end;
       Next;
       Tag := i;
       if assigned(lNotification) then
         lNotification(qryInternal2);
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 {$endregion ~Source}
@@ -4224,20 +4320,20 @@ begin
   // Vérifier qu'il n'y a pas de dépot
   // en: Check that there is no deposit
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT D.no FROM D WHERE D.I=:idInd';
     ParamByName('idInd').AsInteger := idInd;
     Open;
     Result := not EOF;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.InsertDepot(const lMemo: variant; const lDescription: string;
   const lTitle: string; const lidIndividual: longint; const lidRepository: longint);
 begin
   with qryInternal do
-  begin
+   begin
     Close;
     SQL.Text :=
       'INSERT IGNORE INTO D (no, T, M, D, I) VALUES (:idRepository, :Title, :Memo, :Description, :idInd)';
@@ -4247,14 +4343,36 @@ begin
     ParamByName('Description').AsString := lDescription;
     ParamByName('idInd').AsInteger := lidIndividual;
     ExecSQL;
-  end;
+   end;
+end;
+
+procedure TdmGenData.FillDepotsSL(const LStr: TStrings);
+var
+  sourcenumber: String;
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text := 'SELECT no, T FROM D ORDER BY no';
+    Open;
+    First;
+    Lstr.Clear;
+    while not EOF do
+     begin
+      sourcenumber := Fields[0].AsString;
+      LStr.AddObject(sourcenumber + #9'- ' + Fields[1].AsString,
+        TObject(PtrInt(Fields[0].AsInteger)));
+      Next;
+     end;
+    Close;
+   end;
 end;
 
 procedure TdmGenData.InsertDepotOfSource(const lidSource: longint;
   const lidRepository: longint; const buffer: string);
 begin
   with Query1 do
-  begin
+   begin
     Close;
     SQL.Text :=
       'INSERT IGNORE INTO A (S, D, M) VALUES (:idSource, :idDepot, :Note)';
@@ -4262,7 +4380,7 @@ begin
     ParamByName('idDepot').AsInteger := lidRepository;
     ParamByName('Note').AsString := buffer;
     ExecSQL;
-  end;
+   end;
 end;
 
 {$endregion ~deposit}
@@ -4270,14 +4388,14 @@ end;
 procedure TdmGenData.InsertPlace(lidPlace: longint; const Place: string);
 begin
   with Query1 do
-  begin
+   begin
     Close;
     SQL.Text :=
       'INSERT IGNORE INTO L (no, L) VALUES (:idPlace, :Place)';
     ParamByName('idPlace').AsInteger := lidPlace;
     ParamByName('Place').AsString := Place;
     ExecSQL;
-  end;
+   end;
 end;
 
 function TdmGenData.GetPlaceName(const liResult: integer): string;
@@ -4285,13 +4403,13 @@ var
   temp: string;
 begin
   with qryInternal do
-  begin
+   begin
     SQL.Text := 'SELECT L FROM L WHERE no=:idPlace';
     ParamByName('idplace').AsInteger := liResult;
     Open;
     temp := Fields[0].AsString;
     Result := temp;
-  end;
+   end;
 end;
 
 {$endregion ~Places}
@@ -4306,13 +4424,13 @@ begin
   lMaxRecords := 0;
   for I := 1 to length(TableS) do
     with TMG do
-    begin
+     begin
       Tablename := filename + TableS[i] + '.DBF';
       Active := True;
       Open;
       lMaxRecords := lMaxRecords + RecordCount;
       Active := False;
-    end;
+     end;
   Result := lMaxRecords;
 end;
 
@@ -4321,32 +4439,32 @@ function TdmGenData.GetLastIDOfTable(TableName: string): longint;
 
 begin
   with qrySysInfo do
-  begin
+   begin
     SQL.Text := 'SHOW TABLE STATUS WHERE NAME=:TableName';
     ParamByName('TableName').AsString := TableName;
     Open;
     First;
     Result := Fields[10].AsInteger - 1;
     Close;
-  end;
+   end;
 end;
 
 procedure TdmGenData.GetDBSchemas(const aList: TStrings);
 
 begin
   with qrySysInfo do
-  begin
+   begin
     aList.Clear;
     SQL.Text := 'SHOW DATABASES';
     Open;
     First;
     while not EOF do
-    begin
+     begin
       aList.add(Fields[0].AsString);
       Next;
-    end;
+     end;
     Close;
-  end;
+   end;
 end;
 
 initialization

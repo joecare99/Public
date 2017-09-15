@@ -12,7 +12,6 @@ object frmEditDocuments: TfrmEditDocuments
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.4'
   Visible = False
   object lblDocuments1: TLabel
     Left = 104
@@ -137,7 +136,7 @@ object frmEditDocuments: TfrmEditDocuments
   object pnlBottom: TPanel
     Left = 0
     Height = 54
-    Top = 179
+    Top = 199
     Width = 497
     Align = alBottom
     BevelOuter = bvNone

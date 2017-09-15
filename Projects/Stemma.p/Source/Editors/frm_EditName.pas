@@ -126,6 +126,29 @@ implementation
 uses
   frm_Main, cls_Translation, dm_GenData, frm_Explorer;
 
+function GetEventMarriageExists(var parent2: longint; var parent1: longint
+  ): boolean;
+var
+  exists: boolean;
+begin
+  with dmGenData.Query2 do begin
+SQL.Text :=
+      'SELECT COUNT(E.no) FROM E JOIN W ON W.E=E.no JOIN Y on E.Y=Y.no WHERE (W.I=:idParent1 OR W.I=:idParent2) AND W.X=1 AND E.X=1 AND Y.Y=''M'' GROUP BY E.no';
+    ParamByName('idParent1').AsInteger := parent1;
+    ParamByName('idParent2').AsInteger := parent2;
+    Open;
+    exists := False;
+    while not EOF and not exists do
+     begin
+      exists :=
+        exists or (Fields[0].AsInteger = 2);
+      Next;
+     end;
+    close;
+    Result:=exists;
+  end;
+end;
+
 { TFrmEditName }
 
 procedure TfrmEditName.FillNameTable(const suffixe: string; const nom: string;
@@ -634,10 +657,10 @@ end;
 procedure TfrmEditName.NomSaveData(Sender: TObject);
 var
   j: integer;
-  parent1, parent2, no_eve, nocode, lidInd, lidName: longint;
+  parent1, parent2, no_eve, lidInd, lidName: longint;
   nom, i1, i2, i3, i4, temp, dateev, tagName, lSex, lMemoText, lPDate,
     lSDate, lPhrase: string;
-  existe: boolean;
+  exists: boolean;
   sSex: char;
   lidEvType: PtrInt;
   lPrefered: boolean;
@@ -692,7 +715,6 @@ begin
         // Valide si principal...
 
         lSex := BoolToStr(frmEditName.EditMode = eNET_AddFather, 'M', 'F');
-        lIdInd := frmStemmaMainForm.iID;
         temp := BoolToStr(dmgendata.CheckPrefParentExists(lSex, lidInd), '0', '1');
 
         dmGenData.RelationInsertData(10, frmStemmaMainForm.iId,
@@ -704,6 +726,7 @@ begin
             temp := 'M'
           else
             temp := 'F';
+          // GetRelationOtherParent
           dmGenData.Query1.SQL.Text :=
             'SELECT R.no, R.B, N.N FROM R JOIN I ON R.B=I.no JOIN N on N.I=R.B WHERE I.S=:Sex AND R.X=1 AND N.X=1 AND R.A=:idInd';
           dmGenData.Query1.ParamByName('idInd').AsInteger :=
@@ -715,19 +738,8 @@ begin
             parent1 := lidInd;
             parent2 := dmGenData.Query1.Fields[1].AsInteger;
             // Vérifier qu'il n'cbxEvType a pas déjà une union entre ces deux parents
-            dmGenData.Query2.SQL.Text :=
-              'SELECT COUNT(E.no) FROM E JOIN W ON W.E=E.no JOIN Y on E.Y=Y.no WHERE (W.I=:idParent1 OR W.I=:idParent2) AND W.X=1 AND E.X=1 AND Y.Y=''M'' GROUP BY E.no';
-            dmGenData.Query1.ParamByName('idParent1').AsInteger := parent1;
-            dmGenData.Query1.ParamByName('idParent2').AsInteger := parent2;
-            dmGenData.Query2.Open;
-            existe := False;
-            while not dmGenData.Query2.EOF do
-             begin
-              existe :=
-                existe or (dmGenData.Query2.Fields[0].AsInteger = 2);
-              dmGenData.Query2.Next;
-             end;
-            if not existe then
+            exists:=GetEventMarriageExists(parent2, parent1);
+            if not exists then
               // GetName(parent1) montre '???' car le nom n'a pas encore été enregistré, utiliser le nom dans 'nom'
               if Application.MessageBox(
                 PChar(Translation.Items[300] + DecodeName(nom, 1) +
@@ -738,27 +750,14 @@ begin
                begin
                 // Unir les parents
                 // Ajouter l'événement mariage
-                dmGenData.Query1.SQL.Text :=
-                  'INSERT INTO E (Y, L, X) VALUES (300, 1, 1)';
-                dmGenData.Query1.ExecSQL;
-                no_eve := dmGenData.GetLastIDOfTable('E');
+                no_eve := dmGenData.SaveEventData(0,300,1,true);
+                dmGenData.AppendWitness('CONJOINT','',parent1,no_eve,true);
+                dmGenData.AppendWitness('CONJOINT','',parent2,no_eve,true);
                 // Ajouter les témoins
-                dmGenData.Query1.SQL.Text :=
-                  'INSERT INTO W (I, E, X, R) VALUES (:idInd, :idEvent,1, ''CONJOINT'')';
-                dmGenData.Query1.ParamByName('idInd').AsInteger :=
-                  parent1;
-                dmGenData.Query1.ParamByName('idEvent').AsInteger :=
-                  no_eve;
-                dmGenData.Query1.ExecSQL;
-                dmGenData.Query1.ParamByName('idInd').AsInteger :=
-                  parent2;
-                dmGenData.Query1.ParamByName('idEvent').AsInteger :=
-                  no_eve;
-                dmGenData.Query1.ExecSQL;
                 // Ajouter les références
                 // noter que l'on doit ajouter les références (frmStemmaMainForm.Code.Text='edtPrefered')
                 // sur l'événement # frmStemmaMainForm.no.Text
-                dmGenData.PutCode('X', no_eve);
+                //dmGenData.PutCode('X', no_eve);
                 // Sauvegarder les modifications
                 dmGenData.SaveModificationTime(parent1);
                 dmGenData.SaveModificationTime(parent2);
@@ -776,15 +775,8 @@ begin
                 if ((StrToInt(FormatDateTime('YYYY', now)) -
                   StrToInt(dateev)) > 100) then
                  begin
-                  dmGenData.Query2.SQL.Text :=
-                    'UPDATE I SET V=:Code WHERE no=:idInd';
-                  dmGenData.Query2.ParamByName('idInd').AsInteger :=
-                    parent1;
-                  dmGenData.Query2.ParamByName('Code').AsString := 'N';
-                  dmGenData.Query2.ExecSQL;
-                  dmGenData.Query2.ParamByName('idInd').AsInteger :=
-                    parent1;
-                  dmGenData.Query2.ExecSQL;
+                  dmGenData.UpdateIndLiving(parent1,'N',Sender);
+                  dmGenData.UpdateIndLiving(parent2,'N',Sender);
                   dmGenData.NamesChanged(frmEditName);
                  end;
                 dmGenData.EventChanged(frmEditName);
@@ -797,33 +789,10 @@ begin
         // Trouve le sexe de la personne actuelle dans nocode...
         lidInd := dmGenData.AddNewIndividual(sSex, '?', 0);
         edtIdInd.Value := lidInd;
-        dmGenData.Query1.SQL.Clear;
-        dmGenData.Query1.SQL.Add(
-          'INSERT INTO E (Y, X, L, PD, SD) VALUES (300, 1, 1, ''100000000030000000000'', ''100000000030000000000'')');
-        dmGenData.Query1.ExecSQL;
-        nocode := dmGenData.GetLastIDOfTable('E');
+        no_eve:=dmGenData.SaveEventData(0,300,1,true,'','100000000030000000000','100000000030000000000');
         // ajouter les citations du nom à l'événement
-        dmGenData.Query1.SQL.Text :=
-          'INSERT INTO W (I, E, X, R) VALUES (:idInd , :idEvent ,1 , ''CONJOINT'')';
-        dmGenData.Query1.ParamByName('idInd').AsInteger := frmStemmaMainForm.iID;
-        dmGenData.Query1.ParamByName('idEvent').AsInteger := nocode;
-        dmGenData.Query1.ExecSQL;
-        //dmGenData.Query1.SQL.Clear;
-        //dmGenData.Query1.SQL.Add('SHOW TABLE STATUS WHERE NAME=''E''');
-        //dmGenData.Query1.Open;
-        //dmGenData.Query1.First;
-        // ajouter les citations du nom au témoin
-        //        dmGenData.PutCode(code,dmGenData.GetLastIDOfTable('W'););
-        dmGenData.Query1.SQL.Text :=
-          'INSERT INTO W (I, E, X, R) VALUES (:idInd , :idEvent ,1 , ''CONJOINT'')';
-        dmGenData.Query1.ParamByName('idInd').AsInteger := lidInd;
-        dmGenData.Query1.ExecSQL;
-        //dmGenData.Query1.SQL.Clear;
-        //dmGenData.Query1.SQL.Add('SHOW TABLE STATUS WHERE NAME=''E''');
-        //dmGenData.Query1.Open;
-        //dmGenData.Query1.First;
-        // ajouter les citations du nom au témoin
-        //        dmGenData.PutCode(code,dmGenData.GetLastIDOfTable('W'););
+        dmGenData.AppendWitness('CONJOINT','', frmStemmaMainForm.iID,no_eve,true);
+        dmGenData.AppendWitness('CONJOINT','', lidInd,no_eve,true);
         dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
        end;
       eNET_AddBrother, eNET_AddSister:
@@ -838,17 +807,7 @@ begin
         dmGenData.Query2.First;
         while not dmGenData.Query2.EOF do
          begin
-          dmGenData.Query1.SQL.Clear;
-          dmGenData.Query1.SQL.Add(
-            'INSERT INTO R (Y, A, B, X, SD) VALUES (10, ' + IntToStr(lidInd) +
-            ', ' + dmGenData.Query2.Fields[1].AsString +
-            ', 1, ''100000000030000000000'')');
-          dmGenData.Query1.ExecSQL;
-          dmGenData.Query1.SQL.Clear;
-          dmGenData.Query1.SQL.Text := 'select @@identity';
-          dmGenData.Query1.Open;
-          dmGenData.Query1.First;
-          frmEditName.RelID := dmGenData.Query1.Fields[0].AsInteger;
+          RelID := dmGenData.SaveRelationData(0,'','100000000030000000000',10,true,lidInd,dmGenData.Query2.Fields[1].AsInteger,'');
           dmGenData.SaveModificationTime(dmGenData.Query2.Fields[1].AsInteger);
           dmGenData.Query2.Next;
          end;
@@ -857,26 +816,16 @@ begin
        begin
         lidInd := dmGenData.AddNewIndividual(sSex, '?', 0);
         edtIdInd.Value := lidInd;
-        dmGenData.Query1.SQL.Text :=
-          'INSERT INTO R (Y, A, B, X, SD) VALUES (10, :idInd, :idInd2,1, ''100000000030000000000'')';
-        dmGenData.Query1.ParamByName('idInd').AsInteger := lidInd;
-        dmGenData.Query1.ParamByName('idInd2').AsInteger :=
-          frmStemmaMainForm.iID;
-        dmGenData.Query1.ExecSQL;
-        frmEditName.RelID := dmGenData.GetLastIDOfTable('R');
+        RelID := dmGenData.SaveRelationData(0,'','100000000030000000000',10,true,lidInd,frmStemmaMainForm.iID,'');
         // ajouter les citations du nom à la relation
-        //   dmGenData.PutCode(code, );
+
         dmGenData.SaveModificationTime(frmStemmaMainForm.iID);
-        if nocode > 0 then
+        if idInd > 0 then
          begin
-          dmGenData.Query1.SQL.Text :=
-            'INSERT INTO R (Y, A, B, X, SD) VALUES (10, :idInd, :idInd2,1, ''100000000030000000000'')';
-          dmGenData.Query1.ParamByName('idInd').AsInteger := lidInd;
-          dmGenData.Query1.ParamByName('idInd2').AsInteger := nocode;
-          dmGenData.Query1.ExecSQL;
+           dmGenData.SaveRelationData(0,'','100000000030000000000',10,true,lidInd,idind,'');
           // ajouter les citations du nom à la relation
           //   dmGenData.PutCode(code, dmGenData.GetLastIDOfTable('R'));
-          dmGenData.SaveModificationTime(nocode);
+          dmGenData.SaveModificationTime(idInd);
          end;
        end
       else
@@ -934,7 +883,7 @@ procedure TfrmEditName.btnOKClick(Sender: TObject);
 
 var
   lSourceType, lDestType: string;
-  lidInd, lidInd_Dest: integer;
+  lidSource, lidInd_Dest: integer;
 begin
   if frmEditName.ActiveControl is TEdit and assigned(
     (frmEditName.ActiveControl as TEdit).OnEditingDone) then
@@ -943,11 +892,11 @@ begin
   case FEditMode of
     eNET_EditExisting, eNET_AddSpouse:
      begin
-      lidInd := edtIdName.Value;
+      lidSource := edtIdName.Value;
       lSourceType := 'N';
       lidInd_Dest := edtIdInd.Value;
       lDestType := 'E';
-      dmGenData.CopyCitationOfIndByType(lidInd, lSourceType,
+      dmGenData.CopyCitationOfIndByType(lidSource, lSourceType,
         lidInd_Dest, lDestType);
       //    dmGenData.GetCode(code, nocode);
      end;
@@ -955,11 +904,11 @@ begin
     eNET_AddSon, eNET_AddDaughter:
       //Father or Mother
      begin
-      lidInd := edtIdName.Value;
+      lidSource := edtIdName.Value;
       lSourceType := 'N';
       lidInd_Dest := edtIdInd.Value;
       lDestType := 'R';
-      dmGenData.CopyCitationOfIndByType(lidInd, lSourceType,
+      dmGenData.CopyCitationOfIndByType(lidSource, lSourceType,
         lidInd_Dest, lDestType);
      end;
    end;
@@ -990,8 +939,9 @@ begin
           pp := pos(lSurname,' ');
         end
     end;
-
-  // ToDo: insert Name.
+    // ToDo: Find titles, Callname
+  NameEntry[ene_Surname]:=lSurname;
+  nameEntry[ene_GivenName]:=lGivenname;
 end;
 
 procedure TfrmEditName.mnuNameAddTitleClick(Sender: TObject);

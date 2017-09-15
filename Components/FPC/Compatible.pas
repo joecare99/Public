@@ -4,10 +4,12 @@
 
 unit Compatible;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  Win32Crt, int_Graph, graph, unt_FARBGR, Fra_Graph, LazarusPackageIntf;
+  Win32Crt, int_Graph, graph, unt_FARBGR, Fra_Graph, Unt_PasMouse, 
+  LazarusPackageIntf;
 
 implementation
 
