@@ -14,7 +14,6 @@
         <DpiAware Value="True"/>
       </XPManifest>
       <Icon Value="0"/>
-      <ActiveWindowIndexAtStart Value="1"/>
     </General>
     <LazDoc Paths="..\FPDoc" PackageName="Stemma"/>
     <i18n>
@@ -450,9 +449,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frm_EditSource"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="267"/>
-        <CursorPos X="6" Y="295"/>
+        <TopLine Value="118"/>
+        <CursorPos X="68" Y="118"/>
         <UsageCount Value="217"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -543,7 +543,6 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frm_SelectDialog"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <TopLine Value="14"/>
         <CursorPos X="21" Y="47"/>
@@ -657,7 +656,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="169"/>
         <CursorPos X="14" Y="195"/>
-        <UsageCount Value="57"/>
+        <UsageCount Value="53"/>
       </Unit43>
       <Unit44>
         <Filename Value="C:\lazarus_trnk\lazarus\lcl\stdctrls.pp"/>
@@ -665,7 +664,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="802"/>
         <CursorPos X="14" Y="826"/>
-        <UsageCount Value="85"/>
+        <UsageCount Value="81"/>
       </Unit44>
       <Unit45>
         <Filename Value="C:\lazarus_trnk\fpcsrc\rtl\objpas\objpas.pp"/>
@@ -673,42 +672,42 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="16"/>
         <CursorPos X="30" Y="48"/>
-        <UsageCount Value="24"/>
+        <UsageCount Value="20"/>
       </Unit45>
       <Unit46>
         <Filename Value="C:\lazarus_trnk\fpcsrc\rtl\objpas\sysutils\syshelph.inc"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="-1"/>
         <CursorPos X="48" Y="30"/>
-        <UsageCount Value="24"/>
+        <UsageCount Value="20"/>
       </Unit46>
       <Unit47>
         <Filename Value="C:\lazarus\lcl\include\control.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="4984"/>
         <CursorPos Y="5000"/>
-        <UsageCount Value="63"/>
+        <UsageCount Value="59"/>
       </Unit47>
       <Unit48>
         <Filename Value="C:\lazarus\lcl\include\customedit.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="535"/>
         <CursorPos Y="557"/>
-        <UsageCount Value="63"/>
+        <UsageCount Value="59"/>
       </Unit48>
       <Unit49>
         <Filename Value="C:\lazarus\lcl\include\customform.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="2940"/>
         <CursorPos Y="2967"/>
-        <UsageCount Value="63"/>
+        <UsageCount Value="59"/>
       </Unit49>
       <Unit50>
         <Filename Value="C:\lazarus\lcl\interfaces\win32\win32object.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="356"/>
         <CursorPos Y="375"/>
-        <UsageCount Value="63"/>
+        <UsageCount Value="59"/>
       </Unit50>
       <Unit51>
         <Filename Value="C:\lazarus\lcl\controls.pp"/>
@@ -716,14 +715,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="1428"/>
         <CursorPos X="14" Y="1443"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="34"/>
       </Unit51>
       <Unit52>
         <Filename Value="C:\lazarus\lcl\include\spinedit.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="211"/>
         <CursorPos Y="228"/>
-        <UsageCount Value="12"/>
+        <UsageCount Value="8"/>
       </Unit52>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">

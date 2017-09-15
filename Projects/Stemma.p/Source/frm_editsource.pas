@@ -258,12 +258,12 @@ end;
 
 procedure TfrmEditSource.TableauDepotsDblClick(Sender: TObject);
 var
-  d: string;
+  d: integer;
 begin
   // modification d'un dépot
   if TableauDepots.Row > 0 then
    begin
-    d := '0';
+    d := ptrint(TableauDepots.Objects[3, TableauDepots.Row]);
     if InputQuery(Translation.Items[45], Translation.Items[46], d) then
      begin
       dmGenData.Query1.SQL.Text := 'SELECT D.T FROM D WHERE D.no=' + d;
@@ -273,6 +273,7 @@ begin
        begin
         TableauDepots.Cells[1, TableauDepots.Row] := dmGenData.Query1.Fields[0].AsString;
         TableauDepots.Cells[3, TableauDepots.Row] := d;
+        TableauDepots.Objects[3,TableauDepots.Row] := TObject(ptrint(d));
         TableauDepotsEditingDone(Sender);
         PopulateDepots(idSource, TableauDepots);
        end;
@@ -282,28 +283,32 @@ end;
 
 procedure TfrmEditSource.Ajouter1Click(Sender: TObject);
 var
-  d: string;
+  d: integter;
   lStL: TStrings;
+  lTitle: String;
 begin
   // Ajouter un dépot
-  d := '0';
+  d := 0;
   lstl:=TStringlist.Create;
   dmGenData.FillDepotsSL(lStL);
   try
   if SelectDialog(Translation.Items[47], Translation.Items[46],lStL, d) then
    begin
-
-    dmGenData.Query1.SQL.Text := 'SELECT D.T FROM D WHERE D.no=' + d;
+    dmGenData.Query1.SQL.Text := 'SELECT D.T FROM D WHERE D.no=:idDepot';
+    dmGenData.Query1.ParamByName('idDepot').AsInteger:= d;
     dmGenData.Query1.Open;
     dmGenData.Query1.First;
     if not dmGenData.Query1.EOF then
      begin
+      lTitle:=dmGenData.Query1.Fields[0].AsString;
       TableauDepots.RowCount := TableauDepots.RowCount + 1;
       TableauDepots.Row := TableauDepots.RowCount;
       TableauDepots.Cells[0, TableauDepots.Row] := '0';
-      TableauDepots.Cells[1, TableauDepots.Row] := dmGenData.Query1.Fields[0].AsString;
+      TableauDepots.Objects[0,TableauDepots.Row] := TObject(ptrint(0));
+      TableauDepots.Cells[1, TableauDepots.Row] := lTitle;
       TableauDepots.Cells[2, TableauDepots.Row] := '';
       TableauDepots.Cells[3, TableauDepots.Row] := d;
+      TableauDepots.Objects[3,TableauDepots.Row] := TObject(ptrint(d));
       TableauDepotsEditingDone(Sender);
       PopulateDepots(idSource, TableauDepots);
      end;
