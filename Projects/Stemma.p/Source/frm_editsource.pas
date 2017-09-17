@@ -73,14 +73,14 @@ var
 implementation
 
 uses
-  frm_Main, frm_SelectDialog ,cls_Translation, dm_GenData, LCLIntf;
+  frm_Main, frm_SelectDialog, cls_Translation, dm_GenData, LCLIntf;
 
 procedure GetSourceData(const lidSource: longint; out lQuality: longint;
   out lInformation: string; out lDescription: string; out lTitle: string;
   out lIndLink: string);
 begin
   with dmGenData.Query1 do
-   begin
+  begin
     Close;
     SQL.Text := 'SELECT S.no, S.T, S.D, S.M, S.Q, S.A FROM S WHERE S.no=:idSource';
     ParamByName('idSource').AsInteger := lidSource;
@@ -92,34 +92,53 @@ begin
     lInformation := Fields[3].AsString;
     lQuality := Fields[4].AsInteger;
     Close;
-   end;
+  end;
 end;
 
 function SaveSourceRepositoryData(lidSourceDepot: integer; const lMemoText: string;
   const lidRepository: integer; const lidSource: longint): integer;
 begin
   with dmGenData.Query1 do
-   begin
+  begin
     Close;
     if lidSourceDepot = 0 then
-     begin
+    begin
       SQL.Text := 'INSERT INTO A (S, D, M) VALUES (:idSource, :idRepository, :Memo)';
       ParamByName('idSource').AsInteger := lidSource;
-     end
+    end
     else
-     begin
+    begin
       SQL.Text := 'UPDATE A SET M=:Memo, D=:idRepository WHERE no=:idSourceDepot';
       ParamByName('idSourceDepot').AsInteger := lidSourceDepot;
-     end;
+    end;
     ParamByName('Memo').AsString := lMemoText;
     ParamByName('idRepository').AsInteger := lidRepository;
     ExecSQL;
-   end;
+  end;
 
   if lidSourceDepot = 0 then
     Result := dmGenData.GetLastIDOfTable('A')
   else
     Result := lidSourceDepot;
+end;
+
+function GetDepotTitle(var d: integer): string;
+var
+  lTitle: string;
+begin
+  with dmGenData.Query1 do
+  begin
+
+    SQL.Text := 'SELECT D.T FROM D WHERE D.no=:idDepot';
+    ParamByName('idDepot').AsInteger := d;
+    Open;
+    First;
+    if not EOF then
+      lTitle := Fields[0].AsString
+    else
+      lTitle := '';
+  end;
+  Result := lTitle;
 end;
 
 
@@ -132,7 +151,7 @@ var
 begin
   // Populate les dépots
   with dmGenData.Query1 do
-   begin
+  begin
     Close;
     SQL.Text :=
       'SELECT A.no, A.S, A.D, A.M, D.T FROM A JOIN D ON D.no=A.D WHERE A.S=:idsource';
@@ -142,7 +161,7 @@ begin
     lTblDepots.RowCount := RecordCount + 1;
     i := 1;
     while not EOF do
-     begin
+    begin
       lTblDepots.Objects[0, i] := TObject(ptrint(Fields[0].AsInteger));
       lTblDepots.Cells[0, i] := Fields[0].AsString;
       lTblDepots.Cells[1, i] := Fields[4].AsString;
@@ -151,9 +170,9 @@ begin
       lTblDepots.Cells[3, i] := Fields[2].AsString;
       Next;
       i := i + 1;
-     end;
+    end;
     Close;
-   end;
+  end;
 end;
 
 procedure TfrmEditSource.FormShow(Sender: TObject);
@@ -188,10 +207,8 @@ begin
   fraDocuments1.DocType := 'S';
 
   // Populate la form
-  dmGenData.Query1.SQL.Clear;
-
   if FEditMode = esem_AddNew then
-   begin
+  begin
     Caption := Translation.Items[43];
     edtSourceTitle.Text := '';
     edtSourceDescription.Text := '';
@@ -200,9 +217,9 @@ begin
     Q.Value := 0;
     TableauDepots.RowCount := 1;
     No.Value := 0;
-   end
+  end
   else
-   begin
+  begin
     lidSource := idSource;
     GetSourceData(lidSource, lQuality, lInformation, lDescription, lTitle,
       lIndLink);
@@ -217,7 +234,7 @@ begin
     // Populate les dépots
     PopulateDepots(idSource, TableauDepots);
     // Populate le tableau de documents
-   end;
+  end;
   fraDocuments1.idLink := idSource;
 end;
 
@@ -231,14 +248,14 @@ var
   lsResult: string;
 begin
   if ActiveControl.Name = edtSourceInformation.Name then
-   begin
+  begin
     lsResult := frmStemmaMainForm.RetreiveFromHistoy('M');
     if lsResult <> '' then
-     begin
+    begin
       edtSourceInformation.Text := lsResult;
       edtSourceInformationEditingDone(Sender);
-     end;
-   end;
+    end;
+  end;
 end;
 
 procedure TfrmEditSource.Supprimer1Click(Sender: TObject);
@@ -248,72 +265,73 @@ begin
     if Application.MessageBox(PChar(Translation.Items[44] +
       TableauDepots.Cells[1, TableauDepots.Row] + Translation.Items[28]),
       PChar(SConfirmation), MB_YESNO) = idYes then
-     begin
+    begin
       dmGenData.Query1.SQL.Text :=
         'DELETE FROM A WHERE no=' + TableauDepots.Cells[0, TableauDepots.Row];
       dmGenData.Query1.ExecSQL;
       TableauDepots.DeleteRow(TableauDepots.Row);
-     end;
+    end;
 end;
 
 procedure TfrmEditSource.TableauDepotsDblClick(Sender: TObject);
 var
   d: integer;
+  lstl: TStrings;
+  lTitle: string;
 begin
   // modification d'un dépot
   if TableauDepots.Row > 0 then
-   begin
+  begin
     d := ptrint(TableauDepots.Objects[3, TableauDepots.Row]);
-    if InputQuery(Translation.Items[45], Translation.Items[46], d) then
-     begin
-      dmGenData.Query1.SQL.Text := 'SELECT D.T FROM D WHERE D.no=' + d;
-      dmGenData.Query1.Open;
-      dmGenData.Query1.First;
-      if not dmGenData.Query1.EOF then
-       begin
-        TableauDepots.Cells[1, TableauDepots.Row] := dmGenData.Query1.Fields[0].AsString;
-        TableauDepots.Cells[3, TableauDepots.Row] := d;
-        TableauDepots.Objects[3,TableauDepots.Row] := TObject(ptrint(d));
-        TableauDepotsEditingDone(Sender);
-        PopulateDepots(idSource, TableauDepots);
-       end;
-     end;
-   end;
+    lstl := TStringList.Create;
+    dmGenData.FillDepotsSL(lStL);
+    try
+      if SelectDialog(Translation.Items[45], Translation.Items[46], lstl, d) then
+      begin
+        lTitle := GetDepotTitle(d);
+        if lTitle <> '' then
+        begin
+          TableauDepots.Cells[1, TableauDepots.Row] := lTitle;
+          TableauDepots.Cells[3, TableauDepots.Row] := IntToStr(d);
+          TableauDepots.Objects[3, TableauDepots.Row] := TObject(ptrint(d));
+          TableauDepotsEditingDone(Sender);
+          PopulateDepots(idSource, TableauDepots);
+        end;
+      end;
+
+    finally
+      FreeAndNil(lstl);
+    end;
+  end;
+
 end;
 
 procedure TfrmEditSource.Ajouter1Click(Sender: TObject);
 var
-  d: integter;
+  d: integer;
   lStL: TStrings;
-  lTitle: String;
+  lTitle: string;
 begin
   // Ajouter un dépot
   d := 0;
-  lstl:=TStringlist.Create;
+  lstl := TStringList.Create;
   dmGenData.FillDepotsSL(lStL);
   try
-  if SelectDialog(Translation.Items[47], Translation.Items[46],lStL, d) then
-   begin
-    dmGenData.Query1.SQL.Text := 'SELECT D.T FROM D WHERE D.no=:idDepot';
-    dmGenData.Query1.ParamByName('idDepot').AsInteger:= d;
-    dmGenData.Query1.Open;
-    dmGenData.Query1.First;
-    if not dmGenData.Query1.EOF then
-     begin
-      lTitle:=dmGenData.Query1.Fields[0].AsString;
+    if SelectDialog(Translation.Items[47], Translation.Items[46], lStL, d) then
+      lTitle := GetDepotTitle(d);
+    if lTitle <> '' then
+    begin
       TableauDepots.RowCount := TableauDepots.RowCount + 1;
       TableauDepots.Row := TableauDepots.RowCount;
       TableauDepots.Cells[0, TableauDepots.Row] := '0';
-      TableauDepots.Objects[0,TableauDepots.Row] := TObject(ptrint(0));
+      TableauDepots.Objects[0, TableauDepots.Row] := TObject(ptrint(0));
       TableauDepots.Cells[1, TableauDepots.Row] := lTitle;
       TableauDepots.Cells[2, TableauDepots.Row] := '';
-      TableauDepots.Cells[3, TableauDepots.Row] := d;
-      TableauDepots.Objects[3,TableauDepots.Row] := TObject(ptrint(d));
+      TableauDepots.Cells[3, TableauDepots.Row] := IntToStr(d);
+      TableauDepots.Objects[3, TableauDepots.Row] := TObject(ptrint(d));
       TableauDepotsEditingDone(Sender);
       PopulateDepots(idSource, TableauDepots);
-     end;
-   end;
-
+    end;
   finally
     FreeAndNil(lStL);
   end;

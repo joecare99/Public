@@ -45,6 +45,33 @@ implementation
 uses
   frm_Main, cls_Translation, dm_GenData, frm_Usage;
 
+function SaveRepositoryData(Const lidRepository:integer; const lidInd: string; const lMemo: string;
+  const lDescription: string; const lTitle: string): integer;
+
+begin
+  with dmGenData.Query1 do begin
+  if lidRepository=0 then
+       SQL.Add('INSERT INTO D (T,D,M,I) VALUES ('''+
+          lTitle+
+          ''', '''+lDescription+
+          ''', '''+lMemo+
+          ''', '+lidInd+')')
+    else
+       SQL.Add('UPDATE D SET T='''+
+         lTitle+
+         ''', D='''+
+         lDescription+
+         ''', M='''+
+         lMemo+
+         ''', I='+lidInd+' WHERE no='+lidRepository);
+    ExecSQL;
+    if lidRepository=0 then
+       result:=InttoStr(dmGenData.GetLastIDOfTable('D'));
+    else
+       Result:=lidRepository;
+  end;
+end;
+
 procedure FillRepositoryTable(const lOnUpdate: TNotifyEvent;
   const lTblRepositories: TStringGrid);
 var
@@ -98,7 +125,8 @@ end;
 
 procedure TfrmRepository.TableauDepotsEditingDone(Sender: TObject);
 var
-  temp:string;
+  temp, lTitle, lDescription, lMemo, lidInd:string;
+  lidRepository:integer;
   depot:boolean;
 begin
   dmGenData.Query1.SQL.Clear;
@@ -109,59 +137,42 @@ begin
         depot:=StrtoInt(temp)>0;
   if (not depot) and (strtoint(TableauDepots.Cells[0,TableauDepots.Row])>0) then
      begin
-     dmGenData.Query2.SQL.Text:='SELECT N.I, N.N FROM N WHERE N.X=1 AND N.I='+TableauDepots.Cells[0,TableauDepots.Row];
-     dmGenData.Query2.Open;
      depot:=(DecodeName(dmGenData.GetIndividuumName(ptrint(TableauDepots.Objects[0,TableauDepots.Row])),1)+' ('+TableauDepots.Cells[0,TableauDepots.Row]+')')=
             (TableauDepots.Cells[5,TableauDepots.Row]);
      temp:=TableauDepots.Cells[0,TableauDepots.Row];
      end;
+
   if depot then
      begin
-     dmGenData.Query2.SQL.Text:='SELECT N.I, N.N FROM N WHERE N.X=1 AND N.I='+temp;
-     dmGenData.Query2.Open;
-     TableauDepots.Cells[5,TableauDepots.Row]:=DecodeName(dmGenData.Query2.Fields[1].AsString,1)+
+     TableauDepots.Cells[5,TableauDepots.Row]:=DecodeName(dmGenData.GetIndividuumName(temp),1)+
                                                                    ' ('+temp+')';
+     TableauDepots.Objects[5,TableauDepots.Row] :=TObject(ptrint(temp));
      TableauDepots.Cells[0,TableauDepots.Row]:=temp;
-     if TableauDepots.Cells[1,TableauDepots.Row]='0' then
-        dmGenData.Query1.SQL.Add('INSERT INTO D (T,D,M,I) VALUES ('''+
-           AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(TableauDepots.Cells[2,TableauDepots.Row]),'\','\\'),'"','\"'),'''','\''')+
-           ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(TableauDepots.Cells[3,TableauDepots.Row]),'\','\\'),'"','\"'),'''','\''')+
-           ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(TableauDepots.Cells[4,TableauDepots.Row]),'\','\\'),'"','\"'),'''','\''')+
-           ''', '+TableauDepots.Cells[0,TableauDepots.Row]+')')
-     else
-        dmGenData.Query1.SQL.Add('UPDATE D SET T='''+
-           AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(TableauDepots.Cells[2,TableauDepots.Row]),'\','\\'),'"','\"'),'''','\''')+
-           ''', D='''+
-           AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(TableauDepots.Cells[3,TableauDepots.Row]),'\','\\'),'"','\"'),'''','\''')+
-           ''', M='''+
-           AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(TableauDepots.Cells[4,TableauDepots.Row]),'\','\\'),'"','\"'),'''','\''')+
-           ''', I='+TableauDepots.Cells[0,TableauDepots.Row]+
-           ' WHERE no='+TableauDepots.Cells[1,TableauDepots.Row]);
+     TableauDepots.Objects[0,TableauDepots.Row] :=TObject(ptrint(temp));
+     lidRepository:=ptrint(TableauDepots.Objects[1,TableauDepots.Row]);
+     lTitle:=TableauDepots.Cells[2,TableauDepots.Row];
+     lidInd:=ptrint(TableauDepots.Objects[0,TableauDepots.Row]);
+     lidRepository:=SaveRepositoryData(lidRepository, lidInd, lMemo, lDescription, lTitle);
   end
   else
      begin
      TableauDepots.Cells[5,TableauDepots.Row]:='0';
+     TableauDepots.Objects[5,TableauDepots.Row] :=TObject(ptrint(0));
      TableauDepots.Cells[0,TableauDepots.Row]:='0';
-     if TableauDepots.Cells[1,TableauDepots.Row]='0' then
-        dmGenData.Query1.SQL.Add('INSERT INTO D (T,D,M,I) VALUES ('''+
-           AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(TableauDepots.Cells[2,TableauDepots.Row]),'\','\\'),'"','\"'),'''','\''')+
-           ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(TableauDepots.Cells[3,TableauDepots.Row]),'\','\\'),'"','\"'),'''','\''')+
-           ''', '''+AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(TableauDepots.Cells[4,TableauDepots.Row]),'\','\\'),'"','\"'),'''','\''')+
-           ''', 0)')
-     else
-        dmGenData.Query1.SQL.Add('UPDATE D SET T='''+
-          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(TableauDepots.Cells[2,TableauDepots.Row]),'\','\\'),'"','\"'),'''','\''')+
-          ''', D='''+
-          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(TableauDepots.Cells[3,TableauDepots.Row]),'\','\\'),'"','\"'),'''','\''')+
-          ''', M='''+
-          AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(TableauDepots.Cells[4,TableauDepots.Row]),'\','\\'),'"','\"'),'''','\''')+
-          ''', I=0 WHERE no='+TableauDepots.Cells[1,TableauDepots.Row]);
+     TableauDepots.Objects[0,TableauDepots.Row] :=TObject(ptrint(0));
+
+     lidRepository:=ptrint(TableauDepots.Objects[1,TableauDepots.Row]);
+     lTitle:=TableauDepots.Cells[2,TableauDepots.Row];
+     lDescription:=TableauDepots.Cells[3,TableauDepots.Row];
+     lMemo:=TableauDepots.Cells[4,TableauDepots.Row];
+     lidInd:=0;
+     lidRepository:=SaveRepositoryData(lidRepository, 0, lMemo, lDescription, lTitle);
   end;
-  dmGenData.Query1.ExecSQL;
-  if TableauDepots.Cells[1,TableauDepots.Row]='0' then
+  if ptrint(TableauDepots.Objects[1,TableauDepots.Row])=0 then
      begin
-     TableauDepots.Cells[1,TableauDepots.Row]:=InttoStr(dmGenData.GetLastIDOfTable('D'));
-  end;
+  TableauDepots.Objects[1,TableauDepots.Row] :=TObject(ptrint( lidRepository));
+  TableauDepots.Cells[1,TableauDepots.Row] :=inttostr( lidRepository);
+     end;
   TableauDepots.SortColRow(true,3);
 end;
 
@@ -244,7 +255,7 @@ begin
            dmGenData.Query1.SQL.Text:='DELETE FROM A WHERE D='+TableauDepots.Cells[1,TableauDepots.Row];
            dmGenData.Query1.ExecSQL;
            dmGenData.Query1.SQL.Text:='DELETE FROM D WHERE no='+TableauDepots.Cells[1,TableauDepots.Row];
-           dmGenData.Query1.ExecSQL;
+                                              dmGenData.Query1.ExecSQL;
            TableauDepots.DeleteRow(TableauDepots.Row);
         end;
 end;

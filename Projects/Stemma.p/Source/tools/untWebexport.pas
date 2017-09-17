@@ -7,21 +7,22 @@ interface
 uses
   Classes, SysUtils, ComCtrls;
 
-procedure ExportToWebsite(const lOnProgress: TNotifyEvent; const password, user,
-  db, server, site, BaseDir: string; const SPanel: TStatusPanel; const time_delay: integer);
+procedure ExportToWebsite(const lOnProgress: TNotifyEvent;
+  const password, user, db, server, site, BaseDir: string;
+  const SPanel: TStatusPanel; const time_delay: integer);
 
 implementation
 
-uses FMUtils,cls_Translation,StrUtils, dm_GenData;
+uses FMUtils, cls_Translation, StrUtils, dm_GenData;
 
-procedure ExportToWebsite(const lOnProgress: TNotifyEvent; const password, user,
-  db, server, site, BaseDir: string; const SPanel: TStatusPanel; const time_delay: integer);
+procedure ExportToWebsite(const lOnProgress: TNotifyEvent;
+  const password, user, db, server, site, BaseDir: string;
+  const SPanel: TStatusPanel; const time_delay: integer);
 var
   temp: string;
   lLast: string;
   lFirst: string;
-  BaseDirwDS,
-  filename: string;
+  BaseDirwDS, filename: string;
   buttonsfile: textfile;
   indexfile: textfile;
   file2: textfile;
@@ -30,8 +31,9 @@ var
   max_request: integer;
 begin
   BaseDirwDS := IncludeTrailingPathDelimiter(BaseDir);
-  with dmGenData.Query1 do begin
-SQL.Text := 'SELECT no FROM I WHERE NOT V=''O'' ';
+  with dmGenData.Query1 do
+  begin
+    SQL.Text := 'SELECT no FROM I WHERE NOT V=''O'' ';
     Open;
     tag := -RecordCount;
     if assigned(lOnProgress) then
@@ -45,9 +47,8 @@ SQL.Text := 'SELECT no FROM I WHERE NOT V=''O'' ';
     while not EOF do
     begin
       // créer fichiers sitemap
-      temp := '<url><loc>'+site+'/testphp/info.php?no=' +
-        Fields[0].AsString +
-        '</loc><changefreq>monthly</changefreq></url>';
+      temp := '<url><loc>' + site + '/testphp/info.php?no=' +
+        Fields[0].AsString + '</loc><changefreq>monthly</changefreq></url>';
       writeln(file1, temp);
       if (tag mod max_request) = 0 then
       begin
@@ -64,7 +65,7 @@ SQL.Text := 'SELECT no FROM I WHERE NOT V=''O'' ';
       Next;
       tag := tag + 1;
       if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+        lOnProgress(dmGenData.Query1);
     end;
   end;
   writeln(file1, '</urlset>');
@@ -73,18 +74,19 @@ SQL.Text := 'SELECT no FROM I WHERE NOT V=''O'' ';
   SPanel.Text := Translation.Items[324];
   // fr: Exporter projet, créer fichiers index
   // en: Export project, create index files
-  with dmGenData.Query1 do begin
-  SQL.Text :=
+  with dmGenData.Query1 do
+  begin
+    SQL.Text :=
       'SELECT N.I, N.N FROM N JOIN I ON N.I=I.no WHERE NOT I.V=''O'' ORDER BY N.I1, N.I2, N.I3, N.I4';
     Open;
 
     tag := -RecordCount;
-        if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+    if Assigned(lOnProgress) then
+      lOnProgress(dmGenData.Query1);
 
     tag := 1;
-        if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+    if Assigned(lOnProgress) then
+      lOnProgress(dmGenData.Query1);
 
     filename := BaseDirwDS + 'boutons.html';
     assignfile(buttonsfile, FileName);
@@ -97,8 +99,7 @@ SQL.Text := 'SELECT no FROM I WHERE NOT V=''O'' ';
     writeln(buttonsfile, '<BASE TARGET="texte">');
     writeln(buttonsfile,
       '<!--mstheme--><link rel="stylesheet" type="text/css" href="../_themes/genealogy/gene1011.css">'
-      +
-      '<meta name="Microsoft Theme" content="genealogy 1011">');
+      + '<meta name="Microsoft Theme" content="genealogy 1011">');
     writeln(buttonsfile, '</HEAD>');
     writeln(buttonsfile, '<BODY>');
     writeln(buttonsfile, '<HR>');
@@ -398,11 +399,11 @@ SQL.Text := 'SELECT no FROM I WHERE NOT V=''O'' ';
       Next;
       tag := tag + 1;
       if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+        lOnProgress(dmGenData.Query1);
 
     end;
   end;
-    // Fermeture du file1 de buttonsfile
+  // Fermeture du file1 de buttonsfile
   writeln(indexfile, '</DL>');
   writeln(indexfile, '<HR>');
   writeln(indexfile, '</BODY>');
@@ -430,7 +431,9 @@ SQL.Text := 'SELECT no FROM I WHERE NOT V=''O'' ';
   writeln(buttonsfile, '<INPUT TYPE=text name=q size=31 maxlength=255 value="">');
   writeln(buttonsfile, '<INPUT type=submit name=sa VALUE="Google Search">');
   writeln(buttonsfile,
-    '<INPUT type=hidden name=cof VALUE="GALT:#FFFFCC;S:'+site+';GL:2;VLC:#66CC99;AH:center;BGC:#000000;LC:#FFCC00;GFNT:#669999;ALC:#669999;BIMG:'+site+'/fond.jpg;T:#FFFFCC;GIMP:#FFFFCC;AWFID:4aaddc5da62118cf;">');
+    '<INPUT type=hidden name=cof VALUE="GALT:#FFFFCC;S:' + site +
+    ';GL:2;VLC:#66CC99;AH:center;BGC:#000000;LC:#FFCC00;GFNT:#669999;ALC:#669999;BIMG:' +
+    site + '/fond.jpg;T:#FFFFCC;GIMP:#FFFFCC;AWFID:4aaddc5da62118cf;">');
   writeln(buttonsfile,
     '<input type=hidden name=domains value="genealogiequebec.info"><br><input type=radio name=sitesearch value=""> web <input type=radio name=sitesearch value="genealogiequebec.info" checked> genealogiequebec.info');
   writeln(buttonsfile, '</td></tr></TABLE>');
@@ -441,13 +444,14 @@ SQL.Text := 'SELECT no FROM I WHERE NOT V=''O'' ';
   writeln(buttonsfile, '</HTML>');
   closefile(buttonsfile);
 
-  SPanel.text := Translation.Items[325];
-  dmGenData.Query1.tag := -dmGenData.CountAllRecords;;
-      if Assigned(lOnProgress) then
-     lOnProgress(dmGenData.Query1);
+  SPanel.Text := Translation.Items[325];
+  dmGenData.Query1.tag := -dmGenData.CountAllRecords;
+  ;
+  if Assigned(lOnProgress) then
+    lOnProgress(dmGenData.Query1);
   dmGenData.Query1.tag := 1;
-      if Assigned(lOnProgress) then
-     lOnProgress(dmGenData.Query1);
+  if Assigned(lOnProgress) then
+    lOnProgress(dmGenData.Query1);
 
   max_request := 5000;
   // Exporter projet, créer fichiers php de base de données }
@@ -460,8 +464,9 @@ SQL.Text := 'SELECT no FROM I WHERE NOT V=''O'' ';
   writeln(file2, '<LI><A HREF="beginupdate.php" target="texte">beginupdate.php</A></LI>');
   nb_file := 1;
   // TABLE A
-  with dmGenData.Query1 do begin
-SQL.Text := 'SELECT no, S, D, M FROM A';
+  with dmGenData.Query1 do
+  begin
+    SQL.Text := 'SELECT no, S, D, M FROM A';
     Open;
     First;
     filename := BaseDirwDS + 'writedata_A' + IntToStr(nb_file) + '.php';
@@ -499,8 +504,8 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '');
         writeln(file1,
           'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_A'
-          + IntToStr(nb_file + 1) + '.php\";'',' +
-          IntToStr(time_delay) + ');</script>\n");');
+          + IntToStr(nb_file + 1) + '.php\";'',' + IntToStr(time_delay) +
+          ');</script>\n");');
         writeln(file1, 'echo ("<noscript>\n");');
         writeln(file1, '');
         writeln(file1, '?>');
@@ -531,16 +536,14 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '$q = "INSERT IGNORE INTO A (no, S, D, M) VALUES";');
       end;
       // Insert record
-      writeln(file1, '$r = m("$q (' + Fields[0].AsString +
-        ', ' + Fields[1].AsString + ', ' +
-        Fields[2].AsString + ', ''' +
+      writeln(file1, '$r = m("$q (' + Fields[0].AsString + ', ' +
+        Fields[1].AsString + ', ' + Fields[2].AsString + ', ''' +
         AnsiReplaceStr(AnsiReplaceStr(Fields[3].AsString, '"', '\"'),
-        '''', '\''') + ''')") OR DIE ("Err:' + IntToStr(tag) +
-        '". n());');
+        '''', '\''') + ''')") OR DIE ("Err:' + IntToStr(tag) + '". n());');
       Next;
       tag := tag + 1;
       if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+        lOnProgress(dmGenData.Query1);
     end;
   end;
   // Insert file footer
@@ -554,14 +557,14 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
   nb_file := 1;
   writeln(file1,
     'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_C'
-    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) +
-    ');</script>\n");');
+    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) + ');</script>\n");');
   writeln(file1, 'echo ("<noscript>\n");');
   writeln(file1, '');
   writeln(file1, '?>');
   closefile(file1);
   // TABLE C
-  with dmGenData.Query1 do begin
+  with dmGenData.Query1 do
+  begin
     SQL.Text := 'SELECT no, Y, N, S, Q, M FROM C';
     Open;
     First;
@@ -600,8 +603,8 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '');
         writeln(file1,
           'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_C'
-          + IntToStr(nb_file + 1) + '.php\";'',' +
-          IntToStr(time_delay) + ');</script>\n");');
+          + IntToStr(nb_file + 1) + '.php\";'',' + IntToStr(time_delay) +
+          ');</script>\n");');
         writeln(file1, 'echo ("<noscript>\n");');
         writeln(file1, '');
         writeln(file1, '?>');
@@ -632,20 +635,18 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '$q = "INSERT IGNORE INTO C (no, Y, N, S, Q, M) VALUES";');
       end;
       // Insert record
-      writeln(file1, '$r = m("$q (' + Fields[0].AsString +
-        ', ''' + Fields[1].AsString + ''', ' +
-        Fields[2].AsString + ', ' +
-        Fields[3].AsString + ', ' + Fields[4].AsString +
-        ', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[5].AsString,
-        '"', '\"'), '''', '\''') + ''')") OR DIE ("Err:' +
-        IntToStr(tag) + '". n());');
+      writeln(file1, '$r = m("$q (' + Fields[0].AsString + ', ''' +
+        Fields[1].AsString + ''', ' + Fields[2].AsString + ', ' +
+        Fields[3].AsString + ', ' + Fields[4].AsString + ', ''' +
+        AnsiReplaceStr(AnsiReplaceStr(Fields[5].AsString, '"', '\"'), '''', '\''') +
+        ''')") OR DIE ("Err:' + IntToStr(tag) + '". n());');
       Next;
       tag := tag + 1;
       if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+        lOnProgress(dmGenData.Query1);
     end;
   end;
-    // Insert file footer
+  // Insert file footer
   writeln(file1,
     '$r = m("CREATE INDEX N ON C (N)") OR DIE ("Could not successfully run Query from DB2: " . n());');
   writeln(file1,
@@ -656,15 +657,15 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
   nb_file := 1;
   writeln(file1,
     'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_D'
-    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) +
-    ');</script>\n");');
+    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) + ');</script>\n");');
   writeln(file1, 'echo ("<noscript>\n");');
   writeln(file1, '');
   writeln(file1, '?>');
   closefile(file1);
   // TABLE D
-  with dmGenData.Query1 do begin
-  SQL.Text := 'SELECT no, T, D, M, I FROM D';
+  with dmGenData.Query1 do
+  begin
+    SQL.Text := 'SELECT no, T, D, M, I FROM D';
     Open;
     First;
     filename := BaseDirwDS + 'writedata_D' + IntToStr(nb_file) + '.php';
@@ -702,8 +703,8 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '');
         writeln(file1,
           'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_D'
-          + IntToStr(nb_file + 1) + '.php\";'',' +
-          IntToStr(time_delay) + ');</script>\n");');
+          + IntToStr(nb_file + 1) + '.php\";'',' + IntToStr(time_delay) +
+          ');</script>\n");');
         writeln(file1, 'echo ("<noscript>\n");');
         writeln(file1, '');
         writeln(file1, '?>');
@@ -734,34 +735,33 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '$q = "INSERT IGNORE INTO D (no, T, D, M, I) VALUES";');
       end;
       // Insert record
-      writeln(file1, '$r = m("$q (' + Fields[0].AsString +
-        ', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[1].AsString,
-        '"', '\"'), '''', '\''') + ''', ''' + AnsiReplaceStr(
-        AnsiReplaceStr(Fields[2].AsString, '"', '\"'), '''', '\''') +
-        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[3].AsString,
-        '"', '\"'), '''', '\''') + ''', ' + Fields[4].AsString +
-        ')") OR DIE ("Err:' + IntToStr(tag) + '". n());');
+      writeln(file1, '$r = m("$q (' + Fields[0].AsString + ', ''' +
+        AnsiReplaceStr(AnsiReplaceStr(Fields[1].AsString, '"', '\"'), '''', '\''') +
+        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[2].AsString, '"', '\"'),
+        '''', '\''') + ''', ''' +
+        AnsiReplaceStr(AnsiReplaceStr(Fields[3].AsString, '"', '\"'), '''', '\''') +
+        ''', ' + Fields[4].AsString + ')") OR DIE ("Err:' + IntToStr(tag) + '". n());');
       Next;
       tag := tag + 1;
       if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+        lOnProgress(dmGenData.Query1);
     end;
   end;
-    // Insert file footer
+  // Insert file footer
   writeln(file1, 'printf("\ndernier writedata_D' + IntToStr(nb_file) + '.php");');
   writeln(file1, 'printf(" terminé de traité à %s\n",date("F j, Y, g:i:s a"));');
   writeln(file1, '');
   nb_file := 1;
   writeln(file1,
     'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_E'
-    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) +
-    ');</script>\n");');
+    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) + ');</script>\n");');
   writeln(file1, 'echo ("<noscript>\n");');
   writeln(file1, '');
   writeln(file1, '?>');
   closefile(file1);
   // TABLE E
-  with dmGenData.Query1 do begin
+  with dmGenData.Query1 do
+  begin
     SQL.Text := 'SELECT no, Y, PD, SD, L, M, X FROM E';
     Open;
     First;
@@ -800,8 +800,8 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '');
         writeln(file1,
           'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_E'
-          + IntToStr(nb_file + 1) + '.php\";'',' +
-          IntToStr(time_delay) + ');</script>\n");');
+          + IntToStr(nb_file + 1) + '.php\";'',' + IntToStr(time_delay) +
+          ');</script>\n");');
         writeln(file1, 'echo ("<noscript>\n");');
         writeln(file1, '');
         writeln(file1, '?>');
@@ -832,19 +832,17 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '$q = "INSERT IGNORE INTO E (no, Y, PD, SD, L, M, X) VALUES";');
       end;
       // Insert record
-      writeln(file1, '$r = m("$q (' + Fields[0].AsString +
-        ', ' + Fields[1].AsString + ', ''' +
-        AnsiReplaceStr(AnsiReplaceStr(Fields[2].AsString, '"', '\"'),
-        '''', '\''') + ''', ''' +
-        AnsiReplaceStr(AnsiReplaceStr(Fields[3].AsString, '"', '\"'),
-        '''', '\''') + ''', ' + Fields[4].AsString +
-        ', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[5].AsString,
-        '"', '\"'), '''', '\''') + ''', ' + Fields[6].AsString +
-        ')") OR DIE ("Err:' + IntToStr(tag) + '". n());');
+      writeln(file1, '$r = m("$q (' + Fields[0].AsString + ', ' +
+        Fields[1].AsString + ', ''' + AnsiReplaceStr(
+        AnsiReplaceStr(Fields[2].AsString, '"', '\"'), '''', '\''') +
+        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[3].AsString, '"', '\"'),
+        '''', '\''') + ''', ' + Fields[4].AsString + ', ''' +
+        AnsiReplaceStr(AnsiReplaceStr(Fields[5].AsString, '"', '\"'), '''', '\''') +
+        ''', ' + Fields[6].AsString + ')") OR DIE ("Err:' + IntToStr(tag) + '". n());');
       Next;
       tag := tag + 1;
       if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+        lOnProgress(dmGenData.Query1);
     end;
   end;
   // Insert file footer
@@ -856,14 +854,14 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
   nb_file := 1;
   writeln(file1,
     'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_I'
-    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) +
-    ');</script>\n");');
+    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) + ');</script>\n");');
   writeln(file1, 'echo ("<noscript>\n");');
   writeln(file1, '');
   writeln(file1, '?>');
   closefile(file1);
   // TABLE I
-  with dmGenData.Query1 do begin
+  with dmGenData.Query1 do
+  begin
     SQL.Text := 'SELECT no, S, V, I, date FROM I';
     Open;
     First;
@@ -902,8 +900,8 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '');
         writeln(file1,
           'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_I'
-          + IntToStr(nb_file + 1) + '.php\";'',' +
-          IntToStr(time_delay) + ');</script>\n");');
+          + IntToStr(nb_file + 1) + '.php\";'',' + IntToStr(time_delay) +
+          ');</script>\n");');
         writeln(file1, 'echo ("<noscript>\n");');
         writeln(file1, '');
         writeln(file1, '?>');
@@ -934,32 +932,31 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '$q = "INSERT IGNORE INTO I (no, S, V, I, date) VALUES";');
       end;
       // Insert record
-      writeln(file1, '$r = m("$q (' + Fields[0].AsString +
-        ', ''' + Fields[1].AsString + ''', ''' +
-        Fields[2].AsString + ''', ' +
+      writeln(file1, '$r = m("$q (' + Fields[0].AsString + ', ''' +
+        Fields[1].AsString + ''', ''' + Fields[2].AsString + ''', ' +
         Fields[3].AsString + ', ''' + Fields[4].AsString +
         ''')") OR DIE ("Err:' + IntToStr(tag) + '". n());');
       Next;
       tag := tag + 1;
       if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+        lOnProgress(dmGenData.Query1);
     end;
   end;
-    // Insert file footer
+  // Insert file footer
   writeln(file1, 'printf("\ndernier writedata_I' + IntToStr(nb_file) + '.php");');
   writeln(file1, 'printf(" terminé de traité à %s\n",date("F j, Y, g:i:s a"));');
   writeln(file1, '');
   nb_file := 1;
   writeln(file1,
     'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_L'
-    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) +
-    ');</script>\n");');
+    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) + ');</script>\n");');
   writeln(file1, 'echo ("<noscript>\n");');
   writeln(file1, '');
   writeln(file1, '?>');
   closefile(file1);
   // TABLE L
-  with dmGenData.Query1 do begin
+  with dmGenData.Query1 do
+  begin
     SQL.Text := 'SELECT no, L FROM L';
     Open;
     First;
@@ -998,8 +995,8 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '');
         writeln(file1,
           'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_L'
-          + IntToStr(nb_file + 1) + '.php\";'',' +
-          IntToStr(time_delay) + ');</script>\n");');
+          + IntToStr(nb_file + 1) + '.php\";'',' + IntToStr(time_delay) +
+          ');</script>\n");');
         writeln(file1, 'echo ("<noscript>\n");');
         writeln(file1, '');
         writeln(file1, '?>');
@@ -1030,31 +1027,30 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '$q = "INSERT IGNORE INTO L (no, L) VALUES";');
       end;
       // Insert record
-      writeln(file1, '$r = m("$q (' + Fields[0].AsString +
-        ', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[1].AsString,
-        '"', '\"'), '''', '\''') + ''')") OR DIE ("Err:' +
-        IntToStr(tag) + '". n());');
+      writeln(file1, '$r = m("$q (' + Fields[0].AsString + ', ''' +
+        AnsiReplaceStr(AnsiReplaceStr(Fields[1].AsString, '"', '\"'), '''', '\''') +
+        ''')") OR DIE ("Err:' + IntToStr(tag) + '". n());');
       Next;
       tag := tag + 1;
       if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+        lOnProgress(dmGenData.Query1);
     end;
   end;
-    // Insert file footer
+  // Insert file footer
   writeln(file1, 'printf("\ndernier writedata_L' + IntToStr(nb_file) + '.php");');
   writeln(file1, 'printf(" terminé de traité à %s\n",date("F j, Y, g:i:s a"));');
   writeln(file1, '');
   nb_file := 1;
   writeln(file1,
     'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_N'
-    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) +
-    ');</script>\n");');
+    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) + ');</script>\n");');
   writeln(file1, 'echo ("<noscript>\n");');
   writeln(file1, '');
   writeln(file1, '?>');
   closefile(file1);
   // TABLE N
-  with dmGenData.Query1 do begin
+  with dmGenData.Query1 do
+  begin
     SQL.Text :=
       'SELECT no, I, Y, N, X, M, P, PD, SD, I1, I2, I3, I4 FROM N';
     Open;
@@ -1097,8 +1093,8 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '');
         writeln(file1,
           'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_N'
-          + IntToStr(nb_file + 1) + '.php\";'',' +
-          IntToStr(time_delay) + ');</script>\n");');
+          + IntToStr(nb_file + 1) + '.php\";'',' + IntToStr(time_delay) +
+          ');</script>\n");');
         writeln(file1, 'echo ("<noscript>\n");');
         writeln(file1, '');
         writeln(file1, '?>');
@@ -1130,29 +1126,26 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
           '$q = "INSERT IGNORE INTO N (no, I, Y, N, X, M, P, PD, SD, I1, I2, I3, I4) VALUES";');
       end;
       // Insert record
-      writeln(file1, '$r = m("$q (' + Fields[0].AsString +
-        ', ' + Fields[1].AsString + ', ' +
-        Fields[2].AsString + ', ''' +
+      writeln(file1, '$r = m("$q (' + Fields[0].AsString + ', ' +
+        Fields[1].AsString + ', ' + Fields[2].AsString + ', ''' +
         AnsiReplaceStr(AnsiReplaceStr(Fields[3].AsString, '"', '\"'),
-        '''', '\''') + ''', ' + Fields[4].AsString +
-        ', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[5].AsString,
-        '"', '\"'), '''', '\''') + ''', ''' +
-        AnsiReplaceStr(AnsiReplaceStr(Fields[6].AsString, '"', '\"'),
+        '''', '\''') + ''', ' + Fields[4].AsString + ', ''' +
+        AnsiReplaceStr(AnsiReplaceStr(Fields[5].AsString, '"', '\"'), '''', '\''') +
+        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[6].AsString, '"', '\"'),
         '''', '\''') + ''', ''' + AnsiReplaceStr(
         AnsiReplaceStr(Fields[7].AsString, '"', '\"'), '''', '\''') +
-        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[8].AsString,
-        '"', '\"'), '''', '\''') + ''', ''' + AnsiReplaceStr(
+        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[8].AsString, '"', '\"'),
+        '''', '\''') + ''', ''' + AnsiReplaceStr(
         AnsiReplaceStr(Fields[9].AsString, '"', '\"'), '''', '\''') +
-        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[10].AsString,
-        '"', '\"'), '''', '\''') + ''', ''' + AnsiReplaceStr(
+        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[10].AsString, '"', '\"'),
+        '''', '\''') + ''', ''' + AnsiReplaceStr(
         AnsiReplaceStr(Fields[11].AsString, '"', '\"'), '''', '\''') +
-        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[12].AsString,
-        '"', '\"'), '''', '\''') + ''')") OR DIE ("Err:' +
-        IntToStr(tag) + '". n());');
+        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[12].AsString, '"', '\"'),
+        '''', '\''') + ''')") OR DIE ("Err:' + IntToStr(tag) + '". n());');
       Next;
       tag := tag + 1;
       if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+        lOnProgress(dmGenData.Query1);
     end;
   end;
   // Insert file footer
@@ -1174,14 +1167,14 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
   nb_file := 1;
   writeln(file1,
     'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_R'
-    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) +
-    ');</script>\n");');
+    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) + ');</script>\n");');
   writeln(file1, 'echo ("<noscript>\n");');
   writeln(file1, '');
   writeln(file1, '?>');
   closefile(file1);
   // TABLE R
-  with dmGenData.Query1 do begin
+  with dmGenData.Query1 do
+  begin
     SQL.Text := 'SELECT no, Y, A, B, M, X, P, SD FROM R';
     Open;
     First;
@@ -1222,8 +1215,8 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '');
         writeln(file1,
           'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_R'
-          + IntToStr(nb_file + 1) + '.php\";'',' +
-          IntToStr(time_delay) + ');</script>\n");');
+          + IntToStr(nb_file + 1) + '.php\";'',' + IntToStr(time_delay) +
+          ');</script>\n");');
         writeln(file1, 'echo ("<noscript>\n");');
         writeln(file1, '');
         writeln(file1, '?>');
@@ -1255,21 +1248,19 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
           '$q = "INSERT IGNORE INTO R (no, Y, A, B, M, X, P, SD) VALUES";');
       end;
       // Insert record
-      writeln(file1, '$r = m("$q (' + Fields[0].AsString +
-        ', ' + Fields[1].AsString + ', ' +
-        Fields[2].AsString + ', ' +
+      writeln(file1, '$r = m("$q (' + Fields[0].AsString + ', ' +
+        Fields[1].AsString + ', ' + Fields[2].AsString + ', ' +
         Fields[3].AsString + ', ''' + AnsiReplaceStr(
         AnsiReplaceStr(Fields[4].AsString, '"', '\"'), '''', '\''') +
         ''', ' + Fields[5].AsString + ', ''' +
         AnsiReplaceStr(AnsiReplaceStr(Fields[6].AsString, '"', '\"'),
-        '''', '\''') + ''', ''' +
-        AnsiReplaceStr(AnsiReplaceStr(Fields[7].AsString, '"', '\"'),
-        '''', '\''') + ''')") OR DIE ("Err:' + IntToStr(tag) +
-        '". n());');
+        '''', '\''') + ''', ''' + AnsiReplaceStr(
+        AnsiReplaceStr(Fields[7].AsString, '"', '\"'), '''', '\''') +
+        ''')") OR DIE ("Err:' + IntToStr(tag) + '". n());');
       Next;
       tag := tag + 1;
       if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+        lOnProgress(dmGenData.Query1);
     end;
   end;
   // Insert file footer
@@ -1283,14 +1274,14 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
   nb_file := 1;
   writeln(file1,
     'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_S'
-    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) +
-    ');</script>\n");');
+    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) + ');</script>\n");');
   writeln(file1, 'echo ("<noscript>\n");');
   writeln(file1, '');
   writeln(file1, '?>');
   closefile(file1);
   // TABLE S
-  with dmGenData.Query1 do begin
+  with dmGenData.Query1 do
+  begin
     SQL.Text := 'SELECT no, T, D, M, A, Q FROM S';
     Open;
     First;
@@ -1329,8 +1320,8 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '');
         writeln(file1,
           'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_S'
-          + IntToStr(nb_file + 1) + '.php\";'',' +
-          IntToStr(time_delay) + ');</script>\n");');
+          + IntToStr(nb_file + 1) + '.php\";'',' + IntToStr(time_delay) +
+          ');</script>\n");');
         writeln(file1, 'echo ("<noscript>\n");');
         writeln(file1, '');
         writeln(file1, '?>');
@@ -1361,19 +1352,18 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '$q = "INSERT IGNORE INTO S (no, T, D, M, A, Q) VALUES";');
       end;
       // Insert record
-      writeln(file1, '$r = m("$q (' + Fields[0].AsString +
-        ', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[1].AsString,
-        '"', '\"'), '''', '\''') + ''', ''' + AnsiReplaceStr(
-        AnsiReplaceStr(Fields[2].AsString, '"', '\"'), '''', '\''') +
-        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[3].AsString,
-        '"', '\"'), '''', '\''') + ''', ''' + AnsiReplaceStr(
-        AnsiReplaceStr(Fields[4].AsString, '"', '\"'), '''', '\''') +
-        ''', ' + Fields[5].AsString + ')") OR DIE ("Err:' +
+      writeln(file1, '$r = m("$q (' + Fields[0].AsString + ', ''' +
+        AnsiReplaceStr(AnsiReplaceStr(Fields[1].AsString, '"', '\"'), '''', '\''') +
+        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[2].AsString, '"', '\"'),
+        '''', '\''') + ''', ''' +
+        AnsiReplaceStr(AnsiReplaceStr(Fields[3].AsString, '"', '\"'), '''', '\''') +
+        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[4].AsString, '"', '\"'),
+        '''', '\''') + ''', ' + Fields[5].AsString + ')") OR DIE ("Err:' +
         IntToStr(tag) + '". n());');
       Next;
       tag := tag + 1;
       if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+        lOnProgress(dmGenData.Query1);
     end;
   end;
   // Insert file footer
@@ -1383,15 +1373,15 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
   nb_file := 1;
   writeln(file1,
     'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_W'
-    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) +
-    ');</script>\n");');
+    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) + ');</script>\n");');
   writeln(file1, 'echo ("<noscript>\n");');
   writeln(file1, '');
   writeln(file1, '?>');
   closefile(file1);
   // TABLE W
-  with dmGenData.Query1 do begin
-  SQL.Text := 'SELECT no, I, E, X, P, R FROM W';
+  with dmGenData.Query1 do
+  begin
+    SQL.Text := 'SELECT no, I, E, X, P, R FROM W';
     Open;
     First;
     filename := BaseDirwDS + 'writedata_W' + IntToStr(nb_file) + '.php';
@@ -1429,8 +1419,8 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '');
         writeln(file1,
           'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_W'
-          + IntToStr(nb_file + 1) + '.php\";'',' +
-          IntToStr(time_delay) + ');</script>\n");');
+          + IntToStr(nb_file + 1) + '.php\";'',' + IntToStr(time_delay) +
+          ');</script>\n");');
         writeln(file1, 'echo ("<noscript>\n");');
         writeln(file1, '');
         writeln(file1, '?>');
@@ -1461,18 +1451,16 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '$q = "INSERT IGNORE INTO W (no, I, E, X, P, R) VALUES";');
       end;
       // Insert record
-      writeln(file1, '$r = m("$q (' + Fields[0].AsString +
-        ', ' + Fields[1].AsString + ', ' +
-        Fields[2].AsString + ', ' +
+      writeln(file1, '$r = m("$q (' + Fields[0].AsString + ', ' +
+        Fields[1].AsString + ', ' + Fields[2].AsString + ', ' +
         Fields[3].AsString + ', ''' + AnsiReplaceStr(
         AnsiReplaceStr(Fields[4].AsString, '"', '\"'), '''', '\''') +
-        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[5].AsString,
-        '"', '\"'), '''', '\''') + ''')") OR DIE ("Err:' +
-        IntToStr(tag) + '". n());');
+        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[5].AsString, '"', '\"'),
+        '''', '\''') + ''')") OR DIE ("Err:' + IntToStr(tag) + '". n());');
       Next;
       tag := tag + 1;
       if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+        lOnProgress(dmGenData.Query1);
     end;
   end;
   // Insert file footer
@@ -1486,14 +1474,14 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
   nb_file := 1;
   writeln(file1,
     'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_X'
-    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) +
-    ');</script>\n");');
+    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) + ');</script>\n");');
   writeln(file1, 'echo ("<noscript>\n");');
   writeln(file1, '');
   writeln(file1, '?>');
   closefile(file1);
   // TABLE X
-  with dmGenData.Query1 do begin
+  with dmGenData.Query1 do
+  begin
     SQL.Text := 'SELECT no, X, T, D, F, Z, A, N FROM X';
     Open;
     First;
@@ -1532,8 +1520,8 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '');
         writeln(file1,
           'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_X'
-          + IntToStr(nb_file + 1) + '.php\";'',' +
-          IntToStr(time_delay) + ');</script>\n");');
+          + IntToStr(nb_file + 1) + '.php\";'',' + IntToStr(time_delay) +
+          ');</script>\n");');
         writeln(file1, 'echo ("<noscript>\n");');
         writeln(file1, '');
         writeln(file1, '?>');
@@ -1564,20 +1552,19 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '$q = "INSERT IGNORE INTO X (no, X, T, D, F, Z, A, N) VALUES";');
       end;
       // Insert record
-      writeln(file1, '$r = m("$q (' + Fields[0].AsString +
-        ', ' + Fields[1].AsString + ', ''' +
-        AnsiReplaceStr(AnsiReplaceStr(Fields[2].AsString, '"', '\"'),
+      writeln(file1, '$r = m("$q (' + Fields[0].AsString + ', ' +
+        Fields[1].AsString + ', ''' + AnsiReplaceStr(
+        AnsiReplaceStr(Fields[2].AsString, '"', '\"'), '''', '\''') +
+        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[3].AsString, '"', '\"'),
+        '''', '\''') + ''', ''' + AutoQuote(Fields[4].AsString) +
+        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[5].AsString, '"', '\"'),
         '''', '\''') + ''', ''' +
-        AnsiReplaceStr(AnsiReplaceStr(Fields[3].AsString, '"', '\"'),
-        '''', '\''') + ''', ''' + AutoQuote(Fields[4].AsString) + ''', ''' + AnsiReplaceStr(
-        AnsiReplaceStr(Fields[5].AsString, '"', '\"'), '''', '\''') +
-        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[6].AsString,
-        '"', '\"'), '''', '\''') + ''', ' + Fields[7].AsString +
-        ')") OR DIE ("Err:' + IntToStr(tag) + '". n());');
+        AnsiReplaceStr(AnsiReplaceStr(Fields[6].AsString, '"', '\"'), '''', '\''') +
+        ''', ' + Fields[7].AsString + ')") OR DIE ("Err:' + IntToStr(tag) + '". n());');
       Next;
       tag := tag + 1;
       if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+        lOnProgress(dmGenData.Query1);
     end;
   end;
   // Insert file footer
@@ -1589,15 +1576,15 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
   nb_file := 1;
   writeln(file1,
     'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_Y'
-    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) +
-    ');</script>\n");');
+    + IntToStr(nb_file) + '.php\";'',' + IntToStr(time_delay) + ');</script>\n");');
   writeln(file1, 'echo ("<noscript>\n");');
   writeln(file1, '');
   writeln(file1, '?>');
   closefile(file1);
   // TABLE Y
-  with dmGenData.Query1 do begin
-  SQL.Text := 'SELECT no, T, Y, P, R FROM Y';
+  with dmGenData.Query1 do
+  begin
+    SQL.Text := 'SELECT no, T, Y, P, R FROM Y';
     Open;
     First;
     filename := BaseDirwDS + 'writedata_Y' + IntToStr(nb_file) + '.php';
@@ -1635,8 +1622,8 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '');
         writeln(file1,
           'echo ("<script language=\"JavaScript\" type=\"text/javascript\">window.setTimeout(''location.href=\"writedata_Y'
-          + IntToStr(nb_file + 1) + '.php\";'',' +
-          IntToStr(time_delay) + ');</script>\n");');
+          + IntToStr(nb_file + 1) + '.php\";'',' + IntToStr(time_delay) +
+          ');</script>\n");');
         writeln(file1, 'echo ("<noscript>\n");');
         writeln(file1, '');
         writeln(file1, '?>');
@@ -1667,20 +1654,17 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
         writeln(file1, '$q = "INSERT IGNORE INTO Y (no, T, Y, P, R) VALUES";');
       end;
       // Insert record
-      writeln(file1, '$r = m("$q (' + Fields[0].AsString +
-        ', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[1].AsString,
-        '"', '\"'), '''', '\''') + ''', ''' + AnsiReplaceStr(
-        AnsiReplaceStr(Fields[2].AsString, '"', '\"'), '''', '\''') +
-        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(
-        AnsiReplaceStr(Fields[3].AsString, '$', '\$'), '"', '\"'),
-        '''', '\''') + ''', ''' +
-        AnsiReplaceStr(AnsiReplaceStr(Fields[4].AsString, '"', '\"'),
-        '''', '\''') + ''')") OR DIE ("Err:' + IntToStr(tag) +
-        '". n());');
+      writeln(file1, '$r = m("$q (' + Fields[0].AsString + ', ''' +
+        AnsiReplaceStr(AnsiReplaceStr(Fields[1].AsString, '"', '\"'), '''', '\''') +
+        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[2].AsString, '"', '\"'),
+        '''', '\''') + ''', ''' + AnsiReplaceStr(AnsiReplaceStr(
+        AnsiReplaceStr(Fields[3].AsString, '$', '\$'), '"', '\"'), '''', '\''') +
+        ''', ''' + AnsiReplaceStr(AnsiReplaceStr(Fields[4].AsString, '"', '\"'),
+        '''', '\''') + ''')") OR DIE ("Err:' + IntToStr(tag) + '". n());');
       Next;
       tag := tag + 1;
       if Assigned(lOnProgress) then
-       lOnProgress(dmGenData.Query1);
+        lOnProgress(dmGenData.Query1);
     end;
   end;
   // Insert file footer
@@ -1699,4 +1683,20 @@ SQL.Text := 'SELECT no, S, D, M FROM A';
 end;
 
 end.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

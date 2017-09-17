@@ -10,6 +10,7 @@ object frmRepository: TfrmRepository
   OnResize = FormResize
   OnShow = FormShow
   Position = poScreenCenter
+  LCLVersion = '1.9.0.0'
   object Button1: TButton
     Left = 664
     Height = 25
