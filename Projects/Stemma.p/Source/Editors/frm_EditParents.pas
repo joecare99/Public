@@ -92,26 +92,6 @@ implementation
 uses
    frm_Main, cls_Translation, dm_GenData, frm_Names;
 
-function GetRelationOtherParent(const lidChild: integer;const lpSex: String; out parent2: integer;
-  out lName: string): boolean;
-var
-  lPrefParExists: boolean;
-begin
-  with dmGenData.Query1 do begin
-  SQL.Text:='SELECT R.no, R.B, N.N FROM R JOIN I ON R.B=I.no JOIN N on N.I=R.B WHERE I.S=:Sex AND R.X=1 AND N.X=1 AND R.A=:idChild';
-         ParamByName('Sex').AsString:=lpSex;
-         ParamByName('idChild').AsInteger:=lidChild;
-         Open;
-         lPrefParExists := not EOF;
-         if lPrefParExists then
-            begin;
-            lName:=Fields[2].AsString;
-            parent2:=Fields[1].AsInteger;
-         end;
-         close;
-    Result:=lPrefParExists;
-  end;
-end;
 
 { TfrmEditParents }
 
@@ -322,27 +302,13 @@ begin
      if lStrTmp='F' then lStrTmp:='M' else lStrTmp:='F';
 
      lidChild:=idA.Value;
-     lPrefParExists:=GetRelationOtherParent(lidChild,lStrTmp, parent2, lStrTmp);
+     lPrefParExists:=dmgendata.GetRelationOtherParent(lidChild,lStrTmp, parent2, lStrTmp);
      parent1:=idB.Value; //Done -oJC : Convert to Integer
 
      If lPrefParExists then
         begin
 
-        with dmGenData.Query1 do begin
-          Close;
-        // Vérifier qu'il n'y idA pas déjà une union entre ces deux parents
-          SQL.text:='SELECT COUNT(E.no) FROM E JOIN W ON W.E=E.no JOIN Y on E.Y=Y.no WHERE (W.I=:idChild OR W.I=:idParentB) AND W.X=1 AND E.X=1 AND Y.Y=''M'' GROUP BY E.no';
-          ParamByName('idChild').AsInteger:=lidChild;
-          ParamByName('idParentB').AsInteger:=parent1;
-          Open;
-          existe:=false;
-          while not EOF do
-             begin
-             existe:=existe or (Fields[0].AsInteger=2);
-             Next;
-          end;
-          Close;
-        end;
+        existe:=dmgendata.CheckEventsPairedParentsExists(lidChild, parent1);
         if not existe then
            if Application.MessageBox(Pchar(Translation.Items[300]+
                  nomB.Text+Translation.Items[299]+

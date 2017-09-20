@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Grids, Menus, StrUtils, FMUtils, LCLtype, ActnList, Buttons, ComCtrls;
+  Grids, Menus, StrUtils, LCLtype, ActnList, Buttons, ComCtrls;
 
 type
 
@@ -69,113 +69,15 @@ implementation
 
 uses frm_Main, cls_Translation, dm_GenData, frm_Usage;
 
-procedure DeletePlace(const lidPlace: Integer);
-begin
-  dmGenData.Query1.SQL.Text:='DELETE FROM L WHERE no=:idPlace';
-  dmGenData.Query1.ParamByName('idPlace').AsInteger:=lidPlace;
-  dmGenData.Query1.ExecSQL;
-end;
-
-procedure FillTablePlaces(const lTblPlace: TStringGrid;
-  const lOnUpdate: TNotifyEvent);
-var
-  Lieu: string;
-  L4: string;
-  L3: string;
-  L2: string;
-  L1: string;
-  L0: string;
-  LA: string;
-  pos2: integer;
-  pos1: integer;
-  i: integer;
+procedure UpdateEventsChangePlace(const lidPlaceNew, lidPlace: Integer);
 begin
   with dmGenData.Query1 do begin
-    SQL.Clear;
-    SQL.add('SELECT L.no, L.L, COUNT(E.L) FROM L JOIN E on E.L=L.no GROUP by L.no');
-    Open;
-    First;
-    lTblPlace.RowCount:=RecordCount+1;
-    Tag:=-lTblPlace.RowCount;
-    if assigned(lOnUpdate) then
-       lOnUpdate(dmGenData.Query1);
-    Tag:=0;
-    if assigned(lOnUpdate) then
-       lOnUpdate(dmGenData.Query1);
-    i:=0;
-    While not Eof do
-       begin
-       i:=i+1;
-       lTblPlace.Cells[0,i]:=Fields[0].AsString;
-       lTblPlace.Cells[1,i]:=Fields[0].AsString;
-       Lieu:=Fields[1].AsString;
-       if Copy(Lieu,1,4)='!TMG' then
-          begin
-          LA:='';
-          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
-          L0:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
-          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
-          L1:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
-          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
-          L2:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
-          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
-          L3:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
-          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
-          L4:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
-       end
-       else
-          begin
-          Pos1:=AnsiPos('<'+CTagNameArticle+'>',Lieu)+Length(CTagNameArticle)+2;
-          Pos2:=AnsiPos('</'+CTagNameArticle+'>',Lieu);
-          if (Pos1+Pos2)>(Length(CTagNameDetail)+2) then
-             LA:=Copy(Lieu,Pos1,Pos2-Pos1)
-          else
-             LA:='';
-          Pos1:=AnsiPos('<'+CTagNameDetail+'>',Lieu)+(Length(CTagNameDetail)+2);
-          Pos2:=AnsiPos('</'+CTagNameDetail+'>',Lieu);
-          if (Pos1+Pos2)>(Length(CTagNameDetail)+2) then
-             L0:=Copy(Lieu,Pos1,Pos2-Pos1)
-          else
-             L0:='';
-          Pos1:=AnsiPos('<' + CTagNamePlace + '>',Lieu)+7;
-          Pos2:=AnsiPos('</' + CTagNamePlace + '>',Lieu);
-          if (Pos1+Pos2)>7 then
-             L1:=Copy(Lieu,Pos1,Pos2-Pos1)
-          else
-             L1:='';
-          Pos1:=AnsiPos('<' + CTagNameRegion + '>',Lieu)+9;
-          Pos2:=AnsiPos('</' + CTagNameRegion + '>',Lieu);
-          if (Pos1+Pos2)>9 then
-             L2:=Copy(Lieu,Pos1,Pos2-Pos1)
-          else
-             L2:='';
-          Pos1:=AnsiPos('<' + CTagNameCountry + '>',Lieu)+10;
-          Pos2:=AnsiPos('</' + CTagNameCountry + '>',Lieu);
-          if (Pos1+Pos2)>10 then
-             L3:=Copy(Lieu,Pos1,Pos2-Pos1)
-          else
-             L3:='';
-          Pos1:=AnsiPos('<' + CTagNameState + '>',Lieu)+6;
-          Pos2:=AnsiPos('</' + CTagNameState + '>',Lieu);
-          if (Pos1+Pos2)>6 then
-             L4:=Copy(Lieu,Pos1,Pos2-Pos1)
-          else
-             L4:='';
-       end;
-       lTblPlace.Cells[2,i]:=LA;
-       lTblPlace.Cells[3,i]:=L0;
-       lTblPlace.Cells[4,i]:=L1;
-       lTblPlace.Cells[5,i]:=L2;
-       lTblPlace.Cells[6,i]:=L3;
-       lTblPlace.Cells[7,i]:=L4;
-       lTblPlace.Cells[8,i]:=Fields[2].AsString;
-       Next;
-       Tag:=RecNo;
-       if assigned(lOnUpdate) then
-          lOnUpdate(dmGenData.Query1);
-    end;
+  SQL.Text:='UPDATE E SET L=:idPlaceNew'+
+              ' WHERE L=:idPlace';
+            ParamByName('idPlace').AsInteger:=lidPlace;
+            ParamByName('idPlaceNew').AsInteger:=lidPlaceNew;
+            ExecSQL;
   end;
-  lTblPlace.SortColRow(true,3);
 end;
 
 {$R *.lfm}
@@ -224,7 +126,7 @@ begin
   lOnUpdate := @frmStemmaMainForm.UpdateProgressBar;
   lTblPlace:=tblPlace;
 
-  FillTablePlaces(lTblPlace, lOnUpdate);
+  dmGenData.FillTablePlaces(lTblPlace, lOnUpdate);
 
   edtO.Text:='2';
   frmStemmaMainForm.ProgressBar.Visible:=False;
@@ -268,7 +170,7 @@ begin
               lPlace+
               Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
            begin
-           DeletePlace(PtrInt(tblPlace.Objects[0,tblPlace.Row]));
+           dmGenData.DeletePlace(PtrInt(tblPlace.Objects[0,tblPlace.Row]));
            tblPlace.DeleteRow(tblPlace.Row);
         end;
      end;
@@ -307,6 +209,8 @@ end;
 procedure TfrmPlace.mniPlaceMergeClick(Sender: TObject);
 var
   no,Lieu,Lieu2:string;
+  lidPlace: Integer;
+  lidPlaceNew: Longint;
 begin
   Lieu:='';
   if Length(trim(tblPlace.Cells[3,tblPlace.Row]))>0 then
@@ -332,22 +236,18 @@ begin
      else
         Lieu:=Lieu+', '+trim(tblPlace.Cells[7,tblPlace.Row]);
   no := InputBox(Translation.Items[119],Translation.Items[120]+Lieu+Translation.Items[121],'');
-  if StrtoInt(no)>0 then
+  if tryStrtoInt(no,lidPlaceNew) and (lidPlaceNew>0) then
      begin
-     dmGenData.Query1.SQL.Text:='SELECT L.no, L.L FROM L WHERE L.no='+no;
-     dmGenData.Query1.Open;
-     Lieu2:=DecodeChanged(dmGenData.Query1.Fields[1].AsString);
+     Lieu2:=dmGenData.GetPlaceName(lidPlaceNew);
      if Lieu2<>Lieu then
         Application.MessageBox(Pchar(Translation.Items[122]+
            Lieu+Translation.Items[123]+Lieu2+')'),pchar(Translation.Items[124]),0)
      else
         begin
-        dmGenData.Query1.SQL.Text:='UPDATE E SET L='+no+
-          ' WHERE L='+tblPlace.Cells[0,tblPlace.Row];
-        dmGenData.Query1.ExecSQL;
+        lidPlace := ptrint(tblPlace.Objects[0,tblPlace.Row]);
+        UpdateEventsChangePlace(lidPlaceNew, lidPlace);
         // DELETE OLD LIEU
-        dmGenData.Query1.SQL.Text:='DELETE FROM L WHERE no='+tblPlace.Cells[0,tblPlace.Row];
-        dmGenData.Query1.ExecSQL;
+        dmGenData.DeletePlace(lidPlace);
      end;
   end;
 end;

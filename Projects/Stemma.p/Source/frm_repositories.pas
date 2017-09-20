@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Grids, Menus, FMUtils, StrUtils, LCLType;
+  Grids, Menus, FMUtils, LCLType;
 
 type
 
@@ -45,7 +45,7 @@ implementation
 uses
   frm_Main, cls_Translation, dm_GenData, frm_Usage;
 
-function SaveRepositoryData(Const lidRepository:integer; const lidInd: string; const lMemo: string;
+function SaveRepositoryData(Const lidRepository:integer; const lidInd: integer; const lMemo: string;
   const lDescription: string; const lTitle: string): integer;
 
 begin
@@ -55,7 +55,7 @@ begin
           lTitle+
           ''', '''+lDescription+
           ''', '''+lMemo+
-          ''', '+lidInd+')')
+          ''', '+inttostr(lidInd)+')')
     else
        SQL.Add('UPDATE D SET T='''+
          lTitle+
@@ -63,10 +63,10 @@ begin
          lDescription+
          ''', M='''+
          lMemo+
-         ''', I='+lidInd+' WHERE no='+lidRepository);
+         ''', I='+inttostr(lidInd)+' WHERE no='+inttostr(lidRepository));
     ExecSQL;
     if lidRepository=0 then
-       result:=InttoStr(dmGenData.GetLastIDOfTable('D'));
+       result:=dmGenData.GetLastIDOfTable('D')
     else
        Result:=lidRepository;
   end;
@@ -125,8 +125,8 @@ end;
 
 procedure TfrmRepository.TableauDepotsEditingDone(Sender: TObject);
 var
-  temp, lTitle, lDescription, lMemo, lidInd:string;
-  lidRepository:integer;
+  temp, lTitle, lDescription, lMemo:string;
+  lidRepository, lidInd:integer;
   depot:boolean;
 begin
   dmGenData.Query1.SQL.Clear;
@@ -152,6 +152,8 @@ begin
      lidRepository:=ptrint(TableauDepots.Objects[1,TableauDepots.Row]);
      lTitle:=TableauDepots.Cells[2,TableauDepots.Row];
      lidInd:=ptrint(TableauDepots.Objects[0,TableauDepots.Row]);
+     lMemo:=TableauDepots.Cells[4,TableauDepots.Row];
+     lDescription:=TableauDepots.Cells[3,TableauDepots.Row];
      lidRepository:=SaveRepositoryData(lidRepository, lidInd, lMemo, lDescription, lTitle);
   end
   else

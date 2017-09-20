@@ -10,8 +10,7 @@ object frmPlace: TfrmPlace
   OnResize = FormResize
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.4'
-  Visible = False
+  LCLVersion = '1.9.0.0'
   object tblPlace: TStringGrid
     Left = 8
     Height = 536
@@ -141,8 +140,8 @@ object frmPlace: TfrmPlace
     end
   end
   object mnuPlacePopUp: TPopupMenu
-    left = 96
-    top = 760
+    Left = 96
+    Top = 760
     object mniPlaceSortBy: TMenuItem
       Action = actPlaceSort
       object mniPlaceSortDetail: TMenuItem
@@ -178,8 +177,8 @@ object frmPlace: TfrmPlace
     end
   end
   object alsPlace: TActionList
-    left = 225
-    top = 552
+    Left = 225
+    Top = 552
     object actPlaceSortByDetail: TAction
       Category = 'PlaceSort'
       Caption = 'by &detail'

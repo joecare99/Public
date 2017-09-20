@@ -172,6 +172,8 @@ type
     procedure DeleteRelationFull(const lidInd: integer;
       const lidIndChild: integer; const lidRelation: integer);
     procedure UpdateIndModificationTimesByRelation(lLinkID: integer);
+    function GetRelationOtherParent(const lidChild: integer;
+      const lpSex: String; out parent2: integer; out lName: string): boolean;
 
     // Event Methods
     procedure FillTableEvents(const idInd: integer; const lgrdEvents: TStringGrid);
@@ -193,6 +195,8 @@ type
     procedure InsertEvent(const idEvent: longint; const idType: longint;
       const idPlace: longint; const Prefered: boolean; const lMemo: string = '';
       const SDate: string = ''; const PDate: string = '');
+    function CheckEventsPairedParentsExists(const idChild: integer;
+      var idParent: integer): boolean;
 
     //Witness
     function AppendWitness(Role, Phrase: string; idInd, idEvent: integer;
@@ -300,6 +304,9 @@ type
     // Places
     procedure InsertPlace(lidPlace: longint; const Place: string);
     function GetPlaceName(const liResult: integer): string;
+    procedure DeletePlace(const lidPlace: Integer);
+    procedure FillTablePlaces(const lTblPlace: TStringGrid;
+      const lOnUpdate: TNotifyEvent);
 
     // TMG-Methods
     function CountAllRecordsTMG(const filename: string): longint;
@@ -3007,7 +3014,26 @@ begin
    end;
 end;
 
-
+function TdmGenData.GetRelationOtherParent(const lidChild: integer;const lpSex: String; out parent2: integer;
+  out lName: string): boolean;
+var
+  lPrefParExists: boolean;
+begin
+  with qryInternal do begin
+  SQL.Text:='SELECT R.no, R.B, N.N FROM R JOIN I ON R.B=I.no JOIN N on N.I=R.B WHERE I.S=:Sex AND R.X=1 AND N.X=1 AND R.A=:idChild';
+         ParamByName('Sex').AsString:=lpSex;
+         ParamByName('idChild').AsInteger:=lidChild;
+         Open;
+         lPrefParExists := not EOF;
+         if lPrefParExists then
+            begin;
+            lName:=Fields[2].AsString;
+            parent2:=Fields[1].AsInteger;
+         end;
+         close;
+    Result:=lPrefParExists;
+  end;
+end;
 {$endRegion ~Relation}
 // Witness-Methods
 {$region Witness (W)}
@@ -3530,7 +3556,7 @@ procedure TdmGenData.InsertEvent(const idEvent: longint; const idType: longint;
   const idPlace: longint; const Prefered: boolean; const lMemo: string;
   const SDate: string; const PDate: string);
 begin
-  with Query1 do
+  with qryInternal do
    begin
     SQL.Text :=
       'INSERT IGNORE INTO E (no, Y, PD, SD, L, M, X) ' +
@@ -3544,6 +3570,29 @@ begin
     ParamByName('Pref').AsBoolean := Prefered;
     ExecSQL;
    end;
+end;
+
+function TdmGenData.CheckEventsPairedParentsExists(const idChild: integer;
+  var idParent: integer): boolean;
+var
+  existe: boolean;
+begin
+  with qryInternal do begin
+           Close;
+         // Vérifier qu'il n'y idA pas déjà une union entre ces deux parents
+           SQL.text:='SELECT COUNT(E.no) FROM E JOIN W ON W.E=E.no JOIN Y on E.Y=Y.no WHERE (W.I=:idChild OR W.I=:idParent) AND W.X=1 AND E.X=1 AND Y.Y=''M'' GROUP BY E.no';
+           ParamByName('idChild').AsInteger:=idChild;
+           ParamByName('idParent').AsInteger:=idParent;
+           Open;
+           Result:=false;
+           while not EOF do
+              begin
+              Result:=Result or (Fields[0].AsInteger=2);
+              Next;
+           end;
+           Close;
+         end;
+
 end;
 
 {$Endregion Events}
@@ -4410,6 +4459,118 @@ begin
     temp := Fields[0].AsString;
     Result := temp;
    end;
+end;
+
+procedure TdmGenData.DeletePlace(const lidPlace: Integer);
+begin
+  with qryInternal do begin
+   Close;
+SQL.Text:='DELETE FROM L WHERE no=:idPlace';
+    ParamByName('idPlace').AsInteger:=lidPlace;
+    ExecSQL;
+  end;
+end;
+
+procedure TdmGenData.FillTablePlaces(const lTblPlace: TStringGrid;
+  const lOnUpdate: TNotifyEvent);
+var
+  Lieu: string;
+  L4: string;
+  L3: string;
+  L2: string;
+  L1: string;
+  L0: string;
+  LA: string;
+  pos2: integer;
+  pos1: integer;
+  i: integer;
+begin
+  with qryInternal do begin
+    SQL.Clear;
+    SQL.add('SELECT L.no, L.L, COUNT(E.L) FROM L JOIN E on E.L=L.no GROUP by L.no');
+    Open;
+    First;
+    lTblPlace.RowCount:=RecordCount+1;
+    Tag:=-lTblPlace.RowCount;
+    if assigned(lOnUpdate) then
+       lOnUpdate(dmGenData.Query1);
+    Tag:=0;
+    if assigned(lOnUpdate) then
+       lOnUpdate(dmGenData.Query1);
+    i:=0;
+    While not Eof do
+       begin
+       i:=i+1;
+       lTblPlace.Cells[0,i]:=Fields[0].AsString;
+       lTblPlace.Cells[1,i]:=Fields[0].AsString;
+       Lieu:=Fields[1].AsString;
+       if Copy(Lieu,1,4)='!TMG' then
+          begin
+          LA:='';
+          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
+          L0:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
+          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
+          L1:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
+          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
+          L2:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
+          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
+          L3:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
+          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
+          L4:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
+       end
+       else
+          begin
+          Pos1:=AnsiPos('<'+CTagNameArticle+'>',Lieu)+Length(CTagNameArticle)+2;
+          Pos2:=AnsiPos('</'+CTagNameArticle+'>',Lieu);
+          if (Pos1+Pos2)>(Length(CTagNameDetail)+2) then
+             LA:=Copy(Lieu,Pos1,Pos2-Pos1)
+          else
+             LA:='';
+          Pos1:=AnsiPos('<'+CTagNameDetail+'>',Lieu)+(Length(CTagNameDetail)+2);
+          Pos2:=AnsiPos('</'+CTagNameDetail+'>',Lieu);
+          if (Pos1+Pos2)>(Length(CTagNameDetail)+2) then
+             L0:=Copy(Lieu,Pos1,Pos2-Pos1)
+          else
+             L0:='';
+          Pos1:=AnsiPos('<' + CTagNamePlace + '>',Lieu)+7;
+          Pos2:=AnsiPos('</' + CTagNamePlace + '>',Lieu);
+          if (Pos1+Pos2)>7 then
+             L1:=Copy(Lieu,Pos1,Pos2-Pos1)
+          else
+             L1:='';
+          Pos1:=AnsiPos('<' + CTagNameRegion + '>',Lieu)+9;
+          Pos2:=AnsiPos('</' + CTagNameRegion + '>',Lieu);
+          if (Pos1+Pos2)>9 then
+             L2:=Copy(Lieu,Pos1,Pos2-Pos1)
+          else
+             L2:='';
+          Pos1:=AnsiPos('<' + CTagNameCountry + '>',Lieu)+10;
+          Pos2:=AnsiPos('</' + CTagNameCountry + '>',Lieu);
+          if (Pos1+Pos2)>10 then
+             L3:=Copy(Lieu,Pos1,Pos2-Pos1)
+          else
+             L3:='';
+          Pos1:=AnsiPos('<' + CTagNameState + '>',Lieu)+6;
+          Pos2:=AnsiPos('</' + CTagNameState + '>',Lieu);
+          if (Pos1+Pos2)>6 then
+             L4:=Copy(Lieu,Pos1,Pos2-Pos1)
+          else
+             L4:='';
+       end;
+       lTblPlace.Cells[2,i]:=LA;
+       lTblPlace.Cells[3,i]:=L0;
+       lTblPlace.Cells[4,i]:=L1;
+       lTblPlace.Cells[5,i]:=L2;
+       lTblPlace.Cells[6,i]:=L3;
+       lTblPlace.Cells[7,i]:=L4;
+       lTblPlace.Cells[8,i]:=Fields[2].AsString;
+       Next;
+       Tag:=RecNo;
+       if assigned(lOnUpdate) then
+          lOnUpdate(dmGenData.Query1);
+    end;
+  end;
+  lTblPlace.SortColRow(true,3);
 end;
 
 {$endregion ~Places}

@@ -337,6 +337,18 @@ implementation
 uses AnchorDocking, AnchorDockOptionsDlg, dm_GenData, cls_Translation,
   frm_SelectDialog, untWebexport;
 
+procedure UpdateEventPrefered(const lPrefered: boolean; const lidEvent: LongInt
+  );
+begin
+  with dmGenData.Query1 do
+   begin
+    SQL.Text := 'UPDATE E SET X=:Prefered WHERE no=:idEvent';
+    ParamByName('Prefered').AsBoolean := lPrefered;
+    ParamByName('idEvent').AsInteger := lidEvent;
+    ExecSQL;
+   end;
+end;
+
 
 procedure UpdateHistoryChInd(const Items: TStrings; const lNewInd: longint);
 var
@@ -1331,16 +1343,14 @@ var
       else
         lPhrase := '!TMG' + dmGenData.TMG.Fields[3].Value;
       // Mettre l'information du X dans la base de données des événements
-      if dmGenData.TMG.Fields[2].AsBoolean then
-        with dmGenData.Query1 do
-         begin
-          SQL.Text := 'UPDATE E SET X=1 WHERE no=:id';
-          ParamByName('id').AsInteger := dmGenData.TMG.Fields[1].Value;
-          ExecSQL;
-         end;
-      // Si lRole = PRINCIPAL, c'est un témoin X=1, sinon X=0
-      lPrefered := true;
+
+      lidInd := dmGenData.TMG.Fields[0].AsInteger;
+      lidEvent := dmGenData.TMG.Fields[1].AsInteger;
       lRole := UpperCase(dmGenData.TMG.Fields[4].AsString);
+      lPrefered := true;
+      if dmGenData.TMG.Fields[2].AsBoolean then
+         UpdateEventPrefered(lPrefered, lidEvent);
+      // Si lRole = PRINCIPAL, c'est un témoin X=1, sinon X=0
       lPrefered := lPrefered and not (lRole = 'ASSASSIN');
       lPrefered := lPrefered and not (lRole = 'CELEBRANT');
       lPrefered := lPrefered and not (lRole = 'DEPOSITAIRE');
@@ -1351,8 +1361,6 @@ var
       lPrefered := lPrefered and not (lRole = 'TEMOIN');
       lPrefered := lPrefered and not (lRole = 'WITNESS');
       lPrefered := lPrefered and not (lRole = 'BENEFICIAIRE');
-      lidInd := dmGenData.TMG.Fields[0].AsInteger;
-      lidEvent := dmGenData.TMG.Fields[1].AsInteger;
       dmGenData.AppendWitness(lRole, lPhrase, lidInd, lidEvent, lPrefered);
       dmGenData.TMG.Next;
      end;

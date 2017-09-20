@@ -3235,6 +3235,10 @@ msgctxt "tfrmplace.btnplaceok.caption"
 msgid "Ok"
 msgstr ""
 
+#: tfrmplace.caption
+msgid "Lieux"
+msgstr ""
+
 #: tfrmplace.combobox1.text
 msgid "ComboBox1"
 msgstr ""
