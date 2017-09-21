@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Grids, Menus, StrUtils, LCLtype, ActnList, Buttons, ComCtrls;
+  Grids, Menus, LCLtype, ActnList, Buttons, ComCtrls;
 
 type
 
@@ -68,17 +68,6 @@ var
 implementation
 
 uses frm_Main, cls_Translation, dm_GenData, frm_Usage;
-
-procedure UpdateEventsChangePlace(const lidPlaceNew, lidPlace: Integer);
-begin
-  with dmGenData.Query1 do begin
-  SQL.Text:='UPDATE E SET L=:idPlaceNew'+
-              ' WHERE L=:idPlace';
-            ParamByName('idPlace').AsInteger:=lidPlace;
-            ParamByName('idPlaceNew').AsInteger:=lidPlaceNew;
-            ExecSQL;
-  end;
-end;
 
 {$R *.lfm}
 
@@ -245,7 +234,7 @@ begin
      else
         begin
         lidPlace := ptrint(tblPlace.Objects[0,tblPlace.Row]);
-        UpdateEventsChangePlace(lidPlaceNew, lidPlace);
+        dmGenData.UpdateEventsChangePlace(lidPlaceNew, lidPlace);
         // DELETE OLD LIEU
         dmGenData.DeletePlace(lidPlace);
      end;
@@ -287,26 +276,25 @@ end;
 
 procedure TfrmPlace.tblPlaceEditingDone(Sender: TObject);
 var
-  Lieu:string;
+  lPlace:string;
+  lidPlace: Integer;
 begin
-  Lieu:='';
+  lPlace:='';
   if Length(trim(tblPlace.Cells[2,tblPlace.Row]))>0 then
-     Lieu:='<'+CTagNameArticle+'>'+trim(tblPlace.Cells[2,tblPlace.Row])+'</'+CTagNameArticle+'>';
+     lPlace:='<'+CTagNameArticle+'>'+trim(tblPlace.Cells[2,tblPlace.Row])+'</'+CTagNameArticle+'>';
   if Length(trim(tblPlace.Cells[3,tblPlace.Row]))>0 then
-     Lieu:='<'+CTagNameDetail+'>'+trim(tblPlace.Cells[3,tblPlace.Row])+'</'+CTagNameDetail+'>';
+     lPlace:='<'+CTagNameDetail+'>'+trim(tblPlace.Cells[3,tblPlace.Row])+'</'+CTagNameDetail+'>';
   if Length(trim(tblPlace.Cells[4,tblPlace.Row]))>0 then
-     Lieu:=Lieu+'<' + CTagNamePlace + '>'+trim(tblPlace.Cells[4,tblPlace.Row])+'</' + CTagNamePlace + '>';
+     lPlace:=lPlace+'<' + CTagNamePlace + '>'+trim(tblPlace.Cells[4,tblPlace.Row])+'</' + CTagNamePlace + '>';
   if Length(trim(tblPlace.Cells[5,tblPlace.Row]))>0 then
-     Lieu:=Lieu+'<' + CTagNameRegion + '>'+trim(tblPlace.Cells[5,tblPlace.Row])+'</' + CTagNameRegion + '>';
+     lPlace:=lPlace+'<' + CTagNameRegion + '>'+trim(tblPlace.Cells[5,tblPlace.Row])+'</' + CTagNameRegion + '>';
   if Length(trim(tblPlace.Cells[6,tblPlace.Row]))>0 then
-     Lieu:=Lieu+'<' + CTagNameCountry + '>'+trim(tblPlace.Cells[6,tblPlace.Row])+'</' + CTagNameCountry + '>';
+     lPlace:=lPlace+'<' + CTagNameCountry + '>'+trim(tblPlace.Cells[6,tblPlace.Row])+'</' + CTagNameCountry + '>';
   if Length(trim(tblPlace.Cells[7,tblPlace.Row]))>0 then
-     Lieu:=Lieu+'<' + CTagNameState + '>'+trim(tblPlace.Cells[7,tblPlace.Row])+'</' + CTagNameState + '>';
-  dmGenData.Query1.SQL.Clear;
-  dmGenData.Query1.SQL.Add('UPDATE L SET L='''+
-    AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(UTF8toANSI(Lieu),'\','\\'),'"','\"'),'''','\''')+
-    ''' WHERE no='+tblPlace.Cells[0,tblPlace.Row]);
-  dmGenData.Query1.ExecSQL;
+     lPlace:=lPlace+'<' + CTagNameState + '>'+trim(tblPlace.Cells[7,tblPlace.Row])+'</' + CTagNameState + '>';
+
+  lidPlace := ptrint(tblPlace.Objects[0,tblPlace.Row]);
+  dmgendata.UpdatePlaceData(lidPlace, lPlace);
 end;
 
 end.

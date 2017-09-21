@@ -1279,11 +1279,42 @@ begin
   DecodePhraseTMG := phrase;
 end;
 
+function GetRelationCountOfParents(lidInd:integer): integer;
+
+begin
+  with dmGenData.Query3 do begin
+Close;
+    SQL.Text :=
+      'SELECT count(A) FROM R WHERE X=1 AND A=:idChild';
+    ParamByName('idChild').AsInteger := lidInd;
+    Open;
+    Result :=  Fields[0].AsInteger;
+    Close;
+  end;
+end;
+
+function GetTypePossibRoles(var evenement: integer; var TypeEvenement: string
+  ): string;
+
+begin
+  with dmGenData.Query4 do begin
+  SQL.Text :=
+                'SELECT Y.R FROM Y JOIN ' + TypeEvenement +
+                ' ON Y.no=' + TypeEvenement + '.Y WHERE ' +
+                TypeEvenement + '.no=:idEvent';
+              ParamByName('idEvent').AsInteger := Evenement;
+              Open;
+               Result:= Fields[0].AsString;
+              close;
+  end;
+end;
+
 function DecodePhraseStemma(idIndividual: integer; role: string; phrase: string;
   TypeEvenement: string; evenement, char: integer): string;
 var
-  RoleRecherche, Remplace, temp, Sexe, lSex: string;
+  RoleRecherche, Remplace, temp, Sexe, lSex, lRoles: string;
   PosEnd1, PosSep1, PosSep2, PosSep3, compte: integer;
+  lidInd: LongInt;
 begin
   if AnsiPos('<L=' + Translation.Items[319] + '>', uppercase(phrase)) > 0 then
    begin
@@ -1520,14 +1551,11 @@ begin
                   ParamByName('idEvent').AsInteger := Evenement;
                   Open;
                   dmGenData.Query3.SQL.Clear;
+                  dmGenData.Query3.SQL.text:='SELECT R.A, R.B FROM R WHERE X=1 AND R.A=:idParent';
                   if RoleRecherche = 'PARENT' then
-                    dmGenData.Query3.SQL.Add(
-                      'SELECT R.A, R.B FROM R WHERE X=1 AND R.A=' +
-                      Fields[1].AsString)
+                    dmGenData.Query3.ParamByName('idparent').AsInteger:=Fields[1].AsInteger
                   else
-                    dmGenData.Query3.SQL.Add(
-                      'SELECT R.A, R.B FROM R WHERE X=1 AND R.A=' +
-                      Fields[0].AsString);
+                    dmGenData.Query3.ParamByName('idparent').AsInteger:=Fields[0].AsInteger;
                   dmGenData.Query3.Open;
                   while not dmGenData.Query3.EOF do
                    begin
@@ -1599,14 +1627,11 @@ begin
                   ParamByName('idEvent').AsInteger := Evenement;
                   Open;
                   dmGenData.Query3.SQL.Clear;
+                  dmGenData.Query3.SQL.text:='SELECT R.A, R.B FROM R WHERE X=1 AND R.A=:idParent';
                   if RoleRecherche = 'PARENT' then
-                    dmGenData.Query3.SQL.Add(
-                      'SELECT R.A, R.B FROM R WHERE X=1 AND R.A=' +
-                      Fields[0].AsString)
+                    dmGenData.Query3.ParamByName('idparent').AsInteger:=Fields[1].AsInteger
                   else
-                    dmGenData.Query3.SQL.Add(
-                      'SELECT R.A, R.B FROM R WHERE X=1 AND R.A=' +
-                      Fields[1].AsString);
+                    dmGenData.Query3.ParamByName('idparent').AsInteger:=Fields[0].AsInteger;
                   dmGenData.Query3.Open;
                   while not dmGenData.Query3.EOF do
                    begin
@@ -1719,7 +1744,7 @@ begin
          end;
         if Copy(temp, 1, 2) = '$L' then
          begin
-          dmGenData.Query4.SQL.Text :=
+           dmGenData.Query4.SQL.Text :=
             'SELECT L.L FROM L JOIN E ON L.no=E.L WHERE E.no=:idEvent';
           dmGenData.Query4.ParamByName('idEvent').AsInteger := Evenement;
           dmGenData.Query4.Open;
@@ -1856,35 +1881,31 @@ begin
           // Decompte les parents des autres témoins
           RoleRecherche := Copy(phrase, char + 7, possep1 - 6);
           // Vérifie que le role est dans la liste des roles possible
-          dmGenData.Query4.SQL.Text :=
-            'SELECT Y.R FROM Y JOIN ' + TypeEvenement +
-            ' ON Y.no=' + TypeEvenement + '.Y WHERE ' +
-            TypeEvenement + '.no=:idEvent';
-          dmGenData.Query4.ParamByName('idEvent').AsInteger := Evenement;
-          dmGenData.Query4.Open;
+          lRoles:=GetTypePossibRoles(evenement, TypeEvenement);
           compte := 0;
-          if AnsiPos(RoleRecherche, dmGenData.Query4.Fields[0].AsString) > 0 then
+          if AnsiPos(RoleRecherche, lRoles) > 0 then
            begin
             if (TypeEvenement = 'E') then
              begin
               // Decompte les parents des autres témoins
-              dmGenData.Query4.SQL.Text :=
-                'SELECT W.I FROM W JOIN E ON W.E=E.no WHERE ' +
-                'W.R=''' + RoleRecherche + ''' AND E.no=:idEvent';
-              dmGenData.Query4.ParamByName('idEvent').AsInteger := Evenement;
-              dmGenData.Query4.Open;
-              while not dmGenData.Query4.EOF do
-               begin
-                if dmGenData.Query4.Fields[0].AsInteger <> idIndividual then
+              with dmGenData.Query4 do begin
+Close;
+                SQL.Text :=
+                  'SELECT W.I FROM W JOIN E ON W.E=E.no WHERE ' +
+                  'W.R=:Role AND E.no=:idEvent';
+                ParamByName('idEvent').AsInteger := Evenement;
+                ParamByName('Role').AsString := RoleRecherche;
+                Open;
+                while not EOF do
                  begin
-                  dmGenData.Query3.SQL.Text :=
-                    'SELECT B FROM R WHERE X=1 AND A=' +
-                    dmGenData.Query4.Fields[0].AsString;
-                  dmGenData.Query3.Open;
-                  compte := compte + dmGenData.Query3.RecordCount;
+                  lidInd := Fields[0].AsInteger;
+                  if lidInd <> idIndividual then
+                   begin
+                    compte:=compte+GetRelationCountOfParents(lidInd);
+                   end;
+                  Next;
                  end;
-                dmGenData.Query4.Next;
-               end;
+              end;
              end;
            end;
          end;

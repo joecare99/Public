@@ -307,8 +307,7 @@ begin
 
      If lPrefParExists then
         begin
-
-        existe:=dmgendata.CheckEventsPairedParentsExists(lidChild, parent1);
+        existe:=dmgendata.GetEventMarriageExists(parent1, parent2);
         if not existe then
            if Application.MessageBox(Pchar(Translation.Items[300]+
                  nomB.Text+Translation.Items[299]+

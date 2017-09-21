@@ -2778,6 +2778,10 @@ msgctxt "tfrmedittype.t.text"
 msgid "T"
 msgstr ""
 
+#: tfrmeditwitness.caption
+msgid "Modification d'un témoin"
+msgstr ""
+
 #: tfrmeditwitness.chbprefered.caption
 msgctxt "tfrmeditwitness.chbprefered.caption"
 msgid "Prefered"
@@ -3371,6 +3375,11 @@ msgstr ""
 #: tfrmshowimage.mniquit.caption
 msgctxt "TFRMSHOWIMAGE.MNIQUIT.CAPTION"
 msgid "&Quit"
+msgstr ""
+
+#: tfrmshowusage.caption
+msgctxt "tfrmshowusage.caption"
+msgid "Utilisation"
 msgstr ""
 
 #: tfrmshowusage.tblusage.columns[0].title.caption

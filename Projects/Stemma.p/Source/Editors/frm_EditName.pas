@@ -126,28 +126,27 @@ implementation
 uses
   frm_Main, cls_Translation, dm_GenData, frm_Explorer;
 
-function GetEventMarriageExists(var parent2: longint; var parent1: longint
-  ): boolean;
+procedure CreateRelationParenttoChild(const idInd: longint;const idSibling: longint);
 var
-  exists: boolean;
+  lidParent: longint;
 begin
   with dmGenData.Query2 do begin
-SQL.Text :=
-      'SELECT COUNT(E.no) FROM E JOIN W ON W.E=E.no JOIN Y on E.Y=Y.no WHERE (W.I=:idParent1 OR W.I=:idParent2) AND W.X=1 AND E.X=1 AND Y.Y=''M'' GROUP BY E.no';
-    ParamByName('idParent1').AsInteger := parent1;
-    ParamByName('idParent2').AsInteger := parent2;
-    Open;
-    exists := False;
-    while not EOF and not exists do
-     begin
-      exists :=
-        exists or (Fields[0].AsInteger = 2);
-      Next;
-     end;
-    close;
-    Result:=exists;
-  end;
+         // Recherche parent principaux
+           SQL.Text := 'SELECT R.no, R.B FROM R WHERE R.X=1 AND R.A=:idInd';
+           ParamByName('idInd').AsInteger:= idInd;
+           Open;
+           First;
+           while not EOF do
+            begin
+             lidParent:=Fields[1].AsInteger;
+             dmGenData.SaveRelationData(0,'','100000000030000000000',10,true,idSibling,lidParent,'');
+             dmGenData.SaveModificationTime(lidParent);
+             Next;
+            end;
+         end;
 end;
+
+
 
 { TFrmEditName }
 
@@ -659,7 +658,7 @@ var
   j: integer;
   parent1, parent2, no_eve, lidInd, lidName: longint;
   nom, i1, i2, i3, i4, temp, dateev, tagName, lSex, lMemoText, lPDate,
-    lSDate, lPhrase: string;
+    lSDate, lPhrase, lPar2Name: string;
   exists: boolean;
   sSex: char;
   lidEvType: PtrInt;
@@ -727,24 +726,17 @@ begin
           else
             temp := 'F';
           // GetRelationOtherParent
-          dmGenData.Query1.SQL.Text :=
-            'SELECT R.no, R.B, N.N FROM R JOIN I ON R.B=I.no JOIN N on N.I=R.B WHERE I.S=:Sex AND R.X=1 AND N.X=1 AND R.A=:idInd';
-          dmGenData.Query1.ParamByName('idInd').AsInteger :=
-            frmStemmaMainForm.iID;
-          dmGenData.Query1.ParamByName('Sex').AsString := temp;
-          dmGenData.Query1.Open;
-          if not dmGenData.Query1.EOF then
+          if dmgendata.GetRelationOtherParent(frmStemmaMainForm.iID,temp,parent2,lPar2Name) then
            begin
             parent1 := lidInd;
-            parent2 := dmGenData.Query1.Fields[1].AsInteger;
             // Vérifier qu'il n'cbxEvType a pas déjà une union entre ces deux parents
-            exists:=GetEventMarriageExists(parent2, parent1);
+            exists:=dmgendata.GetEventMarriageExists(parent1, parent2);
             if not exists then
               // GetName(parent1) montre '???' car le nom n'a pas encore été enregistré, utiliser le nom dans 'nom'
               if Application.MessageBox(
                 PChar(Translation.Items[300] + DecodeName(nom, 1) +
                 Translation.Items[299] + DecodeName(
-                dmGenData.Query1.Fields[2].AsString, 1) +
+                lPar2Name, 1) +
                 Translation.Items[28]), PChar(
                 SConfirmation), MB_YESNO) = idYes then
                begin
@@ -799,18 +791,7 @@ begin
        begin
         lidInd := dmGenData.AddNewIndividual(sSex, '?', 0);
         edtIdInd.Value := lidInd;
-        // Recherche parent principaux
-        dmGenData.Query2.SQL.Text :=
-          'SELECT R.no, R.B FROM R WHERE R.X=1 AND R.A=' +
-          frmStemmaMainForm.sID;
-        dmGenData.Query2.Open;
-        dmGenData.Query2.First;
-        while not dmGenData.Query2.EOF do
-         begin
-          RelID := dmGenData.SaveRelationData(0,'','100000000030000000000',10,true,lidInd,dmGenData.Query2.Fields[1].AsInteger,'');
-          dmGenData.SaveModificationTime(dmGenData.Query2.Fields[1].AsInteger);
-          dmGenData.Query2.Next;
-         end;
+        CreateRelationParenttoChild(frmStemmaMainForm.iID,lidInd);
        end;
       eNET_AddSon, eNET_AddDaughter:
        begin

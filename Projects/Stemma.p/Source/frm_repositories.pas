@@ -125,33 +125,31 @@ end;
 
 procedure TfrmRepository.TableauDepotsEditingDone(Sender: TObject);
 var
-  temp, lTitle, lDescription, lMemo:string;
-  lidRepository, lidInd:integer;
+  lTitle, lDescription, lMemo:string;
+  temp, lidRepository, lidInd:integer;
   depot:boolean;
 begin
   dmGenData.Query1.SQL.Clear;
-  temp:=TableauDepots.Cells[5,TableauDepots.Row];
-  depot:=false;
-  if (length(temp)>0) then
-     if (temp[1] in ['0'..'9']) then
-        depot:=StrtoInt(temp)>0;
-  if (not depot) and (strtoint(TableauDepots.Cells[0,TableauDepots.Row])>0) then
+  lidInd:=ptrint(TableauDepots.Objects[5,TableauDepots.Row]);
+  depot:=(lidInd>0);
+  if (not depot) and (ptrint(TableauDepots.Objects[0,TableauDepots.Row])>0) then
      begin
-     depot:=(DecodeName(dmGenData.GetIndividuumName(ptrint(TableauDepots.Objects[0,TableauDepots.Row])),1)+' ('+TableauDepots.Cells[0,TableauDepots.Row]+')')=
+     temp:=ptrint(TableauDepots.Objects[0,TableauDepots.Row]);
+     depot:=(DecodeName(dmGenData.GetIndividuumName(temp),1)+' ('+inttostr(temp)+')')=
             (TableauDepots.Cells[5,TableauDepots.Row]);
-     temp:=TableauDepots.Cells[0,TableauDepots.Row];
+     lidInd:=temp;
      end;
 
   if depot then
      begin
-     TableauDepots.Cells[5,TableauDepots.Row]:=DecodeName(dmGenData.GetIndividuumName(temp),1)+
-                                                                   ' ('+temp+')';
-     TableauDepots.Objects[5,TableauDepots.Row] :=TObject(ptrint(temp));
-     TableauDepots.Cells[0,TableauDepots.Row]:=temp;
-     TableauDepots.Objects[0,TableauDepots.Row] :=TObject(ptrint(temp));
+     TableauDepots.Cells[5,TableauDepots.Row]:=DecodeName(dmGenData.GetIndividuumName(lidInd),1)+
+                                                                   ' ('+inttostr(lidInd)+')';
+     TableauDepots.Objects[5,TableauDepots.Row] :=TObject(ptrint(lidInd));
+     TableauDepots.Cells[0,TableauDepots.Row]:=inttostr(lidInd);
+     TableauDepots.Objects[0,TableauDepots.Row] :=TObject(ptrint(lidInd));
      lidRepository:=ptrint(TableauDepots.Objects[1,TableauDepots.Row]);
      lTitle:=TableauDepots.Cells[2,TableauDepots.Row];
-     lidInd:=ptrint(TableauDepots.Objects[0,TableauDepots.Row]);
+
      lMemo:=TableauDepots.Cells[4,TableauDepots.Row];
      lDescription:=TableauDepots.Cells[3,TableauDepots.Row];
      lidRepository:=SaveRepositoryData(lidRepository, lidInd, lMemo, lDescription, lTitle);

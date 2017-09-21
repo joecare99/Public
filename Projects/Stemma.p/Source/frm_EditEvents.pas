@@ -92,7 +92,7 @@ type
     { public declarations }
   end; 
 
-function PopulateTemoins(Event:string):string;
+function PopulateTemoins(idEvent:integer):string;
 
 var
   frmEditEvents: TfrmEditEvents;
@@ -104,43 +104,6 @@ uses
   frm_Events, frm_Main, dm_GenData, frm_Explorer, frm_EditWitness,
   frm_Names, cls_Translation;
 
-procedure GetEventData(var lidEvent: Integer;
-  out LidType: LongInt; out lidPlace:integer; out lPrefered: Boolean;
-  out lSDate: string; out lDate: string;
-  out lMemo: string; out sPlace: string);
-begin
-  with dmGenData.Query1 do begin
-Close;
-    SQL.text:='SELECT E.no, E.Y, E.L, E.M, E.X, E.PD, E.SD, L.L FROM E JOIN L ON L.no=E.L WHERE E.no=:idEvent';
-    ParamByName('idEvent').AsInteger:=lidEvent;
-    Open;
-    First;
-
-    LidType:=Fields[1].AsInteger;
-    lidPlace:=Fields[2].AsInteger;
-    lMemo:=Fields[3].AsString;
-    lPrefered:=Fields[4].AsBoolean;
-    lDate:=Fields[5].AsString;
-    lSDate:=Fields[6].AsString;
-    sPlace:=Fields[7].AsString;
-  end;
-end;
-
-function PreferedEventWitnessExists(const lidInd: LongInt;const lTypeKat:String): Boolean;
-
-begin
-  with dmGenData.Query1 do begin
-Close;
-    SQL.Text:='SELECT E.no FROM E '+
-      'JOIN W on W.E=E.no '+
-      'JOIN Y on E.Y=Y.no '+
-      'WHERE Y.Y=:TypeKat AND E.X=1 AND W.X=1 AND W.I=:idInd';
-    ParamByName('idInd').AsInteger := lidInd;
-    ParamByName('TypeKat').AsString := lTypeKat;
-    Open;
-    Result := not Eof;
-  end;
-end;
 
 {$R *.lfm}
 
@@ -155,7 +118,7 @@ begin
         Button1Click(Sender);
      frmEditWitness.idWitness:=ptrint(TableauTemoins.Objects[0,frmEditEvents.TableauTemoins.Row]);
      If frmEditWitness.Showmodal=mrOK then
-        PopulateTemoins(no.text);
+        PopulateTemoins(no.Value);
   end;
 end;
 
@@ -320,7 +283,7 @@ begin
         // Mettre le bon Y.ItemIndex
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(100);
-        lDSExists:=PreferedEventWitnessExists(frmStemmaMainForm.iID, 'B');
+        lDSExists:=dmGenData.PreferedEventWitnessExists(frmStemmaMainForm.iID, 'B');
         X.Checked:= not lDSExists;
      end;
      eEET_AddBaptism:
@@ -328,7 +291,7 @@ begin
         // Mettre le bon Y.ItemIndex
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(110);
-        lDSExists:=PreferedEventWitnessExists(frmStemmaMainForm.iID, 'B');
+        lDSExists:=dmGenData.PreferedEventWitnessExists(frmStemmaMainForm.iID, 'B');
          X.Checked:= not lDSExists ;
      end;
      eEET_AddDeath:
@@ -337,7 +300,7 @@ begin
         // Mettre le bon Y.ItemIndex
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(200);
-        lDSExists:=PreferedEventWitnessExists(frmStemmaMainForm.iID, 'D');
+        lDSExists:=dmGenData.PreferedEventWitnessExists(frmStemmaMainForm.iID, 'D');
          X.Checked:= not lDSExists ;
      end;
      eEET_AddBurial:
@@ -345,7 +308,7 @@ begin
         // Mettre le bon Y.ItemIndex
         // Trouver si ce doit être un primaire ou non
         FindTypeItem(210);
-        lDSExists:=PreferedEventWitnessExists(frmStemmaMainForm.iID, 'D');
+        lDSExists:=dmGenData.PreferedEventWitnessExists(frmStemmaMainForm.iID, 'D');
          X.Checked:= not lDSExists;
      end;
      end; {Case}
@@ -377,7 +340,7 @@ begin
   else
      begin
      lidEvent:=frmEvents.idEvent;
-     GetEventData(lidEvent, LidType,lidPlace, lPrefered,  lSDate, lDate, lMemo, sPlace);
+     dmGenData.GetEventData(lidEvent, LidType,lidPlace, lPrefered,  lSDate, lDate, lMemo, sPlace);
      FindTypeItem(LidType);
      No.Value:=lidEvent;
      X.Checked:=lPrefered;
@@ -393,17 +356,12 @@ begin
      fraDate1.Date:=lDate;
      fraDate1.SortDate:=lSDate;
      // Aller chercher P, Role et témoins de W
-     phrase:=PopulateTemoins(no.Text);
+     phrase:=PopulateTemoins(no.Value);
   end;
-  dmGenData.Query2.Close;
-  dmGenData.Query2.SQL.text:='SELECT Y.no, Y.T, Y.P FROM Y WHERE Y.no=:idType';
-  dmGenData.Query2.ParamByName('idType').AsInteger:=idEventType;
-  dmGenData.Query2.Open;
-  dmGenData.Query2.First;
   if length(phrase)=0 then
      begin
      fraPhrase1.isDefault:=true;
-     phrase:=dmGenData.Query2.Fields[2].AsString;
+     phrase:=dmGenData.GetTypePhrase(idEventType);
   end;
   fraPhrase1.Text:=DecodePhrase(frmStemmaMainForm.iID,Role.Text,Phrase,'E',No.Value);
   // Populate le tableau de citations
@@ -499,7 +457,7 @@ procedure TfrmEditEvents.Button1Click(Sender: TObject);
 var
   Lieu1,Lieu2,dateev, lEvType, lDate, lSortDate,  lInfo:string;
   valide:boolean;
-  lidInd,idPlace, lIdPlace, lidEvent,result:integer;
+  lidInd,idPlace, lIdPlace, lidEvent, lidWitness:integer;
   lPrefered: boolean;
 begin
   // Vérifie qu'il y a au moins 1 témoin
@@ -538,28 +496,14 @@ begin
         Lieu2:=Lieu2+'<' + CTagNameState + '>'+L4.Text+'</' + CTagNameState + '>';
      Lieu1:=AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(Lieu1,'\','\\'),'"','\"'),'''','\''');
      Lieu2:=AnsiReplaceStr(AnsiReplaceStr(AnsiReplaceStr(Lieu2,'\','\\'),'"','\"'),'''','\''');
-     dmGenData.Query1.SQL.Clear;
-     dmGenData.Query1.SQL.Add('SELECT L.no FROM L WHERE L.L='''+UTF8toANSI(Lieu2)+'''');
-     dmGenData.Query1.Open;
-     if not dmGenData.Query1.EOF then
-        idPlace:=dmGenData.Query1.Fields[0].AsInteger
-     else
+
+     idPlace:=dmGenData.GetPlaceID(Lieu2);
+     if idplace=-1 then
         begin
-        dmGenData.Query1.SQL.Clear;
-        dmGenData.Query1.SQL.Add('SELECT L.no FROM L WHERE L.L='''+UTF8toANSI(Lieu1)+'''');
-        dmGenData.Query1.Open;
-        if not dmGenData.Query1.EOF then
-           idPlace:=dmGenData.Query1.Fields[0].AsInteger
-        else // Ajoute le lieu dans la table
-           begin
-           dmGenData.Query1.SQL.Clear;
-           dmGenData.Query1.SQL.Add('INSERT INTO L (L) VALUES ('''+UTF8toANSI(Lieu2)+''')');
-           dmGenData.Query1.ExecSQL;
-           dmGenData.Query1.SQL.Clear;
-           dmGenData.Query1.SQL.Add('SELECT L.no FROM L WHERE L.L='''+UTF8toANSI(Lieu2)+'''');
-           dmGenData.Query1.Open;
-           idPlace:=dmGenData.Query1.Fields[0].AsInteger;
-        end;
+        idPlace:=dmGenData.GetPlaceID(Lieu1);
+        if idPlace = -1 then
+          // Ajoute le lieu dans la table
+           idPlace:=dmGenData.SavePlaceData(0,Lieu2);
      end;
      if idPlace>1 then
         begin
@@ -570,30 +514,27 @@ begin
      lDate:=fraDate1.Date;
      lSortDate:=fraDate1.SortDate;
      lPrefered:=X.Checked;
-     lidEvent:=no.Value;;
-     result:=dmGenData.SaveEventData(lidEvent,idEventType,lIdPlace,lPrefered,  lInfo, lDate,
+     lidEvent:=no.Value;
+     no.Value:=dmGenData.SaveEventData(lidEvent,idEventType,lIdPlace,lPrefered,  lInfo, lDate,
        lSortDate);
-
-        if No.Value=0 then
+        if lidEvent=0 then
            begin
-            No.Value:=result;
+             lidEvent:=no.Value;
         // Ajoute le témoin qui a été ajouté par défaut dans le tableau
-        dmGenData.Query1.SQL.Clear;
-        dmGenData.Query1.SQL.Add('INSERT INTO W (R, I, P, E, X) VALUES ('''+UTF8ToANSI(TableauTemoins.Cells[1,1])+
-                ''', '+TableauTemoins.Cells[2,1]+', '''', '+no.Text+', 1)');
-        dmGenData.Query1.ExecSQL;
-        TableauTemoins.Cells[0,1]:=InttoStr(dmGenData.GetLastIDOfTable('W'));
+        lidWitness:=dmGenData.AppendWitness(TableauTemoins.Cells[1,1],'',ptrint(TableauTemoins.Objects[2,1]),no.Value,true);
+        TableauTemoins.Objects[0,1]:=Tobject(ptrint(lidWitness));
+        TableauTemoins.Cells[0,1]:=inttostr(lidWitness);
      end;
      // Sauvegarder les modifications pour tous les témoins de l'événements
-     dmGenData.Query3.SQL.Text:='SELECT W.I, W.X FROM W WHERE W.E='+no.Text;
+     dmGenData.Query3.SQL.Text:='SELECT W.I FROM W WHERE W.X=1 AND W.E=:idEvent';
+     dmGenData.Query3.ParamByName('idEvent').AsInteger:=lidEvent;
      dmGenData.Query3.Open;
      dmGenData.Query3.First;
      lidInd:=0;
      While not dmGenData.Query3.EOF do
         begin
-        if dmGenData.Query3.Fields[1].AsBoolean then
-           lidInd:=dmGenData.Query3.Fields[0].AsInteger;
-        dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
+        lidInd:=dmGenData.Query3.Fields[0].AsInteger;
+        dmGenData.SaveModificationTime(lidInd);
 
         // UPDATE DÉCÈS si la date est il y a 100 ans !!!
         if (copy(fraDate1.Date,1,1)='1') and not (fraDate1.Date='100000000030000000000') then
@@ -605,8 +546,7 @@ begin
               dateev:=FormatDateTime('YYYY',now);
         if ((StrtoInt(FormatDateTime('YYYY',now))-StrtoInt(dateev))>100) then
            begin
-           dmGenData.Query2.SQL.Text:='UPDATE I SET V=''N'' WHERE no='+inttostr(lidInd);
-           dmGenData.Query2.ExecSQL;
+           dmGenData.UpdateIndLiving(lidInd,'N',self);
            If (frmStemmaMainForm.actWinNameAndAttr.Checked) and (lidInd=frmStemmaMainForm.iID) then
               frmNames.PopulateNom(Sender);
         end;
@@ -614,10 +554,7 @@ begin
         dmGenData.Query3.Next;
      end;
      // Modifier la ligne de l'explorateur si naissance frmStemmaMainForm ou décès principal
-     dmGenData.Query1.SQL.Text:='SELECT Y.Y, E.X, E.PD FROM Y JOIN E on E.Y=Y.no WHERE E.no='+no.Text;
-     dmGenData.Query1.Open;
-     lEvType:=dmGenData.Query1.Fields[0].AsString;
-     lDate:= dmGenData.Query1.Fields[2].AsString;
+     dmGenData.GetEventExtData(lidEvent, lEvType, lDate, lPrefered);
      if (lEvType='B') then
         begin
     dmGenData.UpdateNameI3(lDate, lidInd);
@@ -633,7 +570,7 @@ begin
      end;
      if  (lidInd>0) and
         ((lEvType='B') or ((lEvType='D'))) and
-        (dmGenData.Query1.Fields[1].AsInteger=1) and (X.Checked) then
+        (lPrefered) and (X.Checked) then
         begin
         if frmStemmaMainForm.actWinExplorer.Checked then
           frmExplorer.UpdateIndexDates(lEvType,lDate,lidInd);
@@ -650,10 +587,11 @@ begin
   frmEditWitness.idWitness:=0;
   frmEditWitness.idEvent:=no.value;
   If frmEditWitness.Showmodal=mrOK then
-     PopulateTemoins(no.text);
+     PopulateTemoins(no.Value);
 end;
 
 procedure TfrmEditEvents.SupprimerTemoinClick(Sender: TObject);
+
 begin
   If (TableauTemoins.RowCount>1) and (TableauTemoins.Row>0) then  // Il faudra qu'il reste au moins un témoin
      if Application.MessageBox(Pchar(Translation.Items[32]+
@@ -661,52 +599,55 @@ begin
         TableauTemoins.Cells[1,TableauTemoins.Row]+')'+Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
         begin
         // Exécuter SAVEMODIFICATIONTIME pour le témoin supprimer
-        dmGenData.SaveModificationTime(strtoint(TableauTemoins.Cells[2,TableauTemoins.Row]));
-        dmGenData.Query1.SQL.Text:='DELETE FROM W WHERE no='+TableauTemoins.Cells[0,TableauTemoins.Row];
-        dmGenData.Query1.ExecSQL;
+        dmGenData.SaveModificationTime(ptrint(TableauTemoins.Objects[2,TableauTemoins.Row]));
+        dmGenData.DeleteWitness(ptrint(TableauTemoins.Objects[0,TableauTemoins.Row]));
         TableauTemoins.DeleteRow(TableauTemoins.Row);
         // Sauvegarder les modifications pour tous les témoins de l'événements
-        dmGenData.Query3.SQL.Text:='SELECT W.I, W.X FROM W WHERE W.E='+no.Text;
-        dmGenData.Query3.Open;
-        dmGenData.Query3.First;
-        While not dmGenData.Query3.EOF do
-           begin
-           dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
-           dmGenData.Query3.Next;
-        end;
+        dmGenData.UpdateWitnessModbyEvent(no.Value);
      end;
 end;
 
-function PopulateTemoins(Event:string):string;
+procedure FillTableWitness(const lidEvent: LongInt;
+  const lTblWitness: TStringGrid; out lMainRole: string; out lPhrase: string);
 var
-  row:integer;
-  phrase:string;
+  row: integer;
 begin
-  dmGenData.Query1.SQL.Text:='SELECT W.no, W.I, W.X, W.P, W.R, N.N FROM W JOIN N ON N.I=W.I WHERE W.E='+
-                           Event+' AND N.X=1 ORDER BY W.X DESC';
-  dmGenData.Query1.Open;
-  dmGenData.Query1.First;
-  frmEditEvents.TableauTemoins.RowCount:=dmGenData.Query1.RecordCount+1;
-  row:=1;
-  while not dmGenData.Query1.eof do
-     begin
-     frmEditEvents.TableauTemoins.Cells[0,row]:=dmGenData.Query1.Fields[0].AsString;
-     frmEditEvents.TableauTemoins.Cells[1,row]:=dmGenData.Query1.Fields[4].AsString;
-     frmEditEvents.TableauTemoins.Cells[2,row]:=dmGenData.Query1.Fields[1].AsString;
-     frmEditEvents.TableauTemoins.Cells[3,row]:=DecodeName(dmGenData.Query1.Fields[5].AsString,1);
-     if dmGenData.Query1.Fields[2].AsBoolean then
-        frmEditEvents.TableauTemoins.Cells[4,row]:='*'
-     else
-        frmEditEvents.TableauTemoins.Cells[4,row]:='';
-     if dmGenData.Query1.Fields[1].AsString=frmStemmaMainForm.sID then
-        begin
-        phrase:=dmGenData.Query1.Fields[3].AsString;
-        frmEditEvents.Role.Text:=dmGenData.Query1.Fields[4].AsString;
-     end;
-     row:=row+1;
-     dmGenData.Query1.Next;
+  with dmGenData.Query1 do begin
+    SQL.Text:='SELECT W.no, W.I, W.X, W.P, W.R, N.N FROM W JOIN N ON N.I=W.I '+
+    'WHERE W.E=:idEvent AND N.X=1 ORDER BY W.X DESC';
+    ParamByName('idEvent').AsInteger:=lidEvent;
+    Open;
+    First;
+    lTblWitness.RowCount:=RecordCount+1;
+    row:=1;
+    while not eof do
+       begin
+       lTblWitness.Cells[0,row]:=Fields[0].AsString;
+       lTblWitness.Cells[1,row]:=Fields[4].AsString;
+       lTblWitness.Cells[2,row]:=Fields[1].AsString;
+       lTblWitness.Cells[3,row]:=DecodeName(Fields[5].AsString,1);
+       if Fields[2].AsBoolean then
+          lTblWitness.Cells[4,row]:='*'
+       else
+          lTblWitness.Cells[4,row]:='';
+       if Fields[1].AsString=frmStemmaMainForm.sID then
+          begin
+          lPhrase:=Fields[3].AsString;
+          lMainRole:=Fields[4].AsString;
+       end;
+       row:=row+1;
+       Next;
+    end;
   end;
-  PopulateTemoins:=phrase;
+end;
+
+function PopulateTemoins(idEvent:integer):string;
+
+var
+  lMainRole: string;
+begin
+  FillTableWitness(idEvent, frmEditEvents.TableauTemoins, lMainRole, result);
+  frmEditEvents.Role.text:=lMainRole;
 end;
 
 end.

@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-  Menus, Buttons, Spin, ExtCtrls, FMUtils, StrUtils;
+  Menus, Buttons, Spin, ExtCtrls, FMUtils;
 
 type
   { TfrmEditWitness }
@@ -59,50 +59,6 @@ implementation
 
 uses frm_EditEvents, frm_Main, dm_GenData, cls_Translation, frm_Explorer;
 
-procedure GetWitnessData(const lidWitness: integer;
-   out lidInd: LongInt; out lName: String;  out lidEvent: LongInt;
-   out lPhrase: String;
-  out lRole: String; out lPrefered: Boolean );
-
-begin
-  with dmGenData.Query1 do begin
-    SQL.Text :=
-         'SELECT W.no, W.I, W.E, W.X, W.P, W.R, N.N FROM W JOIN N ON W.I=N.I WHERE N.X=1 AND W.no=:idWitness';
-       ParamByName('idWitness').AsInteger := lidWitness;
-       Open;
-       First;
-
-       lRole:=Fields[5].AsString;
-       lidInd:=Fields[1].AsInteger;
-       lPrefered:=Fields[3].AsBoolean;
-       lidEvent:=Fields[2].AsInteger;
-       lName:=Fields[6].AsString;
-       lPhrase:=Fields[4].AsString;
-       Close;
-  end;
-end;
-
-procedure FillResourceList(const items: TStrings; const lidType: PtrInt);
-var
-  temp: string;
-begin
-  with dmGenData.Query1 do
-   begin
-    SQL.Text := 'SELECT Y.R FROM Y WHERE Y.no=:idType';
-    ParamByName('idType').AsInteger := lidType;
-    Open;
-    First;
-    Items.Clear;
-    temp := Fields[0].AsString;
-    while AnsiPos('|', temp) > 0 do
-     begin
-      Items.Add(Copy(temp, 1, AnsiPos('|', temp) - 1));
-      temp := Copy(temp, AnsiPos('|', temp) + 1, length(temp));
-     end;
-    Items.Add(Copy(temp, 1, length(temp)));
-   end;
-end;
-
 {$R *.lfm}
 
 { TfrmEditWitness }
@@ -148,9 +104,9 @@ end;
 
 procedure TfrmEditWitness.FormShow(Sender: TObject);
 var
-  j, lidWitness: integer;
+  j, lidWitness, lidEvent: integer;
   lRole, lName, lPhrase: String;
-  lidInd, lidEvent: LongInt;
+  lidInd: LongInt;
   lPrefered: Boolean;
   //  code, nocode:string;
 begin
@@ -165,7 +121,7 @@ begin
   lblResult.Caption := Translation.Items[198];
   lblDefault.Caption := Translation.Items[173];
   // Populate le ComboBox
-  FillResourceList(cbxRole.Items, ptrint(
+  dmGenData.FillTypeRolesList(cbxRole.Items, ptrint(
     frmEditEvents.Y.Items.Objects[frmEditEvents.Y.ItemIndex]));
   // Populate la form
   // dmGenData.GetCode(code,nocode);
@@ -178,6 +134,7 @@ begin
     //     edtIdEvent.Value:=strtoint(nocode);
     chbPrefered.Checked := true;
     cbxRole.ItemIndex := 0;
+    lidEvent:=0;
     P.Text := '';
     lblDefault.Visible := True;
    end
@@ -185,12 +142,12 @@ begin
    begin
 
     lidWitness:=edtWitnessNo.Value;
-    GetWitnessData(lidWitness,  lidInd,lName, lidEvent,lPhrase, lRole,
+    dmGenData.GetWitnessData(lidWitness,  lidInd,lName, lidEvent,lPhrase, lRole,
      lPrefered );
     for j := 0 to cbxRole.Items.Count - 1 do
       if cbxRole.Items[j] = lRole then
         cbxRole.ItemIndex := j;
-    //     edtWitnessNo.Value:=dmGenData.Query1.Fields[0].AsInteger;
+    //     edtWitnessNo.Value:=Query1.Fields[0].AsInteger;
     edtIdInd.Value := lidInd;
     chbPrefered.Checked := lPrefered;
     edtIdEvent.Value := lidEvent;
@@ -198,11 +155,8 @@ begin
     P.Text := lPhrase;
    end;
   // aller chercher la phrase par défaut
-  dmGenData.Query1.SQL.Text := 'SELECT Y.P FROM Y JOIN E ON E.Y=Y.no WHERE E.no=' +
-    edtIdEvent.Text;
-  dmGenData.Query1.Open;
-  dmGenData.Query1.First;
-  P1.Text := dmGenData.Query1.Fields[0].AsString;
+
+  P1.Text:=dmGenData.GetEventDefaultPhrase(lidEvent);
   if length(P.Text) = 0 then
    begin
     P.Text := P1.Text;
@@ -213,54 +167,30 @@ end;
 
 procedure TfrmEditWitness.btnOKClick(Sender: TObject);
 var
-  lidInd: integer;
-  lDate, lEvType: string;
+  lidInd, lidWitness: integer;
+  lDate, lEvType, lPhrase, lRole: string;
+  lPrefered: boolean;
 
 begin
   lidInd := edtIdInd.Value;
-
-
-  dmGenData.Query1.SQL.Clear;
-  if edtWitnessNo.Value = 0 then
-   begin
-    if lblDefault.Visible then
-      edtWitnessNo.Value :=dmGenData.AppendWitness(cbxRole.Items[cbxRole.ItemIndex], '',
-        lidInd, edtIdEvent.Value, true)
-    else
-      edtWitnessNo.Value :=dmGenData.AppendWitness(cbxRole.Items[cbxRole.ItemIndex], trim(
-        p.Text), lidInd, edtIdEvent.Value, true);
-   end
+  if lblDefault.Visible then
+    lPhrase:=''
   else
-   begin
+    lPhrase:=trim(P.Text);
+  lidWitness:=edtWitnessNo.Value;
+  lRole:=cbxRole.Items[cbxRole.ItemIndex];
 
-    if lblDefault.Visible then
-      dmGenData.Query1.SQL.Add('UPDATE W SET R=:Role''' + UTF8ToANSI(
-        cbxRole.Items[cbxRole.ItemIndex]) + ''','' I=' + edtIdInd.Text +
-        ', P='''' WHERE no=' + edtWitnessNo.Text)
-    else
-      dmGenData.Query1.SQL.Add('UPDATE W SET R=''' + UTF8ToANSI(
-        cbxRole.Items[cbxRole.ItemIndex]) + ''', I=' + edtIdInd.Text +
-        ', P=''' + AnsiReplaceStr(AnsiReplaceStr(
-        AnsiReplaceStr(UTF8toANSI(trim(P.Text)), '\', '\\'), '"', '\"'), '''', '\''') +
-        ''' WHERE no=' + edtWitnessNo.Text);
-   end;
+  if lidWitness = 0 then
+      edtWitnessNo.Value :=dmGenData.AppendWitness(lRole, lPhrase, lidInd,
+      edtIdEvent.Value, true)
+  else
+     dmGenData.UpdateWitnessData(lidWitness, lidInd, lRole, lPhrase);
   // fr: Sauvegarder les modifications pour tout les témoins de l'événements
   // en: Save the changes for all the witnesses to the events
-  dmGenData.Query3.SQL.Text := 'SELECT W.I FROM W WHERE W.E=' + edtIdEvent.Text;
-  dmGenData.Query3.Open;
-  dmGenData.Query3.First;
-  while not dmGenData.Query3.EOF do
-   begin
-    dmGenData.SaveModificationTime(dmGenData.Query3.Fields[0].AsInteger);
-    dmGenData.Query3.Next;
-   end;
+  dmGenData.UpdateWitnessModbyEvent(edtIdEvent.Value);
   // fr: Modifier la ligne de l'explorateur si naissance frmStemmaMainForm ou décès principal
   // en: Change the line of Explorer if birth frmStemmaMainForm or main death
-  dmGenData.Query1.SQL.Text :=
-    'SELECT Y.Y, E.X, E.PD FROM Y JOIN E on E.Y=Y.no WHERE E.no=' + edtIdEvent.Text;
-  dmGenData.Query1.Open;
-  lDate := dmGenData.Query1.Fields[2].AsString;
-  lEvType := dmGenData.Query1.Fields[0].AsString;
+  dmGenData.GetEventExtData(edtIdEvent.Value,lEvType,lDate,lPrefered);
 
   if (lEvType = 'B') then
     dmGenData.UpdateNameI3(lDate, lidInd)
@@ -269,7 +199,7 @@ begin
 
   if frmStemmaMainForm.actWinExplorer.Checked and
     ((lEvType = 'B') or ((lEvType = 'D'))) and
-    (dmGenData.Query1.Fields[1].AsInteger = 1) and (chbPrefered.Checked) then
+    (lPrefered) and (chbPrefered.Checked) then
 
     frmExplorer.UpdateIndexDates(lEvType, lDate, lidInd);
 
@@ -277,17 +207,11 @@ end;
 
 procedure TfrmEditWitness.edtIdIndEditingDone(Sender: TObject);
 begin
-  if length(edtIdInd.Text) > 0 then
+  if edtIdInd.Value > 0 then
    begin
-    dmGenData.Query1.SQL.Text := 'SELECT N.N FROM N WHERE N.X=1 AND N.I=' + edtIdInd.Text;
-    dmGenData.Query1.Open;
-    dmGenData.Query1.First;
-    if not dmGenData.Query1.EOF then
-     begin
-      edtName.Text := DecodeName(dmGenData.Query1.Fields[0].AsString, 1);
+      edtName.Text := DecodeName(dmGenData.GetIndividuumName(edtIdInd.Value), 1);
       P2.Text := DecodePhrase(edtIdInd.Value, cbxRole.Text, P.Text, 'E', edtIdEvent.Value);
       frmStemmaMainForm.AppendHistoryData('I', edtIdInd.Value);
-     end;
    end;
 end;
 

@@ -337,18 +337,6 @@ implementation
 uses AnchorDocking, AnchorDockOptionsDlg, dm_GenData, cls_Translation,
   frm_SelectDialog, untWebexport;
 
-procedure UpdateEventPrefered(const lPrefered: boolean; const lidEvent: LongInt
-  );
-begin
-  with dmGenData.Query1 do
-   begin
-    SQL.Text := 'UPDATE E SET X=:Prefered WHERE no=:idEvent';
-    ParamByName('Prefered').AsBoolean := lPrefered;
-    ParamByName('idEvent').AsInteger := lidEvent;
-    ExecSQL;
-   end;
-end;
-
 
 procedure UpdateHistoryChInd(const Items: TStrings; const lNewInd: longint);
 var
@@ -1088,8 +1076,8 @@ end;
 procedure TfrmStemmaMainForm.actFileImportFromTMGExecute(Sender: TObject);
 var
   ini: TIniFile;
-  db, lRole, insert, pd, SD, filename: string;
-  lidPrefered: integer;
+  db, lRole, lPDate, lSDate, filename: string;
+  lIter: integer;
   debut, restant, oldrestant: TDateTime;
   MyCursor: TCursor;
   success: boolean;
@@ -1279,7 +1267,7 @@ var
     lLiving, lSex, lDate: string;
     lidInd, lImportance: integer;
   begin
-    // Importer lidPrefered Individus (_$)
+    // Importer lIter Individus (_$)
     dmGenData.TMG.Tablename := filename + '$.DBF';
 
     dmGenData.TMG.Active := True;
@@ -1349,7 +1337,7 @@ var
       lRole := UpperCase(dmGenData.TMG.Fields[4].AsString);
       lPrefered := true;
       if dmGenData.TMG.Fields[2].AsBoolean then
-         UpdateEventPrefered(lPrefered, lidEvent);
+         dmGenData.UpdateEventPrefered(lPrefered, lidEvent);
       // Si lRole = PRINCIPAL, c'est un témoin X=1, sinon X=0
       lPrefered := lPrefered and not (lRole = 'ASSASSIN');
       lPrefered := lPrefered and not (lRole = 'CELEBRANT');
@@ -1371,7 +1359,10 @@ var
   var
     I4: string;
     I3: string;
-    buffer4, buffer5, buffer, buffer2, buffer3: string;
+    I1, I2, lName, lPhase, lNote: string;
+    lPrefered: boolean;
+    lidName, lidInd: Integer;
+    lidType: LongInt;
   begin
     // Importer N Noms (_N)
     dmGenData.TMG.Tablename := filename + 'N.DBF';
@@ -1390,75 +1381,40 @@ var
         Application.ProcessMessages;
        end;
       if dmGenData.TMG.Fields[3].IsNull then
-        buffer := ''
+        lName := ''
       else
-        buffer := '!TMG|' + AnsiReplaceStr(
+        lName := '!TMG|' + AnsiReplaceStr(
           dmGenData.TMG.Fields[3].Value, '$!&', '|');
-      buffer4 := RemoveUTF8(ExtractDelimited(
-        2, copy(buffer, 5, length(buffer)), ['|']));
-      buffer5 := RemoveUTF8(ExtractDelimited(
-        4, copy(buffer, 5, length(buffer)), ['|']));
+      I1 := RemoveUTF8(ExtractDelimited(
+        2, copy(lName, 5, length(lName)), ['|']));
+      I2 := RemoveUTF8(ExtractDelimited(
+        4, copy(lName, 5, length(lName)), ['|']));
       if dmGenData.TMG.Fields[12].IsNull then
-        buffer2 := ''
+        lPhase := ''
       else
-        buffer2 := '!TMG' + dmGenData.TMG.Fields[12].Value;
+        lPhase := '!TMG' + dmGenData.TMG.Fields[12].Value;
       if dmGenData.TMG.Fields[10].IsNull then
-        buffer3 := ''
+        lNote := ''
       else
-        buffer3 := dmGenData.TMG.Fields[10].Value;
+        lNote := dmGenData.TMG.Fields[10].Value;
       if dmGenData.TMG.Fields[13].IsNull then
-        pd := '100000000030000000000'
+        lPDate := '100000000030000000000'
       else
-        pd := dmGenData.TMG.Fields[13].Value;
+        lPDate := dmGenData.TMG.Fields[13].Value;
       if dmGenData.TMG.Fields[14].IsNull then
-        SD := '100000000030000000000'
+        lSDate := '100000000030000000000'
       else
-        SD := dmGenData.TMG.Fields[14].Value;
-      if dmGenData.TMG.Fields[6].Value then
-        lidPrefered := 1
-      else
-        lidPrefered := 0;
-      with dmGenData.Query2 do begin
-       Close;
-      SQL.Text :=
-          'SELECT E.SD FROM E LEFT JOIN W ON W.E=E.no ' +
-          'WHERE (E.Y=1069 or E.Y=2017 OR E.Y=1002 OR E.Y=1012 OR E.Y=1069) AND W.X=1 AND W.I=:id '
-          + 'ORDER BY E.SD';
-        ParamByName('id').AsInteger := dmGenData.TMG.Fields[0].Value;
-        Open;
-        I3 := Fields[0].AsString;
-      end;
-      with dmGenData.Query2 do begin
-        Close;
-        SQL.Text :=
-          'SELECT E.SD FROM E LEFT JOIN W ON W.E=E.no ' +
-          'WHERE (E.Y=1003 or E.Y=1006 OR E.Y=2001 OR E.Y=2004 OR E.Y=2007 OR E.Y=2009 OR E.Y=2010 OR E.Y=2014 OR E.Y=2018 OR E.Y=2020) AND W.X=1 AND W.I=:id ' + 'ORDER BY E.SD';
-        ParamByName('id').AsInteger := dmGenData.TMG.Fields[0].Value;
-        Open;
-        I4 := Fields[0].AsString;
-      end;
+        lSDate := dmGenData.TMG.Fields[14].Value;
+      lPrefered := dmGenData.TMG.Fields[6].AsBoolean;
 
-      with dmGenData.Query1 do
-       begin
-        Close;
-        SQL.Text :=
-          'INSERT IGNORE INTO N (no, I, Y, N, X, M, P, PD, SD, I1, I2, I3, I4) ' +
-          'VALUES (:idName ,:idInd, :idType, :Name, :Pref, :Note, :Phrase, :PDate, :SDate, :I1, :I2, :I3, :I4)';
-        ParamByName('idName').AsInteger := dmGenData.TMG.Fields[11].Value + nOffset;
-        ParamByName('idInd').AsInteger := dmGenData.TMG.Fields[0].Value + iOffset;
-        ParamByName('idType').AsInteger := dmGenData.TMG.Fields[1].Value + 1000;
-        ParamByName('Name').AsString := buffer;
-        ParamByName('Pref').AsInteger := lidPrefered;
-        ParamByName('Note').AsString := buffer3;
-        ParamByName('Phrase').AsString := buffer2;
-        ParamByName('PDate').AsString := PD;
-        ParamByName('SDate').AsString := SD;
-        ParamByName('I1').AsString := buffer4;
-        ParamByName('I2').AsString := buffer5;
-        ParamByName('I3').AsString := I3;
-        ParamByName('I4').AsString := I4;
-        ExecSQL;
-       end;
+      lidInd:=dmGenData.TMG.Fields[0].AsInteger + iOffset;
+      I3:=dmGenData.GetEventIndBirth(lidInd);
+      I4:=dmGenData.GetEventIndDeath(lidInd);
+
+      lidName:=dmGenData.TMG.Fields[11].AsInteger + nOffset;
+      lidType:=dmGenData.TMG.Fields[1].AsInteger + 1000;
+      dmGenData.InsertName(lidName, lidType, lidInd, lPrefered, lNote, lPhase, lName,
+      lPDate, lSDate ,I1, I2, I3, I4);
 
       dmGenData.TMG.Next;
      end;
@@ -1566,11 +1522,12 @@ var
 
   procedure ImportDocuments;
   var
-    buffer, buffer2, buffer3: string;
+    lTitle, lDescription, lFilename, lZ, lTypeKat: string;
+    lPrefered:Boolean;
+    lidLink: LongInt;
   begin
     // Importer X Exhibits (_I)
     dmGenData.TMG.Tablename := filename + 'I.DBF';
-    insert := 'INSERT IGNORE INTO X (X, T, D, F, Z, A, N) VALUES (';
     dmGenData.TMG.Active := True;
     dmGenData.TMG.Open;
     while not (dmGenData.TMG.EOF) do
@@ -1585,39 +1542,36 @@ var
         Application.ProcessMessages;
        end;
       if dmGenData.TMG.Fields[54].IsNull then
-        lidPrefered := 0
-      else if dmGenData.TMG.Fields[54].Value then
-        lidPrefered := 1
+        lPrefered := false
       else
-        lidPrefered := 0;
+        lPrefered := dmGenData.TMG.Fields[54].AsBoolean;
       if dmGenData.TMG.Fields[0].IsNull then
-        buffer := ''
+        lTitle := ''
       else
-        buffer := AutoQuote(dmGenData.TMG.Fields[0].Value);
+        lTitle := AutoQuote(dmGenData.TMG.Fields[0].Value);
       if dmGenData.TMG.Fields[26].IsNull then
-        buffer2 := ''
+        lDescription := ''
       else
-        buffer2 := AutoQuote(dmGenData.TMG.Fields[26].Value);
+        lDescription := AutoQuote(dmGenData.TMG.Fields[26].Value);
       if dmGenData.TMG.Fields[1].IsNull then
-        buffer3 := ''
+        lFilename := ''
       else
-        buffer3 := AutoQuote(dmGenData.TMG.Fields[1].Value);
+        lFilename := AutoQuote(dmGenData.TMG.Fields[1].Value);
       if dmGenData.TMG.Fields[23].IsNull then
-        SD := ''
+        lZ := ''
       else
-        SD := AutoQuote(dmGenData.TMG.Fields[23].Value);
+        lZ := AutoQuote(dmGenData.TMG.Fields[23].Value);
       if dmGenData.TMG.Fields[41].Value = '_' then
-        pd := 'I'
+        lTypeKat := 'I'
       else
       if uppercase(dmGenData.TMG.Fields[41].Value) = 'M' then
-        pd := 'S'
+        lTypeKat := 'S'
       else
-        pd := 'E';
-      buffer := IntToStr(lidPrefered) + ',''' + buffer + ''',''' + buffer2 +
-        ''',''' + buffer3 + ''',''' + SD + ''',''' + pd + ''',' +
-        IntToStr(dmGenData.TMG.Fields[42].Value) + ');';
-      dmGenData.Query1.SQL.Text := insert + buffer;
-      dmGenData.Query1.ExecSQL;
+        lTypeKat := 'E';
+
+      lidLink:=dmGenData.TMG.Fields[42].AsInteger;
+      dmGenData.InsertDocument(lidLink, lPrefered, lTypeKat, lZ, lFilename, lDescription,
+        lTitle);
       dmGenData.TMG.Next;
      end;
     dmGenData.TMG.Active := False;
@@ -1697,11 +1651,11 @@ begin
       // Avant d'importer le projet, fermer le project actif
       frmStemmaMainForm.Caption := 'Stemma';
       // Fermer toutes les fenêtres ouvertes
-      for lidPrefered := 0 to high(FExtraWindows) do
-        if FExtraWindows[lidPrefered].Parent is TAnchorDockHostSite then
-          TAnchorDockHostSite(FExtraWindows[lidPrefered].Parent).Close
+      for lIter := 0 to high(FExtraWindows) do
+        if FExtraWindows[lIter].Parent is TAnchorDockHostSite then
+          TAnchorDockHostSite(FExtraWindows[lIter].Parent).Close
         else
-          FExtraWindows[lidPrefered].Close;
+          FExtraWindows[lIter].Close;
 
       frmStemmaMainForm.iID := 0;
       MyCursor := Screen.Cursor;

@@ -46,7 +46,7 @@ type
     Filo: TStringGrid;
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    procedure GetCode(out code: string; out no: integer); overload;deprecated;
+    procedure GetCode(out code: string; out no: integer); overload; deprecated;
     procedure PutCode(code: string; no: integer); overload; deprecated;
     procedure GetCode(out code: string; out no: string); overload; deprecated;
     procedure PutCode(code: string; no: string); overload; deprecated;
@@ -105,6 +105,10 @@ type
       const PDate: string; const lMemoText: string; const i4: string;
       const i3: string; const i2: string; const i1: string; const lName: string;
       const lidInd: longint): integer;
+    procedure InsertName(const idName: integer; const idType: longint;
+      const idInd: integer; const Prefered: boolean; const Note: string;
+      const Phase: string; const aName, PDate, SDate: string; const I1: string;
+      const I2: string; const I3: string; const I4: string);
     procedure UpdateNameI3(const lDate: string; const lidInd: integer);
     procedure UpdateNameI4(const lDate: string; const lidInd: integer);
     procedure UpdateNamesPrefered(const idNamePref, idNameUnPref: integer);
@@ -137,9 +141,8 @@ type
       const prefered: boolean; const lidParent: integer;
       const lidChild: integer; const lMemoText: string): integer;
     procedure InsertRelation(const lidParent: longint; const lidChild: longint;
-      const lidType: longint; const lidRelation: longint;
-  const lPhrase: string; const lSDate: string; const lNote: string;
-  lidPrefered: Boolean);
+      const lidType: longint; const lidRelation: longint; const lPhrase: string;
+      const lSDate: string; const lNote: string; lidPrefered: boolean);
     function CopyRelation(lidRelation: integer; idNewInd: integer = 0): longint;
     function RelationInsertData(idType, IdInd, idLink: integer;
       const Note: string = ''; const Phrase: string = ''; Prefered: boolean = True;
@@ -173,9 +176,16 @@ type
       const lidIndChild: integer; const lidRelation: integer);
     procedure UpdateIndModificationTimesByRelation(lLinkID: integer);
     function GetRelationOtherParent(const lidChild: integer;
-      const lpSex: String; out parent2: integer; out lName: string): boolean;
+      const lpSex: string; out parent2: integer; out lName: string): boolean;
 
     // Event Methods
+    procedure GetEventData(var lidEvent: integer; out LidType: longint;
+      out lidPlace: integer; out lPrefered: boolean; out lSDate: string;
+      out lDate: string; out lMemo: string; out sPlace: string);
+    procedure GetEventExtData(const idEvent: integer; out EvType: string;
+      out EvDate: string; out Prefered: boolean);
+    function PreferedEventWitnessExists(const lidInd: longint;
+      const lTypeKat: string): boolean;
     procedure FillTableEvents(const idInd: integer; const lgrdEvents: TStringGrid);
     function GetEventType(const lIdEvent: integer): string;
     procedure CopyEvent(const idEvent: integer);
@@ -195,15 +205,30 @@ type
     procedure InsertEvent(const idEvent: longint; const idType: longint;
       const idPlace: longint; const Prefered: boolean; const lMemo: string = '';
       const SDate: string = ''; const PDate: string = '');
-    function CheckEventsPairedParentsExists(const idChild: integer;
-      var idParent: integer): boolean;
+    function CheckEventsPairedParentsExists(const idParent1: integer;
+      var idParent2: integer): boolean;
+      deprecated {$IFNDEF NoFormat} 'use GetEventMarriageExists' {$ENDIF};
+    procedure UpdateEventPrefered(const lPrefered: boolean;
+      const lidEvent: longint);
+    function GetEventMarriageExists(var parent2: longint;
+      var parent1: longint): boolean;
+    procedure UpdateEventsChangePlace(const lidPlaceNew, lidPlace: integer);
+    function GetEventIndBirth(var lidInd: integer): string;
+    function GetEventIndDeath(var lidInd: integer): string;
+    function GetEventDefaultPhrase(const idEvent: integer): string;
 
     //Witness
+    procedure GetWitnessData(const lidWitness: integer; out lidInd: longint;
+      out lName: string; out lidEvent: longint; out lPhrase: string;
+      out lRole: string; out lPrefered: boolean);
+    procedure UpdateWitnessData(const lidWitness: integer; var lidInd: integer;
+      const lRole: string; const lPhrase: string);
     function AppendWitness(Role, Phrase: string; idInd, idEvent: integer;
       Pref: boolean): integer;
     procedure InsertWitness(const Prefered: boolean; const idEvent: longint;
       const idInd: longint; const Role: string; const Phrase: string);
       deprecated {$IFNDEF NoFormat} 'use AppendWitness' {$ENDIF};
+    procedure DeleteWitness(const lidWitness: integer);
     function GetWitnessListbyEvent(lidEvent: integer): string;
     procedure UpdateWitnessModDatebyEvent(lidEvent: integer);
     procedure UpdateWitnessModbyEvent(lidEvent: integer);
@@ -240,15 +265,18 @@ type
       const lDocumentType: TCaption; const lFileName: TCaption;
       const lDocumentDescription: TCaption;
       const lDocumentTitle: TCaption): integer;
+    procedure InsertDocument(const idLink: longint; const Prefered: boolean;
+      const TypeKat: string; const DocumentInfo: string; const Filename: string;
+      const Description: string; const Title: string);
     procedure UpdateDocumentMemo(const lidDocument: integer;
       const lImageMemoText: TCaption);
     procedure UpdateModificationByEventDocument(lidDocument: integer);
     procedure PopulateDocuments(Tableau: TStringGrid; Code: string; no: integer);
     procedure CopyDocumentbyType_ID(const aType: string; const aID, aNewID: integer);
     function GetDocumentFilename(no, IdInd: integer): string;
-    function GetDocumentInfo(const lidDocument: Integer): string;
-     procedure UpdateDocumentInfo(const lidDocument: integer;
-       const lDocumentInfo: string);
+    function GetDocumentInfo(const lidDocument: integer): string;
+    procedure UpdateDocumentInfo(const lidDocument: integer;
+      const lDocumentInfo: string);
     procedure SelectDocumentData(const lidDocument: integer;
       out lPrefered: boolean;
       out lDocumentInfo, lDocType, lFileName, lDocumentDescription,
@@ -269,6 +297,7 @@ type
       Append: boolean = False);
     procedure DeleteType(const lidType: PtrInt);
     procedure FillTableTypes(const ltblTypes: TStringGrid; OnUpdate: TNotifyEvent);
+    procedure FillTypeRolesList(const items: TStrings; const lidType: PtrInt);
     procedure UpdateTableTypes(const ltblTypes: TStringGrid;
       const lidType: integer);
     procedure GetTypeList(const aList: TStrings; aTypes: array of string);
@@ -303,8 +332,11 @@ type
 
     // Places
     procedure InsertPlace(lidPlace: longint; const Place: string);
+    function GetPlaceID(var Place: string): integer;
+    function SavePlaceData(idPlace: integer; const Place: string): integer;
     function GetPlaceName(const liResult: integer): string;
-    procedure DeletePlace(const lidPlace: Integer);
+    procedure UpdatePlaceData(const lidPlace: integer; const lPlace: string);
+    procedure DeletePlace(const lidPlace: integer);
     procedure FillTablePlaces(const lTblPlace: TStringGrid;
       const lOnUpdate: TNotifyEvent);
 
@@ -724,6 +756,34 @@ begin
     ParamByName('Living').AsString := Living;
     ParamByName('Importance').AsInteger := Importance;
     ParamByName('Date').AsString := Date;
+    ExecSQL;
+   end;
+end;
+
+procedure TdmGenData.InsertName(const idName: integer; const idType: longint;
+  const idInd: integer; const Prefered: boolean; const Note: string;
+  const Phase: string; const aName, PDate, SDate: string; const I1: string;
+  const I2: string; const I3: string; const I4: string);
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text :=
+      'INSERT IGNORE INTO N (no, I, Y, N, X, M, P, PD, SD, I1, I2, I3, I4) ' +
+      'VALUES (:idName ,:idInd, :idType, :Name, :Pref, :Note, :Phrase, :PDate, :SDate, :I1, :I2, :I3, :I4)';
+    ParamByName('idName').AsInteger := idName;
+    ParamByName('idInd').AsInteger := idInd;
+    ParamByName('idType').AsInteger := idType;
+    ParamByName('Name').AsString := aName;
+    ParamByName('Pref').AsBoolean := Prefered;
+    ParamByName('Note').AsString := Note;
+    ParamByName('Phrase').AsString := Phase;
+    ParamByName('PDate').AsString := PDate;
+    ParamByName('SDate').AsString := SDate;
+    ParamByName('I1').AsString := I1;
+    ParamByName('I2').AsString := I2;
+    ParamByName('I3').AsString := I3;
+    ParamByName('I4').AsString := I4;
     ExecSQL;
    end;
 end;
@@ -2414,7 +2474,8 @@ end;
 
 procedure TdmGenData.InsertRelation(const lidParent: longint;
   const lidChild: longint; const lidType: longint; const lidRelation: longint;
-  const lPhrase: string; const lSDate: string; const lNote: string; lidPrefered:Boolean);
+  const lPhrase: string; const lSDate: string; const lNote: string;
+  lidPrefered: boolean);
 begin
   with qryInternal do
    begin
@@ -3014,29 +3075,71 @@ begin
    end;
 end;
 
-function TdmGenData.GetRelationOtherParent(const lidChild: integer;const lpSex: String; out parent2: integer;
-  out lName: string): boolean;
+function TdmGenData.GetRelationOtherParent(const lidChild: integer;
+  const lpSex: string; out parent2: integer; out lName: string): boolean;
 var
   lPrefParExists: boolean;
 begin
-  with qryInternal do begin
-  SQL.Text:='SELECT R.no, R.B, N.N FROM R JOIN I ON R.B=I.no JOIN N on N.I=R.B WHERE I.S=:Sex AND R.X=1 AND N.X=1 AND R.A=:idChild';
-         ParamByName('Sex').AsString:=lpSex;
-         ParamByName('idChild').AsInteger:=lidChild;
-         Open;
-         lPrefParExists := not EOF;
-         if lPrefParExists then
-            begin;
-            lName:=Fields[2].AsString;
-            parent2:=Fields[1].AsInteger;
-         end;
-         close;
-    Result:=lPrefParExists;
-  end;
+  with qryInternal do
+   begin
+    SQL.Text :=
+      'SELECT R.no, R.B, N.N FROM R JOIN I ON R.B=I.no JOIN N on N.I=R.B WHERE I.S=:Sex AND R.X=1 AND N.X=1 AND R.A=:idChild';
+    ParamByName('Sex').AsString := lpSex;
+    ParamByName('idChild').AsInteger := lidChild;
+    Open;
+    lPrefParExists := not EOF;
+    if lPrefParExists then
+     begin
+      ;
+      lName := Fields[2].AsString;
+      parent2 := Fields[1].AsInteger;
+     end;
+    Close;
+    Result := lPrefParExists;
+   end;
 end;
+
 {$endRegion ~Relation}
 // Witness-Methods
 {$region Witness (W)}
+procedure TdmGenData.GetWitnessData(const lidWitness: integer;
+  out lidInd: longint; out lName: string; out lidEvent: longint;
+  out lPhrase: string; out lRole: string; out lPrefered: boolean);
+
+begin
+  with qryInternal do
+   begin
+    SQL.Text :=
+      'SELECT W.no, W.I, W.E, W.X, W.P, W.R, N.N FROM W JOIN N ON W.I=N.I WHERE N.X=1 AND W.no=:idWitness';
+    ParamByName('idWitness').AsInteger := lidWitness;
+    Open;
+    First;
+
+    lRole := Fields[5].AsString;
+    lidInd := Fields[1].AsInteger;
+    lPrefered := Fields[3].AsBoolean;
+    lidEvent := Fields[2].AsInteger;
+    lName := Fields[6].AsString;
+    lPhrase := Fields[4].AsString;
+    Close;
+   end;
+end;
+
+procedure TdmGenData.UpdateWitnessData(const lidWitness: integer;
+  var lidInd: integer; const lRole: string; const lPhrase: string);
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text := 'UPDATE W SET R=:Role, I=:idInd, P=:Phrase WHERE no=:idWitness';
+    ParamByName('Phrase').AsString := lPhrase;
+    ParamByName('idInd').AsInteger := lidInd;
+    ParamByName('idWitness').AsInteger := lidWitness;
+    ParamByName('Role').AsString := lRole;
+    ExecSQL;
+   end;
+end;
+
 function TdmGenData.AppendWitness(Role, Phrase: string; idInd, idEvent: integer;
   Pref: boolean): integer;
 begin
@@ -3064,6 +3167,16 @@ begin
   AppendWitness(Role, Phrase, idInd, idEvent, Prefered);
 end;
 
+procedure TdmGenData.DeleteWitness(const lidWitness: integer);
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text := 'DELETE FROM W WHERE no=:idWitness';
+    ParamByName('idWitness').AsInteger := lidWitness;
+    ExecSQL;
+   end;
+end;
 
 procedure TdmGenData.UpdateWitnessModDatebyEvent(lidEvent: integer);
 var
@@ -3154,10 +3267,50 @@ begin
    end;
 end;
 
-{$endRegion}
+{$endRegion ~Witness}
 
 // Events-Methods
 {$region Events}
+procedure TdmGenData.GetEventData(var lidEvent: integer; out LidType: longint;
+  out lidPlace: integer; out lPrefered: boolean; out lSDate: string;
+  out lDate: string; out lMemo: string; out sPlace: string);
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text :=
+      'SELECT E.no, E.Y, E.L, E.M, E.X, E.PD, E.SD, L.L FROM E JOIN L ON L.no=E.L WHERE E.no=:idEvent';
+    ParamByName('idEvent').AsInteger := lidEvent;
+    Open;
+    First;
+
+    LidType := Fields[1].AsInteger;
+    lidPlace := Fields[2].AsInteger;
+    lMemo := Fields[3].AsString;
+    lPrefered := Fields[4].AsBoolean;
+    lDate := Fields[5].AsString;
+    lSDate := Fields[6].AsString;
+    sPlace := Fields[7].AsString;
+   end;
+end;
+
+function TdmGenData.PreferedEventWitnessExists(const lidInd: longint;
+  const lTypeKat: string): boolean;
+
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text := 'SELECT E.no FROM E ' + 'JOIN W on W.E=E.no ' +
+      'JOIN Y on E.Y=Y.no ' +
+      'WHERE Y.Y=:TypeKat AND E.X=1 AND W.X=1 AND W.I=:idInd';
+    ParamByName('idInd').AsInteger := lidInd;
+    ParamByName('TypeKat').AsString := lTypeKat;
+    Open;
+    Result := not EOF;
+   end;
+end;
+
 procedure TdmGenData.FillTableEvents(const idInd: integer;
   const lgrdEvents: TStringGrid);
 var
@@ -3572,56 +3725,191 @@ begin
    end;
 end;
 
-function TdmGenData.CheckEventsPairedParentsExists(const idChild: integer;
-  var idParent: integer): boolean;
-var
-  existe: boolean;
-begin
-  with qryInternal do begin
-           Close;
-         // Vérifier qu'il n'y idA pas déjà une union entre ces deux parents
-           SQL.text:='SELECT COUNT(E.no) FROM E JOIN W ON W.E=E.no JOIN Y on E.Y=Y.no WHERE (W.I=:idChild OR W.I=:idParent) AND W.X=1 AND E.X=1 AND Y.Y=''M'' GROUP BY E.no';
-           ParamByName('idChild').AsInteger:=idChild;
-           ParamByName('idParent').AsInteger:=idParent;
-           Open;
-           Result:=false;
-           while not EOF do
-              begin
-              Result:=Result or (Fields[0].AsInteger=2);
-              Next;
-           end;
-           Close;
-         end;
+function TdmGenData.CheckEventsPairedParentsExists(const idParent1: integer;
+  var idParent2: integer): boolean;
 
+begin
+  with qryInternal do
+   begin
+    Close;
+    // Vérifier qu'il n'y idA pas déjà une union entre ces deux parents
+    SQL.Text :=
+      'SELECT COUNT(E.no) FROM E JOIN W ON W.E=E.no JOIN Y on E.Y=Y.no WHERE (W.I=:idParent1 OR W.I=:idParent2) AND W.X=1 AND E.X=1 AND Y.Y=''M'' GROUP BY E.no';
+    ParamByName('idParent1').AsInteger := idParent1;
+    ParamByName('idParent2').AsInteger := idParent2;
+    Open;
+    Result := False;
+    while not EOF do
+     begin
+      Result := Result or (Fields[0].AsInteger = 2);
+      Next;
+     end;
+    Close;
+   end;
+
+end;
+
+procedure TdmGenData.UpdateEventPrefered(const lPrefered: boolean;
+  const lidEvent: longint);
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text := 'UPDATE E SET X=:Prefered WHERE no=:idEvent';
+    ParamByName('Prefered').AsBoolean := lPrefered;
+    ParamByName('idEvent').AsInteger := lidEvent;
+    ExecSQL;
+   end;
+end;
+
+function TdmGenData.GetEventMarriageExists(var parent2: longint;
+  var parent1: longint): boolean;
+var
+  exists: boolean;
+begin
+  with qryInternal do
+   begin
+    SQL.Text :=
+      'SELECT COUNT(E.no) FROM E JOIN W ON W.E=E.no JOIN Y on E.Y=Y.no WHERE (W.I=:idParent1 OR W.I=:idParent2) AND W.X=1 AND E.X=1 AND Y.Y=''M'' GROUP BY E.no';
+    ParamByName('idParent1').AsInteger := parent1;
+    ParamByName('idParent2').AsInteger := parent2;
+    Open;
+    exists := False;
+    while not EOF and not exists do
+     begin
+      exists :=
+        exists or (Fields[0].AsInteger = 2);
+      Next;
+     end;
+    Close;
+    Result := exists;
+   end;
+end;
+
+procedure TdmGenData.UpdateEventsChangePlace(const lidPlaceNew, lidPlace: integer);
+begin
+  with qryInternal do
+   begin
+    SQL.Text := 'UPDATE E SET L=:idPlaceNew' + ' WHERE L=:idPlace';
+    ParamByName('idPlace').AsInteger := lidPlace;
+    ParamByName('idPlaceNew').AsInteger := lidPlaceNew;
+    ExecSQL;
+   end;
+end;
+
+function TdmGenData.GetEventIndBirth(var lidInd: integer): string;
+
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text :=
+      'SELECT E.SD FROM E LEFT JOIN W ON W.E=E.no ' +
+      'WHERE (E.Y=1069 or E.Y=2017 OR E.Y=1002 OR E.Y=1012 OR E.Y=1069) AND W.X=1 AND W.I=:id '
+      + 'ORDER BY E.SD';
+    ParamByName('id').AsInteger := lidInd;
+    Open;
+    Result := Fields[0].AsString;
+    Close;
+   end;
+end;
+
+function TdmGenData.GetEventIndDeath(var lidInd: integer): string;
+
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text :=
+      'SELECT E.SD FROM E LEFT JOIN W ON W.E=E.no ' +
+      'WHERE (E.Y=1003 or E.Y=1006 OR E.Y=2001 OR E.Y=2004 OR E.Y=2007 OR E.Y=2009 OR E.Y=2010 OR E.Y=2014 OR E.Y=2018 OR E.Y=2020) AND W.X=1 AND W.I=:id ' + 'ORDER BY E.SD';
+    ParamByName('id').AsInteger := lidInd;
+    Open;
+    Result := Fields[0].AsString;
+    Close;
+   end;
+end;
+
+procedure TdmGenData.GetEventExtData(const idEvent: integer;
+  out EvType: string; out EvDate: string; out Prefered: boolean);
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text := 'SELECT Y.Y, E.X, E.PD FROM Y JOIN E on E.Y=Y.no WHERE E.no=:idEvent';
+    ParamByName('idEvent').AsInteger := idEvent;
+    Open;
+    EvType := Fields[0].AsString;
+    EvDate := Fields[2].AsString;
+    Prefered := Fields[1].AsBoolean;
+    Close;
+   end;
+end;
+
+function TdmGenData.GetEventDefaultPhrase(const idEvent: integer): string;
+
+begin
+  with qryInternal do
+   begin
+    SQL.Text := 'SELECT Y.P FROM Y JOIN E ON E.Y=Y.no WHERE E.no=:idEvent';
+    ParamByName('idEvent').AsInteger := idEvent;
+    Open;
+    First;
+    if not EOF then
+      Result := Fields[0].AsString
+    else
+      Result := '';
+   end;
 end;
 
 {$Endregion Events}
 // Document Methods
 {$region Documents}
-
-function TdmGenData.GetDocumentInfo(const lidDocument: Integer): string;
+function TdmGenData.GetDocumentInfo(const lidDocument: integer): string;
 var
   lMemoText: string;
 begin
-  with Query2 do begin
-  SQL.Text := 'SELECT X.Z FROM X WHERE X.no=:idDocument';
-          ParamByName('idDocument').AsInteger:=lidDocument;
-          Open;
-          lMemoText:=Fields[0].AsString;
-          Close;
-    Result:=lMemoText;
-  end;
+  with qryInternal do
+   begin
+    SQL.Text := 'SELECT X.Z FROM X WHERE X.no=:idDocument';
+    ParamByName('idDocument').AsInteger := lidDocument;
+    Open;
+    lMemoText := Fields[0].AsString;
+    Close;
+    Result := lMemoText;
+   end;
 end;
 
-procedure TdmGenData.UpdateDocumentInfo(const lidDocument: integer; const lDocumentInfo: string);
+procedure TdmGenData.UpdateDocumentInfo(const lidDocument: integer;
+  const lDocumentInfo: string);
 begin
-    with Query2 do begin
+  with qryInternal do
+   begin
     Close;
-      SQL.Text := 'UPDATE X SET Z=:Z WHERE X.no=:idDocument';
-      ParamByName('Z').AsString := lDocumentInfo;
-      ParamByName('idDocument').AsInteger := lidDocument;
-      ExecSQL;
-    end;
+    SQL.Text := 'UPDATE X SET Z=:Z WHERE X.no=:idDocument';
+    ParamByName('Z').AsString := lDocumentInfo;
+    ParamByName('idDocument').AsInteger := lidDocument;
+    ExecSQL;
+   end;
+end;
+
+procedure TdmGenData.InsertDocument(const idLink: longint; const Prefered: boolean;
+  const TypeKat: string; const DocumentInfo: string; const Filename: string;
+  const Description: string; const Title: string);
+begin
+  with qryInternal do
+   begin
+    SQL.Text := 'INSERT IGNORE INTO X (X, T, D, F, Z, A, N) ' +
+      'VALUES (:Prefered, :Title, :Description, :Filename, :Z, :TypeKat, :idLink)';
+    ParamByName('Prefered').AsBoolean := Prefered;
+    ParamByName('Title').AsString := Title;
+    ParamByName('Description').AsString := Description;
+    ParamByName('Filename').AsString := Filename;
+    ParamByName('Z').AsString := DocumentInfo;
+    ParamByName('TypeKat').AsString := TypeKat;
+    ParamByName('idLink').AsInteger := idLink;
+    ExecSQL;
+   end;
 end;
 
 procedure TdmGenData.UpdateModificationByEventDocument(lidDocument: integer);
@@ -4159,6 +4447,27 @@ begin
    end;
 end;
 
+procedure TdmGenData.FillTypeRolesList(const items: TStrings; const lidType: PtrInt);
+var
+  temp: string;
+begin
+  with qryInternal do
+   begin
+    SQL.Text := 'SELECT Y.R FROM Y WHERE Y.no=:idType';
+    ParamByName('idType').AsInteger := lidType;
+    Open;
+    First;
+    Items.Clear;
+    temp := Fields[0].AsString;
+    while AnsiPos('|', temp) > 0 do
+     begin
+      Items.Add(Copy(temp, 1, AnsiPos('|', temp) - 1));
+      temp := Copy(temp, AnsiPos('|', temp) + 1, length(temp));
+     end;
+    Items.Add(Copy(temp, 1, length(temp)));
+   end;
+end;
+
 {$endregion ~Type}
 {$region Source}
 procedure TdmGenData.InsertSource(const lidSource: longint;
@@ -4397,7 +4706,7 @@ end;
 
 procedure TdmGenData.FillDepotsSL(const LStr: TStrings);
 var
-  sourcenumber: String;
+  sourcenumber: string;
 begin
   with qryInternal do
    begin
@@ -4461,14 +4770,70 @@ begin
    end;
 end;
 
-procedure TdmGenData.DeletePlace(const lidPlace: Integer);
+function TdmGenData.SavePlaceData(idPlace: integer; const Place: string): integer;
+
 begin
-  with qryInternal do begin
-   Close;
-SQL.Text:='DELETE FROM L WHERE no=:idPlace';
-    ParamByName('idPlace').AsInteger:=lidPlace;
+  with qryInternal do
+   begin
+    Close;
+    if idplace = 0 then
+      SQL.Text := 'INSERT INTO L (L) VALUES (:Place)'
+    else
+     begin
+      SQL.Text := 'UPDATE L SET L.L=:Place WHERE L.no=:idPlace';
+      ParamByName('idPlace').AsInteger := idPlace;
+     end;
+    ParamByName('Place').AsString := Place;
     ExecSQL;
-  end;
+    if idPlace > 0 then
+      Result := idPlace
+    else
+     begin
+      SQL.Text := 'SELECT @@Identity';
+      Open;
+      Result := Fields[0].AsInteger;
+      Close;
+     end;
+   end;
+end;
+
+function TdmGenData.GetPlaceID(var Place: string): integer;
+
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text := 'SELECT L.no FROM L WHERE L.L=:Place';
+    ParamByName('Place').AsString := Place;
+    Open;
+    if not EOF then
+      Result := Fields[0].AsInteger
+    else
+      Result := -1;
+   end;
+end;
+
+procedure TdmGenData.UpdatePlaceData(const lidPlace: integer; const lPlace: string);
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text := 'UPDATE L SET L=:Place WHERE no=:idPlace';
+    ParamByName('Place').AsString := lPlace;
+    ParamByName('idPlace').AsInteger := lidPlace;
+    ExecSQL;
+   end;
+end;
+
+procedure TdmGenData.DeletePlace(const lidPlace: integer);
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text := 'DELETE FROM L WHERE no=:idPlace';
+    ParamByName('idPlace').AsInteger := lidPlace;
+    ExecSQL;
+   end;
 end;
 
 procedure TdmGenData.FillTablePlaces(const lTblPlace: TStringGrid;
@@ -4485,92 +4850,93 @@ var
   pos1: integer;
   i: integer;
 begin
-  with qryInternal do begin
+  with qryInternal do
+   begin
     SQL.Clear;
     SQL.add('SELECT L.no, L.L, COUNT(E.L) FROM L JOIN E on E.L=L.no GROUP by L.no');
     Open;
     First;
-    lTblPlace.RowCount:=RecordCount+1;
-    Tag:=-lTblPlace.RowCount;
+    lTblPlace.RowCount := RecordCount + 1;
+    Tag := -lTblPlace.RowCount;
     if assigned(lOnUpdate) then
-       lOnUpdate(dmGenData.Query1);
-    Tag:=0;
+      lOnUpdate(qryInternal);
+    Tag := 0;
     if assigned(lOnUpdate) then
-       lOnUpdate(dmGenData.Query1);
-    i:=0;
-    While not Eof do
+      lOnUpdate(qryInternal);
+    i := 0;
+    while not EOF do
+     begin
+      i := i + 1;
+      lTblPlace.Cells[0, i] := Fields[0].AsString;
+      lTblPlace.Cells[1, i] := Fields[0].AsString;
+      Lieu := Fields[1].AsString;
+      if Copy(Lieu, 1, 4) = '!TMG' then
        begin
-       i:=i+1;
-       lTblPlace.Cells[0,i]:=Fields[0].AsString;
-       lTblPlace.Cells[1,i]:=Fields[0].AsString;
-       Lieu:=Fields[1].AsString;
-       if Copy(Lieu,1,4)='!TMG' then
-          begin
-          LA:='';
-          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
-          L0:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
-          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
-          L1:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
-          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
-          L2:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
-          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
-          L3:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
-          Lieu:=Copy(Lieu,AnsiPos('|',Lieu)+1,Length(Lieu));
-          L4:=Copy(Lieu,1,AnsiPos('|',Lieu)-1);
+        LA := '';
+        Lieu := Copy(Lieu, AnsiPos('|', Lieu) + 1, Length(Lieu));
+        L0 := Copy(Lieu, 1, AnsiPos('|', Lieu) - 1);
+        Lieu := Copy(Lieu, AnsiPos('|', Lieu) + 1, Length(Lieu));
+        L1 := Copy(Lieu, 1, AnsiPos('|', Lieu) - 1);
+        Lieu := Copy(Lieu, AnsiPos('|', Lieu) + 1, Length(Lieu));
+        L2 := Copy(Lieu, 1, AnsiPos('|', Lieu) - 1);
+        Lieu := Copy(Lieu, AnsiPos('|', Lieu) + 1, Length(Lieu));
+        L3 := Copy(Lieu, 1, AnsiPos('|', Lieu) - 1);
+        Lieu := Copy(Lieu, AnsiPos('|', Lieu) + 1, Length(Lieu));
+        L4 := Copy(Lieu, 1, AnsiPos('|', Lieu) - 1);
        end
-       else
-          begin
-          Pos1:=AnsiPos('<'+CTagNameArticle+'>',Lieu)+Length(CTagNameArticle)+2;
-          Pos2:=AnsiPos('</'+CTagNameArticle+'>',Lieu);
-          if (Pos1+Pos2)>(Length(CTagNameDetail)+2) then
-             LA:=Copy(Lieu,Pos1,Pos2-Pos1)
-          else
-             LA:='';
-          Pos1:=AnsiPos('<'+CTagNameDetail+'>',Lieu)+(Length(CTagNameDetail)+2);
-          Pos2:=AnsiPos('</'+CTagNameDetail+'>',Lieu);
-          if (Pos1+Pos2)>(Length(CTagNameDetail)+2) then
-             L0:=Copy(Lieu,Pos1,Pos2-Pos1)
-          else
-             L0:='';
-          Pos1:=AnsiPos('<' + CTagNamePlace + '>',Lieu)+7;
-          Pos2:=AnsiPos('</' + CTagNamePlace + '>',Lieu);
-          if (Pos1+Pos2)>7 then
-             L1:=Copy(Lieu,Pos1,Pos2-Pos1)
-          else
-             L1:='';
-          Pos1:=AnsiPos('<' + CTagNameRegion + '>',Lieu)+9;
-          Pos2:=AnsiPos('</' + CTagNameRegion + '>',Lieu);
-          if (Pos1+Pos2)>9 then
-             L2:=Copy(Lieu,Pos1,Pos2-Pos1)
-          else
-             L2:='';
-          Pos1:=AnsiPos('<' + CTagNameCountry + '>',Lieu)+10;
-          Pos2:=AnsiPos('</' + CTagNameCountry + '>',Lieu);
-          if (Pos1+Pos2)>10 then
-             L3:=Copy(Lieu,Pos1,Pos2-Pos1)
-          else
-             L3:='';
-          Pos1:=AnsiPos('<' + CTagNameState + '>',Lieu)+6;
-          Pos2:=AnsiPos('</' + CTagNameState + '>',Lieu);
-          if (Pos1+Pos2)>6 then
-             L4:=Copy(Lieu,Pos1,Pos2-Pos1)
-          else
-             L4:='';
+      else
+       begin
+        Pos1 := AnsiPos('<' + CTagNameArticle + '>', Lieu) + Length(CTagNameArticle) + 2;
+        Pos2 := AnsiPos('</' + CTagNameArticle + '>', Lieu);
+        if (Pos1 + Pos2) > (Length(CTagNameDetail) + 2) then
+          LA := Copy(Lieu, Pos1, Pos2 - Pos1)
+        else
+          LA := '';
+        Pos1 := AnsiPos('<' + CTagNameDetail + '>', Lieu) + (Length(CTagNameDetail) + 2);
+        Pos2 := AnsiPos('</' + CTagNameDetail + '>', Lieu);
+        if (Pos1 + Pos2) > (Length(CTagNameDetail) + 2) then
+          L0 := Copy(Lieu, Pos1, Pos2 - Pos1)
+        else
+          L0 := '';
+        Pos1 := AnsiPos('<' + CTagNamePlace + '>', Lieu) + 7;
+        Pos2 := AnsiPos('</' + CTagNamePlace + '>', Lieu);
+        if (Pos1 + Pos2) > 7 then
+          L1 := Copy(Lieu, Pos1, Pos2 - Pos1)
+        else
+          L1 := '';
+        Pos1 := AnsiPos('<' + CTagNameRegion + '>', Lieu) + 9;
+        Pos2 := AnsiPos('</' + CTagNameRegion + '>', Lieu);
+        if (Pos1 + Pos2) > 9 then
+          L2 := Copy(Lieu, Pos1, Pos2 - Pos1)
+        else
+          L2 := '';
+        Pos1 := AnsiPos('<' + CTagNameCountry + '>', Lieu) + 10;
+        Pos2 := AnsiPos('</' + CTagNameCountry + '>', Lieu);
+        if (Pos1 + Pos2) > 10 then
+          L3 := Copy(Lieu, Pos1, Pos2 - Pos1)
+        else
+          L3 := '';
+        Pos1 := AnsiPos('<' + CTagNameState + '>', Lieu) + 6;
+        Pos2 := AnsiPos('</' + CTagNameState + '>', Lieu);
+        if (Pos1 + Pos2) > 6 then
+          L4 := Copy(Lieu, Pos1, Pos2 - Pos1)
+        else
+          L4 := '';
        end;
-       lTblPlace.Cells[2,i]:=LA;
-       lTblPlace.Cells[3,i]:=L0;
-       lTblPlace.Cells[4,i]:=L1;
-       lTblPlace.Cells[5,i]:=L2;
-       lTblPlace.Cells[6,i]:=L3;
-       lTblPlace.Cells[7,i]:=L4;
-       lTblPlace.Cells[8,i]:=Fields[2].AsString;
-       Next;
-       Tag:=RecNo;
-       if assigned(lOnUpdate) then
-          lOnUpdate(dmGenData.Query1);
-    end;
-  end;
-  lTblPlace.SortColRow(true,3);
+      lTblPlace.Cells[2, i] := LA;
+      lTblPlace.Cells[3, i] := L0;
+      lTblPlace.Cells[4, i] := L1;
+      lTblPlace.Cells[5, i] := L2;
+      lTblPlace.Cells[6, i] := L3;
+      lTblPlace.Cells[7, i] := L4;
+      lTblPlace.Cells[8, i] := Fields[2].AsString;
+      Next;
+      Tag := RecNo;
+      if assigned(lOnUpdate) then
+        lOnUpdate(qryInternal);
+     end;
+   end;
+  lTblPlace.SortColRow(True, 3);
 end;
 
 {$endregion ~Places}

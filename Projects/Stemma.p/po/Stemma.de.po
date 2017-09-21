@@ -2943,6 +2943,10 @@ msgctxt "tfrmedittype.t.text"
 msgid "T"
 msgstr "Zu suchender ~T~ext"
 
+#: tfrmeditwitness.caption
+msgid "Modification d'un témoin"
+msgstr ""
+
 #: tfrmeditwitness.chbprefered.caption
 msgctxt "tfrmeditwitness.chbprefered.caption"
 msgid "Prefered"
@@ -3575,6 +3579,12 @@ msgstr "Bitte wählen ..."
 msgctxt "tfrmshowimage.mniquit.caption"
 msgid "&Quit"
 msgstr "&Beenden"
+
+#: tfrmshowusage.caption
+#, fuzzy
+msgctxt "tfrmshowusage.caption"
+msgid "Utilisation"
+msgstr "Verwendung"
 
 #: tfrmshowusage.tblusage.columns[0].title.caption
 msgctxt "tfrmshowusage.tblusage.columns[0].title.caption"

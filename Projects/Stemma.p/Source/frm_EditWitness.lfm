@@ -7,12 +7,12 @@ object frmEditWitness: TfrmEditWitness
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification d''un témoin'
-  ClientHeight = 287
+  ClientHeight = 267
   ClientWidth = 628
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
-  Visible = False
+  LCLVersion = '1.9.0.0'
   object pnlTop: TPanel
     Left = 0
     Height = 80
@@ -168,7 +168,7 @@ object frmEditWitness: TfrmEditWitness
   object pnlBottom: TPanel
     Left = 0
     Height = 56
-    Top = 231
+    Top = 211
     Width = 628
     Align = alBottom
     BevelOuter = bvNone
@@ -202,8 +202,8 @@ object frmEditWitness: TfrmEditWitness
     end
   end
   object MainMenu1: TMainMenu
-    left = 25
-    top = 200
+    Left = 25
+    Top = 200
     object MenuItem2: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114
