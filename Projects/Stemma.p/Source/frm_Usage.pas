@@ -66,7 +66,8 @@ begin
   TableauUtilisation.ColWidths[4] := 135;
   with dmGenData.Query1 do begin
 SQL.Text :=
-      'SELECT A.S, S.T, S.M, S.A FROM A JOIN S on A.S=S.no WHERE A.D=:idSource';
+      'SELECT A.S, S.T, S.M, S.A '+
+      'FROM A JOIN S on A.S=S.no WHERE A.D=:idSource';
     ParamByName('idSource').AsInteger := lFidLink;
     Open;
     i := 1;
@@ -110,10 +111,14 @@ begin
 with dmGenData.Query1 do begin
       SQL.Text :=
         'SELECT E.no, Y.T, N.N, W.I, E.PD ' +
-        'FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no JOIN N on W.I=N.I JOIN C on C.N=E.no '
-        +
-        'WHERE C.Y=''E'' AND N.X=1 AND E.Y=:idEventType';
+        'FROM E '+
+        'JOIN W on W.E=E.no '+
+        'JOIN Y on E.Y=Y.no '+
+        'JOIN N on W.I=N.I '+
+        'JOIN C on C.N=E.no '+
+        'WHERE C.Y=:TypeKat AND N.X=1 AND E.Y=:idEventType';
       ParamByName('idEventType').AsInteger := lidLink;
+      ParamByName('TypeKat').AsString := 'E';
       Open;
       i := 1;
       lTableauUtilisation.RowCount := RecordCount + 1;
@@ -174,69 +179,70 @@ procedure FillSourceUsageTable(var lTableauUtilisation: TStringGrid;
 var
   i: integer;
 begin
+  with dmGenData.Query1 do
   begin
-    dmGenData.Query1.SQL.Text :=
-      'SELECT E.no, Y.T, N.N, W.I, E.PD ' +
-      'FROM E '+
-      'JOIN W on W.E=E.no '+
-      'JOIN Y on E.Y=Y.no '+
-      'JOIN N on W.I=N.I '+
-      'JOIN C on C.N=E.no '+
-      'WHERE C.Y=:Type AND N.X=1 AND C.S=:idSource';
-    dmGenData.Query1.ParamByName('Type').AsString := 'E';
-    dmGenData.Query1.ParamByName('idSource').AsInteger := lidLink;
-    dmGenData.Query1.Open;
-    i := 1;
-    lTableauUtilisation.RowCount := dmGenData.Query1.RecordCount + 1;
-    while not dmGenData.Query1.EOF do
-    begin
-      lTableauUtilisation.Cells[0, i] := dmGenData.Query1.Fields[0].AsString;
-      lTableauUtilisation.Cells[1, i] := dmGenData.Query1.Fields[1].AsString;
-      lTableauUtilisation.Cells[2, i] :=
-        DecodeName(dmGenData.Query1.Fields[2].AsString, 1);
-      lTableauUtilisation.Cells[3, i] := dmGenData.Query1.Fields[3].AsString;
-      lTableauUtilisation.Cells[4, i] :=
-        ConvertDate(dmGenData.Query1.Fields[4].AsString, 1);
-      i := i + 1;
-      dmGenData.Query1.Next;
+      SQL.Text :=
+        'SELECT E.no, Y.T, N.N, W.I, E.PD ' +
+        'FROM E '+
+        'JOIN W on W.E=E.no '+
+        'JOIN Y on E.Y=Y.no '+
+        'JOIN N on W.I=N.I '+
+        'JOIN C on C.N=E.no '+
+        'WHERE C.Y=:Type AND N.X=1 AND C.S=:idSource';
+      ParamByName('Type').AsString := 'E';
+      ParamByName('idSource').AsInteger := lidLink;
+      Open;
+      i := 1;
+      lTableauUtilisation.RowCount := RecordCount + 1;
+      while not EOF do
+      begin
+        lTableauUtilisation.Cells[0, i] := Fields[0].AsString;
+        lTableauUtilisation.Cells[1, i] := Fields[1].AsString;
+        lTableauUtilisation.Cells[2, i] :=
+          DecodeName(Fields[2].AsString, 1);
+        lTableauUtilisation.Cells[3, i] := Fields[3].AsString;
+        lTableauUtilisation.Cells[4, i] :=
+          ConvertDate(Fields[4].AsString, 1);
+        i := i + 1;
+        Next;
+      end;
+      SQL.Text :=
+        'SELECT R.no, Y.T, N.N, R.A, R.SD FROM R JOIN Y on R.Y=Y.no JOIN N on R.A=N.I JOIN C on C.N=R.no WHERE C.Y=''R'' AND N.X=1 AND C.S='
+        + FrmSources.TableauSources.Cells[1, FrmSources.TableauSources.Row];
+      Open;
+      lTableauUtilisation.RowCount :=
+        lTableauUtilisation.RowCount + RecordCount;
+      while not EOF do
+      begin
+        lTableauUtilisation.Cells[0, i] := Fields[0].AsString;
+        lTableauUtilisation.Cells[1, i] := Fields[1].AsString;
+        lTableauUtilisation.Cells[2, i] :=
+          DecodeName(Fields[2].AsString, 1);
+        lTableauUtilisation.Cells[3, i] := Fields[3].AsString;
+        lTableauUtilisation.Cells[4, i] :=
+          ConvertDate(Fields[4].AsString, 1);
+        i := i + 1;
+        Next;
+      end;
+      SQL.Text :=
+        'SELECT N.no, Y.T, N.N, N.I, N.PD FROM N JOIN Y on N.Y=Y.no JOIN C on C.N=N.no WHERE C.Y=''N'' AND N.X=1 AND C.S='
+        + FrmSources.TableauSources.Cells[1, FrmSources.TableauSources.Row];
+      Open;
+      lTableauUtilisation.RowCount :=
+        lTableauUtilisation.RowCount + RecordCount;
+      while not EOF do
+      begin
+        lTableauUtilisation.Cells[0, i] := Fields[0].AsString;
+        lTableauUtilisation.Cells[1, i] := Fields[1].AsString;
+        lTableauUtilisation.Cells[2, i] :=
+          DecodeName(Fields[2].AsString, 1);
+        lTableauUtilisation.Cells[3, i] := Fields[3].AsString;
+        lTableauUtilisation.Cells[4, i] :=
+          ConvertDate(Fields[4].AsString, 1);
+        i := i + 1;
+        Next;
+      end;
     end;
-    dmGenData.Query1.SQL.Text :=
-      'SELECT R.no, Y.T, N.N, R.A, R.SD FROM R JOIN Y on R.Y=Y.no JOIN N on R.A=N.I JOIN C on C.N=R.no WHERE C.Y=''R'' AND N.X=1 AND C.S='
-      + FrmSources.TableauSources.Cells[1, FrmSources.TableauSources.Row];
-    dmGenData.Query1.Open;
-    lTableauUtilisation.RowCount :=
-      lTableauUtilisation.RowCount + dmGenData.Query1.RecordCount;
-    while not dmGenData.Query1.EOF do
-    begin
-      lTableauUtilisation.Cells[0, i] := dmGenData.Query1.Fields[0].AsString;
-      lTableauUtilisation.Cells[1, i] := dmGenData.Query1.Fields[1].AsString;
-      lTableauUtilisation.Cells[2, i] :=
-        DecodeName(dmGenData.Query1.Fields[2].AsString, 1);
-      lTableauUtilisation.Cells[3, i] := dmGenData.Query1.Fields[3].AsString;
-      lTableauUtilisation.Cells[4, i] :=
-        ConvertDate(dmGenData.Query1.Fields[4].AsString, 1);
-      i := i + 1;
-      dmGenData.Query1.Next;
-    end;
-    dmGenData.Query1.SQL.Text :=
-      'SELECT N.no, Y.T, N.N, N.I, N.PD FROM N JOIN Y on N.Y=Y.no JOIN C on C.N=N.no WHERE C.Y=''N'' AND N.X=1 AND C.S='
-      + FrmSources.TableauSources.Cells[1, FrmSources.TableauSources.Row];
-    dmGenData.Query1.Open;
-    lTableauUtilisation.RowCount :=
-      lTableauUtilisation.RowCount + dmGenData.Query1.RecordCount;
-    while not dmGenData.Query1.EOF do
-    begin
-      lTableauUtilisation.Cells[0, i] := dmGenData.Query1.Fields[0].AsString;
-      lTableauUtilisation.Cells[1, i] := dmGenData.Query1.Fields[1].AsString;
-      lTableauUtilisation.Cells[2, i] :=
-        DecodeName(dmGenData.Query1.Fields[2].AsString, 1);
-      lTableauUtilisation.Cells[3, i] := dmGenData.Query1.Fields[3].AsString;
-      lTableauUtilisation.Cells[4, i] :=
-        ConvertDate(dmGenData.Query1.Fields[4].AsString, 1);
-      i := i + 1;
-      dmGenData.Query1.Next;
-    end;
-  end;
 end;
 
 procedure FillPlaceUsageTable(const lTableauUtilisation: TStringGrid;
@@ -244,23 +250,30 @@ procedure FillPlaceUsageTable(const lTableauUtilisation: TStringGrid;
 var
   i: integer;
 begin
-  dmGenData.Query1.SQL.Text :=
-    'SELECT E.no, Y.T, N.N, W.I, E.PD FROM E JOIN W on W.E=E.no JOIN Y on E.Y=Y.no JOIN N on W.I=N.I WHERE N.X=1 AND E.L=:idPlace';
-  dmGenData.Query1.ParamByName('idplace').AsInteger := lFidLink;
-  dmGenData.Query1.Open;
-  i := 1;
-  lTableauUtilisation.RowCount := dmGenData.Query1.RecordCount + 1;
-  while not dmGenData.Query1.EOF do
-  begin
-    lTableauUtilisation.Cells[0, i] := dmGenData.Query1.Fields[0].AsString;
-    lTableauUtilisation.Cells[1, i] := dmGenData.Query1.Fields[1].AsString;
-    lTableauUtilisation.Cells[2, i] :=
-      DecodeName(dmGenData.Query1.Fields[2].AsString, 1);
-    lTableauUtilisation.Cells[3, i] := dmGenData.Query1.Fields[3].AsString;
-    lTableauUtilisation.Cells[4, i] :=
-      ConvertDate(dmGenData.Query1.Fields[4].AsString, 1);
-    i := i + 1;
-    dmGenData.Query1.Next;
+  with dmGenData.Query1 do begin
+  SQL.Text :=
+      'SELECT E.no, Y.T, N.N, W.I, E.PD '+
+      'FROM E '+
+      'JOIN W on W.E=E.no '+
+      'JOIN Y on E.Y=Y.no '+
+      'JOIN N on W.I=N.I '+
+      'WHERE N.X=1 AND E.L=:idPlace';
+    ParamByName('idplace').AsInteger := lFidLink;
+    Open;
+    i := 1;
+    lTableauUtilisation.RowCount := RecordCount + 1;
+    while not EOF do
+    begin
+      lTableauUtilisation.Cells[0, i] := Fields[0].AsString;
+      lTableauUtilisation.Cells[1, i] := Fields[1].AsString;
+      lTableauUtilisation.Cells[2, i] :=
+        DecodeName(Fields[2].AsString, 1);
+      lTableauUtilisation.Cells[3, i] := Fields[3].AsString;
+      lTableauUtilisation.Cells[4, i] :=
+        ConvertDate(Fields[4].AsString, 1);
+      i := i + 1;
+      Next;
+    end;
   end;
 end;
 

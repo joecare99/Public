@@ -187,7 +187,7 @@ begin
      dmGenData.UpdateWitnessData(lidWitness, lidInd, lRole, lPhrase);
   // fr: Sauvegarder les modifications pour tout les témoins de l'événements
   // en: Save the changes for all the witnesses to the events
-  dmGenData.UpdateWitnessModbyEvent(edtIdEvent.Value);
+  dmGenData.UpdateIndModificationTimesByEvent(edtIdEvent.Value);
   // fr: Modifier la ligne de l'explorateur si naissance frmStemmaMainForm ou décès principal
   // en: Change the line of Explorer if birth frmStemmaMainForm or main death
   dmGenData.GetEventExtData(edtIdEvent.Value,lEvType,lDate,lPrefered);

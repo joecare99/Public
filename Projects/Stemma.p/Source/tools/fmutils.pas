@@ -34,7 +34,7 @@ function DecodePhrase(sIndividuum: string; role: string; phrase: string;
 function DecodePhrase(idIndividuum: integer; role: string; phrase: string;
   TypeEvenement: string; evenement: integer): string; overload;
 function DecodePhraseTMG(idSujet: integer; role: string; phrase: string;
-  TypeEvenement: string; evenement: string): string;
+  TypeEvenement: string; idEvenement: integer): string;
 function DecodePhraseStemma(idIndividual: integer; role: string; phrase: string;
   TypeEvenement: string; evenement, char: integer): string; overload;
 function DecodePhraseStemma(sIndividual: string; role: string; phrase: string;
@@ -451,7 +451,7 @@ var
 begin
   if copy(phrase, 1, 4) = '!TMG' then
     Result := trim(DecodePhraseTMG(idIndividuum, role, copy(phrase, 5, length(phrase)),
-      TypeEvenement, IntToStr(evenement)))
+      TypeEvenement, evenement))
   else
    begin
     Result := trim(DecodePhraseStemma(idIndividuum, role, phrase,
@@ -467,11 +467,13 @@ begin
 end;
 
 function DecodePhraseTMG(idSujet: integer; role: string; phrase: string;
-  TypeEvenement: string; evenement: string): string;
+  TypeEvenement: string; idEvenement: integer): string;
 var
-  RoleRecherche, Remplace, Code, temp, Sexe, lsI3: string;
+  RoleRecherche, Remplace, Code, temp, Sexe, lsI3, lSortDate, lMemo,
+    lSex, lPhrase: string;
   i, PosStart1, PosStart2, PosEnd1, PosEnd2, PosSeparateur: integer;
-  Continue: boolean;
+  Continue, lPrefered: boolean;
+  lidChild, lidParent, lidInd2, lRelType: longint;
 begin
   if AnsiPos('[L=' + Translation.Items[320] + ']', uppercase(phrase)) > 0 then
    begin
@@ -578,67 +580,51 @@ begin
 
   Remplace := '';
   if TypeEvenement = 'R' then
-    with dmGenData.Query4 do
      begin
+      dmgendata.GetRelationData(idEvenement,lSortDate,lPhrase,lMemo,lPrefered,lidParent,lidChild,lRelType);
+      with dmGenData.Query4 do
        begin
         if PosEnd2 > PosStart2 then
          begin
           Code := Copy(Phrase, PosStart2 + 1, PosEnd2 - PosStart2 - 1);
           if Code = 'A' then
            begin
-            SQL.Text := 'SELECT SD FROM R WHERE no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Open;
-            Remplace := CalculateAge(dmGenData.GetI3(idSujet), Fields[0].AsString, 0);
+            Remplace := CalculateAge(dmGenData.GetI3(idSujet), lSortDate, 0);
             if Remplace = '0' then
               Remplace := '';
            end;
           if Code = 'A1' then
            begin
-            SQL.Text := 'SELECT SD, A FROM R WHERE no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Open;
-            lsI3 := dmGenData.GetI3(Fields[1].AsInteger);
-            Remplace := CalculateAge(lsI3, Fields[0].AsString, 0);
+            lsI3 := dmGenData.GetI3(lidChild);
+            Remplace := CalculateAge(lsI3, lSortDate, 0);
             if Remplace = '0' then
               Remplace := '';
            end;
           if Code = 'A2' then
            begin
-            SQL.Text := 'SELECT SD, B FROM R WHERE no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Open;
-            lsI3 := dmGenData.GetI3(Fields[1].AsInteger);
-            Remplace := CalculateAge(lsI3, Fields[0].AsString, 0);
+            lsI3 := dmGenData.GetI3(lidParent);
+            Remplace := CalculateAge(lsI3, lSortDate, 0);
             if Remplace = '0' then
               Remplace := '';
            end;
           if Code = 'AO' then
            begin
-            SQL.Text := 'SELECT SD, B, A FROM R WHERE no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
             if Fields[1].AsInteger = idSujet then
-              lsi3 := dmGenData.geti3(Fields[1].AsInteger)
+              lsi3 := dmGenData.geti3(lidParent)
             else
-              lsi3 := dmGenData.geti3(Fields[2].AsInteger);
-            Remplace := CalculateAge(lsI3, Fields[0].AsString, 0);
+              lsi3 := dmGenData.geti3(lidChild);
+            Remplace := CalculateAge(lsI3, lSortDate, 0);
             if Remplace = '0' then
               Remplace := '';
            end;
           if Code = 'D' then
            begin
-            SQL.Text := 'SELECT SD FROM R WHERE no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Open;
-            Remplace := ConvertDate(Fields[0].AsString, 0);
+            Remplace := ConvertDate(lSortDate, 0);
            end;
           //         if Code='L' then remplace:='/LIEU/'; JAMAIS DANS type 'R'
           if Code = 'M' then
            begin
-            SQL.Text := 'SELECT M FROM R WHERE no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Open;
-            Remplace := Fields[0].AsString;
+            Remplace := lMemo;
             if AnsiPos('[L=' + Translation.Items[320] + ']', uppercase(Remplace)) > 0 then
              begin
               Remplace := copy(Remplace, AnsiPos(
@@ -651,24 +637,18 @@ begin
           if (Code = 'W') or (Code = 'N') then
            begin
             if role = 'ENFANT' then
-              SQL.Text :=
-                'SELECT N.N FROM N JOIN R on N.I = R.A WHERE N.X=1 and R.no=:idEvent'
+              Remplace := DecodeName(dmGenData.GetIndividuumName(lidChild), 1)
             else
-              SQL.Text :=
-                'SELECT N.N FROM N JOIN R on N.I = R.B WHERE N.X=1 and R.no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Open;
-            Remplace := DecodeName(Fields[0].AsString, 1);
+              Remplace := DecodeName(dmGenData.GetIndividuumName(lidParent), 1);
+
            end;
           if Code = 'P' then
            begin
             if role = 'ENFANT' then
-              SQL.Text := 'SELECT I.S FROM R JOIN I ON R.A=I.no WHERE R.no=:idEvent'
+              lSex := dmGenData.GetSexOfInd(lidChild)
             else
-              SQL.Text := 'SELECT I.S FROM R JOIN I ON R.B=I.no WHERE R.no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Open;
-            if Fields[0].AsString = 'F' then
+              lSex := dmGenData.GetSexOfInd(lidParent);
+            if lSex = 'F' then
               Remplace := Translation.Items[66]
             else
               Remplace := Translation.Items[67];
@@ -676,12 +656,10 @@ begin
           if Code = 'PP' then
            begin
             if role = 'ENFANT' then
-              SQL.Text := 'SELECT I.S FROM R JOIN I ON R.A=I.no WHERE R.no=:idEvent'
-            else
-              SQL.Text := 'SELECT I.S FROM R JOIN I ON R.B=I.no WHERE R.no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Open;
-            if Fields[0].AsString = 'F' then
+             lSex := dmGenData.GetSexOfInd(lidChild)
+           else
+             lSex := dmGenData.GetSexOfInd(lidParent);
+           if lSex = 'F' then
               Remplace := Translation.Items[68]
             else
               Remplace := Translation.Items[69];
@@ -689,30 +667,17 @@ begin
           if Code = 'PO' then
            begin
             if role = 'ENFANT' then
-              SQL.Text :=
-                'SELECT N.N FROM N JOIN R on N.I = R.B WHERE N.X=1 and R.no=:idEvent'
-            else
-              SQL.Text :=
-                'SELECT N.N FROM N JOIN R on N.I = R.A WHERE N.X=1 and R.no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Open;
-            Remplace := DecodeName(Fields[0].AsString, 1);
+             Remplace := DecodeName(dmGenData.GetIndividuumName(lidParent), 1)
+           else
+             Remplace := DecodeName(dmGenData.GetIndividuumName(lidChild), 1);
            end;
           if Code = 'P1' then
            begin
-            SQL.Text :=
-              'SELECT N.N FROM N JOIN R on N.I = R.A WHERE N.X=1 and R.no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Open;
-            Remplace := DecodeName(Fields[0].AsString, 1);
+            Remplace := DecodeName(dmGenData.GetIndividuumName(lidChild), 1);
            end;
           if Code = 'P2' then
            begin
-            SQL.Text :=
-              'SELECT N.N FROM N JOIN R on N.I = R.B WHERE N.X=1 and R.no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Open;
-            Remplace := DecodeName(Fields[0].AsString, 1);
+            Remplace := DecodeName(dmGenData.GetIndividuumName(lidParent), 1)
            end;
           if Code = 'PAR' then
            begin
@@ -736,20 +701,14 @@ begin
            end;
           if Code = 'PARO' then
            begin
-            SQL.Text := 'SELECT A,B FROM R WHERE no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Open;
             if role = 'ENFANT' then
-              Remplace := Fields[1].AsString
+              lidInd2:= lidParent
             else
-              Remplace := Fields[0].AsString;
-            SQL.Text := 'SELECT I.S FROM I WHERE I.no=:iiPara1';
-            ParamByName('idPara1').AsString := Remplace;
-            Open;
-            Sexe := Fields[0].AsString;
+              lidInd2:= lidChild;
+            Sexe := dmGenData.GetSexOfInd(lidInd2);
             SQL.Text :=
-              'SELECT N.N FROM N JOIN R on N.I = R.B WHERE R.X=1 AND N.X=1 AND R.A=' +
-              Remplace + ' ORDER BY R.SD';
+              'SELECT N.N FROM N JOIN R on N.I = R.B WHERE R.X=1 AND N.X=1 AND R.A=:idInd ORDER BY R.SD';
+            ParamByName('idInd').AsInteger := lidInd2;
             Open;
             if not EOF then
              begin
@@ -767,13 +726,11 @@ begin
            end;
           if Code = 'PAR1' then
            begin
-            SQL.Text := 'SELECT R.A, I.S FROM R JOIN I on R.A=I.no WHERE R.no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Remplace := Fields[0].AsString;
-            Sexe := Fields[1].AsString;
+            Sexe := dmGenData.GetSexOfInd(lidChild);
             SQL.Text :=
-              'SELECT N.N FROM N JOIN R on N.I = R.B WHERE R.X=1 AND N.X=1 AND R.A=' +
-              Remplace + ' ORDER BY R.SD';
+              'SELECT N.N FROM N JOIN R on N.I = R.B WHERE R.X=1 AND N.X=1 AND '+
+               'R.A=:idInd ORDER BY R.SD';
+            ParamByName('idInd').AsInteger := lidChild;
             Open;
             if not EOF then
              begin
@@ -791,13 +748,11 @@ begin
            end;
           if Code = 'PAR2' then
            begin
-            SQL.Text := 'SELECT R.B, I.S FROM R JOIN I on R.B=I.no WHERE R.no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Remplace := Fields[0].AsString;
-            Sexe := Fields[1].AsString;
+            Sexe := dmGenData.GetSexOfInd(lidParent);
             SQL.Text :=
-              'SELECT N.N FROM N JOIN R on N.I = R.B WHERE R.X=1 AND N.X=1 AND R.A=' +
-              Remplace + ' ORDER BY R.SD';
+              'SELECT N.N FROM N JOIN R on N.I = R.B WHERE R.X=1 AND N.X=1 AND '+
+               'R.A=:idInd ORDER BY R.SD';
+            ParamByName('idInd').AsInteger := lidParent;
             Open;
             if not EOF then
              begin
@@ -817,14 +772,9 @@ begin
           if Copy(Code, 1, 2) = 'R:' then // soit ENFANT, soit PARENT
            begin
             if Copy(Code, 3, length(code)) = 'ENFANT' then
-              SQL.Text :=
-                'SELECT N.N FROM N JOIN R on N.I = R.A WHERE N.X=1 and R.no=:idEvent'
+              Remplace := DecodeName(dmGenData.GetIndividuumName(lidChild), 1)
             else
-              SQL.Text :=
-                'SELECT N.N FROM N JOIN R on N.I = R.B WHERE N.X=1 and R.no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
-            Open;
-            Remplace := DecodeName(Fields[0].AsString, 1);
+              Remplace := DecodeName(dmGenData.GetIndividuumName(lidParent), 1);
            end;
          end;
        end;
@@ -839,7 +789,7 @@ begin
           if Code = 'A' then
            begin
             SQL.Text := 'SELECT PD FROM E WHERE no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
+            ParamByName('idEvent').AsInteger := idEvenement;
             Open;
             Remplace := CalculateAge(dmGenData.GetI3(idSujet), Fields[0].AsString, 0);
             if Remplace = '0' then
@@ -849,7 +799,7 @@ begin
            begin
             SQL.Text :=
               'SELECT E.PD, W.I FROM E JOIN W on E.no=W.E WHERE W.X=1 AND no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
+            ParamByName('idEvent').AsInteger := idEvenement;
             Open;
             if not EOF then
              begin
@@ -863,7 +813,7 @@ begin
            begin
             SQL.Text :=
               'SELECT E.PD, W.I FROM E JOIN W on E.no=W.E WHERE W.X=1 AND no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
+            ParamByName('idEvent').AsInteger := idEvenement;
             Open;
             if not EOF then
              begin
@@ -882,7 +832,7 @@ begin
             SQL.Text :=
               'SELECT E.PD, W.I FROM E JOIN W on E.no=W.E WHERE W.X=1 AND (NOT (W.I=:idInd)) AND no=:idEvent';
             ParamByName('idind').AsInteger := idSujet;
-            ParamByName('idEvent').AsString := Evenement;
+            ParamByName('idEvent').AsInteger := idEvenement;
             Open;
             if not EOF then
              begin
@@ -895,21 +845,21 @@ begin
           if Code = 'D' then
            begin
             SQL.Text := 'SELECT PD FROM E WHERE no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
+            ParamByName('idEvent').AsInteger := idEvenement;
             Open;
             Remplace := ConvertDate(Fields[0].AsString, 0);
            end;
           if Code = 'L' then
            begin
             SQL.Text := 'SELECT L.L FROM L JOIN E ON L.no=E.L WHERE E.no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
+            ParamByName('idEvent').AsInteger := idEvenement;
             Open;
             Remplace := DecodeChanged(Fields[0].AsString);
            end;
           if Code = 'M' then
            begin
             SQL.Text := 'SELECT M FROM E WHERE no=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
+            ParamByName('idEvent').AsInteger := idEvenement;
             Open;
             Remplace := Fields[0].AsString;
             if AnsiPos('[L=' + Translation.Items[320] + ']', uppercase(Remplace)) > 0 then
@@ -952,7 +902,8 @@ begin
            begin
             SQL.Text :=
               'SELECT N.N FROM N JOIN W on N.I=W.I WHERE W.X=1 AND N.X=1 AND W.E=' +
-              Evenement + ' AND NOT W.I=:idInd';
+              ':idEvent AND NOT W.I=:idInd';
+            ParamByName('idEvent').AsInteger := idEvenement;
             ParamByName('idind').AsInteger := idSujet;
             Open;
             if not EOF then
@@ -962,7 +913,7 @@ begin
            begin
             SQL.Text :=
               'SELECT N.N FROM N JOIN W on N.I=W.I WHERE W.X=1 AND N.X=1 AND W.E=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
+            ParamByName('idEvent').AsInteger := idEvenement;
             Open;
             if not EOF then
               Remplace := DecodeName(Fields[0].AsString, 1);
@@ -971,7 +922,7 @@ begin
            begin
             SQL.Text :=
               'SELECT N.N FROM N JOIN W on N.I=W.I WHERE W.X=1 AND N.X=1 AND W.E=:idEvent';
-            ParamByName('idEvent').AsString := Evenement;
+            ParamByName('idEvent').AsInteger := idEvenement;
             Open;
             if not EOF then
              begin
@@ -1004,7 +955,8 @@ begin
           if Code = 'PARO' then
            begin
             SQL.Text := 'SELECT W.I, I.S FROM W JOIN I on W.I=I.no WHERE W.X=1 AND W.E=' +
-              Evenement + ' AND NOT W.I=:idInd';
+              ':idEvent AND NOT W.I=:idInd';
+            ParamByName('idEvent').AsInteger := idEvenement;
             ParamByName('idind').AsInteger := idSujet;
             Open;
             if not EOF then
@@ -1032,8 +984,8 @@ begin
            end;
           if Code = 'PAR1' then
            begin
-            SQL.Text := 'SELECT W.I, I.S FROM W JOIN I on W.I=I.no WHERE W.X=1 AND W.E=' +
-              Evenement;
+            SQL.Text := 'SELECT W.I, I.S FROM W JOIN I on W.I=I.no WHERE W.X=1 AND W.E=:idEvent';
+            ParamByName('idEvent').AsInteger := idEvenement;
             Open;
             if not EOF then
              begin
@@ -1060,8 +1012,8 @@ begin
            end;
           if Code = 'PAR2' then
            begin
-            SQL.Text := 'SELECT W.I, I.S FROM W JOIN I on W.I=I.no WHERE W.X=1 AND W.E=' +
-              Evenement;
+            SQL.Text := 'SELECT W.I, I.S FROM W JOIN I on W.I=I.no WHERE W.X=1 AND W.E=:idEvent';
+            ParamByName('idEvent').AsInteger := idEvenement;
             Open;
             if not EOF then
              begin
@@ -1095,8 +1047,8 @@ begin
           if Code = 'WO' then
            begin
             SQL.Text :=
-              'SELECT N.N FROM N JOIN W on N.I=W.I JOIN E on W.E=E.no WHERE N.X=1 AND W.X=0 AND E.no=' +
-              Evenement;
+              'SELECT N.N FROM N JOIN W on N.I=W.I JOIN E on W.E=E.no WHERE N.X=1 AND W.X=0 AND E.no=:idEvent';
+            ParamByName('idEvent').AsInteger := idEvenement;
             Open;
             while not EOF do
              begin
@@ -1114,8 +1066,9 @@ begin
           if Copy(Code, 1, 2) = 'R:' then
            begin
             RoleRecherche := Copy(Code, 3, length(Code));
-            SQL.Text := 'SELECT N.N FROM N JOIN W on N.I=W.I WHERE N.X=1 AND W.E=' +
-              Evenement + ' AND W.R=''' + RoleRecherche + '''';
+            SQL.Text := 'SELECT N.N FROM N JOIN W on N.I=W.I WHERE N.X=1 AND W.E=:idEvent' +
+            ' AND W.R=''' + RoleRecherche + '''';
+            ParamByName('idEvent').AsInteger := idEvenement;
             Open;
             while not EOF do
              begin
@@ -1142,7 +1095,8 @@ begin
           Code := Copy(Phrase, PosStart2 + 1, PosEnd2 - PosStart2 - 1);
           if (Code = 'A') or (Code = 'A1') then
            begin
-            SQL.Text := 'SELECT PD FROM N WHERE no=' + Evenement;
+            SQL.Text := 'SELECT PD FROM N WHERE no=:idName';
+            ParamByName('idName').AsInteger := idEvenement;
             Open;
             Remplace := CalculateAge(dmGenData.GetI3(idSujet), Fields[0].AsString, 0);
             if Remplace = '0' then
@@ -1152,14 +1106,16 @@ begin
           //         if Code='AO' then JAMAIS DANS TYPE 'N'
           if Code = 'D' then
            begin
-            SQL.Text := 'SELECT PD FROM N WHERE no=' + Evenement;
+            SQL.Text := 'SELECT PD FROM N WHERE no=:idName';
+            ParamByName('idName').AsInteger := idEvenement;
             Open;
             Remplace := ConvertDate(Fields[0].AsString, 0);
            end;
           //         if Code='L' then remplace:='/LIEU/'; JAMAIS DANS type 'N'
           if Code = 'M' then
            begin
-            SQL.Text := 'SELECT M FROM N WHERE no=' + Evenement;
+            SQL.Text := 'SELECT M FROM N WHERE no=:idName';
+            ParamByName('idName').AsInteger := idEvenement;
             Open;
             Remplace := Fields[0].AsString;
             if AnsiPos('[L=' + Translation.Items[320] + ']', uppercase(Remplace)) > 0 then
@@ -1173,13 +1129,15 @@ begin
            end;
           if (Code = 'W') or (Code = 'N') or (Code = 'P1') or (Copy(Code, 1, 2) = 'R:') then
            begin
-            SQL.Text := 'SELECT N FROM N WHERE no=' + Evenement;
+            SQL.Text := 'SELECT N FROM N WHERE no=:idName';
+            ParamByName('idName').AsInteger := idEvenement;
             Open;
             Remplace := DecodeName(Fields[0].AsString, 1);
            end;
           if Code = 'P' then
            begin
-            SQL.Text := 'SELECT I.S FROM N JOIN I ON N.I=I.no WHERE N.no=' + Evenement;
+            SQL.Text := 'SELECT I.S FROM N JOIN I ON N.I=I.no WHERE N.no=:idName';
+            ParamByName('idName').AsInteger := idEvenement;
             Open;
             if Fields[0].AsString = 'F' then
               Remplace := Translation.Items[66]
@@ -1188,7 +1146,8 @@ begin
            end;
           if Code = 'PP' then
            begin
-            SQL.Text := 'SELECT I.S FROM N JOIN I ON N.I=I.no WHERE N.no=' + Evenement;
+            SQL.Text := 'SELECT I.S FROM N JOIN I ON N.I=I.no WHERE N.no=:idName';
+            ParamByName('idName').AsInteger := idEvenement;
             Open;
             if Fields[0].AsString = 'F' then
               Remplace := Translation.Items[68]
@@ -1274,7 +1233,7 @@ begin
       phrase, PosEnd2 + 1, Length(phrase));
 
   if PosEnd2 > PosStart2 then
-    phrase := DecodePhraseTMG(idSujet, role, phrase, TypeEvenement, evenement);
+    phrase := DecodePhraseTMG(idSujet, role, phrase, TypeEvenement, idEvenement);
 
   DecodePhraseTMG := phrase;
 end;
@@ -1941,7 +1900,7 @@ begin
   tryStrToInt(evenement, idEvent);
   if copy(phrase, 1, 4) = '!TMG' then
     DecodePhrase := trim(DecodePhraseTMG(
-      idInd, role, copy(phrase, 5, length(phrase)), TypeEvenement, evenement))
+      idInd, role, copy(phrase, 5, length(phrase)), TypeEvenement, idEvent))
   else
    begin
     DecodePhrase := trim(DecodePhraseStemma(idInd, role, phrase, TypeEvenement, idEvent, 1));

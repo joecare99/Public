@@ -3693,6 +3693,10 @@ msgctxt "tfrmsources.button1.caption"
 msgid "Ok"
 msgstr "Ok"
 
+#: tfrmsources.caption
+msgid "Form: Sources"
+msgstr ""
+
 #: tfrmsources.mnisourceadd.caption
 msgid "&Add ..."
 msgstr ""

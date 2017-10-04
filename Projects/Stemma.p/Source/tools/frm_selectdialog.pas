@@ -58,7 +58,6 @@ begin
     end;
 end;
 
-
 {$R *.lfm}
 
 { TfrmSelectDialog }

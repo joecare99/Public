@@ -93,8 +93,10 @@ type
     procedure SaveModificationTime(no: integer); overload;
     procedure SaveModificationTime(no: string); overload;
       deprecated {$IFNDEF NoFormat} 'use integer-variant' {$ENDIF};
-    procedure UpdateIndModificationTimeByName(lLinkID: integer);
-    procedure UpdateIndModificationTimesByEvent(lLinkID: integer);
+    procedure UpdateIndModificationTimeByName(idName: integer);
+    procedure UpdateIndModificationTimesByEvent(idEvent: integer);
+    procedure UpdateIndNotLivingByEvent(lidEvent: integer;
+      const dateevYear: integer; Sender: TObject);
 
     // Name
     function getIdNameofInd(const lidInd: integer): integer;
@@ -107,8 +109,8 @@ type
       const lidInd: longint): integer;
     procedure InsertName(const idName: integer; const idType: longint;
       const idInd: integer; const Prefered: boolean; const Note: string;
-      const Phase: string; const aName, PDate, SDate: string; const I1: string;
-      const I2: string; const I3: string; const I4: string);
+      const Phase: string; const aName, PDate, SDate: string;
+      const I1: string; const I2: string; const I3: string; const I4: string);
     procedure UpdateNameI3(const lDate: string; const lidInd: integer);
     procedure UpdateNameI4(const lDate: string; const lidInd: integer);
     procedure UpdateNamesPrefered(const idNamePref, idNameUnPref: integer);
@@ -177,6 +179,8 @@ type
     procedure UpdateIndModificationTimesByRelation(lLinkID: integer);
     function GetRelationOtherParent(const lidChild: integer;
       const lpSex: string; out parent2: integer; out lName: string): boolean;
+    procedure CreateRelationParenttoChild(const idInd: longint;
+      const idSibling: longint);
 
     // Event Methods
     procedure GetEventData(var lidEvent: integer; out LidType: longint;
@@ -225,13 +229,10 @@ type
       const lRole: string; const lPhrase: string);
     function AppendWitness(Role, Phrase: string; idInd, idEvent: integer;
       Pref: boolean): integer;
-    procedure InsertWitness(const Prefered: boolean; const idEvent: longint;
-      const idInd: longint; const Role: string; const Phrase: string);
-      deprecated {$IFNDEF NoFormat} 'use AppendWitness' {$ENDIF};
     procedure DeleteWitness(const lidWitness: integer);
+    procedure FillTableWitness(const idEvent, idInd: longint;
+      const lTblWitness: TStringGrid; out lMainRole, lPhrase: string);
     function GetWitnessListbyEvent(lidEvent: integer): string;
-    procedure UpdateWitnessModDatebyEvent(lidEvent: integer);
-    procedure UpdateWitnessModbyEvent(lidEvent: integer);
     procedure DeleteWitnessbyEvent(const lidEvent: integer);
     procedure UpdateWitnessPhraseRole(const idWitness: integer;
       const Role: string; const Phrase: string);
@@ -315,20 +316,35 @@ type
       const psInformation: string; const psAuthor: string): integer;
     function CheckIndSourceExist(idInd: integer): boolean;
     procedure DeleteSourceFull(const lidSource: integer);
+    procedure DeleteSourceLink(const lidSourceLink: integer);
     function GetSourceQuality(const lidSource: integer): longint;
     procedure FillSourcesTable(const lNotification: TNotifyEvent;
       const lTable: TStringGrid);
     procedure FillSourcesSL(const LStr: TStrings);
     function GetSourceCitCount(const lidSource: integer): integer;
+    procedure GetSourceData(const lidSource: longint; out lQuality: longint;
+      out lInformation: string; out lDescription: string; out lTitle: string;
+      out lIndLink: string);
+    function SaveSourceRepositoryData(lidSourceDepot: integer;
+      const lMemoText: string; const lidRepository: integer;
+      const lidSource: longint): integer;
 
     // Repository Methods
+    function SaveRepositoryData(const lidRepository: integer;
+      const lidInd: integer; const lMemo: string; const lDescription: string;
+      const lTitle: string): integer;
+    procedure FillRepositoryTable(const lOnUpdate: TNotifyEvent;
+      const lTblRepositories: TStringGrid);
+    procedure FullDeleteRepository(const lidRepository: integer);
     function CheckIndDepositExist(idInd: integer): boolean;
     procedure InsertDepot(const lMemo: variant; const lDescription: string;
       const lTitle: string; const lidIndividual: longint;
       const lidRepository: longint);
     procedure FillDepotsSL(const LStr: TStrings);
+    procedure PopulateDepots(lidSource: integer; const lTblDepots: TStringGrid);
     procedure InsertDepotOfSource(const lidSource: longint;
       const lidRepository: longint; const buffer: string);
+    function GetDepotTitle(var d: integer): string;
 
     // Places
     procedure InsertPlace(lidPlace: longint; const Place: string);
@@ -396,10 +412,9 @@ const
   CIniKeyWndWidth = 'width';
   CIniKeyWndHeight = 'height';
 
-
 implementation
 
-uses FMUtils, StrUtils, AnchorDocking, cls_Translation, LConvEncoding;
+uses FMUtils, StrUtils, AnchorDocking, cls_Translation, LConvEncoding, dateutils;
 
 {$IFDEF FPC}
 {$R *.lfm}
@@ -1039,7 +1054,7 @@ begin
     SaveModificationTime(nn);
 end;
 
-procedure TdmGenData.UpdateIndModificationTimeByName(lLinkID: integer);
+procedure TdmGenData.UpdateIndModificationTimeByName(idName: integer);
 begin
   with qryInternal do
    begin
@@ -1047,14 +1062,14 @@ begin
     SQL.Text := 'UPDATE I SET I.date=:ModDate ' +
       'FROM I INNER JOIN N ON N.I = I.no ' + 'WHERE N.no=:idName';
     ParamByName('ModDate').AsString := FormatDateTime('YYYYMMDD', now);
-    ParamByName('idName').AsInteger := lLinkID;
+    ParamByName('idName').AsInteger := idName;
     ExecSQL;
    end;
   if assigned(FOnModifyIndividual) then
     FOnModifyIndividual(self);
 end;
 
-procedure TdmGenData.UpdateIndModificationTimesByEvent(lLinkID: integer);
+procedure TdmGenData.UpdateIndModificationTimesByEvent(idEvent: integer);
 begin
   with qryInternal do
    begin
@@ -1062,7 +1077,7 @@ begin
     SQL.Text := 'UPDATE I SET I.date=:ModDate ' +
       'FROM I INNER JOIN W ON W.I = I.no ' + 'WHERE W.E=:idEvent';
     ParamByName('ModDate').AsString := FormatDateTime('YYYYMMDD', now);
-    ParamByName('idEvent').AsInteger := lLinkID;
+    ParamByName('idEvent').AsInteger := idEvent;
     ExecSQL;
    end;
   if assigned(FOnModifyIndividual) then
@@ -1359,7 +1374,7 @@ function TdmGenData.SaveNameData(idName: longint; const Prefered: boolean;
   const i3: string; const i2: string; const i1: string; const lName: string;
   const lidInd: longint): integer;
 begin
-  with Query1 do
+  with qryInternal do
    begin
     if idName = 0 then
      begin
@@ -1386,11 +1401,11 @@ begin
     ParamByName('X').AsBoolean := Prefered;
     ExecSQL;
     if idName = 0 then
-      Result := dmGenData.GetLastIDOfTable('N')
+      Result := GetLastIDOfTable('N')
     else
       Result := idName;
     // Sauvegarder les modifications
-    dmGenData.SaveModificationTime(Result);
+    SaveModificationTime(Result);
    end;
 end;
 
@@ -1422,6 +1437,37 @@ var
 begin
   if TryStrToInt(NStr, no) then
     Result := GetIndividuumName(no);
+end;
+
+procedure TdmGenData.UpdateIndNotLivingByEvent(lidEvent: integer;
+  const dateevYear: integer; Sender: TObject);
+var
+  lidInd: integer;
+  lFlag: boolean;
+begin
+  lidInd := 0;
+  lFlag := False;
+  with qryInternal2 do
+   begin
+    SQL.Text := 'SELECT W.I FROM W WHERE W.E=:idEvent';
+    ParamByName('idEvent').AsInteger := lidEvent;
+    Open;
+    First;
+    while not EOF do
+     begin
+      lidInd := Fields[0].AsInteger;
+
+      if (YearOf(now) - dateevYear) > 100 then
+       begin
+        UpdateIndLiving(lidInd, 'N', Sender);
+        lFlag := True;
+       end;
+
+      Next;
+     end;
+   end;
+  if lFlag then
+    NamesChanged(Sender);
 end;
 
 {$EndRegion ~Individual}
@@ -3099,6 +3145,29 @@ begin
    end;
 end;
 
+procedure TdmGenData.CreateRelationParenttoChild(const idInd: longint;
+  const idSibling: longint);
+var
+  lidParent: longint;
+begin
+  with qryInternal2 do
+   begin
+    // Recherche parent principaux
+    SQL.Text := 'SELECT R.no, R.B FROM R WHERE R.X=1 AND R.A=:idInd';
+    ParamByName('idInd').AsInteger := idInd;
+    Open;
+    First;
+    while not EOF do
+     begin
+      lidParent := Fields[1].AsInteger;
+      SaveRelationData(0, '', '100000000030000000000',
+        10, True, idSibling, lidParent, '');
+      SaveModificationTime(lidParent);
+      Next;
+     end;
+   end;
+end;
+
 {$endRegion ~Relation}
 // Witness-Methods
 {$region Witness (W)}
@@ -3160,13 +3229,6 @@ begin
    end;
 end;
 
-procedure TdmGenData.InsertWitness(const Prefered: boolean;
-  const idEvent: longint; const idInd: longint; const Role: string;
-  const Phrase: string);
-begin
-  AppendWitness(Role, Phrase, idInd, idEvent, Prefered);
-end;
-
 procedure TdmGenData.DeleteWitness(const lidWitness: integer);
 begin
   with qryInternal do
@@ -3178,46 +3240,43 @@ begin
    end;
 end;
 
-procedure TdmGenData.UpdateWitnessModDatebyEvent(lidEvent: integer);
+procedure TdmGenData.FillTableWitness(const idEvent, idInd: longint;
+  const lTblWitness: TStringGrid; out lMainRole: string; out lPhrase: string);
 var
-  lidInd: longint;
+  row: integer;
 begin
-  with Query3 do
+  with qryInternal do
    begin
-    Close;
-    SQL.Text := 'SELECT W.I, W.X FROM W WHERE W.E=:idEvent';
-    ParamByName('idEvent').AsInteger := lidEvent;
+    SQL.Text := 'SELECT W.no, W.I, W.X, W.P, W.R, N.N FROM W JOIN N ON N.I=W.I ' +
+      'WHERE W.E=:idEvent AND N.X=1 ORDER BY W.X DESC';
+    ParamByName('idEvent').AsInteger := idEvent;
     Open;
     First;
+    lTblWitness.RowCount := RecordCount + 1;
+    row := 1;
     while not EOF do
      begin
-      lidInd := Fields[0].AsInteger;
-      SaveModificationTime(lidInd);
-      Next;
-     end;
-    Close;
-   end;
-end;
-
-
-procedure TdmGenData.UpdateWitnessModbyEvent(lidEvent: integer);
-begin
-  with Query3 do
-   begin
-    // fr: Sauvegarder les modifications pour tout les témoins de l'événements
-    // en: Save the changes for all the witnesses to the events
-    SQL.Text := 'SELECT W.I, W.X FROM W WHERE W.E=:idevent';
-    ParamByName('idEvent').AsInteger := lidEvent;
-    Open;
-    First;
-    while not EOF do
-     begin
-      SaveModificationTime(Fields[0].AsInteger);
+      lTblWitness.Cells[0, row] := Fields[0].AsString;
+      lTblWitness.Objects[0, row] := TObject(PtrInt(Fields[0].AsInteger));
+      lTblWitness.Cells[1, row] := Fields[4].AsString;
+      lTblWitness.Cells[2, row] := Fields[1].AsString;
+      lTblWitness.Objects[2, row] := TObject(PtrInt(Fields[1].AsInteger));
+      lTblWitness.Cells[3, row] := DecodeName(Fields[5].AsString, 1);
+      lTblWitness.Cells[3, row] := Fields[1].AsString;
+      if Fields[2].AsBoolean then
+        lTblWitness.Cells[4, row] := '*'
+      else
+        lTblWitness.Cells[4, row] := '';
+      if Fields[1].AsInteger = idInd then
+       begin
+        lPhrase := Fields[3].AsString;
+        lMainRole := Fields[4].AsString;
+       end;
+      row := row + 1;
       Next;
      end;
    end;
 end;
-
 
 procedure TdmGenData.DeleteWitnessbyEvent(const lidEvent: integer);
 begin
@@ -3229,6 +3288,7 @@ begin
     ExecSQL;
    end;
 end;
+
 
 function TdmGenData.GetWitnessListbyEvent(lidEvent: integer): string;
 var
@@ -3536,7 +3596,7 @@ const
   lType = 'E';
 begin
   // Modifie la date de dernière modification pour tous les témoins
-  UpdateWitnessModDatebyEvent(lidEvent);
+  UpdateIndModificationTimesByEvent(lidEvent);
   // Supprimer tous les exhibits de cet événement
   DeleteDocumentsbyType_ID(lType, lidEvent);
 
@@ -3632,7 +3692,7 @@ end;
 procedure TdmGenData.ResetEventPrefered(lidEvent: integer);
 begin
   ResetEventPref(lidEvent);
-  UpdateWitnessModDatebyEvent(lidEvent);
+  UpdateIndModificationTimesByEvent(lidEvent);
 end;
 
 function TdmGenData.SetEventPrefered(const lidEvent, lidInd: integer): boolean;
@@ -3701,7 +3761,7 @@ begin
      end;
    end;
 
-  UpdateWitnessModDatebyEvent(lidevent);
+  UpdateIndModificationTimesByEvent(lidevent);
   Result := redraw;
 end;
 
@@ -3915,7 +3975,7 @@ end;
 procedure TdmGenData.UpdateModificationByEventDocument(lidDocument: integer);
 
 begin
-  with qryInternal do
+  with qryInternal2 do
    begin
     Close;
     SQL.Text :=
@@ -3925,7 +3985,7 @@ begin
     First;
     while not EOF do
      begin
-      dmGenData.SaveModificationTime(Fields[0].AsInteger);
+      SaveModificationTime(Fields[0].AsInteger);
       Next;
      end;
     Close;
@@ -3960,7 +4020,7 @@ begin
   // Enregistrer la date de la dernière modification pour tout les individus reliés
   // à cet exhibits.
   if lidDocument = 0 then
-    Result := dmGenData.GetLastIDOfTable('X')
+    Result := GetLastIDOfTable('X')
   else
     Result := lidDocument;
 end;
@@ -4489,6 +4549,54 @@ begin
    end;
 end;
 
+procedure TdmGenData.GetSourceData(const lidSource: longint;
+  out lQuality: longint; out lInformation: string; out lDescription: string;
+  out lTitle: string; out lIndLink: string);
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text := 'SELECT S.no, S.T, S.D, S.M, S.Q, S.A FROM S WHERE S.no=:idSource';
+    ParamByName('idSource').AsInteger := lidSource;
+    Open;
+    First;
+    lTitle := Fields[1].AsString;
+    lDescription := Fields[2].AsString;
+    lIndLink := Fields[5].AsString;
+    lInformation := Fields[3].AsString;
+    lQuality := Fields[4].AsInteger;
+    Close;
+   end;
+end;
+
+function TdmGenData.SaveSourceRepositoryData(lidSourceDepot: integer;
+  const lMemoText: string; const lidRepository: integer;
+  const lidSource: longint): integer;
+begin
+  with qryInternal do
+   begin
+    Close;
+    if lidSourceDepot = 0 then
+     begin
+      SQL.Text := 'INSERT INTO A (S, D, M) VALUES (:idSource, :idRepository, :Memo)';
+      ParamByName('idSource').AsInteger := lidSource;
+     end
+    else
+     begin
+      SQL.Text := 'UPDATE A SET M=:Memo, D=:idRepository WHERE no=:idSourceDepot';
+      ParamByName('idSourceDepot').AsInteger := lidSourceDepot;
+     end;
+    ParamByName('Memo').AsString := lMemoText;
+    ParamByName('idRepository').AsInteger := lidRepository;
+    ExecSQL;
+   end;
+
+  if lidSourceDepot = 0 then
+    Result := GetLastIDOfTable('A')
+  else
+    Result := lidSourceDepot;
+end;
+
 function TdmGenData.CheckIndSourceExist(idInd: integer): boolean;
 
 begin
@@ -4617,6 +4725,17 @@ begin
    end;
 end;
 
+procedure TdmGenData.DeleteSourceLink(const lidSourceLink: integer);
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text := 'DELETE FROM A WHERE No=:idSourceLink';
+    ParamByName('idSourceLink').AsInteger := lidSourceLink;
+    ExecSQL;
+   end;
+end;
+
 procedure TdmGenData.FillSourcesTable(const lNotification: TNotifyEvent;
   const lTable: TStringGrid);
 var
@@ -4672,6 +4791,87 @@ end;
 
 {$endregion ~Source}
 {$region deposit}
+function TdmGenData.SaveRepositoryData(const lidRepository: integer;
+  const lidInd: integer; const lMemo: string; const lDescription: string;
+  const lTitle: string): integer;
+
+begin
+  with qryInternal do
+   begin
+    if lidRepository = 0 then
+      SQL.Add('INSERT INTO D (T,D,M,I) VALUES (''' + lTitle +
+        ''', ''' + lDescription + ''', ''' + lMemo +
+        ''', ' + IntToStr(lidInd) + ')')
+    else
+      SQL.Add('UPDATE D SET T=''' + lTitle + ''', D=''' +
+        lDescription + ''', M=''' + lMemo +
+        ''', I=' + IntToStr(lidInd) + ' WHERE no=' + IntToStr(lidRepository));
+    ExecSQL;
+    if lidRepository = 0 then
+      Result := GetLastIDOfTable('D')
+    else
+      Result := lidRepository;
+   end;
+end;
+
+procedure TdmGenData.FullDeleteRepository(const lidRepository: integer);
+begin
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text := 'DELETE FROM A WHERE D=:idRepository';
+    ParamByName('idRepository').AsInteger := lidRepository;
+    ExecSQL;
+    SQL.Text := 'DELETE FROM D WHERE no=:idRepository';
+    ParamByName('idRepository').AsInteger := lidRepository;
+    ExecSQL;
+   end;
+end;
+
+procedure TdmGenData.FillRepositoryTable(const lOnUpdate: TNotifyEvent;
+  const lTblRepositories: TStringGrid);
+var
+  lidInd: longint;
+  i: integer;
+begin
+  with qryInternal2 do
+   begin
+    Close;
+    SQL.Text :=
+      'SELECT D.no, D.T, D.D, D.M, D.I, COUNT(A.D) FROM D LEFT JOIN A on D.no=A.D GROUP by D.no ORDER BY D.D';
+    Open;
+    First;
+    lTblRepositories.RowCount := RecordCount + 1;
+    tag := -RecordCount - 1;
+    if assigned(lOnUpdate) then
+      lOnUpdate(qryInternal2);
+    tag := 0;
+    if assigned(lOnUpdate) then
+      lOnUpdate(qryInternal2);
+    i := 0;
+    while not EOF do
+     begin
+      i := i + 1;
+      lidInd := Fields[4].AsInteger;
+      lTblRepositories.Cells[0, i] := IntToStr(lidind);
+      lTblRepositories.Objects[0, i] := TObject(ptrint(lidInd));
+      lTblRepositories.Cells[1, i] := Fields[0].AsString;
+      lTblRepositories.Objects[1, i] := TObject(ptrint(Fields[0].AsInteger));
+      lTblRepositories.Cells[2, i] := Fields[1].AsString;
+      lTblRepositories.Cells[3, i] := Fields[2].AsString;
+      //   lTblRepositories.Objects[3,i]:=TObject(ptrint(Query1.Fields[2].AsInteger));
+      lTblRepositories.Cells[4, i] := Fields[3].AsString;
+      lTblRepositories.Cells[5, i] := DecodeName(GetIndividuumName(lidind), 1);
+      lTblRepositories.Objects[5, i] := TObject(ptrint(lidInd));
+      lTblRepositories.Cells[6, i] := Fields[5].AsString;
+      Next;
+      tag := tag + 1;
+      if assigned(lOnUpdate) then
+        lOnUpdate(qryInternal2);
+     end;
+   end;
+end;
+
 function TdmGenData.CheckIndDepositExist(idInd: integer): boolean;
 
 begin
@@ -4738,6 +4938,55 @@ begin
     ParamByName('idDepot').AsInteger := lidRepository;
     ParamByName('Note').AsString := buffer;
     ExecSQL;
+   end;
+end;
+
+function TdmGenData.GetDepotTitle(var d: integer): string;
+var
+  lTitle: string;
+begin
+  with qryInternal do
+   begin
+    SQL.Text := 'SELECT D.T FROM D WHERE D.no=:idDepot';
+    ParamByName('idDepot').AsInteger := d;
+    Open;
+    First;
+    if not EOF then
+      lTitle := Fields[0].AsString
+    else
+      lTitle := '';
+   end;
+  Result := lTitle;
+end;
+
+procedure TdmGenData.PopulateDepots(lidSource: integer; const lTblDepots: TStringGrid);
+var
+  i: integer;
+
+begin
+  // Populate les dépots
+  with qryInternal do
+   begin
+    Close;
+    SQL.Text :=
+      'SELECT A.no, A.S, A.D, A.M, D.T FROM A JOIN D ON D.no=A.D WHERE A.S=:idsource';
+    ParamByName('idSource').AsInteger := lidSource;
+    Open;
+    First;
+    lTblDepots.RowCount := RecordCount + 1;
+    i := 1;
+    while not EOF do
+     begin
+      lTblDepots.Objects[0, i] := TObject(ptrint(Fields[0].AsInteger));
+      lTblDepots.Cells[0, i] := Fields[0].AsString;
+      lTblDepots.Cells[1, i] := Fields[4].AsString;
+      lTblDepots.Cells[2, i] := Fields[3].AsString;
+      lTblDepots.Objects[3, i] := TObject(ptrint(Fields[2].AsInteger));
+      lTblDepots.Cells[3, i] := Fields[2].AsString;
+      Next;
+      i := i + 1;
+     end;
+    Close;
    end;
 end;
 

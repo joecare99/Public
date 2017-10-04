@@ -7,6 +7,7 @@ object frmSelectDialog: TfrmSelectDialog
   Caption = 'frmSelectDialog'
   ClientHeight = 142
   ClientWidth = 432
+  LCLVersion = '1.9.0.0'
   object ComboBox1: TComboBox
     Left = 10
     Height = 23

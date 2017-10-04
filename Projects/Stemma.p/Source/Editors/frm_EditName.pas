@@ -126,28 +126,6 @@ implementation
 uses
   frm_Main, cls_Translation, dm_GenData, frm_Explorer;
 
-procedure CreateRelationParenttoChild(const idInd: longint;const idSibling: longint);
-var
-  lidParent: longint;
-begin
-  with dmGenData.Query2 do begin
-         // Recherche parent principaux
-           SQL.Text := 'SELECT R.no, R.B FROM R WHERE R.X=1 AND R.A=:idInd';
-           ParamByName('idInd').AsInteger:= idInd;
-           Open;
-           First;
-           while not EOF do
-            begin
-             lidParent:=Fields[1].AsInteger;
-             dmGenData.SaveRelationData(0,'','100000000030000000000',10,true,idSibling,lidParent,'');
-             dmGenData.SaveModificationTime(lidParent);
-             Next;
-            end;
-         end;
-end;
-
-
-
 { TFrmEditName }
 
 procedure TfrmEditName.FillNameTable(const suffixe: string; const nom: string;
@@ -790,8 +768,7 @@ begin
       eNET_AddBrother, eNET_AddSister:
        begin
         lidInd := dmGenData.AddNewIndividual(sSex, '?', 0);
-        edtIdInd.Value := lidInd;
-        CreateRelationParenttoChild(frmStemmaMainForm.iID,lidInd);
+        dmGenData.CreateRelationParenttoChild(frmStemmaMainForm.iID,edtIdInd.Value);
        end;
       eNET_AddSon, eNET_AddDaughter:
        begin

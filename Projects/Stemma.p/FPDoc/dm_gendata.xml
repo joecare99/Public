@@ -19,7 +19,8 @@ Populate le tableau de citations
       </element><element name="TdmGenData.WriteCfgConnection"><short>Writes DB-Connection settings to the configuration-storage (file, registry ...)</short>
       </element><element name="TdmGenData.ReadCfgProject"><short>Reads project-settings from the configuration-storage (file, registry ...)</short>
       </element><element name="TdmGenData.WriteCfgProject"><short>Writes project-settings to the configuration-storage (file, registry ...)</short>
-      </element><element name="TdmGenData.ReadCfgLastPerson"/><element name="TdmGenData.GetIndBaseData"><short>Get (base-)data of a person</short>
+      </element><element name="TdmGenData.ReadCfgLastPerson"><short>Reads the ID of the Last Person from the Configuration</short>
+      </element><element name="TdmGenData.GetIndBaseData"><short>Get (base-)data of a person</short>
       </element><element name="TdmGenData.CheckIndSharedEventExists"><short>Check if there is are primary events with other primary witnesses</short>
       </element><element name="TdmGenData.CheckIndRelationExist"><short>Check if there are any primary relatives</short>
       </element><topic name="Datamodule"/><topic name="Datamodule, Relation"/><topic name="Datamodule, Configuration"/><element name="TdmGenData.AddNewIndividual"><short>Adds a new Individual with given data and returns the ID</short>
@@ -41,6 +42,25 @@ Populate le tableau de citations
       </element><element name="TdmGenData.PopulateNameTable"><short>Fills the Name table</short>
       </element>
     <element name="TdmGenData.UpdateWitnessModDatebyEvent"><short>Updates the Modification-date of all witnesses related to an event</short>
+      </element>
+    <element name="TdmGenData.WriteCfgLastPerson"><short>Writes the ID of the last active Person into the Configuration</short>
+      </element><element name="TdmGenData.ReadCfgInteger"><short>Reads an Integer from the Configuration</short>
+      </element><element name="TdmGenData.WriteCfgInteger"><short>Writes an Integer into the Configuration</short>
+      </element><element name="TdmGenData.ReadCfgString"><short>Reads a String from the Configuration</short>
+      </element><element name="TdmGenData.ReadCfgFormPosition"><short>Reads a Form-Position from the Configuration</short>
+      </element><element name="TdmGenData.ReadCfgGridPosition"><short>Reads a Grid-Position from the Configuration</short>
+      </element><element name="TdmGenData.WriteCfgGridPosition"><short>Writes a Grid-Position into the Configuration</short>
+      </element><element name="TdmGenData.WriteCfgFormPosition"><short>Writes a Form-Position into the Configuration</short>
+      </element><element name="TdmGenData.WriteCfgString"><short>Writes a String into the Configuration</short>
+      </element><element name="TdmGenData.InsertIndividuumData"><short>Inserts a new Individum into the Individuum-Table (incl. ID)</short>
+      </element><element name="TdmGenData.FullDeleteIndividuum"><short>Fully delets an individuum from the DB (including all depending tables)</short>
+      </element><element name="TdmGenData.FullCopyPerson"><short>Fully copies an individuum (incl. depending tables)</short>
+      </element><element name="TdmGenData.GetFirstIndividuum"><short>Returns the ID of the first valid individuum</short>
+      </element><element name="TdmGenData.UpdateIndLiving"><short>Updates the "living" - State of an individuum </short>
+      </element><element name="TdmGenData.UpdateIndSex"><short>Updates the "Sex" -state of an individuum</short>
+      </element><element name="TdmGenData.UpdateIndInterrest"><short>Updates the "Interest"-state of an individuum</short>
+      </element><element name="TdmGenData.RepairRelDateByIndDate"><short>Repairs all Relation dates by Individual-dates </short>
+      </element><element name="TdmGenData.UpdateIndModificationTimesByEvent"><short>Update individum-modification-date by an event.</short>
       </element>
     </module>
   </package>
