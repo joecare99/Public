@@ -1592,6 +1592,7 @@ function VarArrayByLinesep(const Line: String; seps: TSeparatSet;
 
 Var
   avar: Array Of variant;
+  aSep: array of TSeparators;
   rest, sect: String;
   i, cnt: integer;
   rr: String;
@@ -1606,6 +1607,7 @@ Begin
   If cnt > 0 Then
     Begin
       SetLength(avar, cnt + 1);
+      SetLength(aSep, cnt + 1);
       rest := line;
       For i := 0 To cnt Do
         Begin
@@ -1618,12 +1620,14 @@ Begin
               if (fl =-1) or (length(tSect)<fl) then
                 begin
                   sect := tSect;
+                  asep[i] := sep;
                   tRest := rr;
                   fl := length(tSect);
                 end;
             end;
           rest := trest;
           avar[i] := sect;
+
         End;
     End
   Else
@@ -1641,11 +1645,13 @@ Begin
           if avar[i]<>'' then
             begin
               avar[cnt] := avar[i];
+              aSep[cnt] := aSep[i];
               inc(cnt)
             end;
           inc(i);
         end;
       setlength(avar,cnt);
+      SetLength(aSep, cnt );
     end;
   If KeepQuote And (cnt > 1) Then
     Begin
@@ -1664,6 +1670,7 @@ Begin
               rest := '';
             // Teil Speichern
             avar[cnt - 1] := avar[i];
+            aSep[cnt - 1] := aSep[i];
           End
         Else
           Begin
@@ -1678,9 +1685,10 @@ Begin
             Else If copy(avar[i], length(avar[i]) - 2, 1) = rest Then
               rest := '';
 
-            avar[cnt - 1] := avar[cnt - 1] + LineSeparators[sep, 0] + avar[i];
+            avar[cnt - 1] := avar[cnt - 1] + LineSeparators[asep[i], 0] + avar[i];
           End;
       SetLength(avar, cnt);
+      SetLength(aSep, cnt);
     End;
 {$ifndef fpc} // ToDo -oJC : Better define see JEDI.INC
   result := avar;

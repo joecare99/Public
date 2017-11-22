@@ -137,7 +137,7 @@
         <PackageName Value="LCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="52">
+    <Units Count="53">
       <Unit0>
         <Filename Value="Stemma.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -315,11 +315,12 @@
         <UsageCount Value="272"/>
       </Unit15>
       <Unit16>
-        <Filename Value="..\Source\frm_Images.pas"/>
+        <Filename Value="..\Source\frm_images.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormImage"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Images"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="20"/>
         <CursorPos X="42" Y="39"/>
@@ -371,7 +372,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="558"/>
+        <TopLine Value="546"/>
         <CursorPos X="52" Y="592"/>
         <UsageCount Value="204"/>
         <Bookmarks Count="1">
@@ -401,7 +402,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="252"/>
+        <TopLine Value="241"/>
         <CursorPos X="13" Y="297"/>
         <UsageCount Value="208"/>
         <Loaded Value="True"/>
@@ -413,6 +414,7 @@
         <ComponentName Value="frmShowUsage"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
         <WindowIndex Value="1"/>
         <CursorPos X="23" Y="18"/>
@@ -421,12 +423,12 @@
         <LoadedDesigner Value="True"/>
       </Unit23>
       <Unit24>
-        <Filename Value="..\Source\frm_Sources.pas"/>
+        <Filename Value="..\Source\frm_sources.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmSources"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
+        <UnitName Value="frm_Sources"/>
         <EditorIndex Value="5"/>
         <WindowIndex Value="1"/>
         <TopLine Value="65"/>
@@ -436,24 +438,26 @@
         <LoadedDesigner Value="True"/>
       </Unit24>
       <Unit25>
-        <Filename Value="..\Source\frm_Repositories.pas"/>
+        <Filename Value="..\Source\frm_repositories.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmRepository"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_Repositories"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="156"/>
+        <TopLine Value="144"/>
         <CursorPos X="22" Y="188"/>
         <UsageCount Value="218"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit25>
       <Unit26>
-        <Filename Value="..\Source\frm_EditSource.pas"/>
+        <Filename Value="..\Source\frm_editsource.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmEditSource"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_EditSource"/>
         <EditorIndex Value="3"/>
         <TopLine Value="147"/>
         <CursorPos X="8" Y="161"/>
@@ -475,11 +479,12 @@
         <LoadedDesigner Value="True"/>
       </Unit27>
       <Unit28>
-        <Filename Value="..\Source\frm_EditTypes.pas"/>
+        <Filename Value="..\Source\frm_edittypes.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmEditType"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_EditTypes"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="57"/>
         <CursorPos X="53" Y="57"/>
@@ -722,6 +727,16 @@
         <UsageCount Value="127"/>
         <Loaded Value="True"/>
       </Unit51>
+      <Unit52>
+        <Filename Value="C:\lazarus_trnk\lazarus\components\sparta\generics\source\generics.defaults.pas"/>
+        <UnitName Value="Generics.Defaults"/>
+        <EditorIndex Value="10"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="510"/>
+        <CursorPos X="156" Y="526"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit52>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
@@ -834,15 +849,15 @@
       </Position27>
       <Position28>
         <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="240" Column="27" TopLine="325"/>
+        <Caret Line="3230" Column="5" TopLine="3209"/>
       </Position28>
       <Position29>
-        <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="3230" Column="5" TopLine="3209"/>
-      </Position29>
-      <Position30>
         <Filename Value="..\Source\frm_Sources.pas"/>
         <Caret Line="71" Column="33" TopLine="62"/>
+      </Position29>
+      <Position30>
+        <Filename Value="..\Source\frm_Usage.pas"/>
+        <Caret Line="18" Column="23"/>
       </Position30>
     </JumpHistory>
     <CustomSessionData Count="2">
