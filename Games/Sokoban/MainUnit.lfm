@@ -8,6 +8,7 @@ object frmSokoban: TfrmSokoban
   ClientWidth = 660
   Color = clBtnFace
   Constraints.MinHeight = 60
+  DesignTimePPI = 168
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
@@ -20,12 +21,12 @@ object frmSokoban: TfrmSokoban
   OnResize = FormResize
   PopupMenu = OptionsMenu
   Position = poScreenCenter
-  LCLVersion = '1.7'
+  LCLVersion = '1.8.0.6'
   Visible = False
   object StatusBar: TStatusBar
     Left = 0
-    Height = 23
-    Top = 489
+    Height = 43
+    Top = 455
     Width = 660
     Panels = <    
       item
@@ -195,8 +196,8 @@ object frmSokoban: TfrmSokoban
     Filter = 'All Suported Files (*.xml, *.slc, *.rds, *.txt)|*.xml;*.slc;*.rdf;*.lp0;*.txt|Sokoban Level Files (*.xml, *.slc)|*.xml;*.slc|Room Data Files (*.rdf)|*.rdf|LP0 Files (*.lp0)|*.lp0|All Files (*.*)|*.*'
     InitialDir = 'Levels'
     Options = [ofHideReadOnly, ofFileMustExist, ofEnableSizing]
-    Left = 264
-    Top = 96
+    left = 264
+    top = 96
   end
   object SaveLevelDialog: TSaveDialog
     Title = 'Save Sokoban Level'
@@ -204,12 +205,12 @@ object frmSokoban: TfrmSokoban
     Filter = 'Sokoban Level Files (*.slc)|*.slc'
     InitialDir = 'Levels'
     Options = [ofOverwritePrompt, ofHideReadOnly, ofEnableSizing]
-    Left = 304
-    Top = 96
+    left = 304
+    top = 96
   end
   object ToolImages: TImageList
-    Left = 24
-    Top = 96
+    left = 24
+    top = 96
     Bitmap = {
       4C69120000001000000010000000FF00FF00FF00FF00FF00FF00FF00FF00FF00
       FF0032B74EFF25AE39FF25AE39FF25AE39FF25AE39FF24A342FFFF00FF00FF00
@@ -791,8 +792,8 @@ object frmSokoban: TfrmSokoban
     }
   end
   object DisToolImages: TImageList
-    Left = 64
-    Top = 96
+    left = 64
+    top = 96
     Bitmap = {
       4C69120000001000000010000000FF00FF00FF00FF00FF00FF00FF00FF00FF00
       FF00AAAAAAFFA3A3A3FFA3A3A3FFA3A3A3FFA3A3A3FF9F9F9FFFFF00FF00FF00
@@ -1374,8 +1375,8 @@ object frmSokoban: TfrmSokoban
     }
   end
   object HighToolImages: TImageList
-    Left = 104
-    Top = 96
+    left = 104
+    top = 96
     Bitmap = {
       4C69120000001000000010000000FF00FF00FF00FF00FF00FF00FF00FF00FF00
       FF001DA435FF139923FF139923FF139923FF139923FF138C2AFFFF00FF00FF00
@@ -1961,14 +1962,14 @@ object frmSokoban: TfrmSokoban
     Filter = 'Sokoban Skin Files (*.ini)|*.ini'
     InitialDir = 'Skins'
     Options = [ofHideReadOnly, ofFileMustExist, ofEnableSizing]
-    Left = 424
-    Top = 96
+    left = 424
+    top = 96
   end
   object ActionManager1: TActionList
     Images = ToolImages
     OnUpdate = ActionManager1Update
-    Left = 184
-    Top = 96
+    left = 184
+    top = 96
     object ResetLevelAction: TAction
       Category = 'Game'
       Caption = 'Reset'
@@ -2095,8 +2096,8 @@ object frmSokoban: TfrmSokoban
   end
   object OptionsMenu: TPopupMenu
     Images = ToolImages
-    Left = 224
-    Top = 96
+    left = 224
+    top = 96
     object LoadLevel2: TMenuItem
       Action = LoadLevelAction
     end
@@ -2129,16 +2130,16 @@ object frmSokoban: TfrmSokoban
     end
   end
   object ToolbarMenu: TPopupMenu
-    Left = 384
-    Top = 96
+    left = 384
+    top = 96
     object Standard1: TMenuItem
       Action = ShowHideStandardAction
     end
   end
   object ActionMainMenuBar1: TMainMenu
     Images = ToolImages
-    Left = 144
-    Top = 96
+    left = 144
+    top = 96
     object MnuFile: TMenuItem
       Caption = 'File'
       object MenuItem3: TMenuItem

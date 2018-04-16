@@ -1,24 +1,24 @@
 object frmEditType: TfrmEditType
   Left = 885
-  Height = 346
+  Height = 677
   Top = 409
-  Width = 617
+  Width = 1101
   ActiveControl = T
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Modification de type d''événement'
-  ClientHeight = 346
-  ClientWidth = 617
+  ClientHeight = 677
+  ClientWidth = 1101
+  DesignTimePPI = 168
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.8.0.4'
   Visible = False
   object Button1: TButton
-    Left = 456
-    Height = 25
-    Top = 352
-    Width = 75
+    Left = 798
+    Height = 44
+    Top = 616
+    Width = 131
     Caption = 'Ok'
     Default = True
     ModalResult = 1
@@ -26,44 +26,43 @@ object frmEditType: TfrmEditType
     TabOrder = 3
   end
   object Button2: TButton
-    Left = 535
-    Height = 25
-    Top = 352
-    Width = 75
-    Cancel = True
+    Left = 936
+    Height = 44
+    Top = 616
+    Width = 131
     Caption = 'Annul.'
     ModalResult = 2
     TabOrder = 4
   end
   object Label10: TLabel
-    Left = 16
-    Height = 15
-    Top = 16
-    Width = 27
+    Left = 28
+    Height = 30
+    Top = 28
+    Width = 46
     Caption = 'Titre:'
     ParentColor = False
   end
   object T: TEdit
-    Left = 87
-    Height = 23
-    Top = 16
-    Width = 521
+    Left = 152
+    Height = 38
+    Top = 28
+    Width = 912
     TabOrder = 0
     Text = 'T'
   end
   object Label3: TLabel
-    Left = 16
-    Height = 15
-    Top = 80
-    Width = 38
+    Left = 28
+    Height = 30
+    Top = 140
+    Width = 67
     Caption = 'Phrase:'
     ParentColor = False
   end
   object P: TMemo
-    Left = 88
-    Height = 264
-    Top = 80
-    Width = 520
+    Left = 154
+    Height = 462
+    Top = 140
+    Width = 910
     Lines.Strings = (
       'P'
     )
@@ -72,35 +71,35 @@ object frmEditType: TfrmEditType
     TabOrder = 2
   end
   object Label11: TLabel
-    Left = 16
-    Height = 15
-    Top = 48
-    Width = 28
+    Left = 28
+    Height = 30
+    Top = 84
+    Width = 48
     Caption = 'Type:'
     ParentColor = False
   end
   object Y: TComboBox
-    Left = 87
-    Height = 23
-    Top = 48
-    Width = 521
-    ItemHeight = 15
+    Left = 152
+    Height = 38
+    Top = 84
+    Width = 912
+    ItemHeight = 30
     Style = csDropDownList
     TabOrder = 1
   end
   object No: TSpinEdit
-    Left = 530
-    Height = 23
-    Top = 9
-    Width = 80
+    Left = 928
+    Height = 38
+    Top = 16
+    Width = 140
     MaxValue = 0
     TabStop = False
     TabOrder = 5
     Visible = False
   end
   object MainMenu1: TMainMenu
-    left = 31
-    top = 172
+    left = 54
+    top = 301
     object MenuItem2: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114

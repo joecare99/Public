@@ -288,7 +288,9 @@ var
   lidType: PtrInt;
   lSDate, lPhrase: TCaption;
 begin
-  // Si l'enfant n'idA pas de parent de ce sexe, mettre la relation prefered.
+  // Fr: Si l'enfant n'idA pas de parent de ce sexe, mettre la relation prefered.
+  // en: If the child does not have a parent of that sex, put the relationship prefered.
+  // de: Wenn das Kind keinen Elternteil dieses Geschlechts hat, setzen Sie die Beziehung bevorzugt.
   prefered:=false;
    lStrTmp:='';
    FidEvent := -1;
@@ -314,10 +316,13 @@ begin
                  DecodeName(lStrTmp,1)+
                  Translation.Items[28]),pchar(SConfirmation),MB_YESNO)=IDYES then
               begin
-              // Unir les parents
+              // fr: Unir les parents
               // Ajouter l'événement mariage
+              // en: Eltern vereinigen
               no_eve:=dmgenData.SaveEventData(0,300,1,true);
-              // Ajouter les témoins
+              // fr: Ajouter les témoins
+              // en: Add witnesses
+              // de: Zeugen hinzufügen
               dmGenData.AppendWitness('CONJOINT','',parent1,no_eve,true);
               dmGenData.AppendWitness('CONJOINT','',parent2,no_eve,true);
               // Ajouter les références
@@ -325,10 +330,14 @@ begin
               // sur l'événement # frmStemmaMainForm.no.Text
               //dmGenData.PutCode('P',no_eve);
               FidEvent:=no_Eve;
-              // Sauvegarder les modifications
+              // fr: Sauvegarder les modifications
+              // en: Save changes
+              // de: Änderungen speichern
               dmGenData.SaveModificationTime(parent1);
               dmGenData.SaveModificationTime(parent2);
-              // UPDATE DÉCÈS si la date est il y idA 100 ans !!!
+              // fr: UPDATE DÉCÈS si la date est il y idA 100 ans !!!
+              // en: UPDATE DEATH if the date is 100 years ago !!!
+              // de: ÄNDERE TOD wenn das Datum vor 100 Jahren ist !!!
               if (copy(SD2.text,1,1)='1') and not (SD2.text='100000000030000000000') then
                  dateev:=Copy(SD2.text,2,4)
               else
@@ -361,10 +370,14 @@ begin
      begin
      no.text:=InttoStr(dmGenData.GetLastIDOfTable('R'));
   end;
-  // Sauvegarder les modifications
+  // fr: Sauvegarder les modifications
+  // en: Save changes
+  // de: Änderungen speichern
   if StrtoInt(idA.Text)>0 then dmGenData.SaveModificationTime(idA.Value);
   if StrtoInt(idB.Text)>0 then dmGenData.SaveModificationTime(idB.Value);
-  // UPDATE DÉCÈS si la date est il y idA 100 ans !!!
+  // fr: UPDATE DÉCÈS si la date est il y idA 100 ans !!!
+  // en: UPDATE DEATH if the date is 100 years ago !!!
+  // de: ÄNDERE TOD wenn das Datum vor 100 Jahren ist !!!
   if (copy(SD2.text,1,1)='1') and not (SD2.text='100000000030000000000') then
      dateev:=Copy(SD2.text,2,4)
   else

@@ -8,22 +8,25 @@ object frmEditParents: TfrmEditParents
   Caption = 'Modification de Relation'
   ClientHeight = 506
   ClientWidth = 625
+  DesignTimePPI = 168
   Menu = MainMenu1
   OnShow = FormShow
   Position = poScreenCenter
+  LCLVersion = '1.8.0.6'
+  Visible = False
   object Label4: TLabel
-    Left = 10
-    Height = 15
-    Top = 168
-    Width = 38
+    Left = 18
+    Height = 30
+    Top = 294
+    Width = 67
     Caption = 'Phrase:'
     ParentColor = False
   end
   object P: TMemo
-    Left = 88
-    Height = 58
-    Top = 168
-    Width = 528
+    Left = 154
+    Height = 102
+    Top = 294
+    Width = 924
     Lines.Strings = (
       ''
     )
@@ -33,10 +36,10 @@ object frmEditParents: TfrmEditParents
     TabOrder = 0
   end
   object P2: TMemo
-    Left = 88
-    Height = 58
-    Top = 168
-    Width = 528
+    Left = 154
+    Height = 102
+    Top = 294
+    Width = 924
     Lines.Strings = (
       ''
     )
@@ -48,19 +51,19 @@ object frmEditParents: TfrmEditParents
     Visible = False
   end
   object Label6: TLabel
-    Left = 24
-    Height = 15
-    Top = 184
-    Width = 45
+    Left = 42
+    Height = 30
+    Top = 322
+    Width = 77
     Caption = '(default)'
     ParentColor = False
     Visible = False
   end
   object P1: TMemo
-    Left = 80
-    Height = 66
-    Top = 160
-    Width = 536
+    Left = 140
+    Height = 116
+    Top = 280
+    Width = 938
     Lines.Strings = (
       ''
     )
@@ -72,28 +75,28 @@ object frmEditParents: TfrmEditParents
     Visible = False
   end
   object lblChild: TLabel
-    Left = 17
-    Height = 15
-    Top = 76
-    Width = 31
+    Left = 30
+    Height = 30
+    Top = 133
+    Width = 52
     Caption = 'Child:'
     ParentColor = False
   end
   object NomA: TEdit
-    Left = 192
-    Height = 23
-    Top = 72
-    Width = 424
+    Left = 336
+    Height = 38
+    Top = 126
+    Width = 742
     ReadOnly = True
     TabStop = False
     TabOrder = 3
     Text = 'Nom de A'
   end
   object idA: TSpinEdit
-    Left = 88
-    Height = 23
-    Top = 72
-    Width = 96
+    Left = 154
+    Height = 38
+    Top = 126
+    Width = 168
     MaxValue = 10000
     OnEditingDone = idAEditingDone
     ReadOnly = True
@@ -101,21 +104,21 @@ object frmEditParents: TfrmEditParents
   end
   object pnlParentBottom: TPanel
     Left = 0
-    Height = 52
-    Top = 454
-    Width = 625
+    Height = 91
+    Top = 761
+    Width = 1094
     Align = alBottom
     BevelOuter = bvNone
-    ClientHeight = 52
-    ClientWidth = 625
+    ClientHeight = 91
+    ClientWidth = 1094
     TabOrder = 5
     object btnParentOK: TBitBtn
-      Left = 393
-      Height = 40
-      Top = 6
-      Width = 110
+      Left = 690
+      Height = 71
+      Top = 10
+      Width = 192
       Align = alRight
-      BorderSpacing.Around = 6
+      BorderSpacing.Around = 10
       DefaultCaption = True
       Kind = bkOK
       ModalResult = 1
@@ -123,12 +126,12 @@ object frmEditParents: TfrmEditParents
       TabOrder = 0
     end
     object btnParentCancel: TBitBtn
-      Left = 509
-      Height = 40
-      Top = 6
-      Width = 110
+      Left = 892
+      Height = 71
+      Top = 10
+      Width = 192
       Align = alRight
-      BorderSpacing.Around = 6
+      BorderSpacing.Around = 10
       DefaultCaption = True
       Kind = bkCancel
       ModalResult = 2
@@ -136,25 +139,73 @@ object frmEditParents: TfrmEditParents
     end
   end
   inline fraEdtCitations1: TfraEdtCitations
-    Height = 155
-    Top = 299
-    Width = 625
+    Height = 271
+    Top = 490
+    Width = 1094
     Align = alBottom
-    ClientHeight = 155
-    ClientWidth = 625
+    ClientHeight = 271
+    ClientWidth = 1094
     OnResize = nil
     TabOrder = 6
+    DesignLeft = 1537
+    DesignTop = 224
     inherited TableauCitations: TStringGrid
-      Height = 149
-      Width = 524
+      Left = 263
+      Height = 253
+      Top = 9
+      Width = 785
+      BorderSpacing.Right = 37
+      BorderSpacing.Around = 9
+      Columns = <      
+        item
+          MinSize = 32
+          MaxSize = 612
+          PickList.Strings = (          )
+          Title.Caption = 'Source'
+          Width = 306
+        end      
+        item
+          MinSize = 32
+          MaxSize = 612
+          PickList.Strings = (          )
+          Title.Caption = 'Description'
+          Width = 1197
+        end      
+        item
+          MinSize = 32
+          MaxSize = 612
+          PickList.Strings = (          )
+          Title.Caption = 'Q'
+          Width = 46
+        end>
+      ColWidths = (
+        4
+        306
+        1197
+        46
+      )
     end
     inherited pnlCitationLeft: TPanel
-      Height = 149
-      ClientHeight = 149
+      Left = 9
+      Height = 253
+      Top = 9
+      Width = 245
+      BorderSpacing.Around = 9
+      ClientHeight = 253
+      ClientWidth = 245
+      inherited lblCitations: TLabel
+        Left = 16
+        Height = 30
+        Top = 9
+        Width = 213
+        BorderSpacing.Left = 16
+        BorderSpacing.Top = 9
+        BorderSpacing.Right = 16
+      end
     end
     inherited PopupMenu2: TPopupMenu
-      Left = 108
-      Top = 212
+      left = 108
+      top = 212
       object Ajouter1: TMenuItem[0]
         Caption = '&Ajouter'
         ShortCut = 118
@@ -177,51 +228,51 @@ object frmEditParents: TfrmEditParents
   end
   object pnlTop: TPanel
     Left = 0
-    Height = 39
+    Height = 68
     Top = 0
-    Width = 625
+    Width = 1094
     Align = alTop
     BevelOuter = bvNone
-    ClientHeight = 39
-    ClientWidth = 625
+    ClientHeight = 68
+    ClientWidth = 1094
     TabOrder = 7
     object Y: TComboBox
-      Left = 88
-      Height = 23
-      Top = 9
-      Width = 152
+      Left = 154
+      Height = 38
+      Top = 16
+      Width = 266
       AutoComplete = True
       AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-      ItemHeight = 15
+      ItemHeight = 30
       OnChange = YChange
       Style = csDropDownList
       TabOrder = 0
     end
     object lblType: TLabel
-      Left = 24
-      Height = 15
-      Top = 8
-      Width = 28
+      Left = 42
+      Height = 30
+      Top = 14
+      Width = 48
       Caption = 'Type:'
       ParentColor = False
     end
     object X: TCheckBox
-      Left = 448
-      Height = 19
+      Left = 784
+      Height = 34
       Hint = 'Prefered'
-      Top = 9
-      Width = 64
+      Top = 16
+      Width = 112
       Caption = 'Prefered'
       TabOrder = 1
       TabStop = False
       Visible = False
     end
     object No: TSpinEdit
-      Left = 536
-      Height = 23
+      Left = 938
+      Height = 38
       Hint = 'idRelation'
-      Top = 8
-      Width = 80
+      Top = 14
+      Width = 140
       TabStop = False
       TabOrder = 2
       Visible = False
@@ -229,36 +280,36 @@ object frmEditParents: TfrmEditParents
   end
   object pnlParent: TPanel
     Left = 0
-    Height = 31
-    Top = 39
-    Width = 625
+    Height = 54
+    Top = 68
+    Width = 1094
     Align = alTop
-    ClientHeight = 31
-    ClientWidth = 625
+    ClientHeight = 54
+    ClientWidth = 1094
     TabOrder = 8
     object lblParent: TLabel
-      Left = 16
-      Height = 15
-      Top = 3
-      Width = 37
+      Left = 28
+      Height = 30
+      Top = 5
+      Width = 64
       Caption = 'Parent:'
       ParentColor = False
     end
     object NomB: TEdit
-      Left = 192
-      Height = 23
-      Top = 3
-      Width = 424
+      Left = 336
+      Height = 38
+      Top = 5
+      Width = 742
       ReadOnly = True
       TabStop = False
       TabOrder = 0
       Text = 'Nom de B'
     end
     object idB: TSpinEdit
-      Left = 88
-      Height = 23
-      Top = 3
-      Width = 96
+      Left = 154
+      Height = 38
+      Top = 5
+      Width = 168
       MaxValue = 10000
       OnEditingDone = idBEditingDone
       ReadOnly = True
@@ -266,19 +317,35 @@ object frmEditParents: TfrmEditParents
     end
   end
   inline fraMemo1: TfraMemo
-    Height = 60
-    Top = 96
-    Width = 625
-    ClientHeight = 60
-    ClientWidth = 625
+    Height = 105
+    Top = 168
+    Width = 1094
+    ClientHeight = 105
+    ClientWidth = 1094
     TabOrder = 9
     inherited pnlMemoLeft: TPanel
-      Height = 54
-      ClientHeight = 54
+      Left = 9
+      Height = 87
+      Top = 9
+      Width = 245
+      BorderSpacing.Around = 9
+      ClientHeight = 87
+      ClientWidth = 245
+      inherited lblMemo: TLabel
+        Left = 9
+        Height = 30
+        Top = 9
+        Width = 227
+        BorderSpacing.Around = 9
+      end
     end
     inherited edtMemoText: TMemo
-      Height = 54
-      Width = 524
+      Left = 263
+      Height = 87
+      Top = 9
+      Width = 785
+      BorderSpacing.Right = 37
+      BorderSpacing.Around = 9
       Lines.Strings = (
         'M'
       )
@@ -286,51 +353,51 @@ object frmEditParents: TfrmEditParents
   end
   object pnlParentDate: TPanel
     Left = 0
-    Height = 67
-    Top = 232
-    Width = 625
+    Height = 117
+    Top = 373
+    Width = 1094
     Align = alBottom
     BevelOuter = bvNone
-    ClientHeight = 67
-    ClientWidth = 625
+    ClientHeight = 117
+    ClientWidth = 1094
     TabOrder = 10
     object pnlDateLeft: TPanel
-      Left = 3
-      Height = 61
-      Top = 3
-      Width = 80
+      Left = 5
+      Height = 107
+      Top = 5
+      Width = 140
       Align = alLeft
-      BorderSpacing.Around = 3
+      BorderSpacing.Around = 5
       BevelOuter = bvNone
-      ClientHeight = 61
-      ClientWidth = 80
+      ClientHeight = 107
+      ClientWidth = 140
       TabOrder = 0
       object lblDate: TLabel
         Left = 0
-        Height = 15
+        Height = 30
         Top = 0
-        Width = 80
+        Width = 140
         Align = alTop
         Caption = 'Date (sorting):'
         ParentColor = False
       end
     end
     object SD: TEdit
-      Left = 88
-      Height = 23
+      Left = 154
+      Height = 38
       Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
-      Top = 3
-      Width = 232
+      Top = 5
+      Width = 406
       OnEditingDone = SDEditingDone
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
     end
     object SD2: TEdit
-      Left = 88
-      Height = 23
-      Top = 3
-      Width = 232
+      Left = 154
+      Height = 38
+      Top = 5
+      Width = 406
       ReadOnly = True
       TabStop = False
       TabOrder = 2
@@ -339,8 +406,8 @@ object frmEditParents: TfrmEditParents
     end
   end
   object MainMenu1: TMainMenu
-    Left = 16
-    Top = 248
+    left = 28
+    top = 434
     object MenuItem6: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114

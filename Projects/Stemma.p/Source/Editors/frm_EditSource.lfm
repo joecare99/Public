@@ -1,0 +1,375 @@
+object frmEditSource: TfrmEditSource
+  Left = 1012
+  Height = 965
+  Top = 635
+  Width = 1121
+  ActiveControl = edtSourceTitle
+  BorderIcons = []
+  BorderStyle = bsDialog
+  Caption = 'Modification de source'
+  ClientHeight = 965
+  ClientWidth = 1121
+  DesignTimePPI = 168
+  Menu = mnuSourceMain
+  OnShow = FormShow
+  Position = poScreenCenter
+  Visible = False
+  object tblDepots: TStringGrid
+    Left = 154
+    Height = 210
+    Top = 378
+    Width = 924
+    ColCount = 4
+    Columns = <    
+      item
+        MinSize = 18
+        MaxSize = 350
+        ReadOnly = True
+        Title.Caption = 'Depot'
+        Width = 350
+      end    
+      item
+        MinSize = 18
+        MaxSize = 350
+        Title.Caption = 'Info'
+        Width = 536
+      end    
+      item
+        MinSize = 18
+        MaxSize = 350
+        Title.Caption = '# dépot'
+        Visible = False
+      end>
+    ExtendedSelect = False
+    MouseWheelOption = mwGrid
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goEditing, goSmoothScroll]
+    PopupMenu = mnuDepotTable
+    TabOrder = 4
+    OnDblClick = tblDepotsDblClick
+    OnEditingDone = tblDepotsEditingDone
+    ColWidths = (
+      2
+      350
+      536
+      0
+    )
+  end
+  object lblSourceInformation: TLabel
+    Left = 28
+    Height = 30
+    Top = 196
+    Width = 65
+    Caption = 'Mémo:'
+    ParentColor = False
+  end
+  object edtSourceInformation: TMemo
+    Left = 154
+    Height = 102
+    Top = 196
+    Width = 924
+    Lines.Strings = (
+      'M'
+    )
+    OnEditingDone = edtSourceInformationEditingDone
+    ScrollBars = ssAutoVertical
+    TabOrder = 2
+  end
+  object lblRepository: TLabel
+    Left = 28
+    Height = 30
+    Top = 378
+    Width = 102
+    Caption = 'Repository:'
+    ParentColor = False
+  end
+  object lblSourceDescription: TLabel
+    Left = 28
+    Height = 30
+    Top = 84
+    Width = 110
+    Caption = 'Description:'
+    ParentColor = False
+  end
+  object edtSourceDescription: TEdit
+    Left = 152
+    Height = 38
+    Top = 84
+    Width = 924
+    OnKeyDown = edtSourceDescriptionKeyDown
+    TabOrder = 1
+    Text = 'edtSourceDescription'
+  end
+  object edtSourceTitle: TEdit
+    Left = 152
+    Height = 38
+    Top = 28
+    Width = 922
+    TabOrder = 0
+    Text = 'edtSourceTitle'
+  end
+  object lblSourceTitle: TLabel
+    Left = 28
+    Height = 30
+    Top = 28
+    Width = 44
+    Caption = 'Title:'
+    ParentColor = False
+  end
+  object lblSourceQuality: TLabel
+    Left = 28
+    Height = 30
+    Top = 322
+    Width = 174
+    Caption = 'Qualité par défaut:'
+    ParentColor = False
+  end
+  object edtQuality: TSpinEdit
+    Left = 219
+    Height = 38
+    Top = 322
+    Width = 88
+    MaxValue = 10
+    TabOrder = 3
+  end
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 91
+    Top = 874
+    Width = 1121
+    Align = alBottom
+    ClientHeight = 91
+    ClientWidth = 1121
+    TabOrder = 5
+    object btnOK: TBitBtn
+      Left = 716
+      Height = 69
+      Top = 11
+      Width = 192
+      Align = alRight
+      BorderSpacing.Around = 10
+      DefaultCaption = True
+      Kind = bkOK
+      ModalResult = 1
+      OnClick = btnOKClick
+      TabOrder = 0
+    end
+    object btnCancel: TBitBtn
+      Left = 918
+      Height = 69
+      Top = 11
+      Width = 192
+      Align = alRight
+      BorderSpacing.Around = 10
+      Cancel = True
+      DefaultCaption = True
+      Kind = bkCancel
+      ModalResult = 2
+      TabOrder = 1
+    end
+  end
+  inline fraDocuments1: TfraDocuments
+    Left = 9
+    Height = 224
+    Top = 641
+    Width = 1103
+    Align = alBottom
+    BorderSpacing.Around = 9
+    ClientHeight = 224
+    ClientWidth = 1103
+    TabOrder = 6
+    inherited tblDocuments: TStringGrid
+      Left = 172
+      Height = 206
+      Top = 9
+      Width = 885
+      BorderSpacing.Right = 37
+      BorderSpacing.Around = 9
+      Columns = <      
+        item
+          MinSize = 32
+          MaxSize = 612
+          PickList.Strings = (          )
+          Title.Caption = '*'
+          Width = 52
+        end      
+        item
+          MinSize = 32
+          MaxSize = 612
+          PickList.Strings = (          )
+          Title.Caption = 'Title'
+          Width = 1356
+        end      
+        item
+          MinSize = 32
+          MaxSize = 612
+          PickList.Strings = (          )
+          Title.Caption = 'Type'
+          Visible = False
+        end      
+        item
+          MinSize = 32
+          MaxSize = 612
+          PickList.Strings = (          )
+          Title.Caption = 'Format'
+          Width = 140
+        end>
+      ColWidths = (
+        4
+        52
+        1356
+        0
+        140
+      )
+    end
+    inherited pnlDocumentsLeft: TPanel
+      Left = 5
+      Height = 214
+      Top = 5
+      Width = 158
+      BorderSpacing.Around = 5
+      ClientHeight = 214
+      ClientWidth = 158
+      inherited Label12: TLabel
+        Left = 16
+        Height = 30
+        Top = 9
+        Width = 126
+        BorderSpacing.Left = 16
+        BorderSpacing.Top = 9
+        BorderSpacing.Right = 16
+      end
+    end
+  end
+  object edtNo: TSpinEdit
+    Left = 882
+    Height = 38
+    Top = 322
+    Width = 140
+    MaxValue = 0
+    TabStop = False
+    TabOrder = 7
+    Visible = False
+  end
+  inline fraIndividualwithRole1: TfraIndividualwithRole
+    AnchorSideLeft.Control = fraDocuments1
+    AnchorSideTop.Control = edtSourceDescription
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Control = fraDocuments1
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = edtSourceInformation
+    Left = 9
+    Height = 64
+    Top = 127
+    Width = 1103
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    BorderSpacing.Top = 5
+    BorderSpacing.Bottom = 5
+    ClientHeight = 64
+    ClientWidth = 1103
+    TabOrder = 8
+    DesignLeft = 0
+    DesignTop = 0
+    inherited edtIndividId: TSpinEdit
+      Left = 176
+      Height = 46
+      Top = 9
+      Width = 294
+      BorderSpacing.Around = 9
+    end
+    inherited pnlLeft: TPanel
+      Left = 9
+      Height = 46
+      Top = 9
+      Width = 158
+      BorderSpacing.Around = 9
+      BevelOuter = bvNone
+      ClientHeight = 46
+      ClientWidth = 158
+      inherited lblIndividRole: TLabel
+        Left = 9
+        Height = 30
+        Top = 9
+        Width = 140
+        BorderSpacing.Around = 9
+      end
+    end
+    inherited cbxIndividName: TComboBox
+      Left = 479
+      Height = 38
+      Top = 9
+      Width = 578
+      BorderSpacing.Right = 37
+      BorderSpacing.Around = 9
+      ItemHeight = 30
+      OnChange = nil
+    end
+    inherited alsIndividual: TActionList
+      inherited actIndividualNew: TAction
+        OnExecute = nil
+        OnUpdate = nil
+      end
+      inherited actIndividualEdit: TAction
+        OnExecute = nil
+      end
+    end
+  end
+  object Splitter1: TSplitter
+    Cursor = crVSplit
+    Left = 0
+    Height = 9
+    Top = 623
+    Width = 1121
+    Align = alBottom
+    ResizeAnchor = akBottom
+  end
+  object mnuDepotTable: TPopupMenu
+    left = 56
+    top = 434
+    object Ajouter1: TMenuItem
+      Caption = '&Ajouter'
+      ShortCut = 115
+      OnClick = Ajouter1Click
+    end
+    object Modifier1: TMenuItem
+      Caption = '&Modifier'
+      ShortCut = 116
+      OnClick = tblDepotsEditingDone
+    end
+    object Supprimer1: TMenuItem
+      Caption = '&Supprimer'
+      ShortCut = 117
+      OnClick = Supprimer1Click
+    end
+  end
+  object mnuSourceMain: TMainMenu
+    left = 28
+    top = 14
+    object mniSourceRepeat: TMenuItem
+      Caption = 'Repeat'
+      ShortCut = 114
+      OnClick = mniSourceRepeatClick
+    end
+    object mniSourceClose: TMenuItem
+      Caption = '&Quit'
+      ShortCut = 121
+    end
+    object mniRepositories: TMenuItem
+      Caption = '&Dépots'
+      object mniRepositoryAdd: TMenuItem
+        Caption = '&Ajouter'
+        ShortCut = 115
+        OnClick = Ajouter1Click
+      end
+      object mniRepositoryEdit: TMenuItem
+        Caption = '&Modifier'
+        ShortCut = 116
+        OnClick = tblDepotsEditingDone
+      end
+      object mniRepositoryDelete: TMenuItem
+        Caption = '&Supprimer'
+        ShortCut = 117
+        OnClick = Supprimer1Click
+      end
+    end
+  end
+end

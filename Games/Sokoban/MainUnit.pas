@@ -537,7 +537,7 @@ var
         end;
 
         if (FSokobanEngine.PuzzleField[X, Y].FPartType = ptNone) or
-       //   (FSokobanEngine.PuzzleField[X, Y].FPartType = ptReachable) or
+           (FPathFinder.Reachable[point(X, Y)]) or
           (FSokobanEngine.PuzzleField[X, Y].FPartType = ptPlayer) or
           (FSokobanEngine.PuzzleField[X, Y].FPartType = ptCrate) then
         begin

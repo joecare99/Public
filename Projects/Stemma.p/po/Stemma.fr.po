@@ -2784,10 +2784,6 @@ msgctxt "tfrmeditsource.ajouter1.caption"
 msgid "&Ajouter"
 msgstr "&Ajouter"
 
-#: tfrmeditsource.caption
-msgid "Modification de source"
-msgstr ""
-
 #: tfrmeditsource.edtsourcedescription.text
 msgctxt "tfrmeditsource.edtsourcedescription.text"
 msgid "edtSourceDescription"
@@ -2796,6 +2792,28 @@ msgstr ""
 #: tfrmeditsource.edtsourcetitle.text
 msgctxt "tfrmeditsource.edtsourcetitle.text"
 msgid "edtSourceTitle"
+msgstr ""
+
+#: tfrmeditsource.fradocuments1.tbldocuments.columns[0].title.caption
+msgctxt "tfrmeditsource.fradocuments1.tbldocuments.columns[0].title.caption"
+msgid "*"
+msgstr ""
+
+#: tfrmeditsource.fradocuments1.tbldocuments.columns[1].title.caption
+#, fuzzy
+msgctxt "tfrmeditsource.fradocuments1.tbldocuments.columns[1].title.caption"
+msgid "Title"
+msgstr "Titre"
+
+#: tfrmeditsource.fradocuments1.tbldocuments.columns[2].title.caption
+#, fuzzy
+msgctxt "tfrmeditsource.fradocuments1.tbldocuments.columns[2].title.caption"
+msgid "Type"
+msgstr "Type:"
+
+#: tfrmeditsource.fradocuments1.tbldocuments.columns[3].title.caption
+msgctxt "tfrmeditsource.fradocuments1.tbldocuments.columns[3].title.caption"
+msgid "Format"
 msgstr ""
 
 #: tfrmeditsource.lblrepository.caption
@@ -2873,18 +2891,18 @@ msgctxt "tfrmeditsource.supprimer1.caption"
 msgid "&Supprimer"
 msgstr "&Supprimer"
 
-#: tfrmeditsource.tableaudepots.columns[0].title.caption
-msgctxt "tfrmeditsource.tableaudepots.columns[0].title.caption"
+#: tfrmeditsource.tbldepots.columns[0].title.caption
+msgctxt "tfrmeditsource.tbldepots.columns[0].title.caption"
 msgid "Dépot"
 msgstr ""
 
-#: tfrmeditsource.tableaudepots.columns[1].title.caption
-msgctxt "tfrmeditsource.tableaudepots.columns[1].title.caption"
+#: tfrmeditsource.tbldepots.columns[1].title.caption
+msgctxt "tfrmeditsource.tbldepots.columns[1].title.caption"
 msgid "Mémo"
 msgstr ""
 
-#: tfrmeditsource.tableaudepots.columns[2].title.caption
-msgctxt "tfrmeditsource.tableaudepots.columns[2].title.caption"
+#: tfrmeditsource.tbldepots.columns[2].title.caption
+msgctxt "tfrmeditsource.tbldepots.columns[2].title.caption"
 msgid "# dépot"
 msgstr ""
 
@@ -3552,10 +3570,6 @@ msgctxt "tfrmrepository.tableaudepots.columns[5].title.caption"
 msgid "Utilisation"
 msgstr "Utilisation"
 
-#: tfrmselectdialog.caption
-msgid "frmSelectDialog"
-msgstr ""
-
 #: tfrmselectdialog.combobox1.hint
 msgid "Please select ..."
 msgstr ""
@@ -3564,12 +3578,6 @@ msgstr ""
 msgctxt "tfrmshowimage.mniquit.caption"
 msgid "&Quit"
 msgstr "&Quit"
-
-#: tfrmshowusage.caption
-#, fuzzy
-msgctxt "tfrmshowusage.caption"
-msgid "Utilisation"
-msgstr "Utilisation"
 
 #: tfrmshowusage.tblusage.columns[0].title.caption
 msgctxt "tfrmshowusage.tblusage.columns[0].title.caption"

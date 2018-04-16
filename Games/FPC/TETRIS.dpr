@@ -8,6 +8,9 @@ Program TETRIS;
 
 uses
   sysutils,
+  {$IFDEF FPC}
+    interfaces,
+  {$ENDIF}
   Unt_Tetris in '..\Source\Unt_Tetris.pas',
   Unt_TetEng in '..\Source\Unt_TetEng.pas';
 
