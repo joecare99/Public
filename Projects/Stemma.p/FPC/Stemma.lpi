@@ -14,7 +14,6 @@
         <DpiAware Value="True"/>
       </XPManifest>
       <Icon Value="0"/>
-      <ActiveWindowIndexAtStart Value="1"/>
     </General>
     <LazDoc Paths="..\FPDoc" PackageName="Stemma"/>
     <i18n>
@@ -137,7 +136,7 @@
         <PackageName Value="LCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="55">
+    <Units Count="54">
       <Unit0>
         <Filename Value="Stemma.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -151,7 +150,7 @@
         <ComponentName Value="frmStemmaMainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="6"/>
         <TopLine Value="1387"/>
         <CursorPos X="53" Y="1405"/>
         <UsageCount Value="210"/>
@@ -250,7 +249,7 @@
         <ComponentName Value="frmEvents"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="113"/>
         <CursorPos X="50" Y="149"/>
         <UsageCount Value="242"/>
@@ -401,7 +400,7 @@
         <ComponentName Value="frmPlace"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="7"/>
         <TopLine Value="234"/>
         <CursorPos X="13" Y="297"/>
         <UsageCount Value="208"/>
@@ -414,6 +413,7 @@
         <ComponentName Value="frmShowUsage"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
         <WindowIndex Value="1"/>
         <CursorPos X="23" Y="18"/>
@@ -443,7 +443,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frm_Repositories"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="8"/>
         <TopLine Value="137"/>
         <CursorPos X="22" Y="188"/>
         <UsageCount Value="218"/>
@@ -484,7 +484,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frm_EditTypes"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="4"/>
         <CursorPos X="53" Y="57"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -550,7 +550,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frm_SelectDialog"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="9"/>
         <CursorPos X="56" Y="22"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
@@ -571,7 +571,7 @@
       <Unit35>
         <Filename Value="..\Source\tools\untWebexport.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="8"/>
         <WindowIndex Value="1"/>
         <TopLine Value="1343"/>
         <CursorPos X="21" Y="1366"/>
@@ -661,7 +661,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="169"/>
         <CursorPos X="14" Y="195"/>
-        <UsageCount Value="24"/>
+        <UsageCount Value="5"/>
       </Unit43>
       <Unit44>
         <Filename Value="C:\lazarus_trnk\lazarus\lcl\stdctrls.pp"/>
@@ -669,205 +669,200 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="802"/>
         <CursorPos X="14" Y="826"/>
-        <UsageCount Value="52"/>
+        <UsageCount Value="33"/>
       </Unit44>
       <Unit45>
         <Filename Value="C:\lazarus\lcl\include\control.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="4984"/>
         <CursorPos Y="5000"/>
-        <UsageCount Value="30"/>
+        <UsageCount Value="11"/>
       </Unit45>
       <Unit46>
         <Filename Value="C:\lazarus\lcl\include\customedit.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="535"/>
         <CursorPos Y="557"/>
-        <UsageCount Value="30"/>
+        <UsageCount Value="11"/>
       </Unit46>
       <Unit47>
         <Filename Value="C:\lazarus\lcl\include\customform.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="2940"/>
         <CursorPos Y="2967"/>
-        <UsageCount Value="30"/>
+        <UsageCount Value="11"/>
       </Unit47>
       <Unit48>
         <Filename Value="C:\lazarus\lcl\interfaces\win32\win32object.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="356"/>
         <CursorPos Y="375"/>
-        <UsageCount Value="30"/>
+        <UsageCount Value="11"/>
       </Unit48>
       <Unit49>
-        <Filename Value="C:\lazarus\lcl\controls.pp"/>
-        <UnitName Value="Controls"/>
-        <EditorIndex Value="-1"/>
-        <TopLine Value="1428"/>
-        <CursorPos X="14" Y="1443"/>
-        <UsageCount Value="5"/>
-      </Unit49>
-      <Unit50>
         <Filename Value="C:\lazarus_trnk\lazarus\components\lazutils\lazfileutils.pas"/>
         <UnitName Value="LazFileUtils"/>
         <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="84"/>
         <CursorPos X="71" Y="108"/>
-        <UsageCount Value="126"/>
-      </Unit50>
-      <Unit51>
+        <UsageCount Value="107"/>
+      </Unit49>
+      <Unit50>
         <Filename Value="C:\lazarus_trnk\lazarus\components\lazutils\utf8process.pp"/>
         <UnitName Value="UTF8Process"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="646"/>
         <CursorPos Y="692"/>
-        <UsageCount Value="126"/>
-      </Unit51>
-      <Unit52>
+        <UsageCount Value="107"/>
+      </Unit50>
+      <Unit51>
         <Filename Value="C:\lazarus_trnk\lazarus\components\sparta\generics\source\generics.defaults.pas"/>
         <UnitName Value="Generics.Defaults"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="11"/>
         <WindowIndex Value="1"/>
         <TopLine Value="510"/>
         <CursorPos X="156" Y="526"/>
-        <UsageCount Value="13"/>
+        <UsageCount Value="107"/>
         <Loaded Value="True"/>
-      </Unit52>
-      <Unit53>
+      </Unit51>
+      <Unit52>
         <Filename Value="..\..\Lazarus-CCR\components\jvcllaz\run\JvStdCtrls\JvButton.pas"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="9"/>
         <WindowIndex Value="1"/>
         <TopLine Value="27"/>
         <CursorPos X="34" Y="38"/>
-        <UsageCount Value="13"/>
+        <UsageCount Value="107"/>
         <Loaded Value="True"/>
-      </Unit53>
-      <Unit54>
-        <Filename Value="C:\lazarus\components\fppkg\src\laz_pkgrepos.pas"/>
-        <EditorIndex Value="-1"/>
+      </Unit52>
+      <Unit53>
+        <Filename Value="..\..\Lazarus-CCR\components\thtmlport\package\htmlmisc.pas"/>
+        <UnitName Value="HtmlMisc"/>
+        <EditorIndex Value="10"/>
         <WindowIndex Value="1"/>
-        <CursorPos X="3" Y="10"/>
-        <UsageCount Value="10"/>
-      </Unit54>
+        <TopLine Value="12"/>
+        <CursorPos X="100" Y="42"/>
+        <UsageCount Value="104"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit53>
     </Units>
     <JumpHistory Count="29" HistoryIndex="28">
       <Position1>
-        <Filename Value="..\Source\frm_repositories.pas"/>
-        <Caret Line="125" Column="65" TopLine="96"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="4872" Column="28" TopLine="4848"/>
       </Position1>
       <Position2>
         <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="3256" Column="32" TopLine="3242"/>
+        <Caret Line="346" TopLine="326"/>
       </Position2>
       <Position3>
-        <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="4957" TopLine="4933"/>
+        <Filename Value="..\Source\frm_repositories.pas"/>
+        <Caret Line="99" Column="31" TopLine="62"/>
       </Position3>
       <Position4>
-        <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="5041" Column="8" TopLine="5009"/>
+        <Filename Value="..\Source\frm_repositories.pas"/>
+        <Caret Line="157" Column="13" TopLine="135"/>
       </Position4>
       <Position5>
         <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="4872" Column="28" TopLine="4848"/>
+        <Caret Line="11" Column="17"/>
       </Position5>
       <Position6>
         <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="346" TopLine="326"/>
+        <Caret Line="1410" Column="33" TopLine="1374"/>
       </Position6>
       <Position7>
-        <Filename Value="..\Source\frm_repositories.pas"/>
-        <Caret Line="99" Column="31" TopLine="62"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="1469" Column="9" TopLine="1429"/>
       </Position7>
       <Position8>
-        <Filename Value="..\Source\frm_repositories.pas"/>
-        <Caret Line="157" Column="13" TopLine="135"/>
+        <Filename Value="..\Source\dm_gendata.pas"/>
+        <Caret Line="3172" Column="7" TopLine="3130"/>
       </Position8>
       <Position9>
         <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="11" Column="17"/>
+        <Caret Line="4043" Column="7" TopLine="4003"/>
       </Position9>
       <Position10>
-        <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="1410" Column="33" TopLine="1374"/>
-      </Position10>
-      <Position11>
-        <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="1469" Column="9" TopLine="1429"/>
-      </Position11>
-      <Position12>
-        <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="3172" Column="7" TopLine="3130"/>
-      </Position12>
-      <Position13>
-        <Filename Value="..\Source\dm_gendata.pas"/>
-        <Caret Line="4043" Column="7" TopLine="4003"/>
-      </Position13>
-      <Position14>
         <Filename Value="..\Source\tools\fmutils.pas"/>
         <Caret Line="1090" Column="10" TopLine="1067"/>
-      </Position14>
-      <Position15>
+      </Position10>
+      <Position11>
         <Filename Value="..\Source\frm_Usage.pas"/>
         <Caret Line="254" Column="8" TopLine="230"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\Source\frm_Usage.pas"/>
+        <Caret Line="67" Column="8" TopLine="43"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\Source\frm_Usage.pas"/>
+        <Caret Line="111" Column="6" TopLine="87"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\Source\frm_Usage.pas"/>
+        <Caret Line="182" Column="8" TopLine="158"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\Source\frm_sources.pas"/>
+        <Caret Line="71" Column="8" TopLine="47"/>
       </Position15>
       <Position16>
         <Filename Value="..\Source\frm_Usage.pas"/>
-        <Caret Line="67" Column="8" TopLine="43"/>
+        <Caret Line="254" Column="8" TopLine="230"/>
       </Position16>
       <Position17>
         <Filename Value="..\Source\frm_Usage.pas"/>
-        <Caret Line="111" Column="6" TopLine="87"/>
+        <Caret Line="67" Column="8" TopLine="43"/>
       </Position17>
       <Position18>
         <Filename Value="..\Source\frm_Usage.pas"/>
-        <Caret Line="182" Column="8" TopLine="158"/>
+        <Caret Line="111" Column="6" TopLine="87"/>
       </Position18>
       <Position19>
-        <Filename Value="..\Source\frm_sources.pas"/>
-        <Caret Line="71" Column="8" TopLine="47"/>
+        <Filename Value="..\Source\frm_Usage.pas"/>
+        <Caret Line="67" Column="8" TopLine="43"/>
       </Position19>
       <Position20>
-        <Filename Value="..\Source\frm_Usage.pas"/>
-        <Caret Line="254" Column="8" TopLine="230"/>
-      </Position20>
-      <Position21>
-        <Filename Value="..\Source\frm_Usage.pas"/>
-        <Caret Line="67" Column="8" TopLine="43"/>
-      </Position21>
-      <Position22>
-        <Filename Value="..\Source\frm_Usage.pas"/>
-        <Caret Line="111" Column="6" TopLine="87"/>
-      </Position22>
-      <Position23>
-        <Filename Value="..\Source\frm_Usage.pas"/>
-        <Caret Line="67" Column="8" TopLine="43"/>
-      </Position23>
-      <Position24>
         <Filename Value="..\Source\tools\fmutils.pas"/>
         <Caret Line="783" Column="10" TopLine="760"/>
-      </Position24>
-      <Position25>
+      </Position20>
+      <Position21>
         <Filename Value="..\Source\tools\fmutils.pas"/>
         <Caret Line="585" Column="12" TopLine="562"/>
-      </Position25>
-      <Position26>
+      </Position21>
+      <Position22>
         <Filename Value="..\Source\frm_sources.pas"/>
         <Caret Line="71" Column="8" TopLine="47"/>
-      </Position26>
-      <Position27>
+      </Position22>
+      <Position23>
         <Filename Value="..\Source\dm_gendata.pas"/>
         <Caret Line="3230" Column="5" TopLine="3209"/>
-      </Position27>
-      <Position28>
+      </Position23>
+      <Position24>
         <Filename Value="..\Source\dm_gendata.pas"/>
         <Caret Line="270" Column="64" TopLine="254"/>
-      </Position28>
-      <Position29>
+      </Position24>
+      <Position25>
         <Filename Value="..\Source\frm_Usage.pas"/>
         <Caret Line="18" Column="23"/>
+      </Position25>
+      <Position26>
+        <Filename Value="..\..\Lazarus-CCR\components\jvcllaz\run\JvStdCtrls\JvButton.pas"/>
+        <Caret Line="38" Column="34" TopLine="27"/>
+      </Position26>
+      <Position27>
+        <Filename Value="..\..\Lazarus-CCR\components\thtmlport\package\htmlmisc.pas"/>
+        <Caret Line="52" Column="42" TopLine="19"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\..\Lazarus-CCR\components\thtmlport\package\htmlmisc.pas"/>
+        <Caret Line="34" Column="31" TopLine="22"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\..\Lazarus-CCR\components\thtmlport\package\htmlmisc.pas"/>
+        <Caret Line="42" Column="85"/>
       </Position29>
     </JumpHistory>
     <CustomSessionData Count="2">

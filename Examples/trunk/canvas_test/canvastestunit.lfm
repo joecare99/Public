@@ -8,6 +8,7 @@ object frmCanvasTest: TfrmCanvasTest
   Caption = 'Canvas Test Program'
   ClientHeight = 460
   ClientWidth = 233
+  LCLVersion = '1.3'
   object btnBrush: TButton
     Left = 19
     Height = 25
