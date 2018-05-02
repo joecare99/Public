@@ -1,6 +1,7 @@
 ﻿Unit Unt_FileProcs;
 
-{*v 1.00.06 }
+{*v 1.00.07 }
+{*h 1.00.06 CleanPath}
 {*h 1.00.05 Class of CFileInfo }
 {*h 1.00.04 Anpassungen an FPC, Testcase }
 {*h 1.00.02 Erweitere CFileInfo um Displayname und Extensions& entsp. Register-Proc}
@@ -134,6 +135,11 @@ Function GetDir(path: String; Sattr, FAttr: integer): TFiles;
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
 Function GetFileInfo(path: String; force: Boolean = false): String;
+// Hole weitere Infos UEber Datei ein;
+
+///<author>Joe Care</author>
+///  <version>1.00.07</version>
+Function CleanPath(path: String): String;
 // Hole weitere Infos UEber Datei ein;
 
   ///<author>Joe Care</author>
@@ -726,6 +732,23 @@ Begin
       Except
       End;
 End;
+
+function CleanPath(path: String): String;
+const BackPath =DirectorySeparator+'..';
+var
+  pp: Integer;
+begin
+  Result := path;
+  pp:=Pos(BackPath,result);
+  while pp<> 0 do
+    begin
+      if pp< 4 then
+        result:=copy(result,1,pp)+copy(result,pp+length(BackPath)+1,length(Result)-pp)
+      else
+        result:=ExtractFilePath(copy(result,1,pp-1))+copy(result,pp+length(BackPath)+1,length(Result)-pp);
+      pp:=Pos(BackPath,result);
+    end;
+end;
 
 function GetVersion(filename: String): String;
 Var
