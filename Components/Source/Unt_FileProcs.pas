@@ -102,57 +102,57 @@ Type
 
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
+  // Erstelle falls noetig den npath
 Procedure Makepath(npath: String);
-// Erstelle falls noetig den npath
 
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
+  // erzeugt aus dem angegebenen Datei-Pfad einen Backup-Datei-Pfad.
 Function GetBackupPath(Path: String): String;
-// erzeugt aus dem angegebenen Datei-Pfad einen Backup-Datei-Pfad.
 
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
+  // Benenne oder Verschiebe mehrere dateien
 Procedure MultiReName(OldName, NewName: String; repl: TSuccess = Nil; minp:
   integer = 0; maxp: integer = 100);
-// Benenne oder Verschiebe mehrere dateien
 
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
+  // Gibt TRUE zurueck wenn das Verzeichniss leer ist.
 Function IsEmptyDir(path: String): boolean;
-// Gibt TRUE zurueck wenn das Verzeichniss leer ist.
 
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
+  // Durchsuche Verzeichnisbaum ~path~ recursiv nach ~mask~
 Function GetFiles(mask, path: String; repl: TSuccess = Nil; minp: integer = 0;
   maxp: integer = 100): Tfiles;
-// Durchsuche Verzeichnisbaum ~path~ recursiv nach ~mask~
 
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
+  // Hole Directory
 Function GetDir(path: String; Sattr, FAttr: integer): TFiles;
-// Hole Directory
 
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
+  // Hole weitere Infos UEber Datei ein;
 Function GetFileInfo(path: String; force: Boolean = false): String;
-// Hole weitere Infos UEber Datei ein;
 
 ///<author>Joe Care</author>
 ///  <version>1.00.07</version>
+// Bereinigt einen Pfad von '/..'-Einträgen.
 Function CleanPath(path: String): String;
-// Hole weitere Infos UEber Datei ein;
 
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
+  // Hole Dateiversion
 Function GetVersion(filename: String): String;
-// Hole Dateiversion
 
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
   ///  <tested>true</Tested>
   ///  <info>Pruefe ob datei Schon benutzt wird</info>
+  // Pruefe ob datei schon benutzt wird
 Function FileInUse(FileName: String): boolean;
-// Pruefe ob datei Schon benutzt wird
 
 Type
   ///<author>Joe Care</author>
