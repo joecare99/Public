@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="BaseUnits"><module name="Unt_FileProcs"><element name="CFileInfo"><short>CFileInfo is an Abstract Class for File-Information-Provider</short>
+      </element><element name="Makepath"><short>Creates a Directory if necessary (incl. Parents)</short>
+      </element><element name="CleanPath"><short>Bereinigt einen Pfad von '/..'-Einträgen. </short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

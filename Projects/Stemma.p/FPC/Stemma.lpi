@@ -14,6 +14,7 @@
         <DpiAware Value="True"/>
       </XPManifest>
       <Icon Value="0"/>
+      <ActiveWindowIndexAtStart Value="1"/>
     </General>
     <LazDoc Paths="..\FPDoc" PackageName="Stemma"/>
     <i18n>
@@ -151,7 +152,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="1387"/>
+        <TopLine Value="1401"/>
         <CursorPos X="53" Y="1405"/>
         <UsageCount Value="210"/>
         <Loaded Value="True"/>
@@ -161,7 +162,7 @@
         <Filename Value="..\Source\tools\fmutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="FMUtils"/>
-        <TopLine Value="1490"/>
+        <TopLine Value="1508"/>
         <CursorPos X="19" Y="1513"/>
         <UsageCount Value="208"/>
         <Loaded Value="True"/>
@@ -250,7 +251,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="113"/>
+        <TopLine Value="144"/>
         <CursorPos X="50" Y="149"/>
         <UsageCount Value="242"/>
         <Loaded Value="True"/>
@@ -263,7 +264,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="13"/>
+        <TopLine Value="29"/>
         <CursorPos X="52" Y="34"/>
         <UsageCount Value="282"/>
         <Loaded Value="True"/>
@@ -332,7 +333,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="242"/>
+        <TopLine Value="250"/>
         <CursorPos X="35" Y="256"/>
         <UsageCount Value="221"/>
         <Loaded Value="True"/>
@@ -357,7 +358,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="3"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="338"/>
+        <TopLine Value="364"/>
         <CursorPos X="36" Y="369"/>
         <UsageCount Value="223"/>
         <Loaded Value="True"/>
@@ -371,7 +372,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="539"/>
+        <TopLine Value="543"/>
         <CursorPos X="52" Y="592"/>
         <UsageCount Value="204"/>
         <Bookmarks Count="1">
@@ -388,7 +389,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="4"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="161"/>
+        <TopLine Value="185"/>
         <CursorPos X="46" Y="190"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -401,7 +402,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="234"/>
+        <TopLine Value="238"/>
         <CursorPos X="13" Y="297"/>
         <UsageCount Value="208"/>
         <Loaded Value="True"/>
@@ -416,6 +417,7 @@
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
         <WindowIndex Value="1"/>
+        <TopLine Value="12"/>
         <CursorPos X="23" Y="18"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
@@ -444,7 +446,7 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frm_Repositories"/>
         <EditorIndex Value="8"/>
-        <TopLine Value="137"/>
+        <TopLine Value="141"/>
         <CursorPos X="22" Y="188"/>
         <UsageCount Value="218"/>
         <Loaded Value="True"/>
@@ -457,7 +459,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="209"/>
+        <TopLine Value="228"/>
         <CursorPos X="27" Y="233"/>
         <UsageCount Value="217"/>
         <Loaded Value="True"/>
@@ -471,6 +473,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="6"/>
         <WindowIndex Value="1"/>
+        <TopLine Value="3"/>
         <CursorPos X="12" Y="9"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
@@ -483,8 +486,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frm_EditTypes"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
+        <TopLine Value="51"/>
         <CursorPos X="53" Y="57"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -521,7 +524,7 @@
         <ResourceBaseClass Value="DataModule"/>
         <UnitName Value="dm_GenData"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="254"/>
+        <TopLine Value="266"/>
         <CursorPos X="64" Y="270"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
@@ -550,7 +553,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frm_SelectDialog"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="9"/>
+        <TopLine Value="4"/>
         <CursorPos X="56" Y="22"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
@@ -587,7 +592,7 @@
         <UnitName Value="fra_Documents"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="84"/>
+        <TopLine Value="130"/>
         <CursorPos X="27" Y="135"/>
         <ComponentState Value="1"/>
         <UsageCount Value="201"/>
