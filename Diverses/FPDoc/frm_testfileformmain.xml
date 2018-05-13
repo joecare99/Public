@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Prj_TestFileFormStumb"><module name="frm_TestFileFormMain"><element name="TfrmMainForm"><short>Haupt-AnwendungsDialog: Test File-Processing-Frame</short>
+      </element><element name="TfrmMainForm.btnClose"><short>Taster: Dialog/Anwendung Schließen</short>
+      </element><element name="TfrmMainForm.btnLoadFile"><short>Taster: Datei Laden/Verarbeiten</short>
+      </element><element name="TfrmMainForm.cbxFilename"><short>ComboBox: Dateiname (mit Historie)</short>
+      </element><element name="TfrmMainForm.Config1"><short>Konfig-Komonente: u.a. zum Speichern der Datei-Historie</short>
+      </element><element name="TfrmMainForm.OpenDialog1"><short>Dialog: Datei-Öffnen</short>
+      </element><element name="TfrmMainForm.pnlLeft"><short>Panel: (links) Frame-Eigenschaften</short>
+      </element><element name="TfrmMainForm.pnlBottom"><short>Panel: (unten) Form/Anwendungs- Bedienelemente</short>
+      </element><element name="TfrmMainForm.pnlTop"><short>Panel: (oben) Frame/Datei - Bedien-Haupt-Elemente</short>
+      </element><element name="TfrmMainForm.btnSelectFile"><short>Taste: Datei auswählen (via OpenDialog)</short>
+      </element><element name="TfrmMainForm.btnLoadFileClick"><short>Methode: Datei laden/verarbeiten ...</short>
+      </element><element name="TfrmMainForm.btnSelectFileClick"><short>Event-Methode: Datei auswählen (ggf. Verarbeiten)</short>
+      </element><element name="TfrmMainForm.FormShow"><short>Event-Methode: Form-Anzeigen (wird für "Late-init-Schritte verwendet"</short>
+      </element><element name="TfrmMainForm.FDatapath"><short>Pfad für Standard-Daten (default)</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
