@@ -9,7 +9,7 @@
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
     </General>
-    <LazDoc Paths="docs"/>
+    <LazDoc Paths="../Source/fpdocmanager/docs"/>
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
@@ -24,24 +24,27 @@
     <RunParams>
       <local>
         <FormatVersion Value="1"/>
-        <WorkingDirectory Value="D:/AllDocs"/>
+        <WorkingDirectory Value="C:/projekte/Delphi/data/AllDocs"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="2">
+    <RequiredPackages Count="3">
       <Item1>
-        <PackageName Value="SynEdit"/>
+        <PackageName Value="fcl_passrc_trunk"/>
       </Item1>
       <Item2>
-        <PackageName Value="LCL"/>
+        <PackageName Value="SynEdit"/>
       </Item2>
+      <Item3>
+        <PackageName Value="LCL"/>
+      </Item3>
     </RequiredPackages>
-    <Units Count="11">
+    <Units Count="10">
       <Unit0>
         <Filename Value="FPDocManager.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="fmain.pas"/>
+        <Filename Value="../Source/fpdocmanager/fmain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Main"/>
         <HasResources Value="True"/>
@@ -49,71 +52,65 @@
         <UnitName Value="fMain"/>
       </Unit1>
       <Unit2>
-        <Filename Value="fconfig.pas"/>
+        <Filename Value="../Source/fpdocmanager/fconfig.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="CfgWizard"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fConfig"/>
       </Unit2>
       <Unit3>
-        <Filename Value="umakeskel.pas"/>
+        <Filename Value="../Source/fpdocmanager/umakeskel.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="uMakeSkel"/>
       </Unit3>
       <Unit4>
-        <Filename Value="umanager.pas"/>
+        <Filename Value="../Source/fpdocmanager/umanager.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uManager"/>
       </Unit4>
       <Unit5>
-        <Filename Value="flogview.pas"/>
+        <Filename Value="../Source/fpdocmanager/flogview.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="LogView"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fLogView"/>
       </Unit5>
       <Unit6>
-        <Filename Value="fupdateview.pas"/>
+        <Filename Value="../Source/fpdocmanager/fupdateview.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="UpdateView"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fUpdateView"/>
       </Unit6>
       <Unit7>
-        <Filename Value="ulpk.pp"/>
+        <Filename Value="../Source/fpdocmanager/ulpk.pp"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="uLpk"/>
       </Unit7>
       <Unit8>
-        <Filename Value="configfile.pas"/>
+        <Filename Value="../Source/fpdocmanager/configfile.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="ConfigFile"/>
       </Unit8>
       <Unit9>
-        <Filename Value="../../doceditor/frmmain.pp"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="MainForm"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="FrmMain"/>
-      </Unit9>
-      <Unit10>
-        <Filename Value="feditor.pas"/>
+        <Filename Value="../Source/fpdocmanager/feditor.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="ModuleEditor"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="fEditor"/>
-      </Unit10>
+      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <Target>
-      <Filename Value="FPDocManager"/>
+      <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/$NameOnly($Project(InfoFile))"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="$(FPCSrcDir)\utils\fpdoc;$(FPCSrcDir)\packages\fcl-passrc\src;..\..\doceditor"/>
-      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      <OtherUnitFiles Value="$(FPCSrcDir)/utils/fpdoc;$(FPCSrcDir)/packages/fcl-passrc/src;$(LazarusDir)/doceditor;../source/fpdocmanager"/>
+      <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Linking>
       <Options>

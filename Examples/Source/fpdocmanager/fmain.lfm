@@ -1,8 +1,9 @@
 object Main: TMain
   Left = 335
-  Height = 507
+  Height = 487
   Top = 146
   Width = 569
+  ActiveControl = lbPackages
   Align = alClient
   Caption = 'Main'
   ClientHeight = 487
@@ -11,7 +12,7 @@ object Main: TMain
   OnCreate = FormCreate
   OnResize = FormResize
   ShowHint = True
-  LCLVersion = '0.9.31'
+  Visible = False
   object lbPackages: TComboBox
     Left = 0
     Height = 464
@@ -65,7 +66,7 @@ object Main: TMain
           Width = 365
           Align = alClient
           Caption = 'Actions'
-          ClientHeight = 321
+          ClientHeight = 319
           ClientWidth = 361
           TabOrder = 0
           object swAll: TRadioButton
@@ -160,6 +161,8 @@ object Main: TMain
             ChildSizing.ShrinkVertical = crsScaleChilds
             ChildSizing.Layout = cclLeftToRightThenTopToBottom
             ChildSizing.ControlsPerLine = 2
+            ClientHeight = 109
+            ClientWidth = 212
             Columns = 2
             Items.Strings = (
               'Declaration'
@@ -194,22 +197,22 @@ object Main: TMain
           Width = 365
           Align = alTop
           Caption = 'Descriptions'
-          ClientHeight = 77
+          ClientHeight = 75
           ClientWidth = 361
           TabOrder = 1
           object Label8: TLabel
             Left = 10
-            Height = 16
+            Height = 15
             Top = 10
-            Width = 39
+            Width = 38
             Caption = 'Default'
             ParentColor = False
           end
           object Label9: TLabel
             Left = 10
-            Height = 16
+            Height = 15
             Top = 39
-            Width = 40
+            Width = 39
             Caption = 'Lazarus'
             ParentColor = False
           end
@@ -272,6 +275,8 @@ object Main: TMain
         ChildSizing.ShrinkVertical = crsScaleChilds
         ChildSizing.Layout = cclLeftToRightThenTopToBottom
         ChildSizing.ControlsPerLine = 1
+        ClientHeight = 140
+        ClientWidth = 216
         Items.Strings = (
           'Stop on parser error'
           'Warn on missing description'
@@ -892,13 +897,31 @@ object Main: TMain
             ShortCut = 57379
           end>
         MouseActions = <>
+        MouseTextActions = <>
         MouseSelActions = <>
         Lines.Strings = (
           ''
         )
         VisibleSpecialChars = [vscSpace, vscTabAtLast]
         ScrollBars = ssAutoBoth
+        SelectedColor.BackPriority = 50
+        SelectedColor.ForePriority = 50
+        SelectedColor.FramePriority = 50
+        SelectedColor.BoldPriority = 50
+        SelectedColor.ItalicPriority = 50
+        SelectedColor.UnderlinePriority = 50
+        SelectedColor.StrikeOutPriority = 50
         BracketHighlightStyle = sbhsBoth
+        BracketMatchColor.Background = clNone
+        BracketMatchColor.Foreground = clNone
+        BracketMatchColor.Style = [fsBold]
+        FoldedCodeColor.Background = clNone
+        FoldedCodeColor.Foreground = clGray
+        FoldedCodeColor.FrameColor = clGray
+        MouseLinkColor.Background = clNone
+        MouseLinkColor.Foreground = clBlue
+        LineHighlightColor.Background = clNone
+        LineHighlightColor.Foreground = clNone
         inline SynLeftGutterPartList1: TSynGutterPartList
           object SynGutterMarks1: TSynGutterMarks
             Width = 24
@@ -923,6 +946,8 @@ object Main: TMain
           object SynGutterSeparator1: TSynGutterSeparator
             Width = 2
             MouseActions = <>
+            MarkupInfo.Background = clWhite
+            MarkupInfo.Foreground = clGray
           end
           object SynGutterCodeFolding1: TSynGutterCodeFolding
             MouseActions = <>
@@ -992,19 +1017,6 @@ object Main: TMain
   object SynXMLSyn1: TSynXMLSyn
     DefaultFilter = 'XML Document (*.xml,*.xsd,*.xsl,*.xslt,*.dtd)|*.xml;*.xsd;*.xsl;*.xslt;*.dtd'
     Enabled = False
-    ElementAttri.FrameEdges = sfeAround
-    AttributeAttri.FrameEdges = sfeAround
-    NamespaceAttributeAttri.FrameEdges = sfeAround
-    AttributeValueAttri.FrameEdges = sfeAround
-    NamespaceAttributeValueAttri.FrameEdges = sfeAround
-    TextAttri.FrameEdges = sfeAround
-    CDATAAttri.FrameEdges = sfeAround
-    EntityRefAttri.FrameEdges = sfeAround
-    ProcessingInstructionAttri.FrameEdges = sfeAround
-    CommentAttri.FrameEdges = sfeAround
-    DocTypeAttri.FrameEdges = sfeAround
-    SpaceAttri.FrameEdges = sfeAround
-    SymbolAttri.FrameEdges = sfeAround
     WantBracesParsed = False
     left = 24
     top = 144

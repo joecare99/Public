@@ -29,7 +29,7 @@ The documentation manager maintains its own projects
 and creates temporary TFPDocProjects and TFPDocPackages on demand.
 *)
 
-unit umakeskel;
+unit uMakeSkel;
 
 interface
 
@@ -42,9 +42,11 @@ interface
 
 uses
   SysUtils, Classes, Gettext,
-  dGlobals, PasTree, PParser,PScanner,
+  dGlobals,
+  PasTree, PParser,PScanner,
   ConfigFile,
-  mkfpdoc, fpdocproj;
+  mkfpdoc,
+  fpdocproj;
 
 resourcestring
   STitle = 'MakeSkel - FPDoc skeleton XML description file generator';
