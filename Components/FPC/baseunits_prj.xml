@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<docproject>
+  <options>
+    <option name="hide-protected" value="false"/>
+    <option name="warn-no-node" value="false"/>
+    <option name="show-private" value="false"/>
+    <option name="stop-on-parser-error" value="false"/>
+    <option name="parse-impl" value="false"/>
+    <option name="dont-trim" value="false"/>
+    <option name="emit-notes" value="false"/>
+  </options>
+  <packages>
+    <package name="baseunits" output="C:\projekte\Delphi\data\AllDocs\baseunits" content="C:\projekte\Delphi\data\AllDocs\baseunits.xct">
+      <units>
+        <unit file="..\Source\Unt_Allgfunklib.pas" options=""/>
+        <unit file="..\Source\Unt_StringProcs.pas" options=""/>
+        <unit file="..\Source\Unt_VariantProcs.pas" options=""/>
+        <unit file="..\Source\Unt_Autosave.pas" options=""/>
+        <unit file="..\Source\Unt_FileProcs.pas" options=""/>
+        <unit file="..\Source\Unt_ComboBoxExt.pas" options=""/>
+        <unit file="..\Source\Unt_ExecCommand.pas" options=""/>
+        <unit file="..\Source\Unt_LinList.pas" options=""/>
+        <unit file="..\Source\Unt_LogUnit.pas" options=""/>
+      </units>
+      <descriptions>
+        <description file="..\fpDoc\unt_fileprocs.xml"/>
+        <description file="..\fpDoc\unt_stringprocs.xml"/>
+      </descriptions>
+      <imports>
+        <import file="" prefix="C:\projekte\Delphi\data\AllDocs\lcl"/>
+      </imports>
+    </package>
+  </packages>
+</docproject>

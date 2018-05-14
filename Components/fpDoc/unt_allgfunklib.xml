@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="BaseUnits"><module name="Unt_Allgfunklib"><short>Allgemeine Funktions-Library</short><element name="TAob"><short>Type für Packed array of Byte</short>
+      </element><element name="PAOB"><short>Zeiger auf Type: Packed Array of Byte</short>
+      </element><element name="TAoBchEvent"><short>Event/Delegate: Array of Byte Changed</short>
+      </element><element name="TCompResult"><short>Allgemeines Vergleichsresultat</short>
+      </element><element name="TComparefunc"><short>Delegate: Algemeine Vergleichs-Procedure</short>
+      </element><element name="TDataAlign"><short>Data-Alignment-Definition (intel / Motorola)</short>
+      </element><element name="TDataAlign.DAL_Intel"><short>Dataalignment: Intel (Little Endian)</short>
+      </element><element name="TDataAlign.DAL_Motorola"><short>Dataalignment Motorola (Big-Endian)</short>
+      </element><element name="TCompResult.cr_Lower"><short>Compareresult: is Lower (kleiner)</short>
+      </element><element name="TCompResult.cr_equal"><short>Compareresult is equal (gleich)</short>
+      </element><element name="TCompResult.cr_Higher"><short>CompareResult ist Higher (Größer)</short>
+      </element><element name="CompareResult"><short>Compareresult to Shortint </short>
+      </element><element name="Zweihoch"><short>2^n Konstanten</short>
+      </element><element name="Bool2byte"><short>Boolean nach Byte-Konvertierung False-&gt;0 True-&gt;1</short>
+      </element><element name="DBool2byte"><short>Doppel-Boolean nach Byte-Konvertierung  result =[0..3]</short>
+      </element><element name="TBool2byte"><short>Trippel-Boolean nach Byte-Konvertierung  result =[0..7]</short>
+      </element><element name="XChange"><short>tauscht den Inhalt der Variablen Data1, Data2</short>
+      </element><element name="lsbxmsb"><short> tauscht die Byte-Order In der Variablen Data1</short>
+      </element><element name="min"><short>Liefert das Minimum von Data1 und Data2 </short>
+      </element><element name="max"><short>Liefert das Maximum von Data1 und Data2</short>
+      </element><element name="Sort_Bubblesort"><short>Sortiert ein array</short>
+      </element><element name="set2word"><short>wandelt ein set of XXX in ein Bitarray in form eines Words um</short>
+      </element><element name="Word2set"><short>wandelt ein Bitarray in form eines Words in ein set of XXX um</short>
+      </element><element name="crc32"><short>Berechnet den CRC32 aus einem AoB/String</short>
+      </element><element name="crc64"><short>Berechnet einen CRC64 aus 'Buf'</short>
+      </element><element name="search"><short>Durchsucht ein TAoB Buf nach einer Kennung src</short>
+      </element><element name="AoB2String"><short>Stellt ein Array of Byte  in Hex-Editor -Schreibweise Dar</short>
+      </element><element name="sPlus"><short>Führt eine Addition im dword-Ring aus</short>
+      </element><element name="smult"><short>Führt eine Multiplikation im dword-Ring aus</short>
+      </element><element name="IndexOfMax"><short>Sucht den index des Eintrags mit dem hoechsten Wert</short>
+      </element><element name="IndexOfMaxExt"><short>Sucht den index des Eintrags mit dem hoechsten Wert (extended)</short>
+      </element><element name="msecperday"><short>Konstante: Millisekunden pro Tag</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

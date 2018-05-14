@@ -42,6 +42,19 @@
       </element><element name="AllVisible"><short>Alle Ziffern, Zeichen und Unsichtbares</short>
       </element><element name="StrReplace"><short>Durchsucht den String nach 'Such' und ersetzt dies durch 'Ers'</short>
       </element>
+    <element name="LowerCharsetErw"><short>Alle kleinen Buchstaben + kleine dt. Umlaute</short>
+      </element><element name="UpperCharset"><short>Alle großen Buchstaben</short>
+      </element><element name="strsort"><short>sortiert die Worte in einem String</short>
+      </element><element name="VarArrayByLinesep"><short>Erzeugt ein Variantes Array</short>
+      </element><element name="TestString"><short>Teste, ob 'TestString' aus Zeichen von 'charset' besteht</short>
+      </element><element name="CSWildCardFill"><short>Sectionsname von WildCardFill</short>
+      </element><element name="hexcode"><short>Alle Zeichen für Hexadecimaldarstellung</short>
+      </element><element name="Str2QHtml"><short>Wandle einen String in einen Html-Abfrage-String um</short>
+      </element><element name="asciiansi"><short> Konstante für ASCII &lt;-&gt; ANSI umwandlung</short>
+      </element><element name="SepFullSet"><short>Set aus String-Separatoren</short>
+      </element><element name="LineSeparators"><short>Vordefinierte String-Separatoren</short>
+      </element><element name="TryFunctionMatching"><short>Versucht den String 'Probe' anhand von 'Mask' zu zerlegen, bzw. Funktionen zuzuordnen.</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>
