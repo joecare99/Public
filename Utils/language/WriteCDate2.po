@@ -1,0 +1,61 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: unt_cdate.adate
+msgctxt "unt_cdate.adate"
+msgid "19.10.2017"
+msgstr ""
+
+#: unt_cdate.cdate
+msgctxt "unt_cdate.cdate"
+msgid "19.10.2017"
+msgstr ""
+
+#: unt_cdate.cname
+msgid "SILENT-PC2"
+msgstr ""
+
+#: unt_writecddate2.stradate
+msgid ""
+"  ///<author>Rosewich</author>\n"
+"  ///  <user>%1:s</user>\n"
+"  ///  <since>%0:s</since>\n"
+"  ///  <version>1.00.03</version>\n"
+"  ///  <info>Aktuelles Datum</info>\n"
+"  ADate = '%0:s';\n"
+msgstr ""
+
+#: unt_writecddate2.strcdate
+msgid ""
+"  ///<author>Rosewich</author>\n"
+"  ///  <user>%1:s</user>\n"
+"  ///  <since>%0:s</since>\n"
+"  ///  <version>1.00.03</version>\n"
+"  ///  <info>Compile-Datum</info>\n"
+"  CDate = '%0:s';\n"
+msgstr ""
+
+#: unt_writecddate2.strcname
+msgid ""
+"  ///<author>Rosewich</author>\n"
+"  ///  <user>%2:s</user>\n"
+"  ///  <since>%0:s</since>\n"
+"  ///  <version>1.00.03</version>\n"
+"  ///  <info>Computer-Name</info>\n"
+"  CName = '%1:s';\n"
+msgstr ""
+
+#: unt_writecddate2.strhilfetext
+msgid ""
+"%0:s ist ein Programm um das Compilationsdatum in das Compilat\n"
+"einzufuegen. Dies kann mittels der Konstanten ADate oder CDate abgefragt\n"
+"bzw. angezeigt werden.\n"
+"\n"
+"Binden Sie dazu die erstellte Datei z.B: adate.pas\n"
+"mit  {$i adate.pas}  in den Quelltext ein.\n"
+"\n"
+"Aufruf: %0:s <datei> [/U]\n"
+"\n"
+"Compiliert am %1:s\n"
+msgstr ""
+

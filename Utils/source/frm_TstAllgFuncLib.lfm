@@ -3,6 +3,7 @@ object Form2: TForm2
   Height = 437
   Top = 162
   Width = 625
+  ActiveControl = edtInput
   Caption = 'Form2'
   ClientHeight = 437
   ClientWidth = 625
@@ -10,8 +11,8 @@ object Form2: TForm2
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
-  LCLVersion = '1.2.6.0'
-  object Label1: TLabel
+  Visible = False
+  object lblAoB: TLabel
     Left = 498
     Height = 58
     Top = 71
@@ -24,7 +25,7 @@ object Form2: TForm2
     ParentColor = False
     ParentFont = False
   end
-  object Memo1: TMemo
+  object edtInput: TMemo
     Left = 0
     Height = 129
     Top = 0
@@ -36,27 +37,27 @@ object Form2: TForm2
     ScrollBars = ssVertical
     TabOrder = 0
   end
-  object Button1: TButton
+  object btnRandom2AoB: TButton
     Left = 465
     Height = 25
     Top = 8
     Width = 75
     Anchors = [akTop, akRight]
     Caption = 'Zufall->AoB'
-    OnClick = Button1Click
+    OnClick = btnRandom2AoBClick
     TabOrder = 1
   end
-  object Button2: TButton
+  object btnText2AoB: TButton
     Left = 546
     Height = 25
     Top = 8
     Width = 75
     Anchors = [akTop, akRight]
     Caption = 'Text->AoB'
-    OnClick = Button2Click
+    OnClick = btnText2AoBClick
     TabOrder = 2
   end
-  object Edit1: TEdit
+  object edtTstText: TEdit
     Left = 466
     Height = 21
     Top = 40
@@ -65,7 +66,7 @@ object Form2: TForm2
     TabOrder = 3
     Text = 'Dies ist ein Text der in ein Array Of Byte-Feld umgewandelt wird.'
   end
-  object Memo2: TMemo
+  object edtOutput: TMemo
     Left = 0
     Height = 291
     Top = 136
@@ -77,47 +78,47 @@ object Form2: TForm2
     ScrollBars = ssBoth
     TabOrder = 4
   end
-  object Button3: TButton
+  object btnShowCRC64: TButton
     Left = 466
     Height = 25
     Top = 136
     Width = 75
     Anchors = [akTop, akRight]
     Caption = 'Show Crc64 t.'
-    OnClick = Button3Click
+    OnClick = btnShowCRC64Click
     TabOrder = 5
   end
-  object Button4: TButton
+  object btnShowCRC32: TButton
     Left = 546
     Height = 25
     Top = 136
     Width = 75
     Anchors = [akTop, akRight]
     Caption = 'Show crc32 t.'
-    OnClick = Button4Click
+    OnClick = btnShowCRC32Click
     TabOrder = 6
   end
-  object Button5: TButton
+  object btnCalcCrc64: TButton
     Left = 465
     Height = 25
     Top = 167
     Width = 75
     Anchors = [akTop, akRight]
     Caption = 'Crc64(AoB)'
-    OnClick = Button5Click
+    OnClick = btnCalcCrc64Click
     TabOrder = 7
   end
-  object Button6: TButton
+  object btnCalcCrc32: TButton
     Left = 546
     Height = 25
     Top = 167
     Width = 75
     Anchors = [akTop, akRight]
     Caption = 'crc32(AoB)'
-    OnClick = Button6Click
+    OnClick = btnCalcCrc32Click
     TabOrder = 8
   end
-  object Edit2: TEdit
+  object edtCrcOut: TEdit
     Left = 466
     Height = 21
     Top = 200
@@ -126,36 +127,36 @@ object Form2: TForm2
     Color = clBtnFace
     ReadOnly = True
     TabOrder = 9
-    Text = 'Edit2'
+    Text = '<CRC>'
   end
-  object Button7: TButton
+  object btnCalcC64_2: TButton
     Left = 465
     Height = 25
     Top = 227
     Width = 156
     Anchors = [akTop, akRight]
     Caption = 'Crc64(AoB) 2 Teile'
-    OnClick = Button7Click
+    OnClick = btnCalcC64_2Click
     TabOrder = 10
   end
-  object Button8: TButton
+  object btnSort1: TButton
     Left = 466
     Height = 25
     Top = 256
     Width = 155
     Anchors = [akTop, akRight]
     Caption = 'Sort1'
-    OnClick = Button8Click
+    OnClick = btnSort1Click
     TabOrder = 11
   end
-  object Button9: TButton
+  object btnDelay1000: TButton
     Left = 466
     Height = 25
     Top = 288
     Width = 155
     Anchors = [akTop, akRight]
     Caption = 'Delay 1000'
-    OnClick = Button9Click
+    OnClick = btnDelay1000Click
     TabOrder = 12
   end
 end

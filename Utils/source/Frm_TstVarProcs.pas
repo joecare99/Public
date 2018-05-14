@@ -26,21 +26,21 @@ type
         t:packed array[0..7] of boolean;
   end;
 
-  TForm1 = class(TForm)
-    Button1: TButton;
+  TfrmTstVarProcsMain = class(TForm)
+    btnVar2String: TButton;
     Memo1: TMemo;
-    Button2: TButton;
-    Button3: TButton;
-    Button4: TButton;
-    Button5: TButton;
-    Button6: TButton;
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
+    btnGetRealSize: TButton;
+    btnVar2String2: TButton;
+    btnVar2Aob: TButton;
+    btnMoveRandom2Aob: TButton;
+    btnVar2AobOfSt: TButton;
+    procedure btnVar2StringClick(Sender: TObject);
+    procedure btnGetRealSizeClick(Sender: TObject);
+    procedure btnVar2String2Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
-    procedure Button6Click(Sender: TObject);
+    procedure btnVar2AobClick(Sender: TObject);
+    procedure btnMoveRandom2AobClick(Sender: TObject);
+    procedure btnVar2AobOfStClick(Sender: TObject);
   private
     vari:variant;
     { Private-Deklarationen }
@@ -49,7 +49,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  frmTstVarProcsMain: TfrmTstVarProcsMain;
 
 implementation
 
@@ -59,7 +59,7 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TfrmTstVarProcsMain.btnVar2StringClick(Sender: TObject);
 
 var test1:STring;
 //    vari:variant;
@@ -68,7 +68,7 @@ begin
   memo1.Lines.text:=test1;
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TfrmTstVarProcsMain.btnGetRealSizeClick(Sender: TObject);
 
 var test1:STring;
 //    vari:variant;
@@ -81,7 +81,7 @@ begin
 
 end;
 
-procedure TForm1.Button3Click(Sender: TObject);
+procedure TfrmTstVarProcsMain.btnVar2String2Click(Sender: TObject);
 var test1:STring;
 //    vari:variant;
 begin
@@ -89,7 +89,7 @@ begin
   memo1.Lines.text:=test1;
 end;
 
-procedure TForm1.FormCreate(Sender: TObject);
+procedure TfrmTstVarProcsMain.FormCreate(Sender: TObject);
 begin
     vari:=vararrayof([2,word(6),true,4.0,
          vararrayof ([false,true,true,false, true,true]),
@@ -98,7 +98,7 @@ begin
 
 end;
 
-procedure TForm1.Button4Click(Sender: TObject);
+procedure TfrmTstVarProcsMain.btnVar2AobClick(Sender: TObject);
 
 var aob:Taob;
 
@@ -108,7 +108,7 @@ begin
   memo1.text:=AoB2String(aob)
 end;
 
-procedure TForm1.Button5Click(Sender: TObject);
+procedure TfrmTstVarProcsMain.btnMoveRandom2AobClick(Sender: TObject);
 
 var aob:Taob;
     tt:TTesttype;
@@ -131,7 +131,7 @@ begin
 
 end;
 
-procedure TForm1.Button6Click(Sender: TObject);
+procedure TfrmTstVarProcsMain.btnVar2AobOfStClick(Sender: TObject);
 var aob:Taob;
 
 begin

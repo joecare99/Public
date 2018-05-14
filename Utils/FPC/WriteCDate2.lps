@@ -4,35 +4,36 @@
     <PathDelim Value="\"/>
     <Version Value="10"/>
     <BuildModes Active="Default"/>
-    <Units Count="9">
+    <Units Count="11">
       <Unit0>
         <Filename Value="WriteCDate2.dpr"/>
         <IsPartOfProject Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="5"/>
         <CursorPos X="8" Y="11"/>
-        <UsageCount Value="34"/>
+        <UsageCount Value="35"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\source\Unt_WriteCDDate2.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="3"/>
-        <CursorPos X="40" Y="8"/>
-        <UsageCount Value="34"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="15"/>
+        <UsageCount Value="35"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="C:\unt_CDate.pas"/>
+        <Filename Value="C:\unt_cdate.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
-        <UsageCount Value="33"/>
+        <UsageCount Value="34"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="1175"/>
-        <CursorPos X="30" Y="1185"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="379"/>
+        <CursorPos X="15" Y="397"/>
         <UsageCount Value="16"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -49,7 +50,6 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="60" Y="22"/>
         <UsageCount Value="9"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\..\Components\Source\VisualNet\visualsocket.pas"/>
@@ -57,7 +57,6 @@
         <EditorIndex Value="-1"/>
         <CursorPos X="29" Y="8"/>
         <UsageCount Value="9"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit6>
       <Unit7>
         <Filename Value="TSTINSDS.dpr"/>
@@ -71,8 +70,24 @@
         <CursorPos X="18" Y="5"/>
         <UsageCount Value="10"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="..\..\include\jedi.inc"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="1245"/>
+        <CursorPos X="9" Y="1269"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\..\include\jedi_fpc.inc"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="4"/>
+        <CursorPos X="47" Y="69"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit10>
     </Units>
-    <JumpHistory Count="21" HistoryIndex="20">
+    <JumpHistory Count="23" HistoryIndex="22">
       <Position1>
         <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
         <Caret Line="2317" Column="19" TopLine="2289"/>
@@ -157,6 +172,14 @@
         <Filename Value="C:\unt_CDate.pas"/>
         <Caret Line="10" Column="6"/>
       </Position21>
+      <Position22>
+        <Filename Value="..\..\Components\Source\Unt_StringProcs.pas"/>
+        <Caret Line="3" Column="7"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\..\include\jedi.inc"/>
+        <Caret Line="1269" Column="9" TopLine="1245"/>
+      </Position23>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

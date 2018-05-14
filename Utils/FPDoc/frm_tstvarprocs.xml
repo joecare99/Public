@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Prj_TstVarProcs"><module name="Frm_TstVarProcs"><short>Form: Test Variant - Procs (Main)</short><element name="TTesttype"><short>Test-Type mit diversen Feldern</short>
+      </element><element name="TfrmTstVarProcsMain"><short>TForm-Classe: Main of Test Variant Procs</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

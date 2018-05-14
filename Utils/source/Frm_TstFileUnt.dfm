@@ -17,31 +17,31 @@ object Form1: TForm1
   )
   PixelsPerInch = 96
   TextHeight = 13
-  object Label1: TLabel
+  object lblPath_Sx: TLabel
     Left = 640
     Top = 64
     Width = 32
     Height = 13
     Anchors = [akTop, akRight]
-    Caption = 'Label1'
+    Caption = 'lblPath_Sx'
   end
-  object Label2: TLabel
+  object lblVersion: TLabel
     Left = 640
     Top = 88
     Width = 32
     Height = 13
     Anchors = [akTop, akRight]
-    Caption = 'Label2'
+    Caption = '<Version>'
   end
-  object Label3: TLabel
+  object lblCount: TLabel
     Left = 640
     Top = 112
     Width = 32
     Height = 13
     Anchors = [akTop, akRight]
-    Caption = 'Label3'
+    Caption = 'lblCount'
   end
-  object Memo1: TMemo
+  object edtOutput: TMemo
     Left = 16
     Top = 56
     Width = 593
@@ -52,16 +52,16 @@ object Form1: TForm1
     )
     TabOrder = 0
   end
-  object Button1: TButton
+  object btnFindFiles: TButton
     Left = 424
     Top = 16
     Width = 75
     Height = 25
-    Caption = 'Button1'
+    Caption = 'btnFindFiles'
     TabOrder = 1
-    OnClick = Button1Click
+    OnClick = btnFindFilesClick
   end
-  object Edit1: TEdit
+  object edtFilter: TEdit
     Left = 16
     Top = 16
     Width = 81
@@ -69,74 +69,74 @@ object Form1: TForm1
     TabOrder = 2
     Text = '*.mp3'
   end
-  object Edit2: TEdit
+  object edtPfad: TEdit
     Left = 104
     Top = 16
     Width = 313
     Height = 21
     TabOrder = 3
-    Text = 'w:\daten\accustic'
+    Text = 'v:\daten\accustic'
   end
-  object Button2: TButton
+  object btnGetBackupPath: TButton
     Left = 640
     Top = 144
     Width = 185
     Height = 25
     Caption = 'GetBackupPath'
     TabOrder = 4
-    OnClick = Button2Click
+    OnClick = btnGetBackupPathClick
   end
-  object Edit3: TEdit
+  object edtText_Pfad: TEdit
     Left = 624
     Top = 184
     Width = 137
     Height = 21
     TabOrder = 5
-    Text = 'Edit3'
+    Text = '<Text/Pfad>'
   end
-  object Button3: TButton
+  object btnCalcSoundex: TButton
     Left = 768
     Top = 184
     Width = 75
     Height = 25
-    Caption = 'Button3'
+    Caption = 'Soundex'
     TabOrder = 6
-    OnClick = Button3Click
+    OnClick = btnCalcSoundexClick
   end
-  object Button4: TButton
+  object btnIsEmptyDir: TButton
     Left = 624
     Top = 211
     Width = 75
     Height = 25
     Caption = 'IsEmptyDir'
     TabOrder = 7
-    OnClick = Button4Click
+    OnClick = btnIsEmptyDirClick
   end
-  object Button5: TButton
+  object btnMakeDir: TButton
     Left = 705
     Top = 211
     Width = 75
     Height = 25
     Caption = 'MakeDir'
     TabOrder = 8
-    OnClick = Button5Click
+    OnClick = btnMakeDirClick
   end
-  object Button6: TButton
+  object btnGetVersion: TButton
     Left = 623
     Top = 242
     Width = 75
     Height = 25
     Caption = 'GetVersion'
     TabOrder = 9
-    OnClick = Button6Click
+    OnClick = btnGetVersionClick
   end
-  object Button7: TButton
+  object btnGetFileInfo: TButton
     Left = 704
     Top = 240
     Width = 75
     Height = 25
     Caption = 'getFileInfo'
     TabOrder = 10
-    OnClick = Button7Click
+    OnClick = btnGetFileInfoClick
   end
 end

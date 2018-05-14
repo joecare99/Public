@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="WriteCDate"><module name="Unt_WriteCDDate"><element name="rsConstADateS"><short>Augabe-String</short>
+      </element><element name="rsHelp"><short>Hilfe-String</short>
+      </element><element name="Run"><short>Eigentliche ausführende Procedure</short>
+      </element><element name="ShowHelp"><short>Procedure die den Hilfe-Text anzeigt.</short>
+      </element><element name="Newline"><short>Definition des NewLine-Strings</short>
+      </element><short>Unit um das aktuelle Datum in eine Datei zu schreiben</short>
+    </module>
+  </package>
+</fpdoc-descriptions>

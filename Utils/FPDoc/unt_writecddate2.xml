@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="WriteCDate2"><module name="Unt_WriteCDDate2"><element name="StrHilfeText"><short>Hilfetext zum Anzeigen</short>
+      </element><element name="StrADate"><short>Umwandeltext für ADate</short>
+      </element><element name="StrCDate"><short>Umwandeltext für CDate</short>
+      </element><element name="StrCName"><short>Umwandeltext für CName</short>
+      </element><element name="DisplayHelpText"><short>Diese Procedure zeigt einen Hilfetext an</short>
+      </element><element name="Execute"><short>Diese Procedure schreibt das aktuelle Datum in die uebergebene Datei</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

@@ -1,64 +1,82 @@
 object Form1: TForm1
   Left = 267
-  Height = 613
+  Height = 571
   Top = 208
-  Width = 862
+  Width = 863
+  ActiveControl = edtOutput
   Caption = 'Form1'
-  ClientHeight = 613
-  ClientWidth = 862
+  ClientHeight = 571
+  ClientWidth = 863
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
-  LCLVersion = '1.2.6.0'
-  object Label1: TLabel
-    Left = 640
+  Visible = False
+  object lblPath_Sx: TLabel
+    AnchorSideLeft.Control = edtOutput
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 616
     Height = 13
     Top = 64
-    Width = 32
-    Anchors = [akTop, akRight]
-    Caption = 'Label1'
+    Width = 241
+    Anchors = [akTop, akLeft, akRight]
+    AutoSize = False
+    BorderSpacing.Around = 6
+    Caption = 'lblPath_Sx'
     ParentColor = False
   end
-  object Label2: TLabel
-    Left = 640
+  object lblVersion: TLabel
+    AnchorSideLeft.Control = edtOutput
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 616
     Height = 13
     Top = 88
-    Width = 32
-    Anchors = [akTop, akRight]
-    Caption = 'Label2'
+    Width = 241
+    Anchors = [akTop, akLeft, akRight]
+    AutoSize = False
+    BorderSpacing.Around = 6
+    Caption = '<Version>'
     ParentColor = False
   end
-  object Label3: TLabel
-    Left = 640
+  object lblCount: TLabel
+    AnchorSideLeft.Control = edtOutput
+    AnchorSideLeft.Side = asrBottom
+    AnchorSideRight.Control = Owner
+    AnchorSideRight.Side = asrBottom
+    Left = 616
     Height = 13
     Top = 112
-    Width = 32
-    Anchors = [akTop, akRight]
-    Caption = 'Label3'
+    Width = 241
+    Anchors = [akTop, akLeft, akRight]
+    BorderSpacing.Around = 6
+    Caption = 'lblCount'
     ParentColor = False
   end
-  object Memo1: TMemo
+  object edtOutput: TMemo
     Left = 16
-    Height = 497
+    Height = 455
     Top = 56
-    Width = 593
+    Width = 594
     Anchors = [akTop, akLeft, akRight, akBottom]
     Lines.Strings = (
       'Memo1'
     )
     TabOrder = 0
   end
-  object Button1: TButton
+  object btnFindFiles: TButton
     Left = 424
     Height = 25
     Top = 16
     Width = 75
-    Caption = 'Button1'
-    OnClick = Button1Click
+    Caption = 'btnFindFiles'
+    OnClick = btnFindFilesClick
     TabOrder = 1
   end
-  object Edit1: TEdit
+  object edtFilter: TEdit
     Left = 16
     Height = 21
     Top = 16
@@ -66,74 +84,81 @@ object Form1: TForm1
     TabOrder = 2
     Text = '*.mp3'
   end
-  object Edit2: TEdit
+  object edtPfad: TEdit
     Left = 104
     Height = 21
     Top = 16
     Width = 313
     TabOrder = 3
-    Text = 'w:\daten\accustic'
+    Text = 'v:\daten\accustic'
   end
-  object Button2: TButton
+  object btnGetBackupPath: TButton
     Left = 640
     Height = 25
     Top = 144
     Width = 185
+    Anchors = [akTop, akRight]
     Caption = 'GetBackupPath'
-    OnClick = Button2Click
+    OnClick = btnGetBackupPathClick
     TabOrder = 4
   end
-  object Edit3: TEdit
+  object edtText_Pfad: TEdit
     Left = 624
     Height = 21
     Top = 184
     Width = 137
+    Anchors = [akTop, akRight]
     TabOrder = 5
-    Text = 'Edit3'
+    Text = '<Text/Pfad>'
   end
-  object Button3: TButton
+  object btnCalcSoundex: TButton
     Left = 768
     Height = 25
     Top = 184
     Width = 75
-    Caption = 'Button3'
-    OnClick = Button3Click
+    Anchors = [akTop, akRight]
+    Caption = 'Soundex'
+    OnClick = btnCalcSoundexClick
     TabOrder = 6
   end
-  object Button4: TButton
+  object btnIsEmptyDir: TButton
     Left = 624
     Height = 25
     Top = 211
     Width = 75
+    Anchors = [akTop, akRight]
     Caption = 'IsEmptyDir'
-    OnClick = Button4Click
+    OnClick = btnIsEmptyDirClick
     TabOrder = 7
   end
-  object Button5: TButton
-    Left = 705
+  object btnMakeDir: TButton
+    Left = 704
     Height = 25
     Top = 211
     Width = 75
+    Anchors = [akTop, akRight]
     Caption = 'MakeDir'
-    OnClick = Button5Click
+    OnClick = btnMakeDirClick
     TabOrder = 8
   end
-  object Button6: TButton
+  object btnGetVersion: TButton
     Left = 623
     Height = 25
     Top = 242
     Width = 75
+    Anchors = [akTop, akRight]
     Caption = 'GetVersion'
-    OnClick = Button6Click
+    OnClick = btnGetVersionClick
     TabOrder = 9
   end
-  object Button7: TButton
+  object btnGetFileInfo: TButton
     Left = 704
     Height = 25
     Top = 240
     Width = 75
+    Anchors = [akTop, akRight]
     Caption = 'getFileInfo'
-    OnClick = Button7Click
+    OnClick = btnGetFileInfoClick
     TabOrder = 10
   end
 end

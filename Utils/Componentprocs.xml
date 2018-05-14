@@ -1,0 +1,167 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<namespace name="ComponentProcs">
+  <const name="wtc_Equal" type="TWhereToCopy">
+    <value>
+      wtc_Equal
+    </value>
+  </const>
+  <const name="wtc_Left" type="TWhereToCopy">
+    <value>
+      wtc_Left
+    </value>
+  </const>
+  <const name="wtc_Right" type="TWhereToCopy">
+    <value>
+      wtc_Right
+    </value>
+  </const>
+  <const name="wtc_Over" type="TWhereToCopy">
+    <value>
+      wtc_Over
+    </value>
+  </const>
+  <const name="wtc_Under" type="TWhereToCopy">
+    <value>
+      wtc_Under
+    </value>
+  </const>
+  <enum name="TWhereToCopy">
+    <element name="wtc_Equal" />
+    <element name="wtc_Left" />
+    <element name="wtc_Right" />
+    <element name="wtc_Over" />
+    <element name="wtc_Under" />
+  </enum>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TLabel" paramflags="var" />
+      <parameter name="source" type="TLabel" paramflags="const" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TLabel" paramflags="var" />
+      <parameter name="source" type="TLabel" paramflags="const" />
+      <parameter name="createnew" type="Boolean" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TLabel" paramflags="var" />
+      <parameter name="source" type="TLabel" paramflags="const" />
+      <parameter name="createnew" type="Boolean" />
+      <parameter name="wtc" type="TWhereToCopy" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TControl" paramflags="var" />
+      <parameter name="source" type="TControl" paramflags="const" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TControl" paramflags="var" />
+      <parameter name="source" type="TControl" paramflags="const" />
+      <parameter name="createnew" type="Boolean" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TControl" paramflags="var" />
+      <parameter name="source" type="TControl" paramflags="const" />
+      <parameter name="createnew" type="Boolean" />
+      <parameter name="wtc" type="TWhereToCopy" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TWinControl" paramflags="var" />
+      <parameter name="source" type="TWinControl" paramflags="const" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TWinControl" paramflags="var" />
+      <parameter name="source" type="TWinControl" paramflags="const" />
+      <parameter name="createnew" type="Boolean" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TWinControl" paramflags="var" />
+      <parameter name="source" type="TWinControl" paramflags="const" />
+      <parameter name="createnew" type="Boolean" />
+      <parameter name="wtc" type="TWhereToCopy" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TButton" paramflags="var" />
+      <parameter name="source" type="TButton" paramflags="const" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TButton" paramflags="var" />
+      <parameter name="source" type="TButton" paramflags="const" />
+      <parameter name="createnew" type="Boolean" />
+      <parameter name="wtc" type="TWhereToCopy" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TButton" paramflags="var" />
+      <parameter name="source" type="TButton" paramflags="const" />
+      <parameter name="createnew" type="Boolean" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TPanel" paramflags="var" />
+      <parameter name="source" type="TPanel" paramflags="const" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TPanel" paramflags="var" />
+      <parameter name="source" type="TPanel" paramflags="const" />
+      <parameter name="createnew" type="Boolean" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TPanel" paramflags="var" />
+      <parameter name="source" type="TPanel" paramflags="const" />
+      <parameter name="createnew" type="Boolean" />
+      <parameter name="wtc" type="TWhereToCopy" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TEdit" paramflags="var" />
+      <parameter name="source" type="TEdit" paramflags="const" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TEdit" paramflags="var" />
+      <parameter name="source" type="TEdit" paramflags="const" />
+      <parameter name="createnew" type="Boolean" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrCopy" visibility="private" procflags="overload">
+    <parameters>
+      <parameter name="dest" type="TEdit" paramflags="var" />
+      <parameter name="source" type="TEdit" paramflags="const" />
+      <parameter name="createnew" type="Boolean" />
+      <parameter name="wtc" type="TWhereToCopy" />
+    </parameters>
+  </procedure>
+  <procedure name="ContrMoveTo" visibility="private">
+    <parameters>
+      <parameter name="dest" type="TControl" paramflags="var" />
+      <parameter name="wtc" type="TWhereToCopy" />
+    </parameters>
+  </procedure>
+</namespace>

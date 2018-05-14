@@ -1,80 +1,81 @@
-object Form1: TForm1
+object frmTstVarProcsMain: TfrmTstVarProcsMain
   Left = 189
+  Height = 463
   Top = 103
-  Caption = 'Form1'
+  Width = 707
+  ActiveControl = btnVar2String
+  Caption = 'frmTstVarProcsMain'
   ClientHeight = 463
   ClientWidth = 707
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
-  Font.Style = []
   OnCreate = FormCreate
-  PixelsPerInch = 96
-  object Button1: TButton
+  Visible = False
+  object btnVar2String: TButton
     Left = 447
+    Height = 25
     Top = 8
     Width = 75
-    Height = 25
     Caption = 'Var2string'
+    OnClick = btnVar2StringClick
     TabOrder = 0
-    OnClick = Button1Click
   end
   object Memo1: TMemo
-    Left = 8
-    Top = 8
-    Width = 433
+    Left = 4
     Height = 449
+    Top = 4
+    Width = 433
     Lines.Strings = (
       'Memo1'
     )
     ScrollBars = ssVertical
     TabOrder = 1
   end
-  object Button2: TButton
+  object btnGetRealSize: TButton
     Left = 447
+    Height = 25
     Top = 41
     Width = 156
-    Height = 25
     Caption = 'getrealsize <-> SizeOf'
+    OnClick = btnGetRealSizeClick
     TabOrder = 2
-    OnClick = Button2Click
   end
-  object Button3: TButton
+  object btnVar2String2: TButton
     Left = 527
+    Height = 25
     Top = 8
     Width = 121
-    Height = 25
     Caption = 'Var2string (vari,true)'
+    OnClick = btnVar2String2Click
     TabOrder = 3
-    OnClick = Button3Click
   end
-  object Button4: TButton
+  object btnVar2Aob: TButton
     Left = 447
+    Height = 25
     Top = 73
     Width = 156
-    Height = 25
     Caption = 'var2aob'
+    OnClick = btnVar2AobClick
     TabOrder = 4
-    OnClick = Button4Click
   end
-  object Button5: TButton
+  object btnMoveRandom2Aob: TButton
     Left = 447
+    Height = 25
     Top = 104
     Width = 155
-    Height = 25
     Caption = 'Move Random -> AoB'
+    OnClick = btnMoveRandom2AobClick
     TabOrder = 5
-    OnClick = Button5Click
   end
-  object Button6: TButton
+  object btnVar2AobOfSt: TButton
     Left = 447
+    Height = 25
     Top = 136
     Width = 201
-    Height = 25
     Caption = 'var2aob(Dies ist ein einfacher Test !!)'
+    OnClick = btnVar2AobOfStClick
     TabOrder = 6
-    OnClick = Button6Click
   end
-end
+end

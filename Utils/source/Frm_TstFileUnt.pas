@@ -12,27 +12,27 @@ uses
 
 type
   TForm1 = class(TForm)
-    Memo1: TMemo;
-    Button1: TButton;
-    Edit1: TEdit;
-    Edit2: TEdit;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Button2: TButton;
-    Edit3: TEdit;
-    Button3: TButton;
-    Button4: TButton;
-    Button5: TButton;
-    Button6: TButton;
-    Button7: TButton;
-    procedure Button7Click(Sender: TObject);
-    procedure Button6Click(Sender: TObject);
-    procedure Button5Click(Sender: TObject);
-    procedure Button4Click(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
-    procedure Button2Click(Sender: TObject);
-    procedure Button3Click(Sender: TObject);
+    edtOutput: TMemo;
+    btnFindFiles: TButton;
+    edtFilter: TEdit;
+    edtPfad: TEdit;
+    lblPath_Sx: TLabel;
+    lblVersion: TLabel;
+    lblCount: TLabel;
+    btnGetBackupPath: TButton;
+    edtText_Pfad: TEdit;
+    btnCalcSoundex: TButton;
+    btnIsEmptyDir: TButton;
+    btnMakeDir: TButton;
+    btnGetVersion: TButton;
+    btnGetFileInfo: TButton;
+    procedure btnGetFileInfoClick(Sender: TObject);
+    procedure btnGetVersionClick(Sender: TObject);
+    procedure btnMakeDirClick(Sender: TObject);
+    procedure btnIsEmptyDirClick(Sender: TObject);
+    procedure btnFindFilesClick(Sender: TObject);
+    procedure btnGetBackupPathClick(Sender: TObject);
+    procedure btnCalcSoundexClick(Sender: TObject);
   private
     { Private-Deklarationen }
      function OnReply(perc: real; apath: string):boolean;
@@ -52,60 +52,60 @@ implementation
 {$ENDIF}
 
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TForm1.btnFindFilesClick(Sender: TObject);
 
 var fls,p:Tfiles;
 
 begin
-  button2.Enabled := true;
-  fls:=getfiles(edit1.text,edit2.text,onreply,0,20000);
-  memo1.lines.Clear;
+  btnGetBackupPath.Enabled := true;
+  fls:=getfiles(edtFilter.text,edtPfad.text,onreply,0,20000);
+  edtOutput.lines.Clear;
   p:=fls;
   while assigned(p) do
     begin
-      memo1.lines.Add(p.Name +#9+p.pfad);
+      edtOutput.lines.Add(p.Name +#9+p.pfad);
       p:=p.getnext as TFiles;
     end;
-  label3.caption:=inttostr(fls.count);
+  lblCount.caption:='Count: '+inttostr(fls.count);
   fls.free;
 end;
 
 function TForm1.OnReply;
 begin
-  label1.caption:=apath;
-  label2.caption:=inttostr(trunc(perc / 200))+','+inttostr(trunc(perc/2) mod 100) +'%';
+  lblPath_Sx.caption:='Path: '+apath;
+  lblVersion.caption:=inttostr(trunc(perc / 200))+','+inttostr(trunc(perc/2) mod 100) +'%';
   Application.ProcessMessages;
-  result := not button2.enabled;
+  result := not btnGetBackupPath.enabled;
 end;
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TForm1.btnGetBackupPathClick(Sender: TObject);
 begin
- memo1.lines.Add(GetBackupPath(Application.exename ));
+ edtOutput.lines.Add(GetBackupPath(Application.exename ));
 end;
 
-procedure TForm1.Button3Click(Sender: TObject);
+procedure TForm1.btnCalcSoundexClick(Sender: TObject);
 begin
-  label1.caption:= GetSoundex (edit3.text);
+  lblPath_Sx.caption:= 'SoundEx: '+GetSoundex (edtText_Pfad.text);
 end;
 
-procedure TForm1.Button4Click(Sender: TObject);
+procedure TForm1.btnIsEmptyDirClick(Sender: TObject);
 begin
-  label3.Caption := bool2str[isemptydir(edit3.Text)];
+  lblCount.Caption :='Bool2Str: '+ bool2str[isemptydir(edtText_Pfad.Text)];
 end;
 
-procedure TForm1.Button5Click(Sender: TObject);
+procedure TForm1.btnMakeDirClick(Sender: TObject);
 begin
-  Makepath(edit3.text);
+  Makepath(edtText_Pfad.text);
 end;
 
-procedure TForm1.Button6Click(Sender: TObject);
+procedure TForm1.btnGetVersionClick(Sender: TObject);
 begin
-  label2.Caption := getversion(Application.exename);
+  lblVersion.Caption :='Version: '+getversion(Application.exename);
 end;
 
-procedure TForm1.Button7Click(Sender: TObject);
+procedure TForm1.btnGetFileInfoClick(Sender: TObject);
 begin
-  memo1.Text := getFileInfo(Application.exename)
+  edtOutput.Text := getFileInfo(Application.exename)
 end;
 
 end.
