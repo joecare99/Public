@@ -1633,6 +1633,7 @@ Begin
   Else
     Begin
       SetLength(avar, 1);
+      SetLength(aSep, 1);
       avar[0] := line;
     End;
   if TrimEmpty then
@@ -1644,8 +1645,11 @@ Begin
         begin
           if avar[i]<>'' then
             begin
-              avar[cnt] := avar[i];
-              aSep[cnt] := aSep[i];
+              if cnt<> i then
+                begin
+                  avar[cnt] := avar[i];
+                  aSep[cnt] := aSep[i];
+                end;
               inc(cnt)
             end;
           inc(i);

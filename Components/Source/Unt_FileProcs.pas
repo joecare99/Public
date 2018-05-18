@@ -212,7 +212,7 @@ Begin
   Result := false;
   If FileExists(FileName) Then
     Begin
-      HFileRes := FileCreate(pchar(FileName));
+      HFileRes := FileOpen(pchar(FileName),fmOpenReadWrite or fmShareExclusive);
       Result := (HFileRes = {$IFNDEF UNIX} INVALID_HANDLE_VALUE {$ELSE} 0 {$ENDIF});
       If Not Result Then
         FileClose(HFileRes);
@@ -682,7 +682,10 @@ Begin
   keys := TStringlist.Create;
   reg.RootKey := {$IFNDEF UNIX} $80000000 {$ELSE} $00000000 {$ENDIF};
   result := '[ExtInfo]';
-  ext := ExtractFileExt(path);
+  if (copy(path,1,1) = '.' ) then
+    ext := ExtractFileExt('?'+path)
+  else
+    ext := ExtractFileExt(path);
   result := result + #13#10 + 'Extension=' + ext;
   // Get Class
   If reg.OpenKeyReadOnly(ext) Then
