@@ -15,12 +15,10 @@
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
+    <LazDoc Paths="..\FPDoc"/>
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="4">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
@@ -163,8 +161,9 @@
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="C:\unt_CDate.pas"/>
+        <Filename Value="C:\unt_cdate.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="unt_CDate"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\source\Unt_FileMove.pas"/>

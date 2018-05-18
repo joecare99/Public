@@ -1,0 +1,235 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="12">
+      <Unit0>
+        <Filename Value="fpc_TstFileMove.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="52" Y="6"/>
+        <UsageCount Value="24"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\test\tst_FileMoveUnt.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="222"/>
+        <CursorPos X="19" Y="237"/>
+        <UsageCount Value="24"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\Unt_FileMove.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="116"/>
+        <CursorPos Y="146"/>
+        <UsageCount Value="24"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <IsPartOfProject Value="True"/>
+        <TopLine Value="1353"/>
+        <CursorPos X="24" Y="1371"/>
+        <UsageCount Value="24"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\Components\Test\test_FileUtils.pas"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="73"/>
+        <CursorPos X="16" Y="103"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-fpcunit\src\testutils.pp"/>
+        <EditorIndex Value="10"/>
+        <CursorPos X="30" Y="22"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-fpcunit\src\fpcunit.pp"/>
+        <EditorIndex Value="7"/>
+        <TopLine Value="648"/>
+        <CursorPos X="44" Y="384"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="C:\unt_cdate.pas"/>
+        <UnitName Value="unt_CDate"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="6"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\rtl\objpas\sysutils\finah.inc"/>
+        <EditorIndex Value="6"/>
+        <CursorPos X="38" Y="33"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\rtl\objpas\objpas.pp"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="92"/>
+        <CursorPos X="37" Y="109"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\..\Components\Source\Unt_FileProcs.pas"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="213"/>
+        <CursorPos X="74" Y="214"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\rtl\objpas\sysutils\filutilh.inc"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="124"/>
+        <CursorPos X="55" Y="148"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit11>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1359" TopLine="1335"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1364" TopLine="1335"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1363" TopLine="1335"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1365" TopLine="1335"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1366" TopLine="1335"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1367" TopLine="1335"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1368" TopLine="1335"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1369" TopLine="1335"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1357" TopLine="1335"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1373" TopLine="1335"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1374" TopLine="1336"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1356" TopLine="1337"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\source\Unt_FileMove.pas"/>
+        <Caret Line="146" TopLine="116"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1369" TopLine="1337"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1412" TopLine="1390"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1413" Column="41" TopLine="1413"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1415" TopLine="1408"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1416" TopLine="1408"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1418" TopLine="1408"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1420" TopLine="1408"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1421" TopLine="1408"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1422" TopLine="1408"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1438" TopLine="1408"/>
+      </Position23>
+      <Position24>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1440" Column="61" TopLine="1408"/>
+      </Position24>
+      <Position25>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1478" Column="59" TopLine="1449"/>
+      </Position25>
+      <Position26>
+        <Filename Value="..\source\Unt_FileMove.pas"/>
+        <Caret Line="146" TopLine="116"/>
+      </Position26>
+      <Position27>
+        <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <Caret Line="1369" TopLine="1347"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\test\tst_FileMoveUnt.pas"/>
+        <Caret Line="259" TopLine="234"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\source\Unt_FileMove.pas"/>
+        <Caret Line="146" TopLine="116"/>
+      </Position29>
+      <Position30>
+        <Filename Value="..\test\tst_FileMoveUnt.pas"/>
+        <Caret Line="30" Column="30"/>
+      </Position30>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

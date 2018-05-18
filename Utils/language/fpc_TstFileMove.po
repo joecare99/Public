@@ -1,0 +1,20 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: unt_filemove.strhelptext
+msgid ""
+"%0:s ist ein Programm um SEW-Export-Dateien anhand ihrer Daten zu verschieben. \n"
+"\n"
+"Aufruf: %0:s <Datei> <Ziel>\n"
+"\n"
+"<Datei>#9 steht fuer die zu verschiebende Datei\n"
+"<Ziel> #9 fuer das Ziel: Funktionen werden mit $[a-z] angesprochen\n"
+"\n"
+"Beispiel: %0:s  test.exp .$p\\$t\\ \n"
+"Das Beispiel schiebt die \"test.exp\" in den Ordner .\\SEWPfad\\Blocks\\\n"
+"\n"
+"Compiliert am %1:s\n"
+"\n"
+"Weiter mit <Enter>\n"
+msgstr ""
+
