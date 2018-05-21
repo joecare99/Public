@@ -26,6 +26,7 @@ type
     btnClose: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure lbxFontsSelectionChange(Sender: TObject; User: boolean);
+    procedure lbxFontsClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -101,15 +102,18 @@ begin
 
   lbxFonts.Items := Screen.Fonts;
 end;
+{$ENDIF}
+
+procedure TfrmEnumFontsMain.lbxFontsClick(Sender: TObject);
+begin
+  lblTextText.font.Name:=lbxFonts.Items[lbxFonts.ItemIndex];
+end;
 
 procedure TfrmEnumFontsMain.lbxFontsSelectionChange(Sender: TObject;
   User: boolean);
 begin
   lblTextText.font.Name:=lbxFonts.Items[lbxFonts.ItemIndex];
 end;
-
-
-{$ENDIF}
 
 end.
 

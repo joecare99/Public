@@ -26,6 +26,7 @@ type
     btnClose: TBitBtn;
     procedure FormCreate(Sender: TObject);
     procedure lbxWindowsSelectionChange(Sender: TObject; User: boolean);
+    procedure lbxWindowsClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -70,6 +71,11 @@ begin
   finally
     freeandnil(lStr);
   end;
+end;
+
+procedure TfrmEnumWinMain.lbxWindowsClick(Sender: TObject);
+begin
+  lblInfo.caption:= inttostr(Longint(lbxWindows.Items.Objects[lbxWindows.ItemIndex]));
 end;
 
 procedure TfrmEnumWinMain.lbxWindowsSelectionChange(Sender: TObject;

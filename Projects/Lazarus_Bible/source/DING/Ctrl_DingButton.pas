@@ -8,7 +8,7 @@ interface
 
 uses
 {$IFnDEF FPC}
-
+  Windows,
 {$ELSE}
   LCLIntf, LCLType, LCLVersion, LMessages,
 {$ENDIF}

@@ -28,7 +28,11 @@ var
 
 implementation
 
+{$ifdef FPC}
 {$R *.lfm}
+{$ELSE}
+{$R *.dfm}
+{$ENDIF}
 
 { TfrmYesNoDlg }
 

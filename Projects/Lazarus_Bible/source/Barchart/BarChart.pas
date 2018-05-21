@@ -7,7 +7,10 @@ UNIT BarChart;
 INTERFACE
 
 USES
+{$ifdef FPC}
   LCLIntf, LCLType, LMessages,
+{$else}
+{$endif}
   Messages,
   SysUtils,
   Classes,
