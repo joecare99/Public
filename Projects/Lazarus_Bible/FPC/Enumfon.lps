@@ -2,13 +2,12 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <BuildModes Active="Debug"/>
     <Units Count="2">
       <Unit0>
         <Filename Value="Enumfon.dpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <CursorPos X="39" Y="12"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
@@ -17,19 +16,20 @@
       <Unit1>
         <Filename Value="..\source\ENUMFON\Frm_EnumFonMAIN.PAS"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="MainForm"/>
+        <ComponentName Value="frmEnumFontsMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_EnumFonMAIN"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <CursorPos X="21" Y="13"/>
+        <TopLine Value="52"/>
+        <CursorPos X="60" Y="108"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
     </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
+    <JumpHistory Count="4" HistoryIndex="3">
       <Position1>
         <Filename Value="..\source\ENUMFON\Frm_EnumFonMAIN.PAS"/>
       </Position1>
@@ -37,6 +37,14 @@
         <Filename Value="..\source\ENUMFON\Frm_EnumFonMAIN.PAS"/>
         <Caret Line="87" Column="14" TopLine="66"/>
       </Position2>
+      <Position3>
+        <Filename Value="..\source\ENUMFON\Frm_EnumFonMAIN.PAS"/>
+        <Caret Line="29" Column="39"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\ENUMFON\Frm_EnumFonMAIN.PAS"/>
+        <Caret Line="34" Column="39"/>
+      </Position4>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

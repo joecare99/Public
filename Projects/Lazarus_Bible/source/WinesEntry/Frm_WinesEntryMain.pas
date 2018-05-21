@@ -4,24 +4,27 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons, Mask, DBCtrls, ExtCtrls, Db, ADODB;
+  StdCtrls, Buttons, DBCtrls, ExtCtrls, Db, dbf {$IFDEF FPC}  {$ELSE} ,ADODB {$ENDIF};
 
 type
+
+  { TMainForm }
+
   TMainForm = class(TForm)
     DataSource1: TDataSource;
     DBNavigator1: TDBNavigator;
-    DBEdit1: TDBEdit;
-    Label1: TLabel;
-    Label2: TLabel;
-    Label3: TLabel;
-    Label4: TLabel;
-    Label5: TLabel;
-    DBEdit2: TDBEdit;
-    DBEdit3: TDBEdit;
-    DBEdit4: TDBEdit;
-    DBEdit5: TDBEdit;
-    BitBtn1: TBitBtn;
-    ADOTable1: TADOTable;
+    edtName: TDBEdit;
+    lblName: TLabel;
+    lblNumber: TLabel;
+    lblSource: TLabel;
+    lblVintage: TLabel;
+    lblPurchased: TLabel;
+    edtNumber: TDBEdit;
+    edtSource: TDBEdit;
+    edtVintage: TDBEdit;
+    edtPurchased: TDBEdit;
+    btnClose: TBitBtn;
+//    ADOTable1: TADOTable;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
@@ -58,12 +61,20 @@ begin
       FDataDir:='..'+DirectorySeparator+FDataDir
     else
       break;
+  {$IFDEF FPC}
+//  ADOTable1.ConnectionString:='FILE NAME=' +FDataDir+DirectorySeparator+filename;
+  {$ELSE}
   ADOTable1.ConnectionString:='FILE NAME=' +FDataDir+DirectorySeparator+filename;
+  {$ENDIF}
 end;
 
 procedure TMainForm.FormShow(Sender: TObject);
 begin
+  {$IFDEF FPC}
+//  ADOTable1.Open;
+  {$ELSE}
   ADOTable1.Open;
+  {$ENDIF}
 end;
 
 end.

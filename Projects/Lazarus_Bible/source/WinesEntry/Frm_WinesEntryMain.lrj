@@ -1,0 +1,7 @@
+{"version":1,"strings":[
+{"hash":5538698,"name":"tmainform.lblname.caption","sourcebytes":[78,97,109,101,58],"value":"Name:"},
+{"hash":96701450,"name":"tmainform.lblnumber.caption","sourcebytes":[78,117,109,98,101,114,58],"value":"Number:"},
+{"hash":174885338,"name":"tmainform.lblsource.caption","sourcebytes":[83,111,117,114,99,101,58],"value":"Source:"},
+{"hash":5929050,"name":"tmainform.lblvintage.caption","sourcebytes":[86,105,110,116,97,103,101,58],"value":"Vintage:"},
+{"hash":166586362,"name":"tmainform.lblpurchased.caption","sourcebytes":[80,117,114,99,104,97,115,101,100,58],"value":"Purchased:"}
+]}

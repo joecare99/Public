@@ -2,35 +2,34 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="10"/>
     <BuildModes Active="Debug"/>
     <Units Count="2">
       <Unit0>
         <Filename Value="Enumwin.dpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos X="46" Y="16"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\source\ENUMWIN\Frm_EnumWinMAIN.PAS"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="MainForm"/>
+        <ComponentName Value="frmEnumWinMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_EnumWinMAIN"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="26"/>
-        <CursorPos X="39" Y="37"/>
-        <UsageCount Value="22"/>
+        <TopLine Value="18"/>
+        <CursorPos X="44" Y="43"/>
+        <UsageCount Value="26"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
     </Units>
-    <JumpHistory Count="4" HistoryIndex="3">
+    <JumpHistory Count="9" HistoryIndex="8">
       <Position1>
         <Filename Value="..\source\ENUMWIN\Frm_EnumWinMAIN.PAS"/>
       </Position1>
@@ -45,6 +44,26 @@
         <Filename Value="..\source\ENUMWIN\Frm_EnumWinMAIN.PAS"/>
         <Caret Line="3" Column="26"/>
       </Position4>
+      <Position5>
+        <Filename Value="..\source\ENUMWIN\Frm_EnumWinMAIN.PAS"/>
+        <Caret Line="20" Column="15"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\ENUMWIN\Frm_EnumWinMAIN.PAS"/>
+        <Caret Line="58" Column="31"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\ENUMWIN\Frm_EnumWinMAIN.PAS"/>
+        <Caret Line="51"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\ENUMWIN\Frm_EnumWinMAIN.PAS"/>
+        <Caret Line="56"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\ENUMWIN\Frm_EnumWinMAIN.PAS"/>
+        <Caret Line="57" Column="81" TopLine="10"/>
+      </Position9>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

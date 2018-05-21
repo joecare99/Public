@@ -1,0 +1,198 @@
+object MainForm: TMainForm
+  Left = 202
+  Height = 287
+  Top = 132
+  Width = 519
+  ActiveControl = edtName
+  Caption = 'Wines Database Entry Demonstration'
+  ClientHeight = 287
+  ClientWidth = 519
+  Color = clBtnFace
+  DesignTimePPI = 120
+  Font.Color = clWindowText
+  Font.Height = -14
+  Font.Name = 'MS Sans Serif'
+  OnCreate = FormCreate
+  OnShow = FormShow
+  Visible = False
+  object lblName: TLabel
+    Left = 20
+    Height = 25
+    Top = 80
+    Width = 64
+    Caption = 'Name:'
+    Font.Color = clMaroon
+    Font.Height = -20
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object lblNumber: TLabel
+    Left = 20
+    Height = 25
+    Top = 120
+    Width = 83
+    Caption = 'Number:'
+    Font.Color = clMaroon
+    Font.Height = -20
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object lblSource: TLabel
+    Left = 20
+    Height = 25
+    Top = 160
+    Width = 77
+    Caption = 'Source:'
+    Font.Color = clMaroon
+    Font.Height = -20
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object lblVintage: TLabel
+    Left = 20
+    Height = 25
+    Top = 200
+    Width = 82
+    Caption = 'Vintage:'
+    Font.Color = clMaroon
+    Font.Height = -20
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object lblPurchased: TLabel
+    Left = 20
+    Height = 25
+    Top = 240
+    Width = 111
+    Caption = 'Purchased:'
+    Font.Color = clMaroon
+    Font.Height = -20
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+  end
+  object DBNavigator1: TDBNavigator
+    Left = 10
+    Height = 31
+    Top = 10
+    Width = 300
+    BevelOuter = bvNone
+    ChildSizing.EnlargeHorizontal = crsScaleChilds
+    ChildSizing.EnlargeVertical = crsScaleChilds
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 100
+    ClientHeight = 31
+    ClientWidth = 300
+    DataSource = DataSource1
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
+    Options = []
+    ParentFont = False
+    TabOrder = 0
+  end
+  object edtName: TDBEdit
+    Left = 160
+    Height = 24
+    Top = 80
+    Width = 251
+    DataField = 'Name'
+    DataSource = DataSource1
+    CharCase = ecNormal
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
+    MaxLength = 0
+    ParentFont = False
+    TabOrder = 1
+  end
+  object edtNumber: TDBEdit
+    Left = 160
+    Height = 24
+    Top = 120
+    Width = 41
+    DataField = 'Number'
+    DataSource = DataSource1
+    CharCase = ecNormal
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
+    MaxLength = 0
+    ParentFont = False
+    TabOrder = 2
+  end
+  object edtSource: TDBEdit
+    Left = 160
+    Height = 24
+    Top = 160
+    Width = 331
+    DataField = 'Source'
+    DataSource = DataSource1
+    CharCase = ecNormal
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
+    MaxLength = 0
+    ParentFont = False
+    TabOrder = 3
+  end
+  object edtVintage: TDBEdit
+    Left = 160
+    Height = 24
+    Top = 200
+    Width = 71
+    DataField = 'Vintage'
+    DataSource = DataSource1
+    CharCase = ecNormal
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
+    MaxLength = 0
+    ParentFont = False
+    TabOrder = 4
+  end
+  object edtPurchased: TDBEdit
+    Left = 160
+    Height = 24
+    Top = 240
+    Width = 71
+    DataField = 'Purchased'
+    DataSource = DataSource1
+    CharCase = ecNormal
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
+    MaxLength = 0
+    ParentFont = False
+    TabOrder = 5
+  end
+  object btnClose: TBitBtn
+    Left = 370
+    Height = 42
+    Top = 230
+    Width = 134
+    DefaultCaption = True
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
+    Kind = bkClose
+    ModalResult = 11
+    ParentFont = False
+    TabOrder = 6
+  end
+  object DataSource1: TDataSource
+    left = 370
+    top = 10
+  end
+end

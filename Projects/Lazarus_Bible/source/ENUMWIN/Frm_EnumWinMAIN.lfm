@@ -1,18 +1,20 @@
-object MainForm: TMainForm
+object frmEnumWinMain: TfrmEnumWinMain
   Left = 200
-  Height = 273
+  Height = 524
   Top = 99
-  Width = 427
+  Width = 768
+  ActiveControl = lbxWindows
   Caption = 'Enumerate Window Titles'
-  ClientHeight = 273
-  ClientWidth = 427
+  ClientHeight = 524
+  ClientWidth = 768
   Color = clBtnFace
+  DesignTimePPI = 120
   Font.Color = clWindowText
   Font.Height = -13
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
-  LCLVersion = '1.4.0.4'
-  object Label1: TLabel
+  Visible = False
+  object lblWinTitles: TLabel
     Left = 40
     Height = 16
     Top = 24
@@ -24,27 +26,36 @@ object MainForm: TMainForm
     ParentColor = False
     ParentFont = False
   end
-  object ListBox1: TListBox
+  object lbxWindows: TListBox
     Left = 40
-    Height = 217
+    Height = 456
     Top = 40
-    Width = 241
+    Width = 582
     Anchors = [akTop, akLeft, akRight, akBottom]
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'Tahoma'
     ItemHeight = 0
+    OnSelectionChange = lbxWindowsSelectionChange
     ParentFont = False
     Sorted = True
     TabOrder = 0
   end
-  object BitBtn1: TBitBtn
-    Left = 312
+  object btnClose: TBitBtn
+    Left = 653
     Height = 33
-    Top = 224
+    Top = 475
     Width = 89
     Anchors = [akRight, akBottom]
     Kind = bkClose
     TabOrder = 1
+  end
+  object lblInfo: TLabel
+    Left = 42
+    Height = 16
+    Top = 497
+    Width = 57
+    Caption = '<Handle>'
+    ParentColor = False
   end
 end

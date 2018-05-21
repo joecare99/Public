@@ -10,11 +10,12 @@ object MainForm: TMainForm
   ClientHeight = 329
   ClientWidth = 440
   Color = clBtnFace
+  DesignTimePPI = 120
   Font.Color = clBlack
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnClose = FormClose
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.8.2.0'
   Visible = False
   object Bevel1: TBevel
     Left = 8
@@ -135,7 +136,6 @@ object MainForm: TMainForm
     FieldDefs = <>
     Database = OpenForm.Session
     Transaction = OpenForm.SQLTransaction1
-    Options = []
     Params = <>
     left = 40
     top = 296

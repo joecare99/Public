@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="85">
+    <Targets Count="86">
       <Target0 FileName="FPC\AboutEx.lpi">
         <BuildModes Count="5"/>
         <Mode1 Name="Default" Compile="True"/>
@@ -461,6 +461,10 @@
         <Mode4 Name="Debug1"/>
         <Mode5 Name="Release1"/>
       </Target84>
+      <Target85 FileName="FPC\YesNoTest.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target85>
     </Targets>
   </ProjectGroup>
 </CONFIG>

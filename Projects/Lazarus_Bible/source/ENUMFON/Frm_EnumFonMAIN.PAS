@@ -16,11 +16,16 @@ uses
   Forms, Dialogs, StdCtrls, Buttons;
 
 type
-  TMainForm = class(TForm)
-    ListBox1: TListBox;
-    Label1: TLabel;
-    BitBtn1: TBitBtn;
+
+  { TfrmEnumFontsMain }
+
+  TfrmEnumFontsMain = class(TForm)
+    lblTextText: TLabel;
+    lbxFonts: TListBox;
+    lblFontNames: TLabel;
+    btnClose: TBitBtn;
     procedure FormCreate(Sender: TObject);
+    procedure lbxFontsSelectionChange(Sender: TObject; User: boolean);
   private
     { Private declarations }
   public
@@ -28,7 +33,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmEnumFontsMain: TfrmEnumFontsMain;
 
 implementation
 
@@ -51,13 +56,13 @@ begin
   Result := 1;  { Continue enumeration until done }
 end;
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmEnumFontsMain.FormCreate(Sender: TObject);
 var
   Proc: TFarProc;
 begin
   Proc := MakeProcInstance(@EnumFontsProc, HInstance);
   try
-    EnumFonts(Canvas.Handle, nil,Proc,Pointer(ListBox1.Items));
+    EnumFonts(Canvas.Handle, nil,Proc,Pointer(lbxFonts.Items));
   finally
     FreeProcInstance(Proc);
   end;
@@ -78,12 +83,12 @@ begin
   Result := 1;                // Continue until done
 end;
 }
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmEnumFontsMain.FormCreate(Sender: TObject);
 begin
 {  DC := GetDC(0);  // Get a device context handle
   try
     EnumFonts(DC, nil, @EnumFontsProc,
-      Pointer(ListBox1.Items));  // Pass data to callback fn
+      Pointer(lbxFonts.Items));  // Pass data to callback fn
   finally
     ReleaseDC(0, DC);  // Release system resource
   end;  }
@@ -94,7 +99,13 @@ begin
     callback functions, look for a Delphi component that
     does what you want. You'll probably find one! }
 
-  Listbox1.Items := Screen.Fonts;
+  lbxFonts.Items := Screen.Fonts;
+end;
+
+procedure TfrmEnumFontsMain.lbxFontsSelectionChange(Sender: TObject;
+  User: boolean);
+begin
+  lblTextText.font.Name:=lbxFonts.Items[lbxFonts.ItemIndex];
 end;
 
 

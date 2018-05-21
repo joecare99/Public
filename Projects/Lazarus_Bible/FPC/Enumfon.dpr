@@ -17,7 +17,7 @@ uses
 {$ENDIF}
 begin
 Application.Initialize; 
-  Application.Title := 'Demo: Enumfon'; 
-  Application.CreateForm(TMainForm, MainForm); 
+  Application.Title := 'Demo: Enumfon';
+  Application.CreateForm(TfrmEnumFontsMain, frmEnumFontsMain);
   Application.Run; 
 end. 

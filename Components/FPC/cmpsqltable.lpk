@@ -9,7 +9,7 @@
       <PathDelim Value="\"/>
       <SearchPaths>
         <OtherUnitFiles Value="..\Source\SQLTable"/>
-        <UnitOutputDirectory Value="..\..\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)"/>
+        <UnitOutputDirectory Value="..\..\bin\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
     <Files Count="1">

@@ -1,39 +1,57 @@
-object MainForm: TMainForm
+object frmEnumFontsMain: TfrmEnumFontsMain
   Left = 214
+  Height = 278
   Top = 139
+  Width = 422
+  ActiveControl = lbxFonts
   Caption = 'Enumerate Fonts'
   ClientHeight = 278
   ClientWidth = 422
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
+  DesignTimePPI = 120
   Font.Color = clWindowText
   Font.Height = -13
   Font.Name = 'System'
-  Font.Style = []
   OnCreate = FormCreate
-  PixelsPerInch = 96
-  object Label1: TLabel
+  Visible = False
+  object lblFontNames: TLabel
     Left = 24
+    Height = 16
     Top = 8
     Width = 80
-    Height = 16
     Caption = 'Font names:'
+    ParentColor = False
   end
-  object ListBox1: TListBox
+  object lbxFonts: TListBox
     Left = 24
+    Height = 233
     Top = 24
     Width = 273
-    Height = 233
-    ItemHeight = 16
+    ItemHeight = 0
+    OnSelectionChange = lbxFontsSelectionChange
     Sorted = True
     TabOrder = 0
   end
-  object BitBtn1: TBitBtn
+  object btnClose: TBitBtn
     Left = 320
+    Height = 33
     Top = 224
     Width = 89
-    Height = 33
-    TabOrder = 1
     Kind = bkClose
+    TabOrder = 1
   end
-end
+  object lblTextText: TLabel
+    Left = 312
+    Height = 176
+    Top = 24
+    Width = 104
+    AutoSize = False
+    Caption = 'The quick brown fox jumps over the lazy dog'
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'System'
+    ParentColor = False
+    ParentFont = False
+    WordWrap = True
+  end
+end

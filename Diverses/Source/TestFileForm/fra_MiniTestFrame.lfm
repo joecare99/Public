@@ -1,0 +1,23 @@
+object fraMiniTestFrame: TfraMiniTestFrame
+  Left = 0
+  Height = 420
+  Top = 0
+  Width = 560
+  ClientHeight = 420
+  ClientWidth = 560
+  DesignTimePPI = 168
+  ParentFont = False
+  TabOrder = 0
+  object edtTestMemo: TMemo
+    Left = 0
+    Height = 420
+    Top = 0
+    Width = 560
+    Align = alClient
+    Lines.Strings = (
+      'edtTestMemo'
+    )
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+  end
+end

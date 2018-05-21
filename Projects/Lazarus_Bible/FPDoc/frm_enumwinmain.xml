@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Enumwin"><module name="Frm_EnumWinMAIN"><element name="EnumWinProc"><short>Windows calls this function, passing in Handle a reference</short>
+      </element><element name="TfrmEnumWinMain.FormCreate"><short>Enumerate all alive windows by passing to Windows the address of the preceding callback function.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

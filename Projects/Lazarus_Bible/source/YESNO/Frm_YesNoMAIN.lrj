@@ -1,0 +1,6 @@
+{"version":1,"strings":[
+{"hash":135804919,"name":"tfrmyesnomain.btntest.hint","sourcebytes":[84,104,105,115,32,119,105,108,108,32,111,112,101,110,32,116,104,101,32,84,101,115,116,45,68,105,97,108,111,103],"value":"This will open the Test-Dialog"},
+{"hash":371876,"name":"tfrmyesnomain.btntest.caption","sourcebytes":[84,101,115,116],"value":"Test"},
+{"hash":144284718,"name":"tfrmyesnomain.btnexit.hint","sourcebytes":[84,104,105,115,32,119,105,108,108,32,99,108,111,115,101,32,116,104,101,32,65,112,112,108,105,99,97,116,105,111,110],"value":"This will close the Application"},
+{"hash":315140,"name":"tfrmyesnomain.btnexit.caption","sourcebytes":[69,120,105,116],"value":"Exit"}
+]}

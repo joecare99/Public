@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="5">
+      <Unit0>
+        <Filename Value="WinesEntry.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="10" Y="15"/>
+        <UsageCount Value="37"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\WinesEntry\Frm_WinesEntryMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="7"/>
+        <CursorPos X="51" Y="44"/>
+        <UsageCount Value="37"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\WinesEntry\Frm_WinesEntryMain.lfm"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="55" Y="16"/>
+        <UsageCount Value="8"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-db\src\paradox\paradox.pp"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="28" Y="32"/>
+        <UsageCount Value="19"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\pxlib\src\pxlib.pp"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="274"/>
+        <CursorPos X="68" Y="289"/>
+        <UsageCount Value="19"/>
+        <Loaded Value="True"/>
+      </Unit4>
+    </Units>
+    <JumpHistory Count="9" HistoryIndex="8">
+      <Position1>
+        <Filename Value="..\source\WinesEntry\Frm_WinesEntryMain.pas"/>
+      </Position1>
+      <Position2>
+        <Filename Value="WinesEntry.dpr"/>
+        <Caret Line="15" Column="10"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\WinesEntry\Frm_WinesEntryMain.pas"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\WinesEntry\Frm_WinesEntryMain.pas"/>
+        <Caret Line="7" Column="56" TopLine="6"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\WinesEntry\Frm_WinesEntryMain.pas"/>
+        <Caret Line="12" Column="49"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\WinesEntry\Frm_WinesEntryMain.pas"/>
+        <Caret Line="29" Column="56" TopLine="13"/>
+      </Position6>
+      <Position7>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-db\src\paradox\paradox.pp"/>
+        <Caret Line="32" Column="28"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\WinesEntry\Frm_WinesEntryMain.pas"/>
+        <Caret Line="33" Column="56" TopLine="17"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\WinesEntry\Frm_WinesEntryMain.pas"/>
+        <Caret Line="32" Column="56" TopLine="16"/>
+      </Position9>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

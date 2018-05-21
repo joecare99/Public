@@ -4,14 +4,14 @@ interface
 
 uses
   SysUtils, Windows, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, StdCtrls, YesNo;
+  Forms, Dialogs, StdCtrls, Frm_YesNo;
 
 type
-  TMainForm = class(TForm)
-    TestButton: TButton;
-    ExitButton: TButton;
-    procedure TestButtonClick(Sender: TObject);
-    procedure ExitButtonClick(Sender: TObject);
+  TfrmYesNoMain = class(TForm)
+    btnTest: TButton;
+    btnExit: TButton;
+    procedure btnTestClick(Sender: TObject);
+    procedure btnExitClick(Sender: TObject);
 //  private
     { Private declarations }
 //  public
@@ -19,13 +19,13 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmYesNoMain: TfrmYesNoMain;
 
 implementation
 
 {$R *.DFM}
 
-procedure TMainForm.TestButtonClick(Sender: TObject);
+procedure TfrmYesNoMain.btnTestClick(Sender: TObject);
 { Add following two lines to create a variable for
   storing the result of the YesNo dialog. }
 var
@@ -33,14 +33,14 @@ var
 begin
   { Make the dialog caption match the application's for
     easier switching away then back. }
-  YesNoDlg.Caption := MainForm.Caption;
+  frmYesNoDlg.Caption := frmYesNoMain.Caption;
   { Use following statement to change prompt at runtime,
     or you can set the dialog's Caption property. }
-  YesNoDlg.PromptLabel.Caption := 'Click any button. Okay?';
+  frmYesNoDlg.lblPrompt.Caption := 'Click any button. Okay?';
   { Display the dialog and save its result, which equals
     the ModalResult property of the button clicked to close
     the YesNo dialog.}
-  Result := YesNoDlg.ShowModal;
+  Result := frmYesNoDlg.ShowModal;
   if Result = mrYes
   then
     ShowMessage('You selected the Yes button!')
@@ -51,7 +51,7 @@ begin
     ShowMessage('Unknown button!');  { Never shown }
 end;
 
-procedure TMainForm.ExitButtonClick(Sender: TObject);
+procedure TfrmYesNoMain.btnExitClick(Sender: TObject);
 begin
   Close;
 end;

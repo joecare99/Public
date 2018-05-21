@@ -1,0 +1,15 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tfrmmainform.btnloadfile.caption
+msgid "Open"
+msgstr ""
+
+#: tfrmmainform.btnselectfile.caption
+msgid "..."
+msgstr ""
+
+#: tfrmmainform.cbxfilename.text
+msgid "cbxFilename"
+msgstr ""
+

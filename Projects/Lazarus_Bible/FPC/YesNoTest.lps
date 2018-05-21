@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="5">
+      <Unit0>
+        <Filename Value="YesNoTest.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="3" Y="10"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\YESNO\Frm_YesNoMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmYesNoMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="64" Y="41"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\YESNO\Frm_YesNo.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmYesNoDlg"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UsageCount Value="21"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="YesNoTest.lpi"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+        <DefaultSyntaxHighlighter Value="XML"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="Toolbar3.dpr"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="10" Y="16"/>
+        <UsageCount Value="10"/>
+      </Unit4>
+    </Units>
+    <JumpHistory Count="2" HistoryIndex="1">
+      <Position1>
+        <Filename Value="YesNoTest.dpr"/>
+        <Caret Line="14" Column="90"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\YESNO\Frm_YesNoMAIN.PAS"/>
+        <Caret Line="44" Column="16"/>
+      </Position2>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

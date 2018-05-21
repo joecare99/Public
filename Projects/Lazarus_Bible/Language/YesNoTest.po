@@ -1,0 +1,35 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tfrmyesnodlg.lblprompt.caption
+msgid "Prompt?"
+msgstr ""
+
+#: tfrmyesnomain.btnexit.caption
+msgctxt "tfrmyesnomain.btnexit.caption"
+msgid "Exit"
+msgstr ""
+
+#: tfrmyesnomain.btnexit.hint
+msgid "This will close the Application"
+msgstr ""
+
+#: tfrmyesnomain.btntest.caption
+msgctxt "tfrmyesnomain.btntest.caption"
+msgid "Test"
+msgstr ""
+
+#: tfrmyesnomain.btntest.hint
+msgid "This will open the Test-Dialog"
+msgstr ""
+
+#: tmainform.exitbutton.caption
+msgctxt "tmainform.exitbutton.caption"
+msgid "Exit"
+msgstr ""
+
+#: tmainform.testbutton.caption
+msgctxt "tmainform.testbutton.caption"
+msgid "Test"
+msgstr ""
+
