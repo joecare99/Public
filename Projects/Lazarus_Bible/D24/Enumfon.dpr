@@ -7,6 +7,6 @@ uses
 begin 
 Application.Initialize; 
   Application.Title := 'Demo: Enumfon'; 
-  Application.CreateForm(TMainForm, MainForm); 
+  Application.CreateForm(TfrmEnumFontsMain, frmEnumFontsMain);
   Application.Run; 
 end. 

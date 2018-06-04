@@ -3,6 +3,7 @@ object MainForm: TMainForm
   Height = 254
   Top = 136
   Width = 427
+  ActiveControl = Memo1
   Caption = 'Memo Pad'
   ClientHeight = 254
   ClientWidth = 427
@@ -14,7 +15,6 @@ object MainForm: TMainForm
   OnActivate = FormActivate
   OnClose = FormClose
   PopupMenu = PopupMenu1
-  LCLVersion = '1.7'
   Visible = False
   object MemoLabel: TLabel
     Left = 16
@@ -32,7 +32,7 @@ object MainForm: TMainForm
     TabOrder = 0
   end
   object MainMenu1: TMainMenu
-    Left = 304
+    left = 304
     object File1: TMenuItem
       Caption = '&File'
       object Save1: TMenuItem
@@ -55,7 +55,7 @@ object MainForm: TMainForm
     end
   end
   object PopupMenu1: TPopupMenu
-    Left = 376
+    left = 376
     object About2: TMenuItem
       Caption = '&About'
       ShortCut = 112

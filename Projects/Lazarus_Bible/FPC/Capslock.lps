@@ -4,12 +4,13 @@
     <PathDelim Value="\"/>
     <Version Value="10"/>
     <BuildModes Active="Release"/>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
         <Filename Value="Capslock.dpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos Y="19"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="14"/>
+        <CursorPos X="23" Y="18"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
@@ -21,15 +22,23 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="11"/>
-        <CursorPos X="43" Y="20"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="64"/>
+        <CursorPos X="10" Y="67"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="C:\lazarus\lcl\include\winapih.inc"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="61"/>
+        <CursorPos X="40" Y="61"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit2>
     </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
+    <JumpHistory Count="7" HistoryIndex="6">
       <Position1>
         <Filename Value="Capslock.dpr"/>
       </Position1>
@@ -37,6 +46,26 @@
         <Filename Value="..\source\Capslock\Frm_CapslockMAIN.PAS"/>
         <Caret Line="9" Column="38"/>
       </Position2>
+      <Position3>
+        <Filename Value="..\source\Capslock\Frm_CapslockMAIN.PAS"/>
+        <Caret Line="53" Column="10" TopLine="14"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\Capslock\Frm_CapslockMAIN.PAS"/>
+        <Caret Line="23" Column="9" TopLine="7"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\Capslock\Frm_CapslockMAIN.PAS"/>
+        <Caret Line="27" Column="9" TopLine="7"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\Capslock\Frm_CapslockMAIN.PAS"/>
+        <Caret Line="28" Column="9" TopLine="7"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\Capslock\Frm_CapslockMAIN.PAS"/>
+        <Caret Line="67" Column="10" TopLine="19"/>
+      </Position7>
     </JumpHistory>
   </ProjectSession>
 </CONFIG>

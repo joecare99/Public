@@ -10,13 +10,13 @@ object MainForm: TMainForm
   ClientHeight = 108
   ClientWidth = 349
   Color = clBtnFace
+  DesignTimePPI = 120
   Font.Color = clWindowText
   Font.Height = -13
   Font.Name = 'System'
   KeyPreview = True
   OnActivate = FormActivate
   OnKeyDown = FormKeyDown
-  LCLVersion = '1.6.4.0'
   Visible = False
   object Label1: TLabel
     Left = 16
@@ -44,29 +44,46 @@ object MainForm: TMainForm
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Height = 23
-    Top = 85
+    Height = 25
+    Top = 83
     Width = 349
     AutoSize = False
     Panels = <    
       item
+        Alignment = taCenter
         Bevel = pbRaised
         Text = 'Caps'
-        Width = 30
+        Width = 40
       end    
       item
+        Alignment = taCenter
         Text = 'Num'
-        Width = 30
+        Width = 40
       end    
       item
         Alignment = taCenter
         Text = 'Scrl'
-        Width = 30
+        Width = 40
       end    
       item
         Alignment = taCenter
         Text = 'Ins'
-        Width = 30
+        Width = 40
+      end    
+      item
+        Alignment = taCenter
+        Text = 'Shft'
+        Width = 40
+      end    
+      item
+        Alignment = taCenter
+        Text = 'Ctrl'
+        Width = 40
+      end    
+      item
+        Alignment = taCenter
+        Text = 'Alt'
+        Width = 40
       end    
       item
         Width = 50

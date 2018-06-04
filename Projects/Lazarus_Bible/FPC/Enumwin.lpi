@@ -121,7 +121,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
         <Filename Value="Enumwin.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -133,6 +133,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="..\source\ENUMWIN\unt_getwindows.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="unt_GetWindows"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

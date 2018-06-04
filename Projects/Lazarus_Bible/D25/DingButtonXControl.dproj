@@ -136,6 +136,7 @@
                 </VersionInfoKeys>
             </Delphi.Personality>
             <Platforms>
+                <Platform value="Linux64">False</Platform>
                 <Platform value="Win32">True</Platform>
             </Platforms>
             <ActiveXProjectInfo>

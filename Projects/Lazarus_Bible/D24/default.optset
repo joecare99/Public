@@ -10,7 +10,7 @@
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1031</VerInfo_Locale>
         <DCC_DcpOutput>$(bdscommondir)\DCP\$(platform)</DCC_DcpOutput>
-        <DCC_DcuOutput>..\bin\$(platform)\units_d24</DCC_DcuOutput>
+        <DCC_DcuOutput>..\bin\$(platform)\units_$(productversion)</DCC_DcuOutput>
         <DCC_ImageBase>00400000</DCC_ImageBase>
     </PropertyGroup>
     <ProjectExtensions>

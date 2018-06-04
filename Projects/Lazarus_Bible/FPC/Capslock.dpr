@@ -18,6 +18,7 @@ uses
 {$ENDIF}
 
 begin
+  Application.Scaled:=True;
 Application.Initialize;
   Application.Title := 'Demo: Capslock';
   Application.CreateForm(TMainForm, MainForm);

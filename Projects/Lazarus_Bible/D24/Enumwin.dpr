@@ -6,7 +6,7 @@ uses
 {$E EXE} 
 begin 
   Application.Initialize; 
-  Application.Title := 'Demo: Enumwin'; 
-  Application.CreateForm(TMainForm, MainForm); 
+  Application.Title := 'Demo: Enumwin';
+  Application.CreateForm(TfrmEnumWinMain, frmEnumWinMain);
   Application.Run; 
 end. 

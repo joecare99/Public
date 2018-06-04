@@ -1,14 +1,13 @@
 object frmEnumWinMain: TfrmEnumWinMain
   Left = 200
-  Height = 524
+  Height = 534
   Top = 99
   Width = 768
   ActiveControl = lbxWindows
   Caption = 'Enumerate Window Titles'
-  ClientHeight = 524
+  ClientHeight = 534
   ClientWidth = 768
   Color = clBtnFace
-  DesignTimePPI = 120
   Font.Color = clWindowText
   Font.Height = -13
   Font.Name = 'Tahoma'
@@ -28,7 +27,7 @@ object frmEnumWinMain: TfrmEnumWinMain
   end
   object lbxWindows: TListBox
     Left = 40
-    Height = 456
+    Height = 426
     Top = 40
     Width = 582
     Anchors = [akTop, akLeft, akRight, akBottom]
@@ -44,7 +43,7 @@ object frmEnumWinMain: TfrmEnumWinMain
   object btnClose: TBitBtn
     Left = 653
     Height = 33
-    Top = 475
+    Top = 485
     Width = 89
     Anchors = [akRight, akBottom]
     Kind = bkClose
@@ -53,9 +52,24 @@ object frmEnumWinMain: TfrmEnumWinMain
   object lblInfo: TLabel
     Left = 42
     Height = 16
-    Top = 497
+    Top = 464
     Width = 57
     Caption = '<Handle>'
     ParentColor = False
+  end
+  object Edit1: TEdit
+    Left = 42
+    Height = 24
+    Top = 487
+    Width = 542
+    TabOrder = 2
+    Text = 'Edit1'
+  end
+  object SpeedButton1: TSpeedButton
+    Left = 596
+    Height = 22
+    Top = 488
+    Width = 23
+    OnClick = SpeedButton1Click
   end
 end

@@ -1,113 +1,160 @@
 object MainForm: TMainForm
   Left = 200
-  Height = 108
+  Height = 132
   Top = 109
-  Width = 349
+  Width = 430
   ActiveControl = BitBtn1
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'CapsLock and Other Keyboard Toggles'
-  ClientHeight = 108
-  ClientWidth = 349
+  ClientHeight = 132
+  ClientWidth = 430
   Color = clBtnFace
+  DesignTimePPI = 120
   Font.Color = clWindowText
-  Font.Height = -13
+  Font.Height = -16
   Font.Name = 'System'
   KeyPreview = True
   OnActivate = FormActivate
   OnKeyDown = FormKeyDown
-  LCLVersion = '1.6.4.0'
   Visible = False
   object Label1: TLabel
-    Left = 12
-    Height = 42
-    Top = 19
-    Width = 192
+    Left = 15
+    Height = 52
+    Top = 24
+    Width = 240
     AutoSize = False
     Caption = 'Press the CapsLock, NumLock, ScrollLock, and Ins keys.'
     Font.Color = clWindowText
-    Font.Height = -14
+    Font.Height = -18
     Font.Name = 'Tahoma'
     ParentColor = False
     ParentFont = False
     WordWrap = True
   end
   object Bevel1: TBevel
-    Left = 7
-    Height = 65
-    Top = 8
-    Width = 201
+    Left = 9
+    Height = 81
+    Top = 10
+    Width = 251
   end
   object BitBtn1: TBitBtn
-    Left = 240
-    Height = 41
-    Top = 24
-    Width = 89
+    Left = 300
+    Height = 51
+    Top = 30
+    Width = 111
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'System'
     Kind = bkClose
+    ParentFont = False
     TabOrder = 0
   end
   object StatusPanel: TPanel
     Left = 0
-    Height = 20
-    Top = 88
-    Width = 349
+    Height = 25
+    Top = 107
+    Width = 430
     Align = alBottom
     BevelOuter = bvLowered
-    ClientHeight = 20
-    ClientWidth = 349
+    ClientHeight = 25
+    ClientWidth = 430
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'System'
+    ParentFont = False
     TabOrder = 1
     object Pnl_Num: TPanel
-      Left = 41
-      Height = 18
+      Left = 51
+      Height = 23
       Top = 1
-      Width = 40
+      Width = 50
       Align = alLeft
       Caption = 'Num'
       Font.Color = clWindowText
-      Font.Height = -13
+      Font.Height = -16
       Font.Name = 'Tahoma'
       ParentFont = False
       TabOrder = 0
     end
     object Pnl_Caps: TPanel
       Left = 1
-      Height = 18
+      Height = 23
       Top = 1
-      Width = 40
+      Width = 50
       Align = alLeft
       Caption = 'Caps'
       Enabled = False
       Font.Color = clWindowText
-      Font.Height = -13
+      Font.Height = -16
       Font.Name = 'Tahoma'
       ParentFont = False
       TabOrder = 1
     end
     object Pnl_Scrl: TPanel
-      Left = 81
-      Height = 18
+      Left = 101
+      Height = 23
       Top = 1
-      Width = 40
+      Width = 50
       Align = alLeft
       Caption = 'Scrl'
       Font.Color = clWindowText
-      Font.Height = -13
+      Font.Height = -16
       Font.Name = 'Tahoma'
       ParentFont = False
       TabOrder = 2
     end
     object Pnl_Ins: TPanel
-      Left = 121
-      Height = 18
+      Left = 151
+      Height = 23
       Top = 1
-      Width = 40
+      Width = 50
       Align = alLeft
       Caption = 'Ins'
       Font.Color = clWindowText
-      Font.Height = -13
+      Font.Height = -16
       Font.Name = 'Tahoma'
       ParentFont = False
       TabOrder = 3
+    end
+    object Pnl_Shft: TPanel
+      Left = 201
+      Height = 23
+      Top = 1
+      Width = 50
+      Align = alLeft
+      Caption = 'Shft'
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 4
+    end
+    object Pnl_Ctrl: TPanel
+      Left = 251
+      Height = 23
+      Top = 1
+      Width = 50
+      Align = alLeft
+      Caption = 'Crtrl'
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 5
+    end
+    object Pnl_Alt: TPanel
+      Left = 301
+      Height = 23
+      Top = 1
+      Width = 50
+      Align = alLeft
+      Caption = 'Alt'
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 6
     end
   end
 end
