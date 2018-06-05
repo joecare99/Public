@@ -1,0 +1,22 @@
+{ This is an automatically generated lazarus resource file }
+
+LazarusResources.Add('TfrmMouseAndKeyExMain','FORMDATA',[
+  'TPF0'#21'TfrmMouseAndKeyExMain'#20'frmMouseAndKeyExMain'#4'Left'#3'"'#1#6'He'
+  +'ight'#3#236#0#3'Top'#3#156#0#5'Width'#3'^'#2#13'ActiveControl'#7#11'stgDemo'
+  +'Grid'#7'Caption'#6#27'Mouse and key input example'#12'ClientHeight'#3#236#0
+  +#11'ClientWidth'#3'^'#2#10'OnDblClick'#7#12'FormDblClick'#7'Visible'#8#0#11
+  +'TStringGrid'#11'stgDemoGrid'#4'Left'#2#19#6'Height'#3#128#0#3'Top'#2'X'#5'W'
+  +'idth'#3'['#1#9'FixedCols'#2#0#9'FixedRows'#2#0#8'RowCount'#2#8#8'TabOrder'#2
+  +#0#0#0#5'TEdit'#12'edtDemofield'#4'Left'#2'f'#6'Height'#2#23#3'Top'#2'*'#5'W'
+  +'idth'#2'}'#8'TabOrder'#2#1#0#0#7'TButton'#14'btnSelectCells'#4'Left'#3'z'#1
+  +#6'Height'#2'%'#3'Top'#2#12#5'Width'#3#219#0#7'Caption'#6#12'Select cells'#7
+  +'OnClick'#7#19'btnSelectCellsClick'#8'TabOrder'#2#2#0#0#7'TButton'#12'btnMov'
+  +'eMouse'#4'Left'#3'z'#1#6'Height'#2'$'#3'Top'#2'<'#5'Width'#3#219#0#7'Captio'
+  +'n'#6'&Move to upper left corner and dblclick'#7'OnClick'#7#17'btnMoveMouseC'
+  +'lick'#8'TabOrder'#2#3#0#0#7'TButton'#13'btnEnterHello'#4'Left'#3'z'#1#6'Hei'
+  +'ght'#2'%'#3'Top'#2'l'#5'Width'#3#219#0#7'Caption'#6#21'Press ''hello'' in E'
+  +'dit'#7'OnClick'#7#18'btnEnterHelloClick'#8'TabOrder'#2#4#0#0#7'TButton'#15
+  +'btnScrollDownUp'#4'Left'#3'z'#1#6'Height'#2'%'#3'Top'#3#160#0#5'Width'#3#219
+  +#0#7'Caption'#6#28'Scroll down/up in StringGrid'#7'OnClick'#7#20'btnScrollDo'
+  +'wnUpClick'#8'TabOrder'#2#5#0#0#0
+]);

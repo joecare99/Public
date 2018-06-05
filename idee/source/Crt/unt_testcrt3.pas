@@ -164,7 +164,7 @@ var
     mb, bew: extended;
     rc: TColorKmpn;
     istcol: array[0..79, 0..49] of TColorKmpn;
-
+    hashtab: array[0..32768] of word;
     sb: TchinfArr;
     bmp: TPortableNetworkGraphic;
 

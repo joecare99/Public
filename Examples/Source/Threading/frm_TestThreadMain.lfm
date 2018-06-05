@@ -1,0 +1,39 @@
+object frmTestThread: TfrmTestThread
+  Left = 0
+  Height = 153
+  Top = 0
+  Width = 678
+  Caption = 'frmTestThread'
+  ClientHeight = 153
+  ClientWidth = 678
+  DesignTimePPI = 168
+  OnDestroy = FormDestroy
+  Visible = False
+  object Label1: TLabel
+    Left = 25
+    Height = 30
+    Top = 25
+    Width = 64
+    Caption = '<Test>'
+    ParentColor = False
+  end
+  object Button1: TButton
+    Left = 0
+    Height = 60
+    Top = 93
+    Width = 678
+    Align = alBottom
+    Caption = 'Execute'
+    OnClick = Button1Click
+    TabOrder = 0
+  end
+  object Button2: TButton
+    Left = 383
+    Height = 44
+    Top = 26
+    Width = 131
+    Caption = 'Button2'
+    OnClick = Button2Click
+    TabOrder = 1
+  end
+end

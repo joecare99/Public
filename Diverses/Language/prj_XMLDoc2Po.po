@@ -153,15 +153,15 @@ msgstr ""
 
 #: unt_cdate.adate
 msgctxt "unt_cdate.adate"
-msgid "15.07.2017"
+msgid "05.06.2018"
 msgstr ""
 
 #: unt_cdate.cdate
 msgctxt "unt_cdate.cdate"
-msgid "15.07.2017"
+msgid "05.06.2018"
 msgstr ""
 
 #: unt_cdate.cname
-msgid "SILENT-PC2"
+msgid "N00145-BI"
 msgstr ""
 

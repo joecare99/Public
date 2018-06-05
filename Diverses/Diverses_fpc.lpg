@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="19">
+    <Targets Count="20">
       <Target0 FileName="FPC\Clrscr.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="Default"/>
@@ -106,6 +106,10 @@
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target18>
+      <Target19 FileName="FPC\prj_XMLDoc2Po.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target19>
     </Targets>
   </ProjectGroup>
 </CONFIG>

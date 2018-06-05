@@ -135,7 +135,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-      <OtherUnitFiles Value="..\grafik;..\..\Projekte\kams\Utils"/>
+      <OtherUnitFiles Value="..\source\crt"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Parsing>
