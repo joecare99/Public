@@ -7,8 +7,9 @@ object GraphForm: TGraphForm
   ClientHeight = 448
   ClientWidth = 632
   Color = clNavy
+  DesignTimePPI = 168
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -19
   Font.Name = 'MS Sans Serif'
   OnCloseQuery = FormCloseQuery
   OnCreate = FormCreate
@@ -18,11 +19,11 @@ object GraphForm: TGraphForm
   OnResize = FormResize
   OnShow = FormShow
   PopupMenu = PopupMenu1
-  LCLVersion = '1.6.0.4'
+  LCLVersion = '1.8.4.0'
   Visible = False
   object PopupMenu1: TPopupMenu
-    left = 392
-    top = 392
+    left = 686
+    top = 686
     object Clear1: TMenuItem
       Caption = 'Clear'
       OnClick = Clear1Click
@@ -49,12 +50,12 @@ object GraphForm: TGraphForm
   end
   object SavePictureDialog1: TSavePictureDialog
     DefaultExt = '.bmp'
-    left = 408
-    top = 232
+    left = 714
+    top = 406
   end
   object Timer1: TTimer
     OnTimer = Timer1Timer
-    left = 440
-    top = 296
+    left = 770
+    top = 518
   end
 end

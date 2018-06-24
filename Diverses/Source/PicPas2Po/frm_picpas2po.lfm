@@ -1,51 +1,60 @@
 object frmPicPas2PoMain: TfrmPicPas2PoMain
   Left = 1159
-  Height = 678
+  Height = 917
   Top = 226
-  Width = 862
+  Width = 1081
   ActiveControl = fraPoFile1.cbxSelectLanguage
   Caption = 'frmPicPas2PoMain'
-  ClientHeight = 678
-  ClientWidth = 862
+  ClientHeight = 917
+  ClientWidth = 1081
+  DesignTimePPI = 168
   OnCreate = FormCreate
   OnResize = FormResize
   OnShow = FormShow
   Visible = False
   object pnlRight: TPanel
-    Left = 462
-    Height = 635
+    Left = 681
+    Height = 874
     Top = 43
     Width = 400
     Align = alRight
     BevelOuter = bvNone
-    ClientHeight = 635
+    ClientHeight = 874
     ClientWidth = 400
     TabOrder = 0
     inline fraPoFile1: TfraPoFile
-      Height = 635
+      Height = 874
       Width = 400
       Align = alClient
-      ClientHeight = 635
+      ClientHeight = 874
       ClientWidth = 400
       inherited pnlRightTop: TPanel
         Width = 400
         ClientWidth = 400
         inherited cbxSelectLanguage: TComboBox
+          Height = 38
           Width = 216
+          ItemHeight = 30
         end
         inherited tlbPoFile: TToolBar
           Left = 326
+          inherited ToolButton3: TToolButton
+            Left = 41
+          end
+          inherited ToolButton4: TToolButton
+            Left = 81
+          end
         end
       end
       inherited edtPoFile: TMemo
-        Height = 593
+        Height = 832
         Width = 394
         Lines.Strings = (
           'Memo2'
         )
       end
       inherited lblBottom: TLabel
-        Top = 631
+        Top = 870
         Width = 394
       end
     end
@@ -54,26 +63,26 @@ object frmPicPas2PoMain: TfrmPicPas2PoMain
     Left = 0
     Height = 43
     Top = 0
-    Width = 862
+    Width = 1081
     Align = alTop
     BevelOuter = bvNone
     ClientHeight = 43
-    ClientWidth = 862
+    ClientWidth = 1081
     TabOrder = 1
     object edtSourceDir: TLabeledEdit
       Left = 9
-      Height = 23
+      Height = 38
       Top = 20
-      Width = 706
+      Width = 925
       Anchors = [akTop, akLeft, akRight]
       EditLabel.AnchorSideLeft.Control = edtSourceDir
       EditLabel.AnchorSideRight.Control = edtSourceDir
       EditLabel.AnchorSideRight.Side = asrBottom
       EditLabel.AnchorSideBottom.Control = edtSourceDir
       EditLabel.Left = 9
-      EditLabel.Height = 15
-      EditLabel.Top = 2
-      EditLabel.Width = 706
+      EditLabel.Height = 30
+      EditLabel.Top = -13
+      EditLabel.Width = 925
       EditLabel.Caption = 'edtSourceDir'
       EditLabel.ParentColor = False
       TabOrder = 0
@@ -82,7 +91,7 @@ object frmPicPas2PoMain: TfrmPicPas2PoMain
       OnExit = edtSourceDirExit
     end
     object pnlTopRight: TPanel
-      Left = 715
+      Left = 934
       Height = 43
       Top = 0
       Width = 147
@@ -103,17 +112,17 @@ object frmPicPas2PoMain: TfrmPicPas2PoMain
   end
   object pnlLeft: TPanel
     Left = 0
-    Height = 635
+    Height = 874
     Top = 43
     Width = 400
     Align = alLeft
     BevelOuter = bvNone
-    ClientHeight = 635
+    ClientHeight = 874
     ClientWidth = 400
     TabOrder = 2
     object edtPasFile: TMemo
       Left = 3
-      Height = 593
+      Height = 832
       Top = 35
       Width = 394
       Align = alClient
@@ -130,7 +139,7 @@ object frmPicPas2PoMain: TfrmPicPas2PoMain
     object Label1: TLabel
       Left = 3
       Height = 1
-      Top = 631
+      Top = 870
       Width = 394
       Align = alBottom
       BorderSpacing.Around = 3
@@ -148,12 +157,12 @@ object frmPicPas2PoMain: TfrmPicPas2PoMain
       TabOrder = 1
       object cbxSelectFile: TComboBox
         Left = 3
-        Height = 23
+        Height = 38
         Top = 3
         Width = 342
         Align = alClient
         BorderSpacing.Around = 3
-        ItemHeight = 15
+        ItemHeight = 30
         OnSelect = cbxSelectFileClick
         TabOrder = 0
         Text = 'cbxSelectFile'
@@ -182,13 +191,13 @@ object frmPicPas2PoMain: TfrmPicPas2PoMain
   end
   object pnlProcessing: TPanel
     Left = 400
-    Height = 635
+    Height = 874
     Top = 43
-    Width = 62
+    Width = 281
     Align = alClient
     BevelOuter = bvNone
-    ClientHeight = 635
-    ClientWidth = 62
+    ClientHeight = 874
+    ClientWidth = 281
     TabOrder = 3
     object btnProcessPas2Po: TBitBtn
       Left = 0
