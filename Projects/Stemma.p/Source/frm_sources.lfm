@@ -1,88 +1,105 @@
 object frmSources: TfrmSources
   Left = 429
-  Height = 590
+  Height = 980
   Top = 136
-  Width = 1097
+  Width = 1749
   ActiveControl = TableauSources
   BorderIcons = []
   Caption = 'Form: Sources'
-  ClientHeight = 590
-  ClientWidth = 1097
+  ClientHeight = 980
+  ClientWidth = 1749
+  DesignTimePPI = 168
   OnClose = FormClose
   OnResize = FormResize
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.9.0.0'
+  Visible = False
   object TableauSources: TStringGrid
-    Left = 8
-    Height = 536
-    Top = 8
-    Width = 1080
+    Left = 14
+    Height = 938
+    Top = 14
+    Width = 1890
     ColCount = 8
     Columns = <    
       item
+        MinSize = 18
+        MaxSize = 350
         ReadOnly = True
         Title.Caption = '#'
-        Width = 50
+        Width = 88
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Title'
-        Width = 186
+        Width = 326
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Description'
-        Width = 366
+        Width = 640
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Memo'
-        Width = 186
+        Width = 326
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Author'
-        Width = 186
+        Width = 326
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Q'
-        Width = 20
+        Width = 35
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         ReadOnly = True
         Title.Caption = 'Usage'
-        Width = 64
+        Width = 112
       end>
     ExtendedSelect = False
     MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goEditing, goSmoothScroll]
+    ParentFont = False
     PopupMenu = mnuSource
     RowCount = 100
     TabOrder = 0
     OnDblClick = TableauSourcesDblClick
     OnEditingDone = TableauSourcesEditingDone
     ColWidths = (
-      1
-      50
-      186
-      366
-      186
-      186
-      20
-      64
+      2
+      88
+      326
+      640
+      326
+      326
+      35
+      112
     )
   end
   object Button1: TButton
-    Left = 1013
-    Height = 25
-    Top = 552
-    Width = 75
+    Left = 1773
+    Height = 44
+    Top = 966
+    Width = 131
     Cancel = True
     Caption = 'Ok'
     Default = True
     ModalResult = 1
+    ParentFont = False
     TabOrder = 1
   end
   object mnuSource: TPopupMenu
-    Left = 207
-    Top = 552
+    left = 362
+    top = 966
     object mniSourceSort: TMenuItem
       Caption = '&Sort'
       object mniSourceSortNumber: TMenuItem
@@ -121,8 +138,8 @@ object frmSources: TfrmSources
     end
   end
   object alsSource: TActionList
-    Left = 240
-    Top = 552
+    left = 420
+    top = 966
     object actSourceSortNumber: TAction
       Category = 'SourceSort'
       Caption = '&by Number'

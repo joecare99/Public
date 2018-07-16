@@ -1,60 +1,72 @@
 object frmShowUsage: TfrmShowUsage
   Left = 879
-  Height = 365
+  Height = 638
   Top = 160
-  Width = 437
+  Width = 769
+  ActiveControl = tblUsage
   BorderIcons = []
   Caption = 'Utilisation'
-  ClientHeight = 365
-  ClientWidth = 437
+  ClientHeight = 638
+  ClientWidth = 769
+  DesignTimePPI = 168
   OnResize = FormResize
   OnShow = FormShow
   Position = poScreenCenter
   Visible = False
   object tblUsage: TStringGrid
-    Left = 8
-    Height = 312
-    Top = 8
-    Width = 419
+    Left = 14
+    Height = 546
+    Top = 14
+    Width = 733
     Columns = <    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Événement'
-        Width = 75
+        Width = 131
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Témoin'
-        Width = 183
+        Width = 320
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = '#'
-        Width = 64
+        Width = 112
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Date'
-        Width = 75
+        Width = 131
       end>
     ExtendedSelect = False
     MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    ParentFont = False
     RowCount = 100
     TabOrder = 0
     OnDblClick = tblUsageDblClick
     ColWidths = (
-      1
-      75
-      183
-      64
-      75
+      2
+      131
+      320
+      112
+      131
     )
   end
   object btnUsageOk: TBitBtn
-    Left = 336
-    Height = 33
-    Top = 328
-    Width = 91
+    Left = 588
+    Height = 58
+    Top = 574
+    Width = 159
     DefaultCaption = True
     Kind = bkOK
     ModalResult = 1
+    ParentFont = False
     TabOrder = 1
   end
 end

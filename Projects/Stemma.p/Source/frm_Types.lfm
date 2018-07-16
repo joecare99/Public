@@ -1,77 +1,88 @@
 object frmTypes: TfrmTypes
   Left = 498
-  Height = 536
+  Height = 910
   Top = 192
-  Width = 752
+  Width = 1320
   ActiveControl = TableauTypes
   BorderIcons = []
   Caption = 'Types d''événements'
-  ClientHeight = 536
-  ClientWidth = 752
+  ClientHeight = 910
+  ClientWidth = 1320
+  DesignTimePPI = 168
   OnResize = FormResize
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.9.0.0'
+  Visible = False
   object TableauTypes: TStringGrid
-    Left = 8
-    Height = 488
-    Top = 8
-    Width = 1080
+    Left = 14
+    Height = 854
+    Top = 14
+    Width = 1890
     ColCount = 6
     Columns = <    
       item
+        MinSize = 18
+        MaxSize = 350
         ReadOnly = True
         Title.Caption = '#'
-        Width = 40
+        Width = 70
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Titre'
-        Width = 186
+        Width = 326
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Type'
-        Width = 40
+        Width = 70
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Phrase'
-        Width = 728
+        Width = 1274
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         ReadOnly = True
         Title.Caption = 'Utilisation'
-        Width = 64
+        Width = 112
       end>
     ExtendedSelect = False
     MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goColSizing, goEditing, goSmoothScroll]
+    ParentFont = False
     PopupMenu = PopupMenu1
     RowCount = 100
     TabOrder = 0
     OnDblClick = MenuItem4Click
     OnEditingDone = TableauTypesEditingDone
     ColWidths = (
-      1
-      40
-      186
-      40
-      728
-      64
+      2
+      70
+      326
+      70
+      1274
+      112
     )
   end
   object Button1: TButton
-    Left = 1016
-    Height = 25
-    Top = 504
-    Width = 75
-    Cancel = True
+    Left = 1778
+    Height = 44
+    Top = 882
+    Width = 131
     Caption = 'Ok'
-    Default = True
     ModalResult = 1
+    ParentFont = False
     TabOrder = 1
   end
   object PopupMenu1: TPopupMenu
-    Left = 104
-    Top = 480
+    left = 182
+    top = 840
     object MenuItem8: TMenuItem
       Caption = 'Utilisation'
       OnClick = MenuItem8Click

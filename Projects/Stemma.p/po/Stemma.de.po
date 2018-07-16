@@ -2044,6 +2044,7 @@ msgid "&Modifier"
 msgstr "Bearbeiten"
 
 #: tfraedtcitations.tableaucitations.columns[0].title.caption
+msgctxt "tfraedtcitations.tableaucitations.columns[0].title.caption"
 msgid "Source"
 msgstr ""
 
@@ -2360,8 +2361,41 @@ msgctxt "tfrmeditevents.ajoutertemoin.caption"
 msgid "&Ajouter"
 msgstr "&Anfügen"
 
-#: tfrmeditevents.caption
-msgid "Edit Events"
+#: tfrmeditevents.fradocuments1.tbldocuments.columns[0].title.caption
+msgctxt "tfrmeditevents.fradocuments1.tbldocuments.columns[0].title.caption"
+msgid "*"
+msgstr ""
+
+#: tfrmeditevents.fradocuments1.tbldocuments.columns[1].title.caption
+#, fuzzy
+msgctxt "tfrmeditevents.fradocuments1.tbldocuments.columns[1].title.caption"
+msgid "Title"
+msgstr "&Titel hinzufügen"
+
+#: tfrmeditevents.fradocuments1.tbldocuments.columns[2].title.caption
+#, fuzzy
+msgctxt "tfrmeditevents.fradocuments1.tbldocuments.columns[2].title.caption"
+msgid "Type"
+msgstr "Art"
+
+#: tfrmeditevents.fradocuments1.tbldocuments.columns[3].title.caption
+msgctxt "tfrmeditevents.fradocuments1.tbldocuments.columns[3].title.caption"
+msgid "Format"
+msgstr ""
+
+#: tfrmeditevents.fraedtcitations1.tableaucitations.columns[0].title.caption
+msgctxt "tfrmeditevents.fraedtcitations1.tableaucitations.columns[0].title.caption"
+msgid "Source"
+msgstr ""
+
+#: tfrmeditevents.fraedtcitations1.tableaucitations.columns[1].title.caption
+msgctxt "tfrmeditevents.fraedtcitations1.tableaucitations.columns[1].title.caption"
+msgid "Description"
+msgstr ""
+
+#: tfrmeditevents.fraedtcitations1.tableaucitations.columns[2].title.caption
+msgctxt "tfrmeditevents.fraedtcitations1.tableaucitations.columns[2].title.caption"
+msgid "Q"
 msgstr ""
 
 #: tfrmeditevents.l0.hint
@@ -2526,10 +2560,6 @@ msgctxt "tfrmeditevents.yy.text"
 msgid "YY"
 msgstr ""
 
-#: tfrmeditname.caption
-msgid "Modification de Nom"
-msgstr ""
-
 #: tfrmeditname.cbxsex.itemsex[0].caption
 msgid "Unknown"
 msgstr "Unbekannt"
@@ -2557,6 +2587,21 @@ msgstr ""
 msgctxt "tfrmeditname.edtprefered2.text"
 msgid "X"
 msgstr "--no-xshm             Abschalten der Verwendung der Shared-Memory-Erweiterung von X"
+
+#: tfrmeditname.fraedtcitations1.tableaucitations.columns[0].title.caption
+msgctxt "tfrmeditname.fraedtcitations1.tableaucitations.columns[0].title.caption"
+msgid "Source"
+msgstr ""
+
+#: tfrmeditname.fraedtcitations1.tableaucitations.columns[1].title.caption
+msgctxt "tfrmeditname.fraedtcitations1.tableaucitations.columns[1].title.caption"
+msgid "Description"
+msgstr ""
+
+#: tfrmeditname.fraedtcitations1.tableaucitations.columns[2].title.caption
+msgctxt "tfrmeditname.fraedtcitations1.tableaucitations.columns[2].title.caption"
+msgid "Q"
+msgstr ""
 
 #: tfrmeditname.lblindividuum.caption
 msgctxt "tfrmeditname.lblindividuum.caption"
@@ -2960,10 +3005,6 @@ msgstr "Wiederholung"
 msgctxt "tfrmedittype.t.text"
 msgid "T"
 msgstr "Zu suchender ~T~ext"
-
-#: tfrmeditwitness.caption
-msgid "Modification d'un témoin"
-msgstr ""
 
 #: tfrmeditwitness.chbprefered.caption
 msgctxt "tfrmeditwitness.chbprefered.caption"
@@ -3671,10 +3712,6 @@ msgctxt "tfrmsources.button1.caption"
 msgid "Ok"
 msgstr "Ok"
 
-#: tfrmsources.caption
-msgid "Form: Sources"
-msgstr ""
-
 #: tfrmsources.mnisourceadd.caption
 msgid "&Add ..."
 msgstr ""
@@ -4087,12 +4124,6 @@ msgctxt "tfrmstemmamainform.btnseparator2.caption"
 msgid "btnSeparator2"
 msgstr ""
 
-#: tfrmstemmamainform.caption
-#, fuzzy
-msgctxt "tfrmstemmamainform.caption"
-msgid "Stemma"
-msgstr "Sind sie sicher, daß sie STEMMA beenden möchten ?"
-
 #: tfrmstemmamainform.checkbox1.caption
 msgctxt "tfrmstemmamainform.checkbox1.caption"
 msgid "CheckBox1"
@@ -4234,10 +4265,6 @@ msgstr ""
 msgctxt "tfrmtypes.button1.caption"
 msgid "Ok"
 msgstr "Ok"
-
-#: tfrmtypes.caption
-msgid "Types d'événements"
-msgstr ""
 
 #: tfrmtypes.menuitem2.caption
 msgctxt "tfrmtypes.menuitem2.caption"

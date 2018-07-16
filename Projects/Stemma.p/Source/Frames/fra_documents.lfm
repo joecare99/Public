@@ -1,80 +1,91 @@
 object fraDocuments: TfraDocuments
   Left = 0
-  Height = 240
+  Height = 420
   Top = 0
-  Width = 920
-  BorderSpacing.Around = 3
-  ClientHeight = 240
-  ClientWidth = 920
+  Width = 1610
+  BorderSpacing.Around = 5
+  ClientHeight = 420
+  ClientWidth = 1610
+  DesignTimePPI = 168
+  ParentFont = False
   TabOrder = 0
-  DesignLeft = 188
-  DesignTop = 284
   object tblDocuments: TStringGrid
-    Left = 83
-    Height = 234
-    Top = 3
-    Width = 822
+    Left = 145
+    Height = 410
+    Top = 5
+    Width = 1439
     Align = alClient
-    BorderSpacing.Right = 12
-    BorderSpacing.Around = 3
+    BorderSpacing.Right = 21
+    BorderSpacing.Around = 5
     Columns = <    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = '*'
-        Width = 17
+        Width = 30
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Title'
-        Width = 443
+        Width = 775
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Type'
         Visible = False
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Format'
-        Width = 46
+        Width = 80
       end>
     ExtendedSelect = False
     MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    ParentFont = False
     PopupMenu = mnuDocuments
     TabOrder = 0
     OnResize = tblDocumentsResize
     ColWidths = (
-      1
-      17
-      443
+      2
+      30
+      775
       0
-      46
+      80
     )
   end
   object pnlDocumentsLeft: TPanel
     Left = 0
-    Height = 240
+    Height = 420
     Top = 0
-    Width = 80
+    Width = 140
     Align = alLeft
     BevelOuter = bvNone
-    ClientHeight = 240
-    ClientWidth = 80
+    ClientHeight = 420
+    ClientWidth = 140
+    ParentFont = False
     TabOrder = 1
     object Label12: TLabel
-      Left = 5
-      Height = 15
-      Top = 3
-      Width = 70
+      Left = 9
+      Height = 30
+      Top = 5
+      Width = 122
       Align = alTop
       Alignment = taRightJustify
-      BorderSpacing.Left = 5
-      BorderSpacing.Top = 3
-      BorderSpacing.Right = 5
+      BorderSpacing.Left = 9
+      BorderSpacing.Top = 5
+      BorderSpacing.Right = 9
       Caption = 'Documents:'
       ParentColor = False
+      ParentFont = False
     end
   end
   object mnuDocuments: TPopupMenu
-    Left = 40
-    Top = 104
+    left = 70
+    top = 182
     object Ajouter2: TMenuItem
       Action = actDocumentsAdd
     end
@@ -92,8 +103,8 @@ object fraDocuments: TfraDocuments
     end
   end
   object alsDocuments: TActionList
-    Left = 40
-    Top = 40
+    left = 70
+    top = 70
     object actDocumentsAdd: TAction
       Category = 'Documents'
       Caption = '&Add'

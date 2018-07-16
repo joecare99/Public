@@ -1,114 +1,123 @@
 object frmEditEvents: TfrmEditEvents
   Left = 902
-  Height = 730
+  Height = 1059
   Top = 433
-  Width = 631
+  Width = 1149
   ActiveControl = LA
   BorderIcons = []
   BorderStyle = bsDialog
   Caption = 'Edit Events'
-  ClientHeight = 710
-  ClientWidth = 631
+  ClientHeight = 1059
+  ClientWidth = 1149
+  DesignTimePPI = 168
   Menu = mnuEventsMain
   OnShow = FormShow
   Position = poScreenCenter
-  LCLVersion = '1.9.0.0'
+  Visible = False
   object Panel1: TPanel
     Left = 0
-    Height = 75
-    Top = 169
-    Width = 631
+    Height = 131
+    Top = 105
+    Width = 1149
     Align = alBottom
     BevelOuter = bvNone
     Caption = 'Panel1'
-    ClientHeight = 75
-    ClientWidth = 631
+    ClientHeight = 131
+    ClientWidth = 1149
+    ParentFont = False
     TabOrder = 12
     object LA: TEdit
-      Left = 88
-      Height = 23
+      Left = 154
+      Height = 38
       Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
-      Top = 4
-      Width = 40
+      Top = 7
+      Width = 70
+      ParentFont = False
       ParentShowHint = False
       ShowHint = True
       TabOrder = 0
       Text = 'PD'
     end
     object L0: TEdit
-      Left = 128
-      Height = 23
+      Left = 224
+      Height = 38
       Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
-      Top = 4
-      Width = 488
+      Top = 7
+      Width = 854
+      ParentFont = False
       ParentShowHint = False
       ShowHint = True
       TabOrder = 1
       Text = 'PD'
     end
     object L4: TEdit
-      Left = 352
-      Height = 23
+      Left = 616
+      Height = 38
       Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
-      Top = 50
-      Width = 264
+      Top = 88
+      Width = 462
+      ParentFont = False
       ParentShowHint = False
       ShowHint = True
       TabOrder = 2
       Text = 'PD'
     end
     object L3: TEdit
-      Left = 88
-      Height = 23
+      Left = 154
+      Height = 38
       Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
-      Top = 50
-      Width = 264
+      Top = 88
+      Width = 462
+      ParentFont = False
       ParentShowHint = False
       ShowHint = True
       TabOrder = 3
       Text = 'PD'
     end
     object L2: TEdit
-      Left = 352
-      Height = 23
+      Left = 616
+      Height = 38
       Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
-      Top = 27
-      Width = 264
+      Top = 47
+      Width = 462
+      ParentFont = False
       ParentShowHint = False
       ShowHint = True
       TabOrder = 4
       Text = 'PD'
     end
     object L1: TEdit
-      Left = 88
-      Height = 23
+      Left = 154
+      Height = 38
       Hint = '[''v'' ou ''av'' ou ''<'' ou ''ap'' ou ''>''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ][''au'' ou ''et'' ou ''ou''][AAAAMMJJ ou AAAA.MM.JJ ou AAAA/MM/JJ]'
-      Top = 27
-      Width = 264
+      Top = 47
+      Width = 462
+      ParentFont = False
       ParentShowHint = False
       ShowHint = True
       TabOrder = 5
       Text = 'PD'
     end
     object pnlPlaceLeft: TPanel
-      Left = 3
-      Height = 69
-      Top = 3
-      Width = 80
+      Left = 5
+      Height = 121
+      Top = 5
+      Width = 140
       Align = alLeft
-      BorderSpacing.Around = 3
+      BorderSpacing.Around = 5
       BevelOuter = bvNone
-      ClientHeight = 69
-      ClientWidth = 80
+      ClientHeight = 121
+      ClientWidth = 140
+      ParentFont = False
       TabOrder = 6
       object Label8: TLabel
-        Left = 3
-        Height = 15
-        Top = 3
-        Width = 74
+        Left = 5
+        Height = 30
+        Top = 5
+        Width = 130
         Align = alTop
         Alignment = taRightJustify
-        BorderSpacing.Around = 3
+        BorderSpacing.Around = 5
         Caption = 'Place:'
         Layout = tlCenter
         ParentColor = False
@@ -117,87 +126,101 @@ object frmEditEvents: TfrmEditEvents
     end
   end
   object Y: TComboBox
-    Left = 88
-    Height = 23
-    Top = 16
-    Width = 96
+    Left = 154
+    Height = 38
+    Top = 28
+    Width = 168
     AutoComplete = True
     AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
-    ItemHeight = 15
+    ItemHeight = 30
     OnChange = YChange
+    ParentFont = False
     Style = csDropDownList
     TabOrder = 0
     TabStop = False
   end
   object Label1: TLabel
-    Left = 16
-    Height = 15
-    Top = 16
-    Width = 28
+    Left = 28
+    Height = 30
+    Top = 28
+    Width = 48
     Caption = 'Type:'
     ParentColor = False
+    ParentFont = False
   end
   object Role: TEdit
-    Left = 448
-    Height = 23
-    Top = 8
-    Width = 80
+    Left = 784
+    Height = 38
+    Top = 14
+    Width = 140
+    ParentFont = False
     TabStop = False
     TabOrder = 2
     Text = 'Role'
     Visible = False
   end
   object TableauTemoins: TStringGrid
-    Left = 88
-    Height = 104
-    Top = 48
-    Width = 528
+    Left = 154
+    Height = 182
+    Top = 84
+    Width = 924
     Columns = <    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Rôle'
-        Width = 75
+        Width = 131
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = '#'
-        Width = 75
+        Width = 131
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'Nom'
-        Width = 356
+        Width = 623
       end    
       item
+        MinSize = 18
+        MaxSize = 350
         Title.Caption = 'X'
         Visible = False
       end>
     ExtendedSelect = False
     MouseWheelOption = mwGrid
     Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goColSizing, goRowSelect, goSmoothScroll]
+    ParentFont = False
     PopupMenu = mnuWitnes
     TabOrder = 1
     TabStop = False
     OnDblClick = TableauTemoinsDblClick
     OnDrawCell = TableauTemoinsDrawCell
     ColWidths = (
-      1
-      75
-      75
-      356
+      2
+      131
+      131
+      623
       0
     )
   end
   object Label11: TLabel
-    Left = 16
-    Height = 15
-    Top = 48
-    Width = 48
+    Left = 28
+    Height = 30
+    Top = 84
+    Width = 81
     Caption = 'Témoins:'
     ParentColor = False
+    ParentFont = False
   end
   object YY: TEdit
-    Left = 296
-    Height = 23
-    Top = 9
-    Width = 56
+    Left = 518
+    Height = 38
+    Top = 16
+    Width = 98
+    ParentFont = False
     TabStop = False
     TabOrder = 3
     Text = 'YY'
@@ -205,65 +228,117 @@ object frmEditEvents: TfrmEditEvents
   end
   object pnlBottom: TPanel
     Left = 0
-    Height = 52
-    Top = 658
-    Width = 631
+    Height = 91
+    Top = 968
+    Width = 1149
     Align = alBottom
     BevelOuter = bvNone
-    ClientHeight = 52
-    ClientWidth = 631
+    ClientHeight = 91
+    ClientWidth = 1149
+    ParentFont = False
     TabOrder = 4
     object Button1: TBitBtn
-      Left = 399
-      Height = 40
-      Top = 6
-      Width = 110
+      Left = 745
+      Height = 71
+      Top = 10
+      Width = 192
       Align = alRight
-      BorderSpacing.Around = 6
+      BorderSpacing.Around = 10
       DefaultCaption = True
       Kind = bkOK
       ModalResult = 1
       OnClick = Button1Click
+      ParentFont = False
       TabOrder = 0
     end
     object Button2: TBitBtn
-      Left = 515
-      Height = 40
-      Top = 6
-      Width = 110
+      Left = 947
+      Height = 71
+      Top = 10
+      Width = 192
       Align = alRight
-      BorderSpacing.Around = 6
+      BorderSpacing.Around = 10
       Cancel = True
       DefaultCaption = True
       Kind = bkCancel
       ModalResult = 2
+      ParentFont = False
       TabOrder = 1
     end
   end
   object No: TSpinEdit
-    Left = 536
-    Height = 23
-    Top = 8
-    Width = 80
+    Left = 938
+    Height = 38
+    Top = 14
+    Width = 140
+    ParentFont = False
     TabStop = False
     TabOrder = 5
     Visible = False
   end
   inline fraEdtCitations1: TfraEdtCitations
-    Height = 136
-    Top = 379
-    Width = 631
+    Height = 238
+    Top = 472
+    Width = 1149
     Align = alBottom
-    ClientHeight = 136
-    ClientWidth = 631
+    ClientHeight = 238
+    ClientWidth = 1149
     TabOrder = 6
+    DesignLeft = 1537
+    DesignTop = 224
     inherited TableauCitations: TStringGrid
-      Height = 130
-      Width = 530
+      Left = 263
+      Height = 220
+      Top = 9
+      Width = 840
+      BorderSpacing.Right = 37
+      BorderSpacing.Around = 9
+      Columns = <      
+        item
+          MinSize = 32
+          MaxSize = 612
+          PickList.Strings = (          )
+          Title.Caption = 'Source'
+          Width = 306
+        end      
+        item
+          MinSize = 32
+          MaxSize = 612
+          PickList.Strings = (          )
+          Title.Caption = 'Description'
+          Width = 1197
+        end      
+        item
+          MinSize = 32
+          MaxSize = 612
+          PickList.Strings = (          )
+          Title.Caption = 'Q'
+          Width = 46
+        end>
+      ColWidths = (
+        4
+        306
+        1197
+        46
+      )
     end
     inherited pnlCitationLeft: TPanel
-      Height = 130
-      ClientHeight = 130
+      Left = 9
+      Height = 220
+      Top = 9
+      Width = 245
+      BorderSpacing.Around = 9
+      ClientHeight = 220
+      ClientWidth = 245
+      inherited lblCitations: TLabel
+        Left = 16
+        Height = 30
+        Top = 9
+        Width = 213
+        BorderSpacing.Left = 16
+        BorderSpacing.Top = 9
+        BorderSpacing.Right = 16
+      end
     end
     inherited ActionList1: TActionList
       inherited actEdtCitationAdd: TAction
@@ -278,53 +353,124 @@ object frmEditEvents: TfrmEditEvents
     end
   end
   inline fraDocuments1: TfraDocuments
-    Left = 3
-    Height = 132
-    Top = 523
-    Width = 625
+    Left = 9
+    Height = 231
+    Top = 728
+    Width = 1131
     Align = alBottom
-    ClientHeight = 132
-    ClientWidth = 625
+    BorderSpacing.Around = 9
+    ClientHeight = 231
+    ClientWidth = 1131
     TabOrder = 7
     inherited tblDocuments: TStringGrid
-      Left = 86
-      Height = 126
-      Width = 524
+      Left = 259
+      Height = 213
+      Top = 9
+      Width = 826
+      BorderSpacing.Right = 37
+      BorderSpacing.Around = 9
+      Columns = <      
+        item
+          MinSize = 32
+          MaxSize = 612
+          PickList.Strings = (          )
+          Title.Caption = '*'
+          Width = 52
+        end      
+        item
+          MinSize = 32
+          MaxSize = 612
+          PickList.Strings = (          )
+          Title.Caption = 'Title'
+          Width = 1356
+        end      
+        item
+          MinSize = 32
+          MaxSize = 612
+          PickList.Strings = (          )
+          Title.Caption = 'Type'
+          Visible = False
+        end      
+        item
+          MinSize = 32
+          MaxSize = 612
+          PickList.Strings = (          )
+          Title.Caption = 'Format'
+          Width = 140
+        end>
+      ColWidths = (
+        4
+        52
+        1356
+        0
+        140
+      )
     end
     inherited pnlDocumentsLeft: TPanel
-      Left = 3
-      Height = 126
-      Top = 3
-      BorderSpacing.Around = 3
-      ClientHeight = 126
+      Left = 5
+      Height = 221
+      Top = 5
+      Width = 245
+      BorderSpacing.Around = 5
+      ClientHeight = 221
+      ClientWidth = 245
+      inherited Label12: TLabel
+        Left = 16
+        Top = 9
+        Width = 213
+        BorderSpacing.Left = 16
+        BorderSpacing.Top = 9
+        BorderSpacing.Right = 16
+      end
     end
   end
   object Splitter1: TSplitter
     Cursor = crVSplit
     Left = 0
-    Height = 5
-    Top = 515
-    Width = 631
+    Height = 9
+    Top = 710
+    Width = 1149
     Align = alBottom
     ResizeAnchor = akBottom
   end
   inline fraPhrase1: TfraPhrase
-    Height = 70
-    Top = 309
-    Width = 631
+    Height = 122
+    Top = 350
+    Width = 1149
     Align = alBottom
-    ClientHeight = 70
-    ClientWidth = 631
+    ClientHeight = 122
+    ClientWidth = 1149
     TabOrder = 8
-    DesignLeft = 1113
-    DesignTop = 160
+    DesignLeft = 1948
+    DesignTop = 280
     inherited pnlPhraseLeft: TPanel
-      Height = 64
-      ClientHeight = 64
+      Left = 9
+      Height = 104
+      Top = 9
+      Width = 245
+      BorderSpacing.Around = 9
+      ClientHeight = 104
+      ClientWidth = 245
+      inherited lblPhrase: TLabel
+        Left = 9
+        Height = 30
+        Top = 9
+        Width = 227
+        BorderSpacing.Around = 9
+      end
+      inherited lblPhraseDefault: TLabel
+        Height = 30
+        Top = 48
+        Width = 245
+      end
     end
     inherited edtPhrase: TMemo
-      Height = 64
-      Width = 530
+      Left = 263
+      Height = 104
+      Top = 9
+      Width = 840
+      BorderSpacing.Right = 37
+      BorderSpacing.Around = 9
       Lines.Strings = (
         ''
       )
@@ -333,87 +479,140 @@ object frmEditEvents: TfrmEditEvents
   inline fraDate1: TfraDate
     AnchorSideTop.Control = TableauTemoins
     AnchorSideTop.Side = asrBottom
-    Height = 17
-    Top = 152
-    Width = 631
+    Height = 0
+    Top = 105
+    Width = 1149
     Align = alBottom
     Anchors = [akTop, akLeft, akRight]
-    ClientHeight = 17
-    ClientWidth = 631
+    ClientHeight = 0
+    ClientWidth = 1149
     TabOrder = 9
+    DesignLeft = 2718
+    DesignTop = 196
     inherited pnlDateLeft: TPanel
-      Left = 6
-      Height = 5
-      Top = 6
-      BorderSpacing.Left = 3
-      BorderSpacing.Top = 3
-      BorderSpacing.Bottom = 3
-      ClientHeight = 5
+      Left = 14
+      Height = 0
+      Top = 0
+      Width = 245
+      BorderSpacing.Left = 5
+      BorderSpacing.Top = 5
+      BorderSpacing.Bottom = 5
+      BorderSpacing.Around = 9
+      ClientHeight = 0
+      ClientWidth = 245
       inherited lblDate: TLabel
-        Top = 2
+        Left = 9
+        Height = 30
+        Top = 0
+        Width = 227
+        BorderSpacing.Around = 9
       end
     end
     inherited pnlDateRight: TPanel
-      Left = 353
-      Height = 11
-      ClientHeight = 11
+      Left = 298
+      Height = 0
+      Top = 0
+      Width = 805
+      BorderSpacing.Right = 37
+      BorderSpacing.Around = 9
+      ClientHeight = 0
+      ClientWidth = 805
       inherited edtDateForSorting: TEdit
+        Left = 9
         Height = 0
-        Top = 12
-        BorderSpacing.Bottom = 3
+        Top = 6
+        Width = 796
+        BorderSpacing.Left = 9
+        BorderSpacing.Top = 18
+        BorderSpacing.Bottom = 5
         OnEditingDone = nil
+      end
+      inherited lblForSorting: TLabel
+        Left = 9
+        Height = 30
+        Top = 0
+        Width = 787
+        BorderSpacing.Around = 9
       end
     end
     inherited pnlDateClient: TPanel
-      Left = 89
-      Height = 11
-      Width = 261
-      ClientHeight = 11
-      ClientWidth = 261
+      Left = 268
+      Height = 0
+      Top = 0
+      Width = 21
+      BorderSpacing.Around = 9
+      ClientHeight = 0
+      ClientWidth = 21
       inherited edtDateForPresentation: TEdit
+        Left = 9
         Height = 0
-        Top = 12
-        Width = 255
+        Top = 4
+        Width = 3
+        BorderSpacing.Left = 9
+        BorderSpacing.Top = 18
+        BorderSpacing.Right = 9
+        BorderSpacing.Bottom = 9
         OnEditingDone = nil
       end
       inherited lblForPresentation: TLabel
-        Width = 255
+        Left = 9
+        Height = 30
+        Top = 0
+        Width = 3
+        BorderSpacing.Around = 9
       end
     end
   end
   inline fraMemo1: TfraMemo
-    Height = 65
-    Top = 244
-    Width = 631
+    Height = 114
+    Top = 236
+    Width = 1149
     Align = alBottom
-    ClientHeight = 65
-    ClientWidth = 631
+    ClientHeight = 114
+    ClientWidth = 1149
     TabOrder = 10
     inherited pnlMemoLeft: TPanel
-      Height = 59
-      ClientHeight = 59
+      Left = 9
+      Height = 96
+      Top = 9
+      Width = 245
+      BorderSpacing.Around = 9
+      ClientHeight = 96
+      ClientWidth = 245
+      inherited lblMemo: TLabel
+        Left = 9
+        Height = 30
+        Top = 9
+        Width = 227
+        BorderSpacing.Around = 9
+      end
     end
     inherited edtMemoText: TMemo
-      Height = 59
-      Width = 530
+      Left = 263
+      Height = 96
+      Top = 9
+      Width = 840
+      BorderSpacing.Right = 37
+      BorderSpacing.Around = 9
       Lines.Strings = (
         'M'
       )
     end
   end
   object X: TCheckBox
-    Left = 360
-    Height = 19
-    Top = 9
-    Width = 64
+    Left = 630
+    Height = 34
+    Top = 16
+    Width = 112
     Caption = 'Prefered'
+    ParentFont = False
     TabOrder = 13
     TabStop = False
     Visible = False
   end
   object mnuWitnes: TPopupMenu
-    Left = 68
-    Top = 106
+    left = 119
+    top = 186
     object AjouterTemoin: TMenuItem
       Caption = '&Ajouter'
       ShortCut = 115
@@ -431,8 +630,8 @@ object frmEditEvents: TfrmEditEvents
     end
   end
   object mnuEventsMain: TMainMenu
-    Left = 16
-    Top = 72
+    left = 28
+    top = 126
     object MenuItem12: TMenuItem
       Caption = 'Repeat'
       ShortCut = 114

@@ -14,7 +14,6 @@
         <DpiAware Value="True"/>
       </XPManifest>
       <Icon Value="0"/>
-      <ActiveWindowIndexAtStart Value="1"/>
     </General>
     <LazDoc Paths="..\FPDoc" PackageName="Stemma"/>
     <i18n>
@@ -151,8 +150,9 @@
         <ComponentName Value="frmStemmaMainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="6"/>
-        <TopLine Value="1401"/>
+        <TopLine Value="1404"/>
         <CursorPos X="53" Y="1405"/>
         <UsageCount Value="210"/>
         <Loaded Value="True"/>
@@ -162,7 +162,7 @@
         <Filename Value="..\Source\tools\fmutils.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="FMUtils"/>
-        <TopLine Value="1508"/>
+        <TopLine Value="1511"/>
         <CursorPos X="19" Y="1513"/>
         <UsageCount Value="208"/>
         <Loaded Value="True"/>
@@ -251,7 +251,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="5"/>
-        <TopLine Value="144"/>
+        <TopLine Value="147"/>
         <CursorPos X="50" Y="149"/>
         <UsageCount Value="242"/>
         <Loaded Value="True"/>
@@ -264,7 +264,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="29"/>
+        <TopLine Value="32"/>
         <CursorPos X="52" Y="34"/>
         <UsageCount Value="282"/>
         <Loaded Value="True"/>
@@ -315,12 +315,11 @@
         <UsageCount Value="272"/>
       </Unit15>
       <Unit16>
-        <Filename Value="..\Source\frm_images.pas"/>
+        <Filename Value="..\Source\frm_Images.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FormImage"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="frm_Images"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="20"/>
         <CursorPos X="42" Y="39"/>
@@ -333,7 +332,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="250"/>
+        <TopLine Value="253"/>
         <CursorPos X="35" Y="256"/>
         <UsageCount Value="221"/>
         <Loaded Value="True"/>
@@ -358,7 +357,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="3"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="364"/>
+        <TopLine Value="367"/>
         <CursorPos X="36" Y="369"/>
         <UsageCount Value="223"/>
         <Loaded Value="True"/>
@@ -370,9 +369,10 @@
         <ComponentName Value="frmEditEvents"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="543"/>
+        <TopLine Value="569"/>
         <CursorPos X="52" Y="592"/>
         <UsageCount Value="204"/>
         <Bookmarks Count="1">
@@ -389,7 +389,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="4"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="185"/>
+        <TopLine Value="188"/>
         <CursorPos X="46" Y="190"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -402,7 +402,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="7"/>
-        <TopLine Value="238"/>
+        <TopLine Value="254"/>
         <CursorPos X="13" Y="297"/>
         <UsageCount Value="208"/>
         <Loaded Value="True"/>
@@ -414,22 +414,20 @@
         <ComponentName Value="frmShowUsage"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="12"/>
+        <TopLine Value="15"/>
         <CursorPos X="23" Y="18"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit23>
       <Unit24>
-        <Filename Value="..\Source\frm_sources.pas"/>
+        <Filename Value="..\Source\frm_Sources.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmSources"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="frm_Sources"/>
         <EditorIndex Value="5"/>
         <WindowIndex Value="1"/>
         <TopLine Value="65"/>
@@ -439,14 +437,13 @@
         <LoadedDesigner Value="True"/>
       </Unit24>
       <Unit25>
-        <Filename Value="..\Source\frm_repositories.pas"/>
+        <Filename Value="..\Source\frm_Repositories.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmRepository"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="frm_Repositories"/>
         <EditorIndex Value="8"/>
-        <TopLine Value="141"/>
+        <TopLine Value="157"/>
         <CursorPos X="22" Y="188"/>
         <UsageCount Value="218"/>
         <Loaded Value="True"/>
@@ -459,7 +456,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="228"/>
+        <TopLine Value="231"/>
         <CursorPos X="27" Y="233"/>
         <UsageCount Value="217"/>
         <Loaded Value="True"/>
@@ -473,21 +470,20 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="6"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="3"/>
+        <TopLine Value="6"/>
         <CursorPos X="12" Y="9"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit27>
       <Unit28>
-        <Filename Value="..\Source\frm_edittypes.pas"/>
+        <Filename Value="..\Source\frm_EditTypes.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmEditType"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="frm_EditTypes"/>
         <EditorIndex Value="4"/>
-        <TopLine Value="51"/>
+        <TopLine Value="54"/>
         <CursorPos X="53" Y="57"/>
         <UsageCount Value="200"/>
         <Loaded Value="True"/>
@@ -524,7 +520,7 @@
         <ResourceBaseClass Value="DataModule"/>
         <UnitName Value="dm_GenData"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="266"/>
+        <TopLine Value="269"/>
         <CursorPos X="64" Y="270"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
@@ -553,9 +549,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frm_SelectDialog"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="9"/>
-        <TopLine Value="4"/>
+        <TopLine Value="20"/>
         <CursorPos X="56" Y="22"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
@@ -592,9 +587,8 @@
         <UnitName Value="fra_Documents"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="130"/>
+        <TopLine Value="133"/>
         <CursorPos X="27" Y="135"/>
-        <ComponentState Value="1"/>
         <UsageCount Value="201"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -724,16 +718,15 @@
       <Unit51>
         <Filename Value="C:\lazarus_trnk\lazarus\components\sparta\generics\source\generics.defaults.pas"/>
         <UnitName Value="Generics.Defaults"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="-1"/>
         <WindowIndex Value="1"/>
         <TopLine Value="510"/>
         <CursorPos X="156" Y="526"/>
         <UsageCount Value="107"/>
-        <Loaded Value="True"/>
       </Unit51>
       <Unit52>
         <Filename Value="..\..\Lazarus-CCR\components\jvcllaz\run\JvStdCtrls\JvButton.pas"/>
-        <EditorIndex Value="9"/>
+        <EditorIndex Value="10"/>
         <WindowIndex Value="1"/>
         <TopLine Value="27"/>
         <CursorPos X="34" Y="38"/>
@@ -743,7 +736,7 @@
       <Unit53>
         <Filename Value="..\..\Lazarus-CCR\components\thtmlport\package\htmlmisc.pas"/>
         <UnitName Value="HtmlMisc"/>
-        <EditorIndex Value="10"/>
+        <EditorIndex Value="9"/>
         <WindowIndex Value="1"/>
         <TopLine Value="12"/>
         <CursorPos X="100" Y="42"/>
