@@ -191,6 +191,8 @@ const
 
 resourcestring
   rsAllFilesFilter = 'Alle Dateien (*.*)|*.*';
+  rsHttpCloudHdDURL = 'http://cloud-hd.de/rnz/trauerportal.nsf/d06365e91d7e6f6'
+    +'5c125751f00740bb4';
 
 Implementation
 
