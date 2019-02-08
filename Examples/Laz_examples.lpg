@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="29">
+    <Targets Count="35">
       <Target0 FileName="FPC\addrbook.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="default" Compile="True"/>
@@ -130,6 +130,30 @@
         <Mode1 Name="Debug" Compile="True"/>
         <Mode2 Name="Release"/>
       </Target28>
+      <Target29 FileName="FPC\visualtest.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target29>
+      <Target30 FileName="FPC\oiexample.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target30>
+      <Target31 FileName="FPC\PascalStream1.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target31>
+      <Target32 FileName="FPC\browser.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target32>
+      <Target33 FileName="FPC\testpas2js1.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target33>
+      <Target34 FileName="FPC\testpas2js.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target34>
     </Targets>
   </ProjectGroup>
 </CONFIG>

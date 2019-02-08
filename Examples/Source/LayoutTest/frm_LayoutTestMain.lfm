@@ -1,0 +1,93 @@
+object Form1: TForm1
+  Left = 0
+  Height = 846
+  Top = 0
+  Width = 1073
+  Caption = 'Form1'
+  ClientHeight = 846
+  ClientWidth = 1073
+  DesignTimePPI = 168
+  OnCreate = FormCreate
+  OnResize = FormResize
+  Visible = False
+  object pnlClient: TPanel
+    Left = 0
+    Height = 670
+    Top = 88
+    Width = 636
+    Align = alClient
+    Caption = 'pnlClient'
+    TabOrder = 0
+  end
+  object pnlDetail: TPanel
+    Left = 645
+    Height = 670
+    Top = 88
+    Width = 428
+    Align = alRight
+    Caption = 'pnlDetail'
+    TabOrder = 1
+    OnClick = pnlDetailClick
+  end
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 88
+    Top = 758
+    Width = 1073
+    Align = alBottom
+    Caption = 'pnlBottom'
+    TabOrder = 2
+  end
+  object pnlTop: TPanel
+    Left = 0
+    Height = 88
+    Top = 0
+    Width = 1073
+    Align = alTop
+    Caption = 'pnlTop'
+    ClientHeight = 88
+    ClientWidth = 1073
+    TabOrder = 3
+    OnClick = pnlTopClick
+    object btnViewHorizontal: TSpeedButton
+      Left = 7
+      Height = 74
+      Top = 7
+      Width = 80
+      Action = ActViewHorizontal
+      Align = alLeft
+      BorderSpacing.Around = 6
+      OnClick = btnViewHorizontalClick
+    end
+    object btnViewVertical: TSpeedButton
+      Left = 93
+      Height = 74
+      Top = 7
+      Width = 80
+      Action = actViewVertical
+      Align = alLeft
+      BorderSpacing.Around = 6
+      OnClick = btnViewHorizontalClick
+    end
+  end
+  object Splitter1: TSplitter
+    Left = 636
+    Height = 670
+    Top = 88
+    Width = 9
+    Align = alRight
+    ResizeAnchor = akRight
+  end
+  object ActionList1: TActionList
+    left = 577
+    top = 345
+    object actViewVertical: TAction
+      Caption = 'actViewVertical'
+      OnExecute = actViewVerticalExecute
+    end
+    object ActViewHorizontal: TAction
+      Caption = 'ActViewHorizontal'
+      OnExecute = ActViewHorizontalExecute
+    end
+  end
+end
