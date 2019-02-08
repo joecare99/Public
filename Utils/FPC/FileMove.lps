@@ -3,7 +3,7 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="10"/>
-    <BuildModes Active="Default"/>
+    <BuildModes Active="Release"/>
     <Units Count="8">
       <Unit0>
         <Filename Value="FileMove.dpr"/>
@@ -29,8 +29,8 @@
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="3"/>
-        <TopLine Value="101"/>
-        <CursorPos X="68" Y="113"/>
+        <TopLine Value="110"/>
+        <CursorPos X="50" Y="125"/>
         <UsageCount Value="138"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -38,6 +38,7 @@
       <Unit3>
         <Filename Value="..\..\Daten\Source\Cmp_SEWFile.pas"/>
         <IsPartOfProject Value="True"/>
+        <TopLine Value="16"/>
         <CursorPos X="38" Y="19"/>
         <UsageCount Value="138"/>
         <Loaded Value="True"/>
