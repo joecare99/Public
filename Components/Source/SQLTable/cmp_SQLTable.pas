@@ -5,7 +5,7 @@ unit cmp_SQLTable;
 interface
 
 uses
-  Classes, SysUtils, sqldb;
+  Classes, SysUtils,db, sqldb;
 
 type
 
@@ -15,7 +15,11 @@ type
     property SchemaType;
     Property StatementType;
   private
+    FMasterFields: String;
+    FMasterSource: TDataSource;
     FTableName: string;
+    procedure SetMasterFields(AValue: String);
+    procedure SetMasterSource(AValue: TDataSource);
     procedure SetTableName(AValue: string);
   Published
     property MaxIndexesCount;
@@ -25,6 +29,7 @@ type
     Property AutoCalcFields;
     Property Filter;
     Property Filtered;
+    Property FilterOptions;
     Property AfterCancel;
     Property AfterClose;
     Property AfterDelete;
@@ -49,6 +54,8 @@ type
     Property OnPostError;
 
     //    property SchemaInfo default stNoSchema;
+    property MasterFields:String read FMasterFields write SetMasterFields;
+    property MasterSource:TDataSource read FMasterSource write SetMasterSource;
     property Database;
     property Transaction;
     property ReadOnly;
@@ -79,6 +86,18 @@ begin
   if FTableName=AValue then Exit;
   FTableName:=AValue;
   SQL.text := format('select * from %s;',[FTableName]);
+end;
+
+procedure TSQLTable.SetMasterFields(AValue: String);
+begin
+  if FMasterFields=AValue then Exit;
+  FMasterFields:=AValue;
+end;
+
+procedure TSQLTable.SetMasterSource(AValue: TDataSource);
+begin
+  if FMasterSource=AValue then Exit;
+  FMasterSource:=AValue;
 end;
 
 end.

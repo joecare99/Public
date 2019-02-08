@@ -1,0 +1,120 @@
+object Form1: TForm1
+  Left = 0
+  Height = 483
+  Top = 0
+  Width = 565
+  Caption = 'RichEdit'
+  ClientHeight = 483
+  ClientWidth = 565
+  OnCreate = FormCreate
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 27
+    Top = 456
+    Width = 565
+    Align = alBottom
+    BevelOuter = bvNone
+    ClientHeight = 27
+    ClientWidth = 565
+    TabOrder = 0
+    object btnLoad: TButton
+      Left = 8
+      Height = 25
+      Top = 2
+      Width = 75
+      Anchors = [akLeft, akBottom]
+      Caption = 'Load'
+      OnClick = btnLoadClick
+      TabOrder = 0
+    end
+    object btnClear: TButton
+      Left = 168
+      Height = 25
+      Top = 2
+      Width = 75
+      Anchors = [akLeft, akBottom]
+      Caption = 'Clear'
+      OnClick = btnClearClick
+      TabOrder = 1
+    end
+    object btnOk: TButton
+      Left = 376
+      Height = 25
+      Top = 2
+      Width = 75
+      Anchors = [akRight, akBottom]
+      Caption = 'OK'
+      ModalResult = 1
+      OnClick = btnOkClick
+      TabOrder = 2
+    end
+    object btnCancel: TButton
+      Left = 455
+      Height = 25
+      Top = 2
+      Width = 75
+      Anchors = [akRight, akBottom]
+      Caption = 'Cancel'
+      ModalResult = 2
+      OnClick = btnCancelClick
+      TabOrder = 3
+    end
+    object btnSave: TButton
+      AnchorSideRight.Side = asrBottom
+      Left = 88
+      Height = 25
+      Top = 2
+      Width = 75
+      Action = actFileSave
+      Anchors = [akLeft, akBottom]
+      OnClick = actFileSaveExecute
+      TabOrder = 4
+    end
+  end
+  inline RTFEditFrame1: TRTFEditFrame
+    Height = 456
+    Width = 565
+    Align = alClient
+    ClientHeight = 456
+    ClientWidth = 565
+    TabOrder = 1
+    Visible = True
+    inherited RichMemo1: TRichMemo
+      Height = 413
+      Width = 549
+      Lines.Strings = (
+        'RichMemo1'
+      )
+    end
+    inherited btnBold: TSpeedButton
+      GroupIndex = 2
+    end
+    inherited btnItalic: TSpeedButton
+      GroupIndex = 3
+    end
+    inherited btnUnderline: TSpeedButton
+      GroupIndex = 4
+    end
+  end
+  object RtfOpenDialog: TOpenDialog
+    Filter = 'Rich-text file (*.rtf)|*.rtf|Any file (*.*)|*.*'
+    left = 232
+    top = 448
+  end
+  object RtfSaveDialog: TSaveDialog
+    Filter = 'Rich-text file (*.rtf)|*.rtf'
+    Options = [ofOverwritePrompt, ofEnableSizing, ofViewDetail]
+    left = 272
+    top = 448
+  end
+  object ActionList1: TActionList
+    left = 312
+    top = 448
+    object actFileSave: TAction
+      Category = 'File'
+      Caption = 'Save'
+      OnExecute = actFileSaveExecute
+      OnUpdate = actFileSaveUpdate
+    end
+  end
+end
