@@ -6,24 +6,12 @@
 
 Interface
 Uses {$IFDEF MSWINDOWS} windows,  {$ELSE}   {$ENDIF}
-     {$IFDEF FPC} LCLIntf, LCLType,  {$ENDIF} Classes, Graphics; {Graphics MUST follow Windows}
+     {$IFDEF FPC} LCLIntf, LCLType,  {$ENDIF} Classes, Graphics, uTypes; {Graphics MUST follow Windows}
 
 { $DEFINE ShowEdgeLines}{!!! ONLY for debugging !!!}
 { $DEFINE test}{!!! ONLY for debugging !!!}
 
-Const RadCon = Pi / 180;
-  r045: Single = RadCon * 045;
-  r360: Single = RadCon * 360;
-  RockAnomaly: Single = 0.25; {zero = spheres}
-
-Type tPointSingle = Record
-    x, y: Single;
-  End;
-
-  tVector = Record
-    Direction, Distance: Single;
-  End;
-
+type
   tScreenObj = Class {ancestor of all objects on screen}
     Size: Single;
     Color:TColor;
@@ -40,10 +28,10 @@ Type tPointSingle = Record
 
   tSpaceObj = Class(tScreenObj) {ancestor of all moving space objects}
     ShowPos: Boolean;
-    Pos, Speed: tPointSingle;
+    Pos, Speed: TFloatPoint;
     Turned, TurnSpeed: Single;
-    Edge: Array Of tVector;
-    PointSingle: Array Of tPointSingle;
+    Edge: Array Of TVector;
+    PointSingle: Array Of TFloatPoint;
     Constructor Create;
     Procedure ProcessPoints;
     Procedure Draw;
@@ -76,15 +64,20 @@ Type tPointSingle = Record
     Procedure Update;
   End;
 
+  { tShot }
+
   tShot = Class(tSpark) {spark + altered size, speed & counter}
-    constructor Create(Sender: tPlayer; offset: tPointSingle);
+    Multi:integer;
+    constructor Create(Sender: tPlayer; offset: TFloatPoint);
     Procedure Update;
   End;
+
+  { tGame }
 
   tGame = Class
     Screen: tBitmap;
     Speed: Single; {should be 1}
-    ScreenFactor: tPointSingle;
+    ScreenFactor: TFloatPoint;
     focused, paused: Boolean;
     Player: tPlayer;
     Rock: Array Of tRock;
@@ -102,10 +95,12 @@ Type tPointSingle = Record
     Function TextHeight(TextSize: Single): Single;
     Procedure AddSparks(Sender: tSpaceObj);
     Procedure AddShot;
+    procedure PecitionShot;
     Procedure SplitRock(i: Integer);
     Procedure Beep(Count: Integer);
     Procedure PrepareIntro;
     Procedure NewGame;
+  private
   End;
 
   tMenuItem = Class
@@ -137,12 +132,6 @@ Const Edges: Array[Byte] Of String = ({$I CharEdges.txt});
 
 {Tools}
 
-Function PointSingle(x,y:single):tPointSingle;inline;
-begin
-  result.x:=x;
-  result.y:=y;
-end;
-
 Procedure Adjust(Var Value: Single); {get value into 0..1}
 
 Begin
@@ -160,7 +149,7 @@ Begin
   end;
 End;
 
-Function PointInPoly(Pos: tPointSingle; Point: Array Of tPointSingle): Boolean;
+Function PointInPoly(Pos: TFloatPoint; Point: Array Of TFloatPoint): Boolean;
 Var i, j: Integer;
 Begin
   Result := False;
@@ -178,11 +167,12 @@ Begin
     End;
 End;
 
-Function Collision(Pos: tPointSingle; TestObj: tSpaceObj): Boolean;
+Function Collision(Pos: TFloatPoint; TestObj: tSpaceObj): Boolean;
 Var x, y: Integer;
-  tmpPos: tPointSingle;
+  tmpPos: TFloatPoint;
 Begin
   Result := False;
+  if sqr(Pos.x - TestObj.Pos.x*Game.Screen.Width)+sqr(pos.y-TestObj.pos.y*Game.Screen.Height)< sqr(TestObj.Size*1.1) then
   If Settings.Box_ShowParts.Checked Then
     Begin
       For y := -1 To 1 Do {check in all 9 screens}
@@ -199,7 +189,49 @@ Begin
             End;
     End
   Else
-    Result := PointInPoly(Pos, TestObj.PointSingle);
+      Result := PointInPoly(Pos, TestObj.PointSingle);
+
+End;
+
+Function Collision2(TestObj1: tSpaceObj; TestObj: tSpaceObj): Boolean;
+Var x, y: Integer;
+  tmpPos: TFloatPoint;
+  lf: Single;
+Begin
+  Result := False;
+   If Settings.Box_ShowParts.Checked Then
+    Begin
+      For y := -1 To 1 Do {check in all 9 screens}
+        For x := -1 To 1 Do
+          if (abs(TestObj1.Pos.x-x*0.7-0.5) < 0.5) and
+              (abs(TestObj1.Pos.y-y*0.7-0.5) < 0.5) then
+          With Game.Screen Do
+            Begin
+              tmpPos.x := TestObj1.Pos.x* Width + (x * Width);
+              tmpPos.y := TestObj1.Pos.y* Height + (y * Height);
+              If PointInPoly(tmpPos, TestObj.PointSingle) Then
+                Begin
+                  Result := True;
+                  Exit; {break loop}
+                End;
+            End;
+    End
+  Else
+    if abs(TestObj1.Speed.x)+abs(TestObj1.Speed.y)* Game.Speed<2*testobj.Size/Game.Screen.height then
+      begin
+        if sqr(TestObj1.Pos.x - TestObj.Pos.x)+sqr(TestObj1.pos.y-TestObj.pos.y)< sqr(TestObj.Size/Game.Screen.Height) then
+          Begin
+            tmpPos.x := TestObj1.Pos.x* Game.Screen.Width ;
+            tmpPos.y := TestObj1.Pos.y* Game.Screen.Height ;
+            Result := PointInPoly(tmpPos, TestObj.PointSingle);
+          end;
+      end
+    else
+      begin
+        lf := TestObj1.pos.Diff(TestObj.pos).vMult(TestObj1.Speed);
+
+      end;
+
 End;
 
 {ScreenObj}
@@ -354,16 +386,14 @@ Begin
 End;
 
 Procedure tSpaceObj.Update;
-Var Movement: tPointSingle;
+Var Movement: TFloatPoint;
 Begin
   If Settings.Box_FirstP.Checked Then
     Begin {add player's speed}
       If (Self <> Game.Player) Then
-        With Game.Player.Speed Do
-          Begin
-            Movement.x := Speed.x - x;
-            Movement.y := Speed.y - y;
-          End;
+        Movement:=Speed.Diff(Game.Player.Speed)
+      else
+        Movement:=ZeroPnt;
     End
   Else
     Movement := Speed;
@@ -469,7 +499,7 @@ End;
 Procedure tPlayer.CheckCollision;
 Var i, j: Integer;
   broken: Boolean;
-  tmpPos: tPointSingle;
+  tmpPos: TFloatPoint;
 Begin
 {Exit;                            {remove bracket for <unbesiegbarkeit>}
   broken := False;
@@ -551,7 +581,7 @@ End;
 
 {Shot}
 
-Constructor tShot.Create(Sender:tPlayer;offset:tPointSingle);
+constructor tShot.Create(Sender: tPlayer; offset: TFloatPoint);
 Const div0125: Single = 1 / 0125;
 var
   s: Single;
@@ -562,31 +592,38 @@ Begin
   v:= (random -0.5)*div0125*sender.Levels*sender.Temp*0.0003;
   s := Sin((Sender.Turned +v)* r360);
   c := Cos((Sender.Turned +v)* r360);
+  Multi:=round(ln(sender.Levels+1))+1 ;
   pos.x := pos.x + c*offset.x - s*offset.y;
   pos.Y := pos.y + c*offset.y + s*offset.x;
   Speed.x := Sender.Speed.x + (s * div0125);
   Speed.y := Sender.Speed.y + (c * div0125);
-  Counter := 120;
+  Counter := 120+sender.Levels*3;
   Size := 1.5;
 End;
 
-Procedure tShot.Update;
+procedure tShot.Update;
 Var i: Integer;
-  tmpPos: tPointSingle;
+
 Begin
   Inherited;
-  tmpPos.x := Pos.x * Game.Screen.Width; {get pos. on screen and check the rocks}
-  tmpPos.y := Pos.y * Game.Screen.Height;
-  For i := 0 To High(Game.Rock) Do
-    If Collision(tmpPos, Game.Rock[i]) Then
+  i := 0;
+  while i <= High(Game.Rock) Do
+    If Collision2(self, Game.Rock[i]) Then
       Begin
         If (Length(Game.Rock) > 1) Or
           (Game.Rock[0].RockType <> 4) Then
           Game.AddSparks(Self);
         Game.SplitRock(i);
-        Counter := 0;
-        Break;
-      End;
+        dec(Multi);
+        if multi<=0 then
+          begin
+            Counter := 0;
+            Break;
+          end;
+      End
+    else
+      inc(i)
+
 End;
 
 {Game}
@@ -602,7 +639,7 @@ Begin
     Begin
       Width := Main.ClientWidth;
       Height := Main.ClientHeight;
-      {$ifdef FPC}
+      {$ifndef FPC}
       PixelFormat := pf15bit; {!! must be specified AFTER Width & Height !!}
       {$ELSE}
       PixelFormat := pf4bit; {!! must be specified AFTER Width & Height !!}
@@ -750,10 +787,74 @@ Begin
     End;
 End;
 
+var
+    lLastRock:array[0..3] of integer=(-1,-1,-1,-1);
+
+Procedure tGame.PecitionShot;
+
+var
+  lTestRockNr, lPickRock: Int64;
+  lTestRockDist, lPickRockDist, lAngle,lPreAngle: Single;
+  aShot: tShot;
+  i: Integer;
+  lpr: ValReal;
+  vPos: TFloatPoint;
+
+begin
+  // pick a Rock (Monte Carlo Method)
+  if length(Rock)>0 then
+    begin
+  lPickRock:= 0;
+  lPickRockDist := rock[lPickRock].Pos.Summ(rock[lPickRock].speed.sMult(5)).Diff(Player.pos).pLength;
+    for i := 1 to high(Rock) do
+      begin
+        lTestRockNr:= i;
+        lTestRockDist := rock[lTestRockNr].Pos.Summ(rock[lTestRockNr].speed.sMult(5)).Diff(Player.pos).pLength ;
+        if (lTestRockDist < lPickRockDist) and not ((lTestRockNr = lLastRock[0]) or (lTestRockNr = lLastRock[1]) or (lTestRockNr = lLastRock[2]) or (lTestRockNr = lLastRock[3])) then
+           begin
+             lPickRock := lTestRockNr;
+             lPickRockDist := lTestRockDist;
+           end;
+      end;
+  //Calc Angle
+  for i := 1 to high(lLastRock) do
+    lLastRock[i-1] := lLastRock[i];
+  lLastRock[ high(lLastRock)] := lPickRock;
+  lAngle:= Rock[lPickRock].Pos.diff(player.pos).Angle;
+  // asing(sin(α) / a)
+  lpr := sin(-lAngle+pi-Rock[lPickRock].speed.Diff(player.Speed).Angle)*Rock[lPickRock].speed.Diff(player.Speed).pLength*125;
+  if abs(lpr)>1.0 then
+    begin
+      // 2. nd try
+      vPos := vector(-player.speed.angle,1.4).ToPoint;
+      vPos.x := round(vpos.x);
+      vpos.y := round(vpos.y);
+      lAngle:= Rock[lPickRock].Pos.Summ(vpos).diff(player.pos).Angle;
+      lpr := sin(-lAngle+pi-Rock[lPickRock].speed.Diff(player.Speed).Angle)*Rock[lPickRock].speed.Diff(player.Speed).pLength*125;
+      if abs(lpr)>1.0 then
+      exit;
+    end;
+  With Player Do
+    Begin
+      Dec(Score , 10);
+      Temp := Temp + 10;
+    End;
+  lPreAngle:=arcsin(lPr);
+  // Shoot a single missle
+  aShot := tShot.Create(player,pointsingle(0,0));
+//  aShot.multi := 1;
+  aShot.Speed := Vector(-langle+lPreAngle,1.0/125).ToPoint.Summ(player.speed);
+  SetLength(Shot,Length(shot)+1);
+  Shot[high(Shot)]:=aShot;
+  Beep(4)
+    end
+end;
+
 Procedure tGame.AddShot;
 var
-  i: Integer;
+  i, lHighShot: Integer;
   ff: single;
+  cnt: Int64;
 Begin
   With Player Do
     Begin
@@ -766,15 +867,25 @@ Begin
         Exit;
       Temp := Temp + 100;
     End;
-  ff := 0.03/game.Player.Levels;
-  for i := 0 to game.Player.Levels-1 do
+  cnt := trunc(sqrt(game.Player.Levels*2))-1;
+  ff := 0.1/(cnt+1);
+  SetLength(Shot, Length(Shot)+cnt+1 ); {generic insert procedure}
+  lHighShot:=High(Shot);
+  for i := 0 to cnt div 3 do
     begin
-  SetLength(Shot, Length(Shot) + 3); {generic insert procedure}
-  Shot[High(Shot)-2] := tShot.Create(player,pointsingle(0,-0.01-I*ff));
-  Shot[High(Shot)-1] := tShot.Create(player,pointsingle(0.02-I*ff*0.65,0.02-I*ff));
-  Shot[High(Shot)] := tShot.Create(player,pointsingle(-0.02+I*ff*0.65,0.02-I*ff));
+      if (cnt mod 3<>1) or (i<cnt div 3) then
+        begin
+          Shot[lHighShot] := tShot.Create(player,pointsingle(0,-0.01-I*ff));
+          dec(lHighShot);
+        end;
+      if (cnt mod 3<>0) or (i<cnt div 3) then
+        begin
+         Shot[lHighShot] := tShot.Create(player,pointsingle(0.02-I*ff*0.65,0.02-I*ff));
+         Shot[lHighShot-1] := tShot.Create(player,pointsingle(-0.02+I*ff*0.65,0.02-I*ff));
+         dec(lHighShot,2);
+      end
     end;
-  Beep(1); {low beep}
+  Beep(5); {low beep}
 End;
 
 Procedure tGame.SplitRock(i: Integer);
@@ -783,7 +894,7 @@ Const div1000: Single = 1 / 1000;
 Var oldRock: tRock;
   Anomality: Single;
 Begin
-  Beep(2); {high beep}
+  Beep(30); {high beep}
   Inc(Player.Score, Rock[i].RockType * 12);
   oldRock := Rock[i];
   Rock[i] := Rock[High(Rock)];
@@ -821,18 +932,18 @@ End;
 Procedure tGame.Beep(Count: Integer);
   {more count = higher beep, increase with care!}
 Begin
-  If (Count = 0) Then
+  If (Count <= 0) Then
     Exit;
   If Settings.Box_Beep.Checked Then
     begin
     {$IFDEF MSWINDOWS}
-    MessageBeep($FFFFFFFF);
+    windows.Beep(count*20,30);
     {$ELSE}
     SysUtils.Beep;
     {$ENDIF}
 
     end;
-  Beep(Count - 1); {Overkill? YEAH!}
+//  Beep(Count - 2); {Overkill? YEAH!}
 End;
 
 Procedure tGame.PrepareIntro;

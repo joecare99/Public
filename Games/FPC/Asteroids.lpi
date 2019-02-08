@@ -16,6 +16,7 @@
       <ResourceType Value="res"/>
       <Icon Value="0"/>
     </General>
+    <LazDoc Paths="..\FPDoc"/>
     <i18n>
       <EnableI18N Value="True"/>
       <OutDir Value="..\Language"/>
@@ -41,6 +42,7 @@
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
             <Checks>
               <IOChecks Value="True"/>
               <RangeChecks Value="True"/>
@@ -54,6 +56,7 @@
               <UseHeaptrc Value="True"/>
               <UseExternalDbgSyms Value="True"/>
             </Debugging>
+            <LinkSmart Value="True"/>
             <Options>
               <Win32>
                 <GraphicApplication Value="True"/>
@@ -76,11 +79,13 @@
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
               <AllowLabel Value="False"/>
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
+            <RelocatableUnit Value="True"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -112,52 +117,52 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="10">
+    <Units Count="11">
       <Unit0>
         <Filename Value="Asteroids.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\source\asteroids\uGame.pas"/>
+        <Filename Value="..\Source\asteroids\uGame.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\source\asteroids\uMain.pas"/>
+        <Filename Value="..\Source\asteroids\uMain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Main"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit2>
       <Unit3>
-        <Filename Value="..\source\asteroids\uSettings.pas"/>
+        <Filename Value="..\Source\asteroids\uSettings.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Settings"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit3>
       <Unit4>
-        <Filename Value="..\source\asteroids\uKeys.pas"/>
+        <Filename Value="..\Source\asteroids\uKeys.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Keys"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit4>
       <Unit5>
-        <Filename Value="..\source\asteroids\uInfo.pas"/>
+        <Filename Value="..\Source\asteroids\uInfo.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Info"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit5>
       <Unit6>
-        <Filename Value="..\source\asteroids\uDlg_EnterName.pas"/>
+        <Filename Value="..\Source\asteroids\uDlg_EnterName.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Dlg_EnterName"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit6>
       <Unit7>
-        <Filename Value="..\source\asteroids\uHighscores.pas"/>
+        <Filename Value="..\Source\asteroids\uHighscores.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Highscores"/>
         <HasResources Value="True"/>
@@ -171,6 +176,10 @@
         <Filename Value="..\source\asteroids\CharEdges.txt"/>
         <IsPartOfProject Value="True"/>
       </Unit9>
+      <Unit10>
+        <Filename Value="..\Source\asteroids\uTypes.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -191,6 +200,10 @@
     </Parsing>
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>
+      <RelocatableUnit Value="True"/>
+      <Optimizations>
+        <OptimizationLevel Value="2"/>
+      </Optimizations>
     </CodeGeneration>
     <Linking>
       <LinkSmart Value="True"/>

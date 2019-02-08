@@ -20,6 +20,7 @@ object Info: TInfo
   OnPaint = Form_Paint
   OnShow = Form_Show
   Position = poScreenCenter
+  LCLVersion = '1.8.4.0'
   Visible = False
   object Timer: TTimer
     Enabled = False

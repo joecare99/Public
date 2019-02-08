@@ -9,6 +9,7 @@ uses
   {$IFDEF FPC}
   Interfaces,
   {$ENDIF}
+  uTypes in '..\source\asteroids\uTypes.pas',
   uGame in '..\source\asteroids\uGame.pas',
   uMain in '..\source\asteroids\uMain.pas' {Main},
   uSettings in '..\source\asteroids\uSettings.pas' {Settings},

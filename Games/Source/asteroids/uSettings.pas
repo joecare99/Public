@@ -64,7 +64,7 @@ Uses
   LCLIntf, LCLType,
   {$ELSE}windows,
   {$EndIF}
-  Graphics, IniFiles, SysUtils, uGame, uMain, uKeys, uInfo;
+  Graphics, IniFiles, SysUtils, uTypes ,uGame, uMain, uKeys, uInfo;
 
 var
   FDataDir, FSettingsDir: string;
@@ -237,7 +237,7 @@ Begin
 End;
 
 Procedure tSettings.Click_FirstP(Sender: tObject);
-Var tmpPos: tPointSingle;
+Var tmpPos: TFloatPoint;
   i: Integer;
 Begin
   If (Game = Nil) Then

@@ -20,7 +20,7 @@ object Settings: TSettings
   OnKeyPress = Form_KeyPress
   OnShow = Form_Show
   Position = poScreenCenter
-  LCLVersion = '1.8.0.2'
+  LCLVersion = '1.8.4.0'
   Visible = False
   object LabelBlink: TLabel
     Left = 128

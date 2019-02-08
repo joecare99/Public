@@ -172,9 +172,11 @@ Begin
                   Player.Accelerating := True;
                 If (Key = KeyFire) Then
                   AddShot;
+                If (Key = VK_P) Then
+                  PecitionShot;
                 If Player.Accelerating and
                   (player.Temp<300) and
-                  ((abs(player.speed.x)+abs(player.speed.y)>0.001)) and
+                  ((abs(player.speed.x)+abs(player.speed.y)>0.01)) and
                   (player.BlinkCounter<50.0) then
                   AddShot;
               End;

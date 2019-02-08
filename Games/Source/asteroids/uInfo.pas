@@ -183,7 +183,6 @@ end;
 procedure tInfo.RenderText;
 var
   i, x, y: integer;
-  enc: boolean;
 begin
   if rendered then
     Exit;

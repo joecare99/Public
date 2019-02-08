@@ -25,6 +25,7 @@ object Main: TMain
   OnPaint = Form_Paint
   OnShow = Form_Show
   Position = poScreenCenter
+  LCLVersion = '1.8.4.0'
   Visible = False
   object Timer_Start: TTimer
     Enabled = False
