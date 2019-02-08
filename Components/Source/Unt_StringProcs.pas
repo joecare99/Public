@@ -1234,6 +1234,9 @@ function LowCase(s: String): String;
 
 Begin
   result := LowerCase(s);
+  result:=StringReplace(Result,'Ä','ä',[rfReplaceAll]);
+  result:=StringReplace(Result,'Ö','ö',[rfReplaceAll]);
+  result:=StringReplace(Result,'Ü',UmlUEkl,[rfReplaceAll]);
 End;
 //-------------------------------------------------------------
 
