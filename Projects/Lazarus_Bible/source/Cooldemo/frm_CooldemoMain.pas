@@ -13,8 +13,8 @@ uses
   LCLIntf, LCLType,
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ComCtrls, ToolWin, StdCtrls, Buttons, ImgList, ExtCtrls, System.ImageList
-      {$IFDEF FPC}, BGRASpriteAnimation{$endif};
+  ComCtrls, ToolWin, StdCtrls, Buttons, ImgList, ExtCtrls
+      {$IFDEF FPC}, BGRASpriteAnimation{$ELSE}, ImageList {$endif};
 
 type
 
@@ -45,6 +45,8 @@ type
     procedure BitBtn1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    Procedure Panel1Click(Sender: TObject);
+    procedure ToolBar1Paint(Sender: TObject);
     procedure ToolButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -135,6 +137,16 @@ procedure TMainForm.FormCreate(Sender: TObject);
    Image1.Picture.Bitmap.Assign(CoolBar1.Bitmap);
    ToolBar1.ControlStyle:=ToolBar1.ControlStyle-[csOpaque]+[csParentBackground];
     {$ENDIF}
+end;
+
+procedure TMainForm.Panel1Click(Sender: TObject);
+begin
+
+end;
+
+procedure TMainForm.ToolBar1Paint(Sender: TObject);
+begin
+
 end;
 
 procedure TMainForm.FormShow(Sender: TObject);

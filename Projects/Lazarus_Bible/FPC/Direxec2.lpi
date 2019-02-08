@@ -11,16 +11,12 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="CoolDemo"/>
+      <Title Value="Direxec2"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
-      <Resources Count="1">
-        <Resource_0 FileName="..\Data\COOL.gif" Type="RCDATA" ResourceName="COOL"/>
-      </Resources>
     </General>
     <i18n>
-      <EnableI18N Value="True"/>
-      <OutDir Value="..\Language"/>
+      <EnableI18N LFM="False"/>
     </i18n>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
@@ -32,15 +28,14 @@
             <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="..\..\include;..\source\$NameOnly($(ProjFile));$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source;..\source\$NameOnly($(ProjFile))"/>
+            <IncludeFiles Value="..\source;$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\source;..\source\Direxec"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
               <SyntaxMode Value="Delphi"/>
               <IncludeAssertionCode Value="True"/>
-              <AllowLabel Value="False"/>
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
@@ -63,9 +58,6 @@
               </Win32>
             </Options>
           </Linking>
-          <Other>
-            <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-          </Other>
         </CompilerOptions>
       </Item2>
       <Item3 Name="Release">
@@ -76,14 +68,13 @@
             <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="..\..\include;..\source\$NameOnly($(ProjFile));$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source;..\source\$NameOnly($(ProjFile))"/>
+            <IncludeFiles Value="..\source;$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\source;..\source\Direxec"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
               <SyntaxMode Value="Delphi"/>
-              <AllowLabel Value="False"/>
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
@@ -105,9 +96,6 @@
               </Win32>
             </Options>
           </Linking>
-          <Other>
-            <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-          </Other>
         </CompilerOptions>
       </Item3>
     </BuildModes>
@@ -120,21 +108,18 @@
         <Mode0 Name="default"/>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="2">
+    <RequiredPackages Count="1">
       <Item1>
-        <PackageName Value="bgracontrols"/>
-      </Item1>
-      <Item2>
         <PackageName Value="LCL"/>
-      </Item2>
+      </Item1>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>
-        <Filename Value="CoolDemo.dpr"/>
+        <Filename Value="Direxec2.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\source\Cooldemo\frm_CooldemoMain.pas"/>
+        <Filename Value="..\source\DIREXEC\Frm_DirExecMain2.PAS"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
@@ -149,14 +134,13 @@
       <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="..\..\include;..\source\$NameOnly($(ProjFile))"/>
-      <OtherUnitFiles Value="..\Source;..\source\$NameOnly($(ProjFile))"/>
+      <IncludeFiles Value="..\source;$(ProjOutDir)"/>
+      <OtherUnitFiles Value="..\source;..\source\Direxec"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
         <SyntaxMode Value="Delphi"/>
-        <AllowLabel Value="False"/>
       </SyntaxOptions>
     </Parsing>
     <CodeGeneration>
@@ -170,9 +154,6 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">

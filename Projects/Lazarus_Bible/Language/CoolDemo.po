@@ -39,6 +39,10 @@ msgctxt "TMAINFORM.BUTTON1.CAPTION"
 msgid "Stop Animation"
 msgstr ""
 
+#: tmainform.caption
+msgid "CoolBar Demonstration"
+msgstr ""
+
 #: tmainform.coolbar1.bands[1].text
 msgid "Date Selector"
 msgstr ""

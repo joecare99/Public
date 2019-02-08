@@ -1,0 +1,104 @@
+object MainForm: TMainForm
+  Left = 219
+  Height = 405
+  Top = 163
+  Width = 599
+  Caption = 'Directory: Executables'
+  ClientHeight = 405
+  ClientWidth = 599
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 50
+    Top = 355
+    Width = 599
+    Align = alBottom
+    ClientHeight = 50
+    ClientWidth = 599
+    TabOrder = 0
+    object btnCancel: TBitBtn
+      Left = 226
+      Height = 42
+      Top = 4
+      Width = 121
+      Align = alRight
+      BorderSpacing.Around = 3
+      Cancel = True
+      DefaultCaption = True
+      Kind = bkCancel
+      ModalResult = 2
+      NumGlyphs = 2
+      OnClick = btnCancelClick
+      TabOrder = 0
+    end
+    object btnClose: TBitBtn
+      Left = 474
+      Height = 42
+      Top = 4
+      Width = 121
+      Align = alRight
+      BorderSpacing.Around = 3
+      Kind = bkClose
+      TabOrder = 1
+    end
+    object btnRun1: TBitBtn
+      Left = 350
+      Height = 42
+      Top = 4
+      Width = 121
+      Align = alRight
+      BorderSpacing.Around = 3
+      Caption = '&Run...'
+      Glyph.Data = {
+        76010000424D7601000000000000760000002800000020000000100000000100
+        0400000000000001000000000000000000001000000010000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF0033BBBBBBBBBB
+        BB33337777777777777F33BB00BBBBBBBB33337F77333333F37F33BB0BBBBBB0
+        BB33337F73F33337FF7F33BBB0BBBB000B33337F37FF3377737F33BBB00BB00B
+        BB33337F377F3773337F33BBBB0B00BBBB33337F337F7733337F33BBBB000BBB
+        BB33337F33777F33337F33EEEE000EEEEE33337F3F777FFF337F33EE0E80000E
+        EE33337F73F77773337F33EEE0800EEEEE33337F37377F33337F33EEEE000EEE
+        EE33337F33777F33337F33EEEEE00EEEEE33337F33377FF3337F33EEEEEE00EE
+        EE33337F333377F3337F33EEEEEE00EEEE33337F33337733337F33EEEEEEEEEE
+        EE33337FFFFFFFFFFF7F33EEEEEEEEEEEE333377777777777773
+      }
+      NumGlyphs = 2
+      OnClick = btnRunClick
+      TabOrder = 2
+    end
+  end
+  object Memo1: TMemo
+    Left = 3
+    Height = 349
+    Top = 3
+    Width = 593
+    Align = alClient
+    BorderSpacing.Around = 3
+    Lines.Strings = (
+      'Memo1'
+    )
+    TabOrder = 1
+  end
+  object AsyncProcess1: TAsyncProcess
+    Active = False
+    Options = []
+    Priority = ppNormal
+    StartupOptions = []
+    ShowWindow = swoNone
+    WindowColumns = 0
+    WindowHeight = 0
+    WindowLeft = 0
+    WindowRows = 0
+    WindowTop = 0
+    WindowWidth = 0
+    FillAttribute = 0
+    OnReadData = AsyncProcess1ReadData
+    OnTerminate = AsyncProcess1Terminate
+    left = 240
+    top = 172
+  end
+end
