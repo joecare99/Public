@@ -5,7 +5,7 @@ unit uScaleDPI;
 interface
 
 uses
-  Forms, Controls, Graphics, ComCtrls, contnrs;
+  Forms, Controls, Graphics, ComCtrls;
 
 Procedure AutoAdjustAllForms;
 procedure HighDPI(FromDPI: Integer);
@@ -24,7 +24,7 @@ begin
     if FromDPI<>-1 then
     ScaleDPI(Screen.Forms[i],FromDPI)
     else
-    {$IF (FPC_FULLVERSION<30100)}
+    {$IF (FPC_FULLVERSION<30002)}
     ScaleDPI(Screen.Forms[i],Screen.Forms[i].DesignTimeDPI);
     {$ELSE}
     ScaleDPI(Screen.Forms[i],Screen.Forms[i].DesignTimePPI);
@@ -133,7 +133,7 @@ var
   I: Integer;
 begin
   for I:= 0 to Screen.FormCount -1 do
-      {$IF (FPC_FULLVERSION<30100)}
+      {$IF (FPC_FULLVERSION<30003)}
     Screen.Forms[i].AutoAdjustLayout(
       lapAutoAdjustForDPI, Screen.Forms[i].DesignTimeDPI, Screen.PixelsPerInch,
       Screen.Forms[i].Width, ScaleX(Screen.Forms[i].Width, Screen.Forms[i].DesignTimeDPI));

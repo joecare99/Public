@@ -35,6 +35,31 @@ type
     {$endif}
   end;
 
+function DownloadFile(const lURL: string; const lFilename: string; Const lFileDate: TDateTime ): boolean;
+
 implementation
+
+uses dateutils;
+
+function DownloadFile(const lURL: string; const lFilename: string; Const lFileDate: TDateTime ): boolean;
+var
+  mStrm: TMemoryStream;
+  VisualHTTPClient1: TVisualHTTPClient;
+begin
+    Result := false;
+    try
+    mStrm := TMemoryStream.Create;
+    VisualHTTPClient1:=TVisualHTTPClient.Create(nil);
+    VisualHTTPClient1.Get(lURL, mStrm);
+    mStrm.Seek(0, soBeginning);
+    mStrm.SaveToFile(lFilename);
+    FilesetDate(lFilename, DateTimeToDosDateTime( lFileDate ));
+    Result := True;
+  finally
+    FreeAndNil(VisualHTTPClient1);
+    FreeAndNil(mStrm)
+  end;
+end;
+
 
 end.
