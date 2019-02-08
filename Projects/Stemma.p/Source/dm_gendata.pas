@@ -419,9 +419,7 @@ uses FMUtils, StrUtils, AnchorDocking, cls_Translation, LConvEncoding, dateutils
 {$IFDEF FPC}
 {$R *.lfm}
 {$ELSE}
-
 {$R *.dfm}
-
 {$ENDIF}
 
 constructor TdmGenData.Create(AOwner: TComponent);

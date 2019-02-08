@@ -3,7 +3,8 @@ program fpcStemmaTest;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, fpcunittestrunner, testStemma,dm_GenData, frm_ConnectDB;
+  Interfaces, Forms, GuiTestRunner, fpcunittestrunner, anchordockpkg,
+  testStemma, dm_GenData, frm_ConnectDB;
 
 {$R *.res}
 
