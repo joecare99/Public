@@ -2,14 +2,13 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <BuildModes Active="Release"/>
-    <Units Count="2">
+    <Units Count="4">
       <Unit0>
         <Filename Value="Actions.dpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <CursorPos X="21" Y="19"/>
+        <CursorPos X="16" Y="28"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -28,8 +27,26 @@
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="1400"/>
+        <CursorPos X="15" Y="1446"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\lazarus\lcl\include\application.inc"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="1410"/>
+        <CursorPos X="20" Y="1424"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit3>
     </Units>
-    <JumpHistory Count="8" HistoryIndex="7">
+    <JumpHistory Count="12" HistoryIndex="11">
       <Position1>
         <Filename Value="..\source\Actions\Frm_ActionsMain.pas"/>
         <Caret Line="6" Column="38"/>
@@ -62,6 +79,26 @@
         <Filename Value="..\source\Actions\Frm_ActionsMain.pas"/>
         <Caret Line="77" Column="3" TopLine="28"/>
       </Position8>
+      <Position9>
+        <Filename Value="Actions.dpr"/>
+        <Caret Line="28" Column="16"/>
+      </Position9>
+      <Position10>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <Caret Line="1508" Column="15" TopLine="1462"/>
+      </Position10>
+      <Position11>
+        <Filename Value="C:\lazarus\lcl\include\application.inc"/>
+        <Caret Line="1407" Column="24" TopLine="1400"/>
+      </Position11>
+      <Position12>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <Caret Line="1446" Column="15" TopLine="1400"/>
+      </Position12>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>

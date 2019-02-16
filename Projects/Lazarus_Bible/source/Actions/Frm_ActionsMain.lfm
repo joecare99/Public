@@ -5,7 +5,7 @@ object FrmActionsMain: TFrmActionsMain
   Width = 352
   ActiveControl = edtEnterQuit
   Caption = 'Action Lists'
-  ClientHeight = 160
+  ClientHeight = 140
   ClientWidth = 352
   Color = clBtnFace
   Font.Color = clWindowText
@@ -13,11 +13,10 @@ object FrmActionsMain: TFrmActionsMain
   Font.Name = 'MS Sans Serif'
   Menu = mnuMain
   OnCreate = FormCreate
-  LCLVersion = '1.6.4.0'
-  Visible = False
+  LCLVersion = '2.0.0.4'
   object lblHint: TLabel
     Left = 0
-    Height = 26
+    Height = 46
     Top = 104
     Width = 352
     Align = alBottom
@@ -48,7 +47,6 @@ object FrmActionsMain: TFrmActionsMain
     Top = 16
     Width = 75
     Action = actDemoExit
-    DefaultCaption = True
     Glyph.Data = {
       36040000424D3604000000000000360000002800000010000000100000000100
       2000000000000004000064000000640000000000000000000000595D5B85686B

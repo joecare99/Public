@@ -1,0 +1,23 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tfrmactionsmain.actdemoexit.caption
+msgid "E&xit"
+msgstr ""
+
+#: tfrmactionsmain.caption
+msgid "Action Lists"
+msgstr ""
+
+#: tfrmactionsmain.edtenterquit.hint
+msgid "To exit enter 'quit'"
+msgstr ""
+
+#: tfrmactionsmain.lblhint.caption
+msgid "Enter Quit above to enable actions"
+msgstr ""
+
+#: tfrmactionsmain.mnidemo.caption
+msgid "Demo"
+msgstr ""
+

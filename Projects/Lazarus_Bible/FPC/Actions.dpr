@@ -13,7 +13,7 @@ uses
   Forms,
   Frm_ActionsMain in '..\source\Actions\Frm_ActionsMain.pas' {Form1};
 
-{$IFDEF FPC}
+{$IFNDEF FPC}
 {$E EXE}
 {$ENDIF}
 

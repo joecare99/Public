@@ -3,7 +3,7 @@
   <ProjectSession>
     <PathDelim Value="\"/>
     <Version Value="11"/>
-    <BuildModes Active="Default"/>
+    <BuildModes Active="Debug"/>
     <Units Count="3">
       <Unit0>
         <Filename Value="fpcTestAboutEx.lpr"/>
