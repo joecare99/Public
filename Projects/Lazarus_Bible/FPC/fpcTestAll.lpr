@@ -4,7 +4,7 @@ program fpcTestAll;
 
 uses
   Interfaces, Forms, GuiTestRunner, lazmouseandkeyinput, tst_AboutEx,
-  tst_Actions, tst_Something;
+  tst_Actions,  tst_AddPage, tst_BarChart, tst_BarTest2,tst_Something;
 
 {$R *.res}
 

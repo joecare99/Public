@@ -4,11 +4,12 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="7">
+    <Units Count="9">
       <Unit0>
         <Filename Value="fpcTestAll.lpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="29" Y="7"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="70" Y="7"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -31,7 +32,6 @@
       <Unit3>
         <Filename Value="..\source\tests\tst_Actions.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
         <TopLine Value="6"/>
         <CursorPos X="6" Y="27"/>
@@ -68,6 +68,26 @@
         <CursorPos X="-1" Y="-1"/>
         <UsageCount Value="20"/>
       </Unit6>
+      <Unit7>
+        <Filename Value="..\source\Addpage\Frm_AddpageMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\source\Barchart\Frm_BartestMain2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit8>
     </Units>
     <JumpHistory Count="2" HistoryIndex="1">
       <Position1>

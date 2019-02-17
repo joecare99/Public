@@ -22,21 +22,24 @@
       <FormatVersion Value="2"/>
       <Modes Count="0"/>
     </RunParams>
-    <RequiredPackages Count="4">
+    <RequiredPackages Count="5">
       <Item1>
-        <PackageName Value="lazmouseandkeyinput"/>
+        <PackageName Value="BarChartp"/>
       </Item1>
       <Item2>
-        <PackageName Value="fpcunittestrunner"/>
+        <PackageName Value="lazmouseandkeyinput"/>
       </Item2>
       <Item3>
-        <PackageName Value="LCL"/>
+        <PackageName Value="fpcunittestrunner"/>
       </Item3>
       <Item4>
-        <PackageName Value="FCL"/>
+        <PackageName Value="LCL"/>
       </Item4>
+      <Item5>
+        <PackageName Value="FCL"/>
+      </Item5>
     </RequiredPackages>
-    <Units Count="7">
+    <Units Count="9">
       <Unit0>
         <Filename Value="fpcTestAll.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -68,6 +71,16 @@
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
       </Unit6>
+      <Unit7>
+        <Filename Value="..\source\Addpage\Frm_AddpageMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\source\Barchart\Frm_BartestMain2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+      </Unit8>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -78,7 +91,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\source\tests;..\source\AboutEx;..\source\Actions"/>
+      <OtherUnitFiles Value="..\source\tests;..\source\AboutEx;..\source\Actions;..\source\Addpage;..\source\Barchart"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>
