@@ -16,6 +16,9 @@ uses
   Forms, Dialogs, Menus, ExtCtrls, ExtDlgs;
 
 type
+
+  { TfrmBitmapViewerMain }
+
   TfrmBitmapViewerMain = class(TForm)
     BitImage: TImage;
     MainMenu1: TMainMenu;
@@ -29,6 +32,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    PRocedure LoadImage(aFilename:String);
   end;
 
 var
@@ -46,14 +50,23 @@ procedure TfrmBitmapViewerMain.Open1Click(Sender: TObject);
 begin
   if OpenPictureDialog1.Execute then
   begin
-    BitImage.Picture.LoadFromFile(OpenPictureDialog1.Filename);
-    Caption := OpenPictureDialog1.Filename;
+    LoadImage(OpenPictureDialog1.FileName);
   end;
 end;
 
 procedure TfrmBitmapViewerMain.Exit1Click(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TfrmBitmapViewerMain.LoadImage(aFilename: String);
+begin
+  try
+    Caption := aFilename;
+    BitImage.Picture.LoadFromFile(aFilename);
+  Except
+    Caption := 'Error: '+aFilename;
+  end;
 end;
 
 end.

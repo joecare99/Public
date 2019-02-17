@@ -1,29 +1,30 @@
 object frmBitmapViewerMain: TfrmBitmapViewerMain
-  Left = 276
-  Top = 361
+  Left = -11
+  Height = 450
+  Top = -11
+  Width = 661
   Caption = 'Bitmap Viewer'
-  ClientHeight = 263
-  ClientWidth = 426
+  ClientHeight = 420
+  ClientWidth = 661
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
+  DesignTimePPI = 144
   Font.Color = clWindowText
-  Font.Height = -13
+  Font.Height = -20
   Font.Name = 'System'
-  Font.Style = []
   Menu = MainMenu1
+  LCLVersion = '2.0.0.4'
   WindowState = wsMaximized
-  PixelsPerInch = 96
   object BitImage: TImage
     Left = 0
+    Height = 766
     Top = 0
-    Width = 426
-    Height = 263
+    Width = 926
     Align = alClient
     Stretch = True
   end
   object MainMenu1: TMainMenu
-    Left = 248
-    Top = 16
+    left = 372
+    top = 24
     object File1: TMenuItem
       Caption = '&File'
       object Open1: TMenuItem
@@ -37,7 +38,7 @@ object frmBitmapViewerMain: TfrmBitmapViewerMain
     end
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    Left = 280
-    Top = 16
+    left = 420
+    top = 24
   end
-end
+end
