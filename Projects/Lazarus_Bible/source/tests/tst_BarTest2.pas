@@ -26,6 +26,7 @@ type
 implementation
 
 uses Forms;
+
 procedure TTestBarTest2.SetUp;
 begin
   if not assigned(frmBarTestMain2) then
