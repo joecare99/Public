@@ -2,7 +2,7 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <BuildModes Active="Default"/>
     <Units Count="7">
       <Unit0>
@@ -20,8 +20,8 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <CursorPos X="10" Y="14"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="64" Y="28"/>
         <UsageCount Value="39"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -31,9 +31,9 @@
         <Filename Value="..\source\Animator\CmpAnimator.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="cmpAnimator"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="130"/>
-        <CursorPos X="59" Y="141"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="134"/>
+        <CursorPos X="27" Y="157"/>
         <UsageCount Value="39"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -67,7 +67,7 @@
         <UsageCount Value="18"/>
       </Unit6>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="..\source\Animator\CmpAnimator.pas"/>
         <Caret Line="8" Column="29"/>
@@ -184,6 +184,14 @@
         <Filename Value="..\source\Animator\CmpAnimator.pas"/>
         <Caret Line="9" Column="14"/>
       </Position29>
+      <Position30>
+        <Filename Value="..\source\Animator\Frm_AnimatorMain.pas"/>
+        <Caret Line="28" Column="64"/>
+      </Position30>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>
