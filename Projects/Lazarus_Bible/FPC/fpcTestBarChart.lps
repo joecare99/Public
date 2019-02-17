@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
+    <Units Count="6">
+      <Unit0>
+        <Filename Value="fpcTestBarChart.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\tests\tst_BarChart.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="26"/>
+        <CursorPos X="32" Y="42"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\tests\tst_AboutEx.pas"/>
+        <IsVisibleTab Value="True"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="27"/>
+        <CursorPos Y="54"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\source\Barchart\Frm_BartestMain2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\source\Barchart\BarChart.pas"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="17" Y="51"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="C:\lazarus\lcl\controls.pp"/>
+        <UnitName Value="Controls"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="131"/>
+        <CursorPos X="3" Y="159"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit5>
+    </Units>
+    <JumpHistory Count="8" HistoryIndex="7">
+      <Position1>
+        <Filename Value="..\source\tests\tst_BarChart.pas"/>
+        <Caret Line="16" Column="16"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\tests\tst_BarChart.pas"/>
+        <Caret Line="40" Column="22"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\tests\tst_BarChart.pas"/>
+        <Caret Line="39" Column="11" TopLine="11"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\Barchart\BarChart.pas"/>
+        <Caret Line="51" Column="17"/>
+      </Position4>
+      <Position5>
+        <Filename Value="C:\lazarus\lcl\controls.pp"/>
+        <Caret Line="1689" Column="25" TopLine="1662"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\tests\tst_BarChart.pas"/>
+        <Caret Line="40" Column="20" TopLine="11"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\tests\tst_BarChart.pas"/>
+        <Caret Line="106" Column="3" TopLine="85"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\tests\tst_BarChart.pas"/>
+        <Caret Line="14" Column="16"/>
+      </Position8>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>
