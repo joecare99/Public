@@ -14,9 +14,9 @@ uses
 
 type
 
-  { TMainForm }
+  { TfrmAddPageMain }
 
-  TMainForm = class(TForm)
+  TfrmAddPageMain = class(TForm)
     CheckBox1: TCheckBox;
     TabbedNotebook1: TPageControl;
     AddPageButton: TButton;
@@ -32,7 +32,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmAddPageMain: TfrmAddPageMain;
 
 implementation
 
@@ -43,7 +43,7 @@ implementation
 {$ENDIF}
 
 {- Insert new page into TabbedNotebook }
-procedure TMainForm.AddPageButtonClick(Sender: TObject);
+procedure TfrmAddPageMain.AddPageButtonClick(Sender: TObject);
 {$IFNDEF FPC}
 var nTabSheet:TTabsheet;
 {$ENDIF}
@@ -67,7 +67,7 @@ begin
 end;
 
 {- Insert new control into current page }
-procedure TMainForm.AddControlButtonClick(Sender: TObject);
+procedure TfrmAddPageMain.AddControlButtonClick(Sender: TObject);
 var
   L: TListBox;
   P: TWinControl;
