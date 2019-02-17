@@ -1,0 +1,119 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="4">
+      <Unit0>
+        <Filename Value="fpcTestBitView.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\tests\tst_BitView.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="58"/>
+        <CursorPos X="38" Y="104"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\Bitview\Frm_BitViewMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmBitmapViewerMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <TopLine Value="18"/>
+        <CursorPos Y="68"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\source\tests\tst_BarTest2.pas"/>
+        <IsVisibleTab Value="True"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="35"/>
+        <CursorPos Y="68"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit3>
+    </Units>
+    <General>
+      <ActiveWindowIndexAtStart Value="1"/>
+    </General>
+    <JumpHistory Count="15" HistoryIndex="14">
+      <Position1>
+        <Filename Value="..\source\tests\tst_BitView.pas"/>
+        <Caret Line="41" Column="17" TopLine="7"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\tests\tst_BitView.pas"/>
+        <Caret Line="49" Column="77" TopLine="12"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\tests\tst_BitView.pas"/>
+        <Caret Line="22" Column="26" TopLine="12"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\tests\tst_BitView.pas"/>
+        <Caret Line="84" Column="42" TopLine="37"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\tests\tst_BitView.pas"/>
+        <Caret Line="91" Column="52" TopLine="44"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\Bitview\Frm_BitViewMAIN.pas"/>
+        <Caret Line="35" Column="11"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\Bitview\Frm_BitViewMAIN.pas"/>
+        <Caret Line="51" Column="43" TopLine="12"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\tests\tst_BitView.pas"/>
+        <Caret Line="8" Column="63"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\tests\tst_BitView.pas"/>
+        <Caret Line="42"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\source\tests\tst_BitView.pas"/>
+        <Caret Line="34"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\source\tests\tst_BitView.pas"/>
+        <Caret Line="42" Column="33"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\source\Bitview\Frm_BitViewMAIN.pas"/>
+        <Caret Line="63" TopLine="14"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\source\Bitview\Frm_BitViewMAIN.pas"/>
+        <Caret Line="64" TopLine="14"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\source\tests\tst_BitView.pas"/>
+        <Caret Line="44" Column="13"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\source\Bitview\Frm_BitViewMAIN.pas"/>
+        <Caret Line="59" Column="25" TopLine="16"/>
+      </Position15>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode=""/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>
