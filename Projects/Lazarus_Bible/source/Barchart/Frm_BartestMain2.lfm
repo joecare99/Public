@@ -1,0 +1,29 @@
+object frmBarTestMain2: TfrmBarTestMain2
+  Left = 0
+  Height = 452
+  Top = 0
+  Width = 768
+  Caption = 'Form2'
+  ClientHeight = 452
+  ClientWidth = 768
+  Color = clBtnFace
+  DesignTimePPI = 144
+  Font.Color = clWindowText
+  Font.Height = -17
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  object BarChart1: TBarChart
+    Left = 16
+    Height = 410
+    Top = 16
+    Width = 728
+    Data.Strings = (
+      '10'
+      '20'
+      '30'
+      '40'
+      '50'
+    )
+    Labels = True
+  end
+end

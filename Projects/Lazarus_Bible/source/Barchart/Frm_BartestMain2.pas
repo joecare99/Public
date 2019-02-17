@@ -4,34 +4,38 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls,
-  Forms, Dialogs, BarChart;
+  Forms, Dialogs, ExtCtrls, BarChart;
 
 type
-  TMainForm = class(TForm)
+
+  { TfrmBarTestMain2 }
+
+  TfrmBarTestMain2 = class(TForm)
+    BarChart1: TBarChart;
     procedure FormCreate(Sender: TObject);
   private
     { Private declarations }
   public
-    BarChart1: TBarChart;
+
   end;
 
 var
-  MainForm: TMainForm;
+  frmBarTestMain2: TfrmBarTestMain2;
 
 implementation
 
+{$IFDEF FPC}
+{$R *.LFM}
+{$ELSE}
 {$R *.DFM}
+{$ENDIF}
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmBarTestMain2.FormCreate(Sender: TObject);
+
 begin
-  BarChart1 := TBarChart.Create(Self);
-  BarChart1.Parent := Self;
   with BarChart1 do
   begin
-    Left := 20;
-    Top := 20;
-    Width := 375;
-    Height := 200;
+    data.Clear;
     Data.Add(FloatToStr(65.0));
     Data.Add(FloatToStr(45.0));
     Data.Add(FloatToStr(95.0));

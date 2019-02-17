@@ -8,16 +8,15 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms,
-  Frm_BartestMain3,
-  tachartlazaruspkg
-  { you can add units after this };
+  Frm_BartestMain2;
 
 {$R *.res}
 
 begin
   RequireDerivedFormResource := True;
+  Application.Scaled:=True;
   Application.Initialize;
-  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TfrmBarTestMain2,frmBarTestMain2);
   Application.Run;
 end.
 
