@@ -1,31 +1,31 @@
 object frmBitmapViewer2Main: TfrmBitmapViewer2Main
   Left = 200
+  Height = 394
   Top = 99
+  Width = 639
   Caption = 'Bitmap Viewer With Scroll Bars'
-  ClientHeight = 263
-  ClientWidth = 426
+  ClientHeight = 364
+  ClientWidth = 639
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
+  DesignTimePPI = 144
   Font.Color = clWindowText
-  Font.Height = -13
+  Font.Height = -20
   Font.Name = 'System'
-  Font.Style = []
   Menu = MainMenu1
   OnActivate = FormActivate
   OnResize = FormResize
-  PixelsPerInch = 96
+  LCLVersion = '2.0.0.4'
   object BitImage: TImage
     Left = 0
+    Height = 263
     Top = 0
     Width = 426
-    Height = 263
     Align = alClient
     ParentShowHint = False
-    ShowHint = False
   end
   object MainMenu1: TMainMenu
-    Left = 288
-    Top = 16
+    left = 432
+    top = 24
     object File1: TMenuItem
       Caption = '&File'
       object Open1: TMenuItem
@@ -39,7 +39,7 @@ object frmBitmapViewer2Main: TfrmBitmapViewer2Main
     end
   end
   object OpenDialog1: TOpenPictureDialog
-    Left = 320
-    Top = 16
+    left = 480
+    top = 24
   end
-end
+end
