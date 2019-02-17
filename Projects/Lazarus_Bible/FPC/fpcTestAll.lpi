@@ -11,8 +11,49 @@
       <UseXPManifest Value="True"/>
       <Icon Value="0"/>
     </General>
-    <BuildModes Count="1">
+    <BuildModes Count="2">
       <Item1 Name="Default" Default="True"/>
+      <Item2 Name="Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($project(Infofile))"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\source\tests;..\source\AboutEx;..\source\Actions;..\source\Addpage;..\source\Barchart;..\source\Bitview;..\source\Bitview2"/>
+            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <IncludeAssertionCode Value="True"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
+              <UseExternalDbgSyms Value="True"/>
+            </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item2>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -39,7 +80,7 @@
         <PackageName Value="FCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="9">
+    <Units Count="15">
       <Unit0>
         <Filename Value="fpcTestAll.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -81,6 +122,32 @@
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="..\source\Bitview\Frm_BitViewMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\source\Bitview2\Frm_BitView2MAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\source\tests\tst_BitView.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\source\tests\tst_BitView2.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="..\source\tests\tst_BarChart.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\source\tests\tst_BarTest2.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit14>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -91,7 +158,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\source\tests;..\source\AboutEx;..\source\Actions;..\source\Addpage;..\source\Barchart"/>
+      <OtherUnitFiles Value="..\source\tests;..\source\AboutEx;..\source\Actions;..\source\Addpage;..\source\Barchart;..\source\Bitview;..\source\Bitview2"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>
