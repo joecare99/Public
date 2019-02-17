@@ -19,6 +19,7 @@
         </SyntaxOptions>
       </Parsing>
     </CompilerOptions>
+    <Description Value="Bar-Chart Komponente"/>
     <Files Count="1">
       <Item1>
         <Filename Value="..\source\BARCHART\BarChart.pas"/>
@@ -26,6 +27,10 @@
         <UnitName Value="BarChart"/>
       </Item1>
     </Files>
+    <i18n>
+      <EnableI18N Value="True"/>
+      <OutDir Value="..\Language"/>
+    </i18n>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="LCL"/>

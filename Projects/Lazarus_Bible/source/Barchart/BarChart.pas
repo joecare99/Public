@@ -20,6 +20,9 @@ USES
   Dialogs;
 
 TYPE
+
+  { TBarChart }
+
   TBarChart = CLASS(TGraphicControl)
   PRIVATE
     FPen:                   TPen;
@@ -28,6 +31,7 @@ TYPE
     FLabels:                Boolean;
     XBase, YBase:           Integer;
     XIncrement, YIncrement: Integer;
+    procedure Datachange(Sender: TObject);
     PROCEDURE SetPen(Value: TPen);
     PROCEDURE SetBrush(Value: TBrush);
     PROCEDURE SetData(Value: TStrings);
@@ -44,6 +48,8 @@ TYPE
     PROPERTY Brush: TBrush READ FBrush WRITE SetBrush;
     PROPERTY Data: TStrings READ FData WRITE SetData;
     PROPERTY Labels: Boolean READ FLabels WRITE SetLabels;
+    Property Align;
+    property Anchors;
     PROPERTY DragCursor;
     PROPERTY DragMode;
     PROPERTY Enabled;
@@ -97,6 +103,7 @@ BEGIN
   FBrush := TBrush.Create;
   FBrush.OnChange := StyleChanged;
   FData := TStringList.Create;
+  tStringlist(fdata).OnChange:=Datachange;
   FLabels := True;
 END;
 
@@ -122,8 +129,16 @@ END;
 PROCEDURE TBarChart.Paint;
 VAR
   XMax, YMax:           Integer;
-  Width1, WidthD2:      Integer;
   I, X1, Y1, X2, Y2, E: Integer;
+  lValue: Double;
+
+  FUNCTION yNormate(aValue: double): Integer;inline;
+
+  BEGIN
+    Result := YBase - Round((aValue / yScaleIncrement) * YIncrement);
+  END;
+
+
 BEGIN
   WITH Canvas DO
     BEGIN
@@ -132,36 +147,38 @@ BEGIN
       Brush.Color := FBrush.Color;
       X1 := Pen.Width DIV 2;
       Y1 := X1;
-      XMax := Width - Pen.Width + 1;
-      YMax := Height - Pen.Width + 1;
+      XMax := self.Width - Pen.Width +1;
+      YMax := self.Height - Pen.Width +1;
       Rectangle(X1, Y1, X1 + XMax, Y1 + YMax);
+
       IF FData.Count = 0 THEN
         Exit;
       { Initialize variables }
       e := -1;
       TRY
-        XIncrement := (XMax - spaceHorizontal) DIV FData.Count;
+        XIncrement := (XMax - spaceHorizontal) DIV (FData.Count*3+1);
         YIncrement := (YMax - spaceVertical) DIV yScale;
-        Width1 := XIncrement DIV 2;
-        WidthD2 := Width1 DIV 2;
-        XBase := spaceAtLeft + WidthD2;
+        XBase := spaceAtLeft + XIncrement * 2;
         YBase := YMax - spaceAtBottom;
         Canvas.Font := Self.Font;
         { Draw barchart }
         FOR I := 0 TO FData.Count - 1 DO
+          if TryStrToFloat(FData[I],lValue) then
           BEGIN
             E := I; // Because I may be undefined after for-loop
-            X1 := spaceAtLeft + (XIncrement * I);
-            Y1 := YData(I);
-            X2 := X1 + Width1;
+            X1 := spaceAtLeft + (XIncrement*(3 * I+1));
+            Y1 := yNormate(lValue);
+            X2 := X1 + XIncrement * 2;
             Y2 := YBase;
             IF FLabels THEN
               BEGIN
                 Brush.Color := FBrush.Color;
                 TextOut(X1, Y1 - 30, FData.Strings[I]);
               END;
+            // Shaddow
             Brush.Color := clBlack;
-            Rectangle(X1 + 4, Y1 - 4, X2 + 4, Y2 - 4);
+            Rectangle(X1 + 4, Y1 + 4, X2 + 4, Y2 );
+            // Draw the Bar
             Brush.Color := colorArray[(I + 2) MOD numClrs];
             Rectangle(X1, Y1, X2, Y2);
           END;
@@ -190,6 +207,11 @@ PROCEDURE TBarChart.SetPen(Value: TPen);
 BEGIN
   FPen.Assign(Value);
 END;
+
+procedure TBarChart.Datachange(Sender: TObject);
+begin
+  Invalidate;
+end;
 
 { Assign new string list to FData field }
 PROCEDURE TBarChart.SetData(Value: TStrings);
