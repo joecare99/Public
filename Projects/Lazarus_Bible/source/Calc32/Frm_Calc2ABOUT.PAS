@@ -17,9 +17,9 @@ uses
 
 type
 
-  { TAboutForm }
+  { TfrmCalcAbout2 }
 
-  TAboutForm = class(TForm)
+  TfrmCalcAbout2 = class(TForm)
     Panel1: TPanel;
     OKButton: TBitBtn;
     ProgramIcon: TImage;
@@ -34,7 +34,7 @@ type
   end;
 
 var
-  AboutForm: TAboutForm;
+  frmCalcAbout2: TfrmCalcAbout2;
 
 implementation
 
@@ -44,9 +44,9 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-{ TAboutForm }
+{ TfrmCalcAbout2 }
 
-procedure TAboutForm.OKButtonClick(Sender: TObject);
+procedure TfrmCalcAbout2.OKButtonClick(Sender: TObject);
 begin
   Close;
 end;

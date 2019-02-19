@@ -1,337 +1,456 @@
-object CalcForm: TCalcForm
+object CalcForm: TfrmCalcMain2
   Left = 253
-  Height = 325
+  Height = 488
   Top = 130
-  Width = 416
+  Width = 624
   ActiveControl = BitBtn1
   Caption = 'Calculator 32'
-  ClientHeight = 325
-  ClientWidth = 416
+  ClientHeight = 488
+  ClientWidth = 624
   Color = clBtnFace
+  DesignTimePPI = 144
   Font.Color = clWindowText
-  Font.Height = -13
+  Font.Height = -20
   Font.Name = 'Tahoma'
   KeyPreview = True
   Menu = CalcMainMenu
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
-  LCLVersion = '1.6.4.0'
-  Visible = False
   object MemButton: TSpeedButton
-    Left = 8
-    Height = 25
-    Top = 8
-    Width = 25
+    Left = 12
+    Height = 38
+    Top = 12
+    Width = 38
     Caption = 'M'
     Enabled = False
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
+    ParentFont = False
   end
   object DecButton: TSpeedButton
-    Left = 8
-    Height = 25
-    Top = 40
-    Width = 25
+    Left = 12
+    Height = 38
+    Top = 60
+    Width = 38
     Caption = '&D'
     Down = True
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     GroupIndex = 1
     OnClick = DecHexBinButtonClick
+    ParentFont = False
   end
   object HexButton: TSpeedButton
-    Left = 8
-    Height = 25
-    Top = 72
-    Width = 25
+    Left = 12
+    Height = 38
+    Top = 108
+    Width = 38
     Caption = '&H'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     GroupIndex = 1
     OnClick = DecHexBinButtonClick
+    ParentFont = False
   end
   object BinButton: TSpeedButton
-    Left = 8
-    Height = 25
-    Top = 104
-    Width = 25
+    Left = 12
+    Height = 38
+    Top = 156
+    Width = 38
     Caption = '&B'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     GroupIndex = 1
     OnClick = DecHexBinButtonClick
+    ParentFont = False
   end
   object Button7: TSpeedButton
     Tag = 7
-    Left = 184
-    Height = 25
-    Top = 144
-    Width = 25
+    Left = 276
+    Height = 38
+    Top = 216
+    Width = 38
     AllowAllUp = True
     Caption = '7'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object Button8: TSpeedButton
     Tag = 8
-    Left = 224
-    Height = 25
-    Top = 144
-    Width = 25
+    Left = 336
+    Height = 38
+    Top = 216
+    Width = 38
     AllowAllUp = True
     Caption = '8'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object Button9: TSpeedButton
     Tag = 9
-    Left = 264
-    Height = 25
-    Top = 144
-    Width = 25
+    Left = 396
+    Height = 38
+    Top = 216
+    Width = 38
     AllowAllUp = True
     Caption = '9'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object Button4: TSpeedButton
     Tag = 4
-    Left = 184
-    Height = 25
-    Top = 176
-    Width = 25
+    Left = 276
+    Height = 38
+    Top = 264
+    Width = 38
     AllowAllUp = True
     Caption = '4'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object Button5: TSpeedButton
     Tag = 5
-    Left = 224
-    Height = 25
-    Top = 176
-    Width = 25
+    Left = 336
+    Height = 38
+    Top = 264
+    Width = 38
     AllowAllUp = True
     Caption = '5'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object Button6: TSpeedButton
     Tag = 6
-    Left = 264
-    Height = 25
-    Top = 176
-    Width = 25
+    Left = 396
+    Height = 38
+    Top = 264
+    Width = 38
     AllowAllUp = True
     Caption = '6'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object Button1: TSpeedButton
     Tag = 1
-    Left = 184
-    Height = 25
-    Top = 208
-    Width = 25
+    Left = 276
+    Height = 38
+    Top = 312
+    Width = 38
     AllowAllUp = True
     Caption = '1'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object Button2: TSpeedButton
     Tag = 2
-    Left = 224
-    Height = 25
-    Top = 208
-    Width = 25
+    Left = 336
+    Height = 38
+    Top = 312
+    Width = 38
     AllowAllUp = True
     Caption = '2'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object Button3: TSpeedButton
     Tag = 3
-    Left = 264
-    Height = 25
-    Top = 208
-    Width = 25
+    Left = 396
+    Height = 38
+    Top = 312
+    Width = 38
     AllowAllUp = True
     Caption = '3'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object Button0: TSpeedButton
-    Left = 184
-    Height = 25
-    Top = 240
-    Width = 25
+    Left = 276
+    Height = 38
+    Top = 360
+    Width = 38
     AllowAllUp = True
     Caption = '0'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object PlusMinusButton: TSpeedButton
-    Left = 224
-    Height = 25
-    Top = 240
-    Width = 25
+    Left = 336
+    Height = 38
+    Top = 360
+    Width = 38
     AllowAllUp = True
     Caption = '+ -'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = PlusMinusButtonClick
+    ParentFont = False
   end
   object EqualButton: TSpeedButton
-    Left = 264
-    Height = 25
-    Top = 240
-    Width = 25
+    Left = 396
+    Height = 38
+    Top = 360
+    Width = 38
     AllowAllUp = True
     Caption = '='
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = EqualButtonClick
+    ParentFont = False
   end
   object ButtonA: TSpeedButton
     Tag = 10
-    Left = 184
-    Height = 25
-    Top = 272
-    Width = 25
+    Left = 276
+    Height = 38
+    Top = 408
+    Width = 38
     AllowAllUp = True
     Caption = 'A'
     Enabled = False
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object ButtonB: TSpeedButton
     Tag = 11
-    Left = 224
-    Height = 25
-    Top = 272
-    Width = 25
+    Left = 336
+    Height = 38
+    Top = 408
+    Width = 38
     AllowAllUp = True
     Caption = 'B'
     Enabled = False
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object ButtonC: TSpeedButton
     Tag = 12
-    Left = 264
-    Height = 25
-    Top = 272
-    Width = 25
+    Left = 396
+    Height = 38
+    Top = 408
+    Width = 38
     AllowAllUp = True
     Caption = 'C'
     Enabled = False
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object ButtonD: TSpeedButton
     Tag = 13
-    Left = 304
-    Height = 25
-    Top = 272
-    Width = 25
+    Left = 456
+    Height = 38
+    Top = 408
+    Width = 38
     AllowAllUp = True
     Caption = 'D'
     Enabled = False
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object ButtonE: TSpeedButton
     Tag = 14
-    Left = 344
-    Height = 25
-    Top = 272
-    Width = 25
+    Left = 516
+    Height = 38
+    Top = 408
+    Width = 38
     AllowAllUp = True
     Caption = 'E'
     Enabled = False
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object ButtonF: TSpeedButton
     Tag = 15
-    Left = 384
-    Height = 25
-    Top = 272
-    Width = 25
+    Left = 576
+    Height = 38
+    Top = 408
+    Width = 38
     AllowAllUp = True
     Caption = 'F'
     Enabled = False
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ButtonDigitClick
+    ParentFont = False
   end
   object DivButton: TSpeedButton
     Tag = -2
-    Left = 304
-    Height = 25
-    Top = 176
-    Width = 25
+    Left = 456
+    Height = 38
+    Top = 264
+    Width = 38
     AllowAllUp = True
     Caption = '/'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = OpButtonClick
+    ParentFont = False
   end
   object TimesButton: TSpeedButton
     Tag = -1
-    Left = 304
-    Height = 25
-    Top = 144
-    Width = 25
+    Left = 456
+    Height = 38
+    Top = 216
+    Width = 38
     AllowAllUp = True
     Caption = '*'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = OpButtonClick
+    ParentFont = False
   end
   object MinusButton: TSpeedButton
     Tag = -4
-    Left = 304
-    Height = 25
-    Top = 240
-    Width = 25
+    Left = 456
+    Height = 38
+    Top = 360
+    Width = 38
     AllowAllUp = True
     Caption = '-'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = OpButtonClick
+    ParentFont = False
   end
   object PlusButton: TSpeedButton
     Tag = -3
-    Left = 304
-    Height = 25
-    Top = 208
-    Width = 25
+    Left = 456
+    Height = 38
+    Top = 312
+    Width = 38
     AllowAllUp = True
     Caption = '+'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = OpButtonClick
+    ParentFont = False
   end
   object ANDButton: TSpeedButton
     Tag = -5
-    Left = 344
-    Height = 25
-    Top = 144
-    Width = 65
+    Left = 516
+    Height = 38
+    Top = 216
+    Width = 98
     AllowAllUp = True
     Caption = 'AND'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = OpButtonClick
+    ParentFont = False
   end
   object ORButton: TSpeedButton
     Tag = -6
-    Left = 344
-    Height = 25
-    Top = 176
-    Width = 65
+    Left = 516
+    Height = 38
+    Top = 264
+    Width = 98
     AllowAllUp = True
     Caption = 'OR'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = OpButtonClick
+    ParentFont = False
   end
   object XORButton: TSpeedButton
     Tag = -7
-    Left = 344
-    Height = 25
-    Top = 208
-    Width = 65
+    Left = 516
+    Height = 38
+    Top = 312
+    Width = 98
     AllowAllUp = True
     Caption = 'XOR'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = OpButtonClick
+    ParentFont = False
   end
   object NOTButton: TSpeedButton
-    Left = 344
-    Height = 25
-    Top = 240
-    Width = 65
+    Left = 516
+    Height = 38
+    Top = 360
+    Width = 98
     AllowAllUp = True
     Caption = 'NOT'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = NOTButtonClick
+    ParentFont = False
   end
   object MemBevel: TBevel
-    Left = 40
-    Height = 25
-    Top = 8
-    Width = 369
+    Left = 60
+    Height = 38
+    Top = 12
+    Width = 554
   end
   object MemLabel: TLabel
-    Left = 45
-    Height = 17
-    Top = 12
-    Width = 356
+    Left = 68
+    Height = 26
+    Top = 18
+    Width = 534
     Alignment = taRightJustify
     AutoSize = False
     Caption = '0'
     Color = clScrollBar
     Font.Color = clBlack
-    Font.Height = -19
+    Font.Height = -29
     Font.Name = 'Courier New'
     Font.Style = [fsBold]
     ParentColor = False
@@ -339,22 +458,22 @@ object CalcForm: TCalcForm
     Transparent = False
   end
   object DecBevel: TBevel
-    Left = 40
-    Height = 25
-    Top = 40
-    Width = 369
+    Left = 60
+    Height = 38
+    Top = 60
+    Width = 554
   end
   object DecLabel: TLabel
-    Left = 45
-    Height = 17
-    Top = 44
-    Width = 356
+    Left = 68
+    Height = 26
+    Top = 66
+    Width = 534
     Alignment = taRightJustify
     AutoSize = False
     Caption = '-2147483648'
     Color = clScrollBar
     Font.Color = clBlack
-    Font.Height = -19
+    Font.Height = -29
     Font.Name = 'Courier New'
     Font.Style = [fsBold]
     ParentColor = False
@@ -362,22 +481,22 @@ object CalcForm: TCalcForm
     Transparent = False
   end
   object HexBevel: TBevel
-    Left = 40
-    Height = 25
-    Top = 72
-    Width = 369
+    Left = 60
+    Height = 38
+    Top = 108
+    Width = 554
   end
   object HexLabel: TLabel
-    Left = 45
-    Height = 17
-    Top = 76
-    Width = 356
+    Left = 68
+    Height = 26
+    Top = 114
+    Width = 534
     Alignment = taRightJustify
     AutoSize = False
     Caption = '7FFFFFFF'
     Color = clScrollBar
     Font.Color = clBlack
-    Font.Height = -19
+    Font.Height = -29
     Font.Name = 'Courier New'
     Font.Style = [fsBold]
     ParentColor = False
@@ -385,22 +504,22 @@ object CalcForm: TCalcForm
     Transparent = False
   end
   object BinBevel: TBevel
-    Left = 40
-    Height = 25
-    Top = 104
-    Width = 369
+    Left = 60
+    Height = 38
+    Top = 156
+    Width = 554
   end
   object BinLabel: TLabel
-    Left = 45
-    Height = 17
-    Top = 108
-    Width = 356
+    Left = 68
+    Height = 26
+    Top = 162
+    Width = 534
     Alignment = taRightJustify
     AutoSize = False
     Caption = '10000000000000000000000000000000'
     Color = clScrollBar
     Font.Color = clBlack
-    Font.Height = -19
+    Font.Height = -29
     Font.Name = 'Courier New'
     Font.Style = [fsBold]
     ParentColor = False
@@ -408,47 +527,63 @@ object CalcForm: TCalcForm
     Transparent = False
   end
   object LineBevel: TBevel
-    Left = 8
-    Height = 9
-    Top = 128
-    Width = 401
+    Left = 12
+    Height = 14
+    Top = 192
+    Width = 602
     Shape = bsBottomLine
   end
   object ClearButton: TSpeedButton
-    Left = 104
-    Height = 25
-    Top = 144
-    Width = 65
+    Left = 156
+    Height = 38
+    Top = 216
+    Width = 98
     Caption = 'C'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ClearButtonClick
+    ParentFont = False
   end
   object ClearEntryButton: TSpeedButton
-    Left = 104
-    Height = 25
-    Top = 176
-    Width = 65
+    Left = 156
+    Height = 38
+    Top = 264
+    Width = 98
     Caption = '&CE'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = ClearEntryButtonClick
+    ParentFont = False
   end
   object BackButton: TSpeedButton
-    Left = 8
-    Height = 25
-    Top = 144
-    Width = 89
+    Left = 12
+    Height = 38
+    Top = 216
+    Width = 134
     Caption = 'Back'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     OnClick = BackButtonClick
+    ParentFont = False
   end
   object BitBtn1: TBitBtn
-    Left = 8
-    Height = 58
-    Top = 248
-    Width = 104
+    Left = 12
+    Height = 87
+    Top = 372
+    Width = 156
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     Kind = bkClose
+    ParentFont = False
     TabOrder = 0
   end
   object CalcMainMenu: TMainMenu
-    left = 27
-    top = 177
+    left = 41
+    top = 266
     object CalcMenuItem: TMenuItem
       Caption = 'C&alc'
       object CalcExitMenuItem: TMenuItem

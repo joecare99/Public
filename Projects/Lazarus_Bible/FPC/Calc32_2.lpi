@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -18,9 +18,6 @@
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="6">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
@@ -230,9 +227,10 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
@@ -247,14 +245,14 @@
       <Unit1>
         <Filename Value="..\source\Calc32\Frm_CALC2.PAS"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="CalcForm"/>
+        <ComponentName Value="frmCalcMain2"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit1>
       <Unit2>
         <Filename Value="..\source\Calc32\Frm_Calc2ABOUT.PAS"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="AboutForm"/>
+        <ComponentName Value="frmCalcAbout2"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit2>
