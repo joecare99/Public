@@ -4,11 +4,10 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Debug"/>
-    <Units Count="23">
+    <Units Count="24">
       <Unit0>
         <Filename Value="fpcTestAll.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <CursorPos X="16" Y="17"/>
         <UsageCount Value="22"/>
         <Loaded Value="True"/>
@@ -146,42 +145,6 @@
         <UsageCount Value="22"/>
       </Unit14>
       <Unit15>
-        <Filename Value="C:\lazarus\lcl\forms.pp"/>
-        <UnitName Value="Forms"/>
-        <EditorIndex Value="6"/>
-        <TopLine Value="1438"/>
-        <CursorPos X="18" Y="1466"/>
-        <UsageCount Value="11"/>
-        <Loaded Value="True"/>
-      </Unit15>
-      <Unit16>
-        <Filename Value="C:\lazarus\lcl\include\application.inc"/>
-        <EditorIndex Value="5"/>
-        <TopLine Value="227"/>
-        <CursorPos X="9" Y="238"/>
-        <UsageCount Value="11"/>
-        <Loaded Value="True"/>
-      </Unit16>
-      <Unit17>
-        <Filename Value="C:\lazarus\components\lazutils\LazLoggerIntf.inc"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="14" Y="13"/>
-        <UsageCount Value="10"/>
-      </Unit17>
-      <Unit18>
-        <Filename Value="C:\lazarus\components\lazutils\LazLoggerImpl.inc"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="9" Y="50"/>
-        <UsageCount Value="10"/>
-      </Unit18>
-      <Unit19>
-        <Filename Value="C:\lazarus\components\lazutils\lazloggerbase.pas"/>
-        <UnitName Value="LazLoggerBase"/>
-        <EditorIndex Value="-1"/>
-        <CursorPos X="27" Y="287"/>
-        <UsageCount Value="10"/>
-      </Unit19>
-      <Unit20>
         <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
@@ -190,8 +153,8 @@
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
         <UsageCount Value="20"/>
-      </Unit20>
-      <Unit21>
+      </Unit15>
+      <Unit16>
         <Filename Value="..\source\Calc32\Frm_CalcABOUT.PAS"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
@@ -200,8 +163,8 @@
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
         <UsageCount Value="20"/>
-      </Unit21>
-      <Unit22>
+      </Unit16>
+      <Unit17>
         <Filename Value="..\source\tests\tst_Calc32.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
@@ -209,9 +172,53 @@
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
         <UsageCount Value="20"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="1438"/>
+        <CursorPos X="18" Y="1466"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="C:\lazarus\lcl\include\application.inc"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="227"/>
+        <CursorPos X="9" Y="238"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="C:\lazarus\components\lazutils\LazLoggerIntf.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="14" Y="13"/>
+        <UsageCount Value="10"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="C:\lazarus\components\lazutils\LazLoggerImpl.inc"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="9" Y="50"/>
+        <UsageCount Value="10"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="C:\lazarus\components\lazutils\lazloggerbase.pas"/>
+        <UnitName Value="LazLoggerBase"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="27" Y="287"/>
+        <UsageCount Value="10"/>
       </Unit22>
+      <Unit23>
+        <Filename Value="Addpage.dpr"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="7"/>
+        <CursorPos X="26" Y="22"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit23>
     </Units>
-    <JumpHistory Count="22" HistoryIndex="21">
+    <JumpHistory Count="23" HistoryIndex="22">
       <Position1>
         <Filename Value="fpcTestAll.lpr"/>
         <Caret Line="6" Column="60"/>
@@ -300,6 +307,10 @@
         <Filename Value="..\source\tests\tst_Actions.pas"/>
         <Caret Line="101" Column="54" TopLine="84"/>
       </Position22>
+      <Position23>
+        <Filename Value="fpcTestAll.lpr"/>
+        <Caret Line="17" Column="16"/>
+      </Position23>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
