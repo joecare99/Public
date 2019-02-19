@@ -11,8 +11,6 @@ object frmBarChartMain: TfrmBarChartMain
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
-  LCLVersion = '1.8.0.3'
-  Visible = False
   object BitBtn1: TBitBtn
     Left = 288
     Height = 25
@@ -27,14 +25,19 @@ object frmBarChartMain: TfrmBarChartMain
     Height = 234
     Top = 8
     Width = 355
+    AntialiasingMode = amOn
     AxisList = <    
       item
+        Marks.LabelBrush.Style = bsClear
         Minors = <>
         Title.LabelFont.Orientation = 900
+        Title.LabelBrush.Style = bsClear
       end    
       item
         Alignment = calBottom
+        Marks.LabelBrush.Style = bsClear
         Minors = <>
+        Title.LabelBrush.Style = bsClear
       end>
     Foot.Brush.Color = clBtnFace
     Foot.Font.Color = clBlue
@@ -43,13 +46,27 @@ object frmBarChartMain: TfrmBarChartMain
     Title.Text.Strings = (
       'TChart'
     )
+    Toolset = ChartToolset1
     object Series1: TBarSeries
+      Shadow.OffsetX = 4
+      Shadow.OffsetY = 4
+      Shadow.Visible = True
+      Transparency = 64
       Marks.Arrow.Visible = True
       BarBrush.Color = clRed
+      BarWidthPercent = 50
+      Stacked = False
     end
     object Series2: TBarSeries
+      Shadow.OffsetX = 4
+      Shadow.OffsetY = 4
+      Shadow.Visible = True
+      Transparency = 64
       Marks.Arrow.Visible = True
-      BarBrush.Color = clRed
+      BarBrush.Color = clBlue
+      BarOffsetPercent = 30
+      BarWidthPercent = 50
+      Stacked = False
     end
   end
   object Timer1: TTimer

@@ -14,7 +14,7 @@ uses
   LCLIntf, LCLType, TAGraph, TASeries, TATools, TADataTools ,
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons,  ExtCtrls, Menus, TeeProcs;
+  StdCtrls, Buttons,  ExtCtrls, Menus;
 
 type
 
