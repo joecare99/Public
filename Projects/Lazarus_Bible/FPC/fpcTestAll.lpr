@@ -14,6 +14,7 @@ uses
     tst_BarTest2,
     tst_BitView,
     tst_BitView2,
+    tst_Calc32,
     tst_Something;
 
 {$R *.res}

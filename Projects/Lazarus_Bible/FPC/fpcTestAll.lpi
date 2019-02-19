@@ -22,7 +22,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-            <OtherUnitFiles Value="..\source\tests;..\source\AboutEx;..\source\Actions;..\source\Addpage;..\source\Barchart;..\source\Bitview;..\source\Bitview2"/>
+            <OtherUnitFiles Value="..\source\tests;..\source\AboutEx;..\source\Actions;..\source\Addpage;..\source\Barchart;..\source\Bitview;..\source\Bitview2;..\source\Calc32"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -80,7 +80,7 @@
         <PackageName Value="FCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="15">
+    <Units Count="18">
       <Unit0>
         <Filename Value="fpcTestAll.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -150,6 +150,20 @@
         <Filename Value="..\source\tests\tst_BarTest2.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit14>
+      <Unit15>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\source\Calc32\Frm_CalcABOUT.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit17>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -160,7 +174,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\source\tests;..\source\AboutEx;..\source\Actions;..\source\Addpage;..\source\Barchart;..\source\Bitview;..\source\Bitview2"/>
+      <OtherUnitFiles Value="..\source\tests;..\source\AboutEx;..\source\Actions;..\source\Addpage;..\source\Barchart;..\source\Bitview;..\source\Bitview2;..\source\Calc32"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>
