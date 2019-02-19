@@ -1,0 +1,209 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tfrmcalcabout.caption
+msgid "About"
+msgstr ""
+
+#: tfrmcalcabout.copyright.caption
+msgid "Inspired by Calc32 from Tom Swan"
+msgstr ""
+
+#: tfrmcalcabout.okbutton.caption
+msgid "Ok"
+msgstr ""
+
+#: tfrmcalcabout.productname.caption
+msgid "Calc32"
+msgstr ""
+
+#: tfrmcalcabout.version.caption
+msgid "Version 1.1"
+msgstr ""
+
+#: tfrmcalcmain.about1.caption
+msgid "&About..."
+msgstr ""
+
+#: tfrmcalcmain.binbutton.caption
+msgid "&B"
+msgstr ""
+
+#: tfrmcalcmain.binlabel.caption
+msgid "10000000000000000000000000000000 "
+msgstr ""
+
+#: tfrmcalcmain.btn0.caption
+msgid "0"
+msgstr ""
+
+#: tfrmcalcmain.btn1.caption
+msgid "1"
+msgstr ""
+
+#: tfrmcalcmain.btn2.caption
+msgid "2"
+msgstr ""
+
+#: tfrmcalcmain.btn3.caption
+msgid "3"
+msgstr ""
+
+#: tfrmcalcmain.btn4.caption
+msgid "4"
+msgstr ""
+
+#: tfrmcalcmain.btn5.caption
+msgid "5"
+msgstr ""
+
+#: tfrmcalcmain.btn6.caption
+msgid "6"
+msgstr ""
+
+#: tfrmcalcmain.btn7.caption
+msgid "7"
+msgstr ""
+
+#: tfrmcalcmain.btn8.caption
+msgid "8"
+msgstr ""
+
+#: tfrmcalcmain.btn9.caption
+msgid "9"
+msgstr ""
+
+#: tfrmcalcmain.btna.caption
+msgid "A"
+msgstr ""
+
+#: tfrmcalcmain.btnand.caption
+msgid "AND"
+msgstr ""
+
+#: tfrmcalcmain.btnb.caption
+msgid "B"
+msgstr ""
+
+#: tfrmcalcmain.btnback.caption
+msgid "Back"
+msgstr ""
+
+#: tfrmcalcmain.btnc.caption
+msgctxt "tfrmcalcmain.btnc.caption"
+msgid "C"
+msgstr ""
+
+#: tfrmcalcmain.btnclear.caption
+msgctxt "tfrmcalcmain.btnclear.caption"
+msgid "C"
+msgstr ""
+
+#: tfrmcalcmain.btnclearentry.caption
+msgid "&CE"
+msgstr ""
+
+#: tfrmcalcmain.btnd.caption
+msgid "D"
+msgstr ""
+
+#: tfrmcalcmain.btndivide.caption
+msgid "/"
+msgstr ""
+
+#: tfrmcalcmain.btne.caption
+msgid "E"
+msgstr ""
+
+#: tfrmcalcmain.btnequals.caption
+msgid "="
+msgstr ""
+
+#: tfrmcalcmain.btnf.caption
+msgid "F"
+msgstr ""
+
+#: tfrmcalcmain.btnminus.caption
+msgid "-"
+msgstr ""
+
+#: tfrmcalcmain.btnmultiply.caption
+msgid "*"
+msgstr ""
+
+#: tfrmcalcmain.btnnegate.caption
+msgid "+/-"
+msgstr ""
+
+#: tfrmcalcmain.btnnot.caption
+msgid "NOT"
+msgstr ""
+
+#: tfrmcalcmain.btnor.caption
+msgid "OR"
+msgstr ""
+
+#: tfrmcalcmain.btnplus.caption
+msgid "+"
+msgstr ""
+
+#: tfrmcalcmain.btnpoint.caption
+msgid "."
+msgstr ""
+
+#: tfrmcalcmain.btnxor.caption
+msgid "XOR"
+msgstr ""
+
+#: tfrmcalcmain.calcexitmenuitem.caption
+msgid "E&xit"
+msgstr ""
+
+#: tfrmcalcmain.calcmenuitem.caption
+msgid "C&alc"
+msgstr ""
+
+#: tfrmcalcmain.caption
+msgid "Calculator 32"
+msgstr ""
+
+#: tfrmcalcmain.copy1.caption
+msgid "&Copy"
+msgstr ""
+
+#: tfrmcalcmain.decbutton.caption
+msgid "&D"
+msgstr ""
+
+#: tfrmcalcmain.declabel.caption
+msgid "-2147483648 "
+msgstr ""
+
+#: tfrmcalcmain.edit1.caption
+msgid "&Edit"
+msgstr ""
+
+#: tfrmcalcmain.help1.caption
+msgid "He&lp"
+msgstr ""
+
+#: tfrmcalcmain.hexbutton.caption
+msgid "&H"
+msgstr ""
+
+#: tfrmcalcmain.hexlabel.caption
+msgid "7FFFFFFF "
+msgstr ""
+
+#: tfrmcalcmain.membutton.caption
+msgid "M"
+msgstr ""
+
+#: tfrmcalcmain.memlabel.caption
+msgid "0 "
+msgstr ""
+
+#: tfrmcalcmain.paste1.caption
+msgid "&Paste"
+msgstr ""
+
