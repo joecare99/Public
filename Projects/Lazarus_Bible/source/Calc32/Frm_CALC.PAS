@@ -92,6 +92,8 @@ type
   private
     { - Entry-radix switches. Only one can be true! }
     DecEntry, HexEntry, BinEntry: Boolean;
+    { - Negate-Flage for negative Entry }
+    FNegFlag :boolean;
     { - Enable and disable buttons depending on Entry radix }
     procedure EnableButtons;
     { - Update Dec, Hex, and Bin Labels from Accumulator }
@@ -272,7 +274,11 @@ var
   procedure TfrmCalcMain.UpdateDisplay;
   begin
     { - Convert accumulator value to strings }
-    DecString := IntToStr(Accumulator)+' ';
+    if not FNegFlag or (Accumulator<>0) then
+      DecString := IntToStr(Accumulator)+' '
+    else
+      DecString := '-'+IntToStr(Accumulator)+' ';
+
     HexString := IntToHex(Accumulator, maxHexDigits)+' ';
     BinString := IntToBin(Accumulator, maxBinDigits)+' ';
     { - Assign strings to Label object Captions }
@@ -334,13 +340,23 @@ var
     procedure TfrmCalcMain.ButtonDigitClick(Sender: TObject);
     begin
       { - Ignore button clicks if accumulators are full }
-      if Length(DecString) = maxDecDigits then
+      if DecEntry  and ( -abs(Accumulator) < -MaxInt div 10) then
+        Exit;
+      if hexEntry  and (( Accumulator and $f0000000 )<> 0) then
+        Exit;
+      if binEntry  and ( Accumulator < 0) then
         Exit;
       { - Append button tag to end of strings }
       with Sender as TSpeedButton do
       begin
-        if DecEntry then
+        if DecEntry and not FNegFlag then
           DecString := trim(DecString) + IntToStr(Tag)
+        else if DecEntry and FNegFlag then
+          begin
+            DecString := '-' + IntToStr(Tag);
+            if Tag> 0 then
+              FNegFlag:=false;
+          end
         else if HexEntry then
         begin
           Delete(HexString, 1, 1);
@@ -403,7 +419,7 @@ var
     { - Translate keypresses into button clicks }
     procedure TfrmCalcMain.FormKeyPress(Sender: TObject; var Key: Char);
     var
-      Button: TButton;
+      Button: TGraphicControl;
     begin
       case Key of
         asciiEsc:
@@ -422,14 +438,15 @@ var
           btnDivide.Click;
         '+':
           btnPlus.Click;
-        '-':
+        '-':if Accumulator=0 then
+          btnNegate.Click
+        else
           btnMinus.Click;
       else
         begin
-          Button := TButton(FindComponent('btn' + Key));
-          if Button <> nil then
-            if Button.Enabled then
-              Button.Click;
+          Button := TGraphicControl(FindComponent('btn' + Key));
+          if assigned(Button) and Button.Enabled and button.InheritsFrom(TSpeedButton) then
+             TSpeedButton(Button).Click;
         end;
       end;
     end;
@@ -441,8 +458,8 @@ var
       if aOperator <> opNo then
         btnEqualsClick(Sender);
       SetMemAcc(Accumulator);
-
-      aOperator := TEnumOperations(TButton(Sender).Tag);
+      if sender.InheritsFrom(TControl) then
+        aOperator := TEnumOperations(TControl(Sender).Tag);
       Accumulator := 0;
       UpdateDisplay;
       end;
@@ -485,14 +502,16 @@ var
         { - Respond to +/- button click }
         procedure TfrmCalcMain.btnNegateClick(Sender: TObject);
         begin
-          Accumulator := -Accumulator;
+          if Accumulator <> 0 then
+             Accumulator := -Accumulator
+          else
+             FNegFlag := not FNegFlag;
           UpdateDisplay;
         end;
 
         { - Respond to NOT button click }
         procedure TfrmCalcMain.btnNotClick(Sender: TObject);
         begin
-          Accumulator := not Accumulator;
           UpdateDisplay;
         end;
 

@@ -21,8 +21,8 @@ uses
 begin
 Application.Initialize;
   Application.Title := 'Demo: Calc32';
-  Application.CreateForm(TCalcForm, CalcForm);
-  Application.CreateForm(TAboutForm, AboutForm);
+  Application.CreateForm(TfrmCalcMain, frmCalcMain);
+  Application.CreateForm(TfrmCalcAbout, frmCalcAbout);
   Application.Run;
 end.
 

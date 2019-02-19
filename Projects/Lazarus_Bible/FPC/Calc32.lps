@@ -2,13 +2,14 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <BuildModes Active="Release"/>
     <Units Count="4">
       <Unit0>
         <Filename Value="Calc32.dpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="29" Y="8"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="53" Y="25"/>
         <UsageCount Value="26"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -16,12 +17,11 @@
       <Unit1>
         <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="CalcForm"/>
+        <ComponentName Value="frmCalcMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="432"/>
+        <TopLine Value="431"/>
         <CursorPos X="71" Y="293"/>
         <UsageCount Value="23"/>
         <Loaded Value="True"/>
@@ -31,7 +31,7 @@
       <Unit2>
         <Filename Value="..\source\Calc32\Frm_CalcABOUT.PAS"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="AboutForm"/>
+        <ComponentName Value="frmCalcAbout"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
@@ -49,7 +49,7 @@
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit3>
     </Units>
-    <JumpHistory Count="25" HistoryIndex="24">
+    <JumpHistory Count="26" HistoryIndex="25">
       <Position1>
         <Filename Value="Calc32.dpr"/>
       </Position1>
@@ -149,6 +149,14 @@
         <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
         <Caret Line="289" Column="9" TopLine="275"/>
       </Position25>
+      <Position26>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="293" Column="71" TopLine="431"/>
+      </Position26>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>
