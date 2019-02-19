@@ -12,6 +12,11 @@ TYPE
   { TTestActions }
 
   TTestActions = CLASS(TTestCase)
+  private
+    fIdleCnt:integer;
+    procedure AppIdleEnd(Sender: TObject);
+    procedure AppUserInput(Sender: TObject; Msg: Cardinal);
+    procedure MouseMove(Data: PtrInt);
   protected
     PROCEDURE SetUp; override;
     PROCEDURE TearDown; override;
@@ -24,7 +29,7 @@ TYPE
 
 IMPLEMENTATION
 
-uses MouseAndKeyInput;
+uses MouseAndKeyInput,strutils;
 
 CONST
   CTestData: ARRAY[0..160] OF String =
@@ -82,10 +87,17 @@ procedure TTestActions.TestForm;
 begin
 CheckFalse(FrmActionsMain.Visible, 'MainForm is not visible at the moment');
 FrmActionsMain.Show;
+Application.OnUserInput:=@AppUserInput;
 while FrmActionsMain.Visible do
-begin
-      Application.HandleMessage;
-      sleep(1);
+   begin
+      Application.Idle(false);
+      Application.ProcessMessages;
+      inc(fIdleCnt);
+      sleep(10);
+      if fIdleCnt> 300 then
+        FrmActionsMain.Hide
+      else
+        frmActionsMain.Caption := 'Actions ['+DupeString('|',30-fIdleCnt div 10)+DupeString(' ',fIdleCnt div 10)+']';
    end;
 end;
 
@@ -96,32 +108,31 @@ var
 BEGIN
   CheckFalse(FrmActionsMain.Visible, 'MainForm is not visible at the moment');
   FrmActionsMain.Show;
-  MouseInput.Move([],FrmActionsMain,20+random(2),20+random(2));
-  Application.HandleMessage;
+  Application.ProcessMessages;
+  Application.Idle(false);
   sleep(10);
   CheckTrue(FrmActionsMain.Visible, 'MainForm is visible now');
   CheckFalse(FrmActionsMain.actDemoExit.Enabled, 'DemoExit is not Enabled');
   FrmActionsMain.edtEnterQuit.Text:='Test';
-  MouseInput.Move([],FrmActionsMain,20+random(2),20+random(2));
-  Application.HandleMessage;
+  Application.ProcessMessages;
+  Application.Idle(false);
   sleep(10);
   CheckFalse(FrmActionsMain.actDemoExit.Enabled, 'DemoExit is not Enabled with ''Test''');
   FrmActionsMain.edtEnterQuit.Text:='Quit';
-  MouseInput.Move([],FrmActionsMain,20+random(2),20+random(2));
-  Application.HandleMessage;
+  Application.ProcessMessages;
+  Application.Idle(false);
   sleep(10);
   CheckTrue(FrmActionsMain.actDemoExit.Enabled, 'DemoExit is Enabled with ''Quit''');
 for i := 0 to 10000 do
 begin
-    ltweak:=random(100)=0;
+    ltweak:=random(10)=0;
     if ltweak then
       FrmActionsMain.edtEnterQuit.Text:='quit'
     else
       FrmActionsMain.edtEnterQuit.Text:=CTestData[random(length(CTestData))];
- //     MouseInput.Move([],FrmActionsMain,20+random(2),20+random(2));
-      KeyInput.Press(32);
-      Application.HandleMessage;
-      sleep(1);
+    Application.ProcessMessages;
+    Application.Idle(false);
+      sleep(0);
       if ltweak then
         CheckTrue(FrmActionsMain.actDemoExit.Enabled, 'DemoExit['+inttostr(i)+'] is Enabled with ''Quit''')
       else
@@ -132,14 +143,33 @@ begin
 
 END;
 
+procedure TTestActions.AppIdleEnd(Sender: TObject);
+begin
+end;
+
+procedure TTestActions.AppUserInput(Sender: TObject; Msg: Cardinal);
+begin
+  FIdleCnt  := 0;
+end;
+
+procedure TTestActions.MouseMove(Data: PtrInt);
+begin
+  KeyInput.Press(32);
+  MouseInput.Move([],FrmActionsMain,20+random(2),20+random(2));
+end;
+
 procedure TTestActions.SetUp;
 BEGIN
   IF not assigned(FrmActionsMain) THEN
     Application.CreateForm(TFrmActionsMain, FrmActionsMain);
+  FrmActionsMain.edtEnterQuit.Text:='';
 END;
 
 procedure TTestActions.TearDown;
+var
+  i: Integer;
 BEGIN
+  Application.OnIdleEnd:=nil;
   FrmActionsMain.hide;
 END;
 
