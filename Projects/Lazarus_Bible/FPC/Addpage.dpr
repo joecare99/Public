@@ -19,6 +19,6 @@ begin
   Application.Initialize;
   {$ENDIF}
   Application.Title := 'Demo: Add Page';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmAddPageMain, frmAddPageMain);
   Application.Run;
 end.

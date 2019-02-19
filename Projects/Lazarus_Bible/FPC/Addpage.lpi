@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -20,9 +20,6 @@
       <EnableI18N Value="True"/>
       <OutDir Value="..\Language"/>
     </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="5">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
@@ -190,9 +187,10 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
@@ -207,7 +205,7 @@
       <Unit1>
         <Filename Value="..\source\Addpage\Frm_AddpageMAIN.PAS"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="MainForm"/>
+        <ComponentName Value="frmAddPageMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit1>
