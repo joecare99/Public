@@ -13,6 +13,8 @@ type
 
   TTestAddPage= class(TTestCase)
   private
+    FIdleCnt:integer;
+    procedure AppUserInput(Sender: TObject; Msg: Cardinal);
   protected
     procedure SetUp; override;
     procedure TearDown; override;
@@ -26,7 +28,7 @@ type
 
 implementation
 
-uses forms;
+uses forms,strutils;
 
 procedure TTestAddPage.SetUp;
 begin
@@ -38,6 +40,11 @@ procedure TTestAddPage.TearDown;
 begin
   frmAddPageMain.hide;
   freeandnil(frmAddPageMain);
+end;
+
+procedure TTestAddPage.AppUserInput(Sender: TObject; Msg: Cardinal);
+begin
+  FIdleCnt  := 0;
 end;
 
 procedure TTestAddPage.TestSetUp;
@@ -71,10 +78,17 @@ procedure TTestAddPage.TestForm;
 begin
 CheckFalse(frmAddPageMain.Visible, 'MainForm is not visible at the moment');
 frmAddPageMain.Show;
+Application.OnUserInput:=@AppUserInput;
 while frmAddPageMain.Visible do
 begin
-      Application.HandleMessage;
-      sleep(1);
+      Application.Idle(false);
+      Application.ProcessMessages;
+      inc(fIdleCnt);
+      sleep(10);
+      if fIdleCnt> 300 then
+        frmAddPageMain.Hide
+      else
+        frmAddPageMain.Caption := 'AddPage ['+DupeString('|',30-fIdleCnt div 10)+DupeString(' ',fIdleCnt div 10)+']';
    end;
 end;
 
