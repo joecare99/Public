@@ -18,9 +18,9 @@ uses
 
 type
 
-  { TCalcForm }
+  { TfrmCalcMain }
 
-  TCalcForm = class(TForm)
+  TfrmCalcMain = class(TForm)
     BinBevel: TPanel;
     DecBevel: TPanel;
     HexBevel: TPanel;
@@ -107,7 +107,7 @@ type
   end;
 
 var
-  CalcForm: TCalcForm;
+  frmCalcMain: TfrmCalcMain;
 
 implementation
 
@@ -179,7 +179,7 @@ var
       except
         on E: Exception do
         begin
-          CalcForm.ShowError(E.Message);
+          frmCalcMain.ShowError(E.Message);
           Result := 0;
         end;
       end;
@@ -215,7 +215,7 @@ var
 { - Private methods }
 
 { Enable and disable buttons depending on entry radix }
-  procedure TCalcForm.EnableButtons;
+  procedure TfrmCalcMain.EnableButtons;
   begin
     { - Assume binary radix }
     btn0.Enabled := True;
@@ -269,7 +269,7 @@ var
   end;
 
 { Update global strings and Label captions from Accumulator }
-  procedure TCalcForm.UpdateDisplay;
+  procedure TfrmCalcMain.UpdateDisplay;
   begin
     { - Convert accumulator value to strings }
     DecString := IntToStr(Accumulator)+' ';
@@ -282,7 +282,7 @@ var
   end;
 
 { - Update Accumulator value from current entry string }
-  procedure TCalcForm.UpdateAccumulator;
+  procedure TfrmCalcMain.UpdateAccumulator;
   begin
     try
       if DecEntry then
@@ -298,26 +298,26 @@ var
   end;
 
 { - Assign V to MemAcc and update Memory display line }
-  procedure TCalcForm.SetMemAcc(V: Longint);
+  procedure TfrmCalcMain.SetMemAcc(V: Longint);
   begin
     MemAcc := V;
     MemLabel.Caption := IntToStr(MemAcc)+' ';
   end;
 
 { - Display error message string }
-  procedure TCalcForm.ShowError(const Msg: String);
+  procedure TfrmCalcMain.ShowError(const Msg: String);
   begin
     MessageDlg(Msg, mtError, [mbOk], 0);
   end;
 
 { - End program on selecting Close button }
-  procedure TCalcForm.CalcExitMenuItemClick(Sender: TObject);
+  procedure TfrmCalcMain.CalcExitMenuItemClick(Sender: TObject);
   begin
     Close;
   end;
 
 { - Initialize program on form's creation }
-  procedure TCalcForm.FormCreate(Sender: TObject);
+  procedure TfrmCalcMain.FormCreate(Sender: TObject);
   begin
     Accumulator := 0; { Zero accumulator }    { -2147483647 - 1; }
     MemAcc := 0; { Zero intermediate accumulator }
@@ -331,7 +331,7 @@ var
     end;
 
     { - Respond to click of a digit button 0 through F }
-    procedure TCalcForm.ButtonDigitClick(Sender: TObject);
+    procedure TfrmCalcMain.ButtonDigitClick(Sender: TObject);
     begin
       { - Ignore button clicks if accumulators are full }
       if Length(DecString) = maxDecDigits then
@@ -357,7 +357,7 @@ var
     end;
 
     { - Change radix on clicking D, H, or B button }
-    procedure TCalcForm.DecHexBinButtonClick(Sender: TObject);
+    procedure TfrmCalcMain.DecHexBinButtonClick(Sender: TObject);
     begin
       DecEntry := False; { Preset all entry radix switches to False }
       HexEntry := False;
@@ -373,14 +373,14 @@ var
     end;
 
     { - Clear current entry (Accumulator) only }
-    procedure TCalcForm.btnClearEntryClick(Sender: TObject);
+    procedure TfrmCalcMain.btnClearEntryClick(Sender: TObject);
     begin
       Accumulator := 0;
       UpdateDisplay;
     end;
 
     { - Clear current entry and memory (Accumulator and MemAcc) }
-    procedure TCalcForm.btnClearClick(Sender: TObject);
+    procedure TfrmCalcMain.btnClearClick(Sender: TObject);
     begin
       Accumulator := 0;
       UpdateDisplay;
@@ -388,7 +388,7 @@ var
     end;
 
     { Delete last digit entered }
-    procedure TCalcForm.btnBackClick(Sender: TObject);
+    procedure TfrmCalcMain.btnBackClick(Sender: TObject);
     begin
       if DecEntry then
         Delete(DecString, Length(DecString), 1)
@@ -401,7 +401,7 @@ var
     end;
 
     { - Translate keypresses into button clicks }
-    procedure TCalcForm.FormKeyPress(Sender: TObject; var Key: Char);
+    procedure TfrmCalcMain.FormKeyPress(Sender: TObject; var Key: Char);
     var
       Button: TButton;
     begin
@@ -436,7 +436,7 @@ var
 
     { - Respond to click of an operator button (* / + - and or xor) }
     { - Start math operation }
-    procedure TCalcForm.OpButtonClick(Sender: TObject);
+    procedure TfrmCalcMain.OpButtonClick(Sender: TObject);
     begin
       if aOperator <> opNo then
         btnEqualsClick(Sender);
@@ -448,7 +448,7 @@ var
       end;
 
       { - Respond to click of equal button. Complete math operation. }
-      procedure TCalcForm.btnEqualsClick(Sender: TObject);
+      procedure TfrmCalcMain.btnEqualsClick(Sender: TObject);
       begin
         try
           case aOperator of
@@ -483,21 +483,21 @@ var
         end;
 
         { - Respond to +/- button click }
-        procedure TCalcForm.btnNegateClick(Sender: TObject);
+        procedure TfrmCalcMain.btnNegateClick(Sender: TObject);
         begin
           Accumulator := -Accumulator;
           UpdateDisplay;
         end;
 
         { - Respond to NOT button click }
-        procedure TCalcForm.btnNotClick(Sender: TObject);
+        procedure TfrmCalcMain.btnNotClick(Sender: TObject);
         begin
           Accumulator := not Accumulator;
           UpdateDisplay;
         end;
 
         { - Copy current radix string to clipboard }
-        procedure TCalcForm.Copy1Click(Sender: TObject);
+        procedure TfrmCalcMain.Copy1Click(Sender: TObject);
         begin
           if DecEntry then
             Clipboard.AsText := DecString
@@ -508,7 +508,7 @@ var
         end;
 
         { - Paste clipboard text to current radix string }
-        procedure TCalcForm.Paste1Click(Sender: TObject);
+        procedure TfrmCalcMain.Paste1Click(Sender: TObject);
         begin
           if Clipboard.HasFormat(cf_Text) then
           begin
@@ -523,9 +523,9 @@ var
           end;
         end;
 
-        procedure TCalcForm.About1Click(Sender: TObject);
+        procedure TfrmCalcMain.About1Click(Sender: TObject);
         begin
-          AboutForm.ShowModal;
+          frmCalcAbout.ShowModal;
         end;
 
 end.

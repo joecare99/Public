@@ -1,35 +1,38 @@
-object AboutForm: TAboutForm
+object frmCalcAbout: TfrmCalcAbout
   Left = 452
-  Height = 169
+  Height = 254
   Top = 188
-  Width = 298
+  Width = 447
   ActiveControl = OKButton
   BorderStyle = bsDialog
   Caption = 'About'
-  ClientHeight = 169
-  ClientWidth = 298
+  ClientHeight = 254
+  ClientWidth = 447
   Color = clBtnFace
+  DesignTimePPI = 144
   Font.Color = clWindowText
-  Font.Height = -13
+  Font.Height = -20
   Font.Name = 'System'
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
-  Visible = False
   object Panel1: TPanel
-    Left = 8
-    Height = 113
-    Top = 8
-    Width = 281
+    Left = 12
+    Height = 170
+    Top = 12
+    Width = 422
     BevelInner = bvRaised
     BevelOuter = bvLowered
-    ClientHeight = 113
-    ClientWidth = 281
+    ClientHeight = 170
+    ClientWidth = 422
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'System'
+    ParentFont = False
     TabOrder = 0
     object ProgramIcon: TImage
-      Left = 8
-      Height = 57
-      Top = 8
-      Width = 65
+      Left = 12
+      Height = 86
+      Top = 12
+      Width = 98
       Picture.Data = {
         07544269746D6170F6000000424DF60000000000000076000000280000001000
         0000100000000100040000000000800000000000000000000000100000000000
@@ -44,26 +47,26 @@ object AboutForm: TAboutForm
       Stretch = True
     end
     object ProductName: TLabel
-      Left = 88
-      Height = 13
-      Top = 16
-      Width = 40
+      Left = 132
+      Height = 20
+      Top = 24
+      Width = 56
       Caption = 'Calc32'
       Font.Color = clBlack
-      Font.Height = -11
+      Font.Height = -17
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
     end
     object Version: TLabel
-      Left = 88
-      Height = 13
-      Top = 40
-      Width = 65
+      Left = 132
+      Height = 20
+      Top = 60
+      Width = 92
       Caption = 'Version 1.1'
       Font.Color = clBlack
-      Font.Height = -11
+      Font.Height = -17
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentColor = False
@@ -71,13 +74,13 @@ object AboutForm: TAboutForm
       OnClick = VersionClick
     end
     object Copyright: TLabel
-      Left = 41
-      Height = 13
-      Top = 80
-      Width = 197
+      Left = 62
+      Height = 20
+      Top = 120
+      Width = 278
       Caption = 'Inspired by Calc32 from Tom Swan'
       Font.Color = clBlack
-      Font.Height = -11
+      Font.Height = -17
       Font.Name = 'MS Sans Serif'
       Font.Style = [fsBold]
       ParentColor = False
@@ -85,13 +88,13 @@ object AboutForm: TAboutForm
     end
   end
   object OKButton: TBitBtn
-    Left = 96
-    Height = 47
-    Top = 122
-    Width = 108
+    Left = 144
+    Height = 70
+    Top = 183
+    Width = 162
     Caption = 'Ok'
     Font.Color = clBlack
-    Font.Height = -11
+    Font.Height = -17
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
     Kind = bkOK
