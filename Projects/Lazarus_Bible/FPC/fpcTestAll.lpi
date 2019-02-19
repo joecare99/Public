@@ -21,7 +21,7 @@
             <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($project(Infofile))"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir)"/>
+            <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
             <OtherUnitFiles Value="..\source\tests;..\source\AboutEx;..\source\Actions;..\source\Addpage;..\source\Barchart;..\source\Bitview;..\source\Bitview2"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
@@ -115,7 +115,9 @@
       <Unit7>
         <Filename Value="..\source\Addpage\Frm_AddpageMAIN.PAS"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmAddPageMain"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit7>
       <Unit8>
         <Filename Value="..\source\Barchart\Frm_BartestMain2.pas"/>
