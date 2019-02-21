@@ -15,6 +15,7 @@ uses
     tst_BitView,
     tst_BitView2,
     tst_Calc32,
+    tst_Calc64,
     tst_Something;
 
 {$R *.res}

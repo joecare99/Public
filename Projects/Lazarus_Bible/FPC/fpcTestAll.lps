@@ -4,11 +4,12 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Debug"/>
-    <Units Count="24">
+    <Units Count="26">
       <Unit0>
         <Filename Value="fpcTestAll.lpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="16" Y="17"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="16" Y="18"/>
         <UsageCount Value="22"/>
         <Loaded Value="True"/>
       </Unit0>
@@ -211,12 +212,30 @@
       </Unit22>
       <Unit23>
         <Filename Value="Addpage.dpr"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="7"/>
         <CursorPos X="26" Y="22"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
       </Unit23>
+      <Unit24>
+        <Filename Value="..\source\tests\tst_Calc64.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="..\source\Calc32\Frm_CALC64.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit25>
     </Units>
     <JumpHistory Count="23" HistoryIndex="22">
       <Position1>
