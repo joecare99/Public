@@ -559,7 +559,7 @@ var
     CheckEquals(inttobin($12345678,64) ,frmCalc64Main.BinString,'Display: $12345678');
     frmCalc64Main.btnClearEntryClick(frmCalc64Main.btnClearEntry);
     CheckEquals('0000000000000000',frmCalc64Main.HexString,'Display: 0');
-    PunchInKey(integer($FEDCBA98));
+    PunchInKey(int64($FEDCBA98));
     CheckEquals(inttobin($FEDCBA98,64) ,frmCalc64Main.BinString,'Display: $FEDCBA98');
     lOrgCaption:= frmCalc64Main.Caption;
     FSleeptime:=5;

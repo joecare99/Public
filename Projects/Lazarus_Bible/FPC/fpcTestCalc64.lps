@@ -18,8 +18,8 @@
         <Filename Value="..\source\tests\tst_Calc64.pas"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="1148"/>
-        <CursorPos X="39" Y="1044"/>
+        <TopLine Value="545"/>
+        <CursorPos X="18" Y="564"/>
         <UsageCount Value="67"/>
         <Loaded Value="True"/>
       </Unit1>
