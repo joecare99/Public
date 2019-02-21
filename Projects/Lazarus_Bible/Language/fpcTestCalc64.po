@@ -1,0 +1,213 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tfrmcalc64main.about1.caption
+msgid "&About..."
+msgstr ""
+
+#: tfrmcalc64main.binbutton.caption
+msgid "&B"
+msgstr ""
+
+#: tfrmcalc64main.btn0.caption
+msgid "0"
+msgstr ""
+
+#: tfrmcalc64main.btn1.caption
+msgid "1"
+msgstr ""
+
+#: tfrmcalc64main.btn2.caption
+msgid "2"
+msgstr ""
+
+#: tfrmcalc64main.btn3.caption
+msgid "3"
+msgstr ""
+
+#: tfrmcalc64main.btn4.caption
+msgid "4"
+msgstr ""
+
+#: tfrmcalc64main.btn5.caption
+msgid "5"
+msgstr ""
+
+#: tfrmcalc64main.btn6.caption
+msgid "6"
+msgstr ""
+
+#: tfrmcalc64main.btn7.caption
+msgid "7"
+msgstr ""
+
+#: tfrmcalc64main.btn8.caption
+msgid "8"
+msgstr ""
+
+#: tfrmcalc64main.btn9.caption
+msgid "9"
+msgstr ""
+
+#: tfrmcalc64main.btna.caption
+msgid "A"
+msgstr ""
+
+#: tfrmcalc64main.btnand.caption
+msgid "AND"
+msgstr ""
+
+#: tfrmcalc64main.btnb.caption
+msgid "B"
+msgstr ""
+
+#: tfrmcalc64main.btnback.caption
+msgid "Back"
+msgstr ""
+
+#: tfrmcalc64main.btnc.caption
+msgctxt "tfrmcalc64main.btnc.caption"
+msgid "C"
+msgstr ""
+
+#: tfrmcalc64main.btnclear.caption
+msgctxt "tfrmcalc64main.btnclear.caption"
+msgid "C"
+msgstr ""
+
+#: tfrmcalc64main.btnclearentry.caption
+msgid "&CE"
+msgstr ""
+
+#: tfrmcalc64main.btnd.caption
+msgid "D"
+msgstr ""
+
+#: tfrmcalc64main.btndivide.caption
+msgid "/"
+msgstr ""
+
+#: tfrmcalc64main.btne.caption
+msgid "E"
+msgstr ""
+
+#: tfrmcalc64main.btnequals.caption
+msgid "="
+msgstr ""
+
+#: tfrmcalc64main.btnf.caption
+msgid "F"
+msgstr ""
+
+#: tfrmcalc64main.btnminus.caption
+msgid "-"
+msgstr ""
+
+#: tfrmcalc64main.btnmultiply.caption
+msgid "*"
+msgstr ""
+
+#: tfrmcalc64main.btnnegate.caption
+msgid "+/-"
+msgstr ""
+
+#: tfrmcalc64main.btnnot.caption
+msgid "NOT"
+msgstr ""
+
+#: tfrmcalc64main.btnor.caption
+msgid "OR"
+msgstr ""
+
+#: tfrmcalc64main.btnplus.caption
+msgid "+"
+msgstr ""
+
+#: tfrmcalc64main.btnpoint.caption
+msgid "."
+msgstr ""
+
+#: tfrmcalc64main.btnxor.caption
+msgid "XOR"
+msgstr ""
+
+#: tfrmcalc64main.calcexitmenuitem.caption
+msgid "E&xit"
+msgstr ""
+
+#: tfrmcalc64main.calcmenuitem.caption
+msgid "C&alc"
+msgstr ""
+
+#: tfrmcalc64main.caption
+msgid "Calculator 64"
+msgstr ""
+
+#: tfrmcalc64main.copy1.caption
+msgid "&Copy"
+msgstr ""
+
+#: tfrmcalc64main.decbutton.caption
+msgid "&D"
+msgstr ""
+
+#: tfrmcalc64main.edit1.caption
+msgid "&Edit"
+msgstr ""
+
+#: tfrmcalc64main.help1.caption
+msgid "He&lp"
+msgstr ""
+
+#: tfrmcalc64main.hexbutton.caption
+msgid "&H"
+msgstr ""
+
+#: tfrmcalc64main.lblbinary.caption
+msgctxt "tfrmcalc64main.lblbinary.caption"
+msgid "1000 0000 0000 0000 0000 0000 0000 0000 0000"
+msgstr ""
+
+#: tfrmcalc64main.lbldecimal.caption
+msgctxt "tfrmcalc64main.lbldecimal.caption"
+msgid "-2.147.483.648 "
+msgstr ""
+
+#: tfrmcalc64main.lblhex.caption
+msgctxt "tfrmcalc64main.lblhex.caption"
+msgid "7FFF FFFF "
+msgstr ""
+
+#: tfrmcalc64main.lblmemory.caption
+msgctxt "tfrmcalc64main.lblmemory.caption"
+msgid "0 "
+msgstr ""
+
+#: tfrmcalc64main.membutton.caption
+msgid "M"
+msgstr ""
+
+#: tfrmcalc64main.paste1.caption
+msgid "&Paste"
+msgstr ""
+
+#: tfrmcalcabout.caption
+msgid "About"
+msgstr ""
+
+#: tfrmcalcabout.copyright.caption
+msgid "Inspired by Calc32 from Tom Swan"
+msgstr ""
+
+#: tfrmcalcabout.okbutton.caption
+msgid "Ok"
+msgstr ""
+
+#: tfrmcalcabout.productname.caption
+msgid "Calc32"
+msgstr ""
+
+#: tfrmcalcabout.version.caption
+msgid "Version 1.1"
+msgstr ""
+
