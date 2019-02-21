@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Debug"/>
-    <Units Count="10">
+    <Units Count="11">
       <Unit0>
         <Filename Value="fpcTestCalc32.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -12,15 +12,15 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="46"/>
+        <UsageCount Value="67"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\source\tests\tst_Calc32.pas"/>
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="85"/>
-        <CursorPos X="51" Y="121"/>
-        <UsageCount Value="46"/>
+        <TopLine Value="831"/>
+        <CursorPos X="49" Y="860"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
@@ -31,15 +31,15 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="435"/>
-        <CursorPos X="5" Y="462"/>
+        <TopLine Value="520"/>
+        <CursorPos X="30" Y="547"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
           <TopLine Value="-1"/>
           <CursorPos X="-1" Y="-1"/>
         </ExtraEditor1>
-        <UsageCount Value="46"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit2>
@@ -51,7 +51,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
         <WindowIndex Value="1"/>
-        <UsageCount Value="46"/>
+        <UsageCount Value="67"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit3>
@@ -61,7 +61,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="56"/>
         <CursorPos Y="85"/>
-        <UsageCount Value="7"/>
+        <UsageCount Value="5"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\source\tests\tst_AddPage.pas"/>
@@ -69,23 +69,23 @@
         <WindowIndex Value="1"/>
         <TopLine Value="77"/>
         <CursorPos X="19" Y="86"/>
-        <UsageCount Value="23"/>
+        <UsageCount Value="33"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\rtl\objpas\sysutils\sysstrh.inc"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <TopLine Value="83"/>
         <CursorPos X="11" Y="111"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="32"/>
         <Loaded Value="True"/>
       </Unit6>
       <Unit7>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\rtl\objpas\sysutils\sysstr.inc"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="774"/>
         <CursorPos X="2" Y="779"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="32"/>
         <Loaded Value="True"/>
       </Unit7>
       <Unit8>
@@ -95,7 +95,7 @@
         <WindowIndex Value="1"/>
         <TopLine Value="282"/>
         <CursorPos X="45" Y="299"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit8>
       <Unit9>
@@ -105,133 +105,138 @@
         <WindowIndex Value="1"/>
         <TopLine Value="1117"/>
         <CursorPos X="3" Y="1134"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit9>
+      <Unit10>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\rtl-objpas\src\inc\strutils.pp"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="169"/>
+        <CursorPos X="10" Y="196"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+      </Unit10>
     </Units>
-    <General>
-      <ActiveWindowIndexAtStart Value="1"/>
-    </General>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="423" TopLine="406"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="269" Column="41" TopLine="241"/>
       </Position1>
       <Position2>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="424" TopLine="406"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="519" Column="75" TopLine="471"/>
       </Position2>
       <Position3>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="447" TopLine="431"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="325" Column="56" TopLine="298"/>
       </Position3>
       <Position4>
         <Filename Value="..\source\tests\tst_Calc32.pas"/>
-        <Caret Line="113" TopLine="94"/>
+        <Caret Line="320" Column="71" TopLine="298"/>
       </Position4>
       <Position5>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="423" TopLine="406"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="330" Column="65" TopLine="298"/>
       </Position5>
       <Position6>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="424" TopLine="406"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="344" Column="68" TopLine="298"/>
       </Position6>
       <Position7>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="449" Column="42" TopLine="425"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="488" Column="65" TopLine="440"/>
       </Position7>
       <Position8>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="443" Column="26" TopLine="428"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="492" Column="65" TopLine="444"/>
       </Position8>
       <Position9>
         <Filename Value="..\source\tests\tst_Calc32.pas"/>
-        <Caret Line="113" TopLine="94"/>
+        <Caret Line="45" Column="35" TopLine="18"/>
       </Position9>
       <Position10>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="424" TopLine="407"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="59" Column="56" TopLine="50"/>
       </Position10>
       <Position11>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="425" TopLine="407"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="28" Column="22"/>
       </Position11>
       <Position12>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="448" TopLine="432"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="36" Column="20"/>
       </Position12>
       <Position13>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="449" Column="35" TopLine="432"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="635" Column="25" TopLine="589"/>
       </Position13>
       <Position14>
         <Filename Value="..\source\tests\tst_Calc32.pas"/>
-        <Caret Line="113" TopLine="85"/>
+        <Caret Line="581" Column="32" TopLine="553"/>
       </Position14>
       <Position15>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="424" TopLine="407"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="615" Column="45" TopLine="590"/>
       </Position15>
       <Position16>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="425" TopLine="407"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="620" Column="40" TopLine="594"/>
       </Position16>
       <Position17>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="448" TopLine="432"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="623" Column="37" TopLine="597"/>
       </Position17>
       <Position18>
         <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="32" Column="15" TopLine="18"/>
+        <Caret Line="137" Column="56" TopLine="108"/>
       </Position18>
       <Position19>
-        <Filename Value="C:\lazarus\lcl\buttons.pp"/>
-        <Caret Line="411" Column="34" TopLine="394"/>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="136" Column="23" TopLine="120"/>
       </Position19>
       <Position20>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="449" Column="14" TopLine="434"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="630" Column="67" TopLine="603"/>
       </Position20>
       <Position21>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="450" Column="28" TopLine="436"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="653" Column="26" TopLine="606"/>
       </Position21>
       <Position22>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="423" TopLine="402"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="659" Column="22" TopLine="617"/>
       </Position22>
       <Position23>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="447" Column="56" TopLine="431"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="38" Column="23"/>
       </Position23>
       <Position24>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="451" Column="41" TopLine="433"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="840" Column="21" TopLine="806"/>
       </Position24>
       <Position25>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="453" Column="18" TopLine="437"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="777" TopLine="742"/>
       </Position25>
       <Position26>
-        <Filename Value="C:\lazarus\lcl\stdctrls.pp"/>
-        <Caret Line="1224" Column="26" TopLine="1208"/>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="512" Column="33" TopLine="498"/>
       </Position26>
       <Position27>
-        <Filename Value="C:\lazarus\lcl\stdctrls.pp"/>
-        <Caret Line="1171" Column="33" TopLine="1154"/>
+        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
+        <Caret Line="547" Column="30" TopLine="520"/>
       </Position27>
       <Position28>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="449" Column="15" TopLine="437"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="777" TopLine="742"/>
       </Position28>
       <Position29>
         <Filename Value="..\source\tests\tst_Calc32.pas"/>
-        <Caret Line="113" TopLine="85"/>
+        <Caret Line="778" TopLine="742"/>
       </Position29>
       <Position30>
-        <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
-        <Caret Line="462" Column="30" TopLine="438"/>
+        <Filename Value="..\source\tests\tst_Calc32.pas"/>
+        <Caret Line="39" Column="22"/>
       </Position30>
     </JumpHistory>
     <RunParams>

@@ -29,10 +29,6 @@ msgstr ""
 msgid "&B"
 msgstr ""
 
-#: tfrmcalcmain.binlabel.caption
-msgid "10000000000000000000000000000000 "
-msgstr ""
-
 #: tfrmcalcmain.btn0.caption
 msgid "0"
 msgstr ""
@@ -175,10 +171,6 @@ msgstr ""
 msgid "&D"
 msgstr ""
 
-#: tfrmcalcmain.declabel.caption
-msgid "-2147483648 "
-msgstr ""
-
 #: tfrmcalcmain.edit1.caption
 msgid "&Edit"
 msgstr ""
@@ -191,16 +183,33 @@ msgstr ""
 msgid "&H"
 msgstr ""
 
-#: tfrmcalcmain.hexlabel.caption
+#: tfrmcalcmain.lblbinary.caption
+msgctxt "tfrmcalcmain.lblbinary.caption"
+msgid "1000 0000 0000 0000 0000 0000 0000 0000 "
+msgstr ""
+
+#: tfrmcalcmain.lbldecimal.caption
+msgctxt "tfrmcalcmain.lbldecimal.caption"
+msgid "-2147483648 "
+msgstr ""
+
+#: tfrmcalcmain.lblhex.caption
+msgctxt "tfrmcalcmain.lblhex.caption"
 msgid "7FFFFFFF "
+msgstr ""
+
+#: tfrmcalcmain.lblmemory.caption
+msgctxt "tfrmcalcmain.lblmemory.caption"
+msgid "0 "
+msgstr ""
+
+#: tfrmcalcmain.lblopation.caption
+msgctxt "tfrmcalcmain.lblopation.caption"
+msgid " "
 msgstr ""
 
 #: tfrmcalcmain.membutton.caption
 msgid "M"
-msgstr ""
-
-#: tfrmcalcmain.memlabel.caption
-msgid "0 "
 msgstr ""
 
 #: tfrmcalcmain.paste1.caption
