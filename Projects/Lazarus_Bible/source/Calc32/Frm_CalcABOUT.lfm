@@ -1,12 +1,11 @@
 object frmCalcAbout: TfrmCalcAbout
   Left = 452
-  Height = 254
+  Height = 300
   Top = 188
   Width = 447
-  ActiveControl = OKButton
   BorderStyle = bsDialog
   Caption = 'About'
-  ClientHeight = 254
+  ClientHeight = 300
   ClientWidth = 447
   Color = clBtnFace
   DesignTimePPI = 144
@@ -14,25 +13,25 @@ object frmCalcAbout: TfrmCalcAbout
   Font.Height = -20
   Font.Name = 'System'
   Position = poScreenCenter
-  object Panel1: TPanel
+  object pnlInfo: TPanel
     Left = 12
-    Height = 170
+    Height = 212
     Top = 12
-    Width = 422
+    Width = 423
     BevelInner = bvRaised
     BevelOuter = bvLowered
-    ClientHeight = 170
-    ClientWidth = 422
+    ClientHeight = 212
+    ClientWidth = 423
     Font.Color = clWindowText
     Font.Height = -20
     Font.Name = 'System'
     ParentFont = False
     TabOrder = 0
-    object ProgramIcon: TImage
-      Left = 12
-      Height = 86
-      Top = 12
-      Width = 98
+    object icoProgramIcon: TImage
+      Left = 18
+      Height = 128
+      Top = 24
+      Width = 128
       Picture.Data = {
         07544269746D6170F6000000424DF60000000000000076000000280000001000
         0000100000000100040000000000800000000000000000000000100000000000
@@ -46,8 +45,8 @@ object frmCalcAbout: TfrmCalcAbout
       }
       Stretch = True
     end
-    object ProductName: TLabel
-      Left = 132
+    object lblProductName: TLabel
+      Left = 172
       Height = 20
       Top = 24
       Width = 56
@@ -59,10 +58,10 @@ object frmCalcAbout: TfrmCalcAbout
       ParentColor = False
       ParentFont = False
     end
-    object Version: TLabel
-      Left = 132
+    object lblVersion: TLabel
+      Left = 172
       Height = 20
-      Top = 60
+      Top = 52
       Width = 92
       Caption = 'Version 1.1'
       Font.Color = clBlack
@@ -71,12 +70,12 @@ object frmCalcAbout: TfrmCalcAbout
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      OnClick = VersionClick
+      OnClick = lblVersionClick
     end
-    object Copyright: TLabel
+    object lblCopyright: TLabel
       Left = 62
       Height = 20
-      Top = 120
+      Top = 176
       Width = 278
       Caption = 'Inspired by Calc32 from Tom Swan'
       Font.Color = clBlack
@@ -86,22 +85,62 @@ object frmCalcAbout: TfrmCalcAbout
       ParentColor = False
       ParentFont = False
     end
+    object lblApplicationName: TLabel
+      Left = 172
+      Height = 20
+      Top = 80
+      Width = 99
+      Caption = '<AppName>'
+      Font.Color = clBlack
+      Font.Height = -17
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      OnClick = lblVersionClick
+    end
+    object lblVendorName: TLabel
+      Left = 172
+      Height = 20
+      Top = 108
+      Width = 79
+      Caption = '<Vendor>'
+      Font.Color = clBlack
+      Font.Height = -17
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      OnClick = lblVersionClick
+    end
+    object lblURL: TLabel
+      Cursor = crHandPoint
+      Left = 172
+      Height = 20
+      Top = 136
+      Width = 51
+      Caption = '<URL>'
+      Font.Color = clBlue
+      Font.Height = -17
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsUnderline]
+      ParentColor = False
+      ParentFont = False
+      OnClick = lblURLClick
+    end
   end
-  object OKButton: TBitBtn
-    Left = 144
-    Height = 70
-    Top = 183
-    Width = 162
-    Caption = 'Ok'
-    Font.Color = clBlack
-    Font.Height = -17
-    Font.Name = 'MS Sans Serif'
-    Font.Style = [fsBold]
+  object btnOK: TBitBtn
+    Left = 12
+    Height = 55
+    Top = 233
+    Width = 423
+    Align = alBottom
+    BorderSpacing.Around = 12
+    Default = True
+    DefaultCaption = True
     Kind = bkOK
-    Margin = 2
+    ModalResult = 1
     OnClick = OKButtonClick
-    ParentFont = False
-    Spacing = 5
     TabOrder = 1
   end
 end

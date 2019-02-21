@@ -17,14 +17,26 @@ uses
   Clipbrd, ActnList, Frm_CalcABOUT ;
 
 type
+      TEnumOperations =(
+  opNo = 0, { Operators = button Tag properties }
+  opMultiply = -1,
+  opDivide = -2,
+  opAdd = -3,
+  opSubtract = -4,
+  opAnd = -5,
+  opOr = -6,
+  opXor = -7);
 
   { TfrmCalcMain }
 
   TfrmCalcMain = class(TForm)
     BinBevel: TPanel;
+    btnClose: TBitBtn;
+    btnEquals: TButton;
     DecBevel: TPanel;
     HexBevel: TPanel;
     MemBevel: TPanel;
+    OpBevel: TPanel;
     MemButton: TSpeedButton;
     DecButton: TSpeedButton;
     HexButton: TSpeedButton;
@@ -41,7 +53,6 @@ type
     btn0: TSpeedButton;
     btnPoint: TSpeedButton;
     btnNegate: TSpeedButton;
-    btnEquals: TSpeedButton;
     btnA: TSpeedButton;
     btnB: TSpeedButton;
     btnC: TSpeedButton;
@@ -59,10 +70,10 @@ type
     CalcMainMenu: TMainMenu;
     CalcMenuItem: TMenuItem;
     CalcExitMenuItem: TMenuItem;
-    MemLabel: TLabel;
-    DecLabel: TLabel;
-    HexLabel: TLabel;
-    BinLabel: TLabel;
+    lblMemory: TLabel;
+    lblDecimal: TLabel;
+    lblHex: TLabel;
+    lblBinary: TLabel;
     LineBevel: TBevel;
     btnClear: TSpeedButton;
     btnClearEntry: TSpeedButton;
@@ -70,9 +81,10 @@ type
     Help1: TMenuItem;
     About1: TMenuItem;
     Edit1: TMenuItem;
+    lblOpation: TLabel;
+    pnlDisplay: TPanel;
     Paste1: TMenuItem;
     Copy1: TMenuItem;
-    BitBtn1: TBitBtn;
     ActionList1: TActionList;
     procedure CalcExitMenuItemClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -87,6 +99,7 @@ type
     procedure btnNegateClick(Sender: TObject);
     procedure btnNotClick(Sender: TObject);
     procedure Copy1Click(Sender: TObject);
+    procedure lblOpationClick(Sender: TObject);
     procedure Paste1Click(Sender: TObject);
     procedure About1Click(Sender: TObject);
   private
@@ -94,8 +107,18 @@ type
     DecEntry, HexEntry, BinEntry: Boolean;
     { - Negate-Flage for negative Entry }
     FNegFlag :boolean;
+
+    FAccumulator: Longint; { Current result }
+    FMemAcc: Longint; { Memory result }
+    FOperator: TEnumOperations; { opX constant }
+    FDecString: String; { Result in decimal }
+    FHexString: String; { Result in hex }
+    FBinString: String; { Result in binary }
+
     { - Enable and disable buttons depending on Entry radix }
     procedure EnableButtons;
+    function GetValue: integer;
+    procedure SetValue(AValue: integer);
     { - Update Dec, Hex, and Bin Labels from Accumulator }
     procedure UpdateDisplay;
     { - Update Accumulator value from current entry string }
@@ -106,6 +129,11 @@ type
     procedure ShowError(const Msg: String);
   public
     { Public declarations }
+    property Value:integer read GetValue write SetValue;
+    property DecString:String read FDecString;
+    property HexString:String read FHexString;
+    property BinString:String read FBinString;
+    property Operation:TEnumOperations read FOperator;
   end;
 
 var
@@ -113,24 +141,24 @@ var
 
 implementation
 
+uses strutils;
 {$IFnDEF FPC}
   {$R *.dfm}
 {$ELSE}
   {$R *.lfm}
 {$ENDIF}
 
-type
-    TEnumOperations =(
-  opNo = 0, { Operators = button Tag properties }
-  opMultiply = -1,
-  opDivide = -2,
-  opAdd = -3,
-  opSubtract = -4,
-  opAnd = -5,
-  opOr = -6,
-  opXor = -7);
 
 const
+  OpDisplay:array[TEnumOperations] of string =
+  ('><',
+   '\/',
+   '/\',
+   '-',
+   '+',
+   '/',
+   '*',
+   ' ');
 
   { -2147483648 }
   maxDecDigits = 11; { Maximum number of decimal digits }
@@ -141,34 +169,7 @@ const
 
   asciiEsc = #27; { Ascii escape control code }
   asciiEnter = #13; { Ascii enter control code }
-
-var
-  Accumulator: Longint; { Current result }
-  MemAcc: Longint; { Memory result }
-  aOperator: TEnumOperations; { opX constant }
-  DecString: String; { Result in decimal }
-  HexString: String; { Result in hex }
-  BinString: String; { Result in binary }
-
-{ - Global procedures -- for Xtrastuff??? }
-
-{ Convert integer Value to binary string limited to Digits }
-  function IntToBin(Value: Longint; Digits: Integer): String;
-  var
-    S: String;
-  begin
-    S := ''; { Initialize string to null }
-    while Digits > 0 do
-    begin
-      if Odd(Value) then
-        S := '1' + S
-      else
-        S := '0' + S;
-      Value := Value shr 1;
-      Dec(Digits);
-    end;
-    Result := S; { Return S as function result }
-  end;
+  asciiDel = #8; { Ascii del control code }
 
 { Convert string S in decimal to Longint value }
   function StringToInt(const S: String): Longint;
@@ -222,6 +223,7 @@ var
     { - Assume binary radix }
     btn0.Enabled := True;
     btn1.Enabled := True;
+
     btn2.Enabled := False;
     btn3.Enabled := False;
     btn4.Enabled := False;
@@ -270,21 +272,45 @@ var
       BinButton.Down := True;
   end;
 
+function TfrmCalcMain.GetValue: integer;
+begin
+  Result := FAccumulator;
+end;
+
+procedure TfrmCalcMain.SetValue(AValue: integer);
+begin
+  FAccumulator:= AValue;
+  UpdateDisplay;
+end;
+
 { Update global strings and Label captions from Accumulator }
   procedure TfrmCalcMain.UpdateDisplay;
+  var
+    lClaption: String;
+    i: Integer;
   begin
-    { - Convert accumulator value to strings }
-    if not FNegFlag or (Accumulator<>0) then
-      DecString := IntToStr(Accumulator)+' '
+    { - Convert FAccumulator value to strings }
+    if not FNegFlag or (FAccumulator<>0) then
+      FDecString := IntToStr(FAccumulator)
     else
-      DecString := '-'+IntToStr(Accumulator)+' ';
+      FDecString := '-'+IntToStr(FAccumulator);
 
-    HexString := IntToHex(Accumulator, maxHexDigits)+' ';
-    BinString := IntToBin(Accumulator, maxBinDigits)+' ';
+    FHexString := IntToHex(FAccumulator, maxHexDigits);
+    FBinString := intTobin(FAccumulator, maxBinDigits);
     { - Assign strings to Label object Captions }
-    DecLabel.Caption := DecString;
-    HexLabel.Caption := HexString;
-    BinLabel.Caption := BinString;
+    lClaption := FDecString;
+    for i := 1 to (length(inttostr(abs(FAccumulator)))-1) div 3  do
+      Insert('.',lClaption,length(lClaption)+2-i*4);
+    lblDecimal.Caption := lClaption+' ';
+    lClaption := FHexString;
+    for i := 1 to (length(FHexString)-1) div 4  do
+      Insert(' ',lClaption,length(lClaption)+2-i*5);
+    lblHex.Caption := lClaption+' ';
+    lClaption := FBinString;
+    for i := 1 to (length(FBinString)-1) div 4  do
+      Insert(' ',lClaption,length(lClaption)+2-i*5);
+    lblBinary.Caption := lClaption+' ';
+    lblOpation.Caption:=OpDisplay[FOperator];
   end;
 
 { - Update Accumulator value from current entry string }
@@ -292,11 +318,11 @@ var
   begin
     try
       if DecEntry then
-        Accumulator := StringToInt(DecString)
+        FAccumulator := StringToInt(FDecString)
       else if HexEntry then
-        Accumulator := StringToHex(HexString)
+        FAccumulator := StringToHex(FHexString)
       else if BinEntry then
-        Accumulator := StringToBin(BinString);
+        FAccumulator := StringToBin(FBinString);
     except
       on E: EIntError do
         ShowError(E.Message);
@@ -306,8 +332,8 @@ var
 { - Assign V to MemAcc and update Memory display line }
   procedure TfrmCalcMain.SetMemAcc(V: Longint);
   begin
-    MemAcc := V;
-    MemLabel.Caption := IntToStr(MemAcc)+' ';
+    FMemAcc := V;
+    lblMemory.Caption := IntToStr(FMemAcc)+' ';
   end;
 
 { - Display error message string }
@@ -325,10 +351,10 @@ var
 { - Initialize program on form's creation }
   procedure TfrmCalcMain.FormCreate(Sender: TObject);
   begin
-    Accumulator := 0; { Zero accumulator }    { -2147483647 - 1; }
-    MemAcc := 0; { Zero intermediate accumulator }
+    FAccumulator := 0; { Zero FAccumulator }    { -2147483647 - 1; }
+    FMemAcc := 0; { Zero intermediate FAccumulator }
 
-    aOperator := opNo; { No operation in effect }
+    FOperator := opNo; { No operation in effect }
     DecEntry := True; { Assume Decimal radix initially }
     HexEntry := False; { Turn off Hex entry }
     BinEntry := False; { Turn off Binary entry }
@@ -340,32 +366,32 @@ var
     procedure TfrmCalcMain.ButtonDigitClick(Sender: TObject);
     begin
       { - Ignore button clicks if accumulators are full }
-      if DecEntry  and ( -abs(Accumulator) < -MaxInt div 10) then
+      if DecEntry  and ( -abs(FAccumulator) < -(MaxInt div 10)) then
         Exit;
-      if hexEntry  and (( Accumulator and $f0000000 )<> 0) then
+      if hexEntry  and (( FAccumulator and $f0000000 )<> 0) then
         Exit;
-      if binEntry  and ( Accumulator < 0) then
+      if binEntry  and ( FAccumulator < 0) then
         Exit;
       { - Append button tag to end of strings }
       with Sender as TSpeedButton do
       begin
         if DecEntry and not FNegFlag then
-          DecString := trim(DecString) + IntToStr(Tag)
+          FDecString := trim(FDecString) + IntToStr(Tag)
         else if DecEntry and FNegFlag then
           begin
-            DecString := '-' + IntToStr(Tag);
+            FDecString := '-' + IntToStr(Tag);
             if Tag> 0 then
               FNegFlag:=false;
           end
         else if HexEntry then
         begin
-          Delete(HexString, 1, 1);
-          HexString := trim(HexString) + IntToHex(Tag, 1);
+          Delete(FHexString, 1, 1);
+          FHexString := trim(FHexString) + IntToHex(Tag, 1);
         end
         else if BinEntry then
         begin
-          Delete(BinString, 1, 1);
-          BinString := trim(BinString) + IntToBin(Tag, 1);
+          Delete(FBinString, 1, 1);
+          FBinString := trim(FBinString) + IntToBin(Tag, 1);
         end;
       end;
       UpdateAccumulator; { Convert entry string to Longint value }
@@ -391,14 +417,14 @@ var
     { - Clear current entry (Accumulator) only }
     procedure TfrmCalcMain.btnClearEntryClick(Sender: TObject);
     begin
-      Accumulator := 0;
+      FAccumulator := 0;
       UpdateDisplay;
     end;
 
     { - Clear current entry and memory (Accumulator and MemAcc) }
     procedure TfrmCalcMain.btnClearClick(Sender: TObject);
     begin
-      Accumulator := 0;
+      FAccumulator := 0;
       UpdateDisplay;
       SetMemAcc(0);
     end;
@@ -407,11 +433,11 @@ var
     procedure TfrmCalcMain.btnBackClick(Sender: TObject);
     begin
       if DecEntry then
-        Delete(DecString, Length(DecString), 1)
+        Delete(FDecString, Length(FDecString), 1)
       else if HexEntry then
-        Delete(HexString, Length(HexString), 1)
+        Delete(FHexString, Length(FHexString), 1)
       else if BinEntry then
-        Delete(BinString, Length(BinString), 1);
+        Delete(FBinString, Length(FBinString), 1);
       UpdateAccumulator; { Convert entry string to Longint value }
       UpdateDisplay; { Update display result labels }
     end;
@@ -432,13 +458,18 @@ var
             btnEqualsClick(Sender);
             key :=#0;
           end;
+        asciiDel:
+          begin
+            btnBackClick(Sender);
+            key :=#0;
+          end;
         '*':
           btnMultiply.Click;
         '/':
           btnDivide.Click;
         '+':
           btnPlus.Click;
-        '-':if Accumulator=0 then
+        '-':if FAccumulator=0 then
           btnNegate.Click
         else
           btnMinus.Click;
@@ -455,12 +486,12 @@ var
     { - Start math operation }
     procedure TfrmCalcMain.OpButtonClick(Sender: TObject);
     begin
-      if aOperator <> opNo then
+      if FOperator <> opNo then
         btnEqualsClick(Sender);
-      SetMemAcc(Accumulator);
+      SetMemAcc(FAccumulator);
       if sender.InheritsFrom(TControl) then
-        aOperator := TEnumOperations(TControl(Sender).Tag);
-      Accumulator := 0;
+        FOperator := TEnumOperations(TControl(Sender).Tag);
+      FAccumulator := 0;
       UpdateDisplay;
       end;
 
@@ -468,21 +499,21 @@ var
       procedure TfrmCalcMain.btnEqualsClick(Sender: TObject);
       begin
         try
-          case aOperator of
+          case FOperator of
             opMultiply:
-              Accumulator := MemAcc * Accumulator;
+              FAccumulator := FMemAcc * FAccumulator;
             opDivide:
-              Accumulator := MemAcc div Accumulator;
+              FAccumulator := FMemAcc div FAccumulator;
             opAdd:
-              Accumulator := MemAcc + Accumulator;
+              FAccumulator := FMemAcc + FAccumulator;
             opSubtract:
-              Accumulator := MemAcc - Accumulator;
+              FAccumulator := FMemAcc - FAccumulator;
             opAnd:
-              Accumulator := MemAcc and Accumulator;
+              FAccumulator := FMemAcc and FAccumulator;
             opOr:
-              Accumulator := MemAcc or Accumulator;
+              FAccumulator := FMemAcc or FAccumulator;
             opXor:
-              Accumulator := MemAcc xor Accumulator;
+              FAccumulator := FMemAcc xor FAccumulator;
           end;
         except
           on E: EIntError do
@@ -495,15 +526,15 @@ var
         end;
         UpdateDisplay;
 
-        aOperator := opNo;
+        FOperator := opNo;
         SetMemAcc(0);
         end;
 
         { - Respond to +/- button click }
         procedure TfrmCalcMain.btnNegateClick(Sender: TObject);
         begin
-          if Accumulator <> 0 then
-             Accumulator := -Accumulator
+          if FAccumulator <> 0 then
+             FAccumulator := -FAccumulator
           else
              FNegFlag := not FNegFlag;
           UpdateDisplay;
@@ -512,6 +543,7 @@ var
         { - Respond to NOT button click }
         procedure TfrmCalcMain.btnNotClick(Sender: TObject);
         begin
+          FAccumulator := not FAccumulator;
           UpdateDisplay;
         end;
 
@@ -519,12 +551,17 @@ var
         procedure TfrmCalcMain.Copy1Click(Sender: TObject);
         begin
           if DecEntry then
-            Clipboard.AsText := DecString
+            Clipboard.AsText := FDecString
           else if HexEntry then
-            Clipboard.AsText := HexString
+            Clipboard.AsText := FHexString
           else if BinEntry then
-            Clipboard.AsText := BinString
+            Clipboard.AsText := FBinString
         end;
+
+procedure TfrmCalcMain.lblOpationClick(Sender: TObject);
+begin
+
+end;
 
         { - Paste clipboard text to current radix string }
         procedure TfrmCalcMain.Paste1Click(Sender: TObject);
@@ -532,11 +569,11 @@ var
           if Clipboard.HasFormat(cf_Text) then
           begin
             if DecEntry then
-              DecString := Clipboard.AsText
+              FDecString := Clipboard.AsText
             else if HexEntry then
-              HexString := Clipboard.AsText
+              FHexString := Clipboard.AsText
             else if BinEntry then
-              BinString := Clipboard.AsText;
+              FBinString := Clipboard.AsText;
             UpdateAccumulator;
             UpdateDisplay;
           end;

@@ -2,11 +2,10 @@ object frmCalcMain: TfrmCalcMain
   Left = 198
   Height = 542
   Top = 100
-  Width = 634
-  ActiveControl = BitBtn1
+  Width = 720
   Caption = 'Calculator 32'
   ClientHeight = 542
-  ClientWidth = 634
+  ClientWidth = 720
   Color = clBtnFace
   DesignTimePPI = 144
   Font.Color = clWindowText
@@ -16,61 +15,9 @@ object frmCalcMain: TfrmCalcMain
   Menu = CalcMainMenu
   OnCreate = FormCreate
   OnKeyPress = FormKeyPress
-  object MemButton: TSpeedButton
-    Left = 12
-    Height = 38
-    Top = 12
-    Width = 38
-    Caption = 'M'
-    Enabled = False
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'System'
-    ParentFont = False
-  end
-  object DecButton: TSpeedButton
-    Left = 12
-    Height = 38
-    Top = 60
-    Width = 38
-    Caption = '&D'
-    Down = True
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'System'
-    GroupIndex = 1
-    OnClick = DecHexBinButtonClick
-    ParentFont = False
-  end
-  object HexButton: TSpeedButton
-    Left = 12
-    Height = 38
-    Top = 108
-    Width = 38
-    Caption = '&H'
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'System'
-    GroupIndex = 1
-    OnClick = DecHexBinButtonClick
-    ParentFont = False
-  end
-  object BinButton: TSpeedButton
-    Left = 12
-    Height = 38
-    Top = 156
-    Width = 38
-    Caption = '&B'
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'System'
-    GroupIndex = 1
-    OnClick = DecHexBinButtonClick
-    ParentFont = False
-  end
   object btn7: TSpeedButton
     Tag = 7
-    Left = 345
+    Left = 421
     Height = 45
     Top = 312
     Width = 52
@@ -85,7 +32,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btn8: TSpeedButton
     Tag = 8
-    Left = 405
+    Left = 481
     Height = 45
     Top = 312
     Width = 52
@@ -100,7 +47,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btn9: TSpeedButton
     Tag = 9
-    Left = 465
+    Left = 541
     Height = 45
     Top = 312
     Width = 52
@@ -115,7 +62,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btn4: TSpeedButton
     Tag = 4
-    Left = 345
+    Left = 421
     Height = 45
     Top = 360
     Width = 52
@@ -130,7 +77,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btn5: TSpeedButton
     Tag = 5
-    Left = 405
+    Left = 481
     Height = 45
     Top = 360
     Width = 52
@@ -145,7 +92,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btn6: TSpeedButton
     Tag = 6
-    Left = 465
+    Left = 541
     Height = 45
     Top = 360
     Width = 52
@@ -160,7 +107,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btn1: TSpeedButton
     Tag = 1
-    Left = 345
+    Left = 421
     Height = 45
     Top = 408
     Width = 52
@@ -175,7 +122,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btn2: TSpeedButton
     Tag = 2
-    Left = 405
+    Left = 481
     Height = 45
     Top = 408
     Width = 52
@@ -190,7 +137,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btn3: TSpeedButton
     Tag = 3
-    Left = 465
+    Left = 541
     Height = 45
     Top = 408
     Width = 52
@@ -204,7 +151,7 @@ object frmCalcMain: TfrmCalcMain
     ParentFont = False
   end
   object btn0: TSpeedButton
-    Left = 345
+    Left = 421
     Height = 45
     Top = 456
     Width = 52
@@ -218,7 +165,7 @@ object frmCalcMain: TfrmCalcMain
     ParentFont = False
   end
   object btnNegate: TSpeedButton
-    Left = 405
+    Left = 481
     Height = 45
     Top = 456
     Width = 52
@@ -231,23 +178,9 @@ object frmCalcMain: TfrmCalcMain
     OnClick = btnNegateClick
     ParentFont = False
   end
-  object btnEquals: TSpeedButton
-    Left = 285
-    Height = 93
-    Top = 408
-    Width = 52
-    AllowAllUp = True
-    Caption = '='
-    Color = 16250871
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'System'
-    OnClick = btnEqualsClick
-    ParentFont = False
-  end
   object btnA: TSpeedButton
     Tag = 10
-    Left = 345
+    Left = 421
     Height = 45
     Top = 264
     Width = 52
@@ -263,7 +196,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btnB: TSpeedButton
     Tag = 11
-    Left = 405
+    Left = 481
     Height = 45
     Top = 264
     Width = 52
@@ -279,7 +212,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btnC: TSpeedButton
     Tag = 12
-    Left = 465
+    Left = 541
     Height = 45
     Top = 264
     Width = 52
@@ -295,7 +228,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btnD: TSpeedButton
     Tag = 13
-    Left = 345
+    Left = 421
     Height = 45
     Top = 216
     Width = 52
@@ -311,7 +244,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btnE: TSpeedButton
     Tag = 14
-    Left = 405
+    Left = 481
     Height = 45
     Top = 216
     Width = 52
@@ -327,7 +260,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btnF: TSpeedButton
     Tag = 15
-    Left = 465
+    Left = 541
     Height = 45
     Top = 216
     Width = 52
@@ -343,7 +276,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btnDivide: TSpeedButton
     Tag = -2
-    Left = 285
+    Left = 361
     Height = 45
     Top = 264
     Width = 52
@@ -358,7 +291,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btnMultiply: TSpeedButton
     Tag = -1
-    Left = 285
+    Left = 361
     Height = 45
     Top = 216
     Width = 52
@@ -373,7 +306,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btnMinus: TSpeedButton
     Tag = -4
-    Left = 285
+    Left = 361
     Height = 45
     Top = 360
     Width = 52
@@ -388,7 +321,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btnPlus: TSpeedButton
     Tag = -3
-    Left = 285
+    Left = 361
     Height = 45
     Top = 312
     Width = 52
@@ -403,7 +336,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btnAnd: TSpeedButton
     Tag = -5
-    Left = 525
+    Left = 601
     Height = 64
     Top = 216
     Width = 98
@@ -418,7 +351,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btnOr: TSpeedButton
     Tag = -6
-    Left = 525
+    Left = 601
     Height = 64
     Top = 290
     Width = 98
@@ -433,7 +366,7 @@ object frmCalcMain: TfrmCalcMain
   end
   object btnXor: TSpeedButton
     Tag = -7
-    Left = 525
+    Left = 601
     Height = 64
     Top = 363
     Width = 98
@@ -447,7 +380,7 @@ object frmCalcMain: TfrmCalcMain
     ParentFont = False
   end
   object btnNot: TSpeedButton
-    Left = 525
+    Left = 601
     Height = 64
     Top = 436
     Width = 98
@@ -460,15 +393,8 @@ object frmCalcMain: TfrmCalcMain
     OnClick = btnNotClick
     ParentFont = False
   end
-  object LineBevel: TBevel
-    Left = 12
-    Height = 14
-    Top = 192
-    Width = 610
-    Shape = bsBottomLine
-  end
   object btnClear: TSpeedButton
-    Left = 170
+    Left = 246
     Height = 45
     Top = 216
     Width = 104
@@ -481,7 +407,7 @@ object frmCalcMain: TfrmCalcMain
     ParentFont = False
   end
   object btnClearEntry: TSpeedButton
-    Left = 170
+    Left = 246
     Height = 45
     Top = 264
     Width = 104
@@ -506,57 +432,9 @@ object frmCalcMain: TfrmCalcMain
     OnClick = btnBackClick
     ParentFont = False
   end
-  object BitBtn1: TBitBtn
-    Left = 12
-    Height = 74
-    Top = 428
-    Width = 160
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'System'
-    Kind = bkClose
-    ParentFont = False
-    TabOrder = 1
-  end
-  object BinBevel: TPanel
-    Left = 60
-    Height = 42
-    Top = 156
-    Width = 562
-    BevelOuter = bvLowered
-    ClientHeight = 42
-    ClientWidth = 562
-    Color = 16777162
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'System'
-    ParentColor = False
-    ParentFont = False
-    TabOrder = 0
-    object BinLabel: TLabel
-      Left = 4
-      Height = 30
-      Top = 8
-      Width = 554
-      Align = alClient
-      Alignment = taRightJustify
-      AutoSize = False
-      BorderSpacing.Top = 4
-      BorderSpacing.Around = 3
-      Caption = '10000000000000000000000000000000 '
-      Font.Color = clBlack
-      Font.Height = -29
-      Font.Name = 'Lucida Console'
-      Font.Pitch = fpFixed
-      Font.Quality = fqAntialiased
-      Font.Style = [fsItalic]
-      ParentColor = False
-      ParentFont = False
-    end
-  end
   object btnPoint: TSpeedButton
     Tag = -4
-    Left = 465
+    Left = 541
     Height = 45
     Top = 456
     Width = 52
@@ -569,115 +447,288 @@ object frmCalcMain: TfrmCalcMain
     OnClick = OpButtonClick
     ParentFont = False
   end
-  object HexBevel: TPanel
-    Left = 60
-    Height = 42
-    Top = 108
-    Width = 562
-    BevelOuter = bvLowered
-    ClientHeight = 42
-    ClientWidth = 562
-    Color = 16777162
+  object pnlDisplay: TPanel
+    Left = 0
+    Height = 209
+    Top = 0
+    Width = 720
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 209
+    ClientWidth = 720
+    TabOrder = 0
+    object MemButton: TSpeedButton
+      Left = 12
+      Height = 38
+      Top = 12
+      Width = 38
+      Caption = 'M'
+      Enabled = False
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'System'
+      ParentFont = False
+    end
+    object DecButton: TSpeedButton
+      Left = 12
+      Height = 38
+      Top = 60
+      Width = 38
+      Caption = '&D'
+      Down = True
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'System'
+      GroupIndex = 1
+      OnClick = DecHexBinButtonClick
+      ParentFont = False
+    end
+    object HexButton: TSpeedButton
+      Left = 12
+      Height = 38
+      Top = 108
+      Width = 38
+      Caption = '&H'
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'System'
+      GroupIndex = 1
+      OnClick = DecHexBinButtonClick
+      ParentFont = False
+    end
+    object BinButton: TSpeedButton
+      Left = 12
+      Height = 38
+      Top = 156
+      Width = 38
+      Caption = '&B'
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'System'
+      GroupIndex = 1
+      OnClick = DecHexBinButtonClick
+      ParentFont = False
+    end
+    object BinBevel: TPanel
+      Left = 60
+      Height = 42
+      Top = 156
+      Width = 640
+      BevelOuter = bvLowered
+      ClientHeight = 42
+      ClientWidth = 640
+      Color = 16777162
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'System'
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 0
+      object lblBinary: TLabel
+        Left = 4
+        Height = 30
+        Top = 8
+        Width = 632
+        Align = alClient
+        Alignment = taRightJustify
+        AutoSize = False
+        BorderSpacing.Top = 4
+        BorderSpacing.Around = 3
+        Caption = '1000 0000 0000 0000 0000 0000 0000 0000 '
+        Font.CharSet = ANSI_CHARSET
+        Font.Color = clBlack
+        Font.Height = -26
+        Font.Name = 'Lucida Console'
+        Font.Pitch = fpFixed
+        Font.Quality = fqDraft
+        Font.Style = [fsItalic]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object HexBevel: TPanel
+      Left = 60
+      Height = 42
+      Top = 108
+      Width = 640
+      BevelOuter = bvLowered
+      ClientHeight = 42
+      ClientWidth = 640
+      Color = 16777162
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'System'
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 1
+      object lblHex: TLabel
+        Left = 4
+        Height = 30
+        Top = 8
+        Width = 632
+        Align = alClient
+        Alignment = taRightJustify
+        AutoSize = False
+        BorderSpacing.Top = 4
+        BorderSpacing.Around = 3
+        Caption = '7FFFFFFF '
+        Font.Color = clBlack
+        Font.Height = -29
+        Font.Name = 'Lucida Console'
+        Font.Pitch = fpFixed
+        Font.Quality = fqAntialiased
+        Font.Style = [fsItalic]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object DecBevel: TPanel
+      Left = 60
+      Height = 42
+      Top = 60
+      Width = 640
+      BorderSpacing.Top = 4
+      BorderSpacing.Around = 3
+      BevelOuter = bvLowered
+      ClientHeight = 42
+      ClientWidth = 640
+      Color = 16777162
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'System'
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 2
+      object lblDecimal: TLabel
+        Left = 4
+        Height = 30
+        Top = 8
+        Width = 632
+        Align = alClient
+        Alignment = taRightJustify
+        AutoSize = False
+        BorderSpacing.Top = 4
+        BorderSpacing.Around = 3
+        Caption = '-2147483648 '
+        Font.Color = clBlack
+        Font.Height = -29
+        Font.Name = 'Lucida Console'
+        Font.Pitch = fpFixed
+        Font.Quality = fqAntialiased
+        Font.Style = [fsItalic]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object MemBevel: TPanel
+      Left = 60
+      Height = 42
+      Top = 12
+      Width = 554
+      BevelOuter = bvLowered
+      ClientHeight = 42
+      ClientWidth = 554
+      Color = 16777162
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'System'
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 3
+      object lblMemory: TLabel
+        Left = 4
+        Height = 30
+        Top = 8
+        Width = 546
+        Align = alClient
+        Alignment = taRightJustify
+        AutoSize = False
+        BorderSpacing.Top = 4
+        BorderSpacing.Around = 3
+        Caption = '0 '
+        Font.Color = clBlack
+        Font.Height = -29
+        Font.Name = 'Lucida Console'
+        Font.Pitch = fpFixed
+        Font.Quality = fqAntialiased
+        Font.Style = [fsItalic]
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object OpBevel: TPanel
+      Left = 618
+      Height = 42
+      Top = 12
+      Width = 82
+      BevelOuter = bvLowered
+      ClientHeight = 42
+      ClientWidth = 82
+      Color = 16777162
+      Font.Color = clWindowText
+      Font.Height = -20
+      Font.Name = 'System'
+      ParentColor = False
+      ParentFont = False
+      TabOrder = 4
+      object lblOpation: TLabel
+        Left = 4
+        Height = 30
+        Top = 8
+        Width = 74
+        Align = alClient
+        Alignment = taCenter
+        AutoSize = False
+        BorderSpacing.Top = 4
+        BorderSpacing.Around = 3
+        Caption = ' '
+        Font.Color = clBlack
+        Font.Height = -29
+        Font.Name = 'Lucida Console'
+        Font.Pitch = fpFixed
+        Font.Quality = fqAntialiased
+        Font.Style = [fsItalic]
+        ParentColor = False
+        ParentFont = False
+        OnClick = lblOpationClick
+      end
+    end
+  end
+  object LineBevel: TBevel
+    Left = 12
+    Height = 14
+    Top = 192
+    Width = 610
+    Shape = bsBottomLine
+  end
+  object btnEquals: TButton
+    Left = 361
+    Height = 93
+    Top = 408
+    Width = 52
+    Caption = '='
+    Color = 16250871
+    Default = True
     Font.Color = clWindowText
     Font.Height = -20
     Font.Name = 'System'
-    ParentColor = False
+    OnClick = btnEqualsClick
+    ParentFont = False
+    TabOrder = 1
+  end
+  object btnClose: TBitBtn
+    Left = 12
+    Height = 74
+    Top = 428
+    Width = 160
+    DefaultCaption = True
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'System'
+    Kind = bkClose
+    ModalResult = 11
     ParentFont = False
     TabOrder = 2
-    object HexLabel: TLabel
-      Left = 4
-      Height = 30
-      Top = 8
-      Width = 554
-      Align = alClient
-      Alignment = taRightJustify
-      AutoSize = False
-      BorderSpacing.Top = 4
-      BorderSpacing.Around = 3
-      Caption = '7FFFFFFF '
-      Font.Color = clBlack
-      Font.Height = -29
-      Font.Name = 'Lucida Console'
-      Font.Pitch = fpFixed
-      Font.Quality = fqAntialiased
-      Font.Style = [fsItalic]
-      ParentColor = False
-      ParentFont = False
-    end
-  end
-  object DecBevel: TPanel
-    Left = 60
-    Height = 42
-    Top = 60
-    Width = 562
-    BorderSpacing.Top = 4
-    BorderSpacing.Around = 3
-    BevelOuter = bvLowered
-    ClientHeight = 42
-    ClientWidth = 562
-    Color = 16777162
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'System'
-    ParentColor = False
-    ParentFont = False
-    TabOrder = 3
-    object DecLabel: TLabel
-      Left = 4
-      Height = 30
-      Top = 8
-      Width = 554
-      Align = alClient
-      Alignment = taRightJustify
-      AutoSize = False
-      BorderSpacing.Top = 4
-      BorderSpacing.Around = 3
-      Caption = '-2147483648 '
-      Font.Color = clBlack
-      Font.Height = -29
-      Font.Name = 'Lucida Console'
-      Font.Pitch = fpFixed
-      Font.Quality = fqAntialiased
-      Font.Style = [fsItalic]
-      ParentColor = False
-      ParentFont = False
-    end
-  end
-  object MemBevel: TPanel
-    Left = 60
-    Height = 42
-    Top = 12
-    Width = 562
-    BevelOuter = bvLowered
-    ClientHeight = 42
-    ClientWidth = 562
-    Color = 16777162
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'System'
-    ParentColor = False
-    ParentFont = False
-    TabOrder = 4
-    object MemLabel: TLabel
-      Left = 4
-      Height = 30
-      Top = 8
-      Width = 554
-      Align = alClient
-      Alignment = taRightJustify
-      AutoSize = False
-      BorderSpacing.Top = 4
-      BorderSpacing.Around = 3
-      Caption = '0 '
-      Font.Color = clBlack
-      Font.Height = -29
-      Font.Name = 'Lucida Console'
-      Font.Pitch = fpFixed
-      Font.Quality = fqAntialiased
-      Font.Style = [fsItalic]
-      ParentColor = False
-      ParentFont = False
-    end
   end
   object CalcMainMenu: TMainMenu
     left = 41
