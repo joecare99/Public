@@ -2,12 +2,13 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="11"/>
     <BuildModes Active="Release"/>
     <Units Count="2">
       <Unit0>
         <Filename Value="Master.dpr"/>
         <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
         <CursorPos X="109" Y="15"/>
         <UsageCount Value="22"/>
         <Loaded Value="True"/>
@@ -19,9 +20,7 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_MasterMAIN"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
         <TopLine Value="2"/>
         <CursorPos X="31" Y="2"/>
         <UsageCount Value="22"/>
@@ -35,5 +34,9 @@
         <Filename Value="..\source\MASTER\Frm_MasterMAIN.PAS"/>
       </Position1>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>
