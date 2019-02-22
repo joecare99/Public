@@ -3,7 +3,7 @@
         <ProjectGuid>{628C6686-845D-4866-B3B6-62C483A5492E}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="..\..\..\..\..\Delphi\Delphi_Bible\D25\fpcTestAboutEx.dproj">
+        <Projects Include="D25\fpcTestAboutEx.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="D25\Aboutex.dproj">
@@ -351,13 +351,13 @@
         </BorlandProject>
     </ProjectExtensions>
     <Target Name="fpcTestAboutEx">
-        <MSBuild Projects="..\..\..\..\..\Delphi\Delphi_Bible\D25\fpcTestAboutEx.dproj"/>
+        <MSBuild Projects="D25\fpcTestAboutEx.dproj"/>
     </Target>
     <Target Name="fpcTestAboutEx:Clean">
-        <MSBuild Projects="..\..\..\..\..\Delphi\Delphi_Bible\D25\fpcTestAboutEx.dproj" Targets="Clean"/>
+        <MSBuild Projects="D25\fpcTestAboutEx.dproj" Targets="Clean"/>
     </Target>
     <Target Name="fpcTestAboutEx:Make">
-        <MSBuild Projects="..\..\..\..\..\Delphi\Delphi_Bible\D25\fpcTestAboutEx.dproj" Targets="Make"/>
+        <MSBuild Projects="D25\fpcTestAboutEx.dproj" Targets="Make"/>
     </Target>
     <Target Name="Aboutex">
         <MSBuild Projects="D25\Aboutex.dproj"/>
