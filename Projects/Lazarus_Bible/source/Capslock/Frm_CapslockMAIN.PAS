@@ -17,19 +17,19 @@ uses
 
 type
 
-  { TMainForm }
+  { TfrmCapsLockMain }
 
-  TMainForm = class(TForm)
-    BitBtn1: TBitBtn;
-    Label1: TLabel;
-    Bevel1: TBevel;
+  TfrmCapsLockMain = class(TForm)
+    btnClose: TBitBtn;
+    lblInfo: TLabel;
+    bvlInfo: TBevel;
     Pnl_Shft: TPanel;
     Pnl_Ctrl: TPanel;
     Pnl_Alt: TPanel;
-    StatusPanel: TPanel;
-    Pnl_Num: TPanel;
-    Pnl_Caps: TPanel;
-    Pnl_Scrl: TPanel;
+    pnlStatus: TPanel;
+    pnl_Num: TPanel;
+    pnl_Caps: TPanel;
+    pnl_Scrl: TPanel;
     Pnl_Ins: TPanel;
     procedure FormKeyDown(Sender: TObject; var {%H-}Key: Word;
       {%H-}Shift: TShiftState);
@@ -43,7 +43,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmCapsLockMain: TfrmCapsLockMain;
 
 implementation
 
@@ -53,13 +53,13 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-procedure TMainForm.UpdateKeyPanel;
+procedure TfrmCapsLockMain.UpdateKeyPanel;
 begin
-  Pnl_Caps.Enabled :=
+  pnl_Caps.Enabled :=
     GetKeyState(VK_CAPITAL) and 1 = 1;
-  Pnl_Num.Enabled :=
+  pnl_Num.Enabled :=
     GetKeyState(VK_NUMLOCK) and 1 = 1;
-  Pnl_Scrl.Enabled :=
+  pnl_Scrl.Enabled :=
     GetKeyState(VK_SCROLL)  and 1 = 1;
   Pnl_Ins.Enabled :=
     GetKeyState(VK_INSERT)  and 1 = 1;
@@ -69,16 +69,16 @@ begin
     GetKeyState(VK_CONTROL)  and 1 = 1;
   Pnl_Alt.Enabled :=
     GetKeyState(VK_MENU)  and 1 = 1;
-  SetPanel(Pnl_Caps);
-  SetPanel(Pnl_Num);
-  SetPanel(Pnl_Scrl);
+  SetPanel(pnl_Caps);
+  SetPanel(pnl_Num);
+  SetPanel(pnl_Scrl);
   SetPanel(Pnl_Ins);
   SetPanel(Pnl_Shft);
   SetPanel(Pnl_Ctrl);
   SetPanel(Pnl_Alt);
 end;
 
-procedure TMainForm.SetPanel(p: TPanel);
+procedure TfrmCapsLockMain.SetPanel(p: TPanel);
 begin
   with p do
     if Enabled then
@@ -97,13 +97,13 @@ begin
     end;
 end;
 
-procedure TMainForm.FormKeyDown(Sender: TObject; var Key: Word;
+procedure TfrmCapsLockMain.FormKeyDown(Sender: TObject; var Key: Word;
   Shift: TShiftState);
 begin
   UpdateKeyPanel;
 end;
 
-procedure TMainForm.FormActivate(Sender: TObject);
+procedure TfrmCapsLockMain.FormActivate(Sender: TObject);
 begin
   UpdateKeyPanel;
 end;
