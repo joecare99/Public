@@ -16,10 +16,13 @@ uses
 {$E EXE}
 {$ENDIF}
 
+{$R *.res}
+
 begin
+  Application.Scaled:=True;
 Application.Initialize;
   Application.Title := 'Demo: Chargrid';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmCharGridMain, frmCharGridMain);
   Application.CreateForm(TAboutForm, AboutForm);
   Application.Run;
 end.

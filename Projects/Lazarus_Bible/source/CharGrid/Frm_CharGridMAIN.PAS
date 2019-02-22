@@ -18,41 +18,41 @@ uses
 
 type
 
-  { TMainForm }
+  { TfrmCharGridMain }
 
-  TMainForm = class(TForm)
-    CheckBox1: TCheckBox;
-    StringGrid1: TStringGrid;
-    FontCB: TComboBox;
-    FontLabel: TLabel;
-    CloseBitBtn: TBitBtn;
-    CopyEdit: TEdit;
-    CopyLabel: TLabel;
-    SelectBitBtn: TBitBtn;
-    ClipBitBtn: TBitBtn;
-    CharLabel: TLabel;
-    Bevel1: TBevel;
-    ClearBitBtn: TBitBtn;
+  TfrmCharGridMain = class(TForm)
+    chbANSI: TCheckBox;
+    grdChars: TStringGrid;
+    cbxFonts: TComboBox;
+    lblFont: TLabel;
+    btnClose: TBitBtn;
+    edtCopy: TEdit;
+    lblCopy: TLabel;
+    btnSelect: TBitBtn;
+    btnCopy: TBitBtn;
+    lblCharView: TLabel;
+    bvlCharView: TBevel;
+    btnClear: TBitBtn;
     MainMenu1: TMainMenu;
     FileMenu: TMenuItem;
     FileExit: TMenuItem;
     HelpMenu: TMenuItem;
     HelpAbout: TMenuItem;
-    procedure CheckBox1Change(Sender: TObject);
+    procedure chbANSIChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    procedure FontCBChange(Sender: TObject);
-    procedure FontCBKeyDown(Sender: TObject; var Key: Word;
+    procedure cbxFontsChange(Sender: TObject);
+    procedure cbxFontsKeyDown(Sender: TObject; var Key: Word;
       {%H-}Shift: TShiftState);
-    procedure StringGrid1DblClick(Sender: TObject);
-    procedure StringGrid1KeyDown(Sender: TObject;
+    procedure grdCharsDblClick(Sender: TObject);
+    procedure grdCharsKeyDown(Sender: TObject;
       var Key: Word; {%H-}Shift: TShiftState);
-    procedure StringGrid1SelectCell(Sender: TObject;
+    procedure grdCharsSelectCell(Sender: TObject;
       Col, Row: Longint; var CanSelect: Boolean);
     procedure FileExitClick(Sender: TObject);
     procedure HelpAboutClick(Sender: TObject);
-    procedure SelectBitBtnClick(Sender: TObject);
-    procedure ClipBitBtnClick(Sender: TObject);
-    procedure ClearBitBtnClick(Sender: TObject);
+    procedure btnSelectClick(Sender: TObject);
+    procedure btnCopyClick(Sender: TObject);
+    procedure btnClearClick(Sender: TObject);
   private
     { Private declarations }
   public
@@ -60,7 +60,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmCharGridMain: TfrmCharGridMain;
 
 implementation
 
@@ -71,18 +71,18 @@ implementation
 {$ENDIF}
 
 { Initialize controls }
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmCharGridMain.FormCreate(Sender: TObject);
 var
   Ascii, IRow, ICol: Integer;
 begin
-{ Initialize FontCB ComboBox with font names }
-  FontCB.Items := Screen.Fonts;
-{ Show current StringGrid font in FontCB's edit box }
-  FontCB.ItemIndex :=
-    FontCB.Items.IndexOf(StringGrid1.Font.Name);
+{ Initialize cbxFonts ComboBox with font names }
+  cbxFonts.Items := Screen.Fonts;
+{ Show current StringGrid font in cbxFonts's edit box }
+  cbxFonts.ItemIndex :=
+    cbxFonts.Items.IndexOf(grdChars.Font.Name);
 { Insert characters into grid }
   Ascii := 0;
-  with StringGrid1 do
+  with grdChars do
   for IRow := 0 to RowCount-1 do
     for ICol := 0 to ColCount-1 do
     begin
@@ -90,25 +90,25 @@ begin
       Inc(Ascii);
     end;
 { Assign sample character and font }
-  with StringGrid1 do
-    CharLabel.Caption := Cells[Row, Col];
-  CharLabel.Font.Name := StringGrid1.Font.Name;
+  with grdChars do
+    lblCharView.Caption := Cells[Row, Col];
+  lblCharView.Font.Name := grdChars.Font.Name;
 end;
 
-procedure TMainForm.CheckBox1Change(Sender: TObject);
+procedure TfrmCharGridMain.chbANSIChange(Sender: TObject);
 var
   Ascii, IRow, ICol: Integer;
  // AscStr,ansi:String;
 begin
   Ascii := 0;
 //  setlength(ansi,1);
-//  StringGrid1.Font.CharSet:=0;
-  with StringGrid1 do
+//  grdChars.Font.CharSet:=0;
+  with grdChars do
   for IRow := 0 to RowCount-1 do
     for ICol := 0 to ColCount-1 do
     begin
 //      AscStr := ansichar ( Ascii);
-      if CheckBox1.Checked then
+      if chbANSI.Checked then
       begin
 
       Cells[ICol, IRow] :=  ansistring(WideChar(Ascii));
@@ -120,70 +120,70 @@ begin
 end;
 
 { Change grid, edit box, and sample to selected font }
-procedure TMainForm.FontCBChange(Sender: TObject);
+procedure TfrmCharGridMain.cbxFontsChange(Sender: TObject);
 begin
-  StringGrid1.Font.Name := FontCB.Text;
-  CopyEdit.Text := '';  { Optional: Erase current entries }
-  CopyEdit.Font := StringGrid1.Font;
-  CharLabel.Font.Name := StringGrid1.Font.Name;
+  grdChars.Font.Name := cbxFonts.Text;
+  edtCopy.Text := '';  { Optional: Erase current entries }
+  edtCopy.Font := grdChars.Font;
+  lblCharView.Font.Name := grdChars.Font.Name;
 end;
 
-{ Close FontCB drop-down list on pressing Enter or Esc }
-procedure TMainForm.FontCBKeyDown(Sender: TObject;
+{ Close cbxFonts drop-down list on pressing Enter or Esc }
+procedure TfrmCharGridMain.cbxFontsKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
   if Key in [vk_Return, vk_Escape] then
   begin
-    FontCB.DroppedDown := False;
+    cbxFonts.DroppedDown := False;
     Key := 0;
   end;
 end;
 
 { Grid double-click event handler }
-procedure TMainForm.StringGrid1DblClick(Sender: TObject);
+procedure TfrmCharGridMain.grdCharsDblClick(Sender: TObject);
 begin
-  with CopyEdit, StringGrid1 do
+  with edtCopy, grdChars do
     Text := Text + Cells[Col, Row];
 end;
 
 { Select character on pressing Enter or Space }
-procedure TMainForm.StringGrid1KeyDown(Sender: TObject;
+procedure TfrmCharGridMain.grdCharsKeyDown(Sender: TObject;
   var Key: Word; Shift: TShiftState);
 begin
   if Key in [vk_Return, vk_Space] then
-    StringGrid1DblClick(Sender);  // Same as double-click grid
+    grdCharsDblClick(Sender);  // Same as double-click grid
 end;
 
 { Show selected character }
-procedure TMainForm.StringGrid1SelectCell(Sender: TObject; Col,
+procedure TfrmCharGridMain.grdCharsSelectCell(Sender: TObject; Col,
   Row: Longint; var CanSelect: Boolean);
 begin
-  CharLabel.Caption := StringGrid1.Cells[Col, Row];
+  lblCharView.Caption := grdChars.Cells[Col, Row];
   CanSelect := true;
 end;
 
 { File|Exit menu command }
-procedure TMainForm.FileExitClick(Sender: TObject);
+procedure TfrmCharGridMain.FileExitClick(Sender: TObject);
 begin
   Close;
 end;
 
 { Help|About menu command }
-procedure TMainForm.HelpAboutClick(Sender: TObject);
+procedure TfrmCharGridMain.HelpAboutClick(Sender: TObject);
 begin
   AboutForm.ShowModal;
 end;
 
 { Select button click handler }
-procedure TMainForm.SelectBitBtnClick(Sender: TObject);
+procedure TfrmCharGridMain.btnSelectClick(Sender: TObject);
 begin
-  StringGrid1DblClick(Sender);  // Same as double-clicking grid
+  grdCharsDblClick(Sender);  // Same as double-clicking grid
 end;
 
 { Copy selected characters to clipboard }
-procedure TMainForm.ClipBitBtnClick(Sender: TObject);
+procedure TfrmCharGridMain.btnCopyClick(Sender: TObject);
 begin
-  with CopyEdit do
+  with edtCopy do
   begin
     if SelLength = 0 then
       SelectAll;       { Select all text if none selected }
@@ -192,9 +192,9 @@ begin
 end;
 
 { Clear text in copy-to edit box }
-procedure TMainForm.ClearBitBtnClick(Sender: TObject);
+procedure TfrmCharGridMain.btnClearClick(Sender: TObject);
 begin
-  CopyEdit.Text := '';
+  edtCopy.Text := '';
 end;
 
 end.

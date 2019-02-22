@@ -1,125 +1,147 @@
-object MainForm: TMainForm
+object frmCharGridMain: TfrmCharGridMain
   Left = 208
-  Height = 303
+  Height = 454
   Top = 101
-  Width = 568
-  ActiveControl = StringGrid1
+  Width = 852
+  ActiveControl = grdChars
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Character Grid'
-  ClientHeight = 303
-  ClientWidth = 568
+  ClientHeight = 454
+  ClientWidth = 852
   Color = clBtnFace
+  DesignTimePPI = 144
   Font.Color = clWindowText
-  Font.Height = -13
+  Font.Height = -20
   Font.Name = 'Tahoma'
   Menu = MainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
   ShowHint = True
-  LCLVersion = '1.6.4.0'
-  Visible = False
-  object Bevel1: TBevel
-    Left = 40
-    Height = 41
-    Top = 227
-    Width = 57
+  object bvlCharView: TBevel
+    Left = 60
+    Height = 62
+    Top = 384
+    Width = 86
     Anchors = [akLeft, akBottom]
   end
-  object FontLabel: TLabel
-    Left = 16
-    Height = 16
-    Top = 20
-    Width = 30
+  object lblFont: TLabel
+    Left = 24
+    Height = 24
+    Top = 30
+    Width = 46
     Caption = '&Font:'
-    FocusControl = FontCB
+    FocusControl = cbxFonts
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     ParentColor = False
+    ParentFont = False
   end
-  object CopyLabel: TLabel
-    Left = 320
-    Height = 16
-    Top = 20
-    Width = 52
+  object lblCopy: TLabel
+    Left = 480
+    Height = 24
+    Top = 30
+    Width = 80
     Caption = 'To C&opy:'
-    FocusControl = CopyEdit
+    FocusControl = edtCopy
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     ParentColor = False
+    ParentFont = False
   end
-  object CharLabel: TLabel
-    Left = 56
-    Height = 32
-    Top = 231
-    Width = 18
+  object lblCharView: TLabel
+    Left = 84
+    Height = 40
+    Top = 399
+    Width = 22
     Anchors = [akLeft, akBottom]
     Caption = 'X'
     Font.Color = clWindowText
-    Font.Height = -24
+    Font.Height = -36
     Font.Name = 'System'
     ParentColor = False
     ParentFont = False
   end
-  object StringGrid1: TStringGrid
-    Left = 8
-    Height = 137
+  object grdChars: TStringGrid
+    Left = 12
+    Height = 206
     Hint = 'Double click to select character'
-    Top = 56
-    Width = 545
+    Top = 84
+    Width = 818
     ColCount = 32
-    DefaultColWidth = 16
-    DefaultRowHeight = 16
+    DefaultColWidth = 24
+    DefaultRowHeight = 24
     FixedCols = 0
     FixedRows = 0
     Font.Color = clBlack
-    Font.Height = -13
+    Font.Height = -20
     Font.Name = 'System'
     ParentFont = False
     RowCount = 8
     TabOrder = 0
     TitleFont.Color = clBlack
-    TitleFont.Height = -13
+    TitleFont.Height = -20
     TitleFont.Name = 'System'
-    OnDblClick = StringGrid1DblClick
-    OnKeyDown = StringGrid1KeyDown
-    OnSelectCell = StringGrid1SelectCell
+    OnDblClick = grdCharsDblClick
+    OnKeyDown = grdCharsKeyDown
+    OnSelectCell = grdCharsSelectCell
   end
-  object FontCB: TComboBox
-    Left = 64
-    Height = 24
+  object cbxFonts: TComboBox
+    Left = 96
+    Height = 32
     Hint = 'Selected font'
-    Top = 16
-    Width = 225
-    ItemHeight = 16
-    OnChange = FontCBChange
-    OnKeyDown = FontCBKeyDown
+    Top = 24
+    Width = 338
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
+    ItemHeight = 24
+    OnChange = cbxFontsChange
+    OnKeyDown = cbxFontsKeyDown
+    ParentFont = False
     Sorted = True
     Style = csDropDownList
     TabOrder = 5
   end
-  object CloseBitBtn: TBitBtn
-    Left = 448
-    Height = 33
+  object btnClose: TBitBtn
+    Left = 672
+    Height = 50
     Hint = 'End program'
-    Top = 235
-    Width = 89
+    Top = 396
+    Width = 134
     Anchors = [akLeft, akBottom]
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     Kind = bkClose
+    ParentFont = False
     TabOrder = 4
   end
-  object CopyEdit: TEdit
-    Left = 392
-    Height = 24
+  object edtCopy: TEdit
+    Left = 588
+    Height = 32
     Hint = 'Collect characters to copy'
-    Top = 16
-    Width = 161
+    Top = 24
+    Width = 242
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
+    ParentFont = False
     TabOrder = 6
   end
-  object SelectBitBtn: TBitBtn
-    Left = 344
-    Height = 33
+  object btnSelect: TBitBtn
+    Left = 516
+    Height = 50
     Hint = 'Select character to copy'
-    Top = 235
-    Width = 89
+    Top = 396
+    Width = 134
     Anchors = [akLeft, akBottom]
     Caption = '&Select'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       04000000000000010000120B0000120B00001000000000000000000000000000
@@ -135,17 +157,21 @@ object MainForm: TMainForm
       3333333333373733333333333333303333333333333373333333
     }
     NumGlyphs = 2
-    OnClick = SelectBitBtnClick
+    OnClick = btnSelectClick
+    ParentFont = False
     TabOrder = 3
   end
-  object ClipBitBtn: TBitBtn
-    Left = 240
-    Height = 33
+  object btnCopy: TBitBtn
+    Left = 360
+    Height = 50
     Hint = 'Copy to clipboard'
-    Top = 235
-    Width = 89
+    Top = 396
+    Width = 134
     Anchors = [akLeft, akBottom]
     Caption = 'C&opy'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       04000000000000010000130B0000130B00001000000000000000000000000000
@@ -161,17 +187,21 @@ object MainForm: TMainForm
       93337FFFF7737777733300000033333333337777773333333333
     }
     NumGlyphs = 2
-    OnClick = ClipBitBtnClick
+    OnClick = btnCopyClick
+    ParentFont = False
     TabOrder = 2
   end
-  object ClearBitBtn: TBitBtn
-    Left = 136
-    Height = 33
+  object btnClear: TBitBtn
+    Left = 204
+    Height = 50
     Hint = 'Clear copy box'
-    Top = 235
-    Width = 89
+    Top = 396
+    Width = 134
     Anchors = [akLeft, akBottom]
     Caption = 'C&lear'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       04000000000000010000120B0000120B00001000000000000000000000000000
@@ -187,21 +217,26 @@ object MainForm: TMainForm
       50BB555555555555575F555555555555550B5555555555555575
     }
     NumGlyphs = 2
-    OnClick = ClearBitBtnClick
+    OnClick = btnClearClick
+    ParentFont = False
     TabOrder = 1
   end
-  object CheckBox1: TCheckBox
-    Left = 40
-    Height = 20
-    Top = 192
-    Width = 48
+  object chbANSI: TCheckBox
+    Left = 60
+    Height = 29
+    Top = 288
+    Width = 73
     Caption = 'ANSI'
-    OnChange = CheckBox1Change
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'Tahoma'
+    OnChange = chbANSIChange
+    ParentFont = False
     TabOrder = 7
   end
   object MainMenu1: TMainMenu
-    left = 24
-    top = 152
+    left = 36
+    top = 228
     object FileMenu: TMenuItem
       Caption = '&File'
       object FileExit: TMenuItem
