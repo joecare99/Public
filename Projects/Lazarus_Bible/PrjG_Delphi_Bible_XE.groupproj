@@ -6,7 +6,13 @@
 			<Projects Include="D_XE\BarChartp.dproj">
 				<Dependencies/>
 			</Projects>
+			<Projects Include="D_XE\fpcTestAboutEx.dproj">
+				<Dependencies/>
+			</Projects>
 			<Projects Include="D_XE\Aboutex.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\fpcTestActions.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="D_XE\Actions.dproj">
@@ -263,6 +269,15 @@
 		<Target Name="BarChartp:Make">
 			<MSBuild Projects="D_XE\BarChartp.dproj" Targets="Make"/>
 		</Target>
+		<Target Name="fpcTestAboutEx">
+			<MSBuild Projects="D_XE\fpcTestAboutEx.dproj"/>
+		</Target>
+		<Target Name="fpcTestAboutEx:Clean">
+			<MSBuild Projects="D_XE\fpcTestAboutEx.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestAboutEx:Make">
+			<MSBuild Projects="D_XE\fpcTestAboutEx.dproj" Targets="Make"/>
+		</Target>
 		<Target Name="Aboutex">
 			<MSBuild Projects="D_XE\Aboutex.dproj"/>
 		</Target>
@@ -271,6 +286,15 @@
 		</Target>
 		<Target Name="Aboutex:Make">
 			<MSBuild Projects="D_XE\Aboutex.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="fpcTestActions">
+			<MSBuild Projects="D_XE\fpcTestActions.dproj"/>
+		</Target>
+		<Target Name="fpcTestActions:Clean">
+			<MSBuild Projects="D_XE\fpcTestActions.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestActions:Make">
+			<MSBuild Projects="D_XE\fpcTestActions.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Actions">
 			<MSBuild Projects="D_XE\Actions.dproj"/>
@@ -984,13 +1008,13 @@
 			<MSBuild Projects="source\WinesChart\D_XE\WinesChart.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Build">
-			<CallTarget Targets="BarChartp;Aboutex;Actions;Addpage;Animator;BarTest;Bitview;Bitview2;Calc32;Calc32_2;Capslock;Capslock2;Chargrid;Checks;CoolDemo;TestCDlg;Exwin;MayTemp;Mdidemo;Mdidemo2;MemInfo;Memopad;Metamore;MouseExcept;Msgdlg;Multimen;Nonclien;Objlist;OleCont;OleWord1;OleWord2;Ontop;Options;PageTab;PageTabOD;Palette;PicDialogs;Polyflow;PowerTest;Printgr;Prninfo;Readme;Runme;Sketch;Spinbutt;Splashin;StaticDemo;Status;StatusOD;Strlist;Strres;Syscolor;Sysmenu;ConsSysMen;Tabs;YesNoTest;WinesEntry;WinesCalc;VideoPlayer;UpDownDemo;Toolbar3;Toolbar2;Toolbar1;Todo;Telname;TabEdit;Colorlib;Testdll;Combos;Compstrm;Constraint;Contcomp;Daynames;Dclock;Client1;Server1;Client2;Server2;Report1;Sqlplay;WinesChart"/>
+			<CallTarget Targets="BarChartp;fpcTestAboutEx;Aboutex;fpcTestActions;Actions;Addpage;Animator;BarTest;Bitview;Bitview2;Calc32;Calc32_2;Capslock;Capslock2;Chargrid;Checks;CoolDemo;TestCDlg;Exwin;MayTemp;Mdidemo;Mdidemo2;MemInfo;Memopad;Metamore;MouseExcept;Msgdlg;Multimen;Nonclien;Objlist;OleCont;OleWord1;OleWord2;Ontop;Options;PageTab;PageTabOD;Palette;PicDialogs;Polyflow;PowerTest;Printgr;Prninfo;Readme;Runme;Sketch;Spinbutt;Splashin;StaticDemo;Status;StatusOD;Strlist;Strres;Syscolor;Sysmenu;ConsSysMen;Tabs;YesNoTest;WinesEntry;WinesCalc;VideoPlayer;UpDownDemo;Toolbar3;Toolbar2;Toolbar1;Todo;Telname;TabEdit;Colorlib;Testdll;Combos;Compstrm;Constraint;Contcomp;Daynames;Dclock;Client1;Server1;Client2;Server2;Report1;Sqlplay;WinesChart"/>
 		</Target>
 		<Target Name="Clean">
-			<CallTarget Targets="BarChartp:Clean;Aboutex:Clean;Actions:Clean;Addpage:Clean;Animator:Clean;BarTest:Clean;Bitview:Clean;Bitview2:Clean;Calc32:Clean;Calc32_2:Clean;Capslock:Clean;Capslock2:Clean;Chargrid:Clean;Checks:Clean;CoolDemo:Clean;TestCDlg:Clean;Exwin:Clean;MayTemp:Clean;Mdidemo:Clean;Mdidemo2:Clean;MemInfo:Clean;Memopad:Clean;Metamore:Clean;MouseExcept:Clean;Msgdlg:Clean;Multimen:Clean;Nonclien:Clean;Objlist:Clean;OleCont:Clean;OleWord1:Clean;OleWord2:Clean;Ontop:Clean;Options:Clean;PageTab:Clean;PageTabOD:Clean;Palette:Clean;PicDialogs:Clean;Polyflow:Clean;PowerTest:Clean;Printgr:Clean;Prninfo:Clean;Readme:Clean;Runme:Clean;Sketch:Clean;Spinbutt:Clean;Splashin:Clean;StaticDemo:Clean;Status:Clean;StatusOD:Clean;Strlist:Clean;Strres:Clean;Syscolor:Clean;Sysmenu:Clean;ConsSysMen:Clean;Tabs:Clean;YesNoTest:Clean;WinesEntry:Clean;WinesCalc:Clean;VideoPlayer:Clean;UpDownDemo:Clean;Toolbar3:Clean;Toolbar2:Clean;Toolbar1:Clean;Todo:Clean;Telname:Clean;TabEdit:Clean;Colorlib:Clean;Testdll:Clean;Combos:Clean;Compstrm:Clean;Constraint:Clean;Contcomp:Clean;Daynames:Clean;Dclock:Clean;Client1:Clean;Server1:Clean;Client2:Clean;Server2:Clean;Report1:Clean;Sqlplay:Clean;WinesChart:Clean"/>
+			<CallTarget Targets="BarChartp:Clean;fpcTestAboutEx:Clean;Aboutex:Clean;fpcTestActions:Clean;Actions:Clean;Addpage:Clean;Animator:Clean;BarTest:Clean;Bitview:Clean;Bitview2:Clean;Calc32:Clean;Calc32_2:Clean;Capslock:Clean;Capslock2:Clean;Chargrid:Clean;Checks:Clean;CoolDemo:Clean;TestCDlg:Clean;Exwin:Clean;MayTemp:Clean;Mdidemo:Clean;Mdidemo2:Clean;MemInfo:Clean;Memopad:Clean;Metamore:Clean;MouseExcept:Clean;Msgdlg:Clean;Multimen:Clean;Nonclien:Clean;Objlist:Clean;OleCont:Clean;OleWord1:Clean;OleWord2:Clean;Ontop:Clean;Options:Clean;PageTab:Clean;PageTabOD:Clean;Palette:Clean;PicDialogs:Clean;Polyflow:Clean;PowerTest:Clean;Printgr:Clean;Prninfo:Clean;Readme:Clean;Runme:Clean;Sketch:Clean;Spinbutt:Clean;Splashin:Clean;StaticDemo:Clean;Status:Clean;StatusOD:Clean;Strlist:Clean;Strres:Clean;Syscolor:Clean;Sysmenu:Clean;ConsSysMen:Clean;Tabs:Clean;YesNoTest:Clean;WinesEntry:Clean;WinesCalc:Clean;VideoPlayer:Clean;UpDownDemo:Clean;Toolbar3:Clean;Toolbar2:Clean;Toolbar1:Clean;Todo:Clean;Telname:Clean;TabEdit:Clean;Colorlib:Clean;Testdll:Clean;Combos:Clean;Compstrm:Clean;Constraint:Clean;Contcomp:Clean;Daynames:Clean;Dclock:Clean;Client1:Clean;Server1:Clean;Client2:Clean;Server2:Clean;Report1:Clean;Sqlplay:Clean;WinesChart:Clean"/>
 		</Target>
 		<Target Name="Make">
-			<CallTarget Targets="BarChartp:Make;Aboutex:Make;Actions:Make;Addpage:Make;Animator:Make;BarTest:Make;Bitview:Make;Bitview2:Make;Calc32:Make;Calc32_2:Make;Capslock:Make;Capslock2:Make;Chargrid:Make;Checks:Make;CoolDemo:Make;TestCDlg:Make;Exwin:Make;MayTemp:Make;Mdidemo:Make;Mdidemo2:Make;MemInfo:Make;Memopad:Make;Metamore:Make;MouseExcept:Make;Msgdlg:Make;Multimen:Make;Nonclien:Make;Objlist:Make;OleCont:Make;OleWord1:Make;OleWord2:Make;Ontop:Make;Options:Make;PageTab:Make;PageTabOD:Make;Palette:Make;PicDialogs:Make;Polyflow:Make;PowerTest:Make;Printgr:Make;Prninfo:Make;Readme:Make;Runme:Make;Sketch:Make;Spinbutt:Make;Splashin:Make;StaticDemo:Make;Status:Make;StatusOD:Make;Strlist:Make;Strres:Make;Syscolor:Make;Sysmenu:Make;ConsSysMen:Make;Tabs:Make;YesNoTest:Make;WinesEntry:Make;WinesCalc:Make;VideoPlayer:Make;UpDownDemo:Make;Toolbar3:Make;Toolbar2:Make;Toolbar1:Make;Todo:Make;Telname:Make;TabEdit:Make;Colorlib:Make;Testdll:Make;Combos:Make;Compstrm:Make;Constraint:Make;Contcomp:Make;Daynames:Make;Dclock:Make;Client1:Make;Server1:Make;Client2:Make;Server2:Make;Report1:Make;Sqlplay:Make;WinesChart:Make"/>
+			<CallTarget Targets="BarChartp:Make;fpcTestAboutEx:Make;Aboutex:Make;fpcTestActions:Make;Actions:Make;Addpage:Make;Animator:Make;BarTest:Make;Bitview:Make;Bitview2:Make;Calc32:Make;Calc32_2:Make;Capslock:Make;Capslock2:Make;Chargrid:Make;Checks:Make;CoolDemo:Make;TestCDlg:Make;Exwin:Make;MayTemp:Make;Mdidemo:Make;Mdidemo2:Make;MemInfo:Make;Memopad:Make;Metamore:Make;MouseExcept:Make;Msgdlg:Make;Multimen:Make;Nonclien:Make;Objlist:Make;OleCont:Make;OleWord1:Make;OleWord2:Make;Ontop:Make;Options:Make;PageTab:Make;PageTabOD:Make;Palette:Make;PicDialogs:Make;Polyflow:Make;PowerTest:Make;Printgr:Make;Prninfo:Make;Readme:Make;Runme:Make;Sketch:Make;Spinbutt:Make;Splashin:Make;StaticDemo:Make;Status:Make;StatusOD:Make;Strlist:Make;Strres:Make;Syscolor:Make;Sysmenu:Make;ConsSysMen:Make;Tabs:Make;YesNoTest:Make;WinesEntry:Make;WinesCalc:Make;VideoPlayer:Make;UpDownDemo:Make;Toolbar3:Make;Toolbar2:Make;Toolbar1:Make;Todo:Make;Telname:Make;TabEdit:Make;Colorlib:Make;Testdll:Make;Combos:Make;Compstrm:Make;Constraint:Make;Contcomp:Make;Daynames:Make;Dclock:Make;Client1:Make;Server1:Make;Client2:Make;Server2:Make;Report1:Make;Sqlplay:Make;WinesChart:Make"/>
 		</Target>
 		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
 	</Project>
