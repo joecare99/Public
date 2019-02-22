@@ -1,93 +1,104 @@
-object MainForm: TMainForm
+object frmCapsLock2Main: TfrmCapsLock2Main
   Left = 200
-  Height = 108
+  Height = 130
   Top = 109
-  Width = 349
-  ActiveControl = BitBtn1
+  Width = 419
+  ActiveControl = btnClose
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'CapsLock and Other Keyboard Toggles'
-  ClientHeight = 108
-  ClientWidth = 349
+  ClientHeight = 130
+  ClientWidth = 419
   Color = clBtnFace
-  DesignTimePPI = 120
+  DesignTimePPI = 144
   Font.Color = clWindowText
-  Font.Height = -13
+  Font.Height = -16
   Font.Name = 'System'
   KeyPreview = True
   OnActivate = FormActivate
   OnKeyDown = FormKeyDown
-  Visible = False
-  object Label1: TLabel
-    Left = 16
-    Height = 49
-    Top = 16
-    Width = 177
+  object lblInfo: TLabel
+    Left = 19
+    Height = 59
+    Top = 19
+    Width = 212
     AutoSize = False
     Caption = 'Press the CapsLock, NumLock, ScrollLock, and Ins keys.'
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'System'
     ParentColor = False
+    ParentFont = False
     WordWrap = True
   end
-  object Bevel1: TBevel
-    Left = 8
-    Height = 65
-    Top = 8
-    Width = 201
+  object bvlInfo: TBevel
+    Left = 10
+    Height = 78
+    Top = 10
+    Width = 241
   end
-  object BitBtn1: TBitBtn
-    Left = 240
-    Height = 41
-    Top = 24
-    Width = 89
+  object btnClose: TBitBtn
+    Left = 288
+    Height = 49
+    Top = 29
+    Width = 107
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'System'
     Kind = bkClose
+    ParentFont = False
     TabOrder = 0
   end
-  object StatusBar1: TStatusBar
+  object pnlStatus: TStatusBar
     Left = 0
-    Height = 25
-    Top = 83
-    Width = 349
+    Height = 30
+    Top = 100
+    Width = 419
     AutoSize = False
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'System'
     Panels = <    
       item
         Alignment = taCenter
         Bevel = pbRaised
         Text = 'Caps'
-        Width = 40
+        Width = 48
       end    
       item
         Alignment = taCenter
         Text = 'Num'
-        Width = 40
+        Width = 48
       end    
       item
         Alignment = taCenter
         Text = 'Scrl'
-        Width = 40
+        Width = 48
       end    
       item
         Alignment = taCenter
         Text = 'Ins'
-        Width = 40
+        Width = 48
       end    
       item
         Alignment = taCenter
         Text = 'Shft'
-        Width = 40
+        Width = 48
       end    
       item
         Alignment = taCenter
         Text = 'Ctrl'
-        Width = 40
+        Width = 48
       end    
       item
         Alignment = taCenter
         Text = 'Alt'
-        Width = 40
+        Width = 48
       end    
       item
-        Width = 50
+        Width = 60
       end>
+    ParentFont = False
     SimplePanel = False
   end
 end

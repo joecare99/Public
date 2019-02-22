@@ -2,7 +2,7 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <BuildModes Active="Release"/>
     <Units Count="4">
       <Unit0>
@@ -16,13 +16,13 @@
       <Unit1>
         <Filename Value="..\source\Capslock\Frm_Capslock2MAIN.PAS"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="MainForm"/>
+        <ComponentName Value="frmCapsLock2Main"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="20"/>
-        <CursorPos X="71" Y="61"/>
+        <CursorPos X="70" Y="61"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -103,5 +103,9 @@
         <Caret Line="61" Column="71" TopLine="20"/>
       </Position14>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>

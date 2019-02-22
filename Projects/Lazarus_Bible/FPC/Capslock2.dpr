@@ -21,7 +21,7 @@ begin
   Application.Scaled:=True;
   Application.Initialize;
   Application.Title := 'Demo: Capslock2';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmCapsLock2Main, frmCapsLock2Main);
   Application.Run;
 end.
 
