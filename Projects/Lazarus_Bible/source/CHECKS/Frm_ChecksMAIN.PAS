@@ -13,10 +13,15 @@ uses
   LCLIntf, LCLType,
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls,
-  Forms, Dialogs, Menus, StdCtrls;
+  Forms, Dialogs, Menus, StdCtrls, ExtCtrls;
 
 type
+
+  { TMainForm }
+
   TMainForm = class(TForm)
+    bvlInfo: TBevel;
+    lblInfo: TLabel;
     MainMenu1: TMainMenu;
     FileMenu: TMenuItem;
     FileExit: TMenuItem;
@@ -34,6 +39,7 @@ type
     N1: TMenuItem;
     LevelInsert: TMenuItem;
     procedure FileExitClick(Sender: TObject);
+    procedure lblInfoClick(Sender: TObject);
     procedure LevelClick(Sender: TObject);
     procedure ShowButtonClick(Sender: TObject);
     procedure LevelInsertClick(Sender: TObject);
@@ -61,6 +67,11 @@ const
 procedure TMainForm.FileExitClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TMainForm.lblInfoClick(Sender: TObject);
+begin
+
 end;
 
 procedure TMainForm.LevelClick(Sender: TObject);

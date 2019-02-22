@@ -1,29 +1,48 @@
 object MainForm: TMainForm
   Left = 199
+  Height = 249
   Top = 99
+  Width = 460
   Caption = 'Checkmark Demonstration'
-  ClientHeight = 166
-  ClientWidth = 289
+  ClientHeight = 249
+  ClientWidth = 460
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
+  DesignTimePPI = 144
   Font.Color = clWindowText
-  Font.Height = -13
+  Font.Height = -20
   Font.Name = 'System'
-  Font.Style = []
   Menu = MainMenu1
-  PixelsPerInch = 96
   object ShowButton: TButton
-    Left = 184
-    Top = 24
-    Width = 89
-    Height = 33
+    Left = 288
+    Height = 50
+    Top = 36
+    Width = 134
     Caption = 'Show level'
-    TabOrder = 0
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'System'
     OnClick = ShowButtonClick
+    ParentFont = False
+    TabOrder = 0
+  end
+  object bvlInfo: TBevel
+    Left = 8
+    Height = 139
+    Top = 21
+    Width = 240
+  end
+  object lblInfo: TLabel
+    Left = 16
+    Height = 100
+    Top = 40
+    Width = 220
+    Caption = 'Select a Level with:'#13#10'<Alt>-0 ...<Alt>-9'#13#10'or with the Level-Menue'#13#10'The Level-Selection act like '#13#10'Radiobuttons:'
+    ParentColor = False
+    OnClick = lblInfoClick
   end
   object MainMenu1: TMainMenu
-    Left = 72
-    Top = 88
+    left = 320
+    top = 104
     object FileMenu: TMenuItem
       Caption = '&File'
       ShortCut = 112
@@ -92,4 +111,4 @@ object MainForm: TMainForm
       end
     end
   end
-end
+end

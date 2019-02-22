@@ -20,7 +20,7 @@ uses
 begin
   Application.Initialize;
   Application.Title := 'Demo: Checks';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmChecksMain, frmChecksMain);
   Application.Run;
 end.
 
