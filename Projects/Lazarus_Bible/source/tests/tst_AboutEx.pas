@@ -1,11 +1,13 @@
 unit tst_AboutEx;
 
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
+{$EndIF}
 
 interface
 
 uses
-  Classes,Forms, SysUtils, fpcunit, testutils, testregistry,Frm_AboutExMAIN,frm_About;
+  Classes,Forms, SysUtils, {$IFNDEF FPC}TestFramework, {$Else} fpcunit, testutils, testregistry, {$endif} Frm_AboutExMAIN,frm_About;
 
 type
 
@@ -106,6 +108,6 @@ end;
 
 initialization
 
-  RegisterTest(TTestAboutex);
+  RegisterTest(TTestAboutex{$IFNDEF FPC}.Suite{$endif});
 end.
 
