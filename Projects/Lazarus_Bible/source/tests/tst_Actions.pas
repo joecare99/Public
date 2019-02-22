@@ -1,11 +1,13 @@
 UNIT tst_Actions;
 
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+{$mode delphi}{$H+}
+{$EndIF}
 
 INTERFACE
 
 USES
-  Classes, Forms, SysUtils, fpcunit, testutils, testregistry, Frm_ActionsMain;
+  Classes, Forms, SysUtils, {$IFNDEF FPC}TestFramework, {$Else} fpcunit, testutils, testregistry, {$endif} Frm_ActionsMain;
 
 TYPE
 
@@ -16,7 +18,7 @@ TYPE
     fIdleCnt:integer;
     procedure AppIdleEnd(Sender: TObject);
     procedure AppUserInput(Sender: TObject; Msg: Cardinal);
-    procedure MouseMove(Data: PtrInt);
+    procedure MouseMove(Data: NativeInt);
   protected
     PROCEDURE SetUp; override;
     PROCEDURE TearDown; override;
@@ -29,7 +31,7 @@ TYPE
 
 IMPLEMENTATION
 
-uses MouseAndKeyInput,strutils;
+uses strutils;
 
 CONST
   CTestData: ARRAY[0..160] OF String =
@@ -87,10 +89,14 @@ procedure TTestActions.TestForm;
 begin
 CheckFalse(FrmActionsMain.Visible, 'MainForm is not visible at the moment');
 FrmActionsMain.Show;
+{$IFDEF FPC}
 Application.OnUserInput:=@AppUserInput;
+{$EndIF}
 while FrmActionsMain.Visible do
    begin
-      Application.Idle(false);
+    {$IFDEF FPC}
+    Application.Idle(false);
+    {$endif}
       Application.ProcessMessages;
       inc(fIdleCnt);
       sleep(10);
@@ -109,18 +115,24 @@ BEGIN
   CheckFalse(FrmActionsMain.Visible, 'MainForm is not visible at the moment');
   FrmActionsMain.Show;
   Application.ProcessMessages;
-  Application.Idle(false);
+    {$IFDEF FPC}
+    Application.Idle(false);
+    {$endif}
   sleep(10);
   CheckTrue(FrmActionsMain.Visible, 'MainForm is visible now');
   CheckFalse(FrmActionsMain.actDemoExit.Enabled, 'DemoExit is not Enabled');
   FrmActionsMain.edtEnterQuit.Text:='Test';
   Application.ProcessMessages;
-  Application.Idle(false);
+    {$IFDEF FPC}
+    Application.Idle(false);
+    {$endif}
   sleep(10);
   CheckFalse(FrmActionsMain.actDemoExit.Enabled, 'DemoExit is not Enabled with ''Test''');
   FrmActionsMain.edtEnterQuit.Text:='Quit';
   Application.ProcessMessages;
-  Application.Idle(false);
+    {$IFDEF FPC}
+    Application.Idle(false);
+    {$endif}
   sleep(10);
   CheckTrue(FrmActionsMain.actDemoExit.Enabled, 'DemoExit is Enabled with ''Quit''');
 for i := 0 to 10000 do
@@ -131,7 +143,9 @@ begin
     else
       FrmActionsMain.edtEnterQuit.Text:=CTestData[random(length(CTestData))];
     Application.ProcessMessages;
+    {$IFDEF FPC}
     Application.Idle(false);
+    {$endif}
       sleep(0);
       if ltweak then
         CheckTrue(FrmActionsMain.actDemoExit.Enabled, 'DemoExit['+inttostr(i)+'] is Enabled with ''Quit''')
@@ -152,10 +166,10 @@ begin
   FIdleCnt  := 0;
 end;
 
-procedure TTestActions.MouseMove(Data: PtrInt);
+procedure TTestActions.MouseMove(Data: NativeInt);
 begin
-  KeyInput.Press(32);
-  MouseInput.Move([],FrmActionsMain,20+random(2),20+random(2));
+//  KeyInput.Press(32);
+//  MouseInput.Move([],FrmActionsMain,20+random(2),20+random(2));
 end;
 
 procedure TTestActions.SetUp;
@@ -169,11 +183,10 @@ procedure TTestActions.TearDown;
 var
   i: Integer;
 BEGIN
-  Application.OnIdleEnd:=nil;
   FrmActionsMain.hide;
 END;
 
 INITIALIZATION
 
-  RegisterTest(TTestActions);
+  RegisterTest(TTestActions{$IFNDEF FPC}.Suite{$endif});
 END.
