@@ -1,6 +1,6 @@
 ﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
     <PropertyGroup>
-        <DCC_ExeOutput>..\bin\$(platform)</DCC_ExeOutput>
+        <DCC_ExeOutput>..\..\bin\$(platform)</DCC_ExeOutput>
         <VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
         <Manifest_File>None</Manifest_File>
         <VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
@@ -10,7 +10,7 @@
         <DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
         <VerInfo_Locale>1031</VerInfo_Locale>
         <DCC_DcpOutput>$(bdscommondir)\DCP\$(platform)</DCC_DcpOutput>
-        <DCC_DcuOutput>..\bin\$(platform)\units_$(productversion)</DCC_DcuOutput>
+        <DCC_DcuOutput>..\..\bin\$(platform)\units_$(productversion)</DCC_DcuOutput>
         <DCC_ImageBase>00400000</DCC_ImageBase>
     </PropertyGroup>
     <ProjectExtensions>
