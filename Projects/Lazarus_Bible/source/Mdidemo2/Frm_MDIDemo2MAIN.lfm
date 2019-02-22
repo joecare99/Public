@@ -1,21 +1,20 @@
 object MainForm: TMainForm
   Left = 261
+  Height = 381
   Top = 155
+  Width = 640
   Caption = 'MDI Demonstration'
-  ClientHeight = 254
-  ClientWidth = 427
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
+  DesignTimePPI = 144
   Font.Color = clWindowText
-  Font.Height = -13
+  Font.Height = -20
   Font.Name = 'System'
-  Font.Style = []
   FormStyle = fsMDIForm
   Menu = MainMenu1
-  PixelsPerInch = 96
+  LCLVersion = '2.0.0.4'
   object MainMenu1: TMainMenu
-    Left = 40
-    Top = 8
+    left = 60
+    top = 12
     object FileMenu: TMenuItem
       Caption = '&File'
       OnClick = FileMenuClick
@@ -87,11 +86,11 @@ object MainForm: TMainForm
   end
   object OpenDialog: TOpenDialog
     Filter = 'All files (*.*)|*.*'
-    Left = 112
-    Top = 8
+    left = 168
+    top = 12
   end
   object SaveDialog: TSaveDialog
-    Left = 192
-    Top = 8
+    left = 288
+    top = 12
   end
-end
+end

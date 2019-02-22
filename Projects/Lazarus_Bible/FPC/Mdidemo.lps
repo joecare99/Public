@@ -2,15 +2,15 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="9">
+    <Units Count="11">
       <Unit0>
         <Filename Value="Mdidemo.dpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="3"/>
         <CursorPos X="11" Y="6"/>
-        <UsageCount Value="51"/>
+        <UsageCount Value="65"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
@@ -22,9 +22,9 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <TopLine Value="193"/>
-        <CursorPos X="49" Y="213"/>
-        <UsageCount Value="51"/>
+        <TopLine Value="60"/>
+        <CursorPos X="41" Y="88"/>
+        <UsageCount Value="65"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -37,7 +37,7 @@
         <ResourceBaseClass Value="Form"/>
         <TopLine Value="3"/>
         <CursorPos Y="26"/>
-        <UsageCount Value="51"/>
+        <UsageCount Value="65"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -50,7 +50,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
         <CursorPos X="21" Y="13"/>
-        <UsageCount Value="51"/>
+        <UsageCount Value="65"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -61,7 +61,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="21"/>
         <CursorPos X="20" Y="21"/>
-        <UsageCount Value="8"/>
+        <UsageCount Value="7"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit4>
       <Unit5>
@@ -73,37 +73,51 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="11"/>
         <CursorPos X="60" Y="11"/>
-        <UsageCount Value="8"/>
-        <LoadedDesigner Value="True"/>
+        <UsageCount Value="7"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\..\Utils\FPC\WriteCDate2.dpr"/>
         <EditorIndex Value="6"/>
         <CursorPos X="10" Y="18"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="29"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit6>
       <Unit7>
         <Filename Value="C:\Lazarus_rc\lcl\forms.pp"/>
         <UnitName Value="Forms"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="501"/>
         <CursorPos X="42" Y="526"/>
-        <UsageCount Value="22"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="21"/>
       </Unit7>
       <Unit8>
         <Filename Value="C:\Lazarus_rc\fpc\3.0.2\source\rtl\win\wininc\struct.inc"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="7829"/>
         <CursorPos X="14" Y="7862"/>
-        <UsageCount Value="22"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="21"/>
       </Unit8>
+      <Unit9>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <UnitName Value="Forms"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="648"/>
+        <CursorPos X="20" Y="675"/>
+        <UsageCount Value="17"/>
+        <Loaded Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="C:\lazarus\lcl\include\customform.inc"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="2870"/>
+        <CursorPos Y="2882"/>
+        <UsageCount Value="17"/>
+        <Loaded Value="True"/>
+      </Unit10>
     </Units>
-    <JumpHistory Count="20" HistoryIndex="19">
+    <JumpHistory Count="23" HistoryIndex="22">
       <Position1>
         <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
       </Position1>
@@ -182,6 +196,33 @@
         <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
         <Caret Line="212" Column="56" TopLine="191"/>
       </Position20>
+      <Position21>
+        <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
+        <Caret Line="90" Column="24" TopLine="14"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS"/>
+        <Caret Line="188" Column="32" TopLine="149"/>
+      </Position22>
+      <Position23>
+        <Filename Value="C:\lazarus\lcl\forms.pp"/>
+        <Caret Line="675" Column="20" TopLine="648"/>
+      </Position23>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
+  <Debugging>
+    <BreakPoints Count="1">
+      <Item1>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="C:\lazarus\lcl\include\customform.inc"/>
+        <Line Value="2882"/>
+      </Item1>
+    </BreakPoints>
+  </Debugging>
 </CONFIG>

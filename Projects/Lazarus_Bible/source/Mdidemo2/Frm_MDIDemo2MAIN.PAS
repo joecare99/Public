@@ -103,6 +103,9 @@ begin
   else
     Child := TChildForm.Create(Application);
   Child.Caption := Name;
+  {$IFDEF FPC}
+  Child.Parent := self;
+  {$ENDIF}
 end;
 
 procedure TMainForm.FileNewClick(Sender: TObject);
