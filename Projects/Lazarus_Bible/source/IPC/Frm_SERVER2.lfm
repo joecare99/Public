@@ -1,0 +1,65 @@
+object ServerForm: TServerForm
+  Left = 205
+  Height = 184
+  Top = 208
+  Width = 621
+  Caption = 'Server2'
+  ClientHeight = 184
+  ClientWidth = 621
+  Color = clBtnFace
+  DesignTimePPI = 144
+  Font.Color = clWindowText
+  Font.Height = -20
+  Font.Name = 'System'
+  LCLVersion = '2.0.0.4'
+  object Edit1: TEdit
+    Left = 60
+    Height = 28
+    Top = 24
+    Width = 494
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'System'
+    OnChange = Edit1Change
+    ParentFont = False
+    TabOrder = 0
+    Text = 'Edit1'
+  end
+  object Button1: TButton
+    Left = 36
+    Height = 50
+    Top = 84
+    Width = 134
+    Caption = 'Edit Copy'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'System'
+    OnClick = Button1Click
+    ParentFont = False
+    TabOrder = 1
+  end
+  object BitBtn1: TBitBtn
+    Left = 444
+    Height = 50
+    Top = 84
+    Width = 134
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'System'
+    Kind = bkClose
+    ParentFont = False
+    TabOrder = 2
+  end
+  object SimpleIPCServer1: TSimpleIPCServer
+    Active = True
+    ServerID = 'ipcserver'
+    ThreadTimeOut = 50
+    Global = False
+    OnMessage = SimpleIPCServer1Message
+    OnMessageQueued = SimpleIPCServer1MessageQueued
+    MaxQueue = 0
+    MaxAction = ipcmoaNone
+    left = 254
+    top = 90
+  end
+end
