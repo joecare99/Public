@@ -1,0 +1,48 @@
+object ClientForm: TClientForm
+  Left = 328
+  Height = 214
+  Top = 385
+  Width = 729
+  Caption = 'Client1'
+  ClientHeight = 214
+  ClientWidth = 729
+  Color = clBtnFace
+  DesignTimePPI = 144
+  Font.Color = clWindowText
+  Font.Height = -20
+  Font.Name = 'System'
+  OnCreate = FormCreate
+  LCLVersion = '2.0.0.4'
+  object Edit1: TEdit
+    Left = 24
+    Height = 28
+    Top = 36
+    Width = 530
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'System'
+    OnKeyPress = Edit1KeyPress
+    ParentFont = False
+    TabOrder = 0
+    Text = 'Edit1'
+  end
+  object BitBtn1: TBitBtn
+    Left = 420
+    Height = 50
+    Top = 96
+    Width = 134
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'System'
+    Kind = bkClose
+    NumGlyphs = 2
+    ParentFont = False
+    TabOrder = 1
+  end
+  object SimpleIPCClient1: TSimpleIPCClient
+    Active = False
+    ServerID = 'ipcserver'
+    left = 608
+    top = 32
+  end
+end

@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
+    <Units Count="5">
+      <Unit0>
+        <Filename Value="IPCClient.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="11" Y="16"/>
+        <UsageCount Value="43"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\source\IPC\Frm_CLIENT2.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="ClientForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <TopLine Value="25"/>
+        <CursorPos X="28" Y="25"/>
+        <UsageCount Value="43"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\source\IPC\Frm_CLIENT2.lfm"/>
+        <EditorIndex Value="2"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-process\src\simpleipc.pp"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="242"/>
+        <CursorPos X="10" Y="259"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-process\src\winall\simpleipc.inc"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="64" Y="6"/>
+        <UsageCount Value="22"/>
+        <Loaded Value="True"/>
+      </Unit4>
+    </Units>
+    <JumpHistory Count="16" HistoryIndex="15">
+      <Position1>
+        <Filename Value="..\source\IPC\Frm_CLIENT2.PAS"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\IPC\Frm_CLIENT2.PAS"/>
+        <Caret Line="21" Column="21" TopLine="11"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\source\IPC\Frm_CLIENT2.lfm"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\source\IPC\Frm_CLIENT2.PAS"/>
+        <Caret Line="46" Column="3" TopLine="9"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\source\IPC\Frm_CLIENT2.PAS"/>
+        <Caret Line="51" TopLine="13"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\source\IPC\Frm_CLIENT2.PAS"/>
+        <Caret Line="59" Column="55" TopLine="13"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\source\IPC\Frm_CLIENT2.PAS"/>
+        <Caret Line="61" Column="16" TopLine="23"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\source\IPC\Frm_CLIENT2.PAS"/>
+        <Caret Line="60" TopLine="23"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\source\IPC\Frm_CLIENT2.PAS"/>
+        <Caret Line="55" TopLine="23"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\source\IPC\Frm_CLIENT2.PAS"/>
+        <Caret Line="63" TopLine="23"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\source\IPC\Frm_CLIENT2.PAS"/>
+        <Caret Line="59" Column="18" TopLine="25"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\source\IPC\Frm_CLIENT2.PAS"/>
+        <Caret Line="25" Column="28" TopLine="25"/>
+      </Position12>
+      <Position13>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-process\src\simpleipc.pp"/>
+        <Caret Line="90" Column="20" TopLine="59"/>
+      </Position13>
+      <Position14>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-process\src\simpleipc.pp"/>
+        <Caret Line="377" Column="15" TopLine="374"/>
+      </Position14>
+      <Position15>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-process\src\simpleipc.pp"/>
+        <Caret Line="57" Column="19" TopLine="24"/>
+      </Position15>
+      <Position16>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-process\src\simpleipc.pp"/>
+        <Caret Line="259" Column="10" TopLine="242"/>
+      </Position16>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>
