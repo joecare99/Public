@@ -1,0 +1,304 @@
+object frmChecks2Main: TfrmChecks2Main
+  Left = 199
+  Height = 330
+  Top = 99
+  Width = 498
+  Caption = 'Checkmark Demonstration'
+  ClientHeight = 330
+  ClientWidth = 498
+  Color = clBtnFace
+  DesignTimePPI = 144
+  Font.Color = clWindowText
+  Font.Height = -20
+  Font.Name = 'System'
+  Menu = MainMenu1
+  object ShowButton: TButton
+    Left = 344
+    Height = 50
+    Top = 64
+    Width = 134
+    Caption = 'Show level'
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'System'
+    OnClick = ShowButtonClick
+    ParentFont = False
+    TabOrder = 0
+  end
+  object CoolBar1: TCoolBar
+    Left = 0
+    Height = 45
+    Top = 0
+    Width = 498
+    AutoSize = True
+    Bands = <    
+      item
+        Control = ToolBar1
+        Width = 254
+      end>
+    object ToolBar1: TToolBar
+      AnchorSideLeft.Control = CoolBar1
+      AnchorSideTop.Control = CoolBar1
+      Left = 24
+      Height = 35
+      Top = 5
+      Width = 392
+      Align = alNone
+      BorderSpacing.Left = 22
+      BorderSpacing.Top = 3
+      Caption = 'ToolBar1'
+      TabOrder = 0
+      object ToolButton1: TToolButton
+        Left = 1
+        Top = 2
+        Action = actLevel1
+        Caption = '&1'
+        Grouped = True
+        Style = tbsCheck
+      end
+      object ToolButton2: TToolButton
+        Left = 36
+        Top = 2
+        Action = actLevel2
+        Caption = '&2'
+        Grouped = True
+        Style = tbsCheck
+      end
+      object ToolButton3: TToolButton
+        Left = 71
+        Top = 2
+        Action = actLevel3
+        Caption = '&3'
+        Grouped = True
+        Style = tbsCheck
+      end
+      object ToolButton4: TToolButton
+        Left = 106
+        Top = 2
+        Action = actLevel4
+        Caption = '&4'
+        Grouped = True
+        Style = tbsCheck
+      end
+      object ToolButton5: TToolButton
+        Left = 141
+        Top = 2
+        Action = actLevel5
+        Caption = '&5'
+        Grouped = True
+        Style = tbsCheck
+      end
+      object ToolButton6: TToolButton
+        Left = 176
+        Top = 2
+        Action = actLevel6
+        Caption = '&6'
+        Grouped = True
+        Style = tbsCheck
+      end
+      object ToolButton7: TToolButton
+        Left = 211
+        Top = 2
+        Action = actLevel7
+        Caption = '&7'
+        Grouped = True
+        Style = tbsCheck
+      end
+      object ToolButton8: TToolButton
+        Left = 246
+        Top = 2
+        Action = actLevel8
+        Caption = '&8'
+        Grouped = True
+        Style = tbsCheck
+      end
+      object ToolButton9: TToolButton
+        Left = 281
+        Top = 2
+        Action = actLevel9
+        Caption = '&9'
+        Grouped = True
+        Style = tbsCheck
+      end
+    end
+  end
+  object bvlInfo: TBevel
+    Left = 8
+    Height = 139
+    Top = 53
+    Width = 304
+  end
+  object lblInfo: TLabel
+    Left = 16
+    Height = 100
+    Top = 72
+    Width = 220
+    Caption = 'Select a Level with:'#13#10'<Alt>-1 ...<Alt>-9'#13#10'or with the Level-Menue'#13#10'The Level-Selection act like '#13#10'Radiobuttons:'
+    ParentColor = False
+  end
+  object MainMenu1: TMainMenu
+    left = 108
+    top = 184
+    object FileMenu: TMenuItem
+      Caption = '&File'
+      ShortCut = 112
+      object FileExit: TMenuItem
+        Caption = 'E&xit'
+        ShortCut = 32856
+        OnClick = FileExitClick
+      end
+    end
+    object LevelMenu: TMenuItem
+      Caption = '&Level'
+      object Level1: TMenuItem
+        Action = actLevel1
+        AutoCheck = True
+        GroupIndex = 2
+        RadioItem = True
+        OnClick = LevelClick
+      end
+      object Level2: TMenuItem
+        Action = actLevel2
+        AutoCheck = True
+        GroupIndex = 2
+        RadioItem = True
+        OnClick = LevelClick
+      end
+      object Level3: TMenuItem
+        Action = actLevel3
+        AutoCheck = True
+        GroupIndex = 2
+        RadioItem = True
+        OnClick = LevelClick
+      end
+      object Level4: TMenuItem
+        Action = actLevel4
+        AutoCheck = True
+        GroupIndex = 2
+        RadioItem = True
+        OnClick = LevelClick
+      end
+      object Level5: TMenuItem
+        Action = actLevel5
+        AutoCheck = True
+        GroupIndex = 2
+        RadioItem = True
+        OnClick = LevelClick
+      end
+      object Level6: TMenuItem
+        Action = actLevel6
+        AutoCheck = True
+        GroupIndex = 2
+        RadioItem = True
+        OnClick = LevelClick
+      end
+      object Level7: TMenuItem
+        Action = actLevel7
+        AutoCheck = True
+        GroupIndex = 2
+        RadioItem = True
+        OnClick = LevelClick
+      end
+      object Level8: TMenuItem
+        Action = actLevel8
+        AutoCheck = True
+        GroupIndex = 2
+        RadioItem = True
+        OnClick = LevelClick
+      end
+      object Level9: TMenuItem
+        Action = actLevel9
+        AutoCheck = True
+        GroupIndex = 2
+        RadioItem = True
+        OnClick = LevelClick
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object LevelInsert: TMenuItem
+        Caption = '&Insert'
+        Checked = True
+        ShortCut = 45
+        OnClick = LevelInsertClick
+      end
+    end
+  end
+  object ActionList1: TActionList
+    left = 310
+    top = 160
+    object actLevel1: TAction
+      Category = 'Level'
+      AutoCheck = True
+      Caption = 'Level &1'
+      DisableIfNoHandler = False
+      GroupIndex = 2
+      ShortCut = 32817
+    end
+    object actLevel2: TAction
+      Category = 'Level'
+      AutoCheck = True
+      Caption = 'Level &2'
+      DisableIfNoHandler = False
+      GroupIndex = 2
+      ShortCut = 32818
+    end
+    object actLevel3: TAction
+      Category = 'Level'
+      AutoCheck = True
+      Caption = 'Level &3'
+      DisableIfNoHandler = False
+      GroupIndex = 2
+      ShortCut = 32819
+    end
+    object actLevel4: TAction
+      Category = 'Level'
+      AutoCheck = True
+      Caption = 'Level &4'
+      DisableIfNoHandler = False
+      GroupIndex = 2
+      ShortCut = 32820
+    end
+    object actLevel5: TAction
+      Category = 'Level'
+      AutoCheck = True
+      Caption = 'Level &5'
+      Checked = True
+      DisableIfNoHandler = False
+      GroupIndex = 2
+      ShortCut = 32821
+    end
+    object actLevel6: TAction
+      Category = 'Level'
+      AutoCheck = True
+      Caption = 'Level &6'
+      DisableIfNoHandler = False
+      GroupIndex = 2
+      ShortCut = 32822
+    end
+    object actLevel7: TAction
+      Category = 'Level'
+      AutoCheck = True
+      Caption = 'Level &7'
+      DisableIfNoHandler = False
+      GroupIndex = 2
+      ShortCut = 32823
+    end
+    object actLevel8: TAction
+      Category = 'Level'
+      AutoCheck = True
+      Caption = 'Level &8'
+      DisableIfNoHandler = False
+      GroupIndex = 2
+      ShortCut = 32824
+    end
+    object actLevel9: TAction
+      Category = 'Level'
+      AutoCheck = True
+      Caption = 'Level &9'
+      DisableIfNoHandler = False
+      GroupIndex = 2
+      ShortCut = 32825
+    end
+  end
+end
