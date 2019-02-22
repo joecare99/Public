@@ -2,12 +2,13 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="11"/>
     <BuildModes Active="Debug"/>
     <Units Count="5">
       <Unit0>
         <Filename Value="Mdidemo2.dpr"/>
         <IsPartOfProject Value="True"/>
+        <EditorIndex Value="4"/>
         <CursorPos Y="20"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
@@ -19,11 +20,10 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_MDIDemo2MAIN"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="187"/>
-        <CursorPos X="41" Y="210"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="69"/>
+        <CursorPos Y="109"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -33,8 +33,6 @@
         <Filename Value="..\source\Mdidemo2\CHILD2.PAS"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
-        <UnitName Value="CHILD2"/>
-        <EditorIndex Value="2"/>
         <CursorPos X="3" Y="15"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
@@ -46,8 +44,7 @@
         <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="frm_MDIDemo2ABOUT"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="29"/>
         <CursorPos X="9" Y="51"/>
         <UsageCount Value="21"/>
@@ -59,8 +56,7 @@
         <Filename Value="..\source\Mdidemo2\Childbmp.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
-        <UnitName Value="Childbmp"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="1"/>
         <TopLine Value="42"/>
         <CursorPos X="60" Y="52"/>
         <UsageCount Value="21"/>
@@ -94,5 +90,9 @@
         <Caret Line="112" Column="41" TopLine="108"/>
       </Position7>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>

@@ -13,7 +13,7 @@ uses
   LCLIntf, LCLType, LMessages,
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls,
-  Forms, Dialogs, Menus, frm_MDIChild1;
+  Forms, Dialogs, Menus, ExtCtrls, frm_MDIChild1;
 
 type
 
@@ -28,6 +28,7 @@ type
     FileNew: TMenuItem;
     N1: TMenuItem;
     FileExit: TMenuItem;
+    Panel1: TPanel;
     ScrollBox1: TScrollBox;
     WindowMenu: TMenuItem;
     WindowCascade: TMenuItem;
@@ -87,7 +88,7 @@ begin
   Child := TChildForm.Create(Application);
   Child.Caption := Name;
   {$IFDEF FPC}
-   Child.Parent := self;
+   Child.Parent := Panel1;
   {$ENDIF}
 end;
 

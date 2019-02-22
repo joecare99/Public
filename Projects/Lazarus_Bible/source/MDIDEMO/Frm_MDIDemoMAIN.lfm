@@ -1,31 +1,43 @@
 object MainForm: TMainForm
   Left = 261
-  Height = 524
+  Height = 786
   Top = 155
-  Width = 658
+  Width = 987
   Caption = 'MDI Demonstration'
-  ClientHeight = 524
-  ClientWidth = 658
+  ClientHeight = 786
+  ClientWidth = 987
   Color = clBtnFace
+  DesignTimePPI = 144
   Font.Color = clWindowText
-  Font.Height = -13
+  Font.Height = -20
   Font.Name = 'System'
   FormStyle = fsMDIForm
   Menu = MainMenu1
-  Visible = False
   object ScrollBox1: TScrollBox
     Left = 0
-    Height = 70
-    Top = 454
-    Width = 658
+    Height = 81
+    Top = 705
+    Width = 987
     HorzScrollBar.Page = 1
     VertScrollBar.Page = 1
     Align = alBottom
+    Font.Color = clWindowText
+    Font.Height = -20
+    Font.Name = 'System'
+    ParentFont = False
     TabOrder = 0
   end
+  object Panel1: TPanel
+    Left = 0
+    Height = 705
+    Top = 0
+    Width = 987
+    Align = alClient
+    TabOrder = 1
+  end
   object MainMenu1: TMainMenu
-    left = 40
-    top = 8
+    left = 60
+    top = 12
     object FileMenu: TMenuItem
       Caption = '&File'
       OnClick = FileMenuClick
@@ -97,11 +109,11 @@ object MainForm: TMainForm
   end
   object OpenDialog: TOpenDialog
     Filter = 'All files (*.*)|*.*'
-    left = 112
-    top = 8
+    left = 168
+    top = 12
   end
   object SaveDialog: TSaveDialog
-    left = 192
-    top = 8
+    left = 288
+    top = 12
   end
 end
