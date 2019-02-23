@@ -7,6 +7,6 @@ uses
 {$R *.RES}
 
 begin
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmAddPageMain, frmAddPageMain);
   Application.Run;
 end.
