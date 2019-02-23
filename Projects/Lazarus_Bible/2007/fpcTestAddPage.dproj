@@ -1,0 +1,129 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{40c7766d-a318-4e5e-aeb6-97d4100bef62}</ProjectGuid>
+    <MainSource>fpcTestAddPage.dpr</MainSource>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+    <DCC_DependencyCheckOutputName>..\..\bin\fpcTestAddPage.EXE</DCC_DependencyCheckOutputName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_DebugInformation>False</DCC_DebugInformation>
+    <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+    <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    <DCC_ExeOutput>..\..\bin</DCC_ExeOutput>
+    <DCC_DcuOutput>..\..\bin\units</DCC_DcuOutput>
+    <DCC_ObjOutput>..\..\bin\units</DCC_ObjOutput>
+    <DCC_HppOutput>..\..\bin\units</DCC_HppOutput>
+    <DCC_BplOutput>$(BDSCOMMONDIR)\BPL</DCC_BplOutput>
+    <DCC_DcpOutput>$(BDSCOMMONDIR)\DCP</DCC_DcpOutput>
+    <DCC_UnitSearchPath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL\units</DCC_UnitSearchPath>
+    <DCC_ResourcePath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL\units</DCC_ResourcePath>
+    <DCC_ObjPath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL\units</DCC_ObjPath>
+    <DCC_IncludePath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL\units</DCC_IncludePath>
+    <DCC_Define>DEBUG;RELEASE</DCC_Define>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_ExeOutput>..\..\bin</DCC_ExeOutput>
+    <DCC_DcuOutput>..\..\bin\units</DCC_DcuOutput>
+    <DCC_ObjOutput>..\..\bin\units</DCC_ObjOutput>
+    <DCC_HppOutput>..\..\bin\units</DCC_HppOutput>
+    <DCC_BplOutput>$(BDSCOMMONDIR)\BPL</DCC_BplOutput>
+    <DCC_DcpOutput>$(BDSCOMMONDIR)\DCP</DCC_DcpOutput>
+    <DCC_UnitSearchPath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL\units</DCC_UnitSearchPath>
+    <DCC_ResourcePath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL\units</DCC_ResourcePath>
+    <DCC_ObjPath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL\units</DCC_ObjPath>
+    <DCC_IncludePath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL\units</DCC_IncludePath>
+    <DCC_Define>DEBUG;DEBUG</DCC_Define>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Delphi.Personality</Borland.Personality>
+    <Borland.ProjectType>VCLApplication</Borland.ProjectType>
+    <BorlandProject>
+<BorlandProject xmlns=""> <Delphi.Personality>   <Parameters>
+      <Parameters Name="UseLauncher">False</Parameters>
+      <Parameters Name="LoadAllSymbols">True</Parameters>
+      <Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+    </Parameters>
+    <VersionInfo>
+      <VersionInfo Name="IncludeVerInfo">True</VersionInfo>
+      <VersionInfo Name="AutoIncBuild">False</VersionInfo>
+      <VersionInfo Name="MajorVer">1</VersionInfo>
+      <VersionInfo Name="MinorVer">0</VersionInfo>
+      <VersionInfo Name="Release">0</VersionInfo>
+      <VersionInfo Name="Build">0</VersionInfo>
+      <VersionInfo Name="Debug">False</VersionInfo>
+      <VersionInfo Name="PreRelease">False</VersionInfo>
+      <VersionInfo Name="Special">False</VersionInfo>
+      <VersionInfo Name="Private">False</VersionInfo>
+      <VersionInfo Name="DLL">False</VersionInfo>
+      <VersionInfo Name="Locale">1033</VersionInfo>
+      <VersionInfo Name="CodePage">1252</VersionInfo>
+    </VersionInfo>
+    <VersionInfoKeys>
+      <VersionInfoKeys Name="CompanyName"></VersionInfoKeys>
+      <VersionInfoKeys Name="FileDescription">fpcTestAboutEx</VersionInfoKeys>
+      <VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+      <VersionInfoKeys Name="InternalName"></VersionInfoKeys>
+      <VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys>
+      <VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys>
+      <VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys>
+      <VersionInfoKeys Name="ProductName">fpcTestAboutEx</VersionInfoKeys>
+      <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+      <VersionInfoKeys Name="Comments"></VersionInfoKeys>
+      <VersionInfoKeys Name="ProgramID">com.embarcadero.fpcTestAboutEx</VersionInfoKeys>
+    </VersionInfoKeys>
+    <Source>
+      <Source Name="MainSource">fpcTestAddPage.dpr</Source>
+    </Source>
+  </Delphi.Personality> </BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <ItemGroup />
+  <ItemGroup>
+    <DelphiCompile Include="fpcTestAddPage.dpr">
+      <MainSource>MainSource</MainSource>
+    </DelphiCompile>
+    <DCCReference Include="..\" />
+    <DCCReference Include="..\..\Delphi_Bible" />
+    <DCCReference Include="..\2007" />
+    <DCCReference Include="..\s" />
+    <DCCReference Include="..\so" />
+    <DCCReference Include="..\sou" />
+    <DCCReference Include="..\sour" />
+    <DCCReference Include="..\sourc" />
+    <DCCReference Include="..\source" />
+    <DCCReference Include="..\source\" />
+    <DCCReference Include="..\source\A" />
+    <DCCReference Include="..\source\Ad" />
+    <DCCReference Include="..\source\Add" />
+    <DCCReference Include="..\source\Addp" />
+    <DCCReference Include="..\source\Addpa" />
+    <DCCReference Include="..\source\Addpag" />
+    <DCCReference Include="..\source\Addpage" />
+    <DCCReference Include="..\source\Addpage\" />
+    <DCCReference Include="..\source\Addpage\Frm_AddpageMAIN.PAS" />
+    <DCCReference Include="..\source\t" />
+    <DCCReference Include="..\source\te" />
+    <DCCReference Include="..\source\tes" />
+    <DCCReference Include="..\source\test" />
+    <DCCReference Include="..\source\tests" />
+    <DCCReference Include="..\source\tests\" />
+    <DCCReference Include="..\source\tests\t" />
+    <DCCReference Include="..\source\tests\ts" />
+    <DCCReference Include="..\source\tests\tst" />
+    <DCCReference Include="..\source\tests\tst_" />
+    <DCCReference Include="..\source\tests\tst_A" />
+    <DCCReference Include="..\source\tests\tst_Ad" />
+    <DCCReference Include="..\source\tests\tst_Add" />
+    <DCCReference Include="..\source\tests\tst_AddP" />
+    <DCCReference Include="..\source\tests\tst_AddPa" />
+    <DCCReference Include="..\source\tests\tst_AddPag" />
+    <DCCReference Include="..\source\tests\tst_AddPage" />
+    <DCCReference Include="..\source\tests\tst_AddPage.p" />
+    <DCCReference Include="..\source\tests\tst_AddPage.pa" />
+    <DCCReference Include="..\source\tests\tst_AddPage.pas" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Borland.Delphi.Targets" />
+</Project>
