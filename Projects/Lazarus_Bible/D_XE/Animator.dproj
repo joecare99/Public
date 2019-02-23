@@ -53,7 +53,7 @@
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
 			<DCCReference Include="..\source\Animator\Frm_AnimatorMain.pas">
-				<Form>MainForm</Form>
+				<Form>frmAnimatorMain</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">
 				<Key>Cfg_2</Key>

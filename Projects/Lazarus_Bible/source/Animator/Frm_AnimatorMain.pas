@@ -16,7 +16,7 @@ Uses
   Forms, Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls;
 
 Type
-  TMainForm = Class(TForm)
+  TfrmAnimatorMain = Class(TForm)
     Animate1: TAnimate;
     RadioGroup1: TRadioGroup;
     GoBitBtn: TBitBtn;
@@ -34,7 +34,7 @@ Type
   End;
 
 Var
-  MainForm: TMainForm;
+  frmAnimatorMain: TfrmAnimatorMain;
 
 Implementation
 
@@ -73,7 +73,7 @@ Const
   RadioGroup1. Clicking Go or clicking a radio button starts
   the animation immediately. }
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmAnimatorMain.FormCreate(Sender: TObject);
 
 var i:TcommonAvi;
 begin
@@ -83,7 +83,7 @@ begin
   RadioGroup1.ItemIndex:=0; 
 end;
 
-Procedure TMainForm.GoBitBtnClick(Sender: TObject);
+Procedure TfrmAnimatorMain.GoBitBtnClick(Sender: TObject);
 Var
   AnimIndex: TCommonAvi; // Index of selected animation
 Begin
@@ -99,7 +99,7 @@ End;
 
 { Halt the animation when user clicks the Stop button. }
 
-Procedure TMainForm.StopBitBtnClick(Sender: TObject);
+Procedure TfrmAnimatorMain.StopBitBtnClick(Sender: TObject);
 Begin
   Animate1.Stop;
   StatusText.Caption := '(stopped)';
