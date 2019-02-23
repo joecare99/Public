@@ -79,7 +79,9 @@ begin
 
   except
     Caption := 'Error: '+ aFilename;
+    {$IFDEF FPC}
     BitImage.Picture.Clear;
+    {$ENDIF}
   end;
 end;
 
