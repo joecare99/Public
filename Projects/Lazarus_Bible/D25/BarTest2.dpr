@@ -10,6 +10,6 @@ begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
   Application.Title := 'Demo: BarChart-Componente';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmBarTestMain2, frmBarTestMain2);
   Application.Run;
 end.
