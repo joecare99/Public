@@ -31,7 +31,6 @@ type
     lblVendorName: TLabel;
     procedure lblURLClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
-    procedure lblVersionClick(Sender: TObject);
   private
     function GetApplicationName: String;
     function GetCopyright: String;
@@ -73,12 +72,9 @@ end;
 
 procedure TfrmCalcAbout.lblURLClick(Sender: TObject);
 begin
+  {$IFDEF FPC}
   OpenDocument(lblURL.Caption);
-end;
-
-procedure TfrmCalcAbout.lblVersionClick(Sender: TObject);
-begin
-
+  {$ENDIF}
 end;
 
 function TfrmCalcAbout.GetApplicationName: String;

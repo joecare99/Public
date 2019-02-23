@@ -141,13 +141,13 @@ var
 
 implementation
 
-uses strutils;
+uses strutils{$IFnDEF FPC},StrUtilsExt{$ENDIF};
+
 {$IFnDEF FPC}
   {$R *.dfm}
 {$ELSE}
   {$R *.lfm}
 {$ENDIF}
-
 
 const
   OpDisplay:array[TEnumOperations] of string =
