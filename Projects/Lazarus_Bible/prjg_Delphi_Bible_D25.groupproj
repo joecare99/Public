@@ -9,6 +9,9 @@
         <Projects Include="D25\Aboutex.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="D25\fpcTestActions.dproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="D25\Actions.dproj">
             <Dependencies/>
         </Projects>
@@ -34,6 +37,9 @@
             <Dependencies/>
         </Projects>
         <Projects Include="D25\Calc32_2.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\Calc64.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="D25\Capslock2.dproj">
@@ -368,6 +374,15 @@
     <Target Name="Aboutex:Make">
         <MSBuild Projects="D25\Aboutex.dproj" Targets="Make"/>
     </Target>
+    <Target Name="fpcTestActions">
+        <MSBuild Projects="D25\fpcTestActions.dproj"/>
+    </Target>
+    <Target Name="fpcTestActions:Clean">
+        <MSBuild Projects="D25\fpcTestActions.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="fpcTestActions:Make">
+        <MSBuild Projects="D25\fpcTestActions.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Actions">
         <MSBuild Projects="D25\Actions.dproj"/>
     </Target>
@@ -448,6 +463,15 @@
     </Target>
     <Target Name="Calc32_2:Make">
         <MSBuild Projects="D25\Calc32_2.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="Calc64">
+        <MSBuild Projects="D25\Calc64.dproj"/>
+    </Target>
+    <Target Name="Calc64:Clean">
+        <MSBuild Projects="D25\Calc64.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Calc64:Make">
+        <MSBuild Projects="D25\Calc64.dproj" Targets="Make"/>
     </Target>
     <Target Name="Capslock2">
         <MSBuild Projects="D25\Capslock2.dproj"/>
@@ -1368,13 +1392,13 @@
         <MSBuild Projects="D25\Printgr.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="fpcTestAboutEx;Aboutex;Actions;Addpage;Animator;BarTest2;BarTest;Bitview2;Bitview;Calc32;Calc32_2;Capslock2;Capslock;Cclient;Chargrid;Checks;Colorlib;Combos;Compstrm;Constraint;Contcomp;CoolDemo;Cserver;Daynames;Dclock;DingButtonXControl;DingPkg;Direx;Direxec;DMTest;Client1;Client2;Server1;Server2;TestCDlg;TestDing;Testdll;BarChartp;Dragme;Dropfile;Enumfon;Enumwin;Except1;Except2;Except3;Exlist;Telname;Todo;Toolbar1;Toolbar2;Toolbar3;UpDownDemo;VideoPlayer;WinesCalc;WinesChart;WinesDemo;WinesEntry;YesNoTest;Fancy;Filemenu;Nonclien;OleWord2;Readme;Keyinfo;Lister;Mdidemo2;Memopad;Metamore;OleCont;Options;Palette;Polyflow;PowerTest;Sketch;Splashin;Status;Exwin;Master;MayTemp;MemInfo;Report1;Strlist;Strres;Tabs;Listfont;Prninfo;Sysmenu;Fishy;Listtext;OleWord1;Multimen;MouseExcept;Sqlplay;Fishy2;Keycount;Hello;Mdidemo;PageTab;PageTabOD;PicDialogs;Spinbutt;TabEdit;Glyphlst;Ontop;Findrepl;Fontsamp;StaticDemo;Objlist;Runme;Syscolor;StatusOD;Msgdlg;Printgr"/>
+        <CallTarget Targets="fpcTestAboutEx;Aboutex;fpcTestActions;Actions;Addpage;Animator;BarTest2;BarTest;Bitview2;Bitview;Calc32;Calc32_2;Calc64;Capslock2;Capslock;Cclient;Chargrid;Checks;Colorlib;Combos;Compstrm;Constraint;Contcomp;CoolDemo;Cserver;Daynames;Dclock;DingButtonXControl;DingPkg;Direx;Direxec;DMTest;Client1;Client2;Server1;Server2;TestCDlg;TestDing;Testdll;BarChartp;Dragme;Dropfile;Enumfon;Enumwin;Except1;Except2;Except3;Exlist;Telname;Todo;Toolbar1;Toolbar2;Toolbar3;UpDownDemo;VideoPlayer;WinesCalc;WinesChart;WinesDemo;WinesEntry;YesNoTest;Fancy;Filemenu;Nonclien;OleWord2;Readme;Keyinfo;Lister;Mdidemo2;Memopad;Metamore;OleCont;Options;Palette;Polyflow;PowerTest;Sketch;Splashin;Status;Exwin;Master;MayTemp;MemInfo;Report1;Strlist;Strres;Tabs;Listfont;Prninfo;Sysmenu;Fishy;Listtext;OleWord1;Multimen;MouseExcept;Sqlplay;Fishy2;Keycount;Hello;Mdidemo;PageTab;PageTabOD;PicDialogs;Spinbutt;TabEdit;Glyphlst;Ontop;Findrepl;Fontsamp;StaticDemo;Objlist;Runme;Syscolor;StatusOD;Msgdlg;Printgr"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="fpcTestAboutEx:Clean;Aboutex:Clean;Actions:Clean;Addpage:Clean;Animator:Clean;BarTest2:Clean;BarTest:Clean;Bitview2:Clean;Bitview:Clean;Calc32:Clean;Calc32_2:Clean;Capslock2:Clean;Capslock:Clean;Cclient:Clean;Chargrid:Clean;Checks:Clean;Colorlib:Clean;Combos:Clean;Compstrm:Clean;Constraint:Clean;Contcomp:Clean;CoolDemo:Clean;Cserver:Clean;Daynames:Clean;Dclock:Clean;DingButtonXControl:Clean;DingPkg:Clean;Direx:Clean;Direxec:Clean;DMTest:Clean;Client1:Clean;Client2:Clean;Server1:Clean;Server2:Clean;TestCDlg:Clean;TestDing:Clean;Testdll:Clean;BarChartp:Clean;Dragme:Clean;Dropfile:Clean;Enumfon:Clean;Enumwin:Clean;Except1:Clean;Except2:Clean;Except3:Clean;Exlist:Clean;Telname:Clean;Todo:Clean;Toolbar1:Clean;Toolbar2:Clean;Toolbar3:Clean;UpDownDemo:Clean;VideoPlayer:Clean;WinesCalc:Clean;WinesChart:Clean;WinesDemo:Clean;WinesEntry:Clean;YesNoTest:Clean;Fancy:Clean;Filemenu:Clean;Nonclien:Clean;OleWord2:Clean;Readme:Clean;Keyinfo:Clean;Lister:Clean;Mdidemo2:Clean;Memopad:Clean;Metamore:Clean;OleCont:Clean;Options:Clean;Palette:Clean;Polyflow:Clean;PowerTest:Clean;Sketch:Clean;Splashin:Clean;Status:Clean;Exwin:Clean;Master:Clean;MayTemp:Clean;MemInfo:Clean;Report1:Clean;Strlist:Clean;Strres:Clean;Tabs:Clean;Listfont:Clean;Prninfo:Clean;Sysmenu:Clean;Fishy:Clean;Listtext:Clean;OleWord1:Clean;Multimen:Clean;MouseExcept:Clean;Sqlplay:Clean;Fishy2:Clean;Keycount:Clean;Hello:Clean;Mdidemo:Clean;PageTab:Clean;PageTabOD:Clean;PicDialogs:Clean;Spinbutt:Clean;TabEdit:Clean;Glyphlst:Clean;Ontop:Clean;Findrepl:Clean;Fontsamp:Clean;StaticDemo:Clean;Objlist:Clean;Runme:Clean;Syscolor:Clean;StatusOD:Clean;Msgdlg:Clean;Printgr:Clean"/>
+        <CallTarget Targets="fpcTestAboutEx:Clean;Aboutex:Clean;fpcTestActions:Clean;Actions:Clean;Addpage:Clean;Animator:Clean;BarTest2:Clean;BarTest:Clean;Bitview2:Clean;Bitview:Clean;Calc32:Clean;Calc32_2:Clean;Calc64:Clean;Capslock2:Clean;Capslock:Clean;Cclient:Clean;Chargrid:Clean;Checks:Clean;Colorlib:Clean;Combos:Clean;Compstrm:Clean;Constraint:Clean;Contcomp:Clean;CoolDemo:Clean;Cserver:Clean;Daynames:Clean;Dclock:Clean;DingButtonXControl:Clean;DingPkg:Clean;Direx:Clean;Direxec:Clean;DMTest:Clean;Client1:Clean;Client2:Clean;Server1:Clean;Server2:Clean;TestCDlg:Clean;TestDing:Clean;Testdll:Clean;BarChartp:Clean;Dragme:Clean;Dropfile:Clean;Enumfon:Clean;Enumwin:Clean;Except1:Clean;Except2:Clean;Except3:Clean;Exlist:Clean;Telname:Clean;Todo:Clean;Toolbar1:Clean;Toolbar2:Clean;Toolbar3:Clean;UpDownDemo:Clean;VideoPlayer:Clean;WinesCalc:Clean;WinesChart:Clean;WinesDemo:Clean;WinesEntry:Clean;YesNoTest:Clean;Fancy:Clean;Filemenu:Clean;Nonclien:Clean;OleWord2:Clean;Readme:Clean;Keyinfo:Clean;Lister:Clean;Mdidemo2:Clean;Memopad:Clean;Metamore:Clean;OleCont:Clean;Options:Clean;Palette:Clean;Polyflow:Clean;PowerTest:Clean;Sketch:Clean;Splashin:Clean;Status:Clean;Exwin:Clean;Master:Clean;MayTemp:Clean;MemInfo:Clean;Report1:Clean;Strlist:Clean;Strres:Clean;Tabs:Clean;Listfont:Clean;Prninfo:Clean;Sysmenu:Clean;Fishy:Clean;Listtext:Clean;OleWord1:Clean;Multimen:Clean;MouseExcept:Clean;Sqlplay:Clean;Fishy2:Clean;Keycount:Clean;Hello:Clean;Mdidemo:Clean;PageTab:Clean;PageTabOD:Clean;PicDialogs:Clean;Spinbutt:Clean;TabEdit:Clean;Glyphlst:Clean;Ontop:Clean;Findrepl:Clean;Fontsamp:Clean;StaticDemo:Clean;Objlist:Clean;Runme:Clean;Syscolor:Clean;StatusOD:Clean;Msgdlg:Clean;Printgr:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="fpcTestAboutEx:Make;Aboutex:Make;Actions:Make;Addpage:Make;Animator:Make;BarTest2:Make;BarTest:Make;Bitview2:Make;Bitview:Make;Calc32:Make;Calc32_2:Make;Capslock2:Make;Capslock:Make;Cclient:Make;Chargrid:Make;Checks:Make;Colorlib:Make;Combos:Make;Compstrm:Make;Constraint:Make;Contcomp:Make;CoolDemo:Make;Cserver:Make;Daynames:Make;Dclock:Make;DingButtonXControl:Make;DingPkg:Make;Direx:Make;Direxec:Make;DMTest:Make;Client1:Make;Client2:Make;Server1:Make;Server2:Make;TestCDlg:Make;TestDing:Make;Testdll:Make;BarChartp:Make;Dragme:Make;Dropfile:Make;Enumfon:Make;Enumwin:Make;Except1:Make;Except2:Make;Except3:Make;Exlist:Make;Telname:Make;Todo:Make;Toolbar1:Make;Toolbar2:Make;Toolbar3:Make;UpDownDemo:Make;VideoPlayer:Make;WinesCalc:Make;WinesChart:Make;WinesDemo:Make;WinesEntry:Make;YesNoTest:Make;Fancy:Make;Filemenu:Make;Nonclien:Make;OleWord2:Make;Readme:Make;Keyinfo:Make;Lister:Make;Mdidemo2:Make;Memopad:Make;Metamore:Make;OleCont:Make;Options:Make;Palette:Make;Polyflow:Make;PowerTest:Make;Sketch:Make;Splashin:Make;Status:Make;Exwin:Make;Master:Make;MayTemp:Make;MemInfo:Make;Report1:Make;Strlist:Make;Strres:Make;Tabs:Make;Listfont:Make;Prninfo:Make;Sysmenu:Make;Fishy:Make;Listtext:Make;OleWord1:Make;Multimen:Make;MouseExcept:Make;Sqlplay:Make;Fishy2:Make;Keycount:Make;Hello:Make;Mdidemo:Make;PageTab:Make;PageTabOD:Make;PicDialogs:Make;Spinbutt:Make;TabEdit:Make;Glyphlst:Make;Ontop:Make;Findrepl:Make;Fontsamp:Make;StaticDemo:Make;Objlist:Make;Runme:Make;Syscolor:Make;StatusOD:Make;Msgdlg:Make;Printgr:Make"/>
+        <CallTarget Targets="fpcTestAboutEx:Make;Aboutex:Make;fpcTestActions:Make;Actions:Make;Addpage:Make;Animator:Make;BarTest2:Make;BarTest:Make;Bitview2:Make;Bitview:Make;Calc32:Make;Calc32_2:Make;Calc64:Make;Capslock2:Make;Capslock:Make;Cclient:Make;Chargrid:Make;Checks:Make;Colorlib:Make;Combos:Make;Compstrm:Make;Constraint:Make;Contcomp:Make;CoolDemo:Make;Cserver:Make;Daynames:Make;Dclock:Make;DingButtonXControl:Make;DingPkg:Make;Direx:Make;Direxec:Make;DMTest:Make;Client1:Make;Client2:Make;Server1:Make;Server2:Make;TestCDlg:Make;TestDing:Make;Testdll:Make;BarChartp:Make;Dragme:Make;Dropfile:Make;Enumfon:Make;Enumwin:Make;Except1:Make;Except2:Make;Except3:Make;Exlist:Make;Telname:Make;Todo:Make;Toolbar1:Make;Toolbar2:Make;Toolbar3:Make;UpDownDemo:Make;VideoPlayer:Make;WinesCalc:Make;WinesChart:Make;WinesDemo:Make;WinesEntry:Make;YesNoTest:Make;Fancy:Make;Filemenu:Make;Nonclien:Make;OleWord2:Make;Readme:Make;Keyinfo:Make;Lister:Make;Mdidemo2:Make;Memopad:Make;Metamore:Make;OleCont:Make;Options:Make;Palette:Make;Polyflow:Make;PowerTest:Make;Sketch:Make;Splashin:Make;Status:Make;Exwin:Make;Master:Make;MayTemp:Make;MemInfo:Make;Report1:Make;Strlist:Make;Strres:Make;Tabs:Make;Listfont:Make;Prninfo:Make;Sysmenu:Make;Fishy:Make;Listtext:Make;OleWord1:Make;Multimen:Make;MouseExcept:Make;Sqlplay:Make;Fishy2:Make;Keycount:Make;Hello:Make;Mdidemo:Make;PageTab:Make;PageTabOD:Make;PicDialogs:Make;Spinbutt:Make;TabEdit:Make;Glyphlst:Make;Ontop:Make;Findrepl:Make;Fontsamp:Make;StaticDemo:Make;Objlist:Make;Runme:Make;Syscolor:Make;StatusOD:Make;Msgdlg:Make;Printgr:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>

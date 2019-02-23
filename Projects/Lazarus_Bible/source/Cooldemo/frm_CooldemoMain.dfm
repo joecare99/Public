@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmCoolDemoMain: TfrmCoolDemoMain
   Left = 165
   Top = 183
   Caption = 'CoolBar Demonstration'
@@ -26,20 +26,20 @@ object MainForm: TMainForm
         ImageIndex = -1
         MinHeight = 26
         ParentColor = False
-        Width = 466
+        Width = 467
       end
       item
         Break = False
         Control = Animate1
         ImageIndex = -1
         MinHeight = 39
-        Width = 59
+        Width = 62
       end
       item
         Control = DateTimePicker1
         ImageIndex = -1
         Text = 'Date Selector'
-        Width = 529
+        Width = 531
       end>
     Bitmap.Data = {
       760F0000424D760F0000000000007600000028000000800000003C0000000100
@@ -167,13 +167,13 @@ object MainForm: TMainForm
       F77F77F777777777777771771717177777777777777777777777777777777777
       7777777777777777777777777777777777777777777177777777}
     object ToolBar1: TToolBar
-      Left = 11
+      Left = 9
       Top = 6
-      Width = 453
+      Width = 454
       Height = 26
       AutoSize = True
       ButtonHeight = 26
-      ButtonWidth = 79
+      ButtonWidth = 83
       HotImages = NavigatorHotImages
       Images = NavigatorImages
       List = True
@@ -189,7 +189,7 @@ object MainForm: TMainForm
         OnClick = ToolButton1Click
       end
       object ToolButton2: TToolButton
-        Left = 79
+        Left = 83
         Top = 0
         Caption = 'Forward'
         Enabled = False
@@ -197,7 +197,7 @@ object MainForm: TMainForm
         OnClick = ToolButton1Click
       end
       object ToolButton3: TToolButton
-        Left = 158
+        Left = 166
         Top = 0
         Width = 8
         Caption = 'ToolButton3'
@@ -205,14 +205,14 @@ object MainForm: TMainForm
         Style = tbsSeparator
       end
       object ToolButton4: TToolButton
-        Left = 166
+        Left = 174
         Top = 0
         Caption = 'Stop'
         ImageIndex = 2
         OnClick = ToolButton1Click
       end
       object ToolButton5: TToolButton
-        Left = 245
+        Left = 257
         Top = 0
         Caption = 'Refresh'
         ImageIndex = 3
@@ -220,20 +220,20 @@ object MainForm: TMainForm
       end
     end
     object DateTimePicker1: TDateTimePicker
-      Left = 84
+      Left = 78
       Top = 41
-      Width = 447
+      Width = 449
       Height = 25
       Date = 35855.537101388890000000
       Time = 35855.537101388890000000
       TabOrder = 1
     end
     object Animate1: TAnimate
-      Left = 481
+      Left = 478
       Top = 0
-      Width = 50
+      Width = 60
       Height = 39
-      FileName = '..\Data\COOL.AVI'
+      FileName = '..\Delphi_Bible\Data\COOL.AVI'
       StopFrame = 13
     end
   end
@@ -243,6 +243,8 @@ object MainForm: TMainForm
     Width = 177
     Height = 49
     Caption = 'Enable Back and Forward Buttons'
+    DoubleBuffered = True
+    ParentDoubleBuffered = False
     TabOrder = 1
     OnClick = BitBtn1Click
   end
@@ -251,8 +253,10 @@ object MainForm: TMainForm
     Top = 192
     Width = 75
     Height = 25
+    DoubleBuffered = True
     Kind = bkClose
     NumGlyphs = 2
+    ParentDoubleBuffered = False
     TabOrder = 2
   end
   object Button1: TButton

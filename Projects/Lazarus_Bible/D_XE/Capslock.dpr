@@ -10,7 +10,7 @@ uses
 begin
 Application.Initialize;
   Application.Title := 'Demo: Capslock';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmCapsLockMain, frmCapsLockMain);
   Application.Run;
 end.
 

@@ -2,7 +2,7 @@ program CoolDemo;
 
 uses
   Forms,
-  frm_CooldemoMain in '..\source\CoolDemo\frm_CooldemoMain.pas' {MainForm};
+  frm_CooldemoMain in '..\source\CoolDemo\frm_CooldemoMain.pas' {frmCoolDemoMain};
 
 {$R *.RES}
 {$E EXE}
@@ -10,6 +10,6 @@ uses
 begin
   Application.Initialize;
   Application.Title := 'Demo: CoolDemo';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmCoolDemoMain, frmCoolDemoMain);
   Application.Run;
 end.

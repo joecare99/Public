@@ -13,8 +13,8 @@ uses
 begin
   Application.Initialize;
   Application.Title := 'Taschenrechner';
-  Application.CreateForm(TCalcForm, CalcForm);
-  Application.CreateForm(TAboutForm, AboutForm);
+  Application.CreateForm(TfrmCalcMain2, frmCalcMain2);
+  Application.CreateForm(TfrmCalcAbout2, frmCalcAbout2);
   Application.Run;
 end.
 

@@ -139,10 +139,10 @@ var
 
 implementation
 
-uses strutils;
+uses strutils{$IFnDEF FPC},StrUtilsExt{$ENDIF};
 
 {$IFnDEF FPC}
-  {$R *.lfm}
+  {$R *.dfm}
 {$ELSE}
   {$R *.lfm}
 {$ENDIF}
@@ -588,9 +588,11 @@ end;
 
         procedure TfrmCalc64Main.About1Click(Sender: TObject);
         begin
+          {$IFDEF FPC}
           frmCalcAbout.ApplicationName := ApplicationName;
-          frmCalcAbout.ProductName := Application.Title;
           frmCalcAbout.VendorName := VendorName;
+          {$ENDIF}
+          frmCalcAbout.ProductName := Application.Title;
           frmCalcAbout.URL := 'www.jc99.de';
           frmCalcAbout.ShowModal;
         end;

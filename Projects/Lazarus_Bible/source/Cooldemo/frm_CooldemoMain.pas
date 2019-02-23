@@ -14,13 +14,13 @@ uses
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
   ComCtrls, ToolWin, StdCtrls, Buttons, ImgList, ExtCtrls
-      {$IFDEF FPC}, BGRASpriteAnimation{$ELSE}, ImageList {$endif};
+      {$IFDEF FPC}, BGRASpriteAnimation, ImageList{$ELSE} {$endif};
 
 type
 
   { TMainForm }
 
-  TMainForm = class(TForm)
+  TfrmCoolDemoMain = class(TForm)
     {$IFDEF FPC}
     Animate1: TBGRASpriteAnimation;
     Image1: TImage;
@@ -45,8 +45,6 @@ type
     procedure BitBtn1Click(Sender: TObject);
     procedure Button1Click(Sender: TObject);
     procedure FormCreate(Sender: TObject);
-    Procedure Panel1Click(Sender: TObject);
-    procedure ToolBar1Paint(Sender: TObject);
     procedure ToolButton1Click(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
@@ -56,7 +54,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmCoolDemoMain: TfrmCoolDemoMain;
 
 implementation
 
@@ -75,7 +73,7 @@ resourcestring
   SEnable = 'Enable';
   SStopAnimation = 'Stop Animation';
 
-procedure TMainForm.BitBtn1Click(Sender: TObject);
+procedure TfrmCoolDemoMain.BitBtn1Click(Sender: TObject);
 var
   TF: Boolean;  // True or False flag
   S: String;
@@ -89,7 +87,7 @@ begin
   BitBtn1.Caption := format(SBacknForwardBtn_ED, [s]);
 end;
 
-procedure TMainForm.Button1Click(Sender: TObject);
+procedure TfrmCoolDemoMain.Button1Click(Sender: TObject);
 begin
   {$IFNDEF FPC}
   Animate1.Active := not Animate1.Active;
@@ -102,7 +100,7 @@ begin
     else Button1.Caption := SBeginAnimation;
 end;
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmCoolDemoMain.FormCreate(Sender: TObject);
  {$IFDEF FPC}
   var
    TempGif: TBGRAAnimatedGif;
@@ -139,24 +137,14 @@ procedure TMainForm.FormCreate(Sender: TObject);
     {$ENDIF}
 end;
 
-procedure TMainForm.Panel1Click(Sender: TObject);
-begin
-
-end;
-
-procedure TMainForm.ToolBar1Paint(Sender: TObject);
-begin
-
-end;
-
-procedure TMainForm.FormShow(Sender: TObject);
+procedure TfrmCoolDemoMain.FormShow(Sender: TObject);
 begin
   {$IFNDEF FPC}
   Animate1.Active :=true;
   {$ENDIF}
 end;
 
-procedure TMainForm.ToolButton1Click(Sender: TObject);
+procedure TfrmCoolDemoMain.ToolButton1Click(Sender: TObject);
 begin
   with Sender as TToolButton do
     ShowMessage(format(SButtonSelectedS, [Caption]));
