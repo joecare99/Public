@@ -2,7 +2,7 @@ object FrmActionsMain: TFrmActionsMain
   Left = 192
   Top = 107
   Caption = 'Action Lists'
-  ClientHeight = 123
+  ClientHeight = 103
   ClientWidth = 338
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
@@ -16,7 +16,7 @@ object FrmActionsMain: TFrmActionsMain
   TextHeight = 13
   object lblHint: TLabel
     Left = 0
-    Top = 99
+    Top = 79
     Width = 338
     Height = 24
     Align = alBottom
@@ -32,7 +32,7 @@ object FrmActionsMain: TFrmActionsMain
     ParentColor = False
     ParentFont = False
     WordWrap = True
-    ExplicitTop = 134
+    ExplicitTop = 99
     ExplicitWidth = 288
   end
   object edtEnterQuit: TEdit
@@ -50,7 +50,6 @@ object FrmActionsMain: TFrmActionsMain
     Height = 25
     Action = actDemoExit
     Caption = '&Schlie'#223'en'
-    DoubleBuffered = True
     Glyph.Data = {
       DE010000424DDE01000000000000760000002800000024000000120000000100
       0400000000006801000000000000000000001000000000000000000000000000
@@ -70,7 +69,6 @@ object FrmActionsMain: TFrmActionsMain
       0000}
     ModalResult = 11
     NumGlyphs = 2
-    ParentDoubleBuffered = False
     TabOrder = 1
   end
   object mnuMain: TMainMenu

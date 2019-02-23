@@ -13,7 +13,7 @@ uses
   LCLIntf, LCLType,
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls,
-  Forms, Dialogs, Menus, ActnList, StdCtrls, Buttons;
+  Forms, Dialogs, Menus, ActnList, StdCtrls, Buttons, System.Actions;
 
 type
 
