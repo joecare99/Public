@@ -123,18 +123,15 @@ object frmAbout: TfrmAbout
     Top = 175
     Width = 109
     Height = 34
-    DoubleBuffered = True
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -11
     Font.Name = 'MS Sans Serif'
     Font.Style = [fsBold]
+    ParentFont = False
+    TabOrder = 1
     Kind = bkOK
     Margin = 2
-    NumGlyphs = 2
-    ParentDoubleBuffered = False
-    ParentFont = False
     Spacing = -1
-    TabOrder = 1
   end
 end
