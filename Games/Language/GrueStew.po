@@ -1,0 +1,100 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: unt_gruestewbase.anleitung
+msgid ""
+"In diesem Spiel sind sie ein tapferer und sehr #hunriger Jäger#. Deshalb beschließen Sie sich einen ungeheuren #Eintopf# zu kochen. Wie jedemann weiß ist jedoch ein #Ungeheuer# die Grundlage dieses Gerichts.\n"
+"Auf der Suche nach der Hauptzutat des Eintopfs dringen sie in ein #düsteres Labyrinth# vor.\n"
+"Wenn Sie ein Ungeheuer erlegen ist Ihnen ein ausreichender #Eintopf# sicher (und sie haben das Spiel gewonnen).\n"
+"Einmal im Irrgarten, können Sie entweder weiter vordringen oder einen Pfeil in eine benachberte Höhle abschießen - in der Hoffnung, das Ungeheuer zu Treffen.\n"
+"Ich werde Sie deshalb fragen was Sie tun wollen.\n"
+"Mögliche Anworten sind die 4 Richtungen in Groß- oder Kleinbuchstaben.\n"
+"Großbuchstaben zum Marschieren, Kleinbuchstaben zum schießen, wenn Sie das Ungeheuer treffen sollten, teile ich Ihnen das mit. Sie müssen es zum Ausgang schleppen.\n"
+"Aber... Es gibt auch noch andere Dinge im Höhlenlabyrinth. Riesige Fledermäuse ergreifen Sie, und werfen Sie irgendwo ab. \n"
+"Es gibt alles verschlingende Abgründe, die Sie nie wieder freigeben!\n"
+"Und natürlich das Ungeheuer selbst. Diese angriffslustige Bestie wird Sie auffressen, bevor sie sich zur Flucht wenden können.\n"
+"Erdbeben werfen alles durcheinander, Verschütten Ausgänge usw.\n"
+msgstr ""
+
+#: unt_gruestewbase.batcatchyou
+msgid ""
+"Die Fledermäuße greifen an!!!\n"
+"Sie werden hochgehoben !!!\n"
+"...Wo sind sie gelandet ???\n"
+msgstr ""
+
+#: unt_gruestewbase.cantmovethere
+msgid "Sie versuche es, aber da geht es nicht weiter ..."
+msgstr ""
+
+#: unt_gruestewbase.canweisung
+msgid ""
+"Drücken Sie <n>,<o>,<s>,<w> zum schießen in die Richtung\n"
+"        <N>,<O>,<S>,<W> zum bewegen in die Richtung\n"
+"        <?> für Hilfe und  <Q> zum Beenden\n"
+msgstr ""
+
+#: unt_gruestewbase.caughtbymonster
+msgid "Das Monster hat sie erwischt. Jetzt ist's aus ... "
+msgstr ""
+
+#: unt_gruestewbase.cheader
+msgid ""
+"\n"
+"        *** Grue Stew ***\n"
+msgstr ""
+
+#: unt_gruestewbase.cmap
+msgid "Karte:"
+msgstr ""
+
+#: unt_gruestewbase.cpressanykey
+msgid "Drücken Sie eine beliebige Taste ..."
+msgstr ""
+
+#: unt_gruestewbase.equake
+msgid "Erdbe.b..e...n >>>"
+msgstr ""
+
+#: unt_gruestewbase.fellintopit
+msgid ""
+"AAAAhhh ..  hh . hh ..h ..... \n"
+"Sie fallen, und fallen ...\n"
+msgstr ""
+
+#: unt_gruestewbase.hitmonster
+msgid "... und erlegt das Monster. Herzlichen Glückwunsch! Jetzt nur noch schnell zum Ausgang"
+msgstr ""
+
+#: unt_gruestewbase.hitwall
+msgid "... und trifft die Wand"
+msgstr ""
+
+#: unt_gruestewbase.nohit1
+msgid "... und trifft ins leere"
+msgstr ""
+
+#: unt_gruestewbase.nohit2
+msgid "... und trifft nichts"
+msgstr ""
+
+#: unt_gruestewbase.nohit3
+msgid "... und trifft daneben"
+msgstr ""
+
+#: unt_gruestewbase.reachedexit
+msgid "Toll, der Ausgang ist erreicht, leider haben Sie kein Monster erlegt, so müssen sie weiter hungern ... "
+msgstr ""
+
+#: unt_gruestewbase.reachedexitwm
+msgid "Hurra, der Ausgang ist erreicht! Mit dem Monster können sie sich jetzt einen köstlichen Eintopf kochen  ... "
+msgstr ""
+
+#: unt_gruestewbase.rsraumtxt01
+msgid "Sie sind in einem kleinen Raum mit überall verstreut liegenden Felsen und Gesteinstrümmern."
+msgstr ""
+
+#: unt_gruestewbase.rsraumtxt02
+msgid "Sie müssen tief gebückt weitergehen. Riesige Stalagtiten hängen von der Decke und nehmen Ihnen die Sicht"
+msgstr ""
+
