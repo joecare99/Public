@@ -1,0 +1,183 @@
+object frmGrueStewMain: TfrmGrueStewMain
+  Left = 666
+  Height = 605
+  Top = 37
+  Width = 893
+  Caption = 'Grue Stew'
+  ClientHeight = 575
+  ClientWidth = 893
+  DesignTimePPI = 144
+  Menu = MainMenu1
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '2.0.0.4'
+  object Shape2: TShape
+    Left = 643
+    Height = 229
+    Top = 332
+    Width = 232
+    Brush.Color = clYellow
+    Shape = stCircle
+  end
+  object Shape1: TShape
+    Left = 691
+    Height = 133
+    Top = 380
+    Width = 136
+    Brush.Color = clLime
+    Shape = stCircle
+  end
+  object Memo1: TMemo
+    Left = 18
+    Height = 499
+    Top = 41
+    Width = 593
+    Lines.Strings = (
+      'Memo1'
+    )
+    TabOrder = 0
+  end
+  object btnMoveNorth: TSpeedButton
+    Left = 739
+    Height = 41
+    Top = 388
+    Width = 44
+    Caption = 'N'
+    OnClick = btnMoveClick
+  end
+  object btnMoveEast: TSpeedButton
+    Tag = 1
+    Left = 779
+    Height = 41
+    Top = 428
+    Width = 44
+    Caption = 'O'
+    OnClick = btnMoveClick
+  end
+  object btnMoveWest: TSpeedButton
+    Tag = 3
+    Left = 699
+    Height = 41
+    Top = 428
+    Width = 44
+    Caption = 'W'
+    OnClick = btnMoveClick
+  end
+  object btnMoveSouth: TSpeedButton
+    Tag = 2
+    Left = 739
+    Height = 41
+    Top = 468
+    Width = 44
+    Caption = 'S'
+    OnClick = btnMoveClick
+  end
+  object btnShootNorth: TSpeedButton
+    Left = 739
+    Height = 41
+    Top = 340
+    Width = 44
+    Caption = 'N'
+    OnClick = btnShootClick
+  end
+  object btnShootEast: TSpeedButton
+    Tag = 1
+    Left = 827
+    Height = 41
+    Top = 428
+    Width = 44
+    Caption = 'O'
+    OnClick = btnShootClick
+  end
+  object btnShootWest: TSpeedButton
+    Tag = 3
+    Left = 651
+    Height = 41
+    Top = 428
+    Width = 44
+    Caption = 'W'
+    OnClick = btnShootClick
+  end
+  object btnShootSouth: TSpeedButton
+    Tag = 2
+    Left = 739
+    Height = 41
+    Top = 516
+    Width = 44
+    Caption = 'S'
+    OnClick = btnShootClick
+  end
+  object Shoot: TLabel
+    Left = 668
+    Height = 25
+    Top = 371
+    Width = 48
+    Caption = 'Shoot'
+    ParentColor = False
+  end
+  object Walk: TLabel
+    Left = 790
+    Height = 25
+    Top = 398
+    Width = 38
+    Caption = 'Walk'
+    ParentColor = False
+  end
+  object lblActRoom: TLabel
+    Left = 747
+    Height = 25
+    Top = 437
+    Width = 24
+    Caption = '<>'
+    ParentColor = False
+  end
+  object lblMapNorth: TLabel
+    Left = 747
+    Height = 25
+    Top = 304
+    Width = 24
+    Caption = '<>'
+    ParentColor = False
+  end
+  object lblMapWest: TLabel
+    Left = 611
+    Height = 25
+    Top = 437
+    Width = 24
+    Caption = '<>'
+    ParentColor = False
+  end
+  object lblMapSouth: TLabel
+    Left = 747
+    Height = 25
+    Top = 560
+    Width = 24
+    Caption = '<>'
+    ParentColor = False
+  end
+  object lblMapEast: TLabel
+    Left = 872
+    Height = 25
+    Top = 437
+    Width = 24
+    Caption = '<>'
+    ParentColor = False
+  end
+  object MainMenu1: TMainMenu
+    left = 712
+    top = 50
+    object mniFile: TMenuItem
+      Caption = 'Datei'
+      object mniNewGame: TMenuItem
+        Caption = 'Neu'
+        OnClick = mniNewGameClick
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object mniExit: TMenuItem
+        Caption = 'Beenden'
+      end
+    end
+  end
+end
