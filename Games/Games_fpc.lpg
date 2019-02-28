@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="15">
+    <Targets Count="18">
       <Target0 FileName="FPC\fpcTestAsteroidsTypes.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
@@ -89,6 +89,18 @@
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target14>
+      <Target15 FileName="FPC\fpcTestGrueStew.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target15>
+      <Target16 FileName="FPC\prj_GrueStew.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target16>
+      <Target17 FileName="FPC\GrueStew.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target17>
     </Targets>
   </ProjectGroup>
 </CONFIG>
