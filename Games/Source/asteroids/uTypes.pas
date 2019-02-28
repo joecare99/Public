@@ -1,6 +1,8 @@
 unit uTypes;
 
+{$ifdef FPC}
 {$mode delphi}
+{$ENDIF}
 
 interface
 
@@ -85,13 +87,13 @@ begin
   result:=self;
 end;
 
-function TFloatPoint.Summ(p: TFloatPoint): TFloatPoint; inline;
+function TFloatPoint.Summ(p: TFloatPoint): TFloatPoint; {$ifdef FPC}inline;{$ENDIF}
 begin
   result.x:=x+p.x;
   result.y:=y+p.y;
 end;
 
-function TFloatPoint.Diff(p: TFloatPoint): TFloatPoint; inline;
+function TFloatPoint.Diff(p: TFloatPoint): TFloatPoint; {$ifdef FPC}inline;{$ENDIF}
 begin
   result.x:=x-p.x;
   result.y:=y-p.y;
@@ -103,12 +105,12 @@ begin
   result.y:=y*p;
 end;
 
-function TFloatPoint.vMult(p: TFloatPoint): single; inline;
+function TFloatPoint.vMult(p: TFloatPoint): single; {$ifdef FPC}inline;{$ENDIF}
 begin
   result:= x*p.x+y*p.y;
 end;
 
-function TFloatPoint.xMult(p: TFloatPoint): TFloatPoint; inline;
+function TFloatPoint.xMult(p: TFloatPoint): TFloatPoint; {$ifdef FPC}inline;{$ENDIF}
 begin
   result.x := x*p.x - y*p.y;
   result.y := x*p.y + y*p.x;

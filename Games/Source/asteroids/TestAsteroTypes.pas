@@ -1,11 +1,13 @@
-unit TestAsteroTypes;
+﻿unit TestAsteroTypes;
 
+{$ifdef FPC}
 {$mode objfpc}{$H+}
+{$ENDIF}
 
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry, uTypes;
+  Classes, SysUtils,{$IFNDEF FPC}TestFramework, {$Else} fpcunit, testutils, testregistry, {$endif} uTypes;
 
 type
 
@@ -61,6 +63,6 @@ end;
 
 initialization
 
-  RegisterTest(TTestAstypes);
+  RegisterTest(TTestAstypes{$ifndef FPC}.Suite{$ENDIF});
 end.
 
