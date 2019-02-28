@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Asteroids"><module name="uGame"><element name="tPlayer.Temp"><short>Cannon Temperature</short>
+      </element><element name="tPlayer.Score"><short>Actual Player Score</short>
+      </element><element name="tPlayer.TurningLeft"/><element name="tPlayer.Create"><short>Create the Player-Object</short>
+      </element><element name="RadCon"><short>Constant of 1 Degree in rad</short>
+      </element><element name="r045"><short>Constant of 45 Degree in rad</short>
+      </element><element name="r360"><short>Constant of 360 degree in rad (full circle)</short>
+      </element><element name="RockAnomaly"><short>Constant of Rock-roughness (Zero=sphere)</short>
+      </element><element name="tPointSingle"><short>Definition of a point with float-coordinates</short>
+      </element><element name="TVector"><short>Definition of a Vector with Direction and Distance</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
