@@ -3,22 +3,25 @@
         <ProjectGuid>{9F9C5A8C-D95B-4A53-BBAB-F733CE2D875B}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
-        <Projects Include="D24\Asteroids.dproj">
+        <Projects Include="D25\fpcTestAsteroidsTypes.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="D24\Sokoban.dproj">
+        <Projects Include="D25\Asteroids.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="D24\prj_SokoLevelConvert.dproj">
+        <Projects Include="D25\Sokoban.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="D24\RunAround.dproj">
+        <Projects Include="D25\prj_SokoLevelConvert.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="..\Grafik\D24\fpcTestWernerEng.dproj">
+        <Projects Include="D25\RunAround.dproj">
             <Dependencies/>
         </Projects>
-        <Projects Include="..\Grafik\D24\Werner_Levedit.dproj">
+        <Projects Include="..\Grafik\D25\fpcTestWernerEng.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="..\Grafik\D25\Werner_Levedit.dproj">
             <Dependencies/>
         </Projects>
         <Projects Include="D25\TETRIS.dproj">
@@ -32,59 +35,68 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
+    <Target Name="fpcTestAsteroidsTypes">
+        <MSBuild Projects="D25\fpcTestAsteroidsTypes.dproj"/>
+    </Target>
+    <Target Name="fpcTestAsteroidsTypes:Clean">
+        <MSBuild Projects="D25\fpcTestAsteroidsTypes.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="fpcTestAsteroidsTypes:Make">
+        <MSBuild Projects="D25\fpcTestAsteroidsTypes.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Asteroids">
-        <MSBuild Projects="D24\Asteroids.dproj"/>
+        <MSBuild Projects="D25\Asteroids.dproj"/>
     </Target>
     <Target Name="Asteroids:Clean">
-        <MSBuild Projects="D24\Asteroids.dproj" Targets="Clean"/>
+        <MSBuild Projects="D25\Asteroids.dproj" Targets="Clean"/>
     </Target>
     <Target Name="Asteroids:Make">
-        <MSBuild Projects="D24\Asteroids.dproj" Targets="Make"/>
+        <MSBuild Projects="D25\Asteroids.dproj" Targets="Make"/>
     </Target>
     <Target Name="Sokoban">
-        <MSBuild Projects="D24\Sokoban.dproj"/>
+        <MSBuild Projects="D25\Sokoban.dproj"/>
     </Target>
     <Target Name="Sokoban:Clean">
-        <MSBuild Projects="D24\Sokoban.dproj" Targets="Clean"/>
+        <MSBuild Projects="D25\Sokoban.dproj" Targets="Clean"/>
     </Target>
     <Target Name="Sokoban:Make">
-        <MSBuild Projects="D24\Sokoban.dproj" Targets="Make"/>
+        <MSBuild Projects="D25\Sokoban.dproj" Targets="Make"/>
     </Target>
     <Target Name="prj_SokoLevelConvert">
-        <MSBuild Projects="D24\prj_SokoLevelConvert.dproj"/>
+        <MSBuild Projects="D25\prj_SokoLevelConvert.dproj"/>
     </Target>
     <Target Name="prj_SokoLevelConvert:Clean">
-        <MSBuild Projects="D24\prj_SokoLevelConvert.dproj" Targets="Clean"/>
+        <MSBuild Projects="D25\prj_SokoLevelConvert.dproj" Targets="Clean"/>
     </Target>
     <Target Name="prj_SokoLevelConvert:Make">
-        <MSBuild Projects="D24\prj_SokoLevelConvert.dproj" Targets="Make"/>
+        <MSBuild Projects="D25\prj_SokoLevelConvert.dproj" Targets="Make"/>
     </Target>
     <Target Name="RunAround">
-        <MSBuild Projects="D24\RunAround.dproj"/>
+        <MSBuild Projects="D25\RunAround.dproj"/>
     </Target>
     <Target Name="RunAround:Clean">
-        <MSBuild Projects="D24\RunAround.dproj" Targets="Clean"/>
+        <MSBuild Projects="D25\RunAround.dproj" Targets="Clean"/>
     </Target>
     <Target Name="RunAround:Make">
-        <MSBuild Projects="D24\RunAround.dproj" Targets="Make"/>
+        <MSBuild Projects="D25\RunAround.dproj" Targets="Make"/>
     </Target>
     <Target Name="fpcTestWernerEng">
-        <MSBuild Projects="..\Grafik\D24\fpcTestWernerEng.dproj"/>
+        <MSBuild Projects="..\Grafik\D25\fpcTestWernerEng.dproj"/>
     </Target>
     <Target Name="fpcTestWernerEng:Clean">
-        <MSBuild Projects="..\Grafik\D24\fpcTestWernerEng.dproj" Targets="Clean"/>
+        <MSBuild Projects="..\Grafik\D25\fpcTestWernerEng.dproj" Targets="Clean"/>
     </Target>
     <Target Name="fpcTestWernerEng:Make">
-        <MSBuild Projects="..\Grafik\D24\fpcTestWernerEng.dproj" Targets="Make"/>
+        <MSBuild Projects="..\Grafik\D25\fpcTestWernerEng.dproj" Targets="Make"/>
     </Target>
     <Target Name="Werner_Levedit">
-        <MSBuild Projects="..\Grafik\D24\Werner_Levedit.dproj"/>
+        <MSBuild Projects="..\Grafik\D25\Werner_Levedit.dproj"/>
     </Target>
     <Target Name="Werner_Levedit:Clean">
-        <MSBuild Projects="..\Grafik\D24\Werner_Levedit.dproj" Targets="Clean"/>
+        <MSBuild Projects="..\Grafik\D25\Werner_Levedit.dproj" Targets="Clean"/>
     </Target>
     <Target Name="Werner_Levedit:Make">
-        <MSBuild Projects="..\Grafik\D24\Werner_Levedit.dproj" Targets="Make"/>
+        <MSBuild Projects="..\Grafik\D25\Werner_Levedit.dproj" Targets="Make"/>
     </Target>
     <Target Name="TETRIS">
         <MSBuild Projects="D25\TETRIS.dproj"/>
@@ -96,13 +108,13 @@
         <MSBuild Projects="D25\TETRIS.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="Asteroids;Sokoban;prj_SokoLevelConvert;RunAround;fpcTestWernerEng;Werner_Levedit;TETRIS"/>
+        <CallTarget Targets="fpcTestAsteroidsTypes;Asteroids;Sokoban;prj_SokoLevelConvert;RunAround;fpcTestWernerEng;Werner_Levedit;TETRIS"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Asteroids:Clean;Sokoban:Clean;prj_SokoLevelConvert:Clean;RunAround:Clean;fpcTestWernerEng:Clean;Werner_Levedit:Clean;TETRIS:Clean"/>
+        <CallTarget Targets="fpcTestAsteroidsTypes:Clean;Asteroids:Clean;Sokoban:Clean;prj_SokoLevelConvert:Clean;RunAround:Clean;fpcTestWernerEng:Clean;Werner_Levedit:Clean;TETRIS:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Asteroids:Make;Sokoban:Make;prj_SokoLevelConvert:Make;RunAround:Make;fpcTestWernerEng:Make;Werner_Levedit:Make;TETRIS:Make"/>
+        <CallTarget Targets="fpcTestAsteroidsTypes:Make;Asteroids:Make;Sokoban:Make;prj_SokoLevelConvert:Make;RunAround:Make;fpcTestWernerEng:Make;Werner_Levedit:Make;TETRIS:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
