@@ -3,6 +3,9 @@
         <ProjectGuid>{9F9C5A8C-D95B-4A53-BBAB-F733CE2D875B}</ProjectGuid>
     </PropertyGroup>
     <ItemGroup>
+        <Projects Include="..\Components\D25\Compatible.dproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="D25\fpcTestAsteroidsTypes.dproj">
             <Dependencies/>
         </Projects>
@@ -27,6 +30,12 @@
         <Projects Include="D25\TETRIS.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="D25\fpcTestGrueStew.dproj">
+            <Dependencies/>
+        </Projects>
+        <Projects Include="D25\GrueStew.dproj">
+            <Dependencies/>
+        </Projects>
     </ItemGroup>
     <ProjectExtensions>
         <Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -35,6 +44,15 @@
             <Default.Personality/>
         </BorlandProject>
     </ProjectExtensions>
+    <Target Name="Compatible">
+        <MSBuild Projects="..\Components\D25\Compatible.dproj"/>
+    </Target>
+    <Target Name="Compatible:Clean">
+        <MSBuild Projects="..\Components\D25\Compatible.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Compatible:Make">
+        <MSBuild Projects="..\Components\D25\Compatible.dproj" Targets="Make"/>
+    </Target>
     <Target Name="fpcTestAsteroidsTypes">
         <MSBuild Projects="D25\fpcTestAsteroidsTypes.dproj"/>
     </Target>
@@ -107,14 +125,32 @@
     <Target Name="TETRIS:Make">
         <MSBuild Projects="D25\TETRIS.dproj" Targets="Make"/>
     </Target>
+    <Target Name="fpcTestGrueStew">
+        <MSBuild Projects="D25\fpcTestGrueStew.dproj"/>
+    </Target>
+    <Target Name="fpcTestGrueStew:Clean">
+        <MSBuild Projects="D25\fpcTestGrueStew.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="fpcTestGrueStew:Make">
+        <MSBuild Projects="D25\fpcTestGrueStew.dproj" Targets="Make"/>
+    </Target>
+    <Target Name="GrueStew">
+        <MSBuild Projects="D25\GrueStew.dproj"/>
+    </Target>
+    <Target Name="GrueStew:Clean">
+        <MSBuild Projects="D25\GrueStew.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="GrueStew:Make">
+        <MSBuild Projects="D25\GrueStew.dproj" Targets="Make"/>
+    </Target>
     <Target Name="Build">
-        <CallTarget Targets="fpcTestAsteroidsTypes;Asteroids;Sokoban;prj_SokoLevelConvert;RunAround;fpcTestWernerEng;Werner_Levedit;TETRIS"/>
+        <CallTarget Targets="Compatible;fpcTestAsteroidsTypes;Asteroids;Sokoban;prj_SokoLevelConvert;RunAround;fpcTestWernerEng;Werner_Levedit;TETRIS;fpcTestGrueStew;GrueStew"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="fpcTestAsteroidsTypes:Clean;Asteroids:Clean;Sokoban:Clean;prj_SokoLevelConvert:Clean;RunAround:Clean;fpcTestWernerEng:Clean;Werner_Levedit:Clean;TETRIS:Clean"/>
+        <CallTarget Targets="Compatible:Clean;fpcTestAsteroidsTypes:Clean;Asteroids:Clean;Sokoban:Clean;prj_SokoLevelConvert:Clean;RunAround:Clean;fpcTestWernerEng:Clean;Werner_Levedit:Clean;TETRIS:Clean;fpcTestGrueStew:Clean;GrueStew:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="fpcTestAsteroidsTypes:Make;Asteroids:Make;Sokoban:Make;prj_SokoLevelConvert:Make;RunAround:Make;fpcTestWernerEng:Make;Werner_Levedit:Make;TETRIS:Make"/>
+        <CallTarget Targets="Compatible:Make;fpcTestAsteroidsTypes:Make;Asteroids:Make;Sokoban:Make;prj_SokoLevelConvert:Make;RunAround:Make;fpcTestWernerEng:Make;Werner_Levedit:Make;TETRIS:Make;fpcTestGrueStew:Make;GrueStew:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
