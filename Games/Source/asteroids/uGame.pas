@@ -797,7 +797,7 @@ var
   lTestRockDist, lPickRockDist, lAngle,lPreAngle: Single;
   aShot: tShot;
   i: Integer;
-  lpr: ValReal;
+  lpr: {$IFDEF FPC}ValReal{$Else}extended{$endif};
   vPos: TFloatPoint;
 
 begin

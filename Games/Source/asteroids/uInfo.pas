@@ -134,7 +134,7 @@ var
     Time :int64;
   {$else}
   Time: cardinal;
-{$ENDIF}
+{$IFEND}
 {$ENDIF}
 begin
   Timer.Enabled := False; {would cause a stack overflow because of App.ProcMsg}
@@ -147,7 +147,7 @@ begin
     Time := GetTickCount64;
     {$else}
     Time := GetTickCount;
-    {$endif}
+    {$IFEND}
     {$ENDIF}
     if MovingUp then
       ySpeed := ySpeed - 0.01
@@ -173,7 +173,7 @@ begin
     while (GetTickCount64 < Time) do
     {$ELSE}
       while (GetTickCount < Time) do
-    {$ENDIF}
+    {$IFEND}
     {$ENDIF}
     ; {keep the loop at 100 fps}
   until quit or not Info.Visible;

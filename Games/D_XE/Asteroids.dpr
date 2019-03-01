@@ -7,7 +7,8 @@ uses
   uKeys in '..\source\asteroids\uKeys.pas' {Keys},
   uInfo in '..\source\asteroids\uInfo.pas' {Info},
   uDlg_EnterName in '..\source\asteroids\uDlg_EnterName.pas' {Dlg_EnterName},
-  uHighscores in '..\source\asteroids\uHighscores.pas' {Highscores};
+  uHighscores in '..\source\asteroids\uHighscores.pas' {Highscores},
+  uTypes in '..\Source\asteroids\uTypes.pas';
 
 {$R *.RES}
 

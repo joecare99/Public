@@ -172,7 +172,7 @@ Begin
                   Player.Accelerating := True;
                 If (Key = KeyFire) Then
                   AddShot;
-                If (Key = VK_P) Then
+                If (Key = {$IFDEF FPC}VK_P{$else}ORD('P'){$ENDIF}) Then
                   PecitionShot;
                 If Player.Accelerating and
                   (player.Temp<300) and
