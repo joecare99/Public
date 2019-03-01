@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="36">
+    <Targets Count="39">
       <Target0 FileName="FPC\addrbook.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="default" Compile="True"/>
@@ -168,9 +168,23 @@
         <Mode3 Name="Release"/>
       </Target34>
       <Target35 FileName="FPC\prj_TestClasses.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="Default"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+      </Target35>
+      <Target36 FileName="FPC\ipccheckserver.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
-      </Target35>
+      </Target36>
+      <Target37 FileName="FPC\ipcclient.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target37>
+      <Target38 FileName="FPC\ipcserver.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target38>
     </Targets>
   </ProjectGroup>
 </CONFIG>
