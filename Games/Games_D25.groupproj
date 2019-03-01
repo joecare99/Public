@@ -27,6 +27,9 @@
         <Projects Include="..\Grafik\D25\Werner_Levedit.dproj">
             <Dependencies/>
         </Projects>
+        <Projects Include="..\Diverses\D25\Swat.dproj">
+            <Dependencies/>
+        </Projects>
         <Projects Include="D25\TETRIS.dproj">
             <Dependencies/>
         </Projects>
@@ -122,6 +125,15 @@
     <Target Name="Werner_Levedit:Make">
         <MSBuild Projects="..\Grafik\D25\Werner_Levedit.dproj" Targets="Make"/>
     </Target>
+    <Target Name="Swat">
+        <MSBuild Projects="..\Diverses\D25\Swat.dproj"/>
+    </Target>
+    <Target Name="Swat:Clean">
+        <MSBuild Projects="..\Diverses\D25\Swat.dproj" Targets="Clean"/>
+    </Target>
+    <Target Name="Swat:Make">
+        <MSBuild Projects="..\Diverses\D25\Swat.dproj" Targets="Make"/>
+    </Target>
     <Target Name="TETRIS">
         <MSBuild Projects="D25\TETRIS.dproj"/>
     </Target>
@@ -168,13 +180,13 @@
         <MSBuild Projects="D25\WinCub.dproj" Targets="Make"/>
     </Target>
     <Target Name="Build">
-        <CallTarget Targets="Compatible;fpcTestAsteroidsTypes;Asteroids;Sokoban;prj_SokoLevelConvert;RunAround;fpcTestWernerEng;Werner_Levedit;TETRIS;fpcTestGrueStew;GrueStew;prj_GrueStew;WinCub"/>
+        <CallTarget Targets="Compatible;fpcTestAsteroidsTypes;Asteroids;Sokoban;prj_SokoLevelConvert;RunAround;fpcTestWernerEng;Werner_Levedit;Swat;TETRIS;fpcTestGrueStew;GrueStew;prj_GrueStew;WinCub"/>
     </Target>
     <Target Name="Clean">
-        <CallTarget Targets="Compatible:Clean;fpcTestAsteroidsTypes:Clean;Asteroids:Clean;Sokoban:Clean;prj_SokoLevelConvert:Clean;RunAround:Clean;fpcTestWernerEng:Clean;Werner_Levedit:Clean;TETRIS:Clean;fpcTestGrueStew:Clean;GrueStew:Clean;prj_GrueStew:Clean;WinCub:Clean"/>
+        <CallTarget Targets="Compatible:Clean;fpcTestAsteroidsTypes:Clean;Asteroids:Clean;Sokoban:Clean;prj_SokoLevelConvert:Clean;RunAround:Clean;fpcTestWernerEng:Clean;Werner_Levedit:Clean;Swat:Clean;TETRIS:Clean;fpcTestGrueStew:Clean;GrueStew:Clean;prj_GrueStew:Clean;WinCub:Clean"/>
     </Target>
     <Target Name="Make">
-        <CallTarget Targets="Compatible:Make;fpcTestAsteroidsTypes:Make;Asteroids:Make;Sokoban:Make;prj_SokoLevelConvert:Make;RunAround:Make;fpcTestWernerEng:Make;Werner_Levedit:Make;TETRIS:Make;fpcTestGrueStew:Make;GrueStew:Make;prj_GrueStew:Make;WinCub:Make"/>
+        <CallTarget Targets="Compatible:Make;fpcTestAsteroidsTypes:Make;Asteroids:Make;Sokoban:Make;prj_SokoLevelConvert:Make;RunAround:Make;fpcTestWernerEng:Make;Werner_Levedit:Make;Swat:Make;TETRIS:Make;fpcTestGrueStew:Make;GrueStew:Make;prj_GrueStew:Make;WinCub:Make"/>
     </Target>
     <Import Project="$(BDS)\Bin\CodeGear.Group.Targets" Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')"/>
 </Project>
