@@ -828,7 +828,7 @@ BEGIN
   Event := CreateEvent(NIL, False, False, NIL);
   TRY
    {$if declared(GetTickCount64)}
-    Tick := GetTickCount64 + QWORD(Miliseconds);
+    Tick := GetTickCount64 + int64(Miliseconds);
    {$else}
    Tick := GetTickCount + DWORD(Miliseconds);
    {$endif}
