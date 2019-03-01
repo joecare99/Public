@@ -67,7 +67,12 @@ implementation
 resourcestring
   rsLazColorCub = 'ColorCub for Lazarus inspired by E. I. Simay';
 
+{$IFDEF FPC}
 {$R *.lfm}
+{$ELSE}
+{$R *.dfm}
+{$ENDIF}
+
 {$R icon.RES}
 
 var
@@ -118,6 +123,8 @@ begin
       pnlCubs[j + 1, i + 1].Caption := '';
       pnlCubs[j + 1, i + 1].Width := btnUp1.Width;
       pnlCubs[j + 1, i + 1].Height := btnLeft1.Height;
+      pnlCubs[j + 1, i + 1].ParentColor := false;
+      pnlCubs[j + 1, i + 1].ParentBackground := false;
       pnlCubs[j + 1, i + 1].Color := StdCols[FColCub.Tile[J, i]];
       pnlCubs[j + 1, i + 1].Left := btnUp1.left + (j) * btnUp1.Width + (j) * sp;
       pnlCubs[j + 1, i + 1].Top := btnLeft1.top + (i) * btnLeft1.Height + (i) * sp;

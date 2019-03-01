@@ -1,6 +1,8 @@
 unit Cls_ColCub;
 
+{$IFDEF FPC}
 {$mode delphi}
+{$ENDIF}
 
 interface
 
