@@ -8,7 +8,7 @@ interface
 
 uses
   Classes, SysUtils,{$IFDEF FPC} FileUtil,{$ELSE}windows, {$ENDIF} Forms, Controls, Graphics, Dialogs, StdCtrls,
-  ExtCtrls, Buttons, Grids, ValEdit, SokoEngine;
+  ExtCtrls, Buttons, Grids, ValEdit, SokoEngine, ImgList;
 
 type
 
