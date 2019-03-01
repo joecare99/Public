@@ -1,11 +1,14 @@
 unit tst_GrueStew;
 
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
+{$EndIF}
+
 
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry, cls_GrueStewEng;
+  Classes, SysUtils, {$IFNDEF FPC}TestFramework, {$Else} fpcunit, testutils, testregistry, {$endif} cls_GrueStewEng;
 
 type
   TGrueStewTestEng=Class(TGrueStewEng)
@@ -70,7 +73,7 @@ begin
         lMax:=FGrueStew.Room[i].Reachable;
       CheckNotEquals('',FGrueStew.Room[i].Desc,'Room['+inttostr(i)+'].description not empty');
       CheckEquals(false,FGrueStew.Room[i].MappedR,'Room['+inttostr(i)+'].MappedR');
-      for dir in TDir do
+      for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
         begin
           CheckEquals(false,FGrueStew.Room[i].MappedT[dir],'Room['+inttostr(i)+'].MappedT['+CDirDesc[dir]+']');
           CheckNotEquals(i,FGrueStew.Room[i].Transition[dir],'Room['+inttostr(i)+'].Transition['+CDirDesc[dir]+']');
@@ -89,8 +92,8 @@ begin
   CheckNotEquals(0,FGrueStew.ActRoom,'ActRoom <> 0');
   CheckEquals(true,FGrueStew.Room[-1].MappedR,'Room[-1].MappedR');
   CheckEquals(0,FGrueStew.Step,'ActRoom');
-  CheckEquals(8,FGrueStew.ActRoom,'ActRoom');
-  for dir in TDir do
+  CheckEquals({$IFDEF FPC}8{$ELSE}13{$ENDIF},FGrueStew.ActRoom,'ActRoom');
+  for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
     CheckEquals(0,FGrueStew.Map[dir],'Map['+CDirDesc[dir]+']');
 end;
 
@@ -103,8 +106,8 @@ begin
   CheckNotEquals(0,FGrueStew.ActRoom,'ActRoom <> 0');
   CheckEquals(true,FGrueStew.Room[-1].MappedR,'Room[-1].MappedR');
   CheckEquals(0,FGrueStew.Step,'ActRoom');
-  CheckEquals(8,FGrueStew.ActRoom,'ActRoom');
-  for dir in TDir do
+  CheckEquals({$IFDEF FPC}8{$ELSE}13{$ENDIF},FGrueStew.ActRoom,'ActRoom');
+  for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
     CheckEquals(0,FGrueStew.Map[dir],'Map['+CDirDesc[dir]+']');
   CheckNotEquals('',FGrueStew.RoomDesc,'RoomDesc not empty');
   CheckNotEquals('',FGrueStew.RoomDesc,'RoomDesc not empty');
@@ -118,11 +121,11 @@ end;
 procedure TTestGrueStew.TearDown;
 begin
   FreeandNil(FGrueStew);
-  CheckNotEquals(0,AssertCount,'Some Tests have to Called');
+ {$IFDEF FPC}CheckNotEquals(0,AssertCount,'Some Tests have to Called');{$ENDIF}
 end;
 
 initialization
 
-  RegisterTest(TTestGrueStew);
+  RegisterTest(TTestGrueStew{$IFNDEF FPC}.Suite{$endif});
 end.
 

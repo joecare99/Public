@@ -1,6 +1,8 @@
-unit unt_GrueStewBase;
+﻿unit unt_GrueStewBase;
 
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
+{$EndIF}
 
 interface
 
@@ -13,6 +15,11 @@ type
     TShootResult = (shHit, shWall, shMiss, shMiss2, shMiss3, shEarthquake);
     TSens = (snExit, snSnMonster, snBat, snPit);
     TSensSet = set of TSens;
+
+{$IFNDEF FPC}
+const LineEnding=#13#10;
+{$EndIF}
+
 
 resourcestring
     Anleitung = 'In diesem Spiel sind sie ein tapferer und sehr #hunriger Jäger#. ' +

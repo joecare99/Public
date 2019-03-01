@@ -1,4 +1,4 @@
-unit cls_GrueStewEng;
+﻿unit cls_GrueStewEng;
 
 {$IFDEF FPC}
 {$mode delphi}{$H+}
@@ -231,7 +231,7 @@ var
     dir: TDir;
 begin
     Result := [];
-    for dir in TDir do
+    for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
         if FRooms[FPlayerRoom].Transition[dir] <> 0 then
           begin
             if FRooms[FPlayerRoom].Transition[dir] = FGrueRoom then
@@ -272,7 +272,7 @@ begin
 
         // Prüfe ob schon eine Verbindung zw. Zielraum und Aktuellem Raum besteht.
         flag := False;
-        for rDir in Tdir do
+        for rDir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
             if FRooms[Dest].Transition[rDir] = i then
               begin
                 flag := True;
@@ -290,7 +290,7 @@ begin
             if (FRooms[i].Reachable <> 0) and (FRooms[dest].Reachable = 0) then
               begin
                 FRooms[dest].Reachable := FRooms[i].Reachable + 1;
-                for rDir in TDir do
+                for rDir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
                     if (FRooms[dest].Transition[rdir] <> 0) and
                         (FRooms[FRooms[dest].Transition[rdir]].Reachable = 0) then
                         FRooms[FRooms[dest].Transition[rdir]].Reachable :=
@@ -299,7 +299,7 @@ begin
             else if (FRooms[i].Reachable = 0) and (FRooms[dest].Reachable <> 0) then
               begin
                 FRooms[i].Reachable := FRooms[dest].Reachable + 1;
-                for rDir in TDir do
+                for rDir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
                     if (FRooms[i].Transition[rdir] <> 0) and
                         (FRooms[FRooms[i].Transition[rdir]].Reachable = 0) then
                         FRooms[FRooms[i].Transition[rdir]].Reachable :=
@@ -330,7 +330,7 @@ begin
       begin
         FRooms[i].mappedR := False;
         FRooms[i].reachable := 0;
-        for dir in TDir do
+        for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
             FRooms[i].mappedT[dir] := False;
         FRooms[i].Desc := RaumTxt[i];
       end;
@@ -340,7 +340,7 @@ begin
         flag := False;
         while not flag do
           begin
-            for dir in TDir do
+            for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
                 flag := SetTransition(i, dir, i div 7) or flag;
             if i > 7 then
                 flag := flag and (Frooms[i].reachable <> 0);
@@ -348,7 +348,7 @@ begin
       end;
     for i := 1 to 7 do
       while Frooms[i].reachable=0 do
-          for dir in TDir do
+          for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
               SetTransition(i, dir, 1);
 end;
 
