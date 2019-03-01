@@ -1,171 +1,186 @@
 object frmGrueStewMain: TfrmGrueStewMain
   Left = 666
-  Height = 605
+  Height = 403
   Top = 37
-  Width = 893
+  Width = 595
   Caption = 'Grue Stew'
-  ClientHeight = 575
-  ClientWidth = 893
-  DesignTimePPI = 144
+  ClientHeight = 383
+  ClientWidth = 595
   Menu = MainMenu1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   LCLVersion = '2.0.0.4'
   object Shape2: TShape
-    Left = 643
-    Height = 229
-    Top = 332
-    Width = 232
+    Left = 429
+    Height = 153
+    Top = 221
+    Width = 155
     Brush.Color = clYellow
     Shape = stCircle
   end
   object Shape1: TShape
-    Left = 691
-    Height = 133
-    Top = 380
-    Width = 136
+    Left = 461
+    Height = 89
+    Top = 253
+    Width = 91
     Brush.Color = clLime
     Shape = stCircle
   end
   object Memo1: TMemo
-    Left = 18
-    Height = 499
-    Top = 41
-    Width = 593
+    Left = 12
+    Height = 333
+    Top = 27
+    Width = 395
     Lines.Strings = (
       'Memo1'
     )
+    ParentFont = False
     TabOrder = 0
   end
   object btnMoveNorth: TSpeedButton
-    Left = 739
-    Height = 41
-    Top = 388
-    Width = 44
+    Left = 493
+    Height = 27
+    Top = 259
+    Width = 29
     Caption = 'N'
     OnClick = btnMoveClick
+    ParentFont = False
   end
   object btnMoveEast: TSpeedButton
     Tag = 1
-    Left = 779
-    Height = 41
-    Top = 428
-    Width = 44
+    Left = 519
+    Height = 27
+    Top = 285
+    Width = 29
     Caption = 'O'
     OnClick = btnMoveClick
+    ParentFont = False
   end
   object btnMoveWest: TSpeedButton
     Tag = 3
-    Left = 699
-    Height = 41
-    Top = 428
-    Width = 44
+    Left = 466
+    Height = 27
+    Top = 285
+    Width = 29
     Caption = 'W'
     OnClick = btnMoveClick
+    ParentFont = False
   end
   object btnMoveSouth: TSpeedButton
     Tag = 2
-    Left = 739
-    Height = 41
-    Top = 468
-    Width = 44
+    Left = 493
+    Height = 27
+    Top = 312
+    Width = 29
     Caption = 'S'
     OnClick = btnMoveClick
+    ParentFont = False
   end
   object btnShootNorth: TSpeedButton
-    Left = 739
-    Height = 41
-    Top = 340
-    Width = 44
+    Left = 493
+    Height = 27
+    Top = 227
+    Width = 29
     Caption = 'N'
     OnClick = btnShootClick
+    ParentFont = False
   end
   object btnShootEast: TSpeedButton
     Tag = 1
-    Left = 827
-    Height = 41
-    Top = 428
-    Width = 44
+    Left = 551
+    Height = 27
+    Top = 285
+    Width = 29
     Caption = 'O'
     OnClick = btnShootClick
+    ParentFont = False
   end
   object btnShootWest: TSpeedButton
     Tag = 3
-    Left = 651
-    Height = 41
-    Top = 428
-    Width = 44
+    Left = 434
+    Height = 27
+    Top = 285
+    Width = 29
     Caption = 'W'
     OnClick = btnShootClick
+    ParentFont = False
   end
   object btnShootSouth: TSpeedButton
     Tag = 2
-    Left = 739
-    Height = 41
-    Top = 516
-    Width = 44
+    Left = 493
+    Height = 27
+    Top = 344
+    Width = 29
     Caption = 'S'
     OnClick = btnShootClick
+    ParentFont = False
   end
   object Shoot: TLabel
-    Left = 668
+    Left = 445
     Height = 25
-    Top = 371
+    Top = 247
     Width = 48
     Caption = 'Shoot'
     ParentColor = False
+    ParentFont = False
   end
   object Walk: TLabel
-    Left = 790
+    Left = 527
     Height = 25
-    Top = 398
+    Top = 265
     Width = 38
     Caption = 'Walk'
     ParentColor = False
+    ParentFont = False
   end
   object lblActRoom: TLabel
-    Left = 747
+    Left = 498
     Height = 25
-    Top = 437
+    Top = 291
     Width = 24
     Caption = '<>'
     ParentColor = False
+    ParentFont = False
   end
   object lblMapNorth: TLabel
-    Left = 747
+    Left = 498
     Height = 25
-    Top = 304
+    Top = 203
     Width = 24
     Caption = '<>'
     ParentColor = False
+    ParentFont = False
   end
   object lblMapWest: TLabel
-    Left = 611
+    Left = 407
     Height = 25
-    Top = 437
+    Top = 291
     Width = 24
     Caption = '<>'
     ParentColor = False
+    ParentFont = False
   end
   object lblMapSouth: TLabel
-    Left = 747
+    Left = 498
     Height = 25
-    Top = 560
+    Top = 373
     Width = 24
     Caption = '<>'
     ParentColor = False
+    ParentFont = False
   end
   object lblMapEast: TLabel
-    Left = 872
+    Left = 581
     Height = 25
-    Top = 437
+    Top = 291
     Width = 24
     Caption = '<>'
     ParentColor = False
+    ParentFont = False
   end
   object MainMenu1: TMainMenu
-    left = 712
-    top = 50
+    left = 475
+    top = 33
     object mniFile: TMenuItem
       Caption = 'Datei'
       object mniNewGame: TMenuItem

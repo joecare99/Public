@@ -23,7 +23,7 @@ uses
 
 begin
   Application:=TMyApplication.Create(nil);
-  Application.Title:='My Application';
+  Application.Title:='Grue Stew, get the Monster';
   Application.Run;
   Application.Free;
 end.

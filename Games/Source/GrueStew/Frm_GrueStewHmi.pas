@@ -1,6 +1,8 @@
 unit Frm_GrueStewHmi;
 
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
+{$EndIF}
 
 interface
 
@@ -47,6 +49,7 @@ type
         FMovBtn:array[tdir] of TSpeedButton;
         FShtBtn:array[tdir] of TSpeedButton;
         Procedure UpdateMap;
+        Procedure Write(str:String;clear:boolean=false);
     public
 
     end;
@@ -56,7 +59,11 @@ var
 
 implementation
 
+{$IFDEF FPC}
 {$R *.lfm}
+{$ELSE}
+{$R *.dfm}
+{$EndIF}
 
 { TfrmGrueStewMain }
 
@@ -66,34 +73,32 @@ var
 begin
     if Sender.InheritsFrom(TControl) and Not fGrueStew.HasEnded then
       begin
-        Memo1.Append(ITryMove[TDir(TControl(Sender).Tag)]);
+        Write(ITryMove[TDir(TControl(Sender).Tag)]);
         lMResult := fGrueStew.Move(TDir(TControl(Sender).Tag));
         case lMResult of
             mvOK:
               begin
-                memo1.Clear;
-                memo1.Append(fGrueStew.RoomDesc);
+                Write(fGrueStew.RoomDesc,true);
               end;
-            mvWall: memo1.Append(CantMoveThere);
+            mvWall: Write(CantMoveThere);
             mvExit: begin
-              memo1.Append(ReachedExit);
+              Write(ReachedExit);
             end;
             mvExitwMonst: begin
-              memo1.Append(ReachedExitwM);
+              Write(ReachedExitwM);
             end;
-            mvMonster: memo1.Append(CaughtBYMonster);
-            mvPit: memo1.Append(FellIntoPit);
+            mvMonster: Write(CaughtBYMonster);
+            mvPit: Write(FellIntoPit);
             mvBat:
               begin
-                memo1.Clear;
-                memo1.Append(BatCatchYou);
-                memo1.Append(fGrueStew.RoomDesc);
+                Write(BatCatchYou,true);
+                Write(fGrueStew.RoomDesc);
               end;
             mvEarthquake:
               begin
                 memo1.Clear;
-                memo1.Append(EQuake);
-                memo1.Append(fGrueStew.RoomDesc);
+                Write(EQuake);
+                Write(fGrueStew.RoomDesc);
               end;
           end;
                 UpdateMap;
@@ -108,20 +113,20 @@ var
 begin
     if Sender.InheritsFrom(TControl) then
       begin
-        Memo1.Append(Ishoot[TDir(TControl(Sender).Tag)]);
+        Write(Ishoot[TDir(TControl(Sender).Tag)]);
 
         lSResult := fGrueStew.Shoot(TDir(TControl(Sender).Tag));
         case lSResult of
-            shHit: Memo1.Append(HitMonster);
-            shWall: Memo1.Append(HitWall);
-            shMiss: Memo1.Append(NoHit1);
-            shMiss2: Memo1.Append(NoHit2);
-            shMiss3: Memo1.Append(NoHit3);
+            shHit: Write(HitMonster);
+            shWall: Write(HitWall);
+            shMiss: Write(NoHit1);
+            shMiss2: Write(NoHit2);
+            shMiss3: Write(NoHit3);
             shEarthquake:
               begin
                 memo1.Clear;
-                memo1.Append(EQuake);
-                memo1.Append(fGrueStew.RoomDesc);
+                Write(EQuake);
+                Write(fGrueStew.RoomDesc);
               end;
           end;
         UpdateMap;
@@ -143,6 +148,7 @@ begin
     FShtBtn[drEast] := btnShootEast;
     FShtBtn[drSouth] := btnShootSouth;
     FShtBtn[drWest] := btnShootWest;
+    write(fGrueStew.GetDescription,true);
 end;
 
 procedure TfrmGrueStewMain.FormDestroy(Sender: TObject);
@@ -153,8 +159,7 @@ end;
 procedure TfrmGrueStewMain.mniNewGameClick(Sender: TObject);
 begin
     fGrueStew.NewGame;
-    Memo1.Text := fGrueStew.GetDescription;
-    memo1.Append(fGrueStew.RoomDesc);
+    write(fGrueStew.RoomDesc,true);
     UpdateMap;
 end;
 
@@ -164,13 +169,20 @@ var
   lMapDir: LongInt;
 begin
   lblActRoom.Caption:= RaumTxt2[fGrueStew.ActRoom];
-  for dir in Tdir do
+  for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
     begin
       lMapDir:=fGrueStew.Map[dir];
       FMapLbl[dir].Caption := RaumTxt2[lMapDir];
       FMovBtn[dir].Enabled:=lMapDir <> -2;
       FShtBtn[dir].Enabled:=lMapDir <> -2;
     end;
+end;
+
+procedure TfrmGrueStewMain.Write(str: String; clear: boolean);
+begin
+  if clear then memo1.Clear;
+  str := stringreplace(str,'#','',[rfReplaceAll]);
+  Memo1.Lines.Append(str);
 end;
 
 end.

@@ -37,6 +37,7 @@
         <Filename Value="..\Source\GrueStew\Frm_GrueStewHmi.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmGrueStewMain"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit1>
       <Unit2>
