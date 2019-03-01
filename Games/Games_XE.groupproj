@@ -24,10 +24,7 @@
 			<Projects Include="..\Grafik\D_XE\Werner_Levedit.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="..\Grafik\spiele\SuperHirn.dproj">
-				<Dependencies/>
-			</Projects>
-			<Projects Include="..\Grafik\spiele\tetris\D_XE\TETRIS.dproj">
+			<Projects Include="..\Grafik\D_XE\SuperHirn.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="..\Grafik\D_XE\BREAKOUT.dproj">
@@ -114,22 +111,13 @@
 			<MSBuild Projects="..\Grafik\D_XE\Werner_Levedit.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="SuperHirn">
-			<MSBuild Projects="..\Grafik\spiele\SuperHirn.dproj"/>
+			<MSBuild Projects="..\Grafik\D_XE\SuperHirn.dproj"/>
 		</Target>
 		<Target Name="SuperHirn:Clean">
-			<MSBuild Projects="..\Grafik\spiele\SuperHirn.dproj" Targets="Clean"/>
+			<MSBuild Projects="..\Grafik\D_XE\SuperHirn.dproj" Targets="Clean"/>
 		</Target>
 		<Target Name="SuperHirn:Make">
-			<MSBuild Projects="..\Grafik\spiele\SuperHirn.dproj" Targets="Make"/>
-		</Target>
-		<Target Name="TETRIS">
-			<MSBuild Projects="..\Grafik\spiele\tetris\D_XE\TETRIS.dproj"/>
-		</Target>
-		<Target Name="TETRIS:Clean">
-			<MSBuild Projects="..\Grafik\spiele\tetris\D_XE\TETRIS.dproj" Targets="Clean"/>
-		</Target>
-		<Target Name="TETRIS:Make">
-			<MSBuild Projects="..\Grafik\spiele\tetris\D_XE\TETRIS.dproj" Targets="Make"/>
+			<MSBuild Projects="..\Grafik\D_XE\SuperHirn.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="BREAKOUT">
 			<MSBuild Projects="..\Grafik\D_XE\BREAKOUT.dproj"/>
@@ -168,13 +156,13 @@
 			<MSBuild Projects="..\Diverses\D_XE\Football.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Build">
-			<CallTarget Targets="Sokoban;prj_SokoLevelConvert;BOLO;fpcTestWernerEng;RATE_MAL;WERNER1;Werner_Levedit;SuperHirn;TETRIS;BREAKOUT;Asteroids;Swat;Football"/>
+			<CallTarget Targets="Sokoban;prj_SokoLevelConvert;BOLO;fpcTestWernerEng;RATE_MAL;WERNER1;Werner_Levedit;SuperHirn;BREAKOUT;Asteroids;Swat;Football"/>
 		</Target>
 		<Target Name="Clean">
-			<CallTarget Targets="Sokoban:Clean;prj_SokoLevelConvert:Clean;BOLO:Clean;fpcTestWernerEng:Clean;RATE_MAL:Clean;WERNER1:Clean;Werner_Levedit:Clean;SuperHirn:Clean;TETRIS:Clean;BREAKOUT:Clean;Asteroids:Clean;Swat:Clean;Football:Clean"/>
+			<CallTarget Targets="Sokoban:Clean;prj_SokoLevelConvert:Clean;BOLO:Clean;fpcTestWernerEng:Clean;RATE_MAL:Clean;WERNER1:Clean;Werner_Levedit:Clean;SuperHirn:Clean;BREAKOUT:Clean;Asteroids:Clean;Swat:Clean;Football:Clean"/>
 		</Target>
 		<Target Name="Make">
-			<CallTarget Targets="Sokoban:Make;prj_SokoLevelConvert:Make;BOLO:Make;fpcTestWernerEng:Make;RATE_MAL:Make;WERNER1:Make;Werner_Levedit:Make;SuperHirn:Make;TETRIS:Make;BREAKOUT:Make;Asteroids:Make;Swat:Make;Football:Make"/>
+			<CallTarget Targets="Sokoban:Make;prj_SokoLevelConvert:Make;BOLO:Make;fpcTestWernerEng:Make;RATE_MAL:Make;WERNER1:Make;Werner_Levedit:Make;SuperHirn:Make;BREAKOUT:Make;Asteroids:Make;Swat:Make;Football:Make"/>
 		</Target>
 		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
 	</Project>
