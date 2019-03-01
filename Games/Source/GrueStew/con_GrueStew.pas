@@ -1,6 +1,8 @@
 unit con_GrueStew;
 
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
+{$EndIF}
 
 interface
 
@@ -33,7 +35,7 @@ var
 
 implementation
 
-uses unt_GrueStewBase,crt;
+uses unt_GrueStewBase{$IFDEF FPC},crt{$ELSE},win32crt{$EndIF};
 
 { TMyApplication }
 
@@ -134,7 +136,7 @@ begin
   writeln(FGrueStew.GetDescription);
   writeln;
   writeln(CPressAnyKey);
-  ch := ReadKey;
+  {$IFDEF FPC}ch := ReadKey{$ELSE}readln(ch){$ENDIF};
 end;
 
 procedure TMyApplication.UpdateScreen(Delay: boolean);
@@ -168,7 +170,8 @@ begin
               hPos := 1;
               if delay then sleep (40)
             end;
-          write(Utf8ToAnsi(w));
+       //   write(Utf8ToAnsi(w));
+          Write(w);
           if st[i]<>#10 then hPos := hPos+length(Utf8ToAnsi(w))
             else hPos := 1;
           w := '';
@@ -182,7 +185,8 @@ begin
       system.writeln;
       hPos := 1;
     end;
-  system.WriteLn(Utf8ToAnsi(w));
+//  system.WriteLn(Utf8ToAnsi(w));
+  system.WriteLn(w);
 end;
 
 procedure TMyApplication.DoRun;
@@ -212,7 +216,7 @@ begin
   while not FGrueStew.HasEnded do
     begin
       Writeln(CAnweisung);
-      ch := ReadKey;
+      {$IFDEF FPC}ch := ReadKey{$ELSE}readln(ch){$ENDIF};
       if ch in ['N','O','S','W'] then
         DoMove(ch)
       else if ch in ['n','o','s','w'] then
@@ -232,7 +236,7 @@ begin
 
   // Ergebniss anzeigen
   Writeln(CPressAnyKey);
-  ch:=Readkey;
+  {$IFDEF FPC}ch := ReadKey{$ELSE}readln(ch){$ENDIF};
   // stop program loop
   Terminate;
 end;
