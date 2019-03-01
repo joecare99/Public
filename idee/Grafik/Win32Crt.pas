@@ -50,7 +50,7 @@ TYPE
   TCGAColor = integer;
 {$if declared(_CHAR_INFO)}
   TCHAR_INFO=_CHAR_INFO;
-{$endIf}
+{$ifend}
 
 
 CONST
@@ -344,7 +344,7 @@ FUNCTION StrToPChar(CONST S: STRING; CONST {%H-}D: STRING = #0): Pchar; INLINE;
 {$IF not defined(FPC_FULLVERSION) or (FPC_FULLVERSION<30000)}
 TYPE
   TCharArray = ARRAY [Word] OF Char;
-  {$ENDIF}
+  {$IFEND}
 {$ENDIF}
 BEGIN
 {$IFNdef FPC}
@@ -819,7 +819,7 @@ VAR
   Tick, ms: int64;
 {$else}
   Tick, ms: integer;
-{$endif}
+{$IFEND}
   Event:    THandle;
   Msg:      TMsg;
 
@@ -831,7 +831,7 @@ BEGIN
     Tick := GetTickCount64 + int64(Miliseconds);
    {$else}
    Tick := GetTickCount + DWORD(Miliseconds);
-   {$endif}
+   {$IFEND}
     WHILE (ms > 0)  DO
       BEGIN
         Console.ProcessMessage(Msg);
@@ -842,7 +842,7 @@ BEGIN
         ms := Tick - GetTickCount64;
         {$else}
         ms := Tick - GetTickCount;
-        {$endif}
+        {$ifend}
       END;
   FINALLY
     FileClose(Event); { *Converted from CloseHandle* }
@@ -1565,7 +1565,7 @@ BEGIN
   Tick := ShortSTRING(inttostr(GetTickCount64 MOD 1000));
   {$else}
   Tick := ShortSTRING(inttostr(GetTickCount MOD 1000));
-  {$endif}
+  {$IFEND}
   SetMemB800(150, Tick, 4);
   Done := True;
 END;
