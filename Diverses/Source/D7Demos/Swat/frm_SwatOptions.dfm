@@ -11,7 +11,7 @@ object frmSwatOptionDlg: TfrmSwatOptionDlg
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = False
+  OldCreateOrder = True
   Position = poScreenCenter
   OnShow = FormShow
   PixelsPerInch = 96
@@ -29,6 +29,8 @@ object frmSwatOptionDlg: TfrmSwatOptionDlg
     Width = 23
     Height = 13
     Caption = 'Slow'
+    Color = clBtnFace
+    ParentColor = False
   end
   object lblFast: TLabel
     Left = 241
@@ -36,6 +38,8 @@ object frmSwatOptionDlg: TfrmSwatOptionDlg
     Width = 20
     Height = 13
     Caption = 'Fast'
+    Color = clBtnFace
+    ParentColor = False
   end
   object lblLow: TLabel
     Left = 36
@@ -43,6 +47,8 @@ object frmSwatOptionDlg: TfrmSwatOptionDlg
     Width = 20
     Height = 13
     Caption = 'Low'
+    Color = clBtnFace
+    ParentColor = False
   end
   object lblHigh: TLabel
     Left = 239
@@ -50,6 +56,8 @@ object frmSwatOptionDlg: TfrmSwatOptionDlg
     Width = 22
     Height = 13
     Caption = 'High'
+    Color = clBtnFace
+    ParentColor = False
   end
   object lblSpeed: TLabel
     Left = 133
@@ -57,7 +65,9 @@ object frmSwatOptionDlg: TfrmSwatOptionDlg
     Width = 31
     Height = 13
     Caption = '&Speed'
+    Color = clBtnFace
     FocusControl = SpeedSet
+    ParentColor = False
   end
   object lblPopulation: TLabel
     Left = 123
@@ -65,7 +75,9 @@ object frmSwatOptionDlg: TfrmSwatOptionDlg
     Width = 50
     Height = 13
     Caption = '&Population'
+    Color = clBtnFace
     FocusControl = PopulationSet
+    ParentColor = False
   end
   object lblGameTime: TLabel
     Left = 121
@@ -73,7 +85,9 @@ object frmSwatOptionDlg: TfrmSwatOptionDlg
     Width = 54
     Height = 13
     Caption = '&Game Time'
+    Color = clBtnFace
     FocusControl = GameTimeSet
+    ParentColor = False
   end
   object SpeedSet: TTrackBar
     Left = 36
@@ -81,15 +95,7 @@ object frmSwatOptionDlg: TfrmSwatOptionDlg
     Width = 225
     Height = 25
     Max = 30
-    Orientation = trHorizontal
-    Frequency = 1
-    Position = 0
-    SelEnd = 0
-    SelStart = 0
-    TabOrder = 2
-    ThumbLength = 20
-    TickMarks = tmBottomRight
-    TickStyle = tsAuto
+    TabOrder = 0
   end
   object PopulationSet: TTrackBar
     Left = 36
@@ -97,60 +103,50 @@ object frmSwatOptionDlg: TfrmSwatOptionDlg
     Width = 225
     Height = 25
     Max = 35
-    Orientation = trHorizontal
-    Frequency = 1
-    Position = 0
-    SelEnd = 0
-    SelStart = 0
-    TabOrder = 3
-    ThumbLength = 20
-    TickMarks = tmBottomRight
-    TickStyle = tsAuto
+    TabOrder = 1
   end
   object GameTimeSet: TEdit
     Left = 116
     Top = 184
     Width = 65
     Height = 21
-    TabOrder = 4
+    TabOrder = 2
     Text = '150'
- end
- object pnlRight: TPanel
+  end
+  object pnlRight: TPanel
     Left = 286
-    Height = 233
     Top = 0
     Width = 98
+    Height = 233
     Align = alRight
     BevelOuter = bvNone
-    ClientHeight = 233
-    ClientWidth = 98
     TabOrder = 3
     object btnOK: TBitBtn
-      Left = 6
+      Left = 0
+      Top = 0
+      Width = 98
       Height = 60
-      Top = 6
-      Width = 86
       Align = alTop
-      Default = True
-      DefaultCaption = True
+      DoubleBuffered = True
       Kind = bkOK
       Layout = blGlyphTop
-      ModalResult = 1
-      OnClick = btnOKClick
+      NumGlyphs = 2
+      ParentDoubleBuffered = False
       TabOrder = 0
+      OnClick = btnOKClick
     end
     object CancelBtn: TBitBtn
-      Left = 6
+      Left = 0
+      Top = 60
+      Width = 98
       Height = 60
-      Top = 72
-      Width = 86
       Align = alTop
-      Cancel = True
-      DefaultCaption = True
+      DoubleBuffered = True
       Kind = bkCancel
       Layout = blGlyphTop
-      ModalResult = 2
+      NumGlyphs = 2
+      ParentDoubleBuffered = False
       TabOrder = 1
     end
-
+  end
 end

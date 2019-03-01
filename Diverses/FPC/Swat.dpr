@@ -18,6 +18,7 @@ uses
 
 begin
   Application.Initialize;
+  Application.Title := 'Swat: Catch the flies';
   Application.CreateForm(TfrmSwatMain, frmSwatMain);
   Application.CreateForm(TfrmAboutSwat, frmAboutSwat);
   Application.CreateForm(TfrmSwatOptionDlg, frmSwatOptionDlg);

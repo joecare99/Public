@@ -1,23 +1,23 @@
-object SwatForm: TSwatForm
+object frmSwatMain: TfrmSwatMain
   Left = 566
   Top = 362
   Caption = 'Swat!'
-  ClientHeight = 400
-  ClientWidth = 274
+  ClientHeight = 429
+  ClientWidth = 281
   Color = clSilver
   Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  Menu = MainMenu1
-  OldCreateOrder = False
+  Menu = mnuSwatMain
+  OldCreateOrder = True
   OnCreate = FormCreate
   OnMouseDown = FormMouseDown
   OnMouseUp = FormMouseUp
   PixelsPerInch = 96
   TextHeight = 13
-  object GameOverImage: TImage
+  object imgGameOver: TImage
     Left = 10
     Top = 72
     Width = 262
@@ -630,7 +630,7 @@ object SwatForm: TSwatForm
     Stretch = True
     Transparent = True
   end
-  object Image1: TImage
+  object imgScoreBoard: TImage
     Left = 11
     Top = 256
     Width = 260
@@ -1288,77 +1288,82 @@ object SwatForm: TSwatForm
     Stretch = True
     Transparent = True
   end
-  object TimeLabel: TLabel
+  object lblTime: TLabel
     Left = 122
     Top = 296
     Width = 18
     Height = 19
     Caption = '00'
+    Color = clSilver
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -16
     Font.Name = 'Arial'
     Font.Style = [fsBold]
+    ParentColor = False
     ParentFont = False
-    Transparent = True
   end
-  object MissLabel: TLabel
+  object lblMiss: TLabel
     Left = 78
     Top = 351
     Width = 9
     Height = 19
     Caption = '0'
+    Color = clSilver
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -16
     Font.Name = 'Arial'
     Font.Style = [fsBold]
+    ParentColor = False
     ParentFont = False
-    Transparent = True
   end
-  object HitsLabel: TLabel
+  object lblHits: TLabel
     Left = 41
     Top = 351
     Width = 9
     Height = 19
     Caption = '0'
+    Color = clSilver
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -16
     Font.Name = 'Arial'
     Font.Style = [fsBold]
+    ParentColor = False
     ParentFont = False
-    Transparent = True
   end
-  object EscapedLabel: TLabel
+  object lblEscaped: TLabel
     Left = 134
     Top = 351
     Width = 9
     Height = 19
     Caption = '0'
+    Color = clSilver
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -16
     Font.Name = 'Arial'
     Font.Style = [fsBold]
+    ParentColor = False
     ParentFont = False
-    Transparent = True
   end
-  object ScoreLabel: TLabel
+  object lblScore: TLabel
     Left = 205
     Top = 351
     Width = 9
     Height = 19
     Caption = '0'
+    Color = clSilver
     Font.Charset = DEFAULT_CHARSET
     Font.Color = clBlack
     Font.Height = -16
     Font.Name = 'Arial'
     Font.Style = [fsBold]
+    ParentColor = False
     ParentFont = False
-    Transparent = True
   end
-  object MainMenu1: TMainMenu
+  object mnuSwatMain: TMainMenu
     object Gamr1: TMenuItem
       Caption = '&Game'
       object New1: TMenuItem

@@ -49,7 +49,6 @@ type
     lblEscaped: TLabel;
     lblScore: TLabel;
     procedure FormCreate(Sender: TObject);
-    procedure lblScoreClick(Sender: TObject);
     procedure Timer1Timer(Sender: TObject);
     procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer);
@@ -80,12 +79,12 @@ var
 
 implementation
 
-uses frm_SwatOptions, frm_AboutSwat;
+uses Types, frm_SwatOptions, frm_AboutSwat;
 
-{$IFnDEF FPC}
+{$IFDEF FPC}
   {$R *.lfm}
 {$ELSE}
-  {$R *.lfm}
+  {$R *.dfm}
 {$ENDIF}
 {$R extrares.res}
 
@@ -122,11 +121,6 @@ begin
 
   Application.OnMinimize := Pause1Click;
   Application.OnRestore := Pause1Click;
-end;
-
-procedure TfrmSwatMain.lblScoreClick(Sender: TObject);
-begin
-
 end;
 
 procedure TfrmSwatMain.Timer1Timer(Sender: TObject);
