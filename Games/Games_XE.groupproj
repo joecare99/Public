@@ -30,6 +30,9 @@
 			<Projects Include="..\Grafik\D_XE\BREAKOUT.dproj">
 				<Dependencies/>
 			</Projects>
+			<Projects Include="D_XE\fpcTestAsteroidsTypes.dproj">
+				<Dependencies/>
+			</Projects>
 			<Projects Include="D_XE\Asteroids.dproj">
 				<Dependencies/>
 			</Projects>
@@ -37,6 +40,21 @@
 				<Dependencies/>
 			</Projects>
 			<Projects Include="..\Diverses\D_XE\Football.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\fpcTestGrueStew.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\GrueStew.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\prj_GrueStew.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\RunAround.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="D_XE\WinCub.dproj">
 				<Dependencies/>
 			</Projects>
 		</ItemGroup>
@@ -128,6 +146,15 @@
 		<Target Name="BREAKOUT:Make">
 			<MSBuild Projects="..\Grafik\D_XE\BREAKOUT.dproj" Targets="Make"/>
 		</Target>
+		<Target Name="fpcTestAsteroidsTypes">
+			<MSBuild Projects="D_XE\fpcTestAsteroidsTypes.dproj"/>
+		</Target>
+		<Target Name="fpcTestAsteroidsTypes:Clean">
+			<MSBuild Projects="D_XE\fpcTestAsteroidsTypes.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestAsteroidsTypes:Make">
+			<MSBuild Projects="D_XE\fpcTestAsteroidsTypes.dproj" Targets="Make"/>
+		</Target>
 		<Target Name="Asteroids">
 			<MSBuild Projects="D_XE\Asteroids.dproj"/>
 		</Target>
@@ -155,14 +182,59 @@
 		<Target Name="Football:Make">
 			<MSBuild Projects="..\Diverses\D_XE\Football.dproj" Targets="Make"/>
 		</Target>
+		<Target Name="fpcTestGrueStew">
+			<MSBuild Projects="D_XE\fpcTestGrueStew.dproj"/>
+		</Target>
+		<Target Name="fpcTestGrueStew:Clean">
+			<MSBuild Projects="D_XE\fpcTestGrueStew.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestGrueStew:Make">
+			<MSBuild Projects="D_XE\fpcTestGrueStew.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="GrueStew">
+			<MSBuild Projects="D_XE\GrueStew.dproj"/>
+		</Target>
+		<Target Name="GrueStew:Clean">
+			<MSBuild Projects="D_XE\GrueStew.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="GrueStew:Make">
+			<MSBuild Projects="D_XE\GrueStew.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="prj_GrueStew">
+			<MSBuild Projects="D_XE\prj_GrueStew.dproj"/>
+		</Target>
+		<Target Name="prj_GrueStew:Clean">
+			<MSBuild Projects="D_XE\prj_GrueStew.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="prj_GrueStew:Make">
+			<MSBuild Projects="D_XE\prj_GrueStew.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="RunAround">
+			<MSBuild Projects="D_XE\RunAround.dproj"/>
+		</Target>
+		<Target Name="RunAround:Clean">
+			<MSBuild Projects="D_XE\RunAround.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="RunAround:Make">
+			<MSBuild Projects="D_XE\RunAround.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="WinCub">
+			<MSBuild Projects="D_XE\WinCub.dproj"/>
+		</Target>
+		<Target Name="WinCub:Clean">
+			<MSBuild Projects="D_XE\WinCub.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="WinCub:Make">
+			<MSBuild Projects="D_XE\WinCub.dproj" Targets="Make"/>
+		</Target>
 		<Target Name="Build">
-			<CallTarget Targets="Sokoban;prj_SokoLevelConvert;BOLO;fpcTestWernerEng;RATE_MAL;WERNER1;Werner_Levedit;SuperHirn;BREAKOUT;Asteroids;Swat;Football"/>
+			<CallTarget Targets="Sokoban;prj_SokoLevelConvert;BOLO;fpcTestWernerEng;RATE_MAL;WERNER1;Werner_Levedit;SuperHirn;BREAKOUT;fpcTestAsteroidsTypes;Asteroids;Swat;Football;fpcTestGrueStew;GrueStew;prj_GrueStew;RunAround;WinCub"/>
 		</Target>
 		<Target Name="Clean">
-			<CallTarget Targets="Sokoban:Clean;prj_SokoLevelConvert:Clean;BOLO:Clean;fpcTestWernerEng:Clean;RATE_MAL:Clean;WERNER1:Clean;Werner_Levedit:Clean;SuperHirn:Clean;BREAKOUT:Clean;Asteroids:Clean;Swat:Clean;Football:Clean"/>
+			<CallTarget Targets="Sokoban:Clean;prj_SokoLevelConvert:Clean;BOLO:Clean;fpcTestWernerEng:Clean;RATE_MAL:Clean;WERNER1:Clean;Werner_Levedit:Clean;SuperHirn:Clean;BREAKOUT:Clean;fpcTestAsteroidsTypes:Clean;Asteroids:Clean;Swat:Clean;Football:Clean;fpcTestGrueStew:Clean;GrueStew:Clean;prj_GrueStew:Clean;RunAround:Clean;WinCub:Clean"/>
 		</Target>
 		<Target Name="Make">
-			<CallTarget Targets="Sokoban:Make;prj_SokoLevelConvert:Make;BOLO:Make;fpcTestWernerEng:Make;RATE_MAL:Make;WERNER1:Make;Werner_Levedit:Make;SuperHirn:Make;BREAKOUT:Make;Asteroids:Make;Swat:Make;Football:Make"/>
+			<CallTarget Targets="Sokoban:Make;prj_SokoLevelConvert:Make;BOLO:Make;fpcTestWernerEng:Make;RATE_MAL:Make;WERNER1:Make;Werner_Levedit:Make;SuperHirn:Make;BREAKOUT:Make;fpcTestAsteroidsTypes:Make;Asteroids:Make;Swat:Make;Football:Make;fpcTestGrueStew:Make;GrueStew:Make;prj_GrueStew:Make;RunAround:Make;WinCub:Make"/>
 		</Target>
 		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
 	</Project>
