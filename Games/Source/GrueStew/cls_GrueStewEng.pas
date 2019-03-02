@@ -10,8 +10,12 @@ uses
     Classes, SysUtils, unt_GrueStewBase;
 
 type
-    TRoom = record
-        Desc: string;
+
+    { TRoom }
+
+    TRoom = record // datastructure of a room
+        ID:integer; // ID of the room
+        Desc: string; // description of the room
         Reachable: integer;
         MappedR: boolean;
         MappedT: array[TDir] of boolean;
@@ -42,6 +46,9 @@ type
         // Debug-Functions
         function GetRoom(index: integer): TRoom;
         function GetRoomCount: integer;
+        procedure InitLaby;
+        procedure SetObstacle;
+        procedure InitPlayer;
         property rExit: integer read FExitRoom;
         property rGrue: integer read FGrueRoom;
         property rBat1: integer read FBatRoom1;
@@ -52,9 +59,6 @@ type
         Constructor Create;
         function GetDescription: string;
         procedure NewGame;
-        procedure InitLaby;
-        procedure SetObstacle;
-        procedure InitPlayer;
         // Spielaktionen
         function Move(dir: TDir): TMoveResult;
         function Shoot(dir: TDir): TShootResult;
@@ -81,6 +85,7 @@ begin
 end;
 
 const NoRoom:TRoom=({%H-});
+
 {TGrueStewEng }
 
 function TGrueStewEng.GetMap(dir: Tdir): integer;
@@ -330,6 +335,7 @@ begin
       begin
         FRooms[i].mappedR := False;
         FRooms[i].reachable := 0;
+        FRooms[i].ID:=i;
         for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
             FRooms[i].mappedT[dir] := False;
         FRooms[i].Desc := RaumTxt[i];
