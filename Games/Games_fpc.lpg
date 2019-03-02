@@ -40,15 +40,15 @@
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target6>
-      <Target7 FileName="..\Grafik\FPC\prj_FreeCell.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
-      </Target7>
-      <Target8 FileName="..\Grafik\FPC\fpcTestCardBase.lpi">
+      <Target7 FileName="..\Grafik\FPC\fpcTestCardBase.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
+      </Target7>
+      <Target8 FileName="..\Grafik\FPC\prj_FreeCell.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
       </Target8>
       <Target9 FileName="..\Grafik\FPC\Werner_Levedit.lpi">
         <BuildModes Count="5"/>
@@ -90,8 +90,9 @@
         <Mode3 Name="Release"/>
       </Target14>
       <Target15 FileName="FPC\fpcTestGrueStew.lpi">
-        <BuildModes Count="1"/>
+        <BuildModes Count="2"/>
         <Mode1 Name="Default"/>
+        <Mode2 Name="Debug"/>
       </Target15>
       <Target16 FileName="FPC\prj_GrueStew.lpi">
         <BuildModes Count="1"/>
