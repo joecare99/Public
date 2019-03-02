@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestGrueStew"><module name="cls_GrueStewEng"><element name="TRoom"><short>datastructure of a room</short>
+      </element><element name="TRoom.Desc"><short>description of the room</short><descr>a text that descibes the room
+</descr>
+      </element><element name="TRoom.Reachable"><short>the room is reachable from room 1</short><descr>in the geration process the reachability from room 1 indicates that the
+labyrinth is valid. This means you can reach every room by a treansition.
+</descr>
+      </element><element name="TRoom.MappedR"><short>room is mapped</short><descr>the room was visited by the player
+</descr>
+      </element><element name="TRoom.MappedT"><short>Transition is mapped</short><descr>this transition was used or probed by the player.
+</descr>
+      </element><element name="TRoom.Transition"><short>transitions to next room</short><descr>contains the ID of the next room in that direction or a zero if the direction
+is blocked
+</descr>
+      </element><element name="TRoom.IsExit"><short>Is Exit</short>
+      </element><element name="TGrueStewEng"><short>the GameEngine</short><descr>this is the game-engine
+</descr>
+      </element><element name="TGrueStewEng.FRooms"><short>container for all rooms</short><descr>this array contains all rooms of the game. arranged by their ID.
+</descr>
+      </element><element name="TGrueStewEng.FStep"><short>User-actions since game-start </short>
+      </element><element name="TGrueStewEng.FPlayerRoom"><short>the room, the player is in</short>
+      </element><element name="TGrueStewEng.FExitRoom"><short>the room of the exit</short>
+      </element><element name="TGrueStewEng.FGrueRoom"><short>the room of the monster</short>
+      </element><element name="TGrueStewEng.FGameEnded"><short>the game is ended</short>
+      </element><element name="TGrueStewEng.FGrueKilled"><short>the player killed the monster</short>
+      </element><element name="TGrueStewEng.FLastMRes"><short>the last move-result </short>
+      </element><element name="TGrueStewEng.FBatRoom1"><short>the first room with bats</short>
+      </element><element name="TGrueStewEng.FBatRoom2"><short>the second room with bats</short>
+      </element><element name="TGrueStewEng.FPitRoom1"><short>the first room with a pit</short>
+      </element><element name="TGrueStewEng.FPitRoom2"><short>the second room with a pit</short>
+      </element><element name="TGrueStewEng.GetSensSet"><short>get the set of senses</short>
+      </element><element name="TGrueStewEng.GetSensSet.Result" link="#unt_Gruestewbase.TSensSet"><short>a set of senses</short>
+      </element><element name="TGrueStewEng.DoEarthQuake"><short>do an earthquake</short>
+      </element><element name="TGrueStewEng.SetTransition"><short>Set a transition</short>
+      </element><element name="TGrueStewEng.GetRoomDesc"><short>get (full) desription of the room</short>
+      </element><element name="TGrueStewEng.GetMap"><short>Get mapped information</short>
+      </element><element name="TGrueStewEng.GetRoom"><short>Debug: Get the Room by index</short>
+      </element><element name="TGrueStewEng.GetRoomCount"><short>Debug: get count of rooms</short>
+      </element><element name="TGrueStewEng.rExit"><short>Debug: get (the room of) the exit</short>
+      </element><element name="TGrueStewEng.rGrue"><short>Debug: get (the room of) the monster</short>
+      </element><element name="TGrueStewEng.rBat1"><short>Debug: get (the room of) the first bat</short>
+      </element><element name="TGrueStewEng.rBat2"><short>Debug: get (the room of) the second bat</short>
+      </element><element name="TGrueStewEng.rPit1"><short>Debug: get (the room of) the first pit</short>
+      </element><element name="TGrueStewEng.rPit2"><short>Debug: get (the room of) the second pit</short>
+      </element><element name="TGrueStewEng.Create"><short>Constructor of the engine</short>
+      </element><element name="TGrueStewEng.GetDescription"><short>Gives the description of the game</short>
+      </element><element name="TGrueStewEng.NewGame"><short>Initiate a new game</short>
+      </element><element name="TGrueStewEng.InitLaby"><short>initiate the labyrinth</short>
+      </element><element name="TGrueStewEng.SetObstacle"><short>Set/shuffle the obstacles</short>
+      </element><element name="TGrueStewEng.InitPlayer"><short>Initiate the player</short>
+      </element><element name="TGrueStewEng.Move"><short>player action: Move to direction</short>
+      </element><element name="TGrueStewEng.Shoot"><short>player action: shoot in direction</short>
+      </element><element name="TGrueStewEng.GiveUp"><short>player action: give up</short>
+      </element><element name="TGrueStewEng.RoomDesc"><short>(text) description of the room</short>
+      </element><element name="TGrueStewEng.ActRoom"><short>the ID of the room of the player</short>
+      </element><element name="TGrueStewEng.Sens"><short>the senses of the player</short>
+      </element><element name="TGrueStewEng.Map"><short>Map-Information of the room twith the player</short>
+      </element><element name="TGrueStewEng.HasEnded"><short>The game has ended</short>
+      </element><element name="TGrueStewEng.KilledMonster"><short>success: the player has killed the monster</short>
+      </element><element name="TGrueStewEng.Step"><short>number of player-actions so far</short>
+      </element><element name="MyRandom"><short>a Random number with possible gaps</short>
+      </element><element name="NoRoom"><short>a constant definition of No room</short>
+      </element><element name="TGrueStewEng.GetMap.Result"><short>result of GetMap</short><descr><p><b>-2</b>: there is a Wall
+  </p><p><b>-1</b>: there is a Room</p><p><b>0</b>: there is no information</p><p><b>1..20</b>: there is the room with this ID </p>
+        </descr>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

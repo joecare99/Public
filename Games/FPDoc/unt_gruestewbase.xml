@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestGrueStew"><module name="unt_GrueStewBase"><element name="TDir"><short>all possible directions</short>
+      </element><element name="TDir.drNorth"><short>direction north</short>
+      </element><element name="TDir.drEast"><short>direction east</short>
+      </element><element name="TDir.drSouth"><short>direction south</short>
+      </element><element name="TDir.drWest"><short>direction west</short>
+      </element><element name="TMoveResult"><short>result of a player-movement</short>
+      </element><element name="TMoveResult.mvOK"><short>movement succesful</short>
+      </element><element name="TMoveResult.mvWall"><short>a wall blocked the move</short>
+      </element><element name="TMoveResult.mvExit"><short>player reached exit</short>
+      </element><element name="TMoveResult.mvExitwMonst"><short>player reached exit w. monster</short>
+      </element><element name="TMoveResult.mvPit"><short>player fell into pit</short>
+      </element><element name="TMoveResult.mvBat"><short>player caught by bats</short>
+      </element><element name="TMoveResult.mvEarthquake"><short>there was an earthquake</short>
+      </element><element name="TShootResult.shHit"><short>weapon hit the monster</short>
+      </element><element name="TShootResult.shWall"><short>weapon hit the wall</short>
+      </element><element name="TShootResult.shMiss"><short>weapon just miss</short>
+      </element><element name="TShootResult.shMiss2"><short>weapon fell into pit</short>
+      </element><element name="TShootResult.shMiss3"><short>weapon nearly hit bats</short>
+      </element><element name="TShootResult.shEarthquake"><short>an earthquake occured</short>
+      </element><element name="TSens.snExit"><short>the player is next to the exit</short>
+      </element><element name="TSens"><short>possible senses</short>
+      </element><element name="TSens.snSnMonster"><short>the player is next to the monster</short>
+      </element><element name="TSens.snBat"><short>the player is next to bats</short>
+      </element><element name="TSens.snPit"><short>the player is next to a pit</short>
+      </element><element name="TSensSet"><short>a set of senses</short>
+      </element><element name="Anleitung"><short>Description of the game</short>
+      </element><element name="RaumTxt"><short>Description of rooms</short>
+      </element><element name="RaumTxt2"><short>short description of room</short>
+      </element><element name="SensTxt"><short>text when the player senses something</short>
+      </element><element name="ITryMove"><short>desription of the movement</short>
+      </element><element name="IShoot"><short>description of the weapon-use</short>
+      </element><element name="CDirDesc"><short>description of direction</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
