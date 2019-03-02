@@ -129,7 +129,7 @@ end;
 
 procedure TMyApplication.InitScreen;
 var
-  ch: Char;
+  {%H-}ch: Char;
 begin
   ClrScr;
   writeln(CHeader);
