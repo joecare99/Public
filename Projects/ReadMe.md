@@ -30,6 +30,10 @@ Inspiered by/updated from the Delphi-Bible by Tom Swan.<br/>
 Some projects still need some care, some will not work due to a lack of components.<br/>
 Suggestions are welcome.
 
+## Genealogie
+Besides from Stemma+ this folder contain my other genealogical projects, some small, some bigger
+and still under construction.
+
 ## Stemma+ (Stemma.p)
 A modified Version of Stemma from François Marchi<br/>
 https://sourceforge.net/projects/stemma<br/>
