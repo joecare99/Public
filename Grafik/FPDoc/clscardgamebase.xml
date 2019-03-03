@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestCardBase"><module name="ClsCardGameBase"><element name="TCardColor"><short>A Card-color</short><descr>The "color" of the Card specifies a family the card belongs to. In the
+western/french Deck there are 4 colors by default
+the translation of the german names:
+Karo = diamond
+Herz = heart
+Pik = spates
+Kreuz = club
+</descr>
+      </element><element name="TCardValue"><short>Value of the card</short><descr>The value goes from 2 (the ace sometimes can have a value of 1) to the ace.
+This is only the
+the in-game cardvalue can differ from the
+</descr>
+      </element><element name="TCardColor.cclKaro"><short>color of Diamond</short>
+      </element><element name="TCardColor.cclHerz"><short>color of Hearts</short>
+      </element><element name="TCardColor.cclPik"><short>color of Spates</short>
+      </element><element name="TCardColor.cclKreuz"><short>color of Club</short>
+      </element><element name="TCardValue.cvlUnknown"><short>A unnown card </short><descr>An unknown card normaly has no color/value, besides (in case of a turned card)
+it has a value/color that is defined, but only hidden to the viewer/observer or
+other instances
+</descr>
+      </element><element name="TCardValue.cvl2"><short>a 2</short><descr>A card with a value of 2
+e.G: 2 of hearts, 2 of club
+</descr>
+      </element><element name="TCardValue.cvl3"><short>a 3</short><descr>A card with a value of 3
+e.G: 3 of diamonds, 3 of hearts
+</descr>
+      </element><element name="TCardValue.cvl4"><short>a 4</short><descr>A card with a value of 4
+e.G: 4 of club, 2 of diamonds
+</descr>
+      </element><element name="TCardValue.cvl5"><short>a 5</short><descr>A card with a value of 5
+e.G: 5 of spates, 5 of club
+</descr>
+      </element><element name="TCardValue.cvl6"><short>a 6</short><descr>A card with a value of 6
+e.G: 6 of hearts, 6 of spates
+</descr>
+      </element><element name="TCardValue.cvl7"><short>a 7</short><descr>A card with a value of 7
+e.G: 7 of club, 7 of hearts
+</descr>
+      </element><element name="TCardValue.cvl8"><short>a 8</short><descr>A card with a value of 8
+e.G: 8 of diamonds, 8 of club
+</descr>
+      </element><element name="TCardValue.cvl9"><short>a 9</short><descr>A card with a value of 9
+e.G: 9 of spates, 9 of diamonds
+</descr>
+      </element><element name="TCardValue.cvl10"><short>a 10</short><descr>A card with a value of 10
+e.G: 10 of club, 10 of spates
+</descr>
+      </element><element name="TCardValue.cvlBube"><short>a jack</short>
+      </element><element name="TCardValue.cvlDame"><short>a queen</short>
+      </element><element name="TCardValue.cvlKoenig"><short>a king</short>
+      </element><element name="TCardValue.cvlAss"><short>an ace</short>
+      </element>
+    <element name="TCardSlot"><short>a slot for a card</short><descr>a cardslot contains exactly 0 or 1 cards
+and vice versa a card can only be in one or none slot.
+</descr>
+      </element><element name="TCard"><short>a card in the game</short><descr>A Card has a specific definition. It has a defined or assumed combination of
+value/color. The value is assumed in case of a Joker.
+</descr>
+      </element><element name="cclRed"><short>definition of "red" cards</short>
+      </element><element name="cclBlack"><short>definition of "black" cards</short>
+      </element><element name="cvlNumber"><short>defintion of "number"-cards</short>
+      </element><element name="cvlPicture"><short>definition of "picture"-cards</short>
+      </element><element name="TCard.FValue"><short>value of card</short><descr>internal, defined or assumed, value of the card.
+e.G: in case of an "ace of hearts" this field has the value "cvlAss"
+
+</descr>
+      </element><element name="TCard.FColor"><short>color of card</short>
+      </element><element name="TCard.FSlot"><short>slot of card</short>
+      </element><element name="TCard.FIsJoker"><short>th card is a joker</short>
+      </element><element name="TCard.Create"><short>constructor of the card</short>
+      </element><element name="TCard.Color"><short>Color-property</short>
+      </element><element name="TCard.Value"><short>Value-property</short>
+      </element><element name="TCard.Slot"><short>Slot-property</short>
+      </element><element name="TCard.IsJoker"><short>Is a Joker - property</short>
+      </element><element name="TCard.isRed" link="#cclRed"><short>card is "red"</short>
+      </element><element name="TCard.isBlack" link="#cclBlack"><short>card is "black"</short>
+      </element><element name="TCard.turned"><short>the card is turned</short>
+      </element><element name="TCard.ToString"><short>card --&gt; String </short>
+      </element><element name="TCard.ShortDesc"><short>short description</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
