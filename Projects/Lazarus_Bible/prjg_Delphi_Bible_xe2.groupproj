@@ -3,10 +3,22 @@
 			<ProjectGuid>{628C6686-845D-4866-B3B6-62C483A5492E}</ProjectGuid>
 		</PropertyGroup>
 		<ItemGroup>
+			<Projects Include="DXE2\fpcTestAboutEx.dproj">
+				<Dependencies/>
+			</Projects>
 			<Projects Include="DXE2\Aboutex.dproj">
 				<Dependencies/>
 			</Projects>
+			<Projects Include="DXE2\fpcTestActions.dproj">
+				<Dependencies/>
+			</Projects>
 			<Projects Include="DXE2\Actions.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\fpcTestAddPage.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Addpage.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="DXE2\Contcomp.dproj">
@@ -57,10 +69,13 @@
 			<Projects Include="DXE2\BarChartp.dproj">
 				<Dependencies/>
 			</Projects>
-			<Projects Include="DXE2\Addpage.dproj">
+			<Projects Include="DXE2\fpcTestBarChart.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="DXE2\Animator.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\fpcTestBarTest2.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="DXE2\BarTest2.dproj">
@@ -69,13 +84,28 @@
 			<Projects Include="DXE2\BarTest.dproj">
 				<Dependencies/>
 			</Projects>
+			<Projects Include="DXE2\fpcTestBitView2.dproj">
+				<Dependencies/>
+			</Projects>
 			<Projects Include="DXE2\Bitview2.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\fpcTestBitView.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="DXE2\Bitview.dproj">
 				<Dependencies/>
 			</Projects>
+			<Projects Include="DXE2\fpcTestCalc32.dproj">
+				<Dependencies/>
+			</Projects>
 			<Projects Include="DXE2\Calc32.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\fpcTestCalc64.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Calc64.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="DXE2\Calc32_2.dproj">
@@ -174,6 +204,9 @@
 			<Projects Include="DXE2\YesNoTest.dproj">
 				<Dependencies/>
 			</Projects>
+			<Projects Include="DXE2\fpcTestAll.dproj">
+				<Dependencies/>
+			</Projects>
 		</ItemGroup>
 		<ProjectExtensions>
 			<Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -182,6 +215,15 @@
 				<Default.Personality/>
 			</BorlandProject>
 		</ProjectExtensions>
+		<Target Name="fpcTestAboutEx">
+			<MSBuild Projects="DXE2\fpcTestAboutEx.dproj"/>
+		</Target>
+		<Target Name="fpcTestAboutEx:Clean">
+			<MSBuild Projects="DXE2\fpcTestAboutEx.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestAboutEx:Make">
+			<MSBuild Projects="DXE2\fpcTestAboutEx.dproj" Targets="Make"/>
+		</Target>
 		<Target Name="Aboutex">
 			<MSBuild Projects="DXE2\Aboutex.dproj"/>
 		</Target>
@@ -191,6 +233,15 @@
 		<Target Name="Aboutex:Make">
 			<MSBuild Projects="DXE2\Aboutex.dproj" Targets="Make"/>
 		</Target>
+		<Target Name="fpcTestActions">
+			<MSBuild Projects="DXE2\fpcTestActions.dproj"/>
+		</Target>
+		<Target Name="fpcTestActions:Clean">
+			<MSBuild Projects="DXE2\fpcTestActions.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestActions:Make">
+			<MSBuild Projects="DXE2\fpcTestActions.dproj" Targets="Make"/>
+		</Target>
 		<Target Name="Actions">
 			<MSBuild Projects="DXE2\Actions.dproj"/>
 		</Target>
@@ -199,6 +250,24 @@
 		</Target>
 		<Target Name="Actions:Make">
 			<MSBuild Projects="DXE2\Actions.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="fpcTestAddPage">
+			<MSBuild Projects="DXE2\fpcTestAddPage.dproj"/>
+		</Target>
+		<Target Name="fpcTestAddPage:Clean">
+			<MSBuild Projects="DXE2\fpcTestAddPage.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestAddPage:Make">
+			<MSBuild Projects="DXE2\fpcTestAddPage.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Addpage">
+			<MSBuild Projects="DXE2\Addpage.dproj"/>
+		</Target>
+		<Target Name="Addpage:Clean">
+			<MSBuild Projects="DXE2\Addpage.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Addpage:Make">
+			<MSBuild Projects="DXE2\Addpage.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Contcomp">
 			<MSBuild Projects="DXE2\Contcomp.dproj"/>
@@ -344,14 +413,14 @@
 		<Target Name="BarChartp:Make">
 			<MSBuild Projects="DXE2\BarChartp.dproj" Targets="Make"/>
 		</Target>
-		<Target Name="Addpage">
-			<MSBuild Projects="DXE2\Addpage.dproj"/>
+		<Target Name="fpcTestBarChart">
+			<MSBuild Projects="DXE2\fpcTestBarChart.dproj"/>
 		</Target>
-		<Target Name="Addpage:Clean">
-			<MSBuild Projects="DXE2\Addpage.dproj" Targets="Clean"/>
+		<Target Name="fpcTestBarChart:Clean">
+			<MSBuild Projects="DXE2\fpcTestBarChart.dproj" Targets="Clean"/>
 		</Target>
-		<Target Name="Addpage:Make">
-			<MSBuild Projects="DXE2\Addpage.dproj" Targets="Make"/>
+		<Target Name="fpcTestBarChart:Make">
+			<MSBuild Projects="DXE2\fpcTestBarChart.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Animator">
 			<MSBuild Projects="DXE2\Animator.dproj"/>
@@ -361,6 +430,15 @@
 		</Target>
 		<Target Name="Animator:Make">
 			<MSBuild Projects="DXE2\Animator.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="fpcTestBarTest2">
+			<MSBuild Projects="DXE2\fpcTestBarTest2.dproj"/>
+		</Target>
+		<Target Name="fpcTestBarTest2:Clean">
+			<MSBuild Projects="DXE2\fpcTestBarTest2.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestBarTest2:Make">
+			<MSBuild Projects="DXE2\fpcTestBarTest2.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="BarTest2">
 			<MSBuild Projects="DXE2\BarTest2.dproj"/>
@@ -380,6 +458,15 @@
 		<Target Name="BarTest:Make">
 			<MSBuild Projects="DXE2\BarTest.dproj" Targets="Make"/>
 		</Target>
+		<Target Name="fpcTestBitView2">
+			<MSBuild Projects="DXE2\fpcTestBitView2.dproj"/>
+		</Target>
+		<Target Name="fpcTestBitView2:Clean">
+			<MSBuild Projects="DXE2\fpcTestBitView2.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestBitView2:Make">
+			<MSBuild Projects="DXE2\fpcTestBitView2.dproj" Targets="Make"/>
+		</Target>
 		<Target Name="Bitview2">
 			<MSBuild Projects="DXE2\Bitview2.dproj"/>
 		</Target>
@@ -388,6 +475,15 @@
 		</Target>
 		<Target Name="Bitview2:Make">
 			<MSBuild Projects="DXE2\Bitview2.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="fpcTestBitView">
+			<MSBuild Projects="DXE2\fpcTestBitView.dproj"/>
+		</Target>
+		<Target Name="fpcTestBitView:Clean">
+			<MSBuild Projects="DXE2\fpcTestBitView.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestBitView:Make">
+			<MSBuild Projects="DXE2\fpcTestBitView.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Bitview">
 			<MSBuild Projects="DXE2\Bitview.dproj"/>
@@ -398,6 +494,15 @@
 		<Target Name="Bitview:Make">
 			<MSBuild Projects="DXE2\Bitview.dproj" Targets="Make"/>
 		</Target>
+		<Target Name="fpcTestCalc32">
+			<MSBuild Projects="DXE2\fpcTestCalc32.dproj"/>
+		</Target>
+		<Target Name="fpcTestCalc32:Clean">
+			<MSBuild Projects="DXE2\fpcTestCalc32.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestCalc32:Make">
+			<MSBuild Projects="DXE2\fpcTestCalc32.dproj" Targets="Make"/>
+		</Target>
 		<Target Name="Calc32">
 			<MSBuild Projects="DXE2\Calc32.dproj"/>
 		</Target>
@@ -406,6 +511,24 @@
 		</Target>
 		<Target Name="Calc32:Make">
 			<MSBuild Projects="DXE2\Calc32.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="fpcTestCalc64">
+			<MSBuild Projects="DXE2\fpcTestCalc64.dproj"/>
+		</Target>
+		<Target Name="fpcTestCalc64:Clean">
+			<MSBuild Projects="DXE2\fpcTestCalc64.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestCalc64:Make">
+			<MSBuild Projects="DXE2\fpcTestCalc64.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Calc64">
+			<MSBuild Projects="DXE2\Calc64.dproj"/>
+		</Target>
+		<Target Name="Calc64:Clean">
+			<MSBuild Projects="DXE2\Calc64.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Calc64:Make">
+			<MSBuild Projects="DXE2\Calc64.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Calc32_2">
 			<MSBuild Projects="DXE2\Calc32_2.dproj"/>
@@ -695,14 +818,23 @@
 		<Target Name="YesNoTest:Make">
 			<MSBuild Projects="DXE2\YesNoTest.dproj" Targets="Make"/>
 		</Target>
+		<Target Name="fpcTestAll">
+			<MSBuild Projects="DXE2\fpcTestAll.dproj"/>
+		</Target>
+		<Target Name="fpcTestAll:Clean">
+			<MSBuild Projects="DXE2\fpcTestAll.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestAll:Make">
+			<MSBuild Projects="DXE2\fpcTestAll.dproj" Targets="Make"/>
+		</Target>
 		<Target Name="Build">
-			<CallTarget Targets="Aboutex;Actions;Contcomp;CoolDemo;Cserver;Daynames;Dclock;DingButtonXControl;DingPkg;Direx;Direxec;DMTest;Server1;Server2;TestCDlg;TestDing;Testdll;BarChartp;Addpage;Animator;BarTest2;BarTest;Bitview2;Bitview;Calc32;Calc32_2;Capslock2;Capslock;Cclient;Chargrid;Checks;Client1;Client2;Colorlib;Combos;Compstrm;Constraint;Dragme;Dropfile;Enumfon;Enumwin;Except1;Except2;Except3;Exlist;Telname;Todo;Toolbar1;Toolbar2;Toolbar3;UpDownDemo;VideoPlayer;WinesCalc;WinesChart;WinesDemo;WinesEntry;YesNoTest"/>
+			<CallTarget Targets="fpcTestAboutEx;Aboutex;fpcTestActions;Actions;fpcTestAddPage;Addpage;Contcomp;CoolDemo;Cserver;Daynames;Dclock;DingButtonXControl;DingPkg;Direx;Direxec;DMTest;Server1;Server2;TestCDlg;TestDing;Testdll;BarChartp;fpcTestBarChart;Animator;fpcTestBarTest2;BarTest2;BarTest;fpcTestBitView2;Bitview2;fpcTestBitView;Bitview;fpcTestCalc32;Calc32;fpcTestCalc64;Calc64;Calc32_2;Capslock2;Capslock;Cclient;Chargrid;Checks;Client1;Client2;Colorlib;Combos;Compstrm;Constraint;Dragme;Dropfile;Enumfon;Enumwin;Except1;Except2;Except3;Exlist;Telname;Todo;Toolbar1;Toolbar2;Toolbar3;UpDownDemo;VideoPlayer;WinesCalc;WinesChart;WinesDemo;WinesEntry;YesNoTest;fpcTestAll"/>
 		</Target>
 		<Target Name="Clean">
-			<CallTarget Targets="Aboutex:Clean;Actions:Clean;Contcomp:Clean;CoolDemo:Clean;Cserver:Clean;Daynames:Clean;Dclock:Clean;DingButtonXControl:Clean;DingPkg:Clean;Direx:Clean;Direxec:Clean;DMTest:Clean;Server1:Clean;Server2:Clean;TestCDlg:Clean;TestDing:Clean;Testdll:Clean;BarChartp:Clean;Addpage:Clean;Animator:Clean;BarTest2:Clean;BarTest:Clean;Bitview2:Clean;Bitview:Clean;Calc32:Clean;Calc32_2:Clean;Capslock2:Clean;Capslock:Clean;Cclient:Clean;Chargrid:Clean;Checks:Clean;Client1:Clean;Client2:Clean;Colorlib:Clean;Combos:Clean;Compstrm:Clean;Constraint:Clean;Dragme:Clean;Dropfile:Clean;Enumfon:Clean;Enumwin:Clean;Except1:Clean;Except2:Clean;Except3:Clean;Exlist:Clean;Telname:Clean;Todo:Clean;Toolbar1:Clean;Toolbar2:Clean;Toolbar3:Clean;UpDownDemo:Clean;VideoPlayer:Clean;WinesCalc:Clean;WinesChart:Clean;WinesDemo:Clean;WinesEntry:Clean;YesNoTest:Clean"/>
+			<CallTarget Targets="fpcTestAboutEx:Clean;Aboutex:Clean;fpcTestActions:Clean;Actions:Clean;fpcTestAddPage:Clean;Addpage:Clean;Contcomp:Clean;CoolDemo:Clean;Cserver:Clean;Daynames:Clean;Dclock:Clean;DingButtonXControl:Clean;DingPkg:Clean;Direx:Clean;Direxec:Clean;DMTest:Clean;Server1:Clean;Server2:Clean;TestCDlg:Clean;TestDing:Clean;Testdll:Clean;BarChartp:Clean;fpcTestBarChart:Clean;Animator:Clean;fpcTestBarTest2:Clean;BarTest2:Clean;BarTest:Clean;fpcTestBitView2:Clean;Bitview2:Clean;fpcTestBitView:Clean;Bitview:Clean;fpcTestCalc32:Clean;Calc32:Clean;fpcTestCalc64:Clean;Calc64:Clean;Calc32_2:Clean;Capslock2:Clean;Capslock:Clean;Cclient:Clean;Chargrid:Clean;Checks:Clean;Client1:Clean;Client2:Clean;Colorlib:Clean;Combos:Clean;Compstrm:Clean;Constraint:Clean;Dragme:Clean;Dropfile:Clean;Enumfon:Clean;Enumwin:Clean;Except1:Clean;Except2:Clean;Except3:Clean;Exlist:Clean;Telname:Clean;Todo:Clean;Toolbar1:Clean;Toolbar2:Clean;Toolbar3:Clean;UpDownDemo:Clean;VideoPlayer:Clean;WinesCalc:Clean;WinesChart:Clean;WinesDemo:Clean;WinesEntry:Clean;YesNoTest:Clean;fpcTestAll:Clean"/>
 		</Target>
 		<Target Name="Make">
-			<CallTarget Targets="Aboutex:Make;Actions:Make;Contcomp:Make;CoolDemo:Make;Cserver:Make;Daynames:Make;Dclock:Make;DingButtonXControl:Make;DingPkg:Make;Direx:Make;Direxec:Make;DMTest:Make;Server1:Make;Server2:Make;TestCDlg:Make;TestDing:Make;Testdll:Make;BarChartp:Make;Addpage:Make;Animator:Make;BarTest2:Make;BarTest:Make;Bitview2:Make;Bitview:Make;Calc32:Make;Calc32_2:Make;Capslock2:Make;Capslock:Make;Cclient:Make;Chargrid:Make;Checks:Make;Client1:Make;Client2:Make;Colorlib:Make;Combos:Make;Compstrm:Make;Constraint:Make;Dragme:Make;Dropfile:Make;Enumfon:Make;Enumwin:Make;Except1:Make;Except2:Make;Except3:Make;Exlist:Make;Telname:Make;Todo:Make;Toolbar1:Make;Toolbar2:Make;Toolbar3:Make;UpDownDemo:Make;VideoPlayer:Make;WinesCalc:Make;WinesChart:Make;WinesDemo:Make;WinesEntry:Make;YesNoTest:Make"/>
+			<CallTarget Targets="fpcTestAboutEx:Make;Aboutex:Make;fpcTestActions:Make;Actions:Make;fpcTestAddPage:Make;Addpage:Make;Contcomp:Make;CoolDemo:Make;Cserver:Make;Daynames:Make;Dclock:Make;DingButtonXControl:Make;DingPkg:Make;Direx:Make;Direxec:Make;DMTest:Make;Server1:Make;Server2:Make;TestCDlg:Make;TestDing:Make;Testdll:Make;BarChartp:Make;fpcTestBarChart:Make;Animator:Make;fpcTestBarTest2:Make;BarTest2:Make;BarTest:Make;fpcTestBitView2:Make;Bitview2:Make;fpcTestBitView:Make;Bitview:Make;fpcTestCalc32:Make;Calc32:Make;fpcTestCalc64:Make;Calc64:Make;Calc32_2:Make;Capslock2:Make;Capslock:Make;Cclient:Make;Chargrid:Make;Checks:Make;Client1:Make;Client2:Make;Colorlib:Make;Combos:Make;Compstrm:Make;Constraint:Make;Dragme:Make;Dropfile:Make;Enumfon:Make;Enumwin:Make;Except1:Make;Except2:Make;Except3:Make;Exlist:Make;Telname:Make;Todo:Make;Toolbar1:Make;Toolbar2:Make;Toolbar3:Make;UpDownDemo:Make;VideoPlayer:Make;WinesCalc:Make;WinesChart:Make;WinesDemo:Make;WinesEntry:Make;YesNoTest:Make;fpcTestAll:Make"/>
 		</Target>
 		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
 	</Project>
