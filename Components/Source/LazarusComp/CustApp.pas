@@ -185,7 +185,7 @@ end;
 begin
   Result:=Paramstr(0);
 end;
-{$endif darwin}
+{$IFEND darwin}
 
 Procedure SysGetEnvironmentList(List : TStrings;NamesOnly : Boolean);
 
