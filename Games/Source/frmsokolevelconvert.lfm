@@ -1,93 +1,93 @@
 object frmConvertLevelData: TfrmConvertLevelData
   Left = 269
-  Height = 829
+  Height = 1244
   Top = 92
-  Width = 929
+  Width = 1394
   Caption = 'Sokoban-Level-Converter'
-  ClientHeight = 829
-  ClientWidth = 929
+  ClientHeight = 1244
+  ClientWidth = 1394
+  DesignTimePPI = 144
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '1.4.0.2'
   object lblCompileInfo: TLabel
-    Left = 881
-    Height = 6
-    Top = 24
-    Width = 39
+    Left = 1320
+    Height = 11
+    Top = 36
+    Width = 60
     Anchors = [akTop, akRight]
     Caption = 'lblCompileInfo'
-    Font.Height = 7
+    Font.Height = 11
     Font.Name = 'Small Fonts'
     ParentColor = False
     ParentFont = False
   end
   object edtLevelFile: TLabeledEdit
-    Left = 7
-    Height = 23
-    Top = 24
-    Width = 489
-    EditLabel.AnchorSideLeft.Control = edtLevelFile
-    EditLabel.AnchorSideRight.Control = edtLevelFile
-    EditLabel.AnchorSideRight.Side = asrBottom
-    EditLabel.AnchorSideBottom.Control = edtLevelFile
-    EditLabel.Left = 7
-    EditLabel.Height = 15
-    EditLabel.Top = 6
-    EditLabel.Width = 489
+    Left = 10
+    Height = 33
+    Top = 36
+    Width = 734
+    EditLabel.Height = 25
+    EditLabel.Width = 734
     EditLabel.Caption = 'edtLevelFile'
     EditLabel.ParentColor = False
+    EditLabel.ParentFont = False
+    ParentFont = False
     TabOrder = 0
     Text = 'edtLevelFile'
   end
   object btnOpenLFile: TSpeedButton
-    Left = 496
-    Height = 22
-    Top = 25
-    Width = 23
+    Left = 744
+    Height = 33
+    Top = 38
+    Width = 34
     Caption = '...'
     OnClick = btnOpenLFileClick
+    ParentFont = False
   end
   object lbxLevels: TListBox
-    Left = 8
-    Height = 400
-    Top = 144
-    Width = 281
+    Left = 12
+    Height = 600
+    Top = 216
+    Width = 422
     ItemHeight = 0
     OnSelectionChange = lbxLevelsSelectionChange
+    ParentFont = False
     TabOrder = 1
   end
   object dgrActLevel: TDrawGrid
-    Left = 299
-    Height = 425
-    Top = 144
-    Width = 625
+    Left = 448
+    Height = 638
+    Top = 216
+    Width = 938
     ColCount = 25
-    DefaultColWidth = 25
-    DefaultRowHeight = 25
+    DefaultColWidth = 38
+    DefaultRowHeight = 38
     ExtendedSelect = False
     FixedCols = 0
     FixedRows = 0
     Flat = True
     GridLineWidth = 0
+    ParentFont = False
     RowCount = 17
     TabOrder = 2
     OnDrawCell = dgrActLevelDrawCell
   end
   object btnGenTestData: TButton
-    Left = 9
-    Height = 25
-    Top = 544
-    Width = 75
+    Left = 14
+    Height = 38
+    Top = 816
+    Width = 112
     Caption = 'TestData'
     OnClick = btnGenTestDataClick
+    ParentFont = False
     TabOrder = 3
   end
   object edtShowData: TMemo
-    Left = 299
-    Height = 233
-    Top = 576
-    Width = 622
-    Font.Height = -13
+    Left = 448
+    Height = 350
+    Top = 864
+    Width = 933
+    Font.Height = -20
     Font.Name = 'Courier New'
     Lines.Strings = (
       'edtShowData'
@@ -97,76 +97,81 @@ object frmConvertLevelData: TfrmConvertLevelData
     TabOrder = 4
   end
   object btnGenLevelData: TButton
-    Left = 89
-    Height = 25
-    Top = 544
-    Width = 75
+    Left = 134
+    Height = 38
+    Top = 816
+    Width = 112
     Caption = 'WriteLevelData'
     OnClick = btnGenLevelDataClick
+    ParentFont = False
     TabOrder = 5
   end
   object btnSaveData: TButton
-    Left = 9
-    Height = 25
-    Top = 576
-    Width = 75
+    Left = 14
+    Height = 38
+    Top = 864
+    Width = 112
     Caption = 'Save...'
     OnClick = btnSaveDataClick
+    ParentFont = False
     TabOrder = 6
   end
   object btnLoadData: TButton
-    Left = 89
-    Height = 25
-    Top = 576
-    Width = 75
+    Left = 134
+    Height = 38
+    Top = 864
+    Width = 112
     Caption = 'Load...'
     OnClick = btnLoadDataClick
+    ParentFont = False
     TabOrder = 7
   end
   object Button1: TButton
-    Left = 11
-    Height = 25
-    Top = 608
-    Width = 75
+    Left = 16
+    Height = 38
+    Top = 912
+    Width = 112
     Caption = 'Button1'
     OnClick = Button1Click
+    ParentFont = False
     TabOrder = 8
   end
   object Button2: TButton
-    Left = 89
-    Height = 25
-    Top = 608
-    Width = 75
+    Left = 134
+    Height = 38
+    Top = 912
+    Width = 112
     Caption = 'Button2'
     OnClick = Button2Click
+    ParentFont = False
     TabOrder = 9
   end
   object ValueListEditor1: TValueListEditor
-    Left = 552
-    Height = 128
-    Top = 8
-    Width = 288
-    DefaultRowHeight = 18
+    Left = 828
+    Height = 192
+    Top = 12
+    Width = 432
+    DefaultRowHeight = 27
     FixedCols = 0
-    Font.Height = 12
+    Font.Height = 18
     ParentFont = False
     RowCount = 2
     TabOrder = 10
-    TitleFont.Height = 12
+    TitleFont.Height = 18
     Strings.Strings = (
       ''
     )
     ColWidths = (
-      64
-      220
+      96
+      332
     )
   end
   object edtShowData1: TMemo
-    Left = 928
-    Height = 672
-    Top = 144
-    Width = 464
-    Font.Height = -13
+    Left = 1392
+    Height = 1008
+    Top = 216
+    Width = 696
+    Font.Height = -20
     Font.Name = 'Courier New'
     Lines.Strings = (
       'edtShowData'
@@ -176,14 +181,14 @@ object frmConvertLevelData: TfrmConvertLevelData
     TabOrder = 11
   end
   object dlgOpenLevelFile: TOpenDialog
-    left = 520
-    top = 24
+    left = 780
+    top = 36
   end
   object iglLevelTiles: TImageList
     Height = 25
     Width = 25
-    left = 568
-    top = 176
+    left = 852
+    top = 264
     Bitmap = {
       4C69080000001900000019000000AED0E1FFCADEEFFFCBE0EFFFC9DEEFFFC5DB
       EEFFC3D9EDFFC3D9EEFFC3D9EDFFC3D9EEFFC3D9EDFFC4D9EEFFC4DBEFFFC4DB
@@ -815,12 +820,12 @@ object frmConvertLevelData: TfrmConvertLevelData
   end
   object SaveDialog1: TSaveDialog
     DefaultExt = '.bin'
-    left = 57
-    top = 576
+    left = 86
+    top = 864
   end
   object OpenDialog1: TOpenDialog
     DefaultExt = '.bin'
-    left = 137
-    top = 576
+    left = 206
+    top = 864
   end
 end

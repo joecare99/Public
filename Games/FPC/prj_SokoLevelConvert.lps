@@ -2,13 +2,13 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
-    <BuildModes Active="Release1"/>
-    <Units Count="10">
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
+    <Units Count="11">
       <Unit0>
         <Filename Value="prj_SokoLevelConvert.lpr"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
+        <EditorIndex Value="2"/>
         <CursorPos X="34" Y="11"/>
         <UsageCount Value="232"/>
         <Loaded Value="True"/>
@@ -20,8 +20,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frmSokoLevelConvert"/>
-        <TopLine Value="200"/>
-        <CursorPos Y="214"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="16"/>
+        <CursorPos X="32" Y="22"/>
         <UsageCount Value="232"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -29,8 +30,7 @@
       <Unit2>
         <Filename Value="..\Sokoban\LoadLevelsetUnit.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="LoadLevelsetUnit"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="1"/>
         <CursorPos X="45" Y="1328"/>
         <UsageCount Value="232"/>
         <Loaded Value="True"/>
@@ -39,8 +39,7 @@
         <Filename Value="..\Sokoban\sokoengine.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="SokoEngine"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="3"/>
         <CursorPos X="61" Y="8"/>
         <UsageCount Value="232"/>
         <Loaded Value="True"/>
@@ -56,18 +55,16 @@
       </Unit4>
       <Unit5>
         <Filename Value="C:\Programme\lazarus\fpc\2.6.4\source\rtl\inc\heaph.inc"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="-1"/>
         <CursorPos Y="6"/>
         <UsageCount Value="102"/>
-        <Loaded Value="True"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\Sokoban\MainUnit.pas"/>
-        <UnitName Value="MainUnit"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="5"/>
         <TopLine Value="1498"/>
         <CursorPos Y="1520"/>
-        <UsageCount Value="98"/>
+        <UsageCount Value="99"/>
         <Loaded Value="True"/>
       </Unit6>
       <Unit7>
@@ -88,8 +85,17 @@
         <TopLine Value="385"/>
         <UsageCount Value="15"/>
       </Unit9>
+      <Unit10>
+        <Filename Value="..\Source\frmsokolevelconvert.lfm"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="64"/>
+        <CursorPos X="26" Y="83"/>
+        <UsageCount Value="11"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="LFM"/>
+      </Unit10>
     </Units>
-    <JumpHistory Count="29" HistoryIndex="28">
+    <JumpHistory Count="28" HistoryIndex="27">
       <Position1>
         <Filename Value="..\Source\frmsokolevelconvert.pas"/>
         <Caret Line="606" TopLine="586"/>
@@ -202,10 +208,10 @@
         <Filename Value="..\Sokoban\sokoengine.pas"/>
         <Caret Line="122" TopLine="116"/>
       </Position28>
-      <Position29>
-        <Filename Value="..\Sokoban\LoadLevelsetUnit.pas"/>
-        <Caret Line="1327" TopLine="1386"/>
-      </Position29>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>

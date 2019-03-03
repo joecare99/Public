@@ -28,8 +28,8 @@ type
     lblCompileInfo: TLabel;
     lbxLevels: TListBox;
     edtShowData: TMemo;
-    dlgOpenLevelFile: TOpenDialog;
     btnOpenLFile: TSpeedButton;
+    dlgOpenLevelFile: TOpenDialog;
     OpenDialog1: TOpenDialog;
     SaveDialog1: TSaveDialog;
     ValueListEditor1: TValueListEditor;
@@ -550,7 +550,7 @@ var
   i, ValDiff: integer;
 
 const
-  Ln2 = ln(2);
+  Ln2 = {$IFDEF FPC}ln(2){$ELSE}0.69314718055994530941723212145818{$ENDIF};
   mask: array[0..7] of byte = ($0, $1, $3, $7, $f, $1f, $3f, $7f);
 
 begin
@@ -630,7 +630,7 @@ end;
 
 function TfrmConvertLevelData.ReadData(MaxValue: integer): integer;
 const
-  Ln2 = ln(2);
+  Ln2 = {$IFDEF FPC}ln(2){$ELSE}0.69314718055994530941723212145818{$ENDIF};
   mask: array[0..8] of byte = ($0, $1, $3, $7, $f, $1f, $3f, $7f, $ff);
 var
   lDsZ: Integer;
