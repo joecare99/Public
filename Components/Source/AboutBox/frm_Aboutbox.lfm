@@ -467,7 +467,7 @@ object AboutBoxform: TAboutBoxform
       Width = 277
       Align = alBottom
       Alignment = taCenter
-      Caption = 'http://kiraut.de'
+      Caption = 'http://joecare.de'
       Font.Color = clNavy
       Font.Height = -11
       Font.Name = 'MS Sans Serif'

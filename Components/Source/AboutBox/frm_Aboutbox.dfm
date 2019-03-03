@@ -467,7 +467,7 @@ object AboutBoxform: TAboutBoxform
       Hint = 'Besuchen Sie meine Internet-Seite'
       Align = alBottom
       Alignment = taCenter
-      Caption = 'http://jc99.de'
+      Caption = 'http://joecare.de'
       Font.Charset = DEFAULT_CHARSET
       Font.Color = clNavy
       Font.Height = -11
@@ -477,7 +477,7 @@ object AboutBoxform: TAboutBoxform
       ParentShowHint = False
       ShowHint = True
       OnClick = lbl_WebLinkClick
-      ExplicitWidth = 66
+      ExplicitWidth = 81
     end
     object Lbl_Date: TLabel
       Left = 8
