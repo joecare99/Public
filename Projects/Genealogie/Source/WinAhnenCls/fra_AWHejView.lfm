@@ -1,0 +1,2718 @@
+object fraAWHejView: TfraAWHejView
+  AnchorSideTop.Side = asrCenter
+  Left = 0
+  Height = 1116
+  Top = 0
+  Width = 1589
+  ClientHeight = 1116
+  ClientWidth = 1589
+  DesignTimePPI = 144
+  ParentFont = False
+  TabOrder = 0
+  object CoolBar1: TCoolBar
+    Left = 0
+    Height = 68
+    Top = 0
+    Width = 1589
+    Bands = <    
+      item
+        Control = tlbMenu
+        Width = 900
+      end>
+    ParentFont = False
+    object tlbMenu: TToolBar
+      AnchorSideLeft.Control = CoolBar1
+      AnchorSideTop.Control = CoolBar1
+      Left = 24
+      Height = 46
+      Top = 5
+      Width = 871
+      Align = alNone
+      BorderSpacing.Left = 22
+      BorderSpacing.Top = 3
+      Caption = 'Menu'
+      ParentFont = False
+      TabOrder = 0
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 36
+    Top = 1080
+    Width = 1589
+    Panels = <>
+    ParentFont = False
+  end
+  object PageControl1: TPageControl
+    AnchorSideTop.Control = edtBirthPlace1
+    AnchorSideTop.Side = asrCenter
+    Left = 0
+    Height = 1012
+    Top = 68
+    Width = 1589
+    ActivePage = tbs3Details
+    Align = alClient
+    Anchors = [akTop, akLeft, akRight]
+    ParentFont = False
+    TabIndex = 2
+    TabOrder = 2
+    object tbs1Select: TTabSheet
+      Caption = 'Auswahl'
+      ClientHeight = 508
+      ClientWidth = 958
+      ParentFont = False
+      object Panel14: TPanel
+        Left = 0
+        Height = 117
+        Top = 0
+        Width = 958
+        Align = alTop
+        Caption = 'Panel14'
+        ClientHeight = 117
+        ClientWidth = 958
+        ParentFont = False
+        TabOrder = 0
+        object Panel15: TPanel
+          Left = 648
+          Height = 62
+          Top = 1
+          Width = 309
+          Align = alRight
+          Caption = 'Panel9'
+          ParentFont = False
+          TabOrder = 0
+        end
+        object Panel16: TPanel
+          Left = 1
+          Height = 62
+          Top = 1
+          Width = 786
+          Align = alClient
+          Caption = 'Panel10'
+          ParentFont = False
+          TabOrder = 1
+        end
+      end
+      object tblSelectPerson: TStringGrid
+        Left = 32
+        Height = 380
+        Top = 96
+        Width = 894
+        Align = alClient
+        BorderSpacing.Around = 58
+        Columns = <        
+          item
+            MinSize = 15
+            MaxSize = 291
+            Title.Caption = 'idIndividual'
+            Width = 87
+          end        
+          item
+            MinSize = 15
+            MaxSize = 291
+            Title.Caption = 'FamilyName'
+            Width = 291
+          end        
+          item
+            MinSize = 15
+            MaxSize = 291
+            Title.Caption = 'GivenName'
+            Width = 291
+          end        
+          item
+            MinSize = 15
+            MaxSize = 291
+            Title.Caption = 'Birth'
+            Width = 146
+          end>
+        Options = [goFixedHorzLine, goHorzLine, goRangeSelect, goSmoothScroll]
+        ParentFont = False
+        TabOrder = 1
+      end
+    end
+    object tbs2Edit: TTabSheet
+      Caption = 'Bearbeiten'
+      ClientHeight = 974
+      ClientWidth = 1581
+      ParentFont = False
+      object pnlP2Top: TPanel
+        Left = 0
+        Height = 117
+        Top = 0
+        Width = 1581
+        Align = alTop
+        ClientHeight = 117
+        ClientWidth = 1581
+        ParentFont = False
+        TabOrder = 0
+        object pnlP2TopRight: TPanel
+          Left = 1193
+          Height = 115
+          Top = 1
+          Width = 387
+          Align = alRight
+          ClientHeight = 115
+          ClientWidth = 387
+          ParentFont = False
+          TabOrder = 0
+          object lblID: TLabel
+            Tag = 99
+            Left = 11
+            Height = 25
+            Top = 11
+            Width = 365
+            HelpType = htKeyword
+            HelpKeyword = 'ID'
+            Align = alTop
+            Alignment = taCenter
+            BorderSpacing.Around = 10
+            Caption = '<ID>'
+            ParentColor = False
+            ParentFont = False
+          end
+        end
+        object pnlP2TopClient: TPanel
+          Left = 326
+          Height = 115
+          Top = 1
+          Width = 867
+          Align = alClient
+          ClientHeight = 115
+          ClientWidth = 867
+          ParentFont = False
+          TabOrder = 1
+          object lblFather: TLabel
+            AnchorSideTop.Control = edtFather
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = edtFather
+            AnchorSideBottom.Side = asrCenter
+            Left = 4
+            Height = 33
+            Top = 5
+            Width = 90
+            Alignment = taRightJustify
+            Anchors = [akTop, akLeft, akRight]
+            AutoSize = False
+            BorderSpacing.Right = 4
+            BorderSpacing.Bottom = 4
+            BorderSpacing.Around = 4
+            Caption = 'Vater:'
+            ParentColor = False
+            ParentFont = False
+            OnClick = lblFatherClick
+          end
+          object lblMother: TLabel
+            AnchorSideLeft.Control = pnlP2TopClient
+            AnchorSideTop.Control = edtMother
+            AnchorSideTop.Side = asrCenter
+            AnchorSideRight.Control = edtMother
+            AnchorSideBottom.Side = asrCenter
+            Left = 5
+            Height = 33
+            Top = 42
+            Width = 89
+            Alignment = taRightJustify
+            Anchors = [akTop, akLeft, akRight]
+            AutoSize = False
+            BorderSpacing.Right = 4
+            BorderSpacing.Around = 4
+            Caption = 'Mutter:'
+            ParentColor = False
+            ParentFont = False
+          end
+          object edtFather: TEdit
+            AnchorSideTop.Control = pnlP2TopClient
+            AnchorSideRight.Control = pnlP2TopClient
+            AnchorSideRight.Side = asrBottom
+            Left = 102
+            Height = 33
+            Top = 5
+            Width = 760
+            Anchors = [akTop, akLeft, akRight]
+            BorderSpacing.Top = 4
+            BorderSpacing.Right = 4
+            ParentFont = False
+            ReadOnly = True
+            TabOrder = 0
+          end
+          object edtMother: TEdit
+            AnchorSideLeft.Control = edtFather
+            AnchorSideTop.Control = edtFather
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = edtFather
+            AnchorSideRight.Side = asrBottom
+            Left = 102
+            Height = 33
+            Top = 42
+            Width = 760
+            Anchors = [akTop, akLeft, akRight]
+            BorderSpacing.Top = 4
+            ParentFont = False
+            ReadOnly = True
+            TabOrder = 1
+          end
+        end
+        object DBNavigator1: TPanel
+          Left = 21
+          Height = 75
+          Top = 21
+          Width = 285
+          Align = alLeft
+          BorderSpacing.Around = 20
+          ClientHeight = 75
+          ClientWidth = 285
+          ParentFont = False
+          TabOrder = 2
+          object SpeedButton2: TSpeedButton
+            Left = 5
+            Height = 65
+            Top = 5
+            Width = 64
+            Action = actDataSetFirst1
+            Align = alLeft
+            BorderSpacing.Around = 4
+            Caption = '|<'
+            ParentFont = False
+          end
+          object SpeedButton3: TSpeedButton
+            Left = 73
+            Height = 65
+            Top = 5
+            Width = 64
+            Action = actDataSetPrior1
+            Align = alLeft
+            BorderSpacing.Around = 4
+            Caption = '<'
+            ParentFont = False
+          end
+          object SpeedButton4: TSpeedButton
+            Left = 209
+            Height = 65
+            Top = 5
+            Width = 64
+            Action = actDataSetLast1
+            Align = alLeft
+            BorderSpacing.Around = 4
+            Caption = '>|'
+            ParentFont = False
+          end
+          object SpeedButton5: TSpeedButton
+            Left = 141
+            Height = 65
+            Top = 5
+            Width = 64
+            Action = actDataSetNext1
+            Align = alLeft
+            BorderSpacing.Around = 4
+            Caption = '>'
+            ParentFont = False
+          end
+        end
+      end
+      object pnlP2Bottom: TPanel
+        AnchorSideTop.Control = pnlP2VitalData
+        AnchorSideTop.Side = asrBottom
+        Left = 0
+        Height = 441
+        Top = 533
+        Width = 1581
+        Align = alBottom
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        ClientHeight = 441
+        ClientWidth = 1581
+        ParentFont = False
+        TabOrder = 1
+        object pnlP2BottomLeft: TPanel
+          Left = 1
+          Height = 439
+          Top = 1
+          Width = 674
+          Align = alLeft
+          ClientHeight = 439
+          ClientWidth = 674
+          ParentFont = False
+          TabOrder = 0
+          object lblConnection: TLabel
+            Left = 5
+            Height = 25
+            Top = 5
+            Width = 664
+            Align = alTop
+            BorderSpacing.Around = 4
+            Caption = '<Verbindung>'
+            ParentColor = False
+            ParentFont = False
+          end
+          object tblSpouses: TStringGrid
+            Left = 1
+            Height = 404
+            Top = 34
+            Width = 672
+            Align = alClient
+            ColCount = 3
+            Columns = <            
+              item
+                MinSize = 15
+                MaxSize = 300
+                Title.Caption = 'Name'
+                Width = 360
+              end            
+              item
+                MinSize = 15
+                MaxSize = 300
+                Title.Caption = 'Hochzeit'
+                Width = 180
+              end>
+            Options = [goFixedHorzLine, goHorzLine, goRangeSelect, goColSizing, goDblClickAutoSize, goSmoothScroll, goFixedRowNumbering]
+            ParentFont = False
+            TabOrder = 0
+          end
+        end
+        object pnlP2BottomClient: TPanel
+          Left = 683
+          Height = 439
+          Top = 1
+          Width = 897
+          Align = alClient
+          ClientHeight = 439
+          ClientWidth = 897
+          ParentFont = False
+          TabOrder = 1
+          object lblChildren: TLabel
+            Left = 5
+            Height = 25
+            Top = 5
+            Width = 887
+            Align = alTop
+            BorderSpacing.Around = 4
+            Caption = '<Kinder>'
+            ParentColor = False
+            ParentFont = False
+          end
+          object tblChildren: TStringGrid
+            Left = 1
+            Height = 404
+            Top = 34
+            Width = 895
+            Align = alClient
+            ColCount = 2
+            Columns = <            
+              item
+                MinSize = 15
+                MaxSize = 300
+                Title.Caption = 'Name'
+                Width = 900
+              end>
+            Options = [goFixedHorzLine, goHorzLine, goRangeSelect, goColSizing, goDblClickAutoSize, goSmoothScroll]
+            ParentFont = False
+            TabOrder = 0
+          end
+        end
+        object Splitter1: TSplitter
+          Left = 675
+          Height = 439
+          Top = 1
+          Width = 8
+        end
+      end
+      object pnlP2BaseData: TPanel
+        AnchorSideLeft.Control = tbs2Edit
+        AnchorSideTop.Control = pnlP2Top
+        AnchorSideTop.Side = asrBottom
+        Left = 0
+        Height = 232
+        Top = 117
+        Width = 746
+        ClientHeight = 232
+        ClientWidth = 746
+        ParentFont = False
+        TabOrder = 2
+        object lblName: TLabel
+          AnchorSideLeft.Control = pnlP2BaseData
+          AnchorSideTop.Control = edtName
+          AnchorSideTop.Side = asrCenter
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 25
+          Top = 9
+          Width = 127
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'Name:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblGivenname: TLabel
+          AnchorSideLeft.Control = pnlP2BaseData
+          AnchorSideTop.Control = edtGivenname
+          AnchorSideTop.Side = asrCenter
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 25
+          Top = 46
+          Width = 127
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'Vorname(n):'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblOccupation: TLabel
+          AnchorSideLeft.Control = pnlP2BaseData
+          AnchorSideTop.Control = edtOccupation
+          AnchorSideTop.Side = asrCenter
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 25
+          Top = 83
+          Width = 127
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'Beruf:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblFarmname: TLabel
+          AnchorSideLeft.Control = pnlP2BaseData
+          AnchorSideTop.Control = edtFarmname
+          AnchorSideTop.Side = asrCenter
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 25
+          Top = 120
+          Width = 127
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'Hofname:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblSex: TLabel
+          AnchorSideLeft.Control = pnlP2BaseData
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 34
+          Top = 190
+          Width = 127
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'Geschlecht:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblReligion: TLabel
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 230
+          Height = 34
+          Top = 190
+          Width = 116
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Left = 20
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'Bekenntnis:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblAdopted: TLabel
+          AnchorSideLeft.Control = pnlP2BaseData
+          AnchorSideBottom.Side = asrBottom
+          Left = 582
+          Height = 34
+          Top = 190
+          Width = 65
+          Alignment = taRightJustify
+          Anchors = [akTop, akRight, akBottom]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'adopt.v:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtName: TEdit
+          Tag = 102
+          AnchorSideTop.Control = pnlP2BaseData
+          AnchorSideRight.Control = pnlP2BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 140
+          Height = 33
+          Top = 5
+          Width = 605
+          HelpType = htKeyword
+          HelpKeyword = 'Familienname'
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 0
+          TextHint = 'Familienname'
+        end
+        object edtGivenname: TEdit
+          Tag = 103
+          AnchorSideLeft.Control = edtFarmname
+          AnchorSideTop.Control = edtName
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 140
+          Height = 33
+          Top = 42
+          Width = 605
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 1
+          TextHint = 'Vorname(n)'
+        end
+        object edtOccupation: TEdit
+          Tag = 106
+          AnchorSideLeft.Control = edtFarmname
+          AnchorSideTop.Control = edtGivenname
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 140
+          Height = 33
+          Top = 79
+          Width = 605
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 2
+          TextHint = '(zuletzt) ausgeübter Beruf'
+        end
+        object edtFarmname: TEdit
+          Tag = 135
+          AnchorSideLeft.Control = edtName
+          AnchorSideTop.Control = edtOccupation
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 140
+          Height = 33
+          Top = 116
+          Width = 605
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 3
+          TextHint = 'Hofname'
+        end
+        object cbxSex: TComboBox
+          Tag = 104
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 140
+          Height = 33
+          Top = 188
+          Width = 68
+          BorderSpacing.Top = 4
+          ItemHeight = 25
+          ParentFont = False
+          TabOrder = 4
+        end
+        object cbxReligion: TComboBox
+          Tag = 105
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 392
+          Height = 33
+          Top = 188
+          Width = 68
+          Anchors = [akTop]
+          BorderSpacing.Top = 4
+          ItemHeight = 25
+          ParentFont = False
+          TabOrder = 5
+        end
+        object chbLiving: TCheckBox
+          Tag = 131
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Side = asrBottom
+          Left = 488
+          Height = 29
+          Top = 188
+          Width = 60
+          BorderSpacing.Left = 20
+          BorderSpacing.Top = 4
+          BorderSpacing.Right = 20
+          Caption = 'lebt'
+          ParentFont = False
+          TabOrder = 6
+        end
+        object cbxAdopted: TComboBox
+          Tag = 134
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 653
+          Height = 33
+          Top = 188
+          Width = 92
+          Anchors = [akTop, akRight]
+          BorderSpacing.Top = 4
+          ItemHeight = 25
+          ParentFont = False
+          TabOrder = 7
+        end
+      end
+      object pnlP2Image: TPanel
+        AnchorSideTop.Control = pnlP2Top
+        AnchorSideTop.Side = asrBottom
+        AnchorSideRight.Control = tbs2Edit
+        AnchorSideRight.Side = asrBottom
+        Left = 994
+        Height = 314
+        Top = 117
+        Width = 587
+        Anchors = [akTop, akLeft, akRight]
+        ClientHeight = 314
+        ClientWidth = 587
+        ParentFont = False
+        TabOrder = 3
+        object UpDown1: TUpDown
+          AnchorSideRight.Control = pnlP2Image
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = pnlP2Image
+          AnchorSideBottom.Side = asrBottom
+          Left = 553
+          Height = 50
+          Top = 263
+          Width = 33
+          Anchors = [akRight, akBottom]
+          Min = 0
+          Position = 0
+          TabOrder = 0
+          Wrap = False
+        end
+      end
+      object pnlP2VitalData: TPanel
+        AnchorSideLeft.Control = tbs2Edit
+        AnchorSideTop.Control = pnlP2BaseData
+        AnchorSideTop.Side = asrBottom
+        AnchorSideBottom.Control = pnlP2Bottom
+        Left = 0
+        Height = 184
+        Top = 349
+        Width = 920
+        ClientHeight = 184
+        ClientWidth = 920
+        ParentFont = False
+        TabOrder = 4
+        object lblBirth: TLabel
+          AnchorSideLeft.Control = pnlP2VitalData
+          AnchorSideRight.Control = cbxBirthMod
+          AnchorSideBottom.Side = asrBottom
+          Left = 93
+          Height = 35
+          Top = 9
+          Width = 39
+          Alignment = taRightJustify
+          Anchors = [akTop, akRight, akBottom]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'geb.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblBaptised: TLabel
+          AnchorSideLeft.Control = pnlP2VitalData
+          AnchorSideTop.Control = edtBaptPlace
+          AnchorSideRight.Control = lblBirth
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 90
+          Height = 44
+          Top = 46
+          Width = 34
+          Alignment = taRightJustify
+          Anchors = [akTop, akRight, akBottom]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'get.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblDeath: TLabel
+          AnchorSideLeft.Control = pnlP2VitalData
+          AnchorSideTop.Control = edtDeathPlace
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = lblBirth
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 82
+          Height = 25
+          Top = 83
+          Width = 42
+          Alignment = taRightJustify
+          Anchors = [akTop, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'gest.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblBuried: TLabel
+          AnchorSideLeft.Control = pnlP2VitalData
+          AnchorSideTop.Control = edtBurPlace
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = lblBirth
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 79
+          Height = 25
+          Top = 120
+          Width = 45
+          Alignment = taRightJustify
+          Anchors = [akTop, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'begr.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtBirthPlace: TEdit
+          Tag = 110
+          AnchorSideTop.Control = pnlP2VitalData
+          AnchorSideRight.Control = pnlP2VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 408
+          Height = 33
+          Top = 5
+          Width = 511
+          Anchors = [akTop, akRight]
+          BorderSpacing.Top = 4
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 0
+          TextHint = 'Geburtsort'
+        end
+        object cbxBirthMod: TComboBox
+          Tag = 107
+          AnchorSideTop.Control = edtBirthPlace
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = edtBirthDate
+          AnchorSideBottom.Side = asrBottom
+          Left = 140
+          Height = 33
+          Top = 5
+          Width = 86
+          Anchors = [akTop, akRight]
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          BorderSpacing.Right = 8
+          ItemHeight = 25
+          ParentFont = False
+          TabOrder = 1
+        end
+        object edtBirthDate: TDateEdit
+          Tag = 107
+          AnchorSideTop.Control = edtBirthPlace
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = edtBirthPlace
+          AnchorSideBottom.Side = asrBottom
+          Left = 234
+          Height = 33
+          Top = 5
+          Width = 166
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 40
+          Anchors = [akTop, akRight]
+          BorderSpacing.Right = 8
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 2
+          Text = '07.05.1960'
+        end
+        object cbxBaptMod: TComboBox
+          Tag = 111
+          AnchorSideLeft.Control = cbxBirthMod
+          AnchorSideTop.Control = edtBaptPlace
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = cbxBirthMod
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 140
+          Height = 33
+          Top = 42
+          Width = 86
+          Anchors = [akTop, akLeft, akRight]
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          ItemHeight = 25
+          ParentFont = False
+          TabOrder = 3
+        end
+        object edtBaptDate: TDateEdit
+          Tag = 111
+          AnchorSideLeft.Control = edtBirthDate
+          AnchorSideTop.Control = edtBaptPlace
+          AnchorSideRight.Control = edtBirthDate
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 234
+          Height = 33
+          Top = 42
+          Width = 166
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 40
+          Anchors = [akTop, akLeft, akRight]
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 4
+          Text = '07.05.1960'
+        end
+        object edtBaptPlace: TEdit
+          Tag = 114
+          AnchorSideLeft.Control = edtBirthPlace
+          AnchorSideTop.Control = edtBirthPlace
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 408
+          Height = 33
+          Top = 42
+          Width = 511
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 5
+          TextHint = 'Taufort'
+        end
+        object cbxDeathMod: TComboBox
+          Tag = 117
+          AnchorSideLeft.Control = cbxBirthMod
+          AnchorSideTop.Control = edtDeathPlace
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = cbxBirthMod
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 140
+          Height = 33
+          Top = 79
+          Width = 86
+          Anchors = [akTop, akLeft, akRight]
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          ItemHeight = 25
+          ParentFont = False
+          TabOrder = 6
+        end
+        object edtDeathDate: TDateEdit
+          Tag = 117
+          AnchorSideLeft.Control = edtBirthDate
+          AnchorSideTop.Control = edtDeathPlace
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = edtBirthDate
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 234
+          Height = 33
+          Top = 79
+          Width = 166
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 40
+          Anchors = [akTop, akLeft, akRight]
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 7
+          Text = '11.05.2018'
+        end
+        object edtDeathPlace: TEdit
+          Tag = 120
+          AnchorSideLeft.Control = edtBirthPlace
+          AnchorSideTop.Control = edtBaptPlace
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 408
+          Height = 33
+          Top = 79
+          Width = 511
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 8
+          TextHint = 'Sterbeort'
+        end
+        object cbxBurMod: TComboBox
+          Tag = 122
+          AnchorSideLeft.Control = cbxBirthMod
+          AnchorSideTop.Control = edtBurPlace
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = cbxBirthMod
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 140
+          Height = 33
+          Top = 116
+          Width = 86
+          Anchors = [akTop, akLeft, akRight]
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          ItemHeight = 25
+          ParentFont = False
+          TabOrder = 9
+        end
+        object edtBurDate: TDateEdit
+          Tag = 122
+          AnchorSideLeft.Control = edtBirthDate
+          AnchorSideTop.Control = edtBurPlace
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = edtBirthDate
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 234
+          Height = 33
+          Top = 116
+          Width = 166
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 40
+          Anchors = [akTop, akLeft, akRight]
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 10
+          Text = '11.05.2018'
+        end
+        object edtBurPlace: TEdit
+          Tag = 125
+          AnchorSideLeft.Control = edtBirthPlace
+          AnchorSideTop.Control = edtDeathPlace
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 408
+          Height = 33
+          Top = 116
+          Width = 511
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 11
+          TextHint = 'Beräbnissort'
+        end
+      end
+      object edtAge: TEdit
+        AnchorSideTop.Side = asrCenter
+        Left = 928
+        Height = 39
+        Top = 432
+        Width = 184
+        AutoSize = False
+        ParentFont = False
+        TabOrder = 5
+        TextHint = 'Alter'
+      end
+    end
+    object tbs3Details: TTabSheet
+      Caption = 'Details'
+      ClientHeight = 974
+      ClientWidth = 1581
+      ParentFont = False
+      object pnlP3Top: TPanel
+        Left = 0
+        Height = 117
+        Top = 0
+        Width = 1581
+        Align = alTop
+        ClientHeight = 117
+        ClientWidth = 1581
+        ParentFont = False
+        TabOrder = 0
+        object Panel18: TPanel
+          Left = 1271
+          Height = 115
+          Top = 1
+          Width = 309
+          Align = alRight
+          Caption = 'Panel9'
+          ParentFont = False
+          TabOrder = 0
+        end
+        object DBNavigator2: TPanel
+          Left = 21
+          Height = 75
+          Top = 21
+          Width = 285
+          Align = alLeft
+          BorderSpacing.Around = 20
+          ClientHeight = 75
+          ClientWidth = 285
+          ParentFont = False
+          TabOrder = 1
+          object SpeedButton6: TSpeedButton
+            Left = 5
+            Height = 65
+            Top = 5
+            Width = 64
+            Action = actDataSetFirst1
+            Align = alLeft
+            BorderSpacing.Around = 4
+            ParentFont = False
+          end
+          object SpeedButton7: TSpeedButton
+            Left = 73
+            Height = 65
+            Top = 5
+            Width = 64
+            Action = actDataSetPrior1
+            Align = alLeft
+            BorderSpacing.Around = 4
+            ParentFont = False
+          end
+          object SpeedButton8: TSpeedButton
+            Left = 209
+            Height = 65
+            Top = 5
+            Width = 64
+            Action = actDataSetLast1
+            Align = alLeft
+            BorderSpacing.Around = 4
+            ParentFont = False
+          end
+          object SpeedButton9: TSpeedButton
+            Left = 141
+            Height = 65
+            Top = 5
+            Width = 64
+            Action = actDataSetNext1
+            Align = alLeft
+            BorderSpacing.Around = 4
+            ParentFont = False
+          end
+        end
+      end
+      object pnlP3BaseData: TPanel
+        AnchorSideLeft.Control = tbs3Details
+        AnchorSideTop.Control = pnlP3Top
+        AnchorSideTop.Side = asrBottom
+        AnchorSideRight.Control = tbs3Details
+        AnchorSideRight.Side = asrBottom
+        Left = 0
+        Height = 267
+        Top = 117
+        Width = 1581
+        Anchors = [akTop, akLeft, akRight]
+        ClientHeight = 267
+        ClientWidth = 1581
+        ParentFont = False
+        TabOrder = 1
+        object lblName1: TLabel
+          AnchorSideLeft.Control = pnlP3BaseData
+          AnchorSideTop.Control = edtName1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = edtName1
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 25
+          Top = 34
+          Width = 122
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'Name:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblGivenname1: TLabel
+          AnchorSideLeft.Control = pnlP3BaseData
+          AnchorSideTop.Control = edtGivenname1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = edtGivenname1
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 25
+          Top = 71
+          Width = 122
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'Vorname(n):'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblOccupation1: TLabel
+          AnchorSideLeft.Control = pnlP3BaseData
+          AnchorSideTop.Control = edtOccupation1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = edtOccupation1
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 25
+          Top = 108
+          Width = 122
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'Beruf:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblResidence: TLabel
+          AnchorSideLeft.Control = pnlP3BaseData
+          AnchorSideTop.Control = edtResidence
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = edtResidence
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 25
+          Top = 145
+          Width = 122
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'lebte in:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblSex1: TLabel
+          AnchorSideLeft.Control = pnlP3BaseData
+          AnchorSideTop.Control = cbxSex1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = cbxSex1
+          AnchorSideBottom.Side = asrBottom
+          Left = 39
+          Height = 25
+          Top = 182
+          Width = 88
+          Alignment = taRightJustify
+          Anchors = [akTop, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'Geschlecht:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblReligion1: TLabel
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = cbxSex1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = cbxReligion1
+          AnchorSideBottom.Side = asrBottom
+          Left = 225
+          Height = 25
+          Top = 182
+          Width = 119
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Left = 20
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'Bekenntnis:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblSource: TLabel
+          AnchorSideLeft.Control = pnlP3BaseData
+          AnchorSideTop.Control = cbxSex1
+          AnchorSideRight.Control = edtSource
+          AnchorSideBottom.Side = asrBottom
+          Left = 829
+          Height = 25
+          Top = 182
+          Width = 54
+          Alignment = taRightJustify
+          Anchors = [akTop, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'Quelle:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblNameVariants: TLabel
+          AnchorSideTop.Control = pnlP3BaseData
+          Left = 1082
+          Height = 25
+          Top = 1
+          Width = 240
+          Caption = 'Andere Namensschreibweisen:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblCallname: TLabel
+          AnchorSideLeft.Control = pnlP3BaseData
+          AnchorSideTop.Control = edtCallname
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = edtCallname
+          AnchorSideBottom.Side = asrBottom
+          Left = 955
+          Height = 25
+          Top = 74
+          Width = 75
+          Alignment = taRightJustify
+          Anchors = [akTop, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'Rufname:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtName1: TEdit
+          Tag = 102
+          AnchorSideTop.Control = lblNameVariants
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP3BaseData
+          AnchorSideRight.Side = asrCenter
+          Left = 135
+          Height = 33
+          Top = 30
+          Width = 756
+          BorderSpacing.Top = 4
+          ParentFont = False
+          TabOrder = 0
+        end
+        object edtGivenname1: TEdit
+          Tag = 103
+          AnchorSideLeft.Control = edtName1
+          AnchorSideTop.Control = edtName1
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = edtName1
+          AnchorSideRight.Side = asrBottom
+          Left = 135
+          Height = 33
+          Top = 67
+          Width = 756
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          ParentFont = False
+          TabOrder = 1
+        end
+        object edtOccupation1: TEdit
+          Tag = 106
+          AnchorSideLeft.Control = edtName1
+          AnchorSideTop.Control = edtGivenname1
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP3BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 135
+          Height = 33
+          Top = 104
+          Width = 825
+          BorderSpacing.Top = 4
+          ParentFont = False
+          TabOrder = 2
+        end
+        object edtResidence: TEdit
+          Tag = 116
+          AnchorSideLeft.Control = edtName1
+          AnchorSideTop.Control = edtOccupation1
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = edtNameVariants
+          Left = 135
+          Height = 33
+          Top = 141
+          Width = 947
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          ParentFont = False
+          TabOrder = 3
+        end
+        object cbxSex1: TComboBox
+          Tag = 104
+          AnchorSideTop.Control = edtResidence
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP3BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 135
+          Height = 33
+          Top = 178
+          Width = 68
+          BorderSpacing.Top = 4
+          ItemHeight = 25
+          ParentFont = False
+          TabOrder = 4
+        end
+        object chbLiving1: TCheckBox
+          Tag = 131
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = cbxSex1
+          AnchorSideTop.Side = asrCenter
+          Left = 663
+          Height = 29
+          Top = 180
+          Width = 60
+          BorderSpacing.Left = 20
+          BorderSpacing.Top = 4
+          BorderSpacing.Right = 20
+          Caption = 'lebt'
+          ParentFont = False
+          TabOrder = 5
+        end
+        object edtCallname: TEdit
+          Tag = 149
+          AnchorSideTop.Control = edtNameVariants
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP3BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 1038
+          Height = 33
+          Top = 70
+          Width = 542
+          Anchors = [akTop, akRight]
+          BorderSpacing.Top = 4
+          ParentFont = False
+          TabOrder = 6
+        end
+        object edtSource: TEdit
+          Tag = 148
+          AnchorSideLeft.Control = edtName1
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = cbxSex1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = pnlP3BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 891
+          Height = 33
+          Top = 178
+          Width = 689
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          ParentFont = False
+          TabOrder = 7
+        end
+        object cbxReligion1: TComboBox
+          Tag = 105
+          AnchorSideTop.Control = cbxSex1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = pnlP3BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 352
+          Height = 33
+          Top = 178
+          Width = 68
+          Anchors = [akTop]
+          BorderSpacing.Top = 4
+          ItemHeight = 25
+          ParentFont = False
+          TabOrder = 8
+        end
+        object edtNameVariants: TEdit
+          Tag = 132
+          AnchorSideLeft.Control = lblNameVariants
+          AnchorSideRight.Control = pnlP3BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 1082
+          Height = 33
+          Top = 33
+          Width = 498
+          Anchors = [akTop, akLeft, akRight]
+          ParentFont = False
+          TabOrder = 9
+        end
+      end
+      object pnlP3VitalData: TPanel
+        AnchorSideLeft.Control = tbs2Edit
+        AnchorSideTop.Control = edtBirthPlace1
+        AnchorSideTop.Side = asrCenter
+        AnchorSideRight.Control = tbs3Details
+        AnchorSideRight.Side = asrBottom
+        Left = 0
+        Height = 232
+        Top = 382
+        Width = 1581
+        Anchors = [akTop, akLeft, akRight]
+        ClientHeight = 232
+        ClientWidth = 1581
+        ParentFont = False
+        TabOrder = 2
+        object lblBirth1: TLabel
+          AnchorSideLeft.Control = pnlP3VitalData
+          AnchorSideTop.Control = edtBirthPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 25
+          Top = 9
+          Width = 74
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'geb.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblBaptised1: TLabel
+          AnchorSideLeft.Control = pnlP3VitalData
+          AnchorSideTop.Control = edtBaptPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 25
+          Top = 46
+          Width = 74
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'get.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblDeath1: TLabel
+          AnchorSideLeft.Control = pnlP3VitalData
+          AnchorSideTop.Control = edtDeathPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 25
+          Top = 120
+          Width = 74
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'gest.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblBuried1: TLabel
+          AnchorSideLeft.Control = pnlP3VitalData
+          AnchorSideTop.Control = edtBurPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 25
+          Top = 194
+          Width = 74
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'begr.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtBirthPlace1: TEdit
+          Tag = 110
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = pnlP3VitalData
+          AnchorSideRight.Side = asrCenter
+          Left = 381
+          Height = 33
+          Top = 5
+          Width = 484
+          BorderSpacing.Left = 4
+          BorderSpacing.Top = 4
+          ParentFont = False
+          TabOrder = 0
+        end
+        object edtBaptPlace1: TEdit
+          Tag = 114
+          AnchorSideLeft.Control = edtBirthPlace1
+          AnchorSideTop.Control = edtBirthPlace1
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = edtBirthPlace1
+          AnchorSideRight.Side = asrBottom
+          Left = 381
+          Height = 33
+          Top = 42
+          Width = 484
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          ParentFont = False
+          TabOrder = 1
+        end
+        object edtDeathPlace1: TEdit
+          Tag = 120
+          AnchorSideLeft.Control = edtBirthPlace1
+          AnchorSideTop.Control = edtGodParents
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = edtBirthPlace1
+          AnchorSideRight.Side = asrBottom
+          Left = 381
+          Height = 33
+          Top = 116
+          Width = 484
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          ParentFont = False
+          TabOrder = 2
+        end
+        object edtBurPlace1: TEdit
+          Tag = 125
+          AnchorSideLeft.Control = edtBirthPlace1
+          AnchorSideTop.Control = edtCauseOfDeath
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = edtBirthPlace1
+          AnchorSideRight.Side = asrBottom
+          Left = 381
+          Height = 33
+          Top = 190
+          Width = 484
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          ParentFont = False
+          TabOrder = 3
+        end
+        object edtSource4: TEdit
+          Tag = 129
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edtBurPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = pnlP3VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 898
+          Height = 33
+          Top = 190
+          Width = 682
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Left = 34
+          ParentFont = False
+          TabOrder = 4
+        end
+        object edtSource3: TEdit
+          Tag = 128
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edtDeathPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = pnlP3VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 898
+          Height = 33
+          Top = 116
+          Width = 682
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Left = 34
+          ParentFont = False
+          TabOrder = 5
+        end
+        object edtSource2: TEdit
+          Tag = 127
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edtBaptPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = pnlP3VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 899
+          Height = 33
+          Top = 42
+          Width = 681
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Left = 34
+          ParentFont = False
+          TabOrder = 6
+        end
+        object edtSource1: TEdit
+          Tag = 126
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edtBirthPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = pnlP3VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 898
+          Height = 33
+          Top = 5
+          Width = 682
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Left = 34
+          ParentFont = False
+          TabOrder = 7
+        end
+        object cbxBirthMod1: TComboBox
+          Tag = 107
+          AnchorSideTop.Control = edtBirthPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideBottom.Side = asrBottom
+          Left = 87
+          Height = 33
+          Top = 5
+          Width = 104
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          ItemHeight = 25
+          ParentFont = False
+          TabOrder = 8
+        end
+        object cbxBurMod1: TComboBox
+          Tag = 122
+          AnchorSideLeft.Control = cbxBirthMod1
+          AnchorSideTop.Control = edtBurPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = cbxBirthMod1
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 87
+          Height = 33
+          Top = 190
+          Width = 104
+          Anchors = [akTop, akLeft, akRight]
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          ItemHeight = 25
+          ParentFont = False
+          TabOrder = 9
+        end
+        object cbxDeathMod1: TComboBox
+          Tag = 117
+          AnchorSideLeft.Control = cbxBirthMod1
+          AnchorSideTop.Control = edtDeathPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = cbxBirthMod1
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 87
+          Height = 33
+          Top = 116
+          Width = 104
+          Anchors = [akTop, akLeft, akRight]
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          ItemHeight = 25
+          ParentFont = False
+          TabOrder = 10
+        end
+        object cbxBaptMod1: TComboBox
+          Tag = 111
+          AnchorSideLeft.Control = cbxBirthMod1
+          AnchorSideTop.Control = edtBaptPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = cbxBirthMod1
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 87
+          Height = 33
+          Top = 42
+          Width = 104
+          Anchors = [akTop, akLeft, akRight]
+          AutoComplete = True
+          AutoCompleteText = [cbactEnabled, cbactEndOfLineComplete, cbactSearchAscending]
+          ItemHeight = 25
+          ParentFont = False
+          TabOrder = 11
+        end
+        object edtBirthDate1: TDateEdit
+          Tag = 107
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edtBirthPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideBottom.Side = asrBottom
+          Left = 200
+          Height = 33
+          Top = 5
+          Width = 172
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 40
+          BorderSpacing.Left = 9
+          BorderSpacing.Right = 9
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 12
+        end
+        object edtBaptDate1: TDateEdit
+          Tag = 111
+          AnchorSideLeft.Control = edtBirthDate1
+          AnchorSideTop.Control = edtBaptPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = edtBirthDate1
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 200
+          Height = 33
+          Top = 42
+          Width = 172
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 40
+          Anchors = [akTop, akLeft, akRight]
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 13
+        end
+        object edtDeathDate1: TDateEdit
+          Tag = 117
+          AnchorSideLeft.Control = edtBirthDate1
+          AnchorSideTop.Control = edtDeathPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = edtBirthDate1
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 200
+          Height = 33
+          Top = 116
+          Width = 172
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 40
+          Anchors = [akTop, akLeft, akRight]
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 14
+        end
+        object edtBurDate1: TDateEdit
+          Tag = 122
+          AnchorSideLeft.Control = edtBirthDate1
+          AnchorSideTop.Control = edtBurPlace1
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = edtBirthDate1
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Side = asrBottom
+          Left = 200
+          Height = 33
+          Top = 190
+          Width = 172
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 40
+          Anchors = [akTop, akLeft, akRight]
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 15
+        end
+        object edtGodParents: TEdit
+          Tag = 115
+          AnchorSideLeft.Control = cbxBirthMod1
+          AnchorSideTop.Control = edtBaptPlace1
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = edtBirthPlace1
+          AnchorSideRight.Side = asrBottom
+          Left = 87
+          Height = 33
+          Top = 79
+          Width = 778
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          ParentFont = False
+          TabOrder = 16
+        end
+        object edtCauseOfDeath: TEdit
+          Tag = 121
+          AnchorSideLeft.Control = cbxBirthMod1
+          AnchorSideTop.Control = edtDeathPlace1
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = edtBirthPlace1
+          AnchorSideRight.Side = asrBottom
+          Left = 87
+          Height = 33
+          Top = 153
+          Width = 778
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 4
+          ParentFont = False
+          TabOrder = 17
+        end
+        object lblBaptised2: TLabel
+          AnchorSideLeft.Control = pnlP3VitalData
+          AnchorSideTop.Control = edtGodParents
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = cbxBirthMod1
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 25
+          Top = 83
+          Width = 74
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'Paten:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblBaptised3: TLabel
+          AnchorSideLeft.Control = pnlP3VitalData
+          AnchorSideTop.Control = edtCauseOfDeath
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = cbxBirthMod1
+          AnchorSideBottom.Side = asrBottom
+          Left = 5
+          Height = 25
+          Top = 157
+          Width = 74
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          BorderSpacing.Around = 4
+          Caption = 'TU:'
+          ParentColor = False
+          ParentFont = False
+        end
+      end
+    end
+    object tbs4Marriages: TTabSheet
+      Caption = 'Ehen u.a.'
+      ClientHeight = 974
+      ClientWidth = 1581
+      ParentFont = False
+      object Panel1: TPanel
+        Left = 0
+        Height = 453
+        Top = 521
+        Width = 1581
+        Align = alBottom
+        Caption = 'Panel1'
+        ParentFont = False
+        TabOrder = 0
+      end
+      object Panel12: TPanel
+        Left = 1047
+        Height = 521
+        Top = 0
+        Width = 534
+        Align = alRight
+        Caption = 'Panel12'
+        ClientHeight = 521
+        ClientWidth = 534
+        ParentFont = False
+        TabOrder = 1
+        object DBComboBox1: TDBComboBox
+          AnchorSideLeft.Control = Label3
+          AnchorSideTop.Control = Label3
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = Label3
+          AnchorSideRight.Side = asrBottom
+          Left = 59
+          Height = 33
+          Top = 93
+          Width = 416
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 9
+          ItemHeight = 25
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 0
+        end
+        object Label3: TLabel
+          Left = 59
+          Height = 25
+          Top = 59
+          Width = 416
+          Align = alTop
+          BorderSpacing.Left = 58
+          BorderSpacing.Top = 58
+          BorderSpacing.Right = 58
+          Caption = 'Label3'
+          ParentColor = False
+          ParentFont = False
+        end
+      end
+      object Panel13: TPanel
+        Left = 0
+        Height = 521
+        Top = 0
+        Width = 1047
+        Align = alClient
+        Caption = 'Panel13'
+        ClientHeight = 521
+        ClientWidth = 1047
+        ParentFont = False
+        TabOrder = 2
+        object Label2: TLabel
+          AnchorSideLeft.Control = Panel13
+          AnchorSideTop.Control = Panel13
+          AnchorSideRight.Control = Panel13
+          AnchorSideRight.Side = asrBottom
+          Left = 59
+          Height = 25
+          Top = 59
+          Width = 929
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Left = 58
+          BorderSpacing.Top = 58
+          BorderSpacing.Right = 58
+          Caption = 'Label2'
+          ParentColor = False
+          ParentFont = False
+        end
+        object DBGrid2: TDBGrid
+          AnchorSideLeft.Control = Label2
+          AnchorSideTop.Control = Label2
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = Label2
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = Panel13
+          AnchorSideBottom.Side = asrBottom
+          Left = 59
+          Height = 369
+          Top = 93
+          Width = 929
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Top = 9
+          BorderSpacing.Bottom = 58
+          Color = clWindow
+          Columns = <>
+          ParentFont = False
+          TabOrder = 0
+        end
+      end
+    end
+    object tbs5Siblings: TTabSheet
+      Caption = 'Geschwister'
+      ClientHeight = 974
+      ClientWidth = 1581
+      ParentFont = False
+      object DBGrid1: TDBGrid
+        Left = 58
+        Height = 775
+        Top = 141
+        Width = 1465
+        Align = alClient
+        BorderSpacing.Around = 58
+        Color = clWindow
+        Columns = <>
+        ParentFont = False
+        TabOrder = 0
+      end
+      object Label4: TLabel
+        Left = 58
+        Height = 25
+        Top = 58
+        Width = 1465
+        Align = alTop
+        Alignment = taCenter
+        BorderSpacing.Around = 58
+        Caption = 'Label4'
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object tbs6Text: TTabSheet
+      Caption = 'Text'
+      ClientHeight = 974
+      ClientWidth = 1581
+      ParentFont = False
+      object DBMemo1: TDBMemo
+        Tag = 130
+        Left = 58
+        Height = 775
+        Top = 141
+        Width = 1465
+        Align = alClient
+        BorderSpacing.Around = 58
+        DataField = 'Text'
+        ParentFont = False
+        TabOrder = 0
+      end
+      object Label1: TLabel
+        Left = 58
+        Height = 25
+        Top = 58
+        Width = 1465
+        Align = alTop
+        BorderSpacing.Around = 58
+        Caption = 'Label1'
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object tbs7Address: TTabSheet
+      Caption = 'Adresse'
+      ClientHeight = 974
+      ClientWidth = 1581
+      ParentFont = False
+      object Label5: TLabel
+        Left = 58
+        Height = 25
+        Top = 58
+        Width = 1465
+        Align = alTop
+        BorderSpacing.Around = 58
+        Caption = 'Label5'
+        ParentColor = False
+        ParentFont = False
+      end
+      object Panel2: TPanel
+        Left = 40
+        Height = 793
+        Top = 141
+        Width = 1501
+        HelpContext = 103
+        Align = alClient
+        BorderSpacing.Around = 40
+        ClientHeight = 793
+        ClientWidth = 1501
+        Font.Color = clBlack
+        Font.Height = -26
+        Font.Name = 'Arial'
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+        object lblStreet: TLabel
+          AnchorSideTop.Control = edtStreet
+          AnchorSideTop.Side = asrCenter
+          AnchorSideRight.Control = edtStreet
+          Left = 32
+          Height = 29
+          Top = 85
+          Width = 172
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Right = 4
+          Caption = 'Anschrift 1'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label74: TLabel
+          AnchorSideTop.Control = edtAdrSup
+          AnchorSideTop.Side = asrCenter
+          Left = 32
+          Height = 29
+          Top = 166
+          Width = 125
+          Caption = 'Anschrift 2'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label75: TLabel
+          Left = 32
+          Height = 29
+          Top = 246
+          Width = 45
+          Caption = 'PLZ'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label76: TLabel
+          Left = 32
+          Height = 29
+          Top = 328
+          Width = 35
+          Caption = 'Ort'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label77: TLabel
+          Left = 32
+          Height = 29
+          Top = 404
+          Width = 75
+          Caption = 'Zusatz'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object Shape9: TShape
+          Left = 16
+          Height = 2
+          Top = 480
+          Width = 798
+        end
+        object Label82: TLabel
+          Left = 32
+          Height = 29
+          Top = 516
+          Width = 84
+          Caption = 'Telefon'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label83: TLabel
+          Left = 32
+          Height = 29
+          Top = 580
+          Width = 64
+          Caption = 'Email'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label84: TLabel
+          Left = 32
+          Height = 29
+          Top = 644
+          Width = 152
+          Caption = 'Web-Adresse'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object Shape10: TShape
+          Left = 832
+          Height = 654
+          Top = 46
+          Width = 402
+          Brush.Color = clBtnFace
+        end
+        object Shape11: TShape
+          Left = 832
+          Height = 2
+          Top = 480
+          Width = 402
+        end
+        object Label86: TLabel
+          Left = 864
+          Height = 27
+          Top = 576
+          Width = 302
+          Caption = 'vorname.name@provider.de'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label87: TLabel
+          Left = 864
+          Height = 27
+          Top = 640
+          Width = 283
+          Caption = 'www.meine_homepage.de'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label85: TLabel
+          Left = 864
+          Height = 27
+          Top = 512
+          Width = 151
+          Caption = '08190-123456'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblStreetBsp: TLabel
+          AnchorSideTop.Control = edtStreet
+          AnchorSideTop.Side = asrCenter
+          Left = 864
+          Height = 27
+          Top = 86
+          Width = 129
+          Caption = 'Baumstr. 42'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label89: TLabel
+          AnchorSideTop.Control = edtAdrSup
+          AnchorSideTop.Side = asrCenter
+          Left = 864
+          Height = 27
+          Top = 167
+          Width = 234
+          Caption = 'Himmelhof [= Ortsteil]'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label90: TLabel
+          Left = 864
+          Height = 27
+          Top = 240
+          Width = 90
+          Caption = 'D-12345'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label91: TLabel
+          Left = 864
+          Height = 27
+          Top = 320
+          Width = 116
+          Caption = 'Engelbach'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label92: TLabel
+          Left = 864
+          Height = 27
+          Top = 400
+          Width = 144
+          Caption = 'Niederbayern'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentColor = False
+          ParentFont = False
+        end
+        object Label93: TLabel
+          Left = 830
+          Height = 29
+          Top = 10
+          Width = 112
+          Caption = 'Beispiele:'
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbxPlace: TComboBox
+          Tag = 139
+          Left = 208
+          Height = 40
+          Top = 314
+          Width = 596
+          Font.Color = clBlack
+          Font.Height = -26
+          Font.Name = 'Arial'
+          Font.Style = [fsBold]
+          ItemHeight = 30
+          ParentFont = False
+          Style = csSimple
+          TabOrder = 0
+        end
+        object edtStreet: TEdit
+          Tag = 136
+          Left = 208
+          Height = 38
+          Top = 80
+          Width = 594
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentFont = False
+          TabOrder = 1
+          TextHint = '<Straße, Nr>'
+        end
+        object edtAdrSup: TEdit
+          Tag = 137
+          Left = 208
+          Height = 40
+          Top = 160
+          Width = 594
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentFont = False
+          TabOrder = 2
+          TextHint = '<Adress-Zusatz>'
+        end
+        object edtZIP: TEdit
+          Tag = 138
+          Left = 208
+          Height = 38
+          Top = 240
+          Width = 594
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentFont = False
+          TabOrder = 3
+          TextHint = '<PLZ>'
+        end
+        object edtPlaceSup: TEdit
+          Tag = 140
+          Left = 208
+          Height = 38
+          Top = 400
+          Width = 594
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentFont = False
+          TabOrder = 4
+          TextHint = '<Ort-Zusatz>'
+        end
+        object edtPhone: TEdit
+          Tag = 145
+          Left = 208
+          Height = 38
+          Top = 507
+          Width = 594
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentFont = False
+          TabOrder = 5
+          TextHint = '<Telefon-Nummer>'
+        end
+        object edtEMail: TEdit
+          Tag = 146
+          Left = 208
+          Height = 38
+          Top = 576
+          Width = 594
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentFont = False
+          TabOrder = 6
+          TextHint = '<eMail-Adresse>'
+        end
+        object edtUrl: TEdit
+          Tag = 147
+          Left = 208
+          Height = 38
+          Top = 640
+          Width = 594
+          AutoSize = False
+          Font.Color = clBlack
+          Font.Height = -24
+          Font.Name = 'Arial'
+          ParentFont = False
+          TabOrder = 7
+          TextHint = '<URL / Web-Adresse>'
+        end
+      end
+    end
+    object tbs8Bilder: TTabSheet
+      Caption = 'Bilder'
+      ClientHeight = 508
+      ClientWidth = 958
+      ParentFont = False
+      object ListView1: TListView
+        Left = 0
+        Height = 508
+        Top = 0
+        Width = 958
+        Align = alClient
+        Columns = <>
+        LargeImages = ImageList1
+        ParentFont = False
+        TabOrder = 0
+      end
+    end
+  end
+  object ImageList1: TImageList
+    left = 657
+    top = 476
+  end
+  object MainMenu1: TMainMenu
+    left = 563
+    top = 225
+    object mniFile: TMenuItem
+      Caption = 'Datei'
+      object mniFileNew: TMenuItem
+        Action = actFileNew
+        Caption = 'alle Daten löschen'
+      end
+      object mniFileSep1: TMenuItem
+        Caption = '-'
+      end
+      object mniFileISisDSno: TMenuItem
+        Caption = 'ID=Datensatz'
+      end
+      object mniFileDeleteIDs: TMenuItem
+        Caption = 'IDs löschen'
+      end
+      object MenuItem21: TMenuItem
+        Caption = '-'
+      end
+      object mniFilePrivacyOn: TMenuItem
+        Caption = 'Datenschutz ein'
+        OnClick = mniFilePrivacyOnClick
+      end
+      object mniFilePrivacyOff: TMenuItem
+        Caption = 'Datenschutz aus'
+      end
+      object MenuItem23: TMenuItem
+        Caption = '-'
+      end
+      object mniFilePrintSetup: TMenuItem
+        Action = actFilePrintSetup
+      end
+      object mniFilePrint: TMenuItem
+        Action = actFilePrint
+      end
+      object MenuItem15: TMenuItem
+        Caption = '-'
+      end
+      object mniFileExport2Exl: TMenuItem
+        Caption = 'Excel-Export'
+      end
+      object MenuItem14: TMenuItem
+        Caption = '-'
+      end
+      object mniFileSortMarrChild: TMenuItem
+        Caption = 'Ehen / Kinder ordnen'
+      end
+      object MenuItem16: TMenuItem
+        Caption = '-'
+      end
+      object mniFileExit: TMenuItem
+        Action = actFileExit1
+      end
+    end
+    object mniDataexchange: TMenuItem
+      Caption = 'Datenaustausch'
+      object mniDataexchangeSaveGedcom: TMenuItem
+        Action = actSaveGedCom
+        Caption = 'GedCom - Datei schreiben'
+      end
+      object MenuItem17: TMenuItem
+        Action = actLoadGedcom
+      end
+      object mniDataexchangeSep1: TMenuItem
+        Caption = '-'
+      end
+      object mniDataexchangeFokoSave: TMenuItem
+        Caption = 'FOKO - Datei erstellen'
+      end
+      object MenuItem1: TMenuItem
+        Caption = 'FOKO - Datei editieren'
+      end
+      object MenuItem2: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem3: TMenuItem
+        Caption = 'Tiny-Tafel erstellen'
+      end
+      object MenuItem4: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem5: TMenuItem
+        Caption = 'Adressdatei schreiben'
+      end
+    end
+    object mniDataset: TMenuItem
+      Caption = 'Datensatz'
+      object mniDatasetFirst: TMenuItem
+        Action = actDataSetFirst1
+      end
+      object mniDatasetPrior: TMenuItem
+        Action = actDataSetPrior1
+      end
+      object mniDatasetNext: TMenuItem
+        Action = actDataSetNext1
+      end
+      object mniDatasetLast: TMenuItem
+        Action = actDataSetLast1
+      end
+      object mniDatasetSep1: TMenuItem
+        Caption = '-'
+      end
+      object mniDatasetInsert: TMenuItem
+        Action = actDataSetInsert1
+        Caption = 'neu'
+      end
+      object mniDatasetSep2: TMenuItem
+        Caption = '-'
+      end
+      object mniDatasetDelete: TMenuItem
+        Action = actDataSetDelete1
+      end
+    end
+    object mniSearch: TMenuItem
+      Caption = 'Suchen'
+    end
+    object mniLists: TMenuItem
+      Caption = 'Listen'
+    end
+    object mniAncestors: TMenuItem
+      Caption = 'Vorfahren'
+    end
+    object mniDescendens: TMenuItem
+      Caption = 'Nachfahren'
+    end
+    object mniCalender: TMenuItem
+      Caption = 'Kalender'
+    end
+    object mniImages: TMenuItem
+      Caption = 'Bilder'
+    end
+    object mniChecks: TMenuItem
+      Caption = 'Datenprüfung'
+    end
+    object mniFilter: TMenuItem
+      Caption = 'Filter'
+    end
+    object mniInfo: TMenuItem
+      Caption = 'Info'
+    end
+    object mniBackup: TMenuItem
+      Caption = 'Sicherung'
+      object mniOpenFile: TMenuItem
+        Action = actFileOpen1
+      end
+      object mniSaveFile: TMenuItem
+        Caption = 'Sicherung schreiben'
+      end
+    end
+  end
+  object ActionList1: TActionList
+    left = 639
+    top = 230
+    object actDataSetFirst1: TDataSetFirst
+      Category = 'Database'
+      Caption = '&Erster'
+      Hint = 'Erster'
+      OnExecute = actDataSetFirst1Execute
+    end
+    object actDataSetPrior1: TDataSetPrior
+      Category = 'Database'
+      Caption = '&Vorgänger'
+      Hint = 'Vorgänger'
+      OnExecute = actDataSetPrior1Execute
+    end
+    object actDataSetNext1: TDataSetNext
+      Category = 'Database'
+      Caption = '&Nächster'
+      Hint = 'Nächster'
+      OnExecute = actDataSetNext1Execute
+    end
+    object actDataSetLast1: TDataSetLast
+      Category = 'Database'
+      Caption = '&Letzter'
+      Hint = 'Letzter'
+      OnExecute = actDataSetLast1Execute
+    end
+    object actFileOpen1: TFileOpen
+      Category = 'File'
+      Caption = 'Öffnen'
+      Hint = 'Öffnen'
+      ShortCut = 16463
+      OnAccept = actFileOpen1Accept
+    end
+    object actFileOpenWith1: TFileOpenWith
+      Category = 'File'
+      Caption = 'Öffnen mit ...'
+      Hint = 'Öffnen'
+    end
+    object actFileSaveAs1: TFileSaveAs
+      Category = 'File'
+      Caption = 'Sichern &als ...'
+      Hint = 'Sichern als'
+    end
+    object actFileExit1: TFileExit
+      Category = 'File'
+      Caption = '&Beenden'
+      Hint = 'Beenden'
+    end
+    object actFileNew: TAction
+      Category = 'File'
+      Caption = 'Neu ...'
+    end
+    object actFilePrintSetup: TAction
+      Category = 'File'
+      Caption = 'Druckereinrichtung'
+    end
+    object actFilePrint: TAction
+      Category = 'File'
+      Caption = 'Drucken ...'
+    end
+    object actLoadGedcom: TAction
+      Category = 'Dataexchange'
+      Caption = 'GedCom - Datei einlesen'
+    end
+    object actSaveGedCom: TAction
+      Category = 'Dataexchange'
+      Caption = 'actSaveGedCom'
+    end
+    object Action6: TAction
+      Category = 'Dataexchange'
+      Caption = 'Action6'
+    end
+    object Action7: TAction
+      Category = 'Dataexchange'
+      Caption = 'Action7'
+    end
+    object actDataSetInsert1: TDataSetInsert
+      Category = 'Database'
+      Caption = 'E&infügen'
+      Hint = 'Einfügen'
+    end
+    object actDataSetDelete1: TDataSetDelete
+      Category = 'Database'
+      Caption = '&Löschen'
+      Hint = 'Löschen'
+    end
+    object SearchFind1: TSearchFind
+      Category = 'Search'
+      Caption = '&Suchen ...'
+      ShortCut = 16454
+    end
+    object SearchReplace1: TSearchReplace
+      Category = 'Search'
+      Caption = '&Ersetzen'
+      Dialog.Options = [frDown, frReplace, frReplaceAll, frHidePromptOnReplace]
+    end
+    object SearchFindFirst1: TSearchFindFirst
+      Category = 'Search'
+      Caption = 'Ersten suchen'
+    end
+    object SearchFindNext1: TSearchFindNext
+      Category = 'Search'
+      Caption = '&Nächsten suchen'
+      ShortCut = 114
+    end
+    object actFileSave1: TAction
+      Category = 'File'
+      Caption = 'Save'
+    end
+  end
+end

@@ -1,0 +1,22 @@
+object Frame1: TFrame1
+  Left = 0
+  Height = 558
+  Top = 0
+  Width = 799
+  ClientHeight = 558
+  ClientWidth = 799
+  ParentFont = False
+  TabOrder = 0
+  object StringGrid1: TStringGrid
+    Left = 0
+    Height = 558
+    Top = 0
+    Width = 799
+    Align = alClient
+    Options = [goFixedVertLine, goFixedHorzLine, goVertLine, goHorzLine, goRangeSelect, goEditing, goSmoothScroll]
+    ParentFont = False
+    TabOrder = 0
+    OnCellProcess = StringGrid1CellProcess
+    OnGetEditText = StringGrid1GetEditText
+  end
+end
