@@ -35,6 +35,6 @@ requires
   vcl;
 
 contains
-  PPRISMAMDELib_TLB in '..\PPRISMAMDELib_TLB.pas';
+  PPRISMAMDELib_TLB in '..\CSource\PPRISMAMDELib_TLB.pas';
 
 end.
