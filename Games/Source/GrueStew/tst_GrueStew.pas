@@ -68,6 +68,7 @@ begin
   lMax:=0;
   for i := 1 to 20 do
     begin
+      CheckEquals(i,FGrueStew.Room[i].ID,'Room['+inttostr(i)+'].ID');
       CheckNotEquals(0,FGrueStew.Room[i].Reachable,'Room['+inttostr(i)+'].reachable <> 0');
       if lMax<FGrueStew.Room[i].Reachable then
         lMax:=FGrueStew.Room[i].Reachable;
