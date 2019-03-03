@@ -1715,28 +1715,31 @@ Var
   i, cnt: integer;
   rr: String;
   fl: Integer;
-  sep: TSeparators;
+  iSep: TSeparators;
+  sep: array of TSeparators;
   tSect,tRest: String;
 
 Begin
   cnt :=0;
-  for sep in seps do
-    cnt := cnt+ CountSeparators(line, sep);
+  for iSep in seps do
+    cnt := cnt+ CountSeparators(line, iSep);
   If cnt > 0 Then
     Begin
       SetLength(avar, cnt + 1);
+      setlength(sep,cnt +1);
       rest := line;
       For i := 0 To cnt Do
         Begin
           fl:=-1;
           sect := '';
-          for sep in seps do
+          for iSep in seps do
             begin
               rr:='';//Workaround
-              testLinesep(rest, sep, tSect, rr);
+              testLinesep(rest, iSep, tSect, rr);
               if (fl =-1) or (length(tSect)<fl) then
                 begin
                   sect := tSect;
+                  sep[i] := iSep;
                   tRest := rr;
                   fl := length(tSect);
                 end;
@@ -1760,11 +1763,13 @@ Begin
           if avar[i]<>'' then
             begin
               avar[cnt] := avar[i];
+              sep[cnt] := sep[i];
               inc(cnt)
             end;
           inc(i);
         end;
       setlength(avar,cnt);
+      setlength(sep,cnt);
     end;
   If KeepQuote And (cnt > 1) Then
     Begin
@@ -1797,7 +1802,7 @@ Begin
             Else If copy(avar[i], length(avar[i]) - 2, 1) = rest Then
               rest := '';
 
-            avar[cnt - 1] := avar[cnt - 1] + LineSeparators[sep, 0] + avar[i];
+            avar[cnt - 1] := avar[cnt - 1] + LineSeparators[sep[cnt-1], 0] + avar[i];
           End;
       SetLength(avar, cnt);
     End;

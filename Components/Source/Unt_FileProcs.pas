@@ -25,7 +25,6 @@ Uses
   // Stringprocs,
   classes,
   SysUtils,
-
   //     filectrl,
   registry,
   Unt_LinList;
@@ -43,7 +42,7 @@ Type
   TStringArray = SysUtils.TStringArray;
   {$ELSE}
   TStringArray = array of string;
-  {$ENDIF}
+  {$IFEND}
 {$endif ~SUPPORTS_GENERICS}
 
   ///<author>Joe Care</author>
@@ -68,6 +67,7 @@ Type
   ///  <version>1.00.02</version>
     FInfoProc: TFileInfo;
   End;
+
 
 Type
   ///<author>Joe Care</author>
@@ -187,7 +187,7 @@ Var
   dbg: TGetInfo;
 
 const
-   DirSep = {$IFNDEF FPC} '\'{$else ~FPC}DirectorySeparator{$endIF ~FPC};
+   DirSep = {$IFNDEF FPC} PathDelim{$else ~FPC}DirectorySeparator{$endIF ~FPC};
 
 resourcestring
   rsAllFilesFilter = 'Alle Dateien (*.*)|*.*';
@@ -737,7 +737,7 @@ Begin
 End;
 
 function CleanPath(path: String): String;
-const BackPath =DirectorySeparator+'..';
+const BackPath =DirSep+'..';
 var
   pp: Integer;
 begin
