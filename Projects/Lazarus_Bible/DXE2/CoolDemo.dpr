@@ -10,6 +10,6 @@ uses
 begin
   Application.Initialize;
   Application.Title := 'Demo: CoolDemo';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmCoolDemoMain, frmCoolDemoMain);
   Application.Run;
 end.
