@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
+    <Units Count="6">
+      <Unit0>
+        <Filename Value="Prj_Image2Text.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="156"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\Source\Image2Text\frm_Image2TextMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmImage2TextMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="41" Y="11"/>
+        <UsageCount Value="156"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\..\..\Components\Source\RichMemoFrame\RichMemoFrame.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="RTFEditFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+        <EditorIndex Value="1"/>
+        <TopLine Value="51"/>
+        <CursorPos X="74" Y="54"/>
+        <UsageCount Value="155"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\..\..\Delphi_Bible\source\OleCont\Frm_OleContMain.pas"/>
+        <HasResources Value="True"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="20" Y="21"/>
+        <UsageCount Value="76"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\Delphi_Bible\source\PRNINFO\Frm_PrnInfoMAIN.PAS"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="2" Y="49"/>
+        <UsageCount Value="76"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\Source\WinAhnenCls\cls_HejMarrData.pas"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="332"/>
+        <CursorPos X="37" Y="347"/>
+        <UsageCount Value="70"/>
+        <Loaded Value="True"/>
+      </Unit5>
+    </Units>
+    <JumpHistory Count="10" HistoryIndex="9">
+      <Position1>
+        <Filename Value="..\Source\Image2Text\frm_Image2TextMain.pas"/>
+        <Caret Line="50" Column="45"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\Source\Image2Text\frm_Image2TextMain.pas"/>
+        <Caret Line="36" Column="45"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\Source\Image2Text\frm_Image2TextMain.pas"/>
+        <Caret Line="11" Column="41"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\..\..\Components\Source\RichMemoFrame\RichMemoFrame.pas"/>
+        <Caret Line="54" Column="74" TopLine="51"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\..\..\Delphi_Bible\source\OleCont\Frm_OleContMain.pas"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\..\..\Delphi_Bible\source\OleCont\Frm_OleContMain.pas"/>
+        <Caret Line="21" Column="20"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\..\..\Delphi_Bible\source\PRNINFO\Frm_PrnInfoMAIN.PAS"/>
+        <Caret Line="44" Column="11"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\..\..\Delphi_Bible\source\PRNINFO\Frm_PrnInfoMAIN.PAS"/>
+        <Caret Line="49" Column="2"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\Source\WinAhnenCls\cls_HejMarrData.pas"/>
+        <Caret Line="139" Column="18" TopLine="96"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\Source\WinAhnenCls\cls_HejMarrData.pas"/>
+        <Caret Line="347" Column="37" TopLine="332"/>
+      </Position10>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
+  </ProjectSession>
+</CONFIG>
