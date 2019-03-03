@@ -6,6 +6,33 @@
 			<Projects Include="DXE2\Sokoban.dproj">
 				<Dependencies/>
 			</Projects>
+			<Projects Include="DXE2\prj_SokoLevelConvert.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\fpcTestAsteroidsTypes.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Asteroids.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\WinCub.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\fpcTestGrueStew.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\GrueStew.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\prj_GrueStew.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\RunAround.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\TETRIS.dproj">
+				<Dependencies/>
+			</Projects>
 		</ItemGroup>
 		<ProjectExtensions>
 			<Borland.Personality>Default.Personality.12</Borland.Personality>
@@ -23,14 +50,95 @@
 		<Target Name="Sokoban:Make">
 			<MSBuild Projects="DXE2\Sokoban.dproj" Targets="Make"/>
 		</Target>
+		<Target Name="prj_SokoLevelConvert">
+			<MSBuild Projects="DXE2\prj_SokoLevelConvert.dproj"/>
+		</Target>
+		<Target Name="prj_SokoLevelConvert:Clean">
+			<MSBuild Projects="DXE2\prj_SokoLevelConvert.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="prj_SokoLevelConvert:Make">
+			<MSBuild Projects="DXE2\prj_SokoLevelConvert.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="fpcTestAsteroidsTypes">
+			<MSBuild Projects="DXE2\fpcTestAsteroidsTypes.dproj"/>
+		</Target>
+		<Target Name="fpcTestAsteroidsTypes:Clean">
+			<MSBuild Projects="DXE2\fpcTestAsteroidsTypes.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestAsteroidsTypes:Make">
+			<MSBuild Projects="DXE2\fpcTestAsteroidsTypes.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Asteroids">
+			<MSBuild Projects="DXE2\Asteroids.dproj"/>
+		</Target>
+		<Target Name="Asteroids:Clean">
+			<MSBuild Projects="DXE2\Asteroids.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Asteroids:Make">
+			<MSBuild Projects="DXE2\Asteroids.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="WinCub">
+			<MSBuild Projects="DXE2\WinCub.dproj"/>
+		</Target>
+		<Target Name="WinCub:Clean">
+			<MSBuild Projects="DXE2\WinCub.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="WinCub:Make">
+			<MSBuild Projects="DXE2\WinCub.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="fpcTestGrueStew">
+			<MSBuild Projects="DXE2\fpcTestGrueStew.dproj"/>
+		</Target>
+		<Target Name="fpcTestGrueStew:Clean">
+			<MSBuild Projects="DXE2\fpcTestGrueStew.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="fpcTestGrueStew:Make">
+			<MSBuild Projects="DXE2\fpcTestGrueStew.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="GrueStew">
+			<MSBuild Projects="DXE2\GrueStew.dproj"/>
+		</Target>
+		<Target Name="GrueStew:Clean">
+			<MSBuild Projects="DXE2\GrueStew.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="GrueStew:Make">
+			<MSBuild Projects="DXE2\GrueStew.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="prj_GrueStew">
+			<MSBuild Projects="DXE2\prj_GrueStew.dproj"/>
+		</Target>
+		<Target Name="prj_GrueStew:Clean">
+			<MSBuild Projects="DXE2\prj_GrueStew.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="prj_GrueStew:Make">
+			<MSBuild Projects="DXE2\prj_GrueStew.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="RunAround">
+			<MSBuild Projects="DXE2\RunAround.dproj"/>
+		</Target>
+		<Target Name="RunAround:Clean">
+			<MSBuild Projects="DXE2\RunAround.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="RunAround:Make">
+			<MSBuild Projects="DXE2\RunAround.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="TETRIS">
+			<MSBuild Projects="DXE2\TETRIS.dproj"/>
+		</Target>
+		<Target Name="TETRIS:Clean">
+			<MSBuild Projects="DXE2\TETRIS.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="TETRIS:Make">
+			<MSBuild Projects="DXE2\TETRIS.dproj" Targets="Make"/>
+		</Target>
 		<Target Name="Build">
-			<CallTarget Targets="Sokoban"/>
+			<CallTarget Targets="Sokoban;prj_SokoLevelConvert;fpcTestAsteroidsTypes;Asteroids;WinCub;fpcTestGrueStew;GrueStew;prj_GrueStew;RunAround;TETRIS"/>
 		</Target>
 		<Target Name="Clean">
-			<CallTarget Targets="Sokoban:Clean"/>
+			<CallTarget Targets="Sokoban:Clean;prj_SokoLevelConvert:Clean;fpcTestAsteroidsTypes:Clean;Asteroids:Clean;WinCub:Clean;fpcTestGrueStew:Clean;GrueStew:Clean;prj_GrueStew:Clean;RunAround:Clean;TETRIS:Clean"/>
 		</Target>
 		<Target Name="Make">
-			<CallTarget Targets="Sokoban:Make"/>
+			<CallTarget Targets="Sokoban:Make;prj_SokoLevelConvert:Make;fpcTestAsteroidsTypes:Make;Asteroids:Make;WinCub:Make;fpcTestGrueStew:Make;GrueStew:Make;prj_GrueStew:Make;RunAround:Make;TETRIS:Make"/>
 		</Target>
 		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
 	</Project>
