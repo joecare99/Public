@@ -32,6 +32,12 @@
 			<CfgParent>Base</CfgParent>
 			<Base>true</Base>
 		</PropertyGroup>
+		<PropertyGroup Condition="('$(Platform)'=='Win32' and '$(Cfg_1)'=='true') or '$(Cfg_1_Win32)'!=''">
+			<Cfg_1_Win32>true</Cfg_1_Win32>
+			<CfgParent>Cfg_1</CfgParent>
+			<Cfg_1>true</Cfg_1>
+			<Base>true</Base>
+		</PropertyGroup>
 		<PropertyGroup Condition="'$(Config)'=='Debug' or '$(Cfg_2)'!=''">
 			<Cfg_2>true</Cfg_2>
 			<CfgParent>Base</CfgParent>
@@ -43,13 +49,12 @@
 			<Cfg_2>true</Cfg_2>
 			<Base>true</Base>
 		</PropertyGroup>
+		<Import Condition="'$(Base)'!='' And Exists('default.optset')" Project="default.optset"/>
 		<PropertyGroup Condition="'$(Base)'!=''">
 			<VerInfo_IncludeVerInfo>true</VerInfo_IncludeVerInfo>
 			<VerInfo_Keys>CompanyName=;FileDescription=Demo: Add Page;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
 			<OutputExt>EXE</OutputExt>
 			<Manifest_File>None</Manifest_File>
-			<DCC_ExeOutput>..\bin\$(platform)</DCC_ExeOutput>
-			<DCC_UnitSearchPath>..\source\include;$(DCC_UnitSearchPath)</DCC_UnitSearchPath>
 			<VerInfo_Build>6</VerInfo_Build>
 			<VerInfo_AutoGenVersion>true</VerInfo_AutoGenVersion>
 			<DCC_Namespace>Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;System;Xml;Data;Datasnap;Web;Soap;Winapi;$(DCC_Namespace)</DCC_Namespace>
@@ -66,6 +71,7 @@
 			<DCC_S>false</DCC_S>
 			<DCC_N>false</DCC_N>
 			<DCC_K>false</DCC_K>
+			<CfgDependentOn>default.optset</CfgDependentOn>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Base_Win64)'!=''">
 			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.0;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
@@ -74,14 +80,12 @@
 			<Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
 			<Icon_MainIcon>Addpage_Icon.ico</Icon_MainIcon>
 		</PropertyGroup>
+		<Import Condition="'$(Base_Win32)'!='' And Exists('win32.optset')" Project="win32.optset"/>
 		<PropertyGroup Condition="'$(Base_Win32)'!=''">
-			<DCC_ExeOutput>..\bin\</DCC_ExeOutput>
 			<Icon_MainIcon>Addpage_Icon.ico</Icon_MainIcon>
 			<DCC_Namespace>System.Win;Data.Win;Datasnap.Win;Web.Win;Soap.Win;Xml.Win;Bde;$(DCC_Namespace)</DCC_Namespace>
 			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.6;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
-			<DCC_DcuOutput>..\bin\units_xe2</DCC_DcuOutput>
-			<VerInfo_Locale>1033</VerInfo_Locale>
-			<Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
+			<CfgDependentOn>win32.optset</CfgDependentOn>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_1)'!=''">
 			<DCC_DependencyCheckOutputName>..\..\bin\Addpage.exe</DCC_DependencyCheckOutputName>
@@ -92,6 +96,12 @@
 			<DCC_ObjOutput>..\..\bin\units</DCC_ObjOutput>
 			<DCC_HppOutput>..\..\bin\units</DCC_HppOutput>
 			<DCC_Define>RELEASE;$(DCC_Define)</DCC_Define>
+		</PropertyGroup>
+		<PropertyGroup Condition="'$(Cfg_1_Win32)'!=''">
+			<VerInfo_Keys>CompanyName=;FileDescription=;FileVersion=1.0.0.6;InternalName=;LegalCopyright=;LegalTrademarks=;OriginalFilename=;ProductName=;ProductVersion=1.0.0.0;Comments=</VerInfo_Keys>
+			<Icon_MainIcon>Addpage_Icon.ico</Icon_MainIcon>
+			<VerInfo_Locale>1033</VerInfo_Locale>
+			<Manifest_File>$(BDS)\bin\default_app.manifest</Manifest_File>
 		</PropertyGroup>
 		<PropertyGroup Condition="'$(Cfg_2)'!=''">
 			<DCC_DependencyCheckOutputName>..\..\bin\Addpage.exe</DCC_DependencyCheckOutputName>
@@ -108,12 +118,16 @@
 			<DelphiCompile Include="$(MainSource)">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
+			<DCCReference Include="..\source\Addpage\Frm_AddpageMAIN.PAS">
+				<Form>frmAddPageMain</Form>
+			</DCCReference>
 			<BuildConfiguration Include="Debug">
 				<Key>Cfg_2</Key>
 				<CfgParent>Base</CfgParent>
 			</BuildConfiguration>
 			<BuildConfiguration Include="Base">
 				<Key>Base</Key>
+				<DependentOn>default.optset</DependentOn>
 			</BuildConfiguration>
 			<BuildConfiguration Include="Release">
 				<Key>Cfg_1</Key>

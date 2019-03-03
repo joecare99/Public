@@ -1,11 +1,13 @@
 unit tst_AddPage;
 
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+{$mode delphi}{$H+}
+{$EndIF}
 
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry, Frm_AddpageMAIN;
+  Classes, SysUtils, {$IFNDEF FPC}TestFramework, {$Else} fpcunit, testutils, testregistry, {$endif} Frm_AddpageMAIN;
 
 type
 
@@ -78,10 +80,14 @@ procedure TTestAddPage.TestForm;
 begin
 CheckFalse(frmAddPageMain.Visible, 'MainForm is not visible at the moment');
 frmAddPageMain.Show;
+{$IFDEF FPC}
 Application.OnUserInput:=@AppUserInput;
+{$ENDIF}
 while frmAddPageMain.Visible do
 begin
+{$IFDEF FPC}
       Application.Idle(false);
+{$ENDIF}
       Application.ProcessMessages;
       inc(fIdleCnt);
       sleep(10);
@@ -162,7 +168,9 @@ Application.ProcessMessages;
 sleep(100);
 CheckEquals(2,frmAddPageMain.TabbedNotebook1.PageCount,'PageCount := 2');
 CheckEquals('Page 0',frmAddPageMain.TabbedNotebook1.ActivePage.Caption,'ActivePage := Page 0');
-CheckEquals('',frmAddPageMain.ActiveControl.Caption,'ActiveControl := Page 0');
+{$IFDEF FPC}
+  CheckEquals('',frmAddPageMain.ActiveControl.Caption,'ActiveControl := Page 0');
+{$ENDIF}
 frmAddPageMain.AddPageButtonClick(frmAddPageMain.AddControlButton);
 Application.ProcessMessages;
 sleep(100);
@@ -176,7 +184,9 @@ Application.ProcessMessages;
 sleep(100);
 CheckEquals(3,frmAddPageMain.TabbedNotebook1.PageCount,'PageCount := 3');
 CheckEquals('Page 1',frmAddPageMain.TabbedNotebook1.ActivePage.Caption,'ActivePage := Page 1');
-CheckEquals('',frmAddPageMain.ActiveControl.Caption,'ActiveControl := Page 0');
+{$IFDEF FPC}
+  CheckEquals('',frmAddPageMain.ActiveControl.Caption,'ActiveControl := Page 0');
+{$ENDIF}
 frmAddPageMain.AddPageButtonClick(frmAddPageMain.AddPageButton);
 Application.ProcessMessages;
 sleep(100);
@@ -210,6 +220,6 @@ end;
 
 initialization
 
-  RegisterTest(TTestAddPage);
+  RegisterTest(TTestAddPage{$IFNDEF FPC}.Suite{$endif});
 end.
 
