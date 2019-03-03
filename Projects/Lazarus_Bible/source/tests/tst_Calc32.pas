@@ -1,11 +1,14 @@
 unit tst_Calc32;
 
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+{$mode delphi}{$H+}
+{$EndIF}
 
 interface
 
 uses
-  Classes, SysUtils, Controls, fpcunit, testutils, testregistry;
+  Classes, SysUtils, Controls, {$IFNDEF FPC}TestFramework {$ELSE} fpcunit,
+  testutils, testregistry {$ENDIF};
 
 type
 
@@ -1191,6 +1194,6 @@ end;
 
 initialization
 
-  RegisterTest(TTestCalc32);
+  RegisterTest(TTestCalc32{$IFNDEF FPC}.Suite{$ENDIF});
 end.
 

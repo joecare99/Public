@@ -3,7 +3,7 @@ object frmCalc64Main: TfrmCalc64Main
   Top = 100
   ActiveControl = BitBtn1
   Caption = 'Calculator 64'
-  ClientHeight = 578
+  ClientHeight = 599
   ClientWidth = 720
   Color = clBtnFace
   Font.Charset = DEFAULT_CHARSET
