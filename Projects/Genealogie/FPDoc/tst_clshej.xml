@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestClsHej"><module name="tst_ClsHej"><element name="TTestClsHej.CreateTestdata"><short>Erzeuge Test-Daten die genau der Care.hej entsprechen</short>
+      </element><element name="TTestClsHej.AppendTestdata"><short>Erweitere Testdaten um Spezialfälle</short>
+      </element><element name="TTestClsHej.CheckEqualsVar"><short>Prüfe Variants auf Gleichheit</short>
+      </element><element name="TTestClsHej.HejClassOnDataChange"><short>Notification-Event für Daten-Änderung</short>
+      </element><element name="TTestClsHej.HejClassOnStateChange"><short>Notification-Event für State-Änderung</short>
+      </element><element name="TTestClsHej.HejClassOnUpdate"><short>Notification-Event für DatenSatz-Wechsel</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

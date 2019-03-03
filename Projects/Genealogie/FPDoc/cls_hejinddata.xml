@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestClsHej"><module name="cls_HejIndData"><element name="TEnumHejIndDatafields"><short>Enumeration der Datenfelder von T</short>
+      </element><element name="CHejIndDataDesc"><short>Beschreibung der Datenfelder von THeyInd</short>
+      </element><element name="CIndSourceData"><short>Zusammenfassug der Felder die eine Quelle enthalten</short>
+      </element><element name="CIndPlacedata"><short>Zusammenfassug der Felder, die Orte Enthalten</short>
+      </element><element name="CIndDatedata"><short>Zusammenfassung der Felder, die ein Datum enthalten</short>
+      </element><element name="TClsHejIndividuals"><short>Klasse der Individuen</short>
+      </element><element name="TClsHejIndividuals.GetCount" link="#fpcTestClsHej.cls_HejBase.TClsHejBase.GetCount"><short>Ermittelt die Anzahl der Elemente (hier Individuen)</short>
+      </element><element name="TClsHejIndividuals.AppendLinkChild"><short>Fügt eine Kind-Beziehung in das Kinder-Array ein</short>
+      </element><element name="TClsHejIndividuals.SetData"><short>Setzt/Verändert Daten in Individuen</short>
+      </element><element name="TClsHejIndividuals.GetDateData"><short>Ermittelt (Einzel-)Daten von Individuen</short>
+      </element><element name="TClsHejIndividuals.Individual"><short>Zugriffs-Eigenschaft auf Individuen (löst Datensatzwechsel aus)</short>
+      </element><element name="TClsHejIndividuals.PeekInd"><short>Zugriffs-Eigenschaft (ohne DS-Wechsel)</short>
+      </element><element name="TClsHejIndividuals.ActualInd"><short>Eigenschaft: Aktuelles Individuum</short>
+      </element><element name="TClsHejIndividuals.ActualChild"><short>Eigenschaft: Kind des aktuellen Individuums</short>
+      </element><element name="TClsHejIndividuals.ActualChildCount"><short>Eigenschaft: Anzahl der Kinder des aktuellen Individuums</short>
+      </element><element name="TClsHejIndividuals.ActualMarriage"><short>Eigenschaft: Partnerschaften des aktuellen Individuums</short>
+      </element><element name="TClsHejIndividuals.ActualMarriageCount"><short>Eigenschaft: Anzahl der Partnerschaften des aktuellen Individuums</short>
+      </element><element name="TClsHejIndividuals.Data"><short>EIgenschaft: Daten der Individuen</short>
+      </element><element name="TClsHejIndividuals.TestStreamHeader" link="#fpcTestClsHej.cls_HejBase.TClsHejBase.TestStreamHeader"><short>Prüfe Stream auf einen Header (hier ! kein Header)</short>
+      </element><element name="TClsHejIndividuals.Clear" link="#fpcTestClsHej.cls_HejBase.TClsHejBase.Clear"><short>Alles zurücksetzen/bereinigen</short>
+      </element><element name="TClsHejIndividuals.ReadfromStream" link="#fpcTestClsHej.cls_HejBase.TClsHejBase.ReadfromStream"><short>Lese (alle) Datensätze vom Stream (hier Individuen)</short>
+      </element><element name="TClsHejIndividuals.WriteToStream" link="#fpcTestClsHej.cls_HejBase.TClsHejBase.WriteToStream"><short>Schreibe Datensätze auf den Stream (hier Individuen)</short>
+      </element><element name="TClsHejIndividuals.ReadFromDataset" link="#fpcTestClsHej.cls_HejBase.TClsHejBase.ReadFromDataset"><short>Erzeuge Daten aus einem Dataset</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

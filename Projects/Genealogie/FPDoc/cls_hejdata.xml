@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestClsHej"><module name="cls_HejData"><element name="TEnumHejIndRedir"><short>Enumeration aller definierten Weiterleitungen</short>
+      </element><element name="TEnumHejIndRedir.hIRd_Meta"><short>(Dummy-) weiterleitung zu Meta-Daten</short>
+      </element><element name="TEnumHejIndRedir.hIRd_Ind"><short>Default Redir zur Hauptperson</short>
+      </element><element name="TEnumHejIndRedir.hIRd_Spouse"><short>Weiterleitung zum (Ehe-)partner</short>
+      </element><element name="TEnumHejIndRedir.hIRd_AllSpouse"><short>Zusammenfassung aller (Ehe-)Partner</short>
+      </element><element name="TEnumHejIndRedir.hIRd_AnySpouse"><short>Zusammenfassung aller (Ehe-)Partner</short>
+      </element><element name="TEnumHejIndRedir.hIRd_Father"><short>Weiterleitung zum Vater</short>
+      </element><element name="TEnumHejIndRedir.hIRd_Mother"><short>Weiterleitung zur Mutter</short>
+      </element><element name="TEnumHejIndRedir.hIRd_AnyParent"><short>Zusammenfassung aller Eltern</short>
+      </element><element name="TEnumHejIndRedir.hIRd_AllParent"><short>Zusammenfassung aller Eltern</short>
+      </element><element name="TEnumHejIndRedir.hIRd_Child"><short>Weiterleitung zum Kind</short>
+      </element><element name="TEnumHejIndRedir.hIRd_AnyChild"><short>Zusammenfassung aller Kinder</short>
+      </element><element name="TEnumHejIndRedir.hIRd_AllChild"><short>Zusammenfassung aller Kinder</short>
+      </element><element name="TenumIndMetaData"><short>Alle definierten MetaDaten</short>
+      </element><element name="TenumIndMetaData.hInMeD_ParentCount"><short>Anzahl der bekannten (angelegten) Eltern</short>
+      </element><element name="TenumIndMetaData.hInMeD_SpouseCount"><short>Anzahl der bekannten (angelegten) (Ehe-)Partner</short>
+      </element><element name="TenumIndMetaData.hInMeD_ChildCount"><short>Anzahl der bekannten (angelegten) Kinder</short>
+      </element><element name="TenumIndMetaData.hInMeD_SiblingCount"><short>Anzahl der bekannten (angelegten) Geschwister</short>
+      </element><element name="TenumIndMetaData.hInMeD_SourceCount"><short>Anzahl der verwendeten Quellen</short>
+      </element><element name="TenumIndMetaData.hInMeD_PlaceCount"><short>Anzahl der verwendeten Plätze</short>
+      </element><element name="TenumIndMetaData.hInMeD_AdoptCount"><short>Anzahl der Adoptionen</short>
+      </element><element name="TenumIndMetaData.hInMeD_AnyPlace"><short>Alle Plätze</short>
+      </element><element name="TenumIndMetaData.hInMeD_AnySource"><short>Alle Quellen</short>
+      </element><element name="TenumIndMetaData.hInMeD_AnyData"><short>Alle Informationen</short>
+      </element><element name="TenumIndMetaData.hInMeD_AgeOfBapt"><short>Alter bei der Taufe</short>
+      </element><element name="TenumIndMetaData.hInMeD_AgeOfNextSibl"><short>Altersdifferenz zum nächsten Geschwisterteil </short>
+      </element><element name="TenumIndMetaData.hInMeD_AgeOfConf"><short>Alter bei der Konfirmation</short>
+      </element><element name="TenumIndMetaData.hInMeD_AgeOfFMarriage"><short>Alter bei der Hochzeit</short>
+      </element><element name="TenumIndMetaData.hInMeD_AgeOfFirstChild"><short>Alter bei der Geburt des 1. Kindes</short>
+      </element><element name="TenumIndMetaData.hInMeD_AgeOfLMarriage"><short>Alter bei der letzten Hochzeit</short>
+      </element><element name="TenumIndMetaData.hInMeD_AgeOfLChild"><short>Alter bei der Geburt des letzten Kindes</short>
+      </element><element name="TenumIndMetaData.hInMeD_AgeOfDeath"><short>Gestorben im Alter von ...</short>
+      </element><element name="TenumIndMetaData.hInMeD_AgeDiffToSpouse"><short>Altersunterschied zu (Ehe-)Partner</short>
+      </element><element name="TClsHejGenealogy"><short>Genealogie-Klasse</short>
+      </element><element name="TClsHejGenealogy.FIndi"><short>Verwaltungsobjekt aller Individuen</short>
+      </element><element name="TClsHejGenealogy.FMarr"><short>Verwaltungsobjekt aller Hochzeiten/Partner</short>
+      </element><element name="TClsHejGenealogy.FAdop"><short>Verwaltungsobjekt aller Adoptionen</short>
+      </element><element name="TClsHejGenealogy.FOnDataChange"><short>Benachrichtigung bei Datenänderung</short>
+      </element><element name="TClsHejGenealogy.FPlac"><short>Verwaltungsobjekt aller Plätze</short>
+      </element><element name="TClsHejGenealogy.FSour"><short>Verwaltungsobjekt aller Quellen</short>
+      </element><element name="TClsHejGenealogy.FOnStateChange"><short>Benachrichtigung bei Zustandsänderung</short>
+      </element><element name="TClsHejGenealogy.FOnUpdate"><short>Benachrichtigung bei Datensatzwechsel</short>
+      </element><element name="TClsHejGenealogy.GetActualInd"><short>Ermittelt die Aktuelle ID</short>
+      </element><element name="TClsHejGenealogy.GetActualMarriage"><short>Ermittelt aktuelle Hochzeit</short>
+      </element><element name="TClsHejGenealogy.GetChild"><short>Ermittelt ein Kind</short>
+      </element><element name="TClsHejGenealogy.GetChildCount"><short>Ermittelt Anzahl der leiblichen Kinder</short>
+      </element><element name="TClsHejGenealogy.GetFather"><short>Datensatz des Vaters</short>
+      </element><element name="TClsHejGenealogy.GetMother"><short>Datensatz der Mutter</short>
+      </element><element name="TClsHejGenealogy.GetIndividual"><short>Ermittelt und geht zu einer Person</short>
+      </element><element name="TClsHejGenealogy.GetIndividualCount"><short>Ermittelt anzahl der Personen</short>
+      </element><element name="TClsHejGenealogy.GetMarriageData"><short>Liefert Datensatz einer Hochzeit der aktuellen Person</short>
+      </element><element name="TClsHejGenealogy.GetMarriagesCount"><short>Anzahl der Hochzeiten der aktuellen Person</short>
+      </element><element name="TClsHejGenealogy.GetPlaceCount"><short>Anzahl der Plätze</short>
+      </element><element name="TClsHejGenealogy.GetSourceCount"><short>Anzahl der Quellen</short>
+      </element><element name="TClsHejGenealogy.GetSpouse"><short>Liefert Datensatz des (Ehe-)Partners</short>
+      </element>
+    <element name="TClsHejGenealogy.TestStreamHeader" link="#fpcTestClsHej.cls_HejBase.TClsHejBase.TestStreamHeader"><short>Prüfe Stream auf einen Header (hier Übergabe an TIndCls)</short>
+      </element><element name="TClsHejGenealogy.IndexOf" link="#fpcTestClsHej.cls_HejBase.TClsHejBase.IndexOf"><short>Liefert den Index eines Datensatz (hier Übergabe an TIndCls)</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
