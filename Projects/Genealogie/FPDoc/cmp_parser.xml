@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Prj_TstHTMLParser2"><module name="Cmp_Parser"><element name="TBaseParser"><short>Parser - Grundkomponente</short>
+      </element><short>Unit mit Parser-Componente inc. HTML-Parser</short><element name="TBaseParser.LineNo"><short>Aktuell geparste Zeile</short>
+      </element><element name="TBaseParser.Offset"><short>Aktueller Offset </short>
+      </element><element name="TBaseParser.FData"><short>Zu parsende Daten</short>
+      </element><element name="TBaseParser.Init"><short>Kontruktor</short>
+      </element><element name="TBaseParser.Done"><short>Destruktor</short>
+      </element><element name="THTMLParseMode"><short>Mögliche Parse-Modes für HTML-Parser</short>
+      </element><element name="TTextNotification"><short>Deklaration des On Text-Delegates</short>
+      </element><element name="ThtmlParser"><short>HTML-Parser (von BaseParser abgeleitet)</short>
+      </element><element name="ThtmlParser.Feed"><short>Die Feed-Methode führt die eigentliche Parse-Arbeit durch</short>
+      </element><element name="TBaseParser.reset"><short>Reset setzt den Parse-Zeiger wieder auf den Anfang</short>
+      </element><element name="TBaseParser.Feed"><short>Abstrakte Feed Methode </short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
