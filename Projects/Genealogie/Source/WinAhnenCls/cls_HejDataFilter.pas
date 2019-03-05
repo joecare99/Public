@@ -17,31 +17,29 @@ type
       hCcT_xor2 = 4); // xor (..)
 
   TEnumHejCompareType=
-    ( hCmp_Equal = 0,
-      hCmp_UnEqual = 1,
-      hCmp_Less = 2,
-      hCmp_LessOEqual = 3,
-      hCmp_GreaterOEqual = 4,
-      hCmp_Greater = 5,
-      hCmp_Startswith = 6,
-      hCmp_Endswith = 7,
-      hCmp_Contains = 8,
-      hCmp_IsEmpty = 9,
-      hCmp_IsNotEmpty = 10);
-
-
-
-
-
-
+    ( hCmp_Nop = 0, // always false
+      hCmp_Equal = 1,
+      hCmp_UnEqual = 2,
+      hCmp_Less = 3,
+      hCmp_LessOEqual = 4,
+      hCmp_GreaterOEqual = 5,
+      hCmp_Greater = 6,
+      hCmp_Startswith = 7,
+      hCmp_Endswith = 8,
+      hCmp_Contains = 9,
+      hCmp_IsEmpty = 10,
+      hCmp_IsNotEmpty =11);
 
   { TFilterRule }
 
   TFilterRule=record
-
     Function toString:String;
     Function toPasStruct:String;
-
+    Procedure Init(aDataField:Integer;
+    aIndRedir:TEnumHejIndRedir;
+    aCompType:TEnumHejCompareType;
+    aCompValue:variant);
+    Procedure Clear;
     Function Eval(Ind:integer;ActGen:TClsHejGenealogy):boolean;
   public
     // Datenfelder
@@ -62,7 +60,8 @@ const
 
 
    CCompType:array[TEnumHejCompareType] of string=
-   ( 'hCmp_Equal',
+   ( 'hCmp_Nop',
+     'hCmp_Equal',
      'hCmp_UnEqual',
      'hCmp_Less',
      'hCmp_LessOEqual',
@@ -75,7 +74,8 @@ const
      'hCmp_IsNotEmpty');
 
     CCompTypeOp:array[TEnumHejCompareType] of string=
-   ( '= %s',
+   ( '? %s',
+     '= %s',
      '<> %s',
      '< %s',
      '<= %s',
@@ -108,6 +108,7 @@ const
     'AgeOfDeath',
     'AgeDiffToSpouse');
 
+const NoRule:TFilterRule=({%H-});
 
 implementation
 
@@ -139,11 +140,32 @@ begin
   result := result+';CompValue:'+QuotedStr(CompValue)+')';
 end;
 
+procedure TFilterRule.Init(aDataField: Integer; aIndRedir: TEnumHejIndRedir;
+  aCompType: TEnumHejCompareType; aCompValue: variant);
+begin
+  DataField:=aDataField;
+  IndRedir:=aIndRedir;
+  CompType:=aCompType;
+  CompValue:=aCompValue;
+end;
+
+procedure TFilterRule.Clear;
+begin
+  DataField:=0;
+  IndRedir:=hIRd_Ind;
+  CompType:=hCmp_Nop;
+  CompValue:=null;
+end;
+
 function TFilterRule.Eval(Ind: integer; ActGen: TClsHejGenealogy): boolean;
 var lData:variant;
 begin
-  lData := ActGen.GetData(Ind,IndRedir,DataField);
+  if CompType <> hCmp_Nop then
+  lData := ActGen.GetData(Ind,IndRedir,DataField)
+  else
+    lData := null;
   case CompType of
+    hCmp_nop: result := false;
     hCmp_Equal: result := lData = CompValue;
     hCmp_UnEqual: result := lData <> CompValue;
     hCmp_Less: result := lData < CompValue;
@@ -151,7 +173,7 @@ begin
     hCmp_GreaterOEqual: result := lData >= CompValue;
     hCmp_Greater: result := lData > CompValue;
     hCmp_Startswith: result := copy(lData ,1,length(CompValue))= CompValue;
-    hCmp_Endswith: result := RightStr(lData,length(CompValue))= CompValue;;
+    hCmp_Endswith: result := RightStr(lData,length(CompValue))= CompValue;
     hCmp_Contains: result := pos(lData ,CompValue)>0;
     hCmp_IsEmpty: result := lData = null;
     hCmp_IsNotEmpty: result := lData <> null;

@@ -110,7 +110,7 @@
         <PackageName Value="FCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="22">
+    <Units Count="23">
       <Unit0>
         <Filename Value="fpcTestClsHej.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -207,6 +207,10 @@
         <Filename Value="..\Source\WinAhnenCls\unt_MarrTestData.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit21>
+      <Unit22>
+        <Filename Value="..\Source\WinAhnenCls\tst_ClsHejFilter.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit22>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

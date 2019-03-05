@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestClsHej"><module name="cls_HejDataFilter"><element name="TFilterRule"><short>A single rule as part of a filter</short>
+      </element><element name="TFilterRule.toString"><short>common ToString Methode</short>
+      </element><element name="TFilterRule.toPasStruct"><short>Conversion to a Pascal-Structure</short>
+      </element><element name="TFilterRule.Init"><short>Init sets all Data except the Concat type</short>
+      </element><element name="TFilterRule.Eval"><short>Evalueates the Rule (with out the Concat-Info</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

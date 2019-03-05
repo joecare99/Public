@@ -123,6 +123,7 @@ type
     Procedure Next(Sender:TObject=nil);
     Procedure Previous(Sender:TObject=nil);
     Procedure Append(Sender:TObject=nil);
+    procedure AppendLinkChild(idInd, idChild: integer);
     Procedure AppendSpouse(Sender:TObject=nil);
     Procedure AppendParent(Knd:TEnumHejIndDatafields;Sender:TObject=nil);
     Procedure AppendAdoption(idAdopter:integer);
@@ -706,6 +707,11 @@ begin
      FOnUpdate(Self);
   if Assigned(FOnStateChange)  then
     FOnStateChange(Self);
+end;
+
+procedure TClsHejGenealogy.AppendLinkChild(idInd,idChild:integer);
+begin
+  FIndi.AppendLinkChild(idInd,idChild);
 end;
 
 procedure TClsHejGenealogy.AppendSpouse(Sender: TObject);
