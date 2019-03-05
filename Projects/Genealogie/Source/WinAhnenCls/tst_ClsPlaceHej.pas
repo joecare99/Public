@@ -47,14 +47,11 @@ type
 
 implementation
 
+uses unt_PlaceTestData;
+
 resourcestring
   DefDataDir = 'Data';
 
-const cTestPlace:array[0..4] of THejPlaceData = ((ID:0),
-(ID:1;PlaceName:'Hamburg';ZIPCode:'22609';State:'Germany';District:'';GOV:'';Country:'Hamburg';PolName:'';Parish:'';County:'Hamburg';ShortName:'';Longitude:'';Magnitude:'';MaidenheadLoc:''{%H-}),
-(ID:2;PlaceName:'Bremen';ZIPCode:'20000';State:'Germany';District:'';GOV:'';Country:'';PolName:'';Parish:'';County:'';ShortName:'';Longitude:'';Magnitude:'';MaidenheadLoc:''{%H-}),
-(ID:3;PlaceName:'München';ZIPCode:'30000';State:'Germany';District:'';GOV:'';Country:'';PolName:'';Parish:'';County:'';ShortName:'';Longitude:'';Magnitude:'';MaidenheadLoc:''{%H-}),
-(ID:4;PlaceName:'Berlin';ZIPCode:'80000';State:'Germany';District:'';GOV:'';Country:'';PolName:'';Parish:'';County:'';ShortName:'';Longitude:'';Magnitude:'';MaidenheadLoc:''{%H-}));
   { TTestClsPLaceHej }
 
     procedure TTestClsPlaceHej.SetUp;
@@ -79,7 +76,7 @@ const cTestPlace:array[0..4] of THejPlaceData = ((ID:0),
   var
      ls: THejPlaceData;
    begin
-     for ls in cTestPlace do
+     for ls in cPlace do
      FClsHejPlaces.SetPlace(ls);
   end;
 
@@ -258,13 +255,13 @@ var
    begin
      lStr:=TMemoryStream.Create;
      try
-       cTestPlace[0].WriteToStream(lStr);
+       cPlace[0].WriteToStream(lStr);
        CheckEquals(14,lStr.Position,'Stringposition is ');
-       cTestPlace[1].WriteToStream(lStr);
+       cPlace[8].WriteToStream(lStr);
        CheckEquals(61,lStr.Position,'Stringposition 2 is ');
-       cTestPlace[2].WriteToStream(lStr);
+       cPlace[9].WriteToStream(lStr);
        CheckEquals(93,lStr.Position,'Stringposition 3 is ');
-       cTestPlace[3].WriteToStream(lStr);
+       cPlace[10].WriteToStream(lStr);
        CheckEquals(126,lStr.Position,'Stringposition 4 is ');
      finally
        FreeAndNil(lStr);
@@ -274,11 +271,11 @@ var
           deleteFile(FDataDir + DirectorySeparator + 'Care_out.phej');
        lStr := TFileStream.Create(FDataDir + DirectorySeparator + 'Care_out.phej', fmCreate + fmOpenWrite);
          try
-           cTestPlace[0].WriteToStream(lStr);
-           cTestPlace[1].WriteToStream(lStr);
-           cTestPlace[2].WriteToStream(lStr);
-           cTestPlace[3].WriteToStream(lStr);
-           cTestPlace[4].WriteToStream(lStr);
+           cPlace[0].WriteToStream(lStr);
+           cPlace[8].WriteToStream(lStr);
+           cPlace[9].WriteToStream(lStr);
+           cPlace[10].WriteToStream(lStr);
+           cPlace[11].WriteToStream(lStr);
          finally
            FreeAndNil(lStr);
          end;
@@ -289,11 +286,11 @@ procedure TTestPlaceHej.TestToString;
 var
   lStr: TFileStream;
 begin
-  CheckEquals('',cTestPlace[0].toString,'cTestPlace[0].toString');
-  CheckEquals('Hamburg, Hamburg, Hamburg, Germany',cTestPlace[1].toString,'cTestPlace[1].toString');
-  CheckEquals('Bremen, Germany',cTestPlace[2].toString,'cTestPlace[2].toString');
-  CheckEquals('München, Germany',cTestPlace[3].toString,'cTestPlace[3].toString');
-  CheckEquals('Berlin, Germany',cTestPlace[4].toString,'cTestPlace[4].toString');
+  CheckEquals('',cPlace[0].toString,'cTestPlace[0].toString');
+  CheckEquals('Hamburg, Hamburg, Hamburg, Germany',cPlace[8].toString,'cPlace[8].toString');
+  CheckEquals('Bremen, Germany',cPlace[9].toString,'cPlace[9].toString');
+  CheckEquals('München, Germany',cPlace[10].toString,'cPlace[10].toString');
+  CheckEquals('Berlin, Germany',cPlace[11].toString,'cPlace[11].toString');
   Check(FileExists(FDataDir + DirectorySeparator + 'Care.hej'), 'Datei existiert');
     lStr := TFileStream.Create(FDataDir + DirectorySeparator + 'Care.hej', fmOpenRead);
       try
@@ -322,11 +319,11 @@ procedure TTestPlaceHej.TestToPasStruct;
 var
   lStr: TFileStream;
 begin
-  CheckEquals('(ID:0;PlaceName:'''';ZIPCode:'''';State:'''';District:'''';GOV:'''';Country:'''';PolName:'''';Parish:'''';County:'''';ShortName:'''';Longitude:'''';Magnitude:'''';MaidenheadLoc:''''{%H-})',cTestPlace[0].ToPasStruct,'cTestPlace[0].ToPasStruct');
-  CheckEquals('(ID:1;PlaceName:''Hamburg'';ZIPCode:''22609'';State:''Germany'';District:'''';GOV:'''';Country:''Hamburg'';PolName:'''';Parish:'''';County:''Hamburg'';ShortName:'''';Longitude:'''';Magnitude:'''';MaidenheadLoc:''''{%H-})',cTestPlace[1].ToPasStruct,'cTestPlace[1].ToPasStruct');
-  CheckEquals('(ID:2;PlaceName:''Bremen'';ZIPCode:''20000'';State:''Germany'';District:'''';GOV:'''';Country:'''';PolName:'''';Parish:'''';County:'''';ShortName:'''';Longitude:'''';Magnitude:'''';MaidenheadLoc:''''{%H-})',cTestPlace[2].ToPasStruct,'cTestPlace[2].ToPasStruct');
-  CheckEquals('(ID:3;PlaceName:''München'';ZIPCode:''30000'';State:''Germany'';District:'''';GOV:'''';Country:'''';PolName:'''';Parish:'''';County:'''';ShortName:'''';Longitude:'''';Magnitude:'''';MaidenheadLoc:''''{%H-})',cTestPlace[3].ToPasStruct,'cTestPlace[3].ToPasStruct');
-  CheckEquals('(ID:4;PlaceName:''Berlin'';ZIPCode:''80000'';State:''Germany'';District:'''';GOV:'''';Country:'''';PolName:'''';Parish:'''';County:'''';ShortName:'''';Longitude:'''';Magnitude:'''';MaidenheadLoc:''''{%H-})',cTestPlace[4].ToPasStruct,'cTestPlace[4].ToPasStruct');
+  CheckEquals('(ID:0;PlaceName:'''';ZIPCode:'''';State:'''';District:'''';GOV:'''';Country:'''';PolName:'''';Parish:'''';County:'''';ShortName:'''';Longitude:'''';Magnitude:'''';MaidenheadLoc:''''{%H-})',cPlace[0].ToPasStruct,'cTestPlace[0].ToPasStruct');
+  CheckEquals('(ID:8;PlaceName:''Hamburg'';ZIPCode:''22609'';State:''Germany'';District:'''';GOV:'''';Country:''Hamburg'';PolName:'''';Parish:'''';County:''Hamburg'';ShortName:'''';Longitude:'''';Magnitude:'''';MaidenheadLoc:''''{%H-})',cPlace[8].ToPasStruct,'cTestPlace[1].ToPasStruct');
+  CheckEquals('(ID:9;PlaceName:''Bremen'';ZIPCode:''20000'';State:''Germany'';District:'''';GOV:'''';Country:'''';PolName:'''';Parish:'''';County:'''';ShortName:'''';Longitude:'''';Magnitude:'''';MaidenheadLoc:''''{%H-})',cPlace[9].ToPasStruct,'cTestPlace[2].ToPasStruct');
+  CheckEquals('(ID:10;PlaceName:''München'';ZIPCode:''30000'';State:''Germany'';District:'''';GOV:'''';Country:'''';PolName:'''';Parish:'''';County:'''';ShortName:'''';Longitude:'''';Magnitude:'''';MaidenheadLoc:''''{%H-})',cPlace[10].ToPasStruct,'cTestPlace[3].ToPasStruct');
+  CheckEquals('(ID:11;PlaceName:''Berlin'';ZIPCode:''80000'';State:''Germany'';District:'''';GOV:'''';Country:'''';PolName:'''';Parish:'''';County:'''';ShortName:'''';Longitude:'''';Magnitude:'''';MaidenheadLoc:''''{%H-})',cPlace[11].ToPasStruct,'cTestPlace[4].ToPasStruct');
   Check(FileExists(FDataDir + DirectorySeparator + 'Care.hej'), 'Datei existiert');
     lStr := TFileStream.Create(FDataDir + DirectorySeparator + 'Care.hej', fmOpenRead);
       try

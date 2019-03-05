@@ -110,7 +110,7 @@
         <PackageName Value="FCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="23">
+    <Units Count="26">
       <Unit0>
         <Filename Value="fpcTestClsHej.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -189,7 +189,9 @@
       <Unit17>
         <Filename Value="..\Source\WinAhnenCls\fra_IndIndex.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="fraIndIndex"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
       </Unit17>
       <Unit18>
         <Filename Value="..\Source\WinAhnenCls\tst_fraIndIndex.pas"/>
@@ -211,6 +213,18 @@
         <Filename Value="..\Source\WinAhnenCls\tst_ClsHejFilter.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit22>
+      <Unit23>
+        <Filename Value="..\Source\WinAhnenCls\unt_PlaceTestData.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="..\Source\WinAhnenCls\unt_AdopTestData.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="..\Source\WinAhnenCls\unt_SourceTestData.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit25>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

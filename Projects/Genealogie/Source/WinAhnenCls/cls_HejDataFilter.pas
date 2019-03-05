@@ -50,6 +50,12 @@ type
     CompValue:variant;
   end;
 
+  TGenFilter=Class
+  private
+    FRules:array of TFilterRule;
+
+  end;
+
 const
    CConcat:array[TEnumHejConcType] of string=(
      'hCcT_Or',

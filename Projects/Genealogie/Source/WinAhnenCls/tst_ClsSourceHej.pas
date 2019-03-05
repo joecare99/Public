@@ -1,11 +1,14 @@
 unit tst_ClsSourceHej;
 
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+{$mode delphi}{$H+}
+{$ENDIF}
 
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testregistry, cls_HejSourceData;
+  Classes, SysUtils{$IFNDEF FPC},TestFramework {$Else} ,fpcunit, testutils,
+  testregistry {$endif}, cls_HejSourceData;
 
 type
 
@@ -49,14 +52,11 @@ type
 
 implementation
 
+uses unt_SourceTestData;
+
 resourcestring
   DefDataDir = 'Data';
 
-const cTestSour:array[0..4] of THejSourData = ((ID:0{%H-}),
-  (ID:1;Title:'Ancestry.com';Abk:'Anc.';Ereignisse:'divers';Von:'1500';Bis:'1930';Standort:'Salt Lake City, Utah, USA';Publ:'';Rep:'';Bem:'ggf. Anmeldung';Bestand:'';Med:'online'{%H-}),
-  (ID:2;Title:'Eigenes Wissen';Abk:'e.Ws.';Ereignisse:'diverse';Von:'1980';Bis:'2019';Standort:'BW.';Publ:'-';Rep:'Gehirn';Bem:'u.U. nicht objektiv';Bestand:'';Med:'verbal'{%H-}),
-  (ID:3;Title:'OSB Meißenheim';Abk:'OSB-Mh.';Ereignisse:'G,H,T';Von:'1560';Bis:'1969';Standort:'Meißenheim';Publ:'A. Köbele';Rep:'-';Bem:'';Bestand:'';Med:'Buch'{%H-}),
-  (ID:4;Title:'Test';Abk:'1';Ereignisse:'2';Von:'3';Bis:'4';Standort:'5';Publ:'6';Rep:'7';Bem:'8';Bestand:'9';Med:'10'{%H-}));
   { TTestClsSourceHej }
 
    procedure TTestClsSourceHej.SetUp;
@@ -81,7 +81,7 @@ const cTestSour:array[0..4] of THejSourData = ((ID:0{%H-}),
    var
      ls: THejSourData;
    begin
-     for ls in cTestSour do
+     for ls in cSource do
      FClsHejSources.SetSource(ls);
    end;
 
@@ -95,7 +95,7 @@ const cTestSour:array[0..4] of THejSourData = ((ID:0{%H-}),
    procedure TTestClsSourceHej.TestClear;
    begin
      CreateTestData;
-     CheckEquals(5,FClsHejSources.Count,'FClsHejSources.Count');
+     CheckEquals(17,FClsHejSources.Count,'FClsHejSources.Count');
      FClsHejSources.Clear;
      CheckEquals(0,FClsHejSources.Count,'FClsHejSources.Count = 0');
    end;
@@ -104,10 +104,10 @@ const cTestSour:array[0..4] of THejSourData = ((ID:0{%H-}),
    begin
      CreateTestData ;
       CheckEquals(0,FClsHejSources.IndexOf(''),'FClsHejSources.IndexOf('''')');
-      CheckEquals(1,FClsHejSources.IndexOf('Ancestry.com'),'FClsHejSources.IndexOf(''Ancestry.com'')');
-      CheckEquals(2,FClsHejSources.IndexOf('Eigenes Wissen'),'FClsHejSources.IndexOf(''Eigenes Wissen'')');
-      CheckEquals(3,FClsHejSources.IndexOf('OSB Meißenheim'),'FClsHejSources.IndexOf(''OSB Meißenheim'')');
-      CheckEquals(4,FClsHejSources.IndexOf('Test'),'FClsHejSources.IndexOf(''Test'')');
+      CheckEquals(13,FClsHejSources.IndexOf('Ancestry.com'),'FClsHejSources.IndexOf(''Ancestry.com'')');
+      CheckEquals(14,FClsHejSources.IndexOf('Eigenes Wissen'),'FClsHejSources.IndexOf(''Eigenes Wissen'')');
+      CheckEquals(15,FClsHejSources.IndexOf('OSB Meißenheim'),'FClsHejSources.IndexOf(''OSB Meißenheim'')');
+      CheckEquals(16,FClsHejSources.IndexOf('Test'),'FClsHejSources.IndexOf(''Test'')');
       CheckEquals(-1,FClsHejSources.IndexOf('Test2'),'FClsHejSources.IndexOf(''Test2'')');
    end;
 
@@ -305,13 +305,13 @@ var
    begin
      lStr:=TMemoryStream.Create;
      try
-       cTestSour[0].WriteToStream(lStr);
+       cSource[0].WriteToStream(lStr);
        CheckEquals(12,lStr.Position,'Stringposition is ');
-       cTestSour[1].WriteToStream(lStr);
+       cSource[13].WriteToStream(lStr);
        CheckEquals(99,lStr.Position,'Stringposition 2 is ');
-       cTestSour[2].WriteToStream(lStr);
+       cSource[14].WriteToStream(lStr);
        CheckEquals(180,lStr.Position,'Stringposition 3 is ');
-       cTestSour[3].WriteToStream(lStr);
+       cSource[15].WriteToStream(lStr);
        CheckEquals(250,lStr.Position,'Stringposition 4 is ');
      finally
        FreeAndNil(lStr);
@@ -321,11 +321,11 @@ var
           deleteFile(FDataDir + DirectorySeparator + 'Care_out.shej');
        lStr := TFileStream.Create(FDataDir + DirectorySeparator + 'Care_out.shej', fmCreate + fmOpenWrite);
          try
-           cTestSour[0].WriteToStream(lStr);
-           cTestSour[1].WriteToStream(lStr);
-           cTestSour[2].WriteToStream(lStr);
-           cTestSour[3].WriteToStream(lStr);
-           cTestSour[4].WriteToStream(lStr);
+           cSource[0].WriteToStream(lStr);
+           cSource[1].WriteToStream(lStr);
+           cSource[2].WriteToStream(lStr);
+           cSource[3].WriteToStream(lStr);
+           cSource[4].WriteToStream(lStr);
          finally
            FreeAndNil(lStr);
          end;
@@ -335,11 +335,11 @@ procedure TTestSourceHej.TestToString;
 var
   lStr: TFileStream;
 begin
-   CheckEquals('',cTestSour[0].toString,'cTestSour[0].toString');
-   CheckEquals('Ancestry.com',cTestSour[1].toString,'cTestSour[1].toString');
-   CheckEquals('Eigenes Wissen',cTestSour[2].toString,'cTestSour[2].toString');
-   CheckEquals('OSB Meißenheim',cTestSour[3].toString,'cTestSour[3].toString');
-   CheckEquals('Test',cTestSour[4].toString,'cTestSour[4].toString');
+   CheckEquals('',cSource[0].toString,'cSource[0].toString');
+   CheckEquals('Ancestry.com',cSource[13].toString,'cSource[13].toString');
+   CheckEquals('Eigenes Wissen',cSource[14].toString,'cSource[14].toString');
+   CheckEquals('OSB Meißenheim',cSource[15].toString,'cSource[15].toString');
+   CheckEquals('Test',cSource[16].toString,'cSource[16].toString');
       lStr := TFileStream.Create(FDataDir + DirectorySeparator + 'Care.hej', fmOpenRead);
       try
          lStr.seek(1356,soBeginning);
@@ -368,7 +368,7 @@ procedure TTestSourceHej.TestToPasStruct;
 var
   lStr: TFileStream;
 begin
-  CheckEquals('(ID:0;Title:'''';Abk:'''';Ereignisse:'''';Von:'''';Bis:'''';Standort:'''';Publ:'''';Rep:'''';Bem:'''';Bestand:'''';Med:''''{%H-})',cTestSour[0].ToPasStruct,'cTestSour[0].ToPasStruct');
+  CheckEquals('(ID:0;Title:'''';Abk:'''';Ereignisse:'''';Von:'''';Bis:'''';Standort:'''';Publ:'''';Rep:'''';Bem:'''';Bestand:'''';Med:''''{%H-})',cSource[0].ToPasStruct,'cSource[0].ToPasStruct');
   lStr := TFileStream.Create(FDataDir + DirectorySeparator + 'Care.hej', fmOpenRead);
   try
      lStr.seek(1356,soBeginning);

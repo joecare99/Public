@@ -1,0 +1,127 @@
+object frmConnectDb: TfrmConnectDb
+  Left = 840
+  Height = 231
+  Top = 446
+  Width = 444
+  ActiveControl = edtHostName
+  BorderIcons = []
+  BorderStyle = bsDialog
+  Caption = 'Connect to Database'
+  ClientHeight = 231
+  ClientWidth = 444
+  DesignTimePPI = 144
+  FormStyle = fsStayOnTop
+  OnCreate = FormCreate
+  Position = poScreenCenter
+  LCLVersion = '1.8.4.0'
+  Visible = False
+  object edtHostName: TLabeledEdit
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = edtUser
+    Left = 8
+    Height = 33
+    Top = 19
+    Width = 428
+    Anchors = [akLeft, akRight, akBottom]
+    BorderSpacing.Bottom = 25
+    BorderSpacing.Around = 4
+    EditLabel.AnchorSideLeft.Control = edtHostName
+    EditLabel.AnchorSideRight.Control = edtHostName
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = edtHostName
+    EditLabel.Left = 8
+    EditLabel.Height = 25
+    EditLabel.Top = -10
+    EditLabel.Width = 428
+    EditLabel.Caption = 'Hostname:'
+    EditLabel.ParentColor = False
+    TabOrder = 0
+    TextHint = 'Hostname'
+  end
+  object edtUser: TLabeledEdit
+    AnchorSideTop.Side = asrBottom
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Control = edtPassword
+    Left = 8
+    Height = 33
+    Top = 81
+    Width = 428
+    Anchors = [akLeft, akRight, akBottom]
+    BorderSpacing.Bottom = 25
+    BorderSpacing.Around = 4
+    EditLabel.AnchorSideLeft.Control = edtUser
+    EditLabel.AnchorSideRight.Control = edtUser
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = edtUser
+    EditLabel.Left = 8
+    EditLabel.Height = 25
+    EditLabel.Top = 52
+    EditLabel.Width = 428
+    EditLabel.Caption = 'Username:'
+    EditLabel.ParentColor = False
+    TabOrder = 1
+    TextHint = 'Username'
+  end
+  object edtPassword: TLabeledEdit
+    AnchorSideTop.Side = asrCenter
+    AnchorSideRight.Side = asrBottom
+    Left = 8
+    Height = 33
+    Top = 143
+    Width = 428
+    Anchors = [akLeft, akRight, akBottom]
+    BorderSpacing.Bottom = 5
+    BorderSpacing.Around = 4
+    EchoMode = emPassword
+    EditLabel.AnchorSideLeft.Control = edtPassword
+    EditLabel.AnchorSideRight.Control = edtPassword
+    EditLabel.AnchorSideRight.Side = asrBottom
+    EditLabel.AnchorSideBottom.Control = edtPassword
+    EditLabel.Left = 8
+    EditLabel.Height = 25
+    EditLabel.Top = 114
+    EditLabel.Width = 428
+    EditLabel.Caption = 'Password:'
+    EditLabel.ParentColor = False
+    PasswordChar = '*'
+    TabOrder = 2
+    TextHint = 'Password'
+  end
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 52
+    Top = 179
+    Width = 445
+    Align = alBottom
+    ClientHeight = 52
+    ClientWidth = 445
+    TabOrder = 3
+    object btnOK: TBitBtn
+      Left = 186
+      Height = 42
+      Top = 5
+      Width = 125
+      Align = alRight
+      BorderSpacing.Around = 4
+      Default = True
+      DefaultCaption = True
+      Kind = bkOK
+      ModalResult = 1
+      OnClick = OkClick
+      TabOrder = 0
+    end
+    object btnCancel: TBitBtn
+      Left = 315
+      Height = 42
+      Top = 5
+      Width = 125
+      Align = alRight
+      BorderSpacing.Around = 4
+      Cancel = True
+      DefaultCaption = True
+      Kind = bkCancel
+      ModalResult = 2
+      TabOrder = 1
+    end
+  end
+end

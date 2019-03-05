@@ -26,17 +26,22 @@ type
   end;
 
 
+  { TTestClsHejFilter }
+
   TTestClsHejFilter= class(TTestCase)
+  private
+    FGenFilter: TGenFilter;
+    FHejClass: TClsHejGenealogy;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
   published
-    procedure TestHookUp;
+    procedure TestSetUp;
   end;
 
 implementation
 
-uses unt_IndTestData;
+uses unt_IndTestData, unt_MarrTestData, unt_SourceTestData, unt_PlaceTestData;
 
 procedure  GenerateTestData(aHejClass:TClsHejGenealogy);
 
@@ -64,6 +69,13 @@ for i := 1 to high(cInd) do
        aHejClass.Seek(i);
        aHejClass.Delete(aHejClass);
      end;
+
+for i := 0 to high(cPlace) do
+  aHejClass.SetPlace(cPlace[i]);
+
+for i := 0 to high(cSource) do
+  aHejClass.SetSource(cSource[i]);
+
   aHejClass.First;
 
 end;
@@ -89,6 +101,8 @@ var
 begin
    CheckNotNull(FHejClass,'GEnealogie is assigned');
    CheckEquals(9, FHejClass.Count, '9 Individuals');
+   CheckEquals(12, FHejClass.PlaceCount, '12 Places');
+   CheckEquals(17, FHejClass.SourceCount, '17 Sources');
 
 for i := 1 to high(cInd) do
  begin
@@ -104,17 +118,33 @@ end;
 
 procedure TTestClsHejFilter.SetUp;
 begin
-
+FHejClass:=TClsHejGenealogy.Create;
+GenerateTestData(FHejClass);
+FGenFilter := TGenFilter.create;
 end;
 
 procedure TTestClsHejFilter.TearDown;
 begin
-
+  FreeandNil(FGenFilter);
+  freeandnil(FHejClass);
 end;
 
-procedure TTestClsHejFilter.TestHookUp;
+procedure TTestClsHejFilter.TestSetUp;
+var
+  i: Integer;
 begin
-  Fail('Write your own test');
+CheckNotNull(FHejClass,'GEnealogie is assigned');
+CheckEquals(9, FHejClass.Count, '9 Individuals');
+CheckEquals(12, FHejClass.PlaceCount, '12 Places');
+CheckEquals(17, FHejClass.SourceCount, '17 Sources');
+
+for i := 1 to high(cInd) do
+begin
+FHejClass.Seek(i);
+       Checktrue(FHejClass.ActualInd.Equals(cind[i]),  'Individual['+inttostr(i)+'] match');
+       CheckTrue(cind[i].Equals(FHejClass.PeekInd(i)), 'Individual['+inttostr(i)+'] match 2');
+end;
+CheckNotNull(FGenFilter,'Filter is assigned');
 end;
 
 initialization

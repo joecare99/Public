@@ -1,11 +1,14 @@
 unit tst_ClsHej;
 
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+{$mode delphi}{$H+}
+{$ENDIF}
 
 interface
 
 uses
-    Classes, SysUtils, fpcunit, testregistry, sqldb,
+    Classes, SysUtils{$IFNDEF FPC},TestFramework {$Else} ,fpcunit, testutils,
+  testregistry {$endif}, sqldb,
     cls_HejData, cls_HejIndData, cls_HejMarrData, cls_HejPlaceData, cls_HejSourceData,
     dm_GenData2;
 
@@ -64,7 +67,7 @@ type
 
 implementation
 
-uses Forms, frm_ConnectDB,unt_IndTestData,unt_MarrTestData, Controls, variants;
+uses Forms, frm_ConnectDB,unt_IndTestData,unt_MarrTestData,unt_PlaceTestData,unt_SourceTestData, Controls, variants;
 
 resourcestring
     DefDataDir = 'Data';
@@ -102,61 +105,6 @@ const
     TestDatabase = 'AhnenWinTest';
 
 
-    cPlace: array[0..6] of THejPlaceData =
-        ((ID: 0; PlaceName: 'Adelsheim'; ZIPCode: ''; State: ''; District: '';
-        GOV: ''; Country: ''; PolName: ''; Parish: ''; County: '';
-        ShortName: ''; Longitude: '';
-        Magnitude: ''; MaidenheadLoc: ''{%H-}),
-        (ID: 1; PlaceName: 'Binau'; ZIPCode: '74862'; State: 'Deutschland';
-        District: 'Mosbach'; GOV: 'GOV'; Country: 'Baden-Württemberg';
-        PolName: 'Binau (Gemeinde)'; Parish: 'Neckargerach'; County: 'Neckar-Odenwald-Kreis';
-        ShortName: 'Binau'; Longitude: 'L90'; Magnitude: 'B21'; MaidenheadLoc: 'Maidenhead'{%H-}),
-        (ID: 0; PlaceName: 'Eppingen'; ZIPCode: ''; State: ''; District: '';
-        GOV: ''; Country: ''; PolName: ''; Parish: ''; County: '';
-        ShortName: ''; Longitude: '';
-        Magnitude: ''; MaidenheadLoc: ''{%H-}),
-        (ID: 0; PlaceName: 'Mosbach'; ZIPCode: ''; State: ''; District: '';
-        GOV: ''; Country: ''; PolName: ''; Parish: ''; County: '';
-        ShortName: ''; Longitude: '';
-        Magnitude: ''; MaidenheadLoc: ''{%H-}),
-        (ID: 0; PlaceName: 'Neckarbischofsheim'; ZIPCode: ''; State: ''; District: '';
-        GOV: ''; Country: ''; PolName: ''; Parish: ''; County: '';
-        ShortName: ''; Longitude: '';
-        Magnitude: ''; MaidenheadLoc: ''{%H-}),
-        (ID: 0; PlaceName: 'Nimmerland'; ZIPCode: ''; State: ''; District: '';
-        GOV: ''; Country: ''; PolName: ''; Parish: ''; County: '';
-        ShortName: ''; Longitude: '';
-        Magnitude: ''; MaidenheadLoc: ''{%H-}),
-        (ID: 0; PlaceName: 'Sulzfeld'; ZIPCode: ''; State: ''; District: '';
-        GOV: ''; Country: ''; PolName: ''; Parish: ''; County: '';
-        ShortName: ''; Longitude: '';
-        Magnitude: ''; MaidenheadLoc: ''{%H-}));
-    cSource: array[0..11] of THejSourData =
-        ((ID: 0; Title: 'hörensagen'; Abk: '1'; Ereignisse: '2'; Von: '3'; Bis: '4';
-        Standort: '5'; Publ: '6'; Rep: '7'; Bem: '8'; Bestand: '9'; Med: '10'{%H-}),
-        (ID: 1; Title: 'Sterbeanzeige'; Abk: 'Strb.Anz.'; Ereignisse: 'Sterbefälle';
-        Von: '2015'; Bis: '2018'; Standort: 'Heidelberg'; Publ: 'RNZ'; Rep: 'Druckergasse 15';
-        Bem: 'Kann Online abgefragt werden'; Bestand: 'Nur die letzten 14 Tage'; Med: 'online'{%H-}),
-        (ID: 2; Title: 'Friedhof Mosbach'; Abk: ''; Ereignisse: ''; Von: '';
-        Bis: ''; Standort: ''; Publ: ''; Rep: ''; Bem: ''; Bestand: ''; Med: ''{%H-}),
-        (ID: 3; Title: '2'; Abk: ''; Ereignisse: ''; Von: ''; Bis: ''; Standort: '';
-        Publ: ''; Rep: ''; Bem: ''; Bestand: ''; Med: ''{%H-}),
-        (ID: 4; Title: 'Taufbuch'; Abk: ''; Ereignisse: ''; Von: ''; Bis: '';
-        Standort: ''; Publ: ''; Rep: ''; Bem: ''; Bestand: ''; Med: ''{%H-}),
-        (ID: 5; Title: 'Geburtsurkunde'; Abk: ''; Ereignisse: ''; Von: '';
-        Bis: ''; Standort: ''; Publ: ''; Rep: ''; Bem: ''; Bestand: ''; Med: ''{%H-}),
-        (ID: 6; Title: 'Rechnung'; Abk: ''; Ereignisse: ''; Von: ''; Bis: '';
-        Standort: ''; Publ: ''; Rep: ''; Bem: ''; Bestand: ''; Med: ''{%H-}),
-        (ID: 7; Title: '1'; Abk: ''; Ereignisse: ''; Von: ''; Bis: ''; Standort: '';
-        Publ: ''; Rep: ''; Bem: ''; Bestand: ''; Med: ''{%H-}),
-        (ID: 8; Title: '3'; Abk: ''; Ereignisse: ''; Von: ''; Bis: ''; Standort: '';
-        Publ: ''; Rep: ''; Bem: ''; Bestand: ''; Med: ''{%H-}),
-        (ID: 9; Title: 'Quelle1'; Abk: ''; Ereignisse: ''; Von: ''; Bis: '';
-        Standort: ''; Publ: ''; Rep: ''; Bem: ''; Bestand: ''; Med: ''{%H-}),
-        (ID: 10; Title: 'Quelle2'; Abk: ''; Ereignisse: ''; Von: ''; Bis: '';
-        Standort: ''; Publ: ''; Rep: ''; Bem: ''; Bestand: ''; Med: ''{%H-}),
-        (ID: 11; Title: 'Quelle3'; Abk: ''; Ereignisse: ''; Von: ''; Bis: '';
-        Standort: ''; Publ: ''; Rep: ''; Bem: ''; Bestand: ''; Med: ''{%H-}));
 
 
 function GetApplicationName: string;
@@ -173,11 +121,11 @@ procedure TTestClsHej.CreateTestdata(Tested: boolean);
 begin
     FHejClass.Clear;
     if Tested then
-        FhejClass.OnStateChange := @HejClassOnStateChange;
+        FhejClass.OnStateChange := HejClassOnStateChange;
     if Tested then
-        FhejClass.OnUpdate := @HejClassOnUpdate;
+        FhejClass.OnUpdate := HejClassOnUpdate;
     if Tested then
-        FHejClass.OnDataChange := @HejClassOnDataChange;
+        FHejClass.OnDataChange := HejClassOnDataChange;
     if Tested then
         CheckEquals(0, FHejClass.MarriagesCount, 'No Marriages');
     if Tested then
@@ -258,17 +206,16 @@ begin
     if Tested then
         CheckEquals(6, FUpdateCount, '6 Update');
 
-    FHejClass.SetPlace(cPlace[0]);
     FHejClass.SetPlace(cPlace[1]);
     FHejClass.SetPlace(cPlace[2]);
     FHejClass.SetPlace(cPlace[3]);
     FHejClass.SetPlace(cPlace[4]);
     FHejClass.SetPlace(cPlace[5]);
     FHejClass.SetPlace(cPlace[6]);
+    FHejClass.SetPlace(cPlace[7]);
     if Tested then
       CheckEquals(7, FHejClass.PlaceCount, '7 Places');
 
-    FhejClass.SetSource(cSource[0]);
     FhejClass.SetSource(cSource[1]);
     FhejClass.SetSource(cSource[2]);
     FhejClass.SetSource(cSource[3]);
@@ -280,6 +227,7 @@ begin
     FhejClass.SetSource(cSource[9]);
     FhejClass.SetSource(cSource[10]);
     FhejClass.SetSource(cSource[11]);
+    FhejClass.SetSource(cSource[12]);
     if Tested then
         CheckEquals(12, FHejClass.SourceCount, '12 Sources');
 end;

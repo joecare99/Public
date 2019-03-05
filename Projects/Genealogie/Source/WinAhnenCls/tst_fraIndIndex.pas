@@ -1,11 +1,14 @@
 unit tst_fraIndIndex;
 
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+{$mode delphi}{$H+}
+{$ENDIF}
 
 interface
 
 uses
-  Classes, Forms, SysUtils, fpcunit, testutils, testregistry,cls_HejData,fra_IndIndex;
+  Classes, Forms, SysUtils{$IFNDEF FPC},TestFramework {$Else} ,fpcunit, testutils,
+  testregistry {$endif},cls_HejData,fra_IndIndex;
 
 type
 
@@ -98,7 +101,7 @@ begin
     FDataDir := FDataDir + DirectorySeparator + 'HejTest';
 
   FGenealogy:=TClsHejGenealogy.Create;
-  FGenealogy.OnUpdate:=@GenOnUpdateTest;
+  FGenealogy.OnUpdate:=GenOnUpdateTest;
   FOnUpdateCount:=0;
   if not Assigned(FtestForm) then
     Application.CreateForm(TForm,FtestForm);

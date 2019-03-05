@@ -1,11 +1,14 @@
 unit tst_ClsAdopHej;
 
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+{$mode delphi}{$H+}
+{$ENDIF}
 
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testregistry, cls_HejAdopData;
+  Classes, SysUtils{$IFNDEF FPC},TestFramework {$Else} ,fpcunit, testutils,
+  testregistry {$endif}, cls_HejAdopData;
 
 type
 
@@ -405,7 +408,7 @@ begin
         CheckEquals(0, FHejAdopData.idMother_adop, 'idMother_adop is Care');
         CheckEquals(1074, lStr.Position, 'Stringposition is ');
         aStr:=lStr;
-        CheckException(@ReadNext,EVariantError,'Now A Converterror must Happen');
+        CheckException(ReadNext,EVariantError,'Now A Converterror must Happen');
         CheckEquals(1080, lStr.Position, 'Stringposition is ');
       finally
         FreeAndNil(lStr);

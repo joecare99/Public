@@ -1,11 +1,14 @@
 unit tst_ClsIndHej;
 
-{$mode objfpc}{$H+}
+{$IFDEF FPC}
+{$mode delphi}{$H+}
+{$ENDIF}
 
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testregistry, cls_HejIndData;
+  Classes, SysUtils{$IFNDEF FPC},TestFramework {$Else} ,fpcunit, testutils,
+  testregistry {$endif}, cls_HejIndData;
 
 type
 

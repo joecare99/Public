@@ -1,0 +1,1680 @@
+object dmGenData: TdmGenData
+  OldCreateOrder = False
+  Height = 693
+  HorizontalOffset = 873
+  VerticalOffset = 607
+  Width = 723
+  PPI = 168
+  object SQLConnector1: TSQLConnector
+    Connected = True
+    LoginPrompt = False
+    AfterConnect = SQLConnector1AfterConnect
+    DatabaseName = 'ahnenwin_1'
+    KeepConnection = False
+    Password = '1(htyS99'
+    Transaction = SQLTransaction1
+    UserName = 'root'
+    CharSet = 'UTF8'
+    HostName = 'localhost'
+    ConnectorType = 'MySQL 5.7'
+    left = 210
+    top = 14
+  end
+  object SQLTransaction1: TSQLTransaction
+    Active = False
+    Action = caCommitRetaining
+    Database = SQLConnector1
+    Options = [stoUseImplicit]
+    left = 238
+    top = 126
+  end
+  object qryInternal: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <>
+    Database = SQLConnector1
+    Transaction = SQLTransaction1
+    Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit]
+    Params = <>
+    left = 28
+    top = 201
+  end
+  object qryIndividuals: TSQLQuery
+    PacketRecords = -1
+    IndexName = 'DEFAULT_ORDER'
+    FieldDefs = <    
+      item
+        Name = 'idIndividual'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'idIndividual_Father'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'idIndividual_Mother'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'FamilyName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'GivenName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Sex'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 3
+      end    
+      item
+        Name = 'Religion'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'Occupation'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Birth'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BirthModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'Birthplace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BirthSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BaptDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BaptModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'BaptPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Godparents'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BaptSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Residence'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DeathDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'DeathModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'DeathPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DeathReason'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DearhSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BurialDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BurialModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'BurialPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BurialSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Text'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'living'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 3
+      end    
+      item
+        Name = 'Index'
+        DataType = ftString
+        Precision = -1
+        Size = 90
+      end    
+      item
+        Name = 'AKA'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Adopted'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'FarmName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrStreet'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrAddit'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPLZ'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPlaceAddit'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Age'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Phone'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'eMail'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'WebAdr'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'NameSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'CallName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end>
+    Active = True
+    BeforePost = qryIndividualsBeforePost
+    Database = SQLConnector1
+    Transaction = SQLTransaction1
+    SQL.Strings = (
+      'select * from `individuals`'
+    )
+    Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit]
+    Params = <>
+    left = 112
+    top = 264
+  end
+  object Config1: TConfig
+    left = 424
+    top = 72
+  end
+  object qryIndividual_Father: TSQLQuery
+    PacketRecords = -1
+    IndexName = 'DEFAULT_ORDER'
+    FieldDefs = <    
+      item
+        Name = 'idIndividual'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'idIndividual_Father'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'idIndividual_Mother'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'FamilyName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'GivenName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Sex'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 3
+      end    
+      item
+        Name = 'Religion'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'Occupation'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Birth'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BirthModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'Birthplace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BirthSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BaptDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BaptModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'BaptPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Godparents'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BaptSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Residence'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DeathDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'DeathModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'DeathPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DeathReason'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DearhSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BurialDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BurialModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'BurialPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BurialSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Text'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'living'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 3
+      end    
+      item
+        Name = 'Index'
+        DataType = ftString
+        Precision = -1
+        Size = 90
+      end    
+      item
+        Name = 'AKA'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Adopted'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'FarmName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrStreet'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrAddit'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPLZ'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPlaceAddit'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Age'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Phone'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'eMail'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'WebAdr'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'NameSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'CallName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end>
+    Active = True
+    BeforePost = qryIndividualsBeforePost
+    Database = SQLConnector1
+    Transaction = SQLTransaction1
+    SQL.Strings = (
+      'select * from `individuals`'
+    )
+    Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit]
+    Params = <>
+    left = 208
+    top = 296
+  end
+  object qryIndividual_Mother: TSQLQuery
+    PacketRecords = -1
+    IndexName = 'DEFAULT_ORDER'
+    FieldDefs = <    
+      item
+        Name = 'idIndividual'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'idIndividual_Father'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'idIndividual_Mother'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'FamilyName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'GivenName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Sex'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 3
+      end    
+      item
+        Name = 'Religion'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'Occupation'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Birth'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BirthModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'Birthplace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BirthSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BaptDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BaptModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'BaptPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Godparents'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BaptSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Residence'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DeathDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'DeathModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'DeathPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DeathReason'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DearhSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BurialDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BurialModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'BurialPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BurialSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Text'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'living'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 3
+      end    
+      item
+        Name = 'Index'
+        DataType = ftString
+        Precision = -1
+        Size = 90
+      end    
+      item
+        Name = 'AKA'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Adopted'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'FarmName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrStreet'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrAddit'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPLZ'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPlaceAddit'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Age'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Phone'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'eMail'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'WebAdr'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'NameSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'CallName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end>
+    Active = True
+    BeforePost = qryIndividualsBeforePost
+    Database = SQLConnector1
+    Transaction = SQLTransaction1
+    SQL.Strings = (
+      'select * from `individuals`'
+    )
+    Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit]
+    Params = <>
+    left = 336
+    top = 328
+  end
+  object qryIndividual_Kids: TSQLQuery
+    PacketRecords = -1
+    IndexName = 'DEFAULT_ORDER'
+    FieldDefs = <    
+      item
+        Name = 'idIndividual'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'idIndividual_Father'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'idIndividual_Mother'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'FamilyName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'GivenName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Sex'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 3
+      end    
+      item
+        Name = 'Religion'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'Occupation'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Birth'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BirthModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'Birthplace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BirthSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BaptDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BaptModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'BaptPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Godparents'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BaptSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Residence'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DeathDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'DeathModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'DeathPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DeathReason'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DearhSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BurialDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BurialModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'BurialPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BurialSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Text'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'living'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 3
+      end    
+      item
+        Name = 'Index'
+        DataType = ftString
+        Precision = -1
+        Size = 90
+      end    
+      item
+        Name = 'AKA'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Adopted'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'FarmName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrStreet'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrAddit'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPLZ'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPlaceAddit'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Age'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Phone'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'eMail'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'WebAdr'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'NameSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'CallName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end>
+    Active = True
+    BeforePost = qryIndividualsBeforePost
+    Database = SQLConnector1
+    Transaction = SQLTransaction1
+    SQL.Strings = (
+      'select * from `individuals`'
+    )
+    Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit]
+    Params = <>
+    left = 592
+    top = 392
+  end
+  object qryIndividual_Spouse: TSQLQuery
+    PacketRecords = -1
+    IndexName = 'DEFAULT_ORDER'
+    FieldDefs = <    
+      item
+        Name = 'idIndividual'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'idIndividual_Father'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'idIndividual_Mother'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'FamilyName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'GivenName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Sex'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 3
+      end    
+      item
+        Name = 'Religion'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'Occupation'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Birth'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BirthModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'Birthplace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BirthSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BaptDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BaptModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'BaptPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Godparents'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BaptSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Residence'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DeathDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'DeathModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'DeathPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DeathReason'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DearhSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BurialDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BurialModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'BurialPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BurialSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Text'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'living'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 3
+      end    
+      item
+        Name = 'Index'
+        DataType = ftString
+        Precision = -1
+        Size = 90
+      end    
+      item
+        Name = 'AKA'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Adopted'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'FarmName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrStreet'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrAddit'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPLZ'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPlaceAddit'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Age'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Phone'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'eMail'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'WebAdr'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'NameSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'CallName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end>
+    Active = True
+    BeforePost = qryIndividualsBeforePost
+    Database = SQLConnector1
+    Transaction = SQLTransaction1
+    SQL.Strings = (
+      'select * from `individuals`'
+    )
+    Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit]
+    Params = <>
+    left = 464
+    top = 360
+  end
+  object qryMarriages: TSQLQuery
+    PacketRecords = -1
+    FieldDefs = <    
+      item
+        Name = 'idIndividual'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'idIndividual_Father'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'idIndividual_Mother'
+        DataType = ftInteger
+        Precision = -1
+      end    
+      item
+        Name = 'FamilyName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'GivenName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Sex'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 3
+      end    
+      item
+        Name = 'Religion'
+        DataType = ftString
+        Precision = -1
+        Size = 30
+      end    
+      item
+        Name = 'Occupation'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Birth'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BirthModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'Birthplace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BirthSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BaptDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BaptModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'BaptPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Godparents'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BaptSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Residence'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DeathDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'DeathModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'DeathPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DeathReason'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'DearhSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BurialDate'
+        DataType = ftDateTime
+        Precision = -1
+      end    
+      item
+        Name = 'BurialModif'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 9
+      end    
+      item
+        Name = 'BurialPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'BurialSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Text'
+        DataType = ftMemo
+        Precision = -1
+      end    
+      item
+        Name = 'living'
+        DataType = ftFixedChar
+        Precision = -1
+        Size = 3
+      end    
+      item
+        Name = 'Index'
+        DataType = ftString
+        Precision = -1
+        Size = 90
+      end    
+      item
+        Name = 'AKA'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Adopted'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'FarmName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrStreet'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrAddit'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPLZ'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPlace'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'AdrPlaceAddit'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Age'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'Phone'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'eMail'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'WebAdr'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'NameSource'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end    
+      item
+        Name = 'CallName'
+        DataType = ftString
+        Precision = -1
+        Size = 300
+      end>
+    BeforePost = qryIndividualsBeforePost
+    Database = SQLConnector1
+    Transaction = SQLTransaction1
+    SQL.Strings = (
+      'select * from `Marriages` where `idPerson` =:idPerson'
+    )
+    Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit]
+    Params = <    
+      item
+        DataType = ftUnknown
+        Name = 'idPerson'
+        ParamType = ptInput
+      end>
+    left = 104
+    top = 392
+  end
+end
