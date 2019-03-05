@@ -1,0 +1,2357 @@
+object fraAhnenWinClone: TfraAhnenWinClone
+  Left = 0
+  Height = 596
+  Top = 0
+  Width = 953
+  ClientHeight = 596
+  ClientWidth = 953
+  ParentFont = False
+  TabOrder = 0
+  object CoolBar1: TCoolBar
+    Left = 0
+    Height = 37
+    Top = 0
+    Width = 953
+    Bands = <    
+      item
+        Control = tlbMenu
+        Width = 900
+      end>
+    ParentFont = False
+    object tlbMenu: TToolBar
+      AnchorSideLeft.Control = CoolBar1
+      AnchorSideTop.Control = CoolBar1
+      Left = 24
+      Height = 46
+      Top = 5
+      Width = 871
+      Align = alNone
+      AutoSize = True
+      BorderSpacing.Left = 22
+      BorderSpacing.Top = 3
+      Caption = 'Menu'
+      ParentFont = False
+      TabOrder = 0
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 573
+    Width = 953
+    Panels = <>
+    ParentFont = False
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Height = 536
+    Top = 37
+    Width = 953
+    ActivePage = tbs1Select
+    Align = alClient
+    ParentFont = False
+    TabIndex = 0
+    TabOrder = 2
+    object tbs1Select: TTabSheet
+      Caption = 'Auswahl'
+      ClientHeight = 508
+      ClientWidth = 945
+      ParentFont = False
+      object DBGrid3: TDBGrid
+        Left = 32
+        Height = 380
+        Top = 96
+        Width = 881
+        Align = alClient
+        BorderSpacing.Around = 32
+        Color = clWindow
+        Columns = <        
+          item
+            MinSize = 8
+            MaxSize = 160
+            Title.Caption = 'idIndividual'
+            Width = 48
+            FieldName = 'idIndividual'
+          end        
+          item
+            MinSize = 8
+            MaxSize = 160
+            Title.Caption = 'FamilyName'
+            Width = 160
+            FieldName = 'FamilyName'
+          end        
+          item
+            MinSize = 8
+            MaxSize = 160
+            Title.Caption = 'GivenName'
+            Width = 160
+            FieldName = 'GivenName'
+          end        
+          item
+            MinSize = 8
+            MaxSize = 160
+            Title.Caption = 'Birth'
+            Width = 80
+            FieldName = 'Birth'
+          end        
+          item
+            MinSize = 8
+            MaxSize = 160
+            Title.Caption = 'Birthplace'
+            Width = 160
+            FieldName = 'Birthplace'
+          end        
+          item
+            MinSize = 8
+            MaxSize = 160
+            Title.Caption = 'BaptDate'
+            Width = 80
+            FieldName = 'BaptDate'
+          end        
+          item
+            MinSize = 8
+            MaxSize = 160
+            Title.Caption = 'BaptPlace'
+            Width = 160
+            FieldName = 'BaptPlace'
+          end        
+          item
+            MinSize = 8
+            MaxSize = 160
+            Title.Caption = 'DeathDate'
+            Width = 80
+            FieldName = 'DeathDate'
+          end        
+          item
+            MinSize = 8
+            MaxSize = 160
+            Title.Caption = 'DeathPlace'
+            Width = 160
+            FieldName = 'DeathPlace'
+          end        
+          item
+            MinSize = 8
+            MaxSize = 160
+            Title.Caption = 'Sex'
+            FieldName = 'Sex'
+          end        
+          item
+            MinSize = 8
+            MaxSize = 160
+            Title.Caption = 'Index'
+            Width = 48
+            FieldName = 'Index'
+          end>
+        DataSource = DataSource1
+        Options = [dgTitles, dgIndicator, dgColumnResize, dgColumnMove, dgRowLines, dgTabs, dgAlwaysShowSelection, dgConfirmDelete, dgCancelOnExit]
+        ParentFont = False
+        TabOrder = 0
+      end
+      object Panel14: TPanel
+        Left = 0
+        Height = 64
+        Top = 0
+        Width = 945
+        Align = alTop
+        Caption = 'Panel14'
+        ClientHeight = 64
+        ClientWidth = 945
+        ParentFont = False
+        TabOrder = 1
+        object Panel15: TPanel
+          Left = 774
+          Height = 62
+          Top = 1
+          Width = 170
+          Align = alRight
+          Caption = 'Panel9'
+          ParentFont = False
+          TabOrder = 0
+        end
+        object Panel16: TPanel
+          Left = 1
+          Height = 62
+          Top = 1
+          Width = 773
+          Align = alClient
+          Caption = 'Panel10'
+          ParentFont = False
+          TabOrder = 1
+        end
+      end
+    end
+    object tbs2Edit: TTabSheet
+      Caption = 'Bearbeiten'
+      ClientHeight = 508
+      ClientWidth = 945
+      ParentFont = False
+      object pnlP2Top: TPanel
+        Left = 0
+        Height = 64
+        Top = 0
+        Width = 945
+        Align = alTop
+        ClientHeight = 64
+        ClientWidth = 945
+        ParentFont = False
+        TabOrder = 0
+        object DBNavigator1: TDBNavigator
+          Left = 11
+          Height = 42
+          Top = 11
+          Width = 206
+          Align = alLeft
+          BevelOuter = bvNone
+          BorderSpacing.Around = 10
+          ChildSizing.EnlargeHorizontal = crsScaleChilds
+          ChildSizing.EnlargeVertical = crsScaleChilds
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 100
+          ClientHeight = 42
+          ClientWidth = 206
+          DataSource = DataSource1
+          Options = []
+          ParentFont = False
+          TabOrder = 0
+          VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast]
+        end
+        object pnlP2TopRight: TPanel
+          Left = 774
+          Height = 62
+          Top = 1
+          Width = 170
+          Align = alRight
+          ParentFont = False
+          TabOrder = 1
+        end
+        object pnlP2TopClient: TPanel
+          Left = 227
+          Height = 62
+          Top = 1
+          Width = 547
+          Align = alClient
+          ClientHeight = 62
+          ClientWidth = 547
+          ParentFont = False
+          TabOrder = 2
+          object lblFather: TLabel
+            AnchorSideLeft.Control = pnlP2BaseData
+            AnchorSideTop.Control = edtFather
+            AnchorSideRight.Control = edtFather
+            AnchorSideBottom.Control = edtFather
+            AnchorSideBottom.Side = asrBottom
+            Left = 3
+            Height = 6
+            Top = 6
+            Width = 70
+            Alignment = taRightJustify
+            Anchors = [akTop, akLeft, akRight, akBottom]
+            AutoSize = False
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+            Caption = 'Vater:'
+            ParentColor = False
+            ParentFont = False
+          end
+          object edtFather: TDBEdit
+            AnchorSideTop.Control = pnlP2BaseData
+            AnchorSideRight.Control = pnlP2BaseData
+            AnchorSideRight.Side = asrBottom
+            Left = 77
+            Height = 23
+            Top = 3
+            Width = 450
+            DataSource = DataSource1
+            Anchors = [akTop, akLeft, akRight]
+            BorderSpacing.Top = 2
+            CharCase = ecNormal
+            MaxLength = 0
+            ParentFont = False
+            TabOrder = 0
+          end
+          object edtMother: TDBEdit
+            AnchorSideLeft.Control = edtFather
+            AnchorSideTop.Control = edtFather
+            AnchorSideTop.Side = asrBottom
+            AnchorSideRight.Control = pnlP2BaseData
+            AnchorSideRight.Side = asrBottom
+            Left = 77
+            Height = 23
+            Top = 28
+            Width = 450
+            DataSource = DataSource1
+            Anchors = [akTop, akLeft, akRight]
+            BorderSpacing.Top = 2
+            CharCase = ecNormal
+            MaxLength = 0
+            ParentFont = False
+            TabOrder = 1
+          end
+          object lblMother: TLabel
+            AnchorSideLeft.Control = pnlP2BaseData
+            AnchorSideTop.Control = edtMother
+            AnchorSideRight.Control = edtMother
+            AnchorSideBottom.Control = edtMother
+            AnchorSideBottom.Side = asrBottom
+            Left = 3
+            Height = 6
+            Top = 30
+            Width = 70
+            Alignment = taRightJustify
+            Anchors = [akTop, akLeft, akRight, akBottom]
+            AutoSize = False
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+            Caption = 'Mutter:'
+            ParentColor = False
+            ParentFont = False
+          end
+        end
+      end
+      object pnlP2Bottom: TPanel
+        AnchorSideTop.Control = pnlP2VitalData
+        AnchorSideTop.Side = asrBottom
+        Left = 0
+        Height = 215
+        Top = 293
+        Width = 945
+        Align = alBottom
+        Anchors = [akTop, akLeft, akRight, akBottom]
+        ClientHeight = 215
+        ClientWidth = 945
+        ParentFont = False
+        TabOrder = 1
+        object pnlP2BottomLeft: TPanel
+          Left = 1
+          Height = 213
+          Top = 1
+          Width = 370
+          Align = alLeft
+          ClientHeight = 213
+          ClientWidth = 370
+          ParentFont = False
+          TabOrder = 0
+          object lblConnection: TLabel
+            Left = 3
+            Height = 15
+            Top = 3
+            Width = 364
+            Align = alTop
+            BorderSpacing.Around = 2
+            Caption = '<Verbindung>'
+            ParentColor = False
+            ParentFont = False
+          end
+          object DBGrid4: TDBGrid
+            Left = 1
+            Height = 192
+            Top = 20
+            Width = 368
+            Align = alClient
+            Color = clWindow
+            Columns = <>
+            ParentFont = False
+            TabOrder = 0
+          end
+        end
+        object pnlP2BottomClient: TPanel
+          Left = 371
+          Height = 213
+          Top = 1
+          Width = 573
+          Align = alClient
+          ClientHeight = 213
+          ClientWidth = 573
+          ParentFont = False
+          TabOrder = 1
+          object lblChildren: TLabel
+            Left = 3
+            Height = 15
+            Top = 3
+            Width = 567
+            Align = alTop
+            BorderSpacing.Around = 2
+            Caption = '<Kinder>'
+            ParentColor = False
+            ParentFont = False
+          end
+          object DBGrid5: TDBGrid
+            Left = 1
+            Height = 192
+            Top = 20
+            Width = 571
+            Align = alClient
+            Color = clWindow
+            Columns = <>
+            ParentFont = False
+            TabOrder = 0
+          end
+        end
+      end
+      object pnlP2BaseData: TPanel
+        AnchorSideLeft.Control = tbs2Edit
+        AnchorSideTop.Control = pnlP2Top
+        AnchorSideTop.Side = asrBottom
+        Left = 0
+        Height = 128
+        Top = 64
+        Width = 410
+        ClientHeight = 128
+        ClientWidth = 410
+        ParentFont = False
+        TabOrder = 2
+        object lblName: TLabel
+          AnchorSideLeft.Control = pnlP2BaseData
+          AnchorSideTop.Control = edtName
+          AnchorSideRight.Control = edtName
+          AnchorSideBottom.Control = edtName
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 5
+          Width = 70
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'Name:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtName: TDBEdit
+          AnchorSideTop.Control = pnlP2BaseData
+          AnchorSideRight.Control = pnlP2BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 77
+          Height = 23
+          Top = 3
+          Width = 332
+          DataField = 'FamilyName'
+          DataSource = DataSource1
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 0
+        end
+        object lblGivenname: TLabel
+          AnchorSideLeft.Control = pnlP2BaseData
+          AnchorSideTop.Control = edtGivenname
+          AnchorSideRight.Control = edtGivenname
+          AnchorSideBottom.Control = edtGivenname
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 30
+          Width = 70
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'Vorname(n):'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtGivenname: TDBEdit
+          AnchorSideLeft.Control = edtName
+          AnchorSideTop.Control = edtName
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 77
+          Height = 23
+          Top = 28
+          Width = 332
+          DataField = 'GivenName'
+          DataSource = DataSource1
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 1
+        end
+        object lblOccupation: TLabel
+          AnchorSideLeft.Control = pnlP2BaseData
+          AnchorSideTop.Control = edtOccupation
+          AnchorSideRight.Control = edtOccupation
+          AnchorSideBottom.Control = edtOccupation
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 55
+          Width = 70
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'Beruf:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtOccupation: TDBEdit
+          AnchorSideLeft.Control = edtName
+          AnchorSideTop.Control = edtGivenname
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 77
+          Height = 23
+          Top = 53
+          Width = 332
+          DataField = 'Occupation'
+          DataSource = DataSource1
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 2
+        end
+        object lblFarmname: TLabel
+          AnchorSideLeft.Control = pnlP2BaseData
+          AnchorSideTop.Control = edtFarmname
+          AnchorSideRight.Control = edtFarmname
+          AnchorSideBottom.Control = edtFarmname
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 80
+          Width = 70
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'Hofname:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtFarmname: TDBEdit
+          AnchorSideLeft.Control = edtName
+          AnchorSideTop.Control = edtOccupation
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 77
+          Height = 23
+          Top = 78
+          Width = 332
+          DataField = 'FarmName'
+          DataSource = DataSource1
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 3
+        end
+        object lblSex: TLabel
+          AnchorSideLeft.Control = pnlP2BaseData
+          AnchorSideTop.Control = cbxSex
+          AnchorSideRight.Control = cbxSex
+          AnchorSideBottom.Control = cbxSex
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 105
+          Width = 70
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'Geschlecht:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbxSex: TDBComboBox
+          AnchorSideLeft.Control = edtName
+          AnchorSideTop.Control = edtFarmname
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 77
+          Height = 23
+          Top = 103
+          Width = 37
+          BorderSpacing.Top = 2
+          DataField = 'Sex'
+          DataSource = DataSource1
+          ItemHeight = 15
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 4
+        end
+        object cbxReligion: TDBComboBox
+          AnchorSideLeft.Control = edtName
+          AnchorSideTop.Control = edtFarmname
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 194
+          Height = 23
+          Top = 103
+          Width = 37
+          Anchors = [akTop]
+          BorderSpacing.Top = 2
+          DataField = 'Religion'
+          DataSource = DataSource1
+          ItemHeight = 15
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 5
+        end
+        object lblReligion: TLabel
+          AnchorSideLeft.Control = cbxSex
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = cbxReligion
+          AnchorSideRight.Control = cbxReligion
+          AnchorSideBottom.Control = cbxReligion
+          AnchorSideBottom.Side = asrBottom
+          Left = 126
+          Height = 19
+          Top = 105
+          Width = 64
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Left = 10
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'Bekenntnis:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbxAdopted: TDBComboBox
+          AnchorSideLeft.Control = edtName
+          AnchorSideTop.Control = edtFarmname
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 359
+          Height = 23
+          Top = 103
+          Width = 50
+          Anchors = [akTop, akRight]
+          BorderSpacing.Top = 2
+          DataField = 'Adopted'
+          DataSource = DataSource1
+          ItemHeight = 15
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 6
+        end
+        object lblAdopted: TLabel
+          AnchorSideLeft.Control = pnlP2BaseData
+          AnchorSideTop.Control = cbxAdopted
+          AnchorSideRight.Control = cbxAdopted
+          AnchorSideBottom.Control = cbxAdopted
+          AnchorSideBottom.Side = asrBottom
+          Left = 312
+          Height = 19
+          Top = 105
+          Width = 43
+          Alignment = taRightJustify
+          Anchors = [akTop, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'adopt.v:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object chbLiving: TDBCheckBox
+          AnchorSideLeft.Control = cbxReligion
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edtFarmname
+          AnchorSideTop.Side = asrBottom
+          Left = 241
+          Height = 19
+          Top = 103
+          Width = 40
+          AutoSize = True
+          BorderSpacing.Left = 10
+          BorderSpacing.Top = 2
+          BorderSpacing.Right = 10
+          Caption = 'lebt'
+          DataField = 'living'
+          DataSource = DataSource1
+          ParentFont = False
+          TabOrder = 7
+          ValueChecked = 'True'
+          ValueUnchecked = 'False'
+        end
+      end
+      object pnlP2Image: TPanel
+        AnchorSideTop.Control = pnlP2Top
+        AnchorSideTop.Side = asrBottom
+        AnchorSideRight.Control = tbs2Edit
+        AnchorSideRight.Side = asrBottom
+        Left = 547
+        Height = 172
+        Top = 64
+        Width = 398
+        Anchors = [akTop, akLeft, akRight]
+        ClientHeight = 172
+        ClientWidth = 398
+        ParentFont = False
+        TabOrder = 3
+        object UpDown1: TUpDown
+          AnchorSideRight.Control = pnlP2Image
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = pnlP2Image
+          AnchorSideBottom.Side = asrBottom
+          Left = 379
+          Height = 27
+          Top = 144
+          Width = 18
+          Anchors = [akRight, akBottom]
+          Min = 0
+          Position = 0
+          TabOrder = 0
+          Wrap = False
+        end
+      end
+      object pnlP2VitalData: TPanel
+        AnchorSideLeft.Control = tbs2Edit
+        AnchorSideTop.Control = pnlP2BaseData
+        AnchorSideTop.Side = asrBottom
+        AnchorSideBottom.Control = pnlP2Bottom
+        Left = 0
+        Height = 101
+        Top = 192
+        Width = 506
+        ClientHeight = 101
+        ClientWidth = 506
+        ParentFont = False
+        TabOrder = 4
+        object lblBirth: TLabel
+          AnchorSideLeft.Control = pnlP2VitalData
+          AnchorSideTop.Control = edtBirthPlace
+          AnchorSideRight.Control = cbxBirthMod
+          AnchorSideBottom.Control = edtBirthPlace
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 5
+          Width = 70
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'geb.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtBirthPlace: TDBEdit
+          AnchorSideTop.Control = pnlP2VitalData
+          AnchorSideRight.Control = pnlP2VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 243
+          Height = 23
+          Top = 3
+          Width = 262
+          DataField = 'BaptPlace'
+          DataSource = DataSource1
+          Anchors = [akTop, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 0
+        end
+        object cbxBirthMod: TDBComboBox
+          AnchorSideTop.Control = edtBirthPlace
+          AnchorSideRight.Control = edtBirthDate
+          AnchorSideBottom.Control = edtBirthPlace
+          AnchorSideBottom.Side = asrBottom
+          Left = 77
+          Height = 23
+          Top = 3
+          Width = 58
+          Anchors = [akTop, akLeft, akRight]
+          AutoComplete = True
+          DataField = 'BirthModif'
+          DataSource = DataSource1
+          ItemHeight = 15
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 1
+        end
+        object edtBirthDate: TDBDateEdit
+          AnchorSideTop.Control = edtBirthPlace
+          AnchorSideRight.Control = edtBirthPlace
+          AnchorSideBottom.Control = edtBirthPlace
+          AnchorSideBottom.Side = asrBottom
+          Left = 135
+          Height = 23
+          Top = 3
+          Width = 103
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 23
+          Anchors = [akTop, akRight, akBottom]
+          BorderSpacing.Right = 5
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 2
+          Text = '07.05.1960'
+          DataField = 'Birth'
+          DataSource = DataSource1
+        end
+        object cbxBaptMod: TDBComboBox
+          AnchorSideLeft.Control = cbxBirthMod
+          AnchorSideTop.Control = edtBaptPlace
+          AnchorSideRight.Control = edtBaptDate
+          AnchorSideBottom.Control = edtBaptPlace
+          AnchorSideBottom.Side = asrBottom
+          Left = 77
+          Height = 23
+          Top = 28
+          Width = 58
+          Anchors = [akTop, akLeft, akRight]
+          AutoComplete = True
+          DataField = 'BaptModif'
+          DataSource = DataSource1
+          ItemHeight = 15
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 3
+        end
+        object edtBaptDate: TDBDateEdit
+          AnchorSideTop.Control = edtBaptPlace
+          AnchorSideRight.Control = edtBaptPlace
+          AnchorSideBottom.Control = edtBaptPlace
+          AnchorSideBottom.Side = asrBottom
+          Left = 135
+          Height = 23
+          Top = 28
+          Width = 103
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 23
+          Anchors = [akTop, akRight, akBottom]
+          BorderSpacing.Right = 5
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 4
+          Text = '07.05.1960'
+          DataField = 'BaptDate'
+          DataSource = DataSource1
+        end
+        object lblBaptised: TLabel
+          AnchorSideLeft.Control = pnlP2VitalData
+          AnchorSideTop.Control = edtBaptPlace
+          AnchorSideRight.Control = cbxBaptMod
+          AnchorSideBottom.Control = edtBaptPlace
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 30
+          Width = 70
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'get.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtBaptPlace: TDBEdit
+          AnchorSideTop.Control = edtBirthPlace
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 243
+          Height = 23
+          Top = 28
+          Width = 262
+          DataField = 'Birthplace'
+          DataSource = DataSource1
+          Anchors = [akTop, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 5
+        end
+        object lblDeath: TLabel
+          AnchorSideLeft.Control = pnlP2VitalData
+          AnchorSideTop.Control = edtDeathPlace
+          AnchorSideRight.Control = cbxDeathMod
+          AnchorSideBottom.Control = edtDeathPlace
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 55
+          Width = 70
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'gest.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbxDeathMod: TDBComboBox
+          AnchorSideLeft.Control = cbxBirthMod
+          AnchorSideTop.Control = edtDeathPlace
+          AnchorSideRight.Control = edtDeathDate
+          AnchorSideBottom.Control = edtDeathPlace
+          AnchorSideBottom.Side = asrBottom
+          Left = 77
+          Height = 23
+          Top = 53
+          Width = 58
+          Anchors = [akTop, akLeft, akRight]
+          AutoComplete = True
+          DataField = 'DeathModif'
+          DataSource = DataSource1
+          ItemHeight = 15
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 6
+        end
+        object edtDeathDate: TDBDateEdit
+          AnchorSideTop.Control = edtDeathPlace
+          AnchorSideRight.Control = edtDeathPlace
+          AnchorSideBottom.Control = edtDeathPlace
+          AnchorSideBottom.Side = asrBottom
+          Left = 135
+          Height = 23
+          Top = 53
+          Width = 103
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 23
+          Anchors = [akTop, akRight, akBottom]
+          BorderSpacing.Right = 5
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 7
+          Text = '11.05.2018'
+          DataField = 'DeathDate'
+          DataSource = DataSource1
+        end
+        object edtDeathPlace: TDBEdit
+          AnchorSideTop.Control = edtBaptPlace
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 243
+          Height = 23
+          Top = 53
+          Width = 262
+          DataField = 'DeathPlace'
+          DataSource = DataSource1
+          Anchors = [akTop, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 8
+        end
+        object lblBuried: TLabel
+          AnchorSideLeft.Control = pnlP2VitalData
+          AnchorSideTop.Control = edtBurPlace
+          AnchorSideRight.Control = cbxBurMod
+          AnchorSideBottom.Control = edtBurPlace
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 80
+          Width = 70
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'begr.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbxBurMod: TDBComboBox
+          AnchorSideLeft.Control = cbxBirthMod
+          AnchorSideTop.Control = edtBurPlace
+          AnchorSideRight.Control = edtBurDate
+          AnchorSideBottom.Control = edtBurPlace
+          AnchorSideBottom.Side = asrBottom
+          Left = 77
+          Height = 23
+          Top = 78
+          Width = 58
+          Anchors = [akTop, akLeft, akRight]
+          AutoComplete = True
+          DataField = 'BurialModif'
+          DataSource = DataSource1
+          ItemHeight = 15
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 9
+        end
+        object edtBurDate: TDBDateEdit
+          AnchorSideTop.Control = edtBurPlace
+          AnchorSideRight.Control = edtBurPlace
+          AnchorSideBottom.Control = edtBurPlace
+          AnchorSideBottom.Side = asrBottom
+          Left = 135
+          Height = 23
+          Top = 78
+          Width = 103
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 23
+          Anchors = [akTop, akRight, akBottom]
+          BorderSpacing.Right = 5
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 10
+          Text = '11.05.2018'
+          DataField = 'BurialDate'
+          DataSource = DataSource1
+        end
+        object edtBurPlace: TDBEdit
+          AnchorSideTop.Control = edtDeathPlace
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP2VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 243
+          Height = 23
+          Top = 78
+          Width = 262
+          DataField = 'BurialPlace'
+          DataSource = DataSource1
+          Anchors = [akTop, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 11
+        end
+      end
+      object edtAge: TDBEdit
+        Left = 512
+        Height = 22
+        Top = 245
+        Width = 102
+        AutoSize = False
+        CharCase = ecNormal
+        MaxLength = 0
+        ParentFont = False
+        TabOrder = 5
+      end
+    end
+    object tbs3Details: TTabSheet
+      Caption = 'Details'
+      ClientHeight = 508
+      ClientWidth = 945
+      ParentFont = False
+      object pnlP3Top: TPanel
+        Left = 0
+        Height = 64
+        Top = 0
+        Width = 945
+        Align = alTop
+        ClientHeight = 64
+        ClientWidth = 945
+        ParentFont = False
+        TabOrder = 0
+        object DBNavigator2: TDBNavigator
+          Left = 11
+          Height = 42
+          Top = 11
+          Width = 241
+          Align = alLeft
+          BevelOuter = bvNone
+          BorderSpacing.Around = 10
+          ChildSizing.EnlargeHorizontal = crsScaleChilds
+          ChildSizing.EnlargeVertical = crsScaleChilds
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 100
+          ClientHeight = 42
+          ClientWidth = 241
+          DataSource = DataSource1
+          Options = []
+          ParentFont = False
+          TabOrder = 0
+          VisibleButtons = [nbFirst, nbPrior, nbNext, nbLast, nbPost, nbCancel]
+        end
+        object Panel18: TPanel
+          Left = 774
+          Height = 62
+          Top = 1
+          Width = 170
+          Align = alRight
+          Caption = 'Panel9'
+          ParentFont = False
+          TabOrder = 1
+        end
+      end
+      object pnlP3BaseData: TPanel
+        AnchorSideLeft.Control = tbs3Details
+        AnchorSideTop.Control = pnlP3Top
+        AnchorSideTop.Side = asrBottom
+        AnchorSideRight.Control = tbs3Details
+        AnchorSideRight.Side = asrBottom
+        Left = 0
+        Height = 147
+        Top = 64
+        Width = 945
+        Anchors = [akTop, akLeft, akRight]
+        ClientHeight = 147
+        ClientWidth = 945
+        ParentFont = False
+        TabOrder = 1
+        object lblName1: TLabel
+          AnchorSideLeft.Control = pnlP3BaseData
+          AnchorSideTop.Control = edtName1
+          AnchorSideRight.Control = edtName1
+          AnchorSideBottom.Control = edtName1
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 20
+          Width = 68
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'Name:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtName1: TDBEdit
+          AnchorSideTop.Control = lblNameVariants
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP3BaseData
+          AnchorSideRight.Side = asrCenter
+          Left = 75
+          Height = 23
+          Top = 18
+          Width = 416
+          DataField = 'FamilyName'
+          DataSource = DataSource1
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 0
+        end
+        object lblGivenname1: TLabel
+          AnchorSideLeft.Control = pnlP3BaseData
+          AnchorSideTop.Control = edtGivenname1
+          AnchorSideRight.Control = edtGivenname1
+          AnchorSideBottom.Control = edtGivenname1
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 45
+          Width = 68
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'Vorname(n):'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtGivenname1: TDBEdit
+          AnchorSideLeft.Control = edtName1
+          AnchorSideTop.Control = edtName1
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = edtName1
+          AnchorSideRight.Side = asrBottom
+          Left = 75
+          Height = 23
+          Top = 43
+          Width = 416
+          DataField = 'GivenName'
+          DataSource = DataSource1
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 1
+        end
+        object lblOccupation1: TLabel
+          AnchorSideLeft.Control = pnlP3BaseData
+          AnchorSideTop.Control = edtOccupation1
+          AnchorSideRight.Control = edtOccupation1
+          AnchorSideBottom.Control = edtOccupation1
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 70
+          Width = 68
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'Beruf:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtOccupation1: TDBEdit
+          AnchorSideLeft.Control = edtName1
+          AnchorSideTop.Control = edtGivenname1
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP3BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 75
+          Height = 23
+          Top = 68
+          Width = 454
+          DataField = 'Occupation'
+          DataSource = DataSource1
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 2
+        end
+        object lblResidence: TLabel
+          AnchorSideLeft.Control = pnlP3BaseData
+          AnchorSideTop.Control = edtResidence
+          AnchorSideRight.Control = edtResidence
+          AnchorSideBottom.Control = edtResidence
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 95
+          Width = 68
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'lebte in:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtResidence: TDBEdit
+          AnchorSideLeft.Control = edtName1
+          AnchorSideTop.Control = edtOccupation1
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = edtCallname
+          Left = 75
+          Height = 23
+          Top = 93
+          Width = 571
+          DataField = 'Residence'
+          DataSource = DataSource1
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 3
+        end
+        object lblSex1: TLabel
+          AnchorSideLeft.Control = pnlP3BaseData
+          AnchorSideTop.Control = cbxSex1
+          AnchorSideRight.Control = cbxSex1
+          AnchorSideBottom.Control = cbxSex1
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 120
+          Width = 68
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'Geschlecht:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbxSex1: TDBComboBox
+          AnchorSideLeft.Control = edtName1
+          AnchorSideTop.Control = edtResidence
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP3BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 75
+          Height = 23
+          Top = 118
+          Width = 37
+          BorderSpacing.Top = 2
+          DataField = 'Sex'
+          DataSource = DataSource1
+          ItemHeight = 15
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 4
+        end
+        object cbxReligion1: TDBComboBox
+          AnchorSideLeft.Control = edtName1
+          AnchorSideTop.Control = edtResidence
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP3BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 330
+          Height = 23
+          Top = 118
+          Width = 37
+          Anchors = [akTop]
+          BorderSpacing.Top = 2
+          DataField = 'Religion'
+          DataSource = DataSource1
+          ItemHeight = 15
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 5
+        end
+        object lblReligion1: TLabel
+          AnchorSideLeft.Control = cbxSex1
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = cbxReligion1
+          AnchorSideRight.Control = cbxReligion1
+          AnchorSideBottom.Control = cbxReligion1
+          AnchorSideBottom.Side = asrBottom
+          Left = 124
+          Height = 19
+          Top = 120
+          Width = 202
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Left = 10
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'Bekenntnis:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblSource: TLabel
+          AnchorSideLeft.Control = pnlP3BaseData
+          AnchorSideTop.Control = edtSource
+          AnchorSideRight.Control = edtSource
+          AnchorSideBottom.Side = asrBottom
+          Left = 541
+          Height = 21
+          Top = 120
+          Width = 37
+          Alignment = taRightJustify
+          Anchors = [akTop, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'Quelle:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object chbLiving1: TDBCheckBox
+          AnchorSideLeft.Control = cbxReligion1
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edtResidence
+          AnchorSideTop.Side = asrBottom
+          Left = 377
+          Height = 19
+          Top = 118
+          Width = 40
+          AutoSize = True
+          BorderSpacing.Left = 10
+          BorderSpacing.Top = 2
+          BorderSpacing.Right = 10
+          Caption = 'lebt'
+          DataField = 'living'
+          DataSource = DataSource1
+          ParentFont = False
+          TabOrder = 6
+          ValueChecked = 'True'
+          ValueUnchecked = 'False'
+        end
+        object lblNameVariants: TLabel
+          AnchorSideLeft.Control = edtSource
+          AnchorSideTop.Control = pnlP3BaseData
+          Left = 582
+          Height = 15
+          Top = 1
+          Width = 162
+          Caption = 'Andere Namensschreibweisen:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtSource: TDBEdit
+          AnchorSideLeft.Control = edtName1
+          AnchorSideTop.Control = edtResidence
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP3BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 582
+          Height = 23
+          Top = 118
+          Width = 362
+          DataField = 'NameSource'
+          DataSource = DataSource1
+          Anchors = [akTop, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 7
+        end
+        object edtNameVariants: TDBEdit
+          AnchorSideLeft.Control = lblNameVariants
+          AnchorSideTop.Control = edtName1
+          AnchorSideRight.Control = pnlP3BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 582
+          Height = 23
+          Top = 18
+          Width = 362
+          DataField = 'AKA'
+          DataSource = DataSource1
+          Anchors = [akTop, akLeft, akRight]
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 8
+        end
+        object lblCallname: TLabel
+          AnchorSideLeft.Control = pnlP3BaseData
+          AnchorSideTop.Control = edtCallname
+          AnchorSideRight.Control = edtCallname
+          AnchorSideBottom.Side = asrBottom
+          Left = 591
+          Height = 15
+          Top = 45
+          Width = 51
+          Alignment = taRightJustify
+          Anchors = [akTop, akRight]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'Rufname:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtCallname: TDBEdit
+          AnchorSideLeft.Control = edtName1
+          AnchorSideTop.Control = edtNameVariants
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = pnlP3BaseData
+          AnchorSideRight.Side = asrBottom
+          Left = 646
+          Height = 23
+          Top = 43
+          Width = 298
+          DataField = 'CallName'
+          DataSource = DataSource1
+          Anchors = [akTop, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 9
+        end
+      end
+      object pnlP3VitalData: TPanel
+        AnchorSideLeft.Control = tbs2Edit
+        AnchorSideTop.Control = pnlP3BaseData
+        AnchorSideTop.Side = asrBottom
+        AnchorSideRight.Control = tbs3Details
+        AnchorSideRight.Side = asrBottom
+        Left = 0
+        Height = 101
+        Top = 211
+        Width = 945
+        Anchors = [akTop, akLeft, akRight]
+        ClientHeight = 101
+        ClientWidth = 945
+        ParentFont = False
+        TabOrder = 2
+        object lblBirth1: TLabel
+          AnchorSideLeft.Control = pnlP3VitalData
+          AnchorSideTop.Control = edtBirthPlace1
+          AnchorSideRight.Control = cbxBirthMod1
+          AnchorSideBottom.Control = edtBirthPlace1
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 5
+          Width = 41
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'geb.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtBirthPlace1: TDBEdit
+          AnchorSideLeft.Control = edtBirthDate1
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = pnlP3VitalData
+          AnchorSideRight.Side = asrCenter
+          Left = 210
+          Height = 23
+          Top = 3
+          Width = 266
+          DataField = 'BaptPlace'
+          DataSource = DataSource1
+          BorderSpacing.Left = 2
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 0
+        end
+        object cbxBirthMod1: TDBComboBox
+          AnchorSideTop.Control = edtBirthPlace1
+          AnchorSideBottom.Control = edtBirthPlace1
+          AnchorSideBottom.Side = asrBottom
+          Left = 48
+          Height = 23
+          Top = 3
+          Width = 57
+          AutoComplete = True
+          DataField = 'BirthModif'
+          DataSource = DataSource1
+          ItemHeight = 15
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 1
+        end
+        object edtBirthDate1: TDBDateEdit
+          AnchorSideLeft.Control = cbxBirthMod1
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edtBirthPlace1
+          AnchorSideBottom.Control = edtBirthPlace1
+          AnchorSideBottom.Side = asrBottom
+          Left = 110
+          Height = 23
+          Top = 3
+          Width = 95
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 23
+          Anchors = [akTop, akLeft, akBottom]
+          BorderSpacing.Left = 5
+          BorderSpacing.Right = 5
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 2
+          Text = '07.05.1960'
+          DataField = 'Birth'
+          DataSource = DataSource1
+        end
+        object cbxBaptMod1: TDBComboBox
+          AnchorSideLeft.Control = cbxBirthMod1
+          AnchorSideTop.Control = edtBaptPlace1
+          AnchorSideRight.Control = cbxBirthMod1
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = edtBaptPlace1
+          AnchorSideBottom.Side = asrBottom
+          Left = 48
+          Height = 23
+          Top = 28
+          Width = 57
+          Anchors = [akTop, akLeft, akRight]
+          AutoComplete = True
+          DataField = 'BaptModif'
+          DataSource = DataSource1
+          ItemHeight = 15
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 3
+        end
+        object edtBaptDate1: TDBDateEdit
+          AnchorSideLeft.Control = edtBirthDate1
+          AnchorSideTop.Control = edtBaptPlace1
+          AnchorSideRight.Control = edtBirthDate1
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = edtBaptPlace1
+          AnchorSideBottom.Side = asrBottom
+          Left = 110
+          Height = 23
+          Top = 28
+          Width = 95
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 23
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 4
+          Text = '07.05.1960'
+          DataField = 'BaptDate'
+          DataSource = DataSource1
+        end
+        object lblBaptised1: TLabel
+          AnchorSideLeft.Control = pnlP3VitalData
+          AnchorSideTop.Control = edtBaptPlace1
+          AnchorSideRight.Control = cbxBaptMod1
+          AnchorSideBottom.Control = edtBaptPlace1
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 30
+          Width = 41
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'get.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtBaptPlace1: TDBEdit
+          AnchorSideLeft.Control = edtBirthPlace1
+          AnchorSideTop.Control = edtBirthPlace1
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = edtBirthPlace1
+          AnchorSideRight.Side = asrBottom
+          Left = 210
+          Height = 23
+          Top = 28
+          Width = 266
+          DataField = 'Birthplace'
+          DataSource = DataSource1
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 5
+        end
+        object lblDeath1: TLabel
+          AnchorSideLeft.Control = pnlP3VitalData
+          AnchorSideTop.Control = edtDeathPlace1
+          AnchorSideRight.Control = cbxDeathMod1
+          AnchorSideBottom.Control = edtDeathPlace1
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 55
+          Width = 41
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'gest.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbxDeathMod1: TDBComboBox
+          AnchorSideLeft.Control = cbxBirthMod1
+          AnchorSideTop.Control = edtDeathPlace1
+          AnchorSideRight.Control = cbxBirthMod1
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = edtDeathPlace1
+          AnchorSideBottom.Side = asrBottom
+          Left = 48
+          Height = 23
+          Top = 53
+          Width = 57
+          Anchors = [akTop, akLeft, akRight]
+          AutoComplete = True
+          DataField = 'DeathModif'
+          DataSource = DataSource1
+          ItemHeight = 15
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 6
+        end
+        object edtDeathDate1: TDBDateEdit
+          AnchorSideLeft.Control = edtBirthDate1
+          AnchorSideTop.Control = edtDeathPlace1
+          AnchorSideRight.Control = edtBirthDate1
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = edtDeathPlace1
+          AnchorSideBottom.Side = asrBottom
+          Left = 110
+          Height = 23
+          Top = 53
+          Width = 95
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 23
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 7
+          Text = '11.05.2018'
+          DataField = 'DeathDate'
+          DataSource = DataSource1
+        end
+        object edtDeathPlace1: TDBEdit
+          AnchorSideLeft.Control = edtBirthPlace1
+          AnchorSideTop.Control = edtBaptPlace1
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = edtBirthPlace1
+          AnchorSideRight.Side = asrBottom
+          Left = 210
+          Height = 23
+          Top = 53
+          Width = 266
+          DataField = 'DeathPlace'
+          DataSource = DataSource1
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 8
+        end
+        object lblBuried1: TLabel
+          AnchorSideLeft.Control = pnlP3VitalData
+          AnchorSideTop.Control = edtBurPlace1
+          AnchorSideRight.Control = cbxBurMod1
+          AnchorSideBottom.Control = edtBurPlace1
+          AnchorSideBottom.Side = asrBottom
+          Left = 3
+          Height = 19
+          Top = 80
+          Width = 41
+          Alignment = taRightJustify
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Right = 2
+          BorderSpacing.Around = 2
+          Caption = 'begr.:'
+          ParentColor = False
+          ParentFont = False
+        end
+        object cbxBurMod1: TDBComboBox
+          AnchorSideLeft.Control = cbxBirthMod1
+          AnchorSideTop.Control = edtBurPlace1
+          AnchorSideRight.Control = cbxBirthMod1
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = edtBurPlace1
+          AnchorSideBottom.Side = asrBottom
+          Left = 48
+          Height = 23
+          Top = 78
+          Width = 57
+          Anchors = [akTop, akLeft, akRight]
+          AutoComplete = True
+          DataField = 'BurialModif'
+          DataSource = DataSource1
+          ItemHeight = 15
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 9
+        end
+        object edtBurDate1: TDBDateEdit
+          AnchorSideLeft.Control = edtBirthDate1
+          AnchorSideTop.Control = edtBurPlace1
+          AnchorSideRight.Control = edtBirthDate1
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = edtBurPlace1
+          AnchorSideBottom.Side = asrBottom
+          Left = 110
+          Height = 23
+          Top = 78
+          Width = 95
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          DateOrder = doNone
+          ButtonOnlyWhenFocused = True
+          ButtonWidth = 23
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          NumGlyphs = 1
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 10
+          Text = '11.05.2018'
+          DataField = 'BurialDate'
+          DataSource = DataSource1
+        end
+        object edtBurPlace1: TDBEdit
+          AnchorSideLeft.Control = edtBirthPlace1
+          AnchorSideTop.Control = edtDeathPlace1
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = edtBirthPlace1
+          AnchorSideRight.Side = asrBottom
+          Left = 210
+          Height = 23
+          Top = 78
+          Width = 266
+          DataField = 'BurialPlace'
+          DataSource = DataSource1
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 2
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 11
+        end
+        object edtSource1: TDBEdit
+          AnchorSideLeft.Control = edtBirthPlace1
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edtBirthPlace1
+          AnchorSideRight.Control = pnlP3VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 495
+          Height = 23
+          Top = 3
+          Width = 449
+          DataField = 'BirthSource'
+          DataSource = DataSource1
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Left = 19
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 12
+        end
+        object edtSource2: TDBEdit
+          AnchorSideLeft.Control = edtBirthPlace1
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edtBaptPlace1
+          AnchorSideRight.Control = pnlP3VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 495
+          Height = 23
+          Top = 28
+          Width = 449
+          DataField = 'BaptSource'
+          DataSource = DataSource1
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Left = 19
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 13
+        end
+        object edtSource3: TDBEdit
+          AnchorSideLeft.Control = edtBirthPlace1
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edtDeathPlace1
+          AnchorSideRight.Control = pnlP3VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 495
+          Height = 23
+          Top = 53
+          Width = 449
+          DataField = 'DearhSource'
+          DataSource = DataSource1
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Left = 19
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 14
+        end
+        object edtSource4: TDBEdit
+          AnchorSideLeft.Control = edtBirthPlace1
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edtBurPlace1
+          AnchorSideRight.Control = pnlP3VitalData
+          AnchorSideRight.Side = asrBottom
+          Left = 495
+          Height = 23
+          Top = 78
+          Width = 449
+          DataField = 'BurialSource'
+          DataSource = DataSource1
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Left = 19
+          CharCase = ecNormal
+          MaxLength = 300
+          ParentFont = False
+          TabOrder = 15
+        end
+      end
+    end
+    object tbs4Marriages: TTabSheet
+      Caption = 'Ehen u.a.'
+      ClientHeight = 916
+      ClientWidth = 1659
+      ParentFont = False
+      object Panel1: TPanel
+        Left = 0
+        Height = 249
+        Top = 667
+        Width = 1659
+        Align = alBottom
+        Caption = 'Panel1'
+        ParentFont = False
+        TabOrder = 0
+      end
+      object Panel12: TPanel
+        Left = 1365
+        Height = 481
+        Top = 0
+        Width = 294
+        Align = alRight
+        Caption = 'Panel12'
+        ClientHeight = 481
+        ClientWidth = 294
+        ParentFont = False
+        TabOrder = 1
+        object DBComboBox1: TDBComboBox
+          AnchorSideLeft.Control = Label3
+          AnchorSideTop.Control = Label3
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = Label3
+          AnchorSideRight.Side = asrBottom
+          Left = 33
+          Height = 23
+          Top = 54
+          Width = 401
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Top = 5
+          ItemHeight = 15
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 0
+        end
+        object Label3: TLabel
+          Left = 57
+          Height = 30
+          Top = 57
+          Width = 401
+          Align = alTop
+          BorderSpacing.Left = 32
+          BorderSpacing.Top = 32
+          BorderSpacing.Right = 32
+          Caption = 'Label3'
+          ParentColor = False
+          ParentFont = False
+        end
+      end
+      object Panel13: TPanel
+        Left = 0
+        Height = 481
+        Top = 0
+        Width = 1144
+        Align = alClient
+        Caption = 'Panel13'
+        ClientHeight = 481
+        ClientWidth = 1144
+        ParentFont = False
+        TabOrder = 2
+        object Label2: TLabel
+          AnchorSideLeft.Control = Panel13
+          AnchorSideTop.Control = Panel13
+          AnchorSideRight.Control = Panel13
+          AnchorSideRight.Side = asrBottom
+          Left = 33
+          Height = 30
+          Top = 33
+          Width = 1030
+          Anchors = [akTop, akLeft, akRight]
+          BorderSpacing.Left = 32
+          BorderSpacing.Top = 32
+          BorderSpacing.Right = 32
+          Caption = 'Label2'
+          ParentColor = False
+          ParentFont = False
+        end
+        object DBGrid2: TDBGrid
+          AnchorSideLeft.Control = Label2
+          AnchorSideTop.Control = Label2
+          AnchorSideTop.Side = asrBottom
+          AnchorSideRight.Control = Label2
+          AnchorSideRight.Side = asrBottom
+          AnchorSideBottom.Control = Panel13
+          AnchorSideBottom.Side = asrBottom
+          Left = 33
+          Height = 329
+          Top = 54
+          Width = 1030
+          Anchors = [akTop, akLeft, akRight, akBottom]
+          BorderSpacing.Top = 5
+          BorderSpacing.Bottom = 32
+          Color = clWindow
+          Columns = <>
+          ParentFont = False
+          TabOrder = 0
+        end
+      end
+    end
+    object tbs5Siblings: TTabSheet
+      Caption = 'Geschwister'
+      ClientHeight = 916
+      ClientWidth = 1659
+      ParentFont = False
+      object DBGrid1: TDBGrid
+        Left = 56
+        Height = 718
+        Top = 142
+        Width = 1547
+        Align = alClient
+        BorderSpacing.Around = 32
+        Color = clWindow
+        Columns = <>
+        ParentFont = False
+        TabOrder = 0
+      end
+      object Label4: TLabel
+        Left = 56
+        Height = 30
+        Top = 56
+        Width = 1547
+        Align = alTop
+        Alignment = taCenter
+        BorderSpacing.Around = 32
+        Caption = 'Label4'
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object tbs6Text: TTabSheet
+      Caption = 'Text'
+      ClientHeight = 916
+      ClientWidth = 1659
+      ParentFont = False
+      object DBMemo1: TDBMemo
+        Left = 56
+        Height = 718
+        Top = 142
+        Width = 1547
+        Align = alClient
+        BorderSpacing.Around = 32
+        DataField = 'Text'
+        DataSource = DataSource1
+        ParentFont = False
+        TabOrder = 0
+      end
+      object Label1: TLabel
+        Left = 56
+        Height = 30
+        Top = 56
+        Width = 1547
+        Align = alTop
+        BorderSpacing.Around = 32
+        Caption = 'Label1'
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object tbs7Address: TTabSheet
+      Caption = 'Adresse'
+      ClientHeight = 508
+      ClientWidth = 945
+      ParentFont = False
+      object Panel11: TPanel
+        Left = 32
+        Height = 397
+        Top = 79
+        Width = 881
+        Align = alClient
+        BorderSpacing.Around = 32
+        Caption = 'Panel11'
+        ClientHeight = 397
+        ClientWidth = 881
+        ParentFont = False
+        TabOrder = 0
+        object GroupBox1: TGroupBox
+          Left = 651
+          Height = 375
+          Top = 11
+          Width = 219
+          Align = alRight
+          BorderSpacing.Around = 10
+          Caption = 'GroupBox1'
+          ParentFont = False
+          TabOrder = 0
+        end
+      end
+      object Label5: TLabel
+        Left = 32
+        Height = 15
+        Top = 32
+        Width = 881
+        Align = alTop
+        BorderSpacing.Around = 32
+        Caption = 'Label5'
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object tbs8Bilder: TTabSheet
+      Caption = 'Bilder'
+      ClientHeight = 654
+      ClientWidth = 1102
+      ParentFont = False
+      object ListView1: TListView
+        Left = 0
+        Height = 654
+        Top = 0
+        Width = 1102
+        Align = alClient
+        Columns = <>
+        LargeImages = ImageList1
+        ParentFont = False
+        TabOrder = 0
+      end
+    end
+  end
+  object SpeedButton1: TSpeedButton
+    Left = 89
+    Height = 22
+    Top = 42
+    Width = 23
+    ParentFont = False
+  end
+  object ImageList1: TImageList
+    left = 361
+    top = 261
+  end
+  object DataSource1: TDataSource
+    DataSet = dmGenData.qryIndividuals
+    left = 102
+    top = 58
+  end
+  object MainMenu1: TMainMenu
+    left = 309
+    top = 124
+    object mniFile: TMenuItem
+      Caption = 'Datei'
+      object mniFileNew: TMenuItem
+        Action = actFileNew
+        Caption = 'alle Daten löschen'
+      end
+      object mniFileSep1: TMenuItem
+        Caption = '-'
+      end
+      object mniFileISisDSno: TMenuItem
+        Caption = 'ID=Datensatz'
+      end
+      object mniFileDeleteIDs: TMenuItem
+        Caption = 'IDs löschen'
+      end
+      object MenuItem21: TMenuItem
+        Caption = '-'
+      end
+      object mniFilePrivacyOn: TMenuItem
+        Caption = 'Datenschutz ein'
+        OnClick = mniFilePrivacyOnClick
+      end
+      object mniFilePrivacyOff: TMenuItem
+        Caption = 'Datenschutz aus'
+      end
+      object MenuItem23: TMenuItem
+        Caption = '-'
+      end
+      object mniFilePrintSetup: TMenuItem
+        Action = actFilePrintSetup
+      end
+      object mniFilePrint: TMenuItem
+        Action = actFilePrint
+      end
+      object MenuItem15: TMenuItem
+        Caption = '-'
+      end
+      object mniFileExport2Exl: TMenuItem
+        Caption = 'Excel-Export'
+      end
+      object MenuItem14: TMenuItem
+        Caption = '-'
+      end
+      object mniFileSortMarrChild: TMenuItem
+        Caption = 'Ehen / Kinder ordnen'
+      end
+      object MenuItem16: TMenuItem
+        Caption = '-'
+      end
+      object mniFileExit: TMenuItem
+        Action = FileExit1
+      end
+    end
+    object mniDataexchange: TMenuItem
+      Caption = 'Datenaustausch'
+      object mniDataexchangeSaveGedcom: TMenuItem
+        Action = actSaveGedCom
+        Caption = 'GedCom - Datei schreiben'
+      end
+      object MenuItem17: TMenuItem
+        Action = actLoadGedcom
+      end
+      object mniDataexchangeSep1: TMenuItem
+        Caption = '-'
+      end
+      object mniDataexchangeFokoSave: TMenuItem
+        Caption = 'FOKO - Datei erstellen'
+      end
+      object MenuItem1: TMenuItem
+        Caption = 'FOKO - Datei editieren'
+      end
+      object MenuItem2: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem3: TMenuItem
+        Caption = 'Tiny-Tafel erstellen'
+      end
+      object MenuItem4: TMenuItem
+        Caption = '-'
+      end
+      object MenuItem5: TMenuItem
+        Caption = 'Adressdatei schreiben'
+      end
+    end
+    object mniDataset: TMenuItem
+      Caption = 'Datensatz'
+      object mniDatasetFirst: TMenuItem
+        Action = DataSetFirst1
+      end
+      object mniDatasetPrior: TMenuItem
+        Action = DataSetPrior1
+      end
+      object mniDatasetNext: TMenuItem
+        Action = DataSetNext1
+      end
+      object mniDatasetLast: TMenuItem
+        Action = DataSetLast1
+      end
+      object mniDatasetSep1: TMenuItem
+        Caption = '-'
+      end
+      object mniDatasetInsert: TMenuItem
+        Action = DataSetInsert1
+        Caption = 'neu'
+      end
+      object mniDatasetSep2: TMenuItem
+        Caption = '-'
+      end
+      object mniDatasetDelete: TMenuItem
+        Action = DataSetDelete1
+      end
+    end
+    object mniSearch: TMenuItem
+      Caption = 'Suchen'
+    end
+    object mniLists: TMenuItem
+      Caption = 'Listen'
+    end
+    object mniAncestors: TMenuItem
+      Caption = 'Vorfahren'
+    end
+    object mniDescendens: TMenuItem
+      Caption = 'Nachfahren'
+    end
+    object mniCalender: TMenuItem
+      Caption = 'Kalender'
+    end
+    object mniImages: TMenuItem
+      Caption = 'Bilder'
+    end
+    object mniChecks: TMenuItem
+      Caption = 'Datenprüfung'
+    end
+    object mniFilter: TMenuItem
+      Caption = 'Filter'
+    end
+    object mniInfo: TMenuItem
+      Caption = 'Info'
+    end
+    object mniBackup: TMenuItem
+      Caption = 'Sicherung'
+    end
+  end
+  object ActionList1: TActionList
+    left = 352
+    top = 126
+    object DataSetFirst1: TDataSetFirst
+      Category = 'Database'
+      Caption = '&Erster'
+      Hint = 'Erster'
+    end
+    object DataSetPrior1: TDataSetPrior
+      Category = 'Database'
+      Caption = '&Vorgänger'
+      Hint = 'Vorgänger'
+    end
+    object DataSetNext1: TDataSetNext
+      Category = 'Database'
+      Caption = '&Nächster'
+      Hint = 'Nächster'
+    end
+    object DataSetLast1: TDataSetLast
+      Category = 'Database'
+      Caption = '&Letzter'
+      Hint = 'Letzter'
+    end
+    object FileOpen1: TFileOpen
+      Category = 'File'
+      Caption = 'Öffnen'
+      Hint = 'Öffnen'
+      ShortCut = 16463
+    end
+    object FileOpenWith1: TFileOpenWith
+      Category = 'File'
+      Caption = 'Öffnen mit ...'
+      Hint = 'Öffnen'
+    end
+    object FileSaveAs1: TFileSaveAs
+      Category = 'File'
+      Caption = 'Sichern &als ...'
+      Hint = 'Sichern als'
+    end
+    object FileExit1: TFileExit
+      Category = 'File'
+      Caption = '&Beenden'
+      Hint = 'Beenden'
+    end
+    object actFileNew: TAction
+      Category = 'File'
+      Caption = 'Neu ...'
+    end
+    object actFilePrintSetup: TAction
+      Category = 'File'
+      Caption = 'Druckereinrichtung'
+    end
+    object actFilePrint: TAction
+      Category = 'File'
+      Caption = 'Drucken ...'
+    end
+    object actLoadGedcom: TAction
+      Category = 'Dataexchange'
+      Caption = 'GedCom - Datei einlesen'
+    end
+    object actSaveGedCom: TAction
+      Category = 'Dataexchange'
+      Caption = 'actSaveGedCom'
+    end
+    object Action6: TAction
+      Category = 'Dataexchange'
+      Caption = 'Action6'
+    end
+    object Action7: TAction
+      Category = 'Dataexchange'
+      Caption = 'Action7'
+    end
+    object DataSetInsert1: TDataSetInsert
+      Category = 'Database'
+      Caption = 'E&infügen'
+      Hint = 'Einfügen'
+    end
+    object DataSetDelete1: TDataSetDelete
+      Category = 'Database'
+      Caption = '&Löschen'
+      Hint = 'Löschen'
+    end
+    object SearchFind1: TSearchFind
+      Category = 'Search'
+      Caption = '&Suchen ...'
+      ShortCut = 16454
+    end
+    object SearchReplace1: TSearchReplace
+      Category = 'Search'
+      Caption = '&Ersetzen'
+      Dialog.Options = [frDown, frReplace, frReplaceAll, frHidePromptOnReplace]
+    end
+    object SearchFindFirst1: TSearchFindFirst
+      Category = 'Search'
+      Caption = 'Ersten suchen'
+    end
+    object SearchFindNext1: TSearchFindNext
+      Category = 'Search'
+      Caption = '&Nächsten suchen'
+      ShortCut = 114
+    end
+  end
+end
