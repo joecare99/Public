@@ -1,0 +1,306 @@
+object Form2: TForm2
+  Left = 0
+  Height = 1096
+  Top = 0
+  Width = 2074
+  ActiveControl = btnDoParse
+  Caption = 'Form2'
+  ClientHeight = 1096
+  ClientWidth = 2074
+  Color = clBtnFace
+  DesignTimePPI = 120
+  Font.Color = clWindowText
+  Font.Height = -18
+  Font.Name = 'Tahoma'
+  OnShow = FormShow
+  Visible = False
+  object btnDoParse: TBitBtn
+    Left = 907
+    Height = 42
+    Top = 42
+    Width = 125
+    Caption = 'Parse'
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    OnClick = btnDoParseClick
+    ParentFont = False
+    TabOrder = 0
+  end
+  object mHTML: TMemo
+    Left = 13
+    Height = 920
+    Top = 93
+    Width = 442
+    Anchors = [akTop, akLeft, akBottom]
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    Lines.Strings = (
+      '<TAG>Memo1</TAG>'
+    )
+    ParentFont = False
+    ScrollBars = ssBoth
+    TabOrder = 1
+  end
+  object btnLoadFile: TBitBtn
+    Left = 772
+    Height = 42
+    Top = 42
+    Width = 125
+    Caption = 'Open'
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    OnClick = btnLoadFileClick
+    ParentFont = False
+    TabOrder = 2
+  end
+  object mLog: TMemo
+    Left = 987
+    Height = 920
+    Top = 93
+    Width = 280
+    Anchors = [akTop, akLeft, akBottom]
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    Lines.Strings = (
+      'Memo1'
+    )
+    ParentFont = False
+    ScrollBars = ssBoth
+    TabOrder = 3
+  end
+  object mSchema: TMemo
+    Left = 1280
+    Height = 920
+    Top = 93
+    Width = 255
+    Anchors = [akTop, akLeft, akBottom]
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    Lines.Strings = (
+      ']TS: !DOCTYPE'
+      ']TS: div'
+      ']TM: table,border="0"'
+      ']TM: td,width="290"'
+      '[TM: td,width="139"'
+      '+Vater:'
+      ']TE: tr'
+      '[TM: td,width="139"'
+      '+Mutter:'
+      ']TE: tr'
+      '[TM: font,size="1"'
+      '+Individuum:'
+      ']TE: font'
+      ']TM: td,bgcolor=#000000'
+      '[TM: td,bgcolor=#EFEFEF'
+      '+Familie:'
+      ']TE: td'
+      '[TS: h2'
+      '+Individuum:'
+      ']TE: div'
+    )
+    ParentFont = False
+    ScrollBars = ssAutoBoth
+    TabOrder = 4
+    WordWrap = False
+  end
+  object mOutput: TMemo
+    Left = 1545
+    Height = 920
+    Top = 93
+    Width = 483
+    Anchors = [akTop, akLeft, akBottom]
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    Lines.Strings = (
+      'Memo1'
+    )
+    ParentFont = False
+    ScrollBars = ssBoth
+    TabOrder = 6
+  end
+  object btnSave: TBitBtn
+    Left = 1545
+    Height = 42
+    Top = 1022
+    Width = 125
+    Anchors = [akLeft, akBottom]
+    Caption = 'Save'
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    OnClick = btnSaveClick
+    ParentFont = False
+    TabOrder = 5
+  end
+  object cbxFilename: TComboBox
+    Left = 13
+    Height = 30
+    Top = 43
+    Width = 707
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    ItemHeight = 22
+    ParentFont = False
+    TabOrder = 7
+    Text = 'V:\Daten\dokumente\HTML\Genealogie Hübner\gendata.huebner-row.de_2012\huebner\1.html'
+  end
+  object btnBrowseHtml: TBitBtn
+    Left = 723
+    Height = 38
+    Top = 43
+    Width = 42
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    Glyph.Data = {
+      76010000424D7801000000000000760000002800000020000000100000000100
+      04000000000000000000120B0000120B00000000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+      5555555555555555555555555555555555555555555555555555555555555555
+      555555555555555555555555555555555555555FFFFFFFFFF555550000000000
+      55555577777777775F55500B8B8B8B8B05555775F555555575F550F0B8B8B8B8
+      B05557F75F555555575F50BF0B8B8B8B8B0557F575FFFFFFFF7F50FBF0000000
+      000557F557777777777550BFBFBFBFB0555557F555555557F55550FBFBFBFBF0
+      555557F555555FF7555550BFBFBF00055555575F555577755555550BFBF05555
+      55555575FFF75555555555700007555555555557777555555555555555555555
+      5555555555555555555555555555555555555555555555555555
+    }
+    Layout = blGlyphTop
+    NumGlyphs = 2
+    OnClick = btnBrowseHtmlClick
+    ParentFont = False
+    TabOrder = 8
+  end
+  object chbVerbose: TCheckBox
+    Left = 987
+    Height = 26
+    Top = 1028
+    Width = 87
+    Anchors = [akLeft, akBottom]
+    Caption = 'Verbose'
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    ParentFont = False
+    TabOrder = 9
+  end
+  object BitBtn1: TBitBtn
+    Left = 1053
+    Height = 50
+    Top = 40
+    Width = 125
+    Caption = 'BitBtn1'
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    ParentFont = False
+    TabOrder = 10
+  end
+  object btnSaveSchema: TBitBtn
+    Left = 1280
+    Height = 42
+    Top = 1022
+    Width = 125
+    Anchors = [akLeft, akBottom]
+    Caption = 'Save'
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    OnClick = btnSaveSchemaClick
+    ParentFont = False
+    TabOrder = 11
+  end
+  object btnBrowseSchema: TBitBtn
+    Left = 1493
+    Height = 38
+    Top = 40
+    Width = 42
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    Glyph.Data = {
+      76010000424D7801000000000000760000002800000020000000100000000100
+      04000000000000000000120B0000120B00000000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+      5555555555555555555555555555555555555555555555555555555555555555
+      555555555555555555555555555555555555555FFFFFFFFFF555550000000000
+      55555577777777775F55500B8B8B8B8B05555775F555555575F550F0B8B8B8B8
+      B05557F75F555555575F50BF0B8B8B8B8B0557F575FFFFFFFF7F50FBF0000000
+      000557F557777777777550BFBFBFBFB0555557F555555557F55550FBFBFBFBF0
+      555557F555555FF7555550BFBFBF00055555575F555577755555550BFBF05555
+      55555575FFF75555555555700007555555555557777555555555555555555555
+      5555555555555555555555555555555555555555555555555555
+    }
+    Layout = blGlyphTop
+    NumGlyphs = 2
+    OnClick = btnBrowseSchemaClick
+    ParentFont = False
+    TabOrder = 12
+  end
+  object cbxFilenameSchema: TComboBox
+    Left = 1267
+    Height = 30
+    Top = 43
+    Width = 227
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    ItemHeight = 22
+    ParentFont = False
+    TabOrder = 13
+    Text = 'Huebner_Schema.txt'
+  end
+  object btnLoadSchema: TBitBtn
+    Left = 1533
+    Height = 42
+    Top = 37
+    Width = 125
+    Caption = 'Open'
+    Font.Color = clWindowText
+    Font.Height = -18
+    Font.Name = 'Tahoma'
+    OnClick = btnLoadSchemaClick
+    ParentFont = False
+    TabOrder = 14
+  end
+  object HTMLViewer1: THTMLViewer
+    Left = 480
+    Height = 907
+    Top = 103
+    Width = 490
+    TabOrder = 15
+    Anchors = [akTop, akLeft, akBottom]
+    BorderStyle = htFocused
+    HistoryMaxCount = 0
+    DefFontName = 'Times New Roman'
+    DefPreFontName = 'Courier New'
+    NoSelect = False
+    CharSet = DEFAULT_CHARSET
+    PrintMarginLeft = 2
+    PrintMarginRight = 2
+    PrintMarginTop = 2
+    PrintMarginBottom = 2
+    PrintScale = 1
+  end
+  object SaveDialog1: TSaveDialog
+    left = 1480
+    top = 827
+  end
+  object OpenDialog1: TOpenDialog
+    left = 733
+    top = 67
+  end
+  object Config1: TConfig
+    left = 800
+    top = 67
+  end
+end
