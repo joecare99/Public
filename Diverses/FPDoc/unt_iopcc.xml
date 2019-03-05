@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="iopcc_v3"><module name="Unt_iopcc"><short>First Unit for the International Obfuscated Pascal Coding Contest</short><element name="Main"><short>This is the Main-Procedure</short>
+      </element><element name="L"><short>L gives a short version of Integer</short>
+      </element><element name="I"><short>I is an subset of Integer of 0 to 3</short>
+      </element><element name="Z"><short>Z is a constant of 1 shl 11</short>
+      </element><element name="U"><short>U is a constant of $13 shl 1 +1</short>
+      </element><element name="O"><short>O is a constant of U and -U</short>
+      </element><element name="D"><short>D is a constant of O shl (O shl O + O)</short>
+      </element><element name="B"><short>B is a constat of $597B</short>
+      </element><element name="C"><short>C is a string-constant of ' _|'</short>
+      </element><element name="l0"><short>l0 is a array of L containing (0,-3,U-O,-O)</short>
+      </element><element name="lQ"><short>lQ is an array of L containing (O,U,-O,-U)</short>
+      </element><element name="E"><short>Variable E is an Array of L</short>
+      </element><element name="H"><short>Function H takes L and gives L as result</short>
+      </element><element name="H.Q"><short>Q is the var input parameter of H</short>
+      </element><element name="Q"><short>Procedure Q takes L as parameter Q</short>
+      </element><element name="Main.ll"><short>variable ll is an arary of L</short>
+      </element><element name="Main.Hel"><short>Variable Hel of type L is initialized with 0</short>
+      </element><element name="Main.Wor"><short>Variable Wor of type l is initialized with d-D;</short>
+      </element><element name="Main.P"><short>Variable P is of type L</short>
+      </element><element name="Main.A"><short>Variable A is of type L</short>
+      </element><element name="Main.S"><short>Variable S is of type L</short>
+      </element><element name="Main.CA"><short>Variable CA is of type L</short>
+      </element><element name="Main._fe"><short>Variable _fe is of type L and initialized with z-z</short>
+      </element><element name="Main._C"><short>Variable _C is of type L</short>
+      </element><element name="Main.oo"><short>Variable oo is of type l</short>
+      </element><element name="Main.l1"><short>Variable l1 is an array of type L</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
