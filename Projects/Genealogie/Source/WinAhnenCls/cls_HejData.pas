@@ -127,6 +127,7 @@ type
     Procedure AppendSpouse(Sender:TObject=nil);
     Procedure AppendParent(Knd:TEnumHejIndDatafields;Sender:TObject=nil);
     Procedure AppendAdoption(idAdopter:integer);
+    Procedure SetMarriage(idInd,idSpouse:integer);
     Procedure SetPlace(aPlace:THejPlaceData);
     Procedure SetSource(aSource:THejSourData);
     Procedure Edit(Sender:TObject=nil);
@@ -559,7 +560,7 @@ end;
 
 procedure TClsHejGenealogy.SetMarriageData(idx: Integer; AValue: THejMarrData);
 begin
-
+  FMarr.Marriage[FIndi.ActualMarriage[idx]]:=AValue;
 end;
 
 procedure TClsHejGenealogy.SetOnDataChange(AValue: TNotifyEvent);

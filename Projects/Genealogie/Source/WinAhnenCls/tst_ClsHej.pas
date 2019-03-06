@@ -51,9 +51,13 @@ type
     protected
         procedure SetUp; override;
         procedure TearDown; override;
+        procedure CheckEquals(const expected, actual: THejIndData;
+           msg: string='';ChkID: boolean=false); overload;
+
     published
         procedure TestSetup;
         procedure TestCreateTestData;
+        procedure TestAppendTestData;
         procedure TestReadFromStream;
         procedure TestLoadFromFile;
         procedure TestWriteToStream;
@@ -234,9 +238,57 @@ end;
 
 procedure TTestClsHej.AppendTestdata(Tested: boolean);
 var
-  lIDBase: Integer;
+  lIDBase, i, j: Integer;
 begin
   lIDBase := FhejClass.IndexOf(VarArrayOf(['Care','Joe',StrToDate('21.01.1971')]));
+  CheckEquals(1,lIDBase,'Test first Individual');
+  for i := FHejClass.Count+1 to high(cind) do
+    begin
+      FHejClass.Append(self);
+      if Tested then
+         CheckEquals(i, FHejClass.Count, inttostr(i)+' Individuals');
+
+      FHejClass.ActualInd := cind[i] ;
+      if Tested then
+         CheckEquals(cind[i], FHejClass.ActualInd, 'Individual['+inttostr(i)+'] match');
+      if Tested then
+         CheckEquals(cind[i], FHejClass.PeekInd(i), 'Individual['+inttostr(i)+'] match 2');
+
+      if cInd[i].idFather<i then
+         FHejClass.AppendLinkChild(cInd[i].idFather,i);
+      if cInd[i].idMother<i then
+         FHejClass.AppendLinkChild(cInd[i].idMother,i);
+
+      for j := 1 to FHejClass.Count-1 do
+         if (cInd[j].idFather = i) or (cInd[j].idMother = i) then
+            FHejClass.AppendLinkChild(i,j);
+
+    end;
+
+  // Delete an unwanted record
+  for i := 1 to high(cInd) do
+    if cInd[i].id = 0 then
+       begin
+         FHejClass.Seek(i);
+         FHejClass.Delete(FHejClass);
+       end;
+
+  for i := 1 to high(cMarr) do
+    begin
+      FHejClass.SetMarriage(cMarr[i].idPerson,cMarr[i].idSpouse);
+
+    end;
+
+  FHejClass.SetPlace(cPlace[0]);
+  for i := FHejClass.PlaceCount to high(cPlace) do
+    FHejClass.SetPlace(cPlace[i]);
+
+  FHejClass.SetSource(cSource[0]);
+  for i := FHejClass.PlaceCount to high(cSource) do
+    FHejClass.SetSource(cSource[i]);
+
+    FHejClass.First;
+
 end;
 
 procedure TTestClsHej.CheckEqualsVar(Expected, Actual: variant; Message: string);
@@ -316,6 +368,22 @@ begin
     FreeAndNil(FHejClass);
 end;
 
+procedure TTestClsHej.CheckEquals(const expected, actual: THejIndData;
+  msg: string; ChkID: boolean);
+var
+  lFld: TEnumHejIndDatafields;
+begin
+  for lFld in TEnumHejIndDatafields do
+    if lFld> hind_idMother then
+    CheckEquals(string(expected.Data[lFld]),actual.Data[lFld],msg +' fld:'+CHejIndDataDesc[lFld]);
+  if ChkID then
+    begin
+  CheckEquals(integer(expected.Data[hind_idMother]),actual.Data[hind_idMother],msg +' fld:'+CHejIndDataDesc[hind_idMother]);
+  CheckEquals(integer(expected.Data[hind_idFather]),actual.Data[hind_idFather],msg +' fld:'+CHejIndDataDesc[hind_idFather]);
+  CheckEquals(integer(expected.Data[hind_ID]),actual.Data[hind_ID],msg +' fld:'+CHejIndDataDesc[hind_ID]);
+    end;
+end;
+
 procedure TTestClsHej.TestSetup;
 var
     i: integer;
@@ -331,10 +399,36 @@ begin
 end;
 
 procedure TTestClsHej.TestCreateTestData;
+var
+  i: Integer;
 begin
     CreateTestdata(True);
     CheckEquals(4, FHejClass.IndividualCount, '4 Individuals');
     CheckEquals(2, FHejClass.MarriagesCount, '2 Marriages');
+    for i := 1 to 4 do
+       begin
+         Checktrue(cInd[i].Equals(FHejClass.PeekInd(i)),'cInd['+inttostr(i)+'].Equals(FHejClass.PeekInd('+inttostr(i)+'))');
+         Checktrue(FHejClass.PeekInd(i).Equals(cind[i]),'FHejClass.PeekInd('+inttostr(i)+').Equals(cInd['+inttostr(i)+'])');
+         CheckFalse(cInd[5-i].Equals(FHejClass.PeekInd(i)),'not cInd['+inttostr(5-i)+'].Equals(FHejClass.PeekInd('+inttostr(i)+'))');
+         CheckFalse(FHejClass.PeekInd(5-i).Equals(cind[i]),'not FHejClass.PeekInd('+inttostr(5-i)+').Equals(cInd['+inttostr(i)+'])');
+       end;
+end;
+
+procedure TTestClsHej.TestAppendTestData;
+var
+  i: Integer;
+begin
+  CreateTestdata(false);
+  AppendTestdata(true);
+  CheckEquals(9, FHejClass.IndividualCount, '9 Individuals');
+  CheckEquals(6, FHejClass.MarriagesCount, '6 Marriages');
+  for i := 1 to high(cind) do
+     begin
+       Checktrue(cInd[i].Equals(FHejClass.PeekInd(i)),'cInd['+inttostr(i)+'].Equals(FHejClass.PeekInd('+inttostr(i)+'))');
+       Checktrue(FHejClass.PeekInd(i).Equals(cind[i]),'FHejClass.PeekInd('+inttostr(i)+').Equals(cInd['+inttostr(i)+'])');
+       CheckFalse(cInd[9-i].Equals(FHejClass.PeekInd(i)),'not cInd['+inttostr(9-i)+'].Equals(FHejClass.PeekInd('+inttostr(i)+'))');
+       CheckFalse(FHejClass.PeekInd(9-i).Equals(cind[i]),'not FHejClass.PeekInd('+inttostr(9-i)+').Equals(cInd['+inttostr(i)+'])');
+     end;
 end;
 
 procedure TTestClsHej.TestReadFromStream;
