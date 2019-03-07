@@ -1,7 +1,8 @@
 program iopcc_17_2;
 {$apptype console}
-uses unt_iopcc17_2;
+uses uIopcc172;
 
 begin
-  Main;
+  M;
+  readln;
 end.
