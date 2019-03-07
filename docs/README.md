@@ -1,5 +1,8 @@
 # Public/docs
-GitDocs - Homepage with some Demo
+GitDocs - Homepage with some Demo http://joecare99.github.io/Public
 
-e.G:
-http://htmlpreview.github.io/?https://raw.githubusercontent.com/joecare99/public/master/docs/IOPCC.html
+e.G: the IOPCC<br/>
+http://joecare.htmlpreview.github.io/IOPCC.html<br/>
+or IOPCC17_3<br/>
+http://joecare.htmlpreview.github.io/IOPCC17_3.html<br/>
+
