@@ -15,7 +15,11 @@
       <ResourceType Value="res"/>
     </General>
     <LazDoc Paths="..\FPDoc"/>
-    <BuildModes Count="3">
+    <CustomData Count="2">
+      <Item0 Name="MaintainHTML" Value="1"/>
+      <Item1 Name="PasJSWebBrowserProject" Value="1"/>
+    </CustomData>
+    <BuildModes Count="4">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
         <CompilerOptions>
@@ -90,6 +94,39 @@
           </Linking>
         </CompilerOptions>
       </Item3>
+      <Item4 Name="Web">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
+            <OtherUnitFiles Value="..\Source"/>
+            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <AllowLabel Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="ecmascript6"/>
+            <TargetOS Value="browser"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+          </Linking>
+        </CompilerOptions>
+      </Item4>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
