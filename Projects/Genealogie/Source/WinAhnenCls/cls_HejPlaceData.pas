@@ -84,8 +84,6 @@ public
        MaidenheadLoc:string;
  end;
 
- { TClsHejData }
-
  { TClsHejPlaces }
 
  TClsHejPlaces=class(TClsHejBase)
