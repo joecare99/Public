@@ -134,15 +134,14 @@ public
     function GetData(Marr: integer; idx: TEnumHejMarrDatafields): variant;
     function GetMarriage(index: integer): THejMarrData;
     procedure SetActualMarr(AValue: THejMarrData);
+    procedure SetMarriage(index: integer; AValue: THejMarrData);
  protected
     function GetCount: integer;override;
  public
     procedure SetData(Marr: integer; idx: TEnumHejMarrDatafields; AValue: variant
       );
     function GetDateData(Marr: integer; idx: TEnumHejMarrDatafields): string;
-    Procedure Seek(ID:integer);
-    Function GetActID:integer;
-    Property Marriage[index:integer]:THejMarrData read GetMarriage;
+    Property Marriage[index:integer]:THejMarrData read GetMarriage write SetMarriage;
     Property ActualMarr:THejMarrData read GetActualMarr write SetActualMarr;
     Property Data[ind:integer;idx:TEnumHejMarrDatafields]:variant read GetData write SetData;default;
  public
@@ -152,9 +151,13 @@ public
     procedure ReadfromStream(st:Tstream;Idiv:TClsHejBase=nil);Override;
     PRocedure WriteToStream(st:TStream);override;
     Destructor Destroy; override;
-    PRocedure Append(Sender:TObject=nil);
     Procedure SetRevIdx(aRevIdx:integer);
     Procedure ActualMarrSetLink(idPerson,idSpouse:integer);
+ public // IData
+    Procedure Seek(ID:integer);
+    Function GetActID:integer;
+    PRocedure Append(Sender:TObject=nil);
+
  end;
 
 implementation
@@ -347,6 +350,25 @@ begin
       AValue.idPerson := FMarrArray[FActIndex].idSpouse;
       FMarrArray[AValue.ID]:=AValue;
     end;
+end;
+
+procedure TClsHejMarriages.SetMarriage(index: integer; AValue: THejMarrData);
+begin
+  if FMarrArray[Index].Equals(AValue,true) then Exit;
+  AValue.ID := Index;
+  AValue.idPerson := FMarrArray[Index].idPerson;
+  AValue.idSpouse := FMarrArray[Index].idSpouse;
+  AValue.revIdx := FMarrArray[Index].revIdx;
+  FMarrArray[Index]:=AValue;
+  if (AValue.revIdx <>0) or ((FMarrArray[0].revIdx=Index) and (Index>0)) then
+    begin
+      AValue.revIdx := Index;
+      AValue.ID := FMarrArray[Index].revIdx;
+      AValue.idSpouse := FMarrArray[Index].idPerson;
+      AValue.idPerson := FMarrArray[Index].idSpouse;
+      FMarrArray[AValue.ID]:=AValue;
+    end;
+
 end;
 
 { TClsHejData }

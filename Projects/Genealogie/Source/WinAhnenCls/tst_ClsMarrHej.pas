@@ -66,6 +66,7 @@ type
         procedure TestSetUp;
         Procedure TestCreateTestData;
         Procedure TestIndexOf;
+        Procedure TestSeek;
         procedure TestReadStream;
         procedure TestReadStream2;
         procedure TestWriteStream;
@@ -158,6 +159,7 @@ begin
          FClsHejMarriages.SetRevIdx(i);
        FClsHejMarriages.ActualMarr := cMarr[i];
      end;
+  FClsHejMarriages.Seek(0);
 end;
 
 procedure TTestClsMarrHej.TestSetUp;
@@ -184,6 +186,7 @@ begin
   CheckEquals(lMarr,FClsHejMarriages.Marriage[1],'Marriage[1]',true);
   for i := 2 to FClsHejMarriages.Count-1 do
     CheckEquals(cMarr[i-1],FClsHejMarriages.Marriage[i],'Marriage['+inttostr(i)+']',true);
+  CheckEquals(0,FClsHejMarriages.GetActID,'GetActID:0');
 end;
 
 procedure TTestClsMarrHej.TestIndexOf;
@@ -197,6 +200,31 @@ begin
   CheckEquals(-1,FClsHejMarriages.IndexOf(vararrayof([1,3])),'idI:1 idS:3 !');
   CheckEquals(-1,FClsHejMarriages.IndexOf(vararrayof([0,0])),'idI:0 idS:0 !');
 // Todo -jc Großer Test
+end;
+
+procedure TTestClsMarrHej.TestSeek;
+var
+  lSeelDest: LongInt;
+  i: Integer;
+begin
+    CreateTestData;
+    CheckEquals(0,FClsHejMarriages.GetActID,'default Actual Marriage');
+    FClsHejMarriages.Seek(1);
+    CheckEquals(1,FClsHejMarriages.GetActID,'GetActID:1');
+    FClsHejMarriages.Seek(2);
+    CheckEquals(2,FClsHejMarriages.GetActID,'GetActID:2');
+    FClsHejMarriages.Seek(3);
+    CheckEquals(3,FClsHejMarriages.GetActID,'GetActID:3');
+    FClsHejMarriages.Seek(4);
+    CheckEquals(4,FClsHejMarriages.GetActID,'GetActID:4');
+    FClsHejMarriages.Seek(-1);
+    CheckEquals(4,FClsHejMarriages.GetActID,'GetActID.2:4');
+    for i := 0 to 10000 do
+      begin
+        lSeelDest:=random(FClsHejMarriages.Count);
+        FClsHejMarriages.Seek(lSeelDest);
+        CheckEquals(lSeelDest,FClsHejMarriages.GetActID,'GetActID['+IntToStr(i)+']:'+inttostr(lSeelDest));
+      end;
 end;
 
 procedure TTestClsMarrHej.TestReadStream;
