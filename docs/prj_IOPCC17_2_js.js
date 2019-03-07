@@ -1473,7 +1473,7 @@ rtl.module("unt_iopcc2",["System","Math"],function () {
   "use strict";
   var $mod = this;
   var $impl = $mod.$impl;
-  var D = "\x07" + " \\_\/";
+  var D = "\x08" + " \\_\/";
   this.M = function () {
     var Result = 0;
     var Jo = 2017;
