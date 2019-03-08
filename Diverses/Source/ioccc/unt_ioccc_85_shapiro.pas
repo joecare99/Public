@@ -12,10 +12,10 @@ implementation
 { $define ShowGen}
 {$define WaitAtEnd}
 
-{$ifdef ShowGen}
 uses
-  SysUtils, crt;
-{$endif}
+  SysUtils{$ifdef ShowGen}
+, crt, math
+{$endif};
 
 {$ifdef C}// This is the orginal C-Code
 //#define P(X)j=write(1,X,1)
@@ -31,13 +31,14 @@ uses
 
 type TValues=integer;
      TDir= 0..3;
+     TPosArray=array[0..3] of Tdir;
 
 
 const
   T1k = 1024;
   Cg = 39;
   {$ifdef ShowGen}
-  Scc = '   ''---'' , |-,-|';
+  Scc = '   ,---, '' |-''-|';
   {$endif}
   SOut = '|_|  _  |';
   DirStoppArray: array[TDir] of TValues = (0, -3, Cg - 1, -1); // former l
@@ -58,6 +59,52 @@ var
   Write(Copy(SOut+LineEnding, idx + 1, 2 + idx div 8));
   end;
 
+const //{-1}prest:String='010011020101111010020201031210000021010020013000111211112010';
+      //{-2}prest:String='11100200012111101000002122103';
+      {-3}prest:String='01100020110100010100112100000012131011120100011003001111200101101211';
+      sstr:string='';
+      SPre=$123456789ABCDEFF;
+      sInt1:QWord=$0;
+      sInt2:QWord=$0;
+
+
+  function GetRndDir(cnt:TValues;PosibDir:TPosArray):Tdir;
+
+  var
+    lNr: Longint;
+    st:string;
+    tr: byte;
+
+  begin
+//    if cnt=1 then exit(PosibDir[0]);
+   {$ifdef ShowGen}
+    gotoxy(1,1);
+    writeln(inttohex(sint2,16),' ',inttohex(sint1,16),' ',sstr);
+    write(cnt,':',PosibDir[0],', ',PosibDir[1],', ',PosibDir[2],', ',PosibDir[3],'  ');
+    {$endif}
+    if length(preSt)=0 then
+//      readln(st)
+      exit(PosibDir[random(cnt)])
+    else
+      begin
+        st := Prest[1];
+        delete(prest,1,1);
+      end;
+    if trystrtoint(st,lNr) and (lNr<=cnt) then
+      begin
+        sstr:=sstr+st;
+        sint1:=RolQWord( sint1,2);
+        tr:=sint1 and 3;
+        sint1:=sint1 xor tr  or lNr;
+        sint2:=RolQWord( sint2,2);
+        sint2:=sint2 xor tr;
+        exit(PosibDir[lnr])
+
+      end
+    else
+      exit(PosibDir[random(cnt)]);
+  end;
+
 procedure Main;
 
 const
@@ -66,9 +113,12 @@ const
 var
   LabOutIdx: TValues = 0;             // former u
   Fifo: array[0..T1k] of TValues;     // former Nu
-  PosibDir: array[0..3] of TValues;    // former  a
+  PosibDir: TPosArray;    // former  a
   FifoPopIdx: TValues = 0; // Pop-Idx , former d
   FifoPushIdx: TValues = 0; // Push-Idx, former b
+  {$ifdef ShowGen}
+  Idx,
+  {$endif}
   ActCellData, // former c
   NextCell,  // former e
   NextCellData, // former f(2)
@@ -81,7 +131,7 @@ var
 begin
   Randomize;  // This one is defitly usefull but wasn't in the original code
   Labyrinth[0] := 2;   // Setze Endpunkt mit Ausgang
-  StoredCell := Cg * Ru - 1;  // Anfangspunkt unten rechts
+  StoredCell := Cg * Ru - 3;  // Anfangspunkt unten rechts
   NextCell := StoredCell;
   Labyrinth[StoredCell] := T1k+8; // Setze Eingang und belegt
   while (DirCount <> 0) or (FifoPushIdx >= FifoPopIdx) do
@@ -97,24 +147,42 @@ begin
     DirCount := 0;
     for ActDir in DirStoppArray do
     begin
+      PosibDir[ActDir and 3] :=TDir(-1);
       NextCell := Dir[ActDir and 3] + ActCell;
       if ((NextCell >= 0)
         and (NextCell < Cg * Ru)
         and (ActDir <> (NextCell mod Cg))
         and ((ActCellData and T1k) <> (Labyrinth[NextCell] and T1k))) then
       begin
-        PosibDir[pp_(DirCount)] := ActDir;
+        PosibDir[pp_(DirCount)] := ActDir and 3;
       end;
     end;
     if (DirCount <> 0) then
     begin
-      ActDir := PosibDir[random(DirCount)] and 3;  // Calc Destination Cell
+    {$ifdef ShowGen}
+    TextColor(14);
+    TextBackground(1);
+    gotoxy((ActCell mod Cg) * 2 + 1, ActCell div Cg + 1);
+    Write(copy(Scc, (Labyrinth[ActCell] and $0e) + 1, 2));
+    TextBackground(0);
+    TextColor(7);
+    {$endif}
+    ActDir := GetRndDir(Dircount,PosibDir);
+    {$ifdef ShowGen}
+    gotoxy((ActCell mod Cg) * 2 + 1, ActCell div Cg + 1);
+    Write(copy(Scc, (Labyrinth[ActCell] and $0e) + 1, 2));
+    {$endif}
+    end;
+    if (DirCount <> 0) and (ActDir<=3) then
+    begin
+//      ActDir := GetRndDir(Dircount,PosibDir);  // Calc Destination Cell
       NextCell := Dir[ActDir] + ActCell;
       // Remove Wall between Cells
       Labyrinth[ActCell] := ActCellData or 1 shl ActDir;
       Labyrinth[NextCell] := Labyrinth[NextCell] or T1k or (1 shl ((ActDir + 2) mod 4));
       // Push Cell to the Fifo
-      Fifo[pp_(FifoPushIdx)] := NextCell;
+      if dircount>1 then
+        Fifo[pp_(FifoPushIdx)] := ActCell;
     end
     else
     begin
@@ -125,6 +193,16 @@ begin
     {$ifdef ShowGen}
     gotoxy((ActCell mod Cg) * 2 + 1, ActCell div Cg + 1);
     Write(copy(Scc, (Labyrinth[ActCell] and $0e) + 1, 2));
+    TextColor(9);
+    for Idx := FifoPopIdx+1 to FifoPushIdx-1 do
+      begin
+        gotoxy((Fifo[Idx] mod Cg) * 2 + 1, Fifo[Idx] div Cg + 1);
+        Write(copy(Scc, (Labyrinth[Fifo[Idx]] and $0e) + 1, 2));
+      end;
+    TextColor(10);
+    gotoxy((Fifo[FifopopIdx] mod Cg) * 2 + 1, Fifo[FifopopIdx] div Cg + 1);
+    Write(copy(Scc, (Labyrinth[Fifo[FifopopIdx]] and $0e) + 1, 2));
+    TextColor(7);
     sleep(30);
     {$endif}
   end;

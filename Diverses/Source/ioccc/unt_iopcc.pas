@@ -1,5 +1,5 @@
-Unit Unt_iopcc;    {$mode         delphi}{$H+}        Interface      Procedure     Main;
-Implementation   {$define _}    type L=integer      ;I=0..3;const   Z=1 shl 11;    U=$13
+Unit Unt_iopcc;    { $mode        delphi}{$H+}        Interface      Procedure     Main;
+Implementation   { $defin _}    type L=integer      ;I=0..3;const   Z=1 shl 11;    U=$13
 shl        1+1;  O=U     and    -U;D               =O shl          (O shl    O +   O);C=
 ' _|'      ;B=  $597B     ;l0:  array              [I]of           L=(0,     -3,U  -O,-O)
 
@@ -20,7 +20,7 @@ U+O,            3));      end;   {!} Procedure       Main;  {!!!}  var        ll
 
 
 
-           l1:array            [I]of L;begin              Randomize;            E[0]:=
+           l1:array            [I]of L;begin             {Randomize;}           E[0]:=
         d;CA:=U*U-O;A         :=CA;E[CA]:=Z+2;           while(Wor<>0)          or(_fe
         >=Hel)      do       begin       oO:=0         ;S:=CA      ;CA:=        A;_C:=
         E[S];                Wor:=0      ;for P        in(l0       )  do        begin
