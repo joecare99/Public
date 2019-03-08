@@ -313,6 +313,9 @@ begin
           end;
       end;
     Result := (FRooms[i].Transition[dir] <> 0);
+    if result and (FRooms[i].Reachable = 0) then
+       if FRooms[FRooms[i].Transition[dir]].Reachable<>0 then
+          FRooms[i].Reachable := FRooms[FRooms[i].Transition[dir]].Reachable + 1;
 end;
 
 function TGrueStewEng.GetDescription: string;
@@ -322,40 +325,59 @@ end;
 
 procedure TGrueStewEng.InitLaby;
 var
-    flag: boolean;
+    flag, success: boolean;
     dir: TDir;
-    i: integer;
+    i, TrC, bailout: integer;
 
 begin
     FGrueKilled := False;
     FGameEnded := False;
     Fstep := 0;
     setlength(FRooms, high(RaumTxt) + 1);
+    success :=false;
+    while not success do
+      begin
+        bailout:=0;
     for i := 1 to high(RaumTxt) do
       begin
         FRooms[i].mappedR := False;
         FRooms[i].reachable := 0;
         FRooms[i].ID:=i;
         for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
+          begin
+            FRooms[i].Transition[dir] := 0;
             FRooms[i].mappedT[dir] := False;
+          end;
         FRooms[i].Desc := RaumTxt[i];
       end;
     FRooms[1].Reachable := 1;
     for i := 1 to high(RaumTxt) do
       begin
         flag := False;
-        while not flag do
+        TrC:=0;
+        while not flag and (TrC<4) and (bailout<5000) do
           begin
+            TrC:=0;
+            inc(Bailout);
             for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
-                flag := SetTransition(i, dir, i div 7) or flag;
+                if SetTransition(i, dir, i div 7) then
+                  begin
+                    flag:= true;
+                    inc(TrC);
+                  end;
             if i > 7 then
                 flag := flag and (Frooms[i].reachable <> 0);
           end;
       end;
     for i := 1 to 7 do
-      while Frooms[i].reachable=0 do
+      while (Frooms[i].reachable=0) and (bailout<5000) do
+        begin
+          inc(bailout);
           for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
               SetTransition(i, dir, 1);
+        end;
+   success := bailout < 500;
+   end;
 end;
 
 procedure TGrueStewEng.SetObstacle;

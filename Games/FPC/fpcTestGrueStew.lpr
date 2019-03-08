@@ -3,7 +3,7 @@ program fpcTestGrueStew;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, tst_GrueStew;
+  Interfaces, Forms, GuiTestRunner, tst_GrueStew, tst_GrueStewCon;
 
 {$R *.res}
 

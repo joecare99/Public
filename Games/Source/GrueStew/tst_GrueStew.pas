@@ -36,6 +36,8 @@ type
     Procedure TestInits;
     procedure TestInitPlayer;
     procedure TestNewGame;
+    procedure TestFirstMove;
+    procedure TestFirstShoot;
   end;
 
 implementation
@@ -55,7 +57,7 @@ end;
 
 procedure TTestGrueStew.TestInits;
 var
-  i, lMax: Integer;
+  i, lMax, j: Integer;
   dir: TDir;
 begin
   RandSeed:=0;
@@ -81,6 +83,33 @@ begin
         end;
     end;
   Check(lMax>3,'Maximale Erreibarkeit > 3');
+  for j := 1 to 5000 do
+    begin
+      RandSeed:=j;
+      FGrueStew.InitLaby;
+      CheckEquals(false,FGrueStew.HasEnded,'['+inttostr(j)+']FGrueStew.HasEnded');
+      CheckEquals(false,FGrueStew.KilledMonster,'['+inttostr(j)+']FGrueStew.KilledMonster');
+      CheckEquals(20,FGrueStew.RoomCount,'['+inttostr(j)+']FGrueStew.RoomCount');
+      CheckEquals(0,FGrueStew.ActRoom,'['+inttostr(j)+']FGrueStew.ActRoom');
+      CheckEquals(0,FGrueStew.Step,'['+inttostr(j)+']FGrueStew.ActRoom');
+      lMax:=0;
+      for i := 1 to 20 do
+        begin
+          CheckEquals(i,FGrueStew.Room[i].ID,'['+inttostr(j)+']Room['+inttostr(i)+'].ID');
+          CheckNotEquals(0,FGrueStew.Room[i].Reachable,'['+inttostr(j)+']Room['+inttostr(i)+'].reachable <> 0');
+          if lMax<FGrueStew.Room[i].Reachable then
+            lMax:=FGrueStew.Room[i].Reachable;
+          CheckNotEquals('',FGrueStew.Room[i].Desc,'['+inttostr(j)+']Room['+inttostr(i)+'].description not empty');
+          CheckEquals(false,FGrueStew.Room[i].MappedR,'['+inttostr(j)+']Room['+inttostr(i)+'].MappedR');
+          for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
+            begin
+              CheckEquals(false,FGrueStew.Room[i].MappedT[dir],'['+inttostr(j)+']Room['+inttostr(i)+'].MappedT['+CDirDesc[dir]+']');
+              CheckNotEquals(i,FGrueStew.Room[i].Transition[dir],'['+inttostr(j)+']Room['+inttostr(i)+'].Transition['+CDirDesc[dir]+']');
+            end;
+        end;
+      Check(lMax>3,'['+inttostr(j)+']Maximale Erreibarkeit > 3');
+    end;
+
 end;
 
 procedure TTestGrueStew.TestInitPlayer;
@@ -101,6 +130,12 @@ end;
 procedure TTestGrueStew.TestNewGame;
 var
   dir: TDir;
+  j: Integer;
+
+const Exp:array[1..10] of integer =
+  {$IFDEF FPC}(6,0,0,0,0,0,0,0,0,0)
+  {$ELSE}(6,0,0,0,0,0,0,0,0,0)
+  {$ENDIF};
 begin
   RandSeed:=0;
   FGrueStew.NewGame;
@@ -111,7 +146,32 @@ begin
   for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
     CheckEquals(0,FGrueStew.Map[dir],'Map['+CDirDesc[dir]+']');
   CheckNotEquals('',FGrueStew.RoomDesc,'RoomDesc not empty');
-  CheckNotEquals('',FGrueStew.RoomDesc,'RoomDesc not empty');
+  for j := 1 to 10 do
+    begin
+      RandSeed:=j;
+      FGrueStew.NewGame;
+      CheckNotEquals(0,FGrueStew.ActRoom,'['+inttostr(j)+']ActRoom <> 0');
+      CheckEquals(true,FGrueStew.Room[-1].MappedR,'['+inttostr(j)+']Room[-1].MappedR');
+      CheckEquals(0,FGrueStew.Step,'['+inttostr(j)+']ActRoom');
+      CheckEquals(Exp[j],FGrueStew.ActRoom,'['+inttostr(j)+']ActRoom');
+      for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
+        CheckEquals(0,FGrueStew.Map[dir],'['+inttostr(j)+']Map['+CDirDesc[dir]+']');
+      CheckNotEquals('',FGrueStew.RoomDesc,'['+inttostr(j)+']RoomDesc not empty');
+    end;
+end;
+
+procedure TTestGrueStew.TestFirstMove;
+begin
+ RandSeed:=0;
+ FGrueStew.NewGame;
+ CheckNotEquals(0,FGrueStew.ActRoom,'ActRoom <> 0');
+end;
+
+procedure TTestGrueStew.TestFirstShoot;
+begin
+ RandSeed:=0;
+ FGrueStew.NewGame;
+ CheckNotEquals(0,FGrueStew.ActRoom,'ActRoom <> 0');
 end;
 
 procedure TTestGrueStew.SetUp;
