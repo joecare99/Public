@@ -276,7 +276,7 @@ begin
   for i := 1 to high(cMarr) do
     begin
       FHejClass.SetMarriage(cMarr[i].idPerson,cMarr[i].idSpouse);
-
+      FHejClass.ActualMarriage := cMarr[i];
     end;
 
   FHejClass.SetPlace(cPlace[0]);

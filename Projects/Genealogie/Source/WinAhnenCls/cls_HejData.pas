@@ -773,6 +773,20 @@ begin
     Fadop.Data[-1,hadop_idFather]:=idAdopter;
 end;
 
+procedure TClsHejGenealogy.SetMarriage(idInd, idSpouse: integer);
+var
+  lMarrIdx: Integer;
+begin
+  lMarrIdx:= FMarr.IndexOf(vararrayof([idind,idSpouse]));
+  if lMarrIdx=-1 then
+    begin
+      FMarr.Append(self);
+      FMarr.ActualMarrSetLink(idInd,idSpouse);
+    end
+  else
+    Fmarr.Seek(lMarrIdx);
+end;
+
 procedure TClsHejGenealogy.SetPlace(aPlace: THejPlaceData);
 begin
   FPlac.Setplace(aPlace);
