@@ -150,6 +150,12 @@ const
 
      CDirDesc: array[TDir] of string =
        ('drNorth', 'drEast', 'drSouth', 'drWest');
+
+     CMoveResult: array[TMoveResult] of string  =
+         ('mvOK', 'mvWall', 'mvExit', 'mvExitwMonst', 'mvMonster', 'mvPit', 'mvBat', 'mvEarthquake');
+     CShootResult: array[TShootResult] of string =
+         ('shHit', 'shWall', 'shMiss', 'shMiss2', 'shMiss3', 'shEarthquake');
+
 implementation
 
 

@@ -8,7 +8,7 @@ unit tst_GrueStew;
 interface
 
 uses
-  Classes, SysUtils, {$IFNDEF FPC}TestFramework, {$Else} fpcunit, testutils, testregistry, {$endif} cls_GrueStewEng;
+  Classes, SysUtils, {$IFNDEF FPC}TestFramework, {$Else} fpcunit, testutils, testregistry, {$endif}unt_GrueStewBase, cls_GrueStewEng;
 
 type
   TGrueStewTestEng=Class(TGrueStewEng)
@@ -31,6 +31,8 @@ type
   protected
     procedure SetUp; override;
     procedure TearDown; override;
+    PRocedure CheckEquals(exp,Act:TMoveResult;Msg:String);overload;
+    PRocedure CheckEquals(exp,Act:TShootResult;Msg:String);overload;
   published
     procedure TestSetUp;
     Procedure TestInits;
@@ -41,8 +43,6 @@ type
   end;
 
 implementation
-
-uses unt_GrueStewBase;
 
 procedure TTestGrueStew.TestSetUp;
 begin
@@ -133,7 +133,7 @@ var
   j: Integer;
 
 const Exp:array[1..10] of integer =
-  {$IFDEF FPC}(6,0,0,0,0,0,0,0,0,0)
+  {$IFDEF FPC}(6,1,6,6,18,5,18,14,18,14)
   {$ELSE}(6,0,0,0,0,0,0,0,0,0)
   {$ENDIF};
 begin
@@ -165,6 +165,9 @@ begin
  RandSeed:=0;
  FGrueStew.NewGame;
  CheckNotEquals(0,FGrueStew.ActRoom,'ActRoom <> 0');
+ CheckEquals({$IFDEF FPC}8{$ELSE}13{$ENDIF},FGrueStew.ActRoom,'ActRoom');
+ CheckEquals(mvOK,FGrueStew.Move(drNorth),'Move(drNorth)');
+ ChecknotEquals({$IFDEF FPC}8{$ELSE}13{$ENDIF},FGrueStew.ActRoom,'ActRoom');
 end;
 
 procedure TTestGrueStew.TestFirstShoot;
@@ -172,6 +175,9 @@ begin
  RandSeed:=0;
  FGrueStew.NewGame;
  CheckNotEquals(0,FGrueStew.ActRoom,'ActRoom <> 0');
+ CheckEquals({$IFDEF FPC}8{$ELSE}13{$ENDIF},FGrueStew.ActRoom,'ActRoom');
+ CheckEquals(shMiss,FGrueStew.Shoot(drNorth),'Shoot(drNorth)');
+ CheckEquals(shMiss,FGrueStew.Shoot(drSouth),'Shoot(drSouth)');
 end;
 
 procedure TTestGrueStew.SetUp;
@@ -183,6 +189,16 @@ procedure TTestGrueStew.TearDown;
 begin
   FreeandNil(FGrueStew);
  {$IFDEF FPC}CheckNotEquals(0,AssertCount,'Some Tests have to Called');{$ENDIF}
+end;
+
+procedure TTestGrueStew.CheckEquals(exp, Act: TMoveResult; Msg: String);
+begin
+  AssertEquals(Msg,CMoveResult[exp],CMoveResult[Act]);
+end;
+
+procedure TTestGrueStew.CheckEquals(exp, Act: TShootResult; Msg: String);
+begin
+  AssertEquals(Msg,CShootResult[exp],CShootResult[Act]);
 end;
 
 initialization
