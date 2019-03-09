@@ -429,6 +429,14 @@ begin
        CheckFalse(cInd[9-i].Equals(FHejClass.PeekInd(i)),'not cInd['+inttostr(9-i)+'].Equals(FHejClass.PeekInd('+inttostr(i)+'))');
        CheckFalse(FHejClass.PeekInd(9-i).Equals(cind[i]),'not FHejClass.PeekInd('+inttostr(9-i)+').Equals(cInd['+inttostr(i)+'])');
      end;
+  for i := 1 to high(cMarr) do
+     begin
+//       exp := cMarr[i];
+       Checktrue(cMarr[i].Equals(FHejClass.Marriage[i+1]),'cMarr['+inttostr(i)+'].Equals(FHejClass.MarriageData['+inttostr(i+1)+'])');
+       Checktrue(FHejClass.Marriage[i+1].Equals(cMarr[i]),'FHejClass.MarriageData[i]('+inttostr(i)+').Equals(cMarr['+inttostr(i)+'])');
+       CheckFalse(cMarr[5-i].Equals(FHejClass.Marriage[i+1]),'not cMarr['+inttostr(5-i)+'].Equals(FHejClass.MarriageData['+inttostr(i+1)+'])');
+       CheckFalse(FHejClass.Marriage[6-i].Equals(cMarr[i]),'not FHejClass.MarriageData[i]('+inttostr(6-i)+').Equals(cMarr['+inttostr(i)+'])');
+     end;
 end;
 
 procedure TTestClsHej.TestReadFromStream;

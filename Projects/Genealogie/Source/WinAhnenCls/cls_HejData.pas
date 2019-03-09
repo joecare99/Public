@@ -66,6 +66,7 @@ type
     function GetIndividual(index: integer): THejIndData;
     function GetIndividualCount: integer;
     function GetMarriageData(idx: Integer): THejMarrData;
+    function GetMarriage(idMarr: Integer): THejMarrData;
     function GetMarriagesCount: integer;
     function GetMother: THejIndData;
     function GetPlaceCount: integer;
@@ -78,6 +79,7 @@ type
       AValue: variant);overload;
     procedure SetData(ind, index: integer; Field: TEnumHejMarrDatafields;
       AValue: variant);overload;
+    procedure SetMarriage(idMarr: Integer; AValue: THejMarrData);overload;
     procedure SetMarriageData(idx: Integer; AValue: THejMarrData);
     procedure SetOnDataChange(AValue: TNotifyEvent);
     procedure SetOnStateChange(AValue: TNotifyEvent);
@@ -108,6 +110,7 @@ type
     Property ChildCount:integer read GetChildCount;
     Property IndividualCount:integer read GetIndividualCount;
     Property MarriagesCount:integer read GetMarriagesCount;
+    Property Marriage[idMarr:Integer]:THejMarrData read GetMarriage write SetMarriage;
     Property OnStateChange:TNotifyEvent read FOnStateChange write SetOnStateChange;
     Property OnDataChange:TNotifyEvent read FOnDataChange write SetOnDataChange;
     PRoperty OnUpdate:TNotifyEvent read FOnUpdate write SetOnUpdate;
@@ -127,7 +130,7 @@ type
     Procedure AppendSpouse(Sender:TObject=nil);
     Procedure AppendParent(Knd:TEnumHejIndDatafields;Sender:TObject=nil);
     Procedure AppendAdoption(idAdopter:integer);
-    Procedure SetMarriage(idInd,idSpouse:integer);
+    Procedure SetMarriage(idInd,idSpouse:integer);overload;
     Procedure SetPlace(aPlace:THejPlaceData);
     Procedure SetSource(aSource:THejSourData);
     Procedure Edit(Sender:TObject=nil);
@@ -499,6 +502,11 @@ begin
   result := FMarr.Marriage[FIndi.ActualMarriage[idx]];
 end;
 
+function TClsHejGenealogy.GetMarriage(idMarr: Integer): THejMarrData;
+begin
+  result:=Fmarr.Marriage[idMarr];
+end;
+
 function TClsHejGenealogy.GetMarriagesCount: integer;
 begin
   result := FMarr.count;
@@ -558,8 +566,15 @@ begin
       FMarr.SetData(FIndi.PeekInd[Ind].Marriages[index],Field,AValue);
 end;
 
+procedure TClsHejGenealogy.SetMarriage(idMarr: Integer; AValue: THejMarrData);
+begin
+  if FMarr.Marriage[idMarr].Equals(AValue) then exit;
+  FMarr.Marriage[idMarr]:=AValue;
+end;
+
 procedure TClsHejGenealogy.SetMarriageData(idx: Integer; AValue: THejMarrData);
 begin
+  if FMarr.Marriage[FIndi.ActualMarriage[idx]].Equals(AValue) then exit;
   FMarr.Marriage[FIndi.ActualMarriage[idx]]:=AValue;
 end;
 
