@@ -23,6 +23,19 @@
       </element><element name="TClsHejIndividuals.WriteToStream" link="#fpcTestClsHej.cls_HejBase.TClsHejBase.WriteToStream"><short>Schreibe Datensätze auf den Stream (hier Individuen)</short>
       </element><element name="TClsHejIndividuals.ReadFromDataset" link="#fpcTestClsHej.cls_HejBase.TClsHejBase.ReadFromDataset"><short>Erzeuge Daten aus einem Dataset</short>
       </element>
+    <element name="THejIndData.GetData"><short>GetData reads the specified datafield</short>
+      </element><element name="THejIndData.ReadFromStream0"><short>ReadFromStream0 is an approach to buffer-read from stream</short>
+      </element><element name="THejIndData.SetData"><short>writes data to the specified field</short>
+      </element><element name="THejIndData.ToString"><short>String representation of the Individual (vital only) </short>
+      </element><element name="THejIndData.ToPasStruct"><short>ToPasStruct gives a String with all Information as a structure </short>
+      </element><element name="THejIndData.ParentCount"><short>ParentCount gives the count of (declared) parents</short>
+      </element><element name="THejIndData.ChildCount"><short>ChildCount gives the number of children</short>
+      </element><element name="THejIndData.RemoveParent"><short>RemoveParent removes a parent from this individual</short>
+      </element><element name="THejIndData.AppendChild"><short>AppendChild adds a child to the individual</short>
+      </element><element name="THejIndData.RemoveChild"><short>RemoveChild removes a child from the individual</short>
+      </element><element name="THejIndData.AppendMarriage"><short>AppendMarriage adds a marriage to the individual</short>
+      </element><element name="THejIndData.RemoveMarriage"><short>RemoveMarriage</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>
