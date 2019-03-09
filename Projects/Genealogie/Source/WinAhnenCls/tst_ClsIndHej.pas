@@ -74,6 +74,7 @@ type
     procedure TestWebAdr;
     procedure TestNameSource;
     procedure TestCallName;
+    Procedure TestEquals;
     procedure TestReadStream;
     Procedure TestWriteStream;
     Procedure TestAppendChild;
@@ -81,6 +82,8 @@ type
     Procedure testRemoveParent;
     Procedure testRemoveChild;
     Procedure testRemoveMarriage;
+    Procedure testDeleteChild;
+    Procedure testDeleteMarriage;
     Procedure TestToString;
     Procedure TestToPasStruct;
   end;
@@ -104,6 +107,7 @@ type
     procedure TestIndexOf2;
     procedure TestIndexOf3;
     procedure TestIndexOf4;
+    Procedure TestSetActualMarriage;
     procedure TestReadStream;
     procedure TestReadStream2;
     procedure TestWriteStream;
@@ -112,7 +116,7 @@ type
 
 implementation
 
-uses unt_IndTestData,variants;
+uses unt_IndTestData,unt_MarrTestData,variants;
 
 resourcestring
   DefDataDir = 'Data';
@@ -180,6 +184,13 @@ begin
           if (cInd[j].idFather = i) or (cInd[j].idMother = i) then
              FClsHejIndividuals.AppendLinkChild(i,j);
      end;
+
+// Append some Marriages
+  FClsHejIndividuals.AppendMarriage(1,0);
+  FClsHejIndividuals.AppendMarriage(2,1);
+  for i := 1 to high(cMarr) do
+    FClsHejIndividuals.AppendMarriage(cMarr[i].idPerson,cMarr[i].id);
+
 // Delete an unwanted record
 for i := 1 to high(cInd) do
   if cInd[i].id = 0 then
@@ -188,6 +199,8 @@ for i := 1 to high(cInd) do
        FClsHejIndividuals.Delete(self);
      end;
   FClsHejIndividuals.First;
+
+
 end;
 
 procedure TTestClsIndHej.CheckEquals(const expected, actual: THejIndData;
@@ -220,6 +233,9 @@ begin
   CreateTestData(true);
   for i := 0 to high(cInd) do
      CheckEquals(cind[i], FClsHejIndividuals.PeekInd[i], 'Individual['+inttostr(i)+']',true);
+  for i := 1 to high(cMarr) do
+     CheckEquals(cMarr[i].ID, FClsHejIndividuals.PeekInd[cMarr[i].idPerson].Marriages[0], 'Individual['+inttostr(i)+'].Marriages');
+
 
 end;
 
@@ -262,6 +278,12 @@ begin
   CheckEquals(9,FClsHejIndividuals.IndexOf(VarArrayOf([strtodate('01.03.1985')])),'Index of "Musterfrau, Andrea"');
   CheckEquals(6,FClsHejIndividuals.IndexOf(VarArrayOf([strtodate('14.08.1956')])),'Index of "Mustermann, Peter"');
   CheckEquals(1,FClsHejIndividuals.IndexOf(VarArrayOf(['Care','joe',strtodate('01.01.1971')])),'Index of "1971"');
+end;
+
+procedure TTestClsIndHej.TestSetActualMarriage;
+begin
+  CreateTestData(false);
+//  Check
 end;
 
 procedure TTestClsIndHej.TestReadStream;
@@ -1035,6 +1057,80 @@ begin
 
 end;
 
+procedure TTestIndHej.TestEquals;
+var
+  j: TEnumHejIndDatafields;
+  i: Integer;
+begin
+  FHejIndData := cInd[1];
+  Checktrue(FHejIndData.Equals(FHejIndData),'Prüfe direkte Übereinstimmung');
+  for j in TEnumHejIndDatafields do
+    begin
+      FHejIndData.Data[j]:= 987600+random(100);
+      CheckNotEquals(string(FHejIndData.Data[j]),string(cind[1].Data[j]),'Prüfe zuerst ob daten nicht übereinstimmen['+CHejIndDataDesc[j]+']');
+      // Strict
+      if j>hind_ID then
+        begin
+      CheckFalse(FHejIndData.Equals(cind[1]),'Prüfe nicht-Übereinstimmung');
+      CheckFalse(cInd[1].Equals(FHejIndData),'Prüfe nicht-Übereinstimmung2');
+        end
+      else
+        begin
+      CheckTrue(FHejIndData.Equals(cind[1]),'Prüfe dennoch-Übereinstimmung');
+      CheckTrue(cInd[1].Equals(FHejIndData),'Prüfe dennoch-Übereinstimmung2');
+        end;
+      // only Data
+        if j>hind_idMother then
+          begin
+        CheckFalse(FHejIndData.Equals(cind[1],True),'Prüfe nicht-Übereinstimmung3');
+        CheckFalse(cInd[1].Equals(FHejIndData,True),'Prüfe nicht-Übereinstimmung4');
+          end
+        else
+          begin
+        CheckTrue(FHejIndData.Equals(cind[1],True),'Prüfe dennoch-Übereinstimmung3');
+        CheckTrue(cInd[1].Equals(FHejIndData,True),'Prüfe dennoch-Übereinstimmung4');
+          end;
+
+      FHejIndData.Data[j]:=cind[1].data[j];
+      CheckTrue(FHejIndData.Equals(cind[1]),'Prüfe wieder Übereinstimmung');
+    end;
+  for i := 0 to high(cInd) do
+    begin
+      FHejIndData := cInd[i];
+      Checktrue(FHejIndData.Equals(FHejIndData),'I'+inttostr(i)+'] Prüfe direkte Übereinstimmung');
+      for j in TEnumHejIndDatafields do
+        begin
+          FHejIndData.Data[j]:= 123400+random(100);
+          CheckNotEquals(string(FHejIndData.Data[j]),string(cind[i].Data[j]),'I'+inttostr(i)+'] Prüfe zuerst ob daten nicht übereinstimmen['+CHejIndDataDesc[j]+']');
+          // Strict
+          if j>hind_ID then
+            begin
+          CheckFalse(FHejIndData.Equals(cind[i]),'I'+inttostr(i)+'] Prüfe nicht-Übereinstimmung');
+          CheckFalse(cInd[i].Equals(FHejIndData),'I'+inttostr(i)+'] Prüfe nicht-Übereinstimmung2');
+            end
+          else
+            begin
+          CheckTrue(FHejIndData.Equals(cind[i]),'I'+inttostr(i)+'] Prüfe dennoch-Übereinstimmung');
+          CheckTrue(cInd[i].Equals(FHejIndData),'I'+inttostr(i)+'] Prüfe dennoch-Übereinstimmung2');
+            end;
+          // only Data
+            if j>hind_idMother then
+              begin
+            CheckFalse(FHejIndData.Equals(cind[i],True),'I'+inttostr(i)+'] Prüfe nicht-Übereinstimmung3');
+            CheckFalse(cInd[i].Equals(FHejIndData,True),'I'+inttostr(i)+'] Prüfe nicht-Übereinstimmung4');
+              end
+            else
+              begin
+            CheckTrue(FHejIndData.Equals(cind[i],True),'I'+inttostr(i)+'] Prüfe dennoch-Übereinstimmung3');
+            CheckTrue(cInd[i].Equals(FHejIndData,True),'I'+inttostr(i)+'] Prüfe dennoch-Übereinstimmung4');
+              end;
+
+          FHejIndData.Data[j]:=cind[i].data[j];
+          CheckTrue(FHejIndData.Equals(cind[i]),'I'+inttostr(i)+'] Prüfe wieder Übereinstimmung');
+        end;
+    end;
+end;
+
 procedure TTestIndHej.TestReadStream;
 var
     lStr: TStream;
@@ -1214,8 +1310,113 @@ begin
 end;
 
 procedure TTestIndHej.testRemoveMarriage;
-begin
 
+  function iHash(i:integer):integer;
+  begin
+    result:=$10ECA8E xor ((i+1)*11)
+  end;
+
+ var
+  i, lSCount: Integer;
+
+begin
+  CheckEquals(0,FHejIndData.SpouseCount,'Anfang: Keine Ehen');
+  setlength(FHejIndData.Marriages,10);
+  for i := 0 to high(FHejIndData.Marriages) do
+    FHejIndData.Marriages[i]:= iHash(i);
+
+  CheckEquals(10,FHejIndData.SpouseCount,'10 Ehen');
+  CheckEquals(iHash(0),FHejIndData.Marriages[0],'1. Ehe');
+
+  FHejIndData.RemoveMarriage(iHash(1));
+  CheckEquals(9,FHejIndData.SpouseCount,'Noch 9 Ehen');
+  CheckEquals(iHash(2),FHejIndData.Marriages[1],'3. Ehe');
+
+  FHejIndData.RemoveMarriage(iHash(5));
+  CheckEquals(8,FHejIndData.SpouseCount,'Noch 8 Ehen');
+  CheckEquals(iHash(6),FHejIndData.Marriages[4],'8. Ehe');
+
+  lSCount:= 8;
+  for i := 0 to 9 do
+    begin
+      FHejIndData.RemoveMarriage(iHash(i));
+      if not (i in [1,5]) then
+        dec(lSCount);
+      CheckEquals(lSCount,FHejIndData.SpouseCount,'Noch '+inttostr(lSCount)+' Ehen');
+    end;
+  CheckEquals(0,FHejIndData.SpouseCount,'keine Ehen');
+
+end;
+
+procedure TTestIndHej.testDeleteChild;
+function iHash(i:integer):integer;
+begin
+  result:=$10ECA8E xor ((i+1)*11)
+end;
+
+var
+i, lSCount: Integer;
+
+begin
+CheckEquals(0,FHejIndData.ChildCount,'Anfang: Keine Children');
+setlength(FHejIndData.Children,10);
+for i := 0 to high(FHejIndData.Children) do
+  FHejIndData.Children[i]:= iHash(i);
+
+CheckEquals(10,FHejIndData.ChildCount,'10 Children');
+CheckEquals(iHash(0),FHejIndData.Children[0],'1. Child');
+
+FHejIndData.DeleteChild(1);
+CheckEquals(9,FHejIndData.ChildCount,'Noch 9 Children');
+CheckEquals(iHash(2),FHejIndData.Children[1],'2. Child');
+
+FHejIndData.DeleteChild(4);
+CheckEquals(8,FHejIndData.ChildCount,'Noch 8 Children');
+CheckEquals(iHash(6),FHejIndData.Children[4],'5. Child');
+
+for i := 7 downto 0 do
+  begin
+    FHejIndData.DeleteChild(random(i+1));
+    CheckEquals(i,FHejIndData.ChildCount,'Noch '+inttostr(lSCount)+' Children');
+  end;
+CheckEquals(0,FHejIndData.ChildCount,'keine Children');
+
+end;
+
+procedure TTestIndHej.testDeleteMarriage;
+
+function iHash(i:integer):integer;
+
+begin
+  result:=$10ECA8E xor ((i+1)*11)
+end;
+
+var
+i, lSCount: Integer;
+
+begin
+CheckEquals(0,FHejIndData.SpouseCount,'Anfang: Keine Ehen');
+setlength(FHejIndData.Marriages,10);
+for i := 0 to high(FHejIndData.Marriages) do
+  FHejIndData.Marriages[i]:= iHash(i);
+
+CheckEquals(10,FHejIndData.SpouseCount,'10 Ehen');
+CheckEquals(iHash(0),FHejIndData.Marriages[0],'1. Ehe');
+
+FHejIndData.DeleteMarriage(1);
+CheckEquals(9,FHejIndData.SpouseCount,'Noch 9 Ehen');
+CheckEquals(iHash(2),FHejIndData.Marriages[1],'2. Ehe');
+
+FHejIndData.DeleteMarriage(4);
+CheckEquals(8,FHejIndData.SpouseCount,'Noch 8 Ehen');
+CheckEquals(iHash(6),FHejIndData.Marriages[4],'5. Ehe');
+
+for i := 7 downto 0 do
+  begin
+    FHejIndData.DeleteMarriage(random(i+1));
+    CheckEquals(i,FHejIndData.SpouseCount,'Noch '+inttostr(lSCount)+' Ehen');
+  end;
+CheckEquals(0,FHejIndData.SpouseCount,'keine Ehen');
 end;
 
 procedure TTestIndHej.TestToString;

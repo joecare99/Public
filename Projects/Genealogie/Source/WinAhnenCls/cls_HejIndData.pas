@@ -147,8 +147,10 @@ public
   Procedure RemoveParent(aID:integer);
   Procedure AppendChild(aID:integer);
   Procedure RemoveChild(aID:integer);
+  Procedure DeleteChild(idx:integer);
   Procedure AppendMarriage(amID:integer);
   Procedure RemoveMarriage(amID:integer);
+  Procedure DeleteMarriage(Idx:integer);
   function SpouseCount:integer;
   function PlaceCount:integer;
   function SourceCount:integer;
@@ -296,7 +298,13 @@ end;
 
 procedure TClsHejIndividuals.SetActualMarriage(index: integer; AValue: integer);
 begin
-   //Todo:
+   //Todo: Has to be implemented
+  if index = -1 then // Append
+    FIndArray[FActIndex].AppendMarriage(AValue)
+  else if (index<=high(FIndArray[FActIndex].Marriages)) and (AValue  >-1) then // Set
+    FIndArray[FActIndex].Marriages[index]:=AValue
+  else // Delete
+    FIndArray[FActIndex].RemoveMarriage(index);
 end;
 
 procedure TClsHejIndividuals.SetData(ind: integer; idx: TEnumHejIndDatafields;
@@ -940,6 +948,17 @@ begin
     setlength(Children,high(Children));
 end;
 
+procedure THejIndData.DeleteChild(idx: integer);
+var
+  i: Integer;
+begin
+  for i := idx to high(Children) do
+     if i < high(Children) then
+        Children[i] := Children[i+1];
+  if idx <= High(Children) then
+    setlength(Children,high(Children));
+end;
+
 procedure THejIndData.AppendMarriage(amID: integer);
 var
   i: Integer;
@@ -964,6 +983,17 @@ begin
             Marriages[i] := Marriages[i+1];
       end;
   if lMIx >-1 then
+    setlength(Marriages,high(Marriages));
+end;
+
+procedure THejIndData.DeleteMarriage(Idx: integer);
+var
+  i: Integer;
+begin
+  for i := idx to high(Marriages) do
+     if i < high(Marriages) then
+        Marriages[i] := Marriages[i+1];
+  if idx <= High(Marriages) then
     setlength(Marriages,high(Marriages));
 end;
 
@@ -1023,7 +1053,7 @@ begin
 end;
 
 
-
+// Buffered Read from Stream
 procedure THejIndData.ReadFromStream0(const st: TStream);
 var
   by: Byte;
