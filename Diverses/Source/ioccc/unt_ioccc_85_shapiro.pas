@@ -12,10 +12,10 @@ implementation
 { $define ShowGen}
 {$define WaitAtEnd}
 
-uses
-  SysUtils{$ifdef ShowGen}
-, crt, math
-{$endif};
+
+  {$ifdef ShowGen}
+uses SysUtils, crt, math;
+{$endif}
 
 {$ifdef C}// This is the orginal C-Code
 //#define P(X)j=write(1,X,1)
@@ -90,6 +90,7 @@ const //{-1}prest:String='010011020101111010020201031210000021010020013000111211
         st := Prest[1];
         delete(prest,1,1);
       end;
+    {$ifdef ShowGen}
     if trystrtoint(st,lNr) and (lNr<=cnt) then
       begin
         sstr:=sstr+st;
@@ -99,8 +100,12 @@ const //{-1}prest:String='010011020101111010020201031210000021010020013000111211
         sint2:=RolQWord( sint2,2);
         sint2:=sint2 xor tr;
         exit(PosibDir[lnr])
-
       end
+    {$else}
+    lNr := Ord(st[1])-ord('0');
+    if (lNr<=cnt) then
+      exit(PosibDir[lnr])
+    {$endif}
     else
       exit(PosibDir[random(cnt)]);
   end;
