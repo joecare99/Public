@@ -9,7 +9,7 @@ procedure Main;
 implementation
 
 { $define SingleTask}
-{ $define ShowGen}
+{$define ShowGen}
 {$define WaitAtEnd}
 
 
@@ -60,8 +60,9 @@ var
   end;
 
 const //{-1}prest:String='010011020101111010020201031210000021010020013000111211112010';
-      //{-2}prest:String='11100200012111101000002122103';
-      {-3}prest:String='01100020110100010100112100000012131011120100011003001111200101101211';
+      //{-2}prest:String='1011100100121100000101020001000012131121100020031100011110000000020';
+ {-2}prest:String='11110201011110100102030011200010001112201210011103101010010211112';
+      //{-3}prest:String='01100020110100010100112100000012131011120100011003001111200101101211';
       sstr:string='';
       SPre=$123456789ABCDEFF;
       sInt1:QWord=$0;
@@ -83,8 +84,12 @@ const //{-1}prest:String='010011020101111010020201031210000021010020013000111211
     write(cnt,':',PosibDir[0],', ',PosibDir[1],', ',PosibDir[2],', ',PosibDir[3],'  ');
     {$endif}
     if length(preSt)=0 then
+    {$ifdef ShowGen}
 //      readln(st)
       exit(PosibDir[random(cnt)])
+    {$else}
+         exit(PosibDir[random(cnt)])
+     {$endif}
     else
       begin
         st := Prest[1];
@@ -94,6 +99,8 @@ const //{-1}prest:String='010011020101111010020201031210000021010020013000111211
     if trystrtoint(st,lNr) and (lNr<=cnt) then
       begin
         sstr:=sstr+st;
+
+
         sint1:=RolQWord( sint1,2);
         tr:=sint1 and 3;
         sint1:=sint1 xor tr  or lNr;
@@ -136,7 +143,7 @@ var
 begin
   Randomize;  // This one is defitly usefull but wasn't in the original code
   Labyrinth[0] := 2;   // Setze Endpunkt mit Ausgang
-  StoredCell := Cg * Ru - 3;  // Anfangspunkt unten rechts
+  StoredCell := Cg * Ru - 2;  // Anfangspunkt unten rechts
   NextCell := StoredCell;
   Labyrinth[StoredCell] := T1k+8; // Setze Eingang und belegt
   while (DirCount <> 0) or (FifoPushIdx >= FifoPopIdx) do
@@ -204,9 +211,12 @@ begin
         gotoxy((Fifo[Idx] mod Cg) * 2 + 1, Fifo[Idx] div Cg + 1);
         Write(copy(Scc, (Labyrinth[Fifo[Idx]] and $0e) + 1, 2));
       end;
+    if FifoPushIdx > FifoPopIdx then
+      begin
     TextColor(10);
     gotoxy((Fifo[FifopopIdx] mod Cg) * 2 + 1, Fifo[FifopopIdx] div Cg + 1);
     Write(copy(Scc, (Labyrinth[Fifo[FifopopIdx]] and $0e) + 1, 2));
+      end;
     TextColor(7);
     sleep(30);
     {$endif}
