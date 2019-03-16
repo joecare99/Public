@@ -58,7 +58,7 @@ implementation
 
 uses cls_HejIndData, unt_IndTestData, unt_MarrTestData, unt_SourceTestData, unt_PlaceTestData;
 
-procedure  GenerateTestData(aHejClass:TClsHejGenealogy);
+procedure GenerateTestData(aHejClass:TClsHejGenealogy);
 
 var
   i, j: Integer;
