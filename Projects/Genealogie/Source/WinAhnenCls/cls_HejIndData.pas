@@ -493,7 +493,7 @@ end;
 
 function TClsHejIndividuals.EOF: boolean;
 begin
-  result := FactIndex>High(FIndArray)
+  result := FactIndex>=High(FIndArray)
 end;
 
 function TClsHejIndividuals.BOF: boolean;
