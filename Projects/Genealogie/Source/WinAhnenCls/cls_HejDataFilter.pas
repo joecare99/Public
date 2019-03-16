@@ -289,6 +289,9 @@ begin
   lData := ActGen.GetData(Ind,IndRedir,DataField)
   else
     lData := null;
+  if (varisnull(lData) or varisnull(CompValue)) and
+     not (CompType in [hCmp_Nop,hCmp_Equal,hCmp_UnEqual,
+       hCmp_IsEmpty,hCmp_IsNotEmpty]) then exit(false);
   case CompType of
     hCmp_nop: result := false;
     hCmp_Equal: result := lData = CompValue;
@@ -299,7 +302,7 @@ begin
     hCmp_Greater: result := lData > CompValue;
     hCmp_Startswith: result := copy(lData ,1,length(CompValue))= CompValue;
     hCmp_Endswith: result := RightStr(lData,length(CompValue))= CompValue;
-    hCmp_Contains: result := pos(lData ,CompValue)>0;
+    hCmp_Contains: result := pos(CompValue,lData)>0;
     hCmp_IsEmpty: result := lData = null;
     hCmp_IsNotEmpty: result := lData <> null;
   end;

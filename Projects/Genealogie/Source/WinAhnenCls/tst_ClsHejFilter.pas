@@ -190,50 +190,50 @@ procedure TTestClsHejFRule.TestCompGreaterOEqual;
 Const CompToTest:TEnumHejCompareType=hCmp_GreaterOEqual;
 begin
   FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,0);
-  CheckEquals(true,FFilterRule.Eval(1,FHejClass),'0'+CCompTypeOp[CompToTest]+' is false 1');
+  CheckEquals(true,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is true 1');
   FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,1);
-  CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is true 2');
+  CheckEquals(true,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is true 2');
   FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,2);
-  CheckEquals(true,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is true 2b');
+  CheckEquals(false,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is false 2b');
   FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,null);
-  CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is false 3');
+  CheckEquals(false,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is false 3');
 end;
 
 procedure TTestClsHejFRule.TestCompGreater;
 Const CompToTest:TEnumHejCompareType=hCmp_Greater;
 begin
   FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,0);
-  CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is false 1');
+  CheckEquals(true,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is true 1');
   FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,1);
-  CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is true 2');
+  CheckEquals(false,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is false 2');
   FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,2);
-  CheckEquals(true,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is true 2b');
+  CheckEquals(false,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is false 2b');
   FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,null);
-  CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is false 3');
+  CheckEquals(false,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is false 3');
 end;
 
 procedure TTestClsHejFRule.TestCompStartswith;
 Const CompToTest:TEnumHejCompareType=hCmp_Startswith;
 begin
-  FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,0);
-  CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is false 1');
-  FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,1);
-  CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is true 2');
+  FFilterRule.Init(ord(hind_AdrPlace)+100,hIRd_Ind,CompToTest,'Mörtel');
+  CheckEquals(true,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is true 1');
+  FFilterRule.Init(ord(hind_AdrPlace)+100,hIRd_Ind,CompToTest,'Heidel');
+  CheckEquals(false,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is false 2');
   FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,2);
-  CheckEquals(true,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is true 2b');
+  CheckEquals(false,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is false 2b');
   FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,null);
-  CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is false 3');
+  CheckEquals(false,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is false 3');
 end;
 
 procedure TTestClsHejFRule.TestCompEndswith;
 Const CompToTest:TEnumHejCompareType=hCmp_Endswith;
 begin
-  FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,0);
-  CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is false 1');
-  FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,1);
-  CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is true 2');
+FFilterRule.Init(ord(hind_AdrPlace)+100,hIRd_Ind,CompToTest,'stein');
+CheckEquals(true,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is true 1');
+FFilterRule.Init(ord(hind_AdrPlace)+100,hIRd_Ind,CompToTest,'berg');
+CheckEquals(false,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is false 2');
   FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,2);
-  CheckEquals(true,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is true 2b');
+  CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is false 2b');
   FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,null);
   CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is false 3');
 end;
@@ -241,12 +241,12 @@ end;
 procedure TTestClsHejFRule.TestCompContains;
 Const CompToTest:TEnumHejCompareType=hCmp_Contains;
 begin
-  FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,0);
-  CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is false 1');
-  FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,1);
-  CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is true 2');
+FFilterRule.Init(ord(hind_AdrPlace)+100,hIRd_Ind,CompToTest,'rtelst');
+CheckEquals(true,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is true 1');
+FFilterRule.Init(ord(hind_AdrPlace)+100,hIRd_Ind,CompToTest,'delber');
+CheckEquals(false,FFilterRule.Eval(1,FHejClass),'('+FFilterRule.toString+') is false 2');
   FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,2);
-  CheckEquals(true,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is true 2b');
+  CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is false 2b');
   FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,CompToTest,null);
   CheckEquals(false,FFilterRule.Eval(1,FHejClass),CCompTypeOp[CompToTest]+' is false 3');
 end;
