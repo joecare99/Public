@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, ExtCtrls, StdCtrls, Buttons,
-  ComCtrls,cls_HejData, cls_HejIndData;
+  ComCtrls,cls_HejData, cls_HejIndData, cls_HejDataFilter;
 
 type
 
@@ -33,7 +33,7 @@ type
     FoldGenOnUpdate: TNotifyEvent;
     FSelectedInd,
     FIndCount: Integer;
-//Todo:    FFilter:TGenFilter;
+    FFilter:TGenFilter;
     procedure GenOnUpdate(Sender: TObject);
     procedure SetGenealogy(AValue: TClsHejGenealogy);
     Procedure UpdateList(sender:TObject);

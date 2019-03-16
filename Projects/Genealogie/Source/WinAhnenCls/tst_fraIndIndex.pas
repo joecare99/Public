@@ -29,13 +29,53 @@ type
   published
     procedure TestSetUp;
     Procedure Test2;
+    Procedure Test3;
   end;
 
 implementation
 
-uses Controls;
+uses Controls, cls_HejIndData, unt_IndTestData, unt_MarrTestData, unt_SourceTestData, unt_PlaceTestData;
 
 const     DefDataDir = 'Data';
+
+
+  procedure GenerateTestData(aHejClass:TClsHejGenealogy);
+
+  var
+    i, j: Integer;
+  begin
+      for i := 1 to high(cInd) do
+       begin
+         aHejClass.Append(aHejClass);
+         aHejClass.ActualInd := cInd[i];
+
+         if cInd[i].idFather<i then
+            aHejClass.AppendLinkChild(cInd[i].idFather,i);
+         if cInd[i].idMother<i then
+            aHejClass.AppendLinkChild(cInd[i].idMother,i);
+
+         for j := 1 to aHejClass.Count-1 do
+            if (cInd[j].idFather = i) or (cInd[j].idMother = i) then
+               aHejClass.AppendLinkChild(i,j);
+       end;
+  // Delete an unwanted record
+  for i := 1 to high(cInd) do
+    if cInd[i].id = 0 then
+       begin
+         aHejClass.Seek(i);
+         aHejClass.Delete(aHejClass);
+       end;
+
+  for i := 0 to high(cPlace) do
+    aHejClass.SetPlace(cPlace[i]);
+
+  for i := 0 to high(cSource) do
+    aHejClass.SetSource(cSource[i]);
+
+    aHejClass.First;
+
+  end;
+
 
 procedure TTestFraIndIndex.TestSetUp;
 var
@@ -79,6 +119,36 @@ begin
     begin
       sleep(100);
       Application.ProcessMessages;
+    end;
+end;
+
+procedure TTestFraIndIndex.Test3;
+var
+  i: Integer;
+begin
+  GenerateTestData(FGenealogy);
+  for i := 0 to 5 do
+    begin
+      sleep(100);
+      Application.ProcessMessages;
+    end;
+  while not FGenealogy.EOF do
+    begin
+      FGenealogy.Next(self);
+      for i := 0 to 5 do
+        begin
+          sleep(50);
+          Application.ProcessMessages;
+        end;
+    end;
+  while not FGenealogy.BOF do
+    begin
+      FGenealogy.Previous(self);
+      for i := 0 to 5 do
+        begin
+          sleep(50);
+          Application.ProcessMessages;
+        end;
     end;
 end;
 
