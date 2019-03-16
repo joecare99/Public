@@ -40,6 +40,7 @@ type
     aCompType:TEnumHejCompareType;
     aCompValue:variant);
     Procedure Clear;
+    Function Equals(const aFilterRule:TFilterRule):boolean;
     Function Eval(Ind:integer;ActGen:TClsHejGenealogy):boolean;
   public
     // Datenfelder
@@ -87,11 +88,11 @@ const
      '<= %s',
      '>= %s',
      '> %s',
-     'like "%s*"',
-     'like "*%s"',
-     'like "*%s*"',
-     'IsEmpty',
-     'IsNotEmpty');
+     ' like "%s*"',
+     ' like "*%s"',
+     ' like "*%s*"',
+     ' IsEmpty',
+     ' IsNotEmpty');
 
    CIndMetaData:Array[TenumIndMetaData] of string=
    ('ParentCount',
@@ -116,9 +117,20 @@ const
 
 const NoRule:TFilterRule=({%H-});
 
+Function FilterRule(aDataField:Integer;
+    aIndRedir:TEnumHejIndRedir;
+    aCompType:TEnumHejCompareType;
+    aCompValue:variant):TFilterRule;
+
 implementation
 
-uses cls_HejIndData,cls_HejMarrData;
+uses variants,cls_HejIndData,cls_HejMarrData;
+
+function FilterRule(aDataField: Integer; aIndRedir: TEnumHejIndRedir;
+  aCompType: TEnumHejCompareType; aCompValue: variant): TFilterRule;
+begin
+  result.Init(aDataField,aIndRedir,aCompType,aCompValue);
+end;
 
 { TFilterRule }
 
@@ -132,8 +144,12 @@ begin
        result := '.'+CHejIndDataDesc[TEnumHejIndDatafields(DataField-100)]
      else
          result := '.'+CHejMarrDataDesc[TEnumHejMarrDatafields(DataField-200)];
-
-  result := result + Format(CCompTypeOp[CompType],[string(CompValue)]);
+  if VarIsNumeric(CompValue) then
+  result := result + Format(CCompTypeOp[CompType],[FloatToStr(CompValue)])
+  else if VarIsNull(CompValue) then
+  result := result + Format(CCompTypeOp[CompType],['null'])
+  else if VarIsStr(CompValue) then
+  result := result + Format(CCompTypeOp[CompType],[QuotedStr(CompValue)]);
 end;
 
 function TFilterRule.toPasStruct: String;
@@ -143,6 +159,11 @@ begin
   result := result+';DataField:'+inttostr(DataField);
   result := result+';IndRedir:'+CindRedir[IndRedir];
   result := result+';CompType:'+CCompType[CompType];
+  if VarIsNumeric(CompValue) then
+  result := result+';CompValue:'+floattostr(CompValue)+')'
+  else if VarIsNull(CompValue) then
+  result := result+';CompValue:null)'
+  else if VarIsStr(CompValue) then
   result := result+';CompValue:'+QuotedStr(CompValue)+')';
 end;
 
@@ -161,6 +182,14 @@ begin
   IndRedir:=hIRd_Ind;
   CompType:=hCmp_Nop;
   CompValue:=null;
+end;
+
+function TFilterRule.Equals(const aFilterRule: TFilterRule): boolean;
+begin
+  result := (DataField=aFilterRule.DataField) and
+         (IndRedir =aFilterRule.indRedir) and
+  (CompType=aFilterRule.CompType) and
+  (CompValue=aFilterRule.CompValue);
 end;
 
 function TFilterRule.Eval(Ind: integer; ActGen: TClsHejGenealogy): boolean;
