@@ -51,10 +51,19 @@ type
     CompValue:variant;
   end;
 
+  { TGenFilter }
+
   TGenFilter=Class
   private
+    FActRule: Integer;
+    function GetRules(Idx: integer): TFilterRule;
+    procedure SetRules(Idx: integer; AValue: TFilterRule);
+  private
     FRules:array of TFilterRule;
-
+    Function SingleEval(Ind:integer;ActGen:TClsHejGenealogy):boolean;
+    Procedure AppendRule(aConcat:TEnumHejConcType;aFilterRule:TFilterRule);
+    Procedure SetRule(aConcat:TEnumHejConcType;aFilterRule:TFilterRule);
+    property Rules[Idx:integer]:TFilterRule read GetRules write SetRules;
   end;
 
 const
@@ -126,10 +135,91 @@ implementation
 
 uses variants,cls_HejIndData,cls_HejMarrData;
 
+const COrConc=[hCcT_Or,   // ) OR ( ...
+      hCcT_Nor,  // ) or not ( ...
+      hCcT_xor]; // ) xor ( ...
+
 function FilterRule(aDataField: Integer; aIndRedir: TEnumHejIndRedir;
   aCompType: TEnumHejCompareType; aCompValue: variant): TFilterRule;
 begin
   result.Init(aDataField,aIndRedir,aCompType,aCompValue);
+end;
+
+{ TGenFilter }
+
+function TGenFilter.GetRules(Idx: integer): TFilterRule;
+begin
+  // TEst Idx
+  if idx=-1 then Idx := FActRule;
+  if idx < 0 then exit(NoRule)
+  else if idx > high(FRules) then exit(NoRule);
+  result := FRules[Idx];
+end;
+
+procedure TGenFilter.SetRules(Idx: integer; AValue: TFilterRule);
+begin
+  // TEst Idx
+  if idx=-1 then Idx := FActRule;
+  if idx < 0 then exit
+  else if idx = high(FRules)+1 then
+    SetLength(FRules,high(FRules)+2)
+  else if idx > high(FRules) then exit;
+  // Keep Concat
+  AValue.Concat:= FRules[Idx].Concat;
+  FRules[Idx] := AValue;
+end;
+
+function TGenFilter.SingleEval(Ind: integer; ActGen: TClsHejGenealogy): boolean;
+var
+  lOrComb, lAndComb, lEvalRule: Boolean;
+  i: Integer;
+  lLastComb: TEnumHejConcType;
+begin
+  lOrComb := false;
+  lAndComb := true;
+  lLastComb := hCcT_Or;
+  for i := 0 to high(FRules) do
+    begin
+      lEvalRule := FRules[i].Eval(Ind,ActGen);
+      if FRules[i].Concat in COrConc then
+        begin
+          case lLastComb of
+            hCcT_Or: lOrComb:=lOrComb or lAndComb;
+            hCcT_Nor: lOrComb:=lOrComb or not lAndComb;
+            hCcT_xor: lOrComb:=lOrComb xor lAndComb;
+            else;
+          end;
+          lAndComb:=true;
+          lLastComb:=FRules[i].Concat;
+        end
+      else
+      case FRules[i].Concat of
+        hCcT_And: lAndComb:=lAndComb and lEvalRule;
+        hCcT_xor2: lAndComb:=lAndComb xor lEvalRule;
+        else;
+      end;
+    end;
+    case lLastComb of
+            hCcT_Or: lOrComb:=lOrComb or lAndComb;
+            hCcT_Nor: lOrComb:=lOrComb or not lAndComb;
+            hCcT_xor: lOrComb:=lOrComb xor lAndComb;
+            else ;
+          end;
+end;
+
+procedure TGenFilter.AppendRule(aConcat: TEnumHejConcType;
+  aFilterRule: TFilterRule);
+begin
+  setlength(FRules,high(FRules)+2);
+  aFilterRule.Concat:=aConcat;
+  FRules[high(FRules)]:=aFilterRule;
+  FActRule:=high(FRules);
+end;
+
+procedure TGenFilter.SetRule(aConcat: TEnumHejConcType; aFilterRule: TFilterRule
+  );
+begin
+  // Todo: ?? noch kein Plan
 end;
 
 { TFilterRule }
