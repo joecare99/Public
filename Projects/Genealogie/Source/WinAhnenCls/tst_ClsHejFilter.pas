@@ -47,16 +47,23 @@ type
   private
     FGenFilter: TGenFilter;
     FHejClass: TClsHejGenealogy;
+    procedure CheckEquals(const Exp: array of variant; Act: TarrayofInteger;
+      Msg: String); overload;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
   published
     procedure TestSetUp;
+    Procedure TestClear;
+    PRocedure TestSingleRuleOnSingleInd;
+    PRocedure Test2RuleOnSingleInd;
+    PRocedure TestSingleRuleOnGen;
+    PRocedure Test2RuleOnGen;
   end;
 
 implementation
 
-uses cls_HejIndData, unt_IndTestData, unt_MarrTestData, unt_SourceTestData, unt_PlaceTestData;
+uses cls_HejIndData, unt_IndTestData, unt_MarrTestData, unt_SourceTestData, unt_PlaceTestData,variants;
 
 procedure GenerateTestData(aHejClass:TClsHejGenealogy);
 
@@ -321,6 +328,20 @@ end;
 
 {TTestClsHejFilter}
 
+procedure TTestClsHejFilter.CheckEquals(const Exp: array of variant;
+  Act: TarrayofInteger; Msg: String);
+var
+  lMinCommon, i: Integer;
+begin
+  lMinCommon := high(exp);
+  if lMinCommon >high(act) then
+    lMinCommon := high(act);
+
+  for i := 0 to lMinCommon do
+    CheckEquals(integer(exp[i]),act[i],Msg+' ['+inttostr(i)+']');
+  CheckEquals(high(exp),high(act),Msg+' [Count]');
+end;
+
 procedure TTestClsHejFilter.SetUp;
 begin
 FHejClass:=TClsHejGenealogy.Create;
@@ -350,6 +371,85 @@ FHejClass.Seek(i);
        CheckTrue(cind[i].Equals(FHejClass.PeekInd(i)), 'Individual['+inttostr(i)+'] match 2');
 end;
 CheckNotNull(FGenFilter,'Filter is assigned');
+CheckEquals(0,FGenFilter.count,'0 Rules assigned');
+end;
+
+procedure TTestClsHejFilter.TestClear;
+begin
+  CheckEquals(0,FGenFilter.count,'0 Rules assigned');
+  FGenFilter.AppendRule(hCcT_Or,NoRule);
+  CheckEquals(1,FGenFilter.count,'0 Rules assigned');
+  FGenFilter.Clear;
+  CheckEquals(0,FGenFilter.count,'0 Rules assigned');
+end;
+
+procedure TTestClsHejFilter.TestSingleRuleOnSingleInd;
+var
+  i: Integer;
+begin
+  FGenFilter.clear;
+  FGenFilter.AppendRule(hCcT_Or,FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_Equal,1));
+  for i := 1 to FHejClass.count do
+    CheckEquals(i=1,FGenFilter.SingleEval(i,FHejClass),'('+FGenFilter.rules[0].toString+') teste '+inttostr(i));
+  FGenFilter.Concat[0]:=hCcT_Nor;
+  for i := 1 to FHejClass.count do
+    CheckEquals(i<>1,FGenFilter.SingleEval(i,FHejClass),'('+FGenFilter.rules[0].toString+') teste '+inttostr(i));
+  FGenFilter.Concat[0]:=hCcT_and;
+  for i := 1 to FHejClass.count do
+    CheckEquals(i=1,FGenFilter.SingleEval(i,FHejClass),'('+FGenFilter.rules[0].toString+') teste '+inttostr(i));
+  FGenFilter.Rules[0]:=FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_UnEqual,2);
+  for i := 1 to FHejClass.count do
+    CheckEquals(i<>2,FGenFilter.SingleEval(i,FHejClass),'('+FGenFilter.rules[0].toString+') teste '+inttostr(i));
+
+end;
+
+procedure TTestClsHejFilter.Test2RuleOnSingleInd;
+var
+  i: Integer;
+begin
+  FGenFilter.clear;
+  FGenFilter.AppendRule(hCcT_Or,FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_Equal,1));
+  FGenFilter.AppendRule(hCcT_and,FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_UnEqual,2));
+  for i := 1 to FHejClass.count do
+    CheckEquals(i=1,FGenFilter.SingleEval(i,FHejClass),'('+FGenFilter.rules[0].toString+') teste '+inttostr(i));
+  FGenFilter.Concat[0]:=hCcT_Nor;
+  for i := 1 to FHejClass.count do
+    CheckEquals(i<>1,FGenFilter.SingleEval(i,FHejClass),'('+FGenFilter.rules[0].toString+') teste '+inttostr(i));
+  FGenFilter.Concat[0]:=hCcT_and;
+  for i := 1 to FHejClass.count do
+    CheckEquals(i=1,FGenFilter.SingleEval(i,FHejClass),'('+FGenFilter.rules[0].toString+') teste '+inttostr(i));
+  FGenFilter.Rules[0]:=FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_UnEqual,3);
+  for i := 1 to FHejClass.count do
+    CheckEquals((i<>2) and (i<>3),FGenFilter.SingleEval(i,FHejClass),'('+FGenFilter.rules[0].toString+') teste '+inttostr(i));
+  FGenFilter.Concat[0]:=hCcT_or;
+  FGenFilter.Concat[1]:=hCcT_xor;
+  for i := 1 to FHejClass.count do
+    CheckEquals(i in [2,3],FGenFilter.SingleEval(i,FHejClass),'('+FGenFilter.rules[0].toString+') teste '+inttostr(i));
+  FGenFilter.Concat[1]:=hCcT_xor2;
+  for i := 1 to FHejClass.count do
+    CheckEquals(i in [2,3],FGenFilter.SingleEval(i,FHejClass),'('+FGenFilter.rules[0].toString+') teste '+inttostr(i));
+  FGenFilter.Concat[0]:=hCcT_Nor;
+  for i := 1 to FHejClass.count do
+    CheckEquals(not (i in [2,3]),FGenFilter.SingleEval(i,FHejClass),'('+FGenFilter.rules[0].toString+') teste '+inttostr(i));
+end;
+
+procedure TTestClsHejFilter.TestSingleRuleOnGen;
+begin
+  FGenFilter.clear;
+  FGenFilter.AppendRule(hCcT_Or,FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_Equal,1));
+  CheckEquals([1],FGenFilter.Eval(FHejClass),'('+FGenFilter.rules[0].toString+').eval teste ');
+  FGenFilter.Concat[0]:=hCcT_Nor;
+  CheckEquals([2,3,4,5,6,7,8,9],FGenFilter.Eval(FHejClass),'('+FGenFilter.rules[0].toString+').eval teste ');
+  FGenFilter.Concat[0]:=hCcT_and;
+  CheckEquals([1],FGenFilter.Eval(FHejClass),'('+FGenFilter.rules[0].toString+').eval teste ');
+  FGenFilter.Rules[0]:=FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_UnEqual,2);
+  CheckEquals([1,3,4,5,6,7,8,9],FGenFilter.Eval(FHejClass),'('+FGenFilter.rules[0].toString+').eval teste ');
+
+end;
+
+procedure TTestClsHejFilter.Test2RuleOnGen;
+begin
+
 end;
 
 initialization

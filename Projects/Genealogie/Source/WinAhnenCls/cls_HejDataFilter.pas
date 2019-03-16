@@ -52,18 +52,26 @@ type
   end;
 
   { TGenFilter }
-
+  TArrayOfInteger = array of Integer;
   TGenFilter=Class
   private
-    FActRule: Integer;
-    function GetRules(Idx: integer): TFilterRule;
-    procedure SetRules(Idx: integer; AValue: TFilterRule);
-  private
     FRules:array of TFilterRule;
+    FActRule: Integer;
+    function GetConcat(Idx: integer): TEnumHejConcType;
+    function GetRules(Idx: integer): TFilterRule;
+    procedure SetConcat(Idx: integer; AValue: TEnumHejConcType);
+    procedure SetRules(Idx: integer; AValue: TFilterRule);
+  public
+    Procedure Clear;
+    Function Count:integer;
+    Function ToString: string; override;
+    Function ToPasStruct: String;
     Function SingleEval(Ind:integer;ActGen:TClsHejGenealogy):boolean;
+    function Eval(ActGen: TClsHejGenealogy): TArrayOfInteger;
     Procedure AppendRule(aConcat:TEnumHejConcType;aFilterRule:TFilterRule);
     Procedure SetRule(aConcat:TEnumHejConcType;aFilterRule:TFilterRule);
     property Rules[Idx:integer]:TFilterRule read GetRules write SetRules;
+    Property Concat[Idx:integer]:TEnumHejConcType read GetConcat write SetConcat;
   end;
 
 const
@@ -156,6 +164,27 @@ begin
   result := FRules[Idx];
 end;
 
+function TGenFilter.GetConcat(Idx: integer): TEnumHejConcType;
+begin
+  // TEst Idx
+  if idx=-1 then Idx := FActRule;
+  if idx < 0 then exit(hCcT_Or)
+  else if idx > high(FRules) then exit(hCcT_Or);
+  result := FRules[Idx].Concat;
+end;
+
+procedure TGenFilter.SetConcat(Idx: integer; AValue: TEnumHejConcType);
+begin
+  // TEst Idx
+  if idx=-1 then Idx := FActRule;
+  if idx < 0 then exit
+  else if idx = high(FRules)+1 then
+    SetLength(FRules,high(FRules)+2)
+  else if idx > high(FRules) then exit;
+  // Keep Concat
+  FRules[Idx].Concat := AValue;
+end;
+
 procedure TGenFilter.SetRules(Idx: integer; AValue: TFilterRule);
 begin
   // TEst Idx
@@ -167,6 +196,50 @@ begin
   // Keep Concat
   AValue.Concat:= FRules[Idx].Concat;
   FRules[Idx] := AValue;
+end;
+
+procedure TGenFilter.Clear;
+begin
+  setlength(FRules,0);
+end;
+
+function TGenFilter.Count: integer;
+begin
+  result := length(FRules);
+end;
+
+function TGenFilter.ToString: string;
+var
+  i: Integer;
+begin
+  if (high(FRules)=0) then
+    exit('()')
+  else if FRules[0].Concat in [hCcT_Nor,hCcT_xor2] then
+    result := 'not ('+FRules[0].toString else result := '('+FRules[0].toString;
+  for i := 1 to high(FRules) do
+    begin
+    case FRules[i].Concat of
+      hCcT_Or: result :=result+ ') or (' ;
+      hCcT_Nor: result :=result+ ') or not (';
+      hCcT_xor: result :=result+ ') xor (';
+      hCcT_And: result :=result+ ' and ';
+      hCcT_xor2: result :=result+ ' xor ';
+    end;
+      result := result+ FRules[i].toString;
+    end;
+  result := result+')';
+end;
+
+function TGenFilter.ToPasStruct: String;
+var
+  i: Integer;
+begin
+  result := '(';
+  for i := 0 to high(FRules) do
+    result := result +','+FRules[i].toPasStruct;
+  Delete(Result,2,1);
+  result :=Result + ')';
+
 end;
 
 function TGenFilter.SingleEval(Ind: integer; ActGen: TClsHejGenealogy): boolean;
@@ -181,15 +254,16 @@ begin
   for i := 0 to high(FRules) do
     begin
       lEvalRule := FRules[i].Eval(Ind,ActGen);
-      if FRules[i].Concat in COrConc then
+      if FRules[i].Concat in COrConc  then
         begin
+          if (i>0) then
           case lLastComb of
             hCcT_Or: lOrComb:=lOrComb or lAndComb;
             hCcT_Nor: lOrComb:=lOrComb or not lAndComb;
             hCcT_xor: lOrComb:=lOrComb xor lAndComb;
             else;
           end;
-          lAndComb:=true;
+          lAndComb:=lEvalRule;
           lLastComb:=FRules[i].Concat;
         end
       else
@@ -200,11 +274,26 @@ begin
       end;
     end;
     case lLastComb of
-            hCcT_Or: lOrComb:=lOrComb or lAndComb;
-            hCcT_Nor: lOrComb:=lOrComb or not lAndComb;
-            hCcT_xor: lOrComb:=lOrComb xor lAndComb;
-            else ;
+            hCcT_Or: result:=lOrComb or lAndComb;
+            hCcT_Nor: result:=lOrComb or not lAndComb;
+            hCcT_xor: result:=lOrComb xor lAndComb;
+            else result:=lOrComb;
           end;
+end;
+
+function TGenFilter.Eval(ActGen: TClsHejGenealogy): TArrayOfInteger;
+var
+  lIxCnt, i: Integer;
+begin
+  setlength(Result,ActGen.Count);
+  lIxCnt:=0;
+  for i:=1{!} to ActGen.Count do
+      if SingleEval(i,ActGen) then
+        begin
+          result[lIxCnt] := i;
+          inc(lIxCnt);
+    end;
+  setlength(Result,lIxCnt);
 end;
 
 procedure TGenFilter.AppendRule(aConcat: TEnumHejConcType;
