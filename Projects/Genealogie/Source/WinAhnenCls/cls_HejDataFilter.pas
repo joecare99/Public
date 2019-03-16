@@ -236,8 +236,8 @@ var
 begin
   result := '(';
   for i := 0 to high(FRules) do
-    result := result +','+FRules[i].toPasStruct;
-  Delete(Result,2,1);
+    result := result +','+LineEnding+FRules[i].toPasStruct;
+  Delete(Result,2,1+length(LineEnding));
   result :=Result + ')';
 
 end;
@@ -315,14 +315,14 @@ end;
 
 function TFilterRule.toString: String;
 begin
-   result := copy(CindRedir[IndRedir],5,10);
+   result := copy(CindRedir[IndRedir],6,10);
    if IndRedir= hIRd_Meta then
-     result := '.'+CIndMetaData[TenumIndMetaData(DataField)]
+     result :=result+ '.'+CIndMetaData[TenumIndMetaData(DataField)]
    else
      if DataField < 199 then
-       result := '.'+CHejIndDataDesc[TEnumHejIndDatafields(DataField-100)]
+       result :=result+ '.'+CHejIndDataDesc[TEnumHejIndDatafields(DataField-100)]
      else
-         result := '.'+CHejMarrDataDesc[TEnumHejMarrDatafields(DataField-200)];
+         result :=result+ '.'+CHejMarrDataDesc[TEnumHejMarrDatafields(DataField-200)];
   if VarIsNumeric(CompValue) then
   result := result + Format(CCompTypeOp[CompType],[FloatToStr(CompValue)])
   else if VarIsNull(CompValue) then

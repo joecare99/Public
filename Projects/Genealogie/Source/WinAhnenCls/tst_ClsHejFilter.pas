@@ -59,6 +59,9 @@ type
     PRocedure Test2RuleOnSingleInd;
     PRocedure TestSingleRuleOnGen;
     PRocedure Test2RuleOnGen;
+    Procedure TestEquals;
+    Procedure TestToString;
+    Procedure TestToPasStruct;
   end;
 
 implementation
@@ -301,13 +304,13 @@ end;
 procedure TTestClsHejFRule.TestToString;
 begin
 FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,hCmp_Equal,0);
-CheckEquals('.ID= 0',FFilterRule.toString,'('+FFilterRule.toString+').ToString 1');
+CheckEquals('Ind.ID= 0',FFilterRule.toString,'('+FFilterRule.toString+').ToString 1');
 FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,hCmp_Nop,1);
-CheckEquals('.ID? 1',FFilterRule.toString,'('+FFilterRule.toString+').ToString 2');
+CheckEquals('Ind.ID? 1',FFilterRule.toString,'('+FFilterRule.toString+').ToString 2');
 FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,hCmp_Contains,2);
-CheckEquals('.ID like "*2*"',FFilterRule.toString,'('+FFilterRule.toString+').ToString 2b');
+CheckEquals('Ind.ID like "*2*"',FFilterRule.toString,'('+FFilterRule.toString+').ToString 2b');
 FFilterRule.Init(ord(hind_ID)+100,hIRd_Ind,hCmp_IsEmpty,null);
-CheckEquals('.ID IsEmpty',FFilterRule.toString,'('+FFilterRule.toString+').ToString 3');
+CheckEquals('Ind.ID IsEmpty',FFilterRule.toString,'('+FFilterRule.toString+').ToString 3');
 end;
 
 procedure TTestClsHejFRule.TestToPasStruct;
@@ -444,12 +447,84 @@ begin
   CheckEquals([1],FGenFilter.Eval(FHejClass),'('+FGenFilter.rules[0].toString+').eval teste ');
   FGenFilter.Rules[0]:=FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_UnEqual,2);
   CheckEquals([1,3,4,5,6,7,8,9],FGenFilter.Eval(FHejClass),'('+FGenFilter.rules[0].toString+').eval teste ');
-
 end;
 
 procedure TTestClsHejFilter.Test2RuleOnGen;
 begin
+  FGenFilter.clear;
+  FGenFilter.AppendRule(hCcT_Or,FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_Equal,1));
+  FGenFilter.AppendRule(hCcT_and,FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_UnEqual,2));
+  CheckEquals([1],FGenFilter.Eval(FHejClass),'('+FGenFilter.toString+').eval teste ');
+  FGenFilter.Concat[0]:=hCcT_Nor;
+  CheckEquals([2,3,4,5,6,7,8,9],FGenFilter.Eval(FHejClass),'('+FGenFilter.toString+').eval teste ');
+  FGenFilter.Concat[0]:=hCcT_and;
+  CheckEquals([1],FGenFilter.Eval(FHejClass),'('+FGenFilter.toString+').eval teste ');
+  FGenFilter.Rules[0]:=FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_UnEqual,3);
+  CheckEquals([1,4,5,6,7,8,9],FGenFilter.Eval(FHejClass),'('+FGenFilter.toString+').eval teste ');
+  FGenFilter.Concat[0]:=hCcT_or;
+  FGenFilter.Concat[1]:=hCcT_xor;
+  CheckEquals([2,3],FGenFilter.Eval(FHejClass),'('+FGenFilter.toString+').eval teste ');
+  FGenFilter.Concat[1]:=hCcT_xor2;
+  CheckEquals([2,3],FGenFilter.Eval(FHejClass),'('+FGenFilter.toString+').eval teste ');
+  FGenFilter.Concat[0]:=hCcT_Nor;
+  CheckEquals([1,4,5,6,7,8,9],FGenFilter.Eval(FHejClass),'('+FGenFilter.toString+').eval teste ');
+end;
 
+procedure TTestClsHejFilter.TestEquals;
+begin
+  FGenFilter.clear;
+  FGenFilter.AppendRule(hCcT_Or,FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_Equal,1));
+  FGenFilter.AppendRule(hCcT_and,FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_UnEqual,2));
+  CheckEquals(false,FGenFilter.Equals(nil),'Todo:');
+end;
+
+procedure TTestClsHejFilter.TestToString;
+begin
+  FGenFilter.clear;
+  FGenFilter.AppendRule(hCcT_Or,FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_Equal,1));
+  FGenFilter.AppendRule(hCcT_and,FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_UnEqual,2));
+  CheckEquals('(Ind.ID= 1 and Ind.ID<> 2)',FGenFilter.ToString,'('+FGenFilter.ToString+').ToString teste ');
+  FGenFilter.Concat[0]:=hCcT_Nor;
+  CheckEquals('not (Ind.ID= 1 and Ind.ID<> 2)',FGenFilter.ToString,'('+FGenFilter.ToString+').ToString teste ');
+  FGenFilter.Concat[0]:=hCcT_and;
+  CheckEquals('(Ind.ID= 1 and Ind.ID<> 2)',FGenFilter.ToString,'('+FGenFilter.ToString+').ToString teste ');
+  FGenFilter.Rules[0]:=FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_UnEqual,3);
+  CheckEquals('(Ind.ID<> 3 and Ind.ID<> 2)',FGenFilter.ToString,'('+FGenFilter.ToString+').ToString teste ');
+  FGenFilter.Concat[0]:=hCcT_or;
+  FGenFilter.Concat[1]:=hCcT_xor;
+  CheckEquals('(Ind.ID<> 3) xor (Ind.ID<> 2)',FGenFilter.ToString,'('+FGenFilter.ToString+').ToString teste ');
+  FGenFilter.Concat[1]:=hCcT_xor2;
+  CheckEquals('(Ind.ID<> 3 xor Ind.ID<> 2)',FGenFilter.ToString,'('+FGenFilter.ToString+').ToString teste ');
+  FGenFilter.Concat[0]:=hCcT_Nor;
+  CheckEquals('not (Ind.ID<> 3 xor Ind.ID<> 2)',FGenFilter.ToString,'('+FGenFilter.ToString+').ToString teste ');
+end;
+
+procedure TTestClsHejFilter.TestToPasStruct;
+begin
+  FGenFilter.clear;
+  FGenFilter.AppendRule(hCcT_Or,FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_Equal,1));
+  FGenFilter.AppendRule(hCcT_and,FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_UnEqual,2));
+  CheckEquals('((Concat:hCcT_Or;DataField:99;IndRedir:hIRd_Ind;CompType:hCmp_Equal;CompValue:1),'+LineEnding+
+   '(Concat:hCcT_And;DataField:99;IndRedir:hIRd_Ind;CompType:hCmp_UnEqual;CompValue:2))',FGenFilter.ToPasStruct,'('+FGenFilter.ToString+').ToPasStruct teste ');
+  FGenFilter.Concat[0]:=hCcT_Nor;
+  CheckEquals('((Concat:hCcT_Nor;DataField:99;IndRedir:hIRd_Ind;CompType:hCmp_Equal;CompValue:1),'+LineEnding+
+   '(Concat:hCcT_And;DataField:99;IndRedir:hIRd_Ind;CompType:hCmp_UnEqual;CompValue:2))',FGenFilter.ToPasStruct,'('+FGenFilter.ToString+').ToPasStruct teste ');
+  FGenFilter.Concat[0]:=hCcT_And;
+  CheckEquals('((Concat:hCcT_And;DataField:99;IndRedir:hIRd_Ind;CompType:hCmp_Equal;CompValue:1),'+LineEnding+
+   '(Concat:hCcT_And;DataField:99;IndRedir:hIRd_Ind;CompType:hCmp_UnEqual;CompValue:2))',FGenFilter.ToPasStruct,'('+FGenFilter.ToString+').ToPasStruct teste ');
+  FGenFilter.Rules[0]:=FilterRule(ord(hind_ID)+100,hIRd_Ind,hCmp_UnEqual,3);
+  CheckEquals('((Concat:hCcT_And;DataField:99;IndRedir:hIRd_Ind;CompType:hCmp_UnEqual;CompValue:3),'+LineEnding+
+   '(Concat:hCcT_And;DataField:99;IndRedir:hIRd_Ind;CompType:hCmp_UnEqual;CompValue:2))',FGenFilter.ToPasStruct,'('+FGenFilter.ToString+').ToPasStruct teste ');
+  FGenFilter.Concat[0]:=hCcT_or;
+  FGenFilter.Concat[1]:=hCcT_xor;
+  CheckEquals('((Concat:hCcT_Or;DataField:99;IndRedir:hIRd_Ind;CompType:hCmp_UnEqual;CompValue:3),'+LineEnding+
+   '(Concat:hCcT_xor;DataField:99;IndRedir:hIRd_Ind;CompType:hCmp_UnEqual;CompValue:2))',FGenFilter.ToPasStruct,'('+FGenFilter.ToString+').ToPasStruct teste ');
+  FGenFilter.Concat[1]:=hCcT_xor2;
+  CheckEquals('((Concat:hCcT_Or;DataField:99;IndRedir:hIRd_Ind;CompType:hCmp_UnEqual;CompValue:3),'+LineEnding+
+   '(Concat:hCcT_xor2;DataField:99;IndRedir:hIRd_Ind;CompType:hCmp_UnEqual;CompValue:2))',FGenFilter.ToPasStruct,'('+FGenFilter.ToString+').ToPasStruct teste ');
+  FGenFilter.Concat[0]:=hCcT_Nor;
+  CheckEquals('((Concat:hCcT_Nor;DataField:99;IndRedir:hIRd_Ind;CompType:hCmp_UnEqual;CompValue:3),'+LineEnding+
+   '(Concat:hCcT_xor2;DataField:99;IndRedir:hIRd_Ind;CompType:hCmp_UnEqual;CompValue:2))',FGenFilter.ToPasStruct,'('+FGenFilter.ToString+').ToPasStruct teste ');
 end;
 
 initialization
