@@ -3,7 +3,19 @@
       </element><element name="TFilterRule.toString"><short>common ToString Methode</short>
       </element><element name="TFilterRule.toPasStruct"><short>Conversion to a Pascal-Structure</short>
       </element><element name="TFilterRule.Init"><short>Init sets all Data except the Concat type</short>
-      </element><element name="TFilterRule.Eval"><short>Evalueates the Rule (with out the Concat-Info</short>
+      </element><element name="TFilterRule.Eval"><short>Evalueates the Rule (without the Concat-Info)</short>
+      </element>
+    <element name="TEnumHejConcType"><short>TEnumHejConcType defines concatination-types between single FilteRules </short>
+      </element><element name="TEnumHejCompareType"><short>TEnumHejCompareType defines the comparation type of the FilterRule</short>
+      </element><element name="TFilterRule.Clear"><short>Clear reset all data to default (empty) values</short>
+      </element><element name="TFilterRule.Equals"><short>Equals Compares two FilterRules internaly</short>
+      </element><element name="TFilterRule.Concat"><short>Concat stores the concatination-information</short>
+      </element><element name="TFilterRule.DataField"><short>The source-datafield</short>
+      </element><element name="TFilterRule.IndRedir"><short>The redirection enumerator</short>
+      </element><element name="TFilterRule.CompType"><short>the comparation type</short>
+      </element><element name="TFilterRule.CompValue"><short>the value to compare against</short>
+      </element><element name="TGenFilter"><short>TGenFilter is a complete filter containing a list of rules and their concatination</short>
+      </element><element name="TGenFilter.SingleEval"><short>SingleEval evaluates the complete filter against a single Individual</short>
       </element>
     </module>
   </package>
