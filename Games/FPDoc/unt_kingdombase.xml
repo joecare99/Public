@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestKingdom"><module name="unt_KingdomBase"><element name="rsYearOfReign"><short>Resourcestring: Dies ist das %s Jahr deiner Regentschaft</short>
+      </element><element name="rsFirst"><short>Resourcestring: </short>
+      </element><element name="rsSecond"><short>Resourcestring: </short>
+      </element><element name="rsThird"><short>Resourcestring: </short>
+      </element><element name="rsFourth"><short>Resourcestring: </short>
+      </element><element name="rsFifth"><short>Resourcestring: </short>
+      </element><element name="rsSixth"><short>Resourcestring: </short>
+      </element><element name="rsSeventh"><short>Resourcestring: </short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

@@ -1,0 +1,9 @@
+object frmKingdomMain: TfrmKingdomMain
+  Left = 667
+  Height = 360
+  Top = 37
+  Width = 480
+  Caption = 'Kingdom: '
+  DesignTimePPI = 144
+  LCLVersion = '2.0.0.4'
+end
