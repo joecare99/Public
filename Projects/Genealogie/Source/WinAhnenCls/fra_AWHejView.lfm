@@ -24,12 +24,12 @@ object fraAWHejView: TfraAWHejView
       AnchorSideLeft.Control = CoolBar1
       AnchorSideTop.Control = CoolBar1
       Left = 24
-      Height = 46
-      Top = 5
+      Height = 0
+      Top = 14
       Width = 871
       Align = alNone
       BorderSpacing.Left = 22
-      BorderSpacing.Top = 3
+      BorderSpacing.Top = 12
       Caption = 'Menu'
       ParentFont = False
       TabOrder = 0
@@ -50,11 +50,11 @@ object fraAWHejView: TfraAWHejView
     Height = 1012
     Top = 68
     Width = 1589
-    ActivePage = tbs3Details
+    ActivePage = tbs2Edit
     Align = alClient
     Anchors = [akTop, akLeft, akRight]
     ParentFont = False
-    TabIndex = 2
+    TabIndex = 1
     TabOrder = 2
     object tbs1Select: TTabSheet
       Caption = 'Auswahl'
@@ -231,6 +231,7 @@ object fraAWHejView: TfraAWHejView
             Anchors = [akTop, akLeft, akRight]
             BorderSpacing.Top = 4
             BorderSpacing.Right = 4
+            OnDblClick = edtFatherDblClick
             ParentFont = False
             ReadOnly = True
             TabOrder = 0
@@ -247,6 +248,7 @@ object fraAWHejView: TfraAWHejView
             Width = 760
             Anchors = [akTop, akLeft, akRight]
             BorderSpacing.Top = 4
+            OnDblClick = edtMotherDblClick
             ParentFont = False
             ReadOnly = True
             TabOrder = 1
@@ -366,6 +368,7 @@ object fraAWHejView: TfraAWHejView
             Options = [goFixedHorzLine, goHorzLine, goRangeSelect, goColSizing, goDblClickAutoSize, goSmoothScroll, goFixedRowNumbering]
             ParentFont = False
             TabOrder = 0
+            OnDblClick = tblSpousesDblClick
           end
         end
         object pnlP2BottomClient: TPanel
@@ -406,6 +409,7 @@ object fraAWHejView: TfraAWHejView
             Options = [goFixedHorzLine, goHorzLine, goRangeSelect, goColSizing, goDblClickAutoSize, goSmoothScroll]
             ParentFont = False
             TabOrder = 0
+            OnDblClick = tblChildrenDblClick
           end
         end
         object Splitter1: TSplitter
@@ -700,7 +704,6 @@ object fraAWHejView: TfraAWHejView
           Min = 0
           Position = 0
           TabOrder = 0
-          Wrap = False
         end
       end
       object pnlP2VitalData: TPanel

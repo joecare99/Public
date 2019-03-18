@@ -259,10 +259,14 @@ type
     procedure actDataSetNext1Execute(Sender: TObject);
     procedure actDataSetPrior1Execute(Sender: TObject);
     procedure actFileOpen1Accept(Sender: TObject);
+    procedure edtFatherDblClick(Sender: TObject);
+    procedure edtMotherDblClick(Sender: TObject);
     procedure lblFatherClick(Sender: TObject);
     procedure mniOpenFileClick(Sender: TObject);
     procedure mniFilePrivacyOnClick(Sender: TObject);
     procedure mniFileClick(Sender: TObject);
+    procedure tblChildrenDblClick(Sender: TObject);
+    procedure tblSpousesDblClick(Sender: TObject);
   private
     FMenuPopUp:TPopupMenu;
     procedure AfterConstruction; override;
@@ -289,6 +293,16 @@ uses cls_HejIndData;
 procedure TfraAWHejView.mniFileClick(Sender: TObject);
 begin
 
+end;
+
+procedure TfraAWHejView.tblChildrenDblClick(Sender: TObject);
+begin
+  FGenealogy.GotoChild(tblChildren.Row);
+end;
+
+procedure TfraAWHejView.tblSpousesDblClick(Sender: TObject);
+begin
+  FGenealogy.GotoSpouse(tblSpouses.Row-1);
 end;
 
 procedure TfraAWHejView.AfterConstruction;
@@ -450,6 +464,16 @@ end;
 procedure TfraAWHejView.actFileOpen1Accept(Sender: TObject);
 begin
 
+end;
+
+procedure TfraAWHejView.edtFatherDblClick(Sender: TObject);
+begin
+  FGenealogy.GotoParent(hind_idFather);
+end;
+
+procedure TfraAWHejView.edtMotherDblClick(Sender: TObject);
+begin
+  FGenealogy.GotoParent(hind_idMother);
 end;
 
 procedure TfraAWHejView.actDataSetFirst1Execute(Sender: TObject);
