@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="18">
+    <Targets Count="20">
       <Target0 FileName="FPC\fpcTestAsteroidsTypes.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
@@ -102,6 +102,14 @@
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target17>
+      <Target18 FileName="FPC\fpcTestKingdom.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target18>
+      <Target19 FileName="FPC\prj_Kingdom.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target19>
     </Targets>
   </ProjectGroup>
 </CONFIG>
