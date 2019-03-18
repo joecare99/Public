@@ -1,11 +1,14 @@
 unit tst_KingdomEng;
 
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
+{$ENDIF}
 
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry;
+  Classes, SysUtils, {$IFNDEF FPC}TestFramework, {$Else} fpcunit, testutils, testregistry, {$endif}
+  cls_KingdomEng;
 
 type
 
@@ -26,7 +29,7 @@ end;
 
 procedure TTestKingdomEng.SetUp;
 begin
-
+  FKingdom:=TKin
 end;
 
 procedure TTestKingdomEng.TearDown;
@@ -36,6 +39,6 @@ end;
 
 initialization
 
-  RegisterTest(TTestKingdomEng);
+  RegisterTest(TTestKingdomEng{$IFNDEF FPC}.Suite {$ENDIF});
 end.
 

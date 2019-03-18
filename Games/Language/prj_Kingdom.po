@@ -1,0 +1,153 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tfrmkingdommain.btnbuy.caption
+msgid "Kaufen"
+msgstr ""
+
+#: tfrmkingdommain.btndistrfood.caption
+msgid "Verteilen"
+msgstr ""
+
+#: tfrmkingdommain.btnnew.caption
+msgid "Neues Spiel"
+msgstr ""
+
+#: tfrmkingdommain.btnnext.caption
+msgid "Nächste Runde"
+msgstr ""
+
+#: tfrmkingdommain.btnproduce.caption
+msgid "Bewirtschaften"
+msgstr ""
+
+#: tfrmkingdommain.btnsell.caption
+msgid "Verkaufen"
+msgstr ""
+
+#: tfrmkingdommain.caption
+msgid "Kingdom: "
+msgstr ""
+
+#: tfrmkingdommain.edtamountofland.hint
+msgctxt "tfrmkingdommain.edtamountofland.hint"
+msgid "Menge an Land"
+msgstr ""
+
+#: tfrmkingdommain.edtamountofland2.hint
+msgctxt "tfrmkingdommain.edtamountofland2.hint"
+msgid "Menge an Land"
+msgstr ""
+
+#: tfrmkingdommain.edtarea.editlabel.caption
+msgid "edtArea"
+msgstr ""
+
+#: tfrmkingdommain.edtarea.text
+msgid "<Land>"
+msgstr ""
+
+#: tfrmkingdommain.edtpopulation.editlabel.caption
+msgid "edtPopulation"
+msgstr ""
+
+#: tfrmkingdommain.edtpopulation.text
+msgid "<Bevölkerung>"
+msgstr ""
+
+#: tfrmkingdommain.edtpriceofland.editlabel.caption
+msgctxt "tfrmkingdommain.edtpriceofland.editlabel.caption"
+msgid "LabeledEdit2"
+msgstr ""
+
+#: tfrmkingdommain.edtpriceofland.text
+msgid "<LandPreis>"
+msgstr ""
+
+#: tfrmkingdommain.edtstorage.editlabel.caption
+msgctxt "tfrmkingdommain.edtstorage.editlabel.caption"
+msgid "LabeledEdit2"
+msgstr ""
+
+#: tfrmkingdommain.edtstorage.text
+msgid "<Speicher>"
+msgstr ""
+
+#: tfrmkingdommain.label1.caption
+msgid "Label1"
+msgstr ""
+
+#: tfrmkingdommain.panel1.caption
+msgid "Panel1"
+msgstr ""
+
+#: unt_kingdombase.rsadress
+msgid "Hamurabi, ich habe Dir folgendes zu berichten:"
+msgstr ""
+
+#: unt_kingdombase.rseighth
+msgctxt "unt_kingdombase.rseighth"
+msgid "achte"
+msgstr ""
+
+#: unt_kingdombase.rseleventh
+msgid "elfte"
+msgstr ""
+
+#: unt_kingdombase.rsfifth
+msgid "fünfte"
+msgstr ""
+
+#: unt_kingdombase.rsfirst
+msgid "erste"
+msgstr ""
+
+#: unt_kingdombase.rsfourth
+msgid "vierte"
+msgstr ""
+
+#: unt_kingdombase.rsgamedescription
+msgid ""
+"Dies ist das Königreich Sumeria, und Sie wurden für 10 Jahre zum Herscher gewählt.\n"
+"\n"
+"Ihre Herrschaft entscheidet über Leben und Tod von hunderten ihrer Untertanen. Ihre diktatorischen Fähigkeiten werden am Ende der Ampsperiode, nach 10 Jahren geprüft.\n"
+"\n"
+"Jedes Jahr müssen Sie Ihre Entscheidungen überdenken und ausführen.\n"
+msgstr ""
+
+#: unt_kingdombase.rsnineth
+msgid "neunte"
+msgstr ""
+
+#: unt_kingdombase.rsok
+msgid "Erledigt ..."
+msgstr ""
+
+#: unt_kingdombase.rsplague
+msgid "Eine schreckliche Plage hat dein Land heimgesucht und die Hälfte der Bevölkerung dahingerafft..."
+msgstr ""
+
+#: unt_kingdombase.rssecond
+msgid "zweite"
+msgstr ""
+
+#: unt_kingdombase.rsseventh
+msgid "siebente"
+msgstr ""
+
+#: unt_kingdombase.rssixth
+msgid "sechste"
+msgstr ""
+
+#: unt_kingdombase.rstenth
+msgid "zehnte"
+msgstr ""
+
+#: unt_kingdombase.rsthird
+msgid "dritte"
+msgstr ""
+
+#: unt_kingdombase.rsyearofreign
+msgid "Dies ist das %s Jahr deiner Regentschaft sind %d Leute gestorben; %d Leute sind nach Sumeria zugezogen."
+msgstr ""
+

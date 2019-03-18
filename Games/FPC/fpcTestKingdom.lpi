@@ -48,7 +48,7 @@
         <IsPartOfProject Value="True"/>
       </Unit2>
       <Unit3>
-        <Filename Value="unt_KingdomBase.pas"/>
+        <Filename Value="..\Source\Kingdom\unt_KingdomBase.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
     </Units>
@@ -57,12 +57,12 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="fpcTestKingdom"/>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\fpcTestKingdom"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
       <OtherUnitFiles Value="..\Source\Kingdom"/>
-      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>
       <Options>
