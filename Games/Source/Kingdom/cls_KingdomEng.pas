@@ -109,8 +109,19 @@ begin
   if not FExpelled then
   result:=rsAdress +LineEnding+
     format(rsYearOfReign, [Numbers[FYearOfReighn],FDeath,FImmigrants]);
-  // Todo: more Year Desription
-
+  if FPlague then
+    result:=result +LineEnding+LineEnding+ rsPlague;
+  result:=result +LineEnding+LineEnding+
+    format(rsStorage,[FPopulation,FArea,FProductivity,FRatts,FStorage]) ;
+  if FExpelled then
+    result:=result +LineEnding+LineEnding+rsExpelled;
+  if not GameEnded then
+    result:=result +LineEnding+LineEnding+
+      format(rsCostOfLand,[FCostOfLand])
+  else
+    begin
+  // Todo: Endresults
+    end;
 end;
 
 function TKingdomEngine.BuySellMsg(aValue: integer): String;
