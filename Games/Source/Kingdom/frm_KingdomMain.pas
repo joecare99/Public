@@ -140,8 +140,10 @@ begin
 
   Label1.Caption:=
       'Vor:            '#9+edtStorage.Text+LineEnding+
-      'Bev: '+edtPopulation.Text+' *20 ='#9+inttostr(-FKingdom.Population*20+FKingdom.Distributed)+#9+'('+inttostr(FKingdom.Distributed)+')+LineEnding+
-      'Prod: '+inttostr(lMaxProd)+' /2 ='#9+inttostr(-lMaxProd div 2)+#9+'('+inttostr(FKingdom.LandInProd div 2)+')'+LineEnding+
+      'Bev: '+edtPopulation.Text+' *20 ='#9+inttostr(-FKingdom.Population*20+
+            FKingdom.Distributed)+#9+'('+inttostr(FKingdom.Distributed)+')'+LineEnding+
+      'Prod: '+inttostr(lMaxProd)+' /2 ='#9+inttostr(-lMaxProd div 2)+#9+'('+
+            inttostr(FKingdom.LandInProd div 2)+')'+LineEnding+
       '-----------------------------'+LineEnding+
       'Summ:           '#9+inttostr(FKingdom.Storage-FKingdom.Population*20-lMaxProd div 2+FKingdom.Distributed);
 end;
