@@ -1,179 +1,236 @@
 object frmKingdomMain: TfrmKingdomMain
   Left = 667
-  Height = 790
+  Height = 979
   Top = 37
-  Width = 1149
+  Width = 1668
   Caption = 'Kingdom: '
-  ClientHeight = 790
-  ClientWidth = 1149
+  ClientHeight = 979
+  ClientWidth = 1668
   DesignTimePPI = 144
   OnCreate = FormCreate
   OnShow = FormShow
   object btnBuy: TButton
-    Left = 328
-    Height = 38
-    Top = 331
-    Width = 113
+    Left = 492
+    Height = 57
+    Top = 496
+    Width = 200
     Caption = 'Kaufen'
+    Font.Height = 40
     OnClick = btnBuyClick
+    ParentFont = False
     TabOrder = 0
   end
   object edtAmountOfLand: TSpinEdit
-    Left = 26
-    Height = 33
+    AnchorSideTop.Control = btnBuy
+    Left = 20
+    Height = 48
     Hint = 'Menge an Land'
-    Top = 331
-    Width = 294
+    Top = 496
+    Width = 450
+    Font.Height = 40
     MaxValue = 100000
+    ParentFont = False
     TabOrder = 1
   end
   object btnSell: TButton
-    Left = 448
-    Height = 38
-    Top = 331
-    Width = 114
+    Left = 696
+    Height = 57
+    Top = 496
+    Width = 200
     Caption = 'Verkaufen'
+    Font.Height = 40
     OnClick = btnSellClick
+    ParentFont = False
     TabOrder = 2
   end
   object edtDistrFood: TSpinEdit
-    Left = 30
-    Height = 33
-    Top = 374
-    Width = 291
+    AnchorSideLeft.Control = edtAmountOfLand
+    AnchorSideTop.Control = btnDistrFood
+    AnchorSideRight.Control = edtAmountOfLand
+    AnchorSideRight.Side = asrBottom
+    Left = 20
+    Height = 48
+    Top = 559
+    Width = 450
+    Anchors = [akTop, akLeft, akRight]
+    Font.Height = 40
     MaxValue = 1000000
+    ParentFont = False
     TabOrder = 3
   end
   object btnDistrFood: TButton
-    Left = 333
-    Height = 38
-    Top = 381
-    Width = 113
+    AnchorSideLeft.Control = btnBuy
+    AnchorSideTop.Control = btnBuy
+    AnchorSideTop.Side = asrBottom
+    Left = 492
+    Height = 57
+    Top = 559
+    Width = 200
+    BorderSpacing.Top = 6
     Caption = 'Verteilen'
+    Font.Height = 40
     OnClick = btnDistrFoodClick
+    ParentFont = False
     TabOrder = 4
   end
   object edtAmountOfLand2: TSpinEdit
-    Left = 30
-    Height = 33
+    AnchorSideLeft.Control = edtAmountOfLand
+    AnchorSideTop.Control = btnProduce
+    AnchorSideRight.Control = edtAmountOfLand
+    AnchorSideRight.Side = asrBottom
+    Left = 20
+    Height = 48
     Hint = 'Menge an Land'
-    Top = 416
-    Width = 294
+    Top = 622
+    Width = 450
+    Anchors = [akTop, akLeft, akRight]
+    Font.Height = 40
     MaxValue = 1000000
+    ParentFont = False
     TabOrder = 5
   end
   object btnProduce: TButton
-    Left = 331
-    Height = 38
-    Top = 430
-    Width = 113
+    AnchorSideLeft.Control = btnBuy
+    AnchorSideTop.Control = btnDistrFood
+    AnchorSideTop.Side = asrBottom
+    Left = 492
+    Height = 57
+    Top = 622
+    Width = 200
+    BorderSpacing.Top = 6
     Caption = 'Bewirtschaften'
+    Font.Height = 40
     OnClick = btnProduceClick
+    ParentFont = False
     TabOrder = 6
   end
   object Memo1: TMemo
-    Left = 11
-    Height = 303
-    Top = 17
-    Width = 609
+    Left = 20
+    Height = 454
+    Top = 26
+    Width = 1140
+    Font.Height = 40
     Lines.Strings = (
       'Memo1'
     )
+    ParentFont = False
     TabOrder = 7
   end
   object Panel1: TPanel
-    Left = 750
-    Height = 790
+    Left = 1174
+    Height = 979
     Top = 0
-    Width = 399
+    Width = 494
     Align = alRight
-    Caption = 'Panel1'
-    ClientHeight = 790
-    ClientWidth = 399
+    ClientHeight = 979
+    ClientWidth = 494
+    ParentFont = False
     TabOrder = 8
     object edtPopulation: TLabeledEdit
-      Left = 18
-      Height = 33
-      Top = 32
-      Width = 381
-      EditLabel.Height = 25
-      EditLabel.Width = 381
-      EditLabel.Caption = 'edtPopulation'
+      Left = 20
+      Height = 48
+      Top = 48
+      Width = 450
+      EditLabel.Height = 40
+      EditLabel.Width = 450
+      EditLabel.Caption = 'Bevölkerung:'
       EditLabel.ParentColor = False
+      EditLabel.ParentFont = False
+      EditLabel.Font.Height = 40
+      Font.Height = 40
+      ParentFont = False
       ReadOnly = True
       TabOrder = 0
       Text = '<Bevölkerung>'
     end
     object edtArea: TLabeledEdit
-      Left = 24
-      Height = 33
-      Top = 98
-      Width = 375
-      EditLabel.Height = 25
-      EditLabel.Width = 375
-      EditLabel.Caption = 'edtArea'
+      Left = 20
+      Height = 48
+      Top = 147
+      Width = 450
+      EditLabel.Height = 40
+      EditLabel.Width = 450
+      EditLabel.Caption = 'Land:'
       EditLabel.ParentColor = False
+      EditLabel.ParentFont = False
+      EditLabel.Font.Height = 40
+      Font.Height = 40
+      ParentFont = False
       ReadOnly = True
       TabOrder = 1
       Text = '<Land>'
     end
     object edtStorage: TLabeledEdit
-      Left = 24
-      Height = 33
-      Top = 168
-      Width = 368
-      EditLabel.Height = 25
-      EditLabel.Width = 368
-      EditLabel.Caption = 'LabeledEdit2'
+      Left = 20
+      Height = 48
+      Top = 252
+      Width = 450
+      EditLabel.Height = 40
+      EditLabel.Width = 450
+      EditLabel.Caption = 'Speicher:'
       EditLabel.ParentColor = False
+      EditLabel.ParentFont = False
+      EditLabel.Font.Height = 40
+      Font.Height = 40
+      ParentFont = False
       ReadOnly = True
       TabOrder = 2
       Text = '<Speicher>'
     end
     object Bevel1: TBevel
-      Left = 16
-      Height = 10
-      Top = 210
-      Width = 376
+      Left = 24
+      Height = 15
+      Top = 315
+      Width = 564
     end
     object edtPriceOfLand: TLabeledEdit
-      Left = 23
-      Height = 33
-      Top = 256
-      Width = 376
-      EditLabel.Height = 25
-      EditLabel.Width = 376
-      EditLabel.Caption = 'LabeledEdit2'
+      Left = 20
+      Height = 48
+      Top = 384
+      Width = 450
+      EditLabel.Height = 40
+      EditLabel.Width = 450
+      EditLabel.Caption = 'Landpreis:'
       EditLabel.ParentColor = False
+      EditLabel.ParentFont = False
+      EditLabel.Font.Height = 40
+      Font.Height = 40
+      ParentFont = False
       ReadOnly = True
       TabOrder = 3
       Text = '<LandPreis>'
     end
     object Label1: TLabel
-      Left = 45
-      Height = 25
-      Top = 404
-      Width = 51
+      Left = 40
+      Height = 35
+      Top = 480
+      Width = 72
       Caption = 'Label1'
+      Font.Height = 35
       ParentColor = False
+      ParentFont = False
     end
   end
   object btnNext: TButton
-    Left = 449
-    Height = 126
-    Top = 508
-    Width = 264
+    Left = 674
+    Height = 189
+    Top = 762
+    Width = 400
     Caption = 'Nächste Runde'
+    Font.Height = 40
     OnClick = btnNextClick
+    ParentFont = False
     TabOrder = 9
   end
   object btnNew: TButton
-    Left = 17
-    Height = 118
-    Top = 503
-    Width = 255
+    Left = 26
+    Height = 177
+    Top = 754
+    Width = 400
     Caption = 'Neues Spiel'
+    Font.Height = 40
     OnClick = btnNewClick
+    ParentFont = False
     TabOrder = 10
   end
   object CalculatorDialog1: TCalculatorDialog
@@ -186,7 +243,7 @@ object frmKingdomMain: TfrmKingdomMain
     ColorBtnOthers = clBlack
     ColorDisplayText = clBlack
     ColorDisplayBack = clWhite
-    left = 834
-    top = 455
+    left = 1251
+    top = 683
   end
 end

@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, Translations, frm_KingdomMain, unt_KingdomBase
+  Forms, Translations, frm_KingdomMain, unt_KingdomBase, uScaleDPI
   { you can add units after this };
 
 {$R *.res}
@@ -17,6 +17,7 @@ begin
   Application.Scaled:=True;
   Application.Initialize;
   Application.CreateForm(TfrmKingdomMain, frmKingdomMain);
+  uScaleDPI.AutoAdjustAllForms;
   Application.Run;
 end.
 

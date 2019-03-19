@@ -80,14 +80,14 @@ end;
 procedure TfrmKingdomMain.btnNewClick(Sender: TObject);
 begin
   FKingdom.NewGame;
-  DisplayMessage(FKingdom.YearDescription);
+  DisplayMessage(FKingdom.YearDescription,true);
   UpdateValues;
 end;
 
 procedure TfrmKingdomMain.btnNextClick(Sender: TObject);
 begin
   FKingdom.NewYear(false);
-  DisplayMessage(FKingdom.YearDescription);
+  DisplayMessage(FKingdom.YearDescription,true);
   UpdateValues;
 end;
 

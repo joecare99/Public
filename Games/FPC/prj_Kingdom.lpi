@@ -7,9 +7,13 @@
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <Title Value="prj_Kingdom"/>
-      <Scaled Value="True"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
+      <XPManifest>
+        <DpiAware Value="True"/>
+        <TextName Value="JCSoft.Game.Kingdom"/>
+        <TextDesc Value="Rule the Kingdom"/>
+      </XPManifest>
       <Icon Value="0"/>
     </General>
     <LazDoc Paths="..\FPDoc"/>
@@ -28,10 +32,13 @@
       <FormatVersion Value="2"/>
       <Modes Count="0"/>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="LCL"/>
+        <PackageName Value="HighDPI"/>
       </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
     </RequiredPackages>
     <Units Count="4">
       <Unit0>

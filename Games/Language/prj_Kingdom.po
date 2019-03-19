@@ -40,7 +40,7 @@ msgid "Menge an Land"
 msgstr ""
 
 #: tfrmkingdommain.edtarea.editlabel.caption
-msgid "edtArea"
+msgid "Land:"
 msgstr ""
 
 #: tfrmkingdommain.edtarea.text
@@ -48,7 +48,7 @@ msgid "<Land>"
 msgstr ""
 
 #: tfrmkingdommain.edtpopulation.editlabel.caption
-msgid "edtPopulation"
+msgid "Bevölkerung:"
 msgstr ""
 
 #: tfrmkingdommain.edtpopulation.text
@@ -57,7 +57,7 @@ msgstr ""
 
 #: tfrmkingdommain.edtpriceofland.editlabel.caption
 msgctxt "tfrmkingdommain.edtpriceofland.editlabel.caption"
-msgid "LabeledEdit2"
+msgid "Landpreis:"
 msgstr ""
 
 #: tfrmkingdommain.edtpriceofland.text
@@ -66,7 +66,7 @@ msgstr ""
 
 #: tfrmkingdommain.edtstorage.editlabel.caption
 msgctxt "tfrmkingdommain.edtstorage.editlabel.caption"
-msgid "LabeledEdit2"
+msgid "Speicher:"
 msgstr ""
 
 #: tfrmkingdommain.edtstorage.text
@@ -77,12 +77,12 @@ msgstr ""
 msgid "Label1"
 msgstr ""
 
-#: tfrmkingdommain.panel1.caption
-msgid "Panel1"
-msgstr ""
-
 #: unt_kingdombase.rsadress
 msgid "Hamurabi, ich habe Dir folgendes zu berichten:"
+msgstr ""
+
+#: unt_kingdombase.rscostofland
+msgid "Land wird derzeit für %d Büschel Getreide gehandelt."
 msgstr ""
 
 #: unt_kingdombase.rseighth
@@ -92,6 +92,13 @@ msgstr ""
 
 #: unt_kingdombase.rseleventh
 msgid "elfte"
+msgstr ""
+
+#: unt_kingdombase.rsexpelled
+msgid ""
+"Durch deine misserable Herrschaft sind in einem Jahr %d Leute gestorben\n"
+"Dadurch hast Du einen Volksaufstand ausgelöst.\n"
+"Du bist gestürzt und aus dem Land gejagt worden !!!\n"
 msgstr ""
 
 #: unt_kingdombase.rsfifth
@@ -108,11 +115,12 @@ msgstr ""
 
 #: unt_kingdombase.rsgamedescription
 msgid ""
-"Dies ist das Königreich Sumeria, und Sie wurden für 10 Jahre zum Herscher gewählt.\n"
+"Dies ist das Königreich Sumeria, und Sie wurden für 10 Jahre zum Herrscher gewählt.\n"
 "\n"
 "Ihre Herrschaft entscheidet über Leben und Tod von hunderten ihrer Untertanen. Ihre diktatorischen Fähigkeiten werden am Ende der Ampsperiode, nach 10 Jahren geprüft.\n"
 "\n"
 "Jedes Jahr müssen Sie Ihre Entscheidungen überdenken und ausführen.\n"
+"Bedenke, zur Ernährung braucht jeder Bewohner pro Jahr 20 Büschel Getreide, und die Bewirtschaftung von 2 Tagwerk Land kostet 1 Büschel Getreide.\n"
 msgstr ""
 
 #: unt_kingdombase.rsnineth
@@ -137,6 +145,12 @@ msgstr ""
 
 #: unt_kingdombase.rssixth
 msgid "sechste"
+msgstr ""
+
+#: unt_kingdombase.rsstorage
+msgid ""
+"Die Stadt zählt nun %d Einwohner. Du besitzt jetzt %d Tagwerk Land, von denen pro Tagwerk %d Büschel Getreide geernted wurden.\n"
+"Die Ratten frassen %d Büschel, du hast %d Büschel in deine  Lagerhäusern.\n"
 msgstr ""
 
 #: unt_kingdombase.rstenth
