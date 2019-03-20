@@ -139,6 +139,7 @@ var
   I, j: Integer;
 begin
   for I:= 0 to Screen.FormCount -1 do
+    begin
       {$IF (FPC_FULLVERSION<30003)}
     Screen.Forms[i].AutoAdjustLayout(
       lapAutoAdjustForDPI, Screen.Forms[i].DesignTimeDPI, Screen.PixelsPerInch,
@@ -151,6 +152,8 @@ begin
     for j := 0 to Screen.Forms[i].ControlCount-1 do
        ScaleDPI(Screen.Forms[i].Controls[j],Screen.Forms[i].DesignTimePPI,false);
     {$ENDIF}
+
+    end;
 end;
 
 end.
