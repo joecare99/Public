@@ -12,6 +12,80 @@ msgstr ""
 "Language: de_DE\n"
 "X-Generator: Poedit 2.0.2\n"
 
+#: tfrmkingdommain.btnbuy.caption
+msgid "Kaufen"
+msgstr ""
+
+#: tfrmkingdommain.btndistrfood.caption
+msgid "Verteilen"
+msgstr ""
+
+#: tfrmkingdommain.btnnew.caption
+msgid "Neues Spiel"
+msgstr ""
+
+#: tfrmkingdommain.btnnext.caption
+msgid "Nächste Runde"
+msgstr ""
+
+#: tfrmkingdommain.btnproduce.caption
+msgid "Bewirtschaften"
+msgstr ""
+
+#: tfrmkingdommain.btnsell.caption
+msgid "Verkaufen"
+msgstr ""
+
+#: tfrmkingdommain.caption
+msgid "Kingdom: "
+msgstr ""
+
+#: tfrmkingdommain.edtamountofland.hint
+msgctxt "tfrmkingdommain.edtamountofland.hint"
+msgid "Menge an Land"
+msgstr ""
+
+#: tfrmkingdommain.edtamountofland2.hint
+msgctxt "tfrmkingdommain.edtamountofland2.hint"
+msgid "Menge an Land"
+msgstr ""
+
+#: tfrmkingdommain.edtarea.editlabel.caption
+msgid "Land:"
+msgstr ""
+
+#: tfrmkingdommain.edtarea.text
+msgid "<Land>"
+msgstr ""
+
+#: tfrmkingdommain.edtpopulation.editlabel.caption
+msgid "Bevölkerung:"
+msgstr ""
+
+#: tfrmkingdommain.edtpopulation.text
+msgid "<Bevölkerung>"
+msgstr ""
+
+#: tfrmkingdommain.edtpriceofland.editlabel.caption
+msgid "Landpreis:"
+msgstr ""
+
+#: tfrmkingdommain.edtpriceofland.text
+msgid "<LandPreis>"
+msgstr ""
+
+#: tfrmkingdommain.edtstorage.editlabel.caption
+msgid "Speicher:"
+msgstr ""
+
+#: tfrmkingdommain.edtstorage.text
+msgid "<Speicher>"
+msgstr ""
+
+#: tfrmkingdommain.label1.caption
+msgid "Label1"
+msgstr ""
+
 #: unt_kingdombase.rsadress
 msgid "Hamurabi, ich habe Dir folgendes zu berichten:"
 msgstr ""
@@ -52,7 +126,7 @@ msgstr ""
 msgid ""
 "Dies ist das Königreich Sumeria, und Sie wurden für 10 Jahre zum Herrscher gewählt.\n"
 "\n"
-"Ihre Herrschaft entscheidet über Leben und Tod von hunderten ihrer Untertanen. Ihre diktatorischen Fähigkeiten werden am Ende der Ampsperiode, nach 10 Jahren geprüft.\n"
+"Ihre Herrschaft entscheidet über Leben und Tod von hunderten ihrer Untertanen. Ihre diktatorischen Fähigkeiten werden am Ende der Amtsperiode, nach 10 Jahren geprüft.\n"
 "\n"
 "Jedes Jahr müssen Sie Ihre Entscheidungen überdenken und ausführen.\n"
 "Bedenke, zur Ernährung braucht jeder Bewohner pro Jahr 20 Büschel Getreide, und die Bewirtschaftung von 2 Tagwerk Land kostet 1 Büschel Getreide.\n"
@@ -85,7 +159,7 @@ msgstr ""
 #: unt_kingdombase.rsstorage
 msgid ""
 "Die Stadt zählt nun %d Einwohner. Du besitzt jetzt %d Tagwerk Land, von denen pro Tagwerk %d Büschel Getreide geernted wurden.\n"
-"Die Ratten frassen %d Büschel, du hast %d Büschel in deine  Lagerhäusern.\n"
+"Die Ratten frassen %d Büschel, du hast %d Büschel in deine Lagerhäusern.\n"
 msgstr ""
 
 #: unt_kingdombase.rstenth
@@ -99,3 +173,4 @@ msgstr ""
 #: unt_kingdombase.rsyearofreign
 msgid "Dies ist das %s Jahr deiner Regentschaft sind %d Leute gestorben; %d Leute sind nach Sumeria zugezogen."
 msgstr ""
+
