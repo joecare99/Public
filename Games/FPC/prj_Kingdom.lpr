@@ -7,7 +7,8 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, Translations, frm_KingdomMain, unt_KingdomBase, uScaleDPI
+  DefaultTranslator,
+  Forms, unt_KingdomBase, cls_KingdomEng, frm_KingdomMain, uScaleDPI
   { you can add units after this };
 
 {$R *.res}

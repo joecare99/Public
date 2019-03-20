@@ -7,14 +7,14 @@ unit unt_KingdomBase;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, LCLTranslator;
 
 resourcestring
 // Texte
    rsGameDescription = 'Dies ist das Königreich Sumeria, und Sie wurden für 10 '+
      'Jahre zum Herrscher gewählt.'+LineEnding+LineEnding+
      'Ihre Herrschaft entscheidet über Leben und Tod von hunderten ihrer '+
-     'Untertanen. Ihre diktatorischen Fähigkeiten werden am Ende der Ampsperiode'+
+     'Untertanen. Ihre diktatorischen Fähigkeiten werden am Ende der Amtsperiode'+
      ', nach 10 Jahren geprüft.'+LineEnding+LineEnding+
      'Jedes Jahr müssen Sie Ihre Entscheidungen überdenken und ausführen.'+Lineending+
      'Bedenke, zur Ernährung braucht jeder Bewohner pro Jahr 20 Büschel Getreide, '+
@@ -29,7 +29,7 @@ resourcestring
      'Du bist gestürzt und aus dem Land gejagt worden !!!';
    rsStorage= 'Die Stadt zählt nun %d Einwohner. Du besitzt jetzt %d Tagwerk '+
      'Land, von denen pro Tagwerk %d Büschel Getreide geernted wurden.'+LineEnding+
-     'Die Ratten frassen %d Büschel, du hast %d Büschel in deine  Lagerhäusern.';
+     'Die Ratten frassen %d Büschel, du hast %d Büschel in deine Lagerhäusern.';
    rsCostOfLand='Land wird derzeit für %d Büschel Getreide gehandelt.';
    rsOK='Erledigt ...';
 

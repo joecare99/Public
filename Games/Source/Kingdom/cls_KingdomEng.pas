@@ -7,7 +7,7 @@ unit cls_KingdomEng;
 interface
 
 uses
-  Classes, SysUtils;
+  Classes, SysUtils, LCLTranslator;
 
 type
 

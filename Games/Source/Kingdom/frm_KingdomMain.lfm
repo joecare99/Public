@@ -6,9 +6,9 @@ object frmKingdomMain: TfrmKingdomMain
   Caption = 'Kingdom: '
   ClientHeight = 979
   ClientWidth = 1668
-  DesignTimePPI = 144
   OnCreate = FormCreate
   OnShow = FormShow
+  LCLVersion = '2.0.0.4'
   object btnBuy: TButton
     Left = 492
     Height = 57
