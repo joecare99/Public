@@ -2,14 +2,15 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <BuildModes Active="Debug"/>
     <Units Count="7">
       <Unit0>
         <Filename Value="WinCub.lpr"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="2"/>
-        <CursorPos X="10" Y="17"/>
+        <CursorPos Y="13"/>
         <UsageCount Value="34"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -21,7 +22,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frm_WinCub"/>
-        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
         <TopLine Value="64"/>
         <CursorPos X="18" Y="81"/>
         <UsageCount Value="34"/>
@@ -33,7 +34,6 @@
         <Filename Value="..\Source\WinCub\cls_colcub.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Cls_ColCub"/>
-        <EditorIndex Value="1"/>
         <TopLine Value="38"/>
         <CursorPos X="31" Y="52"/>
         <UsageCount Value="34"/>
@@ -188,5 +188,9 @@
         <Caret Line="85" Column="10" TopLine="48"/>
       </Position29>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>
