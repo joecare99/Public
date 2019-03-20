@@ -9,7 +9,7 @@ uses
 
 Procedure AutoAdjustAllForms;
 procedure HighDPI(FromDPI: Integer);
-procedure ScaleDPI(Control: TControl; FromDPI: Integer);
+procedure ScaleDPI(Control: TControl; FromDPI: Integer;ScalePos:boolean=true);
 procedure ScaleImageList(ImgList: TImageList; FromDPI: Integer);
 
 implementation
@@ -76,7 +76,7 @@ begin
     end;
 end;
 
-procedure ScaleDPI(Control: TControl; FromDPI: Integer);
+procedure ScaleDPI(Control: TControl; FromDPI: Integer;ScalePos:boolean=true);
 var
   n: Integer;
   WinControl: TWinControl;
@@ -85,10 +85,16 @@ begin
   if Screen.PixelsPerInch = FromDPI then exit;
 
   with Control do begin
+    if ScalePos then
+      begin
     Left:=ScaleX(Left,FromDPI);
     Top:=ScaleY(Top,FromDPI);
-    Width:=ScaleX(Width,FromDPI);
-    Height:=ScaleY(Height,FromDPI);
+    if not AutoSize then
+      begin
+        Width:=ScaleX(Width,FromDPI);
+        Height:=ScaleY(Height,FromDPI);
+      end;
+      end;
     {$IFDEF LCL_Qt}
       Font.Size := 0;
     {$ELSE}
@@ -121,7 +127,7 @@ begin
     if WinControl.ControlCount > 0 then begin
       for n:=0 to WinControl.ControlCount-1 do begin
         if WinControl.Controls[n] is TControl then begin
-          ScaleDPI(WinControl.Controls[n],FromDPI);
+          ScaleDPI(WinControl.Controls[n],FromDPI,ScalePos);
         end;
       end;
     end;
@@ -130,7 +136,7 @@ end;
 
 procedure AutoAdjustAllForms;
 var
-  I: Integer;
+  I, j: Integer;
 begin
   for I:= 0 to Screen.FormCount -1 do
       {$IF (FPC_FULLVERSION<30003)}
@@ -138,9 +144,12 @@ begin
       lapAutoAdjustForDPI, Screen.Forms[i].DesignTimeDPI, Screen.PixelsPerInch,
       Screen.Forms[i].Width, ScaleX(Screen.Forms[i].Width, Screen.Forms[i].DesignTimeDPI));
     {$ELSE}
+
     Screen.Forms[i].AutoAdjustLayout(
       lapAutoAdjustForDPI, Screen.Forms[i].DesignTimePPI, Screen.PixelsPerInch,
       Screen.Forms[i].Width, ScaleX(Screen.Forms[i].Width, Screen.Forms[i].DesignTimePPI));
+    for j := 0 to Screen.Forms[i].ControlCount-1 do
+       ScaleDPI(Screen.Forms[i].Controls[j],Screen.Forms[i].DesignTimePPI,false);
     {$ENDIF}
 end;
 
