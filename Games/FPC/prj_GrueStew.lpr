@@ -7,6 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
+    DefaultTranslator,
   Forms, Frm_GrueStewHmi, cls_GrueStewEng, unt_GrueStewBase
   { you can add units after this };
 
