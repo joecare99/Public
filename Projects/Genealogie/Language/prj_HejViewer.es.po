@@ -1,17 +1,5 @@
 msgid ""
-msgstr ""
-"Project-Id-Version: \n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: Joe Care\n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=UTF-8\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Orginal: de_DE\n"
-"Language: de_DE\n"
-"X-Generator: Poedit 2.2.1\n"
-"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+msgstr "Content-Type: text/plain; charset=UTF-8"
 "X-Source-Language: de"
 
 #: dm_gendata2.rscreateadoption
@@ -887,3 +875,4 @@ msgstr ""
 #: tfraindindex.speedbutton2.caption
 msgid "S"
 msgstr ""
+
