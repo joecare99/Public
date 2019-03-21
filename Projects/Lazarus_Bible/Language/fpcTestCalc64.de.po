@@ -1,0 +1,223 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joe Care\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: de\n"
+"X-Generator: Poedit 2.2.1\n"
+
+#: tfrmcalc64main.about1.caption
+msgid "&About..."
+msgstr "&Über..."
+
+#: tfrmcalc64main.binbutton.caption
+msgid "&B"
+msgstr "&B"
+
+#: tfrmcalc64main.btn0.caption
+msgid "0"
+msgstr "0"
+
+#: tfrmcalc64main.btn1.caption
+msgid "1"
+msgstr "1"
+
+#: tfrmcalc64main.btn2.caption
+msgid "2"
+msgstr "2"
+
+#: tfrmcalc64main.btn3.caption
+msgid "3"
+msgstr "3"
+
+#: tfrmcalc64main.btn4.caption
+msgid "4"
+msgstr "4"
+
+#: tfrmcalc64main.btn5.caption
+msgid "5"
+msgstr "5"
+
+#: tfrmcalc64main.btn6.caption
+msgid "6"
+msgstr "6"
+
+#: tfrmcalc64main.btn7.caption
+msgid "7"
+msgstr "7"
+
+#: tfrmcalc64main.btn8.caption
+msgid "8"
+msgstr "8"
+
+#: tfrmcalc64main.btn9.caption
+msgid "9"
+msgstr "9"
+
+#: tfrmcalc64main.btna.caption
+msgid "A"
+msgstr "A"
+
+#: tfrmcalc64main.btnand.caption
+msgid "AND"
+msgstr "UND"
+
+#: tfrmcalc64main.btnb.caption
+msgid "B"
+msgstr "B"
+
+#: tfrmcalc64main.btnback.caption
+msgid "Back"
+msgstr "Zurück"
+
+#: tfrmcalc64main.btnc.caption
+msgctxt "tfrmcalc64main.btnc.caption"
+msgid "C"
+msgstr "C"
+
+#: tfrmcalc64main.btnclear.caption
+msgctxt "tfrmcalc64main.btnclear.caption"
+msgid "C"
+msgstr "C"
+
+#: tfrmcalc64main.btnclearentry.caption
+msgid "&CE"
+msgstr "&CE"
+
+#: tfrmcalc64main.btnd.caption
+msgid "D"
+msgstr "D"
+
+#: tfrmcalc64main.btndivide.caption
+msgid "/"
+msgstr "/"
+
+#: tfrmcalc64main.btne.caption
+msgid "E"
+msgstr "E"
+
+#: tfrmcalc64main.btnequals.caption
+#, fuzzy
+msgid "="
+msgstr "="
+
+#: tfrmcalc64main.btnf.caption
+msgid "F"
+msgstr "F"
+
+#: tfrmcalc64main.btnminus.caption
+msgid "-"
+msgstr "-"
+
+#: tfrmcalc64main.btnmultiply.caption
+msgid "*"
+msgstr "*"
+
+#: tfrmcalc64main.btnnegate.caption
+msgid "+/-"
+msgstr "+/-"
+
+#: tfrmcalc64main.btnnot.caption
+msgid "NOT"
+msgstr "NICHT"
+
+#: tfrmcalc64main.btnor.caption
+msgid "OR"
+msgstr "ODER"
+
+#: tfrmcalc64main.btnplus.caption
+msgid "+"
+msgstr "+"
+
+#: tfrmcalc64main.btnpoint.caption
+msgid "."
+msgstr ","
+
+#: tfrmcalc64main.btnxor.caption
+msgid "XOR"
+msgstr "XOR"
+
+#: tfrmcalc64main.calcexitmenuitem.caption
+msgid "E&xit"
+msgstr "S&chließen"
+
+#: tfrmcalc64main.calcmenuitem.caption
+msgid "C&alc"
+msgstr "R&echner"
+
+#: tfrmcalc64main.caption
+msgid "Calculator 64"
+msgstr "Rechner 64"
+
+#: tfrmcalc64main.copy1.caption
+msgid "&Copy"
+msgstr "&Kopieren"
+
+#: tfrmcalc64main.decbutton.caption
+msgid "&D"
+msgstr "&D"
+
+#: tfrmcalc64main.edit1.caption
+msgid "&Edit"
+msgstr "&Bearbeiten"
+
+#: tfrmcalc64main.help1.caption
+msgid "He&lp"
+msgstr "Hi&lfe"
+
+#: tfrmcalc64main.hexbutton.caption
+msgid "&H"
+msgstr "&H"
+
+#: tfrmcalc64main.lblbinary.caption
+msgctxt "tfrmcalc64main.lblbinary.caption"
+msgid "1000 0000 0000 0000 0000 0000 0000 0000 0000"
+msgstr "1000 0000 0000 0000 0000 0000 0000 0000 0000"
+
+#: tfrmcalc64main.lbldecimal.caption
+msgctxt "tfrmcalc64main.lbldecimal.caption"
+msgid "-2.147.483.648 "
+msgstr ""
+
+#: tfrmcalc64main.lblhex.caption
+msgctxt "tfrmcalc64main.lblhex.caption"
+msgid "7FFF FFFF "
+msgstr "7FFF FFFF "
+
+#: tfrmcalc64main.lblmemory.caption
+msgctxt "tfrmcalc64main.lblmemory.caption"
+msgid "0 "
+msgstr "0 "
+
+#: tfrmcalc64main.membutton.caption
+msgid "M"
+msgstr "M"
+
+#: tfrmcalc64main.paste1.caption
+msgid "&Paste"
+msgstr "&Einfügen"
+
+#: tfrmcalcabout.caption
+msgid "About"
+msgstr "Über"
+
+#: tfrmcalcabout.copyright.caption
+msgid "Inspired by Calc32 from Tom Swan"
+msgstr "Inspiriert durch Calc32 von Tom Swan"
+
+#: tfrmcalcabout.okbutton.caption
+msgid "Ok"
+msgstr "Ok"
+
+#: tfrmcalcabout.productname.caption
+msgid "Calc32"
+msgstr "Rechner 32"
+
+#: tfrmcalcabout.version.caption
+msgid "Version 1.1"
+msgstr "Version 1.1"
