@@ -1,145 +1,166 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"X-Source-Language: de"
+"X-Source-Language: de\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joe Care\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: tfrapofile.actfileautoload.caption
+#, fuzzy
 msgid "AutoLoad"
-msgstr ""
+msgstr "Autoload"
 
 #: tfrapofile.actfileload.caption
+#, fuzzy
 msgctxt "tfrapofile.actfileload.caption"
 msgid "Load"
-msgstr ""
+msgstr "Load"
 
 #: tfrapofile.actfileopen.caption
 msgctxt "tfrapofile.actfileopen.caption"
 msgid "Öffnen"
-msgstr ""
+msgstr "Open"
 
 #: tfrapofile.actfileopen.hint
 msgctxt "tfrapofile.actfileopen.hint"
 msgid "Öffnen"
-msgstr ""
+msgstr "Open"
 
 #: tfrapofile.actfilesave.caption
 msgctxt "tfrapofile.actfilesave.caption"
 msgid "Save"
-msgstr ""
+msgstr "Save"
 
 #: tfrapofile.actfilesaveas.caption
 msgctxt "tfrapofile.actfilesaveas.caption"
 msgid "Sichern &als ..."
-msgstr ""
+msgstr "Save &as ..."
 
 #: tfrapofile.actfilesaveas.hint
 msgctxt "tfrapofile.actfilesaveas.hint"
 msgid "Sichern als"
-msgstr ""
+msgstr "Save as"
 
 #: tfrapofile.cbxselectlanguage.text
+#, fuzzy
 msgid "Deutsch,de"
-msgstr ""
+msgstr "German, de"
 
 #: tfrapofile.edtprojectname.text
+#, fuzzy
 msgid "PicPas"
-msgstr ""
+msgstr "PicPas"
 
 #: tfrapofile.tlbpofile.caption
 msgid "tlbPoFile"
 msgstr ""
 
 #: tfrapofile.toolbutton1.caption
+#, fuzzy
 msgid "AL"
-msgstr ""
+msgstr "Al"
 
 #: tfrapofile.toolbutton3.caption
+#, fuzzy
 msgid "Ld"
-msgstr ""
+msgstr "Ap"
 
 #: tfrapofile.toolbutton4.caption
+#, fuzzy
 msgid "Sv"
-msgstr ""
+msgstr "Sv"
 
 #: tfraxmlfile.actdosomething.caption
 msgid "actDoSomething"
 msgstr ""
 
 #: tfraxmlfile.actfileload.caption
+#, fuzzy
 msgctxt "tfraxmlfile.actfileload.caption"
 msgid "Load"
-msgstr ""
+msgstr "Load"
 
 #: tfraxmlfile.actfileopen.caption
 msgctxt "tfraxmlfile.actfileopen.caption"
 msgid "Öffnen"
-msgstr ""
+msgstr "Open"
 
 #: tfraxmlfile.actfileopen.hint
 msgctxt "tfraxmlfile.actfileopen.hint"
 msgid "Öffnen"
-msgstr ""
+msgstr "Open"
 
 #: tfraxmlfile.actfilesave.caption
 msgctxt "tfraxmlfile.actfilesave.caption"
 msgid "Save"
-msgstr ""
+msgstr "Save"
 
 #: tfraxmlfile.actfilesaveas.caption
 msgctxt "tfraxmlfile.actfilesaveas.caption"
 msgid "Sichern &als ..."
-msgstr ""
+msgstr "Save &as ..."
 
 #: tfraxmlfile.actfilesaveas.hint
 msgctxt "tfraxmlfile.actfilesaveas.hint"
 msgid "Sichern als"
-msgstr ""
+msgstr "Save as"
 
 #: tfraxmlfile.btnxmlfileload.caption
 msgid "L"
-msgstr ""
+msgstr "S"
 
 #: tfraxmlfile.btnxmlfileopen.caption
+#, fuzzy
 msgid "O"
-msgstr ""
+msgstr "O"
 
 #: tfraxmlfile.btnxmlfilesave_.caption
 msgid "S"
-msgstr ""
+msgstr "Ac"
 
 #: tfraxmlfile.edtxmlfilename.editlabel.caption
 msgid "Datei:"
-msgstr ""
+msgstr "File:"
 
 #: tfraxmlfile.edtxmlfilename.text
 msgid "edtXmlFilename"
 msgstr ""
 
 #: tfraxmlfile.lblcompiledon.caption
+#, fuzzy
 msgid ""
 "Compiled: %s\n"
 "#9on:%s\n"
-msgstr ""
+msgstr "Compiled: %s #9on: %s"
 
 #: tfrmxml2pomain.actxmlprocesspo2x.caption
+#, fuzzy
 msgid "po2X"
-msgstr ""
+msgstr "po2X"
 
 #: tfrmxml2pomain.actxmlprocessx2po.caption
+#, fuzzy
 msgid "X2Po"
-msgstr ""
+msgstr "X2Po"
 
 #: tfrmxml2pomain.btnprocesspo2pas.caption
 msgid "<"
-msgstr ""
+msgstr "<"
 
 #: tfrmxml2pomain.btnprocessxml2po.caption
 msgid ">"
-msgstr ""
+msgstr ">"
 
 #: tfrmxml2pomain.btnselectdir.caption
 msgid "..."
-msgstr ""
+msgstr "…"
 
 #: tfrmxml2pomain.edtsourcedir.editlabel.caption
 msgid "edtSourceDir"
@@ -150,20 +171,20 @@ msgid "C:\\projekte\\Lazarus\\PicPas\\trunk\\Docs"
 msgstr ""
 
 #: tfrmxml2pomain.frapofile1.pnlrighttop.edtprojectname.text
+#, fuzzy
 msgid "ppManual"
-msgstr ""
+msgstr "ppManual"
 
 #: unt_cdate.adate
 msgctxt "unt_cdate.adate"
 msgid "05.06.2018"
-msgstr ""
+msgstr "06/05/2018"
 
 #: unt_cdate.cdate
 msgctxt "unt_cdate.cdate"
 msgid "05.06.2018"
-msgstr ""
+msgstr "06/05/2018"
 
 #: unt_cdate.cname
 msgid "N00145-BI"
 msgstr ""
-
