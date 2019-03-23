@@ -153,6 +153,10 @@ msgstr ">"
 msgid "..."
 msgstr "..."
 
+#: tfrmxml2pomain.caption
+msgid "frmXml2PoMain"
+msgstr ""
+
 #: tfrmxml2pomain.edtsourcedir.editlabel.caption
 msgid "edtSourceDir"
 msgstr ""
@@ -166,15 +170,20 @@ msgid "ppManual"
 msgstr "ppManual"
 
 #: unt_cdate.adate
+#, fuzzy
+#| msgid "05.06.2018"
 msgctxt "unt_cdate.adate"
-msgid "05.06.2018"
+msgid "22.03.2019"
 msgstr "05.06.2018"
 
 #: unt_cdate.cdate
+#, fuzzy
+#| msgid "05.06.2018"
 msgctxt "unt_cdate.cdate"
-msgid "05.06.2018"
+msgid "22.03.2019"
 msgstr "05.06.2018"
 
 #: unt_cdate.cname
-msgid "N00145-BI"
+msgid "SILENT-PC2"
 msgstr ""
+

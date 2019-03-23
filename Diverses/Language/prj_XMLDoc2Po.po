@@ -1,7 +1,7 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"X-Source-Language: de"
+"X-Source-Language: de\n"
 
 #: tfrapofile.actfileautoload.caption
 msgid "AutoLoad"
@@ -141,6 +141,10 @@ msgstr ""
 msgid "..."
 msgstr ""
 
+#: tfrmxml2pomain.caption
+msgid "frmXml2PoMain"
+msgstr ""
+
 #: tfrmxml2pomain.edtsourcedir.editlabel.caption
 msgid "edtSourceDir"
 msgstr ""
@@ -155,15 +159,15 @@ msgstr ""
 
 #: unt_cdate.adate
 msgctxt "unt_cdate.adate"
-msgid "05.06.2018"
+msgid "22.03.2019"
 msgstr ""
 
 #: unt_cdate.cdate
 msgctxt "unt_cdate.cdate"
-msgid "05.06.2018"
+msgid "22.03.2019"
 msgstr ""
 
 #: unt_cdate.cname
-msgid "N00145-BI"
+msgid "SILENT-PC2"
 msgstr ""
 
