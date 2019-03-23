@@ -352,8 +352,9 @@ copyMode:=true;
       lLastCh:= copy(Phr,i,1)[1];
     end
     else
-      if charinset(copy(phr,i,1)[1],['%','.','0'..'9']) or
-        (charinset(copy(phr,i,1)[1],['-','/',':']) and (i<length(Phr)) and charinset(copy(phr,i+1,1)[1],['/','%','0'..'9'])) then
+      if charinset(copy(phr,i,1)[1],['.','0'..'9']) or
+        (charinset(copy(phr,i,1)[1],[',','-','/',':']) and (i<length(Phr)) and charinset(copy(phr,i+1,1)[1],['/','0'..'9'])) or
+        ((copy(phr,i,1)[1] = '%') and (i<length(Phr)) and not charinset(copy(phr,i+1,1)[1],['0'..'9'])) then
           Excepts[high(Excepts)] += copy(phr,i,1)
         else
           begin

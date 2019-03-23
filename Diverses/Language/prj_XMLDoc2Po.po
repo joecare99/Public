@@ -3,6 +3,14 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "X-Source-Language: de\n"
 
+#: frm_xmldoc2po.rsbigpaceholder
+msgid "%%%d:g"
+msgstr ""
+
+#: frm_xmldoc2po.rsexcpaceholder
+msgid "%%%d:s"
+msgstr ""
+
 #: tfrapofile.actfileautoload.caption
 msgid "AutoLoad"
 msgstr ""
@@ -159,12 +167,12 @@ msgstr ""
 
 #: unt_cdate.adate
 msgctxt "unt_cdate.adate"
-msgid "22.03.2019"
+msgid "23.03.2019"
 msgstr ""
 
 #: unt_cdate.cdate
 msgctxt "unt_cdate.cdate"
-msgid "22.03.2019"
+msgid "23.03.2019"
 msgstr ""
 
 #: unt_cdate.cname

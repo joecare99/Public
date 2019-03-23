@@ -24,6 +24,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="1"/>
+      <BuildNr Value="1"/>
       <StringTable CompanyName="JCSoft" FileDescription="Extracts strings from XMLDoc into PO-files and on reverse substitutes them" InternalName="XMLDoc2Po"/>
     </VersionInfo>
     <BuildModes Count="1">

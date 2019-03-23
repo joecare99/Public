@@ -12,6 +12,14 @@ msgstr ""
 "Language: en\n"
 "X-Generator: Poedit 2.2.1\n"
 
+#: frm_xmldoc2po.rsbigpaceholder
+msgid "%%%d:g"
+msgstr ""
+
+#: frm_xmldoc2po.rsexcpaceholder
+msgid "%%%d:s"
+msgstr ""
+
 #: tfrapofile.actfileautoload.caption
 #, fuzzy
 msgid "AutoLoad"
@@ -183,14 +191,14 @@ msgstr "ppManual"
 #, fuzzy
 #| msgid "05.06.2018"
 msgctxt "unt_cdate.adate"
-msgid "22.03.2019"
+msgid "23.03.2019"
 msgstr "06/05/2018"
 
 #: unt_cdate.cdate
 #, fuzzy
 #| msgid "05.06.2018"
 msgctxt "unt_cdate.cdate"
-msgid "22.03.2019"
+msgid "23.03.2019"
 msgstr "06/05/2018"
 
 #: unt_cdate.cname

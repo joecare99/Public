@@ -33,7 +33,7 @@ uses Forms;
 
 Const BaseDir='Data';
 
- Phrazes:array[0..5,0..1] of string=
+ Phrazes:array[0..6,0..1] of string=
  (('In diesem Spiel versuchen Sie, die durcheinander geworfenen Buchstaben wiede'+
    'r in alphabetische Reihenfolge zu bringen',
    'In diesem Spiel versuchen Sie, die durcheinander geworfenen Buchstaben wiede'+
@@ -49,7 +49,8 @@ Const BaseDir='Data';
   ('D i e s e  Z e i l e  e n t h ä l t  g e s p e r r t e n  T e x t !',
    '%1:g Diese Zeile enthält gesperrten Text!%0:g'),
   ('Diese Zeile enthält ein  g e s p e r r t e s  Wort.',
-   'Diese Zeile enthält ein %1:g gesperrtes %0:g Wort.'));
+   'Diese Zeile enthält ein %1:g gesperrtes %0:g Wort.'),
+   ('1 -  manual mode','%1:g%0:s- %0:g manual mode'));
 
 procedure TTestXMLDoc2Po.LoadTestData;
 begin
@@ -120,6 +121,7 @@ begin
   CheckEquals('44',Excepts[0],'Fourth Phrase: excepts[0]');
   CheckEquals(Phrazes[4,1],frmXml2PoMain.AnalyzePhrase(Phrazes[4,0],Excepts),'Fifth Phrase');
   CheckEquals(Phrazes[5,1],frmXml2PoMain.AnalyzePhrase(Phrazes[5,0],Excepts),'Sixth Phrase');
+  CheckEquals(Phrazes[6,1],frmXml2PoMain.AnalyzePhrase(Phrazes[6,0],Excepts),'Seventh Phrase');
 end;
 
 procedure TTestXMLDoc2Po.TestBuildPhrase;
@@ -143,6 +145,9 @@ begin
   CheckEquals(Phrazes[3,0],frmXml2PoMain.BuildPhrase(Phrazes[3,1],Excepts),'Fourth Phrase');
   CheckEquals(Phrazes[4,0],frmXml2PoMain.BuildPhrase(Phrazes[4,1],Excepts),'Fifth Phrase');
   CheckEquals(Phrazes[5,0],frmXml2PoMain.BuildPhrase(Phrazes[5,1],Excepts),'Sixth Phrase');
+  setlength(Excepts,1);
+  Excepts[0]:= '1';
+  CheckEquals(Phrazes[6,0],frmXml2PoMain.BuildPhrase(Phrazes[6,1],Excepts),'Sixth Phrase');
 end;
 
 initialization
