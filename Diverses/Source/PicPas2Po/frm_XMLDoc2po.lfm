@@ -9,8 +9,6 @@ object frmXml2PoMain: TfrmXml2PoMain
   ClientWidth = 1119
   OnResize = FormResize
   OnShow = FormShow
-  LCLVersion = '1.8.0.3'
-  Visible = False
   object pnlTop: TPanel
     Left = 0
     Height = 43
@@ -27,13 +25,7 @@ object frmXml2PoMain: TfrmXml2PoMain
       Top = 20
       Width = 963
       Anchors = [akTop, akLeft, akRight]
-      EditLabel.AnchorSideLeft.Control = edtSourceDir
-      EditLabel.AnchorSideRight.Control = edtSourceDir
-      EditLabel.AnchorSideRight.Side = asrBottom
-      EditLabel.AnchorSideBottom.Control = edtSourceDir
-      EditLabel.Left = 9
       EditLabel.Height = 15
-      EditLabel.Top = 2
       EditLabel.Width = 963
       EditLabel.Caption = 'edtSourceDir'
       EditLabel.ParentColor = False
@@ -57,6 +49,7 @@ object frmXml2PoMain: TfrmXml2PoMain
         Top = 20
         Width = 23
         Caption = '...'
+        OnClick = btnSelectDirClick
       end
     end
   end
@@ -103,7 +96,7 @@ object frmXml2PoMain: TfrmXml2PoMain
           Width = 142
           ColWidths = (
             64
-            57
+            74
           )
         end
         inherited edtXmlFileDetail: TMemo
@@ -194,5 +187,9 @@ object frmXml2PoMain: TfrmXml2PoMain
       Caption = 'po2X'
       OnExecute = actXmlProcessPo2XExecute
     end
+  end
+  object dlgSelectDirectory: TSelectDirectoryDialog
+    left = 1024
+    top = 8
   end
 end

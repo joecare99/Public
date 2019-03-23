@@ -34,7 +34,9 @@ type
         procedure UpdateUI(Sender: TObject);
     private
         FBaseDir: string;
+        FDirty:Boolean;
         FPoFile: TPoFile;
+        procedure DoUpdateUI(Data: PtrInt);
         function GetLanguageID: integer;
         procedure SetBaseDir(AValue: string);
     public
@@ -104,11 +106,17 @@ end;
 procedure TfraPoFile.UpdateUI(Sender: TObject);
 begin
     edtPoFile.Lines.Assign(FPoFile.Lines);
+    FDirty:=false;;
 end;
 
 function TfraPoFile.GetLanguageID: integer;
 begin
     Result := cbxSelectLanguage.ItemIndex;
+end;
+
+procedure TfraPoFile.DoUpdateUI(Data: PtrInt);
+begin
+  UpdateUI(Self);
 end;
 
 procedure TfraPoFile.SetBaseDir(AValue: string);
@@ -141,6 +149,11 @@ begin
     else
         lTranslStr := '';
     FPoFile.AppendData(lReference, lFullindex, lTranslStr);
+    if not FDirty then
+      begin
+        FDirty:=true;
+        Application.QueueAsyncCall(@DoUpdateUI,0);
+      end;
 end;
 
 function TfraPoFile.LookUpIdent(const aIdent: string): integer;

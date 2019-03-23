@@ -26,8 +26,10 @@ type
     pnlProcessing: TPanel;
     pnlTop: TPanel;
     pnlTopRight: TPanel;
+    dlgSelectDirectory: TSelectDirectoryDialog;
     procedure actXmlProcessPo2XExecute(Sender: TObject);
     procedure actXmlProcessX2PoExecute(Sender: TObject);
+    procedure btnSelectDirClick(Sender: TObject);
     procedure edtSourceDirChange(Sender: TObject);
     procedure FormResize(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -95,18 +97,20 @@ var Chapter:TChapters;
   procedure ParseChilds(Parent: String;Flag1,Flag2:boolean; XMLNodes: TDOMNodeList);
 
   var
-      LNewNode: string;
+      LNewNode, lStyle, LSpanText: string;
       i: integer;
       lBailout, lInterest1, lInterest2, lInterest3, lBailout2: Boolean;
       lOutlLev, j: Longint;
+      lNode: TDOMNode;
   begin
+      LSpanText := '';
       if assigned(XMLNodes) then
           for i := 0 to XMLNodes.Count - 1 do
               if not XMLNodes[i].InheritsFrom(TDOMText) then
                 begin
                   LNewNode := Parent+'['+IntToStr(i)+']'+DirectorySeparator+ ansistring(XMLNodes[i].NodeName);
                   lBailout := ansistring(XMLNodes[i].NodeName) = 'draw:image';
-                  lBailout2 := ansistring(XMLNodes[i].NodeName) = 'text:span';
+                  lBailout2 := (ansistring(XMLNodes[i].NodeName) = 'text:span');
                   lInterest1:= ansistring(XMLNodes[i].NodeName) = 'office:text';
                   lInterest2:= ansistring(XMLNodes[i].NodeName) = 'text:p';
                   lInterest3:= ansistring(XMLNodes[i].NodeName) = 'text:h';
@@ -116,9 +120,19 @@ var Chapter:TChapters;
                       inc(Chapter[lOutlLev]);
                       for j := lOutlLev+1 to 4 do Chapter[j]:=0;
                     end;
-                  if lBailout or lBailout2 then break;
+                  if lBailout then Continue;
+                  if lBailout2 then
+                    begin
+                      lNode := XMLNodes[i].Attributes.GetNamedItem('text:style-name');
+                      if assigned(lNode) then
+                      lStyle := ansistring(lNode.TextContent);
+                      if lStyle <> 'T1' then
+                        ParsePhrase(LNewNode,trim(ansistring(XMLNodes[i].TextContent)),Chapter);
+                      LSpanText := LSpanText+ansistring(XMLNodes[i].TextContent);
+                      Continue;
+                    end;
                   if assigned(XMLNodes[i].ChildNodes) and  (XMLNodes[i].ChildNodes.Count>0)  then
-                    ParseChilds(LNewNode,Flag1 or lInterest1,Flag2 or lInterest2, XMLNodes[i].ChildNodes)
+                    ParseChilds(LNewNode,Flag1 or lInterest1,Flag2 or lInterest2 or lInterest3, XMLNodes[i].ChildNodes)
 
                 end
              else
@@ -128,13 +142,24 @@ var Chapter:TChapters;
                     ParsePhrase(parent,trim(ansistring(TDOMText(XMLNodes[i]).Data)),Chapter);
                   end;
 
-
+      if LSpanText <> '' then
+        ParsePhrase(parent,trim(LSpanText),Chapter);
   end;
 
 
 begin
   Chapter[1]:=0;
   ParseChilds('',false,false,fraXMLFile1.XmlDocument.ChildNodes);
+end;
+
+procedure TfrmXml2PoMain.btnSelectDirClick(Sender: TObject);
+begin
+  dlgSelectDirectory.FileName:=edtSourceDir.Text;
+  if dlgSelectDirectory.Execute then
+    begin
+      edtSourceDir.Text:=dlgSelectDirectory.FileName;
+
+    end;
 end;
 
 procedure TfrmXml2PoMain.actXmlProcessPo2XExecute(Sender: TObject);
@@ -144,12 +169,17 @@ var Chapter:TChapters;
   procedure ParseChilds(Parent: String;Flag1,Flag2:boolean; XMLNodes: TDOMNodeList);
 
   var
-      LNewNode: string;
+      LNewNode, lStyle, LSpanText: string;
+      lSpanArr:array of lNode;
       i: integer;
       lBailout, lInterest1, lInterest2, lInterest3, lBailout2,
         lBailout2b: Boolean;
       lOutlLev, j: Longint;
+      lNode: TDOMNode;
   begin
+    LSpanText:= '';
+    setlength(LSpanArr,0);
+    lInterest3:=false;
       if assigned(XMLNodes) then
           for i := 0 to XMLNodes.Count - 1 do
               if not XMLNodes[i].InheritsFrom(TDOMText) then
@@ -167,7 +197,19 @@ var Chapter:TChapters;
                       inc(Chapter[lOutlLev]);
                       for j := lOutlLev+1 to 4 do Chapter[j]:=0;
                     end;
-                  if lBailout or (lBailout2 or lBailout2b) then
+                  if lBailout2 then
+                    begin
+                      lNode := XMLNodes[i].Attributes.GetNamedItem('text:style-name');
+                      if assigned(lNode) then
+                      lStyle := ansistring(lNode.TextContent);
+                      if lStyle <> 'T1' then
+                        XMLNodes[i].TextContent:=SetNewPhrase(LNewNode,XMLNodes[i].TextContent,Chapter)
+                      LSpanText := LSpanText+ansistring(XMLNodes[i].TextContent);
+                      setlength(lSpanArr,high(lSpanArr)+2);
+                      lSpanArr[high(lSpanArr)] := XMLNodes[i];
+                      Continue;
+                    end;
+                  else If lBailout or lBailout2b then
                    else
                   if assigned(XMLNodes[i].ChildNodes) and  (XMLNodes[i].ChildNodes.Count>0) then
                     ParseChilds(LNewNode,Flag1 or lInterest1,Flag2 or lInterest2 or lInterest3, XMLNodes[i].ChildNodes);
@@ -177,6 +219,10 @@ var Chapter:TChapters;
                   if not lInterest3 then inc(Chapter[4]);
                   XMLNodes[i].TextContent:=SetNewPhrase(Parent,XMLNodes[i].TextContent,Chapter);
                 end;
+         if LSpanText<>'' then
+           begin
+             LSpanTrans:=SetNewPhrase(Parent,LSpanText,Chapter);
+           end;
   end;
 
 
@@ -204,12 +250,23 @@ function TfrmXml2PoMain.AnalyzePhrase(Phr: String; out Excepts: TStringArray
 var
   copyMode: Boolean;
   i: Integer;
+  lBlankCount:integer;
 begin
   setlength(Excepts,0);
   result := '';
   copyMode:=true;
   Phr:=StringReplace(Phr,'/','//',[rfReplaceAll]);
   Phr:=StringReplace(Phr,'%','/%',[rfReplaceAll]);
+// Look for "g e s p e r r t e n" Text
+  lBlankCount :=0;
+  for i := 1 to length(Phr) do
+    if copy(phr,i,1)[1]=' ' then
+      lBlankCount+=1;
+ if lBlankCount>length(Phr) div 2 then
+   begin
+
+   end;
+//
   for i := 1 to length(Phr) do
     if copymode then
     begin

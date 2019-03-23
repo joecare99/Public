@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <SessionStorage Value="InProjectDir"/>
@@ -9,6 +9,10 @@
       <Title Value="prj_XMLDoc2Po"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
+      <XPManifest>
+        <TextName Value="JCSoft.DataApps.XMLDoc2Po"/>
+        <TextDesc Value="Extracts strings from XMLDoc into PO-files and on reverse substitutes them"/>
+      </XPManifest>
       <Icon Value="0"/>
     </General>
     <LazDoc Paths="..\FPDoc"/>
@@ -16,6 +20,12 @@
       <EnableI18N Value="True"/>
       <OutDir Value="..\language"/>
     </i18n>
+    <VersionInfo>
+      <UseVersionInfo Value="True"/>
+      <AutoIncrementBuild Value="True"/>
+      <MinorVersionNr Value="1"/>
+      <StringTable CompanyName="JCSoft" FileDescription="Extracts strings from XMLDoc into PO-files and on reverse substitutes them" InternalName="XMLDoc2Po"/>
+    </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
     </BuildModes>
@@ -23,9 +33,10 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
@@ -73,12 +84,12 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="prj_XMLDoc2Po"/>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($project(Infofile))"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
       <OtherUnitFiles Value="..\Source\PicPas2Po;..\..\Daten\Source\XML_Stuff"/>
-      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>
       <Options>
