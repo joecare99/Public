@@ -45,6 +45,10 @@ type
 var
   frmXml2PoMain: TfrmXml2PoMain;
 
+resourceString
+  rsExcPaceholder='%%%d:s';
+  rsBigPaceholder='%%%d:g';
+
 implementation
 
 {$R *.lfm}
@@ -176,6 +180,7 @@ var Chapter:TChapters;
         lBailout2b: Boolean;
       lOutlLev, j: Longint;
       lNode: TDOMNode;
+      LSpanTrans: DOMString;
   begin
     LSpanText:= '';
     setlength(LSpanArr,0);
@@ -222,6 +227,7 @@ var Chapter:TChapters;
          if LSpanText<>'' then
            begin
              LSpanTrans:=SetNewPhrase(Parent,LSpanText,Chapter);
+
            end;
   end;
 
@@ -251,35 +257,99 @@ var
   copyMode: Boolean;
   i: Integer;
   lBlankCount:integer;
+  lLastCh,lTestCh: Char;
+  Phr2: String;
 begin
   setlength(Excepts,0);
   result := '';
-  copyMode:=true;
   Phr:=StringReplace(Phr,'/','//',[rfReplaceAll]);
   Phr:=StringReplace(Phr,'%','/%',[rfReplaceAll]);
 // Look for "g e s p e r r t e n" Text
-  lBlankCount :=0;
+  copyMode:=false;
+  lLastCh:=' ';
+  Phr2:='';
   for i := 1 to length(Phr) do
-    if copy(phr,i,1)[1]=' ' then
-      lBlankCount+=1;
- if lBlankCount>length(Phr) div 2 then
-   begin
-
-   end;
-//
+    if not copyMode then
+      begin
+        if (lLastCh = ' ') and
+         (copy(Phr,i,1)[1]<>' ') and
+         (copy(Phr+' ',i+1,1)[1]=' ') and((
+         (copy(Phr+'  ',i+2,1)[1]<>' ') and
+         (copy(Phr+'   ',i+3,1)[1]=' ') ) or (
+         (copy(Phr+'  ',i+2,1)[1]=' ') and
+         (copy(Phr+'   ',i+3,1)[1]<>' ')and
+         (copy(Phr+'    ',i+4,1)[1]=' ') ))then
+          begin
+            copyMode:=true;
+            Phr2:=Phr2 + Format(rsBigPaceholder,[integer(copyMode)]);
+            if copy(Phr,i,1)[1] in ['A'..'Z','a'..'z'] then
+              Phr2:=Phr2+' ';
+            Phr2:=Phr2 +copy(Phr,i,1)[1];
+          end
+        else if (lLastCh<>' ') or (copy(Phr,i,1)<>' ') then
+          Phr2:=Phr2 + copy(Phr,i,1);
+        lLastCh:= copy(Phr,i,1)[1];
+      end
+    else
+      begin
+        // Sonderprüfng: UTF8-Sonderzeichen
+        if ((lLastCh=#195) and (ord(copy(Phr,i,1)[1])>128) and (copy(Phr,i,1)[1]<>#195)   ) or (copy(Phr,i,1)[1] = #195) then
+          begin
+//            lTestCh :=copy(Phr,i,1)[1];
+            Phr2:=Phr2 + copy(Phr,i,1);
+            if lLastCh <> #195 then
+              lLastCh:= copy(Phr,i,1)[1];
+          end
+        else
+        if (copy(Phr,i,1)[1]<>' ') and // akt. Zeichen ist kein Leerzeichen
+          (copy(Phr+' ',i+1,1)[1]<>' ') then    // Nächstes Zeichen (wenn vorhanden)
+          begin
+            copyMode:=false;
+            if lLastCh in ['A'..'Z','a'..'z'] then
+              Phr2:=Phr2+' ';
+            Phr2:=Phr2 + Format(rsBigPaceholder,[integer(copyMode)]);
+            if copy(Phr,i,1)[1] in ['A'..'Z','a'..'z'] then
+              Phr2:=Phr2+' '+copy(Phr,i,1)[1]
+            else
+              Phr2:=Phr2+copy(Phr,i,1)[1];
+            lLastCh:=copy(Phr,i,1)[1];
+          end
+        else
+          begin
+            if (lLastCh =' ') and (
+               (copy(Phr,i,1)[1]<>' ') or
+               ((copy(Phr,i,1)[1]=' ') and
+               (copy(Phr2,length(phr2),1)<>' '))) then
+              Phr2:=Phr2 + copy(Phr,i,1);
+            lLastCh:= copy(Phr,i,1)[1];
+          end;
+      end;
+  if  copymode then
+      begin
+            copyMode:=false;
+            if lLastCh in ['A'..'Z','a'..'z'] then
+              Phr2:=Phr2+' ';
+            Phr:=Phr2 + Format(rsBigPaceholder,[integer(copyMode)]);
+          end
+   else
+     Phr:=Phr2;
+// Ersetze Zahlen
+copyMode:=true;
   for i := 1 to length(Phr) do
     if copymode then
     begin
-      if charinset(copy(phr,i,1)[1],['0'..'9']) or
-        ((copy(phr,i,1)='-') and (i<length(Phr)) and charinset(copy(phr,i+1,1)[i],['0'..'9'])) then
+      if (lLastCh<>'%') and ( charinset(copy(phr,i,1)[1],['0'..'9']) or
+        ((copy(phr,i,1)='-') and (i<length(Phr)) and charinset(copy(phr,i+1,1)[i],['0'..'9']))) then
         begin
           CopyMode := false;
           setlength(Excepts,high(Excepts)+2);
           Excepts[high(Excepts)] += copy(phr,i,1);
-          result +='%'+inttostr(high(Excepts))+':s';
+          result +=format(rsExcPaceholder,[high(Excepts)]);
         end
       else
         result += copy(phr,i,1);
+      if (lLastCh <> '%') or (not charinset(copy(phr,i,1)[1],['0'..'9'])) then
+      lLastCh:= copy(Phr,i,1)[1];
     end
     else
       if charinset(copy(phr,i,1)[1],['%','.','0'..'9']) or
@@ -289,6 +359,7 @@ begin
           begin
             copymode := true;
             result += copy(phr,i,1);
+            lLastCh:= copy(Phr,i,1)[1];
           end;
 end;
 
@@ -299,12 +370,55 @@ function TfrmXml2PoMain.BuildPhrase(PhrStmp: String; const Excepts: TStringArray
 var
   phr: String;
   i: Integer;
+  lps,lpe: SizeInt;
+  lUTFMode: Boolean;
 begin
   phr := PhrStmp;
+  Phr:=StringReplace(Phr,'//','// ',[rfReplaceAll]);
+  Phr:=StringReplace(Phr,'/%','/% ',[rfReplaceAll]);
   for i := 0 to high(Excepts) do
-     Phr:=StringReplace(Phr,'%'+inttostr(i)+':s',Excepts[i],[rfReplaceAll]);
-  Phr:=StringReplace(Phr,'/%','%',[rfReplaceAll]);
-  result:=StringReplace(Phr,'//','/',[rfReplaceAll]);
+     Phr:=StringReplace(Phr,format(rsExcPaceholder,[i]),Excepts[i],[rfReplaceAll]);
+  lps := pos(format(rsBigPaceholder,[1]),phr);
+  while lps<>0 do
+    begin
+      delete(phr,lps,4);
+      if copy(phr,lps,1)=' ' then
+        delete(phr,lps,1);
+      lpe := pos(format(rsBigPaceholder,[0]),copy(phr,lps,length(phr)-lps+1));
+      if lpe <> 0 then
+          begin
+            delete(phr,lps+lpe-1,4);
+            if copy(phr,lps+lpe-2,1)=' ' then
+              begin
+              delete(phr,lps+lpe-2,1);
+              dec(lpe);
+              end;
+            if lps+lpe-1>=length(phr) then
+              dec(lpe);
+            for i := lpe-1 downto 1 do
+              if (copy(phr,i+lps,1)[1]<>' ')or (i=lpe-1) then
+                insert(' ',phr,i+lps);
+            if lps>1 then
+              insert(' ',phr,lps);
+// UPF8-Sonderzeichen
+            i := 0;
+            lUTFMode:=false;
+            while (i+lps < length(phr)) and (i<lpe*2) do
+              begin
+                if ((copy(phr,i+lps,1)[1]=#195) or (lUTFMode and (ord(copy(phr,i+lps+2,1)[1])>127) and (copy(phr,i+lps+2,1)[1]<>#195))) and (copy(phr,i+lps+1,1)=' ') then
+                  begin
+                    delete(phr,i+lps+1,1);
+                    lUTFMode:=true;
+                  end
+                else
+                  lUTFMode:=false;
+                inc(i);
+              end
+          end;
+      lps := pos(format(rsBigPaceholder,[1]),Phr);
+    end;
+  Phr:=StringReplace(Phr,'/% ','%',[rfReplaceAll]);
+  result:=StringReplace(Phr,'// ','/',[rfReplaceAll]);
 end;
 
 end.
