@@ -170,7 +170,7 @@ var Chapter:TChapters;
 
   var
       LNewNode, lStyle, LSpanText: string;
-      lSpanArr:array of lNode;
+      lSpanArr:array of TDOMNode;
       i: integer;
       lBailout, lInterest1, lInterest2, lInterest3, lBailout2,
         lBailout2b: Boolean;
@@ -203,12 +203,12 @@ var Chapter:TChapters;
                       if assigned(lNode) then
                       lStyle := ansistring(lNode.TextContent);
                       if lStyle <> 'T1' then
-                        XMLNodes[i].TextContent:=SetNewPhrase(LNewNode,XMLNodes[i].TextContent,Chapter)
+                        XMLNodes[i].TextContent:=SetNewPhrase(LNewNode,XMLNodes[i].TextContent,Chapter);
                       LSpanText := LSpanText+ansistring(XMLNodes[i].TextContent);
                       setlength(lSpanArr,high(lSpanArr)+2);
                       lSpanArr[high(lSpanArr)] := XMLNodes[i];
                       Continue;
-                    end;
+                    end
                   else If lBailout or lBailout2b then
                    else
                   if assigned(XMLNodes[i].ChildNodes) and  (XMLNodes[i].ChildNodes.Count>0) then

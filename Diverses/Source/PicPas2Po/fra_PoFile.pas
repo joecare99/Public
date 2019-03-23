@@ -47,6 +47,7 @@ type
         function LookUpIdent(const aIdent: string): integer;
         function LookUpSource(const aIdent: string): integer;
         function GetTranslText(const id: integer): string;
+        Procedure LoadPOFile(FileName:String);
         property LanguageID: integer read GetLanguageID;// write SetLanguageID
         property BaseDir: string read FBaseDir write SetBaseDir;
     end;
@@ -169,6 +170,12 @@ end;
 function TfraPoFile.GetTranslText(const id: integer): string;
 begin
     Result := FPoFile.GetTranslText(id);
+end;
+
+procedure TfraPoFile.LoadPOFile(FileName: String);
+begin
+  FPoFile.LoadFromFile(Filename);
+  UpdateUI(self);
 end;
 
 end.

@@ -62,7 +62,9 @@
       <Unit2>
         <Filename Value="..\Source\PicPas2Po\frm_XMLDoc2po.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmXml2PoMain"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\Source\PicPas2Po\fra_PoFile.pas"/>
@@ -92,7 +94,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source\PicPas2Po;..\..\Daten\Source\XML_Stuff;..\..\..\.."/>
+      <OtherUnitFiles Value="..\Source\PicPas2Po;..\..\Daten\Source\XML_Stuff"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>
