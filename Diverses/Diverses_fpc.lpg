@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="20">
+    <Targets Count="21">
       <Target0 FileName="FPC\Clrscr.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="Default"/>
@@ -41,40 +41,40 @@
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target5>
-      <Target6 FileName="FPC\PrjTest3dPoint.lpi">
+      <Target6 FileName="FPC\prj_PaintDmo.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target6>
+      <Target7 FileName="FPC\prj_TestCalcButtons.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target7>
+      <Target8 FileName="FPC\prj_TestMouseScrollEvent.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target8>
+      <Target9 FileName="FPC\Prj_TestMyWidgetSet.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target9>
+      <Target10 FileName="FPC\Prj_TestUpDown.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target10>
+      <Target11 FileName="FPC\Prj_WritePascal4.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target11>
+      <Target12 FileName="FPC\prj_iopcc_Calc.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target12>
+      <Target13 FileName="FPC\fpcTest3dPoint.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
         <Mode4 Name="Win64"/>
-      </Target6>
-      <Target7 FileName="FPC\prj_PaintDmo.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
-      </Target7>
-      <Target8 FileName="FPC\prj_TestCalcButtons.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
-      </Target8>
-      <Target9 FileName="FPC\prj_TestMouseScrollEvent.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
-      </Target9>
-      <Target10 FileName="FPC\Prj_TestMyWidgetSet.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
-      </Target10>
-      <Target11 FileName="FPC\Prj_TestUpDown.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
-      </Target11>
-      <Target12 FileName="FPC\Prj_WritePascal4.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
-      </Target12>
-      <Target13 FileName="FPC\prj_iopcc_Calc.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
       </Target13>
       <Target14 FileName="FPC\ioccc_85_shapiro.lpi">
         <BuildModes Count="3"/>
@@ -83,10 +83,11 @@
         <Mode3 Name="Release"/>
       </Target14>
       <Target15 FileName="FPC\iopcc_v3.lpi">
-        <BuildModes Count="3"/>
+        <BuildModes Count="4"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
+        <Mode4 Name="Web"/>
       </Target15>
       <Target16 FileName="FPC\iopcc_17_2.lpi">
         <BuildModes Count="3"/>
@@ -110,6 +111,10 @@
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target19>
+      <Target20 FileName="FPC\fpcTestXMLDoc2Po.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target20>
     </Targets>
   </ProjectGroup>
 </CONFIG>
