@@ -1,4 +1,4 @@
-program PrjTest3dPoint;
+program fpcTest3dPoint;
 
 {$mode objfpc}{$H+}
 
