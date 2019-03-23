@@ -1,0 +1,1294 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"X-Source-Language: en_US\n"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[4]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[4]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Data field"
+msgstr "Data field"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[4]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[4]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Type"
+msgstr "Type"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[4]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[4]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "Length (bytes)"
+msgstr "Length (bytes)"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[4]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[4]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Comment"
+msgstr "Comment"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Protocol Version = %0:s"
+msgstr "Protocol Version = %0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[5]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[5]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[5]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[6]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[6]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Message ID = %0:s"
+msgstr "Message ID = %0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[6]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[6]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[6]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[6]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[7]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[7]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Message length"
+msgstr "Message length"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[7]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[7]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Integer"
+msgstr "Unsigned Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[7]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[7]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[7]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[7]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Message length in bytes including all data fields"
+msgstr "Message length in bytes including all data fields"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[8]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[8]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Message number"
+msgstr "Message number"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[8]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[8]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Integer"
+msgstr "Unsigned Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[8]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[8]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[8]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[8]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Identification number for feedback message. This value shall be incremented by one for each message sent and it should match with received reply message number."
+msgstr "Identification number for feedback message. This value shall be incremented by one for each message sent and it should match with received reply message number."
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[9]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[9]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Steer wheel:"
+msgstr "Steer wheel:"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[9]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[9]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "Steering Angle"
+msgstr "Steering Angle"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[9]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[9]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Float"
+msgstr "Float"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[9]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[9]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[9]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[9]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Measured steering angle (+//-PI in radians)"
+msgstr "Measured steering angle (+//-PI in radians)"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[9]\table:table-row[3]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[9]\\table:table-row[3]\\table:table-cell[1]\\text:p"
+msgid "Hex %0:sFA%1:s no measurement"
+msgstr "Hex %0:sFA%1:s no measurement"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[10]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[10]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Steer wheel:"
+msgstr "Steer wheel:"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[10]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[10]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "Wheel Speed"
+msgstr "Wheel Speed"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[10]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[10]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Float"
+msgstr "Float"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[10]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[10]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[10]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[10]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Measured speed for drive wheel (m//s)"
+msgstr "Measured speed for drive wheel (m//s)"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[10]\table:table-row[3]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[10]\\table:table-row[3]\\table:table-cell[1]\\text:p"
+msgid "Hex %0:sFA%1:s no measurement"
+msgstr "Hex %0:sFA%1:s no measurement"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[11]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[11]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Diff Left wheel:"
+msgstr "Diff Left wheel:"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[11]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[11]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "Wheel Speed"
+msgstr "Wheel Speed"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[11]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[11]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Float"
+msgstr "Float"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[11]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[11]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[11]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[11]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Measured speed for drive wheel (m//s)"
+msgstr "Measured speed for drive wheel (m//s)"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[12]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[12]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Diff Right wheel:"
+msgstr "Diff Right wheel:"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[12]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[12]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "Wheel Speed"
+msgstr "Wheel Speed"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[12]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[12]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Float"
+msgstr "Float"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[12]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[12]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[12]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[12]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Measured speed for drive wheel (m//s)"
+msgstr "Measured speed for drive wheel (m//s)"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "AGV Drive mode"
+msgstr "AGV Drive mode"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "%0:s - manual mode"
+msgstr "%0:s - manual mode"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[3]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[3]\\table:table-cell[1]\\text:p"
+msgid "%0:s - automatic mode"
+msgstr "%0:s - automatic mode"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[3]\table:table-cell[2]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[3]\\table:table-cell[2]\\text:p"
+msgid "%0:s - semi-automatic mode"
+msgstr "%0:s - semi-automatic mode"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[14]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[14]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Timestamp"
+msgstr "Timestamp"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[14]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[14]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned integer"
+msgstr "Unsigned integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[14]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[14]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[14]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[14]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Cumulative time in ms; time base can be chosen freely"
+msgstr "Cumulative time in ms; time base can be chosen freely"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[15]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[15]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "PLC Status"
+msgstr "PLC Status"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[15]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[15]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[15]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[15]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[15]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[15]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Bit%0:s – PLC Error"
+msgstr "Bit%0:s – PLC Error"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[15]\table:table-row[3]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[15]\\table:table-row[3]\\table:table-cell[1]\\text:p"
+msgid "Bit%0:s – Emergency Stop"
+msgstr "Bit%0:s – Emergency Stop"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[15]\table:table-row[3]\table:table-cell[2]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[15]\\table:table-row[3]\\table:table-cell[2]\\text:p"
+msgid "Bit%0:s – PLC Slow Down"
+msgstr "Bit%0:s – PLC Slow Down"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[15]\table:table-row[3]\table:table-cell[3]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[15]\\table:table-row[3]\\table:table-cell[3]\\text:p"
+msgid "Bit%0:s – PLC Stop"
+msgstr "Bit%0:s – PLC Stop"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[15]\table:table-row[3]\table:table-cell[4]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[15]\\table:table-row[3]\\table:table-cell[4]\\text:p"
+msgid "Bit%0:s – Not used"
+msgstr "Bit%0:s – Not used"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[15]\table:table-row[3]\table:table-cell[5]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[15]\\table:table-row[3]\\table:table-cell[5]\\text:p"
+msgid "Bit%0:s – Not used"
+msgstr "Bit%0:s – Not used"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[15]\table:table-row[3]\table:table-cell[6]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[15]\\table:table-row[3]\\table:table-cell[6]\\text:p"
+msgid "Bit%0:s – Charging"
+msgstr "Bit%0:s – Charging"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[15]\table:table-row[3]\table:table-cell[7]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[15]\\table:table-row[3]\\table:table-cell[7]\\text:p"
+msgid "Bit%0:s – Brake released"
+msgstr "Bit%0:s – Brake released"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[15]\table:table-row[3]\table:table-cell[8]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[15]\\table:table-row[3]\\table:table-cell[8]\\text:p"
+msgid "Bit%0:s…bit %1:s Not used"
+msgstr "Bit%0:s…bit %1:s Not used"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[8]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[8]\\text:p"
+msgid "If actuators are controlled by Navitrol, the AGV controller needs to send this message periodically at constant intervals to Navitrol. Navitrol replies with the Actuator control message (message ID %0:s)"
+msgstr "If actuators are controlled by Navitrol, the AGV controller needs to send this message periodically at constant intervals to Navitrol. Navitrol replies with the Actuator control message (message ID %0:s)"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[9]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[9]\\text:p"
+msgid "Not yet fully implemented in Navitrol"
+msgstr "Not yet fully implemented in Navitrol"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[4]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[4]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Data field"
+msgstr "Data field"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[4]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[4]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Type"
+msgstr "Type"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[4]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[4]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "Length (bytes)"
+msgstr "Length (bytes)"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[4]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[4]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Comment"
+msgstr "Comment"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Protocol Version = %0:s"
+msgstr "Protocol Version = %0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[5]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[5]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[5]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[6]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[6]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Message ID = %0:s"
+msgstr "Message ID = %0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[6]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[6]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[6]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[6]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[7]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[7]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Message length"
+msgstr "Message length"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[7]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[7]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Integer"
+msgstr "Unsigned Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[7]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[7]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[7]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[7]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Message length in bytes including all data fields (including Protocol Version and Message ID)"
+msgstr "Message length in bytes including all data fields (including Protocol Version and Message ID)"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[8]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[8]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Message number"
+msgstr "Message number"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[8]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[8]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Integer"
+msgstr "Unsigned Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[8]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[8]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[8]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[8]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "This value shall be incremented by one for each message sent and it should match with received reply message number."
+msgstr "This value shall be incremented by one for each message sent and it should match with received reply message number."
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[9]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[9]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Status bits actuator%0:s"
+msgstr "Status bits actuator%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[9]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[9]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "Lifting"
+msgstr "Lifting"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[9]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[9]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[9]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[9]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[9]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[9]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Bit%0:s – Actuator error"
+msgstr "Bit%0:s – Actuator error"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[9]\table:table-row[3]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[9]\\table:table-row[3]\\table:table-cell[1]\\text:p"
+msgid "Bit%0:s – Activated"
+msgstr "Bit%0:s – Activated"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[9]\table:table-row[3]\table:table-cell[2]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[9]\\table:table-row[3]\\table:table-cell[2]\\text:p"
+msgid "Bit%0:s – Active control"
+msgstr "Bit%0:s – Active control"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[9]\table:table-row[3]\table:table-cell[3]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[9]\\table:table-row[3]\\table:table-cell[3]\\text:p"
+msgid "Bit%0:s – Limit low end"
+msgstr "Bit%0:s – Limit low end"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[9]\table:table-row[3]\table:table-cell[4]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[9]\\table:table-row[3]\\table:table-cell[4]\\text:p"
+msgid "Bit%0:s – Limit high end"
+msgstr "Bit%0:s – Limit high end"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[10]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[10]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Status bits actuator%0:s"
+msgstr "Status bits actuator%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[10]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[10]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "Reach"
+msgstr "Reach"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[10]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[10]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[10]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[10]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[10]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[10]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Bit%0:s – Actuator error"
+msgstr "Bit%0:s – Actuator error"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[10]\table:table-row[3]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[10]\\table:table-row[3]\\table:table-cell[1]\\text:p"
+msgid "Bit%0:s – Activated"
+msgstr "Bit%0:s – Activated"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[10]\table:table-row[3]\table:table-cell[2]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[10]\\table:table-row[3]\\table:table-cell[2]\\text:p"
+msgid "Bit%0:s – Active control"
+msgstr "Bit%0:s – Active control"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[10]\table:table-row[3]\table:table-cell[3]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[10]\\table:table-row[3]\\table:table-cell[3]\\text:p"
+msgid "Bit%0:s – Limit low end"
+msgstr "Bit%0:s – Limit low end"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[10]\table:table-row[3]\table:table-cell[4]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[10]\\table:table-row[3]\\table:table-cell[4]\\text:p"
+msgid "Bit%0:s – Limit high end"
+msgstr "Bit%0:s – Limit high end"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[11]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[11]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Status bits actuator%0:s"
+msgstr "Status bits actuator%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[11]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[11]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "TBD"
+msgstr "TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[11]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[11]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[11]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[11]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[11]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[11]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Bit%0:s – Actuator error"
+msgstr "Bit%0:s – Actuator error"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[11]\table:table-row[3]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[11]\\table:table-row[3]\\table:table-cell[1]\\text:p"
+msgid "Bit%0:s – Activated"
+msgstr "Bit%0:s – Activated"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[11]\table:table-row[3]\table:table-cell[2]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[11]\\table:table-row[3]\\table:table-cell[2]\\text:p"
+msgid "Bit%0:s – Active control"
+msgstr "Bit%0:s – Active control"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[11]\table:table-row[3]\table:table-cell[3]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[11]\\table:table-row[3]\\table:table-cell[3]\\text:p"
+msgid "Bit%0:s – Limit low end"
+msgstr "Bit%0:s – Limit low end"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[11]\table:table-row[3]\table:table-cell[4]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[11]\\table:table-row[3]\\table:table-cell[4]\\text:p"
+msgid "Bit%0:s – Limit high end"
+msgstr "Bit%0:s – Limit high end"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[12]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[12]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Status bits actuator%0:s"
+msgstr "Status bits actuator%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[12]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[12]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "TBD"
+msgstr "TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[12]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[12]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[12]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[12]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[12]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[12]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Bit%0:s – Actuator error"
+msgstr "Bit%0:s – Actuator error"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[12]\table:table-row[3]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[12]\\table:table-row[3]\\table:table-cell[1]\\text:p"
+msgid "Bit%0:s – Activated"
+msgstr "Bit%0:s – Activated"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[12]\table:table-row[3]\table:table-cell[2]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[12]\\table:table-row[3]\\table:table-cell[2]\\text:p"
+msgid "Bit%0:s – Active control"
+msgstr "Bit%0:s – Active control"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[12]\table:table-row[3]\table:table-cell[3]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[12]\\table:table-row[3]\\table:table-cell[3]\\text:p"
+msgid "Bit%0:s – Limit low end"
+msgstr "Bit%0:s – Limit low end"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[12]\table:table-row[3]\table:table-cell[4]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[12]\\table:table-row[3]\\table:table-cell[4]\\text:p"
+msgid "Bit%0:s – Limit high end"
+msgstr "Bit%0:s – Limit high end"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[13]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[13]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Status bits actuator%0:s"
+msgstr "Status bits actuator%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[13]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[13]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "TBD"
+msgstr "TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[13]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[13]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[13]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[13]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[13]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[13]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Bit%0:s – Actuator error"
+msgstr "Bit%0:s – Actuator error"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[13]\table:table-row[3]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[13]\\table:table-row[3]\\table:table-cell[1]\\text:p"
+msgid "Bit%0:s – Activated"
+msgstr "Bit%0:s – Activated"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[13]\table:table-row[3]\table:table-cell[2]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[13]\\table:table-row[3]\\table:table-cell[2]\\text:p"
+msgid "Bit%0:s – Active control"
+msgstr "Bit%0:s – Active control"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[13]\table:table-row[3]\table:table-cell[3]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[13]\\table:table-row[3]\\table:table-cell[3]\\text:p"
+msgid "Bit%0:s – Limit low end"
+msgstr "Bit%0:s – Limit low end"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[13]\table:table-row[3]\table:table-cell[4]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[13]\\table:table-row[3]\\table:table-cell[4]\\text:p"
+msgid "Bit%0:s – Limit high end"
+msgstr "Bit%0:s – Limit high end"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[14]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[14]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Position actuator%0:s"
+msgstr "Position actuator%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[14]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[14]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "Lifting"
+msgstr "Lifting"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[14]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[14]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Signed Integer"
+msgstr "Signed Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[14]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[14]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[14]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[14]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Lifting height in millimeters"
+msgstr "Lifting height in millimeters"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[15]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[15]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Position actuator%0:s"
+msgstr "Position actuator%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[15]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[15]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "Reach"
+msgstr "Reach"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[15]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[15]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Signed Integer"
+msgstr "Signed Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[15]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[15]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[15]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[15]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Reach in in millimeters"
+msgstr "Reach in in millimeters"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[17]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[17]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Position actuator%0:s"
+msgstr "Position actuator%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[17]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[17]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "TBD"
+msgstr "TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[17]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[17]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Signed Integer"
+msgstr "Signed Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[17]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[17]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[17]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[17]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "TBD"
+msgstr "TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[18]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[18]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Position actuator%0:s"
+msgstr "Position actuator%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[18]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[18]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "TBD"
+msgstr "TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[18]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[18]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Signed Integer"
+msgstr "Signed Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[18]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[18]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[18]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[18]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "TBD"
+msgstr "TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[19]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[19]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Position actuator%0:s"
+msgstr "Position actuator%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[19]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[19]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "TBD"
+msgstr "TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[19]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[19]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Signed Integer"
+msgstr "Signed Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[19]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[19]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[19]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[19]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "TBD"
+msgstr "TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[20]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[20]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Load detect"
+msgstr "Load detect"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[20]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[20]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[20]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[20]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[20]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[20]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "%0:s – no detect sensor"
+msgstr "%0:s – no detect sensor"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[20]\table:table-row[3]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[20]\\table:table-row[3]\\table:table-cell[1]\\text:p"
+msgid "%0:s – no load detected"
+msgstr "%0:s – no load detected"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[20]\table:table-row[3]\table:table-cell[2]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[20]\\table:table-row[3]\\table:table-cell[2]\\text:p"
+msgid "%0:s - load detected"
+msgstr "%0:s - load detected"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[54]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[54]\\text:p"
+msgid "Navitrol supports this command from version %0:s onwards."
+msgstr "Navitrol supports this command from version %0:s onwards."
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[4]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[4]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Data field"
+msgstr "Data field"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[4]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[4]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Type"
+msgstr "Type"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[4]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[4]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "Length (bytes)"
+msgstr "Length (bytes)"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[4]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[4]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Comment"
+msgstr "Comment"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Protocol Version = %0:s"
+msgstr "Protocol Version = %0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[5]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[5]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[5]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[6]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[6]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Message ID = %0:s"
+msgstr "Message ID = %0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[6]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[6]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[6]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[6]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[7]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[7]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Message length"
+msgstr "Message length"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[7]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[7]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Integer"
+msgstr "Unsigned Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[7]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[7]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[7]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[7]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Message length in bytes including all data fields"
+msgstr "Message length in bytes including all data fields"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[8]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[8]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Message number"
+msgstr "Message number"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[8]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[8]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Integer"
+msgstr "Unsigned Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[8]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[8]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[9]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[9]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Steer wheel:"
+msgstr "Steer wheel:"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[9]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[9]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "Steering Angle"
+msgstr "Steering Angle"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[9]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[9]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Float"
+msgstr "Float"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[9]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[9]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[9]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[9]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Reference steering angle (+//-PI in radians)"
+msgstr "Reference steering angle (+//-PI in radians)"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[9]\table:table-row[3]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[9]\\table:table-row[3]\\table:table-cell[1]\\text:p"
+msgid "Positive turning direction is CCW"
+msgstr "Positive turning direction is CCW"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[10]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[10]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Steer wheel:"
+msgstr "Steer wheel:"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[10]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[10]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "Wheel Speed"
+msgstr "Wheel Speed"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[10]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[10]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Float"
+msgstr "Float"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[10]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[10]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[10]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[10]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Reference speed for drive wheel (m//s)"
+msgstr "Reference speed for drive wheel (m//s)"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[11]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[11]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Diff Left wheel:"
+msgstr "Diff Left wheel:"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[11]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[11]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "Wheel Speed"
+msgstr "Wheel Speed"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[11]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[11]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Float"
+msgstr "Float"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[11]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[11]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[11]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[11]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Reference speed for drive wheel (m//s)"
+msgstr "Reference speed for drive wheel (m//s)"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[12]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[12]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Diff Right wheel:"
+msgstr "Diff Right wheel:"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[12]\table:table-row[0]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[12]\\table:table-row[0]\\table:table-cell[1]\\text:p"
+msgid "Wheel Speed"
+msgstr "Wheel Speed"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[12]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[12]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Float"
+msgstr "Float"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[12]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[12]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[12]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[12]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Reference speed for drive wheel (m//s)"
+msgstr "Reference speed for drive wheel (m//s)"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[13]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[13]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Status//control"
+msgstr "Status//control"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[13]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[13]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[13]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[13]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[13]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[13]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Bit%0:s – Navitrol Error"
+msgstr "Bit%0:s – Navitrol Error"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[13]\table:table-row[3]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[13]\\table:table-row[3]\\table:table-cell[1]\\text:p"
+msgid "Bit%0:s – Not used"
+msgstr "Bit%0:s – Not used"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[13]\table:table-row[3]\table:table-cell[2]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[13]\\table:table-row[3]\\table:table-cell[2]\\text:p"
+msgid "Bit%0:s – Not used"
+msgstr "Bit%0:s – Not used"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[13]\table:table-row[3]\table:table-cell[3]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[13]\\table:table-row[3]\\table:table-cell[3]\\text:p"
+msgid "Bit%0:s – Not used"
+msgstr "Bit%0:s – Not used"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[13]\table:table-row[3]\table:table-cell[4]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[13]\\table:table-row[3]\\table:table-cell[4]\\text:p"
+msgid "Bit%0:s – Not used"
+msgstr "Bit%0:s – Not used"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[13]\table:table-row[3]\table:table-cell[5]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[13]\\table:table-row[3]\\table:table-cell[5]\\text:p"
+msgid "Bit%0:s – Ack//Reset"
+msgstr "Bit%0:s – Ack//Reset"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[13]\table:table-row[3]\table:table-cell[6]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[13]\\table:table-row[3]\\table:table-cell[6]\\text:p"
+msgid "Bit%0:s – Charge Request"
+msgstr "Bit%0:s – Charge Request"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[13]\table:table-row[3]\table:table-cell[7]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[13]\\table:table-row[3]\\table:table-cell[7]\\text:p"
+msgid "Bit%0:s – Brake Release"
+msgstr "Bit%0:s – Brake Release"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[13]\table:table-row[3]\table:table-cell[8]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[13]\\table:table-row[3]\\table:table-cell[8]\\text:p"
+msgid "Bit%0:s…bit %1:s Not used"
+msgstr "Bit%0:s…bit %1:s Not used"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[58]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[58]\\text:p"
+msgid "Navitrol sends this message as a reply to the Measurement update actuators message (%0:s)."
+msgstr "Navitrol sends this message as a reply to the Measurement update actuators message (%0:s)."
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[59]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[59]\\text:p"
+msgid "Not yet fully implemented in Navitrol!"
+msgstr "Not yet fully implemented in Navitrol!"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[4]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[4]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Data field"
+msgstr "Data field"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[4]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[4]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Type"
+msgstr "Type"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[4]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[4]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "Length (bytes)"
+msgstr "Length (bytes)"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[4]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[4]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Comment"
+msgstr "Comment"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Protocol Version = %0:s"
+msgstr "Protocol Version = %0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[5]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[5]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[5]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[6]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[6]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Message ID = %0:s"
+msgstr "Message ID = %0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[6]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[6]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[6]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[6]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[7]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[7]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Message length = %0:s"
+msgstr "Message length = %0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[7]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[7]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Integer"
+msgstr "Unsigned Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[7]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[7]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+ [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[7]\table:table-row[3]\table:table-cell[0]\text:p
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[7]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[7]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Message length in bytes including all data fields"
+msgstr "Message length in bytes including all data fields"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[8]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[8]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Message number"
+msgstr "Message number"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[8]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[8]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Integer"
+msgstr "Unsigned Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[8]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[8]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[8]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[8]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "This value shall be incremented by one for each message sent and it should match with received reply message number."
+msgstr "This value shall be incremented by one for each message sent and it should match with received reply message number."
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[9]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[9]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Control bits actuators"
+msgstr "Control bits actuators"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[9]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[9]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Unsigned Short"
+msgstr "Unsigned Short"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[9]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[9]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[9]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[9]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Bit%0:s – Activate actuator%1:s"
+msgstr "Bit%0:s – Activate actuator%1:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[9]\table:table-row[3]\table:table-cell[1]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[9]\\table:table-row[3]\\table:table-cell[1]\\text:p"
+msgid "Bit%0:s – Activate actuator%1:s"
+msgstr "Bit%0:s – Activate actuator%1:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[9]\table:table-row[3]\table:table-cell[2]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[9]\\table:table-row[3]\\table:table-cell[2]\\text:p"
+msgid "Bit%0:s – Activate actuator%1:s"
+msgstr "Bit%0:s – Activate actuator%1:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[9]\table:table-row[3]\table:table-cell[3]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[9]\\table:table-row[3]\\table:table-cell[3]\\text:p"
+msgid "Bit%0:s – Activate actuator%1:s"
+msgstr "Bit%0:s – Activate actuator%1:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[9]\table:table-row[3]\table:table-cell[4]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[9]\\table:table-row[3]\\table:table-cell[4]\\text:p"
+msgid "Bit%0:s – Activate actuator%1:s"
+msgstr "Bit%0:s – Activate actuator%1:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[9]\table:table-row[3]\table:table-cell[5]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[9]\\table:table-row[3]\\table:table-cell[5]\\text:p"
+msgid "Bit%0:sBit%1:s – TBD"
+msgstr "Bit%0:sBit%1:s – TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[10]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[10]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Position reference actuator%0:s – Lifting"
+msgstr "Position reference actuator%0:s – Lifting"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[10]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[10]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Signed Integer"
+msgstr "Signed Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[10]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[10]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[10]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[10]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Lifting height in millimeters"
+msgstr "Lifting height in millimeters"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[11]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[11]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Position reference actuator%0:s - Reach"
+msgstr "Position reference actuator%0:s - Reach"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[11]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[11]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Signed Integer"
+msgstr "Signed Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[11]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[11]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[11]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[11]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "Reach in in millimeters"
+msgstr "Reach in in millimeters"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[12]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[12]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Position reference actuator%0:s - TBD"
+msgstr "Position reference actuator%0:s - TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[12]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[12]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Signed Integer"
+msgstr "Signed Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[12]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[12]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[12]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[12]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "TBD"
+msgstr "TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[13]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[13]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Position reference actuator%0:s - TBD"
+msgstr "Position reference actuator%0:s - TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[13]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[13]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Signed Integer"
+msgstr "Signed Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[13]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[13]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[13]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[13]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "TBD"
+msgstr "TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[14]\table:table-row[0]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[14]\\table:table-row[0]\\table:table-cell[0]\\text:p"
+msgid "Position reference actuator%0:s - TBD"
+msgstr "Position reference actuator%0:s - TBD"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[14]\table:table-row[1]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[14]\\table:table-row[1]\\table:table-cell[0]\\text:p"
+msgid "Signed Integer"
+msgstr "Signed Integer"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[14]\table:table-row[2]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[14]\\table:table-row[2]\\table:table-cell[0]\\text:p"
+msgid "%0:s"
+msgstr "%0:s"
+
+#: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[14]\table:table-row[3]\table:table-cell[0]\text:p
+msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[14]\\table:table-row[3]\\table:table-cell[0]\\text:p"
+msgid "TBD"
+msgstr "TBD"
