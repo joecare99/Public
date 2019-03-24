@@ -28,6 +28,8 @@ TYPE
     PROCEDURE TestBuildPhrase;
     PROCEDURE TestStringSplit;
     PROCEDURE TestStringSplit2;
+    procedure TestStringSplit2b;
+    procedure TestStringSplit2c;
     procedure TestStringSplit3;
     procedure TestStringSplit4;
   END;
@@ -225,6 +227,41 @@ BEGIN
 
 END;
 
+PROCEDURE TTestXMLDoc2Po.TestStringSplit2b;
+CONST
+  Sentence = 'The quick brown fox jumps over the lazy dog.';
+  Split: ARRAY[0..2] OF String = ('quick', 'brown', 'lazy');
+
+VAR
+  i:     Integer;
+  lResult: ARRAY OF String;
+  lRest: String;
+  lSuccess: Boolean;
+
+BEGIN
+  i := high(Split);
+  setlength(lResult, i + 2);
+  lSuccess := StringSplit(Sentence, split[i], lRest ,lResult[i+1]);
+  dec(i);
+  WHILE lSuccess and (i >= 0) and (length(lrest) > 0) and
+    StringSplit(lRest, split[i], lRest,lResult[i+1]) DO
+  BEGIN
+    Dec(i);
+  END;
+  lResult[0] := lRest;
+  // Test Result
+  CheckEquals('The ',lResult[0],'lResult[0]' );
+  CheckEquals(' ',lResult[1],'lResult[1]' );
+  CheckEquals(' fox jumps over the ',lResult[2],'lResult[2]' );
+  CheckEquals(' dog.',lResult[3],'lResult[3]' );
+
+  lSuccess   :=
+    (lResult[0] = 'The ') and (lResult[1] = ' ') and
+    (lResult[2] = ' fox jumps over the ') and (lResult[3] = ' dog.');
+  CheckTrue(lSuccess, 'Expected result');
+END;
+
+
 PROCEDURE TTestXMLDoc2Po.TestStringSplit2;
 
 CONST
@@ -254,6 +291,26 @@ BEGIN
     (lResult[2] = ' fox jumps over the ') and (lResult[3] = ' dog.');
   CheckTrue(lSuccess, 'Expected result');
 END;
+
+PROCEDURE TTestXMLDoc2Po.TestStringSplit2c;
+
+CONST
+  Sentence = 'The quick brown fox jumps over the lazy dog.';
+  Split: ARRAY[0..2] OF String = ('quick', 'brown', 'lazy');
+
+VAR
+  lResult: ARRAY OF String;
+  lSuccess: Boolean;
+
+BEGIN
+  lresult:=string(Sentence).split(split);
+  // Test Result
+  lSuccess   :=
+    (lResult[0] = 'The ') and (lResult[1] = ' ') and
+    (lResult[2] = ' fox jumps over the ') and (lResult[3] = ' dog.');
+  CheckTrue(lSuccess, 'Expected result');
+END;
+
 
 PROCEDURE TTestXMLDoc2Po.TestStringSplit3;
 VAR
