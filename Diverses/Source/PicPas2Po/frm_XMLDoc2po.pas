@@ -38,12 +38,13 @@ TYPE
   private
     FIniFile: TIniFile;
     FCfgBaseSection: String;
+  public
     // Part of the Engine
     PROCEDURE parsePhrase(Path, Phrase: String; Chapter: TChapters);
     FUNCTION SetNewPhrase(Path: String; Phrase: DOMString;
       Chapter: TChapters): DOMString;
-    function StringSplit(const LSpanTrans, lSearch: DOMString; out
-      lFirst: DOMString; var lRest: DOMString): Boolean;
+    function StringSplit(const Sentence, Search: DOMString; out
+      First: DOMString; var Rest: DOMString): Boolean;
     Procedure SaveConfigValues(Sender:TObject);
   public
     FUNCTION AnalyzePhrase(Phr: String; out Excepts: TStringArray): String;
@@ -212,21 +213,25 @@ BEGIN
     edtSourceDir.Text := dlgSelectDirectory.FileName;
 END;
 
-    function TfrmXml2PoMain.StringSplit(const LSpanTrans, lSearch: DOMString; out
-    lFirst: DOMString; var lRest: DOMString): Boolean;
+    function TfrmXml2PoMain.StringSplit(const Sentence, Search: DOMString; out
+    First: DOMString; var Rest: DOMString): Boolean;
   VAR
     pp: SizeInt;
   BEGIN
-    pp     := pos(lSearch, LSpanTrans);
+    pp     := pos(Search, Sentence);
     Result := pp <> 0;
     IF Result THEN
     BEGIN
-      lFirst := copy(LSpanTrans, 1, pp - 1);
-      lRest  := copy(LSpanTrans, pp + length(lSearch), length(LSpanTrans) - pp);
+      First := copy(Sentence, 1, pp - 1);
+      Rest  := copy(Sentence, pp + length(Search), length(Sentence) - pp-length(search)+1);
     END
     else
+    BEGIN
+      First := '';
+      Rest  := Sentence;
       //Todo: Ask the User
       ;
+    END
   END;
 
   procedure TfrmXml2PoMain.SaveConfigValues(Sender: TObject);
@@ -254,7 +259,7 @@ VAR
     lOutlLev, j: Longint;
     lNode: TDOMNode;
     LSpanTrans, lSearch, lMiddle, lLast, lFirst, lRest: DOMString;
-    pp:    SizeInt;
+
   BEGIN
     LSpanText := '';
     setlength(LSpanArr, 0);
@@ -276,8 +281,8 @@ VAR
           IF lInterest3 THEN
           BEGIN
             trystrtoint(
-              XMLNodes[i].Attributes.GetNamedItem('text:outline-level').TextContent,
-              lOutlLev);
+              Ansistring(XMLNodes[i].Attributes.GetNamedItem('text:outline-level'
+                ).TextContent), lOutlLev);
             Inc(Chapter[lOutlLev]);
             FOR j := lOutlLev + 1 TO 4 DO
               Chapter[j] := 0;
@@ -312,7 +317,7 @@ VAR
         END;
     IF LSpanText <> '' THEN
     BEGIN
-      LSpanTrans := SetNewPhrase(Parent, LSpanText, Chapter);
+      LSpanTrans := SetNewPhrase(Parent, widestring(LSpanText), Chapter);
       lHandled   := False;
       IF length(lSpanArr) = 1 THEN
       BEGIN
@@ -327,7 +332,7 @@ VAR
         IF lStyle <> 'T1' THEN
         BEGIN
           lSearch := lSpanArr[1].TextContent;
-          IF StringSplit(LSpanTrans, lSearch, lFirst, lRest) THEN
+          IF StringSplit(LSpanTrans, lSearch, lFirst, lRest{%H-}) THEN
           BEGIN
             lSpanArr[0].TextContent := lFirst;
             lSpanArr[2].TextContent := lRest;
@@ -347,7 +352,7 @@ VAR
           BEGIN
             lSpanArr[0].TextContent := lFirst;
             IF StringSplit(lRest, lSpanArr[3].TextContent,
-              lMiddle, lLast) THEN
+              lMiddle, lLast{%H-}) THEN
             BEGIN
               lSpanArr[2].TextContent := lMiddle;
               lSpanArr[4].TextContent := lLast;
@@ -392,8 +397,7 @@ function TfrmXml2PoMain.AnalyzePhrase(Phr: String; out Excepts: TStringArray
 VAR
   copyMode: Boolean;
   i:    Integer;
-  lBlankCount: Integer;
-  lLastCh, lTestCh: Char;
+  lLastCh: Char;
   Phr2: String;
 BEGIN
   setlength(Excepts, 0);

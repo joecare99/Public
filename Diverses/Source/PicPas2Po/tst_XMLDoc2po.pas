@@ -28,6 +28,8 @@ TYPE
     PROCEDURE TestBuildPhrase;
     PROCEDURE TestStringSplit;
     PROCEDURE TestStringSplit2;
+    procedure TestStringSplit3;
+    procedure TestStringSplit4;
   END;
 
 IMPLEMENTATION
@@ -241,6 +243,63 @@ BEGIN
   lSuccess := StringSplit(Sentence, split[0], lResult[0], lRest);
   WHILE lSuccess and (i < length(Split)) and (length(lrest) > 0) and
     StringSplit(lRest, split[i], lResult[i], lRest) DO
+  BEGIN
+    Inc(i);
+    setlength(lResult, i + 1);
+  END;
+  lResult[i] := lRest;
+  // Test Result
+  lSuccess   :=
+    (lResult[0] = 'The ') and (lResult[1] = ' ') and
+    (lResult[2] = ' fox jumps over the ') and (lResult[3] = ' dog.');
+  CheckTrue(lSuccess, 'Expected result');
+END;
+
+PROCEDURE TTestXMLDoc2Po.TestStringSplit3;
+VAR
+  lFirst, lRest, lMiddle: WideString;
+BEGIN
+  CheckEquals(True, frmXml2PoMain.StringSplit(widestring(SentenceToSplit[0, 0]),
+    widestring(SentenceToSplit[0, 1]), lFirst, lRest),'First Split');
+  CheckEquals(widestring( SentenceToSplit[0, 2]),lFirst, 'First Split first');
+  CheckEquals(widestring(SentenceToSplit[0, 3]),lRest,  'First Split rest');
+  // ------------------------
+  CheckEquals(False, frmXml2PoMain.StringSplit(widestring(SentenceToSplit[1, 0]),
+    widestring(SentenceToSplit[1, 1]),lFirst, lRest),
+    'Second Split');
+  CheckEquals(widestring(SentenceToSplit[1, 2]),lFirst, 'Second Split first');
+  CheckEquals(widestring(SentenceToSplit[1, 3]),lRest, 'Second Split rest');
+  // ------------------------
+  CheckEquals(True, frmXml2PoMain.StringSplit(widestring(SentenceToSplit[2, 0]),
+    widestring(SentenceToSplit[2, 1]),lFirst, lRest),
+    'Third Split');
+  CheckEquals(True, frmXml2PoMain.StringSplit(lRest,widestring( SentenceToSplit
+    [3, 1]), lMiddle, lRest),'Fourth Split');
+  CheckEquals( widestring(SentenceToSplit[2, 2]),lFirst, 'Third Split first');
+  CheckEquals( widestring(SentenceToSplit[3, 2]),lMiddle, 'Fourth Split first');
+  CheckEquals( widestring(SentenceToSplit[3, 3]), lRest, 'Fourth Split rest');
+  // ------------------------
+
+END;
+
+PROCEDURE TTestXMLDoc2Po.TestStringSplit4;
+
+CONST
+  Sentence = 'The quick brown fox jumps over the lazy dog.';
+  Split: ARRAY[0..2] OF wideString = ('quick', 'brown', 'lazy');
+
+VAR
+  i:     Integer;
+  lResult: ARRAY OF wideString;
+  lRest: WideString;
+  lSuccess: Boolean;
+
+BEGIN
+  i := 1;
+  setlength(lResult, i + 1);
+  lSuccess := frmXml2PoMain.StringSplit(Sentence, split[0], lResult[0], lRest);
+  WHILE lSuccess and (i < length(Split)) and (length(lrest) > 0) and
+    frmXml2PoMain.StringSplit(lRest, split[i], lResult[i], lRest) DO
   BEGIN
     Inc(i);
     setlength(lResult, i + 1);
