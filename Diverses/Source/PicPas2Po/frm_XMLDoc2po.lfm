@@ -7,9 +7,10 @@ object frmXml2PoMain: TfrmXml2PoMain
   Caption = 'frmXml2PoMain'
   ClientHeight = 716
   ClientWidth = 1119
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnResize = FormResize
   OnShow = FormShow
-  LCLVersion = '2.0.0.4'
   object pnlTop: TPanel
     Left = 0
     Height = 43
@@ -97,7 +98,7 @@ object frmXml2PoMain: TfrmXml2PoMain
           Width = 142
           ColWidths = (
             64
-            78
+            74
           )
         end
         inherited edtXmlFileDetail: TMemo
