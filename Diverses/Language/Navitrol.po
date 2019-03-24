@@ -46,7 +46,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s:g"
+msgid "Protocol Version %1:g=%0:s%0:g"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -246,17 +246,17 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[3]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s:g manual mode"
+msgid "%1:g%0:s-%0:g manual mode"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[3]\table:table-cell[1]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[3]\\table:table-cell[1]\\text:p"
-msgid "%1:g%0:s:g automatic mode"
+msgid "%1:g%0:s-%0:g automatic mode"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[3]\table:table-cell[2]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[3]\\table:table-cell[2]\\text:p"
-msgid "%1:g%0:s:g semi-automatic mode"
+msgid "%1:g%0:s-%0:g semi-automatic mode"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[14]\table:table-row[0]\table:table-cell[0]\text:p
@@ -376,7 +376,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s:g"
+msgid "Protocol Version %1:g=%0:s%0:g"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -826,7 +826,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[20]\table:table-row[3]\table:table-cell[2]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[20]\\table:table-row[3]\\table:table-cell[2]\\text:p"
-msgid "%1:g%0:s:g load detected"
+msgid "%1:g%0:s-%0:g load detected"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[12]\text:h
@@ -891,7 +891,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[15]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s:g"
+msgid "Protocol Version %1:g=%0:s%0:g"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -1076,7 +1076,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Section ID %1:g=%0:s:g"
+msgid "Section ID %1:g=%0:s%0:g"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -1501,7 +1501,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Section ID %1:g=%0:s:g"
+msgid "Section ID %1:g=%0:s%0:g"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -1831,62 +1831,62 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[28]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[28]\\text:p[0]\\text:span"
-msgid "%1:g%0:s:g%1:s %1:g%2:s:g"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s%0:g"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[28]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[28]\\text:p"
-msgid "%1:g%0:s:g%1:s %1:g%2:s:g"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s%0:g"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[29]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[29]\\text:p[0]\\text:span"
-msgid "%1:g%0:s:g%1:s %2:s %1:g Error_Actuator_jammed%3:s#%0:g error %4:s (total of %5:s bytes)"
+msgid "%1:g%0:s%0:g%1:s %2:s %1:g Error_Actuator_jammed%3:s#%0:g error %4:s (total of %5:s bytes)"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[29]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[29]\\text:p"
-msgid "%1:g%0:s:g%1:s %2:s %1:g Error_Actuator_jammed%3:s#%0:g error %4:s (total of %5:s bytes)"
+msgid "%1:g%0:s%0:g%1:s %2:s %1:g Error_Actuator_jammed%3:s#%0:g error %4:s (total of %5:s bytes)"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[30]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[30]\\text:p[0]\\text:span"
-msgid "%0:s %1:g%1:s:g%2:s %3:s %1:g Error_Brake_failure%4:s#%0:g error %5:s (%6:s bytes)"
+msgid "%0:s %1:g%1:s%0:g%2:s %3:s %1:g Error_Brake_failure%4:s#%0:g error %5:s (%6:s bytes)"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[30]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[30]\\text:p"
-msgid "%0:s %1:g%1:s:g%2:s %3:s %1:g Error_Brake_failure%4:s#%0:g error %5:s (%6:s bytes)"
+msgid "%0:s %1:g%1:s%0:g%2:s %3:s %1:g Error_Brake_failure%4:s#%0:g error %5:s (%6:s bytes)"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[31]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[31]\\text:p[0]\\text:span"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g error %3:s (%4:s bytes)"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g error %3:s (%4:s bytes)"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[31]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[31]\\text:p"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g error %3:s (%4:s bytes)"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g error %3:s (%4:s bytes)"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[32]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[32]\\text:p[0]\\text:span"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g error %3:s"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g error %3:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[32]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[32]\\text:p"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g error %3:s"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g error %3:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[33]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[33]\\text:p[0]\\text:span"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g error %3:s"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g error %3:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[33]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[33]\\text:p"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g error %3:s"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g error %3:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[34]\text:p[0]\text:span
@@ -1901,52 +1901,52 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[35]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[35]\\text:p[0]\\text:span"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g warning %3:s (%4:s bytes)"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g warning %3:s (%4:s bytes)"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[35]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[35]\\text:p"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g warning %3:s (%4:s bytes)"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g warning %3:s (%4:s bytes)"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[36]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[36]\\text:p[0]\\text:span"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g warning %3:s"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g warning %3:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[36]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[36]\\text:p"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g warning %3:s"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g warning %3:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[37]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[37]\\text:p[0]\\text:span"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g warning %3:s"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g warning %3:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[37]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[37]\\text:p"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g warning %3:s"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g warning %3:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[38]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[38]\\text:p[0]\\text:span"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g warning %3:s"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g warning %3:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[38]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[38]\\text:p"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g warning %3:s"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g warning %3:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[39]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[39]\\text:p[0]\\text:span"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g warning %3:s"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g warning %3:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[39]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[39]\\text:p"
-msgid "%1:g%0:s:g%1:s %1:g%2:s#%0:g warning %3:s"
+msgid "%1:g%0:s%0:g%1:s %1:g%2:s#%0:g warning %3:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[41]\text:p[0]\text:span
@@ -2006,7 +2006,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[44]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[44]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Section ID %1:g=%0:s:g"
+msgid "Section ID %1:g=%0:s%0:g"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[44]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -2476,7 +2476,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[48]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[48]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Section ID %1:g=%0:s:g"
+msgid "Section ID %1:g=%0:s%0:g"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[48]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -2856,7 +2856,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s:g"
+msgid "Protocol Version %1:g=%0:s%0:g"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -3131,7 +3131,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s:g"
+msgid "Protocol Version %1:g=%0:s%0:g"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -3411,7 +3411,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s:g"
+msgid "Protocol Version %1:g=%0:s%0:g"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -3691,7 +3691,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[16]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[16]\\table:table-row[3]\\table:table-cell[0]\\text:p"
-msgid "Position confidence in percentage (%0:s - %1:s)"
+msgid "Position confidence in percentage (%0:s - %1:s/%)"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[17]\table:table-row[0]\table:table-cell[0]\text:p
