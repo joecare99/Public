@@ -2,6 +2,15 @@ msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "X-Source-Language: de\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joe Care\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"X-Generator: Poedit 2.2.1\n"
 
 #: frm_xmldoc2po.rsbigpaceholder
 msgid "%%%d:g"
@@ -13,149 +22,151 @@ msgstr ""
 
 #: tfrapofile.actfileautoload.caption
 msgid "AutoLoad"
-msgstr ""
+msgstr "AutoLoad"
 
 #: tfrapofile.actfileload.caption
 msgctxt "tfrapofile.actfileload.caption"
 msgid "Load"
-msgstr ""
+msgstr "Load"
 
 #: tfrapofile.actfileopen.caption
 msgctxt "tfrapofile.actfileopen.caption"
 msgid "Öffnen"
-msgstr ""
+msgstr "Open"
 
 #: tfrapofile.actfileopen.hint
 msgctxt "tfrapofile.actfileopen.hint"
 msgid "Öffnen"
-msgstr ""
+msgstr "Open"
 
 #: tfrapofile.actfilesave.caption
 msgctxt "tfrapofile.actfilesave.caption"
 msgid "Save"
-msgstr ""
+msgstr "Save"
 
 #: tfrapofile.actfilesaveas.caption
 msgctxt "tfrapofile.actfilesaveas.caption"
 msgid "Sichern &als ..."
-msgstr ""
+msgstr "Save &as ..."
 
 #: tfrapofile.actfilesaveas.hint
 msgctxt "tfrapofile.actfilesaveas.hint"
 msgid "Sichern als"
-msgstr ""
+msgstr "Save as"
 
 #: tfrapofile.cbxselectlanguage.text
 msgid "Deutsch,de"
-msgstr ""
+msgstr "German, de"
 
 #: tfrapofile.edtprojectname.text
 msgid "PicPas"
-msgstr ""
+msgstr "PicPas"
 
 #: tfrapofile.tlbpofile.caption
 msgid "tlbPoFile"
-msgstr ""
+msgstr "tlbPoFile"
 
 #: tfrapofile.toolbutton1.caption
 msgid "AL"
-msgstr ""
+msgstr "AL"
 
 #: tfrapofile.toolbutton3.caption
 msgid "Ld"
-msgstr ""
+msgstr "Ld"
 
 #: tfrapofile.toolbutton4.caption
 msgid "Sv"
-msgstr ""
+msgstr "Sv"
 
 #: tfraxmlfile.actdosomething.caption
 msgid "actDoSomething"
-msgstr ""
+msgstr "actDoSomething"
 
 #: tfraxmlfile.actfileload.caption
 msgctxt "tfraxmlfile.actfileload.caption"
 msgid "Load"
-msgstr ""
+msgstr "Load"
 
 #: tfraxmlfile.actfileopen.caption
 msgctxt "tfraxmlfile.actfileopen.caption"
 msgid "Öffnen"
-msgstr ""
+msgstr "Open"
 
 #: tfraxmlfile.actfileopen.hint
 msgctxt "tfraxmlfile.actfileopen.hint"
 msgid "Öffnen"
-msgstr ""
+msgstr "Open"
 
 #: tfraxmlfile.actfilesave.caption
 msgctxt "tfraxmlfile.actfilesave.caption"
 msgid "Save"
-msgstr ""
+msgstr "Save"
 
 #: tfraxmlfile.actfilesaveas.caption
 msgctxt "tfraxmlfile.actfilesaveas.caption"
 msgid "Sichern &als ..."
-msgstr ""
+msgstr "Save &as ..."
 
 #: tfraxmlfile.actfilesaveas.hint
 msgctxt "tfraxmlfile.actfilesaveas.hint"
 msgid "Sichern als"
-msgstr ""
+msgstr "Save as"
 
 #: tfraxmlfile.btnxmlfileload.caption
 msgid "L"
-msgstr ""
+msgstr "Ld"
 
 #: tfraxmlfile.btnxmlfileopen.caption
 msgid "O"
-msgstr ""
+msgstr "Ld"
 
 #: tfraxmlfile.btnxmlfilesave_.caption
 msgid "S"
-msgstr ""
+msgstr "Sv"
 
 #: tfraxmlfile.edtxmlfilename.editlabel.caption
 msgid "Datei:"
-msgstr ""
+msgstr "File:"
 
 #: tfraxmlfile.edtxmlfilename.text
 msgid "edtXmlFilename"
-msgstr ""
+msgstr "edtXmlFilename"
 
 #: tfraxmlfile.lblcompiledon.caption
 msgid ""
 "Compiled: %s\n"
 "#9on:%s\n"
 msgstr ""
+"Compiled: %s\n"
+"#9on:%s\n"
 
 #: tfrmxml2pomain.actxmlprocesspo2x.caption
 msgid "po2X"
-msgstr ""
+msgstr "po2X"
 
 #: tfrmxml2pomain.actxmlprocessx2po.caption
 msgid "X2Po"
-msgstr ""
+msgstr "X2Po"
 
 #: tfrmxml2pomain.btnprocesspo2pas.caption
 msgid "<"
-msgstr ""
+msgstr "<"
 
 #: tfrmxml2pomain.btnprocessxml2po.caption
 msgid ">"
-msgstr ""
+msgstr ">"
 
 #: tfrmxml2pomain.btnselectdir.caption
 msgid "..."
-msgstr ""
+msgstr "…"
 
 #: tfrmxml2pomain.caption
 msgid "frmXml2PoMain"
-msgstr ""
+msgstr "frmXml2PoMain"
 
 #: tfrmxml2pomain.edtsourcedir.editlabel.caption
 msgid "edtSourceDir"
-msgstr ""
+msgstr "edtSourceDir"
 
 #: tfrmxml2pomain.edtsourcedir.text
 msgid "C:\\projekte\\Lazarus\\PicPas\\trunk\\Docs"
@@ -163,7 +174,7 @@ msgstr ""
 
 #: tfrmxml2pomain.frapofile1.pnlrighttop.edtprojectname.text
 msgid "ppManual"
-msgstr ""
+msgstr "ppManual"
 
 #: unt_cdate.adate
 msgctxt "unt_cdate.adate"
@@ -178,4 +189,3 @@ msgstr ""
 #: unt_cdate.cname
 msgid "SILENT-PC2"
 msgstr ""
-
