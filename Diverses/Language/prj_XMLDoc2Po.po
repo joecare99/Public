@@ -167,12 +167,12 @@ msgstr ""
 
 #: unt_cdate.adate
 msgctxt "unt_cdate.adate"
-msgid "23.03.2019"
+msgid "24.03.2019"
 msgstr ""
 
 #: unt_cdate.cdate
 msgctxt "unt_cdate.cdate"
-msgid "23.03.2019"
+msgid "24.03.2019"
 msgstr ""
 
 #: unt_cdate.cname
