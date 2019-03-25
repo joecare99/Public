@@ -1,5 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fpdoc-descriptions><package name="fpcTestKingdom"><module name="tst_KingdomEng"><short>tst_KingdomEng ist eine fpc-Test-Unit zum testen der TKingdomEng</short>
+    <element name="TTestKingdomEng"><short>Unit-Testklasse für Kingdom-Engine</short>
+      </element><element name="TTestKingdomEng.FKingdom"><short>Zu testende Kingdom-Klasse</short>
+      </element><element name="TTestKingdomEng.SetUp"><short>SetUp bereitet die Testklasse für Test vor</short>
+      </element><element name="TTestKingdomEng.TearDown"><short>Deinitialisiert/Finalisiert die Testklasse (gibt z.B: Speicher frei ...)</short>
+      </element><element name="TTestKingdomEng.TestSetUp"><short>Testet den Test-Klassen Aufbau.</short>
+      </element><element name="TTestKingdomEng.TestGameRun0"><short>Test eines geradlinigen Spielverlaufs.</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

@@ -1,5 +1,41 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fpdoc-descriptions><package name="fpcTestKingdom"><module name="cls_KingdomEng"><short>cls_KingdomEng-unit enthält TKingdomEng, die Kingdom-Engine</short>
+    <element name="TKingdomEngine.BuySellLand"><short>BuySellLand: Spieleraktion um Land zu Kaufen und zu Verkaufen</short>
+      </element><element name="TKingdomEngine.Distribute"><short>Distribute: Spieleraktion um Getreide zu verteilen</short>
+      </element><element name="TKingdomEngine.Production"><short>Production: Spieleraktion um zu bestimmen wieviel Land bebaut werden soll.</short>
+      </element><element name="TKingdomEngine.GameDescription"><short>Allgemeine Spielbeschreibung</short>
+      </element><element name="TKingdomEngine.YearDescription"><short>Jahres-Bericht</short>
+      </element><element name="TKingdomEngine.BuySellMsg"><short>Nachricht, warum nicht ge- oder Verkauft werden kann</short>
+      </element><element name="TKingdomEngine.DistrMsg"><short>Nachricht, warum Getreide nicht verteilt werden kann</short>
+      </element><element name="TKingdomEngine.ProdMsg"><short>Nachricht, warum so nicht produziert werden kann.</short>
+      </element><element name="TKingdomEngine.NewYearMsg"><short>Nachricht, warum noch nicht ins nächste Jahr gewechselt werden sollte.</short>
+      </element><element name="TKingdomEngine.NewGame"><short>NewGame: Spieleraktion, startet ein neues Spiel. </short>
+      </element><element name="TKingdomEngine.NewYear"><short>NewYear. Spieleraktion, beendet die Runde/Jahr</short>
+      </element><element name="TKingdomEngine.LandPrice"><short>Aktueller Preis für Land</short>
+      </element><element name="TKingdomEngine.Area"><short>Aktueller Landbesitz</short>
+      </element><element name="TKingdomEngine.Population"><short>Aktuelle Bevölkerungszahl</short>
+      </element><element name="TKingdomEngine.Storage"><short>Aktueller Speicherstand</short>
+      </element><element name="TKingdomEngine.LandInProd"><short>Land unter Bewirtschaftung</short>
+      </element><element name="TKingdomEngine.Distributed"><short>Verteiltes Getreide</short>
+      </element><element name="TKingdomEngine.GameEnded"><short>Spiel ist beendet.</short>
+      </element><element name="TKingdomEngine.FPlague"><short>Flag: Eine Plage hat stattgefunden.</short>
+      </element><element name="TKingdomEngine.FExpelled"><short>Flag: Der Spieler wurde aus Mißwirtschaft des Amts enthoben.</short>
+      </element><element name="TKingdomEngine.FYearOfReighn"><short>Jahr der Herrschaft</short>
+      </element><element name="TKingdomEngine.FPopulation"><short>Aktuelle Bevölkerungszahl</short>
+      </element><element name="TKingdomEngine.FStorage"><short>Aktueller Füllstand der Getreidespeicher in Büscheln</short>
+      </element><element name="TKingdomEngine.FHarvest"><short>Anzahl an Büschel Getreide die dieses Jahr geerntet wurden</short>
+      </element><element name="TKingdomEngine.FArea"><short>Aktueller Landbesitz in Tagwerk</short>
+      </element><element name="TKingdomEngine.FLandInProduction"><short>Menge an Land das bewirtschaftet werden soll.</short>
+      </element><element name="TKingdomEngine.FDistributedFood"><short>Menge an Getreide das an die Bevölkerung verteilt werden soll.</short>
+      </element><element name="TKingdomEngine.FRatts"><short>Geteide das durch Ratten gefressen wurde.</short>
+      </element><element name="TKingdomEngine.FImmigrants"><short>Anzahl der Immigranten</short>
+      </element><element name="TKingdomEngine.FDeath"><short>Anzahl der Todesfälle (durch Hunger)</short>
+      </element><element name="TKingdomEngine.FCostOfLand"><short>Aktueller Preis für ein Tahwerk Land</short>
+      </element><element name="TKingdomEngine.FProductivity"><short>Ertrag an Getreide pro Tagwerk Land</short>
+      </element><element name="TKingdomEngine.FPopSum"><short>Durchschnittliche Todesrate in Prozent</short>
+      </element><element name="TKingdomEngine.FDeathSum"><short>Absolute Summe der Todesfälle</short>
+      </element><element name="TKingdomEngine"><short>Gameengine für Kingdom-Spiel. (Eine kleine Wirtschafts-Simulation)</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>
