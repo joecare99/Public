@@ -1,0 +1,170 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joe Care\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"X-Generator: Poedit 2.2.1\n"
+
+#: unt_kingdombase.rsadress
+msgid "Hamurabi, ich habe Dir folgendes zu berichten:"
+msgstr "Hamurabi, j'ai ce qui suit à te dire:"
+
+#: unt_kingdombase.rscostofland
+msgid "Land wird derzeit für %d Büschel Getreide gehandelt."
+msgstr "Les terres sont actuellement échangées contre %d touffes de grains."
+
+#: unt_kingdombase.rseighth
+msgid "achte"
+msgstr "huitieme"
+
+#: unt_kingdombase.rseleventh
+msgid "elfte"
+msgstr "onzième"
+
+#: unt_kingdombase.rsevalaverg
+msgid "Es könnte besser für Dich aussehen. Laut neuster Umfrage wollen Dich %d Leute absetzen!!!"
+msgstr "Ça pourrait vous sembler mieux. Selon le dernier sondage, %d des personnes veulent vous déposer!!!"
+
+#: unt_kingdombase.rsevalbad
+msgid "Du bist in Ungnade gefallen und auf eine einsame Insel verbannt worden."
+msgstr "Vous êtes tombé hors de la faveur et a été relégué à une île déserte."
+
+#: unt_kingdombase.rsevalgood
+msgid "Großartig!!! Du kannst jederzeit über Sumeria herrschen; Außerdem fordern die Leute deinen Kopf, wenn Du nicht bleibst"
+msgstr "génial!!! Vous pouvez régner sur Sumeria à tout moment; De plus, les gens exigent votre tête si vous ne restez pas"
+
+#: unt_kingdombase.rsevalpoor
+msgid "Du hast geherrscht wie ein Ajatollah!!! Die meisten Deiner Untertanen werden bei Deiner Abdankung tanzen"
+msgstr "Tu as régné comme un ayatollah!!! La plupart de vos sujets danseront à votre abdication"
+
+#: unt_kingdombase.rsexpelled
+msgid ""
+"Durch deine misserable Herrschaft sind in einem Jahr %d Leute gestorben\n"
+"Dadurch hast Du einen Volksaufstand ausgelöst.\n"
+"Du bist gestürzt und aus dem Land gejagt worden !!!\n"
+msgstr ""
+"En raison de votre règne misérable, %d personnes sont mortes en un an.\n"
+"Vous avez donc suscité un soulèvement populaire.\n"
+"Vous êté renversé et avez été chassé du pays !!!\n"
+
+#: unt_kingdombase.rsfifth
+msgid "fünfte"
+msgstr "cinquième"
+
+#: unt_kingdombase.rsfirst
+msgid "erste"
+msgstr "première"
+
+#: unt_kingdombase.rsfourth
+msgid "vierte"
+msgstr "quatrième"
+
+#: unt_kingdombase.rsgamedescription
+msgid ""
+"Dies ist das Königreich Sumeria, und Sie wurden für 10 Jahre zum Herrscher gewählt.\n"
+"\n"
+"Ihre Herrschaft entscheidet über Leben und Tod von hunderten ihrer Untertanen. Ihre diktatorischen Fähigkeiten werden am Ende der Amtsperiode, nach 10 Jahren geprüft.\n"
+"\n"
+"Jedes Jahr müssen Sie Ihre Entscheidungen überdenken und ausführen.\n"
+"Bedenke, zur Ernährung braucht jeder Bewohner pro Jahr 20 Büschel Getreide, und die Bewirtschaftung von 2 Tagwerk Land kostet 1 Büschel Getreide.\n"
+msgstr ""
+"C'est le royaume de Sumeria et vous avez été élu souverain pour 10 ans.\n"
+"\n"
+"Leur règne détermine la vie et la mort de centaines de leurs sujets. Leurs capacités dictatoriales sont testées à la fin de la période de office, après 10 ans.\n"
+"\n"
+"Chaque année, vous devez repenser et exécuter vos décisions.\n"
+"Rappelez-vous que chaque habitant a besoin de 20 mottes de céréales par an et que la culture de deux acres de terre coûte une motte de céréales.\n"
+
+#: unt_kingdombase.rsnineth
+msgid "neunte"
+msgstr "neuvième"
+
+#: unt_kingdombase.rsnodistr
+msgid ""
+"Hamurabi, die Leute werden sterben, \n"
+"Du mußt ihnen Getreide geben\n"
+msgstr ""
+"Hamurabi, les gens vont mourir, \n"
+"tu dois leur donner du grain\n"
+
+#: unt_kingdombase.rsnoprod
+msgid "Hamurabi, bedenke, daß Du etwas anbauen mußt, sonst bricht eine große  Hungersnot aus..."
+msgstr "Hamurabi, rappelez-vous que vous devez cultiver quelque chose, sinon une grande famine va éclater..."
+
+#: unt_kingdombase.rsnotenoughland
+msgid "Hamurabi, leider hast Du nur %d Tagwerk Land"
+msgstr "Hamurabi, malheureusement, vous avez seulement %d acres de terré"
+
+#: unt_kingdombase.rsnotenoughpeople
+msgid ""
+"Eine Person kann nur 10 Tagwerk bewirtschaften, Hamurabi.\n"
+"Deine %d Untertanen reichen dafür nicht aus.\n"
+msgstr ""
+"Une personne ne peut gérer que 10 jours de travail, Hamurabi.\n"
+"Vos %d sujets ne suffisent pas pour cela.\n"
+
+#: unt_kingdombase.rsnotenoughres
+msgid ""
+"Hamurabi, denke einmal genau nach! \n"
+"Du hast doch nur %d Büschel Getreide\n"
+msgstr ""
+"Hamurabi, réfléchis attentivement! \n"
+"Vous n'avez que %d céréales Tuft\n"
+
+#: unt_kingdombase.rsnotenoughres2
+msgid "Hamurabi, Du hast nicht genug Resorcen um soviel Land bebauen zu können, denke einmal nach..."
+msgstr "Hamurabi, vous n'avez pas assez de Résorces pour cultiver tant de terres, pensez..."
+
+#: unt_kingdombase.rsok
+msgid "Erledigt ..."
+msgstr "Fait ..."
+
+#: unt_kingdombase.rsplague
+msgid "Eine schreckliche Plage hat dein Land heimgesucht und die Hälfte der Bevölkerung dahingerafft..."
+msgstr "Un terrible fléau a frappé votre pays et tué la moitié de la population ..."
+
+#: unt_kingdombase.rsresultland
+msgid "Der Landbesitz änderte sich von Anfangs 10 Tagwerk pro Person auf durchschnittlich %d Tagwerk."
+msgstr "La propriété foncière a changé du début de 10 jours par personne à une moyenne de %d de acres."
+
+#: unt_kingdombase.rsresultpeople
+msgid "In den 10 Jahren Deiner Herrschaft sind jährlich durchschnittlich %d%% der Bevölkerung durch Hunger gestorben. Ingesamt waren das %d Leute."
+msgstr "Dans les 10 ans de votre règle, une moyenne de %d%% de la population est décédée chaque année à la suite de la faim. Globalement, c'était %d personnes."
+
+#: unt_kingdombase.rssecond
+msgid "zweite"
+msgstr "deuxième"
+
+#: unt_kingdombase.rsseventh
+msgid "siebente"
+msgstr "septième"
+
+#: unt_kingdombase.rssixth
+msgid "sechste"
+msgstr "sixième"
+
+#: unt_kingdombase.rsstorage
+msgid ""
+"Die Stadt zählt nun %d Einwohner. Du besitzt jetzt %d Tagwerk Land, von denen pro Tagwerk %d Büschel Getreide geernted wurden.\n"
+"Die Ratten frassen %d Büschel, du hast %d Büschel in deine Lagerhäusern.\n"
+msgstr ""
+"La ville compte maintenant %d habitants. Vous possédez maintenant %d acres de terre à partir de laquelle %d touffes de grains ont été récoltées.\n"
+"Les rats mangent %d touffes, vous avez %d touffes dans vos entrepôts.\n"
+
+#: unt_kingdombase.rstenth
+msgid "zehnte"
+msgstr "dixième"
+
+#: unt_kingdombase.rsthird
+msgid "dritte"
+msgstr "troisième"
+
+#: unt_kingdombase.rsyearofreign
+msgid "Dies ist das %s Jahr deiner Regentschaft sind %d Leute gestorben; %d Leute sind nach Sumeria zugezogen."
+msgstr "C'est l'année %s de votre règne, %d personnes sont décédées; %d personnes ont déménagé en Sumeria."

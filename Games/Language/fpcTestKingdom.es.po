@@ -1,0 +1,170 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joe Care\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: es\n"
+"X-Generator: Poedit 2.2.1\n"
+
+#: unt_kingdombase.rsadress
+msgid "Hamurabi, ich habe Dir folgendes zu berichten:"
+msgstr "Hamurabi, tengo lo siguiente que decirte:"
+
+#: unt_kingdombase.rscostofland
+msgid "Land wird derzeit für %d Büschel Getreide gehandelt."
+msgstr "La tierra es comerciada actualmente por %d Tuft de cereales."
+
+#: unt_kingdombase.rseighth
+msgid "achte"
+msgstr "Octavo"
+
+#: unt_kingdombase.rseleventh
+msgid "elfte"
+msgstr "Undécimo"
+
+#: unt_kingdombase.rsevalaverg
+msgid "Es könnte besser für Dich aussehen. Laut neuster Umfrage wollen Dich %d Leute absetzen!!!"
+msgstr "Podría lucir mejor para ti. De acuerdo con la última encuesta,%d de la gente quiere dejarlo!!!"
+
+#: unt_kingdombase.rsevalbad
+msgid "Du bist in Ungnade gefallen und auf eine einsame Insel verbannt worden."
+msgstr "Has caído en desgracia y has sido relegado a una isla desierta."
+
+#: unt_kingdombase.rsevalgood
+msgid "Großartig!!! Du kannst jederzeit über Sumeria herrschen; Außerdem fordern die Leute deinen Kopf, wenn Du nicht bleibst"
+msgstr "¡¡¡Gran!!! Puedes gobernar sobre sumeria en cualquier momento; Además, la gente demanda tu cabeza si no te quedas"
+
+#: unt_kingdombase.rsevalpoor
+msgid "Du hast geherrscht wie ein Ajatollah!!! Die meisten Deiner Untertanen werden bei Deiner Abdankung tanzen"
+msgstr "Gobernó como un ayatolá!!! La mayoría de sus súbditos bailarán en su abdicación"
+
+#: unt_kingdombase.rsexpelled
+msgid ""
+"Durch deine misserable Herrschaft sind in einem Jahr %d Leute gestorben\n"
+"Dadurch hast Du einen Volksaufstand ausgelöst.\n"
+"Du bist gestürzt und aus dem Land gejagt worden !!!\n"
+msgstr ""
+"Debido a su regla Misserable, %d la gente ha muerto en un año.\n"
+"Has sido derrocado\n"
+"y expulsado del país!!!\n"
+
+#: unt_kingdombase.rsfifth
+msgid "fünfte"
+msgstr "Quinto"
+
+#: unt_kingdombase.rsfirst
+msgid "erste"
+msgstr "Primero"
+
+#: unt_kingdombase.rsfourth
+msgid "vierte"
+msgstr "Cuarto"
+
+#: unt_kingdombase.rsgamedescription
+msgid ""
+"Dies ist das Königreich Sumeria, und Sie wurden für 10 Jahre zum Herrscher gewählt.\n"
+"\n"
+"Ihre Herrschaft entscheidet über Leben und Tod von hunderten ihrer Untertanen. Ihre diktatorischen Fähigkeiten werden am Ende der Amtsperiode, nach 10 Jahren geprüft.\n"
+"\n"
+"Jedes Jahr müssen Sie Ihre Entscheidungen überdenken und ausführen.\n"
+"Bedenke, zur Ernährung braucht jeder Bewohner pro Jahr 20 Büschel Getreide, und die Bewirtschaftung von 2 Tagwerk Land kostet 1 Büschel Getreide.\n"
+msgstr ""
+"Este es el Reino de sumeria, y usted fue elegido gobernante durante 10 años.\n"
+"\n"
+"Su regla decide las vidas y muertes de cientos de sus súbditos. Sus habilidades dictatoriales se probarán al final del período de mandato después de 10 años.\n"
+"\n"
+"Cada año tienes que reconsiderar y ejecutar tus decisiones.\n"
+"Recuerde, para alimentos, cada residente necesita 20 mechones de grano por año, y la gestión de 2 acres de tierra de la planta cuesta 1 Tuft de grano.\n"
+
+#: unt_kingdombase.rsnineth
+msgid "neunte"
+msgstr "Noveno"
+
+#: unt_kingdombase.rsnodistr
+msgid ""
+"Hamurabi, die Leute werden sterben, \n"
+"Du mußt ihnen Getreide geben\n"
+msgstr ""
+"Hamurabi, la gente va a morir,\n"
+"tienes que darles grano\n"
+
+#: unt_kingdombase.rsnoprod
+msgid "Hamurabi, bedenke, daß Du etwas anbauen mußt, sonst bricht eine große  Hungersnot aus..."
+msgstr "Hamurabi, recuerda que tienes que cultivar algo, de lo contrario una gran hambruna se romperá..."
+
+#: unt_kingdombase.rsnotenoughland
+msgid "Hamurabi, leider hast Du nur %d Tagwerk Land"
+msgstr "Hamurabi, desafortunadamente sólo tienes %d acres de tierra"
+
+#: unt_kingdombase.rsnotenoughpeople
+msgid ""
+"Eine Person kann nur 10 Tagwerk bewirtschaften, Hamurabi.\n"
+"Deine %d Untertanen reichen dafür nicht aus.\n"
+msgstr ""
+"Una persona puede manejar solo 10 días de trabajo, Hamurabi.\n"
+"Sus temas %d no son suficientes para esto.\n"
+
+#: unt_kingdombase.rsnotenoughres
+msgid ""
+"Hamurabi, denke einmal genau nach! \n"
+"Du hast doch nur %d Büschel Getreide\n"
+msgstr ""
+"¡ Hamurabi, piensa con cuidado! \n"
+"Sólo tienes %d Tuft cereal\n"
+
+#: unt_kingdombase.rsnotenoughres2
+msgid "Hamurabi, Du hast nicht genug Resorcen um soviel Land bebauen zu können, denke einmal nach..."
+msgstr "Hamurabi, no tienes suficientes Resorces para cultivar tanta tierra, piensa..."
+
+#: unt_kingdombase.rsok
+msgid "Erledigt ..."
+msgstr "Hecho..."
+
+#: unt_kingdombase.rsplague
+msgid "Eine schreckliche Plage hat dein Land heimgesucht und die Hälfte der Bevölkerung dahingerafft..."
+msgstr "Una plaga terrible ha plagado A su país, matando A la mitad de la población..."
+
+#: unt_kingdombase.rsresultland
+msgid "Der Landbesitz änderte sich von Anfangs 10 Tagwerk pro Person auf durchschnittlich %d Tagwerk."
+msgstr "Propiedad de la tierra cambió de principio de 10 días por persona a un promedio de %d día de trabajo."
+
+#: unt_kingdombase.rsresultpeople
+msgid "In den 10 Jahren Deiner Herrschaft sind jährlich durchschnittlich %d%% der Bevölkerung durch Hunger gestorben. Ingesamt waren das %d Leute."
+msgstr "En los 10 años de su gobierno, un promedio de %d%% de la población ha muerto cada año como resultado del hambre. En general, eso fue %d personas."
+
+#: unt_kingdombase.rssecond
+msgid "zweite"
+msgstr "Segundo"
+
+#: unt_kingdombase.rsseventh
+msgid "siebente"
+msgstr "Séptimo"
+
+#: unt_kingdombase.rssixth
+msgid "sechste"
+msgstr "Sexto"
+
+#: unt_kingdombase.rsstorage
+msgid ""
+"Die Stadt zählt nun %d Einwohner. Du besitzt jetzt %d Tagwerk Land, von denen pro Tagwerk %d Büschel Getreide geernted wurden.\n"
+"Die Ratten frassen %d Büschel, du hast %d Büschel in deine Lagerhäusern.\n"
+msgstr ""
+"La ciudad tiene ahora %d habitantes. Ahora usted posee %d acres de tierra, de los cuales %d los Tufts de cereales han sido peados por planta de día.\n"
+"Las ratas Brew %d Tufts, usted tiene %d Tufts en sus almacenes.\n"
+
+#: unt_kingdombase.rstenth
+msgid "zehnte"
+msgstr "Décimo"
+
+#: unt_kingdombase.rsthird
+msgid "dritte"
+msgstr "Tercero"
+
+#: unt_kingdombase.rsyearofreign
+msgid "Dies ist das %s Jahr deiner Regentschaft sind %d Leute gestorben; %d Leute sind nach Sumeria zugezogen."
+msgstr "Este es el año %s de vuestro reinado, %d la gente ha muerto; %d la gente se mudó a sumeria."

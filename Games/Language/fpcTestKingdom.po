@@ -1,0 +1,144 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: unt_kingdombase.rsadress
+msgid "Hamurabi, ich habe Dir folgendes zu berichten:"
+msgstr ""
+
+#: unt_kingdombase.rscostofland
+msgid "Land wird derzeit für %d Büschel Getreide gehandelt."
+msgstr ""
+
+#: unt_kingdombase.rseighth
+msgid "achte"
+msgstr ""
+
+#: unt_kingdombase.rseleventh
+msgid "elfte"
+msgstr ""
+
+#: unt_kingdombase.rsevalaverg
+msgid "Es könnte besser für Dich aussehen. Laut neuster Umfrage wollen Dich %d Leute absetzen!!!"
+msgstr ""
+
+#: unt_kingdombase.rsevalbad
+msgid "Du bist in Ungnade gefallen und auf eine einsame Insel verbannt worden."
+msgstr ""
+
+#: unt_kingdombase.rsevalgood
+msgid "Großartig!!! Du kannst jederzeit über Sumeria herrschen; Außerdem fordern die Leute deinen Kopf, wenn Du nicht bleibst"
+msgstr ""
+
+#: unt_kingdombase.rsevalpoor
+msgid "Du hast geherrscht wie ein Ajatollah!!! Die meisten Deiner Untertanen werden bei Deiner Abdankung tanzen"
+msgstr ""
+
+#: unt_kingdombase.rsexpelled
+msgid ""
+"Durch deine misserable Herrschaft sind in einem Jahr %d Leute gestorben\n"
+"Dadurch hast Du einen Volksaufstand ausgelöst.\n"
+"Du bist gestürzt und aus dem Land gejagt worden !!!\n"
+msgstr ""
+
+#: unt_kingdombase.rsfifth
+msgid "fünfte"
+msgstr ""
+
+#: unt_kingdombase.rsfirst
+msgid "erste"
+msgstr ""
+
+#: unt_kingdombase.rsfourth
+msgid "vierte"
+msgstr ""
+
+#: unt_kingdombase.rsgamedescription
+msgid ""
+"Dies ist das Königreich Sumeria, und Sie wurden für 10 Jahre zum Herrscher gewählt.\n"
+"\n"
+"Ihre Herrschaft entscheidet über Leben und Tod von hunderten ihrer Untertanen. Ihre diktatorischen Fähigkeiten werden am Ende der Amtsperiode, nach 10 Jahren geprüft.\n"
+"\n"
+"Jedes Jahr müssen Sie Ihre Entscheidungen überdenken und ausführen.\n"
+"Bedenke, zur Ernährung braucht jeder Bewohner pro Jahr 20 Büschel Getreide, und die Bewirtschaftung von 2 Tagwerk Land kostet 1 Büschel Getreide.\n"
+msgstr ""
+
+#: unt_kingdombase.rsnineth
+msgid "neunte"
+msgstr ""
+
+#: unt_kingdombase.rsnodistr
+msgid ""
+"Hamurabi, die Leute werden sterben, \n"
+"Du mußt ihnen Getreide geben\n"
+msgstr ""
+
+#: unt_kingdombase.rsnoprod
+msgid "Hamurabi, bedenke, daß Du etwas anbauen mußt, sonst bricht eine große  Hungersnot aus..."
+msgstr ""
+
+#: unt_kingdombase.rsnotenoughland
+msgid "Hamurabi, leider hast Du nur %d Tagwerk Land"
+msgstr ""
+
+#: unt_kingdombase.rsnotenoughpeople
+msgid ""
+"Eine Person kann nur 10 Tagwerk bewirtschaften, Hamurabi.\n"
+"Deine %d Untertanen reichen dafür nicht aus.\n"
+msgstr ""
+
+#: unt_kingdombase.rsnotenoughres
+msgid ""
+"Hamurabi, denke einmal genau nach! \n"
+"Du hast doch nur %d Büschel Getreide\n"
+msgstr ""
+
+#: unt_kingdombase.rsnotenoughres2
+msgid "Hamurabi, Du hast nicht genug Resorcen um soviel Land bebauen zu können, denke einmal nach..."
+msgstr ""
+
+#: unt_kingdombase.rsok
+msgid "Erledigt ..."
+msgstr ""
+
+#: unt_kingdombase.rsplague
+msgid "Eine schreckliche Plage hat dein Land heimgesucht und die Hälfte der Bevölkerung dahingerafft..."
+msgstr ""
+
+#: unt_kingdombase.rsresultland
+msgid "Der Landbesitz änderte sich von Anfangs 10 Tagwerk pro Person auf durchschnittlich %d Tagwerk."
+msgstr ""
+
+#: unt_kingdombase.rsresultpeople
+msgid "In den 10 Jahren Deiner Herrschaft sind jährlich durchschnittlich %d%% der Bevölkerung durch Hunger gestorben. Ingesamt waren das %d Leute."
+msgstr ""
+
+#: unt_kingdombase.rssecond
+msgid "zweite"
+msgstr ""
+
+#: unt_kingdombase.rsseventh
+msgid "siebente"
+msgstr ""
+
+#: unt_kingdombase.rssixth
+msgid "sechste"
+msgstr ""
+
+#: unt_kingdombase.rsstorage
+msgid ""
+"Die Stadt zählt nun %d Einwohner. Du besitzt jetzt %d Tagwerk Land, von denen pro Tagwerk %d Büschel Getreide geernted wurden.\n"
+"Die Ratten frassen %d Büschel, du hast %d Büschel in deine Lagerhäusern.\n"
+msgstr ""
+
+#: unt_kingdombase.rstenth
+msgid "zehnte"
+msgstr ""
+
+#: unt_kingdombase.rsthird
+msgid "dritte"
+msgstr ""
+
+#: unt_kingdombase.rsyearofreign
+msgid "Dies ist das %s Jahr deiner Regentschaft sind %d Leute gestorben; %d Leute sind nach Sumeria zugezogen."
+msgstr ""
+

@@ -1,0 +1,168 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joe Care\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"X-Generator: Poedit 2.2.1\n"
+
+#: unt_kingdombase.rsadress
+msgid "Hamurabi, ich habe Dir folgendes zu berichten:"
+msgstr "Hamurabi, I have the following to tell you:"
+
+#: unt_kingdombase.rscostofland
+msgid "Land wird derzeit für %d Büschel Getreide gehandelt."
+msgstr "Land is currently traded for %d tufts of grain."
+
+#: unt_kingdombase.rseighth
+msgid "achte"
+msgstr "eighth"
+
+#: unt_kingdombase.rseleventh
+msgid "elfte"
+msgstr "eleventh"
+
+#: unt_kingdombase.rsevalaverg
+msgid "Es könnte besser für Dich aussehen. Laut neuster Umfrage wollen Dich %d Leute absetzen!!!"
+msgstr "It might look better for you. According to the latest survey, %d of people want to drop you off!!!"
+
+#: unt_kingdombase.rsevalbad
+msgid "Du bist in Ungnade gefallen und auf eine einsame Insel verbannt worden."
+msgstr "You have fallen out of favour and been relegated to a deserted Island."
+
+#: unt_kingdombase.rsevalgood
+msgid "Großartig!!! Du kannst jederzeit über Sumeria herrschen; Außerdem fordern die Leute deinen Kopf, wenn Du nicht bleibst"
+msgstr "Great!!! You can rule over Sumeria at any time; Plus, people demand your head if you don't stay"
+
+#: unt_kingdombase.rsevalpoor
+msgid "Du hast geherrscht wie ein Ajatollah!!! Die meisten Deiner Untertanen werden bei Deiner Abdankung tanzen"
+msgstr "You have reigned like an Ayatollah!!! Most of your subjects will dance at your abdication"
+
+#: unt_kingdombase.rsexpelled
+msgid ""
+"Durch deine misserable Herrschaft sind in einem Jahr %d Leute gestorben\n"
+"Dadurch hast Du einen Volksaufstand ausgelöst.\n"
+"Du bist gestürzt und aus dem Land gejagt worden !!!\n"
+msgstr ""
+"Due to your miserable rule %d people died in one year.\n"
+"Thus you have raised a popular uprising.\n"
+"You have been dispossessed and driven out of the country !!!\n"
+
+#: unt_kingdombase.rsfifth
+msgid "fünfte"
+msgstr "fifth"
+
+#: unt_kingdombase.rsfirst
+msgid "erste"
+msgstr "first"
+
+#: unt_kingdombase.rsfourth
+msgid "vierte"
+msgstr "fourth"
+
+#: unt_kingdombase.rsgamedescription
+msgid ""
+"Dies ist das Königreich Sumeria, und Sie wurden für 10 Jahre zum Herrscher gewählt.\n"
+"\n"
+"Ihre Herrschaft entscheidet über Leben und Tod von hunderten ihrer Untertanen. Ihre diktatorischen Fähigkeiten werden am Ende der Amtsperiode, nach 10 Jahren geprüft.\n"
+"\n"
+"Jedes Jahr müssen Sie Ihre Entscheidungen überdenken und ausführen.\n"
+"Bedenke, zur Ernährung braucht jeder Bewohner pro Jahr 20 Büschel Getreide, und die Bewirtschaftung von 2 Tagwerk Land kostet 1 Büschel Getreide.\n"
+msgstr ""
+"This is the kingdom of Sumeria, and you were elected ruler for 10 years.\n"
+"Your reign determines the lives and deaths of hundreds of your subjects. Your dictatorial abilities are tested at the end of the term of office, after 10 years.\n"
+"Every year you have to rethink and execute your decisions.\n"
+"Remember, each inhabitant needs 20 tufts of grain a year, and the cultivation of 2 acres costs 1 tufts of grain.\n"
+
+#: unt_kingdombase.rsnineth
+msgid "neunte"
+msgstr "ninth"
+
+#: unt_kingdombase.rsnodistr
+msgid ""
+"Hamurabi, die Leute werden sterben, \n"
+"Du mußt ihnen Getreide geben\n"
+msgstr ""
+"Hamurabi, People are going to die,\n"
+"You have to give them Grain\n"
+
+#: unt_kingdombase.rsnoprod
+msgid "Hamurabi, bedenke, daß Du etwas anbauen mußt, sonst bricht eine große  Hungersnot aus..."
+msgstr "Hamurabi, remember that You have to grow something, otherwise a great famine will break out ..."
+
+#: unt_kingdombase.rsnotenoughland
+msgid "Hamurabi, leider hast Du nur %d Tagwerk Land"
+msgstr "Hamurabi, unfortunately you only have %d acres land"
+
+#: unt_kingdombase.rsnotenoughpeople
+msgid ""
+"Eine Person kann nur 10 Tagwerk bewirtschaften, Hamurabi.\n"
+"Deine %d Untertanen reichen dafür nicht aus.\n"
+msgstr ""
+"A person can manage only 10 acres, Hamurabi.\n"
+"Your %d Subjects are not enough for this.\n"
+
+#: unt_kingdombase.rsnotenoughres
+msgid ""
+"Hamurabi, denke einmal genau nach! \n"
+"Du hast doch nur %d Büschel Getreide\n"
+msgstr ""
+"Hamurabi, think carefully! \n"
+"You only have %d tuft cereal\n"
+
+#: unt_kingdombase.rsnotenoughres2
+msgid "Hamurabi, Du hast nicht genug Resorcen um soviel Land bebauen zu können, denke einmal nach..."
+msgstr "Hamurabi, You don't have enough resorces to cultivate so much land, think about this again ..."
+
+#: unt_kingdombase.rsok
+msgid "Erledigt ..."
+msgstr "Completed ..."
+
+#: unt_kingdombase.rsplague
+msgid "Eine schreckliche Plage hat dein Land heimgesucht und die Hälfte der Bevölkerung dahingerafft..."
+msgstr "A terrible plague has struck your country and killed half the population ..."
+
+#: unt_kingdombase.rsresultland
+msgid "Der Landbesitz änderte sich von Anfangs 10 Tagwerk pro Person auf durchschnittlich %d Tagwerk."
+msgstr "Land Ownership changed from of 10 acres per person at the beginning to an average of %d%% acres."
+
+#: unt_kingdombase.rsresultpeople
+msgid "In den 10 Jahren Deiner Herrschaft sind jährlich durchschnittlich %d%% der Bevölkerung durch Hunger gestorben. Ingesamt waren das %d Leute."
+msgstr "In the 10 years of your rulership, an average of %d%% of the population died of hunger every year. Overall, that was %d People."
+
+#: unt_kingdombase.rssecond
+msgid "zweite"
+msgstr "second"
+
+#: unt_kingdombase.rsseventh
+msgid "siebente"
+msgstr "seventh"
+
+#: unt_kingdombase.rssixth
+msgid "sechste"
+msgstr "sixth"
+
+#: unt_kingdombase.rsstorage
+msgid ""
+"Die Stadt zählt nun %d Einwohner. Du besitzt jetzt %d Tagwerk Land, von denen pro Tagwerk %d Büschel Getreide geernted wurden.\n"
+"Die Ratten frassen %d Büschel, du hast %d Büschel in deine Lagerhäusern.\n"
+msgstr ""
+"The city now counts %d inhabitants. You now own %d acres land, from which %d tufts of grain were harvested.\n"
+"The rats eat %d tufts, you have %d tufts in your warehouses.\n"
+
+#: unt_kingdombase.rstenth
+msgid "zehnte"
+msgstr "tenth"
+
+#: unt_kingdombase.rsthird
+msgid "dritte"
+msgstr "third"
+
+#: unt_kingdombase.rsyearofreign
+msgid "Dies ist das %s Jahr deiner Regentschaft sind %d Leute gestorben; %d Leute sind nach Sumeria zugezogen."
+msgstr "This is the %s year of your reign, %d people have died; %d people moved to Sumeria."
