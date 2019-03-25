@@ -36,7 +36,7 @@ resourcestring
    rsResultLand='Der Landbesitz änderte sich von Anfangs 10 Tagwerk pro Person '+
        'auf durchschnittlich %d Tagwerk.';
    rsEvalBad='Du bist in Ungnade gefallen und auf eine einsame Insel verbannt worden.';
-   rsEvalPoor='Du hast geherscht wier ein Ajatollah!!! Die meisten Deiner Untertanen'+
+   rsEvalPoor='Du hast geherrscht wie ein Ajatollah!!! Die meisten Deiner Untertanen'+
        ' werden bei Deiner Abdankung tanzen';
    rsEvalAverg='Es könnte besser für Dich aussehen. Laut neuster Umfrage wollen Dich'+
        ' %d Leute absetzen!!!';

@@ -38,6 +38,7 @@ type
         FDeathSum:integer;
         function GetGameEnded: Boolean;
       public
+        constructor Create;
         function BuySellLand(aValue:integer):boolean;
         function Distribute(aValue:integer):boolean;
         function Production(aValue:integer):boolean;
@@ -49,6 +50,7 @@ type
         function NewYearMsg: String;
         Procedure NewGame;
          Function NewYear(keep: boolean):boolean;
+         property Year:integer read FYearOfReighn;
          Property LandPrice:integer read FCostOfLand ;
          PRoperty Area:integer read FArea;
          property Population:integer read FPopulation;
@@ -68,6 +70,11 @@ uses unt_KingdomBase;
 function TKingdomEngine.GetGameEnded: Boolean;
 begin
   result := (FYearOfReighn > 10) or FExpelled ;
+end;
+
+constructor TKingdomEngine.Create;
+begin
+  FExpelled:=true;
 end;
 
 function TKingdomEngine.BuySellLand(aValue: integer): boolean;
@@ -182,7 +189,8 @@ begin
   FStorage:=2800;
   FArea:=1000;
   FProductivity:=3;
-  FLandInProduction:=1000;
+  FLandInProduction:=0;
+  FDistributedFood:=0;
   FHarvest:=3000;
   FRatts:=200;
   FImmigrants:=5;

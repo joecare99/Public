@@ -12,6 +12,10 @@
       <Icon Value="0"/>
     </General>
     <LazDoc Paths="..\FPDoc"/>
+    <i18n>
+      <EnableI18N Value="True"/>
+      <OutDir Value="..\Language"/>
+    </i18n>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
     </BuildModes>
