@@ -106,7 +106,7 @@ end;
 
 function TKingdomEngine.Distribute(aValue: integer): boolean;
 begin
-  if (aValue<0) or (aValue>FStorage - FLandInProduction div 2) then exit(false);
+  if (FDistributedFood+aValue<0) or (aValue>FStorage - FLandInProduction div 2) then exit(false);
   FDistributedFood:=FDistributedFood+aValue;
   FStorage:= FStorage-aValue;
   result:=true;
@@ -211,6 +211,8 @@ begin
   FYearOfReighn:=1;
   FPlague:=false;
   FExpelled:=false;
+  FPopSum:=0;
+  FDeathSum:=0;
   FCostOfLand:=random(10)+16;
 end;
 
@@ -251,10 +253,10 @@ begin
     begin
       FDeath := FPopulation-lFullySupportedPeop;
       FPopulation:=lFullySupportedPeop;
-      FExpelled:=(FDeath*2)>FPopulation;
+      FExpelled:=(FDeath*2)>(FPopulation+FDeath);
     end;
-  if FPopulation>0 then
-    FPopSum:=((FYearOfReighn-1)* FPopSum+(FDeath*100) div FPopulation) div FYearOfReighn
+  if FPopulation+FDeath>0 then
+    FPopSum:=((FYearOfReighn-1)* FPopSum+(FDeath*100) div (FPopulation+FDeath)) div FYearOfReighn
   else
    FPopSum:=100;
   FDeathSum := FDeathSum+FDeath;
