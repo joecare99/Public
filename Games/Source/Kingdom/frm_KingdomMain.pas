@@ -86,7 +86,11 @@ end;
 
 procedure TfrmKingdomMain.btnNextClick(Sender: TObject);
 begin
-  FKingdom.NewYear(false);
+  if not FKingdom.NewYear(false) then
+    begin
+      DisplayMessage(FKingdom.NewYearMsg);
+      exit;
+    end;
   DisplayMessage(FKingdom.YearDescription,true);
   UpdateValues;
 end;

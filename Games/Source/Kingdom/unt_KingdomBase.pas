@@ -7,7 +7,7 @@ unit unt_KingdomBase;
 interface
 
 uses
-  Classes, SysUtils, LCLTranslator;
+  Classes, SysUtils, DefaultTranslator;
 
 resourcestring
 // Texte
@@ -31,8 +31,29 @@ resourcestring
      'Land, von denen pro Tagwerk %d Büschel Getreide geernted wurden.'+LineEnding+
      'Die Ratten frassen %d Büschel, du hast %d Büschel in deine Lagerhäusern.';
    rsCostOfLand='Land wird derzeit für %d Büschel Getreide gehandelt.';
+   rsResultPeople='In den 10 Jahren Deiner Herrschaft sind jährlich durchschnittlich'+
+     ' %d%% der Bevölkerung durch Hunger gestorben. Ingesamt waren das %d Leute.';
+   rsResultLand='Der Landbesitz änderte sich von Anfangs 10 Tagwerk pro Person '+
+       'auf durchschnittlich %d Tagwerk.';
+   rsEvalBad='Du bist in Ungnade gefallen und auf eine einsame Insel verbannt worden.';
+   rsEvalPoor='Du hast geherscht wier ein Ajatollah!!! Die meisten Deiner Untertanen'+
+       ' werden bei Deiner Abdankung tanzen';
+   rsEvalAverg='Es könnte besser für Dich aussehen. Laut neuster Umfrage wollen Dich'+
+       ' %d Leute absetzen!!!';
+   rsEvalGood='Großartig!!! Du kannst jederzeit über Sumeria herrschen; Außerdem '+
+       'fordern die Leute deinen Kopf, wenn Du nicht bleibst';
    rsOK='Erledigt ...';
-
+   rsNotEnoughRes='Hamurabi, denke einmal genau nach! '+LineEnding+'Du hast doch nur'+
+       ' %d Büschel Getreide';
+   rsNotEnoughRes2='Hamurabi, Du hast nicht genug Resorcen um soviel Land bebauen'+
+       ' zu können, denke einmal nach...';
+   rsNotEnoughPeople='Eine Person kann nur 10 Tagwerk bewirtschaften, Hamurabi.'+
+       LineEnding+'Deine %d Untertanen reichen dafür nicht aus.';
+   rsNotEnoughLand='Hamurabi, leider hast Du nur %d Tagwerk Land';
+   rsNoDistr='Hamurabi, die Leute werden sterben, '+LineEnding+'Du mußt ihnen '+
+       'Getreide geben';
+   rsNoProd='Hamurabi, bedenke, daß Du etwas anbauen mußt, sonst bricht eine große '+
+       ' Hungersnot aus...';
 
 // Zahlen
    rsFirst='erste';

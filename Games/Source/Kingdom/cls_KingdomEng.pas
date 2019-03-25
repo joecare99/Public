@@ -46,8 +46,9 @@ type
         function BuySellMsg(aValue:integer):String;
         function DistrMsg(aValue:integer):String;
         function ProdMsg(aValue:integer):String;
+        function NewYearMsg: String;
         Procedure NewGame;
-        procedure NewYear(keep: boolean);
+         Function NewYear(keep: boolean):boolean;
          Property LandPrice:integer read FCostOfLand ;
          PRoperty Area:integer read FArea;
          property Population:integer read FPopulation;
@@ -105,6 +106,8 @@ begin
 end;
 
 function TKingdomEngine.YearDescription: String;
+var
+  lLandPerPop: Integer;
 begin
   if not FExpelled then
   result:=rsAdress +LineEnding+
@@ -120,23 +123,57 @@ begin
       format(rsCostOfLand,[FCostOfLand])
   else
     begin
-  // Todo: Endresults
+      result:=result +LineEnding+LineEnding+
+      format(rsResultPeople,[FPopSum,FDeathSum]);
+      lLandPerPop := FArea div FPopulation;
+      result:=result +LineEnding+
+      format(rsResultLand,[lLandPerPop]);
+      if (FPopSum>33) or (lLandPerPop<7) then
+        result:=result +LineEnding+
+         format(rsEvalBad,[])
+      else if (FPopSum>10) or (lLandPerPop<9) then
+        result:=result +LineEnding+
+         format(rsEvalPoor,[])
+      else if (FPopSum>3) or (lLandPerPop<10) then
+        result:=result +LineEnding+
+         format(rsEvalAverg,[trunc(FPopulation * random * 0.8)])
+      else
+        result:=result +LineEnding+
+         format(rsEvalGood,[])
     end;
 end;
 
 function TKingdomEngine.BuySellMsg(aValue: integer): String;
 begin
-  result:='Geht nicht ...'; // Todo: no BuySell-Message
+  if avalue < 0 then
+    result:=format(rsNotEnoughLand,[FArea])
+  else
+    result:=format(rsNotEnoughRes,[FStorage- FLandInProduction div 2]); // Done: no BuySell-Message
 end;
 
 function TKingdomEngine.DistrMsg(aValue: integer): String;
 begin
-  result:='Geht nicht ...'; // Todo: no Distr-Message
+  result:=format(rsNotEnoughRes,[FStorage]); // Done: no Distr-Message
 end;
 
 function TKingdomEngine.ProdMsg(aValue: integer): String;
 begin
-  result:='Geht nicht ...'; // Todo: no Prod-Message
+  if aValue > FArea then
+    result:=format(rsNotEnoughLand,[FArea])
+  else if aValue > FPopulation*10 then
+    result := format(rsNotEnoughPeople,[FPopulation])
+  else if aValue > FStorage *2 then
+    result := format(rsNotEnoughRes2,[FStorage]); // Done: no Prod-Message
+end;
+
+function TKingdomEngine.NewYearMsg: String;
+begin
+  // Done: no NewYear-Message
+  result:='';
+  if FDistributedFood=0 then
+    result:=rsNoDistr+LineEnding;
+  if FLandInProduction=0 then
+    result:=result + rsNoProd;
 end;
 
 procedure TKingdomEngine.NewGame;
@@ -156,11 +193,14 @@ begin
   FCostOfLand:=random(10)+16;
 end;
 
-procedure TKingdomEngine.NewYear(keep:boolean);
+function TKingdomEngine.NewYear(keep:boolean):boolean;
 var
   lv: Integer;
   lFullySupportedPeop:integer;
 begin
+  if (FLandInProduction = 0) or (FDistributedFood=0) then
+    exit(false);
+  result := true;
   if (FYearOfReighn>10) or FExpelled then exit;
   // Produktionskosten
   FStorage := FStorage- FLandInProduction div 2;
@@ -192,8 +232,10 @@ begin
       FPopulation:=lFullySupportedPeop;
       FExpelled:=(FDeath*2)>FPopulation;
     end;
-
-  FPopSum:=((FYearOfReighn-1)* FPopSum+(FDeath*100) div FPopulation) div FYearOfReighn;
+  if FPopulation>0 then
+    FPopSum:=((FYearOfReighn-1)* FPopSum+(FDeath*100) div FPopulation) div FYearOfReighn
+  else
+   FPopSum:=100;
   FDeathSum := FDeathSum+FDeath;
 
   FPopulation:=FPopulation + FImmigrants;
