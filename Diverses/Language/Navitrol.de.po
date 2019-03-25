@@ -57,10 +57,9 @@ msgid "Comment"
 msgstr "Kommentar"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s%0:g"
-msgstr "Protokollversion%1:g=%0:s%0:s%0:g"
+msgid "Protocol Version = %0:s"
+msgstr "Protokollversion = %0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[5]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -98,6 +97,7 @@ msgid "Message length"
 msgstr "Nachritenlänge"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[7]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[7]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -118,6 +118,7 @@ msgid "Message number"
 msgstr "Nachrichtennummer"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[8]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[8]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -259,18 +260,18 @@ msgstr "%0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[3]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s-%0:g manual mode"
-msgstr "%1:g%0:s-%0:g manueller Modus"
+msgid "%0:s - manual mode"
+msgstr "%0:s - manueller Modus"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[3]\table:table-cell[1]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[3]\\table:table-cell[1]\\text:p"
-msgid "%1:g%0:s-%0:g automatic mode"
-msgstr "%1:g%0:s-%0:g Automatischer Modus"
+msgid "%0:s - automatic mode"
+msgstr "%0:s - Automatik-Modus"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[3]\table:table-cell[2]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[3]\\table:table-cell[2]\\text:p"
-msgid "%1:g%0:s-%0:g semi-automatic mode"
-msgstr "%1:g%0:s-%0:g halb-automatischer Modus"
+msgid "%0:s - semi-automatic mode"
+msgstr "%0:s - halbautomatischer Modus"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[14]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[14]\\table:table-row[0]\\table:table-cell[0]\\text:p"
@@ -353,9 +354,10 @@ msgid "Bit%0:s…bit %1:s Not used"
 msgstr "Bit%0:s ... Bit%1:s Nicht verwendet"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[7]\text:h
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[7]\\text:h"
-msgid "%0:s - Measurement update actuators (Navitrol controls the vehicle)"
-msgstr "%0:s - Messwertaktualisierung-Aktoren (Navitrol steuert das Fahrzeug)"
+msgid "%0:s %1:s Measurement update actuators (Navitrol controls the vehicle)"
+msgstr "%0:s %1: s Measurement update actuators (Navitrol steuert das Fahrzeug)"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[8]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[8]\\text:p"
@@ -388,10 +390,9 @@ msgid "Comment"
 msgstr "Kommentar"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s%0:g"
-msgstr "Protokollversion%1:g=%0:s%0:s%0:g"
+msgid "Protocol Version = %0:s"
+msgstr "Protokollversion = %0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[5]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -429,6 +430,7 @@ msgid "Message length"
 msgstr "Nachritenlänge"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[7]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[7]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -449,6 +451,7 @@ msgid "Message number"
 msgstr "Nachrichtennummer"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[8]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[8]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -840,8 +843,8 @@ msgstr "%0:s – keine Beladung erkannt"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[20]\table:table-row[3]\table:table-cell[2]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[20]\\table:table-row[3]\\table:table-cell[2]\\text:p"
-msgid "%1:g%0:s-%0:g load detected"
-msgstr "%1:g%0:s-%0:g Beladung erkannt"
+msgid "%0:s - load detected"
+msgstr "%0:s - Beladung erkannt"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[12]\text:h
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[12]\\text:h"
@@ -905,10 +908,9 @@ msgid "Comment"
 msgstr "Kommentar"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[15]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s%0:g"
-msgstr "Protokollversion%1:g=%0:s%0:s%0:g"
+msgid "Protocol Version = %0:s"
+msgstr "Protokollversion = %0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[15]\\table:table[5]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -941,9 +943,10 @@ msgid "%0:s"
 msgstr "%0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[7]\table:table-row[0]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[15]\\table:table[7]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Message length %1:g=*%0:g"
-msgstr "Nachrichtenlänge %1:g=*%0:g"
+msgid "Message length = *"
+msgstr "Nachritenlänge"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[7]\table:table-row[0]\table:table-cell[1]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[15]\\table:table[7]\\table:table-row[0]\\table:table-cell[1]\\text:p"
@@ -951,6 +954,7 @@ msgid "Depends on what sections are included"
 msgstr "Hängt davon ab, welche Abschnitte enthalten sind"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[7]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[15]\\table:table[7]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -1038,8 +1042,8 @@ msgstr "Tabelle der nicht signierten Short"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[11]\table:table-row[2]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[15]\\table:table[11]\\table:table-row[2]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s*%0:g Number of sections"
-msgstr "%1:g%0:s*%0:g Anzahl der Abschnitte"
+msgid "%0:s * Number of sections"
+msgstr "%0:s * Anzahl der Abschnitte"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[11]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[15]\\table:table[11]\\table:table-row[3]\\table:table-cell[0]\\text:p"
@@ -1092,10 +1096,9 @@ msgid "Comment"
 msgstr "Kommentar"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Section ID %1:g=%0:s%0:g"
-msgstr "Section ID%1:g=%0:s%0:g"
+msgid "Section ID = %0:s"
+msgstr "Abschnitt ID = %0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[5]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -1114,6 +1117,7 @@ msgid "Section length"
 msgstr "Standardabschnittslänge"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[6]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[6]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -1134,6 +1138,7 @@ msgid "Actuator value"
 msgstr "Aktuator-Wert"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[7]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[7]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -1279,7 +1284,6 @@ msgid "%0:s bits"
 msgstr "%0:s bits"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[15]\table:table-row[3]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[15]\\table:table-row[3]\\table:table-cell[0]\\text:p"
 msgid "Reserved bits (= %0:s)"
 msgstr "Reservierte Bits (= %0:s)"
@@ -1300,7 +1304,6 @@ msgid "%0:s"
 msgstr "%0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[16]\table:table-row[3]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[16]\\table:table-row[3]\\table:table-cell[0]\\text:p"
 msgid "Reserved (always %0:s)"
 msgstr "Reserviert (immer %0:s)"
@@ -1349,7 +1352,7 @@ msgstr "%0:s wenn die Zone ausgelöst wird, %1:s wenn die Zone frei ist"
 #, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[19]\\table:table-row[0]\\table:table-cell[0]\\text:p"
 msgid "Rear scanner warning zone %0:s"
-msgstr "Heckscanner-Warnzone %0:s"
+msgstr "Heckscanner-Warnzone%0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[19]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[19]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -1370,7 +1373,7 @@ msgstr "%0:s wenn die Zone ausgelöst wird, %1:s wenn die Zone frei ist"
 #, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[20]\\table:table-row[0]\\table:table-cell[0]\\text:p"
 msgid "Rear scanner warning zone %0:s"
-msgstr "Heckscanner-Warnzone %0:s"
+msgstr "Heckscanner-Warnzone%0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[20]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[20]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -1398,7 +1401,6 @@ msgid "%0:s bits"
 msgstr "%0:s bits"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[21]\table:table-row[3]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[21]\\table:table-row[3]\\table:table-cell[0]\\text:p"
 msgid "Reserved bits (= %0:s)"
 msgstr "Reservierte Bits (= %0:s)"
@@ -1419,7 +1421,6 @@ msgid "%0:s"
 msgstr "%0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[22]\table:table-row[3]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[22]\\table:table-row[3]\\table:table-cell[0]\\text:p"
 msgid "Reserved (always %0:s)"
 msgstr "Reserviert (immer %0:s)"
@@ -1442,8 +1443,8 @@ msgstr "%0:s bit"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[23]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[23]\\table:table-row[3]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s=%0:g hold the machine, %1:g%1:s=%0:g release the machine"
-msgstr "%1:g%0:s=%0:g Maschine (an-)halten, %1:g%1:s=%0:g Maschine freigeben"
+msgid "%0:s = hold the machine, %1:s = release the machine"
+msgstr "%0:s = (An-)Halten der Maschine, %1:s = die Maschine freigeben"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[24]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[24]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -1456,7 +1457,6 @@ msgid "%0:s bits"
 msgstr "%0:s bits"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[24]\table:table-row[3]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[24]\\table:table-row[3]\\table:table-cell[0]\\text:p"
 msgid "Reserved bits (= %0:s)"
 msgstr "Reservierte Bits (= %0:s)"
@@ -1477,7 +1477,6 @@ msgid "%0:s"
 msgstr "%0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[25]\table:table-row[3]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[25]\\table:table-row[3]\\table:table-cell[0]\\text:p"
 msgid "Reserved (always %0:s)"
 msgstr "Reserviert (immer %0:s)"
@@ -1529,10 +1528,9 @@ msgid "Comment"
 msgstr "Kommentar"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Section ID %1:g=%0:s%0:g"
-msgstr "Section ID%1:g=%0:s%0:g"
+msgid "Section ID = %0:s"
+msgstr "Abschnitt ID = %0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[5]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -1551,6 +1549,7 @@ msgid "Section length"
 msgstr "Standardabschnittslänge"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[6]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[6]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -1569,7 +1568,7 @@ msgstr "Länge des Abschnitts mit allen Datenfeldern des Abschnitts"
 #, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[7]\\table:table-row[0]\\table:table-cell[0]\\text:p"
 msgid "Remote control request (Joystick %0:s)"
-msgstr "Fernbedienungsanfrage (Joystick %0:s)"
+msgstr "Fernbedienungsanfrage (Joystick%0:s)"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[7]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[7]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -1583,13 +1582,14 @@ msgstr "%0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[7]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[7]\\table:table-row[3]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s=%0:g Not requested%1:s = Default"
-msgstr "%1:g%0:s=%0:g Nicht angefordert, %1:s = Vorgabe"
+msgid "%0:s = Not requested%1:s = Default"
+msgstr "%0:s = Nicht angefordert %1:s = Standard"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[8]\table:table-row[0]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[8]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Joystick%0:s %1:g-X %0:g"
-msgstr "Steuerknüppel%0:s %1:g-X %0:g"
+msgid "Joystick%0:s - X"
+msgstr "Steuerknüppel%0:s – X"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[8]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[8]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -1640,7 +1640,7 @@ msgstr "(Standard-Antrieb)"
 #, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[10]\\table:table-row[0]\\table:table-cell[0]\\text:p"
 msgid "Remote control request (Joystick %0:s)"
-msgstr "Fernbedienungsanfrage (Joystick %0:s)"
+msgstr "Fernbedienungsanfrage (Joystick%0:s)"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[10]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[10]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -1654,8 +1654,8 @@ msgstr "%0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[10]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[10]\\table:table-row[3]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s=%0:g Not requested%1:s = Default"
-msgstr "%1:g%0:s=%0:g Nicht angefordert, %1:s = Vorgabe"
+msgid "%0:s = Not requested%1:s = Default"
+msgstr "%0:s = Nicht angefordert %1:s = Standard"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[11]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[11]\\table:table-row[0]\\table:table-cell[0]\\text:p"
@@ -1683,9 +1683,10 @@ msgid "(Default – No action)"
 msgstr "(Standard – Keine Aktion)"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[12]\table:table-row[0]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[12]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Joystick%0:s %1:g-Y %0:g"
-msgstr "Steuerknüppel%0:s %1: g-Y% 0: g"
+msgid "Joystick%0:s - Y"
+msgstr "Steuerknüppel%0:s – Y"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[12]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[12]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -1733,58 +1734,49 @@ msgid "Ignored for other than Omni type vehicles."
 msgstr "Ignoriert für andere Fahrzeuge des Typs Omni."
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[1]\text:p[0]\text:span
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[1]\\text:p[0]\\text:span"
-msgid "%1:g%0:s=%0:g Omni Front wheel steer"
-msgstr "%1:g%0:s=%0:g Omni Front Radlenkung"
+msgid "%0:s = Omni Front wheel steer"
+msgstr "%0:s = Omni Frontlenker"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[1]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[1]\\text:p"
-msgid "%1:g%0:s=%0:g Omni Front wheel steer"
-msgstr "%1:g%0:s=%0:g Omni Front Radlenkung"
+msgid "%0:s = Omni Front wheel steer"
+msgstr "%0:s = Omni Frontlenker"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[2]\text:p[0]\text:span
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[2]\\text:p[0]\\text:span"
-msgid "%1:g%0:s=%0:g Omni Mid wheel steer"
-msgstr "%1:g%0:s=%0:g Omni Mid Radlenkung"
+msgid "%0:s = Omni Mid wheel steer"
+msgstr "%0:s = Omni Mittelradlenker"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[2]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[2]\\text:p"
-msgid "%1:g%0:s=%0:g Omni Mid wheel steer"
-msgstr "%1:g%0:s=%0:g Omni Mid Radlenkung"
+msgid "%0:s = Omni Mid wheel steer"
+msgstr "%0:s = Omni Mittelradlenker"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[3]\text:p[0]\text:span
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[3]\\text:p[0]\\text:span"
-msgid "%1:g%0:s=%0:g Omni Rear wheel steer"
-msgstr "%1:g%0:s=%0:g Omni Rear Radlenkung"
+msgid "%0:s = Omni Rear wheel steer"
+msgstr "%0:s = Omni Hinterradlenken"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[3]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[3]\\text:p"
-msgid "%1:g%0:s=%0:g Omni Rear wheel steer"
-msgstr "%1:g%0:s=%0:g Omni Rear Radlenkung"
+msgid "%0:s = Omni Rear wheel steer"
+msgstr "%0:s = Omni Hinterradlenken"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[4]\text:p[0]\text:span
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[4]\\text:p[0]\\text:span"
-msgid "%1:g%0:s=%0:g Not used"
-msgstr "%1:g%0:s=%0:g"
+msgid "%0:s = Not used"
+msgstr "Bit%0:s – Nicht genutzt"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[4]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[4]\\text:p"
-msgid "%1:g%0:s=%0:g Not used"
-msgstr "%1:g%0:s=%0:g"
+msgid "%0:s = Not used"
+msgstr "Bit%0:s – Nicht genutzt"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[5]\text:p[0]\text:span
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[5]\\text:p[0]\\text:span"
-msgid "%1:g%0:s=%0:g Pivot steer"
-msgstr "%1:g%0:s=%0:g Pivot Lenker"
+msgid "%0:s = Pivot steer"
+msgstr "%0:s = Knicklenker"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[5]\text:p[1]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[5]\\text:p[1]\\text:span"
@@ -1792,34 +1784,29 @@ msgid ""
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[5]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[5]\\text:p"
-msgid "%1:g%0:s=%0:g Pivot steer"
-msgstr "%1:g%0:s=%0:g Pivot Lenker"
+msgid "%0:s = Pivot steer"
+msgstr "%0:s = Knicklenker"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[6]\text:p[0]\text:span
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[6]\\text:p[0]\\text:span"
-msgid "%1:g%0:s=%0:g Omni Parallel steer, wheeling Fwd"
-msgstr "%1:g%0:s=%0:g Omni Parallel Lenker, wheeling Fwd"
+msgid "%0:s = Omni Parallel steer, wheeling Fwd"
+msgstr "%0:s = Omni Parallellenker, vorwärts"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[6]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[6]\\text:p"
-msgid "%1:g%0:s=%0:g Omni Parallel steer, wheeling Fwd"
-msgstr "%1:g%0:s=%0:g Omni Parallel Lenker, wheeling Fwd"
+msgid "%0:s = Omni Parallel steer, wheeling Fwd"
+msgstr "%0:s = Omni Parallellenker, vorwärts"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[7]\text:p[0]\text:span
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[7]\\text:p[0]\\text:span"
-msgid "%1:g%0:s=%0:g Omni Parallel steer, wheeling Bwd"
-msgstr "%1:g%0:s=%0:g Omni Parallel Lenker, wheeling Bwd"
+msgid "%0:s = Omni Parallel steer, wheeling Bwd"
+msgstr "%0:s = Omni Parallellenker, rückwärts"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[7]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[7]\\text:p"
-msgid "%1:g%0:s=%0:g Omni Parallel steer, wheeling Bwd"
-msgstr "%1:g%0:s=%0:g Omni Parallel Lenker, wheeling Bwd"
+msgid "%0:s = Omni Parallel steer, wheeling Bwd"
+msgstr "%0:s = Omni Parallellenker, rückwärts"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[20]\text:h
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[20]\\text:h"
@@ -2053,10 +2040,9 @@ msgid "Comment"
 msgstr "Kommentar"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[44]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[44]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Section ID %1:g=%0:s%0:g"
-msgstr "Section ID%1:g=%0:s%0:g"
+msgid "Section ID = %0:s"
+msgstr "Abschnitt ID = %0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[44]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[44]\\table:table[5]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -2075,6 +2061,7 @@ msgid "Section length"
 msgstr "Standardabschnittslänge"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[44]\table:table[6]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[44]\\table:table[6]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -2115,6 +2102,7 @@ msgid "Error code %0:s"
 msgstr "Fehlercode %0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[44]\table:table[8]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[44]\\table:table[8]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -2210,6 +2198,7 @@ msgid "Error code %0:s"
 msgstr "Fehlercode %0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[44]\table:table[13]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[44]\\table:table[13]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -2355,6 +2344,7 @@ msgid "Warning code %0:s"
 msgstr "Warncode %0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[44]\table:table[20]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[44]\\table:table[20]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -2527,10 +2517,9 @@ msgid "Comment"
 msgstr "Kommentar"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[48]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[48]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Section ID %1:g=%0:s%0:g"
-msgstr "Section ID%1:g=%0:s%0:g"
+msgid "Section ID = %0:s"
+msgstr "Abschnitt ID = %0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[48]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[48]\\table:table[5]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -2549,6 +2538,7 @@ msgid "Section length"
 msgstr "Standardabschnittslänge"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[48]\table:table[6]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[48]\\table:table[6]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -2721,22 +2711,8 @@ msgstr "%0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[48]\table:table[14]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[48]\\table:table[14]\\table:table-row[3]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s=%0:g no errors, %1:g%1:s=%0:g general error state, %1:g%2:s=%0:g BMS communication error, %1:g%3:s=%0:g configuration error, %1:g%4:s=%0:g undervoltage, %1:g%5:s=%0:g overvoltage, %1:g%6:s=%0:g overcurrent, %1:g%7:s=%0:g overtemperature, %1:g%8:s=%0:g internal defect, %1:g%9:s=%0:g bad state of health, %10:s = faulty charger, %11:s = faulty contactor, %12:s = current sensor defect, %13:s = temperature sensor defect, >= %14:s unspecified errors (more definitions may be added later)"
-msgstr ""
-"%1:g%0:s=%0:g keine Fehler, \n"
-"%1:g%1:s=%0:g Allgemeiner Fehlerzustand, \n"
-"%1:g%2:s=%0:g BMS Kommunikationsfehler, \n"
-"%1:g%3:g%3:s=%0:g configuration error,\n"
-"%1:g%4:g%0:g underspannung,\n"
-"%1:g%5:s=%0:g overvoltage,\n"
-"%1:s1,3}} ,%1:g%7:s=0: = Übertemperatur,\n"
-"%1:g%8:s=%0:g interner Defekt,\n"
-"%1:g%9:s=%0:g bad state of health,\n"
-"% 10: s = defekt ladegerät,\n"
-"% 11: s = defekt contactor,\n"
-"% 12: s = aktueller Sensordefekt,\n"
-"% 13: s = Temperatursensordefekt,\n"
-" >=% 14: s unbestimmte Fehler (mehr Definitionen können später hinzugefügt werden)"
+msgid "%0:s = no errors, %1:s = general error state, %2:s = BMS communication error, %3:s = configuration error, %4:s = undervoltage, %5:s = overvoltage, %6:s = overcurrent, %7:s = overtemperature, %8:s = internal defect, %9:s = bad state of health, %10:s = faulty charger, %11:s = faulty contactor, %12:s = current sensor defect, %13:s = temperature sensor defect, >= %14:s unspecified errors (more definitions may be added later)"
+msgstr "%0:s = keine Fehler, %1:s = allgemeiner Fehlerzustand, %2:s = BMS-Kommunikationsfehler, %3:s = Konfigurationsfehler, %4:s = Unterspannung, %5:s = Überspannung, %6:s = Überstrom, %7:s = Übertemperatur, %8:s = interner Defekt, %9:s = schlechter Gesundheitszustand, %10:s = fehlerhaftes Ladegerät, %11:s = defekter Schütz, %12:s = aktueller Sensordefekt, %13:s = Temperatursensordefekt, >=%14:s nicht näher spezifizierte Fehler (weitere Definitionen können später hinzugefügt werden)"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[48]\table:table[15]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[48]\\table:table[15]\\table:table-row[0]\\table:table-cell[0]\\text:p"
@@ -2877,7 +2853,7 @@ msgstr "Aktualisierung Messwert Lenker-Antrieb Fahrzeug"
 #, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[53]\\text:p"
 msgid "The Motor control message is sent as a reply to the message Measurement update steer drive vehicle (Message ID %0:s)."
-msgstr "Die Motor-Steuermeldung wird als Antwort auf das Message-Update-Lenker-Fahrzeug gesendet (Message ID %0:s)."
+msgstr "Die Motor-Steuermeldung wird als Antwort auf das Message-Update-Lenker-Fahrzeug gesendet (Message ID%0:s)."
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[54]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[54]\\text:p"
@@ -2925,10 +2901,9 @@ msgid "Comment"
 msgstr "Kommentar"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s%0:g"
-msgstr "Protokollversion%1:g=%0:s%0:s%0:g"
+msgid "Protocol Version = %0:s"
+msgstr "Protokollversion = %0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[5]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -2961,6 +2936,7 @@ msgid "Message length"
 msgstr "Nachritenlänge"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[7]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[7]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -2981,6 +2957,7 @@ msgid "Message number"
 msgstr "Nachrichtennummer"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[8]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[8]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -3166,9 +3143,10 @@ msgid "Bit%0:s…bit %1:s Not used"
 msgstr "Bit%0:s ... Bit%1:s Nicht verwendet"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[57]\text:h
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[57]\\text:h"
-msgid "%0:s - Control actuators (Navitrol controls the vehicle)"
-msgstr "%0:s - Steuere Aktuatoren (Navitrol steuert das Fahrzeug)"
+msgid "%0:s %1:s Control actuators (Navitrol controls the vehicle)"
+msgstr "%0:s %1: s Control Aktoren (Navitrol steuert das Fahrzeug)"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[58]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[58]\\text:p"
@@ -3201,10 +3179,9 @@ msgid "Comment"
 msgstr "Kommentar"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s%0:g"
-msgstr "Protokollversion%1:g=%0:s%0:s%0:g"
+msgid "Protocol Version = %0:s"
+msgstr "Protokollversion = %0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[5]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -3242,6 +3219,7 @@ msgid "Message length = %0:s"
 msgstr "Nachrichtenlänge =%0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[7]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[7]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -3262,6 +3240,7 @@ msgid "Message number"
 msgstr "Nachrichtennummer"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[8]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[8]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -3430,7 +3409,7 @@ msgstr "%0:s - Navitrol Status"
 #, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[62]\\text:p[1]\\text:span"
 msgid "Supervisor status %0:s"
-msgstr "Aufsicht-Status %0:s"
+msgstr "Aufsicht-Status %0: s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[62]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[62]\\text:p"
@@ -3483,10 +3462,9 @@ msgid "Comment"
 msgstr "Kommentar"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s%0:g"
-msgstr "Protokollversion%1:g=%0:s%0:s%0:g"
+msgid "Protocol Version = %0:s"
+msgstr "Protokollversion = %0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[5]\\table:table-row[1]\\table:table-cell[0]\\text:p"
@@ -3519,9 +3497,10 @@ msgid "%0:s"
 msgstr "%0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[7]\table:table-row[0]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[7]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Message length %1:g=*%0:g"
-msgstr "Nachrichtenlänge %1:g=*%0:g"
+msgid "Message length = *"
+msgstr "Nachritenlänge"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[7]\table:table-row[0]\table:table-cell[1]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[7]\\table:table-row[0]\\table:table-cell[1]\\text:p"
@@ -3529,6 +3508,7 @@ msgid "Depends on what sections are included"
 msgstr "Hängt davon ab, welche Abschnitte enthalten sind"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[7]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[7]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -3549,6 +3529,7 @@ msgid "Default section length"
 msgstr "Standardabschnittslänge"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[8]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[8]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -3569,6 +3550,7 @@ msgid "State"
 msgstr "Zustand"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[9]\table:table-row[1]\table:table-cell[0]\text:p
+#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[9]\\table:table-row[1]\\table:table-cell[0]\\text:p"
 msgid "Unsigned Integer"
 msgstr "Ganzzahl ohne Vorzeichen"
@@ -3584,13 +3566,11 @@ msgid "Navitrol state"
 msgstr "Navitrol-Zustand"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[9]\table:table-row[3]\table:table-cell[1]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[9]\\table:table-row[3]\\table:table-cell[1]\\text:p"
 msgid "START_STATE = %0:s,"
 msgstr "START _ STATE = %0:s,"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[9]\table:table-row[3]\table:table-cell[2]\text:p
-#, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[9]\\table:table-row[3]\\table:table-cell[2]\\text:p"
 msgid "STANDBY_STATE = %0:s,"
 msgstr "STANDBY _ STATE = %0:s,"
@@ -3744,13 +3724,13 @@ msgstr "%0:s"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[15]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[15]\\table:table-row[3]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s=%0:g Failed"
-msgstr "%1:g%0:s=%0:g Versagt"
+msgid "%0:s = Failed"
+msgstr "%0:s = Fehlgesschlagen"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[15]\table:table-row[3]\table:table-cell[1]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[15]\\table:table-row[3]\\table:table-cell[1]\\text:p"
-msgid "%1:g%0:s=%0:g Succeeded"
-msgstr "%1:g%0:s=%0:g Erledigt"
+msgid "%0:s = Succeeded"
+msgstr "%0:s = erfolgreich"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[16]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[16]\\table:table-row[0]\\table:table-cell[0]\\text:p"
@@ -3771,7 +3751,7 @@ msgstr "%0:s"
 #, fuzzy
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[16]\\table:table-row[3]\\table:table-cell[0]\\text:p"
 msgid "Position confidence in percentage (%0:s - %1:s/%)"
-msgstr "Positionszusicherheit in Prozent ( %0:s-%1:s/%)"
+msgstr "Positionszusicherheit in Prozent (%0:s-% 1:s/%)"
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[17]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[17]\\table:table-row[0]\\table:table-cell[0]\\text:p"

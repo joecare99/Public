@@ -411,12 +411,12 @@ BEGIN
   FOR i := 1 TO length(Phr) DO
     IF not copyMode THEN
     BEGIN
-      IF (lLastCh = ' ') and charinset(copy(Phr, i, 1)[1],['A'..'Z','a'..'z']) and
+      IF (lLastCh = ' ') and charinset(copy(Phr, i, 1)[1],['A'..'Z','a'..'z','0'..'9']) and
         (copy(Phr + ' ', i + 1, 1)[1] = ' ') and
-        ((charinset(copy(Phr+'  ', i+2, 1)[1],['A'..'Z','a'..'z']) and
+        ((charinset(copy(Phr+'  ', i+2, 1)[1],['A'..'Z','a'..'z','0'..'9']) and
         (copy(Phr + '   ', i + 3, 1)[1] = ' ')) or
         ((copy(Phr + '  ', i + 2, 1)[1] = ' ') and
-        charinset(copy(Phr+'   ', i+3, 1)[1],['A'..'Z','a'..'z']) and
+        charinset(copy(Phr+'   ', i+3, 1)[1],['A'..'Z','a'..'z','0'..'9']) and
         (copy(Phr + '    ', i + 4, 1)[1] = ' '))) THEN
       BEGIN
         copyMode := True;

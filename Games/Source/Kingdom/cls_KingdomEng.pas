@@ -37,6 +37,7 @@ type
         FPopSum,
         FDeathSum:integer;
         function GetGameEnded: Boolean;
+        function getLandPerPopPerc: integer;
       public
         constructor Create;
         function BuySellLand(aValue:integer):boolean;
@@ -54,6 +55,10 @@ type
          Property LandPrice:integer read FCostOfLand ;
          PRoperty Area:integer read FArea;
          property Population:integer read FPopulation;
+         property Death:integer read FDeath;
+         property DeathSum:integer read FDeathSum;
+         property DeathPerc:integer read FPopSum;
+         property LandPerPopPerc:integer read getLandPerPopPerc;
          Property Storage:integer read FStorage;
          property LandInProd:integer read FLandInProduction;
          Property Distributed:integer read FDistributedFood;
@@ -70,6 +75,14 @@ uses unt_KingdomBase;
 function TKingdomEngine.GetGameEnded: Boolean;
 begin
   result := (FYearOfReighn > 10) or FExpelled ;
+end;
+
+function TKingdomEngine.getLandPerPopPerc: integer;
+begin
+  if FPopulation >0 then
+  result := (FArea* 100) div FPopulation
+  else
+   result := -1;// Ungültig
 end;
 
 constructor TKingdomEngine.Create;

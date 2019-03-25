@@ -35,6 +35,10 @@
       </element><element name="TKingdomEngine.FPopSum"><short>Durchschnittliche Todesrate in Prozent</short>
       </element><element name="TKingdomEngine.FDeathSum"><short>Absolute Summe der Todesfälle</short>
       </element><element name="TKingdomEngine"><short>Gameengine für Kingdom-Spiel. (Eine kleine Wirtschafts-Simulation)</short>
+      </element><element name="TKingdomEngine.Death"><short>Death: Anzahl der Todesfälle (durch Hunger)</short>
+      </element><element name="TKingdomEngine.DeathSum"><short>Summe aller Todesfälle</short>
+      </element><element name="TKingdomEngine.DeathPerc"><short>Sterblichkeit in Prozent</short>
+      </element><element name="TKingdomEngine.LandPerPopPerc"><short>Land pro Einwohner</short>
       </element>
     </module>
   </package>

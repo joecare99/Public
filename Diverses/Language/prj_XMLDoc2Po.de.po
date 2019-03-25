@@ -181,14 +181,14 @@ msgstr "ppManual"
 #, fuzzy
 #| msgid "05.06.2018"
 msgctxt "unt_cdate.adate"
-msgid "24.03.2019"
+msgid "25.03.2019"
 msgstr "05.06.2018"
 
 #: unt_cdate.cdate
 #, fuzzy
 #| msgid "05.06.2018"
 msgctxt "unt_cdate.cdate"
-msgid "24.03.2019"
+msgid "25.03.2019"
 msgstr "05.06.2018"
 
 #: unt_cdate.cname

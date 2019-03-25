@@ -46,7 +46,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s%0:g"
+msgid "Protocol Version = %0:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -246,17 +246,17 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[3]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s-%0:g manual mode"
+msgid "%0:s - manual mode"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[3]\table:table-cell[1]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[3]\\table:table-cell[1]\\text:p"
-msgid "%1:g%0:s-%0:g automatic mode"
+msgid "%0:s - automatic mode"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[13]\table:table-row[3]\table:table-cell[2]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[6]\\table:table[13]\\table:table-row[3]\\table:table-cell[2]\\text:p"
-msgid "%1:g%0:s-%0:g semi-automatic mode"
+msgid "%0:s - semi-automatic mode"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[6]\table:table[14]\table:table-row[0]\table:table-cell[0]\text:p
@@ -341,7 +341,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[7]\text:h
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[7]\\text:h"
-msgid "%0:s - Measurement update actuators (Navitrol controls the vehicle)"
+msgid "%0:s %1:s Measurement update actuators (Navitrol controls the vehicle)"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[8]\text:p
@@ -376,7 +376,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s%0:g"
+msgid "Protocol Version = %0:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -826,7 +826,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[10]\table:table[20]\table:table-row[3]\table:table-cell[2]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[10]\\table:table[20]\\table:table-row[3]\\table:table-cell[2]\\text:p"
-msgid "%1:g%0:s-%0:g load detected"
+msgid "%0:s - load detected"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[12]\text:h
@@ -891,7 +891,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[15]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s%0:g"
+msgid "Protocol Version = %0:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -926,7 +926,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[7]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[15]\\table:table[7]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Message length %1:g=*%0:g"
+msgid "Message length = *"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[7]\table:table-row[0]\table:table-cell[1]\text:p
@@ -1021,7 +1021,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[11]\table:table-row[2]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[15]\\table:table[11]\\table:table-row[2]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s*%0:g Number of sections"
+msgid "%0:s * Number of sections"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[15]\table:table[11]\table:table-row[3]\table:table-cell[0]\text:p
@@ -1076,7 +1076,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Section ID %1:g=%0:s%0:g"
+msgid "Section ID = %0:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -1416,7 +1416,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[23]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[17]\\table:table[23]\\table:table-row[3]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s=%0:g hold the machine, %1:g%1:s=%0:g release the machine"
+msgid "%0:s = hold the machine, %1:s = release the machine"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[17]\table:table[24]\table:table-row[1]\table:table-cell[0]\text:p
@@ -1501,7 +1501,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Section ID %1:g=%0:s%0:g"
+msgid "Section ID = %0:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -1551,12 +1551,12 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[7]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[7]\\table:table-row[3]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s=%0:g Not requested%1:s = Default"
+msgid "%0:s = Not requested%1:s = Default"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[8]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[8]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Joystick%0:s %1:g-X %0:g"
+msgid "Joystick%0:s - X"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[8]\table:table-row[1]\table:table-cell[0]\text:p
@@ -1621,7 +1621,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[10]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[10]\\table:table-row[3]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s=%0:g Not requested%1:s = Default"
+msgid "%0:s = Not requested%1:s = Default"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[11]\table:table-row[0]\table:table-cell[0]\text:p
@@ -1651,7 +1651,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[12]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[12]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Joystick%0:s %1:g-Y %0:g"
+msgid "Joystick%0:s - Y"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[12]\table:table-row[1]\table:table-cell[0]\text:p
@@ -1701,47 +1701,47 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[1]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[1]\\text:p[0]\\text:span"
-msgid "%1:g%0:s=%0:g Omni Front wheel steer"
+msgid "%0:s = Omni Front wheel steer"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[1]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[1]\\text:p"
-msgid "%1:g%0:s=%0:g Omni Front wheel steer"
+msgid "%0:s = Omni Front wheel steer"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[2]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[2]\\text:p[0]\\text:span"
-msgid "%1:g%0:s=%0:g Omni Mid wheel steer"
+msgid "%0:s = Omni Mid wheel steer"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[2]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[2]\\text:p"
-msgid "%1:g%0:s=%0:g Omni Mid wheel steer"
+msgid "%0:s = Omni Mid wheel steer"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[3]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[3]\\text:p[0]\\text:span"
-msgid "%1:g%0:s=%0:g Omni Rear wheel steer"
+msgid "%0:s = Omni Rear wheel steer"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[3]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[3]\\text:p"
-msgid "%1:g%0:s=%0:g Omni Rear wheel steer"
+msgid "%0:s = Omni Rear wheel steer"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[4]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[4]\\text:p[0]\\text:span"
-msgid "%1:g%0:s=%0:g Not used"
+msgid "%0:s = Not used"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[4]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[4]\\text:p"
-msgid "%1:g%0:s=%0:g Not used"
+msgid "%0:s = Not used"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[5]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[5]\\text:p[0]\\text:span"
-msgid "%1:g%0:s=%0:g Pivot steer"
+msgid "%0:s = Pivot steer"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[5]\text:p[1]\text:span
@@ -1751,27 +1751,27 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[5]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[5]\\text:p"
-msgid "%1:g%0:s=%0:g Pivot steer"
+msgid "%0:s = Pivot steer"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[6]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[6]\\text:p[0]\\text:span"
-msgid "%1:g%0:s=%0:g Omni Parallel steer, wheeling Fwd"
+msgid "%0:s = Omni Parallel steer, wheeling Fwd"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[6]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[6]\\text:p"
-msgid "%1:g%0:s=%0:g Omni Parallel steer, wheeling Fwd"
+msgid "%0:s = Omni Parallel steer, wheeling Fwd"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[7]\text:p[0]\text:span
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[7]\\text:p[0]\\text:span"
-msgid "%1:g%0:s=%0:g Omni Parallel steer, wheeling Bwd"
+msgid "%0:s = Omni Parallel steer, wheeling Bwd"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[19]\table:table[13]\table:table-row[3]\table:table-cell[7]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[19]\\table:table[13]\\table:table-row[3]\\table:table-cell[7]\\text:p"
-msgid "%1:g%0:s=%0:g Omni Parallel steer, wheeling Bwd"
+msgid "%0:s = Omni Parallel steer, wheeling Bwd"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[20]\text:h
@@ -2006,7 +2006,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[44]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[44]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Section ID %1:g=%0:s%0:g"
+msgid "Section ID = %0:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[44]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -2476,7 +2476,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[48]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[48]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Section ID %1:g=%0:s%0:g"
+msgid "Section ID = %0:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[48]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -2666,7 +2666,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[48]\table:table[14]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[48]\\table:table[14]\\table:table-row[3]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s=%0:g no errors, %1:g%1:s=%0:g general error state, %1:g%2:s=%0:g BMS communication error, %1:g%3:s=%0:g configuration error, %1:g%4:s=%0:g undervoltage, %1:g%5:s=%0:g overvoltage, %1:g%6:s=%0:g overcurrent, %1:g%7:s=%0:g overtemperature, %1:g%8:s=%0:g internal defect, %1:g%9:s=%0:g bad state of health, %10:s = faulty charger, %11:s = faulty contactor, %12:s = current sensor defect, %13:s = temperature sensor defect, >= %14:s unspecified errors (more definitions may be added later)"
+msgid "%0:s = no errors, %1:s = general error state, %2:s = BMS communication error, %3:s = configuration error, %4:s = undervoltage, %5:s = overvoltage, %6:s = overcurrent, %7:s = overtemperature, %8:s = internal defect, %9:s = bad state of health, %10:s = faulty charger, %11:s = faulty contactor, %12:s = current sensor defect, %13:s = temperature sensor defect, >= %14:s unspecified errors (more definitions may be added later)"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[48]\table:table[15]\table:table-row[0]\table:table-cell[0]\text:p
@@ -2856,7 +2856,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[56]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s%0:g"
+msgid "Protocol Version = %0:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[56]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -3096,7 +3096,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[57]\text:h
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[57]\\text:h"
-msgid "%0:s - Control actuators (Navitrol controls the vehicle)"
+msgid "%0:s %1:s Control actuators (Navitrol controls the vehicle)"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[58]\text:p
@@ -3131,7 +3131,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[60]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s%0:g"
+msgid "Protocol Version = %0:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[60]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -3411,7 +3411,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[5]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[5]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Protocol Version %1:g=%0:s%0:g"
+msgid "Protocol Version = %0:s"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[5]\table:table-row[1]\table:table-cell[0]\text:p
@@ -3446,7 +3446,7 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[7]\table:table-row[0]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[7]\\table:table-row[0]\\table:table-cell[0]\\text:p"
-msgid "Message length %1:g=*%0:g"
+msgid "Message length = *"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[7]\table:table-row[0]\table:table-cell[1]\text:p
@@ -3666,12 +3666,12 @@ msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[15]\table:table-row[3]\table:table-cell[0]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[15]\\table:table-row[3]\\table:table-cell[0]\\text:p"
-msgid "%1:g%0:s=%0:g Failed"
+msgid "%0:s = Failed"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[15]\table:table-row[3]\table:table-cell[1]\text:p
 msgctxt "[0]\\office:document-content[3]\\office:body[0]\\office:text[64]\\table:table[15]\\table:table-row[3]\\table:table-cell[1]\\text:p"
-msgid "%1:g%0:s=%0:g Succeeded"
+msgid "%0:s = Succeeded"
 msgstr ""
 
 #: [0]\office:document-content[3]\office:body[0]\office:text[64]\table:table[16]\table:table-row[0]\table:table-cell[0]\text:p
