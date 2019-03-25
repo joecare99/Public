@@ -9,78 +9,78 @@ msgstr ""
 "Language-Team: J. Care\n"
 "MIME-Version: 1.0\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr_FR\n"
+"Language: es_ES\n"
 "X-Generator: Poedit 2.2.1\n"
 
 #: tfrmkingdommain.btnbuy.caption
 msgid "Kaufen"
-msgstr "Acheter"
+msgstr "Comprar"
 
 #: tfrmkingdommain.btndistrfood.caption
 msgid "Verteilen"
-msgstr "Distribuer"
+msgstr "Distribuir"
 
 #: tfrmkingdommain.btnnew.caption
 msgid "Neues Spiel"
-msgstr "Nouveau jeu"
+msgstr "Nuevo juego"
 
 #: tfrmkingdommain.btnnext.caption
 msgid "Nächste Runde"
-msgstr "Prochain round"
+msgstr "Próxima ronda"
 
 #: tfrmkingdommain.btnproduce.caption
 msgid "Bewirtschaften"
-msgstr "Gérer"
+msgstr "Administrar"
 
 #: tfrmkingdommain.btnsell.caption
 msgid "Verkaufen"
-msgstr "Vendre"
+msgstr "Vender"
 
 #: tfrmkingdommain.caption
 msgid "Kingdom: "
-msgstr "Royaume: "
+msgstr "reino:"
 
 #: tfrmkingdommain.edtamountofland.hint
 msgctxt "tfrmkingdommain.edtamountofland.hint"
 msgid "Menge an Land"
-msgstr "Montant sur la terre"
+msgstr "Monto en tierra"
 
 #: tfrmkingdommain.edtamountofland2.hint
 msgctxt "tfrmkingdommain.edtamountofland2.hint"
 msgid "Menge an Land"
-msgstr "Montant sur la terre"
+msgstr "Monto en tierra"
 
 #: tfrmkingdommain.edtarea.editlabel.caption
 msgid "Land:"
-msgstr "Terrain:"
+msgstr "Tierra:"
 
 #: tfrmkingdommain.edtarea.text
 msgid "<Land>"
-msgstr "<Terrain>"
+msgstr "<Tierra>"
 
 #: tfrmkingdommain.edtpopulation.editlabel.caption
 msgid "Bevölkerung:"
-msgstr "Population:"
+msgstr "Población:"
 
 #: tfrmkingdommain.edtpopulation.text
 msgid "<Bevölkerung>"
-msgstr "<Population>"
+msgstr "<Población>"
 
 #: tfrmkingdommain.edtpriceofland.editlabel.caption
 msgid "Landpreis:"
-msgstr "Prix du terrain:"
+msgstr "Precio de la tierra:"
 
 #: tfrmkingdommain.edtpriceofland.text
 msgid "<LandPreis>"
-msgstr "<Prix du terrain>"
+msgstr "<Precio de la tierra>"
 
 #: tfrmkingdommain.edtstorage.editlabel.caption
 msgid "Speicher:"
-msgstr "Entrepôts:"
+msgstr "Almacenes:"
 
 #: tfrmkingdommain.edtstorage.text
 msgid "<Speicher>"
-msgstr "<Entrepôts>"
+msgstr "<Almacenes>"
 
 #: tfrmkingdommain.label1.caption
 msgid "Label1"
@@ -88,36 +88,36 @@ msgstr ""
 
 #: unt_kingdombase.rsadress
 msgid "Hamurabi, ich habe Dir folgendes zu berichten:"
-msgstr "Hamurabi, j'ai ce qui suit à te dire:"
+msgstr "Hamurabi, tengo lo siguiente que decirte:"
 
 #: unt_kingdombase.rscostofland
 msgid "Land wird derzeit für %d Büschel Getreide gehandelt."
-msgstr "Les terres sont actuellement échangées contre %d touffes de grains."
+msgstr "La tierra es comerciada actualmente por %d Tuft de cereales."
 
 #: unt_kingdombase.rseighth
 msgctxt "unt_kingdombase.rseighth"
 msgid "achte"
-msgstr "huitieme"
+msgstr "Octavo"
 
 #: unt_kingdombase.rseleventh
 msgid "elfte"
-msgstr "onzième"
+msgstr "Undécimo"
 
 #: unt_kingdombase.rsevalaverg
 msgid "Es könnte besser für Dich aussehen. Laut neuster Umfrage wollen Dich %d Leute absetzen!!!"
-msgstr "Ça pourrait vous sembler mieux. Selon le dernier sondage, %d des personnes veulent vous déposer!!!"
+msgstr "Podría lucir mejor para ti. De acuerdo con la última encuesta,%d de la gente quiere dejarlo!!!"
 
 #: unt_kingdombase.rsevalbad
 msgid "Du bist in Ungnade gefallen und auf eine einsame Insel verbannt worden."
-msgstr "Vous êtes tombé hors de la faveur et a été relégué à une île déserte."
+msgstr "Has caído en desgracia y has sido relegado a una isla desierta."
 
 #: unt_kingdombase.rsevalgood
 msgid "Großartig!!! Du kannst jederzeit über Sumeria herrschen; Außerdem fordern die Leute deinen Kopf, wenn Du nicht bleibst"
-msgstr "génial!!! Vous pouvez régner sur Sumeria à tout moment; De plus, les gens exigent votre tête si vous ne restez pas"
+msgstr "¡¡¡Gran!!! Puedes gobernar sobre sumeria en cualquier momento; Además, la gente demanda tu cabeza si no te quedas"
 
 #: unt_kingdombase.rsevalpoor
 msgid "Du hast geherrscht wie ein Ajatollah!!! Die meisten Deiner Untertanen werden bei Deiner Abdankung tanzen"
-msgstr "Tu as régné comme un ayatollah!!! La plupart de vos sujets danseront à votre abdication"
+msgstr "Gobernó como un ayatolá!!! La mayoría de sus súbditos bailarán en su abdicación"
 
 #: unt_kingdombase.rsexpelled
 msgid ""
@@ -125,21 +125,21 @@ msgid ""
 "Dadurch hast Du einen Volksaufstand ausgelöst.\n"
 "Du bist gestürzt und aus dem Land gejagt worden !!!\n"
 msgstr ""
-"En raison de votre règne misérable, %d personnes sont mortes en un an.\n"
-"Vous avez donc suscité un soulèvement populaire.\n"
-"Vous êté renversé et avez été chassé du pays !!!\n"
+"Debido a su regla Misserable, %d la gente ha muerto en un año.\n"
+"Has sido derrocado\n"
+"y expulsado del país!!!\n"
 
 #: unt_kingdombase.rsfifth
 msgid "fünfte"
-msgstr "cinquième"
+msgstr "Quinto"
 
 #: unt_kingdombase.rsfirst
 msgid "erste"
-msgstr "première"
+msgstr "Primero"
 
 #: unt_kingdombase.rsfourth
 msgid "vierte"
-msgstr "quatrième"
+msgstr "Cuarto"
 
 #: unt_kingdombase.rsgamedescription
 msgid ""
@@ -150,97 +150,97 @@ msgid ""
 "Jedes Jahr müssen Sie Ihre Entscheidungen überdenken und ausführen.\n"
 "Bedenke, zur Ernährung braucht jeder Bewohner pro Jahr 20 Büschel Getreide, und die Bewirtschaftung von 2 Tagwerk Land kostet 1 Büschel Getreide.\n"
 msgstr ""
-"C'est le royaume de Sumeria et vous avez été élu souverain pour 10 ans.\n"
+"Este es el Reino de sumeria, y usted fue elegido gobernante durante 10 años.\n"
 "\n"
-"Leur règne détermine la vie et la mort de centaines de leurs sujets. Leurs capacités dictatoriales sont testées à la fin de la période de office, après 10 ans.\n"
+"Su regla decide las vidas y muertes de cientos de sus súbditos. Sus habilidades dictatoriales se probarán al final del período de mandato después de 10 años.\n"
 "\n"
-"Chaque année, vous devez repenser et exécuter vos décisions.\n"
-"Rappelez-vous que chaque habitant a besoin de 20 mottes de céréales par an et que la culture de deux acres de terre coûte une motte de céréales.\n"
+"Cada año tienes que reconsiderar y ejecutar tus decisiones.\n"
+"Recuerde, para alimentos, cada residente necesita 20 mechones de grano por año, y la gestión de 2 acres de tierra de la planta cuesta 1 Tuft de grano.\n"
 
 #: unt_kingdombase.rsnineth
 msgid "neunte"
-msgstr "neuvième"
+msgstr "Noveno"
 
 #: unt_kingdombase.rsnodistr
 msgid ""
 "Hamurabi, die Leute werden sterben, \n"
 "Du mußt ihnen Getreide geben\n"
 msgstr ""
-"Hamurabi, les gens vont mourir, \n"
-"tu dois leur donner du grain\n"
+"Hamurabi, la gente va a morir,\n"
+"tienes que darles grano\n"
 
 #: unt_kingdombase.rsnoprod
 msgid "Hamurabi, bedenke, daß Du etwas anbauen mußt, sonst bricht eine große  Hungersnot aus..."
-msgstr "Hamurabi, rappelez-vous que vous devez cultiver quelque chose, sinon une grande famine va éclater..."
+msgstr "Hamurabi, recuerda que tienes que cultivar algo, de lo contrario una gran hambruna se romperá..."
 
 #: unt_kingdombase.rsnotenoughland
 msgid "Hamurabi, leider hast Du nur %d Tagwerk Land"
-msgstr "Hamurabi, malheureusement, vous avez seulement %d acres de terré"
+msgstr "Hamurabi, desafortunadamente sólo tienes %d acres de tierra"
 
 #: unt_kingdombase.rsnotenoughpeople
 msgid ""
 "Eine Person kann nur 10 Tagwerk bewirtschaften, Hamurabi.\n"
 "Deine %d Untertanen reichen dafür nicht aus.\n"
 msgstr ""
-"Une personne ne peut gérer que 10 jours de travail, Hamurabi.\n"
-"Vos %d sujets ne suffisent pas pour cela.\n"
+"Una persona puede manejar solo 10 días de trabajo, Hamurabi.\n"
+"Sus temas %d no son suficientes para esto.\n"
 
 #: unt_kingdombase.rsnotenoughres
 msgid ""
 "Hamurabi, denke einmal genau nach! \n"
 "Du hast doch nur %d Büschel Getreide\n"
 msgstr ""
-"Hamurabi, réfléchis attentivement! \n"
-"Vous n'avez que %d céréales Tuft\n"
+"¡ Hamurabi, piensa con cuidado! \n"
+"Sólo tienes %d Tuft cereal\n"
 
 #: unt_kingdombase.rsnotenoughres2
 msgid "Hamurabi, Du hast nicht genug Resorcen um soviel Land bebauen zu können, denke einmal nach..."
-msgstr "Hamurabi, vous n'avez pas assez de Résorces pour cultiver tant de terres, pensez..."
+msgstr "Hamurabi, no tienes suficientes Resorces para cultivar tanta tierra, piensa..."
 
 #: unt_kingdombase.rsok
 msgid "Erledigt ..."
-msgstr "Fait ..."
+msgstr "Hecho..."
 
 #: unt_kingdombase.rsplague
 msgid "Eine schreckliche Plage hat dein Land heimgesucht und die Hälfte der Bevölkerung dahingerafft..."
-msgstr "Un terrible fléau a frappé votre pays et tué la moitié de la population ..."
+msgstr "Una plaga terrible ha plagado A su país, matando A la mitad de la población..."
 
 #: unt_kingdombase.rsresultland
 msgid "Der Landbesitz änderte sich von Anfangs 10 Tagwerk pro Person auf durchschnittlich %d Tagwerk."
-msgstr "La propriété foncière a changé du début de 10 jours par personne à une moyenne de %d de acres."
+msgstr "Propiedad de la tierra cambió de principio de 10 días por persona a un promedio de %d día de trabajo."
 
 #: unt_kingdombase.rsresultpeople
 msgid "In den 10 Jahren Deiner Herrschaft sind jährlich durchschnittlich %d%% der Bevölkerung durch Hunger gestorben. Ingesamt waren das %d Leute."
-msgstr "Dans les 10 ans de votre règle, une moyenne de %d%% de la population est décédée chaque année à la suite de la faim. Globalement, c'était %d personnes."
+msgstr "En los 10 años de su gobierno, un promedio de %d%% de la población ha muerto cada año como resultado del hambre. En general, eso fue %d personas."
 
 #: unt_kingdombase.rssecond
 msgid "zweite"
-msgstr "deuxième"
+msgstr "Segundo"
 
 #: unt_kingdombase.rsseventh
 msgid "siebente"
-msgstr "septième"
+msgstr "Séptimo"
 
 #: unt_kingdombase.rssixth
 msgid "sechste"
-msgstr "sixième"
+msgstr "Sexto"
 
 #: unt_kingdombase.rsstorage
 msgid ""
 "Die Stadt zählt nun %d Einwohner. Du besitzt jetzt %d Tagwerk Land, von denen pro Tagwerk %d Büschel Getreide geernted wurden.\n"
 "Die Ratten frassen %d Büschel, du hast %d Büschel in deine Lagerhäusern.\n"
 msgstr ""
-"La ville compte maintenant %d habitants. Vous possédez maintenant %d acres de terre à partir de laquelle %d touffes de grains ont été récoltées.\n"
-"Les rats mangent %d touffes, vous avez %d touffes dans vos entrepôts.\n"
+"La ciudad tiene ahora %d habitantes. Ahora usted posee %d acres de tierra, de los cuales %d los Tufts de cereales han sido peados por planta de día.\n"
+"Las ratas Brew %d Tufts, usted tiene %d Tufts en sus almacenes.\n"
 
 #: unt_kingdombase.rstenth
 msgid "zehnte"
-msgstr "dixième"
+msgstr "Décimo"
 
 #: unt_kingdombase.rsthird
 msgid "dritte"
-msgstr "troisième"
+msgstr "Tercero"
 
 #: unt_kingdombase.rsyearofreign
 msgid "Dies ist das %s Jahr deiner Regentschaft sind %d Leute gestorben; %d Leute sind nach Sumeria zugezogen."
-msgstr "C'est l'année %s de votre règne, %d personnes sont décédées; %d personnes ont déménagé en Sumeria."
+msgstr "Este es el año %s de vuestro reinado, %d la gente ha muerto; %d la gente se mudó a sumeria."

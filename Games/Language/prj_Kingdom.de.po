@@ -14,77 +14,77 @@ msgstr ""
 
 #: tfrmkingdommain.btnbuy.caption
 msgid "Kaufen"
-msgstr ""
+msgstr "Kaufen"
 
 #: tfrmkingdommain.btndistrfood.caption
 msgid "Verteilen"
-msgstr ""
+msgstr "Verteilen"
 
 #: tfrmkingdommain.btnnew.caption
 msgid "Neues Spiel"
-msgstr ""
+msgstr "Neues Spiel"
 
 #: tfrmkingdommain.btnnext.caption
 msgid "Nächste Runde"
-msgstr ""
+msgstr "Nächste Runde"
 
 #: tfrmkingdommain.btnproduce.caption
 msgid "Bewirtschaften"
-msgstr ""
+msgstr "Bewirtschaften"
 
 #: tfrmkingdommain.btnsell.caption
 msgid "Verkaufen"
-msgstr ""
+msgstr "Verkaufen"
 
 #: tfrmkingdommain.caption
 msgid "Kingdom: "
-msgstr ""
+msgstr "Kingdom: "
 
 #: tfrmkingdommain.edtamountofland.hint
 msgctxt "tfrmkingdommain.edtamountofland.hint"
 msgid "Menge an Land"
-msgstr ""
+msgstr "Menge an Land"
 
 #: tfrmkingdommain.edtamountofland2.hint
 msgctxt "tfrmkingdommain.edtamountofland2.hint"
 msgid "Menge an Land"
-msgstr ""
+msgstr "Menge an Land"
 
 #: tfrmkingdommain.edtarea.editlabel.caption
 msgid "Land:"
-msgstr ""
+msgstr "Land:"
 
 #: tfrmkingdommain.edtarea.text
 msgid "<Land>"
-msgstr ""
+msgstr "<Land>"
 
 #: tfrmkingdommain.edtpopulation.editlabel.caption
 msgid "Bevölkerung:"
-msgstr ""
+msgstr "Bevölkerung:"
 
 #: tfrmkingdommain.edtpopulation.text
 msgid "<Bevölkerung>"
-msgstr ""
+msgstr "<Bevölkerung>"
 
 #: tfrmkingdommain.edtpriceofland.editlabel.caption
 msgid "Landpreis:"
-msgstr ""
+msgstr "Landpreis:"
 
 #: tfrmkingdommain.edtpriceofland.text
 msgid "<LandPreis>"
-msgstr ""
+msgstr "<LandPreis>"
 
 #: tfrmkingdommain.edtstorage.editlabel.caption
 msgid "Speicher:"
-msgstr ""
+msgstr "Speicher:"
 
 #: tfrmkingdommain.edtstorage.text
 msgid "<Speicher>"
-msgstr ""
+msgstr "<Speicher>"
 
 #: tfrmkingdommain.label1.caption
 msgid "Label1"
-msgstr ""
+msgstr "Label1"
 
 #: unt_kingdombase.rsadress
 msgid "Hamurabi, ich habe Dir folgendes zu berichten:"
@@ -102,6 +102,22 @@ msgstr "achte"
 #: unt_kingdombase.rseleventh
 msgid "elfte"
 msgstr "elfte"
+
+#: unt_kingdombase.rsevalaverg
+msgid "Es könnte besser für Dich aussehen. Laut neuster Umfrage wollen Dich %d Leute absetzen!!!"
+msgstr "Es könnte besser für Dich aussehen. Laut neuster Umfrage wollen Dich %d Leute absetzen!!!"
+
+#: unt_kingdombase.rsevalbad
+msgid "Du bist in Ungnade gefallen und auf eine einsame Insel verbannt worden."
+msgstr "Du bist in Ungnade gefallen und auf eine einsame Insel verbannt worden."
+
+#: unt_kingdombase.rsevalgood
+msgid "Großartig!!! Du kannst jederzeit über Sumeria herrschen; Außerdem fordern die Leute deinen Kopf, wenn Du nicht bleibst"
+msgstr "Großartig!!! Du kannst jederzeit über Sumeria herrschen; Außerdem fordern die Leute deinen Kopf, wenn Du nicht bleibst"
+
+#: unt_kingdombase.rsevalpoor
+msgid "Du hast geherrscht wie ein Ajatollah!!! Die meisten Deiner Untertanen werden bei Deiner Abdankung tanzen"
+msgstr "Du hast geherrscht wie ein Ajatollah!!! Die meisten Deiner Untertanen werden bei Deiner Abdankung tanzen"
 
 #: unt_kingdombase.rsexpelled
 msgid ""
@@ -145,6 +161,42 @@ msgstr ""
 msgid "neunte"
 msgstr "neunte"
 
+#: unt_kingdombase.rsnodistr
+msgid ""
+"Hamurabi, die Leute werden sterben, \n"
+"Du mußt ihnen Getreide geben\n"
+msgstr ""
+"Hamurabi, die Leute werden sterben, \n"
+"Du mußt ihnen Getreide geben\n"
+
+#: unt_kingdombase.rsnoprod
+msgid "Hamurabi, bedenke, daß Du etwas anbauen mußt, sonst bricht eine große  Hungersnot aus..."
+msgstr "Hamurabi, bedenke, daß Du etwas anbauen mußt, sonst bricht eine große  Hungersnot aus..."
+
+#: unt_kingdombase.rsnotenoughland
+msgid "Hamurabi, leider hast Du nur %d Tagwerk Land"
+msgstr "Hamurabi, leider hast Du nur %d Tagwerk Land"
+
+#: unt_kingdombase.rsnotenoughpeople
+msgid ""
+"Eine Person kann nur 10 Tagwerk bewirtschaften, Hamurabi.\n"
+"Deine %d Untertanen reichen dafür nicht aus.\n"
+msgstr ""
+"Eine Person kann nur 10 Tagwerk bewirtschaften, Hamurabi.\n"
+"Deine %d Untertanen reichen dafür nicht aus.\n"
+
+#: unt_kingdombase.rsnotenoughres
+msgid ""
+"Hamurabi, denke einmal genau nach! \n"
+"Du hast doch nur %d Büschel Getreide\n"
+msgstr ""
+"Hamurabi, denke einmal genau nach! \n"
+"Du hast doch nur %d Büschel Getreide\n"
+
+#: unt_kingdombase.rsnotenoughres2
+msgid "Hamurabi, Du hast nicht genug Resorcen um soviel Land bebauen zu können, denke einmal nach..."
+msgstr "Hamurabi, Du hast nicht genug Resorcen um soviel Land bebauen zu können, denke einmal nach..."
+
 #: unt_kingdombase.rsok
 msgid "Erledigt ..."
 msgstr "Erledigt ..."
@@ -152,6 +204,14 @@ msgstr "Erledigt ..."
 #: unt_kingdombase.rsplague
 msgid "Eine schreckliche Plage hat dein Land heimgesucht und die Hälfte der Bevölkerung dahingerafft..."
 msgstr "Eine schreckliche Plage hat dein Land heimgesucht und die Hälfte der Bevölkerung dahingerafft..."
+
+#: unt_kingdombase.rsresultland
+msgid "Der Landbesitz änderte sich von Anfangs 10 Tagwerk pro Person auf durchschnittlich %d Tagwerk."
+msgstr "Der Landbesitz änderte sich von Anfangs 10 Tagwerk pro Person auf durchschnittlich %d Tagwerk."
+
+#: unt_kingdombase.rsresultpeople
+msgid "In den 10 Jahren Deiner Herrschaft sind jährlich durchschnittlich %d%% der Bevölkerung durch Hunger gestorben. Ingesamt waren das %d Leute."
+msgstr "In den 10 Jahren Deiner Herrschaft sind jährlich durchschnittlich %d%% der Bevölkerung durch Hunger gestorben. Ingesamt waren das %d Leute."
 
 #: unt_kingdombase.rssecond
 msgid "zweite"
