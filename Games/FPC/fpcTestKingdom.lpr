@@ -3,7 +3,8 @@ program fpcTestKingdom;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, tst_KingdomEng, cls_KingdomEng, unt_KingdomBase;
+  Interfaces, Forms, GuiTestRunner, tst_KingdomEng, cls_KingdomEng,
+  unt_KingdomBase, tst_KingdomFrm, frm_KingdomMain;
 
 {$R *.res}
 

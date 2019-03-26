@@ -1,14 +1,15 @@
 object frmKingdomMain: TfrmKingdomMain
-  Left = 667
+  Left = 0
   Height = 979
-  Top = 37
+  Top = 0
   Width = 1668
   Caption = 'Kingdom: '
   ClientHeight = 979
   ClientWidth = 1668
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnShow = FormShow
-  LCLVersion = '2.0.0.4'
+  Position = poScreenCenter
   object btnBuy: TButton
     Left = 492
     Height = 57

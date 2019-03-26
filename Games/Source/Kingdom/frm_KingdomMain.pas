@@ -40,11 +40,14 @@ type
     procedure btnProduceClick(Sender: TObject);
     procedure btnSellClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
   private
      FKingdom:TKingdomEngine;
      Procedure DisplayMessage(Msg:string;Clear:boolean=false);
      Procedure UpdateValues;
+  protected
+     property Kingdom:TKingdomEngine read FKingdom;
   public
 
   end;
@@ -118,6 +121,11 @@ begin
   FKingdom:=TKingdomEngine.Create;
 end;
 
+procedure TfrmKingdomMain.FormDestroy(Sender: TObject);
+begin
+  freeandnil(FKingdom);
+end;
+
 procedure TfrmKingdomMain.FormShow(Sender: TObject);
 begin
   DisplayMessage(FKingdom.GameDescription,True);
@@ -140,6 +148,7 @@ begin
   edtPriceOfLand.Text := inttostr(FKingdom.LandPrice);
 // HintLabel
   lMaxProd:=FKingdom.Area;
+  edtDistrFood.MinValue:=-FKingdom.Distributed;
   if FKingdom.Population*10<lMaxProd then lMaxProd:=FKingdom.Population*10;
 
   Label1.Caption:=

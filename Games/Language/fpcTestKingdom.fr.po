@@ -11,6 +11,80 @@ msgstr ""
 "Language: fr\n"
 "X-Generator: Poedit 2.2.1\n"
 
+#: tfrmkingdommain.btnbuy.caption
+msgid "Kaufen"
+msgstr ""
+
+#: tfrmkingdommain.btndistrfood.caption
+msgid "Verteilen"
+msgstr ""
+
+#: tfrmkingdommain.btnnew.caption
+msgid "Neues Spiel"
+msgstr ""
+
+#: tfrmkingdommain.btnnext.caption
+msgid "Nächste Runde"
+msgstr ""
+
+#: tfrmkingdommain.btnproduce.caption
+msgid "Bewirtschaften"
+msgstr ""
+
+#: tfrmkingdommain.btnsell.caption
+msgid "Verkaufen"
+msgstr ""
+
+#: tfrmkingdommain.caption
+msgid "Kingdom: "
+msgstr ""
+
+#: tfrmkingdommain.edtamountofland.hint
+msgctxt "tfrmkingdommain.edtamountofland.hint"
+msgid "Menge an Land"
+msgstr ""
+
+#: tfrmkingdommain.edtamountofland2.hint
+msgctxt "tfrmkingdommain.edtamountofland2.hint"
+msgid "Menge an Land"
+msgstr ""
+
+#: tfrmkingdommain.edtarea.editlabel.caption
+msgid "Land:"
+msgstr ""
+
+#: tfrmkingdommain.edtarea.text
+msgid "<Land>"
+msgstr ""
+
+#: tfrmkingdommain.edtpopulation.editlabel.caption
+msgid "Bevölkerung:"
+msgstr ""
+
+#: tfrmkingdommain.edtpopulation.text
+msgid "<Bevölkerung>"
+msgstr ""
+
+#: tfrmkingdommain.edtpriceofland.editlabel.caption
+msgid "Landpreis:"
+msgstr ""
+
+#: tfrmkingdommain.edtpriceofland.text
+msgid "<LandPreis>"
+msgstr ""
+
+#: tfrmkingdommain.edtstorage.editlabel.caption
+msgid "Speicher:"
+msgstr ""
+
+#: tfrmkingdommain.edtstorage.text
+msgid "<Speicher>"
+msgstr ""
+
+#: tfrmkingdommain.label1.caption
+msgid "Label1"
+msgstr ""
+
 #: unt_kingdombase.rsadress
 msgid "Hamurabi, ich habe Dir folgendes zu berichten:"
 msgstr "Hamurabi, j'ai ce qui suit à te dire:"
@@ -168,3 +242,4 @@ msgstr "troisième"
 #: unt_kingdombase.rsyearofreign
 msgid "Dies ist das %s Jahr deiner Regentschaft sind %d Leute gestorben; %d Leute sind nach Sumeria zugezogen."
 msgstr "C'est l'année %s de votre règne, %d personnes sont décédées; %d personnes ont déménagé en Sumeria."
+
