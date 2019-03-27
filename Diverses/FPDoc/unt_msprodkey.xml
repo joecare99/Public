@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Prj_MSProdKey"><module name="unt_MSProdKey"><element name="Usage"><short>Prints usage for this program.</short>
+      </element><element name="strip"><short>Strips the dashes from a product key after verifying the product key length. </short>
+      </element><element name="translatealpha"><short>Translates a product key character to its base24 equivalent value. </short>
+      </element><element name="Decode"><short>Decodes a product key into its binary form</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
