@@ -1,8 +1,52 @@
 object Form1: TForm1
   Left = 337
-  Height = 240
+  Height = 479
   Top = 250
-  Width = 320
+  Width = 1045
   Caption = 'Form1'
-  LCLVersion = '2.0.0.4'
+  ClientHeight = 479
+  ClientWidth = 1045
+  object Memo1: TMemo
+    Left = 9
+    Height = 357
+    Top = 29
+    Width = 364
+    Lines.Strings = (
+      'Memo1'
+    )
+    TabOrder = 0
+  end
+  object ListBox1: TListBox
+    Left = 413
+    Height = 357
+    Top = 26
+    Width = 267
+    ItemHeight = 0
+    TabOrder = 1
+  end
+  object ListBox2: TListBox
+    Left = 697
+    Height = 355
+    Top = 26
+    Width = 108
+    ItemHeight = 0
+    TabOrder = 2
+  end
+  object ListBox3: TListBox
+    Left = 821
+    Height = 350
+    Top = 30
+    Width = 203
+    ItemHeight = 0
+    TabOrder = 3
+  end
+  object Button1: TButton
+    Left = 377
+    Height = 79
+    Top = 171
+    Width = 30
+    Caption = 'Button1'
+    OnClick = Button1Click
+    TabOrder = 4
+  end
 end

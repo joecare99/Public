@@ -3,6 +3,23 @@
       </element><element name="strip"><short>Strips the dashes from a product key after verifying the product key length. </short>
       </element><element name="translatealpha"><short>Translates a product key character to its base24 equivalent value. </short>
       </element><element name="Decode"><short>Decodes a product key into its binary form</short>
+      </element><element name="VerifyCrc"><short>Verifies the built-in checksum for newer (Windows 8 and above) product keys.</short>
+      </element><element name="crctable"><short>Table for ISO/IEC 8802-3:1996 aka POSIX 1003.2 cksum</short>
+      </element><element name="printcomposite"><short>Prints the composite number for newer keys (starting with Windows 8), i.e.</short>
+      </element><element name="Main"><short>Main Procedure (Console)</short><descr> mpkdec decodes Microsoft product keys into their binary form and prints the
+ decoded binary key as hexadecimal.
+
+  Keys used in newer versions of Windows starting with Windows 8, i.e. those
+  containing an N anywhere in them, will also have their built-in checksum
+  verified.  An error is printed to stderr if the checksum mismatches.
+
+  The output for keys in the era of Windows Vista and 7 will be garbage.  This
+  is because the keys have additional obfuscation.
+
+  It will read and display the composite number for keys containing an N.
+  This is not possible for older keys because the composite position varies
+  wildly.
+</descr>
       </element>
     </module>
   </package>
