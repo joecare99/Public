@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="21">
+    <Targets Count="23">
       <Target0 FileName="FPC\Clrscr.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="Default"/>
@@ -115,6 +115,14 @@
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target20>
+      <Target21 FileName="FPC\Prj_MSProdKey.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target21>
+      <Target22 FileName="FPC\Prj_MSProdKey2.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target22>
     </Targets>
   </ProjectGroup>
 </CONFIG>
