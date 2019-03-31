@@ -369,7 +369,7 @@ begin
    CheckEquals(0, FKingdom.Death, '[6] Death');
    CheckEquals(5, FKingdom.DeathSum, '[6] DeathSum');
    CheckEquals(0, FKingdom.DeathPerc, '[6] DeathPerc');
-   CheckEquals(28887, FKingdom.Storage, '[6] Storage');
+   CheckEquals(28890, FKingdom.Storage, '[6] Storage');
    CheckEquals(0, FKingdom.LandInProd, '[6] LandInProd');
    CheckEquals(0, FKingdom.Distributed, '[6] Distributed');
    CheckEquals(16, FKingdom.LandPrice, '[6] LandPrice');
@@ -388,7 +388,7 @@ begin
    CheckEquals(0, FKingdom.Death, '[7] Death');
    CheckEquals(5, FKingdom.DeathSum, '[7] DeathSum');
    CheckEquals(0, FKingdom.DeathPerc, '[7] DeathPerc');
-   CheckEquals(5764, FKingdom.Storage, '[7] Storage');
+   CheckEquals(5770, FKingdom.Storage, '[7] Storage');
    CheckEquals(0, FKingdom.LandInProd, '[7] LandInProd');
    CheckEquals(0, FKingdom.Distributed, '[7] Distributed');
    CheckEquals(23, FKingdom.LandPrice, '[7] LandPrice');
@@ -407,7 +407,7 @@ begin
    CheckEquals(0, FKingdom.Death, '[8] Death');
    CheckEquals(5, FKingdom.DeathSum, '[8] DeathSum');
    CheckEquals(0, FKingdom.DeathPerc, '[8] DeathPerc');
-   CheckEquals(1510, FKingdom.Storage, '[8] Storage');
+   CheckEquals(1519, FKingdom.Storage, '[8] Storage');
    CheckEquals(0, FKingdom.LandInProd, '[8] LandInProd');
    CheckEquals(0, FKingdom.Distributed, '[8] Distributed');
    CheckEquals(23, FKingdom.LandPrice, '[8] LandPrice');
@@ -426,7 +426,7 @@ begin
    CheckEquals(0, FKingdom.Death, '[9] Death');
    CheckEquals(5, FKingdom.DeathSum, '[9] DeathSum');
    CheckEquals(0, FKingdom.DeathPerc, '[9] DeathPerc');
-   CheckEquals(43898, FKingdom.Storage, '[9] Storage');
+   CheckEquals(43910, FKingdom.Storage, '[9] Storage');
    CheckEquals(0, FKingdom.LandInProd, '[9] LandInProd');
    CheckEquals(0, FKingdom.Distributed, '[9] Distributed');
    CheckEquals(17, FKingdom.LandPrice, '[9] LandPrice');
@@ -445,7 +445,7 @@ begin
    CheckEquals(0, FKingdom.Death, '[10] Death');
    CheckEquals(5, FKingdom.DeathSum, '[10] DeathSum');
    CheckEquals(0, FKingdom.DeathPerc, '[10] DeathPerc');
-   CheckEquals(6850, FKingdom.Storage, '[10] Storage');
+   CheckEquals(6859, FKingdom.Storage, '[10] Storage');
    CheckEquals(0, FKingdom.LandInProd, '[10] LandInProd');
    CheckEquals(0, FKingdom.Distributed, '[10] Distributed');
    CheckEquals(25, FKingdom.LandPrice, '[10] LandPrice');
@@ -464,7 +464,7 @@ begin
    CheckEquals(0, FKingdom.Death, '[11] Death');
    CheckEquals(5, FKingdom.DeathSum, '[11] DeathSum');
    CheckEquals(0, FKingdom.DeathPerc, '[11] DeathPerc');
-   CheckEquals(7237, FKingdom.Storage, '[11] Storage');
+   CheckEquals(7249, FKingdom.Storage, '[11] Storage');
    CheckEquals(0, FKingdom.LandInProd, '[11] LandInProd');
    CheckEquals(0, FKingdom.Distributed, '[11] Distributed');
    CheckEquals(18, FKingdom.LandPrice, '[11] LandPrice');

@@ -233,7 +233,7 @@ begin
   FHarvest := FLandInProduction * FProductivity;
   // Verlust durch Ratten
   lv := random(5)+1;
-  if lv mod 2=0 then FRatts:= FStorage div lv;
+  if lv mod 2=0 then FRatts:= FStorage div lv else FRatts:=0;
   // Restspeicher
   FStorage := FStorage - FRatts + FHarvest;
   // Immigranten
