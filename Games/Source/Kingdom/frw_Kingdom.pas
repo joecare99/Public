@@ -1,191 +1,315 @@
-unit frw_Kingdom;
+UNIT frw_Kingdom;
 
 {$mode objfpc}
 
-interface
+INTERFACE
 
-uses
+USES
   JS, Classes, SysUtils, Web, cls_KingdomEng;
 
-type
+TYPE
 
-{ TFrwKingdom }
+  { TFrwKingdom }
 
- TFrwKingdom=Class
+  TFrwKingdom = CLASS
   private
-    FKingdomEng:TKingdomEngine;
-    function btnBuyClick(aEvent: TJSMouseEvent): boolean;
-    function btnSellClick(aEvent: TJSMouseEvent): boolean;
+    FKingdomEng: TKingdomEngine;
+    FUNCTION btnBuyClick(aEvent: TJSMouseEvent): Boolean;
+    FUNCTION btnDistributeClick(aEvent: TJSMouseEvent): Boolean;
+    FUNCTION btnProduceClick(aEvent: TJSMouseEvent): Boolean;
+    FUNCTION btnSellClick(aEvent: TJSMouseEvent): Boolean;
+    Procedure DisplayMessage(Msg:string;Clear:boolean=false);
+    Procedure UpdateValues;
   public
-    edtTextOutValue: TJSNode;
-    pnlMain,
-    pnlInput,
-    pnlStatus:TJSElement;
+//    edtTextOutValue: TJSNode;
+    pnlMain, pnlInput, pnlStatus: TJSElement;
 
-    edtTextOut : TJSHTMLElement;
+    edtTextOut: TJSHTMLElement;
 
-    edtBuySellLand : TJSHTMLInputElement;
-    edtDistribute : TJSHTMLInputElement;
-    edtProduce : TJSHTMLInputElement;
+    edtBuySellLand: TJSHTMLInputElement;
+    edtDistribute:  TJSHTMLInputElement;
+    edtProduce:     TJSHTMLInputElement;
 
-    btnBuy: TJSHTMLButtonElement;
-    btnSell: TJSHTMLButtonElement;
+    edtPopulation: TJSHTMLInputElement;
+    edtArea:    TJSHTMLInputElement;
+    edtStorage: TJSHTMLInputElement;
+    edtPrice:   TJSHTMLInputElement;
+    lblHint:    TJSNode;
+
+    btnBuy:     TJSHTMLButtonElement;
+    btnSell:    TJSHTMLButtonElement;
     btnDistribute: TJSHTMLButtonElement;
     btnProduce: TJSHTMLButtonElement;
-    btnNew: TJSHTMLButtonElement;
-    btnNext: TJSHTMLButtonElement;
+    btnNew:     TJSHTMLButtonElement;
+    btnNext:    TJSHTMLButtonElement;
 
-    function btnNewClick(Event{%H-}: TJSMouseEvent): boolean;
-    function btnNextClick(Event{%H-}: TJSMouseEvent): boolean;
+    FUNCTION btnNewClick(Event{%H-}: TJSMouseEvent): Boolean;
+    FUNCTION btnNextClick(Event{%H-}: TJSMouseEvent): Boolean;
 
-    constructor Create;reintroduce;
-  end;
+    CONSTRUCTOR Create; reintroduce;
+  END;
 
-implementation
+IMPLEMENTATION
 
-uses unt_KingdomBase;
+USES unt_KingdomBase;
 
 { TFrwKingdom }
 
-function TFrwKingdom.btnBuyClick(aEvent: TJSMouseEvent): boolean;
-var
+function TFrwKingdom.btnBuyClick(aEvent: TJSMouseEvent): Boolean;
+VAR
   aVal: NativeInt;
+BEGIN
+  IF tryStrToint(edtBuySellLand.Value, aVal) THEN
+    IF FKingdomEng.BuySellLand(abs(aVal)) THEN
+      DisplayMessage(rsOK)
+    ELSE
+      DisplayMessage(FKingdomEng.BuySellMsg(abs(aVal)));
+  UpdateValues;
+END;
+
+function TFrwKingdom.btnDistributeClick(aEvent: TJSMouseEvent): Boolean;
+VAR
+  aVal: NativeInt;
+BEGIN
+  IF tryStrToint(edtDistribute.Value, aVal) THEN
+    IF FKingdomEng.Distribute(aVal) THEN
+      DisplayMessage(rsOK)
+    ELSE
+     DisplayMessage(FKingdomEng.DistrMsg(aVal));
+    UpdateValues;
+END;
+
+function TFrwKingdom.btnProduceClick(aEvent: TJSMouseEvent): Boolean;
+VAR
+  aVal: NativeInt;
+BEGIN
+  IF tryStrToint(edtProduce.Value, aVal) THEN
+    IF FKingdomEng.Production(aVal) THEN
+      DisplayMessage(rsOK)
+    ELSE
+      DisplayMessage(FKingdomEng.ProdMsg(aVal));
+    UpdateValues;
+END;
+
+function TFrwKingdom.btnSellClick(aEvent: TJSMouseEvent): Boolean;
+VAR
+  aVal: NativeInt;
+BEGIN
+  IF tryStrToint(edtBuySellLand.Value, aVal) THEN
+    IF FKingdomEng.BuySellLand(-abs(aVal)) THEN
+      DisplayMessage(rsOK)
+    ELSE
+      DisplayMessage(FKingdomEng.BuySellMsg(-abs(aVal)));
+    UpdateValues;
+END;
+
+procedure TFrwKingdom.DisplayMessage(Msg: string; Clear: boolean);
 begin
-  if tryStrToint(edtBuySellLand.value,aVal) then
-     if  FKingdomEng.BuySellLand(abs(aVal)) then
-  edtTextOutValue.textContent:=edtTextOutValue.textContent+LineEnding+
-   rsOK
-   else
-     edtTextOutValue.textContent:=edtTextOutValue.textContent+LineEnding+
-      FKingdomEng.BuySellMsg(abs(aVal))
+  if Clear then
+    edtTextOut.textContent := Msg
+  ELSE
+    edtTextOut.textContent := edtTextOut.textContent + LineEnding + Msg
 end;
 
-function TFrwKingdom.btnSellClick(aEvent: TJSMouseEvent): boolean;
+procedure TFrwKingdom.UpdateValues;
 var
-  aVal: NativeInt;
+  lMaxProd: Integer;
 begin
-  if tryStrToint(edtBuySellLand.value,aVal) then
-     if  FKingdomEng.BuySellLand(-abs(aVal)) then
-  edtTextOutValue.textContent:=edtTextOutValue.textContent+LineEnding+
-   rsOK
-   else
-     edtTextOutValue.textContent:=edtTextOutValue.textContent+LineEnding+
-      FKingdomEng.BuySellMsg(-abs(aVal))
+  edtPopulation.value := inttostr(FKingdomEng.Population);
+  edtStorage.value := inttostr(FKingdomEng.Storage);
+  edtArea.value := inttostr(FKingdomEng.Area);
+  edtPrice.value := inttostr(FKingdomEng.LandPrice);
+// HintLabel
+  lMaxProd:=FKingdomEng.Area;
+//  edtDistrFood.MinValue:=-FKingdomEng.Distributed;
+  if FKingdomEng.Population*10<lMaxProd then lMaxProd:=FKingdomEng.Population*10;
+
+  lblHint.textContent :=
+      'Vor:            '#9+edtStorage.value+LineEnding+
+      'Bev: '+edtPopulation.value+' *20 ='#9+inttostr(-FKingdomEng.Population*20+
+            FKingdomEng.Distributed)+#9+'('+inttostr(FKingdomEng.Distributed)+')'+LineEnding+
+      'Prod: '+inttostr(lMaxProd)+' /2 ='#9+inttostr(-lMaxProd div 2)+#9+'('+
+            inttostr(FKingdomEng.LandInProd div 2)+')'+LineEnding+
+      '-----------------------------'+LineEnding+
+      'Summ:           '#9+inttostr(FKingdomEng.Storage-FKingdomEng.Population*20-lMaxProd div 2+FKingdomEng.Distributed);
+
 end;
 
-function TFrwKingdom.btnNewClick(Event: TJSMouseEvent): boolean;
-begin
+function TFrwKingdom.btnNewClick(Event: TJSMouseEvent): Boolean;
+BEGIN
   FKingdomEng.NewGame;
-  edtTextOutValue.textContent:=FKingdomEng.YearDescription;
-end;
+  DisplayMessage( FKingdomEng.YearDescription,true);
+  UpdateValues;
+END;
 
-function TFrwKingdom.btnNextClick(Event: TJSMouseEvent): boolean;
-begin
-  if FKingdomEng.NewYear(false) then
-     edtTextOutValue.textContent:=FKingdomEng.YearDescription
-  else
-    edtTextOutValue.textContent:=edtTextOutValue.textContent+LineEnding +
-      FKingdomEng.NewYearMsg;
-end;
+function TFrwKingdom.btnNextClick(Event: TJSMouseEvent): Boolean;
+BEGIN
+  IF FKingdomEng.NewYear(False) THEN
+    DisplayMessage( FKingdomEng.YearDescription,true)
+  ELSE
+    DisplayMessage( FKingdomEng.NewYearMsg);
+    UpdateValues;
+END;
 
 constructor TFrwKingdom.Create;
 
-Function CreateNumberEdit (aName : String) : TJSHTMLInputElement;
+  FUNCTION CreateNumberEdit(aName: String): TJSHTMLInputElement;
 
-begin
-  Result:=TJSHTMLInputElement(document.createElement('input'));
-  Result['type']:='text';
-  Result.value:='0';
-  Result.name:=aName;
-  Result['style']:='width: 80px;';
-end;
+  BEGIN
+    Result      := TJSHTMLInputElement(document.createElement('input'));
+    Result['type'] := 'text';
+    Result.Value := '0';
+    Result.Name := aName;
+    Result['style'] := 'width: 80px;';
+  END;
 
-Function CreateMemoEdit (aName : String) : TJSHTMLElement;
+  FUNCTION CreateMemoEdit(aName: String): TJSHTMLElement;
 
-begin
-  Result:=TJSHTMLElement(document.createElement('div'));
-  Result.name:=aName;
-  Result['style']:='width: 640px; height: 480px;';
-end;
+  BEGIN
+    Result      := TJSHTMLElement(document.createElement('textarea'));
+    Result.Name := aName;
+    Result['id']:= 'memo';
+    Result['rows']:= '25';
+    Result['cols']:= '80';
+//    Result['style'] := 'width: 640px; height: 480px;';
+  END;
 
-Function CreateButton (aName,aCaption : String) : TJSHTMLButtonElement;
+  FUNCTION CreateButton(aName, aCaption: String): TJSHTMLButtonElement;
 
-begin
-  Result:=TJSHTMLButtonElement(document.createElement('input'));
-  Result['id']:=aName;
-  Result['type']:='submit';
-  Result['value']:=aCaption;
-  Result.name:=aName;
-  Result['style']:='width: 160px;';
-  Result['class']:='btn btn-default';
-end;
+  BEGIN
+    Result      := TJSHTMLButtonElement(document.createElement('input'));
+    Result['id'] := aName;
+    Result['type'] := 'submit';
+    Result['value'] := aCaption;
+    Result.Name := aName;
+    Result['style'] := 'width: 160px;';
+    Result['class'] := 'btn btn-default';
+  END;
 
-var
-  lPre: TJSElement;
-begin
-  FKingdomEng:= TKingdomEngine.create;
+VAR
+  lPre, ltableCell, ltableRow, ltable: TJSElement;
+BEGIN
+  FKingdomEng := TKingdomEngine.Create;
 
-pnlMain:=document.createElement('div');
-// attrs are default array property...
-pnlMain['class']:='panel panel-default';
+  pnlMain := document.createElement('div');
+  // attrs are default array property...
+  pnlMain['class'] := 'panel panel-default';
 
-pnlInput:=document.createElement('div');
-pnlInput['class']:='panel-body';
+  pnlInput := document.createElement('div');
+  pnlInput['class'] := 'panel-body';
 
-pnlStatus:=document.createElement('div');
-pnlStatus['class']:='panel-body';
+  pnlStatus := document.createElement('div');
+  pnlStatus['class'] := 'panel-body';
 
-edtBuySellLand:=CreateNumberEdit('edtBuySellLand');
-edtDistribute:=CreateNumberEdit('edtDistribute');
-edtProduce:=CreateNumberEdit('edtProduce');
+  edtBuySellLand := CreateNumberEdit('edtBuySellLand');
+  edtDistribute  := CreateNumberEdit('edtDistribute');
+  edtProduce     := CreateNumberEdit('edtProduce');
 
-btnBuy:=CreateButton('btnBuy','Kaufen');
-btnBuy.onclick:=@btnBuyClick;
+  edtPopulation := CreateNumberEdit('edtPopulation');
+  edtArea  := CreateNumberEdit('edtArea');
+  edtStorage     := CreateNumberEdit('edtStorage');
+  edtPrice     := CreateNumberEdit('edtPrice');
 
-btnSell:=CreateButton('btnSell','Verkaufen');
-btnSell.onclick:=@btnSellClick;
+  lblHint := document.createTextNode('...');
 
-btnNew:=CreateButton('btnNew','Neues Spiel');
-btnNew.style.setProperty('height','40px');
-btnNew.onclick:=@btnNewClick;
+  btnBuy := CreateButton('btnBuy', 'Kaufen');
+  btnBuy.onclick := @btnBuyClick;
 
-btnNext:=CreateButton('btnNext','Nächstes Jahr');
-btnNext.style.setProperty('height','40px');
-btnNext.onclick:=@btnNextClick;
+  btnSell := CreateButton('btnSell', 'Verkaufen');
+  btnSell.onclick := @btnSellClick;
 
-edtTextOut:=CreateMemoEdit('edtTextOut');
-edtTextOutValue:= document.createTextNode('...');
+  btnDistribute := CreateButton('btnDistribute', 'Verteilen');
+  btnDistribute.onclick := @btnDistributeClick;
 
-lPre:=document.createElement('pre');
-lPre.appendChild(edtTextOutValue);
-edtTextOut.appendChild(lPre);
-document.body.appendChild(pnlMain);
-pnlMain.appendChild(pnlStatus);
-pnlMain.appendChild(pnlInput);
+  btnProduce := CreateButton('btnProduce', 'Anbauen');
+  btnProduce.onclick := @btnProduceClick;
 
-pnlInput.appendChild(document.createElement('BR'));
-pnlInput.appendChild(edtTextOut);
-pnlInput.appendChild(document.createElement('BR'));
-pnlInput.appendChild(document.createTextNode('Land in Tagwerk:'));
-pnlInput.appendChild(document.createElement('BR'));
-pnlInput.appendChild(edtBuySellLand);
-pnlInput.appendChild(btnBuy);
-pnlInput.appendChild(btnSell);
-pnlInput.appendChild(document.createElement('BR'));
-pnlInput.appendChild(document.createTextNode('Getreide in Büschel:'));
-pnlInput.appendChild(document.createElement('BR'));
-pnlInput.appendChild(edtDistribute);
-pnlInput.appendChild(document.createElement('BR'));
-pnlInput.appendChild(document.createTextNode('Land in Tagwerk:'));
-pnlInput.appendChild(document.createElement('BR'));
-pnlInput.appendChild(edtProduce);
-pnlInput.appendChild(document.createElement('BR'));
 
-pnlInput.appendChild(btnNew);
-pnlInput.appendChild(document.createTextNode('   '));
-pnlInput.appendChild(btnNext);
-edtTextOutvalue.textContent:=FKingdomEng.GameDescription;
-end;
+  btnNew := CreateButton('btnNew', 'Neues Spiel');
+  btnNew.style.setProperty('height', '40px');
+  btnNew.onclick := @btnNewClick;
 
-end.
+  btnNext := CreateButton('btnNext', 'Nächstes Jahr');
+  btnNext.style.setProperty('height', '40px');
+  btnNext.onclick := @btnNextClick;
+
+  edtTextOut      := CreateMemoEdit('edtTextOut');
+  //lPre := document.createElement('pre');
+  //edtTextOutValue := document.createTextNode('...');
+  //lPre.appendChild(edtTextOutValue);
+  //edtTextOut.appendChild(lPre);
+
+  document.body.appendChild(pnlMain);
+
+  ltable:=document.createElement('table');
+  ltable['style'] := 'width: 100%';
+  ltableRow:=document.createElement('tr');
+  ltableCell:=document.createElement('td');
+  ltableCell['style'] := 'width: 70%';
+  pnlMain.appendChild(ltable);
+  ltable.appendChild(ltableRow);
+  ltableRow.appendChild(ltableCell);
+  ltableCell.appendChild(pnlInput);
+  ltableCell:=document.createElement('td');
+  ltableCell['style'] := 'width: 30%';
+  ltableRow.appendChild(ltableCell);
+  ltableCell.appendChild(pnlStatus);
+
+
+//  pnlInput.appendChild(document.createElement('BR'));
+  pnlInput.appendChild(edtTextOut);
+  pnlInput.appendChild(document.createElement('BR'));
+  pnlInput.appendChild(document.createTextNode('Land in Tagwerk:'));
+  pnlInput.appendChild(document.createElement('BR'));
+  pnlInput.appendChild(edtBuySellLand);
+  pnlInput.appendChild(btnBuy);
+  pnlInput.appendChild(btnSell);
+  pnlInput.appendChild(document.createElement('BR'));
+  pnlInput.appendChild(document.createTextNode('Getreide in Büschel:'));
+  pnlInput.appendChild(document.createElement('BR'));
+  pnlInput.appendChild(edtDistribute);
+  pnlInput.appendChild(btnDistribute);
+  pnlInput.appendChild(document.createElement('BR'));
+  pnlInput.appendChild(document.createTextNode('Land in Tagwerk:'));
+  pnlInput.appendChild(document.createElement('BR'));
+  pnlInput.appendChild(edtProduce);
+  pnlInput.appendChild(btnProduce);
+  pnlInput.appendChild(document.createElement('BR'));
+
+  pnlInput.appendChild(btnNew);
+  pnlInput.appendChild(document.createTextNode('   '));
+  pnlInput.appendChild(btnNext);
+
+  pnlStatus.appendChild(document.createTextNode('Bevölkerung'));
+  pnlStatus.appendChild(document.createElement('BR'));
+  pnlStatus.appendChild(edtPopulation);
+  pnlStatus.appendChild(document.createElement('BR'));
+  pnlStatus.appendChild(document.createElement('BR'));
+  pnlStatus.appendChild(document.createTextNode('Land'));
+  pnlStatus.appendChild(document.createElement('BR'));
+  pnlStatus.appendChild(edtArea);
+  pnlStatus.appendChild(document.createElement('BR'));
+  pnlStatus.appendChild(document.createElement('BR'));
+  pnlStatus.appendChild(document.createTextNode('Vorrat:'));
+  pnlStatus.appendChild(document.createElement('BR'));
+  pnlStatus.appendChild(edtStorage);
+  pnlStatus.appendChild(document.createElement('BR'));
+  pnlStatus.appendChild(document.createElement('BR'));
+  pnlStatus.appendChild(document.createTextNode('Preis pro Land'));
+  pnlStatus.appendChild(document.createElement('BR'));
+  pnlStatus.appendChild(edtPrice);
+  pnlStatus.appendChild(document.createElement('BR'));
+  pnlStatus.appendChild(document.createElement('BR'));
+
+  lPre := document.createElement('pre');
+  lPre.appendChild(lblHint);
+  pnlStatus.appendChild(lPre);
+
+  DisplayMessage( FKingdomEng.GameDescription,true);
+
+END;
+
+END.
+
+
 

@@ -29,7 +29,7 @@ resourcestring
      'Du bist gestürzt und aus dem Land gejagt worden !!!';
    rsStorage= 'Die Stadt zählt nun %d Einwohner. Du besitzt jetzt %d Tagwerk '+
      'Land, von denen pro Tagwerk %d Büschel Getreide geernted wurden.'+LineEnding+
-     'Die Ratten frassen %d Büschel, du hast %d Büschel in deine Lagerhäusern.';
+     'Die Ratten frassen %d Büschel, du hast %d Büschel in deinen Lagerhäusern.';
    rsCostOfLand='Land wird derzeit für %d Büschel Getreide gehandelt.';
    rsResultPeople='In den 10 Jahren Deiner Herrschaft sind jährlich durchschnittlich'+
      ' %d%% der Bevölkerung durch Hunger gestorben. Ingesamt waren das %d Leute.';
