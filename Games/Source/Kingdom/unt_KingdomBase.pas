@@ -7,7 +7,7 @@ unit unt_KingdomBase;
 interface
 
 uses
-  Classes, SysUtils, DefaultTranslator;
+  Classes, SysUtils{$IFDEF FPC}, DefaultTranslator{$ENDIF};
 
 resourcestring
 // Texte
@@ -20,7 +20,7 @@ resourcestring
      'Bedenke, zur Ernährung braucht jeder Bewohner pro Jahr 20 Büschel Getreide, '+
      'und die Bewirtschaftung von 2 Tagwerk Land kostet 1 Büschel Getreide.';
    rsAdress='Hamurabi, ich habe Dir folgendes zu berichten:';
-   rsYearOfReign='Dies ist das %s Jahr deiner Regentschaft sind %d Leute '+
+   rsYearOfReign='Dies ist das %s Jahr deiner Regentschaft, es sind %d Leute '+
      'gestorben; %d Leute sind nach Sumeria zugezogen.';
    rsPlague='Eine schreckliche Plage hat dein Land heimgesucht und die Hälfte '+
      'der Bevölkerung dahingerafft...';
@@ -56,6 +56,9 @@ resourcestring
        ' Hungersnot aus...';
 
 // Zahlen
+{$IFNDEF FPC}
+const
+{$ENDIF}
    rsFirst='erste';
    rsSecond='zweite';
    rsThird='dritte';

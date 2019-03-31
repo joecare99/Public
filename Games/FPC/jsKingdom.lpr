@@ -3,8 +3,8 @@ program jsKingdom;
 {$mode objfpc}
 
 uses
-  JS, Classes, SysUtils, Web;
+  JS, Classes, SysUtils, Web, frw_Kingdom;
 
 begin
-  // Your code here
+  TFrwKingdom.Create;
 end.
