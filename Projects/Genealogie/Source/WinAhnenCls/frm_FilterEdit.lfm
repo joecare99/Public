@@ -1,0 +1,97 @@
+object FrmFilterEdit: TFrmFilterEdit
+  Left = 667
+  Height = 591
+  Top = 37
+  Width = 957
+  Caption = 'FrmFilterEdit'
+  ClientHeight = 591
+  ClientWidth = 957
+  DesignTimePPI = 144
+  OnCreate = FormCreate
+  OnShow = FormShow
+  object Panel1: TPanel
+    Left = 0
+    Height = 75
+    Top = 0
+    Width = 957
+    Align = alTop
+    Caption = 'Panel1'
+    TabOrder = 0
+  end
+  object ScrollBox1: TScrollBox
+    Left = 0
+    Height = 441
+    Top = 75
+    Width = 957
+    HorzScrollBar.Page = 813
+    VertScrollBar.Page = 437
+    Align = alClient
+    ClientHeight = 437
+    ClientWidth = 927
+    TabOrder = 1
+    object cbxHejConcType: TComboBox
+      Left = 8
+      Height = 33
+      Top = 8
+      Width = 150
+      ItemHeight = 25
+      TabOrder = 0
+      Text = 'cbxHejConcType'
+    end
+    object ComboBox2: TComboBox
+      Left = 167
+      Height = 33
+      Top = 8
+      Width = 150
+      ItemHeight = 25
+      TabOrder = 1
+      Text = 'ComboBox2'
+    end
+    object ComboBox3: TComboBox
+      Left = 337
+      Height = 33
+      Top = 8
+      Width = 150
+      ItemHeight = 25
+      TabOrder = 2
+      Text = 'ComboBox3'
+    end
+    object ComboBox4: TComboBox
+      Left = 518
+      Height = 33
+      Top = 8
+      Width = 150
+      ItemHeight = 25
+      TabOrder = 3
+      Text = 'ComboBox4'
+    end
+    object Edit1: TEdit
+      Left = 693
+      Height = 33
+      Top = 8
+      Width = 120
+      TabOrder = 4
+      Text = 'Edit1'
+    end
+    object Memo1: TMemo
+      Left = 16
+      Height = 231
+      Top = 211
+      Width = 489
+      Lines.Strings = (
+        'Memo1'
+      )
+      ScrollBars = ssAutoVertical
+      TabOrder = 5
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Height = 75
+    Top = 516
+    Width = 957
+    Align = alBottom
+    Caption = 'Panel2'
+    TabOrder = 2
+  end
+end

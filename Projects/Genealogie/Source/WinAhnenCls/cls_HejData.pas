@@ -163,6 +163,21 @@ type
      'hIRd_AnyChild',  // Data of any Child
      'hIRd_AllChild'); // Data of all Childs
 
+resourcestring
+      rshIRd_Meta = 'Metadaten';   // e.G. Counts, Timeline-Data
+      rshIRd_Ind = 'Person';   // Individual Data
+      rshIRd_Spouse = 'Ehepartner';  // Data of Main(Last) Spouse
+      rshIRd_AnySpouse = 'ein Ehepartner';  // Data of any Spouse
+      rshIRd_AllSpouse = 'alle Ehepartner';  // Data of all Spousees
+      rshIRd_Father = 'Vater';  // Data of Father
+      rshIRd_Mother = 'Mutter';  // Data of Mother
+      rshIRd_AnyParent = 'ein Elternteil';  // Data of any Parent
+      rshIRd_AllParent = 'Eltern';  // Data of all Parents
+      rshIRd_Child = 'Kind';     // Data of Child
+      rshIRd_AnyChild ='ein Kind';  // Data of any Child
+      rshIRd_AllChild ='alle Kinder'; // Data of all Childs
+
+
 implementation
 
 uses dateutils,LConvEncoding,dm_GenData2;

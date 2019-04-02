@@ -12,6 +12,10 @@
       <Icon Value="0"/>
     </General>
     <LazDoc Paths="..\FPDoc"/>
+    <i18n>
+      <EnableI18N Value="True"/>
+      <OutDir Value="..\language"/>
+    </i18n>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
@@ -110,7 +114,7 @@
         <PackageName Value="FCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="26">
+    <Units Count="28">
       <Unit0>
         <Filename Value="fpcTestClsHej.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -225,6 +229,17 @@
         <Filename Value="..\Source\WinAhnenCls\unt_SourceTestData.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit25>
+      <Unit26>
+        <Filename Value="..\Source\WinAhnenCls\tst_FrmEditFilter.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="..\Source\WinAhnenCls\frm_FilterEdit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FrmFilterEdit"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit27>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

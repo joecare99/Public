@@ -139,6 +139,27 @@ Function FilterRule(aDataField:Integer;
     aCompType:TEnumHejCompareType;
     aCompValue:variant):TFilterRule;
 
+resourcestring
+      rshCcT_Or = 'Oder';   // ) OR ( ...
+      rshCcT_Nor = 'Oder nicht';  // ) or not ( ...
+      rshCcT_xor = 'Entweder Oder';  // ) xor ( ...
+      rshCcT_And = 'Und';  // and (..)
+      rshCcT_xor2 = 'Entweder Oder 2'; // xor (..)
+
+        rshCmp_Nop = '?'; // always false
+        rshCmp_Equal = '=';
+        rshCmp_UnEqual = '<>';
+        rshCmp_Less = '<';
+        rshCmp_LessOEqual = '<=';
+        rshCmp_GreaterOEqual = '>=';
+        rshCmp_Greater = '>';
+        rshCmp_Startswith = 'wie $*';
+        rshCmp_Endswith = 'wie *$';
+        rshCmp_Contains = 'wie *$*';
+        rshCmp_IsEmpty = '[ ]';
+        rshCmp_IsNotEmpty ='![ ]';
+
+
 implementation
 
 uses variants,cls_HejIndData,cls_HejMarrData;
