@@ -2,7 +2,7 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="11"/>
     <BuildModes Active="Debug"/>
     <Units Count="3">
       <Unit0>
@@ -19,10 +19,8 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_DMTestMain"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="5"/>
         <CursorPos X="45" Y="19"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
@@ -35,7 +33,6 @@
         <ComponentName Value="DataModule1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="DataModule"/>
-        <UnitName Value="Frm_Module1"/>
         <EditorIndex Value="2"/>
         <CursorPos X="44" Y="11"/>
         <UsageCount Value="20"/>
@@ -64,5 +61,9 @@
         <Caret Line="30" Column="6" TopLine="4"/>
       </Position5>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>
