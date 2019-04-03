@@ -136,6 +136,10 @@ end;
 procedure TfrmGrueStewMain.FormCreate(Sender: TObject);
 begin
     fGrueStew := TGrueStewEng.Create;
+    for dir {$IFDEF FPC}in TDir{$ELSE}:=Low(TDIR) to high(TDir){$ENDIF} do
+      begin
+
+      end;
     FMapLbl[drNorth] := lblMapNorth;
     FMapLbl[drEast] := lblMapEast;
     FMapLbl[drSouth] := lblMapSouth;

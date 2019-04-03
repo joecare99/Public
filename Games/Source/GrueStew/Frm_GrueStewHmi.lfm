@@ -4,12 +4,11 @@ object frmGrueStewMain: TfrmGrueStewMain
   Top = 37
   Width = 595
   Caption = 'Grue Stew'
-  ClientHeight = 383
+  ClientHeight = 403
   ClientWidth = 595
   Menu = MainMenu1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '2.0.0.4'
   object Shape2: TShape
     Left = 429
     Height = 153
@@ -117,63 +116,63 @@ object frmGrueStewMain: TfrmGrueStewMain
   end
   object Shoot: TLabel
     Left = 445
-    Height = 25
+    Height = 15
     Top = 247
-    Width = 48
+    Width = 31
     Caption = 'Shoot'
     ParentColor = False
     ParentFont = False
   end
   object Walk: TLabel
     Left = 527
-    Height = 25
+    Height = 15
     Top = 265
-    Width = 38
+    Width = 26
     Caption = 'Walk'
     ParentColor = False
     ParentFont = False
   end
   object lblActRoom: TLabel
     Left = 498
-    Height = 25
+    Height = 15
     Top = 291
-    Width = 24
+    Width = 16
     Caption = '<>'
     ParentColor = False
     ParentFont = False
   end
   object lblMapNorth: TLabel
     Left = 498
-    Height = 25
+    Height = 15
     Top = 203
-    Width = 24
+    Width = 16
     Caption = '<>'
     ParentColor = False
     ParentFont = False
   end
   object lblMapWest: TLabel
     Left = 407
-    Height = 25
+    Height = 15
     Top = 291
-    Width = 24
+    Width = 16
     Caption = '<>'
     ParentColor = False
     ParentFont = False
   end
   object lblMapSouth: TLabel
     Left = 498
-    Height = 25
+    Height = 15
     Top = 373
-    Width = 24
+    Width = 16
     Caption = '<>'
     ParentColor = False
     ParentFont = False
   end
   object lblMapEast: TLabel
     Left = 581
-    Height = 25
+    Height = 15
     Top = 291
-    Width = 24
+    Width = 16
     Caption = '<>'
     ParentColor = False
     ParentFont = False
