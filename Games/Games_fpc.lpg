@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="21">
+    <Targets Count="22">
       <Target0 FileName="FPC\fpcTestAsteroidsTypes.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
@@ -98,23 +98,27 @@
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target16>
-      <Target17 FileName="FPC\GrueStew.lpi">
+      <Target17 FileName="FPC\jsGrueStew.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target17>
-      <Target18 FileName="FPC\fpcTestKingdom.lpi">
+      <Target18 FileName="FPC\GrueStew.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target18>
+      <Target19 FileName="FPC\fpcTestKingdom.lpi">
         <BuildModes Count="2"/>
         <Mode1 Name="Default"/>
         <Mode2 Name="Debug"/>
-      </Target18>
-      <Target19 FileName="FPC\prj_Kingdom.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
       </Target19>
-      <Target20 FileName="FPC\jsKingdom.lpi">
+      <Target20 FileName="FPC\prj_Kingdom.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target20>
+      <Target21 FileName="FPC\jsKingdom.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target21>
     </Targets>
   </ProjectGroup>
 </CONFIG>
