@@ -70,6 +70,10 @@ resourcestring
     CaughtBYMonster = 'Das Monster hat sie erwischt. Jetzt ist''s aus ... ';
     FellIntoPit = 'AAAAhhh ..  hh . hh ..h ..... '+LineEnding+'Sie fallen, und fallen ...';
 
+    {$IFDEF BROWSER}
+    const
+    {$EndIF}
+
     rsRaumTxt01= 'Sie sind in einem kleinen Raum mit überall verstreut liegenden Felsen und ' +
         'Gesteinstrümmern.';
     rsRaumTxt02= 'Sie müssen tief gebückt weitergehen. Riesige Stalagtiten hängen von der Decke ' +
@@ -150,6 +154,9 @@ const
 
      CDirDesc: array[TDir] of string =
        ('drNorth', 'drEast', 'drSouth', 'drWest');
+
+     CDirShortDesc: array[TDir] of string =
+       ('N', 'O', 'S', 'W');
 
      CMoveResult: array[TMoveResult] of string  =
          ('mvOK', 'mvWall', 'mvExit', 'mvExitwMonst', 'mvMonster', 'mvPit', 'mvBat', 'mvEarthquake');

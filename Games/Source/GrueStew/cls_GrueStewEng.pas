@@ -84,7 +84,7 @@ begin
         Inc(Result);
 end;
 
-const NoRoom:TRoom=({%H-});
+const NoRoom:TRoom=(ID:0{%H-});
 
 {TGrueStewEng }
 
