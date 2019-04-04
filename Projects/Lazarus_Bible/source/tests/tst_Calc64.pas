@@ -1305,7 +1305,7 @@ begin
   frmCalc64Main.Show;
   lOrgCaption := frmCalc64Main.Caption;
 {$IFDEF FPC}
-    Application.OnUserInput := @AppUserInput;
+    Application.OnUserInput := AppUserInput;
 {$ENDIF}
   while frmCalc64Main.Visible do
   begin
