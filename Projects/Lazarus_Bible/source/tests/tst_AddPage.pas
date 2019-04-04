@@ -81,7 +81,7 @@ begin
 CheckFalse(frmAddPageMain.Visible, 'MainForm is not visible at the moment');
 frmAddPageMain.Show;
 {$IFDEF FPC}
-Application.OnUserInput:=@AppUserInput;
+Application.OnUserInput:=AppUserInput;
 {$ENDIF}
 while frmAddPageMain.Visible do
 begin
