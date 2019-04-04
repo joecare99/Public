@@ -7,7 +7,7 @@ object frmCharGridMain: TfrmCharGridMain
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Character Grid'
-  ClientHeight = 379
+  ClientHeight = 359
   ClientWidth = 586
   Color = clBtnFace
   Font.Color = clWindowText
@@ -17,6 +17,7 @@ object frmCharGridMain: TfrmCharGridMain
   OnCreate = FormCreate
   Position = poScreenCenter
   ShowHint = True
+  LCLVersion = '2.0.0.4'
   object grdChars: TStringGrid
     Left = 0
     Height = 270
