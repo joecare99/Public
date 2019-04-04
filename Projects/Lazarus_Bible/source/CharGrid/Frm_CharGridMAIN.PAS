@@ -21,16 +21,16 @@ type
   { TfrmCharGridMain }
 
   TfrmCharGridMain = class(TForm)
+    pnlCharView: TPanel;
     cbxFonts: TComboBox;
     chbANSI: TCheckBox;
     edtCopy: TEdit;
-    FlowPanel1: TFlowPanel;
+    pnlBtmFlow: TFlowPanel;
     grdChars: TStringGrid;
     btnClose: TBitBtn;
     btnSelect: TBitBtn;
     btnCopy: TBitBtn;
     lblCharView: TLabel;
-    bvlCharView: TBevel;
     btnClear: TBitBtn;
     lblCopy: TLabel;
     lblFont: TLabel;
@@ -39,7 +39,7 @@ type
     mniFileExit: TMenuItem;
     mniHelpMenu: TMenuItem;
     mniHelpAbout: TMenuItem;
-    Panel1: TPanel;
+    pnlTop: TPanel;
     pnlBottom: TPanel;
     procedure chbANSIChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
@@ -56,6 +56,7 @@ type
     procedure btnSelectClick(Sender: TObject);
     procedure btnCopyClick(Sender: TObject);
     procedure btnClearClick(Sender: TObject);
+    procedure pnlBtmFlowResize(Sender: TObject);
   private
     { Private declarations }
   public
@@ -145,8 +146,8 @@ end;
 { Grid double-click event handler }
 procedure TfrmCharGridMain.grdCharsDblClick(Sender: TObject);
 begin
-  with edtCopy, grdChars do
-    Text := Text + Cells[Col, Row];
+  with grdChars do
+    edtCopy.Text := edtCopy.Text + Cells[Col, Row];
 end;
 
 { Select character on pressing Enter or Space }
@@ -174,7 +175,7 @@ end;
 { Help|About menu command }
 procedure TfrmCharGridMain.mniHelpAboutClick(Sender: TObject);
 begin
-  AboutForm.ShowModal;
+  frmAboutForm.ShowModal;
 end;
 
 { Select button click handler }
@@ -198,6 +199,14 @@ end;
 procedure TfrmCharGridMain.btnClearClick(Sender: TObject);
 begin
   edtCopy.Text := '';
+end;
+
+procedure TfrmCharGridMain.pnlBtmFlowResize(Sender: TObject);
+var
+  i: Integer;
+begin
+  for i := 0 to pnlBtmFlow.ControlList.Count -1 do
+    pnlBtmFlow.Controls[i].Width:=((pnlBtmFlow.Width-6) div pnlBtmFlow.ControlCount)-6;
 end;
 
 end.

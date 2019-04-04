@@ -16,16 +16,18 @@ type
     procedure SetUp; override;
     procedure TearDown; override;
   published
-    procedure TestHookUp;
+    procedure TestSetUp;
   end;
 
 implementation
 
 uses Forms, Frm_CharGridABOUT,Frm_CharGridMAIN;
 
-procedure TTestCharGrid.TestHookUp;
+procedure TTestCharGrid.TestSetUp;
 begin
-  Fail('Write your own test');
+  CheckNotNull(frmCharGridMain,'CharGridMain ist assigned');
+  CheckNotNull(frmAboutForm,'AboutForm ist assigned');
+  CheckTrue(frmCharGridMain.Visible);
 end;
 
 procedure TTestCharGrid.SetUp;
@@ -33,13 +35,13 @@ begin
   if not assigned(frmCharGridMain) then
     Application.CreateForm(TfrmCharGridMain,frmCharGridMain);
   if not assigned(frmCharGridMain) then
-    Application.CreateForm(TfrmCharGridMain,frmCharGridMain);
-
+    Application.CreateForm(TfrmAboutForm,frmAboutForm);
+  frmCharGridMain.show;
 end;
 
 procedure TTestCharGrid.TearDown;
 begin
-
+  frmCharGridMain.hide;
 end;
 
 initialization

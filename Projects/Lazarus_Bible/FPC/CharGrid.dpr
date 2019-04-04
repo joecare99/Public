@@ -23,6 +23,6 @@ begin
 Application.Initialize;
   Application.Title := 'Demo: Chargrid';
   Application.CreateForm(TfrmCharGridMain, frmCharGridMain);
-  Application.CreateForm(TAboutForm, AboutForm);
+  Application.CreateForm(TfrmAboutForm, frmAboutForm);
   Application.Run;
 end.

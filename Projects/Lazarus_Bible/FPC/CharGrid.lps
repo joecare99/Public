@@ -8,7 +8,10 @@
       <Unit0>
         <Filename Value="CharGrid.dpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="Chargrid"/>
+        <CursorPos X="27" Y="21"/>
         <UsageCount Value="58"/>
+        <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
       <Unit1>
@@ -18,8 +21,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
+        <EditorIndex Value="1"/>
         <TopLine Value="145"/>
-        <CursorPos X="20" Y="180"/>
+        <CursorPos X="8" Y="149"/>
         <UsageCount Value="58"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
@@ -61,7 +65,7 @@
         <ComponentName Value="MainForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="3"/>
         <CursorPos X="79" Y="22"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
@@ -70,7 +74,7 @@
       </Unit6>
       <Unit7>
         <Filename Value="..\source\DingX\DingButtonXControl_TLB.pas"/>
-        <EditorIndex Value="1"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="153"/>
         <CursorPos X="24" Y="180"/>
         <UsageCount Value="10"/>
@@ -80,14 +84,14 @@
       <Unit8>
         <Filename Value="..\source\EXWIN\unt_Exwin.pas"/>
         <UnitName Value="unt_ExWin"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="4"/>
         <CursorPos X="2" Y="22"/>
         <UsageCount Value="10"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit8>
     </Units>
-    <JumpHistory Count="6" HistoryIndex="5">
+    <JumpHistory Count="7" HistoryIndex="6">
       <Position1>
         <Filename Value="..\source\CharGrid\Frm_CharGridMAIN.PAS"/>
         <Caret Line="89" Column="46" TopLine="77"/>
@@ -109,6 +113,10 @@
         <Filename Value="..\source\CharGrid\Frm_CharGridMAIN.PAS"/>
         <Caret Line="154" Column="22" TopLine="126"/>
       </Position6>
+      <Position7>
+        <Filename Value="..\source\CharGrid\Frm_CharGridMAIN.PAS"/>
+        <Caret Line="180" Column="20" TopLine="145"/>
+      </Position7>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

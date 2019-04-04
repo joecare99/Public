@@ -130,6 +130,7 @@
       <Unit0>
         <Filename Value="CharGrid.dpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="Chargrid"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\source\CharGrid\Frm_CharGridMAIN.PAS"/>
