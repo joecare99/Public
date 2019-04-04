@@ -1177,7 +1177,7 @@ begin
   CheckFalse(frmCalcMain.Visible, 'MainForm is not visible at the moment');
   frmCalcMain.Show;
   lOrgCaption:= frmCalcMain.Caption;
-  Application.OnUserInput:=@AppUserInput;
+  Application.OnUserInput:=AppUserInput;
   while frmCalcMain.Visible do
   begin
         Application.Idle(false);
