@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Release"/>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="Capslock.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -20,7 +20,6 @@
         <ComponentName Value="frmCapsLockMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
         <TopLine Value="13"/>
         <CursorPos X="11" Y="28"/>
@@ -37,6 +36,16 @@
         <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="..\source\tests\tst_CapsLock.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="7"/>
+        <CursorPos X="45" Y="7"/>
+        <UsageCount Value="20"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit3>
     </Units>
     <JumpHistory Count="7" HistoryIndex="6">
       <Position1>
