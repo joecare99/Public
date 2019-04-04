@@ -9,7 +9,7 @@
         <Filename Value="Capslock2.dpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos Y="19"/>
-        <UsageCount Value="21"/>
+        <UsageCount Value="33"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
@@ -21,9 +21,9 @@
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="20"/>
-        <CursorPos X="70" Y="61"/>
-        <UsageCount Value="21"/>
+        <TopLine Value="29"/>
+        <CursorPos X="69" Y="54"/>
+        <UsageCount Value="33"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -34,7 +34,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="374"/>
         <CursorPos X="7" Y="405"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="17"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
@@ -43,7 +43,7 @@
         <EditorIndex Value="2"/>
         <TopLine Value="65"/>
         <CursorPos X="48" Y="69"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="16"/>
         <Loaded Value="True"/>
       </Unit3>
     </Units>
