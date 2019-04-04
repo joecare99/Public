@@ -1,11 +1,13 @@
 unit tst_CapsLock;
 
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
+{$ENDIF}
 
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry;
+  Classes, SysUtils{$IFDEF FPC} , fpcunit, testutils, testregistry {$ELSE} , testsuite {$ENDIF};
 
 type
 
@@ -36,6 +38,6 @@ end;
 
 initialization
 
-  RegisterTest(TTestCapsLock);
+  RegisterTest({$IFDEF FPC} TTestCapsLock {$ELSE} TTestCapsLock.suite {$ENDIF});
 end.
 
