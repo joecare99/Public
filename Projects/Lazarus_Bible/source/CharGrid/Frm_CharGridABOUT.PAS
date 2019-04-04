@@ -17,15 +17,16 @@ uses
 
 type
 
-  { TAboutForm }
+  { TfrmAboutForm }
 
-  TAboutForm = class(TForm)
-    Panel1: TPanel;
-    OKButton: TBitBtn;
-    ProgramIcon: TImage;
-    ProductName: TLabel;
-    Version: TLabel;
-    Copyright: TLabel;
+  TfrmAboutForm = class(TForm)
+    BitBtn1: TBitBtn;
+    pnlClient: TPanel;
+    imgProgramIcon: TImage;
+    lblProductName: TLabel;
+    lblVersion: TLabel;
+    lblCopyright: TLabel;
+    procedure lblCopyrightClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
   private
     { Private declarations }
@@ -34,7 +35,7 @@ type
   end;
 
 var
-  AboutForm: TAboutForm;
+  frmAboutForm: TfrmAboutForm;
 
 implementation
 
@@ -44,11 +45,16 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-{ TAboutForm }
+{ TfrmAboutForm }
 
-procedure TAboutForm.OKButtonClick(Sender: TObject);
+procedure TfrmAboutForm.OKButtonClick(Sender: TObject);
 begin
   Close;
+end;
+
+procedure TfrmAboutForm.lblCopyrightClick(Sender: TObject);
+begin
+
 end;
 
 end.

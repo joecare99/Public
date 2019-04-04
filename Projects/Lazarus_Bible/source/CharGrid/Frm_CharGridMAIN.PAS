@@ -21,23 +21,26 @@ type
   { TfrmCharGridMain }
 
   TfrmCharGridMain = class(TForm)
-    chbANSI: TCheckBox;
-    grdChars: TStringGrid;
     cbxFonts: TComboBox;
-    lblFont: TLabel;
-    btnClose: TBitBtn;
+    chbANSI: TCheckBox;
     edtCopy: TEdit;
-    lblCopy: TLabel;
+    FlowPanel1: TFlowPanel;
+    grdChars: TStringGrid;
+    btnClose: TBitBtn;
     btnSelect: TBitBtn;
     btnCopy: TBitBtn;
     lblCharView: TLabel;
     bvlCharView: TBevel;
     btnClear: TBitBtn;
-    MainMenu1: TMainMenu;
-    FileMenu: TMenuItem;
-    FileExit: TMenuItem;
-    HelpMenu: TMenuItem;
-    HelpAbout: TMenuItem;
+    lblCopy: TLabel;
+    lblFont: TLabel;
+    mnuMainMenu1: TMainMenu;
+    mniFileMenu: TMenuItem;
+    mniFileExit: TMenuItem;
+    mniHelpMenu: TMenuItem;
+    mniHelpAbout: TMenuItem;
+    Panel1: TPanel;
+    pnlBottom: TPanel;
     procedure chbANSIChange(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure cbxFontsChange(Sender: TObject);
@@ -48,8 +51,8 @@ type
       var Key: Word; {%H-}Shift: TShiftState);
     procedure grdCharsSelectCell(Sender: TObject;
       Col, Row: Longint; var CanSelect: Boolean);
-    procedure FileExitClick(Sender: TObject);
-    procedure HelpAboutClick(Sender: TObject);
+    procedure mniFileExitClick(Sender: TObject);
+    procedure mniHelpAboutClick(Sender: TObject);
     procedure btnSelectClick(Sender: TObject);
     procedure btnCopyClick(Sender: TObject);
     procedure btnClearClick(Sender: TObject);
@@ -163,13 +166,13 @@ begin
 end;
 
 { File|Exit menu command }
-procedure TfrmCharGridMain.FileExitClick(Sender: TObject);
+procedure TfrmCharGridMain.mniFileExitClick(Sender: TObject);
 begin
   Close;
 end;
 
 { Help|About menu command }
-procedure TfrmCharGridMain.HelpAboutClick(Sender: TObject);
+procedure TfrmCharGridMain.mniHelpAboutClick(Sender: TObject);
 begin
   AboutForm.ShowModal;
 end;

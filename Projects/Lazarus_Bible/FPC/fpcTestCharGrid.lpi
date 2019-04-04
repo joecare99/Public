@@ -33,7 +33,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="4">
       <Unit0>
         <Filename Value="fpcTestCharGrid.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -42,6 +42,20 @@
         <Filename Value="..\source\tests\tst_CharGrid.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="..\source\CharGrid\Frm_CharGridABOUT.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmAboutForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\source\CharGrid\Frm_CharGridMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmCharGridMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -52,7 +66,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\source\tests"/>
+      <OtherUnitFiles Value="..\source\tests;..\source\CharGrid"/>
       <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
     </SearchPaths>
     <Linking>

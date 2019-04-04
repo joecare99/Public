@@ -1,11 +1,13 @@
 unit tst_CharGrid;
 
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
+{$ENDIF}
 
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry;
+  Classes, SysUtils{$IFDEF FPC} , fpcunit, testutils, testregistry {$ELSE} , testsuite {$ENDIF};
 
 type
 
@@ -19,6 +21,8 @@ type
 
 implementation
 
+uses Forms, Frm_CharGridABOUT,Frm_CharGridMAIN;
+
 procedure TTestCharGrid.TestHookUp;
 begin
   Fail('Write your own test');
@@ -26,6 +30,10 @@ end;
 
 procedure TTestCharGrid.SetUp;
 begin
+  if not assigned(frmCharGridMain) then
+    Application.CreateForm(TfrmCharGridMain,frmCharGridMain);
+  if not assigned(frmCharGridMain) then
+    Application.CreateForm(TfrmCharGridMain,frmCharGridMain);
 
 end;
 

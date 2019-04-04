@@ -1,254 +1,285 @@
 object frmCharGridMain: TfrmCharGridMain
   Left = 208
-  Height = 454
+  Height = 379
   Top = 101
-  Width = 852
+  Width = 568
   ActiveControl = grdChars
   BorderIcons = [biSystemMenu, biMinimize]
   BorderStyle = bsSingle
   Caption = 'Character Grid'
-  ClientHeight = 454
-  ClientWidth = 852
+  ClientHeight = 379
+  ClientWidth = 568
   Color = clBtnFace
-  DesignTimePPI = 144
   Font.Color = clWindowText
-  Font.Height = -20
+  Font.Height = -13
   Font.Name = 'Tahoma'
-  Menu = MainMenu1
+  Menu = mnuMainMenu1
   OnCreate = FormCreate
   Position = poScreenCenter
   ShowHint = True
-  object bvlCharView: TBevel
-    Left = 60
-    Height = 62
-    Top = 384
-    Width = 86
-    Anchors = [akLeft, akBottom]
-  end
-  object lblFont: TLabel
-    Left = 24
-    Height = 24
-    Top = 30
-    Width = 46
-    Caption = '&Font:'
-    FocusControl = cbxFonts
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'Tahoma'
-    ParentColor = False
-    ParentFont = False
-  end
-  object lblCopy: TLabel
-    Left = 480
-    Height = 24
-    Top = 30
-    Width = 80
-    Caption = 'To C&opy:'
-    FocusControl = edtCopy
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'Tahoma'
-    ParentColor = False
-    ParentFont = False
-  end
-  object lblCharView: TLabel
-    Left = 84
-    Height = 40
-    Top = 399
-    Width = 22
-    Anchors = [akLeft, akBottom]
-    Caption = 'X'
-    Font.Color = clWindowText
-    Font.Height = -36
-    Font.Name = 'System'
-    ParentColor = False
-    ParentFont = False
-  end
   object grdChars: TStringGrid
-    Left = 12
-    Height = 206
+    Left = 8
+    Height = 137
     Hint = 'Double click to select character'
-    Top = 84
-    Width = 818
+    Top = 56
+    Width = 545
     ColCount = 32
-    DefaultColWidth = 24
-    DefaultRowHeight = 24
+    DefaultColWidth = 16
+    DefaultRowHeight = 16
     FixedCols = 0
     FixedRows = 0
     Font.Color = clBlack
-    Font.Height = -20
+    Font.Height = -13
     Font.Name = 'System'
     ParentFont = False
     RowCount = 8
     TabOrder = 0
     TitleFont.Color = clBlack
-    TitleFont.Height = -20
+    TitleFont.Height = -13
     TitleFont.Name = 'System'
     OnDblClick = grdCharsDblClick
     OnKeyDown = grdCharsKeyDown
     OnSelectCell = grdCharsSelectCell
   end
-  object cbxFonts: TComboBox
-    Left = 96
-    Height = 32
-    Hint = 'Selected font'
-    Top = 24
-    Width = 338
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'Tahoma'
-    ItemHeight = 24
-    OnChange = cbxFontsChange
-    OnKeyDown = cbxFontsKeyDown
-    ParentFont = False
-    Sorted = True
-    Style = csDropDownList
-    TabOrder = 5
-  end
-  object btnClose: TBitBtn
-    Left = 672
-    Height = 50
-    Hint = 'End program'
-    Top = 396
-    Width = 134
-    Anchors = [akLeft, akBottom]
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'Tahoma'
-    Kind = bkClose
-    ParentFont = False
-    TabOrder = 4
-  end
-  object edtCopy: TEdit
-    Left = 588
-    Height = 32
-    Hint = 'Collect characters to copy'
-    Top = 24
-    Width = 242
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'Tahoma'
-    ParentFont = False
-    TabOrder = 6
-  end
-  object btnSelect: TBitBtn
-    Left = 516
-    Height = 50
-    Hint = 'Select character to copy'
-    Top = 396
-    Width = 134
-    Anchors = [akLeft, akBottom]
-    Caption = '&Select'
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'Tahoma'
-    Glyph.Data = {
-      76010000424D7601000000000000760000002800000020000000100000000100
-      04000000000000010000120B0000120B00001000000000000000000000000000
-      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333000000000
-      333333777777777F33333330B00000003333337F7777777F3333333000000000
-      333333777777777F333333330EEEEEE033333337FFFFFF7F3333333300000000
-      333333377777777F3333333330BFBFB03333333373333373F33333330BFBFBFB
-      03333337F33333F7F33333330FBFBF0F03333337F33337F7F33333330BFBFB0B
-      03333337F3F3F7F7333333330F0F0F0033333337F7F7F773333333330B0B0B03
-      3333333737F7F7F333333333300F0F03333333337737F7F33333333333300B03
-      333333333377F7F33333333333330F03333333333337F7F33333333333330B03
-      3333333333373733333333333333303333333333333373333333
-    }
-    NumGlyphs = 2
-    OnClick = btnSelectClick
-    ParentFont = False
-    TabOrder = 3
-  end
-  object btnCopy: TBitBtn
-    Left = 360
-    Height = 50
-    Hint = 'Copy to clipboard'
-    Top = 396
-    Width = 134
-    Anchors = [akLeft, akBottom]
-    Caption = 'C&opy'
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'Tahoma'
-    Glyph.Data = {
-      76010000424D7601000000000000760000002800000020000000100000000100
-      04000000000000010000130B0000130B00001000000000000000000000000000
-      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF003333330B7FFF
-      FFB0333333777F3333773333330B7FFFFFB0333333777F3333773333330B7FFF
-      FFB0333333777F3333773333330B7FFFFFB03FFFFF777FFFFF77000000000077
-      007077777777777777770FFFFFFFF00077B07F33333337FFFF770FFFFFFFF000
-      7BB07F3FF3FFF77FF7770F00F000F00090077F77377737777F770FFFFFFFF039
-      99337F3FFFF3F7F777FF0F0000F0F09999937F7777373777777F0FFFFFFFF999
-      99997F3FF3FFF77777770F00F000003999337F773777773777F30FFFF0FF0339
-      99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
-      93337FFFF7737777733300000033333333337777773333333333
-    }
-    NumGlyphs = 2
-    OnClick = btnCopyClick
-    ParentFont = False
-    TabOrder = 2
-  end
-  object btnClear: TBitBtn
-    Left = 204
-    Height = 50
-    Hint = 'Clear copy box'
-    Top = 396
-    Width = 134
-    Anchors = [akLeft, akBottom]
-    Caption = 'C&lear'
-    Font.Color = clWindowText
-    Font.Height = -20
-    Font.Name = 'Tahoma'
-    Glyph.Data = {
-      76010000424D7601000000000000760000002800000020000000100000000100
-      04000000000000010000120B0000120B00001000000000000000000000000000
-      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
-      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00500005000555
-      555557777F777555F55500000000555055557777777755F75555005500055055
-      555577F5777F57555555005550055555555577FF577F5FF55555500550050055
-      5555577FF77577FF555555005050110555555577F757777FF555555505099910
-      555555FF75777777FF555005550999910555577F5F77777775F5500505509990
-      3055577F75F77777575F55005055090B030555775755777575755555555550B0
-      B03055555F555757575755550555550B0B335555755555757555555555555550
-      BBB35555F55555575F555550555555550BBB55575555555575F5555555555555
-      50BB555555555555575F555555555555550B5555555555555575
-    }
-    NumGlyphs = 2
-    OnClick = btnClearClick
-    ParentFont = False
-    TabOrder = 1
-  end
   object chbANSI: TCheckBox
-    Left = 60
-    Height = 29
-    Top = 288
-    Width = 73
+    Left = 40
+    Height = 20
+    Top = 192
+    Width = 48
     Caption = 'ANSI'
     Font.Color = clWindowText
-    Font.Height = -20
+    Font.Height = -13
     Font.Name = 'Tahoma'
     OnChange = chbANSIChange
     ParentFont = False
-    TabOrder = 7
+    TabOrder = 1
   end
-  object MainMenu1: TMainMenu
-    left = 36
-    top = 228
-    object FileMenu: TMenuItem
+  object pnlBottom: TPanel
+    Left = 8
+    Height = 50
+    Top = 263
+    Width = 545
+    ClientHeight = 50
+    ClientWidth = 545
+    TabOrder = 2
+    object bvlCharView: TBevel
+      Left = 1
+      Height = 48
+      Top = 1
+      Width = 57
+      Align = alLeft
+      Anchors = [akLeft, akBottom]
+    end
+    object lblCharView: TLabel
+      Left = 56
+      Height = 32
+      Top = 405
+      Width = 18
+      Anchors = [akLeft, akBottom]
+      Caption = 'X'
+      Font.Color = clWindowText
+      Font.Height = -24
+      Font.Name = 'System'
+      ParentColor = False
+      ParentFont = False
+    end
+    object btnClose: TBitBtn
+      Left = 448
+      Height = 33
+      Hint = 'End program'
+      Top = 409
+      Width = 89
+      Anchors = [akLeft, akBottom]
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Kind = bkClose
+      ParentFont = False
+      TabOrder = 0
+    end
+    object btnSelect: TBitBtn
+      Left = 344
+      Height = 33
+      Hint = 'Select character to copy'
+      Top = 409
+      Width = 89
+      Anchors = [akLeft, akBottom]
+      Caption = '&Select'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Glyph.Data = {
+        76010000424D7601000000000000760000002800000020000000100000000100
+        04000000000000010000120B0000120B00001000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333000000000
+        333333777777777F33333330B00000003333337F7777777F3333333000000000
+        333333777777777F333333330EEEEEE033333337FFFFFF7F3333333300000000
+        333333377777777F3333333330BFBFB03333333373333373F33333330BFBFBFB
+        03333337F33333F7F33333330FBFBF0F03333337F33337F7F33333330BFBFB0B
+        03333337F3F3F7F7333333330F0F0F0033333337F7F7F773333333330B0B0B03
+        3333333737F7F7F333333333300F0F03333333337737F7F33333333333300B03
+        333333333377F7F33333333333330F03333333333337F7F33333333333330B03
+        3333333333373733333333333333303333333333333373333333
+      }
+      NumGlyphs = 2
+      OnClick = btnSelectClick
+      ParentFont = False
+      TabOrder = 1
+    end
+    object btnCopy: TBitBtn
+      Left = 240
+      Height = 33
+      Hint = 'Copy to clipboard'
+      Top = 409
+      Width = 89
+      Anchors = [akLeft, akBottom]
+      Caption = 'C&opy'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Glyph.Data = {
+        76010000424D7601000000000000760000002800000020000000100000000100
+        04000000000000010000130B0000130B00001000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF003333330B7FFF
+        FFB0333333777F3333773333330B7FFFFFB0333333777F3333773333330B7FFF
+        FFB0333333777F3333773333330B7FFFFFB03FFFFF777FFFFF77000000000077
+        007077777777777777770FFFFFFFF00077B07F33333337FFFF770FFFFFFFF000
+        7BB07F3FF3FFF77FF7770F00F000F00090077F77377737777F770FFFFFFFF039
+        99337F3FFFF3F7F777FF0F0000F0F09999937F7777373777777F0FFFFFFFF999
+        99997F3FF3FFF77777770F00F000003999337F773777773777F30FFFF0FF0339
+        99337F3FF7F3733777F30F08F0F0337999337F7737F73F7777330FFFF0039999
+        93337FFFF7737777733300000033333333337777773333333333
+      }
+      NumGlyphs = 2
+      OnClick = btnCopyClick
+      ParentFont = False
+      TabOrder = 2
+    end
+    object btnClear: TBitBtn
+      Left = 136
+      Height = 33
+      Hint = 'Clear copy box'
+      Top = 409
+      Width = 89
+      Anchors = [akLeft, akBottom]
+      Caption = 'C&lear'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      Glyph.Data = {
+        76010000424D7601000000000000760000002800000020000000100000000100
+        04000000000000010000120B0000120B00001000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00500005000555
+        555557777F777555F55500000000555055557777777755F75555005500055055
+        555577F5777F57555555005550055555555577FF577F5FF55555500550050055
+        5555577FF77577FF555555005050110555555577F757777FF555555505099910
+        555555FF75777777FF555005550999910555577F5F77777775F5500505509990
+        3055577F75F77777575F55005055090B030555775755777575755555555550B0
+        B03055555F555757575755550555550B0B335555755555757555555555555550
+        BBB35555F55555575F555550555555550BBB55575555555575F5555555555555
+        50BB555555555555575F555555555555550B5555555555555575
+      }
+      NumGlyphs = 2
+      OnClick = btnClearClick
+      ParentFont = False
+      TabOrder = 3
+    end
+    object FlowPanel1: TFlowPanel
+      Left = 58
+      Height = 48
+      Top = 1
+      Width = 486
+      Align = alClient
+      Caption = 'FlowPanel1'
+      ControlList = <>
+      FlowLayout = tlTop
+      FlowStyle = fsLeftRightTopBottom
+      TabOrder = 4
+    end
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 50
+    Top = 0
+    Width = 568
+    Align = alTop
+    ClientHeight = 50
+    ClientWidth = 568
+    TabOrder = 3
+    object lblFont: TLabel
+      Left = 16
+      Height = 16
+      Top = 20
+      Width = 30
+      Caption = '&Font:'
+      FocusControl = cbxFonts
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentColor = False
+      ParentFont = False
+    end
+    object lblCopy: TLabel
+      Left = 320
+      Height = 16
+      Top = 20
+      Width = 52
+      Caption = 'To C&opy:'
+      FocusControl = edtCopy
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentColor = False
+      ParentFont = False
+    end
+    object cbxFonts: TComboBox
+      Left = 64
+      Height = 24
+      Hint = 'Selected font'
+      Top = 16
+      Width = 225
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ItemHeight = 16
+      OnChange = cbxFontsChange
+      OnKeyDown = cbxFontsKeyDown
+      ParentFont = False
+      Sorted = True
+      Style = csDropDownList
+      TabOrder = 0
+    end
+    object edtCopy: TEdit
+      Left = 392
+      Height = 24
+      Hint = 'Collect characters to copy'
+      Top = 16
+      Width = 161
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 1
+    end
+  end
+  object mnuMainMenu1: TMainMenu
+    left = 24
+    top = 152
+    object mniFileMenu: TMenuItem
       Caption = '&File'
-      object FileExit: TMenuItem
+      object mniFileExit: TMenuItem
         Caption = 'E&xit'
-        OnClick = FileExitClick
+        OnClick = mniFileExitClick
       end
     end
-    object HelpMenu: TMenuItem
+    object mniHelpMenu: TMenuItem
       Caption = '&Help'
-      object HelpAbout: TMenuItem
+      object mniHelpAbout: TMenuItem
         Caption = '&About...'
-        OnClick = HelpAboutClick
+        OnClick = mniHelpAboutClick
       end
     end
   end
