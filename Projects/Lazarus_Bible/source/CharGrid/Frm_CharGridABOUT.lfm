@@ -95,7 +95,6 @@ object frmAboutForm: TfrmAboutForm
       Font.Style = [fsBold]
       ParentColor = False
       ParentFont = False
-      OnClick = lblCopyrightClick
     end
   end
   object btnOK: TBitBtn

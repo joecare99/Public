@@ -26,7 +26,6 @@ type
     lblProductName: TLabel;
     lblVersion: TLabel;
     lblCopyright: TLabel;
-    procedure lblCopyrightClick(Sender: TObject);
     procedure OKButtonClick(Sender: TObject);
   private
     { Private declarations }
@@ -47,19 +46,9 @@ implementation
 
 { TfrmAboutForm }
 
-procedure TfrmAboutForm.lblCopyrightClick(Sender: TObject);
-begin
-
-end;
-
 procedure TfrmAboutForm.OKButtonClick(Sender: TObject);
 begin
   Close;
-end;
-
-procedure TfrmAboutForm.lblCopyrightClick(Sender: TObject);
-begin
-
 end;
 
 end.
