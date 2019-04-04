@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Capslock2"><module name="Frm_Capslock2MAIN"><element name="TfrmCapsLock2Main"><short>Hauptklasse des Programms</short>
+      </element><element name="TfrmCapsLock2Main.btnClose"><short>Schliessen - Taste</short>
+      </element><element name="TfrmCapsLock2Main.lblInfo"><short>Informationen - Label</short>
+      </element><element name="TfrmCapsLock2Main.bvlInfo"><short>Rahmen um den Informationen-Label</short>
+      </element><element name="TfrmCapsLock2Main.pnlStatus"><short>Statusbar, Panel mit div. Statusanzeigen</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
