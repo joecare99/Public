@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestCharGrid"><module name="Frm_CharGridABOUT"><element name="TfrmAboutForm"><short>About-Form Klasse</short>
+      </element><element name="TfrmAboutForm.btnOK"><short>OK - Taste  zum Beenden/Schliessen</short>
+      </element><element name="TfrmAboutForm.pnlClient"><short>Container für alle Informationen auf dem Form</short>
+      </element><element name="TfrmAboutForm.imgProgramIcon"><short>Bild für das Programm-Icon</short>
+      </element><element name="TfrmAboutForm.lblProductName"><short>Label mit dem Prduct-Namen</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
