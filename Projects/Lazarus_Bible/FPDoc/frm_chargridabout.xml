@@ -4,6 +4,9 @@
       </element><element name="TfrmAboutForm.pnlClient"><short>Container für alle Informationen auf dem Form</short>
       </element><element name="TfrmAboutForm.imgProgramIcon"><short>Bild für das Programm-Icon</short>
       </element><element name="TfrmAboutForm.lblProductName"><short>Label mit dem Prduct-Namen</short>
+      </element><element name="TfrmAboutForm.lblVersion"><short>Label mit Versionsinformationen</short>
+      </element><element name="TfrmAboutForm.lblCopyright"><short>Label mit Copyright-Informationen</short>
+      </element><element name="TfrmAboutForm.OKButtonClick"><short>Schliesst den Dialog</short>
       </element>
     </module>
   </package>
