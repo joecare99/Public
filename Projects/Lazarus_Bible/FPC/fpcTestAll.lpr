@@ -16,6 +16,9 @@ uses
     tst_BitView2,
     tst_Calc32,
     tst_Calc64,
+    tst_CapsLock,
+    tst_CapsLock2,
+    tst_CharGrid,
     tst_Something;
 
 {$R *.res}

@@ -22,7 +22,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-            <OtherUnitFiles Value="..\source\tests;..\source\AboutEx;..\source\Actions;..\source\Addpage;..\source\Barchart;..\source\Bitview;..\source\Bitview2;..\source\Calc32"/>
+            <OtherUnitFiles Value="..\source\tests;..\source\AboutEx;..\source\Actions;..\source\Addpage;..\source\Barchart;..\source\Bitview;..\source\Bitview2;..\source\Calc32;..\source\Capslock;..\source\CharGrid"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -80,7 +80,7 @@
         <PackageName Value="FCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="20">
+    <Units Count="24">
       <Unit0>
         <Filename Value="fpcTestAll.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -173,6 +173,26 @@
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
       </Unit19>
+      <Unit20>
+        <Filename Value="..\source\Capslock\Frm_Capslock2MAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="..\source\Capslock\Frm_CapslockMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="..\source\CharGrid\Frm_CharGridABOUT.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="..\source\CharGrid\Frm_CharGridMAIN.PAS"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+      </Unit23>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -183,7 +203,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\source\tests;..\source\AboutEx;..\source\Actions;..\source\Addpage;..\source\Barchart;..\source\Bitview;..\source\Bitview2;..\source\Calc32"/>
+      <OtherUnitFiles Value="..\source\tests;..\source\AboutEx;..\source\Actions;..\source\Addpage;..\source\Barchart;..\source\Bitview;..\source\Bitview2;..\source\Calc32;..\source\Capslock;..\source\CharGrid"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>
