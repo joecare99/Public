@@ -62,12 +62,12 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="fpcTestCharGrid"/>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\fpcTestCharGrid"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
       <OtherUnitFiles Value="..\source\tests;..\source\CharGrid"/>
-      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>
       <Options>
