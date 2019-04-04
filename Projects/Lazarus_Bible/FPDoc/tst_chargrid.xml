@@ -1,4 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="fpcTestCharGrid"><module name="tst_CharGrid"/>
+<fpdoc-descriptions><package name="fpcTestCharGrid"><module name="tst_CharGrid"><element name="TTestCharGrid"><short>Test-Classe für CharGrid</short>
+      </element><element name="TTestCharGrid.FIdleCnt"><short>Idle-Cycle-Counter für Test-Application</short>
+      </element><element name="TTestCharGrid.AppUserInput"><short>Notifyer-Event on User-Input</short>
+      </element><element name="TTestCharGrid.SetUp"/><element name="TTestCharGrid.TearDown"><short>Tears down the Test-class</short>
+      </element><element name="TTestCharGrid.TestSetUp"><short>Tested die SetUp-Methode</short>
+      </element><element name="TTestCharGrid.TestMainForm"><short>Testaufruf des Main-Form</short>
+      </element><element name="TTestCharGrid.TestAboutForm"><short>Testaufruf des About-Dialogs</short>
+      </element>
+    </module>
   </package>
 </fpdoc-descriptions>
