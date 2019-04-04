@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Capslock"><module name="Frm_CapslockMAIN"><element name="TfrmCapsLockMain"><short>Hauptklasse für CapsLock</short>
+      </element><element name="TfrmCapsLockMain.btnClose"><short>Schliessen - Taste</short>
+      </element><element name="TfrmCapsLockMain.lblInfo"><short>Informationen - Label</short>
+      </element><element name="TfrmCapsLockMain.bvlInfo"><short>Rahmen um Informationen-Label</short>
+      </element><element name="TfrmCapsLockMain.Pnl_Shft"><short>Panel zur Anzeige des Shift-Zustands</short>
+      </element><element name="TfrmCapsLockMain.Pnl_Ctrl"><short>Panel zur Anzeige des Ctrl-Zustands</short>
+      </element><element name="TfrmCapsLockMain.Pnl_Alt"><short>Panel zur Anzeige des Alt-Zustands</short>
+      </element><element name="TfrmCapsLockMain.pnlStatus"><short>Status-Panel</short>
+      </element><element name="TfrmCapsLockMain.pnl_Num"><short>Panel zur Anzeige des Num-Zustands</short>
+      </element><element name="TfrmCapsLockMain.pnl_Caps"><short>Panel zur Anzeige des Caps-Lock-Zustands</short>
+      </element><element name="TfrmCapsLockMain.pnl_Scrl"><short>Panel zur Anzeige des Scroll-Lock-Zustands</short>
+      </element><element name="TfrmCapsLockMain.Pnl_Ins"><short>Panel zur Anzeige des Insert-Zustands</short>
+      </element><element name="TfrmCapsLockMain.FormKeyDown"><short>Form-Key-Down - Delegate zur Ermittlung des Shift-Status</short>
+      </element><element name="TfrmCapsLockMain.FormActivate"><short>Form-Activate - Delegate</short>
+      </element><element name="TfrmCapsLockMain.SetPanel"><short>SetPanel - Methode</short>
+      </element><element name="TfrmCapsLockMain.UpdateKeyPanel"><short>UpdateKeyPanel - Methode</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
