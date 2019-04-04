@@ -20,7 +20,7 @@ type
   { TfrmAboutForm }
 
   TfrmAboutForm = class(TForm)
-    BitBtn1: TBitBtn;
+    btnOK: TBitBtn;
     pnlClient: TPanel;
     imgProgramIcon: TImage;
     lblProductName: TLabel;
@@ -46,6 +46,11 @@ implementation
 {$ENDIF}
 
 { TfrmAboutForm }
+
+procedure TfrmAboutForm.lblCopyrightClick(Sender: TObject);
+begin
+
+end;
 
 procedure TfrmAboutForm.OKButtonClick(Sender: TObject);
 begin

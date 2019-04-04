@@ -98,7 +98,7 @@ object frmAboutForm: TfrmAboutForm
       OnClick = lblCopyrightClick
     end
   end
-  object BitBtn1: TBitBtn
+  object btnOK: TBitBtn
     Left = 6
     Height = 46
     Top = 127
@@ -109,6 +109,7 @@ object frmAboutForm: TfrmAboutForm
     DefaultCaption = True
     Kind = bkOK
     ModalResult = 1
+    OnClick = OKButtonClick
     TabOrder = 1
   end
 end
