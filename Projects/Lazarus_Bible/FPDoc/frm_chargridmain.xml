@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="CharGrid"><module name="Frm_CharGridMAIN"><element name="TfrmCharGridMain"><short>CharGrid - Hauptfenster</short>
+      </element><element name="TfrmCharGridMain.pnlCharView"><short>Panel mit Anzeige eines einzelnen Zeichens</short>
+      </element><element name="TfrmCharGridMain.cbxFonts"><short>Combobox zum Wählen der Schriftart</short>
+      </element><element name="TfrmCharGridMain.chbANSI"><short>Wählen ANSI oder UTF8</short>
+      </element><element name="TfrmCharGridMain.edtCopy"><short>Ausgewählte Zeichen zum Kopieren</short>
+      </element><element name="TfrmCharGridMain.pnlBtmFlow"><short>Flowpanel mit Tasten </short>
+      </element><element name="TfrmCharGridMain.grdChars"><short>Tabelle mit den Zeichen im Überblick</short>
+      </element><element name="TfrmCharGridMain.btnClose"><short>Schliessen - Taste</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
