@@ -9,7 +9,7 @@
         <Filename Value="fpcTestAll.lpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos X="18" Y="20"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -17,7 +17,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="6"/>
         <CursorPos X="68" Y="20"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
@@ -25,7 +25,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="2"/>
         <CursorPos X="75" Y="22"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
@@ -34,7 +34,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="112"/>
         <CursorPos X="26" Y="93"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
@@ -45,7 +45,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\source\AboutEx\Frm_AboutExMAIN.PAS"/>
@@ -55,7 +55,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\source\Actions\Frm_ActionsMain.pas"/>
@@ -65,7 +65,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit6>
       <Unit7>
         <Filename Value="..\source\Addpage\Frm_AddpageMAIN.PAS"/>
@@ -75,7 +75,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="1"/>
         <CursorPos X="2" Y="3"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit7>
@@ -87,7 +87,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit8>
       <Unit9>
         <Filename Value="..\source\Bitview\Frm_BitViewMAIN.pas"/>
@@ -97,7 +97,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit9>
       <Unit10>
         <Filename Value="..\source\Bitview2\Frm_BitView2MAIN.pas"/>
@@ -107,7 +107,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit10>
       <Unit11>
         <Filename Value="..\source\tests\tst_BitView.pas"/>
@@ -116,7 +116,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit11>
       <Unit12>
         <Filename Value="..\source\tests\tst_BitView2.pas"/>
@@ -125,7 +125,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit12>
       <Unit13>
         <Filename Value="..\source\tests\tst_BarChart.pas"/>
@@ -134,7 +134,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit13>
       <Unit14>
         <Filename Value="..\source\tests\tst_BarTest2.pas"/>
@@ -143,7 +143,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="22"/>
+        <UsageCount Value="23"/>
       </Unit14>
       <Unit15>
         <Filename Value="..\source\Calc32\Frm_CALC.PAS"/>
@@ -153,7 +153,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
       </Unit15>
       <Unit16>
         <Filename Value="..\source\Calc32\Frm_CalcABOUT.PAS"/>
@@ -163,7 +163,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
       </Unit16>
       <Unit17>
         <Filename Value="..\source\tests\tst_Calc32.pas"/>
@@ -171,7 +171,7 @@
         <EditorIndex Value="4"/>
         <TopLine Value="1165"/>
         <CursorPos X="28" Y="1180"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
       </Unit17>
       <Unit18>
@@ -180,8 +180,8 @@
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
         <TopLine Value="1291"/>
-        <CursorPos X="32" Y="1308"/>
-        <UsageCount Value="20"/>
+        <CursorPos X="19" Y="1300"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
       </Unit18>
       <Unit19>
@@ -192,7 +192,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
       </Unit19>
       <Unit20>
         <Filename Value="C:\lazarus\lcl\forms.pp"/>
@@ -245,7 +245,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
       </Unit26>
       <Unit27>
         <Filename Value="..\source\Capslock\Frm_CapslockMAIN.PAS"/>
@@ -255,7 +255,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
       </Unit27>
       <Unit28>
         <Filename Value="..\source\CharGrid\Frm_CharGridABOUT.PAS"/>
@@ -265,7 +265,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
       </Unit28>
       <Unit29>
         <Filename Value="..\source\CharGrid\Frm_CharGridMAIN.PAS"/>
@@ -275,7 +275,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
       </Unit29>
       <Unit30>
         <Filename Value="..\source\tests\tst_AddPage.pas"/>
