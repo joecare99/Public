@@ -12,10 +12,7 @@ object frmAbout: TfrmAbout
   Font.Color = clWindowText
   Font.Height = -13
   Font.Name = 'System'
-  OnCreate = FormCreate
   Position = poScreenCenter
-  LCLVersion = '1.6.4.0'
-  Visible = False
   object pnlAboutText: TPanel
     Left = 5
     Height = 161
@@ -28,7 +25,6 @@ object frmAbout: TfrmAbout
     ClientHeight = 161
     ClientWidth = 319
     TabOrder = 0
-    OnClick = pnlAboutTextClick
     object imgProgramIcon: TImage
       Left = 2
       Height = 57
@@ -121,7 +117,6 @@ object frmAbout: TfrmAbout
       ParentFont = False
       Transparent = False
       WordWrap = True
-      OnClick = lblCommentsClick
     end
   end
   object btnOK: TBitBtn
