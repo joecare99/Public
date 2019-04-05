@@ -5,15 +5,13 @@ object FrmActionsMain: TFrmActionsMain
   Width = 352
   ActiveControl = edtEnterQuit
   Caption = 'Action Lists'
-  ClientHeight = 140
+  ClientHeight = 160
   ClientWidth = 352
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Menu = mnuMain
-  OnCreate = FormCreate
-  LCLVersion = '2.0.0.4'
   object lblHint: TLabel
     Left = 0
     Height = 46
@@ -30,7 +28,6 @@ object FrmActionsMain: TFrmActionsMain
     ParentColor = False
     ParentFont = False
     WordWrap = True
-    OnClick = lblHintClick
   end
   object edtEnterQuit: TEdit
     Left = 104
@@ -38,7 +35,6 @@ object FrmActionsMain: TFrmActionsMain
     Hint = 'To exit enter ''quit'''
     Top = 64
     Width = 121
-    OnChange = edtEnterQuitChange
     TabOrder = 0
   end
   object btnDemoQuit: TBitBtn
