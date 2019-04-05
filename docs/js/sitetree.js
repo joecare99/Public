@@ -14,22 +14,22 @@ var POS_ISNAVIGATION=5;
 var POS_CHILDS=6;
 var POS_TEMPLATENAME=7;
 var theSitetree=[ 
-	['PAGE','4517',jdecode('Home'),jdecode(''),'/4517/index.html','true',[ 
-		['PAGE','10610',jdecode('Impressum'),jdecode(''),'/4517/10610.html','true',[],'']
+	['PAGE','4517',jdecode('Home'),jdecode(''),'/Public/index2.html','true',[ 
+		['PAGE','10610',jdecode('Impressum'),jdecode(''),'/Public/Impressum.html','true',[],'']
 	],''],
-	['PAGE','4574',jdecode('Aktuelles'),jdecode(''),'/4574/index.html','true',[ 
-		['PAGE','4601',jdecode('Neuigkeiten'),jdecode(''),'/4574/4601.html','true',[],''],
-		['PAGE','4628',jdecode('Termine'),jdecode(''),'/4574/4628.html','true',[],''],
-		['PAGE','4655',jdecode('Referenzen'),jdecode(''),'/4574/4655.html','true',[],'']
+	['PAGE','4574',jdecode('Aktuelles'),jdecode(''),'/Public/4574/index.html','true',[ 
+		['PAGE','4601',jdecode('Neuigkeiten'),jdecode(''),'/Public/4574/4601.html','true',[],''],
+		['PAGE','4628',jdecode('Termine'),jdecode(''),'/Public/4574/4628.html','true',[],''],
+		['PAGE','4655',jdecode('Referenzen'),jdecode(''),'/Public/4574/4655.html','true',[],'']
 	],''],
-	['PAGE','4682',jdecode('Bilder'),jdecode(''),'/4682/index.html','true',[ 
-		['PAGE','4709',jdecode('%DCber+mich'),jdecode(''),'/4682/4709.html','true',[],'']
+	['PAGE','4682',jdecode('Bilder'),jdecode(''),'/Public/4682/index.html','true',[ 
+		['PAGE','4709',jdecode('%DCber+mich'),jdecode(''),'/Public/4682/4709.html','true',[],'']
 	],''],
-	['PAGE','10637',jdecode('Tipps+%26+Tricks'),jdecode(''),'/10637/index.html','true',[ 
-		['PAGE','10664',jdecode('Delphi'),jdecode(''),'/10637/10664.html','true',[],''],
-		['PAGE','10691',jdecode('PovRay'),jdecode(''),'/10637/10691.html','true',[],'']
+	['PAGE','10637',jdecode('Tipps+%26+Tricks'),jdecode(''),'/Public/10637/index.html','true',[ 
+		['PAGE','10664',jdecode('Delphi'),jdecode(''),'/Public/10637/10664.html','true',[],''],
+		['PAGE','10691',jdecode('PovRay'),jdecode(''),'/Public/10637/10691.html','true',[],'']
 	],''],
-	['PAGE','4763',jdecode('Links'),jdecode(''),'/4763.html','true',[],'']];
+	['PAGE','4763',jdecode('Links'),jdecode(''),'/Public/Links.html','true',[],'']];
 var siteelementCount=12;
 theSitetree.topTemplateName='Atmosphere';
 					                                                                    
