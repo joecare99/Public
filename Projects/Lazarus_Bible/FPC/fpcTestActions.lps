@@ -17,8 +17,8 @@
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="77"/>
-        <CursorPos Y="101"/>
+        <TopLine Value="132"/>
+        <CursorPos X="34" Y="131"/>
         <UsageCount Value="46"/>
         <Loaded Value="True"/>
       </Unit1>
@@ -34,7 +34,12 @@
         <LoadedDesigner Value="True"/>
       </Unit2>
     </Units>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory Count="1">
+      <Position1>
+        <Filename Value="..\source\tests\tst_Actions.pas"/>
+        <Caret Line="163" Column="92" TopLine="141"/>
+      </Position1>
+    </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
       <Modes Count="0" ActiveMode=""/>

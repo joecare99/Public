@@ -7,7 +7,8 @@ UNIT tst_Actions;
 INTERFACE
 
 USES
-  Classes, Forms, SysUtils, {$IFNDEF FPC}TestFramework, {$Else} fpcunit, testutils, testregistry, {$endif} Frm_ActionsMain;
+  Classes, Forms, Controls, SysUtils, fpcunit, testutils, testregistry,
+  Frm_ActionsMain;
 
 TYPE
 
@@ -86,8 +87,12 @@ BEGIN
 END;
 
 procedure TTestActions.TestForm;
+var
+  lOrgCaption: string;
+
 begin
 CheckFalse(FrmActionsMain.Visible, 'MainForm is not visible at the moment');
+lOrgCaption :=   frmActionsMain.Caption;
 FrmActionsMain.Show;
 {$IFDEF FPC}
 Application.OnUserInput:=AppUserInput;
@@ -103,16 +108,19 @@ while FrmActionsMain.Visible do
       if fIdleCnt> 300 then
         FrmActionsMain.Hide
       else
-        frmActionsMain.Caption := 'Actions ['+DupeString('|',30-fIdleCnt div 10)+DupeString(' ',fIdleCnt div 10)+']';
+        frmActionsMain.Caption := 'Actions ['+StringOfChar('|',30-fIdleCnt div 10)+StringOfChar(' ',fIdleCnt div 10)+']';
    end;
+  frmActionsMain.Caption :=lOrgCaption;
 end;
 
 procedure TTestActions.TestAction;
 var
   i: Integer;
   ltweak: Boolean;
+  lOrgCaption: string;
 BEGIN
   CheckFalse(FrmActionsMain.Visible, 'MainForm is not visible at the moment');
+  lOrgCaption :=   frmActionsMain.Caption;
   FrmActionsMain.Show;
   Application.ProcessMessages;
     {$IFDEF FPC}
@@ -152,9 +160,10 @@ begin
       else
         CheckFalse(FrmActionsMain.actDemoExit.Enabled, 'DemoExit['+inttostr(i)+'] is not Enabled with '''+
          FrmActionsMain.edtEnterQuit.Text+'''');
-
+    if i mod 100 =0 then
+    frmActionsMain.Caption := 'Actions ['+StringOfChar('|',30-i div 300)+StringOfChar(' ',i div 300)+']';
   end;
-
+ frmActionsMain.Caption :=lOrgCaption;
 END;
 
 procedure TTestActions.AppIdleEnd(Sender: TObject);
