@@ -1,20 +1,20 @@
-object MainForm: TMainForm
+object frmChecksMain: TfrmChecksMain
   Left = 199
   Height = 166
   Top = 99
-  Width = 307
+  Width = 373
   Caption = 'Checkmark Demonstration'
   ClientHeight = 166
-  ClientWidth = 307
+  ClientWidth = 373
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -13
   Font.Name = 'System'
   Menu = mnuMainMenu1
   object btnShowButton: TButton
-    Left = 192
+    Left = 272
     Height = 33
-    Top = 24
+    Top = 16
     Width = 89
     Caption = 'Show level'
     Font.Color = clWindowText
@@ -28,14 +28,14 @@ object MainForm: TMainForm
     Left = 5
     Height = 93
     Top = 14
-    Width = 160
+    Width = 251
   end
   object lblInfo: TLabel
     Left = 11
     Height = 80
     Top = 27
     Width = 182
-    Caption = 'Select a Level with:'#13#10'<Alt>-0 ...<Alt>-9'#13#10'or with the Level-Menue'#13#10'The Level-Selection act like '#13#10'Radiobuttons:'
+    Caption = 'Select a Level with:'#13#10'<Alt>-1 ...<Alt>-9'#13#10' or with the Level-Menue'#13#10'The Level-Selection act like '#13#10'Radiobuttons:'
     Font.Color = clWindowText
     Font.Height = -13
     Font.Name = 'System'

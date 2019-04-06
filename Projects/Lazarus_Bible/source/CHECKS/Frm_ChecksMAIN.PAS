@@ -17,9 +17,9 @@ uses
 
 type
 
-  { TMainForm }
+  { TfrmChecksMain }
 
-  TMainForm = class(TForm)
+  TfrmChecksMain = class(TForm)
     bvlInfo: TBevel;
     lblInfo: TLabel;
     mnuMainMenu1: TMainMenu;
@@ -50,7 +50,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmChecksMain: TfrmChecksMain;
 
 implementation
 
@@ -63,12 +63,12 @@ implementation
 const
   highLevel = 9;   { Highest level command }
 
-procedure TMainForm.mniFileExitClick(Sender: TObject);
+procedure TfrmChecksMain.mniFileExitClick(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TMainForm.LevelClick(Sender: TObject);
+procedure TfrmChecksMain.LevelClick(Sender: TObject);
 var
   I: Integer;
 begin
@@ -78,7 +78,7 @@ begin
   TMenuItem(Sender).Checked := True;
 end;
 
-function TMainForm.GetLevel: Integer;
+function TfrmChecksMain.GetLevel: Integer;
 var
   I: Integer;
 begin
@@ -89,7 +89,7 @@ begin
         GetLevel := I + 1;
 end;
 
-procedure TMainForm.btnShowButtonClick(Sender: TObject);
+procedure TfrmChecksMain.btnShowButtonClick(Sender: TObject);
 var
   S: string;
 begin
@@ -100,7 +100,7 @@ begin
   ShowMessage(S);
 end;
 
-procedure TMainForm.mniLevelInsertClick(Sender: TObject);
+procedure TfrmChecksMain.mniLevelInsertClick(Sender: TObject);
 begin
   with Sender as TMenuItem do
     Checked := not Checked;
