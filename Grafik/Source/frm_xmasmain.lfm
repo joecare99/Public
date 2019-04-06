@@ -1,0 +1,14 @@
+object frmXmasMain: TfrmXmasMain
+  Left = 757
+  Height = 400
+  Top = 366
+  Width = 446
+  Caption = 'frmXmasMain'
+  ClientHeight = 400
+  ClientWidth = 446
+  DesignTimePPI = 168
+  OnCreate = FormCreate
+  OnShow = FormPaint
+  LCLVersion = '1.8.4.0'
+  Visible = False
+end
