@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -18,9 +18,6 @@
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
     </BuildModes>
@@ -28,9 +25,10 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="2">
       <Item1>
@@ -52,58 +50,47 @@
       <Unit2>
         <Filename Value="..\MineCAD\Planner\test\TestArray3D.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="TestArray3D"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\MineCAD\Planner\test\TestTagClass.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="TestTagClass"/>
       </Unit3>
       <Unit4>
         <Filename Value="..\MineCAD\Planner\util\minecad.planner.util.tag.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="minecad.planner.util.tag"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\MineCAD\Planner\test\TestTDictionary.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="TestTDictionary"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\MineCAD\Planner\test\TestGParameter.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="TestGParameter"/>
       </Unit6>
       <Unit7>
         <Filename Value="..\MineCAD\Planner\model\minecad.planner.model.generator.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="minecad.planner.model.generator"/>
       </Unit7>
       <Unit8>
         <Filename Value="..\MineCAD\Planner\model\minecad.planner.model.grid.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="minecad.planner.model.grid"/>
       </Unit8>
       <Unit9>
         <Filename Value="..\MineCAD\Planner\model\minecad.planner.model.cell.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="minecad.planner.model.cell"/>
       </Unit9>
       <Unit10>
         <Filename Value="..\MineCAD\Planner\data\minecad.planner.data.nbtblock.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="minecad.planner.data.nbtblock"/>
       </Unit10>
       <Unit11>
         <Filename Value="..\MineCAD\Planner\test\TestNBTBlock.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="TestNBTBlock"/>
       </Unit11>
       <Unit12>
         <Filename Value="..\MineCAD\Planner\data\dmGlobalData.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
-        <UnitName Value="dmGlobalData"/>
       </Unit12>
     </Units>
   </ProjectOptions>
@@ -134,12 +121,6 @@
         </Win32>
       </Options>
     </Linking>
-    <Other>
-      <CompilerMessages>
-        <MsgFileName Value=""/>
-      </CompilerMessages>
-      <CompilerPath Value="$(CompPath)"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">
