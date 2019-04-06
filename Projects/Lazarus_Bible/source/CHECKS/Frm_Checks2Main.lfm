@@ -1,25 +1,24 @@
 object frmChecks2Main: TfrmChecks2Main
   Left = 199
-  Height = 330
+  Height = 220
   Top = 99
-  Width = 498
+  Width = 332
   Caption = 'Checkmark Demonstration'
-  ClientHeight = 330
-  ClientWidth = 498
+  ClientHeight = 220
+  ClientWidth = 332
   Color = clBtnFace
-  DesignTimePPI = 144
   Font.Color = clWindowText
-  Font.Height = -20
+  Font.Height = -13
   Font.Name = 'System'
   Menu = MainMenu1
   object ShowButton: TButton
-    Left = 344
-    Height = 50
-    Top = 64
-    Width = 134
+    Left = 229
+    Height = 33
+    Top = 43
+    Width = 89
     Caption = 'Show level'
     Font.Color = clWindowText
-    Font.Height = -20
+    Font.Height = -13
     Font.Name = 'System'
     OnClick = ShowButtonClick
     ParentFont = False
@@ -27,26 +26,35 @@ object frmChecks2Main: TfrmChecks2Main
   end
   object CoolBar1: TCoolBar
     Left = 0
-    Height = 45
+    Height = 34
     Top = 0
-    Width = 498
+    Width = 332
     AutoSize = True
     Bands = <    
       item
         Control = ToolBar1
         Width = 254
       end>
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'System'
+    ParentFont = False
     object ToolBar1: TToolBar
       AnchorSideLeft.Control = CoolBar1
       AnchorSideTop.Control = CoolBar1
       Left = 24
-      Height = 35
+      Height = 24
       Top = 5
-      Width = 392
+      Width = 225
       Align = alNone
       BorderSpacing.Left = 22
       BorderSpacing.Top = 3
       Caption = 'ToolBar1'
+      Font.Color = clWindowText
+      Font.Height = -13
+      Font.Name = 'System'
+      ParentFont = False
+      ShowCaptions = True
       TabOrder = 0
       object ToolButton1: TToolButton
         Left = 1
@@ -57,7 +65,7 @@ object frmChecks2Main: TfrmChecks2Main
         Style = tbsCheck
       end
       object ToolButton2: TToolButton
-        Left = 36
+        Left = 24
         Top = 2
         Action = actLevel2
         Caption = '&2'
@@ -65,7 +73,7 @@ object frmChecks2Main: TfrmChecks2Main
         Style = tbsCheck
       end
       object ToolButton3: TToolButton
-        Left = 71
+        Left = 47
         Top = 2
         Action = actLevel3
         Caption = '&3'
@@ -73,7 +81,7 @@ object frmChecks2Main: TfrmChecks2Main
         Style = tbsCheck
       end
       object ToolButton4: TToolButton
-        Left = 106
+        Left = 70
         Top = 2
         Action = actLevel4
         Caption = '&4'
@@ -81,7 +89,7 @@ object frmChecks2Main: TfrmChecks2Main
         Style = tbsCheck
       end
       object ToolButton5: TToolButton
-        Left = 141
+        Left = 93
         Top = 2
         Action = actLevel5
         Caption = '&5'
@@ -89,7 +97,7 @@ object frmChecks2Main: TfrmChecks2Main
         Style = tbsCheck
       end
       object ToolButton6: TToolButton
-        Left = 176
+        Left = 116
         Top = 2
         Action = actLevel6
         Caption = '&6'
@@ -97,7 +105,7 @@ object frmChecks2Main: TfrmChecks2Main
         Style = tbsCheck
       end
       object ToolButton7: TToolButton
-        Left = 211
+        Left = 139
         Top = 2
         Action = actLevel7
         Caption = '&7'
@@ -105,7 +113,7 @@ object frmChecks2Main: TfrmChecks2Main
         Style = tbsCheck
       end
       object ToolButton8: TToolButton
-        Left = 246
+        Left = 162
         Top = 2
         Action = actLevel8
         Caption = '&8'
@@ -113,7 +121,7 @@ object frmChecks2Main: TfrmChecks2Main
         Style = tbsCheck
       end
       object ToolButton9: TToolButton
-        Left = 281
+        Left = 185
         Top = 2
         Action = actLevel9
         Caption = '&9'
@@ -123,22 +131,26 @@ object frmChecks2Main: TfrmChecks2Main
     end
   end
   object bvlInfo: TBevel
-    Left = 8
-    Height = 139
-    Top = 53
-    Width = 304
+    Left = 5
+    Height = 93
+    Top = 35
+    Width = 203
   end
   object lblInfo: TLabel
-    Left = 16
-    Height = 100
-    Top = 72
-    Width = 220
+    Left = 11
+    Height = 80
+    Top = 48
+    Width = 182
     Caption = 'Select a Level with:'#13#10'<Alt>-1 ...<Alt>-9'#13#10'or with the Level-Menue'#13#10'The Level-Selection act like '#13#10'Radiobuttons:'
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'System'
     ParentColor = False
+    ParentFont = False
   end
   object MainMenu1: TMainMenu
-    left = 108
-    top = 184
+    left = 72
+    top = 123
     object FileMenu: TMenuItem
       Caption = '&File'
       ShortCut = 112
@@ -225,8 +237,8 @@ object frmChecks2Main: TfrmChecks2Main
     end
   end
   object ActionList1: TActionList
-    left = 310
-    top = 160
+    left = 207
+    top = 107
     object actLevel1: TAction
       Category = 'Level'
       AutoCheck = True
