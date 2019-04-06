@@ -1,0 +1,63 @@
+object Form1: TForm1
+  Left = 667
+  Height = 860
+  Top = 37
+  Width = 1161
+  Caption = 'Form1'
+  ClientHeight = 860
+  ClientWidth = 1161
+  DesignTimePPI = 144
+  object pnlTop: TPanel
+    Left = 0
+    Height = 75
+    Top = 0
+    Width = 1161
+    Align = alTop
+    TabOrder = 0
+  end
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 75
+    Top = 785
+    Width = 1161
+    Align = alBottom
+    Caption = 'pnlBottom'
+    TabOrder = 1
+  end
+  object Panel3: TPanel
+    Left = 0
+    Height = 710
+    Top = 75
+    Width = 255
+    Align = alLeft
+    Caption = 'Panel3'
+    ClientHeight = 710
+    ClientWidth = 255
+    TabOrder = 2
+    object TreeView1: TTreeView
+      Left = 1
+      Height = 651
+      Top = 1
+      Width = 253
+      Align = alClient
+      TabOrder = 0
+    end
+    object BitBtn1: TBitBtn
+      Left = 7
+      Height = 45
+      Top = 658
+      Width = 241
+      Align = alBottom
+      BorderSpacing.Around = 6
+      Caption = 'BitBtn1'
+      OnClick = BitBtn1Click
+      TabOrder = 1
+    end
+  end
+  object PaintBox1: TPaintBox
+    Left = 536
+    Height = 158
+    Top = 576
+    Width = 158
+  end
+end
