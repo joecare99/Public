@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="103">
+    <Targets Count="104">
       <Target0 FileName="FPC\fpcTestAboutEx.lpi">
         <BuildModes Count="2"/>
         <Mode1 Name="Default"/>
@@ -165,370 +165,366 @@
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target28>
-      <Target29 FileName="FPC\Checks.lpi">
-        <BuildModes Count="3"/>
-        <Mode1 Name="Default" Compile="True"/>
-        <Mode2 Name="Debug"/>
-        <Mode3 Name="Release"/>
+      <Target29 FileName="FPC\fpcTestChecks.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
       </Target29>
-      <Target30 FileName="FPC\Checks2.lpi">
+      <Target30 FileName="FPC\Checks.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target30>
-      <Target31 FileName="FPC\Colorlib.lpi">
+      <Target31 FileName="FPC\Checks2.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target31>
-      <Target32 FileName="FPC\Combos.lpi">
+      <Target32 FileName="FPC\Colorlib.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target32>
-      <Target33 FileName="FPC\Compstrm.lpi">
+      <Target33 FileName="FPC\Combos.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target33>
-      <Target34 FileName="FPC\Constraint.lpi">
+      <Target34 FileName="FPC\Compstrm.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target34>
-      <Target35 FileName="FPC\Contcomp.lpi">
+      <Target35 FileName="FPC\Constraint.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target35>
-      <Target36 FileName="FPC\CoolDemo.lpi">
+      <Target36 FileName="FPC\Contcomp.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target36>
-      <Target37 FileName="FPC\Daynames.lpi">
+      <Target37 FileName="FPC\CoolDemo.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target37>
-      <Target38 FileName="FPC\Dclock.lpi">
+      <Target38 FileName="FPC\Daynames.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target38>
-      <Target39 FileName="FPC\DingPkg.lpk"/>
-      <Target40 FileName="FPC\DingButtonXControl.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
-      </Target40>
-      <Target41 FileName="FPC\Direx.lpi">
+      <Target39 FileName="FPC\Dclock.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
+      </Target39>
+      <Target40 FileName="FPC\DingPkg.lpk"/>
+      <Target41 FileName="FPC\DingButtonXControl.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
       </Target41>
-      <Target42 FileName="FPC\Direxec.lpi">
+      <Target42 FileName="FPC\Direx.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target42>
-      <Target43 FileName="FPC\Direxec2.lpi">
+      <Target43 FileName="FPC\Direxec.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target43>
-      <Target44 FileName="FPC\DMTest.lpi">
+      <Target44 FileName="FPC\Direxec2.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target44>
-      <Target45 FileName="FPC\Dragme.lpi">
+      <Target45 FileName="FPC\DMTest.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target45>
-      <Target46 FileName="FPC\Dropfile.lpi">
+      <Target46 FileName="FPC\Dragme.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target46>
-      <Target47 FileName="FPC\Enumfon.lpi">
+      <Target47 FileName="FPC\Dropfile.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target47>
-      <Target48 FileName="FPC\Enumwin.lpi">
+      <Target48 FileName="FPC\Enumfon.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target48>
-      <Target49 FileName="FPC\Except1.lpi">
+      <Target49 FileName="FPC\Enumwin.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target49>
-      <Target50 FileName="FPC\Except2.lpi">
+      <Target50 FileName="FPC\Except1.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target50>
-      <Target51 FileName="FPC\Except3.lpi">
+      <Target51 FileName="FPC\Except2.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target51>
-      <Target52 FileName="FPC\Exlist.lpi">
+      <Target52 FileName="FPC\Except3.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target52>
-      <Target53 FileName="FPC\Exwin.lpi">
+      <Target53 FileName="FPC\Exlist.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target53>
-      <Target54 FileName="FPC\Fancy.lpi">
+      <Target54 FileName="FPC\Exwin.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target54>
-      <Target55 FileName="FPC\Filemenu.lpi">
+      <Target55 FileName="FPC\Fancy.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target55>
-      <Target56 FileName="FPC\Findrepl.lpi">
+      <Target56 FileName="FPC\Filemenu.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target56>
-      <Target57 FileName="FPC\Fishy.lpi">
+      <Target57 FileName="FPC\Findrepl.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target57>
-      <Target58 FileName="FPC\Fishy2.lpi">
+      <Target58 FileName="FPC\Fishy.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target58>
-      <Target59 FileName="FPC\FontSamp.lpi">
+      <Target59 FileName="FPC\Fishy2.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target59>
-      <Target60 FileName="FPC\GlyphLst.lpi">
+      <Target60 FileName="FPC\FontSamp.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target60>
-      <Target61 FileName="FPC\Hello.lpi">
+      <Target61 FileName="FPC\GlyphLst.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target61>
-      <Target62 FileName="FPC\Keycount.lpi">
+      <Target62 FileName="FPC\Hello.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target62>
-      <Target63 FileName="FPC\Keyinfo.lpi">
+      <Target63 FileName="FPC\Keycount.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target63>
-      <Target64 FileName="FPC\Lister.lpi">
+      <Target64 FileName="FPC\Keyinfo.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target64>
-      <Target65 FileName="FPC\Listfont.lpi">
+      <Target65 FileName="FPC\Lister.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target65>
-      <Target66 FileName="FPC\Listtext.lpi">
+      <Target66 FileName="FPC\Listfont.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target66>
-      <Target67 FileName="FPC\Master.lpi">
+      <Target67 FileName="FPC\Listtext.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target67>
-      <Target68 FileName="FPC\MayTemp.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
-      </Target68>
-      <Target69 FileName="FPC\Mdidemo.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
-      </Target69>
-      <Target70 FileName="FPC\Mdidemo2.lpi">
+      <Target68 FileName="FPC\Master.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
+      </Target68>
+      <Target69 FileName="FPC\MayTemp.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target69>
+      <Target70 FileName="FPC\Mdidemo.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
       </Target70>
-      <Target71 FileName="FPC\MemInfo.lpi">
+      <Target71 FileName="FPC\Mdidemo2.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target71>
-      <Target72 FileName="FPC\Memopad.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
+      <Target72 FileName="FPC\MemInfo.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
       </Target72>
-      <Target73 FileName="FPC\Metamore.lpi">
+      <Target73 FileName="FPC\Memopad.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target73>
-      <Target74 FileName="FPC\MouseExcept.lpi">
+      <Target74 FileName="FPC\Metamore.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target74>
+      <Target75 FileName="FPC\MouseExcept.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
-      </Target74>
-      <Target75 FileName="FPC\Msgdlg.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
       </Target75>
-      <Target76 FileName="FPC\Multimen.lpi">
+      <Target76 FileName="FPC\Msgdlg.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target76>
-      <Target77 FileName="FPC\Nonclien.lpi">
+      <Target77 FileName="FPC\Multimen.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target77>
-      <Target78 FileName="FPC\Objlist.lpi">
+      <Target78 FileName="FPC\Nonclien.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target78>
-      <Target79 FileName="FPC\OleCont.lpi">
+      <Target79 FileName="FPC\Objlist.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target79>
-      <Target80 FileName="FPC\OleWord1.lpi">
+      <Target80 FileName="FPC\OleCont.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target80>
-      <Target81 FileName="FPC\OleWord2.lpi">
+      <Target81 FileName="FPC\OleWord1.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target81>
-      <Target82 FileName="FPC\Ontop.lpi">
+      <Target82 FileName="FPC\OleWord2.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target82>
-      <Target83 FileName="FPC\Options.lpi">
+      <Target83 FileName="FPC\Ontop.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target83>
-      <Target84 FileName="FPC\PageTab.lpi">
+      <Target84 FileName="FPC\Options.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target84>
-      <Target85 FileName="FPC\PageTabOD.lpi">
+      <Target85 FileName="FPC\PageTab.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target85>
-      <Target86 FileName="FPC\Palette.lpi">
+      <Target86 FileName="FPC\PageTabOD.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target86>
-      <Target87 FileName="FPC\PicDialogs.lpi">
+      <Target87 FileName="FPC\Palette.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target87>
-      <Target88 FileName="FPC\Polyflow.lpi">
+      <Target88 FileName="FPC\PicDialogs.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target88>
-      <Target89 FileName="FPC\PowerTest.lpi">
+      <Target89 FileName="FPC\Polyflow.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target89>
-      <Target90 FileName="FPC\Printgr.lpi">
+      <Target90 FileName="FPC\PowerTest.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target90>
-      <Target91 FileName="FPC\Prninfo.lpi">
+      <Target91 FileName="FPC\Printgr.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target91>
-      <Target92 FileName="FPC\Readme.lpi">
+      <Target92 FileName="FPC\Prninfo.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target92>
-      <Target93 FileName="FPC\Report1.lpi">
+      <Target93 FileName="FPC\Readme.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target93>
-      <Target94 FileName="FPC\Runme.lpi">
+      <Target94 FileName="FPC\Report1.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target94>
-      <Target95 FileName="FPC\Server1.lpi">
+      <Target95 FileName="FPC\Runme.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target95>
-      <Target96 FileName="FPC\Sketch.lpi">
+      <Target96 FileName="FPC\Server1.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target96>
+      <Target97 FileName="FPC\Sketch.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
-      </Target96>
-      <Target97 FileName="FPC\Spinbutt.lpi">
+      </Target97>
+      <Target98 FileName="FPC\Spinbutt.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
-      </Target97>
-      <Target98 FileName="FPC\Splashin.lpi">
-        <BuildModes Count="5"/>
-        <Mode1 Name="Default" Compile="True"/>
-        <Mode2 Name="Debug"/>
-        <Mode3 Name="Release"/>
-        <Mode4 Name="Debug1"/>
-        <Mode5 Name="Release1"/>
       </Target98>
-      <Target99 FileName="FPC\Sqlplay.lpi">
+      <Target99 FileName="FPC\Splashin.lpi">
         <BuildModes Count="5"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
@@ -536,19 +532,27 @@
         <Mode4 Name="Debug1"/>
         <Mode5 Name="Release1"/>
       </Target99>
-      <Target100 FileName="FPC\WinesEntry.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
+      <Target100 FileName="FPC\Sqlplay.lpi">
+        <BuildModes Count="5"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+        <Mode4 Name="Debug1"/>
+        <Mode5 Name="Release1"/>
       </Target100>
-      <Target101 FileName="FPC\YesNoTest.lpi">
+      <Target101 FileName="FPC\WinesEntry.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target101>
-      <Target102 FileName="FPC\fpcTestAll.lpi">
+      <Target102 FileName="FPC\YesNoTest.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target102>
+      <Target103 FileName="FPC\fpcTestAll.lpi">
         <BuildModes Count="2"/>
         <Mode1 Name="Default"/>
         <Mode2 Name="Debug"/>
-      </Target102>
+      </Target103>
     </Targets>
   </ProjectGroup>
 </CONFIG>
