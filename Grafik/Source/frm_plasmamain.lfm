@@ -1,0 +1,76 @@
+object Form1: TForm1
+  Left = 783
+  Height = 371
+  Top = 241
+  Width = 507
+  Caption = 'Form1'
+  ClientHeight = 371
+  ClientWidth = 507
+  OnCreate = FormCreate
+  LCLVersion = '1.2.6.0'
+  object PaintBox1: TPaintBox
+    Left = 8
+    Height = 300
+    Top = 8
+    Width = 300
+    OnPaint = PaintBox1Paint
+  end
+  object BitBtn1: TBitBtn
+    Left = 320
+    Height = 30
+    Top = 8
+    Width = 75
+    Caption = 'BitBtn1'
+    OnClick = BitBtn1Click
+    TabOrder = 0
+  end
+  object BitBtn2: TBitBtn
+    Left = 320
+    Height = 30
+    Top = 40
+    Width = 75
+    Caption = 'BitBtn2'
+    OnClick = BitBtn2Click
+    TabOrder = 1
+  end
+  object BitBtn3: TBitBtn
+    Left = 320
+    Height = 30
+    Top = 72
+    Width = 75
+    Caption = 'BitBtn3'
+    OnClick = BitBtn3Click
+    TabOrder = 2
+  end
+  object BitBtn4: TBitBtn
+    Left = 400
+    Height = 30
+    Top = 72
+    Width = 75
+    Caption = 'BitBtn4'
+    OnClick = BitBtn4Click
+    TabOrder = 3
+  end
+  object BitBtn5: TBitBtn
+    Left = 400
+    Height = 30
+    Top = 8
+    Width = 75
+    Caption = 'BitBtn5'
+    OnClick = BitBtn5Click
+    TabOrder = 4
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 200
+    OnTimer = Timer1Timer
+    left = 288
+    top = 72
+  end
+  object IdleTimer1: TIdleTimer
+    Interval = 40
+    OnTimer = Timer1Timer
+    left = 288
+    top = 120
+  end
+end
