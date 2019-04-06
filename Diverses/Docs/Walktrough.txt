@@ -43,6 +43,8 @@ Obfuscation Chars:
 | |_| | |   |  _| 1000101011101100
 |_ _ _|_ _|_ _ _| 0101000100010100
 
+322
+111
 function TMyClass.hash(aValue:integer):integer;
  
 begin
