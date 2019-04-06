@@ -1,113 +1,115 @@
 object MainForm: TMainForm
   Left = 199
-  Height = 249
+  Height = 166
   Top = 99
-  Width = 460
+  Width = 307
   Caption = 'Checkmark Demonstration'
-  ClientHeight = 249
-  ClientWidth = 460
+  ClientHeight = 166
+  ClientWidth = 307
   Color = clBtnFace
-  DesignTimePPI = 144
   Font.Color = clWindowText
-  Font.Height = -20
+  Font.Height = -13
   Font.Name = 'System'
-  Menu = MainMenu1
-  object ShowButton: TButton
-    Left = 288
-    Height = 50
-    Top = 36
-    Width = 134
+  Menu = mnuMainMenu1
+  object btnShowButton: TButton
+    Left = 192
+    Height = 33
+    Top = 24
+    Width = 89
     Caption = 'Show level'
     Font.Color = clWindowText
-    Font.Height = -20
+    Font.Height = -13
     Font.Name = 'System'
-    OnClick = ShowButtonClick
+    OnClick = btnShowButtonClick
     ParentFont = False
     TabOrder = 0
   end
   object bvlInfo: TBevel
-    Left = 8
-    Height = 139
-    Top = 21
-    Width = 240
+    Left = 5
+    Height = 93
+    Top = 14
+    Width = 160
   end
   object lblInfo: TLabel
-    Left = 16
-    Height = 100
-    Top = 40
-    Width = 220
+    Left = 11
+    Height = 80
+    Top = 27
+    Width = 182
     Caption = 'Select a Level with:'#13#10'<Alt>-0 ...<Alt>-9'#13#10'or with the Level-Menue'#13#10'The Level-Selection act like '#13#10'Radiobuttons:'
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'System'
     ParentColor = False
-    OnClick = lblInfoClick
+    ParentFont = False
   end
-  object MainMenu1: TMainMenu
-    left = 320
-    top = 104
-    object FileMenu: TMenuItem
+  object mnuMainMenu1: TMainMenu
+    left = 213
+    top = 69
+    object mniFileMenu: TMenuItem
       Caption = '&File'
       ShortCut = 112
-      object FileExit: TMenuItem
+      object mniFileExit: TMenuItem
         Caption = 'E&xit'
         ShortCut = 32856
-        OnClick = FileExitClick
+        OnClick = mniFileExitClick
       end
     end
-    object LevelMenu: TMenuItem
+    object mniLevelMenu: TMenuItem
       Caption = '&Level'
-      object Level1: TMenuItem
+      object mniLevel1: TMenuItem
         Caption = 'Level &1'
         ShortCut = 32817
         OnClick = LevelClick
       end
-      object Level2: TMenuItem
+      object mniLevel2: TMenuItem
         Caption = 'Level &2'
         ShortCut = 32818
         OnClick = LevelClick
       end
-      object Level3: TMenuItem
+      object mniLevel3: TMenuItem
         Caption = 'Level &3'
         ShortCut = 32819
         OnClick = LevelClick
       end
-      object Level4: TMenuItem
+      object mniLevel4: TMenuItem
         Caption = 'Level &4'
         ShortCut = 32820
         OnClick = LevelClick
       end
-      object Level5: TMenuItem
+      object mniLevel5: TMenuItem
         Caption = 'Level &5'
         Checked = True
         ShortCut = 32821
         OnClick = LevelClick
       end
-      object Level6: TMenuItem
+      object mniLevel6: TMenuItem
         Caption = 'Level &6'
         ShortCut = 32822
         OnClick = LevelClick
       end
-      object Level7: TMenuItem
+      object mniLevel7: TMenuItem
         Caption = 'Level &7'
         ShortCut = 32823
         OnClick = LevelClick
       end
-      object Level8: TMenuItem
+      object mniLevel8: TMenuItem
         Caption = 'Level &8'
         ShortCut = 32824
         OnClick = LevelClick
       end
-      object Level9: TMenuItem
+      object mniLevel9: TMenuItem
         Caption = 'Level &9'
         ShortCut = 32825
         OnClick = LevelClick
       end
-      object N1: TMenuItem
+      object mniN1: TMenuItem
         Caption = '-'
       end
-      object LevelInsert: TMenuItem
+      object mniLevelInsert: TMenuItem
         Caption = '&Insert'
         Checked = True
         ShortCut = 45
-        OnClick = LevelInsertClick
+        OnClick = mniLevelInsertClick
       end
     end
   end
