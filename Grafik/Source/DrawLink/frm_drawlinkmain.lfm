@@ -1,0 +1,59 @@
+object frmDrawLinkMain: TfrmDrawLinkMain
+  Left = 0
+  Height = 413
+  Top = 0
+  Width = 623
+  ActiveControl = ButtonPanel1.HelpButton
+  Caption = 'frmDrawLinkMain'
+  ClientHeight = 413
+  ClientWidth = 623
+  OnCreate = FormCreate
+  LCLVersion = '1.6.0.4'
+  Visible = False
+  object ButtonPanel1: TButtonPanel
+    Left = 6
+    Height = 48
+    Top = 316
+    Width = 611
+    OKButton.Name = 'OKButton'
+    OKButton.DefaultCaption = True
+    HelpButton.Name = 'HelpButton'
+    HelpButton.DefaultCaption = True
+    CloseButton.Name = 'CloseButton'
+    CloseButton.DefaultCaption = True
+    CancelButton.Name = 'CancelButton'
+    CancelButton.DefaultCaption = True
+    TabOrder = 0
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 43
+    Top = 370
+    Width = 623
+    Panels = <    
+      item
+        Width = 50
+      end    
+      item
+        Width = 50
+      end    
+      item
+        Width = 50
+      end>
+    SimplePanel = False
+  end
+  object PaintBox1: TPaintBox
+    Left = 0
+    Height = 310
+    Top = 0
+    Width = 623
+    Align = alClient
+    OnPaint = PaintBox1Paint
+  end
+  object Timer1: TTimer
+    Interval = 50
+    OnTimer = Timer1Timer
+    left = 568
+    top = 296
+  end
+end
