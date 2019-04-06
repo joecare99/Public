@@ -1,0 +1,8 @@
+object Form1: TForm1
+  Left = 539
+  Height = 644
+  Top = 232
+  Width = 934
+  Caption = 'Form1'
+  Color = clGreen
+end
