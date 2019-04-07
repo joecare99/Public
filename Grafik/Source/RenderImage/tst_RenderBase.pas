@@ -291,9 +291,9 @@ var
   i: Integer;
   lFTupple:TFTuple;
 begin
- CheckEquals(FTuple(0,0),ZeroTup.VMul(ZeroTup),1e-20,'ZeroTup - ZeroTup');
+ CheckEquals(FTuple(0,0),ZeroTup.VMul(ZeroTup),1e-20,'ZeroTup x ZeroTup');
  FFtupple.init(0,0);
- CheckEquals(FTuple(0,0),FFtupple.VMul(ZeroTup),1e-20,'init(0,0) - ZeroTup');
+ CheckEquals(FTuple(0,0),FFtupple.VMul(ZeroTup),1e-20,'init(0,0) x ZeroTup');
  FFtupple.init(1.0,-1.0);
  CheckEquals(FTuple(0.0,-4.0),FFtupple.VMul(FTuple(2.0,-2.0)),1e-20,'init(1.0,-1.0).VMul(<2,-2>)');
  CheckEquals(1.0,FFtupple.v[0],format('init(%f,%f).v[0]',[1.0,-1.0]));
@@ -316,8 +316,43 @@ begin
 end;
 
 procedure TTestRenderBase.TestEquals;
+var
+  x1, y1,x2,y2: Extended;
+  i: Integer;
+  lFTupple:TFTuple;
 begin
-
+ CheckEquals(true,ZeroTup.Equals(ZeroTup,1e-20),'ZeroTup = ZeroTup');
+ FFtupple.init(0,0);
+ CheckEquals(true,FFtupple.Equals(ZeroTup,1e-20),'init(0,0) = ZeroTup');
+ FFtupple.init(1.0,-1.0);
+ CheckEquals(false,FFtupple.Equals(FTuple(2.0,-2.0),1e-20),'init(1.0,-1.0).Equals(<2,-2>)');
+ CheckEquals(1.0,FFtupple.v[0],format('init(%f,%f).v[0]',[1.0,-1.0]));
+ CheckEquals(-1.0,FFtupple.v[1],format('init(%f,%f).v[1]',[1.0,-1.0]));
+ FFtupple.init(23.0,17.0);
+ CheckEquals(false,FFtupple.Equals(FTuple(3.0,-3.0),1e-20),'init(23.0,17.0).Equals(<-3,3>)');
+ FFtupple.init(23.0,17.0);
+ CheckEquals(false,FFtupple.Equals(FTuple(23.0,-3.0),1e-20),'init(23.0,17.0).Equals(<23,3>)');
+ FFtupple.init(23.0,17.0);
+ CheckEquals(false,FFtupple.Equals(FTuple(3.0,17.0),1e-20),'init(23.0,17.0).Equals(<-3,17>)');
+ for i := 0 to 50000 do
+   begin
+     x1:= (random-0.5)*maxLongint;
+     y1:= (random-0.5)*maxLongint;
+     if random >0.5 then
+       begin
+     x2:= (random-0.5)*maxLongint;
+     y2:= (random-0.5)*maxLongint;
+       end
+     else
+       begin
+         x2:=x1;
+         y2:=y1;
+       end;
+     FFtupple.init(x1,y1);
+     lFTupple.INit(x2,y2);
+     CheckEquals((abs(x1-x2)<1e-20) and (abs(y1-y2)<1e-20),FFtupple.Equals(lFTupple,1e-20),format('init(%f,%f).Equals(%f,%f)',[x1,y1,x2,y2]));
+     CheckEquals(FTuple(x1,y1),FFtupple,1e-20,format('FTupple=(%f,%f)',[x1,y1]));
+   end;
 end;
 
 procedure TTestRenderBase.TestCopy;

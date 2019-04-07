@@ -135,7 +135,7 @@ end;
 
 function TFTuple.Equals(const probe: TFtuple; eps: extended): boolean;
 begin
-  result := ((probe.X-x) < eps) and ((probe.y-y) < eps);
+  result := (abs(probe.X-x) < eps) and (abs(probe.y-y) < eps);
 end;
 
 function TFTuple.Copy(nx, ny: extended): TFTuple;
