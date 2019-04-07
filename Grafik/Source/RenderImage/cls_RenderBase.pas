@@ -21,6 +21,7 @@ type
     function Mul(const fak:TFtuple):extended;overload;
 //    function Div(const div:TFtuple):TFTuple;overload;
     function Mul(const fak:extended):TFTuple;overload;
+    function MulTo(const fak:extended):TFTuple;overload;
     function Divide(const divs:extended):TFTuple;overload;
     function VMul(const fak:TFtuple):TFTuple;overload;
     function Equals(const probe:TFtuple;eps:extended):boolean;overload;
@@ -111,6 +112,13 @@ function TFTuple.Mul(const fak: extended): TFTuple;
 begin
   result.x:=x*fak;
   result.Y:=y*fak;
+end;
+
+function TFTuple.MulTo(const fak: extended): TFTuple;
+begin
+  x:=x*fak;
+  Y:=y*fak;
+  result := self;
 end;
 
 function TFTuple.Divide(const divs: extended): TFTuple;
