@@ -15,7 +15,9 @@ type
     function ToString:string;
     procedure Init(const aX, aY: extended);
     function Add(const sum:TFtuple):TFTuple;
+    function AddTo(const sum:TFtuple):TFTuple;
     function Subt(const dmin:TFtuple):TFTuple;
+    function SubtTo(const dmin:TFtuple):TFTuple;
     function Mul(const fak:TFtuple):extended;overload;
 //    function Div(const div:TFtuple):TFTuple;overload;
     function Mul(const fak:extended):TFTuple;overload;
@@ -80,10 +82,24 @@ begin
   result.y := y+sum.y;
 end;
 
+function TFTuple.AddTo(const sum: TFtuple): TFTuple;
+begin
+  x := x+ sum.x;
+  y := Y+ sum.y;
+  result := Self;
+end;
+
 function TFTuple.Subt(const dmin: TFtuple): TFTuple;
 begin
   result.x := x-dmin.x;
   result.y := y-dmin.y;
+end;
+
+function TFTuple.SubtTo(const dmin: TFtuple): TFTuple;
+begin
+  x := x-dmin.x;
+  y := y-dmin.y;
+  result := self;
 end;
 
 function TFTuple.Mul(const fak: TFtuple): extended;
