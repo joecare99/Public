@@ -14,6 +14,7 @@ type
   TFTuple=record
     function ToString:string;
     procedure Init(const aX, aY: extended);
+    procedure InitDirLen(const Dir, Len: extended);
     function Add(const sum:TFtuple):TFTuple;
     function AddTo(const sum:TFtuple):TFTuple;
     function Subt(const dmin:TFtuple):TFTuple;
@@ -29,6 +30,7 @@ type
     class Function Copy(Vect: TFTuple): TFTuple;static; overload;
     Function Copy: TFTuple; overload;
     function GLen:Extended ;
+    function GDir: Extended;
     function MLen: Extended;
     case Boolean of
     true:(X,Y:Extended);
@@ -75,6 +77,12 @@ procedure TFTuple.Init(const aX, aY: extended);
 begin
   x:= ax;
   y:=ay;
+end;
+
+procedure TFTuple.InitDirLen(const Dir, Len: extended);
+begin
+  X := cos(Dir)*Len;
+  y := sin(Dir)*Len;
 end;
 
 function TFTuple.Add(const sum: TFtuple): TFTuple;
@@ -158,6 +166,35 @@ end;
 function TFTuple.GLen: Extended;
 begin
   result := sqrt(sqr(x)+sqr(y));
+end;
+
+function TFTuple.GDir: Extended;
+var
+  lLen: Extended;
+begin
+  lLen := glen;
+  if llen = 0.0 then
+    begin
+      result := 0.0;
+    end
+  else
+    if abs(x)>abs(y) then
+      begin
+        if x>0 then
+          result := arctan(y/x)
+        else if Y>=0 then
+          result := pi - arctan(-y/x)
+         else
+          result := -pi - arctan(-y/x)
+      end
+    else
+      begin
+        if y>0 then
+          result := 0.5*pi-arctan(x/y)
+        else
+          result := -0.5*pi + arctan(-x/y)
+      end
+
 end;
 
 function TFTuple.MLen: Extended;

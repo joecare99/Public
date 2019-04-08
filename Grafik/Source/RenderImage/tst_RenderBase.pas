@@ -36,6 +36,7 @@ type
     Procedure TestCopy2;
     Procedure TestCopy3;
     Procedure TestGLen;
+    Procedure TestGDir;
     Procedure TestMLen;
   end;
 
@@ -477,6 +478,72 @@ begin
      FFtupple.init(x1,y1);
      lFTupple.INit(x2,y2);
      CheckEquals(sqrt(sqr(x1)+sqr(y1)),FFtupple.GLen,1e-20,format('init(%f,%f).GLen',[x1,y1]));
+     CheckEquals(FTuple(x1,y1),FFtupple,1e-20,format('FTupple=(%f,%f)',[x1,y1]));
+   end;
+end;
+
+procedure TTestRenderBase.TestGDir;
+var
+  x1, y1,x2,y2: Extended;
+  i: Integer;
+  lFTupple:TFTuple;
+begin
+ CheckEquals(0.0,ZeroTup.GDir,1e-20,'ZeroTup.GDir');
+ FFtupple.init(0,0);
+ CheckEquals(0.0,FFtupple.GDir,1e-20,'init(0,0).GDir');
+// Check Well Known Values
+ FFtupple.init(1.0,0.0);
+ CheckEquals(0.0,FFtupple.GDir,1e-15,'init(1.0,0.0).GDir');
+ FFtupple.init(sqrt(3/4),0.5);  // 30°
+ CheckEquals(pi/6,FFtupple.GDir,1e-15,'init(0.866,0.5).GDir');
+ CheckEquals(sqrt(3/4),FFtupple.v[0],format('init(%f,%f).v[0]',[1.0,-1.0]));
+ CheckEquals(0.5,FFtupple.v[1],format('init(%f,%f).v[1]',[1.0,-1.0]));
+ FFtupple.init(1.0,1.0);    // 45°
+ CheckEquals(pi/4,FFtupple.GDir,1e-15,'init(1.0,1.0).GDir');
+ FFtupple.init(0.5,sqrt(3/4)); // 60°
+ CheckEquals(pi/3,FFtupple.GDir,1e-15,'init(0.5,0.866).GDir');
+ FFtupple.init(0.0,1.0);  // 90°
+ CheckEquals(pi/2,FFtupple.GDir,1e-15,'init(0.0,1.0).GDir');
+ FFtupple.init(-0.5,sqrt(3/4)); // 120°
+ CheckEquals(2*pi/3,FFtupple.GDir,1e-15,'init(-0.5,0.866).GDir');
+ FFtupple.init(-1.0,1.0);  // 135°
+ CheckEquals(3*pi/4,FFtupple.GDir,1e-15,'init(-1.0,1.0).GDir');
+ FFtupple.init(-sqrt(3/4),0.5); // 150°
+ CheckEquals(5*pi/6,FFtupple.GDir,1e-15,'init(-0.866,0.5).GDir');
+ FFtupple.init(-1.0,0.0);  // 180°
+ CheckEquals(pi,FFtupple.GDir,1e-15,'init(-1.0,0.0).GDir');
+ FFtupple.init(-sqrt(3/4),-0.5);  // -150°
+ CheckEquals(-5*pi/6,FFtupple.GDir,1e-15,'init(-0.866,-0.5).GDir');
+ FFtupple.init(-1.0,-1.0);  // -135°
+ CheckEquals(-3*pi/4,FFtupple.GDir,1e-15,'init(-1.0,-1.0).GDir');
+ FFtupple.init(-0.5,-sqrt(3/4)); // -120°
+ CheckEquals(-2*pi/3,FFtupple.GDir,1e-15,'init(-0.5,-0.866).GDir');
+ FFtupple.init(0.0,-1.0);  // -90°
+ CheckEquals(-pi/2,FFtupple.GDir,1e-15,'init(0.0,-1.0).GDir');
+ FFtupple.init(0.5,-sqrt(3/4)); // -60°
+ CheckEquals(-pi/3,FFtupple.GDir,1e-15,'init(0.5,-0.866).GDir');
+ FFtupple.init(1.0,-1.0);    // -45°
+ CheckEquals(-pi/4,FFtupple.GDir,1e-15,'init(1.0,-1.0).GDir');
+ FFtupple.init(sqrt(3/4),-0.5);  // -30°
+ CheckEquals(-pi/6,FFtupple.GDir,1e-15,'init(0.866,-0.5).GDir');
+// Some other Values
+ FFtupple.init(23.0,17.0);
+ CheckEquals(0.636508215787951,FFtupple.GDir,1e-15,'init(23.0,17.0).GDir');
+ FFtupple.init(-23.0,17.0);
+ CheckEquals(pi-0.636508215787951,FFtupple.GDir,1e-15,'init(-23.0,17.0).GDir');
+ FFtupple.init(13.0,17.0);
+ CheckEquals(0.917949695694122,FFtupple.GDir,1e-15,'init(13.0,17.0).GDir');
+ FFtupple.init(-13.0,-17.0);
+ CheckEquals(-pi+0.917949695694122,FFtupple.GDir,1e-15,'init(-13.0,-17.0).GDir');
+ for i := 0 to 50000 do
+   begin
+     y2:= (random-0.5)*pi*2;
+     x2:= (random+1e-15)*maxLongint;
+     x1:= cos(y2)*x2;
+     y1:= sin(y2)*x2;;
+     FFtupple.init(x1,y1);
+     lFTupple.INit(x2,y2);
+     CheckEquals(y2,FFtupple.GDir,1e-15,format('init(%f,%f).GDir',[x1,y1]));
      CheckEquals(FTuple(x1,y1),FFtupple,1e-20,format('FTupple=(%f,%f)',[x1,y1]));
    end;
 end;
