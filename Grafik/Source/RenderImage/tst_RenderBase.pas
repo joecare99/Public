@@ -66,7 +66,7 @@ begin
      x1:= (random-0.5)*maxLongint;
      y1:= (random-0.5)*maxLongint;
      FFtupple.init(x1,y1);
-     CheckEquals('<'+floattostr(x1)+'; '+floattostr(y1)+'>';,FFtupple.Tostring,format('init(%f,%f)',[x1,y1]));
+     CheckEquals('<'+floattostr(x1)+'; '+floattostr(y1)+'>',FFtupple.Tostring,format('init(%f,%f)',[x1,y1]));
      CheckEquals(x1,FFtupple.x,format('init(%f,%f).x',[x1,y1]));
      CheckEquals(y1,FFtupple.y,format('init(%f,%f).y',[x1,y1]));
    end;
