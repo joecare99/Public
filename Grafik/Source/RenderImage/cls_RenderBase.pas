@@ -44,6 +44,10 @@ type
     function ToString:string;
     procedure Init(const aX, aY, aZ: extended);
     procedure InitDirLen(const Len, DirZ, DirX: extended);
+    function Add(const sum:TFtriple):TFTriple;
+    function AddTo(const sum:TFtriple):TFTriple;
+    function Subt(const dmin:TFtriple):TFTriple;
+    function SubtTo(const dmin:TFtriple):TFTriple;
     case Boolean of
     true:(X,Y,Z:Extended);
     false:(V:array[0..2] of Extended);
@@ -100,6 +104,37 @@ begin
   x:= cos(Dirz)*Len;
   y:= sin(DirZ) * len * cos(dirX);
   Z:= sin(DirZ) * len * Sin(dirX);
+end;
+
+function TFTriple.Add(const sum: TFtriple): TFTriple;
+begin
+  Result.x:=x+sum.x;
+  Result.y:=y+sum.y;
+  Result.z:=z+sum.z;
+end;
+
+function TFTriple.AddTo(const sum: TFtriple): TFTriple;
+begin
+  x:=x+sum.x;
+  y:=y+sum.y;
+  z:=z+sum.z;
+  result := self;
+end;
+
+function TFTriple.Subt(const dmin: TFtriple): TFTriple;
+begin
+  Result.x:=x-dmin.x;
+  Result.y:=y-dmin.y;
+  Result.z:=z-dmin.z;
+
+end;
+
+function TFTriple.SubtTo(const dmin: TFtriple): TFTriple;
+begin
+  x:=x-dmin.x;
+  y:=y-dmin.y;
+  z:=z-dmin.z;
+  result := self;
 end;
 
 function TFTuple.ToString: string;
