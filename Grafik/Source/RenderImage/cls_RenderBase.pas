@@ -48,6 +48,11 @@ type
     function AddTo(const sum:TFtriple):TFTriple;
     function Subt(const dmin:TFtriple):TFTriple;
     function SubtTo(const dmin:TFtriple):TFTriple;
+    function Mul(const fak:TFtriple):extended;overload;
+//    function Div(const div:TFtriple):TFTriple;overload;
+    function Mul(const fak:extended):TFTriple;overload;
+    function MulTo(const fak:extended):TFTriple;overload;
+    function Divide(const divs:extended):TFTriple;overload;
     case Boolean of
     true:(X,Y,Z:Extended);
     false:(V:array[0..2] of Extended);
@@ -135,6 +140,33 @@ begin
   y:=y-dmin.y;
   z:=z-dmin.z;
   result := self;
+end;
+
+function TFTriple.Mul(const fak: TFtriple): extended;
+begin
+    result := x*fak.x + y*fak.y + z*fak.z
+end;
+
+function TFTriple.Mul(const fak: extended): TFTriple;
+begin
+  result.x:=x*fak;
+  result.Y:=y*fak;
+  result.z:=z*fak;
+end;
+
+function TFTriple.MulTo(const fak: extended): TFTriple;
+begin
+  x:=x*fak;
+  Y:=y*fak;
+  z:=z*fak;
+  result := self;
+end;
+
+function TFTriple.Divide(const divs: extended): TFTriple;
+begin
+   result.x:=x/divs;
+   result.Y:=y/divs;
+   result.z:=z/divs;
 end;
 
 function TFTuple.ToString: string;
