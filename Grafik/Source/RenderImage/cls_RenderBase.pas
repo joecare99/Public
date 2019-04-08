@@ -38,17 +38,24 @@ type
   end;
   PFTuple=^TFTuple;
 
+  { TFTriple }
+
   TFTriple=record
+    function ToString:string;
+    procedure Init(const aX, aY, aZ: extended);
+    procedure InitDirLen(const Len, DirZ, DirX: extended);
     case Boolean of
     true:(X,Y,Z:Extended);
     false:(V:array[0..2] of Extended);
   end;
+  PFTriple=^TFTriple;
 
   TRenderBaseObject=class
 
   end;
 
 function FTuple(const x,y:extended):TFTuple;inline;
+function FTriple(const x,y,z:extended):TFTriple;inline;
 
 const ZeroTup:TFTuple=(x:0.0;y:0.0);
       ZeroTrp:TFTriple=(x:0.0;y:0.0;z:0.0);
@@ -60,12 +67,39 @@ uses math;
 
 resourceString
   rsTupleToString='<%0:f; %1:f>';
+  rsTripleToString='<%0:f; %1:f; %2:f>';
 
 var vfs:TFormatSettings;
 
 function FTuple(const x, y: extended): TFTuple;
 begin
   result.init(x,y);
+end;
+
+function FTriple(const x, y, z: extended): TFTriple;
+begin
+   result.init(x,y,z);
+end;
+
+{ TFTriple }
+
+function TFTriple.ToString: string;
+begin
+   result := format(rsTripleToString,[x,y,z],vfs);
+end;
+
+procedure TFTriple.Init(const aX, aY, aZ: extended);
+begin
+  x:=ax;
+  y:=ay;
+  z:=az;
+end;
+
+procedure TFTriple.InitDirLen(const Len, DirZ, DirX: extended);
+begin
+  x:= cos(Dirz)*Len;
+  y:= sin(DirZ) * len * cos(dirX);
+  Z:= sin(DirZ) * len * Sin(dirX);
 end;
 
 function TFTuple.ToString: string;

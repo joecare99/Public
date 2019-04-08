@@ -55,6 +55,21 @@ procedure TTestRenderBase.TestToString;
 begin
  CheckEquals('<0.00; 0.00>',FFtupple.ToString,'FFtupple.ToString');
  CheckEquals('<0.00; 0.00>',ZeroTup.ToString,'ZeroTup.ToString');
+ FFtupple.init(1.0,-1.0);
+ CheckEquals('<1.00; -1.00>',FFtupple.ToString,'init(1.0,-1.0).ToString');
+ CheckEquals(1.0,FFtupple.v[0],format('init(%f,%f).v[0]',[1.0,-1.0]));
+ CheckEquals(-1.0,FFtupple.v[1],format('init(%f,%f).v[1]',[1.0,-1.0]));
+ FFtupple.init(23.0,17.0);
+ CheckEquals('<23.00; 17.00>',FFtupple.ToString,'init(23.0,17.0).ToString');
+ for i := 0 to 50000 do
+   begin
+     x1:= (random-0.5)*maxLongint;
+     y1:= (random-0.5)*maxLongint;
+     FFtupple.init(x1,y1);
+     CheckEquals('<'+floattostr(x1)+'; '+floattostr(y1)+'>';,FFtupple.Tostring,format('init(%f,%f)',[x1,y1]));
+     CheckEquals(x1,FFtupple.x,format('init(%f,%f).x',[x1,y1]));
+     CheckEquals(y1,FFtupple.y,format('init(%f,%f).y',[x1,y1]));
+   end;
 end;
 
 procedure TTestRenderBase.TestInit;

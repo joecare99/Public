@@ -3,7 +3,7 @@ program fpcTestRenderBase;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, tst_RenderBase;
+  Interfaces, Forms, GuiTestRunner, tst_RenderBase2;
 
 {$R *.res}
 
