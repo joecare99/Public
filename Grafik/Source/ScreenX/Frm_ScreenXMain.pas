@@ -67,7 +67,7 @@ implementation
 uses graph, Math;
 
 {$IFnDEF FPC}
-  {$R *.dfm}
+  {$R *.lfm}
 
 {$ELSE}
   {$R *.lfm}

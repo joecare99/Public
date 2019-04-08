@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -33,9 +33,10 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="2">
       <Item1>
@@ -51,14 +52,14 @@
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Source\Frm_ScreenXMain.pas"/>
+        <Filename Value="..\Source\ScreenX\Frm_ScreenXMain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FrmScreenXMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\Source\Unt_RenderTask.pas"/>
+        <Filename Value="..\Source\ScreenX\Unt_RenderTask.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
     </Units>
@@ -71,7 +72,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="..\..\include;..\Source;$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source"/>
+      <OtherUnitFiles Value="..\Source;..\Source\ScreenX"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Parsing>
