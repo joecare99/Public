@@ -53,6 +53,7 @@ type
     function Mul(const fak:extended):TFTriple;overload;
     function MulTo(const fak:extended):TFTriple;overload;
     function Divide(const divs:extended):TFTriple;overload;
+    function XMul(const fak:TFTriple):TFTriple;overload;
     case Boolean of
     true:(X,Y,Z:Extended);
     false:(V:array[0..2] of Extended);
@@ -167,6 +168,13 @@ begin
    result.x:=x/divs;
    result.Y:=y/divs;
    result.z:=z/divs;
+end;
+
+function TFTriple.XMul(const fak: TFTriple): TFTriple;
+begin
+  result.x := y*fak.z-z*fak.y;
+  result.y := Z*fak.X-x*fak.z;
+  result.z := x*fak.y-y*fak.x;
 end;
 
 function TFTuple.ToString: string;
