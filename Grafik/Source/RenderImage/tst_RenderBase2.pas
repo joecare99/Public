@@ -366,7 +366,7 @@ end;
 
 procedure TTestRenderBase2.TestEquals;
 var
-  x1, y1,x2,y2: Extended;
+  x1, y1,x2,y2, z1, z2: Extended;
   i: Integer;
   lFTriple:TFTriple;
 begin
@@ -380,22 +380,27 @@ begin
  FFtriple.init(23.0,17.0,13.0);
  CheckEquals(false,FFtriple.Equals(FTriple(3.0,-3.0,1.5),1e-20),'init(23.0,17.0,13.0).Equals(<-3,3>)');
  FFtriple.init(23.0,17.0,13.0);
- CheckEquals(false,FFtriple.Equals(FTriple(23.0,-3.0),1e-20),'init(23.0,17.0,13.0).Equals(<23,3>)');
+ CheckEquals(false,FFtriple.Equals(FTriple(23.0,-3.0,13.0),1e-20),'init(23.0,17.0,13.0).Equals(<23,3>)');
  FFtriple.init(23.0,17.0,13.0);
- CheckEquals(false,FFtriple.Equals(FTriple(3.0,17.0),1e-20),'init(23.0,17.0,13.0).Equals(<-3,17>)');
+ CheckEquals(false,FFtriple.Equals(FTriple(3.0,17.0,13.0),1e-20),'init(23.0,17.0,13.0).Equals(<-3,17>)');
+ FFtriple.init(23.0,17.0,13.0);
+ CheckEquals(false,FFtriple.Equals(FTriple(23.0,17.0,3.0),1e-20),'init(23.0,17.0,13.0).Equals(<-3,17>)');
  for i := 0 to 50000 do
    begin
      x1:= (random-0.5)*maxLongint;
      y1:= (random-0.5)*maxLongint;
+     z1:= (random-0.5)*maxLongint;
      if random >0.5 then
        begin
      x2:= (random-0.5)*maxLongint;
      y2:= (random-0.5)*maxLongint;
+     z2:= (random-0.5)*maxLongint;
        end
      else
        begin
          x2:=x1;
          y2:=y1;
+         z2:=z1;
        end;
      FFtriple.init(x1,y1,z1);
      lFTriple.INit(x2,y2,z2);
@@ -406,7 +411,7 @@ end;
 
 procedure TTestRenderBase2.TestCopy;
 var
-  x1, y1,x2,y2: Extended;
+  x1, y1,x2,y2, z1, z2: Extended;
   i: Integer;
 //  lFTriple:TFTriple;
 begin
@@ -425,8 +430,10 @@ begin
    begin
      x1:= (random-0.5)*maxLongint;
      y1:= (random-0.5)*maxLongint;
+     z1:= (random-0.5)*maxLongint;
      x2:= (random-0.5)*maxLongint;
      y2:= (random-0.5)*maxLongint;
+     z2:= (random-0.5)*maxLongint;
      FFtriple.init(x1,y1,z1);
 //     lFTriple.INit(x2,y2,z2);
      CheckEquals(FTriple(x2,y2,z2),FFtriple.Copy(x2,y2,z2),1e-20,format('init(%f,%f,%f).Copy(%f,%f,%f)',[x1,y1,x2,y2]));
@@ -436,7 +443,7 @@ end;
 
 procedure TTestRenderBase2.TestCopy2;
 var
-  x1, y1,x2,y2: Extended;
+  x1, y1,x2,y2, z1, Z2: Extended;
   i: Integer;
   lFTriple:TFTriple;
 begin
@@ -455,8 +462,10 @@ begin
    begin
      x1:= (random-0.5)*maxLongint;
      y1:= (random-0.5)*maxLongint;
+     z1:= (random-0.5)*maxLongint;
      x2:= (random-0.5)*maxLongint;
      y2:= (random-0.5)*maxLongint;
+     Z2:= (random-0.5)*maxLongint;
      FFtriple.init(x1,y1,z1);
      lFTriple.INit(x2,y2,z2);
      CheckEquals(FTriple(x2,y2,z2),FFtriple.Copy(lFTriple),1e-20,format('init(%f,%f,%f).Copy(<%f,%f>)',[x1,y1,x2,y2]));

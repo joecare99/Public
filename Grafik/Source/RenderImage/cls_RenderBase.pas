@@ -54,6 +54,13 @@ type
     function MulTo(const fak:extended):TFTriple;overload;
     function Divide(const divs:extended):TFTriple;overload;
     function XMul(const fak:TFTriple):TFTriple;overload;
+    function Equals(const probe:TFtriple;eps:extended):boolean;overload;
+    class function Copy(nx, ny, nz: extended): TFTriple; static; overload;
+    class Function Copy(Vect: TFTriple): TFTriple;static; overload;
+    Function Copy: TFTriple; overload;
+    function GLen:Extended ;
+    function GDir: TFTuple;
+    function MLen: Extended;
     case Boolean of
     true:(X,Y,Z:Extended);
     false:(V:array[0..2] of Extended);
@@ -175,6 +182,47 @@ begin
   result.x := y*fak.z-z*fak.y;
   result.y := Z*fak.X-x*fak.z;
   result.z := x*fak.y-y*fak.x;
+end;
+
+function TFTriple.Equals(const probe: TFtriple; eps: extended): boolean;
+begin
+    result := (abs(probe.X-x) < eps) and (abs(probe.y-y) < eps)and (abs(probe.z-z) < eps);
+end;
+
+class function TFTriple.Copy(nx, ny, nz: extended): TFTriple;
+begin
+  result.init(nx,ny,nz);
+end;
+
+class function TFTriple.Copy(Vect: TFTriple): TFTriple;
+begin
+  result := Vect;
+end;
+
+function TFTriple.Copy: TFTriple;
+begin
+  result := self;
+end;
+
+function TFTriple.GLen: Extended;
+begin
+  result := sqrt(sqr(x)+sqr(y)+sqr(z));
+end;
+
+function TFTriple.GDir: TFTuple;
+begin
+  if (y=0.0) and (z=0.0) then
+      result := ZeroTup
+  else
+    begin
+      result.v[0] := FTuple(x,sqrt(sqr(y)+sqr(z))).GDir;
+      result.V[1] := FTuple(y,z).gdir;
+    end;
+end;
+
+function TFTriple.MLen: Extended;
+begin
+   result := max(abs(x),max( abs(y),abs(z)));
 end;
 
 function TFTuple.ToString: string;
