@@ -246,7 +246,7 @@ end;
 
 procedure TTestRenderBase2.TestMul;
 var
-  x1, y1,x2,y2: Extended;
+  x1, y1,x2,y2, z1, z2: Extended;
   i: Integer;
   lFTriple:TFTriple;
 begin
@@ -254,27 +254,30 @@ begin
  FFtriple.init(0,0,0);
  CheckEquals(0.0,FFtriple.Mul(ZeroTrp),1e-20,'init(0,0,0) * ZeroTrp');
  FFtriple.init(1.0,-1.0,0.5);
- CheckEquals(4.0,FFtriple.Mul(FTriple(2.0,-2.0,2.0)),1e-20,'init(1.0,-1.0,0.5).Mul(<2,-2>)');
- CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0]));
- CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0]));
+ CheckEquals(5.0,FFtriple.Mul(FTriple(2.0,-2.0,2.0)),1e-20,'init(1.0,-1.0,0.5).Mul(<2,-2,2>)');
+ CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
+ CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
+ CheckEquals(0.5,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
  FFtriple.init(23.0,17.0,13.0);
  CheckEquals(18.0,FFtriple.Mul(FTriple(3.0,-3.0,1.5)),1e-20,'init(23.0,17.0,13.0).Mul(<3,-3)');
  for i := 0 to 50000 do
    begin
      x1:= (random-0.5)*maxLongint;
      y1:= (random-0.5)*maxLongint;
+     z1:= (random-0.5)*maxLongint;
      x2:= (random-0.5)*maxLongint;
      y2:= (random-0.5)*maxLongint;
+     z2:= (random-0.5)*maxLongint;
      FFtriple.init(x1,y1,z1);
      lFTriple.INit(x2,y2,z2);
-     CheckEquals(x1*x2+y1*y2,FFtriple.Mul(lFTriple),1e-20,format('init(%f,%f,%f).Mul(%f,%f,%f)',[x1,y1,x2,y2]));
+     CheckEquals(x1*x2+y1*y2+z1*z2,FFtriple.Mul(lFTriple),1e-20,format('init(%f,%f,%f).Mul(%f,%f,%f)',[x1,y1,x2,y2]));
      CheckEquals(FTriple(x1,y1,z1),FFtriple,1e-20,format('FTriple=(%f,%f,%f)',[x1,y1,z1]));
    end;
 end;
 
 procedure TTestRenderBase2.TestMul2;
 var
-  x1, y1,x2,y2: Extended;
+  x1, y1,x2,y2, z1: Extended;
   i: Integer;
   lFTriple:TFTriple;
 begin
@@ -286,14 +289,15 @@ begin
  CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0]));
  CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0]));
  FFtriple.init(23.0,17.0,13.0);
- CheckEquals(FTriple(-69.0,-51.0),FFtriple.Mul(-3.0),1e-20,'init(23.0,17.0,13.0).Mul(-3.0)');
+ CheckEquals(FTriple(-69.0,-51.0,-39.0),FFtriple.Mul(-3.0),1e-20,'init(23.0,17.0,13.0).Mul(-3.0)');
  for i := 0 to 50000 do
    begin
      x1:= (random-0.5)*maxLongint;
      y1:= (random-0.5)*maxLongint;
+     z1:= (random-0.5)*maxLongint;
      x2:= (random-0.5)*maxLongint;
      FFtriple.init(x1,y1,z1);
-     CheckEquals(FTriple(x1*x2,y1*x2),FFtriple.Mul(X2),1e-20,format('init(%f,%f,%f).Mul(%f)',[x1,y1,x2]));
+     CheckEquals(FTriple(x1*x2,y1*x2,z1*x2),FFtriple.Mul(X2),1e-20,format('init(%f,%f,%f).Mul(%f)',[x1,y1,x2]));
      CheckEquals(FTriple(x1,y1,z1),FFtriple,1e-20,format('FTriple=(%f,%f,%f)',[x1,y1,z1]));
    end;
 end;
