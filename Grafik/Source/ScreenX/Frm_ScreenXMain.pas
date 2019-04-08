@@ -22,7 +22,7 @@ type
     TFrmScreenXMain = class(TForm)
         btnExecute: TButton;
         chbInvers: TCheckBox;
-        CheckGroup1: TCheckGroup;
+        cgpTranforms: TCheckGroup;
         FraGraph1: TFraGraph;
         edtXOffset: TLabeledEdit;
         edtYOffset: TLabeledEdit;
@@ -33,7 +33,7 @@ type
         rgpBasePattern: TRadioGroup;
         edtMandelBrLoop: TSpinEdit;
         procedure ChbAppRemFktn(Sender: TObject);
-        procedure CheckGroup1ItemClick(Sender: TObject; Index: integer);
+        procedure cgpTranformsItemClick(Sender: TObject; Index: integer);
         procedure FormCreate(Sender: TObject);
         procedure btnExecuteClick(Sender: TObject);
         procedure edtXWidthKeyPress(Sender: TObject; var Key: char);
@@ -96,7 +96,7 @@ begin
 
 end;
 
-procedure TFrmScreenXMain.CheckGroup1ItemClick(Sender: TObject; Index: integer);
+procedure TFrmScreenXMain.cgpTranformsItemClick(Sender: TObject; Index: integer);
 var
     ix: integer;
 begin

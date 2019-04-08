@@ -5,6 +5,15 @@
       </element><element name="TFrmScreenXMain.edtXOffset"><short>Eingabefeld für einen X-Offset (Mittelpunkt)</short>
       </element><element name="TFrmScreenXMain.edtYOffset"><short>Eingabefeld für einen Y-Offset (Mittelpunkt)</short>
       </element><element name="TFrmScreenXMain.edtXWidth"><short>Eingabefeld für eine X-Weite (um den Mittelpunkt)</short>
+      </element><element name="TFrmScreenXMain.lbxSelected"><short>ListBox mit Ausgewählten (Transormations-)Funktionen</short>
+      </element><element name="TFrmScreenXMain.pnlLeft"><short>Panel mit Eingabe-Elementen</short>
+      </element><element name="TFrmScreenXMain.rgpBasePattern"><short>RadioButtonGroup: Ausgewähltes Grundmuster</short>
+      </element><element name="TFrmScreenXMain.edtMandelBrLoop"><short>SpinEdit: Gewählte - MandelBrot-Loops</short>
+      </element><element name="TFrmScreenXMain.cgpTranforms"><short>CheckGroup: Mögliche Transformations-Funktionen</short>
+      </element><element name="TFrmScreenXMain.ChbAppRemFktn"><short>Funktion Zufügen und Wegnehmen</short>
+      </element><element name="TFrmScreenXMain.FormCreate"><short>Init-Methode nach Form-Create</short>
+      </element><element name="TFrmScreenXMain.btnExecuteClick"><short>Starten (ggf. Stoppen) des Rendervorgangs</short>
+      </element><element name="TFrmScreenXMain.FraGraph1MouseDown"><short>Über das Mouse-Down-Event kann ein neuer-Ausschnitt selektiert werden.</short>
       </element>
     </module>
   </package>
