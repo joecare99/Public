@@ -25,8 +25,8 @@ type
     function Divide(const divs:extended):TFTuple;overload;
     function VMul(const fak:TFtuple):TFTuple;overload;
     function Equals(const probe:TFtuple;eps:extended):boolean;overload;
-    Function Copy(nx, ny: extended): TFTuple; overload;
-    Function Copy(Vect: TFTuple): TFTuple; overload;
+    class Function Copy(nx, ny: extended): TFTuple;static; overload;
+    class Function Copy(Vect: TFTuple): TFTuple;static; overload;
     Function Copy: TFTuple; overload;
     function GLen:Extended ;
     function MLen: Extended;
@@ -138,12 +138,12 @@ begin
   result := (abs(probe.X-x) < eps) and (abs(probe.y-y) < eps);
 end;
 
-function TFTuple.Copy(nx, ny: extended): TFTuple;
+class function TFTuple.Copy(nx, ny: extended): TFTuple;
 begin
   result.init(nx,ny);
 end;
 
-function TFTuple.Copy(Vect: TFTuple): TFTuple;
+class function TFTuple.Copy(Vect: TFTuple): TFTuple;
 begin
   result.x:=Vect.X;
   Result.y := Vect.y;
