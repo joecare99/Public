@@ -23,6 +23,7 @@
         <Resource_0 FileName="..\..\Glyphs\lazarus.png" Type="RCDATA" ResourceName="LAZARUS_LG"/>
       </Resources>
     </General>
+    <LazDoc Paths="..\FPDoc"/>
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>

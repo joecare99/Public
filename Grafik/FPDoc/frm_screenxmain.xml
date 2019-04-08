@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Prj_SCREENX"><module name="Frm_ScreenXMain"><element name="TFrmScreenXMain"/><element name="TFrmScreenXMain.btnExecute"><short>Taste zum starten (ggf. stoppen) des Rendervorgangs</short>
+      </element><element name="TFrmScreenXMain.chbInvers"><short>CheckBox: Invertieren der Berechnung</short>
+      </element><element name="TFrmScreenXMain.FraGraph1"><short>Grafik - Ausgabe-Panel</short>
+      </element><element name="TFrmScreenXMain.edtXOffset"><short>Eingabefeld für einen X-Offset (Mittelpunkt)</short>
+      </element><element name="TFrmScreenXMain.edtYOffset"><short>Eingabefeld für einen Y-Offset (Mittelpunkt)</short>
+      </element><element name="TFrmScreenXMain.edtXWidth"><short>Eingabefeld für eine X-Weite (um den Mittelpunkt)</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

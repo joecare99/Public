@@ -21,23 +21,23 @@ type
 
     TFrmScreenXMain = class(TForm)
         btnExecute: TButton;
-        CheckBox4: TCheckBox;
+        chbInvers: TCheckBox;
         CheckGroup1: TCheckGroup;
         FraGraph1: TFraGraph;
-        LabeledEdit1: TLabeledEdit;
-        LabeledEdit2: TLabeledEdit;
-        LabeledEdit3: TLabeledEdit;
-        ListBox1: TListBox;
+        edtXOffset: TLabeledEdit;
+        edtYOffset: TLabeledEdit;
+        edtXWidth: TLabeledEdit;
+        lbxSelected: TListBox;
         pnlLeft: TPanel;
         pnlLeftBottom4: TPanel;
-        RadioGroup1: TRadioGroup;
-        SpinEdit1: TSpinEdit;
+        rgpBasePattern: TRadioGroup;
+        edtMandelBrLoop: TSpinEdit;
         procedure ChbAppRemFktn(Sender: TObject);
         procedure CheckGroup1ItemClick(Sender: TObject; Index: integer);
         procedure FormCreate(Sender: TObject);
         procedure btnExecuteClick(Sender: TObject);
-        procedure LabeledEdit3KeyPress(Sender: TObject; var Key: char);
-        procedure LabeledEdit3Exit(Sender: TObject);
+        procedure edtXWidthKeyPress(Sender: TObject; var Key: char);
+        procedure edtXWidthExit(Sender: TObject);
         procedure FraGraph1MouseDown(Sender: TObject; Button: TMouseButton;
             Shift: TShiftState; X, Y: integer);
     private
@@ -104,12 +104,12 @@ begin
         with TCheckGroup(Sender).Controls[index] as TCheckBox do
           begin
             if Checked then
-                ListBox1.Items.AddObject(Caption, TObject(ptrint(index)))
+                lbxSelected.Items.AddObject(Caption, TObject(ptrint(index)))
             else
               begin
-                ix := ListBox1.Items.IndexOf(Caption);
+                ix := lbxSelected.Items.IndexOf(Caption);
                 if ix >= 0 then
-                    ListBox1.Items.Delete(ix);
+                    lbxSelected.Items.Delete(ix);
               end;
           end;
 end;
@@ -118,10 +118,11 @@ procedure TFrmScreenXMain.FraGraph1MouseDown(Sender: TObject;
     Button: TMouseButton; Shift: TShiftState; X, Y: integer);
 begin
     FXoffs := FBXoffs + (x / FraGraph1.Width - 0.5) * FXWidth;
-    LabeledEdit1.Text := FloatToStr(FXoffs);
+    edtXOffset.Text := FloatToStr(FXoffs);
     FYoffs := FBYoffs + (y - FraGraph1.Height div 2) / FraGraph1.Width * FXWidth;
-    LabeledEdit2.Text := FloatToStr(FYoffs);
+    edtYOffset.Text := FloatToStr(FYoffs);
 end;
+
 
 function ExPoint(x, y: extended): Texpoint;
     inline;
@@ -166,25 +167,25 @@ begin
                      end;
 end;
 
-procedure TFrmScreenXMain.LabeledEdit3Exit(Sender: TObject);
+procedure TFrmScreenXMain.edtXWidthExit(Sender: TObject);
 var
     LF: extended;
 begin
     if Sender.InheritsFrom(TLabeledEdit) then
         if TryStrToFloat(TLabeledEdit(Sender).Text, LF) then
-            if Sender = LabeledEdit1 then
+            if Sender = edtXOffset then
                 FXoffs := LF
-            else if Sender = LabeledEdit2 then
+            else if Sender = edtYOffset then
                 FYoffs := LF
-            else if Sender = LabeledEdit3 then
+            else if Sender = edtXWidth then
                 FXWidth := LF;
 end;
 
-procedure TFrmScreenXMain.LabeledEdit3KeyPress(Sender: TObject; var Key: char);
+procedure TFrmScreenXMain.edtXWidthKeyPress(Sender: TObject; var Key: char);
 begin
     if key = #13 then
       begin
-        LabeledEdit3Exit(Sender);
+        edtXWidthExit(Sender);
         key := #0;
       end
     else
@@ -667,13 +668,13 @@ begin
       try
 
         initgraph(grk, grm, bgipath);
-        FmaxRec := SpinEdit1.Value;
+        FmaxRec := edtMandelBrLoop.Value;
         delt := FXWidth / getmaxx;
         LLastTick := GetTickCount;
 
-        setlength(FktArray, ListBox1.Items.Count);
-        for I := 0 to ListBox1.Items.Count do
-            case ptrint(ListBox1.Items.Objects[I]) of
+        setlength(FktArray, lbxSelected.Items.Count);
+        for I := 0 to lbxSelected.Items.Count do
+            case ptrint(lbxSelected.Items.Objects[I]) of
                 0: FktArray[i] := NullFktn;
                 1: FktArray[i] := Wobble3;
                 2: FktArray[i] := strudel2;
@@ -691,7 +692,7 @@ begin
         //    Begin
         //      FRenderTasks[i] := TRenderThread.create(false, I);
         //      setlength(FRenderTasks[i].source, getmaxx + 1);
-        //      Case RadioGroup1.ItemIndex Of
+        //      Case rgpBasePattern.ItemIndex Of
         //        0: FRenderTasks[i].cfkt := farbm;
         //        1: FRenderTasks[i].cfkt := farbm2;
         //        2: FRenderTasks[i].cfkt := farbm3;
@@ -705,7 +706,7 @@ begin
         fbyoffs := FYoffs;
         x0 := getmaxx * delt * 0.5 - fxoffs;
         y0 := getmaxy * delt * 0.5 - fyoffs;
-        case RadioGroup1.ItemIndex of
+        case rgpBasePattern.ItemIndex of
             0: CFktn := farbm;
             1: CFktn := farbm2;
             2: CFktn := farbm3;
@@ -715,7 +716,7 @@ begin
           end;
 
         subSqare := 256;
-        lInverse:=checkbox4.Checked;
+        lInverse:=chbInvers.Checked;
          if not lInverse then
            begin
         bm:=TBitmap.Create;
