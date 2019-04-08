@@ -356,8 +356,33 @@ begin
 end;
 
 procedure TTestRenderBase.TestCopy;
+var
+  x1, y1,x2,y2: Extended;
+  i: Integer;
+  lFTupple:TFTuple;
 begin
-
+ CheckEquals(FTuple(0,0),ZeroTup.Copy(0,0),1e-20,'0,0 x 0,0');
+ FFtupple.init(0,0);
+ CheckEquals(FTuple(0,0),FFtupple.Copy(0,0),1e-20,'init(0,0) x 0,0');
+ FFtupple.init(1.0,-1.0);
+ CheckEquals(FTuple(2.0,-2.0),FFtupple.Copy(2.0,-2.0),1e-20,'init(1.0,-1.0).Copy(<2,-2>)');
+ CheckEquals(1.0,FFtupple.v[0],format('init(%f,%f).v[0]',[1.0,-1.0]));
+ CheckEquals(-1.0,FFtupple.v[1],format('init(%f,%f).v[1]',[1.0,-1.0]));
+ FFtupple.init(23.0,17.0);
+ CheckEquals(FTuple(3.0,-3.0),FFtupple.Copy(3.0,-3.0),1e-20,'init(23.0,17.0).Copy(<3,-3)');
+ CheckEquals(3.0,FFtupple.Copy(3.0,-3.0).v[0],format('init(%f,%f).v[0]',[23.0,17.0]));
+ CheckEquals(-3.0,FFtupple.Copy(3.0,-3.0).v[1],format('init(%f,%f).v[1]',[23.0,17.0]));
+ for i := 0 to 50000 do
+   begin
+     x1:= (random-0.5)*maxLongint;
+     y1:= (random-0.5)*maxLongint;
+     x2:= (random-0.5)*maxLongint;
+     y2:= (random-0.5)*maxLongint;
+     FFtupple.init(x1,y1);
+//     lFTupple.INit(x2,y2);
+     CheckEquals(FTuple(x2,y2),FFtupple.Copy(x2,y2),1e-20,format('init(%f,%f).Copy(%f,%f)',[x1,y1,x2,y2]));
+     CheckEquals(FTuple(x1,y1),FFtupple,1e-20,format('FTupple=(%f,%f)',[x1,y1]));
+   end;
 end;
 
 procedure TTestRenderBase.TestCopy2;
