@@ -41,6 +41,8 @@ type
 
 implementation
 
+uses Math;
+
 procedure TTestRenderBase.TestSetUp;
 begin
 //  CheckNotNull(FFtupple,'FFtuppel exists');
@@ -261,7 +263,7 @@ procedure TTestRenderBase.TestDivide;
 var
   x1, y1,x2,y2: Extended;
   i: Integer;
-  lFTupple:TFTuple;
+//  lFTupple:TFTuple;
 begin
  CheckEquals(FTuple(0,0),ZeroTup.Divide(1.0),1e-20,'ZeroTup * ZeroTup');
  FFtupple.init(0,0);
@@ -359,7 +361,7 @@ procedure TTestRenderBase.TestCopy;
 var
   x1, y1,x2,y2: Extended;
   i: Integer;
-  lFTupple:TFTuple;
+//  lFTupple:TFTuple;
 begin
  CheckEquals(FTuple(0,0),ZeroTup.Copy(0,0),1e-20,'0,0 x 0,0');
  FFtupple.init(0,0);
@@ -426,8 +428,37 @@ begin
 end;
 
 procedure TTestRenderBase.TestMLen;
+var
+  x1, y1,x2,y2: Extended;
+  i: Integer;
+  lFTupple:TFTuple;
 begin
-
+ CheckEquals(0.0,ZeroTup.MLen,1e-20,'ZeroTup.MLen');
+ FFtupple.init(0,0);
+ CheckEquals(0.0,FFtupple.MLen,1e-20,'init(0,0).MLen');
+ FFtupple.init(1.0,-1.0);
+ CheckEquals(1.0,FFtupple.MLen,1e-20,'init(1.0,-1.0).MLen');
+ CheckEquals(1.0,FFtupple.v[0],format('init(%f,%f).v[0]',[1.0,-1.0]));
+ CheckEquals(-1.0,FFtupple.v[1],format('init(%f,%f).v[1]',[1.0,-1.0]));
+ FFtupple.init(23.0,17.0);
+ CheckEquals(23.0,FFtupple.MLen,1e-20,'init(23.0,17.0).MLen');
+ FFtupple.init(-23.0,17.0);
+ CheckEquals(23.0,FFtupple.MLen,1e-20,'init(-23.0,17.0).MLen');
+ FFtupple.init(13.0,17.0);
+ CheckEquals(17.0,FFtupple.MLen,1e-20,'init(13.0,17.0).MLen');
+ FFtupple.init(-13.0,-17.0);
+ CheckEquals(17.0,FFtupple.MLen,1e-20,'init(-13.0,-17.0).MLen');
+ for i := 0 to 50000 do
+   begin
+     x1:= (random-0.5)*maxLongint;
+     y1:= (random-0.5)*maxLongint;
+     x2:= (random-0.5)*maxLongint;
+     y2:= (random-0.5)*maxLongint;
+     FFtupple.init(x1,y1);
+     lFTupple.INit(x2,y2);
+     CheckEquals(max(abs(x1),abs(y1)),FFtupple.MLen,1e-20,format('init(%f,%f).MLen',[x1,y1]));
+     CheckEquals(FTuple(x1,y1),FFtupple,1e-20,format('FTupple=(%f,%f)',[x1,y1]));
+   end;
 end;
 
 procedure TTestRenderBase.CheckEquals(const Exp, Act: TFTuple;eps:extended; Msg: String);
