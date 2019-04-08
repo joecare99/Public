@@ -58,7 +58,10 @@ procedure TTestRenderBase2.TestToString;
 var
   i: Integer;
   x1, y1, z1: Extended;
+  vfs: TFormatSettings;
 begin
+ vfs.DecimalSeparator:='.';
+ vfs.ThousandSeparator:=#0;
  CheckEquals('<0.00; 0.00; 0.00>',FFtriple.ToString,'FFTriple.ToString');
  CheckEquals('<0.00; 0.00; 0.00>',ZeroTrp.ToString,'ZeroTup.ToString');
  FFtriple.init(1.0,-1.0, 0.5);
@@ -73,7 +76,7 @@ begin
      y1:= (random-0.5)*maxLongint;
      z1:= (random-0.5)*maxLongint;
      FFtriple.init(x1,y1,z1);
-     CheckEquals('<'+floattostr(x1)+'; '+floattostr(y1)+'; '+floattostr(z1)+'>',FFtriple.ToString,format('init(%f,%f,%f)',[x1,y1,z1]));
+     CheckEquals('<'+format('%f',[x1],vfs)+'; '+format('%f',[y1],vfs)+'; '+format('%f',[z1],vfs)+'>',FFtriple.ToString,format('init(%f,%f,%f)',[x1,y1,z1]));
      CheckEquals(x1,FFtriple.x,format('init(%f,%f,%f).x',[x1,y1,z1]));
      CheckEquals(y1,FFtriple.y,format('init(%f,%f,%f).y',[x1,y1,z1]));
      CheckEquals(z1,FFtriple.z,format('init(%f,%f,%f).z',[x1,y1,z1]));
@@ -156,7 +159,7 @@ begin
  FFtriple.init(0,0,0);
  CheckEquals(FTriple(0,0,0),FFtriple.AddTo(ZeroTrp),1e-20,'init(0,0,0) + ZeroTrp');
  FFtriple.init(1.0,-1.0,0.5);
- CheckEquals(FTriple(3.0,-3.0,1.5),FFtriple.addTo(FTriple(2.0,-2.0,2.0)),1e-20,'init(1.0,-1.0,0.5).add(<2,-2,2>)');
+ CheckEquals(FTriple(3.0,-3.0,2.5),FFtriple.addTo(FTriple(2.0,-2.0,2.0)),1e-20,'init(1.0,-1.0,0.5).add(<2,-2,2>)');
  CheckEquals(3.0,FFtriple.x,format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
  CheckEquals(-3.0,FFtriple.y,format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
  FFtriple.init(23.0,17.0,13.0);
@@ -189,10 +192,10 @@ begin
  FFtriple.init(0,0,0);
  CheckEquals(FTriple(0,0,0),FFtriple.Subt(ZeroTrp),1e-20,'init(0,0,0) - ZeroTrp');
  FFtriple.init(1.0,-1.0,0.5);
- CheckEquals(FTriple(-1.0,1.0,0.5),FFtriple.Subt(FTriple(2.0,-2.0,2.0)),1e-20,'init(1.0,-1.0,0.5).Subt(<2,-2,2>)');
+ CheckEquals(FTriple(-1.0,1.0,-1.5),FFtriple.Subt(FTriple(2.0,-2.0,2.0)),1e-20,'init(1.0,-1.0,0.5).Subt(<2,-2,2>)');
  CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
  CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
- CheckEquals(-1.0,FFtriple.v[2],format('init(%f,%f,%f).v[2]',[1.0,-1.0,0.5]));
+ CheckEquals(0.5,FFtriple.v[2],format('init(%f,%f,%f).v[2]',[1.0,-1.0,0.5]));
  FFtriple.init(23.0,17.0,13.0);
  CheckEquals(FTriple(20.0,20.0,11.5),FFtriple.Subt(FTriple(3.0,-3.0,1.5)),1e-20,'init(23.0,17.0,13.0).Subt(<-3,3,1.5>)');
  CheckEquals(20.0,FFtriple.Subt(FTriple(3.0,-3.0,1.5)).v[0],format('init(%f,%f,%f).v[0]',[23.0,17.0,13.0]));
@@ -224,8 +227,8 @@ begin
  CheckEquals(FTriple(0,0,0),FFtriple.SubtTo(ZeroTrp),1e-20,'init(0,0,0) - ZeroTrp');
  FFtriple.init(1.0,-1.0,0.5);
  CheckEquals(FTriple(-1.0,1.0,-1.5),FFtriple.SubtTo(FTriple(2.0,-2.0,2.0)),1e-20,'init(1.0,-1.0,0.5).add(<2,-2>)');
- CheckEquals(-1.0,FFtriple.x,format('init(%f,%f,%f).v[0]',[1.0,-1.0]));
- CheckEquals(1.0,FFtriple.y,format('init(%f,%f,%f).v[1]',[1.0,-1.0]));
+ CheckEquals(-1.0,FFtriple.x,format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
+ CheckEquals(1.0,FFtriple.y,format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
  FFtriple.init(23.0,17.0,13.0);
  CheckEquals(FTriple(20.0,20.0,11.5),FFtriple.SubtTo(FTriple(3.0,-3.0,1.5)),1e-20,'init(23.0,17.0,13.0).add(<-3,3)');
  CheckEquals(20.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[23.0,17.0,13.0]));
@@ -241,7 +244,7 @@ begin
      z2:= (random-0.5)*maxLongint;
      FFtriple.init(x1,y1,z1);
      lFTriple.INit(x2,y2,z2);
-     CheckEquals(FTriple(x1-x2,y1-y2,z1-z2),FFtriple.SubtTo(lFTriple),1e-20,format('init(%f,%f,%f).add(%f,%f,%f)',[x1,y1,x2,y2]));
+     CheckEquals(FTriple(x1-x2,y1-y2,z1-z2),FFtriple.SubtTo(lFTriple),1e-20,format('init(%f,%f,%f).add(%f,%f,%f)',[x1,y1,z1,x2,y2,z2]));
      CheckEquals(FTriple(x1-x2,y1-y2,z1-z2),FFtriple,1e-20,format('FTriple=(%f,%f,%f)',[x1+x2,y1+y2]));
    end;
 end;
@@ -259,7 +262,7 @@ begin
  CheckEquals(5.0,FFtriple.Mul(FTriple(2.0,-2.0,2.0)),1e-20,'init(1.0,-1.0,0.5).Mul(<2,-2,2>)');
  CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
  CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
- CheckEquals(0.5,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
+ CheckEquals(0.5,FFtriple.v[2],format('init(%f,%f,%f).v[2]',[1.0,-1.0,0.5]));
  FFtriple.init(23.0,17.0,13.0);
  CheckEquals(18.0,FFtriple.Mul(FTriple(3.0,-3.0,1.5)),1e-20,'init(23.0,17.0,13.0).Mul(<3,-3)');
  for i := 0 to 50000 do
@@ -287,9 +290,9 @@ begin
  FFtriple.init(0,0,0);
  CheckEquals(FTriple(0,0,0),FFtriple.Mul(1.0),1e-20,'init(0,0,0) * ZeroTrp');
  FFtriple.init(1.0,-1.0,0.5);
- CheckEquals(FTriple(2.0,-2.0,2.0),FFtriple.Mul(2.0),1e-20,'init(1.0,-1.0,0.5).Mul(2.0)');
- CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0]));
- CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0]));
+ CheckEquals(FTriple(2.0,-2.0,1.0),FFtriple.Mul(2.0),1e-20,'init(1.0,-1.0,0.5).Mul(2.0)');
+ CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
+ CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
  FFtriple.init(23.0,17.0,13.0);
  CheckEquals(FTriple(-69.0,-51.0,-39.0),FFtriple.Mul(-3.0),1e-20,'init(23.0,17.0,13.0).Mul(-3.0)');
  for i := 0 to 50000 do
@@ -315,8 +318,8 @@ begin
  CheckEquals(FTriple(0,0,0),FFtriple.Divide(1.0),1e-20,'init(0,0,0) * ZeroTrp');
  FFtriple.init(1.0,-1.0,0.5);
  CheckEquals(FTriple(0.5,-0.5,0.25),FFtriple.Divide(2.0),1e-20,'init(1.0,-1.0,0.5).Divide(2.0)');
- CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0]));
- CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0]));
+ CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
+ CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
  FFtriple.init(-69.0,-51.0,-39.0);
  CheckEquals(FTriple(23.0,17.0,13.0),FFtriple.Divide(-3.0),1e-20,'init(-69.0,-51.0).Divide(-3.0)');
  for i := 0 to 50000 do
@@ -328,7 +331,7 @@ begin
      while x2 = 0.0 do
      x2:= (random-0.5)*maxLongint;
      FFtriple.init(x1,y1,z1);
-     CheckEquals(FTriple(x1/x2,y1/x2,z1/x2),FFtriple.Divide(X2),1e-20,format('init(%f,%f,%f).Divide(%f)',[x1,y1,x2]));
+     CheckEquals(FTriple(x1/x2,y1/x2,z1/x2),FFtriple.Divide(X2),1e-20,format('init(%f,%f,%f).Divide(%f)',[x1,y1,z1,x2]));
      CheckEquals(FTriple(x1,y1,z1),FFtriple,1e-20,format('FTriple=(%f,%f,%f)',[x1,y1,z1]));
    end;
 end;
@@ -343,9 +346,9 @@ begin
  FFtriple.init(0,0,0);
  CheckEquals(FTriple(0,0,0),FFtriple.XMul(ZeroTrp),1e-20,'init(0,0,0) x ZeroTrp');
  FFtriple.init(1.0,-1.0,0.5);
- CheckEquals(FTriple(0.0,-4.0,0.0),FFtriple.XMul(FTriple(2.0,-2.0,2.0)),1e-20,'init(1.0,-1.0,0.5).XMul(<2,-2>)');
- CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0]));
- CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0]));
+ CheckEquals(FTriple(-1.0,-4.0,0.0),FFtriple.XMul(FTriple(2.0,-2.0,2.0)),1e-20,'init(1.0,-1.0,0.5).XMul(<2,-2,2>)');
+ CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
+ CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
  FFtriple.init(23.0,17.0,13.0);
  CheckEquals(FTriple(120.0,-18.0,0.0),FFtriple.XMul(FTriple(3.0,-3.0,1.5)),1e-20,'init(23.0,17.0,13.0).XMul(<-3,3)');
  CheckEquals(120.0,FFtriple.XMul(FTriple(3.0,-3.0,1.5)).v[0],format('init(%f,%f,%f).v[0]',[23.0,17.0,13.0]));
@@ -376,17 +379,17 @@ begin
  FFtriple.init(0,0,0);
  CheckEquals(true,FFtriple.Equals(ZeroTrp,1e-20),'init(0,0,0) = ZeroTrp');
  FFtriple.init(1.0,-1.0,0.5);
- CheckEquals(false,FFtriple.Equals(FTriple(2.0,-2.0,2.0),1e-20),'init(1.0,-1.0,0.5).Equals(<2,-2>)');
- CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0]));
- CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0]));
+ CheckEquals(false,FFtriple.Equals(FTriple(2.0,-2.0,2.0),1e-20),'init(1.0,-1.0,0.5).Equals(<2,-2,2>)');
+ CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
+ CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
  FFtriple.init(23.0,17.0,13.0);
- CheckEquals(false,FFtriple.Equals(FTriple(3.0,-3.0,1.5),1e-20),'init(23.0,17.0,13.0).Equals(<-3,3>)');
+ CheckEquals(false,FFtriple.Equals(FTriple(3.0,-3.0,1.5),1e-20),'init(23.0,17.0,13.0).Equals(<-3,3,1.5>)');
  FFtriple.init(23.0,17.0,13.0);
- CheckEquals(false,FFtriple.Equals(FTriple(23.0,-3.0,13.0),1e-20),'init(23.0,17.0,13.0).Equals(<23,3>)');
+ CheckEquals(false,FFtriple.Equals(FTriple(23.0,-3.0,13.0),1e-20),'init(23.0,17.0,13.0).Equals(<23,3,13>)');
  FFtriple.init(23.0,17.0,13.0);
- CheckEquals(false,FFtriple.Equals(FTriple(3.0,17.0,13.0),1e-20),'init(23.0,17.0,13.0).Equals(<-3,17>)');
+ CheckEquals(false,FFtriple.Equals(FTriple(3.0,17.0,13.0),1e-20),'init(23.0,17.0,13.0).Equals(<-3,17,13>)');
  FFtriple.init(23.0,17.0,13.0);
- CheckEquals(false,FFtriple.Equals(FTriple(23.0,17.0,3.0),1e-20),'init(23.0,17.0,13.0).Equals(<-3,17>)');
+ CheckEquals(false,FFtriple.Equals(FTriple(23.0,17.0,3.0),1e-20),'init(23.0,17.0,13.0).Equals(<23,17,3>)');
  for i := 0 to 50000 do
    begin
      x1:= (random-0.5)*maxLongint;
@@ -406,7 +409,7 @@ begin
        end;
      FFtriple.init(x1,y1,z1);
      lFTriple.INit(x2,y2,z2);
-     CheckEquals((abs(x1-x2)<1e-20) and (abs(y1-y2)<1e-20),FFtriple.Equals(lFTriple,1e-20),format('init(%f,%f,%f).Equals(%f,%f,%f)',[x1,y1,x2,y2]));
+     CheckEquals((abs(x1-x2)<1e-20) and (abs(y1-y2)<1e-20),FFtriple.Equals(lFTriple,1e-20),format('init(%f,%f,%f).Equals(%f,%f,%f)',[x1,y1,z1,x2,y2,z2]));
      CheckEquals(FTriple(x1,y1,z1),FFtriple,1e-20,format('FTriple=(%f,%f,%f)',[x1,y1,z1]));
    end;
 end;
@@ -421,13 +424,13 @@ begin
  FFtriple.init(0,0,0);
  CheckEquals(FTriple(0,0,0),FFtriple.Copy(0,0,0),1e-20,'init(0,0,0) x 0,0');
  FFtriple.init(1.0,-1.0,0.5);
- CheckEquals(FTriple(2.0,-2.0,2.0),FFtriple.Copy(2.0,-2.0,2.0),1e-20,'init(1.0,-1.0,0.5).Copy(<2,-2>)');
- CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0]));
- CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0]));
+ CheckEquals(FTriple(2.0,-2.0,2.0),FFtriple.Copy(2.0,-2.0,2.0),1e-20,'init(1.0,-1.0,0.5).Copy(<2,-2,2>)');
+ CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
+ CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
  FFtriple.init(23.0,17.0,13.0);
- CheckEquals(FTriple(3.0,-3.0,1.5),FFtriple.Copy(3.0,-3.0,1.5),1e-20,'init(23.0,17.0,13.0).Copy(<3,-3)');
- CheckEquals(3.0,FFtriple.Copy(3.0,-3.0,1.5).v[0],format('init(%f,%f,%f).v[0]',[23.0,17.0]));
- CheckEquals(-3.0,FFtriple.Copy(3.0,-3.0,1.5).v[1],format('init(%f,%f,%f).v[1]',[23.0,17.0]));
+ CheckEquals(FTriple(3.0,-3.0,1.5),FFtriple.Copy(3.0,-3.0,1.5),1e-20,'init(23.0,17.0,13.0).Copy(<3,-3,1.5>)');
+ CheckEquals(3.0,FFtriple.Copy(3.0,-3.0,1.5).v[0],format('init(%f,%f,%f).v[0]',[23.0,17.0,13.0]));
+ CheckEquals(-3.0,FFtriple.Copy(3.0,-3.0,1.5).v[1],format('init(%f,%f,%f).v[1]',[23.0,17.0,13.0]));
  for i := 0 to 50000 do
    begin
      x1:= (random-0.5)*maxLongint;
@@ -454,12 +457,12 @@ begin
  CheckEquals(FTriple(0,0,0),FFtriple.Copy(FTriple(0,0,0)),1e-20,'init(0,0,0) x 0,0');
  FFtriple.init(1.0,-1.0,0.5);
  CheckEquals(FTriple(2.0,-2.0,2.0),FFtriple.Copy(FTriple(2.0,-2.0,2.0)),1e-20,'init(1.0,-1.0,0.5).Copy(<2,-2>)');
- CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0]));
- CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0]));
+ CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
+ CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
  FFtriple.init(23.0,17.0,13.0);
  CheckEquals(FTriple(3.0,-3.0,1.5),FFtriple.Copy(FTriple(3.0,-3.0,1.5)),1e-20,'init(23.0,17.0,13.0).Copy(<3,-3>)');
- CheckEquals(3.0,FFtriple.Copy(FTriple(3.0,-3.0,1.5)).v[0],format('init(%f,%f,%f).v[0]',[23.0,17.0]));
- CheckEquals(-3.0,FFtriple.Copy(FTriple(3.0,-3.0,1.5)).v[1],format('init(%f,%f,%f).v[1]',[23.0,17.0]));
+ CheckEquals(3.0,FFtriple.Copy(FTriple(3.0,-3.0,1.5)).v[0],format('init(%f,%f,%f).v[0]',[23.0,17.0,13.0]));
+ CheckEquals(-3.0,FFtriple.Copy(FTriple(3.0,-3.0,1.5)).v[1],format('init(%f,%f,%f).v[1]',[23.0,17.0,13.0]));
  for i := 0 to 50000 do
    begin
      x1:= (random-0.5)*maxLongint;
@@ -485,13 +488,15 @@ begin
  FFtriple.init(0,0,0);
  CheckEquals(FTriple(0,0,0),FFtriple.Copy,1e-20,'init(0,0,0) x 0,0');
  FFtriple.init(1.0,-1.0,0.5);
- CheckEquals(FTriple(1.0,-1.0,0.5),FFtriple.Copy,1e-20,'init(1.0,-1.0,0.5).Copy(<2,-2>)');
- CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0]));
- CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0]));
+ CheckEquals(FTriple(1.0,-1.0,0.5),FFtriple.Copy,1e-20,'init(1.0,-1.0,0.5).Copy');
+ CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
+ CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
+ CheckEquals(0.5,FFtriple.v[2],format('init(%f,%f,%f).v[2]',[1.0,-1.0,0.5]));
  FFtriple.init(23.0,17.0,13.0);
- CheckEquals(FTriple(23.0,17.0,13.0),FFtriple.Copy,1e-20,'init(23.0,17.0,13.0).Copy(<3,-3>)');
- CheckEquals(23.0,FFtriple.Copy.v[0],format('init(%f,%f,%f).v[0]',[23.0,17.0]));
- CheckEquals(17.0,FFtriple.Copy.v[1],format('init(%f,%f,%f).v[1]',[23.0,17.0]));
+ CheckEquals(FTriple(23.0,17.0,13.0),FFtriple.Copy,1e-20,'init(23.0,17.0,13.0).Copy');
+ CheckEquals(23.0,FFtriple.Copy.v[0],format('init(%f,%f,%f).Copy.v[0]',[23.0,17.0,13.0]));
+ CheckEquals(17.0,FFtriple.Copy.v[1],format('init(%f,%f,%f).Copy.v[1]',[23.0,17.0,13.0]));
+ CheckEquals(13.0,FFtriple.Copy.v[2],format('init(%f,%f,%f).Copy.v[2]',[23.0,17.0,13.0]));
  for i := 0 to 50000 do
    begin
      x1:= (random-0.5)*maxLongint;
@@ -517,9 +522,9 @@ begin
  FFtriple.init(0,0,0);
  CheckEquals(0.0,FFtriple.GLen,1e-20,'init(0,0,0).GLen');
  FFtriple.init(1.0,-1.0,0.5);
- CheckEquals(Sqrt(2.0),FFtriple.GLen,1e-20,'init(1.0,-1.0,0.5).GLen');
- CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0]));
- CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0]));
+ CheckEquals(1.5,FFtriple.GLen,1e-20,'init(1.0,-1.0,0.5).GLen');
+ CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
+ CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
  FFtriple.init(23.0,17.0,13.0);
  CheckEquals(sqrt(818.0),FFtriple.GLen,1e-20,'init(23.0,17.0,13.0).GLen');
  FFtriple.init(-23.0,17.0,13.0);
@@ -556,9 +561,9 @@ begin
  FFtriple.init(1.0,0.0,0.0);
  CheckEquals(ZeroTup,FFtriple.GDir,1e-15,'init(1.0,0.0).GDir');
  FFtriple.init(sqrt(3/4),0.5,0.0);  // 30°
- CheckEquals(FTuple(pi/6,0),FFtriple.GDir,1e-15,'init(0.866,0.5).GDir');
- CheckEquals(sqrt(3/4),FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0]));
- CheckEquals(0.5,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0]));
+ CheckEquals(FTuple(pi/6,0),FFtriple.GDir,1e-15,'init(0.866,0.5,0.0).GDir');
+ CheckEquals(sqrt(3/4),FFtriple.v[0],format('init(%f,%f,%f).v[0]',[0.866,0.5,0.0]));
+ CheckEquals(0.5,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[0.866,0.5,0.0]));
  FFtriple.init(1.0,1.0,0.0);    // 45°
  CheckEquals(FTuple(pi/4,0),FFtriple.GDir,1e-15,'init(1.0,1.0).GDir');
  FFtriple.init(0.5,sqrt(3/4),0.0); // 60°
@@ -623,8 +628,9 @@ begin
  CheckEquals(0.0,FFtriple.MLen,1e-20,'init(0,0,0).MLen');
  FFtriple.init(1.0,-1.0,0.5);
  CheckEquals(1.0,FFtriple.MLen,1e-20,'init(1.0,-1.0,0.5).MLen');
- CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0]));
- CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0]));
+ CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
+ CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
+ CheckEquals(0.5,FFtriple.v[2],format('init(%f,%f,%f).v[2]',[1.0,-1.0,0.5]));
  FFtriple.init(23.0,17.0,13.0);
  CheckEquals(23.0,FFtriple.MLen,1e-20,'init(23.0,17.0,13.0).MLen');
  FFtriple.init(-23.0,17.0,13.0);
@@ -647,7 +653,7 @@ begin
      z2:= (random-0.5)*maxLongint;
      FFtriple.init(x1,y1,z1);
      lFTriple.INit(x2,y2,z2);
-     CheckEquals(max(abs(x1),abs(y1)),FFtriple.MLen,1e-20,format('init(%f,%f,%f).MLen',[x1,y1,z1]));
+     CheckEquals(max(abs(x1),max(abs(y1),abs(z1))),FFtriple.MLen,1e-20,format('init(%f,%f,%f).MLen',[x1,y1,z1]));
      CheckEquals(FTriple(x1,y1,z1),FFtriple,1e-20,format('FTriple=(%f,%f,%f)',[x1,y1,z1]));
    end;
 end;

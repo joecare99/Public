@@ -52,7 +52,13 @@ begin
 end;
 
 procedure TTestRenderBase.TestToString;
+var
+  i: Integer;
+  x1, y1: Extended;
+  vfs: TFormatSettings;
 begin
+ vfs.DecimalSeparator:='.';
+ vfs.ThousandSeparator:=#0;
  CheckEquals('<0.00; 0.00>',FFtupple.ToString,'FFtupple.ToString');
  CheckEquals('<0.00; 0.00>',ZeroTup.ToString,'ZeroTup.ToString');
  FFtupple.init(1.0,-1.0);
@@ -66,7 +72,7 @@ begin
      x1:= (random-0.5)*maxLongint;
      y1:= (random-0.5)*maxLongint;
      FFtupple.init(x1,y1);
-     CheckEquals('<'+floattostr(x1)+'; '+floattostr(y1)+'>',FFtupple.Tostring,format('init(%f,%f)',[x1,y1]));
+     CheckEquals('<'+format('%f',[x1],vfs)+'; '+format('%f',[y1],vfs)+'>',FFtupple.Tostring,format('init(%f,%f)',[x1,y1]));
      CheckEquals(x1,FFtupple.x,format('init(%f,%f).x',[x1,y1]));
      CheckEquals(y1,FFtupple.y,format('init(%f,%f).y',[x1,y1]));
    end;
