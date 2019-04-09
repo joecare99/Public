@@ -14,9 +14,9 @@ type
   TFTuple=record
     function ToString:string;
     procedure Init(const aX, aY: extended);
-    procedure InitDirLen(const Dir, Len: extended);
-    function Add(const sum:TFtuple):TFTuple;
-    function AddTo(const sum:TFtuple):TFTuple;
+    procedure InitLenDir(const Len, Dir: extended);
+    function Sum(const aVal: TFtuple): TFTuple;
+    function Add(const aVal: TFtuple): TFTuple;
     function Subt(const dmin:TFtuple):TFTuple;
     function SubtTo(const dmin:TFtuple):TFTuple;
     function Mul(const fak:TFtuple):extended;overload;
@@ -81,6 +81,8 @@ type
     function Normalize:TAngle;overload;
     Function Sum(w:TAngle):TAngle;
     Function Add(w:TAngle):TAngle;
+    Function Diff(w:TAngle):TAngle;
+    Function Subt(w:TAngle):TAngle;
     Function ToString:String;
   public
     property AsGrad:Extended read GetAsGrad write SetAsGrad;
@@ -156,7 +158,18 @@ end;
 
 function TAngle.Add(w: TAngle): TAngle;
 begin
-  self := Normalize(angle(self.value + w.value));
+  self := Sum(w);
+  result := self;
+end;
+
+function TAngle.Diff(w: TAngle): TAngle;
+begin
+  result := Normalize(angle(self.value - w.value));
+end;
+
+function TAngle.Subt(w: TAngle): TAngle;
+begin
+  self := diff(w);
   result := self;
 end;
 
@@ -306,22 +319,21 @@ begin
   y:=ay;
 end;
 
-procedure TFTuple.InitDirLen(const Dir, Len: extended);
+procedure TFTuple.InitLenDir(const Len, Dir: extended);
 begin
   X := cos(Dir)*Len;
   y := sin(Dir)*Len;
 end;
 
-function TFTuple.Add(const sum: TFtuple): TFTuple;
+function TFTuple.Sum(const aVal: TFtuple): TFTuple;
 begin
-  result.x := x+sum.x;
-  result.y := y+sum.y;
+  result.x := x+aVal.x;
+  result.y := y+aVal.y;
 end;
 
-function TFTuple.AddTo(const sum: TFtuple): TFTuple;
+function TFTuple.Add(const aVal: TFtuple): TFTuple;
 begin
-  x := x+ sum.x;
-  y := Y+ sum.y;
+  self := Sum(aVal);
   result := Self;
 end;
 

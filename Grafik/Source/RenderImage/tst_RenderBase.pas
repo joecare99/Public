@@ -113,17 +113,17 @@ var
   i: Integer;
   lFTupple:TFTuple;
 begin
- CheckEquals(FTuple(0,0),ZeroTup.Add(ZeroTup),1e-20,'ZeroTup + ZeroTup');
+ CheckEquals(FTuple(0,0),ZeroTup.Sum(ZeroTup),1e-20,'ZeroTup + ZeroTup');
  FFtupple.init(0,0);
- CheckEquals(FTuple(0,0),FFtupple.Add(ZeroTup),1e-20,'init(0,0) + ZeroTup');
+ CheckEquals(FTuple(0,0),FFtupple.Sum(ZeroTup),1e-20,'init(0,0) + ZeroTup');
  FFtupple.init(1.0,-1.0);
- CheckEquals(FTuple(3.0,-3.0),FFtupple.add(FTuple(2.0,-2.0)),1e-20,'init(1.0,-1.0).add(<2,-2>)');
+ CheckEquals(FTuple(3.0,-3.0),FFtupple.Sum(FTuple(2.0,-2.0)),1e-20,'init(1.0,-1.0).add(<2,-2>)');
  CheckEquals(1.0,FFtupple.v[0],format('init(%f,%f).v[0]',[1.0,-1.0]));
  CheckEquals(-1.0,FFtupple.v[1],format('init(%f,%f).v[1]',[1.0,-1.0]));
  FFtupple.init(23.0,17.0);
- CheckEquals(FTuple(26.0,14.0),FFtupple.add(FTuple(3.0,-3.0)),1e-20,'init(23.0,17.0).add(<-3,3)');
- CheckEquals(26.0,FFtupple.Add(FTuple(3.0,-3.0)).v[0],format('init(%f,%f).v[0]',[23.0,17.0]));
- CheckEquals(14.0,FFtupple.Add(FTuple(3.0,-3.0)).v[1],format('init(%f,%f).v[1]',[23.0,17.0]));
+ CheckEquals(FTuple(26.0,14.0),FFtupple.Sum(FTuple(3.0,-3.0)),1e-20,'init(23.0,17.0).add(<-3,3)');
+ CheckEquals(26.0,FFtupple.Sum(FTuple(3.0,-3.0)).v[0],format('init(%f,%f).v[0]',[23.0,17.0]));
+ CheckEquals(14.0,FFtupple.Sum(FTuple(3.0,-3.0)).v[1],format('init(%f,%f).v[1]',[23.0,17.0]));
  for i := 0 to 50000 do
    begin
      x1:= (random-0.5)*maxLongint;
@@ -132,7 +132,7 @@ begin
      y2:= (random-0.5)*maxLongint;
      FFtupple.init(x1,y1);
      lFTupple.INit(x2,y2);
-     CheckEquals(FTuple(x1+x2,y1+y2),FFtupple.Add(lFTupple),1e-20,format('init(%f,%f).add(%f,%f)',[x1,y1,x2,y2]));
+     CheckEquals(FTuple(x1+x2,y1+y2),FFtupple.Sum(lFTupple),1e-20,format('init(%f,%f).add(%f,%f)',[x1,y1,x2,y2]));
      CheckEquals(FTuple(x1,y1),FFtupple,1e-20,format('FTupple=(%f,%f)',[x1,y1]));
    end;
 end;
@@ -143,15 +143,15 @@ var
   i: Integer;
   lFTupple:TFTuple;
 begin
- CheckEquals(FTuple(0,0),ZeroTup.AddTo(ZeroTup),1e-20,'ZeroTup + ZeroTup');
+ CheckEquals(FTuple(0,0),ZeroTup.Add(ZeroTup),1e-20,'ZeroTup + ZeroTup');
  FFtupple.init(0,0);
- CheckEquals(FTuple(0,0),FFtupple.AddTo(ZeroTup),1e-20,'init(0,0) + ZeroTup');
+ CheckEquals(FTuple(0,0),FFtupple.Add(ZeroTup),1e-20,'init(0,0) + ZeroTup');
  FFtupple.init(1.0,-1.0);
- CheckEquals(FTuple(3.0,-3.0),FFtupple.addTo(FTuple(2.0,-2.0)),1e-20,'init(1.0,-1.0).add(<2,-2>)');
+ CheckEquals(FTuple(3.0,-3.0),FFtupple.Add(FTuple(2.0,-2.0)),1e-20,'init(1.0,-1.0).add(<2,-2>)');
  CheckEquals(3.0,FFtupple.x,format('init(%f,%f).v[0]',[1.0,-1.0]));
  CheckEquals(-3.0,FFtupple.y,format('init(%f,%f).v[1]',[1.0,-1.0]));
  FFtupple.init(23.0,17.0);
- CheckEquals(FTuple(26.0,14.0),FFtupple.addTo(FTuple(3.0,-3.0)),1e-20,'init(23.0,17.0).add(<-3,3)');
+ CheckEquals(FTuple(26.0,14.0),FFtupple.Add(FTuple(3.0,-3.0)),1e-20,'init(23.0,17.0).add(<-3,3)');
  CheckEquals(26.0,FFtupple.v[0],format('init(%f,%f).v[0]',[23.0,17.0]));
  CheckEquals(14.0,FFtupple.v[1],format('init(%f,%f).v[1]',[23.0,17.0]));
  for i := 0 to 50000 do
@@ -162,7 +162,7 @@ begin
      y2:= (random-0.5)*maxLongint;
      FFtupple.init(x1,y1);
      lFTupple.INit(x2,y2);
-     CheckEquals(FTuple(x1+x2,y1+y2),FFtupple.Addto(lFTupple),1e-20,format('init(%f,%f).add(%f,%f)',[x1,y1,x2,y2]));
+     CheckEquals(FTuple(x1+x2,y1+y2),FFtupple.Add(lFTupple),1e-20,format('init(%f,%f).add(%f,%f)',[x1,y1,x2,y2]));
      CheckEquals(FTuple(x1+x2,y1+y2),FFtupple,1e-20,format('FTupple=(%f,%f)',[x1+x2,y1+y2]));
    end;
 end;
