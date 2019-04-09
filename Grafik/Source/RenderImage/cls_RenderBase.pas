@@ -212,7 +212,10 @@ end;
 function TFTriple.GDir: TFTuple;
 begin
   if (y=0.0) and (z=0.0) then
+    if (x>=0.0)then
       result := ZeroTup
+    else
+      result := FTuple(pi,0)
   else
     begin
       result.v[0] := FTuple(x,sqrt(sqr(y)+sqr(z))).GDir;

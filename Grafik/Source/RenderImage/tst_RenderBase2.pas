@@ -32,7 +32,7 @@ type
     Procedure TestMul;
     Procedure TestMul2;
     Procedure TestDivide;
-    Procedure TestVMul;
+    procedure TestXMul;
     Procedure TestEquals;
     Procedure TestCopy;
     Procedure TestCopy2;
@@ -336,7 +336,7 @@ begin
    end;
 end;
 
-procedure TTestRenderBase2.TestVMul;
+procedure TTestRenderBase2.TestXMul;
 var
   x1, y1,x2,y2, z1, z2: Extended;
   i: Integer;
@@ -350,10 +350,10 @@ begin
  CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
  CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
  FFtriple.init(23.0,17.0,13.0);
- CheckEquals(FTriple(64.5,4.5,0.0),FFtriple.XMul(FTriple(3.0,-3.0,1.5)),1e-20,'init(23.0,17.0,13.0).XMul(<3,-3,1.5>)');
+ CheckEquals(FTriple(64.5,4.5,-120.0),FFtriple.XMul(FTriple(3.0,-3.0,1.5)),1e-20,'init(23.0,17.0,13.0).XMul(<3,-3,1.5>)');
  CheckEquals(64.5,FFtriple.XMul(FTriple(3.0,-3.0,1.5)).v[0],format('init(%f,%f,%f).v[0]',[23.0,17.0,13.0]));
  CheckEquals(4.5,FFtriple.XMul(FTriple(3.0,-3.0,1.5)).v[1],format('init(%f,%f,%f).v[1]',[23.0,17.0,13.0]));
- CheckEquals(0.0,FFtriple.XMul(FTriple(3.0,-3.0,1.5)).v[2],format('init(%f,%f,%f).v[1]',[23.0,17.0,13.0]));
+ CheckEquals(-120.0,FFtriple.XMul(FTriple(3.0,-3.0,1.5)).v[2],format('init(%f,%f,%f).v[1]',[23.0,17.0,13.0]));
  for i := 0 to 50000 do
    begin
      x1:= (random-0.5)*maxLongint;
@@ -364,7 +364,7 @@ begin
      z2:= (random-0.5)*maxLongint;
      FFtriple.init(x1,y1,z1);
      lFTriple.INit(x2,y2,z2);
-     CheckEquals(FTriple(y1*z2-z1*y2,z1*x2-x1*z2,x1*y2-y1*x2),FFtriple.XMul(lFTriple),1e-20,format('init(%f,%f,%f).XMul(%f,%f,%f)',[x1,y1,x2,y2]));
+     CheckEquals(FTriple(y1*z2-z1*y2,z1*x2-x1*z2,x1*y2-y1*x2),FFtriple.XMul(lFTriple),1e-20,format('init(%f,%f,%f).XMul(%f,%f,%f)',[x1,y1,z1,x2,y2,z2]));
      CheckEquals(FTriple(x1,y1,z1),FFtriple,1e-20,format('FTriple=(%f,%f,%f)',[x1,y1,z1]));
    end;
 end;
@@ -578,20 +578,20 @@ begin
  CheckEquals(FTuple(5*pi/6,0),FFtriple.GDir,1e-15,'init(-0.866,0.5).GDir');
  FFtriple.init(-1.0,0.0,0.0);  // 180°
  CheckEquals(FTuple(pi,0),FFtriple.GDir,1e-15,'init(-1.0,0.0).GDir');
- FFtriple.init(-sqrt(3/4),-0.5,0.0);  // -150°
- CheckEquals(FTuple(-5*pi/6,0),FFtriple.GDir,1e-15,'init(-0.866,-0.5).GDir');
+ FFtriple.init(-sqrt(3/4),-0.5,0);  // -150°
+ CheckEquals(FTuple(5*pi/6,pi),FFtriple.GDir,1e-15,'init(-0.866,-0.5).GDir');
  FFtriple.init(-1.0,-1.0,0.0);  // -135°
- CheckEquals(FTuple(-3*pi/4,0),FFtriple.GDir,1e-15,'init(-1.0,-1.0).GDir');
+ CheckEquals(FTuple(3*pi/4,pi),FFtriple.GDir,1e-15,'init(-1.0,-1.0).GDir');
  FFtriple.init(-0.5,-sqrt(3/4),0.0); // -120°
- CheckEquals(FTuple(-2*pi/3,0),FFtriple.GDir,1e-15,'init(-0.5,-0.866).GDir');
+ CheckEquals(FTuple(2*pi/3,pi),FFtriple.GDir,1e-15,'init(-0.5,-0.866).GDir');
  FFtriple.init(0.0,-1.0,0.0);  // -90°
- CheckEquals(FTuple(-pi/2,0),FFtriple.GDir,1e-15,'init(0.0,-1.0).GDir');
+ CheckEquals(FTuple(pi/2,pi),FFtriple.GDir,1e-15,'init(0.0,-1.0).GDir');
  FFtriple.init(0.5,-sqrt(3/4),0.0); // -60°
- CheckEquals(FTuple(-pi/3,0),FFtriple.GDir,1e-15,'init(0.5,-0.866).GDir');
+ CheckEquals(FTuple(pi/3,pi),FFtriple.GDir,1e-15,'init(0.5,-0.866).GDir');
  FFtriple.init(1.0,-1.0,0.0);    // -45°
- CheckEquals(FTuple(-pi/4,0),FFtriple.GDir,1e-15,'init(1.0,-1.0,0.5).GDir');
+ CheckEquals(FTuple(pi/4,pi),FFtriple.GDir,1e-15,'init(1.0,-1.0,0.5).GDir');
  FFtriple.init(sqrt(3/4),-0.5,0.0);  // -30°
- CheckEquals(FTuple(-pi/6,0),FFtriple.GDir,1e-15,'init(0.866,-0.5).GDir');
+ CheckEquals(FTuple(pi/6,pi),FFtriple.GDir,1e-15,'init(0.866,-0.5).GDir');
 // Some other Values
  FFtriple.init(23.0,17.0,13.0);
  CheckEquals(FTuple(0.636508215787951,0),FFtriple.GDir,1e-15,'init(23.0,17.0,13.0).GDir');
@@ -603,7 +603,7 @@ begin
  CheckEquals(FTuple(-pi+0.917949695694122,0),FFtriple.GDir,1e-15,'init(-13.0,-17.0).GDir');
  for i := 0 to 50000 do
    begin
-     y2:= (random-0.5)*pi*2;
+     y2:= random*pi;
      Z2:= (random-0.5)*pi*2;
      x2:= (random+1e-15)*maxLongint;
      x1:= cos(y2)*x2;
