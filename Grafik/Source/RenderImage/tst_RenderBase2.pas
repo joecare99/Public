@@ -282,9 +282,9 @@ end;
 
 procedure TTestRenderBase2.TestMul2;
 var
-  x1, y1,x2,y2, z1: Extended;
+  x1, y1,x2, z1: Extended;
   i: Integer;
-  lFTriple:TFTriple;
+
 begin
  CheckEquals(FTriple(0,0,0),ZeroTrp.Mul(0.0),1e-20,'ZeroTrp * ZeroTrp');
  FFtriple.init(0,0,0);
@@ -309,9 +309,9 @@ end;
 
 procedure TTestRenderBase2.TestDivide;
 var
-  x1, y1,x2,y2, z1: Extended;
+  x1, y1,x2, z1: Extended;
   i: Integer;
-//  lFTriple:TFTriple;
+
 begin
  CheckEquals(FTriple(0,0,0),ZeroTrp.Divide(1.0),1e-20,'ZeroTrp * ZeroTrp');
  FFtriple.init(0,0,0);
@@ -594,9 +594,9 @@ begin
  CheckEquals(FTuple(pi/6,pi),FFtriple.GDir,1e-15,'init(0.866,-0.5).GDir');
 // Some other Values
  FFtriple.init(23.0,17.0,13.0);
- CheckEquals(FTuple(0.636508215787951,0),FFtriple.GDir,1e-15,'init(23.0,17.0,13.0).GDir');
+ CheckEquals(FTuple(0.74939949238095,0.652846631100774),FFtriple.GDir,1e-15,'init(23.0,17.0,13.0).GDir');
  FFtriple.init(-23.0,17.0,13.0);
- CheckEquals(FTuple(pi-0.636508215787951,0),FFtriple.GDir,1e-15,'init(-23.0,17.0).GDir');
+ CheckEquals(FTuple(pi-0.74939949238095,0.652846631100774),FFtriple.GDir,1e-15,'init(-23.0,17.0).GDir');
  FFtriple.init(13.0,17.0,13.0);
  CheckEquals(FTuple(0.917949695694122,0),FFtriple.GDir,1e-15,'init(13.0,17.0).GDir');
  FFtriple.init(-13.0,-17.0,13.0);
