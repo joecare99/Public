@@ -152,8 +152,11 @@ begin
 end;
 
 procedure TTestAngle.TestSum;
+var
+  ldir2, ldir, lmult, lmult2: Extended;
+  I: Integer;
 begin
-  //Well Known Values
+  //Well Known Values (Without Overflow)
   FAngle := Angle(0.0);
   CheckEquals(Angle(0.0),FAngle.Sum(ZeroAngle),1e-15,'Summe 0° + 0°');
   CheckEquals(Angle(0.0),FAngle,1e-15,'Startwinkel ist 0°');
@@ -170,8 +173,44 @@ begin
   CheckEquals(Angle(0.0),FAngle.Sum(Angle(-0.1)),1e-15,'Summe 0.1r + (-0.1r)');
   CheckEquals(Angle(0.1),FAngle,1e-15,'Startwinkel ist 0.1r');
 
-end;
+  //Well Known Values with(Single overflow)
+  FAngle := Angle(2*pi);
+  CheckEquals(Angle(0.0),FAngle.Sum(ZeroAngle),1e-15,'Summe 0° + 0°');
+  CheckEquals(Angle(2*pi),FAngle,1e-15,'Startwinkel ist 2pi°');
 
+  FAngle := Angle(-2*pi+0.1);
+  CheckEquals(Angle(0.1),FAngle.Sum(ZeroAngle),1e-15,'Summe 0.1r + 0°');
+  CheckEquals(Angle(-2*pi+0.1),FAngle,1e-15,'Startwinkel ist -2pi+0.1r');
+
+  FAngle := Angle(2*pi+0.1);
+  CheckEquals(Angle(0.2),FAngle.Sum(Angle(0.1)),1e-15,'Summe 0.1r + 0.1r');
+  CheckEquals(Angle(2*pi+0.1),FAngle,1e-15,'Startwinkel ist 2pi+0.1r');
+
+  FAngle := Angle(-2*pi+0.1);
+  CheckEquals(Angle(0.0),FAngle.Sum(Angle(-0.1)),1e-15,'Summe 0.1r + (-0.1r)');
+  CheckEquals(Angle(-2*pi+0.1),FAngle,1e-15,'Startwinkel ist -2pi+0.1r');
+
+  FAngle := Angle(0.1);
+  CheckEquals(Angle(0.2),FAngle.Sum(Angle(2*pi+0.1)),1e-15,'Summe 0.1r + 0.1r');
+  CheckEquals(Angle(0.1),FAngle,1e-15,'Startwinkel ist 0.1r');
+
+  FAngle := Angle(+0.1);
+  CheckEquals(Angle(0.0),FAngle.Sum(Angle(2*pi-0.1)),1e-15,'Summe 0.1r + (-0.1r)');
+  CheckEquals(Angle(0.1),FAngle,1e-15,'Startwinkel ist 0.1r');
+
+  // Test Lot of Random Values
+   for I := 0 to 50000 do
+      begin
+         ldir := (random -0.5)* pi*2;
+         lmult := ldir+ (random(256)-128)*pi*2;
+         ldir2 := (random -0.5)* pi*2;
+         lmult2 := ldir2+ (random(256)-128)*pi*2;
+         FAngle := angle(lmult);
+         CheckEquals(Angle(ldir+ldir2).Normalize,FAngle.sum(Angle(lMult2)),5e-13,format('Normalize %f',[lmult]));
+         CheckEquals(Angle(lmult),FAngle,5e-15,format('Still Normalize %f',[ldir]));
+      end;
+
+end;
 
 
 initialization
