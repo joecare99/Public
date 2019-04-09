@@ -337,7 +337,63 @@ begin
 end;
 
 procedure TTestAngle.TestSubt;
+var
+  ldir2, ldir, lmult, lmult2: Extended;
+  I: Integer;
 begin
+  //Well Known Values (Without Overflow)
+  FAngle := Angle(0.0);
+  CheckEquals(Angle(0.0),FAngle.Subt(ZeroAngle),1e-15,'Subtract 0° - 0°');
+  CheckEquals(Angle(0.0),FAngle,1e-15,'Startwinkel ist 0°');
+
+  FAngle := Angle(0.1);
+  CheckEquals(Angle(0.1),FAngle.Subt(ZeroAngle),1e-15,'Subtract 0.1r - 0°');
+  CheckEquals(Angle(0.1),FAngle,1e-15,'Startwinkel ist 0.1r');
+
+  FAngle := Angle(0.1);
+  CheckEquals(Angle(0.2),FAngle.Subt(Angle(-0.1)),1e-15,'Subtract 0.1r - (-0.1r)');
+  CheckEquals(Angle(0.2),FAngle,1e-15,'Startwinkel ist 0.1r');
+
+  FAngle := Angle(0.1);
+  CheckEquals(Angle(0.0),FAngle.Subt(Angle(0.1)),1e-15,'Subtract 0.1r - 0.1r');
+  CheckEquals(Angle(0.0),FAngle,1e-15,'Startwinkel ist 0.1r');
+
+  //Well Known Values with(Single overflow)
+  FAngle := Angle(2*pi);
+  CheckEquals(Angle(0.0),FAngle.Subt(ZeroAngle),1e-15,'Subtract 0° - 0°');
+  CheckEquals(Angle(0.0),FAngle,1e-15,'Startwinkel ist 2pi°');
+
+  FAngle := Angle(-2*pi+0.1);
+  CheckEquals(Angle(0.1),FAngle.Subt(ZeroAngle),1e-15,'Subtract 0.1r - 0°');
+  CheckEquals(Angle(0.1),FAngle,1e-15,'Startwinkel ist -2pi+0.1r');
+
+  FAngle := Angle(2*pi+0.1);
+  CheckEquals(Angle(0.2),FAngle.Subt(Angle(-0.1)),1e-15,'Subtract 0.1r - (-0.1r)');
+  CheckEquals(Angle(0.2),FAngle,1e-15,'Startwinkel ist 2pi+0.1r');
+
+  FAngle := Angle(-2*pi+0.1);
+  CheckEquals(Angle(0.0),FAngle.Subt(Angle(0.1)),1e-15,'Subtract 0.1r - 0.1r)');
+  CheckEquals(Angle(0.0),FAngle,1e-15,'Startwinkel ist -2pi+0.1r');
+
+  FAngle := Angle(0.1);
+  CheckEquals(Angle(0.2),FAngle.Subt(Angle(2*pi-0.1)),1e-15,'Subtract 0.1r - (-0.1r)');
+  CheckEquals(Angle(0.2),FAngle,1e-15,'Startwinkel ist 0.1r');
+
+  FAngle := Angle(+0.1);
+  CheckEquals(Angle(0.0),FAngle.Subt(Angle(2*pi+0.1)),1e-15,'Subtract 0.1r - 0.1r');
+  CheckEquals(Angle(0.0),FAngle,1e-15,'Startwinkel ist 0.1r');
+
+  // Test Lot of Random Values
+   for I := 0 to 50000 do
+      begin
+         ldir := (random -0.5)* pi*2;
+         lmult := ldir+ (random(256)-128)*pi*2;
+         ldir2 := (random -0.5)* pi*2;
+         lmult2 := ldir2+ (random(256)-128)*pi*2;
+         FAngle := angle(lmult);
+         CheckEquals(Angle(ldir-ldir2).Normalize,FAngle.Subt(Angle(lMult2)),5e-13,format('Subt %f - %f',[lmult,lmult2]));
+         CheckEquals(Angle(ldir-ldir2).Normalize,FAngle,5e-13,format('Now  %f',[ldir-ldir2]));
+      end;
 
 end;
 
