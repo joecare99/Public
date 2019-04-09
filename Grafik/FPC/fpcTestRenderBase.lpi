@@ -33,7 +33,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="4">
+    <Units Count="5">
       <Unit0>
         <Filename Value="fpcTestRenderBase.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -50,6 +50,10 @@
         <Filename Value="..\Source\RenderImage\tst_RenderBase.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="..\Source\RenderImage\tst_RenderBaseAngle.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

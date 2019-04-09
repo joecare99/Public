@@ -67,12 +67,32 @@ type
   end;
   PFTriple=^TFTriple;
 
+  { TAngle }
+
+  TAngle=  record
+  private
+    function GetAsGrad: Extended;
+    procedure SetAsGrad(AValue: Extended);
+  public
+    value:extended;
+  public
+    class Function Normalize(w:TAngle):TAngle;static;overload;
+  public
+    function Normalize:TAngle;overload;
+    Function Sum(w:TAngle):TAngle;
+    Function Add(w:TAngle):TAngle;
+    Function ToString:String;
+  public
+    property AsGrad:Extended read GetAsGrad write SetAsGrad;
+  end;
+
   TRenderBaseObject=class
 
   end;
 
 function FTuple(const x,y:extended):TFTuple;inline;
 function FTriple(const x,y,z:extended):TFTriple;inline;
+function Angle(const aVal:extended):TAngle;
 
 const ZeroTup:TFTuple=(x:0.0;y:0.0);
       ZeroTrp:TFTriple=(x:0.0;y:0.0;z:0.0);
@@ -85,6 +105,7 @@ uses math;
 resourceString
   rsTupleToString='<%0:f; %1:f>';
   rsTripleToString='<%0:f; %1:f; %2:f>';
+  rsAngleToString='%0:f°';
 
 var vfs:TFormatSettings;
 
@@ -96,6 +117,50 @@ end;
 function FTriple(const x, y, z: extended): TFTriple;
 begin
    result.init(x,y,z);
+end;
+
+function Angle(const aVal: extended): TAngle;
+begin
+  Result.value:=aVal;
+end;
+
+{ TAngle }
+
+function TAngle.GetAsGrad: Extended;
+begin
+  result := value *180 / pi;
+end;
+
+procedure TAngle.SetAsGrad(AValue: Extended);
+begin
+  value := AValue /180 *pi;
+end;
+
+class function TAngle.Normalize(w: TAngle): TAngle;
+begin
+    result.value := w.value-floor((w.value+ pi)/pi/2)*pi*2;
+end;
+
+function TAngle.Normalize: TAngle;
+begin
+   self :=     Normalize(self);
+  result := self
+end;
+
+function TAngle.Sum(w: TAngle): TAngle;
+begin
+    result := Normalize(angle(self.value + w.value));
+end;
+
+function TAngle.Add(w: TAngle): TAngle;
+begin
+  self := Normalize(angle(self.value + w.value));
+  result := self;
+end;
+
+function TAngle.ToString: String;
+begin
+  result :=format(rsAngleToString,[GetAsGrad],vfs);
 end;
 
 { TFTriple }
