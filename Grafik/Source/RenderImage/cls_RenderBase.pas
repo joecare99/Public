@@ -85,7 +85,7 @@ type
   public
     property AsGrad:Extended read GetAsGrad write SetAsGrad;
   end;
-  PAngle := ^TAngle;
+  PAngle = ^TAngle;
 
   TRenderBaseObject=class
 
@@ -97,6 +97,7 @@ function Angle(const aVal:extended):TAngle;
 
 const ZeroTup:TFTuple=(x:0.0;y:0.0);
       ZeroTrp:TFTriple=(x:0.0;y:0.0;z:0.0);
+      ZeroAngle:TAngle=(Value:0.0);
 
 implementation
 

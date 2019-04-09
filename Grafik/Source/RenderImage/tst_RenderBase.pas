@@ -5,7 +5,7 @@ unit tst_RenderBase;
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry,cls_RenderBase;
+  Classes, SysUtils, fpcunit, testregistry,cls_RenderBase;
 
 type
 
@@ -257,9 +257,9 @@ end;
 
 procedure TTestRenderBase.TestMul2;
 var
-  x1, y1,x2,y2: Extended;
+  x1, y1,x2: Extended;
   i: Integer;
-  lFTupple:TFTuple;
+//  lFTupple:TFTuple;
 begin
  CheckEquals(FTuple(0,0),ZeroTup.Mul(0.0),1e-20,'ZeroTup * ZeroTup');
  FFtupple.init(0,0);
@@ -283,7 +283,7 @@ end;
 
 procedure TTestRenderBase.TestDivide;
 var
-  x1, y1,x2,y2: Extended;
+  x1, y1,x2: Extended;
   i: Integer;
 //  lFTupple:TFTuple;
 begin

@@ -5,7 +5,7 @@ unit tst_RenderBase2;
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry,cls_RenderBase;
+  Classes, SysUtils, fpcunit, testregistry,cls_RenderBase;
 
 type
 

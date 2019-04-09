@@ -1,11 +1,13 @@
 unit tst_RenderBaseAngle;
 
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
+{$ENDIF}
 
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry,cls_RenderBase;
+  Classes, SysUtils{$IFDEF FPC} , fpcunit, testregistry {$ELSE} , testframework {$ENDIF},cls_RenderBase;
 
 type
 
@@ -24,6 +26,7 @@ type
     procedure TestSetUp;
     PRocedure TestNormalize;
     PRocedure TestNormalize2;
+    Procedure TestSum;
   end;
 
 implementation
@@ -148,9 +151,31 @@ begin
      end;
 end;
 
+procedure TTestAngle.TestSum;
+begin
+  //Well Known Values
+  FAngle := Angle(0.0);
+  CheckEquals(Angle(0.0),FAngle.Sum(ZeroAngle),1e-15,'Summe 0° + 0°');
+  CheckEquals(Angle(0.0),FAngle,1e-15,'Startwinkel ist 0°');
+
+  FAngle := Angle(0.1);
+  CheckEquals(Angle(0.1),FAngle.Sum(ZeroAngle),1e-15,'Summe 0.1r + 0°');
+  CheckEquals(Angle(0.1),FAngle,1e-15,'Startwinkel ist 0.1r');
+
+  FAngle := Angle(0.1);
+  CheckEquals(Angle(0.2),FAngle.Sum(Angle(0.1)),1e-15,'Summe 0.1r + 0.1r');
+  CheckEquals(Angle(0.1),FAngle,1e-15,'Startwinkel ist 0.1r');
+
+  FAngle := Angle(0.1);
+  CheckEquals(Angle(0.0),FAngle.Sum(Angle(-0.1)),1e-15,'Summe 0.1r + (-0.1r)');
+  CheckEquals(Angle(0.1),FAngle,1e-15,'Startwinkel ist 0.1r');
+
+end;
+
+
 
 initialization
 
-  RegisterTest(TTestAngle);
+  RegisterTest({$IFDEF FPC} TTestAngle {$ELSE} TTestAngle.suite {$ENDIF});
 end.
 
