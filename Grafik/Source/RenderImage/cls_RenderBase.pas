@@ -85,6 +85,7 @@ type
   public
     property AsGrad:Extended read GetAsGrad write SetAsGrad;
   end;
+  PAngle := ^TAngle;
 
   TRenderBaseObject=class
 
