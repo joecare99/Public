@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestRenderBase"><module name="cls_RenderBase"><element name="TAngle.Normalize"><short>Normiere einen übergebenen Winkel</short>
+      </element><element name="TAngle"><short>Winkel (Wert mit Winkelfunktionen)</short>
+      </element><element name="TFTriple"><short>Ein Dreifach-Wert 3D-Punkt oder 3D-Vector</short>
+      </element><element name="TFTuple"><short>Ein Zweifach-Wert z.B: 2D-Punkt oder 2D-Vector</short>
+      </element><short>Basisklassen/-typen für Rendering</short><element name="TFTuple.ToString"><short>Allgemeine Umwandlung in einen String</short>
+      </element><element name="TFTuple.Init"><short>Initialisierung mit 2 Werten direkt</short>
+      </element><element name="TFTuple.InitDirLen"/><element name="TFTuple.InitLenDir"><short>Initlialisierung mit Länge und Richtung</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
