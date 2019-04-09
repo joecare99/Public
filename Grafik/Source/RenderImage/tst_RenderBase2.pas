@@ -598,9 +598,9 @@ begin
  FFtriple.init(-23.0,17.0,13.0);
  CheckEquals(FTuple(pi-0.74939949238095,0.652846631100774),FFtriple.GDir,1e-15,'init(-23.0,17.0).GDir');
  FFtriple.init(13.0,17.0,13.0);
- CheckEquals(FTuple(0.917949695694122,0),FFtriple.GDir,1e-15,'init(13.0,17.0).GDir');
+ CheckEquals(FTuple(1.02491680674777,0.652846631100774),FFtriple.GDir,1e-14,'init(13.0,17.0,13.0).GDir');
  FFtriple.init(-13.0,-17.0,13.0);
- CheckEquals(FTuple(-pi+0.917949695694122,0),FFtriple.GDir,1e-15,'init(-13.0,-17.0).GDir');
+ CheckEquals(FTuple(pi-1.02491680674777,pi-0.652846631100774),FFtriple.GDir,1e-14,'init(-13.0,-17.0,13.0).GDir');
  for i := 0 to 50000 do
    begin
      y2:= random*pi;
