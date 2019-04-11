@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="prj_RenderImage"><module name="cls_RenderEngine"><short>Unit mit der Render-Engine-Klasse</short><element name="TRenderEngine"><short>Render Engine, Klasse die das eigentliche Rendern ausführt </short>
+      </element><element name="TRenderEngine.FObjects"><short>LIste von (allen) Objekten einer Scene</short>
+      </element><element name="TRenderEngine.FLightSources"><short>Liste der direkten Lichtquellen</short>
+      </element><element name="TRenderEngine.FCamera"><short>Definition der Kamera</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
