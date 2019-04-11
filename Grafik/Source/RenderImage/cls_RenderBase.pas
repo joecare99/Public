@@ -54,6 +54,8 @@ type
   operator * (aFak:extended; aPar2:TFTuple) aLeft:TFTuple;overload;
   operator / (aPar1:TFTuple; aFak:extended) aLeft:TFTuple;
 
+  function abs(Par1:TfTuple):extended;overload;
+
 type
   { TFTriple }
 
@@ -98,6 +100,8 @@ type
   operator * (aPar1:TFTriple; aFak:extended) aLeft:TFTriple;overload;
   operator * (aFak:extended; aPar2:TFTriple) aLeft:TFTriple;overload;
   operator / (aPar1:TFTriple; aFak:extended) aLeft:TFTriple;
+
+  function abs(Par1:TfTriple):extended;overload;
 
 type
   { TAngle }
@@ -228,6 +232,11 @@ var vfs:TFormatSettings;
   operator/(aPar1: TFTuple; aFak: extended)aLeft: TFTuple;inline;
   begin
         aleft := aPar1.Divide(aFak);
+  end;
+
+  function abs(Par1: TfTuple): extended;
+  begin
+    result:= par1.GLen;
   end;
 
 { TFTuple }
@@ -376,6 +385,11 @@ end;
 operator/(aPar1: TFTriple; aFak: extended)aLeft: TFTriple;
 begin
   aleft := aPar1.Divide(aFak);
+end;
+
+function abs(Par1: TfTriple): extended;inline;
+begin
+  result:= par1.GLen;
 end;
 
 { TFTriple }
