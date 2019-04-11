@@ -34,7 +34,9 @@ type
     Procedure TestOpMul;
     Procedure TestMul2;
     Procedure TestOpMul2;
+    Procedure TestOpMul3;
     Procedure TestDivide;
+    Procedure TestOpDivide;
     Procedure TestVMul;
     Procedure TestEquals;
     Procedure TestCopy;
@@ -431,6 +433,32 @@ begin
    end;
 end;
 
+procedure TTestRenderBase.TestOpMul3;
+var
+  x1, y1,x2: Extended;
+  i: Integer;
+//  lFTupple:TFTuple;
+begin
+ CheckEquals(FTuple(0,0),0.0*ZeroTup,1e-20,'ZeroTup * ZeroTup');
+ FFtupple.init(0,0);
+ CheckEquals(FTuple(0,0),1.0*FFtupple,1e-20,'init(0,0) * ZeroTup');
+ FFtupple.init(1.0,-1.0);
+ CheckEquals(FTuple(2.0,-2.0),2.0*FFtupple,1e-20,'init(1.0,-1.0).Mul(2.0)');
+ CheckEquals(1.0,FFtupple.v[0],format('init(%f,%f).v[0]',[1.0,-1.0]));
+ CheckEquals(-1.0,FFtupple.v[1],format('init(%f,%f).v[1]',[1.0,-1.0]));
+ FFtupple.init(23.0,17.0);
+ CheckEquals(FTuple(-69.0,-51.0),-3.0*FFtupple,1e-20,'init(23.0,17.0).Mul(-3.0)');
+ for i := 0 to 50000 do
+   begin
+     x1:= (random-0.5)*maxLongint;
+     y1:= (random-0.5)*maxLongint;
+     x2:= (random-0.5)*maxLongint;
+     FFtupple.init(x1,y1);
+     CheckEquals(FTuple(x1*x2,y1*x2),X2*FFtupple,1e-20,format('init(%f,%f).Mul(%f)',[x1,y1,x2]));
+     CheckEquals(FTuple(x1,y1),FFtupple,1e-20,format('FTupple=(%f,%f)',[x1,y1]));
+   end;
+end;
+
 procedure TTestRenderBase.TestDivide;
 var
   x1, y1,x2: Extended;
@@ -455,6 +483,34 @@ begin
      x2:= (random-0.5)*maxLongint;
      FFtupple.init(x1,y1);
      CheckEquals(FTuple(x1/x2,y1/x2),FFtupple.Divide(X2),1e-20,format('init(%f,%f).Divide(%f)',[x1,y1,x2]));
+     CheckEquals(FTuple(x1,y1),FFtupple,1e-20,format('FTupple=(%f,%f)',[x1,y1]));
+   end;
+end;
+
+procedure TTestRenderBase.TestOpDivide;
+var
+  x1, y1,x2: Extended;
+  i: Integer;
+//  lFTupple:TFTuple;
+begin
+ CheckEquals(FTuple(0,0),ZeroTup/1.0,1e-20,'ZeroTup * ZeroTup');
+ FFtupple.init(0,0);
+ CheckEquals(FTuple(0,0),FFtupple/1.0,1e-20,'init(0,0) * ZeroTup');
+ FFtupple.init(1.0,-1.0);
+ CheckEquals(FTuple(0.5,-0.5),FFtupple/2.0,1e-20,'init(1.0,-1.0).Divide(2.0)');
+ CheckEquals(1.0,FFtupple.v[0],format('init(%f,%f).v[0]',[1.0,-1.0]));
+ CheckEquals(-1.0,FFtupple.v[1],format('init(%f,%f).v[1]',[1.0,-1.0]));
+ FFtupple.init(-69.0,-51.0);
+ CheckEquals(FTuple(23.0,17.0),FFtupple/-3.0,1e-20,'init(-69.0,-51.0).Divide(-3.0)');
+ for i := 0 to 50000 do
+   begin
+     x1:= (random-0.5)*maxLongint;
+     y1:= (random-0.5)*maxLongint;
+     x2:=0.0;
+     while x2 = 0.0 do
+     x2:= (random-0.5)*maxLongint;
+     FFtupple.init(x1,y1);
+     CheckEquals(FTuple(x1/x2,y1/x2),FFtupple/X2,1e-20,format('init(%f,%f).Divide(%f)',[x1,y1,x2]));
      CheckEquals(FTuple(x1,y1),FFtupple,1e-20,format('FTupple=(%f,%f)',[x1,y1]));
    end;
 end;

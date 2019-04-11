@@ -225,7 +225,7 @@ var vfs:TFormatSettings;
     aleft := aPar2.mul(aFak);
   end;
 
-  operator/(aPar1: TFTuple; aFak: extended)aLeft: TFTuple;
+  operator/(aPar1: TFTuple; aFak: extended)aLeft: TFTuple;inline;
   begin
         aleft := aPar1.Divide(aFak);
   end;
