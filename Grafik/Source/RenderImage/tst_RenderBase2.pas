@@ -35,6 +35,7 @@ type
     Procedure TestOpMultiply;
     Procedure TestMul2;
     Procedure TestOpMultiply2;
+    Procedure TestOpMultiply3;
     Procedure TestDivide;
     procedure TestXMul;
     Procedure TestEquals;
@@ -432,6 +433,33 @@ begin
      x2:= (random-0.5)*maxLongint;
      FFtriple.init(x1,y1,z1);
      CheckEquals(FTriple(x1*x2,y1*x2,z1*x2),FFtriple*X2,1e-20,format('init(%f,%f,%f)*%f',[x1,y1,z1,x2]));
+     CheckEquals(FTriple(x1,y1,z1),FFtriple,1e-20,format('FTriple=(%f,%f,%f)',[x1,y1,z1]));
+   end;
+end;
+
+procedure TTestRenderBase2.TestOpMultiply3;
+var
+  x1, y1,x2, z1: Extended;
+  i: Integer;
+
+begin
+ CheckEquals(FTriple(0,0,0),0.0*ZeroTrp,1e-20,'ZeroTrp * ZeroTrp');
+ FFtriple.init(0,0,0);
+ CheckEquals(FTriple(0,0,0),1.0*FFtriple,1e-20,'init(0,0,0) * 1.0');
+ FFtriple.init(1.0,-1.0,0.5);
+ CheckEquals(FTriple(2.0,-2.0,1.0),2.0*FFtriple,1e-20,'init(1.0,-1.0,0.5)*2.0');
+ CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
+ CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
+ FFtriple.init(23.0,17.0,13.0);
+ CheckEquals(FTriple(-69.0,-51.0,-39.0),-3.0*FFtriple,1e-20,'init(23.0,17.0,13.0)*-3.0');
+ for i := 0 to 50000 do
+   begin
+     x1:= (random-0.5)*maxLongint;
+     y1:= (random-0.5)*maxLongint;
+     z1:= (random-0.5)*maxLongint;
+     x2:= (random-0.5)*maxLongint;
+     FFtriple.init(x1,y1,z1);
+     CheckEquals(FTriple(x1*x2,y1*x2,z1*x2),X2*FFtriple,1e-20,format('init(%f,%f,%f)*%f',[x1,y1,z1,x2]));
      CheckEquals(FTriple(x1,y1,z1),FFtriple,1e-20,format('FTriple=(%f,%f,%f)',[x1,y1,z1]));
    end;
 end;
