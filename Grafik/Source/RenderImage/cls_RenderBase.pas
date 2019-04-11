@@ -122,6 +122,10 @@ type
   end;
   PAngle = ^TAngle;
 
+operator := (aRight:Extended) aLeft:TAngle;
+operator := (aRight:TAngle) aLeft:Extended;
+
+type
   TRenderPoint= TFTriple;
 
   TRenderVector= TFTriple;
@@ -264,6 +268,19 @@ begin
   if FStartPoint=AValue then Exit;
   FStartPoint:=AValue;
 end;
+
+{ TAngle operators}
+
+operator:=(aRight: Extended)aLeft: TAngle;
+begin
+  result.value:=aRight;
+end;
+
+operator:=(aRight: TAngle)aLeft: Extended;
+begin
+  result := aRight.value;
+end;
+
 
 { TAngle }
 
