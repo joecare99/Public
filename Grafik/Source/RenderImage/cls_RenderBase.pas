@@ -210,17 +210,17 @@ var vfs:TFormatSettings;
     aleft := aPar1.Subt(aPar2);
   end;
 
-  operator*(aPar1, aPar2: TFTuple)aLeft: extended;
+  operator*(aPar1, aPar2: TFTuple)aLeft: extended;inline;
   begin
     aleft := aPar1.mul(aPar2);
   end;
 
-  operator*(aPar1: TFTuple; aFak: extended)aLeft: TFTuple;
+  operator*(aPar1: TFTuple; aFak: extended)aLeft: TFTuple;inline;
   begin
     aleft := aPar1.mul(aFak);
   end;
 
-  operator*(aFak: extended; aPar2: TFTuple)aLeft: TFTuple;
+  operator*(aFak: extended; aPar2: TFTuple)aLeft: TFTuple;inline;
   begin
     aleft := aPar2.mul(aFak);
   end;
