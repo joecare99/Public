@@ -6,6 +6,47 @@
       </element><short>Basisklassen/-typen für Rendering</short><element name="TFTuple.ToString"><short>Allgemeine Umwandlung in einen String</short>
       </element><element name="TFTuple.Init"><short>Initialisierung mit 2 Werten direkt</short>
       </element><element name="TFTuple.InitDirLen"/><element name="TFTuple.InitLenDir"><short>Initlialisierung mit Länge und Richtung</short>
+      </element><element name="TFTuple.GetValue"><short>Get-Methode für Einzelwerte</short>
+      </element><element name="TFTuple.SetValue"><short>Set-Methode für Einzelwerte</short>
+      </element><element name="TFTuple.Value"><short>Wert - Eigenschaft</short>
+      </element><element name="TFTuple.MLen"><short>Maximal-Länge</short>
+      </element><element name="TFTuple.GDir"><short>Geometrische Richtung zum Punkt</short>
+      </element><element name="TFTuple.GLen"><short>Geometrische Länge zum Punkt</short>
+      </element><element name="TFTuple.Copy"><short>Erzeugt eine Kopie</short>
+      </element><element name="TFTuple.Equals"><short>Vergleichs-Methode</short>
+      </element><element name="TFTuple.VMul"><short>Complex-Multiplikation  </short>
+      </element><element name="TFTuple.Divide"><short>Faktorisches Dividieren</short>
+      </element><element name="TFTuple.MulTo"><short>Multipliziere mit Faktor</short>
+      </element><element name="TFTuple.Mul"><short>Multiplikation</short>
+      </element><element name="TFTuple.SubtTo"><short>Subtraktion</short>
+      </element><element name="TFTuple.Subt"><short>Berechne Differenz</short>
+      </element><element name="TFTuple.Add"><short>Addiere Wert</short>
+      </element><element name="TFTuple.Sum"><short>Summe der Werte</short>
+      </element><element name="operator:=(Variant):TFTuple"><short>Zuweisungs - Operator (variant(Array) -&gt; TFTuple)</short>
+      </element><element name="operator=(,TFTuple):boolean"><short>Vergleichsoperator</short>
+      </element><element name="operator+(,TFTuple):TFTuple"><short>Additions-Operator</short>
+      </element><element name="TFTriple.GetValue"><short>Get-Methode für Wert-Eigenschaft</short>
+      </element><element name="TFTriple.SetValue"><short>Set-Methode für Wert-Eigenschaft</short>
+      </element><element name="TFTriple.ToString"><short>Umwandlung in String</short>
+      </element><element name="TFTriple.Init"><short>Initialisierungs-Methode</short>
+      </element><element name="TFTriple.InitDirLen"><short>Initialisierung mit Länge und zwei Winkeln</short>
+      </element><element name="TFTriple.InitTuple"><short>Initialisierung mit Tuple und Ebene</short>
+      </element><element name="TFTriple.Add"><short>Summen-Methode</short>
+      </element><element name="TFTriple.AddTo"><short>Addiere Wert </short>
+      </element><element name="TFTriple.Subt"><short>Differenz-Methode</short>
+      </element><element name="TFTriple.SubtTo"><short>Subtrahiere Wert</short>
+      </element><element name="TFTriple.Mul"><short>Multiplikations-Methode</short>
+      </element><element name="TFTriple.MulTo"><short>Multipliziere mit Faktor</short>
+      </element><element name="TFTriple.Divide"><short>Division um Faktor</short>
+      </element><element name="TFTriple.XMul"><short>Kreuz-Multiplikation</short>
+      </element><element name="TFTriple.Equals"><short>Vergleichs-Methode</short>
+      </element><element name="TFTriple.Copy"><short>Kopie des Werts</short>
+      </element><element name="TFTriple.GLen"><short>Geografische Länge/Distanz des Vektors/Punks</short>
+      </element><element name="TFTriple.GDir"><short>Geografische Richtung des/zu dem Vector/Punkt</short>
+      </element><element name="TFTriple.MLen"><short>Maximal-Länge zu Punkt</short>
+      </element><element name="TFTriple.Value"><short>Wert-Eigenschaft</short>
+      </element><element name="TAngle.GetAsGrad"><short>Get-Methode Winkel in Grad</short>
+      </element><element name="TAngle.SetAsGrad"><short>Set-Methode := Winkel in Grad</short>
       </element>
     </module>
   </package>
