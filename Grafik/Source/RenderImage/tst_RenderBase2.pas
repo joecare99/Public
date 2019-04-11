@@ -44,6 +44,7 @@ type
     Procedure TestCopy2;
     Procedure TestCopy3;
     Procedure TestGLen;
+    Procedure TestFktAbs;
     Procedure TestGDir;
     Procedure TestMLen;
   end;
@@ -731,6 +732,42 @@ begin
      FFtriple.init(x1,y1,z1);
      lFTriple.INit(x2,y2,z2);
      CheckEquals(sqrt(sqr(x1)+sqr(y1)+sqr(z1)),FFtriple.GLen,1e-20,format('init(%f,%f,%f).GLen',[x1,y1,z1]));
+     CheckEquals(FTriple(x1,y1,z1),FFtriple,1e-20,format('FTriple=(%f,%f,%f)',[x1,y1,z1]));
+   end;
+end;
+
+procedure TTestRenderBase2.TestFktAbs;
+ var
+  x1, y1,x2,y2, z1, z2: Extended;
+  i: Integer;
+  lFTriple:TFTriple;
+begin
+ CheckEquals(0.0,abs(ZeroTrp),1e-20,'ZeroTrp.GLen');
+ FFtriple.init(0,0,0);
+ CheckEquals(0.0,abs(FFtriple),1e-20,'abs(init(0,0,0))');
+ FFtriple.init(1.0,-1.0,0.5);
+ CheckEquals(1.5,abs(FFtriple),1e-20,'abs(init(1.0,-1.0,0.5))');
+ CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
+ CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
+ FFtriple.init(23.0,17.0,13.0);
+ CheckEquals(sqrt(818.0+169.0),abs(FFtriple),1e-20,'abs(init(23.0,17.0,13.0))');
+ FFtriple.init(-23.0,17.0,13.0);
+ CheckEquals(sqrt(818.0+169.0),abs(FFtriple),1e-20,'abs(init(-23.0,17.0,13.0))');
+ FFtriple.init(13.0,17.0,11.0);
+ CheckEquals(sqrt(458.0+121.0),abs(FFtriple),1e-20,'abs(init(13.0,17.0,11.0))');
+ FFtriple.init(-13.0,-17.0,11.0);
+ CheckEquals(sqrt(458.0+121.0),abs(FFtriple),1e-20,'abs(init(-13.0,-17.0,11.0))');
+ for i := 0 to 50000 do
+   begin
+     x1:= (random-0.5)*maxLongint;
+     y1:= (random-0.5)*maxLongint;
+     z1:= (random-0.5)*maxLongint;
+     x2:= (random-0.5)*maxLongint;
+     y2:= (random-0.5)*maxLongint;
+     z2:= (random-0.5)*maxLongint;
+     FFtriple.init(x1,y1,z1);
+     lFTriple.INit(x2,y2,z2);
+     CheckEquals(sqrt(sqr(x1)+sqr(y1)+sqr(z1)),abs(FFtriple),1e-20,format('abs(init(%f,%f,%f))',[x1,y1,z1]));
      CheckEquals(FTriple(x1,y1,z1),FFtriple,1e-20,format('FTriple=(%f,%f,%f)',[x1,y1,z1]));
    end;
 end;
