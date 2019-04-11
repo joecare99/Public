@@ -11,6 +11,7 @@
       <UseXPManifest Value="True"/>
       <Icon Value="0"/>
     </General>
+    <LazDoc Paths="..\FPDoc"/>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
     </BuildModes>
@@ -33,7 +34,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="5">
       <Unit0>
         <Filename Value="fpcTestRenderEngine.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -46,18 +47,26 @@
         <Filename Value="..\Source\RenderImage\cls_RenderSimpleObjects.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="..\Source\RenderImage\cls_RenderBase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\Source\RenderImage\cls_RenderCamera.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="fpcTestRenderEngine"/>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\fpcTestRenderEngine"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
       <OtherUnitFiles Value="..\Source\RenderImage"/>
-      <UnitOutputDirectory Value="lib\$(TargetCPU)-$(TargetOS)"/>
+      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>
       <Options>
