@@ -23,6 +23,7 @@ type
     procedure TestSetUp;
     Procedure TestToString;
     procedure TestInit;
+    procedure TestInitLenDir;
     procedure TestOpAssign;
     Procedure TestSum;
     Procedure TestOpPlus;
@@ -113,6 +114,71 @@ begin
      CheckEquals(y1,FFtupple.y,format('init(%f,%f).y',[x1,y1]));
      CheckEquals(x1,FFtupple.v[0],format('init(%f,%f).v[0]',[x1,y1]));
      CheckEquals(y1,FFtupple.v[1],format('init(%f,%f).v[1]',[x1,y1]));
+   end;
+end;
+
+procedure TTestRenderBase.TestInitLenDir;
+var
+  x1, y1,x2,y2: Extended;
+  i: Integer;
+  lFTupple:TFTuple;
+begin
+ FFtupple.InitLenDir(0,0);
+ CheckEquals(ZeroTup,FFtupple,1e-20,'InitLenDir(0,0)');
+// Check Well Known Values
+ FFtupple.InitLenDir(1.0,0.0);
+ CheckEquals(FTuple(1.0,0.0),FFtupple,1e-15,'InitLenDir(1.0,0.)');
+ FFtupple.InitLenDir(1.0, pi/6);  // 30°
+ CheckEquals(FTuple(sqrt(3/4),0.5),FFtupple,1e-15,'InitLenDir(0.866,0.5)');
+ CheckEquals(sqrt(3/4),FFtupple.v[0],format('InitLenDir(%f,%f).v[0]',[1.0,-1.0]));
+ CheckEquals(0.5,FFtupple.v[1],format('InitLenDir(%f,%f).v[1]',[1.0,-1.0]));
+ FFtupple.InitLenDir(sqrt(2),pi/4);    // 45°
+ CheckEquals(FTuple(1.0,1.0),FFtupple,1e-15,'InitLenDir(1.0,1.0)');
+ FFtupple.InitLenDir(1.0,pi/3); // 60°
+ CheckEquals(FTuple(0.5,sqrt(3/4)),FFtupple,1e-15,'InitLenDir(0.5,0.866)');
+ FFtupple.InitLenDir(1.0,pi/2);  // 90°
+ CheckEquals(FTuple(0.0,1.0),FFtupple,1e-15,'InitLenDir(0.0,1.0)');
+ FFtupple.InitLenDir(1.0,2*pi/3); // 120°
+ CheckEquals(FTuple(-0.5,sqrt(3/4)),FFtupple,1e-15,'InitLenDir(-0.5,0.866)');
+ FFtupple.InitLenDir(sqrt(2),3*pi/4);  // 135°
+ CheckEquals(FTuple(-1.0,1.0),FFtupple,1e-15,'InitLenDir(-1.0,1.0)');
+ FFtupple.InitLenDir(1.0,5*pi/6); // 150°
+ CheckEquals(FTuple(-sqrt(3/4),0.5),FFtupple,1e-15,'InitLenDir(-0.866,0.5)');
+ FFtupple.InitLenDir(1.0,pi);  // 180°
+ CheckEquals(FTuple(-1.0,0.0),FFtupple,1e-15,'InitLenDir(-1.0,0.0)');
+ FFtupple.InitLenDir(1.0,-5*pi/6);  // -150°
+ CheckEquals(FTuple(-sqrt(3/4),-0.5),FFtupple,1e-15,'InitLenDir(-0.866,-0.5)');
+ FFtupple.InitLenDir(sqrt(2.0),-3*pi/4);  // -135°
+ CheckEquals(FTuple(-1.0,-1.0),FFtupple,1e-15,'InitLenDir(-1.0,-1.0)');
+ FFtupple.InitLenDir(1.0,-2*pi/3); // -120°
+ CheckEquals(FTuple(-0.5,-sqrt(3/4)),FFtupple,1e-15,'InitLenDir(-0.5,-0.866)');
+ FFtupple.InitLenDir(1.0,-pi/2);  // -90°
+ CheckEquals(FTuple(0.0,-1.0),FFtupple,1e-15,'InitLenDir(0.0,-1.0)');
+ FFtupple.InitLenDir(1.0,-pi/3); // -60°
+ CheckEquals(FTuple(0.5,-sqrt(3/4)),FFtupple,1e-15,'InitLenDir(0.5,-0.866)');
+ FFtupple.InitLenDir(sqrt(2.0),-pi/4);    // -45°
+ CheckEquals(FTuple(1.0,-1.0),FFtupple,1e-15,'InitLenDir(1.0,-1.0)');
+ FFtupple.InitLenDir(1.0,-pi/6);  // -30°
+ CheckEquals(FTuple(sqrt(3/4),-0.5),FFtupple,1e-15,'InitLenDir(0.866,-0.5)');
+// Some other Values
+ FFtupple.InitLenDir(sqrt(818.0),0.636508215787951);
+ CheckEquals(FTuple(23.0,17.0),FFtupple,1e-15,'InitLenDir(23.0,17.0)');
+ FFtupple.InitLenDir(sqrt(818.0),pi-0.636508215787951);
+ CheckEquals(FTuple(-23.0,17.0),FFtupple,1e-15,'InitLenDir(-23.0,17.0)');
+ FFtupple.InitLenDir(sqrt(458.0),0.917949695694122);
+ CheckEquals(FTuple(13.0,17.0),FFtupple,1e-15,'InitLenDir(13.0,17.0)');
+ FFtupple.InitLenDir(sqrt(458.0),-pi+0.917949695694122);
+ CheckEquals(FTuple(-13.0,-17.0),FFtupple,1e-15,'InitLenDir(-13.0,-17.0)');
+ for i := 0 to 50000 do
+   begin
+     y2:= (random-0.5)*pi*2;
+     x2:= (random+1e-15)*maxLongint;
+     x1:= cos(y2)*x2;
+     y1:= sin(y2)*x2;;
+     FFtupple.InitLenDir(x2,y2);
+     lFTupple.Init(x1,y1);
+     CheckEquals(lFTupple,FFtupple,1e-15,format('InitLenDir(%f,%f)',[x1,y1]));
+     CheckEquals(FTuple(x1,y1),FFtupple,1e-20,format('FTupple=(%f,%f)',[x1,y1]));
    end;
 end;
 
