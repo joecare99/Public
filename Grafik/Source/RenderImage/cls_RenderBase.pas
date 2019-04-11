@@ -1,6 +1,8 @@
 unit cls_RenderBase;
 
-{$mode delphi}{$H+}
+{$mode objfpc}{$H+}
+{$ModeSwitch autoderef}
+{$ModeSwitch advancedrecords}
 
 interface
 
@@ -12,6 +14,10 @@ type
   { TFTuple }
 
   TFTuple=record
+  private
+    function GetValue(idx: integer): Extended;
+    procedure SetValue(idx: integer; AValue: Extended);
+  public
     function ToString:string;
     procedure Init(const aX, aY: extended);
     procedure InitLenDir(const Len, Dir: extended);
@@ -25,25 +31,41 @@ type
     function MulTo(const fak:extended):TFTuple;overload;
     function Divide(const divs:extended):TFTuple;overload;
     function VMul(const fak:TFtuple):TFTuple;overload;
-    function Equals(const probe:TFtuple;eps:extended):boolean;overload;
+    function Equals(const probe:TFtuple;eps:extended=1e-15):boolean;overload;
     class Function Copy(nx, ny: extended): TFTuple;static; overload;
     class Function Copy(Vect: TFTuple): TFTuple;static; overload;
     Function Copy: TFTuple; overload;
     function GLen:Extended ;
     function GDir: Extended;
     function MLen: Extended;
+    property Value[idx:integer]:Extended read GetValue write SetValue;default;
     case Boolean of
     true:(X,Y:Extended);
     false:(V:array[0..1] of Extended);
   end;
   PFTuple=^TFTuple;
 
+  operator := (aRight: Variant) aLeft:TFTuple;
+  operator = (aPar1,aPar2:TFTuple) aLeft:boolean;
+  operator + (aPar1,aPar2:TFTuple) aLeft:TFTuple;
+  operator - (aPar1,aPar2:TFTuple) aLeft:TFTuple;
+  operator * (aPar1,aPar2:TFTuple) aLeft:extended;overload;
+  operator * (aPar1:TFTuple; aFak:extended) aLeft:TFTuple;overload;
+  operator * (aFak:extended; aPar2:TFTuple) aLeft:TFTuple;overload;
+  operator / (aPar1:TFTuple; aFak:extended) aLeft:TFTuple;
+
+type
   { TFTriple }
 
   TFTriple=record
+  private
+    function GetValue(idx: integer): extended;
+    procedure SetValue(idx: integer; AValue: extended);
+  public
     function ToString:string;
     procedure Init(const aX, aY, aZ: extended);
     procedure InitDirLen(const Len, DirZ, DirX: extended);
+    Procedure InitTuple(const aTuple:TFTuple;Plane:integer=0);
     function Add(const sum:TFtriple):TFTriple;
     function AddTo(const sum:TFtriple):TFTriple;
     function Subt(const dmin:TFtriple):TFTriple;
@@ -54,19 +76,30 @@ type
     function MulTo(const fak:extended):TFTriple;overload;
     function Divide(const divs:extended):TFTriple;overload;
     function XMul(const fak:TFTriple):TFTriple;overload;
-    function Equals(const probe:TFtriple;eps:extended):boolean;overload;
+    function Equals(const probe:TFtriple;eps:extended=1e-15):boolean;overload;
     class function Copy(nx, ny, nz: extended): TFTriple; static; overload;
     class Function Copy(Vect: TFTriple): TFTriple;static; overload;
     Function Copy: TFTriple; overload;
     function GLen:Extended ;
     function GDir: TFTuple;
     function MLen: Extended;
+    property Value[idx:integer]:extended read GetValue write SetValue;default;
     case Boolean of
     true:(X,Y,Z:Extended);
     false:(V:array[0..2] of Extended);
   end;
   PFTriple=^TFTriple;
 
+  operator := (aRight: variant) aLeft:TFTriple;
+  operator = (aPar1,aPar2:TFTriple) aLeft:boolean;
+  operator + (aPar1,aPar2:TFTriple) aLeft:TFTriple;
+  operator - (aPar1,aPar2:TFTriple) aLeft:TFTriple;
+  operator * (aPar1,aPar2:TFTriple) aLeft:extended;overload;
+  operator * (aPar1:TFTriple; aFak:extended) aLeft:TFTriple;overload;
+  operator * (aFak:extended; aPar2:TFTriple) aLeft:TFTriple;overload;
+  operator / (aPar1:TFTriple; aFak:extended) aLeft:TFTriple;
+
+type
   { TAngle }
 
   TAngle=  record
@@ -89,8 +122,45 @@ type
   end;
   PAngle = ^TAngle;
 
-  TRenderBaseObject=class
+  TRenderPoint= TFTriple;
 
+  TRenderVector= TFTriple;
+
+  { TRenderRay }
+
+  TRenderRay=Class
+  private
+    FDirection: TRenderVector;
+    FStartPoint: TRenderPoint;
+    procedure SetDirection(AValue: TRenderVector);
+    procedure SetStartPoint(AValue: TRenderPoint);
+  public
+    Property StartPoint:TRenderPoint read FStartPoint write SetStartPoint;
+    Property Direction:TRenderVector read FDirection write SetDirection;
+  end;
+
+  THitData=class;
+
+  { TRenderBaseObject }
+
+  TRenderBaseObject=class(TPersistent) //; abstract;
+  protected
+    FPosition: TRenderPoint;
+    procedure SetPosition(AValue: TRenderPoint);virtual;
+  Public
+    Function HitTest(aRay:TRenderRay;out HitData:THitData):boolean;virtual; abstract;
+    Function BoundaryTest(aRay:TRenderRay;out Distance:extended):boolean;virtual; abstract;
+    property Position:TRenderPoint read FPosition write SetPosition;
+
+  end;
+
+  THitData=Class
+    Distance :extended;
+    HitPoint :TRenderpoint;
+    Normalvec:TRenderVector;
+    AmbientVal:extended;
+    ReflectionVal:extended;
+    refraction:extended;
   end;
 
 function FTuple(const x,y:extended):TFTuple;inline;
@@ -101,10 +171,10 @@ const ZeroTup:TFTuple=(x:0.0;y:0.0);
       ZeroTrp:TFTriple=(x:0.0;y:0.0;z:0.0);
       ZeroAngle:TAngle=(Value:0.0);
 
+
 implementation
 
-uses math;
-{ TFTuple }
+uses math,variants;
 
 resourceString
   rsTupleToString='<%0:f; %1:f>';
@@ -112,6 +182,51 @@ resourceString
   rsAngleToString='%0:f°';
 
 var vfs:TFormatSettings;
+
+  operator:=(aRight: Variant)aLeft: TFTuple;
+  begin
+    assert(VarIsArray(aRight),'Array must have 3 entries');
+    assert(VarArrayHighBound(aRight,0)=1,'Array must have 3 entries');
+    aLeft[0]:=aRight[0];
+    aLeft[1]:=aRight[1];
+  end;
+
+  operator=(aPar1, aPar2: TFTuple)aLeft: boolean;
+  begin
+    aleft := aPar1.Equals(aPar2);
+  end;
+
+  operator+(aPar1, aPar2: TFTuple)aLeft: TFTuple; inline;
+  begin
+    aleft := aPar1.Sum(aPar2);
+  end;
+
+  operator-(aPar1, aPar2: TFTuple)aLeft: TFTuple; inline;
+  begin
+    aleft := aPar1.Subt(aPar2);
+  end;
+
+  operator*(aPar1, aPar2: TFTuple)aLeft: extended;
+  begin
+    aleft := aPar1.mul(aPar2);
+  end;
+
+  operator*(aPar1: TFTuple; aFak: extended)aLeft: TFTuple;
+  begin
+    aleft := aPar1.mul(aFak);
+  end;
+
+  operator*(aFak: extended; aPar2: TFTuple)aLeft: TFTuple;
+  begin
+    aleft := aPar2.mul(aFak);
+  end;
+
+  operator/(aPar1: TFTuple; aFak: extended)aLeft: TFTuple;
+  begin
+        aleft := aPar1.Divide(aFak);
+  end;
+
+{ TFTuple }
 
 function FTuple(const x, y: extended): TFTuple;
 begin
@@ -126,6 +241,28 @@ end;
 function Angle(const aVal: extended): TAngle;
 begin
   Result.value:=aVal;
+end;
+
+{ TRenderBaseObject }
+
+procedure TRenderBaseObject.SetPosition(AValue: TRenderPoint);
+begin
+  if FPosition=AValue then Exit;
+  FPosition:=AValue;
+end;
+
+{ TRenderRay }
+
+procedure TRenderRay.SetDirection(AValue: TRenderVector);
+begin
+  if FDirection=AValue then Exit;
+  FDirection:=AValue;
+end;
+
+procedure TRenderRay.SetStartPoint(AValue: TRenderPoint);
+begin
+  if FStartPoint=AValue then Exit;
+  FStartPoint:=AValue;
 end;
 
 { TAngle }
@@ -178,7 +315,64 @@ begin
   result :=format(rsAngleToString,[GetAsGrad],vfs);
 end;
 
+{ TFTriple operators}
+
+operator:=(aRight: variant)aLeft: TFTriple;
+begin
+  assert(VarIsArray(aRight),'Array must have 3 entries');
+  assert(VarArrayHighBound(aRight,0)=2,'Array must have 3 entries');
+  aLeft[0]:=aRight[0];
+  aLeft[1]:=aRight[1];
+  aLeft[2]:=aRight[2];
+end;
+
+operator=(aPar1, aPar2: TFTriple)aLeft: boolean;
+begin
+  aleft := apar1.Equals(apar2);
+end;
+
+operator+(aPar1, aPar2: TFTriple)aLeft: TFTriple;
+begin
+  aleft := apar1.Add(apar2);
+end;
+
+operator-(aPar1, aPar2: TFTriple)aLeft: TFTriple;
+begin
+  aleft := apar1.Subt(apar2);
+end;
+
+operator*(aPar1, aPar2: TFTriple)aLeft: extended;
+begin
+  aleft := apar1.Mul(apar2);
+end;
+
+operator*(aPar1: TFTriple; aFak: extended)aLeft: TFTriple;
+begin
+  aleft := apar1.Mul(aFak);
+end;
+
+operator*(aFak: extended; aPar2: TFTriple)aLeft: TFTriple;
+begin
+  aleft := aPar2.Mul(aFak);
+end;
+
+operator/(aPar1: TFTriple; aFak: extended)aLeft: TFTriple;
+begin
+  aleft := aPar1.Divide(aFak);
+end;
+
 { TFTriple }
+
+function TFTriple.GetValue(idx: integer): extended;
+begin
+  result := V[idx];
+end;
+
+procedure TFTriple.SetValue(idx: integer; AValue: extended);
+begin
+  assert((idx>=0) and (idx<=2),'Range of index');
+  v[idx] := AValue;
+end;
 
 function TFTriple.ToString: string;
 begin
@@ -197,6 +391,15 @@ begin
   x:= cos(Dirz)*Len;
   y:= sin(DirZ) * len * cos(dirX);
   Z:= sin(DirZ) * len * Sin(dirX);
+end;
+
+procedure TFTriple.InitTuple(const aTuple: TFTuple; Plane: integer);
+begin
+  case plane of
+    0 : init(aTuple.X,aTuple.y,0);
+    1 : init(0,aTuple.X,aTuple.y);
+    2 : init(aTuple.y,0,aTuple.x);
+  end;
 end;
 
 function TFTriple.Add(const sum: TFtriple): TFTriple;
@@ -306,6 +509,16 @@ end;
 function TFTriple.MLen: Extended;
 begin
    result := max(abs(x),max( abs(y),abs(z)));
+end;
+
+function TFTuple.GetValue(idx: integer): Extended;
+begin
+  result := v[idx];
+end;
+
+procedure TFTuple.SetValue(idx: integer; AValue: Extended);
+begin
+  v[idx] := AValue;
 end;
 
 function TFTuple.ToString: string;
