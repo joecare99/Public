@@ -40,6 +40,7 @@ type
     Procedure TestOpDivide;
     procedure TestXMul;
     Procedure TestEquals;
+    Procedure TestOpEquals;
     Procedure TestCopy;
     Procedure TestCopy2;
     Procedure TestCopy3;
@@ -598,6 +599,51 @@ begin
      FFtriple.init(x1,y1,z1);
      lFTriple.INit(x2,y2,z2);
      CheckEquals((abs(x1-x2)<1e-20) and (abs(y1-y2)<1e-20),FFtriple.Equals(lFTriple,1e-20),format('init(%f,%f,%f).Equals(%f,%f,%f)',[x1,y1,z1,x2,y2,z2]));
+     CheckEquals(FTriple(x1,y1,z1),FFtriple,1e-20,format('FTriple=(%f,%f,%f)',[x1,y1,z1]));
+   end;
+end;
+
+procedure TTestRenderBase2.TestOpEquals;
+var
+  x1, y1,x2,y2, z1, z2: Extended;
+  i: Integer;
+  lFTriple:TFTriple;
+begin
+ CheckEquals(true,ZeroTrp=ZeroTrp,'ZeroTrp = ZeroTrp');
+ FFtriple.init(0,0,0);
+ CheckEquals(true,FFtriple=ZeroTrp,'init(0,0,0) = ZeroTrp');
+ FFtriple.init(1.0,-1.0,0.5);
+ CheckEquals(false,FFtriple=FTriple(2.0,-2.0,2.0),'init(1.0,-1.0,0.5)=(<2,-2,2>)');
+ CheckEquals(1.0,FFtriple.v[0],format('init(%f,%f,%f).v[0]',[1.0,-1.0,0.5]));
+ CheckEquals(-1.0,FFtriple.v[1],format('init(%f,%f,%f).v[1]',[1.0,-1.0,0.5]));
+ FFtriple.init(23.0,17.0,13.0);
+ CheckEquals(false,FFtriple=FTriple(3.0,-3.0,1.5),'init(23.0,17.0,13.0)=(<-3,3,1.5>)');
+ FFtriple.init(23.0,17.0,13.0);
+ CheckEquals(false,FFtriple=FTriple(23.0,-3.0,13.0),'init(23.0,17.0,13.0)=(<23,3,13>)');
+ FFtriple.init(23.0,17.0,13.0);
+ CheckEquals(false,FFtriple=FTriple(3.0,17.0,13.0),'init(23.0,17.0,13.0)=(<-3,17,13>)');
+ FFtriple.init(23.0,17.0,13.0);
+ CheckEquals(false,FFtriple=FTriple(23.0,17.0,3.0),'init(23.0,17.0,13.0)=(<23,17,3>)');
+ for i := 0 to 50000 do
+   begin
+     x1:= (random-0.5)*maxLongint;
+     y1:= (random-0.5)*maxLongint;
+     z1:= (random-0.5)*maxLongint;
+     if random >0.5 then
+       begin
+     x2:= (random-0.5)*maxLongint;
+     y2:= (random-0.5)*maxLongint;
+     z2:= (random-0.5)*maxLongint;
+       end
+     else
+       begin
+         x2:=x1;
+         y2:=y1;
+         z2:=z1;
+       end;
+     FFtriple.init(x1,y1,z1);
+     lFTriple.INit(x2,y2,z2);
+     CheckEquals((abs(x1-x2)<1e-20) and (abs(y1-y2)<1e-15),FFtriple=lFTriple,format('init(%f,%f,%f).Equals(%f,%f,%f)',[x1,y1,z1,x2,y2,z2]));
      CheckEquals(FTriple(x1,y1,z1),FFtriple,1e-20,format('FTriple=(%f,%f,%f)',[x1,y1,z1]));
    end;
 end;
