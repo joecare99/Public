@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Prj_plasma"><module name="Frm_PlasmaMain"><element name="lerp"><short>Function to linear interpolate between a0 and a1</short>
+      </element><element name="dotGridGradient"><short>Computes the dot product of the distance and gradient vectors.</short>
+      </element><element name="perlin"><short>Compute Perlin noise at coordinates x, y</short>
+      </element><element name="xGrad"><short>Compute xGrad noise at coordinates x, y</short>
+      </element><element name="yGrad"><short>Compute yGrad noise at coordinates x, y</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
