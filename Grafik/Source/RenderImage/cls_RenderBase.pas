@@ -542,12 +542,12 @@ begin
    result := max(abs(x),max( abs(y),abs(z)));
 end;
 
-function TFTuple.GetValue(idx: integer): Extended;
+function TFTuple.GetValue(idx: integer): Extended;inline;
 begin
   result := v[idx];
 end;
 
-procedure TFTuple.SetValue(idx: integer; AValue: Extended);
+procedure TFTuple.SetValue(idx: integer; AValue: Extended);inline;
 begin
   v[idx] := AValue;
 end;
@@ -557,13 +557,13 @@ begin
   result := format(rsTupleToString,[x,y],vfs);
 end;
 
-procedure TFTuple.Init(const aX, aY: extended);
+procedure TFTuple.Init(const aX, aY: extended);inline;
 begin
   x:= ax;
   y:=ay;
 end;
 
-procedure TFTuple.InitLenDir(const Len, Dir: extended);
+procedure TFTuple.InitLenDir(const Len, Dir: extended);inline;
 begin
   X := cos(Dir)*Len;
   y := sin(Dir)*Len;

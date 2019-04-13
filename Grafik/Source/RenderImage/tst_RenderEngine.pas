@@ -11,31 +11,54 @@ uses
 
 type
 
+  { TTestRenderImage }
+
   TTestRenderImage= class(TTestCase)
   Private
-    FRenderEngine:T
+    FRenderEngine:TRenderEngine;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
   published
-    procedure TestHookUp;
+    procedure TestSetUp;
+    procedure TestRay;
   end;
 
 implementation
 
-procedure TTestRenderImage.TestHookUp;
-begin
-  Fail('Write your own test');
-end;
+uses graphics,cls_RenderBase;
 
 procedure TTestRenderImage.SetUp;
 begin
-
+  FRenderEngine := TRenderEngine.create;
 end;
 
 procedure TTestRenderImage.TearDown;
 begin
+  Freeandnil(FRenderEngine);
+end;
 
+procedure TTestRenderImage.TestSetUp;
+begin
+  CheckNotNull(FRenderEngine,'FrenderEngine is assignes');
+end;
+
+procedure TTestRenderImage.TestRay;
+var
+  lRay: TRenderRay;
+begin
+  FRenderEngine.
+  Append(TSphere.Create(
+     Trenderpoint.init(0,0,0),
+     1.0,
+     clWhite));
+  lRay:=TRenderRay.Create(FTriple(0,0,-2),FTriple(0,0,1));
+  try
+  CheckEquals(true,FRenderEngine.Trace(lRay,1.0,1));
+
+  finally
+    freeandnil(lRay)
+  end;
 end;
 
 initialization

@@ -5,7 +5,7 @@ unit cls_RenderEngine;
 interface
 
 uses
-  Classes, SysUtils, cls_RenderBase,graphics;
+  Classes, SysUtils, cls_RenderBase,cls_RenderCamera,graphics;
 
 type
 

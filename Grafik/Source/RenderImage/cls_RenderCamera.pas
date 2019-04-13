@@ -7,10 +7,18 @@ interface
 uses
   Classes, SysUtils, cls_RenderBase;
 
-type TRenderCamera=Class(TRenderBaseObject)
+type
+
+{ TRenderCamera }
+
+ TRenderCamera=Class(TRenderBaseObject)
+private
+  FLookAt: TRenderPoint;
+  procedure SetLookAt(AValue: TRenderPoint);
+public
     // Abstract Camera definition
-      property Position;
-      property LookAt:
+      property Position:TRenderPoint read FPosition write SetPosition;
+      property LookAt:TRenderPoint read FLookAt write SetLookAt;
     end;
 
     TRenderSimpleCamera=Class(TRenderCamera)
@@ -18,6 +26,14 @@ type TRenderCamera=Class(TRenderBaseObject)
     end;
 
 implementation
+
+{ TRenderCamera }
+
+procedure TRenderCamera.SetLookAt(AValue: TRenderPoint);
+begin
+  if FLookAt=AValue then Exit;
+  FLookAt:=AValue;
+end;
 
 end.
 

@@ -13,8 +13,8 @@ Type TSimpleObject=Class(TRenderBaseObject)
 
      TSphere=Class(TSimpleObject)
 
-     published
-
+     public
+       constructor Create(const aPosition:TRenderPoint; aRadius:
      end;
 
 implementation
