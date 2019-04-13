@@ -1,0 +1,92 @@
+object Form1: TForm1
+  Left = 783
+  Height = 556
+  Top = 241
+  Width = 760
+  Caption = 'Form1'
+  ClientHeight = 556
+  ClientWidth = 760
+  DesignTimePPI = 144
+  OnCreate = FormCreate
+  object PaintBox1: TPaintBox
+    Left = 12
+    Height = 450
+    Top = 12
+    Width = 450
+    ParentFont = False
+    OnPaint = PaintBox1Paint
+  end
+  object btnPerlin: TBitBtn
+    Left = 480
+    Height = 45
+    Top = 12
+    Width = 112
+    Caption = 'Perlin - Noise'
+    OnClick = btnPerlinClick
+    ParentFont = False
+    TabOrder = 0
+  end
+  object btnyGrad: TBitBtn
+    Left = 480
+    Height = 45
+    Top = 60
+    Width = 112
+    Caption = 'yGrad'
+    OnClick = btnyGradClick
+    ParentFont = False
+    TabOrder = 1
+  end
+  object btnHexGrad: TBitBtn
+    Left = 480
+    Height = 45
+    Top = 108
+    Width = 112
+    Caption = 'HexGrad'
+    OnClick = btnHexGradClick
+    ParentFont = False
+    TabOrder = 2
+  end
+  object BitBtn4: TBitBtn
+    Left = 600
+    Height = 45
+    Top = 108
+    Width = 112
+    Caption = 'BitBtn4'
+    OnClick = BitBtn4Click
+    ParentFont = False
+    TabOrder = 3
+  end
+  object BitBtn5: TBitBtn
+    Left = 600
+    Height = 45
+    Top = 12
+    Width = 112
+    Caption = 'BitBtn5'
+    OnClick = BitBtn5Click
+    ParentFont = False
+    TabOrder = 4
+  end
+  object TrackBar1: TTrackBar
+    Left = 488
+    Height = 38
+    Top = 175
+    Width = 224
+    Max = 130
+    Min = 10
+    Position = 10
+    TabOrder = 5
+  end
+  object Timer1: TTimer
+    Enabled = False
+    Interval = 200
+    OnTimer = Timer1Timer
+    left = 432
+    top = 108
+  end
+  object IdleTimer1: TIdleTimer
+    Interval = 40
+    OnTimer = Timer1Timer
+    left = 432
+    top = 180
+  end
+end

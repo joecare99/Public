@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, Frm_PlasmaMain
+  Forms, Frm_PlasmaMain, unt_2dPlasmaFktn
   { you can add units after this };
 
 {$R *.res}

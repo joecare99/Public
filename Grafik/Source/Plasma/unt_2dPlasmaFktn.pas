@@ -1,15 +1,11 @@
-unit Frm_PlasmaMain;
+unit unt_2dPlasmaFktn;
 
-{$IFDEF FPC}
-{$mode delphi}{$H+}
-{$ENDIF}
+{$mode objfpc}{$H+}
 
 interface
 
 uses
-  Classes, SysUtils, {$IFDEF FPC} FileUtil,  {$ENDIF}Forms, Controls,
-  Graphics, Dialogs, ExtCtrls,
-  Buttons, StdCtrls;
+  Classes, SysUtils;
 
 type
   TFloatPoint = record
@@ -18,42 +14,18 @@ type
 
   TGradient = array of array of TFloatPoint;
   TNoiseFktn = function(x, y: single; const Gradient: TGradient): single;
-  { TForm1 }
 
-  TForm1 = class(TForm)
-    BitBtn1: TBitBtn;
-    BitBtn2: TBitBtn;
-    BitBtn3: TBitBtn;
-    BitBtn4: TBitBtn;
-    BitBtn5: TBitBtn;
-    IdleTimer1: TIdleTimer;
-    PaintBox1: TPaintBox;
-    Timer1: TTimer;
-    procedure BitBtn1Click(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
-    procedure BitBtn3Click(Sender: TObject);
-    procedure BitBtn4Click(Sender: TObject);
-    procedure BitBtn5Click(Sender: TObject);
-    procedure FormCreate(Sender: TObject);
-    procedure PaintBox1Paint(Sender: TObject);
-    procedure Timer1Timer(Sender: TObject);
-  private
-    { private declarations }
-    Fw: double;
-    FGradient: TGradient;
-    FBitmap: TBitmap;
-    FNoiseFkt: TNoiseFktn;
-  public
-    { public declarations }
-  end;
+function iff(s: boolean; tv, fv: integer): integer; overload;
+function iff(s: boolean; tv, fv: double): double; overload;
 
-var
-  Form1: TForm1;
+function perlin(x, y: single; const Gradient: TGradient): single;
+function yGrad(x, y: single; const Gradient: TGradient): single;
+function HexGrad(x, y: single; const Gradient: TGradient): single;
+function HexGrad0(x, y: single; const Gradient: TGradient): single;
+function HexGrad2(x, y: single; const Gradient: TGradient): single;
+
 
 implementation
-
-{$R *.lfm}
-
 
 function iff(s: boolean; tv, fv: integer): integer; overload;
 begin
@@ -70,6 +42,7 @@ begin
   else
     Result := fv;
 end;
+
 
 // Function to linearly interpolate between a0 and a1
 // Weight w should be in the range [0.0, 1.0]
@@ -107,6 +80,7 @@ begin
   // Compute the dot-product
   Result := (dx * Gradient[iy + 1, ix + 1].x + dy * Gradient[iy + 1, ix + 1].y);
 end;
+
 // Compute Perlin noise at coordinates x, y
 function perlin(x, y: single; const Gradient: TGradient): single;
 var
@@ -443,113 +417,5 @@ begin
 end;
 
 
-{ TForm1 }
-
-procedure TForm1.PaintBox1Paint(Sender: TObject);
-var
-  cc, rr, gg: byte;
-  ix: integer;
-  iy: integer;
-  x0: integer;
-  y0: integer;
-begin
-  // Debug
-  FGradient[12, 22].x := sin(fw);
-  FGradient[12, 22].y := cos(fw);
-  FGradient[13, 25].x := cos(fw);
-  FGradient[13, 25].y := sin(fw);
-
-  if assigned(FNoiseFkt) then
-  begin
-    case trunc(fw * 10) mod 4 of
-      0:
-      begin
-        x0 := 0;
-        y0 := 0;
-      end;
-      1:
-      begin
-        x0 := 1;
-        y0 := 0;
-      end;
-      2:
-      begin
-        x0 := 1;
-        y0 := 1;
-      end;
-      3:
-      begin
-        x0 := 0;
-        y0 := 1;
-      end;
-    end;
-    for ix := 0 to PaintBox1.Width div 2 do
-      for iy := 0 to PaintBox1.Height div 2 do
-      begin
-        cc := trunc(sin(FNoiseFkt(ix * 0.02 + sin(Fw * 0.001) * 10 +
-          10, iy * 0.02 + cos(Fw * 0.001) * 10 + 10, FGradient) *
-          15 * pi + Fw * 1) * 63) + 192;
-        FBitmap.Canvas.Pixels[ix * 2 + x0, iy * 2 + y0] := RGBToColor(cc, cc, cc);
-      end;
-  end;
-  PaintBox1.canvas.Draw(0, 0, FBitmap);
-end;
-
-procedure TForm1.Timer1Timer(Sender: TObject);
-begin
-  Fw := fw + 0.1;
-  PaintBox1.Invalidate;
-end;
-
-procedure TForm1.FormCreate(Sender: TObject);
-var
-  x: integer;
-  y: integer;
-  ww: extended;
-begin
-  RandSeed := 0;
-  FBitmap := TBitmap.Create;
-  FBitmap.Width := PaintBox1.Width;
-  FBitmap.Height := PaintBox1.Height;
-  setlength(FGradient, 32, 32);
-  ww := 0.0;
-  FNoiseFkt := perlin;
-  for x := 0 to 31 do
-    for y := 0 to 31 do
-    begin
-      //        ww:=x*pi-y*pi;
-      //        ww:= random*2*pi;
-      //        FGradient[x,y].x := sin(ww);
-      //        FGradient[x,y].y := cos(ww);
-      FGradient[x, y].x := random * 2 - 1;
-      FGradient[x, y].y := random * 2 - 1;
-    end;
-end;
-
-procedure TForm1.BitBtn1Click(Sender: TObject);
-begin
-  FNoiseFkt := perlin;
-end;
-
-procedure TForm1.BitBtn2Click(Sender: TObject);
-begin
-  FNoiseFkt := yGrad;
-end;
-
-procedure TForm1.BitBtn3Click(Sender: TObject);
-begin
-  FNoiseFkt := HexGrad;
-end;
-
-procedure TForm1.BitBtn4Click(Sender: TObject);
-begin
-  FNoiseFkt := HexGrad0;
-end;
-
-procedure TForm1.BitBtn5Click(Sender: TObject);
-begin
-  FNoiseFkt := HexGrad2;
-end;
-
-
 end.
+
