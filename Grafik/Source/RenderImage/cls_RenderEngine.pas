@@ -12,17 +12,26 @@ type
 { TRenderEngine }
 
  TRenderEngine=Class
+   private
     FObjects:array of TRenderBaseObject;
     FLightSources:array of TRenderBaseObject;
     FCamera:TRenderCamera;
     FResult:TBitmap;
+  public
+    Constructor Create;
     Function Trace(Ray:TRenderRay;Share:extended;Death:integer):TColor;
     Procedure Render;
+    Procedure Append(aObj:TRenderBaseObject);
   end;
 
 implementation
 
 { TRenderEngine }
+
+constructor TRenderEngine.Create;
+begin
+  // Todo: ?
+end;
 
 function TRenderEngine.Trace(Ray: TRenderRay; Share: extended; Death: integer
   ): TColor;
@@ -47,12 +56,32 @@ procedure TRenderEngine.Render;
 
 var Ray:TRenderRay;
 begin
+  // Create Result-Bitmap
   // Parse
   // Optimize
   // Split into Tasks
   // Per Task do:
   //  - Select a Ray
   //call Trace(Ray, 1.0, 1)
+end;
+
+procedure TRenderEngine.Append(aObj: TRenderBaseObject);
+begin
+  setlength(FObjects,length(FObjects)+1);
+  FObjects[high(FObjects)] := aObj;
+  // test if Object is special
+  if aObj.InheritsFrom(TRenderCamera) then
+    begin
+      Freeandnil(FCamera);
+      FCamera := TRenderCamera(aObj);
+    end;
+  // Todo: Lightsource
+  {
+  if aObj.InheritsFrom(TRenderLightsource) then
+    begin
+      setlength(FLightSources,length(FLightSources)+1);
+      FLightSources[high(FLightSources)] := aObj;
+    end; }
 end;
 
 end.

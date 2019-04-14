@@ -143,6 +143,7 @@ type
     procedure SetDirection(AValue: TRenderVector);
     procedure SetStartPoint(AValue: TRenderPoint);
   public
+    constructor Create(aStart:TRenderPoint;aDir:TRenderVector);
     Property StartPoint:TRenderPoint read FStartPoint write SetStartPoint;
     Property Direction:TRenderVector read FDirection write SetDirection;
   end;
@@ -276,6 +277,12 @@ procedure TRenderRay.SetStartPoint(AValue: TRenderPoint);
 begin
   if FStartPoint=AValue then Exit;
   FStartPoint:=AValue;
+end;
+
+constructor TRenderRay.Create(aStart: TRenderPoint; aDir: TRenderVector);
+begin
+  FStartPoint:=aStart;
+  FDirection:=aDir;
 end;
 
 { TAngle operators}

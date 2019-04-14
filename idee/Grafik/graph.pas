@@ -893,6 +893,8 @@ Procedure DrawPoly(Count: integer; Pts: Array Of PointType);
 Procedure SetViewPort(x1, y1, x2, y2: integer; clip: Boolean);
   Begin
     iGraph.ActiveViewPort := rect(x1, y1, x2, y2);
+    iGraph.bmp.Canvas.ClipRect := rect(x1, y1, x2, y2);
+    iGraph.bmp.Canvas.Clipping:=true;
   End;
 
 Procedure GetViewSettings(Var ViewPort: ViewPortType);

@@ -49,12 +49,12 @@ var
 begin
   FRenderEngine.
   Append(TSphere.Create(
-     Trenderpoint.init(0,0,0),
+     Trenderpoint.copy(0,0,0),
      1.0,
      clWhite));
   lRay:=TRenderRay.Create(FTriple(0,0,-2),FTriple(0,0,1));
   try
-  CheckEquals(true,FRenderEngine.Trace(lRay,1.0,1));
+  CheckEquals(RGBToColor(0,0,0),FRenderEngine.Trace(lRay,1.0,1));
 
   finally
     freeandnil(lRay)
