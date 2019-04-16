@@ -2,7 +2,7 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <BuildModes Active="Default"/>
     <Units Count="7">
       <Unit0>
@@ -10,7 +10,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="1"/>
         <CursorPos X="37" Y="13"/>
-        <UsageCount Value="41"/>
+        <UsageCount Value="48"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -21,9 +21,9 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frm_XmasMain"/>
         <IsVisibleTab Value="True"/>
-        <TopLine Value="84"/>
-        <CursorPos X="52" Y="106"/>
-        <UsageCount Value="41"/>
+        <TopLine Value="73"/>
+        <CursorPos X="104" Y="102"/>
+        <UsageCount Value="48"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -32,28 +32,27 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="1277"/>
         <CursorPos X="70" Y="1295"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit2>
       <Unit3>
         <Filename Value="C:\lazarus\lcl\interfaces\customdrawn\customdrawnobject_win.inc"/>
-        <EditorIndex Value="2"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="76" Y="18"/>
-        <UsageCount Value="12"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="11"/>
       </Unit3>
       <Unit4>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\win\wininc\func.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="495"/>
         <CursorPos X="80" Y="506"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit4>
       <Unit5>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\win\wininc\base.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="662"/>
         <CursorPos X="73" Y="670"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="9"/>
       </Unit5>
       <Unit6>
         <Filename Value="..\Source\frm_drawsvg.pas"/>
@@ -61,15 +60,13 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="frm_DrawSVG"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="15"/>
         <CursorPos Y="18"/>
-        <UsageCount Value="12"/>
-        <Loaded Value="True"/>
-        <LoadedDesigner Value="True"/>
+        <UsageCount Value="11"/>
       </Unit6>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="22" HistoryIndex="21">
       <Position1>
         <Filename Value="..\Source\frm_xmasmain.pas"/>
         <Caret Line="47" Column="50" TopLine="29"/>
@@ -119,75 +116,49 @@
         <Caret Line="22" Column="30"/>
       </Position12>
       <Position13>
-        <Filename Value="C:\lazarus\lcl\interfaces\customdrawn\customdrawnobject_win.inc"/>
+        <Filename Value="..\Source\frm_xmasmain.pas"/>
+        <Caret Line="55" Column="14" TopLine="21"/>
       </Position13>
       <Position14>
-        <Filename Value="C:\lazarus\lcl\interfaces\customdrawn\customdrawnobject_win.inc"/>
-        <Caret Line="590" Column="37" TopLine="579"/>
+        <Filename Value="..\Source\frm_xmasmain.pas"/>
+        <Caret Line="52" Column="19" TopLine="25"/>
       </Position14>
       <Position15>
-        <Filename Value="C:\lazarus\lcl\interfaces\customdrawn\customdrawnobject_win.inc"/>
-        <Caret Line="590" Column="37" TopLine="579"/>
+        <Filename Value="..\Source\frm_xmasmain.pas"/>
+        <Caret Line="106" Column="25" TopLine="81"/>
       </Position15>
       <Position16>
-        <Filename Value="..\Source\frm_drawsvg.pas"/>
+        <Filename Value="..\Source\frm_xmasmain.pas"/>
+        <Caret Line="37" Column="8" TopLine="22"/>
       </Position16>
       <Position17>
-        <Filename Value="..\Source\frm_drawsvg.pas"/>
-        <Caret Line="22" Column="15" TopLine="5"/>
+        <Filename Value="..\Source\frm_xmasmain.pas"/>
+        <Caret Line="106" Column="25" TopLine="80"/>
       </Position17>
       <Position18>
-        <Filename Value="..\Source\frm_drawsvg.pas"/>
-        <Caret Line="76" Column="21" TopLine="45"/>
+        <Filename Value="..\Source\frm_xmasmain.pas"/>
+        <Caret Line="28" Column="16" TopLine="6"/>
       </Position18>
       <Position19>
-        <Filename Value="..\Source\frm_drawsvg.pas"/>
-        <Caret Line="45" TopLine="29"/>
+        <Filename Value="..\Source\frm_xmasmain.pas"/>
+        <Caret Line="89" Column="11" TopLine="69"/>
       </Position19>
       <Position20>
-        <Filename Value="..\Source\frm_drawsvg.pas"/>
-        <Caret Line="43" Column="2" TopLine="27"/>
+        <Filename Value="..\Source\frm_xmasmain.pas"/>
+        <Caret Line="106" Column="48" TopLine="79"/>
       </Position20>
       <Position21>
         <Filename Value="..\Source\frm_xmasmain.pas"/>
-        <Caret Line="55" Column="14" TopLine="21"/>
+        <Caret Line="30" Column="27" TopLine="18"/>
       </Position21>
       <Position22>
         <Filename Value="..\Source\frm_xmasmain.pas"/>
-        <Caret Line="52" Column="19" TopLine="25"/>
-      </Position22>
-      <Position23>
-        <Filename Value="..\Source\frm_xmasmain.pas"/>
-        <Caret Line="106" Column="25" TopLine="81"/>
-      </Position23>
-      <Position24>
-        <Filename Value="..\Source\frm_xmasmain.pas"/>
-        <Caret Line="37" Column="8" TopLine="22"/>
-      </Position24>
-      <Position25>
-        <Filename Value="..\Source\frm_xmasmain.pas"/>
-        <Caret Line="106" Column="25" TopLine="80"/>
-      </Position25>
-      <Position26>
-        <Filename Value="..\Source\frm_xmasmain.pas"/>
-        <Caret Line="28" Column="16" TopLine="6"/>
-      </Position26>
-      <Position27>
-        <Filename Value="..\Source\frm_xmasmain.pas"/>
-        <Caret Line="89" Column="11" TopLine="69"/>
-      </Position27>
-      <Position28>
-        <Filename Value="..\Source\frm_xmasmain.pas"/>
-        <Caret Line="106" Column="48" TopLine="79"/>
-      </Position28>
-      <Position29>
-        <Filename Value="..\Source\frm_xmasmain.pas"/>
-        <Caret Line="30" Column="27" TopLine="18"/>
-      </Position29>
-      <Position30>
-        <Filename Value="..\Source\frm_xmasmain.pas"/>
         <Caret Line="90" Column="46" TopLine="85"/>
-      </Position30>
+      </Position22>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>
