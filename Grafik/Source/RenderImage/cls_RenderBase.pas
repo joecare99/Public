@@ -148,7 +148,14 @@ type
     Property Direction:TRenderVector read FDirection write SetDirection;
   end;
 
-  THitData=class;
+  THitData=record
+  Distance :extended;
+  HitPoint :TRenderpoint;
+  Normalvec:TRenderVector;
+  AmbientVal:extended;
+  ReflectionVal:extended;
+  refraction:extended;
+end;
 
   { TRenderBaseObject }
 
@@ -160,16 +167,6 @@ type
     Function HitTest(aRay:TRenderRay;out HitData:THitData):boolean;virtual; abstract;
     Function BoundaryTest(aRay:TRenderRay;out Distance:extended):boolean;virtual; abstract;
     property Position:TRenderPoint read FPosition write SetPosition;
-
-  end;
-
-  THitData=Class
-    Distance :extended;
-    HitPoint :TRenderpoint;
-    Normalvec:TRenderVector;
-    AmbientVal:extended;
-    ReflectionVal:extended;
-    refraction:extended;
   end;
 
 function FTuple(const x,y:extended):TFTuple;inline;
@@ -271,6 +268,8 @@ procedure TRenderRay.SetDirection(AValue: TRenderVector);
 begin
   if FDirection=AValue then Exit;
   FDirection:=AValue;
+  if FDirection <> ZeroTrp then
+    FDirection := FDirection / FDirection.GLen;
 end;
 
 procedure TRenderRay.SetStartPoint(AValue: TRenderPoint);
@@ -283,6 +282,8 @@ constructor TRenderRay.Create(aStart: TRenderPoint; aDir: TRenderVector);
 begin
   FStartPoint:=aStart;
   FDirection:=aDir;
+  if FDirection <> ZeroTrp then
+    FDirection := FDirection / FDirection.GLen;
 end;
 
 { TAngle operators}

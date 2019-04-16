@@ -37,9 +37,22 @@ begin
 end;
 
 function TSphere.HitTest(aRay: TRenderRay; out HitData: THitData): boolean;
+var
+  lFootpLen, lOffset: Extended;
 begin
-  if  (aRay.StartPoint - FPosition) * aRay.Direction < FRadius then
-
+  result := false;
+  lFootpLen := (FPosition - aRay.StartPoint ) * aRay.Direction;
+  if lFootpLen > 0 then
+    begin
+      lOffset:= sqrt( sqr((FPosition - aRay.StartPoint ).GLen)-sqr(lFootpLen)) ;
+      result := lOffset <= FRadius;
+      if result then
+        begin
+          HitData.Distance:=lFootpLen-sqrt(sqr(FRadius)-sqr(lOffset));
+          HitData.HitPoint := HitData.Distance * aRay.Direction + aRay.StartPoint;
+          HitData.Normalvec := (HitData.HitPoint - FPosition) / FRadius;
+        end;
+    end;
 end;
 
 end.
