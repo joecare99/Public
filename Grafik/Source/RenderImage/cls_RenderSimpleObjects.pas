@@ -1,15 +1,22 @@
 unit cls_RenderSimpleObjects;
 
 {$mode objfpc}{$H+}
+{$interfaces CORBA}
 
 interface
 
 uses
-  Classes, SysUtils, cls_RenderBase, Graphics;
+  Classes, SysUtils, cls_RenderBase,cls_RenderColor, Graphics;
 
-Type TSimpleObject=Class(TRenderBaseObject)
+Type
+
+{ TSimpleObject }
+
+ TSimpleObject=Class(TRenderBaseObject,iHasColor)
       protected
-        FBaseColor:TColor;
+        FBaseColor:TRenderColor;
+       public
+         Function GetColorAt(Point:TRenderPoint):TRenderColor;virtual;
      end;
 
      { TSphere }
@@ -20,16 +27,24 @@ Type TSimpleObject=Class(TRenderBaseObject)
        FRadius: Extended;
      public
        constructor Create(const aPosition: TRenderPoint; aRadius: extended;
-         aBaseColor: TColor);
+         aBaseColor: TRenderColor);
        function HitTest(aRay: TRenderRay; out HitData: THitData): boolean; override;
      end;
 
 implementation
 
+
+{ TSimpleObject }
+
+function TSimpleObject.GetColorAt(Point: TRenderPoint): TRenderColor;
+begin
+  Result:= FBaseColor;
+end;
+
 { TSphere }
 
 constructor TSphere.Create(const aPosition: TRenderPoint; aRadius: extended;
-  aBaseColor: TColor);
+  aBaseColor: TRenderColor);
 begin
   FPosition:= aPosition;
   FRadius := aRadius;

@@ -3,6 +3,7 @@ unit cls_RenderColor;
 {$mode objfpc}{$H+}
 {$ModeSwitch autoderef}
 {$ModeSwitch advancedrecords}
+{$interfaces CORBA}
 
 
 interface
@@ -26,12 +27,19 @@ type
     Function Add(aCol:TRenderColor) :TRenderColor;
     Function Mult(aFak:Extended) :TRenderColor;
     Function Mix(aCol:TRenderColor;aFak:Extended) :TRenderColor;
+    Function Filter(aCol:TRenderColor):TRenderColor;
    case Boolean of
     true:(Red,Green,Blue:Extended);
     false:(V:array[0..2] of Extended);
   end;
 
 Function RenderColor(aRed,aGreen,aBlue:Extended):TRenderColor;
+
+type iHasColor=interface
+['{1F2FC516-23CE-4439-B8D7-75E29F618C00}']
+       function GetColorAt(aPOint:TRenderpoint):TRenderColor;
+       property ColorAt[aPOint:TRenderpoint]:TRenderColor read GetColorAt;
+     end;
 
 implementation
 
@@ -106,6 +114,13 @@ begin
   result.Red:=Red *(1-aFak) + aCol.Red*aFak;
   result.Green:=Green*(1-aFak) + aCol.Green*aFak;
   result.Blue:=Blue*(1-aFak) + aCol.Blue*aFak;
+end;
+
+function TRenderColor.Filter(aCol: TRenderColor): TRenderColor;
+begin
+  Result.Red:= Red * aCol.Red;
+  Result.Green:= Green * aCol.Green;
+  Result.Blue:= Blue * aCol.Blue;
 end;
 
 end.
