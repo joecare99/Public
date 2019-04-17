@@ -39,7 +39,7 @@ var
   bDistance: extended;
   hHitData,bHitdata: THitData;
   HitObj: TRenderBaseObject;
-  lAmbient:TRenderColor;
+  lAmbient, lColorAtHP, lDirect, lReflect, lPhong, lRefract:TRenderColor;
   I: Integer;
 begin
   //  - Follow the ray until it hits an Object.
@@ -61,7 +61,10 @@ begin
       if HitObj.InheritsFrom(TSimpleObject) then
         lColorAtHP := TSimpleObject(HitObj).GetColorAt(hHitData.HitPoint)
       else
-        if HitObj.(iGetColor) then
+        if HitObj is iHasColor then
+          lColorAtHP := (HitObj as iHasColor).GetColorAt(hHitData.HitPoint)
+        else
+          lColorAtHP :=RenderColor(0,0,0);
       lAmbient := lColorAtHP * 0.1;
   //  - - Calculate the Light-Rays from the Hitpoint to the Light-Sources
       lDirect := lColorAtHP * 0.9;
@@ -77,7 +80,9 @@ begin
   //  - - Both split rays are Followed until a maximum of splits is reached or the relevance is canceled by a bail-out-Value.
   //  - All three Rays add up to the Color of the Original Ray.
         result := lAmbient + lDirect;
-      end;
+      end
+   else
+     result := RenderColor(0,0,0);
 end;
 
 procedure TRenderEngine.Render;

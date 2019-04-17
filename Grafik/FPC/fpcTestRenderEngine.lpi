@@ -34,7 +34,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="7">
+    <Units Count="8">
       <Unit0>
         <Filename Value="fpcTestRenderEngine.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -63,6 +63,10 @@
         <Filename Value="..\Source\RenderImage\cls_RenderColor.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit6>
+      <Unit7>
+        <Filename Value="..\Source\RenderImage\cls_RenderBoundary.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

@@ -6,7 +6,7 @@ unit cls_RenderSimpleObjects;
 interface
 
 uses
-  Classes, SysUtils, cls_RenderBase,cls_RenderColor, Graphics;
+  Classes, SysUtils, cls_RenderBase,cls_RenderColor,cls_RenderBoundary, Graphics;
 
 Type
 
@@ -15,8 +15,11 @@ Type
  TSimpleObject=Class(TRenderBaseObject,iHasColor)
       protected
         FBaseColor:TRenderColor;
+        FBoundary:TRenderBoundary;
        public
          Function GetColorAt(Point:TRenderPoint):TRenderColor;virtual;
+         Function BoundaryTest(aRay: TRenderRay; out Distance: extended): boolean;
+           override;
      end;
 
      { TSphere }
@@ -39,6 +42,18 @@ implementation
 function TSimpleObject.GetColorAt(Point: TRenderPoint): TRenderColor;
 begin
   Result:= FBaseColor;
+end;
+
+function TSimpleObject.BoundaryTest(aRay: TRenderRay; out Distance: extended
+  ): boolean;
+begin
+  If Assigned(FBoundary) then
+    result := FBoundary.BoundaryTest(aRay,Distance)
+  else
+    begin
+      Distance:=(aRay.StartPoint-FPosition).GLen;
+      result := (FPosition-aRay.StartPoint)*aray.Direction > Distance*0.5;
+    end;
 end;
 
 { TSphere }

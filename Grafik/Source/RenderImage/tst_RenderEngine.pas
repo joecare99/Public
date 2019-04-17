@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils {$IFDEF FPC}, fpcunit, testregistry {$ELSE}, testframework {$ENDIF},
- cls_RenderBase, cls_RenderSimpleObjects,
+ cls_RenderBase,cls_RenderColor, cls_RenderSimpleObjects,
   cls_RenderEngine;
 
 type
@@ -75,11 +75,10 @@ begin
     lRay.Direction := FTriple(0.5,0.5,sqrt(0.5));
     CheckEquals(false,lSphere.HitTest(lRay,HitData),'Sphere.HitTest2');
 
-    CheckEquals(RGBToColor(0,0,0),FRenderEngine.Trace(lRay,1.0,1));
+    CheckEquals(RGBToColor(0,0,0),FRenderEngine.Trace(lRay,1.0,1),'Trace one Ray');
 
   finally
     freeandnil(lRay);
-    freeandnil(hitdata);
   end;
 
 end;

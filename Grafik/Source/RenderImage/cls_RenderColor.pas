@@ -25,9 +25,11 @@ type
     Procedure InitHSB(Hue,Satur,Bright:Extended);
     Function Plus(aCol:TRenderColor) :TRenderColor;
     Function Add(aCol:TRenderColor) :TRenderColor;
+    Function Minus(aCol:TRenderColor) :TRenderColor;
     Function Mult(aFak:Extended) :TRenderColor;
     Function Mix(aCol:TRenderColor;aFak:Extended) :TRenderColor;
     Function Filter(aCol:TRenderColor):TRenderColor;
+    Function Equals(aCol:TRenderColor):Boolean;
    case Boolean of
     true:(Red,Green,Blue:Extended);
     false:(V:array[0..2] of Extended);
@@ -41,13 +43,70 @@ type iHasColor=interface
        property ColorAt[aPOint:TRenderpoint]:TRenderColor read GetColorAt;
      end;
 
+ operator := (aRight: variant) aLeft:TRenderColor;
+ operator := (aRight: TColor) aLeft:TRenderColor;
+ operator := (aRight: TRenderColor) aLeft:TColor;
+ operator = (aPar1,aPar2:TRenderColor) aLeft:boolean;
+ operator + (aPar1,aPar2:TRenderColor) aLeft:TRenderColor;
+ operator - (aPar1,aPar2:TRenderColor) aLeft:TRenderColor;
+ operator * (aPar1,aPar2:TRenderColor) aLeft:TRenderColor;overload;
+ operator * (aPar1:TRenderColor; aFak:extended) aLeft:TRenderColor;overload;
+ operator * (aFak:extended; aPar2:TRenderColor) aLeft:TRenderColor;overload;
+
+
 implementation
 
-uses math;
+uses math,variants;
 
 function RenderColor(aRed, aGreen, aBlue: Extended): TRenderColor;inline;
 begin
   result.Init(aRed, aGreen, aBlue);
+end;
+
+operator:=(aRight: variant)aLeft: TRenderColor;
+begin
+  assert(VarArrayHighBound(aRight,0)=2,'Variant array must have 3 entries');
+  aLeft.init(aRight[0],aRight[1],aRight[2]);
+end;
+
+operator:=(aRight: TColor)aLeft: TRenderColor;
+begin
+  ALeft.color := aRight;
+end;
+
+operator:=(aRight: TRenderColor)aLeft: TColor;
+begin
+  aLeft := aRight.Color;
+end;
+
+operator=(aPar1, aPar2: TRenderColor)aLeft: boolean;
+begin
+  aleft := aPar1.Equals(aPar2);
+end;
+
+operator+(aPar1, aPar2: TRenderColor)aLeft: TRenderColor;
+begin
+  aLeft := aPar1.Plus(aPar2);
+end;
+
+operator-(aPar1, aPar2: TRenderColor)aLeft: TRenderColor;
+begin
+  aLeft := aPar1.Minus(aPar2);
+end;
+
+operator*(aPar1, aPar2: TRenderColor)aLeft: TRenderColor;
+begin
+  aLeft := aPar1.Filter(aPar2);
+end;
+
+operator*(aPar1: TRenderColor; aFak: extended)aLeft: TRenderColor;
+begin
+  aLeft := aPar1.Mult(aFak);
+end;
+
+operator*(aFak: extended; aPar2: TRenderColor)aLeft: TRenderColor;
+begin
+  aLeft := aPar2.Mult(aFak);
 end;
 
 { TRenderColor }
@@ -102,6 +161,13 @@ begin
   Result := Self;
 end;
 
+function TRenderColor.Minus(aCol: TRenderColor): TRenderColor;
+begin
+  result.Red:=max(Red - aCol.Red,0.0);
+  result.Green:=max(Green - aCol.Green,0.0);
+  result.Blue:=max(Blue - aCol.Blue,0.0);
+end;
+
 function TRenderColor.Mult(aFak: Extended): TRenderColor;
 begin
   result.Red:=Red * aFak;
@@ -121,6 +187,17 @@ begin
   Result.Red:= Red * aCol.Red;
   Result.Green:= Green * aCol.Green;
   Result.Blue:= Blue * aCol.Blue;
+end;
+
+function TRenderColor.Equals(aCol: TRenderColor): Boolean;
+
+const cEps=1e-4; // Color-differences lower than 0.1% are considered equal;
+
+begin
+  result :=
+    (abs(Red-aCol.red) < 1e-4) and
+    (abs(Green-aCol.Green) < 1e-4) and
+    (abs(Blue-aCol.Blue) < 1e-4);
 end;
 
 end.
