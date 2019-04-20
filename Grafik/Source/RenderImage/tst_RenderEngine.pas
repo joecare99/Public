@@ -21,6 +21,8 @@ type
     procedure TearDown; override;
     procedure CheckEquals(const Exp, Act: TFTriple; eps: extended; Msg: String);
       overload;
+    procedure CheckEquals(const Exp, Act: TRenderColor; Msg: String);
+      overload;
   published
     procedure TestSetUp;
     procedure TestRay;
@@ -48,9 +50,18 @@ begin
   CheckEquals(exp.Z,act.Z,eps,Msg+'[Z]');
 end;
 
+procedure TTestRenderImage.CheckEquals(const Exp, Act: TRenderColor; Msg: String
+  );
+const cEps = 1e-4;
+begin
+  CheckEquals(exp.Red,act.Red,cEps,Msg+'[Red]');
+  CheckEquals(exp.Green,act.Green,cEps,Msg+'[Green]');
+  CheckEquals(exp.Blue,act.Blue,cEps,Msg+'[Blue]');
+end;
+
 procedure TTestRenderImage.TestSetUp;
 begin
-  CheckNotNull(FRenderEngine,'FrenderEngine is assignes');
+  CheckNotNull(FRenderEngine,'FrenderEngine is assigned');
 end;
 
 procedure TTestRenderImage.TestRay;
@@ -75,7 +86,7 @@ begin
     lRay.Direction := FTriple(0.5,0.5,sqrt(0.5));
     CheckEquals(false,lSphere.HitTest(lRay,HitData),'Sphere.HitTest2');
 
-    CheckEquals(RGBToColor(0,0,0),FRenderEngine.Trace(lRay,1.0,1),'Trace one Ray');
+    CheckEquals(RenderColor(0,0,0),FRenderEngine.Trace(lRay,1.0,1),'Trace one Ray');
 
   finally
     freeandnil(lRay);

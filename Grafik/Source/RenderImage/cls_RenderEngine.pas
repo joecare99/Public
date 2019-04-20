@@ -5,7 +5,7 @@ unit cls_RenderEngine;
 interface
 
 uses
-  Classes, SysUtils, cls_RenderBase,cls_RenderColor, cls_RenderSimpleObjects, cls_RenderCamera,graphics;
+  Classes, SysUtils, cls_RenderBase,cls_RenderColor, cls_RenderLightSource ,cls_RenderSimpleObjects, cls_RenderCamera,graphics;
 
 type
 
@@ -14,12 +14,16 @@ type
  TRenderEngine=Class
    private
     FObjects:array of TRenderBaseObject;
-    FLightSources:array of TRenderBaseObject;
+    FLightSources:array of TRenderLightsource;
     FCamera:TRenderCamera;
     FResult:TBitmap;
+    FMaxDepth: integer;
+    FMinShare:extended;
+   protected
+     function TestRayIntersection(const Ray: TRenderRay; out HitObj: TRenderBaseObject ): THitData;
   public
     Constructor Create;
-    Function Trace(Ray:TRenderRay;Share:extended;Death:integer):TRenderColor;
+    Function Trace(Ray:TRenderRay;Share:extended;Depth:integer):TRenderColor;
     Procedure Render;
     Procedure Append(aObj:TRenderBaseObject);
   end;
@@ -28,32 +32,51 @@ implementation
 
 { TRenderEngine }
 
+function TRenderEngine.TestRayIntersection(const Ray: TRenderRay; out
+  HitObj: TRenderBaseObject): THitData;
+var
+  i:Integer;
+  bHitdata: THitData;
+  bDistance: extended;
+begin
+  //  - Follow the ray until it hits an Object.
+  result.Distance :=-1.0;
+  HitObj := nil;
+  for I :=  0 to high(FObjects) do
+    if FObjects[i].BoundaryTest(Ray, bDistance) then
+      begin
+  //  - Calculete The Hitpoint of the Object
+        if FObjects[i].HitTest(Ray, bHitData) and ((result.Distance =-1.0)
+          or  (bHitData.Distance<result.Distance)) then
+          begin
+            result:=bHitData;
+            HitObj:=FObjects[i];
+          end
+      end;
+end;
+
 constructor TRenderEngine.Create;
 begin
   // Todo: ?
 end;
 
-function TRenderEngine.Trace(Ray: TRenderRay; Share: extended; Death: integer
+function TRenderEngine.Trace(Ray: TRenderRay; Share: extended; Depth: integer
   ): TRenderColor;
 var
-  bDistance: extended;
-  hHitData,bHitdata: THitData;
-  HitObj: TRenderBaseObject;
+  hHitData, lHit: THitData;
+  HitObj, lBlockObj: TRenderBaseObject;
   lAmbient, lColorAtHP, lDirect, lReflect, lPhong, lRefract:TRenderColor;
   I: Integer;
+  lHpRay: TRenderRay;
+  lLightSVec: TRenderVector;
+  lVecLen: Extended;
 begin
-  //  - Follow the ray until it hits an Object.
-  hHitdata.Distance :=-1.0;
-  for I :=  0 to high(FObjects) do
-    if FObjects[i].BoundaryTest(Ray,bDistance) then
-      begin
-  //  - Calculete The Hitpoint of the Object
-        if FObjects[i].HitTest(Ray,bHitData) and ((hHitdata.Distance =-1.0) or  (bHitData.Distance<hHitData.Distance)) then
-          begin
-            hHitData:=bHitData;
-            HitObj:=FObjects[i];
-          end
-      end;
+  // Bailout-Test
+  if (Depth > FMaxDepth) or (share < FMinShare) then
+    exit(RenderColor(0,0,0));
+
+  hHitData:=TestRayIntersection(Ray, HitObj);
+
   if hHitData.Distance>=0 then
     begin
   //  - Calculate the Light&Color of the Hitpoint by:
@@ -67,7 +90,26 @@ begin
           lColorAtHP :=RenderColor(0,0,0);
       lAmbient := lColorAtHP * 0.1;
   //  - - Calculate the Light-Rays from the Hitpoint to the Light-Sources
-      lDirect := lColorAtHP * 0.9;
+      lHpRay := TRenderRay.Create(hHitData.HitPoint,hHitData.Normalvec);
+      lDirect:=RenderColor(0,0,0);
+      lMaxLight :=0.0;
+      for i := 0 to high(FLightSources) do
+        begin
+          lLightSVec:=(FLightSources[i].Position-hHitData.HitPoint);
+          lMaxLight += FLightSources[i].MaxIntensity(lLightSVec*-1);
+        if  lLightSVec*hHitData.Normalvec >0 then
+          begin
+            lhpRay.Direction := lLightSVec;
+
+            lHit := TestRayIntersection(lHpRay,lBlockObj);
+            lVecLen:= lLightSVec.GLen;
+            if (lHit.Distance <0)  or (lBlockObj=FLightSources[i]) or (lHit.Distance>=lVecLen) then
+              begin
+                FLightSources[i].FalloffIntensity(lLightSVec*-1) * (lHpRay.Direction*hHitData.Normalvec)
+
+              end
+          end
+        end;
 
   //  - - In case of reflection Split the Ray into a new Ray from the Hitpoint according to the Reflection-Propety of the Hitpoint.
 
@@ -90,12 +132,22 @@ procedure TRenderEngine.Render;
 var Ray:TRenderRay;
 begin
   // Create Result-Bitmap
+  FResult:=TBitmap.Create;
+  FResult.Width:= trunc(FCamera.Resolution.x);
+  FResult.Height := trunc(FCamera.Resolution.y);
+  FResult.PixelFormat:=pf24bit;
   // Parse
   // Optimize
   // Split into Tasks
   // Per Task do:
   //  - Select a Ray
-  //call Trace(Ray, 1.0, 1)
+  lRay := TRenderRay.Create(FCamera.Position,FCamera.DefaultDirection);
+  for y := 0 to FResult.Height-1 do
+    for x := 0 to FResult.Width-1 do
+      begin
+        lRay.direction := FCamera.RayDirection[Point(x,y)];
+        FResult.Canvas.Pixels[x,y]:= Trace(lRay, 1.0, 1).Color;
+      end;
 end;
 
 procedure TRenderEngine.Append(aObj: TRenderBaseObject);
@@ -109,7 +161,6 @@ begin
       FCamera := TRenderCamera(aObj);
     end;
   // Todo: Lightsource
-  {
   if aObj.InheritsFrom(TRenderLightsource) then
     begin
       setlength(FLightSources,length(FLightSources)+1);

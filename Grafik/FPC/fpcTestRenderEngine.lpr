@@ -4,7 +4,8 @@ program fpcTestRenderEngine;
 
 uses
   Interfaces, Forms, GuiTestRunner, tst_RenderEngine, cls_RenderSimpleObjects,
-  cls_RenderBase, cls_RenderCamera, cls_RenderEngine, cls_RenderColor, cls_RenderBoundary;
+  cls_RenderBase, cls_RenderCamera, cls_RenderEngine, cls_RenderColor,
+  cls_RenderBoundary, cls_RenderLightSource;
 
 {$R *.res}
 
