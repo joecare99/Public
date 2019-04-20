@@ -17,6 +17,7 @@ Type
         FBaseColor:TRenderColor;
         FBoundary:TRenderBoundary;
        public
+         destructor Destroy; override;
          Function GetColorAt(Point:TRenderPoint):TRenderColor;virtual;
          Function BoundaryTest(aRay: TRenderRay; out Distance: extended): boolean;
            override;
@@ -38,6 +39,12 @@ implementation
 
 
 { TSimpleObject }
+
+destructor TSimpleObject.Destroy;
+begin
+  FreeandNil(FBoundary);
+  inherited Destroy;
+end;
 
 function TSimpleObject.GetColorAt(Point: TRenderPoint): TRenderColor;
 begin
@@ -64,6 +71,7 @@ begin
   FPosition:= aPosition;
   FRadius := aRadius;
   FBaseColor :=  aBaseColor;
+  FBoundary:= TBoundarySphere.Create(aPosition,aRadius);
 end;
 
 function TSphere.HitTest(aRay: TRenderRay; out HitData: THitData): boolean;
@@ -74,7 +82,7 @@ begin
   lFootpLen := (FPosition - aRay.StartPoint ) * aRay.Direction;
   if lFootpLen > 0 then
     begin
-      lOffset:= sqrt( sqr((FPosition - aRay.StartPoint ).GLen)-sqr(lFootpLen)) ;
+      lOffset:= sqrt( abs(sqr((FPosition - aRay.StartPoint ).GLen)-sqr(lFootpLen))) ;
       result := lOffset <= FRadius;
       if result then
         begin

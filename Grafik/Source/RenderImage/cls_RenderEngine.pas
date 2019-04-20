@@ -23,6 +23,7 @@ type
      function TestRayIntersection(const Ray: TRenderRay; out HitObj: TRenderBaseObject ): THitData;
   public
     Constructor Create;
+    destructor Destroy; override;
     Function Trace(Ray:TRenderRay;Share:extended;Depth:integer):TRenderColor;
     Procedure Render;
     Procedure Append(aObj:TRenderBaseObject);
@@ -58,6 +59,19 @@ end;
 constructor TRenderEngine.Create;
 begin
   // Todo: ?
+  FMaxDepth:=100;
+  FMinShare:=1e-4;
+end;
+
+destructor TRenderEngine.Destroy;
+var
+  i: integer;
+begin
+  SetLength(FLightSources,0);
+  for i := 0 to high(FObjects) do
+    FreeAndNil(FObjects[i]);
+  SetLength(FObjects,0);
+  inherited Destroy;
 end;
 
 function TRenderEngine.Trace(Ray: TRenderRay; Share: extended; Depth: integer
@@ -69,7 +83,7 @@ var
   I: Integer;
   lHpRay: TRenderRay;
   lLightSVec: TRenderVector;
-  lVecLen: Extended;
+  lVecLen, lIntensity, lMaxLight: Extended;
 begin
   // Bailout-Test
   if (Depth > FMaxDepth) or (share < FMinShare) then
@@ -91,6 +105,7 @@ begin
       lAmbient := lColorAtHP * 0.1;
   //  - - Calculate the Light-Rays from the Hitpoint to the Light-Sources
       lHpRay := TRenderRay.Create(hHitData.HitPoint,hHitData.Normalvec);
+      try
       lDirect:=RenderColor(0,0,0);
       lMaxLight :=0.0;
       for i := 0 to high(FLightSources) do
@@ -105,12 +120,12 @@ begin
             lVecLen:= lLightSVec.GLen;
             if (lHit.Distance <0)  or (lBlockObj=FLightSources[i]) or (lHit.Distance>=lVecLen) then
               begin
-                FLightSources[i].FalloffIntensity(lLightSVec*-1) * (lHpRay.Direction*hHitData.Normalvec)
-
-              end
+                lIntensity:=  FLightSources[i].FalloffIntensity(lLightSVec*-1) * (lHpRay.Direction*hHitData.Normalvec);
+                lDirect += lColorAtHP.Filter( lIntensity*FLightSources[i].ProjectedColor(lLightSVec*-1));
+              end;
           end
         end;
-
+      lDirect := lDirect *(1/ lMaxLight)*0.9;
   //  - - In case of reflection Split the Ray into a new Ray from the Hitpoint according to the Reflection-Propety of the Hitpoint.
 
       lReflect := RenderColor(0,0,0);
@@ -122,6 +137,9 @@ begin
   //  - - Both split rays are Followed until a maximum of splits is reached or the relevance is canceled by a bail-out-Value.
   //  - All three Rays add up to the Color of the Original Ray.
         result := lAmbient + lDirect;
+      finally
+        freeandnil(lHpRay);
+      end;
       end
    else
      result := RenderColor(0,0,0);
@@ -129,7 +147,8 @@ end;
 
 procedure TRenderEngine.Render;
 
-var Ray:TRenderRay;
+var lRay:TRenderRay;
+  y, x: Integer;
 begin
   // Create Result-Bitmap
   FResult:=TBitmap.Create;
@@ -164,8 +183,8 @@ begin
   if aObj.InheritsFrom(TRenderLightsource) then
     begin
       setlength(FLightSources,length(FLightSources)+1);
-      FLightSources[high(FLightSources)] := aObj;
-    end; }
+      FLightSources[high(FLightSources)] := TRenderLightsource(aObj);
+    end;
 end;
 
 end.

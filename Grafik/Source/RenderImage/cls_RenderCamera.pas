@@ -24,6 +24,7 @@ private
 protected
     function GetRayDirection(pnt: TPoint): TRenderVector;virtual;
 public
+      Function BoundaryTest(aRay: TRenderRay; out Distance: extended): boolean; override;
     // Abstract Camera definition
       property Position:TRenderPoint read FPosition write SetPosition;
       property LookAt:TRenderPoint read FLookAt write SetLookAt;
@@ -62,6 +63,13 @@ end;
 function TRenderCamera.GetRayDirection(pnt: TPoint): TRenderVector;
 begin
   result := (FLookAt-FPosition).Normalize + FRight*(pnt.x/FResolution.x-0.5)+Fup*(pnt.y-FResolution.Y*0.5)/Resolution.x ;
+end;
+
+function TRenderCamera.BoundaryTest(aRay: TRenderRay; out Distance: extended
+  ): boolean;
+begin
+  result := false;
+  Distance:=-1.0;
 end;
 
 procedure TRenderCamera.SetDefaultDirection(AValue: TRenderVector);
