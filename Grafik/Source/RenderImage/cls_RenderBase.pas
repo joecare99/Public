@@ -79,6 +79,7 @@ type
     function Divide(const divs:extended):TFTriple;overload;
     function XMul(const fak:TFTriple):TFTriple;overload;
     function Equals(const probe:TFtriple;eps:extended=1e-15):boolean;overload;
+    function Normalize:TFTriple;
     class function Copy(nx, ny, nz: extended): TFTriple; static; overload;
     class Function Copy(Vect: TFTriple): TFTriple;static; overload;
     Function Copy: TFTriple; overload;
@@ -509,6 +510,11 @@ end;
 function TFTriple.Equals(const probe: TFtriple; eps: extended): boolean;
 begin
     result := (abs(probe.X-x) < eps) and (abs(probe.y-y) < eps)and (abs(probe.z-z) < eps);
+end;
+
+function TFTriple.Normalize: TFTriple;
+begin
+  result := Self/GLen;
 end;
 
 class function TFTriple.Copy(nx, ny, nz: extended): TFTriple;
