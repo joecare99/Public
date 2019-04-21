@@ -98,13 +98,20 @@ var
   llDist,lqDistq: Extended;
 begin
   lVecToPos := (FPosition-aray.StartPoint);
+  if (lVecToPos.glen<=FBoundingRadius) then
+    begin
+      Distance:=0.0;
+      exit (true);
+    end
+  else
+    Distance:=-1.0;
   llDist := lVecToPos*aRay.Direction;
+  if llDist < 0 then
+    exit(false);
   lqDistq := lVecToPos*lVecToPos - sqr(llDist);
   Result := lqdistq <= sqr(FBoundingRadius);
   if result then
     Distance:=llDist-Sqrt(sqr(FBoundingRadius)-lqDistq)
-  else
-    Distance:=-1.0;
 end;
 
 end.

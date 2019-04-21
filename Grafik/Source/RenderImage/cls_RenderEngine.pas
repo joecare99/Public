@@ -102,7 +102,7 @@ begin
           lColorAtHP := (HitObj as iHasColor).GetColorAt(hHitData.HitPoint)
         else
           lColorAtHP :=RenderColor(0,0,0);
-      lAmbient := lColorAtHP * 0.1;
+      lAmbient := lColorAtHP * 0.1*hHitData.AmbientVal;
   //  - - Calculate the Light-Rays from the Hitpoint to the Light-Sources
       lHpRay := TRenderRay.Create(hHitData.HitPoint,hHitData.Normalvec);
       try
@@ -125,10 +125,15 @@ begin
               end;
           end
         end;
-      lDirect := lDirect *(1/ lMaxLight)*0.9;
+      if lMaxLight=0.0 then
+        lDirect := lColorAtHP * 0.9 * hHitData.AmbientVal
+      else
+      lDirect := lDirect *(1/ lMaxLight)*0.9*hHitData.AmbientVal;
   //  - - In case of reflection Split the Ray into a new Ray from the Hitpoint according to the Reflection-Propety of the Hitpoint.
 
-      lReflect := RenderColor(0,0,0);
+      lHpRay.Direction := Ray.Direction + (ray.Direction * hHitData.Normalvec)*(-2.0)*hHitData.Normalvec;
+//      lHpRay.StartPoint := hHitData.HitPoint+hHitData.Normalvec*1e-4;
+      lReflect := trace(lHpRay,0.5,Depth+1) *hHitData.ReflectionVal;
   //  - - In Case of Refraction Split the Ray into a New Ray from the Hitpoint according to the Refraction-Property.
       lPhong := RenderColor(0,0,0);
   //  - - Calculate a Phong - Point when the Reflection-Vector hits a Light-Source
@@ -136,7 +141,7 @@ begin
       lRefract := RenderColor(0,0,0);
   //  - - Both split rays are Followed until a maximum of splits is reached or the relevance is canceled by a bail-out-Value.
   //  - All three Rays add up to the Color of the Original Ray.
-        result := lAmbient + lDirect;
+        result := lAmbient + lDirect + lReflect;
       finally
         freeandnil(lHpRay);
       end;
@@ -179,12 +184,18 @@ begin
       Freeandnil(FCamera);
       FCamera := TRenderCamera(aObj);
     end;
-  // Todo: Lightsource
+  // Done: Lightsource
   if aObj.InheritsFrom(TRenderLightsource) then
     begin
       setlength(FLightSources,length(FLightSources)+1);
       FLightSources[high(FLightSources)] := TRenderLightsource(aObj);
     end;
+  // Todo: Sky/Default-Object
+{  if aObj.InheritsFrom(TSkyObject) then
+    begin
+      Freeandnil(FSkyObject);
+      FSkyObject := TSkyObject(aObj);
+    end;  }
 end;
 
 end.
