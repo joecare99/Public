@@ -38,9 +38,25 @@ Type
        function HitTest(aRay: TRenderRay; out HitData: THitData): boolean; override;
      end;
 
+     { TPlane }
+
+     TPlane=Class(TSimpleObject)
+
+     private
+       FNormal: TRenderVector;
+     public
+       constructor Create(const aPosition: TRenderPoint; aNormal: TRenderVector;
+         aBaseColor: TRenderColor );overload;
+       constructor Create(const aPosition: TRenderPoint; aNormal: TRenderVector;
+         aBaseColor: TRenderColor;aSurface:TFTriple );overload;
+       function HitTest(aRay: TRenderRay; out HitData: THitData): boolean; override;
+       Function BoundaryTest(aRay: TRenderRay; out Distance: extended): boolean;
+         override;
+     end;
+
 implementation
 
-
+uses math;
 { TSimpleObject }
 
 destructor TSimpleObject.Destroy;
@@ -105,6 +121,53 @@ begin
           HitData.refraction:=FSurface.z;
         end;
     end;
+end;
+
+{ TPlane }
+
+constructor TPlane.Create(const aPosition: TRenderPoint;
+  aNormal: TRenderVector; aBaseColor: TRenderColor);
+begin
+  Create(aPosition,aNormal,aBaseColor,FTriple(0.4,0.6,0.0));
+end;
+
+constructor TPlane.Create(const aPosition: TRenderPoint;
+  aNormal: TRenderVector; aBaseColor: TRenderColor; aSurface: TFTriple);
+begin
+  FPosition:= aPosition;
+  FNormal := aNormal/aNormal.GLen;
+  FBaseColor :=  aBaseColor;
+  FBoundary:= nil;
+  FSurface:= aSurface;
+end;
+
+function TPlane.HitTest(aRay: TRenderRay; out HitData: THitData): boolean;
+var
+  lFootpVec: TRenderPoint;
+begin
+  lFootpVec := (FPosition - aRay.StartPoint ) ;
+  HitData.Distance:=-1.0;
+  Result:=sign(lFootpVec*FNormal) = sign(FNormal*aRay.Direction) ;
+  if result then
+    begin
+      HitData.Distance := lFootpVec*FNormal / (FNormal*aRay.Direction);
+      HitData.HitPoint := aRay.StartPoint + HitData.Distance* aRay.Direction;
+      HitData.Normalvec := FNormal;
+      HitData.AmbientVal:=FSurface.x;
+      HitData.ReflectionVal:=FSurface.y;
+      HitData.refraction:=FSurface.z;
+    end;
+end;
+
+function TPlane.BoundaryTest(aRay: TRenderRay; out Distance: extended): boolean;
+var
+  lFootpVec: TRenderPoint;
+begin
+  lFootpVec := (FPosition - aRay.StartPoint ) ;
+  Distance := -1.0;
+  Result:=sign(lFootpVec*FNormal) = sign(FNormal*aRay.Direction) ;
+  if result then
+    Distance := lFootpVec*FNormal / (FNormal*aRay.Direction);
 end;
 
 end.

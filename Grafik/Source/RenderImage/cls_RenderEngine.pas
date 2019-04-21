@@ -115,13 +115,14 @@ begin
         if  lLightSVec*hHitData.Normalvec >0 then
           begin
             lhpRay.Direction := lLightSVec;
-
+            if HitObj.HitTest(lHpRay,lHit) and (lHit.Distance < 1e-6) then
+              lHpRay.StartPoint := hHitData.HitPoint + hHitData.Normalvec*1e-4;
             lHit := TestRayIntersection(lHpRay,lBlockObj);
             lVecLen:= lLightSVec.GLen;
             if (lHit.Distance <0)  or (lBlockObj=FLightSources[i]) or (lHit.Distance>=lVecLen) then
               begin
                 lIntensity:=  FLightSources[i].FalloffIntensity(lLightSVec*-1) * (lHpRay.Direction*hHitData.Normalvec);
-                lDirect += lColorAtHP.Filter( lIntensity*FLightSources[i].ProjectedColor(lLightSVec*-1));
+                lDirect += lIntensity * lColorAtHP.Filter( FLightSources[i].ProjectedColor(lLightSVec*-1));
               end;
           end
         end;
@@ -131,9 +132,14 @@ begin
       lDirect := lDirect *(1/ lMaxLight)*0.9*hHitData.AmbientVal;
   //  - - In case of reflection Split the Ray into a new Ray from the Hitpoint according to the Reflection-Propety of the Hitpoint.
 
+      if hHitData.ReflectionVal <1e-4 then
+        lReflect :=RenderColor(0,0,0)
+      else
+        begin
       lHpRay.Direction := Ray.Direction + (ray.Direction * hHitData.Normalvec)*(-2.0)*hHitData.Normalvec;
 //      lHpRay.StartPoint := hHitData.HitPoint+hHitData.Normalvec*1e-4;
-      lReflect := trace(lHpRay,0.5,Depth+1) *hHitData.ReflectionVal;
+      lReflect := trace(lHpRay,hHitData.ReflectionVal,Depth+1) *hHitData.ReflectionVal;
+        end;
   //  - - In Case of Refraction Split the Ray into a New Ray from the Hitpoint according to the Refraction-Property.
       lPhong := RenderColor(0,0,0);
   //  - - Calculate a Phong - Point when the Reflection-Vector hits a Light-Source
@@ -141,12 +147,12 @@ begin
       lRefract := RenderColor(0,0,0);
   //  - - Both split rays are Followed until a maximum of splits is reached or the relevance is canceled by a bail-out-Value.
   //  - All three Rays add up to the Color of the Original Ray.
-        result := lAmbient + lDirect + lReflect;
+        result := lAmbient + lDirect+ lReflect;
       finally
         freeandnil(lHpRay);
       end;
       end
-   else
+   else      // Todo: SkyObject
      result := RenderColor(0,0,0);
 end;
 

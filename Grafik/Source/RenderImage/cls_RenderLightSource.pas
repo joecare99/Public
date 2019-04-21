@@ -17,6 +17,7 @@ type
       Function FalloffIntensity(Direction:TRenderVector):extended;virtual;
       Function MaxIntensity(Direction:TRenderVector):extended;virtual;
       function BoundaryTest(aRay: TRenderRay; out Distance: extended): boolean; override;
+      function HitTest(aRay: TRenderRay; out HitData: THitData): boolean; override;
     end;
 
 implementation
@@ -51,6 +52,12 @@ function TRenderLightsource.BoundaryTest(aRay: TRenderRay; out
 begin
   Distance:=-1.0;
   result :=false;
+end;
+
+function TRenderLightsource.HitTest(aRay: TRenderRay; out HitData: THitData
+  ): boolean;
+begin
+  result := false;
 end;
 
 end.
