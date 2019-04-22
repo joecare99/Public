@@ -233,12 +233,12 @@ lInside:= (abs(ldist.X) < FSize.x*0.5) and
       (abs(ldist.Z) < FSize.z*0.5);
 
 HitData.Distance := -1.0;
-if ((ldist.x-FSize.x*0.5>0) and (aray.Direction.x<=0)) or
+if not lInside and( ((ldist.x-FSize.x*0.5>0) and (aray.Direction.x<=0)) or
    ((ldist.x+FSize.x*0.5<0) and (aray.Direction.x>=0)) or
    ((ldist.y-FSize.y*0.5>0) and (aray.Direction.y<=0)) or
    ((ldist.y+FSize.y*0.5<0) and (aray.Direction.y>=0)) or
    ((ldist.z-FSize.z*0.5>0) and (aray.Direction.z<=0)) or
-   ((ldist.z+FSize.z*0.5<0) and (aray.Direction.z>=0)) then
+   ((ldist.z+FSize.z*0.5<0) and (aray.Direction.z>=0))) then
      exit(False);
 
 HitData.AmbientVal:=FSurface.x;
@@ -247,40 +247,40 @@ HitData.refraction:=FSurface.z;
 // Teste XY-Ebene
 if abs(aray.Direction.z) > 1e-12 then
   begin
-    HitData.Normalvec := FTriple(0,0,-sign(ldist.Z));
+    HitData.Normalvec := FTriple(0,0,-sign(aray.Direction.Z));
     if lInside then
       HitData.Distance := (ldist.Z-HitData.Normalvec.z*0.5*FSize.z)/aRay.Direction.z
     else
       HitData.Distance := (ldist.Z+HitData.Normalvec.z*0.5*FSize.z)/aRay.Direction.z;
     HitData.HitPoint := aray.StartPoint+aRay.Direction*HitData.Distance;
     lTstPoint := HitData.HitPoint-FPosition;
-    if (abs(lTstPoint.x) < FSize.x*0.5) and (abs(lTstPoint.y) < FSize.y*0.5) then
+    if (abs(lTstPoint.x) <= FSize.x*0.5) and (abs(lTstPoint.y) <= FSize.y*0.5) then
       exit(true);
   end;
 // Teste XZ-Ebene
 if abs(aray.Direction.y) > 1e-12 then
   begin
-    HitData.Normalvec := FTriple(0,-sign(ldist.y),0);
+    HitData.Normalvec := FTriple(0,-sign(aray.Direction.y),0);
     if lInside then
       HitData.Distance := (ldist.y-HitData.Normalvec.y*0.5*FSize.y)/aRay.Direction.y
     else
       HitData.Distance := (ldist.y+HitData.Normalvec.y*0.5*FSize.y)/aRay.Direction.y;
     HitData.HitPoint := aray.StartPoint+aRay.Direction*HitData.Distance;
     lTstPoint := HitData.HitPoint-FPosition;
-    if (abs(lTstPoint.x) < FSize.x*0.5) and (abs(lTstPoint.z) < FSize.z*0.5) then
+    if (abs(lTstPoint.x) <= FSize.x*0.5) and (abs(lTstPoint.z) <= FSize.z*0.5) then
       exit(true);
   end;
 // Teste YZ-Ebene
 if abs(aray.Direction.x) > 1e-12 then
   begin
-    HitData.Normalvec := FTriple(-sign(ldist.x),0,0);
+    HitData.Normalvec := FTriple(-sign(aray.Direction.x),0,0);
     if lInside then
       HitData.Distance := (ldist.x-HitData.Normalvec.x*0.5*FSize.x)/aRay.Direction.x
     else
       HitData.Distance := (ldist.x+HitData.Normalvec.x*0.5*FSize.x)/aRay.Direction.x;
     HitData.HitPoint := aray.StartPoint+aRay.Direction*HitData.Distance;
     lTstPoint := HitData.HitPoint-FPosition;
-    if (abs(lTstPoint.y) < FSize.y*0.5) and (abs(lTstPoint.z) < FSize.z*0.5) then
+    if (abs(lTstPoint.y) <= FSize.y*0.5) and (abs(lTstPoint.z) <= FSize.z*0.5) then
       exit(true);
   end;
 HitData.Distance := -1.0;

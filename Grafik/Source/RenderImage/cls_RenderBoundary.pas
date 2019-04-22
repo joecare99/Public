@@ -47,9 +47,9 @@ var
   lDist,lTstPoint: TRenderPoint;
 begin
   lDist := FPosition-aray.StartPoint;
-  if (abs(ldist.X) < FBoxSize.x) and
-     (abs(ldist.y) < FBoxSize.y) and
-     (abs(ldist.Z) < FBoxSize.z) then
+  if (abs(ldist.X) < FBoxSize.x*0.5) and
+     (abs(ldist.y) < FBoxSize.y*0.5) and
+     (abs(ldist.Z) < FBoxSize.z*0.5) then
      begin
        // Startpoint is Inside
        Distance := 0.0;
@@ -68,7 +68,7 @@ begin
     begin
       Distance := (ldist.Z-sign(ldist.Z)*0.5*FBoxSize.z)/aRay.Direction.z;
       lTstPoint:=aray.StartPoint-FPosition+aRay.Direction*Distance;
-      if (abs(lTstPoint.x) > FBoxSize.x*0.5) and (abs(lTstPoint.y) < FBoxSize.y*0.5) then
+      if (abs(lTstPoint.x) <= FBoxSize.x*0.5) and (abs(lTstPoint.y) <= FBoxSize.y*0.5) then
         exit(true);
     end;
   // Teste XZ-Ebene
@@ -76,7 +76,7 @@ begin
     begin
       Distance := (ldist.y-sign(ldist.y)*0.5*FBoxSize.y)/aRay.Direction.y;
       lTstPoint:=aray.StartPoint-FPosition+aRay.Direction*Distance;
-      if (abs(lTstPoint.x) > FBoxSize.x*0.5) and (abs(lTstPoint.z) < FBoxSize.z*0.5) then
+      if (abs(lTstPoint.x) <= FBoxSize.x*0.5) and (abs(lTstPoint.z) <= FBoxSize.z*0.5) then
         exit(true);
     end;
   // Teste YZ-Ebene
@@ -84,7 +84,7 @@ begin
     begin
       Distance := (ldist.x-sign(ldist.x)*0.5*FBoxSize.x)/aRay.Direction.x;
       lTstPoint:=aray.StartPoint-FPosition+aRay.Direction*Distance;
-      if (abs(lTstPoint.y) > FBoxSize.y*0.5) and (abs(lTstPoint.z) < FBoxSize.z*0.5) then
+      if (abs(lTstPoint.y) <= FBoxSize.y*0.5) and (abs(lTstPoint.z) <= FBoxSize.z*0.5) then
         exit(true);
     end;
   Distance := -1.0;

@@ -19,6 +19,7 @@ type
     FResult:TBitmap;
     FMaxDepth: integer;
     FMinShare:extended;
+    procedure SetMaxDepth(AValue: integer);
    protected
      function TestRayIntersection(const Ray: TRenderRay; out HitObj: TRenderBaseObject ): THitData;
   public
@@ -27,11 +28,18 @@ type
     Function Trace(Ray:TRenderRay;Share:extended;Depth:integer):TRenderColor;
     Procedure Render;
     Procedure Append(aObj:TRenderBaseObject);
+    Property MaxDepth:integer read FMaxDepth write SetMaxDepth;
   end;
 
 implementation
 
 { TRenderEngine }
+
+procedure TRenderEngine.SetMaxDepth(AValue: integer);
+begin
+  if FMaxDepth=AValue then Exit;
+  FMaxDepth:=AValue;
+end;
 
 function TRenderEngine.TestRayIntersection(const Ray: TRenderRay; out
   HitObj: TRenderBaseObject): THitData;
