@@ -137,7 +137,7 @@ begin
       else
         begin
       lHpRay.Direction := Ray.Direction + (ray.Direction * hHitData.Normalvec)*(-2.0)*hHitData.Normalvec;
-//      lHpRay.StartPoint := hHitData.HitPoint+hHitData.Normalvec*1e-4;
+      lHpRay.StartPoint := hHitData.HitPoint+lHpRay.Direction*1e-4;
       lReflect := trace(lHpRay,hHitData.ReflectionVal,Depth+1) *hHitData.ReflectionVal;
         end;
   //  - - In Case of Refraction Split the Ray into a New Ray from the Hitpoint according to the Refraction-Property.

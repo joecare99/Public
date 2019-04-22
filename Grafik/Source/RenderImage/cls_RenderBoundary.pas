@@ -47,6 +47,14 @@ var
   lDist,lTstPoint: TRenderPoint;
 begin
   lDist := FPosition-aray.StartPoint;
+  if (abs(ldist.X) < FBoxSize.x) and
+     (abs(ldist.y) < FBoxSize.y) and
+     (abs(ldist.Z) < FBoxSize.z) then
+     begin
+       // Startpoint is Inside
+       Distance := 0.0;
+       exit(true);
+     end;
   Distance := -1.0;
   if ((ldist.x-FBoxSize.x*0.5>0) and (aray.Direction.x<=0)) or
      ((ldist.x+FBoxSize.x*0.5<0) and (aray.Direction.x>=0)) or

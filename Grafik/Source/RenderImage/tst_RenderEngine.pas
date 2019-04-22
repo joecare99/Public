@@ -30,11 +30,13 @@ type
   published
     procedure TestSetUp;
     procedure TestRay1;
+    procedure TestRay1InSphere;
     procedure TestRayvsSphere2;
     procedure TestRay2;
     procedure TestRayvsPlane2;
     Procedure TestShowScene1;
     Procedure TestShowScene2;
+    Procedure TestShowScene2b;
     Procedure TestShowScene3;
     Procedure TestShowScene4;
     Procedure TestShowScene5;
@@ -51,10 +53,12 @@ procedure TTestRenderImage.TestRenderScene(var lRay: TRenderRay);
 var
   x: Integer;
   y: Integer;
+  lLastTime: QWord;
 begin
   fFrmPictureDisplay.Caption:= TestSuiteName + ': '+TestName;
   fFrmPictureDisplay.Show;
 //  fBitmap.Clear;
+  lLastTime:=GetTickCount64;
   for y := 0 to fFrmPictureDisplay.ClientHeight-1 do
     begin
        for x := 0 to fFrmPictureDisplay.ClientWidth-1 do
@@ -66,9 +70,15 @@ begin
             fBitmap.Canvas.Pixels[x, y]:=FRenderEngine.trace(lRay,
               1.0, 1).Color;
          end;
-       fFrmPictureDisplay.Invalidate;
-       Application.ProcessMessages;
+       if abs(int64(GetTickCount64- lLastTime))>1000 then
+         begin
+           lLastTime:=GetTickCount64;
+           fFrmPictureDisplay.Invalidate;
+           Application.ProcessMessages;
+
+         end;
     end ;
+
 end;
 
 procedure TTestRenderImage.OnFormPaint(Sender: TObject);
@@ -119,7 +129,7 @@ begin
   lSphere := TSphere.Create(
      Trenderpoint.copy(0,0,0),
      1.0,
-     clYellow);
+     clYellow,FTriple(1,0,0));
   FRenderEngine.Append(lSphere);
   FRenderEngine.Append(TRenderLightsource.Create(FTriple(-10,10,-10)));
 
@@ -140,6 +150,41 @@ begin
      Trenderpoint.copy(0,-1001.0,0),
      1000.0,
      clLime,FTriple(0.8,0.2,0.0)));
+  FRenderEngine.Append(TSphere.Create(
+     Trenderpoint.copy(-0.7,-0.3,0),
+     0.7,
+     clRed));
+  FRenderEngine.Append(TSphere.Create(
+     Trenderpoint.copy(0.7,-0.3,0),
+     0.7,
+     clBlue,FTriple(0.1,0.9,0.0)));
+  FRenderEngine.Append(TSphere.Create(
+     Trenderpoint.copy(0.0,0.7,0.0),
+     0.7,
+     clYellow));
+  FRenderEngine.Append(TRenderLightsource.Create(FTriple(-10,10,-10)));
+
+  lRay:=TRenderRay.Create(FTriple(0,0,-2),FTriple(0,0,1));
+  try
+    TestRenderScene(lRay);
+  finally
+    freeandnil(lRay);
+  end;
+end;
+
+procedure TTestRenderImage.TestShowScene2b;
+var
+  lSphere: TSphere;
+  lRay: TRenderRay;
+begin
+  FRenderEngine.Append(TSphere.Create(
+     Trenderpoint.copy(0,-1001.0,0),
+     1000.0,
+     clLime,FTriple(0.8,0.2,0.0)));
+  FRenderEngine.Append(TSphere.Create(
+     Trenderpoint.copy(0,0,0),
+     20.0,
+     RenderColor(0.5,0.5,1),FTriple(0.2,0.8,0.0)));
   FRenderEngine.Append(TSphere.Create(
      Trenderpoint.copy(-0.7,-0.3,0),
      0.7,
@@ -347,6 +392,58 @@ begin
     freeandnil(lRay);
   end;
 
+end;
+
+procedure TTestRenderImage.TestRay1InSphere;
+var
+  lRay: TRenderRay;
+  lSphere: TSphere;
+  HitData: THitData;
+  y, x, i: Integer;
+  bDist: extended;
+begin
+  lSphere := TSphere.Create(
+     Trenderpoint.copy(0,0,0),
+     2.0,
+     clWhite,FTriple(0.9,0.1,0.0));
+  FRenderEngine.Append(lSphere);
+  FRenderEngine.Append(TRenderLightsource.Create(FTriple(-1,1,-1)));
+
+  lRay:=TRenderRay.Create(FTriple(0,0,0),FTriple(0,0,1));
+  try
+    CheckEquals(true,lSphere.BoundaryTest(lRay,bDist),'Sphere.Boundary');
+    CheckEquals(0.0,bDist,1e-14,'Hitdata.HP.Distance');
+    CheckEquals(true,lSphere.HitTest(lRay,HitData),'Sphere.HitTest1');
+    CheckEquals(2.0,HitData.Distance,1e-15,'HitData.Distance');
+    CheckEquals(FTriple(0,0,2),HitData.HitPoint,1e-15,'HitData.HitPoint');
+    CheckEquals(FTriple(0,0,-1),HitData.Normalvec,1e-15,'HitData.Normalvec');
+
+    CheckEquals(RenderColor(0.887311,0.887311,0.887311),FRenderEngine.Trace(lRay,1.0,1),'Trace one Ray');
+
+    lRay.Direction := FTriple(0.5,0.5,sqrt(0.5));
+    CheckEquals(true,lSphere.BoundaryTest(lRay,bDist),'Sphere.Boundary2');
+    CheckEquals(0.0,bDist,1e-14,'Hitdata.HP.Distance2');
+    CheckEquals(true,lSphere.HitTest(lRay,HitData),'Sphere.HitTest2');
+    CheckEquals(2.0,HitData.Distance,1e-15,'HitData.Distance2');
+    CheckEquals(FTriple(1,1,sqrt(2)),HitData.HitPoint,1e-15,'HitData.HitPoint2');
+    CheckEquals(FTriple(-0.5,-0.5,-sqrt(0.5)),HitData.Normalvec,1e-15,'HitData.Normalvec2');
+
+    CheckEquals(RenderColor(1,1,1)*0.858293,FRenderEngine.Trace(lRay,1.0,1),'Trace one Ray2');
+
+    for i := 0 to 10000 do
+      begin
+        lRay.Direction := FTriple(random-0.5,Random-0.5,2.0);
+        CheckEquals(true,lSphere.BoundaryTest(lRay,bDist),'Sphere.Boundary');
+        CheckEquals(0.0,bDist,1e-14,'Hitdata.HP.Distance');
+        CheckEquals(true,lSphere.HitTest(lRay,HitData),'Sphere.HitTest3');
+        CheckEquals(2.0,HitData.Distance,1e-14,'Hitdata.HP.Distance');
+        CheckEquals(2.0,HitData.HitPoint.GLen,1e-14,'Hitdata.HP.Glen3');
+        CheckEquals(HitData.HitPoint*-0.5,HitData.Normalvec,1e-14,'Hitdata.HP.Normalvec');
+
+      end;
+  finally
+    freeandnil(lRay);
+  end;
 end;
 
 procedure TTestRenderImage.TestRayvsSphere2;
