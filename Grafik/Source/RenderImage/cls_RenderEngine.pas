@@ -161,7 +161,8 @@ begin
       end;
       end
    else      // Todo: SkyObject
-     result := RenderColor(0,0,0);
+     result :=clBlack;
+//     RenderColor(Ray.Direction.x*0.5+0.5,Ray.Direction.y*0.5+0.5,Ray.Direction.z*0.5+0.5);
 end;
 
 procedure TRenderEngine.Render;

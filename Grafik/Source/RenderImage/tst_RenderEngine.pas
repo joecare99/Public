@@ -58,7 +58,11 @@ TYPE
     PROCEDURE TestShowScene3;
     PROCEDURE TestShowScene4;
     PROCEDURE TestShowScene5;
+    PROCEDURE TestShowScene6a;
     PROCEDURE TestShowScene6;
+    PROCEDURE TestShowScene7;
+    PROCEDURE TestShowScene8;
+
   public
     CONSTRUCTOR Create; override;
     DESTRUCTOR Destroy; override;
@@ -277,6 +281,36 @@ BEGIN
   END;
 END;
 
+procedure TTestRenderImage.TestShowScene6a;
+var
+  lCenter: TFTriple;
+  lBarSize: Extended;
+  lRay: TRenderRay;
+  i: Integer;
+begin
+  lCenter:=FTriple(-0.3, -0.5, -0.01);
+  lBarSize := 0.5;
+  FRenderEngine.Append(TBox.Create(lCenter,
+    FTriple(4, lBarSize, lBarSize), RenderColor(1, 1, 1), FTriple(0.8, 0.2, 0)));
+  FRenderEngine.Append(TBox.Create(lCenter,
+    FTriple(lBarSize,4,  lBarSize), RenderColor(1, 1, 1), FTriple(0.8, 0.2, 0)));
+  FRenderEngine.Append(TBox.Create(lCenter,
+    FTriple(lBarSize,lBarSize,4), RenderColor(1, 1, 1), FTriple(0.8, 0.2, 0)));
+  FRenderEngine.Append(TSphere.Create(lCenter,
+    lBarSize*0.9, RenderColor(1, 1, 1), FTriple(0.8, 0.2, 0)));
+
+  FOR i := 0 TO 0 DO
+    FRenderEngine.Append(TRenderLightsource.Create(
+      FTriple(lCenter.X+0.9 + (i mod 4) * 0.125, lCenter.Y+1.9 - (i div 4) * 0.125,lCenter.z -1.5)));
+
+  lRay := TRenderRay.Create(FTriple(0, 0, -2), FTriple(0, 0, 1));
+  TRY
+    TestRenderScene(lRay);
+  FINALLY
+    FreeAndNil(lRay);
+  END;
+end;
+
 procedure TTestRenderImage.TestShowScene6;
 VAR
   lRay: TRenderRay;
@@ -307,6 +341,46 @@ BEGIN
     FreeAndNil(lRay);
   END;
 END;
+
+procedure TTestRenderImage.TestShowScene7;
+VAR
+  lRay:    TRenderRay;
+BEGIN
+  FRenderEngine.Append(TDisc.Create(FTriple(0, 0.5, 0),FTriple(0, 0, -1),1.0,clWhite,FTriple(0.8, 0.2, 0)));
+  FRenderEngine.Append(TDisc.Create(FTriple(1, -0.3, 0),FTriple(0, 1, -1),0.5,clLime,FTriple(0.8, 0.2, 0)));
+  FRenderEngine.Append(TDisc.Create(FTriple(-1, -0.3, 0),FTriple(0, -1, 1),0.5,clRed,FTriple(0.8, 0.2, 0)));
+  FRenderEngine.Append(TDisc.Create(FTriple(0, -0.6, -0.5),FTriple(0, 1, 0.2),1.5,clBlue,FTriple(0.8, 0.2, 0)));
+  FRenderEngine.Append(TRenderLightsource.Create(FTriple(-10, 10, -10)));
+
+  lRay := TRenderRay.Create(FTriple(0, 0, -2), FTriple(0, 0, 1));
+  TRY
+    TestRenderScene(lRay);
+  FINALLY
+    FreeAndNil(lRay);
+  END;
+end;
+
+procedure TTestRenderImage.TestShowScene8;
+VAR
+  lRay:    TRenderRay;
+BEGIN
+  FRenderEngine.Append(TCylinder.Create(FTriple(0, 0.1, 0),FTriple(0, 0.7, -1),0.2,clWhite,FTriple(0.6, 0.4, 0)));
+  FRenderEngine.Append(TCylinder.Create(FTriple(1, 0, 0),FTriple(1, -0.01, 1),0.35,clLime,FTriple(0.6, 0.4, 0)));
+  FRenderEngine.Append(TCylinder.Create(FTriple(-1, -0.01, 1),FTriple(-1, 0, 0),0.35,clRed,FTriple(0.6, 0.4, 0)));
+{  FRenderEngine.Append(TDisc.Create(FTriple(1, -0.3, 0),FTriple(0, 1, -1),0.5,clLime,FTriple(0.8, 0.2, 0)));
+  FRenderEngine.Append(TDisc.Create(FTriple(-1, -0.3, 0),FTriple(0, -1, 1),0.5,clRed,FTriple(0.8, 0.2, 0)));  }
+
+  FRenderEngine.Append(TCylinder.Create(FTriple(0, -0.35, -0),FTriple(0, -0.4, -0),1.3,clBlue,FTriple(0.4, 0.6, 0)));
+//  FRenderEngine.Append(TDisc.Create(FTriple(0, -0.30, -0),FTriple(0, -1, 0),1.3,clBlue,FTriple(0.8, 0.2, 0)));
+  FRenderEngine.Append(TRenderLightsource.Create(FTriple(-10, 10, -10)));
+
+  lRay := TRenderRay.Create(FTriple(0, 0, -2), FTriple(0, 0, 1));
+  TRY
+    TestRenderScene(lRay);
+  FINALLY
+    FreeAndNil(lRay);
+  END;
+end;
 
 constructor TTestRenderImage.Create;
 BEGIN

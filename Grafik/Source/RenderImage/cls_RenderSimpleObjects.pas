@@ -102,6 +102,8 @@ type
         constructor Create(const aPosition, aEndPosition: TRenderPoint;
             aRadius: extended; aBaseColor: TRenderColor; aSurface: TFTriple); overload;
         function HitTest(aRay: TRenderRay; out HitData: THitData): boolean; override;
+        function BoundaryTest(aRay: TRenderRay; out Distance: extended): boolean;
+            override;
     end;
 
 
@@ -410,7 +412,7 @@ end;
 function TCylinder.HitTest(aRay: TRenderRay; out HitData: THitData): boolean;
 var
   lFootVec, lHeadVec, lOrthVec, lOrtoDirVec :TRenderVector;
-  lFootHitPoint,lHeadHitPoint : TRenderPoint;
+  lFootHitPoint,lHeadHitPoint, lMHitPoint : TRenderPoint;
   lDist, lHeadDistance , lFootDistance, lMDistance: Extended;
   lInside, lFootPlHit, lHeadPlHit: Boolean;
   lSgn: TValueSign;
@@ -420,6 +422,9 @@ begin
   lFootVec := FPosition-FInnerVec - aray.StartPoint;
   lOrthVec:= aray.Direction.XMul(FInnerVec/FHHeight);
   HitData.Distance:=-1.0;
+  HitData.AmbientVal := FSurface.x;
+  HitData.ReflectionVal := FSurface.y;
+  HitData.refraction := FSurface.z;
   if (lOrthVec.MLen <> 0) then
     begin
       lDist:= (lOrthVec * lFootVec)/lOrthVec.GLen;
@@ -434,14 +439,14 @@ begin
     begin
       lFootDistance := lFootVec * FInnerVec / (FInnerVec * aRay.Direction);
       lFootHitPoint := aRay.StartPoint + lFootDistance * aRay.Direction;
-      lFootplHit := (lFootHitPoint-FPosition-FInnerVec).Glen<=FRadius ;
+      lFootplHit := (lFootHitPoint-FPosition+FInnerVec).Glen <= FRadius ;
     end;
-  lHeadPlHit := sign(lFootVec * FInnerVec) = lsgn;
+  lHeadPlHit := sign(lHeadVec * FInnerVec) = lsgn;
   if lHeadPlHit then
     begin
-      lHeadDistance := lFootVec * FInnerVec / (FInnerVec * aRay.Direction);
+      lHeadDistance := lHeadVec * FInnerVec / (FInnerVec * aRay.Direction);
       lHeadHitPoint := aRay.StartPoint + lHeadDistance * aRay.Direction;
-      lHeadPlHit := (lHeadHitPoint-FPosition-FInnerVec).Glen<=FRadius ;
+      lHeadPlHit := (lHeadHitPoint-FPosition-FInnerVec).Glen <= FRadius ;
     end;
   if lHeadPlHit and lFootPlHit then
     begin
@@ -451,9 +456,6 @@ begin
           HitData.Distance:=lFootDistance;
           HitData.HitPoint:=lFootHitPoint;
           HitData.Normalvec := FInnerVec/FHHeight * -lsgn;
-          HitData.AmbientVal := FSurface.x;
-          HitData.ReflectionVal := FSurface.y;
-          HitData.refraction := FSurface.z;
           exit(true);
         end
       else
@@ -461,51 +463,59 @@ begin
         HitData.Distance:=lHeadDistance;
         HitData.HitPoint:=lHeadHitPoint;
         HitData.Normalvec := FInnerVec/FHHeight * -lsgn;
-        HitData.AmbientVal := FSurface.x;
-        HitData.ReflectionVal := FSurface.y;
-        HitData.refraction := FSurface.z;
         exit(true);
       end
     end;
+  result := false;
   if lFootPlHit  then
     begin
       HitData.Distance:=lFootDistance;
       HitData.HitPoint:=lFootHitPoint;
       HitData.Normalvec := FInnerVec/FHHeight * -lsgn;
-      HitData.AmbientVal := FSurface.x;
-      HitData.ReflectionVal := FSurface.y;
-      HitData.refraction := FSurface.z;
+      result := true;
     end;
   if lHeadPlHit then
   begin
     HitData.Distance:=lHeadDistance;
     HitData.HitPoint:=lHeadHitPoint;
     HitData.Normalvec := FInnerVec/FHHeight * -lsgn;
-    HitData.AmbientVal := FSurface.x;
-    HitData.ReflectionVal := FSurface.y;
-    HitData.refraction := FSurface.z;
+    result := true;
   end;
 
   if lOrthVec.MLen =0 then
     exit(false);
   lOrtoDirVec:=aray.Direction-aray.Direction*FInnerVec/sqr(FHHeight)*FInnerVec;
   lMDistance := lOrtoDirVec*lFootVec/sqr(lOrtoDirVec.glen)-sqrt(sqr(FRadius)-sqr(lDist))/lOrtoDirVec.glen;
-  if (HitData.Distance < 0) or (lMDistance <  HitData.Distance) then
+  if (lMDistance>=0) and ((HitData.Distance < 0) or (lMDistance <  HitData.Distance)) then
     begin
-      HitData.Distance:=lMDistance;
-      HitData.HitPoint:=aray.StartPoint +lMDistance* aray.Direction ;
-      lIVFaktor:=(HitData.HitPoint-FPosition)*FInnerVec/sqr(FHHeight);
-      result := abs(lIVFaktor) <=1.0;
-      if result then
+      lMHitPoint:=aray.StartPoint +lMDistance* aray.Direction ;
+      lIVFaktor:=(lMHitPoint-FPosition)*FInnerVec/sqr(FHHeight);
+      if abs(lIVFaktor) <=1.0 then
         begin
-          HitData.Normalvec := (HitData.HitPoint-FPosition-(HitData.HitPoint-FPosition)*FInnerVec/sqr(FHHeight)*FInnerVec)/FRadius ;
+          result := true;
+          HitData.Distance:=lMDistance;
+          HitData.HitPoint:=lMHitPoint;
+          HitData.Normalvec := (HitData.HitPoint-FPosition-lIVFaktor*FInnerVec)/FRadius ;
           HitData.AmbientVal := FSurface.x;
           HitData.ReflectionVal := FSurface.y;
           HitData.refraction := FSurface.z;
         end
-      else
-      HitData.Distance:=-1.0;
     end;
+end;
+
+function TCylinder.BoundaryTest(aRay: TRenderRay; out Distance: extended
+  ): boolean;
+begin
+  lFootVec := FPosition-FInnerVec - aray.StartPoint;
+  lOrthVec:= aray.Direction.XMul(FInnerVec/FHHeight);
+  if (lOrthVec.MLen <> 0) then
+    begin
+      lDist:= (lOrthVec * lFootVec)/lOrthVec.GLen;
+      if abs(lDist)>FRadius then
+        exit(false);
+    end;
+// Todo: weitere Tests;
+ result := true;
 end;
 
 end.
