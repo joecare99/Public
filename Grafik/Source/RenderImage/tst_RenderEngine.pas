@@ -12,6 +12,32 @@ USES
 
 TYPE
 
+  { TTestRenderObjects }
+
+  TTestRenderObjects = CLASS(TTestCase)
+  private
+    FRenderEngine: TRenderEngine;
+  protected
+    PROCEDURE SetUp; override;
+    PROCEDURE TearDown; override;
+    PROCEDURE CheckEquals(CONST Exp, Act: TFTriple; eps: Extended; Msg: String);
+      overload;
+    PROCEDURE CheckEquals(CONST Exp, Act: TRenderColor; Msg: String);
+      overload;
+  published
+    PROCEDURE TestSetUp;
+    PROCEDURE TestRay1Sphere;
+    PROCEDURE TestRay1InSphere;
+    PROCEDURE TestRayvsSphere2;
+    PROCEDURE TestRay2Plane;
+    PROCEDURE TestRayvsPlane2;
+    PROCEDURE TestRay3Box;
+    PROCEDURE TestRay3InBox;
+    PROCEDURE TestRayvsBox3;
+    PROCEDURE TestRay4Disc;
+    PROCEDURE TestRayvsDisk4;
+  END;
+
   { TTestRenderImage }
 
   TTestRenderImage = CLASS(TTestCase)
@@ -24,20 +50,8 @@ TYPE
   protected
     PROCEDURE SetUp; override;
     PROCEDURE TearDown; override;
-    PROCEDURE CheckEquals(CONST Exp, Act: TFTriple; eps: Extended; Msg: String);
-      overload;
-    PROCEDURE CheckEquals(CONST Exp, Act: TRenderColor; Msg: String);
-      overload;
   published
     PROCEDURE TestSetUp;
-    PROCEDURE TestRay1;
-    PROCEDURE TestRay1InSphere;
-    PROCEDURE TestRayvsSphere2;
-    PROCEDURE TestRay2;
-    PROCEDURE TestRayvsPlane2;
-    PROCEDURE TestRay3;
-    PROCEDURE TestRay3InBox;
-    PROCEDURE TestRayvsBox2;
     PROCEDURE TestShowScene1;
     PROCEDURE TestShowScene2;
     PROCEDURE TestShowScene2b;
@@ -48,13 +62,14 @@ TYPE
   public
     CONSTRUCTOR Create; override;
     DESTRUCTOR Destroy; override;
-  END;
+  end;
 
 IMPLEMENTATION
 
 USES cls_RenderLightSource;
 
-PROCEDURE TTestRenderImage.TestRenderScene(VAR lRay: TRenderRay);
+
+procedure TTestRenderImage.TestRenderScene(var lRay: TRenderRay);
 VAR
   x: Integer;
   y: Integer;
@@ -87,48 +102,32 @@ BEGIN
   // Todo: Save Picture (opional)
 END;
 
-PROCEDURE TTestRenderImage.OnFormPaint(Sender: TObject);
+procedure TTestRenderImage.OnFormPaint(Sender: TObject);
 BEGIN
   IF assigned(fBitmap) THEN
     fFrmPictureDisplay.Canvas.StretchDraw(
       rect(0, 0, fFrmPictureDisplay.ClientWidth, fFrmPictureDisplay.ClientHeight), fBitmap);
 END;
 
-PROCEDURE TTestRenderImage.SetUp;
+procedure TTestRenderImage.SetUp;
 BEGIN
   FRenderEngine := TRenderEngine.Create;
 END;
 
-PROCEDURE TTestRenderImage.TearDown;
+procedure TTestRenderImage.TearDown;
 BEGIN
   FreeAndNil(FRenderEngine);
 END;
 
-PROCEDURE TTestRenderImage.CheckEquals(CONST Exp, Act: TFTriple;
-  eps: Extended; Msg: String);
-BEGIN
-  CheckEquals(exp.X, act.X, eps, Msg + '[X]');
-  CheckEquals(exp.Y, act.Y, eps, Msg + '[Y]');
-  CheckEquals(exp.Z, act.Z, eps, Msg + '[Z]');
-END;
 
-PROCEDURE TTestRenderImage.CheckEquals(CONST Exp, Act: TRenderColor; Msg: String);
-CONST
-  cEps = 1e-4;
-BEGIN
-  CheckEquals(exp.Red, act.Red, cEps, Msg + '[Red]');
-  CheckEquals(exp.Green, act.Green, cEps, Msg + '[Green]');
-  CheckEquals(exp.Blue, act.Blue, cEps, Msg + '[Blue]');
-END;
-
-PROCEDURE TTestRenderImage.TestSetUp;
+procedure TTestRenderImage.TestSetUp;
 BEGIN
   CheckNotNull(FRenderEngine, 'FrenderEngine is assigned');
   CheckNotNull(fFrmPictureDisplay, 'FrenderEngine is assigned');
   CheckNotNull(fBitmap, 'FrenderEngine is assigned');
 END;
 
-PROCEDURE TTestRenderImage.TestShowScene1;
+procedure TTestRenderImage.TestShowScene1;
 VAR
   lSphere: TSphere;
   lRay:    TRenderRay;
@@ -146,7 +145,7 @@ BEGIN
   END;
 END;
 
-PROCEDURE TTestRenderImage.TestShowScene2;
+procedure TTestRenderImage.TestShowScene2;
 VAR
   lSphere: TSphere;
   lRay:    TRenderRay;
@@ -169,7 +168,7 @@ BEGIN
   END;
 END;
 
-PROCEDURE TTestRenderImage.TestShowScene2b;
+procedure TTestRenderImage.TestShowScene2b;
 VAR
   lSphere: TSphere;
   lRay:    TRenderRay;
@@ -194,7 +193,7 @@ BEGIN
   END;
 END;
 
-PROCEDURE TTestRenderImage.TestShowScene3;
+procedure TTestRenderImage.TestShowScene3;
 VAR
   lRay: TRenderRay;
 BEGIN
@@ -219,7 +218,7 @@ BEGIN
   END;
 END;
 
-PROCEDURE TTestRenderImage.TestShowScene4;
+procedure TTestRenderImage.TestShowScene4;
 VAR
   lRay: TRenderRay;
   i:    Integer;
@@ -246,7 +245,7 @@ BEGIN
   END;
 END;
 
-PROCEDURE TTestRenderImage.TestShowScene5;
+procedure TTestRenderImage.TestShowScene5;
 VAR
   lRay: TRenderRay;
   i:    Integer;
@@ -278,7 +277,7 @@ BEGIN
   END;
 END;
 
-PROCEDURE TTestRenderImage.TestShowScene6;
+procedure TTestRenderImage.TestShowScene6;
 VAR
   lRay: TRenderRay;
   i:    Integer;
@@ -309,7 +308,7 @@ BEGIN
   END;
 END;
 
-CONSTRUCTOR TTestRenderImage.Create;
+constructor TTestRenderImage.Create;
 BEGIN
   INHERITED Create;
 
@@ -325,14 +324,48 @@ BEGIN
 
 END;
 
-DESTRUCTOR TTestRenderImage.Destroy;
+destructor TTestRenderImage.Destroy;
 BEGIN
   //  fFrmPictureDisplay.Hide;
   FreeAndNil(fBitmap);
   INHERITED Destroy;
 END;
 
-PROCEDURE TTestRenderImage.TestRay1;
+procedure TTestRenderObjects.SetUp;
+BEGIN
+  FRenderEngine := TRenderEngine.Create;
+END;
+
+procedure TTestRenderObjects.TearDown;
+BEGIN
+  FreeAndNil(FRenderEngine);
+END;
+
+procedure TTestRenderObjects.CheckEquals(const Exp, Act: TFTriple;
+  eps: Extended; Msg: String);
+BEGIN
+  CheckEquals(exp.X, act.X, eps, Msg + '[X]');
+  CheckEquals(exp.Y, act.Y, eps, Msg + '[Y]');
+  CheckEquals(exp.Z, act.Z, eps, Msg + '[Z]');
+END;
+
+procedure TTestRenderObjects.CheckEquals(const Exp, Act: TRenderColor;
+  Msg: String);
+CONST
+  cEps = 1e-4;
+BEGIN
+  CheckEquals(exp.Red, act.Red, cEps, Msg + '[Red]');
+  CheckEquals(exp.Green, act.Green, cEps, Msg + '[Green]');
+  CheckEquals(exp.Blue, act.Blue, cEps, Msg + '[Blue]');
+end;
+
+
+procedure TTestRenderObjects.TestSetUp;
+begin
+  CheckNotNull(FRenderEngine, 'FrenderEngine is assigned');
+end;
+
+procedure TTestRenderObjects.TestRay1Sphere;
 VAR
   lRay:    TRenderRay;
   lSphere: TSphere;
@@ -380,7 +413,7 @@ BEGIN
 
 END;
 
-PROCEDURE TTestRenderImage.TestRay1InSphere;
+procedure TTestRenderObjects.TestRay1InSphere;
 VAR
   lRay:    TRenderRay;
   lSphere: TSphere;
@@ -434,7 +467,7 @@ BEGIN
   END;
 END;
 
-PROCEDURE TTestRenderImage.TestRayvsSphere2;
+procedure TTestRenderObjects.TestRayvsSphere2;
 VAR
   lSphere: TSphere;
   lRay: TRenderRay;
@@ -508,7 +541,7 @@ BEGIN
   END;
 END;
 
-PROCEDURE TTestRenderImage.TestRay2;
+procedure TTestRenderObjects.TestRay2Plane;
 VAR
   lRay:    TRenderRay;
   lPlane:  TPlane;
@@ -557,7 +590,7 @@ BEGIN
 
 END;
 
-PROCEDURE TTestRenderImage.TestRayvsPlane2;
+procedure TTestRenderObjects.TestRayvsPlane2;
 VAR
   lPlane: TPlane;
   lRay: TRenderRay;
@@ -626,7 +659,7 @@ BEGIN
   END;
 END;
 
-PROCEDURE TTestRenderImage.TestRay3;
+procedure TTestRenderObjects.TestRay3Box;
 VAR
   lRay:    TRenderRay;
   lBox:    TBox;
@@ -721,7 +754,7 @@ BEGIN
   END;
 END;
 
-PROCEDURE TTestRenderImage.TestRay3InBox;
+procedure TTestRenderObjects.TestRay3InBox;
 VAR
   lRay:    TRenderRay;
   lBox:    TBox;
@@ -776,7 +809,7 @@ BEGIN
   END;
 END;
 
-PROCEDURE TTestRenderImage.TestRayvsBox2;
+procedure TTestRenderObjects.TestRayvsBox3;
 VAR
   lBox: TBox;
   lRay: TRenderRay;
@@ -844,9 +877,126 @@ BEGIN
   END;
 END;
 
+procedure TTestRenderObjects.TestRay4Disc;
+VAR
+  lRay:    TRenderRay;
+  lDisc:  TDisc;
+  HitData: THitData;
+  y, x, i: Integer;
+  bDist:   Extended;
+BEGIN
+  lDisc := TDisc.Create(FTriple(0, 0, 0), FTriple(0, 0, -1),1.0,
+    clWhite, FTriple(0.80690397017, 0.0, 0.0));
+  FRenderEngine.Append(lDisc);
+  FRenderEngine.Append(TRenderLightsource.Create(FTriple(-10, 10, -10)));
+
+  lRay := TRenderRay.Create(FTriple(0, 0, -2), FTriple(0, 0, 1));
+  TRY
+    CheckEquals(True, lDisc.BoundaryTest(lRay, bDist), 'Disc.Boundary');
+    CheckEquals(2.0, bDist, 1e-14, 'Hitdata.HP.Distance');
+    CheckEquals(True, lDisc.HitTest(lRay, HitData), 'Disc.HitTest1');
+    CheckEquals(2.0, HitData.Distance, 1e-15, 'HitData.Distance');
+    CheckEquals(FTriple(0, 0, 0), HitData.HitPoint, 1e-15, 'HitData.HitPoint');
+    CheckEquals(FTriple(0, 0, -1), HitData.Normalvec, 1e-15, 'HitData.Normalvec');
+
+    CheckEquals(RenderColor(0.5, 0.5, 0.5), FRenderEngine.Trace(lRay, 1.0, 1),
+      'Trace one Ray');
+
+    lRay.Direction := FTriple(0.5, 0.5, 1.3);
+    CheckEquals(False, lDisc.BoundaryTest(lRay, bDist), 'Disc.Boundary2');
+    CheckEquals(-1.0, bDist, 1e-14, 'Hitdata.HP.Distance2');
+    CheckEquals(False, lDisc.HitTest(lRay, HitData), 'Disc.HitTest2');
+    CheckEquals(-1.0, HitData.Distance, 1e-15, 'HitData.Distance2');
+
+    CheckEquals(RenderColor(0, 0, 0), FRenderEngine.Trace(lRay, 1.0, 1), 'Trace one Ray2');
+
+    FOR i := 0 TO 10000 DO
+    BEGIN
+      lRay.Direction := FTriple(random - 0.5, Random - 0.5, 1.6);
+      CheckEquals(True, lDisc.BoundaryTest(lRay, bDist), 'Disc.Boundary');
+      CheckEquals(True, lDisc.HitTest(lRay, HitData), 'Disc.HitTest3');
+      CheckEquals(bDist, HitData.Distance, 1e-14, 'Hitdata.HP.Distance');
+      CheckEquals(0.0, HitData.HitPoint.z, 1e-14, 'Hitdata.HP.z');
+      CheckEquals(FTriple(0, 0, -1), HitData.Normalvec, 1e-14, 'Hitdata.HP.Normalvec');
+
+    END;
+  FINALLY
+    FreeAndNil(lRay);
+  END;
+end;
+
+procedure TTestRenderObjects.TestRayvsDisk4;
+VAR
+  lDisc: TDisc;
+  lRay: TRenderRay;
+  HitData: THitData;
+  bDist: Extended;
+  i: Integer;
+BEGIN
+  lDisc := TDisc.Create(FTriple(0, -0.1, 0), FTriple(0, 1, 0),1000.0,
+    clWhite, FTriple(1, 0, 0));
+
+  FRenderEngine.Append(lDisc);
+  lRay := TRenderRay.Create(FTriple(0, 0, -2), FTriple(0, 0, 1));
+  TRY
+    // First Test Some well known points
+    // 1
+    CheckEquals(False, lDisc.BoundaryTest(lRay, bDist), 'Disc.Boundary');
+    CheckEquals(-1.0, bDist, 1e-14, 'Boundary.Distance');
+    CheckEquals(False, lDisc.HitTest(lRay, HitData), 'Disc.HitTest');
+
+    CheckEquals(RenderColor(0, 0, 0), FRenderEngine.Trace(lRay, 1.0, 1), 'Trace one Ray1');
+
+    // 2
+    lRay.Direction := FTriple(0, 0.5, 1);
+    CheckEquals(False, lDisc.BoundaryTest(lRay, bDist), 'Disc.Boundary2');
+    CheckEquals(-1.0, bDist, 1e-14, 'Boundary.Distance2');
+    CheckEquals(False, lDisc.HitTest(lRay, HitData), 'Disc.HitTest2');
+
+    CheckEquals(RenderColor(0, 0, 0), FRenderEngine.Trace(lRay, 1.0, 1), 'Trace one Ray2');
+
+    // 3
+    lRay.Direction := FTriple(0, -0.5, 1);
+    CheckEquals(True, lDisc.BoundaryTest(lRay, bDist), 'Disc.Boundary3');
+    CheckEquals(0.223606, bDist, 1e-5, 'Boundary.Distance3');
+    CheckEquals(True, lDisc.HitTest(lRay, HitData), 'Disc.HitTest3');
+    CheckEquals(0.223606, HitData.Distance, 1e-5, format('Hitdata.HP.Distance3', [i]));
+    CheckEquals(FTriple(0, -0.1, -1.8), HitData.HitPoint, 1e-7, 'HitData.HitPoint3');
+    CheckEquals(FTriple(0, 1, 0), HitData.Normalvec, 1e-7, 'HitData.Normalvec3');
+
+    CheckEquals(RenderColor(1, 1, 1), FRenderEngine.Trace(lRay, 1.0, 1), 'Trace one Ray2');
+
+    // Random
+    FOR i := 0 TO 10000 DO
+    BEGIN
+      lRay.Direction := FTriple(random - 0.5, Random - 1.0, 2.0);
+      IF (lray.Direction.y < -1e-4) or ((lray.Direction.y < -1e-5) and
+        lDisc.BoundaryTest(lRay, bDist)) THEN
+      BEGIN
+        CheckEquals(True, lDisc.BoundaryTest(lRay, bDist), format(
+          'Disc.Boundary[%d]', [i]));
+        CheckEquals(True, lDisc.HitTest(lRay, HitData), format('Disc.HitTest[%d]', [i]));
+        CheckEquals(bDist, HitData.Distance, 1e-14, format('Hitdata.HP.Distance[%d]', [i]));
+        CheckEquals(-0.1, HitData.HitPoint.y, 1e-14, format('Hitdata.HP.y[%d]', [i]));
+        CheckEquals(FTriple(0, 1, 0), HitData.Normalvec, 1e-14, format(
+          'Hitdata.HP.Normalvec[%d]', [i]));
+      END
+      ELSE
+      BEGIN
+        CheckEquals(False, lDisc.BoundaryTest(lRay, bDist), 'Disc.Boundary');
+        CheckEquals(False, lDisc.HitTest(lRay, HitData), 'Disc.HitTest3');
+        CheckEquals(-1.0, bDist, 1e-14, 'Hitdata.HP.Distance');
+        CheckEquals(-1.0, HitData.Distance, 1e-14, 'Hitdata.HP.Glen3');
+      END;
+    END;
+  FINALLY
+    FreeAndNil(lRay);
+  END;
+end;
+
 INITIALIZATION
 
-  RegisterTest(TTestRenderImage);
+  RegisterTests([TTestRenderObjects,TTestRenderImage]);
 END.
 
 

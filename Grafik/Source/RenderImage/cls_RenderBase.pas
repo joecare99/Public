@@ -161,13 +161,17 @@ end;
   { TRenderBaseObject }
 
   TRenderBaseObject=class(TPersistent) //; abstract;
+  private
+    procedure SetID(AValue: integer);
   protected
+    FId:integer;
     FPosition: TRenderPoint;
     procedure SetPosition(AValue: TRenderPoint);virtual;
   Public
     Function HitTest(aRay:TRenderRay;out HitData:THitData):boolean;virtual; abstract;
     Function BoundaryTest(aRay:TRenderRay;out Distance:extended):boolean;virtual; abstract;
     property Position:TRenderPoint read FPosition write SetPosition;
+    property ID:integer read FId write SetID;
   end;
 
 function FTuple(const x,y:extended):TFTuple;inline;
@@ -256,6 +260,12 @@ begin
 end;
 
 { TRenderBaseObject }
+
+procedure TRenderBaseObject.SetID(AValue: integer);
+begin
+  if FId=AValue then Exit;
+  FId:=AValue;
+end;
 
 procedure TRenderBaseObject.SetPosition(AValue: TRenderPoint);
 begin
