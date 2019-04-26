@@ -36,6 +36,9 @@ TYPE
     PROCEDURE TestRayvsBox3;
     PROCEDURE TestRay4Disc;
     PROCEDURE TestRayvsDisk4;
+    PROCEDURE TestRay5Cylinder;
+    PROCEDURE TestRay5InCylinder;
+    PROCEDURE TestRayvsCylinder5;
   END;
 
   { TTestRenderImage }
@@ -62,7 +65,7 @@ TYPE
     PROCEDURE TestShowScene6;
     PROCEDURE TestShowScene7;
     PROCEDURE TestShowScene8;
-
+    PROCEDURE TestShowScene9;
   public
     CONSTRUCTOR Create; override;
     DESTRUCTOR Destroy; override;
@@ -72,13 +75,19 @@ IMPLEMENTATION
 
 USES cls_RenderLightSource;
 
+type TBoolArray=packed array[0..63] of boolean;
+
 
 procedure TTestRenderImage.TestRenderScene(var lRay: TRenderRay);
 VAR
   x: Integer;
-  y: Integer;
+  y, i: Integer;
   lLastTime: QWord;
+  bits: int64;
+  lRCol:TRenderColor;
+
 BEGIN
+  bits:=$6030016916936DA6;
   fFrmPictureDisplay.Hide;
   fFrmPictureDisplay.Show;
   fFrmPictureDisplay.Caption := TestSuiteName + ': ' + TestName;
@@ -101,6 +110,13 @@ BEGIN
       Application.ProcessMessages;
     END;
   END;
+  // Sign
+  for i := 0 to 62 do
+    begin
+      lRCol.color := fBitmap.Canvas.Pixels[fBitmap.Width-1- i mod 21 ,fBitmap.Height-1- i div 21];
+      fBitmap.Canvas.Pixels[fBitmap.Width-1- i mod 21 ,fBitmap.Height-1- i div 21] := lRCol.Mix(clWhite*(bits shr i and 1),0.5)
+    end;
+
   fFrmPictureDisplay.Invalidate;
   Application.ProcessMessages;
   // Todo: Save Picture (opional)
@@ -151,7 +167,6 @@ END;
 
 procedure TTestRenderImage.TestShowScene2;
 VAR
-  lSphere: TSphere;
   lRay:    TRenderRay;
 BEGIN
   FRenderEngine.Append(TSphere.Create(Trenderpoint.copy(0, -1001.0, 0),
@@ -174,7 +189,6 @@ END;
 
 procedure TTestRenderImage.TestShowScene2b;
 VAR
-  lSphere: TSphere;
   lRay:    TRenderRay;
 BEGIN
   FRenderEngine.Append(TSphere.Create(Trenderpoint.copy(0, -1001.0, 0),
@@ -382,6 +396,11 @@ BEGIN
   END;
 end;
 
+procedure TTestRenderImage.TestShowScene9;
+begin
+
+end;
+
 constructor TTestRenderImage.Create;
 BEGIN
   INHERITED Create;
@@ -444,7 +463,7 @@ VAR
   lRay:    TRenderRay;
   lSphere: TSphere;
   HitData: THitData;
-  y, x, i: Integer;
+   i: Integer;
   bDist:   Extended;
 BEGIN
   lSphere := TSphere.Create(Trenderpoint.copy(0, 0, 0), 1.0,
@@ -492,7 +511,7 @@ VAR
   lRay:    TRenderRay;
   lSphere: TSphere;
   HitData: THitData;
-  y, x, i: Integer;
+  i: Integer;
   bDist:   Extended;
 BEGIN
   lSphere := TSphere.Create(Trenderpoint.copy(0, 0, 0), 2.0,
@@ -576,7 +595,7 @@ BEGIN
     CheckEquals(True, lSphere.BoundaryTest(lRay, bDist), 'Sphere.Boundary3');
     CheckEquals(0.22721, bDist, 1e-5, 'Boundary.Distance3');
     CheckEquals(True, lSphere.HitTest(lRay, HitData), 'Sphere.HitTest3');
-    CheckEquals(0.22721, HitData.Distance, 1e-5, format('Hitdata.HP.Distance3', [i]));
+    CheckEquals(0.22721, HitData.Distance, 1e-5, format('Hitdata.HP.Distance3', []));
     CheckEquals(FTriple(0, -0.1016142, -1.79677161), HitData.HitPoint,
       1e-7, 'HitData.HitPoint3');
     CheckEquals(FTriple(0, 0.99999838, -1.79677161e-3), HitData.Normalvec,
@@ -620,7 +639,7 @@ VAR
   lRay:    TRenderRay;
   lPlane:  TPlane;
   HitData: THitData;
-  y, x, i: Integer;
+   i: Integer;
   bDist:   Extended;
 BEGIN
   lPlane := TPlane.Create(FTriple(0, 0, 0), FTriple(0, 0, -1),
@@ -699,7 +718,7 @@ BEGIN
     CheckEquals(True, lPlane.BoundaryTest(lRay, bDist), 'Plane.Boundary3');
     CheckEquals(0.223606, bDist, 1e-5, 'Boundary.Distance3');
     CheckEquals(True, lPlane.HitTest(lRay, HitData), 'Plane.HitTest3');
-    CheckEquals(0.223606, HitData.Distance, 1e-5, format('Hitdata.HP.Distance3', [i]));
+    CheckEquals(0.223606, HitData.Distance, 1e-5, format('Hitdata.HP.Distance3', []));
     CheckEquals(FTriple(0, -0.1, -1.8), HitData.HitPoint, 1e-7, 'HitData.HitPoint3');
     CheckEquals(FTriple(0, 1, 0), HitData.Normalvec, 1e-7, 'HitData.Normalvec3');
 
@@ -738,7 +757,7 @@ VAR
   lRay:    TRenderRay;
   lBox:    TBox;
   HitData: THitData;
-  y, x, i: Integer;
+   i: Integer;
   bDist:   Extended;
   lExpTriple: TFTriple;
 BEGIN
@@ -833,7 +852,7 @@ VAR
   lRay:    TRenderRay;
   lBox:    TBox;
   HitData: THitData;
-  y, x, i: Integer;
+   i: Integer;
   bDist:   Extended;
   lExpTriple: TFTriple;
 BEGIN
@@ -862,7 +881,7 @@ BEGIN
     CheckEquals(FTriple(sqrt(2), sqrt(2), 2), HitData.HitPoint, 1e-15, 'HitData.HitPoint2');
     CheckEquals(FTriple(0, 0, -1), HitData.Normalvec, 1e-15, 'HitData.Normalvec2');
 
-    CheckEquals(RenderColor(1, 1, 1) * 0.7174233, FRenderEngine.Trace(
+    CheckEquals(RenderColor(1, 1, 1) * 0.726423, FRenderEngine.Trace(
       lRay, 1.0, 1), 'Trace one Ray2');
 
     FOR i := 0 TO 10000 DO
@@ -918,7 +937,7 @@ BEGIN
     CheckEquals(True, lBox.BoundaryTest(lRay, bDist), 'Box.Boundary3');
     CheckEquals(0.223606, bDist, 1e-5, 'Boundary.Distance3');
     CheckEquals(True, lBox.HitTest(lRay, HitData), 'Box.HitTest3');
-    CheckEquals(0.223606, HitData.Distance, 1e-5, format('Hitdata.HP.Distance3', [i]));
+    CheckEquals(0.223606, HitData.Distance, 1e-5, format('Hitdata.HP.Distance3', []));
     CheckEquals(FTriple(0, -0.1, -1.8), HitData.HitPoint, 1e-7, 'HitData.HitPoint3');
     CheckEquals(FTriple(0, 1, 0), HitData.Normalvec, 1e-7, 'HitData.Normalvec3');
 
@@ -956,7 +975,7 @@ VAR
   lRay:    TRenderRay;
   lDisc:  TDisc;
   HitData: THitData;
-  y, x, i: Integer;
+   i: Integer;
   bDist:   Extended;
 BEGIN
   lDisc := TDisc.Create(FTriple(0, 0, 0), FTriple(0, 0, -1),1.0,
@@ -1034,7 +1053,7 @@ BEGIN
     CheckEquals(True, lDisc.BoundaryTest(lRay, bDist), 'Disc.Boundary3');
     CheckEquals(0.223606, bDist, 1e-5, 'Boundary.Distance3');
     CheckEquals(True, lDisc.HitTest(lRay, HitData), 'Disc.HitTest3');
-    CheckEquals(0.223606, HitData.Distance, 1e-5, format('Hitdata.HP.Distance3', [i]));
+    CheckEquals(0.223606, HitData.Distance, 1e-5, format('Hitdata.HP.Distance3', []));
     CheckEquals(FTriple(0, -0.1, -1.8), HitData.HitPoint, 1e-7, 'HitData.HitPoint3');
     CheckEquals(FTriple(0, 1, 0), HitData.Normalvec, 1e-7, 'HitData.Normalvec3');
 
@@ -1061,6 +1080,277 @@ BEGIN
         CheckEquals(False, lDisc.HitTest(lRay, HitData), 'Disc.HitTest3');
         CheckEquals(-1.0, bDist, 1e-14, 'Hitdata.HP.Distance');
         CheckEquals(-1.0, HitData.Distance, 1e-14, 'Hitdata.HP.Glen3');
+      END;
+    END;
+  FINALLY
+    FreeAndNil(lRay);
+  END;
+end;
+
+procedure TTestRenderObjects.TestRay5Cylinder;
+VAR
+  lRay:    TRenderRay;
+  lCylinder:    TCylinder;
+  HitData: THitData;
+   i: Integer;
+  bDist:   Extended;
+  lExpTriple: TFTriple;
+BEGIN
+  lCylinder := TCylinder.Create(FTriple(0, -1, 0), FTriple(0, 1, 0),1.0,
+    clWhite, FTriple(0.9, 0.1, 0.0));
+  FRenderEngine.Append(lCylinder);
+  FRenderEngine.Append(TRenderLightsource.Create(FTriple(-10, 10, -10)));
+
+  lRay := TRenderRay.Create(FTriple(0, 0, -2), FTriple(0, 0, 1));
+  TRY
+    // von Vorne
+    CheckEquals(True, lCylinder.BoundaryTest(lRay, bDist), 'Cylinder.Boundary');
+    CheckEquals(1.0, bDist, 1e-14, 'Boundary.Distance');
+    CheckEquals(True, lCylinder.HitTest(lRay, HitData), 'Cylinder.HitTest1');
+    CheckEquals(1.0, HitData.Distance, 1e-15, 'HitData.Distance');
+    CheckEquals(FTriple(0, 0, -1.0), HitData.HitPoint, 1e-15, 'HitData.HitPoint');
+    CheckEquals(FTriple(0, 0, -1), HitData.Normalvec, 1e-15, 'HitData.Normalvec');
+
+    CheckEquals(RenderColor(1, 1, 1) * 0.52488, FRenderEngine.Trace(
+      lRay, 1.0, 1), 'Trace one Ray');
+
+    lRay.Direction := FTriple(0.5, 0.5, 0.86);
+    CheckEquals(False, lCylinder.BoundaryTest(lRay, bDist), 'Cylinder.Boundary2');
+    CheckEquals(-1.0, bDist, 1e-14, 'Boundary.Distance2');
+    CheckEquals(False, lCylinder.HitTest(lRay, HitData), 'Cylinder.HitTest2');
+    CheckEquals(-1.0, HitData.Distance, 1e-15, 'HitData.Distance2');
+
+    CheckEquals(RenderColor(0, 0, 0), FRenderEngine.Trace(lRay, 1.0, 1), 'Trace one Ray2');
+
+    // von Unten
+    lray.StartPoint := FTriple(0, -2, 0);
+    lRay.Direction  := FTriple(0, 1, 0);
+    CheckEquals(True, lCylinder.BoundaryTest(lRay, bDist), 'Cylinder.Boundary3');
+    CheckEquals(1.0, bDist, 1e-14, 'Boundary.Distance3');
+    CheckEquals(True, lCylinder.HitTest(lRay, HitData), 'Cylinder.HitTest3');
+    CheckEquals(1.0, HitData.Distance, 1e-15, 'HitData.Distance3');
+    CheckEquals(FTriple(0, -1.0, 0), HitData.HitPoint, 1e-15, 'HitData.HitPoint3');
+    CheckEquals(FTriple(0, -1, 0), HitData.Normalvec, 1e-15, 'HitData.Normalvec3');
+
+    CheckEquals(RenderColor(1, 1, 1) * 0.09, FRenderEngine.Trace(lRay, 1.0, 1),
+      'Trace one Ray3');
+
+    lRay.Direction := FTriple(0.5, 0.7, 0.5);
+    CheckEquals(False, lCylinder.BoundaryTest(lRay, bDist), 'Cylinder.Boundary4');
+    CheckEquals(-1.0, bDist, 1e-14, 'Hitdata.HP.Distance4');
+    CheckEquals(False, lCylinder.HitTest(lRay, HitData), 'Cylinder.HitTest4');
+    CheckEquals(-1.0, HitData.Distance, 1e-15, 'HitData.Distance4');
+
+    CheckEquals(RenderColor(0, 0, 0), FRenderEngine.Trace(lRay, 1.0, 1), 'Trace one Ray4');
+
+    // von Links
+    lray.StartPoint := FTriple(-2, 0, 0);
+    lRay.Direction  := FTriple(1, 0, 0);
+    CheckEquals(True, lCylinder.BoundaryTest(lRay, bDist), 'Cylinder.Boundary5');
+    CheckEquals(1.0, bDist, 1e-14, 'Boundary.Distance5');
+    CheckEquals(True, lCylinder.HitTest(lRay, HitData), 'Cylinder.HitTest5');
+    CheckEquals(1.0, HitData.Distance, 1e-15, 'HitData.Distance5');
+    CheckEquals(FTriple(-1.0, 0, 0), HitData.HitPoint, 1e-15, 'HitData.HitPoint5');
+    CheckEquals(FTriple(-1, 0, 0), HitData.Normalvec, 1e-15, 'HitData.Normalvec5');
+
+    CheckEquals(RenderColor(1, 1, 1) * 0.52488, FRenderEngine.Trace(
+      lRay, 1.0, 1), 'Trace one Ray5');
+
+    lRay.Direction := FTriple(0.86, 0.5, 0.5);
+    CheckEquals(False, lCylinder.BoundaryTest(lRay, bDist), 'Cylinder.Boundary6');
+    CheckEquals(-1.0, bDist, 1e-14, 'Hitdata.HP.Distance6');
+    CheckEquals(False, lCylinder.HitTest(lRay, HitData), 'Cylinder.HitTest6');
+    CheckEquals(-1.0, HitData.Distance, 1e-15, 'HitData.Distance6');
+
+    CheckEquals(RenderColor(0, 0, 0), FRenderEngine.Trace(lRay, 1.0, 1), 'Trace one Ray6');
+
+    // von Oben
+    lray.StartPoint := FTriple(0,  2, 0);
+    lRay.Direction  := FTriple(0, -1, 0);
+    CheckEquals(True, lCylinder.BoundaryTest(lRay, bDist), 'Cylinder.Boundary7');
+    CheckEquals(1.0, bDist, 1e-14, 'Boundary.Distance7');
+    CheckEquals(True, lCylinder.HitTest(lRay, HitData), 'Cylinder.HitTest7');
+    CheckEquals(1.0, HitData.Distance, 1e-15, 'HitData.Distance7');
+    CheckEquals(FTriple(0, 1.0, 0), HitData.HitPoint, 1e-15, 'HitData.HitPoint7');
+    CheckEquals(FTriple(0, 1, 0), HitData.Normalvec, 1e-15, 'HitData.Normalvec7');
+
+    CheckEquals(RenderColor(1, 1, 1) * 0.524885, FRenderEngine.Trace(lRay, 1.0, 1),
+      'Trace one Ray7');
+
+    lRay.Direction := FTriple(0.5, 0.7, 0.5);
+    CheckEquals(False, lCylinder.BoundaryTest(lRay, bDist), 'Cylinder.Boundary8');
+    CheckEquals(-1.0, bDist, 1e-14, 'Hitdata.HP.Distance8');
+    CheckEquals(False, lCylinder.HitTest(lRay, HitData), 'Cylinder.HitTest8');
+    CheckEquals(-1.0, HitData.Distance, 1e-15, 'HitData.Distance8');
+
+    CheckEquals(RenderColor(0, 0, 0), FRenderEngine.Trace(lRay, 1.0, 1), 'Trace one Ray8');
+
+    lray.StartPoint := FTriple(0, 0, -2);
+    FOR i := 0 TO 10000 DO
+    BEGIN
+      // Todo: all Sides
+      lExpTriple     := FTriple(random - 0.5, Random - 0.5, 1.0);
+      lRay.Direction := lExpTriple;
+      CheckEquals(True, lCylinder.BoundaryTest(lRay, bDist), format('Cylinder.Boundary[%d]',[i]));
+      CheckEquals(True, lCylinder.HitTest(lRay, HitData),format( 'Cylinder.HitTest[%d],[i])',[i]));
+      CheckEquals(bDist, HitData.Distance, 1e-14,format( 'Hitdata.HP.Distance[%d]',[i]));
+      lExpTriple:=FTriple(0,1,0)* HitData.HitPoint.y;
+      CheckEquals(1.0, (HitData.HitPoint-lExpTriple).glen, 1e-14,format( 'Hitdata.HP.Glen[%d]',[i]));
+      CheckEquals(HitData.HitPoint-lExpTriple, HitData.Normalvec, 1e-14,format( 'Hitdata.HP.Normalvec[%d]',[i]));
+    END;
+  FINALLY
+    FreeAndNil(lRay);
+  END;
+end;
+
+procedure TTestRenderObjects.TestRay5InCylinder;
+VAR
+  lRay:    TRenderRay;
+  lCylinder:    TCylinder;
+  HitData: THitData;
+   i: Integer;
+  bDist, lExpX:   Extended;
+  lExpTriple: TFTriple;
+BEGIN
+  lCylinder := TCylinder.Create(Trenderpoint.copy(0, -1, 0), FTriple(0, 1, 0),3.0,
+    clWhite, FTriple(0.9, 0.1, 0.0));
+  FRenderEngine.Append(lCylinder);
+  FRenderEngine.Append(TRenderLightsource.Create(FTriple(-1, 1, -1)));
+
+  lRay := TRenderRay.Create(FTriple(0, 0, 0), FTriple(0, 0, 1));
+  TRY
+    CheckEquals(True, lCylinder.BoundaryTest(lRay, bDist), 'Cylinder.Boundary');
+    CheckEquals(0.0, bDist, 1e-14, 'Boundary.Distance');
+    CheckEquals(True, lCylinder.HitTest(lRay, HitData), 'Cylinder.HitTest1');
+    CheckEquals(3.0, HitData.Distance, 1e-15, 'HitData.Distance');
+    CheckEquals(FTriple(0, 0, 3), HitData.HitPoint, 1e-15, 'HitData.HitPoint');
+    CheckEquals(FTriple(0, 0, -1), HitData.Normalvec, 1e-15, 'HitData.Normalvec');
+
+    CheckEquals(RenderColor(1, 1, 1)*0.93819, FRenderEngine.Trace(
+      lRay, 1.0, 1), 'Trace one Ray');
+
+    lRay.Direction := FTriple(0.5, 0.5, sqrt(0.5));
+    CheckEquals(True, lCylinder.BoundaryTest(lRay, bDist), 'Cylinder.Boundary2');
+    CheckEquals(0.0, bDist, 1e-14, 'Hitdata.HP.Distance2');
+    CheckEquals(True, lCylinder.HitTest(lRay, HitData), 'Cylinder.HitTest2');
+    CheckEquals(2.0, HitData.Distance, 1e-15, 'HitData.Distance2');
+    CheckEquals(FTriple(1, 1, sqrt(2)), HitData.HitPoint, 1e-15, 'HitData.HitPoint2');
+    CheckEquals(FTriple(0, -1, 0), HitData.Normalvec, 1e-15, 'HitData.Normalvec2');
+
+    CheckEquals(RenderColor(1, 1, 1) * 0.178783, FRenderEngine.Trace(
+      lRay, 1.0, 1), 'Trace one Ray2');
+
+    FOR i := 0 TO 10000 DO
+    BEGIN
+      // Todo: all Sides
+      lExpX :=random - 0.5;
+      lExpTriple     := FTriple(lExpX, Random - 0.5, sqrt(9.0-sqr(lExpX)));
+      lRay.Direction := lExpTriple;
+      CheckEquals(True, lCylinder.BoundaryTest(lRay, bDist), 'Cylinder.Boundary');
+      CheckEquals(0.0, bDist, 1e-14, 'Hitdata.HP.Distance');
+      CheckEquals(True, lCylinder.HitTest(lRay, HitData), 'Cylinder.HitTest3');
+      CheckEquals(lExpTriple.glen, HitData.Distance, 1e-14, 'Hitdata.HP.Distance');
+      CheckEquals(lExpTriple, HitData.HitPoint, 1e-14, 'Hitdata.HP.Glen3');
+      CheckEquals(FTriple(-lRay.Direction.x, 0, -lRay.Direction.z).Normalize, HitData.Normalvec, 1e-14, 'Hitdata.HP.Normalvec');
+
+    END;
+  FINALLY
+    FreeAndNil(lRay);
+  END;
+end;
+
+procedure TTestRenderObjects.TestRayvsCylinder5;
+VAR
+  lCylinder: TCylinder;
+  lCylinder2: TCylinder;
+  lRay: TRenderRay;
+  HitData: THitData;
+  bDist: Extended;
+  i: Integer;
+BEGIN
+  lCylinder := TCylinder.Create(FTriple(0, -0.1, 0), FTriple(0, -0.2, 0),1000.0,
+    clWhite, FTriple(1, 0, 0));
+  lCylinder2 := TCylinder.Create(FTriple(0, -0.2, 0), FTriple(0, -0.1, 0),1000.0,
+    clWhite, FTriple(1, 0, 0));
+
+  FRenderEngine.Append(lCylinder);
+  lRay := TRenderRay.Create(FTriple(0, 0, -2), FTriple(0, 0, 1));
+  TRY
+    // First Test Some well known points
+    // 1
+    CheckEquals(False, lCylinder.BoundaryTest(lRay, bDist), 'Cylinder.Boundary');
+    CheckEquals(-1.0, bDist, 1e-14, 'Boundary.Distance');
+    CheckEquals(False, lCylinder.HitTest(lRay, HitData), 'Cylinder.HitTest');
+
+    CheckEquals(RenderColor(0, 0, 0), FRenderEngine.Trace(lRay, 1.0, 1), 'Trace one Ray1');
+
+    CheckEquals(False, lCylinder2.BoundaryTest(lRay, bDist), 'Cylinder.Boundary1a');
+    CheckEquals(-1.0, bDist, 1e-14, 'Boundary.Distance1a');
+    CheckEquals(False, lCylinder2.HitTest(lRay, HitData), 'Cylinder.HitTest1a');
+
+    // 2
+    lRay.Direction := FTriple(0, 0.5, 1);
+    CheckEquals(False, lCylinder.BoundaryTest(lRay, bDist), 'Cylinder.Boundary2');
+    CheckEquals(-1.0, bDist, 1e-14, 'Boundary.Distance2');
+    CheckEquals(False, lCylinder.HitTest(lRay, HitData), 'Cylinder.HitTest2');
+    CheckEquals(False, lCylinder2.BoundaryTest(lRay, bDist), 'Cylinder.Boundary2a');
+    CheckEquals(-1.0, bDist, 1e-14, 'Boundary.Distance2a');
+    CheckEquals(False, lCylinder2.HitTest(lRay, HitData), 'Cylinder.HitTest2a');
+
+    CheckEquals(RenderColor(0, 0, 0), FRenderEngine.Trace(lRay, 1.0, 1), 'Trace one Ray2');
+
+    // 3
+    lRay.Direction := FTriple(0, -0.5, 1);
+    CheckEquals(True, lCylinder.BoundaryTest(lRay, bDist), 'Cylinder.Boundary3');
+    CheckEquals(0.223606, bDist, 1e-5, 'Boundary.Distance3');
+    CheckEquals(True, lCylinder.HitTest(lRay, HitData), 'Cylinder.HitTest3');
+    CheckEquals(0.223606, HitData.Distance, 1e-5, format('Hitdata.HP.Distance3', []));
+    CheckEquals(FTriple(0, -0.1, -1.8), HitData.HitPoint, 1e-7, 'HitData.HitPoint3');
+    CheckEquals(FTriple(0, 1, 0), HitData.Normalvec, 1e-7, 'HitData.Normalvec3');
+
+    CheckEquals(True, lCylinder2.BoundaryTest(lRay, bDist), 'Cylinder.Boundary3a');
+    CheckEquals(0.223606, bDist, 1e-5, 'Boundary.Distance3a');
+    CheckEquals(True, lCylinder2.HitTest(lRay, HitData), 'Cylinder.HitTest3a');
+    CheckEquals(0.223606, HitData.Distance, 1e-5, format('Hitdata.HP.Distance3a', []));
+    CheckEquals(FTriple(0, -0.1, -1.8), HitData.HitPoint, 1e-7, 'HitData.HitPoint3a');
+    CheckEquals(FTriple(0, 1, 0), HitData.Normalvec, 1e-7, 'HitData.Normalvec3a');
+
+    CheckEquals(RenderColor(1, 1, 1), FRenderEngine.Trace(lRay, 1.0, 1), 'Trace one Ray2');
+
+    // Random
+    FOR i := 0 TO 10000 DO
+    BEGIN
+      lRay.Direction := FTriple(random - 0.5, Random - 1.0, 2.0);
+      IF (lray.Direction.y < -1e-4) or ((lray.Direction.y < -1e-5) and
+        lCylinder.BoundaryTest(lRay, bDist)) THEN
+      BEGIN
+        CheckEquals(True, lCylinder.BoundaryTest(lRay, bDist), format(
+          'Cylinder.Boundary[%d]', [i]));
+        CheckEquals(True, lCylinder.HitTest(lRay, HitData), format('Cylinder.HitTest[%d]', [i]));
+        CheckEquals(bDist, HitData.Distance, 1e-14, format('Hitdata.HP.Distance[%d]', [i]));
+        CheckEquals(-0.1, HitData.HitPoint.y, 1e-14, format('Hitdata.HP.y[%d]', [i]));
+        CheckEquals(FTriple(0, 1, 0), HitData.Normalvec, 1e-14, format(
+          'Hitdata.HP.Normalvec[%d]', [i]));
+        CheckEquals(True, lCylinder2.BoundaryTest(lRay, bDist), format(
+          'Cylinder.Boundary[%d]a', [i]));
+        CheckEquals(True, lCylinder2.HitTest(lRay, HitData), format('Cylinder.HitTest[%d]a', [i]));
+        CheckEquals(bDist, HitData.Distance, 1e-14, format('Hitdata.HP.Distance[%d]a', [i]));
+        CheckEquals(-0.1, HitData.HitPoint.y, 1e-14, format('Hitdata.HP.y[%d]a', [i]));
+        CheckEquals(FTriple(0, 1, 0), HitData.Normalvec, 1e-14, format(
+        'Hitdata.HP.Normalvec[%d]a', [i]));
+      END
+      ELSE
+      BEGIN
+        CheckEquals(false, lCylinder.BoundaryTest(lRay, bDist), format(
+          'Cylinder.Boundary[%d]', [i]));
+        CheckEquals(false, lCylinder.HitTest(lRay, HitData), format('Cylinder.HitTest[%d]', [i]));
+        CheckEquals(-1.0, bDist, 1e-14, 'Boundary.DistanceX');
+        CheckEquals(-1.0, HitData.Distance, 1e-14, 'Hitdata.DistanceX');
+        CheckEquals(false, lCylinder2.BoundaryTest(lRay, bDist), format(
+          'Cylinder.Boundary[%d]a', [i]));
+        CheckEquals(false, lCylinder2.HitTest(lRay, HitData), format('Cylinder.HitTest[%d]a', [i]));
+        CheckEquals(-1.0, bDist, 1e-14, 'Boundary.DistanceXa');
+        CheckEquals(-1.0, HitData.Distance, 1e-14, 'Hitdata.DistanceXa');
       END;
     END;
   FINALLY

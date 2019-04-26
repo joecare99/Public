@@ -24,7 +24,7 @@ private
 protected
     function GetRayDirection(pnt: TPoint): TRenderVector;virtual;
 public
-      Function BoundaryTest(aRay: TRenderRay; out Distance: extended): boolean; override;
+      Function BoundaryTest({%H-}aRay: TRenderRay; out Distance: extended): boolean; override;
     // Abstract Camera definition
       property Position:TRenderPoint read FPosition write SetPosition;
       property LookAt:TRenderPoint read FLookAt write SetLookAt;

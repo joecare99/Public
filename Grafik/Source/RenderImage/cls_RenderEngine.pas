@@ -144,7 +144,7 @@ begin
         lReflect :=RenderColor(0,0,0)
       else
         begin
-      lHpRay.Direction := Ray.Direction + (ray.Direction * hHitData.Normalvec)*(-2.0)*hHitData.Normalvec;
+      lHpRay.Direction := Ray.ReflectDir(hHitData.Normalvec);
       lHpRay.StartPoint := hHitData.HitPoint+lHpRay.Direction*1e-4;
       lReflect := trace(lHpRay,hHitData.ReflectionVal,Depth+1) *hHitData.ReflectionVal;
         end;
@@ -170,7 +170,7 @@ procedure TRenderEngine.Render;
 var lRay:TRenderRay;
   y, x: Integer;
 begin
-  // Create Result-Bitmap
+  // Create Result-Bitmap   s
   FResult:=TBitmap.Create;
   FResult.Width:= trunc(FCamera.Resolution.x);
   FResult.Height := trunc(FCamera.Resolution.y);

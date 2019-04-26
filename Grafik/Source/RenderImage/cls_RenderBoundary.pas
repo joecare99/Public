@@ -7,7 +7,13 @@ interface
 uses
   Classes, SysUtils, cls_RenderBase;
 
-Type TRenderBoundary= Class(TRenderBaseObject);
+Type
+
+{ TRenderBoundary }
+
+ TRenderBoundary= Class(TRenderBaseObject)
+  function HitTest(aRay: TRenderRay; out {%H-}HitData: THitData): boolean; override;
+  end;
 
   { TBoundarySphere }
 
@@ -33,6 +39,15 @@ Type TRenderBoundary= Class(TRenderBaseObject);
 implementation
 
 uses math;
+
+{ TRenderBoundary }
+
+function TRenderBoundary.{%H-}HitTest(aRay: TRenderRay; out HitData: THitData
+  ): boolean;
+begin
+  raise(EAbstractError.Create('HitTest should not be called in a Boundary-Object'));
+end;
+
 { TBoundaryBox }
 
 constructor TBoundaryBox.Create(aPosition: TRenderPoint; aSize: TRenderPoint);
@@ -67,7 +82,7 @@ begin
   if abs(aray.Direction.z) > 1e-12 then
     begin
       Distance := (ldist.Z-sign(ldist.Z)*0.5*FBoxSize.z)/aRay.Direction.z;
-      lTstPoint:=aray.StartPoint-FPosition+aRay.Direction*Distance;
+      lTstPoint:=aray.RayPoint(Distance)-FPosition;
       if (abs(lTstPoint.x) <= FBoxSize.x*0.5) and (abs(lTstPoint.y) <= FBoxSize.y*0.5) then
         exit(true);
     end;
@@ -75,7 +90,7 @@ begin
   if abs(aray.Direction.y) > 1e-12 then
     begin
       Distance := (ldist.y-sign(ldist.y)*0.5*FBoxSize.y)/aRay.Direction.y;
-      lTstPoint:=aray.StartPoint-FPosition+aRay.Direction*Distance;
+      lTstPoint:=aray.RayPoint(Distance) -FPosition;
       if (abs(lTstPoint.x) <= FBoxSize.x*0.5) and (abs(lTstPoint.z) <= FBoxSize.z*0.5) then
         exit(true);
     end;
@@ -83,7 +98,7 @@ begin
   if abs(aray.Direction.x) > 1e-12 then
     begin
       Distance := (ldist.x-sign(ldist.x)*0.5*FBoxSize.x)/aRay.Direction.x;
-      lTstPoint:=aray.StartPoint-FPosition+aRay.Direction*Distance;
+      lTstPoint:=aray.RayPoint(Distance)-FPosition;
       if (abs(lTstPoint.y) <= FBoxSize.y*0.5) and (abs(lTstPoint.z) <= FBoxSize.z*0.5) then
         exit(true);
     end;

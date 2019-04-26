@@ -13,11 +13,11 @@ type
 
  TRenderLightsource= Class(TRenderBaseObject)
       Constructor Create(aPos:TRenderPoint);
-      Function ProjectedColor(Direction:TRenderVector):TRenderColor;virtual;
+      Function ProjectedColor({%H-}Direction:TRenderVector):TRenderColor;virtual;
       Function FalloffIntensity(Direction:TRenderVector):extended;virtual;
       Function MaxIntensity(Direction:TRenderVector):extended;virtual;
-      function BoundaryTest(aRay: TRenderRay; out Distance: extended): boolean; override;
-      function HitTest(aRay: TRenderRay; out HitData: THitData): boolean; override;
+      function BoundaryTest({%H-}aRay: TRenderRay; out Distance: extended): boolean; override;
+      function HitTest({%H-}aRay: TRenderRay; out HitData: THitData): boolean; override;
     end;
 
 implementation

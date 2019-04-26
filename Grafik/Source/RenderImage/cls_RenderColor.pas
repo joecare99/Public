@@ -195,9 +195,9 @@ const cEps=1e-4; // Color-differences lower than 0.1% are considered equal;
 
 begin
   result :=
-    (abs(Red-aCol.red) < 1e-4) and
-    (abs(Green-aCol.Green) < 1e-4) and
-    (abs(Blue-aCol.Blue) < 1e-4);
+    (abs(Red-aCol.red) < cEps) and
+    (abs(Green-aCol.Green) < cEps) and
+    (abs(Blue-aCol.Blue) < cEps);
 end;
 
 end.

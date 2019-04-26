@@ -147,6 +147,8 @@ type
     constructor Create(aStart:TRenderPoint;aDir:TRenderVector);
     Property StartPoint:TRenderPoint read FStartPoint write SetStartPoint;
     Property Direction:TRenderVector read FDirection write SetDirection;
+    function RayPoint(Distance:Extended):TRenderPoint;
+    function ReflectDir(aNormal:TRenderVector):TRenderVector;
   end;
 
   THitData=record
@@ -295,6 +297,16 @@ begin
   FDirection:=aDir;
   if FDirection <> ZeroTrp then
     FDirection := FDirection / FDirection.GLen;
+end;
+
+function TRenderRay.RayPoint(Distance: Extended): TRenderPoint;inline;
+begin
+  result := FStartPoint + FDirection* Distance;
+end;
+
+function TRenderRay.ReflectDir(aNormal: TRenderVector): TRenderVector;inline;
+begin
+  result := FDirection + (FDirection * aNormal)*(-2.0)*aNormal;
 end;
 
 { TAngle operators}
