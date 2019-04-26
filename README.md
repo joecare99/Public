@@ -23,7 +23,7 @@ Container for Games<br/>
 (Dos-)Graphic Programs<br/>
 ![RenderEngine](https://joecare99.github.io/Public/images/TestShowScene5_sml.png)
 
-## [Idee](https://github.com/joecare99/Public/tree/master/Idee)
+## [Idee](https://github.com/joecare99/Public/tree/master/idee)
 Container for ideas<br/>
 ![BoxFlight](https://joecare99.github.io/Public/images/BoxFlight.png)
 
