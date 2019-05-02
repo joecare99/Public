@@ -12,7 +12,8 @@ Type
 { TRenderBoundary }
 
  TRenderBoundary= Class(TRenderBaseObject)
-  function HitTest(aRay: TRenderRay; out {%H-}HitData: THitData): boolean; override;
+    function HitTest(aRay: TRenderRay; out {%H-}HitData: THitData): boolean; override;
+    Constructor Create(aPosition:TRenderPoint);
   end;
 
   { TBoundarySphere }
@@ -35,6 +36,30 @@ Type
       Function BoundaryTest(aRay: TRenderRay; out Distance: extended): boolean; override;
   end;
 
+  { TBoundaryCylinder }
+
+  TBoundaryCylinder = class(TRenderBoundary)
+    Protected
+      FBoxSize:TRenderPoint;
+      FNormal:TRenderVector;
+      FHHeight,
+      FRadius:extended;
+    public
+      Constructor Create(aPosition:TRenderPoint;aNormal:TRenderPoint;Height,Radius:extended);
+      Function BoundaryTest(aRay: TRenderRay; out Distance: extended): boolean; override;
+  end;
+
+  { TBoundaryHollowCylinder }
+
+  TBoundaryHollowCylinder = class(TBoundaryCylinder)
+    Protected
+      FRadiusInner:extended;
+    public
+      Constructor Create(aPosition:TRenderPoint;aNormal:TRenderPoint;Height,Radius1,Radius2:extended);
+      Function BoundaryTest(aRay: TRenderRay; out Distance: extended): boolean; override;
+  end;
+
+
 
 implementation
 
@@ -48,11 +73,16 @@ begin
   raise(EAbstractError.Create('HitTest should not be called in a Boundary-Object'));
 end;
 
+constructor TRenderBoundary.Create(aPosition: TRenderPoint);
+begin
+  FPosition := aPosition;
+end;
+
 { TBoundaryBox }
 
 constructor TBoundaryBox.Create(aPosition: TRenderPoint; aSize: TRenderPoint);
 begin
-  FPosition := aPosition;
+  inherited Create(aPosition);
   FBoxSize := aSize;
 end;
 
@@ -136,6 +166,117 @@ begin
   if result then
     Distance:=llDist-Sqrt(sqr(FBoundingRadius)-lqDistq)
 end;
+
+{ TBoundaryCylinder }
+
+constructor TBoundaryCylinder.Create(aPosition: TRenderPoint;
+  aNormal: TRenderPoint; Height, Radius: extended);
+begin
+  inherited Create(aPosition);
+  FNormal := aNormal / aNormal.GLen;
+  FHHeight:=Height;
+  FRadius:=Radius;
+
+end;
+
+function TBoundaryCylinder.BoundaryTest(aRay: TRenderRay; out Distance: extended
+  ): boolean;
+var
+    lFootVec, lOrthVec, lOrtoDirVec, lStartVec: TRenderVector;
+    lDist, lFootvInnerVProd: extended;
+    lSPDist: ValReal;
+    lSgn: TValueSign;
+begin
+    lSgn := sign(FNormal * aray.Direction);
+    lStartVec := aray.StartPoint-FPosition;
+    lFootVec := FNormal * -lSgn*FHHeight - lStartVec;
+    lSPDist := -lStartVec * FNormal ;
+    if (abs(lSPDist) < FHHeight) and ((lStartVec + lSPDist *
+        FNormal).glen < Fradius) then
+      begin
+        Distance := 0.0;
+        exit(True);
+      end;
+    // Definitive outside
+    lOrthVec := aray.Direction.XMul(FNormal);
+    if (lOrthVec.MLen <> 0) then
+      begin
+        lDist := (lOrthVec * lFootVec) / lOrthVec.GLen;
+        Distance := -1.0;
+        if abs(lDist) > FRadius then
+            exit(False);
+      end;
+    lFootvInnerVProd := lFootVec * FNormal;
+    if (sign(lFootvInnerVProd) = lsgn) and (lsgn <> 0) then
+      begin
+        Distance := lFootvInnerVProd / (FNormal * aRay.Direction);
+        if (aRay.Direction* Distance - lFootVec).Glen <= FRadius then
+            exit(True);
+      end;
+    Distance := -1;
+    if (lOrthVec.MLen = 0) then
+        exit(False);
+    lOrtoDirVec := aray.Direction - (aray.Direction * FNormal) * FNormal;
+    Distance := lOrtoDirVec * lFootVec / sqr(lOrtoDirVec) - sqrt(
+        sqr(FRadius) - sqr(lDist)) / lOrtoDirVec.glen;
+    if (Distance >= 0) and (abs(
+        ( aray.Direction*Distance + lStartVec) * FNormal) <= FHHeight) then
+        exit(True);
+    Distance := -1;
+    Result := False;
+end;
+
+{ TBoundaryHollowCylinder }
+
+constructor TBoundaryHollowCylinder.Create(aPosition: TRenderPoint;
+  aNormal: TRenderPoint; Height, Radius1, Radius2: extended);
+begin
+  inherited Create(aPosition,aNormal,Height,Radius1);
+  FRadiusInner:=Radius2;
+end;
+
+function TBoundaryHollowCylinder.BoundaryTest(aRay: TRenderRay; out
+  Distance: extended): boolean;
+var
+  lSgn: TValueSign;
+  lStartVec,lFootVec,lOrtoDirVec: TRenderVector;
+  lSPDist, lFootvInnerVProd: Extended;
+  lDist: ValReal;
+begin
+  Result := inherited BoundaryTest(aRay,Distance);
+  if Distance = 0.0 then
+    begin;
+      // Inside Outer Cylinder
+      lSgn := sign(FNormal * aray.Direction);
+      lStartVec := aray.StartPoint-FPosition;
+      lFootVec := FNormal * (-lSgn)*FHHeight - lStartVec;
+      lSPDist := -lStartVec * FNormal * FHHeight;
+      if (abs(lSPDist) < FHHeight) and ((lFootVec - lSPDist *
+          FNormal).glen > FRadiusInner) then
+        begin
+          Distance := 0.0;
+          exit(True);
+        end;
+      lFootvInnerVProd := lFootVec * FNormal;
+      if (sign(lFootvInnerVProd) = lsgn) and (lsgn <> 0) then
+        begin
+          // Test: Hit the Top/Floor
+          Distance := lFootvInnerVProd / (FNormal * aRay.Direction);
+          if (aRay.Direction*Distance - lFootVec).Glen <= FRadius then
+              exit(True);
+        end;
+
+      lOrtoDirVec := aray.Direction - (aray.Direction * FNormal) * FNormal;
+      lDist := sqrt(sqr(lStartVec + lSPDist * FNormal)-sqr(lOrtoDirVec*lStartVec/lOrtoDirVec.glen )) ;
+      Distance := lOrtoDirVec * lFootVec / sqr(lOrtoDirVec.glen) - sqrt(
+          sqr(FRadius) - sqr(lDist)) / lOrtoDirVec.glen;
+      if (Distance >= 0) and (abs(
+          ( aray.Direction*Distance + lStartVec) * FNormal) <= FHHeight) then
+          exit(True);
+
+    end;
+end;
+
 
 end.
 

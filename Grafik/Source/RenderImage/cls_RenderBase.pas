@@ -49,12 +49,14 @@ type
   operator = (aPar1,aPar2:TFTuple) aLeft:boolean;
   operator + (aPar1,aPar2:TFTuple) aLeft:TFTuple;
   operator - (aPar1,aPar2:TFTuple) aLeft:TFTuple;
+  operator - (aPar1:TFTuple) aLeft:TFTuple;
   operator * (aPar1,aPar2:TFTuple) aLeft:extended;overload;
   operator * (aPar1:TFTuple; aFak:extended) aLeft:TFTuple;overload;
   operator * (aFak:extended; aPar2:TFTuple) aLeft:TFTuple;overload;
   operator / (aPar1:TFTuple; aFak:extended) aLeft:TFTuple;
 
   function abs(Par1:TfTuple):extended;overload;
+  function sqr(aPar:TFTuple):extended;overload;
 
 type
   { TFTriple }
@@ -97,12 +99,14 @@ type
   operator = (aPar1,aPar2:TFTriple) aLeft:boolean;
   operator + (aPar1,aPar2:TFTriple) aLeft:TFTriple;
   operator - (aPar1,aPar2:TFTriple) aLeft:TFTriple;
+  operator - (aPar1:TFTriple) aLeft:TFTriple;
   operator * (aPar1,aPar2:TFTriple) aLeft:extended;overload;
   operator * (aPar1:TFTriple; aFak:extended) aLeft:TFTriple;overload;
   operator * (aFak:extended; aPar2:TFTriple) aLeft:TFTriple;overload;
   operator / (aPar1:TFTriple; aFak:extended) aLeft:TFTriple;
 
   function abs(Par1:TfTriple):extended;overload;
+  function sqr(aPar:TFTriple):extended;overload;
 
 type
   { TAngle }
@@ -137,18 +141,20 @@ type
 
   { TRenderRay }
 
-  TRenderRay=Class
+  TRenderRay=record
   private
     FDirection: TRenderVector;
     FStartPoint: TRenderPoint;
     procedure SetDirection(AValue: TRenderVector);
     procedure SetStartPoint(AValue: TRenderPoint);
   public
-    constructor Create(aStart:TRenderPoint;aDir:TRenderVector);
+    class Function Init(aStart:TRenderPoint;aDir:TRenderVector):TRenderRay;static;
     Property StartPoint:TRenderPoint read FStartPoint write SetStartPoint;
     Property Direction:TRenderVector read FDirection write SetDirection;
     function RayPoint(Distance:Extended):TRenderPoint;
     function ReflectDir(aNormal:TRenderVector):TRenderVector;
+    function SqrDistance(aPoint: TRenderPoint): Extended;
+    function Distance(aPoint: TRenderPoint): Extended;
   end;
 
   THitData=record
@@ -219,6 +225,11 @@ var vfs:TFormatSettings;
     aleft := aPar1.Subt(aPar2);
   end;
 
+  operator-(aPar1: TFTuple)aLeft: TFTuple;
+  begin
+    aleft := aPar1.mul(-1);
+  end;
+
   operator*(aPar1, aPar2: TFTuple)aLeft: extended;inline;
   begin
     aleft := aPar1.mul(aPar2);
@@ -239,9 +250,14 @@ var vfs:TFormatSettings;
         aleft := aPar1.Divide(aFak);
   end;
 
-  function abs(Par1: TfTuple): extended;
+  function abs(Par1: TfTuple): extended;inline;
   begin
     result:= par1.GLen;
+  end;
+
+    function sqr(aPar: TFTuple): extended;inline;
+  begin
+    Result := sqr(apar.x)+sqr(apar.y);
   end;
 
 { TFTuple }
@@ -291,12 +307,15 @@ begin
   FStartPoint:=AValue;
 end;
 
-constructor TRenderRay.Create(aStart: TRenderPoint; aDir: TRenderVector);
+class Function TRenderRay.init(aStart: TRenderPoint; aDir: TRenderVector):TRenderRay;
 begin
+  with result do
+    begin
   FStartPoint:=aStart;
   FDirection:=aDir;
   if FDirection <> ZeroTrp then
     FDirection := FDirection / FDirection.GLen;
+    end;
 end;
 
 function TRenderRay.RayPoint(Distance: Extended): TRenderPoint;inline;
@@ -307,6 +326,20 @@ end;
 function TRenderRay.ReflectDir(aNormal: TRenderVector): TRenderVector;inline;
 begin
   result := FDirection + (FDirection * aNormal)*(-2.0)*aNormal;
+end;
+
+function TRenderRay.SqrDistance(aPoint: TRenderPoint): Extended;inline;
+var
+  lPntVec: TRenderPoint;
+begin
+  lPntVec := aPoint-FStartPoint;
+  result := sqr(lPntVec)-sqr(lPntVec*FDirection);
+end;
+
+function TRenderRay.Distance(aPoint: TRenderPoint): Extended;
+
+begin
+  result := sqrt(SqrDistance(aPoint));
 end;
 
 { TAngle operators}
@@ -374,7 +407,7 @@ end;
 
 { TFTriple operators}
 
-operator:=(aRight: variant)aLeft: TFTriple;
+operator:=(aRight: Variant)aLeft: TFTriple;inline;
 begin
   assert(VarIsArray(aRight),'Array must have 3 entries');
   assert(VarArrayHighBound(aRight,0)=2,'Array must have 3 entries');
@@ -383,37 +416,42 @@ begin
   aLeft[2]:=aRight[2];
 end;
 
-operator=(aPar1, aPar2: TFTriple)aLeft: boolean;
+operator=(aPar1, aPar2: TFTriple)aLeft: boolean;inline;
 begin
   aleft := apar1.Equals(apar2);
 end;
 
-operator+(aPar1, aPar2: TFTriple)aLeft: TFTriple;
+operator+(aPar1, aPar2: TFTriple)aLeft: TFTriple;inline;
 begin
   aleft := apar1.Add(apar2);
 end;
 
-operator-(aPar1, aPar2: TFTriple)aLeft: TFTriple;
+operator-(aPar1, aPar2: TFTriple)aLeft: TFTriple;inline;
 begin
   aleft := apar1.Subt(apar2);
 end;
 
-operator*(aPar1, aPar2: TFTriple)aLeft: extended;
+operator-(aPar1: TFTriple)aLeft: TFTriple;inline;
+begin
+  aleft := apar1.Mul(-1);
+end;
+
+operator*(aPar1, aPar2: TFTriple)aLeft: extended;inline;
 begin
   aleft := apar1.Mul(apar2);
 end;
 
-operator*(aPar1: TFTriple; aFak: extended)aLeft: TFTriple;
+operator*(aPar1: TFTriple; aFak: extended)aLeft: TFTriple;inline;
 begin
   aleft := apar1.Mul(aFak);
 end;
 
-operator*(aFak: extended; aPar2: TFTriple)aLeft: TFTriple;
+operator*(aFak: extended; aPar2: TFTriple)aLeft: TFTriple;inline;
 begin
   aleft := aPar2.Mul(aFak);
 end;
 
-operator/(aPar1: TFTriple; aFak: extended)aLeft: TFTriple;
+operator/(aPar1: TFTriple; aFak: extended)aLeft: TFTriple;inline;
 begin
   aleft := aPar1.Divide(aFak);
 end;
@@ -421,6 +459,11 @@ end;
 function abs(Par1: TfTriple): extended;inline;
 begin
   result:= par1.GLen;
+end;
+
+function sqr(aPar: TFTriple): extended;inline;
+begin
+  result := sqr(aPar.x)+sqr(aPar.y)+sqr(aPar.z);
 end;
 
 { TFTriple }

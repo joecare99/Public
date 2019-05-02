@@ -112,7 +112,7 @@ begin
           lColorAtHP :=RenderColor(0,0,0);
       lAmbient := lColorAtHP * 0.1*hHitData.AmbientVal;
   //  - - Calculate the Light-Rays from the Hitpoint to the Light-Sources
-      lHpRay := TRenderRay.Create(hHitData.HitPoint,hHitData.Normalvec);
+      lHpRay := TRenderRay.Init(hHitData.HitPoint,hHitData.Normalvec);
       try
       lDirect:=RenderColor(0,0,0);
       lMaxLight :=0.0;
@@ -157,12 +157,13 @@ begin
   //  - All three Rays add up to the Color of the Original Ray.
         result := lAmbient + lDirect+ lReflect;
       finally
-        freeandnil(lHpRay);
+//        freeandnil(lHpRay);
       end;
       end
    else      // Todo: SkyObject
-     result :=clBlack;
-//     RenderColor(Ray.Direction.x*0.5+0.5,Ray.Direction.y*0.5+0.5,Ray.Direction.z*0.5+0.5);
+     result :=//{
+       clBlack;
+//   }  RenderColor(Ray.Direction.x*0.5+0.5,Ray.Direction.y*0.5+0.5,Ray.Direction.z*0.5+0.5);
 end;
 
 procedure TRenderEngine.Render;
@@ -180,7 +181,7 @@ begin
   // Split into Tasks
   // Per Task do:
   //  - Select a Ray
-  lRay := TRenderRay.Create(FCamera.Position,FCamera.DefaultDirection);
+  lRay := TRenderRay.Init(FCamera.Position,FCamera.DefaultDirection);
   for y := 0 to FResult.Height-1 do
     for x := 0 to FResult.Width-1 do
       begin
