@@ -64,7 +64,8 @@ type
 
   TForm6 = class(TForm)
     BitBtn2: TBitBtn;
-    CheckBox2: TCheckBox;
+    chbPause: TCheckBox;
+    chbPause1: TCheckBox;
     Label1: TLabel;
     Timer1: TTimer;
     PaintBox1: TPaintBox;
@@ -72,7 +73,7 @@ type
     TrackBar1: TTrackBar;
     BitBtn1: TBitBtn;
     ScrollBar1: TScrollBar;
-    CheckBox1: TCheckBox;
+    chbShowObjects: TCheckBox;
     procedure BitBtn2Click(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormResize(Sender: TObject);
@@ -98,7 +99,12 @@ type
     fTime: integer;
     procedure AppendIndex(pp: Tpoint; i: integer);
     function GetIndex(pp: tpoint): TidxArray;
+    function ObjHit(const fCPoint, RenDir: TFloatPoint; IgnObj: integer;
+      var obj: integer; var rDist, rr: extended): boolean;
     function PathFunction(Omega: extended): TFloatPoint;
+    function Trace(const MaxHeight: integer; const lSPnt: TFloatPoint;
+      ll: extended; obj: integer; const RenDir: TFloatPoint; Hit: boolean;
+  var rDistq: single; var r: single): TRenderEntry;
     { Private-Deklarationen }
   public
     { Public-Deklarationen }
@@ -117,6 +123,164 @@ implementation
 
 uses unt_Cdate;
 
+Function TForm6.ObjHit(const fCPoint, RenDir:TFloatPoint;IgnObj:integer;var obj:integer;var rDist,rr:extended):boolean ;inline;
+var
+  pp: tpoint;
+  lIdxObj: TidxArray;
+  i,dd: integer;
+  rDistq, r: single;
+begin
+  result := false;
+  for dd := 0 to 50 do
+   begin
+     pp.x := trunc(600 - fCPoint.x - RenDir.x * dd * 9);
+     pp.x := (pp.x + 800) mod 400;
+     pp.y := trunc(600 - fCPoint.y - RenDir.y * dd * 9);
+     pp.y := (pp.y + 800) mod 400;
+     lIdxObj := GetIndex(pp);
+     for I := 0 to High(lIdxObj) do
+       begin
+         fObjects[lIdxObj[I]].Visible:=true;
+         if (lIdxObj[I] <> IgnObj) and  fObjects[lIdxObj[I]].Hittest(fCPoint, RenDir, rDistq, r) and (rDistq > 0.01) and
+           (rDistq < rDist) then
+         begin
+             result := true;
+           obj := lIdxObj[I];
+           rDist := rDistq;
+           rr := r;
+         end;
+       end;
+     if trunc(rDist) < (dd - 1) * 8 then
+       break;
+   end;
+end;
+
+
+function TForm6.Trace(const MaxHeight: integer; const lSPnt: TFloatPoint;
+  ll: extended; obj: integer; const RenDir: TFloatPoint;Hit:boolean; var rDistq: single;
+  var r: single): TRenderEntry;
+
+var
+  lsobj: integer;
+  RenDir3: TFloatPoint;
+  lCPoint3: TFloatPoint;
+  rDist2: extended;
+  obj2: integer;
+  RenDir2: TFloatPoint;
+  lCPoint2: TFloatPoint;
+  ll2: ValReal;
+  rr: extended;
+  rDist: extended;
+  xxa: single;
+
+begin
+  if (obj >= 0) and fObjects[obj].Hittest(fCPoint, RenDir, rDistq, r) and
+    (rDistq > 2) and (rDistq < 300.0) then
+  begin
+    rDist := rDistq;
+    rr := r;
+  end
+  else
+  begin
+    obj := -1;
+    rDist := 300.0;
+  end;
+  ObjHit(fCPoint, RenDir,-1,obj, rDist, rr);
+  if obj >= 0 then
+  begin
+    fObjects[obj].hit := True;
+
+    RenDir2 := fObjects[obj].Reflect(RenDir,rr,xxa);
+
+    {--Ambient--}
+
+    ll := 96.0 + 96 * xxa;
+    ll2 := sqr(sqr(4.0 - 4.0 * RenDir2.y)) - 4096.5 + 256.0;
+    ll := Math.max(ll, ll2);
+    result.oo1 := obj;
+    result.light := trunc(ll);
+    result.Height := trunc(MaxHeight / (rDist + 1));
+    if (ll > 192.0) or (obj = FactiveObj1)  then
+      result.Color := clwhite
+    else
+      if (obj = FactiveObj2) then
+      result.Color := clYellow
+      else
+      result.Color := fObjects[obj].color;
+    {---------------}
+    lCPoint2.x:=fCPoint.x+RenDir.x*rdist;
+    lCPoint2.y:=fCPoint.y+RenDir.y*rdist;
+    if Hit then fCPoint2 := lCPoint2;
+    if ll<=192.0 then
+      begin
+    rdist2:=300-rdist;
+    obj2:= -1;
+    ObjHit(lCPoint2, RenDir2,obj,obj2, rDist2, rr);
+    if obj2 >= 0 then
+    begin
+      fObjects[obj2].hit := True;
+
+      { Reftection-Omega (-pi .. pi)}
+      RenDir3 := fObjects[obj].Reflect(RenDir2,rr,xxa);
+      {--Ambient--}
+
+      ll := 32.0 + 32 * xxa+ll;
+      ll2 := sqr(sqr(4.0 - 4.0 * RenDir3.y)) - 4096.5 + 256.0;
+      ll := Math.max(ll, ll2);
+      result.oo2 := obj2;
+      result.light2 := trunc(ll) ;
+      result.Height2 := trunc(MaxHeight / (rDist+rDist2 + 1));
+      if (ll > 192.0) or (FActiveObj1 = obj2) then
+        result.Color2 := result.Color
+      else
+       if (obj2 = FactiveObj2) then
+         result.Color2 := clYellow
+       else
+         result.Color2 := fObjects[obj2].color;
+
+      {---------------}
+      lCPoint3.x:=lCPoint2.x+RenDir2.x*math.max(rdist2,5.0);
+      lCPoint3.y:=lCPoint2.y+RenDir2.y*math.max(rdist2,5.0);
+      if Hit then fCPoint3 := lCPoint3;
+    end
+     else
+  begin
+    result.light2 := 0;
+    result.Height2 := 0;
+  end
+  END
+  else
+  begin
+    result.light2 := 0;
+    result.Height2 := 0;
+    result.oo2 := -1;
+    if hit then
+      begin
+   fCPoint3.x:=lCPoint2.x+RenDir2.x*40;
+   fCPoint3.y:=fCPoint2.y+RenDir2.y*40;
+      end
+  end
+  end
+  else
+  begin
+    result.light := 0;
+    result.Height := 0;
+    result.light2 := 0;
+    result.Height2 := 0;
+    result.oo1 := -1;
+    result.oo2 := -1;
+     if hit then
+       begin
+    fCPoint2.x:=fCPoint.x+RenDir.x*200;
+    fCPoint2.y:=fCPoint.y+RenDir.y*200;
+       end
+  end;
+  lsobj := obj;
+  ObjHit(lSPnt, RenDir,-1,lsobj, rDist, rr);
+  if lsobj >= 0 then
+    result.shad := trunc(MaxHeight / (rDist + 1));;
+end;
+
 function Floor(op:TFloatPoint):TFloatPoint;overload;inline;
 
 begin
@@ -124,7 +288,7 @@ begin
 end;
 
 function TObstacles.ComputeVisibility(const fCPoint, fCView, lCV2: TFloatPoint;
-  const lCV1: TFloatPoint): boolean;
+  const lCV1: TFloatPoint): boolean;inline;
 begin
   vp := pos + fCPoint + point(400,400);
   vp := (vp - floor(vp / 400) * 400) - point(200,200);
@@ -137,7 +301,7 @@ end;
 
 { TCylinder }
 
-function TCylinder.Hittest(fCPoint, rendir: TFloatPoint; out rdistq, r: single): boolean;
+function TCylinder.Hittest(fCPoint, rendir: TFloatPoint; out rdistq, r: single): boolean;inline;
 
 var
   ld: Extended;
@@ -156,11 +320,11 @@ begin
 end;
 
 function TCylinder.Reflect(rendir: TFloatPoint; rr: single; out xx: single
-  ): TFloatPoint;
+  ): TFloatPoint;inline;
 var
   reflOm: float;
 begin
-  { Reftection-Omega (-pi .. pi)}
+  { Reflection-Omega (-pi .. pi)}
   if abs(rr)>size then
      reflOm:=Sign(rr)*pi
   else
@@ -173,7 +337,7 @@ end;
 { TBox }
 
 function TBox.Hittest(fCPoint, rendir: TFloatPoint; out rdistq, r: single
-  ): boolean;
+  ): boolean;inline;
 
 var
   ld,t1,t2: Extended;
@@ -208,7 +372,7 @@ begin
 end;
 
 function TBox.Reflect(rendir: TFloatPoint; rr: single; out xx: single
-  ): TFloatPoint;
+  ): TFloatPoint;inline;
 begin
   result := rendir;
   if rr>0 then
@@ -223,8 +387,6 @@ begin
     end;
 
 end;
-
-
 
 
 procedure TForm6.FormCreate(Sender: TObject);
@@ -294,7 +456,7 @@ procedure TForm6.PaintBox1Paint(Sender: TObject);
 var
   I: integer;
 begin
-  if not CheckBox1.Checked then
+  if not chbShowObjects.Checked then
     exit;
   with PaintBox1.Canvas do
     try
@@ -369,6 +531,12 @@ begin
     // render
     for I := 0 to high(fRendercache) do
     begin
+      if  fRendercache[I].Height >  fRendercache[I].shad div 2 then
+        begin
+      pen.color := clBlack;
+      moveto(I, bd2 + fRendercache[I].shad);
+      lineto(I, bd2 + fRendercache[I].shad div 2);
+        end;
       c := min(max(fRendercache[I].light,0),255);
 
       pen.color := DecColor(fRendercache[I].color, 255 - c);
@@ -434,20 +602,14 @@ var
   j: integer;
   Hrc2: integer;
   r: single;
-  rDistq, xxa: single;
+  rDistq: single;
   Omega, s, c: extended;
-  RenDir, lCV1, lCV2: TFloatPoint;
+  lCV1, lCV2: TFloatPoint;
   obj: integer;
-
-  rDist: extended;
-  rr: extended;
+  RenDir: TFloatPoint;
   ll: extended;
-  ll2: ValReal;
-  lCPoint2,RenDir2: TFloatPoint;
-  obj2: integer;
-  rDist2: extended;
+  lSPnt: TFloatPoint;
 
-  lCPoint3,RenDir3: TFloatPoint;
    MaxHeight: integer;
 
 
@@ -455,39 +617,8 @@ const
   Freq = 4.0;
   sqrt2 = 0.70710678118654752440084436210485;
 
-  Function ObjHit(const fCPoint, RenDir:TFloatPoint;IgnObj:integer;var obj:integer;var rDist,rr:extended):boolean ;inline;
-  var
-    pp: tpoint;
-    lIdxObj: TidxArray;
-    i,dd: integer;
-  begin
-    result := false;
-    for dd := 0 to 50 do
-     begin
-       pp.x := trunc(600 - fCPoint.x - RenDir.x * dd * 9);
-       pp.x := (pp.x + 800) mod 400;
-       pp.y := trunc(600 - fCPoint.y - RenDir.y * dd * 9);
-       pp.y := (pp.y + 800) mod 400;
-       lIdxObj := GetIndex(pp);
-       for I := 0 to High(lIdxObj) do
-         begin
-           fObjects[lIdxObj[I]].Visible:=true;
-           if (lIdxObj[I] <> IgnObj) and  fObjects[lIdxObj[I]].Hittest(fCPoint, RenDir, rDistq, r) and (rDistq > 0.01) and
-             (rDistq < rDist) then
-           begin
-               result := true;
-             obj := lIdxObj[I];
-             rDist := rDistq;
-             rr := r;
-           end;
-         end;
-       if trunc(rDist) < (dd - 1) * 8 then
-         break;
-     end;
-  end;
-
 begin
-  if not CheckBox2.Checked then
+  if not chbPause.Checked then
     begin
       fTime := (fTime + 1) mod 6000;
       timer1.Interval:=20;
@@ -520,8 +651,15 @@ begin
   fCMove.x := (fCPoint.x - fCMove.x) * 1;
   fCMove.y := (fCPoint.y - fCMove.y) * 1;
 
+  fCPoint.x += fCView.y*0.2;
+  fCPoint.y += -fCView.x*0.2;
+
+  lSPnt := fCPoint;
+  lSPnt.x +=   cos(ScrollBar1.Position/100);
+  lSPnt.y +=   sin(ScrollBar1.Position/100);
+
   PaintBox1.Invalidate;
-  Hrc2 := high(fRendercache) div 2;
+  Hrc2 := high(fRendercache) div 4;
   MaxHeight := PaintBox2.height *4;
   obj := -1;
   for I := 0 to High(fObjects) do
@@ -530,113 +668,29 @@ begin
       Visible := False;
       hit := False;
     end;
-  for j := 0 to high(fRendercache) do
+
+  for j := 0 to high(fRendercache) div 2 do
   begin
     s := sin((Hrc2 - j) * 0.6 / Hrc2);
     c := cos((Hrc2 - j) * 0.6 / Hrc2);
     RenDir.x := fCView.x * c + fCView.y * s;
     RenDir.y := -fCView.x * s + fCView.y * c;
-    if (obj >= 0) and fObjects[obj].Hittest(fCPoint, RenDir, rDistq, r) and
-      (rDistq > 2) and (rDistq < 300.0) then
-    begin
-      rDist := rDistq;
-      rr := r;
-    end
-    else
-    begin
-      obj := -1;
-      rDist := 300.0;
-    end;
-    ObjHit(fCPoint, RenDir,-1,obj, rDist, rr);
-    if obj >= 0 then
-    begin
-      fObjects[obj].hit := True;
+    fRendercache[j]:=Trace(MaxHeight, lSPnt, ll, obj, RenDir,fxx=j, rDistq, r);
+  end;
+  fCPoint.x += -fCView.y*0.4;
+  fCPoint.y += fCView.x*0.4;
 
-      RenDir2 := fObjects[obj].Reflect(RenDir,rr,xxa);
+  lSPnt := fCPoint;
+  lSPnt.x +=   cos(ScrollBar1.Position/100);
+  lSPnt.y +=   sin(ScrollBar1.Position/100);
 
-      {--Ambient--}
-
-      ll := 96.0 + 96 * xxa;
-      ll2 := sqr(sqr(4.0 - 4.0 * RenDir2.y)) - 4096.5 + 256.0;
-      ll := Math.max(ll, ll2);
-      fRendercache[j].oo1 := obj;
-      fRendercache[j].light := trunc(ll);
-      fRendercache[j].Height := trunc(MaxHeight / (rDist + 1));
-      if (ll > 192.0) or (obj = FactiveObj1)  then
-        fRendercache[j].Color := clwhite
-      else
-        if (obj = FactiveObj2) then
-        fRendercache[j].Color := clYellow
-        else
-        fRendercache[j].Color := fObjects[obj].color;
-      {---------------}
-      lCPoint2.x:=fCPoint.x+RenDir.x*rdist;
-      lCPoint2.y:=fCPoint.y+RenDir.y*rdist;
-      if fxx=j then fCPoint2 := lCPoint2;
-      if ll<=192.0 then
-        begin
-      rdist2:=300-rdist;
-      obj2:= -1;
-      ObjHit(lCPoint2, RenDir2,obj,obj2, rDist2, rr);
-      if obj2 >= 0 then
-      begin
-        fObjects[obj2].hit := True;
-
-        { Reftection-Omega (-pi .. pi)}
-        RenDir3 := fObjects[obj].Reflect(RenDir2,rr,xxa);
-        {--Ambient--}
-
-        ll := 32.0 + 32 * xxa+ll;
-        ll2 := sqr(sqr(4.0 - 4.0 * RenDir3.y)) - 4096.5 + 256.0;
-        ll := Math.max(ll, ll2);
-        fRendercache[j].oo2 := obj2;
-        fRendercache[j].light2 := trunc(ll) ;
-        fRendercache[j].Height2 := trunc(MaxHeight / (rDist+rDist2 + 1));
-        if (ll > 192.0) or (FActiveObj1 = obj2) then
-          fRendercache[j].Color2 := fRendercache[j].Color
-        else
-         if (obj2 = FactiveObj2) then
-           fRendercache[j].Color2 := clYellow
-         else
-           fRendercache[j].Color2 := fObjects[obj2].color;
-
-        {---------------}
-        lCPoint3.x:=lCPoint2.x+RenDir2.x*math.max(rdist2,5.0);
-        lCPoint3.y:=lCPoint2.y+RenDir2.y*math.max(rdist2,5.0);
-        if fxx=j then fCPoint3 := lCPoint3;
-      end
-       else
-    begin
-      fRendercache[j].light2 := 0;
-      fRendercache[j].Height2 := 0;
-    end
-    END
-    else
-    begin
-      fRendercache[j].light2 := 0;
-      fRendercache[j].Height2 := 0;
-      fRendercache[j].oo2 := -1;
-      if fxx=j then
-        begin
-     fCPoint3.x:=lCPoint2.x+RenDir2.x*40;
-     fCPoint3.y:=fCPoint2.y+RenDir2.y*40;
-        end
-    end
-    end
-    else
-    begin
-      fRendercache[j].light := 0;
-      fRendercache[j].Height := 0;
-      fRendercache[j].light2 := 0;
-      fRendercache[j].Height2 := 0;
-      fRendercache[j].oo1 := -1;
-      fRendercache[j].oo2 := -1;
-       if fxx=j then
-         begin
-      fCPoint2.x:=fCPoint.x+RenDir.x*200;
-      fCPoint2.y:=fCPoint.y+RenDir.y*200;
-         end
-    end;
+  for j := high(fRendercache) div 2+1 to high(fRendercache)  do
+  begin
+    s := sin(( -j+Hrc2*3) * 0.6 / Hrc2);
+    c := cos(( -j+Hrc2*3) * 0.6 / Hrc2);
+    RenDir.x := fCView.x * c + fCView.y * s;
+    RenDir.y := -fCView.x * s + fCView.y * c;
+    fRendercache[j]:=Trace(MaxHeight, lSPnt, ll, obj, RenDir,fxx=j, rDistq, r);
   end;
   FActiveObj1 := fRendercache[fxx].oo1;
   FActiveObj2 := fRendercache[fxx].oo2;

@@ -183,6 +183,7 @@
       <Unit2>
         <Filename Value="C:\unt_cdate.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="unt_CDate"/>
       </Unit2>
     </Units>
   </ProjectOptions>
