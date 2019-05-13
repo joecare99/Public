@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Prj_TestSprites"><module name="Frm_TestSprites"><short>Test Sprites (MainForm)</short><element name="TSprite"><short>This is a (advanced) record that contains all information about sprites</short>
+      </element><element name="TSprite.a"><short>The Bitmap-data of the Sprite</short>
+      </element><element name="TSprite.spos"><short>The Position to display the Sprite (Upper left corner)</short>
+      </element><element name="TSprite.Step"><short>The (intenal) Number of the image to display </short>
+      </element><element name="TSprite.dx"><short>Movement-Delta-X </short>
+      </element><element name="TSprite.dy"><short>Movement-Delta-Y</short>
+      </element><element name="TSprite.ds"><short>Delta-Step</short>
+      </element><element name="TSprite.Init"><short>This procedure initiates the sprite at a given position</short>
+      </element><element name="TSprite.DoStep"><short>Compute the next step</short>
+      </element><element name="TSprite.Paint"><short>Paint the Shape to a Canvas</short>
+      </element><element name="TSprite.Free"><short>Frees all allocated data of the sprite</short>
+      </element><element name="TTestSpritesForm"><short>MainForm for testing the sprites</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
