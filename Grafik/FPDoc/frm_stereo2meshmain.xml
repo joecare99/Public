@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="prj_Stereo2Mesh"><module name="frm_Stereo2MeshMain"><topic name="ToDo"/><topic name="Description"/><short>Dieses Programm soll aus 2 (ggf. stereoskopischen) Bildern ein 3D-Netz-Objekt erzeugen, das mit Teilen aus den Bildern überzogen ist.</short>
+    <descr>ToDo:
+</descr>
+    </module>
+  </package>
+</fpdoc-descriptions>
