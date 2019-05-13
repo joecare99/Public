@@ -1,21 +1,22 @@
 object TestSpritesForm: TTestSpritesForm
   Left = 715
-  Height = 300
+  Height = 450
   Top = 133
-  Width = 483
+  Width = 724
   Caption = 'TestSpritesForm'
   Color = clBtnFace
+  DesignTimePPI = 144
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -17
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
-  LCLVersion = '1.4.2.0'
+  LCLVersion = '2.0.0.4'
   object Timer1: TTimer
     Interval = 200
     OnTimer = Timer1Timer
-    left = 440
-    top = 256
+    left = 660
+    top = 384
   end
 end
