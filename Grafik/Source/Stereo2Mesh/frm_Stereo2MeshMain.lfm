@@ -1,0 +1,41 @@
+object FrmStereo2MeshMain: TFrmStereo2MeshMain
+  Left = 349
+  Height = 1376
+  Top = 37
+  Width = 1728
+  Caption = 'FrmStereo2MeshMain'
+  ClientHeight = 1376
+  ClientWidth = 1728
+  DesignTimePPI = 144
+  object BGRAVirtualScreen1: TBGRAVirtualScreen
+    Left = 30
+    Height = 470
+    Top = 58
+    Width = 799
+    Alignment = taLeftJustify
+    Caption = 'BGRAVirtualScreen1'
+    Color = clWhite
+    ParentColor = False
+    TabOrder = 0
+  end
+  object BGRAVirtualScreen2: TBGRAVirtualScreen
+    Left = 867
+    Height = 483
+    Top = 51
+    Width = 807
+    Alignment = taLeftJustify
+    Caption = 'BGRAVirtualScreen2'
+    Color = clWhite
+    ParentColor = False
+    TabOrder = 1
+  end
+  object BGLVirtualScreen1: TBGLVirtualScreen
+    Left = 216
+    Height = 687
+    Top = 569
+    Width = 1160
+    BevelWidth = 0
+    TabOrder = 2
+    UseDockManager = False
+  end
+end
