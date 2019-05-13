@@ -2,12 +2,13 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="11"/>
     <BuildModes Active="Debug"/>
     <Units Count="2">
       <Unit0>
         <Filename Value="Daynames.dpr"/>
         <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
         <CursorPos X="18" Y="9"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
@@ -16,9 +17,7 @@
       <Unit1>
         <Filename Value="..\source\DAYNAMES\ArrayP.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="ArrayP"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
         <CursorPos X="87" Y="11"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
@@ -26,5 +25,9 @@
       </Unit1>
     </Units>
     <JumpHistory HistoryIndex="-1"/>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>
