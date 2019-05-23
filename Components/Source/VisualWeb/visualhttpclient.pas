@@ -8,6 +8,9 @@ uses
   Classes, SysUtils, fphttpclient;
 
 type
+
+  { TVisualHTTPClient }
+
   TVisualHTTPClient = class(TFPCustomHTTPClient)
   private
     { private declarations }
@@ -21,6 +24,7 @@ type
     Property ResponseStatusText;
     Property Cookies;
   published
+    constructor Create(AOwner: TComponent); override;
     Property HTTPversion;
     {$if FPC_FULLVERSION>30000}
     Property AllowRedirect;
@@ -39,7 +43,7 @@ function DownloadFile(const lURL: string; const lFilename: string; Const lFileDa
 
 implementation
 
-uses dateutils;
+uses dateutils,ssockets, sslsockets;
 
 function DownloadFile(const lURL: string; const lFilename: string; Const lFileDate: TDateTime ): boolean;
 var
@@ -59,6 +63,13 @@ begin
     FreeAndNil(VisualHTTPClient1);
     FreeAndNil(mStrm)
   end;
+end;
+
+{ TVisualHTTPClient }
+
+constructor TVisualHTTPClient.Create(AOwner: TComponent);
+begin
+  inherited Create(AOwner);
 end;
 
 
