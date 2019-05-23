@@ -13,13 +13,14 @@ uses
   LCLIntf, LCLType,
 {$ENDIF}
   SysUtils, Variants, Classes, Graphics, Controls, Forms, Dialogs, StdCtrls,
-  Buttons, ComCtrls, IpHtml, Ipfilebroker, Unt_Config, htmlview, Cmp_Parser;
+  Buttons, ComCtrls, ExtCtrls, Unt_Config,
+  VisualHTTPClient, htmlview, Cmp_Parser,cmp_Filter;
 
 type
 
-  { TForm2 }
+  { TfrmTestHtmlParsingMain }
 
-  TForm2 = class(TForm)
+  TfrmTestHtmlParsingMain = class(TForm)
     BitBtn1: TBitBtn;
     btnBrowseHtml: TBitBtn;
     btnBrowseSchema: TBitBtn;
@@ -30,15 +31,19 @@ type
     cbxFilename: TComboBox;
     btnDoParse: TBitBtn;
     Config1: TConfig;
-    HTMLViewer1: THTMLViewer;
-    mHTML: TMemo;
     btnLoadFile: TBitBtn;
+    HTMLViewer1: THtmlViewer;
+    mHTML: TMemo;
     mLog: TMemo;
     mSchema: TMemo;
     mOutput: TMemo;
     btnSave: TBitBtn;
     OpenDialog1: TOpenDialog;
+    pnlT1Left: TPanel;
     SaveDialog1: TSaveDialog;
+    Splitter1: TSplitter;
+    VisualHTTPClient1: TVisualHTTPClient;
+    procedure BitBtn1Click(Sender: TObject);
     procedure btnBrowseSchemaClick(Sender: TObject);
     procedure btnDoParseClick(Sender: TObject);
     procedure btnLoadSchemaClick(Sender: TObject);
@@ -46,22 +51,17 @@ type
     procedure btnLoadFileClick(Sender: TObject);
     procedure btnBrowseHtmlClick(Sender: TObject);
     procedure btnSaveSchemaClick(Sender: TObject);
+    procedure FormCreate(Sender: TObject);
+    procedure FormDeactivate(Sender: TObject);
     procedure FormShow(Sender: TObject);
-    procedure IpHtmlPanel1ControlClick(Sender: TIpHtmlCustomPanel;
-      Frame: TIpHtmlFrame; Html: TIpHtml; Node: TIpHtmlNodeControl);
-    procedure IpHtmlPanel1ControlClick2(Sender: TIpHtmlCustomPanel;
-      Frame: TIpHtmlFrame; Html: TIpHtml; Node: TIpHtmlNodeControl;
-      var cancel: boolean);
-    procedure IpHtmlPanel1DocumentOpen(Sender: TObject);
-    procedure IpHtmlPanel1HotClick(Sender: TObject);
   private
     { Private-Deklarationen }
     Acttag, TagMark, TagPath: string;
-    FilterMode: boolean;
-    TestLine: integer;
     FEncoding: string;
     FDataPath: String;
-    function TestFilter(s: string): boolean;
+    FFilter:TBaseFilter;
+    procedure FilterLineChange(Sender: TObject);
+    procedure SetHtmlText(sHTML, sRef: string);
   public
     { Public-Deklarationen }
     Procedure LogParseTag(s:String);
@@ -76,7 +76,7 @@ type
   end;
 
 var
-  Form2: TForm2;
+  frmTestHtmlParsingMain: TfrmTestHtmlParsingMain;
 
 implementation
 
@@ -89,27 +89,31 @@ uses LConvEncoding;
   {$R *.lfm}
 {$ENDIF}
 
-procedure TForm2.btnDoParseClick(Sender: TObject);
+procedure TfrmTestHtmlParsingMain.btnDoParseClick(Sender: TObject);
 var
   p: ThtmlParser;
 begin
   mLog.Clear;
+  FFilter.Schema := mSchema.Lines;
   p := ThtmlParser.Create;
+  try
   p.onStdText := ParseOnStdText;
   p.OnStartTag := ParseOnStartTag;
   p.OnTagMod := ParseOnTagMod;
   p.OnEndTag := ParseOnEndTag;
   p.OnComment := ParseOnComment;
   p.OnScript := ParseOnScript;
-  TestLine := 0;
-  FilterMode := True;
+  FFilter.TestLine := 0;
+  FFilter.FilterMode := True;
   mOutput.Clear;
   Tagpath := '';
   p.Feed(mHTML.Text);
-  p.Done;
+  finally
+    freeandnil(p);
+  end;
 end;
 
-procedure TForm2.btnBrowseSchemaClick(Sender: TObject);
+procedure TfrmTestHtmlParsingMain.btnBrowseSchemaClick(Sender: TObject);
 var
   lRelp: String;
 begin
@@ -125,7 +129,19 @@ begin
     end;
 end;
 
-procedure TForm2.btnLoadSchemaClick(Sender: TObject);
+procedure TfrmTestHtmlParsingMain.BitBtn1Click(Sender: TObject);
+var
+  sHTML: TCaption;
+begin
+          try
+              sHTML := VisualHTTPClient1.Get(cbxFilename.Text);
+              SetHtmlText(
+                  sHTML, cbxFilename.Text);
+        finally
+end;
+end;
+
+procedure TfrmTestHtmlParsingMain.btnLoadSchemaClick(Sender: TObject);
 
   var
     sf: TFileStream;
@@ -155,7 +171,7 @@ procedure TForm2.btnLoadSchemaClick(Sender: TObject);
     mSchema.Lines.Text := ConvertEncodingToUTF8(s, EncodingCP1252, lEncoded);
 end;
 
-procedure TForm2.btnLoadFileClick(Sender: TObject);
+procedure TfrmTestHtmlParsingMain.btnLoadFileClick(Sender: TObject);
 var
   sf: TFileStream;
   s: string;
@@ -177,12 +193,12 @@ begin
   finally
     FreeAndNil(sf);
   end;
-  mHTML.Lines.Text := ConvertEncodingToUTF8(s, EncodingCP1252, lEncoded);
+  mHTML.Lines.Text := ConvertEncodingToUTF8(s, {EncodingCP1252} FEncoding, lEncoded);
   HTMLViewer1.LoadFromString(mHTML.Lines.Text,'');
 //  IpHtmlPanel1.OpenURL('file://'+cbxFilename.Text);
 end;
 
-procedure TForm2.btnBrowseHtmlClick(Sender: TObject);
+procedure TfrmTestHtmlParsingMain.btnBrowseHtmlClick(Sender: TObject);
 begin
   OpenDialog1.FileName:=cbxFilename.text;
   if OpenDialog1.Execute then
@@ -192,7 +208,7 @@ begin
     end;
 end;
 
-procedure TForm2.btnSaveSchemaClick(Sender: TObject);
+procedure TfrmTestHtmlParsingMain.btnSaveSchemaClick(Sender: TObject);
 begin
   SaveDialog1.FileName := cbxFilenameSchema.Text;
   if SaveDialog1.Execute then
@@ -204,7 +220,18 @@ begin
   end;
 end;
 
-procedure TForm2.FormShow(Sender: TObject);
+procedure TfrmTestHtmlParsingMain.FormCreate(Sender: TObject);
+begin
+  FFilter := TBaseFilter.Create(self);
+  FFilter.OnLineChange:=FilterLineChange;
+end;
+
+procedure TfrmTestHtmlParsingMain.FormDeactivate(Sender: TObject);
+begin
+  FreeAndNil(FFilter);
+end;
+
+procedure TfrmTestHtmlParsingMain.FormShow(Sender: TObject);
 Var
    CBCount, i: Integer;
  Begin
@@ -230,30 +257,7 @@ Var
        FDataPath:='..'+DirectorySeparator+FDataPath;
 end;
 
-procedure TForm2.IpHtmlPanel1ControlClick(Sender: TIpHtmlCustomPanel;
-  Frame: TIpHtmlFrame; Html: TIpHtml; Node: TIpHtmlNodeControl);
-begin
-
-end;
-
-procedure TForm2.IpHtmlPanel1ControlClick2(Sender: TIpHtmlCustomPanel;
-  Frame: TIpHtmlFrame; Html: TIpHtml; Node: TIpHtmlNodeControl;
-  var cancel: boolean);
-begin
-  cancel := true;
-end;
-
-procedure TForm2.IpHtmlPanel1DocumentOpen(Sender: TObject);
-begin
-
-end;
-
-procedure TForm2.IpHtmlPanel1HotClick(Sender: TObject);
-begin
-
-end;
-
-procedure TForm2.btnSaveClick(Sender: TObject);
+procedure TfrmTestHtmlParsingMain.btnSaveClick(Sender: TObject);
 begin
   SaveDialog1.FileName := cbxFilename.Text;
   if SaveDialog1.Execute then
@@ -265,9 +269,9 @@ begin
   end;
 end;
 
-procedure TForm2.ParseOnStdText(Sender: TObject; Text: string);
+procedure TfrmTestHtmlParsingMain.ParseOnStdText(Sender: TObject; Text: string);
 begin
-  if TestFilter('S: ' + Text) then
+  if FFilter.TestFilter('S: ' + Text,ComputeFiltered) then
   begin
     if TagMark <> '' then
     begin
@@ -281,14 +285,14 @@ begin
     LogParseTag('! S: ' + Text);
 end;
 
-procedure TForm2.ParseOnStartTag(Sender: TObject; Text: string);
+procedure TfrmTestHtmlParsingMain.ParseOnStartTag(Sender: TObject; Text: string);
 begin
-  if FilterMode and (TagMark <> '') then
+  if FFilter.FilterMode and (TagMark <> '') then
   begin
     ComputeFiltered(2,TagMark);
     TagMark := '';
   end;
-  if TestFilter('TS: ' + uppercase(Text)) then
+  if FFilter.TestFilter('TS: ' + uppercase(Text),ComputeFiltered) then
   begin
 
     LogParseTag('TS: ' + Text + ', ' + TagPath);
@@ -306,9 +310,9 @@ begin
   Tagpath := TagPath + '\' + Acttag;
 end;
 
-procedure TForm2.ParseOnTagMod(Sender: TObject; Text: string);
+procedure TfrmTestHtmlParsingMain.ParseOnTagMod(Sender: TObject; Text: string);
 begin
-  if TestFilter('TM: ' + Acttag + ',' + Text) then
+  if FFilter.TestFilter('TM: ' + Acttag + ',' + Text,ComputeFiltered) then
   begin
     LogParseTag('TM: ' + Text);
     if TagMark <> '' then
@@ -321,9 +325,9 @@ begin
   end;
 end;
 
-procedure TForm2.ParseOnEndTag(Sender: TObject; Text: string);
+procedure TfrmTestHtmlParsingMain.ParseOnEndTag(Sender: TObject; Text: string);
 begin
-  if TestFilter('TE: ' + uppercase(Text)) then
+  if FFilter.TestFilter('TE: ' + uppercase(Text),ComputeFiltered) then
   begin
     if (TagMark <> '') and (Text = '') then
       TagMark := copy(TagMark, 1, length(TagMark) - 1) + ' />';
@@ -364,9 +368,9 @@ begin
   end;
 end;
 
-procedure TForm2.ParseOnComment(Sender: TObject; Text: string);
+procedure TfrmTestHtmlParsingMain.ParseOnComment(Sender: TObject; Text: string);
 begin
-  if FilterMode then
+  if FFilter.FilterMode then
   begin
     if TagMark <> '' then
     begin
@@ -378,9 +382,9 @@ begin
   end;
 end;
 
-procedure TForm2.ParseOnScript(Sender: TObject; Text: string);
+procedure TfrmTestHtmlParsingMain.ParseOnScript(Sender: TObject; Text: string);
 begin
-  if FilterMode then
+  if FFilter.FilterMode then
   begin
     if TagMark <> '' then
     begin
@@ -393,39 +397,39 @@ begin
 
 end;
 
-function TForm2.TestFilter(s: string): boolean;
+procedure TfrmTestHtmlParsingMain.FilterLineChange(Sender: TObject);
 begin
-  if uppercase(copy(mSchema.Lines[TestLine], 2, length(s) + 1)) = uppercase(s) then
-  begin
-    FilterMode := copy(mSchema.Lines[TestLine], 1, 1) = '[';
-    if testline = 0 then
-       mSchema.SelStart:=length(mSchema.Lines[TestLine])+2
+      if Ffilter.TestLine = 1 then
+       mSchema.SelStart:=length(mSchema.Lines[FFilter.TestLine-1])+2
     else
-      mSchema.SelStart:=mSchema.SelStart+length(mSchema.Lines[TestLine])+2;
-    Inc(TestLine);
-    mSchema.SelLength:=length(mSchema.Lines[TestLine]);
-    mSchema.SetFocus;
-    if (testline < mSchema.Lines.Count) and (copy(mSchema.Lines[TestLine], 1, 1) = '+') then
-    begin
-      ComputeFiltered(0,copy(mSchema.Lines[TestLine], 2, 255));
-      mSchema.SelStart:=mSchema.SelStart+length(mSchema.Lines[TestLine])+2;
-      Inc(TestLine);
-      mSchema.SelLength:=length(mSchema.Lines[TestLine]);
-    end;
-  end;
-  Result := FilterMode;
+      mSchema.SelStart:=mSchema.SelStart+length(mSchema.Lines[FFilter.TestLine-1])+2;
+
+      mSchema.SelLength:=length(mSchema.Lines[Ffilter.TestLine]);
+      mSchema.SetFocus;
+
 end;
 
-procedure TForm2.LogParseTag(s: String);
+procedure TfrmTestHtmlParsingMain.SetHtmlText(sHTML, sRef: string);
+var
+    FEncoding: string;
+    lEncoded: boolean;
+begin
+   FEncoding := GuessEncoding(sHtml);
+    mHTML.Lines.Text := ConvertEncodingToUTF8(sHTML, FEncoding, lEncoded);
+    HTMLViewer1.LoadFromString(sHTML, sRef);
+end;
+
+procedure TfrmTestHtmlParsingMain.LogParseTag(s: String);
 begin
   if chbVerbose.Checked then
     mLog.Lines.add(s);
 end;
 
-procedure TForm2.ComputeFiltered(CType: byte; Text: String);
+procedure TfrmTestHtmlParsingMain.ComputeFiltered(CType: byte; Text: String);
 begin
   if ctype in [0,2,3] then
     mOutput.Lines.add(inttostr(CType)+': '+text);
 end;
+
 
 end.

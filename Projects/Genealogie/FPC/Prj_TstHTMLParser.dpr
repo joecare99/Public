@@ -19,6 +19,6 @@ begin
   Application.Scaled:=True;
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TfrmTestHtmlParsingMain, frmTestHtmlParsingMain);
   Application.Run;
 end.

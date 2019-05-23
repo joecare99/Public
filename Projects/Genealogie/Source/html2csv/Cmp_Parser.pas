@@ -27,6 +27,8 @@ type
     Comment = 3, Script = 4);
   TTextNotification = Procedure(sender: TObject; Text: String) of Object;
 
+  { ThtmlParser }
+
   ThtmlParser = Class(TBaseParser)
   Private
     FOnStdText, FOnStartTag, FOnTagMod, FOnEndTag, FOnComment,
@@ -36,6 +38,7 @@ type
     FparseMode: THTMLParseMode;
   public
     procedure Feed(Data: string); override;
+    procedure Error(sender: TObject; NewMessage: string); override;
     Property OnStdText: TTextNotification read FOnStdText write FOnStdText;
     Property OnStartTag: TTextNotification read FOnStartTag write FOnStartTag;
     Property OnTagMod: TTextNotification read FOnTagMod write FOnTagMod;
@@ -270,5 +273,13 @@ begin
         If (divPos = eDivPos) Or (divPos = PP) Then PP := length(Source); }
     end; { while }
   end; { procedure }
+
+  procedure ThtmlParser.Error(sender: TObject; NewMessage: string);
+  var
+    e: Exception;
+  begin
+    e:=Exception.Create(NewMessage);
+    Raise(e);
+  end;
 
 end.
