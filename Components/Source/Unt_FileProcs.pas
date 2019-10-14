@@ -154,6 +154,15 @@ Function GetVersion(filename: String): String;
   // Pruefe ob datei schon benutzt wird
 Function FileInUse(FileName: String): boolean;
 
+///<author>Joe Care</author>
+///  <version>1.00.02</version>
+///  <tested>true</Tested>
+///  <info>Ermittelt die nächste (logische) Datei</info>
+// Ermittelt die nächste (logische) Datei
+Function GetNextFileName(FileName: String): string;
+
+
+
 Type
   ///<author>Joe Care</author>
   ///  <version>1.00.02</version>
@@ -218,6 +227,54 @@ Begin
         FileClose(HFileRes);
     End;
 End;
+
+function GetNextFileName(FileName: String): string;
+var
+  lNames: TStringArray;
+  lPath, lName: String;
+  lpp,lp, lValue: Integer;
+begin
+  lPath := ExtractFilePath(Filename);
+  lNames := string(ExtractFileName(Filename)).Split(['.']);
+  lpp:= lNames[0].LastIndexOfAny(['0','1','2','3','4','5','6','7','8','9']);
+  if lpp=-1 then
+    lnames[0]:=lNames[0]+'01'
+  else
+    begin
+    lName := lnames[0];
+    if lName[lpp+1] in ['0'..'8'] then
+      lName[lpp+1] := char(ord(lName[lpp+1])+1)
+    else if (lpp>0) and (lName[lpp] in ['0'..'8']) then
+      begin
+        lName[lpp+1] := '0';
+        lName[lpp] := char(ord(lName[lpp])+1)
+      end
+    else if (lpp>1) and (lName[lpp]='9') and (lName[lpp-1] in ['0'..'8']) then
+      begin
+        lName[lpp+1] := '0';
+        lName[lpp] := '0';
+        lName[lpp-1] := char(ord(lName[lpp-1])+1)
+      end
+    else if (lpp<1) or not (lName[lpp] in ['0'..'9']) then
+      begin
+        lName[lpp+1] := '0';
+        lName:=lName.Insert(lpp,'1');
+      end
+    else
+      begin // Allgemeiner Ansatz
+        Lp := lpp+1;
+        lValue :=0;
+        while (lp>0) and (lName[lp] in ['0'..'9']) do
+          begin
+            lValue := lValue* 10 + ord(lName[lp])-ord('0');
+            dec(lp);
+          end;
+        lName := LeftStr(lName,lp)+inttostr(lValue+1)+copy(lName,lpp+2);
+      end;
+      lNames[0] := lName;
+    end;
+  result := lPath+lName.Join('.',lNames);
+end;
 
 function GetFiles(mask, path: String; repl: TSuccess; minp: integer;
   maxp: integer): Tfiles;
