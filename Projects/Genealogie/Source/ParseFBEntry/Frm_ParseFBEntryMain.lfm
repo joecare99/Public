@@ -1,0 +1,120 @@
+object FrmParseFBEntryMain: TFrmParseFBEntryMain
+  Left = 780
+  Height = 1175
+  Top = 250
+  Width = 1176
+  Caption = 'Parse Familienbuch Eintrag'
+  ClientHeight = 1175
+  ClientWidth = 1176
+  DesignTimePPI = 144
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '2.0.4.0'
+  object edtSource: TMemo
+    Left = 15
+    Height = 333
+    Top = 19
+    Width = 601
+    Lines.Strings = (
+      #9'74'#9'⚭ 19.8.1765: Johann Christian Baumann <S.d. Adam B., Gastwirt zur Linde und Metzger in Lahr, u.d. Anna Katharina geb. Hockenjos>, Metzger, Gastwirt zum Hecht in Meißenheim, * um 1741, † 28.3.1820'
+      'u. Ursula Dietrich <T.d. Johannes D., Schultheiß in Allmannweier; ⚭I s. 483>, * um 1734, † 26.2.1805.'
+      '5 Kdr: Adam 19.6.1766, † 25.1.1778. '
+      '- Johann Christian <75>.'
+      '- Maria Magdalena 7.1 .1771, † 17.1.1771. '
+      '- Johann Jakob 26.6.1772. '
+      '- Johann Friedrich <76>.'
+    )
+    OnChange = edtSourceChange
+    ScrollBars = ssAutoBoth
+    TabOrder = 0
+  end
+  object stgData: TStringGrid
+    Left = 24
+    Height = 251
+    Top = 384
+    Width = 1108
+    ColCount = 9
+    Columns = <    
+      item
+        Title.Caption = 'ID'
+      end    
+      item
+        Title.Caption = 'Name'
+        Width = 300
+      end    
+      item
+        Title.Caption = 'Birth'
+      end    
+      item
+        Title.Caption = 'Death'
+      end    
+      item
+        Title.Caption = 'Occu'
+      end    
+      item
+        Title.Caption = 'Title'
+      end    
+      item
+        Title.Caption = 'Title'
+      end    
+      item
+        Title.Caption = 'Title'
+      end>
+    RowCount = 1
+    TabOrder = 1
+  end
+  object edtDefaultPlace: TLabeledEdit
+    Left = 640
+    Height = 33
+    Top = 210
+    Width = 480
+    EditLabel.Height = 25
+    EditLabel.Width = 480
+    EditLabel.Caption = 'edtDefaultPlace'
+    EditLabel.ParentColor = False
+    TabOrder = 2
+    Text = 'Meißenheim'
+  end
+  object btnParse: TButton
+    Left = 657
+    Height = 70
+    Top = 296
+    Width = 271
+    Caption = 'btnParse'
+    OnClick = btnParseClick
+    TabOrder = 3
+  end
+  object lbxFamily: TListBox
+    Left = 16
+    Height = 240
+    Top = 912
+    Width = 342
+    ItemHeight = 0
+    TabOrder = 4
+  end
+  object lbxPlaces: TListBox
+    Left = 383
+    Height = 231
+    Top = 918
+    Width = 350
+    ItemHeight = 0
+    TabOrder = 5
+  end
+  object lbxOccupations: TListBox
+    Left = 754
+    Height = 228
+    Top = 920
+    Width = 359
+    ItemHeight = 0
+    TabOrder = 6
+  end
+  object stgData1: TStringGrid
+    Left = 15
+    Height = 251
+    Top = 648
+    Width = 1112
+    ColCount = 8
+    RowCount = 1
+    TabOrder = 7
+  end
+end
