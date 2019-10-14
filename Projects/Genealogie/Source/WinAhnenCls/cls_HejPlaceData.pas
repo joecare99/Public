@@ -108,6 +108,7 @@ public
     Procedure Clear;override;
     Procedure SetPlace(aPlace:THejPlaceData);overload;
     Function IndexOf(aPlaceName:Variant):integer;override;
+    Function NewPlace(aPLace:String ):integer;
     Procedure ReadfromStream(st: Tstream; {%H-}cls: TClsHejBase=nil); override;
     PRocedure WriteToStream(st:TStream);override;
     Destructor Destroy; override;
@@ -170,6 +171,15 @@ begin
   for i := 0 to high(FPlaceArray) do
     if FPlaceArray[i].PlaceName = aPlaceName then
       exit(i);
+end;
+
+function TClsHejPlaces.NewPlace(aPLace: String): integer;
+begin
+  setlength(FPlaceArray,high(Fplacearray)+2);
+  FActIndex:=high(FPlaceArray);
+  FPlaceArray[FActIndex].PlaceName:=aPlace;
+  FPlaceArray[FActIndex].id:=FActIndex;
+  result := FActIndex;
 end;
 
 procedure TClsHejPlaces.ReadfromStream(st: Tstream; cls: TClsHejBase);

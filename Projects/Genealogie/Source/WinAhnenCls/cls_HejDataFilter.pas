@@ -10,7 +10,8 @@ uses
 
 type
   TEnumHejConcType=
-    ( hCcT_Or = 0,   // ) OR ( ...
+    ( hCcT_Nop = -1, // Ende
+      hCcT_Or = 0,   // ) OR ( ...
       hCcT_Nor = 1,  // ) or not ( ...
       hCcT_xor = 2,  // ) xor ( ...
       hCcT_And = 3,  // and (..)
@@ -76,6 +77,7 @@ type
 
 const
    CConcat:array[TEnumHejConcType] of string=(
+     'hCcT_Nop',
      'hCcT_Or',
      'hCcT_Nor',
      'hCcT_xor',
@@ -140,6 +142,7 @@ Function FilterRule(aDataField:Integer;
     aCompValue:variant):TFilterRule;
 
 resourcestring
+      rshCcT_Nop = '';   // )
       rshCcT_Or = 'Oder';   // ) OR ( ...
       rshCcT_Nor = 'Oder nicht';  // ) or not ( ...
       rshCcT_xor = 'Entweder Oder';  // ) xor ( ...
@@ -159,6 +162,29 @@ resourcestring
         rshCmp_IsEmpty = '[ ]';
         rshCmp_IsNotEmpty ='![ ]';
 
+        rshInMeD_ParentCount ='Anzahl Elternteile';
+        rshInMeD_SpouseCount     ='Anzahl Ehepartner';
+        rshInMeD_ChildCount      ='Anzahl Kinder';
+        rshInMeD_SiblingCount    ='Anzahl Geschwister';
+        rshInMeD_SourceCount     ='Anzahl Quellen';
+        rshInMeD_PlaceCount      ='Anzahl Orte';
+        rshInMeD_AdoptCount      ='Anzahl Adoptionen';
+        rshInMeD_AnyPlace        ='ein Platz';
+        rshInMeD_AnySource       ='eine Quelle';
+        rshInMeD_AnyData         ='etwas';
+        rshInMeD_AgeOfBapt       ='Alter bei Taufe';
+        rshInMeD_AgeOfNextSibl   ='Alter bei n. Geschw.';
+        rshInMeD_AgeOfConf       ='Alter bei Konfirmation';
+        rshInMeD_AgeOfFMarriage  ='Alter bei e. Hochzeit';
+        rshInMeD_AgeOfFirstChild ='Alter bei erstem Kind';
+        rshInMeD_AgeOfLMarriage  ='Alter bei l. Hochzeit';
+        rshInMeD_AgeOfLChild     ='Alter bei l. Kind';
+        rshInMeD_AgeOfDeath      ='Alter bei Tod';
+        rshInMeD_AgeDiffToSpouse ='Altersdiff. zu Partner';
+
+var rshCcT: Array[TEnumHejConcType] of String;
+    rshCmp: Array[TEnumHejCompareType] of String;
+    rshMtD: Array[TenumIndMetaData] of string;
 
 implementation
 
@@ -418,5 +444,47 @@ begin
   end;
 end;
 
+initialization
+    rshCcT[hCcT_Or] := rshCcT_Or ;
+    rshCcT[hCcT_Nor] := rshCcT_Nor ;
+    rshCcT[hCcT_xor] := rshCcT_xor;
+    rshCcT[hCcT_and] := rshCcT_And ;
+    rshCcT[hCcT_xor2] := rshCcT_xor2;
+
+    rshCmp[hCmp_Nop          ] := rshCmp_Nop ;
+    rshCmp[hCmp_Equal        ] := rshCmp_Equal ;
+    rshCmp[hCmp_UnEqual      ] := rshCmp_UnEqual ;
+    rshCmp[hCmp_Less         ] := rshCmp_Less ;
+    rshCmp[hCmp_LessOEqual   ] := rshCmp_LessOEqual;
+    rshCmp[hCmp_GreaterOEqual] := rshCmp_GreaterOEqual;
+    rshCmp[hCmp_Greater      ] := rshCmp_Greater ;
+    rshCmp[hCmp_Startswith   ] := rshCmp_Startswith;
+    rshCmp[hCmp_Endswith     ] := rshCmp_Endswith;
+    rshCmp[hCmp_Contains     ] := rshCmp_Contains;
+    rshCmp[hCmp_IsEmpty      ] := rshCmp_IsEmpty;
+    rshCmp[hCmp_IsNotEmpty   ] := rshCmp_IsNotEmpty;
+
+    rshMtD[hInMeD_ParentCount    ] := rshInMeD_ParentCount    ;
+    rshMtD[hInMeD_SpouseCount    ] := rshInMeD_SpouseCount    ;
+    rshMtD[hInMeD_ChildCount     ] := rshInMeD_ChildCount     ;
+    rshMtD[hInMeD_SiblingCount   ] := rshInMeD_SiblingCount   ;
+    rshMtD[hInMeD_SourceCount    ] := rshInMeD_SourceCount    ;
+    rshMtD[hInMeD_PlaceCount     ] := rshInMeD_PlaceCount     ;
+    rshMtD[hInMeD_AdoptCount     ] := rshInMeD_AdoptCount     ;
+    rshMtD[hInMeD_AnyPlace       ] := rshInMeD_AnyPlace       ;
+    rshMtD[hInMeD_AnySource      ] := rshInMeD_AnySource      ;
+    rshMtD[hInMeD_AnyData        ] := rshInMeD_AnyData        ;
+    rshMtD[hInMeD_AgeOfBapt      ] := rshInMeD_AgeOfBapt      ;
+    rshMtD[hInMeD_AgeOfNextSibl  ] := rshInMeD_AgeOfNextSibl  ;
+    rshMtD[hInMeD_AgeOfConf      ] := rshInMeD_AgeOfConf      ;
+    rshMtD[hInMeD_AgeOfFMarriage ] := rshInMeD_AgeOfFMarriage ;
+    rshMtD[hInMeD_AgeOfFirstChild] := rshInMeD_AgeOfFirstChild;
+    rshMtD[hInMeD_AgeOfLMarriage ] := rshInMeD_AgeOfLMarriage ;
+    rshMtD[hInMeD_AgeOfLChild    ] := rshInMeD_AgeOfLChild    ;
+    rshMtD[hInMeD_AgeOfDeath     ] := rshInMeD_AgeOfDeath     ;
+    rshMtD[hInMeD_AgeDiffToSpouse] := rshInMeD_AgeDiffToSpouse;
+
 end.
+
+
 

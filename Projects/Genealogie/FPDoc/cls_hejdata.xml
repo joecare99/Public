@@ -69,7 +69,7 @@
       </element><element name="TClsHejGenealogy.mData"><short>property iData reads and writes Marriage-Data</short>
       </element><element name="TClsHejGenealogy.SpouseCount"><short>property SpouseCount reads the count of spouses of an individual</short>
       </element><element name="TClsHejGenealogy.Spouse"><short>property Spouse retreives individual-data from a spouse of the actual indvidual</short>
-      </element><element name="TClsHejGenealogy.MarriageData"><short>property MarriageData reads and writes marriage-data</short>
+      </element><element name="TClsHejGenealogy.MarriageData"><short>property MarriageData reads and writes marriage-data of actual Individual</short>
       </element><element name="TClsHejGenealogy.SetMarriageData"><short>SetMarriageData writes the Marriage-Data of an Individual;</short>
       </element><element name="TClsHejGenealogy.SetOnDataChange"><short>SetOnDataChange sets the DataChange-notification-event</short>
       </element><element name="TClsHejGenealogy.SetOnStateChange"><short>SetOnStateChange sets the StateChange-notification-event</short>
@@ -82,6 +82,8 @@
       </element><element name="TClsHejGenealogy.IndividualCount"><short>property IndividualCount reads the number of individuals</short>
       </element><element name="TClsHejGenealogy.MarriagesCount"><short>property MarriageCount reads the number of marriages</short>
       </element><element name="TClsHejGenealogy.OnStateChange"><short>property OnStateChange reads and writes the StateChange-notification-event</short>
+      </element>
+    <element name="TClsHejGenealogy.Marriages"><short>Gives access to the Marriages Class</short>
       </element>
     </module>
   </package>

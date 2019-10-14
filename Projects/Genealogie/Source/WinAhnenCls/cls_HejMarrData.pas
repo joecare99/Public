@@ -92,6 +92,7 @@ public
   function  TestStreamHeader(const st:TStream):boolean;
   Procedure ReadFromDataset(idx:integer;const ds:TDataSet);
   Procedure UpdateDataset(const ds:TDataSet);
+  Procedure SetDateData(idx: TEnumHejMarrDatafields;aDate: string);
   function Equals(aValue:THejMarrData;OnlyData:boolean=False):boolean;
   property Data[idx:TEnumHejMarrDatafields]:Variant read GetData write SetData;
   property Value:Double read GetValue;
@@ -141,10 +142,12 @@ public
     procedure SetData(Marr: integer; idx: TEnumHejMarrDatafields; AValue: variant
       );
     function GetDateData(Marr: integer; idx: TEnumHejMarrDatafields): string;
+    Procedure SetDateData(Marr: integer; idx: TEnumHejMarrDatafields; aValue:String);
+    PRocedure ReplacePerson(aInd,aInd2:integer);
     Property Marriage[index:integer]:THejMarrData read GetMarriage write SetMarriage;
     Property ActualMarr:THejMarrData read GetActualMarr write SetActualMarr;
     Property Data[ind:integer;idx:TEnumHejMarrDatafields]:variant read GetData write SetData;default;
- public
+ public // Derived Methods
     Function TestStreamHeader(st:Tstream):boolean;override;
     function IndexOf(Krit: variant): integer; override;
     Procedure Clear;override;
@@ -206,7 +209,7 @@ begin
   if Marr = -1 then
     Marr:= FActIndex;
   if (Marr >=0) and (Marr <= high(FMarrArray)) then
-    FMarrArray[FActIndex].Data[idx] := AValue;
+    FMarrArray[Marr].Data[idx] := AValue;
 end;
 
 function TClsHejMarriages.GetDateData(Marr: integer; idx: TEnumHejMarrDatafields
@@ -215,6 +218,27 @@ begin
   if Marr = -1 then
     Marr := FActIndex;
   result := FMarrArray[marr].GetDateData(idx);
+end;
+
+procedure TClsHejMarriages.SetDateData(Marr: integer;
+  idx: TEnumHejMarrDatafields; aValue: String);
+begin
+  if Marr = -1 then
+    Marr := FActIndex;
+  FMarrArray[marr].SetDateData(idx,aValue);
+end;
+
+procedure TClsHejMarriages.ReplacePerson(aInd, aInd2: integer);
+var
+  i: Integer;
+begin
+  for i := 0 to high(FMarrArray) do
+    begin
+      if FMarrArray[i].idPerson = aInd then
+        FMarrArray[i].idPerson := aInd2;
+      if FMarrArray[i].idSpouse = aInd then
+        FMarrArray[i].idSpouse := aInd2;
+    end;
 end;
 
 procedure TClsHejMarriages.Seek(ID: integer);
@@ -497,6 +521,17 @@ begin
   Data[TEnumHejMarrDatafields(ord(idx)+2)]);
 end;
 
+
+procedure THejMarrData.SetDateData(idx: TEnumHejMarrDatafields; aDate: string);
+var
+  lDay, lMonth, lYear: string;
+begin
+  DateStr2HeyDate(aDate,lDay,lMonth,lYear);
+  data[idx]:=lDay;
+  Data[TEnumHejMarrDatafields(ord(idx)+1)]:=lMonth;
+  Data[TEnumHejMarrDatafields(ord(idx)+2)]:=lYear;
+end;
+
 procedure THejMarrData.Clear;
 var
   I: TEnumHejMarrDatafields;
@@ -727,6 +762,7 @@ begin
         ds.Cancel;
     end;
 end;
+
 
 function THejMarrData.Equals(aValue: THejMarrData; OnlyData: boolean): boolean;
 var

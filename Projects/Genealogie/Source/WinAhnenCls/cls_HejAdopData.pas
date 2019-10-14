@@ -71,6 +71,7 @@ public
     function GetData(ind: integer; idx: TEnumHejAdopDatafields): variant;
     procedure SetData(ind: integer; idx: TEnumHejAdopDatafields; AValue: variant
       );
+    PRocedure ReplacePerson(aInd,aInd2:integer);
     Property Adoption[index:integer]:THejAdopData read GetAdoption;
     Property ActualAdop:THejAdopData read GetActualAdop write SetActualAdop;
     Property Data[ind:integer;idx:TEnumHejAdopDatafields]:variant read GetData write SetData;default;
@@ -104,6 +105,21 @@ begin
     ind:=FActIndex;
   if  (ind >=0) and (ind <= high(FAdopArray)) then
     FAdopArray[ind].Data[idx] := AValue;
+end;
+
+procedure TClsHejAdoptions.ReplacePerson(aInd, aInd2: integer);
+var
+  i: Integer;
+begin
+  for i := 0 to high(FAdopArray) do
+    begin
+      if FAdopArray[i].idPerson= aInd then
+        FAdopArray[i].idPerson:= aInd2;
+      if FAdopArray[i].idFather_adop= aInd then
+        FAdopArray[i].idFather_adop:= aInd2;
+      if FAdopArray[i].idMother_adop= aInd then
+        FAdopArray[i].idMother_adop:= aInd2;
+    end;
 end;
 
 function TClsHejAdoptions.TestStreamHeader(st: Tstream): boolean;

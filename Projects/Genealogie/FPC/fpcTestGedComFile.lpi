@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <SessionStorage Value="InProjectDir"/>
@@ -11,9 +11,6 @@
       <UseXPManifest Value="True"/>
       <Icon Value="0"/>
     </General>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
     </BuildModes>
@@ -21,9 +18,10 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
     </RunParams>
     <RequiredPackages Count="4">
       <Item1>
@@ -39,21 +37,28 @@
         <PackageName Value="FCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="5">
       <Unit0>
         <Filename Value="fpcTestGedComFile.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Source\Test_Gen\testgedcomfile.pas"/>
+        <Filename Value="..\Source\Test_Gen\tst_GedComFile.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="testGedComFile"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\Source\gedcom-import\cmp_gedcomfile.pas"/>
+        <Filename Value="..\Source\gedcom-import\cmp_GedComFile.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Cmp_GedComFile"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="..\Source\Test_Gen\tst_GedComHelper.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\Source\gedcom-import\cls_GedComHelper.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -64,7 +69,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import"/>
+      <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import"/>
       <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>

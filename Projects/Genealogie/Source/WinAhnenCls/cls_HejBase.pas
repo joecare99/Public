@@ -32,6 +32,7 @@ type
     end;
 
 function HejDate2DateStr(Day, Month, Year: string): string;
+procedure DateStr2HeyDate(aDate:String;out Day, Month, Year: string);
 
 implementation
 
@@ -42,7 +43,10 @@ var
     lNum: integer;
 begin
     if not TryStrToInt(day, lNum) then
-        Result := '01.'
+        if day <>'' then
+          Result := Day +' 01.'
+        else
+          Result := '01.'
     else
         Result := Day + '.';
 
@@ -61,6 +65,19 @@ begin
         Result := Result + Year;
     if Result = '01.01.01' then
         Result := '';
+end;
+
+procedure DateStr2HeyDate(aDate: String; out Day, Month, Year: string);
+var
+  lParts: TStringArray;
+begin
+  lParts := adate.Split(['.']);
+  if Length(lParts) = 3 then
+    begin
+      day:= lParts[0];
+      Month:=lParts[1];
+      Year:=lParts[2];
+    end;
 end;
 
 end.

@@ -127,6 +127,10 @@ const
 
   CIndDatedata  =
     [hind_BirthDay, hind_BaptDay,  hind_DeathDay, hind_BurialDay];
+
+  CNonSingleton =
+    [hind_text, hind_AKA, hind_FarmName]  + CIndSourceData;
+
 type
 
 
@@ -136,8 +140,11 @@ type
 
  THejIndData = packed record
 private
+  function GetBirthDate: String;
   function GetData(idx: TEnumHejIndDatafields): Variant;
+  function GetDeathDate: String;
   procedure ReadFromStream0(const st: TStream);
+  procedure SetBirthDate(AValue: String);
   procedure SetData(idx: TEnumHejIndDatafields; AValue: Variant);
 public
   function ToString:String;
@@ -145,6 +152,7 @@ public
   function ParentCount:integer;
   function ChildCount:integer;
   Procedure RemoveParent(aID:integer);
+  Procedure ReplaceParent(aID,aID2:integer);
   Procedure AppendChild(aID:integer);
   Procedure RemoveChild(aID:integer);
   Procedure DeleteChild(idx:integer);
@@ -156,13 +164,16 @@ public
   function SourceCount:integer;
   Function GetValue:double;
   function GetDateData(idx: TEnumHejIndDatafields): string;
+  Procedure SetDateData(idx: TEnumHejIndDatafields;aValue: string);
   Procedure Clear;
   Procedure ReadFromStream(const st:TStream);
   Procedure WriteToStream(const st:TStream);
   Procedure ReadFromDataset(idx:integer;const ds:TDataSet);
   Procedure UpdateDataset(const ds:TDataSet);
   function Equals(aValue:THejIndData;OnlyData:boolean=False):boolean;
-    property Data[idx:TEnumHejIndDatafields]:Variant read GetData write SetData;
+    property Data[idx:TEnumHejIndDatafields]:Variant read GetData write SetData;default;
+    property BirthDate: String read GetBirthDate write SetBirthDate;
+    property DeathDate: String read GetDeathDate;
  public
        ID,
        idFather,
@@ -225,6 +236,7 @@ public
  private
     FIndArray:array of THejIndData;
     FActIndex:integer;
+    FOnUpdate: TNotifyEvent;
     function GetActualChild(index: integer): integer;
     function GetActualChildCount: integer;
     function GetActualInd: THejIndData;
@@ -240,9 +252,13 @@ public
     function GetCount: integer;override;
  public
    procedure AppendLinkChild( const idInd: Integer;const idChild: Integer);
+   procedure RemovePerson(const lActIndex: Integer);
    procedure SetData(ind: integer; idx: TEnumHejIndDatafields; AValue: variant
      );overload;
    Function GetDateData(ind:integer; idx: TEnumHejIndDatafields):string;
+   Procedure SetDateData(ind:Integer; Idx:TEnumHejIndDatafields;aValue:String);
+   Procedure Merge(aInd,aInd2:integer);
+   Class Function GetSource(idx: TEnumHejIndDatafields): TEnumHejIndDatafields;
     Property Individual[index:integer]:THejIndData read GetIndividual;
     Property PeekInd[index:integer]:THejIndData read GetPeekIndi;
     Property ActualInd:THejIndData read GetActualInd write SetActualInd;
@@ -277,6 +293,8 @@ public
     function EOF: boolean;
     Function BOF: boolean;
     Function GetActID: integer;
+    function GetOnUpdate: TNotifyEvent;
+    procedure SetOnUpdate(AValue: TNotifyEvent);
  end;
 
 implementation
@@ -326,6 +344,84 @@ begin
     result := FIndArray[ind].GetDateData(idx);
 end;
 
+procedure TClsHejIndividuals.SetDateData(ind: Integer;
+  Idx: TEnumHejIndDatafields; aValue: String);
+begin
+    if ind = -1 then
+    ind:= FActIndex;
+    if (ind >=0) and (ind <= high(FIndArray)) then
+      FIndArray[ind].SetDateData(idx, AValue);
+end;
+
+procedure TClsHejIndividuals.Merge(aInd, aInd2: integer);
+var
+  i: TEnumHejIndDatafields;
+  lseparator: String;
+  lChild, j: Integer;
+begin
+  for i := hind_idFather to hind_idMother do
+    if (FIndArray[aInd][i]=0) or
+      (FIndArray[aInd][i]=FIndArray[aInd2][i]) then
+    begin
+      FIndArray[aInd][i]:=FIndArray[aInd2][i];
+      if FIndArray[aInd2][i] >0 then
+        FIndArray[FIndArray[aInd2][i]].RemoveChild(aind2);
+    end
+  else
+    if FIndArray[aInd2][i] >0 then
+      FIndArray[FIndArray[aInd2][i]].RemoveChild(aind2);
+  for i := hind_FamilyName to high(TEnumHejIndDatafields) do
+    if (FIndArray[aInd][i]='') or
+      (FIndArray[aInd][i]=FIndArray[aInd2][i]) then
+     begin
+       FIndArray[aInd][i]:=FIndArray[aInd2][i];
+     end
+   else if (FIndArray[aInd2][i]<>'') and (i in CNonSingleton) then
+     begin
+       lseparator := '; ';
+       if i=hind_Text then
+         lseparator:=LineEnding;
+       FIndArray[aInd][i]:=FIndArray[aInd][i]+lseparator+FIndArray[aInd2][i];
+     end;
+   for j := high(FIndArray[aind2].Children) downto 0 do
+     begin
+       lChild :=FIndArray[aind2].Children[j];
+       FIndArray[lChild ].ReplaceParent(aInd2,aInd);
+       FIndArray[aind ].AppendChild(lchild);
+     end;
+   FIndArray[aInd2].Clear;
+end;
+
+class function TClsHejIndividuals.GetSource(idx: TEnumHejIndDatafields
+  ): TEnumHejIndDatafields;
+begin
+  case idx of
+    hind_FamilyName,
+    hind_GivenName,
+    hind_AKA,
+    hind_CallName:result := hind_NameSource;
+    hind_BaptDay,
+    hind_BaptMonth,
+    hind_BaptPlace,
+    hind_BaptYear:result :=  hind_BaptSource ;
+    hind_BirthDay,
+    hind_BirthMonth,
+    hind_Birthplace,
+    hind_BirthYear:result :=  hind_BirthSource ;
+    hind_DeathDay,
+    hind_DeathMonth,
+    hind_DeathPlace,
+    hind_DeathYear,
+    hind_DeathReason:result :=  hind_DeathSource ;
+    hind_BurialDay,
+    hind_BurialMonth,
+    hind_BurialPlace,
+    hind_BurialYear:result :=  hind_BurialSource ;
+  else
+    Result:=hind_ID;
+  end;
+end;
+
 procedure TClsHejIndividuals.AppendMarriage(Ind, marr: integer);
 begin
   if (ind > 0)
@@ -338,8 +434,11 @@ end;
 
 procedure TClsHejIndividuals.Clear;
 begin
+  if not Assigned(FIndArray) then exit;
   setlength(FIndArray,0);
   FActIndex:=-1;
+  if assigned(FOnUpdate) then
+    FOnUpdate(Self);
 end;
 
 procedure TClsHejIndividuals.ReadfromStream(st: Tstream; cls: TClsHejBase);
@@ -388,6 +487,8 @@ begin
         end;
 
     end;
+  if assigned(FOnUpdate) then
+    FOnUpdate(Self);
 end;
 
 procedure TClsHejIndividuals.WriteToStream(st: TStream);
@@ -423,24 +524,36 @@ end;
 
 procedure TClsHejIndividuals.First(Sender: TObject);
 begin
+  if FActIndex= 1 then exit;
   FActIndex:=1;
+  if assigned(FOnUpdate) then
+    FOnUpdate(Self);
 end;
 
 procedure TClsHejIndividuals.Last(Sender: TObject);
 begin
+  if FActIndex=high(FIndArray) then exit;
   FActIndex:=high(FIndArray);
+  if assigned(FOnUpdate) then
+    FOnUpdate(Self);
 end;
 
 procedure TClsHejIndividuals.Next(Sender: TObject);
 begin
+  if FActIndex=high(FIndArray) then exit;
   if FActIndex < high(FIndArray) then
     inc(FActIndex);
+  if assigned(FOnUpdate) then
+    FOnUpdate(Self);
 end;
 
 procedure TClsHejIndividuals.Previous(Sender: TObject);
 begin
+  if FActIndex<= 1 then exit;
   if FActIndex > 1 then
     dec(FActIndex);
+  if assigned(FOnUpdate) then
+    FOnUpdate(Self);
 end;
 
 procedure TClsHejIndividuals.Append(Sender: TObject);
@@ -450,6 +563,8 @@ begin
     else
   Setlength(FIndArray,High(FIndArray)+2);
   FActIndex := high(FIndArray);
+  if assigned(FOnUpdate) then
+    FOnUpdate(Self);
   FIndArray[FActIndex].ID:=FActIndex;
 end;
 
@@ -465,8 +580,14 @@ end;
 
 procedure TClsHejIndividuals.Seek(idInd: integer);
 begin
-  if (idInd <> FActIndex) and (idInd >=0) and (idInd <= high(FIndArray)) then
-    FActIndex:=idInd;
+  if FActIndex = idInd then exit;
+  if (idInd >=0) and (idInd <= high(FIndArray)) then
+    begin
+      FActIndex:=idInd;
+      if assigned(FOnUpdate) then
+        FOnUpdate(Self);
+
+    end;
 end;
 
 procedure TClsHejIndividuals.Cancel(Sender: TObject);
@@ -475,20 +596,9 @@ begin
 end;
 
 procedure TClsHejIndividuals.Delete(Sender: Tobject);
-var
-  i: Integer;
+
 begin
-  FIndArray[FActIndex].id := 0;
-// Löse verbindungen zu Vater und Mutter
-  if FIndArray[FActIndex].idFather >0 then
-    FIndArray[FIndArray[FActIndex].idFather].RemoveChild(FActIndex);
-  if FIndArray[FActIndex].idMother >0 then
-    FIndArray[FIndArray[FActIndex].idMother].RemoveChild(FActIndex);
-// Löse Verbindungen zu evtl.Kindern
-  for i := 0 to high(FIndArray[FActIndex].Children) do
-    FIndArray[FIndArray[FActIndex].Children[i]].RemoveParent(FActIndex);
-// Lösche Daten
-  FIndArray[FActIndex].Clear;
+  RemovePerson(FActIndex);
 end;
 
 function TClsHejIndividuals.EOF: boolean;
@@ -514,6 +624,17 @@ end;
 function TClsHejIndividuals.GetActID: integer;
 begin
   result := FActIndex;
+end;
+
+function TClsHejIndividuals.GetOnUpdate: TNotifyEvent;
+begin
+  result := FOnUpdate;
+end;
+
+procedure TClsHejIndividuals.SetOnUpdate(AValue: TNotifyEvent);
+begin
+  if @FOnUpdate=@AValue then exit;
+  FOnUpdate := aValue;
 end;
 
 function TClsHejIndividuals.GetActualInd: THejIndData;
@@ -566,9 +687,10 @@ end;
 procedure TClsHejIndividuals.AppendLinkChild(const idInd: Integer;
   const idChild: Integer);
 begin
+
   setlength(FIndArray[idInd].Children, high(FIndArray[idInd].Children)+2);
   FIndArray[idInd].Children[high(FIndArray[idInd].Children)]:=idChild;
-  if FIndArray[idInd].Sex = 'w' then
+  if lowercase(FIndArray[idInd].Sex) <> 'm' then
     begin
     if FIndArray[idChild].idMother = 0 then
       FIndArray[idChild].idMother:= idInd;
@@ -576,6 +698,23 @@ begin
   else
   if FIndArray[idChild].idFather = 0 then
     FIndArray[idChild].idFather:= idInd;
+end;
+
+procedure TClsHejIndividuals.RemovePerson(const lActIndex: Integer);
+var
+  i: Integer;
+begin
+    FIndArray[lActIndex].id := 0;
+  // Löse verbindungen zu Vater und Mutter
+    if FIndArray[lActIndex].idFather >0 then
+      FIndArray[FIndArray[lActIndex].idFather].RemoveChild(lActIndex);
+    if FIndArray[lActIndex].idMother >0 then
+      FIndArray[FIndArray[lActIndex].idMother].RemoveChild(lActIndex);
+  // Löse Verbindungen zu evtl.Kindern
+    for i := 0 to high(FIndArray[lActIndex].Children) do
+      FIndArray[FIndArray[lActIndex].Children[i]].RemoveParent(lActIndex);
+  // Lösche Daten
+    FIndArray[lActIndex].Clear;
 end;
 
 function TClsHejIndividuals.TestStreamHeader(st: Tstream): boolean;
@@ -753,6 +892,14 @@ end;
 
 { TClsHejIndData }
 
+function THejIndData.GetBirthDate: String;
+begin
+  if BirthDay+BirthMonth+BirthYear <> '' then
+    result := BirthDay+'.'+BirthMonth+'.'+BirthYear
+  else
+    result := ''
+end;
+
 function THejIndData.GetData(idx: TEnumHejIndDatafields): Variant;
 begin
 
@@ -811,6 +958,14 @@ begin
   else
     result := Null;
   end;
+end;
+
+function THejIndData.GetDeathDate: String;
+begin
+  if DeathDay+DeathMonth+DeathYear <> '' then
+    result := DeathDay+'.'+DeathMonth+'.'+DeathYear
+  else
+    result := '';
 end;
 
 procedure THejIndData.SetData(idx: TEnumHejIndDatafields; AValue: Variant);
@@ -919,6 +1074,14 @@ begin
     idFather:=0;
   if idMother = aID then
     idMother:=0;
+end;
+
+procedure THejIndData.ReplaceParent(aID, aID2: integer);
+begin
+  if idFather = aID then
+    idFather:=aID2;
+  if idMother = aID then
+    idMother:=aID2;
 end;
 
 procedure THejIndData.AppendChild(aID: integer);
@@ -1039,6 +1202,16 @@ begin
   Data[TEnumHejIndDatafields(ord(idx)+2)]);
 end;
 
+procedure THejIndData.SetDateData(idx: TEnumHejIndDatafields; aValue: string);
+var
+  lDay, lMonth, lYear: string;
+begin
+  DateStr2HeyDate(aValue,lDay,lMonth,lYear);
+  data[idx]:=lDay;
+  Data[TEnumHejIndDatafields(ord(idx)+1)]:=lMonth;
+  Data[TEnumHejIndDatafields(ord(idx)+2)]:=lYear;
+end;
+
 procedure THejIndData.Clear;
 var
   I: TEnumHejIndDatafields;
@@ -1108,6 +1281,11 @@ begin
             lActStr:=lActStr+LineEnding;
 
      end;
+end;
+
+procedure THejIndData.SetBirthDate(AValue: String);
+begin
+  // Todo: Implement SetBirthDate
 end;
 
 procedure THejIndData.ReadFromStream(const st: TStream);

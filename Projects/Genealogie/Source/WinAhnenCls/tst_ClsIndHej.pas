@@ -84,6 +84,8 @@ type
     Procedure testRemoveMarriage;
     Procedure testDeleteChild;
     Procedure testDeleteMarriage;
+    Procedure testBirthDate;
+    procedure testDeathDate;
     Procedure TestToString;
     Procedure TestToPasStruct;
   end;
@@ -1418,6 +1420,31 @@ for i := 7 downto 0 do
   end;
 CheckEquals(0,FHejIndData.SpouseCount,'keine Ehen');
 end;
+
+procedure TTestIndHej.testBirthDate;
+begin
+  CheckEquals('21.01.1971',cInd[1].Birthdate,'cInd[1].Birthdate');
+  CheckEquals('',cInd[2].Birthdate,'cInd[2].Birthdate');
+  CheckEquals('',cInd[3].Birthdate,'cInd[3].Birthdate');
+  CheckEquals('',cInd[4].Birthdate,'cInd[4].Birthdate');
+  CheckEquals('',cInd[5].Birthdate,'cInd[5].Birthdate');
+   CheckEquals('14.08.1956',cInd[6].Birthdate,'cInd[6].Birthdate');
+   CheckEquals('22.04.1959',cInd[7].Birthdate,'cInd[7].Birthdate');
+   CheckEquals('28.02.1975',cInd[8].Birthdate,'cInd[8].Birthdate');
+end;
+
+procedure TTestIndHej.testDeathDate;
+begin
+  CheckEquals('af.03.2069',cInd[1].DeathDate,'cInd[1].DeathDate');
+  CheckEquals('',cInd[2].DeathDate,'cInd[2].DeathDate');
+  CheckEquals('',cInd[3].DeathDate,'cInd[3].DeathDate');
+  CheckEquals('',cInd[4].DeathDate,'cInd[4].DeathDate');
+  CheckEquals('',cInd[5].DeathDate,'cInd[5].DeathDate');
+   CheckEquals('',cInd[6].DeathDate,'cInd[6].DeathDate');
+   CheckEquals('',cInd[7].DeathDate,'cInd[7].DeathDate');
+   CheckEquals('',cInd[8].DeathDate,'cInd[8].DeathDate');
+end;
+
 
 procedure TTestIndHej.TestToString;
 var

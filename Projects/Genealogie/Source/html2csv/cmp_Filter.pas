@@ -10,6 +10,19 @@ uses
 Type
    TComputeProc=procedure(CType: byte; Text: String) of object;
 
+   TEnumFiltertype=(
+      ft_On,  // Ausgabe Einschalten
+      ft_Off, // Ausgabe Ausschalten
+      ft_jump, // Sprung
+      ft_Out); // Ausgabe einer Kennung
+
+   {TFilterDef}
+   TFilterRule=record
+     FType:TEnumFiltertype;
+     JumpLine:integer;
+     TestString:String;
+   end;
+
    { TBaseFilter }
 
    TBaseFilter = Class(TComponent)
@@ -37,6 +50,11 @@ Type
 
 
 implementation
+
+Const CFilterOut='+';
+      CFilterOn='[';
+      CFilterOff=']';
+      CFilterJump='j';
 
 procedure TBaseFilter.SetOnLineChange(AValue: TNotifyEvent);
 begin
@@ -78,41 +96,53 @@ end;
 function TBaseFilter.TestFilter(s: string;ComputeFiltered:TComputeProc): boolean;
 
   procedure TestComputeFiltered;
+  var
+    lTestLine: String;
   begin
+    lTestLine:='';
+    if (Ftestline < FSchema.Count) then
+      lTestLine:=FSchema[FTestLine];
     if FVerbose and assigned(FOnLineChange) then
       FOnLineChange(self);
-    if (Ftestline < FSchema.Count) and (copy(FSchema[FTestLine], 1, 1) = '+') then
+    if lTestLine.StartsWith(CFilterOut) then
     begin
       if assigned(ComputeFiltered) then
-        ComputeFiltered(0,copy(FSchema[TestLine], 2, 255));
+        ComputeFiltered(0,copy(lTestLine, 2));
       Inc(FTestLine);
       if FVerbose and assigned(FOnLineChange) then
         FOnLineChange(self);
     end;
   end;
 
+var
+  lActFilter, lNextFilter: String;
+  lDest: Longint;
+
 begin
-  if (FTestLine<FSchema.Count) then
-  if   (copy(FSchema[FTestLine], 1, 1) <> 'j') and
-   (uppercase(copy(FSchema[FTestLine], 2, length(s) + 1)) = uppercase(s)) then
+  if (FTestLine>=FSchema.Count) then exit(false);
+  lActFilter := FSchema[FTestLine];
+  lNextFilter := '';
+  if (FTestLine < FSchema.Count - 1) then
+      lNextFilter := FSchema[FTestLine+1];
+  if  not  lActFilter.StartsWith(CFilterJump) and
+   uppercase(s).StartsWith(uppercase(copy(lActFilter, 2))) then
   begin
-    FFilterMode := copy(FSchema[FTestLine], 1, 1) = '[';
+    FFilterMode := lActFilter.StartsWith(CFilterOn);
     Inc(FTestLine);
     TestComputeFiltered;
   end
-  else if (copy(FSchema[TestLine], 1, 1) = 'j') and
-        (uppercase(copy(FSchema[FTestLine], 4, length(s) + 1)) = uppercase(s)) then
+  else if lActFilter.StartsWith(CFilterJump) and
+        TryStrToInt(copy(FSchema[FTestLine], 2, 2),lDest) and
+        (uppercase(copy(lActFilter, 4)) = uppercase(leftstr(s,length(lActFilter) - 3))) then
       begin
-        FTestLine := StrToInt(copy(FSchema[FTestLine], 2, 2));
+        FTestLine := lDest;
         TestComputeFiltered;
       end
-  else if (copy(FSchema[FTestLine], 1, 1) = 'j') and
-        (FTestLine < FSchema.Count - 1) and
-        (uppercase(copy(FSchema[FTestLine + 1], 2, length(s) + 1)) =
-        uppercase(s)) then
+  else if lActFilter.StartsWith(CFilterJump) and
+        uppercase(s).StartsWith(uppercase(copy(lNextFilter, 2))) then
       begin
         Inc(FTestLine);
-        FilterMode := copy(FSchema[TestLine], 1, 1) = '[';
+        FilterMode := leftstr(lNextFilter, 1) = CFilterOn;
         Inc(FTestLine);
         TestComputeFiltered;
       end;

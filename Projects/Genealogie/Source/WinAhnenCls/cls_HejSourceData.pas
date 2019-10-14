@@ -99,6 +99,7 @@ public
     Function TestStreamHeader(st:Tstream):boolean;override;
     Procedure Clear;override;
     Procedure SetSource(aSource:THejSourData);overload;
+    Function NewSource(aSource:String):integer;
     Function IndexOf(aSourceTitle:variant):integer;override;
     procedure ReadfromStream(st: Tstream; {%H-}cls: TClsHejBase=nil); override;
     PRocedure WriteToStream(st:TStream);override;
@@ -151,6 +152,15 @@ begin
     end;
   FSourArray[lSrc] := aSource;
   FSourArray[lSrc].ID := lSrc;
+end;
+
+function TClsHejSources.NewSource(aSource: String): integer;
+begin
+   setlength(FSourArray,high(FSourArray)+2);
+   FActIndex:=high(FSourArray);
+   FSourArray[FActIndex].Title:=aSource;
+   FSourArray[FActIndex].id:=FActIndex;
+   result := FActIndex;
 end;
 
 function TClsHejSources.IndexOf(aSourceTitle: variant): integer;

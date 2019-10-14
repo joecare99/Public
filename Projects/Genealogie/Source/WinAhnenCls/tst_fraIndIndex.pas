@@ -7,8 +7,8 @@ unit tst_fraIndIndex;
 interface
 
 uses
-  Classes, Forms, SysUtils{$IFNDEF FPC},TestFramework {$Else} ,fpcunit, testutils,
-  testregistry {$endif},cls_HejData,fra_IndIndex;
+  Classes, Forms, SysUtils, Types, fpcunit, testutils, testregistry,
+  cls_HejData, fra_IndIndex;
 
 type
 
@@ -23,11 +23,14 @@ type
     FUpdateSender: TObject;
     FOnUpdateCount:integer;
     procedure GenOnUpdateTest(Sender: TObject);
+    function SimpleSort(const aArray: TIntegerDynArray; aLow, aHigh: integer
+      ): ShortInt;
   protected
     procedure SetUp; override;
     procedure TearDown; override;
   published
     procedure TestSetUp;
+    Procedure TestSortFktn;
     Procedure Test2;
     Procedure Test3;
   end;
@@ -90,6 +93,29 @@ begin
       sleep(10);
       Application.ProcessMessages;
     end;
+end;
+
+procedure TTestFraIndIndex.TestSortFktn;
+
+var
+  lArray: TIntegerDynArray;
+  i: Integer;
+begin
+  setlength(lArray,4);
+  larray[1]:=3;
+  larray[2]:=1;
+  larray[3]:=2;
+  FFraIndIndex.DoIndexSort(lArray,SimpleSort);
+  for i := 1 to length(lArray)-1 do
+    CheckTrue(lArray[i-1]<=lArray[i],'lArray0['+inttostr(i)+']');
+
+  setlength(lArray,10000);
+  for i := 1 to length(lArray)-1 do
+    larray[i]:=random(20000);
+  FFraIndIndex.DoIndexSort(lArray,SimpleSort);
+  for i := 1 to length(lArray)-1 do
+    CheckTrue(lArray[i-1]<=lArray[i],'lArray1['+inttostr(i)+']');
+  setlength(lArray,0);
 end;
 
 procedure TTestFraIndIndex.Test2;
@@ -156,6 +182,17 @@ procedure TTestFraIndIndex.GenOnUpdateTest(Sender: TObject);
 begin
   FUpdateSender := Sender;
   FOnUpdateCount := FonUpdateCount + 1;
+end;
+
+function TTestFraIndIndex.SimpleSort(const aArray: TIntegerDynArray; aLow,
+  aHigh: integer): ShortInt;
+begin
+  if aArray[aLow]<aArray[aHigh] then
+    exit(-1)
+  else if aArray[aLow]>aArray[aHigh] then
+      exit(1)
+  else
+      exit(0);
 end;
 
 procedure TTestFraIndIndex.SetUp;

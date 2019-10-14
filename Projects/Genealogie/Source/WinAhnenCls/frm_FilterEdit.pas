@@ -28,6 +28,7 @@ type
     FFilter: TGenFilter;
     Procedure FillHejConcTypeList(const aSt:TStrings);
     Procedure FillHejCompareTypeList(const aSt:TStrings);
+    procedure FillHejRedirTypeList(const aSt: TStrings);
     procedure SetFilter(AValue: TGenFilter);
   public
     property Filter:TGenFilter read FFilter write SetFilter;
@@ -52,6 +53,8 @@ end;
 procedure TFrmFilterEdit.FormCreate(Sender: TObject);
 begin
   FillHejConcTypeList(cbxHejConcType.Items);
+  FillHejCompareTypeList(ComboBox4.Items);
+  FillHejRedirTypeList(ComboBox2.Items);
 end;
 
 procedure TFrmFilterEdit.FormShow(Sender: TObject);
@@ -68,10 +71,8 @@ var
   j: Integer;
 begin
   aSt.Clear;
-//  for i in TEnumHejConcType do
-//    ast.AddObject(LazarusResources.Find('cls_HejDataFilter.rs'+CConcat[i]).Value,TObject(ptrint(ord(i))));
-   for j := 0 to LazarusResources.Count-1 do
-     ast.AddObject(LazarusResources.Items[j].Name+'='+LazarusResources.Items[j].Value,nil);
+  for i in TEnumHejConcType do
+    ast.AddObject(rshCcT[i],TObject(ptrint(ord(i))));
 end;
 
 procedure TFrmFilterEdit.FillHejCompareTypeList(const aSt: TStrings);
@@ -79,8 +80,17 @@ var
   i: TEnumHejCompareType;
 begin
   aSt.Clear;
-//  for i in TEnumHejCompareType do
-//    ast.AddObject(LazarusResources.Find('rs'+CCompType[i]).Value,TObject(ptrint(ord(i))));
+  for i in TEnumHejCompareType do
+    ast.AddObject(rshCmp[i],TObject(ptrint(ord(i))));
+end;
+
+procedure TFrmFilterEdit.FillHejRedirTypeList(const aSt: TStrings);
+var
+  i: TEnumHejIndRedir;
+begin
+  aSt.Clear;
+  for i in TEnumHejIndRedir do
+    ast.AddObject(rshIRd[i],TObject(ptrint(ord(i))));
 end;
 
 procedure TFrmFilterEdit.SetFilter(AValue: TGenFilter);

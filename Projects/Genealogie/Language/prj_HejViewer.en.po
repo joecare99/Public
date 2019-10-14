@@ -12,6 +12,130 @@ msgstr ""
 "X-Generator: Poedit 2.2.1\n"
 "X-Source-Language: de\n"
 
+#: cls_hejdata.rsgeburt
+msgid "Geburt"
+msgstr ""
+
+#: cls_hejdata.rshird_allchild
+msgid "alle Kinder"
+msgstr ""
+
+#: cls_hejdata.rshird_allparent
+msgid "Eltern"
+msgstr ""
+
+#: cls_hejdata.rshird_allspouse
+msgid "alle Ehepartner"
+msgstr ""
+
+#: cls_hejdata.rshird_anychild
+msgid "ein Kind"
+msgstr ""
+
+#: cls_hejdata.rshird_anyparent
+msgid "ein Elternteil"
+msgstr ""
+
+#: cls_hejdata.rshird_anyspouse
+msgid "ein Ehepartner"
+msgstr ""
+
+#: cls_hejdata.rshird_child
+msgid "Kind"
+msgstr ""
+
+#: cls_hejdata.rshird_father
+msgid "Vater"
+msgstr ""
+
+#: cls_hejdata.rshird_ind
+msgid "Person"
+msgstr ""
+
+#: cls_hejdata.rshird_meta
+msgid "Metadaten"
+msgstr ""
+
+#: cls_hejdata.rshird_mother
+msgid "Mutter"
+msgstr ""
+
+#: cls_hejdata.rshird_spouse
+msgid "Ehepartner"
+msgstr ""
+
+#: cls_hejdatafilter.rshcct_and
+msgid "Und"
+msgstr ""
+
+#: cls_hejdatafilter.rshcct_nor
+msgid "Oder nicht"
+msgstr ""
+
+#: cls_hejdatafilter.rshcct_or
+msgid "Oder"
+msgstr ""
+
+#: cls_hejdatafilter.rshcct_xor
+msgid "Entweder Oder"
+msgstr ""
+
+#: cls_hejdatafilter.rshcct_xor2
+msgid "Entweder Oder 2"
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_contains
+msgid "wie *$*"
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_endswith
+msgid "wie *$"
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_equal
+msgid "="
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_greater
+#, fuzzy
+msgctxt "cls_hejdatafilter.rshcmp_greater"
+msgid ">"
+msgstr ">"
+
+#: cls_hejdatafilter.rshcmp_greateroequal
+msgid ">="
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_isempty
+msgid "[ ]"
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_isnotempty
+msgid "![ ]"
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_less
+#, fuzzy
+msgctxt "cls_hejdatafilter.rshcmp_less"
+msgid "<"
+msgstr "<"
+
+#: cls_hejdatafilter.rshcmp_lessoequal
+msgid "<="
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_nop
+msgid "?"
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_startswith
+msgid "wie $*"
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_unequal
+msgid "<>"
+msgstr ""
+
 #: dm_gendata2.rscreateadoption
 msgid "CREATE TABLE `%s`.`adoptions` ( `idIndividual` INT(11) NOT NULL,`idIndividual_AdopFather` INT(11) NULL DEFAULT '0',`idIndividual_AdopMother` INT(11) NULL DEFAULT '0') COMMENT='Adoption Information of individuals' COLLATE='utf8_general_ci' ENGINE=InnoDB;"
 msgstr ""
@@ -52,44 +176,27 @@ msgstr ""
 msgid "show databases"
 msgstr ""
 
+#: tform1.caption
+msgid "Form1"
+msgstr ""
+
 #: tform1.combobox1.text
 msgid "ComboBox1"
 msgstr ""
 
-#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[0].title.caption
-msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[0].title.caption"
-msgid "idIndividual"
-msgstr "idIndividual"
-
-#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[1].title.caption
-msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[1].title.caption"
-msgid "FamilyName"
-msgstr "Surname"
-
-#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[2].title.caption
-msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[2].title.caption"
-msgid "GivenName"
-msgstr "Givenname"
-
-#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[3].title.caption
-msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[3].title.caption"
-msgid "Birth"
-msgstr "Birth"
-
-#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomclient.tblchildren.columns[0].title.caption
-msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomclient.tblchildren.columns[0].title.caption"
+#: tform1.fraindindex1.stringgrid1.columns[0].title.caption
+#, fuzzy
+msgctxt "tform1.fraindindex1.stringgrid1.columns[0].title.caption"
 msgid "Name"
 msgstr "Name"
 
-#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[0].title.caption
-msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[0].title.caption"
-msgid "Name"
-msgstr "Name"
+#: tform1.fraindindex1.stringgrid1.columns[1].title.caption
+msgid "Cl."
+msgstr ""
 
-#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[1].title.caption
-msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[1].title.caption"
-msgid "Hochzeit"
-msgstr "wedding"
+#: tform1.fraindindex1.stringgrid1.columns[2].title.caption
+msgid "Datum"
+msgstr ""
 
 #: tfraawhejview.actdatasetdelete1.caption
 msgctxt "tfraawhejview.actdatasetdelete1.caption"
@@ -766,6 +873,7 @@ msgid "|<"
 msgstr ""
 
 #: tfraawhejview.speedbutton3.caption
+msgctxt "tfraawhejview.speedbutton3.caption"
 msgid "<"
 msgstr "<"
 
@@ -774,6 +882,7 @@ msgid ">|"
 msgstr ""
 
 #: tfraawhejview.speedbutton5.caption
+msgctxt "tfraawhejview.speedbutton5.caption"
 msgid ">"
 msgstr ">"
 
@@ -888,3 +997,4 @@ msgstr "…"
 #: tfraindindex.speedbutton2.caption
 msgid "S"
 msgstr "Ac"
+

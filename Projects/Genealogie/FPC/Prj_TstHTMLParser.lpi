@@ -19,6 +19,7 @@
         <DpiAware Value="True"/>
       </XPManifest>
     </General>
+    <LazDoc Paths="..\fpDoc"/>
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
