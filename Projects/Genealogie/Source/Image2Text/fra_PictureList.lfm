@@ -1,0 +1,39 @@
+object fraPictureList: TfraPictureList
+  Left = 0
+  Height = 922
+  Top = 0
+  Width = 601
+  ClientHeight = 922
+  ClientWidth = 601
+  DesignTimePPI = 144
+  ParentFont = False
+  TabOrder = 0
+  DesignLeft = 480
+  DesignTop = 8
+  object lstPictures: TShellListView
+    Left = 0
+    Height = 922
+    Top = 0
+    Width = 601
+    Align = alClient
+    Color = clDefault
+    HideSelection = False
+    LargeImages = ilsDirImages
+    Mask = '*.jpg'
+    ParentFont = False
+    SortType = stText
+    TabOrder = 0
+    ViewStyle = vsIcon
+    OnChange = lstPicturesChange
+    OnMouseMove = lstPicturesMouseMove
+    OnMouseWheel = lstPicturesMouseWheel
+    OnSelectItem = lstPicturesSelectItem
+    ObjectTypes = [otNonFolders]
+  end
+  object ilsDirImages: TBGRAImageList
+    Height = 64
+    Width = 64
+    left = 162
+    top = 523
+  end
+end

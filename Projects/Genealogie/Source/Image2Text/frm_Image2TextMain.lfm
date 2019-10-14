@@ -1,126 +1,126 @@
 object frmImage2TextMain: TfrmImage2TextMain
   Left = 0
-  Height = 1130
+  Height = 1695
   Top = 0
-  Width = 2080
+  Width = 3120
   Caption = 'Image 2 Text'
-  ClientHeight = 1130
-  ClientWidth = 2080
+  ClientHeight = 1695
+  ClientWidth = 3120
+  DesignTimePPI = 144
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnKeyDown = FormKeyDown
   OnKeyPress = FormKeyPress
   OnMouseWheel = FormMouseWheel
   OnResize = FormResize
-  Visible = False
   object Splitter1: TSplitter
-    Left = 1347
-    Height = 1035
-    Top = 72
-    Width = 5
+    Left = 2020
+    Height = 1551
+    Top = 108
+    Width = 8
     Align = alRight
     OnCanOffset = Splitter1CanOffset
     ResizeAnchor = akRight
   end
   object pnlRight: TPanel
-    Left = 1352
-    Height = 1035
-    Top = 72
-    Width = 728
+    Left = 2028
+    Height = 1551
+    Top = 108
+    Width = 1092
     Align = alRight
-    ClientHeight = 1035
-    ClientWidth = 728
+    ClientHeight = 1551
+    ClientWidth = 1092
     ParentFont = False
     TabOrder = 1
     inline RTFEditFrame1: TRTFEditFrame
       Left = 1
-      Height = 1033
+      Height = 1549
       Top = 1
-      Width = 726
+      Width = 1090
       Align = alClient
-      ClientHeight = 1033
-      ClientWidth = 726
+      ClientHeight = 1549
+      ClientWidth = 1090
       Visible = True
       inherited RichMemo1: TRichMemo
-        Left = 14
-        Height = 990
-        Top = 70
-        Width = 710
+        Left = 21
+        Height = 1484
+        Top = 105
+        Width = 1066
         Lines.Strings = (
           'RichMemo1'
         )
       end
       inherited btnJA: TSpeedButton
-        Left = 504
-        Height = 38
-        Top = 14
-        Width = 54
+        Left = 756
+        Height = 57
+        Top = 21
+        Width = 81
         Caption = ' '
       end
       inherited btnCA: TSpeedButton
-        Left = 392
-        Height = 38
-        Top = 14
-        Width = 56
+        Left = 588
+        Height = 57
+        Top = 21
+        Width = 84
         Caption = ' '
       end
       inherited btnLA: TSpeedButton
-        Left = 336
-        Height = 38
-        Top = 14
-        Width = 56
+        Left = 504
+        Height = 57
+        Top = 21
+        Width = 84
         Caption = ' '
       end
       inherited btnRA: TSpeedButton
-        Left = 448
-        Height = 38
-        Top = 14
-        Width = 56
+        Left = 672
+        Height = 57
+        Top = 21
+        Width = 84
         Caption = ' '
       end
       inherited btnBold: TSpeedButton
-        Left = 196
-        Height = 38
-        Top = 14
-        Width = 40
+        Left = 294
+        Height = 57
+        Top = 21
+        Width = 60
       end
       inherited btnItalic: TSpeedButton
-        Left = 238
-        Height = 38
-        Top = 14
-        Width = 40
+        Left = 357
+        Height = 57
+        Top = 21
+        Width = 60
       end
       inherited btnUnderline: TSpeedButton
-        Left = 280
-        Height = 38
-        Top = 14
-        Width = 40
+        Left = 420
+        Height = 57
+        Top = 21
+        Width = 60
       end
       inherited btnFont: TSpeedButton
-        Left = 14
-        Height = 38
-        Top = 14
-        Width = 84
+        Left = 21
+        Height = 57
+        Top = 21
+        Width = 126
       end
       inherited btnColor: TSpeedButton
-        Left = 98
-        Height = 38
-        Top = 14
-        Width = 84
+        Left = 147
+        Height = 57
+        Top = 21
+        Width = 126
       end
     end
   end
   object BGRAVirtualScreen1: TBGRAVirtualScreen
-    Left = 170
-    Height = 1035
-    Top = 72
-    Width = 1177
+    Left = 255
+    Height = 1551
+    Top = 108
+    Width = 1765
     OnRedraw = BGRAVirtualScreen1Redraw
     Align = alClient
     Alignment = taLeftJustify
     Caption = 'BGRAVirtualScreen1'
-    ClientHeight = 1035
-    ClientWidth = 1177
+    ClientHeight = 1551
+    ClientWidth = 1765
     Color = clWhite
     FullRepaint = False
     ParentColor = False
@@ -129,10 +129,10 @@ object frmImage2TextMain: TfrmImage2TextMain
     OnMouseDown = BGRAVirtualScreen1MouseDown
     OnMouseMove = BGRAVirtualScreen1MouseMove
     object TrackBar1: TTrackBar
-      Left = 0
-      Height = 19
-      Top = 1016
-      Width = 1177
+      Left = 1
+      Height = 28
+      Top = 1522
+      Width = 1763
       Max = 100
       OnChange = TrackBar1Change
       Position = 0
@@ -143,39 +143,39 @@ object frmImage2TextMain: TfrmImage2TextMain
   end
   object pnlTop: TPanel
     Left = 0
-    Height = 72
+    Height = 108
     Top = 0
-    Width = 2080
+    Width = 3120
     Align = alTop
-    ClientHeight = 72
-    ClientWidth = 2080
+    ClientHeight = 108
+    ClientWidth = 3120
     ParentFont = False
     TabOrder = 3
     object trbImprove: TTrackBar
       AnchorSideLeft.Control = lblImprove
       AnchorSideTop.Control = lblImprove
       AnchorSideTop.Side = asrBottom
-      Left = 239
-      Height = 23
-      Top = 25
-      Width = 182
+      Left = 358
+      Height = 34
+      Top = 39
+      Width = 273
       OnChange = BCButton1Click
       Position = 0
-      BorderSpacing.Top = 3
+      BorderSpacing.Top = 4
       ParentFont = False
       TabOrder = 0
     end
     object btnViewHorizontal: TSpeedButton
       AnchorSideTop.Control = pnlTop
       AnchorSideBottom.Control = lblActDir
-      Left = 498
-      Height = 40
-      Top = 7
-      Width = 40
+      Left = 747
+      Height = 59
+      Top = 10
+      Width = 60
       Action = actViewHorizontal
       Anchors = [akTop, akLeft, akBottom]
-      BorderSpacing.Top = 6
-      BorderSpacing.Bottom = 6
+      BorderSpacing.Top = 9
+      BorderSpacing.Bottom = 9
       Caption = '[|]'
       GroupIndex = 1
       ParentFont = False
@@ -185,15 +185,15 @@ object frmImage2TextMain: TfrmImage2TextMain
       AnchorSideLeft.Side = asrBottom
       AnchorSideTop.Control = pnlTop
       AnchorSideBottom.Control = lblActDir
-      Left = 544
-      Height = 40
-      Top = 7
-      Width = 40
+      Left = 816
+      Height = 59
+      Top = 10
+      Width = 60
       Action = actViewVertical
       Anchors = [akTop, akLeft, akBottom]
-      BorderSpacing.Left = 6
-      BorderSpacing.Top = 6
-      BorderSpacing.Bottom = 6
+      BorderSpacing.Left = 9
+      BorderSpacing.Top = 9
+      BorderSpacing.Bottom = 9
       Caption = '÷'
       GroupIndex = 1
       ParentFont = False
@@ -203,15 +203,16 @@ object frmImage2TextMain: TfrmImage2TextMain
       AnchorSideLeft.Side = asrBottom
       AnchorSideTop.Control = pnlTop
       AnchorSideBottom.Control = lblActDir
-      Left = 123
-      Height = 40
-      Top = 7
-      Width = 110
+      Left = 184
+      Height = 59
+      Top = 10
+      Width = 165
       Anchors = [akTop, akLeft, akBottom]
-      BorderSpacing.Left = 6
-      BorderSpacing.Top = 6
-      BorderSpacing.Bottom = 6
+      BorderSpacing.Left = 9
+      BorderSpacing.Top = 9
+      BorderSpacing.Bottom = 9
       Caption = 'btnOpenDir'
+      OnClick = btnOpenDirClick
       ParentFont = False
       TabOrder = 1
       Visible = False
@@ -219,28 +220,28 @@ object frmImage2TextMain: TfrmImage2TextMain
     object SpeedButton1: TSpeedButton
       AnchorSideTop.Control = pnlTop
       AnchorSideBottom.Control = lblActDir
-      Left = 927
-      Height = 40
-      Top = 7
-      Width = 40
+      Left = 1390
+      Height = 59
+      Top = 10
+      Width = 60
       Action = actFileSave
       Anchors = [akTop, akLeft, akBottom]
-      BorderSpacing.Top = 6
-      BorderSpacing.Bottom = 6
+      BorderSpacing.Top = 9
+      BorderSpacing.Bottom = 9
       ParentFont = False
     end
     object btnOpen: TBitBtn
       AnchorSideLeft.Control = pnlTop
       AnchorSideTop.Control = pnlTop
       AnchorSideBottom.Control = lblActDir
-      Left = 7
-      Height = 40
-      Top = 7
-      Width = 110
+      Left = 10
+      Height = 59
+      Top = 10
+      Width = 165
       Anchors = [akTop, akLeft, akBottom]
-      BorderSpacing.Left = 6
-      BorderSpacing.Top = 6
-      BorderSpacing.Bottom = 6
+      BorderSpacing.Left = 9
+      BorderSpacing.Top = 9
+      BorderSpacing.Bottom = 9
       Caption = 'Öffnen'
       OnClick = btnOpenClick
       ParentFont = False
@@ -250,85 +251,87 @@ object frmImage2TextMain: TfrmImage2TextMain
       AnchorSideLeft.Control = pnlTop
       AnchorSideBottom.Control = pnlTop
       AnchorSideBottom.Side = asrBottom
-      Left = 7
-      Height = 15
-      Top = 53
-      Width = 31
+      Left = 10
+      Height = 25
+      Top = 78
+      Width = 47
       Anchors = [akLeft, akBottom]
-      BorderSpacing.Left = 6
-      BorderSpacing.Bottom = 3
+      BorderSpacing.Left = 9
+      BorderSpacing.Bottom = 4
       Caption = '<Dir>'
       ParentColor = False
+      ParentFont = False
     end
     object lblImprove: TLabel
       AnchorSideLeft.Control = btnOpenDir
       AnchorSideLeft.Side = asrBottom
       AnchorSideTop.Control = pnlTop
-      Left = 239
-      Height = 15
-      Top = 7
-      Width = 59
-      BorderSpacing.Left = 6
-      BorderSpacing.Top = 6
+      Left = 358
+      Height = 25
+      Top = 10
+      Width = 90
+      BorderSpacing.Left = 9
+      BorderSpacing.Top = 9
       Caption = 'Verbessern:'
       ParentColor = False
+      ParentFont = False
     end
   end
   object pnlLeft: TPanel
     Left = 0
-    Height = 1035
-    Top = 72
-    Width = 170
+    Height = 1551
+    Top = 108
+    Width = 255
     Align = alLeft
-    ClientHeight = 1035
-    ClientWidth = 170
+    ClientHeight = 1551
+    ClientWidth = 255
     ParentFont = False
     TabOrder = 4
-    object ShellListView1: TShellListView
+    object lstPictures: TShellListView
       Left = 1
-      Height = 1033
+      Height = 1549
       Top = 1
-      Width = 168
+      Width = 253
       Align = alClient
       Color = clDefault
       Constraints.OnChange = ShellListView1SizeConstraintsChange
       HideSelection = False
-      LargeImages = BGRAImageList1
+      LargeImages = ilsDirImages
       Mask = '*.jpg'
       ParentFont = False
       PopupMenu = RTFEditFrame.PopupMenu1
       SortType = stText
       TabOrder = 0
       ViewStyle = vsIcon
-      OnChange = ShellListView1Change
-      OnMouseMove = ShellListView1MouseMove
-      OnMouseWheel = ShellListView1MouseWheel
-      OnSelectItem = ShellListView1SelectItem
+      OnChange = lstPicturesChange
+      OnMouseMove = lstPicturesMouseMove
+      OnMouseWheel = lstPicturesMouseWheel
+      OnSelectItem = lstPicturesSelectItem
       ObjectTypes = [otNonFolders]
     end
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Height = 23
-    Top = 1107
-    Width = 2080
+    Height = 36
+    Top = 1659
+    Width = 3120
     Panels = <>
     ParentFont = False
     SimplePanel = False
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    left = 406
-    top = 18
+    left = 609
+    top = 27
   end
-  object BGRAImageList1: TBGRAImageList
+  object ilsDirImages: TBGRAImageList
     Height = 64
     Width = 64
-    left = 81
-    top = 322
+    left = 122
+    top = 483
   end
   object ActionList1: TActionList
-    left = 619
-    top = 66
+    left = 929
+    top = 99
     object actViewHorizontal: TAction
       Category = 'View'
       Caption = 'actViewHorizontal'

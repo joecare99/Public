@@ -20,7 +20,7 @@ type
     actViewVertical: TAction;
     actViewHorizontal: TAction;
     ActionList1: TActionList;
-    BGRAImageList1: TBGRAImageList;
+    ilsDirImages: TBGRAImageList;
     BGRAVirtualScreen1: TBGRAVirtualScreen;
     btnOpen: TBitBtn;
     btnOpenDir: TButton;
@@ -33,7 +33,7 @@ type
     btnViewHorizontal: TSpeedButton;
     btnViewVertical: TSpeedButton;
     RTFEditFrame1: TRTFEditFrame;
-    ShellListView1: TShellListView;
+    lstPictures: TShellListView;
     SpeedButton1: TSpeedButton;
     Splitter1: TSplitter;
     StatusBar1: TStatusBar;
@@ -52,6 +52,7 @@ type
       X, Y: Integer);
     procedure BGRAVirtualScreen1Redraw(Sender: TObject; Bitmap: TBGRABitmap);
     procedure btnOpenClick(Sender: TObject);
+    procedure btnOpenDirClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -59,15 +60,15 @@ type
     procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure FormResize(Sender: TObject);
-    procedure ShellListView1Change(Sender: TObject; Item: TListItem;
+    procedure lstPicturesChange(Sender: TObject; Item: TListItem;
       Change: TItemChange);
     procedure ShellListView1ContextPopup(Sender: TObject; MousePos: TPoint;
       var Handled: Boolean);
-    procedure ShellListView1MouseMove(Sender: TObject; Shift: TShiftState; X,
+    procedure lstPicturesMouseMove(Sender: TObject; Shift: TShiftState; X,
       Y: Integer);
-    procedure ShellListView1MouseWheel(Sender: TObject; Shift: TShiftState;
+    procedure lstPicturesMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
-    procedure ShellListView1SelectItem(Sender: TObject; Item: TListItem;
+    procedure lstPicturesSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
     procedure ShellListView1SizeConstraintsChange(Sender: TObject);
     procedure Splitter1CanOffset(Sender: TObject; var NewOffset: Integer;
@@ -108,19 +109,24 @@ begin
   if OpenPictureDialog1.execute then
     begin
       FFilename:=OpenPictureDialog1.FileName;
-      if       ShellListView1.Root<>ExtractFilePath(FFilename) then
+      if       lstPictures.Root<>ExtractFilePath(FFilename) then
          begin
-//           ShellListView1.ViewStyle := vsList;
+//           lstPictures.ViewStyle := vsList;
            lblActDir.Caption:=ExtractFilePath(FFilename);
-           ShellListView1.items.Clear;
-           BGRAImageList1.clear;
-      ShellListView1.Mask:='*.jpg *.jpeg *.png';
-      ShellListView1.Root:=ExtractFilePath(FFilename);
-         ShellListView1.ViewStyle:=vsIcon;
+           lstPictures.items.Clear;
+           ilsDirImages.clear;
+      lstPictures.Mask:='*.jpg *.jpeg *.png';
+      lstPictures.Root:=ExtractFilePath(FFilename);
+         lstPictures.ViewStyle:=vsIcon;
          end;
     Application.ProcessMessages;
           LoadImageFile(FFilename);
     end;
+end;
+
+procedure TfrmImage2TextMain.btnOpenDirClick(Sender: TObject);
+begin
+
 end;
 
 procedure TfrmImage2TextMain.FormCreate(Sender: TObject);
@@ -177,21 +183,21 @@ begin
    BGRAVirtualScreen1.RedrawBitmap;
 end;
 
-procedure TfrmImage2TextMain.ShellListView1Change(Sender: TObject;
+procedure TfrmImage2TextMain.lstPicturesChange(Sender: TObject;
   Item: TListItem; Change: TItemChange);
 var
   NewText, NewPath: String;
   lImage: TBGRABitmap;
 begin
-  if (ctText = change) and (Item=ShellListView1.Selected) and assigned(Item) then
+  if (ctText = change) and (Item=lstPictures.Selected) and assigned(Item) then
     begin
       if ExtractFileExt(item.caption) ='' then
         begin
           item.caption := item.caption + ExtractFileExt(FFileName);
           exit;
         end;
-      NewPath := ShellListView1.GetPathFromItem(Item);
-          if not fileexists(ShellListView1.GetPathFromItem(Item)) then
+      NewPath := lstPictures.GetPathFromItem(Item);
+          if not fileexists(lstPictures.GetPathFromItem(Item)) then
             begin
               RenameFile(FFilename,NewPath);
               if FileExists(changefileext(FFileName,'.rtf')) then
@@ -203,7 +209,7 @@ begin
     end
   else if assigned(Item) and (ctText= Change) and (item.ImageIndex=-1) then
     begin
-      if (item.top < ShellListView1.Height) and (item.top>-64) then
+      if (item.top < lstPictures.Height) and (item.top>-64) then
         Application.QueueAsyncCall(@UpdateListImage, ptrint(Item));
     end;
 end;
@@ -214,45 +220,45 @@ begin
 
 end;
 
-procedure TfrmImage2TextMain.ShellListView1MouseMove(Sender: TObject;
+procedure TfrmImage2TextMain.lstPicturesMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 var
   Item: TListItem;
 begin
   if ssLeft in shift then
     begin
-      for Item in ShellListView1.Items do
-      if (item.ImageIndex=-1) and (item.top < ShellListView1.Height) and (item.top>-64) then
+      for Item in lstPictures.Items do
+      if (item.ImageIndex=-1) and (item.top < lstPictures.Height) and (item.top>-64) then
         Application.QueueAsyncCall(@UpdateListImage, ptrint(Item));
     end;
 end;
 
-procedure TfrmImage2TextMain.ShellListView1MouseWheel(Sender: TObject;
+procedure TfrmImage2TextMain.lstPicturesMouseWheel(Sender: TObject;
   Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
   var Handled: Boolean);
 var
   Item: TListItem;
 begin
-  for Item in ShellListView1.Items do
-  if (item.ImageIndex=-1) and (item.top-ShellListView1.ViewOrigin.y < ShellListView1.Height) and (item.top>shellListView1.ViewOrigin.y-64) then
+  for Item in lstPictures.Items do
+  if (item.ImageIndex=-1) and (item.top-lstPictures.ViewOrigin.y < lstPictures.Height) and (item.top>lstPictures.ViewOrigin.y-64) then
     Application.QueueAsyncCall(@UpdateListImage, ptrint(Item));
 end;
 
-procedure TfrmImage2TextMain.ShellListView1SelectItem(Sender: TObject;
+procedure TfrmImage2TextMain.lstPicturesSelectItem(Sender: TObject;
   Item: TListItem; Selected: Boolean);
 var
   lItem: TListItem;
 begin
-  if FFilename = ShellListView1.GetPathFromItem(Item) then
+  if FFilename = lstPictures.GetPathFromItem(Item) then
     begin
       if Item.ImageIndex = -1 then
         Application.QueueAsyncCall(@UpdateListImage, ptrint(Item));
       exit;
     end;
-  FFilename := ShellListView1.GetPathFromItem(Item);
-  LoadImageFile(ShellListView1.GetPathFromItem(Item));
-  for lItem in ShellListView1.Items do
-  if (litem.ImageIndex=-1) and (litem.top-ShellListView1.ViewOrigin.y < ShellListView1.Height) and (litem.top>shellListView1.ViewOrigin.y-64) then
+  FFilename := lstPictures.GetPathFromItem(Item);
+  LoadImageFile(lstPictures.GetPathFromItem(Item));
+  for lItem in lstPictures.Items do
+  if (litem.ImageIndex=-1) and (litem.top-lstPictures.ViewOrigin.y < lstPictures.Height) and (litem.top>lstPictures.ViewOrigin.y-64) then
     Application.QueueAsyncCall(@UpdateListImage, ptrint(lItem));
 end;
 
@@ -407,11 +413,11 @@ begin
   else
     RTFEditFrame1.NewFile(changeFileExt(lFilename,'.rtf'));
   //
-  ShellListView1.Selected:=  ShellListView1.Items.FindCaption(0,ExtractFileName(lFilename),false,false,false,false);
-  if Assigned(ShellListView1.Selected)
-    and ((ShellListView1.ViewOrigin.y+ShellListView1.height-64<ShellListView1.Selected.Top)
-      or (ShellListView1.ViewOrigin.y> ShellListView1.Selected.Top)   )  then
-     ShellListView1.ViewOrigin :=  Point(ShellListView1.ViewOrigin.x, ShellListView1.Selected.Top);
+  lstPictures.Selected:=  lstPictures.Items.FindCaption(0,ExtractFileName(lFilename),false,false,false,false);
+  if Assigned(lstPictures.Selected)
+    and ((lstPictures.ViewOrigin.y+lstPictures.height-64<lstPictures.Selected.Top)
+      or (lstPictures.ViewOrigin.y> lstPictures.Selected.Top)   )  then
+     lstPictures.ViewOrigin :=  Point(lstPictures.ViewOrigin.x, lstPictures.Selected.Top);
   RTFEditFrame1.RichMemo1.ZoomFactor:=Screen.PixelsPerInch/72;
   BCButton1Click(self);
 end;
@@ -427,14 +433,14 @@ begin
   if assigned(tObject(Data)) and tObject(Data).InheritsFrom(TListItem) then
     begin
       Item :=  TListItem(Data);
-      NewPath := ShellListView1.GetPathFromItem(Item);
+      NewPath := lstPictures.GetPathFromItem(Item);
       if FileExists(NewPath) then
       try
       if (uppercase(ExtractFileExt(item.Caption)) = '.JPG') or
          (uppercase(ExtractFileExt(item.Caption)) = '.JPEG') then
         try
           reader:= TBGRAReaderJpeg.Create;
-          lMs := TFileStream.create(ShellListView1.GetPathFromItem(item),fmOpenRead,fmShareDenyNone);
+          lMs := TFileStream.create(lstPictures.GetPathFromItem(item),fmOpenRead,fmShareDenyNone);
           reader.Scale:=jsEighth;
           reader.Performance:=jpBestSpeed;
           lImage:=TBGRABitmap(reader.ImageRead(lms,TBGRABitmap.Create));
@@ -443,9 +449,9 @@ begin
           freeandnil(lms);
         end
       else
-        lImage:=TBGRABitmap.Create(ShellListView1.GetPathFromItem(item));
-      BGRAImageList1.Add(limage.Resample(64,64,rmSimpleStretch).Bitmap,nil);
-      item.ImageIndex:=BGRAImageList1.Count-1;
+        lImage:=TBGRABitmap.Create(lstPictures.GetPathFromItem(item));
+      ilsDirImages.Add(limage.Resample(64,64,rmSimpleStretch).Bitmap,nil);
+      item.ImageIndex:=ilsDirImages.Count-1;
       finally
         freeandnil(lImage)
       end;
