@@ -1,0 +1,219 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectSession>
+    <PathDelim Value="\"/>
+    <Version Value="10"/>
+    <BuildModes Active="Default"/>
+    <Units Count="9">
+      <Unit0>
+        <Filename Value="Prj_GedcomImp.dpr"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="3"/>
+        <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="39" Y="159"/>
+        <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Cmp_GedComFile"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="286"/>
+        <CursorPos X="38" Y="318"/>
+        <UsageCount Value="201"/>
+        <Loaded Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\Components\GBaseClasses.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="55" Y="23"/>
+        <UsageCount Value="256"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\..\..\..\Components\Source\Unt_ComboBoxExt.pas"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="49"/>
+        <CursorPos X="48" Y="14"/>
+        <UsageCount Value="101"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\GenData\dm_gendata.pas"/>
+        <ComponentName Value="dmGenData"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
+        <EditorIndex Value="6"/>
+        <CursorPos X="52" Y="19"/>
+        <UsageCount Value="101"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\GenData\frm_gendata.pas"/>
+        <ComponentName Value="frmGenData"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_GenData"/>
+        <EditorIndex Value="7"/>
+        <CursorPos X="43" Y="14"/>
+        <UsageCount Value="101"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\..\..\Components\Source\Unt_FileProcs.pas"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="820"/>
+        <CursorPos X="3" Y="846"/>
+        <UsageCount Value="115"/>
+        <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\..\..\..\Daten\Source\Cmp_SEWFile.pas"/>
+        <IsVisibleTab Value="True"/>
+        <WindowIndex Value="1"/>
+        <TopLine Value="97"/>
+        <CursorPos X="16" Y="87"/>
+        <UsageCount Value="115"/>
+        <Loaded Value="True"/>
+      </Unit8>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="307" Column="43" TopLine="284"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="104" Column="25" TopLine="78"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="306" Column="32" TopLine="276"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="108" Column="26" TopLine="102"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="104" Column="25" TopLine="75"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="381" Column="32" TopLine="362"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="129" Column="69" TopLine="90"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="282" Column="14" TopLine="280"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <Caret Line="144" Column="71" TopLine="155"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <Caret Line="187" Column="51" TopLine="156"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <Caret Line="44" Column="8" TopLine="6"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="284" Column="18" TopLine="261"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="294" Column="49" TopLine="271"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="419" Column="23" TopLine="396"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="132" Column="37" TopLine="101"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="293" Column="23" TopLine="289"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <Caret Line="45" Column="9" TopLine="24"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <Caret Line="194" Column="11" TopLine="171"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <Caret Line="52" Column="28" TopLine="13"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <Caret Line="225" Column="17" TopLine="211"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <Caret Line="42" Column="14" TopLine="15"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <Caret Line="249" Column="26" TopLine="214"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <Caret Line="250" Column="26" TopLine="215"/>
+      </Position23>
+      <Position24>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <Caret Line="251" Column="26" TopLine="216"/>
+      </Position24>
+      <Position25>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <Caret Line="258" Column="26" TopLine="223"/>
+      </Position25>
+      <Position26>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <Caret Line="260" Column="10" TopLine="220"/>
+      </Position26>
+      <Position27>
+        <Filename Value="..\gedcom-import\Frm_ShowGedCom.pas"/>
+        <Caret Line="261" Column="36" TopLine="235"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="134" Column="63" TopLine="110"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="45" Column="18" TopLine="13"/>
+      </Position29>
+      <Position30>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Caret Line="256" Column="15" TopLine="247"/>
+      </Position30>
+    </JumpHistory>
+  </ProjectSession>
+</CONFIG>

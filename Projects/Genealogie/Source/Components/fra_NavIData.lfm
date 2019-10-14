@@ -1,0 +1,66 @@
+object fraNavIData: TfraNavIData
+  Left = 0
+  Height = 48
+  Top = 0
+  Width = 558
+  ClientHeight = 48
+  ClientWidth = 558
+  DesignTimePPI = 144
+  OnResize = FrameResize
+  ParentFont = False
+  TabOrder = 0
+  DesignLeft = 349
+  DesignTop = 8
+  object btnFirst: TBitBtn
+    Left = 6
+    Height = 36
+    Top = 6
+    Width = 100
+    Align = alLeft
+    BorderSpacing.Around = 6
+    Caption = '|<'
+    TabOrder = 0
+  end
+  object btnPrev: TBitBtn
+    Left = 112
+    Height = 36
+    Top = 6
+    Width = 100
+    Align = alLeft
+    BorderSpacing.Around = 6
+    Caption = '<'
+    TabOrder = 1
+  end
+  object btnNext: TBitBtn
+    Left = 346
+    Height = 36
+    Top = 6
+    Width = 100
+    Align = alRight
+    BorderSpacing.Around = 6
+    Caption = '>'
+    TabOrder = 2
+  end
+  object btnLast: TBitBtn
+    Left = 452
+    Height = 36
+    Top = 6
+    Width = 100
+    Align = alRight
+    BorderSpacing.Around = 6
+    Caption = '>|'
+    TabOrder = 3
+  end
+  object edtSeekNr: TEdit
+    Left = 218
+    Height = 36
+    Top = 6
+    Width = 122
+    Align = alClient
+    AutoSize = False
+    BorderSpacing.Around = 6
+    OnEditingDone = edtSeekNrEditingDone
+    TabOrder = 4
+    Text = 'edtSeekNr'
+  end
+end

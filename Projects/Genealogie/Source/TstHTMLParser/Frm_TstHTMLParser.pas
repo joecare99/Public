@@ -105,6 +105,7 @@ begin
   p.OnScript := ParseOnScript;
   FFilter.TestLine := 0;
   FFilter.FilterMode := True;
+  FFilter.Verbose:=true;
   mOutput.Clear;
   Tagpath := '';
   p.Feed(mHTML.Text);
@@ -301,7 +302,7 @@ begin
   else
   begin
     LogParseTag('! TS: ' + Text + ', ' + TagPath);
-    TagMark := '<' + Text + '>';
+    TagMark := '';
   end;
   Acttag := uppercase(Text);
   // Exclude singleton Tags
@@ -311,17 +312,24 @@ begin
 end;
 
 procedure TfrmTestHtmlParsingMain.ParseOnTagMod(Sender: TObject; Text: string);
+var
+  lLastFlt: Boolean;
 begin
+  lLastFlt :=FFilter.FilterMode;
   if FFilter.TestFilter('TM: ' + Acttag + ',' + Text,ComputeFiltered) then
   begin
     LogParseTag('TM: ' + Text);
     if TagMark <> '' then
-      TagMark := copy(TagMark, 1, length(TagMark) - 1) + ' ' + Text + '>';
+      TagMark := copy(TagMark, 1, length(TagMark) - 1) + ' ' + Text + '>'
+    else
+      TagMark:=  '<' + Acttag + ' ' + Text + '>' ;
   end
   else
   begin
+    if lLastFlt and (TagMark<>'') then
+      ComputeFiltered(2,TagMark);
     LogParseTag('! TM: ' + Text);
-    TagMark := '';
+    TagMark:='';
   end;
 end;
 

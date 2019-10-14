@@ -1,0 +1,257 @@
+object frmGenData: TfrmGenData
+  Left = 0
+  Height = 758
+  Top = 0
+  Width = 1527
+  ActiveControl = cbxMandant
+  Caption = 'frmGenData'
+  ClientHeight = 758
+  ClientWidth = 1527
+  DesignTimePPI = 120
+  Visible = False
+  object cbxMandant: TComboBox
+    Left = 7
+    Height = 28
+    Top = 24
+    Width = 112
+    ItemHeight = 20
+    OnGetItems = cbxMandantGetItems
+    OnSelect = cbxMandantSelect
+    TabOrder = 0
+    Text = '<Mandant>'
+  end
+  object lblMandant: TLabel
+    Left = 7
+    Height = 20
+    Top = 2
+    Width = 59
+    Caption = 'Mandant'
+    ParentColor = False
+  end
+  object DBNavigator1: TDBNavigator
+    Left = 224
+    Height = 31
+    Top = 704
+    Width = 301
+    Anchors = [akLeft, akBottom]
+    BevelOuter = bvNone
+    ChildSizing.EnlargeHorizontal = crsScaleChilds
+    ChildSizing.EnlargeVertical = crsScaleChilds
+    ChildSizing.ShrinkHorizontal = crsScaleChilds
+    ChildSizing.ShrinkVertical = crsScaleChilds
+    ChildSizing.Layout = cclLeftToRightThenTopToBottom
+    ChildSizing.ControlsPerLine = 100
+    ClientHeight = 31
+    ClientWidth = 301
+    DataSource = DataSource1
+    Options = []
+    TabOrder = 1
+  end
+  object DBGrid1: TDBGrid
+    Left = 61
+    Height = 632
+    Top = 64
+    Width = 1455
+    Anchors = [akTop, akLeft, akRight, akBottom]
+    Color = clWindow
+    Columns = <    
+      item
+        Title.Caption = 'idIndividual'
+        Width = 60
+        FieldName = 'idIndividual'
+      end    
+      item
+        Title.Caption = 'idIndividual_Father'
+        Width = 60
+        FieldName = 'idIndividual_Father'
+      end    
+      item
+        Title.Caption = 'idIndividual_Mother'
+        Width = 60
+        FieldName = 'idIndividual_Mother'
+      end    
+      item
+        Title.Caption = 'FamilyName'
+        Width = 250
+        FieldName = 'FamilyName'
+      end    
+      item
+        Title.Caption = 'GivenName'
+        Width = 250
+        FieldName = 'GivenName'
+      end    
+      item
+        Title.Caption = 'Sex'
+        FieldName = 'Sex'
+      end    
+      item
+        Title.Caption = 'Religion'
+        Width = 60
+        FieldName = 'Religion'
+      end    
+      item
+        Title.Caption = 'Occupation'
+        Width = 250
+        FieldName = 'Occupation'
+      end    
+      item
+        Title.Caption = 'Birth'
+        FieldName = 'Birth'
+      end    
+      item
+        Title.Caption = 'BirthModif'
+        Width = 60
+        FieldName = 'BirthModif'
+      end    
+      item
+        Title.Caption = 'Birthplace'
+        Width = 250
+        FieldName = 'Birthplace'
+      end    
+      item
+        Title.Caption = 'BirthSource'
+        Width = 250
+        FieldName = 'BirthSource'
+      end    
+      item
+        Title.Caption = 'BaptDate'
+        FieldName = 'BaptDate'
+      end    
+      item
+        Title.Caption = 'BaptModif'
+        Width = 60
+        FieldName = 'BaptModif'
+      end    
+      item
+        Title.Caption = 'BaptPlace'
+        Width = 250
+        FieldName = 'BaptPlace'
+      end    
+      item
+        Title.Caption = 'Godparents'
+        Width = 250
+        FieldName = 'Godparents'
+      end    
+      item
+        Title.Caption = 'BaptSource'
+        Width = 250
+        FieldName = 'BaptSource'
+      end    
+      item
+        Title.Caption = 'Residence'
+        Width = 250
+        FieldName = 'Residence'
+      end    
+      item
+        Title.Caption = 'DeathDate'
+        FieldName = 'DeathDate'
+      end    
+      item
+        Title.Caption = 'DeathModif'
+        FieldName = 'DeathModif'
+      end    
+      item
+        Title.Caption = 'DeathPlace'
+        FieldName = 'DeathPlace'
+      end    
+      item
+        Title.Caption = 'DeathReason'
+        FieldName = 'DeathReason'
+      end    
+      item
+        Title.Caption = 'DearhSource'
+        FieldName = 'DearhSource'
+      end    
+      item
+        Title.Caption = 'BurialDate'
+        FieldName = 'BurialDate'
+      end    
+      item
+        Title.Caption = 'BurialModif'
+        FieldName = 'BurialModif'
+      end    
+      item
+        Title.Caption = 'BurialPlace'
+        FieldName = 'BurialPlace'
+      end    
+      item
+        Title.Caption = 'BurialSource'
+        FieldName = 'BurialSource'
+      end    
+      item
+        Title.Caption = 'Text'
+        FieldName = 'Text'
+      end    
+      item
+        Title.Caption = 'living'
+        FieldName = 'living'
+      end    
+      item
+        Title.Caption = 'Index'
+        FieldName = 'Index'
+      end    
+      item
+        Title.Caption = 'AKA'
+        FieldName = 'AKA'
+      end    
+      item
+        Title.Caption = 'Adopted'
+        FieldName = 'Adopted'
+      end    
+      item
+        Title.Caption = 'FarmName'
+        FieldName = 'FarmName'
+      end    
+      item
+        Title.Caption = 'AdrStreet'
+        FieldName = 'AdrStreet'
+      end    
+      item
+        Title.Caption = 'AdrAddit'
+        FieldName = 'AdrAddit'
+      end    
+      item
+        Title.Caption = 'AdrPLZ'
+        FieldName = 'AdrPLZ'
+      end    
+      item
+        Title.Caption = 'AdrPlace'
+        FieldName = 'AdrPlace'
+      end    
+      item
+        Title.Caption = 'AdrPlaceAddit'
+        FieldName = 'AdrPlaceAddit'
+      end    
+      item
+        Title.Caption = 'Age'
+        FieldName = 'Age'
+      end    
+      item
+        Title.Caption = 'Phone'
+        FieldName = 'Phone'
+      end    
+      item
+        Title.Caption = 'eMail'
+        FieldName = 'eMail'
+      end    
+      item
+        Title.Caption = 'WebAdr'
+        FieldName = 'WebAdr'
+      end    
+      item
+        Title.Caption = 'NameSource'
+        FieldName = 'NameSource'
+      end    
+      item
+        Title.Caption = 'CallName'
+        FieldName = 'CallName'
+      end>
+    DataSource = DataSource1
+    TabOrder = 2
+  end
+  object DataSource1: TDataSource
+    DataSet = dmGenData.qryIndividuals
+    left = 8
+    top = 56
+  end
+end

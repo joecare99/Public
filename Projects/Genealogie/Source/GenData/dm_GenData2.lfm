@@ -1,12 +1,12 @@
 object dmGenData: TdmGenData
   OldCreateOrder = False
-  Height = 693
-  HorizontalOffset = 873
-  VerticalOffset = 607
-  Width = 723
-  PPI = 168
+  Height = 594
+  HorizontalOffset = 748
+  VerticalOffset = 520
+  Width = 620
+  PPI = 144
   object SQLConnector1: TSQLConnector
-    Connected = True
+    Connected = False
     LoginPrompt = False
     AfterConnect = SQLConnector1AfterConnect
     DatabaseName = 'ahnenwin_1'
@@ -17,16 +17,16 @@ object dmGenData: TdmGenData
     CharSet = 'UTF8'
     HostName = 'localhost'
     ConnectorType = 'MySQL 5.7'
-    left = 210
-    top = 14
+    left = 180
+    top = 12
   end
   object SQLTransaction1: TSQLTransaction
     Active = False
     Action = caCommitRetaining
     Database = SQLConnector1
     Options = [stoUseImplicit]
-    left = 238
-    top = 126
+    left = 204
+    top = 108
   end
   object qryInternal: TSQLQuery
     PacketRecords = -1
@@ -35,12 +35,11 @@ object dmGenData: TdmGenData
     Transaction = SQLTransaction1
     Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit]
     Params = <>
-    left = 28
-    top = 201
+    left = 24
+    top = 172
   end
   object qryIndividuals: TSQLQuery
     PacketRecords = -1
-    IndexName = 'DEFAULT_ORDER'
     FieldDefs = <    
       item
         Name = 'idIndividual'
@@ -298,7 +297,6 @@ object dmGenData: TdmGenData
         Precision = -1
         Size = 300
       end>
-    Active = True
     BeforePost = qryIndividualsBeforePost
     Database = SQLConnector1
     Transaction = SQLTransaction1
@@ -307,16 +305,15 @@ object dmGenData: TdmGenData
     )
     Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit]
     Params = <>
-    left = 112
-    top = 264
+    left = 96
+    top = 226
   end
   object Config1: TConfig
-    left = 424
-    top = 72
+    left = 363
+    top = 62
   end
   object qryIndividual_Father: TSQLQuery
     PacketRecords = -1
-    IndexName = 'DEFAULT_ORDER'
     FieldDefs = <    
       item
         Name = 'idIndividual'
@@ -574,7 +571,6 @@ object dmGenData: TdmGenData
         Precision = -1
         Size = 300
       end>
-    Active = True
     BeforePost = qryIndividualsBeforePost
     Database = SQLConnector1
     Transaction = SQLTransaction1
@@ -583,12 +579,11 @@ object dmGenData: TdmGenData
     )
     Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit]
     Params = <>
-    left = 208
-    top = 296
+    left = 178
+    top = 254
   end
   object qryIndividual_Mother: TSQLQuery
     PacketRecords = -1
-    IndexName = 'DEFAULT_ORDER'
     FieldDefs = <    
       item
         Name = 'idIndividual'
@@ -846,7 +841,6 @@ object dmGenData: TdmGenData
         Precision = -1
         Size = 300
       end>
-    Active = True
     BeforePost = qryIndividualsBeforePost
     Database = SQLConnector1
     Transaction = SQLTransaction1
@@ -855,12 +849,11 @@ object dmGenData: TdmGenData
     )
     Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit]
     Params = <>
-    left = 336
-    top = 328
+    left = 288
+    top = 281
   end
   object qryIndividual_Kids: TSQLQuery
     PacketRecords = -1
-    IndexName = 'DEFAULT_ORDER'
     FieldDefs = <    
       item
         Name = 'idIndividual'
@@ -1118,7 +1111,6 @@ object dmGenData: TdmGenData
         Precision = -1
         Size = 300
       end>
-    Active = True
     BeforePost = qryIndividualsBeforePost
     Database = SQLConnector1
     Transaction = SQLTransaction1
@@ -1127,12 +1119,11 @@ object dmGenData: TdmGenData
     )
     Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit]
     Params = <>
-    left = 592
-    top = 392
+    left = 507
+    top = 336
   end
   object qryIndividual_Spouse: TSQLQuery
     PacketRecords = -1
-    IndexName = 'DEFAULT_ORDER'
     FieldDefs = <    
       item
         Name = 'idIndividual'
@@ -1390,7 +1381,6 @@ object dmGenData: TdmGenData
         Precision = -1
         Size = 300
       end>
-    Active = True
     BeforePost = qryIndividualsBeforePost
     Database = SQLConnector1
     Transaction = SQLTransaction1
@@ -1399,8 +1389,8 @@ object dmGenData: TdmGenData
     )
     Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit]
     Params = <>
-    left = 464
-    top = 360
+    left = 398
+    top = 309
   end
   object qryMarriages: TSQLQuery
     PacketRecords = -1
@@ -1674,7 +1664,7 @@ object dmGenData: TdmGenData
         Name = 'idPerson'
         ParamType = ptInput
       end>
-    left = 104
-    top = 392
+    left = 89
+    top = 336
   end
 end

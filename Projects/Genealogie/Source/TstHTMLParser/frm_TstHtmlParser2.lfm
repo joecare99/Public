@@ -1,0 +1,2044 @@
+object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
+  Left = 0
+  Height = 1654
+  Top = 0
+  Width = 2720
+  ActiveControl = btnDoParse
+  Caption = 'Test Html Parser 2'
+  ClientHeight = 1654
+  ClientWidth = 2720
+  Color = clBtnFace
+  DesignTimePPI = 144
+  Font.Color = clWindowText
+  Font.Height = -21
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
+  OnKeyUp = FormKeyUp
+  OnShow = FormShow
+  object pnlTop: TPanel
+    Left = 0
+    Height = 76
+    Top = 0
+    Width = 2720
+    Align = alTop
+    ClientHeight = 76
+    ClientWidth = 2720
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    ParentFont = False
+    TabOrder = 0
+    object btnDoParse: TBitBtn
+      Left = 1089
+      Height = 51
+      Top = 10
+      Width = 150
+      Caption = 'Parse'
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      OnClick = btnDoParseClick
+      ParentFont = False
+      TabOrder = 3
+    end
+    object btnLoadFile: TBitBtn
+      Left = 927
+      Height = 51
+      Top = 10
+      Width = 150
+      Caption = 'Open'
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      OnClick = btnLoadFileClick
+      ParentFont = False
+      TabOrder = 2
+    end
+    object cbxFilename: TComboBox
+      Left = 15
+      Height = 33
+      Top = 20
+      Width = 849
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      ItemHeight = 25
+      ParentFont = False
+      TabOrder = 0
+      Text = 'V:\Daten\dokumente\HTML\RNZ-Trauseiten\cloud-hd.de\rnz\trauerportal2\00\vwStammdaten0007.html'
+    end
+    object btnBrowseHtml: TBitBtn
+      Left = 867
+      Height = 45
+      Top = 15
+      Width = 51
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      Glyph.Data = {
+        76010000424D7801000000000000760000002800000020000000100000000100
+        04000000000000000000120B0000120B00000000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+        5555555555555555555555555555555555555555555555555555555555555555
+        555555555555555555555555555555555555555FFFFFFFFFF555550000000000
+        55555577777777775F55500B8B8B8B8B05555775F555555575F550F0B8B8B8B8
+        B05557F75F555555575F50BF0B8B8B8B8B0557F575FFFFFFFF7F50FBF0000000
+        000557F557777777777550BFBFBFBFB0555557F555555557F55550FBFBFBFBF0
+        555557F555555FF7555550BFBFBF00055555575F555577755555550BFBF05555
+        55555575FFF75555555555700007555555555557777555555555555555555555
+        5555555555555555555555555555555555555555555555555555
+      }
+      Layout = blGlyphTop
+      NumGlyphs = 2
+      OnClick = btnBrowseHtmlClick
+      ParentFont = False
+      TabOrder = 1
+    end
+    object btnOpenWeb: TBitBtn
+      Left = 1263
+      Height = 60
+      Top = 2
+      Width = 150
+      Caption = 'WWW'
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      OnClick = btnOpenWebClick
+      ParentFont = False
+      TabOrder = 4
+    end
+    object btnBrowseSchema: TBitBtn
+      Left = 1791
+      Height = 45
+      Top = 15
+      Width = 51
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      Glyph.Data = {
+        76010000424D7801000000000000760000002800000020000000100000000100
+        04000000000000000000120B0000120B00000000000000000000000000000000
+        800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+        FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00555555555555
+        5555555555555555555555555555555555555555555555555555555555555555
+        555555555555555555555555555555555555555FFFFFFFFFF555550000000000
+        55555577777777775F55500B8B8B8B8B05555775F555555575F550F0B8B8B8B8
+        B05557F75F555555575F50BF0B8B8B8B8B0557F575FFFFFFFF7F50FBF0000000
+        000557F557777777777550BFBFBFBFB0555557F555555557F55550FBFBFBFBF0
+        555557F555555FF7555550BFBFBF00055555575F555577755555550BFBF05555
+        55555575FFF75555555555700007555555555557777555555555555555555555
+        5555555555555555555555555555555555555555555555555555
+      }
+      Layout = blGlyphTop
+      NumGlyphs = 2
+      OnClick = btnBrowseSchemaClick
+      ParentFont = False
+      TabOrder = 6
+    end
+    object cbxFilenameSchema: TComboBox
+      Left = 1521
+      Height = 33
+      Top = 20
+      Width = 273
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      ItemHeight = 25
+      ParentFont = False
+      TabOrder = 5
+      Text = 'Huebner_Schema.txt'
+    end
+    object btnLoadSchema: TBitBtn
+      Left = 1839
+      Height = 51
+      Top = 10
+      Width = 150
+      Caption = 'Open'
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      OnClick = btnLoadSchemaClick
+      ParentFont = False
+      TabOrder = 7
+    end
+    object chbAutocontinue: TCheckBox
+      Left = 2061
+      Height = 29
+      Top = 22
+      Width = 178
+      Caption = 'Auto - Continue'
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 8
+    end
+    object lblCompiledOn: TLabel
+      Left = 2634
+      Height = 26
+      Top = 2
+      Width = 80
+      Alignment = taRightJustify
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 4
+      Caption = 'Compiled: %s'#13#10#9'on:%s'
+      Font.Height = -12
+      Font.Name = 'Small Fonts'
+      ParentColor = False
+      ParentFont = False
+    end
+    object BitBtn1: TBitBtn
+      Left = 2364
+      Height = 45
+      Top = 14
+      Width = 228
+      Action = actUpdateTS
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 9
+    end
+  end
+  object PageControl1: TPageControl
+    Left = 255
+    Height = 1492
+    Top = 76
+    Width = 2465
+    ActivePage = TabSheet1
+    Align = alClient
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    ParentFont = False
+    TabIndex = 0
+    TabOrder = 1
+    object TabSheet1: TTabSheet
+      Caption = 'RNZ-Web'
+      ClientHeight = 1454
+      ClientWidth = 2457
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      object pnlBottomP1: TPanel
+        Left = 0
+        Height = 75
+        Top = 1379
+        Width = 2457
+        Align = alBottom
+        ClientHeight = 75
+        ClientWidth = 2457
+        Font.Color = clWindowText
+        Font.Height = -21
+        Font.Name = 'Tahoma'
+        ParentFont = False
+        TabOrder = 0
+        object btnSave: TBitBtn
+          AnchorSideTop.Control = btnSave1
+          AnchorSideBottom.Control = btnSave1
+          AnchorSideBottom.Side = asrBottom
+          Left = 1008
+          Height = 55
+          Top = 10
+          Width = 165
+          Anchors = [akTop, akLeft, akBottom]
+          Caption = 'Save'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          OnClick = btnSaveClick
+          ParentFont = False
+          TabOrder = 0
+        end
+        object chbVerbose: TCheckBox
+          AnchorSideTop.Control = chbAppendDB
+          AnchorSideBottom.Control = chbAppendDB
+          AnchorSideBottom.Side = asrBottom
+          Left = 1192
+          Height = 55
+          Top = 10
+          Width = 154
+          Anchors = [akTop, akLeft, akBottom]
+          Caption = 'Very Verbose'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          OnChange = chbVerboseChange
+          ParentFont = False
+          TabOrder = 1
+        end
+        object btnSaveSchema: TBitBtn
+          Left = 1981
+          Height = 55
+          Top = 10
+          Width = 165
+          Align = alRight
+          Anchors = [akTop, akBottom]
+          BorderSpacing.Around = 9
+          Caption = 'Save'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          OnClick = btnSaveSchemaClick
+          ParentFont = False
+          TabOrder = 2
+        end
+        object chbVerbose1: TCheckBox
+          Left = 2155
+          Height = 55
+          Top = 10
+          Width = 105
+          Align = alRight
+          BorderSpacing.Around = 9
+          Caption = 'Verbose'
+          Checked = True
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          OnChange = chbVerbose1Change
+          ParentFont = False
+          State = cbChecked
+          TabOrder = 3
+        end
+        object btnSave1: TBitBtn
+          Left = 2269
+          Height = 55
+          Top = 10
+          Width = 178
+          Align = alRight
+          Anchors = [akRight, akBottom]
+          BorderSpacing.Around = 9
+          Caption = 'Save CSV'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          OnClick = btnSave1Click
+          ParentFont = False
+          TabOrder = 4
+        end
+        object chbAppendDB: TCheckBox
+          Left = 1836
+          Height = 55
+          Top = 10
+          Width = 136
+          Align = alRight
+          BorderSpacing.Around = 9
+          Caption = 'Append DB'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+          TabOrder = 5
+        end
+      end
+      inline fraTrPortImport1: TfraTrPortImport
+        Height = 1347
+        Top = 32
+        Width = 2457
+        Align = alClient
+        ClientHeight = 1347
+        ClientWidth = 2457
+        TabOrder = 1
+        DesignLeft = 252
+        DesignTop = 930
+        inherited pnlT1Client: TPanel
+          Left = 1498
+          Height = 1287
+          Top = 60
+          Width = 959
+          ClientHeight = 1287
+          ClientWidth = 959
+          inherited mSchema: TMemo
+            Left = 14
+            Height = 1259
+            Top = 14
+            Width = 294
+            BorderSpacing.Around = 14
+            Lines.Strings = (
+              ']TS: !DOCTYPE'
+              ']TS: div'
+              ']S: Stammdaten'
+              ']TS: tr'
+              ']TE: tr'
+              '[TS: a'
+              '+Auftragsnummer:'
+              ']TE: a'
+              '[TS: td'
+              '+Data:'
+              ']TE: tr'
+              'j05TS: tr'
+              ']TE: table'
+              ']S: Zurück'
+              '[TS: a'
+              '+NextFile:'
+              ']TS: img'
+              ']TE: div'
+            )
+          end
+          inherited pnlClClient: TPanel
+            Left = 322
+            Height = 1287
+            Width = 637
+            ClientHeight = 1287
+            ClientWidth = 637
+            inherited mOutput: TMemo
+              Left = 9
+              Height = 808
+              Top = 9
+              Width = 619
+              BorderSpacing.Around = 9
+              Lines.Strings = (
+                'Memo1'
+              )
+            end
+            inherited StringGrid1: TStringGrid
+              Left = 9
+              Height = 452
+              Top = 826
+              Width = 619
+              BorderSpacing.Around = 9
+              Columns = <              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'Auftragsnummer'
+                  Width = 234
+                end              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'Pfad'
+                  Width = 540
+                end              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'Stichwort'
+                  Width = 360
+                end              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'Nachname'
+                  Width = 180
+                end              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'Vorname'
+                  Width = 180
+                end              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'x1'
+                  Width = 36
+                end              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'x2'
+                  Width = 36
+                end              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'Höhe'
+                  Width = 108
+                end              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'Breite'
+                  Width = 108
+                end              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'Date'
+                  Width = 234
+                end              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'Date2'
+                  Width = 234
+                end              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'Type'
+                  Width = 96
+                end              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'PDF'
+                  Width = 288
+                end              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'PNG'
+                  Width = 288
+                end              
+                item
+                  MinSize = 18
+                  MaxSize = 360
+                  PickList.Strings = (                  )
+                  Title.Caption = 'PNG-Th'
+                  Width = 288
+                end>
+              ColWidths = (
+                96
+                234
+                540
+                360
+                180
+                180
+                36
+                36
+                108
+                108
+                234
+                234
+                96
+                288
+                288
+                288
+              )
+            end
+          end
+        end
+        inherited mLog: TMemo
+          Left = 1166
+          Height = 1259
+          Top = 74
+          Width = 318
+          BorderSpacing.Around = 14
+          Lines.Strings = (
+            'Memo1'
+          )
+        end
+        inherited pnlT1Left: TPanel
+          Left = 14
+          Height = 1259
+          Top = 74
+          Width = 1138
+          BorderSpacing.Around = 14
+          ClientHeight = 1259
+          ClientWidth = 1138
+          inherited mHTML: TMemo
+            Height = 753
+            Width = 1138
+            BorderSpacing.Top = 14
+            Lines.Strings = (
+              '<TAG>Memo1</TAG>'
+            )
+          end
+          inherited HTMLViewer1: THtmlViewer
+            Height = 492
+            Width = 1138
+            inherited Splitter1: TSplitter
+              Height = 12
+              Top = 480
+              Width = 1138
+            end
+          end
+        end
+        inherited pnlT1Top: TPanel
+          Height = 60
+          Width = 2457
+        end
+      end
+      object lblRCount4: TLabel
+        AnchorSideBottom.Control = pnlTop
+        AnchorSideBottom.Side = asrBottom
+        Left = 0
+        Height = 30
+        Top = 0
+        Width = 2455
+        Align = alTop
+        Alignment = taRightJustify
+        Anchors = [akRight, akBottom]
+        BorderSpacing.Right = 2
+        BorderSpacing.Bottom = 2
+        Caption = '<0>'
+        Font.Color = clGrayText
+        Font.Height = -17
+        Font.Name = 'Tahoma'
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object TabSheet2: TTabSheet
+      Caption = 'Anzeigen-DB'
+      ClientHeight = 1454
+      ClientWidth = 2457
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      object DBGrid1: TDBGrid
+        Left = 9
+        Height = 591
+        Top = 71
+        Width = 2439
+        Align = alClient
+        BorderSpacing.Around = 9
+        Color = clWindow
+        Columns = <        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Auftrag'
+            Width = 168
+            FieldName = 'Auftrag'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Erscheinungsdatum'
+            Width = 132
+            FieldName = 'Erscheinungsdatum'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Stichwort'
+            Width = 360
+            FieldName = 'Stichwort'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Nachname'
+            Width = 300
+            FieldName = 'Nachname'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Vorname'
+            Width = 300
+            FieldName = 'Vorname'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Ges.'
+            Width = 48
+            FieldName = 'Geschlecht'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Geburtsname'
+            Width = 300
+            FieldName = 'Geburtsname'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Spitzname'
+            Width = 192
+            FieldName = 'Spitzname'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Titel'
+            Width = 192
+            FieldName = 'Titel'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Geboren:'
+            Width = 132
+            FieldName = 'Geb'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Gestorben:'
+            Width = 132
+            FieldName = 'Gest'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Begraben:'
+            Width = 132
+            FieldName = 'Begr'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Ort'
+            Width = 300
+            FieldName = 'Ort'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            PickList.Strings = (
+              '8050'#9'Todesanzeige'
+              '8060'#9'Nachruf'
+              '8070'
+              '8080'
+              '8090'#9'Bekanntmachung'
+            )
+            Title.Caption = 'Rubrik'
+            Width = 96
+            FieldName = 'Rubrik'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'PDF'
+            Width = 216
+            FieldName = 'PDF'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'PNG'
+            Width = 216
+            FieldName = 'PNG'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Hoehe'
+            Width = 96
+            FieldName = 'Hoehe'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Breite'
+            Width = 96
+            FieldName = 'Breite'
+          end        
+          item
+            MinSize = 12
+            MaxSize = 240
+            Title.Caption = 'Pfad'
+            FieldName = 'Pfad'
+          end>
+        DataSource = DataSource1
+        Font.Color = clWindowText
+        Font.Height = -21
+        Font.Name = 'Tahoma'
+        ParentFont = False
+        TabOrder = 0
+        TitleFont.Color = clWindowText
+        TitleFont.Height = -21
+        TitleFont.Name = 'Tahoma'
+      end
+      object pnlP2Top: TPanel
+        Left = 0
+        Height = 62
+        Top = 0
+        Width = 2457
+        Align = alTop
+        Font.Color = clWindowText
+        Font.Height = -21
+        Font.Name = 'Tahoma'
+        ParentFont = False
+        TabOrder = 1
+      end
+      object pnlP2Bottom: TPanel
+        Left = 0
+        Height = 783
+        Top = 671
+        Width = 2457
+        Align = alBottom
+        ClientHeight = 783
+        ClientWidth = 2457
+        Font.Color = clWindowText
+        Font.Height = -21
+        Font.Name = 'Tahoma'
+        ParentFont = False
+        TabOrder = 2
+        object edtPlace: TDBComboBox
+          Left = 16
+          Height = 33
+          Top = 525
+          Width = 297
+          DataField = 'Ort'
+          DataSource = DataSource1
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ItemHeight = 25
+          MaxLength = 0
+          ParentFont = False
+          Sorted = True
+          TabOrder = 7
+        end
+        object DBImage1: TDBImage
+          Left = 1892
+          Height = 681
+          Top = 20
+          Width = 632
+          DataField = 'Bild'
+          DataSource = DataSource1
+          Proportional = True
+          Stretch = True
+        end
+        object DBMemo1: TDBMemo
+          Left = 1200
+          Height = 645
+          Top = 56
+          Width = 669
+          DataField = 'Text'
+          DataSource = DataSource1
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+          ScrollBars = ssAutoVertical
+          TabOrder = 13
+        end
+        object lblMaidenname: TLabel
+          Left = 20
+          Height = 25
+          Top = 135
+          Width = 142
+          Caption = 'Geburts-Name:'
+          FocusControl = edtMaidenname
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtMaidenname: TDBEdit
+          Left = 20
+          Height = 33
+          Top = 165
+          Width = 297
+          DataField = 'Geburtsname'
+          DataSource = DataSource1
+          CharCase = ecNormal
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          MaxLength = 100
+          ParentFont = False
+          TabOrder = 2
+        end
+        object lblGeboren: TLabel
+          Left = 16
+          Height = 25
+          Top = 291
+          Width = 86
+          Caption = 'Geboren:'
+          FocusControl = edtBirth
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblDeath: TLabel
+          Left = 16
+          Height = 25
+          Top = 362
+          Width = 102
+          Caption = 'Gestorben:'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentColor = False
+          ParentFont = False
+        end
+        object lblBurial: TLabel
+          Left = 16
+          Height = 25
+          Top = 428
+          Width = 97
+          Caption = 'Begraben:'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtBirth: TDBDateEdit
+          Left = 116
+          Height = 33
+          Top = 321
+          Width = 297
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          OnCustomDate = edtHaveCustomDate
+          DateOrder = doNone
+          ButtonWidth = 34
+          NumGlyphs = 1
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 3
+          Text = '01.03.1933'
+          TextHint = 'Geburtsdatum'
+          DataField = 'Geb'
+          DataSource = DataSource1
+        end
+        object edtDeath: TDBDateEdit
+          Left = 16
+          Height = 33
+          Top = 387
+          Width = 297
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          OnCustomDate = edtHaveCustomDate
+          DateOrder = doNone
+          ButtonWidth = 34
+          NumGlyphs = 1
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 4
+          DataField = 'Gest'
+          DataSource = DataSource1
+        end
+        object edtBurial: TDBDateEdit
+          Left = 16
+          Height = 33
+          Top = 458
+          Width = 297
+          CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
+          OnCustomDate = edtHaveCustomDate
+          DateOrder = doNone
+          ButtonWidth = 34
+          NumGlyphs = 1
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 6
+          DataField = 'Begr'
+          DataSource = DataSource1
+        end
+        object lblPlace: TLabel
+          Left = 20
+          Height = 25
+          Top = 495
+          Width = 37
+          Caption = 'Ort:'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentColor = False
+          ParentFont = False
+        end
+        object chbAutoText: TCheckBox
+          Left = 1724
+          Height = 29
+          Top = 708
+          Width = 121
+          Caption = 'Auto-Text'
+          Checked = True
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+          State = cbChecked
+          TabOrder = 14
+        end
+        object chbAutoImage: TCheckBox
+          Left = 2288
+          Height = 29
+          Top = 706
+          Width = 141
+          Caption = 'Auto-Image'
+          Checked = True
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+          State = cbChecked
+          TabOrder = 15
+        end
+        object btnProcessPDF2: TSpeedButton
+          Left = 254
+          Height = 33
+          Top = 603
+          Width = 34
+          Caption = 'p2x'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          OnClick = btnProcessPDF2Click
+          ParentFont = False
+        end
+        object btnParseText: TSpeedButton
+          Left = 1144
+          Height = 40
+          Top = 60
+          Width = 39
+          Action = actDataParseText
+          Caption = '<pT'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+        end
+        object btnLoadPng: TSpeedButton
+          Left = 213
+          Height = 33
+          Top = 636
+          Width = 34
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          OnClick = btnLoadPngClick
+          ParentFont = False
+        end
+        object chbPNGFound: TCheckBox
+          Left = 33
+          Height = 29
+          Top = 634
+          Width = 167
+          Caption = 'PNG-gefunden'
+          Enabled = False
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+          TabOrder = 11
+        end
+        object chbPDFFound: TCheckBox
+          Left = 33
+          Height = 29
+          Top = 604
+          Width = 164
+          Caption = 'PDF-gefunden'
+          Enabled = False
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+          TabOrder = 9
+        end
+        object chbXmlFound: TCheckBox
+          Left = 33
+          Height = 29
+          Top = 572
+          Width = 165
+          Caption = 'XML-gefunden'
+          Enabled = False
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+          TabOrder = 8
+        end
+        object btnLoadXml: TSpeedButton
+          Left = 213
+          Height = 33
+          Top = 572
+          Width = 34
+          Caption = 'T>'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          OnClick = btnLoadXmlClick
+          ParentFont = False
+        end
+        inline fraXmlView1: TfraXmlView
+          Left = 843
+          Height = 182
+          Top = 74
+          Width = 294
+          ClientHeight = 182
+          ClientWidth = 294
+          TabOrder = 12
+          inherited PaintBox1: TPaintBox
+            Height = 182
+            Width = 294
+          end
+        end
+        object lblAge: TStaticText
+          Left = 321
+          Height = 26
+          Top = 393
+          Width = 98
+          Caption = '<Age>'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          OnClick = lblAgeClick
+          ParentFont = False
+          TabOrder = 5
+        end
+        object lblDataPath: TStaticText
+          Cursor = crHandPoint
+          Left = 8
+          Height = 23
+          Top = 704
+          Width = 61
+          AutoSize = True
+          Caption = '<Path>'
+          Color = clDefault
+          Font.Color = clHighlight
+          Font.Height = -18
+          Font.Name = 'Tahoma'
+          Font.Style = [fsUnderline]
+          OnClick = lblDataPathClick
+          ParentFont = False
+          ParentColor = False
+          TabOrder = 16
+        end
+        object DBNavigator1: TDBNavigator
+          Left = 1
+          Height = 38
+          Top = 744
+          Width = 2455
+          Align = alBottom
+          BevelOuter = bvNone
+          ChildSizing.EnlargeHorizontal = crsScaleChilds
+          ChildSizing.EnlargeVertical = crsScaleChilds
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 100
+          ClientHeight = 38
+          ClientWidth = 2455
+          DataSource = DataSource1
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          Options = [navFocusableButtons]
+          ParentFont = False
+          TabOrder = 17
+        end
+        object btnRefreshOrte: TSpeedButton
+          Left = 322
+          Height = 38
+          Top = 520
+          Width = 39
+          Caption = '«»'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          OnClick = actDataRefreshPlacesExecute
+          ParentFont = False
+        end
+        object rgRubrik: TDBRadioGroup
+          Left = 556
+          Height = 440
+          Top = 144
+          Width = 267
+          AutoFill = True
+          Caption = 'Rubrik'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 1
+          DataField = 'Rubrik'
+          DataSource = DataSource1
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          Items.Strings = (
+            'Todesanzeige'
+            'Todesanzeige (kein Ort)'
+            'Todesanzeige (kein B.Dat)'
+            'Erinnerung'
+            'Erinnerung (k.TA)'
+            'Danksagung'
+            'Danksagung (k.TA)'
+            'Nachruf (priv.)'
+            'Nachruf (priv./k.TA)'
+            'Nachruf (gesch.)'
+            'Nachruf (gesch./k.TA)'
+            'Bekanntmachung'
+            'Werbung'
+          )
+          ParentFont = False
+          TabOrder = 18
+          Values.Strings = (
+            '8050'
+            '8051'
+            '8052'
+            '8055'
+            '8056'
+            '8060'
+            '8061'
+            '8070'
+            '8071'
+            '8080'
+            '8081'
+            '8090'
+            '8100'
+          )
+        end
+        object pbrPDFProgress: TProgressBar
+          Left = 296
+          Height = 32
+          Top = 604
+          Width = 150
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          Max = 150
+          ParentFont = False
+          TabOrder = 10
+        end
+        object btnOCRCancel: TSpeedButton
+          Left = 456
+          Height = 33
+          Top = 604
+          Width = 34
+          Caption = '(/)'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          OnClick = btnOCRCancelClick
+          ParentFont = False
+        end
+        object rgSex: TDBRadioGroup
+          Left = 20
+          Height = 64
+          Top = 3
+          Width = 690
+          AutoFill = True
+          Caption = 'Geschlecht:'
+          ChildSizing.LeftRightSpacing = 6
+          ChildSizing.EnlargeHorizontal = crsHomogenousChildResize
+          ChildSizing.EnlargeVertical = crsHomogenousChildResize
+          ChildSizing.ShrinkHorizontal = crsScaleChilds
+          ChildSizing.ShrinkVertical = crsScaleChilds
+          ChildSizing.Layout = cclLeftToRightThenTopToBottom
+          ChildSizing.ControlsPerLine = 4
+          Columns = 4
+          DataField = 'Geschlecht'
+          DataSource = DataSource1
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          Items.Strings = (
+            'Männl.'
+            'Weibl.'
+            'N/A'
+          )
+          ParentFont = False
+          TabOrder = 0
+          Values.Strings = (
+            'M'
+            'F'
+            'U'
+          )
+        end
+        object lblFamilyname: TLabel
+          Left = 20
+          Height = 25
+          Top = 74
+          Width = 61
+          Caption = 'Name:'
+          FocusControl = edtFamilyname
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtFamilyname: TDBEdit
+          Left = 20
+          Height = 33
+          Top = 102
+          Width = 297
+          DataField = 'Nachname'
+          DataSource = DataSource1
+          CharCase = ecNormal
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          MaxLength = 100
+          ParentFont = False
+          TabOrder = 1
+        end
+        object edtGivenname: TDBEdit
+          Left = 327
+          Height = 33
+          Top = 102
+          Width = 381
+          DataField = 'Vorname'
+          DataSource = DataSource1
+          CharCase = ecNormal
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          MaxLength = 100
+          ParentFont = False
+          TabOrder = 19
+        end
+        object lblGivenname: TLabel
+          Left = 327
+          Height = 25
+          Top = 74
+          Width = 91
+          Caption = 'Vorname:'
+          FocusControl = edtGivenname
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentColor = False
+          ParentFont = False
+        end
+        object btnDataCopyRecord: TSpeedButton
+          Left = 982
+          Height = 33
+          Top = 21
+          Width = 34
+          Action = actDataCopyRecord
+          Caption = 'CC'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+        end
+        object btnCopyBirthday: TSpeedButton
+          Left = 1155
+          Height = 33
+          Top = 284
+          Width = 34
+          Action = actDataSetBirth
+          Caption = '<*'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+        end
+        object btnCopyDeath: TSpeedButton
+          Left = 1155
+          Height = 33
+          Top = 324
+          Width = 34
+          Action = actDataSetDeath
+          Caption = '<+'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+        end
+        object btnCopyBurial: TSpeedButton
+          Left = 1155
+          Height = 33
+          Top = 363
+          Width = 34
+          Action = actDataSetBurial
+          Caption = '<ℿ'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+        end
+        object SpeedButton1: TSpeedButton
+          Left = 1156
+          Height = 33
+          Top = 243
+          Width = 34
+          Action = actDataSetMaidenname
+          Caption = '<N*'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+        end
+        object btnDelMaidenname: TSpeedButton
+          AnchorSideLeft.Control = edtMaidenname
+          AnchorSideLeft.Side = asrBottom
+          AnchorSideTop.Control = edtMaidenname
+          AnchorSideTop.Side = asrCenter
+          AnchorSideBottom.Side = asrCenter
+          Left = 326
+          Height = 38
+          Top = 162
+          Width = 38
+          Action = actDataDelMaidenname
+          BorderSpacing.Left = 9
+          Caption = 'X'
+          Font.Color = clMaroon
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          Font.Style = [fsBold]
+          ParentFont = False
+        end
+        object SpeedButton3: TSpeedButton
+          Left = 1158
+          Height = 33
+          Top = 405
+          Width = 34
+          Action = actDataSetPlace
+          Caption = '<P'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+        end
+        object btnDataSwitchNames: TSpeedButton
+          Left = 710
+          Height = 33
+          Top = 99
+          Width = 34
+          Action = actDataSwichNames
+          Caption = '↔'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+        end
+        object lblMaidenname1: TLabel
+          Left = 20
+          Height = 25
+          Top = 202
+          Width = 165
+          Caption = 'Spitzname (AKA):'
+          FocusControl = edtMaidenname1
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtMaidenname1: TDBEdit
+          Left = 16
+          Height = 33
+          Top = 232
+          Width = 212
+          DataField = 'Spitzname'
+          DataSource = DataSource1
+          CharCase = ecNormal
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          MaxLength = 50
+          ParentFont = False
+          TabOrder = 20
+        end
+        object lblMaidenname2: TLabel
+          Left = 240
+          Height = 25
+          Top = 202
+          Width = 47
+          Caption = 'Titel:'
+          FocusControl = edtMaidenname2
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentColor = False
+          ParentFont = False
+        end
+        object edtMaidenname2: TDBEdit
+          Left = 240
+          Height = 33
+          Top = 232
+          Width = 297
+          DataField = 'Titel'
+          DataSource = DataSource1
+          CharCase = ecNormal
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          MaxLength = 50
+          ParentFont = False
+          TabOrder = 21
+        end
+        object btnProcessPdf: TSpeedButton
+          Left = 213
+          Height = 33
+          Top = 604
+          Width = 34
+          Action = actDataProcessPDF
+          Caption = 'pPf'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+        end
+        object edtSetAge: TEdit
+          Left = 321
+          Height = 33
+          Top = 390
+          Width = 120
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          OnExit = edtSetAgeExit
+          OnKeyPress = edtSetAgeKeyPress
+          ParentFont = False
+          TabOrder = 22
+          Text = 'edtSetAge'
+          Visible = False
+        end
+        object ComboBoxEx1: TComboBoxEx
+          Left = 2559
+          Height = 30
+          Top = 32
+          Width = 342
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ItemHeight = 24
+          ItemsEx = <>
+          ParentFont = False
+          TabOrder = 23
+        end
+        object DBComboBox1: TDBComboBox
+          Left = 15
+          Height = 33
+          Top = 322
+          Width = 94
+          DataField = 'GebModif'
+          DataSource = DataSource1
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ItemHeight = 25
+          Items.Strings = (
+            ''
+            'vor'
+            'nch.'
+            'ber.'
+            'ges.'
+            'ung.'
+          )
+          MaxLength = 0
+          ParentFont = False
+          TabOrder = 24
+        end
+        object cbxLinkedTo: TComboBox
+          Left = 1194
+          Height = 33
+          Top = 15
+          Width = 675
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ItemHeight = 25
+          OnDropDown = cbxLinkedToDropDown
+          OnExit = cbxLinkedToExit
+          OnSelect = cbxLinkedToSelect
+          ParentFont = False
+          TabOrder = 25
+          Text = 'cbxLinkedTo'
+        end
+        object lblLink: TLabel
+          AnchorSideTop.Control = cbxLinkedTo
+          AnchorSideRight.Control = cbxLinkedTo
+          Left = 1147
+          Height = 25
+          Top = 18
+          Width = 44
+          Anchors = [akTop, akRight]
+          BorderSpacing.Top = 3
+          BorderSpacing.Right = 3
+          Caption = 'Link:'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentColor = False
+          ParentFont = False
+        end
+        object btnOCR_In: TSpeedButton
+          Left = 1156
+          Height = 33
+          Top = 135
+          Width = 34
+          Action = actDataOCRImport
+          Caption = 'O>'
+          Font.Color = clWindowText
+          Font.Height = -21
+          Font.Name = 'Tahoma'
+          ParentFont = False
+        end
+      end
+    end
+    object TabSheet3: TTabSheet
+      Caption = 'Orte'
+      ClientHeight = 1699
+      ClientWidth = 2866
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      inline FraPlaceEdit1: TFraPlaceEdit
+        Height = 1699
+        Width = 2866
+        Align = alClient
+        ClientHeight = 1699
+        ClientWidth = 2866
+        inherited DBEdit1: TDBEdit
+          Left = 1993
+          Height = 87
+          Top = 696
+          Width = 0
+          BorderSpacing.Around = 18
+        end
+        inherited btnImportGedCom: TBitBtn
+          Left = 651
+          Height = 120
+          Top = 24
+          Width = 297
+        end
+        inherited Panel1: TPanel
+          Height = 1088
+          Width = 1134
+          ClientHeight = 1088
+          ClientWidth = 1134
+          inherited DBGrid1: TDBGrid
+            Left = 15
+            Height = 887
+            Top = 97
+            Width = 852
+            BorderSpacing.Around = 18
+            Columns = <            
+              item
+                MinSize = 32
+                MaxSize = 630
+                PickList.Strings = (                )
+                Title.Caption = 'Ortname'
+                Width = 945
+                FieldName = 'Ortname'
+              end>
+          end
+          inherited Edit1: TEdit
+            Left = 15
+            Height = 87
+            Top = 15
+            Width = 852
+            BorderSpacing.Around = 18
+          end
+          inherited DBNavigator1: TDBNavigator
+            Left = 15
+            Height = 96
+            Top = 977
+            Width = 852
+            BorderSpacing.Around = 18
+            ClientHeight = 96
+            ClientWidth = 852
+            Hints.Strings = (            )
+          end
+        end
+        inherited btnSync: TBitBtn
+          Left = 329
+          Height = 120
+          Top = 24
+          Width = 297
+        end
+      end
+    end
+    object TabSheet4: TTabSheet
+      Caption = 'Einstellungen'
+      ClientHeight = 1048
+      ClientWidth = 2310
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      inline fraRNZConfig1: TfraRNZConfig
+        Height = 1048
+        Width = 2310
+        ClientHeight = 1048
+        ClientWidth = 2310
+        inherited pnlHeader: TPanel
+          Height = 58
+        end
+        inherited pnlClient: TPanel
+          inherited FraCfgProperty1: TFraCfgProperty
+            AnchorSideRight.Side = asrBottom
+            Left = 1
+            Height = 80
+            Top = 1
+            Width = 862
+            Align = alTop
+            ClientHeight = 80
+            ClientWidth = 862
+            inherited DividerBevel1: TDividerBevel
+              Height = 15
+              Width = 862
+              Caption = 'Lokaler RNZ-Pfad'
+            end
+          end
+          inherited FraCfgProperty3: TFraCfgProperty
+            Left = 1
+            Height = 81
+            Top = 107
+            Width = 862
+            Align = alTop
+            ClientHeight = 81
+            ClientWidth = 862
+            TabOrder = 1
+            inherited DividerBevel1: TDividerBevel
+              Height = 15
+              Width = 862
+              Caption = 'PDF2XML-Path'
+            end
+          end
+          inherited FraCfgProperty2: TFraCfgProperty
+            Left = 1
+            Height = 80
+            Top = 54
+            Width = 862
+            Align = alTop
+            ClientHeight = 80
+            ClientWidth = 862
+            TabOrder = 5
+            inherited DividerBevel1: TDividerBevel
+              Height = 15
+              Width = 862
+              Caption = 'RNZ - Online URL'
+            end
+          end
+          inherited cbxPDF2XMLPath: TComboBox
+            Left = 22
+            Height = 33
+            Top = 282
+            BorderSpacing.Left = 21
+            BorderSpacing.Top = 40
+            BorderSpacing.Right = 21
+            ItemHeight = 25
+          end
+          inherited cbxLocalPath: TComboBox
+            Left = 22
+            Height = 33
+            Top = 42
+            BorderSpacing.Left = 21
+            BorderSpacing.Top = 40
+            BorderSpacing.Right = 21
+            ItemHeight = 25
+          end
+          inherited cbxOnlineURL: TComboBox
+            Left = 22
+            Height = 33
+            Top = 162
+            BorderSpacing.Left = 21
+            BorderSpacing.Top = 40
+            BorderSpacing.Right = 21
+            ItemHeight = 25
+          end
+          inherited btnLocalPath: TBitBtn
+            Left = 686
+            Height = 68
+            Top = 42
+            Width = 168
+            BorderSpacing.Top = 40
+            BorderSpacing.Right = 21
+          end
+          inherited btnPDF2XMLPath: TBitBtn
+            Left = 686
+            Height = 68
+            Top = 282
+            Width = 168
+            BorderSpacing.Top = 40
+            BorderSpacing.Right = 21
+          end
+        end
+      end
+    end
+  end
+  object ListBox1: TListBox
+    Left = 0
+    Height = 1492
+    Top = 76
+    Width = 255
+    Align = alLeft
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    ItemHeight = 0
+    ParentFont = False
+    TabOrder = 2
+  end
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 86
+    Top = 1568
+    Width = 2720
+    Align = alBottom
+    ClientHeight = 86
+    ClientWidth = 2720
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    ParentFont = False
+    TabOrder = 3
+    object btnExportCSV: TBitBtn
+      Left = 2067
+      Height = 64
+      Top = 10
+      Width = 208
+      Caption = 'Export->CSV'
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      OnClick = btnExportCSVClick
+      ParentFont = False
+      TabOrder = 0
+    end
+    object btnExportGed: TBitBtn
+      Left = 1824
+      Height = 56
+      Top = 20
+      Width = 218
+      Caption = 'Export -> GedCom'
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      OnClick = btnExportGedClick
+      ParentFont = False
+      TabOrder = 1
+    end
+    object chbOnlyTAnzeigen: TCheckBox
+      Left = 1851
+      Height = 29
+      Hint = 'Todesanzeigen/ Alles / Alles ausser'
+      Top = -8
+      Width = 176
+      AllowGrayed = True
+      Caption = 'Nur T-Anzeigen'
+      Font.Color = clWindowText
+      Font.Height = -21
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      State = cbGrayed
+      TabOrder = 2
+    end
+  end
+  object btnDataCopyRecord1: TSpeedButton
+    Left = 982
+    Height = 33
+    Top = 21
+    Width = 34
+    Action = actDataCopyRecord
+    Font.Color = clWindowText
+    Font.Height = -21
+    Font.Name = 'Tahoma'
+    ParentFont = False
+  end
+  object lblRCount: TLabel
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Side = asrBottom
+    Left = 382
+    Height = 21
+    Top = 251
+    Width = 33
+    Anchors = [akRight, akBottom]
+    BorderSpacing.Right = 2
+    BorderSpacing.Bottom = 2
+    Caption = '<0>'
+    Font.Color = clGrayText
+    Font.Height = -17
+    Font.Name = 'Tahoma'
+    ParentColor = False
+    ParentFont = False
+  end
+  object lblRCount1: TLabel
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Side = asrBottom
+    Left = 382
+    Height = 21
+    Top = 251
+    Width = 33
+    Anchors = [akRight, akBottom]
+    BorderSpacing.Right = 2
+    BorderSpacing.Bottom = 2
+    Caption = '<0>'
+    Font.Color = clGrayText
+    Font.Height = -17
+    Font.Name = 'Tahoma'
+    ParentColor = False
+    ParentFont = False
+  end
+  object lblRCount2: TLabel
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Side = asrBottom
+    Left = 422
+    Height = 21
+    Top = 269
+    Width = 33
+    Anchors = [akRight, akBottom]
+    BorderSpacing.Right = 2
+    BorderSpacing.Bottom = 2
+    Caption = '<0>'
+    Font.Color = clGrayText
+    Font.Height = -17
+    Font.Name = 'Tahoma'
+    ParentColor = False
+    ParentFont = False
+  end
+  object lblRCount3: TLabel
+    AnchorSideRight.Side = asrBottom
+    AnchorSideBottom.Side = asrBottom
+    Left = 422
+    Height = 21
+    Top = 269
+    Width = 33
+    Anchors = [akRight, akBottom]
+    BorderSpacing.Right = 2
+    BorderSpacing.Bottom = 2
+    Caption = '<0>'
+    Font.Color = clGrayText
+    Font.Height = -17
+    Font.Name = 'Tahoma'
+    ParentColor = False
+    ParentFont = False
+  end
+  object SaveDialog1: TSaveDialog
+    left = 1811
+    top = 1001
+  end
+  object OpenDialog1: TOpenDialog
+    left = 915
+    top = 89
+  end
+  object DataSource1: TDataSource
+    DataSet = dmRNZAnzeigen.qryTableAnzeigen
+    OnDataChange = DataSource1DataChange
+    left = 327
+    top = 183
+  end
+  object IdleTimer1: TIdleTimer
+    AutoEnabled = True
+    Interval = 100
+    OnTimer = IdleTimer1Timer
+    OnStartTimer = IdleTimer1StartTimer
+    OnStopTimer = IdleTimer1StopTimer
+    left = 2273
+    top = 27
+  end
+  object VisualHTTPClient1: TVisualHTTPClient
+    HTTPversion = '1.1'
+    AllowRedirect = False
+    left = 1440
+    top = 20
+  end
+  object ActionList1: TActionList
+    left = 1056
+    top = 992
+    object actDataSetBirth: TAction
+      Category = 'Data'
+      Caption = 'Setze Geburt'
+      OnExecute = actDataSetBirthExecute
+      OnUpdate = actDataSetBirthUpdate
+    end
+    object DataSetFirst1: TDataSetFirst
+      Category = 'Database'
+      Caption = '&Erster'
+      Hint = 'Erster'
+      DataSource = DataSource1
+    end
+    object DataSetNext1: TDataSetNext
+      Category = 'Database'
+      Caption = '&Nächster'
+      Hint = 'Nächster'
+      ShortCut = 16462
+      DataSource = DataSource1
+    end
+    object DataSetPrior1: TDataSetPrior
+      Category = 'Database'
+      Caption = '&Vorgänger'
+      Enabled = False
+      Hint = 'Vorgänger'
+      ShortCut = 16450
+      DataSource = DataSource1
+    end
+    object DataSetLast1: TDataSetLast
+      Category = 'Database'
+      Caption = '&Letzter'
+      Hint = 'Letzter'
+      DataSource = DataSource1
+    end
+    object actDataSetDeath: TAction
+      Category = 'Data'
+      Caption = 'Setze Gestorben:'
+      OnExecute = actDataSetDeathExecute
+      OnUpdate = actDataSetDeathUpdate
+    end
+    object actDataSetBurial: TAction
+      Category = 'Data'
+      Caption = 'Setze Begräbniss'
+      OnExecute = actDataSetBurialExecute
+      OnUpdate = actDataSetBurialUpdate
+    end
+    object actDataCopyRecord: TAction
+      Category = 'Data'
+      Caption = 'Action1'
+      OnExecute = actDataCopyRecordExecute
+    end
+    object actDataParseText: TAction
+      Category = 'Data'
+      Caption = 'actDataParseText'
+      OnExecute = actDataParseTextExecute
+    end
+    object actDataSetMaidenname: TAction
+      Category = 'Data'
+      Caption = 'actDataSetMaidenname'
+    end
+    object actDataSetPlace: TAction
+      Category = 'Data'
+      Caption = 'actDataSetPlace'
+    end
+    object actDataDelMaidenname: TAction
+      Category = 'Data'
+      Caption = 'Lösche Geburtsname'
+      OnExecute = actDataDelMaidennameExecute
+      OnUpdate = actDataDelMaidennameUpdate
+    end
+    object actDataSwichNames: TAction
+      Category = 'Data'
+      Caption = 'Tausche Vor-, und Nachname'
+      Hint = 'Tausche Vor-, und Nachname'
+      OnExecute = actDataSwichNamesExecute
+    end
+    object actDataProcessPDF: TAction
+      Category = 'Data'
+      Caption = 'actProcessPDF'
+      Hint = 'PDF (extern) mit Texterkennung bearbeiten (OCR)'
+      OnExecute = actDataProcessPdfExecute
+    end
+    object actUpdateTS: TAction
+      Category = 'General'
+      Caption = 'Update TS from Web'
+      OnExecute = actUpdateTSExecute
+    end
+    object actDataOCRImport: TAction
+      Category = 'Data'
+      Caption = 'Import from OCR'
+      OnExecute = actDataOCRImportExecute
+    end
+    object actDataRefreshPlaces: TAction
+      Category = 'Data'
+      Caption = 'Aktualisiere Orte'
+      OnExecute = actDataRefreshPlacesExecute
+    end
+  end
+end

@@ -1,0 +1,202 @@
+object Form1: TForm1
+  Left = 0
+  Height = 1184
+  Top = 0
+  Width = 1516
+  ActiveControl = TreeView1
+  Caption = 'Form1'
+  ClientHeight = 1184
+  ClientWidth = 1516
+  Color = clBtnFace
+  DesignTimePPI = 144
+  Font.Color = clWindowText
+  Font.Height = -17
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  OnShow = FormShow
+  object TreeView1: TTreeView
+    Left = 9
+    Height = 1076
+    Top = 63
+    Width = 326
+    Align = alLeft
+    BorderSpacing.Right = -9
+    BorderSpacing.Around = 9
+    Font.Color = clWindowText
+    Font.Height = -17
+    Font.Name = 'Tahoma'
+    ParentFont = False
+    TabOrder = 0
+    OnSelectionChanged = TreeView1SelectionChanged
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 36
+    Top = 1148
+    Width = 1516
+    Font.Color = clWindowText
+    Font.Height = -17
+    Font.Name = 'Tahoma'
+    Panels = <>
+    ParentFont = False
+  end
+  object mmLog: TMemo
+    Left = 840
+    Height = 350
+    Top = 444
+    Width = 566
+    Font.Color = clWindowText
+    Font.Height = -17
+    Font.Name = 'Tahoma'
+    Lines.Strings = (
+      'Memo1'
+    )
+    ParentFont = False
+    TabOrder = 2
+  end
+  object chbVerbose: TCheckBox
+    Left = 840
+    Height = 29
+    Top = 408
+    Width = 90
+    Caption = 'Verbose'
+    Font.Color = clWindowText
+    Font.Height = -17
+    Font.Name = 'Tahoma'
+    ParentFont = False
+    TabOrder = 3
+  end
+  object pnlTop: TPanel
+    Left = 0
+    Height = 54
+    Top = 0
+    Width = 1516
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 54
+    ClientWidth = 1516
+    Font.Color = clWindowText
+    Font.Height = -17
+    Font.Name = 'Tahoma'
+    ParentFont = False
+    TabOrder = 4
+    object btnBrowseFile: TBitBtn
+      Left = 994
+      Height = 38
+      Top = 12
+      Width = 63
+      Caption = '...'
+      Font.Color = clWindowText
+      Font.Height = -17
+      Font.Name = 'Tahoma'
+      OnClick = btnBrowseFileClick
+      ParentFont = False
+      TabOrder = 0
+    end
+    object cbxFilename: TComboBox
+      Left = 12
+      Height = 29
+      Top = 12
+      Width = 974
+      Font.Color = clWindowText
+      Font.Height = -17
+      Font.Name = 'Tahoma'
+      ItemHeight = 21
+      ParentFont = False
+      TabOrder = 1
+      Text = 'cbxFilename'
+    end
+    object btnOpenFile: TBitBtn
+      Left = 1066
+      Height = 38
+      Top = 12
+      Width = 64
+      Caption = 'Open'
+      Font.Color = clWindowText
+      Font.Height = -17
+      Font.Name = 'Tahoma'
+      OnClick = btnOpenFileClick
+      ParentFont = False
+      TabOrder = 2
+    end
+    object btnFileSaveAs: TBitBtn
+      Left = 1140
+      Height = 38
+      Top = 12
+      Width = 64
+      Caption = 'Save'
+      Font.Color = clWindowText
+      Font.Height = -17
+      Font.Name = 'Tahoma'
+      OnClick = btnFileSaveAsClick
+      ParentFont = False
+      TabOrder = 3
+    end
+  end
+  object Splitter1: TSplitter
+    Left = 335
+    Height = 1094
+    Top = 54
+    Width = 8
+  end
+  object Panel1: TPanel
+    Left = 343
+    Height = 1094
+    Top = 54
+    Width = 378
+    Align = alLeft
+    Caption = 'Panel1'
+    ClientHeight = 1094
+    ClientWidth = 378
+    Font.Color = clWindowText
+    Font.Height = -17
+    Font.Name = 'Tahoma'
+    ParentFont = False
+    TabOrder = 6
+    object Label1: TLabel
+      Left = 15
+      Height = 21
+      Top = 14
+      Width = 48
+      Caption = 'Label1'
+      Font.Color = clWindowText
+      Font.Height = -17
+      Font.Name = 'Tahoma'
+      ParentColor = False
+      ParentFont = False
+    end
+  end
+  object Button1: TButton
+    Left = 1011
+    Height = 46
+    Top = 90
+    Width = 141
+    Caption = 'Button1'
+    Font.Color = clWindowText
+    Font.Height = -17
+    Font.Name = 'Tahoma'
+    OnClick = Button1Click
+    ParentFont = False
+    TabOrder = 7
+  end
+  object OpenDialog1: TOpenDialog
+    left = 708
+    top = 84
+  end
+  object Config1: TConfig
+    left = 840
+    top = 204
+  end
+  object SaveDialog1: TSaveDialog
+    DefaultExt = '.ged'
+    Filter = 'GedCom-Genealogie-Exchange (*.ged)|*.ged|All Files (*.*)|*.*'
+    left = 764
+    top = 89
+  end
+  object ApplicationProperties1: TApplicationProperties
+    OnIdle = ApplicationProperties1Idle
+    left = 828
+    top = 89
+  end
+end

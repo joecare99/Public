@@ -71,11 +71,15 @@ object frmTestHtmlParsingMain: TfrmTestHtmlParsingMain
       ']TS: div'
       ']TM: table,border="0"'
       ']TM: td,width="290"'
-      '[TM: td,width="139"'
+      ']TM: td,width="139"'
       '+Vater:'
+      'j09TE: tr'
+      '[TS: a'
       ']TE: tr'
-      '[TM: td,width="139"'
+      ']TM: td,width="139"'
       '+Mutter:'
+      'j14TE: tr'
+      '[TS: a'
       ']TE: tr'
       '[TM: font,size="1"'
       '+Individuum:'
@@ -334,7 +338,7 @@ object frmTestHtmlParsingMain: TfrmTestHtmlParsingMain
   end
   object VisualHTTPClient1: TVisualHTTPClient
     HTTPversion = '1.1'
-    AllowRedirect = False
+    AllowRedirect = True
     left = 1032
     top = 80
   end
