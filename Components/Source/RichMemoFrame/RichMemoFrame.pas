@@ -94,7 +94,7 @@ procedure TRTFEditFrame.actEditSetUnderlineUpdate(Sender: TObject);
 var
   f: TFontParams;
 begin
-  RichMemo1.GetTextAttributes(RichMemo1.SelStart, f);
+  RichMemo1.GetTextAttributes(RichMemo1.SelStart, f{%H-});
   actEditSetUnderline.Checked:=fsUnderline in f.Style;
 end;
 
@@ -102,7 +102,7 @@ procedure TRTFEditFrame.actEditSetItalicUpdate(Sender: TObject);
 var
   f: TFontParams;
 begin
-  RichMemo1.GetTextAttributes(RichMemo1.SelStart, f);
+  RichMemo1.GetTextAttributes(RichMemo1.SelStart, f{%H-});
     actEditSetItalic.Checked:=fsItalic in f.Style ;
 end;
 
@@ -130,7 +130,7 @@ procedure TRTFEditFrame.actEditSetBoldUpdate(Sender: TObject);
 var
   f: TFontParams;
 begin
-   RichMemo1.GetTextAttributes(RichMemo1.SelStart, f);
+   RichMemo1.GetTextAttributes(RichMemo1.SelStart, f{%H-});
   actEditSetBold.Checked:=fsBold in f.Style;
 end;
 
@@ -171,7 +171,7 @@ var
   f : TFontParams;
   lParamChangSet: TTextModifyMask;
 begin
-  RichMemo1.GetTextAttributes(RichMemo1.SelStart, f);
+  RichMemo1.GetTextAttributes(RichMemo1.SelStart, f{%H-});
   FontDialog1.Font.Name:=f.Name;
   FontDialog1.Font.Size:=f.Size;
   FontDialog1.Font.Style:=f.Style;
@@ -201,7 +201,7 @@ procedure TRTFEditFrame.btnColorClick(Sender: TObject);
 var
   f : TFontParams;
 begin
-  RichMemo1.GetTextAttributes(RichMemo1.SelStart, f);
+  RichMemo1.GetTextAttributes(RichMemo1.SelStart, f{%H-});
   ColorDialog1.Color:=f.Color;
   if ColorDialog1.Execute then begin
     RichMemo1.SetRangeColor( RichMemo1.SelStart, RichMemo1.SelLength,
@@ -228,7 +228,7 @@ begin
        RichMemo1.Font.Style := TFontStyles( Longint(RichMemo1.Font.Style) xor longint([fs]));
        exit;
      end;
-  RichMemo1.GetTextAttributes(RichMemo1.SelStart, f);
+  RichMemo1.GetTextAttributes(RichMemo1.SelStart, f{%H-});
   if fs in f.Style then begin
     rm:=[fs]; add:=[];
   end else begin
@@ -277,19 +277,31 @@ begin
 end;
 
 procedure TRTFEditFrame.SaveFileAs(aFilename: String);
+var
+  lNewFilename, lBakFilename: String;
 begin
   if FFilename <> aFilename then
     FFilename := aFilename;
-  if fileexists(ChangeFileExt(FFilename,'.new')) then
-    deletefile(ChangeFileExt(FFilename,'.new'));
-  SaveRTFFile( RichMemo1, ChangeFileExt(FFilename,'.new'));
-  if fileexists(FFilename) then
+  lNewFilename := ChangeFileExt(FFilename,'.new');
+  lBakFilename := ChangeFileExt(FFilename,'.bak');
+  if (lNewFilename=FFilename) and fileexists(FFilename) then
     begin
-      if fileexists(ChangeFileExt(FFilename,'.bak')) then
-        deletefile(ChangeFileExt(FFilename,'.bak'));
-      RenameFile(FFilename,ChangeFileExt(FFilename,'.bak'));
+      if fileexists(lBakFilename) then
+        deletefile(lBakFilename);
+      RenameFile(FFilename,lBakFilename);
     end;
-  RenameFile(ChangeFileExt(FFilename,'.new'),FFilename);
+  if fileexists(lNewFilename) then
+    deletefile(lNewFilename);
+  SaveRTFFile( RichMemo1, lNewFilename);
+  if (lNewFilename<>FFilename) and fileexists(FFilename) then
+    begin
+      if fileexists(lBakFilename) then
+        deletefile(lBakFilename);
+      if FFilename <> lBakFilename then
+        RenameFile(FFilename,lBakFilename);
+    end;
+  if (lNewFilename<>FFilename) then
+    RenameFile(lNewFilename,FFilename);
   RichMemo1.Modified := false;
 end;
 

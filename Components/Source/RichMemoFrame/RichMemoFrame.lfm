@@ -1,33 +1,36 @@
 object RTFEditFrame: TRTFEditFrame
   Left = 0
-  Height = 275
+  Height = 412
   Top = 0
-  Width = 538
-  ClientHeight = 275
-  ClientWidth = 538
+  Width = 807
+  ClientHeight = 412
+  ClientWidth = 807
+  DesignTimePPI = 144
+  ParentFont = False
   TabOrder = 0
   Visible = False
   object RichMemo1: TRichMemo
-    Left = 8
-    Height = 232
-    Top = 40
-    Width = 522
+    Left = 12
+    Height = 348
+    Top = 60
+    Width = 783
     Anchors = [akTop, akLeft, akRight, akBottom]
     HideSelection = False
     Lines.Strings = (
       'RichMemo1'
     )
     OnChange = RichMemo1Change
+    ParentFont = False
     PopupMenu = PopupMenu1
     ScrollBars = ssAutoBoth
     TabOrder = 0
     ZoomFactor = 1
   end
   object btnJA: TSpeedButton
-    Left = 288
-    Height = 22
-    Top = 8
-    Width = 31
+    Left = 432
+    Height = 33
+    Top = 12
+    Width = 46
     Action = actEditJustJust
     AllowAllUp = True
     Flat = True
@@ -60,12 +63,13 @@ object RTFEditFrame: TRTFEditFrame
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     }
     GroupIndex = 1
+    ParentFont = False
   end
   object btnCA: TSpeedButton
-    Left = 224
-    Height = 22
-    Top = 8
-    Width = 32
+    Left = 336
+    Height = 33
+    Top = 12
+    Width = 48
     Action = actEditJustCenter
     AllowAllUp = True
     Flat = True
@@ -98,12 +102,13 @@ object RTFEditFrame: TRTFEditFrame
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     }
     GroupIndex = 1
+    ParentFont = False
   end
   object btnLA: TSpeedButton
-    Left = 192
-    Height = 22
-    Top = 8
-    Width = 32
+    Left = 288
+    Height = 33
+    Top = 12
+    Width = 48
     Action = actEditJustLeft
     AllowAllUp = True
     Flat = True
@@ -137,12 +142,13 @@ object RTFEditFrame: TRTFEditFrame
     }
     GroupIndex = 1
     ParentBidiMode = False
+    ParentFont = False
   end
   object btnRA: TSpeedButton
-    Left = 256
-    Height = 22
-    Top = 8
-    Width = 32
+    Left = 384
+    Height = 33
+    Top = 12
+    Width = 48
     Action = actEditJustRight
     AllowAllUp = True
     Flat = True
@@ -175,12 +181,13 @@ object RTFEditFrame: TRTFEditFrame
       FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF
     }
     GroupIndex = 1
+    ParentFont = False
   end
   object btnBold: TSpeedButton
-    Left = 112
-    Height = 22
-    Top = 8
-    Width = 23
+    Left = 168
+    Height = 33
+    Top = 12
+    Width = 34
     Action = actEditSetBold
     AllowAllUp = True
     Caption = 'B'
@@ -191,10 +198,10 @@ object RTFEditFrame: TRTFEditFrame
     ParentFont = False
   end
   object btnItalic: TSpeedButton
-    Left = 136
-    Height = 22
-    Top = 8
-    Width = 23
+    Left = 204
+    Height = 33
+    Top = 12
+    Width = 34
     Action = actEditSetItalic
     Caption = 'I'
     Flat = True
@@ -204,10 +211,10 @@ object RTFEditFrame: TRTFEditFrame
     ParentFont = False
   end
   object btnUnderline: TSpeedButton
-    Left = 160
-    Height = 22
-    Top = 8
-    Width = 23
+    Left = 240
+    Height = 33
+    Top = 12
+    Width = 34
     Action = actEditSetUnderline
     Caption = 'U'
     Flat = True
@@ -217,22 +224,24 @@ object RTFEditFrame: TRTFEditFrame
     ParentFont = False
   end
   object btnFont: TSpeedButton
-    Left = 8
-    Height = 22
-    Top = 8
-    Width = 48
+    Left = 12
+    Height = 33
+    Top = 12
+    Width = 72
     Caption = 'Font'
     Flat = True
     OnClick = btnFontClick
+    ParentFont = False
   end
   object btnColor: TSpeedButton
-    Left = 56
-    Height = 22
-    Top = 8
-    Width = 48
+    Left = 84
+    Height = 33
+    Top = 12
+    Width = 72
     Caption = 'Color'
     Flat = True
     OnClick = btnColorClick
+    ParentFont = False
   end
   object ColorDialog1: TColorDialog
     Color = clBlack
@@ -258,18 +267,18 @@ object RTFEditFrame: TRTFEditFrame
       'ColorS=F0FBFF'
       'ColorT=A4A0A0'
     )
-    left = 32
-    top = 112
+    left = 48
+    top = 168
   end
   object FontDialog1: TFontDialog
     MinFontSize = 0
     MaxFontSize = 0
-    left = 32
-    top = 64
+    left = 48
+    top = 96
   end
   object ActionList1: TActionList
-    left = 232
-    top = 80
+    left = 348
+    top = 120
     object actEditSetBold: TAction
       Category = 'Edit'
       Caption = 'actEditSetBold'
@@ -324,7 +333,7 @@ object RTFEditFrame: TRTFEditFrame
     end
   end
   object PopupMenu1: TPopupMenu
-    left = 293
-    top = 158
+    left = 440
+    top = 237
   end
 end

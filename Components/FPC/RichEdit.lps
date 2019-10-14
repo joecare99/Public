@@ -2,9 +2,9 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="5">
+    <Units Count="10">
       <Unit0>
         <Filename Value="RichEdit.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -12,7 +12,7 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="21"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
@@ -20,9 +20,9 @@
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="59"/>
-        <CursorPos X="9" Y="62"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="56"/>
+        <CursorPos X="3" Y="88"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -32,11 +32,10 @@
         <ComponentName Value="RTFEditFrame"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="70"/>
-        <CursorPos X="45" Y="73"/>
-        <UsageCount Value="20"/>
+        <TopLine Value="4"/>
+        <CursorPos X="21" Y="31"/>
+        <UsageCount Value="21"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit2>
@@ -52,128 +51,175 @@
         <UsageCount Value="10"/>
         <DefaultSyntaxHighlighter Value="LFM"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\Lazarus\Package-Repo\packages\richmemo\richmemoutils.pas"/>
+        <UnitName Value="RichMemoUtils"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="11" Y="53"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\..\..\Lazarus\Package-Repo\packages\richmemo\richmemo.pas"/>
+        <UnitName Value="RichMemo"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="506"/>
+        <CursorPos X="36" Y="1001"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\..\..\Lazarus\Package-Repo\packages\richmemo\wsrichmemo.pas"/>
+        <UnitName Value="WSRichMemo"/>
+        <EditorIndex Value="5"/>
+        <CursorPos X="3" Y="122"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="C:\lazarus\lcl\lclclasses.pp"/>
+        <UnitName Value="LCLClasses"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="13"/>
+        <CursorPos X="14" Y="57"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\..\..\Lazarus\Package-Repo\packages\richmemo\win32\win32richmemo.pas"/>
+        <UnitName Value="Win32RichMemo"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="1218"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit9>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="46" Column="64" TopLine="3"/>
+        <Caret Line="76" Column="73" TopLine="23"/>
       </Position1>
       <Position2>
-        <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="47" Column="64" TopLine="3"/>
+        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
+        <Caret Line="8" Column="90"/>
       </Position2>
       <Position3>
         <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="45" Column="69" TopLine="7"/>
+        <Caret Line="9" Column="26"/>
       </Position3>
       <Position4>
         <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="125" TopLine="72"/>
+        <Caret Line="76" TopLine="73"/>
       </Position4>
       <Position5>
-        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="8" Column="29"/>
+        <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
+        <Caret Line="75" Column="66" TopLine="32"/>
       </Position5>
       <Position6>
         <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="29" Column="8" TopLine="4"/>
+        <Caret Line="74" Column="66" TopLine="31"/>
       </Position6>
       <Position7>
-        <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="78" Column="44" TopLine="10"/>
+        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
+        <Caret Line="85" Column="44" TopLine="59"/>
       </Position7>
       <Position8>
-        <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="42" Column="20" TopLine="13"/>
+        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
+        <Caret Line="90" Column="38" TopLine="55"/>
       </Position8>
       <Position9>
-        <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="72" Column="39" TopLine="18"/>
+        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
+        <Caret Line="79" TopLine="47"/>
       </Position9>
       <Position10>
-        <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="53" TopLine="18"/>
+        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
+        <Caret Line="58" Column="64" TopLine="47"/>
       </Position10>
       <Position11>
         <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="64" Column="55" TopLine="23"/>
+        <Caret Line="75" Column="66" TopLine="32"/>
       </Position11>
       <Position12>
         <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="76" Column="73" TopLine="23"/>
+        <Caret Line="74" Column="66" TopLine="31"/>
       </Position12>
       <Position13>
-        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="8" Column="90"/>
+        <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
+        <Caret Line="81" Column="66" TopLine="33"/>
       </Position13>
       <Position14>
-        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="9" Column="26"/>
+        <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
+        <Caret Line="78" Column="9" TopLine="39"/>
       </Position14>
       <Position15>
         <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="76" TopLine="73"/>
+        <Caret Line="98" Column="4" TopLine="50"/>
       </Position15>
       <Position16>
-        <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="75" Column="66" TopLine="32"/>
+        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
+        <Caret Line="99" Column="4" TopLine="51"/>
       </Position16>
       <Position17>
-        <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="74" Column="66" TopLine="31"/>
+        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
+        <Caret Line="98" Column="4" TopLine="50"/>
       </Position17>
       <Position18>
         <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="85" Column="44" TopLine="59"/>
+        <Caret Line="176" Column="13" TopLine="115"/>
       </Position18>
       <Position19>
         <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="90" Column="38" TopLine="55"/>
+        <Caret Line="173" Column="74" TopLine="120"/>
       </Position19>
       <Position20>
         <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="79" TopLine="47"/>
+        <Caret Line="73" Column="45" TopLine="70"/>
       </Position20>
       <Position21>
         <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="58" Column="64" TopLine="47"/>
+        <Caret Line="97" Column="57" TopLine="44"/>
       </Position21>
       <Position22>
-        <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="75" Column="66" TopLine="32"/>
+        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
+        <Caret Line="174" Column="57" TopLine="147"/>
       </Position22>
       <Position23>
-        <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="74" Column="66" TopLine="31"/>
+        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
+        <Caret Line="204" Column="57" TopLine="177"/>
       </Position23>
       <Position24>
         <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="81" Column="66" TopLine="33"/>
+        <Caret Line="62" Column="9" TopLine="56"/>
       </Position24>
       <Position25>
-        <Filename Value="..\Source\Test\frmRichEditMain.pas"/>
-        <Caret Line="78" Column="9" TopLine="39"/>
+        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
+        <Caret Line="295" Column="11" TopLine="254"/>
       </Position25>
       <Position26>
         <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="98" Column="4" TopLine="50"/>
+        <Caret Line="239" Column="7" TopLine="200"/>
       </Position26>
       <Position27>
         <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="99" Column="4" TopLine="51"/>
+        <Caret Line="31" Column="21" TopLine="4"/>
       </Position27>
       <Position28>
-        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="98" Column="4" TopLine="50"/>
+        <Filename Value="..\..\..\Lazarus\Package-Repo\packages\richmemo\richmemo.pas"/>
+        <Caret Line="274" Column="27" TopLine="240"/>
       </Position28>
       <Position29>
-        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="176" Column="13" TopLine="115"/>
+        <Filename Value="..\..\..\Lazarus\Package-Repo\packages\richmemo\richmemo.pas"/>
+        <Caret Line="979" Column="28" TopLine="953"/>
       </Position29>
       <Position30>
-        <Filename Value="..\Source\RichMemoFrame\RichMemoFrame.pas"/>
-        <Caret Line="173" Column="74" TopLine="120"/>
+        <Filename Value="..\..\..\Lazarus\Package-Repo\packages\richmemo\richmemo.pas"/>
+        <Caret Line="1001" Column="36" TopLine="969"/>
       </Position30>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode=""/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>
