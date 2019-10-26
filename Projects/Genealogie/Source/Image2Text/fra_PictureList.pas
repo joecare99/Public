@@ -5,7 +5,8 @@ unit fra_PictureList;
 interface
 
 uses
-  Classes, SysUtils, Forms, Controls, ShellCtrls, BGRAImageList, unt_iData, ComCtrls, Types;
+  Classes, SysUtils, Forms, Controls, ShellCtrls, BGRAImageList, unt_iData,
+  ComCtrls, BGRAGraphics, Types;
 
 type
   TRenameFileEvent=Procedure(sender:TObject;Oldfile,NewFile:String) of Object;
@@ -28,11 +29,15 @@ type
     FonUpdate:TNotifyEvent;
     FFileName: String;
     function GetBasePath: String;
+    function getFilemask: string;
     procedure SetBasePath(AValue: String);
+    procedure SetFilemask(AValue: string);
     procedure SetOnRenameFile(AValue: TRenameFileEvent);
     procedure UpdateListImage(Data: PtrInt);
 
   public
+    constructor Create(TheOwner: TComponent); override;
+    destructor Destroy; override;
     function getdata:variant;
       procedure First(Sender:Tobject=nil);
       Procedure Last(Sender:Tobject=nil);
@@ -49,6 +54,7 @@ type
       property OnUpdate:TNotifyEvent read GetOnUpdate write SetOnUpdate;
       property OnRenameFile:TRenameFileEvent read FOnRenameFile write SetOnRenameFile;
       property BasePath:String read GetBasePath write SetBasePath;
+      property Filemask:string read getFilemask write SetFilemask;
   end;
 
 implementation
@@ -147,8 +153,7 @@ begin
 //           lstPictures.ViewStyle := vsList;
            lstPictures.items.Clear;
            ilsDirImages.clear;
-      lstPictures.Mask:='*.jpg *.jpeg *.png';
-      lstPictures.Root:=AValue;
+         lstPictures.Root:=AValue;
          lstPictures.ViewStyle:=vsIcon;
 
          except
@@ -157,20 +162,31 @@ begin
 
 end;
 
+procedure TfraPictureList.SetFilemask(AValue: string);
+begin
+  if lstPictures.Mask=AValue then Exit;
+  lstPictures.Mask:=AValue;
+end;
+
 function TfraPictureList.GetBasePath: String;
 begin
   result := lstPictures.Root;
 end;
 
+function TfraPictureList.getFilemask: string;
+begin
+  result := lstPictures.Mask;
+end;
+
 procedure TfraPictureList.UpdateListImage(Data: PtrInt);
 var
   Item: TListItem;
-  lImage: TBGRABitmap;
+  lImage,lBmp: TBGRACustomBitmap;
   reader:TBGRAReaderJpeg;
   NewPath: String;
   lMs: TStream;
 begin
-
+  lBmp:=nil;
   if (Data>=0) and (Data<=lstPictures.Items.Count-1) then
     begin
       Item := lstPictures.Items[Data];
@@ -195,12 +211,26 @@ begin
         except
           lImage:=nil;
         end;
-      ilsDirImages.Add(limage.Resample(64,64,rmSimpleStretch).Bitmap,nil);
-      item.ImageIndex:=ilsDirImages.Count-1;
+        lBmp:=lImage.Resample(64,64,rmSimpleStretch);
+        ilsDirImages.Add(lBmp.Bitmap,nil);
+        item.ImageIndex:=ilsDirImages.Count-1;
       finally
+        freeandnil(lBmp);
         freeandnil(lImage)
       end;
     end;
+end;
+
+constructor TfraPictureList.Create(TheOwner: TComponent);
+begin
+  inherited Create(TheOwner);
+  lstPictures.Mask:='*.jpg *.jpeg *.png *.bmp *.gif';
+end;
+
+destructor TfraPictureList.Destroy;
+begin
+  ilsDirImages.Clear;
+  inherited Destroy;
 end;
 
 function TfraPictureList.getdata: variant;
