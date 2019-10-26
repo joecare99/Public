@@ -8,6 +8,7 @@ object FrmTestPictureListMain: TFrmTestPictureListMain
   ClientWidth = 1308
   DesignTimePPI = 144
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   LCLVersion = '2.0.4.0'
   object pnlBottom: TPanel
     Left = 0

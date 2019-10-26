@@ -7,8 +7,8 @@ interface
 uses
   Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, ExtDlgs,
   StdCtrls, ComCtrls, ExtCtrls, Buttons, ActnList, Menus, ShellCtrls,
-  RichMemoFrame, BGRABitmap, BGRABitmapTypes, RichMemo, BGRAImageManipulation,
-  BGRAVirtualScreen, BCTypes, BCButton,  BGRAImageList,
+  fra_PictureList, RichMemoFrame, BGRABitmap, BGRABitmapTypes, RichMemo,
+  BGRAImageManipulation, BGRAVirtualScreen, BCTypes, BCButton, BGRAImageList,
   BGRAGraphicControl, Types;
 
 type
@@ -20,10 +20,10 @@ type
     actViewVertical: TAction;
     actViewHorizontal: TAction;
     ActionList1: TActionList;
-    ilsDirImages: TBGRAImageList;
     BGRAVirtualScreen1: TBGRAVirtualScreen;
     btnOpen: TBitBtn;
     btnOpenDir: TButton;
+    fraPictureList1: TfraPictureList;
     lblActDir: TLabel;
     lblImprove: TLabel;
     OpenPictureDialog1: TOpenPictureDialog;
@@ -33,7 +33,6 @@ type
     btnViewHorizontal: TSpeedButton;
     btnViewVertical: TSpeedButton;
     RTFEditFrame1: TRTFEditFrame;
-    lstPictures: TShellListView;
     SpeedButton1: TSpeedButton;
     Splitter1: TSplitter;
     StatusBar1: TStatusBar;
@@ -60,19 +59,6 @@ type
     procedure FormMouseWheel(Sender: TObject; Shift: TShiftState;
       WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
     procedure FormResize(Sender: TObject);
-    procedure lstPicturesChange(Sender: TObject; Item: TListItem;
-      Change: TItemChange);
-    procedure ShellListView1ContextPopup(Sender: TObject; MousePos: TPoint;
-      var Handled: Boolean);
-    procedure lstPicturesMouseMove(Sender: TObject; Shift: TShiftState; X,
-      Y: Integer);
-    procedure lstPicturesMouseWheel(Sender: TObject; Shift: TShiftState;
-      WheelDelta: Integer; MousePos: TPoint; var Handled: Boolean);
-    procedure lstPicturesSelectItem(Sender: TObject; Item: TListItem;
-      Selected: Boolean);
-    procedure ShellListView1SizeConstraintsChange(Sender: TObject);
-    procedure Splitter1CanOffset(Sender: TObject; var NewOffset: Integer;
-      var Accept: Boolean);
     procedure TrackBar1Change(Sender: TObject);
   private
     FBgraBitmap:TBGRABitmap;
@@ -83,8 +69,8 @@ type
     FScale :single;
     FSavePoint: TPointF;
     procedure LoadImageFile(const lFilename: String);
-    procedure UpdateListImage(Data: PtrInt);
-    procedure UpdateShellImages(Data: PtrInt);
+    procedure PictListRenameFile(sender: TObject; Oldfile, NewFile: String);
+    procedure PictListUpdate(Sender: TObject);
   public
 
   end;
@@ -105,19 +91,17 @@ procedure TfrmImage2TextMain.btnOpenClick(Sender: TObject);
 var
   lFilename: String;
 begin
+  fraPictureList1.fileMask:='*.jpg *.jpeg *.png';
   OpenPictureDialog1.Filter:=rsPictureFilter;
   if OpenPictureDialog1.execute then
     begin
       FFilename:=OpenPictureDialog1.FileName;
-      if       lstPictures.Root<>ExtractFilePath(FFilename) then
+      if fraPictureList1.BasePath<>ExtractFilePath(FFilename) then
          begin
 //           lstPictures.ViewStyle := vsList;
+           fraPictureList1.BasePath:=ExtractFilePath(FFilename);
+           fraPictureList1.Select(ExtractFileName(FFilename));
            lblActDir.Caption:=ExtractFilePath(FFilename);
-           lstPictures.items.Clear;
-           ilsDirImages.clear;
-      lstPictures.Mask:='*.jpg *.jpeg *.png';
-      lstPictures.Root:=ExtractFilePath(FFilename);
-         lstPictures.ViewStyle:=vsIcon;
          end;
     Application.ProcessMessages;
           LoadImageFile(FFilename);
@@ -134,6 +118,9 @@ begin
    FScale := 1.0;
    RTFEditFrame1.RichMemo1.ZoomFactor:=Screen.PixelsPerInch/72;
    RTFEditFrame1.NewFile;
+
+   fraPictureList1.OnRenameFile:=@PictListRenameFile;
+   fraPictureList1.OnUpdate:=@PictListUpdate;
 end;
 
 procedure TfrmImage2TextMain.FormDestroy(Sender: TObject);
@@ -183,98 +170,6 @@ begin
    BGRAVirtualScreen1.RedrawBitmap;
 end;
 
-procedure TfrmImage2TextMain.lstPicturesChange(Sender: TObject;
-  Item: TListItem; Change: TItemChange);
-var
-  NewText, NewPath: String;
-  lImage: TBGRABitmap;
-begin
-  if (ctText = change) and (Item=lstPictures.Selected) and assigned(Item) then
-    begin
-      if ExtractFileExt(item.caption) ='' then
-        begin
-          item.caption := item.caption + ExtractFileExt(FFileName);
-          exit;
-        end;
-      NewPath := lstPictures.GetPathFromItem(Item);
-          if not fileexists(lstPictures.GetPathFromItem(Item)) then
-            begin
-              RenameFile(FFilename,NewPath);
-              if FileExists(changefileext(FFileName,'.rtf')) then
-                RenameFile(changefileext(FFileName,'.rtf'),ChangeFileExt(Newpath,'.rtf'));
-              RTFEditFrame1.Filename:=ChangeFileExt(Newpath,'.rtf');
-            end
-          else
-            item.Caption:=ExtractFileName(FFileName);
-    end
-  else if assigned(Item) and (ctText= Change) and (item.ImageIndex=-1) then
-    begin
-      if (item.top < lstPictures.Height) and (item.top>-64) then
-        Application.QueueAsyncCall(@UpdateListImage, ptrint(Item));
-    end;
-end;
-
-procedure TfrmImage2TextMain.ShellListView1ContextPopup(Sender: TObject;
-  MousePos: TPoint; var Handled: Boolean);
-begin
-
-end;
-
-procedure TfrmImage2TextMain.lstPicturesMouseMove(Sender: TObject;
-  Shift: TShiftState; X, Y: Integer);
-var
-  Item: TListItem;
-begin
-  if ssLeft in shift then
-    begin
-      for Item in lstPictures.Items do
-      if (item.ImageIndex=-1) and (item.top < lstPictures.Height) and (item.top>-64) then
-        Application.QueueAsyncCall(@UpdateListImage, ptrint(Item));
-    end;
-end;
-
-procedure TfrmImage2TextMain.lstPicturesMouseWheel(Sender: TObject;
-  Shift: TShiftState; WheelDelta: Integer; MousePos: TPoint;
-  var Handled: Boolean);
-var
-  Item: TListItem;
-begin
-  for Item in lstPictures.Items do
-  if (item.ImageIndex=-1) and (item.top-lstPictures.ViewOrigin.y < lstPictures.Height) and (item.top>lstPictures.ViewOrigin.y-64) then
-    Application.QueueAsyncCall(@UpdateListImage, ptrint(Item));
-end;
-
-procedure TfrmImage2TextMain.lstPicturesSelectItem(Sender: TObject;
-  Item: TListItem; Selected: Boolean);
-var
-  lItem: TListItem;
-begin
-  if FFilename = lstPictures.GetPathFromItem(Item) then
-    begin
-      if Item.ImageIndex = -1 then
-        Application.QueueAsyncCall(@UpdateListImage, ptrint(Item));
-      exit;
-    end;
-  FFilename := lstPictures.GetPathFromItem(Item);
-  LoadImageFile(lstPictures.GetPathFromItem(Item));
-  for lItem in lstPictures.Items do
-  if (litem.ImageIndex=-1) and (litem.top-lstPictures.ViewOrigin.y < lstPictures.Height) and (litem.top>lstPictures.ViewOrigin.y-64) then
-    Application.QueueAsyncCall(@UpdateListImage, ptrint(lItem));
-end;
-
-procedure TfrmImage2TextMain.ShellListView1SizeConstraintsChange(Sender: TObject
-  );
-begin
-
-end;
-
-procedure TfrmImage2TextMain.Splitter1CanOffset(Sender: TObject;
-  var NewOffset: Integer; var Accept: Boolean);
-begin
-
-end;
-
-
 procedure TfrmImage2TextMain.BGRAVirtualScreen1Redraw(Sender: TObject; Bitmap: TBGRABitmap);
 
 var
@@ -306,6 +201,122 @@ begin
   FSavePoint:=PointF(X,Y)
 end;
 
+{ For each component, sort values to get the median }
+function FilterMedian2(bmp: TBGRACustomBitmap;
+  aRadius,aLevel:float): TBGRACustomBitmap;
+
+  function ComparePixLt(p1, p2: TBGRAPixel): boolean;
+  begin
+    if (p1.red + p1.green + p1.blue = p2.red + p2.green + p2.blue) then
+      Result := (int32or64(p1.red) shl 8) + (int32or64(p1.green) shl 16) +
+        int32or64(p1.blue) < (int32or64(p2.red) shl 8) + (int32or64(p2.green) shl 16) +
+        int32or64(p2.blue)
+    else
+      Result := (p1.red + p1.green + p1.blue) < (p2.red + p2.green + p2.blue);
+  end;
+
+var
+  yb, xb:    int32or64;
+  dx, dy, n, i, j, k: int32or64;
+  alphas:  array of byte;
+  reds:  array of byte;
+  greens:  array of byte;
+  bluess:  array of byte;
+  tempPixel, refPixel, lPixel: TBGRAPixel;
+  tempValue: byte;
+  sumR, sumG, sumB, sumA, BGRAdiv, nbA: uint32or64;
+  tempAlpha: word;
+  bounds:    TRect;
+  pdest:     PBGRAPixel;
+  lRnRadius,lxDist: Integer;
+  lIdx: Int64;
+
+Procedure swap(a1,a2:byte);inline;
+
+var
+  lb: Byte;
+begin
+  lb := a1;
+  a1:= a2;
+  a2 := lb;
+end;
+
+Procedure CountingSort(var aList:array of byte;aAnz:integer);
+
+var
+  lCount  : array[byte] of integer;
+  i, j, z  : integer;
+begin
+  fillchar(lCount,256*sizeof(integer),0);
+  for i := 0 to aAnz do
+    inc(lCount[ aList[ i ] ]);
+    z:= 0;
+  for i := 0 to 255 do
+     for j := 0 to  lCount[ i  ] - 1  do
+       begin
+         aList[ z ] := i;
+         inc( z );
+       end;
+end;
+
+
+begin
+  setlength(bluess,round(3.5*sqr(aRadius)));
+  setlength(greens,round(3.5*sqr(aRadius)));
+  setlength(reds,round(3.5*sqr(aRadius)));
+  setlength(alphas,round(3.5*sqr(aRadius)));
+  lRnRadius:=Round(aRadius);
+  Result := bmp.NewBitmap(bmp.Width, bmp.Height);
+
+  bounds := bmp.GetImageBounds;
+  if (bounds.Right <= bounds.Left) or (bounds.Bottom <= Bounds.Top) then
+    exit;
+  bounds.Left   := max(0, bounds.Left - 1);
+  bounds.Top    := max(0, bounds.Top - 1);
+  bounds.Right  := min(bmp.Width, bounds.Right + 1);
+  bounds.Bottom := min(bmp.Height, bounds.Bottom + 1);
+
+  for yb := bounds.Top to bounds.bottom - 1 do
+  begin
+    pdest := Result.scanline[yb] + bounds.left;
+    for xb := bounds.left to bounds.right - 1 do
+    begin
+ // Get Pixels
+      n := 0;
+      for dy := -lRnRadius to lRnRadius do
+        begin
+          lxDist :=trunc(SQRT(sqr(aRadius)-sqr(dy)));
+        for dx := -lxDist to lxDist do
+        begin
+          lPixel := bmp.GetPixel(xb + dx, yb + dy);
+          if lPixel.alpha = 0 then
+            lPixel := BGRAPixelTransparent;
+          bluess[n] := lPixel.blue;
+          greens[n] := lPixel.green;
+          reds[n] := lPixel.red;
+          alphas[n] := lPixel.alpha;
+          Inc(n);
+        end;
+        end;
+      lPixel := bmp.GetPixel(xb , yb);
+ // Sort Pixels
+      CountingSort(bluess,n);
+      CountingSort(greens,n);
+      CountingSort(reds,n);
+//      CountingSort(alphas,n);
+
+// Get Median
+      lIdx:=trunc(aLevel*n);
+      refPixel.blue :=min(lPixel.blue +250- bluess[lIdx],255);
+      refPixel.green :=min(lPixel.green +250-greens[lIdx],255);
+      refPixel.red := min(lPixel.red +250-reds[lIdx],255);
+      refPixel.alpha := 255;
+      pdest^ := refPixel;
+      Inc(pdest);
+    end;
+  end;
+end;
+
 procedure TfrmImage2TextMain.BCButton1Click(Sender: TObject);
 
 var lMedianImage:TBGRACustomBitmap;
@@ -314,13 +325,13 @@ begin
   FBgraOrgBitmap.draw(FBgraBitmap.Canvas,0,0);
   if trbImprove.Position> 1 then
     begin
-      lMedianImage := FBgraOrgBitmap.FilterBlurRadial(sqr(trbImprove.Position),rbFast);
-      lMedianImage.BlendImage(0,0,FBgraOrgBitmap,boLighten);
-      FBgraBitmap.BlendImage(0,0,lMedianImage,boLinearDifference);
-      FBgraBitmap.LinearNegative;
-      FBgraBitmap.BlendImage(0,0,FBgraBitmap,boMultiply);
-      FBgraBitmap.BlendImage(0,0,FBgraBitmap,boMultiply);
-      freeandnil(lMedianImage);
+      lMedianImage := FilterMedian2(FBgraOrgBitmap,6,0.85);
+//      lMedianImage.BlendImage(0,0,FBgraOrgBitmap,boLighten);
+      freeandnil(FBgraBitmap);
+      TBGRACustomBitmap(FBgraBitmap):=lMedianImage;
+    //  FBgraBitmap.LinearNegative;
+    //  FBgraBitmap.BlendImage(0,0,FBgraBitmap,boMultiply);
+    //  FBgraBitmap.BlendImage(0,0,FBgraBitmap,boMultiply);
     end;
    if trbImprove.Position> 0 then
     FBgraBitmap.InplaceNormalize(true);
@@ -413,55 +424,26 @@ begin
   else
     RTFEditFrame1.NewFile(changeFileExt(lFilename,'.rtf'));
   //
-  lstPictures.Selected:=  lstPictures.Items.FindCaption(0,ExtractFileName(lFilename),false,false,false,false);
-  if Assigned(lstPictures.Selected)
-    and ((lstPictures.ViewOrigin.y+lstPictures.height-64<lstPictures.Selected.Top)
-      or (lstPictures.ViewOrigin.y> lstPictures.Selected.Top)   )  then
-     lstPictures.ViewOrigin :=  Point(lstPictures.ViewOrigin.x, lstPictures.Selected.Top);
+  if fraPictureList1.data <> lFilename then
+    fraPictureList1.Select(ExtractFileName(lFilename));
   RTFEditFrame1.RichMemo1.ZoomFactor:=Screen.PixelsPerInch/72;
   BCButton1Click(self);
 end;
 
-procedure TfrmImage2TextMain.UpdateListImage(Data: PtrInt);
-var
-  Item: TListItem;
-  lImage: TBGRABitmap;
-  reader:TBGRAReaderJpeg;
-  NewPath: String;
-  lMs: TStream;
+procedure TfrmImage2TextMain.PictListRenameFile(sender: TObject; Oldfile,
+  NewFile: String);
 begin
-  if assigned(tObject(Data)) and tObject(Data).InheritsFrom(TListItem) then
-    begin
-      Item :=  TListItem(Data);
-      NewPath := lstPictures.GetPathFromItem(Item);
-      if FileExists(NewPath) then
-      try
-      if (uppercase(ExtractFileExt(item.Caption)) = '.JPG') or
-         (uppercase(ExtractFileExt(item.Caption)) = '.JPEG') then
-        try
-          reader:= TBGRAReaderJpeg.Create;
-          lMs := TFileStream.create(lstPictures.GetPathFromItem(item),fmOpenRead,fmShareDenyNone);
-          reader.Scale:=jsEighth;
-          reader.Performance:=jpBestSpeed;
-          lImage:=TBGRABitmap(reader.ImageRead(lms,TBGRABitmap.Create));
-        finally
-          freeandnil(reader);
-          freeandnil(lms);
-        end
-      else
-        lImage:=TBGRABitmap.Create(lstPictures.GetPathFromItem(item));
-      ilsDirImages.Add(limage.Resample(64,64,rmSimpleStretch).Bitmap,nil);
-      item.ImageIndex:=ilsDirImages.Count-1;
-      finally
-        freeandnil(lImage)
-      end;
-    end;
+  RenameFile(Oldfile,NewFile);
+  if FileExists(changefileext(Oldfile,'.rtf')) then
+    RenameFile(changefileext(Oldfile,'.rtf'),ChangeFileExt(NewFile,'.rtf'));
+  RTFEditFrame1.Filename:=ChangeFileExt(NewFile,'.rtf');
 end;
 
-procedure TfrmImage2TextMain.UpdateShellImages(Data: PtrInt);
+procedure TfrmImage2TextMain.PictListUpdate(Sender: TObject);
 begin
-
+  LoadImageFile(fraPictureList1.Data);
 end;
+
 
 end.
 

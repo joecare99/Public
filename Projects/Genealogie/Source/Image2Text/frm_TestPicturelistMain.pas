@@ -21,6 +21,7 @@ type
     ShellTreeView1: TShellTreeView;
     StatusBar1: TStatusBar;
     procedure FormCreate(Sender: TObject);
+    procedure FormDestroy(Sender: TObject);
     procedure ShellTreeView1SelectionChanged(Sender: TObject);
   private
 
@@ -40,6 +41,11 @@ implementation
 procedure TFrmTestPictureListMain.FormCreate(Sender: TObject);
 begin
   fraNavIData1.Data := fraPictureList1;
+end;
+
+procedure TFrmTestPictureListMain.FormDestroy(Sender: TObject);
+begin
+  fraNavIData1.Data :=nil;
 end;
 
 procedure TFrmTestPictureListMain.ShellTreeView1SelectionChanged(Sender: TObject
