@@ -236,6 +236,7 @@ var
 begin
   lPath := ExtractFilePath(Filename);
   lNames := string(ExtractFileName(Filename)).Split(['.']);
+  if high(lNames)<0 then exit(Filename);
   lpp:= lNames[0].LastIndexOfAny(['0','1','2','3','4','5','6','7','8','9']);
   if lpp=-1 then
     lnames[0]:=lNames[0]+'01'
