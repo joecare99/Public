@@ -1,0 +1,27 @@
+[SEW-Exp-File]
+nestedcomments=Yes
+path=\Projekt\Achsen
+objectflags=0, 8
+symfileflags=2048
+type=Block
+name=fbAggregat
+function=Achse: Antrieb mit 2 Endlagen
+option=
+date=09.07.2012
+author=M. Fink / C. Rosewich
+info=FB202
+changes=
+
+[WildCardFill]
+n=Yes
+p=\Projekt\Achsen
+o=0, 8
+s=2048
+t=Block
+n=fbAggregat
+f=Achse: Antrieb mit 2 Endlagen
+o=
+d=09.07.2012
+a=M. Fink / C. Rosewich
+i=FB202
+c=

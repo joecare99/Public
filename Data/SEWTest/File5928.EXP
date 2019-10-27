@@ -1,0 +1,128 @@
+(* @NESTEDCOMMENTS := 'Yes' *)
+(* @GLOBAL_VARIABLE_LIST := 'Konfiguration' *)
+(* @PATH := '\/Projekt\/Kundenspezifisch' *)
+(* @OBJECTFLAGS := '0, 8' *)
+(* @SYMFILEFLAGS := '2048' *)
+VAR_GLOBAL CONSTANT
+(*---------------------------------------------------------------------*
+*	Function:
+*	Author: J. Marx
+*	Option:
+*	Date:
+*	Version: 1.0
+*----------------------------------------------------------------------*
+*	Info: 
+*----------------------------------------------------------------------*
+Änderungen:
+
+*----------------------------------------------------------------------*)
+	PAT_AQuality                  :   ARRAY[   0 .. PAT_Last ]OF enumAuftragsQualitaet := AQ_SP, (* Stellplatz *)
+	AQ_RP,                        (*  Ruestplatz *)
+	AQ_MA,                        (*  Maschine *)
+	AQ_MA,                        (*  EGS      *)
+	AQ_WaMa,                      (*  Waschmaschine *)
+	AQ_Last                       ;  
+	                             
+(* Kennung der Einzelnen Plätze ob und welcher Sonderplatz und Erlaubnis der einzelnen Paletten-Typen *)
+	PlatzTypCfg                   :   ARRAY[   -1 .. PlT_Last ]OF udtPlatzConfig :=
+(*						SP-Nummer						 		Univ.	H800, 	H1250, 	WK, 	Sonst *)
+	(*None*)
+	(
+			SP_Nr        :=  SPN_None,
+		AllowedPType := FALSE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE ),
+(* Standard 0-9 *)
+	(*Manipulator*)
+	(
+			SP_Nr :=  SPN_Manipulator,
+		AllowedPType := FALSE,
+		TRUE,
+		TRUE,
+		TRUE,
+		TRUE,
+		FALSE ), (*Rüstplatz1*)
+	(	SP_Nr := SPN_Ruestplatz1,
+		AllowedPType := FALSE,
+		TRUE,
+		TRUE,
+		TRUE,
+		TRUE,
+		FALSE ), (*Rüstplatz1*)
+	(	SP_Nr := SPN_Ruestplatz2,
+		AllowedPType := FALSE,
+		TRUE,
+		TRUE,
+		TRUE,
+		TRUE,
+		FALSE ), (*NBH1Wx*)
+	(	SP_Nr := SPN_Maschine1,
+		AllowedPType := FALSE,
+		TRUE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE ), (*NBH1ApcMa*)
+	(	SP_Nr := SPN_Maschine1,
+		AllowedPType := FALSE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE ), (*NBH1DirBlMa*)
+	(	SP_Nr := SPN_Maschine1,
+		AllowedPType := FALSE,
+		TRUE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE ), (*NBH2Wx*)
+	(	SP_Nr := SPN_Maschine2,
+		AllowedPType := FALSE,
+		TRUE,
+		FALSE,
+		TRUE,
+		FALSE,
+		FALSE ), (*NBH2ApcMa*)
+	(	SP_Nr := SPN_Maschine2,
+		AllowedPType := FALSE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE ), (*NBH2DirBlMa*)
+	(	SP_Nr := SPN_Maschine2,
+		AllowedPType := FALSE,
+		TRUE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE ), (*StdStellplatz*)
+	(	SP_Nr := SPN_None,
+		AllowedPType := FALSE,
+		TRUE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE ), (* Option: 10-19 *)
+	(*                            Last*)
+	(
+			SP_Nr :=       SPN_None,
+		AllowedPType := FALSE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE,
+		FALSE );
+	                             
+END_VAR
+
+(* @OBJECT_END := 'Konfiguration' *)
+(* @CONNECTIONS := Konfiguration
+FILENAME : ''
+FILETIME : 0
+EXPORT : 0
+NUMOFCONNECTIONS : 0
+*)

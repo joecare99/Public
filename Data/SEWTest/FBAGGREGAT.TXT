@@ -1,0 +1,154 @@
+(* @NESTEDCOMMENTS := 'Yes' *)
+(* @PATH := '\/Projekt\/Achsen' *)
+(* @OBJECTFLAGS := '0, 8' *)
+(* @SYMFILEFLAGS := '2048' *)
+FUNCTION_BLOCK fbAggregat
+(********************************************************************************)
+(*	Baustein			: Achse: Antrieb mit 2 Endlagen 							*)
+(*																				*)
+(*	Option			  : 															*)
+(*	Funktionsgruppe	 : 														*)
+(*																				*)
+(*	erstellt am		 : 09.07.2012												*)
+(*			 von		: M. Fink / C. Rosewich										*)
+(*------------------------------------------------------------------------------				*)
+(*	Bemerkung		   : FB202												*)
+(*------------------------------------------------------------------------------				*)
+(*	Änderungen		  :														*)
+(********************************************************************************)
+VAR
+	HM_Zeitwert_ist_0    :   BOOL;    (* Auswertung: Keine Laufzeitprüfung *)
+	Anf_Einschalten      :   BOOL;    (* Geprüfte Anforderung: Plus fahren *)
+	Anf_Ausschalten      :   BOOL;    (* Geprüfte Anforderung: Minus fahren *)
+	AnsteuerungFahrenPlus :   BOOL;    (* Ansteuerung Plus *)
+	Laufzeit             :   WORD;    (* Zeitspeicher für Laufzeit *)
+	ZLF                  :   BOOL;    (* TimerZeitlauf *)
+	Achsbewegung         :   BOOL;    (* Einschaltprocedure *)
+
+END_VAR
+VAR_INPUT
+	Gruppe               :   udtGruppe; (* Gruppe der Achse *)
+	Zeitwert             :   INT;     (* Maximal erlaubte Laufzeit *)
+	Eingeschaltet        :   BOOL;    (* Rückmeldung eingeschaltet: für ELSH *)
+END_VAR
+VAR_OUTPUT
+	Einschalten          :   BOOL;    (* Ausgang: Aggregat einschalten *)
+END_VAR
+VAR_IN_OUT
+	Stoerung             :   BYTE;    (* Störungsbyte ( 8 Störungen ) *)
+	{bitaccess  Err_PaarFehler 0        "Endschalter - Paarfehler "}
+	{bitaccess  Err_KeineFreigabe 1        "Keine Freigabe "}
+	{bitaccess  Err_EndlageVerl 2        "Endlage Verlassen "}
+	{bitaccess  Err_Zeitlauf 3        "Laufzeit - Überwachung "}
+	{bitaccess  Err_Ueberfahrt 4        "Endschalter überfahren "}
+	{bitaccess  Err_FU_Gestoert 5        "FU Gestört "}
+	{bitaccess  Err_FU_NichtBereit 6        "FU Nicht Betriebsbereit "}
+	{bitaccess  Err_Param  7        "Parametrierfehler "}
+	OPZeile              :   udtHand; (*       Schnittstelle zur Anzeige Zeile*)
+END_VAR
+
+(* @END_DECLARATION := '0' *)
+(* @TEXT_IMPLEMENTATION := 'ST' *)
+(* NW001: Version ---------------------------------------------------*)
+Version_FB[ 201 ]	:= 16#00050600;
+
+(* NW002: Debug ---------------------------------------------------*)
+
+(* NW005: OPZeile  -----------------------------------------*)
+OPZeile.EndlageMinus	:= NOT Eingeschaltet;
+OPZeile.EndlagePlus	:= Eingeschaltet;
+
+(* NW006: Zeitwert ist 0 ---------------------------------------*)
+HM_Zeitwert_ist_0	:=
+	(	Zeitwert = 0 );
+
+(* NW007: Zeile vorhanden -----------------------------------------*)
+Stoerung.Err_Param	:= Stoerung.Err_Param OR
+	(	OPZeile.Vorhanden AND
+		Gruppe.Lampentest );
+OPZeile.Vorhanden	:= 1;
+
+(* NW008: Anforderung plus -----------------------------------------*)
+Anf_Einschalten	:=
+	(	OPZeile.TastePlus OR
+		(	OPZeile.BefehlAutoPlus AND
+			Gruppe.AutomatikGestartet ) ) AND
+	NOT OPZeile.EndlagePlus;
+
+(* NW009: Anforderung minus -----------------------------------------*)
+Anf_Ausschalten	:=
+	(	OPZeile.TasteMinus OR
+		(	OPZeile.BefehlAutoMinus AND
+			Gruppe.BA_Automatik ) ) OR
+	(	NOT OPzeile.FreigabePlus ) AND
+	NOT OPZeile.EndlageMinus;
+
+(* NW010: Ansteuerung plus -----------------------------------------*)
+OPZeile.AktivPlus	:= OPZeile.AktivPlus OR
+	(	Anf_Einschalten AND
+		OPZeile.FreigabePlus AND
+		NOT Anf_Ausschalten );
+
+OPZeile.AktivPlus	:= OPZeile.AktivPlus AND
+	NOT(	Anf_Ausschalten AND
+		OPZeile.FreigabeMinus );
+
+AnsteuerungFahrenPlus	:= OPZeile.AktivPlus;
+
+(* NW011: Ansteuerung minus -----------------------------------------*)
+OPZeile.AktivMinus	:= FALSE;
+
+Achsbewegung	:=
+	AnsteuerungFahrenPlus AND
+	NOT OPZeile.EndlagePlus;
+(* NW016: Ausgänge  -----------------------------------------*)
+Einschalten	:= AnsteuerungFahrenPlus;
+
+(* NW017: Zeit der Achsbewegung  -----------------------------------------*)
+ZLF	:=
+	fcSETimer(
+		Anforderung	:= Achsbewegung,
+		Zeitvorgabe	:= Zeitwert,
+		Gruppe	:= Gruppe,
+		Zeitspeicher	:= LaufZeit );
+
+(* NW019: Fehler löschen  ------------------------------------------------*)
+IF Gruppe.ERR_Reset THEN
+	Stoerung	:= 0;
+END_IF
+
+(* NW023: Keine Freigabe Plus  -------------------------------------------------*)
+Stoerung.Err_KeineFreigabe	:= Stoerung.Err_KeineFreigabe OR
+	(	Anf_Einschalten AND
+		NOT OPZeile.EndlagePlus AND
+		NOT OPZeile.FreigabePlus AND
+		NOT OPZeile.Gestoert AND
+		Gruppe.Vorschubfreig AND
+		Gruppe.HWFreigabe );
+
+(* NW024: Keine Freigabe Minus  -------------------------------------------------*)
+Stoerung.Err_KeineFreigabe	:= Stoerung.Err_KeineFreigabe OR
+	(	Anf_Ausschalten AND
+		NOT OPZeile.EndlageMinus AND
+		NOT OPZeile.FreigabeMinus AND
+		NOT OPZeile.Gestoert AND
+		Gruppe.Vorschubfreig AND
+		Gruppe.HWFreigabe );
+
+(* NW025:   -------------------------------------------------*)
+Stoerung.Err_Zeitlauf	:= Stoerung.Err_Zeitlauf OR
+	(	ZLF AND
+		Gruppe.BA_Automatik AND
+		Gruppe.BA_Auto_Start AND
+		NOT HM_Zeitwert_ist_0 AND
+		Achsbewegung AND
+		NOT OPZeile.Gestoert );
+
+(* NW027:   -------------------------------------------------*)
+OPZeile.Gestoert	:=
+	(	Stoerung <> 0 );
+
+(* NW028:   -------------------------------------------------*)
+
+(* NW029:   -------------------------------------------------*)
+END_FUNCTION_BLOCK
