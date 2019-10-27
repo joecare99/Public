@@ -1,0 +1,10 @@
+object FrmBrowseOdfMain: TFrmBrowseOdfMain
+  Left = 780
+  Height = 1211
+  Top = 250
+  Width = 1183
+  Caption = 'Browse Odf'
+  DesignTimePPI = 144
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+end
