@@ -1,0 +1,15 @@
+[SEW-Exp-File]
+nestedcomments=Yes
+path=\Projekt\Allgemeine_FC_FB
+objectflags=0, 8
+symfileflags=2048
+type=Block
+name=fbWriteCSV
+
+[WildCardFill]
+n=Yes
+p=\Projekt\Allgemeine_FC_FB
+o=0, 8
+s=2048
+t=Block
+n=fbWriteCSV

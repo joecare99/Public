@@ -1,0 +1,335 @@
+      GOTO 1
+      PROJEKT% := 1150148
+      DECLARE AKTPLATZPOS.
+      DECLARE GRSTPLATZPOS.
+      DECLARE RESERVE.
+      DECLARE VELOCITY_MAX.
+      
+      DECLARE PUMPENZEIT%
+      DECLARE RPUEBERGABE1%
+      DECLARE RPUEBERGABE2%
+      DECLARE MANIPULATOR%
+      DECLARE RUESTPLATZ%
+      DECLARE RUESTPLATZ2%
+      DECLARE MASCHINE2%
+      DECLARE MASCHINE%
+  //weitere Sonderplaetze hier eintragen
+      
+  //Softwarenocken aus PLC
+      DECLARE Z3GRST&
+      DECLARE Z3GRSTGF&
+      DECLARE Z3POS&
+      DECLARE Z3POSGF&
+      DECLARE B3POS&
+      DECLARE B3POSGF&
+      DECLARE X3POS&
+      DECLARE X3POSGF&
+      DECLARE Y3POS&
+      DECLARE Y3POSGF&
+      DECLARE Y3OBEN&
+      DECLARE Y3UNTEN&
+      
+  START: //Start des Programms
+      IF VELOCITY_MAX.x=0 THEN
+          VELOCITY_MAX. := SYSIN_VELOCITY.
+      ENDIF
+      
+      DRIVE SYSOUT_POSACS.
+      
+      PLATZARRAY. := PLATZARRAY.[MANIPULATOR%]
+      
+  //Start der Hauptschleife
+  LOOP: //Hole aktuellen Auftrag
+      FUNC 8
+      IF AUFTRAG%<2000 THEN
+          IF AUFTRAG%>1000 THEN
+          //Holauftrag
+              ZIELPLATZ% := AUFTRAG%-1000
+              IF ZIELPLATZ%=MASCHINE% THEN
+                  CALL HOL_MA
+              ELSE
+                  IF ZIELPLATZ%=MASCHINE2% THEN
+                      CALL HOL_MA
+                  ELSE
+                      CALL HOL_PL
+                  ENDIF
+              ENDIF
+          ELSE
+          //Rueckzugsauftraege
+              IF AUFTRAG%=701 THEN
+                  CALL GSMA_V
+              ENDIF
+              IF AUFTRAG%=702 THEN
+                  CALL GSMA_L
+              ENDIF
+              IF AUFTRAG%=703 THEN
+                  CALL GSPL_V
+              ENDIF
+              IF AUFTRAG%=704 THEN
+                  CALL GSPL_L
+              ENDIF
+              IF AUFTRAG%=MANIPULATOR% THEN
+                  GOTO TKTEND
+              ELSIF AUFTRAG%< 100 THEN
+              // Positionierauftrag
+                 GRSTPLATZPOS. := PLATZARRAY.[ZIELPLATZ%]
+                 GRSTPLATZPOS.z := PLATZARRAY.z
+                 DRIVE  GRSTPLATZPOS. 
+              ENDIF
+          ENDIF
+      ELSE
+      //Bringauftrag
+          ZIELPLATZ% := AUFTRAG%-2000
+          IF ZIELPLATZ%=MASCHINE% THEN
+              CALL BRN_MA
+          ELSE
+              IF ZIELPLATZ%=MASCHINE2% THEN
+                  CALL BRN_MA
+              ELSE
+                  CALL BRN_PL
+              ENDIF
+          ENDIF
+      ENDIF
+      GOTO LOOP
+      
+  TKTEND: FUNC 30
+  END
+  
+  SUB GSMA_V
+      MSG "Fahre Grundstellung aus Maschine Voll"
+      CALL GSPL_V
+  //Melde Entladen Ende
+      FUNC 35
+  //Pruefe Platz Leer
+      FUNC 23
+  //Ende Holauftrag
+      FUNC 21
+  RETURN
+  
+  SUB GSMA_L
+      MSG "Fahre Grundstellung aus Maschine Leer"
+      CALL GSPL_L
+  //Melde Beladen Ende
+      FUNC 36
+  //Pruefe Platz Belegt
+      FUNC 24
+  //Ende Bringauftrag
+      FUNC 22
+  RETURN
+  
+  SUB GSPL_V
+      MSG "Fahre Grundstellung aus Platz Voll"
+  //Hole Position des Aktuellen Platzes
+      AKTPLATZPOS. := PLATZARRAY.[AKTPLATZ%]
+  //1. Stufe 5 mm unter Platz-Position
+      YWERT1% := AKTPLATZPOS.y-5
+  //2. Stufe  10 mm ueber Platz-Position
+      YWERT2% := AKTPLATZPOS.y+10
+  //3. Stufe nn ueber Platz-Position
+      IF AKTPLATZ%=MASCHINE% THEN
+          AKTPLATZPOS.y := AKTPLATZPOS.y+29
+      ELSE
+          IF AKTPLATZ%=MASCHINE2% THEN
+              AKTPLATZPOS.y := AKTPLATZPOS.y+29
+          ELSE
+              IF AKTPLATZ%=RUESTPLATZ% THEN
+                  AKTPLATZPOS.y := AKTPLATZPOS.y+29
+              ELSE
+                  IF AKTPLATZ%=RUESTPLATZ2% THEN
+                      AKTPLATZPOS.y := AKTPLATZPOS.y+29
+                  ELSE
+                  GT_YOF: AKTPLATZPOS.y := AKTPLATZPOS.y+25
+                  ENDIF
+              ENDIF
+          ENDIF
+      ENDIF
+      
+      GRSTPLATZPOS. := AKTPLATZPOS.
+      GRSTPLATZPOS.z := PLATZARRAY.z
+      
+  //In 3 Stufen anheben
+      IF Z3POS&=1 THEN
+          DRIVE_y YWERT1%
+          SYSIN_VELOCITY.y := VELOCITY_MAX.y*0,1
+          DRIVE_y YWERT2%
+          SYSIN_VELOCITY.y := VELOCITY_MAX.y*0,3
+          DRIVE_y AKTPLATZPOS.y
+          SYSIN_VELOCITY. := VELOCITY_MAX.
+      ELSE
+      //Sonst - 1 Stufe, aber langsam
+          SYSIN_VELOCITY.y := VELOCITY_MAX.y*0,2
+          IF Y3OBEN&+0 THEN
+          ELSE
+              DRIVE_y AKTPLATZPOS.y
+          ENDIF
+          SYSIN_VELOCITY. := VELOCITY_MAX.
+      ENDIF
+  GT_SHT: 
+  //Platz Nachbereiten
+      FUNC 28
+      LET SYSIN_VELOCITY.z := VELOCITY_MAX.z*0,5
+  //Fahre Grundstellung an
+      DRIVE_z GRSTPLATZPOS.z
+      LET SYSIN_VELOCITY. := VELOCITY_MAX.
+      
+  //Auftrag beendet
+      IF AUFTRAG%=703 THEN
+      //Pruefe Platz Leer
+          FUNC 23
+      //Ende Holauftrag
+          FUNC 21
+      ENDIF
+      
+  RETURN
+  
+//Grundstellung aus Platz Leer
+  SUB GSPL_L
+      MSG "Fahre Grundstellung aus Platz Leer"
+  //Hole Position des Aktuellen Platzes
+      AKTPLATZPOS. := PLATZARRAY.[AKTPLATZ%]
+  //1. Stufe 25 mm ueber Platz-Position
+      YWERT1% := AKTPLATZPOS.y+25
+  //2. Stufe 5 mm unter Platz-Position
+      YWERT2% := AKTPLATZPOS.y-5
+  //3. Stufe 16,5 mm unter Platz-Position
+      AKTPLATZPOS.y := AKTPLATZPOS.y-16,5
+      GRSTPLATZPOS. := AKTPLATZPOS.
+      GRSTPLATZPOS.z := PLATZARRAY.z
+      
+  //Bei RP in 3 Stufen ablegen
+      IF Z3POS&=1 THEN
+          SYSIN_VELOCITY.y := VELOCITY_MAX.y*0,3
+          DRIVE_y YWERT1%
+          SYSIN_VELOCITY.y := VELOCITY_MAX.y*0,1
+          DRIVE_y YWERT2%
+          SYSIN_VELOCITY. := VELOCITY_MAX.
+      //Fahre Y auf Obere Position
+          DRIVE_y AKTPLATZPOS.y
+      ELSE
+      //Sonst - 1 Stufe, aber langsam
+          SYSIN_VELOCITY.y := VELOCITY_MAX.y*0,2
+          IF Y3UNTEN& THEN
+          ELSE
+              DRIVE_y AKTPLATZPOS.y
+          ENDIF
+          SYSIN_VELOCITY. := VELOCITY_MAX.
+      ENDIF
+      
+  //Platz Nachbereiten
+      FUNC 28
+  //Fahre Grundstellung an
+      DRIVE_z GRSTPLATZPOS.z
+      
+  //Auftrag beendet
+      IF AUFTRAG%=704 THEN
+      //Pruefe Platz Belegt
+          FUNC 24
+      //Ende Bringauftrag
+          FUNC 22
+      ENDIF
+      
+  RETURN
+  
+  SUB HOL_PL
+      CALL GSPL_L
+      MSG "Hole Palette von Platz"
+      
+      AKTPLATZPOS. := PLATZARRAY.[ZIELPLATZ%]
+      AKTPLATZPOS.y := AKTPLATZPOS.y-16,5
+      GRSTPLATZPOS. := AKTPLATZPOS.
+      GRSTPLATZPOS.z := PLATZARRAY.z
+      
+      DRIVEASYNC GRSTPLATZPOS.
+      
+  //Platz vorbereiten
+      FUNC 27
+      
+      DRIVE GRSTPLATZPOS.
+      
+  //Pruefe Platz Leer
+      FUNC 24
+      DRIVE AKTPLATZPOS.
+      
+  //Heben und Rueckzug
+      FUNC 33
+  RETURN
+  
+  SUB BRN_PL
+      CALL GSPL_V
+      MSG "Bringe Palette nach Platz"
+      
+      AKTPLATZPOS. := PLATZARRAY.[ZIELPLATZ%]
+  //Einfahrt-Hoehe ueber Platz-Position ermitteln
+      IF ZIELPLATZ%=RUESTPLATZ% THEN
+          AKTPLATZPOS.y := AKTPLATZPOS.y+29
+      ELSE
+          IF ZIELPLATZ%=RUESTPLATZ2% THEN
+              AKTPLATZPOS.y := AKTPLATZPOS.y+29
+          ELSE
+              AKTPLATZPOS.y := AKTPLATZPOS.y+25
+          ENDIF
+      ENDIF
+      
+      GRSTPLATZPOS. := AKTPLATZPOS.
+      GRSTPLATZPOS.z := PLATZARRAY.z
+      
+      DRIVEASYNC GRSTPLATZPOS.
+  //Platz vorbereiten
+      FUNC 27
+      
+      DRIVE GRSTPLATZPOS.
+  //Pruefe Platz Belegt
+      FUNC 23
+      SYSIN_VELOCITY.z := VELOCITY_MAX.z*0,5
+      DRIVE AKTPLATZPOS.
+      
+  //Senken und Rueckzug
+      FUNC 34
+  RETURN
+  
+  SUB HOL_MA
+      CALL GSPL_L
+      MSG "Hole Palette von Maschine"
+      
+      AKTPLATZPOS. := PLATZARRAY.[ZIELPLATZ%]
+      AKTPLATZPOS.y := AKTPLATZPOS.y-16,5
+      GRSTPLATZPOS. := AKTPLATZPOS.
+      GRSTPLATZPOS.z := PLATZARRAY.z
+      
+      DRIVEASYNC GRSTPLATZPOS.
+  //Platz vorbereiten
+      FUNC 27
+      DRIVE GRSTPLATZPOS.
+  //Pruefe Platz Leer
+      FUNC 24
+      DRIVE AKTPLATZPOS.
+      
+  //Daten Maschine -> MPS
+      FUNC 38
+  //Heben und Rueckzug
+      FUNC 31
+  RETURN
+  
+  SUB BRN_MA
+      CALL GSPL_V
+      MSG "Bringe Palette zu Maschine"
+      
+      AKTPLATZPOS. := PLATZARRAY.[ZIELPLATZ%]
+  //Einfahrt-Hoehe ueber Platz-Position
+      AKTPLATZPOS.y := AKTPLATZPOS.y+29
+      GRSTPLATZPOS. := AKTPLATZPOS.
+      GRSTPLATZPOS.z := PLATZARRAY.z
+      
+      DRIVEASYNC GRSTPLATZPOS.
+  //Platz vorbereiten
+      FUNC 27
+      DRIVE GRSTPLATZPOS.
+  //Pruefe Platz Leer
+      FUNC 23
+      DRIVE AKTPLATZPOS.
+      
+  //Daten MPS->Maschine
+      FUNC 37
+  //Senken und Rueckzug
+      FUNC 32
+  RETURN
