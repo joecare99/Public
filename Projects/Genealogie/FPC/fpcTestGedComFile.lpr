@@ -3,7 +3,8 @@ program fpcTestGedComFile;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces,sysutils, Forms, GuiTestRunner, tst_GedComFile, tst_GedComHelper;
+  Interfaces, sysutils, Forms, GuiTestRunner, tst_GedComFile, tst_GedComHelper,
+  tst_GenHelper, Cls_GedComExt;
 
 {$R *.res}
 
