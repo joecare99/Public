@@ -17,7 +17,7 @@ type
 
     IGedParent = interface
         ['{AFA6D380-06CD-41D8-B195-DF54C7308E7E}']
-        function appendChild(aChild: TGedComObj): integer;
+        function AppendChildNode(aChild: TGedComObj): integer;
         procedure RemoveChild(aChild: TGedComObj);
         function GetChildIdx(aChild: TGedComObj): integer;
         function GetChild(Idx: variant): TGedComObj;
@@ -25,8 +25,9 @@ type
         function Find(aID: string): TGedComObj;
         function ChildCount: integer;
         function GetEnumerator: TGedComObjEnumerator;
-        Procedure EndUpdate;
+        procedure EndUpdate;
         procedure ChildUpdate(aChild: TGedComObj);
+        function GetObject: TObject;
     end;
 
     { TGedComObjEnumerator }
@@ -37,54 +38,78 @@ type
         FIter: integer;
         function getCurrent: TGedComObj;
     public
-        constructor Create(ATree: IGedParent);
-        function MoveNext: boolean;
+        constructor Create(ATree: IGedParent);virtual;
+        function MoveNext: boolean;virtual;
         property Current: TGedComObj read getCurrent;
     end;
 
+    { TGedComRevEnumerator }
+
+    TGedComRevEnumerator = class(TGedComObjEnumerator)
+    public
+        constructor Create(ATree: IGedParent);override;
+        function MoveNext: boolean;override;
+        Function GetEnumerator: TGedComRevEnumerator;
+    end;
+
+    { TGedComRevEnumerator }
+
+    { TGedComRevFltEnumerator }
+
+    TGedComRevFltEnumerator = class(TGedComRevEnumerator)
+    private
+        FFltNodeType:string;
+    public
+        constructor Create(aTree: IGedParent; aFilter: String); reintroduce;
+        function MoveNext: boolean;override;
+    end;
 
     { TGedComObj }
 
     TGedComObj = class(IGedParent)
     private
-      Fchanged: Boolean;
+        Fchanged: boolean;
         FID: integer;
         FNodeID: string;
         FParent: IGedParent;
         FNodeType: string;
         FRoot: IGedParent;
-        FUpdating:boolean;
-        function GetLink: TGedComObj;
+        FUpdating: boolean;
         procedure SetID(AValue: integer);
-        procedure SetLink(AValue: TGedComObj);
         procedure SetNodeID(AValue: string);
         procedure SetParent(AValue: IGedParent);
-        procedure SetRoot(AValue: IGedParent);
     protected
         function GetData: string; virtual;
-        procedure SetData(AValue: string); virtual;
-        function appendChild(aChild: TGedComObj): integer; virtual;
-        procedure RemoveChild(aChild: TGedComObj); virtual;
-        function GetChildIdx(aChild: TGedComObj): integer; virtual;
-        function GetChild(Idx: variant): TGedComObj; virtual;
+        function GetLink: TGedComObj; virtual;
+        function AppendChildNode({%H-}aChild: TGedComObj): integer; virtual;
+        procedure RemoveChild({%H-}aChild: TGedComObj); virtual;
+        function GetChildIdx({%H-}aChild: TGedComObj): integer; virtual;
+        function GetChild({%H-}Idx: variant): TGedComObj; virtual;
         function GetParent: IGedParent;
         function ChildCount: integer; virtual;
-        Procedure BeginUpdate;virtual;
-        Procedure EndUpdate;virtual;
-        procedure ChildUpdate(aChild: TGedComObj); virtual;
+        procedure SetRoot(AValue: IGedParent); virtual;
+        procedure SetLink(AValue: TGedComObj); virtual;
+        procedure SetData({%H-}AValue: string); virtual;
+        procedure ChildUpdate({%H-}aChild: TGedComObj); virtual;
+        function GetObject: TObject;
     public
         procedure Clear; virtual; abstract;
         destructor Destroy; override;
-        constructor Create(const aID, aType: string; const aInfo: string = ''); virtual;
+        constructor Create(const aID, aType: string; const {%H-}aInfo: string = ''); virtual;
         function ToString: ansistring; override;
         function Description: string; virtual;
         function CreateChild(const aID, aType: string;
             const aInfo: string = ''): TGedComObj; virtual;
         function Find(aType: string): TGedComObj;
-        function Equals(aObj: TGedComObj): boolean; overload;
-        function Equals(aObj: TGedComObj; const aCompTags: array of string): boolean; overload;
+        function Equals(aObj: TGedComObj): boolean;virtual; overload;
+        function Equals(aObj: TGedComObj; const aCompTags: array of string): boolean;
+            overload;
         function GetEnumerator: TGedComObjEnumerator;
+        function GetRevEnumerator(Filter:String): TGedComRevEnumerator;
+        procedure BeginUpdate; virtual;
+        procedure EndUpdate; virtual;
         procedure Merge(var aObj: TGedComObj);
+
         property ID: integer read FID write SetID;
         property Parent: IGedParent read FParent write SetParent;
         property Root: IGedParent read FRoot write SetRoot;
@@ -93,10 +118,12 @@ type
         property NodeType: string read FNodeType write FNodeType;
         property NodeID: string read FNodeID write SetNodeID;
         property Count: integer read ChildCount;
+        property Updateing: boolean read FUpdating;
         property Child[Index: variant]: TGedComObj read GetChild; default;
     public
-        class function AssNodeType: string; virtual;
-        class function HandlesNodeType({%H-}aType: string): boolean; virtual;
+        class function AssNodeType: string; virtual; // Class: Assosiated Node Type
+        class function HandlesNodeType({%H-}aType: string): boolean;
+            virtual; // Class: Handles Node Type
     end;
 
     TGedObjClass = class of TGedComObj;
@@ -108,11 +135,13 @@ type
     protected
         function GetData: string; override;
         procedure SetData(AValue: string); override;
-        function appendChild(aChild: TGedComObj): integer; override;
+        function AppendChildNode(aChild: TGedComObj): integer; override;
         procedure RemoveChild(aChild: TGedComObj); override;
         function GetChildIdx(aChild: TGedComObj): integer; override;
         function GetChild(Idx: variant): TGedComObj; override;
         function ChildCount: integer; override;
+        procedure SetShortcutChild(const AValue: TGedComObj;
+            var aShortcut: TGedComObj; const aNodeType: string); overload;
     public
         procedure Clear; override;
         constructor Create(const aID, aType: string; const aInfo: string); override;
@@ -129,7 +158,7 @@ type
         FIdx: TStringList;
         FOnChildUpdate: TNotifyEvent;
         FOnUpdate: TNotifyEvent;
-        FonLongOp:TNotifyEvent;
+        FonLongOp: TNotifyEvent;
         FOnWriteUpdate: TNotifyEvent;
         procedure OnReadUpdate(Sender: TObject);
         class function ParseLine(const Line: string;
@@ -141,14 +170,13 @@ type
         procedure SetOnUpdate(AValue: TNotifyEvent);
         procedure SetOnWriteUpdate(AValue: TNotifyEvent);
     protected
-        function appendChild(aChild: TGedComObj): integer; virtual;
-        procedure RemoveChild(aChild: TGedComObj); virtual;
         function GetChildIdx(aChild: TGedComObj): integer; virtual;
         function GetChild(Idx: variant): TGedComObj;
         function GetParent: IGedParent;
         function ChildCount: integer;
         procedure ChildUpdate(aChild: TGedComObj); virtual;
-        Procedure EndUpdate;
+        function GetObject: TObject;
+        procedure EndUpdate;
     public
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
@@ -181,17 +209,18 @@ type
 
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
-        class function ParseGed(const Lines: TStrings; gcBase: IGedParent; OnUpd,
-          OnLongOp: TNotifyEvent): IGedParent;
+        class function ParseGed(const Lines: TStrings; gcBase: IGedParent;
+            OnUpd, OnLongOp: TNotifyEvent): IGedParent;
 
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
-        class procedure PutGed(const Lines: TStrings; gcBase: IGedParent; OnUpd,
-          OnLongOp: TNotifyEvent);
+        class procedure PutGed(const Lines: TStrings; gcBase: IGedParent;
+            OnUpd, OnLongOp: TNotifyEvent);
 
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
-        class function NewNode(aNodeID, aNodeType: string; aValue: string = ''): TGedComObj;
+        class function NewNode(aNodeID, aNodeType: string;
+            aValue: string = ''): TGedComObj;
 
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
@@ -207,162 +236,30 @@ type
 
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
+        function AppendChildNode(aChild: TGedComObj): integer; virtual;
+        procedure RemoveChild(aChild: TGedComObj); virtual;
+
         procedure AppendIndex(const aIdx: string; const aGedObj: TGedComObj);
         function GetEnumerator: TGedComObjEnumerator;
-        function CreateChild(const aID, aType: string; const aInfo: string = ''): TGedComObj;
+        function RevEnum: TGedComRevEnumerator;
+        function CreateChild(const aID, aType: string;
+            const aInfo: string = ''): TGedComObj;
         function Find(aID: string): TGedComObj;
         procedure Merge(aObj1: TGedComObj; var aObj2: TGedComObj);
+        procedure AppendUnresolvedLink(aLink: string; aObj1: TGedComObj);
         property Count: integer read ChildCount;
         property Child[idx: variant]: TGedComObj read GetChild; default;
         property OnUpdate: TNotifyEvent read FOnUpdate write SetOnUpdate;
-        property OnLongOp: TNotifyEvent read FOnLongOp write SetOnLongOp ;
+        property OnLongOp: TNotifyEvent read FOnLongOp write SetOnLongOp;
         property OnWriteUpdate: TNotifyEvent read FOnWriteUpdate write SetOnWriteUpdate;
         property Encoding: string read FEncoding write SetEncoding;
         property OnChildUpdate: TNotifyEvent read FOnChildUpdate write SetOnChildUpdate;
     end;
 
-    {---------------------------------------------------------------------}
-    // Special Classes as Container of GedCom-Objects
-    { TMultiGedObj }
-    TGedMulti = class(TGedComDefault)
-        // Todo: GedObject, Dessen Informationen an mehreren Stellen verwendet wird
-    end;
-
-    { TGedPlace }
-
-    TGedPlace = class(TGedMulti)
-    private
-        FLatitude: string;
-        FLongitude: string;
-        FName: string;
-        FMap: TGedComObj;
-        procedure SetLatitude(AValue: string);
-        procedure SetLongitude(AValue: string);
-        procedure SetName(AValue: string);
-    published
-        property Name: string read FName write SetName;
-        property FullName: string read GetData write SetData;
-        property Longitude: string read FLongitude write SetLongitude;
-        property Latitude: string read FLatitude write SetLatitude;
-    protected
-        procedure ChildUpdate(aChild: TGedComObj); override;
-    public
-        function ToString: ansistring; override;
-        function Description: string; override;
-        class function AssNodeType: string; override;
-        class function HandlesNodeType(aType: string): boolean; override;
-    end;
-
-    { TGedEvent }
-
-    TGedEvent = class(TGedComDefault)
-    private
-        FDate: TGedComObj;
-        FPlace: TGedPlace;
-        FSource: TGedComObj;
-        function GetDate: string;
-        procedure SetDate(AValue: string);
-        procedure SetPlace(AValue: TGedPlace);
-        procedure SetSource(AValue: TGedComObj);
-    published
-        property Date: string read GetDate write SetDate;
-        property Place: TGedPlace read FPlace write SetPlace;
-        property Source: TGedComObj read FSource write SetSource;
-    protected
-        procedure ChildUpdate(aChild: TGedComObj); override;
-    public
-        function ToString: ansistring; override;
-        function Description: string; override;
-        class function AssNodeType: string; override;
-        class function HandlesNodeType(aType: string): boolean; override;
-    end;
-
-    { TIndName }
-
-    TIndName = class(TGedComDefault)
-    private
-        FCallName: string;
-        FGivenName: string;
-        FNameSuffix: string;
-        Fnext: TGedComObj;
-        FSurname: string;
-        FTitle: string;
-        Fsource: TGedComObj;
-
-        procedure SetCallName(AValue: string);
-        procedure SetFSource(AValue: TGedComObj);
-        procedure SetGivenName(AValue: string);
-        procedure SetNameSuffix(AValue: string);
-        procedure SetSurname(AValue: string);
-        procedure SetTitle(AValue: string);
-    protected
-        procedure SetData(AValue: string); override;
-    published
-        property FullName: string read GetData write SetData;
-        property Surname: string read FSurname write SetSurname;
-        property GivenName: string read FGivenName write SetGivenName;
-        property CallName: string read FCallName write SetCallName;
-        property NameSuffix: string read FNameSuffix write SetNameSuffix;
-        property Title: string read FTitle write SetTitle;
-        property Source: TGedComObj read FSource write SetFSource;
-    public
-        constructor Create(const aID, aType: string; const aInfo: string); override;
-        function ToString: ansistring; override;
-        function Description: string; override;
-        procedure HandleAdditional(aPartner: TGedComObj);
-        class function AssNodeType: string; override;
-        class function HandlesNodeType(aType: string): boolean; override;
-    end;
-
-    { TGedIndividual }
-
-    TGedIndividual = class(TGedComDefault)
-    private
-        FBaptised: TGedEvent;
-        FBirth: TGedEvent;
-        FBurial: TGedEvent;
-        FDeath: TGedEvent;
-        FFather: TGedIndividual;
-        FMother: TGedIndividual;
-        FName: TIndName;
-        FReligion: TGedEvent;
-        FSex: TGedEvent;
-        Fspouses:array of TGedComObj;
-        FChilds:array of TGedComObj;
-        function GetChildCount: integer;
-        function GetChildren(Idx: variant): TGedIndividual;
-        function GetSpouseCount: integer;
-        function GetSpouses(Idx: variant): TGedIndividual;
-        procedure SetBaptised(AValue: TGedEvent);
-        procedure SetBirth(AValue: TGedEvent);
-        procedure SetBurial(AValue: TGedEvent);
-        procedure SetChildren(Idx: variant; AValue: TGedIndividual);
-        procedure SetDeath(AValue: TGedEvent);
-        procedure SetFather(AValue: TGedIndividual);
-        procedure SetMother(AValue: TGedIndividual);
-        procedure SetName(AValue: TIndName);
-        procedure SetSpouses(Idx: variant; AValue: TGedIndividual);
-    published
-        property Name: TIndName read FName write SetName;
-        property Birth: TGedEvent read FBirth write SetBirth;
-        property Baptised: TGedEvent read FBaptised write SetBaptised;
-        property Death: TGedEvent read FDeath write SetDeath;
-        property Burial: TGedEvent read FBurial write SetBurial;
-        property Father: TGedIndividual read FFather write SetFather;
-        property Mother: TGedIndividual read FMother write SetMother;
-        property Spouses[Idx: variant]: TGedIndividual read GetSpouses write SetSpouses;
-        property SpouseCount:integer read GetSpouseCount;
-        property Children[Idx: variant]: TGedIndividual read GetChildren write SetChildren;
-        property ChildCount:integer read GetChildCount;
-    protected
-        procedure ChildUpdate(aChild: TGedComObj); override;
-    public
-        constructor Create(const aID, aType: string; const aInfo: string); override;
-        function ToString: ansistring; override;
-        function Description: string; override;
-        class function AssNodeType: string; override;
-        class function HandlesNodeType(aType: string): boolean; override;
-    end;
+const
+    CEventSource = 'SOUR';
+    CPlace = 'PLAC';
+    CEventDate = 'DATE';
 
 
 implementation
@@ -372,550 +269,40 @@ uses Unt_StringProcs, LConvEncoding, variants;
 resourcestring
     rsGenealogieExchangeFile = 'Genealogie-Exchange-File';
 
-{ TGedPlace }
-const
-    CPlace = 'PLAC';
-    CPaceMap = 'MAP';
-    CPlaceMapLong = 'LONG';
-    CPlaceMapLati = 'LATI';
-    CIndividual = 'INDI';
-    CEventDate = 'DATE';
-    CEventSource = 'SOUR';
-    CEventBirth = 'BIRT';
-    CEventBaptism = 'BAPM';
-    CEventDeath = 'DEAT';
-    CEventBurial = 'BURI';
-    CEventMarriage = 'MARR';
-    CFactOccupation = 'OCCU';
-    CFactName = 'NAME';
-    CFactSex = 'SEX';
-    CFactReligion = 'RELI';
+{ TGedComRevFltEnumerator }
 
-{ TIndName }
-
-procedure TIndName.SetCallName(AValue: string);
+constructor TGedComRevFltEnumerator.Create(aTree: IGedParent; aFilter: String);
 begin
-    if FCallName = AValue then
-        Exit;
-    FCallName := AValue;
+  inherited Create(ATree);
+  FFltNodeType:=aFilter;
 end;
 
-procedure TIndName.SetFSource(AValue: TGedComObj);
+function TGedComRevFltEnumerator.MoveNext: boolean;
 begin
-    if FSource = AValue then
-        Exit;
-    FSource := AValue;
+  Result:=inherited MoveNext;
+  while result and (Current.NodeType <> FFltNodeType) do
+    Result:=inherited MoveNext;
 end;
 
-procedure TIndName.SetGivenName(AValue: string);
+{ TGedComRevEnumerator }
+
+constructor TGedComRevEnumerator.Create(ATree: IGedParent);
 begin
-    if FGivenName = AValue then
-        Exit;
-    FGivenName := AValue;
+  inherited Create(ATree);
+  FIter:=FBaseNode.ChildCount;
 end;
 
-procedure TIndName.SetNameSuffix(AValue: string);
+function TGedComRevEnumerator.MoveNext: boolean;
 begin
-    if FNameSuffix = AValue then
-        Exit;
-    FNameSuffix := AValue;
+  dec(Fiter);
+  Result:=Fiter >=0;
 end;
 
-procedure TIndName.SetSurname(AValue: string);
+function TGedComRevEnumerator.GetEnumerator: TGedComRevEnumerator;
 begin
-    if FSurname = AValue then
-        Exit;
-    FSurname := AValue;
+  result := self;
 end;
 
-procedure TIndName.SetTitle(AValue: string);
-begin
-    if FTitle = AValue then
-        Exit;
-    FTitle := AValue;
-end;
-
-procedure TIndName.SetData(AValue: string);
-var
-    lpp: integer;
-begin
-    lpp := AValue.IndexOf('/');
-    if lpp >= 0 then
-      begin
-        FGivenName := LeftStr(AValue, lpp);
-        FSurname := Copy(avalue, lpp + 1).DeQuotedString('/');
-      end;
-    inherited SetData(AValue);
-end;
-
-constructor TIndName.Create(const aID, aType: string; const aInfo: string);
-begin
-    inherited Create(aID, aType, aInfo);
-    Fsource := nil;
-    Fnext := nil;
-end;
-
-function TIndName.ToString: ansistring;
-begin
-    Result := 'N: ' + Data;
-end;
-
-function TIndName.Description: string;
-begin
-    Result := 'Name: ' + Data;
-    if assigned(FSource) then
-        Result := Result + ' Q:(' + FSource['PAGE'].Data + ')';
-end;
-
-procedure TIndName.HandleAdditional(aPartner: TGedComObj);
-begin
-    if aPartner = self then
-        exit;
-    if not assigned(Fnext) then
-        Fnext := aPartner
-    else if aPartner <> self then
-        TIndName(Fnext).HandleAdditional(aPartner);
-end;
-
-class function TIndName.AssNodeType: string;
-begin
-    Result := CFactName;
-end;
-
-class function TIndName.HandlesNodeType(aType: string): boolean;
-begin
-    Result := aType = CFactName;
-end;
-
-{ TGedComDefault }
-
-function TGedComDefault.GetData: string;
-begin
-    Result := FInformation;
-end;
-
-procedure TGedComDefault.SetData(AValue: string);
-begin
-    if FInformation = AValue then
-        exit;
-    FInformation := AValue;
-    if Assigned(Parent) then
-        Parent.ChildUpdate(self);
-end;
-
-function TGedComDefault.appendChild(aChild: TGedComObj): integer;
-var
-    i: integer;
-begin
-    if not assigned(aChild) then
-        exit(-1);
-    i := GetChildIdx(aChild);
-    if i >= 0 then
-        exit(i);
-    setlength(FChildren, high(FChildren) + 2);
-    Result := high(FChildren);
-    FChildren[Result] := aChild;
-    aChild.ID := Result;
-    if aChild.Parent <> iGedparent(self) then
-        aChild.Parent := self;
-    aChild.Root := froot;
-end;
-
-procedure TGedComDefault.RemoveChild(aChild: TGedComObj);
-var
-    i, lidx: integer;
-    Flag: boolean;
-begin
-    lidx := GetChildIdx(aChild);
-    Flag := lidx >= 0;
-    if flag then
-      begin
-        // This keeps the order;
-        BeginUpdate;
-        for i := lidx + 1 to high(FChildren) do
-          begin
-            FChildren[i - 1] := FChildren[i];
-            FChildren[i - 1].ID := i - 1;
-          end;
-        // Faster but shuffeling:
-        //  FChildren[lIdx] := FChildren[high(FChildren)];
-        //   FChildren[lidx].ID := lidx;
-        setlength(FChildren, high(FChildren));
-        aChild.Parent := nil;
-        EndUpdate;
-      end;
-end;
-
-function TGedComDefault.GetChildIdx(aChild: TGedComObj): integer;
-var
-    i: integer;
-begin
-    Result := -1;
-    if not assigned(aChild) then
-        exit;
-    if aChild.Parent <> IGedParent(self) then
-        exit;
-    if (achild.id >= 0) and (aChild.id <= high(FChildren)) and
-        (FChildren[achild.id] = aChild) then
-        exit(aChild.id);
-    for i := 0 to high(FChildren) do
-        if FChildren[i] = aChild then
-            exit(i);
-end;
-
-function TGedComDefault.GetChild(Idx: variant): TGedComObj;
-begin
-    if VarIsOrdinal(Idx) then
-        Result := FChildren[idx]
-    else if VarIsStr(Idx) then
-      begin
-        Result := Find(Idx);
-        if not Assigned(Result) then
-            Result := CreateChild('', Idx, '');
-      end;
-end;
-
-constructor TGedComDefault.Create(const aID, aType: string; const aInfo: string);
-begin
-    inherited;
-    FInformation := aInfo;
-end;
-
-function TGedComDefault.ChildCount: integer;
-begin
-    Result := Length(FChildren);
-end;
-
-procedure TGedComDefault.Clear;
-var
-    i: integer;
-begin
-    for i := high(FChildren) downto 0 do
-        FreeAndNil(FChildren[i]);
-    setlength(FChildren, 0);
-end;
-
-class function TGedComDefault.HandlesNodeType(aType: string): boolean;
-begin
-    Result := True; // Can handle all kind of Nodes
-end;
-
-{ TGedEvent }
-
-procedure TGedEvent.SetDate(AValue: string);
-begin
-    if assigned(FDate) then
-        FDate.Data := AValue
-    else
-        Child[CEventDate].Data := AValue;
-end;
-
-function TGedEvent.GetDate: string;
-begin
-    if assigned(FDate) then
-        Result := FDate.Data
-    else
-        Result := '';
-end;
-
-procedure TGedEvent.SetPlace(AValue: TGedPlace);
-begin
-    if FPlace = AValue then
-        Exit;
-    FPlace := AValue;
-end;
-
-procedure TGedEvent.SetSource(AValue: TGedComObj);
-begin
-    if FSource = AValue then
-        Exit;
-    FSource := AValue;
-end;
-
-procedure TGedEvent.ChildUpdate(aChild: TGedComObj);
-begin
-    if aChild.NodeType = CEventDate then
-        FDate := aChild
-    else if aChild.NodeType = CPlace then
-        FPlace := TGedPlace(aChild)
-    else if aChild.NodeType = CEventSource then
-        FSource := aChild;
-    inherited;
-end;
-
-function TGedEvent.ToString: ansistring;
-begin
-    Result := 'E: ' + NodeType;
-    if assigned(FDate) then
-        Result := Result + ': ' + FDate.Data;
-    if assigned(FPlace) then
-        Result := Result + ' in ' + FPlace.Data;
-end;
-
-function TGedEvent.Description: string;
-begin
-    Result := 'Event: ' + NodeType;
-    if assigned(FDate) then
-        Result := Result + ' am ' + FDate.Data;
-    if assigned(FPlace) then
-        Result := Result + ' in ' + FPlace.Data;
-    if Data <> '' then
-        Result := Result + ' (' + Data + ')';
-    if assigned(FSource) then
-        Result := Result + ' Q:(' + FSource['PAGE'].Data + ')';
-end;
-
-class function TGedEvent.AssNodeType: string;
-begin
-    Result := '';
-end;
-
-class function TGedEvent.HandlesNodeType(aType: string): boolean;
-begin
-    Result := (atype = CEventBirth) or (atype = CEventBaptism) or
-        (atype = CEventDeath) or (atype = CEventBurial);
-end;
-
-{ TGedIndividual }
-
-function TGedIndividual.GetChildren(Idx: variant): TGedIndividual;
-begin
-    // Todo:
-    Result := nil;
-end;
-
-function TGedIndividual.GetChildCount: integer;
-begin
-  result := Length(FChilds);
-end;
-
-function TGedIndividual.GetSpouseCount: integer;
-begin
-    result := Length(FSpouses);
-end;
-
-function TGedIndividual.GetSpouses(Idx: variant): TGedIndividual;
-begin
-    // Todo:
-    Result := nil;
-end;
-
-procedure TGedIndividual.SetBaptised(AValue: TGedEvent);
-begin
-    if FBaptised = AValue then
-        Exit;
-    FBaptised := AValue;
-end;
-
-procedure TGedIndividual.SetBirth(AValue: TGedEvent);
-begin
-    if FBirth = AValue then
-        Exit;
-    FBirth := AValue;
-end;
-
-procedure TGedIndividual.SetBurial(AValue: TGedEvent);
-begin
-    if FBurial = AValue then
-        Exit;
-    FBurial := AValue;
-end;
-
-procedure TGedIndividual.SetChildren(Idx: variant; AValue: TGedIndividual);
-begin
-
-end;
-
-procedure TGedIndividual.SetDeath(AValue: TGedEvent);
-begin
-    if FDeath = AValue then
-        Exit;
-    FDeath := AValue;
-end;
-
-procedure TGedIndividual.SetFather(AValue: TGedIndividual);
-begin
-    if FFather = AValue then
-        Exit;
-    FFather := AValue;
-end;
-
-procedure TGedIndividual.SetMother(AValue: TGedIndividual);
-begin
-    if FMother = AValue then
-        Exit;
-    FMother := AValue;
-end;
-
-procedure TGedIndividual.SetName(AValue: TIndName);
-begin
-    if FName = AValue then
-        Exit;
-    FName := AValue;
-end;
-
-procedure TGedIndividual.SetSpouses(Idx: variant; AValue: TGedIndividual);
-begin
-
-end;
-
-procedure TGedIndividual.ChildUpdate(aChild: TGedComObj);
-begin
-    if (aChild.NodeType = CFactName) and not assigned(aChild.find('TYPE')) then
-        if assigned(Fname) and (Fname.Parent = IGedParent(self)) then
-            FName.HandleAdditional(aChild)
-        else
-            Fname := TIndName(aChild)
-    else if aChild.NodeType = CFactSex then
-        FSex := TGedEvent(aChild)
-    else if aChild.NodeType = CFactReligion then
-        FReligion := TGedEvent(aChild)
-    else if aChild.NodeType = CEventBirth then
-        FBirth := TGedEvent(aChild)
-    else if aChild.NodeType = CEventBaptism then
-        FBaptised := TGedEvent(aChild)
-    else if aChild.NodeType = CEventDeath then
-        FDeath := TGedEvent(aChild)
-    else if aChild.NodeType = CEventBurial then
-        FBurial := TGedEvent(aChild);
-    inherited;
-end;
-
-constructor TGedIndividual.Create(const aID, aType: string; const aInfo: string);
-begin
-    inherited Create(aID, aType, aInfo);
-    FName := nil;
-    FFather := nil;
-    FMother := nil;
-    FBirth := nil;
-    FBaptised := nil;
-    FSex := nil;
-    FReligion := nil;
-    FDeath := nil;
-    FBurial := nil;
-end;
-
-function TGedIndividual.ToString: ansistring;
-begin
-    Result := 'I: ';
-    if assigned(FName) then
-        Result := Result + FName.Data
-    else
-        Result := Result + NodeID;
-    if assigned(Fsex) then
-        Result := Result + ', ' + Fsex.Data;
-    if assigned(FBirth) then
-        Result := Result + ', ' + FBirth.ToString
-    else
-    if assigned(FBaptised) then
-        Result := Result + ', ' + FBaptised.ToString;
-end;
-
-function TGedIndividual.Description: string;
-begin
-    Result := 'Person: ';
-    if assigned(FName) then
-        Result := Result + FName.Data
-    else
-        Result := Result + NodeID;
-    if assigned(Fsex) then
-        Result := Result + LineEnding + 'Sex: ' + Fsex.Data;
-    if assigned(FBirth) then
-        Result := Result + LineEnding + FBirth.Description;
-    if assigned(FBaptised) then
-        Result := Result + LineEnding + FBaptised.Description;
-    if assigned(FReligion) then
-        Result := Result + LineEnding + 'Religion: ' + FReligion.Data;
-    if assigned(FDeath) then
-        Result := Result + LineEnding + FDeath.Description;
-    if assigned(FBurial) then
-        Result := Result + LineEnding + FBurial.Description;
-end;
-
-class function TGedIndividual.AssNodeType: string;
-begin
-    Result := CIndividual;
-end;
-
-class function TGedIndividual.HandlesNodeType(aType: string): boolean;
-begin
-    Result := aType = CIndividual;
-end;
-
-procedure TGedPlace.SetName(AValue: string);
-var
-    lRest: string;
-    lpp: integer;
-begin
-    if FName = AValue then
-        Exit;
-    if FName = Leftstr(Data, length(FName)) then
-        lRest := copy(Data, length(FName) + 1)
-    else
-      begin
-        lpp := Data.indexof(',');
-        if lpp >= 0 then
-            lRest := copy(Data, lpp + 1)
-        else
-            lRest := '';
-      end;
-    FName := AValue;
-    Data := Fname + lRest;
-end;
-
-procedure TGedPlace.ChildUpdate(aChild: TGedComObj);
-begin
-    FMap := Find(CPaceMap);
-    if assigned(Fmap) and assigned(Fmap.Find(CPlaceMapLati)) then
-        FLatitude := FMap[CPlaceMapLati].Data;
-    if assigned(Fmap) and assigned(Fmap.Find(CPlaceMapLong)) then
-        FLongitude := FMap[CPlaceMapLong].Data;
-    inherited;
-end;
-
-function TGedPlace.ToString: ansistring;
-begin
-    Result := 'Place: ' + Data;
-end;
-
-function TGedPlace.Description: string;
-begin
-    Result := 'Place: ' + Data;
-    if Latitude <> '' then
-        Result := Result + ' (' + Latitude + '; ' + Longitude + ')';
-end;
-
-class function TGedPlace.AssNodeType: string;
-begin
-    Result := CPlace;
-end;
-
-class function TGedPlace.HandlesNodeType(aType: string): boolean;
-begin
-    Result := aType = CPlace;
-end;
-
-procedure TGedPlace.SetLatitude(AValue: string);
-begin
-    if FLatitude = AValue then
-        Exit;
-    FLatitude := AValue;
-    if assigned(Fmap) then
-        FMap[CPlaceMapLati].Data := AValue
-    else
-        self[CPaceMap][CPlaceMapLati].Data := Avalue;
-end;
-
-procedure TGedPlace.SetLongitude(AValue: string);
-begin
-    if FLongitude = AValue then
-        Exit;
-    FLongitude := AValue;
-    if assigned(Fmap) then
-        FMap[CPlaceMapLong].Data := AValue
-    else
-        self[CPaceMap][CPlaceMapLong].Data := Avalue;
-end;
 
 { TGedComObjEnumerator }
 
@@ -948,16 +335,20 @@ begin
     FParent := AValue;
     if assigned(FParent) then
       begin
-        FID := FParent.appendChild(self);
+        FID := FParent.AppendChildNode(self);
         FParent.ChildUpdate(self);
       end;
 end;
 
 procedure TGedComObj.SetRoot(AValue: IGedParent);
+var
+    lch: TGedComObj;
 begin
     if @FRoot = @AValue then
         Exit;
     FRoot := AValue;
+    for lch in self do
+        lch.root := AValue;
 end;
 
 procedure TGedComObj.SetNodeID(AValue: string);
@@ -974,7 +365,7 @@ end;
 
 function TGedComObj.GetLink: TGedComObj;
 begin
-    if copy(GetData, 1, 1) = '@' then
+    if Assigned(FRoot) and (copy(GetData, 1, 1) = '@') then
         Result := FRoot.Find(GetData)
     else
         Result := nil;
@@ -1001,7 +392,7 @@ begin
         SetData(AValue.NodeID);
 end;
 
-function TGedComObj.appendChild(aChild: TGedComObj): integer;
+function TGedComObj.AppendChildNode(aChild: TGedComObj): integer;
 begin
     Result := -1;
 end;
@@ -1032,31 +423,37 @@ end;
 
 procedure TGedComObj.BeginUpdate;
 begin
-  FUpdating:=true;
+    FUpdating := True;
 end;
 
 procedure TGedComObj.EndUpdate;
 var
-  lChlds: TGedComObj;
+    lChlds: TGedComObj;
 begin
-  if not FUpdating then Exit;
-  for lChlds in self do
-    lChlds.EndUpdate;
-  FUpdating:=false;
-  if Fchanged and  Assigned(parent) then
-    Parent.ChildUpdate(self);
-  FChanged:=False;
+    if not FUpdating then
+        Exit;
+    for lChlds in self do
+        lChlds.EndUpdate;
+    FUpdating := False;
+    if Fchanged and Assigned(parent) then
+        Parent.ChildUpdate(self);
+    FChanged := False;
 end;
 
 procedure TGedComObj.ChildUpdate(aChild: TGedComObj);
 begin
-    if Assigned(parent)and not FUpdating then
+    if Assigned(parent) and not FUpdating then
       begin
-        FChanged:=False;
-        Parent.ChildUpdate(self)
+        FChanged := False;
+        Parent.ChildUpdate(self);
       end
     else
-      Fchanged:=true;
+        Fchanged := True;
+end;
+
+function TGedComObj.GetObject: TObject;
+begin
+    Result := self;
 end;
 
 destructor TGedComObj.Destroy;
@@ -1091,7 +488,7 @@ function TGedComObj.CreateChild(const aID, aType: string;
     const aInfo: string): TGedComObj;
 begin
     Result := TGedComFile.NewNode(aid, atype, ainfo);
-    appendChild(Result);
+    AppendChildNode(Result);
 end;
 
 function TGedComObj.Find(aType: string): TGedComObj;
@@ -1142,7 +539,7 @@ procedure TGedComObj.Merge(var aObj: TGedComObj);
 var
     i: integer;
     lCild: TGedComObj;
-    lLink, lOrgCh: TGedComObj;
+    lOrgCh: TGedComObj;
 begin
     // Prüfe, daß beide Objekte den selben Root, Parent und Typ haben
     if assigned(aObj) and (aobj.root = FRoot) and (self <> aobj) and
@@ -1153,8 +550,8 @@ begin
           begin
             lCild := aObj[i];
             lOrgCh := Find(lCild.FNodeType);
-            if not lCild.Data.StartsWith('@') and
-                assigned(lOrgCh) and lOrgCh.Equals(lCild) then
+            if not lCild.Data.StartsWith('@') and assigned(lOrgCh) and
+                lOrgCh.Equals(lCild) then
                 lOrgCh.merge(lCild);
             if assigned(lCild) then
                 lCild.Parent := self;
@@ -1169,6 +566,11 @@ begin
     Result := TGedComObjEnumerator.Create(self);
 end;
 
+function TGedComObj.GetRevEnumerator(Filter: String): TGedComRevEnumerator;
+begin
+  result :=TGedComRevFltEnumerator.Create(self,Filter);
+end;
+
 class function TGedComObj.AssNodeType: string;
 begin
     Result := '';
@@ -1178,6 +580,144 @@ class function TGedComObj.HandlesNodeType(aType: string): boolean;
 begin
     Result := False;
 end;
+
+{ TGedComDefault }
+
+function TGedComDefault.GetData: string;
+begin
+    Result := FInformation;
+end;
+
+procedure TGedComDefault.SetData(AValue: string);
+begin
+    if FInformation = AValue then
+        exit;
+    FInformation := AValue;
+    if Assigned(Parent) then
+        Parent.ChildUpdate(self);
+end;
+
+function TGedComDefault.AppendChildNode(aChild: TGedComObj): integer;
+var
+    i: integer;
+begin
+    if not assigned(aChild) then
+        exit(-1);
+    i := GetChildIdx(aChild);
+    if i >= 0 then
+        exit(i);
+    setlength(FChildren, high(FChildren) + 2);
+    Result := high(FChildren);
+    FChildren[Result] := aChild;
+    aChild.ID := Result;
+    if aChild.Parent <> iGedparent(self) then
+        aChild.Parent := self;
+    aChild.Root := FRoot;
+end;
+
+procedure TGedComDefault.RemoveChild(aChild: TGedComObj);
+var
+    i, lidx: integer;
+    Flag: boolean;
+begin
+    lidx := GetChildIdx(aChild);
+    Flag := lidx >= 0;
+    if flag then
+      begin
+        // This keeps the order;
+        BeginUpdate;
+        for i := lidx + 1 to high(FChildren) do
+          begin
+            FChildren[i - 1] := FChildren[i];
+            FChildren[i - 1].ID := i - 1;
+          end;
+        // Faster but shuffeling:
+        //  FChildren[lIdx] := FChildren[high(FChildren)];
+        //   FChildren[lidx].ID := lidx;
+        setlength(FChildren, high(FChildren));
+        aChild.Parent := nil;
+        ChildUpdate(aChild);
+        EndUpdate;
+      end;
+end;
+
+function TGedComDefault.GetChildIdx(aChild: TGedComObj): integer;
+var
+    i: integer;
+begin
+    Result := -1;
+    if not assigned(aChild) then
+        exit;
+    if aChild.Parent <> IGedParent(self) then
+        exit;
+    if (achild.id >= 0) and (aChild.id <= high(FChildren)) and
+        (FChildren[achild.id] = aChild) then
+        exit(aChild.id);
+    for i := 0 to high(FChildren) do
+        if FChildren[i] = aChild then
+            exit(i);
+end;
+
+function TGedComDefault.GetChild(Idx: variant): TGedComObj;
+begin
+    if VarIsOrdinal(Idx) then
+        Result := FChildren[idx]
+    else if VarIsStr(Idx) then
+      begin
+        Result := Find(Idx);
+        if not Assigned(Result) then
+            Result := CreateChild('', Idx, '');
+      end;
+end;
+
+constructor TGedComDefault.Create(const aID, aType: string; const aInfo: string);
+begin
+    inherited;
+    FInformation := aInfo;
+end;
+
+function TGedComDefault.ChildCount: integer;
+begin
+    Result := Length(FChildren);
+end;
+
+procedure TGedComDefault.SetShortcutChild(const AValue: TGedComObj;
+  var aShortcut: TGedComObj; const aNodeType: string);
+
+var
+        lNode: TGedComObj;
+
+    begin
+        if aValue = aShortCut then
+            exit;
+        BeginUpdate;
+        if assigned(aShortcut) then
+          begin
+            lNode := aShortcut;
+            RemoveChild(lNode);
+            FreeAndNil(lNode);
+          end;
+        if assigned(AValue) then
+            AValue.NodeType := aNodeType;
+        aShortcut := AValue;
+        AppendChildNode(AValue);
+        EndUpdate;
+end;
+
+procedure TGedComDefault.Clear;
+var
+    i: integer;
+begin
+    for i := high(FChildren) downto 0 do
+        FreeAndNil(FChildren[i]);
+    setlength(FChildren, 0);
+end;
+
+class function TGedComDefault.HandlesNodeType(aType: string): boolean;
+begin
+    Result := True; // Can handle all kind of Nodes
+end;
+
 
 { TGedComFile }
 
@@ -1218,8 +758,7 @@ begin
 end;
 
 procedure TGedComFile.SetEncoding(AValue: string);
-var
-    lCharNode: TGedComObj;
+
 begin
     if FEncoding = AValue then
         Exit;
@@ -1237,8 +776,9 @@ end;
 
 procedure TGedComFile.SetOnLongOp(AValue: TNotifyEvent);
 begin
-  if @FOnLongOp=@AValue then Exit;
-  FOnLongOp:=AValue;
+    if @FOnLongOp = @AValue then
+        Exit;
+    FOnLongOp := AValue;
 end;
 
 procedure TGedComFile.SetOnWriteUpdate(AValue: TNotifyEvent);
@@ -1280,7 +820,7 @@ begin
 end;
 
 class function TGedComFile.ParseGed(const Lines: TStrings; gcBase: IGedParent;
-    OnUpd,OnLongOp: TNotifyEvent): IGedParent;
+    OnUpd, OnLongOp: TNotifyEvent): IGedParent;
 
 var
     ActLevel: integer;
@@ -1290,7 +830,7 @@ var
     procedure AppendLine(const Line: string);
 
     var
-        LineLevel, i, LGedObj: integer;
+        LineLevel : integer;
         newvar: TGedComObj;
         lNodeID, lNodeType, lInformation: string;
 
@@ -1305,15 +845,15 @@ var
             newvar.Parent := actVar[LineLevel];
             if (lNodeID <> '') and assigned(OnUpd) then
                 OnUpd(newvar);
-            if  assigned(OnLongOp) and (GetTickCount64-lTime>100) then
-                begin
-                  onLongOp(NewVar);
-                  lTime := GetTickCount64;
-                end;
-            while ActLevel>LineLevel do
+            if assigned(OnLongOp) and (GetTickCount64 - lTime > 100) then
               begin
-                actVar[ActLevel+1].EndUpdate;
-                dec(ActLevel)
+                onLongOp(NewVar);
+                lTime := GetTickCount64;
+              end;
+            while ActLevel > LineLevel do
+              begin
+                actVar[ActLevel + 1].EndUpdate;
+                Dec(ActLevel);
               end;
             actVar[LineLevel + 1] := newvar;
             ActLevel := LineLevel;
@@ -1348,34 +888,60 @@ begin
 end;
 
 class procedure TGedComFile.PutGed(const Lines: TStrings; gcBase: IGedParent;
-    OnUpd,OnLongOp: TNotifyEvent);
+    OnUpd, OnLongOp: TNotifyEvent);
 
 var
-  lTime: QWord;
+    lTime: QWord;
+
+    procedure ThrowEvents(const lActChild: TGedComObj; const Level: integer);
+    begin
+        if assigned(OnUpd) and (Level = 0) then
+            OnUpd(lActChild);
+        if assigned(onLongOp) and (GetTickCount64 - ltime > 100) then
+          begin
+            onLongOp(lActChild);
+            lTime := GetTickCount64;
+          end;
+    end;
 
     procedure IterateParent(const Lines: TStrings; gcParent: IGedParent; Level: integer);
 
     var
         lActChild: TGedComObj;
-        i: integer;
+
     begin
-        for i := 0 to gcParent.ChildCount - 1 do
+        if (gcParent = gcBase) and (gcParent.ChildCount > 3) then
           begin
-            lActChild := gcParent.GetChild(i);
-            Lines.Append(BuildgedcomLine(Level, lActChild));
-            IterateParent(Lines, lActChild, Level + 1);
-            if assigned(OnUpd) and (Level = 0) then
-                OnUpd(lActChild);
-            if assigned(onLongOp) and (GetTickCount64-ltime>100) then
+            for lActChild in gcParent do
+                if (lActChild.NodeType = 'HEAD') or
+                    (lActChild.NodeType = 'SUBM') or (lActChild.NodeType = 'INDI')
+                then
+                  begin
+                    Lines.Append(BuildgedcomLine(Level, lActChild));
+                    IterateParent(Lines, lActChild, Level + 1);
+                    ThrowEvents(lActChild, Level);
+                  end;
+            for lActChild in gcParent do
+                if (lActChild.NodeType <> 'HEAD') and
+                    (lActChild.NodeType <> 'SUBM') and (lActChild.NodeType <> 'INDI')
+                then
+                  begin
+                    Lines.Append(BuildgedcomLine(Level, lActChild));
+                    IterateParent(Lines, lActChild, Level + 1);
+                    ThrowEvents(lActChild, Level);
+                  end;
+          end
+        else
+            for lActChild in gcParent do
               begin
-                onLongOp(lActChild);
-                lTime:=GetTickCount64;
-              end
-          end;
+                Lines.Append(BuildgedcomLine(Level, lActChild));
+                IterateParent(Lines, lActChild, Level + 1);
+                ThrowEvents(lActChild, Level);
+              end;
     end;
 
 begin
-  lTime:=GetTickCount64;
+    lTime := GetTickCount64;
     IterateParent(Lines, gcBase, 0);
 end;
 
@@ -1392,7 +958,7 @@ begin
     lsl := TStringList.Create;
       try
         lsl.Text := ConvertEncodingToUTF8(lst, FEncoding, lbEncoded);
-        ParseGed(lsl, self, OnReadUpdate,FonLongOp);
+        ParseGed(lsl, self, OnReadUpdate, FonLongOp);
       finally
         FreeAndNil(lsl)
       end;
@@ -1408,7 +974,7 @@ var
 begin
     lsl := TStringList.Create;
       try
-        PutGed(lsl, self, FOnWriteUpdate,FonLongOp);
+        PutGed(lsl, self, FOnWriteUpdate, FonLongOp);
         if FEncoding <> '' then
             lst := ConvertEncodingFromUTF8(lsl.Text, FEncoding, lbEncoded)
         else
@@ -1439,7 +1005,7 @@ function TGedComFile.CreateChild(const aID, aType: string;
 begin
     Result := NewNode(aid, atype, ainfo);
     AppendIndex(aID, Result);
-    appendChild(Result);
+    AppendChildNode(Result);
 end;
 
 function TGedComFile.Find(aID: string): TGedComObj;
@@ -1494,7 +1060,12 @@ begin
       end;
 end;
 
-function TGedComFile.appendChild(aChild: TGedComObj): integer;
+procedure TGedComFile.AppendUnresolvedLink(aLink: string; aObj1: TGedComObj);
+begin
+
+end;
+
+function TGedComFile.AppendChildNode(aChild: TGedComObj): integer;
 var
     i: integer;
 begin
@@ -1551,6 +1122,11 @@ begin
     Result := TGedComObjEnumerator.Create(self);
 end;
 
+function TGedComFile.RevEnum: TGedComRevEnumerator;
+begin
+    result := TGedComRevEnumerator.Create(self);
+end;
+
 function TGedComFile.GetChild(Idx: variant): TGedComObj;
 begin
     if VarIsOrdinal(Idx) then
@@ -1577,12 +1153,17 @@ begin
         FonChildUpdate(aChild);
 end;
 
+function TGedComFile.GetObject: TObject;
+begin
+    Result := Self;
+end;
+
 procedure TGedComFile.EndUpdate;
 var
-  lChlds: TGedComObj;
+    lChlds: TGedComObj;
 begin
-  for lChlds in self do
-    lChlds.EndUpdate;
+    for lChlds in self do
+        lChlds.EndUpdate;
 end;
 
 constructor TGedComFile.Create;
@@ -1625,7 +1206,7 @@ begin
       finally
         FreeAndNil(lStream);
       end;
-    lGC := ParseGed(lLines,nil,nil,nil);
+    lGC := ParseGed(lLines, nil, nil, nil);
     lLines.Free;
     Result := '[' + csSection + ']' + LineEnding;
     lresult2 := '[' + cSWildCardFill + ']' + LineEnding;
@@ -1664,8 +1245,5 @@ end;
 initialization
     RegisterGetInfoProc(TGedComFile);
     TGedComFile.RegisterGedComClass(TGedComDefault);
-    TGedComFile.RegisterGedComClass(TGedPlace);
-    TGedComFile.RegisterGedComClass(TGedEvent);
-    TGedComFile.RegisterGedComClass(TIndName);
-    TGedComFile.RegisterGedComClass(TGedIndividual);
+
 end.

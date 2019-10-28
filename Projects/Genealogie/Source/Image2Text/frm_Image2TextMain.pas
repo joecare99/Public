@@ -205,43 +205,78 @@ end;
 function FilterMedian2(bmp: TBGRACustomBitmap;
   aRadius,aLevel:float): TBGRACustomBitmap;
 
-  function ComparePixLt(p1, p2: TBGRAPixel): boolean;
-  begin
-    if (p1.red + p1.green + p1.blue = p2.red + p2.green + p2.blue) then
-      Result := (int32or64(p1.red) shl 8) + (int32or64(p1.green) shl 16) +
-        int32or64(p1.blue) < (int32or64(p2.red) shl 8) + (int32or64(p2.green) shl 16) +
-        int32or64(p2.blue)
-    else
-      Result := (p1.red + p1.green + p1.blue) < (p2.red + p2.green + p2.blue);
-  end;
 
 var
   yb, xb:    int32or64;
   dx, dy, n, i, j, k: int32or64;
-  alphas:  array of byte;
   reds:  array of byte;
   greens:  array of byte;
   bluess:  array of byte;
-  tempPixel, refPixel, lPixel: TBGRAPixel;
-  tempValue: byte;
-  sumR, sumG, sumB, sumA, BGRAdiv, nbA: uint32or64;
-  tempAlpha: word;
+  refPixel, lPixel, ldPixel: TBGRAPixel;
   bounds:    TRect;
-  pdest:     PBGRAPixel;
+  pdest,pSour1,psour2:     PBGRAPixel;
   lRnRadius,lxDist: Integer;
   lIdx: Int64;
+  Count:array[0..2] of integer;
 
-Procedure swap(a1,a2:byte);inline;
-
+function Partition( arr:PByteArray;l, r:integer):integer;
 var
-  lb: Byte;
+  x: Byte;
+  temp,i,j: Integer;
 begin
-  lb := a1;
-  a1:= a2;
-  a2 := lb;
+     x := arr^[r]; i := l;
+    temp := 0;
+    for j := l to  r - 1 do
+    begin
+
+        if (arr^[j] <= x) then
+        begin
+            // Swapping arr[i] and arr[j]
+            temp := arr^[i];
+            arr^[i] := arr^[j];
+            arr^[j] := temp;
+
+            inc(i);
+        end;
+
+    end;
+
+    // Swapping arr[i] and arr[r]
+    temp := arr^[i];
+    arr^[i] := arr^[r];
+    arr^[r] := temp;
+
+    result := i;
 end;
 
-Procedure CountingSort(var aList:array of byte;aAnz:integer);
+  function QuickPick(arr:PByteArray; l, r,  k:integer):byte;
+  var
+    lPos: Integer;
+  begin
+      // If k is smaller than number of elements in array
+      if (k > 0) and (k <= r - l + 1) then
+      begin
+          // Partition the array around last element and get
+          // position of pivot element in sorted array
+          lPos := Partition(arr, l, r);
+
+          // If position is same as k
+          if (lPos-l = k-1) then
+              exit( arr^[lPos]);
+          if (lPos-l > k-1)  then// If position is more, recur for left subarray
+              exit( QuickPick(arr, l, lPos-1, k));
+
+          // Else recur for right subarray
+          exit( QuickPick(arr, lPos+1, r, k-lPos+l-1));
+      end;
+
+      // If k is more than number of elements in array
+      result := 255;
+  end;
+
+
+
+Procedure CountingSort(Const pList:PByteArray ;aAnz:integer);
 
 var
   lCount  : array[byte] of integer;
@@ -249,22 +284,21 @@ var
 begin
   fillchar(lCount,256*sizeof(integer),0);
   for i := 0 to aAnz do
-    inc(lCount[ aList[ i ] ]);
+    inc(lCount[ pList^[ i ] ]);
     z:= 0;
   for i := 0 to 255 do
      for j := 0 to  lCount[ i  ] - 1  do
        begin
-         aList[ z ] := i;
+         pList^[ z ] := i;
          inc( z );
        end;
 end;
 
 
 begin
-  setlength(bluess,round(3.5*sqr(aRadius)));
-  setlength(greens,round(3.5*sqr(aRadius)));
-  setlength(reds,round(3.5*sqr(aRadius)));
-  setlength(alphas,round(3.5*sqr(aRadius)));
+  setlength(bluess,round(3.5*sqr(aRadius))+2);
+  setlength(greens,round(3.5*sqr(aRadius))+2);
+  setlength(reds,round(3.5*sqr(aRadius))+2);
   lRnRadius:=Round(aRadius);
   Result := bmp.NewBitmap(bmp.Width, bmp.Height);
 
@@ -283,38 +317,70 @@ begin
     begin
  // Get Pixels
       n := 0;
-      for dy := -lRnRadius to lRnRadius do
+      fillchar(Count,3*sizeof(integer),0);
+      for dy := lRnRadius-1 downto 0 do
         begin
           lxDist :=trunc(SQRT(sqr(aRadius)-sqr(dy)));
-        for dx := -lxDist to lxDist do
-        begin
-          lPixel := bmp.GetPixel(xb + dx, yb + dy);
-          if lPixel.alpha = 0 then
-            lPixel := BGRAPixelTransparent;
-          bluess[n] := lPixel.blue;
-          greens[n] := lPixel.green;
-          reds[n] := lPixel.red;
-          alphas[n] := lPixel.alpha;
-          Inc(n);
-        end;
-        end;
+          if yb-dy>=bounds.Top then
+            begin
+          pSour1:=bmp.ScanLine[yb-dy]+min(max(xb-lxDist,0),bounds.Right-lxDist*2-1);
+          for dx := -lxDist to lxDist do
+          begin
+            bluess[n] := pSour1^.blue;
+            greens[n] := pSour1^.green;
+            reds[n] := pSour1^.red;
+            inc(n);
+            inc(pSour1)
+          end;
+            end;
+          if (yb+dy< bounds.Bottom) and (dy >0) then
+            begin
+              pSour2:=bmp.ScanLine[yb+dy]+min(max(xb-lxDist,0),bounds.Right-lxDist*2-1);
+          for dx := -lxDist to lxDist do
+          begin
+            bluess[n] := pSour2^.blue;
+            greens[n] := pSour2^.green;
+            reds[n] := pSour2^.red;
+            inc(psour2);
+            inc(n)
+          end;
+
+            end;
+       end;
+
+      lIdx:=trunc(aLevel*n);
+
+      ldPixel.blue:=QuickPick(@bluess[0],0,n-1,lidx);
+      ldPixel.green:=QuickPick(@greens[0],0,n-1,lidx);
+      ldPixel.red:=QuickPick(@reds[0],0,n-1,lidx);
+{      CountingSort(@bluess[0],0,n-1,lidx);
+      CountingSort(@greens[0],0,n-1,,lidx);
+      CountingSort(@reds[0],0,n-1,,lidx);
+
+
+      ldPixel.blue:= bluess[lIdx];
+      ldPixel.green:= greens[lIdx];
+      ldPixel.red:= reds[lIdx]; }
+      ldPixel.alpha:=255;
+
       lPixel := bmp.GetPixel(xb , yb);
  // Sort Pixels
-      CountingSort(bluess,n);
-      CountingSort(greens,n);
-      CountingSort(reds,n);
 //      CountingSort(alphas,n);
 
 // Get Median
-      lIdx:=trunc(aLevel*n);
-      refPixel.blue :=min(lPixel.blue +250- bluess[lIdx],255);
-      refPixel.green :=min(lPixel.green +250-greens[lIdx],255);
-      refPixel.red := min(lPixel.red +250-reds[lIdx],255);
+//      refPixel:=ldPixel;
+//outline
+      refPixel.blue :=min(lPixel.blue +270- ldPixel.blue,255);
+      refPixel.green :=min(lPixel.green +270-ldPixel.green,255);
+      refPixel.red := min(lPixel.red +270-ldPixel.red,255);
       refPixel.alpha := 255;
       pdest^ := refPixel;
       Inc(pdest);
     end;
   end;
+  SetLength(bluess,0);
+  SetLength(greens,0);
+  SetLength(reds,0);
 end;
 
 procedure TfrmImage2TextMain.BCButton1Click(Sender: TObject);
@@ -325,13 +391,13 @@ begin
   FBgraOrgBitmap.draw(FBgraBitmap.Canvas,0,0);
   if trbImprove.Position> 1 then
     begin
-      lMedianImage := FilterMedian2(FBgraOrgBitmap,6,0.85);
+      lMedianImage := FilterMedian2(FBgraOrgBitmap,trbImprove.Position*0.95,0.85);
 //      lMedianImage.BlendImage(0,0,FBgraOrgBitmap,boLighten);
       freeandnil(FBgraBitmap);
       TBGRACustomBitmap(FBgraBitmap):=lMedianImage;
     //  FBgraBitmap.LinearNegative;
-    //  FBgraBitmap.BlendImage(0,0,FBgraBitmap,boMultiply);
-    //  FBgraBitmap.BlendImage(0,0,FBgraBitmap,boMultiply);
+      FBgraBitmap.BlendImage(0,0,FBgraBitmap,boMultiply);
+      FBgraBitmap.BlendImage(0,0,FBgraBitmap,boMultiply);
     end;
    if trbImprove.Position> 0 then
     FBgraBitmap.InplaceNormalize(true);
@@ -409,7 +475,9 @@ begin
     end;
   FBgraOrgBitmap:= TBGRABitmap.Create(lFilename);
   FBgraBitmap:=TBGRABitmap.Create(FBgraOrgBitmap.Width, FBgraOrgBitmap.Height);
-  FBgraOrgBitmap.FilterNormalize(true).draw(FBgraBitmap.canvas, 0, 0);
+  FBgraOrgBitmap.Draw(FBgraBitmap.Canvas,0,0,true);
+  FBgraBitmap.InplaceNormalize(true);
+//  ReturnNilIfGrowHeapFails.draw(FBgraBitmap.canvas, 0, 0);
   FMpoint:=PointF(FBgraBitmap.Width, FBgraBitmap.Height)*0.5;
   Fdim:=PointF(BGRAVirtualScreen1.Width, BGRAVirtualScreen1.Height).Scale(
     FBgraBitmap.Height/BGRAVirtualScreen1.Height);

@@ -1,0 +1,9 @@
+object FrmPlaceEditMain: TFrmPlaceEditMain
+  Left = 0
+  Height = 1202
+  Top = 0
+  Width = 1901
+  Caption = 'FrmPlaceEditMain'
+  DesignTimePPI = 144
+  OnCreate = FormCreate
+end
