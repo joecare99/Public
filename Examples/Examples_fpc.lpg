@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="39">
+    <Targets Count="42">
       <Target0 FileName="FPC\addrbook.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="default" Compile="True"/>
@@ -185,6 +185,18 @@
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target38>
+      <Target39 FileName="FPC\fpCorelExplorer.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="default"/>
+      </Target39>
+      <Target40 FileName="FPC\fpVVisualTest.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target40>
+      <Target41 FileName="FPC\fpVWmfViewer.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target41>
     </Targets>
   </ProjectGroup>
 </CONFIG>
