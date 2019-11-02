@@ -1,0 +1,15 @@
+{"version":1,"strings":[
+{"hash":78162890,"name":"tfraxmlfile.edtxmlfilename.editlabel.caption","sourcebytes":[68,97,116,101,105,58],"value":"Datei:"},
+{"hash":95748677,"name":"tfraxmlfile.edtxmlfilename.text","sourcebytes":[101,100,116,88,109,108,70,105,108,101,110,97,109,101],"value":"edtXmlFilename"},
+{"hash":193059075,"name":"tfraxmlfile.lblcompiledon.caption","sourcebytes":[67,111,109,112,105,108,101,100,58,32,37,115,13,10,9,111,110,58,37,115],"value":"Compiled: %s\r\n\ton:%s"},
+{"hash":79,"name":"tfraxmlfile.btnxmlfileopen.caption","sourcebytes":[79],"value":"O"},
+{"hash":83,"name":"tfraxmlfile.btnxmlfilesave_.caption","sourcebytes":[83],"value":"S"},
+{"hash":76,"name":"tfraxmlfile.btnxmlfileload.caption","sourcebytes":[76],"value":"L"},
+{"hash":155304055,"name":"tfraxmlfile.actdosomething.caption","sourcebytes":[97,99,116,68,111,83,111,109,101,116,104,105,110,103],"value":"actDoSomething"},
+{"hash":214750334,"name":"tfraxmlfile.actfileopen.caption","sourcebytes":[195,150,102,102,110,101,110],"value":"\u00D6ffnen"},
+{"hash":214750334,"name":"tfraxmlfile.actfileopen.hint","sourcebytes":[195,150,102,102,110,101,110],"value":"\u00D6ffnen"},
+{"hash":184274526,"name":"tfraxmlfile.actfilesaveas.caption","sourcebytes":[83,105,99,104,101,114,110,32,38,97,108,115,32,46,46,46],"value":"Sichern &als ..."},
+{"hash":216637395,"name":"tfraxmlfile.actfilesaveas.hint","sourcebytes":[83,105,99,104,101,114,110,32,97,108,115],"value":"Sichern als"},
+{"hash":366789,"name":"tfraxmlfile.actfilesave.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":341364,"name":"tfraxmlfile.actfileload.caption","sourcebytes":[76,111,97,100],"value":"Load"}
+]}
