@@ -226,7 +226,6 @@ begin
       if FReffn<> '' then
         mmLog.append(FReffn+', '+Fplace);
     end;
-
 end;
 
 procedure TForm1.FormCreate(Sender: TObject);
