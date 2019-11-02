@@ -317,7 +317,6 @@ begin
       if FReffn<> '' then
         mmLog.append(FReffn+', '+Fplace);
     end;
-
 end;
 
 procedure TFrmShowGedCom.btnAutoEstBirthClick(Sender: TObject);
