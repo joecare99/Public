@@ -6,24 +6,23 @@
     <General>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="fpcTestGedComFile"/>
+      <Title Value="Prj_PlaceEdit"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
       <Icon Value="0"/>
     </General>
-    <LazDoc Paths="..\FPDoc"/>
-    <BuildModes Count="3">
+    <BuildModes Count="4">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($Project(InfoFile))"/>
+            <Filename Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($Project(Infofile))"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import;..\Source\GedCom2Odf;..\Source\Components"/>
+            <OtherUnitFiles Value="..\test;..\Source;..\Source\PlaceEdit;..\Source\GenData;..\Source\gedcom-import;..\Source\RNZAnzeigen"/>
             <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -32,6 +31,7 @@
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
+            <RelocatableUnit Value="True"/>
             <Checks>
               <IOChecks Value="True"/>
               <RangeChecks Value="True"/>
@@ -60,15 +60,16 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($Project(InfoFile))"/>
+            <Filename Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($Project(Infofile))"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import;..\Source\GedCom2Odf;..\Source\Components"/>
+            <OtherUnitFiles Value="..\test;..\Source;..\Source\PlaceEdit;..\Source\GenData;..\Source\gedcom-import;..\Source\RNZAnzeigen"/>
             <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
+            <RelocatableUnit Value="True"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
@@ -86,6 +87,40 @@
           </Linking>
         </CompilerOptions>
       </Item3>
+      <Item4 Name="Release32">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($Project(Infofile))"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\test;..\Source;..\Source\PlaceEdit;..\Source\GenData;..\Source\gedcom-import;..\Source\RNZAnzeigen"/>
+            <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+          </SearchPaths>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <RelocatableUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item4>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -96,79 +131,79 @@
         <Mode0 Name="default"/>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="5">
+    <RequiredPackages Count="7">
       <Item1>
-        <PackageName Value="fpOdf"/>
+        <PackageName Value="lazmapviewer_bgra"/>
       </Item1>
       <Item2>
-        <PackageName Value="BaseUnits"/>
+        <PackageName Value="lazMapViewerPkg"/>
       </Item2>
       <Item3>
-        <PackageName Value="fpcunittestrunner"/>
+        <PackageName Value="BaseUnits"/>
       </Item3>
       <Item4>
-        <PackageName Value="LCL"/>
+        <PackageName Value="fpvhttp"/>
       </Item4>
       <Item5>
-        <PackageName Value="FCL"/>
+        <PackageName Value="UntConfig"/>
       </Item5>
+      <Item6>
+        <PackageName Value="FCL"/>
+      </Item6>
+      <Item7>
+        <PackageName Value="LCL"/>
+      </Item7>
     </RequiredPackages>
-    <Units Count="10">
+    <Units Count="5">
       <Unit0>
-        <Filename Value="fpcTestGedComFile.lpr"/>
+        <Filename Value="Prj_PlaceEdit.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Source\Test_Gen\tst_GedComFile.pas"/>
+        <Filename Value="..\Source\PlaceEdit\frm_PlaceEditMain.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="FrmPlaceEditMain"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit1>
       <Unit2>
+        <Filename Value="..\Source\PlaceEdit\fra_PlaceEdit.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FraPlaceEdit"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit2>
+      <Unit3>
         <Filename Value="..\Source\gedcom-import\cmp_GedComFile.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Cmp_GedComFile"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="..\Source\Test_Gen\tst_GedComHelper.pas"/>
-        <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="..\Source\gedcom-import\cls_GedComHelper.pas"/>
+        <Filename Value="..\Source\RNZAnzeigen\dm_RNZAnzeigen.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="dmRNZAnzeigen"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="DataModule"/>
       </Unit4>
-      <Unit5>
-        <Filename Value="..\Source\Test_Gen\tst_GenHelper.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="..\Source\gedcom-import\Cls_GedComExt.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="..\Source\GedCom2Odf\cmp_GedComDocumentWriter.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit7>
-      <Unit8>
-        <Filename Value="..\Source\GedCom2Odf\tst_GedCom2Odf.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit8>
-      <Unit9>
-        <Filename Value="..\Source\Components\unt_IGenBase2.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($Project(InfoFile))"/>
+      <Filename Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($Project(Infofile))"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import;..\Source\GedCom2Odf;..\Source\Components"/>
+      <OtherUnitFiles Value="..\test;..\Source;..\Source\PlaceEdit;..\Source\GenData;..\Source\gedcom-import;..\Source\RNZAnzeigen"/>
       <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+      <RelocatableUnit Value="True"/>
+    </CodeGeneration>
     <Linking>
+      <LinkSmart Value="True"/>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>
