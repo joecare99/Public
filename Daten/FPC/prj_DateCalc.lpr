@@ -1,4 +1,4 @@
-program tpiprohtmltree;
+program prj_DateCalc;
 
 {$mode objfpc}{$H+}
 
@@ -7,16 +7,16 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, htmain
+  Forms, frm_DateCalcMain, datetimectrls, runtimetypeinfocontrols, uScaleDPI
   { you can add units after this };
 
 {$R *.res}
 
 begin
-  RequireDerivedFormResource := True;
-  Application.Scaled:=True;
+  RequireDerivedFormResource:=True;
   Application.Initialize;
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TForm1, Form1);
+  HighDPI(-1);
   Application.Run;
 end.
 
