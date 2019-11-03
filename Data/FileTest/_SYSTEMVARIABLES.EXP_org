@@ -1,0 +1,24 @@
+(* @NESTEDCOMMENTS := 'Yes' *)
+(* @GLOBAL_VARIABLE_LIST := '_SystemVariables' *)
+(* @PATH := '' *)
+(* @OBJECTFLAGS := '0, 8' *)
+(* @SYMFILEFLAGS := '2048' *)
+(****************************************************************************************************
+*
+* Global variables
+*
+* (c) 2005 BY SEW-EURODRIVE GmbH + Co KG
+*
+* In this global variable file you will find the system variables H AND DDB in online mode
+*
+*****************************************************************************************************)
+VAR_GLOBAL
+END_VAR
+
+(* @OBJECT_END := '_SystemVariables' *)
+(* @CONNECTIONS := _SystemVariables
+FILENAME : ''
+FILETIME : 0
+EXPORT : 0
+NUMOFCONNECTIONS : 0
+*)

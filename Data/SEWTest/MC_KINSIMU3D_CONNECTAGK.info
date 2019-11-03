@@ -1,0 +1,15 @@
+[SEW-Exp-File]
+nestedcomments=Yes
+path=\MPLCKinematics_Simulation
+objectflags=0, 8
+symfileflags=2048
+type=Block
+name=MC_KinSimu3D_ConnectAGK
+
+[WildCardFill]
+n=Yes
+p=\MPLCKinematics_Simulation
+o=0, 8
+s=2048
+t=Block
+n=MC_KinSimu3D_ConnectAGK

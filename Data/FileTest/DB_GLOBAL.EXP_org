@@ -1,0 +1,38 @@
+(* @NESTEDCOMMENTS := 'Yes' *)
+(* @GLOBAL_VARIABLE_LIST := 'DB_Global' *)
+(* @PATH := '\/Projekt' *)
+(* @OBJECTFLAGS := '0, 8' *)
+(* @SYMFILEFLAGS := '2048' *)
+VAR_GLOBAL
+	dbSystem               :   DB_System;
+	dbSicherheitskreise    :   DB_Sicherheitskreise;
+	dbAnlagenAns_Bildebenen :   DB_AnlagenAns_Bildebenen;
+	dbOrtsverwaltung       :   DB_Ortsverwaltung;
+	dbRParam               :   udtRParams;
+	dbVirtMaschSchnittst   :   DB_VirtMaschSchnittst;
+	dbMasch1Komm           :   DB_MaschKommunikation;
+	dbMasch1Komm_Debug     :   ARRAY[   0 .. Cfg_MaschKomm_Debug_Max ]OF DB_MaschKommunikation;
+
+	dbMasch2Komm           :   DB_MaschKommunikation;
+	dbMasch2Komm_Debug     :   ARRAY[   0 .. Cfg_MaschKomm_Debug_Max ]OF DB_MaschKommunikation;
+	dbSRKDebug             :   udtSRK_Debug;
+END_VAR
+
+VAR_GLOBAL RETAIN
+	PERSISTENT             dbPlatzSuche :        DB_Platzsuche;
+	dbPalettenDaten        :   DB_PalettenDaten;
+	dbPalettenVerwaltung   :   DB_PalettenVerwaltung;
+	dbTaktarten            :   udtTaktarten;
+	dbAuftragsverwaltung   :   DB_Auftragsverwaltung;
+	dbKonfig               :   db_Konfiguration;
+	dbRuestplatzSpeicher   :   DB_RuestplatzSpeicher;
+	RohBetrArt_Bak         :  enumAutoBetriebsart;
+END_VAR
+
+(* @OBJECT_END := 'DB_Global' *)
+(* @CONNECTIONS := DB_Global
+FILENAME : ''
+FILETIME : 0
+EXPORT : 0
+NUMOFCONNECTIONS : 0
+*)

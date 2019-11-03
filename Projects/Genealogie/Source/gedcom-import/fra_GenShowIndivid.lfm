@@ -1,0 +1,368 @@
+object FraShowIndiv: TFraShowIndiv
+  Left = 0
+  Height = 564
+  Top = 0
+  Width = 1251
+  ClientHeight = 564
+  ClientWidth = 1251
+  DesignTimePPI = 144
+  ParentFont = False
+  TabOrder = 0
+  DesignLeft = 461
+  DesignTop = 8
+  object pnlTop: TPanel
+    Left = 0
+    Height = 264
+    Top = 0
+    Width = 1251
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 264
+    ClientWidth = 1251
+    TabOrder = 0
+    OnResize = pnlTopResize
+    object pnlLeft: TPanel
+      Left = 0
+      Height = 264
+      Top = 0
+      Width = 447
+      Align = alLeft
+      ClientHeight = 264
+      ClientWidth = 447
+      TabOrder = 0
+      object btnHParents: TButton
+        Left = 1
+        Height = 75
+        Top = 1
+        Width = 445
+        Align = alTop
+        Caption = 'btnHParents'
+        Font.Height = -20
+        OnClick = btnHParentsClick
+        ParentFont = False
+        TabOrder = 0
+      end
+      object GroupBox1: TGroupBox
+        Left = 1
+        Height = 187
+        Top = 76
+        Width = 445
+        Align = alClient
+        Caption = 'GroupBox1'
+        ClientHeight = 152
+        ClientWidth = 441
+        Font.Height = -22
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 1
+        object lblHBirthData: TStaticText
+          Left = 80
+          Height = 60
+          Top = 12
+          Width = 339
+          Anchors = [akTop, akLeft, akRight]
+          Caption = '< .  .   >'#13#10'in ...'
+          Font.Height = -22
+          ParentFont = False
+          TabOrder = 0
+        end
+        object lblHBirth: TLabel
+          Left = 12
+          Height = 30
+          Top = 12
+          Width = 54
+          Caption = 'Geb.:'
+          ParentColor = False
+        end
+        object lblHDeath: TLabel
+          Left = 12
+          Height = 30
+          Top = 80
+          Width = 44
+          Caption = 'Tod:'
+          ParentColor = False
+        end
+        object lblHDeathData: TStaticText
+          Left = 80
+          Height = 60
+          Top = 80
+          Width = 339
+          Anchors = [akTop, akLeft, akRight]
+          Caption = '<  .  .    >'
+          Font.Height = -22
+          ParentFont = False
+          TabOrder = 1
+        end
+        object Panel1: TPanel
+          AnchorSideTop.Control = GroupBox1
+          AnchorSideRight.Control = GroupBox1
+          AnchorSideRight.Side = asrBottom
+          Left = 345
+          Height = 40
+          Top = 6
+          Width = 90
+          Anchors = [akTop, akRight]
+          BorderSpacing.Around = 6
+          BevelOuter = bvNone
+          ClientHeight = 40
+          ClientWidth = 90
+          TabOrder = 2
+          object btnHSelSp: TSpeedButton
+            Left = 3
+            Height = 34
+            Top = 3
+            Width = 34
+            Align = alLeft
+            BorderSpacing.Around = 3
+            OnClick = btnHSelSpClick
+          end
+          object lblHSCount: TStaticText
+            Left = 43
+            Height = 28
+            Top = 6
+            Width = 21
+            Align = alClient
+            Anchors = [akTop]
+            AutoSize = True
+            BorderSpacing.Right = 20
+            BorderSpacing.Around = 6
+            Caption = '0'
+            TabOrder = 0
+          end
+        end
+      end
+    end
+    object pnlClient: TPanel
+      Left = 447
+      Height = 264
+      Top = 0
+      Width = 804
+      Align = alClient
+      ClientHeight = 264
+      ClientWidth = 804
+      TabOrder = 1
+      object GroupBox2: TGroupBox
+        Left = 1
+        Height = 187
+        Top = 76
+        Width = 802
+        Align = alClient
+        Caption = 'GroupBox2'
+        ClientHeight = 152
+        ClientWidth = 798
+        Font.Height = -22
+        Font.Style = [fsBold]
+        ParentFont = False
+        TabOrder = 0
+        object lblWBirth: TLabel
+          Left = 12
+          Height = 30
+          Top = 12
+          Width = 54
+          Caption = 'Geb.:'
+          ParentColor = False
+        end
+        object lblWDeath: TLabel
+          Left = 12
+          Height = 30
+          Top = 80
+          Width = 44
+          Caption = 'Tod:'
+          ParentColor = False
+        end
+        object lblWBirthData: TStaticText
+          Left = 80
+          Height = 60
+          Top = 12
+          Width = 700
+          Anchors = [akTop, akLeft, akRight]
+          Caption = '< .  .   >'
+          Font.Height = -22
+          ParentFont = False
+          TabOrder = 0
+        end
+        object lblWDeathData: TStaticText
+          Left = 80
+          Height = 60
+          Top = 80
+          Width = 698
+          Anchors = [akTop, akLeft, akRight]
+          Caption = '<  .  .    >'
+          Font.Height = -22
+          ParentFont = False
+          TabOrder = 1
+        end
+        object Panel4: TPanel
+          AnchorSideTop.Control = GroupBox2
+          AnchorSideRight.Control = GroupBox2
+          AnchorSideRight.Side = asrBottom
+          Left = 702
+          Height = 40
+          Top = 6
+          Width = 90
+          Anchors = [akTop, akRight]
+          BorderSpacing.Around = 6
+          BevelOuter = bvNone
+          ClientHeight = 40
+          ClientWidth = 90
+          TabOrder = 2
+          object btnWSelSp: TSpeedButton
+            Left = 3
+            Height = 34
+            Top = 3
+            Width = 34
+            Align = alLeft
+            BorderSpacing.Around = 3
+            OnClick = btnHSelSpClick
+          end
+          object lblWSCount: TStaticText
+            Left = 43
+            Height = 28
+            Top = 6
+            Width = 21
+            Align = alClient
+            Anchors = [akTop, akRight]
+            AutoSize = True
+            BorderSpacing.Right = 20
+            BorderSpacing.Around = 6
+            Caption = '0'
+            TabOrder = 0
+          end
+        end
+      end
+      object btnWParents: TButton
+        Left = 1
+        Height = 75
+        Top = 1
+        Width = 802
+        Align = alTop
+        Caption = 'btnWParents'
+        Font.Height = -20
+        OnClick = btnHParentsClick
+        ParentFont = False
+        TabOrder = 1
+      end
+    end
+  end
+  object Panel2: TPanel
+    Left = 0
+    Height = 300
+    Top = 264
+    Width = 1251
+    Align = alClient
+    Caption = 'Panel2'
+    ClientHeight = 300
+    ClientWidth = 1251
+    TabOrder = 1
+    object Panel3: TPanel
+      Left = 1
+      Height = 51
+      Top = 1
+      Width = 1249
+      Align = alTop
+      ClientHeight = 51
+      ClientWidth = 1249
+      TabOrder = 0
+      object StaticText2: TStaticText
+        Left = 9
+        Height = 33
+        Top = 9
+        Width = 85
+        Align = alLeft
+        AutoSize = True
+        BorderSpacing.Around = 8
+        Caption = 'StaticText2'
+        Font.Height = -18
+        ParentFont = False
+        TabOrder = 0
+      end
+      object SpeedButton2: TSpeedButton
+        Left = 1207
+        Height = 37
+        Top = 7
+        Width = 35
+        Align = alRight
+        BorderSpacing.Around = 6
+      end
+      object SpeedButton3: TSpeedButton
+        Left = 1166
+        Height = 37
+        Top = 7
+        Width = 35
+        Align = alRight
+        BorderSpacing.Around = 6
+      end
+    end
+    object DrawGrid1: TStringGrid
+      Left = 1
+      Height = 247
+      Top = 52
+      Width = 1249
+      Align = alClient
+      ColCount = 6
+      Columns = <      
+        item
+          ButtonStyle = cbsButtonColumn
+          ReadOnly = True
+          Title.Caption = 'Go'
+          Width = 40
+        end      
+        item
+          ButtonStyle = cbsEllipsis
+          ReadOnly = True
+          Title.Caption = '#'
+          Width = 40
+        end      
+        item
+          ButtonStyle = cbsNone
+          ReadOnly = True
+          Title.Caption = 'Kinder: 0'
+          Width = 400
+        end      
+        item
+          Title.Caption = 'M/W'
+          Width = 40
+        end      
+        item
+          Title.Caption = 'Geburt'
+          Width = 230
+        end      
+        item
+          Title.Caption = 'Tod'
+          Width = 230
+        end>
+      ExtendedSelect = False
+      FixedCols = 0
+      Font.Height = -16
+      Options = [goFixedVertLine, goFixedHorzLine, goHorzLine, goRowSelect, goSmoothScroll]
+      ParentFont = False
+      TabOrder = 1
+      TitleFont.Height = -16
+      TitleFont.Style = [fsBold]
+      OnDrawCell = DrawGrid1DrawCell
+      OnButtonClick = DrawGrid1ButtonClick
+    end
+    object Button1: TButton
+      Left = 24
+      Height = 38
+      Top = 243
+      Width = 113
+      Caption = 'Button1'
+      TabOrder = 2
+      Visible = False
+    end
+  end
+  object ListBox1: TListBox
+    Left = 224
+    Height = 120
+    Top = 33
+    Width = 150
+    Font.Height = -18
+    ItemHeight = 0
+    OnClick = ListBox1Click
+    OnExit = ListBox1Exit
+    ParentFont = False
+    TabOrder = 2
+    Visible = False
+  end
+end

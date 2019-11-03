@@ -1,0 +1,45 @@
+weitere Sonderpl?tze hier eintragen
+Softwarenocken aus PLC
+Start des Programms
+Start der Hauptschleife
+Hole aktuellen Auftrag
+Holauftrag
+Rueckzugsauftraege
+Bringauftrag
+Fahre Grundstellung aus Maschine Voll
+Melde Entladen Ende
+Pruefe Platz Leer
+Ende Holauftrag
+Fahre Grundstellung aus Maschine Leer
+Melde Beladen Ende
+Pruefe Platz Belegt
+Ende Bringauftrag
+Fahre Grundstellung aus Platz Voll
+Hole Position des Aktuellen Platzes
+1. Stufe 5 mm unter Platz-Position
+2. Stufe  10 mm ueber Platz-Position
+3. Stufe nn ueber Platz-Position
+In 3 Stufen anheben
+Sonst - 1 Stufe, aber langsam
+Platz Nachbereiten
+Fahre Grundstellung an
+Auftrag beendet
+Grundstellung aus Platz Leer
+Fahre Grundstellung aus Platz Leer
+1. Stufe 25 mm ueber Platz-Position
+2. Stufe 5 mm unter Platz-Position
+3. Stufe 16,5 mm unter Platz-Position
+Bei RP in 3 Stufen ablegen
+Fahre Y auf Obere Position
+Hole Palette von Platz
+Platz vorbereiten
+Heben und Rueckzug
+Bringe Palette nach Platz
+Einfahrt-Hoehe ueber Platz-Position ermitteln
+Senken und Rueckzug
+Hole Palette von Maschine
+Daten Maschine -> MPS
+Bringe Palette zu Maschine
+Einfahrt-Hoehe ueber Platz-Position
+Daten MPS->Maschine
+weitere Sonderplaetze hier eintragen

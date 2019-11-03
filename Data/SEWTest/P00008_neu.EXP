@@ -1,0 +1,1615 @@
+(* @PATH := '\/01_Menu' *)
+
+VISUALISATION  P00008 _VISU_TYPES : 1,1
+_BG_BMP : ''
+_TEXT : 199
+_PAINTZOOM : 330
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 30,40,101,61,65,50
+_COLORS : 0,16777215,16728128,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[0].Wert.15','.OPZeile[0].Wert.2','',''
+_DSP : '.EndlageMinusText[0]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,0,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 20,40,31,81,25,60
+_COLORS : 0,16777215,255,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[0].Wert.15','.OPZeile[0].Wert.6','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,1,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 13,60,20,40,0,60,20,80
+_COLORS : 0,16777215,16735324,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[0].Wert.15','.OPZeile[0].Wert.4','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,5,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 10,60,20,50,10,60,20,70
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[0].Wert.0','','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,9,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 20,50,31,71,30,50
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[0].Wert.10','','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,11,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 290,40,301,81,295,60
+_COLORS : 0,16777215,255,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[0].Wert.15','.OPZeile[0].Wert.7','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,34,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 306,60,300,40,320,60,300,80
+_COLORS : 0,16777215,16735324,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[0].Wert.15','.OPZeile[0].Wert.5','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,35,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 303,60,300,50,311,60,300,71
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[0].Wert.1','','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,36,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 290,50,301,71,300,50
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[0].Wert.11','','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,37,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 101,40,221,61,161,50
+_COLORS : 0,16777215,16728128,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[0].Wert.15','.OPZeile[0].Wert.9','',''
+_DSP : '.Achsname[0]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,95,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 220,40,291,61,255,50
+_COLORS : 0,16777215,16728128,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[0].Wert.15','.OPZeile[0].Wert.3','',''
+_DSP : '.EndlagePlusText[0]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,96,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 100,60,220,81,160,70
+_COLORS : 8421504,16777215,16777215,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[0].Wert.15','','',''
+_DSP : '.AnzeigeWert[0]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,400,0,97,0,0,0
+_FONT : 'Arial'
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 2
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 220,63,220,50,230,70,210,70
+_COLORS : 65535,255,0,16777215,0
+_VARIABLES : '','','',''
+_THRESH : ' NOT OPZeile[0].Wert.8','','',''
+_INPUT : 0
+_DSP : '','!',''
+_ZOOM : ''
+_TEXT : 5,4294967281,400,0,98,0,0,0
+_FONT : 'Arial'
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 2
+_LINEWIDTH : 0
+_NOCOLORS : 0,1
+_POS : 90,50,111,71,100,60
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : ' NOT OPZeile[0].Wert.14','','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,99,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 30,81,101,102,65,91
+_COLORS : 0,16777215,16728128,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[1].Wert.15','.OPZeile[1].Wert.2','',''
+_DSP : '.EndlageMinusText[1]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,147,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 20,81,31,122,25,101
+_COLORS : 0,16777215,255,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[1].Wert.15','.OPZeile[1].Wert.6','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,148,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 13,101,20,81,0,101,20,121
+_COLORS : 0,16777215,16735324,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[1].Wert.15','.OPZeile[1].Wert.4','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,149,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 10,101,20,91,10,101,20,111
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[1].Wert.0','','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,150,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 20,91,31,112,30,91
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[1].Wert.10','','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,151,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 290,81,301,122,295,101
+_COLORS : 0,16777215,255,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[1].Wert.15','.OPZeile[1].Wert.7','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,152,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 306,101,300,81,320,101,300,121
+_COLORS : 0,16777215,16735324,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[1].Wert.15','.OPZeile[1].Wert.5','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,153,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 303,101,300,91,311,101,300,112
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[1].Wert.1','','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,154,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 290,91,301,112,300,91
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[1].Wert.11','','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,155,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 101,81,221,102,161,91
+_COLORS : 0,16777215,16728128,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[1].Wert.15','.OPZeile[1].Wert.9','',''
+_DSP : '.Achsname[1]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,156,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 220,81,291,102,255,91
+_COLORS : 0,16777215,16728128,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[1].Wert.15','.OPZeile[1].Wert.3','',''
+_DSP : '.EndlagePlusText[1]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,157,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 100,101,220,122,160,111
+_COLORS : 8421504,16777215,16777215,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[1].Wert.15','','',''
+_DSP : '.AnzeigeWert[1]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,400,0,158,0,0,0
+_FONT : 'Arial'
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 2
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 220,104,220,91,230,111,210,111
+_COLORS : 65535,255,0,16777215,0
+_VARIABLES : '','','',''
+_THRESH : ' NOT OPZeile[1].Wert.8','','',''
+_INPUT : 0
+_DSP : '','!',''
+_ZOOM : ''
+_TEXT : 5,4294967281,400,0,159,0,0,0
+_FONT : 'Arial'
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 2
+_LINEWIDTH : 0
+_NOCOLORS : 0,1
+_POS : 90,91,111,112,100,101
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : ' NOT OPZeile[1].Wert.14','','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,160,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_BMP : 'c:\users\arey\desktop\referenzierenbild_black1515RLE.bmp'
+_LINEWIDTH : 0
+_NOCOLORS : 0,1
+_POS : 55,104,66,115,60,109
+_COLORS : 16777215,0,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT OPZeile[1].Wert.12','','',''
+_FRAME : 0,0,159
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,161,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+(* @TRANSPARENT_IMAGE := '_TRANSPARENT_IMAGE : 0,16777215' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 30,122,101,143,65,132
+_COLORS : 0,16777215,16728128,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[2].Wert.15','.OPZeile[2].Wert.2','',''
+_DSP : '.EndlageMinusText[2]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,162,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 20,122,31,163,25,142
+_COLORS : 0,16777215,255,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[2].Wert.15','.OPZeile[2].Wert.6','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,163,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 13,142,20,122,0,142,20,162
+_COLORS : 0,16777215,16735324,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[2].Wert.15','.OPZeile[2].Wert.4','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,164,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 10,142,20,132,10,142,20,152
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[2].Wert.0','','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,165,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 20,132,31,153,30,132
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[2].Wert.10','','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,166,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 290,122,301,163,295,142
+_COLORS : 0,16777215,255,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[2].Wert.15','.OPZeile[2].Wert.7','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,167,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 306,142,300,122,320,142,300,162
+_COLORS : 0,16777215,16735324,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[2].Wert.15','.OPZeile[2].Wert.5','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,168,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 303,142,300,132,311,142,300,153
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[2].Wert.1','','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,169,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 290,132,301,153,300,132
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[2].Wert.11','','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,170,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 101,122,221,143,161,132
+_COLORS : 0,16777215,16728128,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[2].Wert.15','.OPZeile[2].Wert.9','',''
+_DSP : '.Achsname[2]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,171,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 220,122,291,143,255,132
+_COLORS : 0,16777215,16728128,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[2].Wert.15','.OPZeile[2].Wert.3','',''
+_DSP : '.EndlagePlusText[2]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,172,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 100,142,220,163,160,152
+_COLORS : 8421504,16777215,16777215,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[2].Wert.15','','',''
+_DSP : '.AnzeigeWert[2]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,400,0,173,0,0,0
+_FONT : 'Arial'
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 2
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 220,145,220,132,230,152,210,152
+_COLORS : 65535,255,0,16777215,0
+_VARIABLES : '','','',''
+_THRESH : ' NOT OPZeile[2].Wert.8','','',''
+_INPUT : 0
+_DSP : '','!',''
+_ZOOM : ''
+_TEXT : 5,4294967281,400,0,174,0,0,0
+_FONT : 'Arial'
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 2
+_LINEWIDTH : 0
+_NOCOLORS : 0,1
+_POS : 90,132,111,153,100,142
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : ' NOT OPZeile[2].Wert.14','','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,175,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_BMP : 'c:\users\arey\desktop\referenzierenbild_black1515RLE.bmp'
+_LINEWIDTH : 0
+_NOCOLORS : 0,1
+_POS : 55,145,66,156,60,150
+_COLORS : 16777215,0,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT OPZeile[2].Wert.12','','',''
+_FRAME : 0,0,159
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,176,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+(* @TRANSPARENT_IMAGE := '_TRANSPARENT_IMAGE : 0,16777215' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 30,163,101,184,65,173
+_COLORS : 0,16777215,16728128,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[3].Wert.15','.OPZeile[3].Wert.2','',''
+_DSP : '.EndlageMinusText[3]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,177,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 20,163,31,204,25,183
+_COLORS : 0,16777215,255,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[3].Wert.15','.OPZeile[3].Wert.6','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,178,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 13,183,20,163,0,183,20,203
+_COLORS : 0,16777215,16735324,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[3].Wert.15','.OPZeile[3].Wert.4','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,179,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 10,183,20,173,10,183,20,193
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[3].Wert.0','','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,180,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 20,173,31,194,30,173
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[3].Wert.10','','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,181,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 290,163,301,204,295,183
+_COLORS : 0,16777215,255,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[3].Wert.15','.OPZeile[3].Wert.7','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,182,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 306,183,300,163,320,183,300,203
+_COLORS : 0,16777215,16735324,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[3].Wert.15','.OPZeile[3].Wert.5','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,183,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 303,183,300,173,311,183,300,194
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','',''
+_THRESH : 'NOT .OPZeile[3].Wert.1','','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,184,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 290,173,301,194,300,173
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[3].Wert.11','','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,185,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 101,163,221,184,161,173
+_COLORS : 0,16777215,16728128,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[3].Wert.15','.OPZeile[3].Wert.9','',''
+_DSP : '.Achsname[3]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,186,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 220,163,291,184,255,173
+_COLORS : 0,16777215,16728128,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[3].Wert.15','.OPZeile[3].Wert.3','',''
+_DSP : '.EndlagePlusText[3]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,187,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 0
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POS : 100,183,220,204,160,193
+_COLORS : 8421504,16777215,16777215,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT .OPZeile[3].Wert.15','','',''
+_DSP : '.AnzeigeWert[3]','%s',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,400,0,188,0,0,0
+_FONT : 'Arial'
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_POLY : 3
+_LINEWIDTH : 2
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 220,186,220,173,230,193,210,193
+_COLORS : 65535,255,0,16777215,0
+_VARIABLES : '','','',''
+_THRESH : ' NOT OPZeile[3].Wert.8','','',''
+_INPUT : 0
+_DSP : '','!',''
+_ZOOM : ''
+_TEXT : 5,4294967281,400,0,189,0,0,0
+_FONT : 'Arial'
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_SIMPLE : 2
+_LINEWIDTH : 0
+_NOCOLORS : 0,1
+_POS : 90,173,111,194,100,183
+_COLORS : 65280,16777215,0,16777215,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : ' NOT OPZeile[3].Wert.14','','',''
+_DSP : '','',''
+_ZOOM : ''
+_INPUT : 0
+_TEXT : 5,4294967281,0,0,190,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @EXTENDEDSIMPLESHAPE := '_SIMPLE: 0' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_BMP : 'c:\users\arey\desktop\referenzierenbild_black1515RLE.bmp'
+_LINEWIDTH : 0
+_NOCOLORS : 0,1
+_POS : 55,186,66,197,60,191
+_COLORS : 16777215,0,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : 'NOT OPZeile[3].Wert.12','','',''
+_FRAME : 0,0,159
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,191,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+(* @TRANSPARENT_IMAGE := '_TRANSPARENT_IMAGE : 0,16777215' *)
+
+_POLY : 3
+_LINEWIDTH : 0
+_NOCOLORS : 1,1
+_POLYSORT : 0
+_POS : 20,140,11,130,12,151,33,139
+_COLORS : 255,255,16777215,0,0
+_VARIABLES : '.CursorX','.CursorY','',''
+_THRESH : '','','',''
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,0,0,0,192,0,0,0
+_FONT : 'Arial'
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+
+_BMP : 'referenzieren_1515RLE.bmp'
+_LINEWIDTH : 0
+_NOCOLORS : 0,1
+_POS : 55,62,56,63,55,62
+_COLORS : 16777215,0,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : ' NOT OPZeile[0].Wert.12','','',''
+_FRAME : 0,0,159
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,195,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+(* @TRANSPARENT_IMAGE := '_TRANSPARENT_IMAGE : 0,16777215' *)
+
+_BMP : 'referenzieren_1515RLE.bmp'
+_LINEWIDTH : 0
+_NOCOLORS : 0,1
+_POS : 55,103,56,104,55,103
+_COLORS : 16777215,0,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : ' NOT OPZeile[1].Wert.12','','',''
+_FRAME : 0,0,159
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,196,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+(* @TRANSPARENT_IMAGE := '_TRANSPARENT_IMAGE : 0,16777215' *)
+
+_BMP : 'referenzieren_1515RLE.bmp'
+_LINEWIDTH : 0
+_NOCOLORS : 0,1
+_POS : 55,143,56,144,55,143
+_COLORS : 16777215,0,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : ' NOT OPZeile[2].Wert.12','','',''
+_FRAME : 0,0,159
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,197,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+(* @TRANSPARENT_IMAGE := '_TRANSPARENT_IMAGE : 0,16777215' *)
+
+_BMP : 'referenzieren_1515RLE.bmp'
+_LINEWIDTH : 0
+_NOCOLORS : 0,1
+_POS : 56,185,57,186,56,185
+_COLORS : 16777215,0,16777215
+_VARIABLES : '','','','','','','',''
+_THRESH : ' NOT OPZeile[3].Wert.12','','',''
+_FRAME : 0,0,159
+_INPUT : 0
+_DSP : '','',''
+_ZOOM : ''
+_TEXT : 5,4294967281,0,0,198,0,0,0
+_FONT : 'Arial     '
+_EXEC : ''
+_TEXTVARIABLES : '','','','',''
+_COLORVARIABLES : '','','','','',''
+_ACCESSLEVELS : 2,2,2,2,2,2,2,2
+_OBJECT : 0,0
+_THRESH2 : '','','',''
+_INPUTTYPE : '','',''
+_HIDDENINPUT : 0
+_END_ELEM
+(* @TEXTSCALINGVARS := '_TEXTSCALINGVARS: $'$',$'$'' *)
+(* @INPUTTAPFALSE := '_INPUTTAPFALSE: 0' *)
+(* @TRANSPARENT_IMAGE := '_TRANSPARENT_IMAGE : 0,16777215' *)
+_KEYINFOLIST : 0
+END_VISUALISATION
