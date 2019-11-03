@@ -1,0 +1,12 @@
+MACRO 
+MacroName: 'Import_TechModule_HandlingKinematics_SBUSPLUS'
+MacroMenu: 'Import_TechModule_HandlingKinematics_SBUSPLUS'
+MacroCmd: 'echo on'
+MacroCmd: 'query off ok'
+MacroCmd: 'online logout'
+MacroCmd: 'project clean'
+MacroCmd: 'project import $$PROJECT_DRIVE$$\$$PROJECT_PATH$$\TechModules\HandlingKinematics\TASKCONFIG_HANDLINGKINEMATICS_MM_LIGHT_SBUSPLUS.EXP'
+MacroCmd: 'project import $$PROJECT_DRIVE$$\$$PROJECT_PATH$$\TechModules\HandlingKinematics\TECHMODULE_HANDLINGKINEMATICS.EXP'
+MacroCmd: 'query on'
+END_MACRO
+

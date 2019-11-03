@@ -1,0 +1,482 @@
+(* @NESTEDCOMMENTS := 'Yes' *)
+(* @PATH := '\/Projekt\/Allgemeine_FC_FB' *)
+(* @OBJECTFLAGS := '0, 8' *)
+(* @SYMFILEFLAGS := '2048' *)
+FUNCTION_BLOCK fbWriteCSV
+VAR
+	output            :   STRING[  255 ]; (* Ausgabe - String *)
+	Sepeat            :   STRING[  5 ]	:= ';'; (*  Feld-Separator *)
+	I                 :   INT;     (* Schleifenzähler *)
+	Record            :   INT;     (* Auszugebender Datensatz *)
+	StartOffset       :   INT;     (* Offset zum Datenfeld (innerhalb des DatenSatzes) *)
+	RecordOffset      :   DWORD;   (* Offset zum DatenSatz *)
+	pByte             :   POINTER  TO BYTE;
+	pWord             (*AT pByte*)  : POINTER TO WORD;
+	pDWord            (*AT pByte*)  : POINTER TO DWORD;
+	pReal             (*AT pByte*)  : POINTER TO REAL;
+	pLReal            (*AT pByte*)  : POINTER TO LREAL;
+	DefaultLength     :   INT;
+
+	nState            :   enumWriteCSVState;
+	pBuffer           :   POINTER  TO BYTE;
+	BufferSize        :   INT;
+	lSysFileOpenAsync :   SysFileOpenAsync;
+	lSysFileWriteAsync :   SysFileWriteAsync;
+	lSysFileCloseAsync :   SysFileCloseAsync;
+	fHandel           :   DWORD;
+	aOffset           :   INT;
+	EOF               :   BOOL;
+	oRest             :   INT;
+	lasten            :   BOOL;
+	refTS             :   DWORD;
+	refDT             :   DT;
+	dd                :   DWORD;
+END_VAR
+VAR_INPUT
+	pFieldDef         :   POINTER  TO ArrCSVDef; (* Zeiger auf die Feld-Definitions-Array *)
+	FieldCount        :   INT;     (* Anzahl der Felder *)
+	pData             :   PT_DataAddress; (* Zeiger auf die auszugebenden Daten (array of udtXXX) *)
+	FieldDataSize     :   INT;     (* Byte-Größe einer Datenstruktur (sizeOf(udtXXX) *)
+	RecordCount       :   INT;     (* Anzahl der Datensätze in DatenStruktur *)
+	FileName          :   STRING[  40 ];
+	WriteHeader       :   BOOL;
+	WriteID           :   BOOL;
+	en                :   BOOL;
+END_VAR
+
+VAR_OUTPUT
+	Busy              :   BOOL;
+	Error             :   BOOL;
+	Result            :   DINT;
+	Done              :   BOOL;
+END_VAR
+(* @END_DECLARATION := '0' *)
+IF NOT en THEN
+	Done	:= FALSE;
+	Busy	:= FALSE;
+	Error	:= FALSE;
+	lasten	:= en;
+	RETURN;
+	
+ELSIF NOT lasten THEN
+	result	:= 0;
+	nState	:= WCS_init;
+	lasten	:= en;
+END_IF
+
+CASE nState OF
+		
+	WCS_Init: (* Initialisierung*)
+		pBuffer	:=
+			ADR(	FileBuffer );
+		BufferSize	:=
+			SIZEOF(	FileBuffer );
+		Busy	:= TRUE;
+		record	:=
+			SEL(	WriteHeader, 0, -1 );
+		nState	:= WCS_FileOpenW;
+		
+	WCS_FileOpenW: (* Datei für Schreibzugriff öffnen*)
+		
+		lSysFileOpenAsync(
+			bEnable	:= TRUE,
+			stFileName	:= FileName,
+(* Todo: - anstatt <Filename> <Filename>.New erzeugen. *)
+			stMode	:= 'w',
+			hFile => fHandel );
+		
+		IF lSysFileOpenAsync.bError THEN
+			Busy	:= FALSE;
+			Error	:= TRUE;
+			Result	:= E_IEC_FILE_COULD_NOT_OPEN;
+			nState	:= WCS_last;
+			
+		ELSIF lSysFileOpenAsync.bDone THEN
+			lSysFileOpenAsync(
+				bEnable	:= FALSE );
+			aOffset	:= 0;
+			EOF	:= FALSE;
+			nState	:= WCS_FillBuffer;
+		ELSE
+			; (* Wait*)
+		END_IF
+		
+	WCS_FillBuffer: (* Puffer mit zu Schreibenden Daten füllen*)
+		ActGetData;
+		output	:=
+			CONCAT(	output, '$R' );
+		IF	aOffset +
+			LEN(	output ) <= Buffersize THEN
+			fpBlockCopy(
+				en	:= TRUE,
+				pSource	:=
+					ADR(	output ),
+				pDest	:= pBuffer +
+					INT_TO_DWORD(	aOffset ),
+				SourceLen	:=
+					LEN(	output ) );
+			aOffset	:= aOffset +
+				LEN(	output );
+			record	:= record + 1;
+			oRest	:= 0;
+			IF record >= RecordCount THEN
+				nState	:= WCS_WriteBuffer;
+				EOF	:= TRUE;
+			END_IF
+		ELSE
+			fpBlockCopy(
+				en	:= TRUE,
+				pSource	:=
+					ADR(	output ),
+				pDest	:= pBuffer +
+					INT_TO_DWORD(	aOffset ),
+				SourceLen	:= Buffersize -
+					aoffset );
+			oRest	:=
+				LEN(	output ) +
+				aoffset -
+				Buffersize;
+			aOffset	:= Buffersize;
+			nState	:= WCS_WriteBuffer;
+		END_IF
+		
+	WCS_WriteBuffer:
+		
+		lSysFileWriteAsync(
+			bEnable	:= TRUE,
+			hFile	:= fHandel,
+			pBuffer	:= pBuffer,
+			dwSize	:= aOffset );
+		
+		IF lSysFileWriteAsync.bError THEN
+			Busy	:= FALSE;
+			Error	:= TRUE;
+			result	:= E_IEC_FILE_COULD_NOT_WRITE;
+			lSysFileWriteAsync(
+				bEnable	:= FALSE,
+				hFile	:= fHandel );
+			nState	:= WCS_last;
+			
+		ELSIF lSysFileWriteAsync.bDone THEN
+			lSysFileWriteAsync(
+				bEnable	:= FALSE,
+				hFile	:= fHandel );
+			nState	:= WCS_CheckEOF;
+		ELSE
+			; (* Wait*)
+		END_IF
+		
+	WCS_CheckEOF:
+		IF orest > 0 THEN
+			fpBlockCopy(
+				en	:= TRUE,
+				pSource	:=
+					ADR(	output ) +
+					INT_TO_DWORD(	LEN(	output ) -oRest ),
+				pDest	:= pBuffer,
+				SourceLen	:= oRest );
+			aOffset	:= oRest;
+			record	:= record + 1;
+			oRest	:= 0;
+			IF record >= RecordCount THEN
+				nState	:= WCS_WriteBuffer;
+			ELSE
+				nState	:= WCS_FillBuffer;
+			END_IF
+		ELSE
+			nState	:= WCS_CloseFile;
+		END_IF
+		
+	WCS_CloseFile:
+(*Datei schliessen*)
+		lSysFileCloseAsync(
+			bEnable	:= TRUE,
+			hFile	:= fHandel, );
+		
+		IF lSysFileCloseAsync.bError THEN (*Fehler beim schließen der Datei*)
+			Busy	:= FALSE;
+			Error	:= TRUE;
+			result	:= E_IEC_FILE_COULD_NOT_CLOSE;
+			lSysFileCloseAsync(
+				bEnable	:= FALSE,
+				hFile	:= fHandel );
+			nState	:= WCS_Last;
+			
+		ELSIF lSysFileCloseAsync.bDone THEN
+(*Baustein beenden*)
+			Done	:= TRUE;
+			Busy	:= FALSE;
+			result	:= 0;
+			lSysFileCloseAsync(
+				bEnable	:= FALSE,
+				hFile	:= fHandel );
+			nState	:= WCS_last;
+		END_IF
+(* Todo: - evtl. ex. <Filename>.BAK löschen,
+		- evtl. Existierende <Filename> in <Filename>.BAK umbenennen 
+		- <Filename>.new in <Filename> umbenennen. *)
+	ELSE
+		; (* Nothing*)
+		IF error THEN
+			lSysFileOpenAsync(
+				bEnable	:= FALSE );
+			lSysFileWriteAsync(
+				bEnable	:= FALSE,
+				hFile	:= fHandel );
+			lSysFileCloseAsync(
+				bEnable	:= FALSE,
+				hFile	:= fHandel );
+		END_IF
+END_CASE
+(*
+Beispiel:
+fpWriteCSV(
+	en:= MtestWriteCSV,
+	FileName:= 'PalHistory.csv',
+	WriteHeader:= mTestWriteHeader,
+	WriteID:= mTestWriteID,
+
+	pFieldDef:= ADR(FieldDef),
+	FieldCount:= 5,
+	pData:= ADR(fpPalettenverwaltung.History),
+	FieldDataSize:= SIZEOF(fpPalettenverwaltung.History[0]),
+	RecordCount:= Cfg_MaxPalHistory+1);
+
+*)
+END_FUNCTION_BLOCK
+ACTION ActGetData:
+(* @TEXT_IMPLEMENTATION := 'ST' *)
+	output	:= '';
+	IF record < 0 THEN
+		FOR I	:=
+				SEL(	WriteID, 0, -1 ) TO Fieldcount - 1 DO
+			IF I < 0 THEN
+				output	:=
+					CONCAT(	output, '[Nr]' );
+			ELSE
+				IF	I > SEL(	WriteID, 0, -1 ) THEN
+					output	:=
+						CONCAT(	output,
+							Sepeat );
+				END_IF
+				output	:=
+					CONCAT(	output,
+						pFieldDef^[ I ].FieldName );
+			END_IF
+			IF pFieldDef^[ I ].FieldType = FT_DWTimestamp THEN
+(*17: Bit-Boolean Bit 7 of Byte *)
+				refTS	:=
+					GetTimeStamp1ms(	) / 1000;
+				refDT	:=
+					SysRtcGetTime(
+						Dummy	:=
+							TRUE );
+			END_IF
+		END_FOR
+	ELSE
+		RecordOffset	:=
+			Record *
+			FieldDataSize;
+		StartOffset	:= 0;
+		FOR I	:=
+				SEL(	WriteID, 0, -1 ) TO Fieldcount - 1 DO
+			IF I < 0 THEN
+				output	:=
+					CONCAT(	output,
+						INT_TO_STRING(	Record ) );
+			ELSE
+				IF	I > SEL(	WriteID, 0, -1 ) THEN
+					output	:=
+						CONCAT(	output,
+							Sepeat );
+				END_IF
+				IF pFieldDef^[ I ].Offset <> -1 (* default *)THEN
+					Startoffset	:= pFieldDef^[ I ].Offset;
+				END_IF
+				CASE pFieldDef^[ i ].FieldType OF
+					FT_unknown: (*0: Unknown Datatype *)
+						output	:=
+							CONCAT(	output, 'unknown' ); (* unknown *)
+					FT_Bool: (*1: Byte-Boolean *)
+						pByte	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								BYTE_TO_STRING(	pByte^ ) ); (* Bool *)
+						DefaultLength	:= 1;
+					FT_Byte: (*2: Unsigned Byte(char) *)
+						pByte	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								BYTE_TO_STRING(	pByte^ ) ); (* Byte *)
+						DefaultLength	:= 1;
+					FT_TinyInt: (*3: Tiny-Int, Signed Byte *)
+						pByte	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								SINT_TO_STRING(	BYTE_TO_SINT(	pByte^ ) ) ); (* TinyInt *)
+						DefaultLength	:= 1;
+					FT_Word: (*4: Unsigned 2-Byte word *)
+						pWord	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								WORD_TO_STRING(	pWord^ ) ); (* Word *)
+						DefaultLength	:= 2;
+					FT_Int: (*5: Signed 2-Byte Integer *)
+						pWord	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								INT_TO_STRING(	WORD_TO_INT(	pWord^ ) ) ); (* Int *)
+						DefaultLength	:= 2;
+					FT_Cardinal: (*6: Unsigned 4-Byte Longword *)
+						pDWord	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								DWORD_TO_STRING(	pDWord^ ) ); (* Cardinal *)
+						DefaultLength	:= 4;
+					FT_LongInt: (*7: Signed 4-Byte LongInteger *)
+						pDWord	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								DINT_TO_STRING(	DWORD_TO_DINT(	pDWord^ ) ) ); (* LongInt *)
+						DefaultLength	:= 4;
+					FT_Real: (*8: 4-Byte Float *)
+						pReal	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								REAL_TO_STRING(	pREal^ ) ); (* Real *)
+						DefaultLength	:= 4;
+					FT_LReal: (*9: 8-Byte Float (double Precizion) *)
+						pLReal	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								LREAL_TO_STRING(	pLReal^ ) ); (* LReal *)
+						DefaultLength	:= 8;
+					FT_BitBool0: (*10: Bit-Boolean Bit 0 of Byte*)
+						pByte	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								SEL(	pByte^.0, '0', '1' ) ); (* BitBool0 *)
+						DefaultLength	:= 1; (* BitBool0 *)
+					FT_BitBool1: (*11: Bit-Boolean Bit 1 of Byte *)
+						pByte	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								SEL(	pByte^.1, '0', '1' ) ); (* BitBool1 *)
+						DefaultLength	:= 1; (* BitBool1 *)
+					FT_BitBool2: (*12: Bit-Boolean Bit 2 of Byte *)
+						pByte	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								SEL(	pByte^.2, '0', '1' ) ); (* BitBool2 *)
+						DefaultLength	:= 1; (* BitBool2 *)
+					FT_BitBool3: (*13: Bit-Boolean Bit 3 of Byte *)
+						pByte	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								SEL(	pByte^.3, '0', '1' ) ); (* BitBool3 *)
+						DefaultLength	:= 1; (* BitBool3 *)
+					FT_BitBool4: (*14: Bit-Boolean Bit 4 of Byte *)
+						pByte	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								SEL(	pByte^.4, '0', '1' ) ); (* BitBool4 *)
+						DefaultLength	:= 1; (* BitBool4 *)
+					FT_BitBool5: (*15: Bit-Boolean Bit 5 of Byte *)
+						pByte	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								SEL(	pByte^.5, '0', '1' ) ); (* BitBool5 *)
+						DefaultLength	:= 1; (* BitBool5 *)
+					FT_BitBool6: (*16: Bit-Boolean Bit 6 of Byte *)
+						pByte	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								SEL(	pByte^.6, '0', '1' ) ); (* BitBool6 *)
+						DefaultLength	:= 1; (* BitBool6 *)
+					FT_BitBool7: (*17: Bit-Boolean Bit 7 of Byte *)
+						pByte	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						output	:=
+							CONCAT(	output,
+								SEL(	pByte^.7, '0', '1' ) ); (* BitBool7 *)
+						DefaultLength	:= 1; (* BitBool7 *)
+					FT_String: (*18: ToDo: Multi-Byte Array of Char *)
+						output	:=
+							CONCAT(	output, 'String' ); (* String *)
+					FT_DWTimestamp: (*19: Bit-Boolean Bit 7 of Byte *)
+						pDWord	:=
+							pData +
+							Recordoffset +
+							Startoffset;
+						dd	:=
+							refTS -
+							pDWord^;
+						output	:=
+							CONCAT(	output,
+								CONCAT(	RIGHT(	CONCAT(	'0', DWORD_TO_STRING(	dd / 3600 ) ), 2 ), ':' ) ); (* Stunden *)
+						output	:=
+							CONCAT(	output,
+								CONCAT(	RIGHT(	CONCAT(	'0', DWORD_TO_STRING(	(	dd /
+													60 ) MOD 60 ) ), 2 ), ':' ) ); (* Minuten *)
+						output	:=
+							CONCAT(	output,
+								RIGHT(	CONCAT(	'0', DWORD_TO_STRING(	dd MOD 60 ) ), 2 ) ); (* Sekunden *)
+						DefaultLength	:= 4;
+					ELSE
+						;
+				END_CASE
+			END_IF
+		END_FOR
+	END_IF
+END_ACTION
+

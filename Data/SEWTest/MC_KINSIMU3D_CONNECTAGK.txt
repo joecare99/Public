@@ -1,0 +1,57 @@
+(* @NESTEDCOMMENTS := 'Yes' *)
+(* @PATH := '\/MPLCKinematics_Simulation' *)
+(* @OBJECTFLAGS := '0, 8' *)
+(* @SYMFILEFLAGS := '2048' *)
+FUNCTION_BLOCK MC_KinSimu3D_ConnectAGK
+VAR_INPUT
+	Enable                        :   BOOL;
+	Simu3DParAGK                  :   MC_KIN_SIMU3D_PAR_AGK;
+END_VAR
+
+VAR_OUTPUT
+	Done                          :   BOOL;
+	Error                         :   BOOL;
+	ErrorID                       :   DINT;
+END_VAR
+
+VAR_IN_OUT
+(* Simu3DDataPC : MC_KIN_SIMU3D_DATA_PC; --> Ersetzt durch gKinSimu3D_Single_PC_Instance *)
+	Simu3DDataAGK                 :   MC_KIN_SIMU3D_DATA_AGK;
+END_VAR
+
+(*{library private}*)
+
+VAR
+(* Ablauf *)
+	Simu3DDataAGKStatus_HasBeenSet :   BOOL	:=  FALSE;
+	i                             :   INT;
+
+(*	fbOpenSimFile : FB_Simu3D_OpenSimFile;*)
+
+(* durch Simu3DDataPC.bRegisterTelegramPending sichergestellt das dieser FB nicht doppelt verwendet wird *)
+(*	fbReceiveTelegram : FB_Simu3D_ReceiveSetpointTCP;*)
+
+(*	stDataSend : MC_KIN_SIMU3D_TELEGRAM_AGK_DATA; *)
+
+	pD4                           :   POINTER  TO UDINT;
+
+(*	fbClear : FB_Simu3D_Clear; *)
+END_VAR
+
+VAR CONSTANT
+(* !!! Trennpunkt zwischen Instanzbezeichner und Achsbezeichner in dieser Version beim Instanzbezeichner
+		-> soll zukuenftig nicht mehr durch Anwender angegeben werden ... *)
+	strTelegramDescription0       :   STRING(	50 )	:= '<Cmd><Bew Va="0"><Kod Bof="0" Typ="Double8" /><Na>';
+	strTelegramDescription1       :   STRING(	59 )	:= (* A1 *)'A1</Na></Bew><Bew Va="0"><Kod Bof="8" Typ="Double8" /><Na>';
+	strTelegramDescription2       :   STRING(	59 )	:= (* A2 *)'A2</Na></Bew><Bew Va="0"><Kod Bof="16" Typ="Double8" /><Na>';
+	strTelegramDescription3       :   STRING(	59 )	:= (* A3 *)'A3</Na></Bew><Bew Va="0"><Kod Bof="24" Typ="Double8" /><Na>';
+	strTelegramDescription4       :   STRING(	59 )	:= (* A4 *)'A4</Na></Bew><Bew Va="0"><Kod Bof="32" Typ="Double8" /><Na>';
+	strTelegramDescription5       :   STRING(	59 )	:= (* A5 *)'A5</Na></Bew><Bew Va="0"><Kod Bof="40" Typ="Double8" /><Na>';
+	strTelegramDescription6       :   STRING(	59 )	:= (* A6 *)'A6</Na></Bew><Bew Va="0"><Kod Bof="48" Typ="Double8" /><Na>';
+	strTelegramDescription7       :   STRING(	59 )	:= (* A7 *)'A7</Na></Bew><Bew Va="0"><Kod Bof="56" Typ="Double8" /><Na>';
+	strTelegramDescription8       :   STRING(	50 )	:= (* A8 *)'A8</Na></Bew><Sei><Kod Bof="64" Typ="Byte1" /><Co>';
+	strTelegramDescription9       :   STRING(	44 )	:= (* Stift *)'Stift</Co><Pr>Ein</Pr><in>0</in></Sei></Cmd>';
+END_VAR
+(* @END_DECLARATION := '0' *)
+;
+END_FUNCTION_BLOCK

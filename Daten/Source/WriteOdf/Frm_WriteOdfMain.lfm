@@ -1,0 +1,53 @@
+object FrmWriteOdfMain: TFrmWriteOdfMain
+  Left = 463
+  Height = 807
+  Top = 250
+  Width = 1139
+  Caption = 'FrmWriteOdfMain'
+  ClientHeight = 807
+  ClientWidth = 1139
+  DesignTimePPI = 144
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '2.0.4.0'
+  inline RTFEditFrame1: TRTFEditFrame
+    Height = 756
+    Top = 51
+    Width = 584
+    Align = alLeft
+    ClientHeight = 756
+    ClientWidth = 584
+    Visible = True
+    inherited RichMemo1: TRichMemo
+      Height = 692
+      Width = 560
+      Lines.Strings = (
+        'RichMemo1'
+      )
+    end
+  end
+  object Button1: TButton
+    Left = 632
+    Height = 38
+    Top = 88
+    Width = 113
+    Caption = 'Button1'
+    OnClick = Button1Click
+    TabOrder = 1
+  end
+  object Splitter1: TSplitter
+    Left = 584
+    Height = 756
+    Top = 51
+    Width = 8
+  end
+  object Panel1: TPanel
+    Left = 0
+    Height = 51
+    Top = 0
+    Width = 1139
+    Align = alTop
+    Caption = 'Panel1'
+    TabOrder = 3
+  end
+end

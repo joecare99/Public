@@ -1,0 +1,93 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: tfraxmlfile.actdosomething.caption
+msgid "actDoSomething"
+msgstr ""
+
+#: tfraxmlfile.actfileload.caption
+msgid "Load"
+msgstr ""
+
+#: tfraxmlfile.actfileopen.caption
+msgctxt "tfraxmlfile.actfileopen.caption"
+msgid "Öffnen"
+msgstr ""
+
+#: tfraxmlfile.actfileopen.hint
+msgctxt "tfraxmlfile.actfileopen.hint"
+msgid "Öffnen"
+msgstr ""
+
+#: tfraxmlfile.actfilesave.caption
+msgid "Save"
+msgstr ""
+
+#: tfraxmlfile.actfilesaveas.caption
+msgid "Sichern &als ..."
+msgstr ""
+
+#: tfraxmlfile.actfilesaveas.hint
+msgid "Sichern als"
+msgstr ""
+
+#: tfraxmlfile.btnxmlfileload.caption
+msgid "L"
+msgstr ""
+
+#: tfraxmlfile.btnxmlfileopen.caption
+msgid "O"
+msgstr ""
+
+#: tfraxmlfile.btnxmlfilesave_.caption
+msgid "S"
+msgstr ""
+
+#: tfraxmlfile.edtxmlfilename.editlabel.caption
+msgid "Datei:"
+msgstr ""
+
+#: tfraxmlfile.edtxmlfilename.text
+msgid "edtXmlFilename"
+msgstr ""
+
+#: tfraxmlfile.lblcompiledon.caption
+msgid ""
+"Compiled: %s\n"
+"#9on:%s\n"
+msgstr ""
+
+#: tfraxmlfile.tabsheet1.caption
+msgid "TabSheet1"
+msgstr ""
+
+#: tfraxmlfile.tabsheet2.caption
+msgid "TabSheet2"
+msgstr ""
+
+#: tfrmmainform.btnloadfile.caption
+msgid "Open"
+msgstr ""
+
+#: tfrmmainform.btnselectfile.caption
+msgid "..."
+msgstr ""
+
+#: tfrmmainform.cbxfilename.text
+msgid "cbxFilename"
+msgstr ""
+
+#: unt_cdate.adate
+msgctxt "unt_cdate.adate"
+msgid "05.05.2018"
+msgstr ""
+
+#: unt_cdate.cdate
+msgctxt "unt_cdate.cdate"
+msgid "05.05.2018"
+msgstr ""
+
+#: unt_cdate.cname
+msgid "N00145-BI"
+msgstr ""
+
