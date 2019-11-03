@@ -24,7 +24,7 @@ type
         procedure SetUp; override;
         procedure TearDown; override;
     published
-        procedure TestHookUp;
+        procedure TestSetUp;
         procedure TestParserOutp3b;
         procedure TestParserOutp1b;
         Procedure TestDateModifRepl;
@@ -44,7 +44,7 @@ type
 implementation
 
 
-procedure TTestGedComHelper.TestHookUp;
+procedure TTestGedComHelper.TestSetUp;
 begin
     CheckNotNull(FGedComFile, 'FGedComFile is assigned');
     CheckNotNull(FGedComHelper, 'FGedComHelper is assigned');
@@ -100,6 +100,7 @@ const FileName='EntryGC0001.entTxt';
 begin
       lst:=TStringList.Create;
       lRs:=TStringList.Create;
+      try
       lSt.LoadFromFile(FDataPath+DirectorySeparator+FileName);
       if FileExists(FDataPath+DirectorySeparator+ChangeFileExt(FileName,'.entExp')) then
         lRs.LoadFromFile(FDataPath+DirectorySeparator+ChangeFileExt(FileName,'.entExp'));
@@ -108,6 +109,10 @@ begin
       FGedComHelper.CitTitle:='Pg. 1';
       FGedComHelper.CreateNewHeader('Dummy');
       ReplayExpResult(lRs);
+      finally
+        FreeAndNil(lSt);
+        FreeAndNil(lRs);
+      end;
 end;
 
 procedure TTestGedComHelper.TestDateModifRepl;

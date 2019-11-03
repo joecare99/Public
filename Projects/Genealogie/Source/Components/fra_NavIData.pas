@@ -24,6 +24,7 @@ type
     procedure SetData(AValue: IDataRO);
     Procedure DataUpdate(Sender: TObject);
   public
+    Destructor Destroy; override;
     Property Data:IDataRO read FData write SetData;
   end;
 
@@ -79,6 +80,14 @@ procedure TfraNavIData.DataUpdate(Sender: TObject);
 begin
 //  if not edtSeekNr.editing
   edtSeekNr.text:=inttostr((sender as IDataRO).GetActID+1);
+end;
+
+destructor TfraNavIData.Destroy;
+begin
+  if assigned(fdata) then
+    Fdata.OnUpdate := nil;
+  FData := nil;
+  inherited Destroy;
 end;
 
 end.

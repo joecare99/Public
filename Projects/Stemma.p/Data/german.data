@@ -1,0 +1,341 @@
+Wollen Sie wirklich STEMMA beenden?
+Bestätigug
+Es war nicht möglich zu der angegebenen MySQL-Datenbank zu verbinden.
+Databankname
+Geben Sie den zu erstellenden Datenbanknamen ein.
+Datenbank existiert schon.
+Ort der TMG 4.0d Datenbank
+Step 1/12 - Event type importation
+Step 2/12 - Source-repository association importation
+Step 3/12 - Repository importation
+Step 4/12 - Event Importation - Time to completion 
+Step 5/12 - Citation importation - Time to completion 
+Step 6/12 - Individual importation - Time to completion 
+Step 7/12 - Place importation - Time to completion 
+Step 8/12 - Witness importation - Time to completion 
+Step 9/12 - Name importation - Time to completion 
+Step 10/12 - Relation importation - Time to completion 
+Step 11/12 - Source importation - Time to completion 
+Step 12/12 - Exhibits importation - Time to completion 
+Error: STEMMA Database already existing or impossible to open imported database.
+Number of the individual
+Enter the number of the desired individual
+The individual 
+ has not been found.
+Enter the database name to delete
+Enter the database name
+Database not found.
+Are you sure you want to delete repository "
+" ?
+Add a citation
+Add an event
+Are you sure you want to delete citation "
+Are you sure you want to delete witness "
+Add an exhibit
+Text
+Add an individual
+Add a name
+Name
+First name
+Suffix
+Title
+Add a child
+Add a parent
+Add a source
+Are you sure you want to delete the link to the depository "
+Depository modification
+Enter the depository #
+Add a depository
+Add a witness
+B - Birth events
+D - Death events
+M - Union events
+X - Other events
+N - Names
+R - Filiations
+Z - Other relations
+Add an event, name or relation type
+Children
+Are you sure you want to delete the link to the child "
+Events
+Are you sure you want to delete "
+Only the exhibits associated to an individual (type "I") can be modified this way
+Are you sure you want to delete exhibit "
+NO TITLE, NO DESCRIPTION
+image
+Exhibits
+she
+he
+her
+his
+daughter of 
+son of 
+ and 
+TO BE PROGRAMMED
+first
+january
+fébruary
+march
+april
+may
+june
+july
+august
+september
+october
+november
+december
+before the 
+before 
+before a 
+ of the year 
+circa the 
+circa 
+circa a 
+the 
+in 
+a 
+after the 
+after 
+after a 
+between the 
+between 
+between a 
+ and the 
+ and a 
+ or the 
+ or in 
+ or a 
+from 
+from 
+from a 
+ to 
+ to 
+ to a 
+c.
+ or 
+Siblings
+Principal exhibit
+Selected exhibit
+Merge with...
+Enter the place # with "
+" should merge
+Not the same place (
+) vs (
+Error
+Are you sure you want to delete place "
+Names
+) and attributes
+To remove a primary name, select the new primary name.
+Are you sure you want to delete the name "
+Parents
+Are you sure you want to delete the link to the  parent "
+Are you sure you want to delete source "
+Are you sure you want to delete "
+Event
+Witness
+Date
+# Source
+Source
+# Author
+Author
+Select the desired language file
+About
+Version:
+Date:
+by François Marchi
+Ancestors
+Connexion to database
+Clse
+User:
+Server:
+Password:
+Ok
+Repositories
+Title
+Description
+Memo
+Individual
+Usage
+Descendants
+Citation modification
+Source:
+Description:
+Quality:
+Cancel
+Event modification
+Type:
+Witnesses:
+(presentation):
+(sort):
+Place:
+Memo:
+Sentence:
+(default)
+Citations:
+Role
+Name
+Q
+Exhibit modification
+Title:
+File:
+Visualise
+Name modification
+Individual:
+Name:
+Type
+Relation modification
+Parent:
+Child:
+Sort date:
+Source modification
+Author:
+Default Quality:
+Repositories:
+Repository
+Witness modification
+Witness:
+Role:
+Result:
+Event type modification
+Child
+Format
+Explorer
+Birth
+Death
+Sibling
+Navigation history
+Places
+Preposition
+Detail
+City
+Region
+State
+Country
+Names and Attributes
+Last modification:
+Parent
+Exhibit display
+Sources
+Author
+Event types
+Phrase
+&Go to
+&Usage
+&Add
+&Modify
+&Delete
+&Witnesses
+&Citations
+Add &title
+Add &first name
+Add &surname
+Add suffi&x
+&Repositories
+&Primary
+Sort by &first name
+Sort by &surname
+Sort by &birth
+Sort by &death
+&Sort
+by &detail
+by &city
+by &region
+by &state
+by countr&y
+&Merge
+by &number
+by &title
+&File
+Conne&xion
+&Create project
+&Open project
+&Import project
+&TMG v. 4.0d
+Delete project
+&Language
+&Quit
+&Edit
+Copy
+Cut
+Paste
+Copy &name
+Copy indi&vidual
+Delete individual
+&Father
+&Mother
+&Broter
+&Sister
+S&on
+&Daughter
+S&pouse
+&Unrelated
+B&irth
+Bap&tism
+D&eath
+Buria&l
+&Navigation
+By &number
+&Previous explorer element
+Ne&xt explorer element
+Complete &history
+&Tools
+&Sources
+&Places
+&Event Types
+&Window
+&Explorer
+&Names and attributes
+E&vents
+&Parents
+E&xhibits
+&Children
+&Siblings
+&Image
+&Ancestors
+&Descendants
+&Help
+&About
+Exhibits:
+" and "
+Do you want to unite "
+There must be at least one witness.
+&Parameters
+&PDF
+Select the location of the PDF viewer
+Executables
+Language translation table
+The deleted person must not be a depot, author of a source, have principal child, parents nor events where another person is a principal witness.
+Copie &event
+Copie Pa&rent
+Copie &Child
+Adding a father to 
+Adding a mother to 
+Adding a brother to 
+Adding a son to 
+Adding a daughter to 
+Selection of the other principal parent
+None for now...
+Adding a spouse to 
+E
+ENGLISH
+&Export project
+&Website
+SITEMAP files creation (1/3)
+Index creation (2/3)
+Database transfer file creation (3/3)
+Directory where to create HTML/PHP files
+Enter the web site server name or address
+Server name
+Enter the website database name
+Database name
+Enter the website MySQL username
+Username
+Enter the username password
+Password
+Database compression
+Repair Birth-Death
+Adding a sister to 
+Removal of orphan records
+Repair names (for sorting)
+Repair relation sort date
