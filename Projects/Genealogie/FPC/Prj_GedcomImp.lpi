@@ -19,8 +19,127 @@
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
-    <BuildModes Count="1">
+    <BuildModes Count="4">
       <Item1 Name="Default" Default="True"/>
+      <Item2 Name="Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($Project(InfoFile))"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="..\Source\gedcom-import;$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\Source\gedcom-import;..\Components;..\Source\Components"/>
+            <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+              <IncludeAssertionCode Value="True"/>
+              <AllowLabel Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
+              <UseExternalDbgSyms Value="True"/>
+            </Debugging>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($Project(InfoFile))"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="..\Source\gedcom-import;$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\Source\gedcom-import;..\Components;..\Source\Components"/>
+            <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+              <AllowLabel Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item3>
+      <Item4 Name="Release86">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="\"/>
+          <Target>
+            <Filename Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($Project(InfoFile))"/>
+          </Target>
+          <SearchPaths>
+            <IncludeFiles Value="..\Source\gedcom-import;$(ProjOutDir)"/>
+            <OtherUnitFiles Value="..\Source\gedcom-import;..\Components;..\Source\Components"/>
+            <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+              <AllowLabel Value="False"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <SmartLinkUnit Value="True"/>
+            <TargetCPU Value="i386"/>
+            <TargetOS Value="win32"/>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <GenerateDebugInfo Value="False"/>
+            </Debugging>
+            <LinkSmart Value="True"/>
+            <Options>
+              <Win32>
+                <GraphicApplication Value="True"/>
+              </Win32>
+            </Options>
+          </Linking>
+        </CompilerOptions>
+      </Item4>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -42,7 +161,7 @@
         <PackageName Value="LCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="4">
+    <Units Count="8">
       <Unit0>
         <Filename Value="Prj_GedcomImp.dpr"/>
         <IsPartOfProject Value="True"/>
@@ -50,7 +169,7 @@
       <Unit1>
         <Filename Value="..\Source\gedcom-import\Frm_ShowGedCom.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
+        <ComponentName Value="FrmShowGedCom"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit1>
@@ -63,6 +182,25 @@
         <Filename Value="..\Source\Components\GBaseClasses.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="..\Source\gedcom-import\cls_GenealogieHelper.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\Source\gedcom-import\Cls_GedComExt.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\Source\gedcom-import\fra_GenShowIndivid.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FraShowIndiv"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\Source\Components\unt_IGenBase2.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -73,11 +211,12 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="..\Source\gedcom-import;$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source\gedcom-import;..\Components"/>
+      <OtherUnitFiles Value="..\Source\gedcom-import;..\Components;..\Source\Components"/>
       <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
+        <SyntaxMode Value="Delphi"/>
         <AllowLabel Value="False"/>
       </SyntaxOptions>
     </Parsing>

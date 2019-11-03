@@ -3,7 +3,9 @@ program fpcTestGedComFile;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces,sysutils, Forms, GuiTestRunner, tst_GedComFile, tst_GedComHelper;
+  Interfaces, sysutils, Forms, GuiTestRunner, tst_GedComFile, tst_GedComHelper,
+  tst_GenHelper, Cls_GedComExt, tst_GedCom2Odf, cmp_GedComDocumentWriter,
+  unt_IGenBase2;
 
 {$R *.res}
 
@@ -24,4 +26,3 @@ begin
   Application.CreateForm(TGuiTestRunner, TestRunner);
   Application.Run;
 end.
-

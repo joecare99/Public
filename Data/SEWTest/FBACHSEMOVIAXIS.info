@@ -1,0 +1,29 @@
+[SEW-Exp-File]
+nestedcomments=Yes
+path=\Projekt\Achsen
+objectflags=0, 8
+symfileflags=2048
+type=Block
+name=fbAchseMoviAxis
+function=Achse: NC-Antrieb ohne Endlagen
+option=MoviAxis-Gruppe
+version=05.06.01
+date=06.06.2013
+author=C. Rosewich
+info=FB232
+changes=
+
+[WildCardFill]
+n=Yes
+p=\Projekt\Achsen
+o=0, 8
+s=2048
+t=Block
+n=fbAchseMoviAxis
+f=Achse: NC-Antrieb ohne Endlagen
+o=MoviAxis-Gruppe
+v=05.06.01
+d=06.06.2013
+a=C. Rosewich
+i=FB232
+c=

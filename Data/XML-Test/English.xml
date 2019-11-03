@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="Tools">Tools-value</string>
+    <string name="Settings">Settings-value</string>
+    <string name="About">About-value</string>
+    <string name="Practice">Practice-value</string>
+    <string name="Random Select">RandomSelect-value</string>
+</resources>

@@ -122,6 +122,8 @@ var
     lFam: TGedComObj;
     lFamID: string;
 begin
+    if atext.endswith(' ') then
+       lFamID :='';
     lFamID := '@F' + aText + '@';
     lfam := FGedComFile.Find(lFamID);
     if not assigned(lfam) then
@@ -416,6 +418,9 @@ begin
         if (subtype = 2) then
           begin
             lIndSex:=lind['SEX'].Data;
+            if (lIndSex <> 'M') and  (lIndSex <>'F') then
+              lIndSex := 'U';
+            aText:=trim(aText);
             lInd2 := FGedComFile.Find('@I' + atext + lIndSex + '@');
             if not assigned(lInd2) then
                 FGedComFile.AppendIndex('@I' + atext + lIndSex + '@', lind)
