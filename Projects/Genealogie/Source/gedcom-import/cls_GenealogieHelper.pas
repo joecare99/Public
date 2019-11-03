@@ -258,7 +258,8 @@ begin
             lName := TGedIndividual(lGedObj).Name;
             if (lName = '') or (lName = '.') or (lName = '?') or
                 (lName = 'NN') or lName.EndsWith(' NN') or
-                lName.EndsWith(' ?') or lName.EndsWith(' .') then
+                lName.EndsWith(' ?') or lName.EndsWith(' .') or
+                (TGedIndividual(lGedObj).Surname='') then
               begin
                 if AutoSetNameInd(TGedIndividual(lGedObj)) then
                     Inc(lcount)

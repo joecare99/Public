@@ -1,0 +1,69 @@
+object Form1: TForm1
+  Left = 233
+  Top = 187
+  Width = 870
+  Height = 640
+  Caption = 'mn>>'
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  PixelsPerInch = 96
+  object DBGrid1: TDBGrid
+    Left = 96
+    Top = 16
+    Width = 417
+    Height = 345
+    DataSource = DataSource1
+    TabOrder = 0
+    TitleFont.Charset = DEFAULT_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -11
+    TitleFont.Name = 'MS Sans Serif'
+    TitleFont.Style = []
+  end
+  object DBNavigator1: TDBNavigator
+    Left = 96
+    Top = 368
+    Width = 240
+    Height = 25
+    DataSource = DataSource1
+    TabOrder = 1
+  end
+  object Query1: TSQLQuery
+    Active = True
+    SQL.Strings = (
+      'select * from Kategorietabelle'
+    )
+    Left = 8
+    Top = 8
+  end
+  object Database1: TDatabase
+    Connected = True
+    DatabaseName = 'Myone'
+    LoginPrompt = False
+  end
+  object UpdateSQL1: TSQLQuery
+    InsertSQL.Strings = (
+      'insert into Kategorietabelle'
+      '  (Zusammenhang, Bezeichnung, Anrede, Tabelle, UpKategorie, Info, Crc32)'
+      'values'
+      '  (:Zusammenhang, :Bezeichnung, :Anrede, :Tabelle, :UpKategorie, :Info, '
+      '   :Crc32)'
+    )
+    DeleteSQL.Strings = (
+      'delete from Kategorietabelle'
+      'where'
+      '  ID = :OLD_ID'
+    )
+    Left = 40
+    Top = 8
+  end
+  object DataSource1: TDataSource
+    DataSet = Query1
+    Left = 8
+    Top = 88
+  end
+end

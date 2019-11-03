@@ -5,7 +5,7 @@ unit Cls_GedComExt;
 interface
 
 uses
-    Classes, SysUtils, Cmp_GedComFile;
+    Classes, SysUtils, Cmp_GedComFile, unt_IGenBase2;
 
 type
     {---------------------------------------------------------------------}
@@ -15,9 +15,17 @@ type
         // Todo: GedObject, Dessen Informationen an mehreren Stellen verwendet wird
     end;
 
+    { TGedSource }
+
+    TGedSource = class(TGedMulti, IGenData)
+        function GetObject: TObject;
+        class function AssNodeType: string; override;
+        class function HandlesNodeType(aType: string): boolean; override;
+    end;
+
     { TGedPlace }
 
-    TGedPlace = class(TGedMulti)
+    TGedPlace = class(TGedMulti, IGenData)
     private
         FLatitude: string;
         FLongitude: string;
@@ -43,25 +51,34 @@ type
 
     { TGedEvent }
 
-    TGedEvent = class(TGedComDefault)
+    TGedEvent = class(TGedComDefault, IGenEvent)
     private
         FDate: TGedComObj;
         FPlace: TGedPlace;
-        FSource: TGedComObj;
+        FSource: TGedSource;
+        FEventType: TenumEventType;
         function GetDate: string;
-        function getPlaceName: string;
+        function GetEventType: TenumEventType;
+        function GetPlace: string; overload;
         procedure SetDate(AValue: string);
-        procedure SetPlace(AValue: TGedPlace);
-        procedure SetPlaceName(AValue: string);
-        procedure SetSource(AValue: TGedComObj);
+        procedure SetEventType(AValue: TenumEventType);
+    protected
+        function GetSource: IGenData;
+        function GetPlace: IGenData; overload;
+        procedure SetPlace(AValue: TGedPlace); overload;
+        procedure SetPlace(AValue: string); overload;
+        procedure SetPlace(AValue: IGenFact); overload;
+        procedure SetSource(AValue: TGedSource); overload;
+        procedure SetSource(AValue: IGenData); overload;
+        procedure ChildUpdate(aChild: TGedComObj); override;
     published
         property Date: string read GetDate write SetDate;
         property Place: TGedPlace read FPlace write SetPlace;
-        property PlaceName: string read getPlaceName write SetPlaceName;
-        property Source: TGedComObj read FSource write SetSource;
-    protected
-        procedure ChildUpdate(aChild: TGedComObj); override;
+        property PlaceName: string read GetPlace write SetPlace;
+        property Source: TGedSource read FSource write SetSource;
+        property EventType: TenumEventType read GetEventType write SetEventType;
     public
+        constructor Create(const aID, aType: string; const aInfo: string); override;
         function ToString: ansistring; override;
         function Description: string; override;
         class function AssNodeType: string; override;
@@ -156,8 +173,7 @@ type
     end;
 
     { TGedIndividual }
-
-    TGedIndividual = class(TGedComDefault)
+    TGedIndividual = class(TGedComDefault, IGenIndividual)
     private
         FBaptised: TGedEvent;
         FBirth: TGedEvent;
@@ -170,59 +186,115 @@ type
         FRefNr: TGedComObj;
         FReligion: TGedEvent;
         FSex: TGedEvent;
+
+        FResidence: TGedEvent;
+        FParentFamily: TGedFamily;
         Fspouses: array of TGedIndividual;
         FFamilys: array of TGedFamily;
         FChilds: array of TGedIndividual;
+        FEvents: array of IGenEvent;
         function GetBaptDate: string;
+        function GetBaptPlace: string;
         function GetBirthDate: string;
         function GetBirthPlace: string;
         function GetBurialDate: string;
+        function GetBurialPlace: string;
+        function GetBurial: IGenEvent;
         function GetChildrenCount: integer;
-        function GetChildren(Idx: variant): TGedIndividual;
+        function GetChildren(Idx: variant): TGedIndividual; overload;
+        function GetChildren(Idx: variant): IGenIndividual; overload;
         function GetDeathDate: string;
         function GetDeathPlace: string;
-        function GetFamCount: integer;
-        function GetFamilys(Idx: variant): TGedFamily;
-        function GetFather: TGedIndividual;
-        function GetMother: TGedIndividual;
+        function GetFamilyCount: integer;
+        function GetFamilies(Idx: variant): TGedFamily; overload;
+        function GetFamilies(Idx: variant): iGenFamily; overload;
+        function GetFather: TGedIndividual; overload;
+        function GetMother: TGedIndividual; overload;
+        function GetFather: IGenIndividual; overload;
+        function GetMother: IGenIndividual; overload;
+        function GetParentFamily: IGenFamily;
         function GetName: string;
+        function GetGivenName: string;
+        function GetSurname: string;
+        function GetTitle: string;
         function GetOccupation: string;
+        function GetOccuPlace: string;
+        function GetResidence: string;
         function GetPersonID: string;
         function GetReligion: string;
         function GetSex: string;
         function GetSpouseCount: integer;
-        function GetSpouses(Idx: variant): TGedIndividual;
-        procedure SetBaptDate(AValue: string);
-        procedure SetBaptised(AValue: TGedEvent);
-        procedure SetBirth(AValue: TGedEvent);
+        function GetSpouses(Idx: variant): TGedIndividual; overload;
+        function GetSpouses(Idx: variant): IGenIndividual; overload;
+
+        procedure SetBirth(AValue: TGedEvent); overload;
+        procedure SetBirth(AValue: IGenEvent); overload;
         procedure SetBirthDate(AValue: string);
         procedure SetBirthPlace(AValue: string);
-        procedure SetBurial(AValue: TGedEvent);
-        procedure SetBurialDate(AValue: string);
-        procedure SetChildren(Idx: variant; AValue: TGedIndividual);
-        procedure SetDeath(AValue: TGedEvent);
+
+        procedure SetBaptDate(AValue: string);
+        procedure SetBaptPlace(AValue: string);
+        procedure SetBaptised(AValue: TGedEvent);
+        procedure SetBaptism(AValue: IGenEvent);
+
+        procedure SetDeath(AValue: TGedEvent); overload;
+        procedure SetDeath(AValue: IGenEvent); overload;
         procedure SetDeathDate(AValue: string);
         procedure SetDeathPlace(AValue: string);
-        procedure SetFamilys(Idx: variant; AValue: TGedFamily);
-        procedure SetFather(AValue: TGedIndividual);
-        procedure SetMother(AValue: TGedIndividual);
+
+        procedure SetBurial(AValue: TGedEvent); overload;
+        procedure SetBurial(AValue: IGenEvent); overload;
+        procedure SetBurialDate(AValue: string);
+        procedure SetBurialPlace(AValue: string);
+
+        procedure SetChildren(Idx: variant; AValue: TGedIndividual); overload;
+        procedure SetChildren(Idx: variant; AValue: IGenIndividual); overload;
+        procedure SetFamilies(Idx: variant; AValue: TGedFamily); overload;
+        procedure SetFamilies(Idx: variant; AValue: IGenFamily); overload;
+        procedure SetFather(AValue: TGedIndividual); overload;
+        procedure SetMother(AValue: TGedIndividual); overload;
+        procedure SetFather(AValue: IGenIndividual); overload;
+        procedure SetMother(AValue: IGenIndividual); overload;
         procedure SetName(AValue: TIndName); overload;
         procedure SetName(AValue: string); overload;
-        procedure SetOccupation(AValue: string);overload;
-        procedure SetOccupation(AValue: TGedEvent);overload;
+        procedure SetGivenName(AValue: string);
+        procedure SetSurname(AValue: string);
+        procedure SetTitle(AValue: string);
+        procedure SetParentFamily(AValue: IGenFamily);
+        procedure SetOccupation(AValue: string); overload;
+        procedure SetOccupation(AValue: TGedEvent); overload;
+        procedure SetOccuPlace(AValue: string);
+
         procedure SetPersonID(AValue: string);
+        procedure SetIndRefID(AValue: string);
         procedure SetRefNr(AValue: TGedComObj);
-        procedure SetReligion(AValue: string);overload;
-        procedure SetReligion(AValue: TGedEvent);overload;
+        procedure SetReligion(AValue: string); overload;
+        procedure SetReligion(AValue: TGedEvent); overload;
+        procedure SetResidence(AValue: string); overload;
+        procedure SetResidence(AValue: TGedEvent); overload;
         procedure SetSex(AValue: string); overload;
         procedure SetSex(AValue: TGedEvent); overload;
+        procedure SetSpouses(Idx: variant; AValue: TGedIndividual); overload;
+        procedure SetSpouses(Idx: variant; AValue: IGenIndividual); overload;
+
+        procedure AppendEvent(aEvent: IGenEvent);
+        procedure RemoveEvent(aEvent: IGenEvent);
+
         procedure SetShortcutChild(const AValue: TGedEvent;
             var aShortcut: TGedEvent; const aNodeType: string); overload;
         procedure SetShortcutChild(const AValue: TGedIndividual;
             var aShortcut: TGedIndividual; const aNodeType: string); overload;
         procedure SetShortcutChild(const AValue: TIndName;
             var aShortcut: TIndName; const aNodeType: string); overload;
-        procedure SetSpouses(Idx: variant; AValue: TGedIndividual);
+    protected
+        function GetEventCount: integer;
+        function GetEvents(Idx: variant): IGenEvent;
+        procedure SetEvents(Idx: variant; AValue: IGenEvent);
+        function GetBaptism: IGenEvent;
+        function GetBirth: IGenEvent;
+        function GetDeath: IGenEvent;
+        function GetIndRefID: string;
+
     published
         property NameNode: TIndName read FName write SetName;
         property Birth: TGedEvent read FBirth write SetBirth;
@@ -235,10 +307,13 @@ type
         property Father: TGedIndividual read GetFather write SetFather;
         property SpouseCount: integer read GetSpouseCount;
         property ChildrenCount: integer read GetChildrenCount;
-        property FamCount: integer read GetFamCount;
+        property FamCount: integer read GetFamilyCount;
 
         {---- vital - Information ---- }
         property Name: string read GetName write SetName;
+        property SurName: string read GetSurname write SetSurname;
+        property GivenName: string read GetGivenName write SetGivenName;
+        property Title: string read GetTitle write SetTitle;
         property Sex: string read GetSex write SetSex;
         property PersonID: string read GetPersonID write SetPersonID;
         property BirthDate: string read GetBirthDate write SetBirthDate;
@@ -249,7 +324,7 @@ type
         property BurialDate: string read GetBurialDate write SetBurialDate;
         property Occupation: string read GetOccupation write SetOccupation;
         property Religion: string read GetReligion write SetReligion;
-
+        property ParentFamily:IGenFamily read GetParentFamily write SetParentFamily;
     protected
         procedure ChildUpdate(aChild: TGedComObj); override;
         procedure AppendChildren(aChild: TGedComObj);
@@ -263,7 +338,8 @@ type
         destructor Destroy; override;
         function ToString: ansistring; override;
         function Description: string; override;
-        function Equals(aObj: TGedComObj): boolean;override; overload;
+        function Equals(aObj: TGedComObj): boolean; override; overload;
+
         class function AssNodeType: string; override;
         class function HandlesNodeType(aType: string): boolean; override;
         function EnumerateChildren: TGedIndEnumerator;
@@ -272,8 +348,8 @@ type
 
         property Spouses[Idx: variant]: TGedIndividual read GetSpouses write SetSpouses;
         property Children[Idx: variant]: TGedIndividual
-           read GetChildren write SetChildren;
-        property Familys[Idx: variant]: TGedFamily read GetFamilys write SetFamilys;
+            read GetChildren write SetChildren;
+        property Familys[Idx: variant]: TGedFamily read GetFamilies write SetFamilies;
     end;
 
     { TGedFamChildrenEnumerator }
@@ -291,34 +367,54 @@ type
     TGedLink = class;
     { TGedFamily }
 
-    TGedFamily = class(TGedComDefault)
+    TGedFamily = class(TGedComDefault, IGenFamily)
     private
         FHusband: TGedIndividual;
         FHusblink: TGedLink;
         FWife: TGedIndividual;
         FWifeLink: TGedLink;
-        FMarriageNode:TGedEvent;
-        FChilds:array of TGedIndividual;
+        FMarriageNode: TGedEvent;
+        FRefNr: TGedEvent;
+        FChilds: array of TGedIndividual;
+        FEvents: array of IGenEvent;
         function GetMarriageDate: string;
         function GetMarriagePlace: string;
         procedure SetMarriage(AValue: TGedEvent);
         procedure SetMarriageDate(AValue: string);
         procedure SetMarriagePlace(AValue: string);
-        procedure SetUpdFamParentLink(Const aLink: TGedLink;
-            var lParenLink: TgedLink; var lParent,lParent2: TGedIndividual);
+        procedure SetUpdFamParentLink(const aLink: TGedLink;
+            var lParenLink: TgedLink; var lParent, lParent2: TGedIndividual);
         procedure UpdSetChildLink(var aLink: TGedLink);
     protected
         procedure ChildUpdate(aChild: TGedComObj); override;
         procedure SetShortcutChild(const AValue: TGedEvent;
             var aShortcut: TGedEvent; const aNodeType: string); overload;
     public
-      procedure AppendFamChild(const aInd: TGedIndividual);
-      procedure RemoveFamChild(const aInd: TGedIndividual);
-        Property Marriage:TGedEvent read FMarriageNode write SetMarriage;
+        function GetChildCount: integer;
+        function GetChildren(Idx: variant): IGenIndividual;
+        function GetFamilyRefID: string;
+        function GetFamilyName: string;
+        function GetHusband: IGenIndividual;
+        function GetMarriage: IGenEvent;
+        function GetWife: IGenIndividual;
+        procedure SetChildren(Idx: variant; AValue: IGenIndividual);
+        procedure SetFamilyRefID(AValue: string);
+        procedure SetHusband(AValue: IGenIndividual);
+        procedure SetMarriage(AValue: IGenEvent);
+        procedure SetWife(AValue: IGenIndividual);
+        procedure SetFamilyName(aValue: string);
+        function GetEventCount: integer;
+        function GetEvents(Idx: variant): IGenEvent;
+        procedure SetEvents(Idx: variant; AValue: IGenEvent);
+    public
+        procedure AppendFamChild(const aInd: TGedIndividual);
+        procedure RemoveFamChild(const aInd: TGedIndividual);
+        property Marriage: TGedEvent read FMarriageNode write SetMarriage;
         property MarriageDate: string read GetMarriageDate write SetMarriageDate;
         property MarriagePlace: string read GetMarriagePlace write SetMarriagePlace;
-        property Husband:TGedIndividual read FHusband;
-        property Wife:TGedIndividual read FWife;
+        property Husband: TGedIndividual read FHusband;
+        property Wife: TGedIndividual read FWife;
+
     public
         constructor Create(const aID, aType: string; const aInfo: string); override;
         class function AssNodeType: string; override;
@@ -331,7 +427,7 @@ type
     TGedLink = class(TGedComDefault)
     private
         FLink: TGedComObj;
-      FRemoving: boolean;
+        FRemoving: boolean;
     protected
         function GetLink: TGedComObj; override;
         procedure SetLink(AValue: TGedComObj); override;
@@ -341,7 +437,7 @@ type
         constructor Create(const aID, aType: string; const aInfo: string); override;
         class function AssNodeType: string; override;
         class function HandlesNodeType(aType: string): boolean; override;
-        property Removing:boolean read FRemoving ;
+        property Removing: boolean read FRemoving;
     end;
 
 const
@@ -359,11 +455,32 @@ const
     CEventDeath = 'DEAT';
     CEventBurial = 'BURI';
     CEventMarriage = 'MARR';
+    CEventDivource = 'DIVO';
+    CEventEmigration = 'EMIG';
+    CEventEducation = 'EDUC';
+    CeventGraduation='GRAD';
+    CEventOrdination='ORDN';
+    CEvent='EVEN';
+    CEventAdoption='ADOP';
+    CeventCremation='CREM';
+    CEventImmigration='IMMI';
+    CEventNaturalization='NATU';
+    CEventProbation='PROB';
+    CEventRetrement='RETI';
+    CEventLastWill = 'WILL';
+
     CFactOccupation = 'OCCU';
     CFactName = 'NAME';
     CFactSex = 'SEX';
     CFactRefNr = 'REFN';
     CFactReligion = 'RELI';
+    CFactResidence = 'RESI';
+    CFact='FACT';
+    CFactDescription='DSCR';
+    CFactUUID='_UID';
+    CFactFsID='_FID';
+    CFactProperty='PROP';
+
     CLinkFamSpouse = 'FAMS';
     CLinkFamChild = 'FAMC';
     CLinkAssosiation = 'ASSO';
@@ -392,32 +509,48 @@ begin
             exit(CTagToNatur[i * 3 + 1 + kind]);
 end;
 
+{ TGedSource }
+
+function TGedSource.GetObject: TObject;
+begin
+    Result := Self;
+end;
+
+class function TGedSource.AssNodeType: string;
+begin
+  Result:=CEventSource;
+end;
+
+class function TGedSource.HandlesNodeType(aType: string): boolean;
+begin
+  Result:=aType = CEventSource;
+end;
+
 { TGedIndFamEnumerator }
 
 function TGedIndFamEnumerator.getCurrent: TGedFamily;
 begin
-   result := nil;
-   if assigned(FBaseNode) then
-     Result := FBaseNode.Familys[FIter];
+    Result := nil;
+    if assigned(FBaseNode) then
+        Result := FBaseNode.Familys[FIter];
 end;
 
 function TGedIndFamEnumerator.MoveNext: boolean;
 begin
-  Inc(FIter);
-  Result := Fiter < FBaseNode.FamCount;
+    Inc(FIter);
+    Result := Fiter < FBaseNode.FamCount;
 end;
 
 function TGedIndFamEnumerator.GetEnumerator: TGedIndFamEnumerator;
 begin
-  result := self;
+    Result := self;
 end;
 
 { TGedLink }
 
 function TGedLink.GetLink: TGedComObj;
 begin
-    if assigned(FLink)
-       and (FLink.NodeID = Data) then
+    if assigned(FLink) and (FLink.NodeID = Data) then
         exit(FLink);
     Result := inherited GetLink;
     Flink := Result;
@@ -434,11 +567,11 @@ end;
 procedure TGedLink.SetData(AValue: string);
 begin
     if assigned(FLink) then
-        begin
-          FRemoving := true;
-          Parent.ChildUpdate(self);
-        end;
-    FRemoving := false;
+      begin
+        FRemoving := True;
+        Parent.ChildUpdate(self);
+      end;
+    FRemoving := False;
     inherited SetData(AValue);
     FLink := inherited GetLink;
 end;
@@ -464,8 +597,8 @@ end;
 class function TGedLink.HandlesNodeType(aType: string): boolean;
 begin
     Result :=
-        (aType = 'FAMS') or (aType = 'FAMC') or (aType = 'HUSB') or
-        (aType = 'WIFE') or (aType = 'CHIL') or (aType = 'ASSO');
+        (aType = CLinkFamSpouse) or (aType = CLinkFamChild) or (aType = CFamHusband) or
+        (aType = CFamWife) or (aType = CFamChildren) or (aType = CLinkAssosiation);
 end;
 
 { TGedFamChildrenEnumerator }
@@ -493,22 +626,23 @@ end;
 
 function TGedFamily.GetMarriageDate: string;
 begin
-  result := '';
-    if Assigned(FMarriageNode) and (FMarriageNode.id>=0) then
-      result := FMarriageNode.Date;
+    Result := '';
+    if Assigned(FMarriageNode) and (FMarriageNode.id >= 0) then
+        Result := FMarriageNode.Date;
 end;
 
 function TGedFamily.GetMarriagePlace: string;
 begin
-    result := '';
-      if Assigned(FMarriageNode) and (FMarriageNode.id>=0) then
-        result := FMarriageNode.PlaceName;
+    Result := '';
+    if Assigned(FMarriageNode) and (FMarriageNode.id >= 0) then
+        Result := FMarriageNode.PlaceName;
 end;
 
 procedure TGedFamily.SetMarriage(AValue: TGedEvent);
 
 begin
-  SetShortcutChild(AValue,FMarriageNode,CEventMarriage);
+    SetShortcutChild(AValue, FMarriageNode, CEventMarriage);
+
 end;
 
 procedure TGedFamily.SetMarriageDate(AValue: string);
@@ -527,89 +661,94 @@ end;
 procedure TGedFamily.SetMarriagePlace(AValue: string);
 begin
     if aValue = GetMarriagePlace then
-           exit;
-       if Assigned(FMarriageNode) then
-           FMarriageNode.PlaceName := AValue
-       else
-         begin
-           SetMarriage(TGedEvent.Create('', '', ''));
-           FMarriageNode.PlaceName := AValue;
-         end;
+        exit;
+    if Assigned(FMarriageNode) then
+        FMarriageNode.PlaceName := AValue
+    else
+      begin
+        SetMarriage(TGedEvent.Create('', '', ''));
+        FMarriageNode.PlaceName := AValue;
+      end;
 end;
 
 procedure TGedFamily.SetUpdFamParentLink(const aLink: TGedLink;
-  var lParenLink: TgedLink; var lParent, lParent2: TGedIndividual);
+    var lParenLink: TgedLink; var lParent, lParent2: TGedIndividual);
 
 
-  procedure RemoveParent(var lParent: TGedIndividual);
-  var
-    lCh: TGedIndividual;
-  begin
-    if Assigned(lParent) then
-      begin
-        if Assigned(lParent2) then
+    procedure RemoveParent(var lParent: TGedIndividual);
+    var
+        lCh: TGedIndividual;
+    begin
+        if Assigned(lParent) then
           begin
-            lParent.RemoveSpouse(lParent2);
-            lParent2.RemoveSpouse(lParent);
+            if Assigned(lParent2) then
+              begin
+                lParent.RemoveSpouse(lParent2);
+                lParent2.RemoveSpouse(lParent);
+              end;
+            lParent.RemoveFam(self);
+            for lCh in FChilds do
+                begin
+                  lParent.RemoveChildren(lCh);
+                  lCh.ParentFamily:=nil;;
+                end;
+            lParent := nil;
           end;
-        lParent.RemoveFam(self);
-        for lCh in FChilds do
-          lParent.RemoveChildren(lCh);
-        lParent:=nil;
-      end;
-  end;
+    end;
 
 var
-  lCh: TGedIndividual;
+    lCh: TGedIndividual;
 
 begin
-  if aLink.Removing or not Assigned(aLink.Parent) then
-     begin
-        if lParenLink=aLink then
-          lParenLink:= TGedLink(find(aLink.NodeType));
-        if (lParent=aLink.Link) then
-          RemoveParent(lParent);
+    if aLink.Removing or not Assigned(aLink.Parent) then
+      begin
+        if lParenLink = aLink then
+            lParenLink := TGedLink(find(aLink.NodeType));
+        if (lParent = aLink.Link) then
+            RemoveParent(lParent);
         if Assigned(lParenLink) and assigned(lParenLink.Link) then
-          lParent := TGedIndividual(lParenLink.Link);
+            lParent := TGedIndividual(lParenLink.Link);
         exit;
-     end;
-  if (lParenLink=aLink) and not assigned(alink.Link) then
-    begin
-      RemoveParent(lParent);
-      exit;
-    end;
-  if not assigned(lParenLink) or (lParenLink.ID >= aLink.ID) then
-      lParenLink := aLink;
-  if assigned(lParenLink) and assigned(lParenLink.Link) then
-    begin
-      if (lParent <> TGedIndividual(lParenLink.Link)) then
-        begin
-          RemoveParent(lParent);
-          lParent := TGedIndividual(lParenLink.Link);
-          lParent.appendFam(Self);
-
+      end;
+    if (lParenLink = aLink) and not assigned(alink.Link) then
+      begin
+        RemoveParent(lParent);
+        exit;
+      end;
+    if not assigned(lParenLink) or (lParenLink.ID >= aLink.ID) then
+        lParenLink := aLink;
+    if assigned(lParenLink) and assigned(lParenLink.Link) then
+      begin
+        if (lParent <> TGedIndividual(lParenLink.Link)) then
+          begin
+            RemoveParent(lParent);
+            lParent := TGedIndividual(lParenLink.Link);
+            lParent.appendFam(Self);
             if assigned(lParent2) then
               begin
                 lParent2.appendSpouse(lParent);
                 lParent.appendSpouse(lParent2);
               end;
-            for lCh in FChilds do
-              lParent.AppendChildren(lCh);
+            for lCh in FChilds d
+               begin
+                lParent.AppendChildren(lCh);
+                lCh.ParentFamily:=self;
+               end;
 
-        end;
-    end;
+          end;
+      end;
 end;
 
-procedure TGedFamily.RemoveFamChild(const aInd:TGedIndividual);
+procedure TGedFamily.RemoveFamChild(const aInd: TGedIndividual);
 
 var
-  i: Integer;
+    i: integer;
 begin
-  for i := high(FChilds) downto 0 do
-      if FChilds[i]=aInd then
+    for i := high(FChilds) downto 0 do
+        if FChilds[i] = aInd then
           begin
             FChilds[i] := FChilds[high(FChilds)];
-            setlength(FChilds,high(FChilds));
+            setlength(FChilds, high(FChilds));
             if Assigned(FHusband) then
                 FHusband.RemoveChildren(aInd);
             if Assigned(FWife) then
@@ -621,59 +760,164 @@ end;
 procedure TGedFamily.UpdSetChildLink(var aLink: TGedLink);
 
 var
-  lDest: TGedIndividual;
+    lDest: TGedIndividual;
 begin
-// Todo:  TGedIndividual(aLink.Link).UpdateChildLink;
-  lDest:=TGedIndividual(aLink.Link);
-  if aLink.Removing or not assigned(aLink.parent) then
-     begin
-       RemoveFamChild(lDest);
-     end
-  else
-    begin
-       AppendFamChild(lDest);
-    end;
+    // Todo:  TGedIndividual(aLink.Link).UpdateChildLink;
+    lDest := TGedIndividual(aLink.Link);
+    if aLink.Removing or not assigned(aLink.parent) then
+      begin
+        RemoveFamChild(lDest);
+      end
+    else
+      begin
+        AppendFamChild(lDest);
+      end;
+
 end;
 
 procedure TGedFamily.ChildUpdate(aChild: TGedComObj);
 
 begin
     if (aChild.NodeType = CFamHusband) then
-        SetUpdFamParentLink(tgedlink(aChild),FHusblink,FHusband, FWife);
+        SetUpdFamParentLink(tgedlink(aChild), FHusblink, FHusband, FWife);
     if (aChild.NodeType = CFamWife) then
-      SetUpdFamParentLink(tgedlink(aChild),FWifeLink,FWife, FHusband);
+        SetUpdFamParentLink(tgedlink(aChild), FWifeLink, FWife, FHusband);
     if (aChild.NodeType = CFamChildren) and assigned(aChild.Link) then
-       UpdSetChildLink(TGedLink(aChild));
+        UpdSetChildLink(TGedLink(aChild));
     if (aChild.NodeType = CEventMarriage) then
-      if not assigned(FMarriageNode)
-        or (FMarriageNode.id > aChild.id) then
-        if (FMarriageNode <> aChild) then
-        FMarriageNode := TGedEvent(aChild)
-      else
-        if not assigned(aChild.Parent) then
-          FMarriageNode:=nil;
+        if not assigned(FMarriageNode) or (FMarriageNode.id > aChild.id) then
+            if (FMarriageNode <> aChild) then
+                FMarriageNode := TGedEvent(aChild)
+            else
+            if not assigned(aChild.Parent) then
+                FMarriageNode := nil;
 
     inherited ChildUpdate(aChild);
 end;
 
 procedure TGedFamily.SetShortcutChild(const AValue: TGedEvent;
-  var aShortcut: TGedEvent; const aNodeType: string);
+    var aShortcut: TGedEvent; const aNodeType: string);
 var
-  lNode: TGedComObj;
+    lNode: TGedComObj;
 begin
-  lNode := aShortcut;
-  inherited SetShortcutChild(AValue,lNode,aNodeType);
-  aShortcut := TGedEvent(lNode);
+    lNode := aShortcut;
+    inherited SetShortcutChild(AValue, lNode, aNodeType);
+    aShortcut := TGedEvent(lNode);
+end;
+
+function TGedFamily.GetChildCount: integer;
+begin
+    Result := length(FChilds);
+end;
+
+function TGedFamily.GetChildren(Idx: variant): IGenIndividual;
+begin
+    if VarIsOrdinal(Idx) then
+        Result := FChilds[Idx];
+end;
+
+function TGedFamily.GetFamilyRefID: string;
+begin
+    Result := NodeID.DeQuotedString('@');
+    if assigned(FRefNr) then
+        Result := FRefNr.Data;
+end;
+
+function TGedFamily.GetFamilyName: string;
+begin
+  result := '';
+  if high(FChilds)>=0 then
+    result:= IGenIndividual(
+     FChilds[high(FChilds)]).Surname
+  else
+    if assigned(FHusband) then
+      result :=IGenIndividual(FHusband).Surname;
+  if assigned(FWife) and (result='') then
+    result :=IGenIndividual(FWife).Surname;
+  if copy(result,1,1)='(' then
+    result := copy(result,2,length(result)-2);
+end;
+
+function TGedFamily.GetHusband: IGenIndividual;
+begin
+    Result := FHusband;
+end;
+
+function TGedFamily.GetMarriage: IGenEvent;
+begin
+    Result := FMarriageNode;
+end;
+
+function TGedFamily.GetWife: IGenIndividual;
+begin
+    Result := FWife;
+end;
+
+procedure TGedFamily.SetChildren(Idx: variant; AValue: IGenIndividual);
+begin
+  // Todo:
+end;
+
+procedure TGedFamily.SetFamilyRefID(AValue: string);
+
+begin
+    if aValue = GetFamilyRefID then
+        exit;
+    if Assigned(FRefNr) then
+        FRefNr.Data := AValue
+    else
+      begin
+        SetShortcutChild(TGedEvent.Create('', '', AValue), FRefNr, CFactRefNr);
+        AppendChildNode(FRefNr);
+      end;
+end;
+
+procedure TGedFamily.SetHusband(AValue: IGenIndividual);
+begin
+    SetHusband(TGedIndividual(AValue.self));
+end;
+
+procedure TGedFamily.SetMarriage(AValue: IGenEvent);
+begin
+    SetMarriage(TGedEvent(AValue.self));
+end;
+
+procedure TGedFamily.SetWife(AValue: IGenIndividual);
+begin
+    SetWife(TGedIndividual(AValue.self));
+end;
+
+procedure TGedFamily.SetFamilyName(aValue: string);
+begin
+
+end;
+
+function TGedFamily.GetEventCount: integer;
+begin
+    Result := length(FEvents);
+end;
+
+function TGedFamily.GetEvents(Idx: variant): IGenEvent;
+begin
+    if VarIsOrdinal(Idx) then
+        Result := FEvents[Idx];
+end;
+
+procedure TGedFamily.SetEvents(Idx: variant; AValue: IGenEvent);
+begin
+  // Todo:
 end;
 
 procedure TGedFamily.AppendFamChild(const aInd: TGedIndividual);
 var
-  lInd: TGedIndividual;
+    lInd: TGedIndividual;
 begin
-   for lInd in FChilds do
-       if lind = aind then exit;
-   SetLength(FChilds,high(FChilds)+2);
-   FChilds[high(FChilds)] := aInd;
+    for lInd in FChilds do
+        if lind = aind then
+            exit;
+    aInd.ParentFamily:=self;
+    SetLength(FChilds, high(FChilds) + 2);
+    FChilds[high(FChilds)] := aInd;
     if Assigned(FHusband) then
         FHusband.appendChildren(aInd);
     if Assigned(FWife) then
@@ -687,7 +931,7 @@ begin
     FHusblink := nil;
     FWife := nil;
     FWifeLink := nil;
-    FMarriageNode:=nil;
+    FMarriageNode := nil;
 end;
 
 class function TGedFamily.AssNodeType: string;
@@ -793,7 +1037,8 @@ begin
         GivenName := trim(lNames[1]);
         if high(lNames) > 1 then
             Title := Trim(lNames[2]);
-        Data := GivenName + ' /' + Surname + '/';
+
+        Data := GivenName + ' /' + Surname + '/' + NameSuffix;
       end
     else
       begin
@@ -854,7 +1099,7 @@ procedure TIndName.SetSurname(AValue: string);
 begin
     if FSurname = AValue then
         Exit;
-    setData(FGivenName + ' ' + AValue.QuotedString('/'));
+    setData(FGivenName + ' ' + AValue.QuotedString('/')+' '+FNameSuffix);
 end;
 
 procedure TIndName.SetTitle(AValue: string);
@@ -862,19 +1107,21 @@ begin
     if FTitle = AValue then
         Exit;
     FTitle := AValue;
-    // erstelle ggf. ein Title-Tag
+    // Todo: erstelle ggf. ein Title-Tag
 
 end;
 
 procedure TIndName.SetData(AValue: string);
 var
-    lpp: integer;
+    lpp, lpp2: integer;
 begin
     lpp := AValue.IndexOf('/');
+    lpp2 := AValue.LastIndexOf('/');
     if lpp >= 0 then
       begin
         FGivenName := trim(LeftStr(AValue, lpp));
-        FSurname := Copy(avalue, lpp + 1).DeQuotedString('/');
+        FSurname := Copy(avalue, lpp + 2,lpp2-lpp-1);
+        FNameSuffix:=trim(Copy(avalue, lpp2 + 2));
       end;
     inherited SetData(AValue);
 end;
@@ -883,15 +1130,10 @@ constructor TIndName.Create(const aID, aType: string; const aInfo: string);
 var
     lpp: integer;
 begin
-    inherited Create(aID, aType, aInfo);
+    inherited Create(aID, aType, '');
     Fsource := nil;
     Fnext := nil;
-    lpp := aInfo.IndexOf('/');
-    if lpp >= 0 then
-      begin
-        FGivenName := trim(LeftStr(aInfo, lpp));
-        FSurname := Copy(aInfo, lpp + 1).DeQuotedString('/');
-      end;
+    SetData(ainfo);
 end;
 
 function TIndName.ToString: ansistring;
@@ -928,12 +1170,59 @@ end;
 
 { TGedEvent }
 
+constructor TGedEvent.Create(const aID, aType: string; const aInfo: string);
+
+begin
+   inherited;
+   if aType = CEventBirth then
+     FEventType:=evt_Birth;
+   if aType = CEventBaptism then
+     FEventType:=evt_Baptism;
+   if aType = CEventMarriage then
+     FEventType:=evt_Marriage;
+   if aType = CEventDeath then
+     FEventType:=evt_Death;
+   if aType = CEventBurial then
+     FEventType:=evt_Burial;
+   if aType = CEventConfirm then
+     FEventType:=evt_Confirmation;
+end;
+
 procedure TGedEvent.SetDate(AValue: string);
 begin
     if assigned(FDate) then
         FDate.Data := AValue
     else
         Child[CEventDate].Data := AValue;
+end;
+
+procedure TGedEvent.SetEventType(AValue: TenumEventType);
+begin
+    if FEventType = AValue then
+        exit;
+    FEventType := AValue;
+    case Avalue of
+        evt_Birth: NodeType := CEventBirth;
+        evt_Baptism: NodeType := CEventBaptism;
+        evt_Marriage: NodeType := CEventMarriage;
+        evt_Death: NodeType := CEventDeath;
+        evt_Burial: NodeType := CEventBurial;
+        evt_Confirmation: NodeType := CEventConfirm;
+      end;
+end;
+
+function TGedEvent.GetSource: IGenData;
+begin
+    Result := nil;
+    if assigned(FSource) then
+        Result := FSource;
+end;
+
+function TGedEvent.GetPlace: IGenData;
+begin
+    Result := nil;
+    if assigned(FDate) then
+        Result := FPlace;
 end;
 
 function TGedEvent.GetDate: string;
@@ -944,7 +1233,12 @@ begin
         Result := '';
 end;
 
-function TGedEvent.getPlaceName: string;
+function TGedEvent.GetEventType: TenumEventType;
+begin
+    Result := FEventType;
+end;
+
+function TGedEvent.GetPlace: string;
 begin
     if assigned(FPlace) then
         Result := FPlace.Data
@@ -959,7 +1253,7 @@ begin
     FPlace := AValue;
 end;
 
-procedure TGedEvent.SetPlaceName(AValue: string);
+procedure TGedEvent.SetPlace(AValue: string);
 begin
     if assigned(FPlace) then
         FPlace.Data := AValue
@@ -967,11 +1261,21 @@ begin
         Child[CPlace].Data := AValue;
 end;
 
-procedure TGedEvent.SetSource(AValue: TGedComObj);
+procedure TGedEvent.SetPlace(AValue: IGenFact);
+begin
+  SetShortcutChild(Tgedplace(AValue.Self),Tgedcomobj(FPlace),CPlace);
+end;
+
+procedure TGedEvent.SetSource(AValue: TGedSource);
 begin
     if FSource = AValue then
         Exit;
     FSource := AValue;
+end;
+
+procedure TGedEvent.SetSource(AValue: IGenData);
+begin
+    SetSource(TGedSource(AValue.Self));
 end;
 
 procedure TGedEvent.ChildUpdate(aChild: TGedComObj);
@@ -981,7 +1285,7 @@ begin
     else if aChild.NodeType = CPlace then
         FPlace := TGedPlace(aChild)
     else if aChild.NodeType = CEventSource then
-        FSource := aChild;
+        FSource := TGedSource(aChild);
     inherited;
 end;
 
@@ -1017,13 +1321,21 @@ begin
     Result := (atype = CEventBirth) or (atype = CEventBaptism) or
         (atype = CEventDeath) or (atype = CEventBurial) or
         (atype = CEventMarriage) or (atype = CEventConfirm) or
-        (atype = CFactOccupation) or
-        (atype = CFactSex) or (atype = CFactReligion) ;
+        (atype = CFactOccupation) or (atype = CFactSex) or
+        (atype = CFactReligion) or (aType = CFactResidence) or
+        (atype = CEventEmigration) or (aType = CEventDivource) ;
 end;
 
 { TGedIndividual }
 
 function TGedIndividual.GetChildren(Idx: variant): TGedIndividual;
+begin
+    Result := nil;
+    if VarIsOrdinal(idx) then
+        Result := FChilds[idx];
+end;
+
+function TGedIndividual.GetChildren(Idx: variant): IGenIndividual;
 begin
     Result := nil;
     if VarIsOrdinal(idx) then
@@ -1039,21 +1351,28 @@ end;
 
 function TGedIndividual.GetDeathPlace: string;
 begin
-    result := '';
+    Result := '';
     if Assigned(FDeath) and assigned(FDeath.Place) then
         Result := FDeath.Place.Data;
 end;
 
-function TGedIndividual.GetFamCount: integer;
+function TGedIndividual.GetFamilyCount: integer;
 begin
-  result := length(FFamilys)
+    Result := length(FFamilys);
 end;
 
-function TGedIndividual.GetFamilys(Idx: variant): TGedFamily;
+function TGedIndividual.GetFamilies(Idx: variant): TGedFamily;
 begin
-  result := nil;
-  if VarIsOrdinal(Idx) then
-    Result := FFamilys[Idx];
+    Result := nil;
+    if VarIsOrdinal(Idx) then
+        Result := FFamilys[Idx];
+end;
+
+function TGedIndividual.GetFamilies(Idx: variant): IGenFamily;
+begin
+    Result := nil;
+    if VarIsOrdinal(Idx) then
+        Result := FFamilys[Idx];
 end;
 
 function TGedIndividual.GetFather: TGedIndividual;
@@ -1066,9 +1385,27 @@ begin
     lFamPar := Find(CLinkFamChild);
     if assigned(lFamPar) and Assigned(lFamPar.Link) then
       begin
-        lfam := TGedFamily(lFamPar.Link);
-        FFather := lfam.FHusband;
-        FMother := lfam.FWife;
+        FParentFamily := TGedFamily(lFamPar.Link);
+        FFather := FParentFamily.FHusband;
+        FMother := FParentFamily.FWife;
+        exit(FFather);
+      end;
+    Result := nil;
+end;
+
+function TGedIndividual.GetFather: IGenIndividual;
+
+var
+  lFamPar: TGedComObj;
+begin
+    if assigned(FFather) and FFather.inheritsfrom(TGedIndividual) then
+      exit(FFather);
+    lFamPar := Find(CLinkFamChild);
+    if assigned(lFamPar) and Assigned(lFamPar.Link) then
+      begin
+        FParentFamily := TGedFamily(lFamPar.Link);
+        FFather := FParentFamily.FHusband;
+        FMother := FParentFamily.FWife;
         exit(FFather);
       end;
     Result := nil;
@@ -1084,12 +1421,36 @@ begin
     lFamPar := Find(CLinkFamChild);
     if assigned(lFamPar) and Assigned(lFamPar.Link) then
       begin
-        lfam := TGedFamily(lFamPar.Link);
-        FFather := lfam.FHusband;
-        FMother := lfam.FWife;
+        FParentFamily := TGedFamily(lFamPar.Link);
+        FFather := FParentFamily.FHusband;
+        FMother := FParentFamily.FWife;
         exit(FMother);
       end;
     Result := nil;
+end;
+
+function TGedIndividual.GetMother: IGenIndividual;
+
+var
+  lFamPar: TGedComObj;
+begin
+    if assigned(FMother) and FMother.inheritsfrom(TGedIndividual) then
+        exit(FMother);
+    lFamPar := Find(CLinkFamChild);
+    if assigned(lFamPar) and Assigned(lFamPar.Link) then
+      begin
+        FParentFamily := TGedFamily(lFamPar.Link);
+        FFather := FParentFamily.FHusband;
+        FMother := FParentFamily.FWife;
+        exit(FMother);
+      end;
+    Result := nil;
+end;
+
+function TGedIndividual.GetParentFamily: IGenFamily;
+
+begin
+    Result := FParentFamily;
 end;
 
 function TGedIndividual.GetName: string;
@@ -1099,6 +1460,27 @@ begin
         Result := FName.FullName;
 end;
 
+function TGedIndividual.GetGivenName: string;
+begin
+    Result := '';
+    if Assigned(FName) then
+        Result := FName.GivenName;
+end;
+
+function TGedIndividual.GetSurname: string;
+begin
+    Result := '';
+    if Assigned(FName) then
+        Result := FName.Surname;
+end;
+
+function TGedIndividual.GetTitle: string;
+begin
+    Result := '';
+    if Assigned(FName) then
+        Result := FName.Title;
+end;
+
 function TGedIndividual.GetOccupation: string;
 begin
     Result := '';
@@ -1106,9 +1488,31 @@ begin
         Result := FOccupation.Data;
 end;
 
+function TGedIndividual.GetOccuPlace: string;
+begin
+    Result := '';
+    if Assigned(FOccupation) then
+        Result := FOccupation.PlaceName;
+end;
+
+
+function TGedIndividual.GetResidence: string;
+begin
+    Result := '';
+    if Assigned(FResidence) then
+        Result := FResidence.PlaceName;
+end;
+
 function TGedIndividual.GetPersonID: string;
 begin
     Result := '';
+    if Assigned(FRefNr) then
+        Result := FRefNr.Data;
+end;
+
+function TGedIndividual.GetIndRefID: string;
+begin
+    Result := NodeID.DeQuotedString('@');
     if Assigned(FRefNr) then
         Result := FRefNr.Data;
 end;
@@ -1141,9 +1545,9 @@ end;
 
 function TGedIndividual.GetBirthPlace: string;
 begin
-    result := '';
-    if Assigned(FBirth) and assigned(FBirth.Place) then
-        Result := FBirth.Place.Data;
+    Result := '';
+    if Assigned(FBirth) then
+        Result := FBirth.PlaceName;
 end;
 
 function TGedIndividual.GetBaptDate: string;
@@ -1153,11 +1557,30 @@ begin
         Result := FBaptised.Date;
 end;
 
+function TGedIndividual.GetBaptPlace: string;
+begin
+    Result := '';
+    if Assigned(FBaptised) then
+        Result := FBaptised.PlaceName;
+end;
+
 function TGedIndividual.GetBurialDate: string;
 begin
     Result := '';
     if Assigned(FBurial) then
-        Result := FBurial.Date;
+        Result := FBurial.PlaceName;
+end;
+
+function TGedIndividual.GetBurialPlace: string;
+begin
+    Result := '';
+    if Assigned(FBaptised) then
+        Result := FBaptised.PlaceName;
+end;
+
+function TGedIndividual.GetBurial: IGenEvent;
+begin
+    Result := FBurial;
 end;
 
 function TGedIndividual.GetSpouseCount: integer;
@@ -1166,6 +1589,13 @@ begin
 end;
 
 function TGedIndividual.GetSpouses(Idx: variant): TGedIndividual;
+begin
+    Result := nil;
+    if VarIsOrdinal(Idx) then
+        Result := Fspouses[idx];
+end;
+
+function TGedIndividual.GetSpouses(Idx: variant): IGenIndividual;
 begin
     Result := nil;
     if VarIsOrdinal(Idx) then
@@ -1185,15 +1615,39 @@ begin
       end;
 end;
 
+procedure TGedIndividual.SetBaptPlace(AValue: string);
+begin
+    if aValue = GetBaptPlace then
+        exit;
+    if Assigned(FBaptised) then
+        FBaptised.PlaceName := AValue
+    else
+      begin
+        SetBaptised(TGedEvent.Create('', '', ''));
+        FBaptised.PlaceName := AValue;
+      end;
+end;
+
 procedure TGedIndividual.SetBaptised(AValue: TGedEvent);
 begin
     SetShortcutChild(AValue, FBaptised, CEventBaptism);
+end;
+
+procedure TGedIndividual.SetBaptism(AValue: IGenEvent);
+begin
+    SetBaptised(TGedEvent(AValue.self));
 end;
 
 procedure TGedIndividual.SetBirth(AValue: TGedEvent);
 
 begin
     SetShortcutChild(AValue, FBirth, CEventBirth);
+end;
+
+procedure TGedIndividual.SetBirth(AValue: IGenEvent);
+
+begin
+    SetBirth(TGedEvent(AValue.Self));
 end;
 
 procedure TGedIndividual.SetBirthDate(AValue: string);
@@ -1228,6 +1682,12 @@ begin
     SetShortcutChild(AValue, FBurial, CEventBurial);
 end;
 
+procedure TGedIndividual.SetBurial(AValue: IGenEvent);
+
+begin
+    SetBurial(TGedEvent(AValue.self));
+end;
+
 procedure TGedIndividual.SetBurialDate(AValue: string);
 begin
     if aValue = GetBurialDate then
@@ -1241,9 +1701,29 @@ begin
       end;
 end;
 
+procedure TGedIndividual.SetBurialPlace(AValue: string);
+begin
+    if aValue = GetBurialPlace then
+        exit;
+    if Assigned(FBurial) then
+        FBurial.PlaceName := AValue
+    else
+      begin
+        SetBurial(TGedEvent.Create('', '', ''));
+        FBurial.PlaceName := AValue;
+      end;
+end;
+
 procedure TGedIndividual.SetChildren(Idx: variant; AValue: TGedIndividual);
 begin
-    if VarIsOrdinal(Idx) and (FChildren[Idx] = Avalue) then
+    if VarIsOrdinal(Idx) and (FChilds[Idx] = Avalue) then
+        Exit;
+    // Todo:
+end;
+
+procedure TGedIndividual.SetChildren(Idx: variant; AValue: IGenIndividual);
+begin
+    if VarIsOrdinal(Idx) and (FChilds[Idx] = Avalue) then
         Exit;
     // Todo:
 end;
@@ -1252,6 +1732,12 @@ procedure TGedIndividual.SetDeath(AValue: TGedEvent);
 
 begin
     SetShortcutChild(AValue, FDeath, CEventDeath);
+end;
+
+procedure TGedIndividual.SetDeath(AValue: IGenEvent);
+
+begin
+    SetDeath(TGedEvent(AValue.Self));
 end;
 
 procedure TGedIndividual.SetDeathDate(AValue: string);
@@ -1280,7 +1766,14 @@ begin
       end;
 end;
 
-procedure TGedIndividual.SetFamilys(Idx: variant; AValue: TGedFamily);
+procedure TGedIndividual.SetFamilies(Idx: variant; AValue: TGedFamily);
+begin
+    if VarIsOrdinal(Idx) and (FFamilys[Idx] = Avalue) then
+        Exit;
+    // Todo:
+end;
+
+procedure TGedIndividual.SetFamilies(Idx: variant; AValue: iGenFamily);
 begin
     if VarIsOrdinal(Idx) and (FFamilys[Idx] = Avalue) then
         Exit;
@@ -1295,6 +1788,16 @@ end;
 procedure TGedIndividual.SetMother(AValue: TGedIndividual);
 begin
     SetShortcutChild(AValue, FMother, CIndividual);
+end;
+
+procedure TGedIndividual.SetFather(AValue: IGenIndividual);
+begin
+    SetFather(TGedIndividual(AValue.self));
+end;
+
+procedure TGedIndividual.SetMother(AValue: IGenIndividual);
+begin
+    SetMother(TGedIndividual(AValue.self));
 end;
 
 procedure TGedIndividual.SetName(AValue: TIndName);
@@ -1315,6 +1818,52 @@ begin
       end;
 end;
 
+procedure TGedIndividual.SetGivenName(AValue: string);
+begin
+    if aValue = GetGivenName then
+        exit;
+    if Assigned(FName) then
+        FName.GivenName := AValue
+    else
+      begin
+        SetName(TIndName.Create('', '', ''));
+        FName.GivenName := AValue;
+      end;
+end;
+
+procedure TGedIndividual.SetSurname(AValue: string);
+begin
+    if aValue = GetSurname then
+        exit;
+    if Assigned(FName) then
+        FName.Surname := AValue
+    else
+      begin
+        SetName(TIndName.Create('', '', ''));
+        FName.Surname := AValue;
+      end;
+end;
+
+procedure TGedIndividual.SetTitle(AValue: string);
+begin
+    if aValue = GetTitle then
+        exit;
+    if Assigned(FName) then
+        FName.Title := AValue
+    else
+      begin
+        SetName(TIndName.Create('', '', ''));
+        FName.Title := AValue;
+      end;
+end;
+
+
+procedure TGedIndividual.SetParentFamily(AValue: IGenFamily);
+
+begin
+    FParentFamily := TGedFamily(AValue.self);
+end;
+
 procedure TGedIndividual.SetOccupation(AValue: string);
 begin
     if aValue = GetOccupation then
@@ -1325,9 +1874,40 @@ begin
         SetOccupation(TGedEvent.Create('', '', AValue));
 end;
 
+procedure TGedIndividual.SetOccuPlace(AValue: string);
+begin
+    if aValue = GetOccuPlace then
+        exit;
+    if Assigned(FResidence) then
+        FOccupation.PlaceName := AValue
+    else
+      begin
+        SetOccupation(TGedEvent.Create('', '', ''));
+        FOccupation.PlaceName := AValue;
+      end;
+end;
+
 procedure TGedIndividual.SetOccupation(AValue: TGedEvent);
 begin
     SetShortcutChild(AValue, FOccupation, CFactOccupation);
+end;
+
+procedure TGedIndividual.SetResidence(AValue: string);
+begin
+    if aValue = GetResidence then
+        exit;
+    if Assigned(FResidence) then
+        FResidence.PlaceName := AValue
+    else
+      begin
+        SetResidence(TGedEvent.Create('', '', ''));
+        FResidence.PlaceName := AValue;
+      end;
+end;
+
+procedure TGedIndividual.SetResidence(AValue: TGedEvent);
+begin
+    SetShortcutChild(AValue, FResidence, CFactResidence);
 end;
 
 procedure TGedIndividual.SetPersonID(AValue: string);
@@ -1339,6 +1919,14 @@ begin
     else
         SetRefNr(TGedEvent.Create('', '', AValue));
 end;
+
+procedure TGedIndividual.SetIndRefID(AValue: string);
+begin
+    if aValue = GetIndRefID then
+        exit;
+    SetPersonID(AValue);
+end;
+
 
 procedure TGedIndividual.SetRefNr(AValue: TGedComObj);
 begin
@@ -1416,9 +2004,68 @@ begin
     // Todo:
 end;
 
+procedure TGedIndividual.SetSpouses(Idx: variant; AValue: IGenIndividual);
+begin
+    // Todo:
+end;
+
+Procedure TGedIndividual.AppendEvent(aEvent:IGenEvent);
+var
+  lEvt: IGenEvent;
+begin
+   for lEvt in FEvents do
+     if levt = aEvent then exit;
+   setlength(FEvents, high(FEvents)+2);
+   FEvents[high(FEvents)]:= aEvent;
+end;
+Procedure TGedIndividual.RemoveEvent(aEvent:IGenEvent);
+var
+  i: Integer;
+begin
+    for i := 0 to high(FEvents) do
+      if FEvents[i] = aEvent then
+        begin
+          FEvents[i]:= FEvents[high(FEvents)];
+          setlength(FEvents, high(FEvents));
+          break
+        end;
+end;
+
+function TGedIndividual.GetEventCount: integer;
+begin
+    Result := length(FEvents);
+end;
+
+function TGedIndividual.GetEvents(Idx: variant): IGenEvent;
+begin
+    Result := nil;
+    if VarIsOrdinal(Idx) then
+        Result := FEvents[idx];
+end;
+
+procedure TGedIndividual.SetEvents(Idx: variant; AValue: IGenEvent);
+begin
+    // Todo:
+end;
+
+function TGedIndividual.GetBaptism: IGenEvent;
+begin
+    Result := FBaptised;
+end;
+
+function TGedIndividual.GetBirth: IGenEvent;
+begin
+    Result := FBirth;
+end;
+
+function TGedIndividual.GetDeath: IGenEvent;
+begin
+    Result := FDeath;
+end;
+
 procedure TGedIndividual.ChildUpdate(aChild: TGedComObj);
 var
-  lIndHusband, lIndWife: TGedIndividual;
+    lIndHusband, lIndWife: TGedIndividual;
 begin
     if (aChild.NodeType = CFactName) and not assigned(aChild.find('TYPE')) then
         if assigned(Fname) and (Fname.Parent = IGedParent(self)) then
@@ -1440,25 +2087,38 @@ begin
     else if aChild.NodeType = CFactRefNr then
         FRefNr := aChild
     else if aChild.NodeType = CLinkFamSpouse then
-       if TGedLink(aChild).Removing or not assigned(aChild.Parent) then
-         begin
-           RemoveFam(TGedFamily(aChild.link));
-           if assigned(aChild.link) then
-             begin
-               lIndHusband := TGedFamily(aChild.link).Husband;
-               lIndWife :=  TGedFamily(aChild.link).Wife;
-           RemoveSpouse(lIndHusband);
-           RemoveSpouse(lIndWife);
-             end;
-         end
-       else if assigned(aChild.link) then
-         begin
-           AppendFam(TGedFamily(aChild.link));
-           if TGedFamily(aChild.link).Husband = self then
-             AppendSpouse(TGedFamily(aChild.link).wife)
+        if TGedLink(aChild).Removing or not assigned(aChild.Parent) then
+          begin
+            RemoveFam(TGedFamily(aChild.link));
+            if assigned(aChild.link) then
+              begin
+                lIndHusband := TGedFamily(aChild.link).Husband;
+                lIndWife := TGedFamily(aChild.link).Wife;
+                RemoveSpouse(lIndHusband);
+                RemoveSpouse(lIndWife);
+              end;
+          end
+        else if assigned(aChild.link) then
+          begin
+            AppendFam(TGedFamily(aChild.link));
+            if TGedFamily(aChild.link).Husband = self then
+                AppendSpouse(TGedFamily(aChild.link).wife)
+            else
+                AppendSpouse(TGedFamily(aChild.link).Husband);
+          end
+       else
+    else
+       begin
+         if aChild.inheritsfrom(TGedEvent) then
+           if not assigned(aChild.Parent) then
+             RemoveEvent(TGedEvent(achild))
            else
-             AppendSpouse(TGedFamily(aChild.link).Husband)
-         end;
+             AppendEvent(TGedEvent(aChild));
+         if aChild.NodeType = CFactOccupation then
+           FOccupation := TGedEvent(aChild)
+         else if aChild.NodeType = CFactResidence then
+           FResidence := TGedEvent(aChild);
+       end;
     inherited;
 end;
 
@@ -1484,8 +2144,8 @@ begin
     for lSp in Fspouses do
         if lSp = aChild then
             exit
-        else if lsp.id <=0 then
-          exit;
+        else if lsp.id <= 0 then
+            exit;
     SetLength(Fspouses, high(Fspouses) + 2);
     Fspouses[high(Fspouses)] := TGedIndividual(aChild);
 end;
@@ -1531,16 +2191,16 @@ begin
 end;
 
 procedure TGedIndividual.RemoveFam(aFam: TGedFamily);
-    var
-        i: integer;
-    begin
-        for i := 0 to high(FFamilys) do
-            if FFamilys[i] = aFam then
-              begin
-                FFamilys[i] := FFamilys[high(FFamilys)];
-                setlength(FFamilys, high(FFamilys));
-                break;
-              end;
+var
+    i: integer;
+begin
+    for i := 0 to high(FFamilys) do
+        if FFamilys[i] = aFam then
+          begin
+            FFamilys[i] := FFamilys[high(FFamilys)];
+            setlength(FFamilys, high(FFamilys));
+            break;
+          end;
 
 end;
 
@@ -1604,25 +2264,26 @@ end;
 
 function TGedIndividual.Equals(aObj: TGedComObj): boolean;
 begin
-  if not assigned(aObj) or not aobj.inheritsfrom(TGedIndividual) then exit(false);
-  result := (Name = TGedIndividual(aobj).Name) and (Sex = TGedIndividual(aobj).sex);
-  result := result and (BirthDate = TGedIndividual(aobj).BirthDate)
-      and( not assigned(birth) or  (birth.Equals(TGedIndividual(aobj).Birth)));
-  result := result and (BaptDate = TGedIndividual(aobj).BaptDate)
-      and( not assigned(Baptised) or  (Baptised.Equals(TGedIndividual(aobj).Baptised)));
-  result := result and (DeathDate = TGedIndividual(aobj).DeathDate)
-      and( not assigned(Death) or  (Death.Equals(TGedIndividual(aobj).Death)));
-  result := result and (BurialDate = TGedIndividual(aobj).BurialDate)
-      and( not assigned(Burial) or  (birth.Equals(TGedIndividual(aobj).Burial)));
-  result := result and (PersonID = TGedIndividual(aobj).PersonID);
-  result := result and (FamCount = TGedIndividual(aobj).FamCount);
-  if result and (FamCount>0) then
-    try
-    result := result and (TGedIndividual(aobj).FamCount>0) and
-      (Familys[0].MarriageDate=TGedIndividual(aobj).Familys[0].MarriageDate);
-    except
-      result := false;
-    end;
+    if not assigned(aObj) or not aobj.inheritsfrom(TGedIndividual) then
+        exit(False);
+    Result := (Name = TGedIndividual(aobj).Name) and (Sex = TGedIndividual(aobj).sex);
+    Result := Result and (BirthDate = TGedIndividual(aobj).BirthDate) and
+        (not assigned(birth) or (birth.Equals(TGedIndividual(aobj).Birth)));
+    Result := Result and (BaptDate = TGedIndividual(aobj).BaptDate) and
+        (not assigned(Baptised) or (Baptised.Equals(TGedIndividual(aobj).Baptised)));
+    Result := Result and (DeathDate = TGedIndividual(aobj).DeathDate) and
+        (not assigned(Death) or (Death.Equals(TGedIndividual(aobj).Death)));
+    Result := Result and (BurialDate = TGedIndividual(aobj).BurialDate) and
+        (not assigned(Burial) or (birth.Equals(TGedIndividual(aobj).Burial)));
+    Result := Result and (PersonID = TGedIndividual(aobj).PersonID);
+    Result := Result and (FamCount = TGedIndividual(aobj).FamCount);
+    if Result and (FamCount > 0) then
+          try
+            Result := Result and (TGedIndividual(aobj).FamCount > 0) and
+                (Familys[0].MarriageDate = TGedIndividual(aobj).Familys[0].MarriageDate);
+          except
+            Result := False;
+          end;
 end;
 
 class function TGedIndividual.AssNodeType: string;
@@ -1647,7 +2308,7 @@ end;
 
 function TGedIndividual.EnumerateFamiliy: TGedIndFamEnumerator;
 begin
-  result := TGedIndFamEnumerator.Create(self);
+    Result := TGedIndFamEnumerator.Create(self);
 end;
 
 
@@ -1731,6 +2392,7 @@ end;
 initialization
 
     TGedComFile.RegisterGedComClass(TGedPlace);
+    TGedComFile.RegisterGedComClass(TGedSource);
     TGedComFile.RegisterGedComClass(TGedLink);
     TGedComFile.RegisterGedComClass(TGedEvent);
     TGedComFile.RegisterGedComClass(TIndName);

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestGedComFile"><module name="cmp_GedComDocumentWriter"><element name="TGenDocumentWriter"><short>GenDocumentWriter uses data from a GedCom-file to write a (human-readable) document</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

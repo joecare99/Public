@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Prj_TstExpFile"><module name="Cmp_SEWFile"><element name="TSEW_Exp_File"><short>Dateiklasse für SEW-Exp-Dateien</short>
+      </element><element name="TKnownIdentifyer"><short>Struktur für bekannte Identifyer</short>
+      </element><element name="TSEW_Exp_File.FAuthor"><short>Author des Blocks</short>
+      </element><element name="TSEW_Exp_File.DisplayName"><short>Anzeigename</short>
+      </element><element name="TSEW_Exp_File.Extensions"><short>Liste der abgehandelten Extensions</short>
+      </element><element name="FormatOptions.efo_Linefeed_Double"><short>Lösche doppelte Leerzeilen</short>
+      </element>
+    <element name="FormatCode.spa"/><element name="FormatCode.spb"><short>Space before</short>
+      </element><element name="FormatCode.lfda"><short>Request Linefeed after</short>
+      </element><element name="FormatCode.incdecind"><short>Increment or decrement Indention (Einrückung anpassen)</short>
+      </element><element name="CommandEnd"><short>End of Command-Sign </short>
+      </element><element name="FormatCode.Zuweisung"><short>The command is mainly a </short>
+      </element><element name="FormatCode.ProcFirst"><short>The Command is mainly a Procedure/Function-Call</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
