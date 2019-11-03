@@ -1,0 +1,5 @@
+{"version":1,"strings":[
+{"hash":4447461,"name":"tfrmmainform.cbxfilename.text","sourcebytes":[99,98,120,70,105,108,101,110,97,109,101],"value":"cbxFilename"},
+{"hash":12558,"name":"tfrmmainform.btnselectfile.caption","sourcebytes":[46,46,46],"value":"..."},
+{"hash":353982,"name":"tfrmmainform.btnloadfile.caption","sourcebytes":[79,112,101,110],"value":"Open"}
+]}

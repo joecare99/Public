@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ressource>
+  <String>
+    <Tools text="Tool-Value"/>
+    <Settings text="Settings-Value"/>
+    <About text="About-Value"/>
+    <Practice text="Practice-Value"/>
+    <Random_Select text="Random Select-Value"/>
+  </String>
+</ressource>

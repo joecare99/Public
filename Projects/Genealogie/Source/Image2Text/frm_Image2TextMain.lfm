@@ -13,6 +13,7 @@ object frmImage2TextMain: TfrmImage2TextMain
   OnKeyPress = FormKeyPress
   OnMouseWheel = FormMouseWheel
   OnResize = FormResize
+  LCLVersion = '2.0.4.0'
   object Splitter1: TSplitter
     Left = 2020
     Height = 1551
