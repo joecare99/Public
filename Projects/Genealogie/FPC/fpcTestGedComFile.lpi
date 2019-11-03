@@ -11,6 +11,7 @@
       <UseXPManifest Value="True"/>
       <Icon Value="0"/>
     </General>
+    <LazDoc Paths="..\FPDoc"/>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
@@ -22,7 +23,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import"/>
+            <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import;..\Source\GedCom2Odf;..\Source\Components"/>
             <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -63,7 +64,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import"/>
+            <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import;..\Source\GedCom2Odf;..\Source\Components"/>
             <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <CodeGeneration>
@@ -95,21 +96,24 @@
         <Mode0 Name="default"/>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="4">
+    <RequiredPackages Count="5">
       <Item1>
-        <PackageName Value="BaseUnits"/>
+        <PackageName Value="fpOdf"/>
       </Item1>
       <Item2>
-        <PackageName Value="fpcunittestrunner"/>
+        <PackageName Value="BaseUnits"/>
       </Item2>
       <Item3>
-        <PackageName Value="LCL"/>
+        <PackageName Value="fpcunittestrunner"/>
       </Item3>
       <Item4>
-        <PackageName Value="FCL"/>
+        <PackageName Value="LCL"/>
       </Item4>
+      <Item5>
+        <PackageName Value="FCL"/>
+      </Item5>
     </RequiredPackages>
-    <Units Count="7">
+    <Units Count="10">
       <Unit0>
         <Filename Value="fpcTestGedComFile.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -139,6 +143,18 @@
         <Filename Value="..\Source\gedcom-import\Cls_GedComExt.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit6>
+      <Unit7>
+        <Filename Value="..\Source\GedCom2Odf\cmp_GedComDocumentWriter.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\Source\GedCom2Odf\tst_GedCom2Odf.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\Source\Components\unt_IGenBase2.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -149,7 +165,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import"/>
+      <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import;..\Source\GedCom2Odf;..\Source\Components"/>
       <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>
