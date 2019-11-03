@@ -1,0 +1,20 @@
+object fraXmlView: TfraXmlView
+  Left = 0
+  Height = 1191
+  Top = 0
+  Width = 978
+  ClientHeight = 1191
+  ClientWidth = 978
+  DesignTimePPI = 144
+  ParentFont = False
+  TabOrder = 0
+  object PaintBox1: TPaintBox
+    Left = 0
+    Height = 1390
+    Top = 0
+    Width = 1141
+    Align = alClient
+    ParentFont = False
+    OnPaint = PaintBox1Paint
+  end
+end

@@ -1,0 +1,228 @@
+(* @NESTEDCOMMENTS := 'Yes' *)
+(* @PATH := '\/Projekt\/Achsen' *)
+(* @OBJECTFLAGS := '0, 8' *)
+(* @SYMFILEFLAGS := '2048' *)
+FUNCTION_BLOCK fbAchseMoviAxis
+(*===============================================*
+*	Baustein		: Achse: NC-Antrieb ohne Endlagen
+*
+*	Option			: MoviAxis-Gruppe
+*	Funktionsgruppe	: Achsen
+*     Version 		: 05.06.01
+*	erstellt am		: 06.06.2013
+*			 von	: C. Rosewich
+*------------------------------------------------------------------------------*
+*	Bemerkung		: FB232
+*------------------------------------------------------------------------------*
+	Änderungen		:
+
+*==========================================================*)
+VAR
+	OPZeile2            :   udtHand;
+	ErrParam            :   BOOL;    (* Fehler bei der Parametrierung *)
+	OP_Aus              :   BOOL;    (* Keine OP-Zeile zum Ansteuern *)
+	modul_aktiv         :   BOOL;    (* Modul ist z.Zt Aktiv (Angewählt) *)
+	Restweg             :   LREAL;   (* Noch zu Fahrender Restweg (in Auto) *)
+	ZaehlerAnf          :   INT;    
+	Anf_Minus_Fahren    :   BOOL;   
+	Anf_Plus_Fahren     :   BOOL;   
+	JogAktivPlus        :   BOOL;    (* Ansteuerung Aktiv plus in JOG *)
+	JogAktivMinus       :   BOOL;    (* Ansteuerung Aktiv minus in JOG *)
+	tmrSEKeineFreigabe  :   WORD;   
+	StoerMeld           :   udtAchsStoerMeld;
+END_VAR
+VAR_INPUT           
+	Gruppe              :   udtGruppe; (* Gruppe zu der die Achse gehört *)
+	In_Ax2ndSWLimitMinus :   BOOL;   
+	In_Ax2ndSWLimitPlus :   BOOL;   
+	Laufzeit            :   INT      := 0; (* Laufzeit für Zeitüberwachung *)
+	Ausregelzeit        :   INT      := 0; (* Achs-Ausregelzeit *)
+	MX_AchsNr           :   BYTE;    (* Achsnummer in der Kinematik_MX *)
+	In_Pos_Fenster      :   LREAL    := 0.1;
+END_VAR
+VAR_IN_OUT          
+	Stoerung            :   BYTE;   
+	OPZeile             :   udtHand;
+	Jog_Frg             :   udtJog_FRG_Interface;
+	AxisGroupKin        :   ST_AxisGroupKin;
+END_VAR
+VAR_OUTPUT          
+	Meldung             :   BYTE;    (* Achs-Meldungen *)
+END_VAR
+
+(* @END_DECLARATION := '0' *)
+(* NW001: Version ------------------------------------------------------------ *)
+Version_FB[ 232 ] := 16#00060501; (* 5.0.0*)
+
+(* NW002: Gruppe ------------------------------------------------------------ *)
+
+(* NW004: Störmeldung lokal legen ---------------------------------------*)
+StoerMeld.Stoerung := Stoerung;
+
+(* NW004: AchsDaten ------------------------------------------------------------ *)
+
+(* NW005: Angewählt ------------------------------------------------------------ *)
+modul_aktiv := OPZeile.Angewaehlt;
+
+(* NW006: Vorhanden ------------------------------------------------------------ *)
+
+ErrParam := OPZeile.Vorhanden AND Gruppe.Lampentest ;
+
+OPZeile.Vorhanden := TRUE;
+
+(* NW008: Anforderung plus -----------------------------------------*)
+Anf_Plus_Fahren :=
+
+	( ( Gruppe.BA_Hand AND OPZeile.TastePlus ) OR
+		( Gruppe.BA_Automatik AND
+			OPZeile.BefehlAutoPlus AND
+			Gruppe.AutomatikGestartet ) ) AND
+	( NOT OPZeile.EndlagePlus OR
+		Gruppe.BA_Hand_Ohne_Verr );
+
+(* NW009: Anforderung minus -----------------------------------------*)
+Anf_Minus_Fahren :=
+
+	( ( Gruppe.BA_Hand AND OPZeile.TasteMinus ) OR
+		( Gruppe.BA_Automatik AND
+			OPZeile.BefehlAutoMinus AND
+			Gruppe.AutomatikGestartet ) ) AND
+	( NOT OPZeile.EndlageMinus OR
+		Gruppe.BA_Hand_Ohne_Verr );
+
+(* NW010: Ansteuerung plus -----------------------------------------*)
+JogAktivPlus :=
+	Anf_Plus_Fahren AND
+	OPZeile.FreigabePlus AND
+	( NOT OPZeile.EndlagePlus OR
+		Gruppe.BA_Hand_Ohne_Verr ) AND
+	NOT Anf_Minus_Fahren AND
+	Gruppe.Vorschubfreig AND
+	Gruppe.HWFreigabe;
+
+(* NW011: Ansteuerung minus -----------------------------------------*)
+JogAktivMinus :=
+	Anf_Minus_Fahren AND
+	OPZeile.FreigabeMinus AND
+	( NOT OPZeile.EndlageMinus OR
+		Gruppe.BA_Hand_Ohne_Verr ) AND
+	NOT Anf_Plus_Fahren AND
+	Gruppe.Vorschubfreig AND
+	Gruppe.HWFreigabe;
+
+
+Restweg := AxisGroupKin.KinControl.INTERNAL.ConsistentInput.TargPos[ MX_AchsNr ] - AxisGroupKin.KinControl.out.Data.Position[ MX_AchsNr ];
+
+
+(* Anzeige in OP-Zeile *)
+OPZeile.BefehlAutoPlus :=
+	( Gruppe.BA_Automatik AND
+		( Restweg > In_pos_fenster ) );
+
+OPZeile.BefehlAutoMinus :=
+	( Gruppe.BA_Automatik AND
+		( Restweg < - In_pos_fenster ) );
+
+OPZeile.AktivPlus :=
+	( Gruppe.BA_Hand AND JogAktivPlus ) OR
+
+	( Gruppe.BA_Automatik AND
+		( AxisGroupKin.KinControl.Out.Data.MotorSpeed[ MX_AchsNr ] > 0.1 ) AND
+		( Restweg > 0.1 ) );
+
+OPZeile.AktivMinus :=
+	( Gruppe.BA_Hand AND JogAktivMinus ) OR
+
+	( Gruppe.BA_Automatik AND
+		( AxisGroupKin.KinControl.Out.Data.MotorSpeed[ MX_AchsNr ] > 0.1 ) AND
+		( Restweg < - 0.1 ) );
+
+(*Freigabe-plus an MX *)
+Jog_Frg.Frg_Pos := DWORD_TO_WORD( PUTBIT(
+			X := Jog_Frg.Frg_Pos,
+			N := MX_AchsNr,
+			B := OPZeile.FreigabePlus ) );
+
+(*Freigabe-minus an MX *)
+Jog_Frg.Frg_Neg := DWORD_TO_WORD( PUTBIT(
+			X := Jog_Frg.Frg_Neg,
+			N := MX_AchsNr,
+			B := OPZeile.FreigabeMinus ) );
+
+(* Jog an MX *)
+Jog_Frg.Jog_Pos := DWORD_TO_WORD( PUTBIT(
+			X := Jog_Frg.Jog_Pos,
+			N := MX_AchsNr,
+			B := JogAktivPlus ) );
+
+(* Jog an MX *)
+Jog_Frg.Jog_Neg := DWORD_TO_WORD( PUTBIT(
+			X := Jog_Frg.Jog_Neg,
+			N := MX_AchsNr,
+			B := JogAktivMinus ) );
+
+(* -------------------------------------------------------
+	Störungen 
+ ---------------------------------------------------------*)
+(* Storung zurücksetzen *)
+IF Gruppe.ERR_Reset THEN
+	StoerMeld.Stoerung := 0;
+END_IF
+
+StoerMeld.Err_Paarfehler := FALSE;
+StoerMeld.Err_EndlageVerl := FALSE;
+StoerMeld.Err_Zeitlauf := FALSE;
+
+(* keine Freigabe *)
+StoerMeld.Mld_KeineFreigabePlus :=
+	( Anf_Plus_Fahren AND
+		NOT OPZeile.FreigabePlus AND
+		NOT OPZeile.EndlagePlus AND
+		Gruppe.BA_Hand ) OR
+	( OPZeile.BefehlAutoPlus AND
+		NOT OPZeile.FreigabePlus AND
+		Gruppe.Vorschubfreig AND
+		gruppe.AutomatikGestartet AND
+		Gruppe.BA_Automatik );
+
+StoerMeld.Mld_KeineFreigabeMinus :=
+	( Anf_Minus_Fahren AND
+		NOT OPZeile.FreigabeMinus AND
+		NOT OPZeile.EndlageMinus AND
+		Gruppe.BA_Hand ) OR
+	( OPZeile.BefehlAutoMinus AND
+		NOT OPZeile.FreigabeMinus AND
+		Gruppe.Vorschubfreig AND
+		gruppe.AutomatikGestartet AND
+		Gruppe.BA_Automatik );
+
+StoerMeld.Err_KeineFreigabe := StoerMeld.Err_KeineFreigabe OR
+	fcSETimer(
+		Anforderung
+	:= StoerMeld.Mld_KeineFreigabePlus OR
+
+			StoerMeld.Mld_KeineFreigabeMinus,
+		Zeitvorgabe := 30000,
+		Gruppe := Gruppe,
+		Zeitspeicher := tmrSEKeineFreigabe );
+StoerMeld.Err_FU_Gestoert :=
+	StoerMeld.Err_FU_Gestoert OR
+
+	( PRG_Kinematics_MX.AxisGroupKin_Axis_MX.Out[ MX_AchsNr ].FBError OR PRG_Kinematics_MX.AxisGroupKin_Axis_MX.Out[ MX_AchsNr ].InverterError );
+
+(* NW030: Störungen auflegen --------------------------------------- *)
+Stoerung := StoerMeld.Stoerung;
+Meldung := StoerMeld.Meldung;
+
+(* Storung auswerten *)
+OPZeile.Gestoert :=
+OPZeile2.Gestoert :=
+	( Stoerung <> 0 );
+
+(* ToDo: Freigaben übergeben, evt. MoviAxis-SEW-Aufruf, Rückmeldungen auflegen *)
+OPZeile.Referenziert :=
+	fcGetBitFromBitArray( AxisGroupKin.Out.yReferenced,
+		MX_AchsNr ) ;
+(* Done: Axisgroup... auf schnittstelle auflegen *)
+RETURN ;
+END_FUNCTION_BLOCK

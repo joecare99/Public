@@ -65,8 +65,8 @@ end;
      function GetValue:string;override;
      procedure SetValue(NewVal:string);override;
   public
-    Property Date:TGedDate read FDate;
-    Property Place:TGedFactType read FPlace;
+    Property DateNode:TGedDate read FDate;
+    Property PlaceNode:TGedPlace read FPlace;
     Property FactType:TGedFactType read FFactType;
   End;
 

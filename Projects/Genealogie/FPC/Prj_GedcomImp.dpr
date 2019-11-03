@@ -17,7 +17,7 @@ uses
 
 begin
   Application.Initialize;
-  Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm1, Form1);
+  Application.{%H-}MainFormOnTaskbar := True;
+  Application.CreateForm(TFrmShowGedCom, FrmShowGedCom);
   Application.Run;
 end.

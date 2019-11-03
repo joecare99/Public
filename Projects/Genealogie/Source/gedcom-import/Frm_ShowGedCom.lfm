@@ -1,10 +1,10 @@
-object Form1: TForm1
+object FrmShowGedCom: TFrmShowGedCom
   Left = 0
   Height = 1184
   Top = 0
   Width = 1516
   ActiveControl = TreeView1
-  Caption = 'Form1'
+  Caption = 'object btnAutoEstBirth: TButton'
   ClientHeight = 1184
   ClientWidth = 1516
   Color = clBtnFace
@@ -15,21 +15,6 @@ object Form1: TForm1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  object TreeView1: TTreeView
-    Left = 9
-    Height = 1076
-    Top = 63
-    Width = 326
-    Align = alLeft
-    BorderSpacing.Right = -9
-    BorderSpacing.Around = 9
-    Font.Color = clWindowText
-    Font.Height = -17
-    Font.Name = 'Tahoma'
-    ParentFont = False
-    TabOrder = 0
-    OnSelectionChanged = TreeView1SelectionChanged
-  end
   object StatusBar1: TStatusBar
     Left = 0
     Height = 36
@@ -38,14 +23,18 @@ object Form1: TForm1
     Font.Color = clWindowText
     Font.Height = -17
     Font.Name = 'Tahoma'
-    Panels = <>
+    Panels = <    
+      item
+        Width = 300
+      end>
     ParentFont = False
+    SimplePanel = False
   end
   object mmLog: TMemo
-    Left = 840
-    Height = 350
-    Top = 444
-    Width = 566
+    Left = 440
+    Height = 174
+    Top = 944
+    Width = 880
     Font.Color = clWindowText
     Font.Height = -17
     Font.Name = 'Tahoma'
@@ -53,19 +42,19 @@ object Form1: TForm1
       'Memo1'
     )
     ParentFont = False
-    TabOrder = 2
+    TabOrder = 1
   end
   object chbVerbose: TCheckBox
-    Left = 840
+    Left = 439
     Height = 29
-    Top = 408
+    Top = 1120
     Width = 90
     Caption = 'Verbose'
     Font.Color = clWindowText
     Font.Height = -17
     Font.Name = 'Tahoma'
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 2
   end
   object pnlTop: TPanel
     Left = 0
@@ -80,12 +69,14 @@ object Form1: TForm1
     Font.Height = -17
     Font.Name = 'Tahoma'
     ParentFont = False
-    TabOrder = 4
+    TabOrder = 3
     object btnBrowseFile: TBitBtn
-      Left = 994
-      Height = 38
-      Top = 12
+      Left = 998
+      Height = 42
+      Top = 6
       Width = 63
+      Align = alLeft
+      BorderSpacing.Around = 6
       Caption = '...'
       Font.Color = clWindowText
       Font.Height = -17
@@ -99,6 +90,8 @@ object Form1: TForm1
       Height = 29
       Top = 12
       Width = 974
+      Align = alLeft
+      BorderSpacing.Around = 12
       Font.Color = clWindowText
       Font.Height = -17
       Font.Name = 'Tahoma'
@@ -108,10 +101,12 @@ object Form1: TForm1
       Text = 'cbxFilename'
     end
     object btnOpenFile: TBitBtn
-      Left = 1066
-      Height = 38
-      Top = 12
+      Left = 1067
+      Height = 42
+      Top = 6
       Width = 64
+      Align = alLeft
+      BorderSpacing.Around = 6
       Caption = 'Open'
       Font.Color = clWindowText
       Font.Height = -17
@@ -121,10 +116,12 @@ object Form1: TForm1
       TabOrder = 2
     end
     object btnFileSaveAs: TBitBtn
-      Left = 1140
-      Height = 38
-      Top = 12
+      Left = 1137
+      Height = 42
+      Top = 6
       Width = 64
+      Align = alLeft
+      BorderSpacing.Around = 6
       Caption = 'Save'
       Font.Color = clWindowText
       Font.Height = -17
@@ -135,36 +132,62 @@ object Form1: TForm1
     end
   end
   object Splitter1: TSplitter
-    Left = 335
+    Left = 378
     Height = 1094
     Top = 54
     Width = 8
   end
-  object Panel1: TPanel
-    Left = 343
+  object pnlLeft: TPanel
+    Left = 0
     Height = 1094
     Top = 54
     Width = 378
     Align = alLeft
-    Caption = 'Panel1'
+    Caption = 'pnlLeft'
     ClientHeight = 1094
     ClientWidth = 378
     Font.Color = clWindowText
     Font.Height = -17
     Font.Name = 'Tahoma'
     ParentFont = False
-    TabOrder = 6
-    object Label1: TLabel
-      Left = 15
-      Height = 21
-      Top = 14
-      Width = 48
-      Caption = 'Label1'
+    TabOrder = 5
+    object pnlBottom: TPanel
+      Left = 1
+      Height = 181
+      Top = 912
+      Width = 376
+      Align = alBottom
+      ClientHeight = 181
+      ClientWidth = 376
+      TabOrder = 0
+      object lblStatistics: TLabel
+        Left = 15
+        Height = 21
+        Top = 14
+        Width = 85
+        Caption = 'lblStatistics'
+        Font.Color = clWindowText
+        Font.Height = -17
+        Font.Name = 'Tahoma'
+        ParentColor = False
+        ParentFont = False
+      end
+    end
+    object TreeView1: TTreeView
+      Left = 10
+      Height = 893
+      Top = 10
+      Width = 367
+      Align = alClient
+      BorderSpacing.Right = -9
+      BorderSpacing.Around = 9
       Font.Color = clWindowText
       Font.Height = -17
       Font.Name = 'Tahoma'
-      ParentColor = False
       ParentFont = False
+      TabOrder = 1
+      OnCustomDrawItem = TreeView1CustomDrawItem
+      OnSelectionChanged = TreeView1SelectionChanged
     end
   end
   object Button1: TButton
@@ -178,7 +201,79 @@ object Form1: TForm1
     Font.Name = 'Tahoma'
     OnClick = Button1Click
     ParentFont = False
+    TabOrder = 6
+  end
+  object btnAutoEstBirth: TButton
+    Left = 400
+    Height = 62
+    Top = 112
+    Width = 176
+    Caption = 'Estimate Birth'
+    OnClick = btnAutoEstBirthClick
     TabOrder = 7
+  end
+  object lblEstBirthResult: TLabel
+    Left = 520
+    Height = 21
+    Top = 175
+    Width = 33
+    Caption = '<0>'
+    ParentColor = False
+  end
+  object lblSetNameResult: TLabel
+    Left = 525
+    Height = 21
+    Top = 267
+    Width = 33
+    Caption = '<0>'
+    ParentColor = False
+  end
+  object btnAutoSetName: TButton
+    Left = 400
+    Height = 62
+    Top = 201
+    Width = 176
+    Caption = 'Set Name'
+    OnClick = btnAutoSetNameClick
+    TabOrder = 8
+  end
+  object lblRemoveIndResult: TLabel
+    Left = 525
+    Height = 21
+    Top = 355
+    Width = 33
+    Caption = '<0>'
+    ParentColor = False
+  end
+  object btnAutoRemoveInd: TButton
+    Left = 400
+    Height = 62
+    Top = 289
+    Width = 176
+    Caption = 'Remove Inds'
+    OnClick = btnAutoRemoveIndClick
+    TabOrder = 9
+  end
+  object btnGotoLink: TSpeedButton
+    Left = 402
+    Height = 33
+    Top = 56
+    Width = 59
+    OnClick = btnGotoLinkClick
+  end
+  object pnlDetail: TPanel
+    Left = 392
+    Height = 544
+    Top = 384
+    Width = 933
+    TabOrder = 10
+  end
+  object ProgressBar1: TProgressBar
+    Left = 478
+    Height = 30
+    Top = 60
+    Width = 190
+    TabOrder = 11
   end
   object OpenDialog1: TOpenDialog
     left = 708
