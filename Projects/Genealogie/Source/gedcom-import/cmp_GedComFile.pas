@@ -73,12 +73,15 @@ type
         FNodeID: string;
         FParent: IGedParent;
         FNodeType: string;
+        FType:integer;
         FRoot: IGedParent;
         FUpdating: boolean;
         procedure SetID(AValue: integer);
         procedure SetNodeID(AValue: string);
         procedure SetParent(AValue: IGedParent);
     protected
+        function GetFtype:integer;
+        procedure SetFType(AValue: integer);virtual;
         function GetData: string; virtual;
         function GetLink: TGedComObj; virtual;
         function AppendChildNode({%H-}aChild: TGedComObj): integer; virtual;
@@ -120,6 +123,7 @@ type
         property Count: integer read ChildCount;
         property Updateing: boolean read FUpdating;
         property Child[Index: variant]: TGedComObj read GetChild; default;
+        property TType:integer read Ftype write SetFType;
     public
         class function AssNodeType: string; virtual; // Class: Assosiated Node Type
         class function HandlesNodeType({%H-}aType: string): boolean;
@@ -340,6 +344,11 @@ begin
       end;
 end;
 
+function TGedComObj.GetFtype: integer;
+begin
+  result:= FType;
+end;
+
 procedure TGedComObj.SetRoot(AValue: IGedParent);
 var
     lch: TGedComObj;
@@ -384,6 +393,12 @@ begin
         FiD := -1
     else if parent.GetChild(AValue) = self then
         FID := AValue;
+end;
+
+procedure TGedComObj.SetFType(AValue: integer);
+begin
+  if Ftype=AValue then Exit;
+  Ftype:=AValue;
 end;
 
 procedure TGedComObj.SetLink(AValue: TGedComObj);

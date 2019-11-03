@@ -5,27 +5,9 @@ unit unt_FBParser;
 interface
 
 uses
-    Classes, SysUtils, Cmp_Parser;
+    Classes, SysUtils, Cmp_Parser, unt_IGenBase2;
 
 type
-    TenumEventType = (
-        evt_ID = 0,
-        evt_Birth = 1,
-        evt_Baptism = 2,
-        evt_Marriage = 3,
-        evt_Death = 4,
-        evt_Burial = 5,
-        evt_Sex = 6,
-        evt_Occupation = 7,
-        evt_Religion = 8,
-        evt_Residence = 9,
-        evt_GivenName = 10,
-        evt_AKA = 11,
-        evt_AddOccupation = 12,
-        evt_AddResidence = 13,
-        evt_AddEmigration = 14,
-        evt_Last
-        );
     TParseEvent = procedure(Sender: TObject; aText: string; Ref: string;
         dsubtype: integer) of object;
 
