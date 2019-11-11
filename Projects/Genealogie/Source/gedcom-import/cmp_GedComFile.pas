@@ -66,7 +66,7 @@ type
 
     { TGedComObj }
 
-    TGedComObj = class(IGedParent)
+    TGedComObj = class(TObject,IGedParent)
     private
         Fchanged: boolean;
         FID: integer;
@@ -152,6 +152,9 @@ type
         class function HandlesNodeType({%H-}aType: string): boolean; override;
     end;
 
+    {TFilterProc}
+    TFilterproc=Function(aObj:TGedComObj):Boolean;
+
     { TGedComFile }
 
     TGedComFile = class(CFileInfo, IGedParent)
@@ -219,7 +222,7 @@ type
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
         class procedure PutGed(const Lines: TStrings; gcBase: IGedParent;
-            OnUpd, OnLongOp: TNotifyEvent);
+            OnUpd, OnLongOp: TNotifyEvent;aFilter:TFilterProc=nil);
 
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
@@ -232,7 +235,7 @@ type
 
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
-        procedure WriteToStream(st: TStream);
+        procedure WriteToStream(st: TStream;aFilter:TFilterProc=nil);
 
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
@@ -903,7 +906,7 @@ begin
 end;
 
 class procedure TGedComFile.PutGed(const Lines: TStrings; gcBase: IGedParent;
-    OnUpd, OnLongOp: TNotifyEvent);
+  OnUpd, OnLongOp: TNotifyEvent; aFilter: TFilterProc);
 
 var
     lTime: QWord;
@@ -929,9 +932,14 @@ var
           begin
             for lActChild in gcParent do
                 if (lActChild.NodeType = 'HEAD') or
-                    (lActChild.NodeType = 'SUBM') or (lActChild.NodeType = 'INDI')
+                    (lActChild.NodeType = 'SUBM') or
+                    (lActChild.NodeType = 'INDI')
                 then
                   begin
+                    if (lActChild.NodeType='INDI') and
+                        assigned(aFilter) and
+                        not aFilter(lActChild) then
+                          continue;
                     Lines.Append(BuildgedcomLine(Level, lActChild));
                     IterateParent(Lines, lActChild, Level + 1);
                     ThrowEvents(lActChild, Level);
@@ -941,6 +949,13 @@ var
                     (lActChild.NodeType <> 'SUBM') and (lActChild.NodeType <> 'INDI')
                 then
                   begin
+                    if (lActChild.NodeType <> 'HEAD') and
+                    (lActChild.NodeType <> 'SUBM') and
+                    (lActChild.NodeType <> 'INDI') and
+                    (lActChild.NodeType <> 'TRLR') and
+                        assigned(aFilter) and
+                        not aFilter(lActChild) then
+                          continue;
                     Lines.Append(BuildgedcomLine(Level, lActChild));
                     IterateParent(Lines, lActChild, Level + 1);
                     ThrowEvents(lActChild, Level);
@@ -980,7 +995,7 @@ begin
     FChanged := False;
 end;
 
-procedure TGedComFile.WriteToStream(st: TStream);
+procedure TGedComFile.WriteToStream(st: TStream; aFilter: TFilterProc);
 
 var
     lsl: TStringList;
@@ -989,7 +1004,7 @@ var
 begin
     lsl := TStringList.Create;
       try
-        PutGed(lsl, self, FOnWriteUpdate, FonLongOp);
+        PutGed(lsl, self, FOnWriteUpdate, FonLongOp,aFilter);
         if FEncoding <> '' then
             lst := ConvertEncodingFromUTF8(lsl.Text, FEncoding, lbEncoded)
         else

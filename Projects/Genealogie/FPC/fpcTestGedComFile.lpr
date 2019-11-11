@@ -5,7 +5,7 @@ program fpcTestGedComFile;
 uses
   Interfaces, sysutils, Forms, GuiTestRunner, tst_GedComFile, tst_GedComHelper,
   tst_GenHelper, Cls_GedComExt, tst_GedCom2Odf, cmp_GedComDocumentWriter,
-  unt_IGenBase2;
+  unt_IGenBase2, tst_GedComExt, unt_GenTestBase;
 
 {$R *.res}
 

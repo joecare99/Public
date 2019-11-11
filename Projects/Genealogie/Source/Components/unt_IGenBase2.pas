@@ -30,7 +30,6 @@ type
         evt_Divorce = 17,
         evt_Education = 18,
         evt_Degree = 19,
-//        evt_ = 19,
         evt_Anull =20,
         evt_BarMitzwah =21,
         evt_BasMitzwah =22,
@@ -38,16 +37,46 @@ type
         evt_Cast=24,
         evt_Cencus=25,
         evt_Member=26,
+        evt_Ordination,
+        evt_Graduation,
+        evt_FreeEvent,
+        evt_Adoption,
+        evt_Cremation,
+        evt_Immigration,
+        evt_Naturalization,
+        evt_Probation,
+        evt_Retirement,
+        evt_LastWill,
+        evt_FreeFact,
+        evt_Description,
+        evt_Uid,
+        evt_FamilySearchID,
+        evt_Property,
+        evt_Assosiation,
 
-
+        evt_LastChange,
         evt_Last
         );
 
-
+const
+    CMonthNames: array[0..23] of string =
+        ('JAN', '01.',
+        'FEB', '02.',
+        'MAR', '03.',
+        'APR', '04.',
+        'MAY', '05.',
+        'JUN', '06.',
+        'JUL', '07.',
+        'AUG', '08.',
+        'SEP', '09.',
+        'OCT', '10.',
+        'NOV', '11.',
+        'DEC', '12.');
 
     { IGenData }
-
+type
     IGenData = interface  // Interface zu einem Genealogischen Faktum
+       ['{1197F8EE-0339-47CC-AFAB-F78B9FF280A8}']
         function GetData: string;
         function GetFType: integer;
         function GetObject: TObject;
@@ -99,6 +128,28 @@ type
 
 
     IGenFamily = interface;
+    IGenIndividual = interface;
+
+    { IGenIndEnumerator }
+
+    IGenIndEnumerator = Interface
+         ['{6BA55FCB-E374-40F7-B7DD-3125C266BABB}']
+             function getCurrent: IGenIndividual;
+             function MoveNext: boolean;
+             property Current: IGenIndividual read getCurrent;
+             function GetEnumerator: IGenIndEnumerator;
+     end;
+
+    { IGenFamEnumerator }
+
+    IGenFamEnumerator = Interface
+         ['{005A67C7-5A98-4749-8F56-204FADDE72F7}']
+             function getCurrent: IGenFamily;
+             function MoveNext: boolean;
+             property Current: IGenFamily read getCurrent;
+             function GetEnumerator: IGenFamEnumerator;
+     end;
+
     { IGenIndividual }
 
     IGenIndividual = interface(IGenEntity)
@@ -132,7 +183,12 @@ type
         function GetSpouseCount: integer;
         function GetSpouses(Idx: Variant): IGenIndividual;
         function GetSurname: string;
+        function GetTimeStamp: TDateTime;
         function GetTitle: string;
+{    Todo:
+        function EnumSpouses:IGenIndEnumerator;
+        function EnumChildren:IGenIndEnumerator;
+        function EnumFamilies:IGenFamEnumerator;       }
         procedure SetBaptDate(AValue: string);
         procedure SetBaptism(AValue: IGenEvent);
         procedure SetBaptPlace(AValue: string);
@@ -160,6 +216,7 @@ type
         procedure SetSex(AValue: string);
         procedure SetSpouses(Idx: Variant; AValue: IGenIndividual);
         procedure SetSurname(AValue: string);
+        procedure SetTimeStamp(AValue: TDateTime);
         procedure SetTitle(AValue: string);
         // Basic-Properies
         property Name: string read GetName write SetName;
@@ -195,6 +252,8 @@ type
         property Occupation: string read GetOccupation write SetOccupation;
         property OccuPlace: string read GetOccuPlace write SetOccuPlace;
         property Residence: string read GetResidence write SetResidence;
+        // Management-Properies
+        property LastChange: TDateTime read GetTimeStamp write SetTimeStamp;
     end;
 
     { IGenFamily }
@@ -209,6 +268,7 @@ type
         function GetMarriageDate: string;
         function GetMarriagePlace: string;
         function GetWife: IGenIndividual;
+        function EnumChildren:IGenIndEnumerator;
         procedure SetChildren(Idx: Variant; AValue: IGenIndividual);
         procedure SetFamilyName(AValue: string);
         procedure SetFamilyRefID(AValue: string);
@@ -226,6 +286,16 @@ type
         property Marriage: IGenEvent read GetMarriage write SetMarriage;
         property FamilyRefID:string read GetFamilyRefID write SetFamilyRefID;
         property FamilyName:string read GetFamilyName write SetFamilyName;
+    end;
+
+    IGenealogy = interface
+      ['{3A5EB720-AB5E-453B-97C2-C57A5E498D9D}']
+       Property Individuum[Idx:Variant]:IGenIndividual;
+       Property IndividCount:Integer;
+       Property Family[Idx:Variant]:IGenFamily;
+       Property FamilyCount:Integer;
+       function EnumChildren:IGenIndEnumerator;
+       function EnumFamilies:IGenFamEnumerator;
     end;
 
 implementation

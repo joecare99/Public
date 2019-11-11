@@ -10,6 +10,7 @@ object frmGedCom2OdfMain: TfrmGedCom2OdfMain
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  LCLVersion = '2.0.4.0'
   object pnlTop: TPanel
     Left = 0
     Height = 54

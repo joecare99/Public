@@ -86,8 +86,10 @@ procedure TTestGed2Odf.TestMuster;
 var
   lChlds: TGedComObj;
   lFams:  IGenFamily;
+  lFilename: String;
 begin
-  LoadGedFile(CMuster);
+  lFilename := Fdatapath+DirectorySeparator +CMuster;
+  LoadGedFile(lFilename);
   FGenDocumentWriter.PrepareDocument;
   for lChlds in FGedComFile do
       if lChlds.inheritsfrom(TGedFamily) then
@@ -97,39 +99,72 @@ begin
   for lFams in FGenDocumentWriter.EnumerateFamilies do
       FGenDocumentWriter.WriteFamily(lFams);
    }
-  FGenDocumentWriter.Document.SaveToSingleXml(Fdatapath+DirectorySeparator +ChangeFileExt(CMuster,'.fodt'));
-  FGenDocumentWriter.FamList.SaveToFile(Fdatapath+DirectorySeparator +ChangeFileExt(CMuster,'f.txt'));
-  FGenDocumentWriter.IndList.SaveToFile(Fdatapath+DirectorySeparator +ChangeFileExt(CMuster,'i.txt'));
+   FGenDocumentWriter.FamList.SaveToFile(ChangeFileExt(lFilename,'f.txt'));
+   FGenDocumentWriter.PlacList.SaveToFile(ChangeFileExt(lFilename,'p.txt'));
+   FGenDocumentWriter.Plac2List.SaveToFile(ChangeFileExt(lFilename,'p2.txt'));
+   FGenDocumentWriter.IndList.SaveToFile(ChangeFileExt(lFilename,'i.txt'));
+   FGenDocumentWriter.OccuList.SaveToFile(ChangeFileExt(lFilename,'o.txt'));
+   FGenDocumentWriter.WriteIndIndex;
+   FGenDocumentWriter.WriteOccIndex;
+   FGenDocumentWriter.WritePlaceIndex;
+   FGenDocumentWriter.WritePlace2Index;
+  FGenDocumentWriter.Document.SaveToSingleXml(ChangeFileExt(lFilename,'.fodt'));
 end;
 
 procedure TTestGed2Odf.TestEntry0052rr;
 var
   lChlds: TGedComObj;
+  lFilename: String;
 begin
-  LoadGedFile(CEntryGC0052rr);
+  lFilename := Fdatapath+DirectorySeparator +CEntryGC0052rr;
+  LoadGedFile(lFilename);
   FGenDocumentWriter.PrepareDocument;
   for lChlds in FGedComFile do
       if lChlds.inheritsfrom(TGedFamily) then
            FgenDocumentWriter.AppendFamily(lChlds as IGenFamily);
   FGenDocumentWriter.SortAndRenumberFamiliies;
-  FGenDocumentWriter.Document.SaveToSingleXml(Fdatapath+DirectorySeparator +ChangeFileExt(CEntryGC0052rr,'.fodt'));
-  FGenDocumentWriter.FamList.SaveToFile(Fdatapath+DirectorySeparator +ChangeFileExt(CEntryGC0052rr,'f.txt'));
-  FGenDocumentWriter.IndList.SaveToFile(Fdatapath+DirectorySeparator +ChangeFileExt(CEntryGC0052rr,'i.txt'));
+  {
+  for lFams in FGenDocumentWriter.EnumerateFamilies do
+      FGenDocumentWriter.WriteFamily(lFams);
+   }
+   FGenDocumentWriter.FamList.SaveToFile(ChangeFileExt(lFilename,'f.txt'));
+   FGenDocumentWriter.PlacList.SaveToFile(ChangeFileExt(lFilename,'p.txt'));
+   FGenDocumentWriter.Plac2List.SaveToFile(ChangeFileExt(lFilename,'p2.txt'));
+   FGenDocumentWriter.IndList.SaveToFile(ChangeFileExt(lFilename,'i.txt'));
+   FGenDocumentWriter.OccuList.SaveToFile(ChangeFileExt(lFilename,'o.txt'));
+   FGenDocumentWriter.WriteIndIndex;
+   FGenDocumentWriter.WriteOccIndex;
+   FGenDocumentWriter.WritePlaceIndex;
+   FGenDocumentWriter.WritePlace2Index;
+  FGenDocumentWriter.Document.SaveToSingleXml(ChangeFileExt(lFilename,'.fodt'));
 end;
 
 procedure TTestGed2Odf.TestEntry0001ff;
 var
   lChlds: TGedComObj;
+  lFilename: String;
 begin
-  LoadGedFile(CEntry001ff2);
+  lFilename := Fdatapath+DirectorySeparator +CEntry001ff2;
+  LoadGedFile(lFilename);
   FGenDocumentWriter.PrepareDocument;
   for lChlds in FGedComFile do
       if lChlds.inheritsfrom(TGedFamily) then
            FgenDocumentWriter.AppendFamily(lChlds as IGenFamily);
   FGenDocumentWriter.SortAndRenumberFamiliies;
-  FGenDocumentWriter.Document.SaveToSingleXml(Fdatapath+DirectorySeparator +ChangeFileExt(CEntry001ff2,'.fodt'));
-  FGenDocumentWriter.FamList.SaveToFile(Fdatapath+DirectorySeparator +ChangeFileExt(CEntry001ff2,'f.txt'));
-  FGenDocumentWriter.IndList.SaveToFile(Fdatapath+DirectorySeparator +ChangeFileExt(CEntry001ff2,'i.txt'));
+  {
+  for lFams in FGenDocumentWriter.EnumerateFamilies do
+      FGenDocumentWriter.WriteFamily(lFams);
+   }
+   FGenDocumentWriter.FamList.SaveToFile(ChangeFileExt(lFilename,'f.txt'));
+   FGenDocumentWriter.PlacList.SaveToFile(ChangeFileExt(lFilename,'p.txt'));
+   FGenDocumentWriter.Plac2List.SaveToFile(ChangeFileExt(lFilename,'p2.txt'));
+   FGenDocumentWriter.IndList.SaveToFile(ChangeFileExt(lFilename,'i.txt'));
+   FGenDocumentWriter.OccuList.SaveToFile(ChangeFileExt(lFilename,'o.txt'));
+   FGenDocumentWriter.WriteIndIndex;
+   FGenDocumentWriter.WriteOccIndex;
+   FGenDocumentWriter.WritePlaceIndex;
+   FGenDocumentWriter.WritePlace2Index;
+  FGenDocumentWriter.Document.SaveToSingleXml(ChangeFileExt(lFilename,'.fodt'));
 end;
 
 procedure TTestGed2Odf.OnLongOp(Sender: TObject);
@@ -142,9 +177,12 @@ procedure TTestGed2Odf.LoadGedFile(const lName: String);
 var
   str: TMemoryStream;
 begin
+  FGedComFile.Clear;
+  if not fileexists(lName) then
+       exit;
   str := TMemoryStream.Create;
   try
-  str.LoadFromFile(FDataPath+DirectorySeparator+lName);
+  str.LoadFromFile(lName);
   str.seek(0, soBeginning);
   FGedComFile.LoadFromStream(str);
   finally

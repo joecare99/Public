@@ -15,6 +15,7 @@ object FrmShowGedCom: TFrmShowGedCom
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  LCLVersion = '2.0.4.0'
   object StatusBar1: TStatusBar
     Left = 0
     Height = 36
@@ -129,6 +130,16 @@ object FrmShowGedCom: TFrmShowGedCom
       OnClick = btnFileSaveAsClick
       ParentFont = False
       TabOrder = 3
+    end
+    object CheckBox1: TCheckBox
+      Left = 1219
+      Height = 29
+      Top = 12
+      Width = 68
+      Caption = 'Filter'
+      Checked = True
+      State = cbChecked
+      TabOrder = 4
     end
   end
   object Splitter1: TSplitter
