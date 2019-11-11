@@ -231,9 +231,13 @@ begin
   FGenealogieWriter.SortAndRenumberFamiliies;
   FGenealogieWriter.FamList.SaveToFile(ChangeFileExt(cbxFilename.Text,'f.txt'));
   FGenealogieWriter.indList.SaveToFile(ChangeFileExt(cbxFilename.Text,'i.txt'));
+  FGenealogieWriter.OccuList.SaveToFile(ChangeFileExt(cbxFilename.Text,'o.txt'));
   FGenealogieWriter.PlacList.SaveToFile(ChangeFileExt(cbxFilename.Text,'p.txt'));
+  FGenealogieWriter.Plac2List.SaveToFile(ChangeFileExt(cbxFilename.Text,'p2.txt'));
   FGenealogieWriter.WriteIndIndex;
+  FGenealogieWriter.WriteOccIndex;
   FGenealogieWriter.WritePlaceIndex;
+  FGenealogieWriter.WritePlace2Index;
   FGenealogieWriter.Document.SaveToSingleXml(ChangeFileExt(cbxFilename.Text,'.fodt'));
 end;
 
