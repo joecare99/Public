@@ -21,6 +21,20 @@ Type
     U, V: Single;
   End;
 
+  { TPointF }
+
+  TPointF = record
+    public
+      function Rotxm90: TpointF;
+      function Neg:TPointF;
+      function Add(aPnt:TPointF):TPointF;
+      function SMult(fak:TGLdouble):TPointF;
+    public
+              case boolean of
+              false: (x,y,z:TGLdouble);
+              true: (d:array[0..2] of TGLdouble);
+            end;
+
   {$IFDEF FPC}
     TGLArrayf3 =array[0..2] of TGLfloat;
     TGLArrayf4 =array[0..3] of TGLfloat;
@@ -33,6 +47,8 @@ Type
     ShinyNess: Glfloat;
   End;
 
+  { T3DBasisObject }
+
   T3DBasisObject = Class(TWinControl)
   public
     Rotation: TGLArrayf4;
@@ -40,14 +56,15 @@ Type
 
     Constructor Create(Aowner: TComponent); override;
     Procedure Draw; virtual; abstract;
-    Procedure MoveTo(x, y, z: Extended); virtual; abstract;
+    Procedure MoveTo(aPnt:TPointF); virtual;abstract;overload;
+    Procedure MoveTo(x, y, z: Extended); virtual; overload;
     Procedure Rotate(Amount, x, y, z: Extended); virtual;
   End;
+
 
   {$IFDEF FPC}
 
   { TO3DCanvas }
-
   TO3DCanvas = Class(TCustomOpenGLControl)
   {$ELSE}
   TO3DCanvas = Class(TWinControl)
@@ -62,17 +79,24 @@ Type
     FObjectHandling: Boolean;
     FSelected: T3DBasisObject;
     FmouseOverObject: Boolean;
+    Speed: Double;
+    cube_rotationx, cube_rotationy, cube_rotationz: GLfloat;
+
     {$IFNDEF FPC}
     Procedure SetDCPixelFormat;
     {$ENDIF}
+    procedure DoPaint(Sender: TObject);
     Function SelectObject(xsel, ysel: integer): cardinal;
   protected
+    {$IFNDEF FPC}
     Procedure PaintWindow({%H-}DC: HDC); override;
+    {$ENDIF}
     Procedure MouseDown(Button: TMouseButton; Shift: TShiftState; X,
       Y: Integer); override;
     Procedure MouseUp(Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
       override;
     Procedure MouseMove(Shift: TShiftState; X, Y: Integer); override;
+    Procedure DrawSceneInt;
   public
     FViewDistance: single;
     DC: Cardinal;
@@ -135,10 +159,12 @@ Type
 
   End;
 
+  { TO3DGroup }
+
   TO3DGroup = Class(T3DBasisObject)
   public
     Procedure Draw; override;
-    Procedure MoveTo(nx, ny, nz: Extended); override;
+    Procedure MoveTo(nPnt: TPointF); override;
   End;
 
 Const
@@ -155,7 +181,9 @@ Const
     DiffColor: (0.0, 1.0, 0.0, 0.0);
     ShinyNess: 0.3);
 
-function UVPoint(U, V: Single): TUVPoint; inline;
+// Hilfsfunktionen
+  Function UVPoint(u,v:Single):TUVPoint;inline;
+  Function PointF(nx,ny,nz:TGLdouble):TPointF;inline;
 
 Implementation
 {$IFDEF FPC}
@@ -166,12 +194,48 @@ const
   zNear = 0.1;
   zFar = 50.0;
 
-Function UVPoint(u, V: Single): TUVPoint;
-Inline;
+function UVPoint(U, V: Single): TUVPoint;inline;
 Begin
-  result.U := u;
-  result.v := v;
+  Result.U := u;
+  Result.v := v;
 End;
+
+function PointF(nx, ny, nz: TGLdouble): TPointF;inline;
+begin
+  Result.x:=nx;
+  Result.y:=ny;
+  Result.z:=nz;
+end;
+
+{ TPointF }
+
+function TPointF.Rotxm90: TpointF;
+begin
+  result.x:= x;
+  result.y:=-z;
+  result.z:= y;
+end;
+
+function TPointF.Neg: TPointF;
+begin
+  result.x:=-x;
+  result.y:=-y;
+  result.z:=-z;
+end;
+
+function TPointF.Add(aPnt: TPointF): TPointF;
+begin
+  result.x:=x+aPnt.x;
+  result.y:=y+aPnt.y;
+  result.z:=z+aPnt.z;
+end;
+
+function TPointF.SMult(fak: TGLdouble): TPointF;
+begin
+  result.x:=x*fak;
+  result.y:=y*fak;
+  result.z:=z*fak;
+end;
 
 constructor TO3DCanvas.Create(AOwner: TComponent);
 
@@ -207,8 +271,6 @@ Begin
       SetDCPixelFormat;
       HRC := wglCreateContext(DC); // Make a GL Context
       wglMakeCurrent(DC, HRC);
-      {$ENDIF}
-
 
       glClearColor(0.0, 0.0, 0.5, 1.0); // Clear background color to black
       glClearDepth(1.0); // Clear the depth buffer
@@ -222,7 +284,7 @@ Begin
       gluPerspective(fovy, Width / Height, zNear, zFar);
       // Aspect ratio of the viewport
       glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-      glMatrixMode(GL_PROJECTION);
+      glMatrixMode(GL_MODELVIEW);
 
        If FCulling Then
         Begin
@@ -236,7 +298,10 @@ Begin
           glEnable(GL_SMOOTH);
           glEnable(GL_BLEND);
         End;
-      OnResize := FormResize;
+      {$Else}
+      AutoResizeViewport := true;
+      OnPaint:=DoPaint;
+      {$ENDIF}
     End
 
 End;
@@ -274,9 +339,9 @@ Begin
   gluPickMatrix(xsel, viewport[3] - ysel, 1.0, 1.0, @viewport);
   gluPerspective(fovy, Width / Height, zNear, zFar);
 
-  DrawScene; //Die Szene zeichnen
+  DrawSceneInt; //Die Szene zeichnen
 
-  glmatrixmode(gl_projection); //Wieder in den Projektionsmodus
+  glMatrixMode(GL_PROJECTION); //Wieder in den Projektionsmodus
   glPopMatrix; //um unsere alte Matrix wiederherzustellen
 
   treffer := glRenderMode(GL_RENDER); //Anzahl der Treffer auslesen
@@ -298,6 +363,123 @@ Begin
 
   Result := getroffen;
 End;
+
+procedure TO3DCanvas.DoPaint(Sender: TObject);
+
+var
+  Ps: TPaintStruct;
+  I: Integer;
+  c: Cardinal;
+
+Const
+  LightAmbient: Array[0..3] Of GLfloat = (0.05, 0.05, 0.05, 1.0);
+  LightDiffuse: Array[0..3] Of GLfloat = (0.7, 0.7, 0.7, 1.0);
+  LightSpecular: Array[0..3] Of GLfloat = (0.8, 0.7, 0.5, 1.0);
+  LightPosition: Array[0..3] Of GLfloat = (-14.0, 14.0, 0.0, 1.0);
+
+Const
+  mat_specular: Array[0..3] Of GlFloat = (1.2, 1.2, 1.2, 1.0);
+  mat_shininess: Array[0..0] Of GlFloat = (50.0);
+
+begin
+//  DrawSceneInt;
+//  exit;
+  BeginPaint(Handle, Ps{%H-}); {out}
+  glMatrixMode(GL_PROJECTION);
+  glClearColor(0, 0, 0.0, 1.0);
+  glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
+//  glEnable(GL_DEPTH_TEST);
+
+//  glMatrixMode(GL_PROJECTION);
+  glLoadIdentity();
+//  gluPerspective(45.0, double(width) / height, 0.1, 100.0);
+  glFrustum(-Width / height,width / height,-1,1,1.5,100);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity();
+
+  glDepthFunc(GL_LEQUAL); // Type of depth test
+      glEnable(GL_DEPTH_TEST); // enables depth testing
+      glEnable(GL_TEXTURE_2D); // Aktiviert Texture Mapping
+      glShadeModel(GL_SMOOTH); // Smooth color shading
+
+  glLightfv(GL_LIGHT0, GL_AMBIENT,  {$IFNDEF FPC}@{$endif}LightAmbient); // Create light
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, {$IFNDEF FPC}@{$endif}LightDiffuse);
+      glLightfv(GL_LIGHT0, GL_SPECULAR, {$IFNDEF FPC}@{$endif}LightSpecular);
+      glLightfv(GL_LIGHT0, GL_POSITION, {$IFNDEF FPC}@{$endif}LightPosition); // Light position
+      glEnable(GL_LIGHTING);
+      glEnable(GL_LIGHT0);
+      glEnable(GL_DEPTH_TEST);
+
+  glinitnames;
+  glpushname(0);
+
+  glTranslatef(0.0, 0.0, -FViewDistance); // Polygon depth
+
+  glMaterialfv(GL_FRONT, GL_SPECULAR, @mat_specular[0]);
+   glMaterialfv(GL_FRONT, GL_SHININESS, @mat_shininess[0]);
+
+//  glRotatef(cube_rotationx, cube_rotationy, cube_rotationz, 0.0);
+  glRotatef(ary, 1.0, 0.0, 0.0);
+  glRotatef(arx, 0.0, 1.0, 0.0);
+{
+  glBegin(GL_QUADS);
+          glColor3f(0.0,1.0,0.0);                              // Set The Color To Green
+          glVertex3f( 1.0, 1.0,-1.0);                  // Top Right Of The Quad (Top)
+          glVertex3f(-1.0, 1.0,-1.0);                  // Top Left Of The Quad (Top)
+          glVertex3f(-1.0, 1.0, 1.0);                  // Bottom Left Of The Quad (Top)
+          glVertex3f( 1.0, 1.0, 1.0);                  // Bottom Right Of The Quad (Top)
+  glEnd();
+  glBegin(GL_QUADS);
+          glColor3f(1.0,0.5,0.0);                              // Set The Color To Orange
+          glVertex3f( 1.0,-1.0, 1.0);                  // Top Right Of The Quad (Bottom)
+          glVertex3f(-1.0,-1.0, 1.0);                  // Top Left Of The Quad (Bottom)
+          glVertex3f(-1.0,-1.0,-1.0);                  // Bottom Left Of The Quad (Bottom)
+          glVertex3f( 1.0,-1.0,-1.0);                  // Bottom Right Of The Quad (Bottom)
+  glEnd();
+  glBegin(GL_QUADS);
+          glColor3f(1.0,0.0,0.0);                              // Set The Color To Red
+          glVertex3f( 1.0, 1.0, 1.0);                  // Top Right Of The Quad (Front)
+          glVertex3f(-1.0, 1.0, 1.0);                  // Top Left Of The Quad (Front)
+          glVertex3f(-1.0,-1.0, 1.0);                  // Bottom Left Of The Quad (Front)
+          glVertex3f( 1.0,-1.0, 1.0);                  // Bottom Right Of The Quad (Front)
+  glEnd();
+  glBegin(GL_QUADS);
+          glColor3f(1.0,1.0,0.0);                              // Set The Color To Yellow
+          glVertex3f( 1.0,-1.0,-1.0);                  // Bottom Left Of The Quad (Back)
+          glVertex3f(-1.0,-1.0,-1.0);                  // Bottom Right Of The Quad (Back)
+          glVertex3f(-1.0, 1.0,-1.0);                  // Top Right Of The Quad (Back)
+          glVertex3f( 1.0, 1.0,-1.0);                  // Top Left Of The Quad (Back)
+  glEnd();
+  glBegin(GL_QUADS);
+          glColor3f(0.0,0.0,1.0);                              // Set The Color To Blue
+          glVertex3f(-1.0, 1.0, 1.0);                  // Top Right Of The Quad (Left)
+          glVertex3f(-1.0, 1.0,-1.0);                  // Top Left Of The Quad (Left)
+          glVertex3f(-1.0,-1.0,-1.0);                  // Bottom Left Of The Quad (Left)
+          glVertex3f(-1.0,-1.0, 1.0);                  // Bottom Right Of The Quad (Left)
+  glEnd();
+  glBegin(GL_QUADS);
+          glColor3f(1.0,0.0,1.0);                              // Set The Color To Violet
+          glVertex3f( 1.0, 1.0,-1.0);                  // Top Right Of The Quad (Right)
+          glVertex3f( 1.0, 1.0, 1.0);                  // Top Left Of The Quad (Right)
+          glVertex3f( 1.0,-1.0, 1.0);                  // Bottom Left Of The Quad (Right)
+          glVertex3f( 1.0,-1.0,-1.0);                  // Bottom Right Of The Quad (Right)
+  glEnd();
+             }
+  For I := 0 To ComponentCount - 1 Do
+    If Components[i].InheritsFrom(T3DBasisObject) Then
+      With T3DBasisObject(Components[i]) Do
+        Begin
+          c := cardinal(self.Components[i]);
+          glloadname(c); //cardinal(Components[i]));
+          glPushMatrix;
+          if T3DBasisObject(Components[i]).Visible then
+            Draw;
+          glPopMatrix;
+        End;
+
+  SwapBuffers;
+   EndPaint(Handle, Ps);
+end;
 
 {$IFNDEF FPC}
 Procedure TO3DCanvas.SetDCPixelFormat;
@@ -353,12 +535,12 @@ Begin
 End;
 {$ENDIF}
 
-procedure TO3DCanvas.DrawScene;
+procedure TO3DCanvas.DrawSceneInt;
 
 Const
   LightAmbient: Array[0..3] Of GLfloat = (0.05, 0.05, 0.05, 1.0);
-  LightDiffuse: Array[0..3] Of GLfloat = (0.5, 0.7, 0.5, 1.0);
-  LightSpecular: Array[0..3] Of GLfloat = (0.7, 0.5, 0.5, 1.0);
+  LightDiffuse: Array[0..3] Of GLfloat = (0.5, 0.5, 0.4, 1.0);
+  LightSpecular: Array[0..3] Of GLfloat = (0.7, 0.6, 0.5, 1.0);
   LightPosition: Array[0..3] Of GLfloat = (-14.0, 14.0, 0.0, 1.0);
 
 Var
@@ -373,10 +555,12 @@ Const
 
 Begin
   BeginPaint(Handle, Ps{%H-}); {out}
-  glMatrixMode(GL_MODELVIEW);
+  glMatrixMode(GL_PROJECTION);
   glClearColor(0, 0, 0.0, 1.0);
   glClear(GL_COLOR_BUFFER_BIT Or GL_DEPTH_BUFFER_BIT);
   // Clear color & depth buffers
+  glFrustum(-TGLfloat(width) / height,TGLfloat(width) / height,-1,1,1.5,100);
+  glMatrixMode(GL_MODELVIEW);
   glLoadIdentity;
 
   glDepthFunc(GL_LEQUAL); // Type of depth test
@@ -384,12 +568,13 @@ Begin
       glEnable(GL_TEXTURE_2D); // Aktiviert Texture Mapping
       glShadeModel(GL_SMOOTH); // Smooth color shading
 
-  glLightfv(GL_LIGHT0, GL_AMBIENT,  {$IFNDEF FPC}@{$endif}LightAmbient); // Create light
+   glLightfv(GL_LIGHT0, GL_AMBIENT,  {$IFNDEF FPC}@{$endif}LightAmbient); // Create light
    glLightfv(GL_LIGHT0, GL_DIFFUSE, {$IFNDEF FPC}@{$endif}LightDiffuse);
    glLightfv(GL_LIGHT0, GL_SPECULAR, {$IFNDEF FPC}@{$endif}LightSpecular);
    glLightfv(GL_LIGHT0, GL_POSITION, {$IFNDEF FPC}@{$endif}LightPosition); // Light position
    glEnable(GL_LIGHTING);
    glEnable(GL_LIGHT0);
+   glEnable(GL_DEPTH_TEST);
 
   glinitnames;
   glpushname(0);
@@ -417,21 +602,89 @@ Begin
 
   EndPaint(Handle, Ps);
 
-  //  InvalidateRect(Handle, Nil, False); // Force window repaint
+//  InvalidateRect(Handle, Nil, False); // Force window repaint
+(*
+
+    glClearColor(1.0, 1.0, 1.0, 1.0);
+    glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
+    glEnable(GL_DEPTH_TEST);
+
+    glMatrixMode(GL_PROJECTION);
+    glLoadIdentity();
+  //  gluPerspective(45.0, double(width) / height, 0.1, 100.0);
+  //  glFrustum(-double(width) / height,double(width) / height,-1,1,1.5,100);
+    glMatrixMode(GL_MODELVIEW);
+    glLoadIdentity();
+
+    glTranslatef(0.0, 0.0,-6.0);
+    glRotatef(cube_rotationx, cube_rotationy, cube_rotationz, 0.0);
+
+    glBegin(GL_QUADS);
+            glColor3f(0.0,1.0,0.0);                              // Set The Color To Green
+            glVertex3f( 1.0, 1.0,-1.0);                  // Top Right Of The Quad (Top)
+            glVertex3f(-1.0, 1.0,-1.0);                  // Top Left Of The Quad (Top)
+            glVertex3f(-1.0, 1.0, 1.0);                  // Bottom Left Of The Quad (Top)
+            glVertex3f( 1.0, 1.0, 1.0);                  // Bottom Right Of The Quad (Top)
+    glEnd();
+    glBegin(GL_QUADS);
+            glColor3f(1.0,0.5,0.0);                              // Set The Color To Orange
+            glVertex3f( 1.0,-1.0, 1.0);                  // Top Right Of The Quad (Bottom)
+            glVertex3f(-1.0,-1.0, 1.0);                  // Top Left Of The Quad (Bottom)
+            glVertex3f(-1.0,-1.0,-1.0);                  // Bottom Left Of The Quad (Bottom)
+            glVertex3f( 1.0,-1.0,-1.0);                  // Bottom Right Of The Quad (Bottom)
+    glEnd();
+    glBegin(GL_QUADS);
+            glColor3f(1.0,0.0,0.0);                              // Set The Color To Red
+            glVertex3f( 1.0, 1.0, 1.0);                  // Top Right Of The Quad (Front)
+            glVertex3f(-1.0, 1.0, 1.0);                  // Top Left Of The Quad (Front)
+            glVertex3f(-1.0,-1.0, 1.0);                  // Bottom Left Of The Quad (Front)
+            glVertex3f( 1.0,-1.0, 1.0);                  // Bottom Right Of The Quad (Front)
+    glEnd();
+    glBegin(GL_QUADS);
+            glColor3f(1.0,1.0,0.0);                              // Set The Color To Yellow
+            glVertex3f( 1.0,-1.0,-1.0);                  // Bottom Left Of The Quad (Back)
+            glVertex3f(-1.0,-1.0,-1.0);                  // Bottom Right Of The Quad (Back)
+            glVertex3f(-1.0, 1.0,-1.0);                  // Top Right Of The Quad (Back)
+            glVertex3f( 1.0, 1.0,-1.0);                  // Top Left Of The Quad (Back)
+    glEnd();
+    glBegin(GL_QUADS);
+            glColor3f(0.0,0.0,1.0);                              // Set The Color To Blue
+            glVertex3f(-1.0, 1.0, 1.0);                  // Top Right Of The Quad (Left)
+            glVertex3f(-1.0, 1.0,-1.0);                  // Top Left Of The Quad (Left)
+            glVertex3f(-1.0,-1.0,-1.0);                  // Bottom Left Of The Quad (Left)
+            glVertex3f(-1.0,-1.0, 1.0);                  // Bottom Right Of The Quad (Left)
+    glEnd();
+    glBegin(GL_QUADS);
+            glColor3f(1.0,0.0,1.0);                              // Set The Color To Violet
+            glVertex3f( 1.0, 1.0,-1.0);                  // Top Right Of The Quad (Right)
+            glVertex3f( 1.0, 1.0, 1.0);                  // Top Left Of The Quad (Right)
+            glVertex3f( 1.0,-1.0, 1.0);                  // Bottom Left Of The Quad (Right)
+            glVertex3f( 1.0,-1.0,-1.0);                  // Bottom Right Of The Quad (Right)
+    glEnd();
+
+    Speed := FrameDiffTimeInMSecs*1.0/30.0;
+
+    cube_rotationx += 5.15 * Speed;
+    cube_rotationy += 5.15 * Speed;
+    cube_rotationz += 20.0 * Speed;
+
+    SwapBuffers;  *)
 
 End;
 
+{$Ifndef FPC}
 procedure TO3DCanvas.PaintWindow(DC: HDC);
 Begin
   if csDesigning in ComponentState then
     exit;
-  If Not Finitialized Then
+{  If Not Finitialized Then
     Begin
       FormResize(self);
       Finitialized := true
     End;
-  DrawScene;
+  DrawScene;     }
 End;
+{$ENDIF}
 
 procedure TO3DCanvas.FormResize(Sender: TObject);
 Begin
@@ -444,7 +697,6 @@ Begin
   glMatrixMode(GL_MODELVIEW);
 
   InvalidateRect(Handle, Nil, False); // Force window repaint
-
 End;
 
 procedure TO3DCanvas.MouseDown(Button: TMouseButton; Shift: TShiftState; X,
@@ -509,6 +761,11 @@ Begin
     Inherited;
 End;
 
+procedure TO3DCanvas.DrawScene;
+begin
+  invalidate;
+end;
+
 procedure TO3DCanvas.MouseUp(Button: TMouseButton; Shift: TShiftState; X,
   Y: Integer);
 Var
@@ -538,14 +795,19 @@ End;
 
 //-----------------------------------------------------------------------
 
-Constructor T3DBasisObject.create;
+constructor T3DBasisObject.Create(Aowner: TComponent);
 Begin
   Inherited;
   If Aowner.inheritsfrom(TWincontrol) Then
     Parent := Twincontrol(Aowner);
 End;
 
-Procedure T3DBasisObject.Rotate(Amount, x, y, z: Extended);
+procedure T3DBasisObject.MoveTo(x, y, z: Extended);
+begin
+  MoveTo(PointF(x,y,z));
+end;
+
+procedure T3DBasisObject.Rotate(Amount, x, y, z: Extended);
 Begin
   Rotation[0] := Amount;
   Rotation[1] := x;
@@ -555,7 +817,7 @@ End;
 
 //----------------------------------------------------------------------------
 
-Procedure TO3DGroup.Draw;
+procedure TO3DGroup.Draw;
 Var
   I: Integer;
 Begin
@@ -567,16 +829,17 @@ Begin
         Begin
           glloadname(cardinal(self.Components[i]));
           glPushMatrix;
-          Draw;
+          if Visible then
+            Draw;
           glPopMatrix;
         End;
 End;
 
-Procedure TO3DGroup.MoveTo(nx, ny, nz: Extended);
+procedure TO3DGroup.MoveTo(nPnt: TPointF);
 Begin
-  Translation[0] := nx;
-  Translation[1] := ny;
-  Translation[2] := nz;
+  Translation[0] := nPnt.x;
+  Translation[1] := nPnt.y;
+  Translation[2] := nPnt.z;
 End;
 
 End.

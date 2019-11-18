@@ -8,7 +8,7 @@ interface
 
 uses Cmp_OpenGLScene;
 
-procedure CreateDTTraeger(nx,ny,nz:Single; nWidth,nHeight, nLength: Single; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject);
+function CreateDTTraeger(aPnt:TPointF; nWidth,nHeight, nLength: Single; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject):T3DBasisObject;
 
 implementation
 
@@ -22,20 +22,20 @@ uses
 
 Const TTrDef: Array[0..2, 0..1] Of single = ((1, 1), (1, 0.9), (0.1, 0.8));
 
-procedure CreateDTTraeger(nx,ny,nz:Single; nWidth,nHeight, nLength: Single; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject);
+function CreateDTTraeger(aPnt: TPointF; nWidth, nHeight, nLength: Single;
+  nMaterialDef: TMaterialBaseDef; FBasis: T3DBasisObject): T3DBasisObject;
 var
   p: Integer;
   yq: Integer;
   xq: Integer;
   I: Integer;
-  F3dObject: T3DZObject;
 begin
-  F3dObject := T3DPrism2.Create(FBasis);
-  with T3DPrism2(F3dObject) do
+  Result := T3DPrism2.Create(FBasis);
+  with T3DPrism2(Result) do
   begin
     Rotation[1] := 1;
     Rotation[0] := -90;
-    moveto(nx, -nz, ny);
+    moveto(aPnt.Rotxm90);
     QWidth := nWidth;
     QLength := nHeight;
     QHeight := nLength;
