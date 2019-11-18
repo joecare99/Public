@@ -15,58 +15,65 @@ uses
   Cmp_OpenGLScene;
 
 type
+
+  { T3DZObject }
+
   T3DZObject = Class(T3DBasisObject)
   public
-    x, y, z: Extended;
+    Pnt: TPointF;
     QColor: TGLArrayf4;
-
-    Procedure MoveTo(nx, ny, nz: Extended); override;
+    Procedure MoveTo(nPnt: TPointF); override;
   protected
     FDisplaylist:Cardinal;
   End;
 
-  T3DQuader = Class(T3DZObject)
+  { T3DDimObject }
+
+  T3DDimObject = Class(T3DZObject)
   public
     QWidth, QLength, QHeight: Extended;
+    procedure SetDimension(aDim:TPointF);virtual;
+  public
+  End;
+
+  T3DQuader = Class(T3DDimObject)
   public
     Procedure Draw; override;
   End;
 
-  T3DQuader2 = Class(T3DZObject)
-  public
-    QWidth, QLength, QHeight: Extended;
+  T3DQuader2 = Class(T3DDimObject)
   public
     Procedure Draw; override;
   End;
 
-  T3DSphere = Class(T3DZObject)
-  public
-    QWidth, QLength, QHeight: Extended;
+  T3DSphere = Class(T3DDimObject)
   public
     Procedure Draw; override;
   End;
 
-  T3DCylinder = Class(T3DZObject)
+  T3DCylinder = Class(T3DDimObject)
   private
      Fsteps:integer;
   public
-    QWidth, QLength, QHeight: Extended;
     Procedure Draw; override;
   published
     property Steps:integer read Fsteps write Fsteps;
   End;
 
-  T3DTorus = Class(T3DZObject)
+  { T3DTorus }
+
+  T3DTorus = Class(T3DDimObject)
   public
-    QWidth, QLength, QHeight: Extended;
+    RadiusOuter, RadiusInner: Extended;
   public
+    Procedure Draw; override;
   End;
 
-  T3DPrism = Class(T3DZObject)
+  T3DPrism = Class(T3DDimObject)
   private
   public
     QWidth, QLength, QHeight: Extended;
-    MaterialDef: TMaterialBasedef;
+    MaterialDef:TMaterialBaseDef;
   protected
     procedure DrawDeckel;virtual;
   public
@@ -90,7 +97,90 @@ type
     Procedure Draw; override;
   End;
 
+
+Function CreateQuader(aBase:T3DBasisObject; aPnt:TPointF;aDim:TPointF;aColor: TGLArrayf4):T3DQuader;
+Function CreateQuader2(aBase:T3DBasisObject;aPnt:TPointF;aDim:TPointF;aColor: TGLArrayf4):T3DQuader2;
+Function CreateSphere(aBase:T3DBasisObject;aPnt:TPointF;aDim:TPointF;aColor: TGLArrayf4):T3DSphere;
+Function CreateCylinderZ(aBase:T3DBasisObject;aPnt:TPointF;aDim:TPointF;aColor: TGLArrayf4):T3DCylinder;
+Function CreateCylinderY(aBase:T3DBasisObject;aPnt:TPointF;aDim:TPointF;aColor: TGLArrayf4):T3DCylinder;
+{Function CreateQuader(pnt:TPointF;Dim:TPointF):T3DQuader;
+Function CreateQuader(pnt:TPointF;Dim:TPointF):T3DQuader;
+}
 implementation
+
+function CreateQuader(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+  aColor: TGLArrayf4): T3DQuader;
+begin
+  result := T3DQuader.Create(aBase);
+  result.Pnt := aPnt;
+  Result.SetDimension(aDim);
+  Result.QColor := aColor;
+end;
+
+function CreateQuader2(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+  aColor: TGLArrayf4): T3DQuader2;
+begin
+  result := T3DQuader2.Create(aBase);
+  result.Pnt := aPnt;
+  Result.SetDimension(aDim);
+  Result.QColor := aColor;
+end;
+
+function CreateSphere(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+  aColor: TGLArrayf4): T3DSphere;
+begin
+  result := T3DSphere.Create(aBase);
+  result.Pnt := aPnt;
+  Result.SetDimension(aDim);
+  Result.QColor := aColor;
+end;
+
+function CreateCylinderZ(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+  aColor: TGLArrayf4): T3DCylinder;
+begin
+  result := T3DCylinder.Create(aBase);
+  result.Pnt := aPnt;
+  Result.SetDimension(aDim);
+
+  Result.Steps:=20;
+  Result.QColor := aColor;
+end;
+
+function CreateCylinderY(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+  aColor: TGLArrayf4): T3DCylinder;
+begin
+  result := T3DCylinder.Create(aBase);
+  result.Pnt := aPnt.Rotxm90;
+  Result.SetDimension(aDim.Rotxm90);
+  result.Rotate(-90,1,0,0);
+  Result.Steps:=20;
+  Result.QColor := aColor;
+
+end;
+
+function CreateCylinder(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+  aColor: TGLArrayf4): T3DCylinder;
+begin
+end;
+
+{ T3DDimObject }
+
+procedure T3DDimObject.SetDimension(aDim: TPointF);
+begin
+  QLength:=aDim.x;
+  QHeight:=aDim.y;
+  QWidth:=aDim.z;
+end;
+
+{ T3DTorus }
+
+procedure T3DTorus.Draw;
+begin
+  // Todo: Generate a Draw Methode
+  // Circle through outer
+  //   Circle through inner
+  //      Generatevertex
+end;
 
 Procedure T3DCone.Draw;
 Var
@@ -105,13 +195,13 @@ Begin
   glBegin(GL_TRIANGLE_FAN);
 //  glColor3fv(QColor);
   glNormal3f(0, -1, 0);
-  glVertex3f(X, Y - QHeight * 0.5, Z);
+  glVertex3f(pnt.X, pnt.Y - QHeight * 0.5, pnt.Z);
   For I := 0 To 40 Do
     Begin
       xx := sin((i / 40) * 2 * pi) * 0.5;
       zz := Cos((i / 40) * 2 * pi) * 0.5;
       glNormal3f(xx, 0, zz);
-      glVertex3f(X + QLength * xx, Y + QHeight * 0.5, Z + QWidth * zz);
+      glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * 0.5, pnt.Z + QWidth * zz);
     End;
   glEnd;
 
@@ -119,22 +209,20 @@ Begin
   glBegin(GL_TRIANGLE_FAN);
 
   glNormal3f(0, 1, 0);
-  glVertex3f(X, Y + QHeight * 0.5, Z);
+  glVertex3f(pnt.X, pnt.Y + QHeight * 0.5, pnt.Z);
   For I := 0 To 40 Do
     Begin
       xx := sin((i / 40) * 2 * pi) * 0.5;
       zz := Cos((i / 40) * 2 * pi) * 0.5;
       glNormal3f(xx * 0.3, 1, zz * 0.3);
-      glVertex3f(X + QLength * xx, Y + QHeight * 0.5, Z + QWidth * zz);
+      glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * 0.5, pnt.Z + QWidth * zz);
     End;
   glEnd;
 End;
 
-Procedure T3DZObject.MoveTo(nx, ny, nz: Extended);
+procedure T3DZObject.MoveTo(nPnt: TPointF);
 Begin
-  x := nx;
-  y := ny;
-  z := nz;
+  Pnt := nPnt;
 End;
 
 Const Wdef: Array[0..7] Of TGLArrayf3 =
@@ -173,11 +261,11 @@ Begin
             P := J * 2 + I;
 
           glNormal3f(nv0[0] * 0.99 + Wdef[p, 0] * 0.02, nv0[1] * 0.99 + Wdef[p, 1] * 0.02, nv0[2] * 0.99 + Wdef[p, 2] * 0.02);
-          glVertex3f(X + QLength * Wdef[P, 0] * 0.5, Y + QHeight * Wdef[P, 1] * 0.5, Z + QWidth * Wdef[P, 2] * 0.5);
+          glVertex3f(pnt.X + QLength * Wdef[P, 0] * 0.5, pnt.Y + QHeight * Wdef[P, 1] * 0.5, pnt.Z + QWidth * Wdef[P, 2] * 0.5);
         End;
       glend;
 
-    glFrontFace(GL_CW);       // Counter Clock-Wise
+    glFrontFace(GL_CW);       // Clock-Wise
       glBegin(GL_TRIANGLE_FAN);
       For I := 0 To 3 Do
         Begin
@@ -187,7 +275,7 @@ Begin
             P := J * 2 + I;
 
           glNormal3f(-nv0[0] * 0.99 - Wdef[p, 0] * 0.02, -nv0[1] * 0.99 - Wdef[p, 1] * 0.02, -nv0[2] * 0.99 - Wdef[p, 2] * 0.02);
-          glVertex3f(X - QLength * Wdef[P, 0] * 0.5, Y - QHeight * Wdef[P, 1] * 0.5, Z - QWidth * Wdef[P, 2] * 0.5);
+          glVertex3f(pnt.X - QLength * Wdef[P, 0] * 0.5, pnt.Y - QHeight * Wdef[P, 1] * 0.5, pnt.Z - QWidth * Wdef[P, 2] * 0.5);
         End;
       glend;
     End;
@@ -205,7 +293,7 @@ Begin
   glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
   glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, {$IFNDEF FPC}@{$ENDIF}QColor);
   // Reflective properties
-  // Reflective properties
+
   For J := 0 To 2 Do
     Begin
       nv0[0] := (Wdef[0, 0] + Wdef[2 + J * 2, 0]) * 0.5;
@@ -215,7 +303,7 @@ Begin
       glBegin(GL_TRIANGLE_FAN);
 
       glNormal3f(nv0[0] * 1.01, nv0[1] * 1.01, nv0[2] * 1.01);
-      glVertex3f(X + QLength * nv0[0] * 0.5, Y + QHeight * nv0[1] * 0.5, Z + QWidth * nv0[2] * 0.5);
+      glVertex3f(pnt.X + QLength * nv0[0] * 0.5, pnt.Y + QHeight * nv0[1] * 0.5, pnt.Z + QWidth * nv0[2] * 0.5);
 
       For I := 0 To 4 Do
         Begin
@@ -225,14 +313,14 @@ Begin
             P := J * 2 + I;
 
           glNormal3f(nv0[0] * 0.99 + Wdef[p, 0] * 0.02, nv0[1] * 0.99 + Wdef[p, 1] * 0.02, nv0[2] * 0.99 + Wdef[p, 2] * 0.02);
-          glVertex3f(X + QLength * Wdef[P, 0] * 0.5, Y + QHeight * Wdef[P, 1] * 0.5, Z + QWidth * Wdef[P, 2] * 0.5);
+          glVertex3f(pnt.X + QLength * Wdef[P, 0] * 0.5, pnt.Y + QHeight * Wdef[P, 1] * 0.5, pnt.Z + QWidth * Wdef[P, 2] * 0.5);
         End;
       glend;
 
-      glFrontFace(GL_CW);       // Counter Clock-Wise
+      glFrontFace(GL_CW);       // Clock-Wise
       glBegin(GL_TRIANGLE_FAN);
       glNormal3f(-nv0[0] * 1.01, -nv0[1] * 1.01, -nv0[2] * 1.01);
-      glVertex3f(X - QLength * nv0[0] * 0.5, Y - QHeight * nv0[1] * 0.5, Z - QWidth * nv0[2] * 0.5);
+      glVertex3f(pnt.X - QLength * nv0[0] * 0.5, pnt.Y - QHeight * nv0[1] * 0.5, pnt.Z - QWidth * nv0[2] * 0.5);
       For I := 0 To 4 Do
         Begin
           If I Mod 4 = 0 Then
@@ -241,7 +329,7 @@ Begin
             P := J * 2 + I;
 
           glNormal3f(-nv0[0] * 0.99 - Wdef[p, 0] * 0.02, -nv0[1] * 0.99 - Wdef[p, 1] * 0.02, -nv0[2] * 0.99 - Wdef[p, 2] * 0.02);
-          glVertex3f(X - QLength * Wdef[P, 0] * 0.5, Y - QHeight * Wdef[P, 1] * 0.5, Z - QWidth * Wdef[P, 2] * 0.5);
+          glVertex3f(pnt.X - QLength * Wdef[P, 0] * 0.5, pnt.Y - QHeight * Wdef[P, 1] * 0.5, pnt.Z - QWidth * Wdef[P, 2] * 0.5);
         End;
       glend;
     End;
@@ -301,9 +389,9 @@ Begin
       For J := 0 To trunc(x1 * (Steps * 4) + 1) Do
         Begin
           glNormal3f(p1[j][0] * 2, p1[j][1] * 2, p1[j][2] * 2);
-          glVertex3f(X + QLength * p1[j][0], Y + QHeight * p1[j][1], Z + QWidth * p1[j][2]);
+          glVertex3f(pnt.X + QLength * p1[j][0], pnt.Y + QHeight * p1[j][1], pnt.Z + QWidth * p1[j][2]);
           glNormal3f(p2[j][0] * 2, p2[j][1] * 2, p2[j][2] * 2);
-          glVertex3f(X + QLength * p2[j][0], Y + QHeight * p2[j][1], Z + QWidth * p2[j][2]);
+          glVertex3f(pnt.X + QLength * p2[j][0], pnt.Y + QHeight * p2[j][1], pnt.Z + QWidth * p2[j][2]);
 
         End;
       glEnd;
@@ -313,9 +401,9 @@ Begin
       For J := 0 To trunc(x1 * (Steps * 4) + 1) Do
         Begin
           glNormal3f(p1[j][0] * 2, -p1[j][1] * 2, p1[j][2] * 2);
-          glVertex3f(X + QLength * p1[j][0], Y - QHeight * p1[j][1], Z + QWidth * p1[j][2]);
+          glVertex3f(pnt.X + QLength * p1[j][0], pnt.Y - QHeight * p1[j][1], pnt.Z + QWidth * p1[j][2]);
           glNormal3f(p2[j][0] * 2, -p2[j][1] * 2, p2[j][2] * 2);
-          glVertex3f(X + QLength * p2[j][0], Y - QHeight * p2[j][1], Z + QWidth * p2[j][2]);
+          glVertex3f(pnt.X + QLength * p2[j][0], pnt.Y - QHeight * p2[j][1], pnt.Z + QWidth * p2[j][2]);
 
         End;
       glEnd;
@@ -343,20 +431,20 @@ Begin
       zz := {(i / 400) +}((i Mod 2) {/ 10} - 0.5);
       glNormal3f(xx * 2, yy * 2, zz * 0.4);
       //      glColor3fv(QColor);
-      glVertex3f(X + QLength * xx, Y + QHeight * yy, Z + QWidth * zz);
+      glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * yy, pnt.Z + QWidth * zz);
     End;
   glEnd;
 
   // Deckel1
   glBegin(GL_TRIANGLE_FAN);
   glNormal3f(0, 0, -1);
-  glVertex3f(X, Y, Z - QWidth * 0.5);
+  glVertex3f(pnt.X, pnt.Y, pnt.Z - QWidth * 0.5);
   For I := 0 To Fsteps Do
     Begin
       xx := sin((i / Fsteps) * 2 * pi) * 0.5;
       yy := Cos((i / Fsteps) * 2 * pi) * 0.5;
       glNormal3f(xx * 0.1, yy * 0.1, -0.9);
-      glVertex3f(X + QLength * xx, Y + QHeight * yy, Z - QWidth * 0.5);
+      glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * yy, pnt.Z - QWidth * 0.5);
     End;
   glEnd;
 
@@ -365,13 +453,13 @@ Begin
   glBegin(GL_TRIANGLE_FAN);
 
   glNormal3f(0, 0, 1);
-  glVertex3f(X, Y, Z + QWidth * 0.5);
+  glVertex3f(pnt.X, pnt.Y, pnt.Z + QWidth * 0.5);
   For I := 0 To Fsteps Do
     Begin
       xx := sin(((i + 0.5) / Fsteps) * 2 * pi) * 0.5;
       yy := Cos(((i + 0.5) / Fsteps) * 2 * pi) * 0.5;
       glNormal3f(xx * 0.1, yy * 0.1, 0.9);
-      glVertex3f(X + QLength * xx, Y + QHeight * yy, Z + QWidth * 0.5);
+      glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * yy, pnt.Z + QWidth * 0.5);
     End;
   glEnd;
 
@@ -406,16 +494,16 @@ Begin
           nn1:=sqrt(sqr(Pdef[I2].u-Pdef[I].u)+ sqr( Pdef[I2].v -Pdef[I].v ));
           if nn1>0 then
             glNormal3f((Pdef[I].v-Pdef[I2].v) / nn1+Pdef[I].u*0.02, -0.02, (Pdef[I2].u-Pdef[I].u) /nn1+Pdef[I].v*0.02);
-          glVertex3f(X + QLength * Pdef[I].u, Y - QHeight * 0.5, Z + QWidth * Pdef[I].v);
+          glVertex3f(pnt.X + QLength * Pdef[I].u, pnt.Y - QHeight * 0.5, pnt.Z + QWidth * Pdef[I].v);
           if nn1>0 then
             glNormal3f((Pdef[I].v-Pdef[I2].v) / nn1+Pdef[I].u*0.02, 0.02, (Pdef[I2].u-Pdef[I].u) /nn1+Pdef[I].v*0.02);
-          glVertex3f(X + QLength * Pdef[I].u, Y + QHeight * 0.5, Z + QWidth * Pdef[I].v);
+          glVertex3f(pnt.X + QLength * Pdef[I].u, pnt.Y + QHeight * 0.5, pnt.Z + QWidth * Pdef[I].v);
           if nn1>0 then
             glNormal3f((Pdef[I].v-Pdef[I2].v) / nn1+Pdef[I2].u*0.02, -0.02, (Pdef[I2].u-Pdef[I].u) /nn1+Pdef[I2].v*0.02);
-          glVertex3f(X + QLength * Pdef[I2].u, Y - QHeight * 0.5, Z + QWidth * Pdef[I2].v);
+          glVertex3f(pnt.X + QLength * Pdef[I2].u, pnt.Y - QHeight * 0.5, pnt.Z + QWidth * Pdef[I2].v);
           if nn1>0 then
             glNormal3f((Pdef[I].v-Pdef[I2].v) / nn1+Pdef[I2].u*0.02, 0.02, (Pdef[I2].u-Pdef[I].u) /nn1+Pdef[I2].v*0.02);
-          glVertex3f(X + QLength * Pdef[I2].u, Y + QHeight * 0.5, Z + QWidth * Pdef[I2].v);
+          glVertex3f(pnt.X + QLength * Pdef[I2].u, pnt.Y + QHeight * 0.5, pnt.Z + QWidth * Pdef[I2].v);
         End;
       glEnd;
 
@@ -434,29 +522,29 @@ begin
   glFrontFace(GL_CCW);       //Counter Clock-Wise
   glBegin(GL_TRIANGLE_FAN);
   glNormal3f(0, 1, 0);
-  glVertex3f(X, Y + QHeight * 0.5, Z);
+  glVertex3f(pnt.X, pnt.Y + QHeight * 0.5, pnt.Z);
   for I := 0 to High(PDef) do
   begin
   glNormal3f(Pdef[I].u * 0.1, 0.9, Pdef[I].v * 0.1);
-  glVertex3f(X + QLength * Pdef[I].u, Y + QHeight * 0.5, Z + QWidth * Pdef[I].v);
+  glVertex3f(pnt.X + QLength * Pdef[I].u, pnt.Y + QHeight * 0.5, pnt.Z + QWidth * Pdef[I].v);
   end;
   I := 0;
   glNormal3f(Pdef[I].u * 0.1, 0.9, Pdef[I].v * 0.1);
-  glVertex3f(X + QLength * Pdef[I].u, Y + QHeight * 0.5, Z + QWidth * Pdef[I].v);
+  glVertex3f(pnt.X + QLength * Pdef[I].u, pnt.Y + QHeight * 0.5, pnt.Z + QWidth * Pdef[I].v);
   glEnd;
   // Deckel1
   glFrontFace(GL_CW);       // Clock-Wise
   glBegin(GL_TRIANGLE_FAN);
   glNormal3f(0, -1, 0);
-  glVertex3f(X, Y - QHeight * 0.5, Z);
+  glVertex3f(pnt.X, pnt.Y - QHeight * 0.5, pnt.Z);
   for I := 0 to High(PDef) do
   begin
   glNormal3f(Pdef[I].u * 0.1, -0.9, Pdef[I].v * 0.1);
-  glVertex3f(X + QLength * Pdef[I].u, Y - QHeight * 0.5, Z + QWidth * Pdef[I].v);
+  glVertex3f(pnt.X + QLength * Pdef[I].u, pnt.Y - QHeight * 0.5, pnt.Z + QWidth * Pdef[I].v);
   end;
   I := 0;
   glNormal3f(Pdef[I].u * 0.1, -0.9, Pdef[I].v * 0.1);
-  glVertex3f(X + QLength * Pdef[I].u, Y - QHeight * 0.5, Z + QWidth * Pdef[I].v);
+  glVertex3f(pnt.X + QLength * Pdef[I].u, pnt.Y - QHeight * 0.5, pnt.Z + QWidth * Pdef[I].v);
   glEnd;
 end;
 
@@ -474,7 +562,7 @@ Begin
         If FillDef[I] >= 0 Then
           Begin
             glNormal3f(Pdef[FillDef[I]].u * 0.1, 0.9, Pdef[FillDef[I]].v * 0.1);
-            glVertex3f(X + QLength * Pdef[FillDef[I]].u, Y + QHeight * 0.5, Z + QWidth * Pdef[FillDef[I]].v);
+            glVertex3f(pnt.X + QLength * Pdef[FillDef[I]].u, pnt.Y + QHeight * 0.5, pnt.Z + QWidth * Pdef[FillDef[I]].v);
           End
         Else
           Begin
@@ -490,7 +578,7 @@ Begin
         If FillDef[I] >= 0 Then
           Begin
             glNormal3f(Pdef[FillDef[I]].u * 0.1,-0.9, Pdef[FillDef[I]].v * 0.1);
-            glVertex3f(X + QLength * Pdef[FillDef[I]].u, Y - QHeight * 0.5, Z + QWidth * Pdef[FillDef[I]].v);
+            glVertex3f(pnt.X + QLength * Pdef[FillDef[I]].u, pnt.Y - QHeight * 0.5, pnt.Z + QWidth * Pdef[FillDef[I]].v);
           End
         Else
           Begin
