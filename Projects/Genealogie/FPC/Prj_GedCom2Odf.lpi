@@ -37,7 +37,7 @@
         <PackageName Value="LCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="8">
+    <Units Count="9">
       <Unit0>
         <Filename Value="Prj_GedCom2Odf.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -77,6 +77,10 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit7>
+      <Unit8>
+        <Filename Value="..\..\..\Daten\Source\XML_Stuff\laz2_XMLWrite2.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -87,7 +91,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source\GedCom2Odf;..\Source\Components;..\Source\gedcom-import"/>
+      <OtherUnitFiles Value="..\Source\GedCom2Odf;..\Source\Components;..\Source\gedcom-import;..\..\..\Daten\Source\XML_Stuff"/>
       <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>

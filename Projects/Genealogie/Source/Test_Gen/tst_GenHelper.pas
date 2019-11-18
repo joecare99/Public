@@ -28,6 +28,8 @@ type
 
 implementation
 
+uses unt_GenTestBase;
+
 procedure TTestGenealogieHelper.TestSetUp;
 begin
     CheckNotNull(FGedComFile, 'FGedComFile is assigned');
@@ -41,18 +43,7 @@ var
     i: integer;
 begin
     inherited Create;
-    FDataPath := 'Data';
-    for i := 0 to 2 do
-        if DirectoryExists(FDataPath) then
-            break
-        else
-            FDataPath := '..' + DirectorySeparator + FDataPath;
-    if not DirectoryExists(FDataPath) then
-        FDataPath := GetAppConfigDir(True)
-    else
-        FDataPath := FDataPath + DirectorySeparator + 'GenData';
-    if not DirectoryExists(FDataPath) then
-        ForceDirectories(FDataPath);
+     FDataPath:=GetDataPath('GenData');
 end;
 
 procedure TTestGenealogieHelper.SetUp;

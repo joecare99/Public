@@ -70,6 +70,7 @@ type
         procedure SetPlace(AValue: IGenFact); overload;
         procedure SetSource(AValue: TGedSource); overload;
         procedure SetSource(AValue: IGenData); overload;
+        procedure SetNodeType(AValue: string); override;
         procedure ChildUpdate(aChild: TGedComObj); override;
     published
         property Date: string read GetDate write SetDate;
@@ -184,11 +185,13 @@ type
         FMother: TGedIndividual;
         FName: TIndName;
         FRefNr: TGedComObj;
+        FFamSrchID:TGedComObj;
         FReligion: TGedEvent;
         FSex: TGedEvent;
 
         FResidence: TGedEvent;
         FParentFamily: TGedFamily;
+        FTimeStamp:TDatetime;
         Fspouses: array of TGedIndividual;
         FFamilys: array of TGedFamily;
         FChilds: array of TGedIndividual;
@@ -226,6 +229,7 @@ type
         function GetSpouseCount: integer;
         function GetSpouses(Idx: variant): TGedIndividual; overload;
         function GetSpouses(Idx: variant): IGenIndividual; overload;
+        function GetTimeStamp:TDateTime;
 
         procedure SetBirth(AValue: TGedEvent); overload;
         procedure SetBirth(AValue: IGenEvent); overload;
@@ -277,6 +281,8 @@ type
         procedure SetSpouses(Idx: variant; AValue: TGedIndividual); overload;
         procedure SetSpouses(Idx: variant; AValue: IGenIndividual); overload;
 
+        procedure SetTimestamp(AValue: TDateTime); overload;
+
         procedure AppendEvent(aEvent: IGenEvent);
         procedure RemoveEvent(aEvent: IGenEvent);
 
@@ -308,6 +314,7 @@ type
         property SpouseCount: integer read GetSpouseCount;
         property ChildrenCount: integer read GetChildrenCount;
         property FamCount: integer read GetFamilyCount;
+        property LastChange:TDatetime read GetTimeStamp write SetTimeStamp;
 
         {---- vital - Information ---- }
         property Name: string read GetName write SetName;
@@ -354,14 +361,16 @@ type
 
     { TGedFamChildrenEnumerator }
 
-    TGedFamChildrenEnumerator = class(TGedIndEnumerator)
+    TGedFamChildrenEnumerator = class(TGedIndEnumerator,IGenIndEnumerator)
     private
         FBaseFam: TGedFamily;
     protected
-        function getCurrent: TGedIndividual; override;
+        function getCurrent: TGedIndividual; override;overload;
+        function getCurrent: IGenIndividual; overload;
     public
         constructor Create(ATree: TGedFamily); reintroduce;
         function MoveNext: boolean; override;
+        function GetEnumerator: IGenIndEnumerator;
     end;
 
     TGedLink = class;
@@ -414,12 +423,14 @@ type
         property MarriagePlace: string read GetMarriagePlace write SetMarriagePlace;
         property Husband: TGedIndividual read FHusband;
         property Wife: TGedIndividual read FWife;
-
+        property Children[Idx: variant]:IGenIndividual read GetChildren write SetChildren;
+        Property ChildCount:Integer read GetChildCount;
     public
         constructor Create(const aID, aType: string; const aInfo: string); override;
         class function AssNodeType: string; override;
         class function HandlesNodeType(aType: string): boolean; override;
         function EnumerateChildren: TGedIndEnumerator;
+        function EnumChildren: IGenIndEnumerator;
     end;
 
     { TGedLink }
@@ -438,6 +449,12 @@ type
         class function AssNodeType: string; override;
         class function HandlesNodeType(aType: string): boolean; override;
         property Removing: boolean read FRemoving;
+    end;
+
+    TGedDefRec=Record
+      E:TenumEventType;
+      T:String;
+      N:String;
     end;
 
 const
@@ -479,25 +496,139 @@ const
     CFactDescription='DSCR';
     CFactUUID='_UID';
     CFactFsID='_FID';
+    CFactFsID2='FSID';
     CFactProperty='PROP';
 
     CLinkFamSpouse = 'FAMS';
     CLinkFamChild = 'FAMC';
     CLinkAssosiation = 'ASSO';
 
-    CTagToNatur: array[0..17] of string =
+    CLastChange='CHAN';
+
+    CTagToNatur: array[0..20] of string =
         (CEventBirth, 'born', 'Birth',
         CEventBaptism, 'baptised', 'Baptism',
         CEventDeath, 'died', 'Death',
         CEventBurial, 'burried', 'Burrial',
         CEventMarriage, 'married', 'Marriage',
+        CEventDivource, 'divorced', 'Divorce',
         CEventConfirm, 'confirmed', 'Confirmation');
 
+    CEventTag:array[0..21] of TGedDefRec =
+        ((E:evt_ID;T:CFactRefNr;N:'ID'),
+         (E:evt_Birth;T:CEventBirth;N:'Geboren:'),
+         (E:evt_Baptism;T:CEventBirth;N:'Getauft:'),
+         (E:evt_Death;T:CEventBirth;N:'Gestorben:'),
+         (E:evt_Burial;T:CEventBirth;N:'Begraben:'),
+         (E:evt_Marriage;T:CEventMarriage;N:'Geheiratet:'),
+         (E:evt_Confirmation;T:CEventBirth;N:'Konfirmiert:'),
+         (E:evt_Divorce;T:CEventBirth;N:'Geschieden:'),
+         (E:evt_AddEmigration;T:CEventEmigration;N:'Ausgewandert:'),
+         (E:evt_Education;T:CEventEducation;N:'Ausbildung:'),
+         (E:evt_Graduation;T:CeventGraduation;N:'Abschluß:'),
+         (E:evt_FreeEvent;T:CEvent;N:''),
+         (E:evt_Adoption;T:CEventAdoption;N:'Adoption:'),
+         (E:evt_Cremation;T:CeventCremation;N:'Einäscherung:'),
+         (E:evt_Immigration;T:CEventImmigration;N:'Eingewandert:'),
+         (E:evt_Probation;T:CEventProbation;N:'Doktortitel:'),
+         (E:evt_Retirement;T:CEventRetrement;N:'Ruhestand:'),
+         (E:evt_LastWill;T:CEventLastWill;N:'Testament:'),
+         (E:evt_Occupation;T:CFactOccupation;N:'Beruf:'),
+         (E:evt_Residence;T:CFactResidence;N:'Wohnhaft:'),
+         (E:evt_Property;T:CFactProperty;N:'Besitz:'),
+         (E:evt_LastChange;T:CLastChange;N:'letzte Änderung:'));
+
 function TagToNatur(aTag: string; kind: integer = 0): string;
+Function Datetime2GedDate(aDt:TDateTime;aModif:string=''):String;
+Function GedDate2DateTime(agDt:String;out aModif:string):TDateTime;
 
 implementation
 
-uses variants;
+uses variants,dateutils;
+
+function Datetime2GedDate(aDt: TDateTime; aModif: string): String;
+
+begin
+  result := inttostr(DayOf(adt))+' '+CMonthNames[MonthOf(aDT)*2-2]+' '+inttostr(YearOf(adt));
+  if aModif <> '' then
+    Result:= aModif+' '+Result;
+end;
+
+function GedDate2DateTime(agDt: String; out aModif: string): TDateTime;
+
+var
+  lYear: Longint;
+  lDatespl: TStringArray;
+  i, lMonth,lDay: Integer;
+  lValid: Boolean;
+
+  function DecodeDateOrYear(aDate:String;var lDate:TDateTime):boolean;
+  var
+    lInt: Longint;
+  begin
+    result:= false;
+    if  TryStrToDate(aDate,lDate) then exit(true)
+    else if trystrtoint(aDate,lInt) then
+      if TryEncodeDate(lInt,1,1,lDate) then exit(true)
+      else {!}
+    else exit(true) {no result}
+  end;
+
+begin
+  result := 0.0;  // Gütliger default
+  aModif := '';
+  lDay:=0;
+  lMonth:=0;
+  lYear:=0;
+  // Zuerst den Text nach Leerzeichen aufsplitten
+  lDatespl:= agDt.Split(' ');
+  // 1. Analyse: anzahl der Splitter
+  case length(lDatespl) of
+  0,1:
+    if DecodeDateOrYear(agDt,result) then exit;
+  2:
+    begin
+      if not TryStrToInt(lDatespl[0],lMonth) then
+      for i := 0 to High(CMonthNames) div 2 do
+         if uppercase(lDatespl[0])=CMonthNames[i*2] then
+           lMonth:= i+1;
+      if lMonth=0 then
+        begin
+          aModif:=lDatespl[0];
+          if DecodeDateOrYear(lDatespl[1],result) then exit;
+        end
+      else
+        begin
+          lDay := 1;
+          trystrtoint(lDatespl[1],lYear);
+        end;
+    end;
+  3: if  (lDatespl[0][1] in ['0'..'9']) and
+    trystrtoint(lDatespl[2],lYear) and
+    trystrtoint(lDatespl[0],lDay) then
+    begin
+      for i := 0 to High(CMonthNames) div 2 do
+         if uppercase(lDatespl[1])=CMonthNames[i*2] then
+           lMonth:= i+1;
+    end
+    else
+     begin
+
+     end
+  else
+  if  (lDatespl[1][1] in ['0'..'9']) and
+      trystrtoint(lDatespl[3],lYear) and
+      trystrtoint(lDatespl[1],lDay) then
+      begin
+        aModif:=lDatespl[0];
+        for i := 0 to High(CMonthNames) div 2 do
+           if uppercase(lDatespl[2])=CMonthNames[i*2] then
+             lMonth:= i+1;
+      end
+  end;
+  lvalid := TryEncodeDate(lYear,lMonth,lDay,result);
+end;
+
 
 function TagToNatur(aTag: string; kind: integer = 0): string;
 var
@@ -605,8 +736,14 @@ end;
 
 function TGedFamChildrenEnumerator.getCurrent: TGedIndividual;
 begin
-    Result := TGedIndividual(FBaseFam[FIter].Link);
+    Result := TGedIndividual( FBaseFam.Children[FIter].self);
 end;
+
+function TGedFamChildrenEnumerator.getCurrent: IGenIndividual;
+begin
+    Result :=  FBaseFam.Children[FIter];
+end;
+
 
 constructor TGedFamChildrenEnumerator.Create(ATree: TGedFamily);
 begin
@@ -616,11 +753,15 @@ end;
 
 function TGedFamChildrenEnumerator.MoveNext: boolean;
 begin
-    while (Fiter < 0) or ((FBaseFam[Fiter].NodeType <> 'CHIL') and
-            (Fiter < FBaseFam.Count)) do
-        Inc(FIter);
-    Result := Fiter < FBaseFam.Count;
+   inc(FIter);
+   Result := Fiter < FBaseFam.ChildCount;
 end;
+
+function TGedFamChildrenEnumerator.GetEnumerator: IGenIndEnumerator;
+begin
+   Result := self;
+end;
+
 
 { TGedFamily }
 
@@ -949,6 +1090,11 @@ begin
     Result := TGedFamChildrenEnumerator.Create(self);
 end;
 
+function TGedFamily.EnumChildren: IGenIndEnumerator;
+begin
+   Result := TgedFamChildrenEnumerator.Create(self);
+end;
+
 { TGedIndSpouseEnumerator }
 
 function TGedIndSpouseEnumerator.getCurrent: TGedIndividual;
@@ -1172,20 +1318,12 @@ end;
 
 constructor TGedEvent.Create(const aID, aType: string; const aInfo: string);
 
+var i : Integer;
 begin
    inherited;
-   if aType = CEventBirth then
-     FEventType:=evt_Birth;
-   if aType = CEventBaptism then
-     FEventType:=evt_Baptism;
-   if aType = CEventMarriage then
-     FEventType:=evt_Marriage;
-   if aType = CEventDeath then
-     FEventType:=evt_Death;
-   if aType = CEventBurial then
-     FEventType:=evt_Burial;
-   if aType = CEventConfirm then
-     FEventType:=evt_Confirmation;
+   for i := 0 to high(CEventTag) do
+     if aType = CEventTag[i].T then
+        FEventType:=CEventTag[i].E;
 end;
 
 procedure TGedEvent.SetDate(AValue: string);
@@ -1197,18 +1335,15 @@ begin
 end;
 
 procedure TGedEvent.SetEventType(AValue: TenumEventType);
+var
+  i: Integer;
 begin
     if FEventType = AValue then
         exit;
     FEventType := AValue;
-    case Avalue of
-        evt_Birth: NodeType := CEventBirth;
-        evt_Baptism: NodeType := CEventBaptism;
-        evt_Marriage: NodeType := CEventMarriage;
-        evt_Death: NodeType := CEventDeath;
-        evt_Burial: NodeType := CEventBurial;
-        evt_Confirmation: NodeType := CEventConfirm;
-      end;
+    for i := 0 to high(CEventTag) do
+     if AValue = CEventTag[i].e then
+        NodeType:=CEventTag[i].T;
 end;
 
 function TGedEvent.GetSource: IGenData;
@@ -1235,6 +1370,7 @@ end;
 
 function TGedEvent.GetEventType: TenumEventType;
 begin
+
     Result := FEventType;
 end;
 
@@ -1276,6 +1412,17 @@ end;
 procedure TGedEvent.SetSource(AValue: IGenData);
 begin
     SetSource(TGedSource(AValue.Self));
+end;
+
+procedure TGedEvent.SetNodeType(AValue:String);
+
+var
+  i: Integer;
+begin
+  inherited;
+  for i := 0 to high(CEventTag) do
+    if AValue = CEventTag[i].T then
+       FEventType:=CEventTag[i].E;
 end;
 
 procedure TGedEvent.ChildUpdate(aChild: TGedComObj);
@@ -1323,7 +1470,8 @@ begin
         (atype = CEventMarriage) or (atype = CEventConfirm) or
         (atype = CFactOccupation) or (atype = CFactSex) or
         (atype = CFactReligion) or (aType = CFactResidence) or
-        (atype = CEventEmigration) or (aType = CEventDivource) ;
+        (atype = CEventEmigration) or (aType = CEventDivource) or
+        (atype = CEventLastWill) or (aType = CLastChange) ;
 end;
 
 { TGedIndividual }
@@ -1600,6 +1748,12 @@ begin
     Result := nil;
     if VarIsOrdinal(Idx) then
         Result := Fspouses[idx];
+end;
+
+function TGedIndividual.GetTimeStamp:TDateTime;
+
+begin
+   result := FTimeStamp;
 end;
 
 procedure TGedIndividual.SetBaptDate(AValue: string);
@@ -2009,6 +2163,14 @@ begin
     // Todo:
 end;
 
+Procedure TGedIndividual.SetTimestamp(AValue:TDateTime);
+
+begin
+  if FTimeStamp=AValue then exit;
+  self[CLastChange][CEventDate].data:=dateTime2GedDate(avalue);
+  FTimeStamp:=AValue;
+end;
+
 Procedure TGedIndividual.AppendEvent(aEvent:IGenEvent);
 var
   lEvt: IGenEvent;
@@ -2066,6 +2228,7 @@ end;
 procedure TGedIndividual.ChildUpdate(aChild: TGedComObj);
 var
     lIndHusband, lIndWife: TGedIndividual;
+    lModif: string;
 begin
     if (aChild.NodeType = CFactName) and not assigned(aChild.find('TYPE')) then
         if assigned(Fname) and (Fname.Parent = IGedParent(self)) then
@@ -2086,6 +2249,8 @@ begin
         FBurial := TGedEvent(aChild)
     else if aChild.NodeType = CFactRefNr then
         FRefNr := aChild
+    else if aChild.NodeType = CLastChange Then
+      FTimeStamp:=GedDate2DateTime(Tgedevent(aChild).Date,lModif)
     else if aChild.NodeType = CLinkFamSpouse then
         if TGedLink(aChild).Removing or not assigned(aChild.Parent) then
           begin

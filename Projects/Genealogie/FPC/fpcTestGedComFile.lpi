@@ -23,7 +23,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import;..\Source\GedCom2Odf;..\Source\Components"/>
+            <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import;..\Source\GedCom2Odf;..\Source\Components;..\..\..\Daten\Source\XML_Stuff"/>
             <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -64,7 +64,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import;..\Source\GedCom2Odf;..\Source\Components"/>
+            <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import;..\Source\GedCom2Odf;..\Source\Components;..\..\..\Daten\Source\XML_Stuff"/>
             <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <CodeGeneration>
@@ -113,7 +113,7 @@
         <PackageName Value="FCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="10">
+    <Units Count="13">
       <Unit0>
         <Filename Value="fpcTestGedComFile.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -155,6 +155,18 @@
         <Filename Value="..\Source\Components\unt_IGenBase2.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit9>
+      <Unit10>
+        <Filename Value="..\Source\Test_Gen\tst_GedComExt.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\Source\Test_Gen\unt_GenTestBase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\..\..\Daten\Source\XML_Stuff\laz2_XMLWrite2.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -165,7 +177,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import;..\Source\GedCom2Odf;..\Source\Components"/>
+      <OtherUnitFiles Value="..\Source\Test_Gen;..\gedcom-import;..\Source\gedcom-import;..\Source\GedCom2Odf;..\Source\Components;..\..\..\Daten\Source\XML_Stuff"/>
       <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>

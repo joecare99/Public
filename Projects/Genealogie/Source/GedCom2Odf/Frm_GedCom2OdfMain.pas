@@ -28,11 +28,14 @@ type
     lblSetNameResult: TLabel;
     lblStatistics: TLabel;
     OpenDialog1: TOpenDialog;
+    pnlClTop: TPanel;
+    pnlClient: TPanel;
     pnlBottom: TPanel;
     pnlDetail: TPanel;
     pnlLeft: TPanel;
     pnlTop: TPanel;
     ProgressBar1: TProgressBar;
+    Splitter1: TSplitter;
     TreeView1: TTreeView;
     procedure ApplicationProperties1Idle(Sender: TObject; var Done: Boolean);
     procedure btnAutoEstBirthClick(Sender: TObject);
@@ -231,10 +234,14 @@ begin
   FGenealogieWriter.SortAndRenumberFamiliies;
   FGenealogieWriter.FamList.SaveToFile(ChangeFileExt(cbxFilename.Text,'f.txt'));
   FGenealogieWriter.indList.SaveToFile(ChangeFileExt(cbxFilename.Text,'i.txt'));
+  FGenealogieWriter.OccuList.SaveToFile(ChangeFileExt(cbxFilename.Text,'o.txt'));
   FGenealogieWriter.PlacList.SaveToFile(ChangeFileExt(cbxFilename.Text,'p.txt'));
+  FGenealogieWriter.Plac2List.SaveToFile(ChangeFileExt(cbxFilename.Text,'p2.txt'));
   FGenealogieWriter.WriteIndIndex;
+  FGenealogieWriter.WriteOccIndex;
   FGenealogieWriter.WritePlaceIndex;
-  FGenealogieWriter.Document.SaveToSingleXml(ChangeFileExt(cbxFilename.Text,'.fodt'));
+  FGenealogieWriter.WritePlace2Index;
+  FGenealogieWriter.SaveToSingleXml(ChangeFileExt(cbxFilename.Text,'.fodt'));
 end;
 
 procedure TfrmGedCom2OdfMain.FormCreate(Sender: TObject);
