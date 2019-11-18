@@ -90,6 +90,7 @@ type
         function GetChild({%H-}Idx: variant): TGedComObj; virtual;
         function GetParent: IGedParent;
         function ChildCount: integer; virtual;
+        procedure SetNodeType(AValue: string); virtual;
         procedure SetRoot(AValue: IGedParent); virtual;
         procedure SetLink(AValue: TGedComObj); virtual;
         procedure SetData({%H-}AValue: string); virtual;
@@ -118,7 +119,7 @@ type
         property Root: IGedParent read FRoot write SetRoot;
         property Data: string read GetData write SetData;
         property Link: TGedComObj read GetLink write SetLink;
-        property NodeType: string read FNodeType write FNodeType;
+        property NodeType: string read FNodeType write SetNodeType;
         property NodeID: string read FNodeID write SetNodeID;
         property Count: integer read ChildCount;
         property Updateing: boolean read FUpdating;
@@ -269,6 +270,7 @@ const
     CEventDate = 'DATE';
 
 
+
 implementation
 
 uses Unt_StringProcs, LConvEncoding, variants;
@@ -368,6 +370,12 @@ begin
     if FNodeID = AValue then
         Exit;
     FNodeID := AValue;
+end;
+
+procedure TGedComObj.SetNodeType(AValue: string);
+begin
+  if FNodeType=AValue then Exit;
+  FNodeType:=AValue;
 end;
 
 function TGedComObj.GetData: string;

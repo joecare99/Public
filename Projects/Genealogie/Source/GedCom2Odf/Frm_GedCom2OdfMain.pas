@@ -28,11 +28,14 @@ type
     lblSetNameResult: TLabel;
     lblStatistics: TLabel;
     OpenDialog1: TOpenDialog;
+    pnlClTop: TPanel;
+    pnlClient: TPanel;
     pnlBottom: TPanel;
     pnlDetail: TPanel;
     pnlLeft: TPanel;
     pnlTop: TPanel;
     ProgressBar1: TProgressBar;
+    Splitter1: TSplitter;
     TreeView1: TTreeView;
     procedure ApplicationProperties1Idle(Sender: TObject; var Done: Boolean);
     procedure btnAutoEstBirthClick(Sender: TObject);
@@ -238,7 +241,7 @@ begin
   FGenealogieWriter.WriteOccIndex;
   FGenealogieWriter.WritePlaceIndex;
   FGenealogieWriter.WritePlace2Index;
-  FGenealogieWriter.Document.SaveToSingleXml(ChangeFileExt(cbxFilename.Text,'.fodt'));
+  FGenealogieWriter.SaveToSingleXml(ChangeFileExt(cbxFilename.Text,'.fodt'));
 end;
 
 procedure TfrmGedCom2OdfMain.FormCreate(Sender: TObject);
