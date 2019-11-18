@@ -10,7 +10,6 @@ object frmGedCom2OdfMain: TfrmGedCom2OdfMain
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
-  LCLVersion = '2.0.4.0'
   object pnlTop: TPanel
     Left = 0
     Height = 54
@@ -138,74 +137,101 @@ object frmGedCom2OdfMain: TfrmGedCom2OdfMain
       OnSelectionChanged = TreeView1SelectionChanged
     end
   end
-  object Button1: TButton
-    Left = 888
-    Height = 46
-    Top = 217
-    Width = 141
-    Caption = 'Button1'
-    Font.Color = clWindowText
-    Font.Height = -17
-    Font.Name = 'Tahoma'
-    OnClick = Button1Click
-    ParentFont = False
+  object pnlClient: TPanel
+    Left = 386
+    Height = 856
+    Top = 54
+    Width = 870
+    Align = alClient
+    ClientHeight = 856
+    ClientWidth = 870
     TabOrder = 2
+    object pnlClTop: TPanel
+      Left = 1
+      Height = 267
+      Top = 1
+      Width = 868
+      Align = alTop
+      ClientHeight = 267
+      ClientWidth = 868
+      TabOrder = 0
+      object Button1: TButton
+        Left = 504
+        Height = 46
+        Top = 177
+        Width = 141
+        Caption = 'Button1'
+        Font.Color = clWindowText
+        Font.Height = -17
+        Font.Name = 'Tahoma'
+        OnClick = Button1Click
+        ParentFont = False
+        TabOrder = 0
+      end
+      object btnAutoEstBirth: TButton
+        Left = 16
+        Height = 62
+        Top = 72
+        Width = 176
+        Caption = 'Estimate Birth'
+        OnClick = btnAutoEstBirthClick
+        TabOrder = 1
+      end
+      object lblEstBirthResult: TLabel
+        Left = 136
+        Height = 25
+        Top = 135
+        Width = 34
+        Caption = '<0>'
+        ParentColor = False
+      end
+      object lblSetNameResult: TLabel
+        Left = 141
+        Height = 25
+        Top = 227
+        Width = 34
+        Caption = '<0>'
+        ParentColor = False
+        OnClick = lblSetNameResultClick
+      end
+      object btnAutoSetName: TButton
+        Left = 16
+        Height = 62
+        Top = 161
+        Width = 176
+        Caption = 'Set Name'
+        OnClick = btnAutoSetNameClick
+        TabOrder = 2
+      end
+      object ProgressBar1: TProgressBar
+        Left = 94
+        Height = 30
+        Top = 20
+        Width = 190
+        TabOrder = 3
+      end
+      object btnGotoLink: TSpeedButton
+        Left = 18
+        Height = 33
+        Top = 16
+        Width = 59
+        OnClick = btnGotoLinkClick
+      end
+    end
+    object pnlDetail: TPanel
+      Left = 1
+      Height = 587
+      Top = 268
+      Width = 868
+      Align = alClient
+      TabOrder = 1
+    end
   end
-  object btnAutoEstBirth: TButton
-    Left = 400
-    Height = 62
-    Top = 112
-    Width = 176
-    Caption = 'Estimate Birth'
-    OnClick = btnAutoEstBirthClick
-    TabOrder = 3
-  end
-  object lblEstBirthResult: TLabel
-    Left = 520
-    Height = 25
-    Top = 175
-    Width = 34
-    Caption = '<0>'
-    ParentColor = False
-  end
-  object lblSetNameResult: TLabel
-    Left = 525
-    Height = 25
-    Top = 267
-    Width = 34
-    Caption = '<0>'
-    ParentColor = False
-    OnClick = lblSetNameResultClick
-  end
-  object btnAutoSetName: TButton
-    Left = 400
-    Height = 62
-    Top = 201
-    Width = 176
-    Caption = 'Set Name'
-    OnClick = btnAutoSetNameClick
-    TabOrder = 4
-  end
-  object ProgressBar1: TProgressBar
-    Left = 478
-    Height = 30
-    Top = 60
-    Width = 190
-    TabOrder = 5
-  end
-  object pnlDetail: TPanel
-    Left = 323
-    Height = 544
-    Top = 366
-    Width = 933
-    TabOrder = 6
-  end
-  object btnGotoLink: TSpeedButton
-    Left = 402
-    Height = 33
-    Top = 56
-    Width = 59
-    OnClick = btnGotoLinkClick
+  object Splitter1: TSplitter
+    Left = 378
+    Height = 856
+    Top = 54
+    Width = 8
   end
   object Config1: TConfig
     left = 752

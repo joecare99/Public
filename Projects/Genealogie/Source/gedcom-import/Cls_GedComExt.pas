@@ -70,6 +70,7 @@ type
         procedure SetPlace(AValue: IGenFact); overload;
         procedure SetSource(AValue: TGedSource); overload;
         procedure SetSource(AValue: IGenData); overload;
+        procedure SetNodeType(AValue: string); override;
         procedure ChildUpdate(aChild: TGedComObj); override;
     published
         property Date: string read GetDate write SetDate;
@@ -513,7 +514,7 @@ const
         CEventDivource, 'divorced', 'Divorce',
         CEventConfirm, 'confirmed', 'Confirmation');
 
-    CEventTag:array[0..18] of TGedDefRec =
+    CEventTag:array[0..21] of TGedDefRec =
         ((E:evt_ID;T:CFactRefNr;N:'ID'),
          (E:evt_Birth;T:CEventBirth;N:'Geboren:'),
          (E:evt_Baptism;T:CEventBirth;N:'Getauft:'),
@@ -532,6 +533,9 @@ const
          (E:evt_Probation;T:CEventProbation;N:'Doktortitel:'),
          (E:evt_Retirement;T:CEventRetrement;N:'Ruhestand:'),
          (E:evt_LastWill;T:CEventLastWill;N:'Testament:'),
+         (E:evt_Occupation;T:CFactOccupation;N:'Beruf:'),
+         (E:evt_Residence;T:CFactResidence;N:'Wohnhaft:'),
+         (E:evt_Property;T:CFactProperty;N:'Besitz:'),
          (E:evt_LastChange;T:CLastChange;N:'letzte Änderung:'));
 
 function TagToNatur(aTag: string; kind: integer = 0): string;
@@ -1314,20 +1318,12 @@ end;
 
 constructor TGedEvent.Create(const aID, aType: string; const aInfo: string);
 
+var i : Integer;
 begin
    inherited;
-   if aType = CEventBirth then
-     FEventType:=evt_Birth;
-   if aType = CEventBaptism then
-     FEventType:=evt_Baptism;
-   if aType = CEventMarriage then
-     FEventType:=evt_Marriage;
-   if aType = CEventDeath then
-     FEventType:=evt_Death;
-   if aType = CEventBurial then
-     FEventType:=evt_Burial;
-   if aType = CEventConfirm then
-     FEventType:=evt_Confirmation;
+   for i := 0 to high(CEventTag) do
+     if aType = CEventTag[i].T then
+        FEventType:=CEventTag[i].E;
 end;
 
 procedure TGedEvent.SetDate(AValue: string);
@@ -1339,18 +1335,15 @@ begin
 end;
 
 procedure TGedEvent.SetEventType(AValue: TenumEventType);
+var
+  i: Integer;
 begin
     if FEventType = AValue then
         exit;
     FEventType := AValue;
-    case Avalue of
-        evt_Birth: NodeType := CEventBirth;
-        evt_Baptism: NodeType := CEventBaptism;
-        evt_Marriage: NodeType := CEventMarriage;
-        evt_Death: NodeType := CEventDeath;
-        evt_Burial: NodeType := CEventBurial;
-        evt_Confirmation: NodeType := CEventConfirm;
-      end;
+    for i := 0 to high(CEventTag) do
+     if AValue = CEventTag[i].e then
+        NodeType:=CEventTag[i].T;
 end;
 
 function TGedEvent.GetSource: IGenData;
@@ -1377,6 +1370,7 @@ end;
 
 function TGedEvent.GetEventType: TenumEventType;
 begin
+
     Result := FEventType;
 end;
 
@@ -1418,6 +1412,17 @@ end;
 procedure TGedEvent.SetSource(AValue: IGenData);
 begin
     SetSource(TGedSource(AValue.Self));
+end;
+
+procedure TGedEvent.SetNodeType(AValue:String);
+
+var
+  i: Integer;
+begin
+  inherited;
+  for i := 0 to high(CEventTag) do
+    if AValue = CEventTag[i].T then
+       FEventType:=CEventTag[i].E;
 end;
 
 procedure TGedEvent.ChildUpdate(aChild: TGedComObj);

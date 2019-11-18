@@ -108,7 +108,7 @@ begin
    FGenDocumentWriter.WriteOccIndex;
    FGenDocumentWriter.WritePlaceIndex;
    FGenDocumentWriter.WritePlace2Index;
-  FGenDocumentWriter.Document.SaveToSingleXml(ChangeFileExt(lFilename,'.fodt'));
+  FGenDocumentWriter.SaveToSingleXml(ChangeFileExt(lFilename,'.fodt'));
 end;
 
 procedure TTestGed2Odf.TestEntry0052rr;
@@ -136,7 +136,7 @@ begin
    FGenDocumentWriter.WriteOccIndex;
    FGenDocumentWriter.WritePlaceIndex;
    FGenDocumentWriter.WritePlace2Index;
-  FGenDocumentWriter.Document.SaveToSingleXml(ChangeFileExt(lFilename,'.fodt'));
+  FGenDocumentWriter.SaveToSingleXml(ChangeFileExt(lFilename,'.fodt'));
 end;
 
 procedure TTestGed2Odf.TestEntry0001ff;
@@ -164,7 +164,7 @@ begin
    FGenDocumentWriter.WriteOccIndex;
    FGenDocumentWriter.WritePlaceIndex;
    FGenDocumentWriter.WritePlace2Index;
-  FGenDocumentWriter.Document.SaveToSingleXml(ChangeFileExt(lFilename,'.fodt'));
+  FGenDocumentWriter.SaveToSingleXml(ChangeFileExt(lFilename,'.fodt'));
 end;
 
 procedure TTestGed2Odf.OnLongOp(Sender: TObject);
