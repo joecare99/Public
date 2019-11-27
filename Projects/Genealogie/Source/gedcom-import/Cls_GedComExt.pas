@@ -174,6 +174,7 @@ type
     end;
 
     { TGedIndividual }
+
     TGedIndividual = class(TGedComDefault, IGenIndividual)
     private
         FBaptised: TGedEvent;
@@ -188,7 +189,6 @@ type
         FFamSrchID:TGedComObj;
         FReligion: TGedEvent;
         FSex: TGedEvent;
-
         FResidence: TGedEvent;
         FParentFamily: TGedFamily;
         FTimeStamp:TDatetime;
@@ -346,7 +346,6 @@ type
         function ToString: ansistring; override;
         function Description: string; override;
         function Equals(aObj: TGedComObj): boolean; override; overload;
-
         class function AssNodeType: string; override;
         class function HandlesNodeType(aType: string): boolean; override;
         function EnumerateChildren: TGedIndEnumerator;
@@ -783,7 +782,6 @@ procedure TGedFamily.SetMarriage(AValue: TGedEvent);
 
 begin
     SetShortcutChild(AValue, FMarriageNode, CEventMarriage);
-
 end;
 
 procedure TGedFamily.SetMarriageDate(AValue: string);
@@ -865,12 +863,13 @@ begin
             RemoveParent(lParent);
             lParent := TGedIndividual(lParenLink.Link);
             lParent.appendFam(Self);
+
             if assigned(lParent2) then
               begin
                 lParent2.appendSpouse(lParent);
                 lParent.appendSpouse(lParent2);
               end;
-            for lCh in FChilds d
+            for lCh in FChilds do
                begin
                 lParent.AppendChildren(lCh);
                 lCh.ParentFamily:=self;
@@ -913,7 +912,6 @@ begin
       begin
         AppendFamChild(lDest);
       end;
-
 end;
 
 procedure TGedFamily.ChildUpdate(aChild: TGedComObj);
@@ -1183,7 +1181,6 @@ begin
         GivenName := trim(lNames[1]);
         if high(lNames) > 1 then
             Title := Trim(lNames[2]);
-
         Data := GivenName + ' /' + Surname + '/' + NameSuffix;
       end
     else
@@ -1253,7 +1250,7 @@ begin
     if FTitle = AValue then
         Exit;
     FTitle := AValue;
-    // Todo: erstelle ggf. ein Title-Tag
+    // erstelle ggf. ein Title-Tag
 
 end;
 
@@ -1629,6 +1626,7 @@ begin
         Result := FName.Title;
 end;
 
+
 function TGedIndividual.GetOccupation: string;
 begin
     Result := '';
@@ -1792,6 +1790,7 @@ begin
     SetBaptised(TGedEvent(AValue.self));
 end;
 
+
 procedure TGedIndividual.SetBirth(AValue: TGedEvent);
 
 begin
@@ -1803,6 +1802,7 @@ procedure TGedIndividual.SetBirth(AValue: IGenEvent);
 begin
     SetBirth(TGedEvent(AValue.Self));
 end;
+
 
 procedure TGedIndividual.SetBirthDate(AValue: string);
 begin
@@ -1934,6 +1934,7 @@ begin
     // Todo:
 end;
 
+
 procedure TGedIndividual.SetFather(AValue: TGedIndividual);
 begin
     SetShortcutChild(AValue, FFather, CIndividual);
@@ -2045,6 +2046,7 @@ procedure TGedIndividual.SetOccupation(AValue: TGedEvent);
 begin
     SetShortcutChild(AValue, FOccupation, CFactOccupation);
 end;
+
 
 procedure TGedIndividual.SetResidence(AValue: string);
 begin
