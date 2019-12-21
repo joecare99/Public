@@ -185,8 +185,8 @@ type
         function GetSurname: string;
         function GetTimeStamp: TDateTime;
         function GetTitle: string;
-{    Todo:
-        function EnumSpouses:IGenIndEnumerator;
+{    Todo:   Mathoden Implementieren                            }
+{       function EnumSpouses:IGenIndEnumerator;
         function EnumChildren:IGenIndEnumerator;
         function EnumFamilies:IGenFamEnumerator;       }
         procedure SetBaptDate(AValue: string);

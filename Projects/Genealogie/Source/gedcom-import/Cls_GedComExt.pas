@@ -516,12 +516,12 @@ const
     CEventTag:array[0..21] of TGedDefRec =
         ((E:evt_ID;T:CFactRefNr;N:'ID'),
          (E:evt_Birth;T:CEventBirth;N:'Geboren:'),
-         (E:evt_Baptism;T:CEventBirth;N:'Getauft:'),
-         (E:evt_Death;T:CEventBirth;N:'Gestorben:'),
-         (E:evt_Burial;T:CEventBirth;N:'Begraben:'),
+         (E:evt_Baptism;T:CEventBaptism;N:'Getauft:'),
+         (E:evt_Death;T:CEventDeath;N:'Gestorben:'),
+         (E:evt_Burial;T:CEventBurial;N:'Begraben:'),
          (E:evt_Marriage;T:CEventMarriage;N:'Geheiratet:'),
-         (E:evt_Confirmation;T:CEventBirth;N:'Konfirmiert:'),
-         (E:evt_Divorce;T:CEventBirth;N:'Geschieden:'),
+         (E:evt_Confirmation;T:CEventConfirm;N:'Konfirmiert:'),
+         (E:evt_Divorce;T:CEventDivource;N:'Geschieden:'),
          (E:evt_AddEmigration;T:CEventEmigration;N:'Ausgewandert:'),
          (E:evt_Education;T:CEventEducation;N:'Ausbildung:'),
          (E:evt_Graduation;T:CeventGraduation;N:'Abschluß:'),
@@ -538,12 +538,23 @@ const
          (E:evt_LastChange;T:CLastChange;N:'letzte Änderung:'));
 
 function TagToNatur(aTag: string; kind: integer = 0): string;
+function EvtToNatur(aEvent: TenumEventType): string;
 Function Datetime2GedDate(aDt:TDateTime;aModif:string=''):String;
 Function GedDate2DateTime(agDt:String;out aModif:string):TDateTime;
 
 implementation
 
 uses variants,dateutils;
+
+function EvtToNatur(aEvent: TenumEventType): string;
+var
+  i: Integer;
+begin
+  result := '';
+  for i := 0 to high(CEventTag) do
+     if CEventTag[i].e = aEvent then
+       exit(CEventTag[i].N);
+end;
 
 function Datetime2GedDate(aDt: TDateTime; aModif: string): String;
 
