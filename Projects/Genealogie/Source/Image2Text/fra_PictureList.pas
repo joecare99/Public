@@ -29,6 +29,7 @@ type
     FonUpdate:TNotifyEvent;
     FFileName: String;
     function GetBasePath: String;
+    function GetCount: integer;
     function getFilemask: string;
     procedure SetBasePath(AValue: String);
     procedure SetFilemask(AValue: string);
@@ -50,6 +51,7 @@ type
       function GetOnUpdate: TNotifyEvent;
       procedure SetOnUpdate(AValue: TNotifyEvent);
       Procedure Select(aFile:string);
+      property Count:integer read GetCount;
       property Data:variant read getdata;
       property OnUpdate:TNotifyEvent read GetOnUpdate write SetOnUpdate;
       property OnRenameFile:TRenameFileEvent read FOnRenameFile write SetOnRenameFile;
@@ -171,6 +173,11 @@ end;
 function TfraPictureList.GetBasePath: String;
 begin
   result := lstPictures.Root;
+end;
+
+function TfraPictureList.GetCount: integer;
+begin
+  Result := lstPictures.Items.Count;
 end;
 
 function TfraPictureList.getFilemask: string;

@@ -1,25 +1,24 @@
 object fraPictureList: TfraPictureList
   Left = 0
-  Height = 922
+  Height = 615
   Top = 0
-  Width = 601
-  ClientHeight = 922
-  ClientWidth = 601
-  DesignTimePPI = 144
+  Width = 401
+  ClientHeight = 615
+  ClientWidth = 401
   ParentFont = False
   TabOrder = 0
   DesignLeft = 480
   DesignTop = 8
   object lstPictures: TShellListView
     Left = 0
-    Height = 922
+    Height = 615
     Top = 0
-    Width = 601
+    Width = 401
     Align = alClient
     Color = clDefault
     HideSelection = False
     LargeImages = ilsDirImages
-    Mask = '*.jpg'
+    Mask = '*.jpg '
     ParentFont = False
     SortType = stText
     TabOrder = 0
@@ -33,7 +32,7 @@ object fraPictureList: TfraPictureList
   object ilsDirImages: TBGRAImageList
     Height = 64
     Width = 64
-    left = 162
-    top = 523
+    left = 108
+    top = 349
   end
 end
