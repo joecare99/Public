@@ -8,7 +8,11 @@ interface
 
 uses Cmp_OpenGLScene;
 
+type TUVFunction=function(u,v:Double):Double;
+
 function CreateDTTraeger(aPnt:TPointF; nWidth,nHeight, nLength: Single; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject):T3DBasisObject;
+function CreateHFFkt(aPnt,aDim:TPointF; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject):T3DBasisObject;
+function CreateHFBmp(aPnt,aDim:TPointF; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject):T3DBasisObject;
 
 implementation
 
@@ -40,6 +44,7 @@ begin
     QLength := nHeight;
     QHeight := nLength;
     MaterialDef := nMaterialDef;
+    QColor := nMaterialDef.DiffColor;
     SetLength(PDef, (high(TTrDef) + 1) * 4);
     for I := 0 to high(PDef) do
     begin

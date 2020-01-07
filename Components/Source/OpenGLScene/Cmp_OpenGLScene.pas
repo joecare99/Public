@@ -85,6 +85,7 @@ type
   TO3DCanvas = Class(TWinControl)
   {$ENDIF}
   private
+    FClickpoint: TPoint;
     {$IFNDEF FPC}
     HRC: HGLRC;
     {$ENDIF}
@@ -93,6 +94,7 @@ type
     FCulling: Boolean;
     FObjectHandling: Boolean;
     FOnSelectionChange: TNotifyEvent;
+    FPreSelected: T3DBasisObject;
     FSelected: T3DBasisObject;
     FmouseOverObject: Boolean;
     Speed: Double;
@@ -104,6 +106,7 @@ type
     procedure DoPaint(Sender: TObject);
     Function SelectObject(xsel, ysel: integer): cardinal;
     procedure SetOnSelectionChange(AValue: TNotifyEvent);
+    procedure SetSelected(AValue: T3DBasisObject);
   protected
     {$IFNDEF FPC}
     Procedure PaintWindow({%H-}DC: HDC); override;
@@ -121,7 +124,7 @@ type
     Constructor Create(AOwner: TComponent); override;
     Destructor Destroy; override;
     Procedure DrawScene;
-    Property Selected: T3DBasisObject read FSelected;
+    Property Selected: T3DBasisObject read FSelected write SetSelected;
     Procedure FormResize(Sender: TObject);
   published
     Property Align;
@@ -434,6 +437,14 @@ begin
   FOnSelectionChange:=AValue;
 end;
 
+procedure TO3DCanvas.SetSelected(AValue: T3DBasisObject);
+begin
+  if FSelected=AValue then Exit;
+  FSelected:=AValue;
+  if assigned(FOnSelectionChange) then
+    FOnSelectionChange(self)
+end;
+
 procedure TO3DCanvas.DoPaint(Sender: TObject);
 
 var
@@ -678,9 +689,8 @@ Begin
         Begin
           if @FSelected <> @T3DBasisObject(so) then
             begin
-              FSelected := T3DBasisObject(so);
-              if assigned(FOnSelectionChange) then
-                FOnSelectionChange(Self);
+              FPreSelected := T3DBasisObject(so);
+              FClickpoint := Point(x,y);
             end;
           if assigned(T3DBasisObject(so).OnMouseDown) then
             T3DBasisObject(so).onMouseDown(so, button, shift, x, y)
@@ -723,10 +733,14 @@ Begin
           Inherited;
         end;
       end
-      else if assigned(Fselected) and assigned(Fselected.OnMouseMove) then
-        fselected.OnMouseMove(fselected, shift, x, y)
+      else begin if assigned(FPreSelected) and assigned(FPreSelected.OnMouseMove) then
+        FPreSelected.OnMouseMove(fselected, shift, x, y)
       else
-       inherited
+        begin
+          if assigned(FPreSelected) and (point(x,y).Distance(FClickpoint)>10) then
+            FPreSelected := nil;
+         inherited
+        end;end;
     Except
       Inherited;
     End
@@ -746,6 +760,11 @@ Var
 Begin
   If FObjectHandling Then
     Try
+      if assigned(FPreSelected) and (point(x,y).Distance(FClickpoint)<=10) then
+        begin
+          SetSelected(FPreSelected);
+          FPreSelected:=nil;
+        end;
       so := Tobject(SelectObject(x, y));
       if (integer(so) <> -1) and assigned(so) and so.InheritsFrom(T3DBasisObject)
         then

@@ -889,7 +889,13 @@ begin
     glTranslatef(Translation[0], Translation[1], Translation[2]);
     glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
 
-    glMaterialfv(GL_FRONT, GL_AMBIENT,
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,{$IFNDEF FPC}
+        @QColor
+        {$ELSE}
+      QColor
+{$ENDIF}       );
+
+(*    glMaterialfv(GL_FRONT, GL_AMBIENT,
 {$IFNDEF FPC}
         @MaterialDef.AmbColor
         {$ELSE}    MaterialDef.AmbColor
@@ -900,7 +906,7 @@ begin
         @MaterialDef.DiffColor
         {$ELSE}  MaterialDef.DiffColor
 {$ENDIF}
-        );
+        );  *)
     //  glMaterialfv(GL_FRONT, GL_SHININESS, {$IFNDEF FPC}@{$ENDIF}MaterialDef.ShinyNess);
 
     // Reflective properties
