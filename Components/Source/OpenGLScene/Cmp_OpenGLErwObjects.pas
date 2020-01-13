@@ -11,9 +11,9 @@ uses Cmp_OpenGLScene;
 type TUVFunction=function(u,v:Double):Double;
 
 function CreateDTTraeger(aPnt:TPointF; nWidth,nHeight, nLength: Single; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject):T3DBasisObject;
-function CreateHFFkt(aPnt,aDim:TPointF; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject):T3DBasisObject;
+(*function CreateHFFkt(aPnt,aDim:TPointF; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject):T3DBasisObject;
 function CreateHFBmp(aPnt,aDim:TPointF; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject):T3DBasisObject;
-
+*)
 implementation
 
 uses
@@ -37,8 +37,8 @@ begin
   Result := T3DPrism2.Create(FBasis);
   with T3DPrism2(Result) do
   begin
-    Rotation[1] := 1;
-    Rotation[0] := -90;
+    RotVector := eX;
+    RotAmount := -90;
     moveto(aPnt.Rotxm90);
     QWidth := nWidth;
     QLength := nHeight;

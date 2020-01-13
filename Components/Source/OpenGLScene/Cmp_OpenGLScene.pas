@@ -11,7 +11,7 @@ Uses
 {$ELSE}
   LCLIntf, LCLType, gl,glu, GLext,OpenGLContext,
 {$ENDIF}
-  Classes, Controls, Sysutils;
+  Classes, Controls, Sysutils,Unt_IHasAttributes;
 
 {$IFNDEF LCLQT}
   {$define HasRGBBits}
@@ -24,13 +24,21 @@ Type
   { TPointF }
 
   TPointF = record
+  private
+    function getAsVariant: variant;
+    procedure SetAsVariant(AValue: variant);
     public
       function Rotxm90: TpointF;
       function Rotym90: TpointF;
       function Rotzm90: TpointF;
+      function Rotxp90: TpointF;
+      function Rotyp90: TpointF;
+      function Rotzp90: TpointF;
       function Neg:TPointF;
       function Add(aPnt:TPointF):TPointF;
       function SMult(fak:TGLdouble):TPointF;
+      function Equals(aPnt:TPointF;e:double=0):Boolean;
+      property AsVariant:variant read getAsVariant write SetAsVariant;
     public
               case boolean of
               false: (x,y,z:TGLdouble);
@@ -57,18 +65,35 @@ type
 
   { T3DBasisObject }
 
-  T3DBasisObject = Class(TWinControl)
+  T3DBasisObject = Class(TWinControl,IHasAttributes)
+  private
+    procedure SetRotAmount(AValue: Double);
+    Procedure SetRotVector(AValue:Variant);overload;
+    procedure SetRotVector(AValue: TPointF);
+  protected
+    FRotVector: TPointF;
+    FRotAmount:Double;
+    FTranslation: TPointF;
   public
-    Rotation: TGLArrayf4;
-    Translation: TGLArrayf3;
 {    FOnMouseMove:TMouseMoveEvent;
     FOnMouseDown:TMouseEvent;
     FOnMouseUp:TMouseEvent; }
     Constructor Create(Aowner: TComponent); override;
     Procedure Draw; virtual; abstract;
-    Procedure MoveTo(aPnt:TPointF); virtual;abstract;overload;
+    Procedure MoveTo(aPnt:TPointF); virtual;overload;
     Procedure MoveTo(x, y, z: Extended); virtual; overload;
     Procedure Rotate(Amount, x, y, z: Extended); virtual;
+  public
+    // IHasAttributes
+    function AttrCount:integer;virtual;
+    function GetAttributes(Idx: variant): variant;virtual;
+    procedure SetAttributes(idx: variant; AValue: variant);virtual;
+    Function ListAttr:variant;virtual;
+  public
+    Property Attribute[Idx:Variant]:Variant read GetAttributes write SetAttributes;
+    property Translation:TPointF read FTranslation;
+    property RotVector:TPointF read FRotVector write SetRotVector;
+    property RotAmount:Double read FRotAmount write SetRotAmount;
   published
 {    property Parent:T
     property onMouseDown:TMouseEvent read FOnMouseDown write FOnMouseDown;
@@ -97,8 +122,6 @@ type
     FPreSelected: T3DBasisObject;
     FSelected: T3DBasisObject;
     FmouseOverObject: Boolean;
-    Speed: Double;
-    cube_rotationx, cube_rotationy, cube_rotationz: GLfloat;
 
     {$IFNDEF FPC}
     Procedure SetDCPixelFormat;
@@ -185,12 +208,17 @@ type
   TO3DGroup = Class(T3DBasisObject)
 
   private
+    FAmount: Extended;
     FTranslVector: TPointF;
     function getTranslAmount: Extended;
     procedure SetTranslAmount(AValue: Extended);
   public
+    function AttrCount:integer;override;
+    function GetAttributes(Idx: variant): variant;override;
+    procedure SetAttributes(idx: variant; AValue: variant);override;
+    Function ListAttr:variant;override;
+  public
     Procedure Draw; override;
-    Procedure MoveTo(nPnt: TPointF); override;
     Property TranslVector:TPointF read FTranslVector write FTranslVector;
     Property TranslAmount:Extended read getTranslAmount write SetTranslAmount;
   End;
@@ -227,11 +255,17 @@ Const
 
 Procedure glNormal(aPnt:TPointF);
 Procedure glVertex(aPnt:TPointF);
+Procedure glTranslate(aPnt:TPointF);
+Procedure glRotate(aAmount:TGLdouble;aPnt:TPointF);
 
 Implementation
+
+uses variants;
 {$IFDEF FPC}
 {$R registerOpenGLScene.res}
 {$ENDIF}
+
+
 const
   fovy = 20.0;
   zNear = 0.1;
@@ -260,7 +294,50 @@ begin
   glVertex3dv(PGLdouble(@aPnt.d[0]));
 end;
 
+procedure glTranslate(aPnt: TPointF);
+begin
+  glTranslated(aPnt.x,aPnt.y,aPnt.z);
+end;
+
+procedure glRotate(aAmount: TGLdouble; aPnt: TPointF);
+begin
+  glRotated(aAmount,aPnt.x,aPnt.y,aPnt.z)
+end;
+
 { TPointF }
+
+function TPointF.getAsVariant: variant;
+begin
+  result := VarArrayOf(['PointF',VarArrayOf(['X',x,'Y',y,'Z',z])]);
+end;
+
+procedure TPointF.SetAsVariant(AValue: variant);
+begin
+  if VarIsArray(AValue) then
+    if (VarArrayHighBound(AValue,1) = 1) then
+      if (lowercase(avalue[0])='pointf') then
+        SetAsVariant(Avalue[1])
+      else if (lowercase(avalue[0])='x')  then
+        x := avalue[1]
+      else if (lowercase(avalue[0])='y')  then
+        y := avalue[1]
+      else if (lowercase(avalue[0])='z')  then
+        z := avalue[1]
+      else
+    else if (VarArrayHighBound(AValue,1) = 5) then
+      begin
+        if (lowercase(avalue[0])='x')  then
+          x := avalue[1];
+        if (lowercase(avalue[2])='y')  then
+          y := avalue[3];
+        if (lowercase(avalue[4])='z')  then
+          z := avalue[5];
+      end
+    else
+      raise(Exception.Create( 'Illegal VarArray'))
+  else
+    raise(Exception.Create( 'Illegal Value: '+VarToStr(AValue)));
+end;
 
 function TPointF.Rotxm90: TpointF;
 begin
@@ -280,6 +357,27 @@ function TPointF.Rotzm90: TpointF;
 begin
   result.x:= y;
   result.y:=-x;
+  result.z:= z;
+end;
+
+function TPointF.Rotxp90: TpointF;
+begin
+  result.x:= x;
+  result.y:=-z;
+  result.z:= y;
+end;
+
+function TPointF.Rotyp90: TpointF;
+begin
+  result.x:= z;
+  result.y:= y;
+  result.z:=-x;
+end;
+
+function TPointF.Rotzp90: TpointF;
+begin
+  result.x:=-y;
+  result.y:= x;
   result.z:= z;
 end;
 
@@ -303,6 +401,15 @@ begin
   result.y:=y*fak;
   result.z:=z*fak;
 end;
+
+function TPointF.Equals(aPnt: TPointF; e: double): Boolean;
+begin
+  if e=0 then
+     Result := (x=aPnt.x) and (y = aPnt.y) and (z=aPnt.z)
+  else
+     Result  := (abs(x-aPnt.x)<e) and (abs(y - aPnt.y)<e) and (abs(z-aPnt.z)<e);
+end;
+
 
 constructor TO3DCanvas.Create(AOwner: TComponent);
 
@@ -787,12 +894,36 @@ End;
 
 //-----------------------------------------------------------------------
 
+procedure T3DBasisObject.SetRotAmount(AValue: Double);
+begin
+  if FRotAmount=AValue then Exit;
+  FRotAmount:=AValue;
+end;
+
+procedure T3DBasisObject.SetRotVector(AValue: Variant);
+var lVec:TPointF;
+
+begin
+  FRotVector.AsVariant := AValue;
+end;
+
+procedure T3DBasisObject.SetRotVector(AValue: TPointF);
+begin
+  if FRotVector.equals(AValue) then Exit;
+  FRotVector:=AValue;
+end;
+
 constructor T3DBasisObject.Create(Aowner: TComponent);
 Begin
   Inherited;
-  If Aowner.inheritsfrom(TWincontrol) Then
+  If assigned(Aowner) and  Aowner.inheritsfrom(TWincontrol) Then
     Parent := TWincontrol(Aowner);
 End;
+
+procedure T3DBasisObject.MoveTo(aPnt: TPointF);
+begin
+  FTranslation := aPnt;
+end;
 
 procedure T3DBasisObject.MoveTo(x, y, z: Extended);
 begin
@@ -801,39 +932,106 @@ end;
 
 procedure T3DBasisObject.Rotate(Amount, x, y, z: Extended);
 Begin
-  Rotation[0] := Amount;
-  Rotation[1] := x;
-  Rotation[2] := y;
-  Rotation[3] := z;
+  FRotAmount := Amount;
+  FRotVector := PointF( x,y,z);
 End;
+
+
+function T3DBasisObject.AttrCount: integer;
+begin
+  result := 3;
+end;
+
+function T3DBasisObject.GetAttributes(Idx: variant): variant;
+begin
+  if VarIsNumeric(Idx) then
+     case Idx of
+       0:result :=FTranslation.AsVariant;
+       1:Result := FRotAmount ;
+       2:Result := FRotVector.AsVariant;
+     end
+  else
+end;
+
+procedure T3DBasisObject.SetAttributes(idx: variant; AValue: variant);
+begin
+  if VarIsNumeric(Idx) then
+     case Idx of
+       0:FTranslation.AsVariant := AValue;
+       1:FRotAmount := aValue;
+       2:SetRotVector(AValue);
+     end
+  else
+end;
+
+function T3DBasisObject.ListAttr: variant;
+begin
+  result := VarArrayOf(['Translation','TPointF','Rotation.Amount','Double','Rotation.Vector','TPointF']);
+end;
 
 //----------------------------------------------------------------------------
 
 function TO3DGroup.getTranslAmount: Extended;
 begin
-  if abs(TranslVector.x) > abs(TranslVector.y) then
-    if abs(TranslVector.x) > abs(TranslVector.z) then
-      result := Translation[0] / TranslVector.x
-    else
-      result := Translation[2] / TranslVector.z
-  else
-    if abs(TranslVector.y) > abs(TranslVector.z) then
-      result := Translation[1] / TranslVector.y
-    else
-      result := Translation[2] / TranslVector.z
+  result := FAmount
 end;
 
 procedure TO3DGroup.SetTranslAmount(AValue: Extended);
 begin
-  MoveTo(FTranslVector.SMult(AValue));
+  if AValue=Famount then exit;
+  FAmount := AValue;
+end;
+
+function TO3DGroup.AttrCount: integer;
+begin
+  Result:=inherited AttrCount+3;
+end;
+
+function TO3DGroup.GetAttributes(Idx: variant): variant;
+var
+  lInhAttrCount: Integer;
+begin
+  lInhAttrCount := inherited AttrCount;
+  if VarIsNumeric(idx) then
+    if idx < lInhAttrCount then
+       inherited
+    else
+      case idx-lInhAttrCount of
+         0:result := FAmount;
+         1:result := FTranslVector.AsVariant;
+      end;
+end;
+
+procedure TO3DGroup.SetAttributes(idx: variant; AValue: variant);
+var
+  lInhAttrCount: Integer;
+begin
+  lInhAttrCount := inherited AttrCount;
+  if VarIsNumeric(idx) then
+    if idx < lInhAttrCount then
+       inherited
+    else
+end;
+
+function TO3DGroup.ListAttr: variant;
+var
+  lVah: LongInt;
+begin
+  Result:=inherited ListAttr;
+  lVah := VarArrayHighBound(result,1);
+  VarArrayRedim(Result,lVah+4);
+  result[lVah+1]:='Transl.Amount';
+  result[lVah+2]:='Double';
+  result[lVah+3]:='Transl.Vector';
+  result[lVah+4]:='TPointF';
 end;
 
 procedure TO3DGroup.Draw;
 Var
   I: Integer;
 Begin
-  glTranslatef(Translation[0], Translation[1], Translation[2]);
-  glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
+  glTranslate( TranslVector.SMult(FAmount).add(FTranslation));
+  glRotate(FRotAmount, FRotVector);
   For I := 0 To ComponentCount - 1 Do
     If Components[i].InheritsFrom(T3DBasisObject) Then
       With T3DBasisObject(Components[i]) Do
@@ -844,13 +1042,6 @@ Begin
             Draw;
           glPopMatrix;
         End;
-End;
-
-procedure TO3DGroup.MoveTo(nPnt: TPointF);
-Begin
-  Translation[0] := nPnt.x;
-  Translation[1] := nPnt.y;
-  Translation[2] := nPnt.z;
 End;
 
 End.

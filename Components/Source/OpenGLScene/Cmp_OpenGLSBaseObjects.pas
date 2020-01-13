@@ -20,9 +20,8 @@ type
 
     T3DZObject = class(T3DBasisObject)
     public
-        Pnt: TPointF;
         QColor: TGLArrayf4;
-        procedure MoveTo(nPnt: TPointF); override;
+        procedure Draw; override;
     protected
         FDisplaylist: cardinal;
     end;
@@ -32,6 +31,7 @@ type
     T3DDimObject = class(T3DZObject)
     public
         QWidth, QLength, QHeight: extended;
+        pnt:Tpointf;
         procedure SetDimension(aDim: TPointF); virtual;
     public
     end;
@@ -189,7 +189,7 @@ function CreateQuader(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
     aColor: TGLArrayf4): T3DQuader;
 begin
     Result := T3DQuader.Create(aBase);
-    Result.Pnt := aPnt;
+    Result.FTranslation := aPnt;
     Result.SetDimension(aDim);
     Result.QColor := aColor;
 end;
@@ -198,7 +198,7 @@ function CreateQuader2(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
     aColor: TGLArrayf4): T3DQuader2;
 begin
     Result := T3DQuader2.Create(aBase);
-    Result.Pnt := aPnt;
+    Result.FTranslation := aPnt;
     Result.SetDimension(aDim);
     Result.QColor := aColor;
 end;
@@ -207,7 +207,7 @@ function CreateSphere(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
     aColor: TGLArrayf4): T3DSphere;
 begin
     Result := T3DSphere.Create(aBase);
-    Result.Pnt := aPnt;
+    Result.FTranslation := aPnt;
     Result.SetDimension(aDim);
     Result.QColor := aColor;
 end;
@@ -216,7 +216,7 @@ function CreateCylinderZ(aBase: T3DBasisObject; aPnt: TPointF;
     aDim: TPointF; aColor: TGLArrayf4): T3DCylinder;
 begin
     Result := T3DCylinderZ.Create(aBase);
-    Result.Pnt := aPnt;
+    Result.FTranslation := aPnt;
     Result.SetDimension(aDim);
     Result.Steps := 40;
     Result.QColor := aColor;
@@ -226,7 +226,7 @@ function CreateCylinderY(aBase: T3DBasisObject; aPnt: TPointF;
     aDim: TPointF; aColor: TGLArrayf4): T3DCylinder;
 begin
     Result := T3DCylinderY.Create(aBase);
-    Result.Pnt := aPnt;
+    Result.FTranslation := aPnt;
     Result.SetDimension(aDim);
     Result.Steps := 40;
     Result.QColor := aColor;
@@ -237,7 +237,7 @@ function CreateCylinderX(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
   aColor: TGLArrayf4): T3DCylinder;
 begin
     Result := T3DCylinderX.Create(aBase);
-    Result.Pnt := aPnt;
+    Result.FTranslation := aPnt;
     Result.SetDimension(aDim);
     Result.Steps := 40;
     Result.QColor := aColor;
@@ -249,7 +249,7 @@ var
   i: Integer;
 begin
     Result := T3DPrismX.Create(aBase);
-    Result.Pnt := aPnt.Rotym90;
+    Result.FTranslation := aPnt;
     Result.QHeight := aHeight;
     Result.QWidth := 1.0;
     Result.QLength := 1.0;
@@ -266,7 +266,7 @@ var
     i: integer;
 begin
     Result := T3DPrismY.Create(aBase);
-    Result.Pnt := aPnt;
+    Result.FTranslation := aPnt;
     Result.QHeight := aHeight;
     Result.QWidth := 1.0;
     Result.QLength := 1.0;
@@ -282,7 +282,7 @@ var
   i: Integer;
 begin
     Result := T3DPrismZ.Create(aBase);
-    Result.Pnt := aPnt.Rotxm90;
+    Result.FTranslation := aPnt;
     Result.QHeight := aHeight;
     Result.QWidth := 1.0;
     Result.QLength := 1.0;
@@ -297,7 +297,7 @@ function CreateConeX(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
     aColor: TGLArrayf4): T3DConeX;
 begin
     Result := T3DConeX.Create(aBase);
-    Result.Pnt := aPnt;
+    Result.FTranslation := aPnt;
     Result.SetDimension(aDim);
     Result.QColor := aColor;
 end;
@@ -306,7 +306,7 @@ function CreateConeY(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
     aColor: TGLArrayf4): T3DConeY;
 begin
     Result := T3DConeY.Create(aBase);
-    Result.Pnt := aPnt;
+    Result.FTranslation := aPnt;
     Result.SetDimension(aDim);
     Result.QColor := aColor;
 
@@ -316,7 +316,7 @@ function CreateConeZ(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
   aColor: TGLArrayf4): T3DConeZ;
 begin
     Result := T3DConeZ.Create(aBase);
-    Result.Pnt := aPnt;
+    Result.FTranslation := aPnt;
     Result.SetDimension(aDim);
     Result.QColor := aColor;
 end;
@@ -327,18 +327,12 @@ procedure T3DCylinderX.Draw;
 var
     I: integer;
     xx, yy, zz: GLFloat;
+    pnt: TPointF;
 
 begin
-    glTranslatef(Translation[0], Translation[1], Translation[2]);
-    glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,
-{$IFNDEF FPC}
-        @QColor
-        {$ELSE}
-      QColor
-{$ENDIF}
-        );
-    // Reflective properties
+    Inherited;
+
+    pnt := Zero;
     glFrontFace(GL_CCW);       // Counter Clock-Wise
     glBegin(GL_TRIANGLE_STRIP);
     for I := 0 to Fsteps * 2 + 1 do
@@ -390,19 +384,12 @@ procedure T3DCylinderY.Draw;
 var
     I: integer;
     xx, yy, zz: GLFloat;
+    pnt: TPointF;
 
 begin
-    glTranslatef(Translation[0], Translation[1], Translation[2]);
-    glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,
-{$IFNDEF FPC}
-        @QColor
-        {$ELSE}
-      QColor
-{$ENDIF}
-        );
+    Inherited;
 
-    // Reflective properties
+    pnt := Zero;
     glFrontFace(GL_CCW);       // Counter Clock-Wise
     glBegin(GL_TRIANGLE_STRIP);
     for I := 0 to Fsteps * 2 + 1 do
@@ -456,14 +443,11 @@ procedure T3DConeZ.Draw;
 var
     I: integer;
     xx, yy: GLFloat;
+    pnt: TPointF;
 begin
-    glTranslatef(Translation[0], Translation[1], Translation[2]);
-    glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,
-{$IFNDEF FPC}
-        @
-{$ENDIF}
-        QColor);
+    Inherited;
+
+    pnt := Zero;
     // Reflective properties
     glFrontFace(GL_CW);       // Counter Clock-Wise
     glBegin(GL_TRIANGLE_FAN);
@@ -521,15 +505,8 @@ var
     I: integer;
     yy, zz: GLFloat;
 begin
-    glTranslatef(Translation[0], Translation[1], Translation[2]);
-    glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,
-{$IFNDEF FPC}
-        @QColor
-        {$else} QColor
-{$ENDIF}
-        );
-    // Reflective properties
+    Inherited;
+
     glFrontFace(GL_CW);       // Counter Clock-Wise
     glBegin(GL_TRIANGLE_FAN);
     //  glColor3fv(QColor);
@@ -566,14 +543,8 @@ var
     I: integer;
     xx, zz: GLFloat;
 begin
-    glTranslatef(Translation[0], Translation[1], Translation[2]);
-    glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,
-{$IFNDEF FPC}
-        @
-{$ENDIF}
-        QColor);
-    // Reflective properties
+     Inherited;
+
     glFrontFace(GL_CW);       // Counter Clock-Wise
     glBegin(GL_TRIANGLE_FAN);
     //  glColor3fv(QColor);
@@ -603,9 +574,16 @@ begin
     glEnd;
 end;
 
-procedure T3DZObject.MoveTo(nPnt: TPointF);
+procedure T3DZObject.Draw;
 begin
-    Pnt := nPnt;
+    glTranslate(FTranslation);
+    glRotate(FRotAmount, FRotVector);
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,
+    {$IFNDEF FPC}
+            @QColor
+            {$else}
+            QColor
+    {$ENDIF});
 end;
 
 const
@@ -622,13 +600,7 @@ var
     Nv0: TGLArrayf4;
 
 begin
-    glTranslatef(Translation[0], Translation[1], Translation[2]);
-    glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-{$IFDEF FPC}
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, QColor);
-{$ELSE}
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, @QColor);
-{$ENDIF}
+    Inherited;
     // Reflective properties
 
     for J := 0 to 2 do
@@ -678,16 +650,7 @@ var
     I: integer;
     P: integer;
 begin
-    glTranslatef(Translation[0], Translation[1], Translation[2]);
-    glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,
-{$IFNDEF FPC}
-        @QColor
-        {$ELSE}
-        QColor
-{$ENDIF}
-        );
-    // Reflective properties
+    Inherited;
 
     for J := 0 to 2 do
       begin
@@ -749,11 +712,8 @@ var
     P2: array[0..Steps * 4 + 1] of TGLArrayf3;
 
 begin
-    glTranslatef(Translation[0], Translation[1], Translation[2]);
-    glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-    glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, @QColor[0]);
-    //glColor3fv(@QColor);
-    // Reflective properties
+    Inherited;
+
     for I := 1 to Steps do //  Steps Schritte für die Viertelkugel
       begin
         x0 := sin(((i - 1) / (Steps * 2)) * pi);
@@ -824,17 +784,8 @@ var
     xx, yy, zz: GLFloat;
 
 begin
-    glTranslatef(Translation[0], Translation[1], Translation[2]);
-    glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,
-{$IFNDEF FPC}
-        @QColor
-        {$ELSE}
-      QColor
-{$ENDIF}
-        );
+    Inherited;
 
-    // Reflective properties
     glFrontFace(GL_CCW);       // Counter Clock-Wise
     glBegin(GL_TRIANGLE_STRIP);
     for I := 0 to Fsteps * 2 + 1 do
@@ -886,14 +837,7 @@ var
     I2: integer;
     //  xx, yy, zz: GLFloat;
 begin
-    glTranslatef(Translation[0], Translation[1], Translation[2]);
-    glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,{$IFNDEF FPC}
-        @QColor
-        {$ELSE}
-      QColor
-{$ENDIF}       );
+    Inherited;
 
 (*    glMaterialfv(GL_FRONT, GL_AMBIENT,
 {$IFNDEF FPC}
