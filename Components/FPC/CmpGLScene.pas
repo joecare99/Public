@@ -4,10 +4,12 @@
 
 unit CmpGLScene;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  Cmp_OpenGLScene, Cmp_OpenGLSBaseObjects, Cmp_OpenGLErwObjects;
+  Cmp_OpenGLScene, Cmp_OpenGLSBaseObjects, Cmp_OpenGLErwObjects, 
+  Unt_IHasAttributes;
 
 implementation
 
