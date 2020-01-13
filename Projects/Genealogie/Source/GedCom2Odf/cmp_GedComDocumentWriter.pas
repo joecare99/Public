@@ -5,7 +5,7 @@ unit cmp_GedComDocumentWriter;
 interface
 
 uses
-    Classes, SysUtils, odf_types, Cmp_GedComFile, unt_IGenBase2,Laz2_DOM;
+    Classes, SysUtils, odf_types, Cmp_GedComFile, unt_IGenBase2, Laz2_DOM;
 
 type
     { TGenDocumentWriter }
@@ -28,7 +28,8 @@ type
         procedure SetGenealogy(AValue: TGedComFile);
         procedure SetLanguage(AValue: string);
         procedure SetOnLongOp(AValue: TNotifyEvent);
-        function Shortplace(aPlace: string; aFam: iGenFamily;out aPlaceRef:string): string;
+        function Shortplace(aPlace: string; aFam: iGenFamily;
+            out aPlaceRef: string): string;
     protected
         FSection: TOdfSection;
         function GetFamilyDate(var aFam: iGenFamily): string;
@@ -45,6 +46,7 @@ type
         procedure AppendFamily(aFam: iGenFamily);
         procedure AppendInd(aInd: IGenIndividual);
         procedure AppendIndOcc(aInd: IGenIndividual);
+        function NormizeStr(aStr: string): string;
         function YearOf(aDate: string): string;
         function SortDate(aDate: string): string;
         function SortName(aName: string): string;
@@ -67,12 +69,12 @@ type
         property Plac2List: TStrings read FPlace2List;
     end;
 
-procedure MyWriteXmlToFile(ADoc: TXMLDocument;  AFilename: string);
+procedure MyWriteXmlToFile(ADoc: TXMLDocument; AFilename: string);
 
 
 implementation
 
-uses Graphics,odf_xmlutils, laz2_XMLWrite2;
+uses Graphics, odf_xmlutils, laz2_XMLWrite2, Cls_GedComExt;
 
 const
     CGedDateModif: array[0..15] of string =
@@ -85,11 +87,11 @@ const
         'vor', 'BEF',  // Ereigniss hatt (kurz) davor stattgefunden
         'ca', 'ABT');
 
- CStCenter='StCenter';
+    CStCenter = 'StCenter';
 
 procedure MyWriteXmlToFile(ADoc: TXMLDocument; AFilename: string);
 begin
-    WriteXMLFile(ADoc, AFilename,[xwfPreserveWhiteSpace,xwfNoIndent]);
+    WriteXMLFile(ADoc, AFilename, [xwfPreserveWhiteSpace, xwfSpIndent]);
 end;
 
 
@@ -169,116 +171,116 @@ begin
     FOnLongOp := AValue;
 end;
 
-function TGenDocumentWriter.Shortplace(aPlace: string; aFam: iGenFamily; out
-  aPlaceRef: string): string;
+function TGenDocumentWriter.Shortplace(aPlace: string; aFam: iGenFamily;
+    out aPlaceRef: string): string;
 
 var
     lpp: integer;
     lObj: IGenFamily;
 
-  procedure AddUpdPlace1(aPlace:String);
-  var
-    lList: TList;
-    lplIx: integer;
-  begin
-    lplIx := FPlaceList.IndexOf(aPlace);
-    if lplIx < 0 then
-      begin
-        lList := TList.Create;
-        lList.Add(afam);
-        FPlaceList.AddObject(aPlace, TObject(lList));
-      end
-    else
-      begin
-        lList := TList(FPlaceList.Objects[lplIx]);
-        if lList.IndexOf(aFam) >= 0 then
-            exit; //!!
-        lList.Add(afam);
-      end;
-  end;
+    procedure AddUpdPlace1(aPlace: string);
+    var
+        lList: TList;
+        lplIx: integer;
+    begin
+        lplIx := FPlaceList.IndexOf(aPlace);
+        if lplIx < 0 then
+          begin
+            lList := TList.Create;
+            lList.Add(afam);
+            FPlaceList.AddObject(aPlace, TObject(lList));
+          end
+        else
+          begin
+            lList := TList(FPlaceList.Objects[lplIx]);
+            if lList.IndexOf(aFam) >= 0 then
+                exit; //!!
+            lList.Add(afam);
+          end;
+    end;
 
-  procedure AddUpdPlace2(aPlace:String);
-  var
-    lList: TList;
-    lplIx, i: integer;
-    lPlace:String;
-    llPlace: TStringArray;
-  begin
-    llPlace:=aPlace.Split(',');
-    lPlace:='';
-    for i := high(llPlace) downto 0 do
-      lplace += trim(llPlace[i])+', ';
-    lplIx := FPlace2List.IndexOf(lPlace);
-    if lplIx < 0 then
-      begin
-        lList := TList.Create;
-        lList.Add(afam);
-        FPlace2List.AddObject(lPlace, TObject(lList));
-      end
-    else
-      begin
-        lList := TList(FPlace2List.Objects[lplIx]);
-        if lList.IndexOf(aFam) >= 0 then
-            exit; //!!
-        lList.Add(afam);
-      end;
-  end;
-
+    procedure AddUpdPlace2(aPlace: string);
+    var
+        lList: TList;
+        lplIx, i: integer;
+        lPlace: string;
+        llPlace: TStringArray;
+    begin
+        llPlace := aPlace.Split(',');
+        lPlace := '';
+        for i := high(llPlace) downto 0 do
+            lplace += trim(llPlace[i]) + ', ';
+        lplIx := FPlace2List.IndexOf(lPlace);
+        if lplIx < 0 then
+          begin
+            lList := TList.Create;
+            lList.Add(afam);
+            FPlace2List.AddObject(lPlace, TObject(lList));
+          end
+        else
+          begin
+            lList := TList(FPlace2List.Objects[lplIx]);
+            if lList.IndexOf(aFam) >= 0 then
+                exit; //!!
+            lList.Add(afam);
+          end;
+    end;
 
 begin
     lpp := aPlace.IndexOf(',');
     Result := aPlace;
-    aPlaceRef:='';
+    aPlaceRef := '';
     if aPlace = '' then
         exit;
     if lpp > 0 then
         Result := copy(aPlace, 1, lpp);
-    aPlaceRef:=Result+inttostr(aPlace.GetHashCode);
+    aPlaceRef := Result + IntToStr(aPlace.GetHashCode);
     AddUpdPlace1(aPlace);
     AddUpdPlace2(aPlace);
 end;
 
 function TGenDocumentWriter.GetFamilyDate(var aFam: iGenFamily): string;
 var
-  lYear: longint;
-  lFamDate: string;
+    lYear: longint;
+    lFamDate: string;
 begin
-  if not assigned(afam) then exit('');
-  lFamDate := afam.MarriageDate;
-  if (lFamDate = '') and (afam.ChildCount > 0) then
-      lFamDate := aFam.Children[0].BirthDate;
-  if (lfamDate = '') and (afam.ChildCount > 0) then
-      lFamDate := aFam.Children[0].BaptDate;
-  if assigned(afam.Husband) and Assigned(aFam.Wife) then
-    begin
-      lFamDate := yearof(afam.Wife.BirthDate);
-      if (lFamDate = '') then
-          lFamDate := yearof(afam.Wife.BaptDate);
-      if (lFamDate <> '') and trystrtoint(lFamDate, lYear) then
-          lFamDate := IntToStr(lYear - 5);
-      if (lFamDate = '') then
-          lFamDate := yearof(afam.Husband.BirthDate);
-      if (lFamDate = '') then
-          lFamDate := yearof(afam.Husband.BaptDate);
-      if (lFamDate <> '') and trystrtoint(lFamDate, lYear) then
-          lFamDate := 'EST ' + IntToStr(lYear + 30);
-    end
-  else if afam.ChildCount = 0 then
-    begin
-      if assigned(afam.Husband) then
-        begin
-          lFamDate := afam.Husband.BirthDate;
-          if (lFamDate = '') then
-              lFamDate := afam.Husband.BaptDate;
-        end
-      else if Assigned(aFam.Wife) then
-        begin
-          lFamDate := afam.Wife.BirthDate;
-          if (lFamDate = '') then
-              lFamDate := afam.Wife.BaptDate;
-        end;
-    end;
-  Result:=lFamDate;
+    if not assigned(afam) then
+        exit('');
+    lFamDate := afam.MarriageDate;
+    if (lFamDate = '') and (afam.ChildCount > 0) then
+        lFamDate := aFam.Children[0].BirthDate;
+    if (lfamDate = '') and (afam.ChildCount > 0) then
+        lFamDate := aFam.Children[0].BaptDate;
+    if assigned(afam.Husband) and Assigned(aFam.Wife) then
+      begin
+        lFamDate := yearof(afam.Wife.BirthDate);
+        if (lFamDate = '') then
+            lFamDate := yearof(afam.Wife.BaptDate);
+        if (lFamDate <> '') and trystrtoint(lFamDate, lYear) then
+            lFamDate := IntToStr(lYear - 5);
+        if (lFamDate = '') then
+            lFamDate := yearof(afam.Husband.BirthDate);
+        if (lFamDate = '') then
+            lFamDate := yearof(afam.Husband.BaptDate);
+        if (lFamDate <> '') and trystrtoint(lFamDate, lYear) then
+            lFamDate := 'EST ' + IntToStr(lYear + 30);
+      end
+    else if afam.ChildCount = 0 then
+      begin
+        if assigned(afam.Husband) then
+          begin
+            lFamDate := afam.Husband.BirthDate;
+            if (lFamDate = '') then
+                lFamDate := afam.Husband.BaptDate;
+          end
+        else if Assigned(aFam.Wife) then
+          begin
+            lFamDate := afam.Wife.BirthDate;
+            if (lFamDate = '') then
+                lFamDate := afam.Wife.BaptDate;
+          end;
+      end;
+    Result := lFamDate;
 end;
 
 procedure TGenDocumentWriter.WriteFamily(aFam: iGenFamily);
@@ -376,13 +378,12 @@ var
             aPara.AddSpan(lEvtIdent + lrDate + ' nach ' + lPlace, [])
         else
           begin
-
+            if (lEvtIdent = '') and (aEvent.Eventtype <> evt_Occupation) then
+                lEvtIdent := EvtToNatur(aEvent.EventType);
             if aEvent.Date <> '' then
                 lEvtIdent += lrDate;
             if (aEvent.Eventtype = evt_Occupation) then
                 lEvtIdent += ' ' + aEvent.Data;
-            //            else
-            //  Todo:              lEvtIdent += ' ' + aEvent.EventType;
             if lPlace <> '' then
                 lEvtIdent += ' in ' + lPlace;
             if (aEvent.Eventtype <> evt_Occupation) then
@@ -393,16 +394,17 @@ var
     end;
 
     procedure AppIndIndOccupation(const aInd: IGenIndividual;
-      const aPara: TOdfParagraph);
+    const aPara: TOdfParagraph);
     var
-      lPlaceRef: string;
+        lPlaceRef: string;
     begin
-      if aInd.Occupation <> '' then
-        begin
-          aPara.AddSpan(', ' + aInd.Occupation, [fsItalic]);
-          if trim(aInd.OccuPlace) <> '' then
-              aPara.AddSpan(' in ' + Shortplace(aInd.OccuPlace,afam,lPlaceRef), [fsItalic]);
-        end;
+        if aInd.Occupation <> '' then
+          begin
+            aPara.AddSpan(', ' + aInd.Occupation, [fsItalic]);
+            if trim(aInd.OccuPlace) <> '' then
+                aPara.AddSpan(' in ' + Shortplace(aInd.OccuPlace, afam, lPlaceRef),
+                    [fsItalic]);
+          end;
     end;
 
     procedure AppendIndiShort(aPara: TOdfParagraph; aInd: IGenIndividual);
@@ -415,8 +417,8 @@ var
         if aInd.Title <> '' then
             aPara.AddSpan(', ' + aInd.Title, [fsItalic]);
         if aInd.Religion <> '' then
-          // Todo: Shorten Religion
-            aPara.AddSpan(', ' + aInd.Religion, [fsItalic]);
+            // Todo: Shorten Religion
+            aPara.AddSpan(', ' + NormizeStr(aInd.Religion), [fsItalic]);
         AppIndIndOccupation(aInd, aPara);
     end;
 
@@ -426,6 +428,7 @@ var
         lRef, lText, lPlaceRef: string;
         FNeedComma: boolean;
         i: integer;
+        lStr: TStringList;
     begin
         aPara.AddSpan(aSep, []);
         aPara.AddTab([]);
@@ -436,7 +439,7 @@ var
         if aInd.Title <> '' then
             aPara.AddSpan(', ' + aInd.Title, []);
         if aInd.Religion <> '' then
-            aPara.AddSpan(', ' + aInd.Religion, []);
+            aPara.AddSpan(', ' + NormizeStr(aInd.Religion), []);
         // Parent References
         FNeedComma := False;
         if assigned(aind.Father) and (aInd.Father.GetChildrenCount > 1) then
@@ -502,10 +505,11 @@ var
             aPara.AddSpan(']', [fsItalic]);
           end;
         //Occupation
-        AppIndIndOccupation(aind,aPara);
+        AppIndIndOccupation(aind, aPara);
         FNeedComma := True;
         if aind.Residence <> '' then
-            aPara.AddSpan(', lebt(e) in ' + Shortplace(aInd.Residence,aFam,lPlaceRef), []);
+            aPara.AddSpan(', lebt(e) in ' +
+                Shortplace(aInd.Residence, aFam, lPlaceRef), []);
 
         // Vital Info
         FNeedComma := True;
@@ -542,12 +546,21 @@ var
           begin
             aPara.AddLineBreak;
             aPara.AppendText('Lebensphasen von ');
+            // Todo: Sortiere Lebensphasen-Events nach Datum
             aPara.AddSpan(aind.Name, [fsItalic]);
             aPara.AppendText(':');
-            for i := 0 to aind.EventCount - 1 do
-              begin
-                aPara.AddLineBreak;
-                AppendEvent(apara, aind.Events[i]);
+            lStr := TStringList.Create;
+              try
+                for i := 0 to aind.EventCount - 1 do
+                    lstr.AddObject(SortDate(aind.Events[i].Date), TObject(ptrint(aind.Events[i])));
+                lStr.Sort;
+                for i := 0 to lStr.Count - 1 do
+                  begin
+                    aPara.AddLineBreak;
+                    AppendEvent(apara, IGenEvent(ptrint(lStr.Objects[i])));
+                  end;
+              finally
+                FreeAndNil(lStr);
               end;
           end;
         // Ref
@@ -579,7 +592,7 @@ var
             aPara.AddSpan(', ' + aInd.Title, []);
         aPara.AddTab([]);
         if aInd.Religion <> '' then
-            aPara.AddSpan(', ' + aInd.Religion, []);
+            aPara.AddSpan(', ' + NormizeStr(aInd.Religion), []);
         // Ref
         aPara.AddSpan('[', [fsItalic]);
         for j := 0 to aInd.FamilyCount - 1 do
@@ -636,7 +649,7 @@ var
         FNeedComma := False;
         if aInd.Religion <> '' then
           begin
-            aPara.AddSpan(aInd.Religion, []);
+            aPara.AddSpan(NormizeStr(aInd.Religion), []);
             FNeedComma := True;
           end;
         // Vital Info
@@ -669,7 +682,7 @@ var
             FNeedComma := True;
           end;
         //Occupation
-        AppIndIndOccupation(aind,aPara);
+        AppIndIndOccupation(aind, aPara);
         if aind.Residence <> '' then
             aPara.AddSpan(', lebte in ' + aInd.Residence, []);
     end;
@@ -679,20 +692,33 @@ var
 
     var
         i: integer;
+        lStr: TStringList;
+        lChild: IGenIndividual;
     begin
         lPara := aDocument.AddParagraph(aParaStyle);
         if aFam.ChildCount = 1 then
             lpara.AppendText(asep + ' 1 Kind:')
         else
             lPara.AppendText(aSep + ' ' + IntToStr(aFam.ChildCount) + ' Kinder:');
-        for i := 0 to aFam.ChildCount - 1 do
-          begin
-            lPara := aDocument.AddParagraph(aParaStyle);
-            lpara.AppendText(IntToStr(i + 1) + ')');
-            if aFam.Children[i].FamilyCount > 0 then
-                AppendIndiAsChildShort(lPara, afam.FamilyName, afam.Children[i])
-            else
-                AppendIndiAsChild(lPara, afam.FamilyName, afam.Children[i]);
+        lStr := TStringList.Create;
+          try
+            for i := 0 to aFam.ChildCount - 1 do
+                lStr.AddObject(SortDate(aFam.Children[i].BirthDate),
+                    TObject(ptrint(aFam.Children[i])));
+            lStr.Sort;
+            lStr.Sorted := True;
+            for i := 0 to lStr.Count - 1 do
+              begin
+                lPara := aDocument.AddParagraph(aParaStyle);
+                lpara.AppendText(IntToStr(i + 1) + ')');
+                lChild := IGenIndividual(ptrint(lstr.Objects[i]));
+                if lChild.FamilyCount > 0 then
+                    AppendIndiAsChildShort(lPara, afam.FamilyName, lChild)
+                else
+                    AppendIndiAsChild(lPara, afam.FamilyName, lChild);
+              end;
+          finally
+            FreeAndNil(lStr);
           end;
     end;
 
@@ -721,9 +747,9 @@ begin
     if assigned(aFam.Marriage) then
         AppendEvent(lPara, aFam.Marriage)
     else
-       begin
-         lPara.AddSpan(trim( EventDateToReadable(GetFamilyDate(aFam))), []);
-       end;
+      begin
+        lPara.AddSpan(trim(EventDateToReadable(GetFamilyDate(aFam))), []);
+      end;
     if assigned(aFam.Husband) then
         AppendIndi(FSection.AddParagraph('FamIndividual'), '●', aFam.Husband);
     if assigned(aFam.Wife) then
@@ -759,9 +785,9 @@ begin
                 else
                     lSection.AddHeadline(3).AppendText(copy(lSortedFname, 1, 2));
             lSurname := trim(lInd.Surname);
-            if (lsurname<>'') and (lsurname[1] = '(') then
+            if (lsurname <> '') and (lsurname[1] = '(') then
                 lSurname := copy(lsurname, 2, length(lsurname) - 2);
-            if (lsurname<>'') and (lsurname[1] = '<') then
+            if (lsurname <> '') and (lsurname[1] = '<') then
                 lSurname := copy(lsurname, 2, length(lsurname) - 2);
             lSection.AddHeadline(4).AppendText(lSurname);
             llastFamName := lSortedFname;
@@ -815,7 +841,7 @@ begin
     for i := 0 to FOccuList.Count - 1 do
       begin
         lSortedOccu := uppercase(FOccuList[i]);
-        llist :=  TList(FOccuList.Objects[i]);
+        llist := TList(FOccuList.Objects[i]);
         if copy(lSortedOccu, 1, 1) <> copy(llastOccu, 1, 1) then
             if copy(lSortedOccu, 1, 1) <> 'Ä'[1] then
                 lSection.AddHeadline(3).AppendText(copy(lSortedOccu, 1, 1))
@@ -831,7 +857,7 @@ begin
           begin
             if lNeedComma then
                 lPara.AddSpan(', ', [fsItalic]);
-            lNeedComma:=false;
+            lNeedComma := False;
             lInd := IGenIndividual(lObj);
             if assigned(lInd.ParentFamily) and (lInd.FamilyCount = 0) then
               begin
@@ -858,14 +884,14 @@ begin
                   end;
                 lPara.AddSpan(']', [fsItalic]);
               end;
-            end;
+          end;
       end;
 end;
 
 procedure TGenDocumentWriter.WritePlaceIndex;
 var
     lSection: TOdfSection;
-     lRef, lSortedplace, llastPlace: string;
+    lRef, lSortedplace, llastPlace: string;
     lpara: TOdfParagraph;
     lList: TList;
     lObj: Pointer;
@@ -921,19 +947,21 @@ begin
     for i := 0 to FPlace2List.Count - 1 do
       begin
         lSortedplace := FPlace2List[i].split(',');
-        lNextPlace:='';
-        if i<FPlace2List.Count - 1 then
-          lNextPlace:=FPlace2List[i+1];
-        for j := 0 to high(lSortedplace)-2 do
-          if ((high(llastPlace)>j) and (llastPlace[j]=lSortedplace[j])) or (trim(lSortedplace[j])='') then
-            Continue
-          else
-            lSection.AddHeadline(3+j).AppendText(trim(lSortedplace[j]));
+        lNextPlace := '';
+        if i < FPlace2List.Count - 1 then
+            lNextPlace := FPlace2List[i + 1];
+        for j := 0 to high(lSortedplace) - 2 do
+            if ((high(llastPlace) > j) and (llastPlace[j] = lSortedplace[j])) or
+                (trim(lSortedplace[j]) = '') then
+                Continue
+            else
+                lSection.AddHeadline(3 + j).AppendText(trim(lSortedplace[j]));
         llastPlace := lSortedplace;
-        if FPlace2List[i]=copy(lnextplace,1,Length(FPlace2List[i])) then
-          lSection.AddHeadline(3+high(lSortedplace)-1).AppendText(trim(lSortedplace[high(lSortedplace)-1]));
+        if FPlace2List[i] = copy(lnextplace, 1, Length(FPlace2List[i])) then
+            lSection.AddHeadline(3 + high(lSortedplace) - 1).AppendText(
+                trim(lSortedplace[high(lSortedplace) - 1]));
         lpara := lSection.AddParagraph('FamHeader');
-        lpara.AddSpan(trim(lSortedplace[high(lSortedplace)-1]), [fsbold]);
+        lpara.AddSpan(trim(lSortedplace[high(lSortedplace) - 1]), [fsbold]);
         lpara.AddTab([]);
         lPara.AddSpan('[', [fsItalic]);
         lNeedComma := False;
@@ -971,12 +999,19 @@ end;
 
 function TGenDocumentWriter.SortName(aName: string): string;
 var
-  lName: TStringArray;
-  i: Integer;
+    lName: TStringArray;
+    i: integer;
 begin
     lName := aName.Split([' ']);
-    if (high(lName)<=0) or (lName[high(lName)][1]in['(','<','"']) then exit(aName);
+    if (high(lName) <= 0) or (lName[high(lName)][1] in ['(', '<', '"']) then
+        exit(aName);
     Result := '';
+    for i := 0 to high(lName) do
+        if (lName[i] = 'verh.') or (lname[i] = 'verw.') then
+          begin
+            setlength(lName, i);
+            break;
+          end;
     for i := high(lName) downto 0 do
         Result += lName[i] + ' ';
 end;
@@ -999,58 +1034,64 @@ begin
     if not assigned(aind) then
         exit;
     AppendIndOcc(aind);
-    if FIndiList.IndexOfObject(Tobject(ptrint(aInd))) = -1 then
+    if FIndiList.IndexOfObject(TObject(ptrint(aInd))) = -1 then
       begin
         lSurname := trim(aInd.Surname);
-        if (lsurname<>'') and (lsurname[1] = '(') then
-          lSurname := copy(lsurname, 2, length(lsurname) - 2);
-        if (lsurname<>'') and (lsurname[1] = '<') then
-          lSurname := copy(lsurname, 2, length(lsurname) - 2);
+        if (lsurname <> '') and (lsurname[1] = '(') then
+            lSurname := copy(lsurname, 2, length(lsurname) - 2);
+        if (lsurname <> '') and (lsurname[1] = '<') then
+            lSurname := copy(lsurname, 2, length(lsurname) - 2);
         FIndiList.AddObject(SortName(lSurname) + ', ' + aInd.GivenName +
-            ' ' + LifeSpan(aInd), tobject(ptrint(aInd)));
+            ' ' + LifeSpan(aInd), TObject(ptrint(aInd)));
 
       end;
 end;
 
 procedure TGenDocumentWriter.AppendIndOcc(aInd: IGenIndividual);
 
-  procedure AppendSingleOccupation(aOccupation: String);
-  var
-    lplIx: Integer;
-    lList: TList;
-  begin
-    lplIx := FOccuList.IndexOf(aOccupation);
-    if lplIx < 0 then
-      begin
-        lList := TList.Create;
-        lList.Add(aInd);
-        FOccuList.AddObject(aOccupation, TObject(lList));
-      end
-    else
-      begin
-        lList := TList(FOccuList.Objects[lplIx]);
-        if lList.IndexOf(aInd) >= 0 then
-            exit; //!!
-        lList.Add(aInd);
-      end;
-  end;
+    procedure AppendSingleOccupation(aOccupation: string);
+    var
+        lplIx: integer;
+        lList: TList;
+    begin
+        lplIx := FOccuList.IndexOf(aOccupation);
+        if lplIx < 0 then
+          begin
+            lList := TList.Create;
+            lList.Add(aInd);
+            FOccuList.AddObject(aOccupation, TObject(lList));
+          end
+        else
+          begin
+            lList := TList(FOccuList.Objects[lplIx]);
+            if lList.IndexOf(aInd) >= 0 then
+                exit; //!!
+            lList.Add(aInd);
+          end;
+    end;
 
 var
-  lOccupation: String;
-  lOccupations: TStringArray;
-  i: Integer;
+    lOccupation: string;
+    lOccupations: TStringArray;
+    i: integer;
 
 begin
-  if not assigned(aind) or (trim(aind.Occupation)='') then
-    exit;
+    if not assigned(aind) or (trim(aind.Occupation) = '') then
+        exit;
 
-  for i :=0 to pred( aInd.EventCount) do
-    if aind.Events[i].EventType  = evt_Occupation then
-      begin
-  lOccupations := aind.Events[i].Data.Split(',');
-  for lOccupation in lOccupations do
-    AppendSingleOccupation(trim(lOccupation));
-      end;
+    for i := 0 to pred(aInd.EventCount) do
+        if aind.Events[i].EventType = evt_Occupation then
+          begin
+            lOccupations := aind.Events[i].Data.Split(',');
+            for lOccupation in lOccupations do
+                AppendSingleOccupation(trim(lOccupation));
+          end;
+end;
+
+function TGenDocumentWriter.NormizeStr(aStr: string): string;
+begin
+    Result := astr.Replace(#$FC, 'ü');
+    Result := Result.Replace(#$DF, 'ß');
 end;
 
 procedure TGenDocumentWriter.AppendFamily(aFam: iGenFamily);
@@ -1059,7 +1100,7 @@ var
     lFamDate: string;
 begin
 
-    lFamDate:=GetFamilyDate(aFam);
+    lFamDate := GetFamilyDate(aFam);
 
     FFamilyList.AddObject(SortName(aFam.FamilyName) + ', ' +
         SortDate(lFamDate), TObject(ptrint(aFam)));
@@ -1074,6 +1115,7 @@ var
     lDatepart: TStringArray;
     i: integer;
 begin
+    aDate := NormizeStr(aDate);
     lDatepart := aDate.Split(' ');
     if length(ldatepart) <= 1 then
         exit(aDate);
@@ -1114,13 +1156,13 @@ end;
 
 procedure TGenDocumentWriter.SaveToSingleXml(AFilename: string);
 begin
-  XmlWriterProc:=@MyWriteXmlToFile;
-  Document.SaveToSingleXml(AFilename);
+    XmlWriterProc := @MyWriteXmlToFile;
+    Document.SaveToSingleXml(AFilename);
 end;
 
 procedure TGenDocumentWriter.SaveToZipFile(AFilename: string);
 begin
-    XmlWriterProc:=@MyWriteXmlToFile;
+    XmlWriterProc := @MyWriteXmlToFile;
     Document.SaveToZipFile(AFilename);
 end;
 
@@ -1135,7 +1177,7 @@ begin
     lStyle := FDocument.AddAutomaticStyle(CStCenter, sfvParagraph);
     lstyle.OdfStyleParentStyleName := 'Standard';
     lstyle.OdfStyleClass := 'text';
-    lStyle.AppendOdfElement(oetStyleParagraphProperties,oatFoTextAlign,'center');
+    lStyle.AppendOdfElement(oetStyleParagraphProperties, oatFoTextAlign, 'center');
 
     lStyle := FDocument.AddStyle('FamilyBook', sfvParagraph);
     lstyle.OdfStyleParentStyleName := 'Standard';
@@ -1186,24 +1228,27 @@ begin
     lMStyle := FDocument.AddMasterStyle;
     lHeader := FDocument.CreateOdfElement(oetStyleHeader);
     lMStyle.AppendChild(lHeader);
-    lp0 := lHeader.AppendOdfElement(oetTextP,oatTextStyleName,CStCenter,TOdfParagraph);
-    lPara:=  TOdfParagraph(lp0);
-    lField:= lPara.AppendOdfElement(oetTextChapter,oatTextDisplay,'name');
-    lField.SetAttribute(oatTextOutlineLevel,'3');
+    lp0 := lHeader.AppendOdfElement(oetTextP, oatTextStyleName, CStCenter, TOdfParagraph);
+    lPara := TOdfParagraph(lp0);
+    lField := lPara.AppendOdfElement(oetTextChapter, oatTextDisplay, 'name');
+    lField.SetAttribute(oatTextOutlineLevel, '3');
     lpara.AppendText(' - ');
-    lField:= lPara.AppendOdfElement(oetTextChapter,oatTextDisplay,'name');
-    lField.SetAttribute(oatTextOutlineLevel,'4');
+    lField := lPara.AppendOdfElement(oetTextChapter, oatTextDisplay, 'name');
+    lField.SetAttribute(oatTextOutlineLevel, '4');
     lHeader := lMStyle.AppendOdfElement(oetLoExtHeaderFirst);
-    lPara:= TOdfParagraph( lHeader.AppendOdfElement(oetTextP,oatTextStyleName,CStCenter,TOdfParagraph));
+    lPara := TOdfParagraph(lHeader.AppendOdfElement(
+        oetTextP, oatTextStyleName, CStCenter, TOdfParagraph));
 
     lHeader := FDocument.CreateOdfElement(oetStyleFooter);
     lMStyle.AppendChild(lHeader);
-    lPara:= TOdfParagraph( lHeader.AppendOdfElement(oetTextP,oatTextStyleName,CStCenter,TOdfParagraph));
+    lPara := TOdfParagraph(lHeader.AppendOdfElement(
+        oetTextP, oatTextStyleName, CStCenter, TOdfParagraph));
     lpara.AppendText('- ');
-    lField:= lPara.AppendOdfElement(oetTextPageNumber,oatTextSelectPage,'current');
+    lField := lPara.AppendOdfElement(oetTextPageNumber, oatTextSelectPage, 'current');
     lpara.AppendText(' -');
     lHeader := lMStyle.AppendOdfElement(oetLoExtFooterFirst);
-    lPara:= TOdfParagraph( lHeader.AppendOdfElement(oetTextP,oatTextStyleName,CStCenter,TOdfParagraph));
+    lPara := TOdfParagraph(lHeader.AppendOdfElement(
+        oetTextP, oatTextStyleName, CStCenter, TOdfParagraph));
 
     for i := 0 to FPlaceList.Count - 1 do
       begin
@@ -1225,7 +1270,7 @@ begin
     FOccuList.Clear;
     FIndiList.Clear;
     FFamilyList.Clear;
-    FSection:=nil;
+    FSection := nil;
 end;
 
 end.

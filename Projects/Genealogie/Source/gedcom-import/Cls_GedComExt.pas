@@ -174,6 +174,7 @@ type
     end;
 
     { TGedIndividual }
+
     TGedIndividual = class(TGedComDefault, IGenIndividual)
     private
         FBaptised: TGedEvent;
@@ -188,7 +189,6 @@ type
         FFamSrchID:TGedComObj;
         FReligion: TGedEvent;
         FSex: TGedEvent;
-
         FResidence: TGedEvent;
         FParentFamily: TGedFamily;
         FTimeStamp:TDatetime;
@@ -346,7 +346,6 @@ type
         function ToString: ansistring; override;
         function Description: string; override;
         function Equals(aObj: TGedComObj): boolean; override; overload;
-
         class function AssNodeType: string; override;
         class function HandlesNodeType(aType: string): boolean; override;
         function EnumerateChildren: TGedIndEnumerator;
@@ -517,12 +516,12 @@ const
     CEventTag:array[0..21] of TGedDefRec =
         ((E:evt_ID;T:CFactRefNr;N:'ID'),
          (E:evt_Birth;T:CEventBirth;N:'Geboren:'),
-         (E:evt_Baptism;T:CEventBirth;N:'Getauft:'),
-         (E:evt_Death;T:CEventBirth;N:'Gestorben:'),
-         (E:evt_Burial;T:CEventBirth;N:'Begraben:'),
+         (E:evt_Baptism;T:CEventBaptism;N:'Getauft:'),
+         (E:evt_Death;T:CEventDeath;N:'Gestorben:'),
+         (E:evt_Burial;T:CEventBurial;N:'Begraben:'),
          (E:evt_Marriage;T:CEventMarriage;N:'Geheiratet:'),
-         (E:evt_Confirmation;T:CEventBirth;N:'Konfirmiert:'),
-         (E:evt_Divorce;T:CEventBirth;N:'Geschieden:'),
+         (E:evt_Confirmation;T:CEventConfirm;N:'Konfirmiert:'),
+         (E:evt_Divorce;T:CEventDivource;N:'Geschieden:'),
          (E:evt_AddEmigration;T:CEventEmigration;N:'Ausgewandert:'),
          (E:evt_Education;T:CEventEducation;N:'Ausbildung:'),
          (E:evt_Graduation;T:CeventGraduation;N:'Abschluß:'),
@@ -539,12 +538,23 @@ const
          (E:evt_LastChange;T:CLastChange;N:'letzte Änderung:'));
 
 function TagToNatur(aTag: string; kind: integer = 0): string;
+function EvtToNatur(aEvent: TenumEventType): string;
 Function Datetime2GedDate(aDt:TDateTime;aModif:string=''):String;
 Function GedDate2DateTime(agDt:String;out aModif:string):TDateTime;
 
 implementation
 
 uses variants,dateutils;
+
+function EvtToNatur(aEvent: TenumEventType): string;
+var
+  i: Integer;
+begin
+  result := '';
+  for i := 0 to high(CEventTag) do
+     if CEventTag[i].e = aEvent then
+       exit(CEventTag[i].N);
+end;
 
 function Datetime2GedDate(aDt: TDateTime; aModif: string): String;
 
@@ -783,7 +793,6 @@ procedure TGedFamily.SetMarriage(AValue: TGedEvent);
 
 begin
     SetShortcutChild(AValue, FMarriageNode, CEventMarriage);
-
 end;
 
 procedure TGedFamily.SetMarriageDate(AValue: string);
@@ -865,12 +874,13 @@ begin
             RemoveParent(lParent);
             lParent := TGedIndividual(lParenLink.Link);
             lParent.appendFam(Self);
+
             if assigned(lParent2) then
               begin
                 lParent2.appendSpouse(lParent);
                 lParent.appendSpouse(lParent2);
               end;
-            for lCh in FChilds d
+            for lCh in FChilds do
                begin
                 lParent.AppendChildren(lCh);
                 lCh.ParentFamily:=self;
@@ -913,7 +923,6 @@ begin
       begin
         AppendFamChild(lDest);
       end;
-
 end;
 
 procedure TGedFamily.ChildUpdate(aChild: TGedComObj);
@@ -1183,7 +1192,6 @@ begin
         GivenName := trim(lNames[1]);
         if high(lNames) > 1 then
             Title := Trim(lNames[2]);
-
         Data := GivenName + ' /' + Surname + '/' + NameSuffix;
       end
     else
@@ -1253,7 +1261,7 @@ begin
     if FTitle = AValue then
         Exit;
     FTitle := AValue;
-    // Todo: erstelle ggf. ein Title-Tag
+    // erstelle ggf. ein Title-Tag
 
 end;
 
@@ -1629,6 +1637,7 @@ begin
         Result := FName.Title;
 end;
 
+
 function TGedIndividual.GetOccupation: string;
 begin
     Result := '';
@@ -1792,6 +1801,7 @@ begin
     SetBaptised(TGedEvent(AValue.self));
 end;
 
+
 procedure TGedIndividual.SetBirth(AValue: TGedEvent);
 
 begin
@@ -1803,6 +1813,7 @@ procedure TGedIndividual.SetBirth(AValue: IGenEvent);
 begin
     SetBirth(TGedEvent(AValue.Self));
 end;
+
 
 procedure TGedIndividual.SetBirthDate(AValue: string);
 begin
@@ -1934,6 +1945,7 @@ begin
     // Todo:
 end;
 
+
 procedure TGedIndividual.SetFather(AValue: TGedIndividual);
 begin
     SetShortcutChild(AValue, FFather, CIndividual);
@@ -2045,6 +2057,7 @@ procedure TGedIndividual.SetOccupation(AValue: TGedEvent);
 begin
     SetShortcutChild(AValue, FOccupation, CFactOccupation);
 end;
+
 
 procedure TGedIndividual.SetResidence(AValue: string);
 begin

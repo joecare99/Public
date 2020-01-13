@@ -6,8 +6,8 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, Buttons,
-  StdCtrls, ComCtrls, Unt_Config,Cmp_GedComFile,cls_GenealogieHelper,cmp_GedComDocumentWriter,
-  fra_GenShowIndivid;
+  StdCtrls, ComCtrls, Spin, Unt_Config, Cmp_GedComFile, cls_GenealogieHelper,
+  cmp_GedComDocumentWriter, fra_GenShowIndivid;
 
 type
 
@@ -21,7 +21,7 @@ type
     btnFileSaveAs: TBitBtn;
     btnGotoLink: TSpeedButton;
     btnOpenFile: TBitBtn;
-    Button1: TButton;
+    btnCreateOdf: TButton;
     cbxFilename: TComboBox;
     Config1: TConfig;
     lblEstBirthResult: TLabel;
@@ -35,6 +35,8 @@ type
     pnlLeft: TPanel;
     pnlTop: TPanel;
     ProgressBar1: TProgressBar;
+    edtOffset: TSpinEdit;
+    edtCount: TSpinEdit;
     Splitter1: TSplitter;
     TreeView1: TTreeView;
     procedure ApplicationProperties1Idle(Sender: TObject; var Done: Boolean);
@@ -43,7 +45,7 @@ type
     procedure btnBrowseFileClick(Sender: TObject);
     procedure btnGotoLinkClick(Sender: TObject);
     procedure btnOpenFileClick(Sender: TObject);
-    procedure Button1Click(Sender: TObject);
+    procedure btnCreateOdfClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure FormShow(Sender: TObject);
@@ -223,21 +225,34 @@ Var
      End;
 end;
 
-procedure TfrmGedCom2OdfMain.Button1Click(Sender: TObject);
+procedure TfrmGedCom2OdfMain.btnCreateOdfClick(Sender: TObject);
 var
   lChlds: TGedComObj;
+  lCount: Integer;
+
+var DebugMin,
+      DebugCount:integer;
 begin
+  lCount := 0;
+  DebugMin:=edtOffset.Value;
+  DebugCount:=edtCount.Value;
   FGenealogieWriter.PrepareDocument;
   for lChlds in FGedComFile do
       if lChlds.inheritsfrom(TGedFamily) then
-           FGenealogieWriter.AppendFamily(lChlds as IGenFamily);
+         begin
+           inc(lCount);
+           if (lCount>=DebugMin) and (lcount <DebugMin+DebugCount) then
+             FGenealogieWriter.AppendFamily(lChlds as IGenFamily);
+         end;
   FGenealogieWriter.SortAndRenumberFamiliies;
+  FGenealogieWriter.SaveToSingleXml(ChangeFileExt(cbxFilename.Text,'0.fodt'));
   FGenealogieWriter.FamList.SaveToFile(ChangeFileExt(cbxFilename.Text,'f.txt'));
   FGenealogieWriter.indList.SaveToFile(ChangeFileExt(cbxFilename.Text,'i.txt'));
   FGenealogieWriter.OccuList.SaveToFile(ChangeFileExt(cbxFilename.Text,'o.txt'));
   FGenealogieWriter.PlacList.SaveToFile(ChangeFileExt(cbxFilename.Text,'p.txt'));
   FGenealogieWriter.Plac2List.SaveToFile(ChangeFileExt(cbxFilename.Text,'p2.txt'));
   FGenealogieWriter.WriteIndIndex;
+  FGenealogieWriter.SaveToSingleXml(ChangeFileExt(cbxFilename.Text,'1.fodt'));
   FGenealogieWriter.WriteOccIndex;
   FGenealogieWriter.WritePlaceIndex;
   FGenealogieWriter.WritePlace2Index;
