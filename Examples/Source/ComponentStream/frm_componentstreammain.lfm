@@ -1,38 +1,43 @@
 object Form1: TForm1
   Left = 329
-  Height = 433
+  Height = 650
   Top = 344
-  Width = 689
+  Width = 1034
   Caption = 'Test Component-Stream'
-  ClientHeight = 433
-  ClientWidth = 689
+  ClientHeight = 650
+  ClientWidth = 1034
+  DesignTimePPI = 144
   OnCreate = FormCreate
-  LCLVersion = '1.4.0.4'
   object Memo1: TMemo
-    Left = 448
-    Height = 416
-    Top = 8
-    Width = 232
+    Left = 672
+    Height = 624
+    Top = 12
+    Width = 348
     Lines.Strings = (
       'Memo1'
     )
+    ParentFont = False
     ScrollBars = ssAutoBoth
     TabOrder = 0
   end
-  object SpeedButton1: TSpeedButton
-    Left = 416
-    Height = 22
-    Top = 8
-    Width = 23
+  object btnCreate: TSpeedButton
+    Left = 624
+    Height = 33
+    Hint = 'Save Component to Text (Memo)'
+    Top = 12
+    Width = 34
     Caption = '>'
-    OnClick = SpeedButton1Click
+    OnClick = btnCreateClick
+    ParentFont = False
   end
-  object SpeedButton2: TSpeedButton
-    Left = 416
-    Height = 22
-    Top = 32
-    Width = 23
+  object btnRestore: TSpeedButton
+    Left = 624
+    Height = 33
+    Hint = 'Restore Component from Memo'
+    Top = 48
+    Width = 34
     Caption = '<'
-    OnClick = SpeedButton2Click
+    OnClick = btnRestoreClick
+    ParentFont = False
   end
 end
