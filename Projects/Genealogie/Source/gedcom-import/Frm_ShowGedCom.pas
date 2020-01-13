@@ -21,7 +21,7 @@ Type
     Button1: TButton;
     btnAutoEstBirth: TButton;
     chbVerbose: TCheckBox;
-    CheckBox1: TCheckBox;
+    chbFiltered: TCheckBox;
     lblStatistics: TLabel;
     lblEstBirthResult: TLabel;
     lblSetNameResult: TLabel;
@@ -314,7 +314,10 @@ begin
         DeleteFile(ChangeFileExt(lFilename,cNewExt));
       lst:=TFileStream.Create(ChangeFileExt(lFilename,cNewExt),fmCreate);
       try
-      FGedComFile.WriteToStream(lst,@GedFilter);
+      if chbFiltered.Checked then
+        FGedComFile.WriteToStream(lst,@GedFilter)
+      else
+        FGedComFile.WriteToStream(lst);
       finally
         freeandnil(lst);
       end;

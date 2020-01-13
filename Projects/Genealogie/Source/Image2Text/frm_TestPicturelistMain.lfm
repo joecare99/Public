@@ -1,88 +1,132 @@
 object FrmTestPictureListMain: TFrmTestPictureListMain
   Left = 482
-  Height = 1238
+  Height = 825
   Top = 250
-  Width = 1308
+  Width = 872
   Caption = 'Test PictureList'
-  ClientHeight = 1238
-  ClientWidth = 1308
-  DesignTimePPI = 144
+  ClientHeight = 825
+  ClientWidth = 872
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '2.0.4.0'
   object pnlBottom: TPanel
     Left = 0
-    Height = 75
-    Top = 1127
-    Width = 1308
+    Height = 50
+    Top = 752
+    Width = 872
     Align = alBottom
+    ClientHeight = 50
+    ClientWidth = 872
+    ParentFont = False
     TabOrder = 0
+    object lblInfo: TLabel
+      Left = 12
+      Height = 1
+      Top = 8
+      Width = 1
+      ParentColor = False
+    end
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Height = 36
-    Top = 1202
-    Width = 1308
+    Height = 23
+    Top = 802
+    Width = 872
     Panels = <>
+    ParentFont = False
   end
   object ShellTreeView1: TShellTreeView
     Left = 0
-    Height = 1052
-    Top = 75
-    Width = 368
+    Height = 702
+    Top = 50
+    Width = 245
     Align = alLeft
     FileSortType = fstNone
+    ParentFont = False
     TabOrder = 2
     OnSelectionChanged = ShellTreeView1SelectionChanged
     ObjectTypes = [otFolders]
   end
   object Panel1: TPanel
     Left = 0
-    Height = 75
+    Height = 50
     Top = 0
-    Width = 1308
+    Width = 872
     Align = alTop
     Caption = 'Panel1'
+    ParentFont = False
     TabOrder = 3
   end
   object Panel2: TPanel
-    Left = 368
-    Height = 1052
-    Top = 75
-    Width = 440
+    Left = 245
+    Height = 702
+    Top = 50
+    Width = 293
     Align = alLeft
     Caption = 'Panel2'
-    ClientHeight = 1052
-    ClientWidth = 440
+    ClientHeight = 702
+    ClientWidth = 293
+    ParentFont = False
     TabOrder = 4
     inline fraNavIData1: TfraNavIData
       Left = 1
-      Top = 1003
-      Width = 438
+      Height = 21
+      Top = 680
+      Width = 291
       Align = alBottom
-      ClientWidth = 438
+      ClientHeight = 21
+      ClientWidth = 291
+      DesignLeft = 233
+      DesignTop = 5
+      inherited btnFirst: TBitBtn
+        Left = 3
+        Height = 15
+        Top = 3
+        Width = 45
+        BorderSpacing.Around = 3
+      end
+      inherited btnPrev: TBitBtn
+        Left = 51
+        Height = 15
+        Top = 3
+        Width = 45
+        BorderSpacing.Around = 3
+      end
       inherited btnNext: TBitBtn
-        Left = 226
+        Left = 195
+        Height = 15
+        Top = 3
+        Width = 45
+        BorderSpacing.Around = 3
       end
       inherited btnLast: TBitBtn
-        Left = 332
+        Left = 243
+        Height = 15
+        Top = 3
+        Width = 45
+        BorderSpacing.Around = 3
       end
       inherited edtSeekNr: TEdit
-        Width = 2
+        Left = 99
+        Height = 15
+        Top = 3
+        Width = 93
+        BorderSpacing.Around = 3
       end
     end
     inline fraPictureList1: TfraPictureList
       Left = 1
-      Height = 1002
+      Height = 679
       Top = 1
-      Width = 438
+      Width = 291
       Align = alClient
-      ClientHeight = 1002
-      ClientWidth = 438
+      ClientHeight = 679
+      ClientWidth = 291
       TabOrder = 1
+      DesignLeft = 320
+      DesignTop = 5
       inherited lstPictures: TShellListView
-        Height = 1002
-        Width = 438
+        Height = 679
+        Width = 291
       end
     end
   end

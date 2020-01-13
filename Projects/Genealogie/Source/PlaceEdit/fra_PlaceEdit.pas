@@ -116,7 +116,7 @@ type
 
 implementation
 
- uses LCLType, graphics, math, mvEngine, mvDE_BGRAGraphics,Cls_GedComExt ;
+ uses LCLType, graphics, mvEngine, mvDE_BGRA, Cls_GedComExt ;
 
  {$R *.lfm}
 
