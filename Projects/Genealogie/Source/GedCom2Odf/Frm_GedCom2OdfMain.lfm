@@ -1,26 +1,26 @@
 object frmGedCom2OdfMain: TfrmGedCom2OdfMain
   Left = 463
-  Height = 910
+  Height = 607
   Top = 250
-  Width = 1256
+  Width = 837
   Caption = 'frmGedCom2OdfMain'
-  ClientHeight = 910
-  ClientWidth = 1256
-  DesignTimePPI = 144
+  ClientHeight = 607
+  ClientWidth = 837
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  LCLVersion = '2.0.6.0'
   object pnlTop: TPanel
     Left = 0
-    Height = 54
+    Height = 36
     Top = 0
     Width = 1256
     Align = alTop
     BevelOuter = bvNone
-    ClientHeight = 54
+    ClientHeight = 36
     ClientWidth = 1256
     Font.Color = clWindowText
-    Font.Height = -17
+    Font.Height = -11
     Font.Name = 'Tahoma'
     ParentFont = False
     TabOrder = 0
@@ -28,12 +28,12 @@ object frmGedCom2OdfMain: TfrmGedCom2OdfMain
       Left = 998
       Height = 42
       Top = 6
-      Width = 63
+      Width = 42
       Align = alLeft
-      BorderSpacing.Around = 6
+      BorderSpacing.Around = 4
       Caption = '...'
       Font.Color = clWindowText
-      Font.Height = -17
+      Font.Height = -11
       Font.Name = 'Tahoma'
       OnClick = btnBrowseFileClick
       ParentFont = False
@@ -43,11 +43,11 @@ object frmGedCom2OdfMain: TfrmGedCom2OdfMain
       Left = 12
       Height = 29
       Top = 12
-      Width = 974
+      Width = 649
       Align = alLeft
-      BorderSpacing.Around = 12
+      BorderSpacing.Around = 8
       Font.Color = clWindowText
-      Font.Height = -17
+      Font.Height = -11
       Font.Name = 'Tahoma'
       ItemHeight = 21
       ParentFont = False
@@ -58,12 +58,12 @@ object frmGedCom2OdfMain: TfrmGedCom2OdfMain
       Left = 1067
       Height = 42
       Top = 6
-      Width = 64
+      Width = 43
       Align = alLeft
-      BorderSpacing.Around = 6
+      BorderSpacing.Around = 4
       Caption = 'Open'
       Font.Color = clWindowText
-      Font.Height = -17
+      Font.Height = -11
       Font.Name = 'Tahoma'
       OnClick = btnOpenFileClick
       ParentFont = False
@@ -73,12 +73,12 @@ object frmGedCom2OdfMain: TfrmGedCom2OdfMain
       Left = 1137
       Height = 42
       Top = 6
-      Width = 64
+      Width = 43
       Align = alLeft
-      BorderSpacing.Around = 6
+      BorderSpacing.Around = 4
       Caption = 'Save'
       Font.Color = clWindowText
-      Font.Height = -17
+      Font.Height = -11
       Font.Name = 'Tahoma'
       ParentFont = False
       TabOrder = 3
@@ -88,33 +88,37 @@ object frmGedCom2OdfMain: TfrmGedCom2OdfMain
     Left = 0
     Height = 856
     Top = 54
-    Width = 378
+    Width = 252
     Align = alLeft
     Caption = 'pnlLeft'
     ClientHeight = 856
-    ClientWidth = 378
+    ClientWidth = 252
     Font.Color = clWindowText
-    Font.Height = -17
+    Font.Height = -11
     Font.Name = 'Tahoma'
     ParentFont = False
     TabOrder = 1
     object pnlBottom: TPanel
       Left = 1
-      Height = 181
-      Top = 674
+      Height = 121
+      Top = 734
       Width = 376
       Align = alBottom
-      ClientHeight = 181
+      ClientHeight = 121
       ClientWidth = 376
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      ParentFont = False
       TabOrder = 0
       object lblStatistics: TLabel
-        Left = 15
+        Left = 10
         Height = 21
-        Top = 14
+        Top = 9
         Width = 85
         Caption = 'lblStatistics'
         Font.Color = clWindowText
-        Font.Height = -17
+        Font.Height = -11
         Font.Name = 'Tahoma'
         ParentColor = False
         ParentFont = False
@@ -126,10 +130,10 @@ object frmGedCom2OdfMain: TfrmGedCom2OdfMain
       Top = 10
       Width = 367
       Align = alClient
-      BorderSpacing.Right = -9
-      BorderSpacing.Around = 9
+      BorderSpacing.Right = -6
+      BorderSpacing.Around = 6
       Font.Color = clWindowText
-      Font.Height = -17
+      Font.Height = -11
       Font.Name = 'Tahoma'
       ParentFont = False
       TabOrder = 1
@@ -137,86 +141,141 @@ object frmGedCom2OdfMain: TfrmGedCom2OdfMain
       OnSelectionChanged = TreeView1SelectionChanged
     end
   end
-  object Button1: TButton
-    Left = 888
-    Height = 46
-    Top = 217
-    Width = 141
-    Caption = 'Button1'
-    Font.Color = clWindowText
-    Font.Height = -17
-    Font.Name = 'Tahoma'
-    OnClick = Button1Click
+  object pnlClient: TPanel
+    Left = 386
+    Height = 856
+    Top = 54
+    Width = 870
+    Align = alClient
+    ClientHeight = 856
+    ClientWidth = 870
     ParentFont = False
     TabOrder = 2
+    object pnlClTop: TPanel
+      Left = 1
+      Height = 178
+      Top = 1
+      Width = 868
+      Align = alTop
+      ClientHeight = 178
+      ClientWidth = 868
+      ParentFont = False
+      TabOrder = 0
+      object btnCreateOdf: TButton
+        Left = 336
+        Height = 31
+        Top = 118
+        Width = 94
+        Caption = 'Create Odf'
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        OnClick = btnCreateOdfClick
+        ParentFont = False
+        TabOrder = 0
+      end
+      object btnAutoEstBirth: TButton
+        Left = 11
+        Height = 41
+        Top = 48
+        Width = 117
+        Caption = 'Estimate Birth'
+        OnClick = btnAutoEstBirthClick
+        ParentFont = False
+        TabOrder = 1
+      end
+      object lblEstBirthResult: TLabel
+        Left = 91
+        Height = 25
+        Top = 90
+        Width = 34
+        Caption = '<0>'
+        ParentColor = False
+        ParentFont = False
+      end
+      object lblSetNameResult: TLabel
+        Left = 94
+        Height = 25
+        Top = 151
+        Width = 34
+        Caption = '<0>'
+        ParentColor = False
+        ParentFont = False
+        OnClick = lblSetNameResultClick
+      end
+      object btnAutoSetName: TButton
+        Left = 11
+        Height = 41
+        Top = 107
+        Width = 117
+        Caption = 'Set Name'
+        OnClick = btnAutoSetNameClick
+        ParentFont = False
+        TabOrder = 2
+      end
+      object ProgressBar1: TProgressBar
+        Left = 63
+        Height = 20
+        Top = 13
+        Width = 127
+        ParentFont = False
+        TabOrder = 3
+      end
+      object btnGotoLink: TSpeedButton
+        Left = 12
+        Height = 22
+        Top = 11
+        Width = 39
+        OnClick = btnGotoLinkClick
+        ParentFont = False
+      end
+      object edtOffset: TSpinEdit
+        Left = 343
+        Height = 33
+        Top = 20
+        Width = 109
+        MaxValue = 100000
+        ParentFont = False
+        TabOrder = 4
+      end
+      object edtCount: TSpinEdit
+        Left = 347
+        Height = 33
+        Top = 48
+        Width = 103
+        MaxValue = 100000
+        ParentFont = False
+        TabOrder = 5
+        Value = 2000
+      end
+    end
+    object pnlDetail: TPanel
+      Left = 1
+      Height = 587
+      Top = 268
+      Width = 868
+      Align = alClient
+      ParentFont = False
+      TabOrder = 1
+    end
   end
-  object btnAutoEstBirth: TButton
-    Left = 400
-    Height = 62
-    Top = 112
-    Width = 176
-    Caption = 'Estimate Birth'
-    OnClick = btnAutoEstBirthClick
-    TabOrder = 3
-  end
-  object lblEstBirthResult: TLabel
-    Left = 520
-    Height = 25
-    Top = 175
-    Width = 34
-    Caption = '<0>'
-    ParentColor = False
-  end
-  object lblSetNameResult: TLabel
-    Left = 525
-    Height = 25
-    Top = 267
-    Width = 34
-    Caption = '<0>'
-    ParentColor = False
-    OnClick = lblSetNameResultClick
-  end
-  object btnAutoSetName: TButton
-    Left = 400
-    Height = 62
-    Top = 201
-    Width = 176
-    Caption = 'Set Name'
-    OnClick = btnAutoSetNameClick
-    TabOrder = 4
-  end
-  object ProgressBar1: TProgressBar
-    Left = 478
-    Height = 30
-    Top = 60
-    Width = 190
-    TabOrder = 5
-  end
-  object pnlDetail: TPanel
-    Left = 323
-    Height = 544
-    Top = 366
-    Width = 933
-    TabOrder = 6
-  end
-  object btnGotoLink: TSpeedButton
-    Left = 402
-    Height = 33
-    Top = 56
-    Width = 59
-    OnClick = btnGotoLinkClick
+  object Splitter1: TSplitter
+    Left = 378
+    Height = 856
+    Top = 54
+    Width = 5
   end
   object Config1: TConfig
-    left = 752
-    top = 224
+    left = 501
+    top = 149
   end
   object OpenDialog1: TOpenDialog
-    left = 748
-    top = 124
+    left = 499
+    top = 83
   end
   object ApplicationProperties1: TApplicationProperties
     OnIdle = ApplicationProperties1Idle
-    left = 868
-    top = 129
+    left = 579
+    top = 86
   end
 end

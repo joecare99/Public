@@ -21,6 +21,7 @@ Type
     Button1: TButton;
     btnAutoEstBirth: TButton;
     chbVerbose: TCheckBox;
+    chbFiltered: TCheckBox;
     lblStatistics: TLabel;
     lblEstBirthResult: TLabel;
     lblSetNameResult: TLabel;
@@ -89,7 +90,7 @@ Var
 
 Implementation
 
-uses LConvEncoding,Cls_GedComExt,Unt_FileProcs;
+uses LConvEncoding,Cls_GedComExt,Unt_FileProcs,unt_IGenBase2;
 
 {$IFDEF FPC}
 {$R *.lfm}
@@ -161,6 +162,45 @@ begin
       lActNode:=Owner.AddChildObject(base,lActChild.ToString,lActChild);
 //      GedCom2treenodes(lActChild,Owner,lActNode);
     end;
+end;
+
+function GedFilter(aObj: TGedComObj): Boolean;
+var
+  FFiledate: TDateTime;
+  lFam: TGedFamily;
+
+  function FilterFamily(aObj:TGedFamily):boolean;
+
+  var
+    lChld: TGedIndividual;
+  begin
+    if not assigned(aObj) then exit(false);
+    result := true;
+    if assigned(aObj.Husband) and (aObj.Husband.LastChange>=FFiledate-1 )
+      then exit;
+    if assigned(aObj.Wife) and (aObj.Wife.LastChange>=FFiledate-1 )
+      then exit;
+    for lChld in aObj.EnumerateChildren do
+     if (lChld.LastChange>=FFiledate-1 ) then exit;
+    result := false;
+  end;
+
+begin
+  result := true;
+  FFiledate:=Date;
+  if aobj.InheritsFrom(TGedIndividual) then
+    begin
+      result := false;
+      if TGedIndividual(aObj).LastChange >=FFiledate-1 then
+        exit(true);
+      if Assigned(TGedIndividual(aObj).ParentFamily) and FilterFamily(TGedFamily(TGedIndividual(aObj).ParentFamily.self)) then
+        exit(true);
+      for lFam in  TGedIndividual(aObj).EnumerateFamiliy do
+        if FilterFamily(lFam) then
+          exit(true);
+    end;
+  if aobj.InheritsFrom(TGedFamily) then
+    exit(FilterFamily(TGedFamily(aObj)));
 end;
 
 procedure TFrmShowGedCom.btnBrowseFileClick(Sender: TObject);
@@ -274,7 +314,10 @@ begin
         DeleteFile(ChangeFileExt(lFilename,cNewExt));
       lst:=TFileStream.Create(ChangeFileExt(lFilename,cNewExt),fmCreate);
       try
-      FGedComFile.WriteToStream(lst);
+      if chbFiltered.Checked then
+        FGedComFile.WriteToStream(lst,@GedFilter)
+      else
+        FGedComFile.WriteToStream(lst);
       finally
         freeandnil(lst);
       end;

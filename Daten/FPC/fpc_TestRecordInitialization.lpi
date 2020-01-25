@@ -1,38 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="10"/>
     <PathDelim Value="\"/>
     <General>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="prj_ComponentStream"/>
+      <Title Value="fpc_TestRecordInitialization"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
       <Icon Value="0"/>
     </General>
     <i18n>
-      <EnableI18N Value="True"/>
-      <OutDir Value="..\po"/>
+      <EnableI18N LFM="False"/>
     </i18n>
     <VersionInfo>
-      <UseVersionInfo Value="True"/>
-      <AutoIncrementBuild Value="True"/>
-      <BuildNr Value="5"/>
-      <Language Value="0407"/>
+      <StringTable ProductVersion=""/>
     </VersionInfo>
-    <BuildModes Count="3">
+    <BuildModes Count="2">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
         <CompilerOptions>
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($Project(Infofile))"/>
+            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-            <OtherUnitFiles Value="..\Source\ComponentStream"/>
+            <OtherUnitFiles Value="..\test"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -48,11 +44,13 @@
               <OverflowChecks Value="True"/>
               <StackChecks Value="True"/>
             </Checks>
+            <VerifyObjMethodCallValidity Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <DebugInfoType Value="dsDwarf2Set"/>
               <UseHeaptrc Value="True"/>
+              <TrashVariables Value="True"/>
               <UseExternalDbgSyms Value="True"/>
             </Debugging>
             <Options>
@@ -63,69 +61,35 @@
           </Linking>
         </CompilerOptions>
       </Item2>
-      <Item3 Name="Release">
-        <CompilerOptions>
-          <Version Value="11"/>
-          <PathDelim Value="\"/>
-          <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
-          </Target>
-          <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-            <OtherUnitFiles Value="..\Source\ComponentStream"/>
-            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
-          </SearchPaths>
-          <Parsing>
-            <SyntaxOptions>
-              <AllowLabel Value="False"/>
-            </SyntaxOptions>
-          </Parsing>
-          <CodeGeneration>
-            <SmartLinkUnit Value="True"/>
-            <Optimizations>
-              <OptimizationLevel Value="3"/>
-            </Optimizations>
-          </CodeGeneration>
-          <Linking>
-            <Debugging>
-              <GenerateDebugInfo Value="False"/>
-            </Debugging>
-            <LinkSmart Value="True"/>
-            <Options>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
-            </Options>
-          </Linking>
-        </CompilerOptions>
-      </Item3>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <FormatVersion Value="2"/>
-      <Modes Count="1">
-        <Mode0 Name="default"/>
-      </Modes>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="3">
       <Item1>
-        <PackageName Value="LCL"/>
+        <PackageName Value="FPCUnitTestRunner"/>
       </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="FCL"/>
+      </Item3>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>
-        <Filename Value="prj_ComponentStream.lpr"/>
+        <Filename Value="fpc_TestRecordInitialization.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Source\ComponentStream\frm_componentstreammain.pas"/>
+        <Filename Value="..\test\testrecordinitialization.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_ComponentStreamMain"/>
+        <UnitName Value="testRecordInitialization"/>
       </Unit1>
     </Units>
   </ProjectOptions>
@@ -137,7 +101,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\..\include"/>
-      <OtherUnitFiles Value="..\Source\ComponentStream"/>
+      <OtherUnitFiles Value="..\test"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Parsing>
@@ -157,4 +121,17 @@
       </Options>
     </Linking>
   </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="3">
+      <Item1>
+        <Name Value="EAbort"/>
+      </Item1>
+      <Item2>
+        <Name Value="ECodetoolError"/>
+      </Item2>
+      <Item3>
+        <Name Value="EFOpenError"/>
+      </Item3>
+    </Exceptions>
+  </Debugging>
 </CONFIG>

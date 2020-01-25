@@ -1,0 +1,70 @@
+object FrmVirtTreeViewEx: TFrmVirtTreeViewEx
+  Left = 462
+  Height = 572
+  Top = 250
+  Width = 999
+  Caption = 'VirtualTreeView Example'
+  ClientHeight = 572
+  ClientWidth = 999
+  DesignTimePPI = 144
+  object VST: TVirtualStringTree
+    Left = 0
+    Height = 572
+    Top = 0
+    Width = 544
+    Align = alLeft
+    DefaultNodeHeight = 25
+    DefaultText = 'Node'
+    Header.AutoSizeIndex = 0
+    Header.Columns = <    
+      item
+        Position = 0
+        Width = 100
+      end    
+      item
+        Position = 1
+        Width = 100
+      end    
+      item
+        Position = 2
+        Width = 100
+      end>
+    Header.Options = [hoColumnResize, hoDrag, hoShowSortGlyphs, hoVisible]
+    Header.Style = hsPlates
+    TabOrder = 0
+    TreeOptions.MiscOptions = [toAcceptOLEDrop, toEditable, toFullRepaintOnResize, toGridExtensions, toInitOnSave, toToggleOnDblClick, toWheelPanning, toEditOnClick]
+    TreeOptions.SelectionOptions = [toExtendedFocus]
+    OnChange = VSTChange
+    OnFreeNode = VSTFreeNode
+    OnGetText = VSTGetText
+    OnGetNodeDataSize = VSTGetNodeDataSize
+    OnNewText = VSTNewText
+  end
+  object btnAddRoot: TButton
+    Left = 560
+    Height = 50
+    Top = 18
+    Width = 150
+    Caption = 'Add Root'
+    OnClick = btnAddRootClick
+    TabOrder = 1
+  end
+  object btnAddChild: TButton
+    Left = 560
+    Height = 50
+    Top = 83
+    Width = 150
+    Caption = 'Add Child'
+    OnClick = btnAddChildClick
+    TabOrder = 2
+  end
+  object btnDelete: TButton
+    Left = 560
+    Height = 50
+    Top = 178
+    Width = 150
+    Caption = 'Delete'
+    OnClick = btnDeleteClick
+    TabOrder = 3
+  end
+end

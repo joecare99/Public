@@ -66,7 +66,7 @@ type
 
     { TGedComObj }
 
-    TGedComObj = class(IGedParent)
+    TGedComObj = class(TObject,IGedParent)
     private
         Fchanged: boolean;
         FID: integer;
@@ -90,6 +90,7 @@ type
         function GetChild({%H-}Idx: variant): TGedComObj; virtual;
         function GetParent: IGedParent;
         function ChildCount: integer; virtual;
+        procedure SetNodeType(AValue: string); virtual;
         procedure SetRoot(AValue: IGedParent); virtual;
         procedure SetLink(AValue: TGedComObj); virtual;
         procedure SetData({%H-}AValue: string); virtual;
@@ -118,7 +119,7 @@ type
         property Root: IGedParent read FRoot write SetRoot;
         property Data: string read GetData write SetData;
         property Link: TGedComObj read GetLink write SetLink;
-        property NodeType: string read FNodeType write FNodeType;
+        property NodeType: string read FNodeType write SetNodeType;
         property NodeID: string read FNodeID write SetNodeID;
         property Count: integer read ChildCount;
         property Updateing: boolean read FUpdating;
@@ -151,6 +152,9 @@ type
         constructor Create(const aID, aType: string; const aInfo: string); override;
         class function HandlesNodeType({%H-}aType: string): boolean; override;
     end;
+
+    {TFilterProc}
+    TFilterproc=Function(aObj:TGedComObj):Boolean;
 
     { TGedComFile }
 
@@ -219,7 +223,7 @@ type
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
         class procedure PutGed(const Lines: TStrings; gcBase: IGedParent;
-            OnUpd, OnLongOp: TNotifyEvent);
+            OnUpd, OnLongOp: TNotifyEvent;aFilter:TFilterProc=nil);
 
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
@@ -232,7 +236,7 @@ type
 
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
-        procedure WriteToStream(st: TStream);
+        procedure WriteToStream(st: TStream;aFilter:TFilterProc=nil);
 
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
@@ -264,6 +268,7 @@ const
     CEventSource = 'SOUR';
     CPlace = 'PLAC';
     CEventDate = 'DATE';
+
 
 
 implementation
@@ -365,6 +370,12 @@ begin
     if FNodeID = AValue then
         Exit;
     FNodeID := AValue;
+end;
+
+procedure TGedComObj.SetNodeType(AValue: string);
+begin
+  if FNodeType=AValue then Exit;
+  FNodeType:=AValue;
 end;
 
 function TGedComObj.GetData: string;
@@ -903,7 +914,7 @@ begin
 end;
 
 class procedure TGedComFile.PutGed(const Lines: TStrings; gcBase: IGedParent;
-    OnUpd, OnLongOp: TNotifyEvent);
+  OnUpd, OnLongOp: TNotifyEvent; aFilter: TFilterProc);
 
 var
     lTime: QWord;
@@ -929,9 +940,14 @@ var
           begin
             for lActChild in gcParent do
                 if (lActChild.NodeType = 'HEAD') or
-                    (lActChild.NodeType = 'SUBM') or (lActChild.NodeType = 'INDI')
+                    (lActChild.NodeType = 'SUBM') or
+                    (lActChild.NodeType = 'INDI')
                 then
                   begin
+                    if (lActChild.NodeType='INDI') and
+                        assigned(aFilter) and
+                        not aFilter(lActChild) then
+                          continue;
                     Lines.Append(BuildgedcomLine(Level, lActChild));
                     IterateParent(Lines, lActChild, Level + 1);
                     ThrowEvents(lActChild, Level);
@@ -941,6 +957,13 @@ var
                     (lActChild.NodeType <> 'SUBM') and (lActChild.NodeType <> 'INDI')
                 then
                   begin
+                    if (lActChild.NodeType <> 'HEAD') and
+                    (lActChild.NodeType <> 'SUBM') and
+                    (lActChild.NodeType <> 'INDI') and
+                    (lActChild.NodeType <> 'TRLR') and
+                        assigned(aFilter) and
+                        not aFilter(lActChild) then
+                          continue;
                     Lines.Append(BuildgedcomLine(Level, lActChild));
                     IterateParent(Lines, lActChild, Level + 1);
                     ThrowEvents(lActChild, Level);
@@ -980,7 +1003,7 @@ begin
     FChanged := False;
 end;
 
-procedure TGedComFile.WriteToStream(st: TStream);
+procedure TGedComFile.WriteToStream(st: TStream; aFilter: TFilterProc);
 
 var
     lsl: TStringList;
@@ -989,7 +1012,7 @@ var
 begin
     lsl := TStringList.Create;
       try
-        PutGed(lsl, self, FOnWriteUpdate, FonLongOp);
+        PutGed(lsl, self, FOnWriteUpdate, FonLongOp,aFilter);
         if FEncoding <> '' then
             lst := ConvertEncodingFromUTF8(lsl.Text, FEncoding, lbEncoded)
         else
