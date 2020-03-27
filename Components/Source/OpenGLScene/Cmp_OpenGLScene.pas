@@ -90,7 +90,7 @@ type
     procedure SetAttributes(idx: variant; AValue: variant);virtual;
     Function ListAttr:variant;virtual;
   public
-    Property Attribute[Idx:Variant]:Variant read GetAttributes write SetAttributes;
+    Property Attributes[Idx:Variant]:Variant read GetAttributes write SetAttributes;
     property Translation:TPointF read FTranslation;
     property RotVector:TPointF read FRotVector write SetRotVector;
     property RotAmount:Double read FRotAmount write SetRotAmount;
@@ -270,6 +270,12 @@ const
   fovy = 20.0;
   zNear = 0.1;
   zFar = 60.0;
+
+  CBaseObjAttr: array[0..5] of string=
+  ('Translation','TPointF','Rotation.Amount','Double','Rotation.Vector','TPointF');
+
+  CGroupAttr: array[0..3] of String=
+  ('Transl.Amount','Double','Transl.Vector','TPointF');
 
 function UVPoint(U, V: Single): TUVPoint;inline;
 Begin
@@ -936,37 +942,62 @@ Begin
   FRotVector := PointF( x,y,z);
 End;
 
-
 function T3DBasisObject.AttrCount: integer;
 begin
   result := 3;
 end;
 
+
+
 function T3DBasisObject.GetAttributes(Idx: variant): variant;
+var
+  lsIdx: Integer;
 begin
+  lsIdx := -2;
+  Result:=Null;
   if VarIsNumeric(Idx) then
-     case Idx of
+    lsIdx := Idx
+  else
+    if VarIsStr(idx) then
+      IndexOfString2(CBaseObjAttr,Idx,lsIdx);
+  if  lsIdx>=-1 then
+     case lsIdx of
+     -1:begin
+          result := ClassName;
+                if Name <> '' then
+                    result := result + '(' + Name + ')';
+        end;
        0:result :=FTranslation.AsVariant;
        1:Result := FRotAmount ;
        2:Result := FRotVector.AsVariant;
-     end
-  else
+     end;
 end;
 
 procedure T3DBasisObject.SetAttributes(idx: variant; AValue: variant);
+var
+  lsIdx: integer;
 begin
+  lsIdx := -1;
   if VarIsNumeric(Idx) then
-     case Idx of
-       0:FTranslation.AsVariant := AValue;
-       1:FRotAmount := aValue;
-       2:SetRotVector(AValue);
-     end
+    lsIdx:=Idx
   else
+    if VarIsStr(idx) then
+      IndexOfString2(CBaseObjAttr,Idx,lsIdx);
+  if lsIdx>=0 then
+    case lsIdx of
+      0:FTranslation.AsVariant := AValue;
+      1:FRotAmount := aValue;
+      2:SetRotVector(AValue);
+    end;
 end;
 
 function T3DBasisObject.ListAttr: variant;
+var
+  I: Integer;
 begin
-  result := VarArrayOf(['Translation','TPointF','Rotation.Amount','Double','Rotation.Vector','TPointF']);
+  result := VarArrayCreate([0,high(CBaseObjAttr)],varvariant);
+  for I := 0 to 5 do
+    result[i] := CBaseObjAttr[i];
 end;
 
 //----------------------------------------------------------------------------
@@ -984,46 +1015,71 @@ end;
 
 function TO3DGroup.AttrCount: integer;
 begin
-  Result:=inherited AttrCount+3;
+  Result:=inherited AttrCount+length(CGroupAttr) div 2;
 end;
 
 function TO3DGroup.GetAttributes(Idx: variant): variant;
 var
-  lInhAttrCount: Integer;
+  lInhAttrCount, lsIdx: Integer;
 begin
   lInhAttrCount := inherited AttrCount;
+  lsIdx := -1;
   if VarIsNumeric(idx) then
     if idx < lInhAttrCount then
-       inherited
+       begin
+          exit(inherited);
+       end
     else
-      case idx-lInhAttrCount of
-         0:result := FAmount;
-         1:result := FTranslVector.AsVariant;
+      lsIdx := Idx-lInhAttrCount
+  else if VarIsStr(idx) then
+    if not IndexOfString2(CGroupAttr,Idx,lsIdx) then
+      begin
+        exit(inherited);
       end;
+  if lsIdx>=0 then
+        case lsIdx of
+           0:result := FAmount;
+           1:result := FTranslVector.AsVariant;
+        end;
 end;
 
 procedure TO3DGroup.SetAttributes(idx: variant; AValue: variant);
 var
-  lInhAttrCount: Integer;
+  lInhAttrCount, lsIdx: Integer;
 begin
   lInhAttrCount := inherited AttrCount;
+  lsIdx := -1;
   if VarIsNumeric(idx) then
     if idx < lInhAttrCount then
-       inherited
-    else
+       begin
+         inherited;
+         exit
+       end
+  else
+    lsIdx := Idx-lInhAttrCount
+else if VarIsStr(idx) then
+  if not IndexOfString2(CGroupAttr,Idx,lsIdx) then
+    begin
+       inherited;
+       exit;
+    end;
+  if lsIdx>=0 then
+        case lsIdx of
+           0: FAmount := AValue;
+           1:FTranslVector.AsVariant := AValue;
+        end;
 end;
 
 function TO3DGroup.ListAttr: variant;
 var
   lVah: LongInt;
+  i: Integer;
 begin
   Result:=inherited ListAttr;
   lVah := VarArrayHighBound(result,1);
-  VarArrayRedim(Result,lVah+4);
-  result[lVah+1]:='Transl.Amount';
-  result[lVah+2]:='Double';
-  result[lVah+3]:='Transl.Vector';
-  result[lVah+4]:='TPointF';
+  VarArrayRedim(Result,lVah+length(CGroupAttr));
+  for i := 0 to high(CGroupAttr) do
+    result[lVah+1+i]:=CGroupAttr[i];
 end;
 
 procedure TO3DGroup.Draw;

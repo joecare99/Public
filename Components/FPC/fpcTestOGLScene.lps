@@ -4,7 +4,7 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Debug"/>
-    <Units Count="8">
+    <Units Count="10">
       <Unit0>
         <Filename Value="fpcTestOGLScene.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -12,14 +12,14 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="30"/>
+        <UsageCount Value="43"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\Source\TestOGLScene\TestOGLSceneComp.pas"/>
         <IsPartOfProject Value="True"/>
-        <TopLine Value="96"/>
-        <CursorPos Y="189"/>
-        <UsageCount Value="30"/>
+        <TopLine Value="36"/>
+        <CursorPos X="31" Y="62"/>
+        <UsageCount Value="43"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
@@ -27,180 +27,196 @@
         <IsPartOfProject Value="True"/>
         <IsVisibleTab Value="True"/>
         <WindowIndex Value="1"/>
-        <TopLine Value="56"/>
-        <CursorPos Y="70"/>
+        <TopLine Value="823"/>
+        <CursorPos X="45" Y="823"/>
         <ExtraEditorCount Value="1"/>
         <ExtraEditor1>
           <EditorIndex Value="-1"/>
           <TopLine Value="828"/>
           <CursorPos X="7" Y="847"/>
         </ExtraEditor1>
-        <UsageCount Value="30"/>
+        <UsageCount Value="43"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
+        <Filename Value="..\Source\TestOGLScene\TestOGLScnBaseObjects.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos Y="27"/>
+        <UsageCount Value="38"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\Source\TestOGLScene\TestOGLScnGroup.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="65"/>
+        <CursorPos X="40" Y="86"/>
+        <UsageCount Value="37"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
         <Filename Value="C:\lazarus\fpc\3.0.4\source\packages\fcl-fpcunit\src\fpcunit.pp"/>
         <EditorIndex Value="5"/>
         <TopLine Value="647"/>
         <CursorPos X="74" Y="651"/>
-        <UsageCount Value="13"/>
-        <Loaded Value="True"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="6"/>
-        <UsageCount Value="13"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLSBaseObjects.pas"/>
-        <EditorIndex Value="3"/>
-        <CursorPos X="23" Y="22"/>
-        <UsageCount Value="13"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
-        <Filename Value="..\Source\TestOGLScene\TestOGLScnBaseObjects.pas"/>
-        <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="46"/>
-        <CursorPos X="18" Y="81"/>
-        <UsageCount Value="25"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="40"/>
+        <CursorPos Y="86"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
+        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit6>
       <Unit7>
-        <Filename Value="..\Source\TestOGLScene\TestOGLScnGroup.pas"/>
-        <IsPartOfProject Value="True"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="5"/>
-        <CursorPos X="34" Y="49"/>
-        <UsageCount Value="24"/>
+        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLSBaseObjects.pas"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="23" Y="22"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit7>
+      <Unit8>
+        <Filename Value="..\Source\OpenGLScene\Unt_IHasAttributes.pas"/>
+        <EditorIndex Value="1"/>
+        <WindowIndex Value="1"/>
+        <CursorPos X="24" Y="24"/>
+        <UsageCount Value="16"/>
+        <Loaded Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="C:\lazarus\fpc\3.0.4\source\rtl\objpas\sysutils\sysinth.inc"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="39"/>
+        <CursorPos Y="81"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit9>
     </Units>
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
-        <Filename Value="..\Source\TestOGLScene\TestOGLSceneComp.pas"/>
-        <Caret Line="57" Column="21" TopLine="36"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="73" TopLine="47"/>
       </Position1>
       <Position2>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="215" Column="21" TopLine="185"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="74" TopLine="47"/>
       </Position2>
       <Position3>
-        <Filename Value="..\Source\TestOGLScene\TestOGLSceneComp.pas"/>
-        <Caret Line="150" TopLine="119"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="76" TopLine="47"/>
       </Position3>
       <Position4>
-        <Filename Value="..\Source\TestOGLScene\TestOGLSceneComp.pas"/>
-        <Caret Line="149" TopLine="129"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="48" TopLine="39"/>
       </Position4>
       <Position5>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="921" Column="23" TopLine="894"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="69" TopLine="39"/>
       </Position5>
       <Position6>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="90" Column="23" TopLine="63"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="86" TopLine="39"/>
       </Position6>
       <Position7>
-        <Filename Value="..\Source\TestOGLScene\TestOGLSceneComp.pas"/>
-        <Caret Line="150" Column="17" TopLine="129"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="46" TopLine="38"/>
       </Position7>
       <Position8>
-        <Filename Value="..\Source\TestOGLScene\TestOGLSceneComp.pas"/>
-        <Caret Line="153" Column="44" TopLine="129"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="87" TopLine="40"/>
       </Position8>
       <Position9>
-        <Filename Value="..\Source\TestOGLScene\TestOGLScnBaseObjects.pas"/>
-        <Caret Line="29"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="77" TopLine="40"/>
       </Position9>
       <Position10>
-        <Filename Value="..\Source\TestOGLScene\TestOGLScnGroup.pas"/>
-        <Caret Line="49" Column="34" TopLine="15"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="78" TopLine="40"/>
       </Position10>
       <Position11>
-        <Filename Value="..\Source\TestOGLScene\TestOGLScnGroup.pas"/>
-        <Caret Line="22" Column="34"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="74" TopLine="40"/>
       </Position11>
       <Position12>
-        <Filename Value="..\Source\TestOGLScene\TestOGLScnBaseObjects.pas"/>
-        <Caret Line="82" Column="44" TopLine="41"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="76" TopLine="40"/>
       </Position12>
       <Position13>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="73" Column="23" TopLine="64"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="48" TopLine="40"/>
       </Position13>
       <Position14>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="95" Column="59" TopLine="67"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="86" TopLine="40"/>
       </Position14>
       <Position15>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="893" Column="21" TopLine="874"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="46" TopLine="38"/>
       </Position15>
       <Position16>
-        <Filename Value="..\Source\TestOGLScene\TestOGLSceneComp.pas"/>
-        <Caret Line="42" Column="23" TopLine="14"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="87" TopLine="40"/>
       </Position16>
       <Position17>
-        <Filename Value="..\Source\TestOGLScene\TestOGLSceneComp.pas"/>
-        <Caret Line="182" Column="28" TopLine="169"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="77" TopLine="40"/>
       </Position17>
       <Position18>
-        <Filename Value="..\Source\TestOGLScene\TestOGLSceneComp.pas"/>
-        <Caret Line="219" Column="39" TopLine="187"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="80" TopLine="40"/>
       </Position18>
       <Position19>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="40" Column="19" TopLine="18"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="74" TopLine="40"/>
       </Position19>
       <Position20>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="396" Column="13" TopLine="388"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="83" TopLine="40"/>
       </Position20>
       <Position21>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="40" Column="46" TopLine="16"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="86" TopLine="40"/>
       </Position21>
       <Position22>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="397" Column="12" TopLine="390"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="46" TopLine="38"/>
       </Position22>
       <Position23>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="399" Column="70" TopLine="376"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="87" TopLine="40"/>
       </Position23>
       <Position24>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="925" Column="21" TopLine="901"/>
+        <Filename Value="..\Source\TestOGLScene\TestOGLScnBaseObjects.pas"/>
+        <Caret Line="71" TopLine="63"/>
       </Position24>
       <Position25>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="950" Column="20" TopLine="916"/>
+        <Filename Value="..\Source\TestOGLScene\TestOGLScnBaseObjects.pas"/>
+        <Caret Line="72" Column="40" TopLine="63"/>
       </Position25>
       <Position26>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="259" Column="10" TopLine="221"/>
+        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
+        <Caret Line="86" TopLine="40"/>
       </Position26>
       <Position27>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="260" Column="20" TopLine="237"/>
+        <Filename Value="..\Source\TestOGLScene\TestOGLSceneComp.pas"/>
+        <Caret Line="47" Column="30" TopLine="11"/>
       </Position27>
       <Position28>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="306" Column="20" TopLine="285"/>
+        <Filename Value="..\Source\TestOGLScene\TestOGLSceneComp.pas"/>
+        <Caret Line="63" Column="4" TopLine="36"/>
       </Position28>
       <Position29>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="1035" Column="34" TopLine="1004"/>
+        <Filename Value="..\Source\TestOGLScene\TestOGLSceneComp.pas"/>
+        <Caret Line="62" Column="31" TopLine="36"/>
       </Position29>
       <Position30>
-        <Filename Value="..\Source\OpenGLScene\Cmp_OpenGLScene.pas"/>
-        <Caret Line="1034" Column="63" TopLine="1004"/>
+        <Filename Value="..\Source\TestOGLScene\TestOGLScnGroup.pas"/>
+        <Caret Line="111" Column="33" TopLine="61"/>
       </Position30>
     </JumpHistory>
     <RunParams>
