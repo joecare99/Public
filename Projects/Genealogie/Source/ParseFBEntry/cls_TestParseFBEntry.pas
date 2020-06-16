@@ -10,6 +10,9 @@ uses
     unt_TestFBData;
 
 type
+
+    { TTestFBEntryParserBase }
+
     TTestFBEntryParserBase = class(TTestCase)
     protected
         fParser: TFBEntryParser;
@@ -19,12 +22,16 @@ type
         FTestName: string;
         procedure SetUp; override;
         procedure TearDown; override;
-        procedure TestOneFile(aFilename: String);
+        procedure TestOneFile(aFilename: String; ff: TFileFoundEvent=nil);
     private
-        procedure FSFileFound(FileIterator: TFileIterator);
+      FlastDeb: String;
+        procedure AddExpResult(Data: array of variant);
+        procedure FSFileFound(FileIterator: TFileIterator);virtual;
         procedure CreateExpResult(st: TStrings; out Expct: TResultTypeArray);
         procedure ExpResultToTStr(const Exp: array of TResultType; st: TStrings);
         procedure ParserError(Sender: TObject);
+        procedure ParserMessage(Sender: TObject; aType: TEventType;
+        aText: string; Ref: string; aMode: integer);
         procedure ParserStartFamily(Sender: TObject; aText, Ref: string; dsubtype: integer);
         procedure ParserFamilyDate(Sender: TObject; aText, Ref: string; dsubtype: integer);
         procedure ParserFamilyData(Sender: TObject; aText, Ref: string; dsubtype: integer);
@@ -50,12 +57,34 @@ type
           procedure TestResult;
           procedure TestParseGC5065;
           procedure TestParseAK2421;
+          procedure TestHandleAKPersonEntry;
+          procedure TestHandleAKPersonEntry_55;
+          procedure TestHandleAKPersonEntry_56;
+          Procedure TestHandleNonPersonEntry;
+          procedure TestHandleNonPersonEntry_Res;
+          procedure TestHandleNonPersonEntry_57;
+          procedure TestGetEntryType;
+          procedure TestGetEntryType2;
+          procedure TestGuessSexOfGivnName;
+          procedure TestHandleGCDateEntry;
+          procedure TesttestEntry;
+          procedure TestTestFor;
+          procedure TestTestFor2;
+          procedure TestTestFor3;
+          procedure TestParseAdditional;
+        private
         end;
 
 
 { TTestFBEntryParser }
+
+    { TTestFBEntryParserAll }
+
     TTestFBEntryParserAll = class(TTestFBEntryParserBase)
-        procedure TestFiles;
+    protected
+      procedure FSFileFound(FileIterator: TFileIterator);override;
+    published
+      procedure TestFiles;
     end;
 
     { TTestFBEntryParserGC }
@@ -77,7 +106,8 @@ type
         procedure TestFileO156;
         procedure TestFileO189;
         procedure TestFileO197;
-        procedure TestFileO451;
+        procedure TestFileO0338;
+        procedure TestFileO0451;
         procedure TestFileO1304;
         procedure TestFileO1886;
         procedure TestFileO2201;
@@ -93,9 +123,15 @@ type
         procedure TestFileO4551;
         procedure TestFileO6299;
         procedure TestFileO6302;
+    private
     end;
 
+    { TTestFBEntryParserAK }
+
     TTestFBEntryParserAK = class(TTestFBEntryParserBase)
+    protected
+        Procedure SetUp; override;
+    published
         procedure TestFileM0001;
         procedure TestFileM0002;
         procedure TestFileM0003;
@@ -105,17 +141,39 @@ type
         procedure TestFileM0007;
         procedure TestFileM0008;
         procedure TestFileM0009;
+        procedure TestFileM0011;
+        procedure TestFileM0026;
+        procedure TestFileM0037;
+        procedure TestFileM0061;
+        procedure TestFileM0119;
+        procedure TestFileM0405;
+        procedure TestFileM0407;
         procedure TestFileM0409;
+        procedure TestFileM0411;
+        procedure TestFileM0424;
+        procedure TestFileM0427;
         procedure TestFileM0429;
         procedure TestFileM0443;
         procedure TestFileM0462;
         procedure TestFileM0470;
+        procedure TestFileM0476;
+        procedure TestFileM0485;
         procedure TestFileM0486;
+        procedure TestFileM1220;
+        procedure TestFileM1221;
+        procedure TestFileM1242;
+        procedure TestFileM1251;
+        procedure TestFileM1252;
+        procedure TestFileM1262;
+        procedure TestFileM1268;
+        procedure TestFileM1274;
+        procedure TestFileM1276;
+    private
      end;
 
 implementation
 
-uses LConvEncoding;
+uses LConvEncoding,unt_IGenBase2;
 
 procedure TTestFBEntryParser.TestSetUp;
 begin
@@ -174,6 +232,14 @@ begin
     lResult.SetAll(['', 'UUU', 'VVV', 12]);
     ParserIndiData(fParser, lResult.Data, lResult.Ref, lResult.SubType);
     CheckEquals(13, FRCounter, 'FRcounter');
+    lResult.SetAll(['', 'WWW', 'XXX', 13]);
+    fparser.DebugSetMsg('WWW','XXX',13);
+    ParserError(fParser);
+    CheckEquals(14, FRCounter, 'FRcounter');
+    ParserMessage(fParser,etWarning,'YYY','YYY2',14);
+    CheckEquals(15, FRCounter, 'FRcounter');
+    ParserMessage(fParser,etDebug,'ZZZ','ZZZ2',15);
+    CheckEquals(16, FRCounter, 'FRcounter');
 end;
 
 procedure TTestFBEntryParser.TestParseGC5065;
@@ -188,16 +254,353 @@ procedure TTestFBEntryParser.TestParseAK2421;
 begin
     ExpResults := cResultEntryAK2421;
     FRCounter := 0;
+    fParser.DefaultPlace:='Meißenheim';
     fParser.Feed(cTestEntryAK2421);
     CheckEquals(length(ExpResults), FRCounter, 'Counter');
 end;
 
+procedure TTestFBEntryParser.TesttestEntry;
 
-procedure TTestFBEntryParserBase.ParserStartFamily(Sender: TObject;
-    aText, Ref: string; dsubtype: integer);
 begin
-    ParserTestEvent(Sender, 'ParserStartFamily', aText, Ref, dSubType);
+
 end;
+
+procedure TTestFBEntryParser.TestTestFor;
+
+begin
+
+end;
+
+procedure TTestFBEntryParser.TestTestFor2;
+
+begin
+
+end;
+
+procedure TTestFBEntryParser.TestTestFor3;
+
+begin
+
+end;
+
+procedure TTestFBEntryParser.TestParseAdditional;
+var
+  Offset: Int64;
+  lOutput: string;
+begin
+  Offset := 1;
+  CheckTrue(fParser.ParseAdditional('(Dies ist ein Test)',Offset,lOutput),'(Dies ist ein Test)');
+  CheckEquals('Dies ist ein Test',lOutput);
+  CheckEquals(19,Offset,'Offset: Dies ist ein Test');
+
+  AddExpResult(['ParserError!','Misspelled additional Entry','',0]);
+  Offset := 1;
+  CheckTrue(fParser.ParseAdditional('(Dies ist ein Fehler',Offset,lOutput),'(Dies ist ein Fehler');
+  CheckEquals('Dies ist ein Fehler',lOutput);
+  CheckEquals(21,Offset,'Offset: Dies ist ein Fehler');
+
+  Offset := 1;
+  CheckTrue(fParser.ParseAdditional('(an den Folgen einer Granatsplitterverwundung'+
+    ' am 10.4.1945 daheim im Keller bei einem Beschuß)',Offset,lOutput),'Dies ist OK');
+  CheckEquals(95,Offset,'Offset: an den Folgen einer ...');
+  CheckEquals('an den Folgen einer Granatsplitterverwundung'+
+    ' am 10.4.1945 daheim im Keller bei einem Beschuß',lOutput);
+
+  Offset := 1;
+  CheckTrue(fParser.ParseAdditional('("an den Folgen einer Granatsplitterverwundung'+
+    ' am 10.4.1945 daheim im Keller bei einem Beschuß, an den Folgen einer'+
+    ' Granatsplitterverwundung am 10.4.1945 daheim im Keller bei einem Beschuß,'+
+    ' an den Folgen einer Granatsplitterverwundung am 10.4.1945 daheim im Keller'+
+    ' bei einem Beschuß, an den Folgen einer Granatsplitterverwundung am 10.4.1945'+
+    ' daheim im Keller bei einem Beschuß.")',Offset,lOutput),'Dies ist OK');
+  CheckEquals(383,Offset,'Offset: Dies ist ein Fehler');
+  CheckEquals('"an den Folgen einer Granatsplitterverwundung'+
+    ' am 10.4.1945 daheim im Keller bei einem Beschuß, an den Folgen einer'+
+    ' Granatsplitterverwundung am 10.4.1945 daheim im Keller bei einem Beschuß,'+
+    ' an den Folgen einer Granatsplitterverwundung am 10.4.1945 daheim im Keller'+
+    ' bei einem Beschuß, an den Folgen einer Granatsplitterverwundung am 10.4.1945'+
+    ' daheim im Keller bei einem Beschuß."',lOutput);
+
+
+end;
+
+procedure TTestFBEntryParser.TestHandleGCDateEntry;
+
+begin
+
+end;
+
+procedure TTestFBEntryParser.TestGuessSexOfGivnName;
+
+begin
+
+end;
+
+procedure TTestFBEntryParser.TestGetEntryType;
+var
+  lDate, lData: string;
+begin
+    CheckEquals(ord(evt_Birth),ord(fparser.GetEntryType('* 01.02.1734 in Bern',lDate,lData)),'* 01.02.1734 in Bern');
+    CheckEquals('01.02.1734 in Bern',lDate,'Geboren in Bern');
+    CheckEquals('',lData,'Geboren in Bern');
+
+    CheckEquals(ord(evt_Birth),ord(fparser.GetEntryType('* in Bern 01.02.1734',lDate,lData)),'* in Bern 01.02.1734');
+    CheckEquals('in Bern 01.02.1734',lDate,'Geboren in Bern 2');
+    CheckEquals('',lData,'Geboren in Bern 2');
+
+    CheckEquals(ord(evt_AddEmigration),ord(fparser.getEntryType('ist nach Amerika ausgewandert',lDate,lData)),'ist nach Amerika ausgewandert');
+    CheckEquals('',lDate,'nach Amerika ausgewandert');
+    CheckEquals('nach Amerika',lData,'nach Amerika ausgewandert');
+
+    CheckEquals(ord(evt_fallen),ord(fparser.getEntryType('gefallen 1.1.1945 in Polen',lDate,lData)),'gefallen 1.1.1945 in Polen');
+    CheckEquals('1.1.1945 in Polen',lDate,'Gefallen in Polen');
+    CheckEquals('gefallen',lData,'Gefallen in Polen');
+
+    CheckEquals(ord(evt_missing),ord(fparser.getEntryType('vermisst in Frankreich 1.1.1943',lDate,lData)),'vermisst in Frankreich 1.1.1943');
+    CheckEquals('in Frankreich 1.1.1943',lDate,'Vermisst in Frankreich');
+    CheckEquals('vermisst',lData,'Vermisst in Frankreich');
+end;
+
+procedure TTestFBEntryParser.TestGetEntryType2;
+var
+  lDate, lData: string;
+begin
+    CheckEquals(ord(evt_Religion),ord(fparser.GetEntryType('rk.',lDate,lData)),'rk.');
+    CheckEquals('rk.',lData,'rk.');
+    CheckEquals('',lDate,'rk.');
+
+    CheckEquals(ord(evt_Religion),ord(fparser.GetEntryType('kath.',lDate,lData)),'kath.');
+    CheckEquals('kath.',lData,'kath.');
+    CheckEquals('',lDate,'kath.');
+
+    CheckEquals(ord(evt_Religion),ord(fparser.GetEntryType('ev.',lDate,lData)),'ev.');
+    CheckEquals('ev.',lData,'ev.');
+    CheckEquals('',lDate,'ev.');
+
+    CheckEquals(ord(evt_Religion),ord(fparser.GetEntryType('ref.',lDate,lData)),'ref.');
+    CheckEquals('ref.',lData,'ref.');
+    CheckEquals('',lDate,'ref.');
+
+    CheckEquals(ord(evt_Religion),ord(fparser.GetEntryType('luth.',lDate,lData)),'luth.');
+    CheckEquals('luth.',lData,'luth.');
+    CheckEquals('',lDate,'luth.');
+end;
+
+procedure TTestFBEntryParser.TestHandleNonPersonEntry;
+begin
+    AddExpResult(['ParserIndiDate','01.02.1734','I3705C2',ord(evt_Birth)]);
+    AddExpResult(['ParserIndiPlace','Bern','I3705C2',ord(evt_Birth)]);
+    fparser.HandleNonPersonEntry('* 01.02.1734 in Bern','I3705C2');
+    CheckEquals(2, FRCounter, 'FRcounter');
+
+    AddExpResult(['ParserIndiDate','01.02.1734','I3705C3',ord(evt_Birth)]);
+    AddExpResult(['ParserIndiPlace','Bern','I3705C3',ord(evt_Birth)]);
+    fparser.HandleNonPersonEntry('* in Bern 01.02.1734','I3705C3');
+    CheckEquals(4, FRCounter, 'FRcounter');
+
+    AddExpResult(['ParserIndiPlace','Amerika','I3705C1',ord(evt_AddEmigration)]);
+    AddExpResult(['ParserIndiData','ist nach Amerika ausgewandert','I3705C1',ord(evt_AddEmigration)]);
+    fparser.HandleNonPersonEntry('ist nach Amerika ausgewandert','I3705C1');
+    CheckEquals(6, FRCounter, 'FRcounter');
+
+    fParser.DebugSetMsg('','1',8);
+    AddExpResult(['ParserIndiDate','17.November 1851','I1',ord(evt_AddEmigration)]);
+    AddExpResult(['ParserIndiPlace','Amerika','I1',ord(evt_AddEmigration)]);
+    AddExpResult(['ParserIndiData','Die Familie ist am 17.November 1851 nach Amerika ausgewandert','I1',ord(evt_AddEmigration)]);
+    fparser.HandleNonPersonEntry(' Die Familie ist am 17.November 1851 nach Amerika ausgewandert','I1');
+    CheckEquals(9, FRCounter, 'FRcounter');
+end;
+
+procedure TTestFBEntryParser.TestHandleNonPersonEntry_Res;
+begin
+    AddExpResult(['ParserIndiPlace','Dundenheim','I11',ord(evt_Residence)]);
+    fparser.HandleNonPersonEntry('in Dundenheim','I11');
+    CheckEquals(1, FRCounter, 'FRcounter');
+
+    AddExpResult(['ParserIndiPlace','Dundenheim','I11',ord(evt_Residence)]);
+    fparser.HandleNonPersonEntry('aus Dundenheim','I11');
+    CheckEquals(2, FRCounter, 'FRcounter');
+
+    AddExpResult(['ParserIndiPlace','"Spieng in der Herrschaft Bern/Schweiz"','I11',ord(evt_Residence)]);
+    fparser.HandleNonPersonEntry('aus "Spieng in der Herrschaft Bern/Schweiz"','I11');
+    CheckEquals(3, FRCounter, 'FRcounter');
+
+end;
+
+procedure TTestFBEntryParser.TestHandleAKPersonEntry;
+var
+  oLastname: string;
+  oPSex: char;
+begin
+    AddExpResult(['ParserFamilyType','','123',1]);
+    AddExpResult(['ParserIndiName','Hilda Wasmer','I123F',0]);
+    AddExpResult(['ParserFamilyIndiv','I123F','123',2]);
+    // {ETYPE = 'ParserFamilyIndiv', DATA = 'I123F', REF = '123', SUBTYPE = 1}
+    AddExpResult(['ParserIndiData','F','I123F',ord(evt_Sex)]);
+    CheckEquals('I123F',fparser.HandleAKPersonEntry('Hilda Röder geb.Wasmer','123','U',5,oLastname,oPSex),'Hilda Röder 1');
+    CheckEquals('Wasmer', oLastname, 'LastName1');
+    CheckEquals('F', oPSex, 'pSex1');
+    CheckEquals(4, FRCounter, 'FRcounter');
+
+    AddExpResult(['ParserIndiName','Peter Mayer','I123M',0]);
+    AddExpResult(['ParserIndiName','Dr. theol.','I123M',4]);
+    AddExpResult(['ParserFamilyIndiv','I123M','123',1]);
+    AddExpResult(['ParserIndiData','M','I123M',ord(evt_Sex)]);
+    CheckEquals('I123M',fparser.HandleAKPersonEntry('Dr. theol.Peter Mayer','123','U',5,oLastname,oPSex),'Dr. theol.Peter Mayer 2');
+    CheckEquals('Mayer', oLastname, 'LastName2');
+    CheckEquals('M', oPSex, 'pSex2');
+    CheckEquals(8, FRCounter, 'FRcounter');
+
+    AddExpResult(['ParserIndiName','Hans-Peter Schulze','I123M',0]);
+    AddExpResult(['ParserFamilyIndiv','I123M','123',1]);
+    AddExpResult(['ParserIndiData','M','I123M',ord(evt_Sex)]);
+    CheckEquals('I123M',fparser.HandleAKPersonEntry('Hans-Peter Schulze','123','U',5,oLastname,oPSex),'Hans-Peter Schulze 3');
+    CheckEquals('Schulze', oLastname, 'LastName3');
+    CheckEquals('M', oPSex, 'pSex3');
+    CheckEquals(11, FRCounter, 'FRcounter');
+
+    AddExpResult(['ParserIndiName','... Zarau','I123U',0]);
+    AddExpResult(['ParserFamilyIndiv','I123U','123',1]);
+    AddExpResult(['ParserIndiData','U','I123U',ord(evt_Sex)]);
+    CheckEquals('I123U',fparser.HandleAKPersonEntry('... Zarau','123','U',5,oLastname,oPSex),'... Zarau 4');
+    CheckEquals('Zarau', oLastname, 'LastName4');
+    CheckEquals('U', oPSex, 'pSex3');
+    CheckEquals(14, FRCounter, 'FRcounter');
+
+    AddExpResult(['ParserIndiName','Kind Arni','I123U',0]);
+    AddExpResult(['ParserFamilyIndiv','I123U','123',1]);
+    AddExpResult(['ParserIndiData','U','I123U',ord(evt_Sex)]);
+    CheckEquals('I123U',fparser.HandleAKPersonEntry('Kind Arni','123','U',5,oLastname,oPSex),'Kind Arni 5');
+    CheckEquals('Arni', oLastname, 'LastName5');
+    CheckEquals('U', oPSex, 'pSex3');
+    CheckEquals(17, FRCounter, 'FRcounter');
+
+    AddExpResult(['ParserIndiName','Dorothea Locher','I58F',0]);
+    AddExpResult(['ParserFamilyIndiv','I58F','58',2]);
+    AddExpResult(['ParserIndiData','F','I58F',ord(evt_Sex)]);
+    AddExpResult(['ParserIndiName','?','I58F',3]);
+    CheckEquals('I58F',fparser.HandleAKPersonEntry('Dorothea Locher','58','F',7,oLastname,oPSex,'?'),'Dorothea Locher 6');
+    CheckEquals('Locher', oLastname, 'LastName6');
+    CheckEquals('F', oPSex, 'pSex6');
+    CheckEquals(21, FRCounter, 'FRcounter');
+
+    AddExpResult(['ParserIndiName','Hans Friedrich Roth','I321M',0]);
+    AddExpResult(['ParserFamilyIndiv','I321M','321',1]);
+    AddExpResult(['ParserIndiData','M','I321M',ord(evt_Sex)]);
+    CheckEquals('I321M',fparser.HandleAKPersonEntry('Hans Friedrich  Roth','321','U',5,oLastname,oPSex),'Hans Friedrich  Roth 6');
+    CheckEquals('Roth', oLastname, 'LastName6');
+    CheckEquals('M', oPSex, 'pSex6');
+    CheckEquals(24, FRCounter, 'FRcounter');
+end;
+
+procedure TTestFBEntryParser.TestHandleAKPersonEntry_55;
+var
+  oLastname: string;
+  oPSex: char;
+begin
+  AddExpResult(['ParserIndiName','Andres Acherer','I123M',0]);
+  AddExpResult(['ParserFamilyIndiv','I123M','123',1]);
+  // {ETYPE = 'ParserFamilyIndiv', DATA = 'I123F', REF = '123', SUBTYPE = 1}
+  AddExpResult(['ParserIndiData','M','I123M',ord(evt_Sex)]);
+  CheckEquals('I123M',fparser.HandleAKPersonEntry('Andres A. ','123','U',55,oLastname,oPSex,'','Acherer'),'Andres A. 1');
+  CheckEquals('Acherer', oLastname, 'LastName1');
+  CheckEquals('M', oPSex, 'pSex1');
+  CheckEquals(3, FRCounter, 'FRcounter');
+
+  AddExpResult(['ParserIndiName','Peter Mayer','I123M',0]);
+  AddExpResult(['ParserIndiName','Dr. theol.','I123M',4]);
+  AddExpResult(['ParserFamilyIndiv','I123M','123',1]);
+  AddExpResult(['ParserIndiData','M','I123M',ord(evt_Sex)]);
+  CheckEquals('I123M',fparser.HandleAKPersonEntry('Dr. theol.Peter M.','123','U',55,oLastname,oPSex, '', 'Mayer'),'Dr. theol.Peter Mayer 2');
+  CheckEquals('Mayer', oLastname, 'LastName2');
+  CheckEquals('M', oPSex, 'pSex2');
+  CheckEquals(7, FRCounter, 'FRcounter');
+
+  AddExpResult(['ParserIndiName','Hans-Peter Schulze','I123M',0]);
+  AddExpResult(['ParserFamilyIndiv','I123M','123',1]);
+  AddExpResult(['ParserIndiData','M','I123M',ord(evt_Sex)]);
+  CheckEquals('I123M',fparser.HandleAKPersonEntry('Hans-Peter Sch.','123','U',55,oLastname,oPSex,'','Schulze'),'Hans-Peter Schulze 3');
+  CheckEquals('Schulze', oLastname, 'LastName3');
+  CheckEquals('M', oPSex, 'pSex3');
+  CheckEquals(10, FRCounter, 'FRcounter');
+
+  AddExpResult(['ParserIndiName','Erna Martha Geriger','I123F',0]);
+  AddExpResult(['ParserFamilyIndiv','I123F','123',2]);
+  AddExpResult(['ParserIndiData','F','I123F',ord(evt_Sex)]);
+  AddExpResult(['ParserIndiName','? Geriger','I123F',3]);
+  CheckEquals('I123F',fparser.HandleAKPersonEntry('Erna Martha','123','U',55,oLastname,oPSex,'? G.','Geriger'),'Erna Martha Geriger 4');
+  CheckEquals('Geriger', oLastname, 'LastName4');
+  CheckEquals('F', oPSex, 'pSex4');
+  CheckEquals(14, FRCounter, 'FRcounter');
+
+  AddExpResult(['ParserIndiName','Martin Eich','I123M',0]);
+  AddExpResult(['ParserFamilyIndiv','I123M','123',1]);
+  AddExpResult(['ParserIndiData','M','I123M',ord(evt_Sex)]);
+  AddExpResult(['ParserIndiName','? Eich','I123M',3]);
+  CheckEquals('I123M',fparser.HandleAKPersonEntry('Martin','123','U',55,oLastname,oPSex,'E.','Eich'),'Martin Eich 5');
+  CheckEquals('Eich', oLastname, 'LastName5');
+  CheckEquals('M', oPSex, 'pSex5');
+  CheckEquals(18, FRCounter, 'FRcounter');
+
+end;
+
+procedure TTestFBEntryParser.TestHandleNonPersonEntry_57;
+
+begin
+  // {ETYPE = 'ParserStartFamily', DATA = '3C1', REF = 0x0, SUBTYPE = 0}
+  AddExpResult(['ParserStartFamily', '3C1', '',  0]);
+  //
+  AddExpResult(['ParserFamilyIndiv','I3C1','3C1',1]);
+  // {ETYPE = 'ParserFamilyIndiv', DATA = 'I123F', REF = '123', SUBTYPE = 1}
+  AddExpResult(['ParserFamilyPlace','Neureuth','3C1',ord(evt_Marriage)]);
+  CheckEquals(ord(evt_Marriage),ord(fparser.HandleNonPersonEntry('oo in Neureuth','I3C1')),'oo in Neureuth');
+  CheckEquals(3, FRCounter, 'FRcounter');
+end;
+procedure TTestFBEntryParser.TestHandleAKPersonEntry_56;
+var
+  oLastname: string;
+  oPSex: char;
+begin
+  AddExpResult(['ParserFamilyType','',  '123', 1]);
+  AddExpResult(['ParserIndiName','Andrea Acherer','I123F',0]);
+  AddExpResult(['ParserFamilyIndiv','I123F','123',2]);
+  // {ETYPE = 'ParserFamilyIndiv', DATA = 'I123F', REF = '123', SUBTYPE = 2}
+  AddExpResult(['ParserIndiData','F','I123F',ord(evt_Sex)]);
+  CheckEquals('I123F',fparser.HandleAKPersonEntry('Andrea geb.Acherer','123','F',56,oLastname,oPSex,'','Acherer'),'Andres A. 2');
+  CheckEquals('Acherer', oLastname, 'LastName1');
+  CheckEquals('F', oPSex, 'pSex1');
+  CheckEquals(4, FRCounter, 'FRcounter');
+
+  AddExpResult(['ParserIndiName','Petra Mayer','I123F',0]);
+  AddExpResult(['ParserIndiName','Dr. theol.','I123F',4]);
+  AddExpResult(['ParserFamilyIndiv','I123F','123',2]);
+  AddExpResult(['ParserIndiData','F','I123F',ord(evt_Sex)]);
+  CheckEquals('I123F',fparser.HandleAKPersonEntry('Dr. theol.Petra Mayer','123','F',56,oLastname,oPSex, '', 'Mayer'),'Dr. theol.Peter Mayer 2');
+  CheckEquals('Mayer', oLastname, 'LastName2');
+  CheckEquals('F', oPSex, 'pSex2');
+  CheckEquals(8, FRCounter, 'FRcounter');
+
+  AddExpResult(['ParserFamilyType','',  '123', 1]);
+  AddExpResult(['ParserIndiName','Marie-Luise Schulze','I123F',0]);
+  AddExpResult(['ParserFamilyIndiv','I123F','123',2]);
+  AddExpResult(['ParserIndiData','F','I123F',ord(evt_Sex)]);
+  CheckEquals('I123F',fparser.HandleAKPersonEntry('Marie-Luise geb.Schulze','123','F',56,oLastname,oPSex,'','Schulze'),'Hans-Peter Schulze 3');
+  CheckEquals('Schulze', oLastname, 'LastName3');
+  CheckEquals('F', oPSex, 'pSex3');
+  CheckEquals(12, FRCounter, 'FRcounter');
+
+  AddExpResult(['ParserFamilyType','',  '123', 1]);
+  AddExpResult(['ParserIndiName','Erna Martha Duda','I123F',0]);
+  AddExpResult(['ParserFamilyIndiv','I123F','123',2]);
+  AddExpResult(['ParserIndiData','F','I123F',ord(evt_Sex)]);
+  AddExpResult(['ParserIndiName','? geb. Duda','I123F',3]);
+  CheckEquals('I123F',fparser.HandleAKPersonEntry('Erna Martha','123','F',56,oLastname,oPSex,'? geb.Duda','Geriger'),'Hans-Peter Schulze 3');
+  CheckEquals('Duda', oLastname, 'LastName4');
+  CheckEquals('F', oPSex, 'pSex4');
+  CheckEquals(17, FRCounter, 'FRcounter');
+
+end;
+
 
 procedure TTestFBEntryParserBase.FSFileFound(FileIterator: TFileIterator);
 var
@@ -242,6 +645,14 @@ begin
         Expct[i - 1].SetAll(st[i].Split([#9]));
 end;
 
+procedure TTestFBEntryParserBase.AddExpResult(Data: array of variant);
+
+begin
+    setlength(ExpResults, high(ExpResults)+2);
+    ExpResults[high(ExpResults)].SetAll(Data);
+end;
+
+
 procedure TTestFBEntryParserBase.ExpResultToTStr(const Exp: array of TResultType;
     st: TStrings);
 var
@@ -253,9 +664,27 @@ begin
         st.append(le.toCsv(#9));
 end;
 
+procedure TTestFBEntryParserBase.ParserStartFamily(Sender: TObject;
+    aText, Ref: string; dsubtype: integer);
+begin
+    ParserTestEvent(Sender, 'ParserStartFamily', aText, Ref, dSubType);
+end;
+
 procedure TTestFBEntryParserBase.ParserError(Sender: TObject);
 begin
-    ParserTestEvent(Sender, 'ParserError!', TFBEntryParser(Sender).LastErr, '', TFBEntryParser(Sender).LastMode);
+    ParserTestEvent(Sender, 'ParserError!', TFBEntryParser(Sender).LastErr, TFBEntryParser(Sender).MainRef, TFBEntryParser(Sender).LastMode);
+end;
+
+procedure TTestFBEntryParserBase.ParserMessage(Sender: TObject;
+  aType: TEventType; aText: string; Ref: string; aMode: integer);
+begin
+  case aType of
+    etCustom: ParserTestEvent(Sender, 'ParserCustom', aText, Ref, aMode);
+    etInfo: ParserTestEvent(Sender, 'ParserInfo', aText, Ref, aMode);
+    etWarning: ParserTestEvent(Sender, 'ParserWarning', aText, Ref, aMode);
+    etError: ParserTestEvent(Sender, 'ParserError!', aText, Ref, aMode);
+    etDebug: ParserTestEvent(Sender, 'ParserDebugMsg', aText, Ref, aMode);
+  end;
 end;
 
 procedure TTestFBEntryParserBase.ParserFamilyType(Sender: TObject;
@@ -310,7 +739,7 @@ procedure TTestFBEntryParserBase.ParserTestEvent(Sender: TObject;
     eType, aText, Ref: string; dsubtype: integer);
 var
     lr: TResultType;
-    lDebEv: string;
+    lDebEv, {%H-}lLastDeb: string;
 begin
     CheckTrue(fParser.Equals(Sender), 'Teste Sender');
     lr.setall([etype, atext, Ref, dsubtype]);
@@ -321,10 +750,15 @@ begin
         Fresult[high(FResult)] := lr;
         exit;
       end;
+    if (eType='ParserDebugMsg') then
+      begin
+        FlastDeb := lDebEv;
+        if ((high(ExpResults) < FRCounter) or (ExpResults[FRCounter].eType<> eType))
+          then exit;  // Ignore optional Element
+      end;
+    lLastDeb:= FlastDeb;
     CheckTrue(high(ExpResults) >= FRCounter, 'Result Exists[' + IntToStr(
         FRCounter) + '],' + FTestName);
-    checkTrue(ExpResults[FRCounter].eType = eType, 'Teste eType[' + IntToStr(
-        FRCounter) + ']=' + eType + ',' + FTestName);
     CheckEquals(ExpResults[FRCounter].eType, eType, 'Teste eType[' + IntToStr(
         FRCounter) + '],' + FTestName);
     CheckEquals(ExpResults[FRCounter].Data, aText, 'Teste aText[' + IntToStr(
@@ -336,17 +770,19 @@ begin
     Inc(FRCounter);
 end;
 
-procedure TTestFBEntryParserBase.TestOneFile(aFilename:String);
+procedure TTestFBEntryParserBase.TestOneFile(aFilename:String;ff:TFileFoundEvent);
 var
   lFileSearcher: TFileSearcher;
 begin
   lFileSearcher := TFileSearcher.Create;
-       try
-         lFileSearcher.OnFileFound := @FSFileFound;
-         lFileSearcher.Search(FDataPath, aFilename, False, False);
-       finally
-         FreeAndNil(lFileSearcher);
-       end;
+  if ff=nil then
+    ff:=@FSFileFound;
+   try
+     lFileSearcher.OnFileFound := ff;
+     lFileSearcher.Search(FDataPath, aFilename, False, False);
+   finally
+     FreeAndNil(lFileSearcher);
+   end;
 end;
 
 constructor TTestFBEntryParserBase.Create;
@@ -411,7 +847,10 @@ begin
     fParser.onIndiRef := @ParserIndiRef;
     fParser.onIndiData := @ParserIndiData;
     fParser.onParseError:=@ParserError;
+    fParser.onParseMessage:=@ParserMessage;
     FTestName := '';
+    setlength(ExpResults,0);
+    FRCounter := 0;
 end;
 
 procedure TTestFBEntryParserBase.TearDown;
@@ -421,6 +860,17 @@ begin
 end;
 
 
+procedure TTestFBEntryParserAll.FSFileFound(FileIterator: TFileIterator);
+var
+  st: String;
+begin
+  st := ExtractFileName(FileIterator.Filename);
+  if st.StartsWith('OsBM') then
+    fParser.DefaultPlace:='Meißenheim'
+  else
+    fParser.DefaultPlace:='';
+  inherited FSFileFound(FileIterator);
+end;
 
 procedure TTestFBEntryParserAll.TestFiles;
 
@@ -534,7 +984,13 @@ begin
     TestOneFile(cFilename);
 end;
 
-procedure TTestFBEntryParserGC.TestFileO451;
+procedure TTestFBEntryParserGC.TestFileO0338;
+begin
+    // Unclosed Reference
+    TestOneFile('OsBObr0338.entTxt');
+end;
+
+procedure TTestFBEntryParserGC.TestFileO0451;
 begin
     TestOneFile('OsBObr0451.entTxt');
 end;
@@ -616,6 +1072,12 @@ begin
     TestOneFile('OsBObr6302.entTxt');
 end;
 
+procedure TTestFBEntryParserAK.SetUp;
+begin
+  inherited SetUp;
+  fParser.DefaultPlace:='Meißenheim';
+end;
+
 procedure TTestFBEntryParserAK.TestFileM0001;
 begin
     TestOneFile('OsBM0001.entTxt');
@@ -661,13 +1123,76 @@ begin
     TestOneFile('OsBM0009.entTxt');
 end;
 
+procedure TTestFBEntryParserAK.TestFileM0011;
+begin
+  // Family emigration
+    TestOneFile('OsBM0011.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM0026;
+begin
+    // Birth-Record
+    TestOneFile('OsBM0026.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM0037;
+begin
+    // Parent mit "aus ..."
+    TestOneFile('OsBM0037.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM0061;
+begin
+    // Residence Entry
+    TestOneFile('OsBM0061.entTxt');
+end;
+
+
+procedure TTestFBEntryParserAK.TestFileM0119;
+begin
+  // : missing
+    TestOneFile('OsBM0119.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM0405;
+begin
+    TestOneFile('OsBM0405.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM0407;
+begin
+  // Husband Mother ?
+    TestOneFile('OsBM0407.entTxt');
+end;
+
+
 procedure TTestFBEntryParserAK.TestFileM0409;
 begin
     TestOneFile('OsBM0409.entTxt');
 end;
 
+procedure TTestFBEntryParserAK.TestFileM0411;
+begin
+    // Comma missing after Occupation
+    TestOneFile('OsBM0411.entTxt');
+end;
+
+
+procedure TTestFBEntryParserAK.TestFileM0424;
+begin
+    // Wife ... as Surname
+    TestOneFile('OsBM0424.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM0427;
+begin
+    // und Flag for Wife-Entry
+    TestOneFile('OsBM0427.entTxt');
+end;
+
 procedure TTestFBEntryParserAK.TestFileM0429;
 begin
+    // Husband first Marriage (. missing in s.)
     TestOneFile('OsBM0429.entTxt');
 end;
 
@@ -686,9 +1211,76 @@ begin
     TestOneFile('OsBM0470.entTxt');
 end;
 
+procedure TTestFBEntryParserAK.TestFileM0476;
+begin
+    // Wife with 3 marrige-types
+    TestOneFile('OsBM0476.entTxt');
+end;
+
 procedure TTestFBEntryParserAK.TestFileM0486;
 begin
     TestOneFile('OsBM0486.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM0485;
+begin
+    // Wife with unsafe Surname (? Eich)
+    // Death of Father of Wife (late Binding)
+    TestOneFile('OsBM0485.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1220;
+begin
+    TestOneFile('OsBM1220.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1221;
+begin
+    TestOneFile('OsBM1221.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1242;
+begin
+    // Divorce
+    TestOneFile('OsBM1242.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1251;
+begin
+    // Places with "bei"
+    // Default-Birthplaces
+    TestOneFile('OsBM1251.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1252;
+begin
+    // Childcount in Brackets
+    // ... as Givenname
+    TestOneFile('OsBM1252.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1262;
+begin
+    // Error in Entry
+    TestOneFile('OsBM1262.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1268;
+begin
+    // Comma after date missing (Error but recovering)
+    TestOneFile('OsBM1268.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1274;
+begin
+    // ??
+    TestOneFile('OsBM1274.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1276;
+begin
+    // ??
+    TestOneFile('OsBM1276.entTxt');
 end;
 
 

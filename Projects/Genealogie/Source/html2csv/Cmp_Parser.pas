@@ -18,6 +18,7 @@ type
     destructor Done; virtual;
     procedure Feed(Data: string); virtual; abstract;
     procedure Error(sender: TObject; NewMessage: string); virtual; abstract;
+    procedure Warning(sender: TObject; NewMessage: string); virtual; abstract;
     procedure reset;
     procedure GetPos(out ActLineNo, ActOffset: Int64);
 
@@ -39,6 +40,7 @@ type
   public
     procedure Feed(Data: string); override;
     procedure Error(sender: TObject; NewMessage: string); override;
+    procedure Warning(sender: TObject; NewMessage: string); override;
     Property OnStdText: TTextNotification read FOnStdText write FOnStdText;
     Property OnStartTag: TTextNotification read FOnStartTag write FOnStartTag;
     Property OnTagMod: TTextNotification read FOnTagMod write FOnTagMod;
@@ -46,6 +48,8 @@ type
     Property OnComment: TTextNotification read FOnComment write FOnComment;
     Property OnScript: TTextNotification read FOnScript write FOnScript;
   End;
+
+ Function HTML2text(s: string): String;
 
 implementation
 
@@ -280,6 +284,11 @@ begin
   begin
     e:=Exception.Create(NewMessage);
     Raise(e);
+  end;
+
+  procedure ThtmlParser.Warning(sender: TObject; NewMessage: string);
+  begin
+    // Todo:
   end;
 
 end.

@@ -15,25 +15,30 @@ Type
 
   TFrmShowGedCom = Class(TForm)
     ApplicationProperties1: TApplicationProperties;
-    btnAutoSetName: TButton;
-    btnAutoRemoveInd: TButton;
-    btnFileSaveAs: TBitBtn;
-    Button1: TButton;
     btnAutoEstBirth: TButton;
-    chbVerbose: TCheckBox;
+    btnAutoRemoveInd: TButton;
+    btnAutoSetName: TButton;
+    btnFileSaveAs: TBitBtn;
+    btnGotoLink: TSpeedButton;
+    Button1: TButton;
     chbFiltered: TCheckBox;
-    lblStatistics: TLabel;
+    chbVerbose: TCheckBox;
     lblEstBirthResult: TLabel;
-    lblSetNameResult: TLabel;
     lblRemoveIndResult: TLabel;
+    lblSetNameResult: TLabel;
+    lblStatistics: TLabel;
+    mmLog: TMemo;
+    Panel1: TPanel;
+    Panel2: TPanel;
     pnlDetail: TPanel;
     pnlLeft: TPanel;
     pnlBottom: TPanel;
     pnlTop: TPanel;
     ProgressBar1: TProgressBar;
     SaveDialog1: TSaveDialog;
-    btnGotoLink: TSpeedButton;
     Splitter1: TSplitter;
+    Splitter2: TSplitter;
+    Splitter3: TSplitter;
     TreeView1: TTreeView;
     StatusBar1: TStatusBar;
     OpenDialog1: TOpenDialog;
@@ -41,7 +46,6 @@ Type
     cbxFilename: TComboBox;
     Config1: TConfig;
     btnOpenFile: TBitBtn;
-    mmLog: TMemo;
     procedure ApplicationProperties1Idle(Sender: TObject; var Done: Boolean);
     procedure btnAutoRemoveIndClick(Sender: TObject);
     procedure btnAutoSetNameClick(Sender: TObject);
