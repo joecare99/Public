@@ -79,6 +79,8 @@ type
   end;
 
 
+  { TStreamAsXMLForm }
+
   { TStreamAsPasForm }
 
   TStreamAsPasForm = class(TComponent)

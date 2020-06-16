@@ -159,10 +159,9 @@ begin
   LCID := GetLCIDFromLangCode(ALang);
 
   // Now we update the format settings to the new language
- {$PUSH}
  {$WARNINGS OFF}
   GetLocaleFormatSettings(LCID, DefaultFormatSettings);
- {$POP}
+ {$WARNINGS ON}
 
   // We also store the code page that belongs to the new language. We'll need
   // that when converting FCL strings to UTF8.
