@@ -45,7 +45,6 @@ msgid "Six"
 msgstr "Hat"
 
 #: stringsunit.rssumofselectednumbers
-#, object-pascal-format
 msgid "Sum of selected numbers: %s"
 msgstr "A választott számok összege: %s"
 
@@ -54,7 +53,6 @@ msgid "Three"
 msgstr "Három"
 
 #: stringsunit.rstodayis
-#, object-pascal-format
 msgctxt "stringsunit.rstodayis"
 msgid "Today is %s"
 msgstr "Ma %s van."
@@ -74,13 +72,11 @@ msgid "Wine"
 msgstr "Bor"
 
 #: stringsunit.rsyouselected
-#, object-pascal-format
 msgctxt "stringsunit.rsyouselected"
 msgid "You selected %s."
 msgstr "Ezt választotta: %s"
 
 #: stringsunit.rsyouselectedat
-#, object-pascal-format
 msgctxt "stringsunit.rsyouselectedat"
 msgid "You selected %0:s at %1:s."
 msgstr "Ön ezt választotta: %0:s ekkor: %1:s."

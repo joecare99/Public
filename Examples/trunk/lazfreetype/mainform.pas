@@ -139,7 +139,8 @@ begin
   lazimg.Free;
 end;
 
-procedure TForm1.FormMouseMove(Sender: TObject; Shift: TShiftState; X,Y: Integer);
+procedure TForm1.FormMouseMove(Sender: TObject; Shift: TShiftState; X,
+  Y: Integer);
 begin
   mx := X;
   my := Y;
