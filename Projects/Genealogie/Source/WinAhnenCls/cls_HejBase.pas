@@ -71,7 +71,7 @@ procedure DateStr2HeyDate(aDate: String; out Day, Month, Year: string);
 var
   lParts: TStringArray;
 begin
-  lParts := adate.Split(['.']);
+  lParts := aDate.Split(['.']);
   if Length(lParts) = 3 then
     begin
       day:= lParts[0];

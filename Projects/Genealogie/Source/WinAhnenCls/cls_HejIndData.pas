@@ -235,7 +235,7 @@ public
 
  { TClsIIndivid }
 
- TClsIIndivid=class(Tobject,IGenIndividual)
+ TClsIIndivid=class(Tobject{,IGenIndividual})
    public
         constructor Create;
         destructor Destroy; override;
@@ -1400,11 +1400,11 @@ begin
     result := '';
 end;
 
-function THejIndData.GetiIndi: IGenIndividual;
+function THejIndData.GetiIndi: IGenIndividual; deprecated;
 begin
-  if assigned(FIIndi) then
-    result := FIIndi
-  else
+//  if assigned(FIIndi) then
+//    result := FIIndi
+//  else
     begin
 
     end;
