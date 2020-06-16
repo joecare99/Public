@@ -1,12 +1,12 @@
 object FrmShowGedCom: TFrmShowGedCom
   Left = 0
-  Height = 789
+  Height = 894
   Top = 0
-  Width = 1011
+  Width = 1072
   ActiveControl = TreeView1
   Caption = 'object btnAutoEstBirth: TButton'
-  ClientHeight = 789
-  ClientWidth = 1011
+  ClientHeight = 894
+  ClientWidth = 1072
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
@@ -17,8 +17,8 @@ object FrmShowGedCom: TFrmShowGedCom
   object StatusBar1: TStatusBar
     Left = 0
     Height = 23
-    Top = 766
-    Width = 1011
+    Top = 871
+    Width = 1072
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
@@ -29,46 +29,20 @@ object FrmShowGedCom: TFrmShowGedCom
     ParentFont = False
     SimplePanel = False
   end
-  object mmLog: TMemo
-    Left = 293
-    Height = 116
-    Top = 629
-    Width = 587
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    Lines.Strings = (
-      'Memo1'
-    )
-    ParentFont = False
-    TabOrder = 1
-  end
-  object chbVerbose: TCheckBox
-    Left = 293
-    Height = 19
-    Top = 747
-    Width = 59
-    Caption = 'Verbose'
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    ParentFont = False
-    TabOrder = 2
-  end
   object pnlTop: TPanel
     Left = 0
     Height = 36
     Top = 0
-    Width = 1011
+    Width = 1072
     Align = alTop
     BevelOuter = bvNone
     ClientHeight = 36
-    ClientWidth = 1011
+    ClientWidth = 1072
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
     ParentFont = False
-    TabOrder = 3
+    TabOrder = 1
     object btnBrowseFile: TBitBtn
       Left = 665
       Height = 28
@@ -147,28 +121,28 @@ object FrmShowGedCom: TFrmShowGedCom
   end
   object Splitter1: TSplitter
     Left = 252
-    Height = 730
+    Height = 835
     Top = 36
     Width = 5
   end
   object pnlLeft: TPanel
     Left = 0
-    Height = 730
+    Height = 835
     Top = 36
     Width = 252
     Align = alLeft
     Caption = 'pnlLeft'
-    ClientHeight = 730
+    ClientHeight = 835
     ClientWidth = 252
     Font.Color = clWindowText
     Font.Height = -11
     Font.Name = 'Tahoma'
     ParentFont = False
-    TabOrder = 5
+    TabOrder = 3
     object pnlBottom: TPanel
       Left = 1
       Height = 121
-      Top = 608
+      Top = 713
       Width = 250
       Align = alBottom
       ClientHeight = 121
@@ -193,7 +167,7 @@ object FrmShowGedCom: TFrmShowGedCom
     end
     object TreeView1: TTreeView
       Left = 7
-      Height = 595
+      Height = 700
       Top = 7
       Width = 244
       Align = alClient
@@ -208,126 +182,195 @@ object FrmShowGedCom: TFrmShowGedCom
       OnSelectionChanged = TreeView1SelectionChanged
     end
   end
-  object Button1: TButton
-    Left = 674
-    Height = 31
-    Top = 60
-    Width = 94
-    Caption = 'Button1'
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    OnClick = Button1Click
-    ParentFont = False
-    TabOrder = 6
-  end
-  object btnAutoEstBirth: TButton
-    Left = 267
-    Height = 41
-    Top = 75
-    Width = 117
-    Caption = 'Estimate Birth'
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    OnClick = btnAutoEstBirthClick
-    ParentFont = False
-    TabOrder = 7
-  end
-  object lblEstBirthResult: TLabel
-    Left = 347
-    Height = 13
-    Top = 117
-    Width = 22
-    Caption = '<0>'
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    ParentColor = False
-    ParentFont = False
-  end
-  object lblSetNameResult: TLabel
-    Left = 350
-    Height = 13
-    Top = 178
-    Width = 22
-    Caption = '<0>'
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    ParentColor = False
-    ParentFont = False
-  end
-  object btnAutoSetName: TButton
-    Left = 267
-    Height = 41
-    Top = 134
-    Width = 117
-    Caption = 'Set Name'
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    OnClick = btnAutoSetNameClick
-    ParentFont = False
-    TabOrder = 8
-  end
-  object lblRemoveIndResult: TLabel
-    Left = 350
-    Height = 13
-    Top = 237
-    Width = 22
-    Caption = '<0>'
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    ParentColor = False
-    ParentFont = False
-  end
-  object btnAutoRemoveInd: TButton
-    Left = 267
-    Height = 41
-    Top = 193
-    Width = 117
-    Caption = 'Remove Inds'
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    OnClick = btnAutoRemoveIndClick
-    ParentFont = False
-    TabOrder = 9
-  end
-  object btnGotoLink: TSpeedButton
-    Left = 268
-    Height = 22
-    Top = 37
-    Width = 39
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    OnClick = btnGotoLinkClick
-    ParentFont = False
-  end
-  object pnlDetail: TPanel
-    Left = 261
-    Height = 363
-    Top = 256
-    Width = 622
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    ParentFont = False
-    TabOrder = 10
-  end
-  object ProgressBar1: TProgressBar
-    Left = 319
-    Height = 20
-    Top = 40
-    Width = 127
-    Font.Color = clWindowText
-    Font.Height = -11
-    Font.Name = 'Tahoma'
-    ParentFont = False
-    TabOrder = 11
+  object Panel1: TPanel
+    Left = 257
+    Height = 835
+    Top = 36
+    Width = 815
+    Align = alClient
+    Caption = 'Panel1'
+    ClientHeight = 835
+    ClientWidth = 815
+    TabOrder = 4
+    object Button1: TButton
+      Left = 216
+      Height = 31
+      Top = 25
+      Width = 94
+      Caption = 'Button1'
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      OnClick = Button1Click
+      ParentFont = False
+      TabOrder = 0
+    end
+    object btnGotoLink: TSpeedButton
+      Left = 160
+      Height = 22
+      Top = 25
+      Width = 39
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      OnClick = btnGotoLinkClick
+      ParentFont = False
+    end
+    object ProgressBar1: TProgressBar
+      Left = 24
+      Height = 20
+      Top = 25
+      Width = 127
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 1
+    end
+    object btnAutoEstBirth: TButton
+      Left = 34
+      Height = 41
+      Top = 62
+      Width = 117
+      Caption = 'Estimate Birth'
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      OnClick = btnAutoEstBirthClick
+      ParentFont = False
+      TabOrder = 2
+    end
+    object lblEstBirthResult: TLabel
+      Left = 129
+      Height = 13
+      Top = 104
+      Width = 22
+      Caption = '<0>'
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      ParentColor = False
+      ParentFont = False
+    end
+    object btnAutoSetName: TButton
+      Left = 34
+      Height = 41
+      Top = 121
+      Width = 117
+      Caption = 'Set Name'
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      OnClick = btnAutoSetNameClick
+      ParentFont = False
+      TabOrder = 3
+    end
+    object lblSetNameResult: TLabel
+      Left = 129
+      Height = 13
+      Top = 165
+      Width = 22
+      Caption = '<0>'
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      ParentColor = False
+      ParentFont = False
+    end
+    object btnAutoRemoveInd: TButton
+      Left = 34
+      Height = 41
+      Top = 180
+      Width = 117
+      Caption = 'Remove Inds'
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      OnClick = btnAutoRemoveIndClick
+      ParentFont = False
+      TabOrder = 4
+    end
+    object lblRemoveIndResult: TLabel
+      Left = 129
+      Height = 13
+      Top = 224
+      Width = 22
+      Caption = '<0>'
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      ParentColor = False
+      ParentFont = False
+    end
+    object Panel2: TPanel
+      Left = 1
+      Height = 170
+      Top = 664
+      Width = 813
+      Align = alBottom
+      Caption = 'Panel2'
+      ClientHeight = 170
+      ClientWidth = 813
+      TabOrder = 5
+      object mmLog: TMemo
+        Left = 1
+        Height = 149
+        Top = 1
+        Width = 811
+        Align = alClient
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        Lines.Strings = (
+          'Memo1'
+        )
+        ParentFont = False
+        TabOrder = 0
+      end
+      object chbVerbose: TCheckBox
+        Left = 1
+        Height = 19
+        Top = 150
+        Width = 811
+        Align = alBottom
+        Caption = 'Verbose'
+        Font.Color = clWindowText
+        Font.Height = -11
+        Font.Name = 'Tahoma'
+        ParentFont = False
+        TabOrder = 1
+      end
+    end
+    object pnlDetail: TPanel
+      Left = 1
+      Height = 408
+      Top = 251
+      Width = 813
+      Align = alBottom
+      Font.Color = clWindowText
+      Font.Height = -11
+      Font.Name = 'Tahoma'
+      ParentFont = False
+      TabOrder = 6
+    end
+    object Splitter2: TSplitter
+      Cursor = crVSplit
+      Left = 1
+      Height = 5
+      Top = 659
+      Width = 813
+      Align = alBottom
+      ResizeAnchor = akBottom
+    end
+    object Splitter3: TSplitter
+      Cursor = crVSplit
+      Left = 1
+      Height = 5
+      Top = 246
+      Width = 813
+      Align = alBottom
+      ResizeAnchor = akBottom
+    end
   end
   object OpenDialog1: TOpenDialog
     left = 472

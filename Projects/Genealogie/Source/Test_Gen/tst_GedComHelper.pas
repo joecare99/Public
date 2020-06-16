@@ -30,6 +30,7 @@ type
         Procedure TestDateModifRepl;
         Procedure TestFiles;
         Procedure TestFile50;
+        Procedure TestFileM407;
         Procedure TestFile51;
         Procedure TestFilesComb;
         Procedure TestFile50_51;
@@ -138,6 +139,12 @@ begin
   TestFilesInt('EntryGC0050.enttxt',@FSFileFound);
   CheckEquals(8,FGedComFile.Count,'Tags after '+'EntryGC0050.enttxt'.QuotedString('"'));
 
+end;
+
+procedure TTestGedComHelper.TestFileM407;
+begin
+  TestFilesInt('OsBM0407.enttxt',@FSFileFound);
+  CheckEquals(11,FGedComFile.Count,'Tags after '+'OsBM407.enttxt'.QuotedString('"'));
 end;
 
 procedure TTestGedComHelper.TestFile51;
@@ -306,7 +313,9 @@ begin
       try
       lSt.LoadFromFile(FileIterator.FileName);
       if FileExists(ChangeFileExt(FileIterator.FileName,'.entExp')) then
-        lRs.LoadFromFile(ChangeFileExt(FileIterator.FileName,'.entExp'));
+        lRs.LoadFromFile(ChangeFileExt(FileIterator.FileName,'.entExp'))
+      else if FileExists(ChangeFileExt(FileIterator.FileName,'.entNew')) then
+        lRs.LoadFromFile(ChangeFileExt(FileIterator.FileName,'.entNew'));
       FGedComHelper.FGedComFile.Clear;
       FGedComHelper.Citation:=lSt;
       FGedComHelper.CitTitle:='Pg.';

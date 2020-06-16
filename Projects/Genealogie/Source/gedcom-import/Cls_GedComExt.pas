@@ -710,7 +710,7 @@ begin
     if assigned(FLink) then
       begin
         FRemoving := True;
-        Parent.ChildUpdate(self);
+        Flink.Parent.ChildUpdate(self);
       end;
     FRemoving := False;
     inherited SetData(AValue);
@@ -1161,7 +1161,11 @@ function TIndName.GetFullName: string;
 
 begin
     if True then
-        Result := trim(Title + ' ' + GivenName + ' ' + Surname)
+      begin
+        Result := trim(Title + ' ' + GivenName + ' ' + Surname);
+        if result = '' then
+          result := Data;
+      end
     else
       begin
         Result := Surname + ', ' + GivenName;

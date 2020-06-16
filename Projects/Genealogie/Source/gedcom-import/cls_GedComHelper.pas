@@ -25,8 +25,8 @@ type
         procedure SetCitTitle(AValue: string);
         procedure SetGedComFile(AValue: TGedComFile);
         procedure SetOsbHdr(AValue: string);
-        procedure WriteGedSource(GedObj: TGedComObj; qTitle: string;
-            lFileEx: boolean; lStrl: TStrings);
+        procedure WriteGedSource(GedObj: TGedComObj; qTitle, lsLink: string;
+          lFileEx: boolean; lStrl: TStrings);
         procedure WriteGedText(GedObj: TGedComObj; lStrl: TStrings;
             lTag: string = 'TEX' + 'T');
         Function GetFather(aInd:TGedComObj):TGedComObj;
@@ -113,6 +113,7 @@ begin
             'ParserIndiPlace': IndiPlace(Sender, aSTa[1], aSTa[2], lInt);
             'ParserIndiRef': IndiRef(Sender, aSTa[1], aSTa[2], lInt);
             'ParserIndiRel': IndiRel(Sender, aSTa[1], aSTa[2], lInt);
+          else
           end;
 end;
 
@@ -124,6 +125,7 @@ var
 begin
     if atext.endswith(' ') then
        lFamID :='';
+    // Todo: Build Family-Reference
     lFamID := '@F' + aText + '@';
     lfam := FGedComFile.Find(lFamID);
     if not assigned(lfam) then
@@ -132,10 +134,11 @@ begin
         lFam['REFN'].Data := FOsbHdr + RightStr('000' + atext, 4);
     if fCitTitle <> '' then
       begin
-        if (FCitRefn = '') or not ((rightstr(atext, 1)[1] in ['F', 'M', 'U']) or
+        if (FCitRefn = '') or
+          not ((rightstr(atext, 1)[1] in ['F', 'M', 'U']) or
             (rightstr(atext, 2)[1] = 'C')) then
             FCitRefn := RightStr('000' + atext, 4) + ', ' + FCitTitle;
-        WriteGedSource(lFam['REFN'], FCitRefn, False, FCitation);
+        WriteGedSource(lFam['REFN'], FCitRefn,'', False, FCitation);
       end
     else
         FCitRefn := '';
@@ -186,7 +189,7 @@ begin
       begin
         lFam['MARR'].Data := aText;
         if FCitRefn <> '' then
-            WriteGedSource(lFam['MARR'], FCitRefn, False, FCitation);
+            WriteGedSource(lFam['MARR'], FCitRefn,'', False, FCitation);
       end;
 end;
 
@@ -214,22 +217,29 @@ procedure TGedComHelper.IndiName(Sender: TObject; aText, aRef: string;
     SubType: integer);
 var
     lInd, lName: TGedComObj;
+    lPos: Integer;
 begin
     lInd := FGedComFile.Find('@' + aRef + '@');
     if not assigned(lInd) then
         lInd := FGedComFile.CreateChild('@' + aRef + '@', 'INDI');
     if SubType = 0 then
       begin
+        if not aText.Contains('/') then
+          begin
+            lPos := atext.LastIndexOf(' ');
+            if lpos>=0 then
+              atext := atext.Insert(lpos+1,'/')+'/';
+          end;
         lInd['NAME'].Data := aText;
         if FCitRefn <> '' then
-            WriteGedSource(lInd['NAME'], FCitRefn, False, FCitation);
+            WriteGedSource(lInd['NAME'], FCitRefn,'', False, FCitation);
       end
     else
     if SubType = 1 then
       begin
         lInd['NAME'].Data := '/' + aText + '/';
         if FCitRefn <> '' then
-            WriteGedSource(lInd['NAME'], FCitRefn, False, FCitation);
+            WriteGedSource(lInd['NAME'], FCitRefn,'', False, FCitation);
         lInd['NAME']['SURN'].Data := aText;
       end
     else
@@ -269,7 +279,7 @@ begin
         else
             FFact := lind.CreateChild('', lGedTag, aText);
         if FCitRefn <> '' then
-            WriteGedSource(FFact, FCitRefn, False, FCitation);
+            WriteGedSource(FFact, FCitRefn,'', False, FCitation);
       end;
 end;
 
@@ -321,7 +331,7 @@ begin
                 lYear := 5*((lYear+2)div 5);
 
                 if FCitRefn <> '' then
-                    WriteGedSource(lInd[lGedTag], FCitRefn, False, FCitation);
+                    WriteGedSource(lInd[lGedTag], FCitRefn,'', False, FCitation);
                 if lValidDate
                   and (lGedTag='BAPM')
                   and (lInd['BIRT']['DATE'].Data = '') then
@@ -366,7 +376,7 @@ begin
               begin
                 lInd[lGedTag]['PLAC'].Data := aText;
                 if FCitRefn <> '' then
-                    WriteGedSource(lInd[lGedTag], FCitRefn, False, FCitation);
+                    WriteGedSource(lInd[lGedTag], FCitRefn,'', False, FCitation);
               end
             else
             if assigned(FFact) and (ffact.Parent = lind as IGedParent) and
@@ -388,7 +398,7 @@ begin
       begin
         lind['REFN'].Data := aText;
         if FCitRefn <> '' then
-            WriteGedSource(lInd['OCCU'], FCitRefn, False, FCitation);
+            WriteGedSource(lInd['OCCU'], FCitRefn,'', False, FCitation);
       end;
 end;
 
@@ -402,7 +412,7 @@ begin
       begin
         lind['OCCU'].Data := aText;
         if FCitRefn <> '' then
-            WriteGedSource(lInd['OCCU'], FCitRefn, False, FCitation);
+            WriteGedSource(lInd['OCCU'], FCitRefn,'', False, FCitation);
       end;
 end;
 
@@ -563,10 +573,9 @@ begin
     FGedComFile := AValue;
 end;
 
-procedure TGedComHelper.WriteGedSource(GedObj: TGedComObj; qTitle: string;
+procedure TGedComHelper.WriteGedSource(GedObj: TGedComObj; qTitle, lsLink: string;
     lFileEx: boolean; lStrl: TStrings);
-var
-    s, lsLink: string;
+
 begin
     if GedObj['SOUR'].Data <> '' then
         exit;

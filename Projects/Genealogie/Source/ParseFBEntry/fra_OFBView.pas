@@ -85,7 +85,7 @@ begin
   if Idx < Listbox1.Items.Count - 1 then
       lNextNode := TDOMNode(listbox1.Items.Objects[Idx + 1])
   else
-      lnextNode := nil;
+      lnextNode := TDOMNode(lTestNode.GetNextNodeSkipChildren);
   lLine := '';
   while assigned(ltestnode) and (ltestnode <> lnextnode) and
       (lTestNode.textcontent <> '§') and (lTestNode.NodeName <> 'text:h') do

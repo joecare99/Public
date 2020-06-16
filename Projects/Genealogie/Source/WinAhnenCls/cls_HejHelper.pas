@@ -5,15 +5,18 @@ unit cls_HejHelper;
 interface
 
 uses
-  Classes, SysUtils, cls_HejData,cls_HejIndData;
+  Classes, SysUtils, cls_HejData,cls_HejIndData,unt_IGenBase2;
 
 type
 
 { THejHelper }
-
+ THejHelper = class;
  { TVirtFamily }
 
- TVirtFamily=Class
+ TVirtFamily = Class(TObject,IGenFamily)
+   private
+      Owner:THejHelper;
+   public
    Ref:string;
    Husband,
    Spouse,
@@ -21,11 +24,48 @@ type
    Marr2:integer;
    Children:array of Integer;
    Kind:Integer;
+   FName,
    Date,
    Place:String;
    Procedure AppendChild(aInd:integer);
    Procedure ReplaceInd(aInd,aind2:integer);
+   constructor Create(aOwner:THejHelper);
    destructor Destroy; override;
+ public
+ //--- Interface IGenFamily
+    function GetChildCount: integer;
+        function GetChildren(Idx: Variant): IGenIndividual;
+        function GetFamilyName: string;
+        function GetFamilyRefID: string;
+        function GetHusband: IGenIndividual;
+        function GetMarriage: IGenEvent;
+        function GetMarriageDate: string;
+        function GetMarriagePlace: string;
+        function GetWife: IGenIndividual;
+        function EnumChildren:IGenIndEnumerator;
+        procedure SetChildren(Idx: Variant; AValue: IGenIndividual);
+        procedure SetFamilyName(AValue: string);
+        procedure SetFamilyRefID(AValue: string);
+        procedure SetHusband(AValue: IGenIndividual);
+        procedure SetMarriage(AValue: IGenEvent);
+        procedure SetMarriageDate(AValue: string);
+        procedure SetMarriagePlace(AValue: string);
+        procedure SetWife(AValue: IGenIndividual);
+    public
+ // --Interface IGenEntity
+      function GetEventCount: integer;
+      function GetEvents(Idx: Variant): IGenEvent;
+      procedure SetEvents(Idx: variant; AValue: IGenEvent);
+      property EventCount: integer read GetEventCount;
+      property Events[Idx: variant]: IGenEvent read GetEvents write SetEvents;
+   public
+ // -- Interface IGenData
+        function GetData: string;
+        function GetFType: integer;
+        function GetObject: TObject;
+        procedure SetData(AValue: string);
+        procedure SetFType(AValue: integer);
+
  end;
 
  THejHelper=Class
@@ -107,10 +147,148 @@ begin
       Children[i]:=aind2;
 end;
 
+constructor TVirtFamily.Create(aOwner: THejHelper);
+begin
+  Owner := aOwner;
+end;
+
 destructor TVirtFamily.Destroy;
 begin
   setlength(Children,0);
   inherited Destroy;
+end;
+
+function TVirtFamily.GetChildCount: integer;
+begin
+  result := length(Children);
+end;
+
+function TVirtFamily.GetChildren(Idx: Variant): IGenIndividual;
+begin
+(*  if VarIsNumeric(Idx) then
+    result := Owner.GetIndi( Children[Idx]);
+  else
+    result := nil; *)
+end;
+
+function TVirtFamily.GetFamilyName: string;
+begin
+  Result := FName;
+end;
+
+function TVirtFamily.GetFamilyRefID: string;
+begin
+  Result := Ref;
+end;
+
+function TVirtFamily.GetHusband: IGenIndividual;
+begin
+
+end;
+
+function TVirtFamily.GetMarriage: IGenEvent;
+begin
+
+end;
+
+function TVirtFamily.GetMarriageDate: string;
+begin
+
+end;
+
+function TVirtFamily.GetMarriagePlace: string;
+begin
+
+end;
+
+function TVirtFamily.GetWife: IGenIndividual;
+begin
+
+end;
+
+function TVirtFamily.EnumChildren: IGenIndEnumerator;
+begin
+
+end;
+
+procedure TVirtFamily.SetChildren(Idx: Variant; AValue: IGenIndividual);
+begin
+
+end;
+
+procedure TVirtFamily.SetFamilyName(AValue: string);
+begin
+
+end;
+
+procedure TVirtFamily.SetFamilyRefID(AValue: string);
+begin
+
+end;
+
+procedure TVirtFamily.SetHusband(AValue: IGenIndividual);
+begin
+
+end;
+
+procedure TVirtFamily.SetMarriage(AValue: IGenEvent);
+begin
+
+end;
+
+procedure TVirtFamily.SetMarriageDate(AValue: string);
+begin
+
+end;
+
+procedure TVirtFamily.SetMarriagePlace(AValue: string);
+begin
+
+end;
+
+procedure TVirtFamily.SetWife(AValue: IGenIndividual);
+begin
+
+end;
+
+function TVirtFamily.GetEventCount: integer;
+begin
+  result := 0
+end;
+
+function TVirtFamily.GetEvents(Idx: Variant): IGenEvent;
+begin
+
+end;
+
+procedure TVirtFamily.SetEvents(Idx: variant; AValue: IGenEvent);
+begin
+
+end;
+
+function TVirtFamily.GetData: string;
+begin
+
+end;
+
+function TVirtFamily.GetFType: integer;
+begin
+  result := Kind;
+end;
+
+function TVirtFamily.GetObject: TObject;
+begin
+  result := self
+end;
+
+procedure TVirtFamily.SetData(AValue: string);
+begin
+
+end;
+
+procedure TVirtFamily.SetFType(AValue: integer);
+begin
+ Kind := AValue;
 end;
 
 
@@ -212,13 +390,12 @@ begin
       end;
   if not assigned(result) and aCre then
     begin
-      result := TVirtFamily.Create;
+      result := TVirtFamily.Create(self);
       result.Ref := aRef;
       result.Marr:=-1;
       Result.Marr2:=-1;
       setlength(FFamily,high(FFamily)+2);
       FFamily[high(FFamily)]:=result;
-
     end;
 end;
 
@@ -231,7 +408,8 @@ begin
   FindFam(lFamID,true);
       if fCitTitle <> '' then
       begin
-        if (FCitRefn = '') or not ((rightstr(atext, 1)[1] in ['F', 'M', 'U']) or
+        if (FCitRefn = '') or
+           not ((rightstr(atext, 1)[1] in ['F', 'M', 'U']) or
             (rightstr(atext, 2)[1] = 'C')or
             (rightstr(atext, 3)[1] = 'C')) then
             FCitRefn := RightStr('000' + atext, 4) + ', ' + FCitTitle;
@@ -365,7 +543,7 @@ var
   lpp, lInd: Integer;
 begin
   lInd := FindInd( aRef ,True);
-  if SubType = 0 then
+  if SubType = 0 then  // Fullname
     begin
       lpp:=aText.LastIndexOf(' ');
       if lpp>=0 then
@@ -378,7 +556,7 @@ begin
           end;
     end
   else
-  if SubType = 1 then
+  if SubType = 1 then  // FamilyName
     begin
       FHejObj.iData[lind,hind_FamilyName]:= aText;
       if FCitRefn <> '' then
@@ -388,17 +566,17 @@ begin
         end;
     end
   else
-  if SubType = 2 then
+  if SubType = 2 then  // GivenName
     begin
       FHejObj.iData[lind,hind_GivenName]:= aText;
     end
   else
-  if SubType = 3 then
+  if SubType = 3 then  // AKA
     begin
       FHejObj.iData[lind,hind_AKA]:= aText;
     end
   else
-  if SubType = 4 then
+  if SubType = 4 then  // Title
     begin
       FHejObj.iData[lind,hind_Text]:= FHejObj.iData[lind,hind_Text]+LineEnding+
         'Titel: '+aText;

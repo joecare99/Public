@@ -53,6 +53,10 @@ type
         evt_FamilySearchID,
         evt_Property,
         evt_Assosiation,
+        evt_Stillborn,
+        evt_Partner,
+        evt_fallen,
+        evt_missing,
 
         evt_LastChange,
         evt_Last
