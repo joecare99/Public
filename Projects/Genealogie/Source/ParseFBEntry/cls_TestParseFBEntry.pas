@@ -61,10 +61,13 @@ type
           procedure TestHandleAKPersonEntry_55;
           procedure TestHandleAKPersonEntry_56;
           Procedure TestHandleNonPersonEntry;
-          procedure TestHandleNonPersonEntry_Res;
+           Procedure TestHandleNonPersonEntry_6;
+         procedure TestHandleNonPersonEntry_Res;
+         procedure TestHandleNonPersonEntry_div;
+         procedure TestHandleNonPersonEntry_marr;
           procedure TestHandleNonPersonEntry_57;
           procedure TestGetEntryType;
-          procedure TestGetEntryType2;
+          procedure TestGetEntryType_Rel;
           procedure TestGuessSexOfGivnName;
           procedure TestHandleGCDateEntry;
           procedure TesttestEntry;
@@ -143,9 +146,12 @@ type
         procedure TestFileM0009;
         procedure TestFileM0011;
         procedure TestFileM0026;
+        procedure TestFileM0030;
         procedure TestFileM0037;
         procedure TestFileM0061;
         procedure TestFileM0119;
+        procedure TestFileM0193;
+        procedure TestFileM0337;
         procedure TestFileM0405;
         procedure TestFileM0407;
         procedure TestFileM0409;
@@ -159,8 +165,14 @@ type
         procedure TestFileM0476;
         procedure TestFileM0485;
         procedure TestFileM0486;
+        procedure TestFileM0832;
+        procedure TestFileM0854;
+        procedure TestFileM1138;
+        procedure TestFileM1149;
         procedure TestFileM1220;
         procedure TestFileM1221;
+        procedure TestFileM1227;
+        procedure TestFileM1240;
         procedure TestFileM1242;
         procedure TestFileM1251;
         procedure TestFileM1252;
@@ -168,6 +180,7 @@ type
         procedure TestFileM1268;
         procedure TestFileM1274;
         procedure TestFileM1276;
+        procedure TestFileM1353;
     private
      end;
 
@@ -359,9 +372,18 @@ begin
     CheckEquals(ord(evt_missing),ord(fparser.getEntryType('vermisst in Frankreich 1.1.1943',lDate,lData)),'vermisst in Frankreich 1.1.1943');
     CheckEquals('in Frankreich 1.1.1943',lDate,'Vermisst in Frankreich');
     CheckEquals('vermisst',lData,'Vermisst in Frankreich');
+
+    CheckEquals(ord(evt_Residence),ord(fparser.getEntryType('wohnhaft in Kürzell',lDate,lData)),'wohnhaft in Kürzell');
+    CheckEquals('in Kürzell',lDate,'wohnhaft in Kürzell');
+    CheckEquals('wohnhaft',lData,'wohnhaft in Kürzell');
+
+    CheckEquals(ord(evt_Residence),ord(fparser.getEntryType('wohnt Mattenhag-Siedlung',lDate,lData)),'wohnhaft in Kürzell');
+    CheckEquals('',lDate,'wohnt Mattenhag-Siedlung');
+    CheckEquals('wohnt Mattenhag-Siedlung',lData,'wohnt Mattenhag-Siedlung');
+
 end;
 
-procedure TTestFBEntryParser.TestGetEntryType2;
+procedure TTestFBEntryParser.TestGetEntryType_Rel;
 var
   lDate, lData: string;
 begin
@@ -411,6 +433,41 @@ begin
     CheckEquals(9, FRCounter, 'FRcounter');
 end;
 
+procedure TTestFBEntryParser.TestHandleNonPersonEntry_6;
+begin
+    AddExpResult(['ParserIndiDate','24.12.1893','I30F',ord(evt_Birth)]);
+    AddExpResult(['ParserIndiPlace','Lauck Kr. Preuß. Holland/Ostpreußen','I30F',ord(evt_Birth)]);
+    fparser.HandleNonPersonEntry('  * in Lauck Kr. Preuß. Holland/Ostpreußen 24.12.1893','I30F');
+    CheckEquals(2, FRCounter, 'FRcounter');
+end;
+
+procedure TTestFBEntryParser.TestHandleNonPersonEntry_div;
+begin
+    AddExpResult(['ParserIndiDate','','I30F',ord(evt_Divorce)]);
+    fparser.HandleNonPersonEntry('o/o','I30F');
+    CheckEquals(2, FRCounter, 'FRcounter');
+end;
+
+procedure TTestFBEntryParser.TestHandleNonPersonEntry_marr;
+begin
+    AddExpResult(['ParserStartFamily','30F','',0]);
+    AddExpResult(['ParserFamilyIndiv','I30F','30F',1]);
+    AddExpResult(['ParserFamilyPlace','Plobsheim/Elsaß','30F',ord(evt_Marriage)]);
+    fparser.HandleNonPersonEntry('⚭ in Plobsheim/Elsaß','I30F');
+    CheckEquals(3, FRCounter, 'FRcounter');
+
+    AddExpResult(['ParserStartFamily','30F','',0]);
+    AddExpResult(['ParserFamilyIndiv','I30F','30F',1]);
+    AddExpResult(['ParserFamilyDate','1948','30F',ord(evt_Marriage)]);
+    AddExpResult(['ParserFamilyPlace','Nonnenweier','30F',ord(evt_Marriage)]);
+    fparser.HandleNonPersonEntry('⚭ 1948 in Nonnenweier','I30F');
+    CheckEquals(7, FRCounter, 'FRcounter');
+
+    AddExpResult(['ParserIndiDate','','I30F',ord(evt_Marriage)]);
+    fparser.HandleNonPersonEntry('⚭in Plobsheim/Elsaß','I30F');
+    CheckEquals(9, FRCounter, 'FRcounter');
+end;
+
 procedure TTestFBEntryParser.TestHandleNonPersonEntry_Res;
 begin
     AddExpResult(['ParserIndiPlace','Dundenheim','I11',ord(evt_Residence)]);
@@ -424,6 +481,11 @@ begin
     AddExpResult(['ParserIndiPlace','"Spieng in der Herrschaft Bern/Schweiz"','I11',ord(evt_Residence)]);
     fparser.HandleNonPersonEntry('aus "Spieng in der Herrschaft Bern/Schweiz"','I11');
     CheckEquals(3, FRCounter, 'FRcounter');
+
+    AddExpResult(['ParserIndiPlace','Illkirch','I30F',ord(evt_Residence)]);
+    AddExpResult(['ParserIndiData','wohnhaft','I30F',ord(evt_Residence)]);
+    fparser.HandleNonPersonEntry(' wohnhaft in Illkirch','I30F');
+    CheckEquals(5, FRCounter, 'FRcounter');
 
 end;
 
@@ -1115,6 +1177,11 @@ end;
 
 procedure TTestFBEntryParserAK.TestFileM0008;
 begin
+  // Husband Name with -
+  // , missing after reference
+  // , Missing after Occupation
+  // Wife name : ...
+  // Child Entry ends with , ==> Error
     TestOneFile('OsBM0008.entTxt');
 end;
 
@@ -1133,6 +1200,12 @@ procedure TTestFBEntryParserAK.TestFileM0026;
 begin
     // Birth-Record
     TestOneFile('OsBM0026.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM0030;
+begin
+    // Birth-Place
+    TestOneFile('OsBM0030.entTxt');
 end;
 
 procedure TTestFBEntryParserAK.TestFileM0037;
@@ -1154,8 +1227,21 @@ begin
     TestOneFile('OsBM0119.entTxt');
 end;
 
+procedure TTestFBEntryParserAK.TestFileM0193;
+begin
+  // Couple were each married and divorced before.
+    TestOneFile('OsBM0193.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM0337;
+begin
+    // Residence Entry 2
+    TestOneFile('OsBM0337.entTxt');
+end;
+
 procedure TTestFBEntryParserAK.TestFileM0405;
 begin
+  // Space missing after Childnumber
     TestOneFile('OsBM0405.entTxt');
 end;
 
@@ -1229,6 +1315,30 @@ begin
     TestOneFile('OsBM0485.entTxt');
 end;
 
+procedure TTestFBEntryParserAK.TestFileM0832;
+begin
+  // complex Chidren-Data
+    TestOneFile('OsBM0832.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM0854;
+begin
+  // Wrong entrysign
+    TestOneFile('OsBM0854.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1138;
+begin
+  // Dr.theol.O ...
+    TestOneFile('OsBM1138.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1149;
+begin
+  // Wife Entry started with "und"
+    TestOneFile('OsBM1149.entTxt');
+end;
+
 procedure TTestFBEntryParserAK.TestFileM1220;
 begin
     TestOneFile('OsBM1220.entTxt');
@@ -1237,6 +1347,17 @@ end;
 procedure TTestFBEntryParserAK.TestFileM1221;
 begin
     TestOneFile('OsBM1221.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1227;
+begin
+    TestOneFile('OsBM1227.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1240;
+begin
+
+  TestOneFile('OsBM1240.entTxt');
 end;
 
 procedure TTestFBEntryParserAK.TestFileM1242;
@@ -1281,6 +1402,12 @@ procedure TTestFBEntryParserAK.TestFileM1276;
 begin
     // ??
     TestOneFile('OsBM1276.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1353;
+begin
+  // Children with discrete Marriages
+  TestOneFile('OsBM1353.entTxt');
 end;
 
 
