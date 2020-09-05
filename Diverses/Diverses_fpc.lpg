@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="23">
+    <Targets Count="38">
       <Target0 FileName="FPC\Clrscr.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="Default"/>
@@ -120,9 +120,70 @@
         <Mode1 Name="Default"/>
       </Target21>
       <Target22 FileName="FPC\Prj_MSProdKey2.lpi">
+        <BuildModes Count="2"/>
+        <Mode1 Name="Default"/>
+        <Mode2 Name="Debug"/>
+      </Target22>
+      <Target23 FileName="FPC\prj_Quine.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
-      </Target22>
+      </Target23>
+      <Target24 FileName="FPC\prj_Quine2.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target24>
+      <Target25 FileName="FPC\prj_Quine3.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target25>
+      <Target26 FileName="FPC\prj_Quine4.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target26>
+      <Target27 FileName="FPC\prj_Quine5.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target27>
+      <Target28 FileName="FPC\prj_Quine6.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target28>
+      <Target29 FileName="FPC\prj_Quine7.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target29>
+      <Target30 FileName="FPC\prj_Quine8_b.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target30>
+      <Target31 FileName="FPC\prj_Quine8.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target31>
+      <Target32 FileName="FPC\prj_Quine9_b.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target32>
+      <Target33 FileName="FPC\prj_Quine9.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target33>
+      <Target34 FileName="FPC\prj_Quine10.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target34>
+      <Target35 FileName="FPC\prj_Quine10_b.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target35>
+      <Target36 FileName="FPC\prj_Quine9b.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target36>
+      <Target37 FileName="FPC\prj_Quine9b_b.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target37>
     </Targets>
   </ProjectGroup>
 </CONFIG>
