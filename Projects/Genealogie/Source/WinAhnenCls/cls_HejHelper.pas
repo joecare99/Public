@@ -126,6 +126,10 @@ implementation
 
 uses cls_HejMarrData,cls_HejPlaceData,strutils,variants;
 
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+
 { TVirtFamily }
 
 procedure TVirtFamily.AppendChild(aInd: integer);

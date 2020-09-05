@@ -49,6 +49,10 @@ implementation
 
 uses unt_PlaceTestData;
 
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+
 resourcestring
   DefDataDir = 'Data';
 
