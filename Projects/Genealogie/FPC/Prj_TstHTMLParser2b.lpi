@@ -11,7 +11,7 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="Prj_TstHTMLParser"/>
+      <Title Value="Prj_TstHTMLParser2b"/>
       <Scaled Value="True"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
@@ -27,7 +27,7 @@
       <UseVersionInfo Value="True"/>
       <AutoIncrementBuild Value="True"/>
       <MinorVersionNr Value="3"/>
-      <BuildNr Value="13"/>
+      <BuildNr Value="8"/>
       <Language Value="0407"/>
       <StringTable CompanyName="JCSoft"/>
     </VersionInfo>
@@ -42,7 +42,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="..\Source\TstHTMLParser;..\html2csv;$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\TstHTMLParser;..\html2csv;..\Source\html2csv"/>
+            <OtherUnitFiles Value="..\Source\TstHTMLParser;..\html2csv;..\Source\html2csv;..\Source\gedcom-import;..\Source\Components"/>
             <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -79,27 +79,33 @@
         <Mode0 Name="default"/>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="4">
+    <RequiredPackages Count="6">
       <Item1>
-        <PackageName Value="fpvhttp"/>
+        <PackageName Value="AnchorDocking"/>
       </Item1>
       <Item2>
-        <PackageName Value="FrameViewer09"/>
+        <PackageName Value="BaseUnits"/>
       </Item2>
       <Item3>
-        <PackageName Value="UntConfig"/>
+        <PackageName Value="fpvhttp"/>
       </Item3>
       <Item4>
-        <PackageName Value="LCL"/>
+        <PackageName Value="FrameViewer09"/>
       </Item4>
+      <Item5>
+        <PackageName Value="UntConfig"/>
+      </Item5>
+      <Item6>
+        <PackageName Value="LCL"/>
+      </Item6>
     </RequiredPackages>
-    <Units Count="4">
+    <Units Count="10">
       <Unit0>
-        <Filename Value="Prj_TstHTMLParser.dpr"/>
+        <Filename Value="Prj_TstHTMLParser2b.dpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Source\TstHTMLParser\Frm_TstHTMLParser.pas"/>
+        <Filename Value="..\Source\TstHTMLParser\Frm_TstHTMLParser2b.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="frmTestHtmlParsingMain"/>
         <HasResources Value="True"/>
@@ -113,6 +119,34 @@
         <Filename Value="..\Source\html2csv\cmp_Filter.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="..\Source\TstHTMLParser\fra_HtmlImp.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="FraHtmlImport"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\Source\html2csv\cls_h2gStep2.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\Source\gedcom-import\cls_GedComHelper.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\Source\gedcom-import\cmp_GedComFile.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Cmp_GedComFile"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\Source\Components\unt_IGenBase2.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\Source\Components\Unt_GNameHandler.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -123,11 +157,12 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="..\Source\TstHTMLParser;..\html2csv;$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source\TstHTMLParser;..\html2csv;..\Source\html2csv"/>
+      <OtherUnitFiles Value="..\Source\TstHTMLParser;..\html2csv;..\Source\html2csv;..\Source\gedcom-import;..\Source\Components"/>
       <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
+        <SyntaxMode Value="Delphi"/>
         <AllowLabel Value="False"/>
       </SyntaxOptions>
     </Parsing>

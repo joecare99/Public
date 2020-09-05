@@ -53,7 +53,7 @@ implementation
 
 Const CFilterOut='+';
       CFilterOn='[';
-      CFilterOff=']';
+//      CFilterOff=']';  Not Used
       CFilterJump='j';
       CFilterJumpOn='J';
 
@@ -148,7 +148,9 @@ begin
   if (FTestLine>=FSchema.Count) then exit(false);
   lActFilter := FSchema[FTestLine];
   lTestLine := FTestLine;
-  if  not  lActFilter.StartsWith(CFilterJump) and
+  if lActFilter.StartsWith(CFilterOut) then
+     TestComputeFiltered
+  else if  not  lActFilter.StartsWith(CFilterJump) and
    uppercase(s+' ').StartsWith(uppercase(copy(lActFilter, 2))) then
   begin
     FFilterMode := lActFilter.StartsWith(CFilterOn);
