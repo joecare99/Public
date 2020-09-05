@@ -275,6 +275,10 @@ implementation
 
 uses Unt_StringProcs, LConvEncoding, variants;
 
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+
 resourcestring
     rsGenealogieExchangeFile = 'Genealogie-Exchange-File';
 
@@ -985,7 +989,7 @@ end;
 
 procedure TGedComFile.LoadFromStream(st: TStream);
 var
-    lst: string;
+    lst: string='';
     lsl: TStringList;
     lbEncoded: boolean;
 begin

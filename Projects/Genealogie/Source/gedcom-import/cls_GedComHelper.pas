@@ -63,6 +63,10 @@ implementation
 
 uses Unt_StringProcs;
 
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+
 procedure TGedComHelper.CreateNewHeader(Filename: string);
 var
     lGedObj0: TGedComObj;
@@ -256,7 +260,7 @@ end;
 procedure TGedComHelper.IndiName(Sender: TObject; aText, aRef: string;
     SubType: integer);
 var
-    lInd, lName: TGedComObj;
+    lInd: TGedComObj;
     lPos: Integer;
 begin
     lInd := FGedComFile.Find('@' + aRef + '@');
@@ -656,7 +660,7 @@ begin
     if lStrl.Text <> '' then
         WriteGedText(GedObj['SOUR']['DATA'], lstrl);
     //Todo: Link - Tag
-    if False then
+    if lsLink<>'' then
         GedObj['SOUR']['_LINK'].Data := lsLink;
     if not assigned(FGedComFile['@S1@']) then
         FGedComFile.CreateChild('@S1@', 'SOUR')['TITL'].Data := 'Quelle';
