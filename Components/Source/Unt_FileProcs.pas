@@ -161,7 +161,16 @@ Function FileInUse(FileName: String): boolean;
 // Ermittelt die nächste (logische) Datei
 Function GetNextFileName(FileName: String): string;
 
+type TSaveProc = Procedure(const s:string);
+  TSaveProc2 = Procedure(const s:string) of object;
 
+///<author>Joe Care</author>
+///  <version>1.00.02</version>
+///  <tested>true</Tested>
+///  <info>Speichert Datei (sicher) mit umbenennen und Backup</info>
+// Speichert Datei (sicher) mit umbenennen und Backup
+Function SaveFile(sp:TSaveProc2; FileName: String): Boolean;overload;
+Function SaveFile(sp:TSaveProc; FileName: String): Boolean;overload;
 
 Type
   ///<author>Joe Care</author>
@@ -633,6 +642,53 @@ Begin
 
     End
 End;
+
+procedure SaveHead(const FileName: String; out NewFileName,BakFilename: String);
+
+begin
+  NewFileName := FileName+'.new';
+  BakFilename := changeFileExt(FileName,'.Bak');
+  if FileExists(NewFileName) then
+    DeleteFile(NewFileName)
+end;
+
+function SaveTail(const FileName, NewFileName,BakFilename: String):boolean;
+
+begin
+  if not FileExists(NewFileName) then exit(false);
+  if FileExists(Filename) then
+    begin
+      if FileExists(BakFilename) then
+        DeleteFile(BakFilename);
+      if FileName <> BakFilename then
+        RenameFile(FileName,BakFilename);
+    end;
+  if FileExists(Filename) then
+    exit(false);
+  RenameFile(NewFileName,FileName);
+  Result:= true;
+end;
+
+function SaveFile(sp: TSaveProc2; FileName: String): Boolean;
+
+var
+  NewFileName, BakFilename: String;
+begin
+  if Not Assigned(sp) then exit(false);
+  SaveHead(FileName,NewFileName,BakFilename);
+  sp(NewFileName);
+  result :=SaveTail(FileName,NewFileName,BakFilename);
+end;
+
+function SaveFile(sp: TSaveProc; FileName: String): Boolean;
+var
+  NewFileName, BakFilename: String;
+begin
+  if Not Assigned(sp) then exit(false);
+  SaveHead(FileName,NewFileName,BakFilename);
+  sp(NewFileName);
+  result :=SaveTail(FileName,NewFileName,BakFilename);
+end;
 
 function GetDefaultDataDir(Area: TGDD_Area; DataType: TGDD_DataType): String;
 

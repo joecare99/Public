@@ -4,10 +4,11 @@
 
 unit fpvnet;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  VisualSocket, fpsock2, LazarusPackageIntf;
+  VisualSocket, LazarusPackageIntf;
 
 implementation
 

@@ -43,6 +43,24 @@ type
     Procedure TestAsVariant;
   end;
 
+const
+    TestFormatSettings : TFormatSettings = (
+    CurrencyFormat: 1;
+    NegCurrFormat: 5;
+    ThousandSeparator: ',';
+    DecimalSeparator: '.';
+    CurrencyDecimals: 2;
+    DateSeparator: '-';
+    TimeSeparator: ':';
+    ListSeparator: ',';
+    CurrencyString: '$';
+    ShortDateFormat: 'd/m/y';
+    LongDateFormat: 'dd" "mmmm" "yyyy';
+    TimeAMString: 'AM';
+    TimePMString: 'PM';
+    ShortTimeFormat: 'hh:nn';
+    LongTimeFormat: 'hh:nn:ss' );
+
 
 implementation
 uses Unt_VariantProcs,variants;

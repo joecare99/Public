@@ -20,7 +20,26 @@ type
         property Attributes[idx:variant]:variant read GetAttributes write SetAttributes;
      end;
 
+Function IndexOfString2(aArray:array of string;aStr:String;out oIdx:integer):boolean;
+
 implementation
+
+function IndexOfString2(aArray: array of string; aStr: String; out oIdx: integer
+  ): boolean;
+var
+  lStr: String;
+  i: Integer;
+begin
+  result := false;
+  oIdx:=-1;
+  lStr := LowerCase(aStr);
+  for i := 0 to high(aArray) div 2 do
+    if Lowercase(aArray[i*2]) = lStr then
+      begin
+        oIdx:=i;
+        exit(true);
+      end;
+end;
 
 end.
 
