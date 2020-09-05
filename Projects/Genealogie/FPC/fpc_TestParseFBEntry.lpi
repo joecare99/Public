@@ -111,7 +111,7 @@
         <PackageName Value="FCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="6">
+    <Units Count="7">
       <Unit0>
         <Filename Value="fpc_TestParseFBEntry.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -136,6 +136,10 @@
         <Filename Value="..\Source\Components\unt_IGenBase2.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit5>
+      <Unit6>
+        <Filename Value="..\Source\Components\Unt_GNameHandler.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit6>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

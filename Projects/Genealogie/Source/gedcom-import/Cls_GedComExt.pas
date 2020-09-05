@@ -546,6 +546,10 @@ implementation
 
 uses variants,dateutils;
 
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+
 function EvtToNatur(aEvent: TenumEventType): string;
 var
   i: Integer;

@@ -68,6 +68,10 @@ implementation
 
 uses cls_HejIndData, unt_IndTestData, unt_MarrTestData, unt_SourceTestData, unt_PlaceTestData,variants;
 
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+
 procedure GenerateTestData(aHejClass:TClsHejGenealogy);
 
 var

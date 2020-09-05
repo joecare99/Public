@@ -73,6 +73,10 @@ implementation
 
 uses Forms, frm_ConnectDB,unt_IndTestData,unt_MarrTestData,unt_PlaceTestData,unt_SourceTestData, Controls, variants;
 
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+
 resourcestring
     DefDataDir = 'Data';
     rsTestData =

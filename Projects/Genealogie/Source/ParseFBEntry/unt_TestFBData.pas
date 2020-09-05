@@ -189,7 +189,7 @@ const
         (eType: 'ParserIndiRel'; Data: '2420'; Ref: 'I2421M'; SubType: 1),
         (eType: 'ParserIndiOccu'; Data: 'Taglöhner'; Ref: 'I2421M'; SubType: 7),
         (eType: 'ParserIndiPlace'; Data: 'Meißenheim'; Ref: 'I2421M'; SubType: 7),
-        {10}  (eType: 'ParserIndiOccu'; Data: 'Tag­wächter'; Ref: 'I2421M'; SubType: 7),
+        {10}  (eType: 'ParserIndiOccu'; Data: 'Tagwächter'; Ref: 'I2421M'; SubType: 7),
         (eType: 'ParserIndiPlace'; Data: 'Meißenheim'; Ref: 'I2421M'; SubType: 7),
         (eType: 'ParserIndiDate'; Data: '29.10.1796'; Ref: 'I2421M'; SubType: 1),
         (eType: 'ParserIndiPlace'; Data: 'Meißenheim'; Ref: 'I2421M'; SubType: 1),
@@ -262,6 +262,9 @@ const
 
 implementation
 
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
 
 { TResultType }
 
