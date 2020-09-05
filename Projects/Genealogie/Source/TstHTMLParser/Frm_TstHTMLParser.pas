@@ -80,13 +80,17 @@ var
 
 implementation
 
-uses LConvEncoding;
+uses LConvEncoding,HtmlGlobals;
 
 {$IFnDEF FPC}
   {$R *.dfm}
 
 {$ELSE}
   {$R *.lfm}
+{$ENDIF}
+
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
 {$ENDIF}
 
 procedure TfrmTestHtmlParsingMain.btnDoParseClick(Sender: TObject);
@@ -146,7 +150,7 @@ procedure TfrmTestHtmlParsingMain.btnLoadSchemaClick(Sender: TObject);
 
   var
     sf: TFileStream;
-    s: string;
+    s: string = '';
     lEncoded: boolean;
     i: Integer;
   begin
@@ -175,7 +179,7 @@ end;
 procedure TfrmTestHtmlParsingMain.btnLoadFileClick(Sender: TObject);
 var
   sf: TFileStream;
-  s: string;
+  s: string='';
   lEncoded: boolean;
   i: Integer;
 begin
@@ -195,7 +199,7 @@ begin
     FreeAndNil(sf);
   end;
   mHTML.Lines.Text := ConvertEncodingToUTF8(s, {EncodingCP1252} FEncoding, lEncoded);
-  HTMLViewer1.LoadFromString(mHTML.Lines.Text,'');
+  HTMLViewer1.LoadFromString(ThtString( mHTML.Lines.Text),'');
 //  IpHtmlPanel1.OpenURL('file://'+cbxFilename.Text);
 end;
 
@@ -424,7 +428,7 @@ var
 begin
    FEncoding := GuessEncoding(sHtml);
     mHTML.Lines.Text := ConvertEncodingToUTF8(sHTML, FEncoding, lEncoded);
-    HTMLViewer1.LoadFromString(sHTML, sRef);
+    HTMLViewer1.LoadFromString(ThtString(sHTML),ThtString(sRef));
 end;
 
 procedure TfrmTestHtmlParsingMain.LogParseTag(s: String);

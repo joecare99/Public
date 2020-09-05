@@ -39,8 +39,8 @@ type
     FparseMode: THTMLParseMode;
   public
     procedure Feed(Data: string); override;
-    procedure Error(sender: TObject; NewMessage: string); override;
-    procedure Warning(sender: TObject; NewMessage: string); override;
+    procedure Error({%H-}sender: TObject; NewMessage: string); override;
+    procedure Warning(sender: TObject; {%H-}NewMessage: string); override;
     Property OnStdText: TTextNotification read FOnStdText write FOnStdText;
     Property OnStartTag: TTextNotification read FOnStartTag write FOnStartTag;
     Property OnTagMod: TTextNotification read FOnTagMod write FOnTagMod;
@@ -60,7 +60,13 @@ begin
   s:=StringReplace(s,'&quot;','"',[rfReplaceAll,rfIgnoreCase]);
   s:=StringReplace(s,'&gt;','>',[rfReplaceAll,rfIgnoreCase]);
   s:=StringReplace(s,'&lt;','<',[rfReplaceAll,rfIgnoreCase]);
-  s:=StringReplace(s,'&amp;','&',[rfReplaceAll,rfIgnoreCase]);
+  s:=StringReplace(s,'&Auml;','Ä',[rfReplaceAll,rfIgnoreCase]);
+  s:=StringReplace(s,'&auml;','ä',[rfReplaceAll,rfIgnoreCase]);
+  s:=StringReplace(s,'&Ouml;','Ö',[rfReplaceAll,rfIgnoreCase]);
+  s:=StringReplace(s,'&ouml;','ö',[rfReplaceAll,rfIgnoreCase]);
+  s:=StringReplace(s,'&Uuml;','Ü',[rfReplaceAll,rfIgnoreCase]);
+  s:=StringReplace(s,'&uuml;','ü',[rfReplaceAll,rfIgnoreCase]);
+  s:=StringReplace(s,'&nbsp;',' ',[rfReplaceAll,rfIgnoreCase]); // &nbsp;
   result := s;
 end;
 
