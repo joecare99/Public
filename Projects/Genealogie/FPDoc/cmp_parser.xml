@@ -12,6 +12,17 @@
       </element><element name="TBaseParser.reset"><short>Reset setzt den Parse-Zeiger wieder auf den Anfang</short>
       </element><element name="TBaseParser.Feed"><short>Abstrakte Feed Methode </short>
       </element>
+    <element name="TBaseParser.Error"><short>ParserError (abstract) </short>
+      </element><element name="TBaseParser.Warning"><short>ParserWarning (abstract)</short>
+      </element><element name="TBaseParser.GetPos"><short>Ausgabe der Line und Offset</short>
+      </element><element name="ThtmlParser.FOnStdText"><short>On Text-Delegate</short>
+      </element><element name="ThtmlParser.FOnStartTag"><short>Tag-Start Delegate</short>
+      </element><element name="ThtmlParser.FOnTagMod"><short>Tag-Modifyer - Delegate</short>
+      </element><element name="ThtmlParser.FparseMode"><short>Aktueller-Parsemode</short>
+      </element><element name="ThtmlParser.Error"><short>Error</short>
+      </element><element name="ThtmlParser.Warning"><short>Warnung</short>
+      </element><element name="HTML2text"><short>Umwandeln von HTML-Zeichencodes in Zeichen</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>
