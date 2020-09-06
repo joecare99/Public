@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<fpdoc-descriptions><package name="Prj_TstHTMLParser"><module name="cmp_Filter"><short>Unit mit Filter-Kompüonente</short><element name="TComputeProc"><short>Deklaration des On Compute-Delegate</short>
+<fpdoc-descriptions><package name="Prj_TstHTMLParser"><module name="cmp_Filter"><short>Unit mit Filter-Komponente</short><element name="TComputeProc"><short>Deklaration des On Compute-Delegate</short>
       </element><element name="TEnumFiltertype"><short>Mögliche Filtertypen</short>
       </element><element name="TEnumFiltertype.ft_On"><short>Ausgabe Einschalten</short>
       </element><element name="TEnumFiltertype.ft_Off"><short>Ausgabe Ausschalten</short>
