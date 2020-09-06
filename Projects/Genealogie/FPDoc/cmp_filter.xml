@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Prj_TstHTMLParser"><module name="cmp_Filter"><short>Unit mit Filter-Kompüonente</short><element name="TComputeProc"><short>Deklaration des On Compute-Delegate</short>
+      </element><element name="TEnumFiltertype"><short>Mögliche Filtertypen</short>
+      </element><element name="TEnumFiltertype.ft_On"><short>Ausgabe Einschalten</short>
+      </element><element name="TEnumFiltertype.ft_Off"><short>Ausgabe Ausschalten</short>
+      </element><element name="TEnumFiltertype.ft_jump"><short>Sprung ohne Ausgabe</short>
+      </element><element name="TEnumFiltertype.ft_jumpOn"><short>Sprung mit Ausgabe</short>
+      </element><element name="TEnumFiltertype.ft_Out"><short>Ausgabe einer Kennung</short>
+      </element><element name="TBaseFilter"><short>Basis-Filtercomponente</short>
+      </element><element name="TBaseFilter.FFilterMode"><short>aktueller Filtermodus (ein/aus)</short>
+      </element><element name="TBaseFilter.FVerbose"><short>Detalierter Ausgabemodus</short>
+      </element><element name="TBaseFilter.FOnLineChange"><short>Zeilen-Wechsel-Delegate</short>
+      </element><element name="TBaseFilter.FTestLine"><short>Aktuelle Filterzeile</short>
+      </element><element name="TBaseFilter.FSchema"><short>Fschema enthält das Filterprogram</short>
+      </element><element name="TBaseFilter.SetFilterMode"><short>FIltermode-Setter</short>
+      </element><element name="TBaseFilter.SetOnLineChange"><short>LineChange-Delegate-Setter</short>
+      </element><element name="TBaseFilter.SetSchema"><short>Schema-Setter</short>
+      </element><element name="TBaseFilter.SetTestLine"><short>TestLine-Setter</short>
+      </element><element name="TBaseFilter.SetVerbose"><short>Verbose-Setter</short>
+      </element><element name="TBaseFilter.Destroy"><short>Destructor</short>
+      </element><element name="TBaseFilter.TestFilter"><short>TestFilter-Funktion (Worker)</short>
+      </element><element name="TBaseFilter.Reset"><short>Reset-Filter</short>
+      </element><element name="TBaseFilter.OnLineChange"><short>LineChange-Notifyter</short>
+      </element><element name="TBaseFilter.TestLine" link="#FTestline"><short>TestLine-Property</short>
+      </element><element name="TBaseFilter.Schema" link="#FSchema"><short>Schema-Property</short>
+      </element><element name="TBaseFilter.FilterMode"><short>FilterMode-Property</short>
+      </element><element name="TBaseFilter.Verbose" link="#FVerbose"><short>Verbose-Property</short>
+      </element><element name="CFilterOut"><short>Ausgabe-Zeichen: '+'</short>
+      </element><element name="CFilterOn"><short>Ausgabe-Ein-Zeichen: '['</short>
+      </element><element name="CFilterJump"><short>Jump+Ausgabe-Aus-Zeichen: 'j'</short>
+      </element><element name="CFilterJumpOn"><short>Jump+Ausgabe-Ein-Zeichen: 'J'</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
