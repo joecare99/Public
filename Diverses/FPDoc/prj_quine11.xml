@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="prj_Quine11"><module name="prj_Quine11"><element name="s"><short>Constant s contains the tail of the program</short>
+      </element><element name="b"><short>Constant b contains the head of the program</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
