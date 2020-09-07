@@ -15,6 +15,7 @@
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
+    <LazDoc Paths="..\FPDoc"/>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
     </BuildModes>
