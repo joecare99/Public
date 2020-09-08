@@ -11,7 +11,7 @@
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="prj_Quine10"/>
+      <Title Value="prj_Quine12"/>
       <UseAppBundle Value="False"/>
       <ResourceType Value="res"/>
     </General>
@@ -29,9 +29,8 @@
     </RunParams>
     <Units Count="1">
       <Unit0>
-        <Filename Value="prj_Quine10.lpr"/>
+        <Filename Value="prj_Quine12.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="d.w"/>
       </Unit0>
     </Units>
   </ProjectOptions>
@@ -39,7 +38,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\prj_Quine10"/>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\prj_Quine12"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
@@ -54,6 +53,7 @@
     <Linking>
       <Debugging>
         <GenerateDebugInfo Value="False"/>
+        <StripSymbols Value="True"/>
       </Debugging>
       <LinkSmart Value="True"/>
     </Linking>
