@@ -6,28 +6,26 @@ interface
 
 uses
     Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, StdCtrls,
-    ExtCtrls, Buttons, ActnList, StdActns, unt_PoFile, fra_PoFile;
+    ExtCtrls, Buttons, ActnList, fra_PoFile;
 
 type
 
     { TfrmPicPas2PoMain }
 
     TfrmPicPas2PoMain = class(TForm)
-        actFileAutoLoad: TAction;
-        actFileLoad: TAction;
-        actFileOpen: TFileOpen;
-        actFileSave: TAction;
-        actFileSaveAs: TFileSaveAs;
         actFileSelectDir: TAction;
         actFileOpenPas: TAction;
         actFileSavePas: TAction;
+        actProcessAllPo2Pas: TAction;
+        actProcessAllPas2Po: TAction;
         actProcessPo2Pas: TAction;
         actProcessPas2Po: TAction;
         alsPicPas2Po: TActionList;
-        alsPoFile: TActionList;
         btnProcessPas2Po: TBitBtn;
         btnFileOpenPas: TSpeedButton;
         btnFileSavePas: TSpeedButton;
+        btnProcessAllPas2Po: TBitBtn;
+        btnProcessAllPo2Pas: TSpeedButton;
         btnSelectDir: TSpeedButton;
         cbxSelectFile: TComboBox;
         edtPasFile: TMemo;
@@ -49,7 +47,7 @@ type
         procedure actFileSelectDirExecute(Sender: TObject);
         procedure cbxSelectFileClick(Sender: TObject);
         procedure edtPasFileChange(Sender: TObject);
-        procedure edtPasFileKeyUp(Sender: TObject; var Key: word; Shift: TShiftState);
+        procedure edtPasFileKeyUp(Sender: TObject; var {%H-}Key: word; {%H-}Shift: TShiftState);
         procedure edtSourceDirChange(Sender: TObject);
         procedure edtSourceDirExit(Sender: TObject);
         procedure FormCreate(Sender: TObject);
@@ -64,6 +62,7 @@ type
         FPasChanged: boolean;
         FPasFilename: string;
         procedure AppendData(const aIdent: string; const aTrans: TStringArray);
+        procedure SavePasFile(const aFilename:String);
     public
 
     end;
@@ -73,7 +72,7 @@ var
 
 implementation
 
-uses LConvEncoding;
+uses LConvEncoding, Unt_FileProcs, LazFileUtils;
 
 {$R *.lfm}
 
@@ -203,26 +202,8 @@ begin
 end;
 
 procedure TfrmPicPas2PoMain.actFileSavePasExecute(Sender: TObject);
-var
-    s: string;
-    sf: TFileStream;
 begin
-    if FileExists(ChangeFileExt(FPasFilename, '.new')) then
-        DeleteFile(ChangeFileExt(FPasFilename, '.new'));
-    sf := TFileStream.Create(ChangeFileExt(FPasFilename, '.new'), fmCreate);
-      try
-        s := ConvertEncoding(edtPasFile.Lines.Text, EncodingUTF8, FFileEncoding);
-        sf.WriteBuffer(s[1], Length(s));
-      finally
-        FreeAndNil(sf);
-      end;
-    if fileexists(FPasFilename) then
-      begin
-        if FileExists(ChangeFileExt(FPasFilename, '.bak')) then
-            DeleteFile(ChangeFileExt(FPasFilename, '.bak'));
-        RenameFile(FPasFilename, ChangeFileExt(FPasFilename, '.bak'));
-      end;
-    RenameFile(ChangeFileExt(FPasFilename, '.new'), FPasFilename);
+    saveFile(SavePasFile,FPasFilename);
     FPasChanged:=false;
 end;
 
@@ -276,6 +257,7 @@ var
     lFs: TFileStream;
     lStr, lFileEncoding: string;
 begin
+    lFileEncoding:='';
     if FPasChanged then
         case MessageDlg('File changed, Save ?',mtConfirmation,[mbYes,mbNo,mbCancel],0) of
            mrYes: actFileSavePas.Execute;
@@ -353,7 +335,7 @@ type
 
 var
     i, id: integer;
-    lpp, lppn: integer;
+    lpp, lppn, lDebHighAo, lDebLangID: integer;
     line, lsTmp, lnewtext, lIdentifyer: string;
     AoIdx: TIdxArray;
 
@@ -379,7 +361,10 @@ begin
             lppn := ParseLineForString(i, edtPasFile.Lines[i], lpp, AoIdx, lsTmp);
             id := fraPoFile1.LookUpIdent(copy(ExtractFileNameWithoutExt(ExtractFileName(FPasFilename)), 5,
                 length(FPasFilename)) + '.' + lIdentifyer);
-            lnewtext := fraPoFile1.GetTranslText(id);
+            if id>=0 then
+            lnewtext := fraPoFile1.GetTranslText(id)
+            else
+            lnewtext:='';
             repeat
                 lppn := ParseLineForString(i, edtPasFile.Lines[i], lpp, AoIdx, lsTmp);
                 if lpp > length(line) then
@@ -389,6 +374,8 @@ begin
                     lpp := 1;
                   end;
             until (lppn = 3) or (i>edtPasFile.Lines.Count);
+            lDebHighAo := high(AoIdx);
+            lDebLangID := fraPoFile1.LanguageID;
             if (high(AoIdx) >= fraPoFile1.LanguageID - 1) and (AoIdx[fraPoFile1.LanguageID - 1].istr <> lnewtext) then
                 with AoIdx[fraPoFile1.LanguageID - 1] do
                   begin
@@ -397,7 +384,16 @@ begin
                     insert(QuotedStr(lnewtext), line, istart);
                     if edtPasFile.Lines[lnNr] <> line then
                       edtPasFile.Lines[lnNr] := line;
+                  end
+             else if  (high(AoIdx) = fraPoFile1.LanguageID-2 ) then
+                with AoIdx[high(AoIdx)] do
+                  begin
+                    line := edtPasFile.Lines[lnNr];
+                    insert(','+QuotedStr(lnewtext), line, iend+1);
+                    if edtPasFile.Lines[lnNr] <> line then
+                      edtPasFile.Lines[lnNr] := line;
                   end;
+
           end;
 
         Inc(i);
@@ -426,6 +422,20 @@ procedure TfrmPicPas2PoMain.AppendData(const aIdent: string; const aTrans: TStri
 begin
     fraPoFile1.AppendData(copy(ExtractFileNameWithoutExt(ExtractFileName(FPasFilename)), 5,
                 length(FPasFilename)) + '.' + aIdent, aTrans);
+end;
+
+procedure TfrmPicPas2PoMain.SavePasFile(const aFilename: String);
+var
+  sf: TFileStream;
+  s: string;
+begin
+  sf := TFileStream.Create(aFilename, fmCreate);
+    try
+      s := ConvertEncoding(edtPasFile.Lines.Text, EncodingUTF8, FFileEncoding);
+      sf.WriteBuffer(s[1], Length(s));
+    finally
+      FreeAndNil(sf);
+    end;
 end;
 
 end.

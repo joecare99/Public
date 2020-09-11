@@ -1,72 +1,7 @@
 msgid ""
 msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
-"X-Source-Language: de"
-
-#: tframe1.actfileautoload.caption
-msgctxt "tframe1.actfileautoload.caption"
-msgid "AutoLoad"
-msgstr ""
-
-#: tframe1.actfileload.caption
-msgctxt "tframe1.actfileload.caption"
-msgid "Load"
-msgstr ""
-
-#: tframe1.actfileopen.caption
-msgctxt "tframe1.actfileopen.caption"
-msgid "Öffnen"
-msgstr ""
-
-#: tframe1.actfileopen.hint
-msgctxt "tframe1.actfileopen.hint"
-msgid "Öffnen"
-msgstr ""
-
-#: tframe1.actfilesave.caption
-msgctxt "tframe1.actfilesave.caption"
-msgid "Save"
-msgstr ""
-
-#: tframe1.actfilesaveas.caption
-msgctxt "tframe1.actfilesaveas.caption"
-msgid "Sichern &als ..."
-msgstr ""
-
-#: tframe1.actfilesaveas.hint
-msgctxt "tframe1.actfilesaveas.hint"
-msgid "Sichern als"
-msgstr ""
-
-#: tframe1.btnfileopenpo.caption
-msgctxt "tframe1.btnfileopenpo.caption"
-msgid "L"
-msgstr ""
-
-#: tframe1.btnfilesavepo.caption
-msgctxt "tframe1.btnfilesavepo.caption"
-msgid "S"
-msgstr ""
-
-#: tframe1.cbxselectlanguage.text
-msgctxt "tframe1.cbxselectlanguage.text"
-msgid "Deutsch,de"
-msgstr ""
-
-#: tframe1.chbautoload.caption
-msgctxt "tframe1.chbautoload.caption"
-msgid "AL"
-msgstr ""
-
-#: tframe1.chbautoload.hint
-msgctxt "tframe1.chbautoload.hint"
-msgid "Automatic load of .po"
-msgstr ""
-
-#: tframe1.edtprojectname.text
-msgctxt "tframe1.edtprojectname.text"
-msgid "PicPas"
-msgstr ""
+"X-Source-Language: de\n"
 
 #: tfrapofile.actfileautoload.caption
 msgctxt "tfrapofile.actfileautoload.caption"
@@ -130,43 +65,8 @@ msgstr ""
 msgid "Sv"
 msgstr ""
 
-#: tfrmpicpas2pomain.actfileautoload.caption
-msgctxt "tfrmpicpas2pomain.actfileautoload.caption"
-msgid "AutoLoad"
-msgstr ""
-
-#: tfrmpicpas2pomain.actfileload.caption
-msgctxt "tfrmpicpas2pomain.actfileload.caption"
-msgid "Load"
-msgstr ""
-
-#: tfrmpicpas2pomain.actfileopen.caption
-msgctxt "tfrmpicpas2pomain.actfileopen.caption"
-msgid "Öffnen"
-msgstr ""
-
-#: tfrmpicpas2pomain.actfileopen.hint
-msgctxt "tfrmpicpas2pomain.actfileopen.hint"
-msgid "Öffnen"
-msgstr ""
-
 #: tfrmpicpas2pomain.actfileopenpas.caption
 msgid "actFileOpenPas"
-msgstr ""
-
-#: tfrmpicpas2pomain.actfilesave.caption
-msgctxt "tfrmpicpas2pomain.actfilesave.caption"
-msgid "Save"
-msgstr ""
-
-#: tfrmpicpas2pomain.actfilesaveas.caption
-msgctxt "tfrmpicpas2pomain.actfilesaveas.caption"
-msgid "Sichern &als ..."
-msgstr ""
-
-#: tfrmpicpas2pomain.actfilesaveas.hint
-msgctxt "tfrmpicpas2pomain.actfilesaveas.hint"
-msgid "Sichern als"
 msgstr ""
 
 #: tfrmpicpas2pomain.actfilesavepas.caption
@@ -177,12 +77,20 @@ msgstr ""
 msgid "Select &Directory"
 msgstr ""
 
+#: tfrmpicpas2pomain.actprocessallpas2po.caption
+msgid "AllPas2Po"
+msgstr ""
+
+#: tfrmpicpas2pomain.actprocessallpo2pas.caption
+msgid "AllPo2Pas"
+msgstr ""
+
 #: tfrmpicpas2pomain.actprocesspas2po.caption
-msgid "actProcessPas2Po"
+msgid "Pas2Po"
 msgstr ""
 
 #: tfrmpicpas2pomain.actprocesspo2pas.caption
-msgid "actProcessPo2Pas"
+msgid "Po2Pas"
 msgstr ""
 
 #: tfrmpicpas2pomain.btnfileopenpas.caption
@@ -195,6 +103,14 @@ msgctxt "tfrmpicpas2pomain.btnfilesavepas.caption"
 msgid "S"
 msgstr ""
 
+#: tfrmpicpas2pomain.btnprocessallpas2po.caption
+msgid ">>"
+msgstr ""
+
+#: tfrmpicpas2pomain.btnprocessallpo2pas.caption
+msgid "<<"
+msgstr ""
+
 #: tfrmpicpas2pomain.btnprocesspas2po.caption
 msgid ">"
 msgstr ""
@@ -205,6 +121,10 @@ msgstr ""
 
 #: tfrmpicpas2pomain.btnselectdir.caption
 msgid "..."
+msgstr ""
+
+#: tfrmpicpas2pomain.caption
+msgid "frmPicPas2PoMain"
 msgstr ""
 
 #: tfrmpicpas2pomain.cbxselectfile.text
