@@ -1,23 +1,48 @@
 program prj_Quine9d_b;
-uses Sysutils;
-const c='const b='#39;
-      b=''';var d:char;begin write(''const b=''#39+b);for d in b do write(char(byte(d)-%0:s))end.';
+
+uses
+    SysUtils;
+
+const
+    c = 'const b='#39;
+    b = ''';var d:char;begin write(''const b=''#39+b);for d in b do write(char(byte(d)%0:s))end.';
 var
-  d: Char;
-  I: Integer;
+    d:     Char;
+    I:     Integer;
+    bTest: Boolean;
 begin
-  writeln(32-byte('§'[1]));
-  for I := 1 to 20 do
-  begin
-  write('const b='+#39);
-  for d in wr format(b,[inttostr(I)]) do write(char(byte(d)-I));
-//  write(#39);
-//  write(c);
-  writeln(b);
-end;//  write(#39);
-//  write(c);
-  writeln(b);
-  readln;
+    writeln(32 - Byte('§'[1]));
+    for I := 1 to 9 do
+      begin
+        Write('const b=' + #39);
+        bTest := False;
+        for d In Format(b, ['-' + IntToStr(I)]) do
+          begin
+            Write(Char(Byte(d) + I));
+            bTest := bTest Or (Byte(d) + I = 39);
+          end;
+        //  write(#39);
+        //  write(c);
+        writeln(Format(b, ['-' + IntToStr(I)]));
+        if btest then
+            writeln('-> NIO');
+
+      end;//  write(#39);
+    for I := 1 to 9 do
+      begin
+        bTest := False;
+        Write('const b=' + #39);
+        for d In Format(b, ['+' + IntToStr(I)]) do
+          begin
+            Write(Char(Byte(d) - I));
+            bTest := bTest Or (Byte(d) - I = 39);
+          end;
+        //  write(#39);
+        //  write(c);
+        writeln(Format(b, ['+' + IntToStr(I)]));
+        if btest then
+            writeln('-> NIO');
+      end;//  write(#39);
+    //  write(c);
+    readln;
 end.
-
-
