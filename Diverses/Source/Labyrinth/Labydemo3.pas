@@ -231,8 +231,8 @@ Procedure TForm1.PutLogo(x, y: Integer; path: variant;
 
             putpixel(dp, true);
             // If dir Mod 3 = 1 Then
-            putpixel(tr.Copy(dp).add(dp).subst(dir12[dir]).SMult(1,2) , true);
-            dp.subst( dir12[dir]);
+            putpixel(tr.Copy(dp).add(dp).subtr(dir12[dir]).SMult(1,2) , true);
+            dp.subtr( dir12[dir]);
           End;
         putpixel(dp, true);
       End;

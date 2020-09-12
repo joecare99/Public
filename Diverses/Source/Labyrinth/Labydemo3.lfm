@@ -1,118 +1,154 @@
 object Form1: TForm1
   Left = 0
-  Height = 579
+  Height = 724
   Top = 0
-  Width = 866
+  Width = 1082
   Caption = 'Form1'
-  ClientHeight = 579
-  ClientWidth = 866
+  ClientHeight = 724
+  ClientWidth = 1082
   Color = clBtnFace
+  DesignTimePPI = 120
   Font.Color = clWindowText
-  Font.Height = -11
+  Font.Height = -14
   Font.Name = 'MS Sans Serif'
-  LCLVersion = '1.8.0.2'
-  Visible = False
+  LCLVersion = '2.0.8.0'
   object Image1: TImage
-    Left = 8
-    Height = 563
-    Top = 8
-    Width = 631
+    Left = 10
+    Height = 559
+    Top = 10
+    Width = 572
     Anchors = [akTop, akLeft, akRight, akBottom]
     OnClick = Image1Click
   end
   object Label1: TLabel
-    Left = 600
+    Left = 750
     Height = 13
-    Top = 336
+    Top = 420
     Width = 32
     Caption = 'Label1'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
     ParentColor = False
+    ParentFont = False
   end
   object Image2: TPaintBox
-    Left = 644
-    Height = 157
-    Top = 415
-    Width = 220
+    Left = 589
+    Height = 196
+    Top = 374
+    Width = 275
     Anchors = [akRight, akBottom]
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
+    ParentFont = False
   end
   object Btn_Create: TButton
-    Left = 773
-    Height = 25
-    Top = 215
-    Width = 75
+    Left = 750
+    Height = 31
+    Top = 269
+    Width = 94
     Anchors = [akTop, akRight]
     Caption = 'Create'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
     OnClick = Btn_CreateClick
+    ParentFont = False
     TabOrder = 0
   end
   object Btn_Test1: TButton
-    Left = 662
-    Height = 25
-    Top = 184
-    Width = 44
+    Left = 611
+    Height = 31
+    Top = 230
+    Width = 55
     Anchors = [akTop, akRight]
     Caption = 'Test1'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
     OnClick = Btn_Test1Click
+    ParentFont = False
     TabOrder = 1
   end
   object Btn_Load: TButton
-    Left = 773
-    Height = 25
-    Top = 269
-    Width = 75
+    Left = 750
+    Height = 31
+    Top = 336
+    Width = 94
     Anchors = [akTop, akRight]
     Caption = 'Load'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
     OnClick = Btn_LoadClick
+    ParentFont = False
     TabOrder = 2
   end
   object Button4: TButton
-    Left = 661
-    Height = 25
-    Top = 97
-    Width = 75
+    Left = 610
+    Height = 31
+    Top = 121
+    Width = 94
     Anchors = [akTop, akRight]
     Caption = '<<'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
     OnClick = Button4Click
+    ParentFont = False
     TabOrder = 3
   end
   object Button5: TButton
-    Left = 742
-    Height = 25
-    Top = 97
-    Width = 75
+    Left = 711
+    Height = 31
+    Top = 121
+    Width = 94
     Anchors = [akTop, akRight]
     Caption = '>>'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
     OnClick = Button5Click
+    ParentFont = False
     TabOrder = 4
   end
   object Btn_GoFwd: TButton
-    Left = 702
-    Height = 25
-    Top = 66
-    Width = 75
+    Left = 661
+    Height = 31
+    Top = 82
+    Width = 94
     Anchors = [akTop, akRight]
     Caption = '^'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
     OnClick = Btn_GoFwdClick
+    ParentFont = False
     TabOrder = 5
   end
   object Btn_Back: TButton
-    Left = 702
-    Height = 25
-    Top = 128
-    Width = 75
+    Left = 661
+    Height = 31
+    Top = 160
+    Width = 94
     Anchors = [akTop, akRight]
     Caption = 'Back'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
     OnClick = Btn_BackClick
+    ParentFont = False
     TabOrder = 6
   end
   inline FraWindRose1: TFraWindRose
-    Left = 780
-    Height = 73
-    Top = 16
-    Width = 81
+    Left = 759
+    Height = 91
+    Top = 20
+    Width = 101
     Anchors = [akTop, akRight]
-    ClientHeight = 73
-    ClientWidth = 81
+    ClientHeight = 91
+    ClientWidth = 101
     TabOrder = 7
     inherited Image1: TImage
       Height = 73
@@ -120,106 +156,128 @@ object Form1: TForm1
     end
   end
   object CheckBox1: TCheckBox
-    Left = 735
+    Left = 713
     Height = 19
-    Top = 153
+    Top = 191
     Width = 42
     Anchors = [akTop, akRight]
     Caption = 'Auto'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
+    ParentFont = False
     TabOrder = 8
   end
   object CheckBox2: TCheckBox
-    Left = 783
+    Left = 781
     Height = 19
-    Top = 153
+    Top = 191
     Width = 75
     Anchors = [akTop, akRight]
     Caption = 'CheckBox1'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
     OnClick = CheckBox2Click
+    ParentFont = False
     TabOrder = 9
   end
   object Btn_Test2: TButton
-    Left = 712
-    Height = 25
-    Top = 184
-    Width = 41
+    Left = 674
+    Height = 31
+    Top = 230
+    Width = 51
     Anchors = [akTop, akRight]
     Caption = 'test2'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
     OnClick = Btn_Test2Click
+    ParentFont = False
     TabOrder = 10
   end
   object Btn_Test3: TButton
-    Left = 759
-    Height = 25
-    Top = 184
-    Width = 41
+    Left = 733
+    Height = 31
+    Top = 230
+    Width = 51
     Anchors = [akTop, akRight]
     Caption = 'Test3'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
     OnClick = Btn_Test3Click
+    ParentFont = False
     TabOrder = 11
   end
   object Btn_Test4: TButton
-    Left = 806
-    Height = 25
-    Top = 184
-    Width = 42
+    Left = 792
+    Height = 31
+    Top = 230
+    Width = 52
     Anchors = [akTop, akRight]
     Caption = 'Test4'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
     OnClick = Btn_Test4Click
+    ParentFont = False
     TabOrder = 12
   end
   object LabeledEdit1: TLabeledEdit
-    Left = 671
+    Left = 839
     Height = 21
-    Top = 215
-    Width = 92
-    EditLabel.AnchorSideTop.Control = LabeledEdit1
-    EditLabel.AnchorSideTop.Side = asrCenter
-    EditLabel.AnchorSideRight.Control = LabeledEdit1
-    EditLabel.AnchorSideBottom.Control = LabeledEdit1
-    EditLabel.AnchorSideBottom.Side = asrBottom
-    EditLabel.Left = 658
+    Top = 269
+    Width = 115
     EditLabel.Height = 13
-    EditLabel.Top = 219
     EditLabel.Width = 10
     EditLabel.Caption = 'X:'
     EditLabel.ParentColor = False
+    EditLabel.ParentFont = False
+    EditLabel.Font.Color = clWindowText
+    EditLabel.Font.Height = -14
+    EditLabel.Font.Name = 'MS Sans Serif'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
     LabelPosition = lpLeft
+    ParentFont = False
     TabOrder = 13
     Text = '150'
   end
   object LabeledEdit2: TLabeledEdit
-    Left = 672
+    Left = 840
     Height = 21
-    Top = 242
-    Width = 91
-    EditLabel.AnchorSideTop.Control = LabeledEdit2
-    EditLabel.AnchorSideTop.Side = asrCenter
-    EditLabel.AnchorSideRight.Control = LabeledEdit2
-    EditLabel.AnchorSideBottom.Control = LabeledEdit2
-    EditLabel.AnchorSideBottom.Side = asrBottom
-    EditLabel.Left = 659
+    Top = 302
+    Width = 114
     EditLabel.Height = 13
-    EditLabel.Top = 246
     EditLabel.Width = 10
     EditLabel.Caption = 'Y:'
     EditLabel.ParentColor = False
+    EditLabel.ParentFont = False
+    EditLabel.Font.Color = clWindowText
+    EditLabel.Font.Height = -14
+    EditLabel.Font.Name = 'MS Sans Serif'
+    Font.Color = clWindowText
+    Font.Height = -14
+    Font.Name = 'MS Sans Serif'
     LabelPosition = lpLeft
+    ParentFont = False
     TabOrder = 14
     Text = '100'
   end
   object Timer1: TTimer
     Interval = 40
     OnTimer = Timer1Timer
-    left = 544
-    top = 184
+    left = 680
+    top = 230
   end
   object OpenDialog1: TOpenDialog
-    left = 696
-    top = 304
+    left = 870
+    top = 380
   end
   object OpenPictureDialog1: TOpenPictureDialog
-    left = 728
-    top = 304
+    left = 910
+    top = 380
   end
 end

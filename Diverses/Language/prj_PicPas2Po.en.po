@@ -12,77 +12,6 @@ msgstr ""
 "Language: en\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: tframe1.actfileautoload.caption
-#, fuzzy
-msgctxt "tframe1.actfileautoload.caption"
-msgid "AutoLoad"
-msgstr "Autoload"
-
-#: tframe1.actfileload.caption
-#, fuzzy
-msgctxt "tframe1.actfileload.caption"
-msgid "Load"
-msgstr "Load"
-
-#: tframe1.actfileopen.caption
-msgctxt "tframe1.actfileopen.caption"
-msgid "Öffnen"
-msgstr "Open"
-
-#: tframe1.actfileopen.hint
-msgctxt "tframe1.actfileopen.hint"
-msgid "Öffnen"
-msgstr "Open"
-
-#: tframe1.actfilesave.caption
-msgctxt "tframe1.actfilesave.caption"
-msgid "Save"
-msgstr "Save"
-
-#: tframe1.actfilesaveas.caption
-msgctxt "tframe1.actfilesaveas.caption"
-msgid "Sichern &als ..."
-msgstr "Save &as ..."
-
-#: tframe1.actfilesaveas.hint
-msgctxt "tframe1.actfilesaveas.hint"
-msgid "Sichern als"
-msgstr "Save as"
-
-#: tframe1.btnfileopenpo.caption
-msgctxt "tframe1.btnfileopenpo.caption"
-msgid "L"
-msgstr "S"
-
-#: tframe1.btnfilesavepo.caption
-msgctxt "tframe1.btnfilesavepo.caption"
-msgid "S"
-msgstr ""
-
-#: tframe1.cbxselectlanguage.text
-#, fuzzy
-msgctxt "tframe1.cbxselectlanguage.text"
-msgid "Deutsch,de"
-msgstr "German, de"
-
-#: tframe1.chbautoload.caption
-#, fuzzy
-msgctxt "tframe1.chbautoload.caption"
-msgid "AL"
-msgstr "Al"
-
-#: tframe1.chbautoload.hint
-#, fuzzy
-msgctxt "tframe1.chbautoload.hint"
-msgid "Automatic load of .po"
-msgstr "Automatic load of .po"
-
-#: tframe1.edtprojectname.text
-#, fuzzy
-msgctxt "tframe1.edtprojectname.text"
-msgid "PicPas"
-msgstr "PicPas"
-
 #: tfrapofile.actfileautoload.caption
 #, fuzzy
 msgctxt "tfrapofile.actfileautoload.caption"
@@ -152,46 +81,9 @@ msgstr "Ap"
 msgid "Sv"
 msgstr "Sv"
 
-#: tfrmpicpas2pomain.actfileautoload.caption
-#, fuzzy
-msgctxt "tfrmpicpas2pomain.actfileautoload.caption"
-msgid "AutoLoad"
-msgstr "Autoload"
-
-#: tfrmpicpas2pomain.actfileload.caption
-#, fuzzy
-msgctxt "tfrmpicpas2pomain.actfileload.caption"
-msgid "Load"
-msgstr "Load"
-
-#: tfrmpicpas2pomain.actfileopen.caption
-msgctxt "tfrmpicpas2pomain.actfileopen.caption"
-msgid "Öffnen"
-msgstr "Open"
-
-#: tfrmpicpas2pomain.actfileopen.hint
-msgctxt "tfrmpicpas2pomain.actfileopen.hint"
-msgid "Öffnen"
-msgstr "Open"
-
 #: tfrmpicpas2pomain.actfileopenpas.caption
 msgid "actFileOpenPas"
 msgstr ""
-
-#: tfrmpicpas2pomain.actfilesave.caption
-msgctxt "tfrmpicpas2pomain.actfilesave.caption"
-msgid "Save"
-msgstr "Save"
-
-#: tfrmpicpas2pomain.actfilesaveas.caption
-msgctxt "tfrmpicpas2pomain.actfilesaveas.caption"
-msgid "Sichern &als ..."
-msgstr "Save &as ..."
-
-#: tfrmpicpas2pomain.actfilesaveas.hint
-msgctxt "tfrmpicpas2pomain.actfilesaveas.hint"
-msgid "Sichern als"
-msgstr "Save as"
 
 #: tfrmpicpas2pomain.actfilesavepas.caption
 msgid "actFileSavePas"
@@ -201,12 +93,20 @@ msgstr ""
 msgid "Select &Directory"
 msgstr "Select &Directory"
 
+#: tfrmpicpas2pomain.actprocessallpas2po.caption
+msgid "AllPas2Po"
+msgstr ""
+
+#: tfrmpicpas2pomain.actprocessallpo2pas.caption
+msgid "AllPo2Pas"
+msgstr ""
+
 #: tfrmpicpas2pomain.actprocesspas2po.caption
-msgid "actProcessPas2Po"
+msgid "Pas2Po"
 msgstr ""
 
 #: tfrmpicpas2pomain.actprocesspo2pas.caption
-msgid "actProcessPo2Pas"
+msgid "Po2Pas"
 msgstr ""
 
 #: tfrmpicpas2pomain.btnfileopenpas.caption
@@ -217,6 +117,14 @@ msgstr "S"
 #: tfrmpicpas2pomain.btnfilesavepas.caption
 msgctxt "tfrmpicpas2pomain.btnfilesavepas.caption"
 msgid "S"
+msgstr ""
+
+#: tfrmpicpas2pomain.btnprocessallpas2po.caption
+msgid ">>"
+msgstr ""
+
+#: tfrmpicpas2pomain.btnprocessallpo2pas.caption
+msgid "<<"
 msgstr ""
 
 #: tfrmpicpas2pomain.btnprocesspas2po.caption
@@ -231,6 +139,10 @@ msgstr "<"
 msgid "..."
 msgstr "…"
 
+#: tfrmpicpas2pomain.caption
+msgid "frmPicPas2PoMain"
+msgstr ""
+
 #: tfrmpicpas2pomain.cbxselectfile.text
 msgid "cbxSelectFile"
 msgstr ""
@@ -244,3 +156,4 @@ msgstr ""
 msgctxt "tfrmpicpas2pomain.edtsourcedir.text"
 msgid "C:\\projekte\\Lazarus\\PicPas\\trunk\\language"
 msgstr ""
+

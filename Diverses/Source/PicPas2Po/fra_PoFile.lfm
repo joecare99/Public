@@ -1,30 +1,33 @@
 object fraPoFile: TfraPoFile
   Left = 0
-  Height = 726
+  Height = 908
   Top = 0
-  Width = 562
-  ClientHeight = 726
-  ClientWidth = 562
+  Width = 702
+  ClientHeight = 908
+  ClientWidth = 702
+  DesignTimePPI = 120
+  ParentFont = False
   TabOrder = 0
   object pnlRightTop: TPanel
     Left = 0
-    Height = 32
+    Height = 40
     Top = 0
-    Width = 562
+    Width = 702
     Align = alTop
     BevelOuter = bvNone
-    ClientHeight = 32
-    ClientWidth = 562
+    ClientHeight = 40
+    ClientWidth = 702
+    ParentFont = False
     TabOrder = 0
     object cbxSelectLanguage: TComboBox
-      Left = 107
-      Height = 23
-      Top = 3
-      Width = 378
+      Left = 134
+      Height = 28
+      Top = 4
+      Width = 471
       Align = alClient
-      BorderSpacing.Bottom = 3
-      BorderSpacing.Around = 3
-      ItemHeight = 15
+      BorderSpacing.Bottom = 4
+      BorderSpacing.Around = 4
+      ItemHeight = 20
       ItemIndex = 4
       Items.Strings = (
         'Unspecific'
@@ -32,30 +35,36 @@ object fraPoFile: TfraPoFile
         'Spain,es'
         'Quechua,qu'
         'Deutsch,de'
+        'Ukrainisch,uk'
+        'Russisch,ru'
+        'Französisch,fr'
+        'Chinesisch,zh_cn'
       )
       OnChange = cbxSelectLanguageChange
+      ParentFont = False
       TabOrder = 0
       Text = 'Deutsch,de'
     end
     object edtProjectName: TEdit
-      Left = 3
-      Height = 23
-      Top = 3
-      Width = 101
+      Left = 4
+      Height = 28
+      Top = 4
+      Width = 126
       Align = alLeft
-      BorderSpacing.Bottom = 3
-      BorderSpacing.Around = 3
+      BorderSpacing.Bottom = 4
+      BorderSpacing.Around = 4
+      ParentFont = False
       TabOrder = 1
       Text = 'PicPas'
     end
     object tlbPoFile: TToolBar
-      Left = 488
-      Height = 26
-      Top = 3
-      Width = 71
+      Left = 609
+      Top = 4
+      Width = 89
       Align = alRight
-      BorderSpacing.Around = 3
+      BorderSpacing.Around = 4
       Caption = 'tlbPoFile'
+      ParentFont = False
       ShowCaptions = True
       TabOrder = 2
       object ToolButton1: TToolButton
@@ -65,13 +74,13 @@ object fraPoFile: TfraPoFile
         Caption = 'AL'
       end
       object ToolButton3: TToolButton
-        Left = 24
+        Left = 30
         Top = 2
         Action = actFileLoad
         Caption = 'Ld'
       end
       object ToolButton4: TToolButton
-        Left = 47
+        Left = 59
         Top = 2
         Action = actFileSave
         Caption = 'Sv'
@@ -79,35 +88,38 @@ object fraPoFile: TfraPoFile
     end
   end
   object edtPoFile: TMemo
-    Left = 3
-    Height = 684
-    Top = 35
-    Width = 556
+    Left = 4
+    Height = 855
+    Top = 44
+    Width = 694
     Align = alClient
-    BorderSpacing.Around = 3
+    BorderSpacing.Around = 4
     Lines.Strings = (
       'Memo2'
     )
+    ParentFont = False
     ScrollBars = ssAutoBoth
     TabOrder = 1
     WordWrap = False
   end
   object lblBottom: TLabel
-    Left = 3
+    Left = 4
     Height = 1
-    Top = 722
-    Width = 556
+    Top = 903
+    Width = 694
     Align = alBottom
-    BorderSpacing.Around = 3
+    BorderSpacing.Around = 4
     ParentColor = False
+    ParentFont = False
   end
   object alsPoFile: TActionList
-    left = 267
-    top = 298
+    left = 334
+    top = 373
     object actFileSave: TAction
       Category = 'PoFile'
       Caption = 'Save'
       OnExecute = actFileSaveExecute
+      OnUpdate = actFileSaveUpdate
     end
     object actFileOpen: TFileOpen
       Category = 'PoFile'

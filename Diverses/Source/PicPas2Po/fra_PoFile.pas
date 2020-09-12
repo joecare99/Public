@@ -30,13 +30,14 @@ type
         ToolButton4: TToolButton;
         procedure actFileLoadExecute(Sender: TObject);
         procedure actFileSaveExecute(Sender: TObject);
+        procedure actFileSaveUpdate(Sender: TObject);
         procedure cbxSelectLanguageChange(Sender: TObject);
         procedure UpdateUI(Sender: TObject);
     private
         FBaseDir: string;
         FDirty:Boolean;
         FPoFile: TPoFile;
-        procedure DoUpdateUI(Data: PtrInt);
+        procedure DoUpdateUI({%H-}Data: PtrInt);
         function GetLanguageID: integer;
         procedure SetBaseDir(AValue: string);
     public
@@ -54,7 +55,7 @@ type
 
 implementation
 
-uses Dialogs;
+uses Dialogs,Unt_FileProcs;
 
 {$R *.lfm}
 
@@ -63,7 +64,12 @@ uses Dialogs;
 procedure TfraPoFile.cbxSelectLanguageChange(Sender: TObject);
 
 begin
-    FPoFile.Lines.Clear;
+    if FPoFile.Changed then
+        case MessageDlg('File changed, Save ?',mtConfirmation,[mbYes,mbNo,mbCancel],0) of
+           mrYes: actFileSave.Execute;
+           mrCancel:exit;
+        end;
+    FPoFile.Clear;
     if actFileAutoLoad.Checked then
         actFileLoad.Execute;
     UpdateUI(Sender);
@@ -74,10 +80,15 @@ procedure TfraPoFile.actFileLoadExecute(Sender: TObject);
 var
     lFilename: string;
 begin
+    if FPoFile.Changed then
+        case MessageDlg('File changed, Save ?',mtConfirmation,[mbYes,mbNo,mbCancel],0) of
+           mrYes: actFileSave.Execute;
+           mrCancel:exit;
+        end;
     lFilename := edtProjectName.Text;
     if pos(',', cbxSelectLanguage.Text) > 0 then
         lFilename := lFilename + ExtensionSeparator + copy(cbxSelectLanguage.Text,
-            pos(',', cbxSelectLanguage.Text) + 1, 4);
+            pos(',', cbxSelectLanguage.Text) + 1, 5);
     lFilename := lFilename + ExtensionSeparator + 'po';
     if fileexists(FBaseDir + DirectorySeparator + lFilename) then
       begin
@@ -93,15 +104,20 @@ begin
     lFilename := edtProjectName.Text;
     if pos(',', cbxSelectLanguage.Text) > 0 then
         lFilename := lFilename + ExtensionSeparator + copy(cbxSelectLanguage.Text,
-            pos(',', cbxSelectLanguage.Text) + 1, 4);
+            pos(',', cbxSelectLanguage.Text) + 1, 5);
     lFilename := lFilename + ExtensionSeparator + 'po';
     if fileexists(FBaseDir + DirectorySeparator + lFilename) and
         (MessageDlg('Confirmatione', format(
-        'File "%s" exists !\nDo you want to replace it ?', [lFilename]),
+        'File "%s" exists !/nDo you want to replace it ?', [lFilename]),
         mtConfirmation, mbYesNo, 0) = mrNo) then
         exit;
     lFilename := FBaseDir + DirectorySeparator + lFilename;
-    FpoFile.SaveToFile(lFilename);
+    SaveFile(@FpoFile.SaveToFile,lFilename);
+end;
+
+procedure TfraPoFile.actFileSaveUpdate(Sender: TObject);
+begin
+  actFileSave.Enabled:=FPoFile.changed;
 end;
 
 procedure TfraPoFile.UpdateUI(Sender: TObject);
@@ -145,7 +161,7 @@ var
 begin
     lReference := aIdent;
     lFullindex := aTrans[0];
-    if cbxSelectLanguage.ItemIndex > 0 then
+    if (cbxSelectLanguage.ItemIndex > 0) and (high(atrans)>=cbxSelectLanguage.ItemIndex - 1) then
         lTranslStr := aTrans[cbxSelectLanguage.ItemIndex - 1]
     else
         lTranslStr := '';

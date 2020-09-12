@@ -15,10 +15,12 @@ type
 
     private
         Flines: TStringList;
+        FChanged:boolean;
         function GetLine(aIndex: integer): string;
+        procedure LinesChange(Sender: TObject);
         procedure SetLines(AValue: TStringList);
         procedure SetLine(aIndex: integer; AValue: string);
-        procedure SetLines2(aIndex: integer; AValue: string);
+//        procedure SetLines2(aIndex: integer; AValue: string);
     public
         constructor Create(AOwner: TComponent); override;
         destructor Destroy; override;
@@ -26,13 +28,15 @@ type
         function LookUpIdent(const aIdent: string): integer;
         function LookUpSource(const aIdent: string): integer;
         function GetTranslText(const id: integer): string;
+        procedure Clear;
         procedure LoadFromFile(Filename: string);
-        procedure SaveToFile(Filename: string);
+        Procedure SaveToFile(const Filename: string);
         class function QuotedStr2(const S: string): string;
         class function UnQuotedStr2(const S: string): string;
         //  class function
         property Lines: TStringList read FLines write SetLines;
         property Line[aIndex: integer]: string read GetLine write SetLine;
+        property Changed:boolean read FChanged;
     end;
 
 
@@ -50,6 +54,7 @@ constructor TPoFile.Create(AOwner: TComponent);
 begin
     inherited Create(AOwner);
     Flines := TStringList.Create;
+    Flines.OnChange:=LinesChange;
 end;
 
 procedure TPoFile.AppendData(const aRef, aIndex, aTransl: string);
@@ -100,23 +105,22 @@ begin
           end;
 end;
 
+procedure TPoFile.Clear;
+begin
+  Flines.Clear;
+  FChanged:=false;
+end;
+
 procedure TPoFile.LoadFromFile(Filename: string);
 begin
     Flines.LoadFromFile(Filename);
+    FChanged:=false;
 end;
 
-procedure TPoFile.SaveToFile(Filename: string);
+procedure TPoFile.SaveToFile(const Filename: string);
 begin
-    if FileExists(ChangeFileExt(Filename, '.new')) then
-        DeleteFile(ChangeFileExt(Filename, '.new'));
-    Flines.SaveToFile(ChangeFileExt(Filename, '.new'));
-    if fileexists(Filename) then
-      begin
-        if FileExists(ChangeFileExt(Filename, '.bak')) then
-            DeleteFile(ChangeFileExt(Filename, '.bak'));
-        RenameFile(Filename, ChangeFileExt(Filename, '.bak'));
-      end;
-    RenameFile(ChangeFileExt(Filename, '.new'), Filename);
+    Flines.SaveToFile(Filename);
+    FChanged:=false;
 end;
 
 procedure TPoFile.SetLines(AValue: TStringList);
@@ -131,16 +135,22 @@ begin
     Result := Flines.Strings[aIndex];
 end;
 
+procedure TPoFile.LinesChange(Sender: TObject);
+begin
+  FChanged:=true;
+end;
+
 procedure TPoFile.SetLine(aIndex: integer; AValue: string);
 begin
     Flines[aIndex] := AValue;
 end;
 
+(*
 procedure TPoFile.SetLines2(aIndex: integer; AValue: string);
 begin
 
 end;
-
+*)
 
 destructor TPoFile.Destroy;
 begin

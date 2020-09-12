@@ -1,44 +1,56 @@
 object Form2: TForm2
   Left = 0
+  Height = 771
   Top = 0
+  Width = 1044
   Caption = 'Form2'
   ClientHeight = 771
-  ClientWidth = 950
+  ClientWidth = 1044
   Color = clBtnFace
-  Font.Charset = DEFAULT_CHARSET
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
-  Font.Style = []
-  PixelsPerInch = 96
   object PaintBox1: TPaintBox
-    Left = 8
-    Top = 8
-    Width = 665
-    Height = 755
+    Left = 0
+    Height = 771
+    Top = 0
+    Width = 777
+    Align = alClient
   end
-  object PaintBox2: TPaintBox
-    Left = 680
-    Top = 8
-    Width = 265
-    Height = 241
-  end
-  object BitBtn1: TBitBtn
-    Left = 760
-    Top = 320
-    Width = 75
-    Height = 25
-    Caption = 'BitBtn1'
+  object Panel1: TPanel
+    Left = 777
+    Height = 771
+    Top = 0
+    Width = 267
+    Align = alRight
+    AutoSize = True
+    Caption = 'Panel1'
+    ClientHeight = 771
+    ClientWidth = 267
     TabOrder = 0
-    OnClick = BitBtn1Click
+    object PaintBox2: TPaintBox
+      Left = 1
+      Height = 241
+      Top = 1
+      Width = 265
+    end
+    object BitBtn1: TBitBtn
+      Left = 73
+      Height = 25
+      Top = 273
+      Width = 75
+      Caption = 'BitBtn1'
+      OnClick = BitBtn1Click
+      TabOrder = 0
+    end
+    object BitBtn2: TBitBtn
+      Left = 73
+      Height = 26
+      Top = 304
+      Width = 75
+      Caption = 'BitBtn2'
+      OnClick = BitBtn2Click
+      TabOrder = 1
+    end
   end
-  object BitBtn2: TBitBtn
-    Left = 760
-    Top = 351
-    Width = 75
-    Height = 26
-    Caption = 'BitBtn2'
-    TabOrder = 1
-    OnClick = BitBtn2Click
-  end
-end
+end

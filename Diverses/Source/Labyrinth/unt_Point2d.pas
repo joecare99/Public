@@ -1,12 +1,14 @@
 Unit unt_Point2d;
 
 {$IFDEF FPC}
-  {$MODE Delphi}
+  {$MODE Delphi}{$H+}
 {$ENDIF}
 { $Author$ : Joe Care }
 /// <Author>Joe Care</Author>
 
 Interface
+
+uses Types;
 
 Type 
   { T2DPoint }
@@ -14,20 +16,42 @@ Type
     x, y: longint;
     Constructor init(nx, ny: longint); overload;
     Constructor init(Vect: T2DPoint); overload;
+    Constructor init(Pnt: TPoint); overload;
     Destructor done; virtual;
     Function Copy(nx, ny: longint): T2DPoint; overload; virtual;
     Function Copy(Vect: T2DPoint): T2DPoint; overload; virtual;
+    function Copy(const Pnt: TPoint): T2DPoint; overload; virtual;
     Function Copy: T2DPoint; overload; virtual;
-    Function add(vect: T2DPoint): T2DPoint; virtual;
-    Function Subst(Vect: T2DPoint): T2DPoint; virtual;
-    Function Mult(vect: T2DPoint): T2DPoint; virtual;
+    Function Add(vect: T2DPoint): T2DPoint; virtual;overload;
+    Function Add(vect: TPoint): T2DPoint; virtual;overload;
+    Function Negate: T2DPoint; virtual;
+    Function Subtr(Vect: T2DPoint): T2DPoint; virtual;overload;
+    Function Subtr(Vect: TPoint): T2DPoint; virtual;overload;
+    Function XMult(vect: T2DPoint): T2DPoint; virtual;
+    Function VMult(vect: T2DPoint): integer; virtual;
     Function SMult(vect: T2DPoint): longint; overload; virtual;
     function SMult(Scalar:integer;Divisor: integer=1): T2DPoint; overload; virtual;
     function Equals(Obj: TObject): boolean; override;
     function ToString: {$IFDEF FPC}ansistring{$ELSE}string{$ENDIF}; override;
+    function Len: single; virtual;
     function GLen: longint; virtual;
     function MLen: longint; virtual;
+    function AsPoint:TPoint;
+(*  public
+    operator equal (const apt1, apt2 : T2DPoint) : Boolean;
+    operator equal (const apt1: T2DPoint;const apt2:Tpoint) : Boolean;
+    operator equal (const apt1: TPoint;const apt2:T2DPoint) : Boolean;
+    operator unequal (const apt1, apt2 : T2DPoint): Boolean;
+          operator add (var apt1 : TPoint2d;const apt2 : TPoint2d): T2DPoint;
+          operator add (var apt1 : TPoint2d;const apt2 : TPoint): T2DPoint;
+          operator subtract (var apt1 : TPoint2d;const apt2 : T2DPoint): T2DPoint;
+          operator subtract (var apt1 : TPoint2d;const apt2 : TPoint): T2DPoint;
+    operator subtract (const apt1 : TPointF): T2DPoint;
+          operator multiply (var apt1: T2DPoint;const afactor: integer): T2DPoint;
+          operator power (var apt1: T2DPoint; afactor: integer): T2DPoint;
+    operator multiply (const apt1, apt2: TPointF): integer;   *)
   End;
+
 
   TArrayOF2DPoint = array Of T2DPoint ;
 
@@ -37,6 +61,9 @@ Var
 Function getdir(radius: integer; direction: integer): T2DPoint;
 function getDirNo(Vect: T2DPoint): integer;
 function getInvDir(dir, radius: integer): integer;
+function Point2D(x,y:integer):T2DPoint;overload;
+function Point2D(p:TPoint):T2DPoint;overload;
+
 
 Implementation
 
@@ -93,18 +120,33 @@ begin
     result := InvDir2D22[dir];
 end;
 
-Constructor T2DPoint.init(Vect: T2DPoint);
+function Point2D(x, y: integer): T2DPoint;
+begin
+  result := T2DPoint.init(x,y);
+end;
+
+function Point2D(p: TPoint): T2DPoint;
+begin
+  result := T2DPoint.init(p);
+end;
+
+constructor T2DPoint.init(Vect: T2DPoint);
 
 Begin
   Copy(Vect);
 End;
+
+constructor T2DPoint.init(Pnt: TPoint);
+begin
+  copy(Pnt);
+end;
 
 constructor T2DPoint.init(nx, ny: longint);
 begin
   Copy(nx, ny);
 end;
 
-destructor T2DPoint.Done;
+destructor T2DPoint.done;
 
 Begin
   x := 0;
@@ -112,7 +154,7 @@ Begin
   inherited;
 End;
 
-function T2DPoint.Copy(nx, ny: longint): T2dPoint;
+function T2DPoint.Copy(nx, ny: longint): T2DPoint;
 begin
   x := nx;
   y := ny;
@@ -132,15 +174,22 @@ Begin
       x := Vect.x;
       y := Vect.y;
     End;
-  result := self
+  result := self ;
 End;
+
+function T2DPoint.Copy(const Pnt: TPoint): T2DPoint;
+begin
+  x := Pnt.x;
+  y := Pnt.y;
+  result := self;
+end;
 
 function T2DPoint.Copy: T2DPoint;
 begin
   result := T2DPoint.init(self);
 end;
 
-Function T2DPoint.Add(Vect: T2DPoint): T2DPoint;
+function T2DPoint.Add(vect: T2DPoint): T2DPoint;
 
 Begin
   if assigned(Vect) then
@@ -151,7 +200,21 @@ Begin
   result := self
 End;
 
-Function T2DPoint.Subst(Vect: T2DPoint): T2DPoint;
+function T2DPoint.Add(vect: TPoint): T2DPoint;
+begin
+  x := x + Vect.x;
+  y := y + Vect.y;
+  result := self
+end;
+
+function T2DPoint.Negate: T2DPoint;
+begin
+  x:= -x;
+  y:= -y;
+  result := self ;
+end;
+
+function T2DPoint.Subtr(Vect: T2DPoint): T2DPoint;
 
 Begin
   if assigned(Vect) then
@@ -162,7 +225,14 @@ Begin
   result := self
 End;
 
-Function T2DPoint.Mult(Vect: T2DPoint): T2DPoint;
+function T2DPoint.Subtr(Vect: TPoint): T2DPoint;
+begin
+  x := x - Vect.x;
+  y := y - Vect.y;
+  result := self
+end;
+
+function T2DPoint.XMult(vect: T2DPoint): T2DPoint;
 
 Var 
   nx, ny: integer;
@@ -175,10 +245,15 @@ Begin
   result := self
 End;
 
-Function T2DPoint.Smult(Vect: T2DPoint): longint;
+function T2DPoint.VMult(vect: T2DPoint): integer;
+begin
+  Result := x * Vect.x + y * Vect.y;
+end;
+
+function T2DPoint.SMult(vect: T2DPoint): longint;
 
 Begin
-  smult := x * Vect.x + y * Vect.y;
+  result := x * Vect.x + y * Vect.y;
 End;
 
 function T2DPoint.SMult(Scalar: integer; Divisor: integer): T2DPoint;
@@ -190,16 +265,22 @@ end;
 
 function T2DPoint.Equals(Obj: TObject): boolean;
 begin
-  if not assigned(Obj) or not Obj.InheritsFrom(T2DPoint) then
+  if not assigned(Obj) then exit(false);
+  if not Obj.InheritsFrom(T2DPoint) then
     result := inherited Equals(Obj)
   else
     result := (x = T2DPoint(Obj).x) and (y = T2DPoint(Obj).y);
 end;
 
-function T2DPoint.ToString: {$IFDEF FPC}ansistring{$ELSE}string{$ENDIF};
+function T2DPoint.ToString: ansistring;
 begin
   result := inherited ToString;
   result := result + '<' + inttostr(x) + ',' + inttostr(y) + '>';
+end;
+
+function T2DPoint.Len: single;
+begin
+  result :=sqrt(sqr(x)+sqr(y));
 end;
 
 function T2DPoint.GLen: longint;
@@ -212,6 +293,105 @@ begin
   result := max(abs(x), abs(y));
 end;
 
+function T2DPoint.AsPoint: TPoint;
+begin
+  result := Point(x,y);
+end;
+
+(*
+class operator T2DPoint.equal(const apt1, apt2: T2DPoint): Boolean;
+begin
+
+end;
+
+class operator T2DPoint.equal(const apt1: T2DPoint; const apt2: Tpoint
+  ): Boolean;
+begin
+
+end;
+
+class operator T2DPoint.equal(const apt1: TPoint; const apt2: T2DPoint
+  ): Boolean;
+begin
+
+end;
+
+class operator T2DPoint.=(const apt1, apt2: T2DPoint): Boolean;
+begin
+  if not assigned(apt1) or not assigned(apt2) then
+    exit(assigned(apt1)= assigned(apt2));
+  result := (apt1.x=apt2.x) and (apt1.y=apt2.y);
+end;
+
+class operator T2DPoint.=(const apt1: T2DPoint; const apt2: Tpoint): Boolean;
+begin
+  if not assigned(apt1) then
+    exit(false);
+  result := (apt1.x=apt2.x) and (apt1.y=apt2.y);
+end;
+
+class operator T2DPoint.=(const apt1: TPoint; const apt2: T2DPoint): Boolean;
+begin
+  if not assigned(apt2) then
+    exit(false);
+  result := (apt1.x=apt2.x) and (apt1.y=apt2.y);
+end;
+
+class operator T2DPoint.<>(const apt1, apt2: T2DPoint): Boolean;
+begin
+  result not (apt1 = apt2);
+end;
+
+class operator T2DPoint.+(var apt1: TPoint2d; const apt2: TPoint2d): T2DPoint;
+begin
+   result := apt1.add(apt2);
+end;
+
+class operator T2DPoint.+(var apt1: TPoint2d; const apt2: TPoint): T2DPoint;
+begin
+  result := apt1.add(apt2);
+end;
+
+class operator T2DPoint.-(var apt1: TPoint2d; const apt2: T2DPoint): T2DPoint;
+begin
+    result := apt1.sub(apt2);
+end;
+
+class operator T2DPoint.-(var apt1: TPoint2d; const apt2: TPoint): T2DPoint;
+begin
+  result := apt1.sub(apt2);
+end;
+
+class operator T2DPoint.-(const apt1: TPointF): T2DPoint;
+begin
+  result := apt1.Neg;
+end;
+
+class operator T2DPoint.*(var apt1: T2DPoint; const apt2): integer;
+begin
+
+end;
+
+class operator T2DPoint.*(const apt1, apt2: TPointF): integer;
+begin
+   result := apt1.Mult(apt2);
+end;
+
+class operator T2DPoint.*(var apt1: T2DPoint; const afactor: integer): T2DPoint;
+begin
+   result := apt1.SMult(afactor);
+end;
+
+class operator T2DPoint.**(var apt1: T2DPoint; afactor: integer): T2DPoint;
+begin
+
+end;
+
+class operator T2DPoint.**(var apt1: T2DPoint;const apt2: T2DPoint): T2DPoint;
+begin
+  result := apt1.XMult(apt2);
+end;
+*)
 
 Var 
   Sqrt2: extended;
@@ -301,7 +481,7 @@ tdp := T2DPoint.init(nil);
   dir8[6] := T2DPoint.init(-1, -1);
   dir8[7] := Dir4[4];
   dir8[8] := T2DPoint.init(1, -1);
-setlength(InvDir2D15, high(dir8) + 1);
+setlength(InvDir2D15{%H-}, high(dir8) + 1);
 for i := 0 to high(dir8) do
   InvDir2D15[i] := getDirNo(tdp.Copy(Dir8[i]).SMult(-1));
 
@@ -319,20 +499,22 @@ for i := 0 to high(dir8) do
   dir12[10] := T2DPoint.init(0, -2);
   dir12[11] := T2DPoint.init(1, -2);
   dir12[12] := T2DPoint.init(2, -1);
-setlength(InvDir2d22, high(dir12) + 1);
+setlength(InvDir2d22{%H-}, high(dir12) + 1);
 for i := 0 to high(dir12) do
   InvDir2d22[i] := getDirNo(tdp.Copy(Dir12[i]).SMult(-1));
 
 FreeAndNil(tdp);
 
 finalization
-for i := 0 to high(dir8) do
-  dir8[i].free;
+for i := 0 to high(dir4) do
+  FreeAndNil(dir4);
 SetLength(dir4,0);
+for i := 0 to high(dir8) do
+  FreeAndNil(dir8[i]);
 SetLength(dir8,0);
 
 for i := 1 to high(dir12) do
-  dir12[i].free;
+  FreeAndNil(dir12[i]);
 SetLength(dir12,0);
 
 End.
