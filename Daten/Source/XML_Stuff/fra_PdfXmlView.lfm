@@ -1,11 +1,11 @@
 object fraXmlView: TfraXmlView
   Left = 0
-  Height = 1191
+  Height = 992
   Top = 0
-  Width = 978
-  ClientHeight = 1191
-  ClientWidth = 978
-  DesignTimePPI = 144
+  Width = 815
+  ClientHeight = 992
+  ClientWidth = 815
+  DesignTimePPI = 120
   ParentFont = False
   TabOrder = 0
   object PaintBox1: TPaintBox
