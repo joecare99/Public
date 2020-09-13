@@ -42,6 +42,8 @@ const     Clen = 30;
 
 implementation
 
+uses unt_Point2d;
+
 {$IFnDEF FPC}
   {$R *.dfm}
 
@@ -53,14 +55,16 @@ procedure TForm2.BitBtn1Click(Sender: TObject);
 var
     x, y, rr: integer;
 begin
-    rr := random(3) + 2;
     Randomize;
     setlength(FZValues, Clen, Clen);
-    // rohdaten
+    // rohdaten -Init
     for x := 0 to Clen - 1 do
-        for y := 0 to Clen - 1 do
-          begin
-            FZValues[x, y] := x + y + random(rr);
+       for y := 0 to Clen - 1 do
+          FZValues[x, y] := -1);
+
+    start := Poin
+
+    begin
             if (x >= 1) and (FZValues[x, y] < FZValues[x - 1, y] - 1) then
                 FZValues[x, y] := FZValues[x - 1, y] - 1;
             if (y >= 1) and (FZValues[x, y] < FZValues[x, y - 1] - 1) then
