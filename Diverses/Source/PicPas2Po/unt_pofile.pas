@@ -157,12 +157,16 @@ begin
     FreeAndNil(Flines);
     inherited Destroy;
 end;
+ const SpecialChar:array[0..3] of char =(#10,#13,#8,#9);
+      SubstStr:array[0..3] of string=('\n','\r','\d','\t');
+      Quote = '"';
+      Escape = '\';
 
 class function TPoFile.QuotedStr2(const S: string): string;
 var
     i, j, Count: integer;
-const
-    Quote = '"';
+
+
 
 begin
     Result := '' + Quote;
@@ -172,7 +176,7 @@ begin
     while i < Count do
       begin
         i := i + 1;
-        if S[i] in [Quote, '\'] then
+        if S[i] in [Quote, Escape] then
           begin
             Result := Result + copy(S, 1 + j, i - j - 1) + '\' + S[i];
             j := i;
@@ -181,16 +185,20 @@ begin
     if i <> j then
         Result := Result + copy(S, 1 + j, i - j);
     Result := Result + Quote;
+    for i := 0 to high(SpecialChar) do
+      Result := Result.Replace(SpecialChar[i],SubstStr[i]);
 end;
 
 class function TPoFile.UnQuotedStr2(const S: string): string;
 var
     i: integer;
-const
-    Quote = '"';
 
 begin
     Result := s;
+    Result := Result.Replace(Escape+Escape,Escape+#1);
+    for i := 0 to high(SpecialChar) do
+      Result := Result.Replace(SubstStr[i],SpecialChar[i]);
+    Result := Result.Replace(Escape+#1,Escape+Escape);
     if ('' + Quote = copy(s, length(s), 1)) and (copy(s, 1, 1) = '' + Quote) then
       begin
         Delete(Result, 1, 1);
@@ -200,7 +208,7 @@ begin
     while i < length(Result) do
       begin
         i := i + 1;
-        if Result[i] = '\' then
+        if Result[i] = Escape then
             Delete(Result, i, 1);
       end;
 end;

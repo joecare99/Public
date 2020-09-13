@@ -1,21 +1,20 @@
 object fraPoFile: TfraPoFile
   Left = 0
-  Height = 908
+  Height = 726
   Top = 0
-  Width = 702
-  ClientHeight = 908
-  ClientWidth = 702
-  DesignTimePPI = 120
+  Width = 562
+  ClientHeight = 726
+  ClientWidth = 562
   ParentFont = False
   TabOrder = 0
   object pnlRightTop: TPanel
     Left = 0
-    Height = 40
+    Height = 32
     Top = 0
     Width = 702
     Align = alTop
     BevelOuter = bvNone
-    ClientHeight = 40
+    ClientHeight = 32
     ClientWidth = 702
     ParentFont = False
     TabOrder = 0
@@ -25,8 +24,8 @@ object fraPoFile: TfraPoFile
       Top = 4
       Width = 471
       Align = alClient
-      BorderSpacing.Bottom = 4
-      BorderSpacing.Around = 4
+      BorderSpacing.Bottom = 3
+      BorderSpacing.Around = 3
       ItemHeight = 20
       ItemIndex = 4
       Items.Strings = (
@@ -49,20 +48,20 @@ object fraPoFile: TfraPoFile
       Left = 4
       Height = 28
       Top = 4
-      Width = 126
+      Width = 101
       Align = alLeft
-      BorderSpacing.Bottom = 4
-      BorderSpacing.Around = 4
+      BorderSpacing.Bottom = 3
+      BorderSpacing.Around = 3
       ParentFont = False
       TabOrder = 1
       Text = 'PicPas'
     end
     object tlbPoFile: TToolBar
-      Left = 609
+      Left = 627
       Top = 4
-      Width = 89
+      Width = 71
       Align = alRight
-      BorderSpacing.Around = 4
+      BorderSpacing.Around = 3
       Caption = 'tlbPoFile'
       ParentFont = False
       ShowCaptions = True
@@ -74,13 +73,13 @@ object fraPoFile: TfraPoFile
         Caption = 'AL'
       end
       object ToolButton3: TToolButton
-        Left = 30
+        Left = 24
         Top = 2
         Action = actFileLoad
         Caption = 'Ld'
       end
       object ToolButton4: TToolButton
-        Left = 59
+        Left = 47
         Top = 2
         Action = actFileSave
         Caption = 'Sv'
@@ -93,7 +92,7 @@ object fraPoFile: TfraPoFile
     Top = 44
     Width = 694
     Align = alClient
-    BorderSpacing.Around = 4
+    BorderSpacing.Around = 3
     Lines.Strings = (
       'Memo2'
     )
@@ -108,13 +107,13 @@ object fraPoFile: TfraPoFile
     Top = 903
     Width = 694
     Align = alBottom
-    BorderSpacing.Around = 4
+    BorderSpacing.Around = 3
     ParentColor = False
     ParentFont = False
   end
   object alsPoFile: TActionList
-    left = 334
-    top = 373
+    Left = 267
+    Top = 298
     object actFileSave: TAction
       Category = 'PoFile'
       Caption = 'Save'

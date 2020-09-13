@@ -3,6 +3,39 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "X-Source-Language: de\n"
 
+#: tfrapicpasfile.actfileopenpas.caption
+msgctxt "tfrapicpasfile.actfileopenpas.caption"
+msgid "actFileOpenPas"
+msgstr ""
+
+#: tfrapicpasfile.actfilesavepas.caption
+msgctxt "tfrapicpasfile.actfilesavepas.caption"
+msgid "actFileSavePas"
+msgstr ""
+
+#: tfrapicpasfile.action3.caption
+msgid "Action3"
+msgstr ""
+
+#: tfrapicpasfile.btnfileopenpas.caption
+msgctxt "tfrapicpasfile.btnfileopenpas.caption"
+msgid "Ld"
+msgstr ""
+
+#: tfrapicpasfile.btnfilesavepas.caption
+msgctxt "tfrapicpasfile.btnfilesavepas.caption"
+msgid "Sv"
+msgstr ""
+
+#: tfrapicpasfile.cbxselectfile.text
+msgctxt "tfrapicpasfile.cbxselectfile.text"
+msgid "cbxSelectFile"
+msgstr ""
+
+#: tfrapicpasfile.label1.caption
+msgid "(0;0)"
+msgstr ""
+
 #: tfrapofile.actfileautoload.caption
 msgctxt "tfrapofile.actfileautoload.caption"
 msgid "AutoLoad"
@@ -39,12 +72,10 @@ msgid "Sichern als"
 msgstr ""
 
 #: tfrapofile.cbxselectlanguage.text
-msgctxt "tfrapofile.cbxselectlanguage.text"
 msgid "Deutsch,de"
 msgstr ""
 
 #: tfrapofile.edtprojectname.text
-msgctxt "tfrapofile.edtprojectname.text"
 msgid "PicPas"
 msgstr ""
 
@@ -53,24 +84,17 @@ msgid "tlbPoFile"
 msgstr ""
 
 #: tfrapofile.toolbutton1.caption
-msgctxt "tfrapofile.toolbutton1.caption"
 msgid "AL"
 msgstr ""
 
 #: tfrapofile.toolbutton3.caption
+msgctxt "tfrapofile.toolbutton3.caption"
 msgid "Ld"
 msgstr ""
 
 #: tfrapofile.toolbutton4.caption
+msgctxt "tfrapofile.toolbutton4.caption"
 msgid "Sv"
-msgstr ""
-
-#: tfrmpicpas2pomain.actfileopenpas.caption
-msgid "actFileOpenPas"
-msgstr ""
-
-#: tfrmpicpas2pomain.actfilesavepas.caption
-msgid "actFileSavePas"
 msgstr ""
 
 #: tfrmpicpas2pomain.actfileselectdir.caption
@@ -91,16 +115,6 @@ msgstr ""
 
 #: tfrmpicpas2pomain.actprocesspo2pas.caption
 msgid "Po2Pas"
-msgstr ""
-
-#: tfrmpicpas2pomain.btnfileopenpas.caption
-msgctxt "tfrmpicpas2pomain.btnfileopenpas.caption"
-msgid "L"
-msgstr ""
-
-#: tfrmpicpas2pomain.btnfilesavepas.caption
-msgctxt "tfrmpicpas2pomain.btnfilesavepas.caption"
-msgid "S"
 msgstr ""
 
 #: tfrmpicpas2pomain.btnprocessallpas2po.caption
@@ -125,10 +139,6 @@ msgstr ""
 
 #: tfrmpicpas2pomain.caption
 msgid "frmPicPas2PoMain"
-msgstr ""
-
-#: tfrmpicpas2pomain.cbxselectfile.text
-msgid "cbxSelectFile"
 msgstr ""
 
 #: tfrmpicpas2pomain.edtsourcedir.editlabel.caption
