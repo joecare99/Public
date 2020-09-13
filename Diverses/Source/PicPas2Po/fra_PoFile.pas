@@ -111,8 +111,7 @@ begin
         'File "%s" exists !/nDo you want to replace it ?', [lFilename]),
         mtConfirmation, mbYesNo, 0) = mrNo) then
         exit;
-    lFilename := FBaseDir + DirectorySeparator + lFilename;
-    SaveFile(@FpoFile.SaveToFile,lFilename);
+    SaveFile(@FpoFile.SaveToFile,FBaseDir + DirectorySeparator +lFilename);
 end;
 
 procedure TfraPoFile.actFileSaveUpdate(Sender: TObject);

@@ -118,7 +118,7 @@
         <PackageName Value="LCL"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="5">
+    <Units Count="6">
       <Unit0>
         <Filename Value="prj_PicPas2Po.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -147,6 +147,12 @@
         <Filename Value="..\Source\PicPas2Po\unt_PicPasFile.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
+      <Unit5>
+        <Filename Value="..\Source\PicPas2Po\fra_PicPasFile.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="fraPicPasFile"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit5>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

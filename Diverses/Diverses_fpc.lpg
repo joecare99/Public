@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="38">
+    <Targets Count="47">
       <Target0 FileName="FPC\Clrscr.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="Default"/>
@@ -9,181 +9,220 @@
         <Mode3 Name="Release"/>
         <Mode4 Name="Release1"/>
       </Target0>
-      <Target1 FileName="FPC\Labyrinth.lpi">
+      <Target1 FileName="FPC\fpcTest2dPoint.lpi">
+        <BuildModes Count="4"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+        <Mode4 Name="Win64"/>
+      </Target1>
+      <Target2 FileName="FPC\fpcTest3dPoint.lpi">
+        <BuildModes Count="4"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
+        <Mode4 Name="Win64"/>
+      </Target2>
+      <Target3 FileName="FPC\Labyrinth.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
-      </Target1>
-      <Target2 FileName="FPC\Labyrinth3.lpi">
+      </Target3>
+      <Target4 FileName="FPC\Labyrinth3.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
         <Mode4 Name="win64"/>
-      </Target2>
-      <Target3 FileName="FPC\Labyrinth3d.lpi">
+      </Target4>
+      <Target5 FileName="FPC\Labyrinth3d.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
         <Mode4 Name="Release-x64"/>
-      </Target3>
-      <Target4 FileName="FPC\PrjLaby4.lpi">
+      </Target5>
+      <Target6 FileName="FPC\PrjLaby4.lpi">
         <BuildModes Count="5"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
         <Mode4 Name="Release1"/>
         <Mode5 Name="Release11"/>
-      </Target4>
-      <Target5 FileName="FPC\Prj_ChangeBoundLoop.lpi">
+      </Target6>
+      <Target7 FileName="FPC\Prj_ChangeBoundLoop.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
-      </Target5>
-      <Target6 FileName="FPC\prj_PaintDmo.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
-      </Target6>
-      <Target7 FileName="FPC\prj_TestCalcButtons.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
       </Target7>
-      <Target8 FileName="FPC\prj_TestMouseScrollEvent.lpi">
+      <Target8 FileName="FPC\prj_PaintDmo.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target8>
-      <Target9 FileName="FPC\Prj_TestMyWidgetSet.lpi">
+      <Target9 FileName="FPC\prj_TestCalcButtons.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target9>
-      <Target10 FileName="FPC\Prj_TestUpDown.lpi">
+      <Target10 FileName="FPC\prj_TestMouseScrollEvent.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target10>
-      <Target11 FileName="FPC\Prj_WritePascal4.lpi">
+      <Target11 FileName="FPC\Prj_TestMyWidgetSet.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target11>
-      <Target12 FileName="FPC\prj_iopcc_Calc.lpi">
+      <Target12 FileName="FPC\Prj_TestUpDown.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target12>
-      <Target13 FileName="FPC\fpcTest3dPoint.lpi">
-        <BuildModes Count="4"/>
-        <Mode1 Name="Default" Compile="True"/>
-        <Mode2 Name="Debug"/>
-        <Mode3 Name="Release"/>
-        <Mode4 Name="Win64"/>
+      <Target13 FileName="FPC\Prj_WritePascal4.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
       </Target13>
-      <Target14 FileName="FPC\ioccc_85_shapiro.lpi">
+      <Target14 FileName="FPC\prj_iopcc_Calc.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target14>
+      <Target15 FileName="FPC\ioccc_85_shapiro.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
-      </Target14>
-      <Target15 FileName="FPC\iopcc_v3.lpi">
+      </Target15>
+      <Target16 FileName="FPC\iopcc_v3.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
         <Mode4 Name="Web"/>
-      </Target15>
-      <Target16 FileName="FPC\iopcc_17_2.lpi">
+      </Target16>
+      <Target17 FileName="FPC\iopcc_17_2.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
-      </Target16>
-      <Target17 FileName="FPC\iopcc_17_2_b.lpi">
-        <BuildModes Count="3"/>
-        <Mode1 Name="Default" Compile="True"/>
-        <Mode2 Name="Debug"/>
-        <Mode3 Name="Release"/>
       </Target17>
-      <Target18 FileName="FPC\prj_PicPas2Po.lpi">
+      <Target18 FileName="FPC\iopcc_17_2_b.lpi">
         <BuildModes Count="3"/>
         <Mode1 Name="Default" Compile="True"/>
         <Mode2 Name="Debug"/>
         <Mode3 Name="Release"/>
       </Target18>
-      <Target19 FileName="FPC\prj_XMLDoc2Po.lpi">
-        <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
+      <Target19 FileName="FPC\prj_PicPas2Po.lpi">
+        <BuildModes Count="3"/>
+        <Mode1 Name="Default" Compile="True"/>
+        <Mode2 Name="Debug"/>
+        <Mode3 Name="Release"/>
       </Target19>
-      <Target20 FileName="FPC\fpcTestXMLDoc2Po.lpi">
+      <Target20 FileName="FPC\fpcTestPicPas2Po.lpi">
         <BuildModes Count="1"/>
-        <Mode1 Name="Default"/>
+        <Mode1 Name="Debug"/>
       </Target20>
-      <Target21 FileName="FPC\Prj_MSProdKey.lpi">
+      <Target21 FileName="FPC\prj_XMLDoc2Po.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target21>
-      <Target22 FileName="FPC\Prj_MSProdKey2.lpi">
-        <BuildModes Count="2"/>
+      <Target22 FileName="FPC\fpcTestXMLDoc2Po.lpi">
+        <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
-        <Mode2 Name="Debug"/>
       </Target22>
-      <Target23 FileName="FPC\prj_Quine.lpi">
+      <Target23 FileName="FPC\Prj_MSProdKey.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target23>
-      <Target24 FileName="FPC\prj_Quine2.lpi">
-        <BuildModes Count="1"/>
+      <Target24 FileName="FPC\Prj_MSProdKey2.lpi">
+        <BuildModes Count="2"/>
         <Mode1 Name="Default"/>
+        <Mode2 Name="Debug"/>
       </Target24>
-      <Target25 FileName="FPC\prj_Quine3.lpi">
+      <Target25 FileName="FPC\prj_Quine.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target25>
-      <Target26 FileName="FPC\prj_Quine4.lpi">
+      <Target26 FileName="FPC\prj_Quine2.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target26>
-      <Target27 FileName="FPC\prj_Quine5.lpi">
+      <Target27 FileName="FPC\prj_Quine3.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target27>
-      <Target28 FileName="FPC\prj_Quine6.lpi">
+      <Target28 FileName="FPC\prj_Quine4.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target28>
-      <Target29 FileName="FPC\prj_Quine7.lpi">
+      <Target29 FileName="FPC\prj_Quine5.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target29>
-      <Target30 FileName="FPC\prj_Quine8_b.lpi">
+      <Target30 FileName="FPC\prj_Quine6.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target30>
-      <Target31 FileName="FPC\prj_Quine8.lpi">
+      <Target31 FileName="FPC\prj_Quine7.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target31>
-      <Target32 FileName="FPC\prj_Quine9_b.lpi">
+      <Target32 FileName="FPC\prj_Quine8_b.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target32>
-      <Target33 FileName="FPC\prj_Quine9.lpi">
+      <Target33 FileName="FPC\prj_Quine8.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target33>
-      <Target34 FileName="FPC\prj_Quine10.lpi">
+      <Target34 FileName="FPC\prj_Quine9_b.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target34>
-      <Target35 FileName="FPC\prj_Quine10_b.lpi">
+      <Target35 FileName="FPC\prj_Quine9.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target35>
-      <Target36 FileName="FPC\prj_Quine9b.lpi">
+      <Target36 FileName="FPC\prj_Quine9b_b.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target36>
-      <Target37 FileName="FPC\prj_Quine9b_b.lpi">
+      <Target37 FileName="FPC\prj_Quine9b.lpi">
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target37>
+      <Target38 FileName="FPC\prj_Quine9c_b.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target38>
+      <Target39 FileName="FPC\prj_Quine9c.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target39>
+      <Target40 FileName="FPC\prj_Quine9d_b.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target40>
+      <Target41 FileName="FPC\prj_Quine9d.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target41>
+      <Target42 FileName="FPC\prj_Quine10_b.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target42>
+      <Target43 FileName="FPC\prj_Quine10.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target43>
+      <Target44 FileName="FPC\prj_Quine11.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target44>
+      <Target45 FileName="FPC\prj_Quine12.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target45>
+      <Target46 FileName="FPC\prj_Quine13.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target46>
     </Targets>
   </ProjectGroup>
 </CONFIG>

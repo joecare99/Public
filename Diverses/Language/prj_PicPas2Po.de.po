@@ -13,74 +13,98 @@ msgstr ""
 "Language: de_DE\n"
 "X-Generator: Poedit 2.2.1\n"
 
+#: tfrapicpasfile.actfileopenpas.caption
+msgctxt "tfrapicpasfile.actfileopenpas.caption"
+msgid "actFileOpenPas"
+msgstr ""
+
+#: tfrapicpasfile.actfilesavepas.caption
+msgctxt "tfrapicpasfile.actfilesavepas.caption"
+msgid "actFileSavePas"
+msgstr ""
+
+#: tfrapicpasfile.action3.caption
+msgid "Action3"
+msgstr ""
+
+#: tfrapicpasfile.btnfileopenpas.caption
+msgctxt "tfrapicpasfile.btnfileopenpas.caption"
+msgid "Ld"
+msgstr ""
+
+#: tfrapicpasfile.btnfilesavepas.caption
+msgctxt "tfrapicpasfile.btnfilesavepas.caption"
+msgid "Sv"
+msgstr ""
+
+#: tfrapicpasfile.cbxselectfile.text
+msgctxt "tfrapicpasfile.cbxselectfile.text"
+msgid "cbxSelectFile"
+msgstr ""
+
+#: tfrapicpasfile.label1.caption
+msgid "(0;0)"
+msgstr ""
+
 #: tfrapofile.actfileautoload.caption
 msgctxt "tfrapofile.actfileautoload.caption"
 msgid "AutoLoad"
-msgstr "AutoLoad"
+msgstr ""
 
 #: tfrapofile.actfileload.caption
 msgctxt "tfrapofile.actfileload.caption"
 msgid "Load"
-msgstr "Öffnen"
+msgstr ""
 
 #: tfrapofile.actfileopen.caption
 msgctxt "tfrapofile.actfileopen.caption"
 msgid "Öffnen"
-msgstr "Öffnen"
+msgstr ""
 
 #: tfrapofile.actfileopen.hint
 msgctxt "tfrapofile.actfileopen.hint"
 msgid "Öffnen"
-msgstr "Öffnen"
+msgstr ""
 
 #: tfrapofile.actfilesave.caption
 msgctxt "tfrapofile.actfilesave.caption"
 msgid "Save"
-msgstr "Sichern"
+msgstr ""
 
 #: tfrapofile.actfilesaveas.caption
 msgctxt "tfrapofile.actfilesaveas.caption"
 msgid "Sichern &als ..."
-msgstr "Sichern &als ..."
+msgstr ""
 
 #: tfrapofile.actfilesaveas.hint
 msgctxt "tfrapofile.actfilesaveas.hint"
 msgid "Sichern als"
-msgstr "Sichern als"
+msgstr ""
 
 #: tfrapofile.cbxselectlanguage.text
-msgctxt "tfrapofile.cbxselectlanguage.text"
 msgid "Deutsch,de"
-msgstr "Deutsch,de"
+msgstr ""
 
 #: tfrapofile.edtprojectname.text
-msgctxt "tfrapofile.edtprojectname.text"
 msgid "PicPas"
-msgstr "PicPas"
+msgstr ""
 
 #: tfrapofile.tlbpofile.caption
 msgid "tlbPoFile"
 msgstr ""
 
 #: tfrapofile.toolbutton1.caption
-msgctxt "tfrapofile.toolbutton1.caption"
 msgid "AL"
-msgstr "AL"
-
-#: tfrapofile.toolbutton3.caption
-msgid "Ld"
-msgstr "Ld"
-
-#: tfrapofile.toolbutton4.caption
-msgid "Sv"
-msgstr "Sv"
-
-#: tfrmpicpas2pomain.actfileopenpas.caption
-msgid "actFileOpenPas"
 msgstr ""
 
-#: tfrmpicpas2pomain.actfilesavepas.caption
-msgid "actFileSavePas"
+#: tfrapofile.toolbutton3.caption
+msgctxt "tfrapofile.toolbutton3.caption"
+msgid "Ld"
+msgstr ""
+
+#: tfrapofile.toolbutton4.caption
+msgctxt "tfrapofile.toolbutton4.caption"
+msgid "Sv"
 msgstr ""
 
 #: tfrmpicpas2pomain.actfileselectdir.caption
@@ -102,16 +126,6 @@ msgstr ""
 #: tfrmpicpas2pomain.actprocesspo2pas.caption
 msgid "Po2Pas"
 msgstr ""
-
-#: tfrmpicpas2pomain.btnfileopenpas.caption
-msgctxt "tfrmpicpas2pomain.btnfileopenpas.caption"
-msgid "L"
-msgstr "L"
-
-#: tfrmpicpas2pomain.btnfilesavepas.caption
-msgctxt "tfrmpicpas2pomain.btnfilesavepas.caption"
-msgid "S"
-msgstr "S"
 
 #: tfrmpicpas2pomain.btnprocessallpas2po.caption
 msgid ">>"
@@ -135,10 +149,6 @@ msgstr "..."
 
 #: tfrmpicpas2pomain.caption
 msgid "frmPicPas2PoMain"
-msgstr ""
-
-#: tfrmpicpas2pomain.cbxselectfile.text
-msgid "cbxSelectFile"
 msgstr ""
 
 #: tfrmpicpas2pomain.edtsourcedir.editlabel.caption
