@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, ShellCtrls, BGRAImageList, unt_iData,
-  ComCtrls, BGRAGraphics, Types;
+  ComCtrls, Types;
 
 type
   TRenameFileEvent=Procedure(sender:TObject;Oldfile,NewFile:String) of Object;
@@ -24,7 +24,6 @@ type
     procedure lstPicturesSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
   private
-    FBasePath: String;
     FOnRenameFile: TRenameFileEvent;
     FonUpdate:TNotifyEvent;
     FFileName: String;
@@ -69,8 +68,7 @@ uses BGRAReadJpeg,BGRABitmap,BGRABitmapTypes;
 procedure TfraPictureList.lstPicturesChange(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 var
-  NewText, NewPath: String;
-  lImage: TBGRABitmap;
+  NewPath: String;
 begin
   if assigned(Item) and (ctText = change) and (Item=lstPictures.Selected)  then
     begin

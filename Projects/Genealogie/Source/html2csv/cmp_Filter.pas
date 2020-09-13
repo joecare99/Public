@@ -14,6 +14,7 @@ Type
       ft_On,  // Ausgabe Einschalten
       ft_Off, // Ausgabe Ausschalten
       ft_jump, // Sprung
+      ft_jumpOn, // Sprung mit Ausgabe
       ft_Out); // Ausgabe einer Kennung
 
    {TFilterDef}
