@@ -574,7 +574,6 @@ var
   lYear: Longint;
   lDatespl: TStringArray;
   i, lMonth,lDay: Integer;
-  lValid: Boolean;
 
   function DecodeDateOrYear(aDate:String;var lDate:TDateTime):boolean;
   var
@@ -640,7 +639,7 @@ begin
              lMonth:= i+1;
       end
   end;
-  lvalid := TryEncodeDate(lYear,lMonth,lDay,result);
+  TryEncodeDate(lYear,lMonth,lDay,result);
 end;
 
 
@@ -1164,14 +1163,14 @@ end;
 function TIndName.GetFullName: string;
 
 begin
-    if True then
+    if True then // Normal
       begin
         Result := trim(Title + ' ' + GivenName + ' ' + Surname);
         if result = '' then
           result := Data;
       end
     else
-      begin
+      {%H-}begin
         Result := Surname + ', ' + GivenName;
         if Title <> '' then
             Result := Result + ', ' + Title;
@@ -1289,8 +1288,6 @@ begin
 end;
 
 constructor TIndName.Create(const aID, aType: string; const aInfo: string);
-var
-    lpp: integer;
 begin
     inherited Create(aID, aType, '');
     Fsource := nil;
@@ -1542,7 +1539,6 @@ end;
 function TGedIndividual.GetFather: TGedIndividual;
 var
     lFamPar: TGedComObj;
-    lfam: TGedFamily;
 begin
     if assigned(FFather) and FFather.inheritsfrom(TGedIndividual) then
         exit(FFather);
@@ -1578,7 +1574,6 @@ end;
 function TGedIndividual.GetMother: TGedIndividual;
 var
     lFamPar: TGedComObj;
-    lfam: TGedFamily;
 begin
     if assigned(FMother) and FMother.inheritsfrom(TGedIndividual) then
         exit(FMother);

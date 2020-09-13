@@ -89,6 +89,7 @@ type
      {$ifdef debug}
     public
      {$endif}
+        function TestReferenz(const aRef:string):boolean;
         function TestEntry(lSubString, TestStr: string;
             out Date: string): boolean;
 
@@ -162,6 +163,10 @@ type
 implementation
 
 uses strutils, Unt_StringProcs;
+
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
 
 const
     csMarriageEntr = '⚭';
@@ -645,10 +650,14 @@ function TFBEntryParser.HandleGCDateEntry(const aText: string;
     end;
 
 begin
+    {$ifdef DEBUG}
     Debug(self, 'HGDE: "' + copy(atext, ppos, 30) + '"');
+    {$endif}
     Result := False;
-    if TestDate(csBirth, evt_Birth) or TestDate(csBaptism2, evt_Baptism) or
-        TestDate(csDeathEntr, evt_Death) or TestDate(csBurial2, evt_Burial) then
+    if TestDate(csBirth, evt_Birth) or
+        TestDate(csBaptism2, evt_Baptism) or
+        TestDate(csDeathEntr, evt_Death) or
+        TestDate(csBurial2, evt_Burial) then
         exit(True)
     else if TestForC(aText, pPos, csDeathGefEntr) then
       begin
@@ -777,6 +786,21 @@ class function TFBEntryParser.TestForC(const aText: string; pPos: int64;
     const aTest: string): boolean;
 begin
     Result := LowerCase(copy(aText, pPos, length(aTest))) = LowerCase(aTest);
+end;
+
+function TFBEntryParser.TestReferenz(const aRef: string): boolean;
+var
+  i: Integer;
+begin
+  //Referent ist nicht leer
+  if aRef='' then exit(false);
+  //Referenz Beginnt mit Zahlen
+  result := aRef[1] in Ziffern;
+  //Referenz enthält nur Zahlen
+  for i := 2 to length(aRef)-1 do
+      result := result and (aRef[i] in Ziffern);
+  //letzte Stelle kann außer Zahlen noch a oder b enthalten
+  result := result and (aRef[length(aRef)] in Ziffern+['a','b']);
 end;
 
 
@@ -1486,12 +1510,14 @@ begin
                   end
                 else
                 if (FMode = 6) and (aText[Offset] in whitespace) and
-                    TestFor(atext, Offset + 1, [csSpouseKn + ' ', csSpouseKn2 + ' '],
+                    TestFor(atext, Offset + 1, [csSpouseKn + ' ', csSpouseKn2 + ' ','u, '],
                     lFound) and
                     ((aText[Offset - 1] in [',', #10, #13]) or (lFound = 0)) then
                   begin
                     if lFound = 1 then
                         warning(self, '"und" as Wife-Flag');
+                    if lFound = 2 then
+                        warning(self, '"u," as Wife-Flag');
                     lSubString := trim(lSubString);
                     if lSubString <> '' then
                       begin
@@ -1808,12 +1834,12 @@ begin
                 lVerwFlag := False;
                 lSubString := '';
                 if TestFor(aText, Offset, csPlaceKenn2 + ' ') and
-                    (atext[Offset + 4] in Ziffern) then
+                    (atext[Offset + 4] in Ziffern+['l']) then
                   begin
                     lVerwFlag := True;
                     lMode := 51;
                   end
-                else if (lRetMode = 9) and (aText[Offset] in Ziffern) then
+                else if (lRetMode = 9) and (aText[Offset] in Ziffern+['l']) then
                   begin
                     lVerwFlag := True;
                     lMode := 52;
@@ -1849,12 +1875,15 @@ begin
             51:
               begin
                 // aus XXX
-                if (aText[Offset] in Ziffern) or
-                    ((length(lSubString) > 0) and (aText[Offset] = 'a')) then
+                if (aText[Offset] in Ziffern+['l']) or
+                    ((length(lSubString) > 0) and (aText[Offset] in ['a','b'])) then
                     lSubString := lSubString + aText[Offset]
                 else if length(lSubString) > 0 then
                   begin
-                    SetIndiRelat(lIndID, lSubString, 1);
+                    If not TestReferenz(lSubString) then
+                      error(self,'"'+lSubString+'" invalid reference')
+                    else
+                      SetIndiRelat(lIndID, lSubString, 1);
                     if aText[Offset] = '>' then
                         Dec(Offset);
                     lMode := 50;
@@ -1864,15 +1893,18 @@ begin
                 // s.a. ###
               begin
                 lfound:=0;
-                if (aText[Offset] in Ziffern) or
-                    ((length(lSubString) > 0) and (aText[Offset] = 'a')) then
+                if (aText[Offset] in Ziffern+['l']) or
+                    ((length(lSubString) > 0) and (aText[Offset] in ['a','b'])) then
                     lSubString := lSubString + aText[Offset]
                 else if length(lSubString) > 0 then
                   begin
                     if not (aText[Offset] in ['>', ';', ',']) and
                         not Testfor(aText, Offset, [' und',' korr.'],lFound) then
                         error(self, 'invalid reference')
-                    else if lFound = 0 then
+                        else if lFound = 0 then
+                            If not TestReferenz(lSubString) then
+                              error(self,'"'+lSubString+'" invalid reference')
+                          else
                         SetIndiRelat(lIndID, lSubString, 2);
                     lSubString := '';
                     lMode := 50;
@@ -1918,6 +1950,9 @@ begin
                         not Testfor(aText, Offset, [' und', ' korr.'], lFound) then
                         error(self, 'invalid reference')
                     else if lFound = 0 then
+                        If not TestReferenz(lSubString) then
+                          error(self,'"'+lSubString+'" invalid reference')
+                     else
                         SetIndiRelat(lIndID, lSubString, 2);
                     lSubString := '';
                     if (aText[Offset] <> ',') and (lFound = 0) then
@@ -3164,7 +3199,12 @@ begin
 
 
     // Namen nach Leerzeichen aufteilen
-    Names := lPersonName.Split([' ']);
+    {$if FPC_FULLVERSION = 30200 }
+    {$Warning 'Split produces wrong results in 3.2.0' }
+    {$ENDIF}
+    Names := trim(lPersonName).Split([' ']);
+
+
 
     // Hole Titel
     lTitel := '';
@@ -3172,7 +3212,10 @@ begin
       begin
         lTitel := FAkkaTitel[lFound];
         lPersonName := copy(lPersonName, length(lTitel) + 2);
-        Names := lPersonName.Split([' ']);
+            {$if FPC_FULLVERSION = 30200 }
+    {$Warning 'Split produces wrong results in 3.2.0' }
+    {$ENDIF}
+        Names := trim(lPersonName).Split([' ']);
       end;
 
     // ? <Name> in AKA
@@ -3185,6 +3228,10 @@ begin
             lLastName := lFamName;
         lPersonName := lPersonName + ' ' + lLastName;
         lAKA := '? ' + lLastName;
+            {$if FPC_FULLVERSION = 30200 }
+    {$Warning 'Split produces wrong results in 3.2.0' }
+    {$ENDIF}
+
         Names := lPersonName.Split([' ']);
       end;
 
@@ -3296,7 +3343,7 @@ var
     lFound: integer;
     lLastZiffCount: integer;
     lZiffCount: integer;
-    lDebug: string;
+    {%H-}lDebug: string;
 
 begin
     Result := '';

@@ -6,7 +6,7 @@ unit cls_TestParseFBEntry;
 interface
 
 uses
-    Classes, SysUtils, FileUtil, fpcunit, testutils, testregistry, unt_FBParser,
+    Classes, SysUtils, FileUtil, fpcunit, testregistry, unt_FBParser,
     unt_TestFBData;
 
 type
@@ -77,6 +77,7 @@ type
           procedure TestTestFor2;
           procedure TestTestFor3;
           procedure TestParseAdditional;
+          Procedure TestTestReferenz;
         private
         end;
 
@@ -202,6 +203,10 @@ implementation
 
 uses LConvEncoding,unt_IGenBase2;
 
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+
 procedure TTestFBEntryParser.TestSetUp;
 begin
     CheckNotNull(fParser);
@@ -211,7 +216,7 @@ procedure TTestFBEntryParser.TestResult;
 var
     lResult: TResultType;
 begin
-    lResult.SetAll(['', '', '', 6]);
+    lResult.SetAll([variant(''), '', '', 6]);
     CheckEquals('(eType:'''';Data:'''';Ref:'''';SubType:6)', lResult.ToString,
         'lResult.Tostring');
     lResult.eType := 'eType';
@@ -226,40 +231,40 @@ begin
     CheckEquals(1, FRCounter, 'FRcounter');
     ParserStartFamily(fParser, lResult.Data, lResult.Ref, lResult.SubType);
     CheckEquals(2, FRCounter, 'FRcounter');
-    lResult.SetAll(['', 'AAA', 'BBB', 2]);
+    lResult.SetAll([variant(''), 'AAA', 'BBB', 2]);
     ParserFamilyType(fParser, lResult.Data, lResult.Ref, lResult.SubType);
     CheckEquals(3, FRCounter, 'FRcounter');
-    lResult.SetAll(['', 'CCC', 'DDD', 3]);
+    lResult.SetAll([variant(''), 'CCC', 'DDD', 3]);
     ParserFamilyDate(fParser, lResult.Data, lResult.Ref, lResult.SubType);
     CheckEquals(4, FRCounter, 'FRcounter');
-    lResult.SetAll(['', 'EEE', 'FFF', 4]);
+    lResult.SetAll([variant(''), 'EEE', 'FFF', 4]);
     ParserFamilyIndiv(fParser, lResult.Data, lResult.Ref, lResult.SubType);
     CheckEquals(5, FRCounter, 'FRcounter');
-    lResult.SetAll(['', 'GGG', 'HHH', 5]);
+    lResult.SetAll([variant(''), 'GGG', 'HHH', 5]);
     ParserFamilyPlace(fParser, lResult.Data, lResult.Ref, lResult.SubType);
     CheckEquals(6, FRCounter, 'FRcounter');
-    lResult.SetAll(['', 'III', 'JJJ', 6]);
+    lResult.SetAll([variant(''), 'III', 'JJJ', 6]);
     ParserIndiName(fParser, lResult.Data, lResult.Ref, lResult.SubType);
     CheckEquals(7, FRCounter, 'FRcounter');
-    lResult.SetAll(['', 'KKK', 'LLL', 7]);
+    lResult.SetAll([variant(''), 'KKK', 'LLL', 7]);
     ParserIndiDate(fParser, lResult.Data, lResult.Ref, lResult.SubType);
     CheckEquals(8, FRCounter, 'FRcounter');
-    lResult.SetAll(['', 'MMM', 'NNN', 8]);
+    lResult.SetAll([variant(''), 'MMM', 'NNN', 8]);
     ParserIndiPlace(fParser, lResult.Data, lResult.Ref, lResult.SubType);
     CheckEquals(9, FRCounter, 'FRcounter');
-    lResult.SetAll(['', 'OOO', 'PPP', 9]);
+    lResult.SetAll([variant(''), 'OOO', 'PPP', 9]);
     ParserIndiRef(fParser, lResult.Data, lResult.Ref, lResult.SubType);
     CheckEquals(10, FRCounter, 'FRcounter');
-    lResult.SetAll(['', 'QQQ', 'RRR', 10]);
+    lResult.SetAll([variant(''), 'QQQ', 'RRR', 10]);
     ParserIndiRel(fParser, lResult.Data, lResult.Ref, lResult.SubType);
     CheckEquals(11, FRCounter, 'FRcounter');
-    lResult.SetAll(['', 'SSS', 'TTT', 11]);
+    lResult.SetAll([variant(''), 'SSS', 'TTT', 11]);
     ParserIndiOccu(fParser, lResult.Data, lResult.Ref, lResult.SubType);
     CheckEquals(12, FRCounter, 'FRcounter');
-    lResult.SetAll(['', 'UUU', 'VVV', 12]);
+    lResult.SetAll([variant(''), 'UUU', 'VVV', 12]);
     ParserIndiData(fParser, lResult.Data, lResult.Ref, lResult.SubType);
     CheckEquals(13, FRCounter, 'FRcounter');
-    lResult.SetAll(['', 'WWW', 'XXX', 13]);
+    lResult.SetAll([variant(''), 'WWW', 'XXX', 13]);
     fparser.DebugSetMsg('WWW','XXX',13);
     ParserError(fParser);
     CheckEquals(14, FRCounter, 'FRcounter');
@@ -432,6 +437,17 @@ begin
     ' daheim im Keller bei einem Beschuß."',lOutput);
 
 
+end;
+
+procedure TTestFBEntryParser.TestTestReferenz;
+begin
+  CheckTrue(fParser.TestReferenz('1234'),'1234 ist gültige Referenz');
+  CheckTrue(fParser.TestReferenz('1'),'1 ist gültige Referenz');
+  CheckTrue(fParser.TestReferenz('2a'),'2a ist gültige Referenz');
+  CheckFalse(fParser.TestReferenz('l234'),'l234 ist keine gültige Referenz');
+  CheckFalse(fParser.TestReferenz('1O14'),'1O14 ist keine gültige Referenz');
+  Checkfalse(fParser.TestReferenz('1234d'),'1234 ist keine gültige Referenz');
+  Checkfalse(fParser.TestReferenz('123a4'),'123a4 ist keine gültige Referenz');
 end;
 
 procedure TTestFBEntryParser.TestHandleGCDateEntry;
@@ -960,7 +976,7 @@ var
     lDebEv, {%H-}lLastDeb: string;
 begin
     CheckTrue(fParser.Equals(Sender), 'Teste Sender');
-    lr.setall([etype, atext, Ref, dsubtype]);
+    lr.setall([variant(etype), atext, Ref, dsubtype]);
     lDebEv := lr.ToString;
     if Length(ExpResults) = 0 then
       begin
@@ -977,9 +993,9 @@ begin
     lLastDeb:= FlastDeb;
     CheckTrue(high(ExpResults) >= FRCounter, 'Result Exists[' + IntToStr(
         FRCounter) + '],' + FTestName);
-    CheckEquals(ExpResults[FRCounter].eType, eType, 'Teste eType[' + IntToStr(
-        FRCounter) + '],' + FTestName);
     CheckEquals(ExpResults[FRCounter].Data, aText, 'Teste aText[' + IntToStr(
+        FRCounter) + '],' + FTestName);
+    CheckEquals(ExpResults[FRCounter].eType, eType, 'Teste eType[' + IntToStr(
         FRCounter) + '],' + FTestName);
     CheckEquals(ExpResults[FRCounter].Ref, Ref, 'Teste Ref[' + IntToStr(
         FRCounter) + '],' + FTestName);
