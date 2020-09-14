@@ -1,18 +1,20 @@
 object fraPicPasFile: TfraPicPasFile
   Left = 0
-  Height = 496
+  Height = 620
   Top = 0
-  Width = 386
-  ClientHeight = 496
-  ClientWidth = 386
+  Width = 482
+  ClientHeight = 620
+  ClientWidth = 482
+  DesignTimePPI = 120
+  ParentFont = False
   TabOrder = 0
   DesignLeft = 433
   DesignTop = 9
   object Label1: TLabel
     Left = 2
-    Height = 15
-    Top = 479
-    Width = 382
+    Height = 20
+    Top = 598
+    Width = 478
     Align = alBottom
     BorderSpacing.Around = 2
     Caption = '(0;0)'
@@ -21,33 +23,33 @@ object fraPicPasFile: TfraPicPasFile
   end
   object pnlLeftTop: TPanel
     Left = 0
-    Height = 24
+    Height = 30
     Top = 0
-    Width = 386
+    Width = 482
     Align = alTop
     BevelOuter = bvNone
-    ClientHeight = 24
-    ClientWidth = 386
+    ClientHeight = 30
+    ClientWidth = 482
     ParentFont = False
     TabOrder = 0
     object cbxSelectFile: TComboBox
       Left = 2
-      Height = 23
+      Height = 28
       Top = 2
-      Width = 338
+      Width = 424
       Align = alClient
       BorderSpacing.Around = 2
-      ItemHeight = 15
-      OnClick = cbxSelectFileClick
+      ItemHeight = 20
+      OnSelect = cbxSelectFileClick
       ParentFont = False
       TabOrder = 0
       Text = 'cbxSelectFile'
     end
     object btnFileOpenPas: TSpeedButton
-      Left = 342
-      Height = 20
+      Left = 428
+      Height = 26
       Top = 2
-      Width = 20
+      Width = 25
       Action = actFileOpenPas
       Align = alRight
       BorderSpacing.Around = 2
@@ -55,10 +57,10 @@ object fraPicPasFile: TfraPicPasFile
       ParentFont = False
     end
     object btnFileSavePas: TSpeedButton
-      Left = 364
-      Height = 20
+      Left = 455
+      Height = 26
       Top = 2
-      Width = 20
+      Width = 25
       Action = actFileSavePas
       Align = alRight
       BorderSpacing.Around = 2
@@ -68,9 +70,9 @@ object fraPicPasFile: TfraPicPasFile
   end
   object edtPasFile: TMemo
     Left = 2
-    Height = 451
-    Top = 26
-    Width = 382
+    Height = 564
+    Top = 32
+    Width = 478
     Align = alClient
     BorderSpacing.Around = 2
     Lines.Strings = (
@@ -84,8 +86,8 @@ object fraPicPasFile: TfraPicPasFile
     WordWrap = False
   end
   object ActionList1: TActionList
-    Left = 225
-    Top = 133
+    left = 281
+    top = 166
     object actFileOpenPas: TAction
       Category = 'File'
       Caption = 'actFileOpenPas'

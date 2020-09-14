@@ -96,6 +96,7 @@ function TPoFile.GetTranslText(const id: integer): string;
 var
     i: integer;
 begin
+    Result := '';
     // Todo: Multiline
     for i := 3 downto 1 do
         if copy(FLines[id + i], 1, 7) = cPoMsgTransl + ' ' then

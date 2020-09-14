@@ -76,7 +76,7 @@ begin
     for i := 0 to fraPicPasFile1.Count - 1 do
       begin
         lIdentifyer:= fraPicPasFile1.GetIdentifyer(i);
-        setlength(lAoS, min(fraPoFile1.LanguageID + 1,1));
+        setlength(lAoS{%H-}, min(fraPoFile1.LanguageID + 1,1));
         lAoS[0] := fraPicPasFile1.Translation[i,0];
         if fraPoFile1.LanguageID>=0 then
            lAoS[fraPoFile1.LanguageID] := fraPicPasFile1.Translation[i,fraPoFile1.LanguageID];
@@ -140,13 +140,16 @@ begin
             'To Update the File you have to select a Language first.', mtError, [mbOK], 0);
         exit;
       end;
-    for i := 0 to fraPicPasFile1.Count do
+    for i := 0 to fraPicPasFile1.Count-1 do
       begin
             lIdentifyer := fraPicPasFile1.GetIdentifyer(I);
             id := fraPoFile1.LookUpIdent(lIdentifyer);
             if id>=0 then
               fraPicPasFile1.Translation[i,fraPoFile1.LanguageID] := fraPoFile1.GetTranslText(id)
+            else
+              fraPicPasFile1.Translation[i,fraPoFile1.LanguageID] :='';
       end;
+    fraPicPasFile1.UpdateUI(Sender);
 end;
 
 procedure TfrmPicPas2PoMain.AppendData(const aIdent: string; const aTrans: TStringArray);

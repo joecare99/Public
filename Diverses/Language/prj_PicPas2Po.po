@@ -4,12 +4,10 @@ msgstr ""
 "X-Source-Language: de\n"
 
 #: tfrapicpasfile.actfileopenpas.caption
-msgctxt "tfrapicpasfile.actfileopenpas.caption"
 msgid "actFileOpenPas"
 msgstr ""
 
 #: tfrapicpasfile.actfilesavepas.caption
-msgctxt "tfrapicpasfile.actfilesavepas.caption"
 msgid "actFileSavePas"
 msgstr ""
 
@@ -28,7 +26,6 @@ msgid "Sv"
 msgstr ""
 
 #: tfrapicpasfile.cbxselectfile.text
-msgctxt "tfrapicpasfile.cbxselectfile.text"
 msgid "cbxSelectFile"
 msgstr ""
 
