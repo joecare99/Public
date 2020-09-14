@@ -1,7 +1,7 @@
 ﻿Unit Unt_FileProcs;
 
 {*v 1.00.08 }
-{*h 1.00.07 SafeFile}
+{*h 1.00.07 SaveFile}
 {*h 1.00.06 CleanPath}
 {*h 1.00.05 Class of CFileInfo }
 {*h 1.00.04 Anpassungen an FPC, Testcase }
@@ -528,7 +528,7 @@ Begin
       sysutils.FindClose(sr); { *Converted from FindClose*  }
 
       // Hole Dateien
-      setlength(files, dimc);
+      setlength(files{%H-}, dimc);
       If FindFirst(OldName, faDirectory, sr) { *Converted from FindFirst*  } = 0 Then
         OldFName := sr.Name
       Else
