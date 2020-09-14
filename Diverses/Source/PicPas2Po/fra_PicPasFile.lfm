@@ -1,0 +1,105 @@
+object fraPicPasFile: TfraPicPasFile
+  Left = 0
+  Height = 496
+  Top = 0
+  Width = 386
+  ClientHeight = 496
+  ClientWidth = 386
+  TabOrder = 0
+  DesignLeft = 433
+  DesignTop = 9
+  object Label1: TLabel
+    Left = 2
+    Height = 15
+    Top = 479
+    Width = 382
+    Align = alBottom
+    BorderSpacing.Around = 2
+    Caption = '(0;0)'
+    ParentColor = False
+    ParentFont = False
+  end
+  object pnlLeftTop: TPanel
+    Left = 0
+    Height = 24
+    Top = 0
+    Width = 386
+    Align = alTop
+    BevelOuter = bvNone
+    ClientHeight = 24
+    ClientWidth = 386
+    ParentFont = False
+    TabOrder = 0
+    object cbxSelectFile: TComboBox
+      Left = 2
+      Height = 23
+      Top = 2
+      Width = 338
+      Align = alClient
+      BorderSpacing.Around = 2
+      ItemHeight = 15
+      OnClick = cbxSelectFileClick
+      ParentFont = False
+      TabOrder = 0
+      Text = 'cbxSelectFile'
+    end
+    object btnFileOpenPas: TSpeedButton
+      Left = 342
+      Height = 20
+      Top = 2
+      Width = 20
+      Action = actFileOpenPas
+      Align = alRight
+      BorderSpacing.Around = 2
+      Caption = 'Ld'
+      ParentFont = False
+    end
+    object btnFileSavePas: TSpeedButton
+      Left = 364
+      Height = 20
+      Top = 2
+      Width = 20
+      Action = actFileSavePas
+      Align = alRight
+      BorderSpacing.Around = 2
+      Caption = 'Sv'
+      ParentFont = False
+    end
+  end
+  object edtPasFile: TMemo
+    Left = 2
+    Height = 451
+    Top = 26
+    Width = 382
+    Align = alClient
+    BorderSpacing.Around = 2
+    Lines.Strings = (
+      'edtPasFile'
+    )
+    OnClick = edtPasFileClick
+    OnKeyUp = edtPasFileKeyUp
+    ParentFont = False
+    ScrollBars = ssAutoBoth
+    TabOrder = 1
+    WordWrap = False
+  end
+  object ActionList1: TActionList
+    Left = 225
+    Top = 133
+    object actFileOpenPas: TAction
+      Category = 'File'
+      Caption = 'actFileOpenPas'
+      OnExecute = actFileOpenPasExecute
+      OnUpdate = actFileOpenPasUpdate
+    end
+    object actFileSavePas: TAction
+      Category = 'File'
+      Caption = 'actFileSavePas'
+      OnExecute = actFileSavePasExecute
+      OnUpdate = actFileSavePasUpdate
+    end
+    object Action3: TAction
+      Caption = 'Action3'
+    end
+  end
+end
