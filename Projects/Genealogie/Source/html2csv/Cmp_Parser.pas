@@ -40,7 +40,7 @@ type
   public
     procedure Feed(Data: string); override;
     procedure Error({%H-}sender: TObject; NewMessage: string); override;
-    procedure Warning(sender: TObject; {%H-}NewMessage: string); override;
+    procedure Warning({%H-}sender: TObject; {%H-}NewMessage: string); override;
     Property OnStdText: TTextNotification read FOnStdText write FOnStdText;
     Property OnStartTag: TTextNotification read FOnStartTag write FOnStartTag;
     Property OnTagMod: TTextNotification read FOnTagMod write FOnTagMod;

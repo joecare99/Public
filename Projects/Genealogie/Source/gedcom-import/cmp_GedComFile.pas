@@ -196,7 +196,7 @@ type
 
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
-        class function GetFileInfoStr(Path: string; Force: boolean = False): string;
+        class function GetFileInfoStr(Path: string; {%H-}Force: boolean = False): string;
             override;
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
