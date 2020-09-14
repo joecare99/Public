@@ -95,7 +95,8 @@ end;
 
 procedure TfraPicPasFile.cbxSelectFileClick(Sender: TObject);
 begin
-
+  if cbxSelectFile.ItemIndex>=0 then
+    actFileOpenPas.Execute;
 end;
 
 procedure TfraPicPasFile.UpdateCombobox(Sender: TObject);
@@ -113,6 +114,8 @@ begin
             cbxSelectFile.AddItem(sr.Name, nil);
             sResult := FindNext(sr);
           end;
+        if cbxSelectFile.ItemIndex<0 then
+          cbxSelectFile.ItemIndex:=0;
       end;
 end;
 

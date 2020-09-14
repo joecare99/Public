@@ -151,6 +151,7 @@
         <Filename Value="..\Source\PicPas2Po\fra_PicPasFile.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="fraPicPasFile"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit5>
     </Units>

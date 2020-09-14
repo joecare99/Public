@@ -148,7 +148,9 @@ begin
         // Get Identifyer
         lpp := pos(':=', lline);
         if lpp > 0 then
-            lIdentifyer := trim(copy(lline, 1, lpp - 1));
+            lIdentifyer := trim(copy(lline, 1, lpp - 1))
+        else
+          lIdentifyer:='';
         lpp := pos('TRANS(', uppercase(lline));
         if lpp > 0 then
           begin
@@ -197,7 +199,7 @@ end;
 procedure TPicPasFile.AppendIndex(PrioIdx,id,Lang:integer;Value:String);
 var
   QStr: String;
-  UIdx, LDiff, i: Integer;
+  i: Integer;
 begin
   // Make Room for Data
   setlength(FAoIndex,high(FAoIndex)+2);
@@ -277,7 +279,6 @@ class function TPicPasFile.QuotedStr2(aStr: String): String;
 
 const SpecialChar=[#10,#13,#8];
 var
-  lLastTPos,lTPos: SizeInt;
   ch:Char;
 begin
   result := Quotedstr(aStr.Replace('+','/+'));
@@ -295,14 +296,15 @@ end;
 
 function TPicPasFile.GetIdentifyer(Idx: Integer): string;
 begin
-  result := FIdentifyers[Idx];;
+  result := FIdentifyers[Idx];
 end;
 
 procedure TPicPasFile.LoadFromFile(Filename: string);
 begin
   FFileEncoding := EncodingUTF8; // Todo: Guessencoding.
   Flines.LoadFromFile(Filename);
-  FFilename:=FFilename;
+  FFilename:=Filename;
+  ParseFile;
   FChanged:=false;
 end;
 
@@ -321,6 +323,7 @@ begin
     Ident := '';
     lLine := FLines[ActLine];
     lppn := pos('''', copy(lline, CharIdx, length(lline)));
+    lParseMode := 0; //String
     if lppn > 0 then
       begin
         // Resize Array
@@ -330,8 +333,7 @@ begin
         AoIdx[high(AoIdx)].lnNrStart := ActLine;
         CharIdx := CharIdx + lppn;
         AoIdx[high(AoIdx)].iStartOffset := CharIdx - 1;
-        lParseMode := 0; //String
-        while (lParseMode < 2) and (length(lline) >= CharIdx) do
+       while (lParseMode < 2) and (length(lline) >= CharIdx) do
           begin
             cc := lline[CharIdx];
             if (cc = '''')  then
