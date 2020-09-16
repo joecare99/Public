@@ -213,7 +213,7 @@
       <Unit1>
         <Filename Value="..\Source\frm_laby4.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form2"/>
+        <ComponentName Value="FrmLaby4"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit1>
