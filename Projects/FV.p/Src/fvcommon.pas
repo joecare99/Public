@@ -62,8 +62,8 @@ UNIT FVCommon;
 {====================================================================}
 
 {$ifdef OS_WINDOWS}
-  uses
-    Windows;
+ // uses
+ //   Windows;
 {$endif}
 
 {***************************************************************************}
@@ -163,6 +163,29 @@ TYPE
    TStrArray = Array [0..MaxStr-1] Of String;         { String array }
    PStrArray = ^TStrArray;                            { String array ptr }
 
+
+{---------------------------------------------------------------------------}
+{                              CallbackPointer                              }
+{                      (is later declared in objects.pas)                   }
+{---------------------------------------------------------------------------}
+{$if FPC_FULLVERSION < 030300}
+TYPE
+{$ifndef TYPED_LOCAL_CALLBACKS}
+   TCallbackFun = CodePointer;
+   TCallbackProc = CodePointer;
+   TCallbackFunParam = CodePointer;
+   TCallbackFunBool = CodePointer;
+   TCallbackFunBoolParam = CodePointer;
+   TCallbackProcParam = CodePointer;
+{$else}
+   TCallbackFun = Function: Pointer is nested;
+   TCallbackProc = Procedure is nested;
+   TCallbackFunParam = Function(Item: Pointer): Pointer is nested;
+   TCallbackFunBool = Function: Boolean is nested;
+   TCallbackFunBoolParam = Function(Item: Pointer): Boolean is nested;
+   TCallbackProcParam = Procedure(Item: Pointer) is nested;
+{$endif}
+{$endif}
 {***************************************************************************}
 {                            INTERFACE ROUTINES                             }
 {***************************************************************************}

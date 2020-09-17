@@ -53,7 +53,7 @@ UNIT App;
 
 USES
    {$IFDEF OS_WINDOWS}                                { WIN/NT CODE }
-       Windows,                                       { Standard units }
+//       Windows,                                       { Standard units }
    {$ENDIF}
 
    {$IFDEF OS_OS2}                                    { OS2 CODE }
@@ -328,7 +328,7 @@ CONST
      ObjType: idBackground;                           { Register id = 30 }
      VmtLink: TypeOf(TBackGround);
      Load:    @TBackGround.Load;                      { Object load method }
-     Store:   @TBackGround.Store                      { Object store method }
+     Store:   @TBackGround.Store{%H-}                      { Object store method }
   );
 
 {---------------------------------------------------------------------------}
@@ -339,7 +339,7 @@ CONST
      ObjType: idDesktop;                              { Register id = 31 }
      VmtLink: TypeOf(TDeskTop);
      Load:    @TDeskTop.Load;                         { Object load method }
-     Store:   @TDeskTop.Store                         { Object store method }
+     Store:   @TDeskTop.Store{%H-}                         { Object store method }
   );
 
 {***************************************************************************}
@@ -382,7 +382,7 @@ resourcestring  sVideoFailed='Video initialization failed.';
 {---------------------------------------------------------------------------}
 {                      INITIALIZED PRIVATE VARIABLES                        }
 {---------------------------------------------------------------------------}
-CONST Pending: TEvent = (What: evNothing);            { Pending event }
+CONST Pending: TEvent = (What: evNothing{%H-});            { Pending event }
 
 {---------------------------------------------------------------------------}
 {  Tileable -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 22Oct99 LdB          }
@@ -575,7 +575,7 @@ VAR NumCols, NumRows, NumTileable, LeftOver, TileNum: Integer;
 
 BEGIN
    NumTileable := 0;                                  { Zero tileable count }
-   ForEach(@DoCountTileable);                         { Count tileable views }
+   ForEach(TCallbackProcParam(@DoCountTileable));     { Count tileable views }
    If (NumTileable>0) Then Begin
      MostEqualDivisors(NumTileable, NumCols, NumRows,
      NOT TileColumnsFirst);                           { Do pre calcs }
@@ -584,7 +584,7 @@ BEGIN
      Else Begin
        LeftOver := NumTileable MOD NumCols;           { Left over count }
        TileNum := NumTileable-1;                      { Tileable views }
-       ForEach(@DoTile);                              { Tile each view }
+       ForEach(TCallbackProcParam(@DoTile));          { Tile each view }
        DrawView;                                      { Now redraw }
      End;
    End;
@@ -630,14 +630,14 @@ VAR CascadeNum: Integer; LastView: PView; Min, Max: TPoint;
 
 BEGIN
    CascadeNum := 0;                                   { Zero cascade count }
-   ForEach(@DoCount);                                 { Count cascadable }
+   ForEach(TCallbackProcParam(@DoCount));             { Count cascadable }
    If (CascadeNum>0) Then Begin
      LastView^.SizeLimits(Min, Max);                  { Check size limits }
      If (Min.X > R.B.X - R.A.X - CascadeNum) OR
      (Min.Y > R.B.Y - R.A.Y - CascadeNum) Then
      TileError Else Begin                             { Check for error }
        Dec(CascadeNum);                               { One less view }
-       ForEach(@DoCascade);                           { Cascade view }
+       ForEach(TCallbackProcParam(@DoCascade));       { Cascade view }
        DrawView;                                      { Redraw now }
      End;
    End;

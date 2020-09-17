@@ -97,7 +97,7 @@ type
   PlString = PAnsiString;  // redefine PString !!
   PString = PansiString deprecated; // redefine PString !!
   {$else}
-  PlString = PString;
+  PlString = ^String;
   {$endif}
 type
 
@@ -159,7 +159,7 @@ type
     function GetKey(var S: String): Pointer; virtual;
     procedure HandleEvent(var Event: TEvent); virtual;
     procedure ReadDirectory(AWildCard: String);
-    procedure SetData(var Rec); virtual;
+    procedure SetData(Const Rec); virtual;
   end;
 
   { TFileInfoPane is a TView that displays the information      }
@@ -213,9 +213,9 @@ type
     constructor Load(var S: TStream);
     destructor Done; virtual;
     procedure GetData(var Rec); virtual;
-    procedure GetFileName({$ifopt H+}out{$else}var{$Endif} S: string);
+    procedure GetFileName({$IfDef FPC_OBJFPC}out{$else}var{$endif} S: string);
     procedure HandleEvent(var Event: TEvent); virtual;
-    procedure SetData(var Rec); virtual;
+    procedure SetData(Const Rec); virtual;
     procedure Store(var S: TStream);
     function Valid(Command: Word): Boolean; virtual;
   private
@@ -276,12 +276,14 @@ type
     function DataSize: Sw_Word; virtual;
     procedure GetData(var Rec); virtual;
     procedure HandleEvent(var Event: TEvent); virtual;
-    procedure SetData(var Rec); virtual;
+    procedure SetData(Const Rec); virtual;
     procedure Store(var S: TStream);
     function Valid(Command: Word): Boolean; virtual;
   private
     procedure SetUpDialog;
   end;
+
+  { TEditChDirDialog }
 
   PEditChDirDialog = ^TEditChDirDialog;
   TEditChDirDialog = Object(TChDirDialog)
@@ -289,7 +291,7 @@ type
       transfer record is a DirStr. }
     function DataSize : Sw_Word; virtual;
     procedure GetData (var Rec); virtual;
-    procedure SetData (var Rec); virtual;
+    procedure SetData (Const Rec); virtual;
   end;  { of TEditChDirDialog }
 
 
@@ -1161,7 +1163,7 @@ begin
   end;
 end;
 
-procedure TFileList.SetData(var Rec);
+procedure TFileList.SetData(const Rec);
 begin
   with PFileDialog(Owner)^ do
     Self.ReadDirectory(zDirectory^ + WildCard);
@@ -1561,7 +1563,7 @@ begin
   GetFilename(String(Rec));
 end;
 
-procedure TFileDialog.GetFileName({$ifopt H+}out{$else}var{$Endif} S: string);
+procedure TFileDialog.GetFileName({$IfDef FPC_OBJFPC}out{$else}var{$endif} S: string);
 
 var
   Path,
@@ -1639,7 +1641,7 @@ begin
     end;
 end;
 
-procedure TFileDialog.SetData(var Rec);
+procedure TFileDialog.SetData(const Rec);
 begin
   TDialog.SetData(Rec);
   if (String(Rec) <> '') and (IsWild(TWildStr(Rec))) then
@@ -1651,6 +1653,7 @@ end;
 
 function TFileDialog.ReadDirectory: integer;
 begin
+  Result := 0;
   FileList^.ReadDirectory(WildCard);
   FileHistory^.AdaptHistoryToDir(GetCurDir);
   zDirectory := NewStr(GetCurDir);
@@ -2012,7 +2015,7 @@ begin
   Options := Options or ofCentered;
 
   R.Assign(3, 3, 30, 4);
-  DirInput := New(PInputLine, Init(R));
+  DirInput := New(PInputLine, Init(R{$ifndef FPC_OBJFPC}, 256{$endif}));
   Insert(DirInput);
   R.Assign(2, 2, 17, 3);
   Control := New(PLabel, Init(R,slDirectoryName, DirInput));
@@ -2119,7 +2122,7 @@ end;
 {****************************************************************************}
 { TChDirDialog.SetData                        }
 {****************************************************************************}
-procedure TChDirDialog.SetData(var Rec);
+procedure TChDirDialog.SetData(const Rec);
 begin
 end;
 
@@ -2215,7 +2218,7 @@ end;
 {****************************************************************************}
 { TEditChDirDialog.SetData                   }
 {****************************************************************************}
-procedure TEditChDirDialog.SetData (var Rec);
+procedure TEditChDirDialog.SetData(const Rec);
 var
   CurDir : String absolute Rec;
 begin
@@ -2378,7 +2381,7 @@ end;
 {****************************************************************************}
 { DriveValid                         }
 {****************************************************************************}
-function DriveValid(const Drive: String): Boolean;
+function {%H-}DriveValid(const Drive: String): Boolean;
 {$ifdef HAS_DOS_DRIVES}
 
 begin

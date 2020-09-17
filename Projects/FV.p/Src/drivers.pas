@@ -66,6 +66,11 @@ USES
          Windows,                                     { Standard unit }
    {$ENDIF}
 
+ {$IFDEF OS_WIN16}                                  { WIN16 CODE }
+         WinProcs, WinTypes,                          { Standard units }
+         Crt,                                         { used for Delay() }
+   {$ENDIF}
+
    {$ifdef OS_DOS}
      Dos,
    {$endif OS_DOS}
@@ -227,6 +232,8 @@ CONST
    mbLeftButton   = $01;                              { Left mouse button }
    mbRightButton  = $02;                              { Right mouse button }
    mbMiddleButton = $04;                              { Middle mouse button }
+   mbScrollWheelDown = $08;                           { Scroll wheel down}
+   mbScrollWheelUp   = $10;                           { Scroll wheel up }
 
 {---------------------------------------------------------------------------}
 {                         SCREEN CRT MODE CONSTANTS                         }
@@ -330,7 +337,7 @@ in Dest. The high bytes of the Sw_Words are set to Attr, or remain
 unchanged if Attr is zero.
 25May96 LdB
 ---------------------------------------------------------------------}
-PROCEDURE MoveStr (Var Dest; Const Str: String; Attr: Byte);
+PROCEDURE MoveStr ({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest; Const Str: String; Attr: Byte);
 
 {-MoveCStr-----------------------------------------------------------
 The characters in Str are moved into the low bytes of corresponding
@@ -339,7 +346,7 @@ Hi(Attr). Tilde characters (~) in the string toggle between the two
 attribute bytes passed in the Attr Sw_Word.
 25May96 LdB
 ---------------------------------------------------------------------}
-PROCEDURE MoveCStr (Var Dest; Const Str: String; Attrs: Word);
+PROCEDURE MoveCStr ({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest; Const Str: String; Attrs: Word);
 
 {-MoveBuf------------------------------------------------------------
 Count bytes are moved from Source into the low bytes of corresponding
@@ -347,7 +354,7 @@ Sw_Words in Dest. The high bytes of the Sw_Words in Dest are set to Attr,
 or remain unchanged if Attr is zero.
 25May96 LdB
 ---------------------------------------------------------------------}
-PROCEDURE MoveBuf (Var Dest, Source; Attr: Byte; Count: Sw_Word);
+PROCEDURE MoveBuf ({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest;const Source; Attr: Byte; Count: Sw_Word);
 
 {-MoveChar------------------------------------------------------------
 Moves characters into a buffer for use with a view's WriteBuf or
@@ -357,7 +364,7 @@ remain unchanged if Ord(C) is zero. The high bytes of the Sw_Words are
 set to Attr, or remain unchanged if Attr is zero.
 25May96 LdB
 ---------------------------------------------------------------------}
-PROCEDURE MoveChar ({$ifopt H+}out{$else}var{$Endif} Dest; C: Char; Attr: Byte; Count: Sw_Word);
+PROCEDURE MoveChar ({$IfDef FPC_OBJFPC}out{$else}var{$endif}Dest; C: Char; Attr: Byte; Count: Sw_Word);
 
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                        KEYBOARD SUPPORT ROUTINES                          }
@@ -515,13 +522,6 @@ Does nothing provided for compatability purposes only.
 04Jan97 LdB
 ---------------------------------------------------------------------}
 PROCEDURE SetVideoMode (Mode: Sw_Word);
-
-{-SetVideoMode-------------------------------------------------------
-Does nothing provided for compatability purposes only.
-04Jan97 LdB
----------------------------------------------------------------------}
-PROCEDURE DoScreenShot (var Dest);
-
 
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                           ERROR CONTROL ROUTINES                          }
@@ -757,6 +757,11 @@ function GetDosTicks: longint; { returns ticks at 18.2 Hz, just like DOS }
      GetDosTicks:=GetTickCount div 55;
   end;
 {$ENDIF OS_WINDOWS}
+{$IFDEF OS_WIN16}
+  begin
+     GetDosTicks:=GetTickCount div 55;
+  end;
+{$ENDIF OS_WIN16}
 {$IFDEF OS_DOS}
   begin
     GetDosTicks:=MemL[$40:$6c];
@@ -819,6 +824,11 @@ begin
     end;
 end;
 {$ENDIF}
+{$IFDEF OS_WIN16}
+  begin
+    Delay (10);
+  end;
+{$ENDIF}
 {$IFDEF OS_NETWARE_LIBC}
   begin
     Delay (10);
@@ -842,19 +852,19 @@ end;
 {                UNINITIALIZED DOS/DPMI/WIN/NT/OS2 VARIABLES                }
 {---------------------------------------------------------------------------}
 VAR
-   SaveExit: Pointer;                                 { Saved exit pointer }
+   SaveExit: CodePointer;                             { Saved exit pointer }
    Queue   : Array [0..QueueMax-1] Of TEvent;         { New message queue }
 
 {***************************************************************************}
 {                         PRIVATE INTERNAL ROUTINES                         }
 {***************************************************************************}
 
-PROCEDURE ShowMouseCursor;inline;
+procedure ShowMouseCursor;
 BEGIN
   ShowMouse;
 END;
 
-PROCEDURE HideMouseCursor;inline;
+procedure HideMouseCursor;
 BEGIN
   HideMouse;
 END;
@@ -926,7 +936,7 @@ END;
 {---------------------------------------------------------------------------}
 {  MoveStr -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 10Jul99 LdB           }
 {---------------------------------------------------------------------------}
-procedure MoveStr(var Dest; const Str: String; Attr: Byte);
+procedure MoveStr({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest; const Str: String; Attr: Byte);
 VAR I: Word; P: PWord;
 BEGIN
    For I := 1 To Length(Str) Do Begin                 { For each character }
@@ -939,7 +949,7 @@ END;
 {---------------------------------------------------------------------------}
 {  MoveCStr -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 10Jul99 LdB          }
 {---------------------------------------------------------------------------}
-procedure MoveCStr(var Dest; const Str: String; Attrs: Word);
+procedure MoveCStr({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest; const Str: String; Attrs: Word);
 VAR B: Byte; I, J: Sw_Word; P: PWord;
 BEGIN
    J := 0;                                            { Start position }
@@ -961,7 +971,7 @@ END;
 {---------------------------------------------------------------------------}
 {  MoveBuf -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 10Jul99 LdB           }
 {---------------------------------------------------------------------------}
-procedure MoveBuf(var Dest, Source; Attr: Byte; Count: Sw_Word);
+procedure MoveBuf({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest; const Source; Attr: Byte; Count: Sw_Word);
 VAR I: Word; P: PWord;
 BEGIN
    For I := 1 To Count Do Begin
@@ -974,7 +984,7 @@ END;
 {---------------------------------------------------------------------------}
 {  MoveChar -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 10Jul99 LdB          }
 {---------------------------------------------------------------------------}
-procedure MoveChar({$ifopt H+}out{$else}var{$Endif} Dest; C: Char; Attr: Byte; Count: Sw_Word);
+procedure MoveChar({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest; C: Char; Attr: Byte; Count: Sw_Word);
 VAR I: Word; P: PWord;
 BEGIN
    For I := 1 To Count Do Begin
@@ -1067,7 +1077,7 @@ END;
 {---------------------------------------------------------------------------}
 {  GetShiftState -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 08Jul96 LdB     }
 {---------------------------------------------------------------------------}
-FUNCTION GetShiftState: Byte;
+function GetShiftState: Byte;
 begin
   GetShiftState:=Keyboard.GetKeyEventShiftState(Keyboard.PollShiftStateEvent);
 end;
@@ -1277,7 +1287,7 @@ end;
 {---------------------------------------------------------------------------}
 {  InitEvents -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 07Sep99 LdB        }
 {---------------------------------------------------------------------------}
-PROCEDURE InitEvents;
+procedure InitEvents;
 BEGIN
   If (ButtonCount <> 0) Then
     begin                   { Mouse is available }
@@ -1301,7 +1311,7 @@ END;
 {---------------------------------------------------------------------------}
 {  DoneEvents -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Jul99 LdB        }
 {---------------------------------------------------------------------------}
-PROCEDURE DoneEvents;
+procedure DoneEvents;
 BEGIN
   DoneSystemMsg;
   Mouse.DoneMouse;
@@ -1382,7 +1392,7 @@ end;
 {---------------------------------------------------------------------------}
 {  DoneVideo -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 19May98 LdB         }
 {---------------------------------------------------------------------------}
-PROCEDURE DoneVideo;
+procedure DoneVideo;
 BEGIN
   if not VideoInitialized then
     exit;
@@ -1396,7 +1406,7 @@ END;
 {---------------------------------------------------------------------------}
 {  ClearScreen -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 04Jan97 LdB       }
 {---------------------------------------------------------------------------}
-PROCEDURE ClearScreen;
+procedure ClearScreen;
 BEGIN
   Video.ClearScreen;
 END;
@@ -1421,7 +1431,7 @@ END;
 {---------------------------------------------------------------------------}
 {  InitSysError -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 20May98 LdB      }
 {---------------------------------------------------------------------------}
-PROCEDURE InitSysError;
+procedure InitSysError;
 BEGIN
    SysErrActive := True;                              { Set active flag }
 END;
@@ -1429,7 +1439,7 @@ END;
 {---------------------------------------------------------------------------}
 {  DoneSysError -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 20May98 LdB      }
 {---------------------------------------------------------------------------}
-PROCEDURE DoneSysError;
+procedure DoneSysError;
 BEGIN
    SysErrActive := False;                             { Clear active flag }
 END;
@@ -1591,7 +1601,7 @@ END;
 {---------------------------------------------------------------------------}
 {  NextQueuedEvent -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 17Mar98 LdB   }
 {---------------------------------------------------------------------------}
-PROCEDURE NextQueuedEvent(Var Event: TEvent);
+procedure NextQueuedEvent(var Event: TEvent);
 BEGIN
    If (QueueCount > 0) Then Begin                     { Check queued event }
      Event := Queue[QueueTail];                       { Fetch next event }

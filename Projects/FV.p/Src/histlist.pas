@@ -76,7 +76,7 @@ interface
 {$V-}{ Turn off strict VAR strings }
 {====================================================================}
 
-uses FVCommon, Objects;                                 { Standard GFV units }
+uses Objects;                                 { Standard GFV units }
 
 {***************************************************************************}
 {                            INTERFACE ROUTINES                             }

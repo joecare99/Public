@@ -261,7 +261,7 @@ const
     VmtLink: TypeOf(TFilterValidator);
      {$ENDIF}
     Load: @TFilterValidator.Load;                    { Object load method }
-    Store: @TFilterValidator.Store                   { Object store method }
+    Store: @TFilterValidator.Store{%H-}                   { Object store method }
     );
 
 {---------------------------------------------------------------------------}
@@ -276,7 +276,7 @@ const
     VmtLink: TypeOf(TRangeValidator);
      {$ENDIF}
     Load: @TRangeValidator.Load;                     { Object load method }
-    Store: @TRangeValidator.Store                    { Object store method }
+    Store: @TRangeValidator.Store{%H-}                    { Object store method }
     {%H-});
 
 {---------------------------------------------------------------------------}
@@ -291,7 +291,7 @@ const
     VmtLink: TypeOf(TStringLookupValidator);
      {$ENDIF}
     Load: @TStringLookupValidator.Load;              { Object load method }
-    Store: @TStringLookupValidator.Store             { Object store method }
+    Store: @TStringLookupValidator.Store{%H-}             { Object store method }
     );
 
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
