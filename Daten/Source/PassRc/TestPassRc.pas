@@ -1,4 +1,4 @@
-unit TestPassRc;
+unit TestPasSrc;
 
 {$mode objfpc}{$H+}
 
@@ -37,6 +37,7 @@ type
     Procedure TestParseTraFile;
     procedure TestMiniTest;
     procedure TestMiniTest2;
+    procedure TestMiniTest3;
     procedure TestCreateUnit;
   public
     Constructor Create; override;
@@ -164,6 +165,23 @@ var
   Decls: {$ifdef VER2_6} TList {$else} { for FPC > 2.6.0 } TFPList {$endif};
 
 const Filename='Minitest2.lpr';
+
+begin
+    M := ParseSource(E,[FDataPath+DirectorySeparator+ Filename], 'linux', 'i386',[]);
+
+    { Cool, we successfully parsed the module.
+      Now output some info about it. }
+      WritePasFile(M,FDataPath+DirectorySeparator+extractFilename(M.Name)+'_.lpr');
+
+      FreeAndNil(M);
+end;
+
+procedure TTestPassRc.TestMiniTest3;
+var
+  M: TPasModule;
+  Decls: {$ifdef VER2_6} TList {$else} { for FPC > 2.6.0 } TFPList {$endif};
+
+const Filename='Minitest3.lpr';
 
 begin
     M := ParseSource(E,[FDataPath+DirectorySeparator+ Filename], 'linux', 'i386',[]);
