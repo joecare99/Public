@@ -1,57 +1,78 @@
-object Form2: TForm2
+object FrmLaby4: TFrmLaby4
   Left = 0
   Height = 771
   Top = 0
   Width = 1044
-  Caption = 'Form2'
+  Caption = 'Labyrinth 4'
   ClientHeight = 771
   ClientWidth = 1044
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'Tahoma'
-  LCLVersion = '2.0.10.0'
   object PaintBox1: TPaintBox
     Left = 0
     Height = 771
     Top = 0
-    Width = 777
+    Width = 937
     Align = alClient
   end
-  object Panel1: TPanel
-    Left = 777
+  object pnlRight: TPanel
+    Left = 937
     Height = 771
     Top = 0
-    Width = 267
+    Width = 107
     Align = alRight
-    AutoSize = True
-    Caption = 'Panel1'
     ClientHeight = 771
-    ClientWidth = 267
+    ClientWidth = 107
     TabOrder = 0
     object PaintBox2: TPaintBox
       Left = 1
       Height = 241
       Top = 1
-      Width = 265
+      Width = 105
+      Align = alTop
     end
-    object BitBtn1: TBitBtn
-      Left = 73
-      Height = 25
-      Top = 273
-      Width = 75
-      Caption = 'BitBtn1'
-      OnClick = BitBtn1Click
+    object pnlRightCl2: TPanel
+      Left = 1
+      Height = 528
+      Top = 242
+      Width = 105
+      Align = alClient
+      ClientHeight = 528
+      ClientWidth = 105
       TabOrder = 0
+      object btnGenerate: TBitBtn
+        Left = 15
+        Height = 25
+        Top = 16
+        Width = 75
+        Caption = 'Generate'
+        OnClick = btnGenerateClick
+        TabOrder = 0
+      end
+      object btnDraw: TBitBtn
+        Left = 15
+        Height = 26
+        Top = 47
+        Width = 75
+        Caption = 'Draw'
+        OnClick = btnDrawClick
+        TabOrder = 1
+      end
+      object btnPrint: TBitBtn
+        Left = 15
+        Height = 26
+        Top = 80
+        Width = 75
+        Caption = 'Print'
+        OnClick = btnPrintClick
+        TabOrder = 2
+      end
     end
-    object BitBtn2: TBitBtn
-      Left = 73
-      Height = 26
-      Top = 304
-      Width = 75
-      Caption = 'BitBtn2'
-      OnClick = BitBtn2Click
-      TabOrder = 1
-    end
+  end
+  object PrintDialog1: TPrintDialog
+    Left = 774
+    Top = 213
   end
 end

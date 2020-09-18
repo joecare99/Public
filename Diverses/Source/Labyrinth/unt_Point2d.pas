@@ -32,6 +32,7 @@ Type
     Function SMult(vect: T2DPoint): longint; overload; virtual;
     function SMult(Scalar:integer;Divisor: integer=1): T2DPoint; overload; virtual;
     function Equals(Obj: TObject): boolean; override;
+    Function IsIn(rect:TRect):boolean;
     function ToString: {$IFDEF FPC}ansistring{$ELSE}string{$ENDIF}; override;
     function Len: single; virtual;
     function GLen: longint; virtual;
@@ -272,6 +273,11 @@ begin
     result := (x = T2DPoint(Obj).x) and (y = T2DPoint(Obj).y);
 end;
 
+function T2DPoint.IsIn(rect: TRect): boolean;
+begin
+  result := rect.Contains(AsPoint);
+end;
+
 function T2DPoint.ToString: ansistring;
 begin
   result := inherited ToString;
@@ -506,8 +512,8 @@ for i := 0 to high(dir12) do
 FreeAndNil(tdp);
 
 finalization
-for i := 0 to high(dir4) do
-  FreeAndNil(dir4);
+//for i := 0 to high(dir4) do
+ // FreeAndNil(dir4);
 SetLength(dir4,0);
 for i := 0 to high(dir8) do
   FreeAndNil(dir8[i]);
