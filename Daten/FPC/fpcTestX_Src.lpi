@@ -6,11 +6,12 @@
     <General>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
-      <Title Value="fpcTestPassRc"/>
+      <Title Value="fpcTestX_Src"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
       <Icon Value="0"/>
     </General>
+    <LazDoc Paths="..\fpDoc"/>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
     </BuildModes>
@@ -35,12 +36,13 @@
     </RequiredPackages>
     <Units Count="4">
       <Unit0>
-        <Filename Value="fpcTestPassRc.lpr"/>
+        <Filename Value="fpcTestX_Src.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\Source\PassRc\TestPassRc.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="TestPasSrc"/>
       </Unit1>
       <Unit2>
         <Filename Value="C:\lazarus\fpc\3.2.0\source\packages\fcl-passrc\src\paswrite.pp"/>
@@ -57,7 +59,7 @@
     <Version Value="11"/>
     <PathDelim Value="\"/>
     <Target>
-      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\fpcTestPassRc"/>
+      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\fpcTestX_Src"/>
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Source\CShSrcRc"/>

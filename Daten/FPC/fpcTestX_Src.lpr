@@ -1,4 +1,4 @@
-program fpcTestPassRc;
+program fpcTestX_Src;
 
 {$mode objfpc}{$H+}
 
