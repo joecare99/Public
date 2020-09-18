@@ -120,19 +120,19 @@ PROCEDURE SetTime (Hour, Minute, Second, Sec100: Word);
 Returns the current time settings of the operating system.
 06Nov97 LdB
 ---------------------------------------------------------------------}
-PROCEDURE GetTime (Var Hour, Minute, Second, Sec100: Word);
+PROCEDURE GetTime ({$IfDef FPC_OBJFPC}out{$else}var{$endif} Hour, Minute, Second, Sec100: Word);
 
 {-MinutesToTime------------------------------------------------------
 Returns the time in hours and minutes of a given number of minutes.
 19Jun97 LdB
 ---------------------------------------------------------------------}
-PROCEDURE MinutesToTime (Md: LongInt; Var Hour24, Minute: Word);
+PROCEDURE MinutesToTime (Md: LongInt; {$IfDef FPC_OBJFPC}out{$else}var{$endif} Hour24, Minute: Word);
 
 {-SecondsToTime------------------------------------------------------
 Returns the time in hours, mins and secs of a given number of seconds.
 19Jun97 LdB
 ---------------------------------------------------------------------}
-PROCEDURE SecondsToTime (Sd: LongInt; Var Hour24, Minute, Second: Word);
+PROCEDURE SecondsToTime (Sd: LongInt; {$IfDef FPC_OBJFPC}out{$else}var{$endif} Hour24, Minute, Second: Word);
 
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
                                 IMPLEMENTATION
@@ -141,7 +141,7 @@ PROCEDURE SecondsToTime (Sd: LongInt; Var Hour24, Minute, Second: Word);
 
   {$IFNDEF PPC_SPEED}                                 { NON SPEED COMPILER }
     {$IFDEF PPC_FPC}                                  { FPC WINDOWS COMPILER }
-    USEs Windows;                                     { Standard unit }
+    uses Windows;                                     { Standard unit }
     {$ELSE}                                           { OTHER COMPILERS }
     USES WinTypes, WinProcs;                          { Standard units }
     {$ENDIF}
@@ -199,7 +199,7 @@ PROCEDURE SecondsToTime (Sd: LongInt; Var Hour24, Minute, Second: Word);
 {---------------------------------------------------------------------------}
 {  CurrentMinuteOfDay -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 24Jun97 LdB}
 {---------------------------------------------------------------------------}
-FUNCTION CurrentMinuteOfDay: Word;
+function CurrentMinuteOfDay: Word;
 VAR Hour, Minute, Second, Sec100: Word;
 BEGIN
    GetTime(Hour, Minute, Second, Sec100);             { Get current time }
@@ -209,7 +209,7 @@ END;
 {---------------------------------------------------------------------------}
 {  CurrentSecondOfDay -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 24Jun97 LdB}
 {---------------------------------------------------------------------------}
-FUNCTION CurrentSecondOfDay: LongInt;
+function CurrentSecondOfDay: LongInt;
 VAR Hour, Minute, Second, Sec100: Word;
 BEGIN
    GetTime(Hour, Minute, Second, Sec100);             { Get current time }
@@ -220,7 +220,7 @@ END;
 {---------------------------------------------------------------------------}
 {  CurrentSec100OfDay -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 24Jun97 LdB}
 {---------------------------------------------------------------------------}
-FUNCTION CurrentSec100OfDay: LongInt;
+function CurrentSec100OfDay: LongInt;
 VAR Hour, Minute, Second, Sec100: Word;
 BEGIN
    GetTime(Hour, Minute, Second, Sec100);             { Get current time }
@@ -231,7 +231,7 @@ END;
 {---------------------------------------------------------------------------}
 {  MinuteOfDay -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 19Jun97 LdB       }
 {---------------------------------------------------------------------------}
-FUNCTION MinuteOfDay (Hour24, Minute: Word): Word;
+function MinuteOfDay(Hour24, Minute: Word): Word;
 BEGIN
    MinuteOfDay := (Hour24 * 60) + Minute;             { Minute from midnight }
 END;
@@ -239,7 +239,7 @@ END;
 {---------------------------------------------------------------------------}
 {  SecondOfDay -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 19Jun97 LdB       }
 {---------------------------------------------------------------------------}
-FUNCTION SecondOfDay (Hour24, Minute, Second: Word): LongInt;
+function SecondOfDay(Hour24, Minute, Second: Word): LongInt;
 BEGIN
    SecondOfDay := (LongInt(Hour24) * 3600) +
      (Minute * 60) + Second;                          { Second from midnight }
@@ -248,7 +248,7 @@ END;
 {---------------------------------------------------------------------------}
 {  SetTime -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 06Nov97 LdB           }
 {---------------------------------------------------------------------------}
-PROCEDURE SetTime (Hour, Minute, Second, Sec100: Word);
+procedure SetTime(Hour, Minute, Second, Sec100: Word);
 {$IFDEF OS_DOS}                                       { DOS/DPMI CODE }
    {$IFDEF ASM_BP}                                    { BP COMPATABLE ASM }
    ASSEMBLER;
@@ -339,7 +339,7 @@ END;
 {---------------------------------------------------------------------------}
 {  GetTime -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 06Nov97 LdB           }
 {---------------------------------------------------------------------------}
-PROCEDURE GetTime (Var Hour, Minute, Second, Sec100: Word);
+procedure GetTime({$IfDef FPC_OBJFPC}out{$else}var{$endif} Hour, Minute, Second, Sec100: Word);
 {$IFDEF OS_DOS}                                       { DOS/DPMI CODE }
    {$IFDEF ASM_BP}                                    { BP COMPATABLE ASM }
    ASSEMBLER;
@@ -461,7 +461,7 @@ END;
 {---------------------------------------------------------------------------}
 {  MinutesToTime -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 19Jun97 LdB     }
 {---------------------------------------------------------------------------}
-PROCEDURE MinutesToTime (Md: LongInt; Var Hour24, Minute: Word);
+procedure MinutesToTime(Md: LongInt; {$IfDef FPC_OBJFPC}out{$else}var{$endif} Hour24, Minute: Word);
 BEGIN
    Hour24 := Md DIV 60;                               { Hours of time }
    Minute := Md MOD 60;                               { Minutes of time }
@@ -470,7 +470,7 @@ END;
 {---------------------------------------------------------------------------}
 {  SecondsToTime -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 19Jun97 LdB     }
 {---------------------------------------------------------------------------}
-PROCEDURE SecondsToTime (Sd: LongInt; Var Hour24, Minute, Second: Word);
+procedure SecondsToTime(Sd: LongInt; {$IfDef FPC_OBJFPC}out{$else}var{$endif} Hour24, Minute, Second: Word);
 BEGIN
    Hour24 := Sd DIV 3600;                             { Hours of time }
    Minute := Sd MOD 3600 DIV 60;                      { Minutes of time }

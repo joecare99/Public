@@ -342,6 +342,8 @@ type
   end;  { of TStatusMessageDlg }
 
 
+
+  { TGauge }
   {#Z+}
   PGauge = ^TGauge;
   {#Z-}
@@ -385,7 +387,7 @@ Min = XXX  Max = XXX  Current = XXX }
     procedure Reset; virtual;
     { Reset sets #Current# to #Min# then redraws the status view. }
     {#X TStatus.Reset }
-    procedure SetData(var Rec); virtual;
+    procedure SetData(Const Rec); virtual;
       { SetData assumes Rec is a #TGaugeRec# and sets the gauge's variables
         accordingly. }
     {#X GetData }
@@ -408,6 +410,8 @@ Min = XXX  Max = XXX  Current = XXX }
   end;  { of TGaugeRec }
 
 
+
+  { TArrowGauge }
   {#Z+}
   PArrowGauge = ^TArrowGauge;
   {#Z-}
@@ -441,7 +445,7 @@ Min = XXX  Max = XXX  Current = XXX }
       { GetData assumes Rec is a #TArrowGaugeRec# and returns the current
         settings of the views variables. }
     {#X SetData }
-    procedure SetData(var Rec); virtual;
+    procedure SetData(Const Rec); virtual;
       { SetData assumes Rec is a #TArrowGaugeRec# and sets the view's
         variables accordingly. }
     {#X GetData }
@@ -594,67 +598,67 @@ const
     ObjType: idStatus;
     VmtLink: Ofs(TypeOf(TStatus)^);
     Load: @TStatus.Load;
-    Store: @TStatus.Store);
+    Store: @TStatus.Store{%H-});
 
   RStatusDlg: TStreamRec = (
     ObjType: idStatusDlg;
     VmtLink: Ofs(TypeOf(TStatusDlg)^);
     Load: @TStatusDlg.Load;
-    Store: @TStatusDlg.Store);
+    Store: @TStatusDlg.Store{%H-});
 
   RStatusMessageDlg: TStreamRec = (
     ObjType: idStatusMessageDlg;
     VmtLink: Ofs(TypeOf(TStatusMessageDlg)^);
     Load: @TStatusMessageDlg.Load;
-    Store: @TStatusMessageDlg.Store);
+    Store: @TStatusMessageDlg.Store{%H-});
 
   RGauge: TStreamRec = (
     ObjType: idGauge;
     VmtLink: Ofs(TypeOf(TGauge)^);
     Load: @TGauge.Load;
-    Store: @TGauge.Store);
+    Store: @TGauge.Store{%H-});
 
   RArrowGauge: TStreamRec = (
     ObjType: idArrowGauge;
     VmtLink: Ofs(TypeOf(TArrowGauge)^);
     Load: @TArrowGauge.Load;
-    Store: @TArrowGauge.Store);
+    Store: @TArrowGauge.Store{%H-});
 
   RBarGauge: TStreamRec = (
     ObjType: idBarGauge;
     VmtLink: Ofs(TypeOf(TBarGauge)^);
     Load: @TBarGauge.Load;
-    Store: @TBarGauge.Store);
+    Store: @TBarGauge.Store{%H-});
 
   RPercentGauge: TStreamRec = (
     ObjType: idPercentGauge;
     VmtLink: Ofs(TypeOf(TPercentGauge)^);
     Load: @TPercentGauge.Load;
-    Store: @TPercentGauge.Store);
+    Store: @TPercentGauge.Store{%H-});
 
   RSpinnerGauge: TStreamRec = (
     ObjType: idSpinnerGauge;
     VmtLink: Ofs(TypeOf(TSpinnerGauge)^);
     Load: @TSpinnerGauge.Load;
-    Store: @TSpinnerGauge.Store);
+    Store: @TSpinnerGauge.Store{%H-});
 
   RAppStatus: TStreamRec = (
     ObjType: idAppStatus;
     VmtLink: Ofs(TypeOf(TAppStatus)^);
     Load: @TAppStatus.Load;
-    Store: @TAppStatus.Store);
+    Store: @TAppStatus.Store{%H-});
 
   RHeapMinAvail: TStreamRec = (
     ObjType: idHeapMinAvail;
     VmtLink: Ofs(TypeOf(THeapMaxAvail)^);
     Load: @THeapMaxAvail.Load;
-    Store: @THeapMaxAvail.Store);
+    Store: @THeapMaxAvail.Store{%H-});
 
   RHeapMemAvail: TStreamRec = (
     ObjType: idHeapMemAvail;
     VmtLink: Ofs(TypeOf(THeapMemAvail)^);
     Load: @THeapMemAvail.Load;
-    Store: @THeapMemAvail.Store);
+    Store: @THeapMemAvail.Store{%H-});
 
 {$ifndef cdPrintDoc}
 {#Z-}
@@ -676,8 +680,6 @@ procedure RegisterStatuses;
 
 implementation
 
-uses
-  MsgBox, App;
 
 {****************************************************************************}
 {                    Local procedures and functions                          }
@@ -760,7 +762,7 @@ end;
 {****************************************************************************}
 { TArrowGauge.SetData                                                        }
 {****************************************************************************}
-procedure TArrowGauge.SetData(var Rec);
+procedure TArrowGauge.SetData(const Rec);
 begin
   Min := PArrowGaugeRec(Rec)^.Min;
   Max := PArrowGaugeRec(Rec)^.Max;
@@ -892,7 +894,7 @@ end;
 {****************************************************************************}
 { TGauge.SetData                                                             }
 {****************************************************************************}
-procedure TGauge.SetData(var Rec);
+procedure TGauge.SetData(const Rec);
 begin
   Min := TGaugeRec(Rec).Min;
   Max := TGaugeRec(Rec).Max;

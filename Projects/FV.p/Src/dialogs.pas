@@ -1,28 +1,28 @@
 {********[ SOURCE FILE OF GRAPHICAL FREE VISION ]**********}
-
+{                                                          }
 {   System independent GRAPHICAL clone of DIALOGS.PAS      }
-
+{                                                          }
 {   Interface Copyright (c) 1992 Borland International     }
-
+{                                                          }
 {   Copyright (c) 1996, 1997, 1998, 1999 by Leon de Boer   }
 {   ldeboer@attglobal.net  - primary e-mail addr           }
 {   ldeboer@starwon.com.au - backup e-mail addr            }
-
+{                                                          }
 {****************[ THIS CODE IS FREEWARE ]*****************}
-
+{                                                          }
 {     This sourcecode is released for the purpose to       }
 {   promote the pascal language on all platforms. You may  }
 {   redistribute it and/or modify with the following       }
 {   DISCLAIMER.                                            }
-
+{                                                          }
 {     This SOURCE CODE is distributed "AS IS" WITHOUT      }
 {   WARRANTIES AS TO PERFORMANCE OF MERCHANTABILITY OR     }
 {   ANY OTHER WARRANTIES WHETHER EXPRESSED OR IMPLIED.     }
-
+{                                                          }
 {*****************[ SUPPORTED PLATFORMS ]******************}
-
+{                                                          }
 { Only Free Pascal Compiler supported                      }
-
+{                                                          }
 {**********************************************************}
 
 unit Dialogs;
@@ -36,8 +36,7 @@ unit Dialogs;
 {$endif}
 
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
-interface
-
+                                  INTERFACE
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
 
 {====Include file to sort compiler platform out =====================}
@@ -57,10 +56,10 @@ interface
 
 uses
    {$IFDEF OS_WINDOWS}{ WIN/NT CODE }
-  Windows,                                       { Standard units }
+ // Windows,                                       { Standard units }
    {$ENDIF}
 
-   {$IFDEF OS_OS2}{ OS2 CODE }
+   {$IFDEF OS_OS2}                                    { OS2 CODE }
   OS2Def, DosCalls, PMWIN,                       { Standard units }
    {$ENDIF}
 
@@ -157,7 +156,6 @@ const
 {---------------------------------------------------------------------------}
 type
   PSItem = ^TSItem;
-
   TSItem = record
     Value: PString;                                  { Item string }
     Next: PSItem;                                    { Next item }
@@ -171,31 +169,31 @@ type
 {                   TInputLine OBJECT - INPUT LINE OBJECT                   }
 {---------------------------------------------------------------------------}
 type
-  TInputLine = object(TView)
+   TInputLine = OBJECT (TView)
     MaxLen: Sw_Integer;                             { Max input length }
     CurPos: Sw_Integer;                             { Cursor position }
     FirstPos: Sw_Integer;                           { First position }
     SelStart: Sw_Integer;                           { Selected start }
     SelEnd: Sw_Integer;                             { Selected end }
-    Data: ^string;                               { Input line data }
-    Validator: PValidator;                       { Validator of view }
-    constructor Init(var Bounds: TRect; AMaxLen: Sw_Integer {$ifopt H+}= 256{$endif});
-    constructor Load(var S: TStream);
+         Data: ^String; {!}                         { Input line data }
+    Validator: PValidator;                          { Validator of view }
+    constructor Init(Const Bounds: TRect; AMaxLen: Sw_Integer {$ifdef FPC_OBJFPC}= 256{$endif});
+      CONSTRUCTOR Load (Var S: TStream);
     destructor Done; virtual;
     function DataSize: Sw_Word; virtual;
     function GetPalette: PPalette; virtual;
-    function Valid(Command: word): boolean; virtual;
+      FUNCTION Valid (Command: Word): Boolean; Virtual;
     procedure Draw; virtual;
     procedure DrawCursor; virtual;
-    procedure SelectAll(Enable: boolean);
-    procedure SetValidator(AValid: PValidator);
-    procedure SetState(AState: word; Enable: boolean); virtual;
-    procedure GetData(var Rec); virtual;
-    procedure SetData(var Rec); virtual;
-    procedure Store(var S: TStream);
-    procedure HandleEvent(var Event: TEvent); virtual;
+      PROCEDURE SelectAll (Enable: Boolean);
+      PROCEDURE SetValidator (AValid: PValidator);
+      PROCEDURE SetState (AState: Word; Enable: Boolean); Virtual;
+      PROCEDURE GetData (Var Rec); Virtual;
+      PROCEDURE SetData (Const Rec); Virtual;
+      PROCEDURE Store (Var S: TStream);
+      PROCEDURE HandleEvent (Var Event: TEvent); Virtual;
   private
-    function CanScroll(Delta: Sw_Integer): boolean;
+      FUNCTION CanScroll (Delta: Sw_Integer): Boolean;
   end;
   PInputLine = ^TInputLine;
 
@@ -259,7 +257,7 @@ type
     procedure DrawBox(const Icon: string; Marker: char);
     procedure SetButtonState(AMask: longint; Enable: boolean);
     procedure GetData(var Rec); virtual;
-    procedure SetData(var Rec); virtual;
+        procedure SetData(const Rec); virtual;
     procedure Store(var S: TStream);
     procedure HandleEvent(var Event: TEvent); virtual;
   private
@@ -286,7 +284,7 @@ type
     procedure Draw; virtual;
     procedure Press(Item: Sw_Integer); virtual;
     procedure MovedTo(Item: Sw_Integer); virtual;
-    procedure SetData(var Rec); virtual;
+      PROCEDURE SetData (Const Rec); Virtual;
   end;
   PRadioButtons = ^TRadioButtons;
 
@@ -332,7 +330,7 @@ type
     procedure Draw; virtual;
     procedure Press(Item: Sw_Integer); virtual;
     procedure GetData(var Rec); virtual;
-    procedure SetData(var Rec); virtual;
+      PROCEDURE SetData (Const Rec); Virtual;
     procedure Store(var S: TStream);
   end;
   PMultiCheckBoxes = ^TMultiCheckBoxes;
@@ -362,7 +360,7 @@ type
       {$ENDIF}
     procedure NewList(AList: PCollection); virtual;
     procedure GetData(var Rec); virtual;
-    procedure SetData(var Rec); virtual;
+        procedure SetData(const Rec); virtual;
     procedure Store(var S: TStream);
     procedure DeleteFocusedItem; virtual;
     { DeleteFocusedItem deletes the focused item and redraws the view. }
@@ -432,7 +430,7 @@ type
     constructor Load(var S: TStream);
     function DataSize: Sw_Word; virtual;
     procedure GetData(var Rec); virtual;
-    procedure SetData(var Rec); virtual;
+        procedure SetData(const Rec); virtual;
     procedure Store(var S: TStream);
     procedure GetText(var S: string); virtual;
   end;
@@ -526,13 +524,14 @@ type
   {#Z+}
   PBrowseInputLine = ^TBrowseInputLine;
 
+  { TBrowseInputLine }
   TBrowseInputLine = object(TInputLine)
     History: Sw_Word;
     constructor Init(var Bounds: TRect; AMaxLen: Sw_Integer; AHistory: Sw_Word);
     constructor Load(var S: TStream);
     function DataSize: Sw_Word; virtual;
     procedure GetData(var Rec); virtual;
-    procedure SetData(var Rec); virtual;
+    procedure SetData(Const Rec); virtual;
     procedure Store(var S: TStream);
   end;  { of TBrowseInputLine }
 
@@ -675,7 +674,8 @@ type
 
   TEditListBox = object(TListBox)
     CurrentField: integer;
-    constructor Init(Bounds: TRect; ANumCols: word; AVScrollBar: PScrollBar);
+    constructor Init(Bounds: TRect; ANumCols: word;
+        AVScrollBar: PScrollBar);
     constructor Load(var S: TStream);
     function FieldValidator: PValidator; virtual;
     function FieldWidth: integer; virtual;
@@ -859,7 +859,7 @@ const
     ObjType: idDialog;                               { Register id = 10 }
     VmtLink: TypeOf(TDialog);
     Load: @TDialog.Load;                            { Object load method }
-    Store: @TDialog.Store                            { Object store method }
+    Store: @TDialog.Store{%H-}                            { Object store method }
     );
 
 {---------------------------------------------------------------------------}
@@ -870,7 +870,7 @@ const
     ObjType: idInputLine;                            { Register id = 11 }
     VmtLink: TypeOf(TInputLine);
     Load: @TInputLine.Load;                         { Object load method }
-    Store: @TInputLine.Store                         { Object store method }
+    Store: @TInputLine.Store{%H-}                         { Object store method }
     );
 
 {---------------------------------------------------------------------------}
@@ -881,7 +881,7 @@ const
     ObjType: idButton;                               { Register id = 12 }
     VmtLink: TypeOf(TButton);
     Load: @TButton.Load;                            { Object load method }
-    Store: @TButton.Store                            { Object store method }
+    Store: @TButton.Store{%H-}                            { Object store method }
     );
 
 {---------------------------------------------------------------------------}
@@ -892,7 +892,7 @@ const
     ObjType: idCluster;                              { Register id = 13 }
     VmtLink: TypeOf(TCluster);
     Load: @TCluster.Load;                           { Object load method }
-    Store: @TCluster.Store                           { Objects store method }
+    Store: @TCluster.Store{%H-}                           { Objects store method }
     );
 
 {---------------------------------------------------------------------------}
@@ -903,7 +903,7 @@ const
     ObjType: idRadioButtons;                         { Register id = 14 }
     VmtLink: TypeOf(TRadioButtons);
     Load: @TRadioButtons.Load;                      { Object load method }
-    Store: @TRadioButtons.Store                      { Object store method }
+    Store: @TRadioButtons.Store{%H-}                      { Object store method }
     );
 
 {---------------------------------------------------------------------------}
@@ -914,7 +914,7 @@ const
     ObjType: idCheckBoxes;                           { Register id = 15 }
     VmtLink: TypeOf(TCheckBoxes);
     Load: @TCheckBoxes.Load;                        { Object load method }
-    Store: @TCheckBoxes.Store                        { Object store method }
+    Store: @TCheckBoxes.Store{%H-}                        { Object store method }
     );
 
 {---------------------------------------------------------------------------}
@@ -925,7 +925,7 @@ const
     ObjType: idMultiCheckBoxes;                      { Register id = 27 }
     VmtLink: TypeOf(TMultiCheckBoxes);
     Load: @TMultiCheckBoxes.Load;                   { Object load method }
-    Store: @TMultiCheckBoxes.Store                   { Object store method }
+    Store: @TMultiCheckBoxes.Store{%H-}                   { Object store method }
     );
 
 {---------------------------------------------------------------------------}
@@ -936,7 +936,7 @@ const
     ObjType: idListBox;                              { Register id = 16 }
     VmtLink: TypeOf(TListBox);
     Load: @TListBox.Load;                           { Object load method }
-    Store: @TListBox.Store                           { Object store method }
+    Store: @TListBox.Store{%H-}                           { Object store method }
     );
 
 {---------------------------------------------------------------------------}
@@ -947,7 +947,7 @@ const
     ObjType: idStaticText;                           { Register id = 17 }
     VmtLink: TypeOf(TStaticText);
     Load: @TStaticText.Load;                        { Object load method }
-    Store: @TStaticText.Store                        { Object store method }
+    Store: @TStaticText.Store{%H-}                        { Object store method }
     );
 
 {---------------------------------------------------------------------------}
@@ -958,7 +958,7 @@ const
     ObjType: idLabel;                                { Register id = 18 }
     VmtLink: TypeOf(TLabel);
     Load: @TLabel.Load;                             { Object load method }
-    Store: @TLabel.Store                             { Object store method }
+    Store: @TLabel.Store{%H-}                             { Object store method }
     );
 
 {---------------------------------------------------------------------------}
@@ -969,7 +969,7 @@ const
     ObjType: idHistory;                              { Register id = 19 }
     VmtLink: TypeOf(THistory);
     Load: @THistory.Load;                           { Object load method }
-    Store: @THistory.Store                           { Object store method }
+    Store: @THistory.Store{%H-}                           { Object store method }
     );
 
 {---------------------------------------------------------------------------}
@@ -980,50 +980,50 @@ const
     ObjType: idParamText;                            { Register id = 20 }
     VmtLink: TypeOf(TParamText);
     Load: @TParamText.Load;                         { Object load method }
-    Store: @TParamText.Store                         { Object store method }
+    Store: @TParamText.Store{%H-}                         { Object store method }
     );
 
   RCommandCheckBoxes: TStreamRec = (
     ObjType: idCommandCheckBoxes;
     VmtLink: Ofs(TypeOf(TCommandCheckBoxes)^);
     Load: @TCommandCheckBoxes.Load;
-    Store: @TCommandCheckBoxes.Store);
+    Store: @TCommandCheckBoxes.Store{%H-});
 
   RCommandRadioButtons: TStreamRec = (
     ObjType: idCommandRadioButtons;
     VmtLink: Ofs(TypeOf(TCommandRadioButtons)^);
     Load: @TCommandRadioButtons.Load;
-    Store: @TCommandRadioButtons.Store);
+    Store: @TCommandRadioButtons.Store{%H-});
 
   RCommandIcon: TStreamRec = (
     ObjType: idCommandIcon;
     VmtLink: Ofs(Typeof(TCommandIcon)^);
     Load: @TCommandIcon.Load;
-    Store: @TCommandIcon.Store);
+    Store: @TCommandIcon.Store{%H-});
 
   RBrowseButton: TStreamRec = (
     ObjType: idBrowseButton;
     VmtLink: Ofs(TypeOf(TBrowseButton)^);
     Load: @TBrowseButton.Load;
-    Store: @TBrowseButton.Store);
+    Store: @TBrowseButton.Store{%H-});
 
   REditListBox: TStreamRec = (
     ObjType: idEditListBox;
     VmtLink: Ofs(TypeOf(TEditListBox)^);
     Load: @TEditListBox.Load;
-    Store: @TEditListBox.Store);
+    Store: @TEditListBox.Store{%H-});
 
   RListDlg: TStreamRec = (
     ObjType: idListDlg;
     VmtLink: Ofs(TypeOf(TListDlg)^);
     Load: @TListDlg.Load;
-    Store: @TListDlg.Store);
+    Store: @TListDlg.Store{%H-});
 
   RModalInputLine: TStreamRec = (
     ObjType: idModalInputLine;
     VmtLink: Ofs(TypeOf(TModalInputLine)^);
     Load: @TModalInputLine.Load;
-    Store: @TModalInputLine.Store);
+    Store: @TModalInputLine.Store{%H-});
 
 resourcestring
   slCancel = 'Cancel';
@@ -1084,11 +1084,11 @@ var
   I: Sw_Word;
 begin
   HotKey := #0;                                      { Preset fail }
-  if (S <> '') then
-  begin                            { Valid string }
+  if (S <> '') then                                  { Valid string }
+  begin                            
     I := Pos('~', S);                                { Search for tilde }
     if (I <> 0) then
-      HotKey := UpCase(S[I + 1]);       { Return hotkey }
+      HotKey := UpCase(S[I + 1]);                    { Return hotkey }
   end;
 end;
 
@@ -1142,7 +1142,7 @@ end;
 function TDialog.Valid(Command: word): boolean;
 begin
   if (Command = cmCancel) then
-    Valid := True         { Cancel returns true }
+    Valid := True                               { Cancel returns true }
   else
     Valid := TGroup.Valid(Command);             { Call group ancestor }
 end;
@@ -1158,7 +1158,7 @@ begin
     evKeyDown:                                       { Key down event }
       case Event.KeyCode of
         kbEsc, kbCtrlF4:
-        begin                       { Escape key press }
+        begin                                      { Escape key press }
           Event.What := evCommand;                 { Command event }
           Event.Command := cmCancel;               { cancel command }
           Event.InfoPtr := nil;                    { Clear info ptr }
@@ -1166,7 +1166,7 @@ begin
           ClearEvent(Event);                       { Clear the event }
         end;
         kbCtrlF5:
-        begin                              { movement of modal dialogs }
+        begin                                      { movement of modal dialogs }
           if (State and sfModal <> 0) then
           begin
             Event.What := evCommand;
@@ -1177,7 +1177,7 @@ begin
           end;
         end;
         kbEnter:
-        begin                               { Enter key press }
+        begin                                      { Enter key press }
           Event.What := evBroadcast;               { Broadcast event }
           Event.Command := cmDefault;              { Default command }
           Event.InfoPtr := nil;                    { Clear info ptr }
@@ -1189,7 +1189,7 @@ begin
       case Event.Command of
         cmOk, cmCancel, cmYes, cmNo:                 { End dialog cmds }
           if (State and sfModal <> 0) then
-          begin     { View is modal }
+          begin                                      { View is modal }
             EndModal(Event.Command);                 { End modal state }
             ClearEvent(Event);                       { Clear the event }
           end;
@@ -1268,8 +1268,7 @@ end;
 { TDialog.NewButton                                                          }
 {****************************************************************************}
 function TDialog.NewButton(X, Y, W, H: Sw_Integer; ATitle: TTitleStr;
-  ACommand, AHelpCtx: word;
-  AFlags: byte): PButton;
+    ACommand, AHelpCtx: word; AFlags: byte): PButton;
 var
   B: PButton;
   R: TRect;
@@ -1288,8 +1287,7 @@ end;
 { TDialog.NewInputLine                                                       }
 {****************************************************************************}
 function TDialog.NewInputLine(X, Y, W, AMaxLen: Sw_Integer;
-  AHelpCtx: word;
-  AValidator: PValidator): PInputLine;
+  AHelpCtx: word; AValidator: PValidator): PInputLine;
 var
   P: PInputLine;
   R: TRect;
@@ -1311,8 +1309,8 @@ end;
 function TDialog.NewLabel(X, Y: Sw_Integer; AText: string;
   ALink: PView): PLabel;
 var
-  P: PLabel;
-  R: TRect;
+   P: PLabel;
+   R: TRect;
 begin
   R.Assign(X, Y, X + CStrLen(AText) + 1, Y + 1);
   P := New(PLabel, Init(R, AText, ALink));
@@ -1328,14 +1326,14 @@ end;
 {--TInputLine---------------------------------------------------------------}
 {  Init -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 04Oct99 LdB              }
 {---------------------------------------------------------------------------}
-constructor TInputLine.Init(var Bounds: TRect; AMaxLen: Sw_Integer);
+constructor TInputLine.Init(const Bounds: TRect; AMaxLen: Sw_Integer);
 begin
   inherited Init(Bounds);                            { Call ancestor }
   State := State or sfCursorVis;                     { Cursor visible }
   Options := Options or (ofSelectable + ofFirstClick + ofVersion20);
-  { Set options }
+                                                     { Set options }
   if (MaxAvail > AMaxLen + 1) then
-  begin             { Check enough memory }
+  begin                                              { Check enough memory }
     GetMem(Data, AMaxLen + 1);                       { Allocate memory }
     Data^ := '';                                     { Data = empty string }
   end;
@@ -1352,19 +1350,19 @@ var
 begin
   inherited Load(S);                                 { Call ancestor }
   S.Read(W, sizeof(w));
-  MaxLen := W;                   { Read max length }
+  MaxLen := W;                                       { Read max length }
   S.Read(W, sizeof(w));
-  CurPos := w;                   { Read cursor position }
+  CurPos := w;                                       { Read cursor position }
   S.Read(W, sizeof(w));
-  FirstPos := w;                 { Read first position }
+  FirstPos := w;                                     { Read first position }
   S.Read(W, sizeof(w));
-  SelStart := w;                 { Read selected start }
+  SelStart := w;                                     { Read selected start }
   S.Read(W, sizeof(w));
-  SelEnd := w;                   { Read selected end }
+  SelEnd := w;                                       { Read selected end }
   S.Read(B, SizeOf(B));                              { Read string length }
-  GetMem(Data, B + 1);                        { Allocate memory }
-  S.Read(Data^[1], B);                             { Read string data }
-  SetLength(Data^, B);                             { Xfer string length }
+  GetMem(Data, B + 1);                               { Allocate memory }
+  S.Read(Data^[1], B);                               { Read string data }
+  SetLength(Data^, B);                               { Xfer string length }
   if (Options and ofVersion >= ofVersion20) then     { Version 2 or above }
     Validator := PValidator(S.Get);                  { Get any validator }
   Options := Options or ofVersion20;                 { Set version 2 flag }
@@ -1376,7 +1374,7 @@ end;
 destructor TInputLine.Done;
 begin
   if (Data <> nil) then
-    FreeMem(Data, MaxLen + 1);    { Release any memory }
+    FreeMem(Data, MaxLen + 1);                        { Release any memory }
   SetValidator(nil);                                  { Clear any validator }
   inherited Done;                                     { Call ancestor }
 end;
@@ -1391,11 +1389,11 @@ begin
   DSize := 0;                                        { Preset zero datasize }
   if (Validator <> nil) and (Data <> nil) then
     DSize := Validator^.Transfer(Data^, nil, vtDataSize);
-  { Add validator size }
-  if (DSize <> 0) then
-    DataSize := DSize             { Use validtor size }
+                                                     { Add validator size }
+  if (DSize <> 0) then 
+    DataSize := DSize                                { Use validtor size }
   else
-    DataSize := MaxLen + 1;                     { No validator use size }
+    DataSize := MaxLen + 1;                          { No validator use size }
 end;
 
 {--TInputLine---------------------------------------------------------------}
@@ -1411,7 +1409,7 @@ end;
 {--TInputLine---------------------------------------------------------------}
 {  Valid -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 04Oct99 LdB             }
 {---------------------------------------------------------------------------}
-function TInputLine.Valid(Command: word): boolean;
+function TInputLine.Valid(Command: Word): Boolean;
 
   function AppendError(AValidator: PValidator): boolean;
   begin
@@ -1419,9 +1417,9 @@ function TInputLine.Valid(Command: word): boolean;
     if (Data <> nil) then
       with AValidator^ do
         if (Options and voOnAppend <> 0) and         { Check options }
-          (CurPos <> Length(Data^)) and                { Exceeds max length } not
-          IsValidInput(Data^, True) then
-        begin     { Check data valid }
+          (CurPos <> Length(Data^)) and              { Exceeds max length } 
+         not IsValidInput(Data^, True) then
+        begin                                        { Check data valid }
           Error;                                     { Call error }
           AppendError := True;                       { Return true }
         end;
@@ -1434,8 +1432,8 @@ begin
     if (Command = cmValid) then                      { Valid command }
       Valid := Validator^.Status = vsOk              { Validator result }
     else if (Command <> cmCancel) then             { Not cancel command }
-      if AppendError(Validator) or                 { Append any error } not
-        Validator^.Valid(Data^) then
+      if AppendError(Validator) or                 { Append any error } 
+        not Validator^.Valid(Data^) then
       begin       { Check validator }
         Select;                                    { Reselect view }
         Valid := False;                            { Return false }
@@ -1497,7 +1495,7 @@ end;
 {--TInputLine---------------------------------------------------------------}
 {  SelectAll -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 04Oct99 LdB         }
 {---------------------------------------------------------------------------}
-procedure TInputLine.SelectAll(Enable: boolean);
+procedure TInputLine.SelectAll(Enable: Boolean);
 begin
   CurPos := 0;                                       { Cursor to start }
   FirstPos := 0;                                     { First pos to start }
@@ -1505,7 +1503,7 @@ begin
   if Enable and (Data <> nil) then
     SelEnd := Length(Data^)
   else
-    SelEnd := 0;        { Selected which end }
+    SelEnd := 0;                                     { Selected which end }
   DrawView;                                          { Now redraw the view }
 end;
 
@@ -1515,22 +1513,21 @@ end;
 procedure TInputLine.SetValidator(AValid: PValidator);
 begin
   if (Validator <> nil) then
-    Validator^.Free;        { Release validator }
+    Validator^.Free;                                 { Release validator }
   Validator := AValid;                               { Set new validator }
 end;
 
 {--TInputLine---------------------------------------------------------------}
 {  SetState -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 04Oct99 LdB          }
 {---------------------------------------------------------------------------}
-procedure TInputLine.SetState(AState: word; Enable: boolean);
+procedure TInputLine.SetState(AState: Word; Enable: Boolean);
 begin
   inherited SetState(AState, Enable);                { Call ancestor }
   if (AState = sfSelected) or ((AState = sfActive) and
     (State and sfSelected <> 0)) then
     SelectAll(Enable)
-  else                           { Call select all }
-  if (AState = sfFocused) then
-    DrawView;           { Redraw for focus }
+  else if (AState = sfFocused) then                  { Call select all }
+    DrawView;                                        { Redraw for focus }
 end;
 
 {--TInputLine---------------------------------------------------------------}
@@ -1538,25 +1535,26 @@ end;
 {---------------------------------------------------------------------------}
 procedure TInputLine.GetData(var Rec);
 begin
-  if (Data <> nil) then
-  begin                        { Data ptr valid }
-    if (Validator = nil) or (Validator^.Transfer(Data^, @Rec, vtGetData) = 0) then
-    begin                 { No validator/data }
+  if (Data <> nil) then                              { Data ptr valid }
+  begin                       
+    if (Validator = nil) 
+      or (Validator^.Transfer(Data^, @Rec, vtGetData) = 0) then
+    begin                                            { No validator/data }
       FillChar(Rec, DataSize, #0);                   { Clear the data area }
       Move(Data^, Rec, Length(Data^) + 1);           { Transfer our data }
     end;
   end
   else
-    FillChar(Rec, DataSize, #0);              { Clear the data area }
+    FillChar(Rec, DataSize, #0);                     { Clear the data area }
 end;
 
 {--TInputLine---------------------------------------------------------------}
 {  SetData -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 04Oct99 LdB           }
 {---------------------------------------------------------------------------}
-procedure TInputLine.SetData(var Rec);
+procedure TInputLine.SetData(const Rec);
 begin
-  if (Data <> nil) then
-  begin                        { Data ptr valid }
+  if (Data <> nil) then                              { Data ptr valid }
+  begin                       
     if (Validator = nil) or (Validator^.Transfer(
       Data^, @Rec, vtSetData) = 0) then
       { No validator/data }
@@ -1891,7 +1889,7 @@ end;
 {--TInputLine---------------------------------------------------------------}
 {  CanScroll -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 04Oct99 LdB         }
 {---------------------------------------------------------------------------}
-function TInputLine.CanScroll(Delta: Sw_Integer): boolean;
+function TInputLine.CanScroll(Delta: Sw_Integer): Boolean;
 var
   S: string;
 begin
@@ -2481,7 +2479,7 @@ end;
 {--TCluster-----------------------------------------------------------------}
 {  SetData -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 04May98 LdB           }
 {---------------------------------------------------------------------------}
-procedure TCluster.SetData(var Rec);
+procedure TCluster.SetData(const Rec);
 begin
   Value := sw_Word(Rec);                              { Set current value }
   DrawView;                                          { Redraw masked areas }
@@ -2752,7 +2750,7 @@ end;
 {--TRadioButtons------------------------------------------------------------}
 {  SetData -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 04May98 LdB           }
 {---------------------------------------------------------------------------}
-procedure TRadioButtons.SetData(var Rec);
+procedure TRadioButtons.SetData(const Rec);
 begin
   Sel := Sw_word(Rec);                               { Set selection }
   inherited SetData(Rec);                            { Call ancestor }
@@ -2872,7 +2870,7 @@ begin
     CurState := SelRange - 1;                        { Roll if needed }
   Value := (Value and not (longint(WordRec(Flags).Lo) shl
     (word(Item) * WordRec(Flags).Hi))) or (longint(CurState) shl
-    (word(Item) * WordRec(Flags).Hi));                              { Calculate value }
+    (word(Item) * WordRec(Flags).Hi));               { Calculate value }
   inherited Press(Item);                             { Call ancestor }
 end;
 
@@ -2887,7 +2885,7 @@ end;
 {--TMultiCheckBoxes---------------------------------------------------------}
 {  SetData -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 06Jun98 LdB           }
 {---------------------------------------------------------------------------}
-procedure TMultiCheckBoxes.SetData(var Rec);
+procedure TMultiCheckBoxes.SetData(const Rec);
 begin
   Value := longint(Rec);                             { Set value }
   DrawView;                                          { Redraw masked areas }
@@ -2986,7 +2984,7 @@ end;
 {--TListBox-----------------------------------------------------------------}
 {  SetData -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 06Jun98 LdB           }
 {---------------------------------------------------------------------------}
-procedure TListBox.SetData(var Rec);
+procedure TListBox.SetData(const Rec);
 begin
   NewList(TListBoxRec(Rec).List);                    { Hold new list }
   FocusItem(TListBoxRec(Rec).Selection);             { Focus selected item }
@@ -3015,8 +3013,9 @@ end;
 {****************************************************************************}
 procedure TListBox.DeleteItem(Item: Sw_Integer);
 begin
-  if (List <> nil) and (List^.Count > 0) and ((Item < List^.Count) and
-    (Item > -1)) then
+  if (List <> nil) and (List^.Count > 0) 
+     and ((Item < List^.Count) 
+     and (Item > -1)) then
   begin
     if IsSelected(Item) and (Item > 0) then
       FocusItem(Item - 1);
@@ -3257,7 +3256,7 @@ end;
 {--TParamText---------------------------------------------------------------}
 {  SetData -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 06Jun98 LdB           }
 {---------------------------------------------------------------------------}
-procedure TParamText.SetData(var Rec);
+procedure TParamText.SetData(const Rec);
 begin
   ParamList := @Rec;                                 { Fetch parameter list }
   DrawView;                                          { Redraw all the view }
@@ -3764,7 +3763,7 @@ end;
 {****************************************************************************}
 { TBrowseInputLine.SetData                                                   }
 {****************************************************************************}
-procedure TBrowseInputLine.SetData(var Rec);
+procedure TBrowseInputLine.SetData(const Rec);
 var
   LocalRec: TBrowseInputLineRec absolute Rec;
 begin

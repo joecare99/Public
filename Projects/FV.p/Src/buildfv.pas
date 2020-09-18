@@ -5,31 +5,31 @@
 unit buildfv;
 interface
 uses
-  fvcommon,
+  {%H-}fvcommon,
   objects,
   drivers,
 {  memory,}
-  fvconsts,
+  {%H-}fvconsts,
 {  resource,}
-  views,
-  validate,
-  msgbox,
-  dialogs,
-  menus,
-  app,
+  {%H-}views,
+  {%H-}validate,
+  {%H-}msgbox,
+  {%H-}dialogs,
+  {%H-}menus,
+  {%H-}app,
   stddlg,
-  asciitab,
+  {%H-}asciitab,
   tabs,
-  outline,
-  memory,
-  colortxt,
-  statuses,
-  histlist,
-  inplong,
-  editors,
-  gadgets,
+  {%H-}outline,
+  {%H-}memory,
+  {%H-}colortxt,
+  {%H-}statuses,
+  {%H-}histlist,
+  {%H-}inplong,
+  {%H-}editors,
+  {%H-}gadgets,
   timeddlg,
-  time;
+  {%H-}time;
 
 implementation
 

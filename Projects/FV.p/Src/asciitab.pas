@@ -104,19 +104,19 @@ const
      ObjType: idTable;
      VmtLink: Ofs(TypeOf(TTable)^);
      Load:    @TTable.Load;
-     Store:   @TTable.Store
+     Store:   @TTable.Store{%H-}
   );
   RReport: TStreamRec = (
      ObjType: idReport;
      VmtLink: Ofs(TypeOf(TReport)^);
      Load:    @TReport.Load;
-     Store:   @TReport.Store
+     Store:   @TReport.Store{%H-}
   );
   RASCIIChart: TStreamRec = (
      ObjType: idASCIIChart;
      VmtLink: Ofs(TypeOf(TASCIIChart)^);
      Load:    @TASCIIChart.Load;
-     Store:   @TASCIIChart.Store
+     Store:   @TASCIIChart.Store{%H-}
   );
 
 {---------------------------------------------------------------------------}

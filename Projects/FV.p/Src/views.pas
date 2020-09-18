@@ -49,7 +49,7 @@ UNIT Views;
 
 USES
    {$IFDEF OS_WINDOWS}                                { WIN/NT CODE }
-         Windows,                                     { Standard unit }
+ //        Windows,                                     { Standard unit }
    {$ENDIF}
 
    {$IFDEF OS_OS2}                                    { OS2 CODE }
@@ -336,7 +336,7 @@ TYPE
          RevCol    : Boolean;
          BackgroundChar : Char;
 
-      CONSTRUCTOR Init (Var Bounds: TRect);
+      CONSTRUCTOR Init (Const Bounds: TRect);
       CONSTRUCTOR Load (Var S: TStream);
       DESTRUCTOR Done; Virtual;
       FUNCTION Prev: PView;
@@ -384,21 +384,21 @@ TYPE
       PROCEDURE SetState (AState: Word; Enable: Boolean); Virtual;
       PROCEDURE SetCmdState (Commands: TCommandSet; Enable: Boolean);
       PROCEDURE GetData (Var Rec); Virtual;
-      PROCEDURE SetData (Var Rec); Virtual;
+      PROCEDURE SetData (Const Rec); Virtual;
       PROCEDURE Store (Var S: TStream);
       PROCEDURE Locate (Var Bounds: TRect);
       PROCEDURE KeyEvent (Var Event: TEvent);
       PROCEDURE GetEvent (Var Event: TEvent); Virtual;
       PROCEDURE PutEvent (Var Event: TEvent); Virtual;
-      PROCEDURE GetExtent ({$ifopt H+}out{$else}var{$Endif} Extent: TRect);
-      procedure GetBounds({$ifopt H+}out{$else}var{$Endif} Bounds: TRect);
+      PROCEDURE GetExtent ({$IfDef FPC_OBJFPC}out{$else}var{$endif} Extent: TRect);
+      procedure GetBounds({$IfDef FPC_OBJFPC}out{$else}var{$endif} Bounds: TRect);
       procedure SetBounds(const Bounds: TRect);
       PROCEDURE GetClipRect (Var Clip: TRect);
       PROCEDURE ClearEvent (Var Event: TEvent);
       PROCEDURE HandleEvent (Var Event: TEvent); Virtual;
-      PROCEDURE ChangeBounds (Var Bounds: TRect); Virtual;
-      procedure SizeLimits(var Min, Max: TPoint); Virtual;
-      PROCEDURE GetCommands (Var Commands: TCommandSet);
+      PROCEDURE ChangeBounds (const Bounds: TRect); Virtual;
+      procedure SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} Min, Max: TPoint); Virtual;
+      PROCEDURE GetCommands ({$IfDef FPC_OBJFPC}out{$else}var{$endif} Commands: TCommandSet);
       PROCEDURE GetPeerViewPtr (Var S: TStream; Var P);
       PROCEDURE PutPeerViewPtr (Var S: TStream; P: PView);
       PROCEDURE CalcBounds (Var Bounds: TRect; Delta: TPoint); Virtual;
@@ -406,8 +406,8 @@ TYPE
       FUNCTION Exposed: Boolean;   { This needs help!!!!! }
       PROCEDURE WriteBuf (X, Y, W, H: Sw_Integer; Var Buf);
       PROCEDURE WriteLine (X, Y, W, H: Sw_Integer; Var Buf);
-      PROCEDURE MakeLocal (Source: TPoint; Var Dest: TPoint);
-      PROCEDURE MakeGlobal (Source: TPoint; Var Dest: TPoint);
+      PROCEDURE MakeLocal (Source: TPoint; {$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest: TPoint);
+      PROCEDURE MakeGlobal (Source: TPoint; {$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest: TPoint);
       PROCEDURE WriteStr (X, Y: Sw_Integer; Str: String; Color: Byte);
       PROCEDURE WriteChar (X, Y: Sw_Integer; C: Char; Color: Byte;
         Count: Sw_Integer);
@@ -431,13 +431,19 @@ TYPE
 {---------------------------------------------------------------------------}
 {                  TGroup OBJECT - GROUP OBJECT ANCESTOR                    }
 {---------------------------------------------------------------------------}
+{$ifndef TYPED_LOCAL_CALLBACKS}
+   TGroupFirstThatCallback = CodePointer;
+{$else}
+   TGroupFirstThatCallback = Function(View: PView): Boolean is nested;
+{$endif}
+
    TGroup = OBJECT (TView)
          Phase   : (phFocused, phPreProcess, phPostProcess);
          EndState: Word;                              { Modal result }
          Current : PView;                             { Selected subview }
          Last    : PView;                             { 1st view inserted }
          Buffer  : PVideoBuf;                         { Speed up buffer }
-      CONSTRUCTOR Init (Var Bounds: TRect);
+      CONSTRUCTOR Init (const Bounds: TRect);
       CONSTRUCTOR Load (Var S: TStream);
       DESTRUCTOR Done; Virtual;
       FUNCTION First: PView;
@@ -445,7 +451,7 @@ TYPE
       FUNCTION GetHelpCtx: Word; Virtual;
       FUNCTION DataSize: Sw_Word; Virtual;
       FUNCTION ExecView (P: PView): Word; Virtual;
-      FUNCTION FirstThat (P: Pointer): PView;
+      FUNCTION FirstThat (P:  TGroupFirstThatCallback): PView;
       FUNCTION Valid (Command: Word): Boolean; Virtual;
       FUNCTION FocusNext (Forwards: Boolean): Boolean;
       PROCEDURE Draw; Virtual;
@@ -457,18 +463,18 @@ TYPE
       PROCEDURE SelectDefaultView;
       PROCEDURE Insert (P: PView);
       PROCEDURE Delete (P: PView);
-      PROCEDURE ForEach (P: Pointer);
+      PROCEDURE ForEach (P: TCallbackProcParam);
       { ForEach can't be virtual because it generates SIGSEGV }
       PROCEDURE EndModal (Command: Word); Virtual;
       PROCEDURE SelectNext (Forwards: Boolean);
       PROCEDURE InsertBefore (P, Target: PView);
       PROCEDURE SetState (AState: Word; Enable: Boolean); Virtual;
       PROCEDURE GetData (Var Rec); Virtual;
-      PROCEDURE SetData (Var Rec); Virtual;
+      PROCEDURE SetData (Const Rec); Virtual;
       PROCEDURE Store (Var S: TStream);
       PROCEDURE EventError (Var Event: TEvent); Virtual;
       PROCEDURE HandleEvent (Var Event: TEvent); Virtual;
-      PROCEDURE ChangeBounds (Var Bounds: TRect); Virtual;
+      PROCEDURE ChangeBounds (const Bounds: TRect); Virtual;
       PROCEDURE GetSubViewPtr (Var S: TStream; Var P);
       PROCEDURE PutSubViewPtr (Var S: TStream; P: PView);
       function ClipChilds: boolean; virtual;
@@ -557,7 +563,7 @@ TYPE
       PROCEDURE SetState (AState: Word; Enable: Boolean); Virtual;
       PROCEDURE Store (Var S: TStream);
       PROCEDURE HandleEvent (Var Event: TEvent); Virtual;
-      PROCEDURE ChangeBounds (Var Bounds: TRect); Virtual;
+      PROCEDURE ChangeBounds (const Bounds: TRect); Virtual;
         PRIVATE
          DrawFlag: Boolean;
          DrawLock: Byte;
@@ -590,7 +596,7 @@ TYPE
       PROCEDURE SetState (AState: Word; Enable: Boolean); Virtual;
       PROCEDURE Store (Var S: TStream);
       PROCEDURE HandleEvent (Var Event: TEvent); Virtual;
-      PROCEDURE ChangeBounds (Var Bounds: TRect); Virtual;
+      PROCEDURE ChangeBounds (Const Bounds: TRect); Virtual;
       PROCEDURE FocusItemNum (Item: Sw_Integer); Virtual;
    END;
    PListViewer = ^TListViewer;
@@ -618,7 +624,7 @@ TYPE
       PROCEDURE SetState (AState: Word; Enable: Boolean); Virtual;
       PROCEDURE Store (Var S: TStream);
       PROCEDURE HandleEvent (Var Event: TEvent); Virtual;
-      PROCEDURE SizeLimits (var Min, Max: TPoint); Virtual;
+      PROCEDURE SizeLimits ({$IfDef FPC_OBJFPC}out{$else}var{$endif} Min, Max: TPoint); Virtual;
    END;
    PWindow = ^TWindow;
 
@@ -703,7 +709,7 @@ CONST
      ObjType: idView;                                 { Register id = 1 }
      VmtLink: TypeOf(TView);                          { Alt style VMT link }
      Load:    @TView.Load;                            { Object load method }
-     Store:   @TView.Store                            { Object store method }
+     Store:   @TView.Store{%H-}                            { Object store method }
    );
 
 {---------------------------------------------------------------------------}
@@ -714,7 +720,7 @@ CONST
      ObjType: idFrame;                                { Register id = 2 }
      VmtLink: TypeOf(TFrame);                         { Alt style VMT link }
      Load:    @TFrame.Load;                           { Frame load method }
-     Store:   @TFrame.Store                           { Frame store method }
+     Store:   @TFrame.Store{%H-}                           { Frame store method }
    );
 
 {---------------------------------------------------------------------------}
@@ -725,7 +731,7 @@ CONST
      ObjType: idScrollBar;                            { Register id = 3 }
      VmtLink: TypeOf(TScrollBar);                     { Alt style VMT link }
      Load:    @TScrollBar.Load;                       { Object load method }
-     Store:   @TScrollBar.Store                       { Object store method }
+     Store:   @TScrollBar.Store{%H-}                       { Object store method }
    );
 
 {---------------------------------------------------------------------------}
@@ -736,7 +742,7 @@ CONST
      ObjType: idScroller;                             { Register id = 4 }
      VmtLink: TypeOf(TScroller);                      { Alt style VMT link }
      Load:    @TScroller.Load;                        { Object load method }
-     Store:   @TScroller.Store                        { Object store method }
+     Store:   @TScroller.Store{%H-}                        { Object store method }
    );
 
 {---------------------------------------------------------------------------}
@@ -747,7 +753,7 @@ CONST
      ObjType: idListViewer;                           { Register id = 5 }
      VmtLink: TypeOf(TListViewer);                    { Alt style VMT link }
      Load:    @TListViewer.Load;                      { Object load method }
-     Store:   @TLIstViewer.Store                      { Object store method }
+     Store:   @TLIstViewer.Store{%H-}                      { Object store method }
    );
 
 {---------------------------------------------------------------------------}
@@ -758,7 +764,7 @@ CONST
      ObjType: idGroup;                                { Register id = 6 }
      VmtLink: TypeOf(TGroup);                         { Alt style VMT link }
      Load:    @TGroup.Load;                           { Object load method }
-     Store:   @TGroup.Store                           { Object store method }
+     Store:   @TGroup.Store{%H-}                           { Object store method }
    );
 
 {---------------------------------------------------------------------------}
@@ -769,7 +775,7 @@ CONST
      ObjType: idWindow;                               { Register id = 7 }
      VmtLink: TypeOf(TWindow);                        { Alt style VMT link }
      Load:    @TWindow.Load;                          { Object load method }
-     Store:   @TWindow.Store                          { Object store method }
+     Store:   @TWindow.Store{%H-}                          { Object store method }
    );
 
 
@@ -937,7 +943,7 @@ END;
 {--TView--------------------------------------------------------------------}
 {  Init -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 20Jun96 LdB              }
 {---------------------------------------------------------------------------}
-constructor TView.Init(var Bounds: TRect);
+constructor TView.Init(Const Bounds: TRect);
 BEGIN
    Inherited Init;                                    { Call ancestor }
    DragMode := dmLimitLoY;                            { Default drag mode }
@@ -956,7 +962,7 @@ END;
 {  supported but it should work as per original TV code.                    }
 {---------------------------------------------------------------------------}
 constructor TView.Load(var S: TStream);
-VAR i: Integer;
+VAR i: Integer=0;
 BEGIN
    Inherited Init;                                    { Call ancestor }
    S.Read(i, SizeOf(i)); Origin.X:=i;                 { Read origin x value }
@@ -1667,7 +1673,7 @@ END;
 {--TView--------------------------------------------------------------------}
 {  SetData -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB           }
 {---------------------------------------------------------------------------}
-procedure TView.SetData(var Rec);
+procedure TView.SetData(const Rec);
 BEGIN                                                 { Abstract method }
 END;
 
@@ -1763,7 +1769,7 @@ END;
 {--TView--------------------------------------------------------------------}
 {  GetExtent -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB         }
 {---------------------------------------------------------------------------}
-procedure TView.GetExtent({$ifopt H+}out{$else}var{$Endif} Extent: TRect);
+procedure TView.GetExtent({$IfDef FPC_OBJFPC}out{$else}var{$endif} Extent: TRect);
 BEGIN
    Extent.A.X := 0;                                   { Zero x field }
    Extent.A.Y := 0;                                   { Zero y field }
@@ -1774,7 +1780,7 @@ END;
 {--TView--------------------------------------------------------------------}
 {  GetBounds -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB         }
 {---------------------------------------------------------------------------}
-procedure TView.GetBounds({$ifopt H+}out{$else}var{$Endif} Bounds: TRect);
+procedure TView.GetBounds({$IfDef FPC_OBJFPC}out{$else}var{$endif} Bounds: TRect);
 BEGIN
    Bounds.A := Origin;                                { Get first corner }
    Bounds.B.X := Origin.X + Size.X;                   { Calc corner x value }
@@ -1827,7 +1833,7 @@ END;
 {--TView--------------------------------------------------------------------}
 {  ChangeBounds -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB      }
 {---------------------------------------------------------------------------}
-procedure TView.ChangeBounds(var Bounds: TRect);
+procedure TView.ChangeBounds(const Bounds: TRect);
 BEGIN
    SetBounds(Bounds);                                 { Set new bounds }
    DrawView;                                          { Draw the view }
@@ -1836,7 +1842,7 @@ END;
 {--TView--------------------------------------------------------------------}
 {  SizeLimits -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB        }
 {---------------------------------------------------------------------------}
-procedure TView.SizeLimits(var Min, Max: TPoint);
+procedure TView.SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} Min, Max: TPoint);
 BEGIN
    Min.X := 0;                                        { Zero x minimum }
    Min.Y := 0;                                        { Zero y minimum }
@@ -1852,7 +1858,7 @@ END;
 {--TView--------------------------------------------------------------------}
 {  GetCommands -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB       }
 {---------------------------------------------------------------------------}
-procedure TView.GetCommands(var Commands: TCommandSet);
+procedure TView.GetCommands({$IfDef FPC_OBJFPC}out{$else}var{$endif} Commands: TCommandSet);
 BEGIN
    Commands := CurCommandSet;                         { Return command set }
 END;
@@ -1936,7 +1942,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  Init -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 15Jul99 LdB              }
 {---------------------------------------------------------------------------}
-CONSTRUCTOR TGroup.Init (Var Bounds: TRect);
+constructor TGroup.Init(const Bounds: TRect);
 BEGIN
    Inherited Init(Bounds);                            { Call ancestor }
    Options := Options OR (ofSelectable + ofBuffered); { Set options }
@@ -1947,7 +1953,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  Load -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 15Sep97 LdB              }
 {---------------------------------------------------------------------------}
-CONSTRUCTOR TGroup.Load (Var S: TStream);
+constructor TGroup.Load(var S: TStream);
 VAR I: Sw_Word;
     Count: Word;
     P, Q: ^Pointer; V: PView; OwnerSave: PGroup;
@@ -1989,7 +1995,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  Done -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB              }
 {---------------------------------------------------------------------------}
-DESTRUCTOR TGroup.Done;
+destructor TGroup.Done;
 VAR P, T: PView;
 BEGIN
    Hide;                                              { Hide the view }
@@ -2011,7 +2017,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  First -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB             }
 {---------------------------------------------------------------------------}
-FUNCTION TGroup.First: PView;
+function TGroup.First: PView;
 BEGIN
    If (Last = Nil) Then First := Nil                  { No first view }
      Else First := Last^.Next;                        { Return first view }
@@ -2020,7 +2026,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  Execute -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB           }
 {---------------------------------------------------------------------------}
-FUNCTION TGroup.Execute: Word;
+function TGroup.Execute: Word;
 VAR Event: TEvent;
 BEGIN
    Repeat
@@ -2039,7 +2045,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  GetHelpCtx -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB        }
 {---------------------------------------------------------------------------}
-FUNCTION TGroup.GetHelpCtx: Word;
+function TGroup.GetHelpCtx: Word;
 VAR H: Word;
 BEGIN
    H := hcNoContext;                                  { Preset no context }
@@ -2051,7 +2057,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  DataSize -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 15Jul98 LdB          }
 {---------------------------------------------------------------------------}
-FUNCTION TGroup.DataSize: Sw_Word;
+function TGroup.DataSize: Sw_Word;
 VAR Total: Word; P: PView;
 BEGIN
    Total := 0;                                        { Zero totals count }
@@ -2068,7 +2074,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  ExecView -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 15Jul99 LdB          }
 {---------------------------------------------------------------------------}
-FUNCTION TGroup.ExecView (P: PView): Word;
+function TGroup.ExecView(P: PView): Word;
 VAR SaveOptions: Word; SaveTopView, SaveCurrent: PView; SaveOwner: PGroup;
     SaveCommands: TCommandSet;
 BEGIN
@@ -2102,7 +2108,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  FirstThat -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 17Jul99 LdB         }
 {---------------------------------------------------------------------------}
-FUNCTION TGroup.FirstThat (P: Pointer): PView;
+function TGroup.FirstThat(P: TGroupFirstThatCallback): PView;
 VAR
   Tp : PView;
 BEGIN
@@ -2111,7 +2117,7 @@ BEGIN
      Tp := Last;                                      { Set temporary ptr }
      Repeat
        Tp := Tp^.Next;                                { Get next view }
-       IF Byte(Longint(CallPointerMethodLocal(P,
+       IF PtrUInt(CallPointerMethodLocal(P,
          { On most systems, locals are accessed relative to base pointer,
            but for MIPS cpu, they are accessed relative to stack pointer.
            This needs adaptation for so low level routines,
@@ -2121,7 +2127,7 @@ BEGIN
 {$else}
          get_frame
 {$endif}
-         ,@self,Tp)))<>0 THEN
+         ,@self,Tp))<>0 THEN
         Begin       { Test each view }
           FirstThat := Tp;                             { View returned true }
           Exit;                                        { Now exit }
@@ -2136,7 +2142,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  Valid -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB             }
 {---------------------------------------------------------------------------}
-FUNCTION TGroup.Valid (Command: Word): Boolean;
+function TGroup.Valid(Command: Word): Boolean;
 
    FUNCTION IsInvalid (P: PView): Boolean;
    BEGIN
@@ -2155,7 +2161,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  FocusNext -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB         }
 {---------------------------------------------------------------------------}
-FUNCTION TGroup.FocusNext (Forwards: Boolean): Boolean;
+function TGroup.FocusNext(Forwards: Boolean): Boolean;
 VAR P: PView;
 BEGIN
    P := FindNext(Forwards);                           { Find next view }
@@ -2178,7 +2184,7 @@ end;
 {--TGroup-------------------------------------------------------------------}
 {  ReDraw -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 2Jun06 DM              }
 {---------------------------------------------------------------------------}
-procedure TGroup.Redraw;
+procedure TGroup.ReDraw;
 begin
   {Lock to prevent screen update.}
   lockscreenupdate;
@@ -2189,7 +2195,7 @@ begin
 end;
 
 
-PROCEDURE TGroup.ResetCursor;
+procedure TGroup.ResetCursor;
 BEGIN
   if (Current<>nil) then
     Current^.ResetCursor;
@@ -2199,7 +2205,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  Awaken -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 15Sep97 LdB            }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.Awaken;
+procedure TGroup.Awaken;
 
    PROCEDURE DoAwaken (P: PView);
    BEGIN
@@ -2207,13 +2213,13 @@ PROCEDURE TGroup.Awaken;
    END;
 
 BEGIN
-   ForEach(@DoAwaken);                                { Awaken each view }
+   ForEach(TCallbackProcParam(@DoAwaken));            { Awaken each view }
 END;
 
 {--TGroup-------------------------------------------------------------------}
 {  Draw -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 17Sep97 LdB              }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.Draw;
+procedure TGroup.Draw;
 BEGIN
    If Buffer=Nil then
      DrawSubViews(First, nil)
@@ -2225,7 +2231,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  SelectDefaultView -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 22Oct99 LdB }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.SelectDefaultView;
+procedure TGroup.SelectDefaultView;
 VAR P: PView;
 BEGIN
    P := Last;                                         { Start at last }
@@ -2267,7 +2273,7 @@ end;
 {--TGroup-------------------------------------------------------------------}
 {  Insert -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 29Sep99 LdB            }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.Insert (P: PView);
+procedure TGroup.Insert(P: PView);
 BEGIN
   BeforeInsert(P);
   InsertBefore(P, First);
@@ -2277,7 +2283,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  Delete -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB            }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.Delete (P: PView);
+procedure TGroup.Delete(P: PView);
 VAR SaveState: Word;
 BEGIN
    BeforeDelete(P);
@@ -2300,7 +2306,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  ForEach -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 17Jul99 LdB           }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.ForEach (P: Pointer);
+procedure TGroup.ForEach(P: TCallbackProcParam);
 VAR
   Tp,Hp,L0 : PView;
 { Vars Hp and L0 are necessary to hold original pointers in case   }
@@ -2336,7 +2342,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  EndModal -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB          }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.EndModal (Command: Word);
+procedure TGroup.EndModal(Command: Word);
 BEGIN
    If (State AND sfModal <> 0) Then                   { This view is modal }
      EndState := Command Else                         { Set endstate }
@@ -2346,7 +2352,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  SelectNext -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 15Sep97 LdB        }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.SelectNext (Forwards: Boolean);
+procedure TGroup.SelectNext(Forwards: Boolean);
 VAR P: PView;
 BEGIN
    P := FindNext(Forwards);                           { Find next view }
@@ -2356,7 +2362,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  InsertBefore -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 29Sep99 LdB      }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.InsertBefore (P, Target: PView);
+procedure TGroup.InsertBefore(P, Target: PView);
 VAR SaveState : Word;
 BEGIN
    If (P <> Nil) AND (P^.Owner = Nil) AND             { View valid }
@@ -2378,7 +2384,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  SetState -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB          }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.SetState (AState: Word; Enable: Boolean);
+procedure TGroup.SetState(AState: Word; Enable: Boolean);
 
     PROCEDURE DoSetState (P: PView);
     BEGIN
@@ -2398,7 +2404,7 @@ BEGIN
    Case AState Of
      sfActive, sfDragging: Begin
          Lock;                                        { Lock the view }
-         ForEach(@DoSetState);                        { Set each subview }
+         ForEach(TCallbackProcParam(@DoSetState));    { Set each subview }
          UnLock;                                      { Unlock the view }
        End;
      sfFocused: Begin
@@ -2406,7 +2412,7 @@ BEGIN
            Current^.SetState(sfFocused, Enable);          { Focus current view }
        End;
      sfExposed: Begin
-         ForEach(@DoExpose);                          { Expose each subview }
+         ForEach(TCallbackProcParam(@DoExpose));      { Expose each subview }
        End;
    End;
 END;
@@ -2414,7 +2420,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  GetData -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 29Mar98 LdB           }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.GetData (Var Rec);
+procedure TGroup.GetData(var Rec);
 VAR Total: Sw_Word; P: PView;
 BEGIN
    Total := 0;                                        { Clear total }
@@ -2429,7 +2435,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  SetData -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 29Mar98 LdB           }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.SetData (Var Rec);
+procedure TGroup.SetData(const Rec);
 VAR Total: Sw_Word; P: PView;
 BEGIN
    Total := 0;                                        { Clear total }
@@ -2444,7 +2450,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  Store -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Mar98 LdB             }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.Store (Var S: TStream);
+procedure TGroup.Store(var S: TStream);
 VAR Count: Word; OwnerSave: PGroup;
 
    PROCEDURE DoPut (P: PView);
@@ -2458,7 +2464,7 @@ BEGIN
    OwnerGroup := @Self;                               { Set as owner group }
    Count := IndexOf(Last);                            { Subview count }
    S.Write(Count, SizeOf(Count));                     { Write the count }
-   ForEach(@DoPut);                                   { Put each in stream }
+   ForEach(TCallbackProcParam(@DoPut));               { Put each in stream }
    PutSubViewPtr(S, Current);                         { Current on stream }
    OwnerGroup := OwnerSave;                           { Restore ownergroup }
 END;
@@ -2466,7 +2472,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  EventError -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB        }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.EventError (Var Event: TEvent);
+procedure TGroup.EventError(var Event: TEvent);
 BEGIN
    If (Owner <> Nil) Then Owner^.EventError(Event);   { Event error }
 END;
@@ -2474,7 +2480,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  HandleEvent -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB       }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.HandleEvent (Var Event: TEvent);
+procedure TGroup.HandleEvent(var Event: TEvent);
 
    FUNCTION ContainsMouse (P: PView): Boolean;
    BEGIN
@@ -2502,23 +2508,23 @@ BEGIN
    If (Event.What = evNothing) Then Exit;             { No valid event exit }
    If (Event.What AND FocusedEvents <> 0) Then Begin  { Focused event }
      Phase := phPreProcess;                           { Set pre process }
-     ForEach(@DoHandleEvent);                         { Pass to each view }
+     ForEach(TCallbackProcParam(@DoHandleEvent));     { Pass to each view }
      Phase := phFocused;                              { Set focused }
      DoHandleEvent(Current);                          { Pass to current }
      Phase := phPostProcess;                          { Set post process }
-     ForEach(@DoHandleEvent);                         { Pass to each }
+     ForEach(TCallbackProcParam(@DoHandleEvent));     { Pass to each }
    End Else Begin
      Phase := phFocused;                              { Set focused }
      If (Event.What AND PositionalEvents <> 0) Then   { Positional event }
        DoHandleEvent(FirstThat(@ContainsMouse))       { Pass to first }
-       Else ForEach(@DoHandleEvent);                  { Pass to all }
+       Else ForEach(TCallbackProcParam(@DoHandleEvent)); { Pass to all }
    End;
 END;
 
 {--TGroup-------------------------------------------------------------------}
 {  ChangeBounds -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Jul99 LdB      }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.ChangeBounds (Var Bounds: TRect);
+procedure TGroup.ChangeBounds(const Bounds: TRect);
 VAR D: TPoint;
 
    PROCEDURE DoCalcChange (P: PView);
@@ -2539,7 +2545,7 @@ BEGIN
      SetBounds(Bounds);                               { Set new bounds }
      GetExtent(Clip);                                 { Get new clip extents }
      Lock;                                            { Lock drawing }
-     ForEach(@DoCalcChange);                          { Change each view }
+     ForEach(TCallbackProcParam(@DoCalcChange));      { Change each view }
      UnLock;                                          { Unlock drawing }
    End;
 END;
@@ -2547,7 +2553,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  GetSubViewPtr -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 20May98 LdB     }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.GetSubViewPtr (Var S: TStream; Var P);
+procedure TGroup.GetSubViewPtr(var S: TStream; var P);
 VAR Index, I: Sw_Word; Q: PView;
 BEGIN
    Index := 0;                                        { Zero index value }
@@ -2562,7 +2568,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  PutSubViewPtr -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 20May98 LdB     }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.PutSubViewPtr (Var S: TStream; P: PView);
+procedure TGroup.PutSubViewPtr(var S: TStream; P: PView);
 VAR Index: Sw_Word;
 BEGIN
    If (P = Nil) Then Index := 0 Else                  { Nil view, Index = 0 }
@@ -2578,7 +2584,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  IndexOf -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB           }
 {---------------------------------------------------------------------------}
-FUNCTION TGroup.IndexOf (P: PView): Sw_Integer;
+function TGroup.IndexOf(P: PView): Sw_Integer;
 VAR I: Sw_Integer; Q: PView;
 BEGIN
    Q := Last;                                         { Start on last view }
@@ -2595,7 +2601,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  FindNext -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 23Sep99 LdB          }
 {---------------------------------------------------------------------------}
-FUNCTION TGroup.FindNext (Forwards: Boolean): PView;
+function TGroup.FindNext(Forwards: Boolean): PView;
 VAR P: PView;
 BEGIN
    FindNext := Nil;                                   { Preset nil return }
@@ -2614,7 +2620,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  FirstMatch -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB        }
 {---------------------------------------------------------------------------}
-FUNCTION TGroup.FirstMatch (AState: Word; AOptions: Word): PView;
+function TGroup.FirstMatch(AState: Word; AOptions: Word): PView;
 
    FUNCTION Matches (P: PView): Boolean;
    BEGIN
@@ -2629,7 +2635,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  ResetCurrent -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB      }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.ResetCurrent;
+procedure TGroup.ResetCurrent;
 BEGIN
    SetCurrent(FirstMatch(sfVisible, ofSelectable),
      NormalSelect);                                   { Reset current view }
@@ -2638,7 +2644,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  RemoveView -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB        }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.RemoveView (P: PView);
+procedure TGroup.RemoveView(P: PView);
 VAR Q: PView;
 BEGIN
    If (P <> Nil) AND (Last <> Nil) Then Begin         { Check view is valid }
@@ -2657,7 +2663,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  InsertView -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 12Sep97 LdB        }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.InsertView (P, Target: PView);
+procedure TGroup.InsertView(P, Target: PView);
 BEGIN
    If (P <> Nil) Then Begin                           { Check view is valid }
      P^.Owner := @Self;                               { Views owner is us }
@@ -2678,7 +2684,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  SetCurrent -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 23Sep99 LdB        }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.SetCurrent (P: PView; Mode: SelectMode);
+procedure TGroup.SetCurrent(P: PView; Mode: SelectMode);
 
    PROCEDURE SelectView (P: PView; Enable: Boolean);
    BEGIN
@@ -3331,7 +3337,8 @@ end;
 {--TScroller----------------------------------------------------------------}
 {  Init -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 26Jul99 LdB              }
 {---------------------------------------------------------------------------}
-CONSTRUCTOR TScroller.Init (Var Bounds: TRect; AHScrollBar, AVScrollBar: PScrollBar);
+constructor TScroller.Init(var Bounds: TRect; AHScrollBar,
+  AVScrollBar: PScrollBar);
 BEGIN
    Inherited Init(Bounds);                            { Call ancestor }
    Options := Options OR ofSelectable;                { View is selectable }
@@ -3346,7 +3353,7 @@ END;
 {   This load method will read old original TV data from a stream as well   }
 {   as the new graphical scroller views.                                    }
 {---------------------------------------------------------------------------}
-CONSTRUCTOR TScroller.Load (Var S: TStream);
+constructor TScroller.Load(var S: TStream);
 VAR i: Integer;
 BEGIN
    Inherited Load(S);                                 { Call ancestor }
@@ -3361,7 +3368,7 @@ END;
 {--TScroller----------------------------------------------------------------}
 {  GetPalette -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 26Jul99 LdB        }
 {---------------------------------------------------------------------------}
-FUNCTION TScroller.GetPalette: PPalette;
+function TScroller.GetPalette: PPalette;
 CONST P: String{$ifopt H-}[Length(CScroller)]{$endif} = CScroller;       { Always normal string }
 BEGIN
    GetPalette := PPalette(@P);                        { Scroller palette }
@@ -3370,7 +3377,7 @@ END;
 {--TScroller----------------------------------------------------------------}
 {  ScrollTo -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Jul99 LdB          }
 {---------------------------------------------------------------------------}
-PROCEDURE TScroller.ScrollTo (X, Y: Sw_Integer);
+procedure TScroller.ScrollTo(X, Y: Sw_Integer);
 BEGIN
    Inc(DrawLock);                                     { Set draw lock }
    If (HScrollBar<>Nil) Then HScrollBar^.SetValue(X); { Set horz scrollbar }
@@ -3382,7 +3389,7 @@ END;
 {--TScroller----------------------------------------------------------------}
 {  SetState -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Jul99 LdB          }
 {---------------------------------------------------------------------------}
-PROCEDURE TScroller.SetState (AState: Word; Enable: Boolean);
+procedure TScroller.SetState(AState: Word; Enable: Boolean);
 
    PROCEDURE ShowSBar (SBar: PScrollBar);
    BEGIN
@@ -3405,7 +3412,7 @@ END;
 {---------------------------------------------------------------------------}
 {  The scroller is saved to the stream compatable with the old TV object.   }
 {---------------------------------------------------------------------------}
-PROCEDURE TScroller.Store (Var S: TStream);
+procedure TScroller.Store(var S: TStream);
 VAR i: Integer;
 BEGIN
    TView.Store(S);                                    { Call TView explicitly }
@@ -3420,7 +3427,7 @@ END;
 {--TScroller----------------------------------------------------------------}
 {  HandleEvent -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Jul99 LdB       }
 {---------------------------------------------------------------------------}
-PROCEDURE TScroller.HandleEvent (Var Event: TEvent);
+procedure TScroller.HandleEvent(var Event: TEvent);
 BEGIN
    Inherited HandleEvent(Event);                      { Call ancestor }
    If (Event.What = evBroadcast) AND
@@ -3432,7 +3439,7 @@ END;
 {--TScroller----------------------------------------------------------------}
 {  ChangeBounds -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Jul99 LdB      }
 {---------------------------------------------------------------------------}
-PROCEDURE TScroller.ChangeBounds (Var Bounds: TRect);
+procedure TScroller.ChangeBounds(const Bounds: TRect);
 BEGIN
    SetBounds(Bounds);                                 { Set new bounds }
    Inc(DrawLock);                                     { Set draw lock }
@@ -3451,7 +3458,7 @@ CONST TvListViewerName = 'LISTBOX';                   { Native name }
 {--TListViewer--------------------------------------------------------------}
 {  Init -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 28May98 LdB              }
 {---------------------------------------------------------------------------}
-CONSTRUCTOR TListViewer.Init (Var Bounds: TRect; ANumCols: Sw_Word; AHScrollBar,
+constructor TListViewer.Init(var Bounds: TRect; ANumCols: Sw_Word; AHScrollBar,
   AVScrollBar: PScrollBar);
 VAR ArStep, PgStep: Sw_Integer;
 BEGIN
@@ -3478,7 +3485,7 @@ END;
 {--TListViewer--------------------------------------------------------------}
 {  Load -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 28May98 LdB              }
 {---------------------------------------------------------------------------}
-CONSTRUCTOR TListViewer.Load (Var S: TStream);
+constructor TListViewer.Load(var S: TStream);
 VAR w: Word;
 BEGIN
    Inherited Load(S);                                 { Call ancestor }
@@ -3493,7 +3500,7 @@ END;
 {--TListViewer--------------------------------------------------------------}
 {  GetPalette -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 28May98 LdB        }
 {---------------------------------------------------------------------------}
-FUNCTION TListViewer.GetPalette: PPalette;
+function TListViewer.GetPalette: PPalette;
 CONST P: String{$ifopt H-}[Length(CListViewer)]{$endif} = CListViewer;   { Always normal string }
 BEGIN
    GetPalette := PPalette(@P);                        { Return palette }
@@ -3502,7 +3509,7 @@ END;
 {--TListViewer--------------------------------------------------------------}
 {  IsSelected -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 28May98 LdB        }
 {---------------------------------------------------------------------------}
-FUNCTION TListViewer.IsSelected (Item: Sw_Integer): Boolean;
+function TListViewer.IsSelected(Item: Sw_Integer): Boolean;
 BEGIN
    If (Item = Focused) Then IsSelected := True Else
      IsSelected := False;                             { Selected item }
@@ -3511,7 +3518,7 @@ END;
 {--TListViewer--------------------------------------------------------------}
 {  GetText -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 28May98 LdB           }
 {---------------------------------------------------------------------------}
-FUNCTION TListViewer.GetText (Item: Sw_Integer; MaxLen: Sw_Integer): String;
+function TListViewer.GetText(Item: Sw_Integer; MaxLen: Sw_Integer): String;
 BEGIN                                                 { Abstract method }
    GetText := '';                                     { Return empty }
 END;
@@ -3519,7 +3526,7 @@ END;
 {--TListViewer--------------------------------------------------------------}
 {  DrawBackGround -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 27Oct99 LdB    }
 {---------------------------------------------------------------------------}
-PROCEDURE TListViewer.Draw;
+procedure TListViewer.Draw;
 VAR  I, J, ColWidth, Item, Indent, CurCol: Sw_Integer;
      Color: Word; SCOff: Byte;
      Text: String; B: TDrawBuffer;
@@ -3568,7 +3575,7 @@ END;
 {--TListViewer--------------------------------------------------------------}
 {  FocusItem -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 26Jul99 LdB         }
 {---------------------------------------------------------------------------}
-PROCEDURE TListViewer.FocusItem (Item: Sw_Integer);
+procedure TListViewer.FocusItem(Item: Sw_Integer);
 BEGIN
    Focused := Item;                                   { Set focus to item }
    If (VScrollBar <> Nil) Then
@@ -3585,7 +3592,7 @@ END;
 {--TListViewer--------------------------------------------------------------}
 {  SetTopItem -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 06Aug99 LdB        }
 {---------------------------------------------------------------------------}
-PROCEDURE TListViewer.SetTopItem (Item: Sw_Integer);
+procedure TListViewer.SetTopItem(Item: Sw_Integer);
 BEGIN
    TopItem := Item;                                   { Set the top item }
 END;
@@ -3593,7 +3600,7 @@ END;
 {--TListViewer--------------------------------------------------------------}
 {  SetRange -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 26Jul99 LdB          }
 {---------------------------------------------------------------------------}
-PROCEDURE TListViewer.SetRange (ARange: Sw_Integer);
+procedure TListViewer.SetRange(ARange: Sw_Integer);
 BEGIN
    Range := ARange;                                   { Set new range }
    If (VScrollBar <> Nil) Then Begin                  { Vertical scrollbar }
@@ -3606,7 +3613,7 @@ END;
 {--TListViewer--------------------------------------------------------------}
 {  SelectItem -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 26Jul99 LdB        }
 {---------------------------------------------------------------------------}
-PROCEDURE TListViewer.SelectItem (Item: Sw_Integer);
+procedure TListViewer.SelectItem(Item: Sw_Integer);
 BEGIN
    Message(Owner, evBroadcast, cmListItemSelected,
      @Self);                                          { Send message }
@@ -3615,7 +3622,7 @@ END;
 {--TListViewer--------------------------------------------------------------}
 {  SetState -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 27Oct99 LdB          }
 {---------------------------------------------------------------------------}
-PROCEDURE TListViewer.SetState (AState: Word; Enable: Boolean);
+procedure TListViewer.SetState(AState: Word; Enable: Boolean);
 
    PROCEDURE ShowSBar(SBar: PScrollBar);
    BEGIN
@@ -3637,7 +3644,7 @@ END;
 {--TListViewer--------------------------------------------------------------}
 {  Store -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 26Jul99 LdB             }
 {---------------------------------------------------------------------------}
-PROCEDURE TListViewer.Store (Var S: TStream);
+procedure TListViewer.Store(var S: TStream);
 VAR w: Word;
 BEGIN
    TView.Store(S);                                    { Call TView explicitly }
@@ -3652,7 +3659,7 @@ END;
 {--TListViewer--------------------------------------------------------------}
 {  HandleEvent -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 27Oct99 LdB       }
 {---------------------------------------------------------------------------}
-PROCEDURE TListViewer.HandleEvent (Var Event: TEvent);
+procedure TListViewer.HandleEvent(var Event: TEvent);
 CONST MouseAutosToSkip = 4;
 VAR Oi, Ni: Sw_Integer; Ct, Cw: Word; Mouse: TPoint;
 
@@ -3751,7 +3758,7 @@ END;
 {--TListViewer--------------------------------------------------------------}
 {  ChangeBounds -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Jul99 LdB      }
 {---------------------------------------------------------------------------}
-PROCEDURE TListViewer.ChangeBounds (Var Bounds: TRect);
+procedure TListViewer.ChangeBounds(const Bounds: TRect);
 BEGIN
    Inherited ChangeBounds(Bounds);                    { Call ancestor }
    If (HScrollBar <> Nil) Then                        { Valid horz scrollbar }
@@ -3769,7 +3776,7 @@ END;
 {--TListViewer--------------------------------------------------------------}
 {  FocusItemNum -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 26Jul99 LdB      }
 {---------------------------------------------------------------------------}
-PROCEDURE TListViewer.FocusItemNum (Item: Sw_Integer);
+procedure TListViewer.FocusItemNum(Item: Sw_Integer);
 BEGIN
    If (Item < 0) Then Item := 0 Else                  { Restrain underflow }
      If (Item >= Range) AND (Range > 0) Then
@@ -4031,7 +4038,7 @@ END;
 {--TWindow------------------------------------------------------------------}
 {  SizeLimits -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 15Sep97 LdB        }
 {---------------------------------------------------------------------------}
-procedure TWindow.SizeLimits(var Min, Max: TPoint);
+procedure TWindow.SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} Min, Max: TPoint);
 BEGIN
    Inherited SizeLimits(Min, Max);                    { View size limits }
    Min.X := MinWinSize.X;                             { Set min x size }
@@ -4158,7 +4165,7 @@ end;
 {--TView--------------------------------------------------------------------}
 {  MakeLocal -> Platforms DOS/DPMI/WIN/OS2 - Checked 12Sep97 LdB            }
 {---------------------------------------------------------------------------}
-procedure TView.MakeLocal(Source: TPoint; var Dest: TPoint);
+procedure TView.MakeLocal(Source: TPoint; {$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest: TPoint);
 var
   cur : PView;
 begin
@@ -4179,7 +4186,7 @@ end;
 {--TView--------------------------------------------------------------------}
 {  MakeGlobal -> Platforms DOS/DPMI/WIN/OS2 - Checked 12Sep97 LdB           }
 {---------------------------------------------------------------------------}
-procedure TView.MakeGlobal(Source: TPoint; var Dest: TPoint);
+procedure TView.MakeGlobal(Source: TPoint; {$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest: TPoint);
 var
   cur : PView;
 begin
@@ -4519,7 +4526,7 @@ end;
 {                         TScroller OBJECT METHODS                          }
 {***************************************************************************}
 
-PROCEDURE TScroller.ScrollDraw;
+procedure TScroller.ScrollDraw;
 VAR D: TPoint;
 BEGIN
    If (HScrollBar<>Nil) Then D.X := HScrollBar^.Value
@@ -4535,7 +4542,7 @@ BEGIN
    End;
 END;
 
-PROCEDURE TScroller.SetLimit (X, Y: Sw_Integer);
+procedure TScroller.SetLimit(X, Y: Sw_Integer);
 VAR PState: Word;
 BEGIN
    Limit.X := X;                                      { Hold x limit }
@@ -4562,7 +4569,7 @@ END;
 {***************************************************************************}
 {                      TScroller OBJECT PRIVATE METHODS                     }
 {***************************************************************************}
-PROCEDURE TScroller.CheckDraw;
+procedure TScroller.CheckDraw;
 BEGIN
    If (DrawLock = 0) AND DrawFlag Then Begin          { Clear & draw needed }
      DrawFlag := False;                               { Clear draw flag }
@@ -4585,7 +4592,7 @@ END;
 {$ifndef  NoLock}
 {$define UseLock}
 {$endif ndef  NoLock}
-PROCEDURE TGroup.Lock;
+procedure TGroup.Lock;
 BEGIN
 {$ifdef UseLock}
    {If (Buffer <> Nil) OR (LockFlag <> 0)
@@ -4596,7 +4603,7 @@ END;
 {--TGroup-------------------------------------------------------------------}
 {  UnLock -> Platforms DOS/DPMI/WIN/OS2 - Checked 23Sep97 LdB               }
 {---------------------------------------------------------------------------}
-PROCEDURE TGroup.Unlock;
+procedure TGroup.UnLock;
 BEGIN
 {$ifdef UseLock}
    If (LockFlag <> 0) Then Begin

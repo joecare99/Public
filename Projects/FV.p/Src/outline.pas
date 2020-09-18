@@ -372,7 +372,7 @@ begin
       ,false);
 end;
 
-function Toutlineviewer.getchild(node:pointer;i:sw_integer):pointer;
+function Toutlineviewer.{%H-}getchild(node:pointer;i:sw_integer):pointer;
 
 begin
   abstract;
@@ -398,7 +398,7 @@ begin
   getnode:=firstthat(@test_position);
 end;
 
-function Toutlineviewer.getnumchildren(node:pointer):sw_integer;
+function Toutlineviewer.{%H-}getnumchildren(node:pointer):sw_integer;
 
 begin
   abstract;
@@ -412,13 +412,13 @@ begin
   getpalette:=@p;
 end;
 
-function Toutlineviewer.getroot:pointer;
+function Toutlineviewer.{%H-}getroot:pointer;
 
 begin
   abstract;
 end;
 
-function Toutlineviewer.gettext(node:pointer):string;
+function Toutlineviewer.{%H-}gettext(node:pointer):string;
 
 begin
   abstract;
@@ -555,13 +555,13 @@ begin
 end;
 
 
-function Toutlineviewer.haschildren(node:pointer):boolean;
+function Toutlineviewer.{%H-}haschildren(node:pointer):boolean;
 
 begin
   abstract;
 end;
 
-function Toutlineviewer.isexpanded(node:pointer):boolean;
+function Toutlineviewer.{%H-}isexpanded(node:pointer):boolean;
 
 begin
   abstract;

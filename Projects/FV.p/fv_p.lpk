@@ -15,6 +15,7 @@
       <Parsing>
         <SyntaxOptions>
           <AllowLabel Value="False"/>
+          <UseAnsiStrings Value="False"/>
         </SyntaxOptions>
       </Parsing>
       <Other>
@@ -27,6 +28,7 @@
     <Description Value="Free Vision + 
 patched Version of Free Vision to be able to b compiled in objFpc-Mode"/>
     <License Value="GPL/LGPL see orginal FV"/>
+    <Version Major="3" Minor="3" Release="1"/>
     <Files Count="33">
       <Item1>
         <Filename Value="src\amismsg.inc"/>

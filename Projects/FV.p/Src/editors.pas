@@ -124,6 +124,9 @@ type
   TEditBuffer = array[0..MaxBufLength] of Char;
 
   PEditor = ^TEditor;
+
+  { TEditor }
+
   TEditor = object (TView)
     HScrollBar         : PScrollBar;
     VScrollBar         : PScrollBar;
@@ -164,7 +167,7 @@ type
     destructor Done; virtual;
     function   BufChar (P : Sw_Word) : Char;
     function   BufPtr (P : Sw_Word) : Sw_Word;
-    procedure  ChangeBounds (var Bounds : TRect); virtual;
+    procedure  ChangeBounds (Const Bounds : TRect); virtual;
     procedure  ConvertEvent (var Event : Drivers.TEvent); virtual;
     function   CursorVisible : Boolean;
     procedure  DeleteSelect;
@@ -188,7 +191,7 @@ type
     procedure  TrackCursor (Center : Boolean);
     procedure  Undo;
     procedure  UpdateCommands; virtual;
-    function   Valid (Command : Word) : Boolean; virtual;
+    function   Valid ({%H-}Command : Word) : Boolean; virtual;
 
   private
     KeyState       : Integer;
@@ -253,6 +256,8 @@ type
     Buffer : TEditBuffer;
   end;
 
+  { TMemo }
+
   PMemo = ^TMemo;
   TMemo = object (TEditor)
     constructor Load (var S : Objects.TStream);
@@ -260,7 +265,7 @@ type
     procedure   GetData (var Rec); virtual;
     function    GetPalette : PPalette; virtual;
     procedure   HandleEvent (var Event : Drivers.TEvent); virtual;
-    procedure   SetData (var Rec); virtual;
+    procedure   SetData (Const Rec); virtual;
     procedure   Store (var S : Objects.TStream);
   end;
 
@@ -292,9 +297,9 @@ type
     constructor Init (var Bounds : TRect; FileName : FNameStr; ANumber : Integer);
     constructor Load (var S : Objects.TStream);
     procedure   Close; virtual;
-    function    GetTitle (MaxSize : Sw_Integer) : TTitleStr; virtual;
+    function    GetTitle ({%H-}MaxSize : Sw_Integer) : TTitleStr; virtual;
     procedure   HandleEvent (var Event : Drivers.TEvent); virtual;
-    procedure   SizeLimits(var Min, Max: TPoint); virtual;
+    procedure   SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} Min, Max: TPoint); virtual;
     procedure   Store (var S : Objects.TStream);
   end;
 
@@ -411,7 +416,7 @@ procedure RegisterEditors;
 implementation
 
 uses
-  Dos, App, StdDlg, MsgBox{, Resource};
+  App, StdDlg, MsgBox, SysUtils{, Resource};
 
 type
   pword = ^word;
@@ -1471,7 +1476,7 @@ begin
 end; { TEditor.Center_Text }
 
 
-procedure TEditor.ChangeBounds (var Bounds : TRect);
+procedure TEditor.ChangeBounds(const Bounds: TRect);
 begin
   SetBounds (Bounds);
   Delta.X := Max (0, Min (Delta.X, Limit.X - Size.X));
@@ -2340,7 +2345,6 @@ procedure TEditor.Jump_To_Line (Select_Mode : Byte);
 { This function brings up a dialog box that allows }
 { the user to select a line number to jump to.     }
 VAR
-  Code       : Integer;         { Used for Val conversion.      }
   Temp_Value : Longint;         { Holds converted dialog value. }
 begin
   if EditorDialog (edJumpToLine, @Line_Number) <> cmCancel then
@@ -2353,8 +2357,8 @@ begin
       { There are faster methods.  This one's easy.    }
       { Note that CurPos.Y is always 1 less than what  }
       { the TIndicator line says.                      }
-      val (Line_Number, Temp_Value, Code);
-      if (Temp_Value < 1) or (Temp_Value > 9999999) then
+
+      if not trystrtoint(Line_Number, Temp_Value) or (Temp_Value < 1) or (Temp_Value > 9999999) then
         Exit;
       if Temp_Value = CurPos.Y + 1 then
         Exit;
@@ -3057,7 +3061,6 @@ procedure TEditor.Set_Right_Margin;
 { that allows the user to set Right_Margin. }
 { Values must be < MaxLineLength and > 9.   }
 VAR
-  Code        : Integer;          { Used for Val conversion.      }
   Margin_Data : TRightMarginRec;  { Holds dialog results.         }
   Temp_Value  : Sw_Integer;       { Holds converted dialog value. }
 begin
@@ -3066,8 +3069,7 @@ begin
       Str (Right_Margin, Margin_Position);
       if EditorDialog (edRightMargin, @Margin_Position) <> cmCancel then
         begin
-          val (Margin_Position, Temp_Value, Code);
-          if (Temp_Value <= MaxLineLength) and (Temp_Value > 9) then
+          if TryStrToInt(Margin_Position, Temp_Value) and (Temp_Value <= MaxLineLength) and (Temp_Value > 9) then
             Right_Margin := Temp_Value;
         end;
     end;
@@ -3381,7 +3383,7 @@ VAR
   Length : Sw_Word;
 begin
   Inherited Load (S);
-  S.Read (Length, SizeOf (Length));
+  S.Read (Length{%H-}, SizeOf (Length));
   if IsValid then
     begin
       S.Read (Buffer^[BufSize - Length], Length);
@@ -3424,7 +3426,7 @@ begin
 end; { TMemo.HandleEvent }
 
 
-procedure TMemo.SetData (var Rec);
+procedure TMemo.SetData(const Rec);
 VAR
   Data : TMemoData absolute Rec;
 begin
@@ -3455,7 +3457,7 @@ begin
   Inherited Init (Bounds, AHScrollBar, AVScrollBar, AIndicator, 0);
   if AFileName <> '' then
     begin
-      FileName := FExpand (AFileName);
+      FileName := ExpandFileName(AFileName);
       if IsValid then
         IsValid := LoadFile;
     end;
@@ -3465,16 +3467,18 @@ end; { TFileEditor.Init }
 constructor TFileEditor.Load (var S : Objects.TStream);
 VAR
   SStart,SEnd,Curs : Sw_Word;
+  NameLength:byte;
 begin
   Inherited Load (S);
   BufSize := 0;
-  S.Read (FileName[0], SizeOf (Byte));
+  S.Read (NameLength{%H-}, SizeOf (Byte));
+  SetLength(FileName,NameLength);
   S.Read (Filename[1], Length (FileName));
   if IsValid then
     IsValid := LoadFile;
-  S.Read (SStart, SizeOf (SStart));
-  S.Read (SEnd, SizeOf (SEnd));
-  S.Read (Curs, SizeOf (Curs));
+  S.Read (SStart{%H-}, SizeOf (SStart));
+  S.Read (SEnd{%H-}, SizeOf (SEnd));
+  S.Read (Curs{%H-}, SizeOf (Curs));
   if IsValid and (SEnd <= BufLen) then
     begin
       SetSelect (SStart, SEnd, Curs = SStart);
@@ -3537,7 +3541,7 @@ begin
         EditorDialog(edOutOfMemory, nil)
       else
         begin
-          BlockRead(F, Buffer^[BufSize-FSize], FSize, FRead);
+          BlockRead(F, Buffer^[BufSize-FSize], FSize, FRead{%H-});
           if (IOResult <> 0) or (FRead<>FSize) then
             EditorDialog(edReadError, @FileName)
           else
@@ -3566,7 +3570,7 @@ begin
   SaveAs := False;
   if EditorDialog (edSaveAs, @FileName) <> cmCancel then
   begin
-    FileName := FExpand (FileName);
+    FileName := ExpandFilename(FileName);
     Message (Owner, Drivers.evBroadcast, cmUpdateTitle, nil);
     SaveAs := SaveFile;
     if IsClipboard then
@@ -3579,15 +3583,12 @@ function TFileEditor.SaveFile : Boolean;
 VAR
   F          : File;
   BackupName : Objects.FNameStr;
-  D          : DOS.DirStr;
-  N          : DOS.NameStr;
-  E          : DOS.ExtStr;
+
 begin
   SaveFile := False;
   if Flags and efBackupFiles <> 0 then
   begin
-    FSplit (FileName, D, N, E);
-    BackupName := D + N + '.bak';
+    BackupName := ChangeFileExt(FileName, '.bak');
     Assign (F, BackupName);
     Erase (F);
     Assign (F, FileName);
@@ -3641,9 +3642,13 @@ end; { TFileEditor.SetBufSize }
 
 
 procedure TFileEditor.Store (var S : Objects.TStream);
+var
+  l: Byte;
 begin
   Inherited Store (S);
-  S.Write (FileName, Length (FileName) + 1);
+  l := Length (FileName);
+  S.Write (l, Length (FileName) + 1);
+  S.Write (FileName[1], min(Length (FileName),255));
   S.Write (SelStart, SizeOf (SelStart));
   S.Write (SelEnd, SizeOf (SelEnd));
   S.Write (CurPtr, SizeOf (CurPtr));
@@ -3771,7 +3776,7 @@ begin
 end; { TEditWindow.HandleEvent }
 
 
-procedure TEditWindow.SizeLimits(var Min, Max: TPoint);
+procedure TEditWindow.SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} Min, Max: TPoint);
 begin
   inherited SizeLimits(Min, Max);
   Min.X := 23;
