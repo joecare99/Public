@@ -1,7 +1,5 @@
 unit obj_trialbutton;
 
-{$mode objfpc}{$H+}
-
 interface
 
 uses
@@ -30,7 +28,7 @@ type
         destructor Done; virtual;
         function Execute: word; virtual;
         procedure HandleEvent(var Event: TEvent); virtual;
-        procedure SizeLimits(var MinSz, MaxSz: TPoint); virtual;
+        procedure SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint); virtual;
         constructor Load(var S: TStream);
         procedure Store(var S: TStream); virtual;
     end;
@@ -119,7 +117,7 @@ var
     S: string;
     R: TRect;
 begin
-  result :=0;
+  {$IfDef FPC_OBJFPC}result{$else}Execute{$endif} :=0;
     case CodeGen.GenPart of
      gpControls:
         begin
@@ -206,7 +204,7 @@ begin
     end;
 end; {TTrialButton.HandleEvent}
 
-procedure TTrialButton.SizeLimits(var MinSz, MaxSz: TPoint);
+procedure TTrialButton.SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint);
 begin
     inherited SizeLimits(MinSz, MaxSz);
     MinSz.X:= 5;  Dec(MaxSz.X,2);
