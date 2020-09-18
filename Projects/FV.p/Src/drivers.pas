@@ -523,6 +523,11 @@ Does nothing provided for compatability purposes only.
 ---------------------------------------------------------------------}
 PROCEDURE SetVideoMode (Mode: Sw_Word);
 
+{-DoScreenShot-------------------------------------------------------
+Moves A copy of the Videobuffer to Dest
+---------------------------------------------------------------------}
+procedure DoScreenShot({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest);
+
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                           ERROR CONTROL ROUTINES                          }
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
@@ -896,12 +901,12 @@ VAR
 begin
   { Video.InitVideo; Incompatible with BP
     and forces a screen clear which is often a bad thing PM }
-  if video.ScreenWidth = 0 then
+ (* if video.ScreenWidth = 0 then
     begin
       GetVideoDriver (Driver);
       if Assigned(Driver.InitDriver) then
         driver.InitDriver;
-    end;
+    end;  *)
   GetVideoMode(CurrMode);
   ScreenMode:=CurrMode;
 end;
@@ -1418,7 +1423,10 @@ procedure SetVideoMode(Mode: Sw_Word);
 BEGIN
 END;
 
-procedure DoScreenShot(var Dest);
+{---------------------------------------------------------------------------}
+{  DoScreenShot -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 10Nov17 JtG      }
+{---------------------------------------------------------------------------}
+procedure DoScreenShot({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest);
 begin
   assert(assigned(VideoBuf),'VideoBuf should be assigned');
   move(VideoBuf^[0],dest,VideoBufSize);
