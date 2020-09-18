@@ -60,6 +60,19 @@ object FrmLaby4: TFrmLaby4
         OnClick = btnDrawClick
         TabOrder = 1
       end
+      object btnPrint: TBitBtn
+        Left = 15
+        Height = 26
+        Top = 80
+        Width = 75
+        Caption = 'Print'
+        OnClick = btnPrintClick
+        TabOrder = 2
+      end
     end
+  end
+  object PrintDialog1: TPrintDialog
+    Left = 774
+    Top = 213
   end
 end
