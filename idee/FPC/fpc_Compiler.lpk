@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <Package Version="4">
+    <PathDelim Value="\"/>
+    <Name Value="fpc_Compiler"/>
+    <Author Value="Joe Care"/>
+    <CompilerOptions>
+      <Version Value="11"/>
+      <PathDelim Value="\"/>
+      <SearchPaths>
+        <IncludeFiles Value="$(ProjOutDir);..\compiler;..\compiler\$(TARGETCPU)"/>
+        <OtherUnitFiles Value="..\compiler;..\compiler\$(TARGETCPU);..\compiler\x86;..\compiler\systems"/>
+        <UnitOutputDirectory Value="..\..\bin\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)"/>
+      </SearchPaths>
+      <Parsing>
+        <SyntaxOptions>
+          <SyntaxMode Value="fpc"/>
+          <UseAnsiStrings Value="False"/>
+        </SyntaxOptions>
+      </Parsing>
+      <Other>
+        <CustomOptions Value="-d$(TARGETCPU)"/>
+      </Other>
+    </CompilerOptions>
+    <Version Major="3" Minor="3" Release="1"/>
+    <Files Count="16">
+      <Item1>
+        <Filename Value="..\compiler\fpcdefs.inc"/>
+        <Type Value="Include"/>
+      </Item1>
+      <Item2>
+        <Filename Value="..\compiler\globtype.pas"/>
+        <UnitName Value="globtype"/>
+      </Item2>
+      <Item3>
+        <Filename Value="..\compiler\globals.pas"/>
+        <UnitName Value="globals"/>
+      </Item3>
+      <Item4>
+        <Filename Value="..\compiler\fpcp.pas"/>
+        <UnitName Value="fpcp"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\compiler\cutils.pas"/>
+        <UnitName Value="cutils"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\compiler\cgutils.pas"/>
+        <UnitName Value="cgutils"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\compiler\browcol.pas"/>
+        <UnitName Value="browcol"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\compiler\cfileutl.pas"/>
+        <UnitName Value="cfileutl"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\compiler\cmsgs.pas"/>
+        <UnitName Value="cmsgs"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\compiler\comphook.pas"/>
+        <UnitName Value="comphook"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\compiler\finput.pas"/>
+        <UnitName Value="finput"/>
+      </Item11>
+      <Item12>
+        <Filename Value="..\compiler\fpccrc.pas"/>
+        <UnitName Value="fpccrc"/>
+      </Item12>
+      <Item13>
+        <Filename Value="..\compiler\fppu.pas"/>
+        <UnitName Value="fppu"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\compiler\x86\cpubase.pas"/>
+        <UnitName Value="cpubase"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\compiler\options.pas"/>
+        <UnitName Value="options"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\compiler\compiler.pas"/>
+        <UnitName Value="compiler"/>
+      </Item16>
+    </Files>
+    <RequiredPkgs Count="1">
+      <Item1>
+        <PackageName Value="FCL"/>
+      </Item1>
+    </RequiredPkgs>
+    <UsageOptions>
+      <IncludePath Value="."/>
+      <UnitPath Value="$(PkgOutDir)"/>
+    </UsageOptions>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+  </Package>
+</CONFIG>
