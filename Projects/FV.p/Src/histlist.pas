@@ -254,13 +254,17 @@ end;
 procedure InsertString(Id: byte; const Str: string);
 var
   P, P1, P2: PChar;
+  L: Integer;
 begin
-  while (HistoryUsed + Length(Str) + 3 > HistorySize) do
+  L := Length(Str);
+  if L>255 then
+    L := 255;
+  while (HistoryUsed + L + 3 > HistorySize) do
   begin
     P := PChar(HistoryBlock);
     while Pointer(P) < Pointer(HistoryBlock) + HistorySize do
     begin
-      if Pointer(P) + Length(PShortString(P + 2)^) + 6 + Length(Str) >
+      if Pointer(P) + Length(PShortString(P + 2)^) + 6 + L >
         Pointer(HistoryBlock) + HistorySize then
       begin
         Dec(HistoryUsed, Length(PShortString(P + 2)^) + 3);
@@ -271,14 +275,16 @@ begin
     end;
   end;
   P1 := PChar(HistoryBlock) + 1;                     { First history record }
-  P2 := P1 + Length(Str) + 3;                          { History record after }
+  P2 := P1 + L + 3;                          { History record after }
   Move(P1^, P2^, HistoryUsed - 1);                 { Shuffle history data }
   P1^ := #0;                         { Set marker byte }
   Inc(P1);
   P1^ := Chr(Id);                          { Set history id }
   Inc(P1);
-  Move(Str[1], P1^, Length(Str) + 1);  { Set history string }
-  Inc(HistoryUsed, Length(Str) + 3);                 { Inc history used }
+  P1^ := Chr(L);                          { Set history id }
+  Inc(P1);
+  Move(Str[1], P1^, L);  { Set history string }
+  Inc(HistoryUsed, L + 3);                 { Inc history used }
 end;
 
 {***************************************************************************}

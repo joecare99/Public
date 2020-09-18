@@ -226,8 +226,8 @@ type
 
   PDirEntry = ^TDirEntry;
   TDirEntry = record
-    DisplayText: PlString;
-    zDirectory: PlString;
+    DisplayText: String;
+    zDirectory: String;
   end;  { of TDirEntry }
 
   { TDirCollection is a collection of TDirEntry's used by       }
@@ -1789,8 +1789,8 @@ var
   DirItem: PDirEntry;
 begin
   New(DirItem);
-  DirItem^.DisplayText^ := S.StrRead;
-  DirItem^.zDirectory^ := S.StrRead;
+  DirItem^.DisplayText := S.StrRead;
+  DirItem^.zDirectory := S.StrRead;
   GetItem := DirItem;
 end;
 
@@ -1798,8 +1798,6 @@ procedure TDirCollection.FreeItem(Item: Pointer);
 var
   DirItem: PDirEntry absolute Item;
 begin
-  DisposeStr(DirItem^.DisplayText);
-  DisposeStr(DirItem^.zDirectory);
   Dispose(DirItem);
 end;
 
@@ -1834,7 +1832,7 @@ end;
 
 function TDirListBox.GetText(Item,MaxLen: Sw_Integer): String;
 begin
-  GetText := PDirEntry(List^.At(Item))^.DisplayText^;
+  GetText := PDirEntry(List^.At(Item))^.DisplayText;
 end;
 
 procedure TDirListBox.HandleEvent(var Event: TEvent);
@@ -1886,11 +1884,11 @@ var
     DirEntry: PDirEntry;
   begin
     New(DirEntry);
-    DirEntry^.DisplayText^ := DisplayText;
+    DirEntry^.DisplayText := DisplayText;
     If Directory='' then
-      DirEntry^.zDirectory^ := DirSeparator {.}
+      DirEntry^.zDirectory := DirSeparator {.}
     else
-      DirEntry^.zDirectory^ := Directory;
+      DirEntry^.zDirectory := Directory;
     NewDirEntry := DirEntry;
   end;
 
@@ -1971,10 +1969,10 @@ begin
    end else S := MiddleDir;
    AList^.Insert(NewDirEntry(Indent + S + SR.Name, Dirct + SR.Name));
       end;
-      FindNext(SR);
+      DosError :=FindNext(SR);
     end;
   FindClose(SR);
-    P := PDirEntry(AList^.At(AList^.Count-1))^.DisplayText;
+    P := @(PDirEntry(AList^.At(AList^.Count-1))^.DisplayText);
     I := Pos('À',P^);
     if I = 0 then
     begin
@@ -2099,9 +2097,9 @@ begin
      cmChangeDir:
        begin
          P := DirList^.List^.At(DirList^.Focused);
-         if (P^.zDirectory^ = Drives^)
-            or DriveValid(P^.zDirectory^[1]) then
-           CurDir := P^.zDirectory^
+         if (P^.zDirectory = Drives^)
+            or DriveValid(P^.zDirectory[1]) then
+           CurDir := P^.zDirectory
          else Exit;
        end;
    else

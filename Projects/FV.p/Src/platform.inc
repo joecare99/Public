@@ -192,6 +192,12 @@ FOR FPC THESE ARE THE TRANSLATIONS
   {$UNDEF BP_VMTLink}
   {$DEFINE Use_API}
   {$DEFINE NO_WINDOW}
+  {$IF FPC_FULLVERSION> 030100}
+    {$IF FPC_FULLVERSION< 030301}
+      {$warn 6058 off}
+    {$ENDIF}
+  {$ENDIF}
+
 {$ENDIF}
 
 {---------------------------------------------------------------------------}
