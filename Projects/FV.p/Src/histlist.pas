@@ -1,24 +1,24 @@
 {********[ SOURCE FILE OF GRAPHICAL FREE VISION ]**********}
-
+{                                                          }
 {   System independent GRAPHICAL clone of HISTLIST.PAS     }
-
+{                                                          }
 {   Interface Copyright (c) 1992 Borland International     }
-
+{                                                          }
 {   Copyright (c) 1996, 1997, 1998, 1999 by Leon de Boer   }
 {   ldeboer@attglobal.net  - primary e-mail address        }
 {   ldeboer@starwon.com.au - backup e-mail address         }
-
+{                                                          }
 {****************[ THIS CODE IS FREEWARE ]*****************}
-
+{                                                          }
 {     This sourcecode is released for the purpose to       }
 {   promote the pascal language on all platforms. You may  }
 {   redistribute it and/or modify with the following       }
 {   DISCLAIMER.                                            }
-
+{                                                          }
 {     This SOURCE CODE is distributed "AS IS" WITHOUT      }
 {   WARRANTIES AS TO PERFORMANCE OF MERCHANTABILITY OR     }
 {   ANY OTHER WARRANTIES WHETHER EXPRESSED OR IMPLIED.     }
-
+{                                                          }
 {*****************[ SUPPORTED PLATFORMS ]******************}
 {     16 and 32 Bit compilers                              }
 {        DOS      - Turbo Pascal 7.0 +      (16 Bit)       }
@@ -31,7 +31,7 @@
 {                 - Speedsoft Sybil 2.0+    (32 Bit)       }
 {                 - FPC 0.9912+             (32 Bit)       }
 {        OS2      - Virtual Pascal 1.0+     (32 Bit)       }
-
+{                                                          }
 {******************[ REVISION HISTORY ]********************}
 {  Version  Date        Fix                                }
 {  -------  ---------   ---------------------------------  }
@@ -47,8 +47,7 @@
 unit HistList;
 
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
-interface
-
+                                  INTERFACE
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
 
 {====Include file to sort compiler platform out =====================}
@@ -274,17 +273,17 @@ begin
       Inc(P, Length(PShortString(P + 2)^) + 3);
     end;
   end;
-  P1 := PChar(HistoryBlock) + 1;                     { First history record }
-  P2 := P1 + L + 3;                          { History record after }
-  Move(P1^, P2^, HistoryUsed - 1);                 { Shuffle history data }
-  P1^ := #0;                         { Set marker byte }
-  Inc(P1);
-  P1^ := Chr(Id);                          { Set history id }
-  Inc(P1);
-  P1^ := Chr(L);                          { Set history id }
-  Inc(P1);
-  Move(Str[1], P1^, L);  { Set history string }
-  Inc(HistoryUsed, L + 3);                 { Inc history used }
+   P1 := PChar(HistoryBlock) + 1;                   { First history record }
+   P2 := P1 + L + 3;                                { History record after }
+   Move(P1^, P2^, HistoryUsed - 1);                 { Shuffle history data }
+   P1^ := #0;                                       { Set marker byte }
+   Inc(P1);
+   P1^ := Chr(Id);                                  { Set history id }
+   Inc(P1);
+   P1^ := Chr(L);                                   { Set length of string }
+   Inc(P1);
+   Move(Str[1], P1^, L);                            { Set history string }
+   Inc(HistoryUsed, L + 3);                         { Inc history used }
 end;
 
 {***************************************************************************}
@@ -330,8 +329,8 @@ var
 begin
   StartId(Id);                                       { Set to first record }
   Count := 0;                                        { Clear count }
-  if (HistoryBlock <> nil) then
-  begin                { History initalized }
+  if (HistoryBlock <> nil) then                      { History initalized }
+  begin               
     AdvanceStringPtr;                                { Move to first string }
     while (CurString <> nil) do
     begin

@@ -71,7 +71,7 @@ uses
 
 const
   MaxDir   = 255;   { Maximum length of a DirStr. }
-  MaxFName = 255; { Maximum length of a String. }
+  MaxFName = 255; { Maximum length of a FNameStr. }
 
   DirSeparator : Char = system.DirectorySeparator;
 
@@ -89,7 +89,7 @@ type
   { TSearchRec }
 
   {  Record used to store Directory information by TFileDialog
-     This is a part of Dos.TSearchRec for Bp !! }
+     This is a part of Dos.Searchrec for Bp !! }
 
 
   PSearchRec = ^TSearchRec;
@@ -578,12 +578,12 @@ type
     AString : PlString;
   end;
 
-resourcestring  sChangeDirectory='Change faDirectory';
+resourcestring  sChangeDirectory='Change Directory';
                 sDeleteFile='Delete file?'#13#10#13#3'%s';
-                sDirectory='faDirectory';
+                sDirectory='Directory';
                 sDrives='Drives';
-                sInvalidDirectory='Invalid faDirectory.';
-                sInvalidDriveOrDir='Invalid drive or faDirectory.';
+                sInvalidDirectory='Invalid Directory.';
+                sInvalidDriveOrDir='Invalid drive or Directory.';
                 sInvalidFileName='Invalid file name.';
                 sOpen='Open';
                 sReplaceFile='Replace file?'#13#10#13#3'%s';
@@ -605,8 +605,8 @@ resourcestring  sChangeDirectory='Change faDirectory';
 
                 slChDir='~C~hdir';
                 slClear='C~l~ear';
-                slDirectoryName='faDirectory ~n~ame';
-                slDirectoryTree='faDirectory ~t~ree';
+                slDirectoryName='Directory ~n~ame';
+                slDirectoryTree='Directory ~t~ree';
                 slFiles='~F~iles';
                 slReplace='~R~eplace';
                 slRevert='~R~evert';
@@ -980,8 +980,10 @@ const
   SR: TSearchRec = ({%H-});
 
 procedure UpStr(var S: String);deprecated;
+{$if not declared(uppercase)}
 var
   I: Sw_Integer;
+{$endif}
 begin
   {$if declared(uppercase)}
   s := Uppercase(s);
@@ -1092,14 +1094,14 @@ begin
          FileList^.Insert(P);
 {       end;}
      end;
-     FindNext(S);
+     DosError :=FindNext(S);
    end;
  {$ifdef fpc}
   FindClose(S);
  {$endif}
 
   Tmp := Dir + AllFiles;
-  FindFirst(Tmp, faDirectory, S);
+  DosError :=FindFirst(Tmp, faDirectory, S);
   while (P <> nil) and (DosError = 0) do
   begin
     if (S.Attr and faDirectory <> 0) and (S.Name <> '.') and (S.Name <> '..') then
@@ -1115,7 +1117,7 @@ begin
         FileList^.Insert(P);
 {      end;}
     end;
-    FindNext(S);
+    DosError :=FindNext(S);
   end;
  {$ifdef fpc}
   FindClose(S);
@@ -1129,8 +1131,8 @@ begin
     if P <> nil then
     begin}
       new(p);
-      FindFirst(Tmp, faDirectory, S);
-      FindNext(S);
+      DosError :=FindFirst(Tmp, faDirectory, S);
+      DosError :=FindNext(S);
       if (DosError = 0) and (S.Name = PrevDir) then
        begin
          P^.Attr:=S.Attr;
@@ -1305,7 +1307,8 @@ end;
     I: Sw_Integer;
   begin
     I := Length(S);
-    while S[I] = ' ' do Dec(I);
+    while S[I] = ' ' do
+      Dec(I);
     RTrim := Copy(S, 1, I);
   end;
 
@@ -1532,10 +1535,12 @@ end;
 constructor TFileDialog.Load(var S: TStream);
 var
   DosError: Integer;
+  StrLength:byte;
 begin
   if not TDialog.Load(S) then
     Fail;
-  S.Read(WildCard, SizeOf(WildCard));
+  S.REad(StrLength,1);
+  S.Read(WildCard[1], StrLength);
   if (S.Status <> stOk) then
   begin
     TDialog.Done;
@@ -1559,8 +1564,11 @@ begin
 end;
 
 procedure TFileDialog.GetData(var Rec);
+var
+  aFilename: string;
 begin
-  GetFilename(String(Rec));
+  GetFilename(aFilename);
+  ShortString(rec):=aFileName;
 end;
 
 procedure TFileDialog.GetFileName({$IfDef FPC_OBJFPC}out{$else}var{$endif} S: string);
@@ -1644,7 +1652,7 @@ end;
 procedure TFileDialog.SetData(const Rec);
 begin
   TDialog.SetData(Rec);
-  if (String(Rec) <> '') and (IsWild(TWildStr(Rec))) then
+  if (shortString(Rec) <> '') and (IsWild(Shortstring(Rec))) then
   begin
     Valid(cmFileInit);
     FileName^.Select;
@@ -1660,9 +1668,12 @@ begin
 end;
 
 procedure TFileDialog.Store(var S: TStream);
+var b:Byte;
 begin
   TDialog.Store(S);
-  S.Write(WildCard, SizeOf(WildCard));
+  B:=Length(WildCard);
+  S.Write(B,SizeOf(B));
+  S.Write(WildCard[1], Length(WildCard));
   PutSubViewPtr(S, FileName);
   PutSubViewPtr(S, FileList);
   PutSubViewPtr(S, FileHistory);
@@ -1804,8 +1815,13 @@ end;
 procedure TDirCollection.PutItem(var S: TStream; Item: Pointer);
 var
   DirItem: PDirEntry absolute Item;
+  b:Byte;
 begin
+  b := length(DirItem^.DisplayText);
+  S.write(b,SizeOf(b));
   S.StrWrite(@DirItem^.DisplayText[1]);
+  b := length(DirItem^.zDirectory);
+  S.write(b,SizeOf(b));
   S.StrWrite(@DirItem^.zDirectory[1]);
 end;
 
@@ -2189,7 +2205,7 @@ end;
 {****************************************************************************}
 function TEditChDirDialog.DataSize : Sw_Word;
 begin
-  DataSize := SizeOf(String);
+  DataSize := 256;
 end;
 
 {****************************************************************************}
@@ -2197,7 +2213,7 @@ end;
 {****************************************************************************}
 procedure TEditChDirDialog.GetData (var Rec);
 var
-  CurDir : String absolute Rec;
+  CurDir : ShortString absolute Rec;
 begin
   if (DirInput = nil) then
     CurDir := ''
@@ -2218,7 +2234,7 @@ end;
 {****************************************************************************}
 procedure TEditChDirDialog.SetData(const Rec);
 var
-  CurDir : String absolute Rec;
+  CurDir : ShortString absolute Rec;
 begin
   if DirList <> nil then
   begin
