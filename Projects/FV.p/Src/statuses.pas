@@ -732,11 +732,11 @@ end;
 {****************************************************************************}
 procedure TArrowGauge.Draw;
 const
-  Arrows: array[0..1] of char = '<>';
+  Arrows : array[0..1] of char = '<>';
 var
-  B: TDrawBuffer;
-  C: word;
-  Len: byte;
+  B : TDrawBuffer;
+  C : Word;
+  Len : Byte;
 begin
   C := GetColor(1);
   Len := Round(Size.X * Current / (Max - Min));
@@ -790,12 +790,8 @@ var
   B: TDrawBuffer;
   C: word;
   FillSize: word;
-  PercentDone: longint;
-  S: string
-{$ifopt H-}
-  [4]
-{$endif}
-  ;
+  PercentDone : PtrInt;
+  S: string{$ifopt H-}[4]{$endif}  ;
 begin
   { fill entire view }
   MoveChar(B, ' ', GetColor(4), Size.X);

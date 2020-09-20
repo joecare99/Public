@@ -526,7 +526,7 @@ PROCEDURE SetVideoMode (Mode: Sw_Word);
 {-DoScreenShot-------------------------------------------------------
 Moves A copy of the Videobuffer to Dest
 ---------------------------------------------------------------------}
-procedure DoScreenShot({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest);
+procedure DoScreenShot(var Dest);
 
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                           ERROR CONTROL ROUTINES                          }
@@ -608,7 +608,7 @@ CONST
    SaveCtrlBreak: Boolean = False;                    { Compatability only }
    SysErrActive : Boolean = False;                    { Compatability only }
    FailSysErrors: Boolean = False;                    { Compatability only }
-   ButtonCount  : Byte = 0;                           { Mouse button count }
+   ButtonCount  : Byte = 1;                           { Mouse button count }
    DoubleDelay  : Sw_Word = 8;                           { Double click delay }
    RepeatDelay  : Sw_Word = 8;                           { Auto mouse delay }
    SysColorAttr : Sw_Word = $4E4F;                       { System colour attr }
@@ -699,7 +699,6 @@ CONST AltCodes: Array [0..127] Of Byte = (
 {                           NEW CONTROL VARIABLES                           }
 {---------------------------------------------------------------------------}
 CONST
-   HideCount : Sw_Integer = 0;                           { Cursor hide count }
    QueueCount: Sw_Word = 0;                              { Queued message count }
    QueueHead : Sw_Word = 0;                              { Queue head pointer }
    QueueTail : Sw_Word = 0;                              { Queue tail pointer }
@@ -712,24 +711,14 @@ CONST
 {                     UNINITIALIZED DOS/DPMI/API VARIABLES                      }
 {---------------------------------------------------------------------------}
 VAR
-   LastDouble : Boolean;                              { Last double buttons }
    LastButtons: Byte;                                 { Last button state }
    DownButtons: Byte;                                 { Last down buttons }
-   EventCount : Sw_Word;                                 { Events in queue }
    AutoDelay  : Sw_Word;                                 { Delay time count }
    DownTicks  : Sw_Word;                                 { Down key tick count }
    AutoTicks  : Sw_Word;                                 { Held key tick count }
-   LastWhereX : Sw_Word;                                 { Last x position }
-   LastWhereY : Sw_Word;                                 { Last y position }
-   DownWhereX : Sw_Word;                                 { Last x position }
-   DownWhereY : Sw_Word;                                 { Last y position }
    LastWhere  : TPoint;                               { Last mouse position }
    DownWhere  : TPoint;                               { Last down position }
-   EventQHead : Pointer;                              { Head of queue }
-   EventQTail : Pointer;                              { Tail of queue }
-   EventQueue : Array [0..EventQSize - 1] Of TEvent;  { Event queue }
-   EventQLast : RECORD END;                           { Simple end marker }
-   StartupScreenMode : TVideoMode;
+    StartupScreenMode : TVideoMode;
    {$ifdef OS_AMIGA}
    StartupTicks: Int64; // ticks at Startup for GetDOSTicks
    {$endif}
@@ -897,7 +886,7 @@ END;
 procedure DetectVideo;
 VAR
   CurrMode : TVideoMode;
-  Driver: TVideoDriver;
+{  Driver: TVideoDriver;  }
 begin
   { Video.InitVideo; Incompatible with BP
     and forces a screen clear which is often a bad thing PM }
@@ -1204,8 +1193,8 @@ begin
               (GetDosTicks-DownTicks<=DoubleDelay) then
              Event.Double:=true;
            DownButtons:=e.Buttons;
-           DownWhere.X:=MouseWhere.x;
-           DownWhere.Y:=MouseWhere.y;
+//           DownWhere.X:=MouseWhere.x;
+//           DownWhere.Y:=MouseWhere.y;
            DownTicks:=GetDosTicks;
            AutoTicks:=GetDosTicks;
            if AutoTicks=0 then
@@ -1293,9 +1282,23 @@ end;
 {  InitEvents -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 07Sep99 LdB        }
 {---------------------------------------------------------------------------}
 procedure InitEvents;
+var
+  ConsoleMode: DWORD;
 BEGIN
   If (ButtonCount <> 0) Then
     begin                   { Mouse is available }
+{$ifdef OS_WINDOWS}
+GetConsoleMode(GetStdHandle(cardinal(Std_Input_Handle)),ConsoleMode);
+ConsoleMode:=(ConsoleMode or ENABLE_MOUSE_INPUT or
+                  ENABLE_WINDOW_INPUT or
+                  ENABLE_EXTENDED_FLAGS)
+          and not (ENABLE_PROCESSED_INPUT or
+                   ENABLE_LINE_INPUT or
+                   ENABLE_ECHO_INPUT or
+                   ENABLE_INSERT_MODE or
+                   ENABLE_QUICK_EDIT_MODE);
+ SetConsoleMode(GetStdHandle(cardinal(Std_Input_Handle)), ConsoleMode);
+{$endif}
      Mouse.InitMouse;                                 { Hook the mouse }
      { this is required by the use of HideCount variable }
      Mouse.ShowMouse;                                 { visible by default }
@@ -1305,9 +1308,7 @@ BEGIN
      MouseWhere.X:=Mouse.GetMouseX;
      MouseWhere.Y:=Mouse.GetMouseY;                   { Get mouse position }
      LastWhere.x:=MouseWhere.x;
-     LastWhereX:=MouseWhere.x;
      LastWhere.y:=MouseWhere.y;
-     LastWhereY:=MouseWhere.y;
      MouseEvents := True;                             { Set initialized flag }
     end;
   InitSystemMsg;
@@ -1356,6 +1357,7 @@ end;
 function InitVideo:boolean;
 
 var StoreScreenMode : TVideoMode;
+  ConsoleMode: DWord;
 
 begin
   initvideo:=false;
@@ -1386,7 +1388,7 @@ begin
       GetVideoMode(ScreenMode);
     end;
 
-  if ScreenWidth > MaxViewWidth then
+  if ScreenWidth >= MaxViewWidth then
     ScreenWidth := MaxViewWidth;
   ScreenWidth:=Video.ScreenWidth;
   ScreenHeight:=Video.ScreenHeight;
@@ -1426,7 +1428,7 @@ END;
 {---------------------------------------------------------------------------}
 {  DoScreenShot -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 10Nov17 JtG      }
 {---------------------------------------------------------------------------}
-procedure DoScreenShot({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest);
+procedure DoScreenShot(var Dest);
 begin
   assert(assigned(VideoBuf),'VideoBuf should be assigned');
   move(VideoBuf^[0],dest,VideoBufSize);

@@ -63,8 +63,7 @@ USES
       Os2Def, Os2Base, OS2PmApi,                       { Standard units }
      {$ENDIF}
    {$ENDIF}
-
-   {$IFnDEF PPC_DELPHI}
+   {$IFDEF PPC_FPC}
    Dos,
    Video,
    {$ENDIF}

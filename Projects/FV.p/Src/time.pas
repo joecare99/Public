@@ -264,6 +264,19 @@ procedure SetTime(Hour, Minute, Second, Sec100: Word);
    END;
    {$ENDIF}
    {$IFDEF ASM_FPC}                                   { FPC COMPATABLE ASM }
+     {$IFDEF BIT_16}
+     ASSEMBLER;
+     ASM
+       MOV CH, BYTE PTR Hour;                           { Fetch hour }
+       MOV CL, BYTE PTR Minute;                         { Fetch minute }
+       MOV DH, BYTE PTR Second;                         { Fetch second }
+       MOV DL, BYTE PTR Sec100;                         { Fetch hundredths }
+       MOV AX, $2D00;                                   { Set function id }
+       PUSH BP;                                         { Safety save register }
+       INT $21;                                         { Set the time }
+       POP BP;                                          { Restore register }
+     END;
+     {$ELSE}
    BEGIN
    ASM
      MOVB Hour, %CH;                                  { Fetch hour }
@@ -278,6 +291,20 @@ procedure SetTime(Hour, Minute, Second, Sec100: Word);
    END;
    {$ENDIF}
 {$ENDIF}
+{$ENDIF}
+{$IFDEF OS_WIN16}                                     { 16 BIT WINDOWS CODE }
+   ASSEMBLER;
+   ASM
+     MOV CH, BYTE PTR Hour;                           { Fetch hour }
+     MOV CL, BYTE PTR Minute;                         { Fetch minute }
+     MOV DH, BYTE PTR Second;                         { Fetch second }
+     MOV DL, BYTE PTR Sec100;                         { Fetch hundredths }
+     MOV AX, $2D00;                                   { Set function id }
+     PUSH BP;                                         { Safety save register }
+     INT $21;                                         { Set the time }
+     POP BP;                                          { Restore register }
+   END;
+   {$ENDIF}
 {$IFDEF OS_WINDOWS}                                   { WIN/NT CODE }
    {$IFDEF BIT_16}                                    { 16 BIT WINDOWS CODE }
    ASSEMBLER;
@@ -364,7 +391,56 @@ procedure GetTime({$IfDef FPC_OBJFPC}out{$else}var{$endif} Hour, Minute, Second,
      STOSW;                                           { Return hours }
    END;
    {$ENDIF}
-   {$IFDEF OS_GO32}                                   { FPC COMPATABLE ASM }
+   {$IFDEF ASM_FPC}                                   { FPC COMPATABLE ASM }
+     {$IFDEF BIT_16}
+       {$IFDEF FPC_X86_DATA_NEAR}
+       ASSEMBLER;
+       ASM
+         MOV AX, $2C00;                                   { Set function id }
+         PUSH BP;                                         { Safety save register }
+         INT $21;                                         { System get time }
+         POP BP;                                          { Restore register }
+         XOR AH, AH;                                      { Clear register }
+         CLD;                                             { Strings go forward }
+         MOV AL, DL;                                      { Transfer register }
+         PUSH DS
+         POP ES
+         MOV DI, Sec100;                                  { ES:DI -> hundredths }
+         STOSW;                                           { Return hundredths }
+         MOV AL, DH;                                      { Transfer register }
+         MOV DI, Second;                                  { ES:DI -> seconds }
+         STOSW;                                           { Return seconds }
+         MOV AL, CL;                                      { Transfer register }
+         MOV DI, Minute;                                  { ES:DI -> minutes }
+         STOSW;                                           { Return minutes }
+         MOV AL, CH;                                      { Transfer register }
+         MOV DI, Hour;                                    { ES:DI -> hours }
+         STOSW;                                           { Return hours }
+       END;
+       {$ELSE FPC_X86_DATA_NEAR}
+       ASSEMBLER;
+       ASM
+         MOV AX, $2C00;                                   { Set function id }
+         PUSH BP;                                         { Safety save register }
+         INT $21;                                         { System get time }
+         POP BP;                                          { Restore register }
+         XOR AH, AH;                                      { Clear register }
+         CLD;                                             { Strings go forward }
+         MOV AL, DL;                                      { Transfer register }
+         LES DI, Sec100;                                  { ES:DI -> hundredths }
+         STOSW;                                           { Return hundredths }
+         MOV AL, DH;                                      { Transfer register }
+         LES DI, Second;                                  { ES:DI -> seconds }
+         STOSW;                                           { Return seconds }
+         MOV AL, CL;                                      { Transfer register }
+         LES DI, Minute;                                  { ES:DI -> minutes }
+         STOSW;                                           { Return minutes }
+         MOV AL, CH;                                      { Transfer register }
+         LES DI, Hour;                                    { ES:DI -> hours }
+         STOSW;                                           { Return hours }
+       END;
+       {$ENDIF}
+     {$ELSE}
    BEGIN
    (* ASM
      MOVW $0x2C00, %AX;                               { Set function id }
@@ -390,6 +466,56 @@ procedure GetTime({$IfDef FPC_OBJFPC}out{$else}var{$endif} Hour, Minute, Second,
      restored if a mouse interrupt is generated while the Dos
      interrupt is called... PM }
      Dos.GetTime(Hour,Minute,Second,Sec100);
+   END;
+   {$ENDIF}
+{$ENDIF}
+{$ENDIF}
+{$IFDEF OS_WIN16}                                     { 16 BIT WINDOWS CODE }
+   {$IFDEF FPC_X86_DATA_NEAR}
+   ASSEMBLER;
+   ASM
+     MOV AX, $2C00;                                   { Set function id }
+     PUSH BP;                                         { Safety save register }
+     INT $21;                                         { System get time }
+     POP BP;                                          { Restore register }
+     XOR AH, AH;                                      { Clear register }
+     CLD;                                             { Strings go forward }
+     MOV AL, DL;                                      { Transfer register }
+     PUSH DS
+     POP ES
+     MOV DI, Sec100;                                  { ES:DI -> hundredths }
+     STOSW;                                           { Return hundredths }
+     MOV AL, DH;                                      { Transfer register }
+     MOV DI, Second;                                  { ES:DI -> seconds }
+     STOSW;                                           { Return seconds }
+     MOV AL, CL;                                      { Transfer register }
+     MOV DI, Minute;                                  { ES:DI -> minutes }
+     STOSW;                                           { Return minutes }
+     MOV AL, CH;                                      { Transfer register }
+     MOV DI, Hour;                                    { ES:DI -> hours }
+     STOSW;                                           { Return hours }
+   END;
+   {$ELSE FPC_X86_DATA_NEAR}
+   ASSEMBLER;
+   ASM
+     MOV AX, $2C00;                                   { Set function id }
+     PUSH BP;                                         { Safety save register }
+     INT $21;                                         { System get time }
+     POP BP;                                          { Restore register }
+     XOR AH, AH;                                      { Clear register }
+     CLD;                                             { Strings go forward }
+     MOV AL, DL;                                      { Transfer register }
+     LES DI, Sec100;                                  { ES:DI -> hundredths }
+     STOSW;                                           { Return hundredths }
+     MOV AL, DH;                                      { Transfer register }
+     LES DI, Second;                                  { ES:DI -> seconds }
+     STOSW;                                           { Return seconds }
+     MOV AL, CL;                                      { Transfer register }
+     LES DI, Minute;                                  { ES:DI -> minutes }
+     STOSW;                                           { Return minutes }
+     MOV AL, CH;                                      { Transfer register }
+     LES DI, Hour;                                    { ES:DI -> hours }
+     STOSW;                                           { Return hours }
    END;
    {$ENDIF}
 {$ENDIF}
