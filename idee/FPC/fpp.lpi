@@ -30,16 +30,28 @@
         <Mode0 Name="default"/>
       </Modes>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="fv_p"/>
+        <PackageName Value="fpc_Compiler"/>
       </Item1>
+      <Item2>
+        <PackageName Value="fv_p"/>
+      </Item2>
     </RequiredPackages>
-    <Units Count="1">
+    <Units Count="3">
       <Unit0>
         <Filename Value="fpp.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
+      <Unit1>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\ide\wutils.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="WUtils"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\ide\fpcatch.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -49,8 +61,8 @@
       <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$nameonly($project(infofile))"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir);..\..\..\Lazarus\FpcTrunk\compiler;..\..\..\Lazarus\FpcTrunk\compiler\$(TARGETCPU);..\..\..\Lazarus\FpcTrunk\ide;..\..\..\Lazarus\FpcTrunk\packages\gdbint\src"/>
-      <OtherUnitFiles Value="..\..\..\Lazarus\FpcTrunk\ide;..\..\..\Lazarus\FpcTrunk\compiler;..\..\..\Lazarus\FpcTrunk\compiler\$(TARGETCPU);..\..\..\Lazarus\FpcTrunk\compiler\x86;..\..\..\Lazarus\FpcTrunk\compiler\systems;..\..\..\Lazarus\FpcTrunk\packages\gdbint\src"/>
+      <IncludeFiles Value="$(ProjOutDir);..\..\..\Lazarus\FpcTrunk\packages\ide;..\..\..\Lazarus\FpcTrunk\packages\gdbint\src"/>
+      <OtherUnitFiles Value="..\..\..\Lazarus\FpcTrunk\Packages\ide;..\..\..\Lazarus\FpcTrunk\packages\gdbint\src;..\..\..\Lazarus\FpcTrunk\packages\rtl-extra\src\inc"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Parsing>
