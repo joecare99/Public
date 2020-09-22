@@ -1151,7 +1151,7 @@ Var
   cFactX, cFactY: Extended;
 
 begin
-  // dies ist ein Laby-Crawler
+  // dies ist ein Zeichen-Laby-Crawler
   LRoom := FEingang;
   LForeward := true;
   cc:=0;
@@ -1475,7 +1475,7 @@ Var
   ly: integer;
 Begin
  // LForeward := true;
-  // dies ist ein Laby-Crawler zum speichern des Labyrinth
+  // dies ist ein Laby-Crawler zum lesen des Labyrinth
   // 1. Kennung
   // Rstream.Seek(0,0);
   If assigned(FRooms) Then

@@ -21,37 +21,42 @@ Type
   { TForm1 }
 
   TForm1 = Class(TForm)
-    Image1: TImage;
+    Button1: TButton;
+    imgResult: TImage;
     Btn_Create: TButton;
     Btn_Test1: TButton;
     Btn_Load: TButton;
-    Button4: TButton;
-    Button5: TButton;
+    btnRotLeft: TButton;
+    btnRotRight: TButton;
     Btn_GoFwd: TButton;
     Btn_Back: TButton;
     FraWindRose1: TFraWindRose;
-    CheckBox1: TCheckBox;
+    chbAutorun: TCheckBox;
+    Panel1: TPanel;
+    pnlRight: TPanel;
+    pnlRightTop: TPanel;
     Timer1: TTimer;
     OpenDialog1: TOpenDialog;
-    CheckBox2: TCheckBox;
+    chbFast: TCheckBox;
     Label1: TLabel;
-    Image2: TPaintBox;
+    imgPreview: TPaintBox;
     Btn_Test2: TButton;
     Btn_Test3: TButton;
     Btn_Test4: TButton;
     OpenPictureDialog1: TOpenPictureDialog;
-    LabeledEdit1: TLabeledEdit;
-    LabeledEdit2: TLabeledEdit;
+    edtXDim: TLabeledEdit;
+    edtYDim: TLabeledEdit;
     Procedure Btn_Test1Click(Sender: TObject);
     Procedure Btn_CreateClick(Sender: TObject);
-    Procedure Image1Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    Procedure imgResultClick(Sender: TObject);
     Procedure Btn_LoadClick(Sender: TObject);
-    Procedure Button5Click(Sender: TObject);
-    Procedure Button4Click(Sender: TObject);
+    Procedure btnRotRightClick(Sender: TObject);
+    Procedure btnRotLeftClick(Sender: TObject);
     Procedure Btn_GoFwdClick(Sender: TObject);
     Procedure Btn_BackClick(Sender: TObject);
     Procedure Timer1Timer(Sender: TObject);
-    Procedure CheckBox2Click(Sender: TObject);
+    Procedure chbFastClick(Sender: TObject);
     Procedure Btn_Test2Click(Sender: TObject);
     Procedure Btn_Test3Click(Sender: TObject);
     Procedure Btn_Test4Click(Sender: TObject);
@@ -103,14 +108,14 @@ procedure TForm1.Btn_Test4Click(Sender: TObject);
   Begin
     If OpenPictureDialog1.Execute Then
       Begin
-        Image1.Canvas.Brush.Color := clDkGray;
-        Image1.Canvas.FillRect(Image1.Canvas.cliprect);
+        imgResult.Canvas.Brush.Color := clDkGray;
+        imgResult.Canvas.FillRect(imgResult.Canvas.cliprect);
 
         FPictFilename := OpenPictureDialog1.filename;
 
         PutImage(0, 0, FPictFilename, 500, putpixel);
         // PutImage(0, 200, FPictFilename, 330, putpixel);
-        // Image1.{Picture.bitmap.}Canvas, Image1.{Picture.bitmap.}Canvas.cliprect);
+        // imgResult.{Picture.bitmap.}Canvas, imgResult.{Picture.bitmap.}Canvas.cliprect);
       End;
   End;
 
@@ -126,8 +131,8 @@ procedure TForm1.Btn_CreateClick(Sender: TObject);
       ProgessForm.hide;
     }
     Laby.show;
-    laby.Laby_width := strtoint(LabeledEdit1.Text);
-    laby.Laby_Length := strtoint(LabeledEdit2.text);
+    laby.Laby_width := strtoint(edtXDim.Text);
+    laby.Laby_Length := strtoint(edtYDim.text);
     laby.Laby_Height_ := 5;
 
     setlength(Laby.fobstacles, 4);
@@ -140,14 +145,19 @@ procedure TForm1.Btn_CreateClick(Sender: TObject);
     Laby.CreateLaby;
   End;
 
+procedure TForm1.Button1Click(Sender: TObject);
+begin
+  Laby.show;
+end;
+
 procedure TForm1.Btn_Test1Click(Sender: TObject);
   Var
     path: variant;
     x, y: Integer;
     // i: Integer;
   Begin
-    Image1.Canvas.Brush.Color := clDkGray;
-    Image1.Canvas.FillRect(Image1.Canvas.cliprect);
+    imgResult.Canvas.Brush.Color := clDkGray;
+    imgResult.Canvas.FillRect(imgResult.Canvas.cliprect);
 
     path := vararrayof([2, 1, 12, 4, 4, 4, 6, 5, 2, 11, 12, 10, 10, 12, 2, 6, 4,
       2, 12, 10, 10, 2, 12, 2, 5, 7, 4, 1, 1, 12, 10, 10, 11, 12, 2, 6, 5, 4, 3,
@@ -155,7 +165,7 @@ procedure TForm1.Btn_Test1Click(Sender: TObject);
       10, 10, 12, 2,
       // 12,10,10,2,
       12, 2, 5, 7, 4, 1, 1]);
-    x := Image1.Width - 50;
+    x := imgResult.Width - 50;
     y := 50;
     PutLogo(x, y, path, putpixel,1);
     PutLogo(x, y+40, path, putpixel,2);
@@ -191,13 +201,13 @@ procedure TForm1.Btn_LoadClick(Sender: TObject);
     Laby.Hide;
   End;
 
-procedure TForm1.Button4Click(Sender: TObject);
+procedure TForm1.btnRotLeftClick(Sender: TObject);
   Begin
     FraWindRose1.direction := FraWindRose1.direction - 10;
     DrawLaby(Sender);
   End;
 
-procedure TForm1.Button5Click(Sender: TObject);
+procedure TForm1.btnRotRightClick(Sender: TObject);
   Begin
     FraWindRose1.direction := FraWindRose1.direction + 10;
     DrawLaby(Sender);
@@ -432,7 +442,7 @@ procedure TForm1.PutLogoUR(putpixel: TPut3DObstaclePxl);
 procedure TForm1.putpixel(lb: T3dpoint; value: Boolean);
   Begin
     If assigned(lb) and value Then
-      Image1.Canvas.Pixels[lb.x, lb.y] := clWhite;
+      imgResult.Canvas.Pixels[lb.x, lb.y] := clWhite;
   End;
 
 procedure TForm1.DoRandomPoints(putpixel: TPut3DObstaclePxl);
@@ -501,32 +511,32 @@ procedure TForm1.Btn_BackClick(Sender: TObject);
 
 procedure TForm1.Btn_Test2Click(Sender: TObject);
   Begin
-    Image1.Canvas.Brush.Color := Color;
-    Image1.Canvas.FillRect(Image1.Canvas.cliprect);
+    imgResult.Canvas.Brush.Color := Color;
+    imgResult.Canvas.FillRect(imgResult.Canvas.cliprect);
 
-    RandomPoints(Image1.Width Div 2, Image1.Height Div 2, Image1.Width Div 2,
+    RandomPoints(imgResult.Width Div 2, imgResult.Height Div 2, imgResult.Width Div 2,
       10000, putpixel);
   End;
 
 procedure TForm1.Btn_Test3Click(Sender: TObject);
   Begin
-    Image1.Canvas.Brush.Color := clDkGray;
-    Image1.Canvas.FillRect(Image1.Canvas.cliprect);
+    imgResult.Canvas.Brush.Color := clDkGray;
+    imgResult.Canvas.FillRect(imgResult.Canvas.cliprect);
 
-    RandomQuadr(Image1.Width Div 2, Image1.Height Div 2, Image1.Height Div 3, 2,
+    RandomQuadr(imgResult.Width Div 2, imgResult.Height Div 2, imgResult.Height Div 3, 2,
       2, putpixel);
   End;
 
-procedure TForm1.CheckBox2Click(Sender: TObject);
+procedure TForm1.chbFastClick(Sender: TObject);
   Begin
-    If CheckBox2.Checked Then
+    If chbFast.Checked Then
       Timer1.Interval := 25
     Else
       Timer1.Interval := 100;
 
   End;
 
-procedure TForm1.Image1Click(Sender: TObject);
+procedure TForm1.imgResultClick(Sender: TObject);
 
   Var
     I, J, imax: Integer;
@@ -541,16 +551,16 @@ procedure TForm1.Image1Click(Sender: TObject);
         For J := 1 To imax Do
           Begin
             hp := Unt_point3d.getdir(I, J);
-            Image1.Canvas.Pixels[hp.x + 40, hp.y + 40] :=
+            imgResult.Canvas.Pixels[hp.x + 40, hp.y + 40] :=
               rgb(I * 3, I * 2 + round(J / imax * 90), round(J / imax * 250));
-            Image1.Canvas.Pixels[J, hp.x + 120] :=
+            imgResult.Canvas.Pixels[J, hp.x + 120] :=
               rgb(I * 3, I * 2 + round(J / imax * 90), round(J / imax * 250));
-            Image1.Canvas.Pixels[J, hp.y + 200] :=
+            imgResult.Canvas.Pixels[J, hp.y + 200] :=
               rgb(I * 3, I * 2 + round(J / imax * 90), round(J / imax * 250));
             hp.free;
 
           End;
-        Image1.Update;
+        imgResult.Update;
       End;
   End;
 
@@ -559,7 +569,7 @@ procedure TForm1.Timer1Timer(Sender: TObject);
     LDir: Integer;
     I: Integer;
   Begin
-    If CheckBox1.Checked Then
+    If chbAutorun.Checked Then
       If assigned(ActRoom) Then
         Begin
           LDir := FLdir; // random(12) + 1;
@@ -646,25 +656,25 @@ procedure TForm1.DrawLaby(Sender: TObject);
             ((I <> getinvdir(iDir,22)) Or (iDir = -1)) Then
             Begin
               If Level > LMAxLEvel - 15 Then
-                Image1.Canvas.pen.Width := (Level - LMAxLEvel + 20) Div 3
+                imgResult.Canvas.pen.Width := (Level - LMAxLEvel + 20) Div 3
               Else
-                Image1.Canvas.pen.Width := 2;
+                imgResult.Canvas.pen.Width := 2;
               If iDir = -1 Then
 
                 Begin
-                  Image1.Canvas.pen.Color := clLime;
+                  imgResult.Canvas.pen.Color := clLime;
                 End
               Else If Lroom.gang[I].token = 'R' Then
                 Begin
-                  Image1.Canvas.pen.Color := clBlue;
+                  imgResult.Canvas.pen.Color := clBlue;
                 End
               Else If Lroom.gang[I].token = 'E' Then
                 Begin
-                  Image1.Canvas.pen.Color := clRed;
+                  imgResult.Canvas.pen.Color := clRed;
 
                 End
               Else
-                Image1.Canvas.pen.Color := clblack;
+                imgResult.Canvas.pen.Color := clblack;
               xx0 := +(Lroom.Ort.y - y0) * df;
               yy0 := -(Lroom.Ort.x - x0) * df;
               zz0 := -(Lroom.Ort.z - 3) * df;
@@ -674,19 +684,19 @@ procedure TForm1.DrawLaby(Sender: TObject);
               VTransform(xx0, yy0,zz0, s, C, rx0, ry0);
               VTransform(xx1, yy1,zz1, s, C, rx1, ry1);
 
-              Image1.Canvas.moveto(lx + rx0, ly + ry0);
-              Image1.Canvas.lineto(lx + rx1, ly + ry1);
+              imgResult.Canvas.moveto(lx + rx0, ly + ry0);
+              imgResult.Canvas.lineto(lx + rx1, ly + ry1);
 
               If (Level > 0) Then
                 DrawSubPath(Level - 1, I, Lroom.gang[I], x0, y0)
               Else
                 inc(LBreaks);
               If Color <> clblack Then
-                Image2.Canvas.Pixels
+                imgPreview.Canvas.Pixels
                   [trunc(Lroom.gang[I].Ort.x / Laby.Laby_Width *
-                  (Image2.Width - 2)) + 1,
+                  (imgPreview.Width - 2)) + 1,
                   trunc(Lroom.gang[I].Ort.y / Laby.Laby_Length *
-                  (Image2.Height - 2)) + 1] := Image1.Canvas.pen.Color;
+                  (imgPreview.Height - 2)) + 1] := imgResult.Canvas.pen.Color;
 
             End;
       End;
@@ -728,7 +738,7 @@ procedure TForm1.DrawLaby(Sender: TObject);
                   sqr(dp.z  - 3)));
 
 
-                Image1.Canvas.pen.Width := 1;
+                imgResult.Canvas.pen.Width := 1;
                 If LAoRooms[J].token = 'R' Then
                   Begin
                     Color := clBlue;
@@ -748,17 +758,17 @@ procedure TForm1.DrawLaby(Sender: TObject);
                   End;
 
                 if dist <Level then
-                  Image2.Canvas.Pixels
+                  imgPreview.Canvas.Pixels
                             [trunc(dp.x  / Laby.Laby_Width *
-                            (Image2.Width - 2)) + 1,
+                            (imgPreview.Width - 2)) + 1,
                             trunc(dp.y  / Laby.Laby_Length *
-                            (Image2.Height - 2)) + 1] := Color2
+                            (imgPreview.Height - 2)) + 1] := Color2
                       Else
-                        Image2.Canvas.Pixels
+                        imgPreview.Canvas.Pixels
                           [trunc(dp.x  / Laby.Laby_Width *
-                          (Image2.Width - 2)) + 1,
+                          (imgPreview.Width - 2)) + 1,
                           trunc(dp.y  / Laby.Laby_Length *
-                          (Image2.Height - 2)) + 1] := clWhite;
+                          (imgPreview.Height - 2)) + 1] := clWhite;
 
                 if dist <Level-1 then
                 For I := 1 To high(Dir3D22) Do
@@ -771,17 +781,17 @@ procedure TForm1.DrawLaby(Sender: TObject);
                         sqr(dp.z div 2 - 3)));
 
                       if dist <Level then
-                           Image2.Canvas.Pixels
+                           imgPreview.Canvas.Pixels
                             [trunc(dp.x div 2 / Laby.Laby_Width *
-                            (Image2.Width - 2)) + 1,
+                            (imgPreview.Width - 2)) + 1,
                             trunc(dp.y div 2 / Laby.Laby_Length *
-                            (Image2.Height - 2)) + 1] := Color2
+                            (imgPreview.Height - 2)) + 1] := Color2
                       Else
-                        Image2.Canvas.Pixels
+                        imgPreview.Canvas.Pixels
                           [trunc(dp.x div 2 / Laby.Laby_Width *
-                          (Image2.Width - 2)) + 1,
+                          (imgPreview.Width - 2)) + 1,
                           trunc(dp.y div 2 / Laby.Laby_Length *
-                          (Image2.Height - 2)) + 1] := clWhite;
+                          (imgPreview.Height - 2)) + 1] := clWhite;
 
 
                       xx0 := +(LAoRooms[J].Ort.y - y0) * df;
@@ -796,14 +806,14 @@ procedure TForm1.DrawLaby(Sender: TObject);
 
                       If dist < Level Then
                         Begin
-                          Image1.Canvas.pen.Width := 5;
-                          Image1.Canvas.pen.Color := clwhite;
-                          Image1.Canvas.moveto(lx + rx0+sgn(rx1-rx0), ly + ry0+sgn(ry1-ry0));
-                          Image1.Canvas.lineto(lx + rx1, ly + ry1);
-                          Image1.Canvas.pen.Width := 5;
-                          Image1.Canvas.pen.Color := Color;
-                          Image1.Canvas.moveto(lx + rx0, ly + ry0);
-                          Image1.Canvas.lineto(lx + rx1+sgn(rx1-rx0), ly + ry1+sgn(ry1-ry0));
+                          imgResult.Canvas.pen.Width := 5;
+                          imgResult.Canvas.pen.Color := clwhite;
+                          imgResult.Canvas.moveto(lx + rx0+sgn(rx1-rx0), ly + ry0+sgn(ry1-ry0));
+                          imgResult.Canvas.lineto(lx + rx1, ly + ry1);
+                          imgResult.Canvas.pen.Width := 5;
+                          imgResult.Canvas.pen.Color := Color;
+                          imgResult.Canvas.moveto(lx + rx0, ly + ry0);
+                          imgResult.Canvas.lineto(lx + rx1+sgn(rx1-rx0), ly + ry1+sgn(ry1-ry0));
 
                         End
 
@@ -820,12 +830,12 @@ procedure TForm1.DrawLaby(Sender: TObject);
     // ax, ay: extended;
 
   Begin
-    lx := Image1.Width Div 2;
-    ly := Image1.Height Div 2;
+    lx := imgResult.Width Div 2;
+    ly := imgResult.Height Div 2;
     s := sin(FraWindRose1.direction * pi / 180);
     C := cos(FraWindRose1.direction * pi / 180);
-    Image1.Canvas.Brush.Color := Color;
-    Image1.Canvas.FillRect(Image1.Canvas.cliprect);
+    imgResult.Canvas.Brush.Color := Color;
+    imgResult.Canvas.FillRect(imgResult.Canvas.cliprect);
     If assigned(ActRoom) Then
       Begin
         lx0 := ActRoom.Ort.x;
@@ -856,4 +866,4 @@ procedure TForm1.DrawLaby(Sender: TObject);
       End;
   End;
 
-End.
+End.
