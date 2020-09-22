@@ -402,7 +402,8 @@ type
         procedure HandleEvent(var Event: TEvent); virtual;
         procedure ChangeBounds(const Bounds: TRect); virtual;
         procedure SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} Min, Max: TPoint); virtual;
-        procedure GetCommands({$IfDef FPC_OBJFPC}out{$else}var{$endif} Commands: TCommandSet);
+        procedure GetCommands(
+{$IfDef FPC_OBJFPC}out{$else}var{$endif} Commands: TCommandSet);
         procedure GetPeerViewPtr(var S: TStream; var P);
         procedure PutPeerViewPtr(var S: TStream; P: PView);
         procedure CalcBounds(var Bounds: TRect; Delta: TPoint); virtual;
@@ -426,8 +427,10 @@ type
         procedure DrawUnderRect(var R: TRect; LastView: PView);
         procedure DrawUnderView(DoShadow: boolean; LastView: PView);
         procedure do_WriteView(x1, x2, y: Sw_Integer; var Buf);
-        procedure do_WriteViewRec1(x1, x2: Sw_integer; p: PView; shadowCounter: Sw_integer);
-        procedure do_WriteViewRec2(x1, x2: Sw_integer; p: PView; shadowCounter: Sw_integer);
+        procedure do_WriteViewRec1(x1, x2: Sw_integer; p: PView;
+            shadowCounter: Sw_integer);
+        procedure do_WriteViewRec2(x1, x2: Sw_integer; p: PView;
+            shadowCounter: Sw_integer);
         function do_ExposedRec1(x1, x2: Sw_integer; p: PView): boolean;
         function do_ExposedRec2(x1, x2: Sw_integer; p: PView): boolean;
     end;
@@ -1056,8 +1059,10 @@ begin
             Res := Owner^.Focus;                           { Return focus state }
             if Res then                                    { Owner has focus }
                 if ((Owner^.Current = nil) or                { No current view }
-                    (Owner^.Current^.Options and ofValidate = 0) { Non validating view } or
-                    (Owner^.Current^.Valid(cmReleasedFocus))) { Okay to drop focus } then
+                    (Owner^.Current^.Options and ofValidate =
+                    0) { Non validating view } or
+                    (Owner^.Current^.Valid(cmReleasedFocus)))
+                { Okay to drop focus } then
                     Select
                 else
                     Res := False;             { Then select us }
@@ -1161,21 +1166,16 @@ begin
         cur := @Self;
         repeat
             p := cur^.GetPalette;
-            if (p <> nil) then
-                if length(p^) <> 0 then
+            if (p <> nil) and (length(p^) > 0) then
+              begin
+                if (color <= length(p^)) and (Ord(p^[color]) > 0) then
+                    color := Ord(p^[color])
+                else
                   begin
-                    if color > length(p^) then
-                      begin
-                        MapColor := errorAttr;
-                        Exit;
-                      end;
-                    color := Ord(p^[color]);
-                    if color = 0 then
-                      begin
-                        MapColor := errorAttr;
-                        Exit;
-                      end;
+                    MapColor := errorAttr;
+                    Exit;
                   end;
+              end;
             cur := cur^.Owner;
         until (cur = nil);
         MapColor := color;
@@ -1912,8 +1912,8 @@ begin
         if (State and (sfSelected or sfDisabled) = 0)    { Not selected/disabled } and
             (Options and ofSelectable <> 0) then       { View is selectable }
             if (Focus = False) or                          { Not view with focus }
-                (Options and ofFirstClick = 0)               { Not 1st click select }
-            then
+                (Options and ofFirstClick = 0)
+            { Not 1st click select } then
                 ClearEvent(Event);                    { Handle the event }
 end;
 
@@ -3888,7 +3888,8 @@ begin
                   begin
                     WordRec(B[CurCol]).Lo := byte(SpecialChars[SCOff]);
                     { Set marker character }
-                    WordRec(B[CurCol + ColWidth - 2]).Lo := byte(SpecialChars[SCOff + 1]);
+                    WordRec(B[CurCol + ColWidth - 2]).Lo :=
+                        byte(SpecialChars[SCOff + 1]);
                     { Set marker character }
                   end;
               end;
@@ -4071,7 +4072,8 @@ begin
             Oi := Focused;                                 { Hold focused item }
             MakeLocal(Event.Where, Mouse);                 { Localize mouse }
             if MouseInView(Event.Where) then
-                Ni := Mouse.Y + (Size.Y * (Mouse.X div Cw)) + TopItem          { Calc item to focus }
+                Ni := Mouse.Y + (Size.Y * (Mouse.X div Cw)) +
+                    TopItem          { Calc item to focus }
             else
                 Ni := Oi;                               { Focus old item }
             Ct := 0;                                       { Clear count value }
@@ -4094,17 +4096,23 @@ begin
                             if (Mouse.Y < 0) then
                                 Ni := Focused - 1; { Move up one item  }
                             if (Mouse.Y >= Size.Y) then
-                                Ni := Focused + 1;                     { Move down one item }
+                                Ni := Focused + 1;
+                            { Move down one item }
                           end
                         else
                           begin                           { Multiple columns }
                             if (Mouse.X < 0) then                  { Mouse x below zero }
-                                Ni := Focused - Size.Y;                { Move down 1 column }
-                            if (Mouse.X >= Size.X) then            { Mouse x above width }
-                                Ni := Focused + Size.Y;                { Move up 1 column }
+                                Ni := Focused - Size.Y;
+                            { Move down 1 column }
+                            if (Mouse.X >= Size.X) then
+                                { Mouse x above width }
+                                Ni := Focused + Size.Y;
+                            { Move up 1 column }
                             if (Mouse.Y < 0) then                  { Mouse y below zero }
-                                Ni := Focused - Focused mod Size.Y;    { Move up one item }
-                            if (Mouse.Y > Size.Y) then             { Mouse y above height }
+                                Ni := Focused - Focused mod Size.Y;
+                            { Move up one item }
+                            if (Mouse.Y > Size.Y) then
+                                { Mouse y above height }
                                 Ni := Focused - Focused mod Size.Y + Size.Y - 1;
                             { Move down one item }
                           end;
@@ -4403,7 +4411,8 @@ begin
                       end;
                 cmClose:                                     { CLOSE COMMAND }
                     if (Flags and wfClose <> 0) and            { Close flag set }
-                        ((Event.InfoPtr = nil) or                  { None specific close }
+                        ((Event.InfoPtr = nil) or
+                        { None specific close }
                         (Event.InfoPtr = @Self)) then
                       begin        { Close to us }
                         ClearEvent(Event);                       { Clear the event }
@@ -4863,13 +4872,15 @@ var
 
     procedure Change(DX, DY: Sw_Integer);
     begin
-        if (Mode and dmDragMove <> 0) and (Event.KeyShift{GetShiftState} and $03 = 0) then
+        if (Mode and dmDragMove <> 0) and (Event.KeyShift{GetShiftState} and
+            $03 = 0) then
           begin
             Inc(P.X, DX);
             Inc(P.Y, DY);
           end
         else
-        if (Mode and dmDragGrow <> 0) and (Event.KeyShift{GetShiftState} and $03 <> 0) then
+        if (Mode and dmDragGrow <> 0) and (Event.KeyShift{GetShiftState} and
+            $03 <> 0) then
           begin
             Inc(S.X, DX);
             Inc(S.Y, DY);
