@@ -1158,7 +1158,7 @@ begin
   LcDir := 1; // (X: +1 Y:+0)
   if assigned(Canvas) then
     begin
-      cFactX := canvas.cliprect.Width / LabyBM_Width;
+      cFactX := canvas.cliprect.Width / (LabyBM_Width+1);
       cFactY := Canvas.cliprect.Height / LabyBM_Length;
     end;
   Repeat
@@ -1177,6 +1177,8 @@ begin
       End;
     End;
 
+    LTdir :=  getInvDir(LcDir,22);
+
     If Lgc = 0 Then // Ende
     Begin
       if not assigned(Canvas) then
@@ -1187,6 +1189,17 @@ begin
         LRoom.Ort.y*dFact ] := clred;
       // Application.ProcessMessages;
       { $endif debug }
+        end
+      else
+        begin
+          Canvas.MoveTo(
+            trunc(LRoom.Ort.x * cFactX),trunc(LRoom.Ort.y * cFactY));
+          Canvas.LineTo
+            (trunc((LRoom.Ort.x +0.5* dir12[Ltdir].x)*cFactX) ,
+             trunc((LRoom.Ort.y +0.5* dir12[Ltdir].y)*cFactY) );
+          Canvas.Ellipse
+            (trunc((LRoom.Ort.x +0.25)*cFactX) , trunc((LRoom.Ort.y +0.25)*cFactY),
+             trunc((LRoom.Ort.x -0.25)*cFactX) , trunc((LRoom.Ort.y -0.25)*cFactY));
         end;
 
       LcDir := getInvDir(LcDir,22);
@@ -1213,11 +1226,18 @@ begin
           end
         else
           begin
-            Canvas.MoveTo(
-              trunc(LRoom.Ort.x * cFactX),trunc(LRoom.Ort.y * cFactY));
+            Canvas.MoveTo
+            (trunc((LRoom.Ort.x +0.5* dir12[Ltdir].x)*cFactX) ,
+             trunc((LRoom.Ort.y +0.5* dir12[Ltdir].y)*cFactY) );
             Canvas.LineTo
-              (trunc((LRoom.Ort.x + dir12[LSdir].x)*cFactX) ,
-               trunc((LRoom.Ort.y + dir12[LSdir].y)*cFactY) );
+            (trunc((LRoom.Ort.x +0.25* dir12[Ltdir].x)*cFactX) ,
+             trunc((LRoom.Ort.y +0.25* dir12[Ltdir].y)*cFactY) );
+            Canvas.LineTo
+              (trunc((LRoom.Ort.x +0.25* dir12[LSdir].x)*cFactX) ,
+               trunc((LRoom.Ort.y +0.25* dir12[LSdir].y)*cFactY) );
+            Canvas.LineTo
+              (trunc((LRoom.Ort.x +0.5* dir12[LSdir].x)*cFactX) ,
+               trunc((LRoom.Ort.y +0.5* dir12[LSdir].y)*cFactY) );
           end;
       End;
       LcDir := LSdir;
@@ -1253,11 +1273,20 @@ begin
          end
       else
       begin
-        Canvas.MoveTo(
-          trunc(LRoom.Ort.x * cFactX),trunc(LRoom.Ort.y * cFactY));
-        Canvas.LineTo
-          (trunc((LRoom.Ort.x + dir12[LSdir].x)*cFactX) ,
-           trunc((LRoom.Ort.y + dir12[LSdir].y)*cFactY) );
+        begin
+          Canvas.MoveTo
+          (trunc((LRoom.Ort.x +0.5* dir12[Ltdir].x)*cFactX) ,
+           trunc((LRoom.Ort.y +0.5* dir12[Ltdir].y)*cFactY) );
+          Canvas.LineTo
+          (trunc((LRoom.Ort.x +0.25* dir12[Ltdir].x)*cFactX) ,
+           trunc((LRoom.Ort.y +0.25* dir12[Ltdir].y)*cFactY) );
+          Canvas.LineTo
+            (trunc((LRoom.Ort.x +0.25* dir12[LSdir].x)*cFactX) ,
+             trunc((LRoom.Ort.y +0.25* dir12[LSdir].y)*cFactY) );
+          Canvas.LineTo
+            (trunc((LRoom.Ort.x +0.5* dir12[LSdir].x)*cFactX) ,
+             trunc((LRoom.Ort.y +0.5* dir12[LSdir].y)*cFactY) );
+        end;
       end;
 
       cc := cc Mod 100 + 1;

@@ -33,7 +33,7 @@ Type
     function SMult(Scalar:integer;Divisor: integer=1): T2DPoint; overload; virtual;
     function Equals(Obj: TObject): boolean; override;
     Function IsIn(rect:TRect):boolean;
-    function ToString: {$IFDEF FPC}ansistring{$ELSE}string{$ENDIF}; override;
+    function ToString: string; override;
     function Len: single; virtual;
     function GLen: longint; virtual;
     function MLen: longint; virtual;
