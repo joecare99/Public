@@ -11,7 +11,7 @@ Uses
   LCLIntf, LCLType, JPEGLib,
 {$ENDIF}
   SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ExtCtrls, ComCtrls, StdCtrls, ExtDlgs, variants, unt_Point2d;
+  ExtCtrls, ComCtrls, StdCtrls, ExtDlgs, PrintersDlgs, variants, unt_Point2d;
 
 Type
   TLbyRoom = class;
@@ -88,6 +88,7 @@ Type
     btnClose: TButton;
     Button3: TButton;
     LabImage: TImage;
+    PrintDialog1: TPrintDialog;
     Timer1: TTimer;
     btnOK: TButton;
     Button1: TButton;
@@ -144,7 +145,7 @@ Var
 
 Implementation
 
-Uses ProgressBarU;
+Uses ProgressBarU,printers,pscanvas;
 
 Const
   CMult = 2;
@@ -228,7 +229,7 @@ Type
     FEingang: TLbyRoom;
     FDebugMode: Boolean;
     Property OnProgress: TProgressEvent Read FOnProgress Write FOnProgress;
-    Procedure LabyCrawl;
+    procedure LabyCrawl(Canvas: TCanvas=nil);
     Procedure WriteToStream(Const WStream: TStream);
 
     /// <author>Rosewich</author>
@@ -968,6 +969,18 @@ Procedure TLaby.Button1Click(Sender: TObject);
 Begin
   {$IFNDEF FPC}
    print
+   {$else}
+   if PrintDialog1.Execute then
+      begin
+        printer.Orientation := poLandscape;
+        printer.Title := 'Laby #3 ' + DateToStr(now());
+        Printer.BeginDoc;
+        printer.Canvas.Pen.Color:=clBlack;
+        printer.Canvas.Pen.Width:=2;
+        printer.Canvas.AntialiasingMode:=amOn;
+        makelaby.LabyCrawl(printer.Canvas);
+        Printer.EndDoc;
+      end;
   {$ENDIF}
 End;
 
@@ -1125,7 +1138,7 @@ begin
     end;
 end;
 
-procedure TMakeLaby.LabyCrawl;
+procedure TMakeLaby.LabyCrawl(Canvas:TCanvas);
 Var
   LRoom: TLbyRoom;
   LForeward: Boolean;
@@ -1135,14 +1148,19 @@ Var
   i: Integer;
   cc:integer;
   LTdir: Integer;
+  cFactX, cFactY: Extended;
 
 begin
-  // dies ist ein Laby-Crawler
+  // dies ist ein Zeichen-Laby-Crawler
   LRoom := FEingang;
   LForeward := true;
   cc:=0;
   LcDir := 1; // (X: +1 Y:+0)
-
+  if assigned(Canvas) then
+    begin
+      cFactX := canvas.cliprect.Width / (LabyBM_Width+1);
+      cFactY := Canvas.cliprect.Height / LabyBM_Length;
+    end;
   Repeat
   Begin
     // Bestimme, Anzahl der Abgänge -> Ende, Gang, Raum
@@ -1159,14 +1177,30 @@ begin
       End;
     End;
 
+    LTdir :=  getInvDir(LcDir,22);
+
     If Lgc = 0 Then // Ende
     Begin
+      if not assigned(Canvas) then
+        begin
       { $ifdef debug }
       Laby.LabImage.Picture.Bitmap.Canvas.pixels[
         LRoom.Ort.x*dFact ,
         LRoom.Ort.y*dFact ] := clred;
       // Application.ProcessMessages;
       { $endif debug }
+        end
+      else
+        begin
+          Canvas.MoveTo(
+            trunc(LRoom.Ort.x * cFactX),trunc(LRoom.Ort.y * cFactY));
+          Canvas.LineTo
+            (trunc((LRoom.Ort.x +0.5* dir12[Ltdir].x)*cFactX) ,
+             trunc((LRoom.Ort.y +0.5* dir12[Ltdir].y)*cFactY) );
+          Canvas.Ellipse
+            (trunc((LRoom.Ort.x +0.25)*cFactX) , trunc((LRoom.Ort.y +0.25)*cFactY),
+             trunc((LRoom.Ort.x -0.25)*cFactX) , trunc((LRoom.Ort.y -0.25)*cFactY));
+        end;
 
       LcDir := getInvDir(LcDir,22);
       LRoom := LRoom.Gang[LcDir];
@@ -1176,6 +1210,8 @@ begin
     Begin
       If LForeward Then
       Begin
+        if not assigned(Canvas) then
+          begin
         { $ifdef debug }
         Laby.LabImage.Picture.Bitmap.Canvas.pen.Color := cllime;
         Laby.LabImage.Picture.Bitmap.Canvas.pen.width := 1;
@@ -1187,6 +1223,22 @@ begin
            (LRoom.Ort.y + dir12[LSdir].y)*dFact );
         // Application.ProcessMessages;
         { $endif debug }
+          end
+        else
+          begin
+            Canvas.MoveTo
+            (trunc((LRoom.Ort.x +0.5* dir12[Ltdir].x)*cFactX) ,
+             trunc((LRoom.Ort.y +0.5* dir12[Ltdir].y)*cFactY) );
+            Canvas.LineTo
+            (trunc((LRoom.Ort.x +0.25* dir12[Ltdir].x)*cFactX) ,
+             trunc((LRoom.Ort.y +0.25* dir12[Ltdir].y)*cFactY) );
+            Canvas.LineTo
+              (trunc((LRoom.Ort.x +0.25* dir12[LSdir].x)*cFactX) ,
+               trunc((LRoom.Ort.y +0.25* dir12[LSdir].y)*cFactY) );
+            Canvas.LineTo
+              (trunc((LRoom.Ort.x +0.5* dir12[LSdir].x)*cFactX) ,
+               trunc((LRoom.Ort.y +0.5* dir12[LSdir].y)*cFactY) );
+          end;
       End;
       LcDir := LSdir;
       LRoom := LRoom.Gang[LcDir];
@@ -1201,12 +1253,16 @@ begin
       Begin
         LForeward := (LSdir <> LRoom.EDir);
       End;
+      if not assigned(Canvas) then
+        begin
       { $ifdef debug }
       If (LRoom.Ort.x + dir12[LSdir].x <> LRoom.Gang[LSdir].Ort.x) Or
         (LRoom.Ort.y + dir12[LSdir].y <> LRoom.Gang[LSdir].Ort.y) Then
+
         Laby.LabImage.Picture.Bitmap.Canvas.pen.Color := clyellow
       Else
         Laby.LabImage.Picture.Bitmap.Canvas.pen.Color := clblue;
+
       Laby.LabImage.Picture.Bitmap.Canvas.pen.width := 1;
       Laby.LabImage.Picture.Bitmap.Canvas.MoveTo(
         LRoom.Ort.x *dFact,
@@ -1214,6 +1270,25 @@ begin
       Laby.LabImage.Picture.Bitmap.Canvas.LineTo(
         (LRoom.Ort.x + dir12[LSdir].x)*dFact ,
         (LRoom.Ort.y + dir12[LSdir].y)*dFact );
+         end
+      else
+      begin
+        begin
+          Canvas.MoveTo
+          (trunc((LRoom.Ort.x +0.5* dir12[Ltdir].x)*cFactX) ,
+           trunc((LRoom.Ort.y +0.5* dir12[Ltdir].y)*cFactY) );
+          Canvas.LineTo
+          (trunc((LRoom.Ort.x +0.25* dir12[Ltdir].x)*cFactX) ,
+           trunc((LRoom.Ort.y +0.25* dir12[Ltdir].y)*cFactY) );
+          Canvas.LineTo
+            (trunc((LRoom.Ort.x +0.25* dir12[LSdir].x)*cFactX) ,
+             trunc((LRoom.Ort.y +0.25* dir12[LSdir].y)*cFactY) );
+          Canvas.LineTo
+            (trunc((LRoom.Ort.x +0.5* dir12[LSdir].x)*cFactX) ,
+             trunc((LRoom.Ort.y +0.5* dir12[LSdir].y)*cFactY) );
+        end;
+      end;
+
       cc := cc Mod 100 + 1;
       If cc = 1 Then
         Application.ProcessMessages;
@@ -1225,7 +1300,6 @@ begin
     // Nächster
   End
   Until (LRoom = FEingang);
-
 end;
 
 procedure TMakeLaby.WriteToStream(const WStream: TStream);
@@ -1430,7 +1504,7 @@ Var
   ly: integer;
 Begin
  // LForeward := true;
-  // dies ist ein Laby-Crawler zum speichern des Labyrinth
+  // dies ist ein Laby-Crawler zum lesen des Labyrinth
   // 1. Kennung
   // Rstream.Seek(0,0);
   If assigned(FRooms) Then

@@ -13,8 +13,7 @@ object Laby: TLaby
   Font.Name = 'MS Sans Serif'
   OnResize = FormResize
   Position = poScreenCenter
-  LCLVersion = '1.8.0.2'
-  Visible = False
+  LCLVersion = '2.0.10.0'
   object LabImage: TImage
     Left = 8
     Height = 479
@@ -110,11 +109,15 @@ object Laby: TLaby
   object Timer1: TTimer
     Interval = 2000
     OnTimer = Timer1Timer
-    left = 8
-    top = 16
+    Left = 8
+    Top = 16
   end
   object SavePictureDialog1: TSavePictureDialog
-    left = 40
-    top = 16
+    Left = 40
+    Top = 16
+  end
+  object PrintDialog1: TPrintDialog
+    Left = 41
+    Top = 76
   end
 end
