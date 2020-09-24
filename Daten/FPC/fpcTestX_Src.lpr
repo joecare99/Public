@@ -3,7 +3,8 @@ program fpcTestX_Src;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, TestPassRc, PasWrite, TestCShScanner;
+  Interfaces, Forms, tcscanner, GuiTestRunner, TestPassRc, TestCShScanner,
+  CShScanner, tst_CShScanner;
 
 {$R *.res}
 

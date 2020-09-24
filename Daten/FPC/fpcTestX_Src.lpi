@@ -13,7 +13,7 @@
     </General>
     <LazDoc Paths="..\fpDoc"/>
     <BuildModes Count="1">
-      <Item1 Name="Default" Default="True"/>
+      <Item1 Name="Debug" Default="True"/>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -34,7 +34,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="4">
+    <Units Count="6">
       <Unit0>
         <Filename Value="fpcTestX_Src.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -45,14 +45,21 @@
         <UnitName Value="TestPasSrc"/>
       </Unit1>
       <Unit2>
-        <Filename Value="C:\lazarus\fpc\3.2.0\source\packages\fcl-passrc\src\paswrite.pp"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="PasWrite"/>
-      </Unit2>
-      <Unit3>
         <Filename Value="..\Source\CShSrcRc\TestCShScanner.pas"/>
         <IsPartOfProject Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\Source\CShSrcRc\CShScanner.pp"/>
+        <IsPartOfProject Value="True"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="..\Source\CShSrcRc\jcs-cshsrc.inc"/>
+        <IsPartOfProject Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\Source\CShSrcRc\tst_CShScanner.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit5>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -63,16 +70,39 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Source\CShSrcRc"/>
-      <OtherUnitFiles Value="..\Source\PassRc;..\..\..\Lazarus\FpcTrunk\packages\fcl-passrc\src;..\Source\CShSrcRc"/>
+      <OtherUnitFiles Value="..\Source\PassRc;..\..\..\Lazarus\FpcTrunk\packages\fcl-passrc\src;..\Source\CShSrcRc;..\..\..\Lazarus\FpcTrunk\packages\fcl-passrc\tests;C:\lazarus\fpc\3.2.0\source\packages\fcl-fpcunit\src\"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <IncludeAssertionCode Value="True"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <Checks>
+        <IOChecks Value="True"/>
+        <RangeChecks Value="True"/>
+        <OverflowChecks Value="True"/>
+        <StackChecks Value="True"/>
+      </Checks>
+      <VerifyObjMethodCallValidity Value="True"/>
+    </CodeGeneration>
     <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf2Set"/>
+        <UseHeaptrc Value="True"/>
+        <TrashVariables Value="True"/>
+        <UseExternalDbgSyms Value="True"/>
+      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>
         </Win32>
       </Options>
     </Linking>
+    <Other>
+      <CustomOptions Value="-dNOCONSOLE -dDEBUG"/>
+    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">
