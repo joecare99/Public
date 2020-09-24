@@ -4,13 +4,14 @@ object Form1: TForm1
   Top = 0
   Width = 866
   Caption = 'Form1'
-  ClientHeight = 707
+  ClientHeight = 687
   ClientWidth = 866
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Menu = MainMenu1
+  LCLVersion = '2.0.10.0'
   object ImgDisplay: TImage
     Left = 0
     Height = 707
