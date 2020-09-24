@@ -22,10 +22,12 @@ type
     procedure TearDown; override;
     procedure CheckEquals(Exp, Act: TToken; Msg: string); overload;
   published
-    procedure TestHookUp;
+    procedure TestSetUp;
     procedure Tokens1;
     procedure Tokens2;
     procedure MiniFile;
+  public
+    constructor Create; override;
   end;
 
 implementation
@@ -47,9 +49,10 @@ begin
   ForceDirectories(FDataPath);
 end;
 
-procedure TTestCSScanner.TestHookUp;
+procedure TTestCSScanner.TestSetUp;
 begin
-  Fail('Write your own test');
+  CheckNotNull(FScanner,'Object is assigned');
+  CheckNotNull(FFileRes,'Helper is assigned');
 end;
 
 procedure TTestCSScanner.Tokens1;
@@ -78,12 +81,33 @@ end;
 
 procedure TTestCSScanner.MiniFile;
 
+const CFileName='Hello_World.cs';
 var
   FileName: String;
+  aToken: TToken;
+
 begin
   Filename := FDatapath + DirectorySeparator+ CFileName;;
   FFileRes.AddIncludePath(ExtractFilePath(FileName));
-
+  FScanner.OpenFile(FileName);
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkIdentifier,aToken,'Starts with Identifyer');
+  CheckEquals('public',FScanner.CurTokenString);
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkWhitespace,aToken,'a Whitespace');
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkclass,aToken,'Class');
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkWhitespace,aToken,'a Whitespace');
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkIdentifier,aToken,'Another identifyer');
+  CheckEquals('Hello',FScanner.CurTokenString);
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkLineEnding,aToken,'a LineEnding');
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkCurlyBraceOpen,aToken,'a CurlyBraceOpen');
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkLineEnding,aToken,'a LineEnding');
 end;
 
 procedure TTestCSScanner.ScannerLog(Sender: TObject; const Msg: String);
@@ -101,7 +125,8 @@ end;
 
 procedure TTestCSScanner.TearDown;
 begin
-
+  FreeandNil(Fscanner);
+  FreeAndNil(FFileRes);
 end;
 
 procedure TTestCSScanner.CheckEquals( Exp,Act: TToken; Msg: string);
@@ -112,6 +137,7 @@ begin
      CheckEquals(ord(exp),ord(act),Msg);
 end;
 
+// }
 initialization
 
   RegisterTest(TTestCSScanner);

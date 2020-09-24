@@ -34,7 +34,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="4">
+    <Units Count="6">
       <Unit0>
         <Filename Value="fpcTestX_Src.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -45,14 +45,21 @@
         <UnitName Value="TestPasSrc"/>
       </Unit1>
       <Unit2>
-        <Filename Value="C:\lazarus\fpc\3.2.0\source\packages\fcl-passrc\src\paswrite.pp"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="PasWrite"/>
-      </Unit2>
-      <Unit3>
         <Filename Value="..\Source\CShSrcRc\TestCShScanner.pas"/>
         <IsPartOfProject Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\Source\CShSrcRc\CShScanner.pp"/>
+        <IsPartOfProject Value="True"/>
       </Unit3>
+      <Unit4>
+        <Filename Value="..\Source\CShSrcRc\jcs-cshsrc.inc"/>
+        <IsPartOfProject Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\Source\CShSrcRc\tst_CShScanner.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit5>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -63,7 +70,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Source\CShSrcRc"/>
-      <OtherUnitFiles Value="..\Source\PassRc;..\..\..\Lazarus\FpcTrunk\packages\fcl-passrc\src;..\Source\CShSrcRc"/>
+      <OtherUnitFiles Value="..\Source\PassRc;..\..\..\Lazarus\FpcTrunk\packages\fcl-passrc\src;..\Source\CShSrcRc;..\..\..\Lazarus\FpcTrunk\packages\fcl-passrc\tests"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>
@@ -73,6 +80,9 @@
         </Win32>
       </Options>
     </Linking>
+    <Other>
+      <CustomOptions Value="-dNOCONSOLE"/>
+    </Other>
   </CompilerOptions>
   <Debugging>
     <Exceptions Count="3">
