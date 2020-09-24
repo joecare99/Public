@@ -131,8 +131,6 @@ end;
 procedure TTestPassRc.TestParseTraFile;
 var
   M: TPasModule;
-  Decls: {$ifdef VER2_6} TList {$else} { for FPC > 2.6.0 } TFPList {$endif};
-
 const Filename='tra_FormPrincipal.pas';
 
 begin
@@ -146,8 +144,6 @@ end;
 procedure TTestPassRc.TestMiniTest;
 var
   M: TPasModule;
-  Decls: {$ifdef VER2_6} TList {$else} { for FPC > 2.6.0 } TFPList {$endif};
-
 const Filename='Minitest.lpr';
 
 begin
@@ -163,8 +159,6 @@ end;
 procedure TTestPassRc.TestMiniTest2;
 var
   M: TPasModule;
-  Decls: {$ifdef VER2_6} TList {$else} { for FPC > 2.6.0 } TFPList {$endif};
-
 const Filename='Minitest2.lpr';
 
 begin
@@ -180,8 +174,6 @@ end;
 procedure TTestPassRc.TestMiniTest3;
 var
   M: TPasModule;
-  Decls: {$ifdef VER2_6} TList {$else} { for FPC > 2.6.0 } TFPList {$endif};
-
 const Filename='Minitest3.lpr';
 
 begin
@@ -197,8 +189,6 @@ end;
 procedure TTestPassRc.TestMiniTest4;
 var
   M: TPasModule;
-  Decls: {$ifdef VER2_6} TList {$else} { for FPC > 2.6.0 } TFPList {$endif};
-
 const Filename='Minitest4.lpr';
 
 begin

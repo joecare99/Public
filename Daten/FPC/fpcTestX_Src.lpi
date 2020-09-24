@@ -13,7 +13,7 @@
     </General>
     <LazDoc Paths="..\fpDoc"/>
     <BuildModes Count="1">
-      <Item1 Name="Default" Default="True"/>
+      <Item1 Name="Debug" Default="True"/>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -70,10 +70,30 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Source\CShSrcRc"/>
-      <OtherUnitFiles Value="..\Source\PassRc;..\..\..\Lazarus\FpcTrunk\packages\fcl-passrc\src;..\Source\CShSrcRc;..\..\..\Lazarus\FpcTrunk\packages\fcl-passrc\tests"/>
+      <OtherUnitFiles Value="..\Source\PassRc;..\..\..\Lazarus\FpcTrunk\packages\fcl-passrc\src;..\Source\CShSrcRc;..\..\..\Lazarus\FpcTrunk\packages\fcl-passrc\tests;C:\lazarus\fpc\3.2.0\source\packages\fcl-fpcunit\src\"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <IncludeAssertionCode Value="True"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <Checks>
+        <IOChecks Value="True"/>
+        <RangeChecks Value="True"/>
+        <OverflowChecks Value="True"/>
+        <StackChecks Value="True"/>
+      </Checks>
+      <VerifyObjMethodCallValidity Value="True"/>
+    </CodeGeneration>
     <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf2Set"/>
+        <UseHeaptrc Value="True"/>
+        <TrashVariables Value="True"/>
+        <UseExternalDbgSyms Value="True"/>
+      </Debugging>
       <Options>
         <Win32>
           <GraphicApplication Value="True"/>
@@ -81,7 +101,7 @@
       </Options>
     </Linking>
     <Other>
-      <CustomOptions Value="-dNOCONSOLE"/>
+      <CustomOptions Value="-dNOCONSOLE -dDEBUG"/>
     </Other>
   </CompilerOptions>
   <Debugging>
