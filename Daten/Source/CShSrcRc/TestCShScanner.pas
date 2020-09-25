@@ -112,6 +112,23 @@ begin
   CheckEquals(tkCurlyBraceOpen,aToken,'a CurlyBraceOpen');
   aToken := Fscanner.FetchToken;
   CheckEquals(tkLineEnding,aToken,'a LineEnding');
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkWhitespace,aToken,'a Whitespace');
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkPublic,aToken,'a public - keyword');
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkWhitespace,aToken,'a Whitespace');
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkStatic,aToken,'a static - keyword');
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkWhitespace,aToken,'a Whitespace');
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkVoid,aToken,'a Void - keyword');
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkWhitespace,aToken,'a Whitespace');
+  aToken := Fscanner.FetchToken;
+  CheckEquals(tkIdentifier,aToken,'an Identifier');
+  CheckEquals('helloworld',FScanner.CurTokenString);
 end;
 
 procedure TTestCSScanner.TestTechnique;
