@@ -675,9 +675,11 @@ const
         x0, y0: integer);
 
     var
-        I: integer;
+        I,K: integer;
         xx0, xx1, yy0, yy1: extended;
         rx0, rx1, ry0, ry1: integer;
+        G:array[0..5] of integer;
+
     begin
         for I := 1 to high(dir12) do
             if assigned(Lroom.gang[I]) and ((I <> getinvdir(iDir, 22)) or
@@ -732,10 +734,12 @@ const
     var
         LAoRooms: TArrayOfRooms;
         I, J: integer;
-        xx0, xx1, yy0, yy1: extended;
-        ix, iy, rx0, rx1, ry0, ry1, dist: integer;
+        xx0, xx1,xx2,xx3, yy0, yy1,yy2,yy3: extended;
+        ix, iy, rx0, rx1, ry0, ry1, dist, GCount, K, rx2, ry2, ry3,
+          rx3: integer;
         Color, Color2: Tcolor;
-        Dp: T2DPoint;
+        Dp, O: T2DPoint;
+        G:array[0..5] of integer;
 
         function sgn(i: integer): integer; inline;
         begin
@@ -746,6 +750,7 @@ const
             else
                 Result := 0;
         end;
+
 
     begin
         Dp := T2DPoint.init(nil);
@@ -795,9 +800,20 @@ const
                             (imgPreview.Height - 2)) + 1] := clWhite;
 
                     if dist < Level - 1 then
-                        for I := 1 to high(dir12) do
+                        begin
+                          O := LAoRooms[J].Ort;
+                          GCount :=0;
+                          for I := 1 to high(dir12) do
                             if assigned(LAoRooms[J].gang[I]) then
+                               begin
+                                 G[GCount]:=I;
+                                 inc(GCount);
+                               end;
+
+                          for K := 0 to GCount-1 do
                               begin
+                                if (K = 1) and (GCount=2) then break;
+                                I := G[K];
                                 dp.Copy(LAoRooms[J].ort).add(LAoRooms[J].gang[I].Ort);
                                 dist :=
                                     trunc(sqrt(sqr(dp.x div 2 - x0) +
@@ -817,28 +833,32 @@ const
                                         (imgPreview.Height - 2)) + 1] := clWhite;
 
 
-                                xx0 := +(LAoRooms[J].Ort.y - y0) * df;
-                                yy0 := -(LAoRooms[J].Ort.x - x0) * df;
-                                xx1 := +(dp.y * 0.5 - y0) * df;
-                                yy1 := -(dp.x * 0.5 - x0) * df;
+                                xx0 := +(O.y +0.5*dir12[I].y  - y0) * df;
+                                yy0 := -(O.x +0.5*dir12[I].x  - x0) * df;
+                                xx1 := +(O.y +0.25*dir12[I].y  - y0) * df;
+                                yy1 := -(O.x +0.25*dir12[I].x  - x0) * df;
+                                I := G[(k+1) mod GCount];
+                                xx2 := +(O.y +0.25*dir12[I].y  - y0) * df;
+                                yy2 := -(O.x +0.25*dir12[I].x  - x0) * df;
+                                xx3 := +(O.y +0.5*dir12[I].y  - y0) * df;
+                                yy3 := -(O.x +0.5*dir12[I].x  - x0) * df;
 
                                 VTransform(xx0, yy0, s, C, rx0, ry0);
                                 VTransform(xx1, yy1, s, C, rx1, ry1);
+                                VTransform(xx2, yy2, s, C, rx2, ry2);
+                                VTransform(xx3, yy3, s, C, rx3, ry3);
 
                                 if dist < Level then
                                   begin
                                     ImgDisplay.Canvas.pen.Width := 3;
-                                    ImgDisplay.Canvas.pen.Color := clwhite;
-                                    ImgDisplay.Canvas.moveto(lx + rx0 + sgn(rx1 - rx0),
-                                        ly + ry0 + sgn(ry1 - ry0));
-                                    ImgDisplay.Canvas.lineto(lx + rx1, ly + ry1);
-                                    ImgDisplay.Canvas.pen.Width := 3;
                                     ImgDisplay.Canvas.pen.Color := Color;
                                     ImgDisplay.Canvas.moveto(lx + rx0, ly + ry0);
-                                    ImgDisplay.Canvas.lineto(lx + rx1 + sgn(rx1 - rx0),
-                                        ly + ry1 + sgn(ry1 - ry0));
+                                    ImgDisplay.Canvas.Lineto(lx + rx1, ly + ry1);
+                                    ImgDisplay.Canvas.Lineto(lx + rx2, ly + ry2);
+                                    ImgDisplay.Canvas.lineto(lx + rx3, ly + ry3);
                                   end;
                               end;
+                        end;
                   end;
               end;
         dp.Free;
