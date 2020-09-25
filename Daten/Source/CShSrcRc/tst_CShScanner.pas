@@ -99,11 +99,16 @@ type
         procedure TestIdentifier;
         procedure TestThis;
         procedure TestStringConst;
+        procedure TestStringConst2;
+        procedure TestStringConst3;
         procedure TestAtString;
         procedure TestDollarStringConst;
         procedure TestNumber;
+        procedure TestNumber2;
+        procedure TestNumber3;
         procedure TestCharacter;
         procedure TestCharString;
+        procedure TestCharString2;
         procedure TestBraceOpen;
         procedure TestBraceClose;
         procedure TestMul;
@@ -284,6 +289,7 @@ type
         procedure TestOperatorIdentifier;
         procedure TestUTF8BOM;
         procedure TestBooleanSwitch;
+        procedure TestSomeLine1;
     end;
 
 implementation
@@ -654,6 +660,19 @@ begin
     TestToken(CShScanner.tkStringConst, '"A string"', true,False);
 end;
 
+procedure TTestCShScanner.TestStringConst2;
+
+begin
+    TestToken(CShScanner.tkStringConst, '"A \"string"', true,False);
+end;
+
+procedure TTestCShScanner.TestStringConst3;
+
+begin
+    TestToken(CShScanner.tkStringConst, '"A'' \"string"', true,False);
+end;
+
+
 procedure TTestCShScanner.TestDollarStringConst;
 
 begin
@@ -666,12 +685,30 @@ begin
     TestToken(CShScanner.tkCharacter, '''A''');
 end;
 
+procedure TTestCShScanner.TestCharString2;
+
+begin
+    TestToken(CShScanner.tkCharacter, '''\n''');
+end;
+
+
 procedure TTestCShScanner.TestNumber;
 
 begin
     TestToken(tkNumber, '123');
 end;
 
+procedure TTestCShScanner.TestNumber2;
+
+begin
+    TestToken(tkNumber, '123f');
+end;
+
+procedure TTestCShScanner.TestNumber3;
+
+begin
+    TestToken(tkNumber, '123d');
+end;
 
 procedure TTestCShScanner.TestCharacter;
 
@@ -1639,7 +1676,7 @@ begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
     TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose, tkDot],
-        '#DEFINE A}#IF defined(A && !B)}begin#endif}end.', True, False);
+        '#DEFINE A'+LineEnding+'#IF (A & !B)'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
 end;
 
 procedure TTestCShScanner.TestIFAndShortEval;
@@ -1647,7 +1684,7 @@ begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
     TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose, tkDot],
-        '#UNDEFINE A}#IF defined(A && !B)}wrong#else}begin#endif}end.',
+        '#UNDEFINE A'+LineEnding+'#IF (A && !B)'+LineEnding+'wrong'+LineEnding+'#else'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}',
         True, False);
 end;
 
@@ -1656,7 +1693,7 @@ begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
     TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose, tkDot],
-        '#DEFINE B}#IF defined(A) or defined(B)}begin#endif}end.', True, False);
+        '#DEFINE B'+LineEnding+'#IF (A | B)'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
 end;
 
 procedure TTestCShScanner.TestIFOrShortEval;
@@ -1664,7 +1701,7 @@ begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
     TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose, tkDot],
-        '#DEFINE A}#IF defined(A) or defined(B)}begin#endif}end.', True, False);
+        '#DEFINE A'+LineEnding+'#IF (A || B)'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
 end;
 
 procedure TTestCShScanner.TestIFXor;
@@ -1758,6 +1795,20 @@ begin
     NewSource('#HINTS OFF }');
     while not (Scanner.FetchToken = tkEOF) do ;
     AssertFalse('Hints off', bshints in Scanner.CurrentBoolSwitches);
+end;
+
+Procedure TTestCShScanner.TestSomeLine1;
+
+begin
+   FScanner.SkipWhiteSpace := True;
+    TestTokens([tkIdentifier,tkAssignPlus, tkString,tkDot, tkIdentifier, tkBraceOpen,tkStringConst,
+           tkComma, tkIdentifier, tkSquaredBraceOpen,tkStringConst,tkSquaredBraceClose,tkComma,
+           tkIdentifier, tkBraceOpen, tkIdentifier, tkSquaredBraceOpen,tkStringConst,tkSquaredBraceClose, tkBraceClose ,
+           tkDivision,tkNumber,tkComma,
+           tkIdentifier, tkBraceOpen, tkIdentifier, tkSquaredBraceOpen,tkStringConst,tkSquaredBraceClose, tkBraceClose ,
+           tkDivision,tkNumber,tkBraceClose,tkSemicolon],
+        'RetText += string.Format("Disk: {0}  Size: {1,5:0.0} GB   Free:{2,5:0.0} GB\r\n", mo["Name"], AsDouble(mo["Size"]) / 1073741824.0, AsDouble(mo["FreeSpace"]) / 1073741824.0);',
+        false);
 end;
 
 initialization
