@@ -3225,7 +3225,34 @@ begin
                 else
                     Result := tkString;
               end;
-            '''', '"':
+            '''':
+                          begin
+                            TokenStart := FTokenPos;
+                            Inc(FTokenPos);
+                            while True do
+                              begin
+                             if
+        {$ifdef UsePChar}FTokenPos[0] in ='''']{$else}
+                            (FTokenPos <= l) and (s[FTokenPos] = '''')
+        {$endif}
+                            then
+                               break;
+
+                            if
+        {$ifdef UsePChar}FTokenPos[0] = #0{$else}
+                            FTokenPos > l
+        {$endif}
+                            then
+                                Error(nErrOpenString, SErrOpenString);
+
+                            Inc(FTokenPos);
+                          end;
+                        Inc(FTokenPos);
+                        if ((FTokenPos - TokenStart) in [3,4]) then // 'z'
+                            Result := tkCharacter
+
+                      end;
+             '"':
               begin
                 TokenStart := FTokenPos;
                 Inc(FTokenPos);
@@ -3233,18 +3260,17 @@ begin
                 while True do
                   begin
                     if
-{$ifdef UsePChar}FTokenPos[0] in ['"','''']{$else}
-                    (FTokenPos <= l) and (s[FTokenPos] in ['"',''''])
+{$ifdef UsePChar}FTokenPos[1] = '\'{$else}
+                    (FTokenPos <= l) and (s[FTokenPos] = '\')
 {$endif}
                     then
-                        if
-{$ifdef UsePChar}FTokenPos[1] = FTokenPos[0]{$else}
-                        (FTokenPos < l) and (s[FTokenPos + 1] = s[FTokenPos])
+                        Inc(FTokenPos)
+                    else if
+{$ifdef UsePChar}FTokenPos[0] in ['"']{$else}
+                    (FTokenPos <= l) and (s[FTokenPos] in ['"'])
 {$endif}
-                        then
-                            Inc(FTokenPos)
-                        else
-                            break;
+                    then
+                       break;
 
                     if
 {$ifdef UsePChar}FTokenPos[0] = #0{$else}
@@ -3256,10 +3282,7 @@ begin
                     Inc(FTokenPos);
                   end;
                 Inc(FTokenPos);
-                if ((FTokenPos - TokenStart) = 3) then // 'z'
-                    Result := tkCharacter
-                else
-                    Result := tkStringConst;
+                Result := tkStringConst;
               end;
             else
                 Break;
