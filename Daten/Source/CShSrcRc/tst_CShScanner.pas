@@ -518,7 +518,7 @@ begin
     for I := Low(t) to High(t) do
       begin
         tk := FScanner.FetchToken;
-        AssertEquals(Format('Read token %d equals expected token.', [i]), t[i], tk);
+        AssertEquals(Format('%s: Read token %d equals expected token.', [TestName,i]), t[i], tk);
         if tk = tkIdentifier then
             LastIdentifier := FScanner.CurtokenString;
       end;
@@ -527,7 +527,7 @@ begin
         tk := FScanner.FetchToken;
         if (tk = tkLineEnding) then
             tk := FScanner.FetchToken;
-        AssertEquals('EOF reached.', tkEOF, FScanner.FetchToken);
+        AssertEquals(TestName+': EOF reached.', tkEOF, FScanner.FetchToken);
       end;
 end;
 
@@ -676,7 +676,7 @@ end;
 procedure TTestCShScanner.TestCharacter;
 
 begin
-    TestToken(CShScanner.tkCharacter, '#65 ', False);
+    TestToken(CShScanner.tkLineComment, '#65 ', False);
 end;
 
 
@@ -774,7 +774,7 @@ end;
 procedure TTestCShScanner.TestAt;
 
 begin
-    TestToken(tkAt, '@');  // ??
+    TestToken(tkLineEnding, '@');  // ??
 end;
 
 procedure TTestCShScanner.TestAtString;
@@ -1477,21 +1477,21 @@ end;
 
 procedure TTestCShScanner.TestDefine1;
 begin
-    TestTokens([tkLineComment], '#IF (NEVER) of #endif');
+    TestTokens([tkLineComment], '#IF (NEVER)'+LineEnding+'of'+LineEnding+'#endif');
 end;
 
 procedure TTestCShScanner.TestDefine2;
 
 begin
     FSCanner.Defines.Add('ALWAYS');
-    TestTokens([tkLineComment, tkWhitespace, tkout, tkWhitespace, tkLineComment],
-        '#if (ALWAYS) comment '+LineEnding+'of'+LineEnding+'#endif');
+    TestTokens([tkLineComment, tkLineEnding, tkout, tkLineEnding, tkLineComment],
+        '#if (ALWAYS) comment '+LineEnding+'out'+LineEnding+'#endif');
 end;
 
 procedure TTestCShScanner.TestDefine21;
 begin
     FSCanner.Defines.Add('ALWAYS');
-    TestTokens([tkLineComment, tkWhitespace, tkout, tkWhitespace, tkLineComment],
+    TestTokens([tkLineComment, tkLineEnding, tkout, tkLineEnding, tkLineComment],
         '#if ALWAYS'+LineEnding+'out'+LineEnding+'#endif');
 end;
 
@@ -1499,26 +1499,26 @@ procedure TTestCShScanner.TestDefine22;
 begin
     FSCanner.Defines.Add('ALWAYS');
     // No whitespace. Test border of *)
-    TestTokens([tkLineComment, tkout, tkWhitespace, tkcomment], '#if (ALWAYS)out #endif');
+    TestTokens([tkLineComment,tkLineEnding,tkout, tkLineEnding, tkLineComment], '#if (ALWAYS)'+LineEnding+'out'+LineEnding+'#endif');
 end;
 
 procedure TTestCShScanner.TestDefine3;
 begin
     FSCanner.Defines.Add('ALWAYS');
-    TestTokens([tkLineComment, tkWhitespace, tkout, tkWhitespace, tkLineComment],
-        '#IFDEF ALWAYS} out #else} in #endif}');
+    TestTokens([tkLineComment, tkLineEnding, tkout, tkLineEnding],
+        '#if ALWAYS'+LineEnding+'out'+LineEnding+'#else'+LineEnding+'in'+LineEnding+'#endif}');
 end;
 
 procedure TTestCShScanner.TestDefine4;
 begin
-    TestTokens([tkLineComment, tkWhitespace, tkin, tkWhitespace, tkLineComment],
-        '#IFDEF ALWAYS} out #else} in #endif}');
+    TestTokens([tkLineComment, tkLineEnding, tkin, tkLineEnding, tkLineComment],
+        '#if ALWAYS'+LineEnding+'out'+LineEnding+'#else'+LineEnding+'in'+LineEnding+'#endif}');
 end;
 
 procedure TTestCShScanner.TestDefine5;
 begin
     FScanner.SkipComments := True;
-    TestTokens([tkLineEnding], '#IFDEF NEVER of #endif}');
+    TestTokens([tkEOF], '#if NEVER'+LineEnding+'out'+LineEnding+'#endif}');
 end;
 
 procedure TTestCShScanner.TestDefine6;
@@ -1526,27 +1526,27 @@ procedure TTestCShScanner.TestDefine6;
 begin
     FSCanner.Defines.Add('ALWAYS');
     FScanner.SkipComments := True;
-    TestTokens([tkWhitespace, tkout, tkWhitespace], '#IFDEF ALWAYS out #endif}');
+    TestTokens([tkLineEnding, tkout, tkLineEnding], '#if ALWAYS'+LineEnding+'out'+LineEnding+'#endif}');
 end;
 
 procedure TTestCShScanner.TestDefine7;
 begin
     FSCanner.Defines.Add('ALWAYS');
     FScanner.SkipComments := True;
-    TestTokens([tkWhitespace, tkout, tkWhitespace],
-        '#if ALWAYS out #else in #endif}');
+    TestTokens([tkLineEnding, tkout, tkLineEnding],
+        '#if ALWAYS'+LineEnding+'out'+LineEnding+'#else'+LineEnding+'in'+LineEnding+'#endif}');
 end;
 
 procedure TTestCShScanner.TestDefine8;
 begin
     FScanner.SkipComments := True;
-    TestTokens([tkWhitespace, tkin, tkWhitespace], '#if ALWAYS} out #else} in #endif}');
+    TestTokens([tkLineEnding, tkin, tkLineEnding], '#if ALWAYS'+LineEnding+'out'+LineEnding+'#else'+LineEnding+'in'+LineEnding+'#endif');
 end;
 
 procedure TTestCShScanner.TestDefine9;
 begin
     FScanner.SkipWhiteSpace := True;
-    TestTokens([], '#if NEVER} of #endif}');
+    TestTokens([], '#if NEVER'+LineEnding+'of'+LineEnding+'#endif}');
 end;
 
 procedure TTestCShScanner.TestDefine10;
@@ -1554,7 +1554,7 @@ procedure TTestCShScanner.TestDefine10;
 begin
     FSCanner.Defines.Add('ALWAYS');
     FScanner.SkipComments := True;
-    TestTokens([tkWhitespace, tkout, tkWhitespace], '#if ALWAYS} of #endif}');
+    TestTokens([tkLineEnding, tkout, tkLineEnding], '#if ALWAYS'+LineEnding+'out'+LineEnding+'#endif}');
 end;
 
 procedure TTestCShScanner.TestDefine11;
@@ -1562,21 +1562,21 @@ begin
     FSCanner.Defines.Add('ALWAYS');
     FScanner.SkipComments := True;
     FScanner.SkipWhiteSpace := True;
-    TestTokens([tkout], '#if ALWAYS of #else} in #endif}');
+    TestTokens([tkout], '#if ALWAYS'+LineEnding+'out'+LineEnding+'#else'+LineEnding+'in'+LineEnding+'#endif}');
 end;
 
 procedure TTestCShScanner.TestDefine12;
 begin
     FScanner.SkipComments := True;
     FScanner.SkipWhiteSpace := True;
-    TestTokens([tkin], '#if ALWAYS of #else} in #endif}');
+    TestTokens([tkin], '#if ALWAYS'+LineEnding+'of'+LineEnding+'#else'+LineEnding+'in'+LineEnding+'#endif}');
 end;
 
 procedure TTestCShScanner.TestDefine13;
 begin
     FScanner.SkipComments := True;
     FScanner.SkipWhiteSpace := True;
-    TestTokens([tkin], '#if ALWAYS }; ą è #else} in #endif}');
+    TestTokens([tkin], '#if ALWAYS'+LineEnding+'; ą è'+LineEnding+'#else'+LineEnding+'in'+LineEnding+'#endif}');
 end;
 
 procedure TTestCShScanner.TestDefine14;
@@ -1600,7 +1600,7 @@ begin
     FResolver.AddStream('myinclude.inc', TStringStream.Create('if true then'));
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
-    TestTokens([tkIf, tkTrue, tkIdentifier], '#I myinclude.inc}', True, False);
+    TestTokens([tkIf, tkTrue, tkIdentifier], '#I myinclude.inc', True, False);
 end;
 
 procedure TTestCShScanner.TestInclude2;
@@ -1608,7 +1608,7 @@ begin
     FResolver.AddStream('myinclude.inc', TStringStream.Create('if true then'));
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
-    TestTokens([tkIf, tkTrue, tkIdentifier, tkElse], '#I myinclude.inc} else', True, False);
+    TestTokens([tkIf, tkTrue, tkIdentifier, tkElse], '#I myinclude.inc else', True, False);
 end;
 
 procedure TTestCShScanner.TestUnDefine1;
@@ -1622,16 +1622,16 @@ procedure TTestCShScanner.TestIFDefined;
 begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
-    TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose, tkDot],
-        '#DEFINE A}#IF defined(A)}begin#endif}end.', True, False);
+    TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose],
+        '#DEFINE A'+LineEnding+'#IF A'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
 end;
 
 procedure TTestCShScanner.TestIFUnDefined;
 begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
-    TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose, tkDot],
-        '#IF undefined(A)}begin#endif}end.', True, False);
+    TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose],
+        '#IF !A'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
 end;
 
 procedure TTestCShScanner.TestIFAnd;
@@ -1671,8 +1671,8 @@ procedure TTestCShScanner.TestIFXor;
 begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
-    TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose, tkDot],
-        '#DEFINE B}#IF defined(A) xor defined(B)}begin#endif}end.', True, False);
+    TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose],
+        '#DEFINE B' + LineEnding +'#IF (A ^ B)' + LineEnding +'{' + LineEnding +'#endif' + LineEnding +'}', True, False);
 end;
 
 procedure TTestCShScanner.TestIFAndOr;
@@ -1680,14 +1680,14 @@ begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
     TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose, tkDot],
-        '#if   (A && B || C) wrong1 #endif' + LineEnding +
-        '#if   (A && B || !C) #else wrong2 #endif' + LineEnding +
-        '#if   (A && !B || C) wrong3 #endif' + LineEnding +
-        '#if   (A && !B || !C) #else wrong4 #endif' + LineEnding +
-        '#if   (!A && B || C) wrong5 #endif' + LineEnding +
-        '#if   (!A && B || !C) #else wrong6 #endif' + LineEnding +
-        '#if   (!A && !B || C) #else wrong7 #endif' + LineEnding +
-        '#if   (!A && !B || !C) {#endif }',
+        '#if   (A && B || C)' + LineEnding +'wrong1' + LineEnding +'#endif' + LineEnding +
+        '#if   (A && B || !C)' + LineEnding +'#else' + LineEnding +'wrong2' + LineEnding +'#endif' + LineEnding +
+        '#if   (A && !B || C)' + LineEnding +'wrong3' + LineEnding +'#endif' + LineEnding +
+        '#if   (A && !B || !C)' + LineEnding +'#else' + LineEnding +'wrong4' + LineEnding +'#endif' + LineEnding +
+        '#if   (!A && B || C)' + LineEnding +'wrong5' + LineEnding +'#endif' + LineEnding +
+        '#if   (!A && B || !C)' + LineEnding +'#else' + LineEnding +'wrong6' + LineEnding +'#endif' + LineEnding +
+        '#if   (!A && !B || C)' + LineEnding +'#else' + LineEnding +'wrong7' + LineEnding +'#endif' + LineEnding +
+        '#if   (!A && !B || !C)' + LineEnding +'#endif',
         True, False);
 end;
 
@@ -1697,20 +1697,20 @@ begin
     FScanner.SkipComments := True;
     FScanner.AddDefine('cpu32');
     TestTokens([tkconst, tkIdentifier, tkEqual, tkString, tkSemicolon,
-        tkCurlyBraceOpen, tkCurlyBraceClose, tkDot],
-        'const platform = ' + LineEnding + '#if defined(cpu32)} ''x86''' +
+        tkCurlyBraceOpen, tkCurlyBraceClose],
+        'const platform == ' + LineEnding + '#if defined(cpu32)} ''x86''' +
         LineEnding + '#elif defined(cpu64)} ''x64''' + LineEnding +
-        '#else #error unknown platform} #endif;' + LineEnding + 'begin end.', True, False);
+        '#else #error unknown platform} #endif;' + LineEnding + '{ }', True, False);
 end;
 
 procedure TTestCShScanner.TestIfError;
 begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
-    TestTokens([tkIdentifier, tkSemicolon, tkCurlyBraceOpen, tkCurlyBraceClose, tkDot],
-        'program Project1;' + LineEnding + 'begin' + LineEnding +
+    TestTokens([tkIdentifier,tkIdentifier, tkSemicolon, tkCurlyBraceOpen, tkCurlyBraceClose],
+        'program Project1;' + LineEnding + '{' + LineEnding +
         '#if sizeof(integer) <> 4} #error wrong sizeof(integer)} #endif}' +
-        LineEnding + 'end.', True, False);
+        LineEnding + '}', True, False);
 end;
 
 procedure TTestCShScanner.TestModeSwitch;

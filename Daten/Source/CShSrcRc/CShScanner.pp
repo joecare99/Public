@@ -2924,12 +2924,7 @@ begin
                     Break;
             tkOperator:
               begin
-                if not (toOperatorToken in FTokenOptions) then
-                  begin
-                    FCurToken := tkIdentifier;
-                    Result := FCurToken;
-                  end;
-                if not (FSkipComments or CShIsSkipping) then
+                if not (CShIsSkipping) then
                     Break;
               end;
 
@@ -3238,13 +3233,13 @@ begin
                 while True do
                   begin
                     if
-{$ifdef UsePChar}FTokenPos[0] = '"'{$else}
-                    (FTokenPos <= l) and (s[FTokenPos] = '"')
+{$ifdef UsePChar}FTokenPos[0] in ['"','''']{$else}
+                    (FTokenPos <= l) and (s[FTokenPos] in ['"',''''])
 {$endif}
                     then
                         if
-{$ifdef UsePChar}FTokenPos[1] = '"'{$else}
-                        (FTokenPos < l) and (s[FTokenPos + 1] = '"')
+{$ifdef UsePChar}FTokenPos[1] = FTokenPos[0]{$else}
+                        (FTokenPos < l) and (s[FTokenPos + 1] = s[FTokenPos])
 {$endif}
                         then
                             Inc(FTokenPos)
