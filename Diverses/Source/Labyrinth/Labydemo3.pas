@@ -4,6 +4,10 @@ unit Labydemo3;
   {$MODE Delphi}
 {$ENDIF}
 
+{$IF FPC_FULLVERSION < 030301}
+   {$WARN 6058 off}{ : Call to subroutine "$1" marked as inline is not inlined}
+{$endif}
+
 interface
 
 uses
@@ -675,11 +679,9 @@ const
         x0, y0: integer);
 
     var
-        I,K: integer;
+        I: integer;
         xx0, xx1, yy0, yy1: extended;
         rx0, rx1, ry0, ry1: integer;
-        G:array[0..5] of integer;
-
     begin
         for I := 1 to high(dir12) do
             if assigned(Lroom.gang[I]) and ((I <> getinvdir(iDir, 22)) or
