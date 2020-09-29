@@ -2191,8 +2191,8 @@ begin
     tkAs                    : Result:=eopAs;
     tkSHR                   : Result:=eopSHR;
     tkSHL                   : Result:=eopSHL;
-    tkAnd                   : Result:=eopAnd;
-    tkOr                    : Result:=eopOR;
+    tkAnd                   : Result:=eopSingleAnd;
+    tkOr                    : Result:=eopSingleOr;
     tkXor                   : Result:=eopXOR;
     tkMod                   : Result:=eopMod;
     tkNot                   : Result:=eopNot;
@@ -6403,7 +6403,7 @@ Function IsVisibility(S : String;  var AVisibility :TCShMemberVisibility) : Bool
 
 Const
   VNames : array[TCShMemberVisibility] of string =
-    ('', 'private', 'protected', 'public', 'published', 'automated', '', '');
+    ('', 'private', 'protected', 'public', 'published', 'automated', '', '', 'internal');
 Var
   V : TCShMemberVisibility;
 
@@ -7168,13 +7168,13 @@ end;
 function TCShParser.CreateSelfExpr(AParent: TCShElement): TThisExpr;
 begin
   Result:=TThisExpr(CreateElement(TThisExpr,'Self',AParent,CurTokenPos));
-  Result.Kind:=pekSelf;
+  Result.Kind:=pekThis;
 end;
 
 function TCShParser.CreateNilExpr(AParent: TCShElement): TNullExpr;
 begin
   Result:=TNullExpr(CreateElement(TNullExpr,'nil',AParent,CurTokenPos));
-  Result.Kind:=pekNil;
+  Result.Kind:=pekNull;
 end;
 
 function TCShParser.CreateRecordValues(AParent: TCShElement): TRecordValues;
