@@ -55,7 +55,7 @@ public
   function toString:String;
    function ToPasStruct: String;
   Procedure Clear;
-  function TestStreamHeader(const st: TStream): boolean;
+  class function TestStreamHeader(const st: TStream): boolean; static;
   Procedure ReadFromStream(const st:TStream);
   Procedure WriteToStream(const st:TStream);
   Procedure ReadFromDataset(idx:integer;const ds:TDataSet);
@@ -109,6 +109,10 @@ public
 implementation
 
 uses dateutils,LConvEncoding,dm_GenData2;
+
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
 
 { TClsHejSources }
 
@@ -305,7 +309,7 @@ begin
         Data[I]:='';
 end;
 
-function THejSourData.TestStreamHeader(const st: TStream): boolean;
+class function THejSourData.TestStreamHeader(const st: TStream): boolean;
 
   var Hdr:array[0..7]of char;
   begin

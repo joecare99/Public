@@ -7,7 +7,7 @@ unit cls_HejIndData;
 interface
 
 uses
-  Classes, SysUtils,variants,db,Unt_IData,cls_HejBase;
+  Classes, SysUtils,variants,db,Unt_IData,unt_IGenBase2,cls_HejBase;
 
 type
   TEnumHejIndDatafields=(
@@ -132,20 +132,23 @@ const
     [hind_text, hind_AKA, hind_FarmName]  + CIndSourceData;
 
 type
-
+ TClsIIndivid = class;
 
  PHejIndData = ^THejIndData;
 
  { THejIndData }
 
- THejIndData = packed record
+ THejIndData = packed Record
 private
+//  FOwner:TCl
   function GetBirthDate: String;
   function GetData(idx: TEnumHejIndDatafields): Variant;
   function GetDeathDate: String;
+  function GetiIndi: IGenIndividual;
   procedure ReadFromStream0(const st: TStream);
   procedure SetBirthDate(AValue: String);
   procedure SetData(idx: TEnumHejIndDatafields; AValue: Variant);
+  procedure SetIndivid(AValue: TClsIIndivid);
 public
   function ToString:String;
   function ToPasStruct:String;
@@ -166,6 +169,7 @@ public
   function GetDateData(idx: TEnumHejIndDatafields): string;
   Procedure SetDateData(idx: TEnumHejIndDatafields;aValue: string);
   Procedure Clear;
+
   Procedure ReadFromStream(const st:TStream);
   Procedure WriteToStream(const st:TStream);
   Procedure ReadFromDataset(idx:integer;const ds:TDataSet);
@@ -174,6 +178,7 @@ public
     property Data[idx:TEnumHejIndDatafields]:Variant read GetData write SetData;default;
     property BirthDate: String read GetBirthDate write SetBirthDate;
     property DeathDate: String read GetDeathDate;
+    property Indi:IGenIndividual read GetiIndi;
  public
        ID,
        idFather,
@@ -228,6 +233,125 @@ public
        CallName:string;
        Marriages:array of Integer;
        Children:array of Integer;
+ private
+     FInd:TClsIIndivid;
+ public
+ //    property IndividI:IGenIndividual read FInd;
+    property Individ:TClsIIndivid read FInd write SetIndivid;
+ end;
+
+ { TClsIIndivid }
+
+ TClsIIndivid=class(Tobject{,IGenIndividual})
+   private
+       FTHejIndData : PHejIndData;
+   public
+        constructor Create(aInd:PHejIndData);
+        destructor Destroy; override;
+  public
+        function GetBaptDate: string;
+        function GetBaptism: IGenEvent;
+        function GetBaptPlace: string;
+        function GetBirth: IGenEvent;
+        function GetBirthDate: string;
+        function GetBirthPlace: string;
+        function GetBurial: IGenEvent;
+        function GetBurialDate: string;
+        function GetBurialPlace: string;
+        function GetChildrenCount: integer;
+        function GetChildren(Idx: Variant): IGenIndividual;
+        function GetDeath: IGenEvent;
+        function GetDeathDate: string;
+        function GetDeathPlace: string;
+        function GetFamilies(Idx: Variant): IGenFamily;
+        function GetFamilyCount: integer;
+        function GetFather: IGenIndividual;
+        function GetGivenName: string;
+        function GetIndRefID: string;
+        function GetMother: IGenIndividual;
+        function GetName: string;
+        function GetOccupation: string;
+        function GetOccuPlace: string;
+        function GetParentFamily: IGenFamily;
+        function GetReligion: string;
+        function GetResidence: string;
+        function GetSex: string;
+        function GetSpouseCount: integer;
+        function GetSpouses(Idx: Variant): IGenIndividual;
+        function GetSurname: string;
+        function GetTimeStamp: TDateTime;
+        function GetTitle: string;
+{    Todo:   Mathoden Implementieren                            }
+{       function EnumSpouses:IGenIndEnumerator;
+        function EnumChildren:IGenIndEnumerator;
+        function EnumFamilies:IGenFamEnumerator;       }
+        procedure SetBaptDate(AValue: string);
+        procedure SetBaptism(AValue: IGenEvent);
+        procedure SetBaptPlace(AValue: string);
+        procedure SetBirth(AValue: IGenEvent);
+        procedure SetBirthDate(AValue: string);
+        procedure SetBirthPlace(AValue: string);
+        procedure SetBurial(AValue: IGenEvent);
+        procedure SetBurialDate(AValue: string);
+        procedure SetBurialPlace(AValue: string);
+        procedure SetChildren(Idx: Variant; AValue: IGenIndividual);
+        procedure SetDeath(AValue: IGenEvent);
+        procedure SetDeathDate(AValue: string);
+        procedure SetDeathPlace(AValue: string);
+        procedure SetFamilies(Idx: Variant; AValue: IGenFamily);
+        procedure SetFather(AValue: IGenIndividual);
+        procedure SetGivenName(AValue: string);
+        procedure SetIndRefID(AValue: string);
+        procedure SetMother(AValue: IGenIndividual);
+        procedure SetName(AValue: string);
+        procedure SetOccupation(AValue: string);
+        procedure SetOccuPlace(AValue: string);
+        procedure SetParentFamily(AValue: IGenFamily);
+        procedure SetReligion(AValue: string);
+        procedure SetResidence(AValue: string);
+        procedure SetSex(AValue: string);
+        procedure SetSpouses(Idx: Variant; AValue: IGenIndividual);
+        procedure SetSurname(AValue: string);
+        procedure SetTimeStamp(AValue: TDateTime);
+        procedure SetTitle(AValue: string);
+
+        // Basic-Properies
+        property Name: string read GetName write SetName;
+        property GivenName: string read GetGivenName write SetGivenName;
+        property Surname: string read GetSurname write SetSurname;
+        property Title: string read GetTitle write SetTitle;
+        property Sex: string read GetSex write SetSex;
+        property IndRefID: string read GetIndRefID write SetIndRefID;
+        // Relationship-Properties
+        property Father: IGenIndividual read GetFather write SetFather;
+        property Mother: IGenIndividual read GetMother write SetMother;
+        property ChildCount: integer read GetChildrenCount;
+        property Children[Idx: Variant]: IGenIndividual read GetChildren write SetChildren;
+        property ParentFamily: IGenFamily read GetParentFamily write SetParentFamily;
+        property FamilyCount: integer read GetFamilyCount;
+        property Families[Idx: Variant]: IGenFamily read GetFamilies write SetFamilies;
+        property SpouseCount: integer read GetSpouseCount;
+        property Spouses[Idx: Variant]: IGenIndividual read GetSpouses write SetSpouses;
+        // Vital-Properties
+        property BirthDate: string read GetBirthDate write SetBirthDate;
+        property BirthPlace: string read GetBirthPlace write SetBirthPlace;
+        property Birth: IGenEvent read GetBirth write SetBirth;
+        property BaptDate: string read GetBaptDate write SetBaptDate;
+        property BaptPlace: string read GetBaptPlace write SetBaptPlace;
+        property Baptism: IGenEvent read GetBaptism write SetBaptism;
+        property DeathDate: string read GetDeathDate write SetDeathDate;
+        property DeathPlace: string read GetDeathPlace write SetDeathPlace;
+        property Death: IGenEvent read GetDeath write SetDeath;
+        property BurialDate: string read GetBurialDate write SetBurialDate;
+        property BurialPlace: string read GetBurialPlace write SetBurialPlace;
+        property Burial: IGenEvent read GetBurial write SetBurial;
+        property Religion: string read GetReligion write SetReligion;
+        property Occupation: string read GetOccupation write SetOccupation;
+        property OccuPlace: string read GetOccuPlace write SetOccuPlace;
+        property Residence: string read GetResidence write SetResidence;
+        // Management-Properies
+        property LastChange: TDateTime read GetTimeStamp write SetTimeStamp;
+
  end;
 
  { TClsHejIndividuals }
@@ -300,6 +424,342 @@ public
 implementation
 
 uses dateutils,LConvEncoding,dm_GenData2;
+
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+
+{ TClsIIndivid }
+
+constructor TClsIIndivid.Create(aInd: PHejIndData);
+begin
+  FTHejIndData := aInd;
+end;
+
+destructor TClsIIndivid.Destroy;
+begin
+
+end;
+
+function TClsIIndivid.GetBaptDate: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetDateData(hind_BaptDay);
+end;
+
+function TClsIIndivid.GetBaptism: IGenEvent;
+begin
+
+end;
+
+function TClsIIndivid.GetBaptPlace: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_BaptPlace);
+end;
+
+function TClsIIndivid.GetBirth: IGenEvent;
+begin
+
+end;
+
+function TClsIIndivid.GetBirthDate: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetDateData(hind_BirthDay);
+end;
+
+function TClsIIndivid.GetBirthPlace: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_Birthplace);
+end;
+
+function TClsIIndivid.GetBurial: IGenEvent;
+begin
+
+end;
+
+function TClsIIndivid.GetBurialDate: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetDateData(hind_BirthDay);
+end;
+
+function TClsIIndivid.GetBurialPlace: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_BurialPlace);
+end;
+
+function TClsIIndivid.GetChildrenCount: integer;
+begin
+
+end;
+
+function TClsIIndivid.GetChildren(Idx: Variant): IGenIndividual;
+begin
+
+end;
+
+function TClsIIndivid.GetDeath: IGenEvent;
+begin
+
+end;
+
+function TClsIIndivid.GetDeathDate: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetDateData(hind_BirthDay);
+end;
+
+function TClsIIndivid.GetDeathPlace: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_DeathPlace);
+end;
+
+function TClsIIndivid.GetFamilies(Idx: Variant): IGenFamily;
+begin
+
+end;
+
+function TClsIIndivid.GetFamilyCount: integer;
+begin
+
+end;
+
+function TClsIIndivid.GetFather: IGenIndividual;
+begin
+
+end;
+
+function TClsIIndivid.GetGivenName: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_GivenName);
+end;
+
+function TClsIIndivid.GetIndRefID: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_Index);
+end;
+
+function TClsIIndivid.GetMother: IGenIndividual;
+begin
+
+end;
+
+function TClsIIndivid.GetName: string;
+begin
+
+end;
+
+function TClsIIndivid.GetOccupation: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_Occupation);
+end;
+
+function TClsIIndivid.GetOccuPlace: string;
+begin
+
+end;
+
+function TClsIIndivid.GetParentFamily: IGenFamily;
+begin
+
+end;
+
+function TClsIIndivid.GetReligion: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_Religion);
+end;
+
+function TClsIIndivid.GetResidence: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_Residence);
+end;
+
+function TClsIIndivid.GetSex: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_Sex);
+end;
+
+function TClsIIndivid.GetSpouseCount: integer;
+begin
+
+end;
+
+function TClsIIndivid.GetSpouses(Idx: Variant): IGenIndividual;
+begin
+
+end;
+
+function TClsIIndivid.GetSurname: string;
+begin
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_FamilyName);
+end;
+
+function TClsIIndivid.GetTimeStamp: TDateTime;
+begin
+
+end;
+
+function TClsIIndivid.GetTitle: string;
+begin
+
+end;
+
+procedure TClsIIndivid.SetBaptDate(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetBaptism(AValue: IGenEvent);
+begin
+
+end;
+
+procedure TClsIIndivid.SetBaptPlace(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetBirth(AValue: IGenEvent);
+begin
+
+end;
+
+procedure TClsIIndivid.SetBirthDate(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetBirthPlace(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetBurial(AValue: IGenEvent);
+begin
+
+end;
+
+procedure TClsIIndivid.SetBurialDate(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetBurialPlace(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetChildren(Idx: Variant; AValue: IGenIndividual);
+begin
+
+end;
+
+procedure TClsIIndivid.SetDeath(AValue: IGenEvent);
+begin
+
+end;
+
+procedure TClsIIndivid.SetDeathDate(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetDeathPlace(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetFamilies(Idx: Variant; AValue: IGenFamily);
+begin
+
+end;
+
+procedure TClsIIndivid.SetFather(AValue: IGenIndividual);
+begin
+
+end;
+
+procedure TClsIIndivid.SetGivenName(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetIndRefID(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetMother(AValue: IGenIndividual);
+begin
+
+end;
+
+procedure TClsIIndivid.SetName(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetOccupation(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetOccuPlace(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetParentFamily(AValue: IGenFamily);
+begin
+
+end;
+
+procedure TClsIIndivid.SetReligion(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetResidence(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetSex(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetSpouses(Idx: Variant; AValue: IGenIndividual);
+begin
+
+end;
+
+procedure TClsIIndivid.SetSurname(AValue: string);
+begin
+
+end;
+
+procedure TClsIIndivid.SetTimeStamp(AValue: TDateTime);
+begin
+
+end;
+
+procedure TClsIIndivid.SetTitle(AValue: string);
+begin
+
+end;
 
 { TClsHejIndividuals }
 
@@ -968,6 +1428,16 @@ begin
     result := '';
 end;
 
+function THejIndData.GetiIndi: IGenIndividual; deprecated;
+begin
+//  if assigned(FIIndi) then
+//    result := FIIndi
+//  else
+    begin
+
+    end;
+end;
+
 procedure THejIndData.SetData(idx: TEnumHejIndDatafields; AValue: Variant);
 begin
     case idx of
@@ -1023,6 +1493,12 @@ begin
       hind_NameSource: NameSource := AValue ;
       hind_CallName: CallName := AValue ;
     end;
+end;
+
+procedure THejIndData.SetIndivid(AValue: TClsIIndivid);
+begin
+  if FInd=AValue then Exit;
+  FInd:=AValue;
 end;
 
 function THejIndData.ToString: String;

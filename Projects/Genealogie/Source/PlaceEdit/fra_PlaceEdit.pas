@@ -5,7 +5,7 @@ unit fra_PlaceEdit;
 interface
 
 uses
-    Types, Classes, SysUtils, DB, FileUtil, Forms, Controls, DBGrids, DBCtrls,
+    Classes, SysUtils, DB, FileUtil, Forms, Controls, DBGrids, DBCtrls,
     ExtCtrls, Buttons, Dialogs, StdCtrls, ComCtrls, ColorBox, mvGeoNames,
     mvMapViewer, VisualHTTPClient, dm_RNZAnzeigen, cmp_GedComFile, mvTypes,
     mvDrawingEngine;
@@ -107,7 +107,6 @@ type
       procedure DoLocatePlace(Data: PtrInt);
       procedure UpdateCoords(X, Y: Integer);
       procedure UpdateDropdownWidth(ACombobox: TCombobox);
-      procedure UpdateLocationHistory(ALocation: String);
       procedure UpdateViewportSize;
 
     public
@@ -116,7 +115,7 @@ type
 
 implementation
 
- uses LCLType, graphics, math, mvEngine, mvDE_BGRAGraphics,Cls_GedComExt ;
+ uses LCLType, graphics, mvEngine, mvDE_BGRA, Cls_GedComExt ;
 
  {$R *.lfm}
 
@@ -127,7 +126,7 @@ implementation
   end;
 
 const
-  MAX_LOCATIONS_HISTORY = 50;
+ // MAX_LOCATIONS_HISTORY = 50;
      USE_DMS = true;
 
   DistanceUnit_Names: array[TDistanceUnits] of string = ('m', 'km', 'miles');
@@ -248,7 +247,7 @@ begin
   ClearFoundLocations;
   GeoNames.Search(CbLocations.Text, MapView.DownloadEngine);
   UpdateDropdownWidth(CbFoundLocations);
-  UpdateLocationHistory(CbLocations.Text);
+//  UpdateLocationHistory(CbLocations.Text);
   if CbFoundLocations.Items.Count > 0 then CbFoundLocations.ItemIndex := 0;
 end;
 
@@ -316,8 +315,6 @@ const
 var
   rArea: TRealArea;
  // gpsList: TGpsObjList;
-  L: TStrings;
-  i: Integer;
 begin
   UpdateCoords(X, Y);
 
@@ -415,11 +412,6 @@ begin
 
 end;
 
-procedure TFraPlaceEdit.UpdateLocationHistory(ALocation: String);
-begin
-
-end;
-
 procedure TFraPlaceEdit.UpdateViewportSize;
 begin
   InfoViewportWidth.Caption := Format('%.2n %s', [
@@ -452,8 +444,7 @@ end;
 
 procedure TFraPlaceEdit.btnImportGedComClick(Sender: TObject);
 var
-    I, j: integer;
-    lActChild, lEvents, lReffn, lDeath: TGedComObj;
+    lActChild, lReffn, lDeath: TGedComObj;
     FReffn, Fplace: string;
     lDataSet: TDataSet;
     lplace: TGedPlace;

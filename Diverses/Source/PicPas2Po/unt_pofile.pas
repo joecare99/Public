@@ -15,10 +15,12 @@ type
 
     private
         Flines: TStringList;
+        FChanged:boolean;
         function GetLine(aIndex: integer): string;
+        procedure LinesChange(Sender: TObject);
         procedure SetLines(AValue: TStringList);
         procedure SetLine(aIndex: integer; AValue: string);
-        procedure SetLines2(aIndex: integer; AValue: string);
+//        procedure SetLines2(aIndex: integer; AValue: string);
     public
         constructor Create(AOwner: TComponent); override;
         destructor Destroy; override;
@@ -26,13 +28,15 @@ type
         function LookUpIdent(const aIdent: string): integer;
         function LookUpSource(const aIdent: string): integer;
         function GetTranslText(const id: integer): string;
+        procedure Clear;
         procedure LoadFromFile(Filename: string);
-        procedure SaveToFile(Filename: string);
+        Procedure SaveToFile(const Filename: string);
         class function QuotedStr2(const S: string): string;
         class function UnQuotedStr2(const S: string): string;
         //  class function
         property Lines: TStringList read FLines write SetLines;
         property Line[aIndex: integer]: string read GetLine write SetLine;
+        property Changed:boolean read FChanged;
     end;
 
 
@@ -50,6 +54,7 @@ constructor TPoFile.Create(AOwner: TComponent);
 begin
     inherited Create(AOwner);
     Flines := TStringList.Create;
+    Flines.OnChange:=LinesChange;
 end;
 
 procedure TPoFile.AppendData(const aRef, aIndex, aTransl: string);
@@ -91,6 +96,7 @@ function TPoFile.GetTranslText(const id: integer): string;
 var
     i: integer;
 begin
+    Result := '';
     // Todo: Multiline
     for i := 3 downto 1 do
         if copy(FLines[id + i], 1, 7) = cPoMsgTransl + ' ' then
@@ -100,23 +106,22 @@ begin
           end;
 end;
 
+procedure TPoFile.Clear;
+begin
+  Flines.Clear;
+  FChanged:=false;
+end;
+
 procedure TPoFile.LoadFromFile(Filename: string);
 begin
     Flines.LoadFromFile(Filename);
+    FChanged:=false;
 end;
 
-procedure TPoFile.SaveToFile(Filename: string);
+procedure TPoFile.SaveToFile(const Filename: string);
 begin
-    if FileExists(ChangeFileExt(Filename, '.new')) then
-        DeleteFile(ChangeFileExt(Filename, '.new'));
-    Flines.SaveToFile(ChangeFileExt(Filename, '.new'));
-    if fileexists(Filename) then
-      begin
-        if FileExists(ChangeFileExt(Filename, '.bak')) then
-            DeleteFile(ChangeFileExt(Filename, '.bak'));
-        RenameFile(Filename, ChangeFileExt(Filename, '.bak'));
-      end;
-    RenameFile(ChangeFileExt(Filename, '.new'), Filename);
+    Flines.SaveToFile(Filename);
+    FChanged:=false;
 end;
 
 procedure TPoFile.SetLines(AValue: TStringList);
@@ -131,28 +136,38 @@ begin
     Result := Flines.Strings[aIndex];
 end;
 
+procedure TPoFile.LinesChange(Sender: TObject);
+begin
+  FChanged:=true;
+end;
+
 procedure TPoFile.SetLine(aIndex: integer; AValue: string);
 begin
     Flines[aIndex] := AValue;
 end;
 
+(*
 procedure TPoFile.SetLines2(aIndex: integer; AValue: string);
 begin
 
 end;
-
+*)
 
 destructor TPoFile.Destroy;
 begin
     FreeAndNil(Flines);
     inherited Destroy;
 end;
+ const SpecialChar:array[0..3] of char =(#10,#13,#8,#9);
+      SubstStr:array[0..3] of string=('\n','\r','\d','\t');
+      Quote = '"';
+      Escape = '\';
 
 class function TPoFile.QuotedStr2(const S: string): string;
 var
     i, j, Count: integer;
-const
-    Quote = '"';
+
+
 
 begin
     Result := '' + Quote;
@@ -162,7 +177,7 @@ begin
     while i < Count do
       begin
         i := i + 1;
-        if S[i] in [Quote, '\'] then
+        if S[i] in [Quote, Escape] then
           begin
             Result := Result + copy(S, 1 + j, i - j - 1) + '\' + S[i];
             j := i;
@@ -171,16 +186,20 @@ begin
     if i <> j then
         Result := Result + copy(S, 1 + j, i - j);
     Result := Result + Quote;
+    for i := 0 to high(SpecialChar) do
+      Result := Result.Replace(SpecialChar[i],SubstStr[i]);
 end;
 
 class function TPoFile.UnQuotedStr2(const S: string): string;
 var
     i: integer;
-const
-    Quote = '"';
 
 begin
     Result := s;
+    Result := Result.Replace(Escape+Escape,Escape+#1);
+    for i := 0 to high(SpecialChar) do
+      Result := Result.Replace(SubstStr[i],SpecialChar[i]);
+    Result := Result.Replace(Escape+#1,Escape+Escape);
     if ('' + Quote = copy(s, length(s), 1)) and (copy(s, 1, 1) = '' + Quote) then
       begin
         Delete(Result, 1, 1);
@@ -190,7 +209,7 @@ begin
     while i < length(Result) do
       begin
         i := i + 1;
-        if Result[i] = '\' then
+        if Result[i] = Escape then
             Delete(Result, i, 1);
       end;
 end;

@@ -49,6 +49,9 @@ type
       ShortCut : char;
     end;
 
+
+    { TTab }
+
     PTab = ^TTab;
     TTab = object(TGroup)
       TabDefs   : PTabDef;
@@ -61,12 +64,12 @@ type
       procedure   Store (var S: TStream);
       function    TabCount: integer;
       function    Valid(Command: Word): Boolean; virtual;
-      procedure   ChangeBounds(var Bounds: TRect); virtual;
+      procedure   ChangeBounds(const Bounds: TRect); virtual;
       procedure   HandleEvent(var Event: TEvent); virtual;
       function    GetPalette: PPalette; virtual;
       procedure   Draw; virtual;
       function    DataSize: sw_word;virtual;
-      procedure   SetData(var Rec);virtual;
+      procedure   SetData(Const Rec);virtual;
       procedure   GetData(var Rec);virtual;
       procedure   SetState(AState: Word; Enable: Boolean); virtual;
       destructor  Done; virtual;
@@ -92,7 +95,7 @@ const
     VmtLink: TypeOf (TTab);
 {$ENDIF BP_VMTLink}
     Load: @TTab.Load;
-    Store: @TTab.Store
+    Store: @TTab.Store{%H-}
   );
 
 
@@ -293,7 +296,7 @@ begin
   end;
 end;
 
-procedure TTab.ChangeBounds(var Bounds: TRect);
+procedure TTab.ChangeBounds(const Bounds: TRect);
 var D: TPoint;
 procedure DoCalcChange(P: PView); {$ifndef FPC}far;{$endif}
 var
@@ -399,10 +402,27 @@ begin
                    ClearEvent(Event);
                    end;
                  end;
+            kbCtrlPgUp:
+              begin
+               if ActiveDef > 0 then
+                Index := Pred (ActiveDef)
+               else
+                Index := Pred (DefCount);
+               ClearEvent(Event);
+              end;
+            kbCtrlPgDn:
+              begin
+               if ActiveDef < Pred (DefCount) then
+                Index := Succ (ActiveDef)
+               else
+                Index := 0;
+               ClearEvent(Event);
+              end;
        else
        for I:=0 to DefCount-1 do
            begin
-             if Upcase(GetAltChar(Event.KeyCode))=AtTab(I)^.ShortCut
+             if (AtTab(I)^.ShortCut <> #0) and
+                         (Upcase(GetAltChar(Event.KeyCode))=AtTab(I)^.ShortCut)
                 then begin
                        Index:=I;
                        ClearEvent(Event);
@@ -606,7 +626,7 @@ begin
 end;
 
 
-procedure TTab.SetData(var Rec);
+procedure TTab.SetData(const Rec);
 type
   Bytes = array[0..65534] of Byte;
 var
@@ -706,7 +726,7 @@ begin
   if P<>nil then Delete(P);
 end;
 begin
-  ForEach(@DeleteViews);
+  ForEach(TCallbackProcParam(@DeleteViews));
   inherited Done;
   P:=TabDefs;
   while P<>nil do

@@ -66,6 +66,11 @@ USES
          Windows,                                     { Standard unit }
    {$ENDIF}
 
+ {$IFDEF OS_WIN16}                                  { WIN16 CODE }
+         WinProcs, WinTypes,                          { Standard units }
+         Crt,                                         { used for Delay() }
+   {$ENDIF}
+
    {$ifdef OS_DOS}
      Dos,
    {$endif OS_DOS}
@@ -227,6 +232,8 @@ CONST
    mbLeftButton   = $01;                              { Left mouse button }
    mbRightButton  = $02;                              { Right mouse button }
    mbMiddleButton = $04;                              { Middle mouse button }
+   mbScrollWheelDown = $08;                           { Scroll wheel down}
+   mbScrollWheelUp   = $10;                           { Scroll wheel up }
 
 {---------------------------------------------------------------------------}
 {                         SCREEN CRT MODE CONSTANTS                         }
@@ -330,7 +337,7 @@ in Dest. The high bytes of the Sw_Words are set to Attr, or remain
 unchanged if Attr is zero.
 25May96 LdB
 ---------------------------------------------------------------------}
-PROCEDURE MoveStr (Var Dest; Const Str: String; Attr: Byte);
+PROCEDURE MoveStr ({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest; Const Str: String; Attr: Byte);
 
 {-MoveCStr-----------------------------------------------------------
 The characters in Str are moved into the low bytes of corresponding
@@ -339,7 +346,7 @@ Hi(Attr). Tilde characters (~) in the string toggle between the two
 attribute bytes passed in the Attr Sw_Word.
 25May96 LdB
 ---------------------------------------------------------------------}
-PROCEDURE MoveCStr (Var Dest; Const Str: String; Attrs: Word);
+PROCEDURE MoveCStr ({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest; Const Str: String; Attrs: Word);
 
 {-MoveBuf------------------------------------------------------------
 Count bytes are moved from Source into the low bytes of corresponding
@@ -347,7 +354,7 @@ Sw_Words in Dest. The high bytes of the Sw_Words in Dest are set to Attr,
 or remain unchanged if Attr is zero.
 25May96 LdB
 ---------------------------------------------------------------------}
-PROCEDURE MoveBuf (Var Dest, Source; Attr: Byte; Count: Sw_Word);
+PROCEDURE MoveBuf ({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest;const Source; Attr: Byte; Count: Sw_Word);
 
 {-MoveChar------------------------------------------------------------
 Moves characters into a buffer for use with a view's WriteBuf or
@@ -357,7 +364,7 @@ remain unchanged if Ord(C) is zero. The high bytes of the Sw_Words are
 set to Attr, or remain unchanged if Attr is zero.
 25May96 LdB
 ---------------------------------------------------------------------}
-PROCEDURE MoveChar ({$ifopt H+}out{$else}var{$Endif} Dest; C: Char; Attr: Byte; Count: Sw_Word);
+PROCEDURE MoveChar ({$IfDef FPC_OBJFPC}out{$else}var{$endif}Dest; C: Char; Attr: Byte; Count: Sw_Word);
 
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                        KEYBOARD SUPPORT ROUTINES                          }
@@ -516,12 +523,10 @@ Does nothing provided for compatability purposes only.
 ---------------------------------------------------------------------}
 PROCEDURE SetVideoMode (Mode: Sw_Word);
 
-{-SetVideoMode-------------------------------------------------------
-Does nothing provided for compatability purposes only.
-04Jan97 LdB
+{-DoScreenShot-------------------------------------------------------
+Moves A copy of the Videobuffer to Dest
 ---------------------------------------------------------------------}
-PROCEDURE DoScreenShot (var Dest);
-
+procedure DoScreenShot(var Dest);
 
 {+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++}
 {                           ERROR CONTROL ROUTINES                          }
@@ -603,7 +608,7 @@ CONST
    SaveCtrlBreak: Boolean = False;                    { Compatability only }
    SysErrActive : Boolean = False;                    { Compatability only }
    FailSysErrors: Boolean = False;                    { Compatability only }
-   ButtonCount  : Byte = 0;                           { Mouse button count }
+   ButtonCount  : Byte = 1;                           { Mouse button count }
    DoubleDelay  : Sw_Word = 8;                           { Double click delay }
    RepeatDelay  : Sw_Word = 8;                           { Auto mouse delay }
    SysColorAttr : Sw_Word = $4E4F;                       { System colour attr }
@@ -694,7 +699,6 @@ CONST AltCodes: Array [0..127] Of Byte = (
 {                           NEW CONTROL VARIABLES                           }
 {---------------------------------------------------------------------------}
 CONST
-   HideCount : Sw_Integer = 0;                           { Cursor hide count }
    QueueCount: Sw_Word = 0;                              { Queued message count }
    QueueHead : Sw_Word = 0;                              { Queue head pointer }
    QueueTail : Sw_Word = 0;                              { Queue tail pointer }
@@ -707,24 +711,14 @@ CONST
 {                     UNINITIALIZED DOS/DPMI/API VARIABLES                      }
 {---------------------------------------------------------------------------}
 VAR
-   LastDouble : Boolean;                              { Last double buttons }
    LastButtons: Byte;                                 { Last button state }
    DownButtons: Byte;                                 { Last down buttons }
-   EventCount : Sw_Word;                                 { Events in queue }
    AutoDelay  : Sw_Word;                                 { Delay time count }
    DownTicks  : Sw_Word;                                 { Down key tick count }
    AutoTicks  : Sw_Word;                                 { Held key tick count }
-   LastWhereX : Sw_Word;                                 { Last x position }
-   LastWhereY : Sw_Word;                                 { Last y position }
-   DownWhereX : Sw_Word;                                 { Last x position }
-   DownWhereY : Sw_Word;                                 { Last y position }
    LastWhere  : TPoint;                               { Last mouse position }
    DownWhere  : TPoint;                               { Last down position }
-   EventQHead : Pointer;                              { Head of queue }
-   EventQTail : Pointer;                              { Tail of queue }
-   EventQueue : Array [0..EventQSize - 1] Of TEvent;  { Event queue }
-   EventQLast : RECORD END;                           { Simple end marker }
-   StartupScreenMode : TVideoMode;
+    StartupScreenMode : TVideoMode;
    {$ifdef OS_AMIGA}
    StartupTicks: Int64; // ticks at Startup for GetDOSTicks
    {$endif}
@@ -757,6 +751,11 @@ function GetDosTicks: longint; { returns ticks at 18.2 Hz, just like DOS }
      GetDosTicks:=GetTickCount div 55;
   end;
 {$ENDIF OS_WINDOWS}
+{$IFDEF OS_WIN16}
+  begin
+     GetDosTicks:=GetTickCount div 55;
+  end;
+{$ENDIF OS_WIN16}
 {$IFDEF OS_DOS}
   begin
     GetDosTicks:=MemL[$40:$6c];
@@ -819,6 +818,11 @@ begin
     end;
 end;
 {$ENDIF}
+{$IFDEF OS_WIN16}
+  begin
+    Delay (10);
+  end;
+{$ENDIF}
 {$IFDEF OS_NETWARE_LIBC}
   begin
     Delay (10);
@@ -842,19 +846,19 @@ end;
 {                UNINITIALIZED DOS/DPMI/WIN/NT/OS2 VARIABLES                }
 {---------------------------------------------------------------------------}
 VAR
-   SaveExit: Pointer;                                 { Saved exit pointer }
+   SaveExit: CodePointer;                             { Saved exit pointer }
    Queue   : Array [0..QueueMax-1] Of TEvent;         { New message queue }
 
 {***************************************************************************}
 {                         PRIVATE INTERNAL ROUTINES                         }
 {***************************************************************************}
 
-PROCEDURE ShowMouseCursor;inline;
+procedure ShowMouseCursor;
 BEGIN
   ShowMouse;
 END;
 
-PROCEDURE HideMouseCursor;inline;
+procedure HideMouseCursor;
 BEGIN
   HideMouse;
 END;
@@ -882,16 +886,16 @@ END;
 procedure DetectVideo;
 VAR
   CurrMode : TVideoMode;
-  Driver: TVideoDriver;
+{  Driver: TVideoDriver;  }
 begin
   { Video.InitVideo; Incompatible with BP
     and forces a screen clear which is often a bad thing PM }
-  if video.ScreenWidth = 0 then
+ (* if video.ScreenWidth = 0 then
     begin
       GetVideoDriver (Driver);
       if Assigned(Driver.InitDriver) then
         driver.InitDriver;
-    end;
+    end;  *)
   GetVideoMode(CurrMode);
   ScreenMode:=CurrMode;
 end;
@@ -926,7 +930,7 @@ END;
 {---------------------------------------------------------------------------}
 {  MoveStr -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 10Jul99 LdB           }
 {---------------------------------------------------------------------------}
-procedure MoveStr(var Dest; const Str: String; Attr: Byte);
+procedure MoveStr({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest; const Str: String; Attr: Byte);
 VAR I: Word; P: PWord;
 BEGIN
    For I := 1 To Length(Str) Do Begin                 { For each character }
@@ -939,7 +943,7 @@ END;
 {---------------------------------------------------------------------------}
 {  MoveCStr -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 10Jul99 LdB          }
 {---------------------------------------------------------------------------}
-procedure MoveCStr(var Dest; const Str: String; Attrs: Word);
+procedure MoveCStr({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest; const Str: String; Attrs: Word);
 VAR B: Byte; I, J: Sw_Word; P: PWord;
 BEGIN
    J := 0;                                            { Start position }
@@ -961,7 +965,7 @@ END;
 {---------------------------------------------------------------------------}
 {  MoveBuf -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 10Jul99 LdB           }
 {---------------------------------------------------------------------------}
-procedure MoveBuf(var Dest, Source; Attr: Byte; Count: Sw_Word);
+procedure MoveBuf({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest; const Source; Attr: Byte; Count: Sw_Word);
 VAR I: Word; P: PWord;
 BEGIN
    For I := 1 To Count Do Begin
@@ -974,7 +978,7 @@ END;
 {---------------------------------------------------------------------------}
 {  MoveChar -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 10Jul99 LdB          }
 {---------------------------------------------------------------------------}
-procedure MoveChar({$ifopt H+}out{$else}var{$Endif} Dest; C: Char; Attr: Byte; Count: Sw_Word);
+procedure MoveChar({$IfDef FPC_OBJFPC}out{$else}var{$endif} Dest; C: Char; Attr: Byte; Count: Sw_Word);
 VAR I: Word; P: PWord;
 BEGIN
    For I := 1 To Count Do Begin
@@ -1067,7 +1071,7 @@ END;
 {---------------------------------------------------------------------------}
 {  GetShiftState -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 08Jul96 LdB     }
 {---------------------------------------------------------------------------}
-FUNCTION GetShiftState: Byte;
+function GetShiftState: Byte;
 begin
   GetShiftState:=Keyboard.GetKeyEventShiftState(Keyboard.PollShiftStateEvent);
 end;
@@ -1189,8 +1193,8 @@ begin
               (GetDosTicks-DownTicks<=DoubleDelay) then
              Event.Double:=true;
            DownButtons:=e.Buttons;
-           DownWhere.X:=MouseWhere.x;
-           DownWhere.Y:=MouseWhere.y;
+//           DownWhere.X:=MouseWhere.x;
+//           DownWhere.Y:=MouseWhere.y;
            DownTicks:=GetDosTicks;
            AutoTicks:=GetDosTicks;
            if AutoTicks=0 then
@@ -1277,10 +1281,24 @@ end;
 {---------------------------------------------------------------------------}
 {  InitEvents -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 07Sep99 LdB        }
 {---------------------------------------------------------------------------}
-PROCEDURE InitEvents;
+procedure InitEvents;
+var
+  ConsoleMode: DWORD;
 BEGIN
   If (ButtonCount <> 0) Then
     begin                   { Mouse is available }
+{$ifdef OS_WINDOWS}
+GetConsoleMode(GetStdHandle(cardinal(Std_Input_Handle)),ConsoleMode);
+ConsoleMode:=(ConsoleMode or ENABLE_MOUSE_INPUT or
+                  ENABLE_WINDOW_INPUT or
+                  ENABLE_EXTENDED_FLAGS)
+          and not (ENABLE_PROCESSED_INPUT or
+                   ENABLE_LINE_INPUT or
+                   ENABLE_ECHO_INPUT or
+                   ENABLE_INSERT_MODE or
+                   ENABLE_QUICK_EDIT_MODE);
+ SetConsoleMode(GetStdHandle(cardinal(Std_Input_Handle)), ConsoleMode);
+{$endif}
      Mouse.InitMouse;                                 { Hook the mouse }
      { this is required by the use of HideCount variable }
      Mouse.ShowMouse;                                 { visible by default }
@@ -1290,9 +1308,7 @@ BEGIN
      MouseWhere.X:=Mouse.GetMouseX;
      MouseWhere.Y:=Mouse.GetMouseY;                   { Get mouse position }
      LastWhere.x:=MouseWhere.x;
-     LastWhereX:=MouseWhere.x;
      LastWhere.y:=MouseWhere.y;
-     LastWhereY:=MouseWhere.y;
      MouseEvents := True;                             { Set initialized flag }
     end;
   InitSystemMsg;
@@ -1301,7 +1317,7 @@ END;
 {---------------------------------------------------------------------------}
 {  DoneEvents -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Jul99 LdB        }
 {---------------------------------------------------------------------------}
-PROCEDURE DoneEvents;
+procedure DoneEvents;
 BEGIN
   DoneSystemMsg;
   Mouse.DoneMouse;
@@ -1341,6 +1357,7 @@ end;
 function InitVideo:boolean;
 
 var StoreScreenMode : TVideoMode;
+  ConsoleMode: DWord;
 
 begin
   initvideo:=false;
@@ -1371,7 +1388,7 @@ begin
       GetVideoMode(ScreenMode);
     end;
 
-  if ScreenWidth > MaxViewWidth then
+  if ScreenWidth >= MaxViewWidth then
     ScreenWidth := MaxViewWidth;
   ScreenWidth:=Video.ScreenWidth;
   ScreenHeight:=Video.ScreenHeight;
@@ -1382,7 +1399,7 @@ end;
 {---------------------------------------------------------------------------}
 {  DoneVideo -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 19May98 LdB         }
 {---------------------------------------------------------------------------}
-PROCEDURE DoneVideo;
+procedure DoneVideo;
 BEGIN
   if not VideoInitialized then
     exit;
@@ -1396,7 +1413,7 @@ END;
 {---------------------------------------------------------------------------}
 {  ClearScreen -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 04Jan97 LdB       }
 {---------------------------------------------------------------------------}
-PROCEDURE ClearScreen;
+procedure ClearScreen;
 BEGIN
   Video.ClearScreen;
 END;
@@ -1408,6 +1425,9 @@ procedure SetVideoMode(Mode: Sw_Word);
 BEGIN
 END;
 
+{---------------------------------------------------------------------------}
+{  DoScreenShot -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 10Nov17 JtG      }
+{---------------------------------------------------------------------------}
 procedure DoScreenShot(var Dest);
 begin
   assert(assigned(VideoBuf),'VideoBuf should be assigned');
@@ -1421,7 +1441,7 @@ END;
 {---------------------------------------------------------------------------}
 {  InitSysError -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 20May98 LdB      }
 {---------------------------------------------------------------------------}
-PROCEDURE InitSysError;
+procedure InitSysError;
 BEGIN
    SysErrActive := True;                              { Set active flag }
 END;
@@ -1429,7 +1449,7 @@ END;
 {---------------------------------------------------------------------------}
 {  DoneSysError -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 20May98 LdB      }
 {---------------------------------------------------------------------------}
-PROCEDURE DoneSysError;
+procedure DoneSysError;
 BEGIN
    SysErrActive := False;                             { Clear active flag }
 END;
@@ -1591,7 +1611,7 @@ END;
 {---------------------------------------------------------------------------}
 {  NextQueuedEvent -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 17Mar98 LdB   }
 {---------------------------------------------------------------------------}
-PROCEDURE NextQueuedEvent(Var Event: TEvent);
+procedure NextQueuedEvent(var Event: TEvent);
 BEGIN
    If (QueueCount > 0) Then Begin                     { Check queued event }
      Event := Queue[QueueTail];                       { Fetch next event }

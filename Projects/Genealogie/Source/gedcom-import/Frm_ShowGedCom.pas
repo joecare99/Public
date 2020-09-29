@@ -15,24 +15,30 @@ Type
 
   TFrmShowGedCom = Class(TForm)
     ApplicationProperties1: TApplicationProperties;
-    btnAutoSetName: TButton;
-    btnAutoRemoveInd: TButton;
-    btnFileSaveAs: TBitBtn;
-    Button1: TButton;
     btnAutoEstBirth: TButton;
+    btnAutoRemoveInd: TButton;
+    btnAutoSetName: TButton;
+    btnFileSaveAs: TBitBtn;
+    btnGotoLink: TSpeedButton;
+    Button1: TButton;
+    chbFiltered: TCheckBox;
     chbVerbose: TCheckBox;
-    lblStatistics: TLabel;
     lblEstBirthResult: TLabel;
-    lblSetNameResult: TLabel;
     lblRemoveIndResult: TLabel;
+    lblSetNameResult: TLabel;
+    lblStatistics: TLabel;
+    mmLog: TMemo;
+    Panel1: TPanel;
+    Panel2: TPanel;
     pnlDetail: TPanel;
     pnlLeft: TPanel;
     pnlBottom: TPanel;
     pnlTop: TPanel;
     ProgressBar1: TProgressBar;
     SaveDialog1: TSaveDialog;
-    btnGotoLink: TSpeedButton;
     Splitter1: TSplitter;
+    Splitter2: TSplitter;
+    Splitter3: TSplitter;
     TreeView1: TTreeView;
     StatusBar1: TStatusBar;
     OpenDialog1: TOpenDialog;
@@ -40,7 +46,6 @@ Type
     cbxFilename: TComboBox;
     Config1: TConfig;
     btnOpenFile: TBitBtn;
-    mmLog: TMemo;
     procedure ApplicationProperties1Idle(Sender: TObject; var Done: Boolean);
     procedure btnAutoRemoveIndClick(Sender: TObject);
     procedure btnAutoSetNameClick(Sender: TObject);
@@ -89,7 +94,7 @@ Var
 
 Implementation
 
-uses LConvEncoding,Cls_GedComExt,Unt_FileProcs;
+uses LConvEncoding,Cls_GedComExt,Unt_FileProcs,unt_IGenBase2;
 
 {$IFDEF FPC}
 {$R *.lfm}
@@ -161,6 +166,45 @@ begin
       lActNode:=Owner.AddChildObject(base,lActChild.ToString,lActChild);
 //      GedCom2treenodes(lActChild,Owner,lActNode);
     end;
+end;
+
+function GedFilter(aObj: TGedComObj): Boolean;
+var
+  FFiledate: TDateTime;
+  lFam: TGedFamily;
+
+  function FilterFamily(aObj:TGedFamily):boolean;
+
+  var
+    lChld: TGedIndividual;
+  begin
+    if not assigned(aObj) then exit(false);
+    result := true;
+    if assigned(aObj.Husband) and (aObj.Husband.LastChange>=FFiledate-1 )
+      then exit;
+    if assigned(aObj.Wife) and (aObj.Wife.LastChange>=FFiledate-1 )
+      then exit;
+    for lChld in aObj.EnumerateChildren do
+     if (lChld.LastChange>=FFiledate-1 ) then exit;
+    result := false;
+  end;
+
+begin
+  result := true;
+  FFiledate:=Date;
+  if aobj.InheritsFrom(TGedIndividual) then
+    begin
+      result := false;
+      if TGedIndividual(aObj).LastChange >=FFiledate-1 then
+        exit(true);
+      if Assigned(TGedIndividual(aObj).ParentFamily) and FilterFamily(TGedFamily(TGedIndividual(aObj).ParentFamily.self)) then
+        exit(true);
+      for lFam in  TGedIndividual(aObj).EnumerateFamiliy do
+        if FilterFamily(lFam) then
+          exit(true);
+    end;
+  if aobj.InheritsFrom(TGedFamily) then
+    exit(FilterFamily(TGedFamily(aObj)));
 end;
 
 procedure TFrmShowGedCom.btnBrowseFileClick(Sender: TObject);
@@ -274,7 +318,10 @@ begin
         DeleteFile(ChangeFileExt(lFilename,cNewExt));
       lst:=TFileStream.Create(ChangeFileExt(lFilename,cNewExt),fmCreate);
       try
-      FGedComFile.WriteToStream(lst);
+      if chbFiltered.Checked then
+        FGedComFile.WriteToStream(lst,@GedFilter)
+      else
+        FGedComFile.WriteToStream(lst);
       finally
         freeandnil(lst);
       end;

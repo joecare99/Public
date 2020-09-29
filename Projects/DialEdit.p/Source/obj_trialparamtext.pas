@@ -1,7 +1,5 @@
 unit obj_TrialParamText;
 
-{$mode objfpc}{$H+}
-
 interface
 
 uses
@@ -35,7 +33,7 @@ type
           { But it DOES! letter for letter! }
           procedure GetText2(var S: ShortString); virtual;             {+}
           procedure HandleEvent(var Event: TEvent); virtual;
-          procedure SizeLimits(var Min, Max: TPoint); virtual;
+          procedure SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} Min, Max: TPoint); virtual;
           procedure Store(var S: TStream);
       end;
 
@@ -115,7 +113,7 @@ var
     R: TRect;
 
 begin
-  result := 0;
+  {$IfDef FPC_OBJFPC}result{$else}Execute{$endif} := 0;
     case CodeGen.GenPart of
      gpDataFields:
         begin
@@ -244,7 +242,7 @@ begin
     end;
 end; {TTrialParamText.HandleEvent}
 
-procedure TTrialParamText.SizeLimits(var Min, Max: TPoint);
+procedure TTrialParamText.SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} Min, Max: TPoint);
 begin
     inherited SizeLimits(Min, Max);
     Min.X:= 1;  Dec(Max.X,2);

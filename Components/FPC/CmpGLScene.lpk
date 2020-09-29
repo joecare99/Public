@@ -21,7 +21,7 @@
       </Other>
     </CompilerOptions>
     <Version Major="1"/>
-    <Files Count="3">
+    <Files Count="4">
       <Item1>
         <Filename Value="../Source/OpenGLScene/Cmp_OpenGLScene.pas"/>
         <UnitName Value="Cmp_OpenGLScene"/>
@@ -34,7 +34,12 @@
         <Filename Value="../Source/OpenGLScene/Cmp_OpenGLErwObjects.pas"/>
         <UnitName Value="Cmp_OpenGLErwObjects"/>
       </Item3>
+      <Item4>
+        <Filename Value="../Source/OpenGLScene/Unt_IHasAttributes.pas"/>
+        <UnitName Value="Unt_IHasAttributes"/>
+      </Item4>
     </Files>
+    <LazDoc Paths="../fpDoc"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="lazopenglcontext"/>

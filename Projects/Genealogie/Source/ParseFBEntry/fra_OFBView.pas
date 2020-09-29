@@ -76,20 +76,23 @@ end;
 
 procedure TFraOFBView.ExtractEntry(Idx:Integer;const lStr: TStrings);
 var
-  lLine: string;
+  lLine,lTc: string;
   lNextNode: TDOMNode;
   lTestNode: TDOMNode;
+  lNodeName: DOMString;
 begin
   lstr.Clear;
   lTestNode := TDOMNode(listbox1.Items.Objects[Idx]);
   if Idx < Listbox1.Items.Count - 1 then
       lNextNode := TDOMNode(listbox1.Items.Objects[Idx + 1])
   else
-      lnextNode := nil;
+      lnextNode := TDOMNode(lTestNode.GetNextNodeSkipChildren);
   lLine := '';
   while assigned(ltestnode) and (ltestnode <> lnextnode) and
       (lTestNode.textcontent <> '§') and (lTestNode.NodeName <> 'text:h') do
     begin
+      lNodeName := lTestnode.Nodename;
+      lTc := lTestNode.TextContent;
       if lTestnode.ClassNameIs('TDOMText') then
           lLine := lLine + lTestNode.TextContent;
       if lTestnode.Nodename = 'text:tab' then
@@ -162,7 +165,7 @@ begin
         lNodeValue := lTestNode.TextContent;
         if (lTestNode.NodeName = 'text:p') and (length(lNodeValue) > 3) and
             (lNodeValue[1] in Ziffern + [#9, ' '[1]]) and
-            (lNodeValue[2] <> ')') and (lNodeValue[2] <> '●'[2]) and
+            (lNodeValue[2] <> ')') and (lNodeValue[2] <> '.') and (lNodeValue[2] <> '●'[2]) and
             (lNodeValue[3] <> ')') then
           begin
             listbox1.AddItem(lNodeValue, lTestNode);

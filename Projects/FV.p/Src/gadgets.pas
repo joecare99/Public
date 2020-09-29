@@ -94,7 +94,7 @@ UNIT Gadgets;
 {$V-} { Turn off strict VAR strings }
 {====================================================================}
 
-USES FVConsts, Time, Objects, Drivers, Views, App;      { Standard GFV units }
+USES Time, Objects, Drivers, Views;      { Standard GFV units }
 
 {***************************************************************************}
 {                        PUBLIC OBJECT DEFINITIONS                          }

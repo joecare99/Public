@@ -81,7 +81,7 @@ const
     VmtLink: TypeOf (TTimedDialog);
 {$ENDIF BP_VMTLink}
     Load:    @TTimedDialog.Load;
-    Store:   @TTimedDialog.Store
+    Store:   @TTimedDialog.Store{%H-}
   );
 
   RTimedDialogText: TStreamRec = (
@@ -92,7 +92,7 @@ const
     VmtLink: TypeOf (TTimedDialogText);
 {$ENDIF BP_VMTLink}
     Load:    @TTimedDialogText.Load;
-    Store:   @TTimedDialogText.Store
+    Store:   @TTimedDialogText.Store{%H-}
   );
 
 procedure RegisterTimedDialog;
@@ -149,7 +149,7 @@ end;
 constructor TTimedDialog.Init (var Bounds: TRect; ATitle: TTitleStr;
   ASecs: word);
 var
-  H, M, S, S100: word;
+  {$IFNDEF FPC}H, M, S , S100: word; {$ENDIF}
   NN: TDateTime;
 begin
   inherited Init (Bounds, ATitle);
@@ -168,7 +168,7 @@ end;
 
 procedure TTimedDialog.GetEvent (var Event: TEvent);
 var
-  H, M, S, S100: word;
+  {$IFNDEF FPC}H, M, S , S100: word; {$ENDIF}
   Secs1: longint;
   NN: TDateTime;
 begin
