@@ -108,7 +108,7 @@ type
 
   TCShMemberVisibility = (visDefault, visPrivate, visProtected, visPublic,
     visPublished, visAutomated,
-    visStrictPrivate, visStrictProtected);
+    visStrictPrivate, visStrictProtected, visInternal);
 
   TCallingConvention = (ccDefault,ccRegister,ccCSharp,ccCDecl,ccStdCall,
                         ccOldFPCCall,ccSafeCall,ccSysCall,ccMWCSharp,
@@ -198,18 +198,18 @@ type
   end;
   TCShElementArray = array of TCShElement;
 
-  TCShExprKind = (pekIdent, pekNumber, pekString, pekSet, pekNil, pekBoolConst,
+  TCShExprKind = (pekIdent, pekNumber, pekString, pekSet, pekNull, pekBoolConst,
      pekRange, pekUnary, pekBinary, pekFuncParams, pekArrayParams, pekListOfExp,
-     pekInherited, pekSelf, pekSpecialize, pekProcedure);
+     pekInherited, pekThis, pekSpecialize, pekProcedure);
 
   TExprOpCode = (eopNone,
-                 eopAdd,eopSubtract,eopMultiply,eopDivide{/}, eopDiv{div},eopMod, eopPower,// arithmetic
+                 eopAdd,eopInc,eopSubtract,eopDec,eopMultiply,eopDivide{/}, eopMod, eopPower,// arithmetic
                  eopShr,eopShl, // bit operations
-                 eopNot,eopAnd,eopOr,eopXor, // logical/bit
-                 eopEqual, eopNotEqual,  // Logical
+                 eopNot,eopSingleAnd,eopAnd,eopSingleOr,eopOr,eopXor,eopKomplement, // logical/bit
+                 eopEqual, eopNotEqual,eopAsk, eopAskAsk,  // Logical
                  eopLessThan,eopGreaterThan, eopLessthanEqual,eopGreaterThanEqual, // ordering
-                 eopIn,eopIs,eopAs, eopSymmetricaldifference, // Specials
-                 eopAddress, eopDeref, eopMemAddress, // Pointers  eopMemAddress=**
+                 eopIn,eopIs,eopAs, eopSymmetricaldifference,eopLampda, // Specials
+//                 eopAddress, eopDeref, eopMemAddress, // Pointers  eopMemAddress=**
                  eopSubIdent); // SomeRec.A, A is subIdent of SomeRec
 
   { TCShExpr }
@@ -1679,7 +1679,7 @@ const
 
   VisibilityNames: array[TCShMemberVisibility] of string = (
     'default','private', 'protected', 'public', 'published', 'automated',
-    'strict private', 'strict protected');
+    'strict private', 'strict protected','internal');
 
   ObjKindNames: array[TCShObjKind] of string = (
     'object', 'class', 'interface',
@@ -1711,13 +1711,13 @@ const
       'Procedure');
 
   OpcodeStrings : Array[TExprOpCode] of string = (
-        '','+','-','*','/','div','mod','**',
-        'shr','shl',
-        'not','and','or','xor',
-        '=','<>',
+        '','+','++','-','--','*','/','%','**',
+        '>>','<<',
+        '!','&','&&','|','||','^','~',
+        '=','!=','?','??',
         '<','>','<=','>=',
-        'in','is','as','><',
-        '@','^','@@',
+        'in','is','as','><','=>',
+ //       '@','^','@@',
         '.');
 
 
@@ -5557,7 +5557,7 @@ end;
 function TUnaryExpr.GetDeclaration(full: Boolean): string;
 
 Const
-  WordOpcodes = [eopDiv,eopMod,eopshr,eopshl,eopNot,eopAnd,eopOr,eopXor];
+  WordOpcodes = [];
 
 begin
   Result:=OpCodeStrings[Opcode];
@@ -5593,12 +5593,12 @@ function TBinaryExpr.GetDeclaration(full: Boolean): string;
   function OpLevel(op: TCShExpr): Integer;
   begin
     case op.OpCode of
-      eopNot,eopAddress:
+      eopNot,eopKomplement:
         Result := 4;
-      eopMultiply, eopDivide, eopDiv, eopMod, eopAnd, eopShl,
+      eopMultiply, eopDivide, eopMod, eopSingleAnd, eopShl,
       eopShr, eopAs, eopPower:
         Result := 3;
-      eopAdd, eopSubtract, eopOr, eopXor:
+      eopAdd, eopSubtract, eopSingleOr, eopXor:
         Result := 2;
       eopEqual, eopNotEqual, eopLessThan, eopLessthanEqual, eopGreaterThan,
       eopGreaterThanEqual, eopIn, eopIs:
@@ -5614,7 +5614,7 @@ begin
   else
     begin
     Result:=OpcodeStrings[Opcode];
-    if Not (OpCode in [eopAddress,eopDeref,eopSubIdent]) then
+    if Not (OpCode in [eopSubIdent]) then
       Result:=' '+Result+' ';
     end;
   If Assigned(Left) then
@@ -5881,7 +5881,7 @@ end;
 
 constructor TNullExpr.Create(AParent : TCShElement);
 begin
-  inherited Create(AParent,pekNil, eopNone);
+  inherited Create(AParent,pekNull, eopNone);
 end;
 
 { TInheritedExpr }
@@ -5896,7 +5896,7 @@ end;
 
 constructor TThisExpr.Create(AParent : TCShElement);
 begin
-  inherited Create(AParent,pekSelf, eopNone);
+  inherited Create(AParent,pekThis, eopNone);
 end;
 
 { TCShLabels }

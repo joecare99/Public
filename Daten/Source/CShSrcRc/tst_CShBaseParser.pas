@@ -55,7 +55,7 @@ Type
     Procedure StartUnit(AUnitName : String);
     Procedure StartProgram(AFileName : String; AIn : String = ''; AOut : String = '');
     Procedure StartLibrary(AFileName : String);
-    Procedure UsesClause(Units : Array of string);
+    Procedure UsingClause(Namespaces : Array of string);
     Procedure StartImplementation;
     Procedure EndSource;
     Procedure Add(Const ALine : String);
@@ -105,12 +105,16 @@ Type
 
 function ExtractFileUnitName(aFilename: string): string;
 function GetCShElementDesc(El: TCShElement): string;
-procedure ReadNextCShcalToken(var Position: PChar; out TokenStart: PChar;
+procedure ReadNextCSharpToken(var Position: PChar; out TokenStart: PChar;
   NestedComments: boolean; SkipDirectives: boolean);
 
 implementation
 
 uses typinfo;
+
+resourcestring
+  rsCShFilename = '%s.cs';
+  rsUsingNamespace = 'using %s;';
 
 function ExtractFileUnitName(aFilename: string): string;
 var
@@ -135,7 +139,7 @@ begin
   Result:=El.Name+':'+El.ClassName+'['+El.SourceFilename+','+IntToStr(El.SourceLinenumber)+']';
 end;
 
-procedure ReadNextCShcalToken(var Position: PChar; out TokenStart: PChar;
+procedure ReadNextCSharpToken(var Position: PChar; out TokenStart: PChar;
   NestedComments: boolean; SkipDirectives: boolean);
 const
   IdentChars = ['a'..'z','A'..'Z','_','0'..'9'];
@@ -162,11 +166,18 @@ begin
         end
       else
         break;
-    '{':    // comment start or compiler directive
-      if (Src[1]='$') and (not SkipDirectives) then
+    '/':    // comment start or compiler directive
+        if (Src[1]='/') then
+        begin
+        // comment start -> read til line end
+        inc(Src);
+        while not (Src^ in [#0,#10,#13]) do
+          inc(Src);
+        end
+      else if (Src[1]='*') then
         // compiler directive
-        break
-      else begin
+        begin
+        inc(Src);
         // CShcal comment => skip
         CommentLvl:=1;
         while true do
@@ -174,11 +185,15 @@ begin
           inc(Src);
           case Src^ of
           #0: break;
-          '{':
-            if NestedComments then
-              inc(CommentLvl);
-          '}':
+          '/':if src[1]='*' then
             begin
+              inc(src);
+               if NestedComments then
+                  inc(CommentLvl);
+            end;
+          '*': if src[1]='/' then
+            begin
+            inc(Src);
             dec(CommentLvl);
             if CommentLvl=0 then
               begin
@@ -188,57 +203,13 @@ begin
             end;
           end;
         end;
-      end;
-    '/':  // comment or real division
-      if (Src[1]='/') then
-        begin
-        // comment start -> read til line end
-        inc(Src);
-        while not (Src^ in [#0,#10,#13]) do
-          inc(Src);
-        end
+      end
       else
-        break;
-    '(':  // comment, bracket or compiler directive
-      if (Src[1]='*') then
-        begin
-        if (Src[2]='$') and (not SkipDirectives) then
-          // compiler directive
-          break
-        else
-          begin
-          // comment start -> read til comment end
-          inc(Src,2);
-          CommentLvl:=1;
-          while true do
-            begin
-            case Src^ of
-            #0: break;
-            '(':
-              if NestedComments and (Src[1]='*') then
-                inc(CommentLvl);
-            '*':
-              if (Src[1]=')') then
-                begin
-                dec(CommentLvl);
-                if CommentLvl=0 then
-                  begin
-                  inc(Src,2);
-                  break;
-                  end;
-                inc(Position);
-                end;
-            end;
-            inc(Src);
-            end;
-        end;
-      end else
-        // round bracket open
         break;
     else
       break;
-    end;
-    end;
+    end; // case
+    end; //
   // read token
   TokenStart:=Src;
   c1:=Src^;
@@ -274,7 +245,7 @@ begin
         inc(Src);
       end;
     end;
-  '''','#':  // string constant
+  '"','#':  // string constant
     while true do
       case Src^ of
       #0: break;
@@ -284,7 +255,7 @@ begin
         while Src^ in ['0'..'9'] do
           inc(Src);
         end;
-      '''':
+      '"':
         begin
         inc(Src);
         while not (Src^ in ['''',#0]) do
@@ -311,7 +282,7 @@ begin
       while Src^ in IdentChars do
         inc(Src);
     end;
-  '{':  // compiler directive (it can't be a comment, because see above)
+  '/':  // compiler directive (it can't be a comment, because see above)
     begin
     CommentLvl:=1;
     while true do
@@ -555,11 +526,7 @@ begin
   FIsUnit:=True;
   If (AUnitName='') then
     AUnitName:=ExtractFileUnitName(MainFilename);
-  Add('unit '+aUnitName+';');
-  Add('');
-  Add('interface');
-  Add('');
-  FFileName:=AUnitName+'.pp';
+  FFileName:=Format(rsCShFilename, [AUnitName]);
 end;
 
 procedure TTestParser.StartProgram(AFileName : String; AIn : String = ''; AOut : String = '');
@@ -567,7 +534,7 @@ begin
   FIsUnit:=False;
   If (AFileName='') then
     AFileName:='proga';
-  FFileName:=AFileName+'.pp';
+  FFileName:=Format(rsCShFilename, [AFileName]);
   If (AIn<>'') then
     begin
     AFileName:=AFileName+'('+AIn;
@@ -575,7 +542,6 @@ begin
       AFileName:=AFileName+','+AOut;
     AFileName:=AFileName+')';
     end;
-  Add('program '+AFileName+';');
   FImplementation:=True;
 end;
 
@@ -584,26 +550,18 @@ begin
   FIsUnit:=False;
   If (AFileName='') then
     AFileName:='liba';
-  FFileName:=AFileName+'.pp';
-  Add('library '+AFileName+';');
+  FFileName:=Format(rsCShFilename, [AFileName]);
   FImplementation:=True;
 end;
 
-procedure TTestParser.UsesClause(Units: array of string);
+procedure TTestParser.UsingClause(Namespaces: array of string);
 
 Var
-  S : String;
   I : integer;
 
 begin
-  S:='';
-  For I:=Low(units) to High(units) do
-    begin
-    If (S<>'') then
-        S:=S+', ';
-    S:=S+Units[i];
-    end;
-  Add('uses '+S+';');
+  For I:=Low(Namespaces) to High(Namespaces) do
+    Add(Format(rsUsingNamespace, [Namespaces[i]]));
   Add('');
 end;
 
@@ -611,19 +569,7 @@ procedure TTestParser.StartImplementation;
 begin
   if Not FImplementation then
     begin
-    if UseImplementation then
-      begin
-      FSource.Insert(0,'');
-      FSource.Insert(0,'Implementation');
-      FSource.Insert(0,'');
-      end
-    else
-      begin
-      Add('');
-      Add('Implementation');
-      Add('');
-      end;
-    FImplementation:=True;
+       FImplementation:=True;
     end;
 end;
 
@@ -631,7 +577,7 @@ procedure TTestParser.EndSource;
 begin
   if Not FEndSource then
     begin
-    Add('end.');
+    Add('}');
     FEndSource:=True;
     end;
 end;
