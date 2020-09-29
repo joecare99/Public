@@ -17,7 +17,8 @@
     </General>
     <LazDoc Paths="..\FPDoc"/>
     <i18n>
-      <EnableI18N LFM="False"/>
+      <EnableI18N Value="True" LFM="False"/>
+      <OutDir Value="..\Language"/>
     </i18n>
     <BuildModes Count="4">
       <Item1 Name="Default" Default="True"/>

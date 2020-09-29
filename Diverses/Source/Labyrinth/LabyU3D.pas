@@ -46,6 +46,7 @@ type
 
         EDir: integer;
         Token: char;
+        FDirCount: integer;
 
         constructor Create(ACollection: TCollection; AOrt: T3DPoint); reintroduce;
         destructor Destroy; override;
@@ -88,18 +89,23 @@ type
     TLaby = class(TForm)
         {Form-Elements}
         btnClose: TButton;
-        Button3: TButton;
+        btnDraw: TButton;
+        btnPrint2: TButton;
+        btnPrint3: TButton;
         LabImage: TImage;
+        pnlBottom: TPanel;
         PrintDialog1: TPrintDialog;
         Timer1: TTimer;
         btnOK: TButton;
-        Button1: TButton;
-        Button2: TButton;
+        btnPrint: TButton;
+        btnSave: TButton;
         Label1: TLabel;
         SavePictureDialog1: TSavePictureDialog;
-        Shape1: TShape;
+        shpState: TShape;
         ProgressBar1: TProgressBar;
-        procedure Button3Click(Sender: TObject);
+        procedure btnDrawClick(Sender: TObject);
+        procedure btnPrint2Click(Sender: TObject);
+        procedure btnPrint3Click(Sender: TObject);
         procedure LabImageClick(Sender: TObject);
         function NewPlayer: TLbyPlayer;
         function GetRoom(ZLbyPlayer: TLbyPlayer): TLbyRoomItm;
@@ -108,8 +114,8 @@ type
         procedure Timer1Timer(Sender: TObject);
         procedure btnOKClick(Sender: TObject);
         procedure TermML(Sender: TObject);
-        procedure Button1Click(Sender: TObject);
-        procedure Button2Click(Sender: TObject);
+        procedure btnPrintClick(Sender: TObject);
+        procedure btnSaveClick(Sender: TObject);
         procedure OnProgress(Sender: TObject; Progress: double);
         procedure FormResize(Sender: TObject);
     private
@@ -119,6 +125,9 @@ type
         FPicBitmap: TBitmap;
         Labyfinished: boolean;
 
+        procedure DrawRoom(Sender: TObject; aRoom: TLbyRoom; inDir, outDir: integer);
+        procedure DrawRoom2(Sender: TObject; room: TLbyRoom; inDir,
+          outDir: integer);
         function GetEingang: TLbyRoom;
         function GetRoomIndex(idx: T3DPoint): TArrayOfRooms;
         procedure SaveLabyBitmap(Lfilename: string);
@@ -155,6 +164,8 @@ const
 
 type
     TProgressEvent = procedure(Sender: TObject; ActProgress: double) of object;
+    TRoomCallback = procedure(Sender: TObject; room: TLbyRoom;
+        inDir, outDir: integer) of object;
 
     TStack = class
     private
@@ -211,7 +222,7 @@ type
         ZStack: TStack;
         // FLaby: TLbyRoom;
 
-        dir12: TArrayOF3DPoint;
+        dir27: TArrayOF3DPoint;
 
         FRooms: TCollection;
         FRunMode: boolean;
@@ -230,8 +241,8 @@ type
         property LBpixel[lb: T3DPoint]: boolean read getLBPixel write PutLBPixel;
         function NewRoomWay(Room: TLbyRoom; dir: shortint; flag2: boolean): TLbyRoom;
         procedure InitResultBitmap;
-        function FindNewWay(Point: T3DPoint; dDir: shortint; var dir: shortint;
-            out flag2: boolean; dp: T3DPoint): boolean;
+        function FindNewWay(Point: T3DPoint; dDir: shortint;
+            var dir: shortint; out flag2: boolean; dp: T3DPoint): boolean;
     protected
         property CCount: integer read FCount;
         procedure Execute; override;
@@ -240,7 +251,9 @@ type
         FEingang: TLbyRoom;
         FDebugMode: boolean;
         property OnProgress: TProgressEvent read FOnProgress write FOnProgress;
-        procedure LabyCrawl(Canvas: TCanvas = nil; HighRun: boolean = False);
+        procedure LabyCrawl(Callback: TRoomCallback; Foreward: bool = True;
+            FilterLevel: integer = -1);
+        procedure LabyCrawlV(Canvas: TCanvas = nil; HighRun: boolean = False);
         procedure WriteToStream(const WStream: TStream);
 
         /// <author>Rosewich</author>
@@ -290,8 +303,6 @@ begin
         Result := makelaby.FRoomIndex[idx.x div 4, idx.y div 4, idx.z div 4];
 end;
 
-
-
 procedure TLaby.SaveLabyBitmap(Lfilename: string);
 var
     LImage: TGraphic;
@@ -299,8 +310,8 @@ begin
   {$IFNDEF FPC}
     if uppercase(ExtractFileExt(SavePictureDialog1.Filename)) = '.PNG' then
       begin
-        LImage := TPngImage.CreateBlank(COLOR_GRAYSCALE, 4, makelaby.LabyDBM.Width,
-            makelaby.LabyDBM.Height);
+        LImage := TPngImage.CreateBlank(COLOR_GRAYSCALE, 4,
+            makelaby.LabyDBM.Width, makelaby.LabyDBM.Height);
         TPngImage(LImage).Canvas.CopyRect(TPngImage(LImage).Canvas.ClipRect,
             makelaby.LabyDBM.Canvas, makelaby.LabyDBM.Canvas.ClipRect);
         TPngImage(LImage).SaveToFile(Lfilename);
@@ -330,10 +341,64 @@ begin
     inherited;
 end;
 
-procedure TLaby.Button3Click(Sender: TObject);
+procedure TLaby.btnDrawClick(Sender: TObject);
 begin
-    makelaby.LabyCrawl(nil, True);
-    makelaby.LabyCrawl;
+    makelaby.LabyCrawlV(nil, True);
+    makelaby.LabyCrawlV;
+end;
+
+var
+    pCanvas: TCanvas;
+    cFactX, cFactY: double;
+    DrawShaddow:boolean;
+
+procedure TLaby.btnPrint2Click(Sender: TObject);
+begin
+   {$IFNDEF FPC}
+    print;
+    {$else}
+    if PrintDialog1.Execute then
+       begin
+         printer.Orientation := poLandscape;
+         printer.Title := 'Laby #3 ' + DateToStr(now());
+         Printer.BeginDoc;
+         printer.Canvas.Pen.Color:=clBlack;
+         printer.Canvas.AntialiasingMode:=amOn;
+         pCanvas:=printer.Canvas;
+         cFactX := printer.canvas.cliprect.Width / (makelaby.LabyBM_Width + 1);
+         cFactY := printer.Canvas.cliprect.Height / makelaby.LabyBM_Length;
+         printer.Canvas.Pen.Width:=trunc(0.1 *cFactY)+1;
+         makelaby.LabyCrawl(DrawRoom,False);
+         Printer.EndDoc;
+       end;
+   {$ENDIF}
+end;
+
+procedure TLaby.btnPrint3Click(Sender: TObject);
+begin
+  {$IFNDEF FPC}
+    print;
+    {$else}
+    if PrintDialog1.Execute then
+       begin
+         printer.Orientation := poLandscape;
+         printer.Title := 'Laby #3 ' + DateToStr(now());
+         Printer.BeginDoc;
+         printer.Canvas.Pen.Color:=clBlack;
+         printer.Canvas.AntialiasingMode:=amOn;
+         pCanvas:=printer.Canvas;
+         cFactX := printer.canvas.cliprect.Width / (makelaby.LabyBM_Width + 1);
+         cFactY := printer.Canvas.cliprect.Height / makelaby.LabyBM_Length;
+         printer.Canvas.Pen.Width:=trunc(0.1 *cFactY)+1;
+         DrawShaddow := true;
+         makelaby.LabyCrawl(DrawRoom2,true,-1);
+         DrawShaddow := false;
+         makelaby.LabyCrawl(DrawRoom2,true,2);
+         makelaby.LabyCrawl(DrawRoom2,true,3);
+         makelaby.LabyCrawl(DrawRoom2,true,4);
+         Printer.EndDoc;
+       end;
+   {$ENDIF}
 end;
 
 procedure TLaby.LabImageClick(Sender: TObject);
@@ -455,8 +520,9 @@ begin
                             i := 1;
                             while (flag) and (i <= 12) do
                               begin
-                                tc := pixels[ZpStack.Point.x + (dir3d22[i].x * j) div
-                                    2, ZpStack.Point.y + (dir3d22[i].y * j) div 2];
+                                tc :=
+                                    pixels[ZpStack.Point.x + (dir3d22[i].x * j) div 2,
+                                    ZpStack.Point.y + (dir3d22[i].y * j) div 2];
                                 flag := flag and ((tc = c) or (tc = ocol));
                                 Inc(i);
                               end;
@@ -510,6 +576,7 @@ const
         clred, { One Way }
         clblue, { eingang zu schwarz }
         clblack);
+
 { Innen im weg }
  (*
   Uebergtab: Array [0 .. 5, 0 .. 5] Of byte = ((1, 1, 1, 4, 4, 9),
@@ -523,6 +590,7 @@ const
 
 var
     Lab_width, Lab_Length, i: integer;
+    tp, o: T3DPoint;
 
 begin
 
@@ -555,6 +623,15 @@ begin
         (makelaby.LabyBM_height_ div 2) or 1);
     makelaby.dFact := df;
     makelaby.OnProgress := OnProgress;
+
+    tp := T3DPoint.init(0, 0, 0);
+    o := makelaby.FEingang.Ort;
+    for i := 0 to makelaby.LabyBM_height_ - 1 do
+      begin
+        makelaby.PutLBPixel(tp.Copy(makelaby.LabyBM_Width - 2, o.y, i), True);
+        makelaby.PutLBPixel(tp.Copy(makelaby.LabyBM_Width - 4, o.y, i), True);
+      end;
+    FreeAndNil(tp);
 {$IFDEF debug}
   makelaby.FDebugMode := true;
 {$ENDIF debug}
@@ -611,8 +688,8 @@ procedure TMakeLaby.PutLBPixel(lb: T3DPoint; Value: boolean);
 
 begin
     with lb do
-        if assigned(lb) and (x > 0) and (y > 0) and (z > 0) and (x < LabyBM_Width) and
-            (y < LabyBM_Length) and (z < LabyBM_Height_) then
+        if assigned(lb) and (x > 0) and (y > 0) and (z > 0) and
+            (x < LabyBM_Width) and (y < LabyBM_Length) and (z < LabyBM_Height_) then
             FIndex[x, y, z] := Value;
 {$IFDEF debug}
   If FDebugMode And value and assigned(lb)  Then
@@ -658,10 +735,10 @@ var
 
 begin
     FRunMode := True;
-    path := vararrayof([2, 1, 12, 4, 4, 4, 6, 5, 2, 11, 12, 10, 10, 12,
-        2, 6, 4, 2, 12, 10, 10, 2, 12, 2, 5, 7, 4, 1, 1, 12, 10, 10, 11,
-        12, 2, 6, 5, 4, 3, 1, 11, 10, 12, 2, 6, 4, 2, 12, 10, 10, 2, 4,
-        3, 1, 11, 10, 12, 4, 4, 2, 10, 10, 12, 2,
+    path := vararrayof([2, 1, 12, 4, 4, 4, 6, 5, 2, 11, 12, 10, 10,
+        12, 2, 6, 4, 2, 12, 10, 10, 2, 12, 2, 5, 7, 4, 1, 1, 12, 10,
+        10, 11, 12, 2, 6, 5, 4, 3, 1, 11, 10, 12, 2, 6, 4, 2, 12, 10,
+        10, 2, 4, 3, 1, 11, 10, 12, 4, 4, 2, 10, 10, 12, 2,
         // 12,10,10,2,
         12, 2, 5, 7, 4, 1, 1]);
   (*
@@ -691,7 +768,7 @@ begin
             else if odir = 0 then // neuer Strang
               begin
                 dDir := random(2) * 2;
-                dir := random(high(dir12) + 1);
+                dir := random(high(dir27) + 1);
               end
             else
               begin // Logo
@@ -710,7 +787,7 @@ begin
                 else
                   begin
                     Sdir := odir;
-                    dir := (odir + random(3) + high(dir12) - 2) mod (high(dir12)) + 1;
+                    dir := (odir + random(3) + high(dir27) - 2) mod (high(dir27)) + 1;
                     dDir := random(2) * 2;
                   end;
               end;
@@ -720,11 +797,12 @@ begin
             if FindNewWay(Point, dDir, dir, flag2, dp) then
               begin
                 // zeichne Linie als weg
-                gl := dir12[dir].glen;
+                gl := dir27[dir].glen;
                 if gl > 0 then
                     for i := 0 to gl do
-                        LBpixel[tr.copy(round(dir12[dir].x * i / gl),
-                            round(dir12[dir].y * i / gl), round(dir12[dir].z * i / gl)).add(point)] := True;
+                        LBpixel[tr.copy(round(dir27[dir].x * i / gl),
+                            round(dir27[dir].y * i / gl),
+                            round(dir27[dir].z * i / gl)).add(point)] := True;
                 Inc(FCount);
 
                 // füge Punkt zum Stack hinzu, für weitere Prüfungen
@@ -771,7 +849,6 @@ end;
 function TMakeLaby.FindNewWay(Point: T3DPoint; dDir: shortint;
     var dir: shortint; out flag2: boolean; dp: T3DPoint): boolean;
 var
-    tdir: integer;
     i: Tcolor;
     j: Tcolor;
     tp: T3DPoint;
@@ -780,25 +857,31 @@ begin
     i := 0;
     tp := T3DPoint.init(nil);
     // suche einen Freien Platz um den Punkt
-    while not Result and (i < high(dir12)) do
+    while not Result and (i < high(dir27)) do
       begin
         // Berechne zu testenden Punkt
         dp.copy(Point);
-        dp.Add(dir12[dir]);
+        dp.Add(dir27[dir]);
         j := 0;
         Result := dir > 0;
         // Teste ob Punkt und alle 26 umliegenden Punkte frei sind
         while (j <= high(Dir3D15)) and Result do
           begin
-            if (tp.copy(dir12[dir]).add(Dir3D15[j]).MLen > 1) then
+            if (tp.copy(dir27[dir]).add(Dir3D15[j]).MLen > 1) or (dir27[dir].z <> 0) then
               begin
-                tp.add(point);
+                tp.add(Point);
                 Result := Result and (not LBpixel[tp]);
               end;
             Inc(j);
           end;
+        // spezial
+        tp.copy(dp);
+        tp.z := 6 - tp.z;
+        Result := Result and (not LBpixel[tp]);
+
         if not Result then
-            dir := (dir + dDir + 10) mod 12 + 1 + ((4 - ddir + (ddir - 1) * (i div 12)) mod 3) * 12;
+            dir := (dir + dDir + 10) mod 12 + 1 +
+                ((4 - ddir + (ddir - 1) * (i div 12)) mod 3) * 12;
         i := i + 1;
       end;
     tp.Free;
@@ -831,21 +914,26 @@ var
     end;
 
 begin
-    Result := TLbyRoom.Create(FRooms, T3DPoint.Init(Room.Ort.x + dir12[dir].x,
-        Room.Ort.y + dir12[dir].y, Room.Ort.z + dir12[dir].z));
-    with Result do
+    Result := TLbyRoom.Create(FRooms, T3DPoint.Init(Room.Ort.x +
+        dir27[dir].x, Room.Ort.y + dir27[dir].y, Room.Ort.z + dir27[dir].z));
+    Result.EDir := getInvDir(dir, 22);
+    Result.Gang[Result.EDir] := Room;
+    with Room do
       begin
-        Gang[getInvDir(dir, 22)] := Room;
+        Gang[dir] := Result;
+        Inc(FDirCount);
+        if Token = 'E' then
+            Token := 'G'
+        else
+            Token := 'R';
       end;
-    Room.Gang[dir] := Result;
 
     LabyDBM.Canvas.lock;
-
 
     { zeichne Unterlage }
     if (dFact > 1) then
       begin
-        for Li := 1 to high(dir12) do
+        for Li := 1 to high(dir27) do
             if assigned(Room.Gang[li]) then
               begin
                 LabyDBM.Canvas.pen.Color := clGray;
@@ -857,10 +945,10 @@ begin
                     (Room.Ort.x * dFact),
                     (Room.Ort.y * dFact));
                 LabyDBM.Canvas.LineTo(
-                    ((Room.Ort.x * 2 + dir12[li].x) * dFact) div 2,
-                    ((Room.Ort.y * 2 + dir12[li].y) * dFact) div 2);
+                    ((Room.Ort.x * 2 + dir27[li].x) * dFact) div 2,
+                    ((Room.Ort.y * 2 + dir27[li].y) * dFact) div 2);
               end;
-        for Li := 1 to high(dir12) do
+        for Li := 1 to high(dir27) do
             if assigned(Room.Gang[li]) then
               begin
                 LabyDBM.Canvas.pen.Color := clblack;
@@ -868,15 +956,15 @@ begin
 
                 LabyDBM.Canvas.MoveTo(Room.Ort.x * dFact, Room.Ort.y * dFact);
                 LabyDBM.Canvas.LineTo(
-                    (((Room.Ort.x * 2 + dir12[li].x) * dFact) div 2 + dir12[li].x),
-                    (((Room.Ort.y * 2 + dir12[li].y) * dFact) div 2 + dir12[li].y));
+                    (((Room.Ort.x * 2 + dir27[li].x) * dFact) div 2 + dir27[li].x),
+                    (((Room.Ort.y * 2 + dir27[li].y) * dFact) div 2 + dir27[li].y));
               end;
       end
     else
         for Li := 0 to 3 do
           begin
-            nx := (dir12[dir].x * Li + sgn(dir12[dir].x)) div 3;
-            ny := (dir12[dir].y * Li + sgn(dir12[dir].y)) div 3;
+            nx := (dir27[dir].x * Li + sgn(dir27[dir].x)) div 3;
+            ny := (dir27[dir].y * Li + sgn(dir27[dir].y)) div 3;
             LabyDBM.Canvas.pixels[(Room.Ort.x + nx) * dFact,
                 (Room.Ort.y + ny) * dFact] := clblack;
           end;
@@ -894,22 +982,23 @@ begin
                 Label1.Caption := IntToStr(makelaby.FCount);
                 Labyfinished := False;
                 if makelaby.Suspended then
-                    Shape1.Brush.Color := clyellow
+                    shpState.Brush.Color := clyellow
                 else
-                    Shape1.Brush.Color := cllime;
+                    shpState.Brush.Color := cllime;
                 if assigned(makelaby.LabyDBM) then
                     with LabImage.Picture.Bitmap.Canvas do
                       begin
                         makelaby.LabyDBM.Canvas.lock;
                           try
-                            if (Laby_Length * Laby_Width)>0 then
-                              try
-                                OnProgress(self, makelaby.FCount / (Laby_Length * Laby_Width) * 6);
-                                CopyRect(ClipRect, makelaby.LabyDBM.Canvas,
-                                    makelaby.LabyDBM.Canvas.ClipRect);
-                              except
+                            if (Laby_Length * Laby_Width) > 0 then
+                                  try
+                                    OnProgress(self, makelaby.FCount /
+                                        (Laby_Length * Laby_Width) * 6);
+                                    CopyRect(ClipRect, makelaby.LabyDBM.Canvas,
+                                        makelaby.LabyDBM.Canvas.ClipRect);
+                                  except
 
-                              end;
+                                  end;
                           finally
                             makelaby.LabyDBM.Canvas.unlock;
                           end;
@@ -918,7 +1007,7 @@ begin
               end
         else
           begin
-            Shape1.Brush.Color := clred;
+            shpState.Brush.Color := clred;
             Label1.Caption := IntToStr(makelaby.FCount);
             if assigned(makelaby.LabyDBM) and not Labyfinished then
                 with LabImage.Picture.Bitmap.Canvas do
@@ -927,7 +1016,8 @@ begin
                     makelaby.LabyDBM.Canvas.lock;
                       try
                           try
-                            OnProgress(self, makelaby.FCount / (Laby_Length * Laby_Width) * 6);
+                            OnProgress(self, makelaby.FCount /
+                                (Laby_Length * Laby_Width) * 6);
                             CopyRect(ClipRect, makelaby.LabyDBM.Canvas,
                                 makelaby.LabyDBM.Canvas.ClipRect);
                           except
@@ -980,7 +1070,7 @@ begin
         Suspended := False;
 end;
 
-procedure TLaby.Button1Click(Sender: TObject);
+procedure TLaby.btnPrintClick(Sender: TObject);
 begin
   {$IFDEF FPC}
   if PrintDialog1.Execute then
@@ -994,16 +1084,16 @@ begin
        printer.Canvas.Pen.Width:=2;
 
        printer.Canvas.AntialiasingMode:=amOn;
-       makelaby.LabyCrawl(printer.Canvas,false);
+       makelaby.LabyCrawlV(printer.Canvas,false);
        printer.Canvas.Pen.Color:=clDkGray shr 1;
        printer.Canvas.brush.Color:=clWhite;
-       makelaby.LabyCrawl(printer.Canvas,true);
+       makelaby.LabyCrawlV(printer.Canvas,true);
        Printer.EndDoc;
      end;
   {$ENDIF}
 end;
 
-procedure TLaby.Button2Click(Sender: TObject);
+procedure TLaby.btnSaveClick(Sender: TObject);
 
 var
     Lfilename: string;
@@ -1047,8 +1137,8 @@ begin
     setlength(FIndex, Width, Length, Height);
     setlength(FRoomIndex, Width div 4 + 1, Length div 4 + 1, Height div 4 + 1);
     FRooms := TCollection.Create(TLbyRoom);
-    dir12 := Dir3D22;
-    setlength(dir12, 37);
+    dir27 := Dir3D22;
+    setlength(dir27, 37);
   (*
     With labyBM.canvas Do
     Begin
@@ -1115,6 +1205,8 @@ begin
     for i := 0 to high(FFGIndex) do
         FFGIndex[i] := -1;
     FOrt := AOrt;
+    Token := 'E';
+    FDirCount := 1;
 end;
 
 destructor TLbyRoom.Destroy;
@@ -1158,7 +1250,143 @@ begin
       end;
 end;
 
-procedure TMakeLaby.LabyCrawl(Canvas: TCanvas; HighRun: boolean);
+procedure TMakeLaby.LabyCrawl(Callback: TRoomCallback; Foreward: bool = True;
+    FilterLevel: integer = -1);
+var
+    LRoom: TLbyRoom;
+    LForeward: boolean;
+    LcDir: integer;
+    Lgc: integer;
+    lOutDir: integer;
+    i: integer;
+    lInDir, lTestDir, J: integer;
+    lTick, sTick: QWord;
+
+begin
+    // dies ist ein Laby-Crawler
+    LRoom := FEingang;
+    LForeward := True;
+    LcDir := 1; // (X: +1 Y:+0)
+    lTick := GetTickCount64;
+    if assigned(Callback) then
+        Callback(self, LRoom, 7, 1);
+    repeat
+          begin
+            // Bestimme, Anzahl der Abgänge -> Ende, Gang, Raum
+            Lgc := 0;
+            lOutDir := 0;
+            lInDir := getInvDir(LcDir, 22);
+            for i := 1 to high(dir27) - 1 do
+              begin
+                //                J:=i;
+                J := (i div 3) + (i mod 3) * 12;
+                lTestDir := (J + (lInDir - 1) mod 12) mod high(dir27) + 1;
+                if (lTestDir <> lInDir) and assigned(LRoom.Gang[lTestDir]) then
+                  begin
+                    Inc(Lgc);
+                    if lOutDir = 0 then
+                        lOutDir := lTestDir;
+                  end;
+              end;
+
+            if Lgc = 0 then // Ende
+              begin
+                if (FilterLevel = -1) or (LRoom.Ort.z = FilterLevel) then
+                  begin
+                    { $ifdef debug }
+                    Laby.LabImage.Picture.Bitmap.Canvas.pixels[
+                        LRoom.Ort.x * dFact,
+                        LRoom.Ort.y * dFact] := clred;
+                    // Application.ProcessMessages;
+                    { $endif debug }
+                    if assigned(Callback) then
+                        Callback(self, LRoom, lInDir, lInDir);
+                  end;
+                LcDir := LRoom.EDir;
+                LRoom := LRoom.Gang[LcDir];
+                LForeward := False;
+              end
+            else if Lgc = 1 then // Gang
+              begin
+                if (FilterLevel = -1) or (LRoom.Ort.z = FilterLevel) then
+                  begin
+                    if LForeward then
+                      begin
+                        { $ifdef debug }
+                        case LRoom.Ort.z of
+                            1: Laby.LabImage.Picture.Bitmap.Canvas.pen.Color := clRed;
+                            2: Laby.LabImage.Picture.Bitmap.Canvas.pen.Color := clgreen;
+                            3: Laby.LabImage.Picture.Bitmap.Canvas.pen.Color :=
+                                    RGBToColor(255, 128, 0);
+                            4: Laby.LabImage.Picture.Bitmap.Canvas.pen.Color := cllime;
+                            5: Laby.LabImage.Picture.Bitmap.Canvas.pen.Color := clLtGray;
+                          end;
+                        Laby.LabImage.Picture.Bitmap.Canvas.pen.Width := 1;
+                        Laby.LabImage.Picture.Bitmap.Canvas.MoveTo(
+                            LRoom.Ort.x * dFact,
+                            LRoom.Ort.y * dFact);
+                        Laby.LabImage.Picture.Bitmap.Canvas.LineTo
+                        ((LRoom.Ort.x + dir27[lOutDir].x) * dFact,
+                            (LRoom.Ort.y + dir27[lOutDir].y) * dFact);
+
+                        // Application.ProcessMessages;
+                        { $endif debug }
+                        if assigned(Callback) then
+                            Callback(self, LRoom, lInDir, lOutDir);
+                      end
+                    else
+                    if assigned(Callback) and not Foreward then
+                        Callback(self, LRoom, lInDir, lOutDir);
+                  end;
+                if LForeward then
+                    LcDir := lOutDir
+                else
+                    LcDir := Lroom.EDir;
+                LRoom := LRoom.Gang[LcDir];
+              end
+            else
+              begin
+                if not LForeward then
+                    LForeward := (lOutDir <> LRoom.EDir);
+
+                if (FilterLevel = -1) or (LRoom.Ort.z = FilterLevel) then
+                  begin
+                    { $ifdef debug }
+                    if (LRoom.Ort.x + dir27[lOutDir].x <> LRoom.Gang[lOutDir].Ort.x) or
+                        (LRoom.Ort.y + dir27[lOutDir].y <>
+                        LRoom.Gang[lOutDir].Ort.y) then
+                        Laby.LabImage.Picture.Bitmap.Canvas.pen.Color := clyellow
+                    else
+                        Laby.LabImage.Picture.Bitmap.Canvas.pen.Color := clblue;
+                    Laby.LabImage.Picture.Bitmap.Canvas.pen.Width := 1;
+                    Laby.LabImage.Picture.Bitmap.Canvas.MoveTo(
+                        LRoom.Ort.x * dFact,
+                        LRoom.Ort.y * dFact);
+                    Laby.LabImage.Picture.Bitmap.Canvas.LineTo(
+                        (LRoom.Ort.x + dir27[lOutDir].x) * dFact,
+                        (LRoom.Ort.y + dir27[lOutDir].y) * dFact);
+
+                    if assigned(Callback) and (not Foreward or (lInDir = Lroom.EDir)) then
+                        Callback(self, LRoom, lInDir, lOutDir);
+                  end;
+
+                sTick := GetTickCount64;
+                if sTick - lTick > 100 then
+                  begin
+                    Application.ProcessMessages;
+                    lTick := sTick;
+                  end;
+                { $endif debug }
+
+                LcDir := lOutDir;
+                LRoom := LRoom.Gang[LcDir];
+              end;
+            // Nächster
+          end
+    until (LRoom = FEingang);
+end;
+
+procedure TMakeLaby.LabyCrawlV(Canvas: TCanvas; HighRun: boolean);
 var
     LRoom: TLbyRoom;
     LForeward: boolean;
@@ -1166,7 +1394,6 @@ var
     Lgc: integer;
     LSdir: integer;
     i: integer;
-    cc: integer;
     LTdir: integer;
     cFactX, cFactY: extended;
     lTick, sTick: QWord;
@@ -1179,25 +1406,23 @@ begin
     // dies ist ein Laby-Crawler
     LRoom := FEingang;
     LForeward := True;
-    cc := 0;
     LcDir := 1; // (X: +1 Y:+0)
     lTick := GetTickCount64;
     if assigned(canvas) then
       begin
-        cFactX := canvas.ClipRect.Width / (LabyBM_Width+1);
+        cFactX := canvas.ClipRect.Width / (LabyBM_Width + 1);
         cFactY := canvas.ClipRect.Height / LabyBM_Length;
         PenColor := Canvas.Pen.Color;
         FillColor := Canvas.Brush.Color;
-        BgrColor := Canvas.Pixels[0, 0];
       end;
     repeat
           begin
             // Bestimme, Anzahl der Abgänge -> Ende, Gang, Raum
             Lgc := 0;
             LSdir := 0;
-            for i := 0 to high(dir12) - 2 do
+            for i := 0 to high(dir27) - 2 do
               begin
-                LTdir := (i + getInvDir(LcDir, 22)) mod high(dir12) + 1;
+                LTdir := (i + getInvDir(LcDir, 22)) mod high(dir27) + 1;
                 if assigned(LRoom.Gang[LTdir]) then
                   begin
                     Inc(Lgc);
@@ -1210,8 +1435,8 @@ begin
             if Lgc = 0 then // Ende
               begin
                 { $ifdef debug }
-                if ((HighRun and (LRoom.Ort.z >= 3)) or (not HighRun and
-                    (LRoom.Ort.z <= 3))) then
+                if ((HighRun and (LRoom.Ort.z >= 3)) or
+                    (not HighRun and (LRoom.Ort.z <= 3))) then
                   begin
                     Laby.LabImage.Picture.Bitmap.Canvas.pixels[
                         LRoom.Ort.x * dFact,
@@ -1223,31 +1448,34 @@ begin
                     (not HighRun and (LRoom.Ort.z <= 3))) then
                   begin
                     Canvas.pen.Color := PenColor;
-                    Canvas.pen.Width := trunc((WaySize + 0.2 + ZFact * LRoom.Ort.z) * cFactX);
+                    Canvas.pen.Width :=
+                        trunc((WaySize + 0.2 + ZFact * LRoom.Ort.z) * cFactX);
                     Canvas.MoveTo
-                    (trunc((LRoom.Ort.x + dir12[LTdir].x * 0.5 + ZFact *
-                        (LRoom.Ort.z + dir12[LTdir].z * 0.5)) * cFactX),
-                        trunc((LRoom.Ort.y + dir12[LTdir].y * 0.5 + ZFact *
-                        (LRoom.Ort.z + dir12[LTdir].z * 0.5)) * cFactY));
+                    (trunc((LRoom.Ort.x + dir27[LTdir].x * 0.5 +
+                        ZFact * (LRoom.Ort.z + dir27[LTdir].z * 0.5)) * cFactX),
+                        trunc((LRoom.Ort.y + dir27[LTdir].y * 0.5 +
+                        ZFact * (LRoom.Ort.z + dir27[LTdir].z * 0.5)) * cFactY));
                     Canvas.LineTo
-                    (trunc((LRoom.Ort.x + dir12[LTdir].x * 0.20 + ZFact * LRoom.Ort.z) * cFactX),
-                        trunc((LRoom.Ort.y + dir12[LTdir].y * 0.20 + ZFact * LRoom.Ort.z) * cFactY));
+                    (trunc((LRoom.Ort.x + dir27[LTdir].x * 0.20 +
+                        ZFact * LRoom.Ort.z) * cFactX),
+                        trunc((LRoom.Ort.y + dir27[LTdir].y * 0.20 +
+                        ZFact * LRoom.Ort.z) * cFactY));
 
                     Canvas.pen.Width := trunc((0.1 + ZFact * LRoom.Ort.z) * cFactX);
                     Canvas.pen.Color := PenColor;
-                    Canvas.Ellipse(trunc((LRoom.Ort.x - 0.5 * WaySize) * cFactX), trunc(
-                        (LRoom.Ort.y - 0.5 * WaySize) * cFactY),
-                        trunc((LRoom.Ort.x + 0.5 * WaySize) * cFactX), trunc(
-                        (LRoom.Ort.y + 0.5 * WaySize) * cFactY));
+                    Canvas.Ellipse(trunc((LRoom.Ort.x - 0.5 * WaySize) * cFactX),
+                        trunc((LRoom.Ort.y - 0.5 * WaySize) * cFactY),
+                        trunc((LRoom.Ort.x + 0.5 * WaySize) * cFactX),
+                        trunc((LRoom.Ort.y + 0.5 * WaySize) * cFactY));
 
                     Canvas.pen.Width := trunc(WaySize * cFactX);
                     Canvas.pen.Color := FillColor;
                     Canvas.MoveTo
-                    (trunc((LRoom.Ort.x + dir12[LTdir].x * 0.7) * cFactX),
-                        trunc((LRoom.Ort.y + dir12[LTdir].y * 0.7) * cFactY));
+                    (trunc((LRoom.Ort.x + dir27[LTdir].x * 0.7) * cFactX),
+                        trunc((LRoom.Ort.y + dir27[LTdir].y * 0.7) * cFactY));
                     Canvas.LineTo
-                    (trunc((LRoom.Ort.x + dir12[LTdir].x * 0.10) * cFactX),
-                        trunc((LRoom.Ort.y + dir12[LTdir].y * 0.10) * cFactY));
+                    (trunc((LRoom.Ort.x + dir27[LTdir].x * 0.10) * cFactX),
+                        trunc((LRoom.Ort.y + dir27[LTdir].y * 0.10) * cFactY));
                   end;
                 LcDir := getInvDir(LcDir, 22);
                 LRoom := LRoom.Gang[LcDir];
@@ -1270,8 +1498,8 @@ begin
                             LRoom.Ort.x * dFact,
                             LRoom.Ort.y * dFact);
                         Laby.LabImage.Picture.Bitmap.Canvas.LineTo
-                        ((LRoom.Ort.x + dir12[LSdir].x) * dFact,
-                            (LRoom.Ort.y + dir12[LSdir].y) * dFact);
+                        ((LRoom.Ort.x + dir27[LSdir].x) * dFact,
+                            (LRoom.Ort.y + dir27[LSdir].y) * dFact);
                       end;
                     // Application.ProcessMessages;
                     { $endif debug }
@@ -1279,37 +1507,44 @@ begin
                         (not HighRun and (LRoom.Ort.z <= 3))) then
                       begin
                         Canvas.pen.Color := PenColor;
-                        Canvas.pen.Width := trunc((WaySize + 0.2 + ZFact * LRoom.Ort.z) * cFactX);
+                        Canvas.pen.Width :=
+                            trunc((WaySize + 0.2 + ZFact * LRoom.Ort.z) * cFactX);
                         Canvas.MoveTo
-                        (trunc((LRoom.Ort.x + dir12[LTdir].x * 0.5 + ZFact *
-                            (LRoom.Ort.z + dir12[LTdir].z * 0.5)) * cFactX),
-                            trunc((LRoom.Ort.y + dir12[LTdir].y * 0.5 + ZFact *
-                            (LRoom.Ort.z + dir12[LTdir].z * 0.5)) * cFactY));
+                        (trunc((LRoom.Ort.x + dir27[LTdir].x * 0.5 +
+                            ZFact * (LRoom.Ort.z + dir27[LTdir].z * 0.5)) * cFactX),
+                            trunc(
+                            (LRoom.Ort.y + dir27[LTdir].y * 0.5 + ZFact *
+                            (LRoom.Ort.z + dir27[LTdir].z * 0.5)) * cFactY));
                         Canvas.LineTo
-                        (trunc((LRoom.Ort.x + dir12[LTdir].x * 0.25 + ZFact * LRoom.Ort.z) * cFactX),
-                            trunc((LRoom.Ort.y + dir12[LTdir].y * 0.25 + ZFact * LRoom.Ort.z) * cFactY));
+                        (trunc(
+                            (LRoom.Ort.x + dir27[LTdir].x * 0.25 + ZFact * LRoom.Ort.z) * cFactX),
+                            trunc(
+                            (LRoom.Ort.y + dir27[LTdir].y * 0.25 + ZFact * LRoom.Ort.z) * cFactY));
                         Canvas.LineTo
-                        (trunc((LRoom.Ort.x + dir12[LSdir].x * 0.25 + ZFact * LRoom.Ort.z) * cFactX),
-                            trunc((LRoom.Ort.y + dir12[LSdir].y * 0.25 + ZFact * LRoom.Ort.z) * cFactY));
+                        (trunc(
+                            (LRoom.Ort.x + dir27[LSdir].x * 0.25 + ZFact * LRoom.Ort.z) * cFactX),
+                            trunc(
+                            (LRoom.Ort.y + dir27[LSdir].y * 0.25 + ZFact * LRoom.Ort.z) * cFactY));
                         Canvas.LineTo
-                        (trunc((LRoom.Ort.x + dir12[LSdir].x * 0.5 + ZFact *
-                            (LRoom.Ort.z + dir12[LSdir].z * 0.5)) * cFactX),
-                            trunc((LRoom.Ort.y + dir12[LSdir].y * 0.5 + ZFact *
-                            (LRoom.Ort.z + dir12[LSdir].z * 0.5)) * cFactY));
+                        (trunc((LRoom.Ort.x + dir27[LSdir].x * 0.5 +
+                            ZFact * (LRoom.Ort.z + dir27[LSdir].z * 0.5)) * cFactX),
+                            trunc(
+                            (LRoom.Ort.y + dir27[LSdir].y * 0.5 + ZFact *
+                            (LRoom.Ort.z + dir27[LSdir].z * 0.5)) * cFactY));
                         Canvas.pen.Width := trunc(WaySize * cFactX);
                         Canvas.pen.Color := FillColor;
                         Canvas.MoveTo
-                        (trunc((LRoom.Ort.x + dir12[LTdir].x * 0.7) * cFactX),
-                            trunc((LRoom.Ort.y + dir12[LTdir].y * 0.7) * cFactY));
+                        (trunc((LRoom.Ort.x + dir27[LTdir].x * 0.7) * cFactX),
+                            trunc((LRoom.Ort.y + dir27[LTdir].y * 0.7) * cFactY));
                         Canvas.LineTo
-                        (trunc((LRoom.Ort.x + dir12[LTdir].x * 0.25) * cFactX),
-                            trunc((LRoom.Ort.y + dir12[LTdir].y * 0.25) * cFactY));
+                        (trunc((LRoom.Ort.x + dir27[LTdir].x * 0.25) * cFactX),
+                            trunc((LRoom.Ort.y + dir27[LTdir].y * 0.25) * cFactY));
                         Canvas.LineTo
-                        (trunc((LRoom.Ort.x + dir12[LSdir].x * 0.25) * cFactX),
-                            trunc((LRoom.Ort.y + dir12[LSdir].y * 0.25) * cFactY));
+                        (trunc((LRoom.Ort.x + dir27[LSdir].x * 0.25) * cFactX),
+                            trunc((LRoom.Ort.y + dir27[LSdir].y * 0.25) * cFactY));
                         Canvas.LineTo
-                        (trunc((LRoom.Ort.x + dir12[LSdir].x * 0.7) * cFactX),
-                            trunc((LRoom.Ort.y + dir12[LSdir].y * 0.7) * cFactY));
+                        (trunc((LRoom.Ort.x + dir27[LSdir].x * 0.7) * cFactX),
+                            trunc((LRoom.Ort.y + dir27[LSdir].y * 0.7) * cFactY));
                       end;
                   end;
                 LcDir := LSdir;
@@ -1330,8 +1565,8 @@ begin
                     (not HighRun and (LRoom.Ort.z <= 3))) then
                   begin
 
-                    if (LRoom.Ort.x + dir12[LSdir].x <> LRoom.Gang[LSdir].Ort.x) or
-                        (LRoom.Ort.y + dir12[LSdir].y <> LRoom.Gang[LSdir].Ort.y) then
+                    if (LRoom.Ort.x + dir27[LSdir].x <> LRoom.Gang[LSdir].Ort.x) or
+                        (LRoom.Ort.y + dir27[LSdir].y <> LRoom.Gang[LSdir].Ort.y) then
                         Laby.LabImage.Picture.Bitmap.Canvas.pen.Color := clyellow
                     else
                         Laby.LabImage.Picture.Bitmap.Canvas.pen.Color := clblue;
@@ -1340,55 +1575,60 @@ begin
                         LRoom.Ort.x * dFact,
                         LRoom.Ort.y * dFact);
                     Laby.LabImage.Picture.Bitmap.Canvas.LineTo(
-                        (LRoom.Ort.x + dir12[LSdir].x) * dFact,
-                        (LRoom.Ort.y + dir12[LSdir].y) * dFact);
+                        (LRoom.Ort.x + dir27[LSdir].x) * dFact,
+                        (LRoom.Ort.y + dir27[LSdir].y) * dFact);
                   end;
                 if assigned(Canvas) and ((HighRun and (LRoom.Ort.z >= 3)) or
                     (not HighRun and (LRoom.Ort.z <= 3))) then
                   begin
                     Canvas.pen.Color := PenColor;
-                    Canvas.pen.Width := trunc((WaySize + 0.2 + ZFact * LRoom.Ort.z) * cFactX);
+                    Canvas.pen.Width :=
+                        trunc((WaySize + 0.2 + ZFact * LRoom.Ort.z) * cFactX);
                     Canvas.MoveTo
-                    (trunc((LRoom.Ort.x + dir12[LTdir].x * 0.5 + ZFact *
-                        (LRoom.Ort.z + dir12[LTdir].z * 0.5)) * cFactX),
-                        trunc((LRoom.Ort.y + dir12[LTdir].y * 0.5 + ZFact *
-                        (LRoom.Ort.z + dir12[LTdir].z * 0.5)) * cFactY));
+                    (trunc((LRoom.Ort.x + dir27[LTdir].x * 0.5 +
+                        ZFact * (LRoom.Ort.z + dir27[LTdir].z * 0.5)) * cFactX),
+                        trunc((LRoom.Ort.y + dir27[LTdir].y * 0.5 +
+                        ZFact * (LRoom.Ort.z + dir27[LTdir].z * 0.5)) * cFactY));
                     Canvas.LineTo
-                    (trunc((LRoom.Ort.x + dir12[LTdir].x * 0.25 + ZFact * LRoom.Ort.z) * cFactX),
-                        trunc((LRoom.Ort.y + dir12[LTdir].y * 0.25 + ZFact * LRoom.Ort.z) * cFactY));
+                    (trunc((LRoom.Ort.x + dir27[LTdir].x * 0.25 +
+                        ZFact * LRoom.Ort.z) * cFactX),
+                        trunc((LRoom.Ort.y + dir27[LTdir].y * 0.25 +
+                        ZFact * LRoom.Ort.z) * cFactY));
                     Canvas.LineTo
-                    (trunc((LRoom.Ort.x + dir12[LSdir].x * 0.25 + ZFact * LRoom.Ort.z) * cFactX),
-                        trunc((LRoom.Ort.y + dir12[LSdir].y * 0.25 + ZFact * LRoom.Ort.z) * cFactY));
+                    (trunc((LRoom.Ort.x + dir27[LSdir].x * 0.25 +
+                        ZFact * LRoom.Ort.z) * cFactX),
+                        trunc((LRoom.Ort.y + dir27[LSdir].y * 0.25 +
+                        ZFact * LRoom.Ort.z) * cFactY));
                     Canvas.LineTo
-                    (trunc((LRoom.Ort.x + dir12[LSdir].x * 0.5 + ZFact *
-                        (LRoom.Ort.z + dir12[LSdir].z * 0.5)) * cFactX),
-                        trunc((LRoom.Ort.y + dir12[LSdir].y * 0.5 + ZFact *
-                        (LRoom.Ort.z + dir12[LSdir].z * 0.5)) * cFactY));
+                    (trunc((LRoom.Ort.x + dir27[LSdir].x * 0.5 +
+                        ZFact * (LRoom.Ort.z + dir27[LSdir].z * 0.5)) * cFactX),
+                        trunc((LRoom.Ort.y + dir27[LSdir].y * 0.5 +
+                        ZFact * (LRoom.Ort.z + dir27[LSdir].z * 0.5)) * cFactY));
 
                     Canvas.pen.Width := trunc(WaySize * cFactX);
                     Canvas.pen.Color := FillColor;
                     Canvas.MoveTo
-                    (trunc((LRoom.Ort.x + dir12[LTdir].x * 0.7) * cFactX),
-                        trunc((LRoom.Ort.y + dir12[LTdir].y * 0.7) * cFactY));
+                    (trunc((LRoom.Ort.x + dir27[LTdir].x * 0.7) * cFactX),
+                        trunc((LRoom.Ort.y + dir27[LTdir].y * 0.7) * cFactY));
                     Canvas.LineTo
-                    (trunc((LRoom.Ort.x + dir12[LTdir].x * 0.25) * cFactX),
-                        trunc((LRoom.Ort.y + dir12[LTdir].y * 0.25) * cFactY));
+                    (trunc((LRoom.Ort.x + dir27[LTdir].x * 0.25) * cFactX),
+                        trunc((LRoom.Ort.y + dir27[LTdir].y * 0.25) * cFactY));
                     Canvas.LineTo
-                    (trunc((LRoom.Ort.x + dir12[LSdir].x * 0.25) * cFactX),
-                        trunc((LRoom.Ort.y + dir12[LSdir].y * 0.25) * cFactY));
+                    (trunc((LRoom.Ort.x + dir27[LSdir].x * 0.25) * cFactX),
+                        trunc((LRoom.Ort.y + dir27[LSdir].y * 0.25) * cFactY));
                     Canvas.LineTo
-                    (trunc((LRoom.Ort.x + dir12[LSdir].x * 0.7) * cFactX),
-                        trunc((LRoom.Ort.y + dir12[LSdir].y * 0.7) * cFactY));
+                    (trunc((LRoom.Ort.x + dir27[LSdir].x * 0.7) * cFactX),
+                        trunc((LRoom.Ort.y + dir27[LSdir].y * 0.7) * cFactY));
                     Canvas.LineTo
                     (trunc((LRoom.Ort.x) * cFactX),
                         trunc((LRoom.Ort.y) * cFactY));
                     Canvas.LineTo
-                    (trunc((LRoom.Ort.x + dir12[LTdir].x * 0.7) * cFactX),
-                        trunc((LRoom.Ort.y + dir12[LTdir].y * 0.7) * cFactY));
-                    Canvas.Ellipse(trunc((LRoom.Ort.x - 0.5 * WaySize) * cFactX), trunc(
-                        (LRoom.Ort.y - 0.5 * WaySize) * cFactY),
-                        trunc((LRoom.Ort.x + 0.5 * WaySize) * cFactX), trunc(
-                        (LRoom.Ort.y + 0.5 * WaySize) * cFactY));
+                    (trunc((LRoom.Ort.x + dir27[LTdir].x * 0.7) * cFactX),
+                        trunc((LRoom.Ort.y + dir27[LTdir].y * 0.7) * cFactY));
+                    Canvas.Ellipse(trunc((LRoom.Ort.x - 0.5 * WaySize) * cFactX),
+                        trunc((LRoom.Ort.y - 0.5 * WaySize) * cFactY),
+                        trunc((LRoom.Ort.x + 0.5 * WaySize) * cFactX),
+                        trunc((LRoom.Ort.y + 0.5 * WaySize) * cFactY));
                   end;
 
                 sTick := GetTickCount64;
@@ -1405,7 +1645,8 @@ begin
             // Nächster
           end
     until (LRoom = FEingang);
-   if Assigned(Canvas) then Canvas.pen.Color:=PenColor;
+    if Assigned(Canvas) then
+        Canvas.pen.Color := PenColor;
 end;
 
 procedure TMakeLaby.WriteToStream(const WStream: TStream);
@@ -1441,8 +1682,8 @@ begin
       end
     else
       begin
-        st := IntToStr(LabyBM_Width) + ',' + IntToStr(LabyBM_Length) + ',' +
-            IntToStr(LabyBM_Height_) + #13;
+        st := IntToStr(LabyBM_Width) + ',' + IntToStr(LabyBM_Length) +
+            ',' + IntToStr(LabyBM_Height_) + #13;
         WStream.Write(st[1], length(st));
       end;
     // 3. Startpunkt
@@ -1458,7 +1699,8 @@ begin
       end
     else
       begin
-        st := IntToStr(LRoom.Ort.x) + ',' + IntToStr(LRoom.Ort.y) + ',' + IntToStr(LRoom.Ort.z) + #13;
+        st := IntToStr(LRoom.Ort.x) + ',' + IntToStr(LRoom.Ort.y) +
+            ',' + IntToStr(LRoom.Ort.z) + #13;
         WStream.Write(st[1], length(st));
       end;
 
@@ -1470,9 +1712,9 @@ begin
           begin
             Lgc := 0;
             LSdir := 0;
-            for i := 0 to high(dir12) - 2 do
+            for i := 0 to high(dir27) - 2 do
               begin
-                LTdir := (i + getInvDir(LcDir, 22)) mod high(dir12) + 1;
+                LTdir := (i + getInvDir(LcDir, 22)) mod high(dir27) + 1;
                 if assigned(LRoom.Gang[LTdir]) then
                   begin
                     Inc(Lgc);
@@ -1507,8 +1749,8 @@ begin
                     Laby.LabImage.Picture.Bitmap.Canvas.MoveTo(LRoom.Ort.x div CMult,
                         LRoom.Ort.y div CMult);
                     Laby.LabImage.Picture.Bitmap.Canvas.LineTo
-                    ((LRoom.Ort.x + dir12[LSdir].x) div CMult,
-                        (LRoom.Ort.y + dir12[LSdir].y) div CMult);
+                    ((LRoom.Ort.x + dir27[LSdir].x) div CMult,
+                        (LRoom.Ort.y + dir27[LSdir].y) div CMult);
                     // Application.ProcessMessages;
                     { $endif debug }
                   end;
@@ -1530,8 +1772,8 @@ begin
                     LForeward := (LSdir <> LRoom.EDir);
                   end;
                 { $ifdef debug }
-                if (LRoom.Ort.x + dir12[LSdir].x <> LRoom.Gang[LSdir].Ort.x) or
-                    (LRoom.Ort.y + dir12[LSdir].y <> LRoom.Gang[LSdir].Ort.y) then
+                if (LRoom.Ort.x + dir27[LSdir].x <> LRoom.Gang[LSdir].Ort.x) or
+                    (LRoom.Ort.y + dir27[LSdir].y <> LRoom.Gang[LSdir].Ort.y) then
                     Laby.LabImage.Picture.Bitmap.Canvas.pen.Color := clyellow
                 else
                     Laby.LabImage.Picture.Bitmap.Canvas.pen.Color := clblue;
@@ -1539,8 +1781,8 @@ begin
                 Laby.LabImage.Picture.Bitmap.Canvas.MoveTo(LRoom.Ort.x div CMult,
                     LRoom.Ort.y div CMult);
                 Laby.LabImage.Picture.Bitmap.Canvas.LineTo(
-                    (LRoom.Ort.x + dir12[LSdir].x) div CMult,
-                    (LRoom.Ort.y + dir12[LSdir].y) div CMult);
+                    (LRoom.Ort.x + dir27[LSdir].x) div CMult,
+                    (LRoom.Ort.y + dir27[LSdir].y) div CMult);
                 cc := cc mod 100 + 1;
                 if cc = 1 then
                     Application.ProcessMessages;
@@ -1573,9 +1815,10 @@ type
 
     begin
         Result := TRoom.Create(FRooms, T3DPoint.Init(
-            Lr.Ort.x + dir12[LcDir].x, Lr.Ort.y + dir12[LcDir].y,
-            Lr.Ort.z + dir12[LcDir].z));
+            Lr.Ort.x + dir27[LcDir].x, Lr.Ort.y + dir27[LcDir].y,
+            Lr.Ort.z + dir27[LcDir].z));
         Lr.Gang[LcDir] := Result;
+        Inc(Lr.FdirCount);
         with Result do
           begin
             EDir := getinvdir(LcDir, 22);
@@ -1630,10 +1873,10 @@ begin
     // dies ist ein Laby-Crawler zum speichern des Labyrinth
     // 1. Kennung
     // Rstream.Seek(0,0);
-    if high(dir12) = -1 then
+    if high(dir27) = -1 then
       begin
-        dir12 := Dir3D22;
-        setlength(dir12, 37);
+        dir27 := Dir3D22;
+        setlength(dir27, 37);
       end;
     if assigned(FRooms) then
         FRooms.Clear
@@ -1662,7 +1905,8 @@ begin
                         i := 0;
                         RStream.Read(LToken, 1);
                         repeat
-                            if (Ltoken = '-') or ((Ltoken >= '0') and (LToken <= '9')) then
+                            if (Ltoken = '-') or ((Ltoken >= '0') and
+                                (LToken <= '9')) then
                                 st := st + Ltoken
                             else
                             if TryStrToInt(st, LabyBM_Height_) then
@@ -1691,7 +1935,7 @@ begin
                     setlength(FRoomIndex, LabyBM_Width div 4 + 1,
                         LabyBM_Length div 4 + 1,
                         LabyBM_Height_ div 4 + 1);
-                   InitResultBitmap;
+                    InitResultBitmap;
             (*
               LabyBM.height:=LabyBM_Height;
               LabyBM.width:=LabyBM_Width;
@@ -1712,7 +1956,8 @@ begin
                         i := 0;
                         RStream.Read(LToken, 1);
                         repeat
-                            if (Ltoken = '-') or ((Ltoken >= '0') and (LToken <= '9')) then
+                            if (Ltoken = '-') or ((Ltoken >= '0') and
+                                (LToken <= '9')) then
                                 st := st + Ltoken
                             else
                             if TryStrToInt(st, lz) then
@@ -1941,6 +2186,136 @@ begin
         Result := makelaby.FEingang
     else
         Result := nil;
+end;
+
+
+procedure TLaby.DrawRoom(Sender: TObject; aRoom: TLbyRoom; inDir, outDir: integer);
+
+var
+    pInVect, pOutVect: T3DPoint;
+    i: integer;
+    bNear: boolean;
+    GWidth: double;
+
+const
+    GWidtho = 0.20;
+begin
+    if assigned(pCanvas) then
+      begin
+        pInVect := Dir3D22[inDir];
+        pOutVect := Dir3D22[outDir];
+
+        bNear := (outdir - inDir + 12) mod 12 < 2;
+
+        GWidth := GWidtho;
+        pCanvas.MoveTo
+        (trunc((aRoom.Ort.x + 0.5 * pInVect.x - GWidth * pInVect.y) * cFactX),
+            trunc((aRoom.Ort.y + 0.5 * pInVect.y + GWidth * pInVect.x) * cFactY));
+        if bNear then
+            pCanvas.LineTo
+            (trunc((aRoom.Ort.x + 0.4 * pInVect.x - GWidth * pInVect.y) * cFactX),
+                trunc((aRoom.Ort.y + 0.4 * pInVect.y + GWidth * pInVect.x) * cFactY))
+        else
+            pCanvas.LineTo
+            (trunc((aRoom.Ort.x + 0.25 * pInVect.x - GWidth * pInVect.y) * cFactX),
+                trunc((aRoom.Ort.y + 0.25 * pInVect.y + GWidth * pInVect.x) * cFactY));
+        if aRoom.Token = 'E' then
+            for i := indir + 1 to indir + 7 do
+              begin
+                pInVect := Dir3D22[(i - 1) mod 12 + 1];
+                pCanvas.LineTo
+                (trunc((aRoom.Ort.x + GWidth * (0.8 * pInVect.x - pInVect.y)) * cFactX),
+                    trunc((aRoom.Ort.y + GWidth * (0.8 * pInVect.y + pInVect.x)) * cFactY));
+              end;
+        if (outdir - inDir + 12) mod 12 > 8 then
+            pCanvas.LineTo
+            (trunc((aRoom.Ort.x + Gwidth * 0.5 * (-pInVect.y + poutVect.y)) * cFactX),
+                trunc((aRoom.Ort.y + Gwidth * 0.5 * (pInVect.x - poutVect.x)) * cFactY));
+
+        if bNear then
+            pCanvas.LineTo
+            (trunc((aRoom.Ort.x + 0.4 * pOutVect.x + GWidth * poutVect.y) * cFactX),
+                trunc((aRoom.Ort.y + 0.4 * pOutVect.y - GWidth * poutVect.x) * cFactY))
+        else
+            pCanvas.LineTo
+            (trunc((aRoom.Ort.x + 0.25 * pOutVect.x + GWidth * poutVect.y) * cFactX),
+                trunc((aRoom.Ort.y + 0.25 * pOutVect.y - GWidth * poutVect.x) * cFactY));
+        pCanvas.LineTo
+        (trunc((aRoom.Ort.x + 0.5 * pOutVect.x + GWidth * poutVect.y) * cFactX),
+            trunc((aRoom.Ort.y + 0.5 * pOutVect.y - GWidth * poutVect.x) * cFactY));
+      end;
+end;
+
+procedure TLaby.DrawRoom2(Sender: TObject; room: TLbyRoom; inDir,
+  outDir: integer);
+
+var pInVect:T3DPoint;
+  i, j: Integer;
+
+function DrawPoint(Ort,v:T3dpoint;vf,zf:single):Tpoint;inline;
+
+var xx,yy,zz :double;
+begin
+    xx := Ort.x + vf * v.x;
+    yy := Ort.y + vf * v.y;
+    zz := Ort.z + vf * v.z-2.0;
+    result := point(trunc((xx + zz * zf) * cFactX),
+                    trunc((yy + zz * zf) * cFactY));
+end;
+
+const PenWidth = 0.4;
+begin
+    if assigned(pCanvas) then
+      begin
+        if DrawShaddow then
+          begin
+        // Zeichne Schatten
+        pCanvas.pen.Mode:=pmCopy;
+        for j := 5 downto 0 do
+          begin
+        pCanvas.pen.width:=trunc((PenWidth-0.15 +j*0.05)*cFactY)+2;
+        pCanvas.pen.color :=RGB(j*40,j*40,j*40);
+        for i := 0 to high(room.FFGIndex) do
+          if room.FFGIndex[i] >=0 then
+          begin
+            pInVect := Dir3D22[i];
+            pCanvas.line(DrawPoint(room.Ort,Dir3D22[0],0.5,0.1),DrawPoint(room.Ort,pInvect,0.5+(5-j)*0.025,0.1));
+        end;
+          end;
+        end else begin
+        // Zeichne Umriss
+        pCanvas.pen.color :=clBlack;
+        pCanvas.pen.width:=trunc(PenWidth*cFactY)+3;
+        pCanvas.pen.Mode:=pmCopy;
+        for i := 0 to high(room.FFgindex) do
+          if room.FFGIndex[i] >=0 then
+          begin
+            pInVect := Dir3D22[i];
+            pCanvas.Line(DrawPoint(room.Ort,Dir3D22[0],0.5,-0.2),DrawPoint(room.Ort,pInvect,0.5,-0.2));
+        end;
+
+        // Zeichne Weg1
+        pCanvas.pen.width:=trunc(PenWidth*cFactY);
+        pCanvas.pen.Mode:=pmCopy;
+
+        pCanvas.pen.color :=RGBToColor(room.Ort.z*55,room.Ort.z*55,room.Ort.z*55);
+        for i := 0 to high(room.FFGIndex) do
+          if room.FFGIndex[i] >=0 then
+          begin
+            pInVect := Dir3D22[i];
+            pCanvas.Line(DrawPoint(room.Ort,Dir3D22[0],0.5,-0.2),DrawPoint(room.Ort,pInvect,0.25,-0.2));
+        end;
+
+        for i := 0 to high(room.FFGIndex) do
+          if room.FFGIndex[i] >=0 then
+          try
+            pInVect := Dir3D22[i];
+            pCanvas.pen.color :=RGBToColor(room.Ort.z*55+pInvect.z*20,room.Ort.z*55+pInvect.z*20,room.Ort.z*55+pInvect.z*20);
+            pCanvas.Line(DrawPoint(room.Ort,pInvect,0.25,-0.2),DrawPoint(room.Ort,pInvect,0.55,-0.2));
+          except
+          end;
+        end;
+      end;
 end;
 
 procedure TLaby.OnProgress(Sender: TObject; Progress: double);

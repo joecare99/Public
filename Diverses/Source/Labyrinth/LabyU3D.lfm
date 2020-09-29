@@ -1,8 +1,9 @@
 object Laby: TLaby
-  Left = 760
+  Left = 419
   Height = 531
-  Top = 254
+  Top = 78
   Width = 654
+  ActiveControl = btnClose
   Align = alCustom
   Caption = 'Laby'
   ClientHeight = 531
@@ -19,7 +20,7 @@ object Laby: TLaby
     Hint = 'Ayala Gilad'
     Top = 8
     Width = 638
-    Anchors = [akTop, akLeft, akRight, akBottom]
+    Anchors = [akLeft, akRight, akBottom]
     Center = True
     OnClick = LabImageClick
     Proportional = True
@@ -48,18 +49,17 @@ object Laby: TLaby
   end
   object pnlBottom: TPanel
     Left = 0
-    Height = 27
+    Height = 35
     Top = 488
-    Width = 654
+    Width = 655
     Anchors = [akLeft, akRight, akBottom]
     BevelOuter = bvLowered
-    Caption = 'pnlBottom'
-    ClientHeight = 27
-    ClientWidth = 654
+    ClientHeight = 35
+    ClientWidth = 655
     TabOrder = 1
     object btnOK: TButton
       Left = 4
-      Height = 19
+      Height = 27
       Top = 4
       Width = 121
       Align = alLeft
@@ -71,7 +71,7 @@ object Laby: TLaby
     end
     object btnClose: TButton
       Left = 128
-      Height = 19
+      Height = 27
       Top = 4
       Width = 114
       Align = alLeft
@@ -81,9 +81,9 @@ object Laby: TLaby
       OnClick = btnCloseClick
       TabOrder = 1
     end
-    object Shape1: TShape
-      Left = 624
-      Height = 19
+    object shpState: TShape
+      Left = 625
+      Height = 27
       Top = 4
       Width = 26
       Align = alRight
@@ -92,45 +92,21 @@ object Laby: TLaby
       Brush.Color = clYellow
       Shape = stRoundRect
     end
-    object btnSave: TButton
-      Left = 546
-      Height = 19
-      Top = 4
-      Width = 75
-      Align = alRight
-      Anchors = [akRight, akBottom]
-      BorderSpacing.Around = 3
-      Caption = 'Save'
-      OnClick = btnSaveClick
-      TabOrder = 2
-    end
-    object btnPrint2: TButton
-      Left = 468
-      Height = 19
-      Top = 4
-      Width = 75
-      Align = alRight
-      Anchors = [akRight, akBottom]
-      BorderSpacing.Around = 3
-      Caption = 'Print2'
-      OnClick = btnPrint2Click
-      TabOrder = 3
-    end
-    object btnPrint1: TButton
-      Left = 390
-      Height = 19
+    object btnPrint: TButton
+      Left = 370
+      Height = 27
       Top = 4
       Width = 75
       Align = alRight
       Anchors = [akRight, akBottom]
       BorderSpacing.Around = 3
       Caption = 'Print'
-      OnClick = btnPrint1Click
-      TabOrder = 4
+      OnClick = btnPrintClick
+      TabOrder = 2
     end
     object btnDraw: TButton
-      Left = 312
-      Height = 19
+      Left = 292
+      Height = 27
       Top = 4
       Width = 75
       Align = alRight
@@ -138,7 +114,43 @@ object Laby: TLaby
       BorderSpacing.Around = 3
       Caption = 'Draw'
       OnClick = btnDrawClick
+      TabOrder = 3
+    end
+    object btnSave: TButton
+      Left = 547
+      Height = 27
+      Top = 4
+      Width = 75
+      Align = alRight
+      Anchors = [akRight, akBottom]
+      BorderSpacing.Around = 3
+      Caption = 'Save'
+      OnClick = btnSaveClick
+      TabOrder = 4
+    end
+    object btnPrint2: TButton
+      Left = 448
+      Height = 27
+      Top = 4
+      Width = 50
+      Align = alRight
+      Anchors = [akRight, akBottom]
+      BorderSpacing.Around = 3
+      Caption = 'Print 2'
+      OnClick = btnPrint2Click
       TabOrder = 5
+    end
+    object btnPrint3: TButton
+      Left = 501
+      Height = 27
+      Top = 4
+      Width = 43
+      Align = alRight
+      Anchors = [akRight, akBottom]
+      BorderSpacing.Around = 3
+      Caption = 'Print 3'
+      OnClick = btnPrint3Click
+      TabOrder = 6
     end
   end
   object Timer1: TTimer
@@ -152,7 +164,7 @@ object Laby: TLaby
     Top = 16
   end
   object PrintDialog1: TPrintDialog
-    Left = 41
-    Top = 76
+    Left = 24
+    Top = 64
   end
 end

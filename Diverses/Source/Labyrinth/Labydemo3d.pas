@@ -3,7 +3,7 @@ Unit Labydemo3d;
 {$IFDEF FPC}
   {$MODE Delphi}
 {$ENDIF}
-
+{$WARN 6058 off : Call to subroutine "$1" marked as inline is not inlined}
 Interface
 
 Uses
