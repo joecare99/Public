@@ -39,6 +39,9 @@ type
     procedure TestMiniTest2;
     procedure TestMiniTest3;
     procedure TestMiniTest4;
+    procedure TestMiniTest5;
+    procedure TestMiniTest6;
+    procedure TestMiniTest7;
     procedure TestCreateUnit;
   public
     Constructor Create; override;
@@ -134,10 +137,9 @@ var
 const Filename='tra_FormPrincipal.pas';
 
 begin
+    // Here we expect an exception
     M := ParseSource(E,[FDataPath+DirectorySeparator+ Filename], 'linux', 'i386',[]);
 
-    { Cool, we successfully parsed the module.
-      Now output some info about it. }
     FreeAndNil(M);
 end;
 
@@ -149,8 +151,6 @@ const Filename='Minitest.lpr';
 begin
     M := ParseSource(E,[FDataPath+DirectorySeparator+ Filename], 'linux', 'i386',[]);
 
-    { Cool, we successfully parsed the module.
-      Now output some info about it. }
       WritePasFile(M,FDataPath+DirectorySeparator+extractFilename(M.Name)+'_.lpr');
 
       FreeAndNil(M);
@@ -164,8 +164,6 @@ const Filename='Minitest2.lpr';
 begin
     M := ParseSource(E,[FDataPath+DirectorySeparator+ Filename], 'linux', 'i386',[]);
 
-    { Cool, we successfully parsed the module.
-      Now output some info about it. }
       WritePasFile(M,FDataPath+DirectorySeparator+extractFilename(M.Name)+'_.lpr');
 
       FreeAndNil(M);
@@ -179,8 +177,6 @@ const Filename='Minitest3.lpr';
 begin
     M := ParseSource(E,[FDataPath+DirectorySeparator+ Filename], 'linux', 'i386',[]);
 
-    { Cool, we successfully parsed the module.
-      Now output some info about it. }
       WritePasFile(M,FDataPath+DirectorySeparator+extractFilename(M.Name)+'_.lpr');
 
       FreeAndNil(M);
@@ -194,8 +190,45 @@ const Filename='Minitest4.lpr';
 begin
     M := ParseSource(E,[FDataPath+DirectorySeparator+ Filename], 'linux', 'i386',[]);
 
-    { Cool, we successfully parsed the module.
-      Now output some info about it. }
+      WritePasFile(M,FDataPath+DirectorySeparator+extractFilename(M.Name)+'_.lpr');
+
+      FreeAndNil(M);
+end;
+
+procedure TTestPassRc.TestMiniTest5;
+var
+  M: TPasModule;
+const Filename='Minitest5.lpr';
+
+begin
+    M := ParseSource(E,[FDataPath+DirectorySeparator+ Filename], 'linux', 'i386',[]);
+
+      WritePasFile(M,FDataPath+DirectorySeparator+extractFilename(M.Name)+'_.lpr');
+
+      FreeAndNil(M);
+end;
+
+procedure TTestPassRc.TestMiniTest6;
+var
+  M: TPasModule;
+const Filename='Minitest6.lpr';
+
+begin
+    M := ParseSource(E,[FDataPath+DirectorySeparator+ Filename], 'linux', 'i386',[]);
+
+      WritePasFile(M,FDataPath+DirectorySeparator+extractFilename(M.Name)+'_.lpr');
+
+      FreeAndNil(M);
+end;
+
+procedure TTestPassRc.TestMiniTest7;
+var
+  M: TPasModule;
+const Filename='Minitest7.lpr';
+
+begin
+    M := ParseSource(E,[FDataPath+DirectorySeparator+ Filename], 'linux', 'i386',[]);
+
       WritePasFile(M,FDataPath+DirectorySeparator+extractFilename(M.Name)+'_.lpr');
 
       FreeAndNil(M);

@@ -597,7 +597,7 @@ type
     end;
 
 const
-    DefPasSourcePos: TCShSourcePos = (Filename: ''; Row: 0; Column: 0);
+    DefCShSourcePos: TCShSourcePos = (Filename: ''; Row: 0; Column: 0);
 
 type
     { TCSharpScanner }
