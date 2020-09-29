@@ -75,7 +75,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="..\..\include;..\source;$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source"/>
+            <OtherUnitFiles Value="..\Source;..\Source\Labyrinth"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -114,7 +114,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="..\..\include;..\source;$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source"/>
+            <OtherUnitFiles Value="..\Source;..\Source\Labyrinth"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -213,7 +213,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="..\..\include;..\source;$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source"/>
+      <OtherUnitFiles Value="..\Source;..\Source\Labyrinth"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Parsing>
