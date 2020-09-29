@@ -4,7 +4,8 @@ program fpcTestX_Src;
 
 uses
   Interfaces, Forms, tcscanner, GuiTestRunner, TestPassRc, TestCShScanner,
-  CShScanner, tst_CShScanner, unt_CShTestData;
+  CShScanner, tst_CShScanner, unt_CShTestData, CShTree, tst_CShBaseParser,
+  CShParser;
 
 {$R *.res}
 
