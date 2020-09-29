@@ -214,7 +214,7 @@
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Source\frm_laby4.pas"/>
+        <Filename Value="..\Source\Labyrinth\frm_laby4.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FrmLaby4"/>
         <HasResources Value="True"/>
