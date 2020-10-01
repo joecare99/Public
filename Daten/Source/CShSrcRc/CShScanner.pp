@@ -139,7 +139,7 @@ type
         tkLessThan,              // '<'
         tkAssign,                // '='
         tkGreaterThan,           // '>'
-        tkAt,                    // '@'
+//        tkAt,                    // '@'
         tkSquaredBraceOpen,      // '['
         tkSquaredBraceClose,     // ']'
         tkXor,                   // '^' (xor operator)
@@ -517,8 +517,8 @@ type
         end;
     protected
     {$ifdef UsePChar}
-    FTokenStart: PChar;
-    FTokenEnd: PChar;
+        FTokenStart: PChar;
+        FTokenEnd: PChar;
     {$else}
         FTokenStart: integer; // position in Expression
         FTokenEnd: integer; // position in Expression
@@ -766,8 +766,8 @@ type
         procedure ClearMacros;
         procedure SetCurToken(const AValue: TToken);
         procedure SetCurTokenString(const AValue: string);
-        procedure SetCurrentBoolSwitches(const AValue: TBoolSwitches); virtual;
-        procedure SetCurrentModeSwitches(AValue: TModeSwitches); virtual;
+        procedure SetCurrentBoolSwitches(const AValue: TBoolSwitches); virtual;deprecated 'not use';
+        procedure SetCurrentModeSwitches(AValue: TModeSwitches); virtual;deprecated 'not use';
         procedure SetCurrentValueSwitch(V: TValueSwitch; const AValue: string);
         procedure SetWarnMsgState(Number: integer; State: TWarnMsgState); virtual;
         function GetWarnMsgState(Number: integer): TWarnMsgState; virtual;
@@ -905,7 +905,7 @@ const
         '<',
         '=',
         '>',
-        '@',
+ //       '@',
         '[',
         ']',
         '^',
@@ -1245,7 +1245,8 @@ type
         Line: string;
         Row: integer;
         ColumnOffset: integer;
-        TokenPos: {$ifdef UsePChar}PChar;{$else}integer; { position in Line }{$endif}
+        TokenPos: {$ifdef UsePChar}PChar;
+{$else}integer; { position in Line }{$endif}
     end;
 
 function StrToModeSwitch(aName: string): TModeSwitch;
@@ -1342,52 +1343,53 @@ const
     IdentChars = ['a'..'z', 'A'..'Z', '_', '0'..'9'];
 
   {$ifdef UsePChar}
-  function IsIdentifier(a: PChar,b:string): boolean;
-  var
-    ac: Char;
-    bx:integer=1;
+    function IsIdentifier(a: PChar; b: string): boolean;
+    var
+        ac: char;
+        bx: integer = 1;
 
-  begin
-    repeat
-      ac:=a^;
-      if (ac in IdentChars) and (upcase(ac)=upcase(b[bx])) then
-        begin
-        inc(a);
-        inc(bx);
-        end
-      else
-        begin
-        Result:=(not (ac in IdentChars)) and (not (b^ in IdentChars));
-        exit;
-        end;
-    until false;
-  end;
+    begin
+        repeat
+            ac := a^;
+            if (ac in IdentChars) and (upcase(ac) = upcase(b[bx])) then
+              begin
+                Inc(a);
+                Inc(bx);
+              end
+            else
+              begin
+                Result := (not (ac in IdentChars)) and (not (b[bx] in IdentChars));
+                exit;
+              end;
+        until False;
+    end;
+
   {$endif}
 
     function ReadIdentifier: TToken;
-    var
-        tt: TToken;
+          {$ifndef UsePChar}
+     var   tt: TToken;    {$endif}
     begin
         Result := tkIdentifier;
    {$ifdef UsePChar}
-   case FTokenEnd-FTokenStart of
-    2:
-      if IsIdentifier(FTokenStart,TokenInfos[tkor]) then
-        Result:=tkor;
-    3:
-      if IsIdentifier(FTokenStart,TokenInfos[tknot]) then
-        Result:=tknot
-      else if IsIdentifier(FTokenStart,TokenInfos[tkand]) then
-        Result:=tkand
-      else if IsIdentifier(FTokenStart,TokenInfos[tkxor]) then
-        Result:=tkxor
-      else if IsIdentifier(FTokenStart,TokenInfos[tkshl]) then
-        Result:=tkshl
-      else if IsIdentifier(FTokenStart,TokenInfos[tkshr]) then
-        Result:=tkshr
-      else if IsIdentifier(FTokenStart,TokenInfos[tkor]) then
-        Result:=tkmod;
-    end;
+        case FTokenEnd - FTokenStart of
+            2:
+                if IsIdentifier(FTokenStart, TokenInfos[tkor]) then
+                    Result := tkor;
+            3:
+                if IsIdentifier(FTokenStart, TokenInfos[tknot]) then
+                    Result := tknot
+                else if IsIdentifier(FTokenStart, TokenInfos[tkand]) then
+                    Result := tkand
+                else if IsIdentifier(FTokenStart, TokenInfos[tkxor]) then
+                    Result := tkxor
+                else if IsIdentifier(FTokenStart, TokenInfos[tkshl]) then
+                    Result := tkshl
+                else if IsIdentifier(FTokenStart, TokenInfos[tkshr]) then
+                    Result := tkshr
+                else if IsIdentifier(FTokenStart, TokenInfos[tkor]) then
+                    Result := tkmod;
+          end;
     {$else}
         for tt in [tkor, tknot, tkand, tkxor, tkshr, tkmod] do
             if copy(Expression, FTokenStart, FTokenEnd - FTokenStart) =
@@ -1410,22 +1412,23 @@ begin
 
     // skip white space
   {$ifdef UsePChar}
-  repeat
-    case FTokenStart^ of
-      #0:
-      if FTokenStart-PChar(Expression)>=length(Expression) then
-        begin
-        FToken:=tkEOF;
-        FTokenEnd:=FTokenStart;
-        exit;
-        end
-      else
-        inc(FTokenStart);
-      #9,#10,#13,' ':
-        inc(FTokenStart);
-      else break;
-    end;
-  until false;
+    repeat
+        case FTokenStart^ of
+            #0:
+                if FTokenStart - PChar(Expression) >= length(Expression) then
+                  begin
+                    FToken := tkEOF;
+                    FTokenEnd := FTokenStart;
+                    exit;
+                  end
+                else
+                    Inc(FTokenStart);
+            #9, #10, #13, ' ':
+                Inc(FTokenStart);
+            else
+                break;
+          end;
+    until False;
   {$else}
     Src := Expression;
     l := length(Src);
@@ -1442,7 +1445,9 @@ begin
     // read token
     FTokenEnd := FTokenStart;
     case
-{$ifdef UsePChar}FTokenEnd^{$else}
+{$ifdef UsePChar}
+        FTokenEnd^
+{$else}
         Src[FTokenEnd]
 {$endif}
         of
@@ -1450,7 +1455,8 @@ begin
           begin
             Inc(FTokenEnd);
     {$ifdef UsePChar}
-    while FTokenEnd^ in IdentChars do inc(FTokenEnd);
+            while FTokenEnd^ in IdentChars do
+                Inc(FTokenEnd);
     {$else}
             while (FTokenEnd <= l) and (Src[FTokenEnd] in IdentChars) do
                 Inc(FTokenEnd);
@@ -1463,18 +1469,22 @@ begin
             // examples: 1, 1.2, 1.2E3, 1E-2
             Inc(FTokenEnd);
     {$ifdef UsePChar}
-    while FTokenEnd^ in Digits do inc(FTokenEnd);
-    if (FTokenEnd^='.') and (FTokenEnd[1]<>'.') then
-      begin
-      inc(FTokenEnd);
-      while FTokenEnd^ in Digits do inc(FTokenEnd);
-      end;
-    if FTokenEnd^ in ['e','E'] then
-      begin
-      inc(FTokenEnd);
-      if FTokenEnd^ in ['-','+'] then inc(FTokenEnd);
-      while FTokenEnd^ in Digits do inc(FTokenEnd);
-      end;
+            while FTokenEnd^ in Digits do
+                Inc(FTokenEnd);
+            if (FTokenEnd^ = '.') and (FTokenEnd[1] <> '.') then
+              begin
+                Inc(FTokenEnd);
+                while FTokenEnd^ in Digits do
+                    Inc(FTokenEnd);
+              end;
+            if FTokenEnd^ in ['e', 'E'] then
+              begin
+                Inc(FTokenEnd);
+                if FTokenEnd^ in ['-', '+'] then
+                    Inc(FTokenEnd);
+                while FTokenEnd^ in Digits do
+                    Inc(FTokenEnd);
+              end;
     {$else}
             while (FTokenEnd <= l) and (Src[FTokenEnd] in Digits) do
                 Inc(FTokenEnd);
@@ -1499,7 +1509,8 @@ begin
           begin
             FToken := tkNumber;
     {$ifdef UsePChar}
-    while FTokenEnd^ in HexDigits do inc(FTokenEnd);
+            while FTokenEnd^ in HexDigits do
+                Inc(FTokenEnd);
     {$else}
             while (FTokenEnd <= l) and (Src[FTokenEnd] in HexDigits) do
                 Inc(FTokenEnd);
@@ -1509,7 +1520,8 @@ begin
           begin
             FToken := tkNumber;
     {$ifdef UsePChar}
-    while FTokenEnd^ in ['0','1'] do inc(FTokenEnd);
+            while FTokenEnd^ in ['0', '1'] do
+                Inc(FTokenEnd);
     {$else}
             while (FTokenEnd <= l) and (Src[FTokenEnd] in ['0', '1']) do
                 Inc(FTokenEnd);
@@ -1534,7 +1546,9 @@ begin
           begin
             Inc(FTokenEnd);
             case
-{$ifdef UsePChar}FTokenEnd^{$else}
+{$ifdef UsePChar}
+                FTokenEnd^
+{$else}
                 copy(Src, FTokenEnd, 1)
 {$endif}
                 of
@@ -1561,7 +1575,9 @@ begin
           begin
             Inc(FTokenEnd);
             case
-{$ifdef UsePChar}FTokenEnd^{$else}
+{$ifdef UsePChar}
+                FTokenEnd^
+{$else}
                 copy(Src, FTokenEnd, 1)
 {$endif}
                 of
@@ -1605,13 +1621,14 @@ begin
             repeat
                 Inc(FTokenEnd);
       {$ifdef UsePChar}
-      if FTokenEnd^='''' then
-        begin
-        inc(FTokenEnd);
-        if FTokenEnd^<>'''' then break;
-        end
-      else if FTokenEnd^ in [#0,#10,#13] then
-        Log(mtError,nErrOpenString,SErrOpenString,[]);
+                if FTokenEnd^ = '''' then
+                  begin
+                    Inc(FTokenEnd);
+                    if FTokenEnd^ <> '''' then
+                        break;
+                  end
+                else if FTokenEnd^ in [#0, #10, #13] then
+                    Log(mtError, nErrOpenString, SErrOpenString, []);
       {$else}
                 if FTokenEnd > l then
                     Log(mtError, nErrOpenString, SErrOpenString, []);
@@ -1642,7 +1659,9 @@ procedure TCondDirectiveEvaluator.Log(aMsgType: TMessageType;
 begin
     if MsgPos < 1 then
         MsgPos := FTokenEnd
-{$ifdef UsePChar}-PChar(Expression)+1{$endif}
+{$ifdef UsePChar}
+            - PChar(Expression) + 1
+{$endif}
     ;
     MsgType := aMsgType;
     MsgNumber := aMsgNumber;
@@ -1683,7 +1702,9 @@ var
     S, aName, Param: string;
     Code: integer;
     NameStartP:
-{$ifdef UsePChar}PChar{$else}
+{$ifdef UsePChar}
+    PChar
+{$else}
     integer
 {$endif}
     ;
@@ -1735,7 +1756,9 @@ begin
                   begin
                     // integer
                     Push(IntToStr(i), FTokenStart
-{$ifdef UsePChar}-PChar(Expression)+1{$endif}
+{$ifdef UsePChar}
+                        - PChar(Expression) + 1
+{$endif}
                         );
                   end
                 else
@@ -1747,7 +1770,9 @@ begin
                     ;
                     // float
                     Push(S, FTokenStart
-{$ifdef UsePChar}-PChar(Expression)+1{$endif}
+{$ifdef UsePChar}
+                        - PChar(Expression) + 1
+{$endif}
                         );
                   end;
               end;
@@ -1758,7 +1783,9 @@ begin
             // string literal
             if not Skip then
                 Push(GetStringLiteralValue, FTokenStart
-{$ifdef UsePChar}-PChar(Expression)+1{$endif}
+{$ifdef UsePChar}
+                    - PChar(Expression) + 1
+{$endif}
                     );
             NextToken;
           end;
@@ -1781,7 +1808,9 @@ begin
               begin
                 aName := GetTokenString;
                 p := FTokenStart
-{$ifdef UsePChar}-PChar(Expression)+1{$endif}
+{$ifdef UsePChar}
+                    - PChar(Expression) + 1
+{$endif}
                 ;
                 NextToken;
                 if FToken = tkBraceOpen then
@@ -2100,14 +2129,16 @@ end;
 function TCondDirectiveEvaluator.GetTokenString: string;
 begin
     Result := copy(Expression, FTokenStart
-{$ifdef UsePChar}-PChar(Expression)+1{$endif}
+{$ifdef UsePChar}
+        - PChar(Expression) + 1
+{$endif}
         , FTokenEnd - FTokenStart);
 end;
 
 function TCondDirectiveEvaluator.GetStringLiteralValue: string;
 var
   {$ifdef UsePChar}
-  p, StartP: PChar;
+    p, StartP: PChar;
   {$else}
     Src: string;
     p, l, StartP: integer;
@@ -2116,27 +2147,30 @@ begin
     Result := '';
     p := FTokenStart;
   {$ifdef UsePChar}
-  repeat
-    case p^ of
-    '''':
-      begin
-      inc(p);
-      StartP:=p;
-      repeat
+    repeat
         case p^ of
-        #0: Log(mtError,nErrInvalidCharacter,SErrInvalidCharacter,['#0']);
-        '''': break;
-        else inc(p);
-        end;
-      until false;
-      if p>StartP then
-        Result:=Result+copy(Expression,StartP-PChar(Expression)+1,p-StartP);
-      inc(p);
-      end;
-    else
-      Log(mtError,nErrInvalidCharacter,SErrInvalidCharacter,['#0']);
-    end;
-  until false;
+            '''':
+              begin
+                Inc(p);
+                StartP := p;
+                repeat
+                    case p^ of
+                        #0: Log(mtError, nErrInvalidCharacter,
+                                SErrInvalidCharacter, ['#0']);
+                        '''': break;
+                        else
+                            Inc(p);
+                      end;
+                until False;
+                if p > StartP then
+                    Result := Result + copy(Expression, StartP -
+                        PChar(Expression) + 1, p - StartP);
+                Inc(p);
+              end;
+            else
+                Log(mtError, nErrInvalidCharacter, SErrInvalidCharacter, ['#0']);
+          end;
+    until False;
   {$else}
     Src := Expression;
     l := length(Src);
@@ -2203,7 +2237,9 @@ begin
     if Expr = '' then
         exit(False);
     FTokenStart :=
-{$ifdef UsePChar}PChar(Expr){$else}
+{$ifdef UsePChar}
+        PChar(Expr)
+{$else}
         1
 {$endif}
     ;
@@ -2939,10 +2975,13 @@ end;
 function TCSharpScanner.ReadNonPascalTillEndToken(StopAtLineEnd: boolean): TToken;
 var
     StartPos:
-{$ifdef UsePChar}PChar{$else}
+{$ifdef UsePChar}
+    PChar
+{$else}
     integer
 {$endif}
     ;
+
   {$ifndef UsePChar}
 var
     s: string;
@@ -2954,7 +2993,7 @@ var
     var
         AddLen: PtrInt;
     {$ifdef UsePChar}
-    OldLen: Integer;
+        OldLen: integer;
     {$endif}
     begin
         AddLen := FTokenPos - StartPos;
@@ -2963,9 +3002,9 @@ var
         else
           begin
       {$ifdef UsePChar}
-      OldLen:=length(FCurTokenString);
-      SetLength(FCurTokenString,OldLen+AddLen);
-      Move(StartPos^,PChar(PChar(FCurTokenString)+OldLen)^,AddLen);
+            OldLen := length(FCurTokenString);
+            SetLength(FCurTokenString, OldLen + AddLen);
+            Move(StartPos^, PChar(PChar(FCurTokenString) + OldLen)^, AddLen);
       {$else}
             FCurTokenString := FCurTokenString + copy(FCurLine, StartPos, AddLen);
       {$endif}
@@ -3012,13 +3051,16 @@ begin
                 exit;
     {$endif}
         case
-{$ifdef UsePChar}FTokenPos^{$else}
+{$ifdef UsePChar}
+            FTokenPos^
+{$else}
             s[FTokenPos]
 {$endif}
             of
       {$ifdef UsePChar}
-      #0: // end of line
-        if DoEndOfLine then exit;
+            #0: // end of line
+                if DoEndOfLine then
+                    exit;
       {$endif}
             '''':
               begin
@@ -3033,12 +3075,14 @@ begin
                         Error(nErrOpenString, SErrOpenString);
           {$endif}
                     case
-{$ifdef UsePChar}FTokenPos^{$else}
+{$ifdef UsePChar}
+                        FTokenPos^
+{$else}
                         s[FTokenPos]
 {$endif}
                         of
           {$ifdef UsePChar}
-          #0: Error(nErrOpenString,SErrOpenString);
+                        #0: Error(nErrOpenString, SErrOpenString);
           {$endif}
                         '''':
                           begin
@@ -3059,7 +3103,9 @@ begin
               begin
                 Inc(FTokenPos);
                 if
-{$ifdef UsePChar}FTokenPos^='/'{$else}
+{$ifdef UsePChar}
+                FTokenPos^ = '/'
+{$else}
                 (FTokenPos <= l) and (s[FTokenPos] = '/')
 {$endif}
                 then
@@ -3068,7 +3114,9 @@ begin
                     repeat
                         Inc(FTokenPos);
                     until
-{$ifdef UsePChar}FTokenPos^ in [#0,#10,#13]{$else}
+{$ifdef UsePChar}
+                        FTokenPos^ in [#0, #10, #13]
+{$else}
                         (FTokenPos > l) or (s[FTokenPos] in [#10, #13])
 {$endif}
                     ;
@@ -3079,10 +3127,9 @@ begin
                 // number or identifier
                 if
 {$ifdef UsePchar}
-            (FTokenPos[0] in ['e','E'])
-            and (FTokenPos[1] in ['n','N'])
-            and (FTokenPos[2] in ['d','D'])
-            and not (FTokenPos[3] in IdentChars)
+                (FTokenPos[0] in ['e', 'E']) and
+                    (FTokenPos[1] in ['n', 'N']) and (FTokenPos[2] in ['d', 'D']) and
+                    not (FTokenPos[3] in IdentChars)
             {$else}
            {$ifndef pas2js}
                 (copy(s, FTokenPos, 3).ToLower = 'end') and
@@ -3105,8 +3152,8 @@ begin
                       end;
                     // return 'end'
           {$ifdef UsePChar}
-          SetLength(FCurTokenString, 3);
-          Move(FTokenPos^, FCurTokenString[1], 3);
+                    SetLength(FCurTokenString, 3);
+                    Move(FTokenPos^, FCurTokenString[1], 3);
           {$else}
                     FCurTokenString := copy(s, FTokenPos, 3);
           {$endif}
@@ -3118,7 +3165,9 @@ begin
                   begin
                     // skip identifier
                     while
-{$ifdef UsePChar}FTokenPos[0] in IdentChars{$else}
+{$ifdef UsePChar}
+                        FTokenPos[0] in IdentChars
+{$else}
                         (FTokenPos <= l) and (s[FTokenPos] in IdentChars)
 {$endif}
                         do
@@ -3150,7 +3199,9 @@ function TCSharpScanner.DoFetchTextToken(ModeChar: char): TToken;
 var
     OldLength: integer;
     TokenStart:
-{$ifdef UsePChar}PChar{$else}
+{$ifdef UsePChar}
+    PChar
+{$else}
     integer
 {$endif}
     ;
@@ -3174,7 +3225,9 @@ begin
             break;
     {$endif}
         case
-{$ifdef UsePChar}FTokenPos[0]{$else}
+{$ifdef UsePChar}
+            FTokenPos[0]
+{$else}
             s[FTokenPos]
 {$endif}
             of
@@ -3183,7 +3236,9 @@ begin
                 TokenStart := FTokenPos;
                 Inc(FTokenPos);
                 if
-{$ifdef UsePChar}FTokenPos[0] in Letters{$else}
+{$ifdef UsePChar}
+                FTokenPos[0] in Letters
+{$else}
                 (FTokenPos < l) and (s[FTokenPos] in Letters)
 {$endif}
                 then
@@ -3198,7 +3253,9 @@ begin
                 TokenStart := FTokenPos;
                 Inc(FTokenPos);
                 if
-{$ifdef UsePChar}FTokenPos[0]='$'{$else}
+{$ifdef UsePChar}
+                FTokenPos[0] = '$'
+{$else}
                 (FTokenPos < l) and (s[FTokenPos] = '$')
 {$endif}
                 then
@@ -3206,19 +3263,23 @@ begin
                     Inc(FTokenPos);
                     repeat
                         Inc(FTokenPos);
-                    until
-{$ifdef UsePChar}not (FTokenPos[0] in HexDigits){$else}
-                        (FTokenPos > l) or not (s[FTokenPos] in HexDigits)
-{$endif}
+                    until not (
+{$ifdef UsePChar}
+                        FTokenPos[0]
+{$else}
+                        FTokenPos <= l) or not (s[FTokenPos]{$endif} in HexDigits)
+
                     ;
                   end
                 else
                     repeat
                         Inc(FTokenPos);
-                    until
-{$ifdef UsePChar}not (FTokenPos[0] in Digits){$else}
-                        (FTokenPos > l) or not (s[FTokenPos] in Digits)
-{$endif}
+                    until not (
+{$ifdef UsePChar}
+                        FTokenPos[0]
+{$else}
+                        (FTokenPos <= l) or not (s[FTokenPos]{$endif}  in Digits)
+
                 ;
                 if Result = tkEOF then
                     Result := tkChar
@@ -3226,54 +3287,61 @@ begin
                     Result := tkString;
               end;
             '''':
-                          begin
-                            TokenStart := FTokenPos;
-                            Inc(FTokenPos);
-                            while True do
-                              begin
-                             if
-        {$ifdef UsePChar}FTokenPos[0] in ='''']{$else}
-                            (FTokenPos <= l) and (s[FTokenPos] = '''')
+              begin
+                TokenStart := FTokenPos;
+                Inc(FTokenPos);
+                while not (
+{$ifdef UsePChar}
+                        FTokenPos[0]
+{$else}
+                    (FTokenPos <= l) or not (s[FTokenPos]{$endif}
+                        = '''') do
+                  begin
+
+                    if
+{$ifdef UsePChar}
+                    FTokenPos[0] = #0
+{$else}
+                    FTokenPos > l
         {$endif}
-                            then
-                               break;
+                    then
+                        Error(nErrOpenString, SErrOpenString);
 
-                            if
-        {$ifdef UsePChar}FTokenPos[0] = #0{$else}
-                            FTokenPos > l
-        {$endif}
-                            then
-                                Error(nErrOpenString, SErrOpenString);
+                    Inc(FTokenPos);
+                  end;
+                Inc(FTokenPos);
+                if ((FTokenPos - TokenStart) in [3, 4]) then // 'z'
+                    Result := tkCharacter;
 
-                            Inc(FTokenPos);
-                          end;
-                        Inc(FTokenPos);
-                        if ((FTokenPos - TokenStart) in [3,4]) then // 'z'
-                            Result := tkCharacter
-
-                      end;
-             '"':
+              end;
+            '"':
               begin
                 TokenStart := FTokenPos;
                 Inc(FTokenPos);
 
                 while True do
                   begin
-                    if
-{$ifdef UsePChar}FTokenPos[1] = '\'{$else}
-                    (FTokenPos <= l) and (s[FTokenPos] = '\')
-{$endif}
+                    if (
+{$ifdef UsePChar}
+                    FTokenPos[0]
+{$else}
+                    FTokenPos <= l) and (s[FTokenPos]{$endif} = '\')
+
                     then
                         Inc(FTokenPos)
-                    else if
-{$ifdef UsePChar}FTokenPos[0] in ['"']{$else}
-                    (FTokenPos <= l) and (s[FTokenPos] in ['"'])
-{$endif}
+                    else if (
+{$ifdef UsePChar}
+                    FTokenPos[0]
+{$else}
+                    FTokenPos <= l) and (s[FTokenPos]{$endif} in ['"'])
+
                     then
-                       break;
+                        break;
 
                     if
-{$ifdef UsePChar}FTokenPos[0] = #0{$else}
+{$ifdef UsePChar}
+                    FTokenPos[0] = #0
+{$else}
                     FTokenPos > l
 {$endif}
                     then
@@ -3289,9 +3357,9 @@ begin
           end;
         SectionLength := FTokenPos - TokenStart;
     {$ifdef UsePChar}
-    SetLength(FCurTokenString, OldLength + SectionLength);
-    if SectionLength > 0 then
-      Move(TokenStart^, FCurTokenString[OldLength + 1], SectionLength);
+        SetLength(FCurTokenString, OldLength + SectionLength);
+        if SectionLength > 0 then
+            Move(TokenStart^, FCurTokenString[OldLength + 1], SectionLength);
     {$else}
         FCurTokenString := FCurTokenString + copy(FCurLine, TokenStart, SectionLength);
     {$endif}
@@ -3318,7 +3386,9 @@ begin
     SI.TokenPos := FTokenPos;
     FIncludeStack.Add(SI);
     FTokenPos :=
-{$ifdef UsePChar}Nil{$else}
+{$ifdef UsePChar}
+        nil
+{$else}
         -1
 {$endif}
     ;
@@ -3939,14 +4009,17 @@ end;
 function TCSharpScanner.DoFetchToken: TToken;
 var
     TokenStart:
-{$ifdef UsePChar}PChar{$else}
+{$ifdef UsePChar}
+    PChar
+{$else}
     integer
 {$endif}
     ;
     i: TToken;
-    SectionLength, NestingLevel, Index: integer;
+    SectionLength, Index: integer;
   {$ifdef UsePChar}
-  OldLength: integer;
+    OldLength: integer;
+
   {$else}
     s: string;
     l: integer;
@@ -3956,9 +4029,9 @@ var
     procedure FetchCurTokenString; inline;
     begin
     {$ifdef UsePChar}
-    SetLength(FCurTokenString, SectionLength);
-    if SectionLength > 0 then
-      Move(TokenStart^, FCurTokenString[1], SectionLength);
+        SetLength(FCurTokenString, SectionLength);
+        if SectionLength > 0 then
+            Move(TokenStart^, FCurTokenString[1], SectionLength);
     {$else}
         FCurTokenString := copy(FCurLine, TokenStart, SectionLength);
     {$endif}
@@ -3975,15 +4048,186 @@ var
     {$endif}
     end;
 
+    procedure FetchNumber;
+    begin
+        // 1, 12, 1.2, 1.2E3, 1.E2, 1E2, 1.2E-3, 1E+2
+        // also typed Numbers like 1f 2d 3l
+        // beware of 1..2
+        TokenStart := FTokenPos;
+        repeat
+            Inc(FTokenPos);
+        until not (
+    {$ifdef UsePChar}
+            FTokenPos[0]
+{$else}
+            FTokenPos <= l) and (s[FTokenPos]
+    {$endif}
+                in Digits);
+        if (
+{$ifdef UsePChar}
+            FTokenPos[0]
+{$else}FTokenPos <= l) and (s[FTokenPos]   {$endif}
+            = '.') and ((
+{$ifdef UsePChar}
+            FTokenPos[1]
+{$else}FTokenPos = l) or (s[FTokenPos + 1]{$endif}
+            <> '.')) then
+          begin
+            Inc(FTokenPos);
+            while (
+                    {$ifdef UsePChar}
+                    FTokenPos[0]
+{$else}
+                    FTokenPos <= l) and (s[FTokenPos]
+{$endif}
+                    in Digits) do
+                Inc(FTokenPos);
+          end;
+        // Check for Exponent
+        if (
+{$ifdef UsePChar}
+        FTokenPos[0]
+{$else}
+        FTokenPos <= l) and (s[FTokenPos]{$endif} in ['e'])
+
+        then
+          begin
+            Inc(FTokenPos);
+            if (
+{$ifdef UsePChar}
+            FTokenPos[0]
+{$else}
+            FTokenPos <= l) and (s[FTokenPos]{$endif} in ['-', '+'])
+
+            then
+                Inc(FTokenPos);
+            while (
+                {$ifdef UsePChar}
+                FTokenPos[0]
+                {$else}
+                FTokenPos <= l) and (s[FTokenPos]{$endif} in Digits)
+                do
+                Inc(FTokenPos);
+          end;
+        // Check for type
+        if (
+{$ifdef UsePChar}
+        FTokenPos[0]{$else}
+        (FTokenPos <= l) and (s[FTokenPos]{$endif} in ['b', 'd', 'f', 'l'])
+        then
+           Inc(FTokenPos);
+        SectionLength := FTokenPos - TokenStart;
+        FetchCurTokenString;
+        Result := tkNumber;
+    end;
+
+    procedure FetchMLComment(Start: string);
+    var
+        NestingLevel: integer;
+        ch: char;
+
+    begin
+          begin
+            // Multi-line comment
+            Inc(FTokenPos);
+            TokenStart := FTokenPos;
+            FCurTokenString := '';
+            {$ifdef UsePChar}
+            OldLength := 0;
+            {$endif}
+            NestingLevel := 0;
+            repeat
+                if
+{$ifdef UsePChar}
+                FTokenPos[0] = #0
+{$else}
+                FTokenPos > l
+    {$endif}
+                then
+                  begin
+                    SectionLength := FTokenPos - TokenStart;
+                {$ifdef UsePChar}
+                    SetLength(FCurTokenString, OldLength + SectionLength +
+                        length(LineEnding));
+                    // +1 for #10
+                    if SectionLength > 0 then
+                        Move(TokenStart^, FCurTokenString[OldLength + 1], SectionLength);
+                    Inc(OldLength, SectionLength);
+                    for ch in string(LineEnding) do
+                      begin
+                        Inc(OldLength);
+                        FCurTokenString[OldLength] := ch;
+                      end;
+                {$else}
+                    FCurTokenString :=
+                        FCurTokenString + copy(
+                        FCurLine, TokenStart, SectionLength) + LineEnding;
+                {$endif}
+                    if not FetchLocalLine then
+                      begin
+                        Result := tkEOF;
+                        FCurToken := Result;
+                        exit;
+                      end;
+                    TokenStart := FTokenPos;
+                  end
+                else if
+{$ifdef UsePChar}
+                (FTokenPos[0] = '*') and (FTokenPos[1] = '/')
+                  {$else}
+                (FTokenPos < l) and (s[FTokenPos] = '*') and
+                    (s[FTokenPos + 1] = '/')
+    {$endif}
+                then
+                  begin
+                    Dec(NestingLevel);
+                    if NestingLevel < 0 then
+                        break;
+                    Inc(FTokenPos, 2);
+                  end
+                else if
+{$ifdef UsePChar}
+                (FTokenPos[0] = '/') and (FTokenPos[1] = '*')
+                  {$else}
+                (FTokenPos < l) and (s[FTokenPos] = '/') and
+                    (s[FTokenPos + 1] = '*')
+    {$endif}
+                then
+                  begin
+                    Inc(FTokenPos, 2);
+                    Inc(NestingLevel);
+                  end
+                else
+                    Inc(FTokenPos);
+            until False;
+            SectionLength := FTokenPos - TokenStart;
+            {$ifdef UsePChar}
+            SetLength(FCurTokenString, OldLength + SectionLength);
+            if SectionLength > 0 then
+                Move(TokenStart^, FCurTokenString[OldLength + 1], SectionLength);
+            {$else}
+            FCurTokenString :=
+                FCurTokenString + copy(FCurLine, TokenStart, SectionLength);
+            {$endif}
+            Inc(FTokenPos, 2);
+            Result := tkComment;
+            DoHandleComment(Self, CurTokenString);
+          end;
+    end;
+
 begin
     TokenStart :=
-{$ifdef UsePChar}nil{$else}
+{$ifdef UsePChar}
+        nil
+{$else}
         0
 {$endif}
     ;
     Result := tkLineEnding;
     if FTokenPos
-{$ifdef UsePChar}= nil{$else}
+{$ifdef UsePChar}
+        = nil
+{$else}
         < 1
 {$endif}
     then
@@ -4009,16 +4253,18 @@ begin
       end;
   {$endif}
     case
-{$ifdef UsePChar}FTokenPos[0]{$else}
+{$ifdef UsePChar}
+        FTokenPos[0]
+{$else}
         s[FTokenPos]
 {$endif}
         of
     {$ifdef UsePChar}
-    #0:         // Empty line
-      begin
-      FetchLine;
-      Result := tkLineEnding;
-      end;
+        #0:         // Empty line
+          begin
+            FetchLine;
+            Result := tkLineEnding;
+          end;
     {$endif}
         ' ':
           begin
@@ -4026,7 +4272,9 @@ begin
             repeat
                 Inc(FTokenPos);
                 if
-{$ifdef UsePChar}FTokenPos[0] = #0{$else}
+{$ifdef UsePChar}
+                FTokenPos[0] = #0
+{$else}
                 FTokenPos > l
 {$endif}
                 then
@@ -4036,7 +4284,9 @@ begin
                         exit;
                       end;
             until not (
-{$ifdef UsePChar}FTokenPos[0]{$else}
+{$ifdef UsePChar}
+                    FTokenPos[0]
+{$else}
                     s[FTokenPos]
 {$endif}
                     = ' ');
@@ -4047,7 +4297,9 @@ begin
             repeat
                 Inc(FTokenPos);
                 if
-{$ifdef UsePChar}FTokenPos[0] = #0{$else}
+{$ifdef UsePChar}
+                FTokenPos[0] = #0
+{$else}
                 FTokenPos > l
 {$endif}
                 then
@@ -4057,7 +4309,9 @@ begin
                         exit;
                       end;
             until not (
-{$ifdef UsePChar}FTokenPos[0]{$else}
+{$ifdef UsePChar}
+                    FTokenPos[0]
+{$else}
                     s[FTokenPos]
 {$endif}
                     = #9);
@@ -4067,7 +4321,9 @@ begin
             TokenStart := FTokenPos;
             FCurTokenString := '';
             while
-{$ifdef UsePChar}FTokenPos[0] <> #0{$else}
+{$ifdef UsePChar}
+                FTokenPos[0] <> #0
+{$else}
                 (FTokenPos <= l) and (s[FTokenPos] <> #0)
 {$endif}
                 do
@@ -4083,7 +4339,9 @@ begin
             Result := tkSingleAnd;
             Inc(FTokenPos);
             if
-{$ifdef UsePChar}FTokenPos[0]='&'{$else}
+{$ifdef UsePChar}
+            FTokenPos[0] = '&'
+{$else}
             (FTokenPos <= l) and (s[FTokenPos] = '&')
 {$endif}
             then
@@ -4092,7 +4350,9 @@ begin
                 Result := tkAnd;
               end;
             if
-{$ifdef UsePChar}FTokenPos[0]='='{$else}
+{$ifdef UsePChar}
+            FTokenPos[0] = '='
+{$else}
             (FTokenPos <= l) and (s[FTokenPos] = '=')
 {$endif}
             then
@@ -4107,7 +4367,9 @@ begin
             Result := tkSingleOr;
             Inc(FTokenPos);
             if
-{$ifdef UsePChar}FTokenPos[0]='|'{$else}
+{$ifdef UsePChar}
+            FTokenPos[0] = '|'
+{$else}
             (FTokenPos <= l) and (s[FTokenPos] = '|')
 {$endif}
             then
@@ -4116,7 +4378,9 @@ begin
                 Result := tkOr;
               end;
             if
-{$ifdef UsePChar}FTokenPos[0]='='{$else}
+{$ifdef UsePChar}
+            FTokenPos[0] = '='
+{$else}
             (FTokenPos <= l) and (s[FTokenPos] = '=')
 {$endif}
             then
@@ -4129,13 +4393,15 @@ begin
         '~':
           begin
             Result := tkKomplement;
-            TokenStart := FTokenPos;
+            Inc(FTokenPos);
           end;
         '@':
           begin
             Inc(FTokenPos);
             if
-{$ifdef UsePChar}FTokenPos[0]='"'{$else}
+{$ifdef UsePChar}
+            FTokenPos[0] = '"'
+{$else}
             (FTokenPos <= l) and (s[FTokenPos] = '"')
 {$endif}
             then
@@ -4145,7 +4411,9 @@ begin
           begin
             Inc(FTokenPos);
             if
-{$ifdef UsePChar}FTokenPos[0]='"'{$else}
+{$ifdef UsePChar}
+            FTokenPos[0] = '"'
+{$else}
             (FTokenPos <= l) and (s[FTokenPos] = '"')
 {$endif}
             then
@@ -4157,7 +4425,9 @@ begin
                 TokenStart := FTokenPos;
                 repeat
                 until
-{$ifdef UsePChar}not (FTokenPos[0] in HexDigits){$else}
+{$ifdef UsePChar}
+                    not (FTokenPos[0] in HexDigits)
+{$else}
                     (FTokenPos > l) or not (s[FTokenPos] in HexDigits)
 {$endif}
                 ;
@@ -4171,14 +4441,16 @@ begin
             Result := tkmod;
             Inc(FTokenPos);
             if
-{$ifdef UsePChar}FTokenPos[0]='='{$else}
+{$ifdef UsePChar}
+            FTokenPos[0] = '='
+{$else}
             (FTokenPos <= l) and (s[FTokenPos] = '=')
 {$endif}
             then
               begin
                 Inc(FTokenPos);
                 Result := tkAssignModulo;
-              end
+              end;
           end;
         '(':
           begin
@@ -4194,19 +4466,23 @@ begin
           begin
             Result := tkMul;
             Inc(FTokenPos);
-            if
-{$ifdef UsePChar}FTokenPos[0]='*'{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '*')
-{$endif}
+            if (
+{$ifdef UsePChar}
+            FTokenPos[0]
+{$else}
+            (FTokenPos <= l) and (s[FTokenPos]{$endif}  = '*')
+
             then
               begin
                 Inc(FTokenPos);
                 Result := tkPower;
               end
-            else if
-{$ifdef UsePChar}FTokenPos[0]='='{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '=')
-{$endif}
+            else if (
+{$ifdef UsePChar}
+            FTokenPos[0]
+{$else}
+            FTokenPos <= l) and (s[FTokenPos]{$endif} = '=')
+
             then
               begin
                 Inc(FTokenPos);
@@ -4218,14 +4494,27 @@ begin
           begin
             Result := tkPlus;
             Inc(FTokenPos);
-            if
-{$ifdef UsePChar}FTokenPos[0]='='{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '=')
-{$endif}
+            if (
+{$ifdef UsePChar}
+            FTokenPos[0]
+{$else}
+            FTokenPos <= l) and (s[FTokenPos]{$endif} = '=')
+
             then
               begin
                 Inc(FTokenPos);
                 Result := tkAssignPlus;
+              end
+            else if (
+{$ifdef UsePChar}
+            FTokenPos[0]
+{$else}
+            FTokenPos <= l) and (s[FTokenPos]{$endif} = '+')
+
+            then
+              begin
+                Inc(FTokenPos);
+                Result := tkPlusPlus;
               end;
           end;
         ',':
@@ -4237,21 +4526,35 @@ begin
           begin
             Result := tkMinus;
             Inc(FTokenPos);
-            if
-{$ifdef UsePChar}FTokenPos[0]='='{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '=')
-{$endif}
+            if (
+{$ifdef UsePChar}
+            FTokenPos[0]
+{$else}
+            (FTokenPos <= l) and (s[FTokenPos]{$endif}  = '=')
             then
               begin
                 Inc(FTokenPos);
                 Result := tkAssignMinus;
-              end;
+              end
+            else if (
+ {$ifdef UsePChar}
+             FTokenPos[0]
+ {$else}
+             FTokenPos <= l) and (s[FTokenPos]{$endif} = '-')
+
+             then
+               begin
+                 Inc(FTokenPos);
+                 Result := tkMinusMinus;
+               end;
           end;
         '.':
           begin
             Inc(FTokenPos);
             if
-{$ifdef UsePChar}FTokenPos[0]='.'{$else}
+{$ifdef UsePChar}
+            FTokenPos[0] = '.'
+{$else}
             (FTokenPos <= l) and (s[FTokenPos] = '.')
 {$endif}
             then
@@ -4267,7 +4570,9 @@ begin
             Result := tkDivision;
             Inc(FTokenPos);
             if
-{$ifdef UsePChar}FTokenPos[0]='/'{$else}
+{$ifdef UsePChar}
+            FTokenPos[0] = '/'
+{$else}
             (FTokenPos <= l) and (s[FTokenPos] = '/')
 {$endif}
             then
@@ -4277,7 +4582,9 @@ begin
                 TokenStart := FTokenPos;
                 FCurTokenString := '';
                 while
-{$ifdef UsePChar}FTokenPos[0] <> #0{$else}
+{$ifdef UsePChar}
+                    FTokenPos[0] <> #0
+{$else}
                     (FTokenPos <= l) and (s[FTokenPos] <> #0)
 {$endif}
                     do
@@ -4287,7 +4594,9 @@ begin
                 Result := tkLineComment;
               end
             else if
-{$ifdef UsePChar}FTokenPos[0]='='{$else}
+{$ifdef UsePChar}
+            FTokenPos[0] = '='
+{$else}
             (FTokenPos <= l) and (s[FTokenPos] = '=')
 {$endif}
             then
@@ -4295,142 +4604,18 @@ begin
                 Inc(FTokenPos);
                 Result := tkAssignDivision;
               end
-            else if
-{$ifdef UsePChar}FTokenPos[0] = '*'{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '*')
+            else if (
+{$ifdef UsePChar}
+                FTokenPos[0]
+{$else}
+                FTokenPos <= l) and (s[FTokenPos]
 {$endif}
-            then
-              begin
-                // Multi-line comment
-                Inc(FTokenPos);
-                TokenStart := FTokenPos;
-                FCurTokenString := '';
-        {$ifdef UsePChar}
-        OldLength := 0;
-        {$endif}
-                NestingLevel := 0;
-                repeat
-                    if
-{$ifdef UsePChar}FTokenPos[0] = #0{$else}
-                    FTokenPos > l
-{$endif}
-                    then
-                      begin
-                        SectionLength := FTokenPos - TokenStart;
-            {$ifdef UsePChar}
-            SetLength(FCurTokenString, OldLength + SectionLength+length(LineEnding)); // +1 for #10
-            if SectionLength > 0 then
-              Move(TokenStart^, FCurTokenString[OldLength + 1], SectionLength);
-            Inc(OldLength, SectionLength);
-            for ch in string(LineEnding) do
-              begin
-                inc(OldLength);
-                FCurTokenString[OldLength] := ch;
-              end;
-            {$else}
-                        FCurTokenString :=
-                            FCurTokenString + copy(FCurLine, TokenStart, SectionLength) +
-                            LineEnding;
-            {$endif}
-                        if not FetchLocalLine then
-                          begin
-                            Result := tkEOF;
-                            FCurToken := Result;
-                            exit;
-                          end;
-                        TokenStart := FTokenPos;
-                      end
-                    else if
-{$ifdef UsePChar}(FTokenPos[0] = '*') and (FTokenPos[1] = '/')
-              {$else}
-                    (FTokenPos < l) and (s[FTokenPos] = '*') and (s[FTokenPos + 1] = '/')
-{$endif}
-                    then
-                      begin
-                        Dec(NestingLevel);
-                        if NestingLevel < 0 then
-                            break;
-                        Inc(FTokenPos, 2);
-                      end
-                    else if
-{$ifdef UsePChar}(FTokenPos[0] = '/') and (FTokenPos[1] = '*')
-              {$else}
-                    (FTokenPos < l) and (s[FTokenPos] = '/') and (s[FTokenPos + 1] = '*')
-{$endif}
-                    then
-                      begin
-                        Inc(FTokenPos, 2);
-                        Inc(NestingLevel);
-                      end
-                    else
-                        Inc(FTokenPos);
-                until False;
-                SectionLength := FTokenPos - TokenStart;
-        {$ifdef UsePChar}
-        SetLength(FCurTokenString, OldLength + SectionLength);
-        if SectionLength > 0 then
-          Move(TokenStart^, FCurTokenString[OldLength + 1], SectionLength);
-        {$else}
-                FCurTokenString :=
-                    FCurTokenString + copy(FCurLine, TokenStart, SectionLength);
-        {$endif}
-                Inc(FTokenPos, 2);
-                Result := tkComment;
-                DoHandleComment(Self, CurTokenString);
-              end;
+                = '*') then
+                FetchMLComment('/*');
 
           end;
         '0'..'9':
-          begin
-            // 1, 12, 1.2, 1.2E3, 1.E2, 1E2, 1.2E-3, 1E+2
-            // beware of 1..2
-            TokenStart := FTokenPos;
-            repeat
-                Inc(FTokenPos);
-            until
-{$ifdef UsePChar}not (FTokenPos[0] in Digits){$else}
-                (FTokenPos > l) or not (s[FTokenPos] in Digits)
-{$endif}
-            ;
-            if
-{$ifdef UsePChar}(FTokenPos[0]='.') and (FTokenPos[1]<>'.'){$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '.') and
-                ((FTokenPos = l) or (s[FTokenPos + 1] <> '.'))
-{$endif}
-            then
-              begin
-                Inc(FTokenPos);
-                while
-{$ifdef UsePChar}FTokenPos[0] in Digits{$else}
-                    (FTokenPos <= l) and (s[FTokenPos] in Digits)
-{$endif}
-                    do
-                    Inc(FTokenPos);
-              end;
-            if
-{$ifdef UsePChar}FTokenPos[0] in ['e', 'E']{$else}
-            (FTokenPos <= l) and (s[FTokenPos] in ['e', 'E'])
-{$endif}
-            then
-              begin
-                Inc(FTokenPos);
-                if
-{$ifdef UsePChar}FTokenPos[0] in ['-','+']{$else}
-                (FTokenPos <= l) and (s[FTokenPos] in ['-', '+'])
-{$endif}
-                then
-                    Inc(FTokenPos);
-                while
-{$ifdef UsePChar}FTokenPos[0] in Digits{$else}
-                    (FTokenPos <= l) and (s[FTokenPos] in Digits)
-{$endif}
-                    do
-                    Inc(FTokenPos);
-              end;
-            SectionLength := FTokenPos - TokenStart;
-            FetchCurTokenString;
-            Result := tkNumber;
-          end;
+            FetchNumber;
         ':':
           begin
             Inc(FTokenPos);
@@ -4440,6 +4625,29 @@ begin
           begin
             Inc(FTokenPos);
             Result := tkAsk;
+            if (
+{$ifdef UsePChar}
+                FTokenPos[0]
+{$else}
+                FTokenPos <= l) and (s[FTokenPos]
+{$endif}
+                = '?') then
+              begin
+                Inc(FTokenPos);
+                Result := tkAskAsk;
+                if (
+    {$ifdef UsePChar}
+                    FTokenPos[0]
+    {$else}
+                    FTokenPos <= l) and (s[FTokenPos]
+    {$endif}
+                    = '=') then
+                  begin
+                    Inc(FTokenPos);
+                    Result := tkAssignAsk;
+                  end
+              end
+
           end;
         ';':
           begin
@@ -4454,52 +4662,60 @@ begin
                 Result := tkLessThan
             else
       {$endif}
-                case
-{$ifdef UsePChar}FTokenPos^{$else}
+            case
+{$ifdef UsePChar}
+                FTokenPos^
+{$else}
                     s[FTokenPos]
 {$endif}
-                    of
-                    '=':
-                      begin
-                        Inc(FTokenPos);
-                        Result := tkLessEqualThan;
-                      end;
-                    '<':
-                      begin
-                        Inc(FTokenPos);
-                        Result := tkshl;
-                        if
-{$ifdef UsePChar}FTokenPos[0]='='{$else}
-                        (FTokenPos <= l) and (s[FTokenPos] = '=')
-                        {$endif}
-                        then
-                          begin
-                            Inc(FTokenPos);
-                            Result := tkAssignshl;
-                          end;
-                      end;
-                    else
-                        Result := tkLessThan;
+                of
+                '=':
+                  begin
+                    Inc(FTokenPos);
+                    Result := tkLessEqualThan;
                   end;
+                '<':
+                  begin
+                    Inc(FTokenPos);
+                    Result := tkshl;
+                    if (
+{$ifdef UsePChar}
+                        FTokenPos[0]
+{$else}
+                            FTokenPos <= l) and (s[FTokenPos]
+{$endif}
+                        = '=') then
+                      begin
+                        Inc(FTokenPos);
+                        Result := tkAssignshl;
+                      end;
+                  end;
+                else
+                    Result := tkLessThan;
+              end;
           end;
         '=':
           begin
             Inc(FTokenPos);
             Result := tkAssign;
-            if
-{$ifdef UsePChar}FTokenPos[0]='='{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '=')
+            if (
+{$ifdef UsePChar}
+                FTokenPos[0]
+{$else}
+                FTokenPos <= l) and (s[FTokenPos]
 {$endif}
-            then
+                = '=') then
               begin
                 Inc(FTokenPos);
                 Result := tkEqual;
               end
-            else if
-{$ifdef UsePChar}FTokenPos[0]='>'{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '>')
+            else if (
+{$ifdef UsePChar}
+                FTokenPos[0]
+{$else}
+                FTokenPos <= l) and (s[FTokenPos]
 {$endif}
-            then
+                = '>') then
               begin
                 Inc(FTokenPos);
                 Result := tkLambda;
@@ -4510,11 +4726,13 @@ begin
           begin
             Inc(FTokenPos);
             Result := tkNot;
-            if
-{$ifdef UsePChar}FTokenPos[0]='='{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '=')
+            if (
+{$ifdef UsePChar}
+                FTokenPos[0]
+{$else}
+                FTokenPos <= l) and (s[FTokenPos]
 {$endif}
-            then
+                = '=') then
               begin
                 Inc(FTokenPos);
                 Result := tkNotEqual;
@@ -4528,39 +4746,43 @@ begin
                 Result := tkGreaterThan
             else
       {$endif}
-                case
-{$ifdef UsePChar}FTokenPos^{$else}
+            case
+{$ifdef UsePChar}
+                FTokenPos^
+{$else}
                     s[FTokenPos]
 {$endif}
-                    of
-                    '=':
-                      begin
-                        Inc(FTokenPos);
-                        Result := tkGreaterEqualThan;
-                      end;
-                    '<':
-                      begin
-                        Inc(FTokenPos);
-                        Result := tkSymmetricalDifference;
-                      end;
-                    '>':
-                      begin
-                        Inc(FTokenPos);
-                        Result := tkshr;
-                        if
-{$ifdef UsePChar}FTokenPos[0]='='{$else}
-                        (FTokenPos <= l) and (s[FTokenPos] = '=')
-                        {$endif}
-                        then
-                          begin
-                            Inc(FTokenPos);
-                            Result := tkAssignshr;
-                          end;
-
-                      end;
-                    else
-                        Result := tkGreaterThan;
+                of
+                '=':
+                  begin
+                    Inc(FTokenPos);
+                    Result := tkGreaterEqualThan;
                   end;
+                '<':
+                  begin
+                    Inc(FTokenPos);
+                    Result := tkSymmetricalDifference;
+                  end;
+                '>':
+                  begin
+                    Inc(FTokenPos);
+                    Result := tkshr;
+                    if (
+{$ifdef UsePChar}
+                        FTokenPos[0]
+{$else}
+                            FTokenPos <= l) and (s[FTokenPos]
+{$endif}
+                        = '=') then
+                      begin
+                        Inc(FTokenPos);
+                        Result := tkAssignshr;
+                      end;
+
+                  end;
+                else
+                    Result := tkGreaterThan;
+              end;
           end;
         '[':
           begin
@@ -4582,14 +4804,16 @@ begin
                 Inc(FTokenPos);
                 Result := tkXor;
                 if
-    {$ifdef UsePChar}FTokenPos[0]='='{$else}
+{$ifdef UsePChar}
+                FTokenPos[0] = '='
+{$else}
                 (FTokenPos <= l) and (s[FTokenPos] = '=')
     {$endif}
                 then
                   begin
                     Inc(FTokenPos);
                     Result := tkAssignXor;
-                  end
+                  end;
               end
             else
                 Result := DoFetchTextToken;
@@ -4615,7 +4839,9 @@ begin
             repeat
                 Inc(FTokenPos);
             until
-{$ifdef UsePChar}not (FTokenPos[0] in IdentChars){$else}
+{$ifdef UsePChar}
+                not (FTokenPos[0] in IdentChars)
+{$else}
                 (FTokenPos > l) or not (s[FTokenPos] in IdentChars)
 {$endif}
             ;
@@ -4640,7 +4866,9 @@ begin
             else
                 Error(nErrInvalidCharacter, SErrInvalidCharacter,
                     [
-{$ifdef UsePChar}FTokenPos[0]{$else}
+{$ifdef UsePChar}
+                    FTokenPos[0]
+{$else}
                     s[FTokenPos]
 {$endif}
                     ]);
@@ -4657,12 +4885,16 @@ end;
 function TCSharpScanner.GetCurColumn: integer;
 begin
     if
-{$ifdef UsePChar}(FTokenPos<>Nil){$else}
+{$ifdef UsePChar}
+    (FTokenPos <> nil)
+{$else}
     FTokenPos > 0
 {$endif}
     then
         Result := FTokenPos
-{$ifdef UsePChar}- PChar(CurLine){$else}
+{$ifdef UsePChar}
+            - PChar(CurLine)
+{$else}
             - 1
 {$endif}
             + FCurColumnOffset
@@ -4839,27 +5071,23 @@ end;
 
 procedure TCSharpScanner.SetCurrentBoolSwitches(const AValue: TBoolSwitches);
 var
-    OldBS, Removed, Added: TBoolSwitches;
+    OldBS: TBoolSwitches;
 begin
     if FCurrentBoolSwitches = AValue then
         Exit;
     OldBS := FCurrentBoolSwitches;
     FCurrentBoolSwitches := AValue;
-    Removed := OldBS - FCurrentBoolSwitches;
-    Added := FCurrentBoolSwitches - OldBS;
 end;
 
 procedure TCSharpScanner.SetCurrentModeSwitches(AValue: TModeSwitches);
 var
-    Old, AddedMS, RemovedMS: TModeSwitches;
+    Old: TModeSwitches;
 begin
     AValue := AValue * AllowedModeSwitches;
     if FCurrentModeSwitches = AValue then
         Exit;
     Old := FCurrentModeSwitches;
     FCurrentModeSwitches := AValue;
-    AddedMS := FCurrentModeSwitches - Old;
-    RemovedMS := Old - FCurrentModeSwitches;
 end;
 
 procedure TCSharpScanner.SetCurrentValueSwitch(V: TValueSwitch; const AValue: string);
@@ -5040,14 +5268,18 @@ begin
     if CurSourceFile.IsEOF then
       begin
         if
-{$ifdef UsePChar}FTokenPos<>nil{$else}
+{$ifdef UsePChar}
+        FTokenPos <> nil
+{$else}
         FTokenPos > 0
 {$endif}
         then
           begin
             FCurLine := '';
             FTokenPos :=
-{$ifdef UsePChar}nil{$else}
+{$ifdef UsePChar}
+                nil
+{$else}
                 -1
 {$endif}
             ;
@@ -5061,7 +5293,9 @@ begin
       begin
         FCurLine := CurSourceFile.ReadLine;
         FTokenPos :=
-{$ifdef UsePChar}PChar(CurLine){$else}
+{$ifdef UsePChar}
+            PChar(CurLine)
+{$else}
             1
 {$endif}
         ;

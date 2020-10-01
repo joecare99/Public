@@ -5804,7 +5804,7 @@ end;
 
 function TNullExpr.GetDeclaration(full: Boolean): string;
 begin
-  Result:='Nil';
+  Result:='null';
   if full then ;
 end;
 
@@ -5812,7 +5812,7 @@ end;
 
 function TInheritedExpr.GetDeclaration(full: Boolean): string;
 begin
-  Result:='Inherited';
+  Result:='base';
   if full then ;
 end;
 
@@ -5820,7 +5820,7 @@ end;
 
 function TThisExpr.GetDeclaration(full: Boolean): string;
 begin
-  Result:='Self';
+  Result:='this';
   if full then ;
 end;
 

@@ -2467,7 +2467,7 @@ begin
   case t of
   //  tkDot:
   //    Result:=5;
-    tknot,tkAt:
+    tknot,tkKomplement:
       Result:=4;
     tkMul, tkDivision, tkmod, tkand, tkShl,tkShr, tkas, tkPower, tkis:
       // Note that "is" has same precedence as "and" in Delphi and fpc, even though
@@ -2501,7 +2501,7 @@ var
   NotBinary : Boolean;
 
 const
-  PrefixSym = [tkPlus, tkMinus, tknot, tkAt, tkKomplement]; // + - not @ @@
+  PrefixSym = [tkPlus, tkMinus, tknot, tkKomplement]; // + - ! ~
   BinaryOP  = [tkMul, tkDivision, tkmod,  tkDotDot,
                tkand, tkShl,tkShr, tkas, tkPower,
                tkPlus, tkMinus, tkor, tkSingleAnd,tkSingleOr, tkxor, tkSymmetricalDifference,
