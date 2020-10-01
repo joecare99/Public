@@ -3,7 +3,7 @@ program fpcTestPassRc;
 {$mode objfpc}{$H+}
 
 uses
-  Interfaces, Forms, GuiTestRunner, TestPassRc, PasWrite, TestCShScanner;
+  Interfaces, Forms, GuiTestRunner, TestPassRc, tcPasWriteStatements;
 
 {$R *.res}
 

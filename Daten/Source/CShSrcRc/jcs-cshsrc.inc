@@ -5,6 +5,7 @@
   {$define HasInt64}
   {$define UseAnsiStrings}
   {$define HasStreams}
+  {$define UsePChar}
   {$IF FPC_FULLVERSION<30101}
     {$define EmulateArrayInsert}
   {$endif}
