@@ -1,24 +1,23 @@
-object Form1: TForm1
+object frmLabyDemo3d: TfrmLabyDemo3d
   Left = 0
   Height = 769
   Top = 0
   Width = 1014
   ActiveControl = Btn_Create
-  Caption = 'Form1'
+  Caption = 'frmLabyDemo3d'
   ClientHeight = 769
   ClientWidth = 1014
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
-  LCLVersion = '2.0.10.0'
-  object imgResult: TImage
+  object imgDisplay: TImage
     Left = 0
     Height = 769
     Top = 0
     Width = 792
     Align = alClient
-    OnClick = imgResultClick
+    OnClick = imgDisplayClick
   end
   object pnlRight: TPanel
     Left = 792
@@ -130,13 +129,13 @@ object Form1: TForm1
       Align = alBottom
       Anchors = [akRight, akBottom]
     end
-    object Panel1: TPanel
+    object pnlRightClient: TPanel
       Left = 1
       Height = 420
       Top = 178
       Width = 220
       Align = alClient
-      Caption = 'Panel1'
+      Caption = 'pnlRightClient'
       ClientHeight = 420
       ClientWidth = 220
       TabOrder = 1
@@ -228,13 +227,13 @@ object Form1: TForm1
         TabOrder = 7
         Text = '100'
       end
-      object Button1: TButton
+      object btnShow: TButton
         Left = 56
         Height = 25
         Top = 93
         Width = 75
-        Caption = 'Button1'
-        OnClick = Button1Click
+        Caption = 'btnShow'
+        OnClick = btnShowClick
         TabOrder = 8
       end
     end

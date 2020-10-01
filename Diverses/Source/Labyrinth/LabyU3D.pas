@@ -350,7 +350,9 @@ end;
 var
     pCanvas: TCanvas;
     cFactX, cFactY: double;
+    Darkshaddow,
     DrawShaddow:boolean;
+    WayWidth :double= 1.1;
 
 procedure TLaby.btnPrint2Click(Sender: TObject);
 begin
@@ -374,6 +376,7 @@ begin
    {$ENDIF}
 end;
 
+
 procedure TLaby.btnPrint3Click(Sender: TObject);
 begin
   {$IFNDEF FPC}
@@ -390,10 +393,15 @@ begin
          cFactX := printer.canvas.cliprect.Width / (makelaby.LabyBM_Width + 1);
          cFactY := printer.Canvas.cliprect.Height / makelaby.LabyBM_Length;
          printer.Canvas.Pen.Width:=trunc(0.1 *cFactY)+1;
+         Darkshaddow:=false;;
          DrawShaddow := true;
          makelaby.LabyCrawl(DrawRoom2,true,-1);
          DrawShaddow := false;
          makelaby.LabyCrawl(DrawRoom2,true,2);
+         DrawShaddow := true;
+         Darkshaddow:=true;
+         makelaby.LabyCrawl(DrawRoom2,true,4);
+         DrawShaddow := false;
          makelaby.LabyCrawl(DrawRoom2,true,3);
          makelaby.LabyCrawl(DrawRoom2,true,4);
          Printer.EndDoc;
@@ -2263,7 +2271,7 @@ begin
                     trunc((yy + zz * zf) * cFactY));
 end;
 
-const PenWidth = 0.4;
+
 begin
     if assigned(pCanvas) then
       begin
@@ -2271,21 +2279,23 @@ begin
           begin
         // Zeichne Schatten
         pCanvas.pen.Mode:=pmCopy;
-        for j := 5 downto 0 do
+
+        for j := 10 downto 0 do
+          if not Darkshaddow or (j <5) then
           begin
-        pCanvas.pen.width:=trunc((PenWidth-0.15 +j*0.05)*cFactY)+2;
-        pCanvas.pen.color :=RGB(j*40,j*40,j*40);
+        pCanvas.pen.width:=trunc((WayWidth*(1.0+(j-5)*(room.Ort.z-2)*0.06))*cFactY)+2;
+        pCanvas.pen.color :=RGB(j*25,j*25,j*25);
         for i := 0 to high(room.FFGIndex) do
           if room.FFGIndex[i] >=0 then
           begin
             pInVect := Dir3D22[i];
-            pCanvas.line(DrawPoint(room.Ort,Dir3D22[0],0.5,0.1),DrawPoint(room.Ort,pInvect,0.5+(5-j)*0.025,0.1));
+            pCanvas.line(DrawPoint(room.Ort,Dir3D22[0],0.5,0.1),DrawPoint(room.Ort,pInvect,0.5+(10-j)*0.03*(room.Ort.z-2) ,0.1));
         end;
           end;
         end else begin
         // Zeichne Umriss
         pCanvas.pen.color :=clBlack;
-        pCanvas.pen.width:=trunc(PenWidth*cFactY)+3;
+        pCanvas.pen.width:=trunc(WayWidth*cFactY*1.01)+1;
         pCanvas.pen.Mode:=pmCopy;
         for i := 0 to high(room.FFgindex) do
           if room.FFGIndex[i] >=0 then
@@ -2295,23 +2305,23 @@ begin
         end;
 
         // Zeichne Weg1
-        pCanvas.pen.width:=trunc(PenWidth*cFactY);
+        pCanvas.pen.width:=trunc(WayWidth*cFactY);
         pCanvas.pen.Mode:=pmCopy;
 
-        pCanvas.pen.color :=RGBToColor(room.Ort.z*55,room.Ort.z*55,room.Ort.z*55);
+        pCanvas.pen.color :=RGBToColor(room.Ort.z*63,room.Ort.z*63,room.Ort.z*63);
         for i := 0 to high(room.FFGIndex) do
           if room.FFGIndex[i] >=0 then
           begin
             pInVect := Dir3D22[i];
-            pCanvas.Line(DrawPoint(room.Ort,Dir3D22[0],0.5,-0.2),DrawPoint(room.Ort,pInvect,0.25,-0.2));
+            pCanvas.Line(DrawPoint(room.Ort,Dir3D22[0],0.5,-0.2),DrawPoint(room.Ort,pInvect,0.25+WayWidth*0.1,-0.2));
         end;
 
         for i := 0 to high(room.FFGIndex) do
           if room.FFGIndex[i] >=0 then
           try
             pInVect := Dir3D22[i];
-            pCanvas.pen.color :=RGBToColor(room.Ort.z*55+pInvect.z*20,room.Ort.z*55+pInvect.z*20,room.Ort.z*55+pInvect.z*20);
-            pCanvas.Line(DrawPoint(room.Ort,pInvect,0.25,-0.2),DrawPoint(room.Ort,pInvect,0.55,-0.2));
+            pCanvas.pen.color :=RGBToColor(room.Ort.z*63+pInvect.z*22,room.Ort.z*63+pInvect.z*22,room.Ort.z*63+pInvect.z*22);
+            pCanvas.Line(DrawPoint(room.Ort,pInvect,0.25+WayWidth*0.1,-0.2),DrawPoint(room.Ort,pInvect,0.51,-0.2));
           except
           end;
         end;
