@@ -569,7 +569,35 @@ procedure TfrmLabyDemo3d.imgDisplayClick(Sender: TObject);
 
 var
     I, J, imax: integer;
-    hp: T3DPoint;
+    jj :single;
+    ShadowSpread:single;
+    hp, pInVect: T3DPoint;
+    pCanvas: TCanvas;
+    room: TLbyRoom;
+
+const
+    cFactX:double = 30.0;
+    cFactY: double = 30.0;
+    WayWidth: double = 1.1;
+
+    function GetZ(Ort, v: T3dpoint; vf: single): single; inline;
+
+      begin
+          Result := Ort.z + vf * v.z - 2.0;
+      end;
+
+
+      function DrawPoint(Ort, v: T3dpoint; vf, zf: single): Tpoint; inline;
+
+      var
+          xx, yy, zz: double;
+      begin
+          xx := Ort.x + vf * v.x;
+          yy := Ort.y + vf * v.y;
+          zz := Ort.z + vf * v.z - 2.0;
+          Result := point(trunc((xx + zz * zf) * cFactX), trunc(
+              (yy + zz * zf) * cFactY));
+      end;
 
 begin
 
@@ -591,6 +619,33 @@ begin
           end;
         imgDisplay.Update;
       end;
+    pCanvas := imgDisplay.Canvas;
+    pInVect := Dir3D22[10];
+    room := TLbyRoom.Create(nil,T3DPoint.Create());
+    room.Ort.Copy(0,15,4);
+    for I := 0 to 10 do
+       begin
+    // test Shadow
+         room.Ort.x := I*2;
+         ShadowSpread := I * 0.1;
+          for j := 19 downto 0 do
+                          begin
+                            jj := j * 0.05;
+                            pCanvas.pen.color := RGB(trunc(jj * 255),trunc(jj * 255),trunc(jj * 255));
+{                            for i := 0 to high(room.FFGIndex) do
+                                if room.FFGIndex[i] >= 0 then
+                                  begin
+                                    pInVect := Dir3D22[i]; }
+                                    pCanvas.pen.Width := trunc((WayWidth * (1.0 + (jj - 0.5) * getZ(room.Ort,pInVect,0.125) * ShadowSpread)) * cFactY) + 2;
+                                    pCanvas.line(DrawPoint(room.Ort, pInVect, 0.0, 0.1),
+                                        DrawPoint(room.Ort, pInvect, 0.25,0.1) );
+                                    pCanvas.pen.Width := trunc((WayWidth * (1.0 + (jj - 0.5) * getZ(room.Ort,pInVect,0.375) * ShadowSpread)) * cFactY) + 2;
+                                    pCanvas.line(DrawPoint(room.Ort, pInVect, 0.25, 0.1),
+                                        DrawPoint(room.Ort, pInvect, 0.5 + (1.0 - jj) * 0.15 * getZ(room.Ort,pInVect,0.375), 0.1));
+//                                  end;
+                          end;
+       end;
+    FreeAndNil(room);
 end;
 
 procedure TfrmLabyDemo3d.Timer1Timer(Sender: TObject);

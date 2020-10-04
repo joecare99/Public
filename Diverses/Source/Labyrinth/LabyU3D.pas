@@ -126,8 +126,8 @@ type
         Labyfinished: boolean;
 
         procedure DrawRoom(Sender: TObject; aRoom: TLbyRoom; inDir, outDir: integer);
-        procedure DrawRoom2(Sender: TObject; room: TLbyRoom; inDir,
-          outDir: integer);
+        procedure DrawRoom2(Sender: TObject; room: TLbyRoom;
+            inDir, outDir: integer);
         function GetEingang: TLbyRoom;
         function GetRoomIndex(idx: T3DPoint): TArrayOfRooms;
         procedure SaveLabyBitmap(Lfilename: string);
@@ -241,8 +241,8 @@ type
         property LBpixel[lb: T3DPoint]: boolean read getLBPixel write PutLBPixel;
         function NewRoomWay(Room: TLbyRoom; dir: shortint; flag2: boolean): TLbyRoom;
         procedure InitResultBitmap;
-        function FindNewWay(Point: T3DPoint; dDir: shortint;
-            var dir: shortint; out flag2: boolean; dp: T3DPoint): boolean;
+        function FindNewWay(Room: TLbyRoom; dDir: shortint;
+            var dir: shortint; out flag2: boolean): boolean;
     protected
         property CCount: integer read FCount;
         procedure Execute; override;
@@ -350,9 +350,8 @@ end;
 var
     pCanvas: TCanvas;
     cFactX, cFactY: double;
-    Darkshaddow,
-    DrawShaddow:boolean;
-    WayWidth :double= 1.1;
+    Darkshaddow, DrawShaddow: boolean;
+    WayWidth: double = 0.9;
 
 procedure TLaby.btnPrint2Click(Sender: TObject);
 begin
@@ -529,8 +528,9 @@ begin
                             while (flag) and (i <= 12) do
                               begin
                                 tc :=
-                                    pixels[ZpStack.Point.x + (dir3d22[i].x * j) div 2,
-                                    ZpStack.Point.y + (dir3d22[i].y * j) div 2];
+                                    pixels[ZpStack.Point.x +
+                                    (dir3d22[i].x * j) div 2, ZpStack.Point.y +
+                                    (dir3d22[i].y * j) div 2];
                                 flag := flag and ((tc = c) or (tc = ocol));
                                 Inc(i);
                               end;
@@ -767,6 +767,8 @@ begin
         dir := 0;
         while True do
           begin
+
+
             // bestimme eine Richtung und eine Drehung
             if Point.x = 0 then // Startpunkt
               begin
@@ -802,7 +804,7 @@ begin
             Inc(wcount);
             dp.copy(Point);
 
-            if FindNewWay(Point, dDir, dir, flag2, dp) then
+            if FindNewWay(room, dDir, dir, flag2) then
               begin
                 // zeichne Linie als weg
                 gl := dir27[dir].glen;
@@ -854,30 +856,35 @@ begin
       end;
 end;
 
-function TMakeLaby.FindNewWay(Point: T3DPoint; dDir: shortint;
-    var dir: shortint; out flag2: boolean; dp: T3DPoint): boolean;
+function TMakeLaby.FindNewWay(Room: TLbyRoom; dDir: shortint;
+  var dir: shortint; out flag2: boolean): boolean;
 var
-    i: Tcolor;
-    j: Tcolor;
-    tp: T3DPoint;
+    i: integer;
+    j: integer;
+    tp,dp: T3DPoint;
+
 begin
     Result := False;
     i := 0;
     tp := T3DPoint.init(nil);
+    dp := T3DPoint.init(nil);
     // suche einen Freien Platz um den Punkt
     while not Result and (i < high(dir27)) do
       begin
         // Berechne zu testenden Punkt
-        dp.copy(Point);
+        dp.copy(Room.Ort);
         dp.Add(dir27[dir]);
-        j := 0;
         Result := dir > 0;
+        for j in [1,11,13,23,25,35] do
+          Result := result and
+            not Assigned(room.Gang[(dir+j+high(dir27)-1) mod high(dir27)+1]);
+        j := 0;
         // Teste ob Punkt und alle 26 umliegenden Punkte frei sind
         while (j <= high(Dir3D15)) and Result do
           begin
-            if (tp.copy(dir27[dir]).add(Dir3D15[j]).MLen > 1) or (dir27[dir].z <> 0) then
+            if (tp.copy(dir27[dir]).add(Dir3D15[j]).MLen > 1) then
               begin
-                tp.add(Point);
+                tp.add(room.ort);
                 Result := Result and (not LBpixel[tp]);
               end;
             Inc(j);
@@ -893,6 +900,7 @@ begin
         i := i + 1;
       end;
     tp.Free;
+    dp.free;
 end;
 
 procedure TMakeLaby.InitResultBitmap;
@@ -1374,7 +1382,8 @@ begin
                         (LRoom.Ort.x + dir27[lOutDir].x) * dFact,
                         (LRoom.Ort.y + dir27[lOutDir].y) * dFact);
 
-                    if assigned(Callback) and (not Foreward or (lInDir = Lroom.EDir)) then
+                    if assigned(Callback) and (not Foreward or
+                        (lInDir = Lroom.EDir)) then
                         Callback(self, LRoom, lInDir, lOutDir);
                   end;
 
@@ -1521,24 +1530,28 @@ begin
                         (trunc((LRoom.Ort.x + dir27[LTdir].x * 0.5 +
                             ZFact * (LRoom.Ort.z + dir27[LTdir].z * 0.5)) * cFactX),
                             trunc(
-                            (LRoom.Ort.y + dir27[LTdir].y * 0.5 + ZFact *
-                            (LRoom.Ort.z + dir27[LTdir].z * 0.5)) * cFactY));
+                            (LRoom.Ort.y + dir27[LTdir].y * 0.5 +
+                            ZFact * (LRoom.Ort.z + dir27[LTdir].z * 0.5)) * cFactY));
                         Canvas.LineTo
                         (trunc(
-                            (LRoom.Ort.x + dir27[LTdir].x * 0.25 + ZFact * LRoom.Ort.z) * cFactX),
+                            (LRoom.Ort.x + dir27[LTdir].x * 0.25 +
+                            ZFact * LRoom.Ort.z) * cFactX),
                             trunc(
-                            (LRoom.Ort.y + dir27[LTdir].y * 0.25 + ZFact * LRoom.Ort.z) * cFactY));
+                            (LRoom.Ort.y + dir27[LTdir].y * 0.25 +
+                            ZFact * LRoom.Ort.z) * cFactY));
                         Canvas.LineTo
                         (trunc(
-                            (LRoom.Ort.x + dir27[LSdir].x * 0.25 + ZFact * LRoom.Ort.z) * cFactX),
+                            (LRoom.Ort.x + dir27[LSdir].x * 0.25 +
+                            ZFact * LRoom.Ort.z) * cFactX),
                             trunc(
-                            (LRoom.Ort.y + dir27[LSdir].y * 0.25 + ZFact * LRoom.Ort.z) * cFactY));
+                            (LRoom.Ort.y + dir27[LSdir].y * 0.25 +
+                            ZFact * LRoom.Ort.z) * cFactY));
                         Canvas.LineTo
                         (trunc((LRoom.Ort.x + dir27[LSdir].x * 0.5 +
                             ZFact * (LRoom.Ort.z + dir27[LSdir].z * 0.5)) * cFactX),
                             trunc(
-                            (LRoom.Ort.y + dir27[LSdir].y * 0.5 + ZFact *
-                            (LRoom.Ort.z + dir27[LSdir].z * 0.5)) * cFactY));
+                            (LRoom.Ort.y + dir27[LSdir].y * 0.5 +
+                            ZFact * (LRoom.Ort.z + dir27[LSdir].z * 0.5)) * cFactY));
                         Canvas.pen.Width := trunc(WaySize * cFactX);
                         Canvas.pen.Color := FillColor;
                         Canvas.MoveTo
@@ -2233,7 +2246,8 @@ begin
                 pInVect := Dir3D22[(i - 1) mod 12 + 1];
                 pCanvas.LineTo
                 (trunc((aRoom.Ort.x + GWidth * (0.8 * pInVect.x - pInVect.y)) * cFactX),
-                    trunc((aRoom.Ort.y + GWidth * (0.8 * pInVect.y + pInVect.x)) * cFactY));
+                    trunc((aRoom.Ort.y + GWidth * (0.8 * pInVect.y + pInVect.x)) *
+                    cFactY));
               end;
         if (outdir - inDir + 12) mod 12 > 8 then
             pCanvas.LineTo
@@ -2254,78 +2268,180 @@ begin
       end;
 end;
 
-procedure TLaby.DrawRoom2(Sender: TObject; room: TLbyRoom; inDir,
-  outDir: integer);
+procedure TLaby.DrawRoom2(Sender: TObject; room: TLbyRoom; inDir, outDir: integer);
 
-var pInVect:T3DPoint;
-  i, j: Integer;
+Const ShadowSpread= 0.2;
+var
+    pInVect, pOutVect: T3DPoint;
+    i, k: integer;
+    jj, zz: single;
 
-function DrawPoint(Ort,v:T3dpoint;vf,zf:single):Tpoint;inline;
+    function GetZ(Ort, v: T3dpoint; vf: single): single; inline;
 
-var xx,yy,zz :double;
-begin
-    xx := Ort.x + vf * v.x;
-    yy := Ort.y + vf * v.y;
-    zz := Ort.z + vf * v.z-2.0;
-    result := point(trunc((xx + zz * zf) * cFactX),
-                    trunc((yy + zz * zf) * cFactY));
-end;
+    begin
+        Result := Ort.z + vf * v.z - 2.0;
+    end;
 
+
+    function DrawPoint(Ort, v: T3dpoint; vf, zf: single): Tpoint; inline;
+
+    var
+        xx, yy, zz: double;
+    begin
+        xx := Ort.x + vf * v.x;
+        yy := Ort.y + vf * v.y;
+        zz := Ort.z + vf * v.z - 2.0;
+        Result := point(trunc((xx + zz * zf) * cFactX), trunc(
+            (yy + zz * zf) * cFactY));
+    end;
 
 begin
     if assigned(pCanvas) then
-      begin
+        if (room.FDirCount <> 2) and (abs((indir - outdir + 36) mod 12) > 1) then
+          begin
+            if DrawShaddow then
+              begin
+                // Zeichne Schatten
+                pCanvas.pen.Mode := pmCopy;
+
+                for k := 19 downto 0 do
+                    if not Darkshaddow or (k <= 10) then
+                      begin
+                        jj := k * 0.05;
+                        pCanvas.pen.color := RGB(trunc(jj * 255),trunc(jj * 255),trunc(jj * 255));
+                        for i := 0 to high(room.FFGIndex) do
+                            if room.FFGIndex[i] >= 0 then
+                              begin
+                                pInVect := Dir3D22[i];
+                                pCanvas.pen.Width := trunc((WayWidth * (1.0 + (jj - 0.5) * getZ(room.Ort,pInVect,0.125) * ShadowSpread)) * cFactY) + 2;
+                                pCanvas.line(DrawPoint(room.Ort, pInVect, 0.0, 0.1),
+                                    DrawPoint(room.Ort, pInvect, 0.25,0.1) );
+                                pCanvas.pen.Width := trunc((WayWidth * (1.0 + (jj - 0.5) * getZ(room.Ort,pInVect,0.375) * ShadowSpread)) * cFactY) + 2;
+                                pCanvas.line(DrawPoint(room.Ort, pInVect, 0.25, 0.1),
+                                    DrawPoint(room.Ort, pInvect, 0.5 + (1.0 - jj) * 0.15 * getZ(room.Ort,pInVect,0.375), 0.1));
+                              end;
+                      end;
+              end
+            else
+              begin
+                // Zeichne Umriss
+                pCanvas.pen.color := clBlack;
+                pCanvas.pen.Width := trunc(WayWidth * cFactY * 1.01) + 1;
+                pCanvas.pen.Mode := pmCopy;
+                for i := 0 to high(room.FFgindex) do
+                    if room.FFGIndex[i] >= 0 then
+                      begin
+                        pInVect := Dir3D22[i];
+                        pCanvas.Line(DrawPoint(room.Ort, Dir3D22[0], 0.5, -0.2),
+                            DrawPoint(room.Ort, pInvect, 0.5, -0.2));
+                      end;
+
+                // Zeichne Weg1
+                pCanvas.pen.Width := trunc(WayWidth * cFactY);
+                pCanvas.pen.Mode := pmCopy;
+
+                pCanvas.pen.color := RGBToColor(room.Ort.z * 63, room.Ort.z * 63, room.Ort.z * 63);
+                for i := 0 to high(room.FFGIndex) do
+                    if room.FFGIndex[i] >= 0 then
+                      begin
+                        pInVect := Dir3D22[i];
+                        pCanvas.Line(DrawPoint(room.Ort, Dir3D22[0], 0.5, -0.2),
+                            DrawPoint(room.Ort, pInvect, 0.25 + WayWidth * 0.1, -0.2));
+                      end;
+
+                for i := 0 to high(room.FFGIndex) do
+                    if room.FFGIndex[i] >= 0 then
+                          try
+                            pInVect := Dir3D22[i];
+                            pCanvas.pen.color :=
+                                RGBToColor(room.Ort.z * 63 + pInvect.z * 22, room.Ort.z * 63 + pInvect.z * 22,
+                                room.Ort.z * 63 + pInvect.z * 22);
+                            pCanvas.Line(DrawPoint(room.Ort, pInvect, 0.25 + WayWidth * 0.1, -0.2),
+                                DrawPoint(room.Ort, pInvect, 0.51, -0.2));
+                          except
+                          end;
+              end;
+          end
+        else
         if DrawShaddow then
           begin
-        // Zeichne Schatten
-        pCanvas.pen.Mode:=pmCopy;
+            pInVect := Dir3D22[inDir];
+            pOutVect := Dir3D22[outDir];
 
-        for j := 10 downto 0 do
-          if not Darkshaddow or (j <5) then
+            // Zeichne Schatten
+            pCanvas.pen.Mode := pmMerge;
+
+            for k := 19 downto 0 do
+                if not Darkshaddow or (k <= 10) then
+                  begin
+                    jj := k * 0.05;
+                   pCanvas.pen.color := RGB(trunc(jj * 255),trunc(jj * 255),trunc(jj * 255));
+                        pCanvas.pen.Width := trunc(
+                        (WayWidth * (1.0 + (jj - 0.5) * getZ(room.Ort, pInVect, 0.375) * ShadowSpread)) * cFactY) + 2;
+                    pCanvas.line(DrawPoint(room.Ort, pInVect, 0.25, 0.1),
+                        DrawPoint(room.Ort, pInvect, 0.5 + (1.0 - jj) * 0.15 * getZ(room.Ort,pInVect,0.375), 0.1));
+                    pCanvas.pen.Width := trunc(
+                        (WayWidth * (1.0 + (jj - 0.5) * getZ(room.Ort, pInVect, 0) * ShadowSpread)) * cFactY) + 2;
+                    pCanvas.line(DrawPoint(room.Ort, pInVect, 0.25, 0.1),
+                        DrawPoint(room.Ort, pOutVect, 0.25, 0.1));
+                    pCanvas.pen.Width := trunc(
+                        (WayWidth * (1.0 + (jj - 0.5) * getZ(room.Ort, pInVect, 0.375) * ShadowSpread)) * cFactY) + 2;
+                    pCanvas.line(DrawPoint(room.Ort, pOutVect, 0.25, 0.1),
+                        DrawPoint(room.Ort, pOutVect, 0.5 + (1.0 - jj) * 0.15 * getZ(room.Ort,poutVect,0.375), 0.1));
+                  end;
+          end
+        else
           begin
-        pCanvas.pen.width:=trunc((WayWidth*(1.0+(j-5)*(room.Ort.z-2)*0.06))*cFactY)+2;
-        pCanvas.pen.color :=RGB(j*25,j*25,j*25);
-        for i := 0 to high(room.FFGIndex) do
-          if room.FFGIndex[i] >=0 then
-          begin
-            pInVect := Dir3D22[i];
-            pCanvas.line(DrawPoint(room.Ort,Dir3D22[0],0.5,0.1),DrawPoint(room.Ort,pInvect,0.5+(10-j)*0.03*(room.Ort.z-2) ,0.1));
-        end;
+            pInVect := Dir3D22[inDir];
+            pOutVect := Dir3D22[outDir];
+
+            // Zeichne Umriss
+            pCanvas.pen.color := clBlack;
+            pCanvas.pen.Width := trunc(WayWidth * cFactY * 1.01) + 1;
+            pCanvas.pen.Mode := pmCopy;
+            pCanvas.Line(DrawPoint(room.Ort, pInVect, 0.5, -0.2),
+                DrawPoint(room.Ort, pInvect, 0.25, -0.2));
+            pCanvas.Line(DrawPoint(room.Ort, pInVect, 0.25, -0.2),
+                DrawPoint(room.Ort, pOutVect, 0.25, -0.2));
+            pCanvas.Line(DrawPoint(room.Ort, pOutVect, 0.25, -0.2),
+                DrawPoint(room.Ort, pOutVect, 0.5, -0.2));
+
+            if pInVect.z<=pOutVect.z then
+            begin
+            // Zeichne Weg1
+            pCanvas.pen.Width := trunc(WayWidth * cFactY);
+            zz := GetZ(room.Ort, pInVect, 0.375)+2.0;
+            pCanvas.pen.color := RGBToColor(trunc(zz * 63), trunc(zz * 63), trunc(zz * 63));
+            pCanvas.Line(DrawPoint(room.Ort, pInvect, 0.51, -0.2),
+                DrawPoint(room.Ort, pInvect, 0.25, -0.2));
+            zz := GetZ(room.Ort, pInVect, 0.0)+2.0;
+            pCanvas.pen.color := RGBToColor(trunc(zz * 63), trunc(zz * 63), trunc(zz * 63));
+            pCanvas.Line(DrawPoint(room.Ort, pInvect, 0.25, -0.2),
+                DrawPoint(room.Ort, pOutVect, 0.25, -0.2));
+            zz := GetZ(room.Ort, pOutVect, 0.375)+2.0;
+            pCanvas.pen.color := RGBToColor(trunc(zz * 63), trunc(zz * 63), trunc(zz * 63));
+            pCanvas.Line(DrawPoint(room.Ort, pOutVect, 0.25, -0.2),
+                DrawPoint(room.Ort, pOutVect, 0.51, -0.2));
+            end
+             else
+             begin
+             // Zeichne Weg1
+             pCanvas.pen.Width := trunc(WayWidth * cFactY);
+             zz := GetZ(room.Ort, pOutVect, 0.375)+2.0;
+             pCanvas.pen.color := RGBToColor(trunc(zz * 63), trunc(zz * 63), trunc(zz * 63));
+             pCanvas.Line(DrawPoint(room.Ort, pOutVect, 0.51, -0.2),
+                 DrawPoint(room.Ort, pOutVect, 0.25, -0.2));
+             zz := GetZ(room.Ort, pInVect, 0.0)+2.0;
+             pCanvas.pen.color := RGBToColor(trunc(zz * 63), trunc(zz * 63), trunc(zz * 63));
+             pCanvas.Line(DrawPoint(room.Ort, pInvect, 0.25, -0.2),
+                 DrawPoint(room.Ort, pOutVect, 0.25, -0.2));
+             zz := GetZ(room.Ort, pInVect, 0.375)+2.0;
+             pCanvas.pen.color := RGBToColor(trunc(zz * 63), trunc(zz * 63), trunc(zz * 63));
+             pCanvas.Line(DrawPoint(room.Ort, pInVect, 0.25, -0.2),
+                 DrawPoint(room.Ort, pInVect, 0.51, -0.2));
+             end
           end;
-        end else begin
-        // Zeichne Umriss
-        pCanvas.pen.color :=clBlack;
-        pCanvas.pen.width:=trunc(WayWidth*cFactY*1.01)+1;
-        pCanvas.pen.Mode:=pmCopy;
-        for i := 0 to high(room.FFgindex) do
-          if room.FFGIndex[i] >=0 then
-          begin
-            pInVect := Dir3D22[i];
-            pCanvas.Line(DrawPoint(room.Ort,Dir3D22[0],0.5,-0.2),DrawPoint(room.Ort,pInvect,0.5,-0.2));
-        end;
 
-        // Zeichne Weg1
-        pCanvas.pen.width:=trunc(WayWidth*cFactY);
-        pCanvas.pen.Mode:=pmCopy;
-
-        pCanvas.pen.color :=RGBToColor(room.Ort.z*63,room.Ort.z*63,room.Ort.z*63);
-        for i := 0 to high(room.FFGIndex) do
-          if room.FFGIndex[i] >=0 then
-          begin
-            pInVect := Dir3D22[i];
-            pCanvas.Line(DrawPoint(room.Ort,Dir3D22[0],0.5,-0.2),DrawPoint(room.Ort,pInvect,0.25+WayWidth*0.1,-0.2));
-        end;
-
-        for i := 0 to high(room.FFGIndex) do
-          if room.FFGIndex[i] >=0 then
-          try
-            pInVect := Dir3D22[i];
-            pCanvas.pen.color :=RGBToColor(room.Ort.z*63+pInvect.z*22,room.Ort.z*63+pInvect.z*22,room.Ort.z*63+pInvect.z*22);
-            pCanvas.Line(DrawPoint(room.Ort,pInvect,0.25+WayWidth*0.1,-0.2),DrawPoint(room.Ort,pInvect,0.51,-0.2));
-          except
-          end;
-        end;
-      end;
 end;
 
 procedure TLaby.OnProgress(Sender: TObject; Progress: double);
