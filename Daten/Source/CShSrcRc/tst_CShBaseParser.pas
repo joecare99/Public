@@ -44,17 +44,15 @@ Type
     FImplementation : Boolean;
     FEndSource: Boolean;
     FUseImplementation: Boolean;
-    function GetPL: TCShLibrary;
-    function GetPP: TCShProgram;
     procedure CleanupParser;
     procedure SetupParser;
   protected
+    FHasNamespace: Boolean;
     procedure SetUp; override;
     procedure TearDown; override;
     procedure CreateEngine(var TheEngine: TCShTreeContainer); virtual;
     Procedure StartUnit(AUnitName : String);
-    Procedure StartProgram(AFileName : String; AIn : String = ''; AOut : String = '');
-    Procedure StartLibrary(AFileName : String);
+    Procedure StartProgram(AFileName : String);
     Procedure UsingClause(Namespaces : Array of string);
     Procedure StartImplementation;
     Procedure EndSource;
@@ -93,8 +91,6 @@ Type
     Property Parser : TTestCShParser read FParser ;
     Property Source : TStrings Read FSource;
     Property Module : TCShModule Read FModule;
-    Property CShProgram : TCShProgram Read GetPP;
-    Property CShLibrary : TCShLibrary Read GetPL;
     Property Declarations : TCShDeclarations read FDeclarations Write FDeclarations;
     Property Definition : TCShElement Read FDefinition Write FDefinition;
     // If set, Will be freed in teardown
@@ -414,16 +410,6 @@ begin
     end;
 end;
 
-function TTestParser.GetPP: TCShProgram;
-begin
-  Result:=Module as TCShProgram;
-end;
-
-function TTestParser.GetPL: TCShLibrary;
-begin
-  Result:=Module as TCShLibrary;
-end;
-
 procedure TTestParser.SetupParser;
 
 begin
@@ -527,31 +513,26 @@ begin
   If (AUnitName='') then
     AUnitName:=ExtractFileUnitName(MainFilename);
   FFileName:=Format(rsCShFilename, [AUnitName]);
+  FImplementation:=True;
+  add('using system;');
+  add('namespace '+AUnitName);
+  add('{');
+  FHasNamespace := true;
+  add('class '+AUnitName+'Class');
+  add('{');
 end;
 
-procedure TTestParser.StartProgram(AFileName : String; AIn : String = ''; AOut : String = '');
+procedure TTestParser.StartProgram(AFileName : String);
 begin
   FIsUnit:=False;
   If (AFileName='') then
-    AFileName:='proga';
-  FFileName:=Format(rsCShFilename, [AFileName]);
-  If (AIn<>'') then
-    begin
-    AFileName:=AFileName+'('+AIn;
-    if (AOut<>'') then
-      AFileName:=AFileName+','+AOut;
-    AFileName:=AFileName+')';
-    end;
-  FImplementation:=True;
-end;
-
-procedure TTestParser.StartLibrary(AFileName: String);
-begin
-  FIsUnit:=False;
-  If (AFileName='') then
-    AFileName:='liba';
+    AFileName:='aFile';
   FFileName:=Format(rsCShFilename, [AFileName]);
   FImplementation:=True;
+  add('using system;');
+  FHasNamespace := false;
+  add('class '+ExtractFilenameOnly(AFileName));
+  add('{');
 end;
 
 procedure TTestParser.UsingClause(Namespaces: array of string);
@@ -577,7 +558,10 @@ procedure TTestParser.EndSource;
 begin
   if Not FEndSource then
     begin
-    Add('}');
+    Add('}'); // Main
+    Add('}'); // Class
+    if FHasNamespace then
+      Add('}'); // Namespace
     FEndSource:=True;
     end;
 end;
@@ -607,19 +591,20 @@ begin
     FFileName:=MainFilename;
   FResolver.AddStream(FFileName,TStringStream.Create(FSource.Text));
   FScanner.OpenFile(FFileName);
+  {$ifndef NOCONSOLE}
   Writeln('// Test : ',Self.TestName);
   for i:=0 to FSource.Count-1 do
     Writeln(Format('%:4d: ',[i+1]),FSource[i]);
+  {$endif}
 end;
 
 procedure TTestParser.ParseDeclarations;
 begin
   if UseImplementation then
     StartImplementation;
-  FSource.Insert(0,'');
-  FSource.Insert(0,'interface');
-  FSource.Insert(0,'');
-  FSource.Insert(0,'unit afile;');
+  FSource.Insert(0,'{');
+  FSource.Insert(0,'class aClass');
+  FHasNamespace := false;
   if Not UseImplementation then
     StartImplementation;
   EndSource;
@@ -670,13 +655,6 @@ Var
   E: TCShExportSymbol;
 
 begin
-  AssertNotNull(Msg+'Have export symbols list',CShLibrary.LibrarySection.ExportSymbols);
-  if AIndex>=CShLibrary.LibrarySection.ExportSymbols.Count then
-    Fail(Format(Msg+'%d not a valid export list symbol',[AIndex]));
-  AssertNotNull(Msg+'Have export symbol',CShLibrary.LibrarySection.ExportSymbols[Aindex]);
-  AssertEquals(Msg+'Correct export symbol class',TCShExportSymbol,TObject(CShLibrary.LibrarySection.ExportSymbols[Aindex]).ClassType);
-  E:=TCShExportSymbol(CShLibrary.LibrarySection.ExportSymbols[Aindex]);
-  AssertEquals(Msg+'Correct export symbol name',AName,E.Name);
   if (AExportName='') then
     AssertNull(Msg+'No export name',E.ExportName)
   else

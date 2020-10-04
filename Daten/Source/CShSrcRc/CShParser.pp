@@ -89,6 +89,7 @@ const
 
 // resourcestring patterns of messages
 resourcestring
+  rsTCShParserNe = 'TCShParser.NextToken REUSE Start=%s Cur=%s End=%s Cur=%s';
   SErrNoSourceGiven = 'No source file specified';
   SErrMultipleSourceFiles = 'Please specify only one source file';
   SParserError = 'Error';
@@ -151,20 +152,19 @@ resourcestring
 type
   TCShScopeType = (
     stModule,  // e.g. unit, program, library
-    stUsesClause,
+    stUsingClause,
+    stNamespace,
     stTypeSection,
     stTypeDef, // e.g. a TCShType
-    stResourceString, // e.g. TCShResString
     stProcedure, // also method, procedure, constructor, destructor, ...
     stProcedureHeader,
-    stWithExpr, // calls BeginScope after parsing every WITH-expression
     stExceptOnExpr,
     stExceptOnStatement,
     stForLoopHeader,
     stDeclaration, // e.g. a TCShProperty, TCShVariable, TCShArgument, ...
-    stAncestors, // the list of ancestors and interfaces of a class
-    stInitialFinalization
+    stAncestors  // the list of ancestors and interfaces of a class
     );
+
   TCShScopeTypes = set of TCShScopeType;
 
   TCShParserLogHandler = Procedure (Sender : TObject; Const Msg : String) of object;
@@ -182,7 +182,6 @@ type
     FPParserLogEvents: TCShParserLogEvents;
     FScannerLogEvents: TCShScannerLogEvents;
   protected
-    FPackage: TCShPackage;
     FInterfaceOnly : Boolean;
     procedure SetCurrentParser(AValue: TCShParser); virtual;
   public
@@ -211,7 +210,6 @@ type
     function GetDefaultClassVisibility(AClass: TCShClassType): TCShMemberVisibility; virtual;
     procedure ModeChanged(Sender: TObject; NewMode: TModeSwitch;
       Before: boolean; var Handled: boolean); virtual;
-    property Package: TCShPackage read FPackage;
     property InterfaceOnly : Boolean Read FInterfaceOnly Write FInterFaceOnly;
     property ScannerLogEvents : TCShScannerLogEvents Read FScannerLogEvents Write FScannerLogEvents;
     property ParserLogEvents : TCShParserLogEvents Read FPParserLogEvents Write FPParserLogEvents;
@@ -283,7 +281,7 @@ type
       Out VarMods: TVariableModifiers; Out LibName, ExportName: TCShExpr;
       const AllowedMods: TVariableModifiers): string;
     procedure HandleProcedureModifier(Parent: TCShElement; pm : TProcedureModifier);
-    procedure HandleProcedureTypeModifier(ProcType: TCShProcedureType; ptm : TProcTypeModifier);
+    procedure HandleProcedureTypeModifier(ProcType: TCShFunctionType; ptm : TProcTypeModifier);
     procedure ParseMembersLocalConsts(AType: TCShMembersType; AVisibility: TCShMemberVisibility);
     procedure ParseMembersLocalTypes(AType: TCShMembersType; AVisibility: TCShMemberVisibility);
     procedure ParseVarList(Parent: TCShElement; VarList: TFPList; AVisibility: TCShMemberVisibility; Full: Boolean);
@@ -294,6 +292,7 @@ type
     Function SaveComments : String;
     Function SaveComments(Const AValue : String) : String;
     function LogEvent(E : TCShParserLogEvent) : Boolean; inline;
+    Procedure DoLog(Const Msg : String; SkipSourceInfo : Boolean = False);overload;
     Procedure DoLog(MsgType: TMessageType; MsgNumber: integer; Const Msg : String; SkipSourceInfo : Boolean = False);overload;
     Procedure DoLog(MsgType: TMessageType; MsgNumber: integer; Const Fmt : String; Args : Array of {$ifdef pas2js}jsvalue{$else}const{$endif};SkipSourceInfo : Boolean = False);overload;
     function GetProcTypeFromToken(tk: TToken; IsClass: Boolean=False ): TProcType;
@@ -398,8 +397,8 @@ type
     function ParseTypeDecl(Parent: TCShElement): TCShType;
     function ParseGenericTypeDecl(Parent: TCShElement; AddToParent: boolean): TCShGenericType;
     function ParseType(Parent: TCShElement; const NamePos: TCShSourcePos; const TypeName: String = ''; Full: Boolean = false): TCShType;
-    function ParseReferenceToProcedureType(Parent: TCShElement; Const NamePos: TCShSourcePos; Const TypeName: String): TCShProcedureType;
-    function ParseProcedureType(Parent: TCShElement; Const NamePos: TCShSourcePos; Const TypeName: String; const PT: TProcType): TCShProcedureType;
+    function ParseReferenceToProcedureType(Parent: TCShElement; Const NamePos: TCShSourcePos; Const TypeName: String): TCShFunctionType;
+    function ParseProcedureType(Parent: TCShElement; Const NamePos: TCShSourcePos; Const TypeName: String; const PT: TProcType): TCShFunctionType;
     function ParseStringType(Parent: TCShElement; Const NamePos: TCShSourcePos; Const TypeName: String): TCShAliasType;
     function ParseSimpleType(Parent: TCShElement; Const NamePos: TCShSourcePos; Const TypeName: String; IsFull : Boolean = False): TCShType;
     function ParseAliasType(Parent: TCShElement; Const NamePos: TCShSourcePos; Const TypeName: String): TCShType;
@@ -414,29 +413,29 @@ type
     Function ParseProperty(Parent : TCShElement; Const AName : String; AVisibility : TCShMemberVisibility; IsClassField: boolean) : TCShProperty;
     function ParseRangeType(AParent: TCShElement; Const NamePos: TCShSourcePos; Const TypeName: String; Full: Boolean = True): TCShRangeType;
     procedure ParseExportDecl(Parent: TCShElement; List: TFPList);
+
     // Constant declarations
     function ParseConstDecl(Parent: TCShElement): TCShConst;
-    function ParseResourcestringDecl(Parent: TCShElement): TCShResString;
     function ParseAttributes(Parent: TCShElement; Add: boolean): TCShAttributes;
+
     // Variable handling. This includes parts of records
     procedure ParseVarDecl(Parent: TCShElement; List: TFPList);
     procedure ParseInlineVarDecl(Parent: TCShElement; List: TFPList;  AVisibility : TCShMemberVisibility  = visDefault; ClosingBrace: Boolean = False);
+
     // Main scope parsing
     procedure ParseMain(var Module: TCShModule);
-    procedure ParseUnit(var Module: TCShModule);
+    procedure ParseModule(var Module: TCShModule);
+    procedure ParseModule(var Module: TCShModule; SkipHeader : Boolean = False);
     function GetLastSection: TCShSection; virtual;
     function CanParseContinue(out Section: TCShSection): boolean; virtual;
     procedure ParseContinue; virtual;
-    procedure ParseProgram(var Module: TCShModule; SkipHeader : Boolean = False);
-    procedure ParseLibrary(var Module: TCShModule);
     procedure ParseOptionalUsesList(ASection: TCShSection);
     procedure ParseUsesList(ASection: TCShSection);
-    procedure ParseImplementation;
     procedure ParseDeclarations(Declarations: TCShDeclarations);
     procedure ParseStatement(Parent: TCShImplBlock; out NewImplElement: TCShImplElement);
     procedure ParseAdhocExpression(out NewExprElement: TCShExpr);
     procedure ParseLabels(AParent: TCShElement);
-    procedure ParseProcBeginBlock(Parent: TProcedureBody);
+
     // Function/Procedure declaration
     function ParseProcedureOrFunctionDecl(Parent: TCShElement;
       ProcType: TProcType; MustBeGeneric: boolean;
@@ -444,9 +443,10 @@ type
     procedure ParseArgList(Parent: TCShElement;
       Args: TFPList; // list of TCShArgument
       EndToken: TToken);
-    procedure ParseProcedureOrFunction(Parent: TCShElement; Element: TCShProcedureType; ProcType: TProcType; OfObjectPossible: Boolean);
+    procedure ParseProcedureOrFunction(Parent: TCShElement; Element: TCShFunctionType; ProcType: TProcType; OfObjectPossible: Boolean);
     procedure ParseProcedureBody(Parent: TCShElement);
     function ParseMethodResolution(Parent: TCShElement): TCShMethodResolution;
+
     // Properties for external access
     property FileResolver: TBaseFileResolver read FFileResolver;
     property Scanner: TCSharpScanner read FScanner;
@@ -984,7 +984,7 @@ var
   p: TCShSourcePos;
 begin
   {$IFDEF VerboseCShParser}
-  writeln('TCShParser.ParseExc Token="',CurTokenText,'"');
+  DoLog('TCShParser.ParseExc Token="'+CurTokenText+'"');
   //writeln('TCShParser.ParseExc ',Scanner.CurColumn,' ',Scanner.CurSourcePos.Column,' ',Scanner.CurTokenPos.Column,' ',Scanner.CurSourceFile.Filename);
   {$ENDIF}
   SetLastMsg(mtError,MsgNumber,Fmt,Args);
@@ -1133,7 +1133,10 @@ begin
   if FTokenRingCur <> FTokenRingEnd then
     begin
     // Get token from buffer
-    //writeln('TCShParser.NextToken REUSE Start=',FTokenRingStart,' Cur=',FTokenRingCur,' End=',FTokenRingEnd,' Cur=',CurTokenString);
+    {$IFDEF DEBUG}
+    DoLog(Format(rsTCShParserNe, [FTokenRingStart, FTokenRingCur,
+      FTokenRingEnd, CurTokenString]));
+    {$ENDIF}
     FCurToken := Scanner.CheckToken(P^.Token,P^.AsString);
     FCurTokenString := P^.AsString;
     end
@@ -1935,7 +1938,7 @@ begin
 end;
 
 function TCShParser.ParseReferenceToProcedureType(Parent: TCShElement; const NamePos: TCShSourcePos; const TypeName: String
-  ): TCShProcedureType;
+  ): TCShFunctionType;
 begin
   if not CurTokenIsIdentifier('reference') then
     ParseExcTokenError('reference');
@@ -1959,8 +1962,8 @@ begin
   case CurToken of
     tkVoid:
       begin
-        Result := TCShProcedureType(CreateElement(TCShProcedureType, '', Parent));
-        ParseProcedureOrFunction(Result, TCShProcedureType(Result), ptProcedure, True);
+        Result := TCShFunctionType(CreateElement(TCShFunctionType, '', Parent));
+        ParseProcedureOrFunction(Result, TCShFunctionType(Result), ptProcedure, True);
         if CurToken = tkSemicolon then
           UngetToken;        // Unget semicolon
       end;
@@ -2136,19 +2139,6 @@ begin
         if not Assigned(Expr) then
           ParseExcSyntaxError;
         Params.AddParam(Expr);
-        if (CurToken=tkColon) then
-          if Not AllowFormatting then
-            ParseExc(nParserExpectTokenError,SParserExpectTokenError,[','])
-          else
-            begin
-            NextToken;
-            Expr.format1:=DoParseExpression(Expr);
-            if (CurToken=tkColon) then
-              begin
-              NextToken;
-              Expr.format2:=DoParseExpression(Expr);
-              end;
-            end;
         if not (CurToken in [tkComma, PClose]) then
           ParseExc(nParserExpectTokenError,SParserExpectTokenError,[',']);
 
@@ -2889,19 +2879,21 @@ begin
   Module:=nil;
   NextToken;
   SaveComments;
+  // Every .cs-file in CSharp is a module at first,
+  // it becomes a Program, when there is a static void Main somewhere.
   case CurToken of
-    tkUsing:
-      ParseUnit(Module);
     tkEOF:
       CheckToken(tkEOF);
   else
-    UngetToken;
-    ParseProgram(Module,True);
+    begin
+      UngetToken;
+      ParseModule(Module,True);
+    end;
   end;
 end;
 
 // Starts after the "unit" token
-procedure TCShParser.ParseUnit(var Module: TCShModule);
+procedure TCShParser.ParseModule(var Module: TCShModule);
 var
   AUnitName: String;
   StartPos: TCShSourcePos;
@@ -2909,25 +2901,11 @@ var
 begin
   StartPos:=CurTokenPos;
   Module := nil;
-  AUnitName := ExpectIdentifier;
-  NextToken;
-  while CurToken = tkDot do
-    begin
-    ExpectIdentifier;
-    AUnitName := AUnitName + '.' + CurTokenString;
-    NextToken;
-    end;
-  UngetToken;
-  Module := TCShModule(CreateElement(TCShModule, AUnitName, Engine.Package, StartPos));
+  AUnitName := FScanner.CurFilename;  // Having the Filename at first
+  Module := TCShModule(CreateElement(TCShModule, AUnitName, nil {Todo: }, StartPos));
   FCurModule:=Module;
   HasFinished:=true;
   try
-    if Assigned(Engine.Package) then
-      begin
-      Module.PackageName := Engine.Package.Name;
-      Engine.Package.Modules.Add(Module);
-      Module.AddRef{$IFDEF CheckCShTreeRefCount}('TCShPackage.Modules'){$ENDIF};
-      end;
     CheckHint(Module,True);
     ExpectToken(tkInterface);
     if po_StopOnUnitInterface in Options then
@@ -2959,11 +2937,7 @@ begin
   Result:=nil;
   if FCurModule=nil then
     exit; // parse completed
-  if CurModule is TCShProgram then
-    Result:=TCShProgram(CurModule).ProgramSection
-  else if CurModule is TCShLibrary then
-    Result:=TCShLibrary(CurModule).LibrarySection
-  else if (CurModule.ClassType=TCShModule) then
+  if (CurModule.ClassType=TCShModule) then
     begin
     if CurModule.ImplementationSection<>nil then
       Result:=CurModule.ImplementationSection
@@ -3031,7 +3005,7 @@ begin
     else
       begin
       // continue after uses clause
-      Engine.FinishScope(stUsesClause,Section);
+      Engine.FinishScope(stUsingClause,Section);
       ParseDeclarations(Section);
       end;
     Section:=GetLastSection;
@@ -3047,17 +3021,17 @@ begin
   end;
 end;
 
-// Starts after the "program" token
-procedure TCShParser.ParseProgram(var Module: TCShModule; SkipHeader : Boolean = False);
+procedure TCShParser.ParseModule(var Module: TCShModule; SkipHeader : Boolean = False);
 Var
-  PP : TCShProgram;
-  Section : TProgramSection;
   N : String;
   StartPos: TCShSourcePos;
   HasFinished: Boolean;
+  PP: TCShModule;
+  Section: TImplementationSection;
   {$IFDEF VerboseCShResolver}
   aSection: TCShSection;
   {$ENDIF}
+
 begin
   StartPos:=CurTokenPos;
   if SkipHeader then
@@ -3066,44 +3040,15 @@ begin
     begin
     N:=ExpectIdentifier;
     NextToken;
-    while CurToken = tkDot do
-      begin
-      ExpectIdentifier;
-      N := N + '.' + CurTokenString;
-      NextToken;
-      end;
-    UngetToken;
     end;
   Module := nil;
-  PP:=TCShProgram(CreateElement(TCShProgram, N, Engine.Package, StartPos));
+  PP:=TCShModule(CreateElement(TCShModule, N, nil, StartPos));
   Module :=PP;
   HasFinished:=true;
   FCurModule:=Module;
   try
-    if Assigned(Engine.Package) then
-    begin
-      Module.PackageName := Engine.Package.Name;
-      Engine.Package.Modules.Add(Module);
-    end;
-    if not SkipHeader then
-      begin
-      NextToken;
-      If (CurToken=tkBraceOpen) then
-        begin
-        PP.InputFile:=ExpectIdentifier;
-        NextToken;
-        if Not (CurToken in [tkBraceClose,tkComma]) then
-          ParseExc(nParserExpectedCommaRBracket,SParserExpectedCommaRBracket);
-        If (CurToken=tkComma) then
-          PP.OutPutFile:=ExpectIdentifier;
-        ExpectToken(tkBraceClose);
-        NextToken;
-        end;
-      if (CurToken<>tkSemicolon) then
-        ParseExcTokenError(';');
-      end;
-    Section := TProgramSection(CreateElement(TProgramSection, '', CurModule));
-    PP.ProgramSection := Section;
+    Section := TImplementationSection(CreateElement(TImplementationSection, '', CurModule));
+    PP.ImplementationSection := Section;
     ParseOptionalUsesList(Section);
     HasFinished:=Section.PendingUsedIntf=nil;
     if not HasFinished then
@@ -3130,54 +3075,6 @@ begin
   end;
 end;
 
-// Starts after the "library" token
-procedure TCShParser.ParseLibrary(var Module: TCShModule);
-Var
-  PP : TCShLibrary;
-  Section : TLibrarySection;
-  N: String;
-  StartPos: TCShSourcePos;
-  HasFinished: Boolean;
-
-begin
-  StartPos:=CurTokenPos;
-  N:=ExpectIdentifier;
-  NextToken;
-  while CurToken = tkDot do
-    begin
-    ExpectIdentifier;
-    N := N + '.' + CurTokenString;
-    NextToken;
-    end;
-  UngetToken;
-  Module := nil;
-  PP:=TCShLibrary(CreateElement(TCShLibrary, N, Engine.Package, StartPos));
-  Module :=PP;
-  HasFinished:=true;
-  FCurModule:=Module;
-  try
-    if Assigned(Engine.Package) then
-    begin
-      Module.PackageName := Engine.Package.Name;
-      Engine.Package.Modules.Add(Module);
-    end;
-    NextToken;
-    if (CurToken<>tkSemicolon) then
-        ParseExcTokenError(';');
-    Section := TLibrarySection(CreateElement(TLibrarySection, '', CurModule));
-    PP.LibrarySection := Section;
-    ParseOptionalUsesList(Section);
-    HasFinished:=Section.PendingUsedIntf=nil;
-    if not HasFinished then
-      exit;
-    ParseDeclarations(Section);
-    FinishedModule;
-  finally
-    if HasFinished then
-      FCurModule:=nil; // clear module if there is an error or finished parsing
-  end;
-end;
-
 procedure TCShParser.ParseOptionalUsesList(ASection: TCShSection);
 // checks if next token is Uses keyword and reads the uses list
 begin
@@ -3190,20 +3087,7 @@ begin
   Engine.CheckPendingUsedInterface(ASection);
   if ASection.PendingUsedIntf<>nil then
     exit;
-  Engine.FinishScope(stUsesClause,ASection);
-end;
-
-// Starts after the "implementation" token
-procedure TCShParser.ParseImplementation;
-var
-  Section: TImplementationSection;
-begin
-  Section := TImplementationSection(CreateElement(TImplementationSection, '', CurModule));
-  CurModule.ImplementationSection := Section;
-  ParseOptionalUsesList(Section);
-  if Section.PendingUsedIntf<>nil then
-    exit;
-  ParseDeclarations(Section);
+  Engine.FinishScope(stUsingClause,ASection);
 end;
 
 function TCShParser.GetProcTypeFromToken(tk: TToken; IsClass: Boolean
@@ -3255,7 +3139,6 @@ var
 
 var
   ConstEl: TCShConst;
-  ResStrEl: TCShResString;
   TypeEl: TCShType;
   ClassEl: TCShClassType;
   List: TFPList;
@@ -3282,9 +3165,6 @@ begin
     case CurToken of
     tkCurlyBraceClose:
       begin
-      If (CurModule is TCShProgram) and (CurModule.InitializationSection=Nil) then
-        ParseExcTokenError('begin');
-      ExpectToken(tkDot);
       break;
       end;
   {  tkimplementation:
@@ -3321,6 +3201,13 @@ begin
       pt:=GetProcTypeFromToken(CurToken,True);
       AddProcOrFunction(Declarations,ParseProcedureOrFunctionDecl(Declarations, pt, MustBeGeneric));
       end;
+    tkNamespace:
+      begin
+      SetBlock(declNone);
+      SaveComments;
+      NextToken;
+      AddProcOrFunction(Declarations,ParseProcedureOrFunctionDecl(Declarations, pt, MustBeGeneric));
+      end;
     tkIdentifier:
       begin
       Scanner.UnSetTokenOption(toOperatorToken);
@@ -3332,13 +3219,6 @@ begin
             Declarations.Declarations.Add(ConstEl);
             Declarations.Consts.Add(ConstEl);
             Engine.FinishScope(stDeclaration,ConstEl);
-          end;
-        declResourcestring:
-          begin
-            ResStrEl := ParseResourcestringDecl(Declarations);
-            Declarations.Declarations.Add(ResStrEl);
-            Declarations.ResStrings.Add(ResStrEl);
-            Engine.FinishScope(stResourceString,ResStrEl);
           end;
         declType:
           begin
@@ -3437,7 +3317,7 @@ begin
         begin
         Proc:=Declarations.Parent as TCShProcedure;
         SetBlock(declNone);
-        ParseProcBeginBlock(TProcedureBody(Declarations));
+//        ParseBeginBlock(TProcedureBody(Declarations));
         break;
         end
       else if  (Declarations is TImplementationSection) then
@@ -3708,27 +3588,6 @@ begin
   end;
 end;
 
-// Starts after the variable name
-function TCShParser.ParseResourcestringDecl(Parent: TCShElement): TCShResString;
-var
-  ok: Boolean;
-begin
-  SaveComments;
-  Result := TCShResString(CreateElement(TCShResString, CurTokenString, Parent));
-  ok:=false;
-  try
-    ExpectToken(tkEqual);
-    NextToken; // skip tkEqual
-    Result.Expr:=DoParseConstValueExpression(Result);
-    UngetToken;
-    CheckHint(Result,True);
-    ok:=true;
-  finally
-    if not ok then
-      ReleaseAndNil(TCShElement(Result){$IFDEF CheckCShTreeRefCount},'CreateElement'{$ENDIF});
-  end;
-end;
-
 function TCShParser.ParseAttributes(Parent: TCShElement; Add: boolean
   ): TCShAttributes;
 // returns with CurToken at tkSquaredBraceClose
@@ -3957,7 +3816,7 @@ end;
 
 function TCShParser.ParseProcedureType(Parent: TCShElement;
   const NamePos: TCShSourcePos; const TypeName: String; const PT: TProcType
-  ): TCShProcedureType;
+  ): TCShFunctionType;
 
 var
   ok: Boolean;
@@ -3965,10 +3824,10 @@ begin
   if PT in [ptFunction,ptClassFunction] then
     Result := CreateFunctionType(TypeName, 'Result', Parent, False, NamePos)
   else
-    Result := TCShProcedureType(CreateElement(TCShProcedureType, TypeName, Parent, NamePos));
+    Result := TCShFunctionType(CreateElement(TCShFunctionType, TypeName, Parent, NamePos));
   ok:=false;
   try
-    ParseProcedureOrFunction(Result, TCShProcedureType(Result), PT, True);
+    ParseProcedureOrFunction(Result, TCShFunctionType(Result), PT, True);
     ok:=true;
   finally
     if not ok then
@@ -4036,7 +3895,7 @@ function TCShParser.ParseGenericTypeDecl(Parent: TCShElement;
     const NamePos: TCShSourcePos; TypeParams: TFPList;
     IsReferenceTo: boolean);
   var
-    ProcTypeEl: TCShProcedureType;
+    ProcTypeEl: TCShFunctionType;
     ProcType: TProcType;
   begin
     ProcTypeEl:=Nil;
@@ -4050,7 +3909,7 @@ function TCShParser.ParseGenericTypeDecl(Parent: TCShElement;
       end;  }
     tkVoid:
       begin
-      ProcTypeEl := TCShProcedureType(CreateElement(TCShProcedureType,
+      ProcTypeEl := TCShFunctionType(CreateElement(TCShFunctionType,
                           TypeName, Parent, visDefault, NamePos, TypeParams));
       ProcType:=ptProcedure;
       end;
@@ -4342,18 +4201,12 @@ begin
       VarEl:=TCShVariable(VarList[i]);
       // Writeln(VarEl.Name, AVisibility);
       // Procedure declaration eats the hints.
-      if Assigned(VarType) and (VarType is TCShProcedureType) then
+      if Assigned(VarType) and (VarType is TCShFunctionType) then
         VarEl.Hints:=VarType.Hints
       else
         VarEl.Hints:=H;
       VarEl.Modifiers:=Mods;
       VarEl.VarModifiers:=VarMods;
-      VarEl.{%H-}AbsoluteLocation:=AbsoluteLocString;
-      if AbsoluteExpr<>nil then
-        begin
-        VarEl.AbsoluteExpr:=AbsoluteExpr;
-        AbsoluteExpr:=nil;
-        end;
       if aLibName<>nil then
         begin
         VarEl.LibraryName:=aLibName;
@@ -4411,6 +4264,11 @@ end;
 function TCShParser.LogEvent(E: TCShParserLogEvent): Boolean;
 begin
   Result:=E in FLogEvents;
+end;
+
+procedure TCShParser.DoLog(const Msg: String; SkipSourceInfo: Boolean);
+begin
+    DoLog(mtDebug,0,Msg,[],SkipSourceInfo);
 end;
 
 procedure TCShParser.SetLastMsg(MsgType: TMessageType; MsgNumber: integer;
@@ -4763,7 +4621,7 @@ begin
   end; // Case
 end;
 
-procedure TCShParser.HandleProcedureTypeModifier(ProcType: TCShProcedureType;
+procedure TCShParser.HandleProcedureTypeModifier(ProcType: TCShFunctionType;
   ptm: TProcTypeModifier);
 var
   Expr: TCShExpr;
@@ -4808,7 +4666,7 @@ begin
 end;
 
 procedure TCShParser.ParseProcedureOrFunction(Parent: TCShElement;
-  Element: TCShProcedureType; ProcType: TProcType; OfObjectPossible: Boolean);
+  Element: TCShFunctionType; ProcType: TProcType; OfObjectPossible: Boolean);
 
   Function FindInSection(AName : String;ASection : TCShSection) : Boolean;
 
@@ -4878,20 +4736,11 @@ begin
       // We actually check if the function exists in the interface section.
       else if (not IsAnonymous)
           and (true {delphi})
-          and (Assigned(CurModule.ImplementationSection)
-            or (CurModule is TCShProgram))
+          and (Assigned(CurModule.ImplementationSection))
           then
         begin
-        OK:=False;
-        if (CurModule is TCShProgram) and Assigned(TCShProgram(CurModule).ProgramSection) then
-          OK:=FindInSection(Parent.Name,TCShProgram(CurModule).ProgramSection);
-        if Not OK then
+
           CheckToken(tkColon)
-        else
-          begin
-          CheckToken(tkSemiColon);
-          UngetToken;
-          end;
         end
       else
         begin
@@ -5071,16 +4920,42 @@ begin
     ParseProcedureBody(Parent);
 end;
 
-// starts after the semicolon
+// starts after the CurlyBraceOpen
 procedure TCShParser.ParseProcedureBody(Parent: TCShElement);
 
 var
   Body: TProcedureBody;
+  Proc: TCShProcedure;
+  SubBlock: TCShImplElement;
 
 begin
   Body := TProcedureBody(CreateElement(TProcedureBody, '', Parent));
   TCShProcedure(Parent).Body:=Body;
-  ParseDeclarations(Body);
+  // these can be used in code for typecasts
+  {$IFDEF DEBUG}
+  DoLog('TCShParser.ParseProcBeginBlock '+curtokenstring);
+  {$ENDIF}
+  repeat
+    NextToken;
+    if CurToken=tkCurlyBraceClose then
+      break
+    else if CurToken<>tkSemiColon then
+    begin
+      UngetToken;
+//      ParseStatement(Body,SubBlock);
+//      if SubBlock=nil then
+//        ExpectToken(tkCurlyBraceClose);
+    end;
+  until false;
+  // A declaration can follow...
+  Proc:=Parent as TCShProcedure;
+  if Proc.GetProcTypeEnum in [ptAnonymousProcedure,ptAnonymousFunction] then
+    NextToken
+  else
+    ExpectToken(tkSemicolon);
+  {$IFDEF DEBUG}
+  DoLog('TCShParser.ParseProcBeginBlock ended '+curtokenstring);
+  {$ENDIF}
 end;
 
 function TCShParser.ParseMethodResolution(Parent: TCShElement
@@ -5335,38 +5210,6 @@ begin
   end;
 end;
 
-// Starts after the "begin" token
-procedure TCShParser.ParseProcBeginBlock(Parent: TProcedureBody);
-var
-  BeginBlock: TCShImplBeginBlock;
-  SubBlock: TCShImplElement;
-  Proc: TCShProcedure;
-begin
-  BeginBlock := TCShImplBeginBlock(CreateElement(TCShImplBeginBlock, '', Parent));
-  Parent.Body := BeginBlock;
-  // these can be used in code for typecasts
-  repeat
-    NextToken;
-//    writeln('TCShParser.ParseProcBeginBlock ',curtokenstring);
-    if CurToken=tkCurlyBraceClose then
-      break
-    else if CurToken<>tkSemiColon then
-    begin
-      UngetToken;
-      ParseStatement(BeginBlock,SubBlock);
-      if SubBlock=nil then
-        ExpectToken(tkCurlyBraceClose);
-    end;
-  until false;
-  // A declaration can follow...
-  Proc:=Parent.Parent as TCShProcedure;
-  if Proc.GetProcTypeEnum in [ptAnonymousProcedure,ptAnonymousFunction] then
-    NextToken
-  else
-    ExpectToken(tkSemicolon);
-//  writeln('TCShParser.ParseProcBeginBlock ended ',curtokenstring);
-end;
-
 // Next token is start of (compound) statement
 // After parsing CurToken is on last token of statement
 procedure TCShParser.ParseStatement(Parent: TCShImplBlock;
@@ -5393,9 +5236,7 @@ var
   begin
     C:=TCShImplBlockClass(CurBlock.ClassType);
     if C=TCShImplExceptOn then
-      Engine.FinishScope(stExceptOnStatement,CurBlock)
-    else if C=TCShImplWithDo then
-      Engine.FinishScope(stWithExpr,CurBlock);
+      Engine.FinishScope(stExceptOnStatement,CurBlock);
     CurBlock:=CurBlock.Parent as TCShImplBlock;
     Result:=CurBlock=Parent;
   end;
@@ -5524,9 +5365,9 @@ begin
               CheckToken(tkSemicolon);
             exit;
             end
-          else if (CurBlock is TCShImplWhileDo)
+          else if (CurBlock is TCShImplWhile)
               or (CurBlock is TCShImplForLoop)
-              or (CurBlock is TCShImplWithDo)
+              or (CurBlock is TCShImplUsing)
               or (CurBlock is TCShImplRaise)
               or (CurBlock is TCShImplExceptOn) then
             // simply close block
@@ -5543,11 +5384,11 @@ begin
           Left:=DoParseExpression(CurBlock);
           UngetToken;
           //WriteLn(i,'WHILE Condition="',Condition,'" Token=',CurTokenText);
-          El:=TCShImplWhileDo(CreateElement(TCShImplWhileDo,'',CurBlock,SrcPos));
-          TCShImplWhileDo(El).ConditionExpr:=Left;
+          El:=TCShImplWhile(CreateElement(TCShImplWhile,'',CurBlock,SrcPos));
+          TCShImplWhile(El).ConditionExpr:=Left;
           Left.Parent:=El;
           Left:=nil;
-          CreateBlock(TCShImplWhileDo(El));
+          CreateBlock(TCShImplWhile(El));
           El:=nil;
           ExpectToken(tkBraceClose);
         end;
@@ -5571,11 +5412,8 @@ begin
           // for VarName in Expression do
           CheckStatementCanStart;
           ExpectToken(tkBraceOpen);
-
           El:=TCShImplForLoop(CreateElement(TCShImplForLoop,'',CurBlock,CurTokenPos));
-          ExpectIdentifier;
-          Expr:=CreatePrimitiveExpr(El,pekIdent,CurTokenString);
-          TCShImplForLoop(El).VariableName:=Expr;
+          ExpectToken(tkBraceOpen);
           repeat
             NextToken;
             case CurToken of
@@ -5595,22 +5433,19 @@ begin
                 ExpectIdentifier;
                 AddToBinaryExprChain(Expr,
                   CreatePrimitiveExpr(El,pekIdent,CurTokenString), eopSubIdent,SrcPos);
-                TCShImplForLoop(El).VariableName:=Expr;
                 end;
             else
               ParseExc(nParserExpectedAssignIn,SParserExpectedAssignIn);
             end;
           until false;
           NextToken;
-          TCShImplForLoop(El).StartExpr:=DoParseExpression(El);
           if (Lt=ltNormal) then
             begin
             NextToken;
-            TCShImplForLoop(El).EndExpr:=DoParseExpression(El);
             end;
-          TCShImplForLoop(El).LoopType:=lt;
-          if (CurToken<>tkDo) then
-            ParseExcTokenError(TokenInfos[tkDo]);
+
+          if (CurToken<>tkBraceClose) then
+            ParseExcTokenError(TokenInfos[tkBraceClose]);
           Engine.FinishScope(stForLoopHeader,El);
           CreateBlock(TCShImplForLoop(El));
           El:=nil;
@@ -5623,11 +5458,11 @@ begin
           NextToken;
           Left:=DoParseExpression(CurBlock);
           UngetToken;
-          El:=TCShImplCaseOf(CreateElement(TCShImplCaseOf,'',CurBlock,SrcPos));
-          TCShImplCaseOf(El).CaseExpr:=Left;
+          El:=TCShImplSwitch(CreateElement(TCShImplSwitch,'',CurBlock,SrcPos));
+          TCShImplSwitch(El).CaseExpr:=Left;
           Left.Parent:=El;
           Left:=nil;
-          CreateBlock(TCShImplCaseOf(El));
+          CreateBlock(TCShImplSwitch(El));
           El:=nil;
           repeat
             NextToken;
@@ -5642,9 +5477,9 @@ begin
             tkelse:
               begin
                 // create case-else block
-                El:=TCShImplCaseElse(CreateElement(TCShImplCaseElse,'',CurBlock,CurTokenPos));
-                TCShImplCaseOf(CurBlock).ElseBranch:=TCShImplCaseElse(El);
-                CreateBlock(TCShImplCaseElse(El));
+                El:=TCShImplSwitchElse(CreateElement(TCShImplSwitchElse,'',CurBlock,CurTokenPos));
+                TCShImplSwitch(CurBlock).ElseBranch:=TCShImplSwitchElse(El);
+                CreateBlock(TCShImplSwitchElse(El));
                 El:=nil;
                 break;
               end
@@ -5768,7 +5603,7 @@ begin
             // close at END
             if CloseBlock then break; // close end
             if CloseStatement(false) then break;
-          end else if CurBlock is TCShImplCaseElse then
+          end else if CurBlock is TCShImplSwitchElse then
           begin
             if CloseBlock then break; // close else
             if CloseBlock then break; // close caseof
@@ -6118,7 +5953,7 @@ begin
         end;
       end;
     else
-      Result.ProcType := TCShProcedureType(CreateElement(TCShProcedureType, '', Result));
+      Result.ProcType := TCShFunctionType(CreateElement(TCShFunctionType, '', Result));
     end;
     ParseProcedureOrFunction(Result, Result.ProcType, ProcType, False);
     Result.Hints:=Result.ProcType.Hints;
@@ -6156,12 +5991,12 @@ procedure TCShParser.ParseRecordVariantParts(ARec: TCShRecordType;
 
 Var
   M : TCShRecordType;
-  V : TCShVariant;
+  V : TCShObject;
   Done : Boolean;
 
 begin
   Repeat
-    V:=TCShVariant(CreateElement(TCShVariant, '', ARec));
+    V:=TCShObject(CreateElement(TCShObject, '', ARec));
     ARec.Variants.Add(V);
     Repeat
       NextToken;
@@ -6906,9 +6741,9 @@ begin
     else
       ParseExc(nParserArrayTypeSyntaxError,SParserArrayTypeSyntaxError); }
   end;
-  // TCShProcedureType parsing has eaten the semicolon;
+  // TCShFunctionType parsing has eaten the semicolon;
   // We know it was a local definition if the array def (ArrType) is the parent
-  if (ArrType.ElType is TCShProcedureType) and (ArrType.ElType.Parent=ArrType) then
+  if (ArrType.ElType is TCShFunctionType) and (ArrType.ElType.Parent=ArrType) then
     UnGetToken;
 end;
 
