@@ -113,8 +113,6 @@ type
     TToken = (
         tkEOF,
         tkWhitespace,
-        tkLineComment,  // //
-        tkComment,      // /* ... */
         tkIdentifier,
         tkLabel,
         tkStringConst,
@@ -122,6 +120,9 @@ type
         tkCharacter, // ^A .. ^Z
         tkLineEnding, // normal LineEnding
         tkTab, // a Tabulator-Key
+
+        tkLineComment,  // //
+        tkComment,      // /* ... */
 
         // Simple (one-character) tokens
         tkCurlyBraceOpen,        // '{'
@@ -737,7 +738,6 @@ type
             var Handled: boolean); virtual;
         procedure HandleIFDEF(const AParam: string);
         procedure HandleIFNDEF(const AParam: string);
-        procedure HandleIFOPT(const AParam: string); // Maybe unneeded
         procedure HandleIF(const AParam: string);
         procedure HandleELSEIF(const AParam: string);
         procedure HandleELSE(const AParam: string);
@@ -880,8 +880,6 @@ const
     TokenInfos: array[TToken] of string = (
         'EOF',
         'Whitespace',
-        'LineComment',
-        'Comment',
         'Identifier',
         'Label',
         'StringConst',
@@ -889,6 +887,10 @@ const
         'Character',
         'LineEnding',
         'Tab',
+
+        '//',
+        '/*',
+
         // Simple (one-character) tokens
         '{',
         '}',
@@ -1072,10 +1074,18 @@ const
     Digits = ['0'..'9'];
     Letters = ['a'..'z', 'A'..'Z'];
     HexDigits = ['0'..'9', 'a'..'f', 'A'..'F'];
+    WhiteSpace = [' ',#9,#10,#13,#255];
 
+Type TTokenKey=record
+        token:TToken;
+        key:string;
+        l:integer  // length of the key;
+     end;
+     TTokenKeyArray= array of TTokenkey;
 var
     SortedTokens: array of TToken;
     LowerCaseTokens: array[ttoken] of string;
+    TokenIndex:array[char] of TTokenKeyArray;
 
 function ExtractFilenameOnly(const AFileName: string): string;
 
@@ -1296,7 +1306,7 @@ end;
 function FilenameIsWinAbsolute(const TheFilename: string): boolean;
 begin
     Result := ((length(TheFilename) >= 2) and (TheFilename[1] in
-        ['A'..'Z', 'a'..'z']) and (TheFilename[2] = ':')) or
+        Letters ) and (TheFilename[2] = ':')) or
         ((length(TheFilename) >= 2) and (TheFilename[1] = '\') and
         (TheFilename[2] = '\'));
 end;
@@ -1339,8 +1349,6 @@ begin
 end;
 
 procedure TCondDirectiveEvaluator.NextToken;
-const
-    IdentChars = ['a'..'z', 'A'..'Z', '_', '0'..'9'];
 
   {$ifdef UsePChar}
     function IsIdentifier(a: PChar; b: string): boolean;
@@ -1407,24 +1415,51 @@ var
     l: integer;
     Src: string;
 {$endif}
+
+ function FetchActChar:char;inline;
+ begin
+   {$ifdef UsePChar}
+          result := FTokenEnd^
+   {$else}
+         if l>=FTokenEnd then
+           result :=Src[FTokenEnd]
+         else
+           result :=#0;
+   {$endif}
+
+ end;
+
+ function FetchNextChar:char;inline;
+ begin
+   {$ifdef UsePChar}
+          result := FTokenEnd[1]
+   {$else}
+         if l>FTokenEnd then
+           result :=Src[FTokenEnd+1]
+         else
+           result :=#0;
+   {$endif}
+
+ end;
+
 begin
     FTokenStart := FTokenEnd;
 
     // skip white space
   {$ifdef UsePChar}
     repeat
-        case FTokenStart^ of
+        case FetchActChar of
             #0:
-                if FTokenStart - PChar(Expression) >= length(Expression) then
+                if FTokenEnd - PChar(Expression) >= length(Expression) then
                   begin
                     FToken := tkEOF;
-                    FTokenEnd := FTokenStart;
+                    FTokenStart := FTokenEnd;
                     exit;
                   end
                 else
-                    Inc(FTokenStart);
+                    Inc(FTokenEnd);
             #9, #10, #13, ' ':
-                Inc(FTokenStart);
+                Inc(FTokenEnd);
             else
                 break;
           end;
@@ -1432,100 +1467,25 @@ begin
   {$else}
     Src := Expression;
     l := length(Src);
-    while (FTokenStart <= l) and (Src[FTokenStart] in AllSpaces) do
-        Inc(FTokenStart);
-    if FTokenStart > l then
+    while (FTokenEnd <= l) and (Src[FTokenEnd] in AllSpaces) do
+        Inc(FTokenEnd);
+    if FTokenEnd > l then
       begin
         FToken := tkEOF;
-        FTokenEnd := FTokenStart;
+        FTokenStart := FTokenEnd;
         exit;
       end;
   {$endif}
 
     // read token
-    FTokenEnd := FTokenStart;
-    case
-{$ifdef UsePChar}
-        FTokenEnd^
-{$else}
-        Src[FTokenEnd]
-{$endif}
-        of
+    FTokenStart := FTokenEnd;
+    case FetchActChar  of
         'a'..'z', 'A'..'Z', '_':
           begin
             Inc(FTokenEnd);
-    {$ifdef UsePChar}
-            while FTokenEnd^ in IdentChars do
+            while FetchActChar in IdentChars do
                 Inc(FTokenEnd);
-    {$else}
-            while (FTokenEnd <= l) and (Src[FTokenEnd] in IdentChars) do
-                Inc(FTokenEnd);
-    {$endif}
             FToken := ReadIdentifier;
-          end;
-        '0'..'9':
-          begin
-            FToken := tkNumber;
-            // examples: 1, 1.2, 1.2E3, 1E-2
-            Inc(FTokenEnd);
-    {$ifdef UsePChar}
-            while FTokenEnd^ in Digits do
-                Inc(FTokenEnd);
-            if (FTokenEnd^ = '.') and (FTokenEnd[1] <> '.') then
-              begin
-                Inc(FTokenEnd);
-                while FTokenEnd^ in Digits do
-                    Inc(FTokenEnd);
-              end;
-            if FTokenEnd^ in ['e', 'E'] then
-              begin
-                Inc(FTokenEnd);
-                if FTokenEnd^ in ['-', '+'] then
-                    Inc(FTokenEnd);
-                while FTokenEnd^ in Digits do
-                    Inc(FTokenEnd);
-              end;
-    {$else}
-            while (FTokenEnd <= l) and (Src[FTokenEnd] in Digits) do
-                Inc(FTokenEnd);
-            if (FTokenEnd <= l) and (Src[FTokenEnd] = '.') and
-                ((FTokenEnd = l) or (Src[FTokenEnd + 1] <> '.')) then
-              begin
-                Inc(FTokenEnd);
-                while (FTokenEnd <= l) and (Src[FTokenEnd] in Digits) do
-                    Inc(FTokenEnd);
-              end;
-            if (FTokenEnd <= l) and (Src[FTokenEnd] in ['e', 'E']) then
-              begin
-                Inc(FTokenEnd);
-                if (FTokenEnd <= l) and (Src[FTokenEnd] in ['-', '+']) then
-                    Inc(FTokenEnd);
-                while (FTokenEnd <= l) and (Src[FTokenEnd] in Digits) do
-                    Inc(FTokenEnd);
-              end;
-    {$endif}
-          end;
-        '$':
-          begin
-            FToken := tkNumber;
-    {$ifdef UsePChar}
-            while FTokenEnd^ in HexDigits do
-                Inc(FTokenEnd);
-    {$else}
-            while (FTokenEnd <= l) and (Src[FTokenEnd] in HexDigits) do
-                Inc(FTokenEnd);
-    {$endif}
-          end;
-        '%':
-          begin
-            FToken := tkNumber;
-    {$ifdef UsePChar}
-            while FTokenEnd^ in ['0', '1'] do
-                Inc(FTokenEnd);
-    {$else}
-            while (FTokenEnd <= l) and (Src[FTokenEnd] in ['0', '1']) do
-                Inc(FTokenEnd);
-    {$endif}
           end;
         '(':
           begin
@@ -1537,114 +1497,54 @@ begin
             FToken := tkBraceClose;
             Inc(FTokenEnd);
           end;
-        '=':
+        '^':
           begin
-            FToken := tkEqual;
+            FToken := tkXor;
             Inc(FTokenEnd);
           end;
-        '<':
+        '&':
+          begin
+            FToken := tkSingleAnd;
+            Inc(FTokenEnd);
+            if FetchActChar = '&' then
+              begin
+                FToken := tkand;
+                Inc(FTokenEnd);
+              end;
+          end;
+        '|':
+          begin
+            FToken := tkSingleOr;
+            Inc(FTokenEnd);
+            if FetchActChar = '|' then
+              begin
+                FToken := tkor;
+                Inc(FTokenEnd);
+              end;
+          end;
+        '=':
+          begin
+            FToken := tkAssign;
+            Inc(FTokenEnd);
+            if FetchActChar = '=' then
+              begin
+                FToken := tkEqual;
+                Inc(FTokenEnd);
+              end;
+          end;
+        '!':
           begin
             Inc(FTokenEnd);
-            case
-{$ifdef UsePChar}
-                FTokenEnd^
-{$else}
-                copy(Src, FTokenEnd, 1)
-{$endif}
-                of
+            case FetchActChar                of
                 '=':
-                  begin
-                    FToken := tkLessEqualThan;
-                    Inc(FTokenEnd);
-                  end;
-                '<':
-                  begin
-                    FToken := tkshl;
-                    Inc(FTokenEnd);
-                  end;
-                '>':
                   begin
                     FToken := tkNotEqual;
                     Inc(FTokenEnd);
                   end;
                 else
-                    FToken := tkLessThan;
+                    FToken := tkNot;
               end;
           end;
-        '>':
-          begin
-            Inc(FTokenEnd);
-            case
-{$ifdef UsePChar}
-                FTokenEnd^
-{$else}
-                copy(Src, FTokenEnd, 1)
-{$endif}
-                of
-                '=':
-                  begin
-                    FToken := tkGreaterEqualThan;
-                    Inc(FTokenEnd);
-                  end;
-                '>':
-                  begin
-                    FToken := tkshr;
-                    Inc(FTokenEnd);
-                  end;
-                else
-                    FToken := tkGreaterThan;
-              end;
-          end;
-        '+':
-          begin
-            FToken := tkPlus;
-            Inc(FTokenEnd);
-          end;
-        '-':
-          begin
-            FToken := tkMinus;
-            Inc(FTokenEnd);
-          end;
-        '*':
-          begin
-            FToken := tkMul;
-            Inc(FTokenEnd);
-          end;
-        '/':
-          begin
-            FToken := tkDivision;
-            Inc(FTokenEnd);
-          end;
-        '''':
-          begin
-            FToken := tkString;
-            repeat
-                Inc(FTokenEnd);
-      {$ifdef UsePChar}
-                if FTokenEnd^ = '''' then
-                  begin
-                    Inc(FTokenEnd);
-                    if FTokenEnd^ <> '''' then
-                        break;
-                  end
-                else if FTokenEnd^ in [#0, #10, #13] then
-                    Log(mtError, nErrOpenString, SErrOpenString, []);
-      {$else}
-                if FTokenEnd > l then
-                    Log(mtError, nErrOpenString, SErrOpenString, []);
-                case Src[FTokenEnd] of
-                    '''':
-                      begin
-                        Inc(FTokenEnd);
-                        if (FTokenEnd > l) or (Src[FTokenEnd] <> '''') then
-                            break;
-                      end;
-                    #10, #13:
-                        Log(mtError, nErrOpenString, SErrOpenString, []);
-                  end;
-      {$endif}
-            until False;
-          end
         else
             FToken := tkEOF;
       end;
@@ -1722,72 +1622,6 @@ begin
             if not Skip then
                 FStack[FStackTop].Operand :=
                     CondDirectiveBool[IsFalse(FStack[FStackTop].Operand)];
-          end;
-        tkMinus:
-          begin
-            // unary minus
-            NextToken;
-            ReadOperand(Skip);
-            if not Skip then
-              begin
-                i := StrToInt64Def(FStack[FStackTop].Operand, 0);
-                FStack[FStackTop].Operand := IntToStr(-i);
-              end;
-          end;
-        tkPlus:
-          begin
-            // unary plus
-            NextToken;
-            ReadOperand(Skip);
-            if not Skip then
-              begin
-                i := StrToInt64Def(FStack[FStackTop].Operand, 0);
-                FStack[FStackTop].Operand := IntToStr(i);
-              end;
-          end;
-        tkNumber:
-          begin
-            // number: convert to decimal
-            if not Skip then
-              begin
-                S := GetTokenString;
-                val(S, i, Code);
-                if Code = 0 then
-                  begin
-                    // integer
-                    Push(IntToStr(i), FTokenStart
-{$ifdef UsePChar}
-                        - PChar(Expression) + 1
-{$endif}
-                        );
-                  end
-                else
-                  begin
-                    val(S, e, Code);
-                    if Code > 0 then
-                        Log(mtError, nErrRangeCheck, sErrRangeCheck, []);
-                    if e = 0 then
-                    ;
-                    // float
-                    Push(S, FTokenStart
-{$ifdef UsePChar}
-                        - PChar(Expression) + 1
-{$endif}
-                        );
-                  end;
-              end;
-            NextToken;
-          end;
-        tkString:
-          begin
-            // string literal
-            if not Skip then
-                Push(GetStringLiteralValue, FTokenStart
-{$ifdef UsePChar}
-                    - PChar(Expression) + 1
-{$endif}
-                    );
-            NextToken;
           end;
         tkIdentifier:
             if Skip then
@@ -1935,8 +1769,6 @@ begin
                 else
                     ReadOperand;
               end;
-            tkMul, tkDivision, tkmod, tkshl, tkshr:
-                ReadBinary(ceplSecond, FToken);
             tkor:
               begin
                 ResolveStack(OldStackTop, ceplThird, tkor);
@@ -1957,10 +1789,11 @@ begin
                 else
                     ReadOperand;
               end;
-            tkPlus, tkMinus, tkxor:
+            tkSingleAnd:
+                ReadBinary(ceplSecond, FToken);
+            tkxor, tkSingleOr:
                 ReadBinary(ceplThird, FToken);
-            tkEqual, tkNotEqual, tkLessThan, tkGreaterThan, tkLessEqualThan,
-            tkGreaterEqualThan:
+            tkEqual, tkNotEqual:
                 ReadBinary(ceplFourth, FToken);
             else
                 LogXExpectedButTokenFound('operator');
@@ -2002,101 +1835,18 @@ begin
     {$R+}
           try
             case Op of
-                tkand: // boolean and
+                tkand,tkSingleAnd: // boolean and
                     R := CondDirectiveBool[IsTrue(A) and IsTrue(B)];
-                tkor: // boolean or
+                tkor,tkSingleOr: // boolean or
                     R := CondDirectiveBool[IsTrue(A) or IsTrue(B)];
                 tkxor: // boolean xor
                     R := CondDirectiveBool[IsTrue(A) xor IsTrue(B)];
-                tkMul, tkmod, tkshl, tkshr, tkPlus, tkMinus:
-                    if IsInteger(A, AInt) then
-                      begin
-                        if IsInteger(B, BInt) then
-                            case Op of
-                                tkMul: R := IntToStr(AInt * BInt);
-                                tkmod: R := IntToStr(AInt mod BInt);
-                                tkshl: R := IntToStr(AInt shl BInt);
-                                tkshr: R := IntToStr(AInt shr BInt);
-                                tkPlus: R := IntToStr(AInt + BInt);
-                                tkMinus: R := IntToStr(AInt - BInt);
-                                else
-                                // Do nothing, satisfy compiler
-                              end
-                        else if IsExtended(B, BFloat) then
-                            case Op of
-                                tkMul: R := FloatToStr(extended(AInt) * BFloat);
-                                tkPlus: R := FloatToStr(extended(AInt) + BFloat);
-                                tkMinus: R := FloatToStr(extended(AInt) - BFloat);
-                                else
-                                    LogXExpectedButTokenFound('integer', BPos);
-                              end
-                        else
-                            LogXExpectedButTokenFound('integer', BPos);
-                      end
-                    else if IsExtended(A, AFloat) then
-                      begin
-                        if IsExtended(B, BFloat) then
-                            case Op of
-                                tkMul: R := FloatToStr(AFloat * BFloat);
-                                tkPlus: R := FloatToStr(AFloat + BFloat);
-                                tkMinus: R := FloatToStr(AFloat - BFloat);
-                                else
-                                    LogXExpectedButTokenFound('float', BPos);
-                              end
-                        else
-                            LogXExpectedButTokenFound('float', BPos);
-                      end
-                    else
-                        Log(mtError, nErrOperandAndOperatorMismatch,
-                            sErrOperandAndOperatorMismatch, []);
-                tkDivision:
-                    if IsExtended(A, AFloat) then
-                      begin
-                        if IsExtended(B, BFloat) then
-                            R := FloatToStr(AFloat / BFloat)
-                        else
-                            LogXExpectedButTokenFound('float', BPos);
-                      end
-                    else if IsInteger(A, Aint) and IsInteger(B, Bint) then
-                        R := IntToStr(AInt div BInt)
-                    else
-                        Log(mtError, nErrOperandAndOperatorMismatch,
-                            sErrOperandAndOperatorMismatch, []);
                 tkEqual,
-                tkNotEqual,
-                tkLessThan, tkGreaterThan,
-                tkLessEqualThan, tkGreaterEqualThan:
+                tkNotEqual:
                   begin
-                    if IsInteger(A, AInt) and IsInteger(B, BInt) then
-                        case Op of
-                            tkEqual: R := CondDirectiveBool[AInt = BInt];
-                            tkNotEqual: R := CondDirectiveBool[AInt <> BInt];
-                            tkLessThan: R := CondDirectiveBool[AInt < BInt];
-                            tkGreaterThan: R := CondDirectiveBool[AInt > BInt];
-                            tkLessEqualThan: R := CondDirectiveBool[AInt <= BInt];
-                            tkGreaterEqualThan: R := CondDirectiveBool[AInt >= BInt];
-                            else
-                            // Do nothing, satisfy compiler
-                          end
-                    else if IsExtended(A, AFloat) and IsExtended(B, BFloat) then
-                        case Op of
-                            tkEqual: R := CondDirectiveBool[AFloat = BFloat];
-                            tkNotEqual: R := CondDirectiveBool[AFloat <> BFloat];
-                            tkLessThan: R := CondDirectiveBool[AFloat < BFloat];
-                            tkGreaterThan: R := CondDirectiveBool[AFloat > BFloat];
-                            tkLessEqualThan: R := CondDirectiveBool[AFloat <= BFloat];
-                            tkGreaterEqualThan: R := CondDirectiveBool[AFloat >= BFloat];
-                            else
-                            // Do nothing, satisfy compiler
-                          end
-                    else
-                        case Op of
+                     case Op of
                             tkEqual: R := CondDirectiveBool[A = B];
                             tkNotEqual: R := CondDirectiveBool[A <> B];
-                            tkLessThan: R := CondDirectiveBool[A < B];
-                            tkGreaterThan: R := CondDirectiveBool[A > B];
-                            tkLessEqualThan: R := CondDirectiveBool[A <= B];
-                            tkGreaterEqualThan: R := CondDirectiveBool[A >= B];
                             else
                             // Do nothing, satisfy compiler
                           end;
@@ -2106,10 +1856,6 @@ begin
                         sErrOperandAndOperatorMismatch, []);
               end;
           except
-            on E: EDivByZero do
-                Log(mtError, nErrDivByZero, sErrDivByZero, []);
-            on E: EZeroDivide do
-                Log(mtError, nErrDivByZero, sErrDivByZero, []);
             on E: EMathError do
                 Log(mtError, nErrRangeCheck, sErrRangeCheck + ' ' + E.Message, []);
             on E: EInterror do
@@ -2745,6 +2491,7 @@ constructor TCSharpScanner.Create(AFileResolver: TBaseFileResolver);
         Result.Duplicates := dupError;
     end;
 
+
 var
     vs: TValueSwitch;
 begin
@@ -2767,6 +2514,8 @@ begin
     FConditionEval.OnLog := @OnCondEvalLog;
     FConditionEval.OnEvalVariable := @OnCondEvalVar;
     FConditionEval.OnEvalFunction := @OnCondEvalFunction;
+
+
 end;
 
 destructor TCSharpScanner.Destroy;
@@ -3563,13 +3312,13 @@ begin
     while (p <= length(Param)) and (Param[p] in [' ', #9]) do
         Inc(p);
     StartPos := p;
-    while (p <= length(Param)) and (Param[p] in ['a'..'z', 'A'..'Z', '0'..'9', '_']) do
+    while (p <= length(Param)) and (Param[p] in IdentChars) do
         Inc(p);
     Identifier := copy(Param, StartPos, p - StartPos);
     while (p <= length(Param)) and (Param[p] in [' ', #9]) do
         Inc(p);
     StartPos := p;
-    while (p <= length(Param)) and (Param[p] in ['a'..'z', 'A'..'Z', '_']) do
+    while (p <= length(Param)) and (Param[p] in Letters+['_']) do
         Inc(p);
     Value := copy(Param, StartPos, p - StartPos);
     HandleWarnIdentifier(Identifier, Value);
@@ -3747,29 +3496,6 @@ begin
                 DoLog(mtInfo, nLogIFNDefAccepted, sLogIFNDefAccepted, [aName])
             else
                 DoLog(mtInfo, nLogIFNDefRejected, sLogIFNDefRejected, [aName]);
-      end;
-end;
-
-procedure TCSharpScanner.HandleIFOPT(const AParam: string);
-
-begin
-    PushSkipMode;
-    if CShIsSkipping then
-        CShSkipMode := csSkipAll
-    else
-      begin
-        if (length(AParam) <> 2) or not (AParam[1] in ['a'..'z', 'A'..'Z']) or
-            not (AParam[2] in ['+', '-']) then
-            Error(nErrXExpectedButYFound, sErrXExpectedButYFound,
-                ['letter[+|-]', AParam]);
-        if IfOpt(AParam[1]) = (AParam[2] = '+') then
-            CShSkipMode := csSkipElseBranch
-        else
-          begin
-            CShSkipMode := csSkipIfBranch;
-            CShIsSkipping := True;
-          end;
-
       end;
 end;
 
@@ -4018,13 +3744,39 @@ var
     i: TToken;
     SectionLength, Index: integer;
   {$ifdef UsePChar}
-    OldLength: integer;
+    OldLength, j: integer;
+    ch0: Char;
+    TestKey: UnicodeString;
 
   {$else}
     s: string;
     l: integer;
 
   {$endif}
+
+  function FetchActChar:Char;inline ;
+begin
+     {$ifdef UsePChar}
+    result :=    FTokenPos[0]
+{$else}
+    if TokenPos <= l then
+      result :=    s[FTokenPos]
+    else
+      result := #0;
+{$endif}
+  end;
+
+  function FetchNextChar:Char;inline;
+begin
+     {$ifdef UsePChar}
+    result :=    FTokenPos[1]
+{$else}
+    if TokenPos < l then
+      result :=    s[FTokenPos+1]
+    else
+      result := #0;
+{$endif}
+  end ;
 
     procedure FetchCurTokenString; inline;
     begin
@@ -4056,64 +3808,27 @@ var
         TokenStart := FTokenPos;
         repeat
             Inc(FTokenPos);
-        until not (
-    {$ifdef UsePChar}
-            FTokenPos[0]
-{$else}
-            FTokenPos <= l) and (s[FTokenPos]
-    {$endif}
-                in Digits);
-        if (
-{$ifdef UsePChar}
-            FTokenPos[0]
-{$else}FTokenPos <= l) and (s[FTokenPos]   {$endif}
-            = '.') and ((
-{$ifdef UsePChar}
-            FTokenPos[1]
-{$else}FTokenPos = l) or (s[FTokenPos + 1]{$endif}
-            <> '.')) then
+        until not ( FetchActChar  in Digits);
+        if ( FetchActChar = '.') and (FetchNextChar <> '.') then
           begin
             Inc(FTokenPos);
-            while (
-                    {$ifdef UsePChar}
-                    FTokenPos[0]
-{$else}
-                    FTokenPos <= l) and (s[FTokenPos]
-{$endif}
-                    in Digits) do
+            while ( FetchActChar  in Digits) do
                 Inc(FTokenPos);
           end;
         // Check for Exponent
-        if (
-{$ifdef UsePChar}
-        FTokenPos[0]
-{$else}
-        FTokenPos <= l) and (s[FTokenPos]{$endif} in ['e'])
-
-        then
+        if ( FetchActChar in ['e']) then
           begin
             Inc(FTokenPos);
-            if (
-{$ifdef UsePChar}
-            FTokenPos[0]
-{$else}
-            FTokenPos <= l) and (s[FTokenPos]{$endif} in ['-', '+'])
+            if (FetchActChar  in ['-', '+'])
 
             then
                 Inc(FTokenPos);
-            while (
-                {$ifdef UsePChar}
-                FTokenPos[0]
-                {$else}
-                FTokenPos <= l) and (s[FTokenPos]{$endif} in Digits)
+            while (FetchActChar in Digits)
                 do
                 Inc(FTokenPos);
           end;
         // Check for type
-        if (
-{$ifdef UsePChar}
-        FTokenPos[0]{$else}
-        (FTokenPos <= l) and (s[FTokenPos]{$endif} in ['b', 'd', 'f', 'l'])
+        if ( FetchActChar  in ['b', 'd', 'f', 'l'])
         then
            Inc(FTokenPos);
         SectionLength := FTokenPos - TokenStart;
@@ -4129,7 +3844,7 @@ var
     begin
           begin
             // Multi-line comment
-            Inc(FTokenPos);
+          //  Inc(FTokenPos);
             TokenStart := FTokenPos;
             FCurTokenString := '';
             {$ifdef UsePChar}
@@ -4137,13 +3852,7 @@ var
             {$endif}
             NestingLevel := 0;
             repeat
-                if
-{$ifdef UsePChar}
-                FTokenPos[0] = #0
-{$else}
-                FTokenPos > l
-    {$endif}
-                then
+                if  FetchActChar  = #0   then
                   begin
                     SectionLength := FTokenPos - TokenStart;
                 {$ifdef UsePChar}
@@ -4171,28 +3880,14 @@ var
                       end;
                     TokenStart := FTokenPos;
                   end
-                else if
-{$ifdef UsePChar}
-                (FTokenPos[0] = '*') and (FTokenPos[1] = '/')
-                  {$else}
-                (FTokenPos < l) and (s[FTokenPos] = '*') and
-                    (s[FTokenPos + 1] = '/')
-    {$endif}
-                then
+                else if (FetchActChar  = '*') and (FetchNextChar = '/') then
                   begin
                     Dec(NestingLevel);
                     if NestingLevel < 0 then
                         break;
                     Inc(FTokenPos, 2);
                   end
-                else if
-{$ifdef UsePChar}
-                (FTokenPos[0] = '/') and (FTokenPos[1] = '*')
-                  {$else}
-                (FTokenPos < l) and (s[FTokenPos] = '/') and
-                    (s[FTokenPos + 1] = '*')
-    {$endif}
-                then
+                else if (FetchActChar  = '/') and (FetchNextChar = '*')  then
                   begin
                     Inc(FTokenPos, 2);
                     Inc(NestingLevel);
@@ -4252,13 +3947,64 @@ begin
         exit;
       end;
   {$endif}
-    case
-{$ifdef UsePChar}
-        FTokenPos[0]
-{$else}
-        s[FTokenPos]
-{$endif}
-        of
+    ch0 := FetchActChar;
+    if assigned(TokenIndex[ch0]) then
+       begin
+         inc(FTokenPos);
+         TestKey := ch0 + FetchActChar+FetchNextChar;
+         for j := 0 to high(TokenIndex[ch0]) do
+           if copy(TokenIndex[ch0][j].key,1,3) = copy(testkey,1,TokenIndex[ch0][j].l) then
+              begin
+                 if (TokenIndex[ch0][j].l <=3) and not (ch0 in IdentChars) then
+                   begin
+                     result := TokenIndex[ch0][j].token;
+                     inc(FTokenPos,TokenIndex[ch0][j].l-1);
+                     break;
+                   end
+                 else
+                   begin
+                     if CurTokenString = '' then
+                       begin
+                         TokenStart := FTokenPos-1;
+                         while FetchActChar in IdentChars do
+                           Inc(FTokenPos);
+                         SectionLength := FTokenPos - TokenStart;
+                         FetchCurTokenString;
+                       end;
+                     if CurTokenString = TokenIndex[ch0][j].key then
+                       begin
+                         result := TokenIndex[ch0][j].token;
+                         break
+                       end
+                   end
+              end;
+
+           case result of
+               tkComment: FetchMLComment(TokenInfos[result]);
+               tkLineComment: begin
+                  TokenStart := FTokenPos;
+                  FCurTokenString := '';
+                  while FetchActChar <> #0  do
+                      Inc(FTokenPos);
+                  SectionLength := FTokenPos - TokenStart;
+                  FetchCurTokenString;
+              end;
+             tkLineEnding:if ch0 in IdentChars then
+               begin
+               if CurTokenString = '' then
+                 begin
+                 TokenStart := FTokenPos-1;
+                 while FetchActChar in IdentChars do
+                   Inc(FTokenPos);
+                 SectionLength := FTokenPos - TokenStart;
+                 FetchCurTokenString;
+                 end;
+                 result := tkIdentifier;
+               end;
+           end;
+         end
+       else
+    case  ch0  of
     {$ifdef UsePChar}
         #0:         // Empty line
           begin
@@ -4271,62 +4017,32 @@ begin
             Result := tkWhitespace;
             repeat
                 Inc(FTokenPos);
-                if
-{$ifdef UsePChar}
-                FTokenPos[0] = #0
-{$else}
-                FTokenPos > l
-{$endif}
-                then
+                if FetchActChar = #0 then
                     if not FetchLocalLine then
                       begin
                         FCurToken := Result;
                         exit;
                       end;
-            until not (
-{$ifdef UsePChar}
-                    FTokenPos[0]
-{$else}
-                    s[FTokenPos]
-{$endif}
-                    = ' ');
+            until not (FetchActChar = ' ');
           end;
         #9:
           begin
             Result := tkTab;
             repeat
                 Inc(FTokenPos);
-                if
-{$ifdef UsePChar}
-                FTokenPos[0] = #0
-{$else}
-                FTokenPos > l
-{$endif}
-                then
+                if FetchActChar = #0  then
                     if not FetchLocalLine then
                       begin
                         FCurToken := Result;
                         exit;
                       end;
-            until not (
-{$ifdef UsePChar}
-                    FTokenPos[0]
-{$else}
-                    s[FTokenPos]
-{$endif}
-                    = #9);
+            until not (FetchActChar= #9);
           end;
         '#': // Compiler Directive
           begin
             TokenStart := FTokenPos;
             FCurTokenString := '';
-            while
-{$ifdef UsePChar}
-                FTokenPos[0] <> #0
-{$else}
-                (FTokenPos <= l) and (s[FTokenPos] <> #0)
-{$endif}
-                do
+            while FetchActChar <> #0 do
                 Inc(FTokenPos);
             SectionLength := FTokenPos - TokenStart;
             FetchCurTokenString;
@@ -4334,28 +4050,16 @@ begin
           end;
         '''', '"':
             Result := DoFetchTextToken;
-        '&':
+{        '&':
           begin
             Result := tkSingleAnd;
             Inc(FTokenPos);
-            if
-{$ifdef UsePChar}
-            FTokenPos[0] = '&'
-{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '&')
-{$endif}
-            then
+            if FetchActChar = '&' then
               begin
                 Inc(FTokenPos);
                 Result := tkAnd;
               end;
-            if
-{$ifdef UsePChar}
-            FTokenPos[0] = '='
-{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '=')
-{$endif}
-            then
+            if FetchActChar = '=' then
               begin
                 Inc(FTokenPos);
                 Result := tkAssignAnd;
@@ -4366,24 +4070,12 @@ begin
           begin
             Result := tkSingleOr;
             Inc(FTokenPos);
-            if
-{$ifdef UsePChar}
-            FTokenPos[0] = '|'
-{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '|')
-{$endif}
-            then
+            if FetchActChar = '|'  then
               begin
                 Inc(FTokenPos);
                 Result := tkOr;
               end;
-            if
-{$ifdef UsePChar}
-            FTokenPos[0] = '='
-{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '=')
-{$endif}
-            then
+            if FetchActChar = '=' then
               begin
                 Inc(FTokenPos);
                 Result := tkAssignOr;
@@ -4394,59 +4086,24 @@ begin
           begin
             Result := tkKomplement;
             Inc(FTokenPos);
-          end;
+          end; }
         '@':
           begin
             Inc(FTokenPos);
-            if
-{$ifdef UsePChar}
-            FTokenPos[0] = '"'
-{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '"')
-{$endif}
-            then
+            if FetchActChar = '"'  then
                 Result := DoFetchTextToken('@');
           end;
         '$':
           begin
             Inc(FTokenPos);
-            if
-{$ifdef UsePChar}
-            FTokenPos[0] = '"'
-{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '"')
-{$endif}
-            then
-              begin
+            if FetchActChar = '"'  then
                 Result := DoFetchTextToken('$');
-              end
-            else
-              begin
-                TokenStart := FTokenPos;
-                repeat
-                until
-{$ifdef UsePChar}
-                    not (FTokenPos[0] in HexDigits)
-{$else}
-                    (FTokenPos > l) or not (s[FTokenPos] in HexDigits)
-{$endif}
-                ;
-                SectionLength := FTokenPos - TokenStart;
-                FetchCurTokenString;
-                Result := tkNumber;
-              end;
           end;
-        '%':
+{        '%':
           begin
             Result := tkmod;
             Inc(FTokenPos);
-            if
-{$ifdef UsePChar}
-            FTokenPos[0] = '='
-{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '=')
-{$endif}
-            then
+            if  FetchActChar = '=' then
               begin
                 Inc(FTokenPos);
                 Result := tkAssignModulo;
@@ -4466,24 +4123,12 @@ begin
           begin
             Result := tkMul;
             Inc(FTokenPos);
-            if (
-{$ifdef UsePChar}
-            FTokenPos[0]
-{$else}
-            (FTokenPos <= l) and (s[FTokenPos]{$endif}  = '*')
-
-            then
+            if FetchActChar = '*' then
               begin
                 Inc(FTokenPos);
                 Result := tkPower;
               end
-            else if (
-{$ifdef UsePChar}
-            FTokenPos[0]
-{$else}
-            FTokenPos <= l) and (s[FTokenPos]{$endif} = '=')
-
-            then
+            else if FetchActChar = '='  then
               begin
                 Inc(FTokenPos);
                 Result := tkAssignMul;
@@ -4494,24 +4139,12 @@ begin
           begin
             Result := tkPlus;
             Inc(FTokenPos);
-            if (
-{$ifdef UsePChar}
-            FTokenPos[0]
-{$else}
-            FTokenPos <= l) and (s[FTokenPos]{$endif} = '=')
-
-            then
+            if FetchActChar = '=' then
               begin
                 Inc(FTokenPos);
                 Result := tkAssignPlus;
               end
-            else if (
-{$ifdef UsePChar}
-            FTokenPos[0]
-{$else}
-            FTokenPos <= l) and (s[FTokenPos]{$endif} = '+')
-
-            then
+            else if FetchActChar = '+' then
               begin
                 Inc(FTokenPos);
                 Result := tkPlusPlus;
@@ -4526,23 +4159,12 @@ begin
           begin
             Result := tkMinus;
             Inc(FTokenPos);
-            if (
-{$ifdef UsePChar}
-            FTokenPos[0]
-{$else}
-            (FTokenPos <= l) and (s[FTokenPos]{$endif}  = '=')
-            then
+            if FetchActChar = '=' then
               begin
                 Inc(FTokenPos);
                 Result := tkAssignMinus;
               end
-            else if (
- {$ifdef UsePChar}
-             FTokenPos[0]
- {$else}
-             FTokenPos <= l) and (s[FTokenPos]{$endif} = '-')
-
-             then
+            else if FetchActChar = '-' then
                begin
                  Inc(FTokenPos);
                  Result := tkMinusMinus;
@@ -4551,72 +4173,41 @@ begin
         '.':
           begin
             Inc(FTokenPos);
-            if
-{$ifdef UsePChar}
-            FTokenPos[0] = '.'
-{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '.')
-{$endif}
-            then
+            Result := tkDot;
+            if FetchActChar =  '.'  then
               begin
                 Inc(FTokenPos);
                 Result := tkDotDot;
               end
-            else
-                Result := tkDot;
           end;
         '/':
           begin
             Result := tkDivision;
             Inc(FTokenPos);
-            if
-{$ifdef UsePChar}
-            FTokenPos[0] = '/'
-{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '/')
-{$endif}
-            then
+            if FetchActChar =  '/'  then
               begin
                 // Single-line comment
                 Inc(FTokenPos);
                 TokenStart := FTokenPos;
                 FCurTokenString := '';
-                while
-{$ifdef UsePChar}
-                    FTokenPos[0] <> #0
-{$else}
-                    (FTokenPos <= l) and (s[FTokenPos] <> #0)
-{$endif}
-                    do
+                while FetchActChar <> #0  do
                     Inc(FTokenPos);
                 SectionLength := FTokenPos - TokenStart;
                 FetchCurTokenString;
                 Result := tkLineComment;
               end
-            else if
-{$ifdef UsePChar}
-            FTokenPos[0] = '='
-{$else}
-            (FTokenPos <= l) and (s[FTokenPos] = '=')
-{$endif}
-            then
+            else if FetchActChar = '='  then
               begin
                 Inc(FTokenPos);
                 Result := tkAssignDivision;
               end
-            else if (
-{$ifdef UsePChar}
-                FTokenPos[0]
-{$else}
-                FTokenPos <= l) and (s[FTokenPos]
-{$endif}
-                = '*') then
+            else if FetchActChar  = '*') then
                 FetchMLComment('/*');
 
-          end;
+          end; }
         '0'..'9':
             FetchNumber;
-        ':':
+   {     ':':
           begin
             Inc(FTokenPos);
             Result := tkColon;
@@ -4625,23 +4216,11 @@ begin
           begin
             Inc(FTokenPos);
             Result := tkAsk;
-            if (
-{$ifdef UsePChar}
-                FTokenPos[0]
-{$else}
-                FTokenPos <= l) and (s[FTokenPos]
-{$endif}
-                = '?') then
+            if FetchActChar  = '?' then
               begin
                 Inc(FTokenPos);
                 Result := tkAskAsk;
-                if (
-    {$ifdef UsePChar}
-                    FTokenPos[0]
-    {$else}
-                    FTokenPos <= l) and (s[FTokenPos]
-    {$endif}
-                    = '=') then
+                if FetchActChar  =   '=' then
                   begin
                     Inc(FTokenPos);
                     Result := tkAssignAsk;
@@ -4657,18 +4236,7 @@ begin
         '<':
           begin
             Inc(FTokenPos);
-      {$ifndef UsePChar}
-            if FTokenPos > l then
-                Result := tkLessThan
-            else
-      {$endif}
-            case
-{$ifdef UsePChar}
-                FTokenPos^
-{$else}
-                    s[FTokenPos]
-{$endif}
-                of
+            case FetchActChar  of
                 '=':
                   begin
                     Inc(FTokenPos);
@@ -4678,13 +4246,7 @@ begin
                   begin
                     Inc(FTokenPos);
                     Result := tkshl;
-                    if (
-{$ifdef UsePChar}
-                        FTokenPos[0]
-{$else}
-                            FTokenPos <= l) and (s[FTokenPos]
-{$endif}
-                        = '=') then
+                    if FetchActChar  '=' then
                       begin
                         Inc(FTokenPos);
                         Result := tkAssignshl;
@@ -4698,41 +4260,22 @@ begin
           begin
             Inc(FTokenPos);
             Result := tkAssign;
-            if (
-{$ifdef UsePChar}
-                FTokenPos[0]
-{$else}
-                FTokenPos <= l) and (s[FTokenPos]
-{$endif}
-                = '=') then
+            if FetchActChar = '=' then
               begin
                 Inc(FTokenPos);
                 Result := tkEqual;
               end
-            else if (
-{$ifdef UsePChar}
-                FTokenPos[0]
-{$else}
-                FTokenPos <= l) and (s[FTokenPos]
-{$endif}
-                = '>') then
+            else if FetchActChar  = '>' then
               begin
                 Inc(FTokenPos);
                 Result := tkLambda;
               end;
-
           end;
         '!':
           begin
             Inc(FTokenPos);
             Result := tkNot;
-            if (
-{$ifdef UsePChar}
-                FTokenPos[0]
-{$else}
-                FTokenPos <= l) and (s[FTokenPos]
-{$endif}
-                = '=') then
+            if FetchActChar = '=' then
               begin
                 Inc(FTokenPos);
                 Result := tkNotEqual;
@@ -4741,18 +4284,7 @@ begin
         '>':
           begin
             Inc(FTokenPos);
-      {$ifndef UsePChar}
-            if FTokenPos > l then
-                Result := tkGreaterThan
-            else
-      {$endif}
-            case
-{$ifdef UsePChar}
-                FTokenPos^
-{$else}
-                    s[FTokenPos]
-{$endif}
-                of
+            case  FetchActChar  of
                 '=':
                   begin
                     Inc(FTokenPos);
@@ -4767,13 +4299,7 @@ begin
                   begin
                     Inc(FTokenPos);
                     Result := tkshr;
-                    if (
-{$ifdef UsePChar}
-                        FTokenPos[0]
-{$else}
-                            FTokenPos <= l) and (s[FTokenPos]
-{$endif}
-                        = '=') then
+                    if FetchActChar = '=' then
                       begin
                         Inc(FTokenPos);
                         Result := tkAssignshr;
@@ -4796,27 +4322,13 @@ begin
           end;
         '^':
           begin
-            if ForceCaret or CShIsSkipping or (PreviousToken in
-                [tkeof, tkTab, tkLineEnding, tkComment, tkIdentifier,
-                tknull, tkOperator, tkBraceClose, tkSquaredBraceClose,
-                tkWhitespace]) then
-              begin
                 Inc(FTokenPos);
                 Result := tkXor;
-                if
-{$ifdef UsePChar}
-                FTokenPos[0] = '='
-{$else}
-                (FTokenPos <= l) and (s[FTokenPos] = '=')
-    {$endif}
-                then
+                if FetchActChar   '='  then
                   begin
                     Inc(FTokenPos);
                     Result := tkAssignXor;
                   end;
-              end
-            else
-                Result := DoFetchTextToken;
           end;
         '\':
           begin
@@ -4832,19 +4344,13 @@ begin
           begin
             Inc(FTokenPos);
             Result := tkCurlyBraceClose;
-          end;
+          end;  }
         'A'..'Z', 'a'..'z', '_':
           begin
             TokenStart := FTokenPos;
-            repeat
-                Inc(FTokenPos);
-            until
-{$ifdef UsePChar}
-                not (FTokenPos[0] in IdentChars)
-{$else}
-                (FTokenPos > l) or not (s[FTokenPos] in IdentChars)
-{$endif}
-            ;
+            Inc(FTokenPos);
+            while FetchActChar  in IdentChars do
+              Inc(FTokenPos);
             SectionLength := FTokenPos - TokenStart;
             FetchCurTokenString;
             Result := tkIdentifier;
@@ -4865,13 +4371,7 @@ begin
                 Inc(FTokenPos)
             else
                 Error(nErrInvalidCharacter, SErrInvalidCharacter,
-                    [
-{$ifdef UsePChar}
-                    FTokenPos[0]
-{$else}
-                    s[FTokenPos]
-{$endif}
-                    ]);
+                    [FetchActChar ]);
       end;
 
     FCurToken := Result;
@@ -5029,21 +4529,7 @@ begin
         Value := '1';
         exit(True);
       end;
-    // then check macros
-    i := FMacros.IndexOf(Name);
-    if i >= 0 then
-      begin
-        M := FMacros.Objects[i] as TMacroDef;
-        Value := M.Value;
-        exit(True);
-      end;
-    // last check user hook
-    if Assigned(OnEvalVariable) then
-      begin
-        Result := OnEvalVariable(Sender, Name, Value);
-        exit;
-      end;
-    Value := '';
+    Value := '0';
     Result := False;
 end;
 
@@ -5343,7 +4829,7 @@ var
 begin
     Result := Trim(Param);
     p := 1;
-    while (p <= length(Result)) and (Result[p] in ['a'..'z', 'A'..'Z', '0'..'9', '_']) do
+    while (p <= length(Result)) and (Result[p] in IdentChars) do
         Inc(p);
     SetLength(Result, p - 1);
 end;
@@ -5477,4 +4963,27 @@ begin
       end;
 end;
 
+procedure AppendIdx(var a:TTokenKeyArray;const aStr:string;const aTkn:TToken);
+
+var
+  i, idx: Integer;
+begin
+  idx := 0;
+  for i := 0 to high(a) do
+    if (a[i].l>length(aStr)) then
+      idx:=i+1 else break;
+  setlength(a,high(a)+2);
+  for i := high(a) downto idx+1 do
+     a[i] := a[i-1];
+  with a[idx] do
+    begin
+      token:=aTkn;
+      key:=aStr;
+      l := length(aStr);
+    end;
+end;
+var i:ttoken;
+  initialization
+for i := tkLineComment to high(TToken) do
+  appendIdx(TokenIndex[TokenInfos[i][1]],TokenInfos[i],i);
 end.

@@ -1233,7 +1233,7 @@ type
 
   TCShImplVarDecl = class(TCShImplElement)
     Variable: TCShVariable;
-    constructor Create(const AName: string;const aType:TCShType; AParent: TCShElement); reintroduce;
+    constructor Create(const AName: string; AParent: TCShElement); override;
     destructor Destroy; override;
     procedure ForEachCall(const aMethodCall: TOnForEachCShElement;
       const Arg: Pointer); override;
@@ -1332,6 +1332,10 @@ type
   { TCShImplBeginBlock }
 
   TCShImplBeginBlock = class(TCShImplBlock)
+  end;
+
+  TCShImplDeclare = class(TCShImplElement)
+
   end;
 
   { TCShImplDoWhile }
@@ -1452,7 +1456,7 @@ type
 
   { TCShImplAssign }
 
-  TAssignKind = (akDefault,akAdd,akMinus,akMul,akDivision);
+  TAssignKind = (akDefault,akAdd,akMinus,akMul,akDivision,akModulo,akAnd,akOr,akXor, akAsk,akShl,akShr);
   TCShImplAssign = class (TCShImplStatement)
   public
     left  : TCShExpr;
@@ -1608,11 +1612,11 @@ const
   UnaryOperators = [otImplicit,otExplicit,otAssign,otNegative,otPositive,otEnumerator];
 
   OperatorTokens : Array[TOperatorType] of string
-       =  ('','','','*','+','-','/','<','=',
-           '>',':=','<>','<=','>=','**',
-           '><','Inc','Dec','mod','-','+','Or','div',
-           'shl','or','and','xor','and','not','xor',
-           'shr','enumerator','in');
+       =  ('','','','*','+','-','/','<','==',
+           '>','=','!=','<=','>=','**',
+           '><','++','--','%','-','+','|','div',
+           '<<','||','&','^','&&','!','^',
+           '>>','enumerator','in');
   OperatorNames : Array[TOperatorType] of string
        =  ('','implicit','explicit','multiply','add','subtract','divide','lessthan','equal',
            'greaterthan','assign','notequal','lessthanorequal','greaterthanorequal','power',
@@ -1620,7 +1624,7 @@ const
            'leftshift','logicalor','bitwiseand','bitwisexor','logicaland','logicalnot','logicalxor',
            'rightshift','enumerator','in');
 
-  AssignKindNames : Array[TAssignKind] of string = (':=','+=','-=','*=','/=' );
+  AssignKindNames : Array[TAssignKind] of string = ('=','+=','-=','*=','/=','%=','&=' ,'|=','^=','??=','>>=','<<=' );
 
   cCShMemberHint : Array[TCShMemberHint] of string =
       ( 'deprecated', 'library', 'platform', 'experimental', 'unimplemented' );
@@ -1785,12 +1789,12 @@ end;
 
 { TCShImplVarDecl }
 
-constructor TCShImplVarDecl.Create(const AName: string; const aType: TCShType;
+constructor TCShImplVarDecl.Create(const AName: string;
   AParent: TCShElement);
 begin
   inherited Create(AName, AParent);
   Variable := TCShVariable.Create(AName,self);
-  Variable.VarType := aType;
+//  Variable.VarType := aType;
 end;
 
 destructor TCShImplVarDecl.Destroy;
@@ -3718,7 +3722,8 @@ end;
 function TCShImplBlock.AddVarDeclartion(const aName: string;
   const TypeEl: TCShType): TCShImplVarDecl;
 begin
-  Result := TCShImplVarDecl.Create(aName,TypeEl, Self);
+  Result := TCShImplVarDecl.Create(aName, Self);
+  Result.Variable.VarType := TypeEl;
   AddElement(Result);
 end;
 
