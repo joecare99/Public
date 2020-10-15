@@ -839,7 +839,7 @@ begin
   DeclareVar('boolean');
   TestStatement(['While a do ;']);
   W:=AssertStatement('While statement',TCShImplWhile) as TCShImplWhile;
-  AssertExpression('While condition',W.ConditionExpr,pekIdent,'a');
+  AssertExpression('While condition',W.ParamExpression,pekIdent,'a');
   AssertNull('Empty body',W.Body);
 end;
 
@@ -851,7 +851,7 @@ begin
   DeclareVar('boolean');
   TestStatement(['While a do','  begin','  end']);
   W:=AssertStatement('While statement',TCShImplWhile) as TCShImplWhile;
-  AssertExpression('While condition',W.ConditionExpr,pekIdent,'a');
+  AssertExpression('While condition',W.ParamExpression,pekIdent,'a');
   AssertNotNull('Have while body',W.Body);
   AssertEquals('begin end block',TCShImplBeginBlock,W.Body.ClassType);
   AssertEquals('Empty block',0,TCShImplBeginBlock(W.Body).ELements.Count);
@@ -867,11 +867,11 @@ begin
   DeclareVar('boolean','b');
   TestStatement(['While a do','  while b do','    begin','    end']);
   W:=AssertStatement('While statement',TCShImplWhile) as TCShImplWhile;
-  AssertExpression('While condition',W.ConditionExpr,pekIdent,'a');
+  AssertExpression('While condition',W.ParamExpression,pekIdent,'a');
   AssertNotNull('Have while body',W.Body);
   AssertEquals('Nested while',TCShImplWhile,W.Body.ClassType);
   W:=W.Body as TCShImplWhile;
-  AssertExpression('While condition',W.ConditionExpr,pekIdent,'b');
+  AssertExpression('While condition',W.ParamExpression,pekIdent,'b');
   AssertNotNull('Have nested while body',W.Body);
   AssertEquals('Nested begin end block',TCShImplBeginBlock,W.Body.ClassType);
   AssertEquals('Empty nested block',0,TCShImplBeginBlock(W.Body).ELements.Count);
@@ -886,7 +886,7 @@ begin
   DeclareVar('boolean');
   TestStatement(['Repeat','Until a;']);
   R:=AssertStatement('Repeat statement',TCShImplDoWhile) as TCShImplDoWhile;
-  AssertExpression('repeat condition',R.ConditionExpr,pekIdent,'a');
+  AssertExpression('repeat condition',R.ParamExpression,pekIdent,'a');
   AssertEquals('Empty body',0,R.Elements.Count);
 end;
 
@@ -899,7 +899,7 @@ begin
   DeclareVar('boolean');
   TestStatement(['Repeat','begin','end;','Until a;']);
   R:=AssertStatement('repeat statement',TCShImplDoWhile) as TCShImplDoWhile;
-  AssertExpression('repeat condition',R.ConditionExpr,pekIdent,'a');
+  AssertExpression('repeat condition',R.ParamExpression,pekIdent,'a');
   AssertEquals('Have statement',1,R.Elements.Count);
   AssertEquals('begin end block',TCShImplBeginBlock,TObject(R.Elements[0]).ClassType);
   AssertEquals('Empty block',0,TCShImplBeginBlock(R.Elements[0]).ELements.Count);
@@ -914,7 +914,7 @@ begin
   DeclareVar('boolean');
   TestStatement(['Repeat','begin','end','Until a;']);
   R:=AssertStatement('repeat statement',TCShImplDoWhile) as TCShImplDoWhile;
-  AssertExpression('repeat condition',R.ConditionExpr,pekIdent,'a');
+  AssertExpression('repeat condition',R.ParamExpression,pekIdent,'a');
   AssertEquals('Have statement',1,R.Elements.Count);
   AssertEquals('begin end block',TCShImplBeginBlock,TObject(R.Elements[0]).ClassType);
   AssertEquals('Empty block',0,TCShImplBeginBlock(R.Elements[0]).ELements.Count);
@@ -930,11 +930,11 @@ begin
   DeclareVar('boolean','b');
   TestStatement(['Repeat','repeat','begin','end','until b','Until a;']);
   R:=AssertStatement('repeat statement',TCShImplDoWhile) as TCShImplDoWhile;
-  AssertExpression('repeat condition',R.ConditionExpr,pekIdent,'a');
+  AssertExpression('repeat condition',R.ParamExpression,pekIdent,'a');
   AssertEquals('Have statement',1,R.Elements.Count);
   AssertEquals('Nested repeat',TCShImplDoWhile,TObject(R.Elements[0]).ClassType);
   R:=TCShImplDoWhile(R.Elements[0]);
-  AssertExpression('repeat condition',R.ConditionExpr,pekIdent,'b');
+  AssertExpression('repeat condition',R.ParamExpression,pekIdent,'b');
   AssertEquals('Have statement',1,R.Elements.Count);
   AssertEquals('begin end block',TCShImplBeginBlock,TObject(R.Elements[0]).ClassType);
   AssertEquals('Empty block',0,TCShImplBeginBlock(R.Elements[0]).ELements.Count);
@@ -949,9 +949,7 @@ begin
   DeclareVar('integer');
   TestStatement(['For(a=1,a<10,a++)',';']);
   F:=AssertStatement('For statement',TCShImplForLoop) as TCShImplForLoop;
-  AssertExpression('Loop variable name',F.IterExpesion,pekIdent,'a');
-  AssertImplElement('Start value',TCShImplAssign,F.InitStatement);
-  AssertImplElement('End value',TCShImplSimple,F.IncStatement);
+  AssertExpression('Loop variable name',F.ParamExpression,pekIdent,'a');
   AssertNull('Empty body',F.Body);
 end;
 
@@ -964,9 +962,7 @@ begin
   DeclareVar('integer');
   TestStatement(['For a in SomeSet Do',';']);
   F:=AssertStatement('For statement',TCShImplForLoop) as TCShImplForLoop;
-  AssertExpression('Loop variable name',F.IterExpesion,pekIdent,'a');
-  AssertImplElement('Start value',TCShImplAssign,F.InitStatement);
-  AssertImplElement('End value',TCShImplSimple,F.IncStatement);
+  AssertExpression('Loop variable name',F.ParamExpression,pekIdent,'a');
   AssertNull('Empty body',F.Body);
 end;
 
@@ -979,9 +975,7 @@ begin
   DeclareVar('integer');
   TestStatement(['For a:=1+1 to 5+5 do',';']);
   F:=AssertStatement('For statement',TCShImplForLoop) as TCShImplForLoop;
-  AssertExpression('Loop variable name',F.IterExpesion,pekIdent,'a');
-  AssertImplElement('Start value',TCShImplAssign,F.InitStatement);
-  AssertImplElement('End value',TCShImplSimple,F.IncStatement);
+  AssertExpression('Loop variable name',F.ParamExpression,pekIdent,'a');
   AssertNull('Empty body',F.Body);
 end;
 
@@ -994,9 +988,7 @@ begin
   DeclareVar('integer');
   TestStatement(['For a:=1 to 10 do','begin','end']);
   F:=AssertStatement('For statement',TCShImplForLoop) as TCShImplForLoop;
-  AssertExpression('Loop variable name',F.IterExpesion,pekIdent,'a');
-  AssertImplElement('Start value',TCShImplAssign,F.InitStatement);
-  AssertImplElement('End value',TCShImplSimple,F.IncStatement);
+  AssertExpression('Loop variable name',F.ParamExpression,pekIdent,'a');
   AssertNotNull('Have for body',F.Body);
   AssertEquals('begin end block',TCShImplBeginBlock,F.Body.ClassType);
   AssertEquals('Empty block',0,TCShImplBeginBlock(F.Body).ELements.Count);
@@ -1011,9 +1003,7 @@ begin
   DeclareVar('integer');
   TestStatement(['For a:=10 downto 1 do','begin','end']);
   F:=AssertStatement('For statement',TCShImplForLoop) as TCShImplForLoop;
-  AssertExpression('Loop variable name',F.IterExpesion,pekIdent,'a');
-  AssertImplElement('Start value',TCShImplAssign,F.InitStatement);
-  AssertImplElement('End value',TCShImplSimple,F.IncStatement);
+  AssertExpression('Loop variable name',F.ParamExpression,pekIdent,'a');
   AssertNotNull('Have for body',F.Body);
   AssertEquals('begin end block',TCShImplBeginBlock,F.Body.ClassType);
   AssertEquals('Empty block',0,TCShImplBeginBlock(F.Body).ELements.Count);
@@ -1028,15 +1018,11 @@ begin
   DeclareVar('integer','b');
   TestStatement(['For a:=1 to 10 do','For b:=11 to 20 do','begin','end']);
   F:=AssertStatement('For statement',TCShImplForLoop) as TCShImplForLoop;
-  AssertExpression('Loop variable name',F.IterExpesion,pekIdent,'a');
-  AssertImplElement('Start value',TCShImplAssign,F.InitStatement);
-  AssertImplElement('End value',TCShImplSimple,F.IncStatement);
+  AssertExpression('Loop variable name',F.ParamExpression,pekIdent,'a');
   AssertNotNull('Have while body',F.Body);
   AssertEquals('begin end block',TCShImplForLoop,F.Body.ClassType);
   F:=F.Body as TCShImplForLoop;
-  AssertExpression('Loop variable name',F.IterExpesion,pekIdent,'a');
-  AssertImplElement('Start value',TCShImplAssign,F.InitStatement);
-  AssertImplElement('End value',TCShImplSimple,F.IncStatement);
+  AssertExpression('Loop variable name',F.ParamExpression,pekIdent,'a');
   AssertNotNull('Have for body',F.Body);
   AssertEquals('begin end block',TCShImplBeginBlock,F.Body.ClassType);
   AssertEquals('Empty block',0,TCShImplBeginBlock(F.Body).ELements.Count);
@@ -1049,10 +1035,8 @@ Var
 
 begin
   DeclareVar('record X,Y : Integer; end');
-  TestStatement(['With a do','begin','end']);
-  W:=AssertStatement('For statement',TCShImplUsing) as TCShImplUsing;
-  AssertEquals('1 expression',1,W.Expressions.Count);
-  AssertExpression('With identifier',TCShExpr(W.Expressions[0]),pekIdent,'a');
+  TestStatement(['using (a) ','begin','end']);
+  W:=AssertStatement('Using statement',TCShImplUsing) as TCShImplUsing;
   AssertNotNull('Have with body',W.Body);
   AssertEquals('begin end block',TCShImplBeginBlock,W.Body.ClassType);
   AssertEquals('Empty block',0,TCShImplBeginBlock(W.Body).ELements.Count);
@@ -1066,10 +1050,7 @@ begin
   DeclareVar('record X,Y : Integer; end');
   DeclareVar('record W,Z : Integer; end','b');
   TestStatement(['With a,b do','begin','end']);
-  W:=AssertStatement('For statement',TCShImplUsing) as TCShImplUsing;
-  AssertEquals('2 expressions',2,W.Expressions.Count);
-  AssertExpression('With identifier 1',TCShExpr(W.Expressions[0]),pekIdent,'a');
-  AssertExpression('With identifier 2',TCShExpr(W.Expressions[1]),pekIdent,'b');
+  W:=AssertStatement('Using statement',TCShImplUsing) as TCShImplUsing;
   AssertNotNull('Have with body',W.Body);
   AssertEquals('begin end block',TCShImplBeginBlock,W.Body.ClassType);
   AssertEquals('Empty block',0,TCShImplBeginBlock(W.Body).ELements.Count);

@@ -72,7 +72,6 @@ Type
       ): TParamsExpr; overload;
     Procedure AssertExportSymbol(Const Msg: String; AIndex : Integer; AName,AExportName : String; AExportIndex : Integer = -1);
     Procedure AssertEquals(Const Msg : String; AExpected, AActual: TCShExprKind); overload;
-    Procedure AssertEquals(Const Msg : String; AExpected, AActual: TLoopType); overload;
     Procedure AssertEquals(Const Msg : String; AExpected, AActual: TCShObjKind); overload;
     Procedure AssertEquals(Const Msg : String; AExpected, AActual: TExprOpCode); overload;
     Procedure AssertEquals(Const Msg : String; AExpected, AActual: TCShMemberHint); overload;
@@ -637,8 +636,18 @@ begin
   FFileName:=Format(rsCShFilename, ['aTest']);
   FResolver.AddStream(FFileName,TStringStream.Create(FSource.Text));
   FScanner.OpenFile(FFileName);
-  FTestBlock :=TCShImplBeginBlock.Create('',nil);
-  FParser.ParseStatement(FTestBlock,lNewImplElement);
+  FTestBlock :=TCShImplBlock.Create('Main',nil);
+  FParser.NextToken;
+  repeat
+     if not (FParser.CurToken in [tkSemicolon,tkCurlyBraceClose]) then
+       begin
+         FParser.UngetToken;
+         FParser.ParseStatement(FTestBlock,lNewImplElement);
+         if lNewImplElement = nil then
+           break;
+       end;
+     FParser.NextToken;
+  until FParser.CurToken = tkCurlyBraceClose;
   AssertNotNull('Module resulted in Module',FTestBlock);
 end;
 
@@ -667,7 +676,8 @@ function TTestParser.AssertExpression(const Msg: String; AExpr: TCShExpr;
   AValue:string): TParamsExpr;
 begin
   Result:=AssertExpression(Msg,AExpr,pekFuncParams,TParamsExpr) as TParamsExpr;
-  AssertEquals(Msg+': Funktion Params',AValue,TParamsExpr(AExpr).Value.GetDeclaration(true));
+  if assigned(TParamsExpr(AExpr).Value) then
+    AssertEquals(Msg+': Funktion Params',AValue,TParamsExpr(AExpr).Value.GetDeclaration(true));
 end;
 
 function TTestParser.AssertExpression(const Msg: String; AExpr: TCShExpr;
@@ -707,13 +717,6 @@ procedure TTestParser.AssertEquals(const Msg: String; AExpected,
 begin
   AssertEquals(Msg,GetEnumName(TypeInfo(TCShExprKind),Ord(AExpected)),
                    GetEnumName(TypeInfo(TCShExprKind),Ord(AActual)));
-end;
-
-procedure TTestParser.AssertEquals(const Msg: String; AExpected,
-  AActual: TLoopType);
-begin
-  AssertEquals(Msg,GetEnumName(TypeInfo(TLoopType),Ord(AExpected)),
-                   GetEnumName(TypeInfo(TLoopType),Ord(AActual)));
 end;
 
 procedure TTestParser.AssertEquals(const Msg: String; AExpected,
