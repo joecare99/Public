@@ -205,12 +205,12 @@ type
      pekInherited, pekThis, pekSpecialize, pekProcedure);
 
   TExprOpCode = (eopNone,
-                 eopAdd,eopInc,eopSubtract,eopDec,eopMultiply,eopDivide{/}, eopMod, eopPower,// arithmetic
+                 eopAdd,eopInca,eopIncp,eopSubtract,eopDeca,eopDecp,eopMultiply,eopDivide{/}, eopMod, eopPower,// arithmetic
                  eopShr,eopShl, // bit operations
                  eopNot,eopSingleAnd,eopAnd,eopSingleOr,eopOr,eopXor,eopKomplement, // logical/bit
                  eopEqual, eopNotEqual,eopAsk, eopAskAsk,  // Logical
                  eopLessThan,eopGreaterThan, eopLessthanEqual,eopGreaterThanEqual, // ordering
-                 eopIn,eopIs,eopAs, eopSymmetricaldifference,eopLampda, // Specials
+                 eopIn,eopIs,eopAs, eopAssign, eopSymmetricaldifference,eopLampda, // Specials
 //                 eopAddress, eopDeref, eopMemAddress, // Pointers  eopMemAddress=**
                  eopSubIdent); // SomeRec.A, A is subIdent of SomeRec
 
@@ -1032,7 +1032,8 @@ type
     otLessThan, otEqual, otGreaterThan,
     otAssign, otNotEqual, otLessEqualThan, otGreaterEqualThan,
     otPower, otSymmetricalDifference,
-    otInc, otDec,
+    otInca, otDeca,
+    otIncp, otDecp,
     otMod,
     otNegative, otPositive,
     otBitWiseOr,
@@ -1233,7 +1234,7 @@ type
 
   TCShImplVarDecl = class(TCShImplElement)
     Variable: TCShVariable;
-    constructor Create(const AName: string;const aType:TCShType; AParent: TCShElement); reintroduce;
+    constructor Create(const AName: string; AParent: TCShElement); override;
     destructor Destroy; override;
     procedure ForEachCall(const aMethodCall: TOnForEachCShElement;
       const Arg: Pointer); override;
@@ -1330,19 +1331,11 @@ type
   end;
 
   { TCShImplBeginBlock }
-
   TCShImplBeginBlock = class(TCShImplBlock)
   end;
 
-  { TCShImplDoWhile }
 
-  TCShImplDoWhile = class(TCShImplBlock)
-  public
-    ConditionExpr : TCShExpr;
-    destructor Destroy; override;
-    Function Condition: string;
-    procedure ForEachCall(const aMethodCall: TOnForEachCShElement;
-      const Arg: Pointer); override;
+  TCShImplDeclare = class(TCShImplElement)
   end;
 
   { TCShImplIfElse }
@@ -1361,20 +1354,6 @@ type
     Function Condition: string;
   end;
 
-  { TCShImplWhile }
-
-  TCShImplWhile = class(TCShImplStatement)
-  public
-    destructor Destroy; override;
-    procedure AddElement(Element: TCShImplElement); override;
-    procedure ForEachCall(const aMethodCall: TOnForEachCShElement;
-      const Arg: Pointer); override;
-  public
-    ConditionExpr : TCShExpr;
-    Body: TCShImplElement;
-    function Condition: string;
-  end;
-
   { TCShImplUsing }
 
   TCShImplUsing = class(TCShImplStatement)
@@ -1382,11 +1361,10 @@ type
     constructor Create(const AName: string; AParent: TCShElement); override;
     destructor Destroy; override;
     procedure AddElement(Element: TCShImplElement); override;
-    procedure AddExpression(const Expression: TCShExpr);
     procedure ForEachCall(const aMethodCall: TOnForEachCShElement;
       const Arg: Pointer); override;
   public
-    Expressions: TFPList; // list of TCShExpr
+    ParamExpressions: TCShExpr; // list of TCShExpr
     Body: TCShImplElement;
   end;
 
@@ -1429,30 +1407,45 @@ type
   TCShImplSwitchElse = class(TCShImplBlock)
   end;
 
-  { TCShImplForLoop
-    - for VariableName in StartExpr do Body
-    - for VariableName := StartExpr to EndExpr do Body }
-
-  TLoopType = (ltNormal,ltDown,ltIn);
-  TCShImplForLoop = class(TCShImplStatement)
+  { TCShImplLoop }
+  // For repetetive Statements
+  TCShImplLoop = class(TCShImplStatement)
   public
     destructor Destroy; override;
     procedure AddElement(Element: TCShImplElement); override;
     procedure ForEachCall(const aMethodCall: TOnForEachCShElement;
       const Arg: Pointer); override;
   public
-    InitStatement : TCShImplBlock ;
-    IterExpesion : TCShExpr ;
-    IncStatement : TCShImplBlock ;
+    ParamExpression : TCShExpr ;
     Body: TCShImplElement;
-    function IncStmt: string;
-    function InitStmt: String;
-    function IterExpr: string;
+    function ParamsEx: string;
+  end;
+
+
+  { TCShImplForLoop
+    - for (VariableName = StartExpr, < EndExpr, ++)  Body }
+  TCShImplForLoop = class(TCShImplLoop)
+  end;
+
+  { TCShImplLoop }
+//  - for (VariableName in StartExpr)  Body
+  TCShImplForeachLoop = class(TCShImplLoop)
+  end;
+
+  { TCShImplWhile }
+// while (condition) Body
+  TCShImplWhile = class(TCShImplLoop)
+  end;
+
+  { TCShImplDoWhile }
+  // do Body while (condition)
+  TCShImplDoWhile = class(TCShImplLoop)
+    function CloseOnSemicolon: boolean; override;
   end;
 
   { TCShImplAssign }
 
-  TAssignKind = (akDefault,akAdd,akMinus,akMul,akDivision);
+  TAssignKind = (akDefault,akAdd,akMinus,akMul,akDivision,akModulo,akAnd,akOr,akXor, akAsk,akShl,akShr);
   TCShImplAssign = class (TCShImplStatement)
   public
     left  : TCShExpr;
@@ -1595,32 +1588,33 @@ const
       'Procedure');
 
   OpcodeStrings : Array[TExprOpCode] of string = (
-        '','+','++','-','--','*','/','%','**',
+        '','+','++','++','-','--','--','*','/','%','**',
         '>>','<<',
         '!','&','&&','|','||','^','~',
         '=','!=','?','??',
         '<','>','<=','>=',
-        'in','is','as','><','=>',
+        'in','is','as','=','><','=>',
  //       '@','^','@@',
         '.');
 
 
-  UnaryOperators = [otImplicit,otExplicit,otAssign,otNegative,otPositive,otEnumerator];
+  UnaryOperators = [otImplicit,otExplicit,otAssign,otNegative,otPositive,otEnumerator,otInca,otDeca];
+  UnaryOperatorsPost = [otIncp,otDecp];
 
   OperatorTokens : Array[TOperatorType] of string
-       =  ('','','','*','+','-','/','<','=',
-           '>',':=','<>','<=','>=','**',
-           '><','Inc','Dec','mod','-','+','Or','div',
-           'shl','or','and','xor','and','not','xor',
-           'shr','enumerator','in');
+       =  ('','','','*','+','-','/','<','==',
+           '>','=','!=','<=','>=','**',
+           '><','++','--','++','--','%','-','+','|','div',
+           '<<','||','&','^','&&','!','^',
+           '>>','enumerator','in');
   OperatorNames : Array[TOperatorType] of string
        =  ('','implicit','explicit','multiply','add','subtract','divide','lessthan','equal',
            'greaterthan','assign','notequal','lessthanorequal','greaterthanorequal','power',
-           'symmetricaldifference','inc','dec','modulus','negative','positive','bitwiseor','intdivide',
+           'symmetricaldifference','inc ante','dec ante','inc post','dec post','modulus','negative','positive','bitwiseor','intdivide',
            'leftshift','logicalor','bitwiseand','bitwisexor','logicaland','logicalnot','logicalxor',
            'rightshift','enumerator','in');
 
-  AssignKindNames : Array[TAssignKind] of string = (':=','+=','-=','*=','/=' );
+  AssignKindNames : Array[TAssignKind] of string = ('=','+=','-=','*=','/=','%=','&=' ,'|=','^=','??=','>>=','<<=' );
 
   cCShMemberHint : Array[TCShMemberHint] of string =
       ( 'deprecated', 'library', 'platform', 'experimental', 'unimplemented' );
@@ -1783,14 +1777,59 @@ begin
     end;
 end;
 
+{ TCShImplDoWhile }
+
+function TCShImplDoWhile.CloseOnSemicolon: boolean;
+begin
+  Result:=assigned(Body)and assigned(ParamExpression);
+end;
+
+{ TCShImplLoop }
+
+destructor TCShImplLoop.Destroy;
+begin
+  ReleaseAndNil(TCShElement(ParamExpression){$IFDEF CheckCShTreeRefCount},'TCShImplLoop.IterExpesion'{$ENDIF});
+  ReleaseAndNil(TCShElement(Body){$IFDEF CheckCShTreeRefCount},'TCShImplLoop.Body'{$ENDIF});
+  inherited Destroy;
+end;
+
+procedure TCShImplLoop.AddElement(Element: TCShImplElement);
+begin
+  inherited AddElement(Element);
+  if Body=nil then
+    begin
+    Body:=Element;
+    Body.AddRef{$IFDEF CheckCShTreeRefCount}('TCShImplLoop.Body'){$ENDIF};
+    end
+  else
+    raise ECShTree.Create('TCShImplForLoop.AddElement body already set - please report this bug');
+end;
+
+procedure TCShImplLoop.ForEachCall(
+  const aMethodCall: TOnForEachCShElement; const Arg: Pointer);
+begin
+  ForEachChildCall(aMethodCall,Arg,ParamExpression,false);
+  if Elements.IndexOf(Body)<0 then
+    ForEachChildCall(aMethodCall,Arg,Body,false);
+  inherited ForEachCall(aMethodCall, Arg);
+end;
+
+function TCShImplLoop.ParamsEx: string;
+begin
+  If Assigned(ParamExpression) then
+    Result:=ParamExpression.GetDeclaration(true)
+  else
+    Result:='';
+end;
+
 { TCShImplVarDecl }
 
-constructor TCShImplVarDecl.Create(const AName: string; const aType: TCShType;
+constructor TCShImplVarDecl.Create(const AName: string;
   AParent: TCShElement);
 begin
   inherited Create(AName, AParent);
   Variable := TCShVariable.Create(AName,self);
-  Variable.VarType := aType;
+//  Variable.VarType := aType;
 end;
 
 destructor TCShImplVarDecl.Destroy;
@@ -2257,29 +2296,6 @@ begin
   inherited ForEachCall(aMethodCall, Arg);
   ForEachChildCall(aMethodCall,Arg,ExceptObject,false);
   ForEachChildCall(aMethodCall,Arg,ExceptAddr,false);
-end;
-
-{ TCShImplDoWhile }
-
-destructor TCShImplDoWhile.Destroy;
-begin
-  ReleaseAndNil(TCShElement(ConditionExpr){$IFDEF CheckCShTreeRefCount},'TCShImplRepeatUntil.ConditionExpr'{$ENDIF});
-  inherited Destroy;
-end;
-
-function TCShImplDoWhile.Condition: string;
-begin
-  If Assigned(ConditionExpr) then
-    Result:=ConditionExpr.GetDeclaration(True)
-  else
-    Result:='';
-end;
-
-procedure TCShImplDoWhile.ForEachCall(
-  const aMethodCall: TOnForEachCShElement; const Arg: Pointer);
-begin
-  inherited ForEachCall(aMethodCall, Arg);
-  ForEachChildCall(aMethodCall,Arg,ConditionExpr,false);
 end;
 
 { TCShImplSimple }
@@ -3625,62 +3641,6 @@ begin
     Result:='';
 end;
 
-destructor TCShImplForLoop.Destroy;
-begin
-  ReleaseAndNil(TCShElement(InitStatement){$IFDEF CheckCShTreeRefCount},'TCShImplForLoop.InitStatement'{$ENDIF});
-  ReleaseAndNil(TCShElement(IterExpesion){$IFDEF CheckCShTreeRefCount},'TCShImplForLoop.IterExpesion'{$ENDIF});
-  ReleaseAndNil(TCShElement(IncStatement){$IFDEF CheckCShTreeRefCount},'TCShImplForLoop.IncStatement'{$ENDIF});
-  ReleaseAndNil(TCShElement(Body){$IFDEF CheckCShTreeRefCount},'TCShImplForLoop.Body'{$ENDIF});
-  inherited Destroy;
-end;
-
-procedure TCShImplForLoop.AddElement(Element: TCShImplElement);
-begin
-  inherited AddElement(Element);
-  if Body=nil then
-    begin
-    Body:=Element;
-    Body.AddRef{$IFDEF CheckCShTreeRefCount}('TCShImplForLoop.Body'){$ENDIF};
-    end
-  else
-    raise ECShTree.Create('TCShImplForLoop.AddElement body already set - please report this bug');
-end;
-
-procedure TCShImplForLoop.ForEachCall(const aMethodCall: TOnForEachCShElement;
-  const Arg: Pointer);
-begin
-  ForEachChildCall(aMethodCall,Arg,InitStatement,false);
-  ForEachChildCall(aMethodCall,Arg,IterExpesion,false);
-  ForEachChildCall(aMethodCall,Arg,IncStatement,false);
-  if Elements.IndexOf(Body)<0 then
-    ForEachChildCall(aMethodCall,Arg,Body,false);
-  inherited ForEachCall(aMethodCall, Arg);
-end;
-
-function TCShImplForLoop.InitStmt: String;
-begin
-  If Assigned(InitStatement) then
-    Result:=InitStatement.GetDeclaration(true)
-  else
-    Result:='';
-end;
-
-function TCShImplForLoop.IterExpr: string;
-begin
-  If Assigned(IterExpesion) then
-    Result:=IterExpesion.GetDeclaration(true)
-  else
-    Result:='';
-end;
-
-function TCShImplForLoop.IncStmt: string;
-begin
-  If Assigned(IncStatement) then
-    Result:=IncStatement.GetDeclaration(true)
-  else
-    Result:='';
-end;
-
 constructor TCShImplBlock.Create(const AName: string; AParent: TCShElement);
 begin
   inherited Create(AName, AParent);
@@ -3718,7 +3678,8 @@ end;
 function TCShImplBlock.AddVarDeclartion(const aName: string;
   const TypeEl: TCShType): TCShImplVarDecl;
 begin
-  Result := TCShImplVarDecl.Create(aName,TypeEl, Self);
+  Result := TCShImplVarDecl.Create(aName, Self);
+  Result.Variable.VarType := TypeEl;
   AddElement(Result);
 end;
 
@@ -3744,14 +3705,14 @@ end;
 function TCShImplBlock.AddWhile(const ACondition: TCShExpr): TCShImplWhile;
 begin
   Result := TCShImplWhile.Create('', Self);
-  Result.ConditionExpr := ACondition;
+  Result.ParamExpression := ACondition;
   AddElement(Result);
 end;
 
 function TCShImplBlock.AddUsing(const Expression: TCShExpr): TCShImplUsing;
 begin
   Result := TCShImplUsing.Create('', Self);
-  Result.AddExpression(Expression);
+  Result.ParamExpressions:=Expression;
   AddElement(Result);
 end;
 
@@ -3766,9 +3727,7 @@ function TCShImplBlock.AddForLoop(const aInitSttmt: TCShImplBlock;
   const aIterExpr: TCShExpr; const aLoopStmt: TCShImplBlock): TCShImplForLoop;
 begin
    Result := TCShImplForLoop.Create('', Self);
-  Result.IncStatement := aLoopStmt;
-  Result.InitStatement := aInitSttmt;
-  Result.IterExpesion:= aIterExpr;
+  Result.ParamExpression:= aIterExpr;
   AddElement(Result);
 end;
 
@@ -4894,44 +4853,6 @@ begin
   ForEachChildCall(aMethodCall,Arg,Statements,false);
 end;
 
-{ TCShImplWhile }
-
-destructor TCShImplWhile.Destroy;
-begin
-  ReleaseAndNil(TCShElement(ConditionExpr){$IFDEF CheckCShTreeRefCount},'TCShImplWhileDo.ConditionExpr'{$ENDIF});
-  ReleaseAndNil(TCShElement(Body){$IFDEF CheckCShTreeRefCount},'TCShImplWhileDo.Body'{$ENDIF});
-  inherited Destroy;
-end;
-
-procedure TCShImplWhile.AddElement(Element: TCShImplElement);
-begin
-  inherited AddElement(Element);
-  if Body=nil then
-    begin
-    Body:=Element;
-    Body.AddRef{$IFDEF CheckCShTreeRefCount}('TCShImplWhileDo.Body'){$ENDIF};
-    end
-  else
-    raise ECShTree.Create('TCShImplWhileDo.AddElement body already set');
-end;
-
-procedure TCShImplWhile.ForEachCall(const aMethodCall: TOnForEachCShElement;
-  const Arg: Pointer);
-begin
-  ForEachChildCall(aMethodCall,Arg,ConditionExpr,false);
-  if Elements.IndexOf(Body)<0 then
-    ForEachChildCall(aMethodCall,Arg,Body,false);
-  inherited ForEachCall(aMethodCall, Arg);
-end;
-
-function TCShImplWhile.Condition: string;
-begin
-  If Assigned(ConditionExpr) then
-    Result:=ConditionExpr.GetDeclaration(True)
-  else
-    Result:='';
-end;
-
 { TCShImplSwitch }
 
 destructor TCShImplSwitch.Destroy;
@@ -5037,17 +4958,15 @@ end;
 constructor TCShImplUsing.Create(const AName: string; AParent: TCShElement);
 begin
   inherited Create(AName, AParent);
-  Expressions:=TFPList.Create;
+  ParamExpressions:=nil;
 end;
 
 destructor TCShImplUsing.Destroy;
 Var
   I : Integer;
 begin
-  ReleaseAndNil(TCShElement(Body){$IFDEF CheckCShTreeRefCount},'TCShImplWithDo.Body'{$ENDIF});
-  For I:=0 to Expressions.Count-1 do
-    TCShExpr(Expressions[i]).Release{$IFDEF CheckCShTreeRefCount}('TCShImplWithDo.Expressions'){$ENDIF};
-  FreeAndNil(Expressions);
+  ReleaseAndNil(TCShElement(Body){$IFDEF CheckCShTreeRefCount},'TCShImplUsing.Body'{$ENDIF});
+  ReleaseAndNil(TCShElement(ParamExpressions){$IFDEF CheckCShTreeRefCount},'TCShImplUsing.ParamExpressions'{$ENDIF});
   inherited Destroy;
 end;
 
@@ -5057,15 +4976,10 @@ begin
   if Body=nil then
     begin
     Body:=Element;
-    Body.AddRef{$IFDEF CheckCShTreeRefCount}('TCShImplWithDo.Body'){$ENDIF};
+    Body.AddRef{$IFDEF CheckCShTreeRefCount}('TCShImplUsing.Body'){$ENDIF};
     end
   else
     raise ECShTree.Create('TCShImplWithDo.AddElement body already set');
-end;
-
-procedure TCShImplUsing.AddExpression(const Expression: TCShExpr);
-begin
-  Expressions.Add(Expression);
 end;
 
 procedure TCShImplUsing.ForEachCall(const aMethodCall: TOnForEachCShElement;
@@ -5073,8 +4987,7 @@ procedure TCShImplUsing.ForEachCall(const aMethodCall: TOnForEachCShElement;
 var
   i: Integer;
 begin
-  for i:=0 to Expressions.Count-1 do
-    ForEachChildCall(aMethodCall,Arg,TCShElement(Expressions[i]),false);
+  ForEachChildCall(aMethodCall,Arg,ParamExpressions,false);
   if Elements.IndexOf(Body)<0 then
     ForEachChildCall(aMethodCall,Arg,Body,false);
   inherited ForEachCall(aMethodCall, Arg);

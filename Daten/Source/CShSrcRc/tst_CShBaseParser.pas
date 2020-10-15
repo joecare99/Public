@@ -43,6 +43,7 @@ Type
     FIsUnit : Boolean;
     FImplementation : Boolean;
     FEndSource: Boolean;
+    FTestBlock: TCShImplBlock;
     FUseImplementation: Boolean;
     procedure CleanupParser;
     procedure SetupParser;
@@ -61,14 +62,16 @@ Type
     Procedure StartParsing;
     Procedure ParseDeclarations;
     Procedure ParseModule; virtual;
+    procedure ParseStatements; virtual;
     procedure ResetParser;
     Procedure CheckHint(AHint : TCShMemberHint);
     Function AssertExpression(Const Msg: String; AExpr : TCShExpr; aKind : TCShExprKind; AClass : TClass) : TCShExpr;
     Function AssertExpression(Const Msg: String; AExpr : TCShExpr; aKind : TCShExprKind; AValue : String) : TPrimitiveExpr;
     Function AssertExpression(Const Msg: String; AExpr : TCShExpr; OpCode : TExprOpCode) : TBinaryExpr;
+    function AssertExpression(const Msg: String; AExpr: TCShExpr; AValue: string
+      ): TParamsExpr; overload;
     Procedure AssertExportSymbol(Const Msg: String; AIndex : Integer; AName,AExportName : String; AExportIndex : Integer = -1);
     Procedure AssertEquals(Const Msg : String; AExpected, AActual: TCShExprKind); overload;
-    Procedure AssertEquals(Const Msg : String; AExpected, AActual: TLoopType); overload;
     Procedure AssertEquals(Const Msg : String; AExpected, AActual: TCShObjKind); overload;
     Procedure AssertEquals(Const Msg : String; AExpected, AActual: TExprOpCode); overload;
     Procedure AssertEquals(Const Msg : String; AExpected, AActual: TCShMemberHint); overload;
@@ -91,6 +94,7 @@ Type
     Property Parser : TTestCShParser read FParser ;
     Property Source : TStrings Read FSource;
     Property Module : TCShModule Read FModule;
+    property ImpBlock : TCShImplBlock read FTestBlock;
     Property Declarations : TCShDeclarations read FDeclarations Write FDeclarations;
     Property Definition : TCShElement Read FDefinition Write FDefinition;
     // If set, Will be freed in teardown
@@ -445,6 +449,10 @@ begin
   {$ENDIF}
   ReleaseAndNil(TCShElement(FModule){$IFDEF CheckCShTreeRefCount},'CreateElement'{$ENDIF});
   {$IFDEF VerboseCShResolverMem}
+  writeln('TTestParser.CleanupParser FTestBlock');
+  {$ENDIF}
+  ReleaseAndNil(TCShElement(FTestBlock){$IFDEF CheckCShTreeRefCount},'CreateElement'{$ENDIF});
+  {$IFDEF VerboseCShResolverMem}
   writeln('TTestParser.CleanupParser FSource');
   {$ENDIF}
   FreeAndNil(FSource);
@@ -620,6 +628,29 @@ begin
   AssertEquals('modulename',ChangeFileExt(FFileName,''),Module.Name);
 end;
 
+procedure TTestParser.ParseStatements;
+var
+  lNewImplElement: TCShImplElement;
+begin
+  FreeAndNil(FTestBlock);
+  FFileName:=Format(rsCShFilename, ['aTest']);
+  FResolver.AddStream(FFileName,TStringStream.Create(FSource.Text));
+  FScanner.OpenFile(FFileName);
+  FTestBlock :=TCShImplBlock.Create('Main',nil);
+  FParser.NextToken;
+  repeat
+     if not (FParser.CurToken in [tkSemicolon,tkCurlyBraceClose]) then
+       begin
+         FParser.UngetToken;
+         FParser.ParseStatement(FTestBlock,lNewImplElement);
+         if lNewImplElement = nil then
+           break;
+       end;
+     FParser.NextToken;
+  until FParser.CurToken = tkCurlyBraceClose;
+  AssertNotNull('Module resulted in Module',FTestBlock);
+end;
+
 procedure TTestParser.CheckHint(AHint: TCShMemberHint);
 begin
   HaveHint(AHint,Definition.Hints);
@@ -639,6 +670,14 @@ function TTestParser.AssertExpression(const Msg: String; AExpr: TCShExpr;
 begin
   Result:=AssertExpression(Msg,AExpr,aKind,TPrimitiveExpr) as TPrimitiveExpr;
   AssertEquals(Msg+': Primitive expression value',AValue,TPrimitiveExpr(AExpr).Value);
+end;
+
+function TTestParser.AssertExpression(const Msg: String; AExpr: TCShExpr;
+  AValue:string): TParamsExpr;
+begin
+  Result:=AssertExpression(Msg,AExpr,pekFuncParams,TParamsExpr) as TParamsExpr;
+  if assigned(TParamsExpr(AExpr).Value) then
+    AssertEquals(Msg+': Funktion Params',AValue,TParamsExpr(AExpr).Value.GetDeclaration(true));
 end;
 
 function TTestParser.AssertExpression(const Msg: String; AExpr: TCShExpr;
@@ -678,13 +717,6 @@ procedure TTestParser.AssertEquals(const Msg: String; AExpected,
 begin
   AssertEquals(Msg,GetEnumName(TypeInfo(TCShExprKind),Ord(AExpected)),
                    GetEnumName(TypeInfo(TCShExprKind),Ord(AActual)));
-end;
-
-procedure TTestParser.AssertEquals(const Msg: String; AExpected,
-  AActual: TLoopType);
-begin
-  AssertEquals(Msg,GetEnumName(TypeInfo(TLoopType),Ord(AExpected)),
-                   GetEnumName(TypeInfo(TLoopType),Ord(AActual)));
 end;
 
 procedure TTestParser.AssertEquals(const Msg: String; AExpected,
