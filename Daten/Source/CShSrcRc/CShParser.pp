@@ -86,6 +86,7 @@ const
   nParserXNotAllowedInY = 2056;
   nFileSystemsNotSupported = 2057;
   nInvalidMessageType = 2058;
+  nParserNotImplemented = 2999;
 
 // resourcestring patterns of messages
 resourcestring
@@ -148,6 +149,7 @@ resourcestring
   SParserXNotAllowedInY = '%s is not allowed in %s';
   SErrFileSystemNotSupported = 'No support for filesystems enabled';
   SErrInvalidMessageType = 'Invalid message type: string or integer expression expected';
+  SParserNotImplemented = '%s is not implemented yet';
 
 type
   TCShScopeType = (
@@ -314,11 +316,12 @@ type
     procedure ParseExc(MsgNumber: integer; const Fmt: String; Args : Array of {$ifdef pas2js}jsvalue{$else}const{$endif});
     procedure ParseExcExpectedIdentifier;
     procedure ParseExcSyntaxError;
+    procedure ParseExcNotImplemented(const Arg: string);
     procedure ParseExcTokenError(const Arg: string);
     procedure ParseExcTypeParamsNotAllowed;
     procedure ParseExcExpectedAorB(const A, B: string);
     function OpLevel(t: TToken): Integer;
-    Function TokenToExprOp (AToken : TToken) : TExprOpCode;
+    function TokenToExprOp(AToken: TToken; post: boolean=false): TExprOpCode;
     function CreateElement(AClass: TCShTreeElement; const AName: String; AParent: TCShElement): TCShElement;overload;
     function CreateElement(AClass: TCShTreeElement; const AName: String; AParent: TCShElement; const ASrcPos: TCShSourcePos): TCShElement;overload;
     function CreateElement(AClass: TCShTreeElement; const AName: String; AParent: TCShElement; AVisibility: TCShMemberVisibility): TCShElement;overload;
@@ -356,8 +359,10 @@ type
     Function DoParseClassExternalHeader(AObjKind: TCShObjKind;
       out AExternalNameSpace, AExternalName: string) : Boolean;
     procedure DoParseArrayType(ArrType: TCShArrayType);
+
     function DoParseExpression(AParent: TCShElement;InitExpr: TCShExpr=nil; AllowEqual : Boolean = True): TCShExpr;
     function DoParseConstValueExpression(AParent: TCShElement): TCShExpr;
+
     function CheckPackMode: TPackMode;
     function AddUseUnit(ASection: TCShSection; const NamePos: TCShSourcePos;
       AUnitName : string; NameExpr: TCShExpr; InFileExpr: TPrimitiveExpr): TCShUsingNamespace;
@@ -370,6 +375,7 @@ type
     constructor Create(AScanner: TCSharpScanner; AFileResolver: TBaseFileResolver;  AEngine: TCShTreeContainer);
     Destructor Destroy; override;
     procedure SetLastMsg(MsgType: TMessageType; MsgNumber: integer; Const Fmt : String; Args : Array of {$ifdef pas2js}jsvalue{$else}const{$endif});
+
     // General parsing routines
     function CurTokenName: String;
     function CurTokenText: String;
@@ -386,6 +392,7 @@ type
     procedure ExpectToken(tk: TToken);
     procedure ExpectTokens(tk:  TTokens);
     function GetPrevToken: TToken;
+    function PeekNextToken: TToken;
     function ExpectIdentifier: String;
     Function CurTokenIsIdentifier(Const S : String) : Boolean;
     // Expression parsing
@@ -1021,6 +1028,11 @@ begin
   ParseExc(nParserSyntaxError,SParserSyntaxError);
 end;
 
+procedure TCShParser.ParseExcNotImplemented(const Arg: string);
+begin
+  ParseExc(nParserNotImplemented,SParserNotImplemented,[Arg]);
+end;
+
 procedure TCShParser.ParseExcTokenError(const Arg: string);
 begin
   ParseExc(nParserExpectTokenError,SParserExpectTokenError,[Arg]);
@@ -1306,6 +1318,13 @@ begin
     i:=High(FTokenRing);
   P:=@FTokenRing[i];
   Result := P^.Token;
+end;
+
+function TCShParser.PeekNextToken: TToken;
+begin
+  NextToken;
+  result := CurToken;
+  UngetToken;
 end;
 
 function TCShParser.ExpectIdentifier: String;
@@ -2037,13 +2056,13 @@ begin
   if C=TPrimitiveExpr then
     Result:=TPrimitiveExpr(Expr).Value
   else if C=TThisExpr then
-    Result:='self'
+    Result:='this'
   else if C=TBoolConstExpr then
     Result:=BoolToStr(TBoolConstExpr(Expr).Value,'true','false')
   else if C=TNullExpr then
-    Result:='nil'
+    Result:='null'
   else if C=TInheritedExpr then
-    Result:='inherited'
+    Result:='base'
   else if C=TUnaryExpr then
     Result:=OpcodeStrings[TUnaryExpr(Expr).OpCode]+ExprToText(TUnaryExpr(Expr).Operand)
   else if C=TBinaryExpr then
@@ -2173,7 +2192,7 @@ begin
   end;
 end;
 
-function TCShParser.TokenToExprOp(AToken: TToken): TExprOpCode;
+function TCShParser.TokenToExprOp(AToken: TToken;post:boolean=false): TExprOpCode;
 
 begin
   Case AToken of
@@ -2189,6 +2208,9 @@ begin
     tkGreaterEqualThan      : Result:=eopGreaterThanEqual;
     tkPower                 : Result:=eopPower;
     tkSymmetricalDifference : Result:=eopSymmetricalDifference;
+    tkPlusPlus              : if post then Result:=eopIncp else Result:=eopInca;
+    tkMinusMinus            : if post then Result:=eopDecp else Result:=eopDeca;
+    tkAssign                : Result:=eopAssign;
     tkIs                    : Result:=eopIs;
     tkAs                    : Result:=eopAs;
     tkSHR                   : Result:=eopSHR;
@@ -2503,12 +2525,13 @@ var
   NotBinary : Boolean;
 
 const
-  PrefixSym = [tkPlus, tkMinus, tknot, tkKomplement]; // + - ! ~
+  PrefixSym = [tkPlus, tkMinus, tknot, tkKomplement,tkPlusPlus,tkMinusMinus]; // + - ! ~ ++ --
   BinaryOP  = [tkMul, tkDivision, tkmod,  tkDotDot,
                tkand, tkShl,tkShr, tkas, tkPower,
                tkPlus, tkMinus, tkor, tkSingleAnd,tkSingleOr, tkxor, tkSymmetricalDifference,
                tkEqual, tkNotEqual, tkLessThan, tkLessEqualThan,
                tkGreaterThan, tkGreaterEqualThan, tkin, tkis, tkAsk, tkAskAsk];
+  SuffixOP = [tkPlusPlus,tkMinusMinus]; // ++, --
 
   function PopExp: TCShExpr; inline;
   begin
@@ -2569,9 +2592,11 @@ const
 
 Var
   AllowedBinaryOps : Set of TToken;
+  AllowedSuffixOPs : Set of TToken;
   SrcPos: TCShSourcePos;
 begin
   AllowedBinaryOps:=BinaryOP;
+  AllowedSuffixOPs:=SuffixOP;
   if Not AllowEqual then
     Exclude(AllowedBinaryOps,tkEqual);
   {$ifdef VerboseCShParser}
@@ -2632,18 +2657,26 @@ begin
         ExpStack.Add(InitExpr);
         InitExpr:=nil;
         end;
-      if (CurToken in AllowedBinaryOPs) then
+      if (Curtoken in AllowedSuffixOPs) then
+        begin
+          NotBinary:=true;
+          x:=PopExp;
+          ExpStack.Add(CreateUnaryExpr(AParent, x, TokenToExprOp(CurToken,true), SrcPos));
+          NextToken;
+        end;
+      if (CurToken in AllowedBinaryOPs) or ((AParent is TParamsExpr) and (CurToken=tkAssign)) then
         begin
         // process operators of higher precedence than next operator
         NotBinary:=False;
         TempOp:=PeekOper;
-        while (OpStackTop>=0) and (OpLevel(TempOp)>=OpLevel(CurToken)) do begin
+        while (OpStackTop>=0) and (OpLevel(TempOp)>=OpLevel(CurToken)) do
+          begin
           PopAndPushOperator;
           TempOp:=PeekOper;
         end;
         PushOper(CurToken);
         NextToken;
-        end;
+       end;
        //Writeln('Bin ',NotBinary ,' or EOE ',isEndOfExp, ' Ex ',Assigned(x),' stack ',ExpStack.Count);
     until NotBinary or isEndOfExp(AllowEqual, NotBinary);
 
@@ -4936,35 +4969,31 @@ end;
 procedure TCShParser.ParseProcedureBody(Parent: TCShElement);
 
 var
-  Body: TProcedureBody;
+  Body : TCShImplBlock;
   Proc: TCShProcedure;
   SubBlock: TCShImplElement;
 
 begin
-  Body := TProcedureBody(CreateElement(TProcedureBody, '', Parent));
-  TCShProcedure(Parent).Body:=Body;
+  Body := TCShImplBlock(CreateElement(TCShImplBlock, '', Parent));
+//  TCShProcedure(Parent).Body:=Body;
   // these can be used in code for typecasts
   {$IFDEF DEBUG}
   DoLog('TCShParser.ParseProcBeginBlock '+curtokenstring);
   {$ENDIF}
   repeat
     NextToken;
-    if CurToken=tkCurlyBraceClose then
-      break
-    else if CurToken<>tkSemiColon then
+    if not (CurToken in [tkCurlyBraceClose,tkSemiColon]) then
     begin
       UngetToken;
-//      ParseStatement(Body,SubBlock);
-//      if SubBlock=nil then
-//        ExpectToken(tkCurlyBraceClose);
+      ParseStatement(Body,SubBlock);
+      if SubBlock=nil then
+        ExpectToken(tkCurlyBraceClose);
     end;
-  until false;
+  until (CurToken = tkCurlyBraceClose);
   // A declaration can follow...
   Proc:=Parent as TCShProcedure;
   if Proc.GetProcTypeEnum in [ptAnonymousProcedure,ptAnonymousFunction] then
-    NextToken
-  else
-    ExpectToken(tkSemicolon);
+    NextToken;
   {$IFDEF DEBUG}
   DoLog('TCShParser.ParseProcBeginBlock ended '+curtokenstring);
   {$ENDIF}
@@ -5250,7 +5279,7 @@ var
     if C=TCShImplExceptOn then
       Engine.FinishScope(stExceptOnStatement,CurBlock);
     CurBlock:=CurBlock.Parent as TCShImplBlock;
-    Result:=CurBlock=Parent;
+    Result:=(CurBlock=Parent) and (PeekNextToken<>tkElse);
   end;
 
   function CloseStatement(CloseIfs: boolean): boolean; // true if parent reached
@@ -5258,7 +5287,7 @@ var
     if CurBlock=Parent then exit(true);
     while CurBlock.CloseOnSemicolon
         or (CloseIfs and (CurBlock is TCShImplIfElse)) do
-      if CloseBlock then exit(true);
+      if CloseBlock then exit(CurBlock.CloseOnSemicolon);
     Result:=false;
   end;
 
@@ -5276,13 +5305,13 @@ var
     if (CurBlock.Elements.Count=0) then
       exit; // at start of block
     t:=GetPrevToken;
-    if t in [tkSemicolon,tkColon,tkElse] then
+    if t in [tkSemicolon,tkColon,tkElse,tkCurlyBraceClose] then
       exit;
     {$IFDEF VerboseCShParser}
     writeln('TCShParser.ParseStatement.CheckSemicolon Prev=',GetPrevToken,' Cur=',CurToken,' ',CurBlock.ClassName,' ',CurBlock.Elements.Count,' ',TObject(CurBlock.Elements[0]).ClassName);
     {$ENDIF}
     // last statement not complete -> semicolon is missing
-    ParseExcTokenError('Semicolon');
+    ParseExcTokenError('Semicolon or CurlyBraceClose');
   end;
 
 var
@@ -5300,7 +5329,6 @@ var
   SubBlock: TCShImplElement;
   Left, Right, Expr: TCShExpr;
   El : TCShImplElement;
-  lt : TLoopType;
   SrcPos: TCShSourcePos;
   Name: String;
   TypeEl, Ranges: TCShType;
@@ -5314,7 +5342,7 @@ begin
   try
     CurBlock := Parent;
     while True do
-    begin
+    begin {while True do}
       NextToken;
       //WriteLn({$IFDEF VerboseCShParser}i,{$ENDIF}' Token=',CurTokenText,' CurBlock=',CurBlock.ClassName);
       case CurToken of
@@ -5361,7 +5389,10 @@ begin
                 TypeEl:=nil;
                 //WriteLn(i,'IF Condition="',Condition,'" Token=',CurTokenText);
                 CurBlock.AddElement(El);
+                if NewImplElement=nil then NewImplElement:=El;
                 El:=nil;
+                if CurToken = tkSemicolon then
+                  UngetToken;
               end
             else if CurToken in [tkBraceOpen] then
               begin  // Now it's definity a function
@@ -5371,7 +5402,7 @@ begin
        end;
       tkVoid:
         begin  // Starts a SubProcedure Decl.
-
+          ParseExcNotImplemented('void');
         end;
       tkIf:
         begin
@@ -5389,12 +5420,11 @@ begin
         El:=nil;
         end;
       tkelse:
-        // ELSE can close multiple blocks, similar to semicolon
-        repeat
+        begin
           {$IFDEF VerboseCShParser}
           writeln('TCShParser.ParseStatement ELSE CurBlock=',CurBlock.ClassName);
           {$ENDIF}
-          if CurBlock is TCShImplIfElse then
+          if (CurBlock is TCShImplIfElse) then
             begin
             if TCShImplIfElse(CurBlock).IfBranch=nil then
             begin
@@ -5403,8 +5433,16 @@ begin
               CurBlock.AddElement(El); // this sets TCShImplIfElse(CurBlock).IfBranch:=El
               El:=nil;
             end;
-            if (CurToken=tkelse) and (TCShImplIfElse(CurBlock).ElseBranch=nil) then
-              break; // add next statement as ElseBranch
+            if not (PeekNextToken in [tkelse,tkCurlyBraceClose]) and (TCShImplIfElse(CurBlock).ElseBranch=nil) then
+              begin
+              if PeekNextToken = tkSemicolon then
+                begin
+                  TCShImplIfElse(CurBlock).ElseBranch := TCShImplElement(CreateElement(TCShImplCommand,'',CurBlock,SrcPos));
+                  TCShImplCommand(TCShImplIfElse(CurBlock).ElseBranch).Command:='';
+                end;
+              Continue // add next statement as ElseBranch
+              end
+            else ExpectToken(tkSemicolon);
             end
           else if (CurBlock is TCShImplTryExcept) and (CurToken=tkelse) then
             begin
@@ -5425,30 +5463,55 @@ begin
               CheckToken(tkSemicolon);
             exit;
             end
-          else if (CurBlock is TCShImplWhile)
+
+          else { if (CurBlock is TCShImplWhile)
               or (CurBlock is TCShImplForLoop)
               or (CurBlock is TCShImplUsing)
               or (CurBlock is TCShImplRaise)
               or (CurBlock is TCShImplExceptOn) then
             // simply close block
-          else
+          else   }
             ParseExcSyntaxError;
           CloseBlock;
-        until false;
+        end;
       tkwhile:
         begin
-          // while Condition do
+          // while (Condition)
           CheckStatementCanStart;
           SrcPos:=CurTokenPos;
           ExpectToken(tkBraceOpen);
           Left:=DoParseExpression(CurBlock);
           UngetToken;
+          if (CurBlock is TCShImplDoWhile) and assigned(TCShImplDoWhile(CurBlock).Body) then
+            begin
+              TCShImplDoWhile(CurBlock).ParamExpression := Left;
+              Left:=nil;
+              ExpectToken(tkSemicolon);
+              UngetToken;
+            end
+          else
+            begin
           //WriteLn(i,'WHILE Condition="',Condition,'" Token=',CurTokenText);
           El:=TCShImplWhile(CreateElement(TCShImplWhile,'',CurBlock,SrcPos));
-          TCShImplWhile(El).ConditionExpr:=Left;
+          TCShImplWhile(El).ParamExpression:=Left;
           Left.Parent:=El;
           Left:=nil;
           CreateBlock(TCShImplWhile(El));
+          El:=nil;
+            end;
+        end;
+      tkDo:
+        begin
+          // do  while (Condition)
+          CheckStatementCanStart;
+          SrcPos:=CurTokenPos;
+          El:=TCShImplDoWhile(CreateElement(TCShImplDoWhile,'',CurBlock,SrcPos));
+          CreateBlock(TCShImplDoWhile(El));
+          if PeekNextToken = tkSemicolon then
+            begin
+              TCShImplDoWhile(El).Body := TCShImplElement(CreateElement(TCShImplCommand,'',El,SrcPos));
+              TCShImplCommand(TCShImplDoWhile(El).Body).Command:='';
+            end;
           El:=nil;
         end;
       tkUsing:
@@ -5456,7 +5519,15 @@ begin
           CheckStatementCanStart;
           NextToken;
           CurBlock.AddCommand('using '+curtokenstring);
-          ExpectToken(tkBraceClose);
+          ExpectToken(tkBraceOpen);
+          Left:=DoParseExpression(CurBlock);
+          El:=TCShImplUsing(CreateElement(TCShImplUsing,'',CurBlock,SrcPos));
+          UngetToken;
+          TCShImplUsing(El).ParamExpressions:=Left;
+          Left.Parent:=El;
+          Left:=nil;
+          CreateBlock(TCShImplWhile(El));
+          El:=nil;
         end;
       tkgoto:
         begin
@@ -5471,28 +5542,12 @@ begin
           // for VarName in Expression do
           CheckStatementCanStart;
           ExpectToken(tkBraceOpen);
+          Left:=ParseParams(CurBlock,pekFuncParams,false);
+          UngetToken;
           El:=TCShImplForLoop(CreateElement(TCShImplForLoop,'',CurBlock,CurTokenPos));
-          repeat
-            NextToken;
-            case CurToken of
-              tkAssign:
-                begin
-                lt:=ltNormal;
-                break;
-                end;
-            else
-              ParseExc(nParserExpectedAssignIn,SParserExpectedAssignIn);
-            end;
-          until false;
-          NextToken;
-          if (Lt=ltNormal) then
-            begin
-            NextToken;
-            end;
-
-          if (CurToken<>tkBraceClose) then
-            ParseExcTokenError(TokenInfos[tkBraceClose]);
-          Engine.FinishScope(stForLoopHeader,El);
+          TCShImplForLoop(El).ParamExpression:=Left;
+          Left.Parent:=El;
+          Left:=nil;
           CreateBlock(TCShImplForLoop(El));
           El:=nil;
           //WriteLn(i,'FOR "',VarName,'" := ',StartValue,' to ',EndValue,' Token=',CurTokenText);
@@ -5502,12 +5557,13 @@ begin
             // foreach (VarName in Expression)
             CheckStatementCanStart;
             ExpectToken(tkBraceOpen);
-            El:=TCShImplForLoop(CreateElement(TCShImplForLoop,'',CurBlock,CurTokenPos));
-            lt := ltIn;
-            if (CurToken<>tkBraceClose) then
-              ParseExcTokenError(TokenInfos[tkBraceClose]);
-            Engine.FinishScope(stForLoopHeader,El);
-            CreateBlock(TCShImplForLoop(El));
+            Left:=DoParseExpression(CurBlock);
+            UngetToken;
+            El:=TCShImplForeachLoop(CreateElement(TCShImplForEachLoop,'',CurBlock,CurTokenPos));
+            TCShImplForeachLoop(El).ParamExpression:=Left;
+            Left.Parent:=El;
+            Left:=nil;
+            CreateBlock(TCShImplForeachLoop(El));
             El:=nil;
             //WriteLn(i,'FOR "',VarName,'" := ',StartValue,' to ',EndValue,' Token=',CurTokenText);
           end;
@@ -5651,7 +5707,7 @@ begin
       tkCurlyBraceClose:
         begin
           // Note: ParseStatement should return with CurToken at last token of the statement
-          if CloseStatement(true) then
+          if (Curblock=parent) and  CloseStatement(true) then
           begin
             // there was none requiring an END
             UngetToken;
@@ -5662,22 +5718,22 @@ begin
           begin
             // close at END
             if CloseBlock then break; // close end
-            if CloseStatement(false) then break;
+            if CloseStatement(PeekNextToken<>tkElse) then break;
           end else if CurBlock is TCShImplSwitchElse then
           begin
             if CloseBlock then break; // close else
             if CloseBlock then break; // close caseof
-            if CloseStatement(false) then break;
+            if CloseStatement(true) then break;
           end else if CurBlock is TCShImplTryHandler then
           begin
             if CloseBlock then break; // close finally/except
             if CloseBlock then break; // close try
-            if CloseStatement(false) then break;
+            if CloseStatement(true) then break;
           end else
             ParseExcSyntaxError;
         end;
       tkSemiColon:
-        if CloseStatement(true) then break;
+        if CloseStatement(PeekNextToken<>tkElse) then break;
       tkEOF:
         CheckToken(tkCurlyBraceClose);
       tkIdentifier,
@@ -5812,7 +5868,8 @@ begin
        else
               ParseExcSyntaxError;
       end
-      end
+
+      end {end while True do}
   finally
     if El<>nil then El.Release{$IFDEF CheckCShTreeRefCount}('CreateElement'){$ENDIF};
     if Left<>nil then Left.Release{$IFDEF CheckCShTreeRefCount}('CreateElement'){$ENDIF};
