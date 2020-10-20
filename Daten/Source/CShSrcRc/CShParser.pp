@@ -292,6 +292,7 @@ type
     procedure OnScannerModeChanged(Sender: TObject; NewMode: TModeSwitch;
       Before: boolean; var Handled: boolean);
   protected
+    Procedure ParseSwitchCases(Const Parent: TCShImplSwitch);
     Function SaveComments : String;
     Function SaveComments(Const AValue : String) : String;
     function LogEvent(E : TCShParserLogEvent) : Boolean; inline;
@@ -439,7 +440,7 @@ type
     function CanParseContinue(out Section: TCShSection): boolean; virtual;
     procedure ParseContinue; virtual;
     procedure ParseOptionalUsesList(ASection: TCShSection);
-    procedure ParseUsesList(ASection: TCShSection);
+    procedure ParseUsingList(ASection: TCShSection);
     procedure ParseDeclarations(Declarations: TCShDeclarations);
     procedure ParseStatement(Parent: TCShImplBlock; out NewImplElement: TCShImplElement);
     procedure ParseAdhocExpression(out NewExprElement: TCShExpr);
@@ -3126,7 +3127,7 @@ begin
   NextToken;
   CheckImplicitUsedUnits(ASection);
   if CurToken=tkUsing then
-    ParseUsesList(ASection)
+    ParseUsingList(ASection)
   else
     UngetToken;
   Engine.CheckPendingUsedInterface(ASection);
@@ -3479,7 +3480,7 @@ begin
 end;
 
 // Starts after the "uses" token
-procedure TCShParser.ParseUsesList(ASection: TCShSection);
+procedure TCShParser.ParseUsingList(ASection: TCShSection);
 var
   AUnitName, aName: String;
   NameExpr: TCShExpr;
@@ -4291,6 +4292,69 @@ procedure TCShParser.OnScannerModeChanged(Sender: TObject;
 begin
   Engine.ModeChanged(Self,NewMode,Before,Handled);
   if Sender=nil then ;
+end;
+
+procedure TCShParser.ParseSwitchCases(const Parent: TCShImplSwitch);
+var
+  El: TCShImplElement;
+  Left: TCShExpr;
+
+  procedure ParseSwitchCasesStatements(Parent:TCShImplBlock);
+  var
+    SubBlock: TCShImplElement;
+    StopTokens: TTokens;
+  begin
+    StopTokens :=[tkCurlyBraceClose];
+    if parent is TCShImplCaseStatement then
+      StopTokens :=StopTokens +[tkCase,tkDefault];
+    while not (PeekNextToken in StopTokens) do
+      ParseStatement(Parent, SubBlock);
+    // CurToken is now at last token of case-statement
+    NextToken;
+  end;
+
+begin
+  NextToken;
+   while Curtoken <> tkCurlyBraceClose do
+     begin
+//       srcpos := CurTokenPos;
+              //writeln(i,'CASE OF Token=',CurTokenText);
+              case CurToken of
+              tkDefault:
+                begin
+                  // create case-else block
+                  Parent.ElseBranch:=TCShImplSwitchElse(CreateElement(TCShImplSwitchElse, '',
+                    Parent, CurTokenPos));
+                  ParseSwitchCasesStatements(Parent.ElseBranch);
+                  ExpectToken(tkCurlyBraceClose);
+                end;
+              tkCase:
+                begin
+                  El:=TCShImplCaseStatement(CreateElement(
+                    TCShImplCaseStatement, '', Parent, CurTokenPos));
+                  parent.AddElement(El);
+                  repeat
+                  if (CurToken=tkColon) then
+                    NextToken;
+                  if (CurToken=tkCase) then
+                    NextToken;
+//                  SrcPos:=CurTokenPos;
+                  Left:=DoParseExpression(El);
+                  //writeln(i,'CASE value="',Expr,'" Token=',CurTokenText);
+                  TCShImplCaseStatement(El).AddExpression(Left);
+                  //writeln(i,'CASE after value Token=',CurTokenText);
+                  if (CurToken<>tkColon) then
+                    ParseExcTokenError(TokenInfos[tkComma]);
+                  until (Curtoken=tkColon) and (PeekNextToken<>tkCase);
+                  // read statement
+                  ParseSwitchCasesStatements(TCShImplCaseStatement(El));
+                  ExpectTokens([tkCurlyBraceClose,tkDefault,tkCase]);
+                end;
+              else
+                ParseExcSyntaxError;
+              end;
+     end;
+   UngetToken;
 end;
 
 function TCShParser.SaveComments: String;
@@ -5295,6 +5359,8 @@ var
   begin
     CurBlock.AddElement(NewBlock);
     CurBlock:=NewBlock;
+    NewBlock.DocComment:=FSavedComments;
+    FSavedComments:='';
     if NewImplElement=nil then NewImplElement:=CurBlock;
   end;
 
@@ -5326,7 +5392,6 @@ var
 
 var
   E:TCShElement;
-  SubBlock: TCShImplElement;
   Left, Right, Expr: TCShExpr;
   El : TCShImplElement;
   SrcPos: TCShSourcePos;
@@ -5454,16 +5519,6 @@ begin
             El:=nil;
             break;
             end
-          else if (CurBlock is TCShImplCaseStatement) then
-            begin
-            UngetToken;
-            // Note: a TCShImplCaseStatement is parsed by a call of ParseStatement,
-            //       so it must be the top level block
-            if CurBlock<>Parent then
-              CheckToken(tkSemicolon);
-            exit;
-            end
-
           else { if (CurBlock is TCShImplWhile)
               or (CurBlock is TCShImplForLoop)
               or (CurBlock is TCShImplUsing)
@@ -5579,65 +5634,9 @@ begin
           Left.Parent:=El;
           Left:=nil;
           CreateBlock(TCShImplSwitch(El));
+          ExpectToken(tkCurlyBraceOpen);
+          ParseSwitchCases(TCShImplSwitch(El));
           El:=nil;
-          repeat
-            NextToken;
-            //writeln(i,'CASE OF Token=',CurTokenText);
-            case CurToken of
-            tkCurlyBraceClose:
-              begin
-              if CurBlock.Elements.Count=0 then
-                ParseExc(nParserExpectCase,SParserExpectCase);
-              break; // end without else
-              end;
-            tkelse:
-              begin
-                // create case-else block
-                El:=TCShImplSwitchElse(CreateElement(TCShImplSwitchElse,'',CurBlock,CurTokenPos));
-                TCShImplSwitch(CurBlock).ElseBranch:=TCShImplSwitchElse(El);
-                CreateBlock(TCShImplSwitchElse(El));
-                El:=nil;
-                break;
-              end
-            else
-              // read case values
-              repeat
-                SrcPos:=CurTokenPos;
-                Left:=DoParseExpression(CurBlock);
-                //writeln(i,'CASE value="',Expr,'" Token=',CurTokenText);
-                if CurBlock is TCShImplCaseStatement then
-                  begin
-                  TCShImplCaseStatement(CurBlock).AddExpression(Left);
-                  Left:=nil;
-                  end
-                else
-                  begin
-                  El:=TCShImplCaseStatement(CreateElement(TCShImplCaseStatement,'',CurBlock,SrcPos));
-                  TCShImplCaseStatement(El).AddExpression(Left);
-                  Left:=nil;
-                  CreateBlock(TCShImplCaseStatement(El));
-                  El:=nil;
-                  end;
-                //writeln(i,'CASE after value Token=',CurTokenText);
-                if (CurToken=tkComma) then
-                  NextToken
-                else if (CurToken<>tkColon) then
-                  ParseExcTokenError(TokenInfos[tkComma]);
-              until Curtoken=tkColon;
-              // read statement
-              ParseStatement(CurBlock,SubBlock);
-              // CurToken is now at last token of case-statement
-              CloseBlock;
-              if CurToken<>tkSemicolon then
-                NextToken;
-              if (CurToken in [tkSemicolon,tkelse,tkCurlyBraceClose]) then
-                // ok
-              else
-                ParseExcTokenError(TokenInfos[tkSemicolon]);
-              if CurToken<>tkSemicolon then
-                UngetToken;
-            end;
-          until false;
           if CurToken=tkCurlyBraceClose then
           begin
             if CloseBlock then break;
@@ -5683,6 +5682,16 @@ begin
             El:=nil;
           end else
             ParseExcSyntaxError;
+        end;
+      tkBreak:
+        begin
+          El:=TCShImplCommand(CreateElement(TCShImplCommand,'',CurBlock,SrcPos));
+          TCShImplCommand(El).Command:='break';
+          Left:=nil;
+          Curblock.AddElement(El);
+          El:=nil;
+          ExpectToken(tkSemicolon);
+          UngetToken;
         end;
       tkThrow:
         begin
