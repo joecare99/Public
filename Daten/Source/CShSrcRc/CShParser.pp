@@ -239,6 +239,8 @@ type
 
   TCShParser = class
   private
+    FCurComments: TStrings;
+    FCurLComment: String;
     const FTokenRingSize = 32;
     type
       TTokenRec = record
@@ -295,6 +297,8 @@ type
     Procedure ParseSwitchCases(Const Parent: TCShImplSwitch);
     Function SaveComments : String;
     Function SaveComments(Const AValue : String) : String;
+    procedure AppendSavedComment(s: TStrings); overload;
+    procedure AppendSavedComment(s: String); overload;
     function LogEvent(E : TCShParserLogEvent) : Boolean; inline;
     Procedure DoLog(Const Msg : String; SkipSourceInfo : Boolean = False);overload;
     Procedure DoLog(MsgType: TMessageType; MsgNumber: integer; Const Msg : String; SkipSourceInfo : Boolean = False);overload;
@@ -1179,7 +1183,7 @@ begin
         if FCurToken=tkComment then
           p^.Comments.Add(Scanner.CurTokenString);
         if FCurToken=tkLineComment then
-          p^.Comments.Add(Scanner.CurTokenString);
+          p^.LineComment:=Scanner.CurTokenString;
       until not (FCurToken in WhitespaceTokensToIgnore);
     except
       on e: EScannerError do
@@ -1200,6 +1204,10 @@ begin
     end;
     p^.Token:=FCurToken;
     FCurTokenString := Scanner.CurTokenString;
+    AppendSavedComment(P^.Comments);
+    FCurComments := p^.Comments;
+    AppendSavedComment(p^.LineComment);
+    FCurLComment := p^.LineComment;
     p^.AsString:=FCurTokenString;
     p^.SourcePos:=Scanner.CurSourcePos;
     p^.TokenPos:=Scanner.CurTokenPos;
@@ -1255,6 +1263,8 @@ begin
   P:=@FTokenRing[FTokenRingCur];
   FCurToken := P^.Token;
   FCurTokenString := P^.AsString;
+  FCurComments := p^.Comments;
+  FCurLComment := p^.LineComment;
   //writeln('TCShParser.UngetToken END Start=',FTokenRingStart,' Cur=',FTokenRingCur,' End=',FTokenRingEnd,' Cur=',CurTokenString);
 end;
 
@@ -2833,6 +2843,24 @@ begin
       end;
     NextToken;
   end;
+end;
+
+procedure TCShParser.AppendSavedComment(s: TStrings);
+begin
+  if s.text <> '' then
+    if FSavedComments <>'' then
+        FSavedComments:=FSavedComments + LineEnding + s.Text
+      else
+        FSavedComments:=s.Text;
+end;
+
+procedure TCShParser.AppendSavedComment(s: String);
+begin
+  if s <> '' then
+    if FSavedComments <>'' then
+        FSavedComments:=FSavedComments + LineEnding + s
+      else
+        FSavedComments:=s;
 end;
 
 function TCShParser.CheckOverloadList(AList: TFPList; AName: String; out
