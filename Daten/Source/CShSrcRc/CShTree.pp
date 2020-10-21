@@ -1389,7 +1389,7 @@ type
 
   { TCShImplCaseStatement }
 
-  TCShImplCaseStatement = class(TCShImplStatement)
+  TCShImplCaseStatement = class(TCShImplBlock)
   public
     constructor Create(const AName: string; AParent: TCShElement); override;
     destructor Destroy; override;
@@ -1399,7 +1399,6 @@ type
       const Arg: Pointer); override;
   public
     Expressions: TFPList; // list of TCShExpr
-    Body: TCShImplElement;
   end;
 
   { TCShImplSwitchElse }
@@ -4919,20 +4918,12 @@ begin
   For I:=0 to Expressions.Count-1 do
     TCShExpr(Expressions[i]).Release{$IFDEF CheckCShTreeRefCount}('TCShImplCaseStatement.CaseExpr'){$ENDIF};
   FreeAndNil(Expressions);
-  ReleaseAndNil(TCShElement(Body){$IFDEF CheckCShTreeRefCount},'TCShImplCaseStatement.Body'{$ENDIF});
   inherited Destroy;
 end;
 
 procedure TCShImplCaseStatement.AddElement(Element: TCShImplElement);
 begin
   inherited AddElement(Element);
-  if Body=nil then
-    begin
-    Body:=Element;
-    Body.AddRef{$IFDEF CheckCShTreeRefCount}('TCShImplCaseStatement.Body'){$ENDIF};
-    end
-  else
-    raise ECShTree.Create('TCShImplCaseStatement.AddElement body already set');
 end;
 
 procedure TCShImplCaseStatement.AddExpression(const Expr: TCShExpr);
@@ -4948,8 +4939,6 @@ var
 begin
   for i:=0 to Expressions.Count-1 do
     ForEachChildCall(aMethodCall,Arg,TCShElement(Expressions[i]),false);
-  if Elements.IndexOf(Body)<0 then
-    ForEachChildCall(aMethodCall,Arg,Body,false);
   inherited ForEachCall(aMethodCall, Arg);
 end;
 

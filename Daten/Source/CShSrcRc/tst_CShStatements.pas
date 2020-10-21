@@ -1195,9 +1195,8 @@ end;
 procedure TTestParserStatementLoops.TestForExpr;
 var
     F  :TCShImplForLoop;
-    B, P1, P2 :TBinaryExpr;
+    P1, P2 :TBinaryExpr;
     P  :TParamsExpr;
-    P3 :TUnaryExpr;
 
 begin
     DeclareVar('int');
@@ -1210,16 +1209,15 @@ begin
     AssertExpression('P1', P1.right, eopAdd);
     P2 := AssertExpression('P2', P.Params[1], eopLessThan);
     AssertExpression('P1', P2.right, eopAdd);
-    P3 := TUnaryExpr(AssertExpression('P2', P.Params[2], pekUnary, TUnaryExpr));
+    TUnaryExpr(AssertExpression('P2', P.Params[2], pekUnary, TUnaryExpr));
 end;
 
 procedure TTestParserStatementLoops.TestForBlock;
 
 var
-    F :TCShImplForLoop;
-    P      :TParamsExpr;
-    P1, P2 :TBinaryExpr;
-    P3     :TUnaryExpr;
+    F  :TCShImplForLoop;
+    P  :TParamsExpr;
+    P3 :TUnaryExpr;
 
 begin
     DeclareVar('int');
@@ -1231,8 +1229,8 @@ begin
     P := AssertExpression('Loop variable name', F.ParamExpression, 'a');
     //    AssertNotNull('Params', P.Params);
     AssertEquals('Param.count', 3, length(P.Params));
-    P1 := AssertExpression('P1', P.Params[0], eopAssign);
-    P2 := AssertExpression('P2', P.Params[1], eopLessthanEqual);
+    AssertExpression('P1', P.Params[0], eopAssign);
+    AssertExpression('P2', P.Params[1], eopLessthanEqual);
     P3 := TUnaryExpr(AssertExpression('P3', P.Params[2], pekUnary, TUnaryExpr));
     AssertEquals('P3.op=++', Ord(P3.OpCode), Ord(eopIncp));
 end;
@@ -1240,10 +1238,9 @@ end;
 procedure TTestParserStatementLoops.TestDowntoBlock;
 
 var
-    F :TCShImplForLoop;
-    P      :TParamsExpr;
-    P1, P2 :TBinaryExpr;
-    P3     :TUnaryExpr;
+    F  :TCShImplForLoop;
+    P  :TParamsExpr;
+    P3 :TUnaryExpr;
 
 begin
     DeclareVar('int');
@@ -1255,8 +1252,8 @@ begin
     P := AssertExpression('Loop variable name', F.ParamExpression, 'a');
     //    AssertNotNull('Params', P.Params);
     AssertEquals('Param.count', 3, length(P.Params));
-    P1 := AssertExpression('P1', P.Params[0], eopAssign);
-    P2 := AssertExpression('P2', P.Params[1], eopGreaterThanEqual);
+    AssertExpression('P1', P.Params[0], eopAssign);
+    AssertExpression('P2', P.Params[1], eopGreaterThanEqual);
     P3 := TUnaryExpr(AssertExpression('P3', P.Params[2], pekUnary, TUnaryExpr));
     AssertEquals('P3.op=--', Ord(P3.OpCode), Ord(eopDecp));
 end;
@@ -1374,7 +1371,6 @@ begin
     AssertEquals('1 expression for case', 1, S.Expressions.Count);
     AssertExpression('With identifier 1', TCShExpr(S.Expressions[0]), pekNumber, '1');
     AssertEquals('Empty case label statement', 0, S.Elements.Count);
-    AssertNull('Empty case label statement', S.Body);
 end;
 
 procedure TTestParserStatementSwitch.TestCaseTwoIntegers;
@@ -1398,7 +1394,6 @@ begin
     AssertExpression('With identifier 1', TCShExpr(S.Expressions[0]), pekNumber, '1');
     AssertExpression('With identifier 2', TCShExpr(S.Expressions[1]), pekNumber, '2');
     AssertEquals('Empty case label statement', 0, S.Elements.Count);
-    AssertNull('Empty case label statement', S.Body);
 end;
 
 procedure TTestParserStatementSwitch.TestCaseRange;
@@ -1420,7 +1415,6 @@ begin
     AssertEquals('1 expression for case', 1, S.Expressions.Count);
     AssertExpression('With identifier 1', TCShExpr(S.Expressions[0]), pekRange, TBinaryExpr);
     AssertEquals('Empty case label statement', 0, S.Elements.Count);
-    AssertNull('Empty case label statement', S.Body);
 end;
 
 procedure TTestParserStatementSwitch.TestCaseRangeSeparate;
@@ -1443,7 +1437,6 @@ begin
     AssertExpression('With identifier 1', TCShExpr(S.Expressions[0]), pekRange, TBinaryExpr);
     AssertExpression('With identifier 2', TCShExpr(S.Expressions[1]), pekNumber, '5');
     AssertEquals('Empty case label statement', 0, S.Elements.Count);
-    AssertNull('Empty case label statement', S.Body);
 end;
 
 procedure TTestParserStatementSwitch.TestCase2Cases;
@@ -1465,7 +1458,6 @@ begin
     AssertEquals('2 expressions for case 1', 1, S.Expressions.Count);
     AssertExpression('Case 1 With identifier 1', TCShExpr(S.Expressions[0]), pekNumber, '1');
     AssertEquals('Empty case label statement 1', 0, S.Elements.Count);
-    AssertNull('Empty case label statement 1', S.Body);
     // Two
     AssertEquals('Correct case for case label 2', TCShImplCaseStatement,
         TCShElement(C.Elements[1]).ClassType);
@@ -1473,7 +1465,6 @@ begin
     AssertEquals('2 expressions for case 2', 1, S.Expressions.Count);
     AssertExpression('Case 2 With identifier 1', TCShExpr(S.Expressions[0]), pekNumber, '2');
     AssertEquals('Empty case label statement 2', 0, S.Elements.Count);
-    AssertNull('Empty case label statement 2', S.Body);
 end;
 
 procedure TTestParserStatementSwitch.TestCaseBlock;
