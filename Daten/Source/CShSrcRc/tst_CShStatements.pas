@@ -1195,9 +1195,8 @@ end;
 procedure TTestParserStatementLoops.TestForExpr;
 var
     F  :TCShImplForLoop;
-    B, P1, P2 :TBinaryExpr;
+    P1, P2 :TBinaryExpr;
     P  :TParamsExpr;
-    P3 :TUnaryExpr;
 
 begin
     DeclareVar('int');
@@ -1210,16 +1209,15 @@ begin
     AssertExpression('P1', P1.right, eopAdd);
     P2 := AssertExpression('P2', P.Params[1], eopLessThan);
     AssertExpression('P1', P2.right, eopAdd);
-    P3 := TUnaryExpr(AssertExpression('P2', P.Params[2], pekUnary, TUnaryExpr));
+    TUnaryExpr(AssertExpression('P2', P.Params[2], pekUnary, TUnaryExpr));
 end;
 
 procedure TTestParserStatementLoops.TestForBlock;
 
 var
-    F :TCShImplForLoop;
-    P      :TParamsExpr;
-    P1, P2 :TBinaryExpr;
-    P3     :TUnaryExpr;
+    F  :TCShImplForLoop;
+    P  :TParamsExpr;
+    P3 :TUnaryExpr;
 
 begin
     DeclareVar('int');
@@ -1231,8 +1229,8 @@ begin
     P := AssertExpression('Loop variable name', F.ParamExpression, 'a');
     //    AssertNotNull('Params', P.Params);
     AssertEquals('Param.count', 3, length(P.Params));
-    P1 := AssertExpression('P1', P.Params[0], eopAssign);
-    P2 := AssertExpression('P2', P.Params[1], eopLessthanEqual);
+    AssertExpression('P1', P.Params[0], eopAssign);
+    AssertExpression('P2', P.Params[1], eopLessthanEqual);
     P3 := TUnaryExpr(AssertExpression('P3', P.Params[2], pekUnary, TUnaryExpr));
     AssertEquals('P3.op=++', Ord(P3.OpCode), Ord(eopIncp));
 end;
@@ -1240,10 +1238,9 @@ end;
 procedure TTestParserStatementLoops.TestDowntoBlock;
 
 var
-    F :TCShImplForLoop;
-    P      :TParamsExpr;
-    P1, P2 :TBinaryExpr;
-    P3     :TUnaryExpr;
+    F  :TCShImplForLoop;
+    P  :TParamsExpr;
+    P3 :TUnaryExpr;
 
 begin
     DeclareVar('int');
@@ -1255,8 +1252,8 @@ begin
     P := AssertExpression('Loop variable name', F.ParamExpression, 'a');
     //    AssertNotNull('Params', P.Params);
     AssertEquals('Param.count', 3, length(P.Params));
-    P1 := AssertExpression('P1', P.Params[0], eopAssign);
-    P2 := AssertExpression('P2', P.Params[1], eopGreaterThanEqual);
+    AssertExpression('P1', P.Params[0], eopAssign);
+    AssertExpression('P2', P.Params[1], eopGreaterThanEqual);
     P3 := TUnaryExpr(AssertExpression('P3', P.Params[2], pekUnary, TUnaryExpr));
     AssertEquals('P3.op=--', Ord(P3.OpCode), Ord(eopDecp));
 end;

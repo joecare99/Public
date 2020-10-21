@@ -334,7 +334,7 @@ begin
     FStatement := AssertStatement('Block statement', TCShImplBeginBlock);
     B := Statement as TCShImplBeginBlock;
     AssertEquals('Empty block', 0, B.Elements.Count);
-    AssertEquals('The DocComment', ' This is a comment ', B.DocComment);
+    AssertEquals('The DocComment', ' This is a comment '+LineEnding, B.DocComment);
 end;
 
 procedure TTestParserStatementBlock.TestBlock2Comments;
@@ -349,7 +349,7 @@ begin
     FStatement := AssertStatement('Block statement', TCShImplBeginBlock);
     B := Statement as TCShImplBeginBlock;
     AssertEquals('Empty block', 0, B.Elements.Count);
-    AssertEquals('No DocComment', '', B.DocComment);
+    AssertEquals('The DocComment', ' This is a comment '+LineEnding+LineEnding+' Another comment', B.DocComment);
 end;
 
 procedure TTestParserStatementAssignment.TestAssignment;
@@ -558,7 +558,7 @@ begin
     FStatement := AssertStatement('Simple statement', TCShImplSimple);
     S := Statement as TCShImplSimple;
     AssertExpression('Doit call', S.Expr, 'Doit');
-    AssertEquals('No DocComment', '', S.DocComment);
+    AssertEquals('The DocComment', 'Comment Line', S.DocComment);
 end;
 
 procedure TTestParserStatementCall.TestCallQualified;
@@ -881,7 +881,7 @@ var
     W1 :TCShImplWhile;
     I  :TCShImplIfElse;
 begin
-    TestStatement(['while (a)', '  if (b)', 'while (c) { }', '  else', ' DoIt();']);
+    TestStatement(cWhileIfWhileBlockElseCall);
     W1 := AssertStatement('If statement', TCShImplWhile) as TCShImplWhile;
     AssertNotNull('Body is assigned', W1.Body);
     AssertNotNull('Params are assigned', W1.ParamExpression);
@@ -923,7 +923,7 @@ var
 begin
     DeclareVar('bool');
     DeclareVar('bool', 'b');
-    TestStatement(['if (a)', '  if (b)', '    {', '    }', 'else', '  {', '  }']);
+    TestStatement(cIfIfBlockElseBlock);
     I := AssertStatement('If statement', TCShImplIfElse, 2) as TCShImplIfElse;
     AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
     AssertNotNull('if branch', I.IfBranch);
@@ -941,8 +941,7 @@ var
 
 begin
     DeclareVar('bool');
-    TestStatement(['if (a)', '  if (b) ', '    {', '    }', '  else',
-        '    {', '   }', 'else', '  {', '}']);
+    TestStatement(cIfIfBlockElseBlockElseBlock);
     I := AssertStatement('If statement', TCShImplIfElse, 1) as TCShImplIfElse;
     AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
     AssertNotNull('if branch', I.IfBranch);
@@ -962,8 +961,7 @@ var
 
 begin
     DeclareVar('bool');
-    TestStatement(['if (a)', '  if (b)', '    DoA(); ',
-        '   else;', ' else', '   DoB();']);
+    TestStatement(cIfIfCallElseElseCall);
     I := AssertStatement('If statement', TCShImplIfElse, 1) as TCShImplIfElse;
     AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
     AssertNotNull('if branch', I.IfBranch);
@@ -985,8 +983,7 @@ var
 begin
     DeclareVar('bool');
     DeclareVar('bool', 'B');
-    TestStatement(['if (a)', 'if (b)', '  {', '  }', 'else ;',
-        'else', '  {', '  }']);
+    TestStatement(cIfIfBlockElseElseBlock);
     OuterIf := AssertStatement('If statement', TCShImplIfElse, 2) as TCShImplIfElse;
     AssertExpression('IF condition', OuterIf.ConditionExpr, pekIdent, 'a');
     AssertNotNull('if branch', OuterIf.IfBranch);
@@ -1012,28 +1009,27 @@ end;
 procedure TTestParserStatementIf.TestIfnoSKError;
 begin
     DeclareVar('bool');
-    ExpectParserError('No Semicolon,Identifyer or CBraceopen missing', ['if (a)']);
+    ExpectParserError('No Semicolon,Identifyer or CBraceopen missing', cErrIfNoSK);
 end;
 
 procedure TTestParserStatementIf.TestIfElsenoSKError;
 begin
     DeclareVar('bool');
-    ExpectParserError('No Semicolon,Identifyer or CBraceopen missing', ['if (a); else']);
+    ExpectParserError('No Semicolon,Identifyer or CBraceopen missing', cErrIfSKElseNoSK);
 end;
 
 procedure TTestParserStatementIf.TestNestedIfElsenoSKError;
 begin
     DeclareVar('bool');
     ExpectParserError('No Semicolon,Identifyer or CBraceopen missing',
-        ['if (a) if (a); else else;']);
+        cErrIfIfSKElseElseSK);
 end;
 
 procedure TTestParserStatementIf.TestIfSemiColonElseError;
 
 begin
     DeclareVar('bool');
-    ExpectParserError('No semicolon before else', ['if (a)', '  {',
-        '  };', 'else', '  {', '  }']);
+    ExpectParserError('No semicolon before else', cErrIfBlockSKElseBlock);
 end;
 
 
@@ -1199,9 +1195,8 @@ end;
 procedure TTestParserStatementLoops.TestForExpr;
 var
     F  :TCShImplForLoop;
-    B, P1, P2 :TBinaryExpr;
+    P1, P2 :TBinaryExpr;
     P  :TParamsExpr;
-    P3 :TUnaryExpr;
 
 begin
     DeclareVar('int');
@@ -1214,7 +1209,7 @@ begin
     AssertExpression('P1', P1.right, eopAdd);
     P2 := AssertExpression('P2', P.Params[1], eopLessThan);
     AssertExpression('P1', P2.right, eopAdd);
-    P3 := TUnaryExpr(AssertExpression('P2', P.Params[2], pekUnary, TUnaryExpr));
+    AssertExpression('P2', P.Params[2], pekUnary, TUnaryExpr);
 end;
 
 procedure TTestParserStatementLoops.TestForBlock;
@@ -1222,7 +1217,6 @@ procedure TTestParserStatementLoops.TestForBlock;
 var
     F      :TCShImplForLoop;
     P      :TParamsExpr;
-    P1, P2 :TBinaryExpr;
     P3     :TUnaryExpr;
 
 begin
@@ -1235,8 +1229,8 @@ begin
     P := AssertExpression('Loop variable name', F.ParamExpression, 'a');
     //    AssertNotNull('Params', P.Params);
     AssertEquals('Param.count', 3, length(P.Params));
-    P1 := AssertExpression('P1', P.Params[0], eopAssign);
-    P2 := AssertExpression('P2', P.Params[1], eopLessthanEqual);
+    AssertExpression('P1', P.Params[0], eopAssign);
+    AssertExpression('P2', P.Params[1], eopLessthanEqual);
     P3 := TUnaryExpr(AssertExpression('P3', P.Params[2], pekUnary, TUnaryExpr));
     AssertEquals('P3.op=++', Ord(P3.OpCode), Ord(eopIncp));
 end;
@@ -1246,7 +1240,6 @@ procedure TTestParserStatementLoops.TestDowntoBlock;
 var
     F      :TCShImplForLoop;
     P      :TParamsExpr;
-    P1, P2 :TBinaryExpr;
     P3     :TUnaryExpr;
 
 begin
@@ -1259,8 +1252,8 @@ begin
     P := AssertExpression('Loop variable name', F.ParamExpression, 'a');
     //    AssertNotNull('Params', P.Params);
     AssertEquals('Param.count', 3, length(P.Params));
-    P1 := AssertExpression('P1', P.Params[0], eopAssign);
-    P2 := AssertExpression('P2', P.Params[1], eopGreaterThanEqual);
+    AssertExpression('P1', P.Params[0], eopAssign);
+    AssertExpression('P2', P.Params[1], eopGreaterThanEqual);
     P3 := TUnaryExpr(AssertExpression('P3', P.Params[2], pekUnary, TUnaryExpr));
     AssertEquals('P3.op=--', Ord(P3.OpCode), Ord(eopDecp));
 end;

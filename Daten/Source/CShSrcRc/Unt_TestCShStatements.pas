@@ -48,7 +48,16 @@ var
     cIfaThrowElseForWrite,
     cIfaUsingElseForWrite,
     cWhileIfWhileElseCall,
+    cWhileIfWhileBlockElseCall,
+    cIfIfBlockElseBlock,
+    cIfIfBlockElseBlockElseBlock,
+    cIfIfCallElseElseCall,
+    cIfIfBlockElseElseBlock,
     cErrIfElsenoSK,
+    cErrIfNoSK,
+    cErrIfSKElseNoSK,
+    cErrIfIfSKElseElseSK,
+    cErrIfBlockSKElseBlock,
     cDummy:Array of string;
 implementation
 
@@ -81,7 +90,20 @@ initialization
    cIfaUsingElseForWrite := ['if (a)', 'using(b) something();', 'else',
         'for (X = 0,X <= 1,X++) Writeln(X);'];
    cWhileIfWhileElseCall := ['while (a)', '  if (b)', 'while (c) ;', '  else', ' DoIt();'];
+   cWhileIfWhileBlockElseCall := ['while (a)', '  if (b)', 'while (c) { }', '  else', ' DoIt();'];
+   cIfIfBlockElseBlock := ['if (a)', '  if (b)', '    {', '    }', 'else', '  {', '  }'];
+   cIfIfBlockElseBlockElseBlock := ['if (a)', '  if (b) ', '    {', '    }', '  else',
+        '    {', '   }', 'else', '  {', '}'];
+   cIfIfCallElseElseCall := ['if (a)', '  if (b)', '    DoA(); ',
+        '   else;', ' else', '   DoB();'];
+   cIfIfBlockElseElseBlock := ['if (a)', 'if (b)', '  {', '  }', 'else ;',
+        'else', '  {', '  }'];
    cErrIfElsenoSK := ['if (a)', 'else'];
+   cErrIfNoSK := ['if (a)'];
+   cErrIfSKElseNoSK := ['if (a); else'];
+   cErrIfIfSKElseElseSK := ['if (a) if (a); else else;'];
+   cErrIfBlockSKElseBlock := ['if (a)', '  {','  };', 'else', '  {', '  }'];
+
 // while
 
 end.

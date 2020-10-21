@@ -420,7 +420,6 @@ begin
   FResolver:=TStreamResolver.Create;
   FResolver.OwnsStreams:=True;
   FScanner:=TCSharpScanner.Create(FResolver);
-  FScanner.CurrentBoolSwitches:=FScanner.CurrentBoolSwitches+[bsHints,bsNotes,bsWarnings];
   CreateEngine(FEngine);
   FParser:=TTestCShParser.Create(FScanner,FResolver,FEngine);
   FSource:=TStringList.Create;
@@ -588,9 +587,10 @@ begin
 end;
 
 procedure TTestParser.StartParsing;
-
+{$ifndef NOCONSOLE}
 var
   i: Integer;
+{$endif}
 begin
   If FIsUnit then
     StartImplementation;
