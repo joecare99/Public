@@ -294,7 +294,6 @@ type
     procedure OnScannerModeChanged(Sender: TObject; NewMode: TModeSwitch;
       Before: boolean; var Handled: boolean);
   protected
-    Procedure ParseSwitchCases(Const Parent: TCShImplSwitch);
     Function SaveComments : String;
     Function SaveComments(Const AValue : String) : String;
     procedure AppendSavedComment(s: TStrings); overload;
@@ -400,6 +399,7 @@ type
     function PeekNextToken: TToken;
     function ExpectIdentifier: String;
     Function CurTokenIsIdentifier(Const S : String) : Boolean;
+
     // Expression parsing
     function isEndOfExp(AllowEqual : Boolean = False; CheckHints : Boolean = True): Boolean;
     function ExprToText(Expr: TCShExpr): String;
@@ -449,6 +449,7 @@ type
     procedure ParseStatement(Parent: TCShImplBlock; out NewImplElement: TCShImplElement);
     procedure ParseAdhocExpression(out NewExprElement: TCShExpr);
     procedure ParseLabels(AParent: TCShElement);
+    Procedure ParseSwitchCases(Const Parent: TCShImplSwitch);
 
     // Function/Procedure declaration
     function ParseProcedureOrFunctionDecl(Parent: TCShElement;
@@ -4353,7 +4354,9 @@ begin
                   // create case-else block
                   Parent.ElseBranch:=TCShImplSwitchElse(CreateElement(TCShImplSwitchElse, '',
                     Parent, CurTokenPos));
+                  ExpectToken(tkColon);
                   ParseSwitchCasesStatements(Parent.ElseBranch);
+                  UngetToken;
                   ExpectToken(tkCurlyBraceClose);
                 end;
               tkCase:
@@ -4376,13 +4379,14 @@ begin
                   until (Curtoken=tkColon) and (PeekNextToken<>tkCase);
                   // read statement
                   ParseSwitchCasesStatements(TCShImplCaseStatement(El));
+                  UngetToken;
                   ExpectTokens([tkCurlyBraceClose,tkDefault,tkCase]);
                 end;
               else
                 ParseExcSyntaxError;
               end;
      end;
-   UngetToken;
+//   UngetToken;
 end;
 
 function TCShParser.SaveComments: String;
@@ -5427,6 +5431,7 @@ var
   TypeEl, Ranges: TCShType;
   ImplRaise: TCShImplRaise;
   VarEl: TCShVariable;
+  _deb: TToken;
 
 begin
   NewImplElement:=nil;
@@ -5505,7 +5510,7 @@ begin
         Left:=DoParseExpression(CurBlock);
         UngetToken;
         El:=TCShImplIfElse(CreateElement(TCShImplIfElse,'',CurBlock,SrcPos));
-        TCShImplIfElse(El).ConditionExpr:=Left;
+        TCShImplIfElse(El).ParamExpression:=Left;
         Left.Parent:=El;
         Left:=nil;
         //WriteLn(i,'IF Condition="',Condition,'" Token=',CurTokenText);
@@ -5600,16 +5605,15 @@ begin
       tkUsing:
         begin
           CheckStatementCanStart;
-          NextToken;
-          CurBlock.AddCommand('using '+curtokenstring);
+          SrcPos:=CurTokenPos;
           ExpectToken(tkBraceOpen);
           Left:=DoParseExpression(CurBlock);
-          El:=TCShImplUsing(CreateElement(TCShImplUsing,'',CurBlock,SrcPos));
           UngetToken;
-          TCShImplUsing(El).ParamExpressions:=Left;
+          El:=TCShImplUsing(CreateElement(TCShImplUsing,'',CurBlock,SrcPos));
+          TCShImplUsing(El).ParamExpression :=Left;
           Left.Parent:=El;
           Left:=nil;
-          CreateBlock(TCShImplWhile(El));
+          CreateBlock(TCShImplUsing(El));
           El:=nil;
         end;
       tkgoto:
@@ -5665,6 +5669,7 @@ begin
           ExpectToken(tkCurlyBraceOpen);
           ParseSwitchCases(TCShImplSwitch(El));
           El:=nil;
+          _deb := PeekNextToken;
           if CurToken=tkCurlyBraceClose then
           begin
             if CloseBlock then break;
@@ -5721,6 +5726,23 @@ begin
           ExpectToken(tkSemicolon);
           UngetToken;
         end;
+      tkReturn:
+        begin
+          El:=TCShImplReturn(CreateElement(TCShImplReturn,'',CurBlock,SrcPos));
+          if PeekNextToken <> tkSemicolon then
+            begin
+             NextToken;
+             Left:=DoParseExpression(El);
+             TCShImplReturn(El).ParamExpression:=Left;
+             Left.Parent:=El;
+             UngetToken;
+            end;
+          Left:=nil;
+          Curblock.AddElement(El);
+          El:=nil;
+          ExpectToken(tkSemicolon);
+          UngetToken;
+        end;
       tkThrow:
         begin
         CheckStatementCanStart;
@@ -5731,12 +5753,7 @@ begin
           UnGetToken
         else
           begin
-          ImplRaise.ExceptObject:=DoParseExpression(ImplRaise);
-          if (CurToken=tkIdentifier) and (Uppercase(CurtokenString)='AT') then
-            begin
-            NextToken;
-            ImplRaise.ExceptAddr:=DoParseExpression(ImplRaise);
-            end;
+          ImplRaise.ParamExpression:=DoParseExpression(ImplRaise);
           If Curtoken in [tkElse,tkCurlyBraceClose,tkSemicolon] then
             UngetToken
           end;
@@ -5756,6 +5773,7 @@ begin
             // close at END
             if CloseBlock then break; // close end
             if CloseStatement(PeekNextToken<>tkElse) then break;
+            if PeekNextToken=tkDefault then break;
           end else if CurBlock is TCShImplSwitchElse then
           begin
             if CloseBlock then break; // close else
@@ -5769,8 +5787,9 @@ begin
           end else
             ParseExcSyntaxError;
         end;
-      tkSemiColon:
+      tkSemiColon: begin
         if CloseStatement(PeekNextToken<>tkElse) then break;
+        if PeekNextToken=tkDefault then break; end;
       tkEOF:
         CheckToken(tkCurlyBraceClose);
       tkIdentifier,

@@ -210,7 +210,7 @@ type
                  eopNot,eopSingleAnd,eopAnd,eopSingleOr,eopOr,eopXor,eopKomplement, // logical/bit
                  eopEqual, eopNotEqual,eopAsk, eopAskAsk,  // Logical
                  eopLessThan,eopGreaterThan, eopLessthanEqual,eopGreaterThanEqual, // ordering
-                 eopIn,eopIs,eopAs, eopAssign, eopSymmetricaldifference,eopLampda, // Specials
+                 eopIn,eopIs,eopAs, eopAssign, eopSymmetricaldifference, eopLampda, eopDeclare, // Specials
 //                 eopAddress, eopDeref, eopMemAddress, // Pointers  eopMemAddress=**
                  eopSubIdent); // SomeRec.A, A is subIdent of SomeRec
 
@@ -1330,6 +1330,18 @@ type
     function CloseOnSemicolon: boolean; override;
   end;
 
+  { TCShImplParamStmt }
+  TCShImplParamStmt = class(TCShImplStatement)
+  public
+    destructor Destroy; override;
+    procedure ForEachCall(const aMethodCall: TOnForEachCShElement;
+      const Arg: Pointer); override;
+  public
+    ParamExpression : TCShExpr ;
+    function ParamsEx: string;
+  end;
+
+
   { TCShImplBeginBlock }
   TCShImplBeginBlock = class(TCShImplBlock)
   end;
@@ -1340,7 +1352,7 @@ type
 
   { TCShImplIfElse }
 
-  TCShImplIfElse = class(TCShImplBlock)
+  TCShImplIfElse = class(TCShImplParamStmt)
   public
     destructor Destroy; override;
     procedure AddElement(Element: TCShImplElement); override;
@@ -1348,15 +1360,13 @@ type
     procedure ForEachCall(const aMethodCall: TOnForEachCShElement;
       const Arg: Pointer); override;
   public
-    ConditionExpr: TCShExpr;
     IfBranch: TCShImplElement;
     ElseBranch: TCShImplElement; // can be nil
-    Function Condition: string;
   end;
 
   { TCShImplUsing }
 
-  TCShImplUsing = class(TCShImplStatement)
+  TCShImplUsing = class(TCShImplParamStmt)
   public
     constructor Create(const AName: string; AParent: TCShElement); override;
     destructor Destroy; override;
@@ -1364,7 +1374,6 @@ type
     procedure ForEachCall(const aMethodCall: TOnForEachCShElement;
       const Arg: Pointer); override;
   public
-    ParamExpressions: TCShExpr; // list of TCShExpr
     Body: TCShImplElement;
   end;
 
@@ -1408,16 +1417,14 @@ type
 
   { TCShImplLoop }
   // For repetetive Statements
-  TCShImplLoop = class(TCShImplStatement)
+  TCShImplLoop = class(TCShImplParamStmt)
   public
     destructor Destroy; override;
     procedure AddElement(Element: TCShImplElement); override;
     procedure ForEachCall(const aMethodCall: TOnForEachCShElement;
       const Arg: Pointer); override;
   public
-    ParamExpression : TCShExpr ;
     Body: TCShImplElement;
-    function ParamsEx: string;
   end;
 
 
@@ -1522,14 +1529,12 @@ type
 
   { TCShImplRaise }
 
-  TCShImplRaise = class(TCShImplStatement)
-  public
-    destructor Destroy; override;
-    procedure ForEachCall(const aMethodCall: TOnForEachCShElement;
-      const Arg: Pointer); override;
-  Public
-    ExceptObject,
-    ExceptAddr : TCShExpr;
+  TCShImplRaise = class(TCShImplParamStmt)
+  end;
+
+  { TCShImplReturn }
+
+  TCShImplReturn = class(TCShImplParamStmt)
   end;
 
   { TCShImplLabelMark }
@@ -1592,7 +1597,7 @@ const
         '!','&','&&','|','||','^','~',
         '=','!=','?','??',
         '<','>','<=','>=',
-        'in','is','as','=','><','=>',
+        'in','is','as','=','><','=>',' ',
  //       '@','^','@@',
         '.');
 
@@ -1776,6 +1781,29 @@ begin
     end;
 end;
 
+{ TCShImplParamStmt }
+
+destructor TCShImplParamStmt.Destroy;
+begin
+  ReleaseAndNil(TCShElement(ParamExpression){$IFDEF CheckCShTreeRefCount},'TCShImplLoop.IterExpesion'{$ENDIF});
+  inherited Destroy;
+end;
+
+procedure TCShImplParamStmt.ForEachCall(
+  const aMethodCall: TOnForEachCShElement; const Arg: Pointer);
+begin
+  ForEachChildCall(aMethodCall,Arg,ParamExpression,false);
+  inherited ForEachCall(aMethodCall, Arg);
+end;
+
+function TCShImplParamStmt.ParamsEx: string;
+begin
+  If Assigned(ParamExpression) then
+    Result:=ParamExpression.GetDeclaration(true)
+  else
+    Result:='';
+end;
+
 { TCShImplDoWhile }
 
 function TCShImplDoWhile.CloseOnSemicolon: boolean;
@@ -1787,7 +1815,6 @@ end;
 
 destructor TCShImplLoop.Destroy;
 begin
-  ReleaseAndNil(TCShElement(ParamExpression){$IFDEF CheckCShTreeRefCount},'TCShImplLoop.IterExpesion'{$ENDIF});
   ReleaseAndNil(TCShElement(Body){$IFDEF CheckCShTreeRefCount},'TCShImplLoop.Body'{$ENDIF});
   inherited Destroy;
 end;
@@ -1807,18 +1834,9 @@ end;
 procedure TCShImplLoop.ForEachCall(
   const aMethodCall: TOnForEachCShElement; const Arg: Pointer);
 begin
-  ForEachChildCall(aMethodCall,Arg,ParamExpression,false);
   if Elements.IndexOf(Body)<0 then
     ForEachChildCall(aMethodCall,Arg,Body,false);
   inherited ForEachCall(aMethodCall, Arg);
-end;
-
-function TCShImplLoop.ParamsEx: string;
-begin
-  If Assigned(ParamExpression) then
-    Result:=ParamExpression.GetDeclaration(true)
-  else
-    Result:='';
 end;
 
 { TCShImplVarDecl }
@@ -2278,23 +2296,6 @@ procedure TProcedureExpr.ForEachCall(const aMethodCall: TOnForEachCShElement;
 begin
   inherited ForEachCall(aMethodCall, Arg);
   ForEachChildCall(aMethodCall,Arg,Proc,false);
-end;
-
-{ TCShImplRaise }
-
-destructor TCShImplRaise.Destroy;
-begin
-  ReleaseAndNil(TCShElement(ExceptObject){$IFDEF CheckCShTreeRefCount},'TCShImplRaise.ExceptObject'{$ENDIF});
-  ReleaseAndNil(TCShElement(ExceptAddr){$IFDEF CheckCShTreeRefCount},'TCShImplRaise.ExceptAddr'{$ENDIF});
-  inherited Destroy;
-end;
-
-procedure TCShImplRaise.ForEachCall(const aMethodCall: TOnForEachCShElement;
-  const Arg: Pointer);
-begin
-  inherited ForEachCall(aMethodCall, Arg);
-  ForEachChildCall(aMethodCall,Arg,ExceptObject,false);
-  ForEachChildCall(aMethodCall,Arg,ExceptAddr,false);
 end;
 
 { TCShImplSimple }
@@ -3593,7 +3594,6 @@ end;
 
 destructor TCShImplIfElse.Destroy;
 begin
-  ReleaseAndNil(TCShElement(ConditionExpr){$IFDEF CheckCShTreeRefCount},'TCShImplIfElse.ConditionExpr'{$ENDIF});
   ReleaseAndNil(TCShElement(IfBranch){$IFDEF CheckCShTreeRefCount},'TCShImplIfElse.IfBranch'{$ENDIF});
   ReleaseAndNil(TCShElement(ElseBranch){$IFDEF CheckCShTreeRefCount},'TCShImplIfElse.ElseBranch'{$ENDIF});
   inherited Destroy;
@@ -3624,20 +3624,11 @@ end;
 procedure TCShImplIfElse.ForEachCall(const aMethodCall: TOnForEachCShElement;
   const Arg: Pointer);
 begin
-  ForEachChildCall(aMethodCall,Arg,ConditionExpr,false);
   if Elements.IndexOf(IfBranch)<0 then
     ForEachChildCall(aMethodCall,Arg,IfBranch,false);
   if Elements.IndexOf(ElseBranch)<0 then
     ForEachChildCall(aMethodCall,Arg,ElseBranch,false);
   inherited ForEachCall(aMethodCall, Arg);
-end;
-
-function TCShImplIfElse.Condition: string;
-begin
-  If Assigned(ConditionExpr) then
-    Result:=ConditionExpr.GetDeclaration(True)
-  else
-    Result:='';
 end;
 
 constructor TCShImplBlock.Create(const AName: string; AParent: TCShElement);
@@ -3697,7 +3688,7 @@ end;
 function TCShImplBlock.AddIfElse(const ACondition: TCShExpr): TCShImplIfElse;
 begin
   Result := TCShImplIfElse.Create('', Self);
-  Result.ConditionExpr := ACondition;
+  Result.ParamExpression := ACondition;
   AddElement(Result);
 end;
 
@@ -3711,7 +3702,7 @@ end;
 function TCShImplBlock.AddUsing(const Expression: TCShExpr): TCShImplUsing;
 begin
   Result := TCShImplUsing.Create('', Self);
-  Result.ParamExpressions:=Expression;
+  Result.ParamExpression := Expression;
   AddElement(Result);
 end;
 
@@ -4947,7 +4938,7 @@ end;
 constructor TCShImplUsing.Create(const AName: string; AParent: TCShElement);
 begin
   inherited Create(AName, AParent);
-  ParamExpressions:=nil;
+  ParamExpression:=nil;
 end;
 
 destructor TCShImplUsing.Destroy;
@@ -4955,7 +4946,6 @@ Var
   I : Integer;
 begin
   ReleaseAndNil(TCShElement(Body){$IFDEF CheckCShTreeRefCount},'TCShImplUsing.Body'{$ENDIF});
-  ReleaseAndNil(TCShElement(ParamExpressions){$IFDEF CheckCShTreeRefCount},'TCShImplUsing.ParamExpressions'{$ENDIF});
   inherited Destroy;
 end;
 
@@ -4976,7 +4966,6 @@ procedure TCShImplUsing.ForEachCall(const aMethodCall: TOnForEachCShElement;
 var
   i: Integer;
 begin
-  ForEachChildCall(aMethodCall,Arg,ParamExpressions,false);
   if Elements.IndexOf(Body)<0 then
     ForEachChildCall(aMethodCall,Arg,Body,false);
   inherited ForEachCall(aMethodCall, Arg);
