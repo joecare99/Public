@@ -34,7 +34,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="11">
+    <Units Count="13">
       <Unit0>
         <Filename Value="fpcTestX_Src.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -80,6 +80,14 @@
         <Filename Value="..\Source\CShSrcRc\tst_CShParseStatementsDirect.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit10>
+      <Unit11>
+        <Filename Value="..\Source\CShSrcRc\tst_CShStatements.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\Source\CShSrcRc\Unt_TestCShStatements.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
