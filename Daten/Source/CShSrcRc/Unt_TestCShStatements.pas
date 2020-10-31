@@ -58,6 +58,15 @@ var
     cErrIfSKElseNoSK,
     cErrIfIfSKElseElseSK,
     cErrIfBlockSKElseBlock,
+    cWhileSK,
+    cWhileBlock,
+    cWhileCall,
+    cWhileWhileBlock,
+    cDoWhile,
+    cDoBlockWhile,
+    cDoCallWhile,
+    cDoDoBlockWhileWhile,
+    cDoWhileBlockWhile,
     cDummy:Array of string;
 implementation
 
@@ -87,7 +96,7 @@ initialization
    cIfaForWriteElseForWite := ['if (a) ', 'for (X = 1, X >= 0,X--) Write(X);',
         'else', 'for (X = 0, X<= 1, X++) Write(X);'];
    cIfaThrowElseForWrite := ['if (a)', 'throw(e);', 'else', 'for (X = 0,X<= 1,X++) Writeln(X);'];
-   cIfaUsingElseForWrite := ['if (a)', 'using(b) something();', 'else',
+   cIfaUsingElseForWrite := ['if (a)', 'using(b) Something();', 'else',
         'for (X = 0,X <= 1,X++) Writeln(X);'];
    cWhileIfWhileElseCall := ['while (a)', '  if (b)', 'while (c) ;', '  else', ' DoIt();'];
    cWhileIfWhileBlockElseCall := ['while (a)', '  if (b)', 'while (c) { }', '  else', ' DoIt();'];
@@ -105,6 +114,14 @@ initialization
    cErrIfBlockSKElseBlock := ['if (a)', '  {','  };', 'else', '  {', '  }'];
 
 // while
-
+   cWhileSK := ['while(a) ;'];
+   cWhileCall := ['while (a)', '  DoSomething();'];
+   cWhileBlock := ['while (a)', '  {', '  }'];
+   cWhileWhileBlock := ['while (a)', '  while (b)', '    {', '    }'];
+   cDoWhile := ['do;', 'while (a);'];
+   cDoBlockWhile := ['do', '{', '}', 'while (a);'];
+   cDoCallWhile := ['do', '  Doit();', 'while (a);'];
+   cDoDoBlockWhileWhile := ['do', 'do', '{', '}', 'while (b);', 'while (a);'];
+   cDoWhileBlockWhile := ['do', 'while (b)', '{', '}', 'while (a);'];
 end.
 

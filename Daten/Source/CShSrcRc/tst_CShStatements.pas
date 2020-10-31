@@ -139,7 +139,6 @@ type
 
     TTestParserStatementUsing = class(TTestStatementParserBase)
         procedure TestUsing;
-        procedure TestWithMultiple;
     end;
 
     TTestParserStatementSwitch = class(TTestStatementParserBase)
@@ -727,7 +726,7 @@ begin
     DeclareVar('bool');
     TestStatement(['if (a)', ';']);
     I := AssertStatement('If statement', TCShImplIfElse, 1) as TCShImplIfElse;
-    AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
+    AssertExpression('IF condition', I.ParamExpression, pekIdent, 'a');
     AssertNull('No else', i.ElseBranch);
     AssertNull('No if branch', I.IfBranch);
 end;
@@ -741,7 +740,7 @@ begin
     DeclareVar('bool');
     TestStatement(['if(a)', '  {', '  }']);
     I := AssertStatement('If statement', TCShImplIfElse, 1) as TCShImplIfElse;
-    AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
+    AssertExpression('IF condition', I.ParamExpression, pekIdent, 'a');
     AssertNull('No else', i.ElseBranch);
     AssertNotNull('if branch', I.IfBranch);
     AssertEquals('begin end block', TCShImplBeginBlock, I.ifBranch.ClassType);
@@ -756,7 +755,7 @@ begin
     DeclareVar('bool');
     TestStatement(['if (a)', '  a=False;']);
     I := AssertStatement('If statement', TCShImplIfElse, 1) as TCShImplIfElse;
-    AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
+    AssertExpression('IF condition', I.ParamExpression, pekIdent, 'a');
     AssertNull('No else', i.ElseBranch);
     AssertNotNull('if branch', I.IfBranch);
     AssertEquals('assignment statement', TCShImplAssign, I.ifBranch.ClassType);
@@ -771,7 +770,7 @@ begin
     DeclareVar('bool');
     TestStatement(['if (a) ;', 'else', ';']);
     I := AssertStatement('If statement', TCShImplIfElse, 1) as TCShImplIfElse;
-    AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
+    AssertExpression('IF condition', I.ParamExpression, pekIdent, 'a');
     AssertNotNull('if branch', I.IfBranch);
     AssertEquals('Command', TCShImplCommand, I.ifBranch.ClassType);
     AssertEquals('Empty Command', '', TCShImplCommand(I.ifBranch).Command);
@@ -789,7 +788,7 @@ begin
     DeclareVar('bool');
     TestStatement(['if (a)', '  {', '  }', 'else', ';']);
     I := AssertStatement('If statement', TCShImplIfElse, 1) as TCShImplIfElse;
-    AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
+    AssertExpression('IF condition', I.ParamExpression, pekIdent, 'a');
     AssertNotNull('if branch', I.IfBranch);
     AssertEquals('begin end block', TCShImplBeginBlock, I.ifBranch.ClassType);
     AssertnotNull('else', i.ElseBranch);
@@ -805,7 +804,7 @@ begin
     DeclareVar('bool');
     TestStatement(['if (a)', '  {', '  }', 'else', '  {', '  }']);
     I := AssertStatement('If statement', TCShImplIfElse, 1) as TCShImplIfElse;
-    AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
+    AssertExpression('IF condition', I.ParamExpression, pekIdent, 'a');
     AssertNotNull('if branch', I.IfBranch);
     AssertEquals('begin end block', TCShImplBeginBlock, I.ifBranch.ClassType);
     AssertNotNull('Else branch', i.ElseBranch);
@@ -825,7 +824,7 @@ begin
     AssertEquals('One Element', 1, B.Elements.Count);
     AssertEquals('If statement', TCShImplIfElse, TObject(B.Elements[0]).ClassType);
     I := TCShImplIfElse(B.Elements[0]);
-    AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
+    AssertExpression('IF condition', I.ParamExpression, pekIdent, 'a');
     AssertNotNull('if branch', I.IfBranch);
     AssertEquals('i_br: simple command', TCShImplSimple, I.ifBranch.ClassType);
     AssertExpression('Doit call', TCShImplSimple(I.ifBranch).Expr, 'DoA');
@@ -843,7 +842,7 @@ begin
     TestStatement(['if (a) ', 'for (X = 1, X >= 0,X--) Write(X);',
         'else', 'for (X = 0, X<= 1, X++) Write(X);']);
     I := AssertStatement('If statement', TCShImplIfElse) as TCShImplIfElse;
-    AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
+    AssertExpression('IF condition', I.ParamExpression, pekIdent, 'a');
     AssertEquals('For statement', TCShImplForLoop, I.ifBranch.ClassType);
     AssertEquals('For statement', TCShImplForLoop, I.ElseBranch.ClassType);
 end;
@@ -854,7 +853,7 @@ var
 begin
     TestStatement(['if (a)', 'throw(e);', 'else', 'for (X = 0,X<= 1,X++) Writeln(X);']);
     I := AssertStatement('If statement', TCShImplIfElse) as TCShImplIfElse;
-    AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
+    AssertExpression('IF condition', I.ParamExpression, pekIdent, 'a');
     AssertEquals('trow statement', TCShImplRaise, I.ifBranch.ClassType);
     AssertNotNull('Else-Branch exisis', I.ElseBranch);
     AssertEquals('For statement', TCShImplForLoop, I.ElseBranch.ClassType);
@@ -867,7 +866,7 @@ begin
     TestStatement(['if (a)', 'using(b) something();', 'else',
         'for (X = 0,X <= 1,X++) Writeln(X);']);
     I := AssertStatement('If statement', TCShImplIfElse) as TCShImplIfElse;
-    AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
+    AssertExpression('IF condition', I.ParamExpression, pekIdent, 'a');
     AssertEquals('For statement', TCShImplUsing, I.ifBranch.ClassType);
     AssertEquals('For statement', TCShImplForLoop, I.ElseBranch.ClassType);
 end;
@@ -883,7 +882,7 @@ begin
     AssertNotNull('Params are assigned', W1.ParamExpression);
     AssertEquals('Body is TCShImplIfElse', TCShImplIfElse.ClassName, W1.Body.ClassName);
     I := TCShImplIfElse(W1.Body);
-    AssertNotNull('Condition is assigned', I.ConditionExpr);
+    AssertNotNull('Condition is assigned', I.ParamExpression);
     AssertNotNull('If-Branch is assigned', I.IfBranch);
     AssertEquals('If-Branch is TCShImplIfElse', TCShImplWhile.ClassName,
         I.IfBranch.ClassName);
@@ -903,7 +902,7 @@ begin
     AssertNotNull('Params are assigned', W1.ParamExpression);
     AssertEquals('Body is TCShImplIfElse', TCShImplIfElse.ClassName, W1.Body.ClassName);
     I := TCShImplIfElse(W1.Body);
-    AssertNotNull('Condition is assigned', I.ConditionExpr);
+    AssertNotNull('Condition is assigned', I.ParamExpression);
     AssertNotNull('If-Branch is assigned', I.IfBranch);
     AssertEquals('If-Branch is TCShImplIfElse', TCShImplWhile.ClassName,
         I.IfBranch.ClassName);
@@ -928,7 +927,7 @@ begin
     DeclareVar('bool', 'b');
     TestStatement(['if (a)', '  if (b)', '    {', '    }', 'else', '  {', '  }']);
     I := AssertStatement('If statement', TCShImplIfElse, 2) as TCShImplIfElse;
-    AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
+    AssertExpression('IF condition', I.ParamExpression, pekIdent, 'a');
     AssertNotNull('if branch', I.IfBranch);
     AssertNull('Else branch', i.ElseBranch);
     AssertEquals('if in if branch', TCShImplIfElse, I.ifBranch.ClassType);
@@ -947,7 +946,7 @@ begin
     TestStatement(['if (a)', '  if (b) ', '    {', '    }', '  else',
         '    {', '   }', 'else', '  {', '}']);
     I := AssertStatement('If statement', TCShImplIfElse, 1) as TCShImplIfElse;
-    AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
+    AssertExpression('IF condition', I.ParamExpression, pekIdent, 'a');
     AssertNotNull('if branch', I.IfBranch);
     AssertNotNull('Else branch', i.ElseBranch);
     AssertEquals('begin end block', TCShImplBeginBlock, I.ElseBranch.ClassType);
@@ -968,12 +967,12 @@ begin
     TestStatement(['if (a)', '  if (b)', '    DoA(); ',
         '   else;', ' else', '   DoB();']);
     I := AssertStatement('If statement', TCShImplIfElse, 1) as TCShImplIfElse;
-    AssertExpression('IF condition', I.ConditionExpr, pekIdent, 'a');
+    AssertExpression('IF condition', I.ParamExpression, pekIdent, 'a');
     AssertNotNull('if branch', I.IfBranch);
     AssertNotNull('Have else for outer if', I.ElseBranch);
     AssertEquals('Have if in if branch', TCShImplIfElse, I.ifBranch.ClassType);
     I2 := I.Ifbranch as TCShImplIfElse;
-    AssertExpression('IF condition', I2.ConditionExpr, pekIdent, 'b');
+    AssertExpression('IF condition', I2.ParamExpression, pekIdent, 'b');
     AssertNotNull('Have then for inner if', I2.ifBranch);
     AssertnotNull('Empty else for inner if', I2.ElseBranch);
     AssertEquals('Have a commend for inner if else', TCShImplCommand,
@@ -991,11 +990,11 @@ begin
     TestStatement(['if (a)', 'if (b)', '  {', '  }', 'else ;',
         'else', '  {', '  }']);
     OuterIf := AssertStatement('If statement', TCShImplIfElse, 2) as TCShImplIfElse;
-    AssertExpression('IF condition', OuterIf.ConditionExpr, pekIdent, 'a');
+    AssertExpression('IF condition', OuterIf.ParamExpression, pekIdent, 'a');
     AssertNotNull('if branch', OuterIf.IfBranch);
     AssertEquals('if else block', TCShImplIfElse, OuterIf.ifBranch.ClassType);
     InnerIf := OuterIf.IfBranch as TCShImplIfElse;
-    AssertExpression('IF condition', InnerIf.ConditionExpr, pekIdent, 'b');
+    AssertExpression('IF condition', InnerIf.ParamExpression, pekIdent, 'b');
     AssertNotNull('if branch', InnerIf.IfBranch);
     AssertEquals('begin end block', TCShImplBeginBlock, InnerIf.ifBranch.ClassType);
     AssertNotNull('Else branch', InnerIf.ElseBranch);
@@ -1322,23 +1321,8 @@ var
     W :TCShImplUsing;
 
 begin
-    DeclareVar('struct { int X,Y; }');
-    TestStatement(['using (a) ', '{', '}']);
-    W := AssertStatement('For statement', TCShImplUsing, 1) as TCShImplUsing;
-    AssertNotNull('Have with body', W.Body);
-    AssertEquals('begin end block', TCShImplBeginBlock, W.Body.ClassType);
-    AssertEquals('Empty block', 0, TCShImplBeginBlock(W.Body).ELements.Count);
-end;
-
-procedure TTestParserStatementUsing.TestWithMultiple;
-var
-    W :TCShImplUsing;
-
-begin
-    DeclareVar('record X,Y : Integer; end');
-    DeclareVar('record W,Z : Integer; end', 'b');
-    TestStatement(['With a,b do', 'begin', 'end']);
-    W := AssertStatement('Using statement', TCShImplUsing) as TCShImplUsing;
+    TestStatement(['using (var a=new AClass()) ', '{', '}']);
+    W := AssertStatement('For statement', TCShImplUsing) as TCShImplUsing;
     AssertNotNull('Have with body', W.Body);
     AssertEquals('begin end block', TCShImplBeginBlock, W.Body.ClassType);
     AssertEquals('Empty block', 0, TCShImplBeginBlock(W.Body).ELements.Count);
@@ -1346,7 +1330,7 @@ end;
 
 procedure TTestParserStatementSwitch.TestCaseEmpty;
 begin
-    DeclareVar('integer');
+    DeclareVar('int');
     AddStatements(['case a of', 'end;']);
     ExpectParserError('Empty case not allowed');
 end;
@@ -1521,7 +1505,7 @@ begin
     AssertEquals('0 statements in block', 0, B.Elements.Count);
     AssertNotNull('Have else branch', C.ElseBranch);
     AssertEquals('Correct else branch class', TCShImplSwitchElse, C.ElseBranch.ClassType);
-    AssertEquals('Zero statements ', 0, TCShImplSwitchElse(C.ElseBranch).Elements.Count);
+    AssertEquals('One statements ', 1, TCShImplSwitchElse(C.ElseBranch).Elements.Count);
 end;
 
 procedure TTestParserStatementSwitch.TestCaseOtherwiseBlockEmpty;
@@ -1754,9 +1738,8 @@ begin
     TestStatement('Raise A;');
     R := AssertStatement('Raise statement', TCShImplRaise) as TCShImplRaise;
     AssertEquals(0, R.Elements.Count);
-    AssertNotNull(R.ExceptObject);
-    AssertNull(R.ExceptAddr);
-    AssertExpression('Expression object', R.ExceptObject, pekIdent, 'A');
+    AssertNotNull(R.ParamExpression);
+    AssertExpression('Expression object', R.ParamExpression, pekIdent, 'A');
 end;
 
 procedure TTestParserStatementThrow.TestRaiseEmpty;
@@ -1767,8 +1750,7 @@ begin
     TestStatement('Raise;');
     R := AssertStatement('Raise statement', TCShImplRaise) as TCShImplRaise;
     AssertEquals(0, R.Elements.Count);
-    AssertNull(R.ExceptObject);
-    AssertNull(R.ExceptAddr);
+    AssertNull(R.ParamExpression);
 end;
 
 procedure TTestParserStatementThrow.TestRaiseAt;
@@ -1782,9 +1764,7 @@ begin
     TestStatement('Raise A at B;');
     R := AssertStatement('Raise statement', TCShImplRaise) as TCShImplRaise;
     AssertEquals(0, R.Elements.Count);
-    AssertNotNull(R.ExceptObject);
-    AssertNotNull(R.ExceptAddr);
-    AssertExpression('Expression object', R.ExceptAddr, pekIdent, 'B');
+    AssertNotNull(R.ParamExpression);
 end;
 
 procedure TTestParserStatementTry.TestTryFinally;
