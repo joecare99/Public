@@ -139,8 +139,19 @@ type
         procedure TestForeachIn;
     end;
 
+    { TTestParserStatementUsing }
+
     TTestParserStatementUsing = class(TTestStatementParserDirBase)
         procedure TestUsing;
+        procedure TestUsing2;
+    end;
+
+    { TTestParserStatementChecking }
+    TTestParserStatementChecking = class(TTestStatementParserDirBase)
+        procedure TestCheckedBlock;
+        procedure TestCheckedCall;
+        procedure TestUncheckedBlock;
+        procedure TestUncheckedCall;
     end;
 
     { TTestParserStatementReturn }
@@ -232,12 +243,15 @@ end;
 procedure TTestParserStatementReturn.TestReturnExpression;
 var
     W :TCShImplReturn;
+    P: TBinaryExpr;
 
 begin
     TestStatement(['return a + 2;']);
     W := AssertStatement('For statement', TCShImplReturn) as TCShImplReturn;
     AssertNotNull('Have with body', W.ParamExpression);
-    AssertExpression('begin end block',  W.ParamExpression,pekBinary,'1');
+    P:=AssertExpression('begin end block',  W.ParamExpression,eopAdd);
+    AssertExpression('Par1',P.left,pekIdent,'a');
+    AssertExpression('Par2',P.right,pekNumber,'2');
 end;
 
 { TTestStatementParserDirBase }
@@ -1387,6 +1401,61 @@ begin
     AssertEquals('Empty block', 0, TCShImplBeginBlock(W.Body).ELements.Count);
 end;
 
+procedure TTestParserStatementUsing.TestUsing2;
+var
+  W: TCShImplUsing;
+begin
+    TestStatement(['using (var a=new AClass()) ', 'DoIt();']);
+    W := AssertStatement('For statement', TCShImplUsing) as TCShImplUsing;
+    AssertNotNull('Have with body', W.Body);
+    AssertEquals('begin end block', TCShImplBeginBlock, W.Body.ClassType);
+    AssertEquals('Empty block', 0, TCShImplBeginBlock(W.Body).ELements.Count);
+end;
+
+procedure TTestParserStatementChecking.TestCheckedBlock;
+var
+  W: TCShImplChecked;
+begin
+    TestStatement(['checked', '{','}']);
+    W := AssertStatement('For statement', TCShImplChecked) as TCShImplChecked;
+    AssertNotNull('Have with body', W.Body);
+    AssertEquals('begin end block', TCShImplBeginBlock, W.Body.ClassType);
+    AssertEquals('Empty block', 0, TCShImplBeginBlock(W.Body).ELements.Count);
+end;
+
+procedure TTestParserStatementChecking.TestCheckedCall;
+var
+  W: TCShImplChecked;
+begin
+    TestStatement(['checked', 'DoIt();']);
+    W := AssertStatement('For statement', TCShImplChecked) as TCShImplChecked;
+    AssertNotNull('Have with body', W.Body);
+    AssertEquals('begin end block', TCShImplSimple, W.Body.ClassType);
+    AssertExpression('Empty block', TCShImplSimple(W.Body).Expr,'DoIt');
+end;
+
+procedure TTestParserStatementChecking.TestUncheckedBlock;
+var
+  W: TCShImplUnchecked;
+begin
+    TestStatement(['unchecked', '{','}']);
+    W := AssertStatement('For statement', TCShImplUnchecked) as TCShImplUnchecked;
+    AssertNotNull('Have with body', W.Body);
+    AssertEquals('begin end block', TCShImplBeginBlock, W.Body.ClassType);
+    AssertEquals('Empty block', 0, TCShImplBeginBlock(W.Body).ELements.Count);
+end;
+
+procedure TTestParserStatementChecking.TestUncheckedCall;
+var
+  W: TCShImplUnchecked;
+begin
+    TestStatement(['unchecked', 'DoIt();']);
+    W := AssertStatement('For statement', TCShImplUnchecked) as TCShImplUnchecked;
+    AssertNotNull('Have with body', W.Body);
+    AssertEquals('begin end block', TCShImplSimple, W.Body.ClassType);
+    AssertExpression('Empty block', TCShImplSimple(W.Body).Expr,'DoIt');
+end;
+
 procedure TTestParserStatementSwitch.TestCaseEmpty;
 var
   S: TCShImplSwitch;
@@ -1561,7 +1630,7 @@ begin
     C := AssertStatement('Case statement', TCShImplSwitch,1) as TCShImplSwitch;
     AssertNotNull('Have case expression', C.CaseExpr);
     AssertExpression('Case expression', C.CaseExpr, pekIdent, 'a');
-    AssertEquals('One case label', 1, C.Elements.Count);
+    AssertEquals('Two case label', 2, C.Elements.Count);
     AssertEquals('Correct case for case label 1', TCShImplCaseStatement,
         TCShElement(C.Elements[0]).ClassType);
     S := TCShImplCaseStatement(C.Elements[0]);
@@ -1573,6 +1642,8 @@ begin
         TCShElement(S.Elements[0]).ClassType);
     B := TCShImplbeginBlock(S.Elements[0]);
     AssertEquals('1 statements in block', 1, B.Elements.Count);
+    AssertEquals('Correct case for default', TCShImplSwitchElse,
+        TCShElement(C.Elements[1]).ClassType);
     AssertNotNull('Have else branch', C.ElseBranch);
     AssertEquals('Correct else branch class', TCShImplSwitchElse,
         C.ElseBranch.ClassType);
@@ -1614,14 +1685,16 @@ begin
     AssertExpression('Case With identifier 1', TCShExpr(S.Expressions[0]),
         pekNumber, '1');
     AssertEquals('1 case label statement', 1, S.Elements.Count);
-    AssertEquals('Correct case for case label 1', TCShImplbeginBlock,
+    AssertEquals('Correct case for case label 1', TCShImplReturn,
         TCShElement(S.Elements[0]).ClassType);
     B := TCShImplbeginBlock(S.Elements[0]);
     AssertEquals('0 statements in block', 0, B.Elements.Count);
+    AssertEquals('Correct case for default', TCShImplSwitchElse,
+        TCShElement(C.Elements[1]).ClassType);
     AssertNotNull('Have else branch', C.ElseBranch);
     AssertEquals('Correct else branch class', TCShImplSwitchElse,
         C.ElseBranch.ClassType);
-    AssertEquals('1 statement in else branch ', 1, TCShImplSwitchElse(
+    AssertEquals('1 statement in else branch ', 2, TCShImplSwitchElse(
         C.ElseBranch).Elements.Count);
 end;
 
@@ -1638,11 +1711,11 @@ begin
     C := AssertStatement('Case statement', TCShImplSwitch,1) as TCShImplSwitch;
     AssertNotNull('Have case expression', C.CaseExpr);
     AssertExpression('Case expression', C.CaseExpr, pekIdent, 'a');
-    AssertEquals('Two case labels', 1, C.Elements.Count);
+    AssertEquals('Two case labels', 2, C.Elements.Count);
     AssertEquals('Correct case for case label 1', TCShImplCaseStatement,
         TCShElement(C.Elements[0]).ClassType);
     S := TCShImplCaseStatement(C.Elements[0]);
-    AssertEquals('2 expressions for case 1', 1, S.Expressions.Count);
+    AssertEquals('1 expressions for case 1', 1, S.Expressions.Count);
     AssertExpression('Case With identifier 1', TCShExpr(S.Expressions[0]),
         pekNumber, '1');
     AssertEquals('2 case label statement', 2, S.Elements.Count);
@@ -1650,10 +1723,12 @@ begin
         TCShElement(S.Elements[0]).ClassType);
     B := TCShImplbeginBlock(S.Elements[0]);
     AssertEquals('0 statements in block', 0, B.Elements.Count);
+    AssertEquals('Correct case for default', TCShImplSwitchElse,
+        TCShElement(C.Elements[1]).ClassType);
     AssertNotNull('Have else branch', C.ElseBranch);
     AssertEquals('Correct else branch class', TCShImplSwitchElse,
         C.ElseBranch.ClassType);
-    AssertEquals('2 statements in else branch ', 2, TCShImplSwitchElse(
+    AssertEquals('2 statements in else branch ', 3, TCShImplSwitchElse(
         C.ElseBranch).Elements.Count);
 end;
 
@@ -1669,7 +1744,7 @@ begin
     C := AssertStatement('Case statement', TCShImplSwitch,2) as TCShImplSwitch;
     AssertNotNull('Have case expression', C.CaseExpr);
     AssertExpression('Case expression', C.CaseExpr, pekIdent, 'a');
-    AssertEquals('One case label', 1, C.Elements.Count);
+    AssertEquals('One case label', 2, C.Elements.Count);
     AssertNotNull('Have else branch', C.ElseBranch);
     AssertEquals('Correct else branch class', TCShImplSwitchElse,
         C.ElseBranch.ClassType);
@@ -1946,7 +2021,7 @@ procedure TTestParserStatementTry.TestTryExcept;
 var
     T :TCShImplTry;
     S :TCShImplSimple;
-    E :TCShImplTryExcept;
+    E :TCShImplTryCatch;
 
 begin
     TestStatement(['try', '  DoSomething();', 'except', '  DoSomethingElse();', 'end']);
@@ -1961,8 +2036,8 @@ begin
     AssertExpression('DoSomething call', S.Expr, pekIdent, 'DoSomething');
     AssertEquals('Simple statement', TCShImplSimple,
         TCShElement(T.Elements[0]).ClassType);
-    AssertEquals('Except statement', TCShImplTryExcept, T.FinallyExcept.ClassType);
-    E := TCShImplTryExcept(T.FinallyExcept);
+    AssertEquals('Except statement', TCShImplTryCatch, T.FinallyExcept.ClassType);
+    E := TCShImplTryCatch(T.FinallyExcept);
     AssertEquals(1, E.Elements.Count);
     AssertEquals('Simple statement', TCShImplSimple,
         TCShElement(E.Elements[0]).ClassType);
@@ -1974,7 +2049,7 @@ procedure TTestParserStatementTry.TestTryExceptNested;
 var
     T :TCShImplTry;
     S :TCShImplSimple;
-    E :TCShImplTryExcept;
+    E :TCShImplTryCatch;
 
 begin
     TestStatement(['try', '  DoSomething1();', '  try', '    DoSomething2();',
@@ -1991,8 +2066,8 @@ begin
     AssertExpression('DoSomething call', S.Expr, pekIdent, 'DoSomething1');
     AssertEquals('Simple statement', TCShImplSimple,
         TCShElement(T.Elements[0]).ClassType);
-    AssertEquals('Except statement', TCShImplTryExcept, T.FinallyExcept.ClassType);
-    E := TCShImplTryExcept(T.FinallyExcept);
+    AssertEquals('Except statement', TCShImplTryCatch, T.FinallyExcept.ClassType);
+    E := TCShImplTryCatch(T.FinallyExcept);
     AssertEquals(1, E.Elements.Count);
     AssertEquals('Simple statement', TCShImplSimple,
         TCShElement(E.Elements[0]).ClassType);
@@ -2011,8 +2086,8 @@ begin
     AssertExpression('DoSomething2 call ', S.Expr, pekIdent, 'DoSomething2');
     AssertEquals('Simple statement2', TCShImplSimple,
         TCShElement(T.Elements[0]).ClassType);
-    AssertEquals('Except statement2', TCShImplTryExcept, T.FinallyExcept.ClassType);
-    E := TCShImplTryExcept(T.FinallyExcept);
+    AssertEquals('Except statement2', TCShImplTryCatch, T.FinallyExcept.ClassType);
+    E := TCShImplTryCatch(T.FinallyExcept);
     AssertEquals(1, E.Elements.Count);
     AssertEquals('Simple statement2', TCShImplSimple,
         TCShElement(E.Elements[0]).ClassType);
@@ -2024,7 +2099,7 @@ procedure TTestParserStatementTry.TestTryExceptEmpty;
 
 var
     T :TCShImplTry;
-    E :TCShImplTryExcept;
+    E :TCShImplTryCatch;
 
 begin
     TestStatement(['try', 'catch', 'end;']);
@@ -2032,8 +2107,8 @@ begin
     AssertEquals(0, T.Elements.Count);
     AssertNotNull(T.FinallyExcept);
     AssertNull(T.ElseBranch);
-    AssertEquals('Except statement', TCShImplTryExcept, T.FinallyExcept.ClassType);
-    E := TCShImplTryExcept(T.FinallyExcept);
+    AssertEquals('Except statement', TCShImplTryCatch, T.FinallyExcept.ClassType);
+    E := TCShImplTryCatch(T.FinallyExcept);
     AssertEquals(0, E.Elements.Count);
 end;
 
@@ -2042,8 +2117,8 @@ procedure TTestParserStatementTry.TestTryExceptOn;
 var
     T :TCShImplTry;
     S :TCShImplSimple;
-    E :TCShImplTryExcept;
-    O :TCShImplExceptOn;
+    E :TCShImplTryCatch;
+    O :TCShImplCatchOn;
 
 begin
     TestStatement(['try', '  DoSomething();', 'catch (exception E)',
@@ -2059,12 +2134,12 @@ begin
     AssertExpression('DoSomething call', S.Expr, pekIdent, 'DoSomething');
     AssertEquals('Simple statement', TCShImplSimple,
         TCShElement(T.Elements[0]).ClassType);
-    AssertEquals('Except statement', TCShImplTryExcept, T.FinallyExcept.ClassType);
-    E := TCShImplTryExcept(T.FinallyExcept);
+    AssertEquals('Except statement', TCShImplTryCatch, T.FinallyExcept.ClassType);
+    E := TCShImplTryCatch(T.FinallyExcept);
     AssertEquals(1, E.Elements.Count);
-    AssertEquals('Except on handler', TCShImplExceptOn, TCShElement(
+    AssertEquals('Except on handler', TCShImplCatchOn, TCShElement(
         E.Elements[0]).ClassType);
-    O := TCShImplExceptOn(E.Elements[0]);
+    O := TCShImplCatchOn(E.Elements[0]);
     AssertEquals(1, O.Elements.Count);
     AssertEquals('Simple statement', TCShImplSimple,
         TCShElement(O.Elements[0]).ClassType);
@@ -2081,8 +2156,8 @@ procedure TTestParserStatementTry.TestTryExceptOn2;
 var
     T :TCShImplTry;
     S :TCShImplSimple;
-    E :TCShImplTryExcept;
-    O :TCShImplExceptOn;
+    E :TCShImplTryCatch;
+    O :TCShImplCatchOn;
 
 begin
     TestStatement(['try', '  DoSomething;', 'catch', 'On E : Exception do',
@@ -2098,13 +2173,13 @@ begin
     AssertExpression('DoSomething call', S.Expr, pekIdent, 'DoSomething');
     AssertEquals('Simple statement', TCShImplSimple,
         TCShElement(T.Elements[0]).ClassType);
-    AssertEquals('Except statement', TCShImplTryExcept, T.FinallyExcept.ClassType);
-    E := TCShImplTryExcept(T.FinallyExcept);
+    AssertEquals('Except statement', TCShImplTryCatch, T.FinallyExcept.ClassType);
+    E := TCShImplTryCatch(T.FinallyExcept);
     AssertEquals(2, E.Elements.Count);
     // Exception handler 1
-    AssertEquals('Except on handler', TCShImplExceptOn, TCShElement(
+    AssertEquals('Except on handler', TCShImplCatchOn, TCShElement(
         E.Elements[0]).ClassType);
-    O := TCShImplExceptOn(E.Elements[0]);
+    O := TCShImplCatchOn(E.Elements[0]);
     AssertEquals(1, O.Elements.Count);
     AssertEquals('Simple statement', TCShImplSimple,
         TCShElement(O.Elements[0]).ClassType);
@@ -2113,9 +2188,9 @@ begin
     S := TCShImplSimple(O.Elements[0]);
     AssertExpression('DoSomethingElse call', S.Expr, pekIdent, 'DoSomethingElse');
     // Exception handler 2
-    AssertEquals('Except on handler', TCShImplExceptOn, TCShElement(
+    AssertEquals('Except on handler', TCShImplCatchOn, TCShElement(
         E.Elements[1]).ClassType);
-    O := TCShImplExceptOn(E.Elements[1]);
+    O := TCShImplCatchOn(E.Elements[1]);
     AssertEquals(1, O.Elements.Count);
     AssertEquals('Simple statement', TCShImplSimple,
         TCShElement(O.Elements[0]).ClassType);
@@ -2129,8 +2204,8 @@ procedure TTestParserStatementTry.TestTryExceptOnElse;
 var
     T  :TCShImplTry;
     S  :TCShImplSimple;
-    E  :TCShImplTryExcept;
-    O  :TCShImplExceptOn;
+    E  :TCShImplTryCatch;
+    O  :TCShImplCatchOn;
     EE :TCShImplTryExceptElse;
     I  :TCShImplIfElse;
 
@@ -2151,12 +2226,12 @@ begin
     AssertExpression('DoSomething call', S.Expr, pekIdent, 'DoSomething');
     AssertEquals('Simple statement', TCShImplSimple,
         TCShElement(T.Elements[0]).ClassType);
-    AssertEquals('Except statement', TCShImplTryExcept, T.FinallyExcept.ClassType);
-    E := TCShImplTryExcept(T.FinallyExcept);
+    AssertEquals('Except statement', TCShImplTryCatch, T.FinallyExcept.ClassType);
+    E := TCShImplTryCatch(T.FinallyExcept);
     AssertEquals(1, E.Elements.Count);
-    AssertEquals('Except on handler', TCShImplExceptOn, TCShElement(
+    AssertEquals('Except on handler', TCShImplCatchOn, TCShElement(
         E.Elements[0]).ClassType);
-    O := TCShImplExceptOn(E.Elements[0]);
+    O := TCShImplCatchOn(E.Elements[0]);
     AssertEquals('Exception Variable name', 'E', O.VariableName);
     AssertEquals('Exception Type name', 'Exception', O.TypeName);
     AssertEquals(1, O.Elements.Count);
@@ -2183,8 +2258,8 @@ procedure TTestParserStatementTry.TestTryExceptOnIfElse;
 var
     T  :TCShImplTry;
     S  :TCShImplSimple;
-    E  :TCShImplTryExcept;
-    O  :TCShImplExceptOn;
+    E  :TCShImplTryCatch;
+    O  :TCShImplCatchOn;
     EE :TCShImplTryExceptElse;
 
 begin
@@ -2201,12 +2276,12 @@ begin
     AssertExpression('DoSomething call', S.Expr, pekIdent, 'DoSomething');
     AssertEquals('Simple statement', TCShImplSimple,
         TCShElement(T.Elements[0]).ClassType);
-    AssertEquals('Except statement', TCShImplTryExcept, T.FinallyExcept.ClassType);
-    E := TCShImplTryExcept(T.FinallyExcept);
+    AssertEquals('Except statement', TCShImplTryCatch, T.FinallyExcept.ClassType);
+    E := TCShImplTryCatch(T.FinallyExcept);
     AssertEquals(1, E.Elements.Count);
-    AssertEquals('Except on handler', TCShImplExceptOn, TCShElement(
+    AssertEquals('Except on handler', TCShImplCatchOn, TCShElement(
         E.Elements[0]).ClassType);
-    O := TCShImplExceptOn(E.Elements[0]);
+    O := TCShImplCatchOn(E.Elements[0]);
     AssertEquals('Exception Variable name', 'E', O.VariableName);
     AssertEquals('Exception Type name', 'Exception', O.TypeName);
     AssertEquals(1, O.Elements.Count);
@@ -2228,8 +2303,8 @@ procedure TTestParserStatementTry.TestTryExceptOnElseNoSemicolo;
 var
     T  :TCShImplTry;
     S  :TCShImplSimple;
-    E  :TCShImplTryExcept;
-    O  :TCShImplExceptOn;
+    E  :TCShImplTryCatch;
+    O  :TCShImplCatchOn;
     EE :TCShImplTryExceptElse;
 begin
     TestStatement(['Try', '  DoSomething;', 'except', 'On E : Exception do',
@@ -2245,12 +2320,12 @@ begin
     AssertExpression('DoSomething call', S.Expr, pekIdent, 'DoSomething');
     AssertEquals('Simple statement', TCShImplSimple,
         TCShElement(T.Elements[0]).ClassType);
-    AssertEquals('Except statement', TCShImplTryExcept, T.FinallyExcept.ClassType);
-    E := TCShImplTryExcept(T.FinallyExcept);
+    AssertEquals('Except statement', TCShImplTryCatch, T.FinallyExcept.ClassType);
+    E := TCShImplTryCatch(T.FinallyExcept);
     AssertEquals(1, E.Elements.Count);
-    AssertEquals('Except on handler', TCShImplExceptOn, TCShElement(
+    AssertEquals('Except on handler', TCShImplCatchOn, TCShElement(
         E.Elements[0]).ClassType);
-    O := TCShImplExceptOn(E.Elements[0]);
+    O := TCShImplCatchOn(E.Elements[0]);
     AssertEquals('Exception Variable name', 'E', O.VariableName);
     AssertEquals('Exception Type name', 'Exception', O.TypeName);
     AssertEquals(1, O.Elements.Count);
@@ -2272,7 +2347,7 @@ procedure TTestParserStatementTry.TestTryExceptRaise;
 var
     T :TCShImplTry;
     S :TCShImplSimple;
-    E :TCShImplTryExcept;
+    E :TCShImplTryCatch;
 
 begin
     TestStatement(['Try', '  DoSomething;', 'except', '  raise', 'end']);
@@ -2287,8 +2362,8 @@ begin
     AssertExpression('DoSomething call', S.Expr, pekIdent, 'DoSomething');
     AssertEquals('Simple statement', TCShImplSimple,
         TCShElement(T.Elements[0]).ClassType);
-    AssertEquals('Except statement', TCShImplTryExcept, T.FinallyExcept.ClassType);
-    E := TCShImplTryExcept(T.FinallyExcept);
+    AssertEquals('Except statement', TCShImplTryCatch, T.FinallyExcept.ClassType);
+    E := TCShImplTryCatch(T.FinallyExcept);
     AssertEquals(1, E.Elements.Count);
     AssertEquals('Raise statement', TCShImplRaise, TCShElement(E.Elements[0]).ClassType);
 end;
@@ -2356,7 +2431,7 @@ initialization
         [TTestParserStatementEmpty, TTestParserStatementBlock,
         TTestParserStatementAssignment, TTestParserStatementCall,
         TTestParserStatementIf, TTestParserStatementLoops, TTestParserStatementUsing,
-        TTestParserStatementReturn,
+        TTestParserStatementChecking, TTestParserStatementReturn,
         TTestParserStatementSwitch, TTestParserStatementThrow,
         TTestParserStatementTry, TTestParserStatementSpecial]);
 
