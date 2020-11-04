@@ -1282,7 +1282,7 @@ type
   TCShImplSwitch = class;
   TCShImplForLoop = class;
   TCShImplTry = class;
-  TCShImplExceptOn = class;
+  TCShImplCatchOn = class;
   TCShImplRaise = class;
   TCShImplAssign = class;
   TCShImplSimple = class;
@@ -1307,10 +1307,10 @@ type
     function AddForLoop(const aInitSttmt:TCShImplBlock;
       const aIterExpr: TCShExpr;const aLoopStmt:TCShImplBlock): TCShImplForLoop;
     function AddTry: TCShImplTry;
-    function AddExceptOn(const VarName, TypeName: string): TCShImplExceptOn;
-    function AddExceptOn(const VarName: string; VarType: TCShType): TCShImplExceptOn;
-    function AddExceptOn(const VarEl: TCShVariable): TCShImplExceptOn;
-    function AddExceptOn(const TypeEl: TCShType): TCShImplExceptOn;
+    function AddExceptOn(const VarName, TypeName: string): TCShImplCatchOn;
+    function AddExceptOn(const VarName: string; VarType: TCShType): TCShImplCatchOn;
+    function AddExceptOn(const VarEl: TCShVariable): TCShImplCatchOn;
+    function AddExceptOn(const TypeEl: TCShType): TCShImplCatchOn;
     function AddRaise: TCShImplRaise;
     function AddLabelMark(const Id: string): TCShImplLabelMark;
     function AddAssign(left, right: TCShExpr): TCShImplAssign;
@@ -1341,6 +1341,17 @@ type
     function ParamsEx: string;
   end;
 
+  { TCShImplMainStmt }
+  TCShImplMainStmt = class(TCShImplStatement)
+  public
+    constructor Create(const AName: string; AParent: TCShElement); override;
+    destructor Destroy; override;
+    procedure AddElement(Element: TCShImplElement); override;
+    procedure ForEachCall(const aMethodCall: TOnForEachCShElement;
+      const Arg: Pointer); override;
+  public
+    Body: TCShImplElement;
+  end;
 
   { TCShImplBeginBlock }
   TCShImplBeginBlock = class(TCShImplBlock)
@@ -1472,9 +1483,19 @@ type
       const Arg: Pointer); override;
   end;
 
+  { TCShImplChecked }
+// checked Body
+  TCShImplChecked = class(TCShImplMainStmt)
+  end;
+
+  { TCShImplChecked }
+// unchecked Body
+  TCShImplUnchecked = class(TCShImplMainStmt)
+  end;
+
   TCShImplTryHandler = class;
   TCShImplTryFinally = class;
-  TCShImplTryExcept = class;
+  TCShImplTryCatch = class;
   TCShImplTryExceptElse = class;
 
   { TCShImplTry }
@@ -1483,7 +1504,7 @@ type
   public
     destructor Destroy; override;
     function AddFinally: TCShImplTryFinally;
-    function AddExcept: TCShImplTryExcept;
+    function AddExcept: TCShImplTryCatch;
     function AddExceptElse: TCShImplTryExceptElse;
     procedure ForEachCall(const aMethodCall: TOnForEachCShElement;
       const Arg: Pointer); override;
@@ -1500,9 +1521,9 @@ type
   TCShImplTryFinally = class(TCShImplTryHandler)
   end;
 
-  { TCShImplTryExcept }
+  { TCShImplTryCatch }
 
-  TCShImplTryExcept = class(TCShImplTryHandler)
+  TCShImplTryCatch = class(TCShImplTryHandler)
   end;
 
   { TCShImplTryExceptElse }
@@ -1510,9 +1531,9 @@ type
   TCShImplTryExceptElse = class(TCShImplTryHandler)
   end;
 
-  { TCShImplExceptOn - Parent is TCShImplTryExcept }
+  { TCShImplCatchOn - Parent is TCShImplTryExcept }
 
-  TCShImplExceptOn = class(TCShImplStatement)
+  TCShImplCatchOn = class(TCShImplStatement)
   public
     destructor Destroy; override;
     procedure AddElement(Element: TCShImplElement); override;
@@ -1779,6 +1800,40 @@ begin
     Result:=Result+S[i];
     CurrPos:=CurrPos+CurrLen;
     end;
+end;
+
+{ TCShImplMainStmt }
+
+constructor TCShImplMainStmt.Create(const AName: string; AParent: TCShElement);
+begin
+  inherited Create(AName, AParent);
+  Body := nil;
+end;
+
+destructor TCShImplMainStmt.Destroy;
+begin
+  ReleaseAndNil(TCShElement(Body){$IFDEF CheckCShTreeRefCount},'TCShImplMainStmt.Body'{$ENDIF});
+  inherited Destroy;
+end;
+
+procedure TCShImplMainStmt.AddElement(Element: TCShImplElement);
+begin
+  inherited AddElement(Element);
+  if Body=nil then
+    begin
+      Body:=Element;
+      Body.AddRef{$IFDEF CheckCShTreeRefCount}('TCShImplUsing.Body'){$ENDIF};
+    end
+  else
+    raise ECShTree.Create('TCShImplWithDo.AddElement body already set');
+end;
+
+procedure TCShImplMainStmt.ForEachCall(const aMethodCall: TOnForEachCShElement;
+  const Arg: Pointer);
+begin
+   if Elements.IndexOf(Body)<0 then
+    ForEachChildCall(aMethodCall,Arg,Body,false);
+  inherited ForEachCall(aMethodCall, Arg);
 end;
 
 { TCShImplParamStmt }
@@ -3728,13 +3783,13 @@ begin
 end;
 
 function TCShImplBlock.AddExceptOn(const VarName, TypeName: string
-  ): TCShImplExceptOn;
+  ): TCShImplCatchOn;
 begin
   Result:=AddExceptOn(VarName,TCShUnresolvedTypeRef.Create(TypeName,nil));
 end;
 
 function TCShImplBlock.AddExceptOn(const VarName: string; VarType: TCShType
-  ): TCShImplExceptOn;
+  ): TCShImplCatchOn;
 var
   V: TCShVariable;
 begin
@@ -3743,18 +3798,18 @@ begin
   Result:=AddExceptOn(V);
 end;
 
-function TCShImplBlock.AddExceptOn(const VarEl: TCShVariable): TCShImplExceptOn;
+function TCShImplBlock.AddExceptOn(const VarEl: TCShVariable): TCShImplCatchOn;
 begin
-  Result:=TCShImplExceptOn.Create('',Self);
+  Result:=TCShImplCatchOn.Create('',Self);
   Result.VarEl:=VarEl;
   Result.TypeEl:=VarEl.VarType;
-  Result.TypeEl.AddRef{$IFDEF CheckCShTreeRefCount}('TCShImplExceptOn.TypeEl'){$ENDIF};
+  Result.TypeEl.AddRef{$IFDEF CheckCShTreeRefCount}('TCShImplCatchOn.TypeEl'){$ENDIF};
   AddElement(Result);
 end;
 
-function TCShImplBlock.AddExceptOn(const TypeEl: TCShType): TCShImplExceptOn;
+function TCShImplBlock.AddExceptOn(const TypeEl: TCShType): TCShImplCatchOn;
 begin
-  Result:=TCShImplExceptOn.Create('',Self);
+  Result:=TCShImplCatchOn.Create('',Self);
   Result.TypeEl:=TypeEl;
   AddElement(Result);
 end;
@@ -4854,9 +4909,16 @@ end;
 
 procedure TCShImplSwitch.AddElement(Element: TCShImplElement);
 begin
-  if (ElseBranch<>Nil) and (Element=ElseBranch) then
-    ElseBranch.AddRef{$IFDEF CheckCShTreeRefCount}('TCShImplCaseOf.ElseBranch'){$ENDIF};
   inherited AddElement(Element);
+  if (ElseBranch<>Nil) and (Element=ElseBranch) then
+    ElseBranch.AddRef{$IFDEF CheckCShTreeRefCount}('TCShImplCaseOf.ElseBranch'){$ENDIF}
+  else if (ElseBranch=Nil) and (Element is TCShImplSwitchElse ) then
+    begin
+      ElseBranch := TCShImplSwitchElse(Element);
+      Element.AddRef{$IFDEF CheckCShTreeRefCount}('TCShImplCaseOf.ElseBranch'){$ENDIF};
+    end
+  else if (ElseBranch<>Nil) and (Element is TCShImplSwitchElse ) then
+    raise ECShTree.Create('TCShImplSwitch.AddElement default already set - please report this bug');
 end;
 
 function TCShImplSwitch.AddCase(const Expression: TCShExpr
@@ -4986,9 +5048,9 @@ begin
   FinallyExcept:=Result;
 end;
 
-function TCShImplTry.AddExcept: TCShImplTryExcept;
+function TCShImplTry.AddExcept: TCShImplTryCatch;
 begin
-  Result:=TCShImplTryExcept.Create('',Self);
+  Result:=TCShImplTryCatch.Create('',Self);
   FinallyExcept:=Result;
 end;
 
@@ -5006,9 +5068,9 @@ begin
   ForEachChildCall(aMethodCall,Arg,ElseBranch,false);
 end;
 
-{ TCShImplExceptOn }
+{ TCShImplCatchOn }
 
-destructor TCShImplExceptOn.Destroy;
+destructor TCShImplCatchOn.Destroy;
 begin
   ReleaseAndNil(TCShElement(VarEl){$IFDEF CheckCShTreeRefCount},'TCShImplExceptOn.VarEl'{$ENDIF});
   ReleaseAndNil(TCShElement(TypeEl){$IFDEF CheckCShTreeRefCount},'TCShImplExceptOn.TypeEl'{$ENDIF});
@@ -5016,7 +5078,7 @@ begin
   inherited Destroy;
 end;
 
-procedure TCShImplExceptOn.AddElement(Element: TCShImplElement);
+procedure TCShImplCatchOn.AddElement(Element: TCShImplElement);
 begin
   inherited AddElement(Element);
   if Body=nil then
@@ -5026,7 +5088,7 @@ begin
     end;
 end;
 
-procedure TCShImplExceptOn.ForEachCall(const aMethodCall: TOnForEachCShElement;
+procedure TCShImplCatchOn.ForEachCall(const aMethodCall: TOnForEachCShElement;
   const Arg: Pointer);
 begin
   ForEachChildCall(aMethodCall,Arg,VarEl,false);
@@ -5036,13 +5098,13 @@ begin
   inherited ForEachCall(aMethodCall, Arg);
 end;
 
-procedure TCShImplExceptOn.ClearTypeReferences(aType: TCShElement);
+procedure TCShImplCatchOn.ClearTypeReferences(aType: TCShElement);
 begin
   if TypeEl=aType then
     ReleaseAndNil(TCShElement(TypeEl){$IFDEF CheckCShTreeRefCount},'TCShImplExceptOn.TypeEl'{$ENDIF});
 end;
 
-function TCShImplExceptOn.VariableName: String;
+function TCShImplCatchOn.VariableName: String;
 begin
   If assigned(VarEl) then
     Result:=VarEl.Name
@@ -5050,7 +5112,7 @@ begin
     Result:='';
 end;
 
-function TCShImplExceptOn.TypeName: string;
+function TCShImplCatchOn.TypeName: string;
 begin
   If assigned(TypeEl) then
     Result:=TypeEl.GetDeclaration(True)

@@ -4352,8 +4352,8 @@ begin
               tkDefault:
                 begin
                   // create case-else block
-                  Parent.ElseBranch:=TCShImplSwitchElse(CreateElement(TCShImplSwitchElse, '',
-                    Parent, CurTokenPos));
+                  parent.AddElement(TCshImplElement(CreateElement(TCShImplSwitchElse, '',
+                    Parent, CurTokenPos)));
                   ExpectToken(tkColon);
                   ParseSwitchCasesStatements(Parent.ElseBranch);
                   UngetToken;
@@ -5372,7 +5372,7 @@ var
   var C: TCShImplBlockClass;
   begin
     C:=TCShImplBlockClass(CurBlock.ClassType);
-    if C=TCShImplExceptOn then
+    if C=TCShImplCatchOn then
       Engine.FinishScope(stExceptOnStatement,CurBlock);
     CurBlock:=CurBlock.Parent as TCShImplBlock;
     Result:=(CurBlock=Parent) and (PeekNextToken<>tkElse);
@@ -5542,7 +5542,7 @@ begin
               end
             else ExpectToken(tkSemicolon);
             end
-          else if (CurBlock is TCShImplTryExcept) and (CurToken=tkelse) then
+          else if (CurBlock is TCShImplTryCatch) and (CurToken=tkelse) then
             begin
             // close TryExcept handler and open an TryExceptElse handler
             CloseBlock;
@@ -5556,7 +5556,7 @@ begin
               or (CurBlock is TCShImplForLoop)
               or (CurBlock is TCShImplUsing)
               or (CurBlock is TCShImplRaise)
-              or (CurBlock is TCShImplExceptOn) then
+              or (CurBlock is TCShImplCatchOn) then
             // simply close block
           else   }
             ParseExcSyntaxError;
@@ -5683,6 +5683,20 @@ begin
         CreateBlock(TCShImplTry(El));
         El:=nil;
         end;
+      tkChecked:
+        begin
+        CheckStatementCanStart;
+        El:=TCShImplChecked(CreateElement(TCShImplChecked,'',CurBlock,CurTokenPos));
+        CreateBlock(TCShImplChecked(El));
+        El:=nil;
+        end;
+      tkUnchecked:
+        begin
+        CheckStatementCanStart;
+        El:=TCShImplUnchecked(CreateElement(TCShImplUnchecked,'',CurBlock,CurTokenPos));
+        CreateBlock(TCShImplUnchecked(El));
+        El:=nil;
+        end;
       tkfinally:
         begin
           if CloseStatement(true) then
@@ -5709,9 +5723,9 @@ begin
           if CurBlock is TCShImplTry then
           begin
             //writeln(i,'EXCEPT');
-            El:=TCShImplTryExcept(CreateElement(TCShImplTryExcept,'',CurBlock,CurTokenPos));
-            TCShImplTry(CurBlock).FinallyExcept:=TCShImplTryExcept(El);
-            CurBlock:=TCShImplTryExcept(El);
+            El:=TCShImplTryCatch(CreateElement(TCShImplTryCatch,'',CurBlock,CurTokenPos));
+            TCShImplTry(CurBlock).FinallyExcept:=TCShImplTryCatch(El);
+            CurBlock:=TCShImplTryCatch(El);
             El:=nil;
           end else
             ParseExcSyntaxError;
@@ -5808,11 +5822,11 @@ begin
             // in try except:
             // on E: Exception do
             // on Exception do
-            if CurBlock is TCShImplTryExcept then
+            if CurBlock is TCShImplTryCatch then
             begin
               SrcPos:=CurTokenPos;
               ExpectIdentifier;
-              El:=TCShImplExceptOn(CreateElement(TCShImplExceptOn,'',CurBlock,SrcPos));
+              El:=TCShImplCatchOn(CreateElement(TCShImplCatchOn,'',CurBlock,SrcPos));
               SrcPos:=CurSourcePos;
               Name:=CurTokenString;
               NextToken;
@@ -5822,9 +5836,9 @@ begin
                 // the first expression was the variable name
                 NextToken;
                 TypeEl:=ParseSimpleType(El,SrcPos,'');
-                TCShImplExceptOn(El).TypeEl:=TypeEl;
+                TCShImplCatchOn(El).TypeEl:=TypeEl;
                 VarEl:=TCShVariable(CreateElement(TCShVariable,Name,El,SrcPos));
-                TCShImplExceptOn(El).VarEl:=VarEl;
+                TCShImplCatchOn(El).VarEl:=VarEl;
                 VarEl.VarType:=TypeEl;
                 TypeEl.AddRef{$IFDEF CheckCShTreeRefCount}('TCShVariable.VarType'){$ENDIF};
                 if TypeEl.Parent=El then
@@ -5833,10 +5847,10 @@ begin
               else
                 begin
                 UngetToken;
-                TCShImplExceptOn(El).TypeEl:=ParseSimpleType(El,SrcPos,'');
+                TCShImplCatchOn(El).TypeEl:=ParseSimpleType(El,SrcPos,'');
                 end;
               Engine.FinishScope(stExceptOnExpr,El);
-              CreateBlock(TCShImplExceptOn(El));
+              CreateBlock(TCShImplCatchOn(El));
               El:=nil;
               ExpectToken(tkDo);
             end else
