@@ -15,6 +15,9 @@ type
 
  TVirtFamily = Class(TObject,IGenFamily)
    private
+     FHusband: integer;
+     FMarriage: IGenEvent;
+     FWife: integer;
       Owner:THejHelper;
    public
    Ref:string;
@@ -106,6 +109,7 @@ public
   procedure IndiRel(Sender: TObject; aText, aRef: string; SubType: integer);
   procedure CreateNewHeader(Filename: string);
   procedure SaveToFile(Filename: string);
+  function IndexOf(iInd:IGenIndividual):integer;
 public
   Procedure Clear;
   procedure FireEvent(Sender: TObject; aSTa: TStringArray);
@@ -169,10 +173,10 @@ end;
 
 function TVirtFamily.GetChildren(Idx: Variant): IGenIndividual;
 begin
-(*  if VarIsNumeric(Idx) then
-    result := Owner.GetIndi( Children[Idx]);
+  if VarIsNumeric(Idx) then
+//    result := Owner.GetIndi( Children[Idx]);
   else
-    result := nil; *)
+    result := nil;
 end;
 
 function TVirtFamily.GetFamilyName: string;
@@ -187,32 +191,34 @@ end;
 
 function TVirtFamily.GetHusband: IGenIndividual;
 begin
-
+//  Result := Owner.GetIndi(FHusband) ;
 end;
 
 function TVirtFamily.GetMarriage: IGenEvent;
 begin
-
+  Result := FMarriage;
 end;
 
 function TVirtFamily.GetMarriageDate: string;
 begin
-
+  If assigned(FMarriage) then
+    result := FMarriage.Date;
 end;
 
 function TVirtFamily.GetMarriagePlace: string;
 begin
-
+  If assigned(FMarriage) then
+    result := FMarriage.Place;
 end;
 
 function TVirtFamily.GetWife: IGenIndividual;
 begin
-
+//  Result := Owner.GetIndi(FWife)
 end;
 
 function TVirtFamily.EnumChildren: IGenIndEnumerator;
 begin
-
+//  result :=
 end;
 
 procedure TVirtFamily.SetChildren(Idx: Variant; AValue: IGenIndividual);
@@ -232,12 +238,12 @@ end;
 
 procedure TVirtFamily.SetHusband(AValue: IGenIndividual);
 begin
-
+  FHusband := Owner.IndexOf(AValue);
 end;
 
 procedure TVirtFamily.SetMarriage(AValue: IGenEvent);
 begin
-
+  FMarriage := Avalue;
 end;
 
 procedure TVirtFamily.SetMarriageDate(AValue: string);
@@ -252,7 +258,7 @@ end;
 
 procedure TVirtFamily.SetWife(AValue: IGenIndividual);
 begin
-
+  FWife := Owner.IndexOf(AValue);
 end;
 
 function TVirtFamily.GetEventCount: integer;
@@ -773,6 +779,12 @@ begin
       finally
         FreeAndNil(lSt);
       end;
+end;
+
+function THejHelper.IndexOf(iInd: IGenIndividual): integer;
+begin
+  //if iInd is TClsIIndivid then
+  //   result:= (iInd as TClsHejIndividuals).
 end;
 
 procedure THejHelper.Clear;

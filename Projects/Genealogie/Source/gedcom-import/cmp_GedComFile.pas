@@ -1274,7 +1274,7 @@ end;
 class function TGedComFile.Extensions: TStringArray;
 {$ENDIF}
 begin
-    setlength(Result, 1);
+    setlength(Result{%H-}, 1);
     Result[0] := '.GED';
 end;
 

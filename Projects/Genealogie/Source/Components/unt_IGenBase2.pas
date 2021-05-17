@@ -302,6 +302,8 @@ type
        function EnumFamilies:IGenFamEnumerator;
     end;
 
+ TTMessageEvent = procedure(Sender: TObject; aType: TEventType;
+        aText: string; Ref: string; aMode: integer) of object;
 implementation
 
 end.
