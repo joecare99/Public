@@ -602,11 +602,11 @@ Const
     (Sal: UmlUEkl; komb: 'y'),
     (Sal: 's'; komb: 'z'),
     (Sal: 'e'; komb: UmlAEGr),
-    (Sal: 'o'; komb: UmlOEGr),
+    (Sal: 'e'; komb: UmlOEGr),
     (Sal: UmlUEkl; komb: UmlUEGr),
     (Sal: 's'; komb: UmlSSkl),
     (Sal: 'e'; komb: UmlAEkl),
-    (Sal: 'o'; komb: UmlOEkl),
+    (Sal: 'e'; komb: UmlOEkl),
     (Sal: UmlUEkl; komb: UmlUEkl));
 
 {$IFDEF SUPPORTS_INT64}
