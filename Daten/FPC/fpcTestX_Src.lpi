@@ -34,7 +34,7 @@
         <PackageName Value="FCL"/>
       </Item3>
     </RequiredPackages>
-    <Units Count="13">
+    <Units Count="14">
       <Unit0>
         <Filename Value="fpcTestX_Src.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -88,6 +88,10 @@
         <Filename Value="..\Source\CShSrcRc\Unt_TestCShStatements.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit12>
+      <Unit13>
+        <Filename Value="..\Source\CShSrcRc\tst_CShParseExpressions.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -98,7 +102,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir);..\Source\CShSrcRc"/>
-      <OtherUnitFiles Value="..\Source\PassRc;..\..\..\Lazarus\FpcTrunk\packages\fcl-passrc\src;..\Source\CShSrcRc;..\..\..\Lazarus\FpcTrunk\packages\fcl-passrc\tests;C:\lazarus\fpc\3.2.0\source\packages\fcl-fpcunit\src\"/>
+      <OtherUnitFiles Value="..\Source\PassRc;..\..\..\Lazarus\FpcTrunk\packages\fcl-passrc\src;..\Source\CShSrcRc;C:\lazarus\fpc\3.2.0\source\packages\fcl-fpcunit\src\"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Parsing>
