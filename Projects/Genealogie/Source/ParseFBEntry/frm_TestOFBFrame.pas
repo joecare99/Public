@@ -19,8 +19,12 @@ type
     actFileSave: TAction;
     actFileSaveAs: TFileSaveAs;
     alsXMLFile: TActionList;
+    btnFirst: TBitBtn;
+    btnLast: TBitBtn;
+    btnNext: TBitBtn;
     btnOpen: TBitBtn;
     btnLoad: TBitBtn;
+    btnPrev: TBitBtn;
     btnSave: TBitBtn;
     btnClose: TBitBtn;
     edtFilename: TComboBox;
@@ -32,10 +36,10 @@ type
     SaveDialog1: TSaveDialog;
     procedure actFileOpenAccept(Sender: TObject);
     procedure actFileOpenBeforeExecute(Sender: TObject);
-    procedure BitBtn1Click(Sender: TObject);
-    procedure BitBtn2Click(Sender: TObject);
-    procedure BitBtn3Click(Sender: TObject);
-    procedure BitBtn4Click(Sender: TObject);
+    procedure btnPrevClick(Sender: TObject);
+    procedure btnFirstClick(Sender: TObject);
+    procedure btnNextClick(Sender: TObject);
+    procedure btnLastClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
 
@@ -70,22 +74,22 @@ begin
 
 end;
 
-procedure TFrmTestOFBViewMain.BitBtn1Click(Sender: TObject);
+procedure TFrmTestOFBViewMain.btnPrevClick(Sender: TObject);
 begin
    fraOFBView.Previous(sender);
 end;
 
-procedure TFrmTestOFBViewMain.BitBtn2Click(Sender: TObject);
+procedure TFrmTestOFBViewMain.btnFirstClick(Sender: TObject);
 begin
    fraOFBView.First(sender);
 end;
 
-procedure TFrmTestOFBViewMain.BitBtn3Click(Sender: TObject);
+procedure TFrmTestOFBViewMain.btnNextClick(Sender: TObject);
 begin
    fraOFBView.next(sender);
 end;
 
-procedure TFrmTestOFBViewMain.BitBtn4Click(Sender: TObject);
+procedure TFrmTestOFBViewMain.btnLastClick(Sender: TObject);
 begin
    fraOFBView.Last(sender);
 end;

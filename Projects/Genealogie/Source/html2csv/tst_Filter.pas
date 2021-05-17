@@ -53,7 +53,7 @@ begin
   CheckEquals(1,Fresult.Count,'Result1');
   CheckEquals('1: TBaseFilter',Fresult[Fresult.Count-1],'Result1');
   CheckEquals(1,FFilter.TestLine,'testLine1');
-  CheckTrue(FFilter.TestFilter('S: Test',@ComputeFiltered),'Message Filter');
+  CheckFaLSE(FFilter.TestFilter('S: Test',@ComputeFiltered),'Message Filter');    //??
   CheckEquals(1,Fresult.Count,'Result1');
   CheckEquals('1: TBaseFilter',Fresult[Fresult.Count-1],'Result1');
   CheckEquals(1,FFilter.TestLine,'testLine1');

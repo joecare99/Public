@@ -56,8 +56,8 @@ type
   protected
     procedure SetUp; override;
     procedure TearDown; override;
-    procedure EndUpdate;virtual;
-    procedure ChildUpdate(aChild: TGedComObj);virtual;
+    procedure EndUpdate;override;
+    procedure ChildUpdate(aChild: TGedComObj);override;
   published
     procedure TestSetUp;
   public
@@ -88,11 +88,11 @@ procedure TTestGedComExt.TestTagToNatur;
 begin
   CheckEquals('born',TagToNatur(CEventBirth,0),'TagToNatur(CEventBirth,0)');
   CheckEquals('baptised',TagToNatur(CEventBaptism,0),'TagToNatur(CEventBaptism,0)');
-  CheckEquals('born',TagToNatur(CEventMarriage,0),'TagToNatur(CEventMarriage,0)');
-  CheckEquals('married',TagToNatur(CEventDeath,0),'TagToNatur(CEventDeath,0)');
+  CheckEquals('married',TagToNatur(CEventMarriage,0),'TagToNatur(CEventMarriage,0)');
+  CheckEquals('died',TagToNatur(CEventDeath,0),'TagToNatur(CEventDeath,0)');
   CheckEquals('burried',TagToNatur(CEventBurial,0),'TagToNatur(CEventBurial,0)');
   CheckEquals('confirmed',TagToNatur(CEventConfirm,0),'TagToNatur(CEventConfirm,0)');
-  CheckEquals('born',TagToNatur(CEventDivource,0),'TagToNatur(CEventDivource,0)');
+  CheckEquals('divorced',TagToNatur(CEventDivource,0),'TagToNatur(CEventDivource,0)');
 end;
 
 procedure TTestGedComExt.TestDatetime2GedDate;

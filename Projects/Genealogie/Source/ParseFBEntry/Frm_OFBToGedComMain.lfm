@@ -1,24 +1,83 @@
-object FrmTestOFBViewMain: TFrmTestOFBViewMain
-  Left = 137
-  Height = 605
+object FrmOFBToGedComMain: TFrmOFBToGedComMain
+  Left = 531
+  Height = 575
   Top = 250
-  Width = 634
-  Caption = 'Test OFBView'
-  ClientHeight = 605
-  ClientWidth = 634
+  Width = 703
+  Caption = 'OFB To GedCom'
+  ClientHeight = 575
+  ClientWidth = 703
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  object Panel1: TPanel
+    Left = 0
+    Height = 39
+    Top = 0
+    Width = 703
+    Align = alTop
+    Caption = 'pnlTop'
+    ClientHeight = 39
+    ClientWidth = 703
+    ParentFont = False
+    TabOrder = 0
+    object edtFilename: TComboBox
+      Left = 5
+      Height = 23
+      Top = 9
+      Width = 456
+      Align = alClient
+      BorderSpacing.Top = 4
+      BorderSpacing.Around = 4
+      ItemHeight = 15
+      ParentFont = False
+      TabOrder = 0
+      Text = 'edtFilename'
+    end
+    object btnOpen: TBitBtn
+      Left = 465
+      Height = 29
+      Top = 5
+      Width = 75
+      Action = actFileOpen
+      Align = alRight
+      BorderSpacing.Around = 4
+      ParentFont = False
+      TabOrder = 1
+    end
+    object btnLoad: TBitBtn
+      Left = 544
+      Height = 29
+      Top = 5
+      Width = 75
+      Action = actFileLoad
+      Align = alRight
+      BorderSpacing.Around = 4
+      ParentFont = False
+      TabOrder = 2
+    end
+    object btnSave: TBitBtn
+      Left = 623
+      Height = 29
+      Top = 5
+      Width = 75
+      Action = actFileSave
+      Align = alRight
+      BorderSpacing.Around = 4
+      ParentFont = False
+      TabOrder = 3
+    end
+  end
   object pnlBottom: TPanel
     Left = 0
     Height = 50
-    Top = 555
-    Width = 634
+    Top = 502
+    Width = 703
     Align = alBottom
     ClientHeight = 50
-    ClientWidth = 634
+    ClientWidth = 703
     ParentFont = False
-    TabOrder = 0
+    TabOrder = 1
     object btnClose: TBitBtn
-      Left = 524
+      Left = 593
       Height = 40
       Top = 5
       Width = 105
@@ -36,7 +95,6 @@ object FrmTestOFBViewMain: TFrmTestOFBViewMain
       Top = 15
       Width = 75
       Caption = '<'
-      OnClick = btnPrevClick
       ParentFont = False
       TabOrder = 1
     end
@@ -46,100 +104,275 @@ object FrmTestOFBViewMain: TFrmTestOFBViewMain
       Top = 15
       Width = 75
       Caption = '|<'
-      OnClick = btnFirstClick
       ParentFont = False
       TabOrder = 2
     end
     object btnNext: TBitBtn
       Left = 271
       Height = 30
-      Top = 15
+      Top = 16
       Width = 75
       Caption = '>'
-      OnClick = btnNextClick
       ParentFont = False
       TabOrder = 3
     end
     object btnLast: TBitBtn
       Left = 353
-      Height = 29
-      Top = 15
+      Height = 30
+      Top = 18
       Width = 75
       Caption = '>|'
-      OnClick = btnLastClick
       ParentFont = False
       TabOrder = 4
     end
   end
-  object Panel1: TPanel
+  object pnlLeft: TPanel
     Left = 0
-    Height = 39
-    Top = 0
-    Width = 634
-    Align = alTop
-    Caption = 'pnlTop'
-    ClientHeight = 39
-    ClientWidth = 634
+    Height = 463
+    Top = 39
+    Width = 266
+    Align = alLeft
+    ClientHeight = 463
+    ClientWidth = 266
     ParentFont = False
-    TabOrder = 1
-    object edtFilename: TComboBox
-      Left = 5
-      Height = 23
-      Top = 9
-      Width = 387
-      Align = alClient
-      BorderSpacing.Top = 4
-      BorderSpacing.Around = 4
-      ItemHeight = 15
+    TabOrder = 2
+    inline fraNavIData1: TfraNavIData
+      Left = 1
+      Height = 25
+      Top = 437
+      Width = 264
+      Align = alBottom
+      ClientHeight = 25
+      ClientWidth = 264
+      DesignLeft = 233
+      DesignTop = 5
+      inherited btnFirst: TBitBtn
+        Left = 3
+        Height = 19
+        Top = 3
+        Width = 45
+        BorderSpacing.Around = 3
+      end
+      inherited btnPrev: TBitBtn
+        Left = 51
+        Height = 19
+        Top = 3
+        Width = 45
+        BorderSpacing.Around = 3
+      end
+      inherited btnNext: TBitBtn
+        Left = 168
+        Height = 19
+        Top = 3
+        Width = 45
+        BorderSpacing.Around = 3
+      end
+      inherited btnLast: TBitBtn
+        Left = 216
+        Height = 19
+        Top = 3
+        Width = 45
+        BorderSpacing.Around = 3
+      end
+      inherited edtSeekNr: TEdit
+        Left = 99
+        Height = 19
+        Top = 3
+        Width = 66
+        BorderSpacing.Around = 3
+      end
+    end
+  end
+  object Splitter1: TSplitter
+    Left = 266
+    Height = 463
+    Top = 39
+    Width = 5
+  end
+  object pnlLeft2: TPanel
+    Left = 271
+    Height = 463
+    Top = 39
+    Width = 122
+    Align = alLeft
+    ClientHeight = 463
+    ClientWidth = 122
+    ParentFont = False
+    TabOrder = 4
+    object btnClear: TBitBtn
+      Left = 16
+      Height = 30
+      Top = 11
+      Width = 75
+      Caption = 'Clear'
+      OnClick = btnClearClick
       ParentFont = False
       TabOrder = 0
-      Text = 'edtFilename'
     end
-    object btnOpen: TBitBtn
-      Left = 396
-      Height = 29
-      Top = 5
+    object btnParseToGed: TBitBtn
+      Left = 16
+      Height = 30
+      Top = 75
       Width = 75
-      Action = actFileOpen
-      Align = alRight
-      BorderSpacing.Around = 4
+      Caption = 'Parse >'
+      OnClick = btnParseToGedClick
       ParentFont = False
       TabOrder = 1
     end
-    object btnLoad: TBitBtn
-      Left = 475
-      Height = 29
-      Top = 5
+    object btnSaveGC: TBitBtn
+      Left = 21
+      Height = 30
+      Top = 352
       Width = 75
-      Action = actFileLoad
-      Align = alRight
-      BorderSpacing.Around = 4
+      Caption = 'Save GC'
+      OnClick = btnSaveGCClick
       ParentFont = False
       TabOrder = 2
     end
-    object btnSave: TBitBtn
-      Left = 554
-      Height = 29
-      Top = 5
-      Width = 75
-      Action = actFileSave
-      Align = alRight
-      BorderSpacing.Around = 4
+    object edtIDPrepos: TEdit
+      Left = 14
+      Height = 23
+      Top = 53
+      Width = 80
       ParentFont = False
       TabOrder = 3
+      Text = 'OsBObr'
+    end
+    object btnExpEntry: TBitBtn
+      Left = 0
+      Height = 26
+      Top = 437
+      Width = 33
+      Anchors = [akLeft, akBottom]
+      Caption = 'Exp>'
+      OnClick = btnExpEntryClick
+      ParentFont = False
+      TabOrder = 4
+    end
+    object btnParseToHej: TBitBtn
+      Left = 16
+      Height = 30
+      Top = 123
+      Width = 75
+      Caption = 'Parse HEJ>'
+      OnClick = btnParseToHejClick
+      ParentFont = False
+      TabOrder = 5
+    end
+    object Label1: TLabel
+      Left = 80
+      Height = 15
+      Top = 107
+      Width = 34
+      Caption = 'Label1'
+      ParentColor = False
+      ParentFont = False
+    end
+    object Label2: TLabel
+      Left = 80
+      Height = 15
+      Top = 156
+      Width = 34
+      Caption = 'Label2'
+      ParentColor = False
+      ParentFont = False
+    end
+    object btnSaveGC1: TBitBtn
+      Left = 21
+      Height = 30
+      Top = 389
+      Width = 75
+      Caption = 'Save HEJ'
+      OnClick = btnSaveGC1Click
+      ParentFont = False
+      TabOrder = 6
+    end
+    object edtDefaultPlace: TEdit
+      Left = 16
+      Height = 23
+      Top = 192
+      Width = 80
+      ParentFont = False
+      TabOrder = 7
+      Text = 'Meißenheim'
+    end
+    object btnStopParse: TSpeedButton
+      Left = 96
+      Height = 22
+      Top = 80
+      Width = 23
+      Caption = '[S]'
+      OnClick = btnStopParseClick
+    end
+    object chbReverse: TCheckBox
+      Left = 19
+      Height = 19
+      Top = 169
+      Width = 57
+      Caption = 'reverse'
+      TabOrder = 8
     end
   end
+  object Panel2: TPanel
+    Left = 393
+    Height = 463
+    Top = 39
+    Width = 310
+    Align = alClient
+    Caption = 'Panel2'
+    ClientHeight = 463
+    ClientWidth = 310
+    ParentFont = False
+    TabOrder = 5
+    object Memo1: TMemo
+      Left = 1
+      Height = 90
+      Top = 372
+      Width = 308
+      Align = alBottom
+      Lines.Strings = (
+        'Memo1'
+      )
+      ParentFont = False
+      ScrollBars = ssAutoBoth
+      TabOrder = 0
+      WordWrap = False
+    end
+    object Splitter2: TSplitter
+      Cursor = crVSplit
+      Left = 1
+      Height = 5
+      Top = 367
+      Width = 308
+      Align = alBottom
+      ResizeAnchor = akBottom
+    end
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Height = 23
+    Top = 552
+    Width = 703
+    Panels = <    
+      item
+        Width = 100
+      end    
+      item
+        Width = 200
+      end>
+    SimplePanel = False
+  end
   object SaveDialog1: TSaveDialog
-    Left = 357
-    Top = 213
+    Left = 384
+    Top = 240
   end
   object ilsOdfFile: TImageList
     BkColor = clWhite
     Height = 24
     ShareImages = True
     Width = 24
-    Left = 321
-    Top = 213
+    Left = 347
+    Top = 240
     Bitmap = {
       4C69100000001800000018000000000000000000000000000000000000000000
       0000000000000000000000000001000000000000000000000000000000010000
@@ -1299,13 +1532,13 @@ object FrmTestOFBViewMain: TFrmTestOFBViewMain
   object OpenDialog1: TOpenDialog
     DefaultExt = '.xml'
     Filter = 'XML-Dateien (*.XML)|*.xml|Alle Dateien (*.*)|*.*'
-    Left = 389
-    Top = 213
+    Left = 416
+    Top = 240
   end
   object alsXMLFile: TActionList
     Images = ilsOdfFile
-    Left = 421
-    Top = 213
+    Left = 448
+    Top = 240
     object actDoSomething: TAction
       Caption = 'actDoSomething'
     end
@@ -1332,6 +1565,11 @@ object FrmTestOFBViewMain: TFrmTestOFBViewMain
       Category = 'OdfFile'
       Caption = 'Load'
       ImageIndex = 6
+      OnExecute = actFileLoadExecute
     end
+  end
+  object Config1: TConfig
+    Left = 488
+    Top = 240
   end
 end
