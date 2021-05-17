@@ -1,7 +1,7 @@
 unit cmp_GedComDocumentWriter;
 
 {$mode objfpc}{$H+}
-
+{$WARN 6058 off : Call to subroutine "$1" marked as inline is not inlined}
 interface
 
 uses
@@ -1235,7 +1235,7 @@ begin
     lpara.AppendText(' - ');
     lField := lPara.AppendOdfElement(oetTextChapter, oatTextDisplay, 'name');
     lField.SetAttribute(oatTextOutlineLevel, '4');
-    lHeader := lMStyle.AppendOdfElement(oetLoExtHeaderFirst);
+    lHeader := lMStyle.AppendOdfElement(oetStyleHeaderFirst);
     lPara := TOdfParagraph(lHeader.AppendOdfElement(
         oetTextP, oatTextStyleName, CStCenter, TOdfParagraph));
 
@@ -1246,7 +1246,7 @@ begin
     lpara.AppendText('- ');
     lField := lPara.AppendOdfElement(oetTextPageNumber, oatTextSelectPage, 'current');
     lpara.AppendText(' -');
-    lHeader := lMStyle.AppendOdfElement(oetLoExtFooterFirst);
+    lHeader := lMStyle.AppendOdfElement(oetStyleFooterFirst);
     lPara := TOdfParagraph(lHeader.AppendOdfElement(
         oetTextP, oatTextStyleName, CStCenter, TOdfParagraph));
 

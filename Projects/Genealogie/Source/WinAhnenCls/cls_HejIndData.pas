@@ -443,13 +443,14 @@ end;
 
 function TClsIIndivid.GetBaptDate: string;
 begin
+  result := '';
   if assigned(FTHejIndData) then
     result := FTHejIndData.GetDateData(hind_BaptDay);
 end;
 
 function TClsIIndivid.GetBaptism: IGenEvent;
 begin
-
+  result := nil; //Owner.GetBaptism;
 end;
 
 function TClsIIndivid.GetBaptPlace: string;
@@ -460,7 +461,7 @@ end;
 
 function TClsIIndivid.GetBirth: IGenEvent;
 begin
-
+  result := nil; //Owner.GetBirth;
 end;
 
 function TClsIIndivid.GetBirthDate: string;
@@ -477,7 +478,7 @@ end;
 
 function TClsIIndivid.GetBurial: IGenEvent;
 begin
-
+  result := nil; //Owner.Burial;
 end;
 
 function TClsIIndivid.GetBurialDate: string;
@@ -504,7 +505,7 @@ end;
 
 function TClsIIndivid.GetDeath: IGenEvent;
 begin
-
+  result := nil; //Owner.Death;
 end;
 
 function TClsIIndivid.GetDeathDate: string;

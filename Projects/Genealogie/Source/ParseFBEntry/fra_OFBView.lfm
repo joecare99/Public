@@ -9,38 +9,38 @@ object FraOFBView: TFraOFBView
   TabOrder = 0
   DesignLeft = 134
   DesignTop = 7
-  object ListBox1: TListBox
+  object lbxEntries: TListBox
     Left = 0
-    Height = 520
+    Height = 347
     Top = 0
-    Width = 866
+    Width = 577
     Align = alClient
     ItemHeight = 0
     MultiSelect = True
-    OnSelectionChange = ListBox1SelectionChange
+    OnSelectionChange = lbxEntriesSelectionChange
     ParentFont = False
     TabOrder = 0
   end
-  object Memo1: TMemo
+  object edtDetail: TMemo
     Left = 0
     Height = 181
-    Top = 619
-    Width = 866
+    Top = 352
+    Width = 577
     Align = alBottom
     Lines.Strings = (
-      'Memo1'
+      '<Details>'
     )
     ParentFont = False
     ScrollBars = ssAutoBoth
     TabOrder = 1
     WordWrap = False
   end
-  object Splitter1: TSplitter
+  object splSplitter1: TSplitter
     Cursor = crVSplit
     Left = 0
     Height = 5
-    Top = 523
-    Width = 866
+    Top = 347
+    Width = 577
     Align = alBottom
     ResizeAnchor = akBottom
   end
