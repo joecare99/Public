@@ -1,6 +1,6 @@
-program prj_Quine9c_b;
+program prj_Quine9e_b;
 const c='const b=';
-      b=''';var d:char;begin write(c+#39+b+#39'';c=''#39 +c);for d in b do write(char(ord(d)-3))end.';
+      b=''';a=#39;var d:char;begin write(c+a+b+a'';c=''a+c);for d in b do write(char(ord(d)-3))end.';
 var
   d: Char;
 begin
