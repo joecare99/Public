@@ -44,10 +44,8 @@
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
-              <SyntaxMode Value="fpc"/>
               <IncludeAssertionCode Value="True"/>
               <AllowLabel Value="False"/>
-              <UseAnsiStrings Value="False"/>
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
@@ -115,7 +113,7 @@
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
-        <PackageName Value="FCL"/>
+        <PackageName Value="fv_p"/>
       </Item1>
     </RequiredPackages>
     <Units Count="21">
