@@ -164,12 +164,14 @@ Function GetNextFileName(FileName: String): string;
 
 type TSaveProc = Procedure(const s:string);
   TSaveProc2 = Procedure(const s:string) of object;
+  TSaveProc3 = Procedure(const s:string;const Data:TObject) of object;
 
 ///<author>Joe Care</author>
 ///  <version>1.00.02</version>
 ///  <tested>true</Tested>
 ///  <info>Speichert Datei (sicher) mit umbenennen und Backup</info>
 // Speichert Datei (sicher) mit umbenennen und Backup
+Function SaveFile(sp:TSaveProc3; FileName: String;const Data:TObject=nil): Boolean;overload;
 Function SaveFile(sp:TSaveProc2; FileName: String): Boolean;overload;
 Function SaveFile(sp:TSaveProc; FileName: String): Boolean;overload;
 
@@ -668,6 +670,17 @@ begin
     exit(false);
   RenameFile(NewFileName,FileName);
   Result:= true;
+end;
+
+function SaveFile(sp: TSaveProc3; FileName: String; const Data: TObject
+  ): Boolean;
+var
+  NewFileName, BakFilename: String;
+begin
+  if Not Assigned(sp) then exit(false);
+  SaveHead(FileName,NewFileName,BakFilename);
+  sp(NewFileName,Data);
+  result :=SaveTail(FileName,NewFileName,BakFilename);
 end;
 
 function SaveFile(sp: TSaveProc2; FileName: String): Boolean;
