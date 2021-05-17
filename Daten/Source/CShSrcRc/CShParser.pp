@@ -364,7 +364,7 @@ type
       out AExternalNameSpace, AExternalName: string) : Boolean;
     procedure DoParseArrayType(ArrType: TCShArrayType);
 
-    function DoParseExpression(AParent: TCShElement;InitExpr: TCShExpr=nil; AllowEqual : Boolean = True): TCShExpr;
+    function DoParseExpression(AParent: TCShElement;InitExpr: TCShExpr=nil; AllowEqual : Boolean = True; AllowAssign : Boolean = True): TCShExpr;
     function DoParseConstValueExpression(AParent: TCShElement): TCShExpr;
 
     function CheckPackMode: TPackMode;
@@ -2223,17 +2223,35 @@ begin
     tkPlusPlus              : if post then Result:=eopIncp else Result:=eopInca;
     tkMinusMinus            : if post then Result:=eopDecp else Result:=eopDeca;
     tkAssign                : Result:=eopAssign;
+    tkAssignPlus            : Result:=eopAssignPlus;
+    tkAssignMinus           : Result:=eopAssignMinus;
+    tkAssignMul             : Result:=eopAssignMul;
+    tkAssignDivision        : Result:=eopAssignDivide;
+    tkAssignModulo          : Result:=eopAssignMod;
+    tkAssignAnd             : Result:=eopAssignAnd;
+    tkAssignOr              : Result:=eopAssignOr;
+    tkAssignXor             : Result:=eopAssignXor;
+    tkAssignshl             : Result:=eopAssignShl;
+    tkAssignshr             : Result:=eopAssignShr;
+    tkAssignAsk             : Result:=eopAssignAsk;
+    tkAsk                   : Result:=eopAsk;
+    tkAskAsk                : Result:=eopAskAsk;
+    tkColon                 : Result:=eopColon;
+    tkLambda                : Result:=eopLampda;
     tkIs                    : Result:=eopIs;
     tkAs                    : Result:=eopAs;
     tkSHR                   : Result:=eopSHR;
     tkSHL                   : Result:=eopSHL;
-    tkAnd                   : Result:=eopSingleAnd;
-    tkOr                    : Result:=eopSingleOr;
+    tkAnd                   : Result:=eopAnd;
+    tkOr                    : Result:=eopOr;
+    tkSingleAnd             : Result:=eopSingleAnd;
+    tkSingleOr              : Result:=eopSingleOr;
     tkXor                   : Result:=eopXOR;
     tkMod                   : Result:=eopMod;
     tkNot                   : Result:=eopNot;
     tkIn                    : Result:=eopIn;
     tkDot                   : Result:=eopSubIdent;
+    tkKomplement            : Result:=eopKomplement;
   else
     result:=eopAdd; // Fool compiler
     ParseExc(nParserNotAnOperand,SParserNotAnOperand,[AToken,TokenInfos[AToken]]);
@@ -2503,23 +2521,28 @@ begin
   case t of
   //  tkDot:
   //    Result:=5;
-    tknot,tkKomplement:
-      Result:=4;
-    tkMul, tkDivision, tkmod, tkand, tkShl,tkShr, tkas, tkPower, tkis:
+     tknot,tkKomplement , tkin: Result:=13;
+     tkas, tkis: Result := 12;
       // Note that "is" has same precedence as "and" in Delphi and fpc, even though
       // some docs say otherwise. e.g. "Obj is TObj and aBool"
-      Result:=3;
-    tkPlus, tkMinus, tkor, tkxor:
-      Result:=2;
-    tkEqual, tkNotEqual, tkLessThan, tkLessEqualThan, tkGreaterThan, tkGreaterEqualThan, tkin:
-      Result:=1;
+    tkMul, tkDivision, tkmod:  Result:=11;
+    tkPlus, tkMinus:  Result:=10;
+    tkShl,tkShr:Result := 9;
+    tkLessThan, tkLessEqualThan, tkGreaterThan, tkGreaterEqualThan: Result := 8;
+    tkEqual, tkNotEqual:      Result:=7;
+    tkSingleAnd: Result :=6;
+    tkxor :      Result :=5;
+    tkSingleOr:      Result :=4;
+    tkand:      Result:=3;
+    tkor:       Result:=2;
+    tkColon:       Result:=1;
   else
     Result:=0;
   end;
 end;
 
 function TCShParser.DoParseExpression(AParent: TCShElement; InitExpr: TCShExpr;
-  AllowEqual: Boolean): TCShExpr;
+  AllowEqual: Boolean; AllowAssign: Boolean): TCShExpr;
 type
   TOpStackItem = record
     Token: TToken;
@@ -2539,11 +2562,14 @@ var
 const
   PrefixSym = [tkPlus, tkMinus, tknot, tkKomplement,tkPlusPlus,tkMinusMinus]; // + - ! ~ ++ --
   BinaryOP  = [tkMul, tkDivision, tkmod,  tkDotDot,
-               tkand, tkShl,tkShr, tkas, tkPower,
+               tkand, tkShl,tkShr, tkas, tkPower, tkLambda,
                tkPlus, tkMinus, tkor, tkSingleAnd,tkSingleOr, tkxor, tkSymmetricalDifference,
-               tkEqual, tkNotEqual, tkLessThan, tkLessEqualThan,
+               tkEqual, tkNotEqual, tkLessThan, tkLessEqualThan, tkColon,
                tkGreaterThan, tkGreaterEqualThan, tkin, tkis, tkAsk, tkAskAsk];
   SuffixOP = [tkPlusPlus,tkMinusMinus]; // ++, --
+  AssignOps  =  [tkAssign, tkAssignPlus, tkAssignMinus, tkAssignMul, tkAssignDivision,
+               tkAssignAnd, tkAssignOr,tkAssignXor, tkAssignModulo,
+               tkAssignshr, tkAssignshl, tkAssignAsk ];
 
   function PopExp: TCShExpr; inline;
   begin
@@ -2608,6 +2634,8 @@ Var
   SrcPos: TCShSourcePos;
 begin
   AllowedBinaryOps:=BinaryOP;
+  if AllowAssign then
+    AllowedBinaryOps:=AllowedBinaryOps + AssignOps;
   AllowedSuffixOPs:=SuffixOP;
   if Not AllowEqual then
     Exclude(AllowedBinaryOps,tkEqual);
@@ -5859,7 +5887,7 @@ begin
         else
           begin
           SrcPos:=CurTokenPos;
-          Left:=DoParseExpression(CurBlock);
+          Left:=DoParseExpression(CurBlock,nil,true,false);
           case CurToken of
             tkAssign,
             tkAssignPlus,

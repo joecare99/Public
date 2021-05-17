@@ -208,9 +208,11 @@ type
                  eopAdd,eopInca,eopIncp,eopSubtract,eopDeca,eopDecp,eopMultiply,eopDivide{/}, eopMod, eopPower,// arithmetic
                  eopShr,eopShl, // bit operations
                  eopNot,eopSingleAnd,eopAnd,eopSingleOr,eopOr,eopXor,eopKomplement, // logical/bit
-                 eopEqual, eopNotEqual,eopAsk, eopAskAsk,  // Logical
+                 eopEqual, eopNotEqual,eopAsk, eopAskAsk, eopColon,  // Logical
                  eopLessThan,eopGreaterThan, eopLessthanEqual,eopGreaterThanEqual, // ordering
                  eopIn,eopIs,eopAs, eopAssign, eopSymmetricaldifference, eopLampda, eopDeclare, // Specials
+                 eopAssignPlus,eopAssignMinus, eopAssignMul, eopAssignDivide, eopAssignMod,
+                 eopAssignAnd, eopAssignOr, eopAssignXor, eopAssignShl, eopAssignShr, eopAssignAsk, // Assignment
 //                 eopAddress, eopDeref, eopMemAddress, // Pointers  eopMemAddress=**
                  eopSubIdent); // SomeRec.A, A is subIdent of SomeRec
 
@@ -1616,9 +1618,11 @@ const
         '','+','++','++','-','--','--','*','/','%','**',
         '>>','<<',
         '!','&','&&','|','||','^','~',
-        '=','!=','?','??',
+        '=','!=','?','??',':',
         '<','>','<=','>=',
         'in','is','as','=','><','=>',' ',
+        '+=','-=','*=','/=','%=',
+        '&=','|=','^=','<<=','>>=','??=',
  //       '@','^','@@',
         '.');
 
