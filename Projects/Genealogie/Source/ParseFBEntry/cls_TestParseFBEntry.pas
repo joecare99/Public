@@ -107,7 +107,7 @@ type
 
     TChildTest = class(TTestCase)
     public
-        constructor Create(aParent:TTestFBEntryParserAll;aTestFile:string);
+        constructor Create(aParent:TTestFBEntryParserAll;aTestFile:string);reintroduce;
      private
          fParent : TTestFBEntryParserAll;
          FTestFile:String;
@@ -572,44 +572,45 @@ begin
 end;
 
 procedure TTestFBEntryParser.TestGetEntryType;
+  type TTestData = record
+       Entry :String;
+       evType :TenumEventType;
+       ExpDate,
+       ExpData:string
+  end;
+
+const TestData:array[0..14] of TTestData=
+   ((Entry:'* 01.02.1734 in Bern';evType:evt_Birth;ExpDate:'01.02.1734 in Bern';ExpData:''),
+    (Entry:'* in Bern 01.02.1734';evType:evt_Birth;ExpDate:'in Bern 01.02.1734';ExpData:''),
+    (Entry:'ist nach Amerika ausgewandert';evType:evt_AddEmigration;ExpDate:'';ExpData:'nach Amerika'),
+    (Entry:'gefallen 1.1.1945 in Polen';evType:evt_fallen;ExpDate:'1.1.1945 in Polen';ExpData:'gefallen'),
+    (Entry:'vermisst in Frankreich 1.1.1943';evType:evt_missing;ExpDate:'in Frankreich 1.1.1943';ExpData:'vermisst'),
+    (Entry:'wohnhaft in Kürzell';evType:evt_Residence;ExpDate:'in Kürzell';ExpData:'wohnhaft'),
+    (Entry:'wohnt Mattenhag-Siedlung';evType:evt_Residence;ExpDate:'';ExpData:'wohnt Mattenhag-Siedlung'),
+    (Entry:'lebte einge Monate in Amerika';evType:evt_Residence;ExpDate:'';ExpData:'lebte einge Monate in Amerika'),
+    (Entry:'+* 6.11.1846';evType:evt_Stillborn;ExpDate:'6.11.1846';ExpData:'totgeboren'),
+    (Entry:'o/o 1.1.1765';evType:evt_Divorce;ExpDate:'1.1.1765';ExpData:''),
+    (Entry:'der Alte';evType:evt_AKA;ExpDate:'';ExpData:'der Alte'),
+    (Entry:'ein Blinder';evType:evt_Description;ExpDate:'';ExpData:'ein Blinder'),
+    (Entry:'wurde "Schmittjockel" genannt';evType:evt_AKA;ExpDate:'';ExpData:'"Schmittjockel"'),
+    (Entry:'2 Jahre 5 Monate alt';evType:evt_Age;ExpDate:'';ExpData:'2 Jahre 5 Monate alt'),
+    (Entry:'* Willstätt im August 1775';evType:evt_Birth;ExpDate:'Willstätt im August 1775';ExpData:''));
+
+//'o/o 1.1.1765'
+// * Willstätt im August 1775
+
+var
+  i: Integer;
+
 var
   lDate, lData: string;
 begin
-    CheckEquals(ord(evt_Birth),ord(fparser.GetEntryType('* 01.02.1734 in Bern',lDate,lData)),'* 01.02.1734 in Bern');
-    CheckEquals('01.02.1734 in Bern',lDate,'Geboren in Bern');
-    CheckEquals('',lData,'Geboren in Bern');
-
-    CheckEquals(ord(evt_Birth),ord(fparser.GetEntryType('* in Bern 01.02.1734',lDate,lData)),'* in Bern 01.02.1734');
-    CheckEquals('in Bern 01.02.1734',lDate,'Geboren in Bern 2');
-    CheckEquals('',lData,'Geboren in Bern 2');
-
-    CheckEquals(ord(evt_AddEmigration),ord(fparser.getEntryType('ist nach Amerika ausgewandert',lDate,lData)),'ist nach Amerika ausgewandert');
-    CheckEquals('',lDate,'nach Amerika ausgewandert');
-    CheckEquals('nach Amerika',lData,'nach Amerika ausgewandert');
-
-    CheckEquals(ord(evt_fallen),ord(fparser.getEntryType('gefallen 1.1.1945 in Polen',lDate,lData)),'gefallen 1.1.1945 in Polen');
-    CheckEquals('1.1.1945 in Polen',lDate,'Gefallen in Polen');
-    CheckEquals('gefallen',lData,'Gefallen in Polen');
-
-    CheckEquals(ord(evt_missing),ord(fparser.getEntryType('vermisst in Frankreich 1.1.1943',lDate,lData)),'vermisst in Frankreich 1.1.1943');
-    CheckEquals('in Frankreich 1.1.1943',lDate,'Vermisst in Frankreich');
-    CheckEquals('vermisst',lData,'Vermisst in Frankreich');
-
-    CheckEquals(ord(evt_Residence),ord(fparser.getEntryType('wohnhaft in Kürzell',lDate,lData)),'wohnhaft in Kürzell');
-    CheckEquals('in Kürzell',lDate,'wohnhaft in Kürzell');
-    CheckEquals('wohnhaft',lData,'wohnhaft in Kürzell');
-
-    CheckEquals(ord(evt_Residence),ord(fparser.getEntryType('wohnt Mattenhag-Siedlung',lDate,lData)),'wohnhaft in Kürzell');
-    CheckEquals('',lDate,'wohnt Mattenhag-Siedlung');
-    CheckEquals('wohnt Mattenhag-Siedlung',lData,'wohnt Mattenhag-Siedlung');
-
-    CheckEquals(ord(evt_Stillborn),ord(fparser.getEntryType('+* 6.11.1846',lDate,lData)),'+* 6.11.1846');
-    CheckEquals('6.11.1846',lDate,'+* 6.11.1846');
-    CheckEquals('totgeboren',lData,'+* 6.11.1846');
-
-    CheckEquals(ord(evt_Divorce),ord(fparser.getEntryType('o/o 1.1.1765',lDate,lData)),'o/o 1.1.1765');
-    CheckEquals('1.1.1765',lDate,'o/o 1.1.1765');
-    CheckEquals('',lData,'o/o 1.1.1765');
+  for i := 0 to high(TestData) do
+    begin
+      CheckEquals(ord(TestData[i].evType),ord(fparser.GetEntryType(TestData[i].Entry,lDate,lData)),'Test['+inttostr(i)+']: '+TestData[i].Entry);
+      CheckEquals(TestData[i].ExpDate,lDate,'Test['+inttostr(i)+'].Date: '+TestData[i].Entry);
+      CheckEquals(TestData[i].ExpData,lData,'Test['+inttostr(i)+'].Data: '+TestData[i].Entry);
+    end
 end;
 
 procedure TTestFBEntryParser.TestGetEntryType_Rel;
@@ -635,6 +636,14 @@ begin
     CheckEquals(ord(evt_Religion),ord(fparser.GetEntryType('luth.',lDate,lData)),'luth.');
     CheckEquals('luth.',lData,'luth.');
     CheckEquals('',lDate,'luth.');
+
+    CheckEquals(ord(evt_Religion),ord(fparser.GetEntryType('evang.',lDate,lData)),'evang.');
+    CheckEquals('evang.',lData,'evang.');
+    CheckEquals('',lDate,'evang.');
+
+    CheckEquals(ord(evt_Religion),ord(fparser.GetEntryType('reform.',lDate,lData)),'reform.');
+    CheckEquals('reform.',lData,'reform.');
+    CheckEquals('',lDate,'reform.');
 end;
 
 procedure TTestFBEntryParser.TestHandleNonPersonEntry;
@@ -959,7 +968,7 @@ begin
         CreateExpResult(lRs, ExpResults);
         FRCounter := 0;
         fParser.GNameHandler.LoadGNameList(FDataPath + DirectorySeparator + 'GNameFile.txt');
-        fparser.GNameHandler.SaveGNameList(ChangeFileExt(FileIterator.FileName, '.Name.New'));
+        fparser.GNameHandler.SetGNLFilename(ChangeFileExt(FileIterator.FileName, '.Name.New'));
         FTestName := ExtractFileName(FileIterator.FileName);
         fParser.Feed(lSt.Text);
         CheckEquals(length(ExpResults), FRCounter, 'Counter');
@@ -1178,7 +1187,7 @@ procedure TTestFBEntryParserBase.SetUp;
 begin
     fParser := TFBEntryParser.Create;
     fParser.GNameHandler.LoadGNameList(FDataPath + DirectorySeparator + 'GNameFile.txt');
-    fParser.GNameHandler.SaveGNameList(FDataPath + DirectorySeparator + 'GNameFile.Nxt');
+    fParser.GNameHandler.SetGNLFilename(FDataPath + DirectorySeparator + 'GNameFile.Nxt');
     fParser.onStartFamily := @ParserStartFamily;
     fParser.onFamilyType := @ParserFamilyType;
     fParser.onFamilyData := @ParserFamilyData;
