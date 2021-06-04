@@ -1,0 +1,102 @@
+object FrmLaby4: TFrmLaby4
+  Left = 0
+  Height = 771
+  Top = 0
+  Width = 1044
+  Caption = 'Labyrinth 4'
+  ClientHeight = 771
+  ClientWidth = 1044
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  LCLVersion = '2.0.10.0'
+  object pbxResult: TPaintBox
+    Left = 0
+    Height = 771
+    Top = 0
+    Width = 937
+    Align = alClient
+  end
+  object pnlRight: TPanel
+    Left = 937
+    Height = 771
+    Top = 0
+    Width = 107
+    Align = alRight
+    ClientHeight = 771
+    ClientWidth = 107
+    TabOrder = 0
+    object pbxPreview: TPaintBox
+      Left = 1
+      Height = 241
+      Top = 1
+      Width = 105
+      Align = alTop
+      OnPaint = pbxPreviewPaint
+    end
+    object pnlRightCl2: TPanel
+      Left = 1
+      Height = 528
+      Top = 242
+      Width = 105
+      Align = alClient
+      ClientHeight = 528
+      ClientWidth = 105
+      TabOrder = 0
+      object btnGenerate: TBitBtn
+        Left = 15
+        Height = 25
+        Top = 56
+        Width = 75
+        Caption = 'Generate'
+        OnClick = btnGenerateClick
+        TabOrder = 1
+      end
+      object btnDraw: TBitBtn
+        Left = 16
+        Height = 26
+        Top = 88
+        Width = 75
+        Caption = 'Draw'
+        OnClick = btnDrawClick
+        TabOrder = 2
+      end
+      object btnPrint: TBitBtn
+        Left = 15
+        Height = 26
+        Top = 120
+        Width = 75
+        Caption = 'Print'
+        OnClick = btnPrintClick
+        TabOrder = 3
+      end
+      object edtLabySize: TSpinEdit
+        Left = 15
+        Height = 21
+        Top = 24
+        Width = 73
+        Increment = 5
+        MaxValue = 80
+        MinValue = 8
+        OnChange = edtLabySizeChange
+        TabOrder = 0
+        Value = 21
+      end
+      object lblLabySize: TLabel
+        Left = 15
+        Height = 13
+        Top = 6
+        Width = 23
+        Caption = 'Size:'
+        ParentColor = False
+      end
+    end
+  end
+  object PrintDialog1: TPrintDialog
+    Left = 774
+    Top = 213
+  end
+end

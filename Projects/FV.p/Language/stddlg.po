@@ -2,7 +2,7 @@ msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8"
 
 #: stddlg.schangedirectory
-msgid "Change faDirectory"
+msgid "Change Directory"
 msgstr ""
 
 #: stddlg.sdeletefile
@@ -13,7 +13,7 @@ msgid ""
 msgstr ""
 
 #: stddlg.sdirectory
-msgid "faDirectory"
+msgid "Directory"
 msgstr ""
 
 #: stddlg.sdrives
@@ -21,11 +21,11 @@ msgid "Drives"
 msgstr ""
 
 #: stddlg.sinvaliddirectory
-msgid "Invalid faDirectory."
+msgid "Invalid Directory."
 msgstr ""
 
 #: stddlg.sinvaliddriveordir
-msgid "Invalid drive or faDirectory."
+msgid "Invalid drive or Directory."
 msgstr ""
 
 #: stddlg.sinvalidfilename
@@ -41,11 +41,11 @@ msgid "C~l~ear"
 msgstr ""
 
 #: stddlg.sldirectoryname
-msgid "faDirectory ~n~ame"
+msgid "Directory ~n~ame"
 msgstr ""
 
 #: stddlg.sldirectorytree
-msgid "faDirectory ~t~ree"
+msgid "Directory ~t~ree"
 msgstr ""
 
 #: stddlg.slfiles

@@ -1,0 +1,1 @@
+program Q7;uses Sysutils,base64;const s='cHJvZ3JhbSBRNzt1c2VzIFN5c1V0aWxzLGJhc2U2NDtjb25zdCBzOj0lMTpzJTA6cyUxOnM7YmVnaW4gd3JpdGUoZm9ybWF0KERlY29kZVN0cmluZ0Jhc2U2NChzKSxbcywjMzldKSllbmQu';begin write(format(DecodeStringBase64(s),[s,#39]))end.

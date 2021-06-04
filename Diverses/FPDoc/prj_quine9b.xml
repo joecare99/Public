@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="prj_Quine9b"><module name="Q9"><element name="d"><short>Iterator-Char</short>
+      </element><short>Quine #9b using 2 strings (one plain and one encoded)</short><element name="r"><short>Constant for the apostroph (#39) for quoting</short>
+      </element><element name="b"><short>b contains the tail of the program (encoded)</short>
+      </element><element name="c"><short>c contains the head of the program (plain)</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

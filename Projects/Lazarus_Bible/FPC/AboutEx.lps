@@ -9,7 +9,7 @@
         <Filename Value="AboutEx.dpr"/>
         <IsPartOfProject Value="True"/>
         <CursorPos X="39" Y="23"/>
-        <UsageCount Value="31"/>
+        <UsageCount Value="37"/>
         <Loaded Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit0>
@@ -21,7 +21,7 @@
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
         <CursorPos X="30" Y="30"/>
-        <UsageCount Value="31"/>
+        <UsageCount Value="37"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -33,10 +33,11 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_ABOUT"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="24"/>
+        <TopLine Value="3"/>
         <CursorPos X="33" Y="28"/>
-        <UsageCount Value="28"/>
+        <UsageCount Value="34"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>

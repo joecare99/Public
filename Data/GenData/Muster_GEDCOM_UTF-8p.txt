@@ -1,0 +1,17 @@
+Berlin, , , Deutschland
+Brosowo, Kulm, Bromberg, Danzig-Westpreussen, Deutsches Reich
+Fallingbostel, Lüneburg, Niedersachsen, Deutschland
+Grabow, , Mecklenburg-Vorpommern, Deutschland
+Hamburg, Hamburg, Hamburg, Deutschland
+Köln, Köln, Nordrhein-Westfalen, Deutschland
+London, , , Großbritannien
+München, München, Bayern, Deutschland
+Neustadt an der Weinstraße, Neustadt an der Weinstraße, Rheinland-Pfalz, Deutschland
+New York, , , USA
+Stalingrad, , , Russland
+Stuttgart, Stuttgart, Baden-Württemberg, Deutschland
+Sydney, , , Australien
+Tempelhof, amerikanischer Sektor, Berlin (West), Deutschland
+Wenningen, Hochsauerlandkreis, Nordrhein-Westfalen, Deutschland
+Windsor, Berkshire, , England
+Wriezen,, Brandenburg, Deutschland
