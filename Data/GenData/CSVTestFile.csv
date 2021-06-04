@@ -1,0 +1,7 @@
+﻿idAnzeige	Auftrag	Stichwort	Nachname	Vorname	Titel	Geschlecht	Geburtsname	Spitzname	Hoehe	Breite	Erscheinungsdatum	Rubrik	PDF	PNG	Geb	GebModif	Gest	GestModif	Begr	BegrModif	Ort	Pfad	LinkID	ProfileImg	ProfImgCount	TimeStamp
+1	10180000001	Mustermann, Peter	Mustermann	Peter	Dr.			Pete	640	480	31.03.2018	8050	10180000001.PDF	10180000001.PNG								..\..\data\GenData\trauerportal\data\00\0011223344556677\$FILE				
+1	10180000101	Mustermann, Petra	Mustermann	Petra					640	480	31.03.2018	8050	10180000101.PDF	10180000101.PNG								..\..\data\GenData\trauerportal\data\ff\ffeeddccbbaa9988\$FILE				
+3	10180000201	Mustermann, Peter	Mustermann	Peter	Dr.			Pete	640	480	01.04.2018	8080	10180000201.PDF	10180000201.PNG								..\..\data\GenData\trauerportal\data\11\1122334455667711\$FILE				
+4	10180000301	Mustermann, Petra	Mustermann	Petra					640	480	01.04.2018	8080	10180000301.PDF	10180000301.PNG								..\..\data\GenData\trauerportal\data\ee\eeddccbbaa9988ff\$FILE				
+5	10180000401	Mustermann, Peter	Mustermann	Peter	Dr.			Pete	640	480	30.04.2018	8060	10180000401.PDF	10180000401.PNG								..\..\data\GenData\trauerportal\data\22\2233445566770011\$FILE				
+6	10180000501	Mustermann, Petra	Mustermann	Petra					640	480	30.04.2018	8060	10180000501.PDF	10180000501.PNG								..\..\data\GenData\trauerportal\data\dd\ddccbbaa9988ffee\$FILE				

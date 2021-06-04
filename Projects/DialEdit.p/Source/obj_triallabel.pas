@@ -1,7 +1,5 @@
 unit obj_TrialLabel;
 
-{$mode objfpc}{$H+}
-
 interface
 
 uses
@@ -18,7 +16,7 @@ type
         constructor Init(var Bounds: TRect; AText: TTitleStr;
                     ALink: PView);
         procedure HandleEvent(var Event: TEvent); virtual;
-        procedure SizeLimits(var MinSz, MaxSz: TPoint); Virtual;
+        procedure SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint); Virtual;
         procedure GenCode(const LinkName: string;aLink:PView);
         procedure ChangeText(const ALabel: string);
         procedure TrackTarget(const OldR: TRect);virtual;
@@ -81,7 +79,7 @@ begin
     end;
 end; {TTrialLabel.HandleEvent}
 
-procedure TTrialLabel.SizeLimits(var MinSz, MaxSz: TPoint);
+procedure TTrialLabel.SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint);
 var
     L: word;
 begin

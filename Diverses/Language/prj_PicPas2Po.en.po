@@ -12,211 +12,123 @@ msgstr ""
 "Language: en\n"
 "X-Generator: Poedit 2.2.1\n"
 
-#: tframe1.actfileautoload.caption
-#, fuzzy
-msgctxt "tframe1.actfileautoload.caption"
-msgid "AutoLoad"
-msgstr "Autoload"
-
-#: tframe1.actfileload.caption
-#, fuzzy
-msgctxt "tframe1.actfileload.caption"
-msgid "Load"
-msgstr "Load"
-
-#: tframe1.actfileopen.caption
-msgctxt "tframe1.actfileopen.caption"
-msgid "Öffnen"
-msgstr "Open"
-
-#: tframe1.actfileopen.hint
-msgctxt "tframe1.actfileopen.hint"
-msgid "Öffnen"
-msgstr "Open"
-
-#: tframe1.actfilesave.caption
-msgctxt "tframe1.actfilesave.caption"
-msgid "Save"
-msgstr "Save"
-
-#: tframe1.actfilesaveas.caption
-msgctxt "tframe1.actfilesaveas.caption"
-msgid "Sichern &als ..."
-msgstr "Save &as ..."
-
-#: tframe1.actfilesaveas.hint
-msgctxt "tframe1.actfilesaveas.hint"
-msgid "Sichern als"
-msgstr "Save as"
-
-#: tframe1.btnfileopenpo.caption
-msgctxt "tframe1.btnfileopenpo.caption"
-msgid "L"
-msgstr "S"
-
-#: tframe1.btnfilesavepo.caption
-msgctxt "tframe1.btnfilesavepo.caption"
-msgid "S"
+#: tfrapicpasfile.actfileopenpas.caption
+msgid "actFileOpenPas"
 msgstr ""
 
-#: tframe1.cbxselectlanguage.text
-#, fuzzy
-msgctxt "tframe1.cbxselectlanguage.text"
-msgid "Deutsch,de"
-msgstr "German, de"
+#: tfrapicpasfile.actfilesavepas.caption
+msgid "actFileSavePas"
+msgstr ""
 
-#: tframe1.chbautoload.caption
-#, fuzzy
-msgctxt "tframe1.chbautoload.caption"
-msgid "AL"
-msgstr "Al"
+#: tfrapicpasfile.action3.caption
+msgid "Action3"
+msgstr ""
 
-#: tframe1.chbautoload.hint
-#, fuzzy
-msgctxt "tframe1.chbautoload.hint"
-msgid "Automatic load of .po"
-msgstr "Automatic load of .po"
+#: tfrapicpasfile.btnfileopenpas.caption
+msgctxt "tfrapicpasfile.btnfileopenpas.caption"
+msgid "Ld"
+msgstr ""
 
-#: tframe1.edtprojectname.text
-#, fuzzy
-msgctxt "tframe1.edtprojectname.text"
-msgid "PicPas"
-msgstr "PicPas"
+#: tfrapicpasfile.btnfilesavepas.caption
+msgctxt "tfrapicpasfile.btnfilesavepas.caption"
+msgid "Sv"
+msgstr ""
+
+#: tfrapicpasfile.cbxselectfile.text
+msgid "cbxSelectFile"
+msgstr ""
+
+#: tfrapicpasfile.label1.caption
+msgid "(0;0)"
+msgstr ""
 
 #: tfrapofile.actfileautoload.caption
-#, fuzzy
 msgctxt "tfrapofile.actfileautoload.caption"
 msgid "AutoLoad"
-msgstr "Autoload"
+msgstr ""
 
 #: tfrapofile.actfileload.caption
-#, fuzzy
 msgctxt "tfrapofile.actfileload.caption"
 msgid "Load"
-msgstr "Load"
+msgstr ""
 
 #: tfrapofile.actfileopen.caption
 msgctxt "tfrapofile.actfileopen.caption"
 msgid "Öffnen"
-msgstr "Open"
+msgstr ""
 
 #: tfrapofile.actfileopen.hint
 msgctxt "tfrapofile.actfileopen.hint"
 msgid "Öffnen"
-msgstr "Open"
+msgstr ""
 
 #: tfrapofile.actfilesave.caption
 msgctxt "tfrapofile.actfilesave.caption"
 msgid "Save"
-msgstr "Save"
+msgstr ""
 
 #: tfrapofile.actfilesaveas.caption
 msgctxt "tfrapofile.actfilesaveas.caption"
 msgid "Sichern &als ..."
-msgstr "Save &as ..."
+msgstr ""
 
 #: tfrapofile.actfilesaveas.hint
 msgctxt "tfrapofile.actfilesaveas.hint"
 msgid "Sichern als"
-msgstr "Save as"
+msgstr ""
 
 #: tfrapofile.cbxselectlanguage.text
-#, fuzzy
-msgctxt "tfrapofile.cbxselectlanguage.text"
 msgid "Deutsch,de"
-msgstr "German, de"
+msgstr ""
 
 #: tfrapofile.edtprojectname.text
-#, fuzzy
-msgctxt "tfrapofile.edtprojectname.text"
 msgid "PicPas"
-msgstr "PicPas"
+msgstr ""
 
 #: tfrapofile.tlbpofile.caption
 msgid "tlbPoFile"
 msgstr ""
 
 #: tfrapofile.toolbutton1.caption
-#, fuzzy
-msgctxt "tfrapofile.toolbutton1.caption"
 msgid "AL"
-msgstr "Al"
-
-#: tfrapofile.toolbutton3.caption
-#, fuzzy
-msgid "Ld"
-msgstr "Ap"
-
-#: tfrapofile.toolbutton4.caption
-#, fuzzy
-msgid "Sv"
-msgstr "Sv"
-
-#: tfrmpicpas2pomain.actfileautoload.caption
-#, fuzzy
-msgctxt "tfrmpicpas2pomain.actfileautoload.caption"
-msgid "AutoLoad"
-msgstr "Autoload"
-
-#: tfrmpicpas2pomain.actfileload.caption
-#, fuzzy
-msgctxt "tfrmpicpas2pomain.actfileload.caption"
-msgid "Load"
-msgstr "Load"
-
-#: tfrmpicpas2pomain.actfileopen.caption
-msgctxt "tfrmpicpas2pomain.actfileopen.caption"
-msgid "Öffnen"
-msgstr "Open"
-
-#: tfrmpicpas2pomain.actfileopen.hint
-msgctxt "tfrmpicpas2pomain.actfileopen.hint"
-msgid "Öffnen"
-msgstr "Open"
-
-#: tfrmpicpas2pomain.actfileopenpas.caption
-msgid "actFileOpenPas"
 msgstr ""
 
-#: tfrmpicpas2pomain.actfilesave.caption
-msgctxt "tfrmpicpas2pomain.actfilesave.caption"
-msgid "Save"
-msgstr "Save"
+#: tfrapofile.toolbutton3.caption
+msgctxt "tfrapofile.toolbutton3.caption"
+msgid "Ld"
+msgstr ""
 
-#: tfrmpicpas2pomain.actfilesaveas.caption
-msgctxt "tfrmpicpas2pomain.actfilesaveas.caption"
-msgid "Sichern &als ..."
-msgstr "Save &as ..."
-
-#: tfrmpicpas2pomain.actfilesaveas.hint
-msgctxt "tfrmpicpas2pomain.actfilesaveas.hint"
-msgid "Sichern als"
-msgstr "Save as"
-
-#: tfrmpicpas2pomain.actfilesavepas.caption
-msgid "actFileSavePas"
+#: tfrapofile.toolbutton4.caption
+msgctxt "tfrapofile.toolbutton4.caption"
+msgid "Sv"
 msgstr ""
 
 #: tfrmpicpas2pomain.actfileselectdir.caption
 msgid "Select &Directory"
 msgstr "Select &Directory"
 
+#: tfrmpicpas2pomain.actprocessallpas2po.caption
+msgid "AllPas2Po"
+msgstr ""
+
+#: tfrmpicpas2pomain.actprocessallpo2pas.caption
+msgid "AllPo2Pas"
+msgstr ""
+
 #: tfrmpicpas2pomain.actprocesspas2po.caption
-msgid "actProcessPas2Po"
+msgid "Pas2Po"
 msgstr ""
 
 #: tfrmpicpas2pomain.actprocesspo2pas.caption
-msgid "actProcessPo2Pas"
+msgid "Po2Pas"
 msgstr ""
 
-#: tfrmpicpas2pomain.btnfileopenpas.caption
-msgctxt "tfrmpicpas2pomain.btnfileopenpas.caption"
-msgid "L"
-msgstr "S"
+#: tfrmpicpas2pomain.btnprocessallpas2po.caption
+msgid ">>"
+msgstr ""
 
-#: tfrmpicpas2pomain.btnfilesavepas.caption
-msgctxt "tfrmpicpas2pomain.btnfilesavepas.caption"
-msgid "S"
+#: tfrmpicpas2pomain.btnprocessallpo2pas.caption
+msgid "<<"
 msgstr ""
 
 #: tfrmpicpas2pomain.btnprocesspas2po.caption
@@ -231,8 +143,8 @@ msgstr "<"
 msgid "..."
 msgstr "…"
 
-#: tfrmpicpas2pomain.cbxselectfile.text
-msgid "cbxSelectFile"
+#: tfrmpicpas2pomain.caption
+msgid "frmPicPas2PoMain"
 msgstr ""
 
 #: tfrmpicpas2pomain.edtsourcedir.editlabel.caption
@@ -244,3 +156,4 @@ msgstr ""
 msgctxt "tfrmpicpas2pomain.edtsourcedir.text"
 msgid "C:\\projekte\\Lazarus\\PicPas\\trunk\\language"
 msgstr ""
+

@@ -1,7 +1,5 @@
 unit obj_DialEditApp;
 
-{$mode objfpc}{$H+}
-
 interface
 
 uses  sysutils,
@@ -31,7 +29,7 @@ type
           destructor Done; virtual;
           function Execute: word; virtual;
           procedure HandleEvent(var Event: TEvent); virtual;
-          procedure SizeLimits(var MinSz, MaxSz: TPoint); virtual;
+          procedure SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint); virtual;
           constructor Load(var S: TStream);
           procedure Store(var S: TStream); virtual;
       end;
@@ -47,7 +45,7 @@ type
           destructor Done; virtual;
           function Execute: word; virtual;
           procedure HandleEvent(var Event: TEvent); virtual;
-          procedure SizeLimits(var MinSz, MaxSz: TPoint); virtual;
+          procedure SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint); virtual;
           constructor Load(var S: TStream);
           procedure Store(var S: TStream); virtual;
       end;
@@ -63,7 +61,7 @@ type
           destructor Done; virtual;
           function Execute: word; virtual;
           procedure HandleEvent(var Event: TEvent); virtual;
-          procedure SizeLimits(var MinSz, MaxSz: TPoint); virtual;
+          procedure SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint); virtual;
           constructor Load(var S: TStream);
           procedure Store(var S: TStream); virtual;
       end;
@@ -83,7 +81,7 @@ type
           Link: PView;
           constructor Init(Bounds: TRect; ALink: PView);
           procedure HandleEvent(var Event: TEvent); virtual;
-          procedure SizeLimits(var MinSz, MaxSz: TPoint); virtual;
+          procedure SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint); virtual;
           procedure GenCode;
           procedure TrackTarget(const OldR: TRect);
           constructor Load(var S: TStream);
@@ -103,7 +101,7 @@ type
           function Execute: word; virtual;
           procedure HandleEvent(var Event: TEvent); virtual;
           procedure SetState(AState: word; Enable: boolean); virtual;
-          procedure SizeLimits(var MinSz, MaxSz: TPoint); virtual;
+          procedure SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint); virtual;
           constructor Load(var S: TStream);
           procedure Store(var S: TStream); virtual;
       end;
@@ -931,7 +929,7 @@ function TTrialRadioButtons.Execute: word;
 var
   zLink: Pview;
 begin
-    result :=0;
+    {$IfDef FPC_OBJFPC}result{$else}Execute{$endif} :=0;
     { these controlled by GenPart: }
     TC.GenCode(Self,zLink);
     LabelP^.GenCode(TC.ShortName,zLink);
@@ -942,7 +940,7 @@ begin
     TC.HandleEvent(Event, @Self, LabelP);
 end; {TTrialRadioButtons.HandleEvent}
 
-procedure TTrialRadioButtons.SizeLimits(var MinSz, MaxSz: TPoint);
+procedure TTrialRadioButtons.SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint);
 begin
     inherited SizeLimits(MinSz, MaxSz);
     MinSz.X:= 7;  Dec(MaxSz.X,2);
@@ -990,7 +988,7 @@ function TTrialCheckBoxes.Execute: word;
 var
   zLink: PView;
 begin
-  result :=0;
+  {$IfDef FPC_OBJFPC}result{$else}Execute{$endif} :=0;
     { these controlled by GenPart: }
     TC.GenCode(Self,zLink);
     LabelP^.GenCode(TC.ShortName,zLink);
@@ -1001,7 +999,7 @@ begin
     TC.HandleEvent(Event, @Self, LabelP);
 end; {TTrialCheckBoxes.HandleEvent}
 
-procedure TTrialCheckBoxes.SizeLimits(var MinSz, MaxSz: TPoint);
+procedure TTrialCheckBoxes.SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint);
 begin
     inherited SizeLimits(MinSz, MaxSz);
     MinSz.X:= 7;  Dec(MaxSz.X,2);
@@ -1065,7 +1063,7 @@ function TTrialMultiCheckBoxes.Execute: word;
 var
   zLink: PView;
 begin
-    result :=0;
+    {$IfDef FPC_OBJFPC}result{$else}Execute{$endif} :=0;
     { these controlled by GenPart: }
     TC.GenCode(Self,zLink);
     LabelP^.GenCode(TC.ShortName,zLink);
@@ -1076,7 +1074,7 @@ begin
     TC.HandleEvent(Event, @Self, LabelP);
 end; {TTrialMultiCheckBoxes.HandleEvent}
 
-procedure TTrialMultiCheckBoxes.SizeLimits(var MinSz, MaxSz: TPoint);
+procedure TTrialMultiCheckBoxes.SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint);
 begin
     inherited SizeLimits(MinSz, MaxSz);
     MinSz.X:= 7;  Dec(MaxSz.X,2);
@@ -1164,7 +1162,7 @@ begin
     end;
 end; {TTrialScrollBar.HandleEvent}
 
-procedure TTrialScrollBar.SizeLimits(var MinSz, MaxSz: TPoint);
+procedure TTrialScrollBar.SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint);
 begin
     MinSz.X:= 1;  MaxSz.X:= 1;
     MinSz.Y:= 3;  MaxSz.Y:= Owner^.Size.Y - 2;
@@ -1257,7 +1255,7 @@ var
     R: TRect;
     zLink: PView;
 begin
-  result :=0;
+  {$IfDef FPC_OBJFPC}result{$else}Execute{$endif} :=0;
     case CodeGen.GenPart of
      gpDataFields:
         begin
@@ -1364,7 +1362,7 @@ begin
     TView.SetState(AState, Enable);
 end; {TTrialListBox.SetState}
 
-procedure TTrialListBox.SizeLimits(var MinSz, MaxSz: TPoint);
+procedure TTrialListBox.SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint);
 begin
     inherited SizeLimits(MinSz, MaxSz);
     MinSz.X:= 3;  Dec(MaxSz.X,2);
@@ -1738,7 +1736,7 @@ var
     Attr: byte;
     NoResize: boolean;
 begin
-{$ifdef FPC}
+{$ifdef FPC_OBJFPC}
    DoScreenShot(screen);
 {$endif}
 {$IFNDEF VPASCAL}
@@ -2221,7 +2219,7 @@ begin
     if OS <> '' then writeln('Default options are: ', OS);
 end; {ShowUsage}
 
-procedure SetOpt; far;
+procedure SetOpt;
 begin
     with FileOptData do
     case OptChr of
@@ -2243,7 +2241,7 @@ begin
     LastOption:= OptChr;
 end; {SetOpt}
 
-procedure DoFile(FName: PathStr; {%H-}Expdd: boolean); far;
+procedure DoFile(FName: PathStr; {%H-}Expdd: boolean);
 begin
     { in case file name is separate from option code: }
     with FileOptData do
@@ -2256,7 +2254,7 @@ begin
     end; {case}
 end; {DoFile}
 
-procedure AppDone; far; {in case setup fails}
+procedure AppDone; {in case setup fails}
 begin
     DialEditApp.Done;
 end; {AppDone}
@@ -2269,10 +2267,10 @@ var
     R: TRect;
 
 begin
-    PShowUsage:= {$ifdef FPC_OBJFPC}@{$endif}ShowUsage;
-    PSetOpt:= {$ifdef FPC_OBJFPC}@{$endif}SetOpt;
-    PDoFile:= {$ifdef FPC_OBJFPC}@{$endif}DoFile;
-    PAppDone:= {$ifdef FPC_OBJFPC}@{$endif}AppDone;
+    PShowUsage:= @ShowUsage;
+    PSetOpt:= @SetOpt;
+    PDoFile:= @DoFile;
+    PAppDone:= @AppDone;
     R.assign(0,0,0,0);
     FileOptData.CollFName:= 'Dialogs.res';
     FileOptData.CodeFName:= '';

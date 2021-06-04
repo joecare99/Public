@@ -7,7 +7,7 @@ unit cls_HejData;
 interface
 
 uses
-    Classes, SysUtils, variants, DB, Unt_IData, cls_HejBase, cls_HejIndData,
+    Classes, SysUtils, variants, Unt_IData, cls_HejBase, cls_HejIndData,
     cls_HejMarrData, cls_HejAdopData,
     cls_HejPlaceData, cls_HejSourceData;
 
@@ -194,6 +194,10 @@ var
 implementation
 
 uses dateutils, LConvEncoding, dm_GenData2;
+
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
 
 { TClsHejGenealogy }
 
@@ -996,7 +1000,7 @@ end;
 
 function TClsHejGenealogy.GetData: variant;
 begin
-
+  result := ''
 end;
 
 procedure TClsHejGenealogy.SetData(NewVal: variant);

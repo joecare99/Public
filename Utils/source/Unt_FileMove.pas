@@ -1,3 +1,6 @@
+{$ifdef fpc}
+  {$mode delphi}
+{$endif}
 unit Unt_FileMove;
 // Vcl;Vcl.Imaging;Vcl.Touch;Vcl.Samples;Vcl.Shell;Winapi;System;Xml;Data;Datasnap;Web;Soap
 interface
@@ -5,29 +8,29 @@ interface
 uses Classes;
 
 type
-    TTextOutProc=Procedure (str:String) of Object;
+    TTextOutProc = procedure(str :string) of object;
     { TFileMoveApp }
 
     TFileMoveApp = class(TComponent)
     private
-        FTitle: string;
-        procedure HandleParameters(out FormatCode: boolean;
-            out Filename, MovePattern: string);
-        procedure SetTitle(val: string);
-        Procedure ConsoleTextOut(str:String);
+        FTitle :string;
+        procedure HandleParameters(out FormatCode :boolean;
+            out Filename, MovePattern :string);
+        procedure SetTitle(val :string);
+        procedure ConsoleTextOut(str :string);
     public
-      procedure DoFileProcessing(const lFileName: string; const lMovePattern: string;
-        const FormatCode: boolean; const SVN: boolean=false;
-  const lTextOut: TTextOutProc=nil);
+        procedure DoFileProcessing(const lFileName :string;
+            const lMovePattern :string; const FormatCode :boolean;
+            const SVN :boolean = False; const lTextOut :TTextOutProc = nil);
         procedure Init;
         procedure Run;
-        function SvnMoveFile(SourcePath, DestPath: string): boolean;
-        property Title: string read FTitle write SetTitle;
+        function SvnMoveFile(SourcePath, DestPath :string) :boolean;
+        property Title :string read FTitle write SetTitle;
 
     end;
 
 var
-    Application: TFileMoveApp;
+    Application :TFileMoveApp;
 
 implementation
 
@@ -62,12 +65,12 @@ begin
 end;
 
 
-function TFileMoveApp.SvnMoveFile(SourcePath, DestPath: string): boolean;
+function TFileMoveApp.SvnMoveFile(SourcePath, DestPath :string) :boolean;
 var
-    SvnMoveProcess: TProcess;
-    Buffer: string;
-    {%H-}ResultStr: string; // To Debug
-    n: longint;
+    SvnMoveProcess :TProcess;
+    Buffer :string;
+    {%H-}ResultStr :string; // To Debug
+    n      :longint;
 
 begin
     Result := False;
@@ -87,7 +90,7 @@ begin
                 ResultStr := Copy(Buffer, 1, n);
 
                 SetLength(Buffer, 1024);
-                n := Stderr.Read(Buffer[1], 1024);
+                n      := Stderr.Read(Buffer[1], 1024);
                 Result := (n = 0);
               except
                 // ignore error, default result is false
@@ -100,9 +103,9 @@ end;
 
 procedure TFileMoveApp.Run;
 var
-    lFileName, lMovePattern: string;
-    FormatCode: boolean;
-    SVN: boolean;
+    lFileName, lMovePattern :string;
+    FormatCode :boolean;
+    SVN :boolean;
 
 begin
     SVN := True;
@@ -110,139 +113,138 @@ begin
     HandleParameters(FormatCode, lFileName, lMovePattern);
 
     if (lFileName <> '') and FileExists(lFileName) then
-        DoFileProcessing(lFileName,lMovePattern, FormatCode, SVN,  ConsoleTextOut);
+        DoFileProcessing(lFileName, lMovePattern, FormatCode, SVN, ConsoleTextOut);
 
 end;
 
-procedure TFileMoveApp.SetTitle(val: string);
+procedure TFileMoveApp.SetTitle(val :string);
 begin
     FTitle := Val;
 end;
 
-procedure TFileMoveApp.ConsoleTextOut(str: String);
+procedure TFileMoveApp.ConsoleTextOut(str :string);
 begin
-  Writeln(Str);
+    Writeln(Str);
 end;
 
-procedure TFileMoveApp.DoFileProcessing(const lFileName: string;  const lMovePattern: string;
-  const FormatCode: boolean;  const SVN: boolean = false;
-  const lTextOut: TTextOutProc=nil);
+procedure TFileMoveApp.DoFileProcessing(const lFileName :string;
+    const lMovePattern :string; const FormatCode :boolean;
+    const SVN :boolean = False; const lTextOut :TTextOutProc = nil);
 
 var
-  lOldFilename: string;
-  lTt: Text;
-  lMoveLogFile: string;
-  lSvnPath: string;
-  bakfile: string;
-  NewName: string;
-  lFileInfo: string;
+    lOldFilename :string;
+    lTt      :Text;
+    lMoveLogFile :string;
+    lSvnPath :string;
+    bakfile  :string;
+    NewName  :string;
+    lFileInfo :string;
 begin
-  if FileInUse(lFileName) then
-    begin
-      if assigned(lTextOut) then
-      lTextOut(#7'File '+lFileName+' in use!');
-      exit;
-    end;
-  lFileInfo := getFileInfo(lFileName);
-   if lMovePattern <> '' then
-     begin
-       NewName := BuildStringByFunction(lMovePattern, lFileInfo);
-       if copy(NewNAme, length(NewName), 1) = DirectorySeparator then
-           NewName := NewName + ExtractFileName(lFileName);
-       if assigned(lTextOut) then
-       lTextOut(NewName);
-       Makepath(ExtractFilePath(NewName));
-     end
-   else
-       Newname := lFileName;
+    if FileInUse(lFileName) then
+      begin
+        if assigned(lTextOut) then
+            lTextOut(#7'File ' + lFileName + ' in use!');
+        exit;
+      end;
+    lFileInfo := getFileInfo(lFileName);
+    if lMovePattern <> '' then
+      begin
+        NewName := BuildStringByFunction(lMovePattern, lFileInfo);
+        if copy(NewNAme, length(NewName), 1) = DirectorySeparator then
+            NewName := NewName + ExtractFileName(lFileName);
+        if assigned(lTextOut) then
+            lTextOut(NewName);
+        Makepath(ExtractFilePath(NewName));
+      end
+    else
+        Newname := lFileName;
 
-   if FileExists(NewName) then
-     begin
-       if newname <> lFileName then
-         begin
-           bakfile := ChangeFileExt(Newname, '.BAK');
-           if fileexists(bakfile) then
-               deleteFile(bakfile);
-           RenameFile(NewName, Bakfile);
-         end;
-     end;
+    if FileExists(NewName) then
+      begin
+        if newname <> lFileName then
+          begin
+            bakfile := ChangeFileExt(Newname, '.BAK');
+            if fileexists(bakfile) then
+                deleteFile(bakfile);
+            RenameFile(NewName, Bakfile);
+          end;
+      end;
 
-   lOldFilename := NewName;
-   if SVN then
-     begin
-       lSvnPath := ExtractFilePath(lFileName);
-       if lSvnPath = '' then
-           lSvnPath := '.';
-       lSvnPath := IncludeTrailingPathDelimiter( lSvnPath)  + '.MoveLog';
-       Makepath(lSvnPath);
-       lMoveLogFile :=
-           lSvnPath + DirectorySeparator + ChangeFileExt(
-           extractfilename(lFileName), '.movelog');
-       AssignFile(lTt, lMoveLogFile);
-         try
-           if FileExists(lMoveLogFile) then
-             begin
-               reset(lTt);
-               readln(lTt, lOldFilename);
-               if copy(lOldFilename, 1, 1) = '"' then
-                   lOldFilename :=
-                       copy(lOldFilename, 2, length(trim(lOldFilename)) - 2);
-               lOldFilename :=
-                   '.\' + ExtractRelativepath(GetCurrentDir + '\', lOldFilename
-                     );
-             end
-           else
-               lOldFilename := '';
-           if lOldFilename <> NewName then
-             begin
-               if lOldFilename = '' then
-                   lOldFilename := NewName
-               else
-                   Makepath(ExtractFilePath(lOldFilename));
-               rewrite(lTt);
-               writeln(lTt, NewName);
-             end;
-         finally
-           CloseFile(lTt);
-         end;
-     end;
+    lOldFilename := NewName;
+    if SVN then
+      begin
+        lSvnPath := ExtractFilePath(lFileName);
+        if lSvnPath = '' then
+            lSvnPath := '.';
+        lSvnPath     := IncludeTrailingPathDelimiter(lSvnPath) + '.MoveLog';
+        Makepath(lSvnPath);
+        lMoveLogFile :=
+            lSvnPath + DirectorySeparator + ChangeFileExt(
+            extractfilename(lFileName), '.movelog');
+        AssignFile(lTt, lMoveLogFile);
+          try
+            if FileExists(lMoveLogFile) then
+              begin
+                reset(lTt);
+                readln(lTt, lOldFilename);
+                if copy(lOldFilename, 1, 1) = '"' then
+                    lOldFilename :=
+                        copy(lOldFilename, 2, length(trim(lOldFilename)) - 2);
+                lOldFilename     :=
+                    '.\' + ExtractRelativepath(GetCurrentDir + '\',
+                    lOldFilename);
+              end
+            else
+                lOldFilename := '';
+            if lOldFilename <> NewName then
+              begin
+                if lOldFilename = '' then
+                    lOldFilename := NewName
+                else
+                    Makepath(ExtractFilePath(lOldFilename));
+                rewrite(lTt);
+                writeln(lTt, NewName);
+              end;
+          finally
+            CloseFile(lTt);
+          end;
+      end;
 
-   if FormatCode then
-     begin
-         try
-           sewfile.loadfromfile(lFileName);
-           sewfile.autoformat;
-           sewfile.savetofile(lOldFilename);
-         except
-         end;
-       if fileexists(lOldFilename) and (lOldFilename <> lFileName) then
-           DeleteFile(lFileName)
-       else
-           RenameFile(bakfile, lFileName);
-     end
-   else
-   if (lOldFilename <> lFileName) and not
-       RenameFile(lFileName, lOldFilename) then
-       readln;
+    if FormatCode then
+      begin
+          try
+            sewfile.loadfromfile(lFileName);
+            sewfile.autoformat;
+            sewfile.savetofile(lOldFilename);
+          except
+          end;
+        if fileexists(lOldFilename) and (lOldFilename <> lFileName) then
+            DeleteFile(lFileName)
+        else
+            RenameFile(bakfile, lFileName);
+      end
+    else if (lOldFilename <> lFileName) and not
+        RenameFile(lFileName, lOldFilename) then
+        readln;
 
-   if (lOldFilename <> NewName) then
-     begin
-       //SVN - Move
-       SvnMoveFile(lOldFilename, NewName);
-       if FileExists(lOldFilename) then
-         begin
-           Makepath(ExtractFilePath(NewName));
-           RenameFile(lOldFilename, NewName);
-         end;
-     end;
+    if (lOldFilename <> NewName) then
+      begin
+        //SVN - Move
+        SvnMoveFile(lOldFilename, NewName);
+        if FileExists(lOldFilename) then
+          begin
+            Makepath(ExtractFilePath(NewName));
+            RenameFile(lOldFilename, NewName);
+          end;
+      end;
 end;
 
-procedure TFileMoveApp.HandleParameters(out FormatCode: boolean;
-    out Filename, MovePattern: string);
+procedure TFileMoveApp.HandleParameters(out FormatCode :boolean;
+    out Filename, MovePattern :string);
 var
-    FI: string;
+    FI :string;
 begin
-    Filename := '';
+    Filename    := '';
     MovePattern := '';
     if paramcount = 0 then
       begin
@@ -259,16 +261,17 @@ begin
       begin
         if uppercase(ParamStr(1)) = '/F' then
           begin
-            Filename := ParamStr(2);
+            Filename   := ParamStr(2);
             FormatCode := True;
             if (paramcount >= 3) then
                 MovePattern := ParamStr(3);
           end
         else
           begin
-            Filename := ParamStr(1);
+            Filename    := ParamStr(1);
             MovePattern := ParamStr(2);
-            FormatCode := False;
+            FormatCode  := False;
+
           end;
       end;
 end;

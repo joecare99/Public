@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -18,9 +18,6 @@
     <i18n>
       <EnableI18N LFM="False"/>
     </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="4">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
@@ -32,7 +29,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="..\..\include;..\source;$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source"/>
+            <OtherUnitFiles Value="..\Source;..\Source\Labyrinth"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -75,7 +72,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="..\..\include;..\source;$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source"/>
+            <OtherUnitFiles Value="..\Source;..\Source\Labyrinth"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -114,7 +111,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="..\..\include;..\source;$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source"/>
+            <OtherUnitFiles Value="..\Source;..\Source\Labyrinth"/>
             <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -151,14 +148,18 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
+      <Modes Count="1">
+        <Mode0 Name="default"/>
+      </Modes>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="LCL"/>
+        <PackageName Value="Printer4Lazarus"/>
       </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
     </RequiredPackages>
     <Units Count="7">
       <Unit0>
@@ -166,38 +167,38 @@
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Source\Labydemo3d.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-      </Unit1>
-      <Unit2>
         <Filename Value="..\Source\ProgressBarU.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="..\Source\LabyU3D.pas"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\Source\Labyrinth\LabyU3D.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Laby"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\Source\unt_Lists.pas"/>
+        <IsPartOfProject Value="True"/>
       </Unit3>
       <Unit4>
-        <Filename Value="..\Source\unt_Lists.pas"/>
+        <Filename Value="..\Source\Labyrinth\unt_Point3d.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit4>
       <Unit5>
-        <Filename Value="..\Source\unt_Point3d.pas"/>
-        <IsPartOfProject Value="True"/>
-      </Unit5>
-      <Unit6>
         <Filename Value="..\Source\Fra_WindRose.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FraWindRose"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\Source\Labyrinth\Labydemo3d.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="frmLabyDemo3d"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit6>
     </Units>
   </ProjectOptions>
