@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  frm_laby4 in '..\source\frm_laby4.pas' {Form2};
+  frm_laby4 in '..\source\labyrinth\frm_laby4.pas' {Form2};
 
 begin
   Application.Initialize;

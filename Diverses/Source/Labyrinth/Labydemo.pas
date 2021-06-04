@@ -16,7 +16,7 @@ uses
   ExtCtrls, StdCtrls;
 
 type
-  TForm1 = class(TForm)
+  TfrmLabyDemo = class(TForm)
     Image1: TImage;
     Button1: TButton;
     Button2: TButton;
@@ -30,7 +30,7 @@ type
   end;
 
 var
-  Form1: TForm1;
+  frmLabyDemo: TfrmLabyDemo;
 
 implementation
 
@@ -42,7 +42,7 @@ uses ProgressBarU, LabyU2,unt_Point2d,variants;
   {$R *.lfm}
 {$ENDIF}
 
-procedure TForm1.Button1Click(Sender: TObject);
+procedure TfrmLabyDemo.Button1Click(Sender: TObject);
 var i:integer;
 begin
    {ProgessForm.Caption := 'Testfortschritt';
@@ -58,7 +58,7 @@ begin
 end;
 
 
-procedure TForm1.Button2Click(Sender: TObject);
+procedure TfrmLabyDemo.Button2Click(Sender: TObject);
 var path:variant;
     x,y:integer;
   i,d: integer;
@@ -87,7 +87,7 @@ begin
     end;
 end;
 
-procedure TForm1.Image1Click(Sender: TObject);
+procedure TfrmLabyDemo.Image1Click(Sender: TObject);
 
 var i,j,imax:integer;
     hp:T2DPoint;

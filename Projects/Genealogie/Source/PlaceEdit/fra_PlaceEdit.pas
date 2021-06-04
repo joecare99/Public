@@ -115,7 +115,7 @@ type
 
 implementation
 
- uses LCLType, graphics, mvEngine, mvDE_BGRA, Cls_GedComExt ;
+ uses LCLType, LazUTF8 ,graphics, mvEngine, mvDE_BGRA, Cls_GedComExt ;
 
  {$R *.lfm}
 
@@ -386,7 +386,9 @@ end;
 
 procedure TFraPlaceEdit.DoLocatePlace(Data: PtrInt);
 begin
-  DataSource1.DataSet.Locate('Ortname', edit1.Text,[loPartialKey,loCaseInsensitive])
+  if not DataSource1.DataSet.Locate(rsOrteName, edit1.Text,[loPartialKey,loCaseInsensitive]) then
+    DataSource1.DataSet.Locate(rsOrteName, winCPtoutf8(edit1.Text),[loPartialKey,loCaseInsensitive]);
+
 end;
 
 procedure TFraPlaceEdit.UpdateCoords(X, Y: Integer);
@@ -483,6 +485,7 @@ begin
               begin
                 ProgressBar1.Position:=lActChild.ID;
                 Application.ProcessMessages;
+                lTime:=GetTickCount64;
               end
           end;
       finally

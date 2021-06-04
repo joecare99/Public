@@ -8,7 +8,7 @@ unit fpvnet;
 interface
 
 uses
-  VisualSocket, LazarusPackageIntf;
+  VisualSocket, fpsock2, LazarusPackageIntf;
 
 implementation
 

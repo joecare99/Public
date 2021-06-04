@@ -1,6 +1,9 @@
 unit fra_OFBView;
 
 {$mode objfpc}{$H+}
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
 
 interface
 
@@ -12,10 +15,10 @@ type
     { TFraOFBView }
 
     TFraOFBView = class(TFrame, IDataRO)
-        ListBox1: TListBox;
-        Memo1: TMemo;
-        Splitter1: TSplitter;
-        procedure ListBox1SelectionChange(Sender: TObject; User: boolean);
+        lbxEntries: TListBox;
+        edtDetail: TMemo;
+        splSplitter1: TSplitter;
+        procedure lbxEntriesSelectionChange(Sender: TObject; User: boolean);
     private
         fOdfFile: TOdfDocument;
         FOnUpdate: TNotifyEvent;
@@ -58,41 +61,46 @@ uses Laz2_DOM, Unt_StringProcs;
 
 { TFraOFBView }
 
-procedure TFraOFBView.ListBox1SelectionChange(Sender: TObject; User: boolean);
+procedure TFraOFBView.lbxEntriesSelectionChange(Sender: TObject; User: boolean);
 var
     lStr: TStrings;
 
 begin
-    lStr := Memo1.Lines;
-    ExtractEntry(ListBox1.itemindex,lStr);
+    lStr := edtDetail.Lines;
+    ExtractEntry(lbxEntries.itemindex,lStr);
     if assigned(FOnUpdate) then
         FOnUpdate(self);
 end;
 
 function TFraOFBView.GetLines: TStrings;
 begin
-    Result := memo1.Lines;
+    Result := edtDetail.Lines;
 end;
 
 procedure TFraOFBView.ExtractEntry(Idx:Integer;const lStr: TStrings);
 var
-  lLine,lTc: string;
+  lLine: string;
   lNextNode: TDOMNode;
   lTestNode: TDOMNode;
+  {$ifdef DEBUG}
   lNodeName: DOMString;
+  lTc:string;
+  {$endif}
 begin
   lstr.Clear;
-  lTestNode := TDOMNode(listbox1.Items.Objects[Idx]);
-  if Idx < Listbox1.Items.Count - 1 then
-      lNextNode := TDOMNode(listbox1.Items.Objects[Idx + 1])
+  lTestNode := TDOMNode(lbxEntries.Items.Objects[Idx]);
+  if Idx < lbxEntries.Items.Count - 1 then
+      lNextNode := TDOMNode(lbxEntries.Items.Objects[Idx + 1])
   else
       lnextNode := TDOMNode(lTestNode.GetNextNodeSkipChildren);
   lLine := '';
   while assigned(ltestnode) and (ltestnode <> lnextnode) and
       (lTestNode.textcontent <> '§') and (lTestNode.NodeName <> 'text:h') do
     begin
+      {$ifdef DEBUG}
       lNodeName := lTestnode.Nodename;
       lTc := lTestNode.TextContent;
+      {$ENDif}
       if lTestnode.ClassNameIs('TDOMText') then
           lLine := lLine + lTestNode.TextContent;
       if lTestnode.Nodename = 'text:tab' then
@@ -111,22 +119,22 @@ end;
 
 function TFraOFBView.GetCount: integer;
 begin
-  result := ListBox1.Count;
+  result := lbxEntries.Count;
 end;
 
 function TFraOFBView.GetSelCount: integer;
 begin
-  Result := ListBox1.SelCount;
+  Result := lbxEntries.SelCount;
 end;
 
 function TFraOFBView.GetSelected(Index: integer): boolean;
 begin
-  result := ListBox1.Selected[Index];
+  result := lbxEntries.Selected[Index];
 end;
 
 procedure TFraOFBView.SetSelected(Index: integer; AValue: boolean);
 begin
-  ListBox1.Selected[Index]:=AValue;
+  lbxEntries.Selected[Index]:=AValue;
 end;
 
 constructor TFraOFBView.Create(TheOwner: TComponent);
@@ -152,7 +160,7 @@ var
     lNodeValue: string;
     lEntryFlag: boolean;
 begin
-    ListBox1.Clear;
+    lbxEntries.Clear;
     FreeAndNil(fOdfFile);
     fOdfFile := TOdfTextDocument.LoadFromFile(Filename);
     lParas := fOdfFile.Body.FindNode('office:text').ChildNodes;
@@ -168,7 +176,7 @@ begin
             (lNodeValue[2] <> ')') and (lNodeValue[2] <> '.') and (lNodeValue[2] <> '●'[2]) and
             (lNodeValue[3] <> ')') then
           begin
-            listbox1.AddItem(lNodeValue, lTestNode);
+            lbxEntries.AddItem(lNodeValue, lTestNode);
             lEntryFlag := True;
           end;
         if lEntryFlag and (lTestNode.NodeName = 'text:h') and
@@ -179,7 +187,7 @@ end;
 
 function TFraOFBView.getdata: variant;
 begin
-    Result := memo1.Text;
+    Result := edtDetail.Text;
 end;
 
 function TFraOFBView.GetLines(Index: integer): TStrings;
@@ -190,36 +198,36 @@ end;
 
 procedure TFraOFBView.First(Sender: TObject);
 begin
-    listbox1.ItemIndex := 0;
+    lbxEntries.ItemIndex := 0;
 end;
 
 procedure TFraOFBView.Last(Sender: TObject);
 begin
-    listbox1.ItemIndex := listbox1.Items.Count - 1;
+    lbxEntries.ItemIndex := lbxEntries.Items.Count - 1;
 end;
 
 procedure TFraOFBView.Next(Sender: TObject);
 begin
     if not EOF then
-        listbox1.ItemIndex := listbox1.ItemIndex + 1;
+        lbxEntries.ItemIndex := lbxEntries.ItemIndex + 1;
 end;
 
 procedure TFraOFBView.Previous(Sender: TObject);
 begin
     if not BOF then
-        listbox1.ItemIndex := listbox1.ItemIndex - 1;
+        lbxEntries.ItemIndex := lbxEntries.ItemIndex - 1;
 end;
 
 procedure TFraOFBView.Seek(aID: integer);
 begin
-    if listbox1.ItemIndex = aID then
+    if lbxEntries.ItemIndex = aID then
         exit;
-    listbox1.ItemIndex := aID;
+    lbxEntries.ItemIndex := aID;
 end;
 
 function TFraOFBView.GetActID: integer;
 begin
-    Result := listbox1.ItemIndex;
+    Result := lbxEntries.ItemIndex;
 end;
 
 function TFraOFBView.GetOnUpdate: TNotifyEvent;
@@ -236,12 +244,12 @@ end;
 
 function TFraOFBView.EOF: boolean;
 begin
-    Result := listbox1.ItemIndex >= listbox1.Items.Count - 1;
+    Result := lbxEntries.ItemIndex >= lbxEntries.Items.Count - 1;
 end;
 
 function TFraOFBView.BOF: boolean;
 begin
-    Result := listbox1.ItemIndex <= 0;
+    Result := lbxEntries.ItemIndex <= 0;
 end;
 
 end.

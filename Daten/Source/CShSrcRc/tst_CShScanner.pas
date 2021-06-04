@@ -146,11 +146,13 @@ type
         procedure TestGreaterEqualThan;
         procedure TestPower;
         procedure TestSymmetricalDifference;
+        procedure TestKomplement;
+        procedure TestAllnonChar;
+
         procedure TestAbstract;
         procedure TestAs;
         procedure TestBase;
         procedure TestBool;
-
         procedure TestBreak;
         procedure TestByte;
         procedure TestCase;
@@ -242,6 +244,7 @@ type
         procedure TestVolatile;
 
         procedure TestWhile;
+        procedure TestAllChar;
 
         procedure TestLineEnding;
         procedure TestTab;
@@ -272,8 +275,8 @@ type
         procedure TestDefine12;
         procedure TestDefine13;
         procedure TestDefine14;
-        procedure TestInclude;
-        procedure TestInclude2;
+//        procedure TestInclude;
+//        procedure TestInclude2;
         procedure TestUnDefine1;
         procedure TestIFDefined;
         procedure TestIFUnDefined;
@@ -288,7 +291,7 @@ type
         procedure TestModeSwitch;
         procedure TestOperatorIdentifier;
         procedure TestUTF8BOM;
-        procedure TestBooleanSwitch;
+        procedure TestAskAsk;
         procedure TestSomeLine1;
     end;
 
@@ -688,7 +691,7 @@ end;
 procedure TTestCShScanner.TestCharString2;
 
 begin
-    TestToken(CShScanner.tkCharacter, '''\n''');
+    TestToken(CShScanner.tkCharacter, '''\n''',true,false);
 end;
 
 
@@ -701,13 +704,13 @@ end;
 procedure TTestCShScanner.TestNumber2;
 
 begin
-    TestToken(tkNumber, '123f');
+    TestToken(tkNumber, '123f',true,false);
 end;
 
 procedure TTestCShScanner.TestNumber3;
 
 begin
-    TestToken(tkNumber, '123d');
+    TestToken(tkNumber, '123d',true,false);
 end;
 
 procedure TTestCShScanner.TestCharacter;
@@ -1439,6 +1442,37 @@ begin
     TestToken(tkshr, '>>');
 end;
 
+procedure TTestCShScanner.TestKomplement;
+begin
+    TestToken(tkKomplement, '~');
+end;
+
+procedure TTestCShScanner.TestAskAsk;
+begin
+    TestToken(tkAskAsk, '??');
+end;
+
+procedure TTestCShScanner.TestAllnonChar;
+var
+  tkn: TToken;
+begin
+   for tkn in TToken do
+     if tkn <> tkComment then
+       if not (TokenInfos[tkn][1] in ['A'..'Z','a'..'z']) then
+         TestToken(tkn, TokenInfos[tkn] );
+end;
+
+procedure TTestCShScanner.TestAllChar;
+var
+  tkn: TToken;
+begin
+   for tkn in TToken do
+     if tkn > tkComment then
+       if  (TokenInfos[tkn][1] in ['A'..'Z','a'..'z']) then
+         TestToken(tkn, TokenInfos[tkn] );
+end;
+
+
 procedure TTestCShScanner.TestLineEnding;
 
 begin
@@ -1522,7 +1556,7 @@ procedure TTestCShScanner.TestDefine2;
 begin
     FSCanner.Defines.Add('ALWAYS');
     TestTokens([tkLineComment, tkLineEnding, tkout, tkLineEnding, tkLineComment],
-        '#if (ALWAYS) comment '+LineEnding+'out'+LineEnding+'#endif');
+        '#if (ALWAYS)'+LineEnding+'out'+LineEnding+'#endif');
 end;
 
 procedure TTestCShScanner.TestDefine21;
@@ -1632,21 +1666,22 @@ begin
 
 end;
 
-procedure TTestCShScanner.TestInclude;
-begin
-    FResolver.AddStream('myinclude.inc', TStringStream.Create('if true then'));
-    FScanner.SkipWhiteSpace := True;
-    FScanner.SkipComments := True;
-    TestTokens([tkIf, tkTrue, tkIdentifier], '#I myinclude.inc', True, False);
-end;
-
-procedure TTestCShScanner.TestInclude2;
-begin
-    FResolver.AddStream('myinclude.inc', TStringStream.Create('if true then'));
-    FScanner.SkipWhiteSpace := True;
-    FScanner.SkipComments := True;
-    TestTokens([tkIf, tkTrue, tkIdentifier, tkElse], '#I myinclude.inc else', True, False);
-end;
+// no include
+//procedure TTestCShScanner.TestInclude;
+//begin
+//    FResolver.AddStream('myinclude.inc', TStringStream.Create('if true then'));
+//    FScanner.SkipWhiteSpace := True;
+//    FScanner.SkipComments := True;
+//    TestTokens([tkIf, tkTrue, tkIdentifier], '#I myinclude.inc', True, False);
+//end;
+//
+//procedure TTestCShScanner.TestInclude2;
+//begin
+//    FResolver.AddStream('myinclude.inc', TStringStream.Create('if true then'));
+//    FScanner.SkipWhiteSpace := True;
+//    FScanner.SkipComments := True;
+//    TestTokens([tkIf, tkTrue, tkIdentifier, tkElse], '#I myinclude.inc else', True, False);
+//end;
 
 procedure TTestCShScanner.TestUnDefine1;
 begin
@@ -1660,7 +1695,7 @@ begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
     TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose],
-        '#DEFINE A'+LineEnding+'#IF A'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
+        '#define A'+LineEnding+'#if A'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
 end;
 
 procedure TTestCShScanner.TestIFUnDefined;
@@ -1668,23 +1703,23 @@ begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
     TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose],
-        '#IF !A'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
+        '#if !A'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
 end;
 
 procedure TTestCShScanner.TestIFAnd;
 begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
-    TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose, tkDot],
-        '#DEFINE A'+LineEnding+'#IF (A & !B)'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
+    TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose],
+        '#define A'+LineEnding+'#if (A & !B)'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
 end;
 
 procedure TTestCShScanner.TestIFAndShortEval;
 begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
-    TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose, tkDot],
-        '#UNDEFINE A'+LineEnding+'#IF (A && !B)'+LineEnding+'wrong'+LineEnding+'#else'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}',
+    TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose],
+        '#undefine A'+LineEnding+'#IF (A && !B)'+LineEnding+'wrong'+LineEnding+'#else'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}',
         True, False);
 end;
 
@@ -1692,16 +1727,16 @@ procedure TTestCShScanner.TestIFOr;
 begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
-    TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose, tkDot],
-        '#DEFINE B'+LineEnding+'#IF (A | B)'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
+    TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose],
+        '#define B'+LineEnding+'#IF (A | B)'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
 end;
 
 procedure TTestCShScanner.TestIFOrShortEval;
 begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
-    TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose, tkDot],
-        '#DEFINE A'+LineEnding+'#IF (A || B)'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
+    TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose],
+        '#define A'+LineEnding+'#IF (A || B)'+LineEnding+'{'+LineEnding+'#endif'+LineEnding+'}', True, False);
 end;
 
 procedure TTestCShScanner.TestIFXor;
@@ -1709,7 +1744,7 @@ begin
     FScanner.SkipWhiteSpace := True;
     FScanner.SkipComments := True;
     TestTokens([tkCurlyBraceOpen, tkCurlyBraceClose],
-        '#DEFINE B' + LineEnding +'#IF (A ^ B)' + LineEnding +'{' + LineEnding +'#endif' + LineEnding +'}', True, False);
+        '#define B' + LineEnding +'#IF (A ^ B)' + LineEnding +'{' + LineEnding +'#endif' + LineEnding +'}', True, False);
 end;
 
 procedure TTestCShScanner.TestIFAndOr;
@@ -1735,9 +1770,9 @@ begin
     FScanner.AddDefine('cpu32');
     TestTokens([tkconst, tkIdentifier, tkEqual, tkString, tkSemicolon,
         tkCurlyBraceOpen, tkCurlyBraceClose],
-        'const platform == ' + LineEnding + '#if defined(cpu32)} ''x86''' +
-        LineEnding + '#elif defined(cpu64)} ''x64''' + LineEnding +
-        '#else #error unknown platform} #endif;' + LineEnding + '{ }', True, False);
+        'const platform == ' + LineEnding + '#if cpu32' + LineEnding + '''x86''' +
+        LineEnding + '#elif cpu64' + LineEnding + '''x64''' + LineEnding +
+        '#else' + LineEnding + '#error unknown platform' + LineEnding + '#endif' + LineEnding + '{ }', True, False);
 end;
 
 procedure TTestCShScanner.TestIfError;
@@ -1746,7 +1781,7 @@ begin
     FScanner.SkipComments := True;
     TestTokens([tkIdentifier,tkIdentifier, tkSemicolon, tkCurlyBraceOpen, tkCurlyBraceClose],
         'program Project1;' + LineEnding + '{' + LineEnding +
-        '#if sizeof(integer) <> 4} #error wrong sizeof(integer)} #endif}' +
+        '#if sizeof(integer) <> 4' + LineEnding + '#error wrong sizeof(integer)' + LineEnding + '#endif}' +
         LineEnding + '}', True, False);
 end;
 
@@ -1785,16 +1820,6 @@ procedure TTestCShScanner.TestUTF8BOM;
 
 begin
     DoTestToken(tkLineEnding, #$EF + #$BB + #$BF);
-end;
-
-procedure TTestCShScanner.TestBooleanSwitch;
-
-begin
-    Scanner.CurrentBoolSwitches := [bsHints];
-    // end space intentional.
-    NewSource('#HINTS OFF }');
-    while not (Scanner.FetchToken = tkEOF) do ;
-    AssertFalse('Hints off', bshints in Scanner.CurrentBoolSwitches);
 end;
 
 Procedure TTestCShScanner.TestSomeLine1;

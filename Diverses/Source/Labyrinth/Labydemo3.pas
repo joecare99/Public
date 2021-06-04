@@ -4,31 +4,31 @@ unit Labydemo3;
   {$MODE Delphi}
 {$ENDIF}
 
+interface
+
 {$IF FPC_FULLVERSION < 030301}
    {$WARN 6058 off}{ : Call to subroutine "$1" marked as inline is not inlined}
 {$endif}
 
-interface
-
 uses
 {$IFnDEF FPC}
-    pngimage, jpeg, Windows,  {UITypes,(?)}
+    pngimage, jpeg, Windows,
+ {$IFDEF HasUITypes} UITypes, {$ENDIF}
 {$ELSE}
   LCLIntf, LCLType, JPEGLib, FileUtil,
 {$ENDIF}
-    SysUtils, Classes, Graphics, Controls, Forms, Dialogs, ExtCtrls, StdCtrls,
-    LabyU3, Fra_WindRose, ExtDlgs, ActnList, StdActns, Menus, Buttons,
-    unt_Point2d;
+    SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+    ExtCtrls, StdCtrls, LabyU3D, Fra_WindRose, ExtDlgs, unt_Point3d;
 
 type
 
-    { TForm1 }
+    { TfrmLabyDemo3 }
 
-    TForm1 = class(TForm)
+    TfrmLabyDemo3 = class(TForm)
         actCreateLaby: TAction;
         actFileSave: TAction;
         ActionList1: TActionList;
-        BitBtn1: TBitBtn;
+        btnShow: TBitBtn;
         btnRotLeft: TButton;
         btnRotRight: TButton;
         Btn_Back: TButton;
@@ -39,7 +39,7 @@ type
         actFileOpen1: TFileOpen;
         actFileSaveAs1: TFileSaveAs;
         FraWindRose1: TFraWindRose;
-        ImgDisplay: TImage;
+        imgDisplay: TImage;
         Btn_Create: TButton;
         Btn_Test1: TButton;
         Btn_Load: TButton;
@@ -55,7 +55,7 @@ type
         N1: TMenuItem;
         pnlRightTop: TPanel;
         pnlRight: TPanel;
-        Panel3: TPanel;
+        pnlRightClient: TPanel;
         Timer1: TTimer;
         OpenDialog1: TOpenDialog;
         Label1: TLabel;
@@ -64,15 +64,15 @@ type
         Btn_Test3: TButton;
         Btn_Test4: TButton;
         OpenPictureDialog1: TOpenPictureDialog;
-        LabeledEdit1: TLabeledEdit;
-        LabeledEdit2: TLabeledEdit;
+        edtXDim: TLabeledEdit;
+        edtYDim: TLabeledEdit;
         procedure actFileOpen1BeforeExecute(Sender: TObject);
         procedure actFileOpen1Cancel(Sender: TObject);
-        procedure BitBtn1Click(Sender: TObject);
+        procedure btnShowClick(Sender: TObject);
         procedure Btn_Test1Click(Sender: TObject);
         procedure actCreateExecute(Sender: TObject);
         procedure FraWindRose1Resize(Sender: TObject);
-        procedure ImgDisplayClick(Sender: TObject);
+        procedure imgDisplayClick(Sender: TObject);
         procedure Btn_LoadClick(Sender: TObject);
         procedure btnRotRightClick(Sender: TObject);
         procedure btnRotLeftClick(Sender: TObject);
@@ -113,7 +113,7 @@ type
     end;
 
 var
-    Form1: TForm1;
+    frmLabyDemo3: TfrmLabyDemo3;
 
 implementation
 
@@ -129,23 +129,23 @@ uses ProgressBarU, variants;
 const
     GoldCut = 0.61803398874989484820458683436564;
 
-procedure TForm1.Btn_Test4Click(Sender: TObject);
+procedure TfrmLabyDemo3.Btn_Test4Click(Sender: TObject);
 
 begin
     if OpenPictureDialog1.Execute then
       begin
-        ImgDisplay.Canvas.Brush.Color := clDkGray;
-        ImgDisplay.Canvas.FillRect(ImgDisplay.Canvas.cliprect);
+        imgDisplay.Canvas.Brush.Color := clDkGray;
+        imgDisplay.Canvas.FillRect(imgDisplay.Canvas.cliprect);
 
         FPictFilename := OpenPictureDialog1.filename;
 
         PutImage(0, 0, FPictFilename, 500, putpixel);
         // PutImage(0, 200, FPictFilename, 330, putpixel);
-        // ImgDisplay.{Picture.bitmap.}Canvas, ImgDisplay.{Picture.bitmap.}Canvas.cliprect);
+        // imgDisplay.{Picture.bitmap.}Canvas, imgDisplay.{Picture.bitmap.}Canvas.cliprect);
       end;
 end;
 
-procedure TForm1.actCreateExecute(Sender: TObject);
+procedure TfrmLabyDemo3.actCreateExecute(Sender: TObject);
 
 begin
     { ProgessForm.Caption := 'Testfortschritt';
@@ -157,8 +157,8 @@ begin
       ProgessForm.hide;
     }
     Laby.Show;
-    laby.Laby_width := StrToInt(LabeledEdit1.Text);
-    laby.Laby_Length := StrToInt(LabeledEdit2.Text);
+    laby.Laby_width := StrToInt(edtXDim.Text);
+    laby.Laby_Length := StrToInt(edtYDim.Text);
     setlength(Laby.fobstacles, 5);
     Laby.fobstacles[0] := PutLogoUR;
     Laby.fobstacles[1] := DoRandomPoints;
@@ -169,19 +169,19 @@ begin
     Laby.CreateLaby;
 end;
 
-procedure TForm1.FraWindRose1Resize(Sender: TObject);
+procedure TfrmLabyDemo3.FraWindRose1Resize(Sender: TObject);
 begin
 
 end;
 
-procedure TForm1.Btn_Test1Click(Sender: TObject);
+procedure TfrmLabyDemo3.Btn_Test1Click(Sender: TObject);
 var
     path: variant;
     x, y: integer;
     // i: Integer;
 begin
-    ImgDisplay.Canvas.Brush.Color := clDkGray;
-    ImgDisplay.Canvas.FillRect(ImgDisplay.Canvas.cliprect);
+    imgDisplay.Canvas.Brush.Color := clDkGray;
+    imgDisplay.Canvas.FillRect(imgDisplay.Canvas.cliprect);
 
     path := vararrayof([2, 1, 12, 4, 4, 4, 6, 5, 2, 11, 12, 10, 10,
         12, 2, 6, 4, 2, 12, 10, 10, 2, 12, 2, 5, 7, 4, 1, 1, 12, 10,
@@ -189,14 +189,14 @@ begin
         10, 2, 4, 3, 1, 11, 10, 12, 4, 4, 2, 10, 10, 12, 2,
         // 12,10,10,2,
         12, 2, 5, 7, 4, 1, 1]);
-    x := ImgDisplay.Width - 50;
+    x := imgDisplay.Width - 50;
     y := 50;
     PutLogo(x, y, path, putpixel, 1);
     PutLogo(x, y + 40, path, putpixel, 2);
     PutLogo(x, y + 80, path, putpixel, 3);
 end;
 
-procedure TForm1.actFileOpen1BeforeExecute(Sender: TObject);
+procedure TfrmLabyDemo3.actFileOpen1BeforeExecute(Sender: TObject);
 begin
     Laby.Show;
     with Laby do
@@ -216,17 +216,17 @@ begin
       end;
 end;
 
-procedure TForm1.actFileOpen1Cancel(Sender: TObject);
+procedure TfrmLabyDemo3.actFileOpen1Cancel(Sender: TObject);
 begin
     Laby.Hide;
 end;
 
-procedure TForm1.BitBtn1Click(Sender: TObject);
+procedure TfrmLabyDemo3.btnShowClick(Sender: TObject);
 begin
-  laby.Show;
+    laby.Show;
 end;
 
-procedure TForm1.Btn_LoadClick(Sender: TObject);
+procedure TfrmLabyDemo3.Btn_LoadClick(Sender: TObject);
 begin
     Laby.LoadLaby(actFileOpen1.Dialog.filename);
     if assigned(Laby.eingang) then
@@ -241,22 +241,22 @@ begin
     Laby.Hide;
 end;
 
-procedure TForm1.btnRotLeftClick(Sender: TObject);
+procedure TfrmLabyDemo3.btnRotLeftClick(Sender: TObject);
 begin
     FDirection := (FDirection + 350) mod 360;
     FraWindRose1.direction := FDirection;
     DrawLaby(Sender);
 end;
 
-procedure TForm1.btnRotRightClick(Sender: TObject);
+procedure TfrmLabyDemo3.btnRotRightClick(Sender: TObject);
 begin
     FDirection := (FDirection + 10) mod 360;
     FraWindRose1.direction := FDirection;
     DrawLaby(Sender);
 end;
 
-procedure TForm1.PutLogo(x, y: integer; path: variant;
-    putpixel: TPutObstaclePxl; wfact: integer);
+procedure TfrmLabyDemo3.PutLogo(x, y: integer; path: variant; putpixel: TPutObstaclePxl;
+    wfact: integer);
 var
     dir, dir1, dir2: shortint;
     I: Tcolor;
@@ -290,7 +290,7 @@ begin
     tr.Free;
 end;
 
-procedure TForm1.RandomPoints(x, y, size, Count: integer; putpixel: TPutObstaclePxl);
+procedure TfrmLabyDemo3.RandomPoints(x, y, size, Count: integer; putpixel: TPutObstaclePxl);
 var
     I: integer;
     dd, ausl, lx, ly, lz: extended;
@@ -321,7 +321,7 @@ begin
     tr.Free;
 end;
 
-procedure TForm1.RandomQuadr(x, y: integer; ausl, dx, dy: extended;
+procedure TfrmLabyDemo3.RandomQuadr(x, y: integer; ausl, dx, dy: extended;
     putpixel: TPutObstaclePxl);
 var
     I, J: integer;
@@ -337,16 +337,16 @@ begin
             jitter := random * 0.5;
             for I := round(-ausl / dx) to round(ausl / dx) do
               begin
-                putpixel(tr.copy(x + round(sin(dd) *
-                    J * dy + cos(dd) * (I + jitter) * dx), y +
-                    round(cos(dd) * J * dy - sin(dd) * (I + jitter) * dx))
+                putpixel(tr.copy(x + round(sin(dd) * J *
+                    dy + cos(dd) * (I + jitter) * dx), y + round(cos(dd) * J *
+                    dy - sin(dd) * (I + jitter) * dx))
                     , True);
               end;
           end;
     tr.Free;
 end;
 
-procedure TForm1.PutImage(x, y: integer; filename: string; size: integer;
+procedure TfrmLabyDemo3.PutImage(x, y: integer; filename: string; size: integer;
     putpixel: TPutObstaclePxl);
 
     function min(a1, a2: integer): integer; inline;
@@ -382,7 +382,8 @@ begin
             LmaxSize := LPicture.Width;
 
         Lbitmap := Tbitmap.Create;
-        Lbitmap.SetSize(trunc(LPicture.Width * size div (LmaxSize * 3)),
+        Lbitmap.SetSize(
+            trunc(LPicture.Width * size div (LmaxSize * 3)),
             trunc(LPicture.Height * size div (LmaxSize * 3)));
         Lbitmap.PixelFormat := pf24bit;
         Lbitmap.Canvas.StretchDraw(Lbitmap.Canvas.cliprect, LPicture.Graphic);
@@ -405,6 +406,8 @@ begin
                     mn := C;
               end;
           end;
+        mx := mx - 10;
+        mn := mn + 10;
         avg := avg div (Lbitmap.Height * Lbitmap.Width);
         for I := 0 to Lbitmap.Height - 1 do
           begin
@@ -423,8 +426,8 @@ begin
                   begin
                     f := -mx + C;
                     //C := 255;
-                    putpixel(tr.copy(x + size -
-                        Lbitmap.Width * 3 + J * 3, y + I * 3),
+                    putpixel(tr.copy(x + size - Lbitmap.Width *
+                        3 + J * 3, y + I * 3),
                         True);
                   end
                 else
@@ -444,7 +447,7 @@ begin
       end;
 end;
 
-procedure TForm1.PutLogoUR(putpixel: TPutObstaclePxl);
+procedure TfrmLabyDemo3.PutLogoUR(putpixel: TPutObstaclePxl);
 var
     path: variant;
     ww: integer;
@@ -457,23 +460,23 @@ begin
         // 12,10,10,2,
         12, 2, 5, 7, 4, 1, 1]);
 
-    if Laby.Laby_Width < 300 then
+    if Laby.Laby_Width < 200 then
         ww := 1
-    else if Laby.Laby_Width < 500 then
+    else if Laby.Laby_Width < 350 then
         ww := 2
     else
         ww := 3;
     PutLogo(Laby.Laby_Width - 10, Laby.Laby_Length - 10, path, putpixel, ww);
 end;
 
-procedure TForm1.putpixel(dp: T2dpoint; Value: boolean);
+procedure TfrmLabyDemo3.putpixel(dp: T2dpoint; Value: boolean);
 begin
     if Value then
         with dp do
-            ImgDisplay.Canvas.Pixels[x, y] := clWhite;
+            imgDisplay.Canvas.Pixels[x, y] := clWhite;
 end;
 
-procedure TForm1.DoRandomPoints(putpixel: TPutObstaclePxl);
+procedure TfrmLabyDemo3.DoRandomPoints(putpixel: TPutObstaclePxl);
 
 var
     Count, size: integer;
@@ -484,7 +487,7 @@ begin
         round(GoldCut * GoldCut * Laby.Laby_Length), size, Count, putpixel);
 end;
 
-procedure TForm1.DoBigQuadr(putpixel: TPutObstaclePxl);
+procedure TfrmLabyDemo3.DoBigQuadr(putpixel: TPutObstaclePxl);
 
 begin
 
@@ -494,13 +497,13 @@ begin
 
 end;
 
-procedure TForm1.DoPicture(putpixel: TPutObstaclePxl);
+procedure TfrmLabyDemo3.DoPicture(putpixel: TPutObstaclePxl);
 begin
     PutImage(((Laby.Laby_Width * 4) div 5) - 20, 20, FPictFilename,
         Laby.Laby_Width div 5, putpixel);
 end;
 
-procedure TForm1.DoSmallQuadr(putpixel: TPutObstaclePxl);
+procedure TfrmLabyDemo3.DoSmallQuadr(putpixel: TPutObstaclePxl);
 
 begin
     RandomQuadr(round(GoldCut * GoldCut * Laby.Laby_Width),
@@ -509,7 +512,7 @@ begin
 
 end;
 
-procedure TForm1.Btn_GoFwdClick(Sender: TObject);
+procedure TfrmLabyDemo3.Btn_GoFwdClick(Sender: TObject);
 var
     LDir: integer;
 begin
@@ -523,7 +526,7 @@ begin
     DrawLaby(Sender);
 end;
 
-procedure TForm1.Btn_BackClick(Sender: TObject);
+procedure TfrmLabyDemo3.Btn_BackClick(Sender: TObject);
 var
     LDir: integer;
 begin
@@ -537,26 +540,26 @@ begin
 
 end;
 
-procedure TForm1.Btn_Test2Click(Sender: TObject);
+procedure TfrmLabyDemo3.Btn_Test2Click(Sender: TObject);
 begin
-    ImgDisplay.Canvas.Brush.Color := Color;
-    ImgDisplay.Canvas.FillRect(ImgDisplay.Canvas.cliprect);
+    imgDisplay.Canvas.Brush.Color := Color;
+    imgDisplay.Canvas.FillRect(imgDisplay.Canvas.cliprect);
 
-    RandomPoints(ImgDisplay.Width div 2, ImgDisplay.Height div 2, ImgDisplay.Width div 2,
+    RandomPoints(imgDisplay.Width div 2, imgDisplay.Height div 2, imgDisplay.Width div 2,
         10000, putpixel);
 end;
 
-procedure TForm1.Btn_Test3Click(Sender: TObject);
+procedure TfrmLabyDemo3.Btn_Test3Click(Sender: TObject);
 begin
-    ImgDisplay.Canvas.Brush.Color := clDkGray;
-    ImgDisplay.Canvas.FillRect(ImgDisplay.Canvas.cliprect);
+    imgDisplay.Canvas.Brush.Color := clDkGray;
+    imgDisplay.Canvas.FillRect(imgDisplay.Canvas.cliprect);
 
-    RandomQuadr(ImgDisplay.Width div 2, ImgDisplay.Height div 2,
-        ImgDisplay.Height div 3, 2,
+    RandomQuadr(imgDisplay.Width div 2, imgDisplay.Height div 2,
+        imgDisplay.Height div 3, 2,
         2, putpixel);
 end;
 
-procedure TForm1.chbFastClick(Sender: TObject);
+procedure TfrmLabyDemo3.chbFastClick(Sender: TObject);
 begin
     if chbFast.Checked then
         Timer1.Interval := 25
@@ -565,7 +568,7 @@ begin
 
 end;
 
-procedure TForm1.ImgDisplayClick(Sender: TObject);
+procedure TfrmLabyDemo3.imgDisplayClick(Sender: TObject);
 
 var
     I, J, imax: integer;
@@ -580,20 +583,20 @@ begin
         for J := 1 to imax do
           begin
             hp := Unt_point2d.getdir(I, J);
-            ImgDisplay.Canvas.Pixels[hp.x + 40, hp.y + 40] :=
+            imgDisplay.Canvas.Pixels[hp.x + 40, hp.y + 40] :=
                 rgb(I * 3, I * 2 {%H-} + round(J / imax * 90), round(J / imax * 250));
-            ImgDisplay.Canvas.Pixels[J, hp.x + 120] :=
+            imgDisplay.Canvas.Pixels[J, hp.x + 120] :=
                 rgb(I * 3, I * 2 {%H-} + round(J / imax * 90), round(J / imax * 250));
-            ImgDisplay.Canvas.Pixels[J, hp.y + 200] :=
+            imgDisplay.Canvas.Pixels[J, hp.y + 200] :=
                 rgb(I * 3, I * 2 {%H-} + round(J / imax * 90), round(J / imax * 250));
             hp.Free;
 
           end;
-        ImgDisplay.Update;
+        imgDisplay.Update;
       end;
 end;
 
-procedure TForm1.Timer1Timer(Sender: TObject);
+procedure TfrmLabyDemo3.Timer1Timer(Sender: TObject);
 var
     LDir: integer;
     I: integer;
@@ -644,7 +647,7 @@ begin
 
 end;
 
-procedure TForm1.DrawLaby(Sender: TObject);
+procedure TfrmLabyDemo3.DrawLaby(Sender: TObject);
 
     procedure VTransform(xx0, yy0, s, C: extended; Out rx0: integer;
         Out ry0: integer); inline;
@@ -688,25 +691,25 @@ const
                 (iDir = -1)) then
               begin
                 if Level > LMAxLEvel - 15 then
-                    ImgDisplay.Canvas.pen.Width := (Level - LMAxLEvel + 20) div 3
+                    imgDisplay.Canvas.pen.Width := (Level - LMAxLEvel + 20) div 3
                 else
-                    ImgDisplay.Canvas.pen.Width := 2;
+                    imgDisplay.Canvas.pen.Width := 2;
                 if iDir = -1 then
 
                   begin
-                    ImgDisplay.Canvas.pen.Color := clLime;
+                    imgDisplay.Canvas.pen.Color := clLime;
                   end
                 else if Lroom.gang[I].token = 'R' then
                   begin
-                    ImgDisplay.Canvas.pen.Color := clBlue;
+                    imgDisplay.Canvas.pen.Color := clBlue;
                   end
                 else if Lroom.gang[I].token = 'E' then
                   begin
-                    ImgDisplay.Canvas.pen.Color := clRed;
+                    imgDisplay.Canvas.pen.Color := clRed;
 
                   end
                 else
-                    ImgDisplay.Canvas.pen.Color := clblack;
+                    imgDisplay.Canvas.pen.Color := clblack;
                 xx0 := +(Lroom.Ort.y - y0) * df;
                 yy0 := -(Lroom.Ort.x - x0) * df;
                 xx1 := +(Lroom.gang[I].Ort.y - y0) * df;
@@ -714,8 +717,8 @@ const
                 VTransform(xx0, yy0, s, C, rx0, ry0);
                 VTransform(xx1, yy1, s, C, rx1, ry1);
 
-                ImgDisplay.Canvas.moveto(lx + rx0, ly + ry0);
-                ImgDisplay.Canvas.lineto(lx + rx1, ly + ry1);
+                imgDisplay.Canvas.moveto(lx + rx0, ly + ry0);
+                imgDisplay.Canvas.lineto(lx + rx1, ly + ry1);
 
                 if (Level > 0) then
                     DrawSubPath(Level - 1, I, Lroom.gang[I], x0, y0)
@@ -726,7 +729,7 @@ const
                         [trunc(Lroom.gang[I].Ort.x / Laby.Laby_Width *
                         (imgPreview.Width - 2)) + 1,
                         trunc(Lroom.gang[I].Ort.y / Laby.Laby_Length *
-                        (imgPreview.Height - 2)) + 1] := ImgDisplay.Canvas.pen.Color;
+                        (imgPreview.Height - 2)) + 1] := imgDisplay.Canvas.pen.Color;
 
               end;
     end;
@@ -736,12 +739,12 @@ const
     var
         LAoRooms: TArrayOfRooms;
         I, J: integer;
-        xx0, xx1,xx2,xx3, yy0, yy1,yy2,yy3: extended;
+        xx0, xx1, xx2, xx3, yy0, yy1, yy2, yy3: extended;
         ix, iy, rx0, rx1, ry0, ry1, dist, GCount, K, rx2, ry2, ry3,
-          rx3: integer;
+        rx3: integer;
         Color, Color2: Tcolor;
         Dp, O: T2DPoint;
-        G:array[0..5] of integer;
+        G: array[0..5] of integer;
 
         function sgn(i: integer): integer; inline;
         begin
@@ -752,7 +755,6 @@ const
             else
                 Result := 0;
         end;
-
 
     begin
         Dp := T2DPoint.init(nil);
@@ -769,7 +771,7 @@ const
                         sqr(dp.y - y0)));
 
 
-                    ImgDisplay.Canvas.pen.Width := 1;
+                    imgDisplay.Canvas.pen.Width := 1;
                     if LAoRooms[J].token = 'R' then
                       begin
                         Color := clBlue;
@@ -802,65 +804,66 @@ const
                             (imgPreview.Height - 2)) + 1] := clWhite;
 
                     if dist < Level - 1 then
-                        begin
-                          O := LAoRooms[J].Ort;
-                          GCount :=0;
-                          for I := 1 to high(dir12) do
+                      begin
+                        O := LAoRooms[J].Ort;
+                        GCount := 0;
+                        for I := 1 to high(dir12) do
                             if assigned(LAoRooms[J].gang[I]) then
-                               begin
-                                 G[GCount]:=I;
-                                 inc(GCount);
-                               end;
-
-                          for K := 0 to GCount-1 do
                               begin
-                                if (K = 1) and (GCount=2) then break;
-                                I := G[K];
-                                dp.Copy(LAoRooms[J].ort).add(LAoRooms[J].gang[I].Ort);
-                                dist :=
-                                    trunc(sqrt(sqr(dp.x div 2 - x0) +
-                                    sqr(dp.y div 2 - y0)));
-
-                                if dist < Level then
-                                    imgPreview.Canvas.Pixels
-                                        [trunc(dp.x div 2 / Laby.Laby_Width *
-                                        (imgPreview.Width - 2)) + 1,
-                                        trunc(dp.y div 2 / Laby.Laby_Length *
-                                        (imgPreview.Height - 2)) + 1] := Color2
-                                else
-                                    imgPreview.Canvas.Pixels
-                                        [trunc(dp.x div 2 / Laby.Laby_Width *
-                                        (imgPreview.Width - 2)) + 1,
-                                        trunc(dp.y div 2 / Laby.Laby_Length *
-                                        (imgPreview.Height - 2)) + 1] := clWhite;
-
-
-                                xx0 := +(O.y +0.5*dir12[I].y  - y0) * df;
-                                yy0 := -(O.x +0.5*dir12[I].x  - x0) * df;
-                                xx1 := +(O.y +0.25*dir12[I].y  - y0) * df;
-                                yy1 := -(O.x +0.25*dir12[I].x  - x0) * df;
-                                I := G[(k+1) mod GCount];
-                                xx2 := +(O.y +0.25*dir12[I].y  - y0) * df;
-                                yy2 := -(O.x +0.25*dir12[I].x  - x0) * df;
-                                xx3 := +(O.y +0.5*dir12[I].y  - y0) * df;
-                                yy3 := -(O.x +0.5*dir12[I].x  - x0) * df;
-
-                                VTransform(xx0, yy0, s, C, rx0, ry0);
-                                VTransform(xx1, yy1, s, C, rx1, ry1);
-                                VTransform(xx2, yy2, s, C, rx2, ry2);
-                                VTransform(xx3, yy3, s, C, rx3, ry3);
-
-                                if dist < Level then
-                                  begin
-                                    ImgDisplay.Canvas.pen.Width := 3;
-                                    ImgDisplay.Canvas.pen.Color := Color;
-                                    ImgDisplay.Canvas.moveto(lx + rx0, ly + ry0);
-                                    ImgDisplay.Canvas.Lineto(lx + rx1, ly + ry1);
-                                    ImgDisplay.Canvas.Lineto(lx + rx2, ly + ry2);
-                                    ImgDisplay.Canvas.lineto(lx + rx3, ly + ry3);
-                                  end;
+                                G[GCount] := I;
+                                Inc(GCount);
                               end;
-                        end;
+
+                        for K := 0 to GCount - 1 do
+                          begin
+                            if (K = 1) and (GCount = 2) then
+                                break;
+                            I := G[K];
+                            dp.Copy(LAoRooms[J].ort).add(LAoRooms[J].gang[I].Ort);
+                            dist :=
+                                trunc(sqrt(sqr(dp.x div 2 - x0) +
+                                sqr(dp.y div 2 - y0)));
+
+                            if dist < Level then
+                                imgPreview.Canvas.Pixels
+                                    [trunc(dp.x div 2 / Laby.Laby_Width *
+                                    (imgPreview.Width - 2)) + 1,
+                                    trunc(dp.y div 2 / Laby.Laby_Length *
+                                    (imgPreview.Height - 2)) + 1] := Color2
+                            else
+                                imgPreview.Canvas.Pixels
+                                    [trunc(dp.x div 2 / Laby.Laby_Width *
+                                    (imgPreview.Width - 2)) + 1,
+                                    trunc(dp.y div 2 / Laby.Laby_Length *
+                                    (imgPreview.Height - 2)) + 1] := clWhite;
+
+
+                            xx0 := +(O.y + 0.5 * dir12[I].y - y0) * df;
+                            yy0 := -(O.x + 0.5 * dir12[I].x - x0) * df;
+                            xx1 := +(O.y + 0.25 * dir12[I].y - y0) * df;
+                            yy1 := -(O.x + 0.25 * dir12[I].x - x0) * df;
+                            I := G[(k + 1) mod GCount];
+                            xx2 := +(O.y + 0.25 * dir12[I].y - y0) * df;
+                            yy2 := -(O.x + 0.25 * dir12[I].x - x0) * df;
+                            xx3 := +(O.y + 0.5 * dir12[I].y - y0) * df;
+                            yy3 := -(O.x + 0.5 * dir12[I].x - x0) * df;
+
+                            VTransform(xx0, yy0, s, C, rx0, ry0);
+                            VTransform(xx1, yy1, s, C, rx1, ry1);
+                            VTransform(xx2, yy2, s, C, rx2, ry2);
+                            VTransform(xx3, yy3, s, C, rx3, ry3);
+
+                            if dist < Level then
+                              begin
+                                imgDisplay.Canvas.pen.Width := 3;
+                                imgDisplay.Canvas.pen.Color := Color;
+                                imgDisplay.Canvas.moveto(lx + rx0, ly + ry0);
+                                imgDisplay.Canvas.Lineto(lx + rx1, ly + ry1);
+                                imgDisplay.Canvas.Lineto(lx + rx2, ly + ry2);
+                                imgDisplay.Canvas.lineto(lx + rx3, ly + ry3);
+                              end;
+                          end;
+                      end;
                   end;
               end;
         dp.Free;
@@ -873,12 +876,12 @@ var
     // ax, ay: extended;
 
 begin
-    lx := ImgDisplay.Width div 2;
-    ly := ImgDisplay.Height div 2;
+    lx := imgDisplay.Width div 2;
+    ly := imgDisplay.Height div 2;
     s := sin(FDirection * pi / 180);
     C := cos(FDirection * pi / 180);
-    ImgDisplay.Canvas.Brush.Color := Color;
-    ImgDisplay.Canvas.FillRect(ImgDisplay.Canvas.cliprect);
+    imgDisplay.Canvas.Brush.Color := Color;
+    imgDisplay.Canvas.FillRect(imgDisplay.Canvas.cliprect);
     if assigned(ActRoom) then
       begin
         lx0 := ActRoom.Ort.x;

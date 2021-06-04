@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectGroup FileVersion="1">
-    <Targets Count="49">
+    <Targets Count="51">
       <Target0 FileName="FPC\Clrscr.lpi">
         <BuildModes Count="4"/>
         <Mode1 Name="Default"/>
@@ -235,6 +235,14 @@
         <BuildModes Count="1"/>
         <Mode1 Name="Default"/>
       </Target48>
+      <Target49 FileName="FPC\prj_Quine14.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target49>
+      <Target50 FileName="FPC\prj_Quine15.lpi">
+        <BuildModes Count="1"/>
+        <Mode1 Name="Default"/>
+      </Target50>
     </Targets>
   </ProjectGroup>
 </CONFIG>

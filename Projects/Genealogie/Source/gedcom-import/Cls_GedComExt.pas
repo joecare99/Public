@@ -1728,7 +1728,7 @@ function TGedIndividual.GetBurialDate: string;
 begin
     Result := '';
     if Assigned(FBurial) then
-        Result := FBurial.PlaceName;
+        Result := FBurial.Date;
 end;
 
 function TGedIndividual.GetBurialPlace: string;

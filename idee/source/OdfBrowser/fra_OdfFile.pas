@@ -25,7 +25,6 @@ type
     cbxFilename: TComboBox;
     edtXmlFileDetail: TMemo;
     ilsOdfFile: TImageList;
-    OpenDialog1: TOpenDialog;
     pnlTop: TPanel;
     pnlClientClient: TPanel;
     SaveDialog1: TSaveDialog;

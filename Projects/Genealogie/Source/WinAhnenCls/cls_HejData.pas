@@ -1000,7 +1000,7 @@ end;
 
 function TClsHejGenealogy.GetData: variant;
 begin
-
+  result := ''
 end;
 
 procedure TClsHejGenealogy.SetData(NewVal: variant);

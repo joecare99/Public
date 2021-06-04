@@ -11,8 +11,7 @@ type
     TParseEvent = procedure(Sender: TObject; aText: string; Ref: string;
         dsubtype: integer) of object;
 
-    TParseMsgEvent = procedure(Sender: TObject; aType: TEventType;
-        aText: string; Ref: string; aMode: integer) of object;
+    TParseMsgEvent = TTMessageEvent;
 
     { TFBEntryParser }
 
@@ -115,14 +114,16 @@ type
             const lMainFamRef: string; lPersonType: char; lMode: integer;
             out lLastName: string; out lPersonSex: char; const aAKA: string = '';
             const lFamName: string = ''): string;
+        procedure HandleFamilyFact(const lMainFamRef: string; const lFamEntry: string);
 
         function BuildName2(const aText: string; var aOffset: int64;
           var lCharCount: integer; var lSubString: string; out
-  lAdditional: string): boolean;
+          lAdditional: string): boolean;
 
         procedure DebugSetMsg(Message, Ref: string; Mode: integer);
 
         function IsValidDate(aDate: string): boolean;
+        function IsValidPlace(aPlace: string): boolean;
     public
         (* GNameHandler *)
         GNameHandler: TGNameHandler;
@@ -199,7 +200,10 @@ const
     csResidence3 = 'wohnte';
     csResidence4 = 'wohnhaft';
     csResidence5 = 'wohnt';
+    csResidence6 = 'Herkunft';
     csEmigration = 'ausgewandert';
+    csEmigration2 = 'wanderte';
+    csAge = 'alt';
     csPlaceKenn = 'in';
     csPlaceKenn2 = 'aus';
     csPlaceKenn3 = 'nach';
@@ -210,10 +214,13 @@ const
     csKath = 'rk.';
     csKath2 = 'kath.';
     csEvang = 'ev.';
+    csEvang2 = 'evang.';
     csReform = 'ref.';
+    csReform2 = 'reform.';
     csLuth = 'luth.';
     csUnknown = '…';
     csUnknown2 = '...';
+    csUnknown3 = '..';
     csTwin = 'Zw';
     csDoktor = 'Dr.';
     csPfarrer = 'Pfarrer';
@@ -223,6 +230,7 @@ const
     csProf = 'Prof. Dr.';
     csProfDoktor = 'Prof.';
     csGehRat = 'Geheimrat';
+    csDateModif4 = 'seit';
 
     cfgLearnUnknown = True;
 
@@ -243,7 +251,7 @@ const
         'Freiin');
 
     CDateModif: array[0..6] of string =
-        ('ca', 'um', 'vor', 'nach', 'seit', 'frühestens', 'spätestens');
+        ('ca', 'um', 'vor', 'nach', csDateModif4, 'frühestens', 'spätestens');
 
     CAkkaTitle: array[0..7] of string =
         (csDoktorMed,
@@ -255,19 +263,22 @@ const
         csProf,
         csDoktor);
 
-    CReligions: array[0..4] of string =
+    CReligions: array[0..6] of string =
         (csKath,
         csKath2,
         csEvang,
+        csEvang2,
         csReform,
+        csReform2,
         csLuth);
 
-    CResidenceKN: array[0..4] of string =
+    CResidenceKN: array[0..5] of string =
         (csResidence,
         csResidence2,
         csResidence3,
         csResidence4,
-        csResidence5);
+        csResidence5,
+        csResidence6);
 
     CPlaceKN: array[0..6] of string =
         (csPlaceKenn,
@@ -277,6 +288,29 @@ const
         csPlaceKenn5,
         csPlaceKenn6,
         csPlaceKenn7);
+
+    CUnknownKN: array[0..2] of string =
+        (csUnknown,
+        csUnknown2,
+        csUnknown3);
+
+    CEmmigratKN: array[0..1] of string =
+        (csEmigration,
+        csEmigration2);
+
+    CMonthKN: array[1..12] of string =
+        ('Januar',
+        'Februar',
+        'März',
+        'April',
+        'Mai',
+        'Juni',
+        'Juli',
+        'August',
+        'September',
+        'Oktober',
+        'November',
+        'Dezember');
 
     csZiffern: array[0..9] of char = '0123456789';
 
@@ -329,6 +363,8 @@ procedure TFBEntryParser.SetFamilyPlace(lFamRef: string; lEvType: TenumEventType
     lPlace: string);
 
 begin
+    if not IsValidPlace(lPlace) then
+        Error(self, lPlace.QuotedString + ' is no valid Place');
     if Assigned(FonFamilyPlace) then
         FonFamilyPlace(self, lPlace, lFamRef, Ord(lEvType));
 end;
@@ -367,6 +403,8 @@ end;
 procedure TFBEntryParser.SetIndiPlace(lIndID: string; lEvType: TenumEventType;
     lPlace: string);
 begin
+    if not IsValidPlace(lPlace) then
+        Error(self, lPlace.QuotedString + ' is no valid Place');
     if Assigned(FonIndiPlace) then
         FonIndiPlace(self, lPlace, lIndID, Ord(lEvType));
 end;
@@ -403,8 +441,9 @@ var
 
 begin
     Result := (length(aText) > ppos + 1) and
-        ((aText[pPos + 1] in Charset + ['"', '?', '*']) or
-        Testfor(aText, pPos + 1, FUmlauts));
+        ((aText[pPos + 1] in AlphaNum + [' ','"', '?', '*'])
+        or Testfor(aText, pPos + 1, csDeathEntr)
+        or Testfor(aText, pPos + 1, FUmlauts) );
     if Result then
       begin   // Additional Info
         aOutput := '';
@@ -440,10 +479,18 @@ begin
         aDate.Contains(#9) or aDate.Contains(',') or
         aDate.Contains(':') or aDate.Contains(';') or
         aDate.Contains('<') or aDate.Contains('>') or
-        aDate.Contains('+') or aDate.Contains('/') or
+        aDate.Contains('+') or //aDate.Contains('/') or
         aDate.Contains('*') or aDate.Contains('|') then
         exit(False);
     Result := True;
+end;
+
+function TFBEntryParser.IsValidPlace(aPlace: string): boolean;
+begin
+   if aPlace = '' then
+     exit(true);
+   result := (aPlace = csUnknown2)
+     or (aPlace[1] in UpperCharset + ['"', '“'[1]]);
 end;
 
 function TFBEntryParser.HandleNonPersonEntry(
@@ -460,6 +507,7 @@ begin
     Debug(self, 'HNPE: "' + aSubString + '"');
     lEntryType := evt_Anull;
     lSubString := trim(aSubString);
+    lDate:='';
     if (lSubString = '') or (lSubString = '.') then
         exit(lEntryType);
 
@@ -468,11 +516,11 @@ begin
         Inc(ldPos);
 
     lPlacBesch := False;
-    ;
+
     if Testfor(lSubString, ldPos + 2, CPlaceKN, lFound) then
       begin
         lPlace := trim(copy(lSubString, ldPos + 2 + length(CPlaceKN[lFound])));
-        lPlacBesch := lPlace.StartsWith('de');
+        lPlacBesch := (lPlace='') or (lPlace[1] in LowerCharset);
         if lPlacBesch then
           begin
             lPlace := '';
@@ -505,8 +553,9 @@ begin
           end;
         lpp2 := lSubString.IndexOfAny(csZiffern);
         // 1. Platz Kennung
-        if (lpp >= 0) and (lpp2 < lpp) and
-            (lsubstring[lpp + length(csPlaceKenn) + 3] <> 'd') then
+        if (lpp >= 0) and (lpp2 < lpp)
+            and  ((length(lsubstring) < lpp + length(csPlaceKenn) + 3) or
+            (lsubstring[lpp + length(csPlaceKenn) + 3] <> 'd')) then
           begin
             lPlace := copy(lSubString, lpp + 4);
             lSubString := copy(lSubString, 1, lpp - 1);
@@ -573,8 +622,7 @@ begin
     if (trim(lPlace) = '') and not (Fmode in [55, 56]) and not lPlacBesch then
         lPlace := FDefaultPlace;
 
-    if (lPlace <> '') and not (lplace = csUnknown2) and not
-        (lplace[1] in UpperCharset + ['"', '“'[1]]) then
+    if not IsValidPlace(lPlace) then
       begin
         error(self, 'Misspelled Place "' + lPlace + '"');
         while (lPlace <> '') and not (lPlace[1] in Charset) do
@@ -913,7 +961,8 @@ begin
         Result := evt_missing;
         Data := csDeathVermEntr;
       end
-    else if lSubString.Contains(csEmigration) then
+    else if lSubString.Contains(csEmigration) or
+       lSubString.Contains(csEmigration2) then
       begin
         Result := evt_AddEmigration;
         if lSubString.StartsWith('ist') then
@@ -922,16 +971,22 @@ begin
             lSubString2 := lSubString;
         Data := left(lSubString2, length(lSubString2) - length(csEmigration) - 1);
       end
+    else if lSubString.EndsWith(' '+csAge) then
+      begin
+        Result := evt_Age;
+        Data := lSubstring;
+      end
     else if TestFor(lSubString, 1, CResidenceKN, lFound) then
       begin
         Result := evt_Residence;
         Data := CResidenceKN[lFound];
         Date := trim(lSubString.Substring(length(Data)));
-        if (Date <> '') and not Date.StartsWith('in ') and not
-            (Date.StartsWith('seit ')) and not (Date[1] in Ziffern) then
+        if (Date <> '') and not Date.StartsWith(csPlaceKenn+' ') and not
+            (Date.StartsWith(csDateModif4+' ')) and not (Date[1] in Ziffern) then
           begin
             Data := Data + ' ' + Date;
             Date := '';
+//            Result := evt_Residence;
           end;
       end
     else if TestFor(lSubString, 1, CReligions, lFound) then
@@ -1034,8 +1089,8 @@ begin
             lCharCount := 0;
           end
         else if (aText[aOffset] = '.') and
-            ((aText[aOffset + 1] in [',', ' ', '.', '>']) or
-            ((aText[aOffset - 1] in Charset) and
+            ((aText[aOffset + 1] in [',','.',' ','>']) or
+            ((aText[aOffset - 1] in Charset+['.']) and
             ((lCharCount <= 3) or (aText[aOffset + 1] in UpperCharset)))) then
             lSubString := lSubstring + aText[aOffset]
         else if Testfor(aText, aOffset, ['-'], lFound) and
@@ -1124,14 +1179,25 @@ var
             lSubString := lSubstring + aText[Offset]
         else if (Offset < Length(aText) - 1) and (aText[Offset] = '.') and
            // Behandle "."
-            (lSubstring <> '') and ((atext[Offset + 1] in Ziffern) or
-            (not (lSubstring[length(lsubstring)] in Ziffern) and
-            (atext[Offset + 1] = ' ') and (atext[Offset + 2] in UpperCharset)) or
-            ((atext[Offset + 1] = ' ') and lSubstring.endswith('tr')) or
-            ((atext[Offset + 1] = ' ') and lSubstring.endswith('Kr')) or
-            ((atext[Offset + 1] = ' ') and (lLastZiffCount < 3)) or
-            (atext[Offset + 1] in UpperCharset) or
-            (atext[Offset + 1] in [',', '/'])) then
+            (lSubstring <> '') and ((atext[Offset + 1] in Ziffern)
+            or (not (lSubstring[length(lsubstring)] in Ziffern)
+              and (atext[Offset + 1] = ' ')
+              and (atext[Offset + 2] in Charset))
+            or (atext[Offset + 1] in ['-',',', '/'])
+            or (atext[Offset + 1] in Charset)
+            or
+            ((atext[Offset + 1] = ' ') and lSubstring.endswith('Dr')) or
+            ((atext[Offset + 1] = ' ') and lSubstring.endswith('rl'))
+            or ((atext[Offset + 1] = ' ') and lSubstring.endswith('Nr'))
+            or ((atext[Offset + 1] = ' ') and lSubstring.endswith('gl'))
+            or ((atext[Offset + 1] = ' ') and lSubstring.endswith('tr'))
+            or ((atext[Offset + 1] = ' ') and lSubstring.endswith('Kr'))
+            or ((atext[Offset + 1] = '.'))
+            or (atext[Offset + 1] = '.')
+            or lSubString.EndsWith('.')
+            or ((atext[Offset + 1] = ' ')
+              and not (atext[Offset + 2] in [#10,#13])
+              and (lLastZiffCount < 3))) then
             lSubString := lSubstring + aText[Offset]
         else if (aText[Offset] = ',')
            // falsch geschriebenes Datum (, anstatt .)
@@ -1145,6 +1211,12 @@ var
               lSubString := lSubstring + '.' ;// Korrektur
               Warning(self,'Misspelled Date');
             end
+        else if (aText[Offset] = ',')
+           and (not lSubstring.Contains(' ')) // Einzelnes Wort
+           and (TestFor(aText,Offset+1,[' Kr.',' Kreis'])) then // Ergänzend: Kreis
+            begin
+              lSubString := lSubstring + ',' ;
+            end
         else if Testfor(aText, Offset, ['-'], lFound) and
             (aText[Offset - 1] in LowerCharset) and
             (aText[Offset + 1 + lFound] in UpperCharset) then
@@ -1154,7 +1226,7 @@ var
           end
         else if Testfor(aText, Offset, CHyphens, lFound) and
             (aText[Offset - 1] in LowerCharset) and
-            (aText[Offset + length(CHyphens[lFound])] in LowerCharset) then
+            (aText[Offset + length(CHyphens[lFound])] in (LowerCharset+['ß'[1]])) then
           begin
             // Warnung nur bei "normalem" Bindestrich
             if lFound = 0 then
@@ -1187,8 +1259,8 @@ var
         else if (aText[Offset] = csProtectSpace[1]) and (length(lSubString) < 5) then
            // Sonderzeichen like
             lSubString := lSubstring + aText[Offset]
-        else if Testfor(aText, Offset, '(') and ParseAdditional(aText,
-            Offset, lAdditional) then
+        else if Testfor(aText, Offset, '(')
+           and ParseAdditional(aText, Offset, lAdditional) then
           begin
             // inc(Offset);
             ldata := lAdditional;
@@ -1206,10 +1278,19 @@ var
                 if lData <> '' then
                     SetFamilyData(lMainFamRef, evt_Divorce, lData);
                 lData := '';
-              end;
+              end
+            else if lData.EndsWith(' alt') then
+               begin
+                 SetIndiData(lIndID,evt_Age,ldata);
+                 ldata:='';
+               end;
           end
-        else if (aText[Offset] = '.') or ((aText[Offset] in [#10, #13]) and
-            (aText[Offset - 1] = '.')) then
+        else if (aText[Offset] = '.')
+           or ((aText[Offset] in [#10, #13])
+             and (aText[Offset - 1] = '.'))
+           or ((aText[Offset] in [#10, #13])
+             and (aText[Offset - 1] = ' ')
+             and (aText[Offset - 2] = '.')) then
           begin
             if FMode <> 9 then
               begin
@@ -1230,14 +1311,14 @@ var
 var
     lMode, lRetMode: integer;
     lSubString, // Aktueller Unterstring
-    lDebug,  //DEBUG: String ab aktueller Position (20 Char)
+    {%H-}lDebug,  //DEBUG: String ab aktueller Position (20 Char)
 
     lIndID, // Aktuelle Personen-ID
     lParentRef, lFamName, lLastName, lChRef, lPersonName, lIndID2,
     lFamCEntry, lPlace, lDate, lEventDate, lChildFam, lFamRef,
     lPersonGName, lAdditional, lDefaultBirthplace, d, d2, lLastName2: string;
     lPos, lChildCount, lFamType, lpp, lRetMode2, lRefMode2, lTest,
-    lZiffCount, lRetMode3, lFound, lsPos: integer;
+    lZiffCount, lRetMode3, lFound, lsPos, lSpouseCount: integer;
     lFirstEntry, lPlaceFlag, lSecondEntry, lParDeathFlag, lFirstCycle,
     lOtherMarrFlag, lVerwFlag: boolean;
     lEntryType2: TenumEventType;
@@ -1254,6 +1335,8 @@ begin
     lPlace := '';
     lData := '';
     lEventDate := '';
+    lSubString := '';
+    lFamName := '';
 
     lZiffCount := 0;
     lCharCount := 0;
@@ -1285,7 +1368,7 @@ begin
                   begin
                     lMode := 2;
                     lpp := lSubString.LastIndexOfAny(
-                        ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a']);
+                        ['0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'a','b']);
                     if lpp > 0 then
                       begin
                         Dec(Offset, length(lSubString) - lpp);
@@ -1310,11 +1393,16 @@ begin
                     lSubString := lSubstring + aText[Offset];
               end;
             2:
-                if (aText[Offset - 1] = ' ') and
-                    (aText[Offset - 2] in Ziffern) and not
-                    TestFor(aText, Offset, csMarriageGC) and CharInSet(
-                    aText[Offset], UpperCharsetErw + ['v']) and not
-                    TestFor(aText, Offset, csIllegChild) then
+                if (aText[Offset - 1] = ' ')
+                   and (aText[Offset - 2] in Ziffern)
+                   and not TestFor(aText, Offset, csMarriageGC)
+                   and not TestFor(aText, Offset, csIllegChild)
+                   and ((CharInSet(aText[Offset], UpperCharsetErw)
+                       and (atext.IndexOf(' ',Offset) > atext.IndexOf(',',Offset)))
+                   or
+                       (CharInSet(aText[Offset], ['v'])
+                       and (atext.IndexOf(' ',Offset+4) > atext.IndexOf(',',Offset+4))))
+                   then
                   begin
                     // Einsprung zu GC
                     lMode := 110;
@@ -1329,6 +1417,7 @@ begin
                       begin
                         lMode := 3;
                         lFamName := '';
+                        lPersonType := 'U';
                         Dec(Offset);
                       end;
                   end;
@@ -1419,7 +1508,7 @@ begin
                     lSubString := lSubstring + aText[Offset];
               end;
             5, 7:
-              begin
+              begin // Person
                 // Init
                 if lFirstCycle then
                   begin
@@ -1490,12 +1579,13 @@ begin
 
                     lEntryType := HandleNonPersonEntry(lSubString, lIndID);
                     lSubString := '';
+                    lLastZiffCount :=0;
                     if lData <> '' then
                       begin
                         SetIndiData(lIndID, lEntryType, trim(lData));
                         lData := '';
                       end;
-                    if not (aText[Offset] in ['.', ',', #10, #13, '<'] ) then
+                    if not (aText[Offset] in ['.', ',', #10, #13, '<','('] ) then
                       begin
                         error(self, ', missing (End of Entry)');
                         dec(offset);
@@ -1528,6 +1618,24 @@ begin
                     lPersonType := 'F';
                     Inc(Offset, 2 + lFound);
                     lSubString := '';
+                  end
+                else if (lSubString='')
+                    and  (aText[offset] ='.') then
+                  begin
+                    if (FMode =6) and atext.Substring(offset,6).Contains('u.') then
+                       Warning(self,'Husband entry ends with "."')
+                     else if atext.Substring(offset,6).Contains(csBirth)
+                        or atext.Substring(offset,6).Contains(csDeathEntr) then
+                          Warning(self,'Entry ends with "." instead of ","')
+                     else if (lMode = 6)
+                        and (not atext.Substring(offset,5).Contains(LineEnding))
+                          then
+                            begin
+                              Warning(self,'Entry ends with "." without Linefeed');
+
+                            end
+                    else
+                      lMode := 12;
                   end
                 else
                 if (aText[Offset] in Ziffern + ['l', ')']) and
@@ -1583,8 +1691,10 @@ begin
                         lChRef := '';
                         lPos := Offset + 1;
                         lPersonSex := GuessSexOfGivnName(lPersonGName);
+                        if not TestFor(atext,Offset+1,['vgl','s.a']) then
+                        begin
                         while (lPos < length(aText)) and
-                            (aText[lPos] in Ziffern + ['a']) do
+                            (aText[lPos] in Ziffern + ['a','b']) do
                           begin
                             lChRef := lChRef + aText[lPos];
                             Inc(lpos);
@@ -1593,6 +1703,9 @@ begin
                             lIndID := 'I' + lChRef + lPersonSex
                         else
                             lIndID := 'I' + lChRef + '_';
+                        end
+                        else
+                            lIndID := 'I' + lMainFamRef + 'C' + trim(IntToStr(lChildCount));
                       end
                     else
                         lIndID := 'I' + lMainFamRef + 'C' + trim(IntToStr(lChildCount));
@@ -1618,6 +1731,7 @@ begin
                         Dec(Offset);
                     lFirstEntry := False;
                   end
+                // ------------- BuildData ---------------
                 else if not lFirstEntry and BuildData(lIndID, atext,
                     Offset, lSubString) then
                   begin
@@ -1628,6 +1742,7 @@ begin
                         lData := '';
                       end;
                     lSubString := '';
+                    lLastZiffCount := 0;
                   end;
                 if aText[Offset] = '<' then
                   begin
@@ -1642,7 +1757,7 @@ begin
                         lData := '';
                       end;
                     if not lEntryEndFlag then
-                        Error(self, 'Child entry not ended with .');
+                        Error(self, 'Child ('+IntToStr(lChildCount -1 )+') entry not ended with .');
                     lSubString := '';
                     lAdditional := '';
                     lAKA := '';
@@ -1653,13 +1768,18 @@ begin
 
             10:
               begin // Ehe Datum & Ort ?
-                if aText[Offset] in Ziffern + ['.'] then
+                if aText[Offset] in Ziffern + ['.','/'] then
                     lSubString := lSubstring + aText[Offset]
-                else
-                if copy(aText, Offset, length(csUnknown)) = csUnknown then
+                else if (aText[Offset]=' ')
+                    and (aText[Offset+1] in Ziffern)
+                    and testfor(lSubString,1,CUnknownKN) then
                   begin
-                    lSubString := lSubstring + csUnknown;
-                    Inc(Offset, Length(csUnknown) - 1);
+                    lSubString := lSubstring +' ';
+                  end
+                else if TestFor(aText, Offset, CUnknownKN,lFound) then
+                  begin
+                    lSubString := lSubstring + cUnknownKN[lFound];
+                    Inc(Offset, Length(cUnknownKN[lFound]) - 1);
                   end
                 else
                   begin
@@ -1691,10 +1811,10 @@ begin
 
                 if BuildData(lIndID, aText, Offset, lSubString) then
                   begin
-                    if Assigned(FonFamilyPlace) and (lEntryType = evt_Marriage) then
-                        FonFamilyPlace(self, lSubString, lMainFamRef, 3)
+                    if (lEntryType = evt_Marriage) then
+                       SetFamilyPlace(lMainFamRef,lEntryType,lSubString)
                     else
-                        lPlace := lSubString;
+                       lPlace := lSubString;
                     lSubString := '';
                     if (lData <> '') then
                       begin   // Additional Info
@@ -1722,20 +1842,43 @@ begin
                     lSubString := '';
 
                 if (aText[Offset] in Ziffern + ['l', ')']) and
-                    (copy(atext, Offset + 1, 3) = ' Kd') then
+                    ((copy(atext, Offset + 1, 3) = ' Kd') or
+                    (copy(atext, Offset + 1, 2) = 'Kd')) then
                   begin
                     lMode := 15;
 
                   end
                 else
-                if not (aText[Offset] in ['.', #10, #13]) then
+                if not (aText[Offset] in ['(','.', #10, #13]) then
                     lSubString += aText[Offset]
                 else
+                  if (aText[Offset]='.') and
+                      not (aText[Offset+1] in [#10,#13] )then
+                    lSubString += aText[Offset]
+                      else if Testfor(aText, Offset, '(') and ParseAdditional(aText,
+                            Offset, lAdditional) then
+                               begin
+                                 // inc(Offset);
+                                 ldata := lAdditional;
+                                 lAdditional := '';
+                                 if ldata.StartsWith(csDivorce) then
+                                   begin
+                                     lData := lData.Remove(0, 3);
+
+                                     SetFamilyPlace(lMainFamRef, evt_Divorce, FDefaultPlace);
+                                     if lData <> '' then
+                                         SetFamilyData(lMainFamRef, evt_Divorce, lData);
+                                     lData := '';
+                                   end;
+                               end
+                else
                   begin
+                    if trim(lsubstring) <>'' then
+                      HandleFamilyFact(lMainFamRef,lSubstring);
                     lSubString := '';
                   end;
               end;
-            15:
+            15:  // Pre-Child
               begin
                 lPersontype := 'U';
                 lSubString := '';
@@ -1757,7 +1900,10 @@ begin
                         lDefaultBirthplace := lAdditional;
                         lAdditional := '';
                       end;
+                    inc(offset,2);
                   end;
+                if (aText[Offset - 1] <> ':') then
+                  warning(self,'Children Header does not end with ":"');
                 lChildcount := 1;
                 lEntryEndFlag := False;
                 lFirstEntry := True;
@@ -1846,12 +1992,18 @@ begin
                     Dec(offset);
                   end
                 else if TestFor(aText, Offset,
-                    ['S.d.', 'T.d.', 'S.d,', 'T.d,', 'Kd.d.']) then
-                    lMode := 54
-                else if TestFor(aText, Offset, 's.a.') then
+                    ['S.d.', 'T.d.', 'S.d,', 'T.d,', 'Kd.d.','S(T).d.'],lFound) then
+                      begin
+                        Inc(Offset, 2);
+                        if lFound>3 then
+                          inc(offset,lFound-3);
+                        lMode := 54
+                      end
+                else if TestFor(aText, Offset, ['s.a.','vgl.']) then
                   begin
                     lMode := 52;
                     lVerwFlag := True;
+                    inc(Offset,3);
                   end
                 else if TestFor(aText, Offset,
                     [csMarriageEntr, csMarriageEntr2, csMarriageEntr3], lFound) then
@@ -1861,11 +2013,23 @@ begin
                         Inc(offset, 1)
                     else
                         Inc(offset, 2);
-                    lOtherMarrFlag := False;
+                    lOtherMarrFlag := lRetMode <> 9;
                   end
                 else if aText[Offset] = '>' then
-                    lMode := lRetMode
-                else if aText[Offset] in [#10, #13] then
+                   begin
+                     if (aText[Offset+1] =';')
+                       and not aText.Substring(offset+2,30).contains('<')
+                       and aText.Substring(offset+2,30).contains('>') then
+                      Warning(self,'Double-closed reference ('+inttostr(lRetMode)+')')
+                    else
+                      lMode := lRetMode
+                   end
+                else  if Testfor(aText,Offset,'),') then
+                   begin
+                     lMode := lRetMode;
+                     error(self, 'Reference Entry ends with "),"');
+                   end
+                else if aText[Offset] in [#10, #13]  then
                   begin
                     error(self, 'unclosed reference');
                     lMode := lRetMode;
@@ -1873,8 +2037,7 @@ begin
                   end;
               end;
             51:
-              begin
-                // aus XXX
+              begin // aus XXX
                 if (aText[Offset] in Ziffern+['l']) or
                     ((length(lSubString) > 0) and (aText[Offset] in ['a','b'])) then
                     lSubString := lSubString + aText[Offset]
@@ -1890,8 +2053,7 @@ begin
                   end;
               end;
             52:
-                // s.a. ###
-              begin
+              begin   // s.a. ###
                 lfound:=0;
                 if (aText[Offset] in Ziffern+['l']) or
                     ((length(lSubString) > 0) and (aText[Offset] in ['a','b'])) then
@@ -1899,8 +2061,8 @@ begin
                 else if length(lSubString) > 0 then
                   begin
                     if not (aText[Offset] in ['>', ';', ',']) and
-                        not Testfor(aText, Offset, [' und',' korr.'],lFound) then
-                        error(self, 'invalid reference')
+                        not Testfor(aText, Offset, [' und',' korr.' ],lFound) then
+                          error(self,'"'+lSubString+ aText[Offset]+'" invalid reference')
                         else if lFound = 0 then
                             If not TestReferenz(lSubString) then
                               error(self,'"'+lSubString+'" invalid reference')
@@ -1917,8 +2079,10 @@ begin
                   end;
               end;
             53:
-                // ooI s.
-              begin
+              begin   // ooI s.
+                if lFirstCycle then
+                  lSpouseCount:=0;
+
                 if (aText[Offset] in Ziffern) or
                     ((length(lSubString) > 0) and (aText[Offset] = 'a')) then
                     lSubString := lSubString + aText[Offset]
@@ -1940,7 +2104,10 @@ begin
                         Dec(offset);
                   end
                 else if (lSubstring = '') and (atext[offset] in ['I', 'l']) then
-                    lOtherMarrFlag := True
+                  begin
+                    lOtherMarrFlag := True;
+                    inc(lSpouseCount);
+                  end
                 else if (length(lSubString) > 0) then
                   begin
                     lfound := 0;
@@ -1965,8 +2132,7 @@ begin
                   end;
               end;
             54:
-              begin
-                Inc(Offset, 2);
+              begin  // S.d. T.d. Start Parent Family
                 if atext[Offset] = ',' then
                     error(self, '. inst. of , expected');
                 if atext[Offset] = 'd' then
@@ -2043,25 +2209,31 @@ begin
                   begin
                     Dec(Offset);
                     lMode := 50;
+                  end
+                else if Testfor(aText,Offset,[#10,#13]) then
+                  begin
+                    Dec(Offset);
+                    lMode := 50;
                   end;
-
               end;
             57:
-              begin
+              begin // oo mit /in
                 if lFamRef = '' then
-                    if lOtherMarrFlag or (lRetMode = 9) then
-                        lFamRef := copy(lIndID, 2) + '1'
+                    if lOtherMarrFlag  then
+                        lFamRef := copy(lIndID, 2) + inttostr(lSpouseCount)
+                    else if (lRetMode = 9) then
+                        lFamRef := copy(lIndID, 2) +'P'+ inttostr(lSpouseCount)
                     else
                         lFamRef := lMainFamRef;
 
                 lpp := atext.IndexOfAny(['>', ';'], Offset);
 
                 // Todo: Genealog. Dates (vor , nach, um ...)
-                if aText[offset] in Ziffern then
-                    lsPos := atext.IndexOf(' ', Offset) + 2
-                else if (lpp > 0) and
+                if (lpp > 0) and
                     copy(aText, offset, lpp - Offset + 1).Contains(' mit ') then
                     lsPos := atext.IndexOf(' mit ', Offset) + 2
+                else if aText[offset] in Ziffern then
+                    lsPos := atext.IndexOf(' ', Offset) + 2
                 else
                     lsPos := Offset;
 
@@ -2095,8 +2267,17 @@ begin
                         StartFamily(lFamRef);
                     SetIndiName(lIndID2, 0, lPersonName);
                     SetFamilyType(lFamRef, 1);
+
                     if lDate <> '' then
-                        SetFamilyDate(lFamRef, evt_Marriage, lDate);
+                        begin
+                          if ldate.Contains(' '+csPlaceKenn+' ') then
+                             begin
+                               lplace := lDate.Substring(lDate.IndexOf(' '+csPlaceKenn+' ')+length(csPlaceKenn)+2);
+                               ldate :=  ldate.Substring(0,lDate.IndexOf(' '+csPlaceKenn+' '));
+                               SetFamilyPlace(lFamRef, evt_Marriage, lPlace);
+                             end;
+                          SetFamilyDate(lFamRef, evt_Marriage, lDate);
+                        end;
                     if (lPersonSex2 = 'F') then
                       begin
                         SetFamilyMember(lFamRef, lIndID2, 2);
@@ -2158,7 +2339,7 @@ begin
                     lMode := 50;
                   end;
               end;
-
+ {$REGION GC}
             100:
               begin // GC-Eintrag
                 if (copy(aText, Offset, length(csSeparatorGC)) = csSeparatorGC) then
@@ -3129,7 +3310,7 @@ begin
             199:
               begin
               end
-
+ {$ENDREGION GC}
             else
                 Lmode := 0
           end;
@@ -3143,7 +3324,12 @@ begin
             Fmode := lMode;
             lStartOffset := Offset;
             {$IFDEF DEBUG}
-            Debug(self, 'NM: (' + IntToStr(lStartOffset) + ')' + lDebug);
+            // New Mode
+            if (lDebug.Substring(19)+' ')[1] in [#$c2..#$ff] then
+              delete(lDebug,length(lDebug),1);
+            if (lDebug.Substring(18)+' ')[1] in [#$e0..#$ff] then
+              delete(lDebug,length(lDebug)-1,2);
+            Debug(self, 'NM:'+inttostr(FMode)+' (' + IntToStr(lStartOffset) + ')' + lDebug);
             {$ENDIF}
           end;
       end;
@@ -3316,6 +3502,60 @@ begin
 
     if lAKA <> '' then
         SetIndiName(Result, 3, trim(lAKA));
+end;
+
+procedure TFBEntryParser.HandleFamilyFact(
+  const lMainFamRef: string;const lFamEntry: string);
+var
+  lEntryType: TenumEventType;
+  lPlace, lSubString, lDate, lData: String;
+  ldPos, lpp, lpp2: SizeInt;
+begin
+   Debug(self, 'HFF: "' + lFamEntry + '"');
+    lSubString := trim(lFamEntry);
+    lDate:='';
+    lEntryType :=evt_Anull;
+    if (lSubString = '') or (lSubString = '.') then
+        exit;
+
+    ldPos := lSubString.LastIndexOfAny(csZiffern);
+    lData := lSubString;
+    if ldpos >= 0 then
+        Inc(ldPos);
+
+    lEntryType := GetEntryType(lSubString,lDate,lData);
+    if lEntryType = evt_last then
+       begin
+         lEntryType:= evt_Residence;
+         lData:=lSubString;
+       end;
+
+    lpp := lData.IndexOf(csPlaceKenn3);
+    if (lpp >= 0) and (lEntryType = evt_AddEmigration) then
+      begin
+        lpp2 := lData.IndexOfAny(csZiffern);
+        lPlace := trim(copy(lData, lpp + length(csPlaceKenn3) + 1));
+        if lpp2 < 0 then
+            ldate := ''
+        else
+            lDate := trim(copy(ldata, lpp2 + 1, lpp - lpp2));
+        if Length(ldata) < Length(lSubString) then
+            lData := lSubString
+        else
+            ldata := lData + ' ' + csEmigration;
+
+      end;
+
+  if lPlace = '' then
+    lPlace := FDefaultPlace;
+
+  // Todo -ojc: Do more ...
+
+  if lDate <>'' then
+    SetFamilyDate(lMainFamRef,lEntryType,lDate);
+  if lPlace <>'' then
+    SetFamilyPlace(lMainFamRef,lEntryType,lPlace);
+  SetFamilyData(lMainFamRef,lEntryType,lData);
 end;
 
 procedure TFBEntryParser.Parse(Data: string);

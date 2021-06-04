@@ -10,7 +10,6 @@ uses
     unt_TestFBData;
 
 type
-
     { TTestFBEntryParserBase }
 
     TTestFBEntryParserBase = class(TTestCase)
@@ -78,6 +77,8 @@ type
           procedure TestTestFor3;
           procedure TestParseAdditional;
           Procedure TestTestReferenz;
+          Procedure TestIsValidDate;
+          Procedure TestIsValidPlace;
         private
         end;
 
@@ -87,10 +88,31 @@ type
     { TTestFBEntryParserAll }
 
     TTestFBEntryParserAll = class(TTestFBEntryParserBase)
+    public
+      constructor Create; override;
+      destructor Destroy; override;
     protected
+      FChildren:array of TTestcase;
+      procedure FSAddFound(FileIterator: TFileIterator);
+    public
       procedure FSFileFound(FileIterator: TFileIterator);override;
+
+      Function GetChildTestCount : Integer; override;
+      Function GetChildTest(AIndex : Integer) : TTest; override;
     published
-      procedure TestFiles;
+      Procedure TestFiles;
+    end;
+
+    { TChildTest }
+
+    TChildTest = class(TTestCase)
+    public
+        constructor Create(aParent:TTestFBEntryParserAll;aTestFile:string);reintroduce;
+     private
+         fParent : TTestFBEntryParserAll;
+         FTestFile:String;
+    protected
+         procedure RunTest; override;
     end;
 
     { TTestFBEntryParserGC }
@@ -148,6 +170,7 @@ type
         procedure TestFileM0008;
         procedure TestFileM0009;
         procedure TestFileM0011;
+        procedure TestFileM0020;
         procedure TestFileM0026;
         procedure TestFileM0030;
         procedure TestFileM0037;
@@ -156,6 +179,7 @@ type
         procedure TestFileM0119;
         procedure TestFileM0193;
         procedure TestFileM0211;
+        procedure TestFileM0263;
         procedure TestFileM0330;
         procedure TestFileM0337;
         procedure TestFileM0405;
@@ -172,9 +196,11 @@ type
         procedure TestFileM0485;
         procedure TestFileM0486;
         procedure TestFileM0549;
+        procedure TestFileM0746;
         procedure TestFileM0832;
         procedure TestFileM0854;
         procedure TestFileM0889;
+        procedure TestFileM0918;
         procedure TestFileM1026;
         procedure TestFileM1078;
         procedure TestFileM1093;
@@ -191,17 +217,44 @@ type
         procedure TestFileM1268;
         procedure TestFileM1274;
         procedure TestFileM1276;
+        procedure TestFileM1319;
+        procedure TestFileM1321;
         procedure TestFileM1353;
         procedure TestFileM1353a;
         procedure TestFileM1354;
         procedure TestFileM1387;
         procedure TestFileM1436;
+        procedure TestFileM2420;
+        procedure TestFileM2421;
     private
      end;
 
 implementation
 
 uses LConvEncoding,unt_IGenBase2;
+
+{ TChildTest }
+
+constructor TChildTest.Create(aParent: TTestFBEntryParserAll; aTestFile: string
+  );
+begin
+   fParent := aParent;
+   FTestFile:=aTestFile;
+   TestName := 'Test_'+ExtractFileNameWithoutExt(FTestFile);
+end;
+
+procedure TChildTest.RunTest;
+begin
+  if assigned(fParent) then
+    begin
+      fParent.SetUp;
+      try
+      fParent.TestOneFile(FTestFile);
+      finally
+        fParent.TearDown;
+      end;
+    end;
+end;
 
 {$if FPC_FULLVERSION = 30200 }
     {$WARN 6058 OFF}
@@ -265,7 +318,11 @@ begin
     ParserIndiData(fParser, lResult.Data, lResult.Ref, lResult.SubType);
     CheckEquals(13, FRCounter, 'FRcounter');
     lResult.SetAll([variant(''), 'WWW', 'XXX', 13]);
+    {$ifdef debug}
     fparser.DebugSetMsg('WWW','XXX',13);
+    {$else}
+      {$warning 'This works only in DEBUG-Mode'}
+    {$endif}
     ParserError(fParser);
     CheckEquals(14, FRCounter, 'FRcounter');
     ParserMessage(fParser,etWarning,'YYY','YYY2',14);
@@ -450,57 +507,110 @@ begin
   Checkfalse(fParser.TestReferenz('123a4'),'123a4 ist keine gültige Referenz');
 end;
 
+procedure TTestFBEntryParser.TestIsValidDate;
+
+  type TTestData = record
+       Date :String;
+       valid :boolean;
+  end;
+
+const TestData:array[0..1] of TTestData=
+   ((Date:'1.1.1980';Valid:true),
+    (Date:'Aug. 1980';Valid:true));
+var
+  i: Integer;
+
+begin
+  CheckEquals(TestData[0].valid,fParser.IsValidDate(TestData[0].Date),TestData[0].Date+' ist '+booltostr(TestData[0].valid,'','un')+'gültiges Datum');
+  for i := 0 to high(TestData) do
+    CheckEquals(TestData[i].valid,fParser.IsValidDate(TestData[i].Date),TestData[i].Date+' ist '+booltostr(TestData[i].valid,'','un')+'gültiges Datum');
+end;
+
+procedure TTestFBEntryParser.TestIsValidPlace;
+  type TTestData = record
+       Place :String;
+       valid :boolean;
+  end;
+
+const TestData:array[0..2] of TTestData=
+   ((Place:'Rot';Valid:true),
+    (Place:'Plobsheim/Elsass';Valid:true),
+    (Place:'der Wäschefabrik';Valid:false));
+var
+  i: Integer;
+
+begin
+  CheckEquals(TestData[0].valid,fParser.IsValidPlace(TestData[0].Place),TestData[0].Place+' ist '+booltostr(TestData[0].valid,'','un')+'gültiger Platz');
+  CheckEquals(TestData[1].valid,fParser.IsValidPlace(TestData[1].Place),TestData[1].Place+' ist '+booltostr(TestData[1].valid,'','un')+'gültiger Platz');
+  for i := 0 to high(TestData) do
+    CheckEquals(TestData[i].valid,fParser.IsValidPlace(TestData[i].Place),TestData[i].Place+' ist '+booltostr(TestData[i].valid,'','un')+'gültiger Platz');
+end;
+
 procedure TTestFBEntryParser.TestHandleGCDateEntry;
 
 begin
-
+//  fParser.HandleGCDateEntry();
 end;
 
 procedure TTestFBEntryParser.TestGuessSexOfGivnName;
+  type TTestData = record
+       Name :String;
+       ResSex :Char;
+  end;
+
+const TestData:array[0..3] of TTestData=
+   ((Name:'Peter';ResSex:'M'),
+   (Name:'Petra';ResSex:'F'),
+   (Name:'Jerg';ResSex:'M'),
+   (Name:'Maria';ResSex:'F'));
+var
+  i: Integer;
 
 begin
-
+  for i := 0 to high(TestData) do
+  CheckEquals(TestData[i].ResSex, fParser.GuessSexOfGivnName(TestData[i].Name));
 end;
 
 procedure TTestFBEntryParser.TestGetEntryType;
+  type TTestData = record
+       Entry :String;
+       evType :TenumEventType;
+       ExpDate,
+       ExpData:string
+  end;
+
+const TestData:array[0..14] of TTestData=
+   ((Entry:'* 01.02.1734 in Bern';evType:evt_Birth;ExpDate:'01.02.1734 in Bern';ExpData:''),
+    (Entry:'* in Bern 01.02.1734';evType:evt_Birth;ExpDate:'in Bern 01.02.1734';ExpData:''),
+    (Entry:'ist nach Amerika ausgewandert';evType:evt_AddEmigration;ExpDate:'';ExpData:'nach Amerika'),
+    (Entry:'gefallen 1.1.1945 in Polen';evType:evt_fallen;ExpDate:'1.1.1945 in Polen';ExpData:'gefallen'),
+    (Entry:'vermisst in Frankreich 1.1.1943';evType:evt_missing;ExpDate:'in Frankreich 1.1.1943';ExpData:'vermisst'),
+    (Entry:'wohnhaft in Kürzell';evType:evt_Residence;ExpDate:'in Kürzell';ExpData:'wohnhaft'),
+    (Entry:'wohnt Mattenhag-Siedlung';evType:evt_Residence;ExpDate:'';ExpData:'wohnt Mattenhag-Siedlung'),
+    (Entry:'lebte einge Monate in Amerika';evType:evt_Residence;ExpDate:'';ExpData:'lebte einge Monate in Amerika'),
+    (Entry:'+* 6.11.1846';evType:evt_Stillborn;ExpDate:'6.11.1846';ExpData:'totgeboren'),
+    (Entry:'o/o 1.1.1765';evType:evt_Divorce;ExpDate:'1.1.1765';ExpData:''),
+    (Entry:'der Alte';evType:evt_AKA;ExpDate:'';ExpData:'der Alte'),
+    (Entry:'ein Blinder';evType:evt_Description;ExpDate:'';ExpData:'ein Blinder'),
+    (Entry:'wurde "Schmittjockel" genannt';evType:evt_AKA;ExpDate:'';ExpData:'"Schmittjockel"'),
+    (Entry:'2 Jahre 5 Monate alt';evType:evt_Age;ExpDate:'';ExpData:'2 Jahre 5 Monate alt'),
+    (Entry:'* Willstätt im August 1775';evType:evt_Birth;ExpDate:'Willstätt im August 1775';ExpData:''));
+
+//'o/o 1.1.1765'
+// * Willstätt im August 1775
+
+var
+  i: Integer;
+
 var
   lDate, lData: string;
 begin
-    CheckEquals(ord(evt_Birth),ord(fparser.GetEntryType('* 01.02.1734 in Bern',lDate,lData)),'* 01.02.1734 in Bern');
-    CheckEquals('01.02.1734 in Bern',lDate,'Geboren in Bern');
-    CheckEquals('',lData,'Geboren in Bern');
-
-    CheckEquals(ord(evt_Birth),ord(fparser.GetEntryType('* in Bern 01.02.1734',lDate,lData)),'* in Bern 01.02.1734');
-    CheckEquals('in Bern 01.02.1734',lDate,'Geboren in Bern 2');
-    CheckEquals('',lData,'Geboren in Bern 2');
-
-    CheckEquals(ord(evt_AddEmigration),ord(fparser.getEntryType('ist nach Amerika ausgewandert',lDate,lData)),'ist nach Amerika ausgewandert');
-    CheckEquals('',lDate,'nach Amerika ausgewandert');
-    CheckEquals('nach Amerika',lData,'nach Amerika ausgewandert');
-
-    CheckEquals(ord(evt_fallen),ord(fparser.getEntryType('gefallen 1.1.1945 in Polen',lDate,lData)),'gefallen 1.1.1945 in Polen');
-    CheckEquals('1.1.1945 in Polen',lDate,'Gefallen in Polen');
-    CheckEquals('gefallen',lData,'Gefallen in Polen');
-
-    CheckEquals(ord(evt_missing),ord(fparser.getEntryType('vermisst in Frankreich 1.1.1943',lDate,lData)),'vermisst in Frankreich 1.1.1943');
-    CheckEquals('in Frankreich 1.1.1943',lDate,'Vermisst in Frankreich');
-    CheckEquals('vermisst',lData,'Vermisst in Frankreich');
-
-    CheckEquals(ord(evt_Residence),ord(fparser.getEntryType('wohnhaft in Kürzell',lDate,lData)),'wohnhaft in Kürzell');
-    CheckEquals('in Kürzell',lDate,'wohnhaft in Kürzell');
-    CheckEquals('wohnhaft',lData,'wohnhaft in Kürzell');
-
-    CheckEquals(ord(evt_Residence),ord(fparser.getEntryType('wohnt Mattenhag-Siedlung',lDate,lData)),'wohnhaft in Kürzell');
-    CheckEquals('',lDate,'wohnt Mattenhag-Siedlung');
-    CheckEquals('wohnt Mattenhag-Siedlung',lData,'wohnt Mattenhag-Siedlung');
-
-    CheckEquals(ord(evt_Stillborn),ord(fparser.getEntryType('+* 6.11.1846',lDate,lData)),'+* 6.11.1846');
-    CheckEquals('6.11.1846',lDate,'+* 6.11.1846');
-    CheckEquals('totgeboren',lData,'+* 6.11.1846');
-
-    CheckEquals(ord(evt_Divorce),ord(fparser.getEntryType('o/o 1.1.1765',lDate,lData)),'o/o 1.1.1765');
-    CheckEquals('1.1.1765',lDate,'o/o 1.1.1765');
-    CheckEquals('',lData,'o/o 1.1.1765');
+  for i := 0 to high(TestData) do
+    begin
+      CheckEquals(ord(TestData[i].evType),ord(fparser.GetEntryType(TestData[i].Entry,lDate,lData)),'Test['+inttostr(i)+']: '+TestData[i].Entry);
+      CheckEquals(TestData[i].ExpDate,lDate,'Test['+inttostr(i)+'].Date: '+TestData[i].Entry);
+      CheckEquals(TestData[i].ExpData,lData,'Test['+inttostr(i)+'].Data: '+TestData[i].Entry);
+    end
 end;
 
 procedure TTestFBEntryParser.TestGetEntryType_Rel;
@@ -526,6 +636,14 @@ begin
     CheckEquals(ord(evt_Religion),ord(fparser.GetEntryType('luth.',lDate,lData)),'luth.');
     CheckEquals('luth.',lData,'luth.');
     CheckEquals('',lDate,'luth.');
+
+    CheckEquals(ord(evt_Religion),ord(fparser.GetEntryType('evang.',lDate,lData)),'evang.');
+    CheckEquals('evang.',lData,'evang.');
+    CheckEquals('',lDate,'evang.');
+
+    CheckEquals(ord(evt_Religion),ord(fparser.GetEntryType('reform.',lDate,lData)),'reform.');
+    CheckEquals('reform.',lData,'reform.');
+    CheckEquals('',lDate,'reform.');
 end;
 
 procedure TTestFBEntryParser.TestHandleNonPersonEntry;
@@ -561,7 +679,7 @@ begin
   CheckEquals(2, FRCounter, 'FRcounter');
 
      AddExpResult(['ParserIndiDate','Juni 1734','I3705C2',ord(evt_Death)]);
-    AddExpResult(['ParserIndiPlace','Bern','I3705C2',ord(evt_Death)]);
+ //   AddExpResult(['ParserIndiPlace','Bern','I3705C2',ord(evt_Death)]);
     fparser.HandleNonPersonEntry('+ im Juni 1734','I3705C2');
     CheckEquals(4, FRCounter, 'FRcounter');
 end;
@@ -850,7 +968,7 @@ begin
         CreateExpResult(lRs, ExpResults);
         FRCounter := 0;
         fParser.GNameHandler.LoadGNameList(FDataPath + DirectorySeparator + 'GNameFile.txt');
-        fparser.GNameHandler.SaveGNameList(ChangeFileExt(FileIterator.FileName, '.Name.New'));
+        fparser.GNameHandler.SetGNLFilename(ChangeFileExt(FileIterator.FileName, '.Name.New'));
         FTestName := ExtractFileName(FileIterator.FileName);
         fParser.Feed(lSt.Text);
         CheckEquals(length(ExpResults), FRCounter, 'Counter');
@@ -991,7 +1109,10 @@ begin
           then exit;  // Ignore optional Element
       end;
     lLastDeb:= FlastDeb;
+    lDebEv:=lr.ToCSV(#9);
     CheckTrue(high(ExpResults) >= FRCounter, 'Result Exists[' + IntToStr(
+        FRCounter) + '],' + FTestName);
+    CheckEquals(ExpResults[FRCounter].toCsv(#9), lDebEv, 'Teste Evt[' + IntToStr(
         FRCounter) + '],' + FTestName);
     CheckEquals(ExpResults[FRCounter].Data, aText, 'Teste aText[' + IntToStr(
         FRCounter) + '],' + FTestName);
@@ -1066,7 +1187,7 @@ procedure TTestFBEntryParserBase.SetUp;
 begin
     fParser := TFBEntryParser.Create;
     fParser.GNameHandler.LoadGNameList(FDataPath + DirectorySeparator + 'GNameFile.txt');
-    fParser.GNameHandler.SaveGNameList(FDataPath + DirectorySeparator + 'GNameFile.Nxt');
+    fParser.GNameHandler.SetGNLFilename(FDataPath + DirectorySeparator + 'GNameFile.Nxt');
     fParser.onStartFamily := @ParserStartFamily;
     fParser.onFamilyType := @ParserFamilyType;
     fParser.onFamilyData := @ParserFamilyData;
@@ -1106,10 +1227,54 @@ begin
   inherited FSFileFound(FileIterator);
 end;
 
-procedure TTestFBEntryParserAll.TestFiles;
+procedure TTestFBEntryParserAll.FSAddFound(FileIterator: TFileIterator);
+var
+  st: String;
 
 begin
-    TestOneFile('*.entTxt');
+  st := ExtractFileName(FileIterator.Filename);
+  RegisterTest(Classname+'\test',TChildTest.Create(self,st));
+end;
+
+
+constructor TTestFBEntryParserAll.Create;
+var
+ lFileSearcher: TFileSearcher;
+
+begin
+  inherited Create;
+  if TestName = '' then
+    begin
+      lFileSearcher := TFileSearcher.Create;
+       try
+         lFileSearcher.OnFileFound := @FSAddFound;
+         lFileSearcher.Search(FDataPath, '*.entTxt', False, False);
+       finally
+         FreeAndNil(lFileSearcher);
+       end;
+    end;
+end;
+
+destructor TTestFBEntryParserAll.Destroy;
+var
+  i: Integer;
+begin
+
+end;
+
+function TTestFBEntryParserAll.GetChildTestCount: Integer;
+begin
+  Result:=length(FChildren);
+end;
+
+function TTestFBEntryParserAll.GetChildTest(AIndex: Integer): TTest;
+begin
+  Result:=FChildren[Aindex];
+end;
+
+procedure TTestFBEntryParserAll.TestFiles;
+begin
+  TestOneFile('*.entTxt');
 end;
 
 
@@ -1368,6 +1533,12 @@ begin
     TestOneFile('OsBM0011.entTxt');
 end;
 
+procedure TTestFBEntryParserAK.TestFileM0020;
+begin
+  // Entry with Adress.
+  TestOneFile('OsB'+RightStr(TestName,5)+'.entTxt');
+end;
+
 procedure TTestFBEntryParserAK.TestFileM0026;
 begin
     // Birth-Record
@@ -1417,6 +1588,13 @@ begin
     TestOneFile('OsBM0211.entTxt');
 end;
 
+procedure TTestFBEntryParserAK.TestFileM0263;
+    Const CFileName = 'OsBM0263.entTxt';
+begin
+  // Unreadable-Marriag-Date with '..'
+  TestOneFile(CFileName);
+end;
+
 procedure TTestFBEntryParserAK.TestFileM0330;
 begin
     // Child-Marriages with 'oo'
@@ -1450,6 +1628,7 @@ end;
 procedure TTestFBEntryParserAK.TestFileM0411;
 begin
     // Comma missing after Occupation
+    // Logical Error: Ursula has wrong reference 1188 ins. of 1768
     TestOneFile('OsBM0411.entTxt');
 end;
 
@@ -1511,6 +1690,13 @@ begin
     TestOneFile('OsBM0549.entTxt');
 end;
 
+procedure TTestFBEntryParserAK.TestFileM0746;
+begin
+  // Reference ends with ),
+    TestOneFile('OsB'+RightStr(TestName,5)+'.entTxt');
+end;
+
+
 procedure TTestFBEntryParserAK.TestFileM0832;
 begin
   // complex Chidren-Data
@@ -1528,6 +1714,12 @@ begin
   // Husband korr. reference
   // Father of wife, complex Place
     TestOneFile('OsBM0889.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM0918;
+begin
+  // Married Child with Person
+    TestOneFile('OsB'+RightStr(TestName,5)+'.entTxt');
 end;
 
 procedure TTestFBEntryParserAK.TestFileM1026;
@@ -1626,6 +1818,18 @@ begin
     TestOneFile('OsBM1276.entTxt');
 end;
 
+procedure TTestFBEntryParserAK.TestFileM1319;
+begin
+  // Single Person
+    TestOneFile('OsB'+RightStr(TestName,5)+'.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM1321;
+begin
+  // Couple each was married first
+    TestOneFile('OsB'+RightStr(TestName,5)+'.entTxt');
+end;
+
 procedure TTestFBEntryParserAK.TestFileM1353;
 begin
   // Children with discrete Marriages
@@ -1654,6 +1858,18 @@ procedure TTestFBEntryParserAK.TestFileM1436;
 begin
   // Main-Person ?
     TestOneFile('OsBM1436.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM2420;
+begin
+  // Main-Person ?
+    TestOneFile('OsBM2420.entTxt');
+end;
+
+procedure TTestFBEntryParserAK.TestFileM2421;
+begin
+  // Main-Person ?
+    TestOneFile('OsBM2421.entTxt');
 end;
 
 

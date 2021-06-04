@@ -42,7 +42,11 @@ type
     procedure TestMiniTest5;
     procedure TestMiniTest6;
     procedure TestMiniTest7;
-    procedure TestCreateUnit;
+    procedure TestMiniTest8;
+     procedure TestMiniTest8w;
+     procedure TestMiniTest9;
+     procedure TestMiniTest10;
+     procedure TestCreateUnit;
   public
     Constructor Create; override;
   end;
@@ -234,6 +238,57 @@ begin
       FreeAndNil(M);
 end;
 
+procedure TTestPassRc.TestMiniTest8;
+var
+  M: TPasModule;
+const Filename='Minitest8.lpr';
+
+begin
+    M := ParseSource(E,[FDataPath+DirectorySeparator+ Filename], 'linux', 'i386',[]);
+
+      WritePasFile(M,FDataPath+DirectorySeparator+extractFilename(M.Name)+'_.lpr');
+
+      FreeAndNil(M);
+end;
+
+procedure TTestPassRc.TestMiniTest8w;
+var
+  M: TPasModule;
+const Filename='Minitest8w.lpr';
+
+begin
+    M := ParseSource(E,[FDataPath+DirectorySeparator+ Filename], 'linux', 'i386',[]);
+
+      WritePasFile(M,FDataPath+DirectorySeparator+extractFilename(M.Name)+'_.lpr');
+
+      FreeAndNil(M);
+end;
+
+procedure TTestPassRc.TestMiniTest9;
+var
+  M: TPasModule;
+const Filename='Minitest9.lpr';
+
+begin
+    M := ParseSource(E,[FDataPath+DirectorySeparator+ Filename], 'linux', 'i386',[]);
+
+      WritePasFile(M,FDataPath+DirectorySeparator+extractFilename(M.Name)+'_.lpr');
+
+      FreeAndNil(M);
+end;
+
+procedure TTestPassRc.TestMiniTest10;
+var
+  M: TPasModule;
+const Filename='Minitest10.lpr';
+
+begin
+    M := ParseSource(E,[FDataPath+DirectorySeparator+ Filename], 'linux', 'i386',[]);
+
+      WritePasFile(M,FDataPath+DirectorySeparator+extractFilename(M.Name)+'_.lpr');
+
+      FreeAndNil(M);
+end;
 
 procedure TTestPassRc.TestCreateUnit;
 var M:TPasModule;

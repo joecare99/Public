@@ -12,6 +12,7 @@ object FrmLaby4: TFrmLaby4
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  LCLVersion = '2.0.10.0'
   object pbxResult: TPaintBox
     Left = 0
     Height = 771

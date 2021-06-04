@@ -2,10 +2,13 @@ unit tst_GedComHelper;
 
 {$mode objfpc}{$H+}
 
+{$WARN 6058 off : Call to subroutine "$1" marked as inline is not inlined}
+
 interface
 
 uses
-    Classes, SysUtils, FileUtil,fpcunit, testutils, testregistry, Cmp_GedComFile, cls_GedComHelper;
+    Classes, SysUtils, FileUtil, fpcunit, testutils, testregistry,
+    Cmp_GedComFile, cls_GedComHelper, unt_IGenBase2;
 
 type
 
@@ -13,32 +16,39 @@ type
 
     TTestGedComHelper = class(TTestCase)
     private
-        FGedComFile: TGedComFile;
-        FGedComHelper: TGedComHelper;
-        FDataPath: string;
-        procedure FSFileFound(FileIterator: TFileIterator);
-        procedure FSFileFoundComb(FileIterator: TFileIterator);
-        procedure ReplayExpResult(st: TStrings);
-        procedure TestFilesInt(aFilename: String; OnFileFound: TFileFoundEvent);
-    protected
+        FGedComFile   :TGedComFile;
+        FGedComHelper :TGedComHelper;
+        FDataPath     :string;
+        procedure FSFileFound(FileIterator :TFileIterator);
+        procedure FSFileFoundComb(FileIterator :TFileIterator);
+        procedure HelperMessage(Sender: TObject; aType: TEventType;
+          aText: string; Ref: string; aMode: integer);
+        procedure ReplayExpResult(st :TStrings);
+        procedure TestFilesInt(aFilename :string; OnFileFound :TFileFoundEvent);
+        Procedure
+    protected;
+        procedure FSAddFound(FileIterator: TFileIterator);
         procedure SetUp; override;
         procedure TearDown; override;
     published
         procedure TestSetUp;
         procedure TestParserOutp3b;
         procedure TestParserOutp1b;
-        Procedure TestDateModifRepl;
-        Procedure TestFiles;
-        Procedure TestFile50;
-        Procedure TestFileM407;
-        Procedure TestFile51;
-        Procedure TestFilesComb;
-        Procedure TestFile50_51;
-        Procedure TestFile51_52;
-        Procedure TestFile52_54;
-        Procedure TestFile52_51_50;
-        PRocedure TestFiles5939ff;
+        procedure TestDateModifRepl;
+        procedure TestFiles;
+        procedure TestFile50;
+        procedure TestFileM407;
+        procedure TestFile51;
+        procedure TestFileM2420;
+        procedure TestFilesComb;
+        procedure TestFile50_51;
+        procedure TestFile51_52;
+        procedure TestFile52_54;
+        procedure TestFile52_51_50;
+        procedure TestFile411_1193;
+        procedure TestFiles5939ff;
     public
+        class var FInit:boolean;
         constructor Create; override;
     end;
 
@@ -46,6 +56,41 @@ implementation
 
 
 uses unt_GenTestBase;
+
+type
+  { TChildTest }
+
+  TChildTest = class(TTestCase)
+  public
+      constructor Create(aParent:TTestGedComHelper;aTestFile:string);reintroduce;
+   private
+       fParent : TTestGedComHelper;
+       FTestFile:String;
+  protected
+       procedure RunTest; override;
+  end;
+
+constructor TChildTest.Create(aParent: TTestGedComHelper; aTestFile: string);
+begin
+    fParent := aParent;
+    FTestFile:=aTestFile;
+    TestName := 'Test_'+ExtractFileNameWithoutExt(FTestFile);
+end;
+
+procedure TChildTest.RunTest;
+begin
+    if assigned(fParent) then
+      begin
+        fParent.SetUp;
+        try
+        fParent.TestFilesInt(FTestFile,@fParent.FSFileFound);
+        finally
+          fParent.TearDown;
+        end;
+      end;
+end;
+
+{ TTestGedComHelper }
 
 procedure TTestGedComHelper.TestSetUp;
 begin
@@ -57,36 +102,34 @@ end;
 
 procedure TTestGedComHelper.TestParserOutp3b;
 var
-    lStr: TStringList;
+    lStr :TStringList;
 begin
     with FGedComHelper do
       begin
         CreateNewHeader('dummy.ged');
         CitTitle := 'Pg. 1';
 
-        lStr := TStringList.Create;
+        lStr     := TStringList.Create;
         Citation := lStr;
           try
             Citation.Text :=
-                '3 Adam, Johann Georg, lu. <Adam, Georg, lu.>, * (err) 09.07.1734 in Obrigheim. † ... in Obrigheim, = 12.07.1734 in Obrigheim.'
-                +
-                LineEnding + 'PN = 49671 ';
-            StartFamily(self,'3', '', 0);
-            IndiName(self,'Adam', 'I3U', 1);
-            FamilyIndiv(self,'I3U', '3', 1);
-            IndiName(self,'Johann Georg', 'I3U', 2);
-            IndiData(self,'lu.', 'I3U', 8);
-            StartFamily(self,'3U', '', 0);
-            FamilyIndiv(self,'I3U', '3U', 3);
-            IndiName(self,'Adam', 'I3UM', 1);
-            FamilyIndiv(self,'I3UM', '3U', 1);
-            IndiName(self,'Georg', 'I3UM', 2);
-            IndiData(self,'lu.', 'I3UM', 8);
-            IndiDate(self,'(err) 09.07.1734', 'I3U', 1);
-            IndiPlace(self,'Obrigheim', 'I3U', 1);
-            IndiDate(self,'12.07.1734', 'I3U', 5);
-            IndiPlace(self,'Obrigheim', 'I3U', 5);
-            IndiRef(self,'49671', 'I3U', 0);
+                '3 Adam, Johann Georg, lu. <Adam, Georg, lu.>, * (err) 09.07.1734 in Obrigheim. † ... in Obrigheim, = 12.07.1734 in Obrigheim.' + LineEnding + 'PN = 49671 ';
+            StartFamily(self, '3', '', 0);
+            IndiName(self, 'Adam', 'I3U', 1);
+            FamilyIndiv(self, 'I3U', '3', 1);
+            IndiName(self, 'Johann Georg', 'I3U', 2);
+            IndiData(self, 'lu.', 'I3U', 8);
+            StartFamily(self, '3U', '', 0);
+            FamilyIndiv(self, 'I3U', '3U', 3);
+            IndiName(self, 'Adam', 'I3UM', 1);
+            FamilyIndiv(self, 'I3UM', '3U', 1);
+            IndiName(self, 'Georg', 'I3UM', 2);
+            IndiData(self, 'lu.', 'I3UM', 8);
+            IndiDate(self, '(err) 09.07.1734', 'I3U', 1);
+            IndiPlace(self, 'Obrigheim', 'I3U', 1);
+            IndiDate(self, '12.07.1734', 'I3U', 5);
+            IndiPlace(self, 'Obrigheim', 'I3U', 5);
+            IndiRef(self, '49671', 'I3U', 0);
             SaveToFile(FDataPath + DirectorySeparator + 'FBObr0003b.ged');
           finally
             FreeAndNil(lStr)
@@ -97,21 +140,22 @@ end;
 
 procedure TTestGedComHelper.TestParserOutp1b;
 var
-  lSt,lRs: TStrings;
+    lSt, lRs :TStrings;
 
-const FileName='EntryGC0001.entTxt';
+const
+    FileName = 'EntryGC0001.entTxt';
 begin
-      lst:=TStringList.Create;
-      lRs:=TStringList.Create;
+    lst := TStringList.Create;
+    lRs := TStringList.Create;
       try
-      lSt.LoadFromFile(FDataPath+DirectorySeparator+FileName);
-      if FileExists(FDataPath+DirectorySeparator+ChangeFileExt(FileName,'.entExp')) then
-        lRs.LoadFromFile(FDataPath+DirectorySeparator+ChangeFileExt(FileName,'.entExp'));
-      FGedComHelper.FGedComFile.Clear;
-      FGedComHelper.Citation:=lSt;
-      FGedComHelper.CitTitle:='Pg. 1';
-      FGedComHelper.CreateNewHeader('Dummy');
-      ReplayExpResult(lRs);
+        lSt.LoadFromFile(FDataPath + DirectorySeparator + FileName);
+        if FileExists(FDataPath + DirectorySeparator + ChangeFileExt(FileName, '.entExp')) then
+            lRs.LoadFromFile(FDataPath + DirectorySeparator + ChangeFileExt(FileName, '.entExp'));
+        FGedComHelper.FGedComFile.Clear;
+        FGedComHelper.Citation := lSt;
+        FGedComHelper.CitTitle := 'Pg. 1';
+        FGedComHelper.CreateNewHeader('Dummy');
+        ReplayExpResult(lRs);
       finally
         FreeAndNil(lSt);
         FreeAndNil(lRs);
@@ -120,242 +164,389 @@ end;
 
 procedure TTestGedComHelper.TestDateModifRepl;
 begin
-  CheckEquals('EST 1980',FGedComHelper.RplGedTags('(s) 1980'),'(s) 1980');
-  CheckEquals('CAL 1980',FGedComHelper.RplGedTags('(err) 1980'),'(err) 1980');
-  CheckEquals('BEF 1980',FGedComHelper.RplGedTags('vor 1980'),'vor 1980');
-  CheckEquals('AFT 1980',FGedComHelper.RplGedTags('nach 1980'),'nach 1980');
-  CheckEquals('AFT 1980',FGedComHelper.RplGedTags('seit 1980'),'seit 1980');
-  CheckEquals('ABT 1980',FGedComHelper.RplGedTags('ca 1980'),'ca 1980');
-  CheckEquals('ABT. 1980',FGedComHelper.RplGedTags('ca. 1980'),'ca. 1980');
+    CheckEquals('EST 1980', FGedComHelper.RplGedTags('(s) 1980'), '(s) 1980');
+    CheckEquals('CAL 1980', FGedComHelper.RplGedTags('(err) 1980'), '(err) 1980');
+    CheckEquals('BEF 1980', FGedComHelper.RplGedTags('vor 1980'), 'vor 1980');
+    CheckEquals('AFT 1980', FGedComHelper.RplGedTags('nach 1980'), 'nach 1980');
+    CheckEquals('AFT 1980', FGedComHelper.RplGedTags('seit 1980'), 'seit 1980');
+    CheckEquals('ABT 1980', FGedComHelper.RplGedTags('ca 1980'), 'ca 1980');
+    CheckEquals('ABT. 1980', FGedComHelper.RplGedTags('ca. 1980'), 'ca. 1980');
 end;
 
 procedure TTestGedComHelper.TestFiles;
-  begin
-    TestFilesInt('*.enttxt',@FSFileFound);
-  end;
+begin
+    TestFilesInt('*.enttxt', @FSFileFound);
+end;
 
 procedure TTestGedComHelper.TestFile50;
-begin
-  TestFilesInt('EntryGC0050.enttxt',@FSFileFound);
-  CheckEquals(8,FGedComFile.Count,'Tags after '+'EntryGC0050.enttxt'.QuotedString('"'));
+const
+    CEntTxtFile = 'EntryGC0050.enttxt';
+    CExpTags    = 8;
+    CExpFam    = '@F50@ FAM';
+    CExpInode  =  '@I50M@';
+    CExpIndi    = 'I: Anton Assel, M, E: born: ABT. 1780';
 
+begin
+    TestFilesInt(CEntTxtFile, @FSFileFound);
+    CheckEquals(CexpTags, FGedComFile.Count, 'Tags after ' + string(
+        ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals('@SUBM@ SUBM', FGedComFile.Child[1].ToString, '[1].ToString ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals(CExpFam, FGedComFile.Child[2].ToString, '[2].ToString ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals('@S1@ SOUR', FGedComFile.Child[3].ToString, '[3].ToString ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals(CExpInode, FGedComFile.Child[4].NodeID, '[4].NodeID ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals(CExpIndi, FGedComFile.Child[4].ToString, '[4].ToString ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
 end;
 
 procedure TTestGedComHelper.TestFileM407;
+const
+    CEntTxtFile = 'OsBM0407.enttxt';
+    CExpTags    = 11;
+    CExpFam    = '@F405@ FAM';
+    CExpInode  =  '@I405M@';
+    CExpIndi    = 'I: Jakob Finzer, M, E: born: 5.8.1895 in Nußloch bei Heidelberg';
+
 begin
-  TestFilesInt('OsBM0407.enttxt',@FSFileFound);
-  CheckEquals(11,FGedComFile.Count,'Tags after '+'OsBM407.enttxt'.QuotedString('"'));
+    TestFilesInt(CEntTxtFile, @FSFileFound);
+    CheckEquals(CexpTags, FGedComFile.Count, 'Tags after ' + string(
+        ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals('@SUBM@ SUBM', FGedComFile.Child[1].ToString, '[1].ToString ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals(CExpFam, FGedComFile.Child[2].ToString, '[2].ToString ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals('@S1@ SOUR', FGedComFile.Child[3].ToString, '[3].ToString ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals(CExpInode, FGedComFile.Child[4].NodeID, '[4].NodeID ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals(CExpIndi, FGedComFile.Child[4].ToString, '[4].ToString ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
 end;
 
 procedure TTestGedComHelper.TestFile51;
-begin
-  TestFilesInt('EntryGC0051.enttxt',@FSFileFound);
-  CheckEquals(18,FGedComFile.Count,'Tags after '+'EntryGC0051.enttxt'.QuotedString('"'));
+const
+    CEntTxtFile = 'EntryGC0051.enttxt';
+    CExpTags    = 18;
+    CExpFam    = '@F51@ FAM';
+    CExpInode  =  '@I51M@';
+    CExpIndi    = 'I: Johann Peter Assel, M, E: born: 17.08.1799 in Asbach';
 
+begin
+    TestFilesInt(CEntTxtFile, @FSFileFound);
+    CheckEquals(CexpTags, FGedComFile.Count, 'Tags after ' + string(
+        ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals('@SUBM@ SUBM', FGedComFile.Child[1].ToString,
+        '[1].ToString ' + string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals(CExpFam, FGedComFile.Child[2].ToString, '[2].ToString ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals('@S1@ SOUR', FGedComFile.Child[3].ToString,
+        '[3].ToString ' + string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals(CExpInode, FGedComFile.Child[4].NodeID, '[4].NodeID ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals(CExpIndi, FGedComFile.Child[4].ToString, '[4].ToString ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
 end;
+
+procedure TTestGedComHelper.TestFileM2420;
+const
+    CEntTxtFile = 'OsBM2420.enttxt';
+    CExpTags    = 8;
+    CExpFam    = '@F2420@ FAM';
+    CExpInode    = '@I2420M@';
+    CExpIndi    = 'I: Bartholomäus Rosewich, M';
+
+begin
+    TestFilesInt(CEntTxtFile, @FSFileFound);
+    CheckEquals(CexpTags, FGedComFile.Count, 'Tags after ' + string(
+        ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals('@SUBM@ SUBM', FGedComFile.Child[1].ToString,
+        '[1].ToString ' + string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals(CExpFam, FGedComFile.Child[2].ToString, '[2].ToString ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals('@S1@ SOUR', FGedComFile.Child[3].ToString,
+        '[3].ToString ' + string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals(CExpInode, FGedComFile.Child[4].NodeID, '[4].NodeID ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+    CheckEquals(CExpIndi, FGedComFile.Child[4].ToString, '[4].ToString ' +
+        string(ExtractFileName(CEntTxtFile)).QuotedString('"'));
+end;
+
 
 procedure TTestGedComHelper.TestFilesComb;
 
-  begin
+begin
     FGedComHelper.FGedComFile.Clear;
     FGedComHelper.CreateNewHeader('Dummy');
 
-    TestFilesInt('*.enttxt',@FSFileFoundComb);
+    TestFilesInt('*.enttxt', @FSFileFoundComb);
 
-    if FileExists(FDataPath+DirectorySeparator+'Entry0001ff.New.Ged') then
-      DeleteFile(FDataPath+DirectorySeparator+'Entry0001ff.New.Ged');
-    FGedComHelper.SaveToFile(FDataPath+DirectorySeparator+'Entry0001ff.New.Ged');
-  end;
+    if FileExists(FDataPath + DirectorySeparator + 'Entry0001ff.New.Ged') then
+        DeleteFile(FDataPath + DirectorySeparator + 'Entry0001ff.New.Ged');
+    FGedComHelper.SaveToFile(FDataPath + DirectorySeparator + 'Entry0001ff.New.Ged');
+end;
 
 procedure TTestGedComHelper.TestFile50_51;
 
-  const FileName1 = 'EntryGC0050.enttxt';
-        FileName2 = 'EntryGC0051.enttxt';
+const
+    FileName1 = 'EntryGC0050.enttxt';
+    FileName2 = 'EntryGC0051.enttxt';
 
-  begin
+begin
     FGedComHelper.FGedComFile.Clear;
     FGedComHelper.CreateNewHeader('Dummy');
 
-    TestFilesInt(FileName1,@FSFileFoundComb);
-      CheckEquals(7,FGedComFile.Count,'Tags after '+FileName1.QuotedString('"'));
-    TestFilesInt(FileName2,@FSFileFoundComb);
-      CheckEquals(20,FGedComFile.Count,'Tags after '+FileName2.QuotedString('"'));
+    TestFilesInt(FileName1, @FSFileFoundComb);
+    CheckEquals(7, FGedComFile.Count, 'Tags after ' + FileName1.QuotedString('"'));
+    TestFilesInt(FileName2, @FSFileFoundComb);
+    CheckEquals(20, FGedComFile.Count, 'Tags after ' + FileName2.QuotedString('"'));
 
-    if FileExists(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'ff.New.Ged')) then
-      DeleteFile(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'ff.New.Ged'));
-    FGedComHelper.SaveToFile(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'ff.New.Ged'));
+    if FileExists(FDataPath + DirectorySeparator + ChangeFileExt(
+        FileName1, 'ff.New.Ged')) then
+        DeleteFile(FDataPath + DirectorySeparator + ChangeFileExt(FileName1, 'ff.New.Ged'));
+    FGedComHelper.SaveToFile(FDataPath + DirectorySeparator + ChangeFileExt(
+        FileName1, 'ff.New.Ged'));
 
-  end;
+end;
 
 procedure TTestGedComHelper.TestFile51_52;
 
-const FileName1 = 'EntryGC0051.enttxt';
-      FileName2 = 'EntryGC0052.enttxt';
+const
+    FileName1 = 'EntryGC0051.enttxt';
+    FileName2 = 'EntryGC0052.enttxt';
 
 begin
-  FGedComHelper.FGedComFile.Clear;
-  FGedComHelper.CreateNewHeader('Dummy');
+    FGedComHelper.FGedComFile.Clear;
+    FGedComHelper.CreateNewHeader('Dummy');
 
-  TestFilesInt(FileName1,@FSFileFoundComb);
-    CheckEquals(17,FGedComFile.Count,'Tags after '+FileName1.QuotedString('"'));
+    TestFilesInt(FileName1, @FSFileFoundComb);
+    CheckEquals(17, FGedComFile.Count, 'Tags after ' + FileName1.QuotedString('"'));
 
-  TestFilesInt(FileName2,@FSFileFoundComb);
-  CheckEquals(22,FGedComFile.Count,'Tags after '+FileName2.QuotedString('"'));
+    TestFilesInt(FileName2, @FSFileFoundComb);
+    CheckEquals(22, FGedComFile.Count, 'Tags after ' + FileName2.QuotedString('"'));
 
-  if FileExists(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'ff.New.Ged')) then
-    DeleteFile(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'ff.New.Ged'));
-  FGedComHelper.SaveToFile(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'ff.New.Ged'));
+    if FileExists(FDataPath + DirectorySeparator + ChangeFileExt(FileName1, 'ff.New.Ged')) then
+        DeleteFile(FDataPath + DirectorySeparator + ChangeFileExt(FileName1, 'ff.New.Ged'));
+    FGedComHelper.SaveToFile(FDataPath + DirectorySeparator + ChangeFileExt(
+        FileName1, 'ff.New.Ged'));
 
 end;
 
 procedure TTestGedComHelper.TestFile52_54;
 
-const FileName1 = 'EntryGC0052.enttxt';
-      FileName2 = 'EntryGC0054.enttxt';
+const
+    FileName1 = 'EntryGC0052.enttxt';
+    FileName2 = 'EntryGC0054.enttxt';
 
 begin
-  FGedComHelper.FGedComFile.Clear;
-  FGedComHelper.CreateNewHeader('Dummy');
+    FGedComHelper.FGedComFile.Clear;
+    FGedComHelper.CreateNewHeader('Dummy');
 
-  TestFilesInt(FileName1,@FSFileFoundComb);
-  CheckEquals(9,FGedComFile.Count,'Tags after '+FileName1.QuotedString('"'));
-  TestFilesInt(FileName2,@FSFileFoundComb);
-  CheckEquals(13,FGedComFile.Count,'Tags after '+FileName2.QuotedString('"'));
+    TestFilesInt(FileName1, @FSFileFoundComb);
+    CheckEquals(9, FGedComFile.Count, 'Tags after ' + FileName1.QuotedString('"'));
+    TestFilesInt(FileName2, @FSFileFoundComb);
+    CheckEquals(13, FGedComFile.Count, 'Tags after ' + FileName2.QuotedString('"'));
 
-  if FileExists(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'_ff.New.Ged')) then
-    DeleteFile(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'_ff.New.Ged'));
-  FGedComHelper.SaveToFile(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'_ff.New.Ged'));
+    if FileExists(FDataPath + DirectorySeparator + ChangeFileExt(FileName1, '_ff.New.Ged')) then
+        DeleteFile(FDataPath + DirectorySeparator + ChangeFileExt(FileName1, '_ff.New.Ged'));
+    FGedComHelper.SaveToFile(FDataPath + DirectorySeparator + ChangeFileExt(
+        FileName1, '_ff.New.Ged'));
 end;
 
 procedure TTestGedComHelper.TestFile52_51_50;
-const FileName1 = 'EntryGC0052.enttxt';
-      FileName2 = 'EntryGC0051.enttxt';
-      FileName3 = 'EntryGC0050.enttxt';
+const
+    FileName1 = 'EntryGC0052.enttxt';
+    FileName2 = 'EntryGC0051.enttxt';
+    FileName3 = 'EntryGC0050.enttxt';
 
 begin
-  FGedComHelper.FGedComFile.Clear;
-  FGedComHelper.CreateNewHeader('Dummy');
+    FGedComHelper.FGedComFile.Clear;
+    FGedComHelper.CreateNewHeader('Dummy');
 
-  TestFilesInt(FileName1,@FSFileFoundComb);
-  CheckEquals(9,FGedComFile.Count,'Tags after '+FileName1.QuotedString('"'));
-  TestFilesInt(FileName2,@FSFileFoundComb);
-  CheckEquals(22,FGedComFile.Count,'Tags after '+FileName2.QuotedString('"'));
-  TestFilesInt(FileName3,@FSFileFoundComb);
-  CheckEquals(25,FGedComFile.Count,'Tags after '+FileName3.QuotedString('"'));
+    TestFilesInt(FileName1, @FSFileFoundComb);
+    CheckEquals(9, FGedComFile.Count, 'Tags after ' + FileName1.QuotedString('"'));
+    TestFilesInt(FileName2, @FSFileFoundComb);
+    CheckEquals(22, FGedComFile.Count, 'Tags after ' + FileName2.QuotedString('"'));
+    TestFilesInt(FileName3, @FSFileFoundComb);
+    CheckEquals(25, FGedComFile.Count, 'Tags after ' + FileName3.QuotedString('"'));
 
-  if FileExists(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'rr.New.Ged')) then
-    DeleteFile(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'rr.New.Ged'));
-  FGedComHelper.SaveToFile(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'rr.New.Ged'));
+    if FileExists(FDataPath + DirectorySeparator + ChangeFileExt(FileName1, 'rr.New.Ged')) then
+        DeleteFile(FDataPath + DirectorySeparator + ChangeFileExt(FileName1, 'rr.New.Ged'));
+    FGedComHelper.SaveToFile(FDataPath + DirectorySeparator + ChangeFileExt(
+        FileName1, 'rr.New.Ged'));
 
 end;
 
-procedure TTestGedComHelper.TestFiles5939ff;
-const FileName1 = 'OsbObr5939.enttxt';
-      FileName2 = 'OsbObr5942.enttxt';
-      FileName3 = 'OsbObr5943.enttxt';
+procedure TTestGedComHelper.TestFile411_1193;
+const
+    FileName1 = 'OsBM0411.enttxt';
+    FileName2 = 'OsBM1193.enttxt';
 
 begin
-  FGedComHelper.FGedComFile.Clear;
-  FGedComHelper.CreateNewHeader('Dummy');
+    FGedComHelper.FGedComFile.Clear;
+    FGedComHelper.CreateNewHeader('Dummy');
 
-  TestFilesInt(FileName1,@FSFileFoundComb);
-    CheckEquals(10,FGedComFile.Count,'Tags after '+FileName1.QuotedString('"'));
-  TestFilesInt(FileName2,@FSFileFoundComb);
-  CheckEquals(14,FGedComFile.Count,'Tags after '+FileName2.QuotedString('"'));
-  TestFilesInt(FileName3,@FSFileFoundComb);
-  CheckEquals(22,FGedComFile.Count,'Tags after '+FileName3.QuotedString('"'));
+    TestFilesInt(FileName1, @FSFileFoundComb);
+    CheckEquals(15, FGedComFile.Count, 'Tags after ' + FileName1.QuotedString('"'));
+    TestFilesInt(FileName2, @FSFileFoundComb);
+    CheckEquals(21, FGedComFile.Count, 'Tags after ' + FileName2.QuotedString('"'));
 
-  if FileExists(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'_ff.New.Ged')) then
-    DeleteFile(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'_ff.New.Ged'));
-  FGedComHelper.SaveToFile(FDataPath+DirectorySeparator+ChangeFileExt(FileName1,'rr.New.Ged'));
+    if FileExists(FDataPath + DirectorySeparator + ChangeFileExt(
+        FileName1, 'ff.New.Ged')) then
+        DeleteFile(FDataPath + DirectorySeparator + ChangeFileExt(FileName1, 'ff.New.Ged'));
+    FGedComHelper.SaveToFile(FDataPath + DirectorySeparator + ChangeFileExt(
+        FileName1, 'ff.New.Ged'));
+end;
+
+procedure TTestGedComHelper.TestFiles5939ff;
+const
+    FileName1 = 'OsbObr5939.enttxt';
+    FileName2 = 'OsbObr5942.enttxt';
+    FileName3 = 'OsbObr5943.enttxt';
+
+begin
+    FGedComHelper.FGedComFile.Clear;
+    FGedComHelper.CreateNewHeader('Dummy');
+
+    TestFilesInt(FileName1, @FSFileFoundComb);
+    CheckEquals(10, FGedComFile.Count, 'Tags after ' + FileName1.QuotedString('"'));
+    TestFilesInt(FileName2, @FSFileFoundComb);
+    CheckEquals(14, FGedComFile.Count, 'Tags after ' + FileName2.QuotedString('"'));
+    TestFilesInt(FileName3, @FSFileFoundComb);
+    CheckEquals(22, FGedComFile.Count, 'Tags after ' + FileName3.QuotedString('"'));
+
+    if FileExists(FDataPath + DirectorySeparator + ChangeFileExt(FileName1, '_ff.New.Ged')) then
+        DeleteFile(FDataPath + DirectorySeparator + ChangeFileExt(FileName1, '_ff.New.Ged'));
+    FGedComHelper.SaveToFile(FDataPath + DirectorySeparator + ChangeFileExt(
+        FileName1, 'rr.New.Ged'));
 
 end;
 
 constructor TTestGedComHelper.Create;
 var
-    i: integer;
+    i :integer;
+    lFileSearcher: TFileSearcher;
 begin
     inherited Create;
-    FDataPath:=GetDataPath('GenData');
-end;
-
-procedure TTestGedComHelper.ReplayExpResult(st: TStrings);
-var
-  i: Integer;
-begin
-  if st.Count=0 then
-    exit;
-  for i := 1 to st.Count-1 do
-     FGedComHelper.FireEvent(self,st[i].Split([#9]));
-end;
-
-procedure TTestGedComHelper.TestFilesInt(aFilename:String;OnFileFound:TFileFoundEvent);
-var
-  lFileSearcher: TFileSearcher;
-begin
-  lFileSearcher:= TFileSearcher.Create ;
-  try
-  lFileSearcher.OnFileFound:=OnFileFound;
-  lFileSearcher.Search(FDataPath+DirectorySeparator+'..'+DirectorySeparator+'Par'
-    +'seFB'
-    , aFilename, false, false);
-  finally
-    freeandnil(lFileSearcher);
-  end;
-end;
-
-procedure TTestGedComHelper.FSFileFound(FileIterator: TFileIterator);
-var
-  lSt,lRs: TStrings;
-begin
-      lst:=TStringList.Create;
-      lRs:=TStringList.Create;
-      try
-      lSt.LoadFromFile(FileIterator.FileName);
-      if FileExists(ChangeFileExt(FileIterator.FileName,'.entExp')) then
-        lRs.LoadFromFile(ChangeFileExt(FileIterator.FileName,'.entExp'))
-      else if FileExists(ChangeFileExt(FileIterator.FileName,'.entNew')) then
-        lRs.LoadFromFile(ChangeFileExt(FileIterator.FileName,'.entNew'));
-      FGedComHelper.FGedComFile.Clear;
-      FGedComHelper.Citation:=lSt;
-      FGedComHelper.CitTitle:='Pg.';
-      FGedComHelper.CreateNewHeader('Dummy');
-      ReplayExpResult(lRs);
-      if FileExists(ChangeFileExt(FileIterator.FileName,'.New.Ged')) then
-        DeleteFile(ChangeFileExt(FileIterator.FileName,'.New.Ged'));
-      FGedComHelper.SaveToFile(ChangeFileExt(FileIterator.FileName,'.New.Ged'));
-
-      finally
-        Freeandnil(lRs);
-        FreeandNil(lSt);
+    FDataPath := GetDataPath('GenData');
+    if (TestName = '')
+       and not FInit then
+      begin
+        lFileSearcher := TFileSearcher.Create;
+         try
+           lFileSearcher.OnFileFound := @FSAddFound;
+           lFileSearcher.Search(FDataPath+DirectorySeparator+'..'+DirectorySeparator+'Par'
+      +'seFB', '*.entTxt', False, False);
+         finally
+           FreeAndNil(lFileSearcher);
+           FInit := true;
+         end;
       end;
 end;
 
-procedure TTestGedComHelper.FSFileFoundComb(FileIterator: TFileIterator);
+procedure TTestGedComHelper.ReplayExpResult(st :TStrings);
 var
-  lSt,lRs: TStrings;
+    i :integer;
 begin
-      lst:=TStringList.Create;
-      lRs:=TStringList.Create;
+    if st.Count = 0 then
+        exit;
+    for i := 1 to st.Count - 1 do
+        FGedComHelper.FireEvent(self, st[i].Split([#9]));
+end;
+
+procedure TTestGedComHelper.TestFilesInt(aFilename :string; OnFileFound :TFileFoundEvent);
+var
+    lFileSearcher :TFileSearcher;
+begin
+    lFileSearcher := TFileSearcher.Create;
       try
-      lSt.LoadFromFile(FileIterator.FileName);
-      if FileExists(ChangeFileExt(FileIterator.FileName,'.entExp')) then
-        lRs.LoadFromFile(ChangeFileExt(FileIterator.FileName,'.entExp'));
-      FGedComHelper.Citation:=lSt;
-      FGedComHelper.CitTitle:='Pg.';
-      ReplayExpResult(lRs);
+        lFileSearcher.OnFileFound := OnFileFound;
+        lFileSearcher.Search(FDataPath + DirectorySeparator + '..' + DirectorySeparator +
+            'Par' + 'seFB'
+            , aFilename, False, False);
+      finally
+        FreeAndNil(lFileSearcher);
+      end;
+end;
+
+procedure TTestGedComHelper.protected;
+begin
+
+end;
+
+procedure TTestGedComHelper.FSAddFound(FileIterator: TFileIterator);
+var
+  st: String;
+
+begin
+  st := ExtractFileName(FileIterator.Filename);
+  RegisterTest(Classname+'All\test',TChildTest.Create(self,st));
+end;
+
+procedure TTestGedComHelper.FSFileFound(FileIterator :TFileIterator);
+var
+    lSt, lRs :TStrings;
+begin
+    lst := TStringList.Create;
+    lRs := TStringList.Create;
+      try
+        lSt.LoadFromFile(FileIterator.FileName);
+        if FileExists(ChangeFileExt(FileIterator.FileName, '.entExp')) then
+            lRs.LoadFromFile(ChangeFileExt(FileIterator.FileName, '.entExp'))
+        else if FileExists(ChangeFileExt(FileIterator.FileName, '.entNew')) then
+            lRs.LoadFromFile(ChangeFileExt(FileIterator.FileName, '.entNew'));
+        FGedComHelper.FGedComFile.Clear;
+        FGedComHelper.Citation := lSt;
+        FGedComHelper.CitTitle := 'Pg.';
+        FGedComHelper.CreateNewHeader('Dummy');
+        ReplayExpResult(lRs);
+        if FileExists(ChangeFileExt(FileIterator.FileName, '.New.Ged')) then
+            DeleteFile(ChangeFileExt(FileIterator.FileName, '.New.Ged'));
+        FGedComHelper.SaveToFile(ChangeFileExt(FileIterator.FileName, '.New.Ged'));
 
       finally
-        Freeandnil(lRs);
-        FreeandNil(lSt);
+        FreeAndNil(lRs);
+        FreeAndNil(lSt);
       end;
+end;
+
+procedure TTestGedComHelper.FSFileFoundComb(FileIterator :TFileIterator);
+var
+    lSt, lRs :TStrings;
+begin
+    lst := TStringList.Create;
+    lRs := TStringList.Create;
+      try
+        lSt.LoadFromFile(FileIterator.FileName);
+        if FileExists(ChangeFileExt(FileIterator.FileName, '.entExp')) then
+            lRs.LoadFromFile(ChangeFileExt(FileIterator.FileName, '.entExp'))
+        else if FileExists(ChangeFileExt(FileIterator.FileName, '.entNew')) then
+            lRs.LoadFromFile(ChangeFileExt(FileIterator.FileName, '.entNew'));
+        FGedComHelper.Citation := lSt;
+        FGedComHelper.CitTitle := 'Pg.';
+        ReplayExpResult(lRs);
+
+      finally
+        FreeAndNil(lRs);
+        FreeAndNil(lSt);
+      end;
+end;
+
+procedure TTestGedComHelper.HelperMessage(Sender: TObject; aType: TEventType;
+  aText: string; Ref: string; aMode: integer);
+begin
+
 end;
 
 procedure TTestGedComHelper.SetUp;
 begin
-    FGedComFile := TGedComFile.Create;
+    FGedComFile   := TGedComFile.Create;
     FGedComHelper := TGedComHelper.Create;
     FGedComHelper.GedComFile := FGedComFile;
+    FGedComHelper.FDebugDate := EncodeDate(2021,05,02);
+    FGedComHelper.onHlpMessage:=@HelperMessage;
 end;
 
 procedure TTestGedComHelper.TearDown;

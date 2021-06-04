@@ -280,7 +280,11 @@ begin
       begin
         eType := aValue[0];
         Data := aValue[1];
-        Data := Data.Replace('\r', #13).Replace('\n', #10).Replace('\t', #9).Replace('\\', '\');
+        Data := Data
+          .Replace('\r', #13)
+          .Replace('\n', #10)
+          .Replace('\t', #9)
+          .Replace('\\', '\');
         Ref := aValue[2];
         SubType := aValue[3];
       end;
@@ -291,7 +295,11 @@ begin
     if (length(aValue) = 4) and TryStrToInt(aValue[3], SubType) then
       begin
         eType := aValue[0];
-        Data := aValue[1].Replace('\r', #13).Replace('\n', #10).Replace('\t', #9).Replace('\\', '\');
+        Data := aValue[1]
+             .Replace('\r', #13)
+             .Replace('\n', #10)
+             .Replace('\t', #9)
+             .Replace('\\', '\');
         Ref := aValue[2];
       end
     else
@@ -300,8 +308,12 @@ end;
 
 function TResultType.ToCSV(delim: string): string;
 begin
-    Result := ''.Join(delim, [eType, Data.Replace('\', '\\').Replace(
-        #9, '\t').Replace(#10, '\n').Replace(#13, '\r'), ref, IntToStr(SubType)]);
+    Result := ''.Join(delim, [eType, Data
+      .Replace('\', '\\')
+      .Replace(#9, '\t')
+      .Replace(#10, '\n')
+      .Replace(#13, '\r')
+      , ref, IntToStr(SubType)]);
 end;
 
 end.

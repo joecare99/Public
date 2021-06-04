@@ -37,7 +37,6 @@ type
         procedure btnPrintClick(Sender: TObject);
         procedure FormCreate(Sender: TObject);
         procedure FormDestroy(Sender: TObject);
-        procedure FormResize(Sender: TObject);
         procedure pbxPreviewPaint(Sender: TObject);
         procedure edtLabySizeChange(Sender: TObject);
     private

@@ -1,27 +1,26 @@
-object Form1: TForm1
+object frmLabyDemo3: TfrmLabyDemo3
   Left = 0
   Height = 707
   Top = 0
-  Width = 866
-  Caption = 'Form1'
-  ClientHeight = 687
-  ClientWidth = 866
+  Width = 831
+  Caption = 'A Labyrinth Demo'
+  ClientHeight = 707
+  ClientWidth = 831
   Color = clBtnFace
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Menu = MainMenu1
-  LCLVersion = '2.0.10.0'
-  object ImgDisplay: TImage
+  object imgDisplay: TImage
     Left = 0
     Height = 707
     Top = 0
-    Width = 584
+    Width = 549
     Align = alClient
-    OnClick = ImgDisplayClick
+    OnClick = imgDisplayClick
   end
   object pnlRight: TPanel
-    Left = 584
+    Left = 549
     Height = 707
     Top = 0
     Width = 282
@@ -147,13 +146,13 @@ object Form1: TForm1
       Font.Name = 'MS Sans Serif'
       ParentFont = False
     end
-    object Panel3: TPanel
+    object pnlRightClient: TPanel
       Left = 1
       Height = 367
       Top = 169
       Width = 280
       Align = alClient
-      Caption = 'Panel3'
+      Caption = 'pnlRightClient'
       ClientHeight = 367
       ClientWidth = 280
       TabOrder = 1
@@ -240,7 +239,7 @@ object Form1: TForm1
         ParentFont = False
         TabOrder = 5
       end
-      object LabeledEdit1: TLabeledEdit
+      object edtXDim: TLabeledEdit
         Left = 39
         Height = 21
         Top = 48
@@ -261,7 +260,7 @@ object Form1: TForm1
         TabOrder = 6
         Text = '150'
       end
-      object LabeledEdit2: TLabeledEdit
+      object edtYDim: TLabeledEdit
         Left = 39
         Height = 21
         Top = 80
@@ -282,13 +281,13 @@ object Form1: TForm1
         TabOrder = 7
         Text = '100'
       end
-      object BitBtn1: TBitBtn
+      object btnShow: TBitBtn
         Left = 146
         Height = 30
         Top = 83
         Width = 75
-        Caption = 'BitBtn1'
-        OnClick = BitBtn1Click
+        Caption = 'btnShow'
+        OnClick = btnShowClick
         TabOrder = 8
       end
     end
