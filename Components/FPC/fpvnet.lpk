@@ -20,7 +20,7 @@
       </Parsing>
     </CompilerOptions>
     <Description Value="Visual Net-Components (mainly from the FCL-net - package)"/>
-    <Version Minor="2"/>
+    <Version Minor="3"/>
     <Files Count="2">
       <Item1>
         <Filename Value="..\Source\VisualNet\visualsocket.pas"/>

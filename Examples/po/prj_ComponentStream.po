@@ -1,15 +1,25 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8"
 
-#: tform1.caption
-msgid "Test Component-Stream"
-msgstr ""
-
-#: tform1.speedbutton1.caption
+#: tform1.btncreate.caption
+msgctxt "tform1.btncreate.caption"
 msgid ">"
 msgstr ""
 
-#: tform1.speedbutton2.caption
+#: tform1.btncreate.hint
+msgid "Save Component to Text (Memo)"
+msgstr ""
+
+#: tform1.btnrestore.caption
+msgctxt "tform1.btnrestore.caption"
 msgid "<"
+msgstr ""
+
+#: tform1.btnrestore.hint
+msgid "Restore Component from Memo"
+msgstr ""
+
+#: tform1.caption
+msgid "Test Component-Stream"
 msgstr ""
 

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Labyrinth3"><module name="LabyU3"><short>2d - Labyrinth Unit</short><element name="TLbyRoom"><short>A Room is a place in the labyrinth.</short>
+      </element><element name="TLbyRoomItm"/><element name="TlbyEingang"><short>The Eingang is a special room of the labyrinth where the player usually starts.</short>
+      </element><element name="TLbyGang"><short>a Gang is a hallway you can usually only go in 2 directions </short>
+      </element><element name="TLbyAusgang"><short>The Ausgang is the destination room.</short>
+      </element><element name="TLbyEnde"><short>Ende is the room at the end of a halllway having no other exit.</short>
+      </element><element name="TLbyCreature"><short>This is the basis of a NPF it still can be frindly, neutral or hostile. </short>
+      </element><element name="TPutObstaclePxl"><short>delegate for creating an Laby-Obstacle.</short>
+      </element><element name="TMakeObstacle"><short>Delegate for making obstacles special places for the labyrinth creation routine</short>
+      </element><element name="TLaby"><short>A (diagnostics-) form for the labyrinth</short>
+      </element><element name="TLaby.btnClose"><short>Close - Button</short>
+      </element><element name="TLaby.LabImage"><short>a Preview-Image</short>
+      </element><element name="TLaby.PrintDialog1"><short>Printer - Dialog</short>
+      </element><element name="TLaby.btnOK"><short>OK - Button</short>
+      </element><element name="Laby"><short>Form-Variable for the Laby-form</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

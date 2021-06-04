@@ -120,7 +120,7 @@ begin
             lPara.AppendOdfElement(oetTextLineBreak);
             lSpan := lpara.AddSpan('ABCDEF abcdef 12345', aFont, FOdfTextDocument);
             lSpan.AppendOdfElement(oetTextLineBreak);
-            lSpan.AppendText('Franz jagt im komplett verwarlosten Taxi quer durch Berlin !');
+            lSpan.AppendText('Franz jagt im komplett verwahrlosten Taxi quer durch Berlin !');
           end;
       finally
         FreeAndNil(aFont)

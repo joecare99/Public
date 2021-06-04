@@ -19,14 +19,13 @@ type
     actFileSave: TAction;
     actFileSaveAs: TFileSaveAs;
     alsXMLFile: TActionList;
-    BitBtn1: TBitBtn;
-    BitBtn2: TBitBtn;
-    BitBtn3: TBitBtn;
-    ComboBox1: TComboBox;
+    btnOpen: TBitBtn;
+    btnFileLoad: TBitBtn;
+    btnFileSave: TBitBtn;
+    cbxFilename: TComboBox;
     edtXmlFileDetail: TMemo;
     ilsOdfFile: TImageList;
-    OpenDialog1: TOpenDialog;
-    Panel1: TPanel;
+    pnlTop: TPanel;
     pnlClientClient: TPanel;
     SaveDialog1: TSaveDialog;
     Splitter2: TSplitter;
@@ -63,8 +62,8 @@ uses LAZ2_DOM;
 
 procedure TFraOdfBrowser.actFileOpenBeforeExecute(Sender: TObject);
 begin
-  if FileExists(ComboBox1.Text) then
-        actFileOpen.Dialog.FileName := ComboBox1.Text
+  if FileExists(cbxFilename.Text) then
+        actFileOpen.Dialog.FileName := cbxFilename.Text
     else
         actFileOpen.Dialog.FileName := '';
 end;
@@ -198,7 +197,7 @@ end;
 procedure TFraOdfBrowser.actFileOpenAccept(Sender: TObject);
 begin
   FOdfFileName := actFileOpen.Dialog.FileName;
-     ComboBox1.Text := FOdfFileName;
+     cbxFilename.Text := FOdfFileName;
      actFileLoad.Execute;
 end;
 
