@@ -1,7 +1,5 @@
 unit obj_TrialStaticText;
 
-{$mode objfpc}{$H+}
-
 interface
 
 uses
@@ -27,7 +25,7 @@ type
         constructor Init(aOwner: Pgroup; AData: PStaticTextData; OnClone:TDelegate);
         function Execute: word; virtual;
         procedure HandleEvent(var Event: TEvent); virtual;
-        procedure SizeLimits(var MinSz, MaxSz: TPoint); virtual;
+        procedure SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint); virtual;
     end;
 
 
@@ -85,7 +83,8 @@ function TTrialStaticText.Execute: word;
 var
     R: TRect;
 begin
-  result :=0;
+  {$IfDef FPC_OBJFPC}result{$else}Execute{$endif}
+   :=0;
     case CodeGen.GenPart of
      gpControls:
         begin
@@ -162,7 +161,7 @@ begin
     end;
 end; {TTrialStaticText.HandleEvent}
 
-procedure TTrialStaticText.SizeLimits(var MinSz, MaxSz: TPoint);
+procedure TTrialStaticText.SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint);
 begin
     inherited SizeLimits(MinSz, MaxSz);
     MinSz.X:= 1;  Dec(MaxSz.X,2);

@@ -2,16 +2,14 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="10"/>
+    <Version Value="11"/>
     <BuildModes Active="Default"/>
-    <Units Count="36">
+    <Units Count="41">
       <Unit0>
         <Filename Value="fpp.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
-        <TopLine Value="481"/>
-        <CursorPos X="35" Y="508"/>
-        <UsageCount Value="22"/>
+        <CursorPos X="37" Y="68"/>
+        <UsageCount Value="27"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -25,10 +23,10 @@
       <Unit2>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\wutils.pas"/>
         <UnitName Value="WUtils"/>
-        <EditorIndex Value="7"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="107"/>
         <CursorPos X="10" Y="133"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="13"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
@@ -132,9 +130,9 @@
       </Unit16>
       <Unit17>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\globdir.inc"/>
-        <EditorIndex Value="6"/>
+        <EditorIndex Value="9"/>
         <TopLine Value="102"/>
-        <UsageCount Value="11"/>
+        <UsageCount Value="13"/>
         <Loaded Value="True"/>
       </Unit17>
       <Unit18>
@@ -156,11 +154,10 @@
       <Unit20>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\weditor.pas"/>
         <UnitName Value="WEditor"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="6783"/>
-        <CursorPos X="12" Y="6809"/>
-        <UsageCount Value="10"/>
+        <EditorIndex Value="10"/>
+        <TopLine Value="6784"/>
+        <CursorPos X="31" Y="6801"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit20>
       <Unit21>
@@ -232,46 +229,82 @@
       <Unit31>
         <Filename Value="..\source\fv\Src\app.pas"/>
         <UnitName Value="App"/>
-        <TopLine Value="32"/>
-        <CursorPos X="45" Y="51"/>
-        <UsageCount Value="10"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="39" Y="60"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit31>
       <Unit32>
         <Filename Value="..\source\fv\Src\platform.inc"/>
-        <EditorIndex Value="8"/>
+        <EditorIndex Value="2"/>
         <TopLine Value="338"/>
         <CursorPos X="22" Y="356"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit32>
       <Unit33>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
         <UnitName Value="FPViews"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="3882"/>
-        <CursorPos X="50" Y="3898"/>
-        <UsageCount Value="10"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="36" Y="39"/>
+        <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit33>
       <Unit34>
         <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\inc\systemh.inc"/>
-        <EditorIndex Value="5"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="313"/>
         <CursorPos X="3" Y="339"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit34>
       <Unit35>
         <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\inc\dosh.inc"/>
-        <EditorIndex Value="3"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="74"/>
         <CursorPos X="11" Y="100"/>
         <UsageCount Value="10"/>
-        <Loaded Value="True"/>
       </Unit35>
+      <Unit36>
+        <Filename Value="..\source\Fv2\Base\fv2consts.pas"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="513"/>
+        <CursorPos X="42" Y="194"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit36>
+      <Unit37>
+        <Filename Value="..\source\Fv2\Base\fv2common.pas"/>
+        <EditorIndex Value="4"/>
+        <CursorPos X="64" Y="23"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="..\source\Fv2\Base\fv2drivers.pas"/>
+        <EditorIndex Value="6"/>
+        <TopLine Value="609"/>
+        <CursorPos X="43" Y="813"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="..\source\Fv2\Base\fv2views.pas"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="454"/>
+        <CursorPos X="17" Y="495"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit39>
+      <Unit40>
+        <Filename Value="..\source\Fv2\fv2time.pas"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="7"/>
+        <CursorPos X="119" Y="26"/>
+        <UsageCount Value="12"/>
+        <Loaded Value="True"/>
+      </Unit40>
     </Units>
-    <JumpHistory Count="21" HistoryIndex="20">
+    <JumpHistory Count="23" HistoryIndex="22">
       <Position1>
         <Filename Value="..\source\fv\Src\app.pas"/>
       </Position1>
@@ -289,75 +322,87 @@
       </Position4>
       <Position5>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\weditor.pas"/>
-        <Caret Line="15" Column="8" TopLine="250"/>
+        <Caret Line="6809" Column="17" TopLine="6783"/>
       </Position5>
       <Position6>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\weditor.pas"/>
-        <Caret Line="6809" Column="17" TopLine="6783"/>
+        <Caret Line="15" Column="8"/>
       </Position6>
       <Position7>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\weditor.pas"/>
-        <Caret Line="15" Column="8"/>
+        <Caret Line="6809" Column="13" TopLine="6783"/>
       </Position7>
       <Position8>
-        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\weditor.pas"/>
-        <Caret Line="6809" Column="13" TopLine="6783"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
       </Position8>
       <Position9>
-        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
+        <Filename Value="fpp.pas"/>
+        <Caret Line="30" Column="14" TopLine="20"/>
       </Position9>
       <Position10>
         <Filename Value="fpp.pas"/>
-        <Caret Line="30" Column="14" TopLine="20"/>
+        <Caret Line="507" Column="35" TopLine="481"/>
       </Position10>
       <Position11>
-        <Filename Value="fpp.pas"/>
-        <Caret Line="507" Column="35" TopLine="481"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
+        <Caret Line="557" Column="3" TopLine="531"/>
       </Position11>
       <Position12>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
-        <Caret Line="557" Column="3" TopLine="531"/>
+        <Caret Line="569" Column="3" TopLine="543"/>
       </Position12>
       <Position13>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
-        <Caret Line="569" Column="3" TopLine="543"/>
+        <Caret Line="4420" Column="59" TopLine="4395"/>
       </Position13>
       <Position14>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
-        <Caret Line="4420" Column="59" TopLine="4395"/>
+        <Caret Line="4015" Column="33" TopLine="3989"/>
       </Position14>
       <Position15>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
-        <Caret Line="4015" Column="33" TopLine="3989"/>
+        <Caret Line="4010" Column="5" TopLine="3984"/>
       </Position15>
       <Position16>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
-        <Caret Line="4010" Column="5" TopLine="3984"/>
+        <Caret Line="4015" Column="11" TopLine="3989"/>
       </Position16>
       <Position17>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
-        <Caret Line="4015" Column="11" TopLine="3989"/>
+        <Caret Line="4013" Column="21" TopLine="3987"/>
       </Position17>
       <Position18>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
-        <Caret Line="4013" Column="21" TopLine="3987"/>
+        <Caret Line="3145" Column="24" TopLine="3119"/>
       </Position18>
       <Position19>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
-        <Caret Line="3145" Column="24" TopLine="3119"/>
+        <Caret Line="3812" Column="25" TopLine="3786"/>
       </Position19>
       <Position20>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
-        <Caret Line="3812" Column="25" TopLine="3786"/>
+        <Caret Line="3145" Column="11" TopLine="3119"/>
       </Position20>
       <Position21>
-        <Filename Value="..\..\..\Lazarus\FpcTrunk\ide\fpviews.pas"/>
-        <Caret Line="3145" Column="11" TopLine="3119"/>
+        <Filename Value="..\source\Fv2\Base\fv2views.pas"/>
+        <Caret Line="313" Column="25" TopLine="292"/>
       </Position21>
+      <Position22>
+        <Filename Value="..\source\Fv2\Base\fv2drivers.pas"/>
+        <Caret Line="101" Column="13" TopLine="67"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\source\Fv2\Base\fv2views.pas"/>
+        <Caret Line="356" Column="30" TopLine="337"/>
+      </Position23>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
   <Debugging>
-    <BreakPoints Count="1">
+    <BreakPoints Count="2">
       <Item1>
         <Kind Value="bpkSource"/>
         <WatchScope Value="wpsLocal"/>
@@ -365,6 +410,13 @@
         <Source Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\dialogs.pas"/>
         <Line Value="2854"/>
       </Item1>
+      <Item2>
+        <Kind Value="bpkSource"/>
+        <WatchScope Value="wpsLocal"/>
+        <WatchKind Value="wpkWrite"/>
+        <Source Value="..\..\..\Lazarus\FpcTrunk\ide\weditor.pas"/>
+        <Line Value="6798"/>
+      </Item2>
     </BreakPoints>
   </Debugging>
 </CONFIG>

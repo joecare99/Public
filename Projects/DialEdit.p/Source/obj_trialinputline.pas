@@ -1,7 +1,5 @@
 unit obj_TrialInputLine;
 
-{$mode objfpc}{$H+}
-
 interface
 
 uses
@@ -49,7 +47,7 @@ type
           procedure MakeHistory(AHistStr: TTitleStr); virtual;
           function Execute: word; virtual;
           procedure HandleEvent(var Event: TEvent); virtual;
-          procedure SizeLimits(var MinSz, MaxSz: TPoint); virtual;
+          procedure SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint); virtual;
           constructor Load01(var S: TStream);
           constructor Load02(var S: TStream);
           procedure Convert02;
@@ -125,7 +123,7 @@ end; {TInputLineDialog.Init}
 
 procedure TInputLineDialog.HandleEvent(var Event: TEvent);
 var
-    S: PString;
+    S: ^String;
 
 const
     S0: string = ' (no parameters needed)';
@@ -244,7 +242,7 @@ var
     zLink:PView;
 
 begin
-     result :=0;
+     {$IfDef FPC_OBJFPC}result{$else}Execute{$endif} :=0;
     case CodeGen.GenPart of
      gpDataFields:
         begin
@@ -405,7 +403,7 @@ begin
     end;
 end; {TTrialInputLine.HandleEvent}
 
-procedure TTrialInputLine.SizeLimits(var MinSz, MaxSz: TPoint);
+procedure TTrialInputLine.SizeLimits({$IfDef FPC_OBJFPC}out{$else}var{$endif} MinSz, MaxSz: TPoint);
 begin
     inherited SizeLimits(MinSz, MaxSz);
     MinSz.X:= 3;  Dec(MaxSz.X,2);

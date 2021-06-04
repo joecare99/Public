@@ -16,13 +16,13 @@ type
 
   TForm1 = class(TForm)
     Memo1: TMemo;
-    SpeedButton1: TSpeedButton;
-    SpeedButton2: TSpeedButton;
+    btnCreate: TSpeedButton;
+    btnRestore: TSpeedButton;
     procedure FormCreate(Sender: TObject);
     procedure OnPropNotFound(Reader: TReader; Instance: TPersistent;
       var PropName: string; IsPath: boolean; var Handled, Skip: Boolean);
-    procedure SpeedButton1Click(Sender: TObject);
-    procedure SpeedButton2Click(Sender: TObject);
+    procedure btnCreateClick(Sender: TObject);
+    procedure btnRestoreClick(Sender: TObject);
   private
     { private declarations }
     FProp :TComponent;
@@ -126,13 +126,13 @@ begin
   FTestProp2:=AValue;
 end;
 
-procedure TForm1.SpeedButton1Click(Sender: TObject);
+procedure TForm1.btnCreateClick(Sender: TObject);
 begin
   saveCompToTxtFile(FProp,SysUtils.GetAppConfigFile(False,true));
   memo1.Lines.LoadFromFile(SysUtils.GetAppConfigFile(False,true));
 end;
 
-procedure TForm1.SpeedButton2Click(Sender: TObject);
+procedure TForm1.btnRestoreClick(Sender: TObject);
 var
   lOnPropNotFound: TPropertyNotFoundEvent;
 begin

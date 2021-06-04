@@ -79,12 +79,12 @@ msgstr ""
 
 #: unt_cdate.adate
 msgctxt "unt_cdate.adate"
-msgid "05.05.2018"
+msgid "06.05.2020"
 msgstr ""
 
 #: unt_cdate.cdate
 msgctxt "unt_cdate.cdate"
-msgid "05.05.2018"
+msgid "06.05.2020"
 msgstr ""
 
 #: unt_cdate.cname

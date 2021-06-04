@@ -2,7 +2,9 @@
 
 {$i jedi.inc}
 
-{*V 2.31.00}
+{*V 2.33.00}
+{*H 2.32.00 Ersetzt Compare durch den Le}
+{*H 2.31.00 TryParseStr }
 {*H 2.30.00 Anpassung an DXE2, Adding deprecated and resolving the consequences }
 {*H 2.29.00 Zerlegung von Charset in Upper- und LowerCharset }
 {*H 2.28.00 Umwandlungsfunktion: AoS2TArrayOfString }
@@ -335,16 +337,21 @@ Function CharInSet(C:Char; Cset:TCharset) :boolean; inline;
 Function Findall(sub: String; s: String): variant;
 //Liefert ein Array mit allen Startpositionen zurueck
 
-// Behandelt einen String wie ein Profile
+// Sucht in einem String nach Mustern
 // Sinn: Zusaetzliche Informationen in einem 'Memo' Speichern
 Function ParseStr(Const Line: String; Const Args: TarrayOfString): integer;
 overload;
 Function ParseStr(Const Line: String; Const Args: TarrayOfString; Modus:
   TParseModus): integer; overload;
+Function ParseStr(Const Line: String; Const Args: array Of String; Modus:
+  TParseModus): integer; overload;
 Function ParseStr(Const Line: String; Const Args: TStrings; Modus: TParseModus):
   integer; overload;
 Function ParseVar(Const Line: String; Const Args: variant; Modus: TParseModus =
   psm_Full): integer; overload;
+
+function TryParseStr(Const aLine:String; Const Args:TarrayOfString; Modus: TParseModus;out lFound:integer):Boolean;overload;
+function TryParseStr(Const aLine:String; Const Args:array Of String; Modus: TParseModus;out lFound:integer):Boolean;overload;
 
 Function DateTime2DTStr(DT: TDateTime): String;
 //
@@ -361,7 +368,7 @@ Function testLinesep(Line: String; Sep: TSeparators): boolean; overload;
 Function testLinesep(Line: String; Sep: TSeparators;{$ifdef SUPPORTS_OUTPARAMS}out separat :string;var rest: String{$else}
   var separat,rest: String{$endif}): boolean; overload;
 
-Procedure TestForLineSep(Const Line: String; Const validSep: TSeparatSet;
+Procedure TestForLineSep(Const Line: String; Const validSep: TSeparatSet;var
    Ergeb: TSepArray);
 
 Function CountSeparators(Line: String; Sep: TSeparators): integer; overload;
@@ -395,7 +402,10 @@ Function strsort(Const orig: String; sep: TSeparators = sep_space; ValidChars:
 
 // Ermittelt den Differenzwert zweier Strings (1.0 ~> gleich )
 Function EvalCompareStr(Const str1, str2: String): real;
-//
+
+function EvalCompareStr2(Const Str1, Str2: String): integer;
+// Levenshtein-Distanz
+
 
 // Schneidet führende und folgende Leerzeichen ab (-> trim), und
 // wandelt doppelte Leerzeichen in einfache um.
@@ -423,7 +433,8 @@ Function TryFunctionMatching(Probe, Mask: String; Var Wildcardfill: String):
 Function BuildStringByFunction(Mask, Wildcardfill: String): String;inline;
 
 //  Wandelt ein dynamisches Array of String in TArray of String um
-function aos2TArrayOfString(aos:Array of String):TarrayOfString;
+Function ArrayOfString(const aArr:array of string):TarrayOfString;inline;
+function aos2TArrayOfString(const aos:Array of String):TarrayOfString;inline;
 
 Const
 //  Vordefinierte String-Separatoren
@@ -480,6 +491,7 @@ Function Str2QHtml(s: String): String;
 Const
   hexcode: Array[0..15] Of char = '0123456789ABCDEF';
   CSWildCardFill = 'WildCardFill';
+  cEmptySepArr : TSepArray =(0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0);
 
 Implementation
 
@@ -594,11 +606,11 @@ Const
     (Sal: UmlUEkl; komb: 'y'),
     (Sal: 's'; komb: 'z'),
     (Sal: 'e'; komb: UmlAEGr),
-    (Sal: 'o'; komb: UmlOEGr),
+    (Sal: 'e'; komb: UmlOEGr),
     (Sal: UmlUEkl; komb: UmlUEGr),
     (Sal: 's'; komb: UmlSSkl),
     (Sal: 'e'; komb: UmlAEkl),
-    (Sal: 'o'; komb: UmlOEkl),
+    (Sal: 'e'; komb: UmlOEkl),
     (Sal: UmlUEkl; komb: UmlUEkl));
 
 {$IFDEF SUPPORTS_INT64}
@@ -883,6 +895,12 @@ begin
 end;
 //-------------------------------------------------------------
 
+function ArrayOfString(const aArr: array of string): TarrayOfString;inline;
+
+begin
+  result := aos2TArrayOfString(aArr);
+end;
+
 function Findall(sub: String; s: String): variant;
 //Liefert ein Array mit allen Startpositionen zurueck
 Var
@@ -1036,7 +1054,7 @@ End;
 //-------------------------------------------------------------
 
 procedure TestForLineSep(const Line: String; const validSep: TSeparatSet;
-  ergeb: TSepArray);
+  var Ergeb: TSepArray);
 
 Var
   iterat: TSeparators;
@@ -1320,6 +1338,17 @@ Begin
 End;
 //-------------------------------------------------------------
 
+function ParseStr(const Line: String; const Args: array of String;
+  Modus: TParseModus): integer;
+var aos:TarrayOfString;
+  i: Integer;
+begin
+  setlength(aos,length(Args));
+  for i := 0 to high(args) do
+     aos[i] := args[i];
+  result := ParseStr(Line,aos,Modus);
+end;
+
 function ParseStr(const Line: String; const Args: TStrings; Modus: TParseModus
   ): integer;
 
@@ -1417,6 +1446,20 @@ Begin
   result := -1;
 End;
 //-------------------------------------------------------------
+
+function TryParseStr(const aLine: String; const Args: TarrayOfString;
+  Modus: TParseModus; out lFound: integer): Boolean;
+begin
+  lFound:=ParseStr(aLine,Args,Modus);
+  result := lFound >=0;
+end;
+
+function TryParseStr(const aLine: String; const Args: array of String;
+  Modus: TParseModus; out lFound: integer): Boolean;
+begin
+  lFound:=ParseStr(aLine,Args,Modus);
+  result := lFound >=0;
+end;
 
 function DateTime2DTStr(DT: TDateTime): String;
 
@@ -1830,7 +1873,7 @@ Begin
           Sort_Bubblesort(avar);
           //Fuelle Daten in String
           hst := avar[0];
-          For i := VarArrayLowBound(avar, 1) To VarArrayHighBound(avar, 1) Do
+          For i := VarArrayLowBound(avar, 1)+1 To VarArrayHighBound(avar, 1) Do
             hst := hst + LineSeparators[sep, 0] + avar[i] + LineSeparators[sep,
               1];
         End
@@ -2305,6 +2348,37 @@ Begin
 End;
 //-------------------------------------------------------------
 
+function EvalCompareStr2(const Str1, Str2: String): integer;
+// Levenshtein-Distanz
+var lev : array of array of integer;
+    i,j : integer;
+
+begin
+   // Str1 := LowerCase(Str1);
+   // Str2 := LowerCase(Str2);
+
+  // If the words are identical, do nothing
+  if Str1 = Str2 then
+  begin
+    result := 0;
+    exit;
+  end;
+
+  SetLength(lev, length(Str1) + 1);
+  for i := low(lev) to high(lev) do
+    setLength(lev[i], length(Str2) + 1);
+
+  for i := low(lev) to high(lev) do lev[i][0] := i;
+  for j := low(lev[low(lev)]) to high(lev[low(lev)]) do lev[0][j] := j;
+
+  for i := low(lev)+1 to high(lev) do
+    for j := low(lev[i])+1 to high(lev[i]) do
+      lev[i][j] := min(min(lev[i-1][j] + 1,lev[i][j-1] + 1)
+                      ,lev[i-1][j-1] + integer(Str1[i] = Str2[j]));
+
+  result := lev[length(Str1)][length(Str2)];
+end;
+
 function CleanPath(path: String): String;
 
 Var
@@ -2410,7 +2484,7 @@ begin
 end;
 {$ENDIF}
 
-function aos2TArrayOfString(aos: array of String): TarrayOfString;
+function aos2TArrayOfString(const aos: array of String): TarrayOfString;
 
 var
   i: Integer;

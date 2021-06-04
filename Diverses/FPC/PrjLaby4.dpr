@@ -10,11 +10,11 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  frm_laby4 in '..\source\frm_laby4.pas' {Form2};
+  frm_laby4 in '..\source\labyrinth\frm_laby4.pas' {Form2};
 
 begin
   Application.Initialize;
   Application.MainFormOnTaskbar := True;
-  Application.CreateForm(TForm2, Form2);
+  Application.CreateForm(TFrmLaby4, FrmLaby4);
   Application.Run;
 end.

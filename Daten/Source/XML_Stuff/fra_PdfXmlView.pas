@@ -22,7 +22,6 @@ type
         procedure actFileLoadExecute(Sender: TObject);
         procedure actFileOpenAccept(Sender: TObject);
         procedure PaintBox1Paint(Sender: TObject);
-        procedure trvXmlStructureSelectionChanged(Sender: TObject);
     private
         { private declarations }
         FXMLDocument: TXMLDocument;
@@ -70,18 +69,12 @@ end;
 
 { TfraXmlView }
 
-procedure TfraXmlView.trvXmlStructureSelectionChanged(Sender: TObject);
-
-begin
-
-end;
-
 procedure TfraXmlView.PaintBox1Paint(Sender: TObject);
 var
     lxPage, lChnode: TDOMNode;
     lWidth, lFaktor, lHeight, lChHeight, lChWidth, lChY, lChX: extended;
     lFormatsetting: TFormatSettings;
-    i, J, ldefTextWidth: integer;
+    i, J: integer;
     sNodeText: string;
 
  function WideStrToFloat(aWS:WideString;fs:TFormatSettings):Extended;inline;
@@ -148,7 +141,6 @@ begin
                     PaintBox1.canvas.Font.Color := clBlack;
                     PaintBox1.Canvas.Brush.Style := bsSolid;
                     sNodeText := UnicodeString(lChnode.TextContent);
-                    ldefTextWidth := Paintbox1.canvas.GetTextWidth('sNodeText');
                     PaintBox1.Canvas.TextOut(trunc(lChX * lFaktor),
                         trunc(lchy * lFaktor), sNodetext);
                   end;

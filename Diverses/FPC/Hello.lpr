@@ -1,0 +1,1 @@
+const c='Hello world';begin write(c) end;

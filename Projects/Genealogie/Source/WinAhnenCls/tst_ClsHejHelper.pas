@@ -21,6 +21,7 @@ type
     procedure ReplayExpResult(st: TStrings);
     procedure TestFilesInt(aFilename: String; OnFileFound: TFileFoundEvent);
 protected
+    procedure FSAddFound(FileIterator: TFileIterator);
     procedure SetUp; override;
     procedure TearDown; override;
 published
@@ -44,12 +45,51 @@ published
     procedure TestFile52_51_50;
     procedure TestFiles5939ff;
 public
+    class var FInit:boolean;
     constructor Create; override;
   end;
 
+
 implementation
 
-uses cls_HejIndData;
+uses cls_HejIndData,LazFileUtils;
+
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+type
+  { TChildTest }
+
+  TChildTest = class(TTestCase)
+  public
+      constructor Create(aParent:TTestHejHelper;aTestFile:string);reintroduce;
+   private
+       fParent : TTestHejHelper;
+       FTestFile:String;
+  protected
+       procedure RunTest; override;
+  end;
+
+constructor TChildTest.Create(aParent: TTestHejHelper; aTestFile: string);
+begin
+  fParent := aParent;
+  FTestFile:=aTestFile;
+  TestName := 'Test_'+ExtractFileNameWithoutExt(FTestFile);
+end;
+
+procedure TChildTest.RunTest;
+begin
+  if assigned(fParent) then
+    begin
+      fParent.SetUp;
+      try
+      fParent.TestFilesInt(FTestFile,@fParent.FSFileFound);
+      finally
+        fParent.TearDown;
+      end;
+    end;
+end;
+
 
 procedure TTestHejHelper.TestSetUp;
 begin
@@ -335,6 +375,7 @@ end;
 constructor TTestHejHelper.Create;
 var
     i: integer;
+    lFileSearcher: TFileSearcher;
 begin
     inherited Create;
     FDataPath := 'Data';
@@ -349,6 +390,20 @@ begin
         FDataPath := FDataPath + DirectorySeparator + 'GenData';
     if not DirectoryExists(FDataPath) then
         ForceDirectories(FDataPath);
+   if (TestName = '')
+     and not FInit then
+    begin
+      lFileSearcher := TFileSearcher.Create;
+       try
+         lFileSearcher.OnFileFound := @FSAddFound;
+         lFileSearcher.Search(FDataPath+DirectorySeparator+'..'+DirectorySeparator+'Par'
+    +'seFB', '*.entTxt', False, False);
+       finally
+         FreeAndNil(lFileSearcher);
+         FInit := true;
+       end;
+    end;
+
 end;
 
 procedure TTestHejHelper.FSFileFound(FileIterator: TFileIterator);
@@ -420,6 +475,15 @@ begin
   finally
     freeandnil(lFileSearcher);
   end;
+end;
+
+procedure TTestHejHelper.FSAddFound(FileIterator: TFileIterator);
+  var
+    st: String;
+
+  begin
+    st := ExtractFileName(FileIterator.Filename);
+    RegisterTest(Classname+'All\test',TChildTest.Create(self,st));
 end;
 
 procedure TTestHejHelper.SetUp;
