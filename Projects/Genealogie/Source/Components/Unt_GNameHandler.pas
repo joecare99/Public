@@ -20,6 +20,7 @@ type
        FGNameList: TStringList;
        FonError: TSendMsg;
        procedure SetcfgLearnUnknown(AValue: boolean);
+       procedure SetChanged(const AValue: boolean);
        procedure SetonError(AValue: TSendMsg);
 
      public
@@ -27,12 +28,14 @@ type
         Procedure Done;
         procedure LoadGNameList(aFilename: string);
         procedure SaveGNameList(aFilename: string = '');
+        procedure SetGNLFilename(aFilename: string = '');
         procedure LearnSexOfGivnName(aName: string; aSex: char);
         function GuessSexOfGivnName(aName: string; bLearn: boolean = True): char;
 
         property onError:TSendMsg read FonError write SetonError;
         property cfgLearnUnknown:boolean read FcfgLearnUnknown write SetcfgLearnUnknown;
-  end;
+        Property Changed:boolean read FGNameListChanged write SetChanged;
+ end;
 
 Const
     csUnknown = '…';
@@ -85,6 +88,7 @@ begin
    FGNameList:=TStringList.Create;
    FGNameList.Sorted := True;
    FcfgLearnUnknown:=True;
+   FGNameListChanged:=false;
 end;
 
 procedure TGNameHandler.Done;
@@ -102,6 +106,12 @@ procedure TGNameHandler.SetcfgLearnUnknown(AValue: boolean);
 begin
   if FcfgLearnUnknown=AValue then Exit;
   FcfgLearnUnknown:=AValue;
+end;
+
+procedure TGNameHandler.SetChanged(const AValue: boolean);
+begin
+  if FGNameListChanged=AValue then Exit;
+  FGNameListChanged:=AValue;
 end;
 
 procedure TGNameHandler.LoadGNameList(aFilename: string);
@@ -122,6 +132,15 @@ begin
     if aFilename <> '' then
         FGNameFile := aFilename;
     SaveFile(FGNameList.SaveToFile,FGNameFile);
+    FGNameListChanged := False;
+end;
+
+procedure TGNameHandler.SetGNLFilename(aFilename: string);
+begin
+    if (aFilename = '') and (FGNameFile = '') then
+        exit;
+    if aFilename <> '' then
+        FGNameFile := aFilename;
 end;
 
 procedure TGNameHandler.LearnSexOfGivnName(aName: string; aSex: char);
@@ -176,7 +195,9 @@ begin
         if ((length(lName) < 3) and (uppercase(lName) <> 'NN')) or
             lname.EndsWith('.') or lname.EndsWith('=') then
           begin
-            if (lName <>'') and assigned(FonError) then
+            if (lName <>'')
+                and bLearn
+                and assigned(FonError) then
                FonError('"' + lName + '" is not a valid Name',0);
           end
         else

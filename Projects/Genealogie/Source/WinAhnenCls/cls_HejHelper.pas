@@ -5,7 +5,7 @@ unit cls_HejHelper;
 interface
 
 uses
-  Classes, SysUtils, cls_HejData,cls_HejIndData,unt_IGenBase2;
+  Classes, SysUtils, cls_HejData,cls_HejIndData,unt_IGenBase2, cls_HejMarrData, cls_GenHelperBase;
 
 type
 
@@ -20,6 +20,7 @@ type
      FWife: integer;
       Owner:THejHelper;
    public
+   Ref2,
    Ref:string;
    Husband,
    Spouse,
@@ -71,54 +72,56 @@ type
 
  end;
 
- THejHelper=Class
+ THejHelper=Class(TGenHelperBase)
 private
-  FCitation: TStrings;
-  FCitRefn,
-  FCitTitle: string;
   FHejObj: TClsHejGenealogy;
   FIndIndex:TStrings;
   FFamily:Array of TVirtFamily;
-  FOsbHdr: string;
+
   procedure AppendIndex(aRef: string; aIndID: integer);
   function GetFami(Idx: Variant): TVirtFamily;
   function GetFieldof(const SubType, knd: integer): TEnumHejIndDatafields;
   function GetIndi(Idx: Variant): THejIndData;
+  function GetMarrFieldof(const SubType, knd: integer): TEnumHejMarrDatafields;
   function HejFamilyType(const SubType: integer): String;
   function RplHejDModiv(Date: String): String;
+
+  function IsFamilyEvent(const SubType: integer): boolean;
   procedure SetCitation(AValue: TStrings);
   procedure SetCitTitle(AValue: string);
   procedure SetHejObj(AValue: TClsHejGenealogy);
   procedure SetOsbHdr(AValue: string);
   Function FindInd(aRef:String;aCre:Boolean=false):integer;
   function FindFam(aRef: String; aCre: Boolean=False): TVirtFamily;
+
 public
+  procedure StartIndiv(Sender: TObject; aText, aRef: string;
+    SubType: integer);override;
   procedure StartFamily(Sender: TObject; aText, {%H-}aRef: string;
-  {%H-}SubType: integer);
-  procedure FamilyIndiv(Sender: TObject; aText, aRef: string; SubType: integer);
-  procedure FamilyType(Sender: TObject; aText, aRef: string; SubType: integer);
-  procedure FamilyDate(Sender: TObject; aText, aRef: string; SubType: integer);
-  procedure FamilyData(Sender: TObject; aText, aRef: string; SubType: integer);
-  procedure FamilyPlace(Sender: TObject; aText, aRef: string; SubType: integer);
-  procedure IndiData(Sender: TObject; aText, aRef: string; SubType: integer);
-  procedure IndiDate(Sender: TObject; aText, aRef: string; SubType: integer);
-  procedure IndiName(Sender: TObject; aText, aRef: string; SubType: integer);
-  procedure IndiPlace(Sender: TObject; aText, aRef: string; SubType: integer);
-  procedure IndiRef(Sender: TObject; aText, aRef: string; SubType: integer);
-  procedure IndiOccu(Sender: TObject; aText, aRef: string; SubType: integer);
-  procedure IndiRel(Sender: TObject; aText, aRef: string; SubType: integer);
-  procedure CreateNewHeader(Filename: string);
-  procedure SaveToFile(Filename: string);
+  {%H-}SubType: integer);override;
+  procedure FamilyIndiv(Sender: TObject; aText, aRef: string; SubType: integer);override;
+  procedure FamilyType(Sender: TObject; aText, aRef: string; SubType: integer);override;
+  procedure FamilyDate(Sender: TObject; aText, aRef: string; SubType: integer);override;
+  procedure FamilyData(Sender: TObject; aText, aRef: string; SubType: integer);override;
+  procedure FamilyPlace(Sender: TObject; aText, aRef: string; SubType: integer);override;
+  procedure IndiData(Sender: TObject; aText, aRef: string; SubType: integer);override;
+  procedure IndiDate(Sender: TObject; aText, aRef: string; SubType: integer);override;
+  procedure IndiName(Sender: TObject; aText, aRef: string; SubType: integer);override;
+  procedure IndiPlace(Sender: TObject; aText, aRef: string; SubType: integer);override;
+  procedure IndiRef(Sender: TObject; aText, aRef: string; SubType: integer);override;
+  procedure IndiOccu(Sender: TObject; aText, aRef: string; SubType: integer);override;
+  procedure IndiRel(Sender: TObject; aText, aRef: string; SubType: integer);override;
+  procedure CreateNewHeader(Filename: string);override;
+  procedure SaveToFile(const Filename: string); override;
+
   function IndexOf(iInd:IGenIndividual):integer;
 public
-  Procedure Clear;
-  procedure FireEvent(Sender: TObject; aSTa: TStringArray);
+  Procedure Clear;override;
+
   Procedure MergePerson(lInd,lInd2:integer);
   Procedure MergeFamily(lInd,lInd2:TVirtFamily);
+
   property HejObj: TClsHejGenealogy read FHejObj write SetHejObj;
-  property Citation: TStrings read FCitation write SetCitation;
-  property CitTitle: string read FCitTitle write SetCitTitle;
-  property OsbHdr: string read FOsbHdr write SetOsbHdr;
   property Indi[Idx:Variant]:THejIndData read GetIndi;
   property Fami[Idx:Variant]:TVirtFamily read GetFami;
 public
@@ -128,7 +131,7 @@ public
 
 implementation
 
-uses cls_HejMarrData,cls_HejPlaceData,strutils,variants;
+uses cls_HejPlaceData,strutils,variants;
 
 {$if FPC_FULLVERSION = 30200 }
     {$WARN 6058 OFF}
@@ -233,7 +236,7 @@ end;
 
 procedure TVirtFamily.SetFamilyRefID(AValue: string);
 begin
-
+  Ref:=AValue;
 end;
 
 procedure TVirtFamily.SetHusband(AValue: IGenIndividual);
@@ -322,6 +325,11 @@ const CGedDateModif:array[0..15] of string=
       result := Date;
     end;
 
+  function THejHelper.IsFamilyEvent(const SubType: integer): boolean;
+  begin
+     result := subtype in [0,3,17]
+  end;
+
 { THejHelper }
 
 procedure THejHelper.SetCitation(AValue: TStrings);
@@ -393,7 +401,7 @@ var
 begin
   result:=nil;
   for aFam in FFamily do
-    if aFam.Ref = aref then
+    if (aFam.Ref = aref) or (aFam.Ref2 = aref) then
       begin
         result := aFam;
         break;
@@ -409,20 +417,39 @@ begin
     end;
 end;
 
+procedure THejHelper.StartIndiv(Sender: TObject; aText, aRef: string;
+  SubType: integer);
+var
+  lInd: Integer;
+begin
+  if aRef='' then aref := aText;
+  lInd := FindInd(aRef,true);
+  FHejObj.iData[lInd,hind_Index]:= FOsbHdr+NormalCitRef(aRef);
+  if fCitTitle <> '' then
+        FCitRefn := NormalCitRef(aRef) + ', ' + FCitTitle
+    else
+        FCitRefn := '';
+
+end;
+
 procedure THejHelper.StartFamily(Sender: TObject; aText, aRef: string;
   SubType: integer);
 var
   lFamID: String;
+  lFam : TVirtFamily;
 begin
+  if atext.endswith(' ') then
+     begin
+       lFamID :='';
+       Error(atext.QuotedString('"')+'is Illigal Family-Ref',aref,SubType);
+     end;
   lFamID := 'F'+aText;
-  FindFam(lFamID,true);
-      if fCitTitle <> '' then
+  lFam := FindFam(lFamID,true);
+  lFam.Ref2:= FOsbHdr + NormalCitRef(aText);
+  if fCitTitle <> '' then
       begin
-        if (FCitRefn = '') or
-           not ((rightstr(atext, 1)[1] in ['F', 'M', 'U']) or
-            (rightstr(atext, 2)[1] = 'C')or
-            (rightstr(atext, 3)[1] = 'C')) then
-            FCitRefn := RightStr('000' + atext, 4) + ', ' + FCitTitle;
+        if (FCitRefn = '') then
+          FCitRefn := NormalCitRef(aText) + ', ' + FCitTitle;
       end
     else
         FCitRefn := '';
@@ -516,35 +543,102 @@ procedure THejHelper.FamilyDate(Sender: TObject; aText, aRef: string;
   SubType: integer);
 var
   lFam: TVirtFamily;
+  lMarFld: TEnumHejMarrDatafields;
+  lIndField: TEnumHejIndDatafields;
 begin
   lFam := Findfam('F' + aRef );
   lfam.Date:=RplHejDModiv( aText);
-  if lfam.Marr>=0 then
-    FHejObj.Marriages.SetDateData(lfam.Marr,hmar_MarrChrchDay,lfam.Date);
-  if lfam.Marr2>=0 then
-    FHejObj.Marriages.SetDateData(lfam.Marr2,hmar_MarrChrchDay,lfam.Date);
+  if IsFamilyEvent(SubType) then
+     begin
+       lMarFld := GetMarrFieldof(SubType,2);
+  if (lfam.Marr>=0) and (lMarFld<>hmar_ID)  then
+    FHejObj.Marriages.SetDateData(lfam.Marr,lMarFld,lfam.Date);
+  if (lfam.Marr2>=0) and (lMarFld<>hmar_ID) then
+    FHejObj.Marriages.SetDateData(lfam.Marr2,lMarFld,lfam.Date);
+     end
+     else
+      begin
+        lIndField:= GetFieldof(SubType,2);
+        if (lfam.Husband <> 0) and (lIndField<>hind_Text) then
+          FHejObj.SetDate(lfam.Husband,lIndField,lfam.Date)
+        else if (lfam.Husband <> 0) then
+          FHejObj.iData[lfam.Husband,lIndField] := FHejObj.iData[lfam.Husband,lIndField]+
+            LineEnding + {GetTextHdr(Subtype) +} 'am ' + aText;
+        if (lfam.Spouse <> 0) and (lIndField<>hind_Text) then
+          FHejObj.SetDate(lfam.Spouse,lIndField,lfam.Date)
+        else if (lfam.Spouse <> 0) then
+          FHejObj.iData[lfam.Spouse,lIndField] := FHejObj.iData[lfam.Spouse,lIndField]+
+            LineEnding + {GetTextHdr(Subtype) +}'am ' + aText;
+      end;
+
 end;
 
 procedure THejHelper.FamilyData(Sender: TObject; aText, aRef: string;
   SubType: integer);
 var
   lFam: TVirtFamily;
+  lMarFld: TEnumHejMarrDatafields;
+  lIndField: TEnumHejIndDatafields;
 begin
   lFam := Findfam('F' + aRef );
   // Todo: Daten Eintragen
+   if assigned(lFam) and IsFamilyEvent(SubType) then
+      begin
+         lMarFld := GetMarrFieldof(SubType,0);
+        if (lfam.Marr>=0) and (lMarFld<>hmar_ID)  then
+          FHejObj.Marriages.SetData(lfam.Marr,lMarFld,aText);
+        if (lfam.Marr2>=0) and (lMarFld<>hmar_ID) then
+          FHejObj.Marriages.SetData(lfam.Marr2,lMarFld,aText);
+      end
+   else
+      begin
+        lIndField:= GetFieldof(SubType,0);
+        if (lfam.Husband <> 0) and (lIndField<>hind_Text) then
+          FHejObj.iData[lfam.Husband,lIndField] := aText
+        else if (lfam.Husband <> 0) then
+          FHejObj.iData[lfam.Husband,lIndField] := FHejObj.iData[lfam.Husband,lIndField]+
+            LineEnding {+ GetTextHdr(Subtype)} + aText;
+        if (lfam.Spouse <> 0) and (lIndField<>hind_Text) then
+          FHejObj.iData[lfam.Spouse,lIndField] := aText
+        else if (lfam.Spouse <> 0) then
+          FHejObj.iData[lfam.Spouse,lIndField] := FHejObj.iData[lfam.Spouse,lIndField]+
+            LineEnding {+ GetTextHdr(Subtype)} + aText;
+      end;
 end;
 
 procedure THejHelper.FamilyPlace(Sender: TObject; aText, aRef: string;
   SubType: integer);
 var
   lFam: TVirtFamily;
+  lMarFld: TEnumHejMarrDatafields;
+  lIndField: TEnumHejIndDatafields;
 begin
   lFam := Findfam('F' + aRef );
+  if not assigned(lFam) then
+    exit;
   lfam.Place:=aText;
-  if lfam.Marr>=0 then
-    FHejObj.Marriages.Data[lfam.Marr,hmar_MarrChrchDay]:=aText;
-  if lfam.Marr2>=0 then
-    FHejObj.Marriages.Data[lfam.Marr2,hmar_MarrChrchDay]:=aText;
+  if isFamilyEvent(Subtype) then
+    begin
+      lMarFld := GetMarrFieldof(SubType,1);
+      if (lfam.Marr>=0) and (lMarFld<>hmar_ID)  then
+    FHejObj.Marriages.Data[lfam.Marr,lMarFld]:=aText;
+      if (lfam.Marr2>=0) and (lMarFld<>hmar_ID) then
+    FHejObj.Marriages.Data[lfam.Marr2,lMarFld]:=aText;
+    end
+  else
+     begin
+       lIndField:= GetFieldof(SubType,1);
+       if (lfam.Husband <> 0) and (lIndField<>hind_Text) then
+         FHejObj.iData[lfam.Husband,lIndField] := aText
+       else if (lfam.Husband <> 0) then
+         FHejObj.iData[lfam.Husband,lIndField] := FHejObj.iData[lfam.Husband,lIndField]+
+           LineEnding {+ GetTextHdr(Subtype)} + aText;
+       if (lfam.Spouse <> 0) and (lIndField<>hind_Text) then
+         FHejObj.iData[lfam.Spouse,lIndField] := aText
+       else if (lfam.Spouse <> 0) then
+         FHejObj.iData[lfam.Spouse,lIndField] := FHejObj.iData[lfam.Spouse,lIndField]+
+           LineEnding {+ GetTextHdr(Subtype)} + aText;
+     end;
 end;
 
 procedure THejHelper.IndiName(Sender: TObject; aText, aRef: string;
@@ -555,6 +649,7 @@ begin
   lInd := FindInd( aRef ,True);
   if SubType = 0 then  // Fullname
     begin
+        // Todo -oJC: Adelsnamen "von XXX"
       lpp:=aText.LastIndexOf(' ');
       if lpp>=0 then
       FHejObj.iData[lind,hind_FamilyName]:=copy(atext,lpp+2);
@@ -767,7 +862,7 @@ begin
    //
 end;
 
-procedure THejHelper.SaveToFile(Filename: string);
+procedure THejHelper.SaveToFile(const Filename: string);
 var
     lSt: TMemoryStream;
 begin
@@ -796,28 +891,6 @@ begin
   for i := high(FFamily) downto 0 do
     freeandnil(FFamily[i]);
   setlength(FFamily,0);
-end;
-
-procedure THejHelper.FireEvent(Sender: TObject; aSTa: TStringArray);
-var
-  lInt: Longint;
-begin
-  if (length(aSTa) = 4) and trystrtoint(asta[3], lInt) then
-      case aSTa[0] of
-          'ParserStartFamily': StartFamily(Sender, aSTa[1], aSTa[2], lInt);
-          'ParserFamilyType': FamilyType(Sender, aSTa[1], aSTa[2], lInt);
-          'ParserFamilyDate': FamilyDate(Sender, aSTa[1], aSTa[2], lInt);
-          'ParserFamilyData': FamilyData(Sender, aSTa[1], aSTa[2], lInt);
-          'ParserFamilyIndiv': FamilyIndiv(Sender, aSTa[1], aSTa[2], lInt);
-          'ParserFamilyPlace': FamilyPlace(Sender, aSTa[1], aSTa[2], lInt);
-          'ParserIndiData': IndiData(Sender, aSTa[1], aSTa[2], lInt);
-          'ParserIndiDate': IndiDate(Sender, aSTa[1], aSTa[2], lInt);
-          'ParserIndiName': IndiName(Sender, aSTa[1], aSTa[2], lInt);
-          'ParserIndiOccu': IndiOccu(Sender, aSTa[1], aSTa[2], lInt);
-          'ParserIndiPlace': IndiPlace(Sender, aSTa[1], aSTa[2], lInt);
-          'ParserIndiRef': IndiRef(Sender, aSTa[1], aSTa[2], lInt);
-          'ParserIndiRel': IndiRel(Sender, aSTa[1], aSTa[2], lInt);
-        end;
 end;
 
 procedure THejHelper.MergePerson(lInd, lInd2:integer);
@@ -859,11 +932,27 @@ begin
         24: Result := hind_Religion;
         29: Result := hind_Residence;
         30: Result := hind_GivenName;
-        33: Result := hind_AKA;
+        ord(evt_AKA)*3: Result := hind_AKA;
+        ord(evt_AddResidence)*3: Result := hind_Residence;
+        ord(evt_Age)*3:Result := hind_Age;
         else
             Result := hind_Text;
       end;
 end;
+
+function THejHelper.GetMarrFieldof(const SubType, knd: integer
+  ): TEnumHejMarrDatafields;
+begin
+    case SubType*3+Knd of
+        ord(evt_Marriage)*3+1: Result := hmar_MarrChrchDay;
+        ord(evt_Marriage)*3+2: Result := hmar_MarrChrchPlace;
+        ord(evt_Divorce)*3+1: Result := hmar_DivorceDay;
+        ord(evt_Divorce)*3+2: Result := hmar_DivorcePlace;
+        else
+            Result := TEnumHejMarrDatafields(-1);
+      end;
+end;
+
 
 function THejHelper.GetIndi(Idx: Variant): THejIndData;
 var
