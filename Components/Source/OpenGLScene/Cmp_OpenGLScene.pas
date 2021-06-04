@@ -11,7 +11,7 @@ Uses
 {$ELSE}
   LCLIntf, LCLType, gl,glu, GLext,OpenGLContext,
 {$ENDIF}
-  Classes, Controls, Sysutils;
+  Classes, Controls, Sysutils,Unt_IHasAttributes;
 
 {$IFNDEF LCLQT}
   {$define HasRGBBits}
@@ -21,38 +21,96 @@ Type
     U, V: Single;
   End;
 
+  { TPointF }
+
+  TPointF = record
+  private
+    function getAsVariant: variant;
+    procedure SetAsVariant(AValue: variant);
+    public
+      function Rotxm90: TpointF;
+      function Rotym90: TpointF;
+      function Rotzm90: TpointF;
+      function Rotxp90: TpointF;
+      function Rotyp90: TpointF;
+      function Rotzp90: TpointF;
+      function Neg:TPointF;
+      function Add(aPnt:TPointF):TPointF;
+      function SMult(fak:TGLdouble):TPointF;
+      function Equals(aPnt:TPointF;e:double=0):Boolean;
+      property AsVariant:variant read getAsVariant write SetAsVariant;
+    public
+              case boolean of
+              false: (x,y,z:TGLdouble);
+              true: (d:array[0..2] of TGLdouble);
+            end;
+
   {$IFDEF FPC}
     TGLArrayf3 =array[0..2] of TGLfloat;
     TGLArrayf4 =array[0..3] of TGLfloat;
     HGLRC = integer;
   {$ENDIF}
 
+const
+  CGLArrayf4_0:TGLArrayf4=(0,0,0,0);
+  CGLArrayf3_0:TGLArrayf3=(0,0,0);
+
+type
   TMaterialBaseDef = Record
     AmbColor: TGLArrayf4;
     DiffColor: TGLArrayf4;
     ShinyNess: Glfloat;
   End;
 
-  T3DBasisObject = Class(TWinControl)
-  public
-    Rotation: TGLArrayf4;
-    Translation: TGLArrayf3;
 
+  { T3DBasisObject }
+
+  T3DBasisObject = Class(TWinControl,IHasAttributes)
+  private
+    procedure SetRotAmount(AValue: Double);
+    Procedure SetRotVector(AValue:Variant);overload;
+    procedure SetRotVector(AValue: TPointF);
+  protected
+    FRotVector: TPointF;
+    FRotAmount:Double;
+    FTranslation: TPointF;
+  public
+{    FOnMouseMove:TMouseMoveEvent;
+    FOnMouseDown:TMouseEvent;
+    FOnMouseUp:TMouseEvent; }
     Constructor Create(Aowner: TComponent); override;
     Procedure Draw; virtual; abstract;
-    Procedure MoveTo(x, y, z: Extended); virtual; abstract;
+    Procedure MoveTo(aPnt:TPointF); virtual;overload;
+    Procedure MoveTo(x, y, z: Extended); virtual; overload;
     Procedure Rotate(Amount, x, y, z: Extended); virtual;
-  End;
+  public
+    // IHasAttributes
+    function AttrCount:integer;virtual;
+    function GetAttributes(Idx: variant): variant;virtual;
+    procedure SetAttributes(idx: variant; AValue: variant);virtual;
+    Function ListAttr:variant;virtual;
+  public
+    Property Attributes[Idx:Variant]:Variant read GetAttributes write SetAttributes;
+    property Translation:TPointF read FTranslation;
+    property RotVector:TPointF read FRotVector write SetRotVector;
+    property RotAmount:Double read FRotAmount write SetRotAmount;
+  published
+{    property Parent:T
+    property onMouseDown:TMouseEvent read FOnMouseDown write FOnMouseDown;
+    property onMouseUp:TMouseEvent read FOnMouseUp write FOnMouseUp;
+    property onMouseMove:TMouseMoveEvent read FOnMouseMove write FOnMouseMove;
+}  End;
+
 
   {$IFDEF FPC}
 
   { TO3DCanvas }
-
   TO3DCanvas = Class(TCustomOpenGLControl)
   {$ELSE}
   TO3DCanvas = Class(TWinControl)
   {$ENDIF}
   private
+    FClickpoint: TPoint;
     {$IFNDEF FPC}
     HRC: HGLRC;
     {$ENDIF}
@@ -60,19 +118,28 @@ Type
     FAntiAliase: Boolean;
     FCulling: Boolean;
     FObjectHandling: Boolean;
+    FOnSelectionChange: TNotifyEvent;
+    FPreSelected: T3DBasisObject;
     FSelected: T3DBasisObject;
     FmouseOverObject: Boolean;
+
     {$IFNDEF FPC}
     Procedure SetDCPixelFormat;
     {$ENDIF}
+    procedure DoPaint(Sender: TObject);
     Function SelectObject(xsel, ysel: integer): cardinal;
+    procedure SetOnSelectionChange(AValue: TNotifyEvent);
+    procedure SetSelected(AValue: T3DBasisObject);
   protected
+    {$IFNDEF FPC}
     Procedure PaintWindow({%H-}DC: HDC); override;
+    {$ENDIF}
     Procedure MouseDown(Button: TMouseButton; Shift: TShiftState; X,
       Y: Integer); override;
     Procedure MouseUp(Button: TMouseButton; Shift: TShiftState; X, Y: Integer);
       override;
     Procedure MouseMove(Shift: TShiftState; X, Y: Integer); override;
+    Procedure DrawSceneInt;
   public
     FViewDistance: single;
     DC: Cardinal;
@@ -80,7 +147,7 @@ Type
     Constructor Create(AOwner: TComponent); override;
     Destructor Destroy; override;
     Procedure DrawScene;
-    Property Selected: T3DBasisObject read FSelected;
+    Property Selected: T3DBasisObject read FSelected write SetSelected;
     Procedure FormResize(Sender: TObject);
   published
     Property Align;
@@ -129,49 +196,226 @@ Type
     property OnMouseWheelDown;
     property OnMouseWheelUp;
     property OnResize;
+    Property OnSelectionChange:TNotifyEvent read FOnSelectionChange write SetOnSelectionChange;
     property PopupMenu;
     property ShowHint;
     property Visible;
 
   End;
 
+  { TO3DGroup }
+
   TO3DGroup = Class(T3DBasisObject)
+
+  private
+    FAmount: Extended;
+    FTranslVector: TPointF;
+    function getTranslAmount: Extended;
+    procedure SetTranslAmount(AValue: Extended);
+  public
+    function AttrCount:integer;override;
+    function GetAttributes(Idx: variant): variant;override;
+    procedure SetAttributes(idx: variant; AValue: variant);override;
+    Function ListAttr:variant;override;
   public
     Procedure Draw; override;
-    Procedure MoveTo(nx, ny, nz: Extended); override;
+    Property TranslVector:TPointF read FTranslVector write FTranslVector;
+    Property TranslAmount:Extended read getTranslAmount write SetTranslAmount;
   End;
 
 Const
-  MaterialColorGreen: TGLArrayf4 = (0.0, 1.0, 0.0, 0.5);
+  Zero : TPointF=(x:0;y:0;z:0);
+  eX : TPointF=(x:1;y:0;z:0);
+  eY : TPointF=(x:0;y:1;z:0);
+  eZ : TPointF=(x:0;y:0;z:1);
+
+  MaterialColorGreen: TGLArrayf4 = (0.0, 1.0, 0.0, 0.0);
   MaterialColorTest: TGLArrayf4 = (0.1, 0.2, 0.2, 0.0);
-  MaterialColorBlack: TGLArrayf4 = (0.1, 0.1, 0.1, 0.0);
+  MaterialColorBlack: TGLArrayf4 = (0.01, 0.01, 0.01, 0.0);
   MaterialColorRed: TGLArrayf4 = (1.0, 0.0, 0.0, 1.0);
   MaterialColorBlue: TGLArrayf4 = (0.0, 0.0, 1.5, 0.0);
   MaterialColorYellow: TGLArrayf4 = (1.0, 1.0, 0.0, 0.0);
+  MaterialColorDkGray: TGLArrayf4 = (0.25, 0.25, 0.25, 0.0);
+  MaterialColorGray: TGLArrayf4 = (0.5, 0.5, 0.5, 0.0);
   MaterialColorWhite: TGLArrayf4 = (1.0, 1.0, 1.0, 0.0);
+  MaterialColorWhiteGlass: TGLArrayf4 = (1.0, 1.0, 1.0, 0.9);
+  MaterialColorBlackGlass: TGLArrayf4 = (0.01, 0.01, 0.01, 0.9);
+  MaterialColorGreenGlass: TGLArrayf4 = (0.0, 1.0, 0.0, 0.9);
 
   MaterialGreenPlastic: TMaterialBaseDef =
   (AmbColor: (0.0, 0.2, 0.0, 0.0);
     DiffColor: (0.0, 1.0, 0.0, 0.0);
     ShinyNess: 0.3);
 
-function UVPoint(U, V: Single): TUVPoint; inline;
+// Hilfsfunktionen
+  Function UVPoint(u,v:Single):TUVPoint;inline;
+  Function PointF(nx,ny,nz:TGLdouble):TPointF;inline;
+
+// Point-GL-Procedure
+
+Procedure glNormal(aPnt:TPointF);
+Procedure glVertex(aPnt:TPointF);
+Procedure glTranslate(aPnt:TPointF);
+Procedure glRotate(aAmount:TGLdouble;aPnt:TPointF);
 
 Implementation
+
+uses variants;
 {$IFDEF FPC}
 {$R registerOpenGLScene.res}
 {$ENDIF}
-const
-  fovy = 60.0;
-  zNear = 0.1;
-  zFar = 50.0;
 
-Function UVPoint(u, V: Single): TUVPoint;
-Inline;
+
+const
+  fovy = 20.0;
+  zNear = 0.1;
+  zFar = 60.0;
+
+  CBaseObjAttr: array[0..5] of string=
+  ('Translation','TPointF','Rotation.Amount','Double','Rotation.Vector','TPointF');
+
+  CGroupAttr: array[0..3] of String=
+  ('Transl.Amount','Double','Transl.Vector','TPointF');
+
+function UVPoint(U, V: Single): TUVPoint;inline;
 Begin
-  result.U := u;
-  result.v := v;
+  Result.U := u;
+  Result.v := v;
 End;
+
+function PointF(nx, ny, nz: TGLdouble): TPointF;inline;
+begin
+  Result.x:=nx;
+  Result.y:=ny;
+  Result.z:=nz;
+end;
+
+procedure glNormal(aPnt: TPointF);
+begin
+  glNormal3dv(PGLdouble(@aPnt.d[0]));
+end;
+
+procedure glVertex(aPnt: TPointF);
+begin
+  glVertex3dv(PGLdouble(@aPnt.d[0]));
+end;
+
+procedure glTranslate(aPnt: TPointF);
+begin
+  glTranslated(aPnt.x,aPnt.y,aPnt.z);
+end;
+
+procedure glRotate(aAmount: TGLdouble; aPnt: TPointF);
+begin
+  glRotated(aAmount,aPnt.x,aPnt.y,aPnt.z)
+end;
+
+{ TPointF }
+
+function TPointF.getAsVariant: variant;
+begin
+  result := VarArrayOf(['PointF',VarArrayOf(['X',x,'Y',y,'Z',z])]);
+end;
+
+procedure TPointF.SetAsVariant(AValue: variant);
+begin
+  if VarIsArray(AValue) then
+    if (VarArrayHighBound(AValue,1) = 1) then
+      if (lowercase(avalue[0])='pointf') then
+        SetAsVariant(Avalue[1])
+      else if (lowercase(avalue[0])='x')  then
+        x := avalue[1]
+      else if (lowercase(avalue[0])='y')  then
+        y := avalue[1]
+      else if (lowercase(avalue[0])='z')  then
+        z := avalue[1]
+      else
+    else if (VarArrayHighBound(AValue,1) = 5) then
+      begin
+        if (lowercase(avalue[0])='x')  then
+          x := avalue[1];
+        if (lowercase(avalue[2])='y')  then
+          y := avalue[3];
+        if (lowercase(avalue[4])='z')  then
+          z := avalue[5];
+      end
+    else
+      raise(Exception.Create( 'Illegal VarArray'))
+  else
+    raise(Exception.Create( 'Illegal Value: '+VarToStr(AValue)));
+end;
+
+function TPointF.Rotxm90: TpointF;
+begin
+  result.x:= x;
+  result.y:= z;
+  result.z:=-y;
+end;
+
+function TPointF.Rotym90: TpointF;
+begin
+  result.x:=-z;
+  result.y:= y;
+  result.z:= x;
+end;
+
+function TPointF.Rotzm90: TpointF;
+begin
+  result.x:= y;
+  result.y:=-x;
+  result.z:= z;
+end;
+
+function TPointF.Rotxp90: TpointF;
+begin
+  result.x:= x;
+  result.y:=-z;
+  result.z:= y;
+end;
+
+function TPointF.Rotyp90: TpointF;
+begin
+  result.x:= z;
+  result.y:= y;
+  result.z:=-x;
+end;
+
+function TPointF.Rotzp90: TpointF;
+begin
+  result.x:=-y;
+  result.y:= x;
+  result.z:= z;
+end;
+
+function TPointF.Neg: TPointF;
+begin
+  result.x:=-x;
+  result.y:=-y;
+  result.z:=-z;
+end;
+
+function TPointF.Add(aPnt: TPointF): TPointF;
+begin
+  result.x:=x+aPnt.x;
+  result.y:=y+aPnt.y;
+  result.z:=z+aPnt.z;
+end;
+
+function TPointF.SMult(fak: TGLdouble): TPointF;
+begin
+  result.x:=x*fak;
+  result.y:=y*fak;
+  result.z:=z*fak;
+end;
+
+function TPointF.Equals(aPnt: TPointF; e: double): Boolean;
+begin
+  if e=0 then
+     Result := (x=aPnt.x) and (y = aPnt.y) and (z=aPnt.z)
+  else
+     Result  := (abs(x-aPnt.x)<e) and (abs(y - aPnt.y)<e) and (abs(z-aPnt.z)<e);
+end;
+
 
 constructor TO3DCanvas.Create(AOwner: TComponent);
 
@@ -207,8 +451,6 @@ Begin
       SetDCPixelFormat;
       HRC := wglCreateContext(DC); // Make a GL Context
       wglMakeCurrent(DC, HRC);
-      {$ENDIF}
-
 
       glClearColor(0.0, 0.0, 0.5, 1.0); // Clear background color to black
       glClearDepth(1.0); // Clear the depth buffer
@@ -222,7 +464,7 @@ Begin
       gluPerspective(fovy, Width / Height, zNear, zFar);
       // Aspect ratio of the viewport
       glHint(GL_PERSPECTIVE_CORRECTION_HINT, GL_NICEST);
-      glMatrixMode(GL_PROJECTION);
+      glMatrixMode(GL_MODELVIEW);
 
        If FCulling Then
         Begin
@@ -236,7 +478,10 @@ Begin
           glEnable(GL_SMOOTH);
           glEnable(GL_BLEND);
         End;
-      OnResize := FormResize;
+      {$Else}
+      AutoResizeViewport := true;
+      OnPaint:=DoPaint;
+      {$ENDIF}
     End
 
 End;
@@ -271,12 +516,12 @@ Begin
   glPushMatrix; //Um unsere Matrix zu sichern
   glLoadIdentity; //Und dieselbige wieder zurückzusetzen
 
-  gluPickMatrix(xsel, viewport[3] - ysel, 1.0, 1.0, @viewport);
-  gluPerspective(fovy, Width / Height, zNear, zFar);
+  gluPickMatrix(xsel, viewport[3] - ysel, 0.2, 0.2, @viewport);
+//  gluPerspective(fovy, Width / Height, zNear, zFar);
 
-  DrawScene; //Die Szene zeichnen
+  DoPaint(nil); //Die Szene zeichnen
 
-  glmatrixmode(gl_projection); //Wieder in den Projektionsmodus
+  glMatrixMode(GL_PROJECTION); //Wieder in den Projektionsmodus
   glPopMatrix; //um unsere alte Matrix wiederherzustellen
 
   treffer := glRenderMode(GL_RENDER); //Anzahl der Treffer auslesen
@@ -298,6 +543,97 @@ Begin
 
   Result := getroffen;
 End;
+
+procedure TO3DCanvas.SetOnSelectionChange(AValue: TNotifyEvent);
+begin
+  if @FOnSelectionChange=@AValue then Exit;
+  FOnSelectionChange:=AValue;
+end;
+
+procedure TO3DCanvas.SetSelected(AValue: T3DBasisObject);
+begin
+  if FSelected=AValue then Exit;
+  FSelected:=AValue;
+  if assigned(FOnSelectionChange) then
+    FOnSelectionChange(self)
+end;
+
+procedure TO3DCanvas.DoPaint(Sender: TObject);
+
+var
+  Ps: TPaintStruct;
+  I: Integer;
+  c: Cardinal;
+
+Const
+  LightAmbient: Array[0..3] Of GLfloat = (0.05, 0.05, 0.05, 1.0);
+  LightDiffuse: Array[0..3] Of GLfloat = (0.7, 0.7, 0.7, 1.0);
+  LightSpecular: Array[0..3] Of GLfloat = (0.8, 0.7, 0.5, 1.0);
+  LightPosition: Array[0..3] Of GLfloat = (-14.0, 14.0, 0.0, 1.0);
+
+Const
+  mat_specular: Array[0..3] Of GlFloat = (1.2, 1.2, 1.2, 1.0);
+  mat_shininess: Array[0..0] Of GlFloat = (50.0);
+
+begin
+//  DrawSceneInt;
+//  exit;
+  BeginPaint(Handle, Ps{%H-}); {out}
+if assigned(Sender) then
+  begin
+  glMatrixMode(GL_PROJECTION);
+{
+ } glClear(GL_COLOR_BUFFER_BIT or GL_DEPTH_BUFFER_BIT);
+ glLoadIdentity();
+  end;
+ gluPerspective(fovy, Width / Height, zNear, zFar);
+// glFrustum(-Width / height*1.0,-width / height*1.0,-1.0,1.0,zNear,zFar);
+  glMatrixMode(GL_MODELVIEW);
+  glLoadIdentity;
+
+  glDepthFunc(GL_LEQUAL); // Type of depth test
+      glEnable(GL_DEPTH_TEST); // enables depth testing
+      glEnable(GL_TEXTURE_2D); // Aktiviert Texture Mapping
+      glShadeModel(GL_SMOOTH); // Smooth color shading
+
+  glLightfv(GL_LIGHT0, GL_AMBIENT,  {$IFNDEF FPC}@{$endif}LightAmbient); // Create light
+  glLightfv(GL_LIGHT0, GL_DIFFUSE, {$IFNDEF FPC}@{$endif}LightDiffuse);
+      glLightfv(GL_LIGHT0, GL_SPECULAR, {$IFNDEF FPC}@{$endif}LightSpecular);
+      glLightfv(GL_LIGHT0, GL_POSITION, {$IFNDEF FPC}@{$endif}LightPosition); // Light position
+      glEnable(GL_LIGHTING);
+      glEnable(GL_LIGHT0);
+      glEnable(GL_DEPTH_TEST);
+      glEnable(GL_LINE_SMOOTH);
+      glEnable(GL_SMOOTH);
+      glEnable(GL_BLEND);
+
+  glinitnames;
+  glpushname(0);
+
+  glTranslatef(0.0, 0.0, -FViewDistance); // Polygon depth
+
+  glMaterialfv(GL_FRONT, GL_SPECULAR, @mat_specular[0]);
+   glMaterialfv(GL_FRONT, GL_SHININESS, @mat_shininess[0]);
+
+//  glRotatef(cube_rotationx, cube_rotationy, cube_rotationz, 0.0);
+  glRotatef(ary, 1.0, 0.0, 0.0);
+  glRotatef(arx, 0.0, 1.0, 0.0);
+
+  For I := 0 To ComponentCount - 1 Do
+    If Components[i].InheritsFrom(T3DBasisObject) Then
+      With T3DBasisObject(Components[i]) Do
+        Begin
+          c := cardinal(self.Components[i]);
+          glloadname(c); //cardinal(Components[i]));
+          glPushMatrix;
+          if Visible then
+            Draw;
+          glPopMatrix;
+        End;
+
+  SwapBuffers;
+   EndPaint(Handle, Ps);
+end;
 
 {$IFNDEF FPC}
 Procedure TO3DCanvas.SetDCPixelFormat;
@@ -353,12 +689,12 @@ Begin
 End;
 {$ENDIF}
 
-procedure TO3DCanvas.DrawScene;
+procedure TO3DCanvas.DrawSceneInt;
 
 Const
   LightAmbient: Array[0..3] Of GLfloat = (0.05, 0.05, 0.05, 1.0);
-  LightDiffuse: Array[0..3] Of GLfloat = (0.5, 0.7, 0.5, 1.0);
-  LightSpecular: Array[0..3] Of GLfloat = (0.7, 0.5, 0.5, 1.0);
+  LightDiffuse: Array[0..3] Of GLfloat = (0.5, 0.5, 0.4, 1.0);
+  LightSpecular: Array[0..3] Of GLfloat = (0.7, 0.6, 0.5, 1.0);
   LightPosition: Array[0..3] Of GLfloat = (-14.0, 14.0, 0.0, 1.0);
 
 Var
@@ -373,10 +709,12 @@ Const
 
 Begin
   BeginPaint(Handle, Ps{%H-}); {out}
-  glMatrixMode(GL_MODELVIEW);
+  glMatrixMode(GL_PROJECTION);
   glClearColor(0, 0, 0.0, 1.0);
   glClear(GL_COLOR_BUFFER_BIT Or GL_DEPTH_BUFFER_BIT);
   // Clear color & depth buffers
+  glFrustum(-TGLfloat(width) / height,TGLfloat(width) / height,-1,1,1.5,100);
+  glMatrixMode(GL_MODELVIEW);
   glLoadIdentity;
 
   glDepthFunc(GL_LEQUAL); // Type of depth test
@@ -384,12 +722,13 @@ Begin
       glEnable(GL_TEXTURE_2D); // Aktiviert Texture Mapping
       glShadeModel(GL_SMOOTH); // Smooth color shading
 
-  glLightfv(GL_LIGHT0, GL_AMBIENT,  {$IFNDEF FPC}@{$endif}LightAmbient); // Create light
+   glLightfv(GL_LIGHT0, GL_AMBIENT,  {$IFNDEF FPC}@{$endif}LightAmbient); // Create light
    glLightfv(GL_LIGHT0, GL_DIFFUSE, {$IFNDEF FPC}@{$endif}LightDiffuse);
    glLightfv(GL_LIGHT0, GL_SPECULAR, {$IFNDEF FPC}@{$endif}LightSpecular);
    glLightfv(GL_LIGHT0, GL_POSITION, {$IFNDEF FPC}@{$endif}LightPosition); // Light position
    glEnable(GL_LIGHTING);
    glEnable(GL_LIGHT0);
+   glEnable(GL_DEPTH_TEST);
 
   glinitnames;
   glpushname(0);
@@ -398,6 +737,7 @@ Begin
 
   glMaterialfv(GL_FRONT, GL_SPECULAR, @mat_specular[0]);
   glMaterialfv(GL_FRONT, GL_SHININESS, @mat_shininess[0]);
+
 
   glRotatef(ary, 1.0, 0.0, 0.0);
   glRotatef(arx, 0.0, 1.0, 0.0);
@@ -417,34 +757,36 @@ Begin
 
   EndPaint(Handle, Ps);
 
-  //  InvalidateRect(Handle, Nil, False); // Force window repaint
-
 End;
 
+{$Ifndef FPC}
 procedure TO3DCanvas.PaintWindow(DC: HDC);
 Begin
   if csDesigning in ComponentState then
     exit;
-  If Not Finitialized Then
+{  If Not Finitialized Then
     Begin
       FormResize(self);
       Finitialized := true
     End;
-  DrawScene;
+  DrawScene;     }
 End;
+{$ENDIF}
 
 procedure TO3DCanvas.FormResize(Sender: TObject);
 Begin
+{  glMatrixMode(GL_PROJECTION);
+  glClearColor(0, 0, 0.0, 1.0);
+  glLoadIdentity();
+ }
 
   glViewport(0, 0, Width, Height);
   // Reset The Current Viewport And Perspective Transformation
   glMatrixMode(GL_PROJECTION);
   glLoadIdentity;
-  gluPerspective(fovy, Width / Height, zNear, zFar);
   glMatrixMode(GL_MODELVIEW);
 
   InvalidateRect(Handle, Nil, False); // Force window repaint
-
 End;
 
 procedure TO3DCanvas.MouseDown(Button: TMouseButton; Shift: TShiftState; X,
@@ -458,7 +800,11 @@ Begin
       if (integer(so) <> -1) and assigned(so) and so.InheritsFrom(T3DBasisObject)
         then
         Begin
-          FSelected := T3DBasisObject(so);
+          if @FSelected <> @T3DBasisObject(so) then
+            begin
+              FPreSelected := T3DBasisObject(so);
+              FClickpoint := Point(x,y);
+            end;
           if assigned(T3DBasisObject(so).OnMouseDown) then
             T3DBasisObject(so).onMouseDown(so, button, shift, x, y)
           else
@@ -467,6 +813,8 @@ Begin
       Else
         begin
           Inherited;
+          if assigned(FOnSelectionChange) and Assigned(FSelected) then
+            FOnSelectionChange(Self);
           FSelected := nil;
         end;
     Except
@@ -498,16 +846,25 @@ Begin
           Inherited;
         end;
       end
-      else if assigned(Fselected) and assigned(Fselected.OnMouseMove) then
-        fselected.OnMouseMove(fselected, shift, x, y)
+      else begin if assigned(FPreSelected) and assigned(FPreSelected.OnMouseMove) then
+        FPreSelected.OnMouseMove(fselected, shift, x, y)
       else
-       inherited
+        begin
+          if assigned(FPreSelected) and (point(x,y).Distance(FClickpoint)>10) then
+            FPreSelected := nil;
+         inherited
+        end;end;
     Except
       Inherited;
     End
   Else
     Inherited;
 End;
+
+procedure TO3DCanvas.DrawScene;
+begin
+  invalidate;
+end;
 
 procedure TO3DCanvas.MouseUp(Button: TMouseButton; Shift: TShiftState; X,
   Y: Integer);
@@ -516,6 +873,11 @@ Var
 Begin
   If FObjectHandling Then
     Try
+      if assigned(FPreSelected) and (point(x,y).Distance(FClickpoint)<=10) then
+        begin
+          SetSelected(FPreSelected);
+          FPreSelected:=nil;
+        end;
       so := Tobject(SelectObject(x, y));
       if (integer(so) <> -1) and assigned(so) and so.InheritsFrom(T3DBasisObject)
         then
@@ -538,45 +900,204 @@ End;
 
 //-----------------------------------------------------------------------
 
-Constructor T3DBasisObject.create;
+procedure T3DBasisObject.SetRotAmount(AValue: Double);
+begin
+  if FRotAmount=AValue then Exit;
+  FRotAmount:=AValue;
+end;
+
+procedure T3DBasisObject.SetRotVector(AValue: Variant);
+var lVec:TPointF;
+
+begin
+  FRotVector.AsVariant := AValue;
+end;
+
+procedure T3DBasisObject.SetRotVector(AValue: TPointF);
+begin
+  if FRotVector.equals(AValue) then Exit;
+  FRotVector:=AValue;
+end;
+
+constructor T3DBasisObject.Create(Aowner: TComponent);
 Begin
   Inherited;
-  If Aowner.inheritsfrom(TWincontrol) Then
-    Parent := Twincontrol(Aowner);
+  If assigned(Aowner) and  Aowner.inheritsfrom(TWincontrol) Then
+    Parent := TWincontrol(Aowner);
 End;
 
-Procedure T3DBasisObject.Rotate(Amount, x, y, z: Extended);
+procedure T3DBasisObject.MoveTo(aPnt: TPointF);
+begin
+  FTranslation := aPnt;
+end;
+
+procedure T3DBasisObject.MoveTo(x, y, z: Extended);
+begin
+  MoveTo(PointF(x,y,z));
+end;
+
+procedure T3DBasisObject.Rotate(Amount, x, y, z: Extended);
 Begin
-  Rotation[0] := Amount;
-  Rotation[1] := x;
-  Rotation[2] := y;
-  Rotation[3] := z;
+  FRotAmount := Amount;
+  FRotVector := PointF( x,y,z);
 End;
+
+function T3DBasisObject.AttrCount: integer;
+begin
+  result := 3;
+end;
+
+
+
+function T3DBasisObject.GetAttributes(Idx: variant): variant;
+var
+  lsIdx: Integer;
+begin
+  lsIdx := -2;
+  Result:=Null;
+  if VarIsNumeric(Idx) then
+    lsIdx := Idx
+  else
+    if VarIsStr(idx) then
+      IndexOfString2(CBaseObjAttr,Idx,lsIdx);
+  if  lsIdx>=-1 then
+     case lsIdx of
+     -1:begin
+          result := ClassName;
+                if Name <> '' then
+                    result := result + '(' + Name + ')';
+        end;
+       0:result :=FTranslation.AsVariant;
+       1:Result := FRotAmount ;
+       2:Result := FRotVector.AsVariant;
+     end;
+end;
+
+procedure T3DBasisObject.SetAttributes(idx: variant; AValue: variant);
+var
+  lsIdx: integer;
+begin
+  lsIdx := -1;
+  if VarIsNumeric(Idx) then
+    lsIdx:=Idx
+  else
+    if VarIsStr(idx) then
+      IndexOfString2(CBaseObjAttr,Idx,lsIdx);
+  if lsIdx>=0 then
+    case lsIdx of
+      0:FTranslation.AsVariant := AValue;
+      1:FRotAmount := aValue;
+      2:SetRotVector(AValue);
+    end;
+end;
+
+function T3DBasisObject.ListAttr: variant;
+var
+  I: Integer;
+begin
+  result := VarArrayCreate([0,high(CBaseObjAttr)],varvariant);
+  for I := 0 to 5 do
+    result[i] := CBaseObjAttr[i];
+end;
 
 //----------------------------------------------------------------------------
 
-Procedure TO3DGroup.Draw;
+function TO3DGroup.getTranslAmount: Extended;
+begin
+  result := FAmount
+end;
+
+procedure TO3DGroup.SetTranslAmount(AValue: Extended);
+begin
+  if AValue=Famount then exit;
+  FAmount := AValue;
+end;
+
+function TO3DGroup.AttrCount: integer;
+begin
+  Result:=inherited AttrCount+length(CGroupAttr) div 2;
+end;
+
+function TO3DGroup.GetAttributes(Idx: variant): variant;
+var
+  lInhAttrCount, lsIdx: Integer;
+begin
+  lInhAttrCount := inherited AttrCount;
+  lsIdx := -1;
+  if VarIsNumeric(idx) then
+    if idx < lInhAttrCount then
+       begin
+          exit(inherited);
+       end
+    else
+      lsIdx := Idx-lInhAttrCount
+  else if VarIsStr(idx) then
+    if not IndexOfString2(CGroupAttr,Idx,lsIdx) then
+      begin
+        exit(inherited);
+      end;
+  if lsIdx>=0 then
+        case lsIdx of
+           0:result := FAmount;
+           1:result := FTranslVector.AsVariant;
+        end;
+end;
+
+procedure TO3DGroup.SetAttributes(idx: variant; AValue: variant);
+var
+  lInhAttrCount, lsIdx: Integer;
+begin
+  lInhAttrCount := inherited AttrCount;
+  lsIdx := -1;
+  if VarIsNumeric(idx) then
+    if idx < lInhAttrCount then
+       begin
+         inherited;
+         exit
+       end
+  else
+    lsIdx := Idx-lInhAttrCount
+else if VarIsStr(idx) then
+  if not IndexOfString2(CGroupAttr,Idx,lsIdx) then
+    begin
+       inherited;
+       exit;
+    end;
+  if lsIdx>=0 then
+        case lsIdx of
+           0: FAmount := AValue;
+           1:FTranslVector.AsVariant := AValue;
+        end;
+end;
+
+function TO3DGroup.ListAttr: variant;
+var
+  lVah: LongInt;
+  i: Integer;
+begin
+  Result:=inherited ListAttr;
+  lVah := VarArrayHighBound(result,1);
+  VarArrayRedim(Result,lVah+length(CGroupAttr));
+  for i := 0 to high(CGroupAttr) do
+    result[lVah+1+i]:=CGroupAttr[i];
+end;
+
+procedure TO3DGroup.Draw;
 Var
   I: Integer;
 Begin
-  glTranslatef(Translation[0], Translation[1], Translation[2]);
-  glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
+  glTranslate( TranslVector.SMult(FAmount).add(FTranslation));
+  glRotate(FRotAmount, FRotVector);
   For I := 0 To ComponentCount - 1 Do
     If Components[i].InheritsFrom(T3DBasisObject) Then
       With T3DBasisObject(Components[i]) Do
         Begin
           glloadname(cardinal(self.Components[i]));
           glPushMatrix;
-          Draw;
+          if Visible then
+            Draw;
           glPopMatrix;
         End;
-End;
-
-Procedure TO3DGroup.MoveTo(nx, ny, nz: Extended);
-Begin
-  Translation[0] := nx;
-  Translation[1] := ny;
-  Translation[2] := nz;
 End;
 
 End.

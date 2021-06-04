@@ -30,10 +30,10 @@ type
   PColoredText = ^TColoredText;
 
   TColoredText = object(TStaticText)
-    Attr: byte;
-    constructor Init(var Bounds: TRect; const AText: string; Attribute: byte);
+    Attr : Byte;
+    constructor Init(var Bounds: TRect; const AText: String; Attribute : Byte);
     constructor Load(var S: TStream);
-    function GetTheColor: byte; virtual;
+    function GetTheColor : byte; virtual;
     procedure Draw; virtual;
     procedure Store(var S: TStream);
   end;
@@ -43,13 +43,13 @@ const
     ObjType: idColoredText;
     VmtLink: Ofs(TypeOf(TColoredText)^);
     Load: @TColoredText.Load;
-    Store: @TColoredText.Store
+    Store: @TColoredText.Store{%H-}
     );
 
 implementation
 
 constructor TColoredText.Init(var Bounds: TRect; const AText: string;
-  Attribute: byte);
+                                  Attribute : Byte);
 begin
   TStaticText.Init(Bounds, AText);
   Attr := Attribute;
@@ -67,7 +67,7 @@ begin
   S.Write(Attr, Sizeof(Attr));
 end;
 
-function TColoredText.GetTheColor: byte;
+function TColoredText.GetTheColor : byte;
 begin
   if AppPalette = apColor then
     GetTheColor := Attr

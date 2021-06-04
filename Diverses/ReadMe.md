@@ -66,4 +66,49 @@ Or That:
  {INTRÈGRATED#-#  DEVELOPMENT AND#   OBJECTPASCAL#  LEARNING #ENV-    IRON-          MENTS# OUT# HERE#      TO#SAY#THE#
 #LEAST!!!######   #########  ####   ###}M:=lQ{###   ######  ####     #####            SO#THIS#  #IS##        THE};end.
 ```
+## !!!New!!! Some Quines
+a Quine is a program that has it's own (Source-)code as a result. (see Wikipedia)
+
+### Quine 1
+```pascal
+program Q;const R=#39#44;C:array[0..8]of string=(#39,R,
+'0]+C[B*2]+R+C[0]+C[B*2+1]+R);','7]);for B in[1..3]do',
+'6]+C[B xor 1])end.','0]+C[8]+C[0]+C[8]);for B IN[2..5]do',
+'writeln(C[','program Q;const R=#39#44;C:array[0..8]of string=(#39,R,',
+');var B:byte;begin');var B:byte;begin
+writeln(C[7]);for B in[1..3]do
+writeln(C[0]+C[B*2]+R+C[0]+C[B*2+1]+R);
+writeln(C[0]+C[8]+C[0]+C[8]);for B IN[2..5]do
+writeln(C[6]+C[B xor 1])end.
+```
+### Quine 2
+This looks more like a pascal program ...
+```pascal
+program prj_Quine2;
+uses SysUtils;
+const s='program prj_Quine2;%1:suses SysUtils;%1:sconst s=%0:s;%1:sbegin%1:s  writeln(Format(s,QuotedStr(s),LineEnding))%1:send.';
+begin
+  writeln(Format(s,[QuotedStr(s),LineEnding]))
+end.
+```
+### Quine 3
+Except for the programname this is (my) smallest pascal-quine
+```pascal
+program Q3;const r=#39;s='program Q3;const r=#39;s=';c=';begin write(s+r+s+r+#59#99#61+r+t+r+t)end.';begin write(s+r+s+r+#59#99#61+r+c+r+c)end.
+```
+.<br/>
+.<br/>
+.<br/>
+### Quine 9
+I like that one, If you don't know it's a Quine it's hard to figure out, what it does. 
+```pascal
+program Q9;const r=#39;b='*>ydu#g=fkdu>ehjlq#zulwh+f.u.e.u.*>f@*.u.f,>iru#g#lq#e#gr#zulwh+fkdu+e|wh+g,06,,hqg1';c='program Q9;const r=#39;b=';var d:char;begin write(c+r+b+r+';c='+r+c);for d in b do write(char(byte(d)-3))end.
+```
+### Quine 10
+I this one uses something like self-encoding
+```pascal
+program d.w;var e,d,o,r,b:string;f:int8=-32;begin r:=(#39)+#39;o:=r[1];e:=',+"><1V9212#2k,9:Hk2#292"Z,B#"()(>?(1()#(+"><1V9d+#")V)defZ[BfZ1?)*';b:='program d.w;var e,d,o,r,b:string;f:int8=-32;begin r:=(#39)+#39;o:=r[1];e:=''';write(b,e,o,';b:=',o,b,r);for d in e do write(b[word(d[1])+f])end.
+```
+
+
 

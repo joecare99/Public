@@ -193,7 +193,7 @@ CONST
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
 {$IFDEF OS_WINDOWS}                                   { WIN/NT CODE }
    {$IFDEF PPC_FPC}                                   { FPC WINDOWS COMPILER }
-   USES Windows;                                      { Standard unit }
+//   USES Windows;                                      { Standard unit }
    {$ELSE}                                            { OTHER COMPILERS }
    USES WinProcs, WinTypes;                           { Standard units }
    {$ENDIF}

@@ -43,8 +43,6 @@ uses dos;
         end.
 }
 
-{$F+}   {needed to use procedure variables}
-
 var
     PShowUsage: procedure;
     {Explains command-line usage}
@@ -427,8 +425,11 @@ function ExeDir: DirStr;
     Ext: ExtStr;  {$ENDIF}
 begin
     {$IFDEF FPC}
+   {$ifdef FPC_OBJFPC}
    Result:= ExtractFilePath(ParamStr(0));
-   {$ELSE}
+    {$ELSE}
+   ExeDir:= ExtractFilePath(ParamStr(0));
+    {$ENDIF} {$ELSE}
    If Lo(DosVersion) >= 3 then begin
         FSplit(ParamStr(0), Dir, Name, Ext);
         ExeDir:= Dir;
@@ -444,7 +445,8 @@ function ExeName: NameStr;
     Ext: ExtStr; {$endif}
 begin
    {$IFDEF FPC}
-  result:= ExtractFileName(ParamStr(0));
+  {$ifdef FPC_OBJFPC}result{$Else}ExeName{$endif}
+    := ExtractFileName(ParamStr(0));
   {$ELSE}
     If Lo(DosVersion) >= 3 then begin
         FSplit(ParamStr(0), Dir, Name, Ext);

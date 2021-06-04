@@ -1,0 +1,286 @@
+0 HEAD
+1 SOUR PAF
+2 VERS 5.2.18.0
+2 NAME Personal Ancestral File
+2 CORP The Church of Jesus Christ of Latter-day Saints
+3 ADDR 50 East North Temple Street
+4 CONT Salt Lake City, UT 84150
+4 CONT USA
+1 DEST Other
+1 DATE 13 Sep 2009
+2 TIME 21:25:27
+1 SUBM @SUB1@
+1 FILE familyv94.ged
+1 GEDC
+2 VERS 5.5
+2 Form LINEAGE - LINKED
+1 CHAR ASCII
+1 LANG English
+0 @SUB1@ SUBM
+1 NAME Paul Pruitt
+1 ADDR 9006 Friars Rd
+2 CONT Bethesdam, MD  20817
+2 CTRY USA
+1 PHON (240) 277-6233
+0 @I1@ INDI
+1 NAME Father/Gentleman I/
+2 GIVN Father
+2 SURN Gentleman I
+1 SEX M
+1 BIRT
+2 DATE 01 JAN 1940
+2 PLAC Father's Birth place
+1 FAMC @F12@
+1 FAMS @F1@
+1 OBJE
+2 FORM jpeg
+2 FILE photo\father.jpg
+1 NOTE Father was a great personality
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @I2@ INDI
+1 NAME Mother//
+2 GIVN Mother
+2 SURN 
+1 SEX F
+1 BIRT
+2 DATE 01 JAN 1950
+2 PLAC Mother's Birth place
+1 FAMC @F11@
+1 FAMS @F1@
+1 OBJE
+2 FORM jpeg
+2 FILE photo\mother.jpg
+1 NOTE Mother was fond of music
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @I3@ INDI
+1 NAME Brother1/Gentleman II/
+2 GIVN Brother1
+2 SURN Gentleman II
+1 SEX M
+1 BIRT
+2 DATE 01 JAN 1960
+2 PLAC Brother1's Birth place
+1 FAMC @F1@
+1 FAMS @F3@
+1 NOTE Brother was footballer
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @I4@ INDI
+1 NAME Sister1//
+2 GIVN Sister1
+2 SURN 
+1 SEX F
+1 BIRT
+2 DATE 01 JAN 1955
+2 PLAC Sister1's Birth place
+1 FAMC @F1@
+1 FAMS @F15@
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @I5@ INDI
+1 NAME Sister2//
+2 GIVN Sister2
+2 SURN 
+1 SEX F
+1 BIRT
+2 DATE 01 JAN 1958
+2 PLAC Sister2's Birth place
+1 FAMC @F1@
+1 FAMS @F5@
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @I6@ INDI
+1 NAME Wife//
+2 GIVN Wife
+2 SURN 
+1 SEX F
+1 BIRT
+2 DATE 01 JAN 1970
+2 PLAC Wife's Birth place
+1 FAMC @F7@
+1 FAMS @F3@
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @I7@ INDI
+1 NAME Father-in-Law//
+2 GIVN Father-in-Law
+2 SURN 
+1 SEX M
+1 BIRT
+2 DATE 01 JAN 1945
+2 PLAC Father-in-Law's Birth place
+1 FAMS @F7@
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @I8@ INDI
+1 NAME Mother-in-Law//
+2 GIVN Mother-in-Law
+2 SURN 
+1 SEX F
+1 BIRT
+2 DATE 01 JAN 1948
+2 PLAC Mother-in-Law's Birth place
+1 FAMS @F7@
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @I9@ INDI
+1 NAME Sister1's Son//
+2 GIVN Sister1's Son
+2 SURN 
+1 SEX M
+1 BIRT
+2 DATE 01 JAN 1985
+2 PLAC Sister1's Son's Birth place
+1 FAMC @F4@
+1 FAMS @F9@
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @I10@ INDI
+1 NAME Mother's Mother//
+2 GIVN Mother's Mother
+2 SURN 
+1 SEX F
+1 BIRT
+2 DATE 01 JAN 1910
+2 PLAC Mother's Mother's Birth place
+1 DEAT
+2 DATE 31 DEC 2000
+2 PLAC Mother's Mother's Death place
+1 FAMS @F11@
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @I11@ INDI
+1 NAME Mother;s Father//
+2 GIVN Mother;s Father
+2 SURN 
+1 SEX M
+1 BIRT
+2 DATE 01 JAN 1905
+2 PLAC Mother;s Father's Birth place
+1 DEAT
+2 DATE 31 DEC 1995
+2 PLAC Mother;s Father's Death place
+1 FAMS @F11@
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @I12@ INDI
+1 NAME Father's Father/Gentleman/
+2 GIVN Father's Father
+2 SURN Gentleman
+1 SEX M
+1 BIRT
+2 DATE 01 JAN 1900
+2 PLAC Father's Father's Birth place
+1 DEAT
+2 DATE 31 DEC 1990
+2 PLAC Father's Father's Death place
+1 FAMS @F12@
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @I13@ INDI
+1 NAME Father's Mother//
+2 GIVN Father's Mother
+2 SURN 
+1 SEX F
+1 BIRT
+2 DATE 01 JAN 1905
+2 PLAC Father's Mother's Birth place
+1 DEAT
+2 DATE 31 DEC 1995
+2 PLAC Father's Mother's Death place
+1 FAMS @F12@
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @I14@ INDI
+1 NAME Sister3//
+2 GIVN Sister3
+2 SURN 
+1 SEX F
+1 BIRT
+2 PLAC Sister3's Birth place
+1 DEAT
+2 PLAC Sister3's Death place
+1 FAMC @F1@
+1 FAMS @F14@
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @I15@ INDI
+1 NAME Sister1's Husband//
+2 GIVN Sister1's Husband
+2 SURN 
+1 SEX M
+1 BIRT
+2 PLAC Sister1's Husband's Birth place
+1 DEAT
+2 PLAC Sister1's Husband's Death place
+1 FAMS @F15@
+1 CHAN
+2 DATE 13 Sep 2009
+3 TIME 21:25:27
+0 @F1@ FAM
+1 CHIL @I3@
+1 CHIL @I4@
+1 CHIL @I5@
+1 CHIL @I14@
+1 HUSB @I1@
+1 MARR
+2 DATE 01 JAN 1970
+2 PLAC Father's Marriage place
+1 WIFE @I2@
+0 @F3@ FAM
+1 HUSB @I3@
+1 MARR
+2 DATE 01 JAN 1990
+2 PLAC Brother1's Marriage place
+1 WIFE @I6@
+0 @F4@ FAM
+1 CHIL @I9@
+0 @F5@ FAM
+1 WIFE @I5@
+0 @F7@ FAM
+1 CHIL @I6@
+1 HUSB @I7@
+1 MARR
+2 DATE 01 JAN 1975
+2 PLAC Father-in-Law's Marriage place
+1 WIFE @I8@
+0 @F9@ FAM
+1 HUSB @I9@
+0 @F11@ FAM
+1 CHIL @I2@
+1 WIFE @I10@
+1 MARR
+2 PLAC Mother's Mother's Marriage place
+1 HUSB @I11@
+0 @F12@ FAM
+1 CHIL @I1@
+1 HUSB @I12@
+1 MARR
+2 PLAC Father's Father's Marriage place
+1 WIFE @I13@
+0 @F14@ FAM
+1 WIFE @I14@
+1 MARR
+2 PLAC Sister3's Marriage place
+0 @F15@ FAM
+1 WIFE @I4@
+1 HUSB @I15@
+1 MARR
+2 PLAC Sister1's Husband's Marriage place
+0 TRLR

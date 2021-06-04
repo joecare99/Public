@@ -2,13 +2,12 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
+    <Version Value="11"/>
     <BuildModes Active="Debug"/>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="Prj_testSvnFilemove.lpr"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <CursorPos X="98" Y="14"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
@@ -16,9 +15,10 @@
       <Unit1>
         <Filename Value="..\source\Unt_FileMove.pas"/>
         <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="61"/>
-        <CursorPos Y="66"/>
+        <TopLine Value="124"/>
+        <CursorPos X="3" Y="4"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit1>
@@ -31,7 +31,29 @@
         <CursorPos X="-1" Y="-1"/>
         <UsageCount Value="20"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="C:\unt_cdate.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="-1"/>
+        <WindowIndex Value="-1"/>
+        <TopLine Value="-1"/>
+        <CursorPos X="-1" Y="-1"/>
+        <UsageCount Value="20"/>
+      </Unit3>
     </Units>
-    <JumpHistory HistoryIndex="-1"/>
+    <JumpHistory Count="2" HistoryIndex="1">
+      <Position1>
+        <Filename Value="Prj_testSvnFilemove.lpr"/>
+        <Caret Line="14" Column="98"/>
+      </Position1>
+      <Position2>
+        <Filename Value="..\source\Unt_FileMove.pas"/>
+        <Caret Line="113" Column="68" TopLine="96"/>
+      </Position2>
+    </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>
