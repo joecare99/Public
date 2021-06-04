@@ -5,7 +5,7 @@ unit VisualSocket;
 interface
 
 uses
-  Classes, SysUtils, fpsock2;
+  Classes, SysUtils, fpSock;
 
 procedure register;
 

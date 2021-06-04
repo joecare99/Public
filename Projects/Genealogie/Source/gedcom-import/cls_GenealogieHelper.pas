@@ -35,6 +35,10 @@ implementation
 
 { TGenealogyHelper }
 
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+
 procedure TGenealogyHelper.SetGedComFile(AValue: TGedComFile);
 begin
     if FGedComFile = AValue then
@@ -71,11 +75,13 @@ begin
     if assigned(aInd.Baptised) and (isQualifiedDate(aind.Baptised.Date, lYear)) then
       begin
         aInd.BirthDate := 'BEF ' + aind.Baptised.Date;
+        aind.Lastchange := Now;
         exit(True);
       end
     else if lYear > 0 then
       begin
         aInd.BirthDate := 'EST ' + IntToStr(lYear);
+        aind.Lastchange := Now;
         exit(True);
       end;
     lIndSex := aInd.Sex;
@@ -91,6 +97,7 @@ begin
         else
             lYear := ((lSpYear + 2) div 5 + 1) * 5;
         aInd.BirthDate := 'EST ' + IntToStr(lYear);
+        aind.Lastchange := Now;
         exit(True);
       end;
     // Iterate trough Marriages and set Birth according to first marriage
@@ -110,6 +117,7 @@ begin
           else
               lYear := (lMinYear div 5 - 4) * 5;
           aInd.BirthDate := 'EST ' + IntToStr(lYear);
+          aind.Lastchange := Now;
           exit(True);
         end;
     // If (only) (qualified) Childs exists the the Birts is 30 or 25 Years before the birth of the Child average
@@ -130,6 +138,7 @@ begin
         else
             lYear := ((lMinYear * 2 + lMaxYear + 6) div 15 - 5) * 5;
         aInd.BirthDate := 'EST ' + IntToStr(lYear);
+        aind.Lastchange := Now;
         exit(True);
       end;
     // If (only) (qualified) Parents exists the the Birts is 30 or 25 Years after the birth of the Parents
@@ -140,6 +149,7 @@ begin
           begin
             lYear := ((lYear + 2) div 5 + 5) * 5;
             aInd.BirthDate := 'EST ' + IntToStr(lYear);
+            aind.Lastchange := Now;
             exit(True);
 
           end;
@@ -152,6 +162,7 @@ begin
           begin
             lYear := ((lYear + 2) div 5 + 6) * 5;
             aInd.BirthDate := 'EST ' + IntToStr(lYear);
+            aind.Lastchange := Now;
             exit(True);
           end;
       end;

@@ -55,6 +55,15 @@
       </element><element name="LineSeparators"><short>Vordefinierte String-Separatoren</short>
       </element><element name="TryFunctionMatching"><short>Versucht den String 'Probe' anhand von 'Mask' zu zerlegen, bzw. Funktionen zuzuordnen.</short>
       </element>
+    <element name="ArrayOfString"><short>Wandelt ein dynamisches Array of String in TArray of String um</short>
+      </element><element name="TryFWildcardMatching"><short>Ermittelt ob "Probe" durch "Mask" dargestellt werden kann.</short>
+      </element><element name="strTrimm"><short>Schneidet führende und folgende Leerzeichen ab (-&gt; trim), und wandelt doppelte Leerzeichen in einfache um.</short>
+      </element><element name="TestForLineSep"><short>Prüft ob die angegebenen Sepataroren in 'Line' vorkommen</short>
+      </element><element name="testLinesep"><short>Prüft ob Separator in 'Line' enthalten ist.</short>
+      </element><element name="TryParseStr" link="#ParseStr"><short>Prüft, ob ein string aus 'args' in 'line' enthalten ist.</short><descr>Es benutzt hierbei die Funktion ParstStr.
+</descr><seealso>ParseStr
+</seealso>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>
