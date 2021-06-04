@@ -1,0 +1,25 @@
+eType	Data	Ref	SubType
+tkPublic	public	Hello_world	1
+tkClass	class	Hello_world	1
+tkIdentifier	Hello	Hello_world	1
+tkCurlyBraceOpen		Hello_world	2
+tkPublic	public	Hello_world	3
+tkStatic	static	Hello_world	3
+tkVoid	void	Hello_world	3
+tkIdentifier	helloworld	Hello_world	3
+tkBraceOpen		Hello_world	3
+tkBraceClose		Hello_world	3
+tkCurlyBraceOpen		Hello_world	4
+tkIdentifier	System	Hello_world	5
+tkDot		Hello_world	5
+tkIdentifier	Diagnostics	Hello_world	5
+tkDot		Hello_world	5
+tkIdentifier	Debug	Hello_world	5
+tkDot		Hello_world	5
+tkIdentifier	WriteLine	Hello_world	5
+tkBraceOpen		Hello_world	5
+tkStringConst	"Hello World!"	Hello_world	5
+tkBraceClose		Hello_world	5
+tkSemicolon		Hello_world	5
+tkCurlyBraceClose		Hello_world	6
+tkCurlyBraceClose		Hello_world	7

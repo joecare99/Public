@@ -8,8 +8,12 @@ interface
 
 uses Cmp_OpenGLScene;
 
-procedure CreateDTTraeger(nx,ny,nz:Single; nWidth,nHeight, nLength: Single; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject);
+type TUVFunction=function(u,v:Double):Double;
 
+function CreateDTTraeger(aPnt:TPointF; nWidth,nHeight, nLength: Single; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject):T3DBasisObject;
+(*function CreateHFFkt(aPnt,aDim:TPointF; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject):T3DBasisObject;
+function CreateHFBmp(aPnt,aDim:TPointF; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject):T3DBasisObject;
+*)
 implementation
 
 uses
@@ -22,24 +26,25 @@ uses
 
 Const TTrDef: Array[0..2, 0..1] Of single = ((1, 1), (1, 0.9), (0.1, 0.8));
 
-procedure CreateDTTraeger(nx,ny,nz:Single; nWidth,nHeight, nLength: Single; nMaterialDef: TMaterialBaseDef;FBasis:T3DBasisObject);
+function CreateDTTraeger(aPnt: TPointF; nWidth, nHeight, nLength: Single;
+  nMaterialDef: TMaterialBaseDef; FBasis: T3DBasisObject): T3DBasisObject;
 var
   p: Integer;
   yq: Integer;
   xq: Integer;
   I: Integer;
-  F3dObject: T3DZObject;
 begin
-  F3dObject := T3DPrism2.Create(FBasis);
-  with T3DPrism2(F3dObject) do
+  Result := T3DPrism2.Create(FBasis);
+  with T3DPrism2(Result) do
   begin
-    Rotation[1] := 1;
-    Rotation[0] := -90;
-    moveto(nx, -nz, ny);
+    RotVector := eX;
+    RotAmount := -90;
+    moveto(aPnt.Rotxm90);
     QWidth := nWidth;
     QLength := nHeight;
     QHeight := nLength;
     MaterialDef := nMaterialDef;
+    QColor := nMaterialDef.DiffColor;
     SetLength(PDef, (high(TTrDef) + 1) * 4);
     for I := 0 to high(PDef) do
     begin

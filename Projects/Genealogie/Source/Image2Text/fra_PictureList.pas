@@ -6,7 +6,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, ShellCtrls, BGRAImageList, unt_iData,
-  ComCtrls, BGRAGraphics, Types;
+  ComCtrls, Types;
 
 type
   TRenameFileEvent=Procedure(sender:TObject;Oldfile,NewFile:String) of Object;
@@ -24,11 +24,11 @@ type
     procedure lstPicturesSelectItem(Sender: TObject; Item: TListItem;
       Selected: Boolean);
   private
-    FBasePath: String;
     FOnRenameFile: TRenameFileEvent;
     FonUpdate:TNotifyEvent;
     FFileName: String;
     function GetBasePath: String;
+    function GetCount: integer;
     function getFilemask: string;
     procedure SetBasePath(AValue: String);
     procedure SetFilemask(AValue: string);
@@ -50,6 +50,7 @@ type
       function GetOnUpdate: TNotifyEvent;
       procedure SetOnUpdate(AValue: TNotifyEvent);
       Procedure Select(aFile:string);
+      property Count:integer read GetCount;
       property Data:variant read getdata;
       property OnUpdate:TNotifyEvent read GetOnUpdate write SetOnUpdate;
       property OnRenameFile:TRenameFileEvent read FOnRenameFile write SetOnRenameFile;
@@ -67,8 +68,7 @@ uses BGRAReadJpeg,BGRABitmap,BGRABitmapTypes;
 procedure TfraPictureList.lstPicturesChange(Sender: TObject; Item: TListItem;
   Change: TItemChange);
 var
-  NewText, NewPath: String;
-  lImage: TBGRABitmap;
+  NewPath: String;
 begin
   if assigned(Item) and (ctText = change) and (Item=lstPictures.Selected)  then
     begin
@@ -171,6 +171,11 @@ end;
 function TfraPictureList.GetBasePath: String;
 begin
   result := lstPictures.Root;
+end;
+
+function TfraPictureList.GetCount: integer;
+begin
+  Result := lstPictures.Items.Count;
 end;
 
 function TfraPictureList.getFilemask: string;

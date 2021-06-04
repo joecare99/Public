@@ -1,136 +1,145 @@
 object FrmTestOFBViewMain: TFrmTestOFBViewMain
   Left = 137
-  Height = 907
+  Height = 605
   Top = 250
-  Width = 951
+  Width = 634
   Caption = 'Test OFBView'
-  ClientHeight = 907
-  ClientWidth = 951
-  DesignTimePPI = 144
+  ClientHeight = 605
+  ClientWidth = 634
   OnCreate = FormCreate
-  LCLVersion = '2.0.4.0'
   object pnlBottom: TPanel
     Left = 0
-    Height = 75
-    Top = 832
-    Width = 951
+    Height = 50
+    Top = 555
+    Width = 634
     Align = alBottom
-    ClientHeight = 75
-    ClientWidth = 951
+    ClientHeight = 50
+    ClientWidth = 634
+    ParentFont = False
     TabOrder = 0
     object btnClose: TBitBtn
-      Left = 786
-      Height = 61
-      Top = 7
-      Width = 158
+      Left = 524
+      Height = 40
+      Top = 5
+      Width = 105
       Align = alRight
-      BorderSpacing.Around = 6
+      BorderSpacing.Around = 4
       DefaultCaption = True
       Kind = bkClose
       ModalResult = 11
+      ParentFont = False
       TabOrder = 0
     end
-    object BitBtn1: TBitBtn
-      Left = 280
-      Height = 45
-      Top = 23
-      Width = 113
+    object btnPrev: TBitBtn
+      Left = 187
+      Height = 30
+      Top = 15
+      Width = 75
       Caption = '<'
-      OnClick = BitBtn1Click
+      OnClick = btnPrevClick
+      ParentFont = False
       TabOrder = 1
     end
-    object BitBtn2: TBitBtn
-      Left = 160
-      Height = 45
-      Top = 23
-      Width = 113
+    object btnFirst: TBitBtn
+      Left = 107
+      Height = 30
+      Top = 15
+      Width = 75
       Caption = '|<'
-      OnClick = BitBtn2Click
+      OnClick = btnFirstClick
+      ParentFont = False
       TabOrder = 2
     end
-    object BitBtn3: TBitBtn
-      Left = 406
-      Height = 45
-      Top = 24
-      Width = 113
+    object btnNext: TBitBtn
+      Left = 271
+      Height = 30
+      Top = 15
+      Width = 75
       Caption = '>'
-      OnClick = BitBtn3Click
+      OnClick = btnNextClick
+      ParentFont = False
       TabOrder = 3
     end
-    object BitBtn4: TBitBtn
-      Left = 530
-      Height = 45
-      Top = 27
-      Width = 113
+    object btnLast: TBitBtn
+      Left = 353
+      Height = 29
+      Top = 15
+      Width = 75
       Caption = '>|'
-      OnClick = BitBtn4Click
+      OnClick = btnLastClick
+      ParentFont = False
       TabOrder = 4
     end
   end
   object Panel1: TPanel
     Left = 0
-    Height = 59
+    Height = 39
     Top = 0
-    Width = 951
+    Width = 634
     Align = alTop
     Caption = 'pnlTop'
-    ClientHeight = 59
-    ClientWidth = 951
+    ClientHeight = 39
+    ClientWidth = 634
+    ParentFont = False
     TabOrder = 1
     object edtFilename: TComboBox
-      Left = 7
-      Height = 33
-      Top = 13
-      Width = 580
+      Left = 5
+      Height = 23
+      Top = 9
+      Width = 387
       Align = alClient
-      BorderSpacing.Top = 6
-      BorderSpacing.Around = 6
-      ItemHeight = 25
+      BorderSpacing.Top = 4
+      BorderSpacing.Around = 4
+      ItemHeight = 15
+      ParentFont = False
       TabOrder = 0
       Text = 'edtFilename'
     end
     object btnOpen: TBitBtn
-      Left = 593
-      Height = 45
-      Top = 7
-      Width = 113
+      Left = 396
+      Height = 29
+      Top = 5
+      Width = 75
       Action = actFileOpen
       Align = alRight
-      BorderSpacing.Around = 6
+      BorderSpacing.Around = 4
+      ParentFont = False
       TabOrder = 1
     end
     object btnLoad: TBitBtn
-      Left = 712
-      Height = 45
-      Top = 7
-      Width = 113
+      Left = 475
+      Height = 29
+      Top = 5
+      Width = 75
       Action = actFileLoad
       Align = alRight
-      BorderSpacing.Around = 6
+      BorderSpacing.Around = 4
+      ParentFont = False
       TabOrder = 2
     end
     object btnSave: TBitBtn
-      Left = 831
-      Height = 45
-      Top = 7
-      Width = 113
+      Left = 554
+      Height = 29
+      Top = 5
+      Width = 75
       Action = actFileSave
       Align = alRight
-      BorderSpacing.Around = 6
+      BorderSpacing.Around = 4
+      ParentFont = False
       TabOrder = 3
     end
   end
   object SaveDialog1: TSaveDialog
-    left = 536
-    top = 320
+    Left = 357
+    Top = 213
   end
   object ilsOdfFile: TImageList
     BkColor = clWhite
     Height = 24
     ShareImages = True
     Width = 24
-    left = 481
-    top = 320
+    Left = 321
+    Top = 213
     Bitmap = {
       4C69100000001800000018000000000000000000000000000000000000000000
       0000000000000000000000000001000000000000000000000000000000010000
@@ -1290,13 +1299,13 @@ object FrmTestOFBViewMain: TFrmTestOFBViewMain
   object OpenDialog1: TOpenDialog
     DefaultExt = '.xml'
     Filter = 'XML-Dateien (*.XML)|*.xml|Alle Dateien (*.*)|*.*'
-    left = 584
-    top = 320
+    Left = 389
+    Top = 213
   end
   object alsXMLFile: TActionList
     Images = ilsOdfFile
-    left = 632
-    top = 320
+    Left = 421
+    Top = 213
     object actDoSomething: TAction
       Caption = 'actDoSomething'
     end

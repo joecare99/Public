@@ -1,0 +1,1 @@
+program Q8;uses base64;const r=#39;b='JztiZWdpbiB3cml0ZShjK3IrYityKyc7Yz0nK3IrYytEZWNvZGVTdHJpbmdCYXNlNjQoYikpZW5kLg==';c='program Q8;uses base64;const r=#39;b=';begin write(c+r+b+r+';c='+r+c+DecodeStringBase64(b))end.
