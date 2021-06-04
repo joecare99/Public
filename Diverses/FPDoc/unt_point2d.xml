@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Labyrinth3"><module name="unt_Point2d"><short>2D integer-Point unit</short><element name="T2DPoint"><short>the 2D Integer-Point- Class.</short>
+      </element><element name="T2DPoint.x"><short>x Koordinate</short>
+      </element><element name="T2DPoint.y"><short>Y-Koordinate</short>
+      </element><element name="T2DPoint.init"><short>Initializes the Class</short>
+      </element><element name="T2DPoint.done"><short>Destructs the class</short>
+      </element><element name="T2DPoint.Copy"><short>Takes and sets the given values</short>
+      </element><element name="T2DPoint.Add"><short>Adds the given values to the Point</short>
+      </element><element name="T2DPoint.Negate"><short>Negates the values of the point</short>
+      </element><element name="T2DPoint.Subtr"><short>Subtracts the given value from the point.</short>
+      </element><element name="T2DPoint.XMult"><short>Makes a Cross-Multiplication of the two points.</short>
+      </element><element name="T2DPoint.VMult"><short>Performs a vector multiplication (result is integer)</short>
+      </element><element name="T2DPoint.SMult"><short>Performs a Scalarmultiplication (the scalar can be rational, with the scalar and a divisor)</short>
+      </element><element name="T2DPoint.Equals"><short>If the given object is equal to the point</short>
+      </element><element name="T2DPoint.IsIn"><short>is true when the point is in the given rect</short>
+      </element><element name="T2DPoint.Len"><short>The length of the path from Zero to the point</short>
+      </element><element name="T2DPoint.GLen"><short>Length of the path to the point only going in right angles</short>
+      </element><element name="T2DPoint.MLen"><short>Gives the absolute maximum of the two koordinates</short>
+      </element><element name="T2DPoint.AsPoint"><short>gives the point as TPoint</short>
+      </element><element name="getdir"><short>get the direction (point) of a radius and a direction.</short>
+      </element><element name="getDirNo"><short>Gives the direction of a point (the radius is given with the length)</short>
+      </element><element name="getInvDir"><short>Gives the oposing direction of a given direction</short>
+      </element><element name="Point2D"><short>Creates a new 2D-Point</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

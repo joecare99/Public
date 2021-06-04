@@ -1,6 +1,7 @@
 unit tst_GedComFile;
 
 {$mode delphi}{$H+}
+{$WARN 6058 off : Call to subroutine "$1" marked as inline is not inlined}
 
 interface
 
@@ -41,9 +42,11 @@ type
         constructor Create; override;
     end;
 
+var cDebugDate:TDateTime=0.0;
+
 implementation
 
-uses Cls_GedComExt;
+uses Cls_GedComExt,unt_GenTestBase;
 
 procedure TTestGedComFile.TestSetUp;
 begin
@@ -157,7 +160,7 @@ begin
         CheckEquals('(err) 09.07.1734', BirthDate, 'BirthDate is (err) 09.07.1734');
         CheckEquals('', BaptDate, 'BaptDate not set');
         CheckEquals('', DeathDate, 'DeathDate not set');
-        CheckEquals('12.07.1734', BurialDate, 'BurialDate not set');
+        CheckEquals('12.07.1734', BurialDate, 'BurialDate set');
         CheckEquals(0, SpouseCount, 'no Spouses');
         CheckEquals(0, ChildrenCount, 'no Children');
         CheckNotNull(Father, 'Indi.Father is not NULL');
@@ -165,14 +168,13 @@ begin
         CheckEquals('Georg Adam', Father.Name, 'Indi.Father is not NULL');
  //       CheckEquals('Linda Kleis', Mother.Name, 'Indi.Father is not NULL');
         CheckEquals('I: Johann Georg Adam, M, E: born: (err) 09.07.1734 in Obrigheim', ToString, 'Name is "Joe Care"');
-        CheckEquals('Person: Joe Care' + LineEnding + 'Sex: M' + LineEnding +
-            'Event: Birth am 21 JAN 1971 in Eppingen, Heilbronn, Baden-Württemberg, Germany (Im Kreiskrankenhaus) Q:(PI of Joe Care)'
-            +
-            LineEnding + 'Event: Baptism am 7 MAR 1971 in Sulzfeld, Karlsruhe, Baden-Württemberg, Germany Q:(PI of Joe Care)'
-            +
-            LineEnding + 'Religion: ev.' + LineEnding +
-            'Event: Death am 2099 in St. NImmerleinsdorf (Im Kreise seiner Familie)' +
-            LineEnding + 'Event: Burrial am 1 APR 2099', Description, 'Description is "Joe Care"');
+        CheckEquals(
+ 'Person: Johann Georg Adam' + lineending +
+ 'Sex: M' + lineending +
+ 'Event: Birth am (err) 09.07.1734 in Obrigheim' + lineending +
+ 'Religion: lu.' + lineending +
+ 'Event: Burrial am 12.07.1734 in Obrigheim' + lineending
+ , Description, 'Description is "Johann Georg Adam"');
       end;
 
 end;
@@ -207,7 +209,7 @@ begin
         CheckEquals('21 JAN 1971', BirthDate, 'BirthDate is 21 JAN 1971');
         CheckEquals('7 MAR 1971', BaptDate, 'BaptDate is 07 MAR 1971');
         CheckEquals('2099', DeathDate, 'DeathDate not set');
-        CheckEquals('1 APR 2099', BurialDate, 'BurialDate not set');
+        CheckEquals('1 APR 2099', BurialDate, 'BurialDate set');
         CheckEquals(0, SpouseCount, 'no Spouses');
         CheckEquals(0, ChildrenCount, 'no Children');
         CheckNotNull(Father, 'Indi.Father is not NULL');
@@ -240,8 +242,8 @@ begin
         CheckEquals('Linda Kleis', Spouses[0].Name, 'Spouse is "Linda Kleis"');
         CheckEquals(1, ChildrenCount, '1 Children');
         CheckEquals('Joe Care', Children[0].Name, 'Child is "Joe Care"');
-        CheckNotNull(Father, 'Indi2.Father is NULL');
-        CheckNotNull(Mother, 'Indi2.Father is NULL');
+        CheckNull(Father, 'Indi2.Father is NULL');
+        CheckNull(Mother, 'Indi2.Mother is NULL');
         CheckEquals('I: Peter Care, M', ToString, 'Name is "Joe Care"');
         CheckEquals('Person: Peter Care' + LineEnding + 'Sex: M', Description,
             'Name is "Joe Care"');
@@ -321,7 +323,7 @@ begin
     lGedObj0['SOUR']['NAME'].Data := 'Test GedCom V0.1';
     lGedObj0['SOUR']['VERS'].Data := 'V0.1';
     lGedObj0['DEST'].Data := 'GEDTest';
-    lGedObj0['DATE'].Data := DateToStr(Now());
+    lGedObj0['DATE'].Data := DateToStr(cDebugDate);
     lGedObj0['SUBM'].Data := '@SUBM@';
     lGedObj0['CHAR'].Data := FGedComFile.Encoding;
     lGedObj0['LANG'].Data := 'GERMAN';
@@ -335,6 +337,7 @@ end;
 
 procedure TTestGedComFile.SetUp;
 begin
+    cDebugDate:=EncodeDate(2021,05,01);
     FGedComFile := TGedComFile.Create;
 end;
 
@@ -466,18 +469,7 @@ var
 
 begin
     inherited Create;
-    FDataPath := 'Data';
-    for i := 0 to 2 do
-        if DirectoryExists(FDataPath) then
-            break
-        else
-            FDataPath := '..' + DirectorySeparator + FDataPath;
-    if not DirectoryExists(FDataPath) then
-        FDataPath := GetAppConfigDir(True)
-    else
-        FDataPath := FDataPath + DirectorySeparator + 'GenData';
-    if not DirectoryExists(FDataPath) then
-        ForceDirectories(FDataPath);
+    FDataPath:=GetDataPath('GenData');
 end;
 
 initialization

@@ -13,9 +13,9 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Labydemo3 in '..\source\Labydemo3.pas' {Form1},
+  Labydemo3 in '..\source\Labyrinth\Labydemo3.pas' {Form1},
   ProgressBarU in '..\source\ProgressBarU.pas' {ProgessForm},
-  LabyU3 in '..\source\LabyU3.pas' {Laby},
+  LabyU3 in '..\source\Labyrinth\LabyU3.pas' {Laby},
   unt_Lists in '..\source\unt_Lists.pas',
   unt_Point2d in '..\source\Labyrinth\unt_Point2d.pas',
   Fra_WindRose in '..\Source\Fra_WindRose.pas' {FraWindRose: TFrame};

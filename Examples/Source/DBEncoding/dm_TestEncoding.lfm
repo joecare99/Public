@@ -1,0 +1,70 @@
+object DataModule1: TDataModule1
+  OldCreateOrder = False
+  Height = 259
+  HorizontalOffset = 1112
+  VerticalOffset = 551
+  Width = 320
+  object MySQL57Connection1: TMySQL57Connection
+    Connected = True
+    LoginPrompt = True
+    AfterConnect = MySQL57Connection1AfterConnect
+    DatabaseName = 'test'
+    KeepConnection = True
+    Password = 'user'
+    Transaction = SQLTransaction1
+    UserName = 'user'
+    CharSet = 'UTF8'
+    HostName = 'localhost'
+    SkipLibraryVersionCheck = True
+    Left = 32
+    Top = 16
+  end
+  object SQLTransaction1: TSQLTransaction
+    Active = False
+    Database = MySQL57Connection1
+    Options = [stoUseImplicit]
+    Left = 32
+    Top = 72
+  end
+  object SQLQuery1: TSQLQuery
+    PacketRecords = -1
+    IndexName = 'DEFAULT_ORDER'
+    MaxIndexesCount = 4
+    FieldDefs = <    
+      item
+        Name = 'idDaten'
+        DataType = ftAutoInc
+        Precision = -1
+      end    
+      item
+        Name = 'Description'
+        DataType = ftString
+        Precision = -1
+        Size = 50
+      end    
+      item
+        Name = 'Nummer'
+        DataType = ftString
+        Precision = -1
+        Size = 50
+      end    
+      item
+        Name = 'Name'
+        DataType = ftString
+        Precision = -1
+        Size = 50
+      end>
+    Active = True
+    AfterOpen = SQLQuery1AfterOpen
+    BeforeOpen = SQLQuery1BeforeOpen
+    Database = MySQL57Connection1
+    Transaction = SQLTransaction1
+    SQL.Strings = (
+      '          select * from `daten`'
+    )
+    Options = [sqoKeepOpenOnCommit, sqoAutoApplyUpdates, sqoAutoCommit]
+    Params = <>
+    Left = 32
+    Top = 136
+  end
+end

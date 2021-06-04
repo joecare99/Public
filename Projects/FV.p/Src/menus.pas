@@ -62,7 +62,7 @@ USES
    {$IFDEF OS_WINDOWS}                                { WIN/NT CODE }
      {$IFNDEF PPC_SPEED}                              { NON SPEED COMPILER }
        {$IFDEF PPC_FPC}                               { FPC WINDOWS COMPILER }
-       Windows,                                       { Standard unit }
+//       Windows,                                       { Standard unit }
        {$ELSE}                                        { OTHER COMPILERS }
        WinTypes,WinProcs,                             { Standard units }
        {$ENDIF}
@@ -343,7 +343,7 @@ CONST
      VmtLink: TypeOf(TMenuBar);
      {$ENDIF}
      Load:    @TMenuBar.Load;                         { Object load method }
-     Store:   @TMenuBar.Store                         { Object store method }
+     Store:   @TMenuBar.Store{%H-}                         { Object store method }
    );
 
 {---------------------------------------------------------------------------}
@@ -358,7 +358,7 @@ CONST
      VmtLink: TypeOf(TMenuBox);
      {$ENDIF}
      Load:    @TMenuBox.Load;                         { Object load method }
-     Store:   @TMenuBox.Store                         { Object store method }
+     Store:   @TMenuBox.Store{%H-}                         { Object store method }
    );
 
 {---------------------------------------------------------------------------}
@@ -373,7 +373,7 @@ CONST
      VmtLink: TypeOf(TStatusLine);
      {$ENDIF}
      Load:    @TStatusLine.Load;                      { Object load method }
-     Store:   @TStatusLine.Store                      { Object store method }
+     Store:   @TStatusLine.Store{%H-}                      { Object store method }
    );
 
 {---------------------------------------------------------------------------}
@@ -388,7 +388,7 @@ CONST
      VmtLink: TypeOf(TMenuPopup);
      {$ENDIF}
      Load:    @TMenuPopup.Load;                       { Object load method }
-     Store:   @TMenuPopup.Store                       { Object store method }
+     Store:   @TMenuPopup.Store{%H-}                       { Object store method }
    );
 
 {***************************************************************************}

@@ -11,11 +11,12 @@ unit Unt_VariantProcs;
 
 interface
 
-uses Unt_Allgfunklib;
+uses sysutils, Unt_Allgfunklib;
 ///<author>Joe Care</author>
 ///  <property>Diese Funktion wandelt einen Variant in einen String um</property>
 ///  <version>1.51.00</version>
-function Var2string(const Data:variant;markarray:boolean=false):String;
+function Var2string(const Data:variant;markarray:boolean=false):String;overload;
+function Var2string(const Data:variant;aFS:TFormatSettings;markarray:boolean=false):String;overload;
 
 ///<property>Diese Funktion berechnet die reale Größe des Variants</property>
 ///  <version>1.51.00</version>
@@ -36,9 +37,10 @@ implementation
 
 uses variants,Unt_StringProcs;
 
-function Var2string(const Data:variant;markarray:boolean=false):String;
+function Var2string(const Data:variant;aFS: TFormatSettings;markarray:boolean=false):String;
 
 var hst : string;
+    lDT : TDateTime;
     i:integer;
 
 begin
@@ -46,17 +48,22 @@ begin
   case Vartype(Data) of
       varEmpty:hst:='Empty';
       varNull:hst:='NULL';
-      varSmallint ,
-      varInteger  ,
-      varSingle   ,
-      varDouble   ,
+
       varCurrency ,
-      varDate     ,
       varDispatch ,
       varError    ,
       varVariant  ,
       varUnknown  ,
-      varByte     :HST:=varastype(Data,varstring);
+
+      varSmallint ,
+      varInteger  ,
+      varByte     :hst:=VarAsType(Data,varstring);
+
+      varDate     :begin lDt := Data;hst:=DateTimeToStr(lDT,afs);end;
+
+      varSingle   ,
+      varDouble   : hst:=FloatToStr(extended(Data),aFS);
+
       varBoolean  :if data then hst:='TRUE' else hst:='FALSE';
       varOleStr   ,
       varString   :if markarray then hst:='"'+Data+'"'
@@ -66,7 +73,7 @@ begin
             if markarray then HST:='(';
             for i := VarArrayLowBound(data,1)to VarArrayHighBound(data,1) do
               begin
-                hst:=hst+Var2string (data[i],true);
+                hst:=hst+Var2string (data[i],aFS,true);
                 if markarray and (i < VarArrayHighBound(Data,1)) then
                   hst:=hst+','
                 else
@@ -76,7 +83,13 @@ begin
             if markarray then hst:=hst +')';
           end;
     end;
-  var2string:=hst;
+  Result := hst;
+end;
+
+function Var2string(const Data: variant;
+  markarray: boolean): String;inline;
+begin
+  Result := Var2string(Data,DefaultFormatSettings,markarray);
 end;
 
 function GetRealSize(const Data:Variant):integer;

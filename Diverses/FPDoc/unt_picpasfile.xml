@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestPicPas2Po"><module name="unt_PicPasFile"><short>PicPasFile is a Hndler for PicPas-Language files</short><element name="Tidx"><short>TIdx is an index-Entry for a specific Item and Language of the Pas-File.</short>
+      </element><element name="Tidx.lnNrStart"><short>lnNrStart holds the (0-based) Linenumber of the Entry</short>
+      </element><element name="Tidx.iStartOffset"><short>iStartOffset holds the Character-Offset in the line of that entry </short>
+      </element><element name="Tidx.lnNrEnd"><short>lnNrEnd holds the linenumber of the end of the entry</short>
+      </element><element name="Tidx.iendOffset"><short>iEndOffset holds the character-offset of the end of the entry</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestOGLScene"><module name="TestOGLSceneComp"><element name="TTestOGlScene"><short>Testclass for testing the OpenGLScene-components</short>
+      </element><element name="TTestOGlScene.TestSetUp"><short>Testet das allgemeine Setup</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

@@ -3,6 +3,21 @@
       </element><element name="Makepath"><short>Creates a Directory if necessary (incl. Parents)</short>
       </element><element name="CleanPath"><short>Bereinigt einen Pfad von '/..'-Einträgen. </short>
       </element>
+    <element name="GetBackupPath"><short>erzeugt aus dem angegebenen Datei-Pfad einen Backup-Datei-Pfad.</short>
+      </element><element name="MultiReName"><short>Benenne oder Verschiebe mehrere dateien</short>
+      </element><element name="IsEmptyDir"><short>Gibt TRUE zurueck wenn das Verzeichniss leer ist.</short>
+      </element><element name="GetFiles"><short>Durchsuche Verzeichnisbaum ~path~ recursiv nach ~mask~</short>
+      </element><element name="GetDir"><short>Hole Directory</short>
+      </element><element name="GetFileInfo"><short>Hole weitere Infos UEber Datei ein;</short>
+      </element><element name="GetVersion"><short>Bereinigt einen Pfad von '/..'-Einträgen.</short>
+      </element><element name="GetNextFileName"><short>Ermittelt die nächste (logische) Datei </short>
+      </element><element name="TSaveProc" link="SafeFile"><short>Procedurschnittstelle für SafeFile-proc</short><seealso>SaveFile ...
+</seealso>
+      </element><element name="SaveFile"><short>Speichert Datei (sicher) mit umbenennen und Backup </short>
+      </element><element name="GetDefaultDataDir"><short>Ermittelt den standard-Daten-Speicher-Pfad</short>
+      </element><element name="DirSep"><short>DirSep Compiler-übergreifende Konstante: Pfad-Trenner</short>
+      </element><element name="rsAllFilesFilter"><short>Standard-Open-Filter für "Alle Dateien"</short>
+      </element><short>FileProcs kapselt nützliche Funktionen rund um Dateien.</short>
     </module>
   </package>
 </fpdoc-descriptions>

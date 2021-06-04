@@ -1,0 +1,170 @@
+object Laby: TLaby
+  Left = 419
+  Height = 531
+  Top = 78
+  Width = 654
+  ActiveControl = btnClose
+  Align = alCustom
+  Caption = 'Laby'
+  ClientHeight = 531
+  ClientWidth = 654
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  OnResize = FormResize
+  Position = poScreenCenter
+  object LabImage: TImage
+    Left = 8
+    Height = 479
+    Hint = 'Ayala Gilad'
+    Top = 8
+    Width = 638
+    Anchors = [akLeft, akRight, akBottom]
+    Center = True
+    OnClick = LabImageClick
+    Proportional = True
+    Stretch = True
+  end
+  object Label1: TLabel
+    Left = 0
+    Height = 13
+    Top = 517
+    Width = 32
+    Anchors = [akLeft, akBottom]
+    Caption = 'Label1'
+    ParentColor = False
+  end
+  object ProgressBar1: TProgressBar
+    Left = 38
+    Height = 11
+    Top = 519
+    Width = 608
+    Anchors = [akLeft, akRight, akBottom]
+    Max = 1000
+    Position = 600
+    Smooth = True
+    Style = pbstMarquee
+    TabOrder = 0
+  end
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 35
+    Top = 488
+    Width = 655
+    Anchors = [akLeft, akRight, akBottom]
+    BevelOuter = bvLowered
+    ClientHeight = 35
+    ClientWidth = 655
+    TabOrder = 1
+    object btnOK: TButton
+      Left = 4
+      Height = 27
+      Top = 4
+      Width = 121
+      Align = alLeft
+      Anchors = [akLeft, akBottom]
+      BorderSpacing.Around = 3
+      Caption = 'OK'
+      OnClick = btnOKClick
+      TabOrder = 0
+    end
+    object btnClose: TButton
+      Left = 128
+      Height = 27
+      Top = 4
+      Width = 114
+      Align = alLeft
+      Anchors = [akLeft, akBottom]
+      BorderSpacing.Around = 3
+      Caption = 'Close'
+      OnClick = btnCloseClick
+      TabOrder = 1
+    end
+    object shpState: TShape
+      Left = 625
+      Height = 27
+      Top = 4
+      Width = 26
+      Align = alRight
+      Anchors = [akRight, akBottom]
+      BorderSpacing.Around = 3
+      Brush.Color = clYellow
+      Shape = stRoundRect
+    end
+    object btnPrint: TButton
+      Left = 370
+      Height = 27
+      Top = 4
+      Width = 75
+      Align = alRight
+      Anchors = [akRight, akBottom]
+      BorderSpacing.Around = 3
+      Caption = 'Print'
+      OnClick = btnPrintClick
+      TabOrder = 2
+    end
+    object btnDraw: TButton
+      Left = 292
+      Height = 27
+      Top = 4
+      Width = 75
+      Align = alRight
+      Anchors = [akRight, akBottom]
+      BorderSpacing.Around = 3
+      Caption = 'Draw'
+      OnClick = btnDrawClick
+      TabOrder = 3
+    end
+    object btnSave: TButton
+      Left = 547
+      Height = 27
+      Top = 4
+      Width = 75
+      Align = alRight
+      Anchors = [akRight, akBottom]
+      BorderSpacing.Around = 3
+      Caption = 'Save'
+      OnClick = btnSaveClick
+      TabOrder = 4
+    end
+    object btnPrint2: TButton
+      Left = 448
+      Height = 27
+      Top = 4
+      Width = 50
+      Align = alRight
+      Anchors = [akRight, akBottom]
+      BorderSpacing.Around = 3
+      Caption = 'Print 2'
+      OnClick = btnPrint2Click
+      TabOrder = 5
+    end
+    object btnPrint3: TButton
+      Left = 501
+      Height = 27
+      Top = 4
+      Width = 43
+      Align = alRight
+      Anchors = [akRight, akBottom]
+      BorderSpacing.Around = 3
+      Caption = 'Print 3'
+      OnClick = btnPrint3Click
+      TabOrder = 6
+    end
+  end
+  object Timer1: TTimer
+    Interval = 2000
+    OnTimer = Timer1Timer
+    Left = 8
+    Top = 16
+  end
+  object SavePictureDialog1: TSavePictureDialog
+    Left = 40
+    Top = 16
+  end
+  object PrintDialog1: TPrintDialog
+    Left = 24
+    Top = 64
+  end
+end

@@ -1,54 +1,54 @@
 object frmTestHtmlParsingMain: TfrmTestHtmlParsingMain
   Left = 0
-  Height = 1315
+  Height = 877
   Top = 0
-  Width = 2489
+  Width = 1659
   ActiveControl = btnDoParse
   Caption = 'Test Html Parsing'
-  ClientHeight = 1315
-  ClientWidth = 2489
+  ClientHeight = 877
+  ClientWidth = 1659
   Color = clBtnFace
-  DesignTimePPI = 144
   Font.Color = clWindowText
-  Font.Height = -22
+  Font.Height = -15
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   OnDeactivate = FormDeactivate
   OnShow = FormShow
+  LCLVersion = '2.0.10.0'
   object btnDoParse: TBitBtn
-    Left = 1088
-    Height = 50
-    Top = 50
-    Width = 150
+    Left = 725
+    Height = 33
+    Top = 33
+    Width = 100
     Caption = 'Parse'
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -15
     Font.Name = 'Tahoma'
     OnClick = btnDoParseClick
     ParentFont = False
     TabOrder = 0
   end
   object btnLoadFile: TBitBtn
-    Left = 926
-    Height = 50
-    Top = 50
-    Width = 150
+    Left = 617
+    Height = 33
+    Top = 33
+    Width = 100
     Caption = 'Open'
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -15
     Font.Name = 'Tahoma'
     OnClick = btnLoadFileClick
     ParentFont = False
     TabOrder = 1
   end
   object mLog: TMemo
-    Left = 1184
-    Height = 1103
-    Top = 112
-    Width = 336
+    Left = 789
+    Height = 1173
+    Top = 75
+    Width = 224
     Anchors = [akTop, akLeft, akBottom]
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -15
     Font.Name = 'Tahoma'
     Lines.Strings = (
       'Memo1'
@@ -58,13 +58,13 @@ object frmTestHtmlParsingMain: TfrmTestHtmlParsingMain
     TabOrder = 2
   end
   object mSchema: TMemo
-    Left = 1536
-    Height = 1103
-    Top = 112
-    Width = 306
+    Left = 1024
+    Height = 1173
+    Top = 75
+    Width = 204
     Anchors = [akTop, akLeft, akBottom]
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -15
     Font.Name = 'Tahoma'
     Lines.Strings = (
       ']TS: !DOCTYPE'
@@ -98,13 +98,13 @@ object frmTestHtmlParsingMain: TfrmTestHtmlParsingMain
     WordWrap = False
   end
   object mOutput: TMemo
-    Left = 1854
-    Height = 1103
-    Top = 112
-    Width = 580
+    Left = 1236
+    Height = 1173
+    Top = 75
+    Width = 387
     Anchors = [akTop, akLeft, akBottom]
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -15
     Font.Name = 'Tahoma'
     Lines.Strings = (
       'Memo1'
@@ -114,26 +114,26 @@ object frmTestHtmlParsingMain: TfrmTestHtmlParsingMain
     TabOrder = 5
   end
   object btnSave: TBitBtn
-    Left = 1854
-    Height = 50
-    Top = 1227
-    Width = 150
+    Left = 1236
+    Height = 33
+    Top = 1257
+    Width = 100
     Anchors = [akLeft, akBottom]
     Caption = 'Save'
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -15
     Font.Name = 'Tahoma'
     OnClick = btnSaveClick
     ParentFont = False
     TabOrder = 4
   end
   object cbxFilename: TComboBox
-    Left = 16
+    Left = 11
     Height = 35
-    Top = 52
-    Width = 848
+    Top = 35
+    Width = 565
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -15
     Font.Name = 'Tahoma'
     ItemHeight = 27
     ParentFont = False
@@ -141,12 +141,12 @@ object frmTestHtmlParsingMain: TfrmTestHtmlParsingMain
     Text = 'V:\Daten\dokumente\HTML\Genealogie Hübner\gendata.huebner-row.de_2012\huebner\1.html'
   end
   object btnBrowseHtml: TBitBtn
-    Left = 868
-    Height = 46
-    Top = 52
-    Width = 50
+    Left = 579
+    Height = 31
+    Top = 35
+    Width = 33
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -15
     Font.Name = 'Tahoma'
     Glyph.Data = {
       76010000424D7801000000000000760000002800000020000000100000000100
@@ -169,52 +169,52 @@ object frmTestHtmlParsingMain: TfrmTestHtmlParsingMain
     TabOrder = 7
   end
   object chbVerbose: TCheckBox
-    Left = 1184
+    Left = 789
     Height = 31
-    Top = 1234
+    Top = 1251
     Width = 109
     Anchors = [akLeft, akBottom]
     Caption = 'Verbose'
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -15
     Font.Name = 'Tahoma'
     ParentFont = False
     TabOrder = 8
   end
   object BitBtn1: TBitBtn
-    Left = 1264
-    Height = 60
-    Top = 48
-    Width = 150
+    Left = 843
+    Height = 40
+    Top = 32
+    Width = 100
     Caption = 'WWW'
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -15
     Font.Name = 'Tahoma'
     OnClick = BitBtn1Click
     ParentFont = False
     TabOrder = 9
   end
   object btnSaveSchema: TBitBtn
-    Left = 1536
-    Height = 50
-    Top = 1227
-    Width = 150
+    Left = 1024
+    Height = 33
+    Top = 1257
+    Width = 100
     Anchors = [akLeft, akBottom]
     Caption = 'Save'
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -15
     Font.Name = 'Tahoma'
     OnClick = btnSaveSchemaClick
     ParentFont = False
     TabOrder = 10
   end
   object btnBrowseSchema: TBitBtn
-    Left = 1792
-    Height = 46
-    Top = 48
-    Width = 50
+    Left = 1195
+    Height = 31
+    Top = 32
+    Width = 33
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -15
     Font.Name = 'Tahoma'
     Glyph.Data = {
       76010000424D7801000000000000760000002800000020000000100000000100
@@ -237,12 +237,12 @@ object frmTestHtmlParsingMain: TfrmTestHtmlParsingMain
     TabOrder = 11
   end
   object cbxFilenameSchema: TComboBox
-    Left = 1520
+    Left = 1013
     Height = 35
-    Top = 52
-    Width = 272
+    Top = 35
+    Width = 181
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -15
     Font.Name = 'Tahoma'
     ItemHeight = 27
     ParentFont = False
@@ -250,43 +250,43 @@ object frmTestHtmlParsingMain: TfrmTestHtmlParsingMain
     Text = 'Huebner_Schema.txt'
   end
   object btnLoadSchema: TBitBtn
-    Left = 1840
-    Height = 50
-    Top = 44
-    Width = 150
+    Left = 1227
+    Height = 33
+    Top = 29
+    Width = 100
     Caption = 'Open'
     Font.Color = clWindowText
-    Font.Height = -22
+    Font.Height = -15
     Font.Name = 'Tahoma'
     OnClick = btnLoadSchemaClick
     ParentFont = False
     TabOrder = 13
   end
   object pnlT1Left: TPanel
-    Left = 9
-    Height = 1114
-    Top = 112
-    Width = 1159
+    Left = 6
+    Height = 1181
+    Top = 75
+    Width = 773
     Anchors = [akTop, akLeft, akBottom]
-    BorderSpacing.Around = 9
+    BorderSpacing.Around = 6
     BevelOuter = bvNone
-    ClientHeight = 1114
-    ClientWidth = 1159
+    ClientHeight = 1181
+    ClientWidth = 773
     Font.Color = clWindowText
-    Font.Height = -21
+    Font.Height = -14
     Font.Name = 'Tahoma'
     ParentFont = False
     TabOrder = 14
     object mHTML: TMemo
       Left = 0
-      Height = 608
-      Top = 506
+      Height = 405
+      Top = 709
       Width = 1159
       Align = alBottom
       Anchors = [akLeft, akBottom]
-      BorderSpacing.Top = 9
+      BorderSpacing.Top = 6
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -14
       Font.Name = 'Tahoma'
       Lines.Strings = (
         '<TAG>Memo1</TAG>'
@@ -316,8 +316,8 @@ object frmTestHtmlParsingMain: TfrmTestHtmlParsingMain
       object Splitter1: TSplitter
         Cursor = crVSplit
         Left = 0
-        Height = 8
-        Top = 489
+        Height = 5
+        Top = 492
         Width = 1159
         Align = alBottom
         ResizeAnchor = akBottom
@@ -325,21 +325,21 @@ object frmTestHtmlParsingMain: TfrmTestHtmlParsingMain
     end
   end
   object SaveDialog1: TSaveDialog
-    left = 1776
-    top = 992
+    Left = 1184
+    Top = 661
   end
   object OpenDialog1: TOpenDialog
-    left = 880
-    top = 80
+    Left = 587
+    Top = 53
   end
   object Config1: TConfig
-    left = 960
-    top = 80
+    Left = 640
+    Top = 53
   end
   object VisualHTTPClient1: TVisualHTTPClient
     HTTPversion = '1.1'
     AllowRedirect = True
-    left = 1032
-    top = 80
+    Left = 688
+    Top = 53
   end
 end

@@ -27,9 +27,9 @@ type  Pnode=^Tnode;
                              const chars:string):string;
         procedure draw;virtual;
         procedure expandall(node:pointer);
-        function firstthat(test:pointer):pointer;
+        function firstthat(test:codepointer):pointer;
         procedure focused(i:sw_integer);virtual;
-        procedure foreach(action:pointer);
+        procedure foreach(action:codepointer);
         function getchild(node:pointer;i:sw_integer):pointer;virtual;
         function getgraph(level:integer;lines:longint;flags:word):string;
         function getnode(i:sw_integer):pointer;virtual;
@@ -46,7 +46,7 @@ type  Pnode=^Tnode;
         procedure update;
       private
         procedure set_focus(Afocus:sw_integer);
-        function do_recurse(action,callerframe:pointer;
+        function do_recurse(action:codepointer;callerframe:pointer;
                             stop_if_found:boolean):pointer;
       end;
 
@@ -193,16 +193,11 @@ begin
     else
       Graph[J] := Chars[Retracted+1];
   end;
-  {$IF FPC_VERSION >= 3}
   setlength(Graph,  J);
-  {$ELSE}
-  Graph[0] := Char(J);
-  {$ENDIF}
-
   CreateGraph := Graph;
 end;
 
-function Toutlineviewer.do_recurse(action,callerframe:pointer;
+function Toutlineviewer.do_recurse(action:codepointer;callerframe:pointer;
                                    stop_if_found:boolean):pointer;
 
 var position:sw_integer;
@@ -334,7 +329,7 @@ begin
     end;
 end;
 
-function Toutlineviewer.firstthat(test:pointer):pointer;
+function Toutlineviewer.firstthat(test:codepointer):pointer;
 
 begin
   firstthat:=do_recurse(test,
@@ -356,7 +351,7 @@ begin
   foc:=i;
 end;
 
-procedure Toutlineviewer.foreach(action:pointer);
+procedure Toutlineviewer.foreach(action:codepointer);
 
 begin
   do_recurse(action,
@@ -372,7 +367,7 @@ begin
       ,false);
 end;
 
-function Toutlineviewer.getchild(node:pointer;i:sw_integer):pointer;
+function Toutlineviewer.{%H-}getchild(node:pointer;i:sw_integer):pointer;
 
 begin
   abstract;
@@ -398,7 +393,7 @@ begin
   getnode:=firstthat(@test_position);
 end;
 
-function Toutlineviewer.getnumchildren(node:pointer):sw_integer;
+function Toutlineviewer.{%H-}getnumchildren(node:pointer):sw_integer;
 
 begin
   abstract;
@@ -412,13 +407,13 @@ begin
   getpalette:=@p;
 end;
 
-function Toutlineviewer.getroot:pointer;
+function Toutlineviewer.{%H-}getroot:pointer;
 
 begin
   abstract;
 end;
 
-function Toutlineviewer.gettext(node:pointer):string;
+function Toutlineviewer.{%H-}gettext(node:pointer):string;
 
 begin
   abstract;
@@ -555,13 +550,13 @@ begin
 end;
 
 
-function Toutlineviewer.haschildren(node:pointer):boolean;
+function Toutlineviewer.{%H-}haschildren(node:pointer):boolean;
 
 begin
   abstract;
 end;
 
-function Toutlineviewer.isexpanded(node:pointer):boolean;
+function Toutlineviewer.{%H-}isexpanded(node:pointer):boolean;
 
 begin
   abstract;
