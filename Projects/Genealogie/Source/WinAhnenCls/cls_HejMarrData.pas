@@ -89,7 +89,7 @@ public
   Procedure Clear;
   Procedure ReadFromStream(const st:TStream);
   Procedure WriteToStream(const st:TStream);
-  function  TestStreamHeader(const st:TStream):boolean;
+  class function  TestStreamHeader(const st:TStream):boolean;static;
   Procedure ReadFromDataset(idx:integer;const ds:TDataSet);
   Procedure UpdateDataset(const ds:TDataSet);
   Procedure SetDateData(idx: TEnumHejMarrDatafields;aDate: string);
@@ -166,6 +166,9 @@ public
 implementation
 
 uses dateutils,LConvEncoding,dm_GenData2;
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
 
 { TClsHejMarriages }
 
@@ -594,7 +597,7 @@ begin
   st.WriteBuffer(LineEnding[1],length(LineEnding));
 end;
 
-function THejMarrData.TestStreamHeader(const st: TStream): boolean;
+class function THejMarrData.TestStreamHeader(const st: TStream): boolean;
 
   var Hdr:array[0..4]of char;
   begin

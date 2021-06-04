@@ -190,6 +190,10 @@ implementation
 
 uses variants,cls_HejIndData,cls_HejMarrData;
 
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+
 const COrConc=[hCcT_Or,   // ) OR ( ...
       hCcT_Nor,  // ) or not ( ...
       hCcT_xor]; // ) xor ( ...

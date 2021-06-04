@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="CmpGLScene"><module name="Cmp_OpenGLScene"><element name="TPointF"><short>3D-Point with float-values</short>
+      </element><element name="TPointF.x"><short>x-value of the point</short>
+      </element><element name="TPointF.y"><short>y-value of the point</short>
+      </element><element name="TPointF.z"><short>z-value of the point</short>
+      </element><element name="TUVPoint"><short>2D-point with float-values</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

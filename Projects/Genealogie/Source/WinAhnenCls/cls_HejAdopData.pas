@@ -40,7 +40,7 @@ public
   function toString:String;
   function ToPasStruct:String;
   Procedure Clear;
-  function TestStreamHeader(const st: TStream): boolean;
+  class function TestStreamHeader(const st: TStream): boolean;static;
   Procedure ReadFromStream(const st:TStream);
   Procedure WriteToStream(const st:TStream);
   Procedure ReadFromDataset(idx:integer;const ds:TDataSet);
@@ -88,6 +88,9 @@ public
 implementation
 
 uses dateutils,LConvEncoding,dm_GenData2;
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
 
 { TClsHejAdoptions }
 
@@ -275,7 +278,7 @@ begin
         Data[I]:='';
 end;
 
-function THejAdopData.TestStreamHeader(const st: TStream): boolean;
+class function THejAdopData.TestStreamHeader(const st: TStream): boolean;
 
   var Hdr:array[0..5]of char;
   begin
@@ -303,6 +306,8 @@ begin
        else
          if by in [10,15] then
            begin
+             if (lAktField = 0) and (lActStr='ortv') then
+               break;
              data[TEnumHejAdopDatafields(lAktField)] := ConvertEncoding(lActStr,EncodingAnsi,EncodingUTF8);
              if by = 15 then
 

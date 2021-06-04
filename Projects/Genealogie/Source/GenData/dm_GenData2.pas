@@ -14,6 +14,7 @@ type
 
     TdmGenData = class(TDataModule)
         Config1: TConfig;
+        MySQL57Connection1: TMySQL57Connection;
         qryIndividuals: TSQLQuery;
         qryMarriages: TSQLQuery;
         qryIndividual_Spouse: TSQLQuery;
@@ -92,6 +93,10 @@ implementation
 {$R *.lfm}
 {$ELSE}
 {$R *.lfm}
+{$ENDIF}
+
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
 {$ENDIF}
 
 resourcestring
