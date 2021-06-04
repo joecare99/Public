@@ -1,67 +1,68 @@
 object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
   Left = 0
-  Height = 1654
+  Height = 1378
   Top = 0
-  Width = 2720
+  Width = 2267
   ActiveControl = btnDoParse
   Caption = 'Test Html Parser 2'
-  ClientHeight = 1654
-  ClientWidth = 2720
+  ClientHeight = 1378
+  ClientWidth = 2267
   Color = clBtnFace
-  DesignTimePPI = 144
+  DesignTimePPI = 120
   Font.Color = clWindowText
-  Font.Height = -21
+  Font.Height = -18
   Font.Name = 'Tahoma'
   OnCreate = FormCreate
   OnKeyDown = FormKeyDown
   OnKeyUp = FormKeyUp
   OnShow = FormShow
+  LCLVersion = '2.0.8.0'
   object pnlTop: TPanel
     Left = 0
-    Height = 76
+    Height = 63
     Top = 0
     Width = 2720
     Align = alTop
-    ClientHeight = 76
+    ClientHeight = 63
     ClientWidth = 2720
     Font.Color = clWindowText
-    Font.Height = -21
+    Font.Height = -18
     Font.Name = 'Tahoma'
     ParentFont = False
     TabOrder = 0
     object btnDoParse: TBitBtn
-      Left = 1089
-      Height = 51
-      Top = 10
-      Width = 150
+      Left = 908
+      Height = 42
+      Top = 8
+      Width = 125
       Caption = 'Parse'
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       OnClick = btnDoParseClick
       ParentFont = False
       TabOrder = 3
     end
     object btnLoadFile: TBitBtn
-      Left = 927
-      Height = 51
-      Top = 10
-      Width = 150
+      Left = 772
+      Height = 42
+      Top = 8
+      Width = 125
       Caption = 'Open'
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       OnClick = btnLoadFileClick
       ParentFont = False
       TabOrder = 2
     end
     object cbxFilename: TComboBox
-      Left = 15
+      Left = 12
       Height = 33
-      Top = 20
-      Width = 849
+      Top = 17
+      Width = 708
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       ItemHeight = 25
       ParentFont = False
@@ -69,12 +70,12 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
       Text = 'V:\Daten\dokumente\HTML\RNZ-Trauseiten\cloud-hd.de\rnz\trauerportal2\00\vwStammdaten0007.html'
     end
     object btnBrowseHtml: TBitBtn
-      Left = 867
-      Height = 45
-      Top = 15
-      Width = 51
+      Left = 722
+      Height = 38
+      Top = 12
+      Width = 42
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       Glyph.Data = {
         76010000424D7801000000000000760000002800000020000000100000000100
@@ -97,25 +98,25 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
       TabOrder = 1
     end
     object btnOpenWeb: TBitBtn
-      Left = 1263
-      Height = 60
+      Left = 1052
+      Height = 50
       Top = 2
-      Width = 150
+      Width = 125
       Caption = 'WWW'
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       OnClick = btnOpenWebClick
       ParentFont = False
       TabOrder = 4
     end
     object btnBrowseSchema: TBitBtn
-      Left = 1791
-      Height = 45
-      Top = 15
-      Width = 51
+      Left = 1492
+      Height = 38
+      Top = 12
+      Width = 42
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       Glyph.Data = {
         76010000424D7801000000000000760000002800000020000000100000000100
@@ -138,12 +139,12 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
       TabOrder = 6
     end
     object cbxFilenameSchema: TComboBox
-      Left = 1521
+      Left = 1268
       Height = 33
-      Top = 20
-      Width = 273
+      Top = 17
+      Width = 228
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       ItemHeight = 25
       ParentFont = False
@@ -151,52 +152,52 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
       Text = 'Huebner_Schema.txt'
     end
     object btnLoadSchema: TBitBtn
-      Left = 1839
-      Height = 51
-      Top = 10
-      Width = 150
+      Left = 1532
+      Height = 42
+      Top = 8
+      Width = 125
       Caption = 'Open'
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       OnClick = btnLoadSchemaClick
       ParentFont = False
       TabOrder = 7
     end
     object chbAutocontinue: TCheckBox
-      Left = 2061
+      Left = 1718
       Height = 29
-      Top = 22
+      Top = 18
       Width = 178
       Caption = 'Auto - Continue'
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       ParentFont = False
       TabOrder = 8
     end
     object lblCompiledOn: TLabel
-      Left = 2634
+      Left = 2635
       Height = 26
       Top = 2
       Width = 80
       Alignment = taRightJustify
       Anchors = [akTop, akRight]
-      BorderSpacing.Right = 4
+      BorderSpacing.Right = 3
       Caption = 'Compiled: %s'#13#10#9'on:%s'
-      Font.Height = -12
+      Font.Height = -10
       Font.Name = 'Small Fonts'
       ParentColor = False
       ParentFont = False
     end
     object BitBtn1: TBitBtn
-      Left = 2364
-      Height = 45
-      Top = 14
-      Width = 228
+      Left = 1970
+      Height = 38
+      Top = 12
+      Width = 190
       Action = actUpdateTS
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       ParentFont = False
       TabOrder = 9
@@ -210,7 +211,7 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
     ActivePage = TabSheet1
     Align = alClient
     Font.Color = clWindowText
-    Font.Height = -21
+    Font.Height = -18
     Font.Name = 'Tahoma'
     ParentFont = False
     TabIndex = 0
@@ -220,19 +221,19 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
       ClientHeight = 1454
       ClientWidth = 2457
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       ParentFont = False
       object pnlBottomP1: TPanel
         Left = 0
-        Height = 75
-        Top = 1379
+        Height = 62
+        Top = 1392
         Width = 2457
         Align = alBottom
-        ClientHeight = 75
+        ClientHeight = 62
         ClientWidth = 2457
         Font.Color = clWindowText
-        Font.Height = -21
+        Font.Height = -18
         Font.Name = 'Tahoma'
         ParentFont = False
         TabOrder = 0
@@ -240,14 +241,14 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           AnchorSideTop.Control = btnSave1
           AnchorSideBottom.Control = btnSave1
           AnchorSideBottom.Side = asrBottom
-          Left = 1008
+          Left = 840
           Height = 55
-          Top = 10
-          Width = 165
+          Top = 8
+          Width = 138
           Anchors = [akTop, akLeft, akBottom]
           Caption = 'Save'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           OnClick = btnSaveClick
           ParentFont = False
@@ -257,14 +258,14 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           AnchorSideTop.Control = chbAppendDB
           AnchorSideBottom.Control = chbAppendDB
           AnchorSideBottom.Side = asrBottom
-          Left = 1192
+          Left = 993
           Height = 55
-          Top = 10
+          Top = 8
           Width = 154
           Anchors = [akTop, akLeft, akBottom]
           Caption = 'Very Verbose'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           OnChange = chbVerboseChange
           ParentFont = False
@@ -274,13 +275,13 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           Left = 1981
           Height = 55
           Top = 10
-          Width = 165
+          Width = 138
           Align = alRight
           Anchors = [akTop, akBottom]
-          BorderSpacing.Around = 9
+          BorderSpacing.Around = 8
           Caption = 'Save'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           OnClick = btnSaveSchemaClick
           ParentFont = False
@@ -292,11 +293,11 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           Top = 10
           Width = 105
           Align = alRight
-          BorderSpacing.Around = 9
+          BorderSpacing.Around = 8
           Caption = 'Verbose'
           Checked = True
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           OnChange = chbVerbose1Change
           ParentFont = False
@@ -304,16 +305,16 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           TabOrder = 3
         end
         object btnSave1: TBitBtn
-          Left = 2269
+          Left = 2299
           Height = 55
           Top = 10
-          Width = 178
+          Width = 148
           Align = alRight
           Anchors = [akRight, akBottom]
-          BorderSpacing.Around = 9
+          BorderSpacing.Around = 8
           Caption = 'Save CSV'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           OnClick = btnSave1Click
           ParentFont = False
@@ -325,10 +326,10 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           Top = 10
           Width = 136
           Align = alRight
-          BorderSpacing.Around = 9
+          BorderSpacing.Around = 8
           Caption = 'Append DB'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
           TabOrder = 5
@@ -342,8 +343,8 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
         ClientHeight = 1347
         ClientWidth = 2457
         TabOrder = 1
-        DesignLeft = 252
-        DesignTop = 930
+        DesignLeft = 210
+        DesignTop = 775
         inherited pnlT1Client: TPanel
           Left = 1498
           Height = 1287
@@ -355,8 +356,8 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
             Left = 14
             Height = 1259
             Top = 14
-            Width = 294
-            BorderSpacing.Around = 14
+            Width = 245
+            BorderSpacing.Around = 12
             Lines.Strings = (
               ']TS: !DOCTYPE'
               ']TS: div'
@@ -389,7 +390,7 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
               Height = 808
               Top = 9
               Width = 619
-              BorderSpacing.Around = 9
+              BorderSpacing.Around = 8
               Lines.Strings = (
                 'Memo1'
               )
@@ -399,140 +400,145 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
               Height = 452
               Top = 826
               Width = 619
-              BorderSpacing.Around = 9
+              BorderSpacing.Around = 8
               Columns = <              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'Auftragsnummer'
-                  Width = 234
+                  Width = 195
                 end              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'Pfad'
-                  Width = 540
+                  Width = 450
                 end              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'Stichwort'
-                  Width = 360
+                  Width = 300
                 end              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'Nachname'
-                  Width = 180
+                  Width = 150
                 end              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'Vorname'
-                  Width = 180
+                  Width = 150
                 end              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'x1'
-                  Width = 36
+                  Width = 30
                 end              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'x2'
-                  Width = 36
+                  Width = 30
                 end              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'Höhe'
-                  Width = 108
+                  Width = 90
                 end              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'Breite'
-                  Width = 108
+                  Width = 90
                 end              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'Date'
-                  Width = 234
+                  Width = 195
                 end              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'Date2'
-                  Width = 234
+                  Width = 195
                 end              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'Type'
-                  Width = 96
+                  Width = 80
                 end              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'PDF'
-                  Width = 288
+                  Width = 240
                 end              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'PNG'
-                  Width = 288
+                  Width = 240
                 end              
                 item
-                  MinSize = 18
-                  MaxSize = 360
+                  MinSize = 15
+                  MaxSize = 300
                   PickList.Strings = (                  )
                   Title.Caption = 'PNG-Th'
-                  Width = 288
+                  Width = 240
                 end>
               ColWidths = (
-                96
-                234
-                540
-                360
-                180
-                180
-                36
-                36
-                108
-                108
-                234
-                234
-                96
-                288
-                288
-                288
+                80
+                195
+                450
+                300
+                150
+                150
+                30
+                30
+                90
+                90
+                195
+                195
+                80
+                240
+                240
+                240
               )
             end
+          end
+          inherited Splitter2: TSplitter
+            Left = 214
+            Height = 1175
+            Width = 6
           end
         end
         inherited mLog: TMemo
           Left = 1166
           Height = 1259
           Top = 74
-          Width = 318
-          BorderSpacing.Around = 14
+          Width = 265
+          BorderSpacing.Around = 12
           Lines.Strings = (
             'Memo1'
           )
@@ -541,14 +547,14 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           Left = 14
           Height = 1259
           Top = 74
-          Width = 1138
-          BorderSpacing.Around = 14
+          Width = 948
+          BorderSpacing.Around = 12
           ClientHeight = 1259
-          ClientWidth = 1138
+          ClientWidth = 948
           inherited mHTML: TMemo
             Height = 753
             Width = 1138
-            BorderSpacing.Top = 14
+            BorderSpacing.Top = 12
             Lines.Strings = (
               '<TAG>Memo1</TAG>'
             )
@@ -557,14 +563,14 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
             Height = 492
             Width = 1138
             inherited Splitter1: TSplitter
-              Height = 12
-              Top = 480
+              Height = 10
+              Top = 482
               Width = 1138
             end
           end
         end
         inherited pnlT1Top: TPanel
-          Height = 60
+          Height = 50
           Width = 2457
         end
       end
@@ -582,7 +588,7 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
         BorderSpacing.Bottom = 2
         Caption = '<0>'
         Font.Color = clGrayText
-        Font.Height = -17
+        Font.Height = -14
         Font.Name = 'Tahoma'
         ParentColor = False
         ParentFont = False
@@ -593,7 +599,7 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
       ClientHeight = 1454
       ClientWidth = 2457
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       ParentFont = False
       object DBGrid1: TDBGrid
@@ -602,103 +608,103 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
         Top = 71
         Width = 2439
         Align = alClient
-        BorderSpacing.Around = 9
+        BorderSpacing.Around = 8
         Color = clWindow
         Columns = <        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Auftrag'
-            Width = 168
+            Width = 140
             FieldName = 'Auftrag'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Erscheinungsdatum'
-            Width = 132
+            Width = 110
             FieldName = 'Erscheinungsdatum'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Stichwort'
-            Width = 360
+            Width = 300
             FieldName = 'Stichwort'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Nachname'
-            Width = 300
+            Width = 250
             FieldName = 'Nachname'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Vorname'
-            Width = 300
+            Width = 250
             FieldName = 'Vorname'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Ges.'
-            Width = 48
+            Width = 40
             FieldName = 'Geschlecht'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Geburtsname'
-            Width = 300
+            Width = 250
             FieldName = 'Geburtsname'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Spitzname'
-            Width = 192
+            Width = 160
             FieldName = 'Spitzname'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Titel'
-            Width = 192
+            Width = 160
             FieldName = 'Titel'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Geboren:'
-            Width = 132
+            Width = 110
             FieldName = 'Geb'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Gestorben:'
-            Width = 132
+            Width = 110
             FieldName = 'Gest'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Begraben:'
-            Width = 132
+            Width = 110
             FieldName = 'Begr'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Ort'
-            Width = 300
+            Width = 250
             FieldName = 'Ort'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             PickList.Strings = (
               '8050'#9'Todesanzeige'
               '8060'#9'Nachruf'
@@ -707,87 +713,84 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
               '8090'#9'Bekanntmachung'
             )
             Title.Caption = 'Rubrik'
-            Width = 96
+            Width = 80
             FieldName = 'Rubrik'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'PDF'
-            Width = 216
+            Width = 180
             FieldName = 'PDF'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'PNG'
-            Width = 216
+            Width = 180
             FieldName = 'PNG'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Hoehe'
-            Width = 96
+            Width = 80
             FieldName = 'Hoehe'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Breite'
-            Width = 96
+            Width = 80
             FieldName = 'Breite'
           end        
           item
-            MinSize = 12
-            MaxSize = 240
+            MinSize = 10
+            MaxSize = 200
             Title.Caption = 'Pfad'
             FieldName = 'Pfad'
           end>
         DataSource = DataSource1
         Font.Color = clWindowText
-        Font.Height = -21
+        Font.Height = -18
         Font.Name = 'Tahoma'
         ParentFont = False
         TabOrder = 0
-        TitleFont.Color = clWindowText
-        TitleFont.Height = -21
-        TitleFont.Name = 'Tahoma'
       end
       object pnlP2Top: TPanel
         Left = 0
-        Height = 62
+        Height = 52
         Top = 0
         Width = 2457
         Align = alTop
         Font.Color = clWindowText
-        Font.Height = -21
+        Font.Height = -18
         Font.Name = 'Tahoma'
         ParentFont = False
         TabOrder = 1
       end
       object pnlP2Bottom: TPanel
         Left = 0
-        Height = 783
-        Top = 671
+        Height = 652
+        Top = 802
         Width = 2457
         Align = alBottom
-        ClientHeight = 783
+        ClientHeight = 652
         ClientWidth = 2457
         Font.Color = clWindowText
-        Font.Height = -21
+        Font.Height = -18
         Font.Name = 'Tahoma'
         ParentFont = False
         TabOrder = 2
         object edtPlace: TDBComboBox
-          Left = 16
+          Left = 13
           Height = 33
-          Top = 525
-          Width = 297
+          Top = 438
+          Width = 248
           DataField = 'Ort'
           DataSource = DataSource1
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ItemHeight = 25
           MaxLength = 0
@@ -796,106 +799,106 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           TabOrder = 7
         end
         object DBImage1: TDBImage
-          Left = 1892
-          Height = 681
-          Top = 20
-          Width = 632
+          Left = 1577
+          Height = 568
+          Top = 17
+          Width = 527
           DataField = 'Bild'
           DataSource = DataSource1
           Proportional = True
           Stretch = True
         end
         object DBMemo1: TDBMemo
-          Left = 1200
-          Height = 645
-          Top = 56
-          Width = 669
+          Left = 1000
+          Height = 538
+          Top = 47
+          Width = 558
           DataField = 'Text'
           DataSource = DataSource1
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
           ScrollBars = ssAutoVertical
           TabOrder = 13
         end
         object lblMaidenname: TLabel
-          Left = 20
+          Left = 17
           Height = 25
-          Top = 135
+          Top = 112
           Width = 142
           Caption = 'Geburts-Name:'
           FocusControl = edtMaidenname
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentColor = False
           ParentFont = False
         end
         object edtMaidenname: TDBEdit
-          Left = 20
+          Left = 17
           Height = 33
-          Top = 165
-          Width = 297
+          Top = 138
+          Width = 248
           DataField = 'Geburtsname'
           DataSource = DataSource1
           CharCase = ecNormal
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           MaxLength = 100
           ParentFont = False
           TabOrder = 2
         end
         object lblGeboren: TLabel
-          Left = 16
+          Left = 13
           Height = 25
-          Top = 291
+          Top = 242
           Width = 86
           Caption = 'Geboren:'
           FocusControl = edtBirth
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentColor = False
           ParentFont = False
         end
         object lblDeath: TLabel
-          Left = 16
+          Left = 13
           Height = 25
-          Top = 362
+          Top = 302
           Width = 102
           Caption = 'Gestorben:'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentColor = False
           ParentFont = False
         end
         object lblBurial: TLabel
-          Left = 16
+          Left = 13
           Height = 25
-          Top = 428
+          Top = 357
           Width = 97
           Caption = 'Begraben:'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentColor = False
           ParentFont = False
         end
         object edtBirth: TDBDateEdit
-          Left = 116
+          Left = 97
           Height = 33
-          Top = 321
-          Width = 297
+          Top = 268
+          Width = 248
           CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
           OnCustomDate = edtHaveCustomDate
           DateOrder = doNone
-          ButtonWidth = 34
+          ButtonWidth = 28
           NumGlyphs = 1
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           MaxLength = 0
           ParentFont = False
@@ -906,17 +909,17 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           DataSource = DataSource1
         end
         object edtDeath: TDBDateEdit
-          Left = 16
+          Left = 13
           Height = 33
-          Top = 387
-          Width = 297
+          Top = 322
+          Width = 248
           CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
           OnCustomDate = edtHaveCustomDate
           DateOrder = doNone
-          ButtonWidth = 34
+          ButtonWidth = 28
           NumGlyphs = 1
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           MaxLength = 0
           ParentFont = False
@@ -925,17 +928,17 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           DataSource = DataSource1
         end
         object edtBurial: TDBDateEdit
-          Left = 16
+          Left = 13
           Height = 33
-          Top = 458
-          Width = 297
+          Top = 382
+          Width = 248
           CalendarDisplaySettings = [dsShowHeadings, dsShowDayNames]
           OnCustomDate = edtHaveCustomDate
           DateOrder = doNone
-          ButtonWidth = 34
+          ButtonWidth = 28
           NumGlyphs = 1
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           MaxLength = 0
           ParentFont = False
@@ -944,138 +947,138 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           DataSource = DataSource1
         end
         object lblPlace: TLabel
-          Left = 20
+          Left = 17
           Height = 25
-          Top = 495
+          Top = 412
           Width = 37
           Caption = 'Ort:'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentColor = False
           ParentFont = False
         end
         object chbAutoText: TCheckBox
-          Left = 1724
+          Left = 1437
           Height = 29
-          Top = 708
+          Top = 590
           Width = 121
           Caption = 'Auto-Text'
           Checked = True
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
           State = cbChecked
           TabOrder = 14
         end
         object chbAutoImage: TCheckBox
-          Left = 2288
+          Left = 1907
           Height = 29
-          Top = 706
+          Top = 588
           Width = 141
           Caption = 'Auto-Image'
           Checked = True
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
           State = cbChecked
           TabOrder = 15
         end
         object btnProcessPDF2: TSpeedButton
-          Left = 254
-          Height = 33
-          Top = 603
-          Width = 34
+          Left = 212
+          Height = 28
+          Top = 502
+          Width = 28
           Caption = 'p2x'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           OnClick = btnProcessPDF2Click
           ParentFont = False
         end
         object btnParseText: TSpeedButton
-          Left = 1144
-          Height = 40
-          Top = 60
-          Width = 39
+          Left = 953
+          Height = 33
+          Top = 50
+          Width = 32
           Action = actDataParseText
           Caption = '<pT'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
         end
         object btnLoadPng: TSpeedButton
-          Left = 213
-          Height = 33
-          Top = 636
-          Width = 34
+          Left = 178
+          Height = 28
+          Top = 530
+          Width = 28
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           OnClick = btnLoadPngClick
           ParentFont = False
         end
         object chbPNGFound: TCheckBox
-          Left = 33
+          Left = 28
           Height = 29
-          Top = 634
+          Top = 528
           Width = 167
           Caption = 'PNG-gefunden'
           Enabled = False
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
           TabOrder = 11
         end
         object chbPDFFound: TCheckBox
-          Left = 33
+          Left = 28
           Height = 29
-          Top = 604
+          Top = 503
           Width = 164
           Caption = 'PDF-gefunden'
           Enabled = False
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
           TabOrder = 9
         end
         object chbXmlFound: TCheckBox
-          Left = 33
+          Left = 28
           Height = 29
-          Top = 572
+          Top = 477
           Width = 165
           Caption = 'XML-gefunden'
           Enabled = False
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
           TabOrder = 8
         end
         object btnLoadXml: TSpeedButton
-          Left = 213
-          Height = 33
-          Top = 572
-          Width = 34
+          Left = 178
+          Height = 28
+          Top = 477
+          Width = 28
           Caption = 'T>'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           OnClick = btnLoadXmlClick
           ParentFont = False
         end
         inline fraXmlView1: TfraXmlView
-          Left = 843
-          Height = 182
-          Top = 74
-          Width = 294
-          ClientHeight = 182
-          ClientWidth = 294
+          Left = 702
+          Height = 152
+          Top = 62
+          Width = 245
+          ClientHeight = 152
+          ClientWidth = 245
           TabOrder = 12
           inherited PaintBox1: TPaintBox
             Height = 182
@@ -1083,13 +1086,13 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           end
         end
         object lblAge: TStaticText
-          Left = 321
-          Height = 26
-          Top = 393
-          Width = 98
+          Left = 268
+          Height = 22
+          Top = 328
+          Width = 82
           Caption = '<Age>'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           OnClick = lblAgeClick
           ParentFont = False
@@ -1097,15 +1100,15 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
         end
         object lblDataPath: TStaticText
           Cursor = crHandPoint
-          Left = 8
+          Left = 7
           Height = 23
-          Top = 704
+          Top = 587
           Width = 61
           AutoSize = True
           Caption = '<Path>'
           Color = clDefault
           Font.Color = clHighlight
-          Font.Height = -18
+          Font.Height = -15
           Font.Name = 'Tahoma'
           Font.Style = [fsUnderline]
           OnClick = lblDataPathClick
@@ -1115,8 +1118,8 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
         end
         object DBNavigator1: TDBNavigator
           Left = 1
-          Height = 38
-          Top = 744
+          Height = 32
+          Top = 750
           Width = 2455
           Align = alBottom
           BevelOuter = bvNone
@@ -1126,33 +1129,33 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           ChildSizing.ShrinkVertical = crsScaleChilds
           ChildSizing.Layout = cclLeftToRightThenTopToBottom
           ChildSizing.ControlsPerLine = 100
-          ClientHeight = 38
+          ClientHeight = 32
           ClientWidth = 2455
           DataSource = DataSource1
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           Options = [navFocusableButtons]
           ParentFont = False
           TabOrder = 17
         end
         object btnRefreshOrte: TSpeedButton
-          Left = 322
-          Height = 38
-          Top = 520
-          Width = 39
+          Left = 268
+          Height = 32
+          Top = 433
+          Width = 32
           Caption = '«»'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           OnClick = actDataRefreshPlacesExecute
           ParentFont = False
         end
         object rgRubrik: TDBRadioGroup
-          Left = 556
-          Height = 440
-          Top = 144
-          Width = 267
+          Left = 463
+          Height = 367
+          Top = 120
+          Width = 222
           AutoFill = True
           Caption = 'Rubrik'
           ChildSizing.LeftRightSpacing = 6
@@ -1165,7 +1168,7 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           DataField = 'Rubrik'
           DataSource = DataSource1
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           Items.Strings = (
             'Todesanzeige'
@@ -1201,34 +1204,34 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           )
         end
         object pbrPDFProgress: TProgressBar
-          Left = 296
-          Height = 32
-          Top = 604
-          Width = 150
+          Left = 247
+          Height = 27
+          Top = 503
+          Width = 125
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           Max = 150
           ParentFont = False
           TabOrder = 10
         end
         object btnOCRCancel: TSpeedButton
-          Left = 456
-          Height = 33
-          Top = 604
-          Width = 34
+          Left = 380
+          Height = 28
+          Top = 503
+          Width = 28
           Caption = '(/)'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           OnClick = btnOCRCancelClick
           ParentFont = False
         end
         object rgSex: TDBRadioGroup
-          Left = 20
-          Height = 64
-          Top = 3
-          Width = 690
+          Left = 17
+          Height = 53
+          Top = 2
+          Width = 575
           AutoFill = True
           Caption = 'Geschlecht:'
           ChildSizing.LeftRightSpacing = 6
@@ -1242,7 +1245,7 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           DataField = 'Geschlecht'
           DataSource = DataSource1
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           Items.Strings = (
             'Männl.'
@@ -1258,118 +1261,118 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           )
         end
         object lblFamilyname: TLabel
-          Left = 20
+          Left = 17
           Height = 25
-          Top = 74
+          Top = 62
           Width = 61
           Caption = 'Name:'
           FocusControl = edtFamilyname
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentColor = False
           ParentFont = False
         end
         object edtFamilyname: TDBEdit
-          Left = 20
+          Left = 17
           Height = 33
-          Top = 102
-          Width = 297
+          Top = 85
+          Width = 248
           DataField = 'Nachname'
           DataSource = DataSource1
           CharCase = ecNormal
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           MaxLength = 100
           ParentFont = False
           TabOrder = 1
         end
         object edtGivenname: TDBEdit
-          Left = 327
+          Left = 272
           Height = 33
-          Top = 102
-          Width = 381
+          Top = 85
+          Width = 318
           DataField = 'Vorname'
           DataSource = DataSource1
           CharCase = ecNormal
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           MaxLength = 100
           ParentFont = False
           TabOrder = 19
         end
         object lblGivenname: TLabel
-          Left = 327
+          Left = 272
           Height = 25
-          Top = 74
+          Top = 62
           Width = 91
           Caption = 'Vorname:'
           FocusControl = edtGivenname
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentColor = False
           ParentFont = False
         end
         object btnDataCopyRecord: TSpeedButton
-          Left = 982
-          Height = 33
-          Top = 21
-          Width = 34
+          Left = 818
+          Height = 28
+          Top = 18
+          Width = 28
           Action = actDataCopyRecord
           Caption = 'CC'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
         end
         object btnCopyBirthday: TSpeedButton
-          Left = 1155
-          Height = 33
-          Top = 284
-          Width = 34
+          Left = 962
+          Height = 28
+          Top = 237
+          Width = 28
           Action = actDataSetBirth
           Caption = '<*'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
         end
         object btnCopyDeath: TSpeedButton
-          Left = 1155
-          Height = 33
-          Top = 324
-          Width = 34
+          Left = 962
+          Height = 28
+          Top = 270
+          Width = 28
           Action = actDataSetDeath
           Caption = '<+'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
         end
         object btnCopyBurial: TSpeedButton
-          Left = 1155
-          Height = 33
-          Top = 363
-          Width = 34
+          Left = 962
+          Height = 28
+          Top = 302
+          Width = 28
           Action = actDataSetBurial
           Caption = '<ℿ'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
         end
         object SpeedButton1: TSpeedButton
-          Left = 1156
-          Height = 33
-          Top = 243
-          Width = 34
+          Left = 963
+          Height = 28
+          Top = 202
+          Width = 28
           Action = actDataSetMaidenname
           Caption = '<N*'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
         end
@@ -1379,118 +1382,118 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           AnchorSideTop.Control = edtMaidenname
           AnchorSideTop.Side = asrCenter
           AnchorSideBottom.Side = asrCenter
-          Left = 326
-          Height = 38
-          Top = 162
-          Width = 38
+          Left = 272
+          Height = 32
+          Top = 135
+          Width = 32
           Action = actDataDelMaidenname
-          BorderSpacing.Left = 9
+          BorderSpacing.Left = 8
           Caption = 'X'
           Font.Color = clMaroon
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           Font.Style = [fsBold]
           ParentFont = False
         end
         object SpeedButton3: TSpeedButton
-          Left = 1158
-          Height = 33
-          Top = 405
-          Width = 34
+          Left = 965
+          Height = 28
+          Top = 338
+          Width = 28
           Action = actDataSetPlace
           Caption = '<P'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
         end
         object btnDataSwitchNames: TSpeedButton
-          Left = 710
-          Height = 33
-          Top = 99
-          Width = 34
+          Left = 592
+          Height = 28
+          Top = 82
+          Width = 28
           Action = actDataSwichNames
           Caption = '↔'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
         end
         object lblMaidenname1: TLabel
-          Left = 20
+          Left = 17
           Height = 25
-          Top = 202
+          Top = 168
           Width = 165
           Caption = 'Spitzname (AKA):'
           FocusControl = edtMaidenname1
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentColor = False
           ParentFont = False
         end
         object edtMaidenname1: TDBEdit
-          Left = 16
+          Left = 13
           Height = 33
-          Top = 232
-          Width = 212
+          Top = 193
+          Width = 177
           DataField = 'Spitzname'
           DataSource = DataSource1
           CharCase = ecNormal
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           MaxLength = 50
           ParentFont = False
           TabOrder = 20
         end
         object lblMaidenname2: TLabel
-          Left = 240
+          Left = 200
           Height = 25
-          Top = 202
+          Top = 168
           Width = 47
           Caption = 'Titel:'
           FocusControl = edtMaidenname2
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentColor = False
           ParentFont = False
         end
         object edtMaidenname2: TDBEdit
-          Left = 240
+          Left = 200
           Height = 33
-          Top = 232
-          Width = 297
+          Top = 193
+          Width = 248
           DataField = 'Titel'
           DataSource = DataSource1
           CharCase = ecNormal
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           MaxLength = 50
           ParentFont = False
           TabOrder = 21
         end
         object btnProcessPdf: TSpeedButton
-          Left = 213
-          Height = 33
-          Top = 604
-          Width = 34
+          Left = 178
+          Height = 28
+          Top = 503
+          Width = 28
           Action = actDataProcessPDF
           Caption = 'pPf'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
         end
         object edtSetAge: TEdit
-          Left = 321
+          Left = 268
           Height = 33
-          Top = 390
-          Width = 120
+          Top = 325
+          Width = 100
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           OnExit = edtSetAgeExit
           OnKeyPress = edtSetAgeKeyPress
@@ -1500,27 +1503,27 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           Visible = False
         end
         object ComboBoxEx1: TComboBoxEx
-          Left = 2559
+          Left = 2132
           Height = 30
-          Top = 32
-          Width = 342
+          Top = 27
+          Width = 285
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
-          ItemHeight = 24
+          ItemHeight = 20
           ItemsEx = <>
           ParentFont = False
           TabOrder = 23
         end
         object DBComboBox1: TDBComboBox
-          Left = 15
+          Left = 12
           Height = 33
-          Top = 322
-          Width = 94
+          Top = 268
+          Width = 78
           DataField = 'GebModif'
           DataSource = DataSource1
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ItemHeight = 25
           Items.Strings = (
@@ -1536,12 +1539,12 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           TabOrder = 24
         end
         object cbxLinkedTo: TComboBox
-          Left = 1194
+          Left = 995
           Height = 33
-          Top = 15
-          Width = 675
+          Top = 12
+          Width = 562
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ItemHeight = 25
           OnDropDown = cbxLinkedToDropDown
@@ -1556,27 +1559,27 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           AnchorSideRight.Control = cbxLinkedTo
           Left = 1147
           Height = 25
-          Top = 18
+          Top = 15
           Width = 44
           Anchors = [akTop, akRight]
-          BorderSpacing.Top = 3
-          BorderSpacing.Right = 3
+          BorderSpacing.Top = 2
+          BorderSpacing.Right = 2
           Caption = 'Link:'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentColor = False
           ParentFont = False
         end
         object btnOCR_In: TSpeedButton
-          Left = 1156
-          Height = 33
-          Top = 135
-          Width = 34
+          Left = 963
+          Height = 28
+          Top = 112
+          Width = 28
           Action = actDataOCRImport
           Caption = 'O>'
           Font.Color = clWindowText
-          Font.Height = -21
+          Font.Height = -18
           Font.Name = 'Tahoma'
           ParentFont = False
         end
@@ -1587,7 +1590,7 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
       ClientHeight = 1699
       ClientWidth = 2866
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       ParentFont = False
       inline FraPlaceEdit1: TFraPlaceEdit
@@ -1596,63 +1599,397 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
         Align = alClient
         ClientHeight = 1699
         ClientWidth = 2866
-        inherited DBEdit1: TDBEdit
-          Left = 1993
-          Height = 87
-          Top = 696
-          Width = 0
-          BorderSpacing.Around = 18
-        end
-        inherited btnImportGedCom: TBitBtn
-          Left = 651
-          Height = 120
-          Top = 24
-          Width = 297
-        end
-        inherited Panel1: TPanel
-          Height = 1088
-          Width = 1134
-          ClientHeight = 1088
-          ClientWidth = 1134
+        inherited pnlLeft: TPanel
+          Height = 933
+          Width = 275
+          ClientHeight = 933
+          ClientWidth = 275
           inherited DBGrid1: TDBGrid
             Left = 15
             Height = 887
             Top = 97
             Width = 852
-            BorderSpacing.Around = 18
+            BorderSpacing.Around = 15
             Columns = <            
               item
-                MinSize = 32
-                MaxSize = 630
+                MinSize = 27
+                MaxSize = 525
                 PickList.Strings = (                )
                 Title.Caption = 'Ortname'
-                Width = 945
+                Width = 788
                 FieldName = 'Ortname'
               end>
           end
           inherited Edit1: TEdit
             Left = 15
-            Height = 87
+            Height = 72
             Top = 15
             Width = 852
-            BorderSpacing.Around = 18
+            BorderSpacing.Around = 15
           end
           inherited DBNavigator1: TDBNavigator
             Left = 15
-            Height = 96
-            Top = 977
+            Height = 80
+            Top = 993
             Width = 852
-            BorderSpacing.Around = 18
-            ClientHeight = 96
+            BorderSpacing.Around = 15
+            ClientHeight = 80
             ClientWidth = 852
             Hints.Strings = (            )
           end
         end
-        inherited btnSync: TBitBtn
-          Left = 329
-          Height = 120
-          Top = 24
-          Width = 297
+        inherited Panel2: TPanel
+          Left = 396
+          Height = 933
+          Width = 576
+          ClientHeight = 933
+          ClientWidth = 576
+          inherited DBEdit1: TDBEdit
+            Left = 1993
+            Height = 72
+            Top = 711
+            Width = 0
+            BorderSpacing.Around = 15
+          end
+          inherited MapView: TMapView
+            Height = 849
+            Width = 574
+            DownloadEngine = FraPlaceEdit1.MapView.BuiltInDLE
+            DrawingEngine = FraPlaceEdit1.MapView.BuiltInDE
+          end
+        end
+        inherited PageControl: TPageControl
+          Left = 1097
+          Height = 933
+          Width = 287
+          inherited PgData: TTabSheet
+            ClientHeight = 895
+            ClientWidth = 404
+            inherited ZoomTrackBar: TTrackBar
+              Height = 42
+              Top = 24
+              Width = 398
+            end
+            inherited LblZoom: TLabel
+              Left = 7
+              Height = 25
+              Top = 7
+              Width = 52
+              BorderSpacing.Left = 7
+              BorderSpacing.Top = 7
+            end
+            inherited CbMouseCoords: TGroupBox
+              Left = 7
+              Height = 104
+              Top = 74
+              Width = 386
+              BorderSpacing.Left = 7
+              BorderSpacing.Top = 8
+              BorderSpacing.Right = 7
+              ClientHeight = 74
+              ClientWidth = 382
+              inherited LblPositionLongitude: TLabel
+                Left = 8
+                Height = 25
+                Top = 4
+                Width = 80
+                BorderSpacing.Left = 8
+                BorderSpacing.Top = 4
+              end
+              inherited LblPositionLatitude: TLabel
+                Left = 8
+                Height = 25
+                Top = 26
+                Width = 63
+                BorderSpacing.Left = 8
+                BorderSpacing.Top = 4
+                BorderSpacing.Bottom = 8
+              end
+              inherited InfoPositionLongitude: TLabel
+                Left = 307
+                Height = 25
+                Top = 4
+                Width = 51
+                BorderSpacing.Top = 4
+                BorderSpacing.Right = 17
+              end
+              inherited InfoPositionLatitude: TLabel
+                Left = 307
+                Height = 25
+                Top = 26
+                Width = 51
+                BorderSpacing.Top = 4
+                BorderSpacing.Right = 17
+                BorderSpacing.Bottom = 8
+              end
+            end
+            inherited GbCenterCoords: TGroupBox
+              Left = 7
+              Height = 104
+              Top = 154
+              Width = 386
+              BorderSpacing.Top = 8
+              ClientHeight = 74
+              ClientWidth = 382
+              inherited LblCenterLongitude: TLabel
+                Left = 8
+                Height = 25
+                Top = 4
+                Width = 80
+                BorderSpacing.Left = 8
+                BorderSpacing.Top = 4
+              end
+              inherited LblCenterLatitude: TLabel
+                Left = 8
+                Height = 25
+                Top = 26
+                Width = 63
+                BorderSpacing.Left = 8
+                BorderSpacing.Top = 4
+                BorderSpacing.Bottom = 8
+              end
+              inherited InfoCenterLongitude: TLabel
+                Left = 307
+                Height = 25
+                Top = 4
+                Width = 51
+                BorderSpacing.Top = 4
+                BorderSpacing.Right = 17
+              end
+              inherited InfoCenterLatitude: TLabel
+                Left = 307
+                Height = 25
+                Top = 26
+                Width = 51
+                BorderSpacing.Top = 4
+                BorderSpacing.Right = 17
+                BorderSpacing.Bottom = 8
+              end
+            end
+            inherited GbScreenSize: TGroupBox
+              Left = 7
+              Height = 104
+              Top = 234
+              Width = 386
+              BorderSpacing.Top = 8
+              ClientHeight = 74
+              ClientWidth = 382
+              inherited LblViewportWidth: TLabel
+                Left = 8
+                Height = 25
+                Top = 4
+                Width = 48
+                BorderSpacing.Left = 8
+                BorderSpacing.Top = 4
+              end
+              inherited LblViewportHeight: TLabel
+                Left = 8
+                Height = 25
+                Top = 26
+                Width = 53
+                BorderSpacing.Left = 8
+                BorderSpacing.Top = 4
+                BorderSpacing.Bottom = 8
+              end
+              inherited InfoViewportWidth: TLabel
+                Left = 307
+                Height = 25
+                Top = 4
+                Width = 51
+                BorderSpacing.Top = 4
+                BorderSpacing.Right = 17
+              end
+              inherited InfoViewportHeight: TLabel
+                Left = 307
+                Height = 25
+                Top = 26
+                Width = 51
+                BorderSpacing.Top = 4
+                BorderSpacing.Right = 17
+                BorderSpacing.Bottom = 8
+              end
+            end
+            inherited cbxDistanceUnits: TComboBox
+              Left = 316
+              Height = 33
+              Top = 232
+              Width = 67
+              BorderSpacing.Top = 7
+              BorderSpacing.Right = 8
+              ItemHeight = 25
+            end
+            inherited GbSearch: TGroupBox
+              Left = 7
+              Height = 156
+              Top = 316
+              Width = 386
+              BorderSpacing.Top = 8
+              ClientHeight = 126
+              ClientWidth = 382
+              inherited CbLocations: TComboBox
+                Left = 8
+                Height = 33
+                Top = 4
+                Width = 277
+                BorderSpacing.Left = 8
+                BorderSpacing.Top = 4
+                BorderSpacing.Right = 4
+                BorderSpacing.Bottom = 4
+                ItemHeight = 25
+              end
+              inherited BtnSearch: TButton
+                Left = 295
+                Height = 35
+                Top = 3
+                Width = 78
+                BorderSpacing.Right = 7
+              end
+              inherited LblSelectLocation: TLabel
+                Left = 8
+                Height = 25
+                Top = 35
+                Width = 266
+                BorderSpacing.Top = 8
+              end
+              inherited BtnGoTo: TButton
+                Left = 302
+                Height = 35
+                Top = 55
+                Width = 71
+                BorderSpacing.Bottom = 8
+              end
+              inherited CbFoundLocations: TComboBox
+                Left = 8
+                Height = 28
+                Top = 58
+                Width = 284
+                BorderSpacing.Top = 4
+                BorderSpacing.Right = 4
+                BorderSpacing.Bottom = 8
+                ItemHeight = 16
+              end
+            end
+            inherited BtnSaveToFile: TButton
+              Left = 7
+              Height = 35
+              Top = 550
+              Width = 154
+              BorderSpacing.Top = 8
+            end
+          end
+          inherited PgConfig: TTabSheet
+            inherited Label1: TLabel
+              Left = 7
+              Top = 7
+              BorderSpacing.Top = 7
+            end
+            inherited CbDrawingEngine: TComboBox
+              Left = 7
+              Height = 33
+              Top = 26
+              BorderSpacing.Left = 7
+              BorderSpacing.Right = 7
+              ItemHeight = 25
+            end
+            inherited LblProviders: TLabel
+              Left = 7
+              Top = 58
+              BorderSpacing.Top = 8
+            end
+            inherited CbProviders: TComboBox
+              Left = 7
+              Height = 33
+              Top = 76
+              BorderSpacing.Left = 7
+              BorderSpacing.Right = 4
+              ItemHeight = 25
+            end
+            inherited BtnLoadMapProviders: TSpeedButton
+              Left = 328
+              Height = 23
+              Top = 76
+              Width = 24
+              BorderSpacing.Right = 4
+            end
+            inherited BtnSaveMapProviders: TSpeedButton
+              Left = 368
+              Height = 23
+              Top = 76
+              Width = 24
+              BorderSpacing.Right = 8
+            end
+            inherited CbUseThreads: TCheckBox
+              Left = 7
+              Top = 108
+              BorderSpacing.Left = 7
+              BorderSpacing.Top = 8
+            end
+            inherited CbDoubleBuffer: TCheckBox
+              Left = 7
+              Top = 134
+              BorderSpacing.Top = 7
+              BorderSpacing.Right = 9
+            end
+            inherited CbDebugTiles: TCheckBox
+              Left = 7
+              Top = 160
+              BorderSpacing.Top = 7
+            end
+            inherited CbShowPOIImage: TCheckBox
+              Left = 7
+              Top = 199
+              BorderSpacing.Top = 7
+            end
+            inherited BtnPOITextFont: TButton
+              Left = 7
+              Top = 228
+              BorderSpacing.Top = 8
+            end
+            inherited cbPOITextBgColor: TColorBox
+              Left = 151
+              Height = 30
+              Top = 229
+              BorderSpacing.Left = 8
+              ItemHeight = 17
+            end
+            inherited LblPOITextBgColor: TLabel
+              Left = 103
+              Top = 232
+              BorderSpacing.Left = 8
+            end
+            inherited Bevel1: TBevel
+              Left = 7
+              Height = 4
+              Top = 188
+              BorderSpacing.Top = 8
+            end
+          end
+          inherited PgGedCom: TTabSheet
+            inherited Panel1: TPanel
+              Height = 1088
+              Width = 1134
+              ClientHeight = 1088
+              ClientWidth = 1134
+              inherited btnImportGedCom: TBitBtn
+                Left = 731
+                Height = 100
+                Top = 20
+                Width = 248
+              end
+              inherited btnSync: TBitBtn
+                Left = 463
+                Height = 100
+                Top = 20
+                Width = 248
+              end
+              inherited ProgressBar1: TProgressBar
+                Left = 5
+                Height = 21
+                Top = 67
+                Width = 138
+              end
+            end
+          end
         end
       end
     end
@@ -1661,7 +1998,7 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
       ClientHeight = 1048
       ClientWidth = 2310
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       ParentFont = False
       inline fraRNZConfig1: TfraRNZConfig
@@ -1670,17 +2007,17 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
         ClientHeight = 1048
         ClientWidth = 2310
         inherited pnlHeader: TPanel
-          Height = 58
+          Height = 48
         end
         inherited pnlClient: TPanel
           inherited FraCfgProperty1: TFraCfgProperty
             AnchorSideRight.Side = asrBottom
             Left = 1
-            Height = 80
+            Height = 67
             Top = 1
             Width = 862
             Align = alTop
-            ClientHeight = 80
+            ClientHeight = 67
             ClientWidth = 862
             inherited DividerBevel1: TDividerBevel
               Height = 15
@@ -1690,11 +2027,11 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           end
           inherited FraCfgProperty3: TFraCfgProperty
             Left = 1
-            Height = 81
+            Height = 68
             Top = 107
             Width = 862
             Align = alTop
-            ClientHeight = 81
+            ClientHeight = 68
             ClientWidth = 862
             TabOrder = 1
             inherited DividerBevel1: TDividerBevel
@@ -1705,11 +2042,11 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
           end
           inherited FraCfgProperty2: TFraCfgProperty
             Left = 1
-            Height = 80
+            Height = 67
             Top = 54
             Width = 862
             Align = alTop
-            ClientHeight = 80
+            ClientHeight = 67
             ClientWidth = 862
             TabOrder = 5
             inherited DividerBevel1: TDividerBevel
@@ -1719,47 +2056,47 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
             end
           end
           inherited cbxPDF2XMLPath: TComboBox
-            Left = 22
+            Left = 18
             Height = 33
-            Top = 282
-            BorderSpacing.Left = 21
-            BorderSpacing.Top = 40
-            BorderSpacing.Right = 21
+            Top = 235
+            BorderSpacing.Left = 18
+            BorderSpacing.Top = 33
+            BorderSpacing.Right = 18
             ItemHeight = 25
           end
           inherited cbxLocalPath: TComboBox
-            Left = 22
+            Left = 18
             Height = 33
-            Top = 42
-            BorderSpacing.Left = 21
-            BorderSpacing.Top = 40
-            BorderSpacing.Right = 21
+            Top = 35
+            BorderSpacing.Left = 18
+            BorderSpacing.Top = 33
+            BorderSpacing.Right = 18
             ItemHeight = 25
           end
           inherited cbxOnlineURL: TComboBox
-            Left = 22
+            Left = 18
             Height = 33
-            Top = 162
-            BorderSpacing.Left = 21
-            BorderSpacing.Top = 40
-            BorderSpacing.Right = 21
+            Top = 135
+            BorderSpacing.Left = 18
+            BorderSpacing.Top = 33
+            BorderSpacing.Right = 18
             ItemHeight = 25
           end
           inherited btnLocalPath: TBitBtn
-            Left = 686
-            Height = 68
-            Top = 42
-            Width = 168
-            BorderSpacing.Top = 40
-            BorderSpacing.Right = 21
+            Left = 714
+            Height = 57
+            Top = 35
+            Width = 140
+            BorderSpacing.Top = 33
+            BorderSpacing.Right = 18
           end
           inherited btnPDF2XMLPath: TBitBtn
-            Left = 686
-            Height = 68
-            Top = 282
-            Width = 168
-            BorderSpacing.Top = 40
-            BorderSpacing.Right = 21
+            Left = 714
+            Height = 57
+            Top = 235
+            Width = 140
+            BorderSpacing.Top = 33
+            BorderSpacing.Right = 18
           end
         end
       end
@@ -1769,10 +2106,10 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
     Left = 0
     Height = 1492
     Top = 76
-    Width = 255
+    Width = 212
     Align = alLeft
     Font.Color = clWindowText
-    Font.Height = -21
+    Font.Height = -18
     Font.Name = 'Tahoma'
     ItemHeight = 0
     ParentFont = False
@@ -1780,53 +2117,53 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
   end
   object pnlBottom: TPanel
     Left = 0
-    Height = 86
-    Top = 1568
+    Height = 72
+    Top = 1582
     Width = 2720
     Align = alBottom
-    ClientHeight = 86
+    ClientHeight = 72
     ClientWidth = 2720
     Font.Color = clWindowText
-    Font.Height = -21
+    Font.Height = -18
     Font.Name = 'Tahoma'
     ParentFont = False
     TabOrder = 3
     object btnExportCSV: TBitBtn
-      Left = 2067
-      Height = 64
-      Top = 10
-      Width = 208
+      Left = 1722
+      Height = 53
+      Top = 8
+      Width = 173
       Caption = 'Export->CSV'
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       OnClick = btnExportCSVClick
       ParentFont = False
       TabOrder = 0
     end
     object btnExportGed: TBitBtn
-      Left = 1824
-      Height = 56
-      Top = 20
-      Width = 218
+      Left = 1520
+      Height = 47
+      Top = 17
+      Width = 182
       Caption = 'Export -> GedCom'
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       OnClick = btnExportGedClick
       ParentFont = False
       TabOrder = 1
     end
     object chbOnlyTAnzeigen: TCheckBox
-      Left = 1851
+      Left = 1542
       Height = 29
       Hint = 'Todesanzeigen/ Alles / Alles ausser'
-      Top = -8
+      Top = -7
       Width = 176
       AllowGrayed = True
       Caption = 'Nur T-Anzeigen'
       Font.Color = clWindowText
-      Font.Height = -21
+      Font.Height = -18
       Font.Name = 'Tahoma'
       ParentFont = False
       State = cbGrayed
@@ -1834,29 +2171,29 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
     end
   end
   object btnDataCopyRecord1: TSpeedButton
-    Left = 982
-    Height = 33
-    Top = 21
-    Width = 34
+    Left = 818
+    Height = 28
+    Top = 18
+    Width = 28
     Action = actDataCopyRecord
     Font.Color = clWindowText
-    Font.Height = -21
+    Font.Height = -18
     Font.Name = 'Tahoma'
     ParentFont = False
   end
   object lblRCount: TLabel
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 382
+    Left = 766
     Height = 21
-    Top = 251
+    Top = 481
     Width = 33
     Anchors = [akRight, akBottom]
     BorderSpacing.Right = 2
     BorderSpacing.Bottom = 2
     Caption = '<0>'
     Font.Color = clGrayText
-    Font.Height = -17
+    Font.Height = -14
     Font.Name = 'Tahoma'
     ParentColor = False
     ParentFont = False
@@ -1864,16 +2201,16 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
   object lblRCount1: TLabel
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 382
+    Left = 766
     Height = 21
-    Top = 251
+    Top = 481
     Width = 33
     Anchors = [akRight, akBottom]
     BorderSpacing.Right = 2
     BorderSpacing.Bottom = 2
     Caption = '<0>'
     Font.Color = clGrayText
-    Font.Height = -17
+    Font.Height = -14
     Font.Name = 'Tahoma'
     ParentColor = False
     ParentFont = False
@@ -1881,16 +2218,16 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
   object lblRCount2: TLabel
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 422
+    Left = 799
     Height = 21
-    Top = 269
+    Top = 496
     Width = 33
     Anchors = [akRight, akBottom]
     BorderSpacing.Right = 2
     BorderSpacing.Bottom = 2
     Caption = '<0>'
     Font.Color = clGrayText
-    Font.Height = -17
+    Font.Height = -14
     Font.Name = 'Tahoma'
     ParentColor = False
     ParentFont = False
@@ -1898,33 +2235,33 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
   object lblRCount3: TLabel
     AnchorSideRight.Side = asrBottom
     AnchorSideBottom.Side = asrBottom
-    Left = 422
+    Left = 799
     Height = 21
-    Top = 269
+    Top = 496
     Width = 33
     Anchors = [akRight, akBottom]
     BorderSpacing.Right = 2
     BorderSpacing.Bottom = 2
     Caption = '<0>'
     Font.Color = clGrayText
-    Font.Height = -17
+    Font.Height = -14
     Font.Name = 'Tahoma'
     ParentColor = False
     ParentFont = False
   end
   object SaveDialog1: TSaveDialog
-    left = 1811
-    top = 1001
+    left = 1509
+    top = 834
   end
   object OpenDialog1: TOpenDialog
-    left = 915
-    top = 89
+    left = 763
+    top = 74
   end
   object DataSource1: TDataSource
     DataSet = dmRNZAnzeigen.qryTableAnzeigen
     OnDataChange = DataSource1DataChange
-    left = 327
-    top = 183
+    left = 273
+    top = 153
   end
   object IdleTimer1: TIdleTimer
     AutoEnabled = True
@@ -1932,18 +2269,18 @@ object frmTstHtmlParser2Main: TfrmTstHtmlParser2Main
     OnTimer = IdleTimer1Timer
     OnStartTimer = IdleTimer1StartTimer
     OnStopTimer = IdleTimer1StopTimer
-    left = 2273
-    top = 27
+    left = 1894
+    top = 23
   end
   object VisualHTTPClient1: TVisualHTTPClient
     HTTPversion = '1.1'
     AllowRedirect = False
-    left = 1440
-    top = 20
+    left = 1200
+    top = 17
   end
   object ActionList1: TActionList
-    left = 1056
-    top = 992
+    left = 880
+    top = 827
     object actDataSetBirth: TAction
       Category = 'Data'
       Caption = 'Setze Geburt'

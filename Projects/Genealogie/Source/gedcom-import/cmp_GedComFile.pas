@@ -196,7 +196,7 @@ type
 
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
-        class function GetFileInfoStr(Path: string; Force: boolean = False): string;
+        class function GetFileInfoStr(Path: string; {%H-}Force: boolean = False): string;
             override;
         ///<author>Joe Care</author>
         ///  <version>1.00.02</version>
@@ -274,6 +274,10 @@ const
 implementation
 
 uses Unt_StringProcs, LConvEncoding, variants;
+
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
 
 resourcestring
     rsGenealogieExchangeFile = 'Genealogie-Exchange-File';
@@ -985,7 +989,7 @@ end;
 
 procedure TGedComFile.LoadFromStream(st: TStream);
 var
-    lst: string;
+    lst: string='';
     lsl: TStringList;
     lbEncoded: boolean;
 begin
@@ -1270,7 +1274,7 @@ end;
 class function TGedComFile.Extensions: TStringArray;
 {$ENDIF}
 begin
-    setlength(Result, 1);
+    setlength(Result{%H-}, 1);
     Result[0] := '.GED';
 end;
 

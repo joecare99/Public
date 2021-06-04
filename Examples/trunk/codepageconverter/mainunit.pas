@@ -226,7 +226,7 @@ begin
       end;
       if ok then
       begin
-        if uppercase(ExtractFileExt(FileListBox1.Items[i]))='.LRS' then
+        if FilenameExtIs(FileListBox1.Items[i], 'lrs') then
         begin
           if ConvertMeLRS(tmp) then
           begin

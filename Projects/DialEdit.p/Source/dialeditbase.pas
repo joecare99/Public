@@ -11,7 +11,7 @@ type
 
     TShortName = string[2];
 
-    PString=objects.PString deprecated;
+    PString=objects.PString;
 { command codes }
 
 const

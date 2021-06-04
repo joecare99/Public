@@ -546,6 +546,10 @@ implementation
 
 uses variants,dateutils;
 
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+
 function EvtToNatur(aEvent: TenumEventType): string;
 var
   i: Integer;
@@ -570,7 +574,6 @@ var
   lYear: Longint;
   lDatespl: TStringArray;
   i, lMonth,lDay: Integer;
-  lValid: Boolean;
 
   function DecodeDateOrYear(aDate:String;var lDate:TDateTime):boolean;
   var
@@ -636,7 +639,7 @@ begin
              lMonth:= i+1;
       end
   end;
-  lvalid := TryEncodeDate(lYear,lMonth,lDay,result);
+  TryEncodeDate(lYear,lMonth,lDay,result);
 end;
 
 
@@ -710,7 +713,7 @@ begin
     if assigned(FLink) then
       begin
         FRemoving := True;
-        Parent.ChildUpdate(self);
+        Flink.Parent.ChildUpdate(self);
       end;
     FRemoving := False;
     inherited SetData(AValue);
@@ -1160,10 +1163,14 @@ end;
 function TIndName.GetFullName: string;
 
 begin
-    if True then
-        Result := trim(Title + ' ' + GivenName + ' ' + Surname)
-    else
+    if True then // Normal
       begin
+        Result := trim(Title + ' ' + GivenName + ' ' + Surname);
+        if result = '' then
+          result := Data;
+      end
+    else
+      {%H-}begin
         Result := Surname + ', ' + GivenName;
         if Title <> '' then
             Result := Result + ', ' + Title;
@@ -1281,8 +1288,6 @@ begin
 end;
 
 constructor TIndName.Create(const aID, aType: string; const aInfo: string);
-var
-    lpp: integer;
 begin
     inherited Create(aID, aType, '');
     Fsource := nil;
@@ -1534,7 +1539,6 @@ end;
 function TGedIndividual.GetFather: TGedIndividual;
 var
     lFamPar: TGedComObj;
-    lfam: TGedFamily;
 begin
     if assigned(FFather) and FFather.inheritsfrom(TGedIndividual) then
         exit(FFather);
@@ -1570,7 +1574,6 @@ end;
 function TGedIndividual.GetMother: TGedIndividual;
 var
     lFamPar: TGedComObj;
-    lfam: TGedFamily;
 begin
     if assigned(FMother) and FMother.inheritsfrom(TGedIndividual) then
         exit(FMother);
@@ -1725,7 +1728,7 @@ function TGedIndividual.GetBurialDate: string;
 begin
     Result := '';
     if Assigned(FBurial) then
-        Result := FBurial.PlaceName;
+        Result := FBurial.Date;
 end;
 
 function TGedIndividual.GetBurialPlace: string;

@@ -120,19 +120,19 @@ PROCEDURE SetTime (Hour, Minute, Second, Sec100: Word);
 Returns the current time settings of the operating system.
 06Nov97 LdB
 ---------------------------------------------------------------------}
-PROCEDURE GetTime (Var Hour, Minute, Second, Sec100: Word);
+PROCEDURE GetTime ({$IfDef FPC_OBJFPC}out{$else}var{$endif} Hour, Minute, Second, Sec100: Word);
 
 {-MinutesToTime------------------------------------------------------
 Returns the time in hours and minutes of a given number of minutes.
 19Jun97 LdB
 ---------------------------------------------------------------------}
-PROCEDURE MinutesToTime (Md: LongInt; Var Hour24, Minute: Word);
+PROCEDURE MinutesToTime (Md: LongInt; {$IfDef FPC_OBJFPC}out{$else}var{$endif} Hour24, Minute: Word);
 
 {-SecondsToTime------------------------------------------------------
 Returns the time in hours, mins and secs of a given number of seconds.
 19Jun97 LdB
 ---------------------------------------------------------------------}
-PROCEDURE SecondsToTime (Sd: LongInt; Var Hour24, Minute, Second: Word);
+PROCEDURE SecondsToTime (Sd: LongInt; {$IfDef FPC_OBJFPC}out{$else}var{$endif} Hour24, Minute, Second: Word);
 
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
                                 IMPLEMENTATION
@@ -141,7 +141,7 @@ PROCEDURE SecondsToTime (Sd: LongInt; Var Hour24, Minute, Second: Word);
 
   {$IFNDEF PPC_SPEED}                                 { NON SPEED COMPILER }
     {$IFDEF PPC_FPC}                                  { FPC WINDOWS COMPILER }
-    USEs Windows;                                     { Standard unit }
+    uses Windows;                                     { Standard unit }
     {$ELSE}                                           { OTHER COMPILERS }
     USES WinTypes, WinProcs;                          { Standard units }
     {$ENDIF}
@@ -199,7 +199,7 @@ PROCEDURE SecondsToTime (Sd: LongInt; Var Hour24, Minute, Second: Word);
 {---------------------------------------------------------------------------}
 {  CurrentMinuteOfDay -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 24Jun97 LdB}
 {---------------------------------------------------------------------------}
-FUNCTION CurrentMinuteOfDay: Word;
+function CurrentMinuteOfDay: Word;
 VAR Hour, Minute, Second, Sec100: Word;
 BEGIN
    GetTime(Hour, Minute, Second, Sec100);             { Get current time }
@@ -209,7 +209,7 @@ END;
 {---------------------------------------------------------------------------}
 {  CurrentSecondOfDay -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 24Jun97 LdB}
 {---------------------------------------------------------------------------}
-FUNCTION CurrentSecondOfDay: LongInt;
+function CurrentSecondOfDay: LongInt;
 VAR Hour, Minute, Second, Sec100: Word;
 BEGIN
    GetTime(Hour, Minute, Second, Sec100);             { Get current time }
@@ -220,7 +220,7 @@ END;
 {---------------------------------------------------------------------------}
 {  CurrentSec100OfDay -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 24Jun97 LdB}
 {---------------------------------------------------------------------------}
-FUNCTION CurrentSec100OfDay: LongInt;
+function CurrentSec100OfDay: LongInt;
 VAR Hour, Minute, Second, Sec100: Word;
 BEGIN
    GetTime(Hour, Minute, Second, Sec100);             { Get current time }
@@ -231,7 +231,7 @@ END;
 {---------------------------------------------------------------------------}
 {  MinuteOfDay -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 19Jun97 LdB       }
 {---------------------------------------------------------------------------}
-FUNCTION MinuteOfDay (Hour24, Minute: Word): Word;
+function MinuteOfDay(Hour24, Minute: Word): Word;
 BEGIN
    MinuteOfDay := (Hour24 * 60) + Minute;             { Minute from midnight }
 END;
@@ -239,7 +239,7 @@ END;
 {---------------------------------------------------------------------------}
 {  SecondOfDay -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 19Jun97 LdB       }
 {---------------------------------------------------------------------------}
-FUNCTION SecondOfDay (Hour24, Minute, Second: Word): LongInt;
+function SecondOfDay(Hour24, Minute, Second: Word): LongInt;
 BEGIN
    SecondOfDay := (LongInt(Hour24) * 3600) +
      (Minute * 60) + Second;                          { Second from midnight }
@@ -248,7 +248,7 @@ END;
 {---------------------------------------------------------------------------}
 {  SetTime -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 06Nov97 LdB           }
 {---------------------------------------------------------------------------}
-PROCEDURE SetTime (Hour, Minute, Second, Sec100: Word);
+procedure SetTime(Hour, Minute, Second, Sec100: Word);
 {$IFDEF OS_DOS}                                       { DOS/DPMI CODE }
    {$IFDEF ASM_BP}                                    { BP COMPATABLE ASM }
    ASSEMBLER;
@@ -264,6 +264,19 @@ PROCEDURE SetTime (Hour, Minute, Second, Sec100: Word);
    END;
    {$ENDIF}
    {$IFDEF ASM_FPC}                                   { FPC COMPATABLE ASM }
+     {$IFDEF BIT_16}
+     ASSEMBLER;
+     ASM
+       MOV CH, BYTE PTR Hour;                           { Fetch hour }
+       MOV CL, BYTE PTR Minute;                         { Fetch minute }
+       MOV DH, BYTE PTR Second;                         { Fetch second }
+       MOV DL, BYTE PTR Sec100;                         { Fetch hundredths }
+       MOV AX, $2D00;                                   { Set function id }
+       PUSH BP;                                         { Safety save register }
+       INT $21;                                         { Set the time }
+       POP BP;                                          { Restore register }
+     END;
+     {$ELSE}
    BEGIN
    ASM
      MOVB Hour, %CH;                                  { Fetch hour }
@@ -278,6 +291,20 @@ PROCEDURE SetTime (Hour, Minute, Second, Sec100: Word);
    END;
    {$ENDIF}
 {$ENDIF}
+{$ENDIF}
+{$IFDEF OS_WIN16}                                     { 16 BIT WINDOWS CODE }
+   ASSEMBLER;
+   ASM
+     MOV CH, BYTE PTR Hour;                           { Fetch hour }
+     MOV CL, BYTE PTR Minute;                         { Fetch minute }
+     MOV DH, BYTE PTR Second;                         { Fetch second }
+     MOV DL, BYTE PTR Sec100;                         { Fetch hundredths }
+     MOV AX, $2D00;                                   { Set function id }
+     PUSH BP;                                         { Safety save register }
+     INT $21;                                         { Set the time }
+     POP BP;                                          { Restore register }
+   END;
+   {$ENDIF}
 {$IFDEF OS_WINDOWS}                                   { WIN/NT CODE }
    {$IFDEF BIT_16}                                    { 16 BIT WINDOWS CODE }
    ASSEMBLER;
@@ -339,7 +366,7 @@ END;
 {---------------------------------------------------------------------------}
 {  GetTime -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 06Nov97 LdB           }
 {---------------------------------------------------------------------------}
-PROCEDURE GetTime (Var Hour, Minute, Second, Sec100: Word);
+procedure GetTime({$IfDef FPC_OBJFPC}out{$else}var{$endif} Hour, Minute, Second, Sec100: Word);
 {$IFDEF OS_DOS}                                       { DOS/DPMI CODE }
    {$IFDEF ASM_BP}                                    { BP COMPATABLE ASM }
    ASSEMBLER;
@@ -364,7 +391,56 @@ PROCEDURE GetTime (Var Hour, Minute, Second, Sec100: Word);
      STOSW;                                           { Return hours }
    END;
    {$ENDIF}
-   {$IFDEF OS_GO32}                                   { FPC COMPATABLE ASM }
+   {$IFDEF ASM_FPC}                                   { FPC COMPATABLE ASM }
+     {$IFDEF BIT_16}
+       {$IFDEF FPC_X86_DATA_NEAR}
+       ASSEMBLER;
+       ASM
+         MOV AX, $2C00;                                   { Set function id }
+         PUSH BP;                                         { Safety save register }
+         INT $21;                                         { System get time }
+         POP BP;                                          { Restore register }
+         XOR AH, AH;                                      { Clear register }
+         CLD;                                             { Strings go forward }
+         MOV AL, DL;                                      { Transfer register }
+         PUSH DS
+         POP ES
+         MOV DI, Sec100;                                  { ES:DI -> hundredths }
+         STOSW;                                           { Return hundredths }
+         MOV AL, DH;                                      { Transfer register }
+         MOV DI, Second;                                  { ES:DI -> seconds }
+         STOSW;                                           { Return seconds }
+         MOV AL, CL;                                      { Transfer register }
+         MOV DI, Minute;                                  { ES:DI -> minutes }
+         STOSW;                                           { Return minutes }
+         MOV AL, CH;                                      { Transfer register }
+         MOV DI, Hour;                                    { ES:DI -> hours }
+         STOSW;                                           { Return hours }
+       END;
+       {$ELSE FPC_X86_DATA_NEAR}
+       ASSEMBLER;
+       ASM
+         MOV AX, $2C00;                                   { Set function id }
+         PUSH BP;                                         { Safety save register }
+         INT $21;                                         { System get time }
+         POP BP;                                          { Restore register }
+         XOR AH, AH;                                      { Clear register }
+         CLD;                                             { Strings go forward }
+         MOV AL, DL;                                      { Transfer register }
+         LES DI, Sec100;                                  { ES:DI -> hundredths }
+         STOSW;                                           { Return hundredths }
+         MOV AL, DH;                                      { Transfer register }
+         LES DI, Second;                                  { ES:DI -> seconds }
+         STOSW;                                           { Return seconds }
+         MOV AL, CL;                                      { Transfer register }
+         LES DI, Minute;                                  { ES:DI -> minutes }
+         STOSW;                                           { Return minutes }
+         MOV AL, CH;                                      { Transfer register }
+         LES DI, Hour;                                    { ES:DI -> hours }
+         STOSW;                                           { Return hours }
+       END;
+       {$ENDIF}
+     {$ELSE}
    BEGIN
    (* ASM
      MOVW $0x2C00, %AX;                               { Set function id }
@@ -390,6 +466,56 @@ PROCEDURE GetTime (Var Hour, Minute, Second, Sec100: Word);
      restored if a mouse interrupt is generated while the Dos
      interrupt is called... PM }
      Dos.GetTime(Hour,Minute,Second,Sec100);
+   END;
+   {$ENDIF}
+{$ENDIF}
+{$ENDIF}
+{$IFDEF OS_WIN16}                                     { 16 BIT WINDOWS CODE }
+   {$IFDEF FPC_X86_DATA_NEAR}
+   ASSEMBLER;
+   ASM
+     MOV AX, $2C00;                                   { Set function id }
+     PUSH BP;                                         { Safety save register }
+     INT $21;                                         { System get time }
+     POP BP;                                          { Restore register }
+     XOR AH, AH;                                      { Clear register }
+     CLD;                                             { Strings go forward }
+     MOV AL, DL;                                      { Transfer register }
+     PUSH DS
+     POP ES
+     MOV DI, Sec100;                                  { ES:DI -> hundredths }
+     STOSW;                                           { Return hundredths }
+     MOV AL, DH;                                      { Transfer register }
+     MOV DI, Second;                                  { ES:DI -> seconds }
+     STOSW;                                           { Return seconds }
+     MOV AL, CL;                                      { Transfer register }
+     MOV DI, Minute;                                  { ES:DI -> minutes }
+     STOSW;                                           { Return minutes }
+     MOV AL, CH;                                      { Transfer register }
+     MOV DI, Hour;                                    { ES:DI -> hours }
+     STOSW;                                           { Return hours }
+   END;
+   {$ELSE FPC_X86_DATA_NEAR}
+   ASSEMBLER;
+   ASM
+     MOV AX, $2C00;                                   { Set function id }
+     PUSH BP;                                         { Safety save register }
+     INT $21;                                         { System get time }
+     POP BP;                                          { Restore register }
+     XOR AH, AH;                                      { Clear register }
+     CLD;                                             { Strings go forward }
+     MOV AL, DL;                                      { Transfer register }
+     LES DI, Sec100;                                  { ES:DI -> hundredths }
+     STOSW;                                           { Return hundredths }
+     MOV AL, DH;                                      { Transfer register }
+     LES DI, Second;                                  { ES:DI -> seconds }
+     STOSW;                                           { Return seconds }
+     MOV AL, CL;                                      { Transfer register }
+     LES DI, Minute;                                  { ES:DI -> minutes }
+     STOSW;                                           { Return minutes }
+     MOV AL, CH;                                      { Transfer register }
+     LES DI, Hour;                                    { ES:DI -> hours }
+     STOSW;                                           { Return hours }
    END;
    {$ENDIF}
 {$ENDIF}
@@ -461,7 +587,7 @@ END;
 {---------------------------------------------------------------------------}
 {  MinutesToTime -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 19Jun97 LdB     }
 {---------------------------------------------------------------------------}
-PROCEDURE MinutesToTime (Md: LongInt; Var Hour24, Minute: Word);
+procedure MinutesToTime(Md: LongInt; {$IfDef FPC_OBJFPC}out{$else}var{$endif} Hour24, Minute: Word);
 BEGIN
    Hour24 := Md DIV 60;                               { Hours of time }
    Minute := Md MOD 60;                               { Minutes of time }
@@ -470,7 +596,7 @@ END;
 {---------------------------------------------------------------------------}
 {  SecondsToTime -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 19Jun97 LdB     }
 {---------------------------------------------------------------------------}
-PROCEDURE SecondsToTime (Sd: LongInt; Var Hour24, Minute, Second: Word);
+procedure SecondsToTime(Sd: LongInt; {$IfDef FPC_OBJFPC}out{$else}var{$endif} Hour24, Minute, Second: Word);
 BEGIN
    Hour24 := Sd DIV 3600;                             { Hours of time }
    Minute := Sd MOD 3600 DIV 60;                      { Minutes of time }

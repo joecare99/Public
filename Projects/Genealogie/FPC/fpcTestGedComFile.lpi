@@ -53,6 +53,9 @@
               </Win32>
             </Options>
           </Linking>
+          <Other>
+            <CustomOptions Value="-dDEBUG"/>
+          </Other>
         </CompilerOptions>
       </Item2>
       <Item3 Name="Release">
@@ -113,7 +116,7 @@
         <PackageName Value="FCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="13">
+    <Units Count="14">
       <Unit0>
         <Filename Value="fpcTestGedComFile.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -167,6 +170,10 @@
         <Filename Value="..\..\..\Daten\Source\XML_Stuff\laz2_XMLWrite2.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit12>
+      <Unit13>
+        <Filename Value="..\Source\Components\cls_GenHelperBase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

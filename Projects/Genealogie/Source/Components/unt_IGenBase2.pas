@@ -53,6 +53,11 @@ type
         evt_FamilySearchID,
         evt_Property,
         evt_Assosiation,
+        evt_Stillborn,
+        evt_Partner,
+        evt_fallen,
+        evt_missing,
+        evt_Age,
 
         evt_LastChange,
         evt_Last
@@ -298,6 +303,8 @@ type
        function EnumFamilies:IGenFamEnumerator;
     end;
 
+ TTMessageEvent = procedure(Sender: TObject; aType: TEventType;
+        aText: string; Ref: string; aMode: integer) of object;
 implementation
 
 end.

@@ -18,6 +18,7 @@ type
     destructor Done; virtual;
     procedure Feed(Data: string); virtual; abstract;
     procedure Error(sender: TObject; NewMessage: string); virtual; abstract;
+    procedure Warning(sender: TObject; NewMessage: string); virtual; abstract;
     procedure reset;
     procedure GetPos(out ActLineNo, ActOffset: Int64);
 
@@ -38,7 +39,8 @@ type
     FparseMode: THTMLParseMode;
   public
     procedure Feed(Data: string); override;
-    procedure Error(sender: TObject; NewMessage: string); override;
+    procedure Error({%H-}sender: TObject; NewMessage: string); override;
+    procedure Warning({%H-}sender: TObject; {%H-}NewMessage: string); override;
     Property OnStdText: TTextNotification read FOnStdText write FOnStdText;
     Property OnStartTag: TTextNotification read FOnStartTag write FOnStartTag;
     Property OnTagMod: TTextNotification read FOnTagMod write FOnTagMod;
@@ -46,6 +48,8 @@ type
     Property OnComment: TTextNotification read FOnComment write FOnComment;
     Property OnScript: TTextNotification read FOnScript write FOnScript;
   End;
+
+ Function HTML2text(s: string): String;
 
 implementation
 
@@ -56,7 +60,13 @@ begin
   s:=StringReplace(s,'&quot;','"',[rfReplaceAll,rfIgnoreCase]);
   s:=StringReplace(s,'&gt;','>',[rfReplaceAll,rfIgnoreCase]);
   s:=StringReplace(s,'&lt;','<',[rfReplaceAll,rfIgnoreCase]);
-  s:=StringReplace(s,'&amp;','&',[rfReplaceAll,rfIgnoreCase]);
+  s:=StringReplace(s,'&Auml;','Ä',[rfReplaceAll,rfIgnoreCase]);
+  s:=StringReplace(s,'&auml;','ä',[rfReplaceAll,rfIgnoreCase]);
+  s:=StringReplace(s,'&Ouml;','Ö',[rfReplaceAll,rfIgnoreCase]);
+  s:=StringReplace(s,'&ouml;','ö',[rfReplaceAll,rfIgnoreCase]);
+  s:=StringReplace(s,'&Uuml;','Ü',[rfReplaceAll,rfIgnoreCase]);
+  s:=StringReplace(s,'&uuml;','ü',[rfReplaceAll,rfIgnoreCase]);
+  s:=StringReplace(s,'&nbsp;',' ',[rfReplaceAll,rfIgnoreCase]); // &nbsp;
   result := s;
 end;
 
@@ -280,6 +290,11 @@ begin
   begin
     e:=Exception.Create(NewMessage);
     Raise(e);
+  end;
+
+  procedure ThtmlParser.Warning(sender: TObject; NewMessage: string);
+  begin
+    // Todo:
   end;
 
 end.

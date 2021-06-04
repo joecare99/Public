@@ -195,6 +195,10 @@ implementation
 
 uses dateutils, LConvEncoding, dm_GenData2;
 
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+
 { TClsHejGenealogy }
 
 function TClsHejGenealogy.GetActualInd: THejIndData;
@@ -996,7 +1000,7 @@ end;
 
 function TClsHejGenealogy.GetData: variant;
 begin
-
+  result := ''
 end;
 
 procedure TClsHejGenealogy.SetData(NewVal: variant);

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestX_Src"><module name="CShScanner"><element name="TCSharpScannerCSSkipMode"><short>The modes to Skip CSharp-Source</short>
+      </element><element name="TCSharpScannerCSSkipMode.csSkipNone"><short>No skipping</short>
+      </element><element name="TCSharpScannerCSSkipMode.ppSkipIfBranch"/><element name="TCSharpScannerCSSkipMode.csSkipIfBranch"><short>skip the If-Branch</short>
+      </element><element name="TCSharpScannerCSSkipMode.csSkipElseBranch"><short>Skip the else branch</short>
+      </element><element name="TCSharpScannerCSSkipMode.csSkipAll"><short>skip all</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

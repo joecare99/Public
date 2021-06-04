@@ -132,7 +132,7 @@ const
     [hind_text, hind_AKA, hind_FarmName]  + CIndSourceData;
 
 type
-
+ TClsIIndivid = class;
 
  PHejIndData = ^THejIndData;
 
@@ -140,6 +140,7 @@ type
 
  THejIndData = packed Record
 private
+//  FOwner:TCl
   function GetBirthDate: String;
   function GetData(idx: TEnumHejIndDatafields): Variant;
   function GetDeathDate: String;
@@ -147,6 +148,7 @@ private
   procedure ReadFromStream0(const st: TStream);
   procedure SetBirthDate(AValue: String);
   procedure SetData(idx: TEnumHejIndDatafields; AValue: Variant);
+  procedure SetIndivid(AValue: TClsIIndivid);
 public
   function ToString:String;
   function ToPasStruct:String;
@@ -231,13 +233,20 @@ public
        CallName:string;
        Marriages:array of Integer;
        Children:array of Integer;
+ private
+     FInd:TClsIIndivid;
+ public
+ //    property IndividI:IGenIndividual read FInd;
+    property Individ:TClsIIndivid read FInd write SetIndivid;
  end;
 
  { TClsIIndivid }
 
- TClsIIndivid=class(Tobject,IGenIndividual)
+ TClsIIndivid=class(Tobject{,IGenIndividual})
+   private
+       FTHejIndData : PHejIndData;
    public
-        constructor Create;
+        constructor Create(aInd:PHejIndData);
         destructor Destroy; override;
   public
         function GetBaptDate: string;
@@ -416,11 +425,15 @@ implementation
 
 uses dateutils,LConvEncoding,dm_GenData2;
 
+{$if FPC_FULLVERSION = 30200 }
+    {$WARN 6058 OFF}
+{$ENDIF}
+
 { TClsIIndivid }
 
-constructor TClsIIndivid.Create;
+constructor TClsIIndivid.Create(aInd: PHejIndData);
 begin
-
+  FTHejIndData := aInd;
 end;
 
 destructor TClsIIndivid.Destroy;
@@ -430,47 +443,54 @@ end;
 
 function TClsIIndivid.GetBaptDate: string;
 begin
-
+  result := '';
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetDateData(hind_BaptDay);
 end;
 
 function TClsIIndivid.GetBaptism: IGenEvent;
 begin
-
+  result := nil; //Owner.GetBaptism;
 end;
 
 function TClsIIndivid.GetBaptPlace: string;
 begin
-
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_BaptPlace);
 end;
 
 function TClsIIndivid.GetBirth: IGenEvent;
 begin
-
+  result := nil; //Owner.GetBirth;
 end;
 
 function TClsIIndivid.GetBirthDate: string;
 begin
-
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetDateData(hind_BirthDay);
 end;
 
 function TClsIIndivid.GetBirthPlace: string;
 begin
-
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_Birthplace);
 end;
 
 function TClsIIndivid.GetBurial: IGenEvent;
 begin
-
+  result := nil; //Owner.Burial;
 end;
 
 function TClsIIndivid.GetBurialDate: string;
 begin
-
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetDateData(hind_BirthDay);
 end;
 
 function TClsIIndivid.GetBurialPlace: string;
 begin
-
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_BurialPlace);
 end;
 
 function TClsIIndivid.GetChildrenCount: integer;
@@ -485,17 +505,19 @@ end;
 
 function TClsIIndivid.GetDeath: IGenEvent;
 begin
-
+  result := nil; //Owner.Death;
 end;
 
 function TClsIIndivid.GetDeathDate: string;
 begin
-
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetDateData(hind_BirthDay);
 end;
 
 function TClsIIndivid.GetDeathPlace: string;
 begin
-
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_DeathPlace);
 end;
 
 function TClsIIndivid.GetFamilies(Idx: Variant): IGenFamily;
@@ -515,12 +537,14 @@ end;
 
 function TClsIIndivid.GetGivenName: string;
 begin
-
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_GivenName);
 end;
 
 function TClsIIndivid.GetIndRefID: string;
 begin
-
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_Index);
 end;
 
 function TClsIIndivid.GetMother: IGenIndividual;
@@ -535,7 +559,8 @@ end;
 
 function TClsIIndivid.GetOccupation: string;
 begin
-
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_Occupation);
 end;
 
 function TClsIIndivid.GetOccuPlace: string;
@@ -550,17 +575,20 @@ end;
 
 function TClsIIndivid.GetReligion: string;
 begin
-
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_Religion);
 end;
 
 function TClsIIndivid.GetResidence: string;
 begin
-
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_Residence);
 end;
 
 function TClsIIndivid.GetSex: string;
 begin
-
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_Sex);
 end;
 
 function TClsIIndivid.GetSpouseCount: integer;
@@ -575,7 +603,8 @@ end;
 
 function TClsIIndivid.GetSurname: string;
 begin
-
+  if assigned(FTHejIndData) then
+    result := FTHejIndData.GetData(hind_FamilyName);
 end;
 
 function TClsIIndivid.GetTimeStamp: TDateTime;
@@ -1400,11 +1429,11 @@ begin
     result := '';
 end;
 
-function THejIndData.GetiIndi: IGenIndividual;
+function THejIndData.GetiIndi: IGenIndividual; deprecated;
 begin
-  if assigned(FIIndi) then
-    result := FIIndi
-  else
+//  if assigned(FIIndi) then
+//    result := FIIndi
+//  else
     begin
 
     end;
@@ -1465,6 +1494,12 @@ begin
       hind_NameSource: NameSource := AValue ;
       hind_CallName: CallName := AValue ;
     end;
+end;
+
+procedure THejIndData.SetIndivid(AValue: TClsIIndivid);
+begin
+  if FInd=AValue then Exit;
+  FInd:=AValue;
 end;
 
 function THejIndData.ToString: String;

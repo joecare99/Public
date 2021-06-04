@@ -40,11 +40,15 @@ implementation
 {$ENDIF}
 
 type TShifts =
+  {$IFDEF FPC}
+    TShiftStateEnum;
+  {$ELSE}
 {$ifdef Compiler14_up}
   (ssShift, ssAlt, ssCtrl, ssLeft, ssRight, ssMiddle, ssDouble, ssTouch, ssPen, ssCommand);
 {$else ~Compiler14_up}
   (ssShift, ssAlt, ssCtrl,ssLeft, ssRight, ssMiddle, ssDouble);
 {$endif ~Compiler14_up}
+{$ENDIF}
      TTShiftstate = set of TShifts;
 
 function ShiftState2Str(shift:TShiftState):string;
