@@ -306,6 +306,8 @@ begin
        else
          if by in [10,15] then
            begin
+             if (lAktField = 0) and (lActStr='ortv') then
+               break;
              data[TEnumHejAdopDatafields(lAktField)] := ConvertEncoding(lActStr,EncodingAnsi,EncodingUTF8);
              if by = 15 then
 

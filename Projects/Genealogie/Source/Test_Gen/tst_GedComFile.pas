@@ -168,14 +168,13 @@ begin
         CheckEquals('Georg Adam', Father.Name, 'Indi.Father is not NULL');
  //       CheckEquals('Linda Kleis', Mother.Name, 'Indi.Father is not NULL');
         CheckEquals('I: Johann Georg Adam, M, E: born: (err) 09.07.1734 in Obrigheim', ToString, 'Name is "Joe Care"');
-        CheckEquals('Person: Joe Care' + LineEnding + 'Sex: M' + LineEnding +
-            'Event: Birth am 21 JAN 1971 in Eppingen, Heilbronn, Baden-Württemberg, Germany (Im Kreiskrankenhaus) Q:(PI of Joe Care)'
-            +
-            LineEnding + 'Event: Baptism am 7 MAR 1971 in Sulzfeld, Karlsruhe, Baden-Württemberg, Germany Q:(PI of Joe Care)'
-            +
-            LineEnding + 'Religion: ev.' + LineEnding +
-            'Event: Death am 2099 in St. NImmerleinsdorf (Im Kreise seiner Familie)' +
-            LineEnding + 'Event: Burrial am 1 APR 2099', Description, 'Description is "Joe Care"');
+        CheckEquals(
+ 'Person: Johann Georg Adam' + lineending +
+ 'Sex: M' + lineending +
+ 'Event: Birth am (err) 09.07.1734 in Obrigheim' + lineending +
+ 'Religion: lu.' + lineending +
+ 'Event: Burrial am 12.07.1734 in Obrigheim' + lineending
+ , Description, 'Description is "Johann Georg Adam"');
       end;
 
 end;

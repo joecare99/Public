@@ -4,13 +4,13 @@
     <PathDelim Value="\"/>
     <Version Value="11"/>
     <BuildModes Active="Debug"/>
-    <Units Count="47">
+    <Units Count="53">
       <Unit0>
         <Filename Value="DialEdit.pas"/>
         <IsPartOfProject Value="True"/>
         <TopLine Value="201"/>
         <CursorPos X="14" Y="242"/>
-        <UsageCount Value="149"/>
+        <UsageCount Value="179"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -20,7 +20,7 @@
         <EditorIndex Value="18"/>
         <TopLine Value="289"/>
         <CursorPos X="33" Y="300"/>
-        <UsageCount Value="149"/>
+        <UsageCount Value="179"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
@@ -28,7 +28,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="11"/>
         <CursorPos X="2" Y="44"/>
-        <UsageCount Value="148"/>
+        <UsageCount Value="178"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
@@ -36,8 +36,8 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="obj_TrialLabel"/>
         <EditorIndex Value="8"/>
-        <CursorPos Y="3"/>
-        <UsageCount Value="99"/>
+        <CursorPos X="19" Y="19"/>
+        <UsageCount Value="129"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
@@ -46,7 +46,7 @@
         <UnitName Value="DialEditBase"/>
         <EditorIndex Value="1"/>
         <CursorPos X="61" Y="14"/>
-        <UsageCount Value="98"/>
+        <UsageCount Value="128"/>
         <Loaded Value="True"/>
       </Unit4>
       <Unit5>
@@ -55,7 +55,7 @@
         <UnitName Value="DialEditBFctn"/>
         <EditorIndex Value="2"/>
         <CursorPos X="68" Y="96"/>
-        <UsageCount Value="98"/>
+        <UsageCount Value="128"/>
         <Loaded Value="True"/>
       </Unit5>
       <Unit6>
@@ -65,17 +65,18 @@
         <EditorIndex Value="10"/>
         <TopLine Value="65"/>
         <CursorPos X="50" Y="86"/>
-        <UsageCount Value="95"/>
+        <UsageCount Value="125"/>
         <Loaded Value="True"/>
       </Unit6>
       <Unit7>
         <Filename Value="..\Source\obj_editcontroldlg.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Obj_EditControlDlg"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="4"/>
         <TopLine Value="33"/>
         <CursorPos X="38" Y="34"/>
-        <UsageCount Value="74"/>
+        <UsageCount Value="104"/>
         <Loaded Value="True"/>
       </Unit7>
       <Unit8>
@@ -85,14 +86,14 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="79"/>
         <CursorPos Y="108"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="103"/>
       </Unit8>
       <Unit9>
         <Filename Value="..\Source\str_statictextdata.pas"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="45" Y="8"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="103"/>
       </Unit9>
       <Unit10>
         <Filename Value="..\Source\str_inputlinedata.pas"/>
@@ -100,7 +101,7 @@
         <UnitName Value="str_InputLineData"/>
         <EditorIndex Value="14"/>
         <CursorPos X="21" Y="8"/>
-        <UsageCount Value="73"/>
+        <UsageCount Value="103"/>
         <Loaded Value="True"/>
       </Unit10>
       <Unit11>
@@ -109,7 +110,7 @@
         <UnitName Value="Str_DialogData"/>
         <EditorIndex Value="13"/>
         <CursorPos X="11" Y="10"/>
-        <UsageCount Value="70"/>
+        <UsageCount Value="100"/>
         <Loaded Value="True"/>
       </Unit11>
       <Unit12>
@@ -118,7 +119,7 @@
         <UnitName Value="str_ParamTextData"/>
         <EditorIndex Value="17"/>
         <CursorPos X="27" Y="8"/>
-        <UsageCount Value="65"/>
+        <UsageCount Value="95"/>
         <Loaded Value="True"/>
       </Unit12>
       <Unit13>
@@ -127,7 +128,7 @@
         <UnitName Value="str_ButtonData"/>
         <EditorIndex Value="12"/>
         <CursorPos X="26" Y="13"/>
-        <UsageCount Value="65"/>
+        <UsageCount Value="95"/>
         <Loaded Value="True"/>
       </Unit13>
       <Unit14>
@@ -136,7 +137,7 @@
         <UnitName Value="str_ListBoxData"/>
         <EditorIndex Value="15"/>
         <CursorPos X="27" Y="8"/>
-        <UsageCount Value="65"/>
+        <UsageCount Value="95"/>
         <Loaded Value="True"/>
       </Unit14>
       <Unit15>
@@ -144,7 +145,7 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="16"/>
         <CursorPos X="10" Y="10"/>
-        <UsageCount Value="65"/>
+        <UsageCount Value="95"/>
         <Loaded Value="True"/>
       </Unit15>
       <Unit16>
@@ -154,7 +155,7 @@
         <EditorIndex Value="9"/>
         <TopLine Value="94"/>
         <CursorPos X="50" Y="116"/>
-        <UsageCount Value="62"/>
+        <UsageCount Value="92"/>
         <Loaded Value="True"/>
       </Unit16>
       <Unit17>
@@ -163,7 +164,7 @@
         <EditorIndex Value="5"/>
         <TopLine Value="98"/>
         <CursorPos X="50" Y="120"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="68"/>
         <Loaded Value="True"/>
       </Unit17>
       <Unit18>
@@ -173,7 +174,7 @@
         <EditorIndex Value="7"/>
         <TopLine Value="223"/>
         <CursorPos X="53" Y="245"/>
-        <UsageCount Value="38"/>
+        <UsageCount Value="68"/>
         <Loaded Value="True"/>
       </Unit18>
       <Unit19>
@@ -183,7 +184,7 @@
         <EditorIndex Value="3"/>
         <TopLine Value="435"/>
         <CursorPos X="47" Y="1960"/>
-        <UsageCount Value="36"/>
+        <UsageCount Value="66"/>
         <Loaded Value="True"/>
       </Unit19>
       <Unit20>
@@ -193,7 +194,7 @@
         <EditorIndex Value="6"/>
         <TopLine Value="23"/>
         <CursorPos X="23" Y="45"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="65"/>
         <Loaded Value="True"/>
       </Unit20>
       <Unit21>
@@ -202,20 +203,20 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="365"/>
         <CursorPos Y="381"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="4"/>
       </Unit21>
       <Unit22>
         <Filename Value="..\Params.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="5" Y="39"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="4"/>
       </Unit22>
       <Unit23>
         <Filename Value="..\..\FpcTrunk\packages\fv\src\platform.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="166"/>
         <CursorPos X="9" Y="176"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="4"/>
       </Unit23>
       <Unit24>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\rtl-extra\src\inc\objects.pp"/>
@@ -223,7 +224,7 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="1129"/>
         <CursorPos X="4" Y="1197"/>
-        <UsageCount Value="37"/>
+        <UsageCount Value="35"/>
       </Unit24>
       <Unit25>
         <Filename Value="..\..\FpcTrunk\packages\fv\src\fvcommon.pas"/>
@@ -231,53 +232,51 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="46"/>
         <CursorPos X="5" Y="145"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="4"/>
       </Unit25>
       <Unit26>
         <Filename Value="..\..\FpcTrunk\packages\fv\src\buildfv.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="21"/>
         <CursorPos X="20" Y="12"/>
-        <UsageCount Value="41"/>
+        <UsageCount Value="39"/>
       </Unit26>
       <Unit27>
         <Filename Value="..\..\FpcTrunk\packages\fv\src\stddlg.pas"/>
         <UnitName Value="StdDlg"/>
         <EditorIndex Value="-1"/>
-        <TopLine Value="2484"/>
-        <CursorPos X="26" Y="2487"/>
-        <UsageCount Value="6"/>
+        <TopLine Value="949"/>
+        <CursorPos X="35" Y="954"/>
+        <UsageCount Value="24"/>
       </Unit27>
       <Unit28>
         <Filename Value="..\..\FpcTrunk\packages\fv\src\drivers.pas"/>
         <UnitName Value="Drivers"/>
-        <EditorIndex Value="22"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="26"/>
         <CursorPos Y="1536"/>
-        <UsageCount Value="52"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="66"/>
       </Unit28>
       <Unit29>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\rtl-console\src\inc\videoh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="89"/>
         <CursorPos X="3" Y="98"/>
-        <UsageCount Value="44"/>
+        <UsageCount Value="42"/>
       </Unit29>
       <Unit30>
         <Filename Value="..\..\FpcTrunk\packages\fv\src\app.pas"/>
         <UnitName Value="App"/>
-        <EditorIndex Value="20"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="757"/>
         <CursorPos Y="772"/>
-        <UsageCount Value="70"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="84"/>
       </Unit30>
       <Unit31>
         <Filename Value="..\NewDlgs.pas"/>
         <EditorIndex Value="-1"/>
         <CursorPos X="59" Y="331"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="4"/>
       </Unit31>
       <Unit32>
         <Filename Value="..\..\FpcTrunk\packages\fv\src\msgbox.pas"/>
@@ -285,32 +284,28 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="179"/>
         <CursorPos X="32" Y="194"/>
-        <UsageCount Value="6"/>
+        <UsageCount Value="4"/>
       </Unit32>
       <Unit33>
         <Filename Value="..\..\FpcTrunk\packages\fv\src\dialogs.pas"/>
         <UnitName Value="Dialogs"/>
-        <EditorIndex Value="21"/>
-        <TopLine Value="2069"/>
-        <CursorPos Y="2077"/>
-        <UsageCount Value="63"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <UsageCount Value="77"/>
       </Unit33>
       <Unit34>
         <Filename Value="..\..\FpcTrunk\packages\fv\src\views.pas"/>
         <UnitName Value="Views"/>
-        <EditorIndex Value="24"/>
-        <TopLine Value="1143"/>
-        <CursorPos Y="1153"/>
-        <UsageCount Value="59"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="537"/>
+        <CursorPos X="6" Y="2120"/>
+        <UsageCount Value="73"/>
       </Unit34>
       <Unit35>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\inc\dosh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="79"/>
         <CursorPos X="11" Y="87"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="33"/>
       </Unit35>
       <Unit36>
         <Filename Value="..\..\FpcTrunk\packages\fv\src\editors.pas"/>
@@ -318,205 +313,132 @@
         <EditorIndex Value="-1"/>
         <TopLine Value="287"/>
         <CursorPos X="30" Y="298"/>
-        <UsageCount Value="36"/>
+        <UsageCount Value="34"/>
       </Unit36>
       <Unit37>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\packages\rtl-console\src\inc\video.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="28"/>
         <CursorPos X="30" Y="36"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="33"/>
       </Unit37>
       <Unit38>
         <Filename Value="..\..\FpcTrunk\packages\fv\src\timeddlg.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="168"/>
         <CursorPos X="9" Y="178"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="33"/>
       </Unit38>
       <Unit39>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\objpas\sysutils\datih.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="120"/>
         <CursorPos X="19" Y="128"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="33"/>
       </Unit39>
       <Unit40>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\inc\systemh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="435"/>
         <CursorPos X="3" Y="443"/>
-        <UsageCount Value="35"/>
+        <UsageCount Value="33"/>
       </Unit40>
       <Unit41>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\objpas\classes\classesh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="10"/>
         <CursorPos X="4" Y="27"/>
-        <UsageCount Value="18"/>
+        <UsageCount Value="16"/>
       </Unit41>
       <Unit42>
         <Filename Value="C:\lazarus\fpc\3.0.0\source\rtl\objpas\sysutils\sysstrh.inc"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="49"/>
         <CursorPos X="10" Y="66"/>
-        <UsageCount Value="17"/>
+        <UsageCount Value="15"/>
       </Unit42>
       <Unit43>
         <Filename Value="..\..\FpcTrunk\packages\fv\src\outline.pas"/>
         <EditorIndex Value="-1"/>
         <TopLine Value="179"/>
         <CursorPos X="10" Y="196"/>
-        <UsageCount Value="10"/>
+        <UsageCount Value="8"/>
       </Unit43>
       <Unit44>
         <Filename Value="..\..\..\Delphi_home\Idee\source\fv\Src\drivers.pas"/>
         <UnitName Value="Drivers"/>
-        <EditorIndex Value="19"/>
-        <TopLine Value="1426"/>
-        <CursorPos X="13" Y="1432"/>
-        <UsageCount Value="12"/>
-        <Loaded Value="True"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="526"/>
+        <CursorPos X="27" Y="529"/>
+        <UsageCount Value="26"/>
       </Unit44>
       <Unit45>
         <Filename Value="C:\lazarus\fpc\3.2.0\source\packages\fv\src\views.pas"/>
         <UnitName Value="Views"/>
-        <EditorIndex Value="25"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="1817"/>
         <CursorPos X="17" Y="1839"/>
-        <UsageCount Value="11"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="25"/>
       </Unit45>
       <Unit46>
         <Filename Value="C:\lazarus\fpc\3.2.0\source\packages\rtl-console\src\inc\videoh.inc"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="23"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="3" Y="96"/>
-        <UsageCount Value="11"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="25"/>
       </Unit46>
+      <Unit47>
+        <Filename Value="..\..\..\Delphi_home\Idee\source\fv\Src\platform.inc"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="158"/>
+        <CursorPos X="33" Y="196"/>
+        <UsageCount Value="24"/>
+      </Unit47>
+      <Unit48>
+        <Filename Value="..\..\..\Delphi_home\Idee\source\fv\Src\views.pas"/>
+        <UnitName Value="Views"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1824"/>
+        <CursorPos X="30" Y="1839"/>
+        <UsageCount Value="24"/>
+      </Unit48>
+      <Unit49>
+        <Filename Value="..\..\..\Delphi_home\Idee\source\fv\Src\histlist.pas"/>
+        <UnitName Value="HistList"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="116"/>
+        <CursorPos X="3" Y="188"/>
+        <UsageCount Value="24"/>
+      </Unit49>
+      <Unit50>
+        <Filename Value="..\..\..\Delphi_home\Idee\source\fv\Src\stddlg.pas"/>
+        <UnitName Value="StdDlg"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="1956"/>
+        <CursorPos X="46" Y="1970"/>
+        <UsageCount Value="22"/>
+      </Unit50>
+      <Unit51>
+        <Filename Value="..\..\..\Delphi_home\Idee\source\fv\Src\dialogs.pas"/>
+        <UnitName Value="Dialogs"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="2891"/>
+        <CursorPos X="19" Y="2913"/>
+        <UsageCount Value="22"/>
+      </Unit51>
+      <Unit52>
+        <Filename Value="C:\lazarus\fpc\3.2.0\source\packages\rtl-extra\src\inc\objects.pp"/>
+        <UnitName Value="Objects"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="394"/>
+        <CursorPos X="16" Y="414"/>
+        <UsageCount Value="10"/>
+      </Unit52>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="1">
       <Position1>
-        <Filename Value="..\Source\obj_dialeditapp.pas"/>
-        <Caret Line="2224" Column="19" TopLine="2202"/>
+        <Filename Value="..\Source\obj_triallabel.pas"/>
+        <Caret Line="19" Column="19"/>
       </Position1>
-      <Position2>
-        <Filename Value="..\..\..\Delphi_home\Idee\source\fv\Src\drivers.pas"/>
-        <Caret Line="529" Column="64" TopLine="500"/>
-      </Position2>
-      <Position3>
-        <Filename Value="..\..\..\Delphi_home\Idee\source\fv\Src\drivers.pas"/>
-        <Caret Line="1429" Column="64" TopLine="1426"/>
-      </Position3>
-      <Position4>
-        <Filename Value="..\Source\Params.pas"/>
-        <Caret Line="450" Column="14" TopLine="408"/>
-      </Position4>
-      <Position5>
-        <Filename Value="..\Source\obj_trialcluster.pas"/>
-        <Caret Line="45" Column="23" TopLine="23"/>
-      </Position5>
-      <Position6>
-        <Filename Value="..\Source\dialeditbase.pas"/>
-        <Caret Line="14" Column="28"/>
-      </Position6>
-      <Position7>
-        <Filename Value="DialEdit.pas"/>
-        <Caret Line="242" Column="14" TopLine="201"/>
-      </Position7>
-      <Position8>
-        <Filename Value="..\..\..\Delphi_home\Idee\source\fv\Src\drivers.pas"/>
-        <Caret Line="895" Column="39" TopLine="881"/>
-      </Position8>
-      <Position9>
-        <Filename Value="..\Source\obj_triallabel.pas"/>
-        <Caret Line="21" Column="19"/>
-      </Position9>
-      <Position10>
-        <Filename Value="C:\lazarus\fpc\3.2.0\source\packages\fv\src\views.pas"/>
-        <Caret Line="1839" Column="17" TopLine="1817"/>
-      </Position10>
-      <Position11>
-        <Filename Value="..\Source\obj_triallabel.pas"/>
-        <Caret Line="3"/>
-      </Position11>
-      <Position12>
-        <Filename Value="..\Source\obj_trialstatictext.pas"/>
-        <Caret Line="3"/>
-      </Position12>
-      <Position13>
-        <Filename Value="..\Source\obj_trialstatictext.pas"/>
-        <Caret Line="28" Column="70" TopLine="132"/>
-      </Position13>
-      <Position14>
-        <Filename Value="..\Source\obj_trialstatictext.pas"/>
-        <Caret Line="86" Column="50" TopLine="65"/>
-      </Position14>
-      <Position15>
-        <Filename Value="..\Source\obj_trialparamtext.pas"/>
-        <Caret Line="3"/>
-      </Position15>
-      <Position16>
-        <Filename Value="..\Source\obj_trialparamtext.pas"/>
-        <Caret Line="116" Column="50" TopLine="94"/>
-      </Position16>
-      <Position17>
-        <Filename Value="..\Source\obj_trialbutton.pas"/>
-        <Caret Line="3"/>
-      </Position17>
-      <Position18>
-        <Filename Value="..\Source\obj_trialbutton.pas"/>
-        <Caret Line="120" Column="50" TopLine="98"/>
-      </Position18>
-      <Position19>
-        <Filename Value="..\Source\obj_trialinputline.pas"/>
-        <Caret Line="3"/>
-      </Position19>
-      <Position20>
-        <Filename Value="..\Source\obj_trialinputline.pas"/>
-        <Caret Line="245" Column="53" TopLine="223"/>
-      </Position20>
-      <Position21>
-        <Filename Value="..\Source\obj_dialeditapp.pas"/>
-        <Caret Line="3"/>
-      </Position21>
-      <Position22>
-        <Filename Value="..\Source\obj_dialeditapp.pas"/>
-        <Caret Line="48" Column="21" TopLine="26"/>
-      </Position22>
-      <Position23>
-        <Filename Value="..\Source\obj_dialeditapp.pas"/>
-        <Caret Line="932" Column="52" TopLine="199"/>
-      </Position23>
-      <Position24>
-        <Filename Value="..\Source\obj_dialeditapp.pas"/>
-        <Caret Line="991" Column="50" TopLine="969"/>
-      </Position24>
-      <Position25>
-        <Filename Value="..\Source\obj_dialeditapp.pas"/>
-        <Caret Line="1066" Column="52" TopLine="1044"/>
-      </Position25>
-      <Position26>
-        <Filename Value="..\Source\obj_dialeditapp.pas"/>
-        <Caret Line="1258" Column="50" TopLine="1236"/>
-      </Position26>
-      <Position27>
-        <Filename Value="..\Source\obj_dialeditapp.pas"/>
-        <Caret Line="1740" Column="4" TopLine="1718"/>
-      </Position27>
-      <Position28>
-        <Filename Value="..\Source\obj_dialeditapp.pas"/>
-        <Caret Line="2268" Column="17" TopLine="2248"/>
-      </Position28>
-      <Position29>
-        <Filename Value="..\..\..\Delphi_home\Idee\source\fv\Src\drivers.pas"/>
-        <Caret Line="529" Column="19" TopLine="507"/>
-      </Position29>
-      <Position30>
-        <Filename Value="..\..\..\Delphi_home\Idee\source\fv\Src\drivers.pas"/>
-        <Caret Line="1432" Column="13" TopLine="1426"/>
-      </Position30>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>

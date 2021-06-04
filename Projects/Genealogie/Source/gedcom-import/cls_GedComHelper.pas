@@ -5,67 +5,54 @@ unit cls_GedComHelper;
 interface
 
 uses
-    Classes, SysUtils, Cmp_GedComFile, unt_IGenBase2;
+    Classes, SysUtils, Cmp_GedComFile, unt_IGenBase2,cls_GenHelperBase;
 
 type
-    TTHlprMsgEvent=TTMessageEvent;
     { TGedComHelper }
 
-    TGedComHelper = class
+    TGedComHelper = class(TGenHelperBase)
         FGedComFile: TGedComFile;
 
     private
-        FCitation: TStrings;
-        FCitRefn: string;
-        FCitTitle: string;
         FFact: TGedComObj;
-        FonHlpMessage: TTHlprMsgEvent;
-        FOsbHdr: string;
+
         function GetGEDTag(const SubType: integer): string;
+
         function IsFamilyEvent(const SubType: integer): boolean;
-        procedure SetCitation(AValue: TStrings);
         procedure SetCitTitle(AValue: string);
         procedure SetGedComFile(AValue: TGedComFile);
-        procedure SetonHlpMessage(const AValue: TTHlprMsgEvent);
-        procedure SetOsbHdr(AValue: string);
         procedure WriteGedSource(GedObj: TGedComObj; qTitle, lsLink: string;
           lFileEx: boolean; lStrl: TStrings);
         procedure WriteGedText(GedObj: TGedComObj; lStrl: TStrings;
             lTag: string = 'TEX' + 'T');
         Function GetFather(aInd:TGedComObj):TGedComObj;
         Function GetMother(aInd:TGedComObj):TGedComObj;
-        Procedure Warning(aText:String ; Ref: string; aMode: integer);
-        Procedure Error(aText:String ; Ref: string; aMode: integer);
     public
         {$ifdef DEBUG}
         FDebugDate:TDateTime;
        {$ENDIF}
         procedure StartFamily(Sender: TObject; aText, {%H-}aRef: string;
-        {%H-}SubType: integer);
+        {%H-}SubType: integer);override;
         procedure StartIndiv(Sender: TObject; aText, aRef: string;
-          SubType: integer);
-        procedure FamilyIndiv(Sender: TObject; aText, aRef: string; SubType: integer);
-        procedure FamilyType(Sender: TObject; aText, aRef: string; SubType: integer);
-        procedure FamilyDate(Sender: TObject; aText, aRef: string; SubType: integer);
-        procedure FamilyData(Sender: TObject; aText, aRef: string; SubType: integer);
-        procedure FamilyPlace(Sender: TObject; aText, aRef: string; SubType: integer);
-        procedure IndiData(Sender: TObject; aText, aRef: string; SubType: integer);
-        procedure IndiDate(Sender: TObject; aText, aRef: string; SubType: integer);
-        procedure IndiName(Sender: TObject; aText, aRef: string; SubType: integer);
-        procedure IndiPlace(Sender: TObject; aText, aRef: string; SubType: integer);
-        procedure IndiRef(Sender: TObject; aText, aRef: string; SubType: integer);
-        procedure IndiOccu(Sender: TObject; aText, aRef: string; SubType: integer);
-        procedure IndiRel(Sender: TObject; aText, aRef: string; SubType: integer);
-        procedure CreateNewHeader(Filename: string);
-        procedure SaveToFile(const Filename: string);
-        procedure FireEvent(Sender: TObject; aSTa: TStringArray);
+          SubType: integer); override;
+        procedure FamilyIndiv(Sender: TObject; aText, aRef: string; SubType: integer);override;
+        procedure FamilyType(Sender: TObject; aText, aRef: string; SubType: integer);override;
+        procedure FamilyDate(Sender: TObject; aText, aRef: string; SubType: integer);override;
+        procedure FamilyData(Sender: TObject; aText, aRef: string; SubType: integer);override;
+        procedure FamilyPlace(Sender: TObject; aText, aRef: string; SubType: integer);override;
+        procedure IndiData(Sender: TObject; aText, aRef: string; SubType: integer);override;
+        procedure IndiDate(Sender: TObject; aText, aRef: string; SubType: integer);override;
+        procedure IndiName(Sender: TObject; aText, aRef: string; SubType: integer);override;
+        procedure IndiPlace(Sender: TObject; aText, aRef: string; SubType: integer);override;
+        procedure IndiRef(Sender: TObject; aText, aRef: string; SubType: integer);override;
+        procedure IndiOccu(Sender: TObject; aText, aRef: string; SubType: integer);override;
+        procedure IndiRel(Sender: TObject; aText, aRef: string; SubType: integer);override;
+        procedure CreateNewHeader(Filename: string);override;
+        procedure SaveToFile(const Filename: string);override;
+
         function RplGedTags(Date: String): String;
-        function NormalCitRef(const aText: string): String;
+
         property GedComFile: TGedComFile read FGedComFile write SetGedComFile;
-        property Citation: TStrings read FCitation write SetCitation;
-        property CitTitle: string read FCitTitle write SetCitTitle;
-        property OsbHdr: string read FOsbHdr write SetOsbHdr;
-        property onHlpMessage:TTHlprMsgEvent read FonHlpMessage write SetonHlpMessage;
     end;
 
 implementation
@@ -166,30 +153,6 @@ begin
       end;
 end;
 
-procedure TGedComHelper.FireEvent(Sender: TObject; aSTa: TStringArray);
-var
-    lInt: longint;
-begin
-    if (length(aSTa) = 4) and trystrtoint(asta[3], lInt) then
-        case aSTa[0] of
-            'ParserStartIndiv': StartIndiv(Sender, aSTa[1], aSTa[2], lInt);
-            'ParserStartFamily': StartFamily(Sender, aSTa[1], aSTa[2], lInt);
-            'ParserFamilyType': FamilyType(Sender, aSTa[1], aSTa[2], lInt);
-            'ParserFamilyDate': FamilyDate(Sender, aSTa[1], aSTa[2], lInt);
-            'ParserFamilyData': FamilyData(Sender, aSTa[1], aSTa[2], lInt);
-            'ParserFamilyIndiv': FamilyIndiv(Sender, aSTa[1], aSTa[2], lInt);
-            'ParserFamilyPlace': FamilyPlace(Sender, aSTa[1], aSTa[2], lInt);
-            'ParserIndiData': IndiData(Sender, aSTa[1], aSTa[2], lInt);
-            'ParserIndiDate': IndiDate(Sender, aSTa[1], aSTa[2], lInt);
-            'ParserIndiName': IndiName(Sender, aSTa[1], aSTa[2], lInt);
-            'ParserIndiOccu': IndiOccu(Sender, aSTa[1], aSTa[2], lInt);
-            'ParserIndiPlace': IndiPlace(Sender, aSTa[1], aSTa[2], lInt);
-            'ParserIndiRef': IndiRef(Sender, aSTa[1], aSTa[2], lInt);
-            'ParserIndiRel': IndiRel(Sender, aSTa[1], aSTa[2], lInt);
-          else
-          end;
-end;
-
 procedure TGedComHelper.StartFamily(Sender: TObject; aText, aRef: string;
     SubType: integer);
 var
@@ -197,7 +160,10 @@ var
     lFamID: string;
 begin
     if atext.endswith(' ') then
-       lFamID :='';
+       begin
+         lFamID :='';
+         Error(atext.QuotedString('"')+'is Illigal Family-Ref',aref,SubType)
+       end;
     // Todo: Build Family-Reference
     lFamID := '@F' + aText + '@';
     lfam := FGedComFile.Find(lFamID);
@@ -235,13 +201,6 @@ begin
       end
     else
         FCitRefn := '';
-end;
-
-procedure TGedComHelper.SetOsbHdr(AValue: string);
-begin
-    if FOsbHdr = AValue then
-        Exit;
-    FOsbHdr := AValue;
 end;
 
 procedure TGedComHelper.FamilyIndiv(Sender: TObject; aText, aRef: string;
@@ -367,7 +326,7 @@ procedure TGedComHelper.IndiName(Sender: TObject; aText, aRef: string;
     SubType: integer);
 var
     lInd: TGedComObj;
-    lPos: Integer;
+    lPos, lDiff: Integer;
     OrgName: String;
 
   function EscapeSurname(nText: string):string;
@@ -399,8 +358,16 @@ begin
                aText:=EscapeSurname(aText);
                OrgName := lInd[gtNAME].Data;
                if GetSoundex(OrgName) <> GetSoundex(aText) then
-                 Warning('IndiName: '+OrgName+'<>'+aText,aRef,SubType);
-            end
+                  begin
+                     lDiff := EvalCompareStr2(GetSoundex(OrgName), GetSoundex(aText));
+                     if ldiff>3 then
+                 Warning('IndiName: '+OrgName+'<>'+aText+' ' +
+                   inttostr(ldiff),aRef,SubType)
+                     else if ldiff > 7 then
+                       Error('IndiName: '+OrgName+'<>'+aText+' ' +
+                         inttostr(ldiff),aRef,SubType);
+                  end
+              end;
         end;
     if SubType = 0 then
       begin
@@ -446,9 +413,18 @@ begin
     lGedTag := GetGedTag(SubType);
     if assigned(lInd) then
       begin
+        if lGedtag = gtNOTE then
+          begin
+            FFact := lind[lGedTag];
+            if FFact.Data = '' then
+              FFact.Data := aText
+            else
+              FFact.CreateChild('', gtCONT, aText);;
+          end
+        else
         if subtype < 12 then
           begin
-            lInd[lGedTag].Data := aText;
+            lInd[lGedTag].Data :=  aText;
             ffact := lInd[lGedTag];
           end
         else
@@ -497,6 +473,15 @@ begin
       begin
         if lGedTag <> gtNOTE then
           begin
+            if lGedtag = gtNOTE then
+              begin
+                FFact := lind[lGedTag];
+                if FFact.Data = '' then
+                  FFact.Data := 'am '+aText
+                else
+                  FFact.CreateChild('', gtCONT,'am '+ aText);;
+              end
+            else
             if subtype < 12 then
               begin
                 if lValidDate then
@@ -547,6 +532,15 @@ begin
       begin
         if lGedTag <> gtNOTE then
           begin
+            if lGedtag = gtNOTE then
+              begin
+                FFact := lind[lGedTag];
+                if FFact.Data = '' then
+                  FFact.Data := 'in '+aText
+                else
+                  FFact.CreateChild('', gtCONT, 'in '+aText);;
+              end
+            else
             if subtype < 12 then
               begin
                 lInd[lGedTag][gtPLAC].Data := aText.Replace('/',', ');
@@ -712,46 +706,6 @@ begin
       result:= lWife.link;
 end;
 
-procedure TGedComHelper.Warning(aText: String; Ref: string; aMode: integer);
-begin
-  if assigned(FonHlpMessage) then
-    FonHlpMessage(self,etWarning,aText,Ref,aMode);
-end;
-
-procedure TGedComHelper.Error(aText: String; Ref: string; aMode: integer);
-begin
-  if assigned(FonHlpMessage) then
-    FonHlpMessage(self,etError,aText,Ref,aMode);
-end;
-
-function TGedComHelper.NormalCitRef(const aText: string): String;
-var
-  lText: String;
-  lp1, i: Integer;
-begin
-  if aText.StartsWith('F') or aText.StartsWith('I') then
-    lText := atext.Substring(1)
-  else
-    lText:=aText;
-
-  // 1. Ziffernfolge wird
-  lp1 :=lText.IndexOfAny('0123456789');
-  if lp1 <0 then exit(lText);
-
-  i := lp1 +1;
-  while (i<length(lText)) and (lText.Chars[i] in Ziffern) do
-    inc(i);
-  result := lText.Insert(lp1,StringOfChar('0',4-(i-lp1)));
-end;
-
-procedure TGedComHelper.SetCitation(AValue: TStrings);
-begin
-    if @FCitation = @AValue then
-        Exit;
-    FCitation := AValue;
-    FCitRefn:='';
-end;
-
 function TGedComHelper.GetGEDTag(const SubType: integer): string;
 begin
     case SubType of
@@ -771,6 +725,7 @@ begin
         13: Result := gtRESI;
         14: Result := gtEMIG;  // Ausgewandert-Event
         17: result := gtDIV; // Scheidung
+        ord(evt_Age):Result := gtDEAT;
         ord(evt_Partner): result := gtNOTE
         else
             Result := gtNOTE;  // Notitz
@@ -795,12 +750,6 @@ begin
     if @FGedComFile = @AValue then
         Exit;
     FGedComFile := AValue;
-end;
-
-procedure TGedComHelper.SetonHlpMessage(const AValue: TTHlprMsgEvent);
-begin
-  if @FonHlpMessage=@AValue then Exit;
-  FonHlpMessage:=AValue;
 end;
 
 procedure TGedComHelper.WriteGedSource(GedObj: TGedComObj; qTitle, lsLink: string;

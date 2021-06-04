@@ -14,6 +14,7 @@ type
 
     TdmGenData = class(TDataModule)
         Config1: TConfig;
+        MySQL57Connection1: TMySQL57Connection;
         qryIndividuals: TSQLQuery;
         qryMarriages: TSQLQuery;
         qryIndividual_Spouse: TSQLQuery;
