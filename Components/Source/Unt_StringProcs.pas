@@ -2,7 +2,8 @@
 
 {$i jedi.inc}
 
-{*V 2.32.00}
+{*V 2.33.00}
+{*H 2.32.00 Ersetzt Compare durch den Le}
 {*H 2.31.00 TryParseStr }
 {*H 2.30.00 Anpassung an DXE2, Adding deprecated and resolving the consequences }
 {*H 2.29.00 Zerlegung von Charset in Upper- und LowerCharset }
@@ -401,7 +402,10 @@ Function strsort(Const orig: String; sep: TSeparators = sep_space; ValidChars:
 
 // Ermittelt den Differenzwert zweier Strings (1.0 ~> gleich )
 Function EvalCompareStr(Const str1, str2: String): real;
-//
+
+function EvalCompareStr2(Const Str1, Str2: String): integer;
+// Levenshtein-Distanz
+
 
 // Schneidet führende und folgende Leerzeichen ab (-> trim), und
 // wandelt doppelte Leerzeichen in einfache um.
@@ -2343,6 +2347,37 @@ Begin
     result := 0;
 End;
 //-------------------------------------------------------------
+
+function EvalCompareStr2(const Str1, Str2: String): integer;
+// Levenshtein-Distanz
+var lev : array of array of integer;
+    i,j : integer;
+
+begin
+   // Str1 := LowerCase(Str1);
+   // Str2 := LowerCase(Str2);
+
+  // If the words are identical, do nothing
+  if Str1 = Str2 then
+  begin
+    result := 0;
+    exit;
+  end;
+
+  SetLength(lev, length(Str1) + 1);
+  for i := low(lev) to high(lev) do
+    setLength(lev[i], length(Str2) + 1);
+
+  for i := low(lev) to high(lev) do lev[i][0] := i;
+  for j := low(lev[low(lev)]) to high(lev[low(lev)]) do lev[0][j] := j;
+
+  for i := low(lev)+1 to high(lev) do
+    for j := low(lev[i])+1 to high(lev[i]) do
+      lev[i][j] := min(min(lev[i-1][j] + 1,lev[i][j-1] + 1)
+                      ,lev[i-1][j-1] + integer(Str1[i] = Str2[j]));
+
+  result := lev[length(Str1)][length(Str2)];
+end;
 
 function CleanPath(path: String): String;
 
