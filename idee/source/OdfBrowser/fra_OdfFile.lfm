@@ -139,8 +139,8 @@ object FraOdfBrowser: TFraOdfBrowser
     Height = 24
     ShareImages = True
     Width = 24
-    left = 294
-    top = 187
+    Left = 294
+    Top = 187
     Bitmap = {
       4C69100000001800000018000000000000000000000000000000000000000000
       0000000000000000000000000001000000000000000000000000000000010000
@@ -1297,26 +1297,21 @@ object FraOdfBrowser: TFraOdfBrowser
       0000000000000000000000000000
     }
   end
-  object OpenDialog1: TOpenDialog
-    DefaultExt = '.xml'
-    Filter = 'XML-Dateien (*.XML)|*.xml|Alle Dateien (*.*)|*.*'
-    left = 363
-    top = 187
-  end
   object SaveDialog1: TSaveDialog
-    left = 331
-    top = 187
+    Left = 331
+    Top = 187
   end
   object alsXMLFile: TActionList
     Images = ilsOdfFile
-    left = 395
-    top = 187
+    Left = 395
+    Top = 187
     object actDoSomething: TAction
       Caption = 'actDoSomething'
     end
     object actFileOpen: TFileOpen
       Category = 'OdfFile'
       Caption = 'Öffnen'
+      Dialog.Filter = 'XML-Dateien (*.xml)|*.xml|ODF-Textdokument (*.odf)|*.odf|Flat XML ODF-Textdokument (*.fodt)|*.fodt|Alle Dateien (*.*)|*.*'
       Hint = 'Öffnen'
       ImageIndex = 7
       BeforeExecute = actFileOpenBeforeExecute
