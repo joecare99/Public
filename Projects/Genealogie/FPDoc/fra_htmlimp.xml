@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="Prj_TstHTMLParser"><module name="fra_HtmlImp"><short>Frame für den HTML-Import mit Filter</short><element name="TCoumputeOutput"><short>Delegatdefinition für Ausgabeverarbeitung</short>
+      </element><element name="TFraHtmlImport"><short>HTML-Import-Frame-Klasse</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>

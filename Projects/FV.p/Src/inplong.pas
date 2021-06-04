@@ -85,6 +85,9 @@ const
   ilDisplayHex = 4;   {Number displayed as hex when possible}
 
 type
+
+  { TInputLong }
+
   TInputLong = object(TInputLine)
     ILOptions: word;
     LLim, ULim: longint;
@@ -94,7 +97,7 @@ type
     procedure Store(var S: TStream);
     function DataSize: Sw_Word; virtual;
     procedure GetData(var Rec); virtual;
-    procedure SetData(var Rec); virtual;
+    procedure SetData(Const Rec); virtual;
     function RangeCheck: boolean; virtual;
     procedure Error; virtual;
     procedure HandleEvent(var Event: TEvent); virtual;
@@ -107,7 +110,7 @@ const
     ObjType: idInputLong;
     VmtLink: Ofs(Typeof(TInputLong)^);
     Load: @TInputLong.Load;
-    Store: @TInputLong.Store);
+    Store: @TInputLong.Store{%H-});
 
 implementation
 
@@ -195,7 +198,7 @@ begin
 end;
 
 {-------------------TInputLong.SetData}
-procedure TInputLong.SetData(var Rec);
+procedure TInputLong.SetData(const Rec);
 var
   L: longint;
   S: string;

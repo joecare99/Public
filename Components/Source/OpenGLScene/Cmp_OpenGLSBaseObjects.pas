@@ -8,499 +8,974 @@ interface
 
 uses
 {$IFnDEF FPC}
-  openGL,
+    openGL,
 {$ELSE}
-  gl,
+    gl,
 {$ENDIF}
-  Cmp_OpenGLScene;
+    Cmp_OpenGLScene;
 
 type
-  T3DZObject = Class(T3DBasisObject)
-  public
-    x, y, z: Extended;
-    QColor: TGLArrayf4;
 
-    Procedure MoveTo(nx, ny, nz: Extended); override;
-  protected
-    FDisplaylist:Cardinal;
-  End;
+    { T3DZObject }
 
-  T3DQuader = Class(T3DZObject)
-  public
-    QWidth, QLength, QHeight: Extended;
-  public
-    Procedure Draw; override;
-  End;
+    T3DZObject = class(T3DBasisObject)
+    public
+        QColor: TGLArrayf4;
+        procedure Draw; override;
+    protected
+        FDisplaylist: cardinal;
+    end;
 
-  T3DQuader2 = Class(T3DZObject)
-  public
-    QWidth, QLength, QHeight: Extended;
-  public
-    Procedure Draw; override;
-  End;
+    { T3DDimObject }
 
-  T3DSphere = Class(T3DZObject)
-  public
-    QWidth, QLength, QHeight: Extended;
-  public
-    Procedure Draw; override;
-  End;
+    T3DDimObject = class(T3DZObject)
+    public
+        QWidth, QLength, QHeight: extended;
+        pnt:Tpointf;
+        procedure SetDimension(aDim: TPointF); virtual;
+    public
+    end;
 
-  T3DCylinder = Class(T3DZObject)
-  private
-     Fsteps:integer;
-  public
-    QWidth, QLength, QHeight: Extended;
-    Procedure Draw; override;
-  published
-    property Steps:integer read Fsteps write Fsteps;
-  End;
+    T3DQuader = class(T3DDimObject)
+    public
+        procedure Draw; override;
+    end;
 
-  T3DTorus = Class(T3DZObject)
-  public
-    QWidth, QLength, QHeight: Extended;
-  public
-  End;
+    T3DQuader2 = class(T3DDimObject)
+    public
+        procedure Draw; override;
+    end;
 
-  T3DPrism = Class(T3DZObject)
-  private
-  public
-    QWidth, QLength, QHeight: Extended;
-    MaterialDef: TMaterialBasedef;
-  protected
-    procedure DrawDeckel;virtual;
-  public
-    PDef: Array Of TUVPoint;
+    T3DSphere = class(T3DDimObject)
+    public
+        procedure Draw; override;
+    end;
 
-    Procedure Draw; override;
-  End;
+    T3DCylinder = class(T3DDimObject)
+    private
+        Fsteps: integer;
+    published
+        property Steps: integer read Fsteps write Fsteps;
+    end;
 
-  T3DPrism2 = Class(T3DPrism)
-  public
-    FillDef: Array Of Integer;
-    FillType: Cardinal;
-  protected
-    Procedure DrawDeckel; override;
-  End;
+    { T3DCylinderX }
 
-  T3DCone = Class(T3DZObject)
-  public
-    QWidth, QLength, QHeight: Extended;
-  public
-    Procedure Draw; override;
-  End;
+    T3DCylinderX = class(T3DCylinder)
+    public
+        procedure Draw; override;
+    end;
+
+    { T3DCylinderY }
+
+    T3DCylinderY = class(T3DCylinder)
+    public
+        procedure Draw; override;
+    end;
+
+    { T3DCylinderZ }
+
+    T3DCylinderZ = class(T3DCylinder)
+    public
+        procedure Draw; override;
+    end;
+
+    { T3DTorus }
+
+    T3DTorus = class(T3DDimObject)
+    public
+        RadiusOuter, RadiusInner: extended;
+    public
+        procedure Draw; override;
+    end;
+
+    { T3DPrismBase }
+
+    T3DPrismBase = class(T3DDimObject)
+    private
+    public
+        MaterialDef: TMaterialBaseDef;
+    protected
+        procedure DrawDeckel; virtual;Abstract;
+    public
+        PDef: array of TUVPoint;
+    end;
+
+    { T3DPrism }
+    T3DPrism = class(T3DPrismBase)
+    private
+    public
+        MaterialDef: TMaterialBaseDef;
+    protected
+        procedure DrawDeckel; override;
+    public
+        PDef: array of TUVPoint;
+        procedure Draw; override;
+    end;
+
+    T3DPrismX = class(T3DPrism)
+
+    end;
+
+    T3DPrismY = class(T3DPrism)
+
+    end;
+
+    T3DPrismZ = class(T3DPrism)
+
+    end;
+
+    { T3DPrism2 }
+
+    T3DPrism2 = class(T3DPrism)
+    public
+        FillDef: array of integer;
+        FillType: cardinal;
+    protected
+        procedure DrawDeckel; override;
+    end;
+
+    { T3DConeX }
+
+    T3DConeX = class(T3DDimObject)
+    public
+        procedure Draw; override;
+    end;
+
+    { T3DConeY }
+
+    T3DConeY = class(T3DDimObject)
+    public
+        procedure Draw; override;
+    end;
+
+    { T3DConeZ }
+
+    T3DConeZ = class(T3DDimObject)
+    public
+        procedure Draw; override;
+    end;
+
+
+function CreateQuader(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+    aColor: TGLArrayf4): T3DQuader;
+function CreateQuader2(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+    aColor: TGLArrayf4): T3DQuader2;
+function CreateSphere(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+    aColor: TGLArrayf4): T3DSphere;
+function CreateCylinderZ(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+    aColor: TGLArrayf4): T3DCylinder;
+function CreateCylinderY(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+    aColor: TGLArrayf4): T3DCylinder;
+function CreateCylinderX(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+    aColor: TGLArrayf4): T3DCylinder;
+function CreatePrismX(aBase: T3DBasisObject; aPnt: TPointF; aHeight: TGLfloat;
+    const aPnts: array of TUVPoint; aMaterial: TMaterialBaseDef): T3DPrism;
+function CreatePrismY(aBase: T3DBasisObject; aPnt: TPointF; aHeight: TGLfloat;
+    const aPnts: array of TUVPoint; aMaterial: TMaterialBaseDef): T3DPrism;
+function CreatePrismZ(aBase: T3DBasisObject; aPnt: TPointF; aHeight: TGLfloat;
+    const aPnts: array of TUVPoint; aMaterial: TMaterialBaseDef): T3DPrism;
+function CreateConeX(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+    aColor: TGLArrayf4): T3DConeX;
+function CreateConeY(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+    aColor: TGLArrayf4): T3DConeY;
+function CreateConeZ(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+    aColor: TGLArrayf4): T3DConeZ;
+
+
 
 implementation
 
-Procedure T3DCone.Draw;
-Var
-  I: Integer;
-  xx, zz: GLFloat;
-Begin
-  glTranslatef(Translation[0], Translation[1], Translation[2]);
-  glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-  glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, {$IFNDEF FPC}@{$ENDIF}QColor);
-  // Reflective properties
-  glFrontFace(GL_CW);       // Counter Clock-Wise
-  glBegin(GL_TRIANGLE_FAN);
-//  glColor3fv(QColor);
-  glNormal3f(0, -1, 0);
-  glVertex3f(X, Y - QHeight * 0.5, Z);
-  For I := 0 To 40 Do
-    Begin
-      xx := sin((i / 40) * 2 * pi) * 0.5;
-      zz := Cos((i / 40) * 2 * pi) * 0.5;
-      glNormal3f(xx, 0, zz);
-      glVertex3f(X + QLength * xx, Y + QHeight * 0.5, Z + QWidth * zz);
-    End;
-  glEnd;
+function CreateQuader(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+    aColor: TGLArrayf4): T3DQuader;
+begin
+    Result := T3DQuader.Create(aBase);
+    Result.FTranslation := aPnt;
+    Result.SetDimension(aDim);
+    Result.QColor := aColor;
+end;
 
-  glFrontFace(GL_CCW);       // Counter Clock-Wise
-  glBegin(GL_TRIANGLE_FAN);
+function CreateQuader2(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+    aColor: TGLArrayf4): T3DQuader2;
+begin
+    Result := T3DQuader2.Create(aBase);
+    Result.FTranslation := aPnt;
+    Result.SetDimension(aDim);
+    Result.QColor := aColor;
+end;
 
-  glNormal3f(0, 1, 0);
-  glVertex3f(X, Y + QHeight * 0.5, Z);
-  For I := 0 To 40 Do
-    Begin
-      xx := sin((i / 40) * 2 * pi) * 0.5;
-      zz := Cos((i / 40) * 2 * pi) * 0.5;
-      glNormal3f(xx * 0.3, 1, zz * 0.3);
-      glVertex3f(X + QLength * xx, Y + QHeight * 0.5, Z + QWidth * zz);
-    End;
-  glEnd;
-End;
+function CreateSphere(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+    aColor: TGLArrayf4): T3DSphere;
+begin
+    Result := T3DSphere.Create(aBase);
+    Result.FTranslation := aPnt;
+    Result.SetDimension(aDim);
+    Result.QColor := aColor;
+end;
 
-Procedure T3DZObject.MoveTo(nx, ny, nz: Extended);
-Begin
-  x := nx;
-  y := ny;
-  z := nz;
-End;
+function CreateCylinderZ(aBase: T3DBasisObject; aPnt: TPointF;
+    aDim: TPointF; aColor: TGLArrayf4): T3DCylinder;
+begin
+    Result := T3DCylinderZ.Create(aBase);
+    Result.FTranslation := aPnt;
+    Result.SetDimension(aDim);
+    Result.Steps := 40;
+    Result.QColor := aColor;
+end;
 
-Const Wdef: Array[0..7] Of TGLArrayf3 =
-  ((1, 1, 1), (-1, 1, 1), (-1, -1, 1), (1, -1, 1), (1, -1, -1), (1, 1, -1), (-1, 1, -1), (-1, 1, 1));
+function CreateCylinderY(aBase: T3DBasisObject; aPnt: TPointF;
+    aDim: TPointF; aColor: TGLArrayf4): T3DCylinder;
+begin
+    Result := T3DCylinderY.Create(aBase);
+    Result.FTranslation := aPnt;
+    Result.SetDimension(aDim);
+    Result.Steps := 40;
+    Result.QColor := aColor;
 
-Procedure T3DQuader.Draw;
+end;
 
-Var
-  I: Integer;
-  J: Integer;
-  P: Integer;
-  Nv0: TGLArrayf4;
+function CreateCylinderX(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+  aColor: TGLArrayf4): T3DCylinder;
+begin
+    Result := T3DCylinderX.Create(aBase);
+    Result.FTranslation := aPnt;
+    Result.SetDimension(aDim);
+    Result.Steps := 40;
+    Result.QColor := aColor;
+end;
 
-Begin
-  glTranslatef(Translation[0], Translation[1], Translation[2]);
-  glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-{$IFDEF FPC}
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, QColor);
-{$ELSE}
-    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, @QColor);
-{$ENDIF}
-  // Reflective properties
+function CreatePrismX(aBase: T3DBasisObject; aPnt: TPointF; aHeight: TGLfloat;
+  const aPnts: array of TUVPoint; aMaterial: TMaterialBaseDef): T3DPrism;
+var
+  i: Integer;
+begin
+    Result := T3DPrismX.Create(aBase);
+    Result.FTranslation := aPnt;
+    Result.QHeight := aHeight;
+    Result.QWidth := 1.0;
+    Result.QLength := 1.0;
+    result.Rotate(-90,0,1,0);
+    setlength(Result.PDef, Length(aPnts));
+    for i := 0 to high(aPnts) do
+        Result.PDef[i] := aPnts[i];
+    Result.MaterialDef := aMaterial;
+end;
 
-  For J := 0 To 2 Do
-    Begin
-      nv0[0] := (Wdef[0, 0] + Wdef[2 + J * 2, 0]) * 0.5;
-      nv0[1] := (Wdef[0, 1] + Wdef[2 + J * 2, 1]) * 0.5;
-      nv0[2] := (Wdef[0, 2] + Wdef[2 + J * 2, 2]) * 0.5;
-      glFrontFace(GL_CCW);       // Counter Clock-Wise
-      glBegin(GL_TRIANGLE_FAN);
-      For I := 0 To 3 Do
-        Begin
-          If I = 0 Then
-            P := 0
-          Else
-            P := J * 2 + I;
+function CreatePrismY(aBase: T3DBasisObject; aPnt: TPointF; aHeight: TGLfloat;
+    const aPnts: array of TUVPoint; aMaterial: TMaterialBaseDef): T3DPrism;
+var
+    i: integer;
+begin
+    Result := T3DPrismY.Create(aBase);
+    Result.FTranslation := aPnt;
+    Result.QHeight := aHeight;
+    Result.QWidth := 1.0;
+    Result.QLength := 1.0;
+    setlength(Result.PDef, Length(aPnts));
+    for i := 0 to high(aPnts) do
+        Result.PDef[i] := aPnts[i];
+    Result.MaterialDef := aMaterial;
+end;
 
-          glNormal3f(nv0[0] * 0.99 + Wdef[p, 0] * 0.02, nv0[1] * 0.99 + Wdef[p, 1] * 0.02, nv0[2] * 0.99 + Wdef[p, 2] * 0.02);
-          glVertex3f(X + QLength * Wdef[P, 0] * 0.5, Y + QHeight * Wdef[P, 1] * 0.5, Z + QWidth * Wdef[P, 2] * 0.5);
-        End;
-      glend;
+function CreatePrismZ(aBase: T3DBasisObject; aPnt: TPointF; aHeight: TGLfloat;
+    const aPnts: array of TUVPoint; aMaterial: TMaterialBaseDef): T3DPrism;
+var
+  i: Integer;
+begin
+    Result := T3DPrismZ.Create(aBase);
+    Result.FTranslation := aPnt;
+    Result.QHeight := aHeight;
+    Result.QWidth := 1.0;
+    Result.QLength := 1.0;
+    result.Rotate(-90,1,0,0);
+    setlength(Result.PDef, Length(aPnts));
+    for i := 0 to high(aPnts) do
+        Result.PDef[i] := aPnts[i];
+    Result.MaterialDef := aMaterial;
+end;
+
+function CreateConeX(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+    aColor: TGLArrayf4): T3DConeX;
+begin
+    Result := T3DConeX.Create(aBase);
+    Result.FTranslation := aPnt;
+    Result.SetDimension(aDim);
+    Result.QColor := aColor;
+end;
+
+function CreateConeY(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+    aColor: TGLArrayf4): T3DConeY;
+begin
+    Result := T3DConeY.Create(aBase);
+    Result.FTranslation := aPnt;
+    Result.SetDimension(aDim);
+    Result.QColor := aColor;
+
+end;
+
+function CreateConeZ(aBase: T3DBasisObject; aPnt: TPointF; aDim: TPointF;
+  aColor: TGLArrayf4): T3DConeZ;
+begin
+    Result := T3DConeZ.Create(aBase);
+    Result.FTranslation := aPnt;
+    Result.SetDimension(aDim);
+    Result.QColor := aColor;
+end;
+
+{ T3DCylinderX }
+
+procedure T3DCylinderX.Draw;
+var
+    I: integer;
+    xx, yy, zz: GLFloat;
+    pnt: TPointF;
+
+begin
+    Inherited;
+
+    pnt := Zero;
+    glFrontFace(GL_CCW);       // Counter Clock-Wise
+    glBegin(GL_TRIANGLE_STRIP);
+    for I := 0 to Fsteps * 2 + 1 do
+      begin
+        xx := {(i / 400) +}((i mod 2) {/ 10} - 0.5);
+        yy := cos((i / Fsteps) * pi) * 0.5;
+        ZZ := sin((i / Fsteps) * pi) * 0.5;
+        glNormal3f(xx * 0.1, yy * 2, zz * 2);
+        //      glColor3fv(QColor);
+        glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * yy, pnt.Z + QWidth * zz);
+      end;
+    glEnd;
+
+    // Deckel1
+    glBegin(GL_TRIANGLE_FAN);
+    // Mittelpunkt Unten
+    glNormal3f(-1, 0, 0);
+    xx:= -0.5;
+    glVertex3f(pnt.X+ QLength * xx, pnt.Y, pnt.Z );
+    for I := 0 to Fsteps do
+      begin
+        yy := cos((i / Fsteps) * 2 * pi) * 0.5;
+        zz := sin((i / Fsteps) * 2 * pi) * 0.5;
+        glNormal3f(- 0.9, yy*0.1, zz*0.1);
+        glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * yy, pnt.Z - QWidth * zz);
+      end;
+    glEnd;
+
+    // Deckel2
+    glFrontFace(GL_CW);       // Clock-Wise
+    glBegin(GL_TRIANGLE_FAN);
+    // Mittelpunkt Oben
+    glNormal3f(1, 0, 0);
+    xx:= 0.5;
+    glVertex3f(pnt.X+QLength*xx, pnt.Y, pnt.Z );
+    for I := 0 to Fsteps do
+      begin
+        yy := cos(((i + 0.5) / Fsteps) * 2 * pi) * 0.5;
+        zz := sin(((i + 0.5) / Fsteps) * 2 * pi) * 0.5;
+        glNormal3f(0.9, yy * 0.1, zz*0.1);
+        glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * yy, pnt.Z + QWidth * zz);
+      end;
+    glEnd;
+end;
+
+{ T3DCylinderY }
+
+procedure T3DCylinderY.Draw;
+var
+    I: integer;
+    xx, yy, zz: GLFloat;
+    pnt: TPointF;
+
+begin
+    Inherited;
+
+    pnt := Zero;
+    glFrontFace(GL_CCW);       // Counter Clock-Wise
+    glBegin(GL_TRIANGLE_STRIP);
+    for I := 0 to Fsteps * 2 + 1 do
+      begin
+        xx := sin((i / Fsteps) * pi) * 0.5;
+        yy := {(i / 400) +}((i mod 2) {/ 10} - 0.5);
+        ZZ := Cos((i / Fsteps) * pi) * 0.5;
+        glNormal3f(xx * 2, yy * 0.1, zz * 2);
+        //      glColor3fv(QColor);
+        glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * yy, pnt.Z + QWidth * zz);
+      end;
+    glEnd;
+
+    // Deckel1
+    glBegin(GL_TRIANGLE_FAN);
+    // Mittelpunkt Unten
+    glNormal3f(0, -1, 0);
+    yy:= -0.5;
+    glVertex3f(pnt.X, pnt.Y+ QHeight * yy, pnt.Z );
+    for I := 0 to Fsteps do
+      begin
+        xx := sin((i / Fsteps) * 2 * pi) * 0.5;
+        zz := Cos((i / Fsteps) * 2 * pi) * 0.5;
+        glNormal3f(xx * 0.1, -0.9, zz*0.1);
+        glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * yy, pnt.Z - QWidth * zz);
+      end;
+    glEnd;
+
+    // Deckel2
+    glFrontFace(GL_CW);       // Clock-Wise
+    glBegin(GL_TRIANGLE_FAN);
+    // Mittelpunkt Oben
+    glNormal3f(0, 1, 0);
+    yy:= 0.5;
+    glVertex3f(pnt.X, pnt.Y+ QHeight * yy, pnt.Z );
+    for I := 0 to Fsteps do
+      begin
+        xx := sin(((i + 0.5) / Fsteps) * 2 * pi) * 0.5;
+        zz := Cos(((i + 0.5) / Fsteps) * 2 * pi) * 0.5;
+        glNormal3f(xx * 0.1, 0.9, zz*0.1);
+        glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * yy, pnt.Z + QWidth * zz);
+      end;
+    glEnd;
+
+end;
+
+
+{ T3DConeZ }
+
+procedure T3DConeZ.Draw;
+var
+    I: integer;
+    xx, yy: GLFloat;
+    pnt: TPointF;
+begin
+    Inherited;
+
+    pnt := Zero;
+    // Reflective properties
+    glFrontFace(GL_CW);       // Counter Clock-Wise
+    glBegin(GL_TRIANGLE_FAN);
+    //  glColor3fv(QColor);
+    glNormal3f(0, 0, -1);
+    glVertex3f(pnt.X, pnt.Y , pnt.Z - abs(QWidth) * 0.5);
+    for I := 0 to 40 do
+      begin
+        xx := sin((i / 40) * 2 * pi) * 0.5;
+        yy := Cos((i / 40) * 2 * pi) * 0.5;
+        glNormal3f(xx, yy, 0);
+        glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * yy, pnt.Z + QWidth * 0.5);
+      end;
+    glEnd;
+
+    glFrontFace(GL_CCW);       // Counter Clock-Wise
+    glBegin(GL_TRIANGLE_FAN);
+
+    glNormal3f(0, 0, 1);
+    glVertex3f(pnt.X, pnt.Y , pnt.Z+abs(QWidth)*0.5);
+    for I := 0 to 40 do
+      begin
+        xx := sin((i / 40) * 2 * pi) * 0.5;
+        yy := Cos((i / 40) * 2 * pi) * 0.5;
+        glNormal3f(xx * 0.1,  yy * 0.1,0.9);
+        glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * yy, pnt.Z + QWidth * 0.5);
+      end;
+    glEnd;
+end;
+
+{ T3DDimObject }
+
+procedure T3DDimObject.SetDimension(aDim: TPointF);
+begin
+    QLength := aDim.x;
+    QHeight := aDim.y;
+    QWidth := aDim.z;
+end;
+
+{ T3DTorus }
+
+procedure T3DTorus.Draw;
+begin
+    // Todo: Generate a Draw Methode
+    // Circle through outer
+    //   Circle through inner
+    //      Generatevertex
+end;
+
+
+{ T3DConeX }
+
+procedure T3DConeX.Draw;
+var
+    I: integer;
+    yy, zz: GLFloat;
+begin
+    Inherited;
 
     glFrontFace(GL_CW);       // Counter Clock-Wise
-      glBegin(GL_TRIANGLE_FAN);
-      For I := 0 To 3 Do
-        Begin
-          If I = 0 Then
-            P := 0
-          Else
-            P := J * 2 + I;
+    glBegin(GL_TRIANGLE_FAN);
+    //  glColor3fv(QColor);
+    glNormal3f(-1, 0, 0);
+    glVertex3f(pnt.X+ abs(QLength) * 0.5, pnt.Y , pnt.Z);
+    for I := 0 to 40 do
+      begin
+        yy := sin((i / 40) * 2 * pi) * 0.5;
+        zz := Cos((i / 40) * 2 * pi) * 0.5;
+        glNormal3f(0, yy, zz);
+        glVertex3f(pnt.X - QLength * 0.5, pnt.Y + QHeight * yy, pnt.Z + QWidth * zz);
+      end;
+    glEnd;
 
-          glNormal3f(-nv0[0] * 0.99 - Wdef[p, 0] * 0.02, -nv0[1] * 0.99 - Wdef[p, 1] * 0.02, -nv0[2] * 0.99 - Wdef[p, 2] * 0.02);
-          glVertex3f(X - QLength * Wdef[P, 0] * 0.5, Y - QHeight * Wdef[P, 1] * 0.5, Z - QWidth * Wdef[P, 2] * 0.5);
-        End;
-      glend;
-    End;
-End;
+    glFrontFace(GL_CCW);       // Counter Clock-Wise
+    glBegin(GL_TRIANGLE_FAN);
 
-Procedure T3DQuader2.Draw;
-Var
-//  NN: Extended;
-  nv0: TGLArrayf3;
-  J: Integer;
-  I: Integer;
-  P: Integer;
-Begin
-  glTranslatef(Translation[0], Translation[1], Translation[2]);
-  glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-  glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, {$IFNDEF FPC}@{$ENDIF}QColor);
-  // Reflective properties
-  // Reflective properties
-  For J := 0 To 2 Do
-    Begin
-      nv0[0] := (Wdef[0, 0] + Wdef[2 + J * 2, 0]) * 0.5;
-      nv0[1] := (Wdef[0, 1] + Wdef[2 + J * 2, 1]) * 0.5;
-      nv0[2] := (Wdef[0, 2] + Wdef[2 + J * 2, 2]) * 0.5;
-       glFrontFace(GL_CCW);       // Counter Clock-Wise
-      glBegin(GL_TRIANGLE_FAN);
+    glNormal3f(1, 0, 0);
+    glVertex3f(pnt.X- abs(QLength) * 0.5, pnt.Y , pnt.Z);
+    for I := 0 to 40 do
+      begin
+        yy := sin((i / 40) * 2 * pi) * 0.5;
+        zz := Cos((i / 40) * 2 * pi) * 0.5;
+        glNormal3f(0.9,yy * 0.1, zz * 0.1);
+        glVertex3f(pnt.X - QLength * 0.5, pnt.Y + QHeight * yy, pnt.Z + QWidth * zz);
+      end;
+    glEnd;
+end;
 
-      glNormal3f(nv0[0] * 1.01, nv0[1] * 1.01, nv0[2] * 1.01);
-      glVertex3f(X + QLength * nv0[0] * 0.5, Y + QHeight * nv0[1] * 0.5, Z + QWidth * nv0[2] * 0.5);
+{ T3DConeY }
 
-      For I := 0 To 4 Do
-        Begin
-          If I Mod 4 = 0 Then
-            P := 0
-          Else
-            P := J * 2 + I;
+procedure T3DConeY.Draw;
+var
+    I: integer;
+    xx, zz: GLFloat;
+begin
+     Inherited;
 
-          glNormal3f(nv0[0] * 0.99 + Wdef[p, 0] * 0.02, nv0[1] * 0.99 + Wdef[p, 1] * 0.02, nv0[2] * 0.99 + Wdef[p, 2] * 0.02);
-          glVertex3f(X + QLength * Wdef[P, 0] * 0.5, Y + QHeight * Wdef[P, 1] * 0.5, Z + QWidth * Wdef[P, 2] * 0.5);
-        End;
-      glend;
+    glFrontFace(GL_CW);       // Counter Clock-Wise
+    glBegin(GL_TRIANGLE_FAN);
+    //  glColor3fv(QColor);
+    glNormal3f(0, -1, 0);
+    glVertex3f(pnt.X, pnt.Y - QHeight * 0.5, pnt.Z);
+    for I := 0 to 40 do
+      begin
+        xx := sin((i / 40) * 2 * pi) * 0.5;
+        zz := Cos((i / 40) * 2 * pi) * 0.5;
+        glNormal3f(xx, 0, zz);
+        glVertex3f(pnt.X + QLength * xx, pnt.Y - QHeight * 0.5, pnt.Z + QWidth * zz);
+      end;
+    glEnd;
 
-      glFrontFace(GL_CW);       // Counter Clock-Wise
-      glBegin(GL_TRIANGLE_FAN);
-      glNormal3f(-nv0[0] * 1.01, -nv0[1] * 1.01, -nv0[2] * 1.01);
-      glVertex3f(X - QLength * nv0[0] * 0.5, Y - QHeight * nv0[1] * 0.5, Z - QWidth * nv0[2] * 0.5);
-      For I := 0 To 4 Do
-        Begin
-          If I Mod 4 = 0 Then
-            P := 0
-          Else
-            P := J * 2 + I;
+    glFrontFace(GL_CCW);       // Counter Clock-Wise
+    glBegin(GL_TRIANGLE_FAN);
 
-          glNormal3f(-nv0[0] * 0.99 - Wdef[p, 0] * 0.02, -nv0[1] * 0.99 - Wdef[p, 1] * 0.02, -nv0[2] * 0.99 - Wdef[p, 2] * 0.02);
-          glVertex3f(X - QLength * Wdef[P, 0] * 0.5, Y - QHeight * Wdef[P, 1] * 0.5, Z - QWidth * Wdef[P, 2] * 0.5);
-        End;
-      glend;
-    End;
-End;
+    glNormal3f(0, 1, 0);
+    glVertex3f(pnt.X, pnt.Y + QHeight * 0.5, pnt.Z);
+    for I := 0 to 40 do
+      begin
+        xx := sin((i / 40) * 2 * pi) * 0.5;
+        zz := Cos((i / 40) * 2 * pi) * 0.5;
+        glNormal3f(xx * 0.1, 0.9, zz * 0.1);
+        glVertex3f(pnt.X + QLength * xx, pnt.Y - QHeight * 0.5, pnt.Z + QWidth * zz);
+      end;
+    glEnd;
+end;
 
-Procedure T3DSphere.Draw;
-Var
-  I, J, J0, M0: Integer;
-  x0, x1, xx, xx0, yy, yy0, zz, zz0: GLFloat;
+procedure T3DZObject.Draw;
+begin
+    glTranslate(FTranslation);
+    glRotate(FRotAmount, FRotVector);
+    glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE,
+    {$IFNDEF FPC}
+            @QColor
+            {$else}
+            QColor
+    {$ENDIF});
+end;
 
-Const steps = 8;
+const
+    Wdef: array[0..7] of TGLArrayf3 =
+        ((1, 1, 1), (-1, 1, 1), (-1, -1, 1), (1, -1, 1), (1, -1, -1), (1, 1, -1),
+        (-1, 1, -1), (-1, 1, 1));
 
-Var P1: Array[0..Steps * 4 + 1] Of TGLArrayf3;
-  P2: Array[0..Steps * 4 + 1] Of TGLArrayf3;
+procedure T3DQuader.Draw;
 
-Begin
-  glTranslatef(Translation[0], Translation[1], Translation[2]);
-  glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-  glMaterialfv(GL_FRONT_AND_BACK, GL_AMBIENT_AND_DIFFUSE, @QColor[0]);
-  //glColor3fv(@QColor);
-  // Reflective properties
-  For I := 1 To Steps Do //  Steps Schritte für die Viertelkugel
-    Begin
-      x0 := sin(((i - 1) / (Steps * 2)) * pi);
-      X1 := sin((i / (Steps * 2)) * pi);
-      yy0 := Cos(((i - 1) / (Steps * 2)) * pi) * 0.5;
-      yy := cos((i / (Steps * 2)) * pi) * 0.5;
-      For J := 0 To trunc(x1 * (Steps * 4) + 1) Do
-        Begin
-          If x0 = 0 Then
-            Begin
-              xx0 := 0;
-              zz0 := 0;
-            End
-          Else
-            Begin
-              M0 := trunc(x0 * (Steps * 4) + 1);
-              J0 := trunc((J / trunc(x1 * (Steps * 4) + 1)) * M0);
-              xx0 := sin(J0 / M0 * 2 * pi) * x0 * 0.5;
-              zz0 := cos(J0 / M0 * 2 * pi) * x0 * 0.5;
-            End;
-          xx := sin((J / trunc(x1 * (Steps * 4) + 1)) * 2 * pi) * x1 * 0.5;
-          zz := Cos((J / trunc(x1 * (Steps * 4) + 1)) * 2 * pi) * x1 * 0.5;
+var
+    I: integer;
+    J: integer;
+    P: integer;
+    Nv0: TGLArrayf4;
 
-          p1[J][0] := xx0;
-          p1[J][1] := yy0;
-          p1[J][2] := zz0;
+begin
+    Inherited;
+    // Reflective properties
 
-          p2[J][0] := xx;
-          p2[J][1] := yy;
-          p2[J][2] := zz;
+    for J := 0 to 2 do
+      begin
+        nv0[0] := (Wdef[0, 0] + Wdef[2 + J * 2, 0]) * 0.5;
+        nv0[1] := (Wdef[0, 1] + Wdef[2 + J * 2, 1]) * 0.5;
+        nv0[2] := (Wdef[0, 2] + Wdef[2 + J * 2, 2]) * 0.5;
+        glFrontFace(GL_CCW);       // Counter Clock-Wise
+        glBegin(GL_TRIANGLE_FAN);
+        for I := 0 to 3 do
+          begin
+            if I = 0 then
+                P := 0
+            else
+                P := J * 2 + I;
 
-        End;
+            glNormal3f(nv0[0] * 0.99 + Wdef[p, 0] * 0.02, nv0[1] *
+                0.99 + Wdef[p, 1] * 0.02, nv0[2] * 0.99 + Wdef[p, 2] * 0.02);
+            glVertex3f(pnt.X + QLength * Wdef[P, 0] * 0.5, pnt.Y +
+                QHeight * Wdef[P, 1] * 0.5, pnt.Z + QWidth * Wdef[P, 2] * 0.5);
+          end;
+        glend;
 
-       glFrontFace(GL_CCW);       // Counter Clock-Wise
-      glBegin(GL_TRIANGLE_STRIP);
-      For J := 0 To trunc(x1 * (Steps * 4) + 1) Do
-        Begin
-          glNormal3f(p1[j][0] * 2, p1[j][1] * 2, p1[j][2] * 2);
-          glVertex3f(X + QLength * p1[j][0], Y + QHeight * p1[j][1], Z + QWidth * p1[j][2]);
-          glNormal3f(p2[j][0] * 2, p2[j][1] * 2, p2[j][2] * 2);
-          glVertex3f(X + QLength * p2[j][0], Y + QHeight * p2[j][1], Z + QWidth * p2[j][2]);
+        glFrontFace(GL_CW);       // Clock-Wise
+        glBegin(GL_TRIANGLE_FAN);
+        for I := 0 to 3 do
+          begin
+            if I = 0 then
+                P := 0
+            else
+                P := J * 2 + I;
 
-        End;
-      glEnd;
+            glNormal3f(-nv0[0] * 0.99 - Wdef[p, 0] * 0.02, -nv0[1] *
+                0.99 - Wdef[p, 1] * 0.02, -nv0[2] * 0.99 - Wdef[p, 2] * 0.02);
+            glVertex3f(pnt.X - QLength * Wdef[P, 0] * 0.5, pnt.Y -
+                QHeight * Wdef[P, 1] * 0.5, pnt.Z - QWidth * Wdef[P, 2] * 0.5);
+          end;
+        glend;
+      end;
+end;
 
-      glFrontFace(GL_CW);       // Counter Clock-Wise
-      glBegin(GL_TRIANGLE_STRIP);
-      For J := 0 To trunc(x1 * (Steps * 4) + 1) Do
-        Begin
-          glNormal3f(p1[j][0] * 2, -p1[j][1] * 2, p1[j][2] * 2);
-          glVertex3f(X + QLength * p1[j][0], Y - QHeight * p1[j][1], Z + QWidth * p1[j][2]);
-          glNormal3f(p2[j][0] * 2, -p2[j][1] * 2, p2[j][2] * 2);
-          glVertex3f(X + QLength * p2[j][0], Y - QHeight * p2[j][1], Z + QWidth * p2[j][2]);
+procedure T3DQuader2.Draw;
+var
+    //  NN: Extended;
+    nv0: TGLArrayf3;
+    J: integer;
+    I: integer;
+    P: integer;
+begin
+    Inherited;
 
-        End;
-      glEnd;
-    End;
-End;
+    for J := 0 to 2 do
+      begin
+        nv0[0] := (Wdef[0, 0] + Wdef[2 + J * 2, 0]) * 0.5;
+        nv0[1] := (Wdef[0, 1] + Wdef[2 + J * 2, 1]) * 0.5;
+        nv0[2] := (Wdef[0, 2] + Wdef[2 + J * 2, 2]) * 0.5;
+        glFrontFace(GL_CCW);       // Counter Clock-Wise
+        glBegin(GL_TRIANGLE_FAN);
+
+        glNormal3f(nv0[0] * 1.01, nv0[1] * 1.01, nv0[2] * 1.01);
+        glVertex3f(pnt.X + QLength * nv0[0] * 0.5, pnt.Y + QHeight *
+            nv0[1] * 0.5, pnt.Z + QWidth * nv0[2] * 0.5);
+
+        for I := 0 to 4 do
+          begin
+            if I mod 4 = 0 then
+                P := 0
+            else
+                P := J * 2 + I;
+
+            glNormal3f(nv0[0] * 0.99 + Wdef[p, 0] * 0.02, nv0[1] *
+                0.99 + Wdef[p, 1] * 0.02, nv0[2] * 0.99 + Wdef[p, 2] * 0.02);
+            glVertex3f(pnt.X + QLength * Wdef[P, 0] * 0.5, pnt.Y +
+                QHeight * Wdef[P, 1] * 0.5, pnt.Z + QWidth * Wdef[P, 2] * 0.5);
+          end;
+        glend;
+
+        glFrontFace(GL_CW);       // Clock-Wise
+        glBegin(GL_TRIANGLE_FAN);
+        glNormal3f(-nv0[0] * 1.01, -nv0[1] * 1.01, -nv0[2] * 1.01);
+        glVertex3f(pnt.X - QLength * nv0[0] * 0.5, pnt.Y - QHeight *
+            nv0[1] * 0.5, pnt.Z - QWidth * nv0[2] * 0.5);
+        for I := 0 to 4 do
+          begin
+            if I mod 4 = 0 then
+                P := 0
+            else
+                P := J * 2 + I;
+
+            glNormal3f(-nv0[0] * 0.99 - Wdef[p, 0] * 0.02, -nv0[1] *
+                0.99 - Wdef[p, 1] * 0.02, -nv0[2] * 0.99 - Wdef[p, 2] * 0.02);
+            glVertex3f(pnt.X - QLength * Wdef[P, 0] * 0.5, pnt.Y -
+                QHeight * Wdef[P, 1] * 0.5, pnt.Z - QWidth * Wdef[P, 2] * 0.5);
+          end;
+        glend;
+      end;
+end;
+
+procedure T3DSphere.Draw;
+var
+    I, J, J0, M0: integer;
+    x0, x1, xx, xx0, yy, yy0, zz, zz0: GLFloat;
+
+const
+    steps = 8;
+
+var
+    P1: array[0..Steps * 4 + 1] of TGLArrayf3;
+    P2: array[0..Steps * 4 + 1] of TGLArrayf3;
+
+begin
+    Inherited;
+
+    for I := 1 to Steps do //  Steps Schritte für die Viertelkugel
+      begin
+        x0 := sin(((i - 1) / (Steps * 2)) * pi);
+        X1 := sin((i / (Steps * 2)) * pi);
+        yy0 := Cos(((i - 1) / (Steps * 2)) * pi) * 0.5;
+        yy := cos((i / (Steps * 2)) * pi) * 0.5;
+        for J := 0 to trunc(x1 * (Steps * 4) + 1) do
+          begin
+            if x0 = 0 then
+              begin
+                xx0 := 0;
+                zz0 := 0;
+              end
+            else
+              begin
+                M0 := trunc(x0 * (Steps * 4) + 1);
+                J0 := trunc((J / trunc(x1 * (Steps * 4) + 1)) * M0);
+                xx0 := sin(J0 / M0 * 2 * pi) * x0 * 0.5;
+                zz0 := cos(J0 / M0 * 2 * pi) * x0 * 0.5;
+              end;
+            xx := sin((J / trunc(x1 * (Steps * 4) + 1)) * 2 * pi) * x1 * 0.5;
+            zz := Cos((J / trunc(x1 * (Steps * 4) + 1)) * 2 * pi) * x1 * 0.5;
+
+            p1[J][0] := xx0;
+            p1[J][1] := yy0;
+            p1[J][2] := zz0;
+
+            p2[J][0] := xx;
+            p2[J][1] := yy;
+            p2[J][2] := zz;
+
+          end;
+
+        glFrontFace(GL_CCW);       // Counter Clock-Wise
+        glBegin(GL_TRIANGLE_STRIP);
+        for J := 0 to trunc(x1 * (Steps * 4) + 1) do
+          begin
+            glNormal3f(p1[j][0] * 2, p1[j][1] * 2, p1[j][2] * 2);
+            glVertex3f(pnt.X + QLength * p1[j][0], pnt.Y + QHeight *
+                p1[j][1], pnt.Z + QWidth * p1[j][2]);
+            glNormal3f(p2[j][0] * 2, p2[j][1] * 2, p2[j][2] * 2);
+            glVertex3f(pnt.X + QLength * p2[j][0], pnt.Y + QHeight *
+                p2[j][1], pnt.Z + QWidth * p2[j][2]);
+
+          end;
+        glEnd;
+
+        glFrontFace(GL_CW);       // Counter Clock-Wise
+        glBegin(GL_TRIANGLE_STRIP);
+        for J := 0 to trunc(x1 * (Steps * 4) + 1) do
+          begin
+            glNormal3f(p1[j][0] * 2, -p1[j][1] * 2, p1[j][2] * 2);
+            glVertex3f(pnt.X + QLength * p1[j][0], pnt.Y - QHeight *
+                p1[j][1], pnt.Z + QWidth * p1[j][2]);
+            glNormal3f(p2[j][0] * 2, -p2[j][1] * 2, p2[j][2] * 2);
+            glVertex3f(pnt.X + QLength * p2[j][0], pnt.Y - QHeight *
+                p2[j][1], pnt.Z + QWidth * p2[j][2]);
+
+          end;
+        glEnd;
+      end;
+end;
 
 
-Procedure T3DCylinder.Draw;
-Var
-  I: Integer;
-  xx, yy, zz: GLFloat;
+procedure T3DCylinderZ.Draw;
+var
+    I: integer;
+    xx, yy, zz: GLFloat;
 
-Begin
-  glTranslatef(Translation[0], Translation[1], Translation[2]);
-  glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
-  glMaterialfv(GL_FRONT, GL_AMBIENT_AND_DIFFUSE, {$IFNDEF FPC}@{$ENDIF}QColor);
+begin
+    Inherited;
 
-  // Reflective properties
-  glFrontFace(GL_CCW);       // Counter Clock-Wise
-  glBegin(GL_TRIANGLE_STRIP);
-  For I := 0 To Fsteps * 2 + 1 Do
-    Begin
-      xx := sin((i / Fsteps) * pi) * 0.5;
-      yy := Cos((i / Fsteps) * pi) * 0.5;
-      zz := {(i / 400) +}((i Mod 2) {/ 10} - 0.5);
-      glNormal3f(xx * 2, yy * 2, zz * 0.4);
-      //      glColor3fv(QColor);
-      glVertex3f(X + QLength * xx, Y + QHeight * yy, Z + QWidth * zz);
-    End;
-  glEnd;
+    glFrontFace(GL_CCW);       // Counter Clock-Wise
+    glBegin(GL_TRIANGLE_STRIP);
+    for I := 0 to Fsteps * 2 + 1 do
+      begin
+        xx := sin((i / Fsteps) * pi) * 0.5;
+        yy := Cos((i / Fsteps) * pi) * 0.5;
+        zz := {(i / 400) +}((i mod 2) {/ 10} - 0.5);
+        glNormal3f(xx * 2, yy * 2, zz * 0.4);
+        //      glColor3fv(QColor);
+        glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * yy, pnt.Z + QWidth * zz);
+      end;
+    glEnd;
 
-  // Deckel1
-  glBegin(GL_TRIANGLE_FAN);
-  glNormal3f(0, 0, -1);
-  glVertex3f(X, Y, Z - QWidth * 0.5);
-  For I := 0 To Fsteps Do
-    Begin
-      xx := sin((i / Fsteps) * 2 * pi) * 0.5;
-      yy := Cos((i / Fsteps) * 2 * pi) * 0.5;
-      glNormal3f(xx * 0.1, yy * 0.1, -0.9);
-      glVertex3f(X + QLength * xx, Y + QHeight * yy, Z - QWidth * 0.5);
-    End;
-  glEnd;
+    // Deckel1
+    glBegin(GL_TRIANGLE_FAN);
+    glNormal3f(0, 0, -1);
+    glVertex3f(pnt.X, pnt.Y, pnt.Z - QWidth * 0.5);
+    for I := 0 to Fsteps do
+      begin
+        xx := sin((i / Fsteps) * 2 * pi) * 0.5;
+        yy := Cos((i / Fsteps) * 2 * pi) * 0.5;
+        glNormal3f(xx * 0.1, yy * 0.1, -0.9);
+        glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * yy, pnt.Z - QWidth * 0.5);
+      end;
+    glEnd;
 
-  // Deckel1
-  glFrontFace(GL_CW);       // Clock-Wise
-  glBegin(GL_TRIANGLE_FAN);
+    // Deckel1
+    glFrontFace(GL_CW);       // Clock-Wise
+    glBegin(GL_TRIANGLE_FAN);
 
-  glNormal3f(0, 0, 1);
-  glVertex3f(X, Y, Z + QWidth * 0.5);
-  For I := 0 To Fsteps Do
-    Begin
-      xx := sin(((i + 0.5) / Fsteps) * 2 * pi) * 0.5;
-      yy := Cos(((i + 0.5) / Fsteps) * 2 * pi) * 0.5;
-      glNormal3f(xx * 0.1, yy * 0.1, 0.9);
-      glVertex3f(X + QLength * xx, Y + QHeight * yy, Z + QWidth * 0.5);
-    End;
-  glEnd;
+    glNormal3f(0, 0, 1);
+    glVertex3f(pnt.X, pnt.Y, pnt.Z + QWidth * 0.5);
+    for I := 0 to Fsteps do
+      begin
+        xx := sin(((i + 0.5) / Fsteps) * 2 * pi) * 0.5;
+        yy := Cos(((i + 0.5) / Fsteps) * 2 * pi) * 0.5;
+        glNormal3f(xx * 0.1, yy * 0.1, 0.9);
+        glVertex3f(pnt.X + QLength * xx, pnt.Y + QHeight * yy, pnt.Z + QWidth * 0.5);
+      end;
+    glEnd;
 
-End;
+end;
 
-Procedure T3DPrism.Draw;
-Var
-  I: Integer;
-  nn1: Extended;
-  Li: Integer;
-  I2: Integer;
-  //  xx, yy, zz: GLFloat;
-Begin
-  glTranslatef(Translation[0], Translation[1], Translation[2]);
-  glRotatef(rotation[0], rotation[1], rotation[2], rotation[3]);
+procedure T3DPrism.Draw;
+var
+    I: integer;
+    nn1: extended;
+    Li: integer;
+    I2: integer;
+    //  xx, yy, zz: GLFloat;
+begin
+    Inherited;
 
-  glMaterialfv(GL_FRONT, GL_AMBIENT, {$IFNDEF FPC}@{$ENDIF}MaterialDef.AmbColor);
-  glMaterialfv(GL_FRONT, GL_DIFFUSE, {$IFNDEF FPC}@{$ENDIF}MaterialDef.DiffColor);
-//  glMaterialfv(GL_FRONT, GL_SHININESS, {$IFNDEF FPC}@{$ENDIF}MaterialDef.ShinyNess);
+(*    glMaterialfv(GL_FRONT, GL_AMBIENT,
+{$IFNDEF FPC}
+        @MaterialDef.AmbColor
+        {$ELSE}    MaterialDef.AmbColor
+{$ENDIF}
+        );
+    glMaterialfv(GL_FRONT, GL_DIFFUSE,
+{$IFNDEF FPC}
+        @MaterialDef.DiffColor
+        {$ELSE}  MaterialDef.DiffColor
+{$ENDIF}
+        );  *)
+    //  glMaterialfv(GL_FRONT, GL_SHININESS, {$IFNDEF FPC}@{$ENDIF}MaterialDef.ShinyNess);
 
-  // Reflective properties
-  If high(pdef) >= 0 Then
-    Begin
-  glFrontFace(GL_CW);       // Clock-Wise
-  glBegin(GL_TRIANGLE_STRIP);
-  //  glNormal3f(0, 0, 0);
-  //  glVertex3f(X, Y, Z);
-      For Li := 0 To High(PDef)+1 Do
-        Begin
-          I:= LI mod (High(PDef)+1);
-          I2:=(LI+1) mod (High(PDef)+1);
-          nn1:=sqrt(sqr(Pdef[I2].u-Pdef[I].u)+ sqr( Pdef[I2].v -Pdef[I].v ));
-          if nn1>0 then
-            glNormal3f((Pdef[I].v-Pdef[I2].v) / nn1+Pdef[I].u*0.02, -0.02, (Pdef[I2].u-Pdef[I].u) /nn1+Pdef[I].v*0.02);
-          glVertex3f(X + QLength * Pdef[I].u, Y - QHeight * 0.5, Z + QWidth * Pdef[I].v);
-          if nn1>0 then
-            glNormal3f((Pdef[I].v-Pdef[I2].v) / nn1+Pdef[I].u*0.02, 0.02, (Pdef[I2].u-Pdef[I].u) /nn1+Pdef[I].v*0.02);
-          glVertex3f(X + QLength * Pdef[I].u, Y + QHeight * 0.5, Z + QWidth * Pdef[I].v);
-          if nn1>0 then
-            glNormal3f((Pdef[I].v-Pdef[I2].v) / nn1+Pdef[I2].u*0.02, -0.02, (Pdef[I2].u-Pdef[I].u) /nn1+Pdef[I2].v*0.02);
-          glVertex3f(X + QLength * Pdef[I2].u, Y - QHeight * 0.5, Z + QWidth * Pdef[I2].v);
-          if nn1>0 then
-            glNormal3f((Pdef[I].v-Pdef[I2].v) / nn1+Pdef[I2].u*0.02, 0.02, (Pdef[I2].u-Pdef[I].u) /nn1+Pdef[I2].v*0.02);
-          glVertex3f(X + QLength * Pdef[I2].u, Y + QHeight * 0.5, Z + QWidth * Pdef[I2].v);
-        End;
-      glEnd;
+    // Reflective properties
+    if high(pdef) >= 0 then
+      begin
+        glFrontFace(GL_CW);       // Clock-Wise
+        glBegin(GL_TRIANGLE_STRIP);
+        //  glNormal3f(0, 0, 0);
+        //  glVertex3f(X, Y, Z);
+        for Li := 0 to High(PDef) + 1 do
+          begin
+            I := LI mod (High(PDef) + 1);
+            I2 := (LI + 1) mod (High(PDef) + 1);
+            nn1 := sqrt(sqr(Pdef[I2].u - Pdef[I].u) + sqr(Pdef[I2].v - Pdef[I].v));
+            if nn1 > 0 then
+                glNormal3f((Pdef[I].v - Pdef[I2].v) / nn1 + Pdef[I].u * 0.02,
+                    -0.02, (Pdef[I2].u - Pdef[I].u) / nn1 + Pdef[I].v * 0.02);
+            glVertex3f(pnt.X + QLength * Pdef[I].u, pnt.Y - QHeight *
+                0.5, pnt.Z + QWidth * Pdef[I].v);
+            if nn1 > 0 then
+                glNormal3f((Pdef[I].v - Pdef[I2].v) / nn1 + Pdef[I].u * 0.02,
+                    0.02, (Pdef[I2].u - Pdef[I].u) / nn1 + Pdef[I].v * 0.02);
+            glVertex3f(pnt.X + QLength * Pdef[I].u, pnt.Y + QHeight *
+                0.5, pnt.Z + QWidth * Pdef[I].v);
+            if nn1 > 0 then
+                glNormal3f((Pdef[I].v - Pdef[I2].v) / nn1 + Pdef[I2].u * 0.02,
+                    -0.02, (Pdef[I2].u - Pdef[I].u) / nn1 + Pdef[I2].v * 0.02);
+            glVertex3f(pnt.X + QLength * Pdef[I2].u, pnt.Y - QHeight *
+                0.5, pnt.Z + QWidth * Pdef[I2].v);
+            if nn1 > 0 then
+                glNormal3f((Pdef[I].v - Pdef[I2].v) / nn1 + Pdef[I2].u * 0.02,
+                    0.02, (Pdef[I2].u - Pdef[I].u) / nn1 + Pdef[I2].v * 0.02);
+            glVertex3f(pnt.X + QLength * Pdef[I2].u, pnt.Y + QHeight *
+                0.5, pnt.Z + QWidth * Pdef[I2].v);
+          end;
+        glEnd;
 
-      DrawDeckel;
+        DrawDeckel;
 
-    End;
-End;
+      end;
+end;
 
 procedure T3DPrism.DrawDeckel;
 var
-  I: Integer;
+    I: integer;
 
 begin
-  //  exit;
-  // Deckel1
-  glFrontFace(GL_CCW);       //Counter Clock-Wise
-  glBegin(GL_TRIANGLE_FAN);
-  glNormal3f(0, 1, 0);
-  glVertex3f(X, Y + QHeight * 0.5, Z);
-  for I := 0 to High(PDef) do
-  begin
-  glNormal3f(Pdef[I].u * 0.1, 0.9, Pdef[I].v * 0.1);
-  glVertex3f(X + QLength * Pdef[I].u, Y + QHeight * 0.5, Z + QWidth * Pdef[I].v);
-  end;
-  I := 0;
-  glNormal3f(Pdef[I].u * 0.1, 0.9, Pdef[I].v * 0.1);
-  glVertex3f(X + QLength * Pdef[I].u, Y + QHeight * 0.5, Z + QWidth * Pdef[I].v);
-  glEnd;
-  // Deckel1
-  glFrontFace(GL_CW);       // Clock-Wise
-  glBegin(GL_TRIANGLE_FAN);
-  glNormal3f(0, -1, 0);
-  glVertex3f(X, Y - QHeight * 0.5, Z);
-  for I := 0 to High(PDef) do
-  begin
-  glNormal3f(Pdef[I].u * 0.1, -0.9, Pdef[I].v * 0.1);
-  glVertex3f(X + QLength * Pdef[I].u, Y - QHeight * 0.5, Z + QWidth * Pdef[I].v);
-  end;
-  I := 0;
-  glNormal3f(Pdef[I].u * 0.1, -0.9, Pdef[I].v * 0.1);
-  glVertex3f(X + QLength * Pdef[I].u, Y - QHeight * 0.5, Z + QWidth * Pdef[I].v);
-  glEnd;
+    //  exit;
+    // Deckel1
+    glFrontFace(GL_CCW);       //Counter Clock-Wise
+    glBegin(GL_TRIANGLE_FAN);
+    glNormal3f(0, 1, 0);
+    glVertex3f(pnt.X, pnt.Y + QHeight * 0.5, pnt.Z);
+    for I := 0 to High(PDef) do
+      begin
+        glNormal3f(Pdef[I].u * 0.1, 0.9, Pdef[I].v * 0.1);
+        glVertex3f(pnt.X + QLength * Pdef[I].u, pnt.Y + QHeight * 0.5,
+            pnt.Z + QWidth * Pdef[I].v);
+      end;
+    I := 0;
+    glNormal3f(Pdef[I].u * 0.1, 0.9, Pdef[I].v * 0.1);
+    glVertex3f(pnt.X + QLength * Pdef[I].u, pnt.Y + QHeight * 0.5,
+        pnt.Z + QWidth * Pdef[I].v);
+    glEnd;
+    // Deckel1
+    glFrontFace(GL_CW);       // Clock-Wise
+    glBegin(GL_TRIANGLE_FAN);
+    glNormal3f(0, -1, 0);
+    glVertex3f(pnt.X, pnt.Y - QHeight * 0.5, pnt.Z);
+    for I := 0 to High(PDef) do
+      begin
+        glNormal3f(Pdef[I].u * 0.1, -0.9, Pdef[I].v * 0.1);
+        glVertex3f(pnt.X + QLength * Pdef[I].u, pnt.Y - QHeight * 0.5,
+            pnt.Z + QWidth * Pdef[I].v);
+      end;
+    I := 0;
+    glNormal3f(Pdef[I].u * 0.1, -0.9, Pdef[I].v * 0.1);
+    glVertex3f(pnt.X + QLength * Pdef[I].u, pnt.Y - QHeight * 0.5,
+        pnt.Z + QWidth * Pdef[I].v);
+    glEnd;
 end;
 
-Procedure T3DPrism2.DrawDeckel;
-Var
-  I: Integer;
-  //  xx, yy, zz: GLFloat;
-Begin
-  If high(pdef) >= 0 Then
-    Begin
-  //{
-      glFrontFace(GL_CW);       //Counter Clock-Wise
-      glBegin(FillType);
-      For I := 0 To High(FillDef) Do
-        If FillDef[I] >= 0 Then
-          Begin
-            glNormal3f(Pdef[FillDef[I]].u * 0.1, 0.9, Pdef[FillDef[I]].v * 0.1);
-            glVertex3f(X + QLength * Pdef[FillDef[I]].u, Y + QHeight * 0.5, Z + QWidth * Pdef[FillDef[I]].v);
-          End
-        Else
-          Begin
-            glEnd;
-            glBegin(FillType);
-          End;
-      glEnd;
+procedure T3DPrism2.DrawDeckel;
+var
+    I: integer;
+    //  xx, yy, zz: GLFloat;
+begin
+    if high(pdef) >= 0 then
+      begin
+        //{
+        glFrontFace(GL_CW);       //Counter Clock-Wise
+        glBegin(FillType);
+        for I := 0 to High(FillDef) do
+            if FillDef[I] >= 0 then
+              begin
+                glNormal3f(Pdef[FillDef[I]].u * 0.1, 0.9, Pdef[FillDef[I]].v * 0.1);
+                glVertex3f(pnt.X + QLength * Pdef[FillDef[I]].u, pnt.Y +
+                    QHeight * 0.5, pnt.Z + QWidth * Pdef[FillDef[I]].v);
+              end
+            else
+              begin
+                glEnd;
+                glBegin(FillType);
+              end;
+        glEnd;
 
-      // Deckel2
-      glFrontFace(GL_CCW);       // Clock-Wise
-      glBegin(FillType);
-      For I := 0 To High(FillDef) Do
-        If FillDef[I] >= 0 Then
-          Begin
-            glNormal3f(Pdef[FillDef[I]].u * 0.1,-0.9, Pdef[FillDef[I]].v * 0.1);
-            glVertex3f(X + QLength * Pdef[FillDef[I]].u, Y - QHeight * 0.5, Z + QWidth * Pdef[FillDef[I]].v);
-          End
-        Else
-          Begin
-            glEnd;
-            glBegin(FillType);
-          End;
-      glEnd;
+        // Deckel2
+        glFrontFace(GL_CCW);       // Clock-Wise
+        glBegin(FillType);
+        for I := 0 to High(FillDef) do
+            if FillDef[I] >= 0 then
+              begin
+                glNormal3f(Pdef[FillDef[I]].u * 0.1, -0.9, Pdef[FillDef[I]].v * 0.1);
+                glVertex3f(pnt.X + QLength * Pdef[FillDef[I]].u, pnt.Y -
+                    QHeight * 0.5, pnt.Z + QWidth * Pdef[FillDef[I]].v);
+              end
+            else
+              begin
+                glEnd;
+                glBegin(FillType);
+              end;
+        glEnd;
 
-      glFrontFace(GL_CW);       // Clock-Wise
-    End;
-End;
+        glFrontFace(GL_CW);       // Clock-Wise
+      end;
+end;
 
 end.

@@ -1,0 +1,1 @@
+program Q9;const r=#39;b='*>ydu#g=fkdu>ehjlq#zulwh+f.u.e.u.*>f@*.u.f,>iru#g#lq#e#gr#zulwh+fkdu+e|wh+g,06,,hqg1';c='program Q9;const r=#39;b=';var d:char;begin write(c+r+b+r+';c='+r+c);for d in b do write(char(byte(d)-3))end.

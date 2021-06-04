@@ -7,7 +7,7 @@ uses
   frm_ConnectDB, dm_GenData2, tst_ClsIndHej, tst_ClsMarrHej, tst_ClsAdopHej,
   tst_ClsPlaceHej, tst_ClsSourceHej, cls_HejBase, tst_fraIndIndex,
   unt_IndTestData, unt_MarrTestData, tst_ClsHejFilter, unt_PlaceTestData,
-  tst_FrmEditFilter, frm_FilterEdit, tst_ClsHejHelper, cls_HejHelper;
+  tst_FrmEditFilter, frm_FilterEdit, tst_ClsHejHelper, cls_HejHelper, cls_GenHelperBase;
 
 {$R *.res}
 

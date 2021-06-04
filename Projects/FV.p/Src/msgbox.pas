@@ -1,24 +1,24 @@
 {********[ SOURCE FILE OF GRAPHICAL FREE VISION ]**********}
-
+{                                                          }
 {   System independent GRAPHICAL clone of MSGBOX.PAS       }
-
+{                                                          }
 {   Interface Copyright (c) 1992 Borland International     }
-
+{                                                          }
 {   Copyright (c) 1996, 1997, 1998, 1999 by Leon de Boer   }
 {   ldeboer@attglobal.net  - primary e-mail addr           }
 {   ldeboer@starwon.com.au - backup e-mail addr            }
-
+{                                                          }
 {****************[ THIS CODE IS FREEWARE ]*****************}
-
+{                                                          }
 {     This sourcecode is released for the purpose to       }
 {   promote the pascal language on all platforms. You may  }
 {   redistribute it and/or modify with the following       }
 {   DISCLAIMER.                                            }
-
+{                                                          }
 {     This SOURCE CODE is distributed "AS IS" WITHOUT      }
 {   WARRANTIES AS TO PERFORMANCE OF MERCHANTABILITY OR     }
 {   ANY OTHER WARRANTIES WHETHER EXPRESSED OR IMPLIED.     }
-
+{                                                          }
 {*****************[ SUPPORTED PLATFORMS ]******************}
 {     16 and 32 Bit compilers                              }
 {        DOS      - Turbo Pascal 7.0 +      (16 Bit)       }
@@ -31,7 +31,7 @@
 {                 - Speedsoft Sybil 2.0+    (32 Bit)       }
 {        OS2      - Virtual Pascal 1.0+     (32 Bit)       }
 {                 - Speedsoft Sybil 2.0+    (32 Bit)       }
-
+{                                                          }
 {******************[ REVISION HISTORY ]********************}
 {  Version  Date        Fix                                }
 {  -------  ---------   ---------------------------------  }
@@ -53,8 +53,7 @@ unit MsgBox;
 {$endif}
 
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
-interface
-
+                                  INTERFACE
 {<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>}
 
 {====Include file to sort compiler platform out =====================}
@@ -133,7 +132,8 @@ Before the dialog is displayed the Msg and Params are passed to FormatStr.
 The resulting string is displayed as a TStaticText view in the dialog.
 30Sep99 LdB
 ---------------------------------------------------------------------}
-function MessageBox(const Msg: string; Params: Pointer; AOptions: word): word;
+function MessageBox(const Msg: string; Params: Pointer; 
+  AOptions: word): word;
 
 {-MessageBoxRect-----------------------------------------------------
 MessageBoxRec allows the specification of a TRect for the message box
@@ -154,7 +154,8 @@ function MessageBoxRectDlg(Dlg: PDialog; var R: TRect; const Msg: string;
 InputBox displays a simple dialog that allows user to type in a string
 30Sep99 LdB
 ---------------------------------------------------------------------}
-function InputBox(const Title, ALabel: string; var S: string; Limit: byte): word;
+function InputBox(const Title, ALabel: string; var S: string; 
+  Limit: byte): word;
 
 {-InputBoxRect-------------------------------------------------------
 InputBoxRect is like InputBox but allows the specification of a rectangle.
@@ -226,16 +227,16 @@ begin
       begin
         R.Assign(0, 0, 10, 2);                       { Assign screen area }
         Control := New(PButton, Init(R, ButtonName[I], Commands[i],
-          bfNormal));
-        { Create button }
+          bfNormal));                                { Create button }
+        
         Inc(X, Control^.Size.X + 2);                 { Adjust position }
         ButtonList[ButtonCount] := Control;          { Add to button list }
         Inc(ButtonCount);                            { Inc button count }
       end;
     X := (Size.X - X) shr 1;                         { Calc x position }
     if (ButtonCount > 0) then
-      for I := 0 to ButtonCount - 1 do
-      begin         { For each button }
+      for I := 0 to ButtonCount - 1 do                { For each button }
+      begin        
         Control := ButtonList[I];                     { Transfer button }
         Insert(Control);                              { Insert button }
         Control^.MoveTo(X, Size.Y - 3);               { Position button }
@@ -244,8 +245,8 @@ begin
     SelectNext(False);                               { Select first button }
   end;
   if (AOptions and mfInsertInApp = 0) then
-    MessageBoxRectDlg := DeskTop^.ExecView(Dlg)
-  else { Execute dialog }
+    MessageBoxRectDlg := DeskTop^.ExecView(Dlg)      { Execute dialog }
+  else 
     MessageBoxRectDlg := Application^.ExecView(Dlg); { Execute dialog }
 end;
 
@@ -269,7 +270,8 @@ end;
 {---------------------------------------------------------------------------}
 {  InputBox -> Platforms DOS/DPMI/WIN/NT/OS2 - Updated 30Sep99 LdB          }
 {---------------------------------------------------------------------------}
-function InputBox(const Title, ALabel: string; var S: string; Limit: byte): word;
+function InputBox(const Title, ALabel: string; var S: string; 
+  Limit: byte): word;
 var
   R: TRect;
 begin
@@ -295,18 +297,18 @@ begin
   with Dialog^ do
   begin
     R.Assign(4 + CStrLen(ALabel), 2, Size.X - 3, 3); { Assign screen area }
-    Control := New(PInputLine, Init(R,Limit));             { Create input line }
+    Control := New(PInputLine, Init(R,Limit));       { Create input line }
     Insert(Control);                                 { Insert input line }
     R.Assign(2, 2, 3 + CStrLen(ALabel), 3);          { Assign screen area }
     Insert(New(PLabel, Init(R, ALabel, Control)));   { Insert label }
     R.Assign(Size.X - 24, Size.Y - 4, Size.X - 14,
       Size.Y - 2);                                   { Assign screen area }
-    Insert(New(PButton, Init(R, 'O~K~', cmOk, bfDefault)));
-    { Insert okay button }
+    Insert(New(PButton, Init(R, 'O~K~', cmOk, 
+       bfDefault)));                                 { Insert okay button }
     Inc(R.A.X, 12);                                  { New start x position }
     Inc(R.B.X, 12);                                  { New end x position }
-    Insert(New(PButton, Init(R, 'Cancel', cmCancel, bfNormal)));
-    { Insert cancel button }
+    Insert(New(PButton, Init(R, 'Cancel', cmCancel, 
+        bfNormal)));                                 { Insert cancel button }
     Inc(R.A.X, 12);                                  { New start x position }
     Inc(R.B.X, 12);                                  { New end x position }
     SelectNext(False);                               { Select first button }
@@ -314,7 +316,7 @@ begin
   Dialog^.SetData(S);                                { Set data in dialog }
   C := DeskTop^.ExecView(Dialog);                    { Execute the dialog }
   if (C <> cmCancel) then
-    Dialog^.GetData(S);        { Get data from dialog }
+    Dialog^.GetData(S);                              { Get data from dialog }
   Dispose(Dialog, Done);                             { Dispose of dialog }
   InputBoxRect := C;                                 { Return execute result }
 end;

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="prj_Quine10"><module name="d.w"><short>The program is called d.w so it contains a . and a w</short><element name="e"><short>e contains the encoded part of the tail.</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
