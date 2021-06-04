@@ -10,6 +10,9 @@ object dmGenData: TdmGenData
     AfterConnect = SQLConnector1AfterConnect
     DatabaseName = 'ahnenwin_1'
     KeepConnection = False
+    Params.Strings = (
+      'SkipLibraryVersionCheck=true'
+    )
     Password = '1(htyS99'
     Transaction = SQLTransaction1
     UserName = 'root'
@@ -1665,5 +1668,13 @@ object dmGenData: TdmGenData
       end>
     Left = 59
     Top = 224
+  end
+  object MySQL57Connection1: TMySQL57Connection
+    Connected = False
+    LoginPrompt = False
+    KeepConnection = False
+    SkipLibraryVersionCheck = True
+    Left = 36
+    Top = 45
   end
 end
