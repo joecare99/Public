@@ -1,0 +1,8 @@
+Dwight, 1, (, Dwight, )
+Frantz, 0, (, Müller, )
+Freiwein, 0, (, Schüchter, )
+Gabler, 3, (, Gabler, )
+Müller, 15, (, Müller, Frantz, )
+Mustermann, 11, (, Mustermann, )
+Schüchter, 4, (, Schüchter, Freiwein, )
+von Stradonitz, 2, (, von Stradonitz, )
