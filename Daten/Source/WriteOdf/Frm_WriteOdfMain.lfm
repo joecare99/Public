@@ -1,53 +1,110 @@
 object FrmWriteOdfMain: TFrmWriteOdfMain
   Left = 463
-  Height = 807
+  Height = 538
   Top = 250
-  Width = 1139
+  Width = 759
   Caption = 'FrmWriteOdfMain'
-  ClientHeight = 807
-  ClientWidth = 1139
-  DesignTimePPI = 144
+  ClientHeight = 538
+  ClientWidth = 759
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  LCLVersion = '2.0.4.0'
+  LCLVersion = '2.0.12.0'
   inline RTFEditFrame1: TRTFEditFrame
     Height = 756
     Top = 51
-    Width = 584
+    Width = 389
     Align = alLeft
     ClientHeight = 756
-    ClientWidth = 584
+    ClientWidth = 389
     Visible = True
     inherited RichMemo1: TRichMemo
-      Height = 692
-      Width = 560
+      Left = 5
+      Height = 713
+      Top = 27
+      Width = 568
       Lines.Strings = (
         'RichMemo1'
       )
     end
+    inherited btnJA: TSpeedButton
+      Left = 192
+      Height = 15
+      Top = 5
+      Width = 21
+    end
+    inherited btnCA: TSpeedButton
+      Left = 149
+      Height = 15
+      Top = 5
+      Width = 21
+    end
+    inherited btnLA: TSpeedButton
+      Left = 128
+      Height = 15
+      Top = 5
+      Width = 21
+    end
+    inherited btnRA: TSpeedButton
+      Left = 171
+      Height = 15
+      Top = 5
+      Width = 21
+    end
+    inherited btnBold: TSpeedButton
+      Left = 75
+      Height = 15
+      Top = 5
+      Width = 15
+    end
+    inherited btnItalic: TSpeedButton
+      Left = 91
+      Height = 15
+      Top = 5
+      Width = 15
+    end
+    inherited btnUnderline: TSpeedButton
+      Left = 107
+      Height = 15
+      Top = 5
+      Width = 15
+    end
+    inherited btnFont: TSpeedButton
+      Left = 5
+      Height = 15
+      Top = 5
+      Width = 32
+    end
+    inherited btnColor: TSpeedButton
+      Left = 37
+      Height = 15
+      Top = 5
+      Width = 32
+    end
   end
   object Button1: TButton
-    Left = 632
-    Height = 38
-    Top = 88
-    Width = 113
+    Left = 421
+    Height = 25
+    Top = 59
+    Width = 75
     Caption = 'Button1'
     OnClick = Button1Click
+    ParentFont = False
     TabOrder = 1
   end
   object Splitter1: TSplitter
     Left = 584
     Height = 756
     Top = 51
-    Width = 8
+    Width = 5
   end
   object Panel1: TPanel
     Left = 0
-    Height = 51
+    Height = 34
     Top = 0
     Width = 1139
     Align = alTop
     Caption = 'Panel1'
+    ParentFont = False
     TabOrder = 3
   end
 end
