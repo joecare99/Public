@@ -1,61 +1,60 @@
 object Form1: TForm1
   Left = 0
-  Height = 1615
+  Height = 1077
   Top = 0
-  Width = 2473
+  Width = 1649
   ActiveControl = ComboBox1
   Caption = 'Form1'
-  ClientHeight = 1615
-  ClientWidth = 2473
-  DesignTimePPI = 144
+  ClientHeight = 1077
+  ClientWidth = 1649
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   object pnlTop: TPanel
     Left = 0
-    Height = 75
+    Height = 50
     Top = 0
-    Width = 2473
+    Width = 1649
     Align = alTop
-    ClientHeight = 75
-    ClientWidth = 2473
+    ClientHeight = 50
+    ClientWidth = 1649
     ParentFont = False
     TabOrder = 0
     object ComboBox1: TComboBox
-      Left = 20
-      Height = 33
-      Top = 14
-      Width = 808
-      ItemHeight = 25
+      Left = 13
+      Height = 23
+      Top = 9
+      Width = 539
+      ItemHeight = 15
       ParentFont = False
       TabOrder = 0
       Text = 'ComboBox1'
     end
     object SpeedButton1: TSpeedButton
-      Left = 837
-      Height = 33
-      Top = 14
-      Width = 34
+      Left = 558
+      Height = 22
+      Top = 9
+      Width = 23
       OnClick = SpeedButton1Click
       ParentFont = False
     end
   end
   object pnlBottom: TPanel
     Left = 0
-    Height = 99
-    Top = 1516
-    Width = 2473
+    Height = 66
+    Top = 1011
+    Width = 1649
     Align = alBottom
-    ClientHeight = 99
-    ClientWidth = 2473
+    ClientHeight = 66
+    ClientWidth = 1649
     ParentFont = False
     TabOrder = 1
     object BitBtn1: TBitBtn
-      Left = 2302
-      Height = 89
-      Top = 5
-      Width = 166
+      Left = 1534
+      Height = 58
+      Top = 4
+      Width = 111
       Align = alRight
-      BorderSpacing.Around = 4
+      BorderSpacing.Around = 3
       DefaultCaption = True
       Kind = bkClose
       ModalResult = 11
@@ -64,146 +63,1142 @@ object Form1: TForm1
     end
   end
   inline fraIndIndex1: TfraIndIndex
-    Height = 1441
-    Top = 75
-    Width = 312
+    Height = 961
+    Top = 50
+    Width = 208
     Align = alLeft
-    ClientHeight = 1441
-    ClientWidth = 312
+    ClientHeight = 961
+    ClientWidth = 208
     TabOrder = 2
     inherited pnlTop: TPanel
-      Width = 312
-      ClientWidth = 312
+      Height = 53
+      Width = 208
+      ClientHeight = 53
+      ClientWidth = 208
       inherited cbxSortBy: TComboBox
-        Width = 304
+        Top = 8
+        Width = 203
+        BorderSpacing.Right = 3
+        BorderSpacing.Bottom = 3
+      end
+      inherited lblSort: TLabel
+        Left = -52
+        Top = 12
+        BorderSpacing.Right = 3
+      end
+      inherited lblFind: TLabel
+        Left = -44
+        Top = 34
+        BorderSpacing.Right = 3
       end
       inherited edtFind: TEdit
-        Width = 304
+        Height = 15
+        Top = 34
+        Width = 203
+        BorderSpacing.Right = 3
+        BorderSpacing.Bottom = 3
       end
     end
     inherited pnlBottom: TPanel
-      Top = 1353
-      Width = 312
-      ClientWidth = 312
+      Height = 39
+      Top = 922
+      Width = 208
+      ClientHeight = 39
+      ClientWidth = 208
       inherited ComboBox1: TComboBox
-        Width = 298
+        Left = 4
+        Top = 12
+        Width = 200
+        BorderSpacing.Around = 3
       end
       inherited chbFilterActive: TCheckBox
-        Width = 106
+        Left = 70
+        Height = 5
+        Top = 4
+        Width = 104
+        BorderSpacing.Around = 3
+      end
+      inherited SpeedButton1: TSpeedButton
+        Left = 40
+        Height = 5
+        Top = 4
+        Width = 27
+        BorderSpacing.Around = 3
+      end
+      inherited Label1: TLabel
+        Left = 6
+        Height = 1
+        Top = 6
+        BorderSpacing.Around = 5
       end
       inherited SpeedButton2: TSpeedButton
-        Left = 245
+        Left = 177
+        Height = 5
+        Top = 4
+        Width = 27
+        BorderSpacing.Around = 3
       end
     end
     inherited TabControl1: TTabControl
-      Width = 312
+      Height = 18
+      Top = 54
+      Width = 208
+      BorderSpacing.Top = 1
     end
     inherited StringGrid1: TStringGrid
-      Height = 1189
-      Width = 312
+      Height = 850
+      Top = 72
+      Width = 208
       Columns = <      
         item
+          MinSize = 7
+          MaxSize = 133
           PickList.Strings = (          )
           Title.Caption = 'Name'
-          Width = 150
+          Width = 100
         end      
         item
+          MinSize = 7
+          MaxSize = 133
           PickList.Strings = (          )
           Title.Caption = 'Cl.'
-          Width = 30
+          Width = 20
         end      
         item
+          MinSize = 7
+          MaxSize = 133
           PickList.Strings = (          )
           Title.Caption = 'Datum'
+          Width = 64
         end>
       ColWidths = (
-        150
-        30
-        96
+        100
+        20
+        64
       )
     end
   end
   inline fraAWHejView1: TfraAWHejView
     AnchorSideTop.Side = asrTop
-    Left = 312
-    Height = 1441
-    Top = 75
-    Width = 2161
+    Left = 208
+    Height = 961
+    Top = 50
+    Width = 1441
     Align = alClient
-    ClientHeight = 1441
-    ClientWidth = 2161
+    ClientHeight = 961
+    ClientWidth = 1441
     TabOrder = 3
     inherited CoolBar1: TCoolBar
-      Width = 2161
+      Height = 30
+      Width = 1441
+      inherited tlbMenu: TToolBar
+        BorderSpacing.Left = 22
+        BorderSpacing.Top = 12
+      end
     end
     inherited StatusBar1: TStatusBar
-      Top = 1405
-      Width = 2161
+      Height = 23
+      Top = 938
+      Width = 1441
     end
     inherited PageControl1: TPageControl
-      Height = 1337
-      Width = 2161
+      Height = 908
+      Top = 30
+      Width = 1441
+      inherited tbs1Select: TTabSheet
+        inherited Panel14: TPanel
+          Height = 52
+          ClientHeight = 52
+          inherited Panel15: TPanel
+            Left = 820
+            Width = 137
+          end
+        end
+        inherited tblSelectPerson: TStringGrid
+          BorderSpacing.Around = 26
+          Columns = <          
+            item
+              MinSize = 7
+              MaxSize = 129
+              PickList.Strings = (              )
+              Title.Caption = 'idIndividual'
+              Width = 39
+            end          
+            item
+              MinSize = 7
+              MaxSize = 129
+              PickList.Strings = (              )
+              Title.Caption = 'FamilyName'
+              Width = 129
+            end          
+            item
+              MinSize = 7
+              MaxSize = 129
+              PickList.Strings = (              )
+              Title.Caption = 'GivenName'
+              Width = 129
+            end          
+            item
+              MinSize = 7
+              MaxSize = 129
+              PickList.Strings = (              )
+              Title.Caption = 'Birth'
+              Width = 65
+            end>
+          ColWidths = (
+            64
+            39
+            129
+            129
+            65
+          )
+        end
+      end
       inherited tbs2Edit: TTabSheet
-        ClientHeight = 1299
-        ClientWidth = 2153
+        ClientHeight = 880
+        ClientWidth = 1433
         inherited pnlP2Top: TPanel
-          Width = 2153
-          ClientWidth = 2153
+          Height = 52
+          Width = 1433
+          ClientHeight = 52
+          ClientWidth = 1433
           inherited pnlP2TopRight: TPanel
-            Left = 1765
+            Left = 1260
+            Height = 50
+            Width = 172
+            ClientHeight = 50
+            ClientWidth = 172
+            inherited lblID: TLabel
+              Left = 6
+              Height = 15
+              Top = 6
+              Width = 160
+              BorderSpacing.Around = 5
+            end
           end
           inherited pnlP2TopClient: TPanel
-            Width = 1439
-            ClientWidth = 1439
+            Left = 146
+            Height = 50
+            Width = 1114
+            ClientHeight = 50
+            ClientWidth = 1114
+            inherited lblFather: TLabel
+              Left = 2
+              Height = 15
+              Top = 7
+              Width = 39
+              BorderSpacing.Right = 2
+              BorderSpacing.Bottom = 2
+              BorderSpacing.Around = 2
+            end
+            inherited lblMother: TLabel
+              Height = 15
+              Top = 32
+              Width = 38
+              BorderSpacing.Right = 2
+              BorderSpacing.Around = 2
+            end
             inherited edtFather: TEdit
-              Width = 1332
+              Left = 45
+              Height = 23
+              Width = 1066
+              BorderSpacing.Top = 2
+              BorderSpacing.Right = 2
             end
             inherited edtMother: TEdit
-              Width = 1332
+              Left = 45
+              Height = 23
+              Width = 1066
+              BorderSpacing.Top = 2
+            end
+          end
+          inherited DBNavigator1: TPanel
+            Left = 10
+            Height = 32
+            Top = 10
+            Width = 127
+            BorderSpacing.Around = 9
+            ClientHeight = 32
+            ClientWidth = 127
+            inherited SpeedButton2: TSpeedButton
+              Left = 3
+              Height = 26
+              Top = 3
+              Width = 29
+              BorderSpacing.Around = 2
+            end
+            inherited SpeedButton3: TSpeedButton
+              Left = 34
+              Height = 26
+              Top = 3
+              Width = 29
+              BorderSpacing.Around = 2
+            end
+            inherited SpeedButton4: TSpeedButton
+              Left = 96
+              Height = 26
+              Top = 3
+              Width = 29
+              BorderSpacing.Around = 2
+            end
+            inherited SpeedButton5: TSpeedButton
+              Left = 65
+              Height = 26
+              Top = 3
+              Width = 29
+              BorderSpacing.Around = 2
             end
           end
         end
         inherited pnlP2Bottom: TPanel
-          Height = 766
-          Width = 2153
-          ClientHeight = 766
-          ClientWidth = 2153
+          Height = 643
+          Top = 237
+          Width = 1433
+          ClientHeight = 643
+          ClientWidth = 1433
           inherited pnlP2BottomLeft: TPanel
-            Height = 764
-            ClientHeight = 764
+            Height = 641
+            Width = 299
+            ClientHeight = 641
+            ClientWidth = 299
+            inherited lblConnection: TLabel
+              Left = 3
+              Height = 15
+              Top = 3
+              Width = 293
+              BorderSpacing.Around = 2
+            end
             inherited tblSpouses: TStringGrid
-              Height = 729
+              Height = 620
+              Top = 20
+              Width = 297
+              Columns = <              
+                item
+                  MinSize = 7
+                  MaxSize = 133
+                  PickList.Strings = (                  )
+                  Title.Caption = 'Name'
+                  Width = 160
+                end              
+                item
+                  MinSize = 7
+                  MaxSize = 133
+                  PickList.Strings = (                  )
+                  Title.Caption = 'Hochzeit'
+                  Width = 80
+                end>
+              ColWidths = (
+                64
+                160
+                80
+              )
             end
           end
           inherited pnlP2BottomClient: TPanel
-            Height = 764
-            Width = 1469
-            ClientHeight = 764
-            ClientWidth = 1469
+            Left = 303
+            Height = 641
+            Width = 1129
+            ClientHeight = 641
+            ClientWidth = 1129
             inherited lblChildren: TLabel
-              Width = 1459
+              Left = 3
+              Height = 15
+              Top = 3
+              Width = 1123
+              BorderSpacing.Around = 2
             end
             inherited tblChildren: TStringGrid
-              Height = 729
-              Width = 1467
+              Height = 620
+              Top = 20
+              Width = 1127
+              Columns = <              
+                item
+                  MinSize = 7
+                  MaxSize = 133
+                  PickList.Strings = (                  )
+                  Title.Caption = 'Name'
+                  Width = 400
+                end>
+              ColWidths = (
+                64
+                400
+              )
             end
           end
           inherited Splitter1: TSplitter
-            Height = 764
+            Left = 300
+            Height = 641
+            Width = 3
+          end
+        end
+        inherited pnlP2BaseData: TPanel
+          Height = 103
+          Top = 52
+          Width = 331
+          ClientHeight = 103
+          ClientWidth = 331
+          inherited lblName: TLabel
+            Height = 15
+            Top = 7
+            Width = 221
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblGivenname: TLabel
+            Height = 15
+            Top = 32
+            Width = 221
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblOccupation: TLabel
+            Height = 15
+            Top = 57
+            Width = 221
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblFarmname: TLabel
+            Height = 15
+            Top = 82
+            Width = 221
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblSex: TLabel
+            Height = 66
+            Top = 85
+            Width = 221
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblReligion: TLabel
+            Left = 102
+            Height = 66
+            Top = 85
+            Width = 217
+            BorderSpacing.Left = 9
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblAdopted: TLabel
+            Left = 410
+            Height = 66
+            Top = 85
+            Width = 43
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited edtName: TEdit
+            Left = 62
+            Height = 23
+            Width = 268
+            BorderSpacing.Top = 2
+          end
+          inherited edtGivenname: TEdit
+            Left = 62
+            Height = 23
+            Width = 268
+            BorderSpacing.Top = 2
+          end
+          inherited edtOccupation: TEdit
+            Left = 62
+            Height = 23
+            Width = 268
+            BorderSpacing.Top = 2
+          end
+          inherited edtFarmname: TEdit
+            Left = 62
+            Height = 23
+            Top = 78
+            Width = 268
+            BorderSpacing.Top = 2
+          end
+          inherited cbxSex: TComboBox
+            Left = 62
+            Height = 23
+            Top = 83
+            Width = 30
+            BorderSpacing.Top = 2
+            ItemHeight = 15
+          end
+          inherited cbxReligion: TComboBox
+            Left = 256
+            Height = 23
+            Top = 83
+            Width = 30
+            BorderSpacing.Top = 2
+            ItemHeight = 15
+          end
+          inherited chbLiving: TCheckBox
+            Left = 217
+            Height = 19
+            Top = 83
+            Width = 40
+            BorderSpacing.Left = 9
+            BorderSpacing.Top = 2
+            BorderSpacing.Right = 9
+          end
+          inherited cbxAdopted: TComboBox
+            Left = 289
+            Height = 23
+            Top = 83
+            Width = 41
+            BorderSpacing.Top = 2
+            ItemHeight = 15
           end
         end
         inherited pnlP2Image: TPanel
-          Width = 1159
-          ClientWidth = 1159
+          Left = 442
+          Height = 139
+          Top = 52
+          Width = 991
+          ClientHeight = 139
+          ClientWidth = 991
           inherited UpDown1: TUpDown
-            Left = 1125
+            Left = 975
+            Height = 22
+            Top = 116
+            Width = 15
+          end
+        end
+        inherited pnlP2VitalData: TPanel
+          Height = 82
+          Top = 155
+          Width = 409
+          ClientHeight = 82
+          ClientWidth = 409
+          inherited lblBirth: TLabel
+            Left = 33
+            Height = 57
+            Top = 4
+            Width = 26
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblBaptised: TLabel
+            Left = 32
+            Height = 51
+            Top = 30
+            Width = 23
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblDeath: TLabel
+            Left = 27
+            Height = 15
+            Top = 57
+            Width = 28
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblBuried: TLabel
+            Left = 25
+            Height = 15
+            Top = 82
+            Width = 30
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited edtBirthPlace: TEdit
+            Left = 181
+            Height = 23
+            Width = 227
+            BorderSpacing.Top = 2
+          end
+          inherited cbxBirthMod: TComboBox
+            Left = 63
+            Height = 23
+            Width = 38
+            BorderSpacing.Right = 3
+            ItemHeight = 15
+          end
+          inherited edtBirthDate: TDateEdit
+            Left = 104
+            Height = 23
+            Width = 74
+            ButtonWidth = 18
+            BorderSpacing.Right = 3
+          end
+          inherited cbxBaptMod: TComboBox
+            Left = 63
+            Height = 23
+            Width = 38
+            ItemHeight = 15
+          end
+          inherited edtBaptDate: TDateEdit
+            Left = 104
+            Height = 23
+            Width = 74
+            ButtonWidth = 18
+          end
+          inherited edtBaptPlace: TEdit
+            Left = 181
+            Height = 23
+            Width = 227
+            BorderSpacing.Top = 2
+          end
+          inherited cbxDeathMod: TComboBox
+            Left = 63
+            Height = 23
+            Width = 38
+            ItemHeight = 15
+          end
+          inherited edtDeathDate: TDateEdit
+            Left = 104
+            Height = 23
+            Width = 74
+            ButtonWidth = 18
+          end
+          inherited edtDeathPlace: TEdit
+            Left = 181
+            Height = 23
+            Width = 227
+            BorderSpacing.Top = 2
+          end
+          inherited cbxBurMod: TComboBox
+            Left = 63
+            Height = 23
+            Top = 78
+            Width = 38
+            ItemHeight = 15
+          end
+          inherited edtBurDate: TDateEdit
+            Left = 104
+            Height = 23
+            Top = 78
+            Width = 74
+            ButtonWidth = 18
+          end
+          inherited edtBurPlace: TEdit
+            Left = 181
+            Height = 23
+            Top = 78
+            Width = 227
+            BorderSpacing.Top = 2
+          end
+        end
+        inherited edtAge: TEdit
+          Left = 413
+          Height = 17
+          Top = 192
+          Width = 82
+        end
+      end
+      inherited tbs3Details: TTabSheet
+        inherited pnlP3Top: TPanel
+          Height = 52
+          ClientHeight = 52
+          inherited Panel18: TPanel
+            Left = 1443
+            Width = 137
+          end
+          inherited DBNavigator2: TPanel
+            Width = 127
+            BorderSpacing.Around = 9
+            ClientWidth = 127
+            inherited SpeedButton6: TSpeedButton
+              Width = 29
+              BorderSpacing.Around = 2
+            end
+            inherited SpeedButton7: TSpeedButton
+              Width = 29
+              BorderSpacing.Around = 2
+            end
+            inherited SpeedButton8: TSpeedButton
+              Width = 29
+              BorderSpacing.Around = 2
+            end
+            inherited SpeedButton9: TSpeedButton
+              Width = 29
+              BorderSpacing.Around = 2
+            end
+          end
+        end
+        inherited pnlP3BaseData: TPanel
+          Height = 119
+          Top = 52
+          ClientHeight = 119
+          inherited lblName1: TLabel
+            Left = 2
+            Top = 15
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblGivenname1: TLabel
+            Left = 2
+            Top = 31
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblOccupation1: TLabel
+            Left = 2
+            Top = 48
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblResidence: TLabel
+            Left = 2
+            Top = 65
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblSex1: TLabel
+            Top = 81
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblReligion1: TLabel
+            Left = 100
+            Top = 81
+            BorderSpacing.Left = 9
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblSource: TLabel
+            Top = 81
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblNameVariants: TLabel
+            Left = 481
+          end
+          inherited lblCallname: TLabel
+            Top = 33
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited edtName1: TEdit
+            Left = 60
+            Top = 13
+            Width = 336
+            BorderSpacing.Top = 2
+          end
+          inherited edtGivenname1: TEdit
+            Left = 60
+            Top = 30
+            BorderSpacing.Top = 2
+          end
+          inherited edtOccupation1: TEdit
+            Left = 60
+            Top = 46
+            Width = 367
+            BorderSpacing.Top = 2
+          end
+          inherited edtResidence: TEdit
+            Left = 60
+            Top = 63
+            BorderSpacing.Top = 2
+          end
+          inherited cbxSex1: TComboBox
+            Left = 60
+            Height = 23
+            Top = 79
+            Width = 30
+            BorderSpacing.Top = 2
+            ItemHeight = 15
+          end
+          inherited chbLiving1: TCheckBox
+            Left = 295
+            Top = 80
+            BorderSpacing.Left = 9
+            BorderSpacing.Top = 2
+            BorderSpacing.Right = 9
+          end
+          inherited edtCallname: TEdit
+            Left = 1339
+            Top = 31
+            Width = 241
+            BorderSpacing.Top = 2
+          end
+          inherited edtSource: TEdit
+            Left = 396
+            Top = 79
+            BorderSpacing.Top = 2
+          end
+          inherited cbxReligion1: TComboBox
+            Height = 23
+            Top = 79
+            Width = 30
+            BorderSpacing.Top = 2
+            ItemHeight = 15
+          end
+          inherited edtNameVariants: TEdit
+            Left = 481
+            Top = 15
+          end
+        end
+        inherited pnlP3VitalData: TPanel
+          Height = 103
+          Top = 170
+          ClientHeight = 103
+          inherited lblBirth1: TLabel
+            Left = 2
+            Top = 4
+            Width = 912
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblBaptised1: TLabel
+            Left = 2
+            Top = 21
+            Width = 912
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblDeath1: TLabel
+            Left = 2
+            Top = 53
+            Width = 912
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblBuried1: TLabel
+            Left = 2
+            Top = 86
+            Width = 912
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited edtBirthPlace1: TEdit
+            Left = 169
+            Top = 2
+            Width = 215
+            BorderSpacing.Left = 2
+            BorderSpacing.Top = 2
+          end
+          inherited edtBaptPlace1: TEdit
+            Left = 169
+            Top = 19
+            BorderSpacing.Top = 2
+          end
+          inherited edtDeathPlace1: TEdit
+            Left = 169
+            Top = 51
+            BorderSpacing.Top = 2
+          end
+          inherited edtBurPlace1: TEdit
+            Left = 169
+            Top = 85
+            BorderSpacing.Top = 2
+          end
+          inherited edtSource4: TEdit
+            Left = 399
+            Top = 85
+            BorderSpacing.Left = 15
+          end
+          inherited edtSource3: TEdit
+            Left = 399
+            Top = 51
+            BorderSpacing.Left = 15
+          end
+          inherited edtSource2: TEdit
+            Left = 399
+            Top = 19
+            BorderSpacing.Left = 15
+          end
+          inherited edtSource1: TEdit
+            Left = 399
+            Top = 2
+            BorderSpacing.Left = 15
+          end
+          inherited cbxBirthMod1: TComboBox
+            Left = 39
+            Height = 23
+            Top = 2
+            Width = 46
+            ItemHeight = 15
+          end
+          inherited cbxBurMod1: TComboBox
+            Left = 39
+            Height = 23
+            Top = 85
+            ItemHeight = 15
+          end
+          inherited cbxDeathMod1: TComboBox
+            Left = 39
+            Height = 23
+            Top = 51
+            ItemHeight = 15
+          end
+          inherited cbxBaptMod1: TComboBox
+            Left = 39
+            Height = 23
+            Top = 19
+            ItemHeight = 15
+          end
+          inherited edtBirthDate1: TDateEdit
+            Left = 89
+            Top = 2
+            Width = 77
+            ButtonWidth = 18
+            BorderSpacing.Left = 4
+            BorderSpacing.Right = 4
+          end
+          inherited edtBaptDate1: TDateEdit
+            Left = 89
+            Top = 19
+            ButtonWidth = 18
+          end
+          inherited edtDeathDate1: TDateEdit
+            Left = 89
+            Top = 51
+            ButtonWidth = 18
+          end
+          inherited edtBurDate1: TDateEdit
+            Left = 89
+            Top = 85
+            ButtonWidth = 18
+          end
+          inherited edtGodParents: TEdit
+            Left = 39
+            Top = 35
+            BorderSpacing.Top = 2
+          end
+          inherited edtCauseOfDeath: TEdit
+            Left = 39
+            Top = 68
+            BorderSpacing.Top = 2
+          end
+          inherited lblBaptised2: TLabel
+            Left = 2
+            Top = 37
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+          inherited lblBaptised3: TLabel
+            Left = 2
+            Top = 70
+            BorderSpacing.Right = 2
+            BorderSpacing.Around = 2
+          end
+        end
+      end
+      inherited tbs4Marriages: TTabSheet
+        inherited Panel1: TPanel
+          Height = 201
+          Top = 773
+        end
+        inherited Panel12: TPanel
+          Left = 1344
+          Width = 237
+          ClientWidth = 237
+          inherited DBComboBox1: TDBComboBox
+            Left = 26
+            Height = 23
+            Top = 41
+            BorderSpacing.Top = 4
+            ItemHeight = 15
+          end
+          inherited Label3: TLabel
+            BorderSpacing.Left = 26
+            BorderSpacing.Top = 26
+            BorderSpacing.Right = 26
+          end
+        end
+        inherited Panel13: TPanel
+          inherited Label2: TLabel
+            Left = 26
+            Top = 26
+            BorderSpacing.Left = 26
+            BorderSpacing.Top = 26
+            BorderSpacing.Right = 26
+          end
+          inherited DBGrid2: TDBGrid
+            Left = 26
+            Top = 41
+            BorderSpacing.Top = 4
+            BorderSpacing.Bottom = 26
+          end
+        end
+      end
+      inherited tbs5Siblings: TTabSheet
+        inherited DBGrid1: TDBGrid
+          BorderSpacing.Around = 26
+        end
+        inherited Label4: TLabel
+          BorderSpacing.Around = 26
+        end
+      end
+      inherited tbs6Text: TTabSheet
+        inherited DBMemo1: TDBMemo
+          BorderSpacing.Around = 26
+        end
+        inherited Label1: TLabel
+          BorderSpacing.Around = 26
+        end
+      end
+      inherited tbs7Address: TTabSheet
+        inherited Label5: TLabel
+          BorderSpacing.Around = 26
+        end
+        inherited Panel2: TPanel
+          BorderSpacing.Around = 18
+          inherited lblStreet: TLabel
+            Left = 14
+            Top = 38
+            BorderSpacing.Right = 2
+            Font.Height = -17
+          end
+          inherited Label74: TLabel
+            Left = 14
+            Top = 74
+            Font.Height = -17
+          end
+          inherited Label75: TLabel
+            Left = 14
+            Top = 109
+            Font.Height = -17
+          end
+          inherited Label76: TLabel
+            Left = 14
+            Top = 146
+            Font.Height = -17
+          end
+          inherited Label77: TLabel
+            Left = 14
+            Top = 179
+            Font.Height = -17
+          end
+          inherited Shape9: TShape
+            Left = 7
+            Top = 213
+            Width = 355
+          end
+          inherited Label82: TLabel
+            Left = 14
+            Top = 229
+            Font.Height = -17
+          end
+          inherited Label83: TLabel
+            Left = 14
+            Top = 258
+            Font.Height = -17
+          end
+          inherited Label84: TLabel
+            Left = 14
+            Top = 286
+            Font.Height = -17
+          end
+          inherited Shape10: TShape
+            Left = 370
+            Height = 291
+            Top = 21
+            Width = 179
+          end
+          inherited Shape11: TShape
+            Left = 370
+            Top = 213
+            Width = 179
+          end
+          inherited Label86: TLabel
+            Left = 384
+            Top = 256
+            Font.Height = -17
+          end
+          inherited Label87: TLabel
+            Left = 384
+            Top = 285
+            Font.Height = -17
+          end
+          inherited Label85: TLabel
+            Left = 384
+            Top = 227
+            Font.Height = -17
+          end
+          inherited lblStreetBsp: TLabel
+            Left = 384
+            Top = 38
+            Font.Height = -17
+          end
+          inherited Label89: TLabel
+            Left = 384
+            Top = 74
+            Font.Height = -17
+          end
+          inherited Label90: TLabel
+            Left = 384
+            Top = 107
+            Font.Height = -17
+          end
+          inherited Label91: TLabel
+            Left = 384
+            Top = 142
+            Font.Height = -17
+          end
+          inherited Label92: TLabel
+            Left = 384
+            Top = 178
+            Font.Height = -17
+          end
+          inherited Label93: TLabel
+            Left = 369
+            Top = 5
+            Font.Height = -17
+          end
+          inherited cbxPlace: TComboBox
+            Left = 93
+            Top = 139
+            Width = 265
+            ItemHeight = 19
+          end
+          inherited edtStreet: TEdit
+            Left = 93
+            Height = 17
+            Top = 35
+            Width = 264
+            Font.Height = -17
+          end
+          inherited edtAdrSup: TEdit
+            Left = 93
+            Height = 18
+            Top = 71
+            Width = 264
+            Font.Height = -17
+          end
+          inherited edtZIP: TEdit
+            Left = 93
+            Height = 17
+            Top = 107
+            Width = 264
+            Font.Height = -17
+          end
+          inherited edtPlaceSup: TEdit
+            Left = 93
+            Height = 17
+            Top = 178
+            Width = 264
+            Font.Height = -17
+          end
+          inherited edtPhone: TEdit
+            Left = 93
+            Height = 17
+            Top = 225
+            Width = 264
+            Font.Height = -17
+          end
+          inherited edtEMail: TEdit
+            Left = 93
+            Height = 17
+            Top = 256
+            Width = 264
+            Font.Height = -17
+          end
+          inherited edtUrl: TEdit
+            Left = 93
+            Height = 17
+            Top = 285
+            Width = 264
+            Font.Height = -17
           end
         end
       end
     end
   end
   object OpenDialog1: TOpenDialog
-    left = 803
-    top = 69
+    DefaultExt = '.*.hej'
+    Filter = 'WinAhnen (*.hej)|*.hej|Alle Dateien (*.*)|*.*'
+    Left = 535
+    Top = 46
   end
 end

@@ -1,16 +1,5 @@
 msgid ""
-msgstr ""
-"Content-Type: text/plain; charset=UTF-8\n"
-"Project-Id-Version: HejViewer\n"
-"POT-Creation-Date: \n"
-"PO-Revision-Date: \n"
-"Last-Translator: Joe Care\n"
-"Language-Team: \n"
-"MIME-Version: 1.0\n"
-"Content-Transfer-Encoding: 8bit\n"
-"Language: en\n"
-"X-Generator: Poedit 2.2.1\n"
-"X-Source-Language: de\n"
+msgstr "Content-Type: text/plain; charset=UTF-8"
 
 #: cls_hejdata.rsdeath
 msgid "Gest."
@@ -121,10 +110,9 @@ msgid "="
 msgstr ""
 
 #: cls_hejdatafilter.rshcmp_greater
-#, fuzzy
 msgctxt "cls_hejdatafilter.rshcmp_greater"
 msgid ">"
-msgstr ">"
+msgstr ""
 
 #: cls_hejdatafilter.rshcmp_greateroequal
 msgid ">="
@@ -139,10 +127,9 @@ msgid "![ ]"
 msgstr ""
 
 #: cls_hejdatafilter.rshcmp_less
-#, fuzzy
 msgctxt "cls_hejdatafilter.rshcmp_less"
 msgid "<"
-msgstr "<"
+msgstr ""
 
 #: cls_hejdatafilter.rshcmp_lessoequal
 msgid "<="
@@ -268,7 +255,7 @@ msgstr ""
 
 #: dm_gendata2.rsdatapath
 msgid "Data"
-msgstr "Data"
+msgstr ""
 
 #: dm_gendata2.rsquote
 #, object-pascal-format
@@ -293,52 +280,44 @@ msgid "ComboBox1"
 msgstr ""
 
 #: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[0].title.caption
-#, fuzzy
 msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[0].title.caption"
 msgid "idIndividual"
-msgstr "idIndividual"
+msgstr ""
 
 #: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[1].title.caption
-#, fuzzy
 msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[1].title.caption"
 msgid "FamilyName"
-msgstr "Surname"
+msgstr ""
 
 #: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[2].title.caption
-#, fuzzy
 msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[2].title.caption"
 msgid "GivenName"
-msgstr "Givenname"
+msgstr ""
 
 #: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[3].title.caption
-#, fuzzy
 msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[3].title.caption"
 msgid "Birth"
-msgstr "Birth"
+msgstr ""
 
 #: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomclient.tblchildren.columns[0].title.caption
-#, fuzzy
 msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomclient.tblchildren.columns[0].title.caption"
 msgid "Name"
-msgstr "Name"
+msgstr ""
 
 #: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[0].title.caption
-#, fuzzy
 msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[0].title.caption"
 msgid "Name"
-msgstr "Name"
+msgstr ""
 
 #: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[1].title.caption
-#, fuzzy
 msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[1].title.caption"
 msgid "Hochzeit"
-msgstr "wedding"
+msgstr ""
 
 #: tform1.fraindindex1.stringgrid1.columns[0].title.caption
-#, fuzzy
 msgctxt "tform1.fraindindex1.stringgrid1.columns[0].title.caption"
 msgid "Name"
-msgstr "Name"
+msgstr ""
 
 #: tform1.fraindindex1.stringgrid1.columns[1].title.caption
 msgid "Cl."
@@ -349,308 +328,277 @@ msgid "Datum"
 msgstr ""
 
 #: tfraawhejview.actdatasetdelete1.caption
-msgctxt "tfraawhejview.actdatasetdelete1.caption"
 msgid "&Löschen"
-msgstr "&删除"
+msgstr ""
 
 #: tfraawhejview.actdatasetdelete1.hint
-msgctxt "tfraawhejview.actdatasetdelete1.hint"
 msgid "Löschen"
-msgstr "Delete"
+msgstr ""
 
 #: tfraawhejview.actdatasetfirst1.caption
-msgctxt "tfraawhejview.actdatasetfirst1.caption"
 msgid "&Erster"
-msgstr "&First"
+msgstr ""
 
 #: tfraawhejview.actdatasetfirst1.hint
-msgctxt "tfraawhejview.actdatasetfirst1.hint"
 msgid "Erster"
-msgstr "First"
+msgstr ""
 
 #: tfraawhejview.actdatasetinsert1.caption
-msgctxt "tfraawhejview.actdatasetinsert1.caption"
 msgid "E&infügen"
-msgstr "&insert"
+msgstr ""
 
 #: tfraawhejview.actdatasetinsert1.hint
-msgctxt "tfraawhejview.actdatasetinsert1.hint"
 msgid "Einfügen"
-msgstr "Paste"
+msgstr ""
 
 #: tfraawhejview.actdatasetlast1.caption
-msgctxt "tfraawhejview.actdatasetlast1.caption"
 msgid "&Letzter"
-msgstr "&Last"
+msgstr ""
 
 #: tfraawhejview.actdatasetlast1.hint
-msgctxt "tfraawhejview.actdatasetlast1.hint"
 msgid "Letzter"
-msgstr "Last"
+msgstr ""
 
 #: tfraawhejview.actdatasetnext1.caption
-msgctxt "tfraawhejview.actdatasetnext1.caption"
 msgid "&Nächster"
-msgstr "&Next"
+msgstr ""
 
 #: tfraawhejview.actdatasetnext1.hint
-msgctxt "tfraawhejview.actdatasetnext1.hint"
 msgid "Nächster"
-msgstr "Next"
+msgstr ""
 
 #: tfraawhejview.actdatasetprior1.caption
-msgctxt "tfraawhejview.actdatasetprior1.caption"
 msgid "&Vorgänger"
-msgstr "&Predecessor"
+msgstr ""
 
 #: tfraawhejview.actdatasetprior1.hint
-msgctxt "tfraawhejview.actdatasetprior1.hint"
 msgid "Vorgänger"
-msgstr "Predecessor"
+msgstr ""
 
 #: tfraawhejview.actfileexit1.caption
-msgctxt "tfraawhejview.actfileexit1.caption"
 msgid "&Beenden"
-msgstr "&退出"
+msgstr ""
 
 #: tfraawhejview.actfileexit1.hint
-msgctxt "tfraawhejview.actfileexit1.hint"
 msgid "Beenden"
-msgstr "Finish"
+msgstr ""
 
 #: tfraawhejview.actfilenew.caption
-msgctxt "tfraawhejview.actfilenew.caption"
 msgid "Neu ..."
-msgstr "New..."
+msgstr ""
 
 #: tfraawhejview.actfileopen1.caption
 msgctxt "tfraawhejview.actfileopen1.caption"
 msgid "Öffnen"
-msgstr "Open"
+msgstr ""
 
 #: tfraawhejview.actfileopen1.hint
 msgctxt "tfraawhejview.actfileopen1.hint"
 msgid "Öffnen"
-msgstr "Open"
+msgstr ""
 
 #: tfraawhejview.actfileopenwith1.caption
-msgctxt "tfraawhejview.actfileopenwith1.caption"
 msgid "Öffnen mit ..."
-msgstr "Open with ..."
+msgstr ""
 
 #: tfraawhejview.actfileopenwith1.hint
 msgctxt "tfraawhejview.actfileopenwith1.hint"
 msgid "Öffnen"
-msgstr "Open"
+msgstr ""
 
 #: tfraawhejview.actfileprint.caption
-msgctxt "tfraawhejview.actfileprint.caption"
 msgid "Drucken ..."
-msgstr "Print..."
+msgstr ""
 
 #: tfraawhejview.actfileprintsetup.caption
-msgctxt "tfraawhejview.actfileprintsetup.caption"
 msgid "Druckereinrichtung"
-msgstr "Printer setup"
+msgstr ""
 
 #: tfraawhejview.actfilesave1.caption
 msgid "Save"
-msgstr "Save"
+msgstr ""
 
 #: tfraawhejview.actfilesaveas1.caption
-msgctxt "tfraawhejview.actfilesaveas1.caption"
 msgid "Sichern &als ..."
-msgstr "Save &as ..."
+msgstr ""
 
 #: tfraawhejview.actfilesaveas1.hint
-msgctxt "tfraawhejview.actfilesaveas1.hint"
 msgid "Sichern als"
-msgstr "Save as"
+msgstr ""
 
 #: tfraawhejview.action6.caption
-msgctxt "tfraawhejview.action6.caption"
 msgid "Action6"
 msgstr ""
 
 #: tfraawhejview.action7.caption
-msgctxt "tfraawhejview.action7.caption"
 msgid "Action7"
 msgstr ""
 
 #: tfraawhejview.actloadgedcom.caption
-msgctxt "tfraawhejview.actloadgedcom.caption"
 msgid "GedCom - Datei einlesen"
-msgstr "read GedCom-file"
+msgstr ""
 
 #: tfraawhejview.actsavegedcom.caption
-msgctxt "tfraawhejview.actsavegedcom.caption"
 msgid "actSaveGedCom"
 msgstr ""
 
 #: tfraawhejview.chbliving.caption
 msgctxt "tfraawhejview.chbliving.caption"
 msgid "lebt"
-msgstr "living"
+msgstr ""
 
 #: tfraawhejview.chbliving1.caption
 msgctxt "tfraawhejview.chbliving1.caption"
 msgid "lebt"
-msgstr "living"
+msgstr ""
 
 #: tfraawhejview.edtadrsup.texthint
-#, fuzzy
 msgid "<Adress-Zusatz>"
-msgstr "<Address Additional >"
+msgstr ""
 
 #: tfraawhejview.edtage.texthint
 msgid "Alter"
-msgstr "Age"
+msgstr ""
 
 #: tfraawhejview.edtbaptdate.text
 msgctxt "tfraawhejview.edtbaptdate.text"
 msgid "07.05.1960"
-msgstr "05/07/1960"
+msgstr ""
 
 #: tfraawhejview.edtbaptplace.texthint
 msgid "Taufort"
-msgstr "Place of baptism"
+msgstr ""
 
 #: tfraawhejview.edtbirthdate.text
 msgctxt "tfraawhejview.edtbirthdate.text"
 msgid "07.05.1960"
-msgstr "05/07/1960"
+msgstr ""
 
 #: tfraawhejview.edtbirthplace.texthint
 msgid "Geburtsort"
-msgstr "Place of birth"
+msgstr ""
 
 #: tfraawhejview.edtburdate.text
 msgctxt "tfraawhejview.edtburdate.text"
 msgid "11.05.2018"
-msgstr "05/11/2018"
+msgstr ""
 
 #: tfraawhejview.edtburplace.texthint
 msgid "Beräbnissort"
-msgstr "Burial site"
+msgstr ""
 
 #: tfraawhejview.edtdeathdate.text
 msgctxt "tfraawhejview.edtdeathdate.text"
 msgid "11.05.2018"
-msgstr "05/11/2018"
+msgstr ""
 
 #: tfraawhejview.edtdeathplace.texthint
 msgid "Sterbeort"
-msgstr "Place of death"
+msgstr ""
 
 #: tfraawhejview.edtemail.texthint
-#, fuzzy
 msgid "<eMail-Adresse>"
-msgstr "<email address >"
+msgstr ""
 
 #: tfraawhejview.edtfarmname.texthint
 msgid "Hofname"
-msgstr "Court name"
+msgstr ""
 
 #: tfraawhejview.edtgivenname.texthint
 msgid "Vorname(n)"
-msgstr "First Name (s)"
+msgstr ""
 
 #: tfraawhejview.edtname.texthint
 msgid "Familienname"
-msgstr "Surname"
+msgstr ""
 
 #: tfraawhejview.edtoccupation.texthint
 msgid "(zuletzt) ausgeübter Beruf"
-msgstr "(Last) profession"
+msgstr ""
 
 #: tfraawhejview.edtphone.texthint
 msgid "<Telefon-Nummer>"
-msgstr "<phone number>"
+msgstr ""
 
 #: tfraawhejview.edtplacesup.texthint
 msgid "<Ort-Zusatz>"
-msgstr "<location additions>"
+msgstr ""
 
 #: tfraawhejview.edtstreet.texthint
 msgid "<Straße, Nr>"
-msgstr "<Street, No>"
+msgstr ""
 
 #: tfraawhejview.edturl.texthint
 msgid "<URL / Web-Adresse>"
-msgstr "<URL/web address >"
+msgstr ""
 
 #: tfraawhejview.edtzip.texthint
 msgid "<PLZ>"
-msgstr "<ZIP>"
+msgstr ""
 
 #: tfraawhejview.label1.caption
-msgctxt "tfraawhejview.label1.caption"
 msgid "Label1"
 msgstr ""
 
 #: tfraawhejview.label2.caption
-msgctxt "tfraawhejview.label2.caption"
 msgid "Label2"
 msgstr ""
 
 #: tfraawhejview.label3.caption
-msgctxt "tfraawhejview.label3.caption"
 msgid "Label3"
 msgstr ""
 
 #: tfraawhejview.label4.caption
-msgctxt "tfraawhejview.label4.caption"
 msgid "Label4"
 msgstr ""
 
 #: tfraawhejview.label5.caption
-msgctxt "tfraawhejview.label5.caption"
 msgid "Label5"
 msgstr ""
 
 #: tfraawhejview.label74.caption
 msgid "Anschrift 2"
-msgstr "Address 2"
+msgstr ""
 
 #: tfraawhejview.label75.caption
 msgid "PLZ"
-msgstr "ZIP"
+msgstr ""
 
 #: tfraawhejview.label76.caption
 msgid "Ort"
-msgstr "City"
+msgstr ""
 
 #: tfraawhejview.label77.caption
 msgid "Zusatz"
-msgstr "Addition"
+msgstr ""
 
 #: tfraawhejview.label82.caption
 msgid "Telefon"
-msgstr "Phone"
+msgstr ""
 
 #: tfraawhejview.label83.caption
 msgid "Email"
-msgstr "Email"
+msgstr ""
 
 #: tfraawhejview.label84.caption
 msgid "Web-Adresse"
-msgstr "Web address"
+msgstr ""
 
 #: tfraawhejview.label85.caption
 msgid "08190-123456"
-msgstr "1-819-0123456"
+msgstr ""
 
 #: tfraawhejview.label86.caption
 msgid "vorname.name@provider.de"
-msgstr "givenname.surname@provider.com"
+msgstr ""
 
 #: tfraawhejview.label87.caption
 msgid "www.meine_homepage.de"
-msgstr "www.my_homepage.com"
+msgstr ""
 
 #: tfraawhejview.label89.caption
 msgid "Himmelhof [= Ortsteil]"
-msgstr "Himmelhof [= District]"
+msgstr ""
 
 #: tfraawhejview.label90.caption
 msgid "D-12345"
@@ -658,328 +606,288 @@ msgstr ""
 
 #: tfraawhejview.label91.caption
 msgid "Engelbach"
-msgstr "Engelbach"
+msgstr ""
 
 #: tfraawhejview.label92.caption
 msgid "Niederbayern"
-msgstr "Lower Bavaria"
+msgstr ""
 
 #: tfraawhejview.label93.caption
 msgid "Beispiele:"
-msgstr "Examples:"
+msgstr ""
 
 #: tfraawhejview.lbladopted.caption
-msgctxt "tfraawhejview.lbladopted.caption"
 msgid "adopt.v:"
-msgstr "adopt.f:"
+msgstr ""
 
 #: tfraawhejview.lblbaptised.caption
 msgctxt "tfraawhejview.lblbaptised.caption"
 msgid "get.:"
-msgstr "bapt.:"
+msgstr ""
 
 #: tfraawhejview.lblbaptised1.caption
 msgctxt "tfraawhejview.lblbaptised1.caption"
 msgid "get.:"
-msgstr "bapt.:"
+msgstr ""
 
 #: tfraawhejview.lblbaptised2.caption
 msgid "Paten:"
-msgstr "Godparents:"
+msgstr ""
 
 #: tfraawhejview.lblbaptised3.caption
 msgid "TU:"
-msgstr "CoD:"
+msgstr ""
 
 #: tfraawhejview.lblbirth.caption
 msgctxt "tfraawhejview.lblbirth.caption"
 msgid "geb.:"
-msgstr "born.:"
+msgstr ""
 
 #: tfraawhejview.lblbirth1.caption
 msgctxt "tfraawhejview.lblbirth1.caption"
 msgid "geb.:"
-msgstr "born.:"
+msgstr ""
 
 #: tfraawhejview.lblburied.caption
 msgctxt "tfraawhejview.lblburied.caption"
 msgid "begr.:"
-msgstr "buried:"
+msgstr ""
 
 #: tfraawhejview.lblburied1.caption
 msgctxt "tfraawhejview.lblburied1.caption"
 msgid "begr.:"
-msgstr "buried:"
+msgstr ""
 
 #: tfraawhejview.lblcallname.caption
-msgctxt "tfraawhejview.lblcallname.caption"
 msgid "Rufname:"
-msgstr "Callname:"
+msgstr ""
 
 #: tfraawhejview.lblchildren.caption
-msgctxt "tfraawhejview.lblchildren.caption"
 msgid "<Kinder>"
-msgstr "<children>"
+msgstr ""
 
 #: tfraawhejview.lblconnection.caption
-msgctxt "tfraawhejview.lblconnection.caption"
 msgid "<Verbindung>"
-msgstr "<connection>"
+msgstr ""
 
 #: tfraawhejview.lbldeath.caption
 msgctxt "tfraawhejview.lbldeath.caption"
 msgid "gest.:"
-msgstr "died:"
+msgstr ""
 
 #: tfraawhejview.lbldeath1.caption
 msgctxt "tfraawhejview.lbldeath1.caption"
 msgid "gest.:"
-msgstr "died:"
+msgstr ""
 
 #: tfraawhejview.lblfarmname.caption
-msgctxt "tfraawhejview.lblfarmname.caption"
 msgid "Hofname:"
-msgstr "Court name:"
+msgstr ""
 
 #: tfraawhejview.lblfather.caption
-msgctxt "tfraawhejview.lblfather.caption"
 msgid "Vater:"
-msgstr "Father:"
+msgstr ""
 
 #: tfraawhejview.lblgivenname.caption
 msgctxt "tfraawhejview.lblgivenname.caption"
 msgid "Vorname(n):"
-msgstr "First Name (s):"
+msgstr ""
 
 #: tfraawhejview.lblgivenname1.caption
 msgctxt "tfraawhejview.lblgivenname1.caption"
 msgid "Vorname(n):"
-msgstr "First Name (s):"
+msgstr ""
 
 #: tfraawhejview.lblid.caption
-#, fuzzy
 msgid "<ID>"
-msgstr "<ID>"
+msgstr ""
 
 #: tfraawhejview.lblmother.caption
-msgctxt "tfraawhejview.lblmother.caption"
 msgid "Mutter:"
-msgstr "Mother:"
+msgstr ""
 
 #: tfraawhejview.lblname.caption
 msgctxt "tfraawhejview.lblname.caption"
 msgid "Name:"
-msgstr "Name:"
+msgstr ""
 
 #: tfraawhejview.lblname1.caption
 msgctxt "tfraawhejview.lblname1.caption"
 msgid "Name:"
-msgstr "Name:"
+msgstr ""
 
 #: tfraawhejview.lblnamevariants.caption
-msgctxt "tfraawhejview.lblnamevariants.caption"
 msgid "Andere Namensschreibweisen:"
-msgstr "Other Name attritentions:"
+msgstr ""
 
 #: tfraawhejview.lbloccupation.caption
 msgctxt "tfraawhejview.lbloccupation.caption"
 msgid "Beruf:"
-msgstr "Occupation:"
+msgstr ""
 
 #: tfraawhejview.lbloccupation1.caption
 msgctxt "tfraawhejview.lbloccupation1.caption"
 msgid "Beruf:"
-msgstr "Occupation:"
+msgstr ""
 
 #: tfraawhejview.lblreligion.caption
 msgctxt "tfraawhejview.lblreligion.caption"
 msgid "Bekenntnis:"
-msgstr "Commitment:"
+msgstr ""
 
 #: tfraawhejview.lblreligion1.caption
 msgctxt "tfraawhejview.lblreligion1.caption"
 msgid "Bekenntnis:"
-msgstr "Commitment:"
+msgstr ""
 
 #: tfraawhejview.lblresidence.caption
-msgctxt "tfraawhejview.lblresidence.caption"
 msgid "lebte in:"
-msgstr "Residence:"
+msgstr ""
 
 #: tfraawhejview.lblsex.caption
 msgctxt "tfraawhejview.lblsex.caption"
 msgid "Geschlecht:"
-msgstr "Sex:"
+msgstr ""
 
 #: tfraawhejview.lblsex1.caption
 msgctxt "tfraawhejview.lblsex1.caption"
 msgid "Geschlecht:"
-msgstr "Sex:"
+msgstr ""
 
 #: tfraawhejview.lblsource.caption
-msgctxt "tfraawhejview.lblsource.caption"
 msgid "Quelle:"
-msgstr "Source:"
+msgstr ""
 
 #: tfraawhejview.lblstreet.caption
 msgid "Anschrift 1"
-msgstr "Address 1"
+msgstr ""
 
 #: tfraawhejview.lblstreetbsp.caption
 msgid "Baumstr. 42"
-msgstr "Treestreet 42"
+msgstr ""
 
 #: tfraawhejview.menuitem1.caption
-msgctxt "tfraawhejview.menuitem1.caption"
 msgid "FOKO - Datei editieren"
-msgstr "edit FOKO-file"
+msgstr ""
 
 #: tfraawhejview.menuitem3.caption
-msgctxt "tfraawhejview.menuitem3.caption"
 msgid "Tiny-Tafel erstellen"
-msgstr "Create Tiny-Panel"
+msgstr ""
 
 #: tfraawhejview.menuitem5.caption
-msgctxt "tfraawhejview.menuitem5.caption"
 msgid "Adressdatei schreiben"
-msgstr "Write address file"
+msgstr ""
 
 #: tfraawhejview.mniancestors.caption
-msgctxt "tfraawhejview.mniancestors.caption"
 msgid "Vorfahren"
-msgstr "Ancestors"
+msgstr ""
 
 #: tfraawhejview.mnibackup.caption
-msgctxt "tfraawhejview.mnibackup.caption"
 msgid "Sicherung"
-msgstr "Backup"
+msgstr ""
 
 #: tfraawhejview.mnicalender.caption
-msgctxt "tfraawhejview.mnicalender.caption"
 msgid "Kalender"
-msgstr "Calendar"
+msgstr ""
 
 #: tfraawhejview.mnichecks.caption
-msgctxt "tfraawhejview.mnichecks.caption"
 msgid "Datenprüfung"
-msgstr "Data verification"
+msgstr ""
 
 #: tfraawhejview.mnidataexchange.caption
-msgctxt "tfraawhejview.mnidataexchange.caption"
 msgid "Datenaustausch"
-msgstr "Data exchange"
+msgstr ""
 
 #: tfraawhejview.mnidataexchangefokosave.caption
-msgctxt "tfraawhejview.mnidataexchangefokosave.caption"
 msgid "FOKO - Datei erstellen"
-msgstr "create FOKO-file"
+msgstr ""
 
 #: tfraawhejview.mnidataexchangesavegedcom.caption
-msgctxt "tfraawhejview.mnidataexchangesavegedcom.caption"
 msgid "GedCom - Datei schreiben"
-msgstr "write GedCom-file"
+msgstr ""
 
 #: tfraawhejview.mnidataset.caption
-msgctxt "tfraawhejview.mnidataset.caption"
 msgid "Datensatz"
-msgstr "Record"
+msgstr ""
 
 #: tfraawhejview.mnidatasetinsert.caption
-msgctxt "tfraawhejview.mnidatasetinsert.caption"
 msgid "neu"
-msgstr "new"
+msgstr ""
 
 #: tfraawhejview.mnidescendens.caption
-msgctxt "tfraawhejview.mnidescendens.caption"
 msgid "Nachfahren"
-msgstr "Descendants"
+msgstr ""
 
 #: tfraawhejview.mnifile.caption
-msgctxt "tfraawhejview.mnifile.caption"
 msgid "Datei"
-msgstr "File"
+msgstr ""
 
 #: tfraawhejview.mnifiledeleteids.caption
-msgctxt "tfraawhejview.mnifiledeleteids.caption"
 msgid "IDs löschen"
-msgstr "Delete IDs"
+msgstr ""
 
 #: tfraawhejview.mnifileexport2exl.caption
-msgctxt "tfraawhejview.mnifileexport2exl.caption"
 msgid "Excel-Export"
-msgstr "Excel export"
+msgstr ""
 
 #: tfraawhejview.mnifileisisdsno.caption
-msgctxt "tfraawhejview.mnifileisisdsno.caption"
 msgid "ID=Datensatz"
-msgstr "ID = Record"
+msgstr ""
 
 #: tfraawhejview.mnifilenew.caption
-msgctxt "tfraawhejview.mnifilenew.caption"
 msgid "alle Daten löschen"
-msgstr "Delete all data"
+msgstr ""
 
 #: tfraawhejview.mnifileprivacyoff.caption
-msgctxt "tfraawhejview.mnifileprivacyoff.caption"
 msgid "Datenschutz aus"
-msgstr "Privacy off"
+msgstr ""
 
 #: tfraawhejview.mnifileprivacyon.caption
-msgctxt "tfraawhejview.mnifileprivacyon.caption"
 msgid "Datenschutz ein"
-msgstr "Privacy on"
+msgstr ""
 
 #: tfraawhejview.mnifilesortmarrchild.caption
-msgctxt "tfraawhejview.mnifilesortmarrchild.caption"
 msgid "Ehen / Kinder ordnen"
-msgstr "Marriages/arranging children"
+msgstr ""
 
 #: tfraawhejview.mnifilter.caption
-msgctxt "tfraawhejview.mnifilter.caption"
 msgid "Filter"
-msgstr "Filter"
+msgstr ""
 
 #: tfraawhejview.mniimages.caption
 msgctxt "tfraawhejview.mniimages.caption"
 msgid "Bilder"
-msgstr "Images"
+msgstr ""
 
 #: tfraawhejview.mniinfo.caption
-msgctxt "tfraawhejview.mniinfo.caption"
 msgid "Info"
-msgstr "Info"
+msgstr ""
 
 #: tfraawhejview.mnilists.caption
-msgctxt "tfraawhejview.mnilists.caption"
 msgid "Listen"
-msgstr "Lists"
+msgstr ""
 
 #: tfraawhejview.mnisavefile.caption
 msgid "Sicherung schreiben"
-msgstr "Write backup"
+msgstr ""
 
 #: tfraawhejview.mnisearch.caption
-msgctxt "tfraawhejview.mnisearch.caption"
 msgid "Suchen"
-msgstr "Search"
+msgstr ""
 
 #: tfraawhejview.panel1.caption
-msgctxt "tfraawhejview.panel1.caption"
 msgid "Panel1"
 msgstr ""
 
 #: tfraawhejview.panel12.caption
-msgctxt "tfraawhejview.panel12.caption"
 msgid "Panel12"
 msgstr ""
 
 #: tfraawhejview.panel13.caption
-msgctxt "tfraawhejview.panel13.caption"
 msgid "Panel13"
 msgstr ""
 
 #: tfraawhejview.panel14.caption
-msgctxt "tfraawhejview.panel14.caption"
 msgid "Panel14"
 msgstr ""
 
@@ -989,7 +897,6 @@ msgid "Panel9"
 msgstr ""
 
 #: tfraawhejview.panel16.caption
-msgctxt "tfraawhejview.panel16.caption"
 msgid "Panel10"
 msgstr ""
 
@@ -999,24 +906,20 @@ msgid "Panel9"
 msgstr ""
 
 #: tfraawhejview.searchfind1.caption
-msgctxt "tfraawhejview.searchfind1.caption"
 msgid "&Suchen ..."
-msgstr "&Search ..."
+msgstr ""
 
 #: tfraawhejview.searchfindfirst1.caption
-msgctxt "tfraawhejview.searchfindfirst1.caption"
 msgid "Ersten suchen"
-msgstr "First search"
+msgstr ""
 
 #: tfraawhejview.searchfindnext1.caption
-msgctxt "tfraawhejview.searchfindnext1.caption"
 msgid "&Nächsten suchen"
-msgstr "&Find Next"
+msgstr ""
 
 #: tfraawhejview.searchreplace1.caption
-msgctxt "tfraawhejview.searchreplace1.caption"
 msgid "&Ersetzen"
-msgstr "&Replace"
+msgstr ""
 
 #: tfraawhejview.speedbutton2.caption
 msgid "|<"
@@ -1025,7 +928,7 @@ msgstr ""
 #: tfraawhejview.speedbutton3.caption
 msgctxt "tfraawhejview.speedbutton3.caption"
 msgid "<"
-msgstr "<"
+msgstr ""
 
 #: tfraawhejview.speedbutton4.caption
 msgid ">|"
@@ -1034,85 +937,77 @@ msgstr ""
 #: tfraawhejview.speedbutton5.caption
 msgctxt "tfraawhejview.speedbutton5.caption"
 msgid ">"
-msgstr ">"
+msgstr ""
 
 #: tfraawhejview.tblchildren.columns[0].title.caption
 msgctxt "tfraawhejview.tblchildren.columns[0].title.caption"
 msgid "Name"
-msgstr "Name"
+msgstr ""
 
 #: tfraawhejview.tblselectperson.columns[0].title.caption
 msgctxt "tfraawhejview.tblselectperson.columns[0].title.caption"
 msgid "idIndividual"
-msgstr "idIndividual"
+msgstr ""
 
 #: tfraawhejview.tblselectperson.columns[1].title.caption
 msgctxt "tfraawhejview.tblselectperson.columns[1].title.caption"
 msgid "FamilyName"
-msgstr "Surname"
+msgstr ""
 
 #: tfraawhejview.tblselectperson.columns[2].title.caption
 msgctxt "tfraawhejview.tblselectperson.columns[2].title.caption"
 msgid "GivenName"
-msgstr "Givenname"
+msgstr ""
 
 #: tfraawhejview.tblselectperson.columns[3].title.caption
 msgctxt "tfraawhejview.tblselectperson.columns[3].title.caption"
 msgid "Birth"
-msgstr "Birth"
+msgstr ""
 
 #: tfraawhejview.tblspouses.columns[0].title.caption
 msgctxt "tfraawhejview.tblspouses.columns[0].title.caption"
 msgid "Name"
-msgstr "Name"
+msgstr ""
 
 #: tfraawhejview.tblspouses.columns[1].title.caption
 msgctxt "tfraawhejview.tblspouses.columns[1].title.caption"
 msgid "Hochzeit"
-msgstr "wedding"
+msgstr ""
 
 #: tfraawhejview.tbs1select.caption
-msgctxt "tfraawhejview.tbs1select.caption"
 msgid "Auswahl"
-msgstr "Please select"
+msgstr ""
 
 #: tfraawhejview.tbs2edit.caption
-msgctxt "tfraawhejview.tbs2edit.caption"
 msgid "Bearbeiten"
-msgstr "Edit"
+msgstr ""
 
 #: tfraawhejview.tbs3details.caption
-msgctxt "tfraawhejview.tbs3details.caption"
 msgid "Details"
-msgstr "Details"
+msgstr ""
 
 #: tfraawhejview.tbs4marriages.caption
-msgctxt "tfraawhejview.tbs4marriages.caption"
 msgid "Ehen u.a."
-msgstr "Marriages, among others."
+msgstr ""
 
 #: tfraawhejview.tbs5siblings.caption
-msgctxt "tfraawhejview.tbs5siblings.caption"
 msgid "Geschwister"
-msgstr "siblings"
+msgstr ""
 
 #: tfraawhejview.tbs6text.caption
-msgctxt "tfraawhejview.tbs6text.caption"
 msgid "Text"
-msgstr "Text"
+msgstr ""
 
 #: tfraawhejview.tbs7address.caption
-msgctxt "tfraawhejview.tbs7address.caption"
 msgid "Adresse"
-msgstr "Address"
+msgstr ""
 
 #: tfraawhejview.tbs8bilder.caption
 msgctxt "tfraawhejview.tbs8bilder.caption"
 msgid "Bilder"
-msgstr "Images"
+msgstr ""
 
 #: tfraawhejview.tlbmenu.caption
-msgctxt "tfraawhejview.tlbmenu.caption"
 msgid "Menu"
-msgstr "Menu"
+msgstr ""
 

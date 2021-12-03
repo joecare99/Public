@@ -6,13 +6,14 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, Graphics, Dialogs, ExtCtrls, ComCtrls,
-  ShellCtrls, StdCtrls, fra_NavIData, fra_PictureList;
+  ShellCtrls, StdCtrls, FileCtrl, fra_NavIData, fra_PictureList;
 
 type
 
   { TFrmTestPictureListMain }
 
   TFrmTestPictureListMain = class(TForm)
+    FileListBox1: TFileListBox;
     fraNavIData1: TfraNavIData;
     fraPictureList1: TfraPictureList;
     lblInfo: TLabel;
@@ -56,6 +57,8 @@ var
 begin
   lFilename:=ShellTreeView1.GetPathFromNode(ShellTreeView1.Selected);
   fraPictureList1.BasePath:=lFilename;
+  FileListBox1.Directory:=lFilename;
+  FileListBox1.Mask:=fraPictureList1.Filemask;
   lblInfo.Caption:='Count: '+inttostr(fraPictureList1.Count)+LineEnding+
     'FileMask: '+fraPictureList1.Filemask;
 end;

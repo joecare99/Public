@@ -1,0 +1,146 @@
+object FraGenEvent: TFraGenEvent
+  Left = 0
+  Height = 250
+  Top = 0
+  Width = 369
+  ClientHeight = 250
+  ClientWidth = 369
+  TabOrder = 0
+  DesignLeft = 468
+  DesignTop = 9
+  object pnlLeft: TPanel
+    Left = 0
+    Height = 250
+    Top = 0
+    Width = 24
+    Align = alLeft
+    BevelOuter = bvNone
+    Caption = 'pnlLeft'
+    ClientHeight = 250
+    ClientWidth = 24
+    TabOrder = 0
+    object lblEvent: TStaticText
+      Left = 0
+      Height = 17
+      Top = 2
+      Width = 24
+      Align = alTop
+      BorderSpacing.Top = 2
+      Caption = 'Evt:'
+      TabOrder = 0
+    end
+  end
+  object pnlClient: TPanel
+    Left = 24
+    Height = 250
+    Top = 0
+    Width = 345
+    Align = alClient
+    BevelOuter = bvNone
+    BorderWidth = 1
+    Caption = 'pnlClient'
+    ClientHeight = 250
+    ClientWidth = 345
+    TabOrder = 1
+    object edtDate: TEditButton
+      Left = 3
+      Height = 23
+      Top = 3
+      Width = 339
+      Align = alTop
+      BorderSpacing.Around = 2
+      ButtonWidth = 23
+      MaxLength = 0
+      NumGlyphs = 1
+      OnChange = edtDateChange
+      PasswordChar = #0
+      TabOrder = 0
+      Text = 'edtDate'
+    end
+    object cbxPlace: TComboBoxEx
+      Left = 3
+      Height = 22
+      Top = 28
+      Width = 311
+      Align = alTop
+      BorderSpacing.Right = 28
+      BorderSpacing.Around = 2
+      ItemHeight = 16
+      ItemsEx = <>
+      TabOrder = 1
+    end
+    object SpeedButton1: TSpeedButton
+      AnchorSideTop.Control = cbxDescription
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pnlClient
+      AnchorSideRight.Side = asrBottom
+      Left = 319
+      Height = 22
+      Top = 52
+      Width = 23
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 2
+    end
+    object SpeedButton2: TSpeedButton
+      AnchorSideTop.Control = cbxPlace
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pnlClient
+      AnchorSideRight.Side = asrBottom
+      Left = 319
+      Height = 22
+      Top = 28
+      Width = 23
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 2
+    end
+    object cbxDescription: TComboBoxEx
+      Left = 3
+      Height = 22
+      Top = 52
+      Width = 311
+      Align = alTop
+      BorderSpacing.Right = 28
+      BorderSpacing.Around = 2
+      ItemHeight = 16
+      ItemsEx = <>
+      TabOrder = 2
+    end
+    object Memo1: TMemo
+      Left = 3
+      Height = 147
+      Top = 76
+      Width = 311
+      Align = alClient
+      BorderSpacing.Right = 28
+      BorderSpacing.Around = 2
+      Lines.Strings = (
+        'Memo1'
+      )
+      TabOrder = 3
+    end
+    object SpeedButton3: TSpeedButton
+      AnchorSideTop.Control = cbxAssociation
+      AnchorSideTop.Side = asrCenter
+      AnchorSideRight.Control = pnlClient
+      AnchorSideRight.Side = asrBottom
+      Left = 319
+      Height = 22
+      Top = 225
+      Width = 23
+      Anchors = [akTop, akRight]
+      BorderSpacing.Right = 2
+    end
+    object cbxAssociation: TComboBoxEx
+      Left = 3
+      Height = 22
+      Top = 225
+      Width = 311
+      Align = alBottom
+      BorderSpacing.Right = 28
+      BorderSpacing.Around = 2
+      ItemHeight = 16
+      ItemsEx = <>
+      TabOrder = 4
+    end
+  end
+end

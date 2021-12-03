@@ -1,8 +1,16 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8X-Source-Language: de"
 
+#: cls_hejdata.rsdeath
+msgid "Gest."
+msgstr ""
+
 #: cls_hejdata.rsgeburt
 msgid "Geburt"
+msgstr ""
+
+#: cls_hejdata.rsgivnname
+msgid "Vorname"
 msgstr ""
 
 #: cls_hejdata.rshird_allchild
@@ -51,6 +59,22 @@ msgstr ""
 
 #: cls_hejdata.rshird_spouse
 msgid "Ehepartner"
+msgstr ""
+
+#: cls_hejdata.rsid
+msgid "ID"
+msgstr ""
+
+#: cls_hejdata.rssortkndwn
+msgid "▼"
+msgstr ""
+
+#: cls_hejdata.rssortknup
+msgid "▲"
+msgstr ""
+
+#: cls_hejdata.rssurname
+msgid "Nachname"
 msgstr ""
 
 #: cls_hejdatafilter.rshcct_and
@@ -123,27 +147,109 @@ msgstr ""
 msgid "<>"
 msgstr ""
 
+#: cls_hejdatafilter.rshinmed_adoptcount
+msgid "Anzahl Adoptionen"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_agedifftospouse
+msgid "Altersdiff. zu Partner"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageofbapt
+msgid "Alter bei Taufe"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageofconf
+msgid "Alter bei Konfirmation"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageofdeath
+msgid "Alter bei Tod"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageoffirstchild
+msgid "Alter bei erstem Kind"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageoffmarriage
+msgid "Alter bei e. Hochzeit"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageoflchild
+msgid "Alter bei l. Kind"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageoflmarriage
+msgid "Alter bei l. Hochzeit"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageofnextsibl
+msgid "Alter bei n. Geschw."
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_anydata
+msgid "etwas"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_anyplace
+msgid "ein Platz"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_anysource
+msgid "eine Quelle"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_childcount
+msgid "Anzahl Kinder"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_parentcount
+msgid "Anzahl Elternteile"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_placecount
+msgid "Anzahl Orte"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_siblingcount
+msgid "Anzahl Geschwister"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_sourcecount
+msgid "Anzahl Quellen"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_spousecount
+msgid "Anzahl Ehepartner"
+msgstr ""
+
 #: dm_gendata2.rscreateadoption
+#, object-pascal-format
 msgid "CREATE TABLE `%s`.`adoptions` ( `idIndividual` INT(11) NOT NULL,`idIndividual_AdopFather` INT(11) NULL DEFAULT '0',`idIndividual_AdopMother` INT(11) NULL DEFAULT '0') COMMENT='Adoption Information of individuals' COLLATE='utf8_general_ci' ENGINE=InnoDB;"
 msgstr ""
 
 #: dm_gendata2.rscreateindividuals
+#, object-pascal-format
 msgid "CREATE TABLE `%s`.`Individuals` (`idIndividual` INT(11) NOT NULL COMMENT 'id des Individuums, (Primary Key)',`idIndividual_Father` INT(11) NOT NULL DEFAULT '0' COMMENT 'id-Verbindung zu Vater',`idIndividual_Mother` INT(11) NOT NULL DEFAULT '0' COMMENT 'id-Verbindung zu Mutter',`FamilyName` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Familienname',`GivenName` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Vorname',`Sex` ENUM('M','F','U') NOT NULL DEFAULT 'U' COMMENT 'Geschlecht',`Religion` VARCHAR(10) NULL DEFAULT NULL COMMENT 'Religionszugehörigkeit (Abk)',`Occupation` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Beruf',`Birth` DATETIME NULL DEFAULT NULL,`BirthModif` ENUM('','Abt','Est','Cal','Bef','Aft') NOT NULL DEFAULT '',`Birthplace` VARCHAR(100) NULL DEFAULT '',`BirthSource` VARCHAR(100) NULL DEFAULT '',`BaptDate` DATETIME NULL DEFAULT NULL,`BaptModif` ENUM('','Abt','Est','Cal','Bef','Aft') NULL DEFAULT '',`BaptPlace` VARCHAR(100) NULL DEFAULT '',`Godparents` VARCHAR(100) NULL DEFAULT '',`BaptSource` VARCHAR(100) NULL DEFAULT '',`Residence` VARCHAR(100) NULL DEFAULT '',`DeathDate` DATETIME NULL DEFAULT NULL,`DeathModif` ENUM('','Abt','Est','Cal','Bef','Aft') NULL DEFAULT '',`DeathPlace` VARCHAR(100) NULL DEFAULT '',`DeathReason` VARCHAR(100) NULL DEFAULT '',`DearhSource` VARCHAR(100) NULL DEFAULT '',`BurialDate` DATETIME NULL DEFAULT NULL,`BurialModif` ENUM('','Abt','Est','Cal','Bef','Aft') NULL DEFAULT '',`BurialPlace` VARCHAR(100) NULL DEFAULT '',`BurialSource` VARCHAR(100) NULL DEFAULT '',`Text` LONGTEXT NULL,`living` ENUM('','Y','N') NULL DEFAULT 'N',`AKA` VARCHAR(100) NULL DEFAULT '',`Index` VARCHAR(30) NULL DEFAULT '',`Adopted` VARCHAR(100) NULL DEFAULT '',`FarmName` VARCHAR(100) NULL DEFAULT '',`AdrStreet` VARCHAR(100) NULL DEFAULT '',`AdrAddit` VARCHAR(100) NULL DEFAULT '',`AdrPLZ` VARCHAR(100) NULL DEFAULT '',`AdrPlace` VARCHAR(100) NULL DEFAULT '',`AdrPlaceAddit` VARCHAR(100) NULL DEFAULT '',`Age` VARCHAR(100) NULL DEFAULT '',`Phone` VARCHAR(100) NULL DEFAULT '',`eMail` VARCHAR(100) NULL DEFAULT '',`WebAdr` VARCHAR(100) NULL DEFAULT '',`NameSource` VARCHAR(100) NULL DEFAULT '',`CallName` VARCHAR(100) NULL DEFAULT '',PRIMARY KEY (`idIndividual`),INDEX `Index` (`Index`),INDEX `FamilyName` (`FamilyName`)) COLLATE='utf8_general_ci' ENGINE=InnoDB;"
 msgstr ""
 
 #: dm_gendata2.rscreatemarriage
+#, object-pascal-format
 msgid "CREATE TABLE `%s`.`marriages` ( `idIndividual` INT(11) NULL DEFAULT NULL, `idIndividual_Spouse` INT(11) NULL DEFAULT NULL,`Chrch` DATETIME NULL DEFAULT NULL, `ChrchModif` ENUM('','Abt','Est','Cal','Bef','Aft') NULL DEFAULT '', `ChrchPlace` VARCHAR(50) NULL DEFAULT NULL, `ChrchWitness` VARCHAR(50) NULL DEFAULT NULL, `State` DATETIME NULL DEFAULT NULL, `StateModif` ENUM('','Abt','Est','Cal','Bef','Aft') NULL DEFAULT '',`StatePlace` VARCHAR(50) NULL DEFAULT NULL, `StateWitness` VARCHAR(50) NULL DEFAULT NULL, `MarrKind` VARCHAR(50) NULL DEFAULT NULL, `Divource` DATETIME NULL DEFAULT NULL, `DivourceModif` ENUM('','Abt','Est','Cal','Bef','Aft') NULL DEFAULT '',`DivourcePlace` VARCHAR(50) NULL DEFAULT NULL, `ChrchSource` VARCHAR(50) NULL DEFAULT NULL, `StateSource` VARCHAR(50) NULL DEFAULT NULL, `DivourceSource` VARCHAR(50) NULL DEFAULT NULL, INDEX `idIndividual` (`idIndividual`), INDEX `idIndividual_Spouse` (`idIndividual_Spouse`) ) COMMENT='Marriages of individuals' COLLATE='utf8_general_ci' ENGINE=InnoDB;"
 msgstr ""
 
 #: dm_gendata2.rscreateplace
+#, object-pascal-format
 msgid "CREATE TABLE `%s`.`places` ( `idPlace` INT(11) NULL DEFAULT NULL, `Placename` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Ortsname', `ZIP` VARCHAR(50) NULL DEFAULT NULL COMMENT 'PLZ', `State` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Land', `Localgov` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Reg. Bezirk', `GOV` VARCHAR(50) NULL DEFAULT NULL COMMENT 'GOV', `Country` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Land', `Comunity` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Gemeinde', `Parish` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Pfarrei/Kirchspiel', `Kreis` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Landkreis', `shortname` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Kurzname', `Longitude` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Längengrad', `Magnitude` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Breitengrad', `Maidenhead` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Maidenhead Locator' ) COMMENT='Information on Places' COLLATE='utf8_general_ci' ENGINE=InnoDB;"
 msgstr ""
 
 #: dm_gendata2.rscreateschema
+#, object-pascal-format
 msgid "CREATE DATABASE `%s`;"
 msgstr ""
 
 #: dm_gendata2.rscreatesource
+#, object-pascal-format
 msgid "CREATE TABLE `%s`.`sources` ( `Description` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Quellname', `short` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Abk', `events` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Eeignis(se)', `from` INT(11) NULL DEFAULT NULL COMMENT 'von', `to` INT(11) NULL DEFAULT NULL COMMENT 'bis', `place` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Standort',`owner` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Anbieter', `address` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Adresse des Archives',`info` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Bemerkung', `best` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Bestand',`medium` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Medium' ) COMMENT='Information on sources'  COLLATE='utf8_general_ci'  ENGINE=InnoDB"
 msgstr ""
 
@@ -152,10 +258,12 @@ msgid "Data"
 msgstr ""
 
 #: dm_gendata2.rsquote
+#, object-pascal-format
 msgid "`%s`"
 msgstr ""
 
 #: dm_gendata2.rsselectfromtable
+#, object-pascal-format
 msgid "select * from `%s`;"
 msgstr ""
 
@@ -169,6 +277,41 @@ msgstr ""
 
 #: tform1.combobox1.text
 msgid "ComboBox1"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[0].title.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[0].title.caption"
+msgid "idIndividual"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[1].title.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[1].title.caption"
+msgid "FamilyName"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[2].title.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[2].title.caption"
+msgid "GivenName"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[3].title.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[3].title.caption"
+msgid "Birth"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomclient.tblchildren.columns[0].title.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomclient.tblchildren.columns[0].title.caption"
+msgid "Name"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[0].title.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[0].title.caption"
+msgid "Name"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[1].title.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[1].title.caption"
+msgid "Hochzeit"
 msgstr ""
 
 #: tform1.fraindindex1.stringgrid1.columns[0].title.caption
@@ -947,37 +1090,5 @@ msgstr ""
 #: tfraawhejview.tlbmenu.caption
 msgctxt "tfraawhejview.tlbmenu.caption"
 msgid "Menu"
-msgstr ""
-
-#: tfraindindex.chbfilteractive.caption
-msgid "Aktiv"
-msgstr ""
-
-#: tfraindindex.combobox1.text
-msgid "<Manage>"
-msgstr ""
-
-#: tfraindindex.edtfind.texthint
-msgid "<Suchen>"
-msgstr ""
-
-#: tfraindindex.label1.caption
-msgid "Filter:"
-msgstr ""
-
-#: tfraindindex.lblfind.caption
-msgid "Suchen:"
-msgstr ""
-
-#: tfraindindex.lblsort.caption
-msgid "Sortieren:"
-msgstr ""
-
-#: tfraindindex.speedbutton1.caption
-msgid "..."
-msgstr ""
-
-#: tfraindindex.speedbutton2.caption
-msgid "S"
 msgstr ""
 
