@@ -1,6 +1,7 @@
 unit cls_GedComHelper;
 
 {$mode objfpc}{$H+}
+ {$WARN 6058 off : Call to subroutine "$1" marked as inline is not inlined}
 
 interface
 
@@ -31,6 +32,8 @@ type
         {$ifdef DEBUG}
         FDebugDate:TDateTime;
        {$ENDIF}
+        procedure AppendIndNote(const lInd: TGedComObj;const aText: string);
+        procedure Clear; override;
         procedure StartFamily(Sender: TObject; aText, {%H-}aRef: string;
         {%H-}SubType: integer);override;
         procedure StartIndiv(Sender: TObject; aText, aRef: string;
@@ -49,7 +52,7 @@ type
         procedure IndiRel(Sender: TObject; aText, aRef: string; SubType: integer);override;
         procedure CreateNewHeader(Filename: string);override;
         procedure SaveToFile(const Filename: string);override;
-
+        procedure EndOfEntry(Sender: TObject; aText, aRef: string; SubType: integer);override;
         function RplGedTags(Date: String): String;
 
         property GedComFile: TGedComFile read FGedComFile write SetGedComFile;
@@ -77,7 +80,9 @@ const
    gtDEAT = 'DEAT';
    gtDEST = 'DEST';
    gtDIV = 'DIV';
+   gtDSCR = 'DSCR';
    gtEMIG = 'EMIG';
+   gtEVEN = 'EVEN';
    gtFAM = 'FAM';
    gtFAMC = 'FAMC';
    gtFAMS = 'FAMS';
@@ -96,6 +101,7 @@ const
    gtOCCU = 'OCCU';
    gtPAGE = 'PAGE';
    gtPLAC = 'PLAC';
+   gtPROP = 'PROP';
    gtREFN = 'REFN';
    gtRELI = 'RELI';
    gtRESI = 'RESI';
@@ -115,7 +121,7 @@ procedure TGedComHelper.CreateNewHeader(Filename: string);
 var
     lGedObj0: TGedComObj;
 begin
-    FGedComFile.Clear;
+    Clear;
     lGedObj0 := FGedComFile.CreateChild('', gtHEAD);
     lGedObj0[gtSOUR].Data := 'GEDTest';
     lGedObj0[gtSOUR][gtNAME].Data := 'Test GedCom V0.1';
@@ -135,6 +141,7 @@ begin
     lGedObj0[gtGEDC][gtFORM].Data := 'LINEAGE-LINKED';
     lGedObj0 := FGedComFile.CreateChild('@SUBM@', gtSUBM);
     lGedObj0[gtNAME].Data := 'Joe Care';
+    FFact := nil;
 end;
 
 procedure TGedComHelper.SaveToFile(const Filename: string);
@@ -151,6 +158,12 @@ begin
       finally
         FreeAndNil(lSt);
       end;
+end;
+
+procedure TGedComHelper.EndOfEntry(Sender: TObject; aText, aRef: string;
+  SubType: integer);
+begin
+
 end;
 
 procedure TGedComHelper.StartFamily(Sender: TObject; aText, aRef: string;
@@ -181,6 +194,26 @@ begin
         FCitRefn := '';
 end;
 
+procedure TGedComHelper.AppendIndNote(const lInd: TGedComObj;
+  const aText: string);
+var
+  lFact: TGedComObj;
+begin
+  lFact := lind[gtNOTE];
+  if lFact.Data = '' then
+    lFact.Data := aText
+  else
+    lFact.CreateChild('', gtCONT,  aText); ;
+end;
+
+procedure TGedComHelper.Clear;
+begin
+    if assigned(FGedComFile) then
+      FGedComFile.Clear;
+
+    FFact := nil;
+end;
+
 procedure TGedComHelper.StartIndiv(Sender: TObject; aText, aRef: string;
     SubType: integer);
 
@@ -206,7 +239,7 @@ end;
 procedure TGedComHelper.FamilyIndiv(Sender: TObject; aText, aRef: string;
     SubType: integer);
 var
-    lFam, lInd: TGedComObj;
+    lFam, lInd, lInd2: TGedComObj;
 begin
     lInd := FGedComFile.Find('@' + aText + '@');
     lFam := FGedComFile.Find('@F' + aRef + '@');
@@ -227,6 +260,14 @@ begin
           begin
             lFam.CreateChild('', gtCHIL, lind.NodeID);
             lInd[gtFAMC].Data := lfam.NodeID;
+            if not atext.Contains('C')
+                and not (atext+'C').Contains('I'+aref+'C')
+                and assigned(FGedComFile.Find('@F'+copy(atext,2,length(atext)-2)+'@')) then
+              begin
+                lind2 := FGedComFile.Find('@I'+aref+'C'+atext+'@');
+                if not assigned(Lind2) then
+                  Error('FamInd: '+aref+' not referenced in '+copy(atext,2),aRef,SubType);
+              end;
           end;
       end;
 end;
@@ -234,15 +275,24 @@ end;
 procedure TGedComHelper.FamilyType(Sender: TObject; aText, aRef: string;
     SubType: integer);
 var
-    lFam: TGedComObj;
+    lFam, lEvt: TGedComObj;
 begin
     lFam := FGedComFile.Find('@F' + aRef + '@');
-    if assigned(lFam) then
+    if assigned(lFam)  then
+      if Subtype <> 3 then
       begin
         lFam[gtMARR].Data := aText;
         if FCitRefn <> '' then
             WriteGedSource(lFam[gtMARR], FCitRefn,'', False, FCitation);
-      end;
+      end
+    else
+    begin
+      lEvt:=lFam[gtEVEN];
+      lEvt.Data := aText;
+      lEvt[gtTYPE].Data:= 'Partners';
+      if FCitRefn <> '' then
+          WriteGedSource(lEvt, FCitRefn,'', False, FCitation);
+    end;
 end;
 
 procedure TGedComHelper.FamilyDate(Sender: TObject; aText, aRef: string;
@@ -280,7 +330,10 @@ var
   begin
     if not assigned(lObj) then
        exit;
-    lObj[lGedTag].Data := aText;
+    if lObj[lGedTag].Data='' then
+      lObj[lGedTag].Data := aText
+    else
+      lObj[lGedTag].Data :=lObj[lGedTag].Data+ '; '+aText;
     lFact := lObj[lGedTag];
     if FCitRefn <> '' then
        WriteGedSource(lFact, FCitRefn,'', False, FCitation);
@@ -331,13 +384,19 @@ var
 
   function EscapeSurname(nText: string):string;
 
-  begin  // Todo -oJC: Adelsnamen "von XXX"
+  begin  // DONE -oJC: Adelsnamen "von XXX"
     result := nText;
     if not result.Contains('/') then
       begin
-        lPos := result.LastIndexOf(' ');
+        lpos := result.IndexOfAny([' von ',' van ']);
         if lpos>=0 then
-          result := result.Insert(lpos+1,'/')+'/';
+          result := result.Insert(lpos+1,'/')+'/'
+        else
+          begin
+            lPos := result.LastIndexOf(' ');
+            if lpos>=0 then
+              result := result.Insert(lpos+1,'/')+'/';
+          end;
       end;
   end;
 
@@ -415,17 +474,21 @@ begin
       begin
         if lGedtag = gtNOTE then
           begin
-            FFact := lind[lGedTag];
-            if FFact.Data = '' then
-              FFact.Data := aText
-            else
-              FFact.CreateChild('', gtCONT, aText);;
+            AppendIndNote(lind,'Data: '+aText);
           end
         else
-        if subtype < 12 then
+        if (subtype < 12) then
           begin
-            lInd[lGedTag].Data :=  aText;
-            ffact := lInd[lGedTag];
+            if not assigned(FFact)
+                or not (FFact.NodeType=lGedTag)
+                or not (FFact.Parent = iGedParent(lInd)) then
+               FFact := lInd[lGedTag];
+
+            if (FFact.Data='') or (lGedTag=gtSEX) then
+              FFact.Data :=  aText
+            else if not FFact.Data.Contains(aText) then
+              FFact.Data := FFact.Data + '; '+aText;
+
           end
         else
             FFact := lind.CreateChild('', lGedTag, aText);
@@ -434,7 +497,7 @@ begin
       end;
 end;
 
-const CGedDateModif:array[0..15] of string=
+const CGedDateModif:array[0..17] of string=
      ('(s)','EST', // Geschätztes datum
       'um','ABT', // ungefähres Datum
       '(err)','CAL', // erreichnetes Datum
@@ -442,6 +505,7 @@ const CGedDateModif:array[0..15] of string=
       'seit','AFT',
       'frühestens','AFT',
       'vor','BEF',  // Ereigniss hatt (kurz) davor stattgefunden
+      'ab','AFT',  // Ereigniss hatt (kurz) davor stattgefunden
       'ca','ABT');
 
   function TGedComHelper.RplGedTags(Date:String):String;
@@ -471,52 +535,41 @@ begin
     lValidDate := TryStrToInt(rightstr(lGedDt,4),lYear);
     if assigned(lInd) then
       begin
-        if lGedTag <> gtNOTE then
+        if lGedtag = gtNOTE then
           begin
-            if lGedtag = gtNOTE then
-              begin
-                FFact := lind[lGedTag];
-                if FFact.Data = '' then
-                  FFact.Data := 'am '+aText
-                else
-                  FFact.CreateChild('', gtCONT,'am '+ aText);;
-              end
-            else
-            if subtype < 12 then
-              begin
-                if lValidDate then
-                  lInd[lGedTag][gtDATE].Data := lGedDt
-                else
-                  lInd[lGedTag].Data := lGedDt;
-                lYear := 5*((lYear+2)div 5);
-
-                if FCitRefn <> '' then
-                    WriteGedSource(lInd[lGedTag], FCitRefn,'', False, FCitation);
-                if lValidDate
-                  and (lGedTag=gtBAPM)
-                  and (lInd[gtBIRT][gtDATE].Data = '') then
-                    if lgedDT[1] in ['0'..'9'] then
-                       lInd[gtBIRT][gtDATE].Data :=CGedDateModif[13]+' '+lGedDt
-                    else
-                      lInd[gtBIRT][gtDATE].Data :=CGedDateModif[1]+' '+inttostr(lYear);
-                if lValidDate
-                  and ((lGedTag=gtBAPM) or (lGedTag=gtBIRT))
-                  and assigned(GetFather(lind))
-                  and (GetFather(lind)[gtBIRT][gtDATE].Data = '') then
-                      GetFather(lind)[gtBIRT][gtDATE].Data :=CGedDateModif[1]+' '+inttostr(lYear-30);
-                if lValidDate
-                  and ((lGedTag=gtBAPM) or (lGedTag=gtBIRT))
-                  and assigned(GetMother(lind))
-                  and (GetMother(lind)[gtBIRT][gtDATE].Data = '') then
-                      GetMother(lind)[gtBIRT][gtDATE].Data :=CGedDateModif[1]+' '+inttostr(lYear-25);
-              end
-            else
-            if assigned(FFact) and (FFact.Parent = lind as IGedParent) and
-                (FFact.NodeType = lGedTag) then
-                fFact[gtDATE].Data := lGedDt;
+            AppendIndNote(lInd,'am '+ aText);
           end
         else
-            lind[gtDATE].Data := aText;
+        if subtype < 12 then
+          begin
+            if lValidDate then
+              lInd[lGedTag][gtDATE].Data := lGedDt
+            else
+              lInd[lGedTag].Data := lGedDt;
+            lYear := 5*((lYear+2)div 5);
+
+            if FCitRefn <> '' then
+                WriteGedSource(lInd[lGedTag], FCitRefn,'', False, FCitation);
+            if lValidDate
+              and (lGedTag=gtBAPM)
+              and (lInd[gtBIRT][gtDATE].Data = '') then
+                if lgedDT[1] in ['0'..'9'] then
+                   lInd[gtBIRT][gtDATE].Data :=CGedDateModif[13]+' '+lGedDt
+                else
+                  lInd[gtBIRT][gtDATE].Data :=CGedDateModif[1]+' '+inttostr(lYear);
+            if lValidDate
+              and ((lGedTag=gtBAPM) or (lGedTag=gtBIRT))
+              and assigned(GetFather(lind))
+              and (GetFather(lind)[gtBIRT][gtDATE].Data = '') then
+                  GetFather(lind)[gtBIRT][gtDATE].Data :=CGedDateModif[1]+' '+inttostr(lYear-30);
+            if lValidDate
+              and ((lGedTag=gtBAPM) or (lGedTag=gtBIRT))
+              and assigned(GetMother(lind))
+              and (GetMother(lind)[gtBIRT][gtDATE].Data = '') then
+                  GetMother(lind)[gtBIRT][gtDATE].Data :=CGedDateModif[1]+' '+inttostr(lYear-25);
+          end
+        else
+          lind[gtDATE].Data := aText;
       end;
 end;
 
@@ -589,8 +642,6 @@ procedure TGedComHelper.IndiRel(Sender: TObject; aText, aRef: string; SubType: i
 var
     lInd, lInd2, lFam, lInd3, lFam2: TGedComObj;
     lIndSex: String;
-    lFound: Boolean;
-    i: Integer;
 begin
     lInd := FGedComFile.Find('@' + aRef + '@');
     // exit;
@@ -604,9 +655,16 @@ begin
             aText:=trim(aText);
             lInd2 := FGedComFile.Find('@I' + atext + lIndSex + '@');
             if not assigned(lInd2) then
-                FGedComFile.AppendIndex('@I' + atext + lIndSex + '@', lind)
-            else
+                begin
+                  FGedComFile.AppendIndex('@I' + atext + lIndSex + '@', lind)
+                  {$ifdef debug};
+                  AppendIndNote(lind,'Ref: '+'I' + atext + lIndSex);
+                  {$endif}
+                end
+            else if lind2 <> lind then
               begin
+                if lIndSex<>lind2[gtSEX].Data then
+                  error('Geschlecht von Personen ungleich',aRef,SubType);
                 // Prüfe Merge
 
                 FGedComFile.Merge(lind,lind2);
@@ -640,6 +698,9 @@ begin
                 lFam.CreateChild('', gtCHIL, lind.NodeID);
                 lind[gtFAMC].link := lFam;
               end
+            else if not assigned(lFam) then
+                FGedComFile.AppendIndex('@I' + atext +'C' +aRef+ '@', lind)
+
           end;
       end
     else
@@ -708,6 +769,7 @@ end;
 
 function TGedComHelper.GetGEDTag(const SubType: integer): string;
 begin
+//  aType := '';
     case SubType of
         0: Result := gtREFN;  // Refence
         1: Result := gtBIRT;  // Geburts-Event
@@ -726,7 +788,11 @@ begin
         14: Result := gtEMIG;  // Ausgewandert-Event
         17: result := gtDIV; // Scheidung
         ord(evt_Age):Result := gtDEAT;
-        ord(evt_Partner): result := gtNOTE
+        ord(evt_Property):Result := gtPROP;
+        ord(evt_Description):Result := gtDSCR;
+        ord(evt_Partner):begin result := gtEVEN; //aType:='Partner';
+        end;
+        ord(evt_Info): result := gtNOTE
         else
             Result := gtNOTE;  // Notitz
       end;
@@ -735,7 +801,7 @@ end;
 function TGedComHelper.IsFamilyEvent(const SubType: integer): boolean;
 
 begin
-  result := subtype in [0,3,17]
+  result := subtype in [0,3,17,ord(evt_Partner)];
 end;
 
 procedure TGedComHelper.SetCitTitle(AValue: string);

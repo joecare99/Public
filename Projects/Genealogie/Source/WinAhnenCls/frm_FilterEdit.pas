@@ -47,7 +47,8 @@ uses LResources;
 function setResStr(Name, Value: AnsiString; Hash: Longint; arg: pointer
   ): AnsiString;
 begin
-  TStrings(arg).Add(Name+'='+Value);
+  if name.StartsWith('cls_hejdatafilter') then
+    TStrings(arg).Add(Name+'='+Value);
 end;
 
 procedure TFrmFilterEdit.FormCreate(Sender: TObject);
@@ -62,6 +63,7 @@ begin
   memo1.Clear;
   if rshCcT_or <>'' then
   SetResourceStrings(@setResStr,Memo1.Lines);
+
 //  FillHejConcTypeList(Memo1.Lines);
 end;
 
