@@ -22,12 +22,12 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\Prj_OFBToGedCom"/>
+            <Filename Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$(BuildMode)\Prj_OFBToGedCom"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
             <OtherUnitFiles Value="..\Source\ParseFBEntry;..\Source\gedcom-import;..\Source\Components;..\Source\WinAhnenCls;..\Source\GenData;..\Source\html2csv"/>
-            <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$(BuildMode)\units"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -74,7 +74,7 @@
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
             <OtherUnitFiles Value="..\Source\ParseFBEntry;..\Source\gedcom-import;..\Source\Components;..\Source\WinAhnenCls;..\Source\GenData;..\Source\html2csv"/>
-            <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$(BuildMode)\units"/>
           </SearchPaths>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
@@ -106,7 +106,7 @@
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
             <OtherUnitFiles Value="..\Source\ParseFBEntry;..\Source\gedcom-import;..\Source\Components;..\Source\WinAhnenCls;..\Source\GenData;..\Source\html2csv"/>
-            <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$(BuildMode)\units"/>
           </SearchPaths>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
@@ -226,7 +226,7 @@
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
       <OtherUnitFiles Value="..\Source\ParseFBEntry;..\Source\gedcom-import;..\Source\Components;..\Source\WinAhnenCls;..\Source\GenData;..\Source\html2csv"/>
-      <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+      <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$(BuildMode)\units"/>
     </SearchPaths>
     <CodeGeneration>
       <SmartLinkUnit Value="True"/>
