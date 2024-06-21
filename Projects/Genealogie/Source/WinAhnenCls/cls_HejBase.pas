@@ -31,19 +31,24 @@ type
         procedure UpdateDataset(const ds: TDataSet); virtual; abstract;
     end;
 
-function HejDate2DateStr(Day, Month, Year: string): string;
+function HejDate2DateStr(Day, Month, Year: string;dtOnly:boolean=false): string;
 procedure DateStr2HeyDate(aDate:String;out Day, Month, Year: string);
 
 implementation
 
 uses SysUtils;
 
-function HejDate2DateStr(Day, Month, Year: string): string;
+function HejDate2DateStr(Day, Month, Year: string; dtOnly: boolean): string;
 var
     lNum: integer;
 begin
     if not TryStrToInt(day, lNum) then
-        if day <>'' then
+       if  TryStrToInt(RightStr(day,2) , lNum) then
+          if dtOnly  then
+            Result := RightStr(day,2)+'.'
+          else
+            Result := Day +'.'
+        else if (day <>'') and not dtOnly then
           Result := Day +' 01.'
         else
           Result := '01.'

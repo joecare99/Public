@@ -2,9 +2,9 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="10"/>
-    <BuildModes Active="Default"/>
-    <Units Count="3">
+    <Version Value="12"/>
+    <BuildModes Active="Debug"/>
+    <Units Count="18">
       <Unit0>
         <Filename Value="fpcTestGedComFile.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -12,36 +12,264 @@
         <WindowIndex Value="-1"/>
         <TopLine Value="-1"/>
         <CursorPos X="-1" Y="-1"/>
-        <UsageCount Value="20"/>
+        <UsageCount Value="28"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Test_Gen\testgedcomfile.pas"/>
+        <Filename Value="..\Source\Test_Gen\tst_GedComFile.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="testGedComFile"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <CursorPos X="37" Y="19"/>
-        <UsageCount Value="20"/>
+        <EditorIndex Value="3"/>
+        <CursorPos X="29" Y="416"/>
+        <UsageCount Value="28"/>
         <Loaded Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <Filename Value="..\Source\gedcom-import\cmp_GedComFile.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Cmp_GedComFile"/>
-        <CursorPos X="38" Y="10"/>
-        <UsageCount Value="20"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="28"/>
       </Unit2>
-    </Units>
-    <JumpHistory Count="2" HistoryIndex="1">
-      <Position1>
+      <Unit3>
+        <Filename Value="..\Source\Test_Gen\tst_GedComHelper.pas"/>
+        <IsPartOfProject Value="True"/>
+        <IsVisibleTab Value="True"/>
+        <TopLine Value="48"/>
+        <CursorPos X="25" Y="77"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\Source\gedcom-import\cls_GedComHelper.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="1"/>
+        <CursorPos Y="5"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\Source\Test_Gen\tst_GenHelper.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="8"/>
+        <TopLine Value="8"/>
+        <CursorPos Y="42"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\Source\gedcom-import\Cls_GedComExt.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="4"/>
+        <CursorPos Y="5"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\Source\GedCom2Odf\cmp_GedComDocumentWriter.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="10"/>
+        <TopLine Value="1567"/>
+        <CursorPos Y="1606"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\Source\GedCom2Odf\tst_GedCom2Odf.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="9"/>
+        <TopLine Value="148"/>
+        <CursorPos X="38" Y="148"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\Source\Components\unt_IGenBase2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UsageCount Value="28"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\Source\Test_Gen\tst_GedComExt.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="7"/>
+        <CursorPos X="80" Y="4"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\Source\Test_Gen\unt_GenTestBase.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="6"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\..\..\Daten\Source\XML_Stuff\laz2_XMLWrite2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="5"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="..\Source\Components\cls_GenHelperBase.pas"/>
+        <IsPartOfProject Value="True"/>
+        <EditorIndex Value="2"/>
+        <CursorPos X="2" Y="15"/>
+        <UsageCount Value="28"/>
+        <Loaded Value="True"/>
+      </Unit13>
+      <Unit14>
         <Filename Value="..\Test_Gen\testgedcomfile.pas"/>
-        <Caret Line="31" Column="31"/>
+        <UnitName Value="testGedComFile"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="37" Y="19"/>
+        <UsageCount Value="19"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
+        <UnitName Value="Cmp_GedComFile"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="38" Y="10"/>
+        <UsageCount Value="19"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\Source\TstHTMLParser\frm_TstHtmlParser2.pas"/>
+        <HasResources Value="True"/>
+        <UnitName Value="frm_tsthtmlparser2"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="19"/>
+        <CursorPos X="41" Y="19"/>
+        <UsageCount Value="10"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="..\Source\gedcom-import\cls_GenealogieHelper.pas"/>
+        <EditorIndex Value="11"/>
+        <CursorPos Y="5"/>
+        <UsageCount Value="10"/>
+        <Loaded Value="True"/>
+      </Unit17>
+    </Units>
+    <JumpHistory Count="30" HistoryIndex="29">
+      <Position1>
+        <Filename Value="..\Source\Test_Gen\tst_GedComHelper.pas"/>
+        <Caret Line="77" Column="25" TopLine="48"/>
       </Position1>
       <Position2>
-        <Filename Value="..\gedcom-import\cmp_gedcomfile.pas"/>
-        <Caret Line="10" Column="38"/>
+        <Filename Value="..\Source\Test_Gen\tst_GedComHelper.pas"/>
+        <Caret Line="24" Column="50"/>
       </Position2>
+      <Position3>
+        <Filename Value="..\Source\Test_Gen\tst_GedComHelper.pas"/>
+        <Caret Line="77" Column="25" TopLine="48"/>
+      </Position3>
+      <Position4>
+        <Filename Value="..\Source\Test_Gen\tst_GedComHelper.pas"/>
+        <Caret Line="32" Column="19" TopLine="3"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\Source\Test_Gen\tst_GedComHelper.pas"/>
+        <Caret Line="42" Column="42" TopLine="25"/>
+      </Position5>
+      <Position6>
+        <Filename Value="..\Source\gedcom-import\cls_GedComHelper.pas"/>
+        <Caret Line="839" Column="55" TopLine="785"/>
+      </Position6>
+      <Position7>
+        <Filename Value="..\Source\gedcom-import\cls_GedComHelper.pas"/>
+        <Caret Line="111" Column="4" TopLine="82"/>
+      </Position7>
+      <Position8>
+        <Filename Value="..\Source\gedcom-import\cls_GedComHelper.pas"/>
+        <Caret Line="839" Column="55" TopLine="785"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\Source\gedcom-import\cls_GedComHelper.pas"/>
+        <Caret Line="644" TopLine="616"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\Source\gedcom-import\cls_GedComHelper.pas"/>
+        <Caret Line="50" Column="66" TopLine="22"/>
+      </Position10>
+      <Position11>
+        <Filename Value="..\Source\gedcom-import\cls_GedComHelper.pas"/>
+        <Caret Line="49" Column="65" TopLine="21"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\Source\gedcom-import\cls_GedComHelper.pas"/>
+        <Caret Line="13" Column="36" TopLine="10"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\Source\Components\cls_GenHelperBase.pas"/>
+        <Caret Line="15" Column="2"/>
+      </Position13>
+      <Position14>
+        <Filename Value="..\Source\Test_Gen\tst_GedComFile.pas"/>
+        <Caret Line="452" Column="28" TopLine="421"/>
+      </Position14>
+      <Position15>
+        <Filename Value="..\Source\Test_Gen\tst_GedComFile.pas"/>
+        <Caret Line="386" Column="11" TopLine="357"/>
+      </Position15>
+      <Position16>
+        <Filename Value="..\Source\Test_Gen\tst_GedComFile.pas"/>
+        <Caret Line="315" TopLine="286"/>
+      </Position16>
+      <Position17>
+        <Filename Value="..\Source\Test_Gen\tst_GedComFile.pas"/>
+        <Caret Line="244" Column="43" TopLine="216"/>
+      </Position17>
+      <Position18>
+        <Filename Value="..\Source\gedcom-import\Cls_GedComExt.pas"/>
+        <Caret Line="208" Column="3" TopLine="179"/>
+      </Position18>
+      <Position19>
+        <Filename Value="..\Source\gedcom-import\Cls_GedComExt.pas"/>
+        <Caret Line="2643" Column="37" TopLine="2599"/>
+      </Position19>
+      <Position20>
+        <Filename Value="..\Source\Test_Gen\unt_GenTestBase.pas"/>
+      </Position20>
+      <Position21>
+        <Filename Value="..\Source\GedCom2Odf\cmp_GedComDocumentWriter.pas"/>
+        <Caret Line="1606" TopLine="1567"/>
+      </Position21>
+      <Position22>
+        <Filename Value="..\Source\gedcom-import\cls_GenealogieHelper.pas"/>
+        <Caret Line="5"/>
+      </Position22>
+      <Position23>
+        <Filename Value="..\Source\Test_Gen\tst_GedComFile.pas"/>
+        <Caret Line="448" Column="27"/>
+      </Position23>
+      <Position24>
+        <Filename Value="..\Source\Test_Gen\tst_GedComFile.pas"/>
+        <Caret Line="446" Column="27"/>
+      </Position24>
+      <Position25>
+        <Filename Value="..\Source\Test_Gen\tst_GedComFile.pas"/>
+        <Caret Line="61" Column="52" TopLine="16"/>
+      </Position25>
+      <Position26>
+        <Filename Value="..\Source\Test_Gen\tst_GedComFile.pas"/>
+        <Caret Line="62" Column="31"/>
+      </Position26>
+      <Position27>
+        <Filename Value="..\Source\Test_Gen\tst_GedComExt.pas"/>
+        <Caret Line="187" Column="8" TopLine="158"/>
+      </Position27>
+      <Position28>
+        <Filename Value="..\Source\Test_Gen\tst_GedComExt.pas"/>
+        <Caret Line="4" Column="80"/>
+      </Position28>
+      <Position29>
+        <Filename Value="..\Source\Test_Gen\tst_GedComFile.pas"/>
+        <Caret Line="416" Column="29"/>
+      </Position29>
+      <Position30>
+        <Filename Value="..\Source\Test_Gen\tst_GedComHelper.pas"/>
+        <Caret Line="58" Column="31" TopLine="36"/>
+      </Position30>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>

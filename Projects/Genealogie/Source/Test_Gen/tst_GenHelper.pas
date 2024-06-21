@@ -5,7 +5,7 @@ unit tst_GenHelper;
 interface
 
 uses
-  Classes, SysUtils, fpcunit, testutils, testregistry,Cmp_GedComFile, cls_GenealogieHelper;
+  Classes, SysUtils, fpcunit, testregistry,Cmp_GedComFile, cls_GenealogieHelper;
 
 type
 
@@ -39,8 +39,7 @@ begin
 end;
 
 constructor TTestGenealogieHelper.Create;
-var
-    i: integer;
+
 begin
     inherited Create;
      FDataPath:=GetDataPath('GenData');

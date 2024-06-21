@@ -2,15 +2,15 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <BuildModes Active="Default"/>
-    <Units Count="6">
+    <Units Count="7">
       <Unit0>
         <Filename Value="Prj_TstHTMLParser.dpr"/>
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="3"/>
         <CursorPos X="40" Y="9"/>
-        <UsageCount Value="195"/>
+        <UsageCount Value="196"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
@@ -20,7 +20,7 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <EditorIndex Value="2"/>
-        <UsageCount Value="30"/>
+        <UsageCount Value="31"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
@@ -29,14 +29,14 @@
         <IsPartOfProject Value="True"/>
         <EditorIndex Value="1"/>
         <CursorPos X="10"/>
-        <UsageCount Value="30"/>
+        <UsageCount Value="31"/>
         <Loaded Value="True"/>
       </Unit2>
       <Unit3>
         <Filename Value="..\Source\html2csv\cmp_Filter.pas"/>
         <IsPartOfProject Value="True"/>
         <CursorPos X="35" Y="58"/>
-        <UsageCount Value="30"/>
+        <UsageCount Value="31"/>
         <Loaded Value="True"/>
       </Unit3>
       <Unit4>
@@ -47,7 +47,6 @@
         <CursorPos X="57" Y="1080"/>
         <UsageCount Value="14"/>
         <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit4>
       <Unit5>
         <Filename Value="..\Source\TstHTMLParser\fra_HtmlImp.pas"/>
@@ -56,21 +55,37 @@
         <ResourceBaseClass Value="Frame"/>
         <IsVisibleTab Value="True"/>
         <EditorIndex Value="5"/>
-        <CursorPos X="11"/>
+        <TopLine Value="9"/>
+        <CursorPos X="11" Y="9"/>
         <UsageCount Value="12"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit5>
+      <Unit6>
+        <Filename Value="..\Source\GedCom2Odf\cmp_GedComDocumentWriter.pas"/>
+        <EditorIndex Value="-1"/>
+        <TopLine Value="54"/>
+        <CursorPos X="61" Y="83"/>
+        <UsageCount Value="10"/>
+      </Unit6>
     </Units>
-    <JumpHistory Count="1">
+    <JumpHistory Count="3" HistoryIndex="2">
       <Position1>
         <Filename Value="Prj_TstHTMLParser.dpr"/>
         <Caret Line="13" Column="10"/>
       </Position1>
+      <Position2>
+        <Filename Value="..\Source\TstHTMLParser\fra_HtmlImp.pas"/>
+        <Caret Column="11"/>
+      </Position2>
+      <Position3>
+        <Filename Value="..\Source\TstHTMLParser\fra_HtmlImp.pas"/>
+        <Caret Line="9" Column="11" TopLine="9"/>
+      </Position3>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
-      <Modes Count="0" ActiveMode="default"/>
+      <Modes ActiveMode="default"/>
     </RunParams>
   </ProjectSession>
 </CONFIG>

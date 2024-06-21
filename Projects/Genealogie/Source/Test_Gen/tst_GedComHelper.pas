@@ -7,7 +7,7 @@ unit tst_GedComHelper;
 interface
 
 uses
-    Classes, SysUtils, FileUtil, fpcunit, testutils, testregistry,
+    Classes, SysUtils, FileUtil, fpcunit, testregistry,
     Cmp_GedComFile, cls_GedComHelper, unt_IGenBase2;
 
 type
@@ -55,7 +55,7 @@ type
 implementation
 
 
-uses unt_GenTestBase;
+uses unt_GenTestBase, LazFileUtils;
 
 type
   { TChildTest }
@@ -426,7 +426,6 @@ end;
 
 constructor TTestGedComHelper.Create;
 var
-    i :integer;
     lFileSearcher: TFileSearcher;
 begin
     inherited Create;
@@ -537,7 +536,7 @@ end;
 procedure TTestGedComHelper.HelperMessage(Sender: TObject; aType: TEventType;
   aText: string; Ref: string; aMode: integer);
 begin
-
+  //
 end;
 
 procedure TTestGedComHelper.SetUp;

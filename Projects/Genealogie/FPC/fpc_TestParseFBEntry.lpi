@@ -18,12 +18,12 @@
           <Version Value="11"/>
           <PathDelim Value="\"/>
           <Target>
-            <Filename Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\fpc_TestParseFBEntry"/>
+            <Filename Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$(BuildMode)\fpc_TestParseFBEntry"/>
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
             <OtherUnitFiles Value="..\Source\ParseFBEntry;..\Source\html2csv;..\Source\Components"/>
-            <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$(BuildMode)\units"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -67,7 +67,7 @@
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
             <OtherUnitFiles Value="..\Source\ParseFBEntry;..\Source\html2csv;..\Source\Components"/>
-            <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$(BuildMode)\units"/>
           </SearchPaths>
           <CodeGeneration>
             <SmartLinkUnit Value="True"/>
@@ -151,7 +151,7 @@
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
       <OtherUnitFiles Value="..\Source\ParseFBEntry;..\Source\html2csv;..\Source\Components"/>
-      <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+      <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\$(BuildMode)\units"/>
     </SearchPaths>
     <Linking>
       <Options>

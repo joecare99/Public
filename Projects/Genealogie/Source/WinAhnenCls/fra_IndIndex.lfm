@@ -1,21 +1,20 @@
 object fraIndIndex: TfraIndIndex
   Left = 0
-  Height = 876
+  Height = 564
   Top = 0
-  Width = 345
-  ClientHeight = 876
-  ClientWidth = 345
-  DesignTimePPI = 144
+  Width = 274
+  ClientHeight = 564
+  ClientWidth = 274
   ParentFont = False
   TabOrder = 0
   object pnlTop: TPanel
     Left = 0
-    Height = 120
+    Height = 80
     Top = 0
-    Width = 345
+    Width = 274
     Align = alTop
-    ClientHeight = 120
-    ClientWidth = 345
+    ClientHeight = 80
+    ClientWidth = 274
     ParentFont = False
     TabOrder = 0
     OnClick = pnlTopClick
@@ -25,13 +24,13 @@ object fraIndIndex: TfraIndIndex
       AnchorSideRight.Side = asrBottom
       AnchorSideBottom.Control = edtFind
       Left = 1
-      Height = 33
-      Top = 41
-      Width = 337
+      Height = 23
+      Top = 26
+      Width = 268
       Anchors = [akLeft, akRight, akBottom]
-      BorderSpacing.Right = 6
-      BorderSpacing.Bottom = 6
-      ItemHeight = 25
+      BorderSpacing.Right = 4
+      BorderSpacing.Bottom = 4
+      ItemHeight = 15
       Items.Strings = (
         'Familianname'
         'Vorname'
@@ -48,12 +47,12 @@ object fraIndIndex: TfraIndIndex
       AnchorSideTop.Control = cbxSortBy
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = cbxSortBy
-      Left = -80
-      Height = 25
-      Top = 45
-      Width = 75
+      Left = -53
+      Height = 15
+      Top = 30
+      Width = 50
       Anchors = [akTop, akRight]
-      BorderSpacing.Right = 6
+      BorderSpacing.Right = 4
       Caption = 'Sortieren:'
       ParentColor = False
       ParentFont = False
@@ -62,12 +61,12 @@ object fraIndIndex: TfraIndIndex
       AnchorSideTop.Control = edtFind
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = edtFind
-      Left = -66
-      Height = 25
-      Top = 84
-      Width = 61
+      Left = -45
+      Height = 15
+      Top = 57
+      Width = 42
       Anchors = [akTop, akRight]
-      BorderSpacing.Right = 6
+      BorderSpacing.Right = 4
       Caption = 'Suchen:'
       ParentColor = False
       ParentFont = False
@@ -79,13 +78,13 @@ object fraIndIndex: TfraIndIndex
       AnchorSideBottom.Control = pnlTop
       AnchorSideBottom.Side = asrBottom
       Left = 1
-      Height = 33
-      Top = 80
-      Width = 337
+      Height = 22
+      Top = 53
+      Width = 268
       Anchors = [akLeft, akRight, akBottom]
       AutoSize = False
-      BorderSpacing.Right = 6
-      BorderSpacing.Bottom = 6
+      BorderSpacing.Right = 4
+      BorderSpacing.Bottom = 4
       OnChange = edtFindChange
       OnKeyPress = edtFindKeyPress
       ParentFont = False
@@ -95,44 +94,44 @@ object fraIndIndex: TfraIndIndex
   end
   object pnlBottom: TPanel
     Left = 0
-    Height = 88
-    Top = 788
-    Width = 345
+    Height = 59
+    Top = 505
+    Width = 274
     Align = alBottom
-    ClientHeight = 88
-    ClientWidth = 345
+    ClientHeight = 59
+    ClientWidth = 274
     ParentFont = False
     TabOrder = 1
     object ComboBox1: TComboBox
-      Left = 7
-      Height = 33
-      Top = 48
-      Width = 331
+      Left = 5
+      Height = 23
+      Top = 31
+      Width = 264
       Align = alBottom
-      BorderSpacing.Around = 6
-      ItemHeight = 25
+      BorderSpacing.Around = 4
+      ItemHeight = 15
       ParentFont = False
       TabOrder = 0
       Text = '<Manage>'
     end
     object chbFilterActive: TCheckBox
-      Left = 133
-      Height = 35
-      Top = 7
-      Width = 139
+      Left = 90
+      Height = 22
+      Top = 5
+      Width = 135
       Align = alClient
-      BorderSpacing.Around = 6
+      BorderSpacing.Around = 4
       Caption = 'Aktiv'
       ParentFont = False
       TabOrder = 1
     end
     object SpeedButton1: TSpeedButton
-      Left = 67
-      Height = 35
-      Top = 7
-      Width = 60
+      Left = 46
+      Height = 22
+      Top = 5
+      Width = 40
       Align = alLeft
-      BorderSpacing.Around = 6
+      BorderSpacing.Around = 4
       Caption = '...'
       ParentFont = False
     end
@@ -140,32 +139,32 @@ object fraIndIndex: TfraIndIndex
       AnchorSideTop.Control = ComboBox1
       AnchorSideTop.Side = asrCenter
       AnchorSideRight.Control = ComboBox1
-      Left = 13
-      Height = 23
-      Top = 13
-      Width = 42
+      Left = 9
+      Height = 14
+      Top = 9
+      Width = 29
       Align = alLeft
-      BorderSpacing.Around = 12
+      BorderSpacing.Around = 8
       Caption = 'Filter:'
       ParentColor = False
       ParentFont = False
     end
     object SpeedButton2: TSpeedButton
-      Left = 278
-      Height = 35
-      Top = 7
-      Width = 60
+      Left = 229
+      Height = 22
+      Top = 5
+      Width = 40
       Align = alRight
-      BorderSpacing.Around = 6
+      BorderSpacing.Around = 4
       Caption = 'S'
       ParentFont = False
     end
   end
   object TabControl1: TTabControl
     Left = 0
-    Height = 40
-    Top = 123
-    Width = 345
+    Height = 27
+    Top = 82
+    Width = 274
     HotTrack = True
     TabIndex = 0
     Tabs.Strings = (
@@ -174,34 +173,29 @@ object fraIndIndex: TfraIndIndex
       'Historie'
     )
     Align = alTop
-    BorderSpacing.Top = 3
+    BorderSpacing.Top = 2
     ParentFont = False
     TabOrder = 2
   end
   object StringGrid1: TStringGrid
     Left = 0
-    Height = 625
-    Top = 163
-    Width = 345
+    Height = 396
+    Top = 109
+    Width = 274
     Align = alClient
     AlternateColor = clCream
     ColCount = 3
+    ColumnClickSorts = True
     Columns = <    
       item
-        MinSize = 15
-        MaxSize = 300
         Title.Caption = 'Name'
-        Width = 225
+        Width = 150
       end    
       item
-        MinSize = 15
-        MaxSize = 300
         Title.Caption = 'Color'
-        Width = 45
+        Width = 30
       end    
       item
-        MinSize = 15
-        MaxSize = 300
         Title.Caption = 'Date'
       end>
     DefaultDrawing = False
@@ -210,6 +204,7 @@ object fraIndIndex: TfraIndIndex
     ParentFont = False
     TabOrder = 3
     OnDrawCell = StringGrid1DrawCell
+    OnButtonClick = StringGrid1ButtonClick
     OnGetCellHint = StringGrid1GetCellHint
     OnGetEditText = StringGrid1GetEditText
     OnSelection = StringGrid1Selection

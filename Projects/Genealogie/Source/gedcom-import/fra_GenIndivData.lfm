@@ -1,0 +1,57 @@
+object FraGenIndivData: TFraGenIndivData
+  Left = 0
+  Height = 689
+  Top = 0
+  Width = 318
+  ClientHeight = 689
+  ClientWidth = 318
+  TabOrder = 0
+  DesignLeft = 466
+  DesignTop = 6
+  object pnlTop: TPanel
+    Left = 0
+    Height = 106
+    Top = 0
+    Width = 318
+    Align = alTop
+    BevelOuter = bvLowered
+    BevelWidth = 2
+    TabOrder = 0
+  end
+  object pnlBottom2: TPanel
+    Left = 0
+    Height = 50
+    Top = 639
+    Width = 318
+    Align = alBottom
+    BevelOuter = bvLowered
+    TabOrder = 1
+  end
+  object pnlBottom: TPanel
+    Left = 0
+    Height = 199
+    Top = 440
+    Width = 318
+    Align = alBottom
+    BevelOuter = bvNone
+    TabOrder = 2
+  end
+  object pnlClient: TPanel
+    Left = 0
+    Height = 329
+    Top = 106
+    Width = 318
+    Align = alClient
+    BevelOuter = bvNone
+    TabOrder = 3
+  end
+  object Splitter1: TSplitter
+    Cursor = crVSplit
+    Left = 0
+    Height = 5
+    Top = 435
+    Width = 318
+    Align = alBottom
+    ResizeAnchor = akBottom
+  end
+end

@@ -241,7 +241,7 @@ begin
         lStr.Seek(738, soBeginning);
         FClsHejMarriages.ReadFromStream(lStr);
         CheckEquals(2, FClsHejMarriages.Count, '2 Marriages');
-        CheckEquals(1061, lStr.Position, 'Stringposition is 1061');
+        CheckEquals(1059, lStr.Position, 'Stringposition is 1059');
       finally
         FreeAndNil(lStr)
       end;
@@ -661,7 +661,7 @@ begin
         CheckEquals('3', FHejMarrData.MarrStateDay, 'MarrStateDay is Joker');
         CheckEquals('4', FHejMarrData.MarrStateMonth, 'MarrStateMonth is j');
         CheckEquals('1994', FHejMarrData.MarrStateYear, 'MarrStateYear is JaySee');
-        CheckEquals(902, lStr.Position, 'Stringposition is ');
+        CheckEquals(901, lStr.Position, 'Stringposition is ');
         FHejMarrData.ReadFromStream(lStr);
         CheckEquals(2, FHejMarrData.idPerson, 'idPerson2 is 2');
         CheckEquals(1, FHejMarrData.idSpouse, 'idSpouse2 is 1');
