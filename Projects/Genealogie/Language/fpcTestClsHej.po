@@ -1,8 +1,16 @@
 msgid ""
 msgstr "Content-Type: text/plain; charset=UTF-8"
 
+#: cls_hejdata.rsdeath
+msgid "Gest."
+msgstr ""
+
 #: cls_hejdata.rsgeburt
 msgid "Geburt"
+msgstr ""
+
+#: cls_hejdata.rsgivnname
+msgid "Vorname"
 msgstr ""
 
 #: cls_hejdata.rshird_allchild
@@ -51,6 +59,22 @@ msgstr ""
 
 #: cls_hejdata.rshird_spouse
 msgid "Ehepartner"
+msgstr ""
+
+#: cls_hejdata.rsid
+msgid "ID"
+msgstr ""
+
+#: cls_hejdata.rssortkndwn
+msgid "▼"
+msgstr ""
+
+#: cls_hejdata.rssortknup
+msgid "▲"
+msgstr ""
+
+#: cls_hejdata.rssurname
+msgid "Nachname"
 msgstr ""
 
 #: cls_hejdatafilter.rshcct_and
@@ -236,6 +260,82 @@ msgstr ""
 
 #: dm_gendata2.rsshowdatabase
 msgid "show databases"
+msgstr ""
+
+#: tfraindindex.chbfilteractive.caption
+msgid "Aktiv"
+msgstr ""
+
+#: tfraindindex.combobox1.text
+msgid "<Manage>"
+msgstr ""
+
+#: tfraindindex.edtfind.texthint
+msgid "<Suchen>"
+msgstr ""
+
+#: tfraindindex.label1.caption
+msgid "Filter:"
+msgstr ""
+
+#: tfraindindex.lblfind.caption
+msgid "Suchen:"
+msgstr ""
+
+#: tfraindindex.lblsort.caption
+msgid "Sortieren:"
+msgstr ""
+
+#: tfraindindex.speedbutton1.caption
+msgid "..."
+msgstr ""
+
+#: tfraindindex.speedbutton2.caption
+msgid "S"
+msgstr ""
+
+#: tfraindindex.stringgrid1.columns[0].title.caption
+msgid "Name"
+msgstr ""
+
+#: tfraindindex.stringgrid1.columns[1].title.caption
+msgid "Color"
+msgstr ""
+
+#: tfraindindex.stringgrid1.columns[2].title.caption
+msgid "Date"
+msgstr ""
+
+#: tfrmfilteredit.caption
+msgid "FrmFilterEdit"
+msgstr ""
+
+#: tfrmfilteredit.cbxhejconctype.text
+msgid "cbxHejConcType"
+msgstr ""
+
+#: tfrmfilteredit.combobox2.text
+msgid "ComboBox2"
+msgstr ""
+
+#: tfrmfilteredit.combobox3.text
+msgid "ComboBox3"
+msgstr ""
+
+#: tfrmfilteredit.combobox4.text
+msgid "ComboBox4"
+msgstr ""
+
+#: tfrmfilteredit.edit1.text
+msgid "Edit1"
+msgstr ""
+
+#: tfrmfilteredit.panel1.caption
+msgid "Panel1"
+msgstr ""
+
+#: tfrmfilteredit.panel2.caption
+msgid "Panel2"
 msgstr ""
 
 #: tst_clsadophej.defdatadir

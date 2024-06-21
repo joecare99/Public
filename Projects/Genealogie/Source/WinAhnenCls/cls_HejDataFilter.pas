@@ -368,7 +368,10 @@ function TFilterRule.toString: String;
 begin
    result := copy(CindRedir[IndRedir],6,10);
    if IndRedir= hIRd_Meta then
-     result :=result+ '.'+CIndMetaData[TenumIndMetaData(DataField)]
+     begin
+       if  DataField <= ord(high(TenumIndMetaData)) then
+         result :=result+ '.'+CIndMetaData[TenumIndMetaData(DataField)]
+     end
    else
      if DataField < 199 then
        result :=result+ '.'+CHejIndDataDesc[TEnumHejIndDatafields(DataField-100)]

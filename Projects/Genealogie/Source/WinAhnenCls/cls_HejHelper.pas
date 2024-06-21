@@ -87,10 +87,8 @@ private
   function RplHejDModiv(Date: String): String;
 
   function IsFamilyEvent(const SubType: integer): boolean;
-  procedure SetCitation(AValue: TStrings);
-  procedure SetCitTitle(AValue: string);
+  function IsMetaField(const SubType: TEnumHejIndDatafields): boolean;
   procedure SetHejObj(AValue: TClsHejGenealogy);
-  procedure SetOsbHdr(AValue: string);
   Function FindInd(aRef:String;aCre:Boolean=false):integer;
   function FindFam(aRef: String; aCre: Boolean=False): TVirtFamily;
 
@@ -330,30 +328,18 @@ const CGedDateModif:array[0..15] of string=
      result := subtype in [0,3,17]
   end;
 
+  function THejHelper.IsMetaField(const SubType: TEnumHejIndDatafields
+    ): boolean;
+  begin
+    result := subtype in [hind_Occupation,hind_Residence,hind_FarmName];
+  end;
+
 { THejHelper }
-
-procedure THejHelper.SetCitation(AValue: TStrings);
-begin
-  if FCitation=AValue then Exit;
-  FCitation:=AValue;
-end;
-
-procedure THejHelper.SetCitTitle(AValue: string);
-begin
-  if FCitTitle=AValue then Exit;
-  FCitTitle:=AValue;
-end;
 
 procedure THejHelper.SetHejObj(AValue: TClsHejGenealogy);
 begin
   if FHejObj=AValue then Exit;
   FHejObj:=AValue;
-end;
-
-procedure THejHelper.SetOsbHdr(AValue: string);
-begin
-  if FOsbHdr=AValue then Exit;
-  FOsbHdr:=AValue;
 end;
 
 procedure THejHelper.AppendIndex(aRef:string;aIndID:integer);
@@ -550,7 +536,7 @@ begin
   lfam.Date:=RplHejDModiv( aText);
   if IsFamilyEvent(SubType) then
      begin
-       lMarFld := GetMarrFieldof(SubType,2);
+       lMarFld := GetMarrFieldof(SubType,1);
   if (lfam.Marr>=0) and (lMarFld<>hmar_ID)  then
     FHejObj.Marriages.SetDateData(lfam.Marr,lMarFld,lfam.Date);
   if (lfam.Marr2>=0) and (lMarFld<>hmar_ID) then
@@ -559,12 +545,16 @@ begin
      else
       begin
         lIndField:= GetFieldof(SubType,2);
-        if (lfam.Husband <> 0) and (lIndField<>hind_Text) then
+        if (lfam.Husband <> 0) and IsMetaField(lIndField) then
+          FHejObj.iMetaData[-1,lfam.Husband,lIndField,1] := lfam.Date
+        else if (lfam.Husband <> 0) and (lIndField<>hind_Text) then
           FHejObj.SetDate(lfam.Husband,lIndField,lfam.Date)
         else if (lfam.Husband <> 0) then
           FHejObj.iData[lfam.Husband,lIndField] := FHejObj.iData[lfam.Husband,lIndField]+
             LineEnding + {GetTextHdr(Subtype) +} 'am ' + aText;
-        if (lfam.Spouse <> 0) and (lIndField<>hind_Text) then
+        if (lfam.Spouse <> 0) and IsMetaField(lIndField) then
+          FHejObj.iMetaData[-1,lfam.Husband,lIndField,1] := lfam.Date
+        else if (lfam.Spouse <> 0) and (lIndField<>hind_Text) then
           FHejObj.SetDate(lfam.Spouse,lIndField,lfam.Date)
         else if (lfam.Spouse <> 0) then
           FHejObj.iData[lfam.Spouse,lIndField] := FHejObj.iData[lfam.Spouse,lIndField]+
@@ -593,12 +583,16 @@ begin
    else
       begin
         lIndField:= GetFieldof(SubType,0);
-        if (lfam.Husband <> 0) and (lIndField<>hind_Text) then
+        if (lfam.Husband <> 0) and IsMetaField(lIndField) then
+          FHejObj.iMetaData[-1,lfam.Husband,lIndField,0] := aText
+        else if (lfam.Husband <> 0) and (lIndField<>hind_Text) then
           FHejObj.iData[lfam.Husband,lIndField] := aText
         else if (lfam.Husband <> 0) then
           FHejObj.iData[lfam.Husband,lIndField] := FHejObj.iData[lfam.Husband,lIndField]+
             LineEnding {+ GetTextHdr(Subtype)} + aText;
-        if (lfam.Spouse <> 0) and (lIndField<>hind_Text) then
+        if (lfam.Spouse <> 0) and IsMetaField(lIndField) then
+          FHejObj.iMetaData[-1,lfam.Spouse,lIndField,0] := aText
+        else if (lfam.Spouse <> 0) and (lIndField<>hind_Text) then
           FHejObj.iData[lfam.Spouse,lIndField] := aText
         else if (lfam.Spouse <> 0) then
           FHejObj.iData[lfam.Spouse,lIndField] := FHejObj.iData[lfam.Spouse,lIndField]+
@@ -619,7 +613,7 @@ begin
   lfam.Place:=aText;
   if isFamilyEvent(Subtype) then
     begin
-      lMarFld := GetMarrFieldof(SubType,1);
+      lMarFld := GetMarrFieldof(SubType,2);
       if (lfam.Marr>=0) and (lMarFld<>hmar_ID)  then
     FHejObj.Marriages.Data[lfam.Marr,lMarFld]:=aText;
       if (lfam.Marr2>=0) and (lMarFld<>hmar_ID) then
@@ -628,12 +622,16 @@ begin
   else
      begin
        lIndField:= GetFieldof(SubType,1);
-       if (lfam.Husband <> 0) and (lIndField<>hind_Text) then
+       if (lfam.Husband <> 0) and IsMetaField(lIndField) then
+          FHejObj.iMetaData[-1,lfam.Husband,lIndField,2] := aText
+        else if (lfam.Husband <> 0) and (lIndField<>hind_Text) then
          FHejObj.iData[lfam.Husband,lIndField] := aText
        else if (lfam.Husband <> 0) then
          FHejObj.iData[lfam.Husband,lIndField] := FHejObj.iData[lfam.Husband,lIndField]+
            LineEnding {+ GetTextHdr(Subtype)} + aText;
-       if (lfam.Spouse <> 0) and (lIndField<>hind_Text) then
+       if (lfam.Spouse <> 0) and IsMetaField(lIndField) then
+          FHejObj.iMetaData[-1,lfam.Spouse,lIndField,2] := aText
+        else if (lfam.Spouse <> 0) and (lIndField<>hind_Text) then
          FHejObj.iData[lfam.Spouse,lIndField] := aText
        else if (lfam.Spouse <> 0) then
          FHejObj.iData[lfam.Spouse,lIndField] := FHejObj.iData[lfam.Spouse,lIndField]+
@@ -702,7 +700,9 @@ begin
     lHejDat:='W';
   if lind>0 then
     begin
-      if lTag<>hind_Text then
+      if IsMetaField(ltag) then
+        FHejObj.iMetaData[-1,lind,lTag,0]:=atext
+      else if lTag<>hind_Text then
         FHejObj.iData[lind,lTag]:=lHejDat
       else
         FHejObj.iData[lind,lTag]:=FHejObj.iData[lind,lTag]+LineEnding+atext;
@@ -730,15 +730,17 @@ begin
 
   if lind>0 then
     begin
-      if lValidDate and (lTag<>hind_Text) then
+      if lValidDate and IsMetaField(ltag) then
+         FHejObj.iMetaData[-1,lind,lTag,1]:=lHejDate
+      else  if lValidDate and (lTag<>hind_Text) then
         begin
           lYear := 5*((lYear+2)div 5);
              FHejObj.SetDate(lind,lTag,lHejDate);
              lDSource := TClsHejIndividuals.GetSource(ltag);
-      if (FCitRefn <> '') and (lTag<>hind_ID) then
-          FHejObj.iData[lind,lDSource]:= FCitRefn;
-        if  lHejDate[1] in ['0'..'9'] then
-          begin
+          if (FCitRefn <> '') and (lTag<>hind_ID) then
+            FHejObj.iData[lind,lDSource]:= FCitRefn;
+          if  lHejDate[1] in ['0'..'9'] then
+            begin
           // gibt es nur ein Taufdatum setze Geburt davor
             if (FHejObj.iData[lind,hind_BirthYear]='') and
                (lTag=hind_BaptDay) then
@@ -770,7 +772,9 @@ begin
   lTag:=GetFieldof(SubType,2);
   if lind>0 then
     begin
-      if lTag<>hind_Text then
+      if IsMetaField(ltag) then
+        FHejObj.iMetaData[-1,lind,lTag,2]:=atext
+      else if lTag<>hind_Text then
         FHejObj.iData[lind,lTag]:=atext
       else
         FHejObj.iData[lind,lTag]:=FHejObj.iData[lind,lTag]+LineEnding+atext;
@@ -797,7 +801,9 @@ begin
   lTag:=GetFieldof(SubType,0);
   if lind>0 then
     begin
-      if lTag<>hind_Text then
+      if IsMetaField(ltag) then
+        FHejObj.iMetaData[-1,lind,lTag,0]:=atext
+      else if lTag<>hind_Text then
         FHejObj.iData[lind,lTag]:=atext
       else
         FHejObj.iData[lind,lTag]:=FHejObj.iData[lind,lTag]+LineEnding+atext;
@@ -929,11 +935,17 @@ begin
         17: Result := hind_BurialPlace;
         18: Result := hind_Sex;
         21: Result := hind_Occupation;
+        22: Result := hind_Occupation;
+        23: Result := hind_Occupation;
         24: Result := hind_Religion;
+        27: Result := hind_Residence;
+        28: Result := hind_Residence;
         29: Result := hind_Residence;
         30: Result := hind_GivenName;
         ord(evt_AKA)*3: Result := hind_AKA;
         ord(evt_AddResidence)*3: Result := hind_Residence;
+        ord(evt_AddResidence)*3+1: Result := hind_Residence;
+        ord(evt_AddResidence)*3+2: Result := hind_Residence;
         ord(evt_Age)*3:Result := hind_Age;
         else
             Result := hind_Text;

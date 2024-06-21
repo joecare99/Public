@@ -58,6 +58,7 @@ type
         evt_fallen,
         evt_missing,
         evt_Age,
+        evt_Info,
 
         evt_LastChange,
         evt_Last

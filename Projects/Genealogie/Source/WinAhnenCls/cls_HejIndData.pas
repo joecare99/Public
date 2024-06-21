@@ -166,7 +166,7 @@ public
   function PlaceCount:integer;
   function SourceCount:integer;
   Function GetValue:double;
-  function GetDateData(idx: TEnumHejIndDatafields): string;
+  function GetDateData(idx: TEnumHejIndDatafields;dtOnly:boolean=false): string;
   Procedure SetDateData(idx: TEnumHejIndDatafields;aValue: string);
   Procedure Clear;
 
@@ -379,7 +379,7 @@ public
    procedure RemovePerson(const lActIndex: Integer);
    procedure SetData(ind: integer; idx: TEnumHejIndDatafields; AValue: variant
      );overload;
-   Function GetDateData(ind:integer; idx: TEnumHejIndDatafields):string;
+   Function GetDateData(ind:integer; idx: TEnumHejIndDatafields;dtOnly:boolean=false):string;
    Procedure SetDateData(ind:Integer; Idx:TEnumHejIndDatafields;aValue:String);
    Procedure Merge(aInd,aInd2:integer);
    Class Function GetSource(idx: TEnumHejIndDatafields): TEnumHejIndDatafields;
@@ -796,13 +796,13 @@ begin
     FIndArray[ind].Data[idx] := AValue;
 end;
 
-function TClsHejIndividuals.GetDateData(ind: integer; idx: TEnumHejIndDatafields
-  ): string;
+function TClsHejIndividuals.GetDateData(ind: integer;
+  idx: TEnumHejIndDatafields; dtOnly: boolean): string;
 begin
   if Ind = -1 then
     ind := FActIndex;
   if (ind >0) and (ind <= high(FIndArray)) then
-    result := FIndArray[ind].GetDateData(idx);
+    result := FIndArray[ind].GetDateData(idx,dtOnly);
 end;
 
 procedure TClsHejIndividuals.SetDateData(ind: Integer;
@@ -1672,11 +1672,12 @@ begin
       exit(lDate)
 end;
 
-function THejIndData.GetDateData(idx: TEnumHejIndDatafields): string;
+function THejIndData.GetDateData(idx: TEnumHejIndDatafields; dtOnly: boolean
+  ): string;
 begin
   result := HejDate2DateStr(data[idx],
   Data[TEnumHejIndDatafields(ord(idx)+1)],
-  Data[TEnumHejIndDatafields(ord(idx)+2)]);
+  Data[TEnumHejIndDatafields(ord(idx)+2)],dtOnly);
 end;
 
 procedure THejIndData.SetDateData(idx: TEnumHejIndDatafields; aValue: string);
