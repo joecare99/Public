@@ -8,7 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
   Forms, Frm_GedCom2OdfMain, cmp_GedComDocumentWriter, unt_IGenBase2,
-  Cls_GedComExt, cls_GenealogieHelper, Cmp_GedComFile, fra_GenShowIndivid
+  Cls_GedComExt, cls_GenealogieHelper, Cmp_GedComFile, fra_GenShowIndivid,
+  fra_GenIndivData, fra_GenIndivEvent
   { you can add units after this };
 
 {$R *.res}

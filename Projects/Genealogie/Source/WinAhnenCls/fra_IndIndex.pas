@@ -33,6 +33,7 @@ type
     procedure edtFindKeyPress(Sender: TObject; var Key: char);
     procedure ListBox1SelectionChange(Sender: TObject; User: boolean);
     procedure pnlTopClick(Sender: TObject);
+    procedure StringGrid1ButtonClick(Sender: TObject; aCol, aRow: Integer);
     procedure StringGrid1DrawCell(Sender: TObject; aCol, aRow: Integer;
       aRect: TRect; aState: TGridDrawState);
     procedure StringGrid1GetCellHint(Sender: TObject; ACol, ARow: Integer;
@@ -44,13 +45,18 @@ type
     procedure StringGrid1SelectCell(Sender: TObject; aCol, aRow: Integer;
       var CanSelect: Boolean);
     procedure StringGrid1Selection(Sender: TObject; aCol, aRow: Integer);
+    Procedure Sort(aCol,aType:integer);
   private
     FGenealogy: TClsHejGenealogy;
     FoldGenOnUpdate: TNotifyEvent;
     FIndexArray:TArrayOfInteger;
+    FSortCol,
+    FSortType,
     FSelectedInd,
     FIndCount: Integer;
     FFilter:TGenFilter;
+    function fktDeathSort(const List: TIntegerDynArray; Index1, Index2: Integer
+      ): ShortInt;
     function fktBirthSort(const List: TIntegerDynArray; Index1, Index2: Integer
       ): ShortInt;
     function fktFamilynameSort(const List: TIntegerDynArray; Index1,
@@ -104,6 +110,18 @@ end;
 procedure TfraIndIndex.pnlTopClick(Sender: TObject);
 begin
 
+end;
+
+procedure TfraIndIndex.StringGrid1ButtonClick(Sender: TObject; aCol,
+  aRow: Integer);
+begin
+  if aRow>0 then exit;
+    begin
+      if FSortCol<>aCol then
+         Sort(aCol,1)
+      else
+        Sort(aCol,succ(FSortType));
+    end;
 end;
 
 procedure TfraIndIndex.StringGrid1DrawCell(Sender: TObject; aCol,
@@ -185,8 +203,8 @@ begin
       value :=inttostr(nIndex);
     2: case cbxSortBy.ItemIndex of
       -1,0,1,2,5: value :=FGenealogy.peekInd(nIndex).BirthDate;
-      3:value :=FGenealogy.peekInd(nIndex).DeathDate;
-        4:;
+      3:;
+        4:value :=FGenealogy.peekInd(nIndex).DeathDate;
        end
     end;
 // Dates
@@ -300,7 +318,8 @@ begin
     result := 0
 end;
 
-Procedure TfraIndIndex.DoIndexSort(var aArray:TIntegerDynArray;aSortFkt:TIndCompareFkt;aLb:integer=-1;aHb:integer=-1);
+procedure TfraIndIndex.DoIndexSort(var aArray: TIntegerDynArray;
+  aSortFkt: TIndCompareFkt; aLb: integer; aHb: integer);
 
 Procedure Swap(var aArray:TIntegerDynArray;ind1,ind2:integer);inline;
 
@@ -371,6 +390,47 @@ begin
 
 end;
 
+procedure TfraIndIndex.Sort(aCol, aType: integer);
+begin
+  if (acol =0) and (aType = 0) then
+    cbxSortBy.ItemIndex:=0
+  else   if (acol =0) and (aType = 1) then
+    cbxSortBy.ItemIndex:=1
+  else   if (acol =0) and (aType = 2) then
+    cbxSortBy.ItemIndex:=0
+  else   if (acol =2) and (aType = 0) then
+    cbxSortBy.ItemIndex:=2
+  else   if (acol =2) and (aType = 1) then
+    cbxSortBy.ItemIndex:=3
+  else   if (acol =2) and (aType = 2) then
+    cbxSortBy.ItemIndex:=4
+  else   if (acol =2) and (aType = 3) then
+    cbxSortBy.ItemIndex:=2
+  else
+    cbxSortBy.ItemIndex:=5 ;
+
+end;
+
+function TfraIndIndex.fktDeathSort(const List: TIntegerDynArray; Index1,
+  Index2: Integer): ShortInt;
+var
+  lStr1, lStr2: String;
+begin
+  lStr1 :=uppercase(FGenealogy.PeekInd(List[index1]).DeathYear+
+     FGenealogy.PeekInd(List[index1]).DeathMonth+
+     FGenealogy.PeekInd(List[index1]).DeathDay);
+  lStr2 :=uppercase(FGenealogy.PeekInd(List[index2]).DeathYear+
+     FGenealogy.PeekInd(List[index2]).DeathMonth+
+     FGenealogy.PeekInd(List[index2]).DeathDay);
+  if lstr1 < lstr2 then
+    result := -1
+  else
+    if lstr1 > lstr2 then
+      result := 1
+  else
+    result := 0;
+end;
+
 procedure TfraIndIndex.cbxSortByChange(Sender: TObject);
 
 var
@@ -387,14 +447,34 @@ begin
   case cbxSortBy.ItemIndex of
     0: begin
           DoIndexSort(FIndexArray,@fktFamilynameSort);
+          StringGrid1.Columns[0].Title.Caption:=rsSurname+rsSortKnUp;
+          StringGrid1.Columns[1].Title.Caption:=rsID;
           StringGrid1.Columns[2].Title.Caption:=rsGeburt;
         end;
      1: begin
           DoIndexSort(FIndexArray,@fktGivenNameSort);
+          StringGrid1.Columns[0].Title.Caption:=rsGivnname+rsSortKnUp;
+          StringGrid1.Columns[1].Title.Caption:=rsID;
           StringGrid1.Columns[2].Title.Caption:=rsGeburt;
         end;
-//    2: TExtendedStringList(ListBox1.Items).CustomSort(@fktBirthSort);
-    5:
+    2: begin
+          DoIndexSort(FIndexArray,@fktBirthSort);
+          StringGrid1.Columns[0].Title.Caption:=rsSurname;
+          StringGrid1.Columns[1].Title.Caption:=rsID;
+          StringGrid1.Columns[2].Title.Caption:=rsGeburt+rsSortKnUp;
+        end;
+    4:  begin
+          DoIndexSort(FIndexArray,@fktDeathSort);
+          StringGrid1.Columns[0].Title.Caption:=rsSurname;
+          StringGrid1.Columns[1].Title.Caption:=rsID;
+          StringGrid1.Columns[2].Title.Caption:=rsDeath+rsSortKnUp;
+        end;
+    5:  begin
+          DoIndexSort(FIndexArray,@fktIDSort);
+          StringGrid1.Columns[0].Title.Caption:=rsSurname;
+          StringGrid1.Columns[1].Title.Caption:=rsID+rsSortKnUp;
+          StringGrid1.Columns[2].Title.Caption:=rsGeburt;
+        end;
   else
   end;
 //  else

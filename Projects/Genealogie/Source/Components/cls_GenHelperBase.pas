@@ -48,6 +48,7 @@ type
         procedure IndiRef(Sender: TObject; aText, aRef: string; SubType: integer);virtual;abstract;
         procedure IndiOccu(Sender: TObject; aText, aRef: string; SubType: integer);virtual;abstract;
         procedure IndiRel(Sender: TObject; aText, aRef: string; SubType: integer);virtual;abstract;
+        procedure EndOfEntry(Sender: TObject; aText, aRef: string; SubType: integer);virtual;abstract;
         procedure CreateNewHeader(Filename: string);virtual;abstract;
         procedure SaveToFile(const Filename: string);virtual;abstract;
         procedure FireEvent(Sender: TObject; aSTa: TStringArray);
