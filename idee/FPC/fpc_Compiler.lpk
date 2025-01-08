@@ -8,8 +8,8 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <IncludeFiles Value="$(ProjOutDir);..\compiler;..\compiler\$(TARGETCPU)"/>
-        <OtherUnitFiles Value="..\compiler;..\compiler\$(TARGETCPU);..\compiler\x86;..\compiler\systems"/>
+        <IncludeFiles Value="$(ProjOutDir);..\..\..\Lazarus\FpcTrunk\compiler;..\..\..\Lazarus\FpcTrunk\compiler\$(TARGETCPU)"/>
+        <OtherUnitFiles Value="..\..\..\Lazarus\FpcTrunk\compiler;..\..\..\Lazarus\FpcTrunk\compiler\$(TARGETCPU);..\..\..\Lazarus\FpcTrunk\compiler\x86;..\..\..\Lazarus\FpcTrunk\compiler\systems"/>
         <UnitOutputDirectory Value="..\..\bin\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
@@ -23,91 +23,87 @@
       </Other>
     </CompilerOptions>
     <Version Major="3" Minor="3" Release="1"/>
-    <Files Count="21">
+    <Files Count="20">
       <Item1>
-        <Filename Value="..\compiler\browcol.pas"/>
-        <UnitName Value="browcol"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\cfileutl.pas"/>
+        <UnitName Value="cfileutl"/>
       </Item1>
       <Item2>
-        <Filename Value="..\compiler\cfileutl.pas"/>
-        <UnitName Value="cfileutl"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\cgutils.pas"/>
+        <UnitName Value="cgutils"/>
       </Item2>
       <Item3>
-        <Filename Value="..\Compiler\cgbase.pas"/>
-        <UnitName Value="cgbase"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\cmsgs.pas"/>
+        <UnitName Value="cmsgs"/>
       </Item3>
       <Item4>
-        <Filename Value="..\compiler\cgutils.pas"/>
-        <UnitName Value="cgutils"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\comphook.pas"/>
+        <UnitName Value="comphook"/>
       </Item4>
       <Item5>
-        <Filename Value="..\compiler\cmsgs.pas"/>
-        <UnitName Value="cmsgs"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\compiler.pas"/>
+        <UnitName Value="compiler"/>
       </Item5>
       <Item6>
-        <Filename Value="..\compiler\comphook.pas"/>
-        <UnitName Value="comphook"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\cutils.pas"/>
+        <UnitName Value="cutils"/>
       </Item6>
       <Item7>
-        <Filename Value="..\compiler\compiler.pas"/>
-        <UnitName Value="compiler"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\finput.pas"/>
+        <UnitName Value="finput"/>
       </Item7>
       <Item8>
-        <Filename Value="..\compiler\cutils.pas"/>
-        <UnitName Value="cutils"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\fpcdefs.inc"/>
+        <Type Value="Include"/>
       </Item8>
       <Item9>
-        <Filename Value="..\compiler\finput.pas"/>
-        <UnitName Value="finput"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\fpcp.pas"/>
+        <UnitName Value="fpcp"/>
       </Item9>
       <Item10>
-        <Filename Value="..\compiler\fpccrc.pas"/>
-        <UnitName Value="fpccrc"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\fppu.pas"/>
+        <UnitName Value="fppu"/>
       </Item10>
       <Item11>
-        <Filename Value="..\compiler\fpcdefs.inc"/>
-        <Type Value="Include"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\globals.pas"/>
+        <UnitName Value="globals"/>
       </Item11>
       <Item12>
-        <Filename Value="..\compiler\fpcp.pas"/>
-        <UnitName Value="fpcp"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\globtype.pas"/>
+        <UnitName Value="globtype"/>
       </Item12>
       <Item13>
-        <Filename Value="..\compiler\fppu.pas"/>
-        <UnitName Value="fppu"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\link.pas"/>
+        <UnitName Value="link"/>
       </Item13>
       <Item14>
-        <Filename Value="..\compiler\globals.pas"/>
-        <UnitName Value="globals"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\ncal.pas"/>
+        <UnitName Value="ncal"/>
       </Item14>
       <Item15>
-        <Filename Value="..\compiler\globtype.pas"/>
-        <UnitName Value="globtype"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\options.pas"/>
+        <UnitName Value="options"/>
       </Item15>
       <Item16>
-        <Filename Value="..\Compiler\link.pas"/>
-        <UnitName Value="link"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\optutils.pas"/>
+        <UnitName Value="optutils"/>
       </Item16>
       <Item17>
-        <Filename Value="..\Compiler\ncal.pas"/>
-        <UnitName Value="ncal"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\x86\aasmcpu.pas"/>
+        <UnitName Value="aasmcpu"/>
       </Item17>
       <Item18>
-        <Filename Value="..\compiler\options.pas"/>
-        <UnitName Value="options"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\x86\cpubase.pas"/>
+        <UnitName Value="cpubase"/>
       </Item18>
       <Item19>
-        <Filename Value="..\Compiler\optutils.pas"/>
-        <UnitName Value="optutils"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\cgbase.pas"/>
+        <UnitName Value="cgbase"/>
       </Item19>
       <Item20>
-        <Filename Value="..\Compiler\x86\aasmcpu.pas"/>
-        <UnitName Value="aasmcpu"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\fpchash.pas"/>
+        <UnitName Value="fpchash"/>
       </Item20>
-      <Item21>
-        <Filename Value="..\compiler\x86\cpubase.pas"/>
-        <UnitName Value="cpubase"/>
-      </Item21>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>
