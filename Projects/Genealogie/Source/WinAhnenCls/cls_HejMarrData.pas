@@ -85,7 +85,7 @@ public
   function ToPasStruct:String;
   function PlaceCount:integer;
   function SourceCount:integer;
-  function GetDateData(idx: TEnumHejMarrDatafields): string;
+  function GetDateData(idx: TEnumHejMarrDatafields;dtOnly:boolean=false): string;
   Procedure Clear;
   Procedure ReadFromStream(const st:TStream);
   Procedure WriteToStream(const st:TStream);
@@ -141,7 +141,7 @@ public
  public
     procedure SetData(Marr: integer; idx: TEnumHejMarrDatafields; AValue: variant
       );
-    function GetDateData(Marr: integer; idx: TEnumHejMarrDatafields): string;
+    function GetDateData(Marr: integer; idx: TEnumHejMarrDatafields;dtOnly:boolean=false): string;
     Procedure SetDateData(Marr: integer; idx: TEnumHejMarrDatafields; aValue:String);
     PRocedure ReplacePerson(aInd,aInd2:integer);
     Property Marriage[index:integer]:THejMarrData read GetMarriage write SetMarriage;
@@ -215,12 +215,12 @@ begin
     FMarrArray[Marr].Data[idx] := AValue;
 end;
 
-function TClsHejMarriages.GetDateData(Marr: integer; idx: TEnumHejMarrDatafields
-  ): string;
+function TClsHejMarriages.GetDateData(Marr: integer;
+  idx: TEnumHejMarrDatafields; dtOnly: boolean): string;
 begin
   if Marr = -1 then
     Marr := FActIndex;
-  result := FMarrArray[marr].GetDateData(idx);
+  result := FMarrArray[marr].GetDateData(idx,dtOnly);
 end;
 
 procedure TClsHejMarriages.SetDateData(Marr: integer;
@@ -517,11 +517,12 @@ begin
        result := result+ 1;
 end;
 
-function THejMarrData.GetDateData(idx: TEnumHejMarrDatafields): string;
+function THejMarrData.GetDateData(idx: TEnumHejMarrDatafields; dtOnly: boolean
+  ): string;
 begin
   result := HejDate2DateStr(data[idx],
   Data[TEnumHejMarrDatafields(ord(idx)+1)],
-  Data[TEnumHejMarrDatafields(ord(idx)+2)]);
+  Data[TEnumHejMarrDatafields(ord(idx)+2)],dtOnly);
 end;
 
 
