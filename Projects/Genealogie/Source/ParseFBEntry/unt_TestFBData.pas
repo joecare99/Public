@@ -219,7 +219,7 @@ const
         (eType: 'ParserIndiDate'; Data: '7.6. 1827'; Ref: 'I2421C2'; SubType: 4),
         (eType: 'ParserIndiPlace'; Data: 'Meißenheim'; Ref: 'I2421C2'; SubType: 4),
         //{ETYPE = 'ParserError!', DATA = 'Child entry not ended wit###(gdb unparsed remainder:...)###', REF = '2421', SUBTYPE = 9}
-        (eType: 'ParserError!'; Data: 'Child entry not ended with .'; Ref: '2421'; SubType: 9),
+        (eType: 'ParserError!'; Data: 'Child (2) entry not ended with .'; Ref: '2421'; SubType: 9),
         (eType: 'ParserIndiName'; Data: 'Theobald Rosewich'; Ref: 'I2421C3'; SubType: 0),
         {40}(eType: 'ParserFamilyIndiv'; Data: 'I2421C3'; Ref: '2421'; SubType: 5),
         (eType: 'ParserIndiData'; Data: 'M'; Ref: 'I2421C3'; SubType: 6),

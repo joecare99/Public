@@ -1,0 +1,6 @@
+{"version":1,"strings":[
+{"hash":122760100,"name":"tfragenevent.pnlleft.caption","sourcebytes":[112,110,108,76,101,102,116],"value":"pnlLeft"},
+{"hash":314746,"name":"tfragenevent.lblevent.caption","sourcebytes":[69,118,116,58],"value":"Evt:"},
+{"hash":10652932,"name":"tfragenevent.pnlclient.caption","sourcebytes":[112,110,108,67,108,105,101,110,116],"value":"pnlClient"},
+{"hash":196651205,"name":"tfragenevent.edtdate.text","sourcebytes":[101,100,116,68,97,116,101],"value":"edtDate"}
+]}

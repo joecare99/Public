@@ -312,7 +312,6 @@ end;
 
 procedure TTestGedComFile.CreateNewHeader(Filename: string);
 var
-    lGedObj1: TGedComObj;
     lGedObj0: TGedComObj;
 begin
     FGedComFile.Clear;
