@@ -229,7 +229,7 @@ end;
 constructor TfraPictureList.Create(TheOwner: TComponent);
 begin
   inherited Create(TheOwner);
-  lstPictures.Mask:='*.jpg *.jpeg *.png *.bmp *.gif';
+  lstPictures.Mask:='*.jpg;*.jpeg;*.png;*.bmp;*.gif';
 end;
 
 destructor TfraPictureList.Destroy;

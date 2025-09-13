@@ -1,6 +1,7 @@
 unit Cls_GedComExt;
 
 {$mode objfpc}{$H+}
+ {$WARN 6058 off : Call to subroutine "$1" marked as inline is not inlined}
 
 interface
 
@@ -19,6 +20,19 @@ type
 
     TGedSource = class(TGedMulti, IGenData)
         function GetObject: TObject;
+        class function AssNodeType: string; override;
+        class function HandlesNodeType(aType: string): boolean; override;
+    end;
+
+    { TGedNote }
+
+    TGedNote = class(TGedComDefault, IGenData)
+    private
+      FText: string;
+      procedure SetText(const AValue: string);
+    published
+        property Text:string read FText write SetText;
+    Public
         class function AssNodeType: string; override;
         class function HandlesNodeType(aType: string): boolean; override;
     end;
@@ -55,11 +69,13 @@ type
     private
         FDate: TGedComObj;
         FPlace: TGedPlace;
+        FNote: TGedNote;
         FSource: TGedSource;
         FEventType: TenumEventType;
         function GetDate: string;
         function GetEventType: TenumEventType;
         function GetPlace: string; overload;
+        function GetNote: string; overload;
         procedure SetDate(AValue: string);
         procedure SetEventType(AValue: TenumEventType);
     protected
@@ -68,6 +84,8 @@ type
         procedure SetPlace(AValue: TGedPlace); overload;
         procedure SetPlace(AValue: string); overload;
         procedure SetPlace(AValue: IGenFact); overload;
+        procedure SetNote(AValue: TGedNote); overload;
+        procedure SetNote(AValue: string); overload;
         procedure SetSource(AValue: TGedSource); overload;
         procedure SetSource(AValue: IGenData); overload;
         procedure SetNodeType(AValue: string); override;
@@ -76,6 +94,8 @@ type
         property Date: string read GetDate write SetDate;
         property Place: TGedPlace read FPlace write SetPlace;
         property PlaceName: string read GetPlace write SetPlace;
+        property Note: TGedNote read FNote write SetNote;
+        property NoteText: string read GetNote write SetNote;
         property Source: TGedSource read FSource write SetSource;
         property EventType: TenumEventType read GetEventType write SetEventType;
     public
@@ -186,7 +206,7 @@ type
         FMother: TGedIndividual;
         FName: TIndName;
         FRefNr: TGedComObj;
-        FFamSrchID:TGedComObj;
+//        FFamSrchID:TGedComObj;
         FReligion: TGedEvent;
         FSex: TGedEvent;
         FResidence: TGedEvent;
@@ -502,6 +522,8 @@ const
     CLinkFamChild = 'FAMC';
     CLinkAssosiation = 'ASSO';
 
+    CNote ='NOTE';
+
     CLastChange='CHAN';
 
     CTagToNatur: array[0..20] of string =
@@ -513,7 +535,7 @@ const
         CEventDivource, 'divorced', 'Divorce',
         CEventConfirm, 'confirmed', 'Confirmation');
 
-    CEventTag:array[0..21] of TGedDefRec =
+    CEventTag:array[0..24] of TGedDefRec =
         ((E:evt_ID;T:CFactRefNr;N:'ID'),
          (E:evt_Birth;T:CEventBirth;N:'Geboren:'),
          (E:evt_Baptism;T:CEventBaptism;N:'Getauft:'),
@@ -533,8 +555,11 @@ const
          (E:evt_Retirement;T:CEventRetrement;N:'Ruhestand:'),
          (E:evt_LastWill;T:CEventLastWill;N:'Testament:'),
          (E:evt_Occupation;T:CFactOccupation;N:'Beruf:'),
+         (E:evt_Description;T:CFactDescription;N:'Phys.Beschr.:'),
          (E:evt_Residence;T:CFactResidence;N:'Wohnhaft:'),
          (E:evt_Property;T:CFactProperty;N:'Besitz:'),
+         (E:evt_Religion;T:CFactReligion;N:'Religion:'),
+         (E:evt_Info;T:CNote;N:'Info:'),
          (E:evt_LastChange;T:CLastChange;N:'letzte Änderung:'));
 
 function TagToNatur(aTag: string; kind: integer = 0): string;
@@ -651,6 +676,24 @@ begin
     for i := 0 to high(CTagToNatur) div 3 do
         if atag = CTagToNatur[i * 3] then
             exit(CTagToNatur[i * 3 + 1 + kind]);
+end;
+
+{ TGedNote }
+
+procedure TGedNote.SetText(const AValue: string);
+begin
+  if FText=AValue then Exit;
+  FText:=AValue;
+end;
+
+class function TGedNote.AssNodeType: string;
+begin
+  Result:=CNote;
+end;
+
+class function TGedNote.HandlesNodeType(aType: string): boolean;
+begin
+  Result:=aType = CNote;
 end;
 
 { TGedSource }
@@ -1395,6 +1438,14 @@ begin
         Result := '';
 end;
 
+function TGedEvent.GetNote: string;
+begin
+    if assigned(FNote) then
+        Result := FNote.Text
+    else
+        Result := '';
+end;
+
 procedure TGedEvent.SetPlace(AValue: TGedPlace);
 begin
     if FPlace = AValue then
@@ -1413,6 +1464,24 @@ end;
 procedure TGedEvent.SetPlace(AValue: IGenFact);
 begin
   SetShortcutChild(Tgedplace(AValue.Self),Tgedcomobj(FPlace),CPlace);
+end;
+
+procedure TGedEvent.SetNote(AValue: TGedNote);
+begin
+    if FNote = AValue then
+        Exit;
+    FNote := AValue;
+end;
+
+procedure TGedEvent.SetNote(AValue: string);
+begin
+    if assigned(FNote) then
+        FNote.text := AValue
+    else
+        begin
+           FNote:= TgedNote(Child[CNote]);
+           FNote.Text := AValue;
+        end;
 end;
 
 procedure TGedEvent.SetSource(AValue: TGedSource);
@@ -1481,10 +1550,15 @@ begin
     Result := (atype = CEventBirth) or (atype = CEventBaptism) or
         (atype = CEventDeath) or (atype = CEventBurial) or
         (atype = CEventMarriage) or (atype = CEventConfirm) or
+
         (atype = CFactOccupation) or (atype = CFactSex) or
         (atype = CFactReligion) or (aType = CFactResidence) or
+        (atype = CFactDescription) or (aType = CFactProperty)or
+        (atype = CFactFsID)  or
+
         (atype = CEventEmigration) or (aType = CEventDivource) or
-        (atype = CEventLastWill) or (aType = CLastChange) ;
+        (atype = CEventLastWill) or (aType = CLastChange) or
+        (atype = CEventEducation) or (aType = CEventRetrement) ;
 end;
 
 { TGedIndividual }

@@ -17,8 +17,8 @@ uses
 {$ELSE}
   LCLIntf, LCLType, JPEGLib, FileUtil,
 {$ENDIF}
-    SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-    ExtCtrls, StdCtrls, LabyU3D, Fra_WindRose, ExtDlgs, unt_Point3d;
+    SysUtils, Classes, Graphics, Controls, Forms, Dialogs, ActnList, Buttons,
+    ExtCtrls, StdActns, StdCtrls, Menus, LabyU3D, Fra_WindRose, ExtDlgs, unt_Point3d;
 
 type
 

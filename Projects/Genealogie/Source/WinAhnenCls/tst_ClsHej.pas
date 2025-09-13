@@ -66,12 +66,25 @@ type
         procedure TestGetDataMarr;
         procedure TestGetDataRedir;
         procedure TestGetMetaData;
+        procedure TestMetaDataField;
+        procedure TestMetaDataField2;
     end;
 
+    { TTestClsHejBase }
+
+    TTestClsHejBase = class(TTestCase)
+    private
+    protected
+        procedure SetUp; override;
+        procedure TearDown; override;
+    published
+        procedure TestHejDate2DateStr;
+        procedure TestDateStr2HeyDate;
+    end;
 
 implementation
 
-uses Forms, frm_ConnectDB,unt_IndTestData,unt_MarrTestData,unt_PlaceTestData,unt_SourceTestData, Controls, variants;
+uses Forms, frm_ConnectDB,cls_HejBase,unt_IndTestData,unt_MarrTestData,unt_PlaceTestData,unt_SourceTestData, Controls, variants;
 
 {$if FPC_FULLVERSION = 30200 }
     {$WARN 6058 OFF}
@@ -123,6 +136,47 @@ end;
 function GetVendorName: string;
 begin
     Result := 'JC-Soft';
+end;
+
+{ TTestClsHejBase }
+
+procedure TTestClsHejBase.SetUp;
+begin
+end;
+
+procedure TTestClsHejBase.TearDown;
+begin
+end;
+
+procedure TTestClsHejBase.TestHejDate2DateStr;
+
+type TTestRec=record
+        ExpResult,
+        acDay,acMonth,acYear:String;
+        dtOnly:boolean;
+      end;
+
+const cTestData:array[0..8] of TTestrec=
+    ((ExpResult:'';acDay:'';acMonth:'';acYear:'';dtOnly:false),
+     (ExpResult:'';acDay:'01';acMonth:'01';acYear:'01';dtOnly:false),
+     (ExpResult:'01.01.02';acDay:'01';acMonth:'01';acYear:'02';dtOnly:false),
+     (ExpResult:'21.01.1971';acDay:'21';acMonth:'01';acYear:'1971';dtOnly:false),
+     (ExpResult:'vo 01.01.1971';acDay:'vo 01';acMonth:'01';acYear:'1971';dtOnly:false),
+     (ExpResult:'03.06.1971';acDay:'vo 03';acMonth:'06';acYear:'1971';dtOnly:true),
+     (ExpResult:'vo 01.02.1971';acDay:'vo';acMonth:'02';acYear:'1971';dtOnly:false),
+     (ExpResult:'01.06.1971';acDay:'vo';acMonth:'06';acYear:'1971';dtOnly:true),
+     (ExpResult:'05.01.2000';acDay:'05';acMonth:'Mr';acYear:'2000';dtOnly:false));
+var
+  dt: TTestRec;
+
+begin
+  for dt in cTestData do
+    CheckEquals(dt.ExpResult,HejDate2DateStr(dt.acDay,dt.acMonth,dt.acYear,dt.dtOnly),'HejDate2DateStr('+dt.acDay+','+dt.acMonth+','+dt.acYear+','+BoolToStr(dt.dtOnly)+')');
+end;
+
+procedure TTestClsHejBase.TestDateStr2HeyDate;
+begin
+
 end;
 
 procedure TTestClsHej.CreateTestdata(Tested: boolean);
@@ -451,9 +505,9 @@ begin
     Check(FileExists(FDataDir + DirectorySeparator + 'Care.hej'), 'Datei existiert');
     lStr := TFileStream.Create(FDataDir + DirectorySeparator + 'Care.hej', fmOpenRead);
       try
-        CheckEquals(1725, lStr.Size, 'StreamSize is 1725');
+        CheckEquals(1710, lStr.Size, 'StreamSize is 1710');
         FHejClass.ReadFromStream(lStr);
-        CheckEquals(1725, lStr.Position, 'Streamposition is 1725');
+        CheckEquals(1710, lStr.Position, 'Streamposition is 1710');
 
       finally
         FreeAndNil(lStr)
@@ -516,7 +570,7 @@ begin
     Check(FileExists(FDataDir + DirectorySeparator + 'Care.hej'), 'Datei existiert');
     lStr := TFileStream.Create(FDataDir + DirectorySeparator + 'Care.hej', fmOpenRead);
       try
-        CheckEquals(1725, lStr.Size, 'StreamSize is 1725');
+        CheckEquals(1710, lStr.Size, 'StreamSize is 1710');
         FHejClass.ReadfromStream(lStr);
 
       finally
@@ -529,7 +583,7 @@ begin
         fmCreate + fmOpenWrite);
       try
         FHejClass.WriteToStream(lStr);
-        CheckEquals(1725, lStr.Size, 'StreamSize is 1725');
+        CheckEquals(1710, lStr.Size, 'StreamSize is 1710');
       finally
         FreeAndNil(lStr);
       end;
@@ -958,6 +1012,97 @@ begin
 
 end;
 
+procedure TTestClsHej.TestMetaDataField;
+begin
+    CreateTestdata(False);
+    FHejClass.First;
+    FHejClass.Next;
+    CheckEquals('Computerland',FHejClass.iData[-1,hind_Residence],'Residence Data');
+    CheckEquals(1,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+    FHejClass.iMetaData[0,-1,hind_Residence,0] := 'Hauptstr. 20';
+    CheckEquals('Hauptstr. 20',FHejClass.iData[-1,hind_Residence],'Residence Data');
+    CheckEquals(1,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+    FHejClass.iMetaData[-1,-1,hind_Residence,1] := '1920';
+    CheckEquals('1920: Hauptstr. 20',FHejClass.iData[-1,hind_Residence],'Residence Data');
+    CheckEquals(1,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+    FHejClass.iMetaData[-1,-1,hind_Residence,2] := 'Sulzfeld';
+    CheckEquals('1920: Hauptstr. 20 in Sulzfeld',FHejClass.iData[-1,hind_Residence],'Residence Data');
+    CheckEquals(1,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+    FHejClass.iMetaData[-1,-1,hind_Residence,1] := '1930';
+    CheckEquals('1920: Hauptstr. 20 in Sulzfeld / 1930: ',FHejClass.iData[-1,hind_Residence],'Residence Data');
+    CheckEquals(2,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+    FHejClass.iMetaData[-1,-1,hind_Residence,2] := 'Sulzfeld';
+    CheckEquals('1920: Hauptstr. 20 in Sulzfeld / 1930:  in Sulzfeld',FHejClass.iData[-1,hind_Residence],'Residence Data');
+    CheckEquals(2,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+    FHejClass.iMetaData[-1,-1,hind_Residence,0] := 'Hauptstr. 50';
+    CheckEquals('1920: Hauptstr. 20 in Sulzfeld / 1930: Hauptstr. 50 in Sulzfeld',FHejClass.iData[-1,hind_Residence],'Residence Data');
+    CheckEquals(2,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+    FHejClass.iMetaData[-1,-1,hind_Residence,0] := 'im Altersheim';
+    CheckEquals('1920: Hauptstr. 20 in Sulzfeld / 1930: Hauptstr. 50 in Sulzfeld / im Altersheim',FHejClass.iData[-1,hind_Residence],'Residence Data');
+    CheckEquals(3,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+end;
+
+procedure TTestClsHej.TestMetaDataField2;
+begin
+    CreateTestdata(False);
+    FHejClass.First;
+    FHejClass.Next;
+    CheckEquals('Computerland',FHejClass.iData[-1,hind_Residence],'Residence Data');
+    CheckEquals(1,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+    CheckEquals('',FHejClass.iMetaData[0,-1,hind_Residence,2],'Residence Data');
+    CheckEquals('Computerland',FHejClass.iMetaData[0,-1,hind_Residence,0],'Residence Data');
+    CheckEquals('',FHejClass.iMetaData[0,-1,hind_Residence,1],'Residence Data');
+
+    FHejClass.iData[-1,hind_Residence]:='Hauptstr. 20';
+    CheckEquals('Hauptstr. 20',FHejClass.iMetaData[0,-1,hind_Residence,0],'Residence Data');
+    CheckEquals('',FHejClass.iMetaData[0,-1,hind_Residence,2],'Residence Data');
+    CheckEquals('',FHejClass.iMetaData[0,-1,hind_Residence,1],'Residence Data');
+    CheckEquals(1,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+
+    FHejClass.iData[-1,hind_Residence]:='1920:';
+    CheckEquals('',FHejClass.iMetaData[0,-1,hind_Residence,0],'Residence Data');
+    CheckEquals('1920',FHejClass.iMetaData[0,-1,hind_Residence,1],'Residence Data');
+    CheckEquals('',FHejClass.iMetaData[0,-1,hind_Residence,2],'Residence Data');
+    CheckEquals(1,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+
+    FHejClass.iData[-1,hind_Residence]:='in Stettin';
+    CheckEquals('',FHejClass.iMetaData[0,-1,hind_Residence,0],'Residence Data');
+    CheckEquals('',FHejClass.iMetaData[0,-1,hind_Residence,1],'Residence Data');
+    CheckEquals('Stettin',FHejClass.iMetaData[0,-1,hind_Residence,2],'Residence Data');
+    CheckEquals(1,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+
+    FHejClass.iData[-1,hind_Residence]:='1920: Hauptstr. 20';
+    CheckEquals('Hauptstr. 20',FHejClass.iMetaData[0,-1,hind_Residence,0],'Residence Data');
+    CheckEquals('1920',FHejClass.iMetaData[0,-1,hind_Residence,1],'Residence Data');
+    CheckEquals('',FHejClass.iMetaData[0,-1,hind_Residence,2],'Residence Data');
+    CheckEquals(1,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+
+    FHejClass.iData[-1,hind_Residence]:='1920: Hauptstr. 20 in Sulzfeld';
+    CheckEquals('Hauptstr. 20',FHejClass.iMetaData[0,-1,hind_Residence,0],'Residence Data');
+    CheckEquals('1920',FHejClass.iMetaData[0,-1,hind_Residence,1],'Residence Data');
+    CheckEquals('Sulzfeld',FHejClass.iMetaData[0,-1,hind_Residence,2],'Residence Data');
+    CheckEquals(1,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+
+    FHejClass.iData[-1,hind_Residence]:='1920: Hauptstr. 20 in Sulzfeld / 1930: ';
+    CheckEquals('',FHejClass.iMetaData[-1,-1,hind_Residence,0],'Residence Data');
+    CheckEquals('1930',FHejClass.iMetaData[-1,-1,hind_Residence,1],'Residence Data');
+    CheckEquals('',FHejClass.iMetaData[-1,-1,hind_Residence,2],'Residence Data');
+    CheckEquals(2,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+
+    FHejClass.iData[-1,hind_Residence]:='1920: Hauptstr. 20 in Sulzfeld / 1930:  in Stettin';
+    CheckEquals('',FHejClass.iMetaData[-1,-1,hind_Residence,0],'Residence Data');
+    CheckEquals('1930',FHejClass.iMetaData[-1,-1,hind_Residence,1],'Residence Data');
+    CheckEquals('Stettin',FHejClass.iMetaData[-1,-1,hind_Residence,2],'Residence Data');
+    CheckEquals(2,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+
+    FHejClass.iData[-1,hind_Residence]:='1920: Hauptstr. 20 in Sulzfeld / 1930: Hauptstr. 50 in Stettin';
+    CheckEquals('Hauptstr. 50',FHejClass.iMetaData[-1,-1,hind_Residence,0],'Residence Data');
+    CheckEquals('1930',FHejClass.iMetaData[-1,-1,hind_Residence,1],'Residence Data');
+    CheckEquals('Stettin',FHejClass.iMetaData[-1,-1,hind_Residence,2],'Residence Data');
+    CheckEquals(2,FHejClass.GetiMetaFieldCount(-1,hind_Residence),'FieldCount of Residence');
+
+end;
+
 { TTestClsHejWithDB }
 
 procedure TTestClsHejWithDB.SetUp;
@@ -1222,8 +1367,8 @@ begin
     CheckEquals('Be', FHejIndData.Religion, 'Religion is Be');
     CheckEquals('j', FHejIndData.Living, 'Living is j');
     CheckEquals('Joker', FHejIndData.CallName, 'Callname is Joker');
-    CheckEquals('I0001', FHejIndData.Index, 'Living is j');
-    CheckEquals('JaySee', FHejIndData.AKA, 'Callname is Joker');
+    CheckEquals('I0001', FHejIndData.Index, 'Index is I0001');
+    CheckEquals('JaySee', FHejIndData.AKA, 'AKA is JaySee');
 end;
 
 
@@ -1231,6 +1376,7 @@ end;
 
 initialization
 
+    RegisterTest(TTestClsHejBase);
     RegisterTest(TTestClsHej);
     RegisterTest(TTestClsHejWithDB);
 end.
