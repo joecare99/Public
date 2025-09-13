@@ -58,6 +58,9 @@ var
 
 begin
     FOdfTextDocument.Clear;
+
+    FOdfTextDocument.AddTOC('Inhalt',3);
+
     FOdfTextDocument.AddHeadline(1).AppendText('Demonstration von fpOdf');
     FOdfTextDocument.AddHeadline(2).AppendText('Überschriften');
     for i := 3 to 8 do
@@ -67,6 +70,7 @@ begin
     lpara.AddSpan('Hello', [fsBold]);
     lpara.AppendOdfElement(oetTextLineBreak);
     lpara.AddSpan('World', [fsItalic]);
+//    lpara.AddGraphic(
     lPara := FOdfTextDocument.AddParagraph(cStyleName);
     lpara.AddSpan('Hello', [fsUnderline]);
     lpara.AppendOdfElement(oetTextLineBreak);
@@ -105,13 +109,22 @@ begin
 
     FOdfTextDocument.AddHeadline(2).AppendText('Schriftarten');
     lFirstChar := '!';
+    lPara := FOdfTextDocument.AddParagraph(cStyleName);
+    for lFont in Screen.Fonts do
+            if copy(lfont, 1, 1) <> lFirstChar then
+              begin
+                lPara.AddLink('[' + copy(lfont, 1, 1)+']', [], 'FS' + copy(lfont, 1, 1));
+                lFirstChar := copy(lfont, 1, 1);
+              end;
+
+    lFirstChar := '!';
     aFont := TFont.Create;
       try
         for lFont in Screen.Fonts do
           begin
             if copy(lfont, 1, 1) <> lFirstChar then
               begin
-                FOdfTextDocument.AddHeadline(4).AppendText(copy(lfont, 1, 1));
+                TOdfParagraph(FOdfTextDocument.AddHeadline(3)).AddBookmark(copy(lfont, 1, 1), [], 'FS' + copy(lfont, 1, 1));
                 lFirstChar := copy(lfont, 1, 1);
               end;
             lPara := FOdfTextDocument.AddParagraph(cStyleName);
@@ -125,6 +138,19 @@ begin
       finally
         FreeAndNil(aFont)
       end;
+
+    FOdfTextDocument.AddHeadline(2).AppendText('Langer Absatz');
+    lPara := FOdfTextDocument.AddParagraph(cStyleName);
+    lPara.AppendText('Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '+
+    'sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam '+
+    'erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea '+
+    'rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum '+
+    'dolor sit amet. Lorem ipsum dolor sit amet, consetetur sadipscing elitr, '+
+    'sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam '+
+    'erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea '+
+    'rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum '+
+    'dolor sit amet. (ENDE)');
+
     FOdfTextDocument.AddHeadline(2).AppendText('Schriftfarben');
     lText := 'Bringt mehr Farben ins Leben, denn Farben machen das Leben bunt, und streicheln das Gemüt.';
     lPara := FOdfTextDocument.AddParagraph(cStyleName);

@@ -1,0 +1,15 @@
+{"version":1,"strings":[
+{"hash":240182846,"name":"tfrmgedcom2odfmain.caption","sourcebytes":[102,114,109,71,101,100,67,111,109,50,79,100,102,77,97,105,110],"value":"frmGedCom2OdfMain"},
+{"hash":12558,"name":"tfrmgedcom2odfmain.btnbrowsefile.caption","sourcebytes":[46,46,46],"value":"..."},
+{"hash":4447461,"name":"tfrmgedcom2odfmain.cbxfilename.text","sourcebytes":[99,98,120,70,105,108,101,110,97,109,101],"value":"cbxFilename"},
+{"hash":353982,"name":"tfrmgedcom2odfmain.btnopenfile.caption","sourcebytes":[79,112,101,110],"value":"Open"},
+{"hash":366789,"name":"tfrmgedcom2odfmain.btnfilesaveas.caption","sourcebytes":[83,97,118,101],"value":"Save"},
+{"hash":122760100,"name":"tfrmgedcom2odfmain.pnlleft.caption","sourcebytes":[112,110,108,76,101,102,116],"value":"pnlLeft"},
+{"hash":161154387,"name":"tfrmgedcom2odfmain.lblstatistics.caption","sourcebytes":[108,98,108,83,116,97,116,105,115,116,105,99,115],"value":"lblStatistics"},
+{"hash":144964886,"name":"tfrmgedcom2odfmain.btncreateodf.caption","sourcebytes":[67,114,101,97,116,101,32,79,100,102],"value":"Create Odf"},
+{"hash":234436040,"name":"tfrmgedcom2odfmain.btnautoestbirth.caption","sourcebytes":[69,115,116,105,109,97,116,101,32,66,105,114,116,104],"value":"Estimate Birth"},
+{"hash":16190,"name":"tfrmgedcom2odfmain.lblestbirthresult.caption","sourcebytes":[60,48,62],"value":"<0>"},
+{"hash":16190,"name":"tfrmgedcom2odfmain.lblsetnameresult.caption","sourcebytes":[60,48,62],"value":"<0>"},
+{"hash":207963045,"name":"tfrmgedcom2odfmain.btnautosetname.caption","sourcebytes":[83,101,116,32,78,97,109,101],"value":"Set Name"},
+{"hash":4860802,"name":"tfrmgedcom2odfmain.btnclearlists.caption","sourcebytes":[67,108,101,97,114],"value":"Clear"}
+]}

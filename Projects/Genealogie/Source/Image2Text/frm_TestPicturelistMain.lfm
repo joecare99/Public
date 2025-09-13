@@ -1,44 +1,44 @@
 object FrmTestPictureListMain: TFrmTestPictureListMain
   Left = 482
-  Height = 825
+  Height = 1031
   Top = 250
-  Width = 872
+  Width = 1090
   Caption = 'Test PictureList'
-  ClientHeight = 825
-  ClientWidth = 872
+  ClientHeight = 1031
+  ClientWidth = 1090
+  DesignTimePPI = 120
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   object pnlBottom: TPanel
     Left = 0
-    Height = 50
-    Top = 752
-    Width = 872
+    Height = 62
+    Top = 940
+    Width = 1090
     Align = alBottom
-    ClientHeight = 50
-    ClientWidth = 872
+    ClientHeight = 62
+    ClientWidth = 1090
     ParentFont = False
     TabOrder = 0
     object lblInfo: TLabel
-      Left = 12
+      Left = 15
       Height = 1
-      Top = 8
+      Top = 10
       Width = 1
-      ParentColor = False
     end
   end
   object StatusBar1: TStatusBar
     Left = 0
-    Height = 23
-    Top = 802
-    Width = 872
+    Height = 29
+    Top = 1002
+    Width = 1090
     Panels = <>
     ParentFont = False
   end
   object ShellTreeView1: TShellTreeView
     Left = 0
-    Height = 702
-    Top = 50
-    Width = 245
+    Height = 878
+    Top = 62
+    Width = 306
     Align = alLeft
     FileSortType = fstNone
     ParentFont = False
@@ -48,86 +48,96 @@ object FrmTestPictureListMain: TFrmTestPictureListMain
   end
   object Panel1: TPanel
     Left = 0
-    Height = 50
+    Height = 62
     Top = 0
-    Width = 872
+    Width = 1090
     Align = alTop
     Caption = 'Panel1'
     ParentFont = False
     TabOrder = 3
   end
   object Panel2: TPanel
-    Left = 245
-    Height = 702
-    Top = 50
-    Width = 293
+    Left = 306
+    Height = 878
+    Top = 62
+    Width = 366
     Align = alLeft
     Caption = 'Panel2'
-    ClientHeight = 702
-    ClientWidth = 293
+    ClientHeight = 878
+    ClientWidth = 366
     ParentFont = False
     TabOrder = 4
     inline fraNavIData1: TfraNavIData
       Left = 1
-      Height = 21
-      Top = 680
-      Width = 291
+      Height = 26
+      Top = 851
+      Width = 364
       Align = alBottom
-      ClientHeight = 21
-      ClientWidth = 291
-      DesignLeft = 233
-      DesignTop = 5
+      ClientHeight = 26
+      ClientWidth = 364
+      DesignLeft = 291
+      DesignTop = 6
       inherited btnFirst: TBitBtn
-        Left = 3
-        Height = 15
-        Top = 3
-        Width = 45
-        BorderSpacing.Around = 3
+        Left = 4
+        Height = 18
+        Top = 4
+        Width = 56
+        BorderSpacing.Around = 4
       end
       inherited btnPrev: TBitBtn
-        Left = 51
-        Height = 15
-        Top = 3
-        Width = 45
-        BorderSpacing.Around = 3
+        Left = 64
+        Height = 18
+        Top = 4
+        Width = 56
+        BorderSpacing.Around = 4
       end
       inherited btnNext: TBitBtn
-        Left = 195
-        Height = 15
-        Top = 3
-        Width = 45
-        BorderSpacing.Around = 3
+        Left = 244
+        Height = 18
+        Top = 4
+        Width = 56
+        BorderSpacing.Around = 4
       end
       inherited btnLast: TBitBtn
-        Left = 243
-        Height = 15
-        Top = 3
-        Width = 45
-        BorderSpacing.Around = 3
+        Left = 304
+        Height = 18
+        Top = 4
+        Width = 56
+        BorderSpacing.Around = 4
       end
       inherited edtSeekNr: TEdit
-        Left = 99
-        Height = 15
-        Top = 3
-        Width = 93
-        BorderSpacing.Around = 3
+        Left = 124
+        Height = 18
+        Top = 4
+        Width = 116
+        BorderSpacing.Around = 4
       end
     end
     inline fraPictureList1: TfraPictureList
       Left = 1
-      Height = 679
+      Height = 850
       Top = 1
-      Width = 291
+      Width = 364
       Align = alClient
-      ClientHeight = 679
-      ClientWidth = 291
+      ClientHeight = 850
+      ClientWidth = 364
       TabOrder = 1
-      DesignLeft = 320
-      DesignTop = 5
+      DesignLeft = 400
+      DesignTop = 6
       inherited lstPictures: TShellListView
-        Height = 679
-        Width = 291
+        Height = 850
+        Width = 364
+        MaskCaseSensitivity = mcsCaseInsensitive
       end
     end
+  end
+  object FileListBox1: TFileListBox
+    Left = 752
+    Height = 441
+    Top = 159
+    Width = 215
+    Directory = 'C:\lazarus'
+    ItemHeight = 20
+    TabOrder = 5
   end
 end

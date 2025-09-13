@@ -64,6 +64,8 @@ type
         function GetChild(idx: integer): THejIndData;
         function GetChildCount: integer;
         function GetFather: THejIndData;
+        function GetiMetaFieldData(nr, index: integer;
+          Field: TEnumHejIndDatafields; tpe: integer): variant;
         function GetIndividual(index: integer): THejIndData;
         function GetIndividualCount: integer;
         function GetMarriageData(idx: integer): THejMarrData;
@@ -80,6 +82,8 @@ type
             AValue: variant); overload;
         procedure SetData(ind, index: integer; Field: TEnumHejMarrDatafields;
             AValue: variant); overload;
+        procedure SetiMetaFieldData(nr, index: integer;
+          Field: TEnumHejIndDatafields; tpe: integer; const AValue: variant);
         procedure SetMarriage(idMarr: integer; AValue: THejMarrData); overload;
         procedure SetMarriageData(idx: integer; AValue: THejMarrData);
         procedure SetOnDataChange(AValue: TNotifyEvent);
@@ -95,6 +99,8 @@ type
             overload;
         function GetData(index: integer; Redir: TEnumHejIndRedir;
             Field: integer): variant; overload;
+        function GetiMetaFieldCount(index: integer;
+          Field: TEnumHejIndDatafields): integer;
         Procedure SetDate(index: integer; Field: TEnumHejIndDatafields;aValue:String);
         function PeekInd(index: integer): THejIndData;
         property Individual[index: integer]: THejIndData read GetIndividual;
@@ -102,6 +108,8 @@ type
         property ActualMarriage: THejMarrData read GetActualMarriage write SetActualMarriage;
         property Father: THejIndData read GetFather;
         property Mother: THejIndData read GetMother;
+        property iMetaData[nr,index: integer;Field: TEnumHejIndDatafields;tpe:integer]: variant
+            read GetiMetaFieldData write SetiMetaFieldData;
         property iData[index: integer;Field: TEnumHejIndDatafields]: variant
             read GetData write SetData;
         property mData[ind, index: integer;Field: TEnumHejMarrDatafields]: variant
@@ -175,6 +183,12 @@ const
 
 resourcestring
     rsGeburt = 'Geburt';
+    rsDeath='Gest.';
+    rsGivnname = 'Vorname';
+    rsSurname = 'Nachname';
+    rsID='ID';
+    rsSortKnDwn = '▼';
+    rsSortKnUp = '▲';
     rshIRd_Meta = 'Metadaten';   // e.G. Counts, Timeline-Data
     rshIRd_Ind = 'Person';   // Individual Data
     rshIRd_Spouse = 'Ehepartner';  // Data of Main(Last) Spouse
@@ -434,8 +448,8 @@ begin
               end;
             hInMeD_AgeOfBapt:
               begin
-                TryStrToDate(lind[0].GetDateData(hind_BirthDay), lBirth);
-                TryStrToDate(lind[0].GetDateData(hind_BaptDay), lSecond);
+                TryStrToDate(lind[0].GetDateData(hind_BirthDay,true), lBirth);
+                TryStrToDate(lind[0].GetDateData(hind_BaptDay,true), lSecond);
                 Result := YearSpan(lBirth, lSecond);
 
               end;
@@ -469,16 +483,16 @@ begin
               begin
                 if lind[0].ChildCount = 0 then
                     exit(null);
-                if not TryStrToDate(lind[0].GetDateData(hind_BirthDay), lBirth) then
+                if not TryStrToDate(lind[0].GetDateData(hind_BirthDay,true), lBirth) then
                     exit(null);
                 laDate := lBirth;
                 for i := 0 to lInd[0].ChildCount - 1 do
                   begin
-                    if TryStrToDate(FIndi.GetDateData(lInd[0].Children[i], hind_BirthDay),
+                    if TryStrToDate(FIndi.GetDateData(lInd[0].Children[i], hind_BirthDay,true),
                         lSecond) then
                         if (laDate = lBirth) or (laDate > lSecond) then
                             laDate := lSecond;
-                    if TryStrToDate(FIndi.GetDateData(lInd[0].Children[i], hind_BaptDay),
+                    if TryStrToDate(FIndi.GetDateData(lInd[0].Children[i], hind_BaptDay,true),
                         lSecond) then
                         if (laDate = lBirth) or (laDate > lSecond) then
                             laDate := lSecond;
@@ -492,16 +506,16 @@ begin
               begin
                 if lind[0].SourceCount = 0 then
                     exit(null);
-                if not TryStrToDate(lind[0].GetDateData(hind_BirthDay), lBirth) then
+                if not TryStrToDate(lind[0].GetDateData(hind_BirthDay,true), lBirth) then
                     exit(null);
                 laDate := lBirth;
                 for i := 0 to lInd[0].SpouseCount - 1 do
                   begin
-                    if TryStrToDate(fmarr.GetDateData(lInd[0].Marriages[i], hmar_MarrChrchDay),
+                    if TryStrToDate(fmarr.GetDateData(lInd[0].Marriages[i], hmar_MarrChrchDay,true),
                         lSecond) then
                         if (laDate < lSecond) then
                             laDate := lSecond;
-                    if TryStrToDate(fmarr.GetDateData(lInd[0].Marriages[i], hmar_MarrStateDay),
+                    if TryStrToDate(fmarr.GetDateData(lInd[0].Marriages[i], hmar_MarrStateDay,true),
                         lSecond) then
                         if (laDate < lSecond) then
                             laDate := lSecond;
@@ -515,16 +529,16 @@ begin
               begin
                 if lind[0].ChildCount = 0 then
                     exit(null);
-                if not TryStrToDate(lind[0].GetDateData(hind_BirthDay), lBirth) then
+                if not TryStrToDate(lind[0].GetDateData(hind_BirthDay,true), lBirth) then
                     exit(null);
                 laDate := lBirth;
                 for i := 0 to lInd[0].ChildCount - 1 do
                   begin
-                    if TryStrToDate(FIndi.GetDateData(lInd[0].Children[i], hind_BirthDay),
+                    if TryStrToDate(FIndi.GetDateData(lInd[0].Children[i], hind_BirthDay,true),
                         lSecond) then
                         if (laDate < lSecond) then
                             laDate := lSecond;
-                    if TryStrToDate(FIndi.GetDateData(lInd[0].Children[i], hind_BaptDay),
+                    if TryStrToDate(FIndi.GetDateData(lInd[0].Children[i], hind_BaptDay,true),
                         lSecond) then
                         if (laDate < lSecond) then
                             laDate := lSecond;
@@ -536,9 +550,9 @@ begin
               end;
             hInMeD_AgeOfDeath:
               begin
-                if not TryStrToDate(lind[0].GetDateData(hind_BirthDay), lBirth) then
+                if not TryStrToDate(lind[0].GetDateData(hind_BirthDay,true), lBirth) then
                     exit(null);
-                TryStrToDate(lind[0].GetDateData(hind_DeathDay), lSecond);
+                TryStrToDate(lind[0].GetDateData(hind_DeathDay,true), lSecond);
                 Result := YearsBetween(lBirth, lSecond);
               end;
             hInMeD_AgeDiffToSpouse: ;
@@ -568,6 +582,54 @@ end;
 function TClsHejGenealogy.GetFather: THejIndData;
 begin
     Result := Findi.PeekInd[FIndi.ActualInd.idFather];
+end;
+
+function TClsHejGenealogy.GetiMetaFieldData(nr, index: integer;
+  Field: TEnumHejIndDatafields; tpe: integer): variant;
+
+var lData:String;
+  ldd: TStringArray;
+  lNr, lpin: Integer;
+  lpd: SizeInt;
+begin
+  ldata:= iData[index,Field];
+  ldd:= lData.replace(' / ','/').Split('/');
+  if (nr = -1) or (nr > High(Ldd)) then
+    lNr := High(Ldd)
+  else
+    lNr := nr;
+
+      lpd := ldd[lNr].IndexOf(':');
+      lpin := ldd[lNr].LastIndexOf(' in ');
+      if (lpin = -1) and ldd[lNr].StartsWith('in ') then
+        lpin := 0
+      else if (lpin > 0) then
+        inc(lpin);
+      case tpe of
+        1: // Datum
+          result :=ldd[lNr].Substring(0,lpd);
+        0:// Data
+          if lpin<>-1 then
+            result :=trim(ldd[lNr].Substring(lpd+1,lpin-lpd-1))
+          else
+            result :=trim(ldd[lNr].Substring(lpd+1));
+
+
+        2: // Place
+          if lpin<>-1 then
+            result :=trim(ldd[lNr].Substring(lpin+2))
+          else
+            result :='';
+        else result := '';
+    end
+end;
+
+function TClsHejGenealogy.GetiMetaFieldCount(index: integer;
+  Field: TEnumHejIndDatafields): integer;
+var lData:String;
+begin
+  ldata:= iData[index,Field];
+  result:= length(lData.Split('/'));
 end;
 
 function TClsHejGenealogy.GetIndividual(index: integer): THejIndData;
@@ -657,6 +719,64 @@ begin
         ind := GetActID;
     if index < length(FIndi.PeekInd[Ind].Marriages) then
         FMarr.SetData(FIndi.PeekInd[Ind].Marriages[index], Field, AValue);
+end;
+
+procedure TClsHejGenealogy.SetiMetaFieldData(nr, index: integer;
+  Field: TEnumHejIndDatafields; tpe: integer; const AValue: variant);
+
+var lData:String;
+  ldd: TStringArray;
+  lNr, lpin: Integer;
+  lpd: SizeInt;
+
+begin
+  ldata:= iData[index,Field];
+  ldd:= lData.replace(' / ','/').Split('/');
+  if (nr = -1) or (nr > High(Ldd)) then
+    lNr := High(Ldd)
+  else
+    lNr := nr;
+
+      lpd := ldd[lNr].IndexOf(':');
+      lpin := ldd[lNr].LastIndexOf(' in ');
+      if (lpin = -1) and ldd[lNr].StartsWith('in ') then
+        lpin := 0
+      else if (lpin > 0) then
+        inc(lpin);
+      // Entscheide, ob neuer Eintrag benötigt
+      if (nr=-1)
+        and (((tpe=1) and (lpd>-1))
+           or ((tpe=2) and (lpin>-1))
+           or ((tpe=0) and (lpin>-1) and (lpin-lpd-1>2))
+           or ((tpe=0) and (lpin=-1) and (lpd+1<length(ldd[lNr]))) ) then
+           begin
+             setlength(ldd,high(ldd)+2);
+             lpin:=-1;
+             lpd:=-1;
+             inc(lNr);
+           end;
+      case tpe of
+        1: // Datum
+           ldd[lNr]:=string(AValue)+': '+ldd[lNr].Substring(lpd+1);
+        0:begin // Data
+          if (lpd=-1) and (lpin=-1) then
+             ldd[lNr]:=string(AValue)
+          else if (lpin=-1) then
+            ldd[lNr]:=ldd[lNr].Substring(0,lpd)+': '+string(AValue)
+          else if (lpd=-1) then
+            ldd[lNr]:=string(AValue)+' in '+ldd[lNr].Substring(lpin+3)
+          else
+            ldd[lNr]:=ldd[lNr].Substring(0,lpd)+': '+string(AValue)+' in '+ldd[lNr].Substring(lpin+3);
+          end;
+        2: // Place
+          if lpin<>-1 then
+            ldd[lNr]:=ldd[lNr].Substring(0,lpin+2)+string(AValue)
+          else
+            ldd[lNr]:=trim(ldd[lNr] +' in '+string(AValue));
+        else; // do nothing
+    end;
+
+   iData[index,Field] := string.Join(' / ',ldd);
 end;
 
 procedure TClsHejGenealogy.SetMarriage(idMarr: integer; AValue: THejMarrData);
