@@ -1,6 +1,7 @@
 unit cls_GenealogieHelper;
 
 {$mode delphi}
+{$WARN 6058 off : Call to subroutine "$1" marked as inline is not inlined}
 
 interface
 
@@ -62,15 +63,19 @@ end;
 
 function TGenealogyHelper.AutoEstimateBirthInd(aInd: TGedIndividual): boolean;
 
+
+
 var
-    lYear, lSpYear, lMaxYear, lMinYear: integer;
+    lYear, lSpYear, lMaxYear, lMinYear, ldYear: integer;
     lIndSex: string;
     lInds: TGedIndividual;
     lFam: TGedFamily;
     lfamLnk: TGedComObj;
+    lQDeathDate: Boolean;
 begin
     // If a Baptism exists the Birth is (right) before the Baptism.
     lYear := 0;
+    ldYear := 0;
     Result := False;
     if assigned(aInd.Baptised) and (isQualifiedDate(aind.Baptised.Date, lYear)) then
       begin
@@ -85,6 +90,8 @@ begin
         exit(True);
       end;
     lIndSex := aInd.Sex;
+    lQDeathDate:= assigned(aInd.Death) and (isQualifiedDate(aind.Death.Date, ldYear));
+
     // if a (qualified) Spouse exists the Birth is 3 Years before/after the Birth of the spouse (rouned to 5 Y)
     lSpYear := 0;
     if (aInd.SpouseCount > 0) and assigned(aInd.Spouses[0]) and
@@ -96,9 +103,12 @@ begin
             lYear := ((lSpYear + 2) div 5 - 1) * 5
         else
             lYear := ((lSpYear + 2) div 5 + 1) * 5;
-        aInd.BirthDate := 'EST ' + IntToStr(lYear);
-        aind.Lastchange := Now;
-        exit(True);
+        if (ldYear=0) or (ldYear>lYear) then
+          begin
+            aInd.BirthDate := 'EST ' + IntToStr(lYear);
+            aind.Lastchange := Now;
+            exit(True);
+          end;
       end;
     // Iterate trough Marriages and set Birth according to first marriage
     lMinYear := -1;
@@ -148,10 +158,21 @@ begin
         if lYear > 0 then
           begin
             lYear := ((lYear + 2) div 5 + 5) * 5;
-            aInd.BirthDate := 'EST ' + IntToStr(lYear);
-            aind.Lastchange := Now;
-            exit(True);
-
+            if (ldYear=0) or (ldYear>lYear) then
+              begin
+                aInd.BirthDate := 'EST ' + IntToStr(lYear);
+                aind.Lastchange := Now;
+                exit(True);
+              end
+            else
+              begin
+                if lQDeathDate then
+                   aInd.BirthDate := 'BEF ' + aind.Death.Date
+                else
+                   aInd.BirthDate := 'BEF ' + IntToStr(ldYear);
+                aind.Lastchange := Now;
+                exit(True);
+              end
           end;
       end;
     // If (only) (qualified) Parents exists the the Birts is 30 or 25 Years after the birth of the Parents
@@ -161,9 +182,21 @@ begin
         if lYear > 0 then
           begin
             lYear := ((lYear + 2) div 5 + 6) * 5;
-            aInd.BirthDate := 'EST ' + IntToStr(lYear);
-            aind.Lastchange := Now;
-            exit(True);
+            if (ldYear=0) or (ldYear>lYear) then
+              begin
+                aInd.BirthDate := 'EST ' + IntToStr(lYear);
+                aind.Lastchange := Now;
+                exit(True);
+              end
+            else
+              begin
+                if lQDeathDate then
+                   aInd.BirthDate := 'BEF ' + aind.Death.Date
+                else
+                   aInd.BirthDate := 'BEF ' + IntToStr(ldYear);
+                aind.Lastchange := Now;
+                exit(True);
+              end
           end;
       end;
 
@@ -209,7 +242,12 @@ begin
     lName := aind.NameNode;
     if lName.GivenName = '' then
       begin
-        lName.Givenname := 'NN';
+        if aInd.Sex='M' then
+          lName.Givenname := 'NNm'
+        else if aInd.Sex='F' then
+          lName.Givenname := 'NNf'
+        else
+          lName.Givenname := 'NN';
         Result := True;
       end;
     for lInds in aInd.EnumerateSpouses do
@@ -267,8 +305,13 @@ begin
         if lGedObj.InheritsFrom(TGedIndividual) then
           begin
             lName := TGedIndividual(lGedObj).Name;
-            if (lName = '') or (lName = '.') or (lName = '?') or
-                (lName = 'NN') or lName.EndsWith(' NN') or
+            if (lName = '') or
+                (lName = '.') or
+                lName.EndsWith('...') or
+                lName.EndsWith('…') or
+                (lName = '?') or
+                (lName = 'NN') or
+                lName.EndsWith(' NN') or
                 lName.EndsWith(' ?') or lName.EndsWith(' .') or
                 (TGedIndividual(lGedObj).Surname='') then
               begin

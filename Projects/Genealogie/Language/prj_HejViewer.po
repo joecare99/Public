@@ -14,8 +14,16 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 "X-Source-Language: de\n"
 
+#: cls_hejdata.rsdeath
+msgid "Gest."
+msgstr ""
+
 #: cls_hejdata.rsgeburt
 msgid "Geburt"
+msgstr ""
+
+#: cls_hejdata.rsgivnname
+msgid "Vorname"
 msgstr ""
 
 #: cls_hejdata.rshird_allchild
@@ -64,6 +72,22 @@ msgstr ""
 
 #: cls_hejdata.rshird_spouse
 msgid "Ehepartner"
+msgstr ""
+
+#: cls_hejdata.rsid
+msgid "ID"
+msgstr ""
+
+#: cls_hejdata.rssortkndwn
+msgid "▼"
+msgstr ""
+
+#: cls_hejdata.rssortknup
+msgid "▲"
+msgstr ""
+
+#: cls_hejdata.rssurname
+msgid "Nachname"
 msgstr ""
 
 #: cls_hejdatafilter.rshcct_and
@@ -136,6 +160,82 @@ msgstr ""
 msgid "<>"
 msgstr ""
 
+#: cls_hejdatafilter.rshinmed_adoptcount
+msgid "Anzahl Adoptionen"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_agedifftospouse
+msgid "Altersdiff. zu Partner"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageofbapt
+msgid "Alter bei Taufe"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageofconf
+msgid "Alter bei Konfirmation"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageofdeath
+msgid "Alter bei Tod"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageoffirstchild
+msgid "Alter bei erstem Kind"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageoffmarriage
+msgid "Alter bei e. Hochzeit"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageoflchild
+msgid "Alter bei l. Kind"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageoflmarriage
+msgid "Alter bei l. Hochzeit"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageofnextsibl
+msgid "Alter bei n. Geschw."
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_anydata
+msgid "etwas"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_anyplace
+msgid "ein Platz"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_anysource
+msgid "eine Quelle"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_childcount
+msgid "Anzahl Kinder"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_parentcount
+msgid "Anzahl Elternteile"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_placecount
+msgid "Anzahl Orte"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_siblingcount
+msgid "Anzahl Geschwister"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_sourcecount
+msgid "Anzahl Quellen"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_spousecount
+msgid "Anzahl Ehepartner"
+msgstr ""
+
 #: dm_gendata2.rscreateadoption
 msgid "CREATE TABLE `%s`.`adoptions` ( `idIndividual` INT(11) NOT NULL,`idIndividual_AdopFather` INT(11) NULL DEFAULT '0',`idIndividual_AdopMother` INT(11) NULL DEFAULT '0') COMMENT='Adoption Information of individuals' COLLATE='utf8_general_ci' ENGINE=InnoDB;"
 msgstr ""
@@ -182,6 +282,41 @@ msgstr ""
 
 #: tform1.combobox1.text
 msgid "ComboBox1"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[0].title.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[0].title.caption"
+msgid "idIndividual"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[1].title.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[1].title.caption"
+msgid "FamilyName"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[2].title.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[2].title.caption"
+msgid "GivenName"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[3].title.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[3].title.caption"
+msgid "Birth"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomclient.tblchildren.columns[0].title.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomclient.tblchildren.columns[0].title.caption"
+msgid "Name"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[0].title.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[0].title.caption"
+msgid "Name"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[1].title.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[1].title.caption"
+msgid "Hochzeit"
 msgstr ""
 
 #: tform1.fraindindex1.stringgrid1.columns[0].title.caption
@@ -992,5 +1127,18 @@ msgstr ""
 
 #: tfraindindex.speedbutton2.caption
 msgid "S"
+msgstr ""
+
+#: tfraindindex.stringgrid1.columns[0].title.caption
+msgctxt "tfraindindex.stringgrid1.columns[0].title.caption"
+msgid "Name"
+msgstr ""
+
+#: tfraindindex.stringgrid1.columns[1].title.caption
+msgid "Color"
+msgstr ""
+
+#: tfraindindex.stringgrid1.columns[2].title.caption
+msgid "Date"
 msgstr ""
 

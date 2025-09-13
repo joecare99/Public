@@ -8,6 +8,7 @@ object FrmOFBToGedComMain: TFrmOFBToGedComMain
   ClientWidth = 703
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  LCLVersion = '2.0.12.0'
   object Panel1: TPanel
     Left = 0
     Height = 39
@@ -311,6 +312,16 @@ object FrmOFBToGedComMain: TFrmOFBToGedComMain
       Width = 57
       Caption = 'reverse'
       TabOrder = 8
+    end
+    object btnParseDebug: TBitBtn
+      Left = 16
+      Height = 30
+      Top = 256
+      Width = 75
+      Caption = 'P.Debug >'
+      OnClick = btnParseDebugClick
+      ParentFont = False
+      TabOrder = 9
     end
   end
   object Panel2: TPanel

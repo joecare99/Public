@@ -100,7 +100,7 @@ type
         procedure Clear; virtual; abstract;
         destructor Destroy; override;
         constructor Create(const aID, aType: string; const {%H-}aInfo: string = ''); virtual;
-        function ToString: ansistring; override;
+        function ToString: string; override;
         function Description: string; virtual;
         function CreateChild(const aID, aType: string;
             const aInfo: string = ''): TGedComObj; virtual;
@@ -1213,7 +1213,7 @@ begin
     inherited;
     FIdx := TStringList.Create;
     Fidx.Sorted := True;
-    FEncoding := 'UTF-8';
+    FEncoding := EncodingUTF8BOM;
 end;
 
 destructor TGedComFile.Destroy;
