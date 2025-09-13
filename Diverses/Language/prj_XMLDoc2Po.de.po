@@ -14,73 +14,13 @@ msgstr ""
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
 #: frm_xmldoc2po.rsbigpaceholder
+#, object-pascal-format
 msgid "%%%d:g"
 msgstr ""
 
 #: frm_xmldoc2po.rsexcpaceholder
+#, object-pascal-format
 msgid "%%%d:s"
-msgstr ""
-
-#: tfrapofile.actfileautoload.caption
-msgid "AutoLoad"
-msgstr ""
-
-#: tfrapofile.actfileload.caption
-msgctxt "tfrapofile.actfileload.caption"
-msgid "Load"
-msgstr "Öffnen"
-
-#: tfrapofile.actfileopen.caption
-msgctxt "tfrapofile.actfileopen.caption"
-msgid "Öffnen"
-msgstr "Öffnen"
-
-#: tfrapofile.actfileopen.hint
-msgctxt "tfrapofile.actfileopen.hint"
-msgid "Öffnen"
-msgstr "Öffnen"
-
-#: tfrapofile.actfilesave.caption
-msgctxt "tfrapofile.actfilesave.caption"
-msgid "Save"
-msgstr "Sichern"
-
-#: tfrapofile.actfilesaveas.caption
-msgctxt "tfrapofile.actfilesaveas.caption"
-msgid "Sichern &als ..."
-msgstr "Sichern &als ..."
-
-#: tfrapofile.actfilesaveas.hint
-msgctxt "tfrapofile.actfilesaveas.hint"
-msgid "Sichern als"
-msgstr "Sichern als"
-
-#: tfrapofile.cbxselectlanguage.text
-msgid "Deutsch,de"
-msgstr "Deutsch,de"
-
-#: tfrapofile.edtprojectname.text
-msgid "PicPas"
-msgstr "PicPas"
-
-#: tfrapofile.tlbpofile.caption
-msgid "tlbPoFile"
-msgstr ""
-
-#: tfrapofile.toolbutton1.caption
-msgid "AL"
-msgstr "AL"
-
-#: tfrapofile.toolbutton3.caption
-msgid "Ld"
-msgstr "Ld"
-
-#: tfrapofile.toolbutton4.caption
-msgid "Sv"
-msgstr "Sv"
-
-#: tfraxmlfile.actdosomething.caption
-msgid "actDoSomething"
 msgstr ""
 
 #: tfraxmlfile.actfileload.caption
@@ -134,16 +74,20 @@ msgid "edtXmlFilename"
 msgstr ""
 
 #: tfraxmlfile.lblcompiledon.caption
+#, object-pascal-format, fuzzy
+#| msgid ""
+#| "Compiled: %s\n"
+#| "#9on:%s\n"
 msgid ""
 "Compiled: %s\n"
-"#9on:%s\n"
+"\ton:%s"
 msgstr ""
 "Compiled: %s\n"
 "#9on:%s\n"
 
 #: tfrmxml2pomain.actxmlprocesspo2x.caption
 msgid "po2X"
-msgstr "po2X"
+msgstr ""
 
 #: tfrmxml2pomain.actxmlprocessx2po.caption
 msgid "X2Po"
@@ -151,15 +95,15 @@ msgstr ""
 
 #: tfrmxml2pomain.btnprocesspo2pas.caption
 msgid "<"
-msgstr "<"
+msgstr ""
 
 #: tfrmxml2pomain.btnprocessxml2po.caption
 msgid ">"
-msgstr ">"
+msgstr ""
 
 #: tfrmxml2pomain.btnselectdir.caption
 msgid "..."
-msgstr "..."
+msgstr ""
 
 #: tfrmxml2pomain.caption
 msgid "frmXml2PoMain"
@@ -171,27 +115,23 @@ msgstr ""
 
 #: tfrmxml2pomain.edtsourcedir.text
 msgid "C:\\projekte\\Lazarus\\PicPas\\trunk\\Docs"
-msgstr "C:\\projekte\\Lazarus\\PicPas\\trunk\\Docs"
-
-#: tfrmxml2pomain.frapofile1.pnlrighttop.edtprojectname.text
-msgid "ppManual"
-msgstr "ppManual"
+msgstr ""
 
 #: unt_cdate.adate
 #, fuzzy
 #| msgid "05.06.2018"
 msgctxt "unt_cdate.adate"
-msgid "25.03.2019"
+msgid "01.06.2024"
 msgstr "05.06.2018"
 
 #: unt_cdate.cdate
 #, fuzzy
 #| msgid "05.06.2018"
 msgctxt "unt_cdate.cdate"
-msgid "25.03.2019"
+msgid "01.06.2024"
 msgstr "05.06.2018"
 
 #: unt_cdate.cname
-msgid "SILENT-PC2"
+msgid "N00145-BI"
 msgstr ""
 

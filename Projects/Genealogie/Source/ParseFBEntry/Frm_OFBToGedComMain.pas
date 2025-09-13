@@ -20,6 +20,7 @@ type
     actFileSave: TAction;
     actFileSaveAs: TFileSaveAs;
     alsXMLFile: TActionList;
+    btnParseDebug: TBitBtn;
     btnPrev: TBitBtn;
     btnFirst: TBitBtn;
     btnNext: TBitBtn;
@@ -60,6 +61,7 @@ type
     procedure actFileOpenAccept(Sender: TObject);
     procedure actFileOpenBeforeExecute(Sender: TObject);
     procedure btnExpEntryClick(Sender: TObject);
+    procedure btnParseDebugClick(Sender: TObject);
     procedure btnSaveGC1Click(Sender: TObject);
     procedure btnSaveGCClick(Sender: TObject);
     procedure btnStopParseClick(Sender: TObject);
@@ -71,6 +73,7 @@ type
   private
     FBreakParsing: Boolean;
     FDataPath: String;
+    Fdebug: Boolean;
     fParser:TFBEntryParser;
     FGedComFile : TGedComFile;
     FgedComHelper : TGedComHelper;
@@ -136,6 +139,37 @@ begin
   if Fileexists(lFilename) then
     DeleteFile(lFilename);
   fraOFBView.Lines.SaveToFile(lFilename);
+end;
+
+procedure TFrmOFBToGedComMain.btnParseDebugClick(Sender: TObject);
+var
+  i, lc: Integer;
+begin
+  Fdebug := true;
+  lc:=0;
+  fParser.DefaultPlace:= edtDefaultPlace.Text;
+
+ if fraOFBView.SelCount=1 then
+   begin
+     FHejHelper.Citation := fraOFBView.Lines;
+     fParser.Feed(fraOFBView.Data);
+     fraOFBView.next;
+   end
+ else
+   for i := 0 to fraOFBView.Count-1 do
+     if fraOFBView.Selected[i] then
+       begin
+         FHejHelper.Citation:= fraOFBView.GetLines(i);
+         fParser.Feed(FHejHelper.Citation.Text);
+         inc(lc);
+         if lc mod 10 = 0 then
+           begin
+           Label2.Caption:=inttoStr(FHejHelper.HejObj.Count);
+           Application.ProcessMessages;
+
+           end;
+       end;
+   Fdebug := false;
 end;
 
 procedure TFrmOFBToGedComMain.btnSaveGC1Click(Sender: TObject);
@@ -349,8 +383,11 @@ begin
     etCustom: ;
     etInfo: ;
     etWarning:   memo1.Append('Warning: ('+Ref+','+inttostr(aMode)+') '+aText);
-    etError:   memo1.Append('!Err: ('+Ref+','+inttostr(aMode)+') '+aText);
-    etDebug: FState := 'st ('+Ref+','+inttostr(aMode)+') '+aText;
+    etError:   memo1.Append('!PErr: ('+Ref+','+inttostr(aMode)+') '+aText);
+    etDebug: begin FState := 'st ('+Ref+','+inttostr(aMode)+') '+aText;
+         if Fdebug then
+           memo1.Append(FState);
+    end;
   end;
 end;
 
@@ -361,7 +398,7 @@ begin
     etCustom: ;
     etInfo: ;
     etWarning:   memo1.Append('Warning: ('+Ref+','+inttostr(aMode)+') '+aText);
-    etError:   memo1.Append('!Err: ('+Ref+','+inttostr(aMode)+') '+aText);
+    etError:   memo1.Append('!!Err: ('+Ref+','+inttostr(aMode)+') '+aText);
     etDebug: FState := 'st ('+Ref+','+inttostr(aMode)+') '+aText;
   end;
 end;

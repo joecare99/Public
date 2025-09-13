@@ -94,6 +94,7 @@ begin
   for lChlds in FGedComFile do
       if lChlds.inheritsfrom(TGedFamily) then
            FgenDocumentWriter.AppendFamily(lChlds as IGenFamily);
+  FGenDocumentWriter.WritePreamble;
   FGenDocumentWriter.SortAndRenumberFamiliies;
   {
   for lFams in FGenDocumentWriter.EnumerateFamilies do
@@ -106,6 +107,7 @@ begin
    FGenDocumentWriter.OccuList.SaveToFile(ChangeFileExt(lFilename,'o.txt'));
    FGenDocumentWriter.WriteIndIndex;
    FGenDocumentWriter.WriteOccIndex;
+   FGenDocumentWriter.WritePropIndex;
    FGenDocumentWriter.WritePlaceIndex;
    FGenDocumentWriter.WritePlace2Index;
   FGenDocumentWriter.SaveToSingleXml(ChangeFileExt(lFilename,'.fodt'));
@@ -122,6 +124,7 @@ begin
   for lChlds in FGedComFile do
       if lChlds.inheritsfrom(TGedFamily) then
            FgenDocumentWriter.AppendFamily(lChlds as IGenFamily);
+  FGenDocumentWriter.WritePreamble;
   FGenDocumentWriter.SortAndRenumberFamiliies;
   {
   for lFams in FGenDocumentWriter.EnumerateFamilies do
@@ -134,6 +137,7 @@ begin
    FGenDocumentWriter.OccuList.SaveToFile(ChangeFileExt(lFilename,'o.txt'));
    FGenDocumentWriter.WriteIndIndex;
    FGenDocumentWriter.WriteOccIndex;
+   FGenDocumentWriter.WritePropIndex;
    FGenDocumentWriter.WritePlaceIndex;
    FGenDocumentWriter.WritePlace2Index;
   FGenDocumentWriter.SaveToSingleXml(ChangeFileExt(lFilename,'.fodt'));
@@ -150,6 +154,7 @@ begin
   for lChlds in FGedComFile do
       if lChlds.inheritsfrom(TGedFamily) then
            FgenDocumentWriter.AppendFamily(lChlds as IGenFamily);
+  FGenDocumentWriter.WritePreamble;
   FGenDocumentWriter.SortAndRenumberFamiliies;
   {
   for lFams in FGenDocumentWriter.EnumerateFamilies do
@@ -162,6 +167,7 @@ begin
    FGenDocumentWriter.OccuList.SaveToFile(ChangeFileExt(lFilename,'o.txt'));
    FGenDocumentWriter.WriteIndIndex;
    FGenDocumentWriter.WriteOccIndex;
+   FGenDocumentWriter.WritePropIndex;
    FGenDocumentWriter.WritePlaceIndex;
    FGenDocumentWriter.WritePlace2Index;
   FGenDocumentWriter.SaveToSingleXml(ChangeFileExt(lFilename,'.fodt'));

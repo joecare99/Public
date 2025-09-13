@@ -164,6 +164,12 @@ begin
                FonError('"' + lName + '" is not a valid Name',0);
           end
         else
+        if (length(lName) > 1) and (lName[1] in ['a'..'z']) then
+          begin
+            if (lName <>'') and assigned(FonError) then
+              FonError('"' + lName + '" is not a valid Name (case)',0)
+          end
+        else
         if (lName <> '') and (copy(lName, 1, 1) <> '(') and
             (copy(lName, 1, 1) <> '"') and
             ((FGNameList.Values[lName] = '') or
