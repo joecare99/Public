@@ -8,9 +8,9 @@ unit fpc_Compiler;
 interface
 
 uses
-  browcol, cfileutl, cgbase, cgutils, cmsgs, comphook, compiler, cutils, 
-  finput, fpccrc, fpcp, fppu, globals, globtype, link, ncal, options, 
-  optutils, aasmcpu, cpubase;
+  cfileutl, cgutils, cmsgs, comphook, compiler, cutils, finput, fpcp, fppu, 
+  globals, globtype, link, ncal, options, optutils, aasmcpu, cpubase, cgbase, 
+  fpchash;
 
 implementation
 

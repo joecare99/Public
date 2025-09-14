@@ -1,46 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectSession>
-    <Version Value="10"/>
+    <PathDelim Value="\"/>
+    <Version Value="12"/>
     <BuildModes Active="Default"/>
-    <Units Count="3">
+    <Units Count="6">
       <Unit0>
         <Filename Value="SuDoKu.dpr"/>
         <IsPartOfProject Value="True"/>
-        <UsageCount Value="20"/>
+        <EditorIndex Value="1"/>
+        <CursorPos X="20" Y="15"/>
+        <UsageCount Value="62"/>
+        <Loaded Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../Sudoku/Frm_SudokuMain.pas"/>
+        <Filename Value="..\Sudoku\Frm_SudokuMain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <TopLine Value="527"/>
-        <CursorPos X="60" Y="557"/>
-        <UsageCount Value="20"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
+        <TopLine Value="460"/>
+        <CursorPos Y="465"/>
+        <UsageCount Value="62"/>
+        <Loaded Value="True"/>
+        <LoadedDesigner Value="True"/>
       </Unit1>
       <Unit2>
-        <Filename Value="../source/cls_crtbasegamehmi.pas"/>
-        <UnitName Value="cls_CrtBaseGameHMI"/>
-        <IsVisibleTab Value="True"/>
-        <CursorPos X="11" Y="14"/>
-        <UsageCount Value="10"/>
+        <Filename Value="C:\lazarus\lcl\printers.pas"/>
+        <UnitName Value="Printers"/>
+        <EditorIndex Value="4"/>
+        <TopLine Value="752"/>
+        <CursorPos Y="777"/>
+        <UsageCount Value="30"/>
         <Loaded Value="True"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="C:\lazarus\components\printers\win32\winprndialogs.inc"/>
+        <EditorIndex Value="3"/>
+        <TopLine Value="352"/>
+        <CursorPos X="59" Y="39"/>
+        <UsageCount Value="30"/>
+        <Loaded Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="C:\lazarus\components\printers\printersdlgs.pp"/>
+        <UnitName Value="PrintersDlgs"/>
+        <EditorIndex Value="2"/>
+        <TopLine Value="188"/>
+        <CursorPos X="58" Y="223"/>
+        <UsageCount Value="29"/>
+        <Loaded Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\..\..\Lazarus\fpOdf\examples\BoldText\OdtBoldTextExample.lpr"/>
+        <IsVisibleTab Value="True"/>
+        <EditorIndex Value="5"/>
+        <TopLine Value="9"/>
+        <CursorPos X="47" Y="55"/>
+        <UsageCount Value="29"/>
+        <Loaded Value="True"/>
+      </Unit5>
     </Units>
-    <JumpHistory Count="3" HistoryIndex="2">
+    <JumpHistory Count="13" HistoryIndex="12">
       <Position1>
-        <Filename Value="../source/cls_crtbasegamehmi.pas"/>
+        <Filename Value="SuDoKu.dpr"/>
+        <Caret Line="15" Column="20"/>
       </Position1>
       <Position2>
-        <Filename Value="../source/cls_crtbasegamehmi.pas"/>
-        <Caret Line="100" Column="48" TopLine="81"/>
+        <Filename Value="..\Sudoku\Frm_SudokuMain.pas"/>
+        <Caret Line="474" Column="73" TopLine="444"/>
       </Position2>
       <Position3>
-        <Filename Value="../source/cls_crtbasegamehmi.pas"/>
-        <Caret Line="14" Column="11"/>
+        <Filename Value="..\Sudoku\Frm_SudokuMain.pas"/>
+        <Caret Line="471" Column="68" TopLine="449"/>
       </Position3>
+      <Position4>
+        <Filename Value="..\Sudoku\Frm_SudokuMain.pas"/>
+        <Caret Line="551" Column="68" TopLine="519"/>
+      </Position4>
+      <Position5>
+        <Filename Value="..\Sudoku\Frm_SudokuMain.pas"/>
+        <Caret Line="471" Column="44" TopLine="455"/>
+      </Position5>
+      <Position6>
+        <Filename Value="C:\lazarus\lcl\printers.pas"/>
+        <Caret Line="593" Column="24" TopLine="574"/>
+      </Position6>
+      <Position7>
+        <Filename Value="C:\lazarus\lcl\printers.pas"/>
+        <Caret Line="777" TopLine="752"/>
+      </Position7>
+      <Position8>
+        <Filename Value="C:\lazarus\components\printers\win32\winprndialogs.inc"/>
+        <Caret Line="371" Column="45" TopLine="353"/>
+      </Position8>
+      <Position9>
+        <Filename Value="..\Sudoku\Frm_SudokuMain.pas"/>
+        <Caret Line="472" Column="43" TopLine="455"/>
+      </Position9>
+      <Position10>
+        <Filename Value="..\Sudoku\Frm_SudokuMain.pas"/>
+        <Caret Line="476" Column="43" TopLine="455"/>
+      </Position10>
+      <Position11>
+        <Filename Value="C:\lazarus\components\printers\printersdlgs.pp"/>
+      </Position11>
+      <Position12>
+        <Filename Value="..\Sudoku\Frm_SudokuMain.pas"/>
+        <Caret Line="475" Column="36" TopLine="449"/>
+      </Position12>
+      <Position13>
+        <Filename Value="..\Sudoku\Frm_SudokuMain.pas"/>
+        <Caret Line="479" Column="51" TopLine="454"/>
+      </Position13>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>

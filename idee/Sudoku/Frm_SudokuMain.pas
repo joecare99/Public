@@ -470,15 +470,19 @@ VAR
   DefaultRowHeight: integer;
   activerect, rect: Trect;
 BEGIN
+  if (PageSetupDialog1.PageHeight = 0) then
+     PageSetupDialog1.PageHeight := 29700;
+  if (PageSetupDialog1.PageWidth = 0)  then
+        PageSetupDialog1.PageWidth := 21000;
   // Rahmen
-  activerect.Top := PageRect.Top + PageSetupDialog1.{$IFDEF FPC}Margins.Top{$ELSE} MarginTop {$ENDIF} * (PageRect.bottom
-    - PageRect.top) DIV PageSetupDialog1.{$IFDEF FPC}Height{$ELSE} PageHeight {$ENDIF};
-  activerect.bottom := PageRect.bottom - PageSetupDialog1.{$IFDEF FPC}Margins.Bottom {$ELSE} MarginBottom {$ENDIF}*
-    (PageRect.bottom - PageRect.top) DIV PageSetupDialog1.{$IFDEF FPC}Height{$ELSE} PageHeight {$ENDIF};
-  activerect.left := PageRect.left + PageSetupDialog1.{$IFDEF FPC}Margins.Left{$ELSE} MarginLeft {$ENDIF} *
-    (PageRect.right - PageRect.left) DIV PageSetupDialog1.{$IFDEF FPC}Width{$ELSE} PageWidth {$ENDIF};
-  activerect.right := PageRect.right - PageSetupDialog1.{$IFDEF FPC}Margins.Right{$ELSE} MarginRight {$ENDIF} *
-    (PageRect.right - PageRect.left) DIV PageSetupDialog1.{$IFDEF FPC}Width{$ELSE} PageWidth {$ENDIF};
+  activerect.Top := PageRect.Top + PageSetupDialog1.MarginTop  * (PageRect.bottom
+    - PageRect.top) DIV PageSetupDialog1.PageHeight;
+  activerect.bottom := PageRect.bottom - PageSetupDialog1.MarginBottom *
+    (PageRect.bottom - PageRect.top) DIV PageSetupDialog1.PageHeight;
+  activerect.left := PageRect.left + PageSetupDialog1.MarginLeft *
+    (PageRect.right - PageRect.left) DIV PageSetupDialog1.PageWidth;
+  activerect.right := PageRect.right - PageSetupDialog1.MarginRight *
+    (PageRect.right - PageRect.left) DIV PageSetupDialog1.PageWidth;
   th := (activerect.bottom - activerect.top) DIV 2;
   tw := (activerect.right - activerect.left) DIV 2;
   IF th > tw THEN
@@ -541,14 +545,14 @@ VAR
   activerect: Trect;
 BEGIN
   // Rahmen
-  activerect.Top := PageRect.Top + PageSetupDialog1.{$IFDEF FPC}Margins.Top{$ELSE} MarginTop {$ENDIF} * (PageRect.bottom
-    - PageRect.top) DIV PageSetupDialog1.{$IFDEF FPC}Height{$ELSE} PageHeight {$ENDIF};
-  activerect.bottom := PageRect.bottom - PageSetupDialog1.{$IFDEF FPC}Margins.Bottom {$ELSE} MarginBottom {$ENDIF}*
-    (PageRect.bottom - PageRect.top) DIV PageSetupDialog1.{$IFDEF FPC}Height{$ELSE} PageHeight {$ENDIF};
-  activerect.left := PageRect.left + PageSetupDialog1.{$IFDEF FPC}Margins.Left{$ELSE} MarginLeft {$ENDIF} *
-    (PageRect.right - PageRect.left) DIV PageSetupDialog1.{$IFDEF FPC}Width{$ELSE} PageWidth {$ENDIF};
-  activerect.right := PageRect.right - PageSetupDialog1.{$IFDEF FPC}Margins.Right{$ELSE} MarginRight {$ENDIF} *
-    (PageRect.right - PageRect.left) DIV PageSetupDialog1.{$IFDEF FPC}Width{$ELSE} PageWidth {$ENDIF};
+  activerect.Top := PageRect.Top + PageSetupDialog1.MarginTop * (PageRect.bottom
+    - PageRect.top) DIV PageSetupDialog1.PageHeight;
+  activerect.bottom := PageRect.bottom - PageSetupDialog1.MarginBottom*
+    (PageRect.bottom - PageRect.top) DIV PageSetupDialog1.PageHeight;
+  activerect.left := PageRect.left + PageSetupDialog1.MarginLeft *
+    (PageRect.right - PageRect.left) DIV PageSetupDialog1.PageWidth;
+  activerect.right := PageRect.right - PageSetupDialog1.MarginRight *
+    (PageRect.right - PageRect.left) DIV PageSetupDialog1.PageWidth;
   canvas.Pen.Style := psInsideFrame;
   canvas.DrawFocusRect(activerect);
   DoneDrawing := true;
@@ -608,4 +612,4 @@ begin
 end;
 
 END.
-
+

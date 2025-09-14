@@ -7,7 +7,7 @@ object Form1: TForm1
   ClientHeight = 507
   ClientWidth = 550
   OnCreate = FormCreate
-  Visible = False
+  LCLVersion = '2.0.12.0'
   object edtLognCode: TMemo
     Left = 272
     Height = 334
@@ -88,7 +88,7 @@ object Form1: TForm1
   object Timer1: TTimer
     Interval = 500
     OnTimer = Timer1Timer
-    left = 125
-    top = 44
+    Left = 125
+    Top = 44
   end
 end

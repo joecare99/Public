@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
@@ -9,10 +9,9 @@
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
         <LRSInOutputDirectory Value="False"/>
+        <CompatibilityMode Value="True"/>
       </Flags>
-      <MainUnit Value="0"/>
       <Title Value="Prj_FVtestapp"/>
-      <ActiveWindowIndexAtStart Value="1"/>
     </General>
     <BuildModes Count="1">
       <Item1 Name="default" Default="True"/>
@@ -21,11 +20,14 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
+      <local>
+        <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T &apos;Lazarus Run Output&apos; -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+      </local>
       <FormatVersion Value="2"/>
       <Modes Count="1">
         <Mode0 Name="default">
           <local>
-            <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T 'Lazarus Run Output' -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
+            <LaunchingApplication PathPlusParams="/usr/X11R6/bin/xterm -T &apos;Lazarus Run Output&apos; -e $(LazarusDir)/tools/runwait.sh $(TargetCmdLine)"/>
           </local>
         </Mode0>
       </Modes>
@@ -54,7 +56,7 @@
       </Unit1>
       <Unit2>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\platform.inc"/>
-        <EditorIndex Value="11"/>
+        <EditorIndex Value="12"/>
         <TopLine Value="165"/>
         <CursorPos X="65" Y="18"/>
         <UsageCount Value="23"/>
@@ -79,9 +81,10 @@
       <Unit5>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
         <UnitName Value="StdDlg"/>
+        <IsVisibleTab Value="True"/>
         <EditorIndex Value="8"/>
-        <TopLine Value="654"/>
-        <CursorPos X="18" Y="1057"/>
+        <TopLine Value="1285"/>
+        <CursorPos X="49" Y="1300"/>
         <UsageCount Value="23"/>
         <Loaded Value="True"/>
       </Unit5>
@@ -96,22 +99,20 @@
       </Unit6>
       <Unit7>
         <Filename Value="C:\lazarus\fpc\3.2.0\source\packages\rtl-console\src\inc\mouseh.inc"/>
-        <EditorIndex Value="17"/>
+        <EditorIndex Value="-1"/>
         <TopLine Value="57"/>
         <CursorPos X="3" Y="48"/>
         <UsageCount Value="23"/>
-        <Loaded Value="True"/>
       </Unit7>
       <Unit8>
         <Filename Value="C:\lazarus\fpc\3.2.0\source\packages\rtl-console\src\inc\mouse.inc"/>
-        <EditorIndex Value="16"/>
+        <EditorIndex Value="-1"/>
         <CursorPos X="32" Y="17"/>
         <UsageCount Value="23"/>
-        <Loaded Value="True"/>
       </Unit8>
       <Unit9>
         <Filename Value="fpp.pas"/>
-        <EditorIndex Value="15"/>
+        <EditorIndex Value="11"/>
         <TopLine Value="127"/>
         <CursorPos X="45" Y="25"/>
         <UsageCount Value="22"/>
@@ -126,7 +127,7 @@
       <Unit11>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\resource.pas"/>
         <UnitName Value="Resource"/>
-        <EditorIndex Value="12"/>
+        <EditorIndex Value="13"/>
         <CursorPos X="21" Y="18"/>
         <UsageCount Value="21"/>
         <Loaded Value="True"/>
@@ -164,7 +165,7 @@
       <Unit16>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\validate.pas"/>
         <UnitName Value="Validate"/>
-        <EditorIndex Value="13"/>
+        <EditorIndex Value="14"/>
         <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit16>
@@ -180,7 +181,6 @@
       <Unit18>
         <Filename Value="..\source\fv\Src\views.pas"/>
         <UnitName Value="Views"/>
-        <IsVisibleTab Value="True"/>
         <WindowIndex Value="1"/>
         <TopLine Value="1152"/>
         <CursorPos X="41" Y="1165"/>
@@ -190,10 +190,8 @@
       <Unit19>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\views.pas"/>
         <UnitName Value="Views"/>
-        <IsVisibleTab Value="True"/>
-        <EditorIndex Value="14"/>
-        <TopLine Value="2754"/>
-        <CursorPos X="57" Y="2751"/>
+        <EditorIndex Value="15"/>
+        <CursorPos X="57"/>
         <UsageCount Value="12"/>
         <Loaded Value="True"/>
       </Unit19>
@@ -201,123 +199,123 @@
     <JumpHistory Count="30" HistoryIndex="29">
       <Position1>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="1647" Column="52" TopLine="1624"/>
+        <Caret Line="1642" Column="77" TopLine="1624"/>
       </Position1>
       <Position2>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="1642" Column="77" TopLine="1624"/>
+        <Caret Line="2523" TopLine="2500"/>
       </Position2>
       <Position3>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="2523" TopLine="2500"/>
+        <Caret Line="2524" TopLine="2500"/>
       </Position3>
       <Position4>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="2524" TopLine="2500"/>
+        <Caret Line="1649" TopLine="1626"/>
       </Position4>
       <Position5>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="1649" TopLine="1626"/>
+        <Caret Line="1650" TopLine="1626"/>
       </Position5>
       <Position6>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="1650" TopLine="1626"/>
+        <Caret Line="215" Column="15" TopLine="192"/>
       </Position6>
       <Position7>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="1669" Column="21" TopLine="1689"/>
+        <Caret Line="1581" Column="50" TopLine="1561"/>
       </Position7>
       <Position8>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="215" Column="15" TopLine="192"/>
+        <Caret Line="1563" Column="10" TopLine="1540"/>
       </Position8>
       <Position9>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="1581" Column="50" TopLine="1561"/>
+        <Caret Line="216" Column="23" TopLine="193"/>
       </Position9>
       <Position10>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="1563" Column="10" TopLine="1540"/>
+        <Caret Line="1563" Column="18" TopLine="1540"/>
       </Position10>
       <Position11>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="216" Column="23" TopLine="193"/>
+        <Caret Line="1566" Column="27" TopLine="1540"/>
       </Position11>
       <Position12>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="1563" Column="18" TopLine="1540"/>
+        <Caret Line="1540" Column="20" TopLine="1526"/>
       </Position12>
       <Position13>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="1566" Column="27" TopLine="1540"/>
+        <Caret Line="1651" TopLine="1628"/>
       </Position13>
       <Position14>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="1540" Column="20" TopLine="1526"/>
+        <Caret Line="1308" Column="25" TopLine="1285"/>
       </Position14>
       <Position15>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="1651" TopLine="1628"/>
+        <Caret Line="1315" Column="25" TopLine="1285"/>
       </Position15>
       <Position16>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="1308" Column="25" TopLine="1285"/>
+        <Caret Line="1428" Column="36" TopLine="1411"/>
       </Position16>
       <Position17>
         <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="1315" Column="25" TopLine="1285"/>
+        <Caret Line="989" Column="10" TopLine="961"/>
       </Position17>
       <Position18>
-        <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="1428" Column="36" TopLine="1411"/>
+        <Filename Value="..\source\fv\Src\views.pas"/>
+        <Caret Line="30" Column="34"/>
       </Position18>
       <Position19>
-        <Filename Value="..\source\fv\Src\stddlg.pas"/>
-        <Caret Line="989" Column="10" TopLine="961"/>
+        <Filename Value="..\source\fv\Src\views.pas"/>
+        <Caret Line="393" Column="32" TopLine="371"/>
       </Position19>
       <Position20>
         <Filename Value="..\source\fv\Src\views.pas"/>
-        <Caret Line="30" Column="34"/>
+        <Caret Line="1774" Column="4" TopLine="1768"/>
       </Position20>
       <Position21>
-        <Filename Value="..\source\fv\Src\views.pas"/>
-        <Caret Line="393" Column="32" TopLine="371"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\views.pas"/>
+        <Caret Line="5135" Column="5" TopLine="5090"/>
       </Position21>
       <Position22>
-        <Filename Value="..\source\fv\Src\views.pas"/>
-        <Caret Line="1774" Column="4" TopLine="1768"/>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\views.pas"/>
+        <Caret Line="356" Column="18" TopLine="334"/>
       </Position22>
       <Position23>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\views.pas"/>
-        <Caret Line="5135" Column="5" TopLine="5090"/>
+        <Caret Line="1153" Column="13" TopLine="1146"/>
       </Position23>
       <Position24>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\views.pas"/>
-        <Caret Line="356" Column="18" TopLine="334"/>
+        <Caret Line="1002" Column="34" TopLine="988"/>
       </Position24>
       <Position25>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\views.pas"/>
-        <Caret Line="1153" Column="13" TopLine="1146"/>
+        <Caret Line="352" Column="16" TopLine="330"/>
       </Position25>
       <Position26>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\views.pas"/>
-        <Caret Line="1002" Column="34" TopLine="988"/>
+        <Caret Line="1378" Column="47" TopLine="1353"/>
       </Position26>
       <Position27>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\views.pas"/>
-        <Caret Line="352" Column="16" TopLine="330"/>
+        <Caret Line="2744" Column="15" TopLine="2706"/>
       </Position27>
       <Position28>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\views.pas"/>
-        <Caret Line="1378" Column="47" TopLine="1353"/>
+        <Caret Line="3320" Column="26" TopLine="3282"/>
       </Position28>
       <Position29>
-        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\views.pas"/>
-        <Caret Line="2744" Column="15" TopLine="2706"/>
+        <Filename Value="..\source\fv\Src\views.pas"/>
+        <Caret Line="1165" Column="41" TopLine="1152"/>
       </Position29>
       <Position30>
-        <Filename Value="..\..\..\Lazarus\FpcTrunk\packages\fv\src\views.pas"/>
-        <Caret Line="3320" Column="26" TopLine="3282"/>
+        <Filename Value="..\source\fv\Src\stddlg.pas"/>
+        <Caret Line="1649" Column="66" TopLine="1629"/>
       </Position30>
     </JumpHistory>
   </ProjectOptions>
@@ -330,6 +328,11 @@
     <SearchPaths>
       <UnitOutputDirectory Value="..\..\Bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
+    <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
+      </Debugging>
+    </Linking>
   </CompilerOptions>
   <Debugging>
     <BreakPoints Count="2">
