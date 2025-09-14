@@ -11,6 +11,7 @@ object frmLabyDemo3: TfrmLabyDemo3
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Menu = MainMenu1
+  LCLVersion = '4.2.0.0'
   object imgDisplay: TImage
     Left = 0
     Height = 707
@@ -27,6 +28,7 @@ object frmLabyDemo3: TfrmLabyDemo3
     Align = alRight
     ClientHeight = 707
     ClientWidth = 282
+    ParentBackground = False
     TabOrder = 0
     object pnlRightTop: TPanel
       Left = 1
@@ -36,6 +38,7 @@ object frmLabyDemo3: TfrmLabyDemo3
       Align = alTop
       ClientHeight = 168
       ClientWidth = 280
+      ParentBackground = False
       TabOrder = 0
       object btnRotLeft: TButton
         Left = 40
@@ -47,9 +50,9 @@ object frmLabyDemo3: TfrmLabyDemo3
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
-        OnClick = btnRotLeftClick
         ParentFont = False
         TabOrder = 0
+        OnClick = btnRotLeftClick
       end
       object btnRotRight: TButton
         Left = 120
@@ -61,9 +64,9 @@ object frmLabyDemo3: TfrmLabyDemo3
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
-        OnClick = btnRotRightClick
         ParentFont = False
         TabOrder = 1
+        OnClick = btnRotRightClick
       end
       object Btn_GoFwd: TButton
         Left = 80
@@ -75,9 +78,9 @@ object frmLabyDemo3: TfrmLabyDemo3
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
-        OnClick = Btn_GoFwdClick
         ParentFont = False
         TabOrder = 2
+        OnClick = Btn_GoFwdClick
       end
       object Btn_Back: TButton
         Left = 79
@@ -89,9 +92,9 @@ object frmLabyDemo3: TfrmLabyDemo3
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
-        OnClick = Btn_BackClick
         ParentFont = False
         TabOrder = 3
+        OnClick = Btn_BackClick
       end
       object chbAuto: TCheckBox
         Left = 73
@@ -116,9 +119,9 @@ object frmLabyDemo3: TfrmLabyDemo3
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
-        OnClick = chbFastClick
         ParentFont = False
         TabOrder = 5
+        OnClick = chbFastClick
       end
       inline FraWindRose1: TFraWindRose
         Left = 201
@@ -127,6 +130,7 @@ object frmLabyDemo3: TfrmLabyDemo3
         Width = 73
         ClientHeight = 78
         ClientWidth = 73
+        ParentBackground = False
         TabOrder = 6
         inherited Image1: TImage
           Height = 78
@@ -155,6 +159,7 @@ object frmLabyDemo3: TfrmLabyDemo3
       Caption = 'pnlRightClient'
       ClientHeight = 367
       ClientWidth = 280
+      ParentBackground = False
       TabOrder = 1
       object Btn_Create: TButton
         Left = 144
@@ -166,9 +171,9 @@ object frmLabyDemo3: TfrmLabyDemo3
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
-        OnClick = actCreateExecute
         ParentFont = False
         TabOrder = 0
+        OnClick = actCreateExecute
       end
       object Btn_Test1: TButton
         Left = 40
@@ -180,9 +185,9 @@ object frmLabyDemo3: TfrmLabyDemo3
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
-        OnClick = Btn_Test1Click
         ParentFont = False
         TabOrder = 1
+        OnClick = Btn_Test1Click
       end
       object Btn_Load: TButton
         Left = 90
@@ -207,9 +212,9 @@ object frmLabyDemo3: TfrmLabyDemo3
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
-        OnClick = Btn_Test2Click
         ParentFont = False
         TabOrder = 3
+        OnClick = Btn_Test2Click
       end
       object Btn_Test3: TButton
         Left = 138
@@ -221,9 +226,9 @@ object frmLabyDemo3: TfrmLabyDemo3
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
-        OnClick = Btn_Test3Click
         ParentFont = False
         TabOrder = 4
+        OnClick = Btn_Test3Click
       end
       object Btn_Test4: TButton
         Left = 185
@@ -235,9 +240,9 @@ object frmLabyDemo3: TfrmLabyDemo3
         Font.Color = clWindowText
         Font.Height = -11
         Font.Name = 'MS Sans Serif'
-        OnClick = Btn_Test4Click
         ParentFont = False
         TabOrder = 5
+        OnClick = Btn_Test4Click
       end
       object edtXDim: TLabeledEdit
         Left = 39
@@ -287,8 +292,8 @@ object frmLabyDemo3: TfrmLabyDemo3
         Top = 83
         Width = 75
         Caption = 'btnShow'
-        OnClick = btnShowClick
         TabOrder = 8
+        OnClick = btnShowClick
       end
     end
     object Label1: TLabel
