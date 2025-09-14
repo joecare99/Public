@@ -1,0 +1,12 @@
+﻿<mapping-table>
+    <metaclass name="Package">
+        <map-entry name="GFacts" alias="GFacts" generated="true" />
+        <map-entry name="GSource" alias="GSource" generated="true" />
+        <map-entry name="GBaseClasses" alias="GBaseClasses" generated="true" />
+    </metaclass>
+    <metaclass name="Class">
+        <map-entry name="CBaseFact" alias="CBaseFact" generated="true" />
+        <map-entry name="CBaseSource" alias="CBaseSource" generated="true" />
+        <map-entry name="GDate" alias="GDate" generated="true" />
+    </metaclass>
+</mapping-table>

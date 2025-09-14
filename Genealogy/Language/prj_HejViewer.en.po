@@ -1,0 +1,1196 @@
+msgid ""
+msgstr ""
+"Content-Type: text/plain; charset=UTF-8\n"
+"Project-Id-Version: HejViewer\n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: \n"
+"Last-Translator: Joe Care\n"
+"Language-Team: \n"
+"MIME-Version: 1.0\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Language: en\n"
+"X-Generator: Poedit 2.2.1\n"
+"X-Source-Language: de\n"
+
+#: cls_hejdata.rsdeath
+msgid "Gest."
+msgstr ""
+
+#: cls_hejdata.rsgeburt
+msgid "Geburt"
+msgstr ""
+
+#: cls_hejdata.rsgivnname
+msgid "Vorname"
+msgstr ""
+
+#: cls_hejdata.rshird_allchild
+msgid "alle Kinder"
+msgstr ""
+
+#: cls_hejdata.rshird_allparent
+msgid "Eltern"
+msgstr ""
+
+#: cls_hejdata.rshird_allspouse
+msgid "alle Ehepartner"
+msgstr ""
+
+#: cls_hejdata.rshird_anychild
+msgid "ein Kind"
+msgstr ""
+
+#: cls_hejdata.rshird_anyparent
+msgid "ein Elternteil"
+msgstr ""
+
+#: cls_hejdata.rshird_anyspouse
+msgid "ein Ehepartner"
+msgstr ""
+
+#: cls_hejdata.rshird_child
+msgid "Kind"
+msgstr ""
+
+#: cls_hejdata.rshird_father
+msgid "Vater"
+msgstr ""
+
+#: cls_hejdata.rshird_ind
+msgid "Person"
+msgstr ""
+
+#: cls_hejdata.rshird_meta
+msgid "Metadaten"
+msgstr ""
+
+#: cls_hejdata.rshird_mother
+msgid "Mutter"
+msgstr ""
+
+#: cls_hejdata.rshird_spouse
+msgid "Ehepartner"
+msgstr ""
+
+#: cls_hejdata.rsid
+msgid "ID"
+msgstr ""
+
+#: cls_hejdata.rssortkndwn
+msgid "▼"
+msgstr ""
+
+#: cls_hejdata.rssortknup
+msgid "▲"
+msgstr ""
+
+#: cls_hejdata.rssurname
+msgid "Nachname"
+msgstr ""
+
+#: cls_hejdatafilter.rshcct_and
+msgid "Und"
+msgstr ""
+
+#: cls_hejdatafilter.rshcct_nor
+msgid "Oder nicht"
+msgstr ""
+
+#: cls_hejdatafilter.rshcct_or
+msgid "Oder"
+msgstr ""
+
+#: cls_hejdatafilter.rshcct_xor
+msgid "Entweder Oder"
+msgstr ""
+
+#: cls_hejdatafilter.rshcct_xor2
+msgid "Entweder Oder 2"
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_contains
+msgid "wie *$*"
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_endswith
+msgid "wie *$"
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_equal
+msgid "="
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_greater
+#, fuzzy
+msgctxt "cls_hejdatafilter.rshcmp_greater"
+msgid ">"
+msgstr ">"
+
+#: cls_hejdatafilter.rshcmp_greateroequal
+msgid ">="
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_isempty
+msgid "[ ]"
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_isnotempty
+msgid "![ ]"
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_less
+#, fuzzy
+msgctxt "cls_hejdatafilter.rshcmp_less"
+msgid "<"
+msgstr "<"
+
+#: cls_hejdatafilter.rshcmp_lessoequal
+msgid "<="
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_nop
+msgid "?"
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_startswith
+msgid "wie $*"
+msgstr ""
+
+#: cls_hejdatafilter.rshcmp_unequal
+msgid "<>"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_adoptcount
+msgid "Anzahl Adoptionen"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_agedifftospouse
+msgid "Altersdiff. zu Partner"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageofbapt
+msgid "Alter bei Taufe"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageofconf
+msgid "Alter bei Konfirmation"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageofdeath
+msgid "Alter bei Tod"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageoffirstchild
+msgid "Alter bei erstem Kind"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageoffmarriage
+msgid "Alter bei e. Hochzeit"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageoflchild
+msgid "Alter bei l. Kind"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageoflmarriage
+msgid "Alter bei l. Hochzeit"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_ageofnextsibl
+msgid "Alter bei n. Geschw."
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_anydata
+msgid "etwas"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_anyplace
+msgid "ein Platz"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_anysource
+msgid "eine Quelle"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_childcount
+msgid "Anzahl Kinder"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_parentcount
+msgid "Anzahl Elternteile"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_placecount
+msgid "Anzahl Orte"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_siblingcount
+msgid "Anzahl Geschwister"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_sourcecount
+msgid "Anzahl Quellen"
+msgstr ""
+
+#: cls_hejdatafilter.rshinmed_spousecount
+msgid "Anzahl Ehepartner"
+msgstr ""
+
+#: dm_gendata2.rscreateadoption
+#, object-pascal-format
+msgid "CREATE TABLE `%s`.`adoptions` ( `idIndividual` INT(11) NOT NULL,`idIndividual_AdopFather` INT(11) NULL DEFAULT '0',`idIndividual_AdopMother` INT(11) NULL DEFAULT '0') COMMENT='Adoption Information of individuals' COLLATE='utf8_general_ci' ENGINE=InnoDB;"
+msgstr ""
+
+#: dm_gendata2.rscreateindividuals
+#, object-pascal-format
+msgid "CREATE TABLE `%s`.`Individuals` (`idIndividual` INT(11) NOT NULL COMMENT 'id des Individuums, (Primary Key)',`idIndividual_Father` INT(11) NOT NULL DEFAULT '0' COMMENT 'id-Verbindung zu Vater',`idIndividual_Mother` INT(11) NOT NULL DEFAULT '0' COMMENT 'id-Verbindung zu Mutter',`FamilyName` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Familienname',`GivenName` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Vorname',`Sex` ENUM('M','F','U') NOT NULL DEFAULT 'U' COMMENT 'Geschlecht',`Religion` VARCHAR(10) NULL DEFAULT NULL COMMENT 'Religionszugehörigkeit (Abk)',`Occupation` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Beruf',`Birth` DATETIME NULL DEFAULT NULL,`BirthModif` ENUM('','Abt','Est','Cal','Bef','Aft') NOT NULL DEFAULT '',`Birthplace` VARCHAR(100) NULL DEFAULT '',`BirthSource` VARCHAR(100) NULL DEFAULT '',`BaptDate` DATETIME NULL DEFAULT NULL,`BaptModif` ENUM('','Abt','Est','Cal','Bef','Aft') NULL DEFAULT '',`BaptPlace` VARCHAR(100) NULL DEFAULT '',`Godparents` VARCHAR(100) NULL DEFAULT '',`BaptSource` VARCHAR(100) NULL DEFAULT '',`Residence` VARCHAR(100) NULL DEFAULT '',`DeathDate` DATETIME NULL DEFAULT NULL,`DeathModif` ENUM('','Abt','Est','Cal','Bef','Aft') NULL DEFAULT '',`DeathPlace` VARCHAR(100) NULL DEFAULT '',`DeathReason` VARCHAR(100) NULL DEFAULT '',`DearhSource` VARCHAR(100) NULL DEFAULT '',`BurialDate` DATETIME NULL DEFAULT NULL,`BurialModif` ENUM('','Abt','Est','Cal','Bef','Aft') NULL DEFAULT '',`BurialPlace` VARCHAR(100) NULL DEFAULT '',`BurialSource` VARCHAR(100) NULL DEFAULT '',`Text` LONGTEXT NULL,`living` ENUM('','Y','N') NULL DEFAULT 'N',`AKA` VARCHAR(100) NULL DEFAULT '',`Index` VARCHAR(30) NULL DEFAULT '',`Adopted` VARCHAR(100) NULL DEFAULT '',`FarmName` VARCHAR(100) NULL DEFAULT '',`AdrStreet` VARCHAR(100) NULL DEFAULT '',`AdrAddit` VARCHAR(100) NULL DEFAULT '',`AdrPLZ` VARCHAR(100) NULL DEFAULT '',`AdrPlace` VARCHAR(100) NULL DEFAULT '',`AdrPlaceAddit` VARCHAR(100) NULL DEFAULT '',`Age` VARCHAR(100) NULL DEFAULT '',`Phone` VARCHAR(100) NULL DEFAULT '',`eMail` VARCHAR(100) NULL DEFAULT '',`WebAdr` VARCHAR(100) NULL DEFAULT '',`NameSource` VARCHAR(100) NULL DEFAULT '',`CallName` VARCHAR(100) NULL DEFAULT '',PRIMARY KEY (`idIndividual`),INDEX `Index` (`Index`),INDEX `FamilyName` (`FamilyName`)) COLLATE='utf8_general_ci' ENGINE=InnoDB;"
+msgstr ""
+
+#: dm_gendata2.rscreatemarriage
+#, object-pascal-format
+msgid "CREATE TABLE `%s`.`marriages` ( `idIndividual` INT(11) NULL DEFAULT NULL, `idIndividual_Spouse` INT(11) NULL DEFAULT NULL,`Chrch` DATETIME NULL DEFAULT NULL, `ChrchModif` ENUM('','Abt','Est','Cal','Bef','Aft') NULL DEFAULT '', `ChrchPlace` VARCHAR(50) NULL DEFAULT NULL, `ChrchWitness` VARCHAR(50) NULL DEFAULT NULL, `State` DATETIME NULL DEFAULT NULL, `StateModif` ENUM('','Abt','Est','Cal','Bef','Aft') NULL DEFAULT '',`StatePlace` VARCHAR(50) NULL DEFAULT NULL, `StateWitness` VARCHAR(50) NULL DEFAULT NULL, `MarrKind` VARCHAR(50) NULL DEFAULT NULL, `Divource` DATETIME NULL DEFAULT NULL, `DivourceModif` ENUM('','Abt','Est','Cal','Bef','Aft') NULL DEFAULT '',`DivourcePlace` VARCHAR(50) NULL DEFAULT NULL, `ChrchSource` VARCHAR(50) NULL DEFAULT NULL, `StateSource` VARCHAR(50) NULL DEFAULT NULL, `DivourceSource` VARCHAR(50) NULL DEFAULT NULL, INDEX `idIndividual` (`idIndividual`), INDEX `idIndividual_Spouse` (`idIndividual_Spouse`) ) COMMENT='Marriages of individuals' COLLATE='utf8_general_ci' ENGINE=InnoDB;"
+msgstr ""
+
+#: dm_gendata2.rscreateplace
+#, object-pascal-format
+msgid "CREATE TABLE `%s`.`places` ( `idPlace` INT(11) NULL DEFAULT NULL, `Placename` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Ortsname', `ZIP` VARCHAR(50) NULL DEFAULT NULL COMMENT 'PLZ', `State` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Land', `Localgov` VARCHAR(100) NULL DEFAULT NULL COMMENT 'Reg. Bezirk', `GOV` VARCHAR(50) NULL DEFAULT NULL COMMENT 'GOV', `Country` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Land', `Comunity` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Gemeinde', `Parish` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Pfarrei/Kirchspiel', `Kreis` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Landkreis', `shortname` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Kurzname', `Longitude` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Längengrad', `Magnitude` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Breitengrad', `Maidenhead` VARCHAR(50) NULL DEFAULT NULL COMMENT 'Maidenhead Locator' ) COMMENT='Information on Places' COLLATE='utf8_general_ci' ENGINE=InnoDB;"
+msgstr ""
+
+#: dm_gendata2.rscreateschema
+#, object-pascal-format
+msgid "CREATE DATABASE `%s`;"
+msgstr ""
+
+#: dm_gendata2.rscreatesource
+#, object-pascal-format
+msgid "CREATE TABLE `%s`.`sources` ( `Description` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Quellname', `short` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Abk', `events` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Eeignis(se)', `from` INT(11) NULL DEFAULT NULL COMMENT 'von', `to` INT(11) NULL DEFAULT NULL COMMENT 'bis', `place` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Standort',`owner` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Anbieter', `address` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Adresse des Archives',`info` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Bemerkung', `best` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Bestand',`medium` VARBINARY(100) NULL DEFAULT NULL COMMENT 'Medium' ) COMMENT='Information on sources'  COLLATE='utf8_general_ci'  ENGINE=InnoDB"
+msgstr ""
+
+#: dm_gendata2.rsdatapath
+msgid "Data"
+msgstr "Data"
+
+#: dm_gendata2.rsquote
+#, object-pascal-format
+msgid "`%s`"
+msgstr ""
+
+#: dm_gendata2.rsselectfromtable
+#, object-pascal-format
+msgid "select * from `%s`;"
+msgstr ""
+
+#: dm_gendata2.rsshowdatabase
+msgid "show databases"
+msgstr ""
+
+#: tform1.caption
+msgid "Form1"
+msgstr ""
+
+#: tform1.combobox1.text
+msgid "ComboBox1"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[0].title.caption
+#, fuzzy
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[0].title.caption"
+msgid "idIndividual"
+msgstr "idIndividual"
+
+#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[1].title.caption
+#, fuzzy
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[1].title.caption"
+msgid "FamilyName"
+msgstr "Surname"
+
+#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[2].title.caption
+#, fuzzy
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[2].title.caption"
+msgid "GivenName"
+msgstr "Givenname"
+
+#: tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[3].title.caption
+#, fuzzy
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[3].title.caption"
+msgid "Birth"
+msgstr "Birth"
+
+#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2basedata.cbxreligion.text
+msgid "(rel)"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2basedata.cbxsex.text
+msgid "Sx"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomclient.tblchildren.columns[0].title.caption
+#, fuzzy
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomclient.tblchildren.columns[0].title.caption"
+msgid "Name"
+msgstr "Name"
+
+#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[0].title.caption
+#, fuzzy
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[0].title.caption"
+msgid "Name"
+msgstr "Name"
+
+#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[1].title.caption
+#, fuzzy
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[1].title.caption"
+msgid "Hochzeit"
+msgstr "wedding"
+
+#: tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton6.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton6.caption"
+msgid "|<"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton7.caption
+#, fuzzy
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton7.caption"
+msgid "<"
+msgstr "<"
+
+#: tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton8.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton8.caption"
+msgid ">|"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton9.caption
+#, fuzzy
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton9.caption"
+msgid ">"
+msgstr ">"
+
+#: tform1.fraindindex1.stringgrid1.columns[0].title.caption
+#, fuzzy
+msgctxt "tform1.fraindindex1.stringgrid1.columns[0].title.caption"
+msgid "Name"
+msgstr "Name"
+
+#: tform1.fraindindex1.stringgrid1.columns[1].title.caption
+msgid "Cl."
+msgstr ""
+
+#: tform1.fraindindex1.stringgrid1.columns[2].title.caption
+msgid "Datum"
+msgstr ""
+
+#: tfraawhejview.actdatasetdelete1.caption
+msgctxt "tfraawhejview.actdatasetdelete1.caption"
+msgid "&Löschen"
+msgstr "&删除"
+
+#: tfraawhejview.actdatasetdelete1.hint
+msgctxt "tfraawhejview.actdatasetdelete1.hint"
+msgid "Löschen"
+msgstr "Delete"
+
+#: tfraawhejview.actdatasetfirst1.caption
+msgctxt "tfraawhejview.actdatasetfirst1.caption"
+msgid "&Erster"
+msgstr "&First"
+
+#: tfraawhejview.actdatasetfirst1.hint
+msgctxt "tfraawhejview.actdatasetfirst1.hint"
+msgid "Erster"
+msgstr "First"
+
+#: tfraawhejview.actdatasetinsert1.caption
+msgctxt "tfraawhejview.actdatasetinsert1.caption"
+msgid "E&infügen"
+msgstr "&insert"
+
+#: tfraawhejview.actdatasetinsert1.hint
+msgctxt "tfraawhejview.actdatasetinsert1.hint"
+msgid "Einfügen"
+msgstr "Paste"
+
+#: tfraawhejview.actdatasetlast1.caption
+msgctxt "tfraawhejview.actdatasetlast1.caption"
+msgid "&Letzter"
+msgstr "&Last"
+
+#: tfraawhejview.actdatasetlast1.hint
+msgctxt "tfraawhejview.actdatasetlast1.hint"
+msgid "Letzter"
+msgstr "Last"
+
+#: tfraawhejview.actdatasetnext1.caption
+msgctxt "tfraawhejview.actdatasetnext1.caption"
+msgid "&Nächster"
+msgstr "&Next"
+
+#: tfraawhejview.actdatasetnext1.hint
+msgctxt "tfraawhejview.actdatasetnext1.hint"
+msgid "Nächster"
+msgstr "Next"
+
+#: tfraawhejview.actdatasetprior1.caption
+msgctxt "tfraawhejview.actdatasetprior1.caption"
+msgid "&Vorgänger"
+msgstr "&Predecessor"
+
+#: tfraawhejview.actdatasetprior1.hint
+msgctxt "tfraawhejview.actdatasetprior1.hint"
+msgid "Vorgänger"
+msgstr "Predecessor"
+
+#: tfraawhejview.actfileexit1.caption
+msgctxt "tfraawhejview.actfileexit1.caption"
+msgid "&Beenden"
+msgstr "&退出"
+
+#: tfraawhejview.actfileexit1.hint
+msgctxt "tfraawhejview.actfileexit1.hint"
+msgid "Beenden"
+msgstr "Finish"
+
+#: tfraawhejview.actfilenew.caption
+msgctxt "tfraawhejview.actfilenew.caption"
+msgid "Neu ..."
+msgstr "New..."
+
+#: tfraawhejview.actfileopen1.caption
+msgctxt "tfraawhejview.actfileopen1.caption"
+msgid "Öffnen"
+msgstr "Open"
+
+#: tfraawhejview.actfileopen1.hint
+msgctxt "tfraawhejview.actfileopen1.hint"
+msgid "Öffnen"
+msgstr "Open"
+
+#: tfraawhejview.actfileopenwith1.caption
+msgctxt "tfraawhejview.actfileopenwith1.caption"
+msgid "Öffnen mit ..."
+msgstr "Open with ..."
+
+#: tfraawhejview.actfileopenwith1.hint
+msgctxt "tfraawhejview.actfileopenwith1.hint"
+msgid "Öffnen"
+msgstr "Open"
+
+#: tfraawhejview.actfileprint.caption
+msgctxt "tfraawhejview.actfileprint.caption"
+msgid "Drucken ..."
+msgstr "Print..."
+
+#: tfraawhejview.actfileprintsetup.caption
+msgctxt "tfraawhejview.actfileprintsetup.caption"
+msgid "Druckereinrichtung"
+msgstr "Printer setup"
+
+#: tfraawhejview.actfilesave1.caption
+msgid "Save"
+msgstr "Save"
+
+#: tfraawhejview.actfilesaveas1.caption
+msgctxt "tfraawhejview.actfilesaveas1.caption"
+msgid "Sichern &als ..."
+msgstr "Save &as ..."
+
+#: tfraawhejview.actfilesaveas1.hint
+msgctxt "tfraawhejview.actfilesaveas1.hint"
+msgid "Sichern als"
+msgstr "Save as"
+
+#: tfraawhejview.action6.caption
+msgctxt "tfraawhejview.action6.caption"
+msgid "Action6"
+msgstr ""
+
+#: tfraawhejview.action7.caption
+msgctxt "tfraawhejview.action7.caption"
+msgid "Action7"
+msgstr ""
+
+#: tfraawhejview.actloadgedcom.caption
+msgctxt "tfraawhejview.actloadgedcom.caption"
+msgid "GedCom - Datei einlesen"
+msgstr "read GedCom-file"
+
+#: tfraawhejview.actsavegedcom.caption
+msgctxt "tfraawhejview.actsavegedcom.caption"
+msgid "actSaveGedCom"
+msgstr ""
+
+#: tfraawhejview.chbliving.caption
+msgctxt "tfraawhejview.chbliving.caption"
+msgid "lebt"
+msgstr "living"
+
+#: tfraawhejview.chbliving1.caption
+msgctxt "tfraawhejview.chbliving1.caption"
+msgid "lebt"
+msgstr "living"
+
+#: tfraawhejview.edtadrsup.texthint
+#, fuzzy
+msgid "<Adress-Zusatz>"
+msgstr "<Address Additional >"
+
+#: tfraawhejview.edtage.texthint
+msgid "Alter"
+msgstr "Age"
+
+#: tfraawhejview.edtbaptdate.text
+msgctxt "tfraawhejview.edtbaptdate.text"
+msgid "07.05.1960"
+msgstr "05/07/1960"
+
+#: tfraawhejview.edtbaptplace.texthint
+msgid "Taufort"
+msgstr "Place of baptism"
+
+#: tfraawhejview.edtbirthdate.text
+msgctxt "tfraawhejview.edtbirthdate.text"
+msgid "07.05.1960"
+msgstr "05/07/1960"
+
+#: tfraawhejview.edtbirthplace.texthint
+msgid "Geburtsort"
+msgstr "Place of birth"
+
+#: tfraawhejview.edtburdate.text
+msgctxt "tfraawhejview.edtburdate.text"
+msgid "11.05.2018"
+msgstr "05/11/2018"
+
+#: tfraawhejview.edtburplace.texthint
+msgid "Beräbnissort"
+msgstr "Burial site"
+
+#: tfraawhejview.edtdeathdate.text
+msgctxt "tfraawhejview.edtdeathdate.text"
+msgid "11.05.2018"
+msgstr "05/11/2018"
+
+#: tfraawhejview.edtdeathplace.texthint
+msgid "Sterbeort"
+msgstr "Place of death"
+
+#: tfraawhejview.edtemail.texthint
+#, fuzzy
+msgid "<eMail-Adresse>"
+msgstr "<email address >"
+
+#: tfraawhejview.edtfarmname.texthint
+msgid "Hofname"
+msgstr "Court name"
+
+#: tfraawhejview.edtgivenname.texthint
+msgid "Vorname(n)"
+msgstr "First Name (s)"
+
+#: tfraawhejview.edtname.texthint
+msgid "Familienname"
+msgstr "Surname"
+
+#: tfraawhejview.edtoccupation.texthint
+msgid "(zuletzt) ausgeübter Beruf"
+msgstr "(Last) profession"
+
+#: tfraawhejview.edtphone.texthint
+msgid "<Telefon-Nummer>"
+msgstr "<phone number>"
+
+#: tfraawhejview.edtplacesup.texthint
+msgid "<Ort-Zusatz>"
+msgstr "<location additions>"
+
+#: tfraawhejview.edtstreet.texthint
+msgid "<Straße, Nr>"
+msgstr "<Street, No>"
+
+#: tfraawhejview.edturl.texthint
+msgid "<URL / Web-Adresse>"
+msgstr "<URL/web address >"
+
+#: tfraawhejview.edtzip.texthint
+msgid "<PLZ>"
+msgstr "<ZIP>"
+
+#: tfraawhejview.label1.caption
+msgctxt "tfraawhejview.label1.caption"
+msgid "Label1"
+msgstr ""
+
+#: tfraawhejview.label2.caption
+msgctxt "tfraawhejview.label2.caption"
+msgid "Label2"
+msgstr ""
+
+#: tfraawhejview.label3.caption
+msgctxt "tfraawhejview.label3.caption"
+msgid "Label3"
+msgstr ""
+
+#: tfraawhejview.label4.caption
+msgctxt "tfraawhejview.label4.caption"
+msgid "Label4"
+msgstr ""
+
+#: tfraawhejview.label5.caption
+msgctxt "tfraawhejview.label5.caption"
+msgid "Label5"
+msgstr ""
+
+#: tfraawhejview.label74.caption
+msgid "Anschrift 2"
+msgstr "Address 2"
+
+#: tfraawhejview.label75.caption
+msgid "PLZ"
+msgstr "ZIP"
+
+#: tfraawhejview.label76.caption
+msgid "Ort"
+msgstr "City"
+
+#: tfraawhejview.label77.caption
+msgid "Zusatz"
+msgstr "Addition"
+
+#: tfraawhejview.label82.caption
+msgid "Telefon"
+msgstr "Phone"
+
+#: tfraawhejview.label83.caption
+msgid "Email"
+msgstr "Email"
+
+#: tfraawhejview.label84.caption
+msgid "Web-Adresse"
+msgstr "Web address"
+
+#: tfraawhejview.label85.caption
+msgid "08190-123456"
+msgstr "1-819-0123456"
+
+#: tfraawhejview.label86.caption
+msgid "vorname.name@provider.de"
+msgstr "givenname.surname@provider.com"
+
+#: tfraawhejview.label87.caption
+msgid "www.meine_homepage.de"
+msgstr "www.my_homepage.com"
+
+#: tfraawhejview.label89.caption
+msgid "Himmelhof [= Ortsteil]"
+msgstr "Himmelhof [= District]"
+
+#: tfraawhejview.label90.caption
+msgid "D-12345"
+msgstr ""
+
+#: tfraawhejview.label91.caption
+msgid "Engelbach"
+msgstr "Engelbach"
+
+#: tfraawhejview.label92.caption
+msgid "Niederbayern"
+msgstr "Lower Bavaria"
+
+#: tfraawhejview.label93.caption
+msgid "Beispiele:"
+msgstr "Examples:"
+
+#: tfraawhejview.lbladopted.caption
+msgctxt "tfraawhejview.lbladopted.caption"
+msgid "adopt.v:"
+msgstr "adopt.f:"
+
+#: tfraawhejview.lblbaptised.caption
+msgctxt "tfraawhejview.lblbaptised.caption"
+msgid "get.:"
+msgstr "bapt.:"
+
+#: tfraawhejview.lblbaptised1.caption
+msgctxt "tfraawhejview.lblbaptised1.caption"
+msgid "get.:"
+msgstr "bapt.:"
+
+#: tfraawhejview.lblbaptised2.caption
+msgid "Paten:"
+msgstr "Godparents:"
+
+#: tfraawhejview.lblbaptised3.caption
+msgid "TU:"
+msgstr "CoD:"
+
+#: tfraawhejview.lblbirth.caption
+msgctxt "tfraawhejview.lblbirth.caption"
+msgid "geb.:"
+msgstr "born.:"
+
+#: tfraawhejview.lblbirth1.caption
+msgctxt "tfraawhejview.lblbirth1.caption"
+msgid "geb.:"
+msgstr "born.:"
+
+#: tfraawhejview.lblburied.caption
+msgctxt "tfraawhejview.lblburied.caption"
+msgid "begr.:"
+msgstr "buried:"
+
+#: tfraawhejview.lblburied1.caption
+msgctxt "tfraawhejview.lblburied1.caption"
+msgid "begr.:"
+msgstr "buried:"
+
+#: tfraawhejview.lblcallname.caption
+msgctxt "tfraawhejview.lblcallname.caption"
+msgid "Rufname:"
+msgstr "Callname:"
+
+#: tfraawhejview.lblchildren.caption
+msgctxt "tfraawhejview.lblchildren.caption"
+msgid "<Kinder>"
+msgstr "<children>"
+
+#: tfraawhejview.lblconnection.caption
+msgctxt "tfraawhejview.lblconnection.caption"
+msgid "<Verbindung>"
+msgstr "<connection>"
+
+#: tfraawhejview.lbldeath.caption
+msgctxt "tfraawhejview.lbldeath.caption"
+msgid "gest.:"
+msgstr "died:"
+
+#: tfraawhejview.lbldeath1.caption
+msgctxt "tfraawhejview.lbldeath1.caption"
+msgid "gest.:"
+msgstr "died:"
+
+#: tfraawhejview.lblfarmname.caption
+msgctxt "tfraawhejview.lblfarmname.caption"
+msgid "Hofname:"
+msgstr "Court name:"
+
+#: tfraawhejview.lblfather.caption
+msgctxt "tfraawhejview.lblfather.caption"
+msgid "Vater:"
+msgstr "Father:"
+
+#: tfraawhejview.lblgivenname.caption
+msgctxt "tfraawhejview.lblgivenname.caption"
+msgid "Vorname(n):"
+msgstr "First Name (s):"
+
+#: tfraawhejview.lblgivenname1.caption
+msgctxt "tfraawhejview.lblgivenname1.caption"
+msgid "Vorname(n):"
+msgstr "First Name (s):"
+
+#: tfraawhejview.lblid.caption
+#, fuzzy
+msgid "<ID>"
+msgstr "<ID>"
+
+#: tfraawhejview.lblmother.caption
+msgctxt "tfraawhejview.lblmother.caption"
+msgid "Mutter:"
+msgstr "Mother:"
+
+#: tfraawhejview.lblname.caption
+msgctxt "tfraawhejview.lblname.caption"
+msgid "Name:"
+msgstr "Name:"
+
+#: tfraawhejview.lblname1.caption
+msgctxt "tfraawhejview.lblname1.caption"
+msgid "Name:"
+msgstr "Name:"
+
+#: tfraawhejview.lblnamevariants.caption
+msgctxt "tfraawhejview.lblnamevariants.caption"
+msgid "Andere Namensschreibweisen:"
+msgstr "Other Name attritentions:"
+
+#: tfraawhejview.lbloccupation.caption
+msgctxt "tfraawhejview.lbloccupation.caption"
+msgid "Beruf:"
+msgstr "Occupation:"
+
+#: tfraawhejview.lbloccupation1.caption
+msgctxt "tfraawhejview.lbloccupation1.caption"
+msgid "Beruf:"
+msgstr "Occupation:"
+
+#: tfraawhejview.lblreligion.caption
+msgctxt "tfraawhejview.lblreligion.caption"
+msgid "Bekenntnis:"
+msgstr "Commitment:"
+
+#: tfraawhejview.lblreligion1.caption
+msgctxt "tfraawhejview.lblreligion1.caption"
+msgid "Bekenntnis:"
+msgstr "Commitment:"
+
+#: tfraawhejview.lblresidence.caption
+msgctxt "tfraawhejview.lblresidence.caption"
+msgid "lebte in:"
+msgstr "Residence:"
+
+#: tfraawhejview.lblsex.caption
+msgctxt "tfraawhejview.lblsex.caption"
+msgid "Geschlecht:"
+msgstr "Sex:"
+
+#: tfraawhejview.lblsex1.caption
+msgctxt "tfraawhejview.lblsex1.caption"
+msgid "Geschlecht:"
+msgstr "Sex:"
+
+#: tfraawhejview.lblsource.caption
+msgctxt "tfraawhejview.lblsource.caption"
+msgid "Quelle:"
+msgstr "Source:"
+
+#: tfraawhejview.lblstreet.caption
+msgid "Anschrift 1"
+msgstr "Address 1"
+
+#: tfraawhejview.lblstreetbsp.caption
+msgid "Baumstr. 42"
+msgstr "Treestreet 42"
+
+#: tfraawhejview.menuitem1.caption
+msgctxt "tfraawhejview.menuitem1.caption"
+msgid "FOKO - Datei editieren"
+msgstr "edit FOKO-file"
+
+#: tfraawhejview.menuitem3.caption
+msgctxt "tfraawhejview.menuitem3.caption"
+msgid "Tiny-Tafel erstellen"
+msgstr "Create Tiny-Panel"
+
+#: tfraawhejview.menuitem5.caption
+msgctxt "tfraawhejview.menuitem5.caption"
+msgid "Adressdatei schreiben"
+msgstr "Write address file"
+
+#: tfraawhejview.mniancestors.caption
+msgctxt "tfraawhejview.mniancestors.caption"
+msgid "Vorfahren"
+msgstr "Ancestors"
+
+#: tfraawhejview.mnibackup.caption
+msgctxt "tfraawhejview.mnibackup.caption"
+msgid "Sicherung"
+msgstr "Backup"
+
+#: tfraawhejview.mnicalender.caption
+msgctxt "tfraawhejview.mnicalender.caption"
+msgid "Kalender"
+msgstr "Calendar"
+
+#: tfraawhejview.mnichecks.caption
+msgctxt "tfraawhejview.mnichecks.caption"
+msgid "Datenprüfung"
+msgstr "Data verification"
+
+#: tfraawhejview.mnidataexchange.caption
+msgctxt "tfraawhejview.mnidataexchange.caption"
+msgid "Datenaustausch"
+msgstr "Data exchange"
+
+#: tfraawhejview.mnidataexchangefokosave.caption
+msgctxt "tfraawhejview.mnidataexchangefokosave.caption"
+msgid "FOKO - Datei erstellen"
+msgstr "create FOKO-file"
+
+#: tfraawhejview.mnidataexchangesavegedcom.caption
+msgctxt "tfraawhejview.mnidataexchangesavegedcom.caption"
+msgid "GedCom - Datei schreiben"
+msgstr "write GedCom-file"
+
+#: tfraawhejview.mnidataset.caption
+msgctxt "tfraawhejview.mnidataset.caption"
+msgid "Datensatz"
+msgstr "Record"
+
+#: tfraawhejview.mnidatasetinsert.caption
+msgctxt "tfraawhejview.mnidatasetinsert.caption"
+msgid "neu"
+msgstr "new"
+
+#: tfraawhejview.mnidescendens.caption
+msgctxt "tfraawhejview.mnidescendens.caption"
+msgid "Nachfahren"
+msgstr "Descendants"
+
+#: tfraawhejview.mnifile.caption
+msgctxt "tfraawhejview.mnifile.caption"
+msgid "Datei"
+msgstr "File"
+
+#: tfraawhejview.mnifiledeleteids.caption
+msgctxt "tfraawhejview.mnifiledeleteids.caption"
+msgid "IDs löschen"
+msgstr "Delete IDs"
+
+#: tfraawhejview.mnifileexport2exl.caption
+msgctxt "tfraawhejview.mnifileexport2exl.caption"
+msgid "Excel-Export"
+msgstr "Excel export"
+
+#: tfraawhejview.mnifileisisdsno.caption
+msgctxt "tfraawhejview.mnifileisisdsno.caption"
+msgid "ID=Datensatz"
+msgstr "ID = Record"
+
+#: tfraawhejview.mnifilenew.caption
+msgctxt "tfraawhejview.mnifilenew.caption"
+msgid "alle Daten löschen"
+msgstr "Delete all data"
+
+#: tfraawhejview.mnifileprivacyoff.caption
+msgctxt "tfraawhejview.mnifileprivacyoff.caption"
+msgid "Datenschutz aus"
+msgstr "Privacy off"
+
+#: tfraawhejview.mnifileprivacyon.caption
+msgctxt "tfraawhejview.mnifileprivacyon.caption"
+msgid "Datenschutz ein"
+msgstr "Privacy on"
+
+#: tfraawhejview.mnifilesortmarrchild.caption
+msgctxt "tfraawhejview.mnifilesortmarrchild.caption"
+msgid "Ehen / Kinder ordnen"
+msgstr "Marriages/arranging children"
+
+#: tfraawhejview.mnifilter.caption
+msgctxt "tfraawhejview.mnifilter.caption"
+msgid "Filter"
+msgstr "Filter"
+
+#: tfraawhejview.mniimages.caption
+msgctxt "tfraawhejview.mniimages.caption"
+msgid "Bilder"
+msgstr "Images"
+
+#: tfraawhejview.mniinfo.caption
+msgctxt "tfraawhejview.mniinfo.caption"
+msgid "Info"
+msgstr "Info"
+
+#: tfraawhejview.mnilists.caption
+msgctxt "tfraawhejview.mnilists.caption"
+msgid "Listen"
+msgstr "Lists"
+
+#: tfraawhejview.mnisavefile.caption
+msgid "Sicherung schreiben"
+msgstr "Write backup"
+
+#: tfraawhejview.mnisearch.caption
+msgctxt "tfraawhejview.mnisearch.caption"
+msgid "Suchen"
+msgstr "Search"
+
+#: tfraawhejview.panel1.caption
+msgctxt "tfraawhejview.panel1.caption"
+msgid "Panel1"
+msgstr ""
+
+#: tfraawhejview.panel12.caption
+msgctxt "tfraawhejview.panel12.caption"
+msgid "Panel12"
+msgstr ""
+
+#: tfraawhejview.panel13.caption
+msgctxt "tfraawhejview.panel13.caption"
+msgid "Panel13"
+msgstr ""
+
+#: tfraawhejview.panel14.caption
+msgctxt "tfraawhejview.panel14.caption"
+msgid "Panel14"
+msgstr ""
+
+#: tfraawhejview.panel15.caption
+msgctxt "tfraawhejview.panel15.caption"
+msgid "Panel9"
+msgstr ""
+
+#: tfraawhejview.panel16.caption
+msgctxt "tfraawhejview.panel16.caption"
+msgid "Panel10"
+msgstr ""
+
+#: tfraawhejview.panel18.caption
+msgctxt "tfraawhejview.panel18.caption"
+msgid "Panel9"
+msgstr ""
+
+#: tfraawhejview.searchfind1.caption
+msgctxt "tfraawhejview.searchfind1.caption"
+msgid "&Suchen ..."
+msgstr "&Search ..."
+
+#: tfraawhejview.searchfindfirst1.caption
+msgctxt "tfraawhejview.searchfindfirst1.caption"
+msgid "Ersten suchen"
+msgstr "First search"
+
+#: tfraawhejview.searchfindnext1.caption
+msgctxt "tfraawhejview.searchfindnext1.caption"
+msgid "&Nächsten suchen"
+msgstr "&Find Next"
+
+#: tfraawhejview.searchreplace1.caption
+msgctxt "tfraawhejview.searchreplace1.caption"
+msgid "&Ersetzen"
+msgstr "&Replace"
+
+#: tfraawhejview.speedbutton2.caption
+msgctxt "tfraawhejview.speedbutton2.caption"
+msgid "|<"
+msgstr ""
+
+#: tfraawhejview.speedbutton3.caption
+msgctxt "tfraawhejview.speedbutton3.caption"
+msgid "<"
+msgstr "<"
+
+#: tfraawhejview.speedbutton4.caption
+msgctxt "tfraawhejview.speedbutton4.caption"
+msgid ">|"
+msgstr ""
+
+#: tfraawhejview.speedbutton5.caption
+msgctxt "tfraawhejview.speedbutton5.caption"
+msgid ">"
+msgstr ">"
+
+#: tfraawhejview.tblchildren.columns[0].title.caption
+msgctxt "tfraawhejview.tblchildren.columns[0].title.caption"
+msgid "Name"
+msgstr "Name"
+
+#: tfraawhejview.tblselectperson.columns[0].title.caption
+msgctxt "tfraawhejview.tblselectperson.columns[0].title.caption"
+msgid "idIndividual"
+msgstr "idIndividual"
+
+#: tfraawhejview.tblselectperson.columns[1].title.caption
+msgctxt "tfraawhejview.tblselectperson.columns[1].title.caption"
+msgid "FamilyName"
+msgstr "Surname"
+
+#: tfraawhejview.tblselectperson.columns[2].title.caption
+msgctxt "tfraawhejview.tblselectperson.columns[2].title.caption"
+msgid "GivenName"
+msgstr "Givenname"
+
+#: tfraawhejview.tblselectperson.columns[3].title.caption
+msgctxt "tfraawhejview.tblselectperson.columns[3].title.caption"
+msgid "Birth"
+msgstr "Birth"
+
+#: tfraawhejview.tblspouses.columns[0].title.caption
+msgctxt "tfraawhejview.tblspouses.columns[0].title.caption"
+msgid "Name"
+msgstr "Name"
+
+#: tfraawhejview.tblspouses.columns[1].title.caption
+msgctxt "tfraawhejview.tblspouses.columns[1].title.caption"
+msgid "Hochzeit"
+msgstr "wedding"
+
+#: tfraawhejview.tbs1select.caption
+msgctxt "tfraawhejview.tbs1select.caption"
+msgid "Auswahl"
+msgstr "Please select"
+
+#: tfraawhejview.tbs2edit.caption
+msgctxt "tfraawhejview.tbs2edit.caption"
+msgid "Bearbeiten"
+msgstr "Edit"
+
+#: tfraawhejview.tbs3details.caption
+msgctxt "tfraawhejview.tbs3details.caption"
+msgid "Details"
+msgstr "Details"
+
+#: tfraawhejview.tbs4marriages.caption
+msgctxt "tfraawhejview.tbs4marriages.caption"
+msgid "Ehen u.a."
+msgstr "Marriages, among others."
+
+#: tfraawhejview.tbs5siblings.caption
+msgctxt "tfraawhejview.tbs5siblings.caption"
+msgid "Geschwister"
+msgstr "siblings"
+
+#: tfraawhejview.tbs6text.caption
+msgctxt "tfraawhejview.tbs6text.caption"
+msgid "Text"
+msgstr "Text"
+
+#: tfraawhejview.tbs7address.caption
+msgctxt "tfraawhejview.tbs7address.caption"
+msgid "Adresse"
+msgstr "Address"
+
+#: tfraawhejview.tbs8bilder.caption
+msgctxt "tfraawhejview.tbs8bilder.caption"
+msgid "Bilder"
+msgstr "Images"
+
+#: tfraawhejview.tlbmenu.caption
+msgctxt "tfraawhejview.tlbmenu.caption"
+msgid "Menu"
+msgstr "Menu"
+
+#: tfraindindex.chbfilteractive.caption
+msgid "Aktiv"
+msgstr ""
+
+#: tfraindindex.combobox1.text
+msgid "<Manage>"
+msgstr ""
+
+#: tfraindindex.edtfind.texthint
+msgid "<Suchen>"
+msgstr ""
+
+#: tfraindindex.label1.caption
+msgid "Filter:"
+msgstr ""
+
+#: tfraindindex.lblfind.caption
+msgid "Suchen:"
+msgstr ""
+
+#: tfraindindex.lblsort.caption
+msgid "Sortieren:"
+msgstr ""
+
+#: tfraindindex.speedbutton1.caption
+msgid "..."
+msgstr ""
+
+#: tfraindindex.speedbutton2.caption
+msgid "S"
+msgstr ""
+
+#: tfraindindex.stringgrid1.columns[0].title.caption
+#, fuzzy
+msgctxt "tfraindindex.stringgrid1.columns[0].title.caption"
+msgid "Name"
+msgstr "Name"
+
+#: tfraindindex.stringgrid1.columns[1].title.caption
+msgid "Color"
+msgstr ""
+
+#: tfraindindex.stringgrid1.columns[2].title.caption
+msgid "Date"
+msgstr ""
+
