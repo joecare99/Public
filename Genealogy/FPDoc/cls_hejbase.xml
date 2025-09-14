@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<fpdoc-descriptions><package name="fpcTestClsHej"><module name="cls_HejBase"><element name="TClsHejBase.GetCount"><short>Ermittelt die Anzahl der Elemente</short>
+      </element><element name="TClsHejBase.Count"><short>Anzahl der Elemente</short>
+      </element><element name="TClsHejBase.TestStreamHeader"><short>Prüfe Stream auf einen Header </short>
+      </element><element name="TClsHejBase.Clear"><short>Alles zurücksetzen/bereinigen </short>
+      </element><element name="TClsHejBase.ReadfromStream"><short>Lese (alle) Datensätze vom Stream</short>
+      </element><element name="TClsHejBase.WriteToStream"><short>Schreibe Datensätze auf den Stream</short>
+      </element><element name="TClsHejBase.ReadFromDataset"><short>Erzeuge Daten aus einem Dataset</short>
+      </element><element name="TClsHejBase.UpdateDataset"><short>Schreibe Daten auf den Dataset</short>
+      </element><element name="HejDate2DateStr"><short>Erzeuge aus drei Einzelfeldern einen Datums-String</short>
+      </element>
+    <element name="TClsHejBase"><short>Basis-Klasse für Hej-Daten (AhnenWin)</short>
+      </element><element name="TClsHejBase.IndexOf"><short>Liefert den Index eines Datensatz</short>
+      </element>
+    </module>
+  </package>
+</fpdoc-descriptions>
