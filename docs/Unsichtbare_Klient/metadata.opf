@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="uuid_id" version="2.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:identifier opf:scheme="calibre" id="calibre_id">277</dc:identifier>
+        <dc:identifier opf:scheme="uuid" id="uuid_id">5fdb31de-9894-4e8b-b52b-47a0181f366f</dc:identifier>
+        <dc:title>Der unsichtbare Klient</dc:title>
+        <dc:creator opf:file-as="Care, Joe &amp; ChatGBT5" opf:role="aut">Joe Care</dc:creator>
+        <dc:creator opf:file-as="Care, Joe &amp; ChatGBT5" opf:role="aut">ChatGBT5</dc:creator>
+        <dc:contributor opf:file-as="calibre" opf:role="bkp">calibre (7.6.0) [https://calibre-ebook.com]</dc:contributor>
+        <dc:date>0101-01-01T00:00:00+00:00</dc:date>
+        <dc:description>&lt;div&gt;
+&lt;h1 style="line-height: 120%; background-color: transparent; font-family: 'Liberation Sans'"&gt;&lt;span style="color: #000000"&gt;Der unsichtbare Klient&lt;/span&gt;&lt;/h1&gt;
+&lt;h3 style="background-color: transparent; font-style: italic; font-family: 'Liberation Serif'"&gt;&lt;span style="color: #000000"&gt;Ein Marlowe‑Roman voller Lügen, Blut und Schatten&lt;/span&gt;&lt;/h3&gt;
+&lt;p style="line-height: 42.5498px; background-color: transparent; font-family: 'Liberation Serif','serif'"&gt;&lt;span style="color: #000000; background-color: transparent"&gt;Ein Auftrag ohne Gesicht. Ein Umschlag voller Geld. Eine Akte, die mächtige Männer zu Fall bringen könnte – und jeden, der sie in den Händen hält, ins Grab.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="line-height: 42.5498px; background-color: transparent; font-family: 'Liberation Serif','serif'"&gt;&lt;span style="color: #000000; background-color: transparent"&gt;Privatdetektiv Philip Marlowe stolpert in einen Fall, der mehr Fragen aufwirft, als er beantworten kann: Ein Antiquar, der zu viel weiß. Eine Frau, die zwei Gesichter trägt. Ein Cop, der sein Abzeichen längst verkauft hat. Und ein unsichtbarer Klient, der im Dunkeln die Fäden zieht.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="line-height: 42.5498px; background-color: transparent; font-family: 'Liberation Serif','serif'"&gt;&lt;span style="color: #000000; background-color: transparent"&gt;Zwischen verregneten Straßen, verrauchten Bars und Villen aus Glas kämpft Marlowe gegen eine Wahrheit, die tödlicher ist als jede Kugel. Denn in dieser Stadt ist nichts, wie es scheint – und jeder Zug auf dem Schachbrett kann der letzte sein.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="line-height: 42.5498px; background-color: transparent; font-family: 'Liberation Serif','serif'"&gt;&lt;strong style="color: #000000"&gt;„Der unsichtbare Klient“&lt;/strong&gt;&lt;span style="color: #000000"&gt; ist ein Noir‑Thriller über Macht, Verrat und die Frage, ob ein Mann in einer Stadt voller Schatten überhaupt gewinnen kann.&lt;/span&gt;&lt;/p&gt;&lt;/div&gt;</dc:description>
+        <dc:language>deu</dc:language>
+        <dc:subject>Krimi</dc:subject>
+        <meta name="calibre:timestamp" content="2025-10-16T16:56:53.215052+00:00"/>
+        <meta name="calibre:title_sort" content="unsichtbare Klient, Der"/>
+    </metadata>
+    <guide>
+        <reference type="cover" title="Titelbild" href="cover.jpg"/>
+    </guide>
+</package>
