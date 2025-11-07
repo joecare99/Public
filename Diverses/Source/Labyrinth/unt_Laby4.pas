@@ -4,10 +4,10 @@ unit unt_Laby4;
 
 (*
   Einheit: unt_Laby4
-  Autor:   [unbekannt]
+  Autor:   Joe Care
   Zweck:
     - Erzeugung eines höhenbasierten Labyrinths (Zellenraster mit ganzzahligen "Höhenwerten")
-    - Zellen mit Wert 0 gelten als "leer/ungeritzt" (noch nicht gesetzt)
+    - Zellen mit Wert 0 gelten als "leer/ungenutzt" (noch nicht gesetzt)
     - Positive Werte (>= 1) repräsentieren die gesetzte Zellhöhe
 
   Überblick über die Datenstrukturen:
