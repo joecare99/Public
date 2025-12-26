@@ -3,7 +3,7 @@ program Prj_McStrPln;
   {$MODE Delphi}
 {$ENDIF}
 uses
-  Forms,
+  Forms, Interfaces,
   Frm_McStrPln in '..\source\Frm_McStrPln.pas' {FrmMineCAD},
   Frm_ChildWin in '..\source\Frm_ChildWin.pas' {MDIChild},
   dmGlobalData in '..\MineCAD\Planner\data\dmGlobalData.pas' {DataModule1: TDataModule},
