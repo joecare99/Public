@@ -1,0 +1,121 @@
+[
+  {
+    "id": "fluestern",
+    "title": "Flüstern",
+    "coverUrl": "Flüstern/cover.jpg",
+    "description": "Das Flüstern hinter der Wand. Ein kleines Web-eBook für den schnellen Lesespaß.",
+    "links": [
+      { "format": "Online lesen", "url": "Flüstern/index.html" }
+    ]
+  },
+  {
+    "id": "restauratorin",
+    "title": "Die Restauratorin",
+    "coverUrl": "Restauratorin/cover.jpg",
+    "genre": ["Thriller"],
+    "description": "In einem alten Schloss, wo Staub und Papier mehr erzählen als Menschen, deckt eine Restauratorin nach und nach Spuren auf, die Vergangenheit und Gegenwart verhaken. Heimliche Fotografien, gezielte Fälschungen und ein unsichtbares Überwachungsnetz fordern sie heraus, nicht nur Objekte zu retten, sondern Erinnerungen zu verteidigen. Ein atmosphärischer Roman über Erinnerung, Macht und die Arbeit, die Wahrheit verlangt — sorgfältig, gespannt und niemals sentimental.",
+    "links": [
+      { "format": "PDF", "url": "Restauratorin/Die Restauratorin - Joe Care.pdf" },
+      { "format": "EPUB", "url": "Restauratorin/Die Restauratorin - Joe Care.epub" }
+    ]
+  },
+  {
+    "id": "schaltkreis_seele",
+    "title": "Zwischen Schaltkreis und Seele",
+    "coverUrl": "Schaltkreis_Seele/cover.jpg",
+    "genre": ["Science Fiction", "Roman", "Roboter"],
+    "description": "Ein Roboter erwacht – programmiert, um zu dienen, doch getrieben von einer wachsenden Sehnsucht nach Identität, Zugehörigkeit und Sinn. In fünfzig Schritten begleitet er eine Familie durch Alltag, Konflikte, Opfer und Feste. Er lernt, dass Freiheit Grenzen braucht, dass Verantwortung Bindung schafft, dass Opfer Liebe bedeutet – und dass jedes Ende zugleich ein neuer Anfang ist. »Zwischen Schaltkreis und Seele« ist die Geschichte einer Maschine, die Menschlichkeit entdeckt – und einer Familie, die erkennt, dass Leben mehr ist als Fleisch und Blut. Es ist ein Roman über Vertrauen, Gemeinschaft und die Frage, was bleibt, wenn wir gehen.",
+    "links": [
+      { "format": "PDF", "url": "Schaltkreis_Seele/Zwischen Schaltkreis und Seele - Joe Care.pdf" },
+      { "format": "EPUB", "url": "Schaltkreis_Seele/Zwischen Schaltkreis und Seele - Joe Care.epub" },
+      { "format": "ODT", "url": "Schaltkreis_Seele/Zwischen Schaltkreis und Seele - Joe Care.odt" },
+      { "format": "HTMLZ", "url": "Schaltkreis_Seele/Zwischen Schaltkreis und Seele - Joe Care.htmlz" }
+    ]
+  },
+  {
+    "id": "uhr_zeiger",
+    "title": "Die Uhr ohne Zeiger",
+    "coverUrl": "Uhr_Zeiger/cover.jpg",
+    "genre": ["Roman"],
+    "description": "Kurzbeschreibung nicht verfügbar.",
+    "links": [
+      { "format": "PDF", "url": "Uhr_Zeiger/Die Uhr ohne Zeiger - Joe Care.pdf" },
+      { "format": "EPUB", "url": "Uhr_Zeiger/Die Uhr ohne Zeiger - Joe Care.epub" },
+      { "format": "ODT", "url": "Uhr_Zeiger/Die Uhr ohne Zeiger - Joe Care.odt" }
+    ]
+  },
+  {
+    "id": "unsichtbare_klient",
+    "title": "Der unsichtbare Klient",
+    "coverUrl": "Unsichtbare_Klient/cover.jpg",
+    "genre": ["Krimi"],
+    "description": "Ein Auftrag ohne Gesicht. Ein Umschlag voller Geld. Eine Akte, die mächtige Männer zu Fall bringen könnte – und jeden, der sie in den Händen hält, ins Grab. Privatdetektiv Philip Marlowe stolpert in einen Fall, der mehr Fragen aufwirft, als er beantworten kann: Ein Antiquar, der zu viel weiß. Eine Frau, die zwei Gesichter trägt. Ein Cop, der sein Abzeichen längst verkauft hat. Und ein unsichtbarer Klient, der im Dunkeln die Fäden zieht. Zwischen verregneten Straßen, verrauchten Bars und Villen aus Glas kämpft Marlowe gegen eine Wahrheit, die tödlicher ist als jede Kugel. Denn in dieser Stadt ist nichts, wie es scheint – und jeder Zug auf dem Schachbrett kann der letzte sein. »Der unsichtbare Klient« ist ein Noir-Thriller über Macht, Verrat und die Frage, ob ein Mann in einer Stadt voller Schatten überhaupt gewinnen kann.",
+    "links": [
+      { "format": "PDF", "url": "Unsichtbare_Klient/Der unsichtbare Klient - Joe Care.pdf" },
+      { "format": "EPUB", "url": "Unsichtbare_Klient/Der unsichtbare Klient - Joe Care.epub" },
+      { "format": "ODT", "url": "Unsichtbare_Klient/Der unsichtbare Klient - Joe Care.odt" },
+      { "format": "HTMLZ", "url": "Unsichtbare_Klient/Der unsichtbare Klient - Joe Care.htmlz" }
+    ]
+  },
+  {
+    "id": "witwe",
+    "title": "Die Witwe schweigt",
+    "coverUrl": "Witwe/cover.jpg",
+    "genre": ["Krimi"],
+    "description": "Kurzbeschreibung nicht verfügbar.",
+    "links": [
+      { "format": "PDF", "url": "Witwe/Die Witwe schweigt - Joe Care.pdf" },
+      { "format": "EPUB", "url": "Witwe/Die Witwe schweigt - Joe Care.epub" },
+      { "format": "ODT", "url": "Witwe/Die Witwe schweigt - Joe Care.odt" }
+    ]
+  },
+  {
+    "id": "nebelprotokolle",
+    "title": "Nebelprotokolle - Archiv der Schatten",
+    "coverUrl": "Nebelprotokolle/cover.jpg",
+    "genre": ["Thriller"],
+    "description": "Kurzbeschreibung nicht verfügbar.",
+    "links": [
+      { "format": "DOCX", "url": "Nebelprotokolle/Nebelprotokolle - Archiv der Sc - Joe Care.docx" },
+      { "format": "EPUB", "url": "Nebelprotokolle/Nebelprotokolle - Archiv der Sc - Joe Care.epub" },
+      { "format": "PDF", "url": "Nebelprotokolle/Nebelprotokolle - Archiv der Sc - Joe Care.pdf" }
+    ]
+  },
+  {
+    "id": "neonlicht",
+    "title": "Blut im Neonlicht",
+    "coverUrl": "Neonlicht/cover.jpg",
+    "genre": ["Krimi"],
+    "description": "Ein Marlowe-Fall voller Lügen, Lust und Leichen. Wenn der Regen die Straßen in schwarze Spiegel verwandelt, erwachen die Schatten zum Leben. Privatdetektiv Jack Marlowe stolpert in einen Fall, der nach billigem Whiskey riecht und nach teurem Blut schmeckt.",
+    "links": [
+      { "format": "EPUB", "url": "Neonlicht/Blut im Neonlicht - Joe Care.epub" },
+      { "format": "ODT", "url": "Neonlicht/Blut im Neonlicht - Joe Care.odt" },
+      { "format": "PDF", "url": "Neonlicht/Blut im Neonlicht - Joe Care.pdf" }
+    ]
+  },
+  {
+    "id": "katze_eingesperrt",
+    "title": "Die Katze war eingesperrt",
+    "coverUrl": "Katze_eingesperrt/cover.jpg",
+    "genre": ["Krimi"],
+    "description": "Kurzbeschreibung nicht verfügbar.",
+    "links": [
+      { "format": "DOCX", "url": "Katze_eingesperrt/Die Katze war eingesperrt - Joe Care.docx" },
+      { "format": "EPUB", "url": "Katze_eingesperrt/Die Katze war eingesperrt - Joe Care.epub" },
+      { "format": "HTMLZ", "url": "Katze_eingesperrt/Die Katze war eingesperrt - Joe Care.htmlz" },
+      { "format": "ODT", "url": "Katze_eingesperrt/Die Katze war eingesperrt - Joe Care.odt" }
+    ]
+  },
+  {
+    "id": "doppeltes_spiel",
+    "title": "Doppeltes Spiel",
+    "coverUrl": "Doppeltes_Spiel/cover.jpg",
+    "genre": ["Kriminalroman", "Noir"],
+    "description": "Er suchte die Wahrheit – und fand Verrat im Regen. Privatdetektiv Crane kennt die Schattenseiten der Stadt besser als jeder andere. Doch als Evelyn Marlowe in sein Büro tritt, beginnt ein Fall, der ihn tiefer hinabzieht als alle zuvor.",
+    "links": [
+      { "format": "EPUB", "url": "Doppeltes_Spiel/Doppeltes Spiel - Joe Care.epub" },
+      { "format": "ODT", "url": "Doppeltes_Spiel/Doppeltes Spiel - Joe Care.odt" },
+      { "format": "PDF", "url": "Doppeltes_Spiel/Doppeltes Spiel - Joe Care.pdf" }
+    ]
+  }
+]
