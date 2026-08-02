@@ -200,7 +200,7 @@ begin
  result := dir
  // Fester Spezialfall für radius10
  else if radius =10 then
- result := ((dir +2) mod6) +1
+ result := ((dir +2) mod 6) +1
  // Inversion aus vorberechneter Tabelle für8-Nachbarschaft
  else if radius =15 then
  result := InvDir2D15[dir]
@@ -288,7 +288,7 @@ begin
 end;
 
 { T2DPoint – Arithmetik / Vektoroperationen }
-function T2DPoint.Add(vect: T2DPoint);
+function T2DPoint.Add(vect: T2DPoint): T2DPoint;
 
 Begin
  // Addition mit nil-Schutz
@@ -534,14 +534,14 @@ Var
 
 Begin
  imax := round(radius * sqrt2 *4);
- If (round(radius * sqrt2) Mod2) =0 Then
+ If (round(radius * sqrt2) Mod 2) =0 Then
  imax := imax +4; // Anpassung für gerade Rundungsfälle
 
  // Richtung in Grundintervall falten
- nr := direction Mod (imax Div2);
- nr := nr Mod (imax Div4);
- If nr > imax Div8 Then
- nr := (imax Div4) - nr; // Spiegelung aufgrund Achsensymmetrie
+ nr := direction Mod (imax Div 2);
+ nr := nr Mod (imax Div 4);
+ If nr > imax Div 8 Then
+ nr := (imax Div 4) - nr; // Spiegelung aufgrund Achsensymmetrie
 
  // Spezialfall Richtung0 ? Nullvektor
  If direction =0 Then
