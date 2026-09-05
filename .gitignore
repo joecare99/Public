@@ -7,3 +7,4 @@
 /docs/Properties
 *.bak
 *.lnk
+/Idee/FPC/*.lps
