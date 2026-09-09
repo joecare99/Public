@@ -163,12 +163,14 @@
         <Filename Value="..\Source\gedcom-import\fra_GenIndivData.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FraGenIndivData"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit9>
       <Unit10>
         <Filename Value="..\Source\gedcom-import\fra_GenIndivEvent.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="FraGenEvent"/>
+        <HasResources Value="True"/>
         <ResourceBaseClass Value="Frame"/>
       </Unit10>
     </Units>

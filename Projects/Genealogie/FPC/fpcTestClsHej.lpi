@@ -1,11 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <PathDelim Value="\"/>
     <General>
+      <Flags>
+        <CompatibilityMode Value="True"/>
+      </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <MainUnit Value="0"/>
       <Title Value="fpcTestClsHej"/>
       <ResourceType Value="res"/>
       <UseXPManifest Value="True"/>
@@ -117,7 +119,7 @@
         <PackageName Value="FCL"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="31">
+    <Units Count="32">
       <Unit0>
         <Filename Value="fpcTestClsHej.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -255,6 +257,10 @@
         <Filename Value="..\Source\Components\cls_GenHelperBase.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit30>
+      <Unit31>
+        <Filename Value="..\Source\Components\unt_IGenBase2.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit31>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

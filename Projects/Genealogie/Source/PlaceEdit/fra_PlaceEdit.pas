@@ -115,7 +115,7 @@ type
 
 implementation
 
- uses LCLType, LazUTF8 ,graphics, mvEngine, mvDE_BGRA, Cls_GedComExt ;
+ uses LCLType, LazUTF8 ,graphics, mvEngine, mvDE_BGRA, Cls_GedComExt, RNZ.Types ;
 
  {$R *.lfm}
 

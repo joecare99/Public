@@ -1,6 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <fpdoc-descriptions><package name="fpcTestClsHej"><module name="Unt_IData"><element name="IData"><short>Daten-Interface</short>
       </element>
+    <element name="IDataRO"><short>reaadonly Data-Interface</short>
+      </element><element name="IDataRO.getdata"><short>GetData liefert einen (den aktellen) kompletten Datensatz.</short>
+      </element><element name="IDataRO.First"><short>Springt zum ersten Datensatz</short>
+      </element><element name="IDataRO.Last"><short>Springt zum letzten Datensatz</short>
+      </element><element name="IDataRO.Next"><short>Springt zum nächsten Datensatz</short>
+      </element><element name="IDataRO.Previous"><short>Springt zum vorherigen Datensatz</short>
+      </element><element name="IDataRO.Seek"><short>Sucht einen Datensatz mit der übergebenen Nummer</short>
+      </element><element name="IDataRO.EOF"><short>Ende, keine weiteren Datensätze</short>
+      </element><element name="IDataRO.BOF"><short>Anfang, keine vorherigen Datensätze</short>
+      </element><element name="IDataRO.GetActID"><short>Aktuelle ID</short>
+      </element>
     </module>
   </package>
 </fpdoc-descriptions>

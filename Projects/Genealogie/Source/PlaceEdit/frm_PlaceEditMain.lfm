@@ -1,9 +1,9 @@
 object FrmPlaceEditMain: TFrmPlaceEditMain
   Left = 0
-  Height = 1202
+  Height = 801
   Top = 0
-  Width = 1901
+  Width = 1267
   Caption = 'FrmPlaceEditMain'
-  DesignTimePPI = 144
   OnCreate = FormCreate
+  LCLVersion = '2.2.4.0'
 end

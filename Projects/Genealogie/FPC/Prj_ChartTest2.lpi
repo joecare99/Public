@@ -27,12 +27,15 @@
       <FormatVersion Value="2"/>
       <Modes Count="0"/>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="LCL"/>
+        <PackageName Value="BaseUnits"/>
       </Item1>
+      <Item2>
+        <PackageName Value="LCL"/>
+      </Item2>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="Prj_ChartTest2.DPR"/>
         <IsPartOfProject Value="True"/>
@@ -49,6 +52,10 @@
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="..\..\..\Idee\source\2DIndex\cls_2DIndex.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -59,7 +66,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="..\source\ChartTest;$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\source\ChartTest"/>
+      <OtherUnitFiles Value="..\source\ChartTest;..\..\..\Idee\source\2DIndex"/>
       <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>
