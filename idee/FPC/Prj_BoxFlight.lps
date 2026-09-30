@@ -2,16 +2,13 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="10"/>
-    <BuildModes Active="Debug"/>
-    <Units Count="5">
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
+    <Units Count="3">
       <Unit0>
         <Filename Value="Prj_BoxFlight.dpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="15" Y="26"/>
-        <UsageCount Value="148"/>
-        <Loaded Value="True"/>
-        <DefaultSyntaxHighlighter Value="Delphi"/>
+        <UsageCount Value="28"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\source\Frm_BoxFlight.pas"/>
@@ -20,10 +17,9 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <TopLine Value="569"/>
-        <CursorPos Y="588"/>
-        <UsageCount Value="63"/>
+        <TopLine Value="628"/>
+        <CursorPos X="54" Y="633"/>
+        <UsageCount Value="28"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
@@ -31,150 +27,62 @@
       <Unit2>
         <Filename Value="C:\unt_cdate.pas"/>
         <IsPartOfProject Value="True"/>
-        <EditorIndex Value="4"/>
-        <CursorPos X="86" Y="21"/>
-        <UsageCount Value="71"/>
-        <Loaded Value="True"/>
+        <UnitName Value="unt_CDate"/>
+        <EditorIndex Value="-1"/>
+        <CursorPos X="51" Y="8"/>
+        <UsageCount Value="28"/>
         <DefaultSyntaxHighlighter Value="Delphi"/>
       </Unit2>
-      <Unit3>
-        <Filename Value="C:\lazarus\fpc\3.0.2\source\rtl\objpas\math.pp"/>
-        <EditorIndex Value="3"/>
-        <TopLine Value="430"/>
-        <UsageCount Value="21"/>
-        <Loaded Value="True"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="C:\lazarus\lcl\graphmath.pp"/>
-        <UnitName Value="GraphMath"/>
-        <EditorIndex Value="2"/>
-        <TopLine Value="87"/>
-        <CursorPos X="31" Y="37"/>
-        <UsageCount Value="21"/>
-        <Loaded Value="True"/>
-      </Unit4>
     </Units>
-    <JumpHistory Count="30" HistoryIndex="29">
+    <JumpHistory Count="11" HistoryIndex="10">
       <Position1>
         <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="601" Column="29" TopLine="549"/>
+        <Caret Line="27" Column="69" TopLine="107"/>
       </Position1>
       <Position2>
         <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="16" Column="25"/>
+        <Caret Line="303" Column="21" TopLine="280"/>
       </Position2>
       <Position3>
         <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="44" Column="36" TopLine="28"/>
+        <Caret Line="304" Column="90" TopLine="280"/>
       </Position3>
       <Position4>
         <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="121" TopLine="103"/>
+        <Caret Line="323" Column="18" TopLine="298"/>
       </Position4>
       <Position5>
         <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="116" Column="60" TopLine="103"/>
+        <Caret Line="340" Column="14" TopLine="315"/>
       </Position5>
       <Position6>
         <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="45" Column="51" TopLine="37"/>
+        <Caret Line="375" Column="18" TopLine="49"/>
       </Position6>
       <Position7>
         <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="51" Column="21" TopLine="28"/>
+        <Caret Line="656" Column="9" TopLine="646"/>
       </Position7>
       <Position8>
         <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="53" Column="22" TopLine="28"/>
+        <Caret Line="698" Column="21" TopLine="654"/>
       </Position8>
       <Position9>
         <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="60" Column="81" TopLine="43"/>
+        <Caret Line="665" Column="9" TopLine="644"/>
       </Position9>
       <Position10>
         <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="549" Column="9" TopLine="521"/>
+        <Caret Line="668" Column="19" TopLine="644"/>
       </Position10>
       <Position11>
         <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="163" Column="3" TopLine="144"/>
+        <Caret Line="634" Column="58" TopLine="622"/>
       </Position11>
-      <Position12>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="208" Column="7" TopLine="191"/>
-      </Position12>
-      <Position13>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="240" Column="49" TopLine="215"/>
-      </Position13>
-      <Position14>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="257" Column="41" TopLine="240"/>
-      </Position14>
-      <Position15>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="274" Column="63" TopLine="252"/>
-      </Position15>
-      <Position16>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="309" Column="75" TopLine="291"/>
-      </Position16>
-      <Position17>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="163" TopLine="141"/>
-      </Position17>
-      <Position18>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="164" TopLine="141"/>
-      </Position18>
-      <Position19>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="165" TopLine="141"/>
-      </Position19>
-      <Position20>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="166" TopLine="141"/>
-      </Position20>
-      <Position21>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="163" TopLine="141"/>
-      </Position21>
-      <Position22>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="166" Column="4" TopLine="141"/>
-      </Position22>
-      <Position23>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="368" Column="50" TopLine="350"/>
-      </Position23>
-      <Position24>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="205" Column="52" TopLine="192"/>
-      </Position24>
-      <Position25>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="166" Column="24" TopLine="149"/>
-      </Position25>
-      <Position26>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="217" Column="29" TopLine="200"/>
-      </Position26>
-      <Position27>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="168" Column="64" TopLine="376"/>
-      </Position27>
-      <Position28>
-        <Filename Value="C:\unt_cdate.pas"/>
-        <Caret Line="21" Column="86"/>
-      </Position28>
-      <Position29>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="166" Column="50" TopLine="169"/>
-      </Position29>
-      <Position30>
-        <Filename Value="..\source\Frm_BoxFlight.pas"/>
-        <Caret Line="437" Column="14" TopLine="427"/>
-      </Position30>
     </JumpHistory>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>

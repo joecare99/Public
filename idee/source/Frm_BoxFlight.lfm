@@ -1,74 +1,73 @@
 object Form6: TForm6
   Left = 349
-  Height = 1134
+  Height = 756
   Top = 91
-  Width = 1508
+  Width = 1005
   ActiveControl = TrackBar1
-  ClientHeight = 1134
-  ClientWidth = 1508
-  DesignTimePPI = 144
+  ClientHeight = 756
+  ClientWidth = 1005
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnResize = FormResize
   object PaintBox1: TPaintBox
-    Left = 16
-    Height = 600
-    Top = 480
-    Width = 600
+    Left = 11
+    Height = 400
+    Top = 320
+    Width = 400
     ParentFont = False
     OnPaint = PaintBox1Paint
   end
   object PaintBox2: TPaintBox
-    Left = 12
-    Height = 444
-    Top = 12
-    Width = 1488
+    Left = 8
+    Height = 296
+    Top = 8
+    Width = 992
     Anchors = [akTop, akLeft, akRight]
     ParentFont = False
     OnMouseMove = PaintBox2MouseMove
   end
   object TrackBar1: TTrackBar
-    Left = -12
-    Height = 38
-    Top = 1092
-    Width = 1503
+    Left = -8
+    Height = 25
+    Top = 728
+    Width = 1002
     Position = 0
     ParentFont = False
     TabOrder = 0
   end
   object BitBtn1: TBitBtn
-    Left = 1008
-    Height = 38
-    Top = 612
-    Width = 112
+    Left = 672
+    Height = 25
+    Top = 408
+    Width = 75
     Caption = 'BitBtn1'
     ParentFont = False
     TabOrder = 1
   end
   object ScrollBar1: TScrollBar
-    Left = 621
-    Height = 24
-    Top = 480
-    Width = 506
+    Left = 416
+    Height = 16
+    Top = 320
+    Width = 337
     Max = 629
     PageSize = 0
     Position = 127
     TabOrder = 2
   end
   object chbShowObjects: TCheckBox
-    Left = 621
-    Height = 29
-    Top = 513
-    Width = 111
+    Left = 414
+    Height = 19
+    Top = 342
+    Width = 74
     Caption = 'Zeige Obj.'
     ParentFont = False
     TabOrder = 3
   end
   object chbPause: TCheckBox
-    Left = 768
-    Height = 29
-    Top = 513
-    Width = 76
+    Left = 512
+    Height = 19
+    Top = 342
+    Width = 51
     Caption = 'Pause'
     Checked = True
     ParentFont = False
@@ -76,20 +75,20 @@ object Form6: TForm6
     TabOrder = 4
   end
   object Label1: TLabel
-    Left = 938
-    Height = 25
-    Top = 484
-    Width = 51
+    Left = 774
+    Height = 15
+    Top = 323
+    Width = 34
     Anchors = [akTop, akRight]
     Caption = 'Label1'
     ParentColor = False
     ParentFont = False
   end
   object BitBtn2: TBitBtn
-    Left = 1332
-    Height = 69
-    Top = 816
-    Width = 168
+    Left = 888
+    Height = 46
+    Top = 544
+    Width = 112
     DefaultCaption = True
     Kind = bkClose
     ModalResult = 11
@@ -97,12 +96,12 @@ object Form6: TForm6
     ParentFont = False
     TabOrder = 5
   end
-  object chbPause1: TCheckBox
-    Left = 880
-    Height = 29
-    Top = 513
-    Width = 76
-    Caption = 'Pause'
+  object chbStereo: TCheckBox
+    Left = 587
+    Height = 19
+    Top = 342
+    Width = 53
+    Caption = 'Stereo'
     Checked = True
     ParentFont = False
     State = cbChecked
@@ -111,7 +110,7 @@ object Form6: TForm6
   object Timer1: TTimer
     Interval = 40
     OnTimer = Timer1Timer
-    left = 876
-    top = 566
+    Left = 584
+    Top = 377
   end
 end

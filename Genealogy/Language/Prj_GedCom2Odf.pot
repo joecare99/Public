@@ -1,0 +1,463 @@
+msgid ""
+msgstr "Content-Type: text/plain; charset=UTF-8"
+
+#: cmp_gedcomdocumentwriter.rsausgewandert
+msgid "ausgewandert"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsbapt
+msgid "~"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsbegraben
+msgid "begraben"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsberufsverzei
+msgid "Berufsverzeichnis"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsbesa
+msgid "besaß"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsborn
+msgid "*"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsburr
+msgid "="
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter1
+msgid "Die Anordnung des Stoffes"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter1text1
+msgid "So verwickelt auch die Darstellung verwandtschaftlicher Zusammenhänge erscheinen mag, so lässt sich der zeitliche Ablauf der Geschlechter und ganzer Bevölkerungen doch auf ein stets gleichbleibendes Grundelement zurückführen: _auf die aus einem Elternpaar und seinen Kindern bestehende Familie_, die sogenannte _Kleinfamilie_. Jede Familie entsteht in der Regel durch die Eheschließung, wächst mit der Geburt der Kinder, schwindet wieder mit deren Heranwachsen und Ausscheiden aus dem Elternhaus, und erlischt schließlich mit dem Tod der beiden Ehegatten, um so im Wechsel der Zeit immer wieder neuen Familien Platz zu machen."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter1text2
+msgid "Der gesamte Stoff des Buches ist daher grundsätzlich nach Familien geordnet. Jede Familie ist mit einer laufenden Nummer versehen, das ist die Familiennummer. Auch Einzelfälle, vereinzelte Geburten, Sterbefälle oder Verheiratungen von sonst ortsfremden Personen werden mitgezählt, sie werden eben als Bestandteile oder Bruchstücke von Kleinfamilien angesehen, die sich irgendwie an anderen Orten ergänzen lassen."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter1text3
+msgid "Alle Familien gleichen Namens sind zusammengefasst und in sich zeitlich geordnet, #ohne# Rücksicht darauf, ob sie miteinander in einem verwandtschaftlichen Zusammenhang stehen oder nicht. Eine Darstellung und Trennung nach \"Stämmen\" erfolgt also nicht."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter1text4
+msgid "Da die Schreibweise der Familiennamen zum Teil noch fast bis ins 19.Jahrhundert starken Schwankungen unterworfen war, wurde die Einordnung der Familien dieses Namens in der Regel nach der heute üblichen Schreibweise vorgenommen. Die abweichenden oder in früherer Zeit gebräuchlichen Formen eines Namens sind bei den einzelnen Familien oder am Anfang des Abschnitts so aufgeführt, wie sie in den Quellen vorkommen. Im Familiennamensverzeichnis am Schluss des Buches sind mit allen Familiennamen auch deren abweichende Formen aufgenommen."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter1text5
+msgid "Für die zeitliche Einordnung einer Familie war stets der Zeitpunkt ihrer Entstehung maßgebend, also in der Regel das Traudatum. War aber das Traudatum nicht zu ermitteln, so z.B. bei Beginn der Kirchenbücher, ferner wenn eine Familie von außerhalb zuzog und die Trauung an einem anderen Ort stattfand, dann ist die betreffende Familie zeitlich nach dem Geburtsdatum des ersten bekannten Kindes eingeordnet."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter2
+msgid "Die Familienzusammenhänge"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter2text1
+msgid "Der verwandtschaftliche Zusammenhang zwischen den einzelnen Familien ist mit Hilfe der Familiennummern ersichtlich gemacht. Bei jeder Familie ist sowohl beim Mann als auch bei der Frau in eckigen Klammern (z.B. |<5550>|) durch die Familiennummer angegeben, aus welchen Familien sie stammen. Ebenso wird auch in großen eckigen Klammern auf andere Ehen oder auf uneheliche Verbindungen der betreffenden Person hingewiesen (z.B. |[4321]|)."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter2text2
+msgid "In gleicher Weise wird bei den Kindern jeder Familie durch Zusatz, der entsprechenden Familiennummern in grpßen eckigen Klammern angegeben, welche ehelichen oder unehelichen Verbindungen die Kinder später selbst eingegangen sind."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter2text3
+msgid "Durch dieses System sind sämtliche aufgeführten Familien und Einzelpersonen, die mit anderen hier aufgeführten Familien in irgend einem verwandtschaftlichen Zusammenhang stehen, in einfacher Form miteinander in Verbindung gesetzt."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter2text4
+msgid "Bei Personen, die von außerhalb stammen, die in den Ort einheirateten oder von auswärts zugezogen sind, und also auch keine verwandtschaftliche Beziehung im Ort haben, wird jeweils in den eckigen Klammern an Stelle der Familiennummern alles das angegeben, was, über ihre Herkunft, ihre Eltern, deren Beruf und Wohnort oder was über weitere auswärtige Verbindungen bekannt ist."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter3
+msgid "Zeichen und Abkürzungen"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter3text1
+msgid "Die Wiedergabe des Gesamtinhaltes der Kirchenbücher und der Standesamtsregister auf so engem Raume war nur möglich durch die weitgehende Verwendung von Zeichen und Abkürzungen und durch die größte Kürze und Knappheit des Ausdrucks. Folgende Zeichen und Abkürzungen wurden daher im Familientext verwendet:"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter4
+msgid "Die Angaben bei jeder Familie"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter4text1
+msgid "Die Angaben bei jeder Kleinfamilie sind in zwei Hauptteile gegliedert, von denen der erste die Eheleute (die Eltern) selbst, der zweite die Kinder betrifft. Alle Angaben stehen im Regelfalle stets in dieser Reihenfolge:"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter4text2
+msgid "1.\tTrauungsdatum und Trauungsort."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter4text3
+msgid "2.\tDie Angaben über den Ehemann: _seinen oder seine Vornamen_, wobei hier wie sonst der Rufname, wenn er bekannt ist, durch Unterstreichung hervorgehoben ist, Beruf, Wohnort, Bekenntnis, in eckigen Klammern hinter dem Bekenntnis Herkunft oder andere eheliche oder uneheliche Verbindungen; Lebensdaten."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter4text4
+msgid "3.\tDie Angaben über die Ehefrau in gleicher Reihenfolge."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter4text5
+msgid "4.\tDie Angaben über die Kinder:"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter4text6
+msgid "Die Kinder sind, soweit die Geburtsdaten bekannt sind, nach dem Alter geordnet. Bei den im Ort verheirateten Kindern folgen nach dem oder den Vornamen in eckigen Klammern die Familiennummern, unter denen ihre ehelichen oder unehelichen Verbindungen zu finden sind. Bei unverheirateten Kindern folgen nach den Vornamen unmittelbar Geburtszeit und -ort, Berufe, evtl. auswärtige Verheiratungen oder die Angabe der Abwanderung. Da das Ortssippenbuch nur den Inhalt der örtlichen Quellen wiedergibt, so besteht bei den zu- und abgewanderten Familien stets die Möglichkeit, dass außer den angegebenen Kindern noch weitere zur Familie gehören, die nicht am Ort geboren bzw. gestorben sind. Wie denn in vielen Fällen Familien unvollständig bleiben müssen, die am Ort selbst nicht von ihrer Gründung bis zu ihrer Auflösung wohnhaft geblieben sind."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter4text7
+msgid "Auf fehlende Lebensdaten wird nicht besonders hingewiesen; ist also bei einer Person aus den örtlichen Quellen nichts über Geburt, Heirat oder Tod, Beruf, Wohn- oder Herkunftsort usw. zu erfahren, so sind diese Angaben im Text einfach übergangen."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter5
+msgid "Uneheliche Verbindungen"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter5text1
+msgid "Uneheliche Verbindungen stellen \"biologische Ehen\" dar und werden wie Kleinfamilien behandelt. Sie erhalten wie die ehelichen Verbindungen eine Familiennummer, ihre zeitliche Einordnung erfolgt nach dem Geburtstag des (ersten) Kindes."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter5text2
+msgid "Uneheliche Kinder stehen in der Regel unter dem Familiennamen der Mutter, da sie diesen in den meisten Fällen im späteren Leben führten. Der Vater des unehelichen Kindes ist nur dann angegeben, wenn eine ausdrückliche Vaterschaftsanerkennung erfolgte. Hatte eine Frau mehrere uneheliche Kinder, ohne dass der Vater oder die Väter bekannt oder genannt sind, so sind diese Kinder der Einfachheit halber unter einer gemeinsamen Familiennummer zusammengefasst; damit ist jedoch nicht, gesagt, dass es sich um Vollgeschwister von dem gleichen Vater handelt."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter5text3
+msgid "Uneheliche Kinder, deren Eltern später miteinander heirateten, sogenannte \"voreheliche\" Kinder, sind daher nicht als uneheliche Kinder behandelt, sondern sind gemeinsam mit den .ehelich geborenen Geschwistern unter der elterlichen Familiennummer zusammengefasst."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter6
+msgid "Die Verzeichnisse"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter6text1
+msgid "Alle vorkommenden Personen sind am Schluss des Buches in einem alphabetisch geordneten Verzeichnis zusammengestellt; dabei wird auch auf die verschiedenen Schreibweisen eines Namens durch gegenseitige Verweise eingegangen. Ebenso sind alle vorkommenden Ortsnamen und Berufe in einem Register aufgeführt; bei der näheren Bestimmung der Orte, die zwar nicht in allen Fällen möglich war, wurde die Angabe der geographischen Lage für wichtiger angesehen als die der vielfach wechselnden politischen Zugehörigkeit. Die Zahlen hinter den Familien- und Ortsnamen verweisen auf die Familiennummern, unter denen sie zu finden sind."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter7
+msgid "Wie findet man Anschluss an den Familientext"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter7text1
+msgid "Der Ortsansässige findet wohl im Familientext des Buches infolge der strengen alphabetischen und zeitlichen Ordnung des gesamten Stoffes leicht seine eigene Familie oder sich selbst sowie seine weiteren Verwandten. An Hand der übersichtlichen Nummerierung wird jeder nach einiger Übung gar bald die mannigfaltigen Verbindungen des weitverzweigten Verwandtschaftsgefüges seines Ortes zu entwirren vermögen. Demjenigen aber, der nur eine einzelne Familie oder Person sucht, ohne nähere Zusammenhänge zu kennen, helfen in den meisten Fällen die ausführlichen Namens- und Ortsverzeichnisse weiter."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter8
+msgid "Einträge von auswärts"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter8text1
+msgid "Es sei besonders darauf hingewiesen, dass alle Zeit- und Ortsangaben außerhalb unseres Ortes in den meisten Fällen aus den örtlichen Quellen selbst stammen, also aus den Kirchenbüchern und Standesamtsregistern des eigenen Ortes. Von auswärts konnten keinerlei Nachrichten eingeholt werden, das würde den Rahmen wie auch das Thema dieses Buches überschritten haben."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter8text2
+msgid "Außerdem war es in all den Fällen nicht möglich, eine Quelle mit Urkundenwert heranzuziehen, wo es sich um die Darstellung der Familien der Neubürger und Heimatvertriebenen handelt. Alle Nachrichten über sie beruhen fast ausschließlich auf mündliche Mitteilungen oder auf ihren eigenen Angaben bei Verwaltungserhebungen (Haushaltslisten u.ä.) und sind deswegen von allen übrigen streng quellenmäßig belegten Angaben des Buches zu unterscheiden, Doch erhöht die Aufnahme dieses neuen Bevölkerungsteiles mit den Angaben über dessen Herkunft den historischen Wert des Buches gerade für spätere Zeiten so ungemein, dass diese Nachteile nicht so entscheidend ins Gewicht fallen dürften."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter8text3
+msgid "Sehr nachteilig für die Vollständigkeit wirken sich die von den Pfarr- und Standesämtern nur sehr mangelhaft erfassten und erfassbaren Mitteilungen über die teilweise sehr zahlreichen auswärts erfolgten Geburten und Sterbefälle von Ortseinwohnern aus. Es waren daher oft empfindliche Lücken nicht zu vermeiden."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter9
+msgid "Berichtigungen und Ergänzungen"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rschapter9text1
+msgid "Die mit der Bearbeitung des umfangreichen Quellenmaterials und der Einordnung der zahlreichen Familienzusammenhänge verbundene Kleinarbeit lässt auch bei größter Genauigkeit und Sorgfalt das Unterlaufen von Versehen nicht in allen Fällen vermeiden. Allein schon die Quellen sind nicht frei von Unrichtigkeiten und Irrtümern, auch decken sich manchmal die Angaben der Standesamtsregister und die der Kirchenbücher nicht, ganz abgesehen von den Angaben der in Zweifelsfällen persönlich befragten. Für alle Hinweise und Vorschläge zur Berichtigung und Verbesserung, die in einem Korrekturverzeichnis später zusammengefasst werden sollen,ist daher der Verfasser stets dankbar."
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsdeath
+msgid "†"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsdivo
+msgid "o/o"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rseigentumsverzei
+msgid "Eigentumsverzeichnis"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rseinleitung
+msgid "Einleitung"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsfamilienverzeichnis
+msgid "Familienverzeichnis"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsgeboren
+msgid "geboren"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsgeheiratet
+msgid "geheiratet"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsgeschieden
+msgid "geschieden"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsgestorben
+msgid "gestorben"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsgetauft
+msgid "getauft"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsheadline
+msgid "Anleitung für die Leser des Familienbuches"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsilleg
+msgid "o-o"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsilleg2
+msgid "o~o"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rskam
+msgid "kam"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsmarr
+msgid "⚭"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsmitglieddes
+msgid "Mitglied des"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsmitgliedseit
+msgid "Mitglied seit"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsortsverzeich
+msgid "Ortsverzeichnis"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsortsverzeich2
+msgid "Ortsverzeichnis (hierarchisch)"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rspersonenverz
+msgid "Personenverzeichnis"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rssubtitle
+msgid "Untertitel"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rstitle
+#, object-pascal-format
+msgid "Familienbuch %s"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rstoc
+msgid "Inhaltsverzeichnis"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rsunehelich
+msgid "unehelich"
+msgstr ""
+
+#: cmp_gedcomdocumentwriter.rswar
+msgid "war"
+msgstr ""
+
+#: cmp_gedcomfile.rsgenealogieexchangefile
+msgid "Genealogie-Exchange-File"
+msgstr ""
+
+#: frm_gedcom2odfmain.rsstatistics
+#, object-pascal-format
+msgid ""
+"Statistics:\n"
+"Individuals:\t%d\n"
+"Families:\t%d\n"
+"Notes:\t%d\n"
+"Places:\t%d\n"
+"Sources:\t%d\n"
+"Repositories:\t%d\n"
+"Objects:\t%d"
+msgstr ""
+
+#: tfragenevent.edtdate.text
+msgid "edtDate"
+msgstr ""
+
+#: tfragenevent.lblevent.caption
+msgid "Evt:"
+msgstr ""
+
+#: tfragenevent.pnlclient.caption
+msgid "pnlClient"
+msgstr ""
+
+#: tfragenevent.pnlleft.caption
+msgctxt "tfragenevent.pnlleft.caption"
+msgid "pnlLeft"
+msgstr ""
+
+#: tfrashowindiv.btnhparents.caption
+msgid "btnHParents"
+msgstr ""
+
+#: tfrashowindiv.btnwparents.caption
+msgid "btnWParents"
+msgstr ""
+
+#: tfrashowindiv.button1.caption
+msgid "Button1"
+msgstr ""
+
+#: tfrashowindiv.drawgrid1.columns[0].title.caption
+msgid "Go"
+msgstr ""
+
+#: tfrashowindiv.drawgrid1.columns[1].title.caption
+msgid "#"
+msgstr ""
+
+#: tfrashowindiv.drawgrid1.columns[2].title.caption
+msgid "Kinder: 0"
+msgstr ""
+
+#: tfrashowindiv.drawgrid1.columns[3].title.caption
+msgid "M/W"
+msgstr ""
+
+#: tfrashowindiv.drawgrid1.columns[4].title.caption
+msgid "Geburt"
+msgstr ""
+
+#: tfrashowindiv.drawgrid1.columns[5].title.caption
+msgid "Tod"
+msgstr ""
+
+#: tfrashowindiv.groupbox1.caption
+msgid "GroupBox1"
+msgstr ""
+
+#: tfrashowindiv.groupbox2.caption
+msgid "GroupBox2"
+msgstr ""
+
+#: tfrashowindiv.lblhbirth.caption
+msgctxt "tfrashowindiv.lblhbirth.caption"
+msgid "Geb.:"
+msgstr ""
+
+#: tfrashowindiv.lblhbirthdata.caption
+msgid ""
+"< .  .   >\n"
+"in ..."
+msgstr ""
+
+#: tfrashowindiv.lblhdeath.caption
+msgctxt "tfrashowindiv.lblhdeath.caption"
+msgid "Tod:"
+msgstr ""
+
+#: tfrashowindiv.lblhdeathdata.caption
+msgctxt "tfrashowindiv.lblhdeathdata.caption"
+msgid "<  .  .    >"
+msgstr ""
+
+#: tfrashowindiv.lblhscount.caption
+msgctxt "tfrashowindiv.lblhscount.caption"
+msgid "0"
+msgstr ""
+
+#: tfrashowindiv.lblwbirth.caption
+msgctxt "tfrashowindiv.lblwbirth.caption"
+msgid "Geb.:"
+msgstr ""
+
+#: tfrashowindiv.lblwbirthdata.caption
+msgid "< .  .   >"
+msgstr ""
+
+#: tfrashowindiv.lblwdeath.caption
+msgctxt "tfrashowindiv.lblwdeath.caption"
+msgid "Tod:"
+msgstr ""
+
+#: tfrashowindiv.lblwdeathdata.caption
+msgctxt "tfrashowindiv.lblwdeathdata.caption"
+msgid "<  .  .    >"
+msgstr ""
+
+#: tfrashowindiv.lblwscount.caption
+msgctxt "tfrashowindiv.lblwscount.caption"
+msgid "0"
+msgstr ""
+
+#: tfrashowindiv.panel2.caption
+msgid "Panel2"
+msgstr ""
+
+#: tfrashowindiv.statictext2.caption
+msgid "StaticText2"
+msgstr ""
+
+#: tfrmgedcom2odfmain.btnautoestbirth.caption
+msgid "Estimate Birth"
+msgstr ""
+
+#: tfrmgedcom2odfmain.btnautosetname.caption
+msgid "Set Name"
+msgstr ""
+
+#: tfrmgedcom2odfmain.btnbrowsefile.caption
+msgid "..."
+msgstr ""
+
+#: tfrmgedcom2odfmain.btnclearlists.caption
+msgid "Clear"
+msgstr ""
+
+#: tfrmgedcom2odfmain.btncreateodf.caption
+msgid "Create Odf"
+msgstr ""
+
+#: tfrmgedcom2odfmain.btnfilesaveas.caption
+msgid "Save"
+msgstr ""
+
+#: tfrmgedcom2odfmain.btnopenfile.caption
+msgid "Open"
+msgstr ""
+
+#: tfrmgedcom2odfmain.caption
+msgid "frmGedCom2OdfMain"
+msgstr ""
+
+#: tfrmgedcom2odfmain.cbxfilename.text
+msgid "cbxFilename"
+msgstr ""
+
+#: tfrmgedcom2odfmain.lblestbirthresult.caption
+msgctxt "tfrmgedcom2odfmain.lblestbirthresult.caption"
+msgid "<0>"
+msgstr ""
+
+#: tfrmgedcom2odfmain.lblsetnameresult.caption
+msgctxt "tfrmgedcom2odfmain.lblsetnameresult.caption"
+msgid "<0>"
+msgstr ""
+
+#: tfrmgedcom2odfmain.lblstatistics.caption
+msgid "lblStatistics"
+msgstr ""
+
+#: tfrmgedcom2odfmain.pnlleft.caption
+msgctxt "tfrmgedcom2odfmain.pnlleft.caption"
+msgid "pnlLeft"
+msgstr ""
+

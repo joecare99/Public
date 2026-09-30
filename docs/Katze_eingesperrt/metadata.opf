@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="uuid_id" version="2.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:identifier opf:scheme="calibre" id="calibre_id">19</dc:identifier>
+        <dc:identifier opf:scheme="uuid" id="uuid_id">6d8a99b1-a8c8-43cf-a730-99af89677a1c</dc:identifier>
+        <dc:title>Die Katze war eingesperrt</dc:title>
+        <dc:creator opf:file-as="Care, Joe" opf:role="aut">Joe Care</dc:creator>
+        <dc:contributor opf:file-as="calibre" opf:role="bkp">calibre (7.6.0) [https://calibre-ebook.com]</dc:contributor>
+        <dc:date>0101-01-01T00:00:00+00:00</dc:date>
+        <dc:language>eng</dc:language>
+        <dc:subject>Krimi</dc:subject>
+        <meta name="calibre:timestamp" content="2025-09-16T13:20:56+00:00"/>
+        <meta name="calibre:title_sort" content="Katze war eingesperrt, Die"/>
+    </metadata>
+    <guide>
+        <reference type="cover" title="Titelbild" href="cover.jpg"/>
+    </guide>
+</package>

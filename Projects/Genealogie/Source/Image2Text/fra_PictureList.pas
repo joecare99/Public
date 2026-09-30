@@ -311,7 +311,10 @@ procedure TfraPictureList.Select(aFile: string);
 var
   lFnd: TListItem;
 begin
-  lFnd :=lstPictures.FindCaption(0,ExtractFileName(aFile),false,false,false,false);
+  if aFile.startswith('..') then
+
+  else
+      lFnd :=lstPictures.FindCaption(0,ExtractFileName(aFile),false,false,false,false);
   if Assigned(lFnd) then
     lstPictures.itemindex:= lFnd.Index;
 end;
