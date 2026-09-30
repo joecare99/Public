@@ -1,0 +1,18 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="uuid_id" version="2.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:identifier opf:scheme="calibre" id="calibre_id">20</dc:identifier>
+        <dc:identifier opf:scheme="uuid" id="uuid_id">d5b6599b-80cf-4c92-ad02-d1ed2281d74d</dc:identifier>
+        <dc:title>Nebelprotokolle - Archiv der Schatten</dc:title>
+        <dc:creator opf:file-as="Care, Joe" opf:role="aut">Joe Care</dc:creator>
+        <dc:contributor opf:file-as="calibre" opf:role="bkp">calibre (7.6.0) [https://calibre-ebook.com]</dc:contributor>
+        <dc:date>0101-01-01T00:00:00+00:00</dc:date>
+        <dc:language>deu</dc:language>
+        <dc:subject>Thriller</dc:subject>
+        <meta name="calibre:timestamp" content="2025-09-19T23:09:22+00:00"/>
+        <meta name="calibre:title_sort" content="Nebelprotokolle - Archiv der Schatten"/>
+    </metadata>
+    <guide>
+        <reference type="cover" title="Titelbild" href="cover.jpg"/>
+    </guide>
+</package>

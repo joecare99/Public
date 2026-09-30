@@ -90,20 +90,20 @@ const
  ' |     | '+LineEnding+
  '_|_____| '+LineEnding+
  '       \ ',
- ' /|      '+LineEnding+
- '/ |      '+LineEnding+
- '| |      '+LineEnding+
- '| |      '+LineEnding+
- '| |      '+LineEnding+
- '\ |      '+LineEnding+
- '_\|      ',
- '    /|   '+LineEnding+
- '___/ |   '+LineEnding+
- '\_/| |   '+LineEnding+
- '|X|| |   '+LineEnding+
- '/_\| |   '+LineEnding+
- '   \ |   '+LineEnding+
- '____\|   ');
+ ' / |     '+LineEnding+
+ '/  |     '+LineEnding+
+ '|  |     '+LineEnding+
+ '|  |     '+LineEnding+
+ '|  |     '+LineEnding+
+ '\  |     '+LineEnding+
+ '_\ |     ',
+ '    / |  '+LineEnding+
+ '___/  |  '+LineEnding+
+ '\_/|  |  '+LineEnding+
+ '|X||  |  '+LineEnding+
+ '/_\|  |  '+LineEnding+
+ '   \  |  '+LineEnding+
+ '____\ |  ');
    Movie: array[0..10]  of integer=
 (1,
  0,

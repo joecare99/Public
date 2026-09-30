@@ -65,7 +65,7 @@ type
   TForm6 = class(TForm)
     BitBtn2: TBitBtn;
     chbPause: TCheckBox;
-    chbPause1: TCheckBox;
+    chbStereo: TCheckBox;
     Label1: TLabel;
     Timer1: TTimer;
     PaintBox1: TPaintBox;
@@ -301,7 +301,7 @@ end;
 
 { TCylinder }
 
-function TCylinder.Hittest(fCPoint, rendir: TFloatPoint; out rdistq, r: single): boolean;inline;
+function TCylinder.Hittest(fCPoint, rendir: TFloatPoint; out rdistq, r: single): boolean;
 
 var
   ld: Extended;
@@ -320,7 +320,7 @@ begin
 end;
 
 function TCylinder.Reflect(rendir: TFloatPoint; rr: single; out xx: single
-  ): TFloatPoint;inline;
+  ): TFloatPoint;
 var
   reflOm: float;
 begin
@@ -337,7 +337,7 @@ end;
 { TBox }
 
 function TBox.Hittest(fCPoint, rendir: TFloatPoint; out rdistq, r: single
-  ): boolean;inline;
+  ): boolean;
 
 var
   ld,t1,t2: Extended;
@@ -372,7 +372,7 @@ begin
 end;
 
 function TBox.Reflect(rendir: TFloatPoint; rr: single; out xx: single
-  ): TFloatPoint;inline;
+  ): TFloatPoint;
 begin
   result := rendir;
   if rr>0 then
@@ -630,8 +630,8 @@ begin
 
   fCMove := fCPoint;
   fCPoint := PathFunction(Omega);
-  lCv1  := PathFunction(Omega+0.2);
-  lCv2  := PathFunction(Omega+0.21);
+  lCv1  := PathFunction(Omega+ScrollBar1.Position/1000);
+  lCv2  := PathFunction(Omega+ScrollBar1.Position/1000+0.01);
   fCView.x := lcv2.x-lcv1.x;
   fCView.y := lcv2.y-lcv1.y;
   ll:= sqrt(sqr(fCView.x)+sqr(fCView.y));
@@ -651,12 +651,21 @@ begin
   fCMove.x := (fCPoint.x - fCMove.x) * 1;
   fCMove.y := (fCPoint.y - fCMove.y) * 1;
 
-  fCPoint.x += fCView.y*0.2;
-  fCPoint.y += -fCView.x*0.2;
-
   lSPnt := fCPoint;
-  lSPnt.x +=   cos(ScrollBar1.Position/100);
-  lSPnt.y +=   sin(ScrollBar1.Position/100);
+
+  if chbStereo.Checked then
+    begin
+      fCPoint.x += fCView.y*0.4;
+      fCPoint.y += -fCView.x*0.4;
+    end
+  else
+    begin
+      fCPoint.x += -fCView.y*0.4;
+      fCPoint.y += fCView.x*0.4;
+    end;
+
+  lSPnt.x +=   fCView.x;
+  lSPnt.y +=   fcView.y;
 
   PaintBox1.Invalidate;
   Hrc2 := high(fRendercache) div 4;
@@ -677,12 +686,17 @@ begin
     RenDir.y := -fCView.x * s + fCView.y * c;
     fRendercache[j]:=Trace(MaxHeight, lSPnt, ll, obj, RenDir,fxx=j, rDistq, r);
   end;
-  fCPoint.x += -fCView.y*0.4;
-  fCPoint.y += fCView.x*0.4;
 
-  lSPnt := fCPoint;
-  lSPnt.x +=   cos(ScrollBar1.Position/100);
-  lSPnt.y +=   sin(ScrollBar1.Position/100);
+  if chbStereo.Checked then
+    begin
+      fCPoint.x += -fCView.y*0.8;
+      fCPoint.y += fCView.x*0.8;
+    end
+  else
+    begin
+      fCPoint.x += fCView.y*0.8;
+      fCPoint.y += -fCView.x*0.8;
+    end;
 
   for j := high(fRendercache) div 2+1 to high(fRendercache)  do
   begin

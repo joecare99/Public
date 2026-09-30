@@ -1,0 +1,26 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="uuid_id" version="2.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:identifier opf:scheme="calibre" id="calibre_id">274</dc:identifier>
+        <dc:identifier opf:scheme="uuid" id="uuid_id">dcd39071-bdb9-48c4-8ec0-c52723649689</dc:identifier>
+        <dc:title>Blut im Neonlicht</dc:title>
+        <dc:creator opf:file-as="Care, Joe &amp; ChatGBT5" opf:role="aut">Joe Care</dc:creator>
+        <dc:creator opf:file-as="Care, Joe &amp; ChatGBT5" opf:role="aut">ChatGBT5</dc:creator>
+        <dc:contributor opf:file-as="calibre" opf:role="bkp">calibre (7.6.0) [https://calibre-ebook.com]</dc:contributor>
+        <dc:date>0101-01-01T00:00:00+00:00</dc:date>
+        <dc:description>&lt;div&gt;
+&lt;p align="center" style="line-height: 100%; background-color: transparent; font-weight: bold; font-family: 'Liberation Sans','sans-serif'; font-size: 28pt"&gt;&lt;span style="color: #c9211e"&gt;Blut&lt;/span&gt; im &lt;span style="color: #5983b0"&gt;Neonlicht&lt;/span&gt;&lt;/p&gt;
+&lt;p align="center" style="line-height: 100%; background-color: transparent; font-style: italic; font-weight: bold; font-size: 14pt"&gt;Ein Marlowe‑Fall voller Lügen, Lust und Leichen&lt;/p&gt;
+&lt;p style="line-height: 115%; background-color: transparent; font-size: 14pt"&gt;&lt;span style="background-color: transparent"&gt;Wenn der Regen die Straßen von Los Angeles in schwarze Spiegel verwandelt, erwachen die Schatten zum Leben. Privatdetektiv Jack Marlowe stolpert in einen Fall, der nach billigem Whiskey riecht und nach teurem Blut schmeckt: Ein verschwundener Bruder, eine Schwester mit zu vielen Geheimnissen, eine Sängerin mit einer Stimme wie Gift und ein Antiquar, der mehr Leichen im Keller hat als Bücher im Regal.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="line-height: 115%; background-color: transparent; font-size: 14pt"&gt;&lt;span style="background-color: transparent"&gt;Zwischen flackernden Neonreklamen, verlogenen Polizisten und Schlägern im Maßanzug kämpft Marlowe gegen eine Stadt, die ihre eigenen Kinder frisst. Jeder Hinweis führt tiefer in ein Netz aus Verrat und Gewalt – und jeder Schritt könnte sein letzter sein.&lt;/span&gt;&lt;/p&gt;
+&lt;p style="line-height: 115%; background-color: transparent; font-size: 14pt"&gt;&lt;strong&gt;„Blut im Neonlicht“&lt;/strong&gt; ist ein gnadenloser Abstieg in die Unterwelt einer Stadt, in der Wahrheit nur ein anderes Wort für Täuschung ist – und in der selbst das Licht der Reklame nicht hell genug brennt, um das Blut zu überstrahlen.&lt;/p&gt;
+&lt;p&gt;&lt;/p&gt;&lt;/div&gt;</dc:description>
+        <dc:language>deu</dc:language>
+        <dc:subject>Krimi</dc:subject>
+        <meta name="calibre:timestamp" content="2025-10-14T00:18:32.804945+00:00"/>
+        <meta name="calibre:title_sort" content="Blut im Neonlicht"/>
+    </metadata>
+    <guide>
+        <reference type="cover" title="Titelbild" href="cover.jpg"/>
+    </guide>
+</package>
