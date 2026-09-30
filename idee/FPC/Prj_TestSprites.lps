@@ -2,15 +2,13 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="9"/>
-    <BuildModes Active="Debug"/>
+    <Version Value="11"/>
+    <BuildModes Active="Default"/>
     <Units Count="2">
       <Unit0>
         <Filename Value="Prj_TestSprites.dpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="62" Y="19"/>
-        <UsageCount Value="102"/>
-        <Loaded Value="True"/>
+        <UsageCount Value="20"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\Grafik\Frm_TestSprites.pas"/>
@@ -19,13 +17,15 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <IsVisibleTab Value="True"/>
-        <EditorIndex Value="1"/>
-        <CursorPos X="70" Y="21"/>
-        <UsageCount Value="102"/>
+        <UsageCount Value="20"/>
         <Loaded Value="True"/>
         <LoadedDesigner Value="True"/>
       </Unit1>
     </Units>
     <JumpHistory HistoryIndex="-1"/>
+    <RunParams>
+      <FormatVersion Value="2"/>
+      <Modes Count="0" ActiveMode="default"/>
+    </RunParams>
   </ProjectSession>
 </CONFIG>

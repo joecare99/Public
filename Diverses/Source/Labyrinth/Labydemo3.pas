@@ -18,7 +18,7 @@ uses
   LCLIntf, LCLType, JPEGLib, FileUtil,
 {$ENDIF}
     SysUtils, Classes, Graphics, Controls, Forms, Dialogs, ActnList, Buttons,
-    ExtCtrls, StdActns, StdCtrls, Menus, LabyU3D, Fra_WindRose, ExtDlgs, unt_Point3d;
+    ExtCtrls, StdActns, StdCtrls, Menus, LabyU3, Fra_WindRose, ExtDlgs, unt_Point2d;
 
 type
 

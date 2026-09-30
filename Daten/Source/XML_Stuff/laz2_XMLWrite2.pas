@@ -25,7 +25,7 @@ unit laz2_XMLWrite2;
 
 interface
 
-uses Classes, LazUTF8, laz2_DOM, SysUtils, laz2_xmlutils, lazutf8classes;
+uses Classes, LazUTF8, laz2_DOM, SysUtils, laz2_xmlutils;
 
 type
   TXMLWriterFlag2 = (
@@ -85,7 +85,7 @@ type
     procedure wrtChr(c: DOMChar); {$IFDEF HAS_INLINE} inline; {$ENDIF}
     procedure wrtIndent; {$IFDEF HAS_INLINE} inline; {$ENDIF}
     procedure wrtQuotedLiteral(const ws: DOMString);
-    procedure ConvWrite(const s: DOMString; const SpecialChars: TSetOfChar;
+    procedure ConvWrite(const s: DOMString; const SpecialChars: TSysCharSet;
       const SpecialCharCallback: TSpecialCharCallback);
     procedure WriteNSDef(B: TBinding);
     procedure NamespaceFixup(Element: TDOMElement);
@@ -182,7 +182,7 @@ end;
   ---------------------------------------------------------------------}
 
 const
-  AttrSpecialChars : array[boolean] of TSetOfChar = (
+  AttrSpecialChars : array[boolean] of TSysCharSet = (
     ['<', '"', '&', #0..#31], // false: default
     ['<', '"', '&']  // true: write special characters
     );
@@ -345,7 +345,7 @@ begin
   FActIndent += FLineBreakEnd;
 end;
 
-procedure TXMLWriter2.ConvWrite(const s: DOMString; const SpecialChars: TSetOfChar;
+procedure TXMLWriter2.ConvWrite(const s: DOMString; const SpecialChars: TSysCharSet;
   const SpecialCharCallback: TSpecialCharCallback);
 var
   StartPos, EndPos: Integer;
@@ -877,9 +877,9 @@ end;
 procedure WriteXMLFile(doc: TXMLDocument; const AFileName: String;
   Flags: TXMLWriterFlags2 = []);
 var
-  fs: TFileStreamUTF8;
+  fs: TFileStream;
 begin
-  fs := TFileStreamUTF8.Create(AFileName, fmCreate);
+  fs := TFileStream.Create(AFileName, fmCreate);
   try
     WriteXMLFile(doc, fs, Flags);
   finally

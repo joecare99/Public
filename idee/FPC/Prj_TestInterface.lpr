@@ -1,7 +1,7 @@
 program Prj_TestInterface;
 
 {$mode delphi}
-{$interfaces corba}
+{$interfaces CORBA}
 uses sysutils;
 
 type
@@ -39,7 +39,7 @@ end;
 
 procedure TMyClass3.DoThis(value: integer);
 begin
-  WriteLn('MyClass2.DoThis('+inttostr(value)+'): Also a Success!!!');
+  WriteLn('MyClass3.DoThis('+inttostr(value)+'): Also a Success!!!');
 end;
 
 { TMyClass }

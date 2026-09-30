@@ -304,6 +304,14 @@ msgctxt "tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[3]
 msgid "Birth"
 msgstr ""
 
+#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2basedata.cbxreligion.text
+msgid "(rel)"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2basedata.cbxsex.text
+msgid "Sx"
+msgstr ""
+
 #: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomclient.tblchildren.columns[0].title.caption
 msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomclient.tblchildren.columns[0].title.caption"
 msgid "Name"
@@ -317,6 +325,26 @@ msgstr ""
 #: tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[1].title.caption
 msgctxt "tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[1].title.caption"
 msgid "Hochzeit"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton6.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton6.caption"
+msgid "|<"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton7.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton7.caption"
+msgid "<"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton8.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton8.caption"
+msgid ">|"
+msgstr ""
+
+#: tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton9.caption
+msgctxt "tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton9.caption"
+msgid ">"
 msgstr ""
 
 #: tform1.fraindindex1.stringgrid1.columns[0].title.caption
@@ -1000,6 +1028,7 @@ msgid "&Ersetzen"
 msgstr ""
 
 #: tfraawhejview.speedbutton2.caption
+msgctxt "tfraawhejview.speedbutton2.caption"
 msgid "|<"
 msgstr ""
 
@@ -1009,6 +1038,7 @@ msgid "<"
 msgstr ""
 
 #: tfraawhejview.speedbutton4.caption
+msgctxt "tfraawhejview.speedbutton4.caption"
 msgid ">|"
 msgstr ""
 
