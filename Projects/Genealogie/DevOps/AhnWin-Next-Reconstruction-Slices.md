@@ -4,7 +4,520 @@
 **Priority:** Continue non-reporting reconstruction; QuickReport/LazReport is
 deferred by user request.
 
-## Latest checkpoint — Source-name list Enter dispatch
+## Latest checkpoint — Window-title menu dispatch
+
+Restored the DFM/LFM-bound `TForm1.Fenstertitelndern1Click` from its
+call-and-return listing as `fcapt(Sender)`. The callee displays a modal title
+prompt and updates the form and application titles, so the wrapper was not
+invoked during automated validation.
+
+Both Lazarus projects build and all 213 synthetic tests pass. Coverage is
+711/1,047 methods retaining listings (67.91%); `frmAhnenWinMain.pas` is
+240/323 (74.30%). Tracker: 182 items, 176 done, five blocked, and one pending
+for deferred LazReport. No genealogy data was opened and AhnWin was not
+started.
+
+## Latest checkpoint — Death-date edit exit dispatch
+
+Restored the DFM/LFM-bound `TForm1.DBEdit20Exit` and `DBEdit21Exit` wrappers
+from their complete call-and-return listings as `wt36(Sender)`. Both resource
+bindings and the shared call target are confirmed. The `wt36` helper remains
+assembler-backed and provider-dependent, so neither event was invoked.
+
+Both Lazarus projects build and all 213 synthetic tests pass. Coverage is
+712/1,047 methods retaining listings (68.00%); `frmAhnenWinMain.pas` is
+241/323 (74.61%). Tracker: 181 items, 175 done, five blocked, and one pending
+for deferred LazReport. No genealogy data was opened and AhnWin was not
+started.
+
+## Latest checkpoint — Main-form memo exit save dispatch
+
+Restored the DFM/LFM-bound `TForm1.DBMemo1Exit` from its complete two-
+instruction listing as `speich1(Sender)`. This matches the existing
+`DBNavigator1BeforeAction` dispatch and the identified direct call target.
+The handler was not executed: `speich1` can post or delete the current record.
+Both Lazarus projects build and all 213 consolidated tests pass; the existing
+synthetic persistence tests exercise its provider-independent helper
+branches. Coverage is 716/1,047 methods retaining listings (68.39%);
+`frmAhnenWinMain.pas` is 245/323 (75.85%). Tracker: 179 items, 173 done,
+five blocked, and one pending for deferred LazReport. No genealogy data was
+opened and AhnWin was not started.
+
+## Next checkpoint — Baptism date edit exit dispatch
+
+Restored the DFM/LFM-bound `TForm1.DBEdit12Exit` and `DBEdit13Exit` wrappers
+from their complete call-and-return listings as `wt34(Sender)`. Both event
+resources and the common target are confirmed. The `wt34` date-validation
+helper remains assembler-backed and provider-dependent, so neither wrapper
+was invoked; validation is by compilation and the existing synthetic suite
+without opening genealogy data.
+
+Both Lazarus projects build and all 213 synthetic tests pass. Coverage is
+714/1,047 methods retaining listings (68.19%); `frmAhnenWinMain.pas` is
+243/323 (75.23%). Tracker: 180 items, 174 done, five blocked, and one
+pending for deferred LazReport. No genealogy data was opened and AhnWin was
+not started.
+
+## Latest checkpoint — Graphic-form close lifecycle
+
+Restored `TForm13.FormClose` from listing `00570728`. The DPR create-form
+sequence maps the first global target (`0061C9B0`) to `Form12` and the second
+(`0061E10C`) to `Form13`. The handler closes global `Form12`, then hides global
+`Form13`, rather than acting on its receiver. A synthetic test uses a distinct
+receiver, parameter dialog, and graphic form, and checks the close-before-hide
+order and global-target identity without running drawing or printing code.
+
+All 213 consolidated synthetic tests pass, and the Debug main-project rebuild
+links. Coverage is 717/1,047 methods retaining listings (68.48%);
+`Unit13.pas` is 52/55 (94.55%). Tracker: 178 items, 172 done, five blocked,
+and one pending for deferred LazReport. No genealogy data was opened and
+AhnWin was not started.
+
+## Latest checkpoint — Unit19 no-op callback
+
+Removed the compiler-generated try/finally listing from
+`TForm19.namgv` (listing `0055748C`): the complete body performs no
+domain-visible operation. Neither `Unit19.dfm` nor `Unit19.lfm` binds this
+method, and no other source caller was found; its reachability remains
+unknown. A synthetic `CreateNew` test verifies the handler preserves seeded
+form and checkbox state without streaming the resource.
+
+The focused Unit19 suite passes 9/9 tests; all 212 consolidated tests pass,
+and the Debug main-project rebuild links. Coverage is 718/1,047 methods
+retaining listings (68.58%); `Unit19.pas` is 17/28 (60.71%). Tracker: 177
+items, 171 done, five blocked, and one pending for deferred LazReport. No
+genealogy data was opened and AhnWin was not started.
+
+## Previous checkpoint — DB navigator save-before-action dispatch
+
+Restored the DFM/LFM-bound `TForm1.DBNavigator1BeforeAction` from the
+complete listing at `005D9384` as `speich1(Sender)`. The event signature
+matches the target method, and both form resources bind the navigator's
+`BeforeAction` to this handler; the navigator is connected to `DataSource1`
+(`Table1`). The callee implements the separately reconstructed person-row
+save/delete/duplicate-number flow. The wrapper is intentionally not invoked
+in tests because that path may post or delete a row; existing tests exercise
+its provider-independent persistence helpers using synthetic datasets.
+
+The test project and Debug main project build, and all 211 existing
+synthetic tests pass. Coverage is 719/1,047 methods retaining listings
+(68.67%); `frmAhnenWinMain.pas` is 246/323 (76.16%). Tracker: 176 items,
+170 done, five blocked, and one pending for deferred LazReport. No genealogy
+data was opened and AhnWin was not started.
+
+## Previous checkpoint — Main-form dataset-control callbacks
+
+Restored `TForm1.tabdisab` and `TForm1.tabenab` from listings `005D8834`
+and `005D8858`. The calls at `DataModule2 +$005C` and `+$0080` map to
+`Table1` and `Table5`: the declared component order places `DataSource19`
+in slot 62, and the prior FOKO listing anchors that field at `+$014C`,
+establishing the first component slot at `+$0058`. Both `Unit2.dfm` and
+`Unit2.lfm` bind `DataSource1` to `Table1` and `DataSource5` to `Table5`.
+The restored helpers disable and re-enable controls on those two datasets in
+listing order. A synthetic test exercises both methods on inactive
+`TSQLTable` instances without opening data; no DFM/LFM event binding or
+additional runtime purpose is inferred.
+
+All 211 consolidated tests pass; the forced Debug main-project rebuild links.
+Coverage is 720/1,047 methods retaining listings (68.77%);
+`frmAhnenWinMain.pas` is 247/323 (76.47%). Tracker: 175 items, 169 done,
+five blocked, and one pending for deferred LazReport. No genealogy data was
+opened and AhnWin was not started.
+
+## Previous checkpoint — Graphic-form printer setup dispatch
+
+Restored DFM/LFM-bound `TForm13.SpeedButton13Click` from listing `00572478`
+as a direct `PrinterSetupDialog1.Execute` call; its Boolean result is ignored,
+as in the listing. Both form resources bind the callback, and the button hint
+is `Druckereinstellung`. The synthetic test injects a `TPrinterSetupDialog`
+subclass whose virtual `Execute` records the call, so it verifies one
+dispatch without opening the native printer dialog or running a print job.
+This is only printer setup, not QuickReport/LazReport conversion or report
+generation.
+
+All 210 consolidated tests pass; the forced Debug main-project rebuild links.
+Coverage is 722/1,047 methods retaining listings (68.96%);
+`Unit13.pas` is now 53/55. Tracker: 174 items, 168 done, five blocked, and
+one pending for deferred LazReport. No genealogy data was opened and AhnWin
+was not started.
+
+## Latest checkpoint — FOKO selector activation data source
+
+Restored DFM-bound `TForm20.FormActivate` from listing `005CC690`. The
+receiver's lookup combo now assigns `DataModule2.DataSource19` as its
+`ListSource`. The target is corroborated by `Unit2` field order: the
+DataSource19 field at `+$014C` is followed by the two Table19 persistent
+fields and then Table20 at `+$0158`, matching the offsets used in the
+activation and finish listings. `Unit2.dfm` binds DataSource19 to Table19
+(`FKMG.db`, field `TX`); Table20 is `FOKO.DBF`, and the FOKO lookup lists and
+keys on `TX`. The test creates only a synthetic `TDataSource` and lookup
+control; it does not create/open a table or genealogy data.
+
+All 209 consolidated tests pass; the forced Debug main-project rebuild
+links. Coverage is 723/1,047 methods retaining listings (69.05%);
+`Unit20.pas` is now 1/6. Tracker: 173 items, 167 done, five blocked, and one
+pending for deferred LazReport. No genealogy data was opened and AhnWin was
+not started. The separate `BitBtn1Click` database-generation path remains
+unchanged.
+
+## Latest checkpoint — Person-choice counter callbacks
+
+Restored `TPersonEntryChoiceForm._PROC_005C6A20` and
+`_PROC_005C6A50` from their complete listings. They increment and decrement
+the 32-bit cell at `0253587C`, now preserved as `GlobalVar_0253587C`.
+The DFM/LFM bind neither callback, and no other Pascal source reference to
+the cell was found; no state meaning or event reachability is inferred.
+Synthetic tests verify `41 -> 42` and `41 -> 40` on unstreamed dialog
+instances.
+
+All 208 consolidated tests pass, and the forced Debug main-project rebuild
+links. Coverage is 724/1,047 methods retaining listings (69.15%);
+`Forms\PersonEntryChoiceForm.pas` is now 0/6. Tracker: 172 items, 166 done,
+five blocked, and one pending for deferred LazReport. No genealogy data was
+opened and AhnWin was not started.
+
+## Latest checkpoint — French Republican calendar conversion
+
+Restored the complete DFM-driven `TForm7.berechnen` conversion. It now checks
+for nonempty day/month/year text; dispatches the 12 Gregorian month-start
+anchors; applies the listing's year-specific one-day adjustments; handles
+ordinary days and complementary days; and formats/rechecks the final date
+against 31.12.1805. Complementary entries are accepted only for Fructidor
+with year item indices 2, 6, or 10. Invalid complementary entries retain the
+German warning and clear the output; dates after the historical cutoff retain
+the original message text/caption and clear the output.
+
+The static month-start table includes the hidden first jump-table case at
+`005CEFB4`; its `22.09.1792` value is inferred from the table alignment,
+DFM month order, and the adjacent visible anchors. The unannotated year
+comparison literals at `005CF0A4`/`005CF0C8` are resolved as I/IV by the
+ordered DFM year choices; the other comparisons are directly visible in the
+listing. Synthetic tests exercise all month starts, ordinary conversion,
+leap complementary days in years III/VII/XI, the last accepted date, and the
+post-cutoff output-clearing/message path. The test replaces the LCL message
+box callback and restores it afterward, so no modal UI is opened.
+
+All 206 consolidated tests pass; the forced Debug main-project rebuild links.
+Coverage is 726/1,047 methods retaining listings (69.34%); `Unit7.pas` is
+0/10 (0%). Tracker: 172 items, 166 done, five blocked, and one pending for
+deferred LazReport. No genealogy data was opened and AhnWin was not started.
+
+## Latest checkpoint — Place-dialog cancel navigation
+
+Restored the DFM-bound `TForm33.BitBtn2Click` from listing `0053B5F8`, bound
+to the place dialog's `Abbruch` button. In order, it activates
+`Form1.TabSheet2`, closes global `Form33`, and closes global `Form38`. The DPR
+creation calls corroborate both global form identities; the implementation
+does not substitute the event receiver for either global target.
+
+A synthetic test invokes the handler on a distinct receiver, builds only an
+unstreamed main page control, and records that the target page is active
+before both close events and that the close order is preserved. All 200
+consolidated tests pass; the forced Debug main-project rebuild links.
+Coverage is 727/1,047 methods retaining listings (69.44%); `Unit33.pas` is
+1/6 (16.67%). Tracker: 171 items, 164 done, six blocked, and one pending for
+deferred LazReport. No genealogy data was opened and AhnWin was not started.
+
+## Latest checkpoint — Place-dialog activation prefill
+
+Restored DFM-bound `TForm33.FormActivate` from listing `0053B630`. It copies
+the selected item from global `Form14.ListBox1` into the receiver's `Edit1`.
+Although DeDe labels the source offset as `Label4`, the DPR maps that global
+slot to `TForm14`; the form declaration/resource and Unit14 listings identify
+offset `+$0300` as `ListBox1`, with `ItemIndex` and `Items` accessors. The
+translation preserves the selected-item lookup without adding an unobserved
+empty-selection guard.
+
+A synthetic test creates unstreamed `TForm14`/`TForm33` instances, selects a
+sample list item, and verifies the text handoff. All 199 consolidated tests
+pass, and the forced Debug main-project rebuild links. Coverage is 728/1,047
+methods retaining listings (69.53%); `Unit33.pas` is 2/6 (33.33%). Tracker:
+170 items, 163 done, six blocked, and one pending for deferred LazReport. No
+genealogy data was opened and AhnWin was not started.
+
+## Latest checkpoint — Main-form DBGrid3 Escape handler
+
+Restored DFM/LFM-bound `TForm1.DBGrid3KeyDown` from listing `00604E48` with
+the full `(Sender, var Key: Word, Shift: TShiftState)` event signature. On
+Escape (`$001B`) it clears `DBComboBox3.Text`, hides `DBGrid3` and `Label81`,
+then focuses `DBComboBox3`. It does not consume or rewrite the key; other keys
+are no-ops.
+
+Synthetic tests invoke the actual event method with `CreateNew` controls and
+verify both branches, including unchanged keys and focus. All 198 consolidated
+tests pass and the forced Debug main-project rebuild links. Coverage is
+729/1,047 methods retaining listings (69.63%); `frmAhnenWinMain.pas` is
+249/323 (77.09%). Tracker: 169 items, 162 done, six blocked, and one pending
+for deferred LazReport. No genealogy data was opened and AhnWin was not
+started.
+
+## Latest checkpoint — Main-form DBGrid3 exit focus
+
+Restored DFM/LFM-bound `TForm1.DBGrid3Exit` from its complete listing at
+`00604E1C`. In order, it hides the receiver's `DBGrid3`, hides `Label81`, and
+sets the receiver's `ActiveControl` to `DBComboBox3`. No dataset or lookup
+method is called.
+
+A synthetic `TForm1.CreateNew` test verifies both visibility changes and the
+focus handoff using unstreamed controls. All 197 consolidated tests pass and
+the forced Debug main-project rebuild links. Coverage is 730/1,047 methods
+retaining listings (69.72%); `frmAhnenWinMain.pas` is 250/323 (77.40%).
+Tracker: 168 items, 161 done, six blocked, and one pending for deferred
+LazReport. No genealogy data was opened and AhnWin was not started.
+
+## Latest checkpoint — Family-sheet counter zero cleanup
+
+Restored the unbound `TForm32._PROC_00559D3C` from its complete listing. It
+increments `GlobalVar_0061E0A8`; only when the result is zero does it clear
+the long-string cells at `0061E0A4` and `0061E0A0`, then finalize the
+15-element long-string array beginning at `0061E064`. The two `@LStrClr`
+references and the `@FinalizeArray` element type/count establish the direct
+cleanup contract. The matching decrement remains separate. Neither callback
+is bound in the DFM, and state meaning/reachability remain unknown.
+
+Synthetic tests verify nonzero preservation for all 17 strings and clearing
+on the `-1` to `0` transition. All 196 consolidated tests pass and the forced
+Debug main-project rebuild links. Coverage is 731/1,047 methods retaining
+listings (69.82%); `Unit32.pas` is 4/6 (66.67%). Tracker: 167 items, 160 done,
+six blocked, and one pending for deferred LazReport. No genealogy data was
+opened and AhnWin was not started.
+
+## Latest checkpoint — Descendant counter zero cleanup
+
+Restored the unbound `TForm19._PROC_00558A15` from its complete listing. It
+increments the address-backed integer `GlobalVar_0061E05C` and clears exactly
+twelve long-string cells (`0061E014` through `0061E040`) only when the new
+counter value is zero. The `@LStrClr` calls establish each cell's string type;
+the Pascal assignments preserve the listing's reverse-address order. The
+already restored decrement remains separate. Neither callback is bound in
+the DFM/LFM, and the state purpose remains unknown. Other retained listings
+reference two of the string cells; those workflows were not changed.
+
+Synthetic tests verify that a nonzero increment preserves every string and
+that the transition from `-1` to `0` clears all twelve. All 194 consolidated
+tests pass and the forced Debug main-project rebuild links. Coverage is
+732/1,047 methods retaining listings (69.91%); `Unit19.pas` is 18/28
+(64.29%). Tracker: 166 items, 159 done, six blocked, and one pending for
+deferred LazReport. No genealogy data was opened and AhnWin was not started.
+
+## Latest checkpoint — Family-sheet counter decrement
+
+Restored the unbound `TForm32._PROC_00559D98` from its complete
+two-instruction listing. It subtracts one from the 32-bit cell at `0061E0A8`,
+preserved as `GlobalVar_0061E0A8`. The neighboring increment listing confirms
+the shared cell and performs separate zero-triggered string/array cleanup;
+that cleanup was not added to the decrement. Neither callback is bound in
+the DFM, and the counter's purpose remains unknown.
+
+The test project now compiles `Unit32`; this exposed and fixed its missing
+`ExtCtrls` interface dependency for the declared `TImage` controls. A
+synthetic `CreateNew` test verifies ordinary decrement and zero-to-negative
+behavior without loading the DFM. All 192 consolidated tests pass and the
+forced Debug main-project rebuild links. Coverage is 733/1,047 methods
+retaining listings (70.01%); `Unit32.pas` is 5/6 (83.33%). Tracker: 165 items,
+158 done, six blocked, and one pending for deferred LazReport. No genealogy
+data was opened and AhnWin was not started.
+
+## Latest checkpoint — Descendant parameter counter decrement
+
+Restored the unbound `TForm19._PROC_00558ABC` from its complete two-instruction
+listing. It subtracts one from the 32-bit cell at `0061E05C`, now represented
+as `GlobalVar_0061E05C`. The neighboring `_PROC_00558A15` independently
+increments that same cell and clears string state on a zero result, confirming
+the integer type; the decrement itself performs no cleanup. Neither callback
+is bound in the DFM/LFM, and the counter's purpose remains unknown.
+
+A synthetic `CreateNew` test verifies both ordinary decrement and
+zero-to-negative transition, without streaming the resource or inferring
+callback reachability. All 191 consolidated tests pass and the forced Debug
+main-project rebuild links. Coverage is 734/1,047 methods retaining listings
+(70.11%); `Unit19.pas` is 19/28 (67.86%). Tracker: 164 items, 157 done, six
+blocked, and one pending for deferred LazReport. No genealogy data was opened
+and AhnWin was not started.
+
+## Latest checkpoint — Descendant list-type visibility
+
+Restored DFM/LFM-bound `TForm19.ComboBox1Change` from listing `00558964`.
+Every invocation first makes CheckBox7 and CheckBox8 visible, then hides
+both only when the current combo text contains the case-sensitive substring
+`alph`. The resource's two standard item captions do not contain that token;
+the branch is preserved without assigning it a broader domain interpretation.
+
+A synthetic test invokes the handler on an unstreamed form and verifies the
+reset-visible behavior, case-sensitive match, and preservation of another
+checkbox's visibility. All 190 consolidated tests pass and the forced Debug
+main-project rebuild links. Coverage is 735/1,047 methods retaining listings
+(70.20%); `Unit19.pas` is 20/28 (71.43%). Tracker: 163 items, 156 done, six
+blocked, one pending for deferred LazReport. No genealogy data was opened
+and AhnWin was not started.
+
+## Latest checkpoint — Field-list print confirmation
+
+Restored DFM-bound `TForm24.SpeedButton1Click` from listing `0055F698`. The
+handler checks the receiver's `ListBox3`, `ListBox4`, and `ListBox6` in order.
+If any list contains an item, it skips the confirmation prompt. If all are
+empty, it asks the legacy Yes/No question; only Yes continues. Both accepted
+paths set global `GlobalVar_02535B50` to `butt1` and set global `Form24`'s
+modal result to `mrCancel`, preserving the listing's target split.
+
+A synthetic test uses a nonempty receiver list and a distinct global target,
+so it verifies the accepted path without opening a dialog. The empty-list
+prompt branch is preserved but not run in tests. All 189 consolidated tests
+pass and the forced Debug main-project rebuild links. Coverage is 736/1,047
+methods retaining listings (70.30%); `Unit24.pas` is 4/26 (15.38%). Tracker:
+162 items, 155 done, six blocked, one pending for deferred LazReport. No
+genealogy data was opened and AhnWin was not started.
+
+## Pre-restoration evidence checkpoint — French Republican conversion
+
+This earlier map recorded the unresolved jump-table annotation and modal
+branches before the full `TForm7.berechnen` translation. It was superseded by
+the completed restoration documented in the latest checkpoint above; the
+five provider/dependency blockers and deferred LazReport remain unchanged.
+
+## Latest checkpoint — Descendant parameter number controls
+
+Restored DFM-bound `TForm19.Button1Click` through `Button4Click`. Buttons 1/2
+decrement/increment `Edit1`; Buttons 3/4 decrement/increment `Edit2`. Both
+decrement handlers compare the displayed value with the lower-bound string
+`'1'` before parsing and subtracting one. Increment handlers parse the text,
+add one, and write the converted integer back. The complete listings and
+DFM/LFM bindings establish the field-to-button mapping; `Unit19.dfm` gives
+both numeric edits the initial value `1`.
+
+Four synthetic tests invoke the real methods on unstreamed forms and verify
+both fields, increments/decrements, and the lower-bound no-op. All 188
+consolidated tests pass and the forced Debug main-project rebuild links.
+Coverage is 737/1,047 methods retaining listings (70.39%); `Unit19.pas` is
+21/28 (75.00%). Tracker: 160 items, 154 done, five blocked, and one pending
+for deferred LazReport. No genealogy data was opened and AhnWin was not
+started.
+
+## Latest checkpoint — Field-list selection presets
+
+Restored the DFM/LFM-bound `TForm24.RadioButton4Click` and
+`RadioButton5Click` from complete listings `0055F528` and `0055F5E0`.
+Despite the radio-button names, the resource captions say “alle markieren”
+and “Markierungen entfernen”; the listings confirm that the handlers set
+`CheckBox1` through `CheckBox11` all true or all false, respectively. They do
+not touch `CheckBox12` through `CheckBox18` or either radio button's state.
+Two synthetic tests initialize those eleven controls to the opposite state
+and exercise the actual handlers.
+
+All 184 consolidated tests pass and the forced Debug main-project rebuild
+links. Coverage is 741/1,047 methods retaining listings (70.77%);
+`Unit24.pas` is 5/26 (19.23%). Tracker: 159 items, 153 done, five blocked,
+one pending for deferred LazReport. No genealogy data was opened and AhnWin
+was not started.
+
+## Latest checkpoint — First two field-list button pairs
+
+Restored DFM/LFM-bound `TForm24.Button2Click` through `Button7Click`.
+Button2/3 add the selected item from global `ListBox1`/`ListBox2` to global
+`ListBox3`/`ListBox4`; Button4/5 delete the selected item from global
+`ListBox3`/`ListBox4`; Button6/7 clear those corresponding target lists. The
+list-field offsets are corroborated by `listanz`/`FormClose` and the matching
+double-click handlers. The DFM/LFM arrows confirm the paired source/target
+layout; the DeDe `Label*` annotations are not relied upon.
+
+Six synthetic tests use distinct callback receiver and global target forms,
+and assert the transfer/removal/clear effects plus source or receiver
+preservation. All 182 consolidated tests pass and the forced Debug
+main-project rebuild links. Coverage is 743/1,047 methods retaining listings
+(70.96%); `Unit24.pas` is 7/26 (26.92%). Tracker: 158 items, 152 done, five
+blocked, one pending for deferred LazReport. No genealogy data was opened
+and AhnWin was not started.
+
+## Latest checkpoint — Hofname list button actions
+
+Restored DFM/LFM-bound `TForm24.Button1Click`, `Button8Click`, and
+`Button10Click`. Button1 adds the selected item from global `Form24.ListBox5`
+to `Form24.ListBox6`; when the target count is nonzero it disables the
+receiver's `RadioButton1`/`RadioButton3` and checks `RadioButton2`. Button8
+deletes the selected target item and re-enables receiver radio buttons 1 and
+3 only when the list becomes empty. Button10 clears the global target list
+and always re-enables those two receiver controls; neither removal path
+changes RadioButton2.
+
+Synthetic tests exercise addition, both branches of Button8's count check,
+and clear, using a distinct callback receiver/global form. All 176 tests pass
+and the Debug main-project rebuild succeeds. Coverage is 749/1,047 methods
+retaining listings (71.54%); `Unit24.pas` is 13/26 (50.00%). Tracker: 157
+items, 151 done, five blocked, one pending for deferred LazReport. No
+genealogy data was opened and AhnWin was not started.
+
+## Latest checkpoint — Single Hofname selection
+
+Restored DFM/LFM-bound `TForm24.ListBox5DblClick` from complete listing
+`0055F954`. If global `Form24.ListBox6` is already nonempty, it displays the
+legacy warning `Es kann nur 1 Hofname ausgewählt werden, sonst gibt es
+Durcheinander.` and does not continue. Otherwise it adds the selected item
+from global `Form24.ListBox5` to global `Form24.ListBox6`; if the target now
+has an item, the receiver's `RadioButton1` and `RadioButton3` are disabled and
+`RadioButton2` is checked.
+
+The synthetic test uses distinct receiver/global forms and covers the
+nonmodal successful path only, avoiding the real warning dialog. All 173
+consolidated tests pass; the forced Debug main-project rebuild succeeds.
+Coverage is 752/1,047 methods retaining listings (71.82%); `Unit24.pas` is
+16/26 (61.54%). Tracker: 156 items, 150 done, five blocked, one pending for
+deferred LazReport. No genealogy data was opened and AhnWin was not started.
+
+## Latest checkpoint — ListBox4 selected-item deletion
+
+Restored `TForm24.ListBox4DblClick` from complete listing `0055F11C`. It reads
+the current `ItemIndex` from global `Form24.ListBox4` and calls `Delete` on
+that list's `Items`. Unit24's `FormClose` loop and the paired
+`Button5Click`/clear handlers corroborate the component at offset `+$0304`
+as `ListBox4`. Both the DFM and LFM bind this event to `ListBox4` and also to
+`ListBox6`; the handler's listing targets the global `Form24.ListBox4`
+regardless of `Sender`.
+
+A synthetic test passes the receiver's `ListBox6` as `Sender` while the
+global target is a distinct form; it verifies that only the target list's
+selected item is deleted. All 172 tests pass. Coverage is 753/1,047 methods
+retaining listings (71.92%); `Unit24.pas` is 17/26 (65.38%). Tracker: 155
+items, 149 done, five blocked, and one pending for user-deferred LazReport.
+No genealogy data was opened or the application started.
+
+## Latest checkpoint — Paired field-list double-click transfers
+
+Restored DFM-bound `TForm24.ListBox1DblClick` and
+`TForm24.ListBox2DblClick` from complete listings `0055F00C` and `0055F080`.
+They read the current selected item from global `Form24.ListBox1` or
+`Form24.ListBox2`, then add that string to global `Form24.ListBox3` or
+`Form24.ListBox4`, respectively. The same x86 operation sequences appear in
+`Button2Click` and `Button3Click`; DFM/LFM geometry places each source/target
+pair around the corresponding `>` button. This evidence resolves inaccurate
+`Label*` comments in the disassembly.
+
+Synthetic tests use a callback receiver distinct from global `Form24`, verify
+the selected value is added to the correct target, and confirm the source
+list and receiver target remain unchanged. All 171 consolidated tests pass
+and the forced Debug main-project rebuild succeeds. Inventory: 754/1,047
+methods retain listings (72.02%); `Unit24.pas` is 18/26 (69.23%). The tracker
+has 154 items: 148 done, five blocked, and one pending for deferred LazReport.
+No genealogy data was opened and the application was not started.
+
+## Latest checkpoint — Field-list selected-item removal
+
+Restored the DFM-bound `TForm24.ListBox3DblClick` from complete listing
+`0055F0F4`. The listing loads global `Form24`, addresses the independently
+corroborated `ListBox3` field at offset `+$0300`, obtains its `ItemIndex`, and
+deletes that item from `Items`. The Pascal body preserves that explicit
+global target. A synthetic test gives the event receiver and global target
+different forms, selects the middle item in the target list, and verifies
+only that target item is removed.
+
+The consolidated suite passes 169/169 tests and the forced Debug main-project
+rebuild succeeds. The refreshed inventory is 756/1,047 methods retaining
+listings (72.21%); `Unit24.pas` is 20/26 (76.92%). The tracker has 153 items:
+147 done, five blocked on provider/dependency evidence, and one pending for
+user-deferred LazReport. No genealogy data was opened, and neither AhnWin nor
+a test process remains running. This slice does not cover the other field
+lists or report/database workflows.
+
+## Previous checkpoint — Source-name list Enter dispatch
 
 Restored the DFM-bound `TForm28.ListBox1KeyPress` from the complete listing at
 `005747C0`. Its declaration now matches `TKeyPressEvent`
@@ -29,6 +542,46 @@ Keep the provider-dependent Unit14 `FindKey` path, parent/child relationship
 blockers, the unfinished calendar conversion, and deferred LazReport scope
 unchanged.
 
+## Previous checkpoint — Source-name list double-click
+
+Restored DFM-bound `TForm28.ListBox1DblClick` from the complete listing at
+`005748EC`. It clears and copies the shared name from
+`ListBox1.Items[GlobalVar_025353A0]`, assigns global `Form34.Label3.Caption`
+to the exact `Aktueller Name: ` prefix plus the original item text, then shows
+global `Form34`. This preserves use of the previously stored selection index
+rather than reading `ListBox1.ItemIndex` in the handler. The target form and
+label are corroborated by the DPR and `Unit34.dfm`.
+
+A synthetic test seeds a stored index that differs from the list's current
+`ItemIndex`, invokes the handler on a separate source form, and verifies the
+shared string, exact caption, global target visibility, `OnShow`, and unchanged
+list selection. The complete suite passes 167/167 tests, and the Debug main
+project builds. Coverage is 758/1,047 methods with listings (72.40%);
+`Unit28.pas` is 3/9 (33.33%). The tracker has 151 items: 145 done, five
+blocked on provider/dependency evidence, and one pending for user-deferred
+LazReport. Relationship/provider blockers and reporting scope remain
+unchanged; no genealogy data or application was used.
+
+## Latest checkpoint — Source-editor list double-click
+
+Restored the DFM-bound `TForm29.ListBox1DblClick` from listing `00562060`.
+The event reads the current list's `ItemIndex`, clears and assigns
+`GlobalVar_0061E0EC` from that item, sets global `Form30.Label4.Caption` to
+the exact `Aktuelle Quelle: ` prefix plus the source name, then shows global
+`Form30`. The DPR maps the global to `TForm30`; the DFM binds the event and
+contains `Label4`; the listing directly identifies the label control. `Unit30`
+is an implementation-only dependency of `Unit29`.
+
+A synthetic test uses separate list and editor forms, seeds stale shared text,
+and verifies the selected item, exact caption, editor visibility, and one
+`OnShow` event without streaming the database-backed editor DFM. All 168
+consolidated tests pass, and the forced Debug main-project rebuild links.
+Coverage is 757/1,047 listings (72.30%); `Unit29.pas` is 2/8 (25.00%). The
+todo tracker has 152 items: 146 done, five blocked, and one pending for
+user-deferred LazReport. No genealogy data was opened and the application was
+not started. Keep adjacent source-editor save/maintenance handlers and all
+BDE/SQLDB-dependent paths separate from this UI handoff.
+
 ## Actual source-restoration status — 2026-09-30
 
 The todo percentages below are workflow tracking only; they are not the
@@ -36,8 +589,8 @@ percentage of the decompiled program translated to Pascal. The reusable
 per-file scan found 251/323 class-qualified methods in
 `frmAhnenWinMain.pas` retaining listings (77.71%). Within the `TForm1` class
 specifically, 251/283 retain listings (88.69%); the distinction is that the
-file also contains other classes. Across all 69 Pascal files, 759/1,047
-class-qualified methods retain listings (72.49%). The reconstructed
+file also contains other classes. Across all 69 Pascal files, 757/1,047
+class-qualified methods retain listings (72.30%). The reconstructed
 `Forms\PersonSearchForm.pas` is 218/225 (96.89%) by this listing-presence
 metric. The full refreshed table is
 `AhnWin-Assembly-Coverage-2026-09-30.csv`; methods without listings are not
@@ -105,11 +658,10 @@ without streaming the form or invoking the report workflow.
 three `ComboBox*Change` callbacks. Each complete listing checks its own
 combo's text length and calls the no-argument `TForm7.berechnen()` only when
 nonempty; all call-site annotations identify that zero-argument helper. The
-callbacks are restored, but `berechnen`'s large assembler listing remains
-untouched and no calendar-conversion behavior is claimed. A synthetic test
-verifies that empty inputs preserve the existing output. The suite passes 165
-tests and the Debug main project builds; `Unit7.pas` now has 1/10 methods with
-retained listings.
+callbacks were restored before the separate conversion reconstruction; at
+that checkpoint, `berechnen`'s listing remained untouched. The empty-input
+guard test verifies that existing output is preserved. The later complete
+conversion is documented in the latest checkpoint at the top of this file.
 
 **Descendant-list checkbox presets:** Both form resources bind
 `TForm19.RadioButton1Click` and `RadioButton2Click`. Their complete listings
