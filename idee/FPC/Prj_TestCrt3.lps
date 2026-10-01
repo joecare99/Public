@@ -2,35 +2,39 @@
 <CONFIG>
   <ProjectSession>
     <PathDelim Value="\"/>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <BuildModes Active="Default"/>
     <Units Count="2">
       <Unit0>
         <Filename Value="Prj_TestCrt3.dpr"/>
         <IsPartOfProject Value="True"/>
-        <CursorPos X="12" Y="15"/>
+        <IsVisibleTab Value="True"/>
+        <CursorPos X="43" Y="10"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit0>
       <Unit1>
         <Filename Value="..\source\Crt\unt_testcrt3.pas"/>
         <IsPartOfProject Value="True"/>
-        <IsVisibleTab Value="True"/>
         <EditorIndex Value="1"/>
-        <TopLine Value="212"/>
+        <TopLine Value="68"/>
+        <CursorPos Y="253"/>
         <UsageCount Value="20"/>
         <Loaded Value="True"/>
       </Unit1>
     </Units>
-    <JumpHistory Count="1">
+    <JumpHistory Count="2" HistoryIndex="1">
       <Position1>
         <Filename Value="Prj_TestCrt3.dpr"/>
         <Caret Line="15" Column="12"/>
       </Position1>
+      <Position2>
+        <Filename Value="..\source\Crt\unt_testcrt3.pas"/>
+      </Position2>
     </JumpHistory>
     <RunParams>
       <FormatVersion Value="2"/>
-      <Modes Count="0" ActiveMode="default"/>
+      <Modes ActiveMode="default"/>
     </RunParams>
   </ProjectSession>
 </CONFIG>

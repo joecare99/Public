@@ -12,6 +12,7 @@ object SDIAppForm: TSDIAppForm
   Font.Name = 'System'
   Menu = MainMenu1
   OnCreate = FormCreate
+  OnDestroy = FormDestroy
   OnMouseMove = FormMouseMove
   OnPaint = FormPaint
   OnResize = FormResize
@@ -96,17 +97,17 @@ object SDIAppForm: TSDIAppForm
       Style = tbsSeparator
     end
     object btnEditCut: TToolButton
-      Left = 79
+      Left = 82
       Top = 2
       Action = EditCut1
     end
     object btnEditCopy: TToolButton
-      Left = 102
+      Left = 105
       Top = 2
       Action = EditCopy1
     end
     object btnEdtPaste: TToolButton
-      Left = 125
+      Left = 128
       Top = 2
       Action = EditPaste1
     end
@@ -151,6 +152,30 @@ object SDIAppForm: TSDIAppForm
     Font.Name = 'System'
     ParentColor = False
     ParentFont = False
+  end
+  object Label4: TLabel
+    AnchorSideTop.Control = Label1
+    Left = 432
+    Height = 16
+    Top = 454
+    Width = 44
+    Caption = 'Label4'
+    Font.Color = clWindowText
+    Font.Height = -13
+    Font.Name = 'System'
+    ParentColor = False
+    ParentFont = False
+  end
+  object Button1: TButton
+    AnchorSideTop.Control = btnOptimize
+    AnchorSideTop.Side = asrCenter
+    Left = 90
+    Height = 25
+    Top = 588
+    Width = 75
+    Caption = 'Button1'
+    OnClick = btnShow2Click
+    TabOrder = 4
   end
   object MainMenu1: TMainMenu
     Images = ImageList1
