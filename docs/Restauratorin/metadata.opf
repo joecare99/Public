@@ -1,0 +1,20 @@
+<?xml version='1.0' encoding='utf-8'?>
+<package xmlns="http://www.idpf.org/2007/opf" unique-identifier="uuid_id" version="2.0">
+    <metadata xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:opf="http://www.idpf.org/2007/opf">
+        <dc:identifier opf:scheme="calibre" id="calibre_id">21</dc:identifier>
+        <dc:identifier opf:scheme="uuid" id="uuid_id">e0c81b39-f234-4d13-9148-fba75bf7ebb0</dc:identifier>
+        <dc:title>Die Restauratorin</dc:title>
+        <dc:creator opf:file-as="Care, Joe" opf:role="aut">Joe Care</dc:creator>
+        <dc:contributor opf:file-as="calibre" opf:role="bkp">calibre (7.6.0) [https://calibre-ebook.com]</dc:contributor>
+        <dc:date>0101-01-01T00:00:00+00:00</dc:date>
+        <dc:description>&lt;div&gt;
+&lt;p&gt;In einem alten Schloss, wo Staub und Papier mehr erzählen als Menschen, deckt eine Restauratorin nach und nach Spuren auf, die Vergangenheit und Gegenwart verhaken. Heimliche Fotografien, gezielte Fälschungen und ein unsichtbares Überwachungsnetz fordern sie heraus, nicht nur Objekte zu retten, sondern Erinnerungen zu verteidigen. Ein atmosphärischer Roman über Erinnerung, Macht und die Arbeit, die Wahrheit verlangt — sorgfältig, gespannt und niemals sentimental.&lt;/p&gt;&lt;/div&gt;</dc:description>
+        <dc:language>deu</dc:language>
+        <dc:subject>Thriller</dc:subject>
+        <meta name="calibre:timestamp" content="2025-10-09T21:24:23+00:00"/>
+        <meta name="calibre:title_sort" content="Unknown Title"/>
+    </metadata>
+    <guide>
+        <reference type="cover" title="Titelbild" href="cover.jpg"/>
+    </guide>
+</package>

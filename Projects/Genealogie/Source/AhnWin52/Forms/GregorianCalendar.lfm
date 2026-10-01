@@ -1,0 +1,405 @@
+object GregorianCalendarForm: TGregorianCalendarForm
+  Left = 192
+  Height = 999
+  Top = 114
+  Width = 1375
+  ActiveControl = edtYear
+  BorderIcons = []
+  BorderStyle = bsSingle
+  Caption = 'Gregorianischer Kalender (ab 1582)'
+  ClientHeight = 999
+  ClientWidth = 1375
+  Color = clBtnFace
+  DesignTimePPI = 168
+  Font.Color = clWindowText
+  Font.Height = -26
+  Font.Name = 'MS Sans Serif'
+  OnClose = FormClose
+  OnCreate = FormCreate
+  OnKeyDown = FormKeyDown
+  OnShow = FormShow
+  Position = poMainFormCenter
+  Visible = False
+  object Shape1: TShape
+    Left = 58
+    Height = 2
+    Top = 65
+    Width = 1283
+  end
+  object btnPrintKalender: TSpeedButton
+    Left = 63
+    Height = 51
+    Top = 7
+    Width = 54
+    Font.Color = clWindowText
+    Font.Height = -26
+    Font.Name = 'MS Sans Serif'
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000120B0000120B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00300000000000
+      0003377777777777777308888888888888807F33333333333337088888888888
+      88807FFFFFFFFFFFFFF7000000000000000077777777777777770F8F8F8F8F8F
+      8F807F333333333333F708F8F8F8F8F8F9F07F333333333337370F8F8F8F8F8F
+      8F807FFFFFFFFFFFFFF7000000000000000077777777777777773330FFFFFFFF
+      03333337F3FFFF3F7F333330F0000F0F03333337F77773737F333330FFFFFFFF
+      03333337F3FF3FFF7F333330F00F000003333337F773777773333330FFFF0FF0
+      33333337F3F37F3733333330F08F0F0333333337F7337F7333333330FFFF0033
+      33333337FFFF7733333333300000033333333337777773333333
+    }
+    NumGlyphs = 2
+    OnClick = btnPrintKalenderClick
+    ParentFont = False
+  end
+  object StringGrid1: TStringGrid
+    Left = 56
+    Height = 252
+    Top = 117
+    Width = 1286
+    ColCount = 28
+    DefaultColWidth = 42
+    DefaultRowHeight = 35
+    FixedCols = 0
+    FixedRows = 0
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Options = [goFixedVertLine, goThumbTracking]
+    ParentFont = False
+    RowCount = 7
+    ScrollBars = ssNone
+    TabOrder = 0
+    TabStop = False
+    TitleFont.Color = clBlack
+    TitleFont.Height = -19
+    TitleFont.Name = 'Arial'
+  end
+  object StringGrid2: TStringGrid
+    Left = 56
+    Height = 252
+    Top = 425
+    Width = 1286
+    ColCount = 28
+    DefaultColWidth = 42
+    DefaultRowHeight = 35
+    FixedCols = 0
+    FixedRows = 0
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Options = [goFixedVertLine, goThumbTracking]
+    ParentFont = False
+    RowCount = 7
+    ScrollBars = ssNone
+    TabOrder = 1
+    TabStop = False
+    TitleFont.Color = clBlack
+    TitleFont.Height = -19
+    TitleFont.Name = 'Arial'
+  end
+  object StringGrid3: TStringGrid
+    Left = 56
+    Height = 252
+    Top = 733
+    Width = 1286
+    ColCount = 28
+    DefaultColWidth = 42
+    DefaultRowHeight = 35
+    FixedCols = 0
+    FixedRows = 0
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Options = [goFixedVertLine, goThumbTracking]
+    ParentFont = False
+    RowCount = 7
+    ScrollBars = ssNone
+    TabOrder = 2
+    TabStop = False
+    TitleFont.Color = clBlack
+    TitleFont.Height = -19
+    TitleFont.Name = 'Arial'
+  end
+  object edtYear: TEdit
+    Left = 679
+    Height = 47
+    Top = 5
+    Width = 86
+    AutoSize = False
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    OnChange = edtYearChange
+    OnKeyDown = edtYearKeyDown
+    ParentFont = False
+    TabOrder = 3
+  end
+  object btnFollowYear: TButton
+    Left = 786
+    Height = 47
+    Top = 5
+    Width = 47
+    Caption = '>'
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    OnClick = btnFollowYearClick
+    ParentFont = False
+    TabOrder = 4
+    TabStop = False
+  end
+  object btnPrevYear: TButton
+    Left = 614
+    Height = 47
+    Top = 5
+    Width = 47
+    Caption = '<'
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    OnClick = btnPrevYearClick
+    ParentFont = False
+    TabOrder = 5
+    TabStop = False
+  end
+  object btnOK: TBitBtn
+    Left = 1195
+    Height = 49
+    Top = 5
+    Width = 147
+    Caption = 'fertig'
+    Default = True
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Glyph.Data = {
+      DE010000424DDE01000000000000760000002800000024000000120000000100
+      0400000000006801000000000000000000001000000000000000000000000000
+      80000080000000808000800000008000800080800000C0C0C000808080000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      3333333333333333333333330000333333333333333333333333F33333333333
+      00003333344333333333333333388F3333333333000033334224333333333333
+      338338F3333333330000333422224333333333333833338F3333333300003342
+      222224333333333383333338F3333333000034222A22224333333338F338F333
+      8F33333300003222A3A2224333333338F3838F338F33333300003A2A333A2224
+      33333338F83338F338F33333000033A33333A222433333338333338F338F3333
+      0000333333333A222433333333333338F338F33300003333333333A222433333
+      333333338F338F33000033333333333A222433333333333338F338F300003333
+      33333333A222433333333333338F338F00003333333333333A22433333333333
+      3338F38F000033333333333333A223333333333333338F830000333333333333
+      333A333333333333333338330000333333333333333333333333333333333333
+      0000
+    }
+    ModalResult = 1
+    NumGlyphs = 2
+    OnClick = btnOKClick
+    ParentFont = False
+    TabOrder = 6
+    TabStop = False
+  end
+  object edtJanuary: TEdit
+    Left = 238
+    Height = 35
+    Top = 72
+    Width = 135
+    AutoSize = False
+    BorderStyle = bsNone
+    Color = clSilver
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabStop = False
+    TabOrder = 7
+    Text = '    Januar'
+  end
+  object edtFebruary: TEdit
+    Left = 537
+    Height = 35
+    Top = 72
+    Width = 135
+    AutoSize = False
+    BorderStyle = bsNone
+    Color = clSilver
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabStop = False
+    TabOrder = 8
+    Text = '   Februar'
+  end
+  object edtMarch: TEdit
+    Left = 798
+    Height = 35
+    Top = 72
+    Width = 135
+    AutoSize = False
+    BorderStyle = bsNone
+    Color = clSilver
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabStop = False
+    TabOrder = 9
+    Text = '      März'
+  end
+  object edtApril: TEdit
+    Left = 1111
+    Height = 35
+    Top = 72
+    Width = 135
+    AutoSize = False
+    BorderStyle = bsNone
+    Color = clSilver
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabStop = False
+    TabOrder = 10
+    Text = '     April'
+  end
+  object edtMay: TEdit
+    Left = 238
+    Height = 35
+    Top = 378
+    Width = 135
+    AutoSize = False
+    BorderStyle = bsNone
+    Color = clSilver
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabStop = False
+    TabOrder = 11
+    Text = '       Mai  '
+  end
+  object edtJune: TEdit
+    Left = 539
+    Height = 35
+    Top = 378
+    Width = 135
+    AutoSize = False
+    BorderStyle = bsNone
+    Color = clSilver
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabStop = False
+    TabOrder = 12
+    Text = '      Juni'
+  end
+  object edtJuly: TEdit
+    Left = 817
+    Height = 35
+    Top = 378
+    Width = 135
+    AutoSize = False
+    BorderStyle = bsNone
+    Color = clSilver
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabStop = False
+    TabOrder = 13
+    Text = '      Juli'
+  end
+  object edtAugust: TEdit
+    Left = 1111
+    Height = 35
+    Top = 378
+    Width = 135
+    AutoSize = False
+    BorderStyle = bsNone
+    Color = clSilver
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabStop = False
+    TabOrder = 14
+    Text = '   August'
+  end
+  object Edit10: TEdit
+    Left = 238
+    Height = 35
+    Top = 686
+    Width = 135
+    AutoSize = False
+    BorderStyle = bsNone
+    Color = clSilver
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabStop = False
+    TabOrder = 15
+    Text = 'September'
+  end
+  object Edit11: TEdit
+    Left = 539
+    Height = 35
+    Top = 686
+    Width = 135
+    AutoSize = False
+    BorderStyle = bsNone
+    Color = clSilver
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabStop = False
+    TabOrder = 16
+    Text = '  Oktober'
+  end
+  object Edit12: TEdit
+    Left = 824
+    Height = 35
+    Top = 686
+    Width = 135
+    AutoSize = False
+    BorderStyle = bsNone
+    Color = clSilver
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabStop = False
+    TabOrder = 17
+    Text = 'November'
+  end
+  object Edit13: TEdit
+    Left = 1111
+    Height = 35
+    Top = 686
+    Width = 135
+    AutoSize = False
+    BorderStyle = bsNone
+    Color = clSilver
+    Font.Color = clBlack
+    Font.Height = -26
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentFont = False
+    TabStop = False
+    TabOrder = 18
+    Text = 'Dezember'
+  end
+end

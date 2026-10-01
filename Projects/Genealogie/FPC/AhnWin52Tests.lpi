@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <General>
+      <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
+      <Title Value="AhnWin52Tests"/>
+      <ResourceType Value="res"/>
+    </General>
+    <BuildModes Count="1">
+      <Item1 Name="Default" Default="True"/>
+    </BuildModes>
+    <RequiredPackages Count="4">
+      <Item1>
+        <PackageName Value="FCL"/>
+      </Item1>
+      <Item2>
+        <PackageName Value="CmpSQLTable"/>
+      </Item2>
+      <Item3>
+        <PackageName Value="LCL"/>
+      </Item3>
+      <Item4>
+        <PackageName Value="Printer4Lazarus"/>
+      </Item4>
+    </RequiredPackages>
+    <Units Count="41">
+      <Unit0>
+        <Filename Value="..\Source\AhnWin52Tests\AhnWin52Tests.lpr"/>
+        <IsPartOfProject Value="True"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_AboutFormTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_DBTablesCompatTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_FokoRowDeletionTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_GregorianCalendarModelTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_MainFormCloseTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_MainFormExitTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_MainFormKeyPressTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_MainRecordPersistenceTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_PersonEntryChoiceTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_ParentUnlinkTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_ParentSelectionTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_PrivacyModeTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_QuickReportCompatTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\Source\AhnWin52\Forms\AboutForm.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AboutDialog"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="..\Source\AhnWin52\Forms\PersonEntryChoiceForm.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="PersonEntryChoiceDialog"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="..\Source\AhnWin52\Unit5.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form5"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="..\Source\AhnWin52\Unit15.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form15"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="..\Source\AhnWin52\Unit23.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form23"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="..\Source\AhnWin52\Unit25.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form25"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_SQLDBLocateTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_HofnameFormTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_AttributeMaintenanceCancelTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_SourceDialogCancelTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_GedcomDialogCancelTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_FokoDialogCancelTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_TinyTafelDialogCancelTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_BrowserFormTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_GraphicFormTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_RevolutionCalendarFormTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_SourceDialogKeyPressTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_PlaceDialogKeyPressTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_InertMainFormHandlers.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit32>
+      <Unit33>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_FieldListCounterTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit33>
+      <Unit34>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_ChoiceDialogCounterTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit34>
+      <Unit35>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_FokoDialogCounterTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit35>
+      <Unit36>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_DataModuleCounterTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit36>
+      <Unit37>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_DescendantParameterPresetsTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit37>
+      <Unit38>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_ChoiceDialogCheckboxPresetTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit38>
+      <Unit39>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_GregorianCalendarCounterTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit39>
+      <Unit40>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_MainFormDatasetControlsTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit40>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="\"/>
+    <Target>
+      <Filename Value="..\bin\$(TargetCPU)-$(TargetOS)\AhnWin52Tests"/>
+    </Target>
+    <SearchPaths>
+      <IncludeFiles Value="$(ProjOutDir)"/>
+      <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\Model;..\Source\AhnWin52\Services;..\Source\AhnWin52\Test;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\DBTables;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52Tests"/>
+      <UnitOutputDirectory Value="..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+    </SearchPaths>
+  </CompilerOptions>
+</CONFIG>
