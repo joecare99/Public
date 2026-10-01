@@ -26,7 +26,7 @@
         <PackageName Value="Printer4Lazarus"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="40">
+    <Units Count="41">
       <Unit0>
         <Filename Value="..\Source\AhnWin52Tests\AhnWin52Tests.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -205,6 +205,10 @@
         <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_GregorianCalendarCounterTests.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit39>
+      <Unit40>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_MainFormDatasetControlsTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit40>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

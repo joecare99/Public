@@ -19,6 +19,7 @@ type
     procedure TestNameDialogCancelButtonClosesForm;
     procedure TestNameDialogActivationCopiesSharedNameIntoEdit;
     procedure TestSourceNameListEnterDispatchesToNameEditor;
+    procedure TestSourceNameListDoubleClickUsesStoredIndexAndShowsEditor;
     procedure TestSourceNameListClickCopiesSelectedAndUnselectedIndices;
     procedure TestProfessionDialogCancelButtonClosesForm;
     procedure TestNameDialogUnboundCounterIncrement;
@@ -143,6 +144,52 @@ begin
   finally
     nameDialog.Hide;
     Unit34.Form34 := nil;
+    GlobalVar_0253539C := '';
+    nameDialog.Free;
+    sourceNameDialog.Free;
+  end;
+end;
+
+procedure TTestAHW52AttributeMaintenanceCancel.
+  TestSourceNameListDoubleClickUsesStoredIndexAndShowsEditor;
+var
+  sourceNameDialog: TForm28;
+  nameDialog: TForm34;
+begin
+  Application.Initialize;
+  sourceNameDialog := TForm28.CreateNew(nil);
+  nameDialog := TForm34.CreateNew(nil);
+  Unit34.Form34 := nameDialog;
+  try
+    sourceNameDialog.ListBox1 := TListBox.Create(sourceNameDialog);
+    sourceNameDialog.ListBox1.Items.Add('First synthetic name');
+    sourceNameDialog.ListBox1.Items.Add('Stored-index synthetic name');
+    sourceNameDialog.ListBox1.ItemIndex := 0;
+
+    nameDialog.Label3 := TLabel.Create(nameDialog);
+    MakeTestFormInvisible(nameDialog);
+    nameDialog.OnShow := @RecordFormShow;
+    FShowEventCount := 0;
+    nameDialog.Hide;
+
+    GlobalVar_025353A0 := 1;
+    GlobalVar_0253539C := 'Stale name';
+    sourceNameDialog.ListBox1DblClick(sourceNameDialog.ListBox1);
+
+    AssertEquals('The stored list index should select the shared name.',
+      'Stored-index synthetic name', GlobalVar_0253539C);
+    AssertEquals('The label should use the exact name prefix.',
+      'Aktueller Name: Stored-index synthetic name',
+      nameDialog.Label3.Caption);
+    AssertEquals('The global editor should be shown once.', 1,
+      FShowEventCount);
+    AssertTrue('The global editor should be visible.', nameDialog.Visible);
+    AssertEquals('The list selection should not be changed by the handler.',
+      0, sourceNameDialog.ListBox1.ItemIndex);
+  finally
+    nameDialog.Hide;
+    Unit34.Form34 := nil;
+    GlobalVar_025353A0 := 0;
     GlobalVar_0253539C := '';
     nameDialog.Free;
     sourceNameDialog.Free;

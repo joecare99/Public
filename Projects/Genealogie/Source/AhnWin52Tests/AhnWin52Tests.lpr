@@ -32,6 +32,7 @@ uses
   tst_AHW52_MainFormFocusHandlers,
   tst_AHW52_MainFormCloseTests,
   tst_AHW52_MainFormExitTests,
+  tst_AHW52_MainFormDatasetControlsTests,
   tst_AHW52_MainFormKeyPressTests,
   tst_AHW52_MainRecordPersistenceTests,
   tst_AHW52_PersonEntryChoiceTests,
@@ -51,6 +52,8 @@ uses
   tst_AHW52_TinyTafelDialogCancelTests,
   tst_AHW52_DataModuleCounterTests,
   tst_AHW52_DescendantParameterPresetsTests,
+  tst_AHW52_DescendantParameterCounterTests,
+  tst_AHW52_FamilySheetCounterTests,
   tst_AHW52_ChoiceDialogCheckboxPresetTests,
   tst_AHW52_QuickReportCompatTests;
 
