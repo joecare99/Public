@@ -11,6 +11,8 @@ type
   TTestAHW52PersonEntryChoice = class(TTestCase)
   published
     procedure TestChoiceDialogContract;
+    procedure TestUnboundCounterIncrement;
+    procedure TestUnboundCounterDecrement;
   end;
 
 implementation
@@ -122,6 +124,42 @@ begin
     finally
       closeQueryRecorder.Free;
     end;
+end;
+
+procedure TTestAHW52PersonEntryChoice.TestUnboundCounterIncrement;
+var
+  choiceForm: TPersonEntryChoiceForm;
+begin
+  Application.Initialize;
+  choiceForm := TPersonEntryChoiceForm.CreateNew(nil);
+  try
+    GlobalVar_0253587C := 41;
+
+    choiceForm._PROC_005C6A20(choiceForm);
+
+    AssertEquals(42, GlobalVar_0253587C);
+  finally
+    GlobalVar_0253587C := 0;
+    choiceForm.Free;
+  end;
+end;
+
+procedure TTestAHW52PersonEntryChoice.TestUnboundCounterDecrement;
+var
+  choiceForm: TPersonEntryChoiceForm;
+begin
+  Application.Initialize;
+  choiceForm := TPersonEntryChoiceForm.CreateNew(nil);
+  try
+    GlobalVar_0253587C := 41;
+
+    choiceForm._PROC_005C6A50(choiceForm);
+
+    AssertEquals(40, GlobalVar_0253587C);
+  finally
+    GlobalVar_0253587C := 0;
+    choiceForm.Free;
+  end;
 end;
 
 initialization

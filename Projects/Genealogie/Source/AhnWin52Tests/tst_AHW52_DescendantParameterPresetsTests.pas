@@ -17,6 +17,12 @@ type
     procedure TestFirstRadioChecksAllFields;
     procedure TestSecondRadioClearsAllFields;
     procedure TestCheckbox15ClickChecksItself;
+    procedure TestGenerationStartDecrementStopsAtOne;
+    procedure TestGenerationStartIncrement;
+    procedure TestGenerationCountDecrementStopsAtOne;
+    procedure TestGenerationCountIncrement;
+    procedure TestListTypeVisibilityUsesAlphSubstring;
+    procedure TestNamgvIsListingProvenNoOp;
   end;
 
 implementation
@@ -135,6 +141,157 @@ begin
     dialog.CheckBox15Click(dialog.CheckBox15);
     AssertTrue('CheckBox15 should be checked after its click handler.',
       dialog.CheckBox15.Checked);
+  finally
+    dialog.Free;
+  end;
+end;
+
+procedure TTestAHW52DescendantParameterPresets.
+  TestGenerationStartDecrementStopsAtOne;
+var
+  dialog: TForm19;
+begin
+  dialog := TForm19.CreateNew(nil);
+  try
+    dialog.Edit1 := TEdit.Create(dialog);
+    dialog.Edit1.Text := '1';
+    dialog.Edit2 := TEdit.Create(dialog);
+    dialog.Edit2.Text := '7';
+
+    dialog.Button1Click(dialog.Button1);
+
+    AssertEquals('1', dialog.Edit1.Text);
+    AssertEquals('7', dialog.Edit2.Text);
+
+    dialog.Edit1.Text := '2';
+    dialog.Button1Click(dialog.Button1);
+    AssertEquals('1', dialog.Edit1.Text);
+  finally
+    dialog.Free;
+  end;
+end;
+
+procedure TTestAHW52DescendantParameterPresets.TestGenerationStartIncrement;
+var
+  dialog: TForm19;
+begin
+  dialog := TForm19.CreateNew(nil);
+  try
+    dialog.Edit1 := TEdit.Create(dialog);
+    dialog.Edit1.Text := '4';
+    dialog.Edit2 := TEdit.Create(dialog);
+    dialog.Edit2.Text := '7';
+
+    dialog.Button2Click(dialog.Button2);
+
+    AssertEquals('5', dialog.Edit1.Text);
+    AssertEquals('7', dialog.Edit2.Text);
+  finally
+    dialog.Free;
+  end;
+end;
+
+procedure TTestAHW52DescendantParameterPresets.
+  TestGenerationCountDecrementStopsAtOne;
+var
+  dialog: TForm19;
+begin
+  dialog := TForm19.CreateNew(nil);
+  try
+    dialog.Edit1 := TEdit.Create(dialog);
+    dialog.Edit1.Text := '6';
+    dialog.Edit2 := TEdit.Create(dialog);
+    dialog.Edit2.Text := '1';
+
+    dialog.Button3Click(dialog.Button3);
+
+    AssertEquals('6', dialog.Edit1.Text);
+    AssertEquals('1', dialog.Edit2.Text);
+
+    dialog.Edit2.Text := '2';
+    dialog.Button3Click(dialog.Button3);
+    AssertEquals('1', dialog.Edit2.Text);
+  finally
+    dialog.Free;
+  end;
+end;
+
+procedure TTestAHW52DescendantParameterPresets.TestGenerationCountIncrement;
+var
+  dialog: TForm19;
+begin
+  dialog := TForm19.CreateNew(nil);
+  try
+    dialog.Edit1 := TEdit.Create(dialog);
+    dialog.Edit1.Text := '6';
+    dialog.Edit2 := TEdit.Create(dialog);
+    dialog.Edit2.Text := '4';
+
+    dialog.Button4Click(dialog.Button4);
+
+    AssertEquals('6', dialog.Edit1.Text);
+    AssertEquals('5', dialog.Edit2.Text);
+  finally
+    dialog.Free;
+  end;
+end;
+
+procedure TTestAHW52DescendantParameterPresets.
+  TestListTypeVisibilityUsesAlphSubstring;
+var
+  dialog: TForm19;
+begin
+  dialog := TForm19.CreateNew(nil);
+  try
+    dialog.ComboBox1 := TComboBox.Create(dialog);
+    dialog.CheckBox7 := TCheckBox.Create(dialog);
+    dialog.CheckBox8 := TCheckBox.Create(dialog);
+    dialog.CheckBox6 := TCheckBox.Create(dialog);
+
+    dialog.ComboBox1.Text := 'Stammliste';
+    dialog.CheckBox7.Visible := False;
+    dialog.CheckBox8.Visible := False;
+    dialog.CheckBox6.Visible := False;
+    dialog.ComboBox1Change(dialog.ComboBox1);
+    AssertTrue(dialog.CheckBox7.Visible);
+    AssertTrue(dialog.CheckBox8.Visible);
+    AssertFalse(dialog.CheckBox6.Visible);
+
+    dialog.ComboBox1.Text := 'alph - sortiert';
+    dialog.CheckBox7.Visible := True;
+    dialog.CheckBox8.Visible := True;
+    dialog.ComboBox1Change(dialog.ComboBox1);
+    AssertFalse(dialog.CheckBox7.Visible);
+    AssertFalse(dialog.CheckBox8.Visible);
+
+    dialog.ComboBox1.Text := 'ALPH';
+    dialog.ComboBox1Change(dialog.ComboBox1);
+    AssertTrue(dialog.CheckBox7.Visible);
+    AssertTrue(dialog.CheckBox8.Visible);
+  finally
+    dialog.Free;
+  end;
+end;
+
+procedure TTestAHW52DescendantParameterPresets.TestNamgvIsListingProvenNoOp;
+var
+  dialog: TForm19;
+begin
+  dialog := CreateDialogWithCheckBoxes;
+  try
+    dialog.Caption := 'Synthetic dialog';
+    dialog.ModalResult := 0;
+    dialog.CheckBox1.Checked := True;
+    dialog.CheckBox7.Visible := False;
+    dialog.CheckBox8.Visible := True;
+
+    dialog.namgv(dialog);
+
+    AssertEquals('Synthetic dialog', dialog.Caption);
+    AssertEquals(0, dialog.ModalResult);
+    AssertTrue(dialog.CheckBox1.Checked);
+    AssertFalse(dialog.CheckBox7.Visible);
+    AssertTrue(dialog.CheckBox8.Visible);
   finally
     dialog.Free;
   end;
