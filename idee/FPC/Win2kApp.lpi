@@ -1,16 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <PathDelim Value="\"/>
     <General>
       <Flags>
         <MainUnitHasUsesSectionForAllUnits Value="False"/>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
+        <CompatibilityMode Value="True"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <MainUnit Value="0"/>
       <Title Value="Win2kApp"/>
       <Scaled Value="True"/>
       <UseAppBundle Value="False"/>
@@ -134,7 +134,9 @@
       <Unit2>
         <Filename Value="..\source\Frm_W2kAbout.pas"/>
         <IsPartOfProject Value="True"/>
+        <ComponentName Value="AboutBox"/>
         <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
       </Unit2>
     </Units>
   </ProjectOptions>

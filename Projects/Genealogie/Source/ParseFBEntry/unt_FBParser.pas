@@ -1,3 +1,24 @@
+{
+  /////////////////////////////////////////////////////////////////////////////
+  // Unit: unt_FBParser
+  // Purpose:
+  //   Parser für genealogische / Familienbuch-Einträge im freien Textformat.
+  //   Wandelt komplex strukturierte Zeilen mit Personen-, Familien-, Ereignis-
+  //   und Referenzinformationen in strukturierte Ereignis-Callbacks um.
+  // Features:
+  //   * Zeichenbasierter Zustandsautomat (FMode) für sequenzielles Parsing
+  //   * Erkennung von: Namen, AKA, Geschlecht, Berufen, Lebensphasen,
+  //     Ereignissen (Geburt, Taufe, Ehe, Tod, Begräbnis, Scheidung, Emigration
+  //     Besitz, Religion), Orts- & Datumsangaben, Referenzen, Eltern, Kinder
+  //   * Umgang mit Sonderzeichen: Umlaute, Geschützte Leerzeichen, Unicode-Symbole
+  //   * Heuristisches Lernen / Raten des Geschlechts über TGNameHandler
+  //   * Robuste Fehler-/Warnungsrückmeldung per Ereignis (onParseMessage)
+  // Assumptions / Limits:
+  //   * Nicht thread-sicher
+  //   * Erwartet wohldefiniertes Eingabeformat (Genealogie-spezifische Kürzel)
+  //   * Fehlerhafte Formatierungen werden gemeldet, Parsing läuft weiter
+  /////////////////////////////////////////////////////////////////////////////
+}
 unit unt_FBParser;
 
 {$mode objfpc}{$H+}
@@ -6,49 +27,93 @@ interface
 
 uses
     Classes, SysUtils, Cmp_Parser, unt_IGenBase2, Unt_GNameHandler;
-
 type
-    TParseEvent = procedure(Sender: TObject; aText: string; Ref: string;
+  /// <summary>
+    ///   Generisches Parse-Ereignis: wird bei extrahierten Segmenten ausgelöst.
+    /// </summary>
+    /// <param name="Sender">Parserinstanz.</param>
+    /// <param name="aText">Inhalt des extrahierten Segments (Text).</param>
+    /// <param name="Ref">Bezugs-ID (Familien-/Personen-Referenz).</param>
+    /// <param name="dsubtype">Subtyp / Ereigniscode.</param>
+   TParseEvent = procedure(Sender: TObject; aText: string; Ref: string;
         dsubtype: integer) of object;
 
+    /// <summary>
+    ///   Meldungsereignis für Fehler, Warnungen & Debug-Ausgaben.
+    /// </summary>
     TParseMsgEvent = TTMessageEvent;
 
     { TFBEntryParser }
 
+    /// <summary>
+    ///   Parserklasse für genealogische Freitext-Einträge.
+    /// </summary>
+    /// <remarks>
+    ///   Führt zeichenorientiertes Parsing über einen umfangreichen Zustandsautomaten
+    ///   durch. Erkennt und normalisiert Namen, Ereignisse, Orte, Daten, Beziehungen
+    ///   und freie Fakten. Delegiert Geschlechts-Heuristik an TGNameHandler.
+    /// </remarks>
     TFBEntryParser = class(TBaseParser)
     private
+        /// <summary>Fallback-Ort, wenn kein Ort erkannt wurde.</summary>
         FDefaultPlace: string;
 
+        /// <summary>Letzte Meldung (Fehler/Warnung/Debug).</summary>
         FLastErr: string;
+        /// <summary>Aktuelle Familien-Hauptreferenz (Eintragsnummer).</summary>
         FMainRef: string;
+        /// <summary>Event: Ende eines Eintrags.</summary>
         FonEntryEnd: TParseEvent;
 
+        /// <summary>Erkannte Umlautsequenzen für Zeichentest.</summary>
         FUmlauts: array of string;
+        /// <summary>Liste bekannter Titel für Namens-/AKA-Erkennung.</summary>
         FAkkaTitel: array of string;
 
+        /// <summary>Ereignis bei Start einer Familie.</summary>
         FonStartFamily: TParseEvent;
+        /// <summary>Ereignis für Familiendaten (Freitext).</summary>
         FonFamilyData: TParseEvent;
+        /// <summary>Ereignis für Familiendatum.</summary>
         FonFamilyDate: TParseEvent;
+        /// <summary>Ereignis für Familien-Mitglied-Zuordnung.</summary>
         FonFamilyIndiv: TParseEvent;
+        /// <summary>Ereignis für Familien-Ort.</summary>
         FonFamilyPlace: TParseEvent;
+        /// <summary>Ereignis für Familien-Typ (Ehe, unehelich, etc.).</summary>
         FonFamilyType: TParseEvent;
+        /// <summary>Ereignis für Personen-Freitextdaten.</summary>
         FonIndiData: TParseEvent;
+        /// <summary>Ereignis für Personen-Datum.</summary>
         FonIndiDate: TParseEvent;
+        /// <summary>Ereignis für Personen-Namen.</summary>
         FonIndiName: TParseEvent;
+        /// <summary>Ereignis für Personen-Beruf.</summary>
         FonIndiOccu: TParseEvent;
+        /// <summary>Ereignis für Personen-Ort.</summary>
         FonIndiPlace: TParseEvent;
+        /// <summary>Ereignis für Personen-Referenz (ID / Nummer).</summary>
         FonIndiRef: TParseEvent;
+        /// <summary>Ereignis für Beziehungen (Referenzen, Eltern etc.).</summary>
         FonIndiRel: TParseEvent;
 
+        /// <summary>Event bei grundlegenden Parsefehlern (Fallback ohne Details).</summary>
         FonParseError: TNotifyEvent;
+        /// <summary>Meldungsereignis mit Typklassifikation.</summary>
         FonParseMessage: TParseMsgEvent;
 
+        /// <summary>Aktueller Zustandswert des Parsers.</summary>
         FMode: integer;
+        /// <summary>Debug-Hilfsroutine zur Statusprotokollierung.</summary>
         procedure Debug(Sender: TObject; NewMessage: string);
+        /// <summary>Fehlermeldung aus Namens-Lernkomponente.</summary>
         procedure GNameError(Msg: String; aType: integer);
+        /// <summary>Setzt Standardort (Guard bei Gleichheit).</summary>
         procedure SetDefaultPlace(AValue: string);
+        /// <summary>Intern: Familiendaten setzen.</summary>
         procedure SetFamilyData(lFamRef: string; lEvType: TenumEventType;
             lData: string);
+        /// <summary>Intern: Familiendatum setzen.</summary>
         procedure SetFamilyDate(lFamRef: string; lEvType: TenumEventType;
             lDate: string);
         procedure SetFamilyPlace(lFamRef: string; lEvType: TenumEventType;
