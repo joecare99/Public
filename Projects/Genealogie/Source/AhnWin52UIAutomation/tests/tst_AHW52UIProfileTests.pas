@@ -380,12 +380,16 @@ procedure TTestAHW52UIProfile.TestRoundTripsJSONProfile;
 var
   OriginalProfile: TWindowProfile;
   ParsedProfile: TWindowProfile;
+  JSON: UTF8String;
 begin
   OriginalProfile := CreateValidProfile;
   OriginalProfile.ForegroundWindowHandle := SearchDialogHandle;
   OriginalProfile.Controls[2].Text := 'München';
-  ParsedProfile := ProfileFromJSON(ProfileToJSON(OriginalProfile));
+  JSON := ProfileToJSON(OriginalProfile);
+  ParsedProfile := ProfileFromJSON(JSON);
 
+  CheckTrue(Pos('"schemaVersion":2',
+    StringReplace(JSON, ' ', '', [rfReplaceAll])) > 0);
   AssertEquals(OriginalProfile.ProcessId, ParsedProfile.ProcessId);
   AssertEquals(OriginalProfile.ExecutablePath, ParsedProfile.ExecutablePath);
   AssertEquals(OriginalProfile.ExecutableSha256, ParsedProfile.ExecutableSha256);

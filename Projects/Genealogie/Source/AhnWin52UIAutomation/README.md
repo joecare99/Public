@@ -119,6 +119,13 @@ target-process foreground HWND/class/caption when available.
 `timeout-waiting-for-dialog` before returning an error; it has not sent input.
 The adapter cannot read `TDBGrid` rows or claim a hit from dialog closure.
 
+The preflight for the four `geba` categories is recorded in
+`DevOps\AhnWin-Next-Reconstruction-Slices.md`. It requires a new verified
+backup/inventory and a fresh same-PID dialog profile before each separately
+authorized one-category experiment. The category labels are test
+preconditions, not BDE result predictions. The user must report visible
+selection independently; dialog closure alone never means a lookup hit.
+
 ### Start and inspect
 
 Only the exact pinned executable may be started. This command is not a

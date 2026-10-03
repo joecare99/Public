@@ -166,13 +166,34 @@ layout, stable ordering, collation comparison, or matching `.YG` tree behavior
 for the approved AhnWin fixtures. Do not claim that `PX_add_primary_index`
 handles a secondary index; its source validates a primary `.PX` file.
 
-Next provider spike: using only synthetic Paradox files, test whether the
-installed FPC/pxlib binding can open and enumerate `.XG` logical records
-without writes, and whether their order corresponds to the declared
-`intl850` key order. If that path is insufficient, implement a dedicated
-read-only secondary-index reader with strict header/schema validation before
-connecting it to the UI. No live AhnWin run or genealogy-row inspection was
-performed for this API review.
+### Synthetic `.XG` logical-record probe — 2026-10-03
+
+A one-shot fixture generator created a 4-KiB file with pxlib file type 6
+(`pxfFileTypNonIncSecIndexG`) under the session `files` directory only. Its
+five synthetic fields were `Surname`, `GivenName`, `PersonId`, `PersonPart`,
+and a final two-byte `Hint`; three artificial records were written in an
+intentionally preselected surname/given-name order. FPC 3.2.2 `TParadox`
+opened the file and returned all five field names and all three records in
+the stored field order, including the `Hint` values.
+
+The SHA-256 was
+`BD80AD491B3D7F295DD7F859000342C4FE29A771B2FD76B000D9C1F2097A660C`
+both before and after the read. This validates generic, read-only
+field/record access for this synthetic file type. Raw header inspection
+reported `fileType=6`, `records=3`, `fields=5`, and `primaryKeyFields=2`;
+pxlib 0.6.8 sets the latter to 2 unconditionally for this file type. Thus the
+test does not establish how the header partitions secondary-key fields from
+primary-key fields. Because the fixture was authored in the desired row order
+and contains no matching `.YG` tree, it also does **not** verify pxlib sorting,
+`intl850` comparison, `.YG` traversal, or BDE behavior. The actual approved
+fixture was not opened.
+
+Next provider spike: validate the `.XG`/`.YG` header and cross-file structure
+using a second synthetic fixture with a corresponding tree, or implement a
+dedicated read-only reader after confirming the required format details. Do
+not connect generic `TParadox` record enumeration to the provider contract as
+an ordered lookup until sort and candidate ordering are independently tested.
+No live AhnWin run or genealogy-row inspection was performed.
 
 ## Checkpoint — wPDF DFM compatibility surface
 
@@ -3225,3 +3246,79 @@ reachability remain unknown. The LFM binds `FormMouseDown` and `FormKeyDown`;
 the DFM binds neither, despite the retained handlers. Record these as evidence
 limits, not as reasons to invent bindings or shared-state APIs. See the
 About-dialog wiki map.
+
+## Continuation — retained class references and visible experiment results
+
+### Main quest
+
+The class-pointer audit for the reorganized no-listing units found two
+assembly-comment identities that need explicit source mappings:
+`TDataModule2` at `005D5125` is now `TGenealogyDataModule`, and `TForm7` at
+`005EEBFE` is now `TFrenchRepublicanCalendarForm`. Their original listing
+names/instructions remain intact; the comments and symbol map show both
+identities. The streamed instances remain `DataModule2` and `Form7`.
+
+The broader listing inventory remains an evidence task, not a reason to
+translate an unqualified routine. The latest DFM-bound candidate screen has
+not found a complete database/report/global-free handler with a synthetic
+test surface. Continue by inventorying event bindings/callers, and keep
+relationship, export, and report workflows blocked on their provider and
+dataset contracts.
+
+### Side quest
+
+The external adapter now captures only target-process foreground HWND and
+matching class/caption metadata, alongside the existing visible top-level
+window/control profile. It records a persisted
+`timeout-waiting-for-dialog` result (phase, timeout stage/limit, last visible
+profile) when the bounded dialog wait expires, and sends no input in that
+branch. New profiles/results use schema version 2; version-1 profiles and
+prepared manifests remain readable. The UI profile/result contract continues
+to set `gridSelectionRead` and `lookupOutcomeInferred` to false. The adapter
+builds without warnings and 30 synthetic tests pass; no original process was
+started for this change.
+
+### Prepare-only `geba` observation protocol
+
+This is a UX corroboration protocol, not a way to define the replacement
+provider contract. The approved fixture's `geba` header fixes the index fields
+and order, but does not prove BDE partial-key behavior, hit/miss cursor
+semantics, or errors. A manifest remains non-executable; preparing this
+checklist does not authorize a live action.
+
+**Before each separately authorized run:**
+
+1. Confirm the exact approved test executable path/hash and that no other
+   AhnWin instance or unexpected modal dialog is active.
+2. Capture a fresh recursive file inventory with sizes, timestamps, and
+   hashes. Copy the complete test-instance directory to a dated backup
+   outside it; compare the backup inventory to the source before proceeding.
+3. Manually open `Auswahl`, capture a fresh profile from the same PID, and
+   validate it with the adapter. Do not reuse an old profile after a dialog
+   geometry, DPI, owner, process, or executable change.
+4. Prepare exactly one category/manifest and review the surname/given-name
+   inputs locally. Do not batch, replay, or source query values from a
+   persistent script. No category is executed until the user separately
+   authorizes that named category and snapshot.
+5. Permit only the two visible search-field text writes and the recovered
+   `Edit2Exit` trigger. Do not click other dialog controls, edit/save a
+   person, open reports, or invoke print/export.
+6. The user records whether a candidate was visibly selected; the adapter
+   records only visible window/control state. Compare the complete
+   post-close file inventory with the pre-run inventory. Stop on any
+   unexpected prompt, ambiguous UI, or unexplained file difference, preserve
+   both inventories and the backup, and do not proceed to another category.
+
+**Scenario categories:** `known-hit` requires a user-verified full two-field
+match; `surname-only-prefix` supplies a surname and an empty given name;
+`absent-surname` uses a user-verified absent surname and nonempty given name;
+`absent-given-name` uses a verified surname and a given name absent for that
+surname. The category is a precondition label, not a predicted BDE result.
+
+**Recorded terminal evidence:** use one of `dialog-closed`,
+`dialog-remains-open`, `dialog-wait-timeout`, `profile-mismatch`, or
+`unexpected-window`. Separately record the user's visible-selection report as
+`candidate-confirmed`, `no-candidate-confirmed`, or `ambiguous/not-observed`.
+Do not translate `dialog-closed` into a hit, `dialog-remains-open` into a miss,
+or any UI result into cursor position. The adapter's grid-selection and
+lookup-inference flags remain false in every category.

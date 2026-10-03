@@ -83,10 +83,13 @@ procedure TTestAHW52UIExperiment.
   TestManifestRoundTripPreservesApprovedLookupCategory;
 var
   Original, Parsed: TUIExperimentManifest;
+  JSON: UTF8String;
 begin
   Original := CreateValidManifest;
-  Parsed := UIExperimentManifestFromJSON(
-    UIExperimentManifestToJSON(Original));
+  JSON := UIExperimentManifestToJSON(Original);
+  Parsed := UIExperimentManifestFromJSON(JSON);
+  CheckTrue(Pos('"resultSchemaVersion":2',
+    StringReplace(JSON, ' ', '', [rfReplaceAll])) > 0);
   AssertEquals(Original.ManifestId, Parsed.ManifestId);
   AssertEquals(Original.SnapshotReference, Parsed.SnapshotReference);
   AssertEquals(Original.ProcessId, Parsed.ProcessId);
