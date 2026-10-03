@@ -16,6 +16,8 @@ type
     property Operation: string read FOperation;
   end;
 
+procedure RaiseDBTablesCompatibilityUnsupported(const Operation: string);
+
 implementation
 
 constructor EDBTablesCompatibilityUnsupported.Create(
@@ -25,6 +27,11 @@ begin
   inherited CreateFmt(
     'DBTables compatibility stub cannot perform "%s"; migrate this path from BDE.',
     [Operation]);
+end;
+
+procedure RaiseDBTablesCompatibilityUnsupported(const Operation: string);
+begin
+  raise EDBTablesCompatibilityUnsupported.Create(Operation);
 end;
 
 end.

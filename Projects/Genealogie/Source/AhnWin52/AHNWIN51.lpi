@@ -28,7 +28,7 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="3">
+    <RequiredPackages Count="4">
       <Item1>
         <PackageName Value="Printer4Lazarus"/>
       </Item1>
@@ -38,6 +38,9 @@
       <Item3>
         <PackageName Value="LCL"/>
       </Item3>
+      <Item4>
+        <PackageName Value="lazreport"/>
+      </Item4>
     </RequiredPackages>
     <Units Count="5">
       <Unit0>
@@ -82,9 +85,12 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\test;..\Source;Forms"/>
+      <OtherUnitFiles Value="..\test;..\Source;Forms;Reports;Compat\BrowserCommands;wPDF\Components;wPDF\Engine;ThirdParty\mORMot2\src;ThirdParty\mORMot2\src\core;ThirdParty\mORMot2\src\ui;ThirdParty\mORMot2\src\lib"/>
       <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
+    <Other>
+      <CustomOptions Value="-dNO_USE_PDFSECURITY -dNO_USE_UNISCRIBE -dZLIBPAS -dNOLIBDEFLATESTATIC"/>
+    </Other>
     <Linking>
       <Options>
         <Win32>

@@ -11,8 +11,8 @@ type
   /// Compile-time stand-in for the Delphi graphics type returned by GetPage.
   TMetafile = TGraphic;
 
-  /// QuickReport preview callback signature recovered from the preview controls.
-  TQRPreviewEvent = procedure(Sender: TObject) of object;
+  /// QuickReport preview callback signature recovered from the preview listing.
+  TQRPreviewEvent = procedure(Sender: TObject; PageCount: Integer) of object;
 
   TQRPrinter = class;
 

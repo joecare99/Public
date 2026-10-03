@@ -263,6 +263,9 @@ implementation
 
 {$R *.DFM}
 
+uses
+  Unit12;
+
 procedure TPersonSearchForm.Button1Click(Sender : TObject);
 begin
 (*
@@ -670,26 +673,8 @@ end;
 
 procedure TPersonSearchForm.BitBtn2Click(Sender : TObject);
 begin
-(*
-
-* Reference to pointer to GlobalVar_0253592C
-|
-00584060   A1E0C46100             mov     eax, dword ptr [$0061C4E0]
-00584065   8B00                   mov     eax, [eax]
-
-* Possible String Reference to: 'Verw'
-|
-00584067   BA8C405800             mov     edx, $0058408C
-
-* Reference to: System.@LStrCmp;
-|
-0058406C   E8F30EE8FF             call    00404F64
-00584071   740F                   jz      00584082
-00584073   A1D8535302             mov     eax, dword ptr [$025353D8]
-00584078   C7804C02000002000000   mov     dword ptr [eax+$024C], $00000002
-00584082   C3                     ret
-
-*)
+  if Unit12.GlobalVar_0253592C <> 'Verw' then
+    PersonSearchDialog.ModalResult := mrCancel;
 end;
 
 procedure TPersonSearchForm.Edit1KeyDown(Sender: TObject; var Key: Word;
@@ -904,121 +889,31 @@ begin
 end;
 
 procedure TPersonSearchForm.FormCreate(Sender : TObject);
+var
+  screenWidth: Integer;
+  screenHeight: Integer;
 begin
-(*
-0058424C   53                     push    ebx
-0058424D   56                     push    esi
-0058424E   57                     push    edi
-0058424F   55                     push    ebp
-00584250   BDD8535302             mov     ebp, $025353D8
-00584255   B201                   mov     dl, $01
-00584257   8B4500                 mov     eax, [ebp+$00]
+  PersonSearchDialog.Scaled := True;
+  screenWidth := Screen.Width;
+  screenHeight := Screen.Height;
 
-* Reference to: Forms.TCustomForm.SetScaled(TCustomForm;Boolean);
-|
-0058425A   E8D131EEFF             call    00467430
+  if (screenHeight > 768) or (screenWidth > 1024) then
+  begin
+    PersonSearchDialog.Height :=
+      PersonSearchDialog.Height * screenHeight div 768;
+    PersonSearchDialog.Width :=
+      PersonSearchDialog.Width * screenHeight div 768;
+    PersonSearchDialog.ScaleBy(screenHeight, 768);
+  end;
 
-* Reference to TScreen instance
-|
-0058425F   A1C8CC6100             mov     eax, dword ptr [$0061CCC8]
-00584264   8B00                   mov     eax, [eax]
-
-* Reference to: Forms.TScreen.GetWidth(TScreen):Integer;
-|
-00584266   E8C969EEFF             call    0046AC34
-0058426B   8BF8                   mov     edi, eax
-
-* Reference to TScreen instance
-|
-0058426D   A1C8CC6100             mov     eax, dword ptr [$0061CCC8]
-00584272   8B00                   mov     eax, [eax]
-
-* Reference to: Forms.TScreen.GetHeight(TScreen):Integer;
-|
-00584274   E8AF69EEFF             call    0046AC28
-00584279   8BD8                   mov     ebx, eax
-0058427B   81FB00030000           cmp     ebx, $00000300
-00584281   7F08                   jnle    0058428B
-00584283   81FF00040000           cmp     edi, $00000400
-00584289   7E47                   jle     005842D2
-0058428B   8B4500                 mov     eax, [ebp+$00]
-
-* Reference to field TScreen.OFFS_004C
-|
-0058428E   8B404C                 mov     eax, [eax+$4C]
-00584291   F7EB                   imul    ebx 
-00584293   B900030000             mov     ecx, $00000300
-00584298   99                     cdq
-00584299   F7F9                   idiv    ecx 
-0058429B   8BD0                   mov     edx, eax
-0058429D   8B4500                 mov     eax, [ebp+$00]
-
-* Reference to: Controls.TControl.SetHeight(TControl;Integer);
-|
-005842A0   E8177FECFF             call    0044C1BC
-005842A5   8B4500                 mov     eax, [ebp+$00]
-005842A8   8B4048                 mov     eax, [eax+$48]
-005842AB   F7EB                   imul    ebx 
-005842AD   B900030000             mov     ecx, $00000300
-005842B2   99                     cdq
-005842B3   F7F9                   idiv    ecx 
-005842B5   8BD0                   mov     edx, eax
-005842B7   8B4500                 mov     eax, [ebp+$00]
-
-* Reference to: Controls.TControl.SetWidth(TControl;Integer);
-|
-005842BA   E8D97EECFF             call    0044C198
-005842BF   B900030000             mov     ecx, $00000300
-005842C4   8BD3                   mov     edx, ebx
-005842C6   8B4500                 mov     eax, [ebp+$00]
-005842C9   66BEECFF               mov     si, $FFEC
-
-* Reference to: System.@CallDynaInst;
-|
-005842CD   E862FCE7FF             call    00403F34
-005842D2   81FB00030000           cmp     ebx, $00000300
-005842D8   7C08                   jl      005842E2
-005842DA   81FF00040000           cmp     edi, $00000400
-005842E0   7D47                   jnl     00584329
-005842E2   8B4500                 mov     eax, [ebp+$00]
-005842E5   8B404C                 mov     eax, [eax+$4C]
-005842E8   F7EB                   imul    ebx 
-005842EA   B900030000             mov     ecx, $00000300
-005842EF   99                     cdq
-005842F0   F7F9                   idiv    ecx 
-005842F2   8BD0                   mov     edx, eax
-005842F4   8B4500                 mov     eax, [ebp+$00]
-
-* Reference to: Controls.TControl.SetHeight(TControl;Integer);
-|
-005842F7   E8C07EECFF             call    0044C1BC
-005842FC   8B4500                 mov     eax, [ebp+$00]
-005842FF   8B4048                 mov     eax, [eax+$48]
-00584302   F7EB                   imul    ebx 
-00584304   B900030000             mov     ecx, $00000300
-00584309   99                     cdq
-0058430A   F7F9                   idiv    ecx 
-0058430C   8BD0                   mov     edx, eax
-0058430E   8B4500                 mov     eax, [ebp+$00]
-
-* Reference to: Controls.TControl.SetWidth(TControl;Integer);
-|
-00584311   E8827EECFF             call    0044C198
-00584316   B900040000             mov     ecx, $00000400
-0058431B   8BD7                   mov     edx, edi
-0058431D   8B4500                 mov     eax, [ebp+$00]
-00584320   66BEECFF               mov     si, $FFEC
-
-* Reference to: System.@CallDynaInst;
-|
-00584324   E80BFCE7FF             call    00403F34
-00584329   5D                     pop     ebp
-0058432A   5F                     pop     edi
-0058432B   5E                     pop     esi
-0058432C   5B                     pop     ebx
-0058432D   C3                     ret
-
-*)
+  if (screenHeight < 768) or (screenWidth < 1024) then
+  begin
+    PersonSearchDialog.Height :=
+      PersonSearchDialog.Height * screenHeight div 768;
+    PersonSearchDialog.Width :=
+      PersonSearchDialog.Width * screenHeight div 768;
+    PersonSearchDialog.ScaleBy(screenWidth, 1024);
+  end;
 end;
 
 procedure TPersonSearchForm.showpreview(Sender : TObject);
