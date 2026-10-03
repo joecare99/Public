@@ -1,0 +1,100 @@
+object Form1: TForm1
+  Left = 0
+  Height = 795
+  Top = 0
+  Width = 1142
+  Caption = 'Form1'
+  ClientHeight = 795
+  ClientWidth = 1142
+  DesignTimePPI = 168
+  Visible = False
+  inline Frame1_1: TFrame1
+    Height = 795
+    Width = 1142
+    Align = alClient
+    ClientHeight = 795
+    ClientWidth = 1142
+    OnMouseDown = nil
+    inherited DBGrid1: TDBGrid
+      Left = 49
+      Height = 840
+      Top = 18
+      Width = 1295
+      Columns = <      
+        item
+          MinSize = 18
+          MaxSize = 350
+          PickList.Strings = (          )
+          Title.Caption = 'Nummer'
+          Width = 94
+          FieldName = 'Nummer'
+        end      
+        item
+          MinSize = 18
+          MaxSize = 350
+          PickList.Strings = (          )
+          Title.Caption = 'Name'
+          Width = 382
+          FieldName = 'Name'
+        end      
+        item
+          MinSize = 18
+          MaxSize = 350
+          PickList.Strings = (          )
+          Title.Caption = 'Vornamen'
+          Width = 385
+          FieldName = 'Vornamen'
+        end      
+        item
+          MinSize = 18
+          MaxSize = 350
+          PickList.Strings = (          )
+          Title.Alignment = taCenter
+          Title.Caption = '*'
+          FieldName = 'Gebjahr'
+        end      
+        item
+          MinSize = 18
+          MaxSize = 350
+          PickList.Strings = (          )
+          Title.Caption = 'Geb.-Ort'
+          Width = 438
+          FieldName = 'Gebort'
+        end      
+        item
+          MinSize = 18
+          MaxSize = 350
+          PickList.Strings = (          )
+          Title.Alignment = taCenter
+          Title.Caption = '~'
+          Width = 112
+          FieldName = 'Taufjahr'
+        end      
+        item
+          MinSize = 18
+          MaxSize = 350
+          PickList.Strings = (          )
+          Title.Caption = 'Tauf-Ort'
+          Width = 438
+          FieldName = 'Taufort'
+        end      
+        item
+          MinSize = 18
+          MaxSize = 350
+          PickList.Strings = (          )
+          Title.Alignment = taCenter
+          Title.Caption = '+'
+          Width = 112
+          FieldName = 'Stjahr'
+        end      
+        item
+          MinSize = 18
+          MaxSize = 350
+          PickList.Strings = (          )
+          Title.Caption = 'IDNR'
+          Width = 112
+          FieldName = 'IDNR'
+        end>
+    end
+  end
+end
