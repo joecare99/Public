@@ -7,3 +7,5 @@
 /docs/Properties
 *.bak
 *.lnk
+*.lps
+/Projects/Genealogie/bin
