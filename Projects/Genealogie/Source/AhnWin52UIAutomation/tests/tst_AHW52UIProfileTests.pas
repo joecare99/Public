@@ -26,6 +26,8 @@ type
     procedure TestRejectsUnenumeratedOwnerWindow;
     procedure TestAcceptsStableApplicationWindowOwner;
     procedure TestDisambiguatesVisibleApplicationWindow;
+    procedure TestDetectsVisiblePersonSearchDialog;
+    procedure TestDetectsClosedPersonSearchDialog;
     procedure TestRejectsPasswordStyleEditAsSearchInput;
     procedure TestRejectsAmbiguousSearchDialog;
     procedure TestRejectsUnexpectedDialogControl;
@@ -285,6 +287,23 @@ begin
   ValidatePersonSearchProfile(Profile, Profile, Targets);
   AssertEquals(QWord(SearchDialogHandle), Targets.DialogHandle);
   AssertEquals(QWord(202), Targets.NameEditHandle);
+end;
+
+procedure TTestAHW52UIProfile.TestDetectsVisiblePersonSearchDialog;
+var
+  Profile: TWindowProfile;
+begin
+  Profile := CreateValidProfile;
+  CheckTrue(HasVisiblePersonSearchDialog(Profile));
+end;
+
+procedure TTestAHW52UIProfile.TestDetectsClosedPersonSearchDialog;
+var
+  Profile: TWindowProfile;
+begin
+  Profile := CreateValidProfile;
+  Profile.Controls[1].Visible := False;
+  CheckFalse(HasVisiblePersonSearchDialog(Profile));
 end;
 
 procedure TTestAHW52UIProfile.TestRejectsPasswordStyleEditAsSearchInput;

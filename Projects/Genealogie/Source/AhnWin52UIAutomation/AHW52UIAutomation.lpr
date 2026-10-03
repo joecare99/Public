@@ -17,7 +17,6 @@ const
   WindowMessageTimeoutMs = 5000;
   WindowEnumerationAttempts = 4;
   WindowEnumerationRetryDelayMs = 100;
-  SearchActionTimeoutMs = 30000;
   SearchDialogWaitTimeoutMs = 30000;
   StartupTimeoutMs = 30000;
   CryptoProviderRsaAes = 24;
@@ -702,18 +701,6 @@ begin
   end;
 end;
 
-function HasVisiblePersonSearchDialog(
-  const Profile: TWindowProfile): Boolean;
-var
-  I: LongInt;
-begin
-  for I := 0 to High(Profile.Controls) do
-    if Profile.Controls[I].IsTopLevel and Profile.Controls[I].Visible and
-       SameText(Trim(Profile.Controls[I].Text), 'Auswahl') then
-      Exit(True);
-  Result := False;
-end;
-
 function WaitForPersonSearchDialog(
   ProcessId: DWORD; const ExpectedProfile: TWindowProfile;
   out Targets: TPersonSearchTargets): TWindowProfile;
@@ -875,19 +862,6 @@ begin
   end;
 end;
 
-procedure ClickValidatedSearchButton(ButtonHandle: HWND);
-var
-  MessageResult: DWORD_PTR;
-  MessageStatus: LRESULT;
-begin
-  MessageResult := 0;
-  MessageStatus := SendWindowMessageTimeoutW(ButtonHandle, BM_CLICK, 0, 0,
-    SMTO_ABORTIFHUNG or SMTO_BLOCK, SearchActionTimeoutMs, MessageResult);
-  if MessageStatus = 0 then
-    raise Exception.CreateFmt('BM_CLICK failed or timed out (Win32 error %d).',
-      [GetLastError]);
-end;
-
 function BuildSearchStatusJSON(
   const Profile: TWindowProfile;
   const Surname, GivenName, PreviousSurname, PreviousGivenName,
@@ -906,12 +880,22 @@ begin
     SearchObject := TJSONObject.Create;
     SearchObject.Add('surname', Surname);
     SearchObject.Add('givenName', GivenName);
+    if (Phase = 'about-to-trigger-search-on-edit2-exit') or
+       (Phase = 'search-not-triggered-dialog-still-open') or
+       (Phase = 'search-triggered-by-edit2-exit-dialog-closed') then
+      SearchObject.Add('trigger', 'Edit2Exit->Button1Click');
     if Phase = 'button-click-sent' then
       SearchObject.Add('buttonClickStatus', 'sent')
     else if Phase = 'about-to-click-search' then
       SearchObject.Add('buttonClickStatus', 'outcome-unknown-until-post-profile')
     else
       SearchObject.Add('buttonClickStatus', 'not-sent');
+    if Phase = 'about-to-trigger-search-on-edit2-exit' then
+      SearchObject.Add('searchTriggerStatus', 'pending')
+    else if Phase = 'search-not-triggered-dialog-still-open' then
+      SearchObject.Add('searchTriggerStatus', 'dialog-remains-open')
+    else if Phase = 'search-triggered-by-edit2-exit-dialog-closed' then
+      SearchObject.Add('searchTriggerStatus', 'dialog-closed');
     RootObject.Add('search', SearchObject);
     PreviousInputObject := TJSONObject.Create;
     PreviousInputObject.Add('surname', PreviousSurname);
@@ -941,7 +925,6 @@ var
   GivenTextBefore: UTF8String;
   NameTextAfter: UTF8String;
   GivenTextAfter: UTF8String;
-  OriginalTargets: TPersonSearchTargets;
   ProgressJSON: UTF8String;
 begin
   RequireOnlyOptions(Options, [
@@ -1023,29 +1006,27 @@ begin
   if GivenTextAfter <> GivenName then
     raise Exception.Create('Given-name text readback did not match; search was not clicked.');
 
-  OriginalTargets := Targets;
   ProgressJSON := BuildSearchStatusJSON(CurrentProfile, Surname, GivenName,
     NameTextBefore, GivenTextBefore, 'given-name-set');
   ReplaceUTF8File(OutputPath, ProgressJSON + LineEnding);
   ProgressJSON := BuildSearchStatusJSON(CurrentProfile, Surname, GivenName,
-    NameTextBefore, GivenTextBefore, 'about-to-focus-search');
+    NameTextBefore, GivenTextBefore, 'about-to-trigger-search-on-edit2-exit');
   ReplaceUTF8File(OutputPath, ProgressJSON + LineEnding);
+  { Leaving Edit2 invokes its DFM-bound OnExit handler, which calls Button1Click. }
   FocusValidatedEdit(HWND(Targets.DialogHandle), HWND(Targets.NameEditHandle));
-  CurrentProfile := CaptureProfile(ProcessId);
-  ValidatePersonSearchProfile(CurrentProfile, ExpectedProfile, Targets);
-  if (Targets.SearchButtonHandle <> OriginalTargets.SearchButtonHandle) or
-     (Targets.DialogHandle <> OriginalTargets.DialogHandle) then
-    raise Exception.Create('The UI changed immediately before the search click.');
-  ProgressJSON := BuildSearchStatusJSON(CurrentProfile, Surname, GivenName,
-    NameTextBefore, GivenTextBefore, 'about-to-click-search');
-  ReplaceUTF8File(OutputPath, ProgressJSON + LineEnding);
-  ClickValidatedSearchButton(HWND(Targets.SearchButtonHandle));
-  Sleep(750);
   PostActionProfile := CaptureProfile(ProcessId);
+  if HasVisiblePersonSearchDialog(PostActionProfile) then
+  begin
+    ProgressJSON := BuildSearchStatusJSON(PostActionProfile, Surname, GivenName,
+      NameTextBefore, GivenTextBefore, 'search-not-triggered-dialog-still-open');
+    ReplaceUTF8File(OutputPath, ProgressJSON + LineEnding);
+    raise Exception.Create(
+      'The search dialog remained open after leaving the given-name edit; no button click was sent.');
+  end;
   ProgressJSON := BuildSearchStatusJSON(PostActionProfile, Surname, GivenName,
-    NameTextBefore, GivenTextBefore, 'button-click-sent');
+    NameTextBefore, GivenTextBefore, 'search-triggered-by-edit2-exit-dialog-closed');
   ReplaceUTF8File(OutputPath, ProgressJSON + LineEnding);
-  WriteLn(Format('Search click sent; post-action profile saved to %s',
+  WriteLn(Format('The Edit2Exit handler closed the dialog; post-action profile saved to %s',
     [ExpandFileName(OutputPath)]));
 end;
 

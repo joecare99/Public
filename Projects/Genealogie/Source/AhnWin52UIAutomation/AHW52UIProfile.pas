@@ -46,6 +46,8 @@ type
   EUIProfileError = class(Exception);
 
 function SameWindowsPath(const LeftPath, RightPath: UTF8String): Boolean;
+function HasVisiblePersonSearchDialog(
+  const Profile: TWindowProfile): Boolean;
 procedure ValidateExecutableIdentity(
   const ActualPath, ActualSha256: UTF8String);
 procedure ValidatePersonSearchProfile(
@@ -110,6 +112,19 @@ begin
     raise EUIProfileError.Create('The visible person-search dialog was not found.');
   if Matches <> 1 then
     raise EUIProfileError.Create('The person-search dialog selector is ambiguous.');
+end;
+
+function HasVisiblePersonSearchDialog(
+  const Profile: TWindowProfile): Boolean;
+var
+  I: LongInt;
+begin
+  for I := 0 to High(Profile.Controls) do
+    if Profile.Controls[I].IsTopLevel and
+       Profile.Controls[I].Visible and
+       SameText(Trim(Profile.Controls[I].Text), PersonSearchCaption) then
+      Exit(True);
+  Result := False;
 end;
 
 function FindSingleMainWindow(const Profile: TWindowProfile): LongInt;

@@ -128,21 +128,26 @@ revalidates the window hierarchy before sending each action.
 
 `--dry-run` validates the profile and reports field lengths without sending
 input; the CLI still requires `--allow-input` as an explicit command guard.
-A real search sets the two visible fields with `WM_SETTEXT`, checks readback,
-and clicks only the validated `suchen` button with `BM_CLICK`.
+A real search sets the two visible fields with `WM_SETTEXT` and checks
+readback. In the recovered AhnWin DFM, `Edit2.OnExit` is bound to a handler
+that calls the same `Button1Click` routine used by `suchen`. The adapter
+therefore triggers that recovered search path by moving focus away from the
+given-name edit; it does not send `BM_CLICK`. The dialog normally closes during
+that exit handler, so a closed dialog is recorded as the observed trigger
+result, not as a dispatched button click.
 When launching the command itself makes the modal dialog disappear,
 `--wait-for-dialog` keeps the one-shot command active for up to 30 seconds so
 the user can reopen `Auswahl`; it proceeds only after the live window profile
 matches and otherwise exits without sending input.
 This is not identical to keyboard typing: Delphi `OnKeyPress` handlers are not
 invoked by `WM_SETTEXT`. If readback, focus, window ownership, process identity,
-or selector geometry differs, the command stops before clicking. The result
+or selector geometry differs, the command stops before triggering the edit-exit search. The result
 JSON contains the prior input-field values and a post-action UI profile. It
 records progress atomically (`validated-no-input`, `about-to-set-*`, `*-set`,
-`about-to-click-search`, and `button-click-sent`); after a click timeout, its
-status is explicitly marked outcome-unknown. An error therefore leaves the
-last completed/intended phase available. It does not claim that BDE found a
-record or reveal grid contents that Windows does not expose as control text.
+`about-to-trigger-search-on-edit2-exit`, and
+`search-triggered-by-edit2-exit-dialog-closed`). An error therefore leaves the
+last completed/intended phase available. It does not infer which grid row was
+selected or reveal grid contents that Windows does not expose as control text.
 
 Do not use this command for record creation, editing, deletion, saving,
 printing, or export. The approved interactive search result and any sidecar
