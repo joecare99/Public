@@ -15,7 +15,10 @@ const
     'C:\Users\Mir\.copilot\session-state\bc780dc9-be21-4e10-b7a2-0aab27abfe2f\files\ahnwin-ui-profiles';
   MaximumCapturedText = 4096;
   WindowMessageTimeoutMs = 5000;
+  WindowEnumerationAttempts = 4;
+  WindowEnumerationRetryDelayMs = 100;
   SearchActionTimeoutMs = 30000;
+  SearchDialogWaitTimeoutMs = 30000;
   StartupTimeoutMs = 30000;
   CryptoProviderRsaAes = 24;
   CryptoVerifyContext = $F0000000;
@@ -212,10 +215,16 @@ begin
   end;
 end;
 
+function GetWindowClass(WindowHandle: HWND): UTF8String; forward;
+
 function IsPasswordEdit(WindowHandle: HWND): Boolean;
 var
   WindowStyle: LONG_PTR;
+  ClassName: UTF8String;
 begin
+  ClassName := GetWindowClass(WindowHandle);
+  if not SameText(ClassName, 'Edit') and not SameText(ClassName, 'TEdit') then
+    Exit(False);
   WindowStyle := GetWindowLongPtrW(WindowHandle, GWL_STYLE);
   Result := (WindowStyle and ES_PASSWORD) <> 0;
 end;
@@ -339,7 +348,8 @@ begin
   except
     on E: Exception do
     begin
-      Context^.ErrorText := E.Message;
+      Context^.ErrorText := Format('Window inspection failed for HWND 0x%s: %s',
+        [IntToHex(PtrUInt(WindowHandle), SizeOf(Pointer) * 2), E.Message]);
       Result := False;
     end;
   end;
@@ -349,25 +359,39 @@ function EnumerateTopLevelWindow(
   WindowHandle: HWND; Parameter: LPARAM): BOOL; stdcall;
 var
   Context: PWindowEnumContext;
-    WindowProcessId: DWORD;
-  begin
-    Context := PWindowEnumContext(Parameter);
-    try
-      WindowProcessId := 0;
-      if GetWindowThreadProcessId(WindowHandle, WindowProcessId) <> 0 then
-      begin
-        if WindowProcessId = Context^.Profile^.ProcessId then
-          AppendWindow(WindowHandle, Context);
-        if (Context^.ErrorText = '') and (WindowProcessId = Context^.Profile^.ProcessId) and
-           not EnumChildWindows(WindowHandle, @EnumerateChildWindow, Parameter) then
-          Context^.ErrorText := 'Child-window enumeration failed.';
+  WindowProcessId: DWORD;
+  EnumerationSucceeded: BOOL;
+  EnumerationError: DWORD;
+begin
+  Context := PWindowEnumContext(Parameter);
+  try
+    WindowProcessId := 0;
+    if GetWindowThreadProcessId(WindowHandle, WindowProcessId) <> 0 then
+    begin
+    if WindowProcessId = Context^.Profile^.ProcessId then
+      AppendWindow(WindowHandle, Context);
+    if (Context^.ErrorText = '') and
+       (WindowProcessId = Context^.Profile^.ProcessId) then
+    begin
+      SetLastError(0);
+      EnumerationSucceeded :=
+        EnumChildWindows(WindowHandle, @EnumerateChildWindow, Parameter);
+      EnumerationError := GetLastError;
+      if not EnumerationSucceeded and (Context^.ErrorText = '') and
+         (EnumerationError <> 0) then
+        Context^.ErrorText := Format(
+          'Child-window enumeration failed for HWND 0x%s (Win32 error %d).',
+          [IntToHex(PtrUInt(WindowHandle), SizeOf(Pointer) * 2),
+           EnumerationError]);
+    end;
     end;
     Result := Context^.ErrorText = '';
   except
     on E: Exception do
     begin
-      Context^.ErrorText := E.Message;
-      Result := False;
+    Context^.ErrorText := Format('Top-level inspection failed for HWND 0x%s: %s',
+      [IntToHex(PtrUInt(WindowHandle), SizeOf(Pointer) * 2), E.Message]);
+    Result := False;
     end;
   end;
 end;
@@ -375,24 +399,27 @@ end;
 function CaptureProfile(ProcessId: DWORD): TWindowProfile;
 var
   Context: TWindowEnumContext;
+  Attempt: LongInt;
 begin
   Result.ProcessId := ProcessId;
   Result.ExecutablePath := QueryProcessPath(ProcessId);
   ValidateExecutableIdentity(Result.ExecutablePath, GetFileSha256(Result.ExecutablePath));
   Result.ExecutableSha256 := ApprovedExecutableSha256;
-  Result.Controls := nil;
-
-  Context.Profile := @Result;
-  Context.ErrorText := '';
-  if not EnumWindows(@EnumerateTopLevelWindow, LPARAM(@Context)) then
+  for Attempt := 1 to WindowEnumerationAttempts do
   begin
+    Result.Controls := nil;
+    Context.Profile := @Result;
+    Context.ErrorText := '';
+    if EnumWindows(@EnumerateTopLevelWindow, LPARAM(@Context)) then
+      Exit;
     if Context.ErrorText <> '' then
       raise Exception.Create(Context.ErrorText);
-    raise Exception.Create('Top-level window enumeration failed.');
+    if Attempt < WindowEnumerationAttempts then
+      Sleep(WindowEnumerationRetryDelayMs);
   end;
-
-  if Length(Result.Controls) = 0 then
-    raise Exception.CreateFmt('No windows were found for process %d.', [ProcessId]);
+  raise Exception.CreateFmt(
+    'The window hierarchy remained unstable after %d capture attempts.',
+    [WindowEnumerationAttempts]);
 end;
 
 function PathIsInsideDirectory(
@@ -486,6 +513,8 @@ var
   TemporaryFileName: string;
   TemporaryWideName: UnicodeString;
   DestinationWideName: UnicodeString;
+  MoveError: DWORD;
+  CleanupError: DWORD;
 begin
   ValidateOutputLocation(FileName, False);
   TemporaryFileName := FileName + '.tmp-' + IntToStr(GetCurrentProcessId) +
@@ -497,7 +526,15 @@ begin
     PWideChar(DestinationWideName),
     MOVEFILE_REPLACE_EXISTING or MoveFileWriteThroughFlag) then
   begin
-    DeleteOutputFile(PWideChar(TemporaryWideName));
+    MoveError := GetLastError;
+    if not DeleteOutputFile(PWideChar(TemporaryWideName)) then
+    begin
+      CleanupError := GetLastError;
+      raise Exception.CreateFmt(
+        'Atomic log replacement failed (Win32 %d) and its temporary file could not be removed (Win32 %d).',
+        [MoveError, CleanupError]);
+    end;
+    SetLastError(MoveError);
     RaiseLastOSError;
   end;
 end;
@@ -512,7 +549,8 @@ begin
   I := FirstOption;
   while I <= High(Arguments) do
   begin
-    if (Arguments[I] = '--allow-input') or (Arguments[I] = '--dry-run') then
+    if (Arguments[I] = '--allow-input') or (Arguments[I] = '--dry-run') or
+       (Arguments[I] = '--wait-for-dialog') then
     begin
       OptionValue.Name := WideToUTF8(Arguments[I]);
       OptionValue.Value := 'true';
@@ -664,6 +702,40 @@ begin
   end;
 end;
 
+function HasVisiblePersonSearchDialog(
+  const Profile: TWindowProfile): Boolean;
+var
+  I: LongInt;
+begin
+  for I := 0 to High(Profile.Controls) do
+    if Profile.Controls[I].IsTopLevel and Profile.Controls[I].Visible and
+       SameText(Trim(Profile.Controls[I].Text), 'Auswahl') then
+      Exit(True);
+  Result := False;
+end;
+
+function WaitForPersonSearchDialog(
+  ProcessId: DWORD; const ExpectedProfile: TWindowProfile;
+  out Targets: TPersonSearchTargets): TWindowProfile;
+var
+  StartedAt: QWord;
+begin
+  StartedAt := GetTickCount64;
+  repeat
+    Result := CaptureProfile(ProcessId);
+    if HasVisiblePersonSearchDialog(Result) then
+    begin
+      ValidatePersonSearchProfile(Result, ExpectedProfile, Targets);
+      Exit;
+    end;
+    if GetTickCount64 - StartedAt >= SearchDialogWaitTimeoutMs then
+      raise Exception.CreateFmt(
+        'The visible person-search dialog did not appear within %d ms; no input was sent.',
+        [SearchDialogWaitTimeoutMs]);
+    Sleep(250);
+  until False;
+end;
+
 procedure SaveProfile(const Profile: TWindowProfile; const OutputPath: string);
 begin
   WriteNewUTF8File(OutputPath, ProfileToJSON(Profile) + LineEnding);
@@ -680,6 +752,8 @@ begin
   OutputPath := FindOption(Options, '--output');
   ValidateOutputPath(OutputPath);
   Profile := CaptureProfile(ProcessId);
+  if Length(Profile.Controls) = 0 then
+    raise Exception.CreateFmt('No windows were found for process %d.', [ProcessId]);
   SaveProfile(Profile, OutputPath);
   WriteLn(Format('Profile saved for PID %d to %s',
     [ProcessId, ExpandFileName(OutputPath)]));
@@ -817,7 +891,7 @@ end;
 function BuildSearchStatusJSON(
   const Profile: TWindowProfile;
   const Surname, GivenName, PreviousSurname, PreviousGivenName,
-    Phase: UTF8String; ButtonClickSent: Boolean): UTF8String;
+    Phase: UTF8String): UTF8String;
 var
   RootObject: TJSONObject;
   SearchObject: TJSONObject;
@@ -832,7 +906,12 @@ begin
     SearchObject := TJSONObject.Create;
     SearchObject.Add('surname', Surname);
     SearchObject.Add('givenName', GivenName);
-    SearchObject.Add('buttonClickSent', TJSONBoolean.Create(ButtonClickSent));
+    if Phase = 'button-click-sent' then
+      SearchObject.Add('buttonClickStatus', 'sent')
+    else if Phase = 'about-to-click-search' then
+      SearchObject.Add('buttonClickStatus', 'outcome-unknown-until-post-profile')
+    else
+      SearchObject.Add('buttonClickStatus', 'not-sent');
     RootObject.Add('search', SearchObject);
     PreviousInputObject := TJSONObject.Create;
     PreviousInputObject.Add('surname', PreviousSurname);
@@ -853,6 +932,7 @@ var
   OutputPath: string;
   Surname: UTF8String;
   GivenName: UTF8String;
+  WaitForDialog: Boolean;
   ExpectedProfile: TWindowProfile;
   CurrentProfile: TWindowProfile;
   PostActionProfile: TWindowProfile;
@@ -866,7 +946,7 @@ var
 begin
   RequireOnlyOptions(Options, [
     '--pid', '--profile', '--output', '--surname', '--given-name',
-    '--allow-input', '--dry-run']);
+    '--allow-input', '--dry-run', '--wait-for-dialog']);
   if FindOption(Options, '--allow-input') <> 'true' then
     raise Exception.Create('person-search requires the explicit --allow-input switch.');
 
@@ -885,8 +965,14 @@ begin
 
   ExpectedProfile := ReadProfileFile(ExpectedProfilePath);
   RequireSameTargetProcess(ExpectedProfile, ProcessId);
-  CurrentProfile := CaptureProfile(ProcessId);
-  ValidatePersonSearchProfile(CurrentProfile, ExpectedProfile, Targets);
+  WaitForDialog := HasOption(Options, '--wait-for-dialog');
+  if WaitForDialog then
+    CurrentProfile := WaitForPersonSearchDialog(ProcessId, ExpectedProfile, Targets)
+  else
+  begin
+    CurrentProfile := CaptureProfile(ProcessId);
+    ValidatePersonSearchProfile(CurrentProfile, ExpectedProfile, Targets);
+  end;
 
   NameTextBefore := GetWindowTextSafely(HWND(Targets.NameEditHandle));
   GivenTextBefore := GetWindowTextSafely(HWND(Targets.GivenNameEditHandle));
@@ -901,11 +987,11 @@ begin
   end;
 
   ProgressJSON := BuildSearchStatusJSON(CurrentProfile, Surname, GivenName,
-    NameTextBefore, GivenTextBefore, 'validated-no-input', False);
+    NameTextBefore, GivenTextBefore, 'validated-no-input');
   WriteNewUTF8File(OutputPath, ProgressJSON + LineEnding);
 
   ProgressJSON := BuildSearchStatusJSON(CurrentProfile, Surname, GivenName,
-    NameTextBefore, GivenTextBefore, 'about-to-set-surname', False);
+    NameTextBefore, GivenTextBefore, 'about-to-set-surname');
   ReplaceUTF8File(OutputPath, ProgressJSON + LineEnding);
   FocusValidatedEdit(HWND(Targets.DialogHandle), HWND(Targets.NameEditHandle));
   CurrentProfile := CaptureProfile(ProcessId);
@@ -917,11 +1003,11 @@ begin
   if GetWindowTextSafely(HWND(Targets.NameEditHandle)) <> Surname then
     raise Exception.Create('Surname text changed after profile revalidation; search was not clicked.');
   ProgressJSON := BuildSearchStatusJSON(CurrentProfile, Surname, GivenName,
-    NameTextBefore, GivenTextBefore, 'surname-set', False);
+    NameTextBefore, GivenTextBefore, 'surname-set');
   ReplaceUTF8File(OutputPath, ProgressJSON + LineEnding);
 
   ProgressJSON := BuildSearchStatusJSON(CurrentProfile, Surname, GivenName,
-    NameTextBefore, GivenTextBefore, 'about-to-set-given-name', False);
+    NameTextBefore, GivenTextBefore, 'about-to-set-given-name');
   ReplaceUTF8File(OutputPath, ProgressJSON + LineEnding);
   FocusValidatedEdit(HWND(Targets.DialogHandle), HWND(Targets.GivenNameEditHandle));
   CurrentProfile := CaptureProfile(ProcessId);
@@ -939,10 +1025,10 @@ begin
 
   OriginalTargets := Targets;
   ProgressJSON := BuildSearchStatusJSON(CurrentProfile, Surname, GivenName,
-    NameTextBefore, GivenTextBefore, 'given-name-set', False);
+    NameTextBefore, GivenTextBefore, 'given-name-set');
   ReplaceUTF8File(OutputPath, ProgressJSON + LineEnding);
   ProgressJSON := BuildSearchStatusJSON(CurrentProfile, Surname, GivenName,
-    NameTextBefore, GivenTextBefore, 'about-to-focus-search', False);
+    NameTextBefore, GivenTextBefore, 'about-to-focus-search');
   ReplaceUTF8File(OutputPath, ProgressJSON + LineEnding);
   FocusValidatedEdit(HWND(Targets.DialogHandle), HWND(Targets.NameEditHandle));
   CurrentProfile := CaptureProfile(ProcessId);
@@ -951,13 +1037,13 @@ begin
      (Targets.DialogHandle <> OriginalTargets.DialogHandle) then
     raise Exception.Create('The UI changed immediately before the search click.');
   ProgressJSON := BuildSearchStatusJSON(CurrentProfile, Surname, GivenName,
-    NameTextBefore, GivenTextBefore, 'about-to-click-search', False);
+    NameTextBefore, GivenTextBefore, 'about-to-click-search');
   ReplaceUTF8File(OutputPath, ProgressJSON + LineEnding);
   ClickValidatedSearchButton(HWND(Targets.SearchButtonHandle));
   Sleep(750);
   PostActionProfile := CaptureProfile(ProcessId);
   ProgressJSON := BuildSearchStatusJSON(PostActionProfile, Surname, GivenName,
-    NameTextBefore, GivenTextBefore, 'button-click-sent', True);
+    NameTextBefore, GivenTextBefore, 'button-click-sent');
   ReplaceUTF8File(OutputPath, ProgressJSON + LineEnding);
   WriteLn(Format('Search click sent; post-action profile saved to %s',
     [ExpandFileName(OutputPath)]));
@@ -970,7 +1056,8 @@ begin
   WriteLn('  inspect --pid PID --output PROFILE.json');
   WriteLn('  start-and-inspect --output PROFILE.json');
   WriteLn('  person-search --pid PID --profile PROFILE.json --surname TEXT');
-  WriteLn('      --given-name TEXT --allow-input [--dry-run] --output RESULT.json');
+  WriteLn('      --given-name TEXT --allow-input [--dry-run]');
+  WriteLn('      [--wait-for-dialog] --output RESULT.json');
   WriteLn('Profiles/results must be written outside C:\ProgramData\AHNENWIN Test.');
 end;
 

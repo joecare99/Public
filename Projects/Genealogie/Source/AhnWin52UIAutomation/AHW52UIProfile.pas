@@ -61,8 +61,11 @@ const
   ExpectedExecutableSha256 =
     '817C1B1BB23469CD628C52E4A5EA26CB4DB26275B5EC84952717B218605F0AFF';
   MainWindowCaption = 'AHNENWIN 5.1';
+  MainWindowClass = 'TForm1';
   PersonSearchCaption = 'Auswahl';
   SearchButtonCaption = 'suchen';
+  EditWindowClass = 'TEdit';
+  SearchButtonWindowClass = 'TButton';
 
 function NormalizeWindowsPath(const Path: UTF8String): UTF8String;
 begin
@@ -119,6 +122,7 @@ begin
   for I := 0 to High(Profile.Controls) do
     if Profile.Controls[I].IsTopLevel and
        Profile.Controls[I].Visible and
+       SameText(Profile.Controls[I].ClassName, MainWindowClass) and
        SameText(Trim(Profile.Controls[I].Text), MainWindowCaption) then
     begin
       Result := I;
@@ -136,14 +140,14 @@ function IsDirectVisibleEdit(
 begin
   Result := (Control.ParentHandle = DialogHandle) and
     Control.Visible and not Control.IsPassword and
-    SameText(Control.ClassName, 'Edit');
+    SameText(Control.ClassName, EditWindowClass);
 end;
 
 function IsSearchButton(
   const Control: TUIControlInfo; DialogHandle: QWord): Boolean;
 begin
   Result := (Control.ParentHandle = DialogHandle) and
-    Control.Visible and SameText(Control.ClassName, 'Button') and
+    Control.Visible and SameText(Control.ClassName, SearchButtonWindowClass) and
     SameText(Trim(Control.Text), SearchButtonCaption);
 end;
 

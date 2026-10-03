@@ -23,8 +23,9 @@ type
     procedure TestRejectsMissingSearchButton;
     procedure TestRejectsDisabledSearchButton;
     procedure TestRejectsProfileGeometryChange;
-    procedure TestRejectsMissingMainWindowOwner;
+    procedure TestRejectsUnenumeratedOwnerWindow;
     procedure TestAcceptsStableApplicationWindowOwner;
+    procedure TestDisambiguatesVisibleApplicationWindow;
     procedure TestRejectsPasswordStyleEditAsSearchInput;
     procedure TestRejectsAmbiguousSearchDialog;
     procedure TestRejectsUnexpectedDialogControl;
@@ -56,7 +57,7 @@ begin
 
   Result.Controls[0].Handle := MainWindowHandle;
   Result.Controls[0].ProcessId := TestProcessId;
-  Result.Controls[0].ClassName := 'TForm';
+  Result.Controls[0].ClassName := 'TForm1';
   Result.Controls[0].Text := 'AHNENWIN 5.1';
   Result.Controls[0].Width := 792;
   Result.Controls[0].Height := 546;
@@ -67,7 +68,7 @@ begin
   Result.Controls[1].Handle := SearchDialogHandle;
   Result.Controls[1].OwnerHandle := MainWindowHandle;
   Result.Controls[1].ProcessId := TestProcessId;
-  Result.Controls[1].ClassName := 'TForm';
+  Result.Controls[1].ClassName := 'TForm3';
   Result.Controls[1].Text := 'Auswahl';
   Result.Controls[1].Width := 386;
   Result.Controls[1].Height := 147;
@@ -78,7 +79,7 @@ begin
   Result.Controls[2].Handle := 202;
   Result.Controls[2].ParentHandle := SearchDialogHandle;
   Result.Controls[2].ProcessId := TestProcessId;
-  Result.Controls[2].ClassName := 'Edit';
+  Result.Controls[2].ClassName := 'TEdit';
   Result.Controls[2].Text := '';
   Result.Controls[2].Top := 29;
   Result.Controls[2].Left := 112;
@@ -92,7 +93,7 @@ begin
   Result.Controls[3].Handle := 203;
   Result.Controls[3].ParentHandle := SearchDialogHandle;
   Result.Controls[3].ProcessId := TestProcessId;
-  Result.Controls[3].ClassName := 'Edit';
+  Result.Controls[3].ClassName := 'TEdit';
   Result.Controls[3].Text := '';
   Result.Controls[3].Top := 60;
   Result.Controls[3].Left := 112;
@@ -106,7 +107,7 @@ begin
   Result.Controls[4].Handle := 204;
   Result.Controls[4].ParentHandle := SearchDialogHandle;
   Result.Controls[4].ProcessId := TestProcessId;
-  Result.Controls[4].ClassName := 'Button';
+  Result.Controls[4].ClassName := 'TButton';
   Result.Controls[4].Text := 'suchen';
   Result.Controls[4].Top := 96;
   Result.Controls[4].Left := 112;
@@ -120,7 +121,7 @@ begin
   Result.Controls[5].Handle := 205;
   Result.Controls[5].ParentHandle := SearchDialogHandle;
   Result.Controls[5].ProcessId := TestProcessId;
-  Result.Controls[5].ClassName := 'Button';
+  Result.Controls[5].ClassName := 'TBitBtn';
   Result.Controls[5].Text := 'schon gefunden';
   Result.Controls[5].Top := 96;
   Result.Controls[5].Left := 219;
@@ -231,7 +232,7 @@ begin
   AssertProfileRejected(CurrentProfile, ExpectedProfile);
 end;
 
-procedure TTestAHW52UIProfile.TestRejectsMissingMainWindowOwner;
+procedure TTestAHW52UIProfile.TestRejectsUnenumeratedOwnerWindow;
 var
   Profile: TWindowProfile;
   Targets: TPersonSearchTargets;
@@ -263,6 +264,26 @@ begin
   Profile.Controls[High(Profile.Controls)].IsTopLevel := True;
 
   ValidatePersonSearchProfile(Profile, Profile, Targets);
+  AssertEquals(QWord(202), Targets.NameEditHandle);
+end;
+
+procedure TTestAHW52UIProfile.TestDisambiguatesVisibleApplicationWindow;
+var
+  Profile: TWindowProfile;
+  Targets: TPersonSearchTargets;
+begin
+  Profile := CreateValidProfile;
+  SetLength(Profile.Controls, Length(Profile.Controls) + 1);
+  Profile.Controls[High(Profile.Controls)].Handle := 300;
+  Profile.Controls[High(Profile.Controls)].ProcessId := TestProcessId;
+  Profile.Controls[High(Profile.Controls)].ClassName := 'TApplication';
+  Profile.Controls[High(Profile.Controls)].Text := 'AHNENWIN 5.1';
+  Profile.Controls[High(Profile.Controls)].Visible := True;
+  Profile.Controls[High(Profile.Controls)].Enabled := True;
+  Profile.Controls[High(Profile.Controls)].IsTopLevel := True;
+
+  ValidatePersonSearchProfile(Profile, Profile, Targets);
+  AssertEquals(QWord(SearchDialogHandle), Targets.DialogHandle);
   AssertEquals(QWord(202), Targets.NameEditHandle);
 end;
 
