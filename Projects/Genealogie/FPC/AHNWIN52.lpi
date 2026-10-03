@@ -32,7 +32,7 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="3">
+    <RequiredPackages Count="5">
       <Item1>
         <PackageName Value="Printer4Lazarus"/>
       </Item1>
@@ -42,6 +42,12 @@
       <Item3>
         <PackageName Value="LCL"/>
       </Item3>
+      <Item4>
+        <PackageName Value="FrameViewer09"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="fpvhttp"/>
+      </Item5>
     </RequiredPackages>
     <Units Count="5">
       <Unit0>

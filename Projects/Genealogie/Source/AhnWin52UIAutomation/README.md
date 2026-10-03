@@ -83,8 +83,9 @@ $out = "C:\Users\Mir\.copilot\session-state\bc780dc9-be21-4e10-b7a2-0aab27abfe2f
 & $tool start-and-inspect --output "$out\startup-profile.json"
 ```
 
-The utility does not enter credentials or dismiss a login dialog. It waits up
-to 30 seconds for the visible `AHNENWIN 5.1` main window; on timeout it reports
+The utility does not enter credentials or dismiss a login dialog. It treats
+the splash screen and the initial no-window interval as transient, polling up
+to 30 seconds for the visible `AHNENWIN 5.1` main window. On timeout it reports
 the PID and leaves the program running rather than terminating it.
 
 For a process already started by the utility, open the person-search dialog
@@ -105,10 +106,15 @@ enumerator.
 
 The search command needs the profile captured from the same running process,
 an explicit `--allow-input`, both input options, and a fresh profile match.
-It accepts exactly two visible native `Edit` children and one enabled native
-`Button` labelled `suchen` beneath the visible `Auswahl` dialog owned by the
-main window. It orders the edits by screen position, then revalidates the
-window hierarchy before sending each action.
+The observed `Auswahl` dialog exposes exactly two visible VCL `TEdit` child
+windows and one enabled VCL `TButton` labelled `suchen`; the additional
+`TBitBtn` is not a search target. The dialog's captured HWND owner must be a
+top-level window in the same process. Delphi may use either the visible main
+form or an application-owned hidden window as that owner; the saved profile
+pins whichever one is observed. The visible main form is identified as
+`TForm1`, because the live application also exposes a `TApplication` window
+with the same caption. The adapter orders the edits by screen position, then
+revalidates the window hierarchy before sending each action.
 
 ```powershell
 & $tool person-search `
@@ -121,16 +127,27 @@ window hierarchy before sending each action.
 ```
 
 `--dry-run` validates the profile and reports field lengths without sending
-input. A real search sets the two visible fields with `WM_SETTEXT`, checks
-readback, and clicks only the validated `suchen` button with `BM_CLICK`.
+input; the CLI still requires `--allow-input` as an explicit command guard.
+A real search sets the two visible fields with `WM_SETTEXT` and checks
+readback. In the recovered AhnWin DFM, `Edit2.OnExit` is bound to a handler
+that calls the same `Button1Click` routine used by `suchen`. The adapter
+therefore triggers that recovered search path by moving focus away from the
+given-name edit; it does not send `BM_CLICK`. The dialog normally closes during
+that exit handler, so a closed dialog is recorded as the observed trigger
+result, not as a dispatched button click.
+When launching the command itself makes the modal dialog disappear,
+`--wait-for-dialog` keeps the one-shot command active for up to 30 seconds so
+the user can reopen `Auswahl`; it proceeds only after the live window profile
+matches and otherwise exits without sending input.
 This is not identical to keyboard typing: Delphi `OnKeyPress` handlers are not
 invoked by `WM_SETTEXT`. If readback, focus, window ownership, process identity,
-or selector geometry differs, the command stops before clicking. The result
+or selector geometry differs, the command stops before triggering the edit-exit search. The result
 JSON contains the prior input-field values and a post-action UI profile. It
 records progress atomically (`validated-no-input`, `about-to-set-*`, `*-set`,
-`about-to-click-search`, and `button-click-sent`), so an error or timeout leaves
-the last completed/intended phase available. It does not claim that BDE found
-a record or reveal grid contents that Windows does not expose as control text.
+`about-to-trigger-search-on-edit2-exit`, and
+`search-triggered-by-edit2-exit-dialog-closed`). An error therefore leaves the
+last completed/intended phase available. It does not infer which grid row was
+selected or reveal grid contents that Windows does not expose as control text.
 
 Do not use this command for record creation, editing, deletion, saving,
 printing, or export. The approved interactive search result and any sidecar
