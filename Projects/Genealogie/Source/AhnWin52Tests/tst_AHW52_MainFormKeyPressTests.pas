@@ -14,6 +14,8 @@ type
     procedure TestEscapeVirtualKeyIsRecognized;
     procedure TestEscapeSetsCancelModalResult;
     procedure TestNonEscapePreservesModalResult;
+    procedure TestAlreadyFoundButtonCancelsGlobalDialogExceptVerwMode;
+    procedure TestFormCreateScalesGlobalSearchFormFromScreen;
     procedure TestEnterMovesFocusAndIsConsumed;
     procedure TestNonEnterKeyIsPreserved;
   end;
@@ -21,7 +23,8 @@ type
 implementation
 
 uses
-  SysUtils, Controls, StdCtrls, FormKeyPressBehavior, PersonSearchForm;
+  SysUtils, Controls, Forms, StdCtrls, FormKeyPressBehavior,
+  PersonSearchForm, Unit12;
 
 type
   // Simulates visible focus targets without showing a test window.
@@ -138,6 +141,116 @@ begin
       raise Exception.Create('A non-Escape key in the second edit changed the modal result.');
   finally
     searchForm.Free;
+  end;
+end;
+
+procedure TTestAHW52MainFormKeyPress.
+  TestAlreadyFoundButtonCancelsGlobalDialogExceptVerwMode;
+var
+  receiverForm: TPersonSearchForm;
+  globalDialog: TPersonSearchForm;
+  previousDialog: TPersonSearchForm;
+  previousMode: string;
+begin
+  Application.Initialize;
+  previousDialog := PersonSearchDialog;
+  previousMode := Unit12.GlobalVar_0253592C;
+  receiverForm := nil;
+  globalDialog := nil;
+  try
+    receiverForm := TPersonSearchForm.CreateNew(nil);
+    globalDialog := TPersonSearchForm.CreateNew(nil);
+    PersonSearchDialog := globalDialog;
+    Unit12.GlobalVar_0253592C := 'Sonstiges';
+    receiverForm.BitBtn2Click(nil);
+
+    AssertEquals('Non-Verw mode cancels the global search dialog.',
+      mrCancel, globalDialog.ModalResult);
+    AssertEquals('The event receiver is not the listing-identified target.',
+      mrNone, receiverForm.ModalResult);
+
+    globalDialog.ModalResult := mrOK;
+    Unit12.GlobalVar_0253592C := 'Verw';
+    receiverForm.BitBtn2Click(nil);
+
+    AssertEquals('Exact Verw mode leaves the global modal result unchanged.',
+      mrOK, globalDialog.ModalResult);
+  finally
+    PersonSearchDialog := previousDialog;
+    Unit12.GlobalVar_0253592C := previousMode;
+    globalDialog.Free;
+    receiverForm.Free;
+  end;
+end;
+
+procedure ApplyExpectedScreenScale(searchForm: TPersonSearchForm;
+  screenWidth, screenHeight: Integer);
+begin
+  if (screenHeight > 768) or (screenWidth > 1024) then
+  begin
+    searchForm.Height := searchForm.Height * screenHeight div 768;
+    searchForm.Width := searchForm.Width * screenHeight div 768;
+    searchForm.ScaleBy(screenHeight, 768);
+  end;
+
+  if (screenHeight < 768) or (screenWidth < 1024) then
+  begin
+    searchForm.Height := searchForm.Height * screenHeight div 768;
+    searchForm.Width := searchForm.Width * screenHeight div 768;
+    searchForm.ScaleBy(screenWidth, 1024);
+  end;
+end;
+
+procedure TTestAHW52MainFormKeyPress.
+  TestFormCreateScalesGlobalSearchFormFromScreen;
+var
+  previousDialog: TPersonSearchForm;
+  receiverForm: TPersonSearchForm;
+  globalDialog: TPersonSearchForm;
+  expectedDialog: TPersonSearchForm;
+  receiverWidth: Integer;
+  receiverHeight: Integer;
+begin
+  Application.Initialize;
+  previousDialog := PersonSearchDialog;
+  receiverForm := nil;
+  globalDialog := nil;
+  expectedDialog := nil;
+  try
+    receiverForm := TPersonSearchForm.CreateNew(nil);
+    globalDialog := TPersonSearchForm.CreateNew(nil);
+    expectedDialog := TPersonSearchForm.CreateNew(nil);
+
+    receiverForm.Scaled := False;
+    receiverForm.SetBounds(0, 0, 320, 240);
+    receiverWidth := receiverForm.Width;
+    receiverHeight := receiverForm.Height;
+    globalDialog.Scaled := True;
+    globalDialog.SetBounds(0, 0, 640, 480);
+    expectedDialog.Scaled := True;
+    expectedDialog.SetBounds(0, 0, 640, 480);
+    PersonSearchDialog := globalDialog;
+
+    ApplyExpectedScreenScale(expectedDialog, Screen.Width, Screen.Height);
+    receiverForm.FormCreate(receiverForm);
+
+    AssertTrue('Form creation enables scaling on the global search dialog.',
+      globalDialog.Scaled);
+    AssertEquals('The global search form receives screen-scaled width.',
+      expectedDialog.Width, globalDialog.Width);
+    AssertEquals('The global search form receives screen-scaled height.',
+      expectedDialog.Height, globalDialog.Height);
+    AssertFalse('The event receiver is not the scaled global target.',
+      receiverForm.Scaled);
+    AssertEquals('The receiver width remains unchanged.',
+      receiverWidth, receiverForm.Width);
+    AssertEquals('The receiver height remains unchanged.',
+      receiverHeight, receiverForm.Height);
+  finally
+    PersonSearchDialog := previousDialog;
+    expectedDialog.Free;
+    globalDialog.Free;
+    receiverForm.Free;
   end;
 end;
 

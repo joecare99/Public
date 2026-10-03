@@ -18,10 +18,15 @@ type
     procedure TestDBEdit69ChangeClearsAddressBackedStrings;
   end;
 
+  TTestAHW52MainFormProgressLabelReset = class(TTestCase)
+  published
+    procedure TestLab18einResetsAndShowsProgressLabels;
+  end;
+
 implementation
 
 uses
-  Controls, Forms, SysUtils, frmAhnenWinMain;
+  Controls, Forms, StdCtrls, SysUtils, frmAhnenWinMain;
 
 procedure TTestAHW52InertMainFormHandlers.
   TestListingProvenNoOpHandlersLeaveFormStateUnchanged;
@@ -51,6 +56,7 @@ begin
     mainForm.DBLookupComboBox9Enter(nil);
     mainForm.DBLookupComboBox10Enter(nil);
     mainForm.DBLookupComboBox11Enter(nil);
+    mainForm.drucken2Click(nil);
 
     if mainForm.Caption <> 'Synthetic main form' then
       raise Exception.Create('No-op handlers must preserve the form caption.');
@@ -95,8 +101,37 @@ begin
   end;
 end;
 
+procedure TTestAHW52MainFormProgressLabelReset.
+  TestLab18einResetsAndShowsProgressLabels;
+var
+  mainForm: TForm1;
+begin
+  Application.Initialize;
+  mainForm := TForm1.CreateNew(nil);
+  try
+    mainForm.Label18 := TLabel.Create(mainForm);
+    mainForm.Label18.Parent := mainForm;
+    mainForm.Label18.Caption := 'stale progress';
+    mainForm.Label18.Visible := False;
+    mainForm.Label19 := TLabel.Create(mainForm);
+    mainForm.Label19.Parent := mainForm;
+    mainForm.Label19.Caption := 'unchanged';
+    mainForm.Label19.Visible := False;
+
+    mainForm.lab18ein(mainForm);
+
+    AssertTrue(mainForm.Label18.Visible);
+    AssertEquals('0 %', mainForm.Label18.Caption);
+    AssertTrue(mainForm.Label19.Visible);
+    AssertEquals('unchanged', mainForm.Label19.Caption);
+  finally
+    mainForm.Free;
+  end;
+end;
+
 initialization
   RegisterTest(TTestAHW52InertMainFormHandlers);
   RegisterTest(TTestAHW52MainFormStringReset);
+  RegisterTest(TTestAHW52MainFormProgressLabelReset);
 
 end.

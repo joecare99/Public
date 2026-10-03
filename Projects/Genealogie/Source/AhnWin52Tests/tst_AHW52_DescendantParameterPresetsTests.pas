@@ -21,6 +21,8 @@ type
     procedure TestGenerationStartIncrement;
     procedure TestGenerationCountDecrementStopsAtOne;
     procedure TestGenerationCountIncrement;
+    procedure TestFinishClearsAlphabeticListTypeFields;
+    procedure TestFinishPreservesFieldsForOtherListTypes;
     procedure TestListTypeVisibilityUsesAlphSubstring;
     procedure TestNamgvIsListingProvenNoOp;
   end;
@@ -28,7 +30,7 @@ type
 implementation
 
 uses
-  Forms, StdCtrls, SysUtils;
+  Forms, StdCtrls, SysUtils, Unit12;
 
 function TTestAHW52DescendantParameterPresets.CreateDialogWithCheckBoxes:
   TForm19;
@@ -232,6 +234,56 @@ begin
     AssertEquals('6', dialog.Edit1.Text);
     AssertEquals('5', dialog.Edit2.Text);
   finally
+    dialog.Free;
+  end;
+end;
+
+procedure TTestAHW52DescendantParameterPresets.
+  TestFinishClearsAlphabeticListTypeFields;
+var
+  dialog: TForm19;
+  previousMode: string;
+begin
+  previousMode := Unit12.GlobalVar_0253592C;
+  Unit12.GlobalVar_0253592C := 'Synthetic non-Nach mode';
+  dialog := CreateDialogWithCheckBoxes;
+  try
+    dialog.ComboBox1 := TComboBox.Create(dialog);
+    dialog.ComboBox1.Text := 'alph - sortiert';
+    dialog.CheckBox7.Checked := True;
+    dialog.CheckBox8.Checked := True;
+
+    dialog.BitBtn1Click(dialog.BitBtn1);
+
+    AssertFalse(dialog.CheckBox7.Checked);
+    AssertFalse(dialog.CheckBox8.Checked);
+  finally
+    Unit12.GlobalVar_0253592C := previousMode;
+    dialog.Free;
+  end;
+end;
+
+procedure TTestAHW52DescendantParameterPresets.
+  TestFinishPreservesFieldsForOtherListTypes;
+var
+  dialog: TForm19;
+  previousMode: string;
+begin
+  previousMode := Unit12.GlobalVar_0253592C;
+  Unit12.GlobalVar_0253592C := 'Synthetic non-Nach mode';
+  dialog := CreateDialogWithCheckBoxes;
+  try
+    dialog.ComboBox1 := TComboBox.Create(dialog);
+    dialog.ComboBox1.Text := 'chronologisch';
+    dialog.CheckBox7.Checked := True;
+    dialog.CheckBox8.Checked := True;
+
+    dialog.BitBtn1Click(dialog.BitBtn1);
+
+    AssertTrue(dialog.CheckBox7.Checked);
+    AssertTrue(dialog.CheckBox8.Checked);
+  finally
+    Unit12.GlobalVar_0253592C := previousMode;
     dialog.Free;
   end;
 end;

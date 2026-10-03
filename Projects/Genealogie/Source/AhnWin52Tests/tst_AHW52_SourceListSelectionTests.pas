@@ -11,11 +11,15 @@ type
   TTestAHW52SourceListSelection = class(TTestCase)
   private
     FShowEventCount: Integer;
+    FMenuClickCount: Integer;
     procedure MakeTestFormInvisible(form: TCustomForm);
+    procedure RecordMenuClick(Sender: TObject);
     procedure RecordFormShow(Sender: TObject);
   published
     procedure TestListClickCopiesSelectedAndUnselectedIndices;
     procedure TestDoubleClickCopiesSelectionAndShowsSourceEditor;
+    procedure TestMenuShowsGlobalSourceList;
+    procedure TestUnboundSearchHandlerClicksSourceListMenu;
     procedure TestFinishResetsSelectionAndCancelsGlobalForm;
     procedure TestUnboundCounterIncrementPreservesString;
     procedure TestUnboundCounterIncrementClearsStringAtZero;
@@ -25,7 +29,7 @@ type
 implementation
 
 uses
-  Controls, StdCtrls, SysUtils, Unit29, Unit30;
+  Controls, Menus, StdCtrls, SysUtils, frmAhnenWinMain, Unit29, Unit30;
 
 procedure TTestAHW52SourceListSelection.MakeTestFormInvisible(
   form: TCustomForm);
@@ -38,6 +42,11 @@ end;
 procedure TTestAHW52SourceListSelection.RecordFormShow(Sender: TObject);
 begin
   Inc(FShowEventCount);
+end;
+
+procedure TTestAHW52SourceListSelection.RecordMenuClick(Sender: TObject);
+begin
+  Inc(FMenuClickCount);
 end;
 
 procedure TTestAHW52SourceListSelection.
@@ -84,6 +93,58 @@ begin
     GlobalVar_0061E0EC := '';
     sourceEditor.Free;
     sourceList.Free;
+  end;
+end;
+
+procedure TTestAHW52SourceListSelection.TestMenuShowsGlobalSourceList;
+var
+  mainForm: TForm1;
+  previousSourceList: TForm29;
+  sourceList: TForm29;
+begin
+  Application.Initialize;
+  FShowEventCount := 0;
+  previousSourceList := Unit29.Form29;
+  mainForm := TForm1.CreateNew(nil);
+  sourceList := TForm29.CreateNew(nil);
+  try
+    MakeTestFormInvisible(sourceList);
+    sourceList.OnShow := @RecordFormShow;
+    Unit29.Form29 := sourceList;
+
+    mainForm.QuellenListeeditieren1Click(mainForm);
+
+    AssertTrue('The global source list should be shown.',
+      sourceList.Visible);
+    AssertEquals('The global source list should receive one Show.',
+      1, FShowEventCount);
+  finally
+    Unit29.Form29 := previousSourceList;
+    sourceList.Free;
+    mainForm.Free;
+  end;
+end;
+
+procedure TTestAHW52SourceListSelection.
+  TestUnboundSearchHandlerClicksSourceListMenu;
+var
+  mainForm: TForm1;
+  sourceListMenuItem: TMenuItem;
+begin
+  Application.Initialize;
+  FMenuClickCount := 0;
+  mainForm := TForm1.CreateNew(nil);
+  sourceListMenuItem := TMenuItem.Create(mainForm);
+  try
+    mainForm.QuellenListeeditieren1 := sourceListMenuItem;
+    sourceListMenuItem.OnClick := @RecordMenuClick;
+
+    mainForm.Quellesuchen1Click(mainForm);
+
+    AssertEquals('The source-list menu item should be clicked once.',
+      1, FMenuClickCount);
+  finally
+    mainForm.Free;
   end;
 end;
 
