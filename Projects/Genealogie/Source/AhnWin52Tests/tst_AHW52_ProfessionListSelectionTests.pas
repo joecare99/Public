@@ -18,12 +18,13 @@ type
     procedure TestUnboundCounterIncrementAndZeroClear;
     procedure TestUnboundCounterDecrement;
     procedure TestDoubleClickCopiesProfessionAndShowsEditor;
+    procedure TestMenuShowsGlobalProfessionList;
   end;
 
 implementation
 
 uses
-  StdCtrls, SysUtils, Unit36, Unit37;
+  StdCtrls, SysUtils, frmAhnenWinMain, Unit36, Unit37;
 
 procedure TTestAHW52ProfessionListSelection.MakeTestFormInvisible(
   form: TCustomForm);
@@ -148,6 +149,36 @@ begin
     GlobalVar_025353B4 := '';
     professionEditor.Free;
     professionList.Free;
+  end;
+end;
+
+procedure TTestAHW52ProfessionListSelection.
+  TestMenuShowsGlobalProfessionList;
+var
+  mainForm: TForm1;
+  previousProfessionList: TForm36;
+  professionList: TForm36;
+begin
+  Application.Initialize;
+  FShowEventCount := 0;
+  previousProfessionList := Unit36.Form36;
+  mainForm := TForm1.CreateNew(nil);
+  professionList := TForm36.CreateNew(nil);
+  try
+    MakeTestFormInvisible(professionList);
+    professionList.OnShow := @RecordFormShow;
+    Unit36.Form36 := professionList;
+
+    mainForm.BerufeVerwaltung1Click(mainForm);
+
+    AssertTrue('The global profession list should be shown.',
+      professionList.Visible);
+    AssertEquals('The global profession list should receive one Show.',
+      1, FShowEventCount);
+  finally
+    Unit36.Form36 := previousProfessionList;
+    professionList.Free;
+    mainForm.Free;
   end;
 end;
 
