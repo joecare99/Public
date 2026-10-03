@@ -1,8 +1,1364 @@
 # Backlog: Next AhnWin reconstruction slices
 
 **Status:** Active reconstruction backlog  
-**Priority:** Continue non-reporting reconstruction; QuickReport/LazReport is
-deferred by user request.
+**Priority:** Continue replacing the legacy wPDF/Ahnw50 PDF engine with the
+verified SynPDF/mORMot2 report-to-PDF adapters and migrate QuickReport report
+workflows to LazReport. The Ahnw50 DLL and its embedded license path are not
+target dependencies. Non-reporting relationship slices remain blocked on
+provider/schema evidence.
+
+## Latest bounded helper checkpoint — `Proc_005D3AB8` — 2026-10-03
+
+Audited the pure numeric formatter against its caller shape and the independent
+sibling listing. The Pascal method takes one `Extended`, formats it with
+`FloatToStr`, prefixes 25 spaces, and returns the rightmost 25 characters.
+A new synthetic FPCUnit test creates the form without streaming its DFM and
+checks the 25-character result for `42.0`. The focused test passes 1/1 and the
+full suite passes 389/389.
+
+This validates only the Pascal helper's output shape. Its remaining assembly
+call sites are comments, so neither the test nor the build proves binary ABI
+compatibility. Keep those call sites disabled until converted. No database,
+report, password, licensing, or unknown-global path is involved.
+
+## Evidence checkpoint — approved unpersonalized test directory — 2026-10-02
+
+The user approved structural analysis of `C:\ProgramData\AHNENWIN Test` as an
+unpersonalized test dataset. Its inventory includes Paradox/BDE table files,
+the AhnWin executable, and `par.cfg` containing the product identifier.
+`Unit2.dfm` itself is the source for the persisted `Table9` field schema,
+including names, field types, and declared sizes. The `AWD.DB` header also
+contains several matching field labels, but it is only corroboration and is
+not needed to recover the DFM-declared schema.
+
+The independent `Projects_AhnenWin\Unit2.pas` declaration gives the matching
+object-layout offsets: `DataModule2.Table9` is at `$09C`, and its field
+components run from `Table9Nummer` at `$874` through `Table9Rufname` at
+`$940` in four-byte increments. Cross-referencing these offsets with
+`frmAhnenWinMain.pas` disassembly identifies which named field components a
+routine accesses. They are offsets within the decompiled data-module object,
+not byte offsets in a Paradox record and not index definitions.
+
+The user appended Pascal bodies for `Proc_005D7D30`, `Proc_005D32CC`,
+`Proc_005D3228`, `Proc_005FBFD8`, and `Proc_005D3AB8`. Auditing their original
+assembly in `frmAhnenWinMain.pas.bak` and callsites confirms the first four
+receive their input in EAX and an output-string pointer in EDX. Their assembly
+shape is therefore procedure-style input/output, although the user's
+conversions express them as `TForm1` string-returning functions. Those
+functions can be retained only as a high-level Pascal API with matching
+converted callsites; they do not preserve the observed binary call ABI.
+
+`Proc_005D3AB8` has a stronger mismatch: the caller at `00608A3A` puts an
+output-string buffer in EAX and pushes a 12-byte floating-point value. The
+routine passes the three stack words to the floating-point formatter, prefixes
+25 spaces, and writes the final 25-character slice to that buffer. This
+supports `function(Value: Extended): string` and not a procedure with two
+integers and a word. The declaration and implementation have been adjusted to
+`function(Value: Extended): string`; the other converted routines remain
+high-level `TForm1` functions and do not preserve the legacy helper ABI. The
+remaining assembly callsites are comments, so a successful project compile
+does not establish runtime ABI equivalence.
+
+The requested `AHW52_Main.lpi` build now succeeds. The first compile exposed
+two malformed return declarations and unresolved decompiler helper names;
+these were corrected using the complete `Projects_AhnenWin` RTL listings:
+`Trim` and `ExtractFileName` from `SysUtils`, `RightStr` from `StrUtils`, and
+`DaysInAMonth` from `DateUtils`. The main form's weekday method delegates to
+the already-tested `DateWeekdayAbbreviation` helper, avoiding duplicate
+production logic.
+
+A read-only RAD Studio 3.0 BDE metadata probe compiled successfully and was
+run only against a copy of `AWD.*` in a temporary directory. BDE denied opening
+the table because a password is required. The approved source files were not
+modified, no records were enumerated or displayed, and no password was guessed
+or attacked. `dbexplor.exe` and `DataExplore.exe` are present but were not
+launched; do not treat their presence as evidence that the password gate can
+be bypassed. The protected table is not a blocker for reading the DFM field
+schema. It does block optional validation of on-disk `namgeb`/`geba` index
+definitions through the BDE. Subsequent read-only parsing of the approved
+fixture's `.XG0`–`.XG7` headers in two verified snapshots recovered all eight
+ordered fixture index field lists, including `namgeb` and `geba`; this is
+separate from `Unit2.dfm`, which persists no `Table9` `IndexDefs`. BDE lookup,
+cursor, and error behavior remain unresolved. The Unit15/Unit16 caller dataset
+contract is a separate unresolved report boundary.
+
+## Latest bounded restoration — date weekday abbreviation helper — 2026-10-02
+
+Recovered the pure formatter called by the main form's `wt34` listing as
+`Forms\DateWeekdayAbbreviation.pas`. It parses using the current regional
+`StrToDate` settings, maps `DayOfWeek` values 1..7 to the evidenced German
+abbreviations `So`, `Mo`, `Di`, `Mi`, `Do`, `Fr`, `Sa`, and returns an empty
+string for invalid input. This behavior is recovered from the complete
+independent `Projects_AhnenWin\Unit1.pas` listing at `005D7C50`.
+
+Three synthetic tests cover all weekdays, invalid dates, and a non-German
+short-date format. The focused tests pass 3/3; the full Lazarus suite passes
+382/382. The standalone helper compiles under Delphi 7, RAD Studio 3.0, and
+FPC. This restores the pure helper only: `wt34` still reads database fields
+and updates `Label23`, and has not been wired to the new helper or exercised.
+The BDE test-table password continues to block relationship and report
+integration. No test-dataset rows were accessed.
+
+## Checkpoint — synthetic indexed lookup boundary
+
+Added `IndexedLookupContract.pas` with a provider-neutral named-index lookup
+contract. A lookup takes key values in the caller-specified index-field order,
+returns an explicit hit or miss with an opaque record ID, preserves the
+provider's current cursor, and leaves provider errors visible. The test-only
+in-memory provider covers synthetic `namgeb` and `geba` index names; its
+`SyntheticKeyA`/`SyntheticKeyB`/`SyntheticKeyC`/`SyntheticKeyD` fields and row
+IDs are illustrative fixtures only, not recovered `Table9` index definitions
+or genealogy records.
+
+Eight focused tests cover named-index hits, ordered composite keys, hit/miss
+cursor preservation, deterministic first-inserted duplicate selection,
+unknown indexes, wrong key arity, and provider exception propagation. Both
+`Unit2.dfm` and `Projects_AhnenWin\DataModule2.dfm` define `Table9` fields but
+persist no index metadata. The runtime `namgeb`/`geba` references therefore
+remain insufficient to map these synthetic keys to production fields. The
+focused suite passes 8/8 and the full Lazarus suite passes 379/379. The
+separate `Unit3` person-search
+listing does show `Table9` using `geba` with `FindNearest` and two ordered
+values; it does not establish the fields or the exact `FindKey` behavior used
+by relationship handlers, and `FindNearest` is outside this exact-lookup
+contract. No DBTables shim, form handler, or database-backed behavior was
+changed. Relationship-selection extraction and UI wiring remain blocked until
+a non-sensitive source-backed key mapping and the relevant write/cancellation
+contract are established.
+
+## Checkpoint — wPDF DFM compatibility surface
+
+`Source\Projects_AhnenWin` contains a partial wPDF export decompilation, not
+the full WPTools editor/preview library. Added the separate
+`Source\AhnWin52\wPDF\Components\WPPDFCompatibility.pas` component shim with the
+Unit13/Unit16 DFM-backed enum values and published properties for
+`TWPPDFPrinter`,
+`TWPPDFExportInfo`, and `TWPPDFProperties`. Constructor defaults `Producer`
+and `PreselectedCJK` follow the decompiled constructors. The `PDFAMode`
+setter also restores the complete simple listing rule: selecting PDF/A Level
+A changes the default TrueType font mode to embedded TrueType, while leaving
+an explicit font mode unchanged.
+
+`TWPPDFExportInfo.Assign` now copies the recovered metadata fields and
+`Strings` collection. The listing does not copy `IsUTF8`, and the synthetic
+test preserves that behavior. `Strings` uses a `TStrings` getter so its
+published property remains compatible with Delphi 7 and RAD Studio 3.0.
+`TWPCustomPDFExport.Info` also restores its listing-backed setter, which
+copies into the component-owned metadata object rather than replacing it.
+
+The synthetic test streams the Unit16 PDF component settings, including the
+`WPPDFProperties1.PDFPrinter` reference and the three enabled mode flags.
+Focused tests pass 6/6; the full Lazarus suite passes 360/360. The
+compatibility unit compiles under Delphi 7 DCC32 and RAD Studio 3.0 DCC32.
+The Unit16 Pascal unit itself compiles in the FPC test build after adding its
+missing standard control units and correcting an `(*` sequence inside an
+assembly comment that left the decompiled source comment unclosed.
+
+Limits: constructing the whole Unit16 form still stops at the explicit
+QuickReport compatibility exception `TQRPreview.Create`. The compatibility
+unit supports the streamed property surface, the recovered metadata
+assignment and setter, and one recovered option transition; it does not
+implement PDF rendering. Unit13/Unit16 still depend on the external
+`Ahnw50.dll` engine/license call. No licensing behavior was copied or
+bypassed, and no PDF was written.
+
+Lifecycle evidence is now mapped: Unit16's `SpeedButton4Click` calls the
+printer's virtual `+40` start-document method, prepares QuickReport, loops
+over report pages, calls virtual `+4C` with five page arguments, renders each
+page metafile, calls virtual `+48` to close the page, and calls virtual `+54`
+to finish the document. The listing's error strings confirm that page start
+is only valid inside a document. The five page arguments remain opaque.
+
+`wPDF\Engine\WPPDFEngineContract.pas` now defines an abstract, injectable
+backend lifecycle. The component delegates document/page start and finish
+operations to that backend, checks invalid transitions, and changes its
+state only after a backend operation succeeds. Ten focused synthetic tests
+pass, including operation order, multiple pages, invalid transitions,
+missing-backend failure, and propagation/retry after backend exceptions. The
+full Lazarus suite passes 364/364; both Delphi 7 and RAD Studio 3.0 DCC32
+compile the contract and component units.
+
+This seam is only a boundary for future implementation: the five page values
+are still passed opaquely, the external engine is absent, and QuickReport
+rendering remains unsupported. No fake backend is wired into Unit16 and no
+PDF output is generated. Next, continue recovering the engine ABI and page
+argument semantics from the independent Ahnw50/consumer listings without
+adding those reference sources or licensing behavior to the AhnWin52 build.
+
+Additional ABI evidence from `Ahnw50.dpr` and `WPPDFR1.pas` narrows the
+contract without yet defining a usable adapter. The exports use `stdcall`;
+the assembly cleanup sizes show six 32-bit arguments for
+`WPPDF_Initialize`, one pointer for `WPPDF_Finalize`, four words for
+`WPPDF_Action`, and three words for `WPPDF_InitializePage`. Initialization
+returns a context pointer and rejects its fourth input when greater than 3,
+but the argument meanings are not established. Finalize frees the context.
+Action receives the context, action code, and two opaque words; its result is
+an integer, with the caller checking zero for document start. The page
+initializer receives the context, a second word not read in the recovered
+body, and a pointer to a record; it returns a Boolean-like success value.
+
+The `WPPDFR1` five-argument page method builds that record and passes its
+first five values at offsets `0`, `4`, `8`, `0C`, and `10` to
+`WPPDF_InitializePage`. Unit16 supplies two calculated report-page values,
+then `0`, `254`, and `254`; their meanings and units remain unresolved. The
+wrapper calls action `$11B7` only after page initialization succeeds.
+Observed document/page action order is `$11B5` start document, `$11B7`
+initialize page, `$11B8` finish page, `$11B6` pre-finalize document,
+`$11B9` retrieve output stream, `$11BA` set filename, and `$11BB` finalize.
+This is evidence for the façade call ordering, not authorization to load or
+reimplement the external engine. Full ownership, per-action result, and
+property signatures still require corroboration before an adapter is safe.
+
+## Selected replacement direction — SynPDF + LazReport
+
+The user selected SynPDF to replace the wPDF/Ahnw50 PDF engine and LazReport
+to replace QuickReport. The official SynPDF README describes a standalone
+Delphi library (Delphi 6+, no external DLL) with metafile rendering and a VCL
+canvas. It is not a drop-in, source-compatible replacement for the recovered
+wPDF component surface; use an adapter rather than importing the external
+wPDF API or DLL.
+
+The shared `Reports\ReportPdfContracts.pas` boundary now carries page
+definitions, metadata, a page-source renderer, and an injected writer;
+`ReportPdfFilePublisher.pas` atomically publishes completed output. The Delphi
+provider is `SynPdfReportWriter.pas`, built from SynPDF commit
+`15749968e294f5e86fe1a36b117827ee9fdd648a`. For Windows FPC/Lazarus,
+`MormotPdfReportWriter.pas` uses `mormot.ui.pdf` from mORMot2 commit
+`1f37f3a44bef4f9c2f935b9d3a11855b50a7fe86`, following SynPDF's README
+recommendation. Both consume the same LazReport prepared-page contract; the
+legacy wPDF opaque page arguments are not part of it.
+
+The Unit23 `TFokoListReportWorkflow.ExportToPdf` slice has produced and
+validated synthetic PDF output. Focused writer tests pass 3/3, Unit23 tests
+pass 9/9, and the full Lazarus suite passes 369/369. DCC32 version 7 and
+RAD Studio 3.0 probes validate the SynPDF backend; Lazarus/FPC validates
+mORMot2 output. The probes cover two pages, A4 portrait/landscape dimensions,
+title metadata, and rendered synthetic canvas text.
+
+This output boundary is not wired to a production export button/dialog and
+has not been exercised against real genealogy data. Unit16's QuickReport
+print/save/PDF workflow and remaining layouts are still open. Keep Ahnw50
+reference-only; do not load its DLL or carry its license-code call forward.
+The vendored notices choose the LGPL 2.1 option for each backend; review
+license delivery and linking/replacement obligations before redistribution.
+
+Source: [SynPDF official README](https://github.com/synopse/SynPDF).
+
+## Latest checkpoint — Unit15 report-to-PDF extension
+
+`TUnit15ListReport` now implements the shared `IReportPageSource` contract,
+exposing prepared EMF pages, A4 dimensions/orientation, and canvas rendering.
+Its `ExportToPdf` prepares the recovered Unit15 LazReport template and writes
+through the injected provider/atomic publisher. Synthetic tests export two
+rows and check signature, requested title, page dimensions, and caller cursor.
+Focused Unit15 tests pass 6/6; the full Lazarus suite passes 371/371.
+
+The Unit15 DFM does not establish a `DataSet` or `DataSource` binding, and its
+fifteen `QRDBText` names do not establish the real field semantics. Searches
+of the reconstructed Unit1, Unit15, and Unit16 Pascal sources found no
+explicit assignment to those fields or `Form15.QuickRep1`. This
+does not yet wire Unit16's PDF button, replace its UI, remove QuickReport
+dependencies, or retire Ahnw50 references. Continue with source/resource
+evidence for the real dataset contract before integrating the caller.
+
+## Previous checkpoint — Unit23 report-to-PDF vertical slice
+
+The synthetic Unit23 handoff now prepares the embedded LazReport using
+caller-owned test rows and exports the prepared pages through an injected
+`IReportPdfWriter`. A shared temporary-file publisher prevents partial output
+from replacing an existing destination. Delphi and FPC/Lazarus use separate
+providers behind the same contract: SynPDF and mORMot2 respectively.
+
+At that checkpoint, the FPC test project passed all 369 tests. Focused PDF
+writer and Unit23 workflow suites pass 3/3 and 9/9. Delphi 7 and RAD Studio 3.0 DCC32
+both compile/run the SynPDF probe; its PDF and the FPC/mORMot2 PDF pass
+structural checks for signature/EOF, page count, ordered A4 dimensions,
+metadata, and synthetic canvas text. No Unit16/product UI or real data path
+is claimed. See `AhnWin-LazReport-Migration.md` and the CodeWiki how-to for
+the detailed scope and licensing notes.
+
+## Latest checkpoint — integrated Unit18 text export
+
+Restored `TForm18.speichern` as an injectable save workflow: it preserves the
+listing's dialog filter/cancel/default-extension order, formats and traverses
+`DataModule2.Table16` through source/writer interfaces, and writes the header,
+separator line, and data rows. The exact header was recovered from
+`AHNWIN51.exe` at file offset `0x1457E8`; PE mapping gives VA `0x5463E8`,
+matching the string reference in the Unit18 listing. The data adapter maps
+the DFM-evidenced `Nummer`, `Name`, `Geb*`, `St*`, and `H*` fields without
+guessing the `H*` business labels.
+
+The FPC test build now succeeds and the complete suite passes 354/354,
+including seven dialog/orchestration tests and eight export tests. Synthetic
+tests use fake factories/data; one isolated writer test creates and removes a
+temporary file. RAD Studio DCC32 version 17.0 compiles the save workflow,
+dataset adapter, and VCL dialog adapter. No real genealogy dataset or actual
+save dialog was used. The subsequent Lazarus rebuild also fixed a duplicate
+implementation `uses` entry and added the missing `Classes` test dependency.
+
+Remaining validation boundary: the full native application is still blocked
+by unavailable legacy project units and QuickReport/WPTools dependencies.
+Do not claim database-backed, interactive-dialog, or end-user application
+behavior based only on these isolated tests.
+
+## Latest checkpoint — Unit16 shared address counter
+
+Translated the complete short listings in `TForm16._PROC_0055E5BD` and
+`TForm16._PROC_0055E5EC`: increment and decrement the same 32-bit cell,
+`$0061E0C4`. `Reports\Unit16AddressCounter.pas` retains the address-based
+global name because the counter's domain meaning is unknown. The callbacks
+delegate to this helper; neither a DFM/LFM event binding nor a Pascal caller
+was found, so reachability is not claimed.
+
+Six synthetic tests cover ordinary increments/decrements, crossing zero,
+and both signed `LongInt` wraparound boundaries. The focused suite passes
+6/6, full Lazarus suite 340/340, and the helper compiles with Delphi 7 DCC32
+and RAD Studio 3.0 DCC32. `Unit16.pas` still cannot be compiled in the
+available project because its QuickReport dependencies are missing; only the
+independent helper is compiled/tested. The current scan is 615/1,094 methods
+with retained listings (56.22%); Unit16 is 13/29 (44.83%). Structural
+listing counts do not measure behavioral coverage.
+
+## Previous checkpoint — Unit18 save-button boundary
+
+Restored the DFM/LFM-bound `Button7Click` order from the complete listing:
+call `speichern(Sender)`, then show the exact Excel instruction. The sender
+and ordered actions are isolated in `Unit18SaveButtonWorkflow` and tested
+with recording callbacks.
+
+The `speichern` listing still contains untranslated dialog, dataset, and
+file-output logic. It now raises `EUnit18SaveOperationUnsupported` before any
+I/O, so the restored button wrapper cannot report a completed save or show
+the follow-up hint after the untranslated method returns. No dialog or file
+was used. The form-resource declarations also established that Button7 and
+Button1 are `TButton`; their Pascal field declarations and unstreamed fixtures
+were corrected from `TSpeedButton`.
+
+Focused tests pass 4/4; the full Lazarus suite passed 334/334 at that
+increment. Both Delphi 7
+DCC32 and RAD Studio 3.0 DCC32 compile the isolated workflow and error units.
+The scan at that increment was 617/1,094 methods with retained assembly
+(56.40%); Unit18 was
+7/32 (21.88%). These remain structural listing counts, not behavior coverage.
+
+## Candidate screen — remaining short handlers
+
+The next small Unit16 candidates are not isolated workflows: `FormCreate`
+calls the unavailable WPPDF licensing/configuration APIs using embedded
+identity/key strings, and its trailing callbacks have no recovered resource
+binding. Do not invent a PDF vendor contract or test with real licensing data.
+
+`Unit27.SpeedButton1Click` is resource-bound but combines global cursor and
+form mutations with dispatch into `TForm3.gedaus`/`gedausv` according to
+address-backed global strings. Those routines are provider/report paths, so
+the handler cannot be safely invoked or translated as a self-contained
+synthetic slice without understanding the BDE data contract. Continue screening
+for a complete handler whose effects do not cross these boundaries.
+
+## Interpreting assembly coverage
+
+The scanner reports methods that **still contain** retained assembly:
+615/1,094, or 56.22%. The complement is 479/1,094 without a listing (43.78%),
+not “479 original methods reconstructed.” The denominator also includes
+newly-added support methods. Recent Unit5 and Unit15 migrations each added
+seven no-assembly methods: therefore the assembly percentage went down
+(59.20% to 58.44%), while its complement went up (40.80% to 41.56%). Older
+notes used “coverage” for opposite sides of this ratio; compare only after
+normalizing the numerator and scan scope.
+
+## Implementation strategy
+
+Optimize for recovered behavior, not for a favorable coverage percentage.
+Long methods may be restored in evidence-backed Pascal slices: isolate a
+well-understood branch or state transition, preserve its ordering and
+side-effects, and validate that slice with synthetic tests before continuing
+to the next block. Keep each slice useful in the application path where its
+contract is known; do not count newly added helpers or untouched Pascal as
+restored original routines. If a method's dependencies are still opaque, keep
+the boundary explicit and move to another independently provable block.
+
+## Previous checkpoint — report counter callbacks
+
+Restored four complete report-form listings, each consisting of a decrement
+of one address-backed 32-bit global: Unit5 `$0061DFA0`, Unit15 `$0061DF14`,
+Unit23 `$025358D0`, and Unit25 `$0061E0DC`. The names retain the addresses;
+the counter semantics and consumers remain unknown.
+
+Synthetic tests call the actual methods on unstreamed forms and verify a
+nonzero decrement and the unclamped `0 -> -1` boundary. No DFM/LFM binding or
+reconstructed Pascal caller was found, so runtime reachability is not claimed.
+Focused tests pass 4/4; the full suite passes 330/330. Coverage is 618/1,093
+(56.54% still containing listings); each of the four report units is now 0/2.
+These are structural measures, not behavior coverage.
+
+## Previous checkpoint — Gregorian calendar print handler
+
+`btnPrintKalenderClick` is DFM/LFM-bound and its complete listing now maps to
+the original control sequence: hide the follow-year button, realign the
+previous-year button, hide the OK and print buttons, call `TCustomForm.Print`,
+then show all four controls in the same sequence. The previous-year button
+remains visible while the print action runs; this is explicitly asserted by
+the injected-action test.
+
+The FPC event path raises `EGregorianCalendarPrintUnsupported` before
+accessing controls or opening a printer. The helper/error units compile with
+both available DCC32 versions. The focused tests pass 2/2 and the full suite
+passes 326/326. Actual printer output and visual parity remain unvalidated.
+Direct RAD Studio compilation of the full calendar unit remains blocked by
+pre-existing `EInvalidOpException` and Lazarus-style `MessageDlg` references.
+The refreshed listing scan is 622/1,093 (56.91%); `Forms\GregorianCalendar.pas`
+is 0/17 with retained assembly. The denominator includes the new
+`PrintCalendar` and exception-constructor support methods.
+
+## Previous checkpoint — Unit16 preview controls and report dispatch
+
+Restored the four DFM-bound page-navigation handlers, the page-count callback,
+and the shared page-status update from the complete x86 listing. The DFM binds
+all four buttons. The callback's second register argument (`ECX`) is the total
+page count; the translated callback signature now reflects that evidence.
+`PreviewPageCount` gives the legacy shared count cell a domain name. The page
+transition rules live in `Reports\Unit16PreviewActions.pas`, and the handlers
+still call `TQRPreview.SetPageNumber` so the FPC compatibility layer reports
+that its actual preview behavior is unsupported.
+
+The DFM-bound `SpeedButton2Click` and `SpeedButton3Click` wrappers now forward
+`Sender` to `Drucken1Click` and `Speichernunter1Click`; a recording callback
+tests the shared dispatch helper without opening dialogs or invoking printer/
+file I/O. `Drucken1Click` now restores the print-dialog bounds and accepted
+range dispatch to `Form15.QuickRep1`'s printer settings. Independent IDR type
+offsets and Unit15 DFM property names corroborate the mapping. Its FPC path
+raises the explicit unsupported-print exception; no real dialog or printer
+has been exercised.
+
+`Quickreport1NeedData` now uses the two-argument QuickReport callback ABI,
+increments its per-form page counter, and sets `MoreData` from the recovered
+printer-page-count comparison. The transition is synthetically tested. Its
+FPC path explicitly rejects the unavailable printer page-count operation.
+No resource binding or source assignment exists in the reconstructed tree;
+runtime reachability is unknown.
+
+`Speichernunter1Click` now applies the listing-backed text-only filter and
+`txt` default extension, returns on cancellation or a filename that is blank
+after trimming, and raises a named unsupported-export error for an accepted
+nonblank path until the long export body is translated. FPC fails before UI;
+the synthetic tests do not show a dialog or create a file.
+
+`FormKeyDown` is restored from its complete listing with the ABI-correct
+`TKeyEvent` signature: Escape closes the receiving form and other keys leave
+it alone. No Unit16 DFM/LFM binding or source assignment was found, so runtime
+reachability is unproven. Its key predicate is covered synthetically.
+
+Twenty synthetic tests pass for page transitions/bounds, status formatting,
+Escape-key recognition, NeedData counter boundaries, save-dialog setup and
+filename checks, print-dialog initialization, zoom selection, exit-button
+dispatch, and report-action sender forwarding. The focused suite passes 20/20
+and the full suite 324/324.
+Both Delphi 7 DCC32 and RAD Studio 3.0 DCC32 compile and run a smoke program
+against the actual `Unit16PreviewActions.pas` helper, using their matching
+RTL `Lib` directories.
+
+The full native project still cannot be built from this tree: the legacy
+`AHNWIN51.dpr` has stale relative source paths, and its referenced `Unit1.pas`
+and `Unit9.pas` are absent from `Source\AhnWin52` (they belong to the separate
+`Projects_AhnenWin` decompilation). Do not combine decompiler variants merely
+to force a build. A separate DCC probe of `Unit15` also stops at missing
+`QRPrntr.dcu`; the installed RAD Studio libraries do not contain the complete
+QuickReport units. The Lazarus test project builds, but does not compile
+`Unit16` because its WPTools PDF
+dependency has not been shimmed. No QuickReport rendering, callback UI,
+actual zoom, print, PDF, export, or output parity is claimed. Remaining
+assembly is in 623/1,091 scanned methods (57.10%). `Unit16.pas` is 15/29
+methods with retained listings (51.72%), down from 29/29. These are structural
+listing counts, not a measure of application behavior restored.
+
+The remaining main-form and PersonSearch `showpreview` wrappers are
+listing-only. Neither has a DFM/LFM event binding, and both load their initial
+page count from shared cell `0061E0B8`, whose producer has not been recovered
+in the Pascal sources. Do not infer a binding or substitute a guessed
+`TQRPrinter` page-count property. These caller and preview-integration paths
+remain deferred; the WPTools components are also unavailable in the isolated
+build.
+
+## Latest checkpoint — Unit15 LazReport layout
+
+Unit15 shares Unit5's A4 portrait, single-column bands and fifteen
+DFM-named `QRDBText` fields, with two enabled and thirteen disabled. Its DFM
+positions the header caption and printed date slightly differently and adds
+an empty fourth QRImage; those images have no evidenced producer or embedded
+picture data and are excluded. The new embedded `Reports\Unit15ListReport.lrf`
+uses a distinct `Unit15Rows` alias and preserves the evidenced layout offsets.
+No production caller or field semantics were found in the reconstructed
+source.
+
+Four synthetic tests verify template bindings/visibility, preparation,
+bookmark and ownership preservation, schema rejection, and the Unit15 form
+factory. The project builds and all 304 tests pass. No database, preview,
+printer, export, or rendered-output comparison was used.
+
+Assembly remains in 637/1,090 methods (58.44%; complement 41.56% without
+listings, not necessarily reconstructed); Unit15 is 1/2 assembly-backed and
+`Reports\Unit15ListReport.pas` is 0/6. The next major
+QuickReport path is Unit16's preview/PDF integration; its WPTools dependency
+and preview behavior require separate evidence before attempting migration.
+
+## Latest checkpoint — Unit5 LazReport layout
+
+The Unit5 DFM establishes an A4 portrait, single-column report with page
+header/detail/footer bands, two header captions, fifteen named DBText
+components (two enabled, thirteen disabled), an empty `QRMemo1`, date and
+page-number fields, and three empty QRImage components. The FPC form now uses
+an embedded `Reports\Unit5ListReport.lrf` template and a builder that validates
+the fifteen DFM field names against an already-active caller-owned dataset.
+There is no evidenced production caller or semantic mapping for the field
+placeholders; empty image components are omitted.
+
+Four synthetic tests verify the layout, binding alias, field visibility,
+two-row preparation, bookmark and ownership preservation, missing-field
+rejection, and form factory. The Lazarus test project builds and all 300 tests
+pass. No database, preview UI, printer, export, or rendered-output comparison
+was used. The canonical app build remains blocked at deferred `QRPrgres`.
+
+Coverage is 637/1,083 methods containing retained assembly (58.82%); Unit5 is
+1/2 assembly-backed and `Reports\Unit5ListReport.pas` is 0/6. Unit15 remains a
+separate candidate because its DFM has small layout differences and an
+additional empty image component; its caller and field semantics remain
+unproved.
+
+## Latest checkpoint — Unit25 LazReport layout
+
+`Unit25.dfm` establishes an A4 portrait, two-column QuickReport with page
+header/detail/footer bands, two visible data fields, six disabled data fields,
+the `QRLabel1` caption placeholder, date/page-number footer fields, and three
+empty image components. Its bounded replacement is an embedded
+`Reports\Unit25ListReport.lrf` template loaded by
+`Unit25ListReportTemplateResource.pas`; the report builder binds a
+caller-provided active dataset under the template alias and preserves its
+current bookmark during preparation.
+
+Four synthetic tests cover template objects and bindings, two-row preparation,
+caller dataset ownership/cursor state, required-field rejection, and the
+Unit25 form factory. The project builds and the full suite passes 296/296.
+There is no evidenced Unit25 production caller or semantic mapping behind its
+placeholder field names. The empty image controls are excluded. Preview,
+printing, export, production data, and output parity are not implemented or
+validated. The application build remains blocked at deferred `QRPrgres`.
+
+Coverage is 637/1,076 methods with retained assembly (59.20%); `Unit25.pas`
+is 1/2 assembly-backed and `Reports\Unit25ListReport.pas` is 0/6. The next
+reporting candidate must be selected from the remaining QuickReport resources
+only after its DFM fields and caller contract are independently evidenced.
+
+## Latest checkpoint — Unit21 FOKO LazReport preview dispatch
+
+The Unit23 FOKO report is now accessible through the restored
+`Unit21.SpeedButton2Click` caller. The A4 portrait `Reports\Unit23Foko.lrf`
+template is embedded as a Lazarus resource; the workflow prepares it against
+the already-active `DataModule2.Table20` and calls the default LazReport
+prepared-preview surface. The three QRImage placeholders in the DFM have no
+embedded picture data or proven source and are not represented. No pixel-level
+output parity is claimed.
+
+`TFokoListReport` validates all nine required fields without opening a
+provider, bookmarks/restores the caller's current record, and leaves ownership
+with the caller. The preview presenter is injectable; tests use a recording
+presenter and never open a modal preview or invoke printing. Print remains an
+explicit unsupported operation. Unit23's FPC LFM no longer streams
+QuickReport controls; the original Delphi DFM/field declarations remain under
+the Delphi conditional.
+
+Seven Unit23 and two Unit21 synthetic tests verify captions and field bindings,
+actual preparation, current-row/ownership preservation, missing-field
+rejection, handler dispatch, embedded template loading, and presenter
+invocation. The focused Unit21 suite passes 2/2 and the complete suite passes
+292/292; the test project builds. The application build remains blocked by
+deferred `QRPrgres`. No database, genealogy data, modal preview UI, printer,
+export, or output comparison was used.
+
+Coverage is 426/1,062 methods restored (40.11%); `Unit21.pas` has 4/8 methods
+still assembly-backed, and `Unit23.pas` is 1/2 assembly-backed. Remaining
+report migration includes the other QuickReport forms, print, export, and
+output parity; do not infer these from successful FOKO preview dispatch.
+
+## Latest checkpoint — Unit10 browser-command dispatch boundary
+
+Restored `BitBtn1Click` and `SpeedButton2Click` to dispatch legacy command
+ID 6 with option 0; restored `SpeedButton3Click` to dispatch command ID 4 with
+option 0; and restored `BitBtn2Click` to dispatch command 4 only after the
+save dialog accepts. The complete listings at `0055A124`, `0055A138`,
+`0055A1AC`, and `0055A1C0` establish these values and call order. Only the
+two SpeedButton events are bound in the available DFM/LFM; the BitBtn methods
+are restored from listings but their UI reachability is not claimed.
+
+Because the Windows `TWebBrowser.ExecWB` surface has no proven equivalent on
+the FPC `THtmlViewer`, `Compat\BrowserCommands\BrowserCommandCompat.pas`
+defines an injectable command provider and a default provider that raises
+`EBrowserCommandCompatibilityUnsupported` with the exact legacy command
+identity. It does not print, save, or silently substitute HTML-viewer
+behavior. Synthetic tests use a recording provider and a fixed-result save
+dialog to cover all four handlers, both save-dialog outcomes, exact command
+IDs/options, and the explicit default failure. No browser, file, dialog UI,
+report, or genealogy data was accessed.
+
+The focused tests pass 6/6; the complete suite passes 283/283; and the test
+project builds. Coverage is 416/1,053 restored (39.51%); `Unit10.pas` is
+8/16 assembly-backed (50.00%). The main application build is still blocked
+by the deferred QuickReport dependency `QRPrgres`.
+
+## Latest checkpoint — Unit24 field-list refresh
+
+Restored `TForm24.listanz` (`0055EC64`) and `Button9Click` (`0055EE60`) from
+the independent IDR listing. IDR confirms `listanz` is a receiver-only helper,
+not a `Sender` event, and maps the three source pairs through `TDataModule2`:
+Table12/field Table12Name to ListBox1, Table13/field Table13Ort to ListBox2,
+and Table37/field Table37Hofname to ListBox5. The helper clears all six
+listboxes, then opens each source in sequence, traverses from First to EOF,
+and appends `AsString` only when `AsInteger > 0`; conversion and provider
+errors are not swallowed. `Button9Click` dispatches the main-form
+`listen_akt` callback before calling `listanz`. The direct x86 callers and
+independent IDR declaration show `listen_akt` has no argument; its Pascal
+signature was corrected, but its body remains assembly-backed.
+
+`RefreshFieldLists` factors this exact ordered generic dataset operation for
+synthetic `TBufDataset` tests. Three cases verify populated and empty lists,
+all-list clearing, order/filtering, and conversion-error propagation before
+later datasets are opened. The live global-table path and Button9 dispatch
+were not invoked because they enter the provider-backed main refresh. No
+genealogy data or application UI was accessed. The test project builds and
+the full suite passes 277/277. The canonical application build remains
+blocked by the deferred QuickReport dependency `QRPrgres`. Coverage is
+411/1,052 restored (39.07%), with 641 methods still assembly-backed;
+`Unit24.pas` is 0/26 assembly-backed. This restores the method body only; it
+does not assert BDE/SQLDB or production-provider parity.
+
+## Latest checkpoint — Unit18 export-string normalizer
+
+Restored the unit-level helper at `00545A0C` from the complete IDR
+decompilation in `Source\Projects_AhnenWin\Unit18.pas`. The call site confirms
+`AnsiString` input in EAX and output-string address in EDX; the previous
+`TForm18.Proc_00545A0C(Sender: TObject)` class declaration was an ABI
+misidentification and has been replaced by
+`Proc_00545A0C(inputText: AnsiString; var outputText: AnsiString)`.
+The implementation preserves the special `..`, `HK`, `vo.r`, and `na.ch`
+branches and the remaining trim/period/space conversion. A guard prevents a
+period-only value from looping after the original fixed-length copy empties
+the working string.
+
+Eight synthetic tests cover the special branches, punctuation conversion,
+numeric-prefix pass-through, whitespace preservation, and the empty-result
+edge case. The helper is tested independently; `speichern` still contains its
+assembly listing and was not invoked, so no CSV file or provider work is
+claimed. The complete suite passes 275/275 and the test project builds. The
+canonical application build currently stops because the deferred QuickReport
+unit `QRPrgres` is unavailable; no report dependency was changed. Coverage is
+409/1,052 restored (38.88%), with 643 assembly-backed; `Unit18.pas` is 8/32
+assembly-backed (25.00%). No real data, report, file, or application UI was
+accessed.
+
+## Latest checkpoint — Unit24 field-list close state
+
+Restored DFM/LFM-bound `TForm24.FormClose` from listing `0055F144`. The
+separate IDR decompilation in `Source\Projects_AhnenWin\Unit24.pas` identifies
+the string constant at `0055F524` as `%`, confirming that ListBox3 and
+ListBox4 are serialized in order with a trailing delimiter for every item.
+The handler then zeros 18 option globals and sets the corresponding flags
+from RadioButton1-3 and CheckBox1-11, 14, and 16-18. The IDR `Unit3` listing
+independently shows the option globals consumed by report-generation code;
+report behavior remains outside this slice. Since the two decompilations use
+different global-address labels, the Pascal declarations retain the current
+DeDe listing's `GlobalVar_025353E0`–`GlobalVar_02535424` names rather than
+assuming the other image's absolute addresses.
+
+A synthetic unstreamed-form test verifies both ordered strings and trailing
+delimiters, every radio/checkbox mapping, empty-list clearing, and all-zero
+flags, while restoring shared state afterward. The full suite passes
+267/267; the test project and main application build. Coverage is
+408/1,052 restored (38.78%), with 644 assembly-backed; `Unit24.pas` is
+2/26 assembly-backed (7.69%). No database, report, or application UI was
+opened.
+
+## Candidate-screen checkpoint — no resource-bound candidate — 2026-10-02
+
+The follow-up screen after `TForm24.FormShow` found no immediate method that
+meets all current selection criteria: a retained complete assembly listing,
+confirmed form-resource binding, and a bounded synthetic test with no
+database/provider, report/printing, file, or opaque-helper behavior.
+`TGregorianCalendarForm.btnPrintKalenderClick` remains report/printing work;
+the calendar address-counter callbacks are already Pascal and have no
+confirmed resource binding. This is a bounded screening result, not proof
+that all remaining source methods have been inventoried.
+
+At the time of this screen, coverage was 406/1,052 methods restored (38.59%);
+646 were assembly-backed. `Unit24.pas` was 3/26 assembly-backed (11.54%) after
+r1569.
+
+## Latest checkpoint — main-form empty callback
+
+Restored the complete listing for `TForm1.drucken2Click` at `005D3FB0` as an
+empty Pascal body: the listing consists only of compiler exception-frame
+setup/teardown, with no application-level operation. No DFM/LFM event binding
+was found, so this does not establish UI reachability or printing behavior.
+The inert main-form test invokes it on an unstreamed form and verifies that
+caption and modal result remain unchanged. Focused test passes 1/1; the full
+suite passes 266/266. Coverage is 407/1,052 restored (38.69%), with 645 still
+assembly-backed; `frmAhnenWinMain.pas` is 229/323 assembly-backed (70.90%).
+No database, report, or application UI was opened.
+
+## Earlier checkpoint — Unit24 field-list initialization
+
+Restored DFM/LFM-bound `TForm24.FormShow` from the complete listing
+`0055EE78`: call the then-assembly-backed `listanz` helper, enable
+RadioButton1 and RadioButton3, and set ActiveControl to ListBox1. A synthetic
+unstreamed-form test verified the enabled states and active control.
+`listanz` was restored later as recorded in the latest checkpoint; this
+historical test did not execute provider-backed list loading. At that time,
+the complete suite passed 266/266. No genealogy data or report was opened.
+
+## Latest checkpoint — Main-form progress-label reset
+
+Restored `TForm1.lab18ein` from complete listing `005D87E4`. The helper shows
+Label18, sets its caption to `0 %`, refreshes it, then shows and refreshes
+Label19; nine retained callers were located. The unstreamed-form test creates
+synthetic labels and verifies visibility plus the reset caption. Focused test
+passes 1/1; full suite passes 265/265, and the Lazarus test project builds.
+Coverage is 405/1,052 methods restored (38.50%); `frmAhnenWinMain.pas` is
+230/323 assembly-backed (71.21%). No data or report code was invoked.
+
+## Latest checkpoint — Unit18 clear-all criteria
+
+Restored the DFM/LFM-bound `TForm18.Button5Click` from its complete listing.
+The “alle löschen” action clears ComboBox1-26, Edit1-9, and Edit23, then
+sets ActiveControl to ComboBox1. The listing has no query or dataset
+operation. A synthetic test seeds all 36 fields and verifies the clear and
+focus behavior. Focused Unit18 tests pass 6/6, the full suite 264/264, and
+the Lazarus test project builds. Coverage is 404/1,052 methods restored
+(38.40%); `Unit18.pas` is 9/32 assembly-backed (28.13%). Only the bounded
+method changed in the legacy-encoded source. No database, report, or
+application UI was opened.
+
+## Latest checkpoint — Unit18 search-form initialization
+
+Restored the DFM/LFM-bound `TForm18.FormShow` from its complete listing. It
+disables Button1 and Button7, then sets ActiveControl to ComboBox1. An
+unstreamed-form test starts with both buttons enabled and verifies these
+states and the focused control. At that checkpoint, coverage was 403/1,052
+methods restored (38.31%); `Unit18.pas` was 10/32 assembly-backed (31.25%).
+Focused tests passed 5/5 and the full suite passed 263/263. The source
+encoding is unchanged outside the restored method. No database, report, or
+application UI was opened.
+
+## Latest checkpoint — Unit18 search-row clearing
+
+Restored the nine DFM/LFM-bound `TForm18.SpeedButton2Click` through
+`SpeedButton10Click` handlers from complete listings. Each clears exactly
+the three or four search inputs in its own criteria row; the listings do not
+touch Query1 or any dataset. A synthetic unstreamed-form test seeds all 35
+inputs and checks each handler clears only its designated row. At that
+checkpoint, coverage was 402/1,052 methods restored (38.21%);
+`Unit18.pas` was 11/32 assembly-backed (34.38%). Focused tests passed 4/4 and
+the full suite passed 262/262. The legacy source encoding was preserved
+outside the replaced method bodies. No database, report, or application UI
+was opened.
+
+## Latest checkpoint — Unit19 finish-button checkbox state
+
+Restored the DFM/LFM-bound `TForm19.BitBtn1Click` from its complete listing.
+The handler dispatches `nachf(Sender)` only when the shared mode in Unit12
+equals `Nach` exactly, then clears CheckBox7 and CheckBox8 if the current
+list-type text contains the case-sensitive substring `alph`. Two synthetic tests exercise both checkbox outcomes with a non-`Nach` mode,
+so they do not enter the database-backed descendant workflow. At that
+checkpoint, coverage was 393/1,052 methods restored (37.36%);
+`Unit19.pas` was 12/28 assembly-backed (42.86%). Focused tests passed 11/11
+and the full suite passed 261/261. No database, report, or application UI was
+opened.
+
+## Latest checkpoint — Unit17 checkbox presets
+
+Restored DFM/LFM-bound `TForm17.RadioButton1Click` and
+`RadioButton2Click` from complete listings as explicit presets for
+CheckBox1-9 and CheckBox11-16. Both methods touch the 15 checkboxes only; the
+radio-button captions corroborate the mark-all and clear-all intent. The
+unstreamed synthetic tests assert all 15 states for each handler. Focused
+tests pass 2/2, the full suite 259/259, and the test project builds. Coverage
+is 392/1,052 methods restored (37.26%); `Unit17.pas` is 10/15
+assembly-backed (66.67%). No database, report, or application UI was opened.
+
+## Latest checkpoint — Unit13 unbound scale callback
+
+Restored `TForm13.UpDown1Click` from listing `005661E8`. It compares the
+address-backed extended scale strictly against `0.5` and subtracts `0.13`
+only when greater; unlike `Button5Click`, the listing does not request a
+repaint. Synthetic unstreamed-form tests cover below, exactly at, and above
+the threshold. The Unit13 DFM/LFM do not bind this handler and no direct
+Pascal caller was found, so only the method body is reconstructed, not
+original UI reachability. Focused GraphicForm tests pass 9/9; full suite
+257/257. Coverage is 662/1,052 (62.93%); `Unit13.pas` is 41/55 (74.55%).
+No database or report was opened.
+
+## Earlier candidate boundaries — Unit10 and Unit24
+
+The Unit10 browser commands were initially held back because the listings
+target `SHDocVw.TWebBrowser.ExecWB` while the FPC branch declares
+`THtmlViewer`. They were subsequently restored against an explicit unsupported
+command-provider boundary as recorded in the latest checkpoint.
+
+Unit24's resource-bound `Button9Click` calls the main-form `listen_akt`
+callback and then `TForm24.listanz`, which reads data-module state and
+repopulates lists. Keep this out of unattended tests until synthetic
+provider/data-module contracts bound those reads and writes; do not invoke it
+on genealogy records or claim BDE/SQLDB parity.
+
+## Latest checkpoint — Unit19 cursor reset
+
+Restored `TForm19.vorchron` as `Screen.Cursor := crDefault`. The complete
+listing loads the global `TScreen`, passes cursor value zero to `SetCursor`,
+and performs no other application operation. The unstreamed synthetic test
+sets `crHourGlass`, invokes the method, verifies `crDefault`, and restores
+the prior cursor in `finally`. No DFM/LFM binding or direct caller was found;
+the restored body is not evidence of original UI reachability. Focused tests
+pass 2/2 and the full suite passes 256/256. Coverage is 663/1,052 (63.02%);
+`Unit19.pas` is 13/28 (46.43%). No database or report was opened.
+
+## Latest checkpoint — Unit19 empty callbacks
+
+Restored `TForm19.vorf` and `TForm19.voralph` from complete listings that
+contain only compiler exception-frame setup/teardown; neither performs an
+application operation. The DFM and LFM do not bind these methods, so they are
+recorded as reconstructed method bodies, not verified reachable UI behavior.
+An unstreamed-form test invokes both and confirms that `ModalResult` remains
+unchanged. Focused tests pass 1/1; the full suite passes 255/255. Coverage is
+664/1,052 (63.12%); `Unit19.pas` is 14/28 (50.00%). No database or report was
+opened.
+
+## Latest checkpoint — Unit17 counter increment
+
+Restored `_PROC_0054524D` from its complete listing as an increment of the
+same address-backed `LongInt` used by `_PROC_0054527C`. The wrapper's
+exception-frame instructions are compiler bookkeeping, so the observed
+operation is `Inc(GlobalVar_0061DFD8)`. An unstreamed-form test verifies
+increment from zero and from a positive count; together with the existing
+decrement test, focused tests pass 2/2 and the full suite passes 254/254.
+Coverage is 666/1,052 (63.31%); `Unit17.pas` is 12/15 (80.00%). No data was
+opened.
+
+## Latest checkpoint — Unit18 first living-status exit handler
+
+Restored the complete `ComboBox1Exit` listing: when `ComboBox1.Text` equals
+`lebt` exactly, clear `ComboBox2.Text` and `Edit1.Text`. Both DFM and LFM bind
+the handler. The existing unstreamed Unit18 tests now exercise this pair
+alongside the eight previously restored pairs and preserve all dependent
+fields for case-different input. Focused tests pass 3/3 and the full suite
+253/253. Coverage is 667/1,052 (63.40%); `Unit18.pas` is 20/32 (62.50%). No
+records or application UI were opened.
+
+## Candidate deferred — Unit18 string normalizer
+
+Do not rewrite `Proc_00545A0C` from its current decompiler declaration yet.
+The caller at `00546211` passes a string in `EAX` and an output-string address
+in `EDX`, which conflicts with the generated `Sender: TObject` signature.
+The complete body also calls `00409448` and `0044643C`, whose implementations
+are not present in this repository. The routine appears string-only, but the
+correct Pascal signature and helper semantics remain unproven. Resume only
+after independent ABI/helper evidence is available; do not infer behavior
+from the German string fragments alone.
+
+## Latest checkpoint — Unit18 counter callbacks
+
+Restored `_PROC_0054D870` and `_PROC_0054D8B4` from complete listings.
+The increment callback increases the address-backed 32-bit counter and clears
+both associated managed strings only when the resulting count is zero; the
+decrement callback subtracts one without clamping. Synthetic unstreamed-form
+tests cover the nonzero increment, zero-result clear branch, and zero-to-minus
+one decrement. Focused tests pass 3/3; full suite 253/253. Coverage is
+668/1,052 (63.50%); `Unit18.pas` is 21/32 (65.63%). No database or application
+UI was opened.
+
+## Latest checkpoint — Unit18 bounded control state
+
+Restored the eight DFM/LFM-bound `ComboBox*Exit` handlers for fields 3, 5, 7,
+9, 11, 13, 22, and 25 from their complete listings. Each performs an exact,
+case-sensitive comparison with `lebt` and clears only its paired combo/edit
+fields. Restored `FormClose` from its listing to copy `Edit23.Text` into the
+address-backed `GlobalVar_0253593C`. Three synthetic unstreamed-form tests
+cover all eight clear branches, nonmatching case, and close-state copying.
+The focused group passes 3/3; the complete suite passes 250/250; the test
+project builds with `Unit18` included. Coverage at that slice was 670/1,052
+(63.69%); `Unit18.pas` was 23/32 (71.88%). The canonical application build
+advances past the `Unit10` HtmlView dependency and then stops in deferred
+`Unit16` because `TMainMenu`/`TMenuItem` are unresolved. No records, files, or
+application UI were opened.
+
+## Latest checkpoint — Unit17 counter decrement
+
+Restored `TForm17._PROC_0054527C` from listing `0054527C` as
+`Dec(GlobalVar_0061DFD8)`. The complete listing consists only of that
+address-backed decrement and `ret`; it does not clamp at zero. Its
+unstreamed `TForm17` test covers zero-to-negative and positive decrement.
+That slice passed 1/1 focused and 247/247 full-suite tests at the time.
+`_PROC_0054524D` was subsequently restored as the matching increment. No
+database was opened and AhnWin was not started.
+
+## Latest checkpoint — Unit10 counter helpers
+
+Restored `_PROC_0055B2B5` and `_PROC_0055B2E4` from listings `0055B2B5` and
+`0055B2E4` as direct increments and decrements of the address-backed
+`GlobalVar_0061E0B0`. The increment listing contains exception-frame cleanup
+around the increment but no additional application behavior; the decrement
+has no clamp. Two synthetic tests cover both deltas and the negative
+decrement boundary using an unstreamed form. Focused tests pass 2/2, the full
+suite 246/246, and the test project builds. Coverage is now 680/1,052
+(64.64%); `Unit10.pas` is 12/15 (80.00%). No HTML content, image, or
+genealogy data was loaded.
+
+## Latest checkpoint — Image-selection form dispatch
+
+Restored the DFM/LFM-bound `TForm10.SpeedButton5Click` from listing
+`0055A4B8`; the handler displays the global `Form32` image-selection form.
+The synthetic test assigns an unstreamed `TForm32` with a test-only `OnShow`
+observer and verifies the global target is shown exactly once. Because the
+target is not streamed, its file-loading `FormShow` is not assigned and no
+image paths are read. The image-selection form's file-loading and click
+handlers remain assembly-backed and out of scope. The test project now
+references the existing `FrameViewer09` and `fpvhttp` packages required by
+`Unit10`. The focused test passes 1/1, the complete suite 244/244, and the
+test project builds. Coverage is now 682/1,052 (64.83%); `Unit10.pas` is
+14/15 (93.33%). No image or genealogy data was loaded and AhnWin was not
+started.
+
+## Latest checkpoint — Source archive form lookup boundary
+
+Restored the DFM-bound `TForm30.FormShow` from listing `00560EC8`. It first
+calls `DataModule2.Table11.FindKey([Form30.Label2.Caption])`, then assigns the
+eleven fixed archive-description captions in listing order. `Table11` is the
+converted `TSQLTable` corresponding to the legacy BDE table; the existing
+compatibility helper rejects `TTable.FindKey` explicitly rather than using
+SQLDB lookup semantics.
+
+An unstreamed synthetic test creates only `TForm30`, `TDataModule2`, and an
+inactive `TSQLTable`, then verifies that `FormShow` propagates the named
+`TTable.FindKey` compatibility exception before touching real data. The
+post-lookup caption assignments are compile-checked but intentionally not
+reached because lookup semantics and archive records are unavailable. The
+focused test passes 1/1, the full suite 243/243, and the test project builds.
+The canonical main build remains blocked by the pre-existing `Unit18.pas`
+syntax error. Coverage is 683/1,052 (64.92%); `Unit30.pas` is 1/6 (16.67%).
+No genealogy or archive database was opened and AhnWin was not started.
+
+This fulfills the first bounded provider-backed source restoration against
+the explicit-failure boundary; it does not implement `FindKey` or claim BDE /
+SQLDB lookup parity. Continue with another short routine only where its
+unsupported data operation and failure boundary are independently testable.
+
+### Follow-up candidate screening
+
+The DFM-bound `TForm32.Image1DblClick` handles ten image controls, constructs
+`.jpg` paths, and calls `TPicture.LoadFromFile` on those branches; it also
+depends on opaque string helpers. Keep it deferred unless a synthetic file
+provider and helper contract are established. The short-looking
+`TForm29.FormActivate`, `TForm36.FormActivate`, and `TForm39.FormActivate`
+callbacks clear selections and then open BDE-backed tables. `TForm19.BitBtn1Click`
+can dispatch to `nachf`, whose listing reads the main dataset's `RecordCount`.
+`TForm1.Proband1Click` likewise reads record count after dispatching a menu
+item. These are not control-only tests and remain uninvoked. No next
+resource-bound candidate met the safe execution boundary in this screen.
+
+## Latest checkpoint — Relationship caption normalization
+
+Restored the DFM/LFM-bound `TForm1.ComboBox5Exit` from the complete listing
+`0061781C`. It performs two ordered, case-sensitive substring checks on
+`ComboBox5.Text`: `heschl` becomes `Eheschliessung`, then `dere Bez` becomes
+`andere Beziehung` if still present. The form resources also bind
+`ComboBox5Change`; that existing handler only focuses `Edit4`. Four
+synthetic tests exercise each replacement, unchanged input, and case
+sensitivity using an unstreamed form and manually created combo box.
+
+The focused suite passes 4/4 and the full suite 242/242. The test project
+builds. The canonical `AHNWIN52.lpi` build remains blocked by the pre-existing
+syntax error in `Unit18.pas` (`ComboBox4` encountered where `THEN` is
+expected); this slice does not modify that unrelated method. Coverage is
+684/1,052 (65.02%); `frmAhnenWinMain.pas` is 231/323 (71.52%). No genealogy
+data was opened and AhnWin was not started.
+
+Next, continue screening for complete, resource-bound handlers with control-
+only or synthetic effects. Keep provider-backed dataset refreshes, report,
+print, file, and relationship-index workflows out of execution; do not
+approximate incomplete listings or static constants.
+
+## Latest checkpoint — Main-form resize state
+
+Restored the DFM/LFM-bound `TForm1.FormResize` sequence from listing
+`005F23A0`: use the global main-form height and the previous height in
+`ScaleControls`, store the new height in the address-backed cell
+`02535BA4`, then invoke `gridanp`. Both retained callers invoke `gridanp`
+without arguments, and the target listing does not consume an event sender,
+so its decompiler-generated `Sender` parameter was removed. `gridanp` itself
+remains assembly-backed and was not modified.
+
+A synthetic `TForm1.CreateNew` test verifies the height state update without
+streaming data-bound controls; `ScaleControls` sees no children and the
+retained `gridanp` body is deliberately not treated as restored grid-sizing
+behavior. The focused test passes 1/1, the complete suite 238/238, and the
+canonical main project builds and links. Coverage is 685/1,052 (65.11%);
+`frmAhnenWinMain.pas` is 232/323 (71.83%). No genealogy data was opened and
+AhnWin was not started.
+
+### Follow-up candidate boundary review
+
+Audited the complete `gridanp` listing and both call sites: the routine uses
+its `TForm1` receiver, reads five string-grid client widths, and sets their
+column widths; it never reads an event `Sender`. The parameterless signature
+is therefore supported, but the referenced floating-point constants at
+`005D4348` through `005D4390` are not defined in the checked-in Pascal
+listing. The known `AHNWIN51.exe` and `AHNWIN51_.exe` reference images are
+absent from this working copy. Keep the grid-width body assembly-backed until
+those exact constants are independently recovered; do not estimate
+proportions.
+
+The short `Osterberechnung1Click` listing is not a safe alternative: after
+setting the `"Oster"` mode and active tab it calls `speich1` and an
+unidentified global virtual method. `TForm13.Button4Click` is DFM-bound but
+creates a JPEG/bitmap and enters a save-dialog/file-write path; `FormShow`
+opens a BDE dataset. These remain untouched. Continue screening for a
+complete control-only callback, or restore `gridanp` only with verified
+constant evidence.
+
+## Latest checkpoint — Login dialog label sizing
+
+Restored `TLoginDialog.FormShow` from the complete listing at `004B0EE0`;
+`DBLogDlg.dfm` binds it to the form's `OnShow`. It compares
+`Panel.ClientWidth` to `DatabaseName.Left + DatabaseName.Width` and only
+when the label reaches or exceeds that boundary assigns the remaining panel
+width minus the observed five-pixel margin. A synthetic `CreateNew` dialog
+with manually created controls tests a fitting label, exact boundary, and
+narrow panel. The login resource and its database-facing handlers were not
+streamed or invoked.
+
+`DBLogDlg` is included by a unit-specific source reference rather than a
+global `Sys` search path. Its legacy declarations needed the missing
+`ExtCtrls` import for `TPanel` and `TBevel`; no unrelated login behavior was
+changed. The focused tests pass 3/3, the full synthetic suite passes 237/237,
+and the canonical main project builds and links. Coverage is 686/1,052
+(65.21%); `Sys\DBLogDlg.pas` is 5/6 (83.33%). No database was opened and
+AhnWin was not started.
+
+## Latest checkpoint — Password dialog edit state
+
+Restored `TPasswordDialog.EditChange` from the complete listing at
+`004B1298`; `DBPWDlg.dfm` binds `Edit.OnChange` to the handler. It enables
+`AddButton` and `RemoveButton` when `Edit.Text` is nonempty, and enables
+`OKButton` when the text is nonempty or the private byte at offset `030C` is
+nonzero. A synthetic test invokes the actual handler on a `CreateNew` dialog
+with manually created controls, covering empty, nonempty, and cleared text
+while the byte remains at its default zero. The nonzero-byte branch is
+source-recovered but not dynamically injected.
+
+The test project compiles `DBPWDlg` through an explicit unit source path,
+avoiding a broad `Sys` search path that collides with Lazarus's `DBLogDlg`.
+The focused test passes 1/1, the complete suite 234/234, and both test and
+canonical main Lazarus projects build/link. Coverage is 687/1,052 (65.30%);
+`Sys\DBPWDlg.pas` is 6/7 (85.71%). No database was opened and AhnWin was not
+started.
+
+## Latest checkpoint — Report-option cancel reset dispatch
+
+Restored `TForm17.BitBtn2Click` from listing `005405A0`; both form resources
+bind `BitBtn2.OnClick` to this method. The DPR's `CreateForm` listing maps
+global `0061DFC8` to `TForm17`. The handler sets `Form17.ModalResult` to
+`mrCancel`, clears the address-backed 32-bit cell `0061DFD0`, then calls the
+global main form's `anzeigen` with the original `Sender`.
+
+The handler remains uninvoked because `anzeigen` enters the assembly-backed,
+database-refresh path. Added `Unit17` to the test project's compile set so
+the restored body is actually compiled; the full synthetic suite passes
+233/233, and the canonical main project links. Coverage is 688/1,052 methods
+with retained listings (65.40%); `Unit17.pas` is 14/15 (93.33%). No genealogy
+data was opened and AhnWin was not started.
+
+## Latest checkpoint — Option-dialog cancel dispatch
+
+Restored `TForm19.BitBtn2Click` from listing `0055108C`; both the DFM and LFM
+bind `BitBtn2.OnClick` to this method. The listing sets the global `Form19`
+instance's `ModalResult` to the literal value 2 (`mrCancel`), then calls the
+global main form's `anzeigen` with the original `Sender`. `Form19` is the
+address-backed form global preceding the sequential `GlobalVar_0061E014`
+string cells; `Form1` and `anzeigen(Sender)` are exposed by
+`frmAhnenWinMain`.
+
+The exact dispatch now compiles, including the necessary implementation
+dependency on `frmAhnenWinMain`. It was not invoked because `anzeigen` remains
+assembly-backed and enters the data-refresh path. The test project compiles
+the changed unit, the main project links, and the full synthetic suite passes
+233/233; no test invokes this handler. Coverage is 689/1,052 methods with
+retained listings (65.49%); `Unit19.pas` is 16/28 (57.14%). No genealogy data
+was opened and AhnWin was not started.
+
+## Latest checkpoint — Fractional graphic scale buttons
+
+Restored the DFM/LFM-bound `TForm13.Button5Click` and `Button6Click` from
+listings `00572404` and `00572448`. The shared cell `0061E120` is an
+80-bit `Extended`: the listings use `fld`/`fstp tbyte`, and the matching
+reference executable initializes the same cell as a ten-byte floating-point
+value. Read-only PE inspection of `AHNWIN51.exe` (SHA-256
+`817c1b1bb23469cd628c52e4a5ea26cb4db26275b5ec84952717b218605f0aff`)
+confirmed the code bytes at the method entry match the listing and decoded
+the referenced constants: `0.5` threshold and `0.13` step.
+
+`Button5Click` subtracts `0.13` and refreshes only when the cell is strictly
+greater than `0.5`; `Button6Click` always adds `0.13` then refreshes. Synthetic
+tests verify values below, at, and above the threshold, the increment, and
+repaint requests using a recording PaintBox callback rather than the
+assembly-backed family drawing handler. The focused graphics tests pass 8/8,
+the full synthetic suite passes 233/233, and both Lazarus projects build and
+link. Coverage is 690/1,052 methods with retained listings (65.59%);
+`Unit13.pas` is 42/55 (76.36%). No application was run and no genealogy data
+was opened.
+
+## Latest checkpoint — Family-graphic PaintBox wrapper
+
+Restored DFM/LFM-bound `TForm11.PaintBox1Paint` from listing `005CB350`. It
+compares `PaintBox1.Canvas` with the saved canvas reference at `02535894`;
+when they match, it sets the PaintBox control color to `clBtnFace`, then
+unconditionally calls `zeichnen` with the saved canvas. The assignment target
+is the PaintBox control, as shown by the `TControl.SetColor` call with the
+PaintBox still in the receiver register.
+
+The handler was not invoked because `zeichnen` remains a large
+assembly-backed routine that may access genealogy data. Both Lazarus projects
+build and link, and the existing synthetic suite passes 232/232; none of
+those tests invokes this paint path. Coverage is now 692/1,052 methods with
+retained listings (65.78%); `Unit11.pas` is 5/11 (45.45%). The updated
+per-file report is `AhnWin-Assembly-Coverage-2026-10-01.csv`. No genealogy
+data was opened and AhnWin was not started.
+
+## Latest checkpoint — Family-graphic button dispatch
+
+Restored the DFM/LFM-bound `TForm11.Button1Click` from listing `005CB568`.
+The listing increments the address-backed counter at `025358A8`, then passes
+the saved canvas at `02535894` to `zeichnen`. The field access in
+`FormCreate` and the drawing call sites identify the saved object as a
+`TCanvas`; the existing `zeichnen(Sender: TObject)` signature accepts it
+without changing that routine's API.
+
+The handler body now preserves that order. It was not invoked: `zeichnen`
+remains a large assembly-backed routine that may access genealogy data. Both
+the test project and canonical main project compile and link; this validates
+the restored dispatch's types but not its runtime drawing/data behavior.
+Structural inventory is 693/1,052 methods with retained listings (65.87%);
+`Unit11.pas` is 6/11 (54.55%). The updated per-file report is
+`AhnWin-Assembly-Coverage-2026-10-01.csv`. No genealogy data was opened and
+AhnWin was not started.
+
+## Latest checkpoint — Bounded graphic control handlers
+
+Restored the DFM/LFM-bound `TForm13.ScrollBar1Change` and
+`TForm13.ScrollBar2Change` from listings `00572484` and `00572490`. Each
+listing loads `PaintBox1`, calls the same refresh routine, and returns;
+both Pascal bodies now call `PaintBox1.Refresh`. A synthetic visible PaintBox
+with a recording `OnPaint` verifies that each handler requests a redraw.
+
+Also restored the DFM/LFM-bound `Button1Click`, `Button2Click`, and
+`Button3Click` listings (`005707C0`, `00570838`, and `00570854`). They toggle
+the address-backed mode and exact captions, increment two 32-bit state cells,
+and independently enforce the two observed decrement thresholds, requesting
+a PaintBox refresh after each taken branch. Synthetic tests exercise both
+toggle directions, increments, both decrement branches, and the boundary
+no-op. No drawing generator, printing, or external data is used.
+
+Restored the DFM/LFM-bound `Button7Click` and `Button8Click` listings
+(`00573120` and `005730D4`) as guarded Pen.Width decrement/increment handlers.
+They preserve the observed 1- and 3-pixel limits and refresh only after
+changing the width; synthetic tests cover both bounds and all intermediate
+steps.
+
+The focused graphic-form group passes 7/7, the complete synthetic suite passes
+232/232, and both `AhnWin52Tests.lpi` and `AHW52_Main.lpi` build and link.
+Current structural inventory: 694/1,052 methods retain listings (65.97%);
+`Unit13.pas` is 44/55 (80.00%). The per-file report is
+`AhnWin-Assembly-Coverage-2026-10-01.csv`. No genealogy data was opened and
+AhnWin was not started.
+
+## Latest checkpoint — BDE boundary and bounded UI restorations
+
+Restored `TForm1.anzeigen1Click` from the complete DFM/LFM-bound listing
+`005EEB40`. It selects `TabSheet2`, then shows `StringGrid5`; a synthetic
+`CreateNew` main form verifies both effects without initializing data-bound
+controls. Restored `TForm13.FormCreate` from DFM/LFM-bound listing `00570740`:
+it initializes six address-backed integer cells (`02535380`, `02535384`,
+`011AD31C`, `011AD324`, `011AD318`, `0253537C`), then sets `PaintBox1` to
+100 by 100, white, and pen width 1. Its synthetic `TPaintBox` test verifies
+the values and restores shared fixture state.
+
+The DBTables compatibility boundary permits non-I/O `TQuery` setup and
+explicitly rejects unsupported query execution and the listing-evidenced
+`FindKey`/`EmptyTable` calls. Focused tests pass: DBTables 7/7, menu dispatch
+2/2, and graphics 4/4. The complete suite passes 229/229, and both Lazarus
+projects build and link. The current structural inventory is 701/1,052 methods
+retaining listings (66.63%); `frmAhnenWinMain.pas` is 233/323 (72.14%) and
+`Unit13.pas` is 51/55 (92.73%). The denominator includes five compatibility
+surface methods and should not be compared directly with the prior 1,047-
+method report. See `AhnWin-Assembly-Coverage-2026-10-01.csv`. No genealogy
+data was opened and AhnWin was not started.
+
+## BDE query runtime boundary — 2026-10-01
+
+The DBTables inventory distinguishes actual Pascal/resource dependencies from
+DeDe reference comments. `PersonSearchForm.dfm` streams one `TQuery` component,
+but it has no database/transaction settings; the other located
+`FindKey`/`OpenDatabase`/`EmptyTable` references are retained listing
+annotations, not executable Pascal calls. Do not build a speculative
+`TSession`/`TTable` API from those comments alone.
+
+`DBTables.TQuery` can now be constructed and configured with SQL text without
+opening a provider. `OpenCursor`, `Prepare`, and `ExecSQL` fail explicitly
+with `EDBTablesCompatibilityUnsupported` and a method-specific `Operation`.
+The compatibility unit also provides `TSQLTable` helper methods for the
+listing-evidenced BDE calls `FindKey` and `EmptyTable`; both always fail
+explicitly and do not inspect or mutate a dataset. This keeps source
+reconstruction compilable without allowing SQLDB to silently replace BDE
+execution. Existing `TBufDataset` tests continue to exercise generic in-memory
+locate and navigation behavior separately; they do not establish BDE
+key/index equivalence.
+
+The compatibility test group passes 7/7; the complete synthetic suite passes
+227/227 and `AHW52_Main.lpi` builds. No genealogy data was opened and AhnWin
+was not started. Next, choose a bounded restoration only after its concrete
+Pascal call surface is evidenced; keep `FindKey`, session/alias operations,
+and table-file behavior unsupported until then.
+
+## Candidate boundary review — 2026-10-01
+
+After the edit-tab guard, the short-list was screened for another bounded
+handler. `TabSheet7Enter` refreshes and opens the BDE-backed relationship
+dataset and selects the `namgeb` database; the source-list and Hofnamen menu
+handlers also open database-backed datasets. The `DBEdit40Exit`/`DBEdit7Exit`
+paths depend on data-module state and message dialogs, `Image2Click` executes
+an external picture-file dialog, and the remaining Unit16 candidate belongs
+to the QuickReport preview. These paths were not run or changed.
+
+The tiny Unit21 callback at `005CBE3F` contains only malformed decoded bytes
+(`0003 add [ebx], al; 0000 add [eax], al`) and has no resource binding; it is
+not sufficient evidence for a Pascal body. At that screening point, the
+immediate shortlist had no additional safe provider-free slice. A subsequent
+focused review of the graphics unit found two independently bounded scrollbar
+repaint handlers; their restoration is recorded in the latest checkpoint
+above. Continue screening for similarly small resource-bound UI methods.
+Preserve the existing relationship and LazReport boundaries.
+
+## Latest checkpoint — Edit-tab entry mode guard
+
+Restored the DFM/LFM-bound `TForm1.TabSheet2Enter` from listing `005EC2E8`.
+It compares `Unit12.GlobalVar_0253592C` with the exact `dsneu` sentinel and
+calls `anzeigen(Self)` only when they differ. The synthetic test exercises
+only the `dsneu` branch; it deliberately avoids the provider-backed refresh
+path. The method remains bounded to the observed comparison and dispatch.
+
+Both Lazarus projects build and all 221 synthetic tests pass. Coverage is
+703/1,047 methods retaining listings (67.14%); `frmAhnenWinMain.pas` is
+234/323 (72.45%). Tracker: 190 items, 184 done, five blocked, and one pending
+for deferred LazReport. No genealogy data was opened and AhnWin was not
+started.
+
+## Latest checkpoint — Family-graphics menu dispatch
+
+Restored the DFM/LFM-bound `TForm1.FamGrafik1Click` from listing `005F9CCC`.
+It selects `TabSheet2`, clicks `aus1`, then shows global `Unit11.Form11`, in
+that order. The DPR maps the listing's global slot `0061C924` (address
+`02535890`) to `TForm11`. A synthetic test records the menu-click/show order
+and page selection using unstreamed forms; the target is alpha-blended and
+its real drawing/data initialization is not invoked.
+
+Both Lazarus projects build and all 220 synthetic tests pass. Coverage is
+704/1,047 methods retaining listings (67.24%); `frmAhnenWinMain.pas` is
+235/323 (72.76%). The tracker has 189 items: 183 done, five blocked, and one
+pending for deferred LazReport. No genealogy data was opened, no dialog was
+shown, and AhnWin was not started.
+
+## Latest checkpoint — Person-search form screen scaling
+
+Restored DFM-bound `TPersonSearchForm.FormCreate` from listing `0058424C`.
+It targets global `PersonSearchDialog`, enables scaling, caches screen
+dimensions, and preserves both independent threshold branches. Each branch
+updates target height then width using the observed screen-height ratio; the
+first calls `ScaleBy(screenHeight, 768)`, while the second calls
+`ScaleBy(screenWidth, 1024)`. A synthetic test compares the global target
+against these operations and verifies that a separate event receiver remains
+unchanged.
+
+Both Lazarus projects build and all 219 tests pass. Coverage is 705/1,047
+methods retaining listings (67.34%); `PersonSearchForm.pas` is 216/225
+(96.00%). Tracker: 188 items, 182 done, five blocked, and one pending for
+deferred LazReport. No genealogy data was opened and AhnWin was not started.
+
+## Latest checkpoint — Person-search “already found” action
+
+Restored the DFM-bound `TPersonSearchForm.BitBtn2Click` from listing
+`00584060`. It compares shared `Unit12.GlobalVar_0253592C` with the exact
+string `Verw`; only a nonmatch sets `PersonSearchDialog.ModalResult` to
+`mrCancel`. The DPR maps the listing's global target address
+`025353D8` to `TForm3`, which is represented by `PersonSearchDialog` in the
+renamed unit. Synthetic tests use distinct receiver/global forms and cover
+both comparison outcomes without streaming the DFM or constructing `TQuery`.
+
+Both Lazarus projects build and all 218 tests pass. Coverage at that
+checkpoint was 706/1,047 methods retaining listings (67.43%);
+`PersonSearchForm.pas` was 217/225 (96.44%). Tracker then had 187 items, 181
+done, five blocked, and one pending for deferred LazReport.
+No genealogy data was opened and AhnWin was not started.
+
+## Latest checkpoint — Help menu guidance
+
+Restored the DFM/LFM-bound `TForm1.Hilfe1Click` from listing `00601858` as
+the direct message `Bitte die beiliegende Datei "Handbuch.pdf" benützen`.
+The synthetic test intercepts the LCL `PromptDialogFunction` used by
+`ShowMessage`, verifies the exact message and call count, and prevents a modal
+dialog from appearing.
+
+Both Lazarus projects build and all 217 synthetic tests pass. Coverage is
+707/1,047 methods retaining listings (67.53%); `frmAhnenWinMain.pas` is
+236/323 (73.07%). Tracker: 186 items, 180 done, five blocked, and one pending
+for deferred LazReport. No actual message dialog, genealogy data, or
+application was opened.
+
+## Latest checkpoint — Unbound source-search menu dispatch
+
+Restored the complete `TForm1.Quellesuchen1Click` listing as
+`QuellenListeeditieren1.Click`. It has no DFM/LFM binding or source caller,
+so no reachability is inferred and no event binding was added. A synthetic
+`TMenuItem` with a recording `OnClick` checks the dispatch without opening
+the source-list database workflow.
+
+Both Lazarus projects build and all 216 synthetic tests pass. Coverage at
+that checkpoint was 708/1,047 methods retaining listings (67.62%);
+`frmAhnenWinMain.pas` was 237/323 (73.37%). Tracker then had 185 items, 179
+done, five blocked, and one pending
+for deferred LazReport. No genealogy data was opened and AhnWin was not
+started.
+
+## Latest checkpoint — Source-list menu handoff
+
+Restored the DFM/LFM-bound `TForm1.QuellenListeeditieren1Click` from listing
+`00603C74` as `Unit29.Form29.Show`. The DPR `CreateForm` sequence maps
+`0061C7CC` to `TForm29`; it is not the later-created `TForm30` editor. A
+synthetic test uses an unstreamed global list form with a recording `OnShow`,
+so its database-backed `FormActivate` is not triggered.
+
+Both Lazarus projects build and all 215 synthetic tests pass. Coverage is
+709/1,047 methods retaining listings (67.72%); `frmAhnenWinMain.pas` is
+238/323 (73.68%). Tracker: 184 items, 178 done, five blocked, and one pending
+for deferred LazReport. No genealogy data was opened and AhnWin was not
+started.
+
+## Latest checkpoint — Profession-list menu handoff
+
+Restored the DFM/LFM-bound `TForm1.BerufeVerwaltung1Click` from listing
+`0060CFBC` as `Unit36.Form36.Show`. The DPR creation sequence maps global
+`0061C344` to `TForm36`; the synthetic test substitutes a `CreateNew` target
+and recording `OnShow`, avoiding the database-backed form resource.
+
+Both Lazarus projects build and all 214 synthetic tests pass. Coverage is
+710/1,047 methods retaining listings (67.81%); `frmAhnenWinMain.pas` is
+239/323 (73.99%). Tracker: 183 items, 177 done, five blocked, and one pending
+for deferred LazReport. No genealogy data was opened and AhnWin was not
+started.
 
 ## Latest checkpoint — Window-title menu dispatch
 
@@ -846,15 +2202,15 @@ The current project build completes and all 159 registered tests pass.
 
 ### 1. Calendar unit and year navigation (`GregorianCalendar`)
 
-**Status:** Calendar generation and year navigation implemented; model tests
-pass for every supported year and the isolated form builds. The two
-address-based callbacks now restore paired mutations of global `025358EC`
-through `GlobalVar_025358EC`. Synthetic tests verify only the increment and
-decrement. Their consumers, semantic purpose, and event associations remain
-unresolved.
-The print workflow remains deferred with reporting.  
-**Effort:** Completed for the date-grid slice; print reconstruction remains
-separate and report-dependent.  
+**Status:** Calendar generation, year navigation, and the listing-backed
+print-handler control sequence are implemented; model tests pass for every
+supported year and the isolated form builds. The two address-based callbacks
+restore paired mutations of global `025358EC` through `GlobalVar_025358EC`.
+Synthetic tests verify only the increment and decrement. Their consumers,
+semantic purpose, and event associations remain unresolved. Native form
+printing is not exercised by the FPC build.
+**Effort:** Completed for the date-grid and bounded print-handler slices;
+native printing remains an external-platform boundary.  
 **Value:** Medium; provides a useful, buildable UI/domain slice.  
 **Evidence:** The numbered unit/class are now named for their established
 purpose: `TGregorianCalendarForm` / `GregorianCalendar`. The visual files live
@@ -871,10 +2227,10 @@ from its implementation. The three 28x7 grids each display four consecutive
 months. The standalone Pascal test program checks all years 1582–2499,
 month/day anchors, leap-century cases, the endpoint guards, and the ViewModel
 contract.
-**Follow-up:** Keep the print handler deferred and retain the callback
-listings under their address-based names. Available Pascal/DFM/LFM evidence
-does not identify the counter's consumers or justify binding either callback.
-Do not use genealogy database data.
+**Follow-up:** Retain the callback listings under their address-based names.
+Available Pascal/DFM/LFM evidence does not identify the counter's consumers
+or justify binding either callback. Do not use genealogy database data or
+claim print-output parity.
 
 ### 2. FOKO current-row deletion (`Unit21.Zeilelschen1Click`)
 
