@@ -264,7 +264,7 @@ implementation
 {$R *.DFM}
 
 uses
-  Unit12;
+  AncestorChartOptionsForm;
 
 procedure TPersonSearchForm.Button1Click(Sender : TObject);
 begin
@@ -673,7 +673,7 @@ end;
 
 procedure TPersonSearchForm.BitBtn2Click(Sender : TObject);
 begin
-  if Unit12.GlobalVar_0253592C <> 'Verw' then
+  if AncestorChartOptionsForm.GlobalVar_0253592C <> 'Verw' then
     PersonSearchDialog.ModalResult := mrCancel;
 end;
 

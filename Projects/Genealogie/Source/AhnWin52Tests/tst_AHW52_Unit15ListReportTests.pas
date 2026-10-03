@@ -22,7 +22,7 @@ implementation
 
 uses
   SysUtils, Classes, DB, BufDataset, Forms, Graphics, LR_Class, Types,
-  Unit15ListReport, Unit15, ReportPdfContracts, MormotPdfReportWriter;
+  Unit15ListReport, SingleColumnA4ReportVariantForm, ReportPdfContracts, MormotPdfReportWriter;
 
 function CreateSyntheticRows: TBufDataset;
 var
@@ -163,11 +163,11 @@ procedure TTestAHW52Unit15ListReport.
   TestUnit15FormCreatesOwnedLazReportBuilder;
 var
   dataSet: TBufDataset;
-  reportForm: TForm15;
+  reportForm: TSingleColumnA4ReportVariantForm;
   listReport: TUnit15ListReport;
 begin
   dataSet := CreateSyntheticRows;
-  reportForm := TForm15.Create(nil);
+  reportForm := TSingleColumnA4ReportVariantForm.Create(nil);
   try
     AssertEquals('Form15', reportForm.Caption);
     AssertEquals(0, reportForm.ComponentCount);

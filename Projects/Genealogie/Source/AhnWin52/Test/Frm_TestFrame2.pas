@@ -5,7 +5,7 @@ unit Frm_TestFrame2;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, Unit2,
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, GenealogyDataModule,
   fra_Edit;
 
 type

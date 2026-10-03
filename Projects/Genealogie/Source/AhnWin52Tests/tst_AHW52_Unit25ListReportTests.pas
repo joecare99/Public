@@ -19,7 +19,7 @@ type
 implementation
 
 uses
-  SysUtils, DB, BufDataset, Forms, LR_Class, Unit25ListReport, Unit25;
+  SysUtils, DB, BufDataset, Forms, LR_Class, Unit25ListReport, TwoColumnA4ReportForm;
 
 function CreateSyntheticRows: TBufDataset;
 begin
@@ -144,11 +144,11 @@ procedure TTestAHW52Unit25ListReport.
   TestUnit25FormCreatesOwnedLazReportBuilder;
 var
   dataSet: TBufDataset;
-  reportForm: TForm25;
+  reportForm: TTwoColumnA4ReportForm;
   listReport: TUnit25ListReport;
 begin
   dataSet := CreateSyntheticRows;
-  reportForm := TForm25.Create(nil);
+  reportForm := TTwoColumnA4ReportForm.Create(nil);
   try
     AssertEquals('Form25', reportForm.Caption);
     AssertEquals(0, reportForm.ComponentCount);

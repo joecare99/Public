@@ -33,7 +33,7 @@ type
 implementation
 
 uses
-  Buttons, Classes, ExtCtrls, PrintersDlgs, SysUtils, Unit12, Unit13;
+  Buttons, Classes, ExtCtrls, PrintersDlgs, SysUtils, AncestorChartOptionsForm, Unit13;
 
 type
   TRecordingPrinterSetupDialog = class(TPrinterSetupDialog)
@@ -419,24 +419,24 @@ end;
 procedure TTestAHW52GraphicForm.
   TestFormCloseClosesGlobalParametersThenHidesGlobalGraphic;
 var
-  previousParameterDialog: TForm12;
+  previousParameterDialog: TAncestorChartOptionsForm;
   previousGraphicForm: TForm13;
-  parameterDialog: TForm12;
+  parameterDialog: TAncestorChartOptionsForm;
   graphicForm: TForm13;
   eventReceiver: TForm13;
 begin
   Application.Initialize;
   FParameterDialogCloseEventCount := 0;
   FGraphicVisibleWhenParameterDialogCloses := False;
-  previousParameterDialog := Unit12.Form12;
+  previousParameterDialog := AncestorChartOptionsForm.Form12;
   previousGraphicForm := Unit13.Form13;
-  parameterDialog := TForm12.CreateNew(nil);
+  parameterDialog := TAncestorChartOptionsForm.CreateNew(nil);
   graphicForm := nil;
   eventReceiver := nil;
   try
     graphicForm := TForm13.CreateNew(nil);
     eventReceiver := TForm13.CreateNew(nil);
-    Unit12.Form12 := parameterDialog;
+    AncestorChartOptionsForm.Form12 := parameterDialog;
     Unit13.Form13 := graphicForm;
     parameterDialog.OnClose := @RecordParameterDialogClose;
     parameterDialog.AlphaBlend := True;
@@ -467,7 +467,7 @@ begin
     AssertTrue('The non-global event receiver is not hidden.',
       eventReceiver.Visible);
   finally
-    Unit12.Form12 := previousParameterDialog;
+    AncestorChartOptionsForm.Form12 := previousParameterDialog;
     Unit13.Form13 := previousGraphicForm;
     eventReceiver.Free;
     graphicForm.Free;

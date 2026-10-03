@@ -26,7 +26,7 @@ implementation
 uses
   SysUtils, Classes, DB, BufDataset, Forms, LazReport, LR_Class,
   FokoListReport, FokoListReportCompatibilityError, FokoListReportWorkflow,
-  ReportPdfContracts, MormotPdfReportWriter, Unit23;
+  ReportPdfContracts, MormotPdfReportWriter, FokoFilePrintForm;
 
 type
   TRecordingFokoPreviewPresenter = class(TInterfacedObject,
@@ -256,9 +256,9 @@ end;
 procedure TTestAHW52Unit23FokoReport.
   TestUnit23LazarusFormLoadsWithoutQuickReportComponents;
 var
-  reportForm: TForm23;
+  reportForm: TFokoFilePrintForm;
 begin
-  reportForm := TForm23.Create(nil);
+  reportForm := TFokoFilePrintForm.Create(nil);
   try
     AssertEquals('FOKO-Datei drucken', reportForm.Caption);
     AssertEquals(0, reportForm.ComponentCount);
@@ -271,11 +271,11 @@ procedure TTestAHW52Unit23FokoReport.
   TestUnit23FactoryCreatesOwnedReportBuilder;
 var
   dataSet: TBufDataset;
-  reportForm: TForm23;
+  reportForm: TFokoFilePrintForm;
   fokoReport: TFokoListReport;
 begin
   dataSet := CreateSyntheticTable20;
-  reportForm := TForm23.Create(nil);
+  reportForm := TFokoFilePrintForm.Create(nil);
   try
     fokoReport := reportForm.CreateFokoListReport(FindRepositoryTemplate,
       dataSet);

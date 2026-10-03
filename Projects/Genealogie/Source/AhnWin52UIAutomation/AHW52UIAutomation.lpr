@@ -4,7 +4,8 @@ program AHW52UIAutomation;
 {$codepage utf8}
 
 uses
-  Classes, fpjson, jsonparser, SysUtils, Windows, AHW52UIProfile;
+  Classes, fpjson, jsonparser, SysUtils, Windows, AHW52UIProfile,
+  AHW52UIExperiment;
 
 const
   ApprovedExecutablePath = 'C:\ProgramData\AHNENWIN Test\AHNWIN51.exe';
@@ -17,7 +18,7 @@ const
   WindowMessageTimeoutMs = 5000;
   WindowEnumerationAttempts = 4;
   WindowEnumerationRetryDelayMs = 100;
-  SearchDialogWaitTimeoutMs = 30000;
+  SearchDialogWaitTimeoutMs = UIExperimentDialogWaitTimeoutMs;
   StartupTimeoutMs = 30000;
   CryptoProviderRsaAes = 24;
   CryptoVerifyContext = $F0000000;
@@ -399,18 +400,29 @@ function CaptureProfile(ProcessId: DWORD): TWindowProfile;
 var
   Context: TWindowEnumContext;
   Attempt: LongInt;
+  ForegroundWindow: HWND;
+  ForegroundProcessId: DWORD;
 begin
   Result.ProcessId := ProcessId;
   Result.ExecutablePath := QueryProcessPath(ProcessId);
   ValidateExecutableIdentity(Result.ExecutablePath, GetFileSha256(Result.ExecutablePath));
   Result.ExecutableSha256 := ApprovedExecutableSha256;
+  Result.ForegroundWindowHandle := 0;
   for Attempt := 1 to WindowEnumerationAttempts do
   begin
     Result.Controls := nil;
     Context.Profile := @Result;
     Context.ErrorText := '';
     if EnumWindows(@EnumerateTopLevelWindow, LPARAM(@Context)) then
+    begin
+      ForegroundWindow := GetForegroundWindow;
+      ForegroundProcessId := 0;
+      if (ForegroundWindow <> 0) and
+         (GetWindowThreadProcessId(ForegroundWindow, ForegroundProcessId) <> 0) and
+         (ForegroundProcessId = ProcessId) then
+        Result.ForegroundWindowHandle := QWord(PtrUInt(ForegroundWindow));
       Exit;
+    end;
     if Context.ErrorText <> '' then
       raise Exception.Create(Context.ErrorText);
     if Attempt < WindowEnumerationAttempts then
@@ -703,22 +715,24 @@ end;
 
 function WaitForPersonSearchDialog(
   ProcessId: DWORD; const ExpectedProfile: TWindowProfile;
-  out Targets: TPersonSearchTargets): TWindowProfile;
+  out Targets: TPersonSearchTargets;
+  out FinalProfile: TWindowProfile): Boolean;
 var
   StartedAt: QWord;
 begin
   StartedAt := GetTickCount64;
   repeat
-    Result := CaptureProfile(ProcessId);
-    if HasVisiblePersonSearchDialog(Result) then
+    FinalProfile := CaptureProfile(ProcessId);
+    if HasVisiblePersonSearchDialog(FinalProfile) then
     begin
-      ValidatePersonSearchProfile(Result, ExpectedProfile, Targets);
-      Exit;
+      ValidatePersonSearchProfile(FinalProfile, ExpectedProfile, Targets);
+      Exit(True);
     end;
     if GetTickCount64 - StartedAt >= SearchDialogWaitTimeoutMs then
-      raise Exception.CreateFmt(
-        'The visible person-search dialog did not appear within %d ms; no input was sent.',
-        [SearchDialogWaitTimeoutMs]);
+    begin
+      Result := False;
+      Exit;
+    end;
     Sleep(250);
   until False;
 end;
@@ -767,6 +781,60 @@ begin
   Profile := WaitForMainWindow(ProcessId);
   SaveProfile(Profile, OutputPath);
   WriteLn(Format('Profile saved to %s', [ExpandFileName(OutputPath)]));
+end;
+
+procedure RunPrepareSearch(const Options: TOptionValueArray);
+var
+  ProfilePath: string;
+  OutputPath: string;
+  SnapshotReference: UTF8String;
+  Category: TUIExperimentCategory;
+  Surname: UTF8String;
+  GivenName: UTF8String;
+  Profile: TWindowProfile;
+  Targets: TPersonSearchTargets;
+  Manifest: TUIExperimentManifest;
+  ManifestId: TGUID;
+begin
+  RequireOnlyOptions(Options, [
+    '--profile', '--snapshot-reference', '--category', '--surname',
+    '--given-name', '--output']);
+  ProfilePath := FindOption(Options, '--profile');
+  OutputPath := FindOption(Options, '--output');
+  SnapshotReference := FindOption(Options, '--snapshot-reference');
+  if not HasOption(Options, '--profile') or
+     not HasOption(Options, '--snapshot-reference') or
+     not HasOption(Options, '--category') or
+     not HasOption(Options, '--surname') or
+     not HasOption(Options, '--given-name') then
+    raise Exception.Create(
+      'prepare-search requires explicit profile, snapshot reference, category, surname, and given-name options.');
+  if ProfilePath = '' then
+    raise Exception.Create('A saved --profile is required.');
+  ValidateOutputLocation(ProfilePath, False);
+  ValidateOutputPath(OutputPath);
+
+  Profile := ReadProfileFile(ProfilePath);
+  ValidateExecutableIdentity(Profile.ExecutablePath,
+    GetFileSha256(Profile.ExecutablePath));
+  ValidatePersonSearchProfile(Profile, Profile, Targets);
+  Category := ParseUIExperimentCategory(FindOption(Options, '--category'));
+  Surname := FindOption(Options, '--surname');
+  GivenName := FindOption(Options, '--given-name');
+  if CreateGUID(ManifestId) <> 0 then
+    raise Exception.Create('A unique experiment manifest ID could not be created.');
+
+  Manifest := CreateUIExperimentManifest(
+    UTF8String(GUIDToString(ManifestId)), SnapshotReference,
+    UTF8String(ExpandFileName(ProfilePath)),
+    UTF8String(GetFileSha256(ProfilePath)), Profile, Category, Surname,
+    GivenName);
+  WriteNewUTF8File(OutputPath,
+    UIExperimentManifestToJSON(Manifest) + LineEnding);
+  WriteLn(Format(
+    'Prepared a non-executable search manifest for PID %d at %s',
+    [Profile.ProcessId, ExpandFileName(OutputPath)]));
+  WriteLn('No process was started or queried; no UI input was sent.');
 end;
 
 procedure RequireSameTargetProcess(
@@ -871,12 +939,17 @@ var
   SearchObject: TJSONObject;
   ProfileData: TJSONData;
   PreviousInputObject: TJSONObject;
+  Observation: TUIVisibleObservation;
+  ActionStatus: TUIActionStatus;
 begin
   RootObject := TJSONObject.Create;
   try
-    RootObject.Add('schemaVersion', TJSONIntegerNumber.Create(1));
+    RootObject.Add('schemaVersion', TJSONIntegerNumber.Create(2));
+    RootObject.Add('resultSchemaVersion', TJSONIntegerNumber.Create(2));
     RootObject.Add('processId', TJSONInt64Number.Create(Profile.ProcessId));
     RootObject.Add('phase', Phase);
+    ActionStatus := CaptureUIActionStatus(Phase);
+    RootObject.Add('action', GetJSON(UIActionStatusToJSON(ActionStatus)));
     SearchObject := TJSONObject.Create;
     SearchObject.Add('surname', Surname);
     SearchObject.Add('givenName', GivenName);
@@ -901,6 +974,9 @@ begin
     PreviousInputObject.Add('surname', PreviousSurname);
     PreviousInputObject.Add('givenName', PreviousGivenName);
     RootObject.Add('preSearchValues', PreviousInputObject);
+    Observation := CaptureVisibleObservation(Profile);
+    RootObject.Add('observation',
+      GetJSON(UIVisibleObservationToJSON(Observation)));
     ProfileData := GetJSON(ProfileToJSON(Profile));
     RootObject.Add('visibleProfile', ProfileData);
     Result := RootObject.FormatJSON;
@@ -950,7 +1026,18 @@ begin
   RequireSameTargetProcess(ExpectedProfile, ProcessId);
   WaitForDialog := HasOption(Options, '--wait-for-dialog');
   if WaitForDialog then
-    CurrentProfile := WaitForPersonSearchDialog(ProcessId, ExpectedProfile, Targets)
+  begin
+    if not WaitForPersonSearchDialog(ProcessId, ExpectedProfile, Targets,
+      CurrentProfile) then
+    begin
+      ProgressJSON := BuildSearchStatusJSON(CurrentProfile, Surname,
+        GivenName, '', '', 'timeout-waiting-for-dialog');
+      WriteNewUTF8File(OutputPath, ProgressJSON + LineEnding);
+      raise Exception.CreateFmt(
+        'The visible person-search dialog did not appear within %d ms; no input was sent.',
+        [SearchDialogWaitTimeoutMs]);
+    end;
+  end
   else
   begin
     CurrentProfile := CaptureProfile(ProcessId);
@@ -1036,9 +1123,13 @@ begin
   WriteLn('  verify');
   WriteLn('  inspect --pid PID --output PROFILE.json');
   WriteLn('  start-and-inspect --output PROFILE.json');
+  WriteLn('  prepare-search --profile PROFILE.json --snapshot-reference ID');
+  WriteLn('      --category known-hit|surname-only-prefix|absent-surname|absent-given-name');
+  WriteLn('      --surname TEXT --given-name TEXT --output MANIFEST.json');
   WriteLn('  person-search --pid PID --profile PROFILE.json --surname TEXT');
   WriteLn('      --given-name TEXT --allow-input [--dry-run]');
   WriteLn('      [--wait-for-dialog] --output RESULT.json');
+  WriteLn('prepare-search only creates a manifest; it does not start AhnWin or send input.');
   WriteLn('Profiles/results must be written outside C:\ProgramData\AHNENWIN Test.');
 end;
 
@@ -1086,6 +1177,8 @@ begin
       RunInspect(Options)
     else if CommandName = 'start-and-inspect' then
       RunStartAndInspect(Options)
+    else if CommandName = 'prepare-search' then
+      RunPrepareSearch(Options)
     else if CommandName = 'person-search' then
       RunPersonSearch(Options)
     else

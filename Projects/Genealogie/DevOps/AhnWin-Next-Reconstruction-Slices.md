@@ -7,6 +7,16 @@ workflows to LazReport. The Ahnw50 DLL and its embedded license path are not
 target dependencies. Non-reporting relationship slices remain blocked on
 provider/schema evidence.
 
+## Assembly-listing statistics — 2026-10-03
+
+The PascalAssemblyCoverage scan found 603/1,142 first-party class methods
+still containing retained assembly listings (52.80%); 539/1,142 have no
+recognized listing (47.20%). Scope is `Source\AhnWin52` with the vendored
+`ThirdParty` subtree excluded. Newly added support and compatibility methods
+remain in the denominator, so the no-listing count does not mean those methods
+were reconstructed. The per-file scan is
+`DevOps\AhnWin-Assembly-Coverage-2026-10-03.csv`.
+
 ## Latest bounded helper checkpoint — `Proc_005D3AB8` — 2026-10-03
 
 Audited the pure numeric formatter against its caller shape and the independent
@@ -99,32 +109,70 @@ and updates `Label23`, and has not been wired to the new helper or exercised.
 The BDE test-table password continues to block relationship and report
 integration. No test-dataset rows were accessed.
 
-## Checkpoint — synthetic indexed lookup boundary
+## Checkpoint — Table9 request contract and RemoteControl preflight — 2026-10-03
 
-Added `IndexedLookupContract.pas` with a provider-neutral named-index lookup
-contract. A lookup takes key values in the caller-specified index-field order,
-returns an explicit hit or miss with an opaque record ID, preserves the
-provider's current cursor, and leaves provider errors visible. The test-only
-in-memory provider covers synthetic `namgeb` and `geba` index names; its
-`SyntheticKeyA`/`SyntheticKeyB`/`SyntheticKeyC`/`SyntheticKeyD` fields and row
-IDs are illustrative fixtures only, not recovered `Table9` index definitions
-or genealogy records.
+The approved fixture's `.XG0`–`.XG7` headers have now been decoded, so the
+earlier unresolved-key-map statement below is superseded. Added
+`Table9IndexDefinitions.pas` with the eight verified ordered field lists and
+`intl850` collation. Added `PersonSearchLookupRequest.pas`; its person-search
+name path builds the exact `geba` key prefix `Edit1` / Name, then `Edit2` /
+Vornamen, as shown by `Button1Click` at `00583F0C`–`00583F6E`.
 
-Eight focused tests cover named-index hits, ordered composite keys, hit/miss
-cursor preservation, deterministic first-inserted duplicate selection,
-unknown indexes, wrong key arity, and provider exception propagation. Both
-`Unit2.dfm` and `Projects_AhnenWin\DataModule2.dfm` define `Table9` fields but
-persist no index metadata. The runtime `namgeb`/`geba` references therefore
-remain insufficient to map these synthetic keys to production fields. The
-focused suite passes 8/8 and the full Lazarus suite passes 379/379. The
-separate `Unit3` person-search
-listing does show `Table9` using `geba` with `FindNearest` and two ordered
-values; it does not establish the fields or the exact `FindKey` behavior used
-by relationship handlers, and `FindNearest` is outside this exact-lookup
-contract. No DBTables shim, form handler, or database-backed behavior was
-changed. Relationship-selection extraction and UI wiring remain blocked until
-a non-sensitive source-backed key mapping and the relevant write/cancellation
-contract are established.
+Replaced the old synthetic BDE-shaped contract—which preserved a current
+cursor and returned the first duplicate—with a provider-neutral
+`IIndexedLookupProvider`. It returns `not found`, one candidate, or an ordered
+candidate list; malformed result shapes are rejected, and the provider cannot
+expose an implicit BDE cursor. The candidate order is the future provider's
+index order. This is approved replacement behavior, not an assertion about BDE.
+No concrete lapParadox/pxlib provider has been wired yet; the schema unit is
+fixture evidence and must not substitute for runtime metadata validation in
+the provider.
+
+The AhnWin52 index tests pass 15/15. The external utility now has a
+`prepare-search` command that creates a versioned, non-executable manifest
+from a saved dialog profile and supplied snapshot reference. It never starts
+or queries the target process and sends no input. The observation result
+records visible top-level state while explicitly not reading grid selection
+or inferring a lookup outcome. Its synthetic suite passes 26/26, and the
+utility builds without warnings. No live experiment was run.
+The CLI preflight was also exercised with a synthetic saved profile and
+verified that the manifest keeps `liveExecutionAuthorized=false`,
+`snapshot.manualVerificationRequired=true`, and all three provider outcome
+classes; it neither launched nor queried the original process.
+
+Remaining work includes selecting and implementing the lapParadox/pxlib
+provider from its actual available API, replacing the complete assembly-backed
+dialog flow with UI-layer candidate selection, and separate user approval
+before any live search. These are distinct from production relationship
+writes, which still require an application-specific selection/cancellation
+flow. The detailed design and constraints are in the session plan and
+Paradox metadata how-to.
+
+### pxlib provider API inspection — 2026-10-03
+
+The user-provided pxlib 0.6.8 headers expose `PX_read_primary_index` and
+`PX_add_primary_index`, plus generic record-number accessors such as
+`PX_get_record`, `PX_get_record2`, and `PX_retrieve_record`. They do not expose
+a secondary-index seek/FindKey API. FPC's `TParadox` wrapper delegates record
+navigation to `PX_get_record` and likewise exposes no secondary-index lookup
+operation.
+
+The bundled `doc/paradox4.txt` describes `.XG` secondary-index data files as
+one logical record per table record, with secondary key fields followed by
+primary-key fields and a final `Hint` field. The C header/API therefore leaves
+a plausible read-only implementation route—open/validate a secondary-index
+file and traverse its records—but does not by itself prove the exact field
+layout, stable ordering, collation comparison, or matching `.YG` tree behavior
+for the approved AhnWin fixtures. Do not claim that `PX_add_primary_index`
+handles a secondary index; its source validates a primary `.PX` file.
+
+Next provider spike: using only synthetic Paradox files, test whether the
+installed FPC/pxlib binding can open and enumerate `.XG` logical records
+without writes, and whether their order corresponds to the declared
+`intl850` key order. If that path is insufficient, implement a dedicated
+read-only secondary-index reader with strict header/schema validation before
+connecting it to the UI. No live AhnWin run or genealogy-row inspection was
+performed for this API review.
 
 ## Checkpoint — wPDF DFM compatibility surface
 
@@ -357,14 +405,15 @@ for a complete handler whose effects do not cross these boundaries.
 
 ## Interpreting assembly coverage
 
-The scanner reports methods that **still contain** retained assembly:
-615/1,094, or 56.22%. The complement is 479/1,094 without a listing (43.78%),
-not “479 original methods reconstructed.” The denominator also includes
-newly-added support methods. Recent Unit5 and Unit15 migrations each added
-seven no-assembly methods: therefore the assembly percentage went down
-(59.20% to 58.44%), while its complement went up (40.80% to 41.56%). Older
-notes used “coverage” for opposite sides of this ratio; compare only after
-normalizing the numerator and scan scope.
+The 2026-10-03 first-party scan reports 603/1,142 methods still containing
+retained assembly (52.80%); the complement is 539/1,142 without a listing
+(47.20%), not “539 original methods reconstructed.” The scan covers
+`Source\AhnWin52` and excludes vendored `ThirdParty` Pascal. Its denominator
+includes newly added support methods and compatibility units. Compared with
+the 2026-10-02 report (615/1,094), both the source set and denominator changed,
+so the difference is not a direct count of restored original methods. The
+dated per-file report is
+`DevOps\AhnWin-Assembly-Coverage-2026-10-03.csv`.
 
 ## Implementation strategy
 

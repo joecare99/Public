@@ -5,15 +5,15 @@ unit tst_AHW52_GraphicsParameterDialogTests;
 interface
 
 uses
-  fpcunit, testregistry, Unit12, Unit13;
+  fpcunit, testregistry, AncestorChartOptionsForm, Unit13;
 
 type
   TTestAHW52GraphicsParameterDialog = class(TTestCase)
   private
     FGraphicButtonClickCount: Integer;
-    function CreateDialogWithControls: TForm12;
-    procedure SetCheckBoxes(dialog: TForm12; checked: Boolean);
-    procedure AssertCheckBoxes(dialog: TForm12; expected: Boolean);
+    function CreateDialogWithControls: TAncestorChartOptionsForm;
+    procedure SetCheckBoxes(dialog: TAncestorChartOptionsForm; checked: Boolean);
+    procedure AssertCheckBoxes(dialog: TAncestorChartOptionsForm; expected: Boolean);
     procedure SetOptionFlags(value: LongInt);
     procedure AssertOptionFlags(expected: LongInt);
     procedure HandleGraphicButtonClick(Sender: TObject);
@@ -38,9 +38,9 @@ implementation
 uses
   Buttons, Controls, Forms, Spin, StdCtrls, SysUtils;
 
-function TTestAHW52GraphicsParameterDialog.CreateDialogWithControls: TForm12;
+function TTestAHW52GraphicsParameterDialog.CreateDialogWithControls: TAncestorChartOptionsForm;
 begin
-  Result := TForm12.CreateNew(nil);
+  Result := TAncestorChartOptionsForm.CreateNew(nil);
   Result.CheckBox1 := TCheckBox.Create(Result);
   Result.CheckBox2 := TCheckBox.Create(Result);
   Result.CheckBox3 := TCheckBox.Create(Result);
@@ -65,7 +65,7 @@ begin
   Result.SpinEdit2.Parent := Result;
 end;
 
-procedure TTestAHW52GraphicsParameterDialog.SetCheckBoxes(dialog: TForm12;
+procedure TTestAHW52GraphicsParameterDialog.SetCheckBoxes(dialog: TAncestorChartOptionsForm;
   checked: Boolean);
 begin
   dialog.CheckBox1.Checked := checked;
@@ -78,7 +78,7 @@ begin
   dialog.CheckBox8.Checked := checked;
 end;
 
-procedure TTestAHW52GraphicsParameterDialog.AssertCheckBoxes(dialog: TForm12;
+procedure TTestAHW52GraphicsParameterDialog.AssertCheckBoxes(dialog: TAncestorChartOptionsForm;
   expected: Boolean);
 var
   checkBoxes: array[0..7] of TCheckBox;
@@ -146,7 +146,7 @@ end;
 
 procedure TTestAHW52GraphicsParameterDialog.TestFirstRadioChecksEveryField;
 var
-  parameterDialog: TForm12;
+  parameterDialog: TAncestorChartOptionsForm;
 begin
   parameterDialog := CreateDialogWithControls;
   try
@@ -163,7 +163,7 @@ end;
 procedure TTestAHW52GraphicsParameterDialog.
   TestFormShowInitializesDefaultControls;
 var
-  parameterDialog: TForm12;
+  parameterDialog: TAncestorChartOptionsForm;
 begin
   parameterDialog := CreateDialogWithControls;
   try
@@ -195,7 +195,7 @@ end;
 procedure TTestAHW52GraphicsParameterDialog.
   TestFormShowHidesStartNumberForDescendantMode;
 var
-  parameterDialog: TForm12;
+  parameterDialog: TAncestorChartOptionsForm;
 begin
   parameterDialog := CreateDialogWithControls;
   try
@@ -222,17 +222,17 @@ end;
 procedure TTestAHW52GraphicsParameterDialog.
   TestSpeedButtonCopiesOptionsAndDispatchesVorgr1;
 var
-  parameterDialog: TForm12;
+  parameterDialog: TAncestorChartOptionsForm;
   graphicForm: TForm13;
-  previousParameterDialog: TForm12;
+  previousParameterDialog: TAncestorChartOptionsForm;
   previousGraphicForm: TForm13;
 begin
   Application.Initialize;
-  previousParameterDialog := Unit12.Form12;
+  previousParameterDialog := AncestorChartOptionsForm.Form12;
   previousGraphicForm := Unit13.Form13;
   parameterDialog := CreateDialogWithControls;
   graphicForm := CreateGraphicForm;
-  Unit12.Form12 := parameterDialog;
+  AncestorChartOptionsForm.Form12 := parameterDialog;
   try
     SetOptionFlags(0);
     GlobalVar_0061E2C0 := 9;
@@ -260,24 +260,24 @@ begin
     graphicForm.Hide;
     Unit13.Form13 := previousGraphicForm;
     graphicForm.Free;
-    Unit12.Form12 := previousParameterDialog;
+    AncestorChartOptionsForm.Form12 := previousParameterDialog;
     parameterDialog.Free;
   end;
 end;
 
 procedure TTestAHW52GraphicsParameterDialog.TestSpeedButtonDispatchesVorgr2;
 var
-  parameterDialog: TForm12;
+  parameterDialog: TAncestorChartOptionsForm;
   graphicForm: TForm13;
-  previousParameterDialog: TForm12;
+  previousParameterDialog: TAncestorChartOptionsForm;
   previousGraphicForm: TForm13;
 begin
   Application.Initialize;
-  previousParameterDialog := Unit12.Form12;
+  previousParameterDialog := AncestorChartOptionsForm.Form12;
   previousGraphicForm := Unit13.Form13;
   parameterDialog := CreateDialogWithControls;
   graphicForm := CreateGraphicForm;
-  Unit12.Form12 := parameterDialog;
+  AncestorChartOptionsForm.Form12 := parameterDialog;
   try
     GlobalVar_0253592C := 'Vorgr2';
     parameterDialog.SpinEdit1.Value := 1;
@@ -292,7 +292,7 @@ begin
     graphicForm.Hide;
     Unit13.Form13 := previousGraphicForm;
     graphicForm.Free;
-    Unit12.Form12 := previousParameterDialog;
+    AncestorChartOptionsForm.Form12 := previousParameterDialog;
     parameterDialog.Free;
   end;
 end;
@@ -300,17 +300,17 @@ end;
 procedure TTestAHW52GraphicsParameterDialog.
   TestSpeedButtonDispatchesNachgr1AndFocusesButton;
 var
-  parameterDialog: TForm12;
+  parameterDialog: TAncestorChartOptionsForm;
   graphicForm: TForm13;
-  previousParameterDialog: TForm12;
+  previousParameterDialog: TAncestorChartOptionsForm;
   previousGraphicForm: TForm13;
 begin
   Application.Initialize;
-  previousParameterDialog := Unit12.Form12;
+  previousParameterDialog := AncestorChartOptionsForm.Form12;
   previousGraphicForm := Unit13.Form13;
   parameterDialog := CreateDialogWithControls;
   graphicForm := CreateGraphicForm;
-  Unit12.Form12 := parameterDialog;
+  AncestorChartOptionsForm.Form12 := parameterDialog;
   try
     GlobalVar_0253592C := 'Nachgr1';
 
@@ -326,24 +326,24 @@ begin
     graphicForm.Hide;
     Unit13.Form13 := previousGraphicForm;
     graphicForm.Free;
-    Unit12.Form12 := previousParameterDialog;
+    AncestorChartOptionsForm.Form12 := previousParameterDialog;
     parameterDialog.Free;
   end;
 end;
 
 procedure TTestAHW52GraphicsParameterDialog.TestSpeedButtonDispatchesNachgr2;
 var
-  parameterDialog: TForm12;
+  parameterDialog: TAncestorChartOptionsForm;
   graphicForm: TForm13;
-  previousParameterDialog: TForm12;
+  previousParameterDialog: TAncestorChartOptionsForm;
   previousGraphicForm: TForm13;
 begin
   Application.Initialize;
-  previousParameterDialog := Unit12.Form12;
+  previousParameterDialog := AncestorChartOptionsForm.Form12;
   previousGraphicForm := Unit13.Form13;
   parameterDialog := CreateDialogWithControls;
   graphicForm := CreateGraphicForm;
-  Unit12.Form12 := parameterDialog;
+  AncestorChartOptionsForm.Form12 := parameterDialog;
   try
     GlobalVar_0253592C := 'Nachgr2';
 
@@ -357,7 +357,7 @@ begin
     graphicForm.Hide;
     Unit13.Form13 := previousGraphicForm;
     graphicForm.Free;
-    Unit12.Form12 := previousParameterDialog;
+    AncestorChartOptionsForm.Form12 := previousParameterDialog;
     parameterDialog.Free;
   end;
 end;
@@ -365,14 +365,14 @@ end;
 procedure TTestAHW52GraphicsParameterDialog.
   TestSpeedButtonLeavesUnknownModeUnchanged;
 var
-  parameterDialog: TForm12;
-  previousParameterDialog: TForm12;
+  parameterDialog: TAncestorChartOptionsForm;
+  previousParameterDialog: TAncestorChartOptionsForm;
   previousGraphicForm: TForm13;
 begin
-  previousParameterDialog := Unit12.Form12;
+  previousParameterDialog := AncestorChartOptionsForm.Form12;
   previousGraphicForm := Unit13.Form13;
   parameterDialog := CreateDialogWithControls;
-  Unit12.Form12 := parameterDialog;
+  AncestorChartOptionsForm.Form12 := parameterDialog;
   Unit13.Form13 := nil;
   try
     SetOptionFlags(0);
@@ -387,14 +387,14 @@ begin
     SetOptionFlags(0);
     GlobalVar_0253592C := '';
     Unit13.Form13 := previousGraphicForm;
-    Unit12.Form12 := previousParameterDialog;
+    AncestorChartOptionsForm.Form12 := previousParameterDialog;
     parameterDialog.Free;
   end;
 end;
 
 procedure TTestAHW52GraphicsParameterDialog.TestSecondRadioClearsEveryField;
 var
-  parameterDialog: TForm12;
+  parameterDialog: TAncestorChartOptionsForm;
 begin
   parameterDialog := CreateDialogWithControls;
   try
@@ -411,11 +411,11 @@ end;
 procedure TTestAHW52GraphicsParameterDialog.
   TestCancelSetsStateAndCancelModalResult;
 var
-  parameterDialog: TForm12;
+  parameterDialog: TAncestorChartOptionsForm;
 begin
   Application.Initialize;
-  parameterDialog := TForm12.CreateNew(nil);
-  Unit12.Form12 := parameterDialog;
+  parameterDialog := TAncestorChartOptionsForm.CreateNew(nil);
+  AncestorChartOptionsForm.Form12 := parameterDialog;
   try
     GlobalVar_02535948 := 0;
     parameterDialog.ModalResult := 0;
@@ -428,16 +428,16 @@ begin
         [parameterDialog.ModalResult]);
   finally
     GlobalVar_02535948 := 0;
-    Unit12.Form12 := nil;
+    AncestorChartOptionsForm.Form12 := nil;
     parameterDialog.Free;
   end;
 end;
 
 procedure TTestAHW52GraphicsParameterDialog.TestUnboundCounterIncrement;
 var
-  parameterDialog: TForm12;
+  parameterDialog: TAncestorChartOptionsForm;
 begin
-  parameterDialog := TForm12.CreateNew(nil);
+  parameterDialog := TAncestorChartOptionsForm.CreateNew(nil);
   try
     GlobalVar_0061E100 := 4;
     parameterDialog._PROC_00562BB1(parameterDialog);
@@ -451,9 +451,9 @@ end;
 
 procedure TTestAHW52GraphicsParameterDialog.TestUnboundCounterDecrement;
 var
-  parameterDialog: TForm12;
+  parameterDialog: TAncestorChartOptionsForm;
 begin
-  parameterDialog := TForm12.CreateNew(nil);
+  parameterDialog := TAncestorChartOptionsForm.CreateNew(nil);
   try
     GlobalVar_0061E100 := 4;
     parameterDialog._PROC_00562BE0(parameterDialog);

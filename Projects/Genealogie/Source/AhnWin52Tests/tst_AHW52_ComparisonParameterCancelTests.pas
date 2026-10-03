@@ -18,13 +18,13 @@ type
 implementation
 
 uses
-  Controls, Forms, Unit35;
+  Controls, Forms, PersonComparisonOptionsForm;
 
 procedure TTestAHW52ComparisonParameterCancel.TestUnboundCounterIncrement;
 var
-  comparisonDialog: TForm35;
+  comparisonDialog: TPersonComparisonOptionsForm;
 begin
-  comparisonDialog := TForm35.CreateNew(nil);
+  comparisonDialog := TPersonComparisonOptionsForm.CreateNew(nil);
   try
     GlobalVar_025358FC := 5;
     comparisonDialog._PROC_005CFAA4(comparisonDialog);
@@ -38,9 +38,9 @@ end;
 
 procedure TTestAHW52ComparisonParameterCancel.TestUnboundCounterDecrement;
 var
-  comparisonDialog: TForm35;
+  comparisonDialog: TPersonComparisonOptionsForm;
 begin
-  comparisonDialog := TForm35.CreateNew(nil);
+  comparisonDialog := TPersonComparisonOptionsForm.CreateNew(nil);
   try
     GlobalVar_025358FC := 5;
     comparisonDialog._PROC_005CFAD4(comparisonDialog);
@@ -55,9 +55,9 @@ end;
 procedure TTestAHW52ComparisonParameterCancel.
   TestCancelResetsSelectionStateAndModalResult;
 var
-  comparisonDialog: TForm35;
+  comparisonDialog: TPersonComparisonOptionsForm;
 begin
-  comparisonDialog := TForm35.CreateNew(nil);
+  comparisonDialog := TPersonComparisonOptionsForm.CreateNew(nil);
   Form35 := comparisonDialog;
   try
     GlobalVar_02535B90 := 1;

@@ -16,12 +16,12 @@ type
 implementation
 
 uses
-  Controls, StdCtrls, Unit24;
+  Controls, StdCtrls, OrtsfamilienbuchOptionsForm;
 
 procedure TTestAHW52FieldListFormClose.
   TestFormCloseSerializesListsAndStoresSelectionFlags;
 var
-  fieldListForm: TForm24;
+  fieldListForm: TOrtsfamilienbuchOptionsForm;
   checkBoxes: array[1..18] of TCheckBox;
   previousFlags: array[1..18] of LongInt;
   previousFieldList: string;
@@ -49,7 +49,7 @@ begin
   previousFlags[17] := GlobalVar_02535420;
   previousFlags[18] := GlobalVar_02535424;
 
-  fieldListForm := TForm24.CreateNew(nil);
+  fieldListForm := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
   try
     fieldListForm.ListBox3 := TListBox.Create(fieldListForm);
     fieldListForm.ListBox3.Parent := fieldListForm;

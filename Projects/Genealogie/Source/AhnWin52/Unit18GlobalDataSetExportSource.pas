@@ -20,7 +20,7 @@ type
 implementation
 
 uses
-  Unit18DataSetExportSource, Unit2;
+  Unit18DataSetExportSource, GenealogyDataModule;
 
 function TUnit18GlobalDataSetExportSourceFactory.CreateSource:
   IUnit18ExportSource;

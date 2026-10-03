@@ -34,6 +34,7 @@ type
     procedure TestRejectsChangedDialogControl;
     procedure TestRejectsUnexpectedTopLevelWindow;
     procedure TestRoundTripsJSONProfile;
+    procedure TestReadsVersionOneProfileWithoutForegroundData;
     procedure TestRejectsMalformedJSONProfile;
   end;
 
@@ -55,6 +56,7 @@ begin
   Result.ProcessId := TestProcessId;
   Result.ExecutablePath := TestExecutablePath;
   Result.ExecutableSha256 := TestExecutableHash;
+  Result.ForegroundWindowHandle := 0;
   SetLength(Result.Controls, 6);
 
   Result.Controls[0].Handle := MainWindowHandle;
@@ -380,12 +382,15 @@ var
   ParsedProfile: TWindowProfile;
 begin
   OriginalProfile := CreateValidProfile;
+  OriginalProfile.ForegroundWindowHandle := SearchDialogHandle;
   OriginalProfile.Controls[2].Text := 'München';
   ParsedProfile := ProfileFromJSON(ProfileToJSON(OriginalProfile));
 
   AssertEquals(OriginalProfile.ProcessId, ParsedProfile.ProcessId);
   AssertEquals(OriginalProfile.ExecutablePath, ParsedProfile.ExecutablePath);
   AssertEquals(OriginalProfile.ExecutableSha256, ParsedProfile.ExecutableSha256);
+  AssertEquals(OriginalProfile.ForegroundWindowHandle,
+    ParsedProfile.ForegroundWindowHandle);
   AssertEquals(Length(OriginalProfile.Controls), Length(ParsedProfile.Controls));
   AssertEquals(OriginalProfile.Controls[1].OwnerHandle,
     ParsedProfile.Controls[1].OwnerHandle);
@@ -393,6 +398,24 @@ begin
     ParsedProfile.Controls[1].IsTopLevel);
   AssertEquals(OriginalProfile.Controls[2].Text, ParsedProfile.Controls[2].Text);
   AssertEquals(OriginalProfile.Controls[4].Text, ParsedProfile.Controls[4].Text);
+end;
+
+procedure TTestAHW52UIProfile.TestReadsVersionOneProfileWithoutForegroundData;
+var
+  Profile: TWindowProfile;
+  JSON: UTF8String;
+  ParsedProfile: TWindowProfile;
+begin
+  Profile := CreateValidProfile;
+  JSON := StringReplace(ProfileToJSON(Profile),
+    '"schemaVersion": 2', '"schemaVersion": 1', []);
+  JSON := StringReplace(JSON,
+    '"foregroundWindowHandle": 0,' + LineEnding, '', []);
+
+  ParsedProfile := ProfileFromJSON(JSON);
+
+  AssertEquals(QWord(0), ParsedProfile.ForegroundWindowHandle);
+  AssertEquals(Profile.ProcessId, ParsedProfile.ProcessId);
 end;
 
 procedure TTestAHW52UIProfile.TestRejectsMalformedJSONProfile;

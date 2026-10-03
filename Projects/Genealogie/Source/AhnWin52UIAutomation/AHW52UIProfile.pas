@@ -33,6 +33,7 @@ type
     ProcessId: LongWord;
     ExecutablePath: UTF8String;
     ExecutableSha256: UTF8String;
+    ForegroundWindowHandle: QWord;
     Controls: TUIControlInfoArray;
   end;
 
@@ -452,12 +453,14 @@ var
 begin
   RootObject := TJSONObject.Create;
   try
-    RootObject.Add('schemaVersion', TJSONIntegerNumber.Create(1));
+    RootObject.Add('schemaVersion', TJSONIntegerNumber.Create(2));
 
     ProcessObject := TJSONObject.Create;
     ProcessObject.Add('id', TJSONInt64Number.Create(Profile.ProcessId));
     ProcessObject.Add('path', Profile.ExecutablePath);
     ProcessObject.Add('sha256', Profile.ExecutableSha256);
+    ProcessObject.Add('foregroundWindowHandle',
+      TJSONInt64Number.Create(Int64(Profile.ForegroundWindowHandle)));
     RootObject.Add('process', ProcessObject);
 
     ControlsArray := TJSONArray.Create;
@@ -515,7 +518,8 @@ begin
     if not (RootData is TJSONObject) then
       raise EUIProfileError.Create('UI profile root must be a JSON object.');
     RootObject := TJSONObject(RootData);
-    if RequiredJSONValue(RootObject, 'schemaVersion').AsInteger <> 1 then
+    Value := RequiredJSONValue(RootObject, 'schemaVersion');
+    if (Value.JSONType <> jtNumber) or not (Value.AsInteger in [1, 2]) then
       raise EUIProfileError.Create('Unsupported UI profile schema version.');
 
     Value := RequiredJSONValue(RootObject, 'process');
@@ -525,6 +529,8 @@ begin
     Result.ProcessId := ProcessObject.Get('id', Int64(0));
     Result.ExecutablePath := ProcessObject.Get('path', '');
     Result.ExecutableSha256 := ProcessObject.Get('sha256', '');
+    Result.ForegroundWindowHandle := ProcessObject.Get(
+      'foregroundWindowHandle', Int64(0));
     if (Result.ProcessId = 0) or (Result.ExecutablePath = '') or
        (Result.ExecutableSha256 = '') then
       raise EUIProfileError.Create('UI profile process identity is incomplete.');

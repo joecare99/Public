@@ -24,7 +24,7 @@ implementation
 
 uses
   SysUtils, Controls, Forms, StdCtrls, FormKeyPressBehavior,
-  PersonSearchForm, Unit12;
+  PersonSearchForm, AncestorChartOptionsForm;
 
 type
   // Simulates visible focus targets without showing a test window.
@@ -154,14 +154,14 @@ var
 begin
   Application.Initialize;
   previousDialog := PersonSearchDialog;
-  previousMode := Unit12.GlobalVar_0253592C;
+  previousMode := AncestorChartOptionsForm.GlobalVar_0253592C;
   receiverForm := nil;
   globalDialog := nil;
   try
     receiverForm := TPersonSearchForm.CreateNew(nil);
     globalDialog := TPersonSearchForm.CreateNew(nil);
     PersonSearchDialog := globalDialog;
-    Unit12.GlobalVar_0253592C := 'Sonstiges';
+    AncestorChartOptionsForm.GlobalVar_0253592C := 'Sonstiges';
     receiverForm.BitBtn2Click(nil);
 
     AssertEquals('Non-Verw mode cancels the global search dialog.',
@@ -170,14 +170,14 @@ begin
       mrNone, receiverForm.ModalResult);
 
     globalDialog.ModalResult := mrOK;
-    Unit12.GlobalVar_0253592C := 'Verw';
+    AncestorChartOptionsForm.GlobalVar_0253592C := 'Verw';
     receiverForm.BitBtn2Click(nil);
 
     AssertEquals('Exact Verw mode leaves the global modal result unchanged.',
       mrOK, globalDialog.ModalResult);
   finally
     PersonSearchDialog := previousDialog;
-    Unit12.GlobalVar_0253592C := previousMode;
+    AncestorChartOptionsForm.GlobalVar_0253592C := previousMode;
     globalDialog.Free;
     receiverForm.Free;
   end;

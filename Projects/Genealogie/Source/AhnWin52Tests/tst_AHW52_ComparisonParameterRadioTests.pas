@@ -5,14 +5,14 @@ unit tst_AHW52_ComparisonParameterRadioTests;
 interface
 
 uses
-  fpcunit, testregistry, Unit35;
+  fpcunit, testregistry, PersonComparisonOptionsForm;
 
 type
   TTestAHW52ComparisonParameterRadio = class(TTestCase)
   private
-    function CreateDialogWithControls: TForm35;
-    procedure SetCheckBoxes(dialog: TForm35; checked: Boolean);
-    procedure AssertCheckBoxes(dialog: TForm35; expected: Boolean);
+    function CreateDialogWithControls: TPersonComparisonOptionsForm;
+    procedure SetCheckBoxes(dialog: TPersonComparisonOptionsForm; checked: Boolean);
+    procedure AssertCheckBoxes(dialog: TPersonComparisonOptionsForm; expected: Boolean);
   published
     procedure TestFirstRadioEnablesAllCheckBoxesAndClearsRadios;
     procedure TestSecondRadioDisablesAllCheckBoxesAndClearsRadios;
@@ -23,9 +23,9 @@ implementation
 uses
   Forms, StdCtrls, SysUtils;
 
-function TTestAHW52ComparisonParameterRadio.CreateDialogWithControls: TForm35;
+function TTestAHW52ComparisonParameterRadio.CreateDialogWithControls: TPersonComparisonOptionsForm;
 begin
-  Result := TForm35.CreateNew(nil);
+  Result := TPersonComparisonOptionsForm.CreateNew(nil);
   Result.CheckBox1 := TCheckBox.Create(Result);
   Result.CheckBox2 := TCheckBox.Create(Result);
   Result.CheckBox3 := TCheckBox.Create(Result);
@@ -40,7 +40,7 @@ begin
   Result.RadioButton2 := TRadioButton.Create(Result);
 end;
 
-procedure TTestAHW52ComparisonParameterRadio.SetCheckBoxes(dialog: TForm35;
+procedure TTestAHW52ComparisonParameterRadio.SetCheckBoxes(dialog: TPersonComparisonOptionsForm;
   checked: Boolean);
 begin
   dialog.CheckBox1.Checked := checked;
@@ -55,7 +55,7 @@ begin
   dialog.CheckBox10.Checked := checked;
 end;
 
-procedure TTestAHW52ComparisonParameterRadio.AssertCheckBoxes(dialog: TForm35;
+procedure TTestAHW52ComparisonParameterRadio.AssertCheckBoxes(dialog: TPersonComparisonOptionsForm;
   expected: Boolean);
 var
   checkBoxes: array[0..9] of TCheckBox;
@@ -79,7 +79,7 @@ end;
 procedure TTestAHW52ComparisonParameterRadio.
   TestFirstRadioEnablesAllCheckBoxesAndClearsRadios;
 var
-  comparisonDialog: TForm35;
+  comparisonDialog: TPersonComparisonOptionsForm;
 begin
   comparisonDialog := CreateDialogWithControls;
   try
@@ -100,7 +100,7 @@ end;
 procedure TTestAHW52ComparisonParameterRadio.
   TestSecondRadioDisablesAllCheckBoxesAndClearsRadios;
 var
-  comparisonDialog: TForm35;
+  comparisonDialog: TPersonComparisonOptionsForm;
 begin
   comparisonDialog := CreateDialogWithControls;
   try

@@ -794,7 +794,7 @@ ResourceString
 implementation
 
 uses
-  AboutForm, Unit2, Unit12, DateWeekdayAbbreviation, GregorianCalendar, GregorianCalendarViewModel,
+  AboutForm, GenealogyDataModule, AncestorChartOptionsForm, DateWeekdayAbbreviation, GregorianCalendar, GregorianCalendarViewModel,
   FormKeyPressBehavior, MainRecordPersistenceBehavior, MainFormCloseBehavior,
   MainFormExitBehavior, ParentUnlinkBehavior, PrivacyModeBehavior,
   PrivacyModeState, Unit11, Unit29, Unit36
@@ -1501,7 +1501,7 @@ begin
 005D511E   A10CC96100             mov     eax, dword ptr [$0061C90C]
 005D5123   8B00                   mov     eax, [eax]
 
-* Reference to class TDataModule2
+* Reference to class TDataModule2 (reconstructed as TGenealogyDataModule)
 |
 005D5125   8B15B4015300           mov     edx, [$005301B4]
 
@@ -41476,7 +41476,7 @@ end;
 
 procedure TForm1.TabSheet2Enter(Sender : TObject);
 begin
-  if Unit12.GlobalVar_0253592C <> 'dsneu' then
+  if AncestorChartOptionsForm.GlobalVar_0253592C <> 'dsneu' then
     anzeigen(Self);
 end;
 
@@ -46498,7 +46498,7 @@ begin
 005EEBFA   8BCB                   mov     ecx, ebx
 005EEBFC   B201                   mov     dl, $01
 
-* Reference to class TForm7
+* Reference to class TForm7 (reconstructed as TFrenchRepublicanCalendarForm)
 |
 005EEBFE   A150E65C00             mov     eax, dword ptr [$005CE650]
 

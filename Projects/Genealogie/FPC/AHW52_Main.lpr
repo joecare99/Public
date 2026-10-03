@@ -7,7 +7,7 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, printer4lazarus, frmAhnenWinMain, Unit2, AboutForm, frm_Splash,
+  Forms, printer4lazarus, frmAhnenWinMain, GenealogyDataModule, AboutForm, frm_Splash,
   PersonSearchForm
   { you can add units after this };
 
@@ -22,7 +22,7 @@ begin
   frmSplash.Update;
   Application.Title := 'AHNENWIN 5.1';
   Application.CreateForm(TForm1, Form1);
-  Application.CreateForm(TDataModule2, DataModule2);
+  Application.CreateForm(TGenealogyDataModule, DataModule2);
   Application.CreateForm(TAboutForm, AboutDialog);
   Application.Run;
 end.

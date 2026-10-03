@@ -26,7 +26,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables"/>
+            <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables"/>
             <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -67,7 +67,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables"/>
+            <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables"/>
             <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <CodeGeneration>
@@ -98,7 +98,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables"/>
+            <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables"/>
             <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <CodeGeneration>
@@ -159,7 +159,7 @@
         <ResourceBaseClass Value="Form"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\Source\AhnWin52\Unit2.pas"/>
+        <Filename Value="..\Source\AhnWin52\DataModules\GenealogyDataModule.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="DataModule2"/>
         <HasResources Value="True"/>
@@ -196,7 +196,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables"/>
+      <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables"/>
       <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>

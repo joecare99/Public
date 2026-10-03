@@ -16,13 +16,13 @@ type
 implementation
 
 uses
-  Forms, Unit2;
+  Forms, GenealogyDataModule;
 
 procedure TTestAHW52DataModuleCounters.TestDirectCounterDecrement;
 var
-  dataModule: TDataModule2;
+  dataModule: TGenealogyDataModule;
 begin
-  dataModule := TDataModule2.CreateNew(nil);
+  dataModule := TGenealogyDataModule.CreateNew(nil);
   try
     GlobalVar_0061DF0C := 9;
     dataModule._PROC_00533514(dataModule);

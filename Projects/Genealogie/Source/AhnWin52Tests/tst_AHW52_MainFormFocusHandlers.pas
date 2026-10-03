@@ -38,7 +38,7 @@ implementation
 
 uses
   ComCtrls, Controls, DBCtrls, DBGrids, Forms, Grids, InterfaceBase, Menus,
-  StdCtrls, Unit11, Unit12;
+  StdCtrls, Unit11, AncestorChartOptionsForm;
 
 procedure TTestAHW52MainFormMenuDispatch.RecordFamilyGraphicsMenuClick(
   Sender: TObject);
@@ -230,16 +230,16 @@ var
   previousMode: string;
 begin
   mainForm := TForm1.CreateNew(nil);
-  previousMode := Unit12.GlobalVar_0253592C;
+  previousMode := AncestorChartOptionsForm.GlobalVar_0253592C;
   try
-    Unit12.GlobalVar_0253592C := 'dsneu';
+    AncestorChartOptionsForm.GlobalVar_0253592C := 'dsneu';
     mainForm.Caption := 'unchanged';
     mainForm.TabSheet2Enter(mainForm.TabSheet2);
 
     AssertEquals('The new-record sentinel should skip the refresh call.',
       'unchanged', mainForm.Caption);
   finally
-    Unit12.GlobalVar_0253592C := previousMode;
+    AncestorChartOptionsForm.GlobalVar_0253592C := previousMode;
     mainForm.Free;
   end;
 end;

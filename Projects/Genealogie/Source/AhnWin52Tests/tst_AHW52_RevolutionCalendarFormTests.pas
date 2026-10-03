@@ -32,7 +32,7 @@ type
 implementation
 
 uses
-  Classes, StdCtrls, SysUtils, Unit7;
+  Classes, StdCtrls, SysUtils, FrenchRepublicanCalendarForm;
 
 var
   CalendarMessageBoxCount: Integer;
@@ -48,7 +48,7 @@ begin
   Result := 1;
 end;
 
-procedure PrepareCalendarInputs(calendarForm: TForm7);
+procedure PrepareCalendarInputs(calendarForm: TFrenchRepublicanCalendarForm);
 const
   RepublicanYears: array[0..13] of string = (
     ' I', ' II', ' III', ' IV', ' V', ' VI', ' VII',
@@ -87,14 +87,14 @@ end;
 procedure TTestAHW52RevolutionCalendarForm.
   TestFormCreateScalesForLargeScreen;
 var
-  calendarForm: TForm7;
+  calendarForm: TFrenchRepublicanCalendarForm;
   screenWidth: Integer;
   screenHeight: Integer;
 begin
   Application.Initialize;
   screenWidth := Screen.Width;
   screenHeight := Screen.Height;
-  calendarForm := TForm7.CreateNew(nil);
+  calendarForm := TFrenchRepublicanCalendarForm.CreateNew(nil);
   try
     calendarForm.SetBounds(0, 0, 640, 480);
     calendarForm.FormCreate(calendarForm);
@@ -112,7 +112,7 @@ end;
 
 procedure TTestAHW52RevolutionCalendarForm.TestBerechnenConvertsOrdinaryDate;
 var
-  calendarForm: TForm7;
+  calendarForm: TFrenchRepublicanCalendarForm;
   previousFormatSettings: TFormatSettings;
   previousMessageBoxFunction: TMessageBoxFunction;
 begin
@@ -123,7 +123,7 @@ begin
   CalendarMessageBoxCount := 0;
   DefaultFormatSettings.ShortDateFormat := 'dd.mm.yyyy';
   DefaultFormatSettings.DateSeparator := '.';
-  calendarForm := TForm7.CreateNew(nil);
+  calendarForm := TFrenchRepublicanCalendarForm.CreateNew(nil);
   try
     PrepareCalendarInputs(calendarForm);
     calendarForm.ComboBox1.ItemIndex := 0;
@@ -148,7 +148,7 @@ const
     '21.01.1794', '20.02.1794', '22.03.1794', '21.04.1794',
     '21.05.1794', '20.06.1794', '20.07.1794', '19.08.1794');
 var
-  calendarForm: TForm7;
+  calendarForm: TFrenchRepublicanCalendarForm;
   previousFormatSettings: TFormatSettings;
   previousMessageBoxFunction: TMessageBoxFunction;
   monthIndex: Integer;
@@ -160,7 +160,7 @@ begin
   CalendarMessageBoxCount := 0;
   DefaultFormatSettings.ShortDateFormat := 'dd.mm.yyyy';
   DefaultFormatSettings.DateSeparator := '.';
-  calendarForm := TForm7.CreateNew(nil);
+  calendarForm := TFrenchRepublicanCalendarForm.CreateNew(nil);
   try
     PrepareCalendarInputs(calendarForm);
     calendarForm.ComboBox1.ItemIndex := 0;
@@ -185,7 +185,7 @@ end;
 procedure TTestAHW52RevolutionCalendarForm.
   TestBerechnenConvertsLeapComplementaryDay;
 var
-  calendarForm: TForm7;
+  calendarForm: TFrenchRepublicanCalendarForm;
   previousFormatSettings: TFormatSettings;
   previousMessageBoxFunction: TMessageBoxFunction;
   yearIndex: Integer;
@@ -198,7 +198,7 @@ begin
   CalendarMessageBoxCount := 0;
   DefaultFormatSettings.ShortDateFormat := 'dd.mm.yyyy';
   DefaultFormatSettings.DateSeparator := '.';
-  calendarForm := TForm7.CreateNew(nil);
+  calendarForm := TFrenchRepublicanCalendarForm.CreateNew(nil);
   try
     PrepareCalendarInputs(calendarForm);
     calendarForm.ComboBox1.ItemIndex := 30;
@@ -240,7 +240,7 @@ end;
 procedure TTestAHW52RevolutionCalendarForm.
   TestBerechnenAllowsLastDateBeforeCalendarCutoff;
 var
-  calendarForm: TForm7;
+  calendarForm: TFrenchRepublicanCalendarForm;
   previousFormatSettings: TFormatSettings;
   previousMessageBoxFunction: TMessageBoxFunction;
 begin
@@ -251,7 +251,7 @@ begin
   CalendarMessageBoxCount := 0;
   DefaultFormatSettings.ShortDateFormat := 'dd.mm.yyyy';
   DefaultFormatSettings.DateSeparator := '.';
-  calendarForm := TForm7.CreateNew(nil);
+  calendarForm := TFrenchRepublicanCalendarForm.CreateNew(nil);
   try
     PrepareCalendarInputs(calendarForm);
     calendarForm.ComboBox1.ItemIndex := 29;
@@ -272,7 +272,7 @@ end;
 procedure TTestAHW52RevolutionCalendarForm.
   TestBerechnenClearsDatesAfterCalendarCutoff;
 var
-  calendarForm: TForm7;
+  calendarForm: TFrenchRepublicanCalendarForm;
   previousFormatSettings: TFormatSettings;
   previousMessageBoxFunction: TMessageBoxFunction;
 begin
@@ -285,7 +285,7 @@ begin
   CalendarMessageCaption := '';
   DefaultFormatSettings.ShortDateFormat := 'dd.mm.yyyy';
   DefaultFormatSettings.DateSeparator := '.';
-  calendarForm := TForm7.CreateNew(nil);
+  calendarForm := TFrenchRepublicanCalendarForm.CreateNew(nil);
   try
     PrepareCalendarInputs(calendarForm);
     calendarForm.ComboBox1.ItemIndex := 0;
@@ -310,9 +310,9 @@ end;
 procedure TTestAHW52RevolutionCalendarForm.
   TestBerechnenPreservesOutputWhenInputIsEmpty;
 var
-  calendarForm: TForm7;
+  calendarForm: TFrenchRepublicanCalendarForm;
 begin
-  calendarForm := TForm7.CreateNew(nil);
+  calendarForm := TFrenchRepublicanCalendarForm.CreateNew(nil);
   try
     PrepareCalendarInputs(calendarForm);
     calendarForm.Edit1.Text := 'Existing synthetic output';
@@ -328,9 +328,9 @@ end;
 procedure TTestAHW52RevolutionCalendarForm.
   TestEmptyCalendarComboChangesPreserveOutput;
 var
-  calendarForm: TForm7;
+  calendarForm: TFrenchRepublicanCalendarForm;
 begin
-  calendarForm := TForm7.CreateNew(nil);
+  calendarForm := TFrenchRepublicanCalendarForm.CreateNew(nil);
   try
     calendarForm.ComboBox1 := TComboBox.Create(calendarForm);
     calendarForm.ComboBox2 := TComboBox.Create(calendarForm);
@@ -357,12 +357,12 @@ end;
 
 procedure TTestAHW52RevolutionCalendarForm.TestFinishButtonClosesForm;
 var
-  calendarForm: TForm7;
+  calendarForm: TFrenchRepublicanCalendarForm;
 begin
   Application.Initialize;
   FCloseEventCount := 0;
-  calendarForm := TForm7.CreateNew(nil);
-  Unit7.Form7 := calendarForm;
+  calendarForm := TFrenchRepublicanCalendarForm.CreateNew(nil);
+  FrenchRepublicanCalendarForm.Form7 := calendarForm;
   try
     calendarForm.OnClose := @RecordFormClose;
     calendarForm.BitBtn1Click(calendarForm.BitBtn1);
@@ -371,7 +371,7 @@ begin
       raise Exception.CreateFmt('Expected one close event, got %d.',
         [FCloseEventCount]);
   finally
-    Unit7.Form7 := nil;
+    FrenchRepublicanCalendarForm.Form7 := nil;
     calendarForm.Free;
   end;
 end;
@@ -379,11 +379,11 @@ end;
 procedure TTestAHW52RevolutionCalendarForm.
   TestUnboundButtonHandlerClosesReceiver;
 var
-  calendarForm: TForm7;
+  calendarForm: TFrenchRepublicanCalendarForm;
 begin
   Application.Initialize;
   FCloseEventCount := 0;
-  calendarForm := TForm7.CreateNew(nil);
+  calendarForm := TFrenchRepublicanCalendarForm.CreateNew(nil);
   try
     calendarForm.OnClose := @RecordFormClose;
     calendarForm.Button1Click(nil);
@@ -398,12 +398,12 @@ end;
 
 procedure TTestAHW52RevolutionCalendarForm.TestEscapeClosesForm;
 var
-  calendarForm: TForm7;
+  calendarForm: TFrenchRepublicanCalendarForm;
   key: Word;
 begin
   Application.Initialize;
   FCloseEventCount := 0;
-  calendarForm := TForm7.CreateNew(nil);
+  calendarForm := TFrenchRepublicanCalendarForm.CreateNew(nil);
   try
     calendarForm.OnClose := @RecordFormClose;
     key := $1B;
@@ -419,12 +419,12 @@ end;
 
 procedure TTestAHW52RevolutionCalendarForm.TestOtherKeyDoesNotCloseForm;
 var
-  calendarForm: TForm7;
+  calendarForm: TFrenchRepublicanCalendarForm;
   key: Word;
 begin
   Application.Initialize;
   FCloseEventCount := 0;
-  calendarForm := TForm7.CreateNew(nil);
+  calendarForm := TFrenchRepublicanCalendarForm.CreateNew(nil);
   try
     calendarForm.OnClose := @RecordFormClose;
     key := $41;
@@ -440,9 +440,9 @@ end;
 
 procedure TTestAHW52RevolutionCalendarForm.TestUnboundCounterIncrement;
 var
-  calendarForm: TForm7;
+  calendarForm: TFrenchRepublicanCalendarForm;
 begin
-  calendarForm := TForm7.CreateNew(nil);
+  calendarForm := TFrenchRepublicanCalendarForm.CreateNew(nil);
   try
     GlobalVar_025358F4 := 41;
     calendarForm._PROC_005CF32C(calendarForm);
@@ -456,9 +456,9 @@ end;
 
 procedure TTestAHW52RevolutionCalendarForm.TestUnboundCounterDecrement;
 var
-  calendarForm: TForm7;
+  calendarForm: TFrenchRepublicanCalendarForm;
 begin
-  calendarForm := TForm7.CreateNew(nil);
+  calendarForm := TFrenchRepublicanCalendarForm.CreateNew(nil);
   try
     GlobalVar_025358F4 := 41;
     calendarForm._PROC_005CF35C(calendarForm);

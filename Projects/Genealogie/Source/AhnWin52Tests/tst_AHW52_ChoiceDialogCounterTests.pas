@@ -17,13 +17,13 @@ type
 implementation
 
 uses
-  Forms, SysUtils, Unit31;
+  Forms, SysUtils, GenealogyListOptionsForm;
 
 procedure TTestAHW52ChoiceDialogCounters.TestIncrement;
 var
-  choiceDialog: TForm31;
+  choiceDialog: TGenealogyListOptionsForm;
 begin
-  choiceDialog := TForm31.CreateNew(nil);
+  choiceDialog := TGenealogyListOptionsForm.CreateNew(nil);
   try
     GlobalVar_0061E108 := 4;
     choiceDialog._PROC_00563108(choiceDialog);
@@ -36,9 +36,9 @@ end;
 
 procedure TTestAHW52ChoiceDialogCounters.TestDecrement;
 var
-  choiceDialog: TForm31;
+  choiceDialog: TGenealogyListOptionsForm;
 begin
-  choiceDialog := TForm31.CreateNew(nil);
+  choiceDialog := TGenealogyListOptionsForm.CreateNew(nil);
   try
     GlobalVar_0061E108 := 4;
     choiceDialog._PROC_00563138(choiceDialog);

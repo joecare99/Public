@@ -44,11 +44,12 @@ The tests use only synthetic HWND profiles. They never start AhnWin.
 ## Safe usage
 
 Before the first launch or input experiment, make and hash-verify the approved
-test-instance backup outside the source tree. Do not copy, print, or inspect a
-configuration file if it may contain a database password. The current test
-directory contains `par.cfg`; its contents have not been read. Do not proceed
-with a full-directory backup or application launch until that file is known
-not to contain a credential or an approved way to protect it is available.
+test-instance backup outside the source tree. The user confirmed that the
+approved fixture's `par.cfg` contains no credentials and authorized the
+previous backup and test run. Still avoid printing or logging configuration
+contents, and make a fresh inventory/backup before any new live experiment.
+Stop if a future fixture or configuration file has an unknown credential
+status.
 
 Check the pinned binary without launching it:
 
@@ -70,6 +71,53 @@ network output paths, and reject any output path inside the test-data
 directory. Profiles include visible text from the approved process's visible
 windows/controls; that text may include the currently displayed test record.
 Store profiles locally and remove them when no longer needed.
+
+New profiles use schema version 2 and include the foreground HWND only when
+Windows reports that the foreground belongs to the pinned target process.
+Version-1 saved profiles remain readable; their foreground observation is
+reported as unavailable. Foreground captions/classes are taken only from the
+captured target-process window profile, never from another foreground
+application.
+
+### Prepare a controlled search manifest
+
+`prepare-search` creates a versioned, non-executable experiment manifest from a
+saved UI profile. It performs no process launch, window query, or input action.
+The saved profile must already identify the pinned executable and contain the
+validated visible `Auswahl` dialog. The supplied snapshot reference is recorded
+for traceability, but the command cannot verify that a backup exists or that
+it is complete; manual snapshot verification remains a required precondition.
+
+```powershell
+& $tool prepare-search `
+  --profile "$out\person-search-profile.json" `
+  --snapshot-reference "snapshot-id-from-preflight" `
+  --category known-hit `
+  --surname "Example" `
+  --given-name "Person" `
+  --output "$out\prepared-search.json"
+```
+
+Supported categories are `known-hit`, `surname-only-prefix`,
+`absent-surname`, and `absent-given-name`. The category names describe the
+experiment's intended precondition; they do not prove that the fixture
+contains or lacks a matching person. Search values are stored only in the
+local manifest and may be sensitive. The JSON explicitly sets
+`liveExecutionAuthorized` to `false`; no command consumes a manifest to run an
+experiment. Each live search still requires the separate guarded command and
+explicit `--allow-input`.
+
+The manifest declares the provider outcome classes `not-found`,
+`single-candidate`, and `candidate-list`; these are not outcomes observed by
+the external adapter. Visible UI evidence is captured separately. Result JSON
+uses result schema version 2 and records the action phase, whether the bounded
+person-search-dialog wait timed out, its configured timeout when applicable,
+whether `Auswahl` remains visible, the visible top-level window count, and
+target-process foreground HWND/class/caption when available.
+`gridSelectionRead` and `lookupOutcomeInferred` are always false. On a
+`--wait-for-dialog` timeout, the adapter writes a result profile with phase
+`timeout-waiting-for-dialog` before returning an error; it has not sent input.
+The adapter cannot read `TDBGrid` rows or claim a hit from dialog closure.
 
 ### Start and inspect
 
