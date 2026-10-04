@@ -39,10 +39,10 @@ type
   end;
 
   EUnit16ExportFieldMissing = class(Exception);
+  EUnit16ExportStateUnavailable = class(Exception);
 
 var
-  { These globals retain their binary cell names; the original app populates
-    them outside the recovered Unit16 handler. }
+  { These raw cells retain their binary names; the FPC tree has no producers. }
   GlobalVar_02535930: string;
   GlobalVar_02535934: string;
   GlobalVar_02535438: string;
@@ -50,6 +50,7 @@ var
 procedure ExecuteUnit16TextExport(const Context: TUnit16TextExportContext;
   Table14, Table22, Table27: TDataSet;
   const Writer: IUnit16TextExportWriter);
+procedure ValidateUnit16ExportTextState(const Context: TUnit16TextExportContext);
 
 implementation
 
@@ -100,6 +101,30 @@ end;
 function HasListCaption(const Caption: string): Boolean;
 begin
   Result := (Pos('Namens', Caption) > 0) or (Pos('Orts', Caption) > 0);
+end;
+
+procedure RequireAddressState(const StateText, StateName: string);
+begin
+  if StateText = '' then
+    raise EUnit16ExportStateUnavailable.CreateFmt(
+      'Unit16 export state "%s" has no mapped FPC producer.', [StateName]);
+end;
+
+procedure ValidateUnit16ExportTextState(
+  const Context: TUnit16TextExportContext);
+begin
+  if (Context.ReportKind = 'NLBO') or (Context.ReportKind = 'OLPN') or
+     (Context.ReportKind = 'Sppr') or (Context.ReportKind = 'Sppo') or
+     (Context.ReportKind = 'Schacht') then
+    RequireAddressState(Context.HeaderText02535930, 'GlobalVar_02535930');
+
+  if (Context.ReportKind = 'Vorf') or (Context.ReportKind = 'famb') or
+     (Context.ReportKind = 'Nach') or (Context.ReportKind = 'Schacht') then
+    RequireAddressState(Context.HeaderText02535934, 'GlobalVar_02535934');
+
+  if (Context.ReportKind = 'OFB') and
+     not HasListCaption(Context.ReportCaption) then
+    RequireAddressState(Context.HeaderText02535438, 'GlobalVar_02535438');
 end;
 
 function IsSupportedReportKind(const ReportKind: string): Boolean;

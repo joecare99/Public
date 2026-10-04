@@ -5,19 +5,24 @@ unit tst_AHW52_Unit16TextExportTests;
 interface
 
 uses
-  fpcunit, testregistry;
+  DB, fpcunit, testregistry;
 
 type
   TTestAHW52Unit16TextExport = class(TTestCase)
+  private
+    procedure FailDataSetOpen(DataSet: TDataSet);
   published
     procedure TestTextExportUsesTable14FieldsAndHeader;
     procedure TestHtmlExportPreservesListingLines;
     procedure TestHtmlAncestorHeadingEmitsBreakLines;
     procedure TestListCaptionSelectsTable22;
     procedure TestBaseReportSelectsTable27;
+    procedure TestEmptyDatasetWritesHeaderAndFooter;
+    procedure TestRequiredAddressStateIsNotSilentlyDefaulted;
     procedure TestHtmlDetectionIsCaseSensitiveSubstringMatch;
     procedure TestMissingDatasetIsReportedAndWriterClosed;
     procedure TestMissingFieldIsReportedAndWriterClosed;
+    procedure TestDataSetOpenFailurePropagatesAndClosesWriter;
     procedure TestWriterFailureStillClosesWriter;
     procedure TestTextFileWriterWritesAndCloses;
   end;
@@ -25,7 +30,7 @@ type
 implementation
 
 uses
-  Classes, DB, BufDataset, SysUtils, Unit16TextExportWorkflow;
+  Classes, MemDS, SysUtils, Unit16TextExportWorkflow;
 
 type
   TCollectingTextWriter = class(TInterfacedObject, IUnit16TextExportWriter)
@@ -69,19 +74,19 @@ begin
 end;
 
 function CreateDataSet(const FieldNames: array of string;
-  const Values: array of string): TBufDataset;
+  const Values: array of string): TMemDataset;
 var
   fieldIndex: Integer;
 begin
   if Length(FieldNames) <> Length(Values) then
     raise EArgumentException.Create('Field and value counts must match.');
 
-  Result := TBufDataset.Create(nil);
+  Result := TMemDataset.Create(nil);
   try
     for fieldIndex := 0 to High(FieldNames) do
       Result.FieldDefs.Add(FieldNames[fieldIndex], ftString, 100);
-    Result.CreateDataset;
-    Result.Open;
+    Result.CreateTable;
+    Result.Active := True;
     Result.Append;
     for fieldIndex := 0 to High(FieldNames) do
       Result.FieldByName(FieldNames[fieldIndex]).AsString :=
@@ -105,6 +110,22 @@ begin
   Result.HeaderText0061E028 := '';
 end;
 
+function CreateEmptyDataSet(const FieldNames: array of string): TMemDataset;
+var
+  fieldIndex: Integer;
+begin
+  Result := TMemDataset.Create(nil);
+  try
+    for fieldIndex := 0 to High(FieldNames) do
+      Result.FieldDefs.Add(FieldNames[fieldIndex], ftString, 100);
+    Result.CreateTable;
+    Result.Active := True;
+  except
+    Result.Free;
+    raise;
+  end;
+end;
+
 function NewTemporaryTextName: string;
 var
   fileId: TGUID;
@@ -119,7 +140,7 @@ procedure TTestAHW52Unit16TextExport.
   TestTextExportUsesTable14FieldsAndHeader;
 var
   context: TUnit16TextExportContext;
-  table14: TBufDataset;
+  table14: TMemDataset;
   writerObject: TCollectingTextWriter;
   writer: IUnit16TextExportWriter;
 begin
@@ -132,9 +153,9 @@ begin
     ExecuteUnit16TextExport(context, table14, nil, nil, writer);
 
     AssertEquals('Name list', writerObject.Lines[0]);
-    AssertEquals(StringOfChar('-', 72), writerObject.Lines[1]);
+    AssertEquals(StringOfChar('-', 76), writerObject.Lines[1]);
     AssertEquals('Ada 1900', writerObject.Lines[2]);
-    AssertEquals(StringOfChar('-', 72), writerObject.Lines[3]);
+    AssertEquals(StringOfChar('-', 76), writerObject.Lines[3]);
     AssertTrue(Pos('AHNENWIN 5.1 / ', writerObject.Lines[4]) = 1);
     AssertTrue(writerObject.Closed);
   finally
@@ -147,7 +168,7 @@ procedure TTestAHW52Unit16TextExport.
   TestHtmlExportPreservesListingLines;
 var
   context: TUnit16TextExportContext;
-  table14: TBufDataset;
+  table14: TMemDataset;
   writerObject: TCollectingTextWriter;
   writer: IUnit16TextExportWriter;
 begin
@@ -167,7 +188,7 @@ begin
     AssertEquals('<HTML>', writerObject.Lines[2]);
     AssertEquals('<BODY>', writerObject.Lines[3]);
     AssertEquals('Name list', writerObject.Lines[4]);
-    AssertEquals(StringOfChar('-', 72) + '<p>', writerObject.Lines[5]);
+    AssertEquals(StringOfChar('-', 76) + '<p>', writerObject.Lines[5]);
     AssertEquals('Ada 1900<p>', writerObject.Lines[6]);
     AssertEquals('</BODY>', writerObject.Lines[9]);
     AssertEquals('</HTML>', writerObject.Lines[10]);
@@ -182,7 +203,7 @@ procedure TTestAHW52Unit16TextExport.
   TestHtmlAncestorHeadingEmitsBreakLines;
 var
   context: TUnit16TextExportContext;
-  table14: TBufDataset;
+  table14: TMemDataset;
   writerObject: TCollectingTextWriter;
   writer: IUnit16TextExportWriter;
 begin
@@ -196,11 +217,11 @@ begin
 
     AssertEquals('Vorfahren von ', writerObject.Lines[4]);
     AssertEquals('<br>', writerObject.Lines[5]);
-    AssertEquals(StringOfChar('-', 72), writerObject.Lines[6]);
+    AssertEquals(StringOfChar('-', 76), writerObject.Lines[6]);
     AssertEquals('<br>', writerObject.Lines[7]);
     AssertEquals('Selected ancestor', writerObject.Lines[8]);
     AssertEquals('<br>', writerObject.Lines[9]);
-    AssertEquals(StringOfChar('-', 72) + '<p>', writerObject.Lines[10]);
+    AssertEquals(StringOfChar('-', 76) + '<p>', writerObject.Lines[10]);
   finally
     writer := nil;
     table14.Free;
@@ -210,7 +231,7 @@ end;
 procedure TTestAHW52Unit16TextExport.TestListCaptionSelectsTable22;
 var
   context: TUnit16TextExportContext;
-  table22: TBufDataset;
+  table22: TMemDataset;
   writerObject: TCollectingTextWriter;
   writer: IUnit16TextExportWriter;
 begin
@@ -236,7 +257,7 @@ end;
 procedure TTestAHW52Unit16TextExport.TestBaseReportSelectsTable27;
 var
   context: TUnit16TextExportContext;
-  table27: TBufDataset;
+  table27: TMemDataset;
   writerObject: TCollectingTextWriter;
   writer: IUnit16TextExportWriter;
 begin
@@ -255,11 +276,62 @@ begin
   end;
 end;
 
+procedure TTestAHW52Unit16TextExport.FailDataSetOpen(DataSet: TDataSet);
+begin
+  raise EDatabaseError.Create('Synthetic dataset open failure.');
+end;
+
+procedure TTestAHW52Unit16TextExport.TestEmptyDatasetWritesHeaderAndFooter;
+var
+  context: TUnit16TextExportContext;
+  table14: TMemDataset;
+  writerObject: TCollectingTextWriter;
+  writer: IUnit16TextExportWriter;
+begin
+  context := CreateContext('NLBO', 'report.txt');
+  context.HeaderText02535930 := 'Name list';
+  table14 := CreateEmptyDataSet(['Nm', 'Zeile']);
+  writerObject := TCollectingTextWriter.Create;
+  writer := writerObject;
+  try
+    ExecuteUnit16TextExport(context, table14, nil, nil, writer);
+
+    AssertEquals(4, writerObject.Lines.Count);
+    AssertEquals('Name list', writerObject.Lines[0]);
+    AssertEquals(StringOfChar('-', 76), writerObject.Lines[1]);
+    AssertEquals(StringOfChar('-', 76), writerObject.Lines[2]);
+    AssertTrue(Pos('AHNENWIN 5.1 / ', writerObject.Lines[3]) = 1);
+  finally
+    writer := nil;
+    table14.Free;
+  end;
+end;
+
+procedure TTestAHW52Unit16TextExport.
+  TestRequiredAddressStateIsNotSilentlyDefaulted;
+var
+  context: TUnit16TextExportContext;
+  raisedExpectedException: Boolean;
+begin
+  context := CreateContext('NLBO', 'report.txt');
+  raisedExpectedException := False;
+  try
+    ValidateUnit16ExportTextState(context);
+  except
+    on EUnit16ExportStateUnavailable do
+      raisedExpectedException := True;
+  end;
+  AssertTrue(raisedExpectedException);
+
+  context.HeaderText02535930 := 'Name list';
+  ValidateUnit16ExportTextState(context);
+end;
+
 procedure TTestAHW52Unit16TextExport.
   TestHtmlDetectionIsCaseSensitiveSubstringMatch;
 var
   context: TUnit16TextExportContext;
-  table14: TBufDataset;
+  table14: TMemDataset;
   writerObject: TCollectingTextWriter;
   writer: IUnit16TextExportWriter;
 begin
@@ -271,7 +343,7 @@ begin
     ExecuteUnit16TextExport(context, table14, nil, nil, writer);
 
     AssertEquals('Namensliste aller Personen', writerObject.Lines[0]);
-    AssertEquals(StringOfChar('-', 72), writerObject.Lines[1]);
+    AssertEquals(StringOfChar('-', 76), writerObject.Lines[1]);
     AssertEquals('Ada 1900', writerObject.Lines[2]);
     AssertFalse(writerObject.Lines[0] = '<!DOCTYPE HTML PUBLIC ' +
       '"-//W3C//DTD HTML 4.0//EN//">');
@@ -312,7 +384,7 @@ procedure TTestAHW52Unit16TextExport.
   TestMissingFieldIsReportedAndWriterClosed;
 var
   context: TUnit16TextExportContext;
-  table14: TBufDataset;
+  table14: TMemDataset;
   writerObject: TCollectingTextWriter;
   writer: IUnit16TextExportWriter;
   raisedExpectedException: Boolean;
@@ -338,10 +410,53 @@ begin
   end;
 end;
 
+procedure TTestAHW52Unit16TextExport.
+  TestDataSetOpenFailurePropagatesAndClosesWriter;
+var
+  context: TUnit16TextExportContext;
+  table14: TMemDataset;
+  writerObject: TCollectingTextWriter;
+  writer: IUnit16TextExportWriter;
+  raisedExpectedException: Boolean;
+begin
+  context := CreateContext('NLBO', 'report.txt');
+  table14 := CreateDataSet(['Nm', 'Zeile'], ['Ada', '1900']);
+  table14.Close;
+  with TStringField.Create(table14) do
+  begin
+    FieldName := 'Nm';
+    DataSet := table14;
+  end;
+  with TStringField.Create(table14) do
+  begin
+    FieldName := 'Zeile';
+    DataSet := table14;
+  end;
+  table14.BeforeOpen := @FailDataSetOpen;
+  writerObject := TCollectingTextWriter.Create;
+  writer := writerObject;
+  raisedExpectedException := False;
+  try
+    try
+      ExecuteUnit16TextExport(context, table14, nil, nil, writer);
+    except
+      on E: EDatabaseError do
+        raisedExpectedException :=
+          E.Message = 'Synthetic dataset open failure.';
+    end;
+
+    AssertTrue(raisedExpectedException);
+    AssertTrue(writerObject.Closed);
+  finally
+    writer := nil;
+    table14.Free;
+  end;
+end;
+
 procedure TTestAHW52Unit16TextExport.TestWriterFailureStillClosesWriter;
 var
   context: TUnit16TextExportContext;
-  table14: TBufDataset;
+  table14: TMemDataset;
   writerObject: TCollectingTextWriter;
   writer: IUnit16TextExportWriter;
   raisedExpectedException: Boolean;

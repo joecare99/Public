@@ -7,6 +7,30 @@ workflows to LazReport. The Ahnw50 DLL and its embedded license path are not
 target dependencies. Non-reporting relationship slices remain blocked on
 provider/schema evidence.
 
+## Latest bounded reporting slice — Unit16 text/HTML export
+
+Translated the complete `TForm16.Speichernunter1Click` text/HTML writer into
+`Reports\Unit16TextExportWorkflow.pas` and wired its FPC save action through
+`ExecuteUnit16SaveDialog`. The exact text filter (including the space after
+`(`), `txt` default extension, cancellation/trim guard, case-sensitive
+`Pos('htm', FileName)` test, selector comparisons, HTML literals, separator
+suffix, ancestor `<br>` lines, footer, and close/error behavior are retained.
+
+The offset projections use `Table14.Nm`/`Zeile`, `Table22.No`/`Zus`, and
+`Table27.Namvorn`; `Label2.Caption` supplies the list-caption test. The three
+other global header strings remain address-named aliases without mapped
+producers; `Unit19.GlobalVar_0061E028` is read directly. These unknowns are
+not replaced with guessed report labels. The form adapter rejects a required
+empty alias with `EUnit16ExportStateUnavailable` before opening an output file.
+All source failures remain visible: the streamed SQLDB tables have no
+configured provider and no real data was opened.
+
+Synthetic coverage passes 13/13 workflow tests and 23/23 Unit16 preview/action
+tests; the full suite passes 461/461. `Unit16.pas` compiles in the test project.
+The forced Debug main-project build links, but `AHW52_Main.lpi` does not include
+Unit16, so this is not an end-user runtime claim. The unrelated Unit15
+QuickReport/PDF caller dataset remains blocked.
+
 ## Latest bounded helper slice — Unit13 graphic-text functions
 
 Reconstructed `TForm13` listing helpers `005637C4`, `00563868`, and
