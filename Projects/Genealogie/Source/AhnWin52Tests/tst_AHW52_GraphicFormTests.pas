@@ -18,6 +18,7 @@ type
     procedure RecordParameterDialogClose(Sender: TObject;
       var CloseAction: TCloseAction);
     procedure RecordPaint(Sender: TObject);
+    procedure AssertFormShowSetup(const Mode, ExpectedRenderOperation: string);
   published
     procedure TestFormCreateInitializesPaintBoxAndAddressBackedState;
     procedure TestScrollbarChangesRefreshPaintBox;
@@ -28,14 +29,65 @@ type
     procedure TestFinishButtonClosesGraphicForm;
     procedure TestPrinterSetupButtonExecutesDialog;
     procedure TestFormCloseClosesGlobalParametersThenHidesGlobalGraphic;
+    procedure TestFontSelectionStoresAcceptedNameAndRefreshes;
+    procedure TestFontSelectionCancelPreservesNameAndRefreshes;
+    procedure TestFormShowTranslatesPreludeAndOpensTablesInListingOrder;
+    procedure TestFormShowStopsAtAncestorRenderingBoundary;
+    procedure TestFormShowStopsAtDescendantRenderingBoundary;
+    procedure TestGraphicPersonNumberFormattingMatchesListing;
+    procedure TestGraphicTextUppercasePreservesLegacyUmlautBytes;
+    procedure TestGraphicLabelNormalizationMatchesListingBranches;
   end;
 
 implementation
 
 uses
-  Buttons, Classes, ExtCtrls, PrintersDlgs, SysUtils, AncestorChartOptionsForm, Unit13;
+  Buttons, Classes, DB, Dialogs, ExtCtrls, Paradox, PrintersDlgs, StdCtrls,
+  SysUtils, AncestorChartOptionsForm, GenealogyDataModule, Unit13,
+  Unit13GraphicTextHelpers;
 
 type
+  TRecordingParadoxTable = class(TParadox)
+  private
+    FCallLog: TStrings;
+    FLogName: string;
+    FCursorOpen: Boolean;
+  protected
+    function GetRecord(Buffer: TRecordBuffer; GetMode: TGetMode;
+      DoCheck: Boolean): TGetResult; override;
+    function GetRecordSize: Word; override;
+    procedure InternalClose; override;
+    procedure InternalInitFieldDefs; override;
+    procedure InternalOpen; override;
+    function IsCursorOpen: Boolean; override;
+  public
+    constructor CreateRecorder(AOwner: TComponent; ACallLog: TStrings;
+      const ALogName: string);
+  end;
+
+  TRecordingIntegerField = class(TIntegerField)
+  private
+    FReadCount: Integer;
+    FValue: Integer;
+  protected
+    function GetAsInteger: Longint; override;
+  public
+    property ReadCount: Integer read FReadCount;
+    property Value: Integer read FValue write FValue;
+  end;
+
+  TRecordingFontDialog = class(TFontDialog)
+  private
+    FAccept: Boolean;
+    FInitialFontName: string;
+    FSelectedFontName: string;
+  public
+    function Execute: Boolean; override;
+    property Accept: Boolean read FAccept write FAccept;
+    property InitialFontName: string read FInitialFontName;
+    property SelectedFontName: string read FSelectedFontName write FSelectedFontName;
+  end;
+
   TRecordingPrinterSetupDialog = class(TPrinterSetupDialog)
   private
     FExecuteCount: Integer;
@@ -43,6 +95,60 @@ type
     function Execute: Boolean; override;
     property ExecuteCount: Integer read FExecuteCount;
   end;
+
+  constructor TRecordingParadoxTable.CreateRecorder(AOwner: TComponent;
+    ACallLog: TStrings;
+    const ALogName: string);
+  begin
+    inherited Create(AOwner);
+    FCallLog := ACallLog;
+    FLogName := ALogName;
+  end;
+
+  function TRecordingParadoxTable.GetRecord(Buffer: TRecordBuffer;
+    GetMode: TGetMode; DoCheck: Boolean): TGetResult;
+  begin
+    Result := grEOF;
+  end;
+
+  function TRecordingParadoxTable.GetRecordSize: Word;
+  begin
+    Result := 0;
+  end;
+
+  procedure TRecordingParadoxTable.InternalClose;
+  begin
+    FCursorOpen := False;
+  end;
+
+  procedure TRecordingParadoxTable.InternalInitFieldDefs;
+  begin
+  end;
+
+  procedure TRecordingParadoxTable.InternalOpen;
+  begin
+    FCallLog.Add(FLogName);
+    FCursorOpen := True;
+  end;
+
+  function TRecordingParadoxTable.IsCursorOpen: Boolean;
+  begin
+    Result := FCursorOpen;
+  end;
+
+function TRecordingIntegerField.GetAsInteger: Longint;
+begin
+  Inc(FReadCount);
+  Result := FValue;
+end;
+
+  function TRecordingFontDialog.Execute: Boolean;
+begin
+  FInitialFontName := Font.Name;
+  if FAccept then
+    Font.Name := FSelectedFontName;
+  Result := FAccept;
+end;
 
 function TRecordingPrinterSetupDialog.Execute: Boolean;
 begin
@@ -492,6 +598,355 @@ begin
       printerSetupDialog.ExecuteCount);
   finally
     graphicForm.Free;
+  end;
+end;
+
+procedure TTestAHW52GraphicForm.
+  TestFontSelectionStoresAcceptedNameAndRefreshes;
+var
+  graphicForm: TForm13;
+  fontDialog: TRecordingFontDialog;
+  previousFontName: string;
+begin
+  Application.Initialize;
+  previousFontName := Unit13.GlobalVar_0061E2EC;
+  FPaintEventCount := 0;
+  graphicForm := TForm13.CreateNew(nil);
+  try
+    graphicForm.PaintBox1 := TPaintBox.Create(graphicForm);
+    graphicForm.PaintBox1.Parent := graphicForm;
+    graphicForm.PaintBox1.SetBounds(0, 0, 100, 100);
+    graphicForm.PaintBox1.OnPaint := @RecordPaint;
+    fontDialog := TRecordingFontDialog.Create(graphicForm);
+    fontDialog.Accept := True;
+    fontDialog.SelectedFontName := 'Synthetic Font';
+    graphicForm.FontDialog1 := fontDialog;
+    graphicForm.Show;
+    Application.ProcessMessages;
+    FPaintEventCount := 0;
+
+    graphicForm.SpeedButton12Click(nil);
+
+    AssertEquals('The dialog starts with the recovered Arial font.',
+      'Arial', fontDialog.InitialFontName);
+    AssertEquals('The accepted font is stored in the mapped state cell.',
+      'Synthetic Font', Unit13.GlobalVar_0061E2EC);
+    AssertTrue('PaintBox1 is refreshed after accepting the font.',
+      FPaintEventCount > 0);
+  finally
+    Unit13.GlobalVar_0061E2EC := previousFontName;
+    graphicForm.Free;
+  end;
+end;
+
+procedure TTestAHW52GraphicForm.
+  TestFontSelectionCancelPreservesNameAndRefreshes;
+var
+  graphicForm: TForm13;
+  fontDialog: TRecordingFontDialog;
+  previousFontName: string;
+begin
+  Application.Initialize;
+  previousFontName := Unit13.GlobalVar_0061E2EC;
+  Unit13.GlobalVar_0061E2EC := 'Previously selected font';
+  FPaintEventCount := 0;
+  graphicForm := TForm13.CreateNew(nil);
+  try
+    graphicForm.PaintBox1 := TPaintBox.Create(graphicForm);
+    graphicForm.PaintBox1.Parent := graphicForm;
+    graphicForm.PaintBox1.SetBounds(0, 0, 100, 100);
+    graphicForm.PaintBox1.OnPaint := @RecordPaint;
+    fontDialog := TRecordingFontDialog.Create(graphicForm);
+    fontDialog.Accept := False;
+    fontDialog.SelectedFontName := 'Unused Font';
+    graphicForm.FontDialog1 := fontDialog;
+    graphicForm.Show;
+    Application.ProcessMessages;
+    FPaintEventCount := 0;
+
+    graphicForm.SpeedButton12Click(nil);
+
+    AssertEquals('The dialog starts with the recovered Arial font.',
+      'Arial', fontDialog.InitialFontName);
+    AssertEquals('Cancel preserves the previously selected font.',
+      'Previously selected font', Unit13.GlobalVar_0061E2EC);
+    AssertTrue('PaintBox1 is refreshed after cancelling the font dialog.',
+      FPaintEventCount > 0);
+  finally
+    Unit13.GlobalVar_0061E2EC := previousFontName;
+    graphicForm.Free;
+  end;
+end;
+
+procedure TTestAHW52GraphicForm.
+  TestFormShowTranslatesPreludeAndOpensTablesInListingOrder;
+var
+  graphicForm: TForm13;
+  dataModule: TGenealogyDataModule;
+  previousDataModule: TGenealogyDataModule;
+  personNumberField: TRecordingIntegerField;
+  openCalls: TStringList;
+  previousMode: string;
+  previousRoundScale: Integer;
+  previousResetState1: Integer;
+  previousResetState2: Integer;
+  previousInitialBoxWidth: Integer;
+  previousInitialLineWidth: Integer;
+  previousZoom: Extended;
+  previousProgressState: Integer;
+begin
+  previousProgressState := Unit13.GlobalVar_02535388;
+  previousMode := AncestorChartOptionsForm.GlobalVar_0253592C;
+  previousResetState1 := Unit13.GlobalVar_0061E2F4;
+  previousResetState2 := Unit13.GlobalVar_0061E2F8;
+  previousRoundScale := Unit13.GlobalVar_0061E11C;
+  previousInitialBoxWidth := Unit13.GlobalVar_011AD338;
+  previousInitialLineWidth := Unit13.GlobalVar_011AD334;
+  previousZoom := Unit13.GlobalVar_0061E120;
+  graphicForm := TForm13.CreateNew(nil);
+  previousDataModule := GenealogyDataModule.DataModule2;
+  dataModule := TGenealogyDataModule.CreateNew(nil);
+  openCalls := TStringList.Create;
+  personNumberField := TRecordingIntegerField.Create(dataModule);
+  try
+    graphicForm.Button1 := TSpeedButton.Create(graphicForm);
+    graphicForm.Button1.Parent := graphicForm;
+    graphicForm.Button1.Visible := True;
+    dataModule.Table17 := TRecordingParadoxTable.CreateRecorder(
+      dataModule, openCalls,
+      'Table17.Open');
+    dataModule.Table18 := TRecordingParadoxTable.CreateRecorder(
+      dataModule, openCalls,
+      'Table18.Open');
+    personNumberField.Value := 42;
+    dataModule.Table1Nummer := personNumberField;
+    GenealogyDataModule.DataModule2 := dataModule;
+    AncestorChartOptionsForm.GlobalVar_0253592C := '';
+    Unit13.GlobalVar_02535388 := 1;
+
+    graphicForm.FormShow(graphicForm);
+
+    AssertEquals('FormShow resets the proven progress state.',
+      0, Unit13.GlobalVar_02535388);
+    AssertFalse('FormShow hides the proven button before opening tables.',
+      graphicForm.Button1.Visible);
+    AssertEquals('FormShow opens exactly the two listing-backed tables.', 2,
+      openCalls.Count);
+    AssertEquals('FormShow retains the first listing-backed table open.',
+      'Table17.Open', openCalls[0]);
+    AssertEquals('FormShow retains the second listing-backed table open.',
+      'Table18.Open', openCalls[1]);
+    AssertEquals('The field virtual call reads the integer field once.', 1,
+      personNumberField.ReadCount);
+    AssertEquals('FormShow clears the first opaque state cell.', 0,
+      Unit13.GlobalVar_0061E2F4);
+    AssertEquals('FormShow clears the second opaque state cell.', 0,
+      Unit13.GlobalVar_0061E2F8);
+    AssertTrue('FormShow restores the listing-backed scale.',
+      Abs(Unit13.GlobalVar_0061E120 - 0.63) < 1e-12);
+    AssertEquals('The first scale-derived state rounds 0.63 * 6.', 4,
+      Unit13.GlobalVar_0061E11C);
+    AssertEquals('FormShow initializes the observed state cell.', 20,
+      Unit13.GlobalVar_011AD338);
+    AssertEquals('The second scale-derived state rounds 0.63 * 120.', 76,
+      Unit13.GlobalVar_011AD334);
+  finally
+    GenealogyDataModule.DataModule2 := previousDataModule;
+    AncestorChartOptionsForm.GlobalVar_0253592C := previousMode;
+    Unit13.GlobalVar_02535388 := previousProgressState;
+    Unit13.GlobalVar_0061E2F4 := previousResetState1;
+    Unit13.GlobalVar_0061E2F8 := previousResetState2;
+    Unit13.GlobalVar_0061E11C := previousRoundScale;
+    Unit13.GlobalVar_011AD338 := previousInitialBoxWidth;
+    Unit13.GlobalVar_011AD334 := previousInitialLineWidth;
+    Unit13.GlobalVar_0061E120 := previousZoom;
+    graphicForm.Free;
+    dataModule.Free;
+    openCalls.Free;
+  end;
+end;
+
+procedure TTestAHW52GraphicForm.TestFormShowStopsAtAncestorRenderingBoundary;
+const
+  Modes: array[0..1] of string = ('Vorgr1', 'Vorgr2');
+var
+  Mode: string;
+begin
+  for Mode in Modes do
+    AssertFormShowSetup(Mode, 'TForm13.Vorf_erm');
+end;
+
+procedure TTestAHW52GraphicForm.TestFormShowStopsAtDescendantRenderingBoundary;
+const
+  Modes: array[0..1] of string = ('Nachgr1', 'Nachgr2');
+var
+  Mode: string;
+begin
+  for Mode in Modes do
+    AssertFormShowSetup(Mode, 'TForm13.Nach_erm');
+end;
+
+procedure TTestAHW52GraphicForm.TestGraphicPersonNumberFormattingMatchesListing;
+begin
+  AssertEquals('Zero is padded to six digits.', '000000',
+    FormatGraphicPersonNumber(0));
+  AssertEquals('Positive values are left-padded.', '000042',
+    FormatGraphicPersonNumber(42));
+  AssertEquals('Values longer than six characters keep their suffix.',
+    '234567', FormatGraphicPersonNumber(1234567));
+  AssertEquals('Negative values preserve the final six characters.',
+    '0000-1', FormatGraphicPersonNumber(-1));
+  AssertEquals('Negative over-width values preserve the final six characters.',
+    '234567', FormatGraphicPersonNumber(-1234567));
+end;
+
+procedure TTestAHW52GraphicForm.TestGraphicTextUppercasePreservesLegacyUmlautBytes;
+var
+  input: RawByteString;
+  expected: RawByteString;
+begin
+  input := '';
+  expected := '';
+  AssertEquals('Ordinary ASCII text uses uppercase conversion.',
+    RawByteString('AHNWIN'), UppercaseGraphicText('AhnWin'));
+
+  SetLength(input, 3);
+  input[1] := AnsiChar($E4);
+  input[2] := AnsiChar($F6);
+  input[3] := AnsiChar($FC);
+  SetLength(expected, 3);
+  expected[1] := AnsiChar($C4);
+  expected[2] := AnsiChar($D6);
+  expected[3] := AnsiChar($DC);
+  AssertEquals('The three evidenced ANSI umlaut bytes map explicitly.',
+    expected, UppercaseGraphicText(input));
+end;
+
+procedure TTestAHW52GraphicForm.TestGraphicLabelNormalizationMatchesListingBranches;
+begin
+  AssertEquals('Trimmed double dots produce an empty label.',
+    RawByteString(''), NormalizeGraphicLabel('  ..  '));
+  AssertEquals('HK labels use the fixed seven-character slice.',
+    RawByteString('HK 1234567'), NormalizeGraphicLabel('HK:1234567'));
+  AssertEquals('vo.r labels use fixed positions and the final four bytes.',
+    RawByteString('vor 1234'), NormalizeGraphicLabel('vo.r1234'));
+  AssertEquals('na.ch labels use fixed positions and the final four bytes.',
+    RawByteString('nac 1234'), NormalizeGraphicLabel('na.ch1234'));
+  AssertEquals('Whitespace-only labels are returned unchanged.',
+    RawByteString('   '), NormalizeGraphicLabel('   '));
+  AssertEquals('Leading spaces and dots are stripped by repeated nine-byte slices.',
+    RawByteString('12345'), NormalizeGraphicLabel('  .  123456789'));
+  AssertEquals('General labels remove dots and add a space before digits.',
+    RawByteString('Name 42'), NormalizeGraphicLabel('Name.42'));
+  AssertEquals('Labels beginning with a digit bypass general normalization.',
+    RawByteString('1.23456'), NormalizeGraphicLabel('1.23456'));
+  AssertEquals('Alphabetic labels without punctuation remain unchanged.',
+    RawByteString('Normal'), NormalizeGraphicLabel('Normal'));
+end;
+
+procedure TTestAHW52GraphicForm.AssertFormShowSetup(const Mode,
+  ExpectedRenderOperation: string);
+var
+  graphicForm: TForm13;
+  dataModule: TGenealogyDataModule;
+  previousDataModule: TGenealogyDataModule;
+  personNumberField: TRecordingIntegerField;
+  openCalls: TStringList;
+  previousMode: string;
+  previousProgressState: Integer;
+  previousResetState1: Integer;
+  previousResetState2: Integer;
+  previousRoundScale: Integer;
+  previousInitialBoxWidth: Integer;
+  previousInitialLineWidth: Integer;
+  previousZoom: Extended;
+begin
+  previousDataModule := GenealogyDataModule.DataModule2;
+  previousMode := AncestorChartOptionsForm.GlobalVar_0253592C;
+  previousProgressState := Unit13.GlobalVar_02535388;
+  previousResetState1 := Unit13.GlobalVar_0061E2F4;
+  previousResetState2 := Unit13.GlobalVar_0061E2F8;
+  previousRoundScale := Unit13.GlobalVar_0061E11C;
+  previousInitialBoxWidth := Unit13.GlobalVar_011AD338;
+  previousInitialLineWidth := Unit13.GlobalVar_011AD334;
+  previousZoom := Unit13.GlobalVar_0061E120;
+  graphicForm := TForm13.CreateNew(nil);
+  dataModule := TGenealogyDataModule.CreateNew(nil);
+  openCalls := TStringList.Create;
+  personNumberField := TRecordingIntegerField.Create(dataModule);
+  try
+    graphicForm.Button1 := TSpeedButton.Create(graphicForm);
+    graphicForm.Button1.Parent := graphicForm;
+    graphicForm.Button1.Visible := True;
+    graphicForm.PaintBox1 := TPaintBox.Create(graphicForm);
+    graphicForm.PaintBox1.Parent := graphicForm;
+    graphicForm.ScrollBar1 := TScrollBar.Create(graphicForm);
+    graphicForm.ScrollBar1.Parent := graphicForm;
+    graphicForm.ScrollBar2 := TScrollBar.Create(graphicForm);
+    graphicForm.ScrollBar2.Parent := graphicForm;
+    graphicForm.ScrollBar1.Position := 17;
+    graphicForm.ScrollBar2.Position := 23;
+
+    dataModule.Table17 := TRecordingParadoxTable.CreateRecorder(
+      dataModule, openCalls, 'Table17.Open');
+    dataModule.Table18 := TRecordingParadoxTable.CreateRecorder(
+      dataModule, openCalls, 'Table18.Open');
+    personNumberField.Value := 42;
+    dataModule.Table1Nummer := personNumberField;
+    GenealogyDataModule.DataModule2 := dataModule;
+    AncestorChartOptionsForm.GlobalVar_0253592C := Mode;
+    Unit13.GlobalVar_02535388 := 1;
+    Unit13.GlobalVar_0061E120 := 0.9;
+
+    try
+      graphicForm.FormShow(graphicForm);
+      Fail('FormShow must stop at the unsupported rendering boundary.');
+    except
+      on E: EInvalidOpException do
+        AssertEquals(
+          Format('Graphic rendering operation "%s" is not reconstructed.',
+            [ExpectedRenderOperation]),
+          E.Message);
+    end;
+
+    AssertEquals('FormShow reads the person-number field before rendering.',
+      1, personNumberField.ReadCount);
+    AssertEquals('FormShow clears the first state cell before rendering.', 0,
+      Unit13.GlobalVar_0061E2F4);
+    AssertEquals('FormShow clears the second state cell before rendering.', 0,
+      Unit13.GlobalVar_0061E2F8);
+    AssertTrue('FormShow initializes the scale before rendering.',
+      Abs(Unit13.GlobalVar_0061E120 - 0.63) < 1e-12);
+    AssertEquals('FormShow calculates the first scale value before rendering.',
+      4, Unit13.GlobalVar_0061E11C);
+    AssertEquals('FormShow initializes the observed state cell before rendering.',
+      20,
+      Unit13.GlobalVar_011AD338);
+    AssertEquals('FormShow calculates the second scale value before rendering.',
+      76, Unit13.GlobalVar_011AD334);
+    AssertEquals('The selected mode opens the expected tables first.', 2,
+      openCalls.Count);
+    AssertEquals('The first table opens before rendering.', 'Table17.Open',
+      openCalls[0]);
+    AssertEquals('The second table opens before rendering.', 'Table18.Open',
+      openCalls[1]);
+    AssertEquals('The first scrollbar resets before rendering.', 0,
+      graphicForm.ScrollBar1.Position);
+    AssertEquals('The second scrollbar resets before rendering.', 0,
+      graphicForm.ScrollBar2.Position);
+  finally
+    GenealogyDataModule.DataModule2 := previousDataModule;
+    AncestorChartOptionsForm.GlobalVar_0253592C := previousMode;
+    Unit13.GlobalVar_02535388 := previousProgressState;
+    Unit13.GlobalVar_0061E2F4 := previousResetState1;
+    Unit13.GlobalVar_0061E2F8 := previousResetState2;
+    Unit13.GlobalVar_0061E11C := previousRoundScale;
+    Unit13.GlobalVar_011AD338 := previousInitialBoxWidth;
+    Unit13.GlobalVar_011AD334 := previousInitialLineWidth;
+    Unit13.GlobalVar_0061E120 := previousZoom;
+    graphicForm.Free;
+    dataModule.Free;
+    openCalls.Free;
   end;
 end;
 

@@ -17,10 +17,17 @@ type
     procedure TestPreparedManifestCannotAuthorizeExecution;
     procedure TestManifestRoundTripPreservesApprovedLookupCategory;
     procedure TestReadsManifestWithVersionOneResultSchema;
+    procedure TestRejectsFractionalSchemaVersion;
+    procedure TestRejectsAlteredAllowedLookupOutcomes;
+    procedure TestRejectsMalformedAllowedLookupOutcomes;
+    procedure TestAllowsVersionOneManifestWithoutOutcomeList;
+    procedure TestRejectsVersionTwoManifestWithoutOutcomeList;
     procedure TestRejectsIncompleteCategoryInputs;
     procedure TestRejectsExecutionEnabledManifest;
     procedure TestRejectsUnverifiedSnapshot;
     procedure TestRejectsUnexpectedExecutableIdentity;
+    procedure TestRejectsFractionalProcessId;
+    procedure TestRejectsOutOfRangeProcessId;
     procedure TestCapturesVisibleWindowsWithoutInferringSearchResult;
     procedure TestCapturesTargetForegroundWindowWithoutReadingGrid;
     procedure TestCapturesDialogWaitTimeoutSeparatelyFromLookupOutcome;
@@ -29,7 +36,7 @@ type
 implementation
 
 uses
-  SysUtils;
+  fpjson, jsonparser, SysUtils;
 
 const
   TestExecutablePath = 'C:\ProgramData\AHNENWIN Test\AHNWIN51.exe';
@@ -105,16 +112,136 @@ procedure TTestAHW52UIExperiment.
 var
   Manifest: TUIExperimentManifest;
   JSON: UTF8String;
+  JSONData, Value: TJSONData;
   Parsed: TUIExperimentManifest;
 begin
   Manifest := CreateValidManifest;
-  JSON := StringReplace(UIExperimentManifestToJSON(Manifest),
-    '"resultSchemaVersion": 2', '"resultSchemaVersion": 1', []);
+  JSONData := GetJSON(UIExperimentManifestToJSON(Manifest));
+  try
+    Value := TJSONObject(JSONData).Find('resultSchemaVersion');
+    if Value = nil then
+      Fail('The serialized manifest must contain its result schema version.');
+    Value.AsInteger := 1;
+    AssertEquals(1, Value.AsInteger);
+    JSON := JSONData.FormatJSON;
+  finally
+    JSONData.Free;
+  end;
 
   Parsed := UIExperimentManifestFromJSON(JSON);
-
   AssertEquals(Manifest.ManifestId, Parsed.ManifestId);
   AssertEquals('known-hit', UIExperimentCategoryName(Parsed.Category));
+end;
+
+procedure TTestAHW52UIExperiment.TestRejectsFractionalSchemaVersion;
+var
+  Manifest: TUIExperimentManifest;
+  JSON: UTF8String;
+  RootData: TJSONData;
+begin
+  Manifest := CreateValidManifest;
+  RootData := GetJSON(UIExperimentManifestToJSON(Manifest));
+  try
+    if TJSONObject(RootData).Find('resultSchemaVersion') = nil then
+      Fail('The serialized manifest must contain its result schema version.');
+    TJSONObject(RootData).Delete('resultSchemaVersion');
+    TJSONObject(RootData).Add('resultSchemaVersion',
+      TJSONFloatNumber.Create(2.5));
+    JSON := RootData.FormatJSON;
+  finally
+    RootData.Free;
+  end;
+
+  try
+    UIExperimentManifestFromJSON(JSON);
+    Fail('A result schema version must be an integer.');
+  except
+    on E: EUIExperimentError do
+      AssertTrue(E.Message <> '');
+  end;
+end;
+
+procedure TTestAHW52UIExperiment.TestRejectsAlteredAllowedLookupOutcomes;
+var
+  Manifest: TUIExperimentManifest;
+  JSON: UTF8String;
+begin
+  Manifest := CreateValidManifest;
+  JSON := StringReplace(UIExperimentManifestToJSON(Manifest),
+    '"candidate-list"', '"first-match"', []);
+  try
+    UIExperimentManifestFromJSON(JSON);
+    Fail('A manifest cannot redefine the supported lookup outcomes.');
+  except
+    on E: EUIExperimentError do
+      AssertTrue(E.Message <> '');
+  end;
+end;
+
+procedure TTestAHW52UIExperiment.TestRejectsMalformedAllowedLookupOutcomes;
+var
+  Manifest: TUIExperimentManifest;
+  JSON: UTF8String;
+begin
+  Manifest := CreateValidManifest;
+  JSON := StringReplace(UIExperimentManifestToJSON(Manifest),
+    '"candidate-list"', '42', []);
+  try
+    UIExperimentManifestFromJSON(JSON);
+    Fail('The outcome list must have the declared array shape.');
+  except
+    on E: EUIExperimentError do
+      AssertTrue(E.Message <> '');
+  end;
+end;
+
+procedure TTestAHW52UIExperiment.
+  TestAllowsVersionOneManifestWithoutOutcomeList;
+var
+  Manifest: TUIExperimentManifest;
+  JSON: UTF8String;
+  RootData, Value: TJSONData;
+  Parsed: TUIExperimentManifest;
+begin
+  Manifest := CreateValidManifest;
+  RootData := GetJSON(UIExperimentManifestToJSON(Manifest));
+  try
+    Value := TJSONObject(RootData).Find('resultSchemaVersion');
+    if Value = nil then
+      Fail('The serialized manifest must contain its result schema version.');
+    Value.AsInteger := 1;
+    AssertEquals(1, Value.AsInteger);
+    TJSONObject(RootData).Delete('allowedLookupOutcomes');
+    JSON := RootData.FormatJSON;
+  finally
+    RootData.Free;
+  end;
+
+  Parsed := UIExperimentManifestFromJSON(JSON);
+  AssertEquals('known-hit', UIExperimentCategoryName(Parsed.Category));
+end;
+
+procedure TTestAHW52UIExperiment.TestRejectsVersionTwoManifestWithoutOutcomeList;
+var
+  Manifest: TUIExperimentManifest;
+  JSON: UTF8String;
+  RootData: TJSONData;
+begin
+  Manifest := CreateValidManifest;
+  RootData := GetJSON(UIExperimentManifestToJSON(Manifest));
+  try
+    TJSONObject(RootData).Delete('allowedLookupOutcomes');
+    JSON := RootData.FormatJSON;
+  finally
+    RootData.Free;
+  end;
+  try
+    UIExperimentManifestFromJSON(JSON);
+    Fail('Schema 2 requires the declared lookup outcome list.');
+  except
+    on E: EUIExperimentError do
+      AssertTrue(E.Message <> '');
+  end;
 end;
 
 procedure TTestAHW52UIExperiment.TestRejectsIncompleteCategoryInputs;
@@ -173,6 +300,66 @@ begin
     Fail('The manifest must stay pinned to the approved executable.');
   except
     on E: EUIProfileError do
+      AssertTrue(E.Message <> '');
+  end;
+end;
+
+procedure TTestAHW52UIExperiment.TestRejectsFractionalProcessId;
+var
+  Manifest: TUIExperimentManifest;
+  JSON: UTF8String;
+  RootData, TargetData: TJSONData;
+begin
+  Manifest := CreateValidManifest;
+  RootData := GetJSON(UIExperimentManifestToJSON(Manifest));
+  try
+    TargetData := TJSONObject(RootData).Find('target');
+    if not (TargetData is TJSONObject) then
+      Fail('The serialized manifest must contain its target object.');
+    if TJSONObject(TargetData).Find('processId') = nil then
+      Fail('The serialized target must contain a process ID.');
+    TJSONObject(TargetData).Delete('processId');
+    TJSONObject(TargetData).Add('processId', TJSONFloatNumber.Create(4711.5));
+    JSON := RootData.FormatJSON;
+  finally
+    RootData.Free;
+  end;
+
+  try
+    UIExperimentManifestFromJSON(JSON);
+    Fail('A target process ID must be an integer.');
+  except
+    on E: EUIExperimentError do
+      AssertTrue(E.Message <> '');
+  end;
+end;
+
+procedure TTestAHW52UIExperiment.TestRejectsOutOfRangeProcessId;
+var
+  Manifest: TUIExperimentManifest;
+  JSON: UTF8String;
+  RootData, TargetData, Value: TJSONData;
+begin
+  Manifest := CreateValidManifest;
+  RootData := GetJSON(UIExperimentManifestToJSON(Manifest));
+  try
+    TargetData := TJSONObject(RootData).Find('target');
+    if not (TargetData is TJSONObject) then
+      Fail('The serialized manifest must contain its target object.');
+    Value := TJSONObject(TargetData).Find('processId');
+    if Value = nil then
+      Fail('The serialized target must contain a process ID.');
+    Value.AsInt64 := Int64(High(LongWord)) + 1;
+    JSON := RootData.FormatJSON;
+  finally
+    RootData.Free;
+  end;
+
+  try
+    UIExperimentManifestFromJSON(JSON);
+    Fail('A process ID must fit the Windows process-ID type.');
+  except
+    on E: EUIExperimentError do
       AssertTrue(E.Message <> '');
   end;
 end;

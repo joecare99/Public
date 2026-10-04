@@ -19,82 +19,84 @@ type
 implementation
 
 uses
-  Forms, StdCtrls, frmAhnenWinMain;
+  AHW52PersonDetailsFrame, StdCtrls;
 
-function CreateMainFormWithRelationshipComboBox(
-  out relationshipComboBox: TComboBox): TForm1;
+function CreateDetailsFrameWithRelationshipComboBox(
+  out relationshipComboBox: TComboBox): TAHW52PersonDetailsFrame;
 begin
-  Result := TForm1.CreateNew(nil);
-  relationshipComboBox := TComboBox.Create(Result);
-  relationshipComboBox.Parent := Result;
-  Result.ComboBox5 := relationshipComboBox;
+  Result := TAHW52PersonDetailsFrame.Create(nil);
+  relationshipComboBox := Result.ComboBox5;
 end;
 
 procedure TTestAHW52RelationshipCaptionNormalization.TestNormalizesMarriageCaption;
 var
-  mainForm: TForm1;
+  detailsFrame: TAHW52PersonDetailsFrame;
   relationshipComboBox: TComboBox;
 begin
-  mainForm := CreateMainFormWithRelationshipComboBox(relationshipComboBox);
+  detailsFrame :=
+    CreateDetailsFrameWithRelationshipComboBox(relationshipComboBox);
   try
     relationshipComboBox.Text := 'vorherige heschl. Verbindung';
 
-    mainForm.ComboBox5Exit(nil);
+    detailsFrame.ComboBox5Exit(relationshipComboBox);
 
     AssertEquals('Eheschliessung', relationshipComboBox.Text);
   finally
-    mainForm.Free;
+    detailsFrame.Free;
   end;
 end;
 
 procedure TTestAHW52RelationshipCaptionNormalization.TestNormalizesOtherRelationshipCaption;
 var
-  mainForm: TForm1;
+  detailsFrame: TAHW52PersonDetailsFrame;
   relationshipComboBox: TComboBox;
 begin
-  mainForm := CreateMainFormWithRelationshipComboBox(relationshipComboBox);
+  detailsFrame :=
+    CreateDetailsFrameWithRelationshipComboBox(relationshipComboBox);
   try
     relationshipComboBox.Text := 'andere Bez. zur Familie';
 
-    mainForm.ComboBox5Exit(nil);
+    detailsFrame.ComboBox5Exit(relationshipComboBox);
 
     AssertEquals('andere Beziehung', relationshipComboBox.Text);
   finally
-    mainForm.Free;
+    detailsFrame.Free;
   end;
 end;
 
 procedure TTestAHW52RelationshipCaptionNormalization.TestLeavesUnmatchedCaptionUnchanged;
 var
-  mainForm: TForm1;
+  detailsFrame: TAHW52PersonDetailsFrame;
   relationshipComboBox: TComboBox;
 begin
-  mainForm := CreateMainFormWithRelationshipComboBox(relationshipComboBox);
+  detailsFrame :=
+    CreateDetailsFrameWithRelationshipComboBox(relationshipComboBox);
   try
     relationshipComboBox.Text := 'Verlobung';
 
-    mainForm.ComboBox5Exit(nil);
+    detailsFrame.ComboBox5Exit(relationshipComboBox);
 
     AssertEquals('Verlobung', relationshipComboBox.Text);
   finally
-    mainForm.Free;
+    detailsFrame.Free;
   end;
 end;
 
 procedure TTestAHW52RelationshipCaptionNormalization.TestMatchingIsCaseSensitive;
 var
-  mainForm: TForm1;
+  detailsFrame: TAHW52PersonDetailsFrame;
   relationshipComboBox: TComboBox;
 begin
-  mainForm := CreateMainFormWithRelationshipComboBox(relationshipComboBox);
+  detailsFrame :=
+    CreateDetailsFrameWithRelationshipComboBox(relationshipComboBox);
   try
     relationshipComboBox.Text := 'Heschl. Verbindung';
 
-    mainForm.ComboBox5Exit(nil);
+    detailsFrame.ComboBox5Exit(relationshipComboBox);
 
     AssertEquals('Heschl. Verbindung', relationshipComboBox.Text);
   finally
-    mainForm.Free;
+    detailsFrame.Free;
   end;
 end;
 

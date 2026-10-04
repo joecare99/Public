@@ -5,15 +5,15 @@ unit Frm_TestFrame2;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, GenealogyDataModule,
-  fra_Edit;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,
+  GenealogyDataModule, AHW52PersonEditFrame;
 
 type
 
   { TForm1 }
 
   TForm1 = class(TForm)
-    Frame2_1: TFrame2;
+    PersonEditFrame: TAHW52PersonEditFrame;
   private
 
   public
@@ -28,4 +28,3 @@ implementation
 {$R *.lfm}
 
 end.
-

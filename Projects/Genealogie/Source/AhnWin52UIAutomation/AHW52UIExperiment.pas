@@ -365,6 +365,22 @@ begin
       'Manifest property "%s" is required.', [Name]);
 end;
 
+function TryReadJSONInteger(const Value: TJSONData; Minimum,
+  Maximum: Int64; out Number: Int64): Boolean;
+var
+  NumericValue: Extended;
+begin
+  Result := False;
+  if Value.JSONType <> jtNumber then
+    Exit;
+  NumericValue := Value.AsFloat;
+  if (NumericValue < Minimum) or (NumericValue > Maximum) or
+     (Frac(NumericValue) <> 0) then
+    Exit;
+  Number := Trunc(NumericValue);
+  Result := True;
+end;
+
 function RequiredString(const Parent: TJSONObject;
   const Name: string): UTF8String;
 var
@@ -377,12 +393,48 @@ begin
   Result := UTF8String(Value.AsString);
 end;
 
+procedure ValidateAllowedLookupOutcomes(const Root: TJSONObject;
+  ResultSchemaVersion: LongInt);
+const
+  ExpectedOutcomes: array[0..2] of UTF8String = (
+    'not-found', 'single-candidate', 'candidate-list');
+var
+  Value: TJSONData;
+  Outcomes: TJSONArray;
+  Index: LongInt;
+begin
+  if not Root.Find('allowedLookupOutcomes', Value) then
+  begin
+    if ResultSchemaVersion >= 2 then
+      raise EUIExperimentError.Create(
+        'Manifest lookup outcome list is required.');
+    Exit;
+  end;
+  if not (Value is TJSONArray) then
+    raise EUIExperimentError.Create(
+      'Manifest lookup outcomes must be an array.');
+  Outcomes := TJSONArray(Value);
+  if Outcomes.Count <> Length(ExpectedOutcomes) then
+    raise EUIExperimentError.Create(
+      'Manifest lookup outcome list does not match the supported contract.');
+  for Index := 0 to High(ExpectedOutcomes) do
+  begin
+    if Outcomes.Items[Index].JSONType <> jtString then
+      raise EUIExperimentError.Create(
+        'Manifest lookup outcome list does not match the supported contract.');
+    if UTF8String(Outcomes.Items[Index].AsString) <> ExpectedOutcomes[Index] then
+      raise EUIExperimentError.Create(
+        'Manifest lookup outcome list does not match the supported contract.');
+  end;
+end;
+
 function UIExperimentManifestFromJSON(
   const JSON: UTF8String): TUIExperimentManifest;
 var
   RootData: TJSONData;
   Root, Snapshot, Target, Query: TJSONObject;
   Value: TJSONData;
+  IntegerValue, ResultSchemaVersion: Int64;
 begin
   RootData := GetJSON(JSON);
   try
@@ -390,11 +442,12 @@ begin
       raise EUIExperimentError.Create('Manifest root must be an object.');
     Root := TJSONObject(RootData);
     Value := RequiredValue(Root, 'schemaVersion');
-    if (Value.JSONType <> jtNumber) or (Value.AsInteger <> 1) then
+    if not TryReadJSONInteger(Value, 1, 1, IntegerValue) then
       raise EUIExperimentError.Create('Unsupported experiment manifest schema.');
     Value := RequiredValue(Root, 'resultSchemaVersion');
-    if (Value.JSONType <> jtNumber) or not (Value.AsInteger in [1, 2]) then
+    if not TryReadJSONInteger(Value, 1, 2, ResultSchemaVersion) then
       raise EUIExperimentError.Create('Unsupported experiment result schema.');
+    ValidateAllowedLookupOutcomes(Root, ResultSchemaVersion);
 
     Result.ManifestId := RequiredString(Root, 'manifestId');
     Snapshot := RequiredObject(Root, 'snapshot');
@@ -407,9 +460,10 @@ begin
 
     Target := RequiredObject(Root, 'target');
     Value := RequiredValue(Target, 'processId');
-    if Value.JSONType <> jtNumber then
-      raise EUIExperimentError.Create('Target process ID must be numeric.');
-    Result.ProcessId := Value.AsInt64;
+    if not TryReadJSONInteger(Value, 1, High(LongWord), IntegerValue) then
+      raise EUIExperimentError.Create(
+        'Target process ID must be a positive 32-bit integer.');
+    Result.ProcessId := IntegerValue;
     Result.ExecutablePath := RequiredString(Target, 'executablePath');
     Result.ExecutableSha256 := RequiredString(Target, 'executableSha256');
     Result.ProfileReference := RequiredString(Target, 'profileReference');

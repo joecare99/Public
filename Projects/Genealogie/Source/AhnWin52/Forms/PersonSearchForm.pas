@@ -266,6 +266,19 @@ implementation
 uses
   AncestorChartOptionsForm;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Label3 (TLabel); TForm3.Edit1 (TEdit); TForm3.Edit2 (TEdit)
+Database/provider: DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_009C
+Project calls: TForm3.ucase(); Unit_00408494.Proc_00409214; Unit_00408494.Proc_004099B4
+Framework/API calls: Controls.TControl.GetText(TControl):TCaption;;
+    Forms.TCustomForm.Close(TCustomForm);
+Strings/files/dialog text: 'geba'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Button1Click(Sender : TObject);
 begin
 (*
@@ -689,6 +702,19 @@ begin
   SetCancelResultOnEscape(Self, Key);
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Label3 (TLabel); TForm3.Edit1 (TEdit)
+Database/provider: DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08; GlobalVar_011AD2C4
+Unresolved field offsets: OFFS_009C
+Project calls: Unit_00408494.Proc_004099B4
+Framework/API calls: Controls.TControl.GetText(TControl):TCaption;;
+    Forms.TCustomForm.Close(TCustomForm);
+Strings/files/dialog text: '�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Edit1Exit(Sender : TObject);
 begin
 (*
@@ -916,6 +942,15 @@ begin
   end;
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Image1 (N.A.)
+Global state: GlobalVar_0061E0B4; GlobalVar_0061E0B8
+Project calls: TForm16.QRPreview1PageAvailable()
+Framework/API calls: Forms.TCustomForm.Show(TCustomForm);;
+    QRPrntr.TQRPreview.SetQRPrinter(TQRPreview;TQRPrinter);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.showpreview(Sender : TObject);
 begin
 (*
@@ -965,6 +1000,11 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_004091D8
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.ucase(Sender : TObject);
 begin
 (*
@@ -1154,6 +1194,16 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Database/provider: DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_0884
+Project calls: TForm3.Proc_00576F54(); TForm3.ucase(); Unit_00408494.Proc_00409448
+Framework/API calls: System.Proc_00404EE0
+Strings/files/dialog text: ' <'; ' und '; ', '; '> '; '^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.refelt(Sender : TObject);
 begin
 (*
@@ -1560,6 +1610,34 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Image1 (N.A.); Label1 (TLabel); Label2 (TLabel); Label3 (TLabel); Label4 (N.A.); Label5
+    (N.A.); Label7 (N.A.)
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.Delete(TDataSet);; DB.TDataSet.First(TDataSet);; DB.TDataSet.Open(TDataSet);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.EmptyTable(TTable);; QRCtrls.TQRDBText.SetDataSet(TQRDBText;TDataSet);;
+    QuickRpt.TQuickRep.SetDataSet(TQuickRep;TDataSet);
+Global state: GlobalVar_0061DF08; GlobalVar_0061DF10; GlobalVar_0061E0B4; GlobalVar_0253592C
+Unresolved field offsets: OFFS_01B4; OFFS_01BC; OFFS_01C0; OFFS_02A8; OFFS_02AC; OFFS_02BC;
+    OFFS_034C; OFFS_0350; OFFS_0354; OFFS_0358; OFFS_035C; OFFS_0368; OFFS_64
+Project calls: Unit_00408494.Proc_00409448
+Framework/API calls: Controls.TControl.SetHeight(TControl;Integer);;
+    Controls.TControl.SetLeft(TControl;Integer);; Controls.TControl.SetVisible(TControl;Boolean);;
+    Controls.TControl.SetWidth(TControl;Integer);; Forms.TScreen.SetCursor(TScreen;TCursor);;
+    Graphics.TFont.SetSize(TFont;Integer);; method TLabel.SetEnabled(Boolean);
+    QRCtrls.TQRCustomLabel.SetAutoStretch(TQRCustomLabel;Boolean);;
+    QRCtrls.TQRCustomLabel.SetCaption(TQRCustomLabel;AnsiString);;
+    QRCtrls.TQRDBText.SetDataField(TQRDBText;AnsiString);;
+    QuickRpt.TCustomQuickRep.Preview(TCustomQuickRep);;
+    QuickRpt.TQRPage.SetColumns(TQRPage;Integer);; System.Proc_00404EE0;
+    System.TObject.Free(TObject);; TScreen instance
+Strings/files/dialog text: ', '; '_^[��]�'; 'fahren von'; 'Nach'; 'Nachfahren von'; 'Namens-Register
+    zu: '; 'Namens-Register'; 'namort'; 'NN'; 'no'; 'Vorf'; 'Vorfahren von'; 'zus';
+    '�+�����_^[��]�'; '�5����\����<�a'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.NList(Sender : TObject);
 begin
 (*
@@ -2771,6 +2849,33 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Image1 (N.A.); Label1 (TLabel); Label2 (TLabel); Label3 (TLabel); Label4 (N.A.); Label5
+    (N.A.); Label7 (N.A.)
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.Delete(TDataSet);; DB.TDataSet.First(TDataSet);; DB.TDataSet.Open(TDataSet);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.EmptyTable(TTable);; QRCtrls.TQRDBText.SetDataSet(TQRDBText;TDataSet);;
+    QuickRpt.TQuickRep.SetDataSet(TQuickRep;TDataSet);
+Global state: GlobalVar_0061DF08; GlobalVar_0061DF10; GlobalVar_0061E0B4; GlobalVar_0253592C
+Unresolved field offsets: OFFS_01B4; OFFS_01BC; OFFS_01C0; OFFS_02A8; OFFS_02AC; OFFS_02BC;
+    OFFS_034C; OFFS_0350; OFFS_0354; OFFS_0358; OFFS_035C; OFFS_0368; OFFS_64
+Project calls: Unit_00408494.Proc_00409448
+Framework/API calls: Controls.TControl.SetHeight(TControl;Integer);;
+    Controls.TControl.SetLeft(TControl;Integer);; Controls.TControl.SetVisible(TControl;Boolean);;
+    Controls.TControl.SetWidth(TControl;Integer);; Forms.TScreen.SetCursor(TScreen;TCursor);;
+    Graphics.TFont.SetSize(TFont;Integer);; method TLabel.SetEnabled(Boolean);
+    QRCtrls.TQRCustomLabel.SetAutoStretch(TQRCustomLabel;Boolean);;
+    QRCtrls.TQRCustomLabel.SetCaption(TQRCustomLabel;AnsiString);;
+    QRCtrls.TQRDBText.SetDataField(TQRDBText;AnsiString);;
+    QuickRpt.TCustomQuickRep.Preview(TCustomQuickRep);;
+    QuickRpt.TQRPage.SetColumns(TQRPage;Integer);; System.Proc_00404EE0;
+    System.TObject.Free(TObject);; TScreen instance
+Strings/files/dialog text: ', '; '_^[��]�'; 'fahren von'; 'Nach'; 'Nachfahren von'; 'namort'; 'no';
+    'Orts-Register zu: '; 'Orts-Register'; 'Vorf'; 'Vorfahren von'; 'zus'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.OList(Sender : TObject);
 begin
 (*
@@ -3919,6 +4024,60 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Image2 (N.A.); Label7 (N.A.); TForm1.Label18 (TLabel); TForm1.Label19 (TLabel);
+    TForm1.OpenDialog1 (TOpenDialog)
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.Edit(TDataSet);; DB.TDataSet.First(TDataSet);; DB.TDataSet.Open(TDataSet);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.EmptyTable(TTable);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08; GlobalVar_0061E048; GlobalVar_0253563C; GlobalVar_02535644;
+    GlobalVar_02535648; GlobalVar_0253564C; GlobalVar_02535668; GlobalVar_0253566C;
+    GlobalVar_02535940; GlobalVar_02535B9C
+Unresolved field offsets: OFFS_005C; OFFS_0080; OFFS_00A8; OFFS_00C8; OFFS_00CC; OFFS_01DC;
+    OFFS_01E0; OFFS_0244; OFFS_0248; OFFS_02A4; OFFS_02AC; OFFS_02B0; OFFS_02B4; OFFS_032C;
+    OFFS_0330; OFFS_0334; OFFS_0338; OFFS_0378; OFFS_0410; OFFS_0414; OFFS_0418; OFFS_041C;
+    OFFS_0420; OFFS_0424; OFFS_0428; OFFS_042C; OFFS_0430; OFFS_0434; OFFS_0438; OFFS_043C;
+    OFFS_0440; OFFS_0444; OFFS_0448; OFFS_044C; OFFS_0450; OFFS_0454; OFFS_0458; OFFS_045C;
+    OFFS_0460; OFFS_0464; OFFS_0534; OFFS_0538; OFFS_053C; OFFS_0540; OFFS_0544; OFFS_0548;
+    OFFS_054C; OFFS_0550; OFFS_0554; OFFS_0558; OFFS_055C; OFFS_0560; OFFS_0564; OFFS_0568;
+    OFFS_056C; OFFS_0570; OFFS_0574; OFFS_0578; OFFS_057C; OFFS_0580; OFFS_0584; OFFS_0588;
+    OFFS_058C; OFFS_0590; OFFS_0594; OFFS_0598; OFFS_059C; OFFS_05A0; OFFS_05A4; OFFS_05A8;
+    OFFS_05AC; OFFS_05B0; OFFS_05B4; OFFS_05BC; OFFS_05C0; OFFS_05C4; OFFS_05C8; OFFS_05CC;
+    OFFS_05D0; OFFS_05D4; OFFS_05D8; OFFS_05DC; OFFS_05E0; OFFS_05E4; OFFS_05E8; OFFS_05F0;
+    OFFS_05F4; OFFS_05F8; OFFS_05FC; OFFS_0A44; OFFS_0A48; OFFS_0A4C; OFFS_0A58; OFFS_0A64;
+    OFFS_0A68; OFFS_0A74; OFFS_58
+Project calls: TForm1 instance; TForm1.listen_akt(); TForm1.ucase(); TForm3.ans(); TForm3.indi();
+    TForm3.Proc_00576EB0(); TForm3.Proc_00577934(); Unit_00408494.Proc_004091D8;
+    Unit_00408494.Proc_00409214; Unit_00408494.Proc_00409448; Unit_00408494.Proc_004094CC;
+    Unit_00408494.Proc_00409950; Unit_00408494.Proc_00409980; Unit_00408494.Proc_004099B4;
+    Unit_00446399.Proc_0044643C
+Framework/API calls: Controls.TControl.SetText(TControl;TCaption);;
+    Controls.TControl.SetVisible(TControl;Boolean);; Dialogs.ShowMessage(AnsiString);;
+    Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;; MMSystem.mci_TMSF_Frame(Longint):Byte;;
+    QControls.TGraphicControl.PaintRequest(TGraphicControl);; System.IOResult:Integer;;
+    System.Proc_00402988; System.Proc_00404EE0; System.Utf8ToAnsi(UTF8String):String;
+Strings/files/dialog text: ' %'; ' ['; ' Event Type: '; ' NOTE '; ' NOTE @'; ' Rel.: '; ' RELI'; '
+    TEXT'; '0 %'; '0 @F'; '0 @N'; '0 @REPO'; '0 TRLR'; '0000'; '000000'; '1 _ABBR'; '1 _FCNTY'; '1
+    _FCTRY'; '1 _FSTAE'; '1 _GOV'; '1 ADOP'; '1 AFN'; '1 AUTH'; '1 CHAR '; '1 CHAR IBM'; '1 CHAR
+    UNIC'; '1 CHAR UTF'; '1 DATE'; '1 EVEN'; '1 MARR'; '1 NAME'; '1 PLAC'; '1 POST'; '1 PUBL'; '1
+    RESI'; '1 TEXT'; '1 TITL'; '1 TYPE'; '1 URL'; '2 DATE'; '2 FAMC'; '2 GIVN'; '2 PLAC'; '2 SOUR';
+    '2 SURN'; '2 TYPE CIVI'; '2 TYPE RELI'; '2 TYPE'; '3 _EXTENDED_LOCATIONS'; ': '; '; '; '@ _LOC';
+    '@ FAM'; '@ INDI'; '@ NOTE'; '@ SOUR'; '@I'; '_^[��]�'; '_GODP'; '_loc'; '_WITN'; 'AA'; 'ADDR';
+    'adop'; 'adr'; 'ADR1'; 'ADR2'; 'ADR3'; 'ADR4'; 'ADR5'; 'alt_'; 'andere Beziehung'; 'Ausbildung:
+    '; 'BAPM'; 'birt'; 'BIRT'; 'Bque'; 'buri'; 'BURI'; 'CAUS'; 'CHAN'; 'chan'; 'CHIL'; 'CHR'; 'chr';
+    'COMM '; 'CONC '; 'CONT '; 'DEAT'; 'deat'; 'DIV'; 'EDUC'; 'Eheschliessung'; 'EMA'; 'emig';
+    'EMIG'; 'ev'; 'even'; 'Event Date: '; 'Event Type: '; 'fam'; 'fam_civi'; 'fam_div'; 'fam_reli';
+    'Fehler beim Einlesen.'; 'Fehler: '; 'Gedcom einlesen '; 'Gedcom pr�fen ... '; 'Gque'; 'Hnm.:';
+    'Hque.:'; 'HUSB'; 'IDNO'; 'ih'; 'kath'; 'kl'; 'konf'; 'L.-Orte:'; 'lebt:'; 'NATU'; 'natu'; 'NN';
+    'not marr'; 'NPFX'; 'nro'; 'OCCU'; 'PHON'; 'Qu.Be'; 'Qu.G'; 'Qu.Ta'; 'Qu.To'; 'REFN'; 'REFN: ';
+    'Rel.: '; 'resi'; 'rk'; 'Saqu.:'; 'Schq.:'; 'Schrw.:'; 'Sdat.:'; 'SEX'; 'Sort.:'; 'sour';
+    'Sque'; 'Strz.:'; 'SUBM'; 'Tque'; 'Trauz'; 'URL'; 'Verb.:'; 'WIFE'; '�H'; '�N����?���_^[��]�';
+    '�t��������<�a'; '������%����<�a'; '����������)�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.gedein(Sender : TObject);
 begin
 (*
@@ -19542,6 +19701,58 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.Label18 (TLabel); TForm1.Label19 (TLabel); TForm1.OpenDialog1 (TOpenDialog);
+    TForm1.Repso2 (TClientDataSet); TForm1.Repso2alt (TStringField); TForm1.Repso2inh
+    (TStringField); TForm1.Repso2inh2 (TMemoField); TForm1.Repso2nr (TIntegerField); Form1
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.DisableControls(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DB.TDataSet.EnableControls(TDataSet);; DB.TDataSet.First(TDataSet);;
+    DB.TDataSet.Open(TDataSet);; DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.EmptyTable(TTable);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08; GlobalVar_02535940
+Unresolved field offsets: OFFS_005C; OFFS_0080; OFFS_02A4; OFFS_02AC; OFFS_02B0; OFFS_02B4;
+    OFFS_0410; OFFS_0414; OFFS_0418; OFFS_041C; OFFS_0420; OFFS_0424; OFFS_0428; OFFS_042C;
+    OFFS_0430; OFFS_0434; OFFS_0438; OFFS_043C; OFFS_0440; OFFS_0444; OFFS_0448; OFFS_044C;
+    OFFS_0450; OFFS_0454; OFFS_0458; OFFS_045C; OFFS_0534; OFFS_0538; OFFS_053C; OFFS_0540;
+    OFFS_0544; OFFS_0548; OFFS_054C; OFFS_0550; OFFS_0554; OFFS_0558; OFFS_055C; OFFS_0560;
+    OFFS_0564; OFFS_0568; OFFS_056C; OFFS_0570; OFFS_0574; OFFS_0578; OFFS_057C; OFFS_0580;
+    OFFS_0584; OFFS_0588; OFFS_058C; OFFS_0590; OFFS_0594; OFFS_0598; OFFS_059C; OFFS_05A0;
+    OFFS_05A4; OFFS_05A8; OFFS_05AC; OFFS_05B0; OFFS_05B4; OFFS_05BC; OFFS_05C0; OFFS_05C4;
+    OFFS_05C8; OFFS_05CC; OFFS_05D4; OFFS_05D8; OFFS_05DC; OFFS_05F0; OFFS_05F4; OFFS_05F8;
+    OFFS_05FC; OFFS_0600
+Project calls: TForm1 instance; TForm3.ans(); TForm3.Proc_00577934(); TForm3.zsa();
+    Unit_00408494.Proc_004091D8; Unit_00408494.Proc_00409214; Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_004094CC; Unit_00408494.Proc_00409950; Unit_00408494.Proc_00409980;
+    Unit_00408494.Proc_004099B4; Unit_00446399.Proc_00446420; Unit_00446399.Proc_0044643C
+Framework/API calls: Controls.TControl.Refresh(TControl);;
+    Controls.TControl.SetText(TControl;TCaption);; Controls.TControl.SetVisible(TControl;Boolean);;
+    DBClient.TCustomClientDataSet.EmptyDataSet(TCustomClientDataSet);;
+    DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;;
+    Forms.TScreen.SetCursor(TScreen;TCursor);; method TClientDataSet.FindKey(Array of Longin);
+    method TClientDataSet.Post(); method TIntegerField.GetAsInteger(); method
+    TIntegerField.SetAsInteger(Longint); method TMemoField.GetAsString(); method
+    TMemoField.SetAsString(string); method TStringField.SetAsString(string);
+    QControls.TGraphicControl.PaintRequest(TGraphicControl);; System.Proc_00402988;
+    System.Proc_00404EE0; System.Utf8ToAnsi(UTF8String):String;; TScreen instance
+Strings/files/dialog text: ' %'; ', '; '0 %'; '0 @'; '0 @F'; '0 @I'; '0 @N'; '0 @NI'; '0 @P'; '0
+    @S'; '0 TRLR'; '000000'; '1 ADOP'; '1 ADR1'; '1 ADR3'; '1 ADR4'; '1 ADR5'; '1 BAPT'; '1 BIRT';
+    '1 BURI'; '1 CHAR '; '1 CHAR ANSI'; '1 CHAR IBM'; '1 CHAR UNIC'; '1 CHAR UTF'; '1 CHIL @'; '1
+    CHR'; '1 CON'; '1 DEAT'; '1 DIV'; '1 EDUC'; '1 EMA'; '1 ENGA'; '1 GODP '; '1 HUSB @'; '1 IDNO';
+    '1 MARR'; '1 NAME'; '1 NOTE @N'; '1 NOTE Hnm.'; '1 NOTE lebt'; '1 NOTE'; '1 OCCU'; '1 PHON'; '1
+    RELI'; '1 REPO @R'; '1 RESI'; '1 SEX'; '1 SOUR @'; '1 SOUR @S'; '1 URL'; '1 WIFE @'; '2 _GODP ';
+    '2 _RUFN'; '2 _WITN'; '2 ADDR'; '2 CAUS'; '2 COMM'; '2 CON'; '2 CONC'; '2 DATE '; '2 DATE'; '2
+    EMAIL'; '2 FAMC'; '2 GIVN'; '2 GODP '; '2 NOTE @N'; '2 NOTE'; '2 PHON'; '2 PLAC'; '2 SITE'; '2
+    SOUR @'; '2 SOUR @S'; '2 SOUR'; '2 SURN'; '2 TYPE CIVI'; '2 TYPE RELI'; '3 _EXTENDED_LOCATIONS';
+    '3 _LOC @P'; '3 CON'; '3 CONC'; '3 CONT'; '; '; '@ INDI'; '@NI'; 'AD'; 'adop'; 'alt_'; 'andere
+    Beziehung'; 'Ausbildung: '; 'CHAN'; 'chan'; 'Ed'; 'Eheschliessung'; 'Gedcom einlesen '; 'Gedcom
+    vorbereiten'; 'Hnm.:'; 'ih'; 'INDI'; 'lebt'; 'lebt: j'; 'marr'; 'NI'; 'not mar'; 'Rel'; 'rk';
+    'roman catholic'; 'Schrw.:'; 'VARIATION'; '�Ԍ��������<�a'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.gedein2(Sender : TObject);
 begin
 (*
@@ -31963,6 +32174,57 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Label7 (N.A.); TForm1.Label18 (TLabel); TForm1.Label19 (TLabel); TForm1.Repso2
+    (TClientDataSet); TForm1.Repso2alt (TStringField); TForm1.Repso2inh (TStringField);
+    TForm1.Repso2inh2 (TMemoField); TForm1.Repso2nr (TIntegerField); TForm3.OpenDialog1
+    (TOpenDialog); TForm3.Query1 (TQuery)
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.DisableControls(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DB.TDataSet.EnableControls(TDataSet);; DB.TDataSet.First(TDataSet);;
+    DB.TDataSet.Last(TDataSet);; DB.TDataSet.Open(TDataSet);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.EmptyTable(TTable);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08; GlobalVar_0253583C; GlobalVar_02535840; GlobalVar_02535864;
+    GlobalVar_02535868
+Unresolved field offsets: OFFS_005C; OFFS_00A8; OFFS_01DC; OFFS_0550
+Project calls: TForm1 instance; TForm1.anzeigen(); TForm1.listen_akt(); TForm3.Bapm();
+    TForm3.Birt(); TForm3.Buri(); TForm3.Chan(); TForm3.Deat(); TForm3.Educ(); TForm3.Even();
+    TForm3.famn(); TForm3.Grad(); TForm3.Nam(); TForm3.Note(); TForm3.Occu();
+    TForm3.Proc_00577934(); TForm3.Prop(); TForm3.Resi(); TForm3.Sex(); TForm3.ucase();
+    TForm3.Ziff2(); TForm3.zsa(); Unit_00408494.Proc_004091D8; Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_00409950; Unit_00408494.Proc_00409980; Unit_00408494.Proc_004099B4;
+    Unit_00446399.Proc_00446420; Unit_00446399.Proc_0044643C
+Framework/API calls: Controls.TControl.Refresh(TControl);;
+    Controls.TControl.SetText(TControl;TCaption);; Controls.TControl.SetVisible(TControl;Boolean);;
+    DBClient.TCustomClientDataSet.EmptyDataSet(TCustomClientDataSet);;
+    DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    Dialogs.Proc_004456EC; Dialogs.ShowMessage(AnsiString);;
+    Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;;
+    Forms.TScreen.SetCursor(TScreen;TCursor);; method TClientDataSet.FindKey(Array of Longin);
+    method TClientDataSet.Post(); method TIntegerField.SetAsInteger(Longint); method
+    TMemoField.GetAsString(); method TMemoField.SetAsString(string); method TOpenDialog.Execute();
+    method TStringField.SetAsString(string);
+    QControls.TGraphicControl.PaintRequest(TGraphicControl);; System.Proc_00402988;
+    System.Proc_00404EE0; System.Utf8ToAnsi(UTF8String):String;; TScreen instance
+Strings/files/dialog text: ' %'; ' Familien'; ' Personen'; '0 %'; '0 @F'; '0 @N'; '0 @NI'; '0 @P';
+    '0 @S'; '0 TRLR'; '000000'; '1 _ABBR'; '1 _FCNTY'; '1 _FCTRY'; '1 _FPOST'; '1 _FSTAE'; '1 _GOV';
+    '1 ADDR'; '1 ADOP'; '1 ADR1'; '1 ADR2'; '1 ADR3'; '1 ADR4'; '1 ADR5'; '1 CHAR '; '1 CHAR ANSEL';
+    '1 CHAR ANSI'; '1 CHAR ASC'; '1 CHAR IBM'; '1 CHAR UNIC'; '1 CHAR UTF'; '1 CON'; '1 DEST'; '1
+    EMA'; '1 FILE'; '1 GEDC'; '1 NAME '; '1 NAME'; '1 NOTE @N'; '1 NOTE'; '1 PHON'; '1 POST'; '1
+    REPO @R'; '1 SOUR @'; '1 SOUR @S'; '1 SOUR'; '1 URL'; '2 ADDR'; '2 CONC'; '2 CONT'; '2 EMAIL';
+    '2 FAMC'; '2 FORM'; '2 LATI '; '2 LONG '; '2 NOTE @N'; '2 PHON'; '2 SOUR @S'; '2 VERS'; '3 _LOC
+    @P'; '; '; '@ _LOC'; '@ INDI'; '_^[��]�'; '_EXTENDED_LOCATIONS'; 'AA'; 'ansel'; 'ansi'; 'asci';
+    'BAPM'; 'Bekenntnis: '; 'Beruf: '; 'BIRT'; 'BURI'; 'CHAN'; 'CHR'; 'DATE'; 'Datei: '; 'Datum: ';
+    'DEAT'; 'EDUC'; 'Einsender: '; 'Erweiterung: EXTENDED_LOCATIONS'; 'EVEN'; 'FAMC'; 'FAMS';
+    'Gedcom einlesen '; 'Gedcom vorbereiten'; 'Gedcom-Dateien (*.ged)|*.ged'; 'Gedcom-Daten anh�ngen
+    ?'; 'GEDCOM: '; 'GRAD'; 'ibm'; 'IDNO'; 'IDNO: '; 'ih'; 'NAME'; 'NI'; 'OCCU'; 'ort_'; 'PROP';
+    'Quelle: '; 'REFN'; 'REFN: '; 'RELI'; 'RESI'; 'RIN'; 'RIN: '; 'rk'; 'r�mi'; 'SEX'; 'TITL';
+    'unic'; 'utf'; 'Zeichensatz: '; 'Ziel: '; '�� ���_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.gedein_neu(Sender : TObject);
 begin
 (*
@@ -38353,6 +38615,56 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Image1 (N.A.); Image2 (N.A.); Label10 (N.A.); Label2 (TLabel); Label3 (TLabel); Label4
+    (N.A.); Label5 (N.A.); Label7 (N.A.); Label9 (N.A.); Shape1 (N.A.); TForm1.DBText1 (TDBText);
+    TForm1.Label18 (TLabel); TForm1.Label19 (TLabel); TForm1.Memo1 (TMemo); TForm1.SaveDialog1
+    (TSaveDialog); Form1
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.FieldByName(TDataSet;AnsiString):TField;; DB.TDataSet.First(TDataSet);;
+    DB.TDataSet.Next(TDataSet);; DB.TDataSet.Open(TDataSet);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08; GlobalVar_0061DFEC; GlobalVar_0061DFFC; GlobalVar_02535650;
+    GlobalVar_02535654; GlobalVar_02535658; GlobalVar_0253592C; GlobalVar_02535BA0
+Unresolved field offsets: OFFS_005C; OFFS_0080; OFFS_00C4; OFFS_00CC; OFFS_024C; OFFS_0328;
+    OFFS_032C; OFFS_0334; OFFS_0340; OFFS_0348; OFFS_0534; OFFS_0538; OFFS_05B0; OFFS_60
+Project calls: method TForm1.Invalidate(); TForm1 instance; TForm1.anzeigen(); TForm1.ucase();
+    TForm3.gedausx(); TForm3.Proc_00576EB0(); TForm3.Proc_00582C04(); Unit_00408494.Proc_004091D8;
+    Unit_00408494.Proc_00409448; Unit_00408494.Proc_00409950; Unit_00408494.Proc_00409980;
+    Unit_00408494.Proc_004099B4; Unit_00408494.Proc_0040A1B8; Unit_00408494.Proc_0040BBD8;
+    Unit_00408494.Proc_0040C84C
+Framework/API calls: Controls.TControl.GetText(TControl):TCaption;;
+    Controls.TControl.Hide(TControl);; Controls.TControl.Refresh(TControl);;
+    Controls.TControl.SetColor(TControl;TColor);; Controls.TControl.SetText(TControl;TCaption);;
+    Controls.TControl.SetVisible(TControl;Boolean);;
+    Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;; Forms.TCustomForm.Hide(TCustomForm);;
+    Forms.TCustomForm.SetVisible(TCustomForm;Boolean);; method TLabel.SetDragMode(TDragMode); method
+    TLabel.Update(); method TMemo.Clear(); method TStrings.Assign(TPersistent); method
+    TStrings.Count(); method TStrings.Strings [ Index();
+    QControls.TGraphicControl.PaintRequest(TGraphicControl);; System.AnsiToUtf8(String):UTF8String;;
+    System.Proc_00402988; System.Proc_00404EE0
+Strings/files/dialog text: ' %'; ' /'; ' and taufjahr<='; ' TO '; '. .'; '0 %'; '0 @F'; '0 @I'; '0
+    @P'; '0 @S'; '0 @S1@ SUBM'; '0 HEAD'; '0 TRLR'; '000000'; '1 _ABBR '; '1 _FCNTY '; '1 _FCTRY ';
+    '1 _FPOST '; '1 _FSTAE '; '1 _GOV '; '1 _MAIDENHEAD '; '1 _STAT MARRIED'; '1 _STAT NOT MARRIED';
+    '1 ABBR '; '1 ADDR'; '1 ADOP'; '1 BIRT'; '1 BURI'; '1 CHAR ANSI'; '1 CHAR Unicode'; '1 CHAR
+    UTF-8'; '1 CHIL @I'; '1 CHR'; '1 CITY '; '1 DEAT'; '1 DEST OTHER'; '1 DIV'; '1 EMAIL '; '1 FAMC
+    @F'; '1 FAMS @F'; '1 FILE '; '1 GEDC'; '1 HUSB @I'; '1 IDNO '; '1 LANG German'; '1 MAP'; '1
+    MARR'; '1 NAME '; '1 NAME /'; '1 NAME UNKNOWN'; '1 NOTE '; '1 NOTE Hnm.: '; '1 NOTE lebt: '; '1
+    NOTE Schrw.: '; '1 OCCU '; '1 PHON '; '1 PLAC'; '1 POST '; '1 PUBL '; '1 RELI '; '1 RESI'; '1
+    SEX F'; '1 SEX M'; '1 SEX U'; '1 SOUR @S'; '1 SOUR AHNENWIN'; '1 TITL '; '1 WIFE @I'; '2 _GODP
+    '; '2 _RUFNAME '; '2 _WITN '; '2 ADDR '; '2 ADR1 '; '2 ADR2 '; '2 CALN '; '2 CAUS '; '2 CONT ';
+    '2 CONT Hnm.: '; '2 CONT lebt: '; '2 CONT Schrw.: '; '2 DATE '; '2 EMAIL '; '2 EVEN '; '2 FAMC
+    @F'; '2 FORM LINEAGE-LINKED'; '2 FORM place, county, state, countr; '2 LATI '; '2 LONG '; '2
+    NOTE '; '2 NOTE not marr'; '2 PHON '; '2 PLAC '; '2 SOUR @S'; '2 TYPE CIVIL'; '2 TYPE RELI'; '2
+    TYPE variant'; '2 VERS 5.1'; '2 VERS 5.5.1'; '2 WWW '; '3 _LOC @P'; '3 ADR1 '; '3 ADR2 '; '3
+    ADR3 '; '3 CITY '; '3 CONC '; '3 DATE '; '3 MEDI '; '3 PLAC '; '3 POST '; '@ _LOC'; '@ FAM'; '@
+    INDI'; '@ SOUR'; '_^[��]�'; 'andere Beziehung'; 'dsn'; 'FROM '; 'gebjahr<='; 'ged'; 'Gedcom
+    schreiben'; 'Gedcom-Dateien (*.ged)|*.ged'; 'kommentar'; 'nn'; 'num'; 'nummer'; 'ort_'; 'Over';
+    'tit'; '﻿0 HEAD'; '�SS������_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.gedaus(Sender : TObject);
 begin
 (*
@@ -50631,6 +50943,25 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Image1 (N.A.); Label1 (TLabel); Label10 (N.A.); Label2 (TLabel); Label3 (TLabel); Label4
+    (N.A.); Label9 (N.A.); TForm1.Label18 (TLabel)
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.Edit(TDataSet);; DB.TDataSet.First(TDataSet);; DB.TDataSet.Next(TDataSet);;
+    DB.TDataSet.Open(TDataSet);; DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.EmptyTable(TTable);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_00B0; OFFS_02A4; OFFS_02B8; OFFS_0454; OFFS_0458; OFFS_0464
+Project calls: TForm1 instance; TForm3.Proc_00576EB0(); TForm3.Proc_00582C04();
+    Unit_00408494.Proc_004091D8; Unit_00408494.Proc_00409448; Unit_00408494.Proc_00409950;
+    Unit_00408494.Proc_00409980; Unit_00408494.Proc_004099B4
+Framework/API calls: Controls.TControl.SetText(TControl;TCaption);;
+    QControls.TGraphicControl.PaintRequest(TGraphicControl);; System.Proc_00404EE0
+Strings/files/dialog text: ' %'; '_^[��]�'; 'mut'; 'num'; 'vat'; '�B����_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.gedausx(Sender : TObject);
 begin
 (*
@@ -52862,6 +53193,50 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Image2 (N.A.); Label5 (N.A.); Label7 (N.A.); Label9 (N.A.); Shape1 (N.A.); TForm1.Label18
+    (TLabel); TForm1.Label19 (TLabel); TForm1.Memo1 (TMemo); TForm1.SaveDialog1 (TSaveDialog)
+Database/provider: DB.TDataSet.FieldByName(TDataSet;AnsiString):TField;;
+    DB.TDataSet.First(TDataSet);; DB.TDataSet.Next(TDataSet);; DB.TDataSet.Open(TDataSet);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08; GlobalVar_0061DFEC; GlobalVar_0061DFFC; GlobalVar_02535644;
+    GlobalVar_02535650; GlobalVar_02535654; GlobalVar_02535658
+Unresolved field offsets: OFFS_005C; OFFS_00C4; OFFS_01D0; OFFS_024C; OFFS_0328; OFFS_032C;
+    OFFS_0334; OFFS_0340; OFFS_0348; OFFS_05B0
+Project calls: TForm1 instance; TForm1.anzeigen(); TForm3.gedausxv(); TForm3.Proc_00576EB0();
+    TForm3.Proc_00582C04(); Unit_00408494.Proc_004091D8; Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_00409950; Unit_00408494.Proc_00409980; Unit_00408494.Proc_004099B4;
+    Unit_00408494.Proc_0040A1B8; Unit_00408494.Proc_0040BBD8; Unit_00408494.Proc_0040C84C;
+    Unit_00446399.Proc_0044643C
+Framework/API calls: Controls.TControl.GetText(TControl):TCaption;;
+    Controls.TControl.Hide(TControl);; Controls.TControl.Refresh(TControl);;
+    Controls.TControl.SetText(TControl;TCaption);; Controls.TControl.SetVisible(TControl;Boolean);;
+    Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;; Forms.TCustomForm.Hide(TCustomForm);;
+    Forms.TCustomForm.SetVisible(TCustomForm;Boolean);; method TMemo.Clear(); method
+    TStrings.Assign(TPersistent); method TStrings.Count(); method TStrings.Strings [ Index();
+    QControls.TGraphicControl.PaintRequest(TGraphicControl);; System.AnsiToUtf8(String):UTF8String;;
+    System.Proc_00402988; System.Proc_00404EE0; System.TObject.Free(TObject);
+Strings/files/dialog text: ' %'; ' /'; ' TO '; '..'; '0 %'; '0 @F'; '0 @I'; '0 @P'; '0 @S'; '0 @S1@
+    SUBM'; '0 HEAD'; '0 TRLR'; '000000'; '1 _ABBR '; '1 _FCNTY '; '1 _FCTRY '; '1 _FPOST '; '1
+    _FSTAE '; '1 _GOV '; '1 _STAT MARRIED'; '1 _STAT NOT MARRIED'; '1 ABBR '; '1 ADDR'; '1 BIRT'; '1
+    BURI'; '1 CHAR ANSI'; '1 CHAR Unicode'; '1 CHAR UTF-8'; '1 CHIL @I'; '1 CHR'; '1 CITY '; '1
+    DEAT'; '1 DEST OTHER'; '1 DIV'; '1 EMAIL '; '1 FAMC @F'; '1 FAMS @F'; '1 FILE '; '1 GEDC'; '1
+    HUSB @I'; '1 IDNO '; '1 LANG German'; '1 MAP '; '1 MARR'; '1 NAME '; '1 NAME /'; '1 NAME
+    UNKNOWN'; '1 NOTE '; '1 NOTE Hnm.: '; '1 NOTE lebt: '; '1 NOTE Schrw.: '; '1 OCCU '; '1 PHON ';
+    '1 PLAC'; '1 POST '; '1 PUBL '; '1 RELI '; '1 RESI'; '1 SEX F'; '1 SEX M'; '1 SEX U'; '1 SOUR
+    @S'; '1 SOUR AHNENWIN'; '1 TITL '; '1 WIFE @I'; '2 _GODP '; '2 _RUFNAME '; '2 _WITN '; '2 ADDR
+    '; '2 ADR1 '; '2 ADR2 '; '2 CALN '; '2 CAUS '; '2 CONT '; '2 CONT Hnm.: '; '2 CONT lebt: '; '2
+    CONT Schrw.: '; '2 DATE '; '2 EMAIL '; '2 EVEN '; '2 FORM LINEAGE-LINKED'; '2 FORM place,
+    county, state, countr; '2 NOTE '; '2 NOTE not marr'; '2 PHON '; '2 PLAC '; '2 SOUR @S'; '2 TYPE
+    CIVIL'; '2 TYPE MAIDENHEAD'; '2 TYPE RELI'; '2 TYPE variant'; '2 VERS 5.1'; '2 VERS 5.5.1'; '2
+    WWW '; '3 _LOC @P'; '3 ADR1 '; '3 ADR2 '; '3 ADR3 '; '3 CITY '; '3 CONC '; '3 DATE '; '3 MEDI ';
+    '3 PLAC '; '3 POST '; '@ _LOC'; '@ FAM'; '@ INDI'; '@ SOUR'; '_^[��]�'; 'and'; 'Ehes'; 'FROM ';
+    'ged'; 'Gedcom schreiben'; 'Gedcom-Dateien (*.ged)|*.ged'; 'kommentar'; 'lfn'; 'qu'; 'tit'; '﻿0
+    HEAD'; '�φ������_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.gedausv(Sender : TObject);
 begin
 (*
@@ -63900,6 +64275,19 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Database/provider: DB.TDataSet.First(TDataSet);; DB.TDataSet.Next(TDataSet);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;;
+    DBTables.TTable.SetIndexFieldNames(TTable;AnsiString);
+Global state: GlobalVar_0061DF08; GlobalVar_02535448; GlobalVar_0253544C
+Project calls: TForm3.Proc_00576EB0(); Unit_00408494.Proc_004091D8
+Framework/API calls: class TStringList; System.Proc_00404EE0;
+    System.TObject.Create(TObject;Boolean);
+Strings/files/dialog text: '000000'; '_^[��]�'; 'dsn'; 'lfn'; 'Mutter'; 'Vater'; '������_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.gedausxv(Sender : TObject);
 begin
 (*
@@ -65468,6 +65856,28 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.DBText1 (TDBText); TForm1.Label18 (TLabel); TForm1.Label19 (TLabel);
+    TForm1.SaveDialog1 (TSaveDialog)
+Database/provider: DB.TDataSet.First(TDataSet);; DB.TDataSet.Next(TDataSet);;
+    DB.TDataSet.Open(TDataSet);; DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08; GlobalVar_02535BA0
+Unresolved field offsets: OFFS_00CC; OFFS_013C; OFFS_0950; OFFS_0954; OFFS_0958; OFFS_09C4;
+    OFFS_09DC; OFFS_09E0; OFFS_09E4; OFFS_09E8; OFFS_09EC; OFFS_0A44
+Project calls: TForm1 instance; TForm1.lab18ein(); TForm3.ucase(); Unit_00408494.Proc_00409950
+Framework/API calls: Controls.TControl.Hide(TControl);;
+    Controls.TControl.SetColor(TControl;TColor);; Controls.TControl.SetText(TControl;TCaption);;
+    Dialogs.ShowMessage(AnsiString);; Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;;
+    Forms.TScreen.SetCursor(TScreen;TCursor);; method TSaveDialog.Execute();
+    QControls.TGraphicControl.PaintRequest(TGraphicControl);; System.IOResult:Integer;;
+    System.Proc_00402988; System.Proc_00404EE0; TScreen instance
+Strings/files/dialog text: ' Adresse(n) geschrieben.'; ' and taufjahr<='; '(Nur lebende Personen
+    !)'; '.txt'; 'Adressen schreiben'; 'Frau'; 'gebjahr<='; 'Herr'; 'Herrn'; 'namgeb'; 'Text-Dateien
+    (*.txt)|*.txt'; 'txt'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.adrschreib(Sender : TObject);
 begin
 (*
@@ -66344,6 +66754,48 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.Label18 (TLabel); TForm1.Label19 (TLabel); TForm1.Memo1 (TMemo); TForm1.OpenDialog1
+    (TOpenDialog)
+Database/provider: class TTable; DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.FieldByName(TDataSet;AnsiString):TField;; DB.TDataSet.First(TDataSet);;
+    DB.TDataSet.Last(TDataSet);; DB.TDataSet.Next(TDataSet);; DB.TDataSet.Open(TDataSet);;
+    DB.TFieldDefs.Add(TFieldDefs;AnsiString;TFieldType;Integer;Boolean);;
+    DB.TIndexDefs.Add(TIndexDefs;AnsiString;AnsiString;TIndexOptions);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.Create(TTable;boolean;TComponent);; DBTables.TTable.CreateTable(TTable);;
+    DBTables.TTable.SetExclusive(TTable;Boolean);; DBTables.TTable.SetIndexName(TTable;AnsiString);;
+    DBTables.TTable.SetTableName(TTable;TFileName);; method TTable.DefChanged(TObject); method
+    TTable.GetRecordCount(); method TTable.Post()
+Global state: GlobalVar_0061DF08; GlobalVar_02535940; GlobalVar_02535944
+Unresolved field offsets: OFFS_005C; OFFS_0080; OFFS_00A8; OFFS_01C4; OFFS_0248; OFFS_0410;
+    OFFS_0414; OFFS_0418; OFFS_041C; OFFS_0420; OFFS_0424; OFFS_0428; OFFS_0440; OFFS_0454;
+    OFFS_0534; OFFS_0538; OFFS_053C; OFFS_0540; OFFS_0544; OFFS_0548; OFFS_054C; OFFS_0550;
+    OFFS_0554; OFFS_0558; OFFS_055C; OFFS_0560; OFFS_0564; OFFS_0568; OFFS_056C; OFFS_0570;
+    OFFS_0574; OFFS_0578; OFFS_057C; OFFS_0580; OFFS_0584; OFFS_0588; OFFS_058C; OFFS_0590;
+    OFFS_0594; OFFS_0598; OFFS_059C; OFFS_05A0; OFFS_05A4; OFFS_05A8; OFFS_05AC; OFFS_05B0;
+    OFFS_05B4; OFFS_05E0; OFFS_05E4; OFFS_05E8; OFFS_58; OFFS_60
+Project calls: TForm1 instance; TForm1.lab18ein(); TForm1.listen_akt(); TForm3.Proc_005AFB94();
+    TForm3.ucase(); Unit_00408494.Proc_00409214; Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_00409950; Unit_00408494.Proc_00409980; Unit_00408494.Proc_004099B4
+Framework/API calls: Classes.TCollection.Clear(TCollection);; Controls.TControl.Hide(TControl);;
+    Controls.TControl.SetText(TControl;TCaption);;
+    DBTables.TDBDataSet.SetDatabaseName(TDBDataSet;AnsiString);; Dialogs.ShowMessage(AnsiString);;
+    Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;; method TMemo.Clear(); method
+    TStrings.Assign(TPersistent); method TStrings.Count(); method TStrings.Put(Integer,string);
+    method TStrings.Strings [ Index(); QControls.TGraphicControl.PaintRequest(TGraphicControl);;
+    System.Proc_00404EE0; System.TObject.Free(TObject);
+Strings/files/dialog text: ' %'; '0 %'; '00000'; '_^[��]�'; 'AHNEN DOS lesen '; 'ahnen.dbf';
+    'ahntab'; 'begrort'; 'begrtag'; 'Bemerk.: '; 'beruf'; 'code'; 'Eheschliessung'; 'ein';
+    'gebjahr'; 'gebmonat'; 'gebort'; 'gebtag'; 'geschlecht'; 'hjahr'; 'hjahr1'; 'hjahr2'; 'hjahr3';
+    'hmonat'; 'hmonat1'; 'hmonat2'; 'hmonat3'; 'hort'; 'hort1'; 'hort2'; 'hort3'; 'htag'; 'htag1';
+    'htag2'; 'htag3'; 'kommentar'; 'Lebensorte'; 'lebensorte'; 'name';
+    'name;gebjahr;gebmonat;gebtag'; 'num'; 'qu'; 'Qu.: '; 'quelle'; 'religion'; 'sonstiges';
+    'stalter'; 'stjahr'; 'stmonat'; 'stort'; 'sttag'; 'taufort'; 'taufpat'; 'tauftag'; 'todesurs';
+    'trauz'; 'trauz1'; 'trauz2'; 'trauz3'; 'tx'; 'vornamen'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.ahndosein(Sender : TObject);
 begin
 (*
@@ -71288,6 +71740,41 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.Label18 (TLabel); TForm1.Label19 (TLabel); TForm1.Memo1 (TMemo); TForm1.OpenDialog1
+    (TOpenDialog)
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.FieldByName(TDataSet;AnsiString):TField;; DB.TDataSet.First(TDataSet);;
+    DB.TDataSet.Last(TDataSet);; DB.TDataSet.Next(TDataSet);; DB.TDataSet.Open(TDataSet);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.SetTableName(TTable;TFileName);
+Global state: GlobalVar_0061DF08; GlobalVar_02535940; GlobalVar_02535944
+Unresolved field offsets: OFFS_005C; OFFS_0080; OFFS_01C4; OFFS_0248; OFFS_0410; OFFS_0414;
+    OFFS_0418; OFFS_041C; OFFS_0420; OFFS_0424; OFFS_0428; OFFS_0430; OFFS_0434; OFFS_0440;
+    OFFS_0454; OFFS_0460; OFFS_0464; OFFS_0534; OFFS_0538; OFFS_053C; OFFS_0540; OFFS_0544;
+    OFFS_0548; OFFS_054C; OFFS_0550; OFFS_0554; OFFS_0558; OFFS_055C; OFFS_0560; OFFS_0564;
+    OFFS_0568; OFFS_056C; OFFS_0570; OFFS_0574; OFFS_0578; OFFS_057C; OFFS_0580; OFFS_0584;
+    OFFS_0588; OFFS_058C; OFFS_0590; OFFS_0594; OFFS_0598; OFFS_059C; OFFS_05A0; OFFS_05A4;
+    OFFS_05A8; OFFS_05AC; OFFS_05B0; OFFS_05B4; OFFS_05E0; OFFS_05E4; OFFS_05E8
+Project calls: TForm1 instance; TForm1.listen_akt(); TForm1.ucase(); Unit_00408494.Proc_00409214;
+    Unit_00408494.Proc_00409448; Unit_00408494.Proc_00409950; Unit_00408494.Proc_00409980;
+    Unit_00408494.Proc_004099B4
+Framework/API calls: Controls.TControl.Hide(TControl);; Controls.TControl.Refresh(TControl);;
+    Controls.TControl.SetText(TControl;TCaption);; Controls.TControl.SetVisible(TControl;Boolean);;
+    DBTables.TDBDataSet.SetDatabaseName(TDBDataSet;AnsiString);;
+    Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;; method TMemo.Clear(); method
+    TStrings.Assign(TPersistent); method TStrings.Count(); method TStrings.Put(Integer,string);
+    method TStrings.Strings [ Index(); QControls.TGraphicControl.PaintRequest(TGraphicControl);;
+    System.Proc_00404EE0
+Strings/files/dialog text: ' %'; '0 %'; '00000'; '_^[��]�'; 'begrort'; 'begrtag'; 'Bemerk.: ';
+    'beruf'; 'ehen'; 'Eheschliessung'; 'gebjahr'; 'gebmonat'; 'gebort'; 'gebtag'; 'geschlecht';
+    'herkunft'; 'hjahr'; 'hmonat'; 'hort'; 'htag'; 'kibu.dbf'; 'kommentar'; 'mutter'; 'name'; 'num';
+    'OSB lesen '; 'qu'; 'Qu.: '; 'quelle'; 'religion'; 'sonstiges'; 'stjahr'; 'stmonat'; 'stort';
+    'sttag'; 'taufort'; 'taufpat'; 'tauftag'; 'todesurs'; 'trauz'; 'vater'; 'vornamen';
+    '�/����_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.osbein(Sender : TObject);
 begin
 (*
@@ -74168,6 +74655,14 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061E048
+Project calls: TForm3.ucase(); Unit_00408494.Proc_00409448
+Framework/API calls: System.Proc_00402988
+Strings/files/dialog text: '0 TRLR'; 'OBJE'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.lieszeil(Sender : TObject);
 begin
 (*
@@ -74368,6 +74863,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: TForm3.ansl()
+Framework/API calls: user32.OemToCharA()
+Strings/files/dialog text: '_^[YY]ÐU��j'; '�n����_^[YY]ÐU��j'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.ans(Sender : TObject);
 begin
 (*
@@ -74474,6 +74976,19 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Label7 (N.A.); TForm1.Label79 (TLabel)
+Database/provider: DB.TDataSet.Edit(TDataSet);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_005C; OFFS_01DC; OFFS_58
+Project calls: TForm1 instance; TForm3.ucase(); Unit_00408494.Proc_004099B4
+Framework/API calls: Controls.TControl.SetText(TControl;TCaption);;
+    QControls.TGraphicControl.PaintRequest(TGraphicControl);
+Strings/files/dialog text: '^[��]�'; '�y�����^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.indi(Sender : TObject);
 begin
 (*
@@ -74753,6 +75268,69 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Image1 (N.A.); Label1 (TLabel); Label2 (TLabel); Label3 (TLabel); Label4 (N.A.); Label5
+    (N.A.); Label8 (N.A.); Label9 (N.A.); TForm1.Label19 (TLabel); TForm1.lfbh2 (TClientDataSet);
+    TForm1.lfbh2Aus (TIntegerField); TForm1.lfbh2Eh (TStringField); TForm1.lfbh2Hei (TStringField);
+    TForm1.lfbh2Ix (TStringField); TForm1.lfbh2Nam (TStringField); TForm1.lfbh2Nm (TIntegerField);
+    TForm1.lfbh2Prob (TStringField); TForm1.Memo1 (TMemo); Timer1 (N.A.); Form1
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.Delete(TDataSet);; DB.TDataSet.DisableControls(TDataSet);;
+    DB.TDataSet.Edit(TDataSet);; DB.TDataSet.EnableControls(TDataSet);;
+    DB.TDataSet.First(TDataSet);; DB.TDataSet.Next(TDataSet);; DB.TDataSet.Open(TDataSet);;
+    DB.TIndexDefs.Update(TIndexDefs);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.EmptyTable(TTable);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;;
+    DBTables.TTable.GetIndexName(TTable):AnsiString;;
+    QRCtrls.TQRDBText.SetDataSet(TQRDBText;TDataSet);;
+    QuickRpt.TQuickRep.SetDataSet(TQuickRep;TDataSet);
+Global state: GlobalVar_0061DF08; GlobalVar_0061DF10; GlobalVar_0061E0C8; GlobalVar_02535440;
+    GlobalVar_02535444
+Unresolved field offsets: OFFS_005C; OFFS_00C4; OFFS_00CC; OFFS_00E0; OFFS_00E8; OFFS_013C;
+    OFFS_0140; OFFS_01E8; OFFS_01EC; OFFS_0218; OFFS_02A8; OFFS_02AC; OFFS_02BC; OFFS_0324;
+    OFFS_0328; OFFS_032C; OFFS_0330; OFFS_0334; OFFS_0338; OFFS_033C; OFFS_0350; OFFS_0354;
+    OFFS_0368; OFFS_038C; OFFS_0394; OFFS_04C8; OFFS_04CC; OFFS_04D0; OFFS_04D4; OFFS_04D8;
+    OFFS_04DC; OFFS_04E0; OFFS_04E4; OFFS_04E8; OFFS_04EC; OFFS_04F0; OFFS_04F4; OFFS_04F8;
+    OFFS_0508; OFFS_0534; OFFS_0538; OFFS_053C; OFFS_0540; OFFS_0544; OFFS_0548; OFFS_054C;
+    OFFS_0550; OFFS_0554; OFFS_0558; OFFS_055C; OFFS_0560; OFFS_0564; OFFS_0568; OFFS_056C;
+    OFFS_0570; OFFS_0574; OFFS_0578; OFFS_057C; OFFS_0580; OFFS_0584; OFFS_0588; OFFS_058C;
+    OFFS_059C; OFFS_05B0; OFFS_05BC; OFFS_05C8; OFFS_05EC; OFFS_0948; OFFS_094C; OFFS_0950;
+    OFFS_0954; OFFS_0A44; OFFS_0A68; OFFS_64
+Project calls: TForm1 instance; TForm3.illki(); TForm3.oabk(); TForm3.Proc_00576EB0();
+    TForm3.Proc_00576F54(); TForm3.Proc_00576FF8(); TForm3.ucase(); Unit_00408494.Proc_004091D8;
+    Unit_00408494.Proc_00409448; Unit_00408494.Proc_00409950; Unit_00408494.Proc_004099B4
+Framework/API calls: class TStringList; Classes.TStringList.SetSorted(TStringList;Boolean);;
+    Controls.TControl.Refresh(TControl);; Controls.TControl.SetHeight(TControl;Integer);;
+    Controls.TControl.SetLeft(TControl;Integer);; Controls.TControl.SetText(TControl;TCaption);;
+    Controls.TControl.SetVisible(TControl;Boolean);; Controls.TControl.SetWidth(TControl;Integer);;
+    DBClient.TCustomClientDataSet.EmptyDataSet(TCustomClientDataSet);;
+    DBClient.TCustomClientDataSet.GetIndexDefs(TCustomClientDataSet):TIndexDefs;;
+    DBClient.TCustomClientDataSet.GetIndexName(TCustomClientDataSet):AnsiString;;
+    DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    Dialogs.InputQuery(AnsiString;AnsiString;AnsiString;AnsiString):Boolean;;
+    Forms.TScreen.SetCursor(TScreen;TCursor);; Graphics.TFont.SetSize(TFont;Integer);; method
+    TClientDataSet.FindKey(Array of Longin); method TClientDataSet.GetRecNo(); method
+    TClientDataSet.Post(); method TClientDataSet.SetRecNo(Integer); method
+    TIntegerField.GetAsInteger(); method TIntegerField.SetAsInteger(Longint); method
+    TLabel.SetEnabled(Boolean); method TMemo.Clear(); method TStringField.GetAsString(); method
+    TStringField.SetAsString(string); method TStrings.Assign(TPersistent); method TStrings.Count();
+    method TStrings.Strings [ Index(); QControls.TGraphicControl.PaintRequest(TGraphicControl);;
+    QRCtrls.TQRCustomLabel.SetAutoStretch(TQRCustomLabel;Boolean);;
+    QRCtrls.TQRCustomLabel.SetCaption(TQRCustomLabel;AnsiString);;
+    QRCtrls.TQRDBText.SetDataField(TQRDBText;AnsiString);;
+    QuickRpt.TCustomQuickRep.Preview(TCustomQuickRep);;
+    QuickRpt.TQRPage.SetColumns(TQRPage;Integer);; System.Proc_00404EE0;
+    System.TObject.Create(TObject;Boolean);; TScreen instance
+Strings/files/dialog text: ' ('; ' (TP: '; ' (TZ: '; ' * '; ' + '; ' - '; ' <'; ' ['; ' [aus '; '
+    [DS '; ' [oo '; ' in '; ' ~ '; '(OFB) '; ') '; ', '; '- o-o : '; '- oo '; '- oo'; '. ';
+    '000000*'; ': '; '] '; '_^[��]�'; 'Bezie'; 'Ehes'; 'heir'; 'Kind(er), Mutter nicht bekannt: - ';
+    'Kind(er), Vater nicht bekannt: - '; 'Kind(er): '; 'MmxX'; 'mut'; 'Mutter nicht bekannt: ';
+    'na'; 'nm'; 'num'; 'OFB erstellen'; 'OFB'; 'ort_'; 'Orts-Abk�rzungen: '; 'Pro'; 'vat'; 'Vater
+    nicht bekannt: '; 'WwxX'; 'zeile'; '�berschrift : '; '�N'; '�o����E���_^[��]�'; '�z����������a'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.ofb2(Sender : TObject);
 begin
 (*
@@ -90997,6 +91575,68 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Image1 (N.A.); Label1 (TLabel); Label2 (TLabel); Label3 (TLabel); Label4 (N.A.); Label5
+    (N.A.); Label8 (N.A.); Label9 (N.A.); TForm1.DBMemo1 (TDBMemo); TForm1.Label19 (TLabel);
+    TForm1.lfbh2 (TClientDataSet); TForm1.lfbh2Aus (TIntegerField); TForm1.lfbh2Eh (TStringField);
+    TForm1.lfbh2Hei (TStringField); TForm1.lfbh2Ix (TStringField); TForm1.lfbh2Nam (TStringField);
+    TForm1.lfbh2Nm (TIntegerField); TForm1.lfbh2Prob (TStringField); TForm1.Memo1 (TMemo); Timer1
+    (N.A.); Form1
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.Delete(TDataSet);; DB.TDataSet.DisableControls(TDataSet);;
+    DB.TDataSet.Edit(TDataSet);; DB.TDataSet.EnableControls(TDataSet);;
+    DB.TDataSet.First(TDataSet);; DB.TDataSet.Next(TDataSet);; DB.TDataSet.Open(TDataSet);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.EmptyTable(TTable);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;;
+    DBTables.TTable.GetIndexName(TTable):AnsiString;;
+    QRCtrls.TQRDBText.SetDataSet(TQRDBText;TDataSet);;
+    QuickRpt.TQuickRep.SetDataSet(TQuickRep;TDataSet);
+Global state: GlobalVar_0061DF08; GlobalVar_0061DF10; GlobalVar_0061E0C8; GlobalVar_02535440;
+    GlobalVar_02535444
+Unresolved field offsets: OFFS_005C; OFFS_00C4; OFFS_00CC; OFFS_00E0; OFFS_013C; OFFS_0140;
+    OFFS_01E8; OFFS_01EC; OFFS_0218; OFFS_02A8; OFFS_02AC; OFFS_02BC; OFFS_0324; OFFS_0328;
+    OFFS_032C; OFFS_0330; OFFS_0334; OFFS_0338; OFFS_033C; OFFS_0350; OFFS_0354; OFFS_0368;
+    OFFS_038C; OFFS_0394; OFFS_04C8; OFFS_04CC; OFFS_04D0; OFFS_04D4; OFFS_04D8; OFFS_04DC;
+    OFFS_04E0; OFFS_04E4; OFFS_04E8; OFFS_04EC; OFFS_04F0; OFFS_04F4; OFFS_04F8; OFFS_0508;
+    OFFS_0534; OFFS_0538; OFFS_053C; OFFS_0540; OFFS_0544; OFFS_0548; OFFS_054C; OFFS_0550;
+    OFFS_0554; OFFS_0558; OFFS_055C; OFFS_0560; OFFS_0564; OFFS_0568; OFFS_056C; OFFS_0570;
+    OFFS_0574; OFFS_057C; OFFS_0580; OFFS_0584; OFFS_0588; OFFS_058C; OFFS_059C; OFFS_05B0;
+    OFFS_05C8; OFFS_05EC; OFFS_0950; OFFS_0954; OFFS_0A44; OFFS_0A68; OFFS_64
+Project calls: TForm1 instance; TForm3.illki(); TForm3.oabk(); TForm3.Proc_00576EB0();
+    TForm3.Proc_00576F54(); TForm3.Proc_00576FF8(); TForm3.ucase(); Unit_00408494.Proc_004091D8;
+    Unit_00408494.Proc_00409448; Unit_00408494.Proc_00409950; Unit_00408494.Proc_004099B4
+Framework/API calls: class TStringList; Classes.TStringList.SetSorted(TStringList;Boolean);;
+    Controls.TControl.Refresh(TControl);; Controls.TControl.SetHeight(TControl;Integer);;
+    Controls.TControl.SetLeft(TControl;Integer);; Controls.TControl.SetText(TControl;TCaption);;
+    Controls.TControl.SetVisible(TControl;Boolean);; Controls.TControl.SetWidth(TControl;Integer);;
+    DBClient.TCustomClientDataSet.EmptyDataSet(TCustomClientDataSet);;
+    DBClient.TCustomClientDataSet.GetIndexName(TCustomClientDataSet):AnsiString;;
+    DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    Dialogs.InputQuery(AnsiString;AnsiString;AnsiString;AnsiString):Boolean;;
+    Forms.TScreen.SetCursor(TScreen;TCursor);; Graphics.TFont.GetSize(TFont):Integer;;
+    Graphics.TFont.SetSize(TFont;Integer);; method TClientDataSet.FindKey(Array of Longin); method
+    TClientDataSet.GetRecNo(); method TClientDataSet.Post(); method
+    TClientDataSet.SetRecNo(Integer); method TIntegerField.GetAsInteger(); method
+    TIntegerField.SetAsInteger(Longint); method TLabel.SetEnabled(Boolean); method TMemo.Clear();
+    method TStringField.GetAsString(); method TStringField.SetAsString(string); method
+    TStrings.Assign(TPersistent); method TStrings.Count(); method TStrings.Strings [ Index();
+    QControls.TGraphicControl.PaintRequest(TGraphicControl);;
+    QRCtrls.TQRCustomLabel.SetAutoStretch(TQRCustomLabel;Boolean);;
+    QRCtrls.TQRCustomLabel.SetCaption(TQRCustomLabel;AnsiString);;
+    QRCtrls.TQRDBText.SetDataField(TQRDBText;AnsiString);;
+    QuickRpt.TCustomQuickRep.Preview(TCustomQuickRep);;
+    QuickRpt.TQRPage.SetColumns(TQRPage;Integer);; System.Proc_00404EE0;
+    System.TObject.Create(TObject;Boolean);; TScreen instance
+Strings/files/dialog text: ' ('; ' (TP: '; ' (TZ: '; ' * '; ' + '; ' - '; ' <'; ' ['; ' [aus '; '
+    [oo '; ' ~ '; ', '; '- o-o : '; '- oo '; '- oo'; '. '; '000000*'; ': '; '] '; '_^[��]�';
+    'Bezie'; 'Ehes'; 'heir'; 'Kind(er), Mutter nicht bekannt: - '; 'Kind(er), Vater nicht bekannt: -
+    '; 'Kind(er): '; 'mut'; 'Mutter nicht bekannt: '; 'na'; 'nm'; 'num'; 'OFB erstellen'; 'OFB';
+    'ort_'; 'Orts-Abk�rzungen: '; 'Pro'; 'vat'; 'Vater nicht bekannt: '; 'zeile'; '�(���O������a';
+    '�berschrift : '; '�|������_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.ofb3(Sender : TObject);
 begin
 (*
@@ -105210,6 +105850,23 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.lfbh2 (TClientDataSet); TForm1.lfbh2Nm (TIntegerField); Form1
+Database/provider: DB.TDataSet.First(TDataSet);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Project calls: TForm1 instance; TForm3.oabk(); TForm3.Proc_00576EB0(); TForm3.Proc_00576F54();
+    TForm3.Proc_00576FF8(); Unit_00408494.Proc_00409448; Unit_00408494.Proc_00409950;
+    Unit_00408494.Proc_004099B4
+Framework/API calls: DBClient.TCustomClientDataSet.GetIndexName(TCustomClientDataSet):AnsiString;;
+    DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);; method
+    TClientDataSet.FindKey(Array of Longin); method TClientDataSet.GetRecNo(); method
+    TClientDataSet.SetRecNo(Integer); method TIntegerField.GetAsInteger(); System.Proc_00404EE0
+Strings/files/dialog text: ' (TP: '; ' * '; ' + '; ' ['; ' ~ '; ', '; 'Pro'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.illki(Sender : TObject);
 begin
 (*
@@ -106216,6 +106873,17 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Database/provider: DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_00CC; OFFS_0A68
+Project calls: TForm3.Proc_00576EB0(); Unit_00408494.Proc_00409448
+Framework/API calls: System.Proc_00404EE0
+Strings/files/dialog text: '[��]�'; 'ort_'; '�������[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.oabk(Sender : TObject);
 begin
 (*
@@ -106414,6 +107082,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_00409448
+Framework/API calls: System.Proc_00404EE0
+Strings/files/dialog text: '1234567890'; '[��]�'; '魺����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Ortdreh(Sender : TObject);
 begin
 (*
@@ -106558,6 +107233,15 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_0540; OFFS_0544
+Project calls: TForm3.Proc_005772E4(); Unit_00408494.Proc_00409448
+Framework/API calls: System.Proc_00404EE0
+Strings/files/dialog text: '[��]�'; 'Namens-Zusatz: '; '顸����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Nam(Sender : TObject);
 begin
 (*
@@ -106838,6 +107522,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_0548
+Project calls: Unit_00408494.Proc_004091D8; Unit_00408494.Proc_00409448
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Sex(Sender : TObject);
 begin
 (*
@@ -107025,6 +107716,22 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.Repso2 (TClientDataSet); TForm1.Repso2inh2 (TMemoField)
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_05A0
+Project calls: TForm1 instance; TForm3.Ortdreh(); TForm3.Proc_00577934(); TForm3.zsa();
+    Unit_00408494.Proc_00409448; Unit_00408494.Proc_004094CC
+Framework/API calls: DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    method TClientDataSet.FindKey(Array of Longin); method TMemoField.GetAsString();
+    System.Proc_00402988; System.Proc_00404EE0
+Strings/files/dialog text: '* '; '2 COMM'; '2 LATI'; '2 LONG'; '2 SOUR @'; '2 SOUR'; '_^[��]�';
+    'CONC'; 'CONT'; 'DATE'; 'Geburt: '; 'ih'; 'NOTE'; 'PLAC'; '�`�����_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Birt(Sender : TObject);
 begin
 (*
@@ -108002,6 +108709,22 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.Repso2 (TClientDataSet); TForm1.Repso2inh2 (TMemoField)
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_05A4
+Project calls: TForm1 instance; TForm3.Ortdreh(); TForm3.Proc_00577934(); TForm3.zsa();
+    Unit_00408494.Proc_00409448; Unit_00408494.Proc_004094CC
+Framework/API calls: DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    method TClientDataSet.FindKey(Array of Longin); method TMemoField.GetAsString();
+    System.Proc_00402988; System.Proc_00404EE0
+Strings/files/dialog text: ', '; '2 COMM'; '2 LATI'; '2 LONG'; '2 SOUR @'; '2 SOUR'; '_GODP';
+    'CONC'; 'CONT'; 'DATE'; 'ih'; 'NOTE'; 'PLAC'; 'Taufe: '; '~ '
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Bapm(Sender : TObject);
 begin
 (*
@@ -109067,6 +109790,22 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.Repso2 (TClientDataSet); TForm1.Repso2inh2 (TMemoField)
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_05A8
+Project calls: TForm1 instance; TForm3.Ortdreh(); TForm3.Proc_00577934(); TForm3.zsa();
+    Unit_00408494.Proc_00409448; Unit_00408494.Proc_004094CC
+Framework/API calls: DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    method TClientDataSet.FindKey(Array of Longin); method TMemoField.GetAsString();
+    System.Proc_00402988; System.Proc_00404EE0
+Strings/files/dialog text: '+ '; '2 COMM'; '2 LATI'; '2 LONG'; '2 SOUR @'; '2 SOUR'; '_^[��]�';
+    'CAUS'; 'CONC'; 'CONT'; 'DATE'; 'ih'; 'NOTE'; 'PLAC'; 'Tod: '; '�ڙ����_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Deat(Sender : TObject);
 begin
 (*
@@ -110080,6 +110819,22 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.Repso2 (TClientDataSet); TForm1.Repso2inh2 (TMemoField)
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_05AC
+Project calls: TForm1 instance; TForm3.Ortdreh(); TForm3.Proc_00577934(); TForm3.zsa();
+    Unit_00408494.Proc_00409448; Unit_00408494.Proc_004094CC
+Framework/API calls: DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    method TClientDataSet.FindKey(Array of Longin); method TMemoField.GetAsString();
+    System.Proc_00402988; System.Proc_00404EE0
+Strings/files/dialog text: '# '; '2 COMM'; '2 LATI'; '2 LONG'; '2 SOUR @'; '2 SOUR'; '_^[��]�';
+    'Bestatt.: '; 'CONC'; 'CONT'; 'DATE'; 'ih'; 'NOTE'; 'PLAC'; '�H�����_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Buri(Sender : TObject);
 begin
 (*
@@ -111057,6 +111812,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: TForm3.Ortdreh(); TForm3.zsa(); Unit_00408494.Proc_00409448
+Framework/API calls: System.Proc_00402988; System.Proc_00404EE0
+Strings/files/dialog text: '_^[��]�'; 'Beruf: '; 'CONT'; 'DATE'; 'NOTE'; 'PLAC'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Occu(Sender : TObject);
 begin
 (*
@@ -111478,6 +112240,15 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: TForm3.Ortdreh(); TForm3.Proc_00577934(); TForm3.zsa(); Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_004094CC
+Framework/API calls: System.Proc_00402988; System.Proc_00404EE0
+Strings/files/dialog text: ' ('; 'CONC'; 'CONT'; 'DATE'; 'Ereig'; 'Ereig.: '; 'NOTE'; 'PAGE';
+    'PLAC'; 'TYPE'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Even(Sender : TObject);
 begin
 (*
@@ -112093,6 +112864,15 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: TForm3.Ortdreh(); TForm3.zsa(); Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_004094CC
+Framework/API calls: System.Proc_00402988; System.Proc_00404EE0
+Strings/files/dialog text: '_^[��]�'; 'Ausbild'; 'Ausbild.: '; 'CONC'; 'CONT'; 'DATE'; 'NOTE';
+    'PLAC'; 'TYPE'; '鿁����_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Grad(Sender : TObject);
 begin
 (*
@@ -112703,6 +113483,14 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: TForm3.Ortdreh(); TForm3.zsa(); Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_004094CC
+Framework/API calls: System.Proc_00402988; System.Proc_00404EE0
+Strings/files/dialog text: 'CONC'; 'CONT'; 'DATE'; 'NOTE'; 'PLAC'; 'Schule'; 'Schule: '; 'TYPE'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Educ(Sender : TObject);
 begin
 (*
@@ -113269,6 +114057,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: TForm3.zsa(); Unit_00408494.Proc_00409448
+Framework/API calls: System.Proc_00402988; System.Proc_00404EE0
+Strings/files/dialog text: '_^[��]�'; '��z����_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Prop(Sender : TObject);
 begin
 (*
@@ -113469,6 +114264,15 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_0578
+Project calls: TForm3.Ortdreh(); TForm3.zsa(); Unit_00408494.Proc_00409448
+Framework/API calls: System.Proc_00402988; System.Proc_00404EE0
+Strings/files/dialog text: '_^[��]�'; 'PLAC'; '��x����_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Resi(Sender : TObject);
 begin
 (*
@@ -113762,6 +114566,14 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: TForm3.Proc_00577934(); TForm3.zsa(); Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_004094CC
+Framework/API calls: System.Proc_00402988; System.Proc_00404EE0
+Strings/files/dialog text: '_^[��]�'; 'DATE'; 'DS ge�nd.'; 'DS ge�nd.: '; 'TIME'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Chan(Sender : TObject);
 begin
 (*
@@ -114109,6 +114921,15 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_05B4; OFFS_05C8
+Project calls: TForm3.zsa(); Unit_00408494.Proc_00409448
+Framework/API calls: System.Proc_00402988; System.Proc_00404EE0
+Strings/files/dialog text: 'CONC'; 'CONT'; 'Hnm.:'; 'lebt:'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Note(Sender : TObject);
 begin
 (*
@@ -114667,6 +115488,12 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_00409448; Unit_00408494.Proc_004099B4
+Strings/files/dialog text: '�Bp�����[��]ÐU��j'; '��[��]ÐU��j'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Ziff(Sender : TObject);
 begin
 (*
@@ -114779,6 +115606,12 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_00409448; Unit_00408494.Proc_004099B4
+Strings/files/dialog text: '�o�����[��]�'; '��[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Ziff2(Sender : TObject);
 begin
 (*
@@ -114884,6 +115717,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.Memo1 (TMemo)
+Project calls: TForm1 instance
+Framework/API calls: method TStrings.Add(string)
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.ansl(Sender : TObject);
 begin
 (*
@@ -115268,6 +116108,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: TForm3.ansl()
+Framework/API calls: System.Utf8ToAnsi(UTF8String):String;; user32.OemToCharA()
+Strings/files/dialog text: '^[Y]�'; 'ansel'; 'asci'; 'ibm'; 'utf'; '�������^[Y]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.zsa(Sender : TObject);
 begin
 (*
@@ -115407,6 +116254,29 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Label7 (N.A.); TForm1.Repso2 (TClientDataSet); TForm1.Repso2inh2 (TMemoField); Form1
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_005C; OFFS_0080; OFFS_00CC; OFFS_01DC; OFFS_02A4; OFFS_02AC;
+    OFFS_02B0; OFFS_02B4; OFFS_0410; OFFS_0414; OFFS_0418; OFFS_041C; OFFS_0420; OFFS_0424;
+    OFFS_0428; OFFS_042C; OFFS_0430; OFFS_0434; OFFS_0438; OFFS_043C; OFFS_0440; OFFS_0444;
+    OFFS_0448; OFFS_044C; OFFS_0450; OFFS_0454; OFFS_0458; OFFS_045C; OFFS_0538; OFFS_053C;
+    OFFS_05C4; OFFS_05E4; OFFS_0A44; OFFS_0A6C; OFFS_0A70; OFFS_58
+Project calls: TForm1 instance; TForm3.Ortdreh(); TForm3.Proc_00577934(); TForm3.ucase();
+    TForm3.Ziff(); TForm3.zsa(); Unit_00408494.Proc_00409448; Unit_00408494.Proc_004094CC;
+    Unit_00408494.Proc_00409950; Unit_00446399.Proc_0044643C
+Framework/API calls: DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    method TClientDataSet.FindKey(Array of Longin); method TMemoField.GetAsString();
+    System.Proc_00402988
+Strings/files/dialog text: '0 @F'; '00'; '000000'; '1 _VWMARR'; '1 CHIL'; '1 DIV'; '1 HUSB'; '1
+    MARR'; '1 WIFE'; '2 LATI'; '2 LONG'; '_^[��]�'; '_STAT MARR'; '_WITN'; 'andere Beziehung';
+    'CIVIL'; 'DATE'; 'Eheschliessung'; 'ih'; 'NOTE not marr'; 'PLAC'; 'RELI'; 'SOUR'; 'TYPE';
+    '��X����_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.famn(Sender : TObject);
 begin
 (*
@@ -118306,6 +119176,78 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Label2 (TLabel); Label4 (N.A.); TForm3.OpenDialog1 (TOpenDialog); TApplication instance
+Database/provider: class TTable; DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.DisableControls(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DB.TDataSet.EnableControls(TDataSet);; DB.TDataSet.FieldByName(TDataSet;AnsiString):TField;;
+    DB.TDataSet.First(TDataSet);; DB.TDataSet.Last(TDataSet);; DB.TDataSet.Next(TDataSet);;
+    DB.TDataSet.Open(TDataSet);;
+    DB.TFieldDefs.Add(TFieldDefs;AnsiString;TFieldType;Integer;Boolean);;
+    DB.TIndexDefs.Add(TIndexDefs;AnsiString;AnsiString;TIndexOptions);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.Create(TTable;boolean;TComponent);; DBTables.TTable.CreateTable(TTable);;
+    DBTables.TTable.DeleteTable(TTable);; DBTables.TTable.EmptyTable(TTable);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;;
+    DBTables.TTable.SetDataSource(TTable;TDataSource);;
+    DBTables.TTable.SetTableName(TTable;TFileName);
+Global state: GlobalVar_0061DF08; GlobalVar_0061DFB4; GlobalVar_0061E0E8; GlobalVar_02535398;
+    GlobalVar_025353B0; GlobalVar_025353C8; GlobalVar_02535860; GlobalVar_0253586C;
+    GlobalVar_02535944
+Unresolved field offsets: OFFS_005C; OFFS_0080; OFFS_00D4; OFFS_0534
+Project calls: TForm1 instance; TForm1.anzeigen(); TForm3._PROC_005BE22C(); TForm3.Nam();
+    TForm3.Proc_00576EB0(); TForm3.Proc_005772E4(); TForm3.Proc_00577934(); TForm3.Proc_005BC72C();
+    TForm3.Proc_005BD864(); TForm3.Proc_005BD9B4(); TForm3.Proc_005BDC24(); TForm3.Proc_005BDDC8();
+    TForm3.Proc_005BE17C(); TForm3.Proc_005BE468(); TForm3.Proc_005BE540(); TForm3.Proc_005BE5E0();
+    TForm3.Proc_005BF084(); TForm3.sour(); TForm3.ucase(); TForm3.zsa();
+    Unit_00408494.Proc_004091D8; Unit_00408494.Proc_00409448; Unit_00408494.Proc_004094CC;
+    Unit_00408494.Proc_00409950; Unit_00408494.Proc_00409980; Unit_00408494.Proc_004099B4;
+    Unit_00408494.Proc_0040A07C; Unit_00446399.Proc_00446420; Unit_00446399.Proc_0044643C
+Framework/API calls: Classes.TCollection.Clear(TCollection);; Controls.TControl.Hide(TControl);;
+    Controls.TControl.Refresh(TControl);; Controls.TControl.SetText(TControl;TCaption);;
+    Controls.TControl.SetVisible(TControl;Boolean);;
+    DBClient.TCustomClientDataSet.EmptyDataSet(TCustomClientDataSet);;
+    DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    DBTables.TDBDataSet.SetAutoRefresh(TDBDataSet;Boolean);;
+    DBTables.TDBDataSet.SetDatabaseName(TDBDataSet;AnsiString);; Dialogs.ShowMessage(AnsiString);;
+    Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;;
+    Forms.TApplication.MessageBox(TApplication;PChar;PChar;Longint):Integer;;
+    Forms.TScreen.SetCursor(TScreen;TCursor);; method TOpenDialog.Execute(); Screen;
+    System.ParamStr(Integer):String;; System.Proc_00402988; System.Proc_00404EE0;
+    System.Utf8ToAnsi(UTF8String):String;; TScreen instance
+Strings/files/dialog text: ' %'; ' bis '; ' Familien'; ' Personen'; ' und '; '"GIVN"-Name stimmt
+    nicht mit Vornam; '"SURN"-Name stimmt nicht mit Name �; ', '; '0 %'; '0 @'; '0 @F'; '0 @N'; '0
+    @P'; '0 @S'; '0 HEAD'; '0 TRLR'; '0note'; '1 _ABBR'; '1 _FCNTY'; '1 _FCTRY'; '1 _FPOST'; '1
+    _FSTAE'; '1 _GOV'; '1 _MAIDENHEAD'; '1 _POST'; '1 _STAT MARRIED'; '1 _STAT NOT MARRIED'; '1
+    ABBR'; '1 ADDR'; '1 BAP'; '1 BIRT'; '1 BURI'; '1 CHAN'; '1 CHAR '; '1 CHAR ANSEL'; '1 CHAR
+    ANSI'; '1 CHAR IBM'; '1 CHAR UNIC'; '1 CHAR UTF'; '1 CHIL'; '1 CHR'; '1 CITY'; '1 CONT '; '1
+    DEAT'; '1 DEST'; '1 DIV'; '1 EMA'; '1 EMAIL'; '1 EMIG'; '1 FAMC'; '1 FAMS'; '1 FILE'; '1 GEDC';
+    '1 HUSB'; '1 IDNO'; '1 MARRIED'; '1 NAME'; '1 NOTE @N'; '1 NOTE'; '1 OCCU'; '1 PHON'; '1 PLAC';
+    '1 POST'; '1 PUBL'; '1 RELI'; '1 RESI'; '1 SEX'; '1 SOUR @'; '1 SOUR @S'; '1 SOUR'; '1 URL'; '1
+    WIFE'; '1 WWW'; '2 _GODP'; '2 _RUFN'; '2 _WITN'; '2 ADR1'; '2 ADR2'; '2 CALN'; '2 CAUS'; '2
+    CONT'; '2 DATE BET'; '2 DATE FROM'; '2 DATE TO'; '2 DATE'; '2 EMAIL'; '2 EVEN'; '2 FONE'; '2
+    FORM'; '2 GIVN'; '2 GODP'; '2 LATI'; '2 LONG'; '2 NICK'; '2 NOTE @N'; '2 NOTE not marr'; '2
+    NOTE'; '2 NPFX'; '2 NSFX'; '2 PHON'; '2 PLAC'; '2 ROMN'; '2 SOUR @'; '2 SOUR @S'; '2 SOUR'; '2
+    SPFX'; '2 SURN'; '2 TYPE CIVIL'; '2 TYPE RELI'; '2 TYPE'; '2 VERS'; '3 _LOC @P'; '3 AGE'; '3
+    CONC'; '3 CONT'; '3 DATE'; '3 MEDI'; '3 PLAC'; ': '; '; '; '@ INDI'; '@F'; '_^[��]�';
+    '_EXTENDED_LOCATIONS'; 'AA'; 'ab '; 'ADDR'; 'adoption'; 'Adoptivname: '; 'ADR1'; 'ADR2'; 'ADR3';
+    'ADR4'; 'ADR5'; 'AHNENWIN 4'; 'aka'; 'ALIA'; 'Alias-Name: '; 'alt_'; 'AND'; 'ansel'; 'ansi';
+    'auch bekannt als: '; 'AUTH'; 'BAPT'; 'Bem. zu Name'; 'Bestatt.: '; 'Bestehende Daten
+    �berschreiben ?'; 'BET'; 'BIRT'; 'birth'; 'bis '; 'BURI'; 'CHAN'; 'CITY'; 'CONC'; 'DATE';
+    'Datei: '; 'Datum: '; 'DEAT'; 'Die Gedcom-Datei ist im Unicode-Zei; 'Diese Person k�nnte
+    identisch sein; 'DIV'; 'divorce'; 'Ehename: '; 'Einsender: '; 'EMIG'; 'Erweiterung:
+    EXTENDED_LOCATIONS'; 'estate'; 'Fehler'; 'FfWw'; 'fnr'; 'Fnr'; 'FROM'; 'fsc'; 'Geburt: ';
+    'Geburtsname: '; 'Gedcom einlesen '; 'Gedcom vorbereiten'; 'Gedcom-Datei einlesen';
+    'Gedcom-Dateien (*.ged)|*.ged'; 'GEDCOM: '; 'Hinweis: Rufname ist nicht in "Vorn; 'ibm'; 'ih';
+    'immigrant'; 'kath'; 'K�nstlername: '; 'maiden'; 'MARR'; 'married'; 'Mm'; 'Name nach
+    Einwanderung: '; 'Name nach Einzug in ein Haus: '; 'Name nach Scheidung: '; 'Name vor erster
+    Ehe: '; 'NAME'; 'Nr'; 'num'; 'Ordensname: '; 'ort_'; 'PL'; 'POST'; 'pseudonym'; 'Quelle zu
+    Name'; 'Quelle: '; 'religious'; 'RESI'; 'rk'; 'r�m'; 'SOUR0'; 'SOUR1'; 'SOUR2'; 'Spitzname: ';
+    'Stammname: '; 'Taufe: '; 'tit'; 'TO'; 'Tod: '; 'unic'; 'unified'; 'utf'; 'Uu'; 'variant'; 'von
+    '; 'Xx'; 'Zeichensatz: '; 'Ziel: '; 'zu Name'; 'zwischen '; '��C���0U\'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.gedein_5(Sender : TObject);
 begin
 (*
@@ -127903,6 +128845,20 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.Repso2 (TClientDataSet); TForm1.Repso2inh2 (TMemoField)
+Database/provider: DB.TDataSet.Edit(TDataSet);
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_005C; OFFS_05A0; OFFS_05A4; OFFS_05A8; OFFS_05AC
+Project calls: TForm1 instance; Unit_00408494.Proc_00409448
+Framework/API calls: DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    method TClientDataSet.FindKey(Array of Longin); method TMemoField.GetAsString();
+    System.Proc_00404EE0
+Strings/files/dialog text: '2 SOUR @'; '; '; '[��]�'; 'BAPT'; 'BIRT'; 'BURI'; 'DEAT'; 'ih';
+    '�H����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.sour(Sender : TObject);
 begin
 (*
@@ -128868,6 +129824,12 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_00409950
+Strings/files/dialog text: ' '
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00576F55(Sender : TObject);
 begin
 (*
@@ -128970,6 +129932,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_00409448; Unit_00446399.Proc_0044643C
+Framework/API calls: System.Proc_00404EE0
+Strings/files/dialog text: '. '; '..'; '_^[��]�'; 'HK '; 'HK'; 'na.ch'; 'vo.r'; '�O�����_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00576FF9(Sender : TObject);
 begin
 (*
@@ -129313,6 +130282,14 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_05B0
+Project calls: Unit_00408494.Proc_00409448; Unit_00408494.Proc_004094CC
+Framework/API calls: System.Proc_00404EE0
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005772E5(Sender : TObject);
 begin
 (*
@@ -129441,6 +130418,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_00409448
+Strings/files/dialog text: '02'; '03'; '04'; '05'; '06'; '07'; '08'; '09'; '10'; '11'; '12';
+    '[��]�'; 'JANFEBMARM�RAPRMAYMAIJUNJULAUGSEPOC; '�l�����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00577545(Sender : TObject);
 begin
 (*
@@ -129748,6 +130732,11 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: TForm3.Proc_0057774D()
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0057775B(Sender : TObject);
 begin
 (*
@@ -129767,6 +130756,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00577787(Sender : TObject);
 begin
 (*
@@ -129800,6 +130793,17 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: TForm3.Proc_00577544(); Unit_00408494.Proc_004091D8; Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_00409950; Unit_00408494.Proc_0040BB90; Unit_00408494.Proc_0040D094;
+    Unit_00446399.Proc_0044643C
+Strings/files/dialog text: ' '; '. .'; '..'; '00'; '0123456789'; '1234567890'; 'ab'; 'ABT'; 'AFT';
+    'BEF'; 'CA UM VO NA ER AB CI'; 'ca'; 'CAL'; 'ch'; 'ci'; 'er'; 'EST'; 'JAN FEB MAR M�R APR MAY
+    MAI JUN JUL; 'JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDE; 'na'; 'r '; 'rc'; 't '; 'um'; 'vo';
+    '�3����Z����)�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00577935(Sender : TObject);
 begin
 (*
@@ -131390,6 +132394,11 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: TForm3.Proc_0057872C()
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0057874A(Sender : TObject);
 begin
 (*
@@ -131411,6 +132420,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00578780(Sender : TObject);
 begin
 (*
@@ -131425,6 +132438,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00578869(Sender : TObject);
 begin
 (*
@@ -131452,6 +132469,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_00409448
+Framework/API calls: System.Proc_00404EE0
+Strings/files/dialog text: '1234567890'; '[��]�'; '魺����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0057891A(Sender : TObject);
 begin
 (*
@@ -131611,6 +132635,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00578DF9(Sender : TObject);
 begin
 (*
@@ -131619,6 +132647,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00579745(Sender : TObject);
 begin
 (*
@@ -131629,6 +132661,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00579765(Sender : TObject);
 begin
 (*
@@ -131638,6 +132674,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0057A1ED(Sender : TObject);
 begin
 (*
@@ -131648,6 +132688,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0057A20D(Sender : TObject);
 begin
 (*
@@ -131657,6 +132701,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0057ABC5(Sender : TObject);
 begin
 (*
@@ -131667,6 +132715,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0057ABE5(Sender : TObject);
 begin
 (*
@@ -131676,6 +132728,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0057AC0F(Sender : TObject);
 begin
 (*
@@ -131685,6 +132741,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0057B55D(Sender : TObject);
 begin
 (*
@@ -131695,6 +132755,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0057B57D(Sender : TObject);
 begin
 (*
@@ -131704,6 +132768,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0057EC7B(Sender : TObject);
 begin
 (*
@@ -131713,6 +132781,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0057ECA4(Sender : TObject);
 begin
 (*
@@ -131723,6 +132795,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00582499(Sender : TObject);
 begin
 (*
@@ -131733,6 +132809,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005824B9(Sender : TObject);
 begin
 (*
@@ -131743,6 +132823,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005825E1(Sender : TObject);
 begin
 (*
@@ -131752,6 +132836,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0058276C(Sender : TObject);
 begin
 (*
@@ -131762,6 +132850,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005827C8(Sender : TObject);
 begin
 (*
@@ -131776,6 +132868,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00582855(Sender : TObject);
 begin
 (*
@@ -131786,6 +132882,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00582A1B(Sender : TObject);
 begin
 (*
@@ -131796,6 +132896,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00582A66(Sender : TObject);
 begin
 (*
@@ -131806,6 +132910,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00582A78(Sender : TObject);
 begin
 (*
@@ -131814,6 +132922,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00582AB7(Sender : TObject);
 begin
 (*
@@ -131823,6 +132935,16 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_004091D8; Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_004099B4; Unit_00408494.Proc_0040AAF0
+Framework/API calls: System.Proc_00404EE0
+Strings/files/dialog text: '%2s'; '%4s'; 'ABT '; 'AFT '; 'APR'; 'AUG'; 'BEF '; 'CA'; 'CAL '; 'DEC';
+    'ER'; 'FEB'; 'JUL'; 'JUN'; 'MAR'; 'MAY'; 'NA'; 'NOV'; 'OCT'; 'SEP'; 'UM';
+    'um*UM*ca*CA*VO*vo*na*NA*ER*er'; 'VO'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00582C05(Sender : TObject);
 begin
 (*
@@ -132589,6 +133711,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005831BA(Sender : TObject);
 begin
 (*
@@ -132601,6 +133727,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005831C6(Sender : TObject);
 begin
 (*
@@ -132613,6 +133743,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005831D2(Sender : TObject);
 begin
 (*
@@ -132625,6 +133759,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00583240(Sender : TObject);
 begin
 (*
@@ -132642,6 +133780,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00583265(Sender : TObject);
 begin
 (*
@@ -132651,6 +133793,11 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: TForm3.Proc_0058369B()
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005836B9(Sender : TObject);
 begin
 (*
@@ -132672,6 +133819,19 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Label3 (TLabel); TForm3.Edit1 (TEdit); TForm3.Edit2 (TEdit)
+Database/provider: DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_009C
+Project calls: TForm3.ucase(); Unit_00408494.Proc_00409214; Unit_00408494.Proc_004099B4
+Framework/API calls: Controls.TControl.GetText(TControl):TCaption;;
+    Forms.TCustomForm.Close(TCustomForm);
+Strings/files/dialog text: 'geba'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00583D55(Sender : TObject);
 begin
 (*
@@ -133069,6 +134229,68 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Image1 (N.A.); Label1 (TLabel); Label2 (TLabel); Label3 (TLabel); Label4 (N.A.); Label5
+    (N.A.); Label8 (N.A.); Label9 (N.A.); TForm1.DBMemo1 (TDBMemo); TForm1.Label19 (TLabel);
+    TForm1.lfbh2 (TClientDataSet); TForm1.lfbh2Aus (TIntegerField); TForm1.lfbh2Eh (TStringField);
+    TForm1.lfbh2Hei (TStringField); TForm1.lfbh2Ix (TStringField); TForm1.lfbh2Nam (TStringField);
+    TForm1.lfbh2Nm (TIntegerField); TForm1.lfbh2Prob (TStringField); TForm1.Memo1 (TMemo); Timer1
+    (N.A.); Form1
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.Delete(TDataSet);; DB.TDataSet.DisableControls(TDataSet);;
+    DB.TDataSet.Edit(TDataSet);; DB.TDataSet.EnableControls(TDataSet);;
+    DB.TDataSet.First(TDataSet);; DB.TDataSet.Next(TDataSet);; DB.TDataSet.Open(TDataSet);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.EmptyTable(TTable);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;;
+    DBTables.TTable.GetIndexName(TTable):AnsiString;;
+    QRCtrls.TQRDBText.SetDataSet(TQRDBText;TDataSet);;
+    QuickRpt.TQuickRep.SetDataSet(TQuickRep;TDataSet);
+Global state: GlobalVar_0061DF08; GlobalVar_0061DF10; GlobalVar_0061E0C8; GlobalVar_02535440;
+    GlobalVar_02535444
+Unresolved field offsets: OFFS_005C; OFFS_00C4; OFFS_00CC; OFFS_00E0; OFFS_013C; OFFS_0140;
+    OFFS_01E8; OFFS_01EC; OFFS_0218; OFFS_02A8; OFFS_02AC; OFFS_02BC; OFFS_0324; OFFS_0328;
+    OFFS_032C; OFFS_0330; OFFS_0334; OFFS_0338; OFFS_033C; OFFS_0350; OFFS_0354; OFFS_0368;
+    OFFS_038C; OFFS_0394; OFFS_04C8; OFFS_04CC; OFFS_04D0; OFFS_04D4; OFFS_04D8; OFFS_04DC;
+    OFFS_04E0; OFFS_04E4; OFFS_04E8; OFFS_04EC; OFFS_04F0; OFFS_04F4; OFFS_04F8; OFFS_0508;
+    OFFS_0534; OFFS_0538; OFFS_053C; OFFS_0540; OFFS_0544; OFFS_0548; OFFS_054C; OFFS_0550;
+    OFFS_0554; OFFS_0558; OFFS_055C; OFFS_0560; OFFS_0564; OFFS_0568; OFFS_056C; OFFS_0570;
+    OFFS_0574; OFFS_057C; OFFS_0580; OFFS_0584; OFFS_0588; OFFS_058C; OFFS_059C; OFFS_05B0;
+    OFFS_05C8; OFFS_05EC; OFFS_0950; OFFS_0954; OFFS_0A44; OFFS_0A68; OFFS_64
+Project calls: TForm1 instance; TForm3.illki(); TForm3.oabk(); TForm3.Proc_00576EB0();
+    TForm3.Proc_00576F54(); TForm3.Proc_00576FF8(); TForm3.ucase(); Unit_00408494.Proc_004091D8;
+    Unit_00408494.Proc_00409448; Unit_00408494.Proc_00409950; Unit_00408494.Proc_004099B4
+Framework/API calls: class TStringList; Classes.TStringList.SetSorted(TStringList;Boolean);;
+    Controls.TControl.Refresh(TControl);; Controls.TControl.SetHeight(TControl;Integer);;
+    Controls.TControl.SetLeft(TControl;Integer);; Controls.TControl.SetText(TControl;TCaption);;
+    Controls.TControl.SetVisible(TControl;Boolean);; Controls.TControl.SetWidth(TControl;Integer);;
+    DBClient.TCustomClientDataSet.EmptyDataSet(TCustomClientDataSet);;
+    DBClient.TCustomClientDataSet.GetIndexName(TCustomClientDataSet):AnsiString;;
+    DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    Dialogs.InputQuery(AnsiString;AnsiString;AnsiString;AnsiString):Boolean;;
+    Forms.TScreen.SetCursor(TScreen;TCursor);; Graphics.TFont.GetSize(TFont):Integer;;
+    Graphics.TFont.SetSize(TFont;Integer);; method TClientDataSet.FindKey(Array of Longin); method
+    TClientDataSet.GetRecNo(); method TClientDataSet.Post(); method
+    TClientDataSet.SetRecNo(Integer); method TIntegerField.GetAsInteger(); method
+    TIntegerField.SetAsInteger(Longint); method TLabel.SetEnabled(Boolean); method TMemo.Clear();
+    method TStringField.GetAsString(); method TStringField.SetAsString(string); method
+    TStrings.Assign(TPersistent); method TStrings.Count(); method TStrings.Strings [ Index();
+    QControls.TGraphicControl.PaintRequest(TGraphicControl);;
+    QRCtrls.TQRCustomLabel.SetAutoStretch(TQRCustomLabel;Boolean);;
+    QRCtrls.TQRCustomLabel.SetCaption(TQRCustomLabel;AnsiString);;
+    QRCtrls.TQRDBText.SetDataField(TQRDBText;AnsiString);;
+    QuickRpt.TCustomQuickRep.Preview(TCustomQuickRep);;
+    QuickRpt.TQRPage.SetColumns(TQRPage;Integer);; System.Proc_00404EE0;
+    System.TObject.Create(TObject;Boolean);; TScreen instance
+Strings/files/dialog text: ' ('; ' (TP: '; ' (TZ: '; ' * '; ' + '; ' - '; ' <'; ' ['; ' [aus '; '
+    [oo '; ' ~ '; ', '; '- o-o : '; '- oo '; '- oo'; '. '; '000000*'; ': '; '] '; '_^[��]�';
+    'Bezie'; 'Ehes'; 'heir'; 'Kind(er), Mutter nicht bekannt: - '; 'Kind(er), Vater nicht bekannt: -
+    '; 'Kind(er): '; 'mut'; 'Mutter nicht bekannt: '; 'na'; 'nm'; 'num'; 'OFB erstellen'; 'OFB';
+    'ort_'; 'Orts-Abk�rzungen: '; 'Pro'; 'vat'; 'Vater nicht bekannt: '; 'zeile'; '�(���O������a';
+    '�berschrift : '; '�|������_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00585029(Sender : TObject);
 begin
 (*
@@ -147281,6 +148503,34 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Image1 (N.A.); Label1 (TLabel); Label2 (TLabel); Label3 (TLabel); Label4 (N.A.); Label5
+    (N.A.); Label7 (N.A.)
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.Delete(TDataSet);; DB.TDataSet.First(TDataSet);; DB.TDataSet.Open(TDataSet);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.EmptyTable(TTable);; QRCtrls.TQRDBText.SetDataSet(TQRDBText;TDataSet);;
+    QuickRpt.TQuickRep.SetDataSet(TQuickRep;TDataSet);
+Global state: GlobalVar_0061DF08; GlobalVar_0061DF10; GlobalVar_0061E0B4; GlobalVar_0253592C
+Unresolved field offsets: OFFS_01B4; OFFS_01BC; OFFS_01C0; OFFS_02A8; OFFS_02AC; OFFS_02BC;
+    OFFS_034C; OFFS_0350; OFFS_0354; OFFS_0358; OFFS_035C; OFFS_0368; OFFS_64
+Project calls: Unit_00408494.Proc_00409448
+Framework/API calls: Controls.TControl.SetHeight(TControl;Integer);;
+    Controls.TControl.SetLeft(TControl;Integer);; Controls.TControl.SetVisible(TControl;Boolean);;
+    Controls.TControl.SetWidth(TControl;Integer);; Forms.TScreen.SetCursor(TScreen;TCursor);;
+    Graphics.TFont.SetSize(TFont;Integer);; method TLabel.SetEnabled(Boolean);
+    QRCtrls.TQRCustomLabel.SetAutoStretch(TQRCustomLabel;Boolean);;
+    QRCtrls.TQRCustomLabel.SetCaption(TQRCustomLabel;AnsiString);;
+    QRCtrls.TQRDBText.SetDataField(TQRDBText;AnsiString);;
+    QuickRpt.TCustomQuickRep.Preview(TCustomQuickRep);;
+    QuickRpt.TQRPage.SetColumns(TQRPage;Integer);; System.Proc_00404EE0;
+    System.TObject.Free(TObject);; TScreen instance
+Strings/files/dialog text: ', '; '_^[��]�'; 'fahren von'; 'Nach'; 'Nachfahren von'; 'Namens-Register
+    zu: '; 'Namens-Register'; 'namort'; 'NN'; 'no'; 'Vorf'; 'Vorfahren von'; 'zus';
+    '�+�����_^[��]�'; '�5����\����<�a'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00595701(Sender : TObject);
 begin
 (*
@@ -148491,6 +149741,58 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.Label18 (TLabel); TForm1.Label19 (TLabel); TForm1.OpenDialog1 (TOpenDialog);
+    TForm1.Repso2 (TClientDataSet); TForm1.Repso2alt (TStringField); TForm1.Repso2inh
+    (TStringField); TForm1.Repso2inh2 (TMemoField); TForm1.Repso2nr (TIntegerField); Form1
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.DisableControls(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DB.TDataSet.EnableControls(TDataSet);; DB.TDataSet.First(TDataSet);;
+    DB.TDataSet.Open(TDataSet);; DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.EmptyTable(TTable);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08; GlobalVar_02535940
+Unresolved field offsets: OFFS_005C; OFFS_0080; OFFS_02A4; OFFS_02AC; OFFS_02B0; OFFS_02B4;
+    OFFS_0410; OFFS_0414; OFFS_0418; OFFS_041C; OFFS_0420; OFFS_0424; OFFS_0428; OFFS_042C;
+    OFFS_0430; OFFS_0434; OFFS_0438; OFFS_043C; OFFS_0440; OFFS_0444; OFFS_0448; OFFS_044C;
+    OFFS_0450; OFFS_0454; OFFS_0458; OFFS_045C; OFFS_0534; OFFS_0538; OFFS_053C; OFFS_0540;
+    OFFS_0544; OFFS_0548; OFFS_054C; OFFS_0550; OFFS_0554; OFFS_0558; OFFS_055C; OFFS_0560;
+    OFFS_0564; OFFS_0568; OFFS_056C; OFFS_0570; OFFS_0574; OFFS_0578; OFFS_057C; OFFS_0580;
+    OFFS_0584; OFFS_0588; OFFS_058C; OFFS_0590; OFFS_0594; OFFS_0598; OFFS_059C; OFFS_05A0;
+    OFFS_05A4; OFFS_05A8; OFFS_05AC; OFFS_05B0; OFFS_05B4; OFFS_05BC; OFFS_05C0; OFFS_05C4;
+    OFFS_05C8; OFFS_05CC; OFFS_05D4; OFFS_05D8; OFFS_05DC; OFFS_05F0; OFFS_05F4; OFFS_05F8;
+    OFFS_05FC; OFFS_0600
+Project calls: TForm1 instance; TForm3.ans(); TForm3.Proc_00577934(); TForm3.zsa();
+    Unit_00408494.Proc_004091D8; Unit_00408494.Proc_00409214; Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_004094CC; Unit_00408494.Proc_00409950; Unit_00408494.Proc_00409980;
+    Unit_00408494.Proc_004099B4; Unit_00446399.Proc_00446420; Unit_00446399.Proc_0044643C
+Framework/API calls: Controls.TControl.Refresh(TControl);;
+    Controls.TControl.SetText(TControl;TCaption);; Controls.TControl.SetVisible(TControl;Boolean);;
+    DBClient.TCustomClientDataSet.EmptyDataSet(TCustomClientDataSet);;
+    DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;;
+    Forms.TScreen.SetCursor(TScreen;TCursor);; method TClientDataSet.FindKey(Array of Longin);
+    method TClientDataSet.Post(); method TIntegerField.GetAsInteger(); method
+    TIntegerField.SetAsInteger(Longint); method TMemoField.GetAsString(); method
+    TMemoField.SetAsString(string); method TStringField.SetAsString(string);
+    QControls.TGraphicControl.PaintRequest(TGraphicControl);; System.Proc_00402988;
+    System.Proc_00404EE0; System.Utf8ToAnsi(UTF8String):String;; TScreen instance
+Strings/files/dialog text: ' %'; ', '; '0 %'; '0 @'; '0 @F'; '0 @I'; '0 @N'; '0 @NI'; '0 @P'; '0
+    @S'; '0 TRLR'; '000000'; '1 ADOP'; '1 ADR1'; '1 ADR3'; '1 ADR4'; '1 ADR5'; '1 BAPT'; '1 BIRT';
+    '1 BURI'; '1 CHAR '; '1 CHAR ANSI'; '1 CHAR IBM'; '1 CHAR UNIC'; '1 CHAR UTF'; '1 CHIL @'; '1
+    CHR'; '1 CON'; '1 DEAT'; '1 DIV'; '1 EDUC'; '1 EMA'; '1 ENGA'; '1 GODP '; '1 HUSB @'; '1 IDNO';
+    '1 MARR'; '1 NAME'; '1 NOTE @N'; '1 NOTE Hnm.'; '1 NOTE lebt'; '1 NOTE'; '1 OCCU'; '1 PHON'; '1
+    RELI'; '1 REPO @R'; '1 RESI'; '1 SEX'; '1 SOUR @'; '1 SOUR @S'; '1 URL'; '1 WIFE @'; '2 _GODP ';
+    '2 _RUFN'; '2 _WITN'; '2 ADDR'; '2 CAUS'; '2 COMM'; '2 CON'; '2 CONC'; '2 DATE '; '2 DATE'; '2
+    EMAIL'; '2 FAMC'; '2 GIVN'; '2 GODP '; '2 NOTE @N'; '2 NOTE'; '2 PHON'; '2 PLAC'; '2 SITE'; '2
+    SOUR @'; '2 SOUR @S'; '2 SOUR'; '2 SURN'; '2 TYPE CIVI'; '2 TYPE RELI'; '3 _EXTENDED_LOCATIONS';
+    '3 _LOC @P'; '3 CON'; '3 CONC'; '3 CONT'; '; '; '@ INDI'; '@NI'; 'AD'; 'adop'; 'alt_'; 'andere
+    Beziehung'; 'Ausbildung: '; 'CHAN'; 'chan'; 'Ed'; 'Eheschliessung'; 'Gedcom einlesen '; 'Gedcom
+    vorbereiten'; 'Hnm.:'; 'ih'; 'INDI'; 'lebt'; 'lebt: j'; 'marr'; 'NI'; 'not mar'; 'Rel'; 'rk';
+    'roman catholic'; 'Schrw.:'; 'VARIATION'; '�Ԍ��������<�a'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_00596975(Sender : TObject);
 begin
 (*
@@ -160911,6 +162213,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059C9C8(Sender : TObject);
 begin
 (*
@@ -160921,6 +162227,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059C9F0(Sender : TObject);
 begin
 (*
@@ -160953,6 +162263,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059CA79(Sender : TObject);
 begin
 (*
@@ -160963,6 +162277,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059CA99(Sender : TObject);
 begin
 (*
@@ -160973,6 +162291,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059CC11(Sender : TObject);
 begin
 (*
@@ -160986,6 +162308,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059CC30(Sender : TObject);
 begin
 (*
@@ -160996,6 +162322,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059CC7D(Sender : TObject);
 begin
 (*
@@ -161004,6 +162334,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059CC9A(Sender : TObject);
 begin
 (*
@@ -161012,6 +162346,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059CDD7(Sender : TObject);
 begin
 (*
@@ -161022,6 +162360,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059CE59(Sender : TObject);
 begin
 (*
@@ -161032,6 +162374,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059CEA5(Sender : TObject);
 begin
 (*
@@ -161041,6 +162387,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059CFA5(Sender : TObject);
 begin
 (*
@@ -161051,6 +162401,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059CFB9(Sender : TObject);
 begin
 (*
@@ -161060,6 +162414,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059D06D(Sender : TObject);
 begin
 (*
@@ -161069,6 +162427,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059D07C(Sender : TObject);
 begin
 (*
@@ -161079,6 +162441,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_0059D08C(Sender : TObject);
 begin
 (*
@@ -161090,6 +162456,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A58F8(Sender : TObject);
 begin
 (*
@@ -161100,6 +162470,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A590C(Sender : TObject);
 begin
 (*
@@ -161132,6 +162506,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A5A11(Sender : TObject);
 begin
 (*
@@ -161141,6 +162519,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A5A1E(Sender : TObject);
 begin
 (*
@@ -161151,6 +162533,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A5A68(Sender : TObject);
 begin
 (*
@@ -161161,6 +162547,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A5AA3(Sender : TObject);
 begin
 (*
@@ -161171,6 +162561,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A5AE0(Sender : TObject);
 begin
 (*
@@ -161181,6 +162575,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A5BFC(Sender : TObject);
 begin
 (*
@@ -161191,6 +162589,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A5C45(Sender : TObject);
 begin
 (*
@@ -161199,6 +162601,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A5C70(Sender : TObject);
 begin
 (*
@@ -161207,6 +162613,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A5D9B(Sender : TObject);
 begin
 (*
@@ -161216,6 +162626,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A5E41(Sender : TObject);
 begin
 (*
@@ -161225,6 +162639,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A5EC7(Sender : TObject);
 begin
 (*
@@ -161234,6 +162652,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A5ED6(Sender : TObject);
 begin
 (*
@@ -161244,6 +162666,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A5F18(Sender : TObject);
 begin
 (*
@@ -161252,6 +162678,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A6211(Sender : TObject);
 begin
 (*
@@ -161265,6 +162695,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A628A(Sender : TObject);
 begin
 (*
@@ -161275,6 +162709,56 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Image1 (N.A.); Image2 (N.A.); Label10 (N.A.); Label2 (TLabel); Label3 (TLabel); Label4
+    (N.A.); Label5 (N.A.); Label7 (N.A.); Label9 (N.A.); Shape1 (N.A.); TForm1.DBText1 (TDBText);
+    TForm1.Label18 (TLabel); TForm1.Label19 (TLabel); TForm1.Memo1 (TMemo); TForm1.SaveDialog1
+    (TSaveDialog); Form1
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Close(TDataSet);;
+    DB.TDataSet.FieldByName(TDataSet;AnsiString):TField;; DB.TDataSet.First(TDataSet);;
+    DB.TDataSet.Next(TDataSet);; DB.TDataSet.Open(TDataSet);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08; GlobalVar_0061DFEC; GlobalVar_0061DFFC; GlobalVar_02535650;
+    GlobalVar_02535654; GlobalVar_02535658; GlobalVar_0253592C; GlobalVar_02535BA0
+Unresolved field offsets: OFFS_005C; OFFS_0080; OFFS_00C4; OFFS_00CC; OFFS_024C; OFFS_0328;
+    OFFS_032C; OFFS_0334; OFFS_0340; OFFS_0348; OFFS_0534; OFFS_0538; OFFS_05B0; OFFS_60
+Project calls: method TForm1.Invalidate(); TForm1 instance; TForm1.anzeigen(); TForm1.ucase();
+    TForm3.gedausx(); TForm3.Proc_00576EB0(); TForm3.Proc_00582C04(); Unit_00408494.Proc_004091D8;
+    Unit_00408494.Proc_00409448; Unit_00408494.Proc_00409950; Unit_00408494.Proc_00409980;
+    Unit_00408494.Proc_004099B4; Unit_00408494.Proc_0040A1B8; Unit_00408494.Proc_0040BBD8;
+    Unit_00408494.Proc_0040C84C
+Framework/API calls: Controls.TControl.GetText(TControl):TCaption;;
+    Controls.TControl.Hide(TControl);; Controls.TControl.Refresh(TControl);;
+    Controls.TControl.SetColor(TControl;TColor);; Controls.TControl.SetText(TControl;TCaption);;
+    Controls.TControl.SetVisible(TControl;Boolean);;
+    Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;; Forms.TCustomForm.Hide(TCustomForm);;
+    Forms.TCustomForm.SetVisible(TCustomForm;Boolean);; method TLabel.SetDragMode(TDragMode); method
+    TLabel.Update(); method TMemo.Clear(); method TStrings.Assign(TPersistent); method
+    TStrings.Count(); method TStrings.Strings [ Index();
+    QControls.TGraphicControl.PaintRequest(TGraphicControl);; System.AnsiToUtf8(String):UTF8String;;
+    System.Proc_00402988; System.Proc_00404EE0
+Strings/files/dialog text: ' %'; ' /'; ' and taufjahr<='; ' TO '; '. .'; '0 %'; '0 @F'; '0 @I'; '0
+    @P'; '0 @S'; '0 @S1@ SUBM'; '0 HEAD'; '0 TRLR'; '000000'; '1 _ABBR '; '1 _FCNTY '; '1 _FCTRY ';
+    '1 _FPOST '; '1 _FSTAE '; '1 _GOV '; '1 _MAIDENHEAD '; '1 _STAT MARRIED'; '1 _STAT NOT MARRIED';
+    '1 ABBR '; '1 ADDR'; '1 ADOP'; '1 BIRT'; '1 BURI'; '1 CHAR ANSI'; '1 CHAR Unicode'; '1 CHAR
+    UTF-8'; '1 CHIL @I'; '1 CHR'; '1 CITY '; '1 DEAT'; '1 DEST OTHER'; '1 DIV'; '1 EMAIL '; '1 FAMC
+    @F'; '1 FAMS @F'; '1 FILE '; '1 GEDC'; '1 HUSB @I'; '1 IDNO '; '1 LANG German'; '1 MAP'; '1
+    MARR'; '1 NAME '; '1 NAME /'; '1 NAME UNKNOWN'; '1 NOTE '; '1 NOTE Hnm.: '; '1 NOTE lebt: '; '1
+    NOTE Schrw.: '; '1 OCCU '; '1 PHON '; '1 PLAC'; '1 POST '; '1 PUBL '; '1 RELI '; '1 RESI'; '1
+    SEX F'; '1 SEX M'; '1 SEX U'; '1 SOUR @S'; '1 SOUR AHNENWIN'; '1 TITL '; '1 WIFE @I'; '2 _GODP
+    '; '2 _RUFNAME '; '2 _WITN '; '2 ADDR '; '2 ADR1 '; '2 ADR2 '; '2 CALN '; '2 CAUS '; '2 CONT ';
+    '2 CONT Hnm.: '; '2 CONT lebt: '; '2 CONT Schrw.: '; '2 DATE '; '2 EMAIL '; '2 EVEN '; '2 FAMC
+    @F'; '2 FORM LINEAGE-LINKED'; '2 FORM place, county, state, countr; '2 LATI '; '2 LONG '; '2
+    NOTE '; '2 NOTE not marr'; '2 PHON '; '2 PLAC '; '2 SOUR @S'; '2 TYPE CIVIL'; '2 TYPE RELI'; '2
+    TYPE variant'; '2 VERS 5.1'; '2 VERS 5.5.1'; '2 WWW '; '3 _LOC @P'; '3 ADR1 '; '3 ADR2 '; '3
+    ADR3 '; '3 CITY '; '3 CONC '; '3 DATE '; '3 MEDI '; '3 PLAC '; '3 POST '; '@ _LOC'; '@ FAM'; '@
+    INDI'; '@ SOUR'; '_^[��]�'; 'andere Beziehung'; 'dsn'; 'FROM '; 'gebjahr<='; 'ged'; 'Gedcom
+    schreiben'; 'Gedcom-Dateien (*.ged)|*.ged'; 'kommentar'; 'nn'; 'num'; 'nummer'; 'ort_'; 'Over';
+    'tit'; '﻿0 HEAD'; '�SS������_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005A7C21(Sender : TObject);
 begin
 (*
@@ -173552,6 +175036,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AF240(Sender : TObject);
 begin
 (*
@@ -173566,6 +175054,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AF258(Sender : TObject);
 begin
 (*
@@ -173593,6 +175085,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AF375(Sender : TObject);
 begin
 (*
@@ -173606,6 +175102,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AF3FC(Sender : TObject);
 begin
 (*
@@ -173620,6 +175120,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AF549(Sender : TObject);
 begin
 (*
@@ -173637,6 +175141,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AF5A3(Sender : TObject);
 begin
 (*
@@ -173648,6 +175156,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AF5B2(Sender : TObject);
 begin
 (*
@@ -173660,6 +175172,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AF5E1(Sender : TObject);
 begin
 (*
@@ -173670,6 +175186,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AF64D(Sender : TObject);
 begin
 (*
@@ -173680,6 +175200,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AF695(Sender : TObject);
 begin
 (*
@@ -173693,6 +175217,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AF6A4(Sender : TObject);
 begin
 (*
@@ -173703,6 +175231,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AF8BC(Sender : TObject);
 begin
 (*
@@ -173714,6 +175246,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AFABD(Sender : TObject);
 begin
 (*
@@ -173723,6 +175259,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AFB3C(Sender : TObject);
 begin
 (*
@@ -173737,6 +175277,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_00409448
+Framework/API calls: user32.OemToCharA()
+Strings/files/dialog text: '^[YY]ÐU��Q'; '�H����^[YY]ÐU��Q'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005AFB95(Sender : TObject);
 begin
 (*
@@ -173835,6 +175382,28 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.DBText1 (TDBText); TForm1.Label18 (TLabel); TForm1.Label19 (TLabel);
+    TForm1.SaveDialog1 (TSaveDialog)
+Database/provider: DB.TDataSet.First(TDataSet);; DB.TDataSet.Next(TDataSet);;
+    DB.TDataSet.Open(TDataSet);; DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08; GlobalVar_02535BA0
+Unresolved field offsets: OFFS_00CC; OFFS_013C; OFFS_0950; OFFS_0954; OFFS_0958; OFFS_09C4;
+    OFFS_09DC; OFFS_09E0; OFFS_09E4; OFFS_09E8; OFFS_09EC; OFFS_0A44
+Project calls: TForm1 instance; TForm1.lab18ein(); TForm3.ucase(); Unit_00408494.Proc_00409950
+Framework/API calls: Controls.TControl.Hide(TControl);;
+    Controls.TControl.SetColor(TControl;TColor);; Controls.TControl.SetText(TControl;TCaption);;
+    Dialogs.ShowMessage(AnsiString);; Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;;
+    Forms.TScreen.SetCursor(TScreen;TCursor);; method TSaveDialog.Execute();
+    QControls.TGraphicControl.PaintRequest(TGraphicControl);; System.IOResult:Integer;;
+    System.Proc_00402988; System.Proc_00404EE0; TScreen instance
+Strings/files/dialog text: ' Adresse(n) geschrieben.'; ' and taufjahr<='; '(Nur lebende Personen
+    !)'; '.txt'; 'Adressen schreiben'; 'Frau'; 'gebjahr<='; 'Herr'; 'Herrn'; 'namgeb'; 'Text-Dateien
+    (*.txt)|*.txt'; 'txt'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005B3ABD(Sender : TObject);
 begin
 (*
@@ -174710,6 +176279,50 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: Image2 (N.A.); Label5 (N.A.); Label7 (N.A.); Label9 (N.A.); Shape1 (N.A.); TForm1.Label18
+    (TLabel); TForm1.Label19 (TLabel); TForm1.Memo1 (TMemo); TForm1.SaveDialog1 (TSaveDialog)
+Database/provider: DB.TDataSet.FieldByName(TDataSet;AnsiString):TField;;
+    DB.TDataSet.First(TDataSet);; DB.TDataSet.Next(TDataSet);; DB.TDataSet.Open(TDataSet);;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08; GlobalVar_0061DFEC; GlobalVar_0061DFFC; GlobalVar_02535644;
+    GlobalVar_02535650; GlobalVar_02535654; GlobalVar_02535658
+Unresolved field offsets: OFFS_005C; OFFS_00C4; OFFS_01D0; OFFS_024C; OFFS_0328; OFFS_032C;
+    OFFS_0334; OFFS_0340; OFFS_0348; OFFS_05B0
+Project calls: TForm1 instance; TForm1.anzeigen(); TForm3.gedausxv(); TForm3.Proc_00576EB0();
+    TForm3.Proc_00582C04(); Unit_00408494.Proc_004091D8; Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_00409950; Unit_00408494.Proc_00409980; Unit_00408494.Proc_004099B4;
+    Unit_00408494.Proc_0040A1B8; Unit_00408494.Proc_0040BBD8; Unit_00408494.Proc_0040C84C;
+    Unit_00446399.Proc_0044643C
+Framework/API calls: Controls.TControl.GetText(TControl):TCaption;;
+    Controls.TControl.Hide(TControl);; Controls.TControl.Refresh(TControl);;
+    Controls.TControl.SetText(TControl;TCaption);; Controls.TControl.SetVisible(TControl;Boolean);;
+    Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;; Forms.TCustomForm.Hide(TCustomForm);;
+    Forms.TCustomForm.SetVisible(TCustomForm;Boolean);; method TMemo.Clear(); method
+    TStrings.Assign(TPersistent); method TStrings.Count(); method TStrings.Strings [ Index();
+    QControls.TGraphicControl.PaintRequest(TGraphicControl);; System.AnsiToUtf8(String):UTF8String;;
+    System.Proc_00402988; System.Proc_00404EE0; System.TObject.Free(TObject);
+Strings/files/dialog text: ' %'; ' /'; ' TO '; '..'; '0 %'; '0 @F'; '0 @I'; '0 @P'; '0 @S'; '0 @S1@
+    SUBM'; '0 HEAD'; '0 TRLR'; '000000'; '1 _ABBR '; '1 _FCNTY '; '1 _FCTRY '; '1 _FPOST '; '1
+    _FSTAE '; '1 _GOV '; '1 _STAT MARRIED'; '1 _STAT NOT MARRIED'; '1 ABBR '; '1 ADDR'; '1 BIRT'; '1
+    BURI'; '1 CHAR ANSI'; '1 CHAR Unicode'; '1 CHAR UTF-8'; '1 CHIL @I'; '1 CHR'; '1 CITY '; '1
+    DEAT'; '1 DEST OTHER'; '1 DIV'; '1 EMAIL '; '1 FAMC @F'; '1 FAMS @F'; '1 FILE '; '1 GEDC'; '1
+    HUSB @I'; '1 IDNO '; '1 LANG German'; '1 MAP '; '1 MARR'; '1 NAME '; '1 NAME /'; '1 NAME
+    UNKNOWN'; '1 NOTE '; '1 NOTE Hnm.: '; '1 NOTE lebt: '; '1 NOTE Schrw.: '; '1 OCCU '; '1 PHON ';
+    '1 PLAC'; '1 POST '; '1 PUBL '; '1 RELI '; '1 RESI'; '1 SEX F'; '1 SEX M'; '1 SEX U'; '1 SOUR
+    @S'; '1 SOUR AHNENWIN'; '1 TITL '; '1 WIFE @I'; '2 _GODP '; '2 _RUFNAME '; '2 _WITN '; '2 ADDR
+    '; '2 ADR1 '; '2 ADR2 '; '2 CALN '; '2 CAUS '; '2 CONT '; '2 CONT Hnm.: '; '2 CONT lebt: '; '2
+    CONT Schrw.: '; '2 DATE '; '2 EMAIL '; '2 EVEN '; '2 FORM LINEAGE-LINKED'; '2 FORM place,
+    county, state, countr; '2 NOTE '; '2 NOTE not marr'; '2 PHON '; '2 PLAC '; '2 SOUR @S'; '2 TYPE
+    CIVIL'; '2 TYPE MAIDENHEAD'; '2 TYPE RELI'; '2 TYPE variant'; '2 VERS 5.1'; '2 VERS 5.5.1'; '2
+    WWW '; '3 _LOC @P'; '3 ADR1 '; '3 ADR2 '; '3 ADR3 '; '3 CITY '; '3 CONC '; '3 DATE '; '3 MEDI ';
+    '3 PLAC '; '3 POST '; '@ _LOC'; '@ FAM'; '@ INDI'; '@ SOUR'; '_^[��]�'; 'and'; 'Ehes'; 'FROM ';
+    'ged'; 'Gedcom schreiben'; 'Gedcom-Dateien (*.ged)|*.ged'; 'kommentar'; 'lfn'; 'qu'; 'tit'; '﻿0
+    HEAD'; '�φ������_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005B52A5(Sender : TObject);
 begin
 (*
@@ -185747,6 +187360,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BBEA4(Sender : TObject);
 begin
 (*
@@ -185761,6 +187378,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BBEBC(Sender : TObject);
 begin
 (*
@@ -185788,6 +187409,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BBFD9(Sender : TObject);
 begin
 (*
@@ -185801,6 +187426,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BC060(Sender : TObject);
 begin
 (*
@@ -185815,6 +187444,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BC12D(Sender : TObject);
 begin
 (*
@@ -185832,6 +187465,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BC187(Sender : TObject);
 begin
 (*
@@ -185843,6 +187480,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BC196(Sender : TObject);
 begin
 (*
@@ -185855,6 +187496,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BC1C5(Sender : TObject);
 begin
 (*
@@ -185865,6 +187510,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BC225(Sender : TObject);
 begin
 (*
@@ -185875,6 +187524,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BC26D(Sender : TObject);
 begin
 (*
@@ -185888,6 +187541,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BC27C(Sender : TObject);
 begin
 (*
@@ -185898,6 +187555,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BC464(Sender : TObject);
 begin
 (*
@@ -185909,6 +187570,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BC655(Sender : TObject);
 begin
 (*
@@ -185918,6 +187583,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BC6D4(Sender : TObject);
 begin
 (*
@@ -185932,6 +187601,22 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.Repso2 (TClientDataSet); TForm1.Repso2inh2 (TMemoField)
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DB.TDataSet.Next(TDataSet);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Project calls: TForm1 instance; TForm3.Proc_00577934(); Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_004094CC
+Framework/API calls: DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    method TClientDataSet.FindKey(Array of Longin); method TMemoField.GetAsString();
+    System.Proc_00404EE0
+Strings/files/dialog text: '2 SOUR @'; '; '; '_^[��]�0'; 'andere Beziehung'; 'Eheschliessung'; 'ih';
+    '��l����_^[��]�0'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BC72D(Sender : TObject);
 begin
 (*
@@ -187649,6 +189334,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BD845(Sender : TObject);
 begin
 (*
@@ -187659,6 +189348,15 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_0574
+Project calls: Unit_00408494.Proc_00409448
+Framework/API calls: System.Proc_00404EE0
+Strings/files/dialog text: ', '; '[��]�'; 'BAPT'; '�<k����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BD865(Sender : TObject);
 begin
 (*
@@ -187839,6 +189537,18 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DB.TDataSet.FieldByName(TDataSet;AnsiString):TField;;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_0548
+Project calls: Unit_00408494.Proc_004091D8; Unit_00408494.Proc_00409448; Unit_00408494.Proc_004099B4
+Strings/files/dialog text: '^[��]�'; 'fnr'; '��h����^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BD9B5(Sender : TObject);
 begin
 (*
@@ -188126,6 +189836,15 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DB.TDataSet.FieldByName(TDataSet;AnsiString):TField;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Project calls: TForm3.Proc_00576EB0(); Unit_00408494.Proc_00409448; Unit_00408494.Proc_004099B4
+Strings/files/dialog text: 'fnr'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BDC25(Sender : TObject);
 begin
 (*
@@ -188328,6 +190047,20 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.Repso2 (TClientDataSet); TForm1.Repso2inh (TStringField)
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_05B0; OFFS_05B4; OFFS_05BC; OFFS_05C8
+Project calls: TForm1 instance; TForm3.Proc_005772E4(); Unit_00408494.Proc_00409448
+Framework/API calls:
+    DBClient.TCustomClientDataSet.FindKey(TCustomClientDataSet;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;;
+    DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);; method
+    TStringField.GetAsString(); System.Proc_00404EE0
+Strings/files/dialog text: '1 NOTE @'; '[��]�'; 'Hnm.:'; 'ih'; 'lebt: j'; 'NOTE'; 'Schrw.:';
+    '��c����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BDDC9(Sender : TObject);
 begin
 (*
@@ -188792,6 +190525,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_05B0
+Project calls: Unit_00408494.Proc_00409448
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BE17D(Sender : TObject);
 begin
 (*
@@ -188901,6 +190641,15 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_05B0; OFFS_05B4; OFFS_05BC; OFFS_05C8
+Project calls: Unit_00408494.Proc_00409448
+Framework/API calls: System.Proc_00404EE0
+Strings/files/dialog text: 'Hnm.:'; 'lebt: j'; 'Schrw.:'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BE22C(Sender : TObject);
 begin
 (*
@@ -189170,6 +190919,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_05EC
+Strings/files/dialog text: 'DEAT'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BE469(Sender : TObject);
 begin
 (*
@@ -189276,6 +191032,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_058C
+Strings/files/dialog text: 'DEAT'; 'YY]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BE541(Sender : TObject);
 begin
 (*
@@ -189369,6 +191132,18 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_0554; OFFS_0558; OFFS_055C; OFFS_0564; OFFS_0568; OFFS_056C;
+    OFFS_057C; OFFS_0580; OFFS_0584; OFFS_0590; OFFS_0594; OFFS_0598
+Project calls: TForm3.Proc_005772E4(); TForm3.Proc_00577934(); Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_004094CC
+Framework/API calls: System.Proc_00404EE0
+Strings/files/dialog text: '* '; '[��]�'; 'Auswanderung am '; 'BAPT'; 'Bestatt.: '; 'BIRT'; 'BURI';
+    'DEAT'; 'EMIG'; 'Geburt: '; 'Taufe: '; 'Tod: '; '�6U����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BE5E1(Sender : TObject);
 begin
 (*
@@ -190531,6 +192306,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BF03E(Sender : TObject);
 begin
 (*
@@ -190541,6 +192320,18 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_00CC; OFFS_0560; OFFS_0570; OFFS_0578; OFFS_0588; OFFS_059C;
+    OFFS_0A44; OFFS_0A4C; OFFS_0A58; OFFS_0A64
+Project calls: TForm3.Ortdreh(); TForm3.Proc_005772E4(); Unit_00408494.Proc_00409448
+Strings/files/dialog text: 'Auswanderung nach '; 'BAPT'; 'BIRT'; 'BURI'; 'DEAT'; 'EMIG'; 'RESI';
+    '��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BF085(Sender : TObject);
 begin
 (*
@@ -191135,6 +192926,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BF52A(Sender : TObject);
 begin
 (*
@@ -191145,6 +192940,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BFC6D(Sender : TObject);
 begin
 (*
@@ -191155,6 +192954,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005BFCB6(Sender : TObject);
 begin
 (*
@@ -191165,6 +192968,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C5655(Sender : TObject);
 begin
 (*
@@ -191174,6 +192981,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C580C(Sender : TObject);
 begin
 (*
@@ -191184,6 +192995,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C586C(Sender : TObject);
 begin
 (*
@@ -191198,6 +193013,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C58A1(Sender : TObject);
 begin
 (*
@@ -191298,6 +193117,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C59AC(Sender : TObject);
 begin
 (*
@@ -191308,6 +193131,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C5A22(Sender : TObject);
 begin
 (*
@@ -191318,6 +193145,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C5A35(Sender : TObject);
 begin
 (*
@@ -191328,6 +193159,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C5A47(Sender : TObject);
 begin
 (*
@@ -191338,6 +193173,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C5A59(Sender : TObject);
 begin
 (*
@@ -191348,6 +193187,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C5A6B(Sender : TObject);
 begin
 (*
@@ -191358,6 +193201,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C5CF8(Sender : TObject);
 begin
 (*
@@ -191368,6 +193215,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C5D23(Sender : TObject);
 begin
 (*
@@ -191820,6 +193671,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C60C5(Sender : TObject);
 begin
 (*
@@ -191832,6 +193687,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C60D5(Sender : TObject);
 begin
 (*
@@ -191845,6 +193704,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C6122(Sender : TObject);
 begin
 (*
@@ -191853,6 +193716,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C61E8(Sender : TObject);
 begin
 (*
@@ -191863,6 +193730,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C61F6(Sender : TObject);
 begin
 (*
@@ -191873,6 +193744,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C6395(Sender : TObject);
 begin
 (*
@@ -191882,6 +193757,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C6433(Sender : TObject);
 begin
 (*
@@ -191892,6 +193771,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C64F9(Sender : TObject);
 begin
 (*
@@ -191902,6 +193785,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C650D(Sender : TObject);
 begin
 (*
@@ -191912,6 +193799,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C6580(Sender : TObject);
 begin
 (*
@@ -191922,6 +193813,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C6665(Sender : TObject);
 begin
 (*
@@ -192081,6 +193976,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm._PROC_005C6788(Sender : TObject);
 begin
 (*
@@ -192090,6 +193989,12 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_00409950
+Strings/files/dialog text: ' '
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_00576F54(Sender : TObject);
 begin
 (*
@@ -192193,6 +194098,17 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: TForm3.Proc_00577544(); Unit_00408494.Proc_004091D8; Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_00409950; Unit_00408494.Proc_0040BB90; Unit_00408494.Proc_0040D094;
+    Unit_00446399.Proc_0044643C
+Strings/files/dialog text: ' '; '. .'; '..'; '00'; '0123456789'; '1234567890'; 'ab'; 'ABT'; 'AFT';
+    'BEF'; 'CA UM VO NA ER AB CI'; 'ca'; 'CAL'; 'ch'; 'ci'; 'er'; 'EST'; 'JAN FEB MAR M�R APR MAY
+    MAI JUN JUL; 'JANFEBMARAPRMAYJUNJULAUGSEPOCTNOVDE; 'na'; 'r '; 'rc'; 't '; 'um'; 'vo';
+    '�3����Z����)�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_00577934(Sender : TObject);
 begin
 (*
@@ -193784,6 +195700,12 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_00409950
+Strings/files/dialog text: '000000'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_00576EB0(Sender : TObject);
 begin
 (*
@@ -193887,6 +195809,16 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_004091D8; Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_004099B4; Unit_00408494.Proc_0040AAF0
+Framework/API calls: System.Proc_00404EE0
+Strings/files/dialog text: '%2s'; '%4s'; 'ABT '; 'AFT '; 'APR'; 'AUG'; 'BEF '; 'CA'; 'CAL '; 'DEC';
+    'ER'; 'FEB'; 'JUL'; 'JUN'; 'MAR'; 'MAY'; 'NA'; 'NOV'; 'OCT'; 'SEP'; 'UM';
+    'um*UM*ca*CA*VO*vo*na*NA*ER*er'; 'VO'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_00582C04(Sender : TObject);
 begin
 (*
@@ -194654,6 +196586,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_00409448
+Framework/API calls: user32.OemToCharA()
+Strings/files/dialog text: '^[YY]ÐU��Q'; '�H����^[YY]ÐU��Q'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_005AFB94(Sender : TObject);
 begin
 (*
@@ -194753,6 +196692,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_00409448; Unit_00446399.Proc_0044643C
+Framework/API calls: System.Proc_00404EE0
+Strings/files/dialog text: '. '; '..'; '_^[��]�'; 'HK '; 'HK'; 'na.ch'; 'vo.r'; '�O�����_^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_00576FF8(Sender : TObject);
 begin
 (*
@@ -195097,6 +197043,14 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_05B0
+Project calls: Unit_00408494.Proc_00409448; Unit_00408494.Proc_004094CC
+Framework/API calls: System.Proc_00404EE0
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_005772E4(Sender : TObject);
 begin
 (*
@@ -195226,6 +197180,18 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DB.TDataSet.FieldByName(TDataSet;AnsiString):TField;;
+    DBTables.TSession.OpenDatabase(TSession;AnsiString):TDatabase;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_0548
+Project calls: Unit_00408494.Proc_004091D8; Unit_00408494.Proc_00409448; Unit_00408494.Proc_004099B4
+Strings/files/dialog text: '^[��]�'; 'fnr'; '��h����^[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_005BD9B4(Sender : TObject);
 begin
 (*
@@ -195514,6 +197480,15 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DB.TDataSet.FieldByName(TDataSet;AnsiString):TField;;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Project calls: TForm3.Proc_00576EB0(); Unit_00408494.Proc_00409448; Unit_00408494.Proc_004099B4
+Strings/files/dialog text: 'fnr'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_005BDC24(Sender : TObject);
 begin
 (*
@@ -195717,6 +197692,18 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_0554; OFFS_0558; OFFS_055C; OFFS_0564; OFFS_0568; OFFS_056C;
+    OFFS_057C; OFFS_0580; OFFS_0584; OFFS_0590; OFFS_0594; OFFS_0598
+Project calls: TForm3.Proc_005772E4(); TForm3.Proc_00577934(); Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_004094CC
+Framework/API calls: System.Proc_00404EE0
+Strings/files/dialog text: '* '; '[��]�'; 'Auswanderung am '; 'BAPT'; 'Bestatt.: '; 'BIRT'; 'BURI';
+    'DEAT'; 'EMIG'; 'Geburt: '; 'Taufe: '; 'Tod: '; '�6U����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_005BE5E0(Sender : TObject);
 begin
 (*
@@ -196880,6 +198867,18 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_00CC; OFFS_0560; OFFS_0570; OFFS_0578; OFFS_0588; OFFS_059C;
+    OFFS_0A44; OFFS_0A4C; OFFS_0A58; OFFS_0A64
+Project calls: TForm3.Ortdreh(); TForm3.Proc_005772E4(); Unit_00408494.Proc_00409448
+Strings/files/dialog text: 'Auswanderung nach '; 'BAPT'; 'BIRT'; 'BURI'; 'DEAT'; 'EMIG'; 'RESI';
+    '��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_005BF084(Sender : TObject);
 begin
 (*
@@ -197475,6 +199474,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_058C
+Strings/files/dialog text: 'DEAT'; 'YY]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_005BE540(Sender : TObject);
 begin
 (*
@@ -197569,6 +199575,15 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_0574
+Project calls: Unit_00408494.Proc_00409448
+Framework/API calls: System.Proc_00404EE0
+Strings/files/dialog text: ', '; '[��]�'; 'BAPT'; '�<k����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_005BD864(Sender : TObject);
 begin
 (*
@@ -197750,6 +199765,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_05EC
+Strings/files/dialog text: 'DEAT'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_005BE468(Sender : TObject);
 begin
 (*
@@ -197857,6 +199879,20 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.Repso2 (TClientDataSet); TForm1.Repso2inh (TStringField)
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_05B0; OFFS_05B4; OFFS_05BC; OFFS_05C8
+Project calls: TForm1 instance; TForm3.Proc_005772E4(); Unit_00408494.Proc_00409448
+Framework/API calls:
+    DBClient.TCustomClientDataSet.FindKey(TCustomClientDataSet;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;;
+    DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);; method
+    TStringField.GetAsString(); System.Proc_00404EE0
+Strings/files/dialog text: '1 NOTE @'; '[��]�'; 'Hnm.:'; 'ih'; 'lebt: j'; 'NOTE'; 'Schrw.:';
+    '��c����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_005BDDC8(Sender : TObject);
 begin
 (*
@@ -198322,6 +200358,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DF08
+Unresolved field offsets: OFFS_05B0
+Project calls: Unit_00408494.Proc_00409448
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_005BE17C(Sender : TObject);
 begin
 (*
@@ -198432,6 +200475,22 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TForm1.Repso2 (TClientDataSet); TForm1.Repso2inh2 (TMemoField)
+Database/provider: DB.TDataSet.Append(TDataSet);; DB.TDataSet.Edit(TDataSet);;
+    DB.TDataSet.Next(TDataSet);;
+    DBTables.TTable.FindKey(TTable;arrayofTVarRec;arrayofTVarRec;0..-1):Boolean;
+Global state: GlobalVar_0061DF08
+Project calls: TForm1 instance; TForm3.Proc_00577934(); Unit_00408494.Proc_00409448;
+    Unit_00408494.Proc_004094CC
+Framework/API calls: DBClient.TCustomClientDataSet.SetIndexName(TCustomClientDataSet;AnsiString);;
+    method TClientDataSet.FindKey(Array of Longin); method TMemoField.GetAsString();
+    System.Proc_00404EE0
+Strings/files/dialog text: '2 SOUR @'; '; '; '_^[��]�0'; 'andere Beziehung'; 'Eheschliessung'; 'ih';
+    '��l����_^[��]�0'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_005BC72C(Sender : TObject);
 begin
 (*
@@ -200150,6 +202209,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_0057774D(Sender : TObject);
 begin
 (*
@@ -200164,6 +202227,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Project calls: Unit_00408494.Proc_00409448
+Strings/files/dialog text: '02'; '03'; '04'; '05'; '06'; '07'; '08'; '09'; '10'; '11'; '12';
+    '[��]�'; 'JANFEBMARM�RAPRMAYMAIJUNJULAUGSEPOC; '�l�����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_00577544(Sender : TObject);
 begin
 (*
@@ -200472,6 +202542,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_0057872C(Sender : TObject);
 begin
 (*
@@ -200492,6 +202566,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPersonSearchForm.Proc_0058369B(Sender : TObject);
 begin
 (*

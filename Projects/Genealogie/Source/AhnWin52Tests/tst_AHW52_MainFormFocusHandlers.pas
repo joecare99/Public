@@ -37,8 +37,8 @@ type
 implementation
 
 uses
-  ComCtrls, Controls, DBCtrls, DBGrids, Forms, Grids, InterfaceBase, Menus,
-  StdCtrls, Unit11, AncestorChartOptionsForm;
+  AHW52PersonEditFrame, ComCtrls, Controls, DBCtrls, DBGrids, Forms, Grids,
+  InterfaceBase, Menus, StdCtrls, Unit11, AncestorChartOptionsForm;
 
 procedure TTestAHW52MainFormMenuDispatch.RecordFamilyGraphicsMenuClick(
   Sender: TObject);
@@ -128,16 +128,16 @@ begin
     pageControl.ActivePage := initialTab;
     mainForm.PageControl1 := pageControl;
     mainForm.TabSheet2 := editTab;
-    mainForm.StringGrid5 := TStringGrid.Create(mainForm);
-    mainForm.StringGrid5.Parent := editTab;
-    mainForm.StringGrid5.Visible := False;
+    mainForm.PersonEditFrame := TAHW52PersonEditFrame.Create(mainForm);
+    mainForm.PersonEditFrame.Parent := editTab;
+    mainForm.PersonEditFrame.StringGrid5.Visible := False;
 
     mainForm.anzeigen1Click(nil);
 
     AssertTrue('The handler should activate the edit tab.',
       pageControl.ActivePage = editTab);
     AssertTrue('The handler should show StringGrid5.',
-      mainForm.StringGrid5.Visible);
+      mainForm.PersonEditFrame.StringGrid5.Visible);
   finally
     mainForm.Free;
   end;
@@ -187,19 +187,13 @@ procedure TTestAHW52MainFormFocusHandlers.TestFormActivateFocusesGlobalDBEdit2;
 var
   mainForm: TForm1;
 begin
-  mainForm := TForm1.CreateNew(nil);
+  Application.Initialize;
+  mainForm := TForm1.Create(nil);
   try
-    mainForm.DBEdit2 := TDBEdit.Create(mainForm);
-    mainForm.DBEdit2.Parent := mainForm;
-    Form1 := mainForm;
-    try
-      mainForm.FormActivate(mainForm);
+    mainForm.FormActivate(mainForm);
 
-      AssertTrue('Activating the main form should focus its global DBEdit2.',
-        mainForm.ActiveControl = mainForm.DBEdit2);
-    finally
-      Form1 := nil;
-    end;
+    AssertTrue('Activating the main form should focus the edit-frame field.',
+      mainForm.ActiveControl = mainForm.PersonEditFrame.DBEdit2);
   finally
     mainForm.Free;
   end;
@@ -209,15 +203,13 @@ procedure TTestAHW52MainFormFocusHandlers.TestTabSheet2ShowFocusesDBEdit2;
 var
   mainForm: TForm1;
 begin
-  mainForm := TForm1.CreateNew(nil);
+  Application.Initialize;
+  mainForm := TForm1.Create(nil);
   try
-    mainForm.DBEdit2 := TDBEdit.Create(mainForm);
-    mainForm.DBEdit2.Parent := mainForm;
+    mainForm.PersonEditFrame.TabSheet2Show(mainForm.TabSheet2);
 
-    mainForm.TabSheet2Show(nil);
-
-    AssertTrue('Showing the edit tab should focus DBEdit2.',
-      mainForm.ActiveControl = mainForm.DBEdit2);
+    AssertTrue('Showing the edit tab should focus the edit-frame field.',
+      mainForm.ActiveControl = mainForm.PersonEditFrame.DBEdit2);
   finally
     mainForm.Free;
   end;
@@ -249,25 +241,19 @@ procedure TTestAHW52MainFormFocusHandlers.
 var
   mainForm: TForm1;
 begin
-  mainForm := TForm1.CreateNew(nil);
+  Application.Initialize;
+  mainForm := TForm1.Create(nil);
   try
-    mainForm.DBGrid3 := TDBGrid.Create(mainForm);
-    mainForm.DBGrid3.Parent := mainForm;
-    mainForm.DBGrid3.Visible := True;
-    mainForm.Label81 := TLabel.Create(mainForm);
-    mainForm.Label81.Parent := mainForm;
-    mainForm.Label81.Visible := True;
-    mainForm.DBComboBox3 := TDBComboBox.Create(mainForm);
-    mainForm.DBComboBox3.Parent := mainForm;
-
-    mainForm.DBGrid3Exit(mainForm.DBGrid3);
+    mainForm.PersonEditFrame.DBGrid3.Visible := True;
+    mainForm.PersonEditFrame.Label81.Visible := True;
+    mainForm.PersonEditFrame.DBGrid3Exit(mainForm.PersonEditFrame.DBGrid3);
 
     AssertFalse('Leaving DBGrid3 should hide the grid.',
-      mainForm.DBGrid3.Visible);
+      mainForm.PersonEditFrame.DBGrid3.Visible);
     AssertFalse('Leaving DBGrid3 should hide Label81.',
-      mainForm.Label81.Visible);
+      mainForm.PersonEditFrame.Label81.Visible);
     AssertTrue('Leaving DBGrid3 should focus DBComboBox3.',
-      mainForm.ActiveControl = mainForm.DBComboBox3);
+      mainForm.ActiveControl = mainForm.PersonEditFrame.DBComboBox3);
   finally
     mainForm.Free;
   end;
@@ -279,26 +265,27 @@ var
   mainForm: TForm1;
   key: Word;
 begin
-  mainForm := TForm1.CreateNew(nil);
+  Application.Initialize;
+  mainForm := TForm1.Create(nil);
   try
-    mainForm.StringGrid5 := TStringGrid.Create(mainForm);
-    mainForm.StringGrid5.Parent := mainForm;
-    mainForm.StringGrid5.Visible := True;
+    mainForm.PersonEditFrame.StringGrid5.Visible := True;
 
     key := $001B;
-    mainForm.StringGrid5KeyDown(mainForm.StringGrid5, key, []);
+    mainForm.PersonEditFrame.StringGrid5KeyDown(
+      mainForm.PersonEditFrame.StringGrid5, key, []);
 
     AssertFalse('Escape should hide StringGrid5.',
-      mainForm.StringGrid5.Visible);
+      mainForm.PersonEditFrame.StringGrid5.Visible);
     AssertEquals('The handler should leave the key unchanged.',
       $001B, key);
 
-    mainForm.StringGrid5.Visible := True;
+    mainForm.PersonEditFrame.StringGrid5.Visible := True;
     key := Ord('A');
-    mainForm.StringGrid5KeyDown(mainForm.StringGrid5, key, []);
+    mainForm.PersonEditFrame.StringGrid5KeyDown(
+      mainForm.PersonEditFrame.StringGrid5, key, []);
 
     AssertTrue('A non-Escape key should leave StringGrid5 visible.',
-      mainForm.StringGrid5.Visible);
+      mainForm.PersonEditFrame.StringGrid5.Visible);
     AssertEquals('The handler should leave ordinary keys unchanged.',
       Ord('A'), key);
   finally
@@ -312,38 +299,35 @@ var
   mainForm: TForm1;
   key: Word;
 begin
-  mainForm := TForm1.CreateNew(nil);
+  Application.Initialize;
+  mainForm := TForm1.Create(nil);
   try
-    mainForm.DBGrid3 := TDBGrid.Create(mainForm);
-    mainForm.DBGrid3.Parent := mainForm;
-    mainForm.DBComboBox3 := TDBComboBox.Create(mainForm);
-    mainForm.DBComboBox3.Parent := mainForm;
-    mainForm.Label81 := TLabel.Create(mainForm);
-    mainForm.Label81.Parent := mainForm;
-    mainForm.DBComboBox3.Text := 'synthetic value';
-    mainForm.DBGrid3.Visible := True;
-    mainForm.Label81.Visible := True;
+    mainForm.PersonEditFrame.DBComboBox3.Text := 'synthetic value';
+    mainForm.PersonEditFrame.DBGrid3.Visible := True;
+    mainForm.PersonEditFrame.Label81.Visible := True;
 
     key := $001B;
-    mainForm.DBGrid3KeyDown(mainForm.DBGrid3, key, []);
+    mainForm.PersonEditFrame.DBGrid3KeyDown(
+      mainForm.PersonEditFrame.DBGrid3, key, []);
 
-    AssertEquals('', mainForm.DBComboBox3.Text);
-    AssertFalse(mainForm.DBGrid3.Visible);
-    AssertFalse(mainForm.Label81.Visible);
-    AssertTrue(mainForm.ActiveControl = mainForm.DBComboBox3);
+    AssertEquals('', mainForm.PersonEditFrame.DBComboBox3.Text);
+    AssertFalse(mainForm.PersonEditFrame.DBGrid3.Visible);
+    AssertFalse(mainForm.PersonEditFrame.Label81.Visible);
+    AssertTrue(mainForm.ActiveControl = mainForm.PersonEditFrame.DBComboBox3);
     AssertEquals($001B, key);
 
-    mainForm.DBGrid3.Visible := True;
-    mainForm.Label81.Visible := True;
-    mainForm.DBComboBox3.Text := 'preserved value';
-    mainForm.ActiveControl := mainForm.DBGrid3;
+    mainForm.PersonEditFrame.DBGrid3.Visible := True;
+    mainForm.PersonEditFrame.Label81.Visible := True;
+    mainForm.PersonEditFrame.DBComboBox3.Text := 'preserved value';
+    mainForm.ActiveControl := mainForm.PersonEditFrame.DBGrid3;
     key := Ord('A');
-    mainForm.DBGrid3KeyDown(mainForm.DBGrid3, key, []);
+    mainForm.PersonEditFrame.DBGrid3KeyDown(
+      mainForm.PersonEditFrame.DBGrid3, key, []);
 
-    AssertEquals('preserved value', mainForm.DBComboBox3.Text);
-    AssertTrue(mainForm.DBGrid3.Visible);
-    AssertTrue(mainForm.Label81.Visible);
-    AssertTrue(mainForm.ActiveControl = mainForm.DBGrid3);
+    AssertEquals('preserved value', mainForm.PersonEditFrame.DBComboBox3.Text);
+    AssertTrue(mainForm.PersonEditFrame.DBGrid3.Visible);
+    AssertTrue(mainForm.PersonEditFrame.Label81.Visible);
+    AssertTrue(mainForm.ActiveControl = mainForm.PersonEditFrame.DBGrid3);
     AssertEquals(Ord('A'), key);
   finally
     mainForm.Free;

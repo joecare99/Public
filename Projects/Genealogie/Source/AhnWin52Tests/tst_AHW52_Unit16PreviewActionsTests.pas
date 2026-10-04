@@ -12,8 +12,10 @@ type
   private
     FClickedControl: TObject;
     FActionSender: TObject;
+    FExportedFileName: string;
     procedure RecordButtonClick(Sender: TObject);
     procedure RecordReportAction(Sender: TObject);
+    procedure RecordExportFile(const FileName: string);
   published
     procedure TestPreviousPageDecrements;
     procedure TestPreviousPageStopsAtFirstPage;
@@ -35,12 +37,27 @@ type
     procedure TestOtherZoomIndicesDoNotChangeMode;
     procedure TestExitActionClicksTheDedicatedButton;
     procedure TestReportActionDispatchPreservesSender;
+    procedure TestSaveActionReturnsWhenDialogIsCancelled;
+    procedure TestSaveActionReturnsWhenFileNameIsBlank;
+    procedure TestSaveActionExportsSelectedFileName;
   end;
 
 implementation
 
 uses
   Unit16PreviewActions, Unit16ExportCompatibilityError;
+
+type
+  TFakeSaveDialog = class(TSaveDialog)
+  public
+    ExecuteResult: Boolean;
+    function Execute: Boolean; override;
+  end;
+
+function TFakeSaveDialog.Execute: Boolean;
+begin
+  Result := ExecuteResult;
+end;
 
 procedure TTestAHW52Unit16PreviewActions.RecordButtonClick(Sender: TObject);
 begin
@@ -50,6 +67,12 @@ end;
 procedure TTestAHW52Unit16PreviewActions.RecordReportAction(Sender: TObject);
 begin
   FActionSender := Sender;
+end;
+
+procedure TTestAHW52Unit16PreviewActions.RecordExportFile(
+  const FileName: string);
+begin
+  FExportedFileName := FileName;
 end;
 
 procedure TTestAHW52Unit16PreviewActions.TestPreviousPageDecrements;
@@ -148,7 +171,7 @@ begin
 
     ConfigureUnit16SaveDialog(saveDialog);
 
-    AssertEquals('Text-Dateien (*.txt)|*.txt', saveDialog.Filter);
+    AssertEquals('Text-Dateien ( *.txt)|*.txt', saveDialog.Filter);
 {$IFDEF FPC}
     AssertEquals('.txt', saveDialog.DefaultExt);
 {$ELSE}
@@ -260,6 +283,60 @@ begin
       FActionSender = sender);
   finally
     sender.Free;
+  end;
+end;
+
+procedure TTestAHW52Unit16PreviewActions.
+  TestSaveActionReturnsWhenDialogIsCancelled;
+var
+  saveDialog: TFakeSaveDialog;
+begin
+  saveDialog := TFakeSaveDialog.Create(nil);
+  try
+    saveDialog.ExecuteResult := False;
+    FExportedFileName := '';
+
+    AssertFalse(ExecuteUnit16SaveDialog(saveDialog, @RecordExportFile));
+    AssertEquals('', FExportedFileName);
+  finally
+    saveDialog.Free;
+  end;
+end;
+
+procedure TTestAHW52Unit16PreviewActions.
+  TestSaveActionReturnsWhenFileNameIsBlank;
+var
+  saveDialog: TFakeSaveDialog;
+begin
+  saveDialog := TFakeSaveDialog.Create(nil);
+  try
+    saveDialog.ExecuteResult := True;
+    saveDialog.FileName := '  ' + #9;
+    FExportedFileName := '';
+
+    AssertFalse(ExecuteUnit16SaveDialog(saveDialog, @RecordExportFile));
+    AssertEquals('', FExportedFileName);
+  finally
+    saveDialog.Free;
+  end;
+end;
+
+procedure TTestAHW52Unit16PreviewActions.
+  TestSaveActionExportsSelectedFileName;
+var
+  saveDialog: TFakeSaveDialog;
+begin
+  saveDialog := TFakeSaveDialog.Create(nil);
+  try
+    saveDialog.ExecuteResult := True;
+    saveDialog.FileName := 'report.txt';
+    FExportedFileName := '';
+
+    AssertTrue(ExecuteUnit16SaveDialog(saveDialog, @RecordExportFile));
+    AssertEquals('report.txt', FExportedFileName);
+    AssertEquals('Text-Dateien ( *.txt)|*.txt', saveDialog.Filter);
+  finally
+    saveDialog.Free;
   end;
 end;
 

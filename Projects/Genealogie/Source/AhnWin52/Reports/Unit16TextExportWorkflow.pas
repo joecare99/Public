@@ -132,10 +132,10 @@ end;
 procedure WriteReportHeading(const Context: TUnit16TextExportContext;
   const HtmlSuffix: string; const Writer: IUnit16TextExportWriter);
 var
-  hasListCaption: Boolean;
+  captionIsList: Boolean;
   isHtml: Boolean;
 begin
-  hasListCaption := HasListCaption(Context.ReportCaption);
+  captionIsList := HasListCaption(Context.ReportCaption);
   isHtml := IsHtmlFileName(Context.FileName);
 
   if Context.ReportKind = 'Einz' then
@@ -155,7 +155,7 @@ begin
 
   if Context.ReportKind = 'Vorf' then
   begin
-    if hasListCaption then
+    if captionIsList then
     begin
       Writer.WriteLine(Context.ReportCaption);
       WriteSeparator(Writer, HtmlSuffix);
@@ -187,7 +187,7 @@ begin
 
   if Context.ReportKind = 'OFB' then
   begin
-    if hasListCaption then
+    if captionIsList then
     begin
       Writer.WriteLine(Context.ReportCaption);
       WriteSeparator(Writer, HtmlSuffix);
@@ -244,7 +244,7 @@ begin
 
   if Context.ReportKind = 'Nach' then
   begin
-    if hasListCaption then
+    if captionIsList then
     begin
       Writer.WriteLine(Context.ReportCaption);
       WriteSeparator(Writer, HtmlSuffix);

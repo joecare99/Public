@@ -4,9 +4,16 @@ interface
 
 uses
    SysUtils, Classes, Graphics,
-  Controls, Forms, Dialogs, StdCtrls, DB, sqldb, IBConnection, Cmp_SQLTable;
+  Controls, Forms, Dialogs, StdCtrls, DB, sqldb, IBConnection, Cmp_SQLTable
+  {$IFDEF FPC}, paradox{$ENDIF};
 
 type
+  {$IFDEF FPC}
+  TInterimParadoxTable = TParadox;
+  {$ELSE}
+  TInterimParadoxTable = TSQLTable;
+  {$ENDIF}
+
  // TSQLQuery = TQuery;
  // TSQLTable = TTable;
 
@@ -70,8 +77,8 @@ type
     Table16Hname: TStringField;
     Table16Geschlecht: TStringField;
     DataSource17: TDataSource;
-    Table17: TSQLTable;
-    Table18: TSQLTable;
+    Table17: TInterimParadoxTable;
+    Table18: TInterimParadoxTable;
     DataSource18: TDataSource;
     Table19: TSQLTable;
     DataSource19: TDataSource;
@@ -718,6 +725,7 @@ type
     { Private declarations }
   public
     { Public declarations }
+    procedure InitializeDataAccess;
   end ;
 
 var
@@ -737,5 +745,56 @@ procedure TGenealogyDataModule._PROC_00533514(Sender : TObject);
 begin
   Dec(GlobalVar_0061DF0C);
 end;
+
+procedure TGenealogyDataModule.InitializeDataAccess;
+var
+  dataDirectory: string;
+  table17FileName: string;
+  table18FileName: string;
+  pxLibraryPath: string;
+begin
+  {$IFDEF FPC}
+  dataDirectory := GetEnvironmentVariable('AHNWIN52_DATA_DIRECTORY');
+  if dataDirectory = '' then
+    dataDirectory := ExtractFilePath(ParamStr(0));
+  dataDirectory := ExpandFileName(dataDirectory);
+  if not DirectoryExists(dataDirectory) then
+    raise EFOpenError.CreateFmt(
+      'Configured AhnWin52 data directory "%s" does not exist.',
+      [dataDirectory]);
+
+  table17FileName := IncludeTrailingPathDelimiter(dataDirectory) +
+    ExtractFileName(Table17.FileName);
+  table18FileName := IncludeTrailingPathDelimiter(dataDirectory) +
+    ExtractFileName(Table18.FileName);
+  if not FileExists(table17FileName) then
+    raise EFOpenError.CreateFmt(
+      'Required Paradox table "%s" does not exist.', [table17FileName]);
+  if not FileExists(table18FileName) then
+    raise EFOpenError.CreateFmt(
+      'Required Paradox table "%s" does not exist.', [table18FileName]);
+
+  pxLibraryPath := GetEnvironmentVariable('AHNWIN52_PXLIBRARY');
+  if pxLibraryPath <> '' then
+  begin
+    if not FileExists(pxLibraryPath) then
+      raise EFOpenError.CreateFmt(
+        'Configured pxlib library "%s" does not exist.', [pxLibraryPath]);
+  end;
+
+  Table17.FileName := table17FileName;
+  Table18.FileName := table18FileName;
+  if pxLibraryPath <> '' then
+  begin
+    Table17.PXLibrary := pxLibraryPath;
+    Table18.PXLibrary := pxLibraryPath;
+  end;
+  {$ENDIF}
+end;
+
+{$IFDEF FPC}
+initialization
+  RegisterClass(TParadox);
+{$ENDIF}
 
 end.

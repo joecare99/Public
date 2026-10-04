@@ -5,14 +5,15 @@ unit Frm_TestFrame1;
 interface
 
 uses
-  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs, fra_Page1;
+  Classes, SysUtils, FileUtil, Forms, Controls, Graphics, Dialogs,
+  AHW52PersonSelectionFrame;
 
 type
 
   { TForm1 }
 
   TForm1 = class(TForm)
-    Frame1_1: TFrame1;
+    PersonSelectionFrame: TAHW52PersonSelectionFrame;
 
   private
 
@@ -31,4 +32,3 @@ implementation
 
 
 end.
-

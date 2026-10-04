@@ -4417,10 +4417,9 @@ object DataModule2: TGenealogyDataModule
     left = 352
     top = 160
   end
-  object Table17: TSQLTable
+  object Table17: TParadox
     FieldDefs = <>
-    FilterOptions = []
-    TableName = 'awd.db'
+    FileName = 'awd.db'
     left = 400
     top = 160
     object Table17Nummer: TIntegerField
@@ -4943,10 +4942,9 @@ object DataModule2: TGenealogyDataModule
       Size = 40
     end
   end
-  object Table18: TSQLTable
+  object Table18: TParadox
     FieldDefs = <>
-    FilterOptions = []
-    TableName = 'MRG.DB'
+    FileName = 'MRG.DB'
     left = 504
     top = 160
     object Table18Numr: TAutoIncField

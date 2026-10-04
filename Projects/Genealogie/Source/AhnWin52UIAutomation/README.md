@@ -108,12 +108,17 @@ experiment. Each live search still requires the separate guarded command and
 explicit `--allow-input`.
 
 The manifest declares the provider outcome classes `not-found`,
-`single-candidate`, and `candidate-list`; these are not outcomes observed by
-the external adapter. Visible UI evidence is captured separately. Result JSON
+`single-candidate`, and `candidate-list`; the manifest reader rejects a
+missing (for result schema version 2), malformed, reordered, or altered
+outcome list. Version-1 manifests remain readable without that list. These
+are not outcomes observed by the external adapter. Visible
+UI evidence is captured separately. Result JSON
 uses result schema version 2 and records the action phase, whether the bounded
 person-search-dialog wait timed out, its configured timeout when applicable,
 whether `Auswahl` remains visible, the visible top-level window count, and
 target-process foreground HWND/class/caption when available.
+Manifest schema versions must be integral values, and the target PID must be
+a positive 32-bit integer; fractional or out-of-range values are rejected.
 `gridSelectionRead` and `lookupOutcomeInferred` are always false. On a
 `--wait-for-dialog` timeout, the adapter writes a result profile with phase
 `timeout-waiting-for-dialog` before returning an error; it has not sent input.
