@@ -35,7 +35,7 @@
         <PackageName Value="lazreport"/>
       </Item7>
     </RequiredPackages>
-    <Units Count="91">
+    <Units Count="107">
       <Unit0>
         <Filename Value="..\Source\AhnWin52Tests\AhnWin52Tests.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -439,6 +439,70 @@
         <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_MainFormPureHelperTests.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit90>
+      <Unit91>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_DataAccessInitializationTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit91>
+      <Unit92>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_PersonSelectionFrameTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit92>
+      <Unit93>
+        <Filename Value="..\Source\AhnWin52Tests\AHW52PersonEditFrameTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit93>
+      <Unit94>
+        <Filename Value="..\Source\AhnWin52Tests\AHW52PersonDetailsFrameTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit94>
+      <Unit95>
+        <Filename Value="..\Source\AhnWin52Tests\AHW52RelationshipsFrameTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit95>
+      <Unit96>
+        <Filename Value="..\Source\AhnWin52Tests\AHW52SiblingsFrameTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit96>
+      <Unit97>
+        <Filename Value="..\Source\AhnWin52Tests\AHW52PersonTextFrameTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit97>
+      <Unit98>
+        <Filename Value="..\Source\AhnWin52Tests\AHW52RelatedPersonSelectionFrameTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit98>
+      <Unit99>
+        <Filename Value="..\Source\AhnWin52Tests\AHW52AddressFrameTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit99>
+      <Unit100>
+        <Filename Value="..\Source\AhnWin52Tests\AHW52PicturesFrameTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit100>
+      <Unit101>
+        <Filename Value="..\Source\AhnWin52\Services\Unit13GraphicLayoutModel.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit101>
+      <Unit102>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_GraphicLayoutModelTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit102>
+      <Unit103>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_FrenchRepublicanCalendarMenuTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit103>
+      <Unit104>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit10YearInputTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit104>
+      <Unit105>
+        <Filename Value="..\Source\AhnWin52\Reports\Unit16TextExportWorkflow.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit105>
+      <Unit106>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit16TextExportTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit106>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -449,7 +513,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Sys;..\Source\AhnWin52\wPDF\Components;..\Source\AhnWin52\wPDF\Engine;..\Source\AhnWin52\Forms;..\Source\AhnWin52\Model;..\Source\AhnWin52\Services;..\Source\AhnWin52\Test;..\Source\AhnWin52\Reports;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\ThirdParty\mORMot2\src;..\Source\AhnWin52\ThirdParty\mORMot2\src\core;..\Source\AhnWin52\ThirdParty\mORMot2\src\ui;..\Source\AhnWin52\ThirdParty\mORMot2\src\lib;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\DBTables;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\BrowserCommands;..\Source\AhnWin52Tests"/>
+      <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Sys;..\Source\AhnWin52\wPDF\Components;..\Source\AhnWin52\wPDF\Engine;..\Source\AhnWin52\Forms;..\Source\AhnWin52\Model;..\Source\AhnWin52\Services;..\Source\AhnWin52\Test;..\Source\AhnWin52\Reports;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\ThirdParty\mORMot2\src;..\Source\AhnWin52\ThirdParty\mORMot2\src\core;..\Source\AhnWin52\ThirdParty\mORMot2\src\ui;..\Source\AhnWin52\ThirdParty\mORMot2\src\lib;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\DBTables;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\BrowserCommands;..\Source\AhnWin52Tests;$(FPCSrcDir)\packages\pxlib\src;$(FPCSrcDir)\packages\fcl-db\src\paradox"/>
       <UnitOutputDirectory Value="..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Other>
