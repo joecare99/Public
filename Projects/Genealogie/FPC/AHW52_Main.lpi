@@ -26,7 +26,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables"/>
+            <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\Services;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables;$(FPCSrcDir)\packages\pxlib\src;$(FPCSrcDir)\packages\fcl-db\src\paradox"/>
             <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <Parsing>
@@ -67,7 +67,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables"/>
+            <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\Services;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables;$(FPCSrcDir)\packages\pxlib\src;$(FPCSrcDir)\packages\fcl-db\src\paradox"/>
             <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <CodeGeneration>
@@ -98,7 +98,7 @@
           </Target>
           <SearchPaths>
             <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables"/>
+            <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\Services;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables;$(FPCSrcDir)\packages\pxlib\src;$(FPCSrcDir)\packages\fcl-db\src\paradox"/>
             <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
           </SearchPaths>
           <CodeGeneration>
@@ -146,7 +146,7 @@
         <PackageName Value="LCL"/>
       </Item4>
     </RequiredPackages>
-    <Units Count="6">
+    <Units Count="9">
       <Unit0>
         <Filename Value="AHW52_Main.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -186,6 +186,69 @@
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit5>
+      <Unit6>
+        <Filename Value="..\Source\AhnWin52\Forms\AHW52PersonSelectionFrame.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AHW52PersonSelectionFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="..\Source\AhnWin52\Forms\AHW52PersonEditFrame.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AHW52PersonEditFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="..\Source\AhnWin52\Forms\AHW52PersonDetailsFrame.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AHW52PersonDetailsFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="..\Source\AhnWin52\Forms\AHW52RelationshipsFrame.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AHW52RelationshipsFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="..\Source\AhnWin52\Forms\AHW52SiblingsFrame.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AHW52SiblingsFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="..\Source\AhnWin52\Forms\AHW52PersonTextFrame.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AHW52PersonTextFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="..\Source\AhnWin52\Forms\AHW52RelatedPersonSelectionFrame.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AHW52RelatedPersonSelectionFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="..\Source\AhnWin52\Forms\AHW52AddressFrame.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AHW52AddressFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="..\Source\AhnWin52\Forms\AHW52PicturesFrame.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="AHW52PicturesFrame"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Frame"/>
+      </Unit14>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -196,7 +259,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables"/>
+      <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Forms;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\Services;..\Source\AhnWin52\Test;..\Source\AhnWin52\Model;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\DBTables;$(FPCSrcDir)\packages\pxlib\src;$(FPCSrcDir)\packages\fcl-db\src\paradox"/>
       <UnitOutputDirectory Value="..\..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Linking>

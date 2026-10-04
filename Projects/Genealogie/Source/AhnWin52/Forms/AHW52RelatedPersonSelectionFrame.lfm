@@ -1,0 +1,118 @@
+object AHW52RelatedPersonSelectionFrame: TAHW52RelatedPersonSelectionFrame
+  Left = 0
+  Height = 1255
+  Top = 0
+  Width = 1877
+  ClientHeight = 1255
+  ClientWidth = 1877
+  DesignTimePPI = 168
+  Font.CharSet = ANSI_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -16
+  Font.Name = 'Arial'
+  Font.Style = [fsBold]
+  ParentFont = False
+  TabOrder = 0
+  object Label27: TLabel
+    Left = 45
+    Height = 1
+    Top = 20
+    Width = 1
+    Color = clSilver
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Arial'
+    Font.Style = [fsBold]
+    ParentColor = False
+    ParentFont = False
+    Transparent = False
+  end
+  object DBGrid2: TDBGrid
+    Left = 41
+    Height = 577
+    Hint = 'Auswahl durch Doppelclick auf Name oder <ENTER>;  Schließen auch mit <ESC>'
+    Top = 64
+    Width = 955
+    Color = clWindow
+    Columns = <
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Caption = 'Nummer'
+        Width = 72
+        FieldName = 'Nummer'
+      end
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Caption = 'Name'
+        Width = 333
+        FieldName = 'Name'
+      end
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Caption = 'Vornamen'
+        Width = 333
+        FieldName = 'Vornamen'
+      end
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Alignment = taCenter
+        Title.Caption = '*'
+        FieldName = 'Gebjahr'
+      end
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Caption = 'Geb.-Ort'
+        Width = 333
+        FieldName = 'Gebort'
+      end
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Alignment = taCenter
+        Title.Caption = '~'
+        Width = 85
+        FieldName = 'Taufjahr'
+      end
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Caption = 'Tauf-Ort'
+        Width = 333
+        FieldName = 'Taufort'
+      end
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Alignment = taCenter
+        Title.Caption = '+'
+        Width = 85
+        FieldName = 'Stjahr'
+      end
+      item
+        MinSize = 13
+        MaxSize = 267
+        Title.Caption = 'IDNR'
+        Width = 85
+        FieldName = 'IDNR'
+      end>
+    FixedCols = 0
+    Font.CharSet = ANSI_CHARSET
+    Font.Color = clWindowText
+    Font.Height = -16
+    Font.Name = 'Arial'
+    Options = [dgTitles, dgColLines, dgRowLines, dgRowSelect, dgConfirmDelete, dgCancelOnExit]
+    ParentFont = False
+    TabOrder = 0
+    TitleFont.CharSet = ANSI_CHARSET
+    TitleFont.Color = clWindowText
+    TitleFont.Height = -13
+    TitleFont.Name = 'Arial'
+    OnDblClick = DBGrid2DblClick
+  end
+end

@@ -23,6 +23,7 @@ begin
   Application.Title := 'AHNENWIN 5.1';
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TGenealogyDataModule, DataModule2);
+  DataModule2.InitializeDataAccess;
   Application.CreateForm(TAboutForm, AboutDialog);
   Application.Run;
 end.

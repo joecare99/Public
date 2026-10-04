@@ -1,0 +1,48 @@
+object AHW52PersonTextFrame: TAHW52PersonTextFrame
+  Left = 0
+  Height = 1255
+  Top = 0
+  Width = 1877
+  DesignTimePPI = 168
+  ClientHeight = 1255
+  ClientWidth = 1877
+  Font.CharSet = ANSI_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -16
+  Font.Name = 'Arial'
+  Font.Style = [fsBold]
+  ParentFont = False
+    object Label21: TLabel
+      Left = 64
+      Height = 1
+      Top = 15
+      Width = 1
+      Color = clSilver
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Arial'
+      Font.Style = [fsBold]
+      ParentColor = False
+      ParentFont = False
+      Transparent = False
+    end
+    object DBMemo1: TDBMemo
+      Left = 64
+      Height = 577
+      Hint = 'Zeilenumbruch mit [Strg][Eingabetaste]'
+      Top = 53
+      Width = 823
+      DataField = 'Kommentar'
+      Font.CharSet = ANSI_CHARSET
+      Font.Color = clWindowText
+      Font.Height = -16
+      Font.Name = 'Arial'
+      OnExit = DBMemo1Exit
+      ParentFont = False
+      ParentShowHint = False
+      ScrollBars = ssVertical
+      ShowHint = True
+      TabOrder = 0
+    end
+end
