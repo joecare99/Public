@@ -65,9 +65,8 @@ begin
         @mainForm.PersonTextFrame.DBMemo1Exit);
     AssertTrue('Memo exit should request the existing shared save workflow.',
       mainForm.PersonTextFrame.OnSaveRequested = @mainForm.speich1);
-    AssertTrue('Tab enter should dispatch through the person-text frame.',
-      mainForm.TabSheet6.OnEnter =
-        @mainForm.PersonTextFrame.TabSheet6Enter);
+    AssertFalse('Tab enter should not dispatch through an inert adapter.',
+      Assigned(mainForm.TabSheet6.OnEnter));
   finally
     mainForm.Free;
   end;

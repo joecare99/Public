@@ -210,7 +210,8 @@ leaving the assembly-only tab-entry behavior inactive.
   controls.
 - The comment field, memo bounds, hint, scrollbars, styles, tab caption,
   image index, and memo-exit event are preserved.
-- Tab entry and memo exit are dispatched through typed frame-to-host actions.
+- Memo exit is dispatched through a typed frame-to-host action; the empty
+  tab-enter adapter was removed in a later cleanup increment.
 - The memo exit callback retains the existing `DBMemo1Exit(Sender) ->
   speich1(Sender)` path; no additional database operation is invented.
 - Tests cover streamed ownership, data binding, visible properties, event
@@ -224,12 +225,24 @@ leaving the assembly-only tab-entry behavior inactive.
 - The `Kommentar` field binding and memo-exit event remain in the frame
   resource. `DBMemo1Exit` forwards to the existing host method, which invokes
   `speich1(Sender)`; that method's current insert/post guards are unchanged.
-- `TabSheet6Enter` forwards to its prior host handler. Its commented listing
-  performs dataset reads and updates `Label21`, but remains inactive because
-  the Pascal handler was empty.
+- At extraction time, `TabSheet6Enter` forwarded to its prior host handler.
+  Its commented listing performs dataset reads and updates `Label21`, but
+  remained inactive because the Pascal handler was empty. A later cleanup
+  removed the empty frame handler and host assignment; the listing remains
+  inactive.
 - Two frame tests cover streaming, bounds, field/hint values, event
   ownership, and callback routing. Focused tests pass 2/2; the full suite
   passes 420/420. Debug main and test projects build. No database was opened.
+
+**Cleanup increment:** Removed the empty `TabSheet6Enter` frame method and
+the main-form `TabSheet6.OnEnter` assignment. `DBMemo1.OnExit` and
+`PersonTextFrame.OnSaveRequested := @speich1` remain unchanged. The updated
+focused test asserts no enter handler is assigned while retaining assertions
+for memo event ownership and sender forwarding. The historical tab-enter
+listing still reads datasets and updates `Label21`; that behavior remains
+inactive. The focused frame suite passes 2/2, the full FPCUnit suite passes
+465/465, and the forced Debug main build links. No data or interactive UI was
+used.
 
 ## Sprint goal — seventh vertical slice
 
@@ -382,8 +395,9 @@ now own these event entry points without host forwarding. Listing-derived
 data access and navigation remain inactive.
 
 The Text tab's `TabSheet6Enter` assembly listing reads several datasets and
-composes a caption into `Label21`; the corresponding Pascal method remains
-empty and is still a host callback. The memo-exit method is different: its
+composes a caption into `Label21`; its former Pascal adapter had an empty body
+and has since been removed with its `OnEnter` assignment. The listing remains
+inactive. The memo-exit method is different: its
 verified Pascal body calls `speich1(Sender)`, which retains the existing
 empty-record deletion and new-person post guards. The frame forwards the
 original `DBMemo1` sender to this host method; it does not call datasets or

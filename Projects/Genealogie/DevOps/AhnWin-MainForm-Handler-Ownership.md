@@ -37,7 +37,7 @@ stubs. Moving controls did not move those stubs or listings.
 | `TabSheet3` / `TAHW52PersonDetailsFrame` | tab enter/exit, several DBEdit exits, combo change/key/exit | `ComboBox5Change` still requests the unresolved `Edit4` host focus target. Combo-exit handlers now terminate locally; their former host calls reached only empty Pascal wrappers. |
 | `TabSheet4` / `TAHW52RelationshipsFrame` | tab enter/exit, grid click, DBEdit exits, DBComboBox exit, combo exits | All handlers terminate in the frame. The old combo-exit host dispatcher and two empty `TForm1` wrappers are removed; their historical listings remain inactive in `ReverseEngineering\AhnWin52-Details-Relationships-ComboExits.asm.txt`. |
 | `TabSheet5` / `TAHW52SiblingsFrame` | none; enter and grid double-click terminate in the frame | **Source migration complete.** Removed both no-op host handlers and the dispatcher; preserved 1,551 lines of inactive listing evidence in `ReverseEngineering\AhnWin52-TabSheet5-Siblings.asm.txt`. BDE lookup/navigation remains deferred. |
-| `TabSheet6` / `TAHW52PersonTextFrame` | tab enter, memo exit | Memo exit saves through the shared person-persistence workflow; remove the redundant event wrapper when direct callback wiring is validated. |
+| `TabSheet6` / `TAHW52PersonTextFrame` | memo exit | The memo-exit callback reaches the shared person-persistence workflow. The empty tab-enter adapter and host assignment have been removed; the historical dataset/caption listing remains inactive. |
 | `TabSheet7` / `TAHW52RelatedPersonSelectionFrame` | tab enter, grid double-click, tab mouse-down | Audit for cross-tab navigation and global selection state; preserve those as explicit host actions. |
 | `TabSheet8` / `TAHW52AddressFrame` | tab enter | City-combo exit now terminates in the frame. The old empty host wrapper was removed and its inactive listing was archived; address DB/BDE behavior remains unresolved. |
 | `TabSheet9` / `TAHW52PicturesFrame` | none; click/show/exit terminate in the frame | **First source migration complete.** Removed the pictures host dispatcher and three `TForm1` methods. Preserved their 7,067 source lines of listing evidence in `ReverseEngineering\AhnWin52-TabSheet9-Pictures.asm.txt`; frame handlers remain inert. |
@@ -112,3 +112,37 @@ conversion candidate. A listing that opens BDE tables, touches global state,
 or contains opaque offsets should first be cross-referenced against the data
 module and a symbol/offset map. No assembly listing was activated by this
 annotation pass.
+
+## Calendar menu controller — bounded lifecycle extraction
+
+The LFM-bound `GregorianischerKalender1Click` and
+`FrzRevolutionskalender1Click` handlers remain on `TForm1` as short proxies.
+Their shared sequencing now lives in `Forms\CalendarMenuController.pas`;
+control activation, record saving, concrete forms, view-model construction,
+modal display, and legacy state remain in the form adapter.
+
+The Gregorian action preserves `TabSheet2` activation then `speich1`, creates
+a newly owned `TGregorianCalendarForm`, injects a new
+`TGregorianCalendarViewModel`, shows it modally, and calls `Free` from a
+`finally` block. The French action preserves the same tab/save prefix, sets
+`FrenchRepublicanCalendarForm.Form7` before modal display, then calls
+`Release` and clears `Form7` in nested `finally` blocks. These disposal rules
+are intentionally not unified.
+
+Six synthetic tests assert ordering, sender forwarding, owner and ViewModel
+setup, global reference visibility, modal and save exception propagation, and
+cleanup. The focused suite passes 6/6; the full suite passes 465/465; the
+forced Debug main build links. No modal UI or genealogy data is exercised.
+
+## Text-tab inert enter adapter removed
+
+`TAHW52PersonTextFrame.TabSheet6Enter` had an empty Pascal body, and the frame
+LFM did not bind an enter event. Removed that method and the redundant
+`TabSheet6.OnEnter` assignment from `TForm1`. The active `DBMemo1.OnExit` path
+is unchanged: `DBMemo1Exit(Sender)` forwards the original memo sender through
+`OnSaveRequested` to `speich1`.
+
+The complete assembly-backed tab-enter behavior reads datasets and composes
+`Label21`; it remains inactive and was not moved into the frame. The focused
+PersonTextFrame suite verifies that `TabSheet6.OnEnter` stays unassigned and
+that the memo/save callback remains bound.

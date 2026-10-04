@@ -7,6 +7,19 @@ workflows to LazReport. The Ahnw50 DLL and its embedded license path are not
 target dependencies. Non-reporting relationship slices remain blocked on
 provider/schema evidence.
 
+## Latest maintainability slice — calendar menu controller
+
+The LFM-bound Gregorian and French Republican calendar commands are now
+proxies into `Forms\CalendarMenuController.pas`. The shared orchestration
+preserves tab activation and save order, while the main-form adapter retains
+the distinct view-model construction, `Free` versus `Release` semantics, and
+the legacy French `Form7` reference window. Synthetic tests cover successful
+ordering, sender forwarding, owner/view-model assignment, modal failures,
+cleanup, and save failure before form creation. The focused controller suite
+passes 6/6, the full FPCUnit suite passes 465/465, and the forced Debug build
+links. No interactive dialogs or genealogy data were used. Calendar
+calculations, rendering, printing, and other menu actions are unchanged.
+
 ## Latest bounded reporting slice — Unit16 text/HTML export
 
 Translated the complete `TForm16.Speichernunter1Click` text/HTML writer into

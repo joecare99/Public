@@ -35,7 +35,7 @@ uses
   tst_AHW52_GregorianCalendarModelTests,
   tst_AHW52_GregorianCalendarCounterTests,
   tst_AHW52_GregorianCalendarPrintTests,
-  tst_AHW52_FrenchRepublicanCalendarMenuTests,
+  tst_AHW52_CalendarMenuControllerTests,
   tst_AHW52_InertMainFormHandlers,
   tst_AHW52_MainFormFocusHandlers,
   tst_AHW52_PersonSelectionFrameTests,

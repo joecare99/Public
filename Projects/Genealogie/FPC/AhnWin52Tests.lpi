@@ -488,7 +488,7 @@
         <IsPartOfProject Value="True"/>
       </Unit102>
       <Unit103>
-        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_FrenchRepublicanCalendarMenuTests.pas"/>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_CalendarMenuControllerTests.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit103>
       <Unit104>

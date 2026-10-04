@@ -9,7 +9,8 @@ uses
   AHW52PersonSelectionFrame, AHW52PersonEditFrame,
   AHW52PersonDetailsFrame, AHW52RelationshipsFrame, AHW52SiblingsFrame,
   AHW52PersonTextFrame, AHW52RelatedPersonSelectionFrame, AHW52AddressFrame,
-  AHW52PicturesFrame, FrenchRepublicanCalendarForm;
+  AHW52PicturesFrame, GregorianCalendar, FrenchRepublicanCalendarForm,
+  CalendarMenuController;
 
 type
   TClientDataSet= TBufDataset;
@@ -460,14 +461,26 @@ type
     function Proc_005FBFD8(const FileName: string): string;
     function Proc_005D3AB8(Value: Extended): string;
   protected
-    procedure SaveBeforeFrenchRepublicanCalendar(Sender: TObject); virtual;
+    procedure ActivateCalendarEditTab; virtual;
+    procedure SaveBeforeCalendar(Sender: TObject); virtual;
+    function CreateGregorianCalendarForm: TGregorianCalendarForm; virtual;
+    procedure ConfigureGregorianCalendarForm(
+      CalendarForm: TGregorianCalendarForm); virtual;
+    procedure ShowGregorianCalendarForm(
+      CalendarForm: TGregorianCalendarForm); virtual;
+    procedure DisposeGregorianCalendarForm(
+      CalendarForm: TGregorianCalendarForm); virtual;
     function CreateFrenchRepublicanCalendarForm:
       TFrenchRepublicanCalendarForm; virtual;
+    procedure AssignFrenchCalendarFormReference(
+      CalendarForm: TFrenchRepublicanCalendarForm); virtual;
     procedure ShowFrenchRepublicanCalendarForm(
       CalendarForm: TFrenchRepublicanCalendarForm); virtual;
     procedure ReleaseFrenchRepublicanCalendarForm(
       CalendarForm: TFrenchRepublicanCalendarForm); virtual;
+    procedure ClearFrenchCalendarFormReference; virtual;
   private
+    function BuildCalendarMenuActions: TCalendarMenuActions;
     procedure HandlePersonEditHostAction(Sender: TObject;
       HostAction: TPersonEditTabHostAction);
     procedure HandlePersonEditNavigatorBeforeAction(Sender: TObject;
@@ -526,7 +539,7 @@ ResourceString
 implementation
 
 uses
-  AboutForm, GenealogyDataModule, AncestorChartOptionsForm, DateWeekdayAbbreviation, GregorianCalendar, GregorianCalendarViewModel,
+  AboutForm, GenealogyDataModule, AncestorChartOptionsForm, DateWeekdayAbbreviation, GregorianCalendarViewModel,
   FormKeyPressBehavior, MainRecordPersistenceBehavior, MainFormCloseBehavior,
   MainFormExitBehavior, ParentUnlinkBehavior, PrivacyModeBehavior,
   PrivacyModeState, Unit11, Unit29, Unit36
@@ -1023,7 +1036,6 @@ begin
   if Assigned(PersonTextFrame) then
   begin
     PersonTextFrame.OnSaveRequested := @speich1;
-    TabSheet6.OnEnter := @PersonTextFrame.TabSheet6Enter;
   end;
 
   if Assigned(RelatedPersonSelectionFrame) then

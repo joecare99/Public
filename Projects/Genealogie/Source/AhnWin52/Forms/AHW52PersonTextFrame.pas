@@ -12,7 +12,6 @@ type
   published
     Label21: TLabel;
     DBMemo1: TDBMemo;
-    procedure TabSheet6Enter(Sender: TObject);
     procedure DBMemo1Exit(Sender: TObject);
   private
     FOnSaveRequested: TNotifyEvent;
@@ -24,10 +23,6 @@ type
 implementation
 
 {$R *.lfm}
-
-procedure TAHW52PersonTextFrame.TabSheet6Enter(Sender: TObject);
-begin
-end;
 
 procedure TAHW52PersonTextFrame.DBMemo1Exit(Sender: TObject);
 begin
