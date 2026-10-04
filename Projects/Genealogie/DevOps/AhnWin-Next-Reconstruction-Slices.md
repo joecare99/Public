@@ -7,14 +7,147 @@ workflows to LazReport. The Ahnw50 DLL and its embedded license path are not
 target dependencies. Non-reporting relationship slices remain blocked on
 provider/schema evidence.
 
+## Latest bounded helper slice — Unit13 graphic-text functions
+
+Reconstructed `TForm13` listing helpers `005637C4`, `00563868`, and
+`00563A0C` as provider-free functions in
+`Source\AhnWin52\Services\Unit13GraphicTextHelpers.pas`. The implementation
+preserves six-character suffix formatting, the explicit legacy ANSI umlaut
+byte mappings, and the graphic-label branch order/fixed slices. The original
+listings remain commented in `Unit13.pas`; typed Pascal adapters now call the
+new functions but make no claim of Delphi 32-bit register-ABI compatibility.
+
+The focused `TTestAHW52GraphicForm` suite passes 17/17, including over-width
+and negative values, all three umlaut bytes, whitespace, special labels,
+repeated nine-byte slices, digit bypass, and general dot/spacing behavior.
+The complete FPCUnit suite passes 423/423, and the Debug main application
+builds successfully.
+`Projects_AhnenWin` resolves every direct helper call to `IntToStr`,
+`UpperCase`, `Trim`, or `RightStr`; therefore no speculative unsupported
+operation was added to this helper call graph. The layout-driven chart routines
+remain listing-only and outside this slice.
+The three original listings are retained, so the assembly-listing coverage
+count is unchanged; their resource maps now record the resolved RTL targets
+and explicitly distinguish those pure helpers from the non-ABI evidence.
+
+## Latest isolated layout slice — Unit13 `0056CAD4`
+
+The independent `Projects_AhnenWin\Unit13.pas` listing identifies the shared
+graphic-record stride as `$198` bytes and the storage base as
+`GlobalVar_011AE35C` (AhnWin52 address `GlobalVar_011AD35C`). The complete
+`0056CAD4` listing reads 32-bit slots at entry offsets `$00` and `$14`, loops
+over levels 2 through `GlobalVar_011AD328` inclusive, and examines
+`GlobalVar_011AD344 - 1` adjacent entry pairs. If two adjacent entries have
+the current level marker and the current offset-`$00` value is at least the
+next value, the next value is incremented. Slot meaning beyond these
+operations and the rest of the record remain unknown.
+
+The bounded transformation is isolated in
+`Source\AhnWin52\Services\Unit13GraphicLayoutModel.pas` as a typed projection
+of those two integer slots. It is deliberately not wired to `TForm13` or the
+legacy global layout array: that would require migrating and validating the
+complete record storage. The original listing remains inactive. Recursive
+propagation helpers (including the then-unresolved `0042E1EC` dependency)
+and PDF-canvas/drawing routines remained outside this `0056CAD4` slice; the
+isolated layout-family follow-up is recorded immediately below.
+
+Five synthetic tests cover bounds, inclusive levels, adjacent-marker
+matching, comparison branches, and live in-place update ordering. They use
+only in-memory projections; they do not create a form, open genealogy data,
+or render/print a chart. The focused suite passes 5/5, the complete FPCUnit
+suite passes 428/428, and the Debug main application builds successfully.
+The helper remains isolated; no original graphics call path was enabled.
+
+## Latest isolated layout-family slice — Unit13 `0056897C`–`00569010`
+
+The remaining six methods in the same layout family are now represented by
+isolated operations in `Unit13GraphicLayoutModel.pas`:
+
+| Listing | Reconstructed operation | Listing evidence |
+|---|---|---|
+| `0056897C` | Adjust projected slot `$04` through the binary-indexed entry run. | Signed integer branches, sibling slot `$00` comparison, and repeated in-place delta propagation. |
+| `00568B04` | Adjust projected slot `$00` through the binary-indexed entry run. | Signed integer branches and repeated in-place delta propagation. |
+| `00568C9C` | Reflow projected slot `$04`. | Selects a `Math.Power(2, depth - 1)`/`Round` start, checks slot `$04`, and dispatches `0056897C`. |
+| `00568E3C` | Reflow projected slot `$00`. | Same traversal shape for slot `$00`, dispatching `00568B04`. |
+| `00568FD4` | Select active-prefix maximum level and reflow slot `$04`. | Scans while slot `$08` is positive, keeps the greatest slot `$14` above its zero baseline, then calls `00568C9C`. |
+| `00569010` | Select active-prefix maximum level and reflow slot `$00`. | Same selector, then calls `00568E3C`. |
+
+The independent `Projects_AhnenWin\Math.pas` resolves the former
+`0042E1EC` unknown call as `Math.Power`. The model projects only integer slots
+`$00`, `$04`, `$08`, and `$14`; their meanings outside the observed
+operations remain unknown. Explicit projection bounds are checked and
+incomplete required tree entries raise `EGraphicLayoutProjectionBounds`.
+
+The focused suite now passes 15/15 and the complete FPCUnit suite passes
+438/438. The Debug main application builds. These methods are **not** wired
+to `TForm13`, `GlobalVar_011AD35C`, or any caller. The historical listings
+remain inactive; no database, PDF, canvas, printing, or chart rendering was
+used or enabled.
+
+## Latest bounded menu-handler slice — French Republican calendar
+
+`TForm1.FrzRevolutionskalender1Click` is LFM-bound and its AhnWin52 listing
+matches the independent `Projects_AhnenWin\Unit1.pas` sequence: activate
+`TabSheet2`, invoke `speich1`, create the form formerly named `TForm7` with the
+main form as owner, invoke its modal display, and release it in a finally
+path. The class reference maps to the existing
+`TFrenchRepublicanCalendarForm`.
+
+The retained handler is now a short typed Pascal proxy in
+`Forms\MainMenuActions\CalendarAndPictures.inc`. Virtual lifecycle seams keep
+the production owner/modal/release behavior explicit and allow tests to
+substitute an unstreamed form without opening a real dialog. The historical
+listing remains in place. `Form7` is assigned during the modal lifetime for
+the calendar's existing finish-button handler and cleared even if display or
+release raises.
+
+The focused menu lifecycle tests pass 2/2, covering the call order, tab
+activation before saving, owner, valid `Form7` during display, and cleanup
+after normal and injected-failure paths. The complete FPCUnit suite passes
+440/440, and the Debug main project builds and links.
+
+`Osterberechnung1Click` was inspected but not restored. Its listing sets the
+`Oster` mode, activates `TabSheet2`, saves, then calls a virtual target through
+`GlobalVar_0061E0AC` at unresolved VMT offset `$E8`. Although Unit10 has an
+Oster-specific state path, the target's exact display/ownership behavior is
+not established; no guessed show/close call was added. Unit13 PDF/chart and
+provider-dependent paths are also outside this slice.
+
+## Latest bounded Unit10 slice — Easter-year arrow controls
+
+The LFM binds `TForm10.Button2Click` to the `<` button and
+`TForm10.Button1Click` to the `>` button. Both AhnWin52 and independent
+`Projects_AhnenWin\Unit10.pas` listings show a lexical comparison of the
+trimmed `Edit1.Text` against `'1582'` / `'2500'`, followed (when the condition
+passes) by integer conversion of the original, untrimmed edit text, a one-year
+decrement/increment, and `Edit1.Refresh`. The independent SysUtils listing
+resolves `00409448`, `004099B4`, and `00409950` to `Trim`, `StrToInt`, and
+`IntToStr`.
+
+Both arrow handlers are now restored in `Source\AhnWin52\Unit10.pas`.
+`TryStrToInt` preserves the listing's no-change outcome for malformed or
+whitespace-padded input without adding a broad exception handler. Tests also
+lock down the lexical-comparison quirk: `999` passes the decrement gate, and
+`19999` passes the increment gate. The focused suite passes 5/5; the complete
+FPCUnit suite passes 445/445; the Debug main project builds and links.
+
+The adjacent `Edit1Change` handler remains inactive because its valid range
+calls `rechnen`, whose legacy workflow includes unported Easter calculation,
+file/XML generation, and browser operations. The menu command,
+`TForm10.FormShow`, calculator/export, printing, and save behavior remain
+outside this slice.
+
 ## Assembly-listing statistics — 2026-10-03
 
-The PascalAssemblyCoverage scan found 603/1,142 first-party class methods
-still containing retained assembly listings (52.80%); 539/1,142 have no
-recognized listing (47.20%). Scope is `Source\AhnWin52` with the vendored
-`ThirdParty` subtree excluded. Newly added support and compatibility methods
-remain in the denominator, so the no-listing count does not mean those methods
-were reconstructed. The per-file scan is
+The latest PascalAssemblyCoverage scan found 602/1,144 first-party class
+methods still containing retained assembly listings (52.62%); 542/1,144 have
+no recognized listing (47.38%). `Unit13.FormShow` now translates its
+listing-backed initialization prefix and the proven field access while
+retaining the original listing for unresolved rendering behavior. Scope is
+`Source\AhnWin52` with the vendored `ThirdParty` subtree excluded. Newly added
+support and compatibility methods remain in the denominator, so the
+no-listing count does not mean those methods were reconstructed. The per-file
+scan is
 `DevOps\AhnWin-Assembly-Coverage-2026-10-03.csv`.
 
 ## Latest bounded helper checkpoint — `Proc_005D3AB8` — 2026-10-03
@@ -194,6 +327,27 @@ dedicated read-only reader after confirming the required format details. Do
 not connect generic `TParadox` record enumeration to the provider contract as
 an ordered lookup until sort and candidate ordering are independently tested.
 No live AhnWin run or genealogy-row inspection was performed.
+
+### `.YG` generation and ordering boundary — 2026-10-03
+
+The pxlib 0.6.8 source/API review does not provide a valid way to complete the
+planned ordering experiment with its writer alone. `PX_write_primary_index`
+builds only a list of source data blocks and record counts, then writes one
+index entry per block using that block's first stored record. Its
+`build_primary_index` routine walks the existing block chain; it does not
+compare keys or sort records. `PX_read_primary_index` explicitly accepts only
+file type `pxfFileTypPrimIndex` (type 1), and `PX_add_primary_index` likewise
+requires a primary `.PX` index. The format note says a `.YG` file has the
+same basic format as `.PX`, but this does not supply a secondary-index
+collation/comparison or a tested `.YG` traversal API.
+
+Consequently, generating a `.YG` from the already ordered synthetic `.XG`
+would only mirror the order chosen by the fixture writer; it could not test
+the source of that order or `intl850` comparisons. No surrogate pair was
+created and no approved files were opened. Keep the tree/order validation
+blocked until an independent documented builder/parser or authoritative
+synthetic `.XG`/`.YG` fixture is available. The generic `.XG` row reader
+remains useful for field access, but is not an ordered lookup provider.
 
 ## Checkpoint — wPDF DFM compatibility surface
 
@@ -426,9 +580,13 @@ for a complete handler whose effects do not cross these boundaries.
 
 ## Interpreting assembly coverage
 
-The 2026-10-03 first-party scan reports 603/1,142 methods still containing
-retained assembly (52.80%); the complement is 539/1,142 without a listing
-(47.20%), not “539 original methods reconstructed.” The scan covers
+The initial 2026-10-03 first-party scan reported 603/1,142 methods still
+containing retained assembly (52.80%). After restoring
+`Unit13.SpeedButton12Click`, the report recorded 602/1,142 (52.71%). The
+latest `Unit13.FormShow` increment adds the bounded
+`TouchGraphicPersonNumberField` helper while retaining the handler listing:
+602/1,144 (52.62%) still contain listings and 542/1,144 (47.38%) do not. The
+complement is not a count of original methods reconstructed. The scan covers
 `Source\AhnWin52` and excludes vendored `ThirdParty` Pascal. Its denominator
 includes newly added support methods and compatibility units. Compared with
 the 2026-10-02 report (615/1,094), both the source set and denominator changed,
@@ -3322,3 +3480,175 @@ surname. The category is a precondition label, not a predicted BDE result.
 Do not translate `dialog-closed` into a hit, `dialog-remains-open` into a miss,
 or any UI result into cursor position. The adapter's grid-selection and
 lookup-inference flags remain false in every category.
+
+## Continuation — Unit17 inventory and remote authorization gate
+
+The DFM/caller inventory revisited `Unit17` as one bounded example. Its DFM
+binds `FormShow`, `BitBtn1Click`, `BitBtn2Click`, and both checkbox-preset
+radio buttons. The radio-button presets have already been restored from
+complete listings and covered by synthetic tests. `BitBtn2Click` is also
+restored, but forwards to `Form1.anzeigen`, whose database refresh path is not
+safe to invoke from an isolated test.
+
+The remaining visible completion flow is not a safe restoration candidate:
+
+| Handler | Direct evidence | Boundary |
+|---|---|---|
+| `FormShow` (`00545204`) | Opens the streamed dataset at DataModule offset `$0530`, opens BDE database alias `tit`, then calls `First` | Dataset/database behavior; no synthetic UI-only effect |
+| `BitBtn1Click` (`005405C5`) | DFM-bound “Fertig” action; listing has an `Fbml` branch to `FamblHTML`, repeated `TTable.FindKey` calls, dataset/database operations, and global dialog state | Report/export and BDE/global behavior are coupled; keep assembly-backed |
+| `gebst`, `gebstvn`, `nam2`, `fambeltern` | Directly referenced from retained Unit17 assembly paths | Internal helpers, not independently DFM-bound; translating them alone would not close a testable contract |
+
+No Unit17 production source was changed. The principal quest remains on the
+broader listing-to-DFM/caller inventory rather than guessing this completion
+workflow.
+
+The RemoteControl CLI and synthetic test suite were revalidated: FPC 3.2.2
+build succeeded and all 37 tests passed. The manifest reader now requires the
+exact `not-found`, `single-candidate`, `candidate-list` outcome array for
+result schema 2, rejecting altered or malformed entries. Tests also confirm
+that prepared manifests cannot set `liveExecutionAuthorized`. The CLI only
+creates manifests; no command consumes one as an execution plan. The approved
+application was closed and no input was sent. The previous Ute/Elsa
+observation is complete and will not be repeated. Any next live observation
+remains blocked until a specific query category is separately authorized and
+its fresh backup/inventory and dialog profile are verified.
+Manifest parsing additionally requires integral schema numbers and a positive
+32-bit target PID; fractional versions/PIDs and an out-of-range PID are
+covered by synthetic rejection tests. The CLI and all 37 tests compile
+without warnings; a non-starting `verify` confirms the approved executable
+path/hash still match.
+
+### Additional bound-handler triage
+
+`Unit32.FormShow` is DFM-bound, but its retained listing resets three labels
+and fifteen image controls, then derives paths under `Bilder/` from
+address-backed photo state, calls unverified string/path helpers, and loads
+JPEG files into `TPicture`. Its visible effects are coupled to external files
+and unresolved global/helper contracts; keep the complete routine
+assembly-backed rather than partially restoring only the control resets.
+
+The `Unit26` `Gedcom schreiben` radio handlers are likewise not independent
+checkbox-style state actions: the `Nachfahren` listing reads
+`TForm1.StringGrid2` and dispatches into the dataset-backed `nach_erm` and
+save-dialog flow. `Unit28.BitBtn1Click` traverses and appends a global BDE
+dataset. These are recorded as blocked candidates, not approximated.
+
+`Unit13.SpeedButton12Click` is now restored from listing `00570694`. The
+method sets `FontDialog1.Font.Name` to `Arial`, stores the selected name only
+when `Execute` returns true, and always refreshes `PaintBox1`. A private
+`StoreFontNameState` helper is the only writer to the source-level
+`GlobalVar_0061E2EC` mapping; the listing and `Unit13.zerleg` establish that
+the original cell is an `AnsiString` passed to `TFont.SetName`. The binary
+address is retained as an identifier, not emitted as an absolute address in
+the rebuilt process. Synthetic dialog tests verify accepted and cancelled
+paths and repaint behavior; they do not run the printer or genealogy drawing
+workflow. The focused GraphicForm group passes 11/11, the full suite passes
+398/398, and the main Debug project links.
+
+**`Unit13.FormShow` bounded restoration — 2026-10-04:** The listing-backed
+`Table17.Open` and `Table18.Open` calls remain in their original order; the
+BDE `TSession.OpenDatabase` call remains outside the form. `Table17`/`Table18`
+now use the centrally configured direct `TParadox` route; other `TSQLTable`
+datasets still lack a selected SQLDB connection/provider. `$0534` maps to
+`Table1Nummer`; the sibling `DB.pas` VMT map corroborates slot `$58` as
+`TField.GetAsInteger`, so a small helper now reads `.AsInteger`. The known
+global setup is translated (`0.63` scale, rounded values `4` and `76`, the
+observed `$011AD338` value `20`, and two zeroed state cells). Each of the four
+chart modes resets the paint/scroll state and then reaches an explicit
+unsupported-rendering exception; `Vorf_erm`/`Nach_erm` retain their listings
+and do not claim successful drawing. Synthetic tests cover the setup, field
+access, table-open order, all four mode dispatches, and scrollbar resets
+without database I/O.
+GraphicForm tests pass 14/14 and the full suite 401/401. Coverage is
+602/1,144 (52.62%); `Unit13.pas` is 40/57 (70.18%). The test project compiles
+the changed Unit13 and the Debug target `FPC\AHW52_Main.lpi` links. No live
+application or database was opened.
+
+### `Cmp_SQLTable` source review — connection configuration remains blocked
+
+The supplied files
+`C:\Projekte\Delphi\Components\Source\SQLTable\cmp_SQLTable.pas` and
+`C:\Projekte\Delphi\Components\FPC\cmpsqltable.lpk` were inspected; the
+component package builds. As clarified by the user, `TSQLTable` is a SQLDB
+query component like `TSQLQuery` or `TSQLCommand`: it is expected to use a
+provider-backed `TSQLConnection`, which is a separate component. `TSQLTable`
+subclasses `TCustomSQLQuery`; its `TableName` setter constructs
+`select * from <name>;`, and it republishes inherited SQLDB `Database` and
+`Transaction` properties. It is not expected to implement its own connection
+or database engine.
+
+The suggested Lazarus `lazParadox` package was inspected. It registers
+`paradox.TParadox`, declared as `TParadox = class(TDataSet)` and implemented
+directly on pxlib. It exposes file/table naming and pxlib configuration, but
+does not inherit from SQLDB `TSQLConnection` or provide an SQLDB transaction.
+It can open Paradox files as a direct dataset; it cannot be assigned to the
+current `TSQLTable.Database` property.
+
+The `GenealogyDataModule` resource assigns table names (`awd.db`, `MRG.DB`,
+etc.) but does not assign `Database` or `Transaction`; it declares no
+connection or transaction component. Although the Pascal unit imports
+`IBConnection`, it declares and initializes no `TIBConnection`. A targeted
+search found no SQL connection/transaction assignments in AhnWin52 source or
+resources. The presence of `IBConnection` in a `uses` clause is not evidence
+that InterBase is the intended backend, and the `TableName` SQL generation
+does not establish that a SQL server exposes the legacy Paradox files as SQL
+tables.
+
+The user selected a bounded interim migration to direct `TParadox` components
+for `Table17` and `Table18`; this does not convert `TParadox` into a SQLDB
+connection. The remaining SQLDB datasets still need either a compatible
+`TSQLConnection` or their own separately validated direct-dataset migration.
+The import of `IBConnection` alone does not establish that `TIBConnection` is
+intended. Validate the two migrated tables' file, field, filter, and runtime
+pxlib behavior before expanding the migration. Keep dataset `Open`/`Close`
+locations unchanged.
+
+### Incremental direct-dataset migration — `Table17` / `Table18` (2026-10-04)
+
+The user chose to use lazParadox/FCL `TParadox` alongside the existing
+`TSQLTable` datasets as an interim approach. The FPC data module now streams
+`Table17` (`awd.db`) and `Table18` (`MRG.DB`) as `TParadox` with `FileName`,
+while all other tables remain `TSQLTable`. The original `DataSource17/18`
+bindings, persistent fields, and `Unit13.FormShow` calls (`Table17.Open`,
+then `Table18.Open`) remain in place. This is not a `TSQLConnection` adapter.
+
+`TInterimParadoxTable` aliases to `TParadox` under FPC and to the legacy
+`TSQLTable` type for Delphi; the existing Delphi DFM therefore remains
+unchanged. FPC explicitly registers `TParadox` before data-module resource
+streaming; `FilterOptions` was removed from the two LFM objects because that
+property is not published by `TParadox`. `InitializeDataAccess` resolves table
+files under `AHNWIN52_DATA_DIRECTORY`, defaulting to the executable directory,
+and fails explicitly if the directory or either file is missing. The approved
+test instance places `AHNWIN51.exe`, `AWD.DB`, and `MRG.DB` together. The
+method optionally reads `AHNWIN52_PXLIBRARY`, validates the configured file,
+and assigns it to both datasets; without the override, pxlib's default
+`pxlib.dll` remains in force. The FPC project files include the bundled
+`fcl-db` Paradox and pxlib source paths through `$(FPCSrcDir)` because this x64
+FPC installation has no prebuilt `paradox.ppu`.
+
+Tests now instantiate the data module from its LFM, verify both streamed
+datasets, data-directory resolution, configured-library success/error paths,
+and no-partial-assignment behavior when a table is missing. Empty temporary
+files and synthetic recorder datasets confirm the paths and original open-call
+order without database I/O. The full test suite passes 404/404 and the Debug
+application build links. No real Paradox file was opened, so DLL deployment,
+actual file
+compatibility, filter behavior on the real `awd.db`, and persistent-field
+binding still need validation against the approved test instance. The other
+SQLDB datasets remain without a selected connection/provider, and lookup/index
+semantics are not supplied by this migration. Do not change other tables or
+open live data until those boundaries are independently checked. Keep a
+possible `TDBParadox` common component as a separate future architecture item.
+
+### Main-form helper call-site audit
+
+Rechecked the handwritten `TForm1.Proc_005D32CC`, `Proc_005D3228`, and
+`Proc_005FBFD8` bodies against `frmAhnenWinMain.pas.bak`. The current source
+contains many annotated assembly call sites, but the backup retains only
+different `Sender: TObject` declarations for these routines, not complete
+callee listings. The present helper signatures (`string -> string`,
+`Integer -> string`, and `string -> string`) and their transformations
+therefore remain assumptions rather than recovered ABI or behavior. Caller
+references alone are not sufficient evidence to validate the implementations;
+leave them unchanged and continue the listing inventory until a complete
+callee listing or equivalent direct evidence is available.
