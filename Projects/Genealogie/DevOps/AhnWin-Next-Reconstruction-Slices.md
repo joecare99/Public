@@ -108,7 +108,7 @@ UI cleanup. The evidence record is
 `ReverseEngineering\AhnWin52-Table9-Parent-Reference-Hypothesis.md`; caller
 details are in the connection-workflow wiki.
 
-### Marriage-pair transaction boundary — SQLDB synthetic evidence only
+### Marriage-pair transaction boundary — provider-free contract and future SQLDB evidence
 
 The owner reports that failure during the two reciprocal `MRG.DB` posts has
 previously left the database unusable. Added
@@ -135,7 +135,7 @@ reciprocal persistence, a trigger failure on the second insert with zero rows
 after rollback, and dataset/schema guards (5/5). The complete FPCUnit suite
 passes 644/644.
 
-This is SQLDB/SQLite evidence only. `Table5.Transaction` may be shared with
+This is SQLDB/SQLite evidence for the long-term SQLDB target only. `Table5.Transaction` may be shared with
 other datasets; the implementation does not prove exclusive transaction
 ownership or isolation from unrelated pending writes. The adapter remains
 unwired to either legacy connection route. The BDE/Paradox question remains
@@ -145,6 +145,73 @@ has not been executed. Pair-level atomicity also does not encompass the new
 `Table1` person row, `LOC.db` additions, or later `Ind*` date/index update.
 Keep production writes blocked pending dedicated-transaction/isolation
 review and target-provider evidence.
+
+### Virtual SQLDB-compatible Paradox provider — architecture clarification
+
+The intended direction is a virtual SQLDB-compatible provider backed by
+Paradox, so application/DataModule-facing code can continue using the common
+`TSQL...`-style component/API surface while provider-specific Paradox/pxlib
+details remain encapsulated. The previously noted shared `TDBParadox`
+component is this future architecture item; the user has now confirmed this
+intent. This is not a plan to migrate application components to raw
+`TParadox`. The exact compatibility scope and implementation shape still
+need specification.
+
+The checked-in data module has not yet been moved to that provider for
+marriage data: `Table5`, `Table10`, and `Table15` are still `TSQLTable`;
+only `Table17` and `Table18` are direct `TParadox`.
+
+The provider boundary has been tightened: `IGenealogyDataModule` now owns
+`AppendMarriageRecord`, and the relationship adapter delegates to it without
+referencing SQLDB or `TParadox`. Field mapping, provider flushes, and concrete
+dataset support checks live in `GenealogyDataModule`. The current concrete
+implementation explicitly rejects non-SQLDB Table5 instances; this is not
+evidence that the present TParadox path is ready to write.
+
+Static inspection of the installed FPC 3.2.2 `TParadox` source found that
+`InternalPost` delegates insert records to `InternalAddRecord`, which calls
+`PXAppendRecord`; that method body is empty. The pxlib binding declares
+`PX_insert_record` but this component does not invoke it, and neither the
+component API nor the binding exposes a transaction lifecycle. These are
+source-level findings, not runtime proof for a potential local fork.
+Consequently, neither the transitional SQLDB adapter nor unverified raw
+`TParadox.Post` is safe to wire for a marriage pair. A future virtual
+provider cannot simply wrap the installed `TParadox` implementation and
+assume appends work. The detailed gate and synthetic-fixture sequence are in
+`ReverseEngineering\AhnWin52-TParadox-Write-Capability-Audit.md`.
+
+Next: enumerate the required `TSQL...` surface used by the application,
+specify the shared Paradox provider boundary, then test append/reopen and
+pair-failure recovery on a newly created synthetic Paradox fixture. Establish
+whether the deployed pxlib supports the required transaction contract or a
+different crash-safe strategy is needed. Keep the old relationship UI paths
+unchanged. BDE/Paradox and SQLDB/SQLite evidence remain separate.
+
+### Future SQLDB runtime transaction wiring audit — 2026-10-18
+
+Static inspection found three SQLDB datasets (`Table5`, `Table10`, and
+`Table15`) for `MRG.DB`; the LFM contains no SQLDB connection/transaction
+components or assignments, and the Pascal source search found no runtime
+assignment for these components. `InitializeDataAccess` configures only
+Paradox `Table17`/`Table18`. The marriage adapter delegates to
+`Table5.Transaction`; if that is an ambient transaction, the coordinator can
+commit or roll back unrelated pending work. Sharing among the datasets is not
+proven, nor is the absence of external runtime setup. The current startup
+`FPC\AHW52_Main.lpr` does not configure SQLDB; it only calls
+`InitializeDataAccess`, which sets Table17/18 Paradox paths. The evidence and
+next gates are recorded in
+`ReverseEngineering\AhnWin52-MRG-Transaction-Wiring-Audit.md`. Keep the
+adapter unwired pending recovery of runtime setup, an unrelated-write
+isolation test, and BDE/Paradox rollback evidence.
+
+The project-build blocker was traced to stale project wiring, not a missing
+source unit: the form was renamed from `Unit3` to `PersonSearchForm` and lives
+at `Source\AhnWin52\Forms\PersonSearchForm.pas`, while the legacy `Unit3.pas`
+remains in `Source\Projects_AhnenWin`. `FPC\AHNWIN52.dpr` now references the
+renamed form directly and includes Lazarus `Interfaces` initialization. With
+the existing LazReport package dependency registered, the main project
+builds successfully. No broad `Source\Projects_AhnenWin` compiler search path
+is used, avoiding collisions with standard LCL/RTL units.
 
 The user also clarified parent reassignment: insertion and removal are
 separate actions, with the action unavailable in the current state disabled.
@@ -4954,8 +5021,11 @@ compatibility, filter behavior on the real `awd.db`, and persistent-field
 binding still need validation against the approved test instance. The other
 SQLDB datasets remain without a selected connection/provider, and lookup/index
 semantics are not supplied by this migration. Do not change other tables or
-open live data until those boundaries are independently checked. Keep a
-possible `TDBParadox` common component as a separate future architecture item.
+open live data until those boundaries are independently checked. The later
+architecture clarification confirms that a shared `TDBParadox`-style
+SQLDB-compatible provider backed by Paradox is the intended direction; the
+interim direct-dataset migration described here is not that provider.
+Enumerate the required `TSQL...` surface before designing or implementing it.
 
 ### Main-form helper call-site audit
 

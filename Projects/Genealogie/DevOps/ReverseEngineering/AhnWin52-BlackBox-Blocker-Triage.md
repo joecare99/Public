@@ -29,6 +29,30 @@ rules or user intent.
 
 ## Evidence already available
 
+### Marriage pair transaction scope — virtual Paradox provider, future SQLDB
+
+The synthetic SQLite pair adapter passes its second-insert rollback test, but
+this is preparation for a future SQLDB target only. The user clarified that
+the intended current Lazarus architecture is a virtual SQLDB-compatible
+provider backed by Paradox, with a common `TSQL...`-style surface and
+Paradox/pxlib details hidden behind the provider/DataModule. It is not a plan
+to expose raw `TParadox` throughout the application. Static inspection found
+three `MRG.DB` SQLDB datasets (`Table5`, `Table10`, `Table15`) and no streamed
+or source-level SQLDB connection/transaction assignments. The adapter uses
+`Table5.Transaction` directly and can commit or roll back that entire active
+transaction. More importantly, the checked-in data module still declares
+Table5/10/15 as `TSQLTable`; only Table17/18 are `TParadox`. Static inspection
+of FPC 3.2.2 `TParadox` also found that append handling routes through an
+empty `PXAppendRecord`, and the component exposes no transaction API. Thus
+neither the current component mapping nor a safe pair-write boundary is
+implemented. Keep all marriage writes unwired until the required
+SQLDB-compatible API subset is inventoried and the virtual provider proves
+append/recovery behavior on a fresh synthetic Paradox fixture. The raw
+`TParadox` source is a warning against assuming append support from that class,
+not evidence that the virtual provider is impossible. See
+`AhnWin52-TParadox-Write-Capability-Audit.md`. The older SQLDB wiring audit is
+preparation for the later SQLDB phase only.
+
 - BDE 5.2.0.2 synthetic tests observe duplicate-key hits, misses with
   retained current rows, composite-index prefixes, and selected filter
   behavior through the public dataset API; no `.XG`/`.YG` parsing is required.

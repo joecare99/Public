@@ -27,6 +27,8 @@ type
     procedure TestDBCheckBoxExitRequiresInitializedInterface;
     procedure TestDBCheckBoxExitPropagatesRefreshErrors;
     procedure TestDataModuleAdapterDelegatesTable1;
+    procedure TestDataModuleAdapterDelegatesTransactionLifecycle;
+    procedure TestDataModuleAdapterRequiresConfiguredTransaction;
     procedure TestDataModuleAdapterRejectsMissingForm;
     procedure TestTemporaryDataModuleCanBeSubstituted;
     procedure TestTemporaryDataModuleRequiresInitialization;
@@ -37,7 +39,8 @@ type
 implementation
 
 uses
-  BufDataset, Forms, GenealogyDataModule, LCLType, SysUtils, Unit32,
+  BufDataset, Forms, GenealogyDataModule, LCLType, SQLite3Conn, SQLDB,
+  SysUtils, Unit32,
   GenealogyDataModuleAccess, frmAhnenWinMain;
 
 type
@@ -54,6 +57,11 @@ type
   TFakeGenealogyDataModule = class(TInterfacedObject, IGenealogyDataModule)
   private
     FTable1: TDataSet;
+    procedure BeginTransaction;
+    procedure CommitTransaction;
+    procedure RollbackTransaction;
+    procedure AppendMarriageRecord(const PersonNumber, PartnerNumber: Integer;
+      const Details: TMarriageDetails);
     function GetTable1: TDataSet;
     function GetTable3: TDataSet;
     function GetTable1Nummer: TField;
@@ -96,6 +104,31 @@ end;
 function TFakeGenealogyDataModule.GetTable1: TDataSet;
 begin
   Result := FTable1;
+end;
+
+procedure TFakeGenealogyDataModule.BeginTransaction;
+begin
+  raise EDataModuleTransactionUnavailable.Create(
+    'The synthetic module does not provide transactions.');
+end;
+
+procedure TFakeGenealogyDataModule.CommitTransaction;
+begin
+  raise EDataModuleTransactionUnavailable.Create(
+    'The synthetic module does not provide transactions.');
+end;
+
+procedure TFakeGenealogyDataModule.RollbackTransaction;
+begin
+  raise EDataModuleTransactionUnavailable.Create(
+    'The synthetic module does not provide transactions.');
+end;
+
+procedure TFakeGenealogyDataModule.AppendMarriageRecord(
+  const PersonNumber, PartnerNumber: Integer; const Details: TMarriageDetails);
+begin
+  raise EDataModuleWriteUnavailable.Create(
+    'The synthetic module does not provide marriage writes.');
 end;
 
 function TFakeGenealogyDataModule.GetTable3: TDataSet;
@@ -412,6 +445,99 @@ begin
       temporaryAdapter <> nil);
   finally
     temporaryAdapter := nil;
+    adapter := nil;
+    dataModule.Free;
+  end;
+end;
+
+procedure TTestAHW52PersonEditFrame.
+  TestDataModuleAdapterDelegatesTransactionLifecycle;
+var
+  adapter: IGenealogyDataModule;
+  connection: TSQLite3Connection;
+  dataModule: TGenealogyDataModule;
+  transaction: TSQLTransaction;
+begin
+  Application.Initialize;
+  dataModule := TGenealogyDataModule.Create(nil);
+  connection := TSQLite3Connection.Create(nil);
+  transaction := TSQLTransaction.Create(nil);
+  try
+    connection.DatabaseName := ':memory:';
+    connection.OpenFlags := [sofReadWrite, sofCreate, sofMemory];
+    connection.Transaction := transaction;
+    transaction.Database := connection;
+    connection.Connected := True;
+    dataModule.Table5.Transaction := transaction;
+    adapter := CreateGenealogyDataModuleAdapter(dataModule);
+
+    adapter.BeginTransaction;
+    AssertTrue('BeginTransaction should start the Table5 transaction.',
+      transaction.Active);
+    adapter.RollbackTransaction;
+    AssertFalse('RollbackTransaction should end the Table5 transaction.',
+      transaction.Active);
+
+    adapter.BeginTransaction;
+    AssertTrue('A second transaction should be startable after rollback.',
+      transaction.Active);
+    adapter.CommitTransaction;
+    AssertFalse('CommitTransaction should end the Table5 transaction.',
+      transaction.Active);
+  finally
+    adapter := nil;
+    if Assigned(dataModule.Table5) then
+      dataModule.Table5.Transaction := nil;
+    dataModule.Free;
+    if transaction.Active then
+      transaction.Rollback;
+    connection.Close;
+    transaction.Free;
+    connection.Free;
+  end;
+end;
+
+procedure TTestAHW52PersonEditFrame.
+  TestDataModuleAdapterRequiresConfiguredTransaction;
+var
+  adapter: IGenealogyDataModule;
+  dataModule: TGenealogyDataModule;
+  raisedExpectedError: Boolean;
+begin
+  Application.Initialize;
+  dataModule := TGenealogyDataModule.Create(nil);
+  try
+    adapter := CreateGenealogyDataModuleAdapter(dataModule);
+    raisedExpectedError := False;
+    try
+      adapter.BeginTransaction;
+    except
+      on EDataModuleTransactionUnavailable do
+        raisedExpectedError := True;
+    end;
+    AssertTrue('A missing Table5 transaction must fail explicitly.',
+      raisedExpectedError);
+
+    raisedExpectedError := False;
+    try
+      adapter.CommitTransaction;
+    except
+      on EDataModuleTransactionUnavailable do
+        raisedExpectedError := True;
+    end;
+    AssertTrue('Commit must report a missing Table5 transaction explicitly.',
+      raisedExpectedError);
+
+    raisedExpectedError := False;
+    try
+      adapter.RollbackTransaction;
+    except
+      on EDataModuleTransactionUnavailable do
+        raisedExpectedError := True;
+    end;
+    AssertTrue('Rollback must report a missing Table5 transaction explicitly.',
+      raisedExpectedError);
+  finally
     adapter := nil;
     dataModule.Free;
   end;
