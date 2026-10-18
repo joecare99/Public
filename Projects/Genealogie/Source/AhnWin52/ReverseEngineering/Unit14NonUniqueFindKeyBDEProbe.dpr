@@ -128,6 +128,37 @@ begin
   Table.Post;
 end;
 
+procedure CheckSyntheticRows(Table: TTable);
+const
+  ExpectedIDs: array[0..3] of Integer = (1, 2, 3, 4);
+  ExpectedPlaces: array[0..3] of string = (
+    'SyntheticDuplicate',
+    'SyntheticDuplicate',
+    'SyntheticOther',
+    'SyntheticOtherCase'
+  );
+var
+  Index: Integer;
+begin
+  Table.IndexName := '';
+  Table.First;
+  for Index := Low(ExpectedIDs) to High(ExpectedIDs) do
+  begin
+    if Table.EOF then
+      raise Exception.CreateFmt('BDE ended before synthetic row %d',
+        [Index]);
+    if (Table.FieldByName('ID').AsInteger <> ExpectedIDs[Index]) or
+      (Table.FieldByName('Ort').AsString <> ExpectedPlaces[Index]) then
+      raise Exception.CreateFmt('Unexpected BDE row at position %d', [Index]);
+    WriteLn('BDE_RECORD[', Index, ']=ID:',
+      Table.FieldByName('ID').AsInteger, ';Ort=',
+      Table.FieldByName('Ort').AsString);
+    Table.Next;
+  end;
+  if not Table.EOF then
+    raise Exception.Create('BDE returned more synthetic rows than expected');
+end;
+
 procedure CreateFixture;
 var
   FixtureDirectory: string;
@@ -164,8 +195,10 @@ begin
     AddSyntheticPlace(Table, 2, 'SyntheticDuplicate');
     AddSyntheticPlace(Table, 1, 'SyntheticDuplicate');
     AddSyntheticPlace(Table, 3, 'SyntheticOther');
+    AddSyntheticPlace(Table, 4, 'SyntheticOtherCase');
     Table.AddIndex('Ort_', 'Ort', [ixCaseInsensitive]);
     Table.IndexDefs.Update;
+    CheckSyntheticRows(Table);
     IndexDef := Table.IndexDefs.Find('Ort_');
     if (IndexDef = nil) or (CompareText(IndexDef.Fields, 'Ort') <> 0) or
       (ixUnique in IndexDef.Options) then
@@ -195,6 +228,7 @@ var
   Found: Boolean;
   HitID: Integer;
   MissID: Integer;
+  CaseInsensitiveFound: Boolean;
 begin
   ValidateSyntheticFixtureDirectory(FixtureDirectory);
   NetDirectory := CreateNetDirectory;
@@ -216,6 +250,7 @@ begin
     Table.Open;
     WriteLn('LANGUAGE_DRIVER=', Table.LanguageDriver);
     Table.IndexDefs.Update;
+    CheckSyntheticRows(Table);
     IndexDef := Table.IndexDefs.Find('Ort_');
     if (IndexDef = nil) or (CompareText(IndexDef.Fields, 'Ort') <> 0) or
       (ixUnique in IndexDef.Options) then
@@ -233,6 +268,16 @@ begin
     if (HitID <> 1) and (HitID <> 2) then
       raise Exception.Create('The duplicate hit selected a nonmatching row');
     WriteLn('HIT_FOUND=1 HIT_ID=', HitID, ' BOF=', Ord(Table.BOF),
+      ' EOF=', Ord(Table.EOF), ' RECNO=', Table.RecNo);
+
+    Table.First;
+    CaseInsensitiveFound := Table.FindKey(['syntheticothercase']);
+    if not CaseInsensitiveFound or
+      (Table.FieldByName('ID').AsInteger <> 4) then
+      raise Exception.Create(
+        'The case-insensitive Ort_ lookup did not find its synthetic key');
+    WriteLn('CASE_VARIANT_FOUND=1 ID=',
+      Table.FieldByName('ID').AsInteger, ' BOF=', Ord(Table.BOF),
       ' EOF=', Ord(Table.EOF), ' RECNO=', Table.RecNo);
 
     Table.First;
