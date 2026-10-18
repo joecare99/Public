@@ -99,11 +99,23 @@ partial-key, exception, or SQLDB behavior.
    This schema does not establish the `spitzbas` producer's source traversal,
    mode-dependent filtering, output ordering, or errors; the producer still
    calls `EmptyTable` and remains blocked.
-3. **No relationship declarations:** the manifest has no relation collection,
-   foreign-key constraints, or cascade rules. `AWD.DB.Vater` and `.Mutter` are
-   integer fields with matching leading secondary indexes, so they are
-   *candidate* parent references only. Referential integrity, sentinel values,
-   self-reference policy, and deletion semantics remain unknown.
+3. **No database relationship declarations:** the manifest has no relation
+   collection, foreign-key constraints, or cascade rules. `AWD.DB.Vater` and
+   `.Mutter` are integer fields with matching leading secondary indexes. The
+   user specified the application-domain meaning: each is a zero-or-one
+   reference to a person's `Table9.Nummer`, with `0` meaning no parent.
+   Separately, the user specifies that a marriage in `Marr` is stored as two
+   reciprocal, otherwise identical records referencing the two persons; the
+   current component map is `Table5`/`MRG.DB`. The user has not observed
+   multiple marriages as supported, but this is not a confirmed uniqueness
+   constraint. These domain statements do not add physical foreign-key
+   enforcement to the manifest. Invalid parent references can be stored.
+   When implemented, the application's data check is intended to report
+   invalid/missing parent references, parent self-references, marriage
+   self-links, and missing reciprocal marriage records, without offering
+   correction. Exact diagnostics, write-time rejection behavior, physical
+   NULL handling, pair-write atomicity, duplicate recovery, and deletion
+   semantics remain open.
 4. **Index uniqueness/runtime flags:** the normalized semantic catalogue
    records index field order and collation but not a verified uniqueness or
    duplicate-key runtime contract. The generated template's primary-key

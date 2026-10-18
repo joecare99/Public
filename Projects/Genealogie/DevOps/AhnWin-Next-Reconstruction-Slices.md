@@ -4,8 +4,9 @@
 **Priority:** Continue replacing the legacy wPDF/Ahnw50 PDF engine with the
 verified SynPDF/mORMot2 report-to-PDF adapters and migrate QuickReport report
 workflows to LazReport. The Ahnw50 DLL and its embedded license path are not
-target dependencies. Non-reporting relationship slices remain blocked on
-provider parity and application-specific relationship rules.
+target dependencies. Parent-slot cardinality and zero-sentinel semantics are
+now owner-confirmed; non-reporting relationship writes remain gated on
+provider parity, invalid-reference policy, and caller lifecycle behavior.
 
 ## Authorized test-copy BDE catalogue — completed 2026-10-18
 
@@ -71,13 +72,104 @@ dataset contract or separately approved visible observation; missing original
 source/build dependencies; or an independent ordering oracle. Repeating the
 completed exact-field synthetic comparison does not unblock any of these.
 
-The planned next relationship step is therefore evidence intake only. Request
-a metadata-only Table9 specification covering parent/child fields,
-cardinality, optionality, sentinel/self-reference rules, and update/delete/
-cancellation semantics; do not request genealogy records. Otherwise select a
-separately gated workstream and supply the exact missing evidence named by
-its blocker. Until then, keep provider integration, writes, destructive
-producers, and live report/UI paths blocked.
+The relationship domain clarification has since closed key semantic gaps;
+the exact remaining questions are recorded under the dated clarification
+below. Request only unresolved behavior (for example validation-check
+coverage or cleanup on failure), not already supplied parent cardinality or
+spouse-pair shape. Do not request genealogy records. Until provider and write
+lifecycle behavior are independently bounded, keep provider integration,
+writes, destructive producers, and live report/UI paths blocked.
+
+### Table9 parent/spouse domain clarification — 2026-10-18, 18:58
+
+The user supplied the domain rule that each person has zero or one father and
+zero or one mother; `0` means no parent, while a present parent reference
+points to that person's `Table9.Nummer`. The user has now clarified that a
+marriage is represented by two reciprocal, otherwise identical records in
+`Marr` (currently mapped to `Table5`/`MRG.DB`): one from each person to the
+other.
+
+Parent cardinality, the parent zero sentinel, and marriage pair shape are now
+specified. The user confirms that “Schon vorhanden” applies to the same
+person-pair, while connecting a person to a different person succeeds.
+Marriage duplicate handling is therefore pair-scoped, not one-spouse-per-
+person. This matches the visible endpoint-pair check in the existing-person
+listing; the new-person route shows no duplicate precheck. These domain rules
+do not prove provider enforcement or write atomicity. Invalid parent
+references can be stored. Once implemented, the data check is intended to
+report invalid/missing parent references, parent self-references, marriage
+self-links, and missing reciprocal marriage records. It will not offer
+corrections. It is a future detection mechanism, not a write-time constraint
+or repair path. Production writes and provider integration remain blocked on
+physical NULL handling, data-check implementation/diagnostics,
+duplicate/recovery behavior,
+partial failure between reciprocal posts, cancellation, provider errors, and
+UI cleanup. The evidence record is
+`ReverseEngineering\AhnWin52-Table9-Parent-Reference-Hypothesis.md`; caller
+details are in the connection-workflow wiki.
+
+### Marriage-pair transaction boundary — SQLDB synthetic evidence only
+
+The owner reports that failure during the two reciprocal `MRG.DB` posts has
+previously left the database unusable. Added
+`Source\AhnWin52\Relationships\MarriagePairTransactionContract.pas` as a
+provider-neutral coordinator contract. It writes `(person, partner)` and
+`(partner, person)` with identical details, commits only after both appends,
+and requests rollback on append or commit failure. A rollback failure remains
+visible together with the original error. Nonpositive person numbers and
+self-marriage are rejected before beginning the transaction. The focused
+synthetic suite passes 8/8, the full FPCUnit suite passes 637/637, and the
+main Debug project builds.
+
+This is not a provider implementation or proof of atomic persistence. The
+contract is registered in the test project only and is not called by either
+legacy connection route. `IGenealogyDataModule` now exposes
+`BeginTransaction`, `CommitTransaction`, and `RollbackTransaction`; its
+concrete adapter delegates these operations to `Table5.Transaction` and
+fails explicitly if no SQLDB transaction is configured. The new
+`MarriagePairDataModuleAdapter` maps the provider-neutral coordinator onto
+`Table5`, validates the active/browse dataset and required fields, posts both
+directions with all 18 detail fields, and calls `ApplyUpdates(0)` before the
+coordinator commits. The artificial in-memory SQLite adapter tests cover
+reciprocal persistence, a trigger failure on the second insert with zero rows
+after rollback, and dataset/schema guards (5/5). The complete FPCUnit suite
+passes 644/644.
+
+This is SQLDB/SQLite evidence only. `Table5.Transaction` may be shared with
+other datasets; the implementation does not prove exclusive transaction
+ownership or isolation from unrelated pending writes. The adapter remains
+unwired to either legacy connection route. The BDE/Paradox question remains
+open; a preparation-only probe protocol is recorded in
+`ReverseEngineering\AhnWin52-MRG-Transaction-Observation-Protocol.md`, and
+has not been executed. Pair-level atomicity also does not encompass the new
+`Table1` person row, `LOC.db` additions, or later `Ind*` date/index update.
+Keep production writes blocked pending dedicated-transaction/isolation
+review and target-provider evidence.
+
+The user also clarified parent reassignment: insertion and removal are
+separate actions, with the action unavailable in the current state disabled.
+A parent cannot be swapped directly; remove it and then insert the
+replacement. This matches the reconstructed unlink handler, which sets the
+selected parent field to `0` and posts. Record the rule in the parent workflow
+wiki; it does not resolve the remaining search/provider/cancellation gates.
+
+Invalid parent-reference values can also persist until the application's
+data check reports them. Do not assume write-time foreign-key rejection for
+these links. The intended check reports but offers no correction; its precise
+diagnostics remain unspecified.
+
+Connection management follows the same insert/remove-only model. There is no
+in-place edit/replace operation; changing a particular link is remove then
+insert, while adding links to other people remains allowed. The reconstructed
+`Verbindunglschen1Click` trace deletes matching `MRG.DB` rows in both endpoint
+directions, and the user confirms that removing a marriage deletes both
+records of the reciprocal pair. Details are in the connection-workflow wiki.
+
+The user reports that the current program also accepts a connection from a
+person to themselves, which the user considers an error. Treat self-marriage
+as invalid domain data; the future data check is intended to report it
+without offering correction. This is separate from the provider-only test
+that showed Table9 parent fields can physically hold self-references.
 
 ## Paradox best-guess dispositions — 2026-10-18
 
@@ -100,6 +192,32 @@ independent BDE runtime oracle for distinct ASCII keys in that fixture, not a
 `.YG` parser, `intl850` collation proof, tie-order guarantee, or SQLDB
 contract. Both narrow investigation tasks may close; broader provenance,
 binary-tree reader, and production-provider work remain gated.
+
+## Table9 parent-reference BDE black-box probe — 2026-10-18
+
+Compiled `Source\AhnWin52\ReverseEngineering\Table9ParentReferenceBDEBlackBoxProbe.dpr`
+with the installed Delphi 17 compiler and ran it against the installed BDE
+5.2.0.2 using only a fresh, synthetic Table9-shaped table. After read-only
+reopen, the public `TTable` lookups returned: shared father 2 rows, shared
+mother 2, zero reference 2, missing target 1, and self-reference 1. All
+artificial inserts/posts succeeded; the process exited 0 and removed the
+fixture. No authorized records or `.XG`/`.YG` internals were read.
+
+This advances only the provider-mechanics evidence: those values can be
+represented and found by the named indexes. It does not establish application
+validation, referential integrity, or genealogy policy; keep relationship
+provider integration and writes blocked. Full scope and limits are recorded
+in `ReverseEngineering\AhnWin52-Table9-Parent-Reference-Hypothesis.md`.
+
+The probe was then extended to issue an absent one-component `FindKey` on
+each `vat`/`mut` index after `First`. BDE 5.2.0.2 returned false for both,
+retained the initial synthetic row (`Nummer=100`, `RecNo=1`), and reported
+`BOF=True`, `EOF=False`. This narrows the cursor evidence for that public call
+shape only; it is not SQLDB prefix parity and does not establish caller policy
+after failure. Rebuilt and reran the probe successfully, including fixture
+cleanup. Remaining relationship work is still gated by absent SQLDB named-
+index prefix semantics, caller error/cancellation behavior, and authoritative
+domain rules; do not wire or mutate production paths.
 
 ## UI automation scope — selected tab and graceful-close actions
 
@@ -611,6 +729,24 @@ improvement: an invalid year keeps the last valid calendar visible instead
 of clearing it before conversion fails. This is documented as a deliberate
 UX/robustness deviation, not exact legacy parity; no code change was needed.
 Locale-sensitive date parsing remains a separate unresolved boundary.
+
+## Generic report lifecycle boundary — synthetic contract only
+
+Added `Reports\ReportLifecycleContract.pas` as a provider/UI-neutral contract
+for request identity, caller-supplied source context, preparation, prepared
+report identity/capabilities, and one-capability output dispatch. Synthetic
+tests cover required boundaries and prove there is no implicit preview/print/
+PDF/text fallback. The focused suite passes 15/15; existing FOKO report and
+Unit16 text-export suites pass 9/9 and 15/15. The test project builds.
+The complete FPCUnit suite passes 629/629, and `AHW52_Main` builds in Debug.
+
+This is only a lifecycle seam, not a common renderer or production adapter.
+It does not change or route FOKO, Unit15, or Unit16 behavior; it does not
+establish real output, caller reachability, Unit16 preview/PDF, printing,
+QuickReport/WPTools migration, or dependency retirement. Keep those report
+gates blocked until their own caller/provider/engine evidence is available.
+Detailed boundaries and non-claims are recorded in
+`ReverseEngineering\AhnWin52-Unit15-Report-Caller-Discovery.md`.
 
 ## Static Unit15/Unit16 report-caller discovery — one route-specific field map
 
@@ -1803,10 +1939,12 @@ against the actual `Unit16PreviewActions.pas` helper, using their matching
 RTL `Lib` directories.
 
 The full native project still cannot be built from this tree: the legacy
-`AHNWIN51.dpr` has stale relative source paths, and its referenced `Unit1.pas`
-and `Unit9.pas` are absent from `Source\AhnWin52` (they belong to the separate
-`Projects_AhnenWin` decompilation). Do not combine decompiler variants merely
-to force a build. A separate DCC probe of `Unit15` also stops at missing
+`AHNWIN51.dpr` has stale relative source paths and expects the old AhnWin 5.1
+project composition. Static comparison identifies current successors for
+its Unit1 and Unit9 form roles (`frmAhnenWinMain.TForm1` and
+`AboutForm.TAboutForm`), but does not establish drop-in source or version
+equivalence. Do not combine decompiler variants merely to force a build. A
+separate DCC probe of `Unit15` also stops at missing
 `QRPrntr.dcu`; the installed RAD Studio libraries do not contain the complete
 QuickReport units. The Lazarus test project builds, but does not compile
 `Unit16` because its WPTools PDF
@@ -2292,6 +2430,16 @@ This fulfills the first bounded provider-backed source restoration against
 the explicit-failure boundary; it does not implement `FindKey` or claim BDE /
 SQLDB lookup parity. Continue with another short routine only where its
 unsupported data operation and failure boundary are independently testable.
+
+**Correction (2026-10-18):** the generic SQLDB `TSQLQuery.Locate` comparison
+does not establish the capabilities of project-specific
+`Cmp_SQLTable.TSQLTable`. The user reports using `.Index`, `.Seek('=', ...)`,
+and `.NoMatch` for lookups. That API is a concrete candidate for named-index
+and prefix behavior; its implementation is not present in this tree, and it
+has not been tested. Do not state that SQLDB as a whole lacks an equivalent:
+test the actual `Cmp_SQLTable` operation on matched synthetic cases before
+accepting or rejecting parity. Keep production handlers blocked in the
+meantime.
 
 ### Follow-up candidate screening
 
@@ -3642,10 +3790,14 @@ and unresolved dimension state; do not add an `OnTimer` binding.
 **Value:** High; clarifies the executable entry point and provides a route to
 build the larger application independently of QuickReport.
 
-**Evidence:** `AHNWIN51.dpr` refers to missing `Unit1.pas`; the source tree has
-`frmAhnenWinMain.pas` declaring `TForm1`. The project refers to `Unit8.pas`,
-while the available splash form is `Forms\frm_Splash.pas`. AhnWin 5.2 startup
-projects provide additional composition evidence.
+**Evidence:** `AHNWIN51.dpr` refers to legacy `Unit1.pas`/`Unit9.pas`;
+current form successors are `frmAhnenWinMain.TForm1` and
+`AboutForm.TAboutForm`, respectively. Their class/resource lineage is
+supported, but they are not proven drop-in sources for the older DPR. The
+project also refers to `Unit8.pas`, while the available splash form is
+`Forms\frm_Splash.pas`. AhnWin 5.2 startup projects provide additional
+composition evidence. See
+`ReverseEngineering\AhnWin52-Unit1-Unit9-Renamed-Unit-Mapping.md`.
 
 **Progress:** The entry-point sequence now appears in `AHW52_Main.lpr`, and
 the existing `AHW52_Splash.lpi` project builds the splash form independently.
@@ -4379,8 +4531,19 @@ mode check or replacing unrelated branches.
 
 **Current blocker:** The choice-form caller/state handshake is mapped, including
 the radio-button `Checked` contract; do not treat this as a remaining mapping
-task. No safe relationship implementation slice is ready until a non-sensitive
-`Table9` key/index definition and provider miss/error contract are available.
+task. The bounded Table9 parent-reference storage/selection hypothesis now has
+synthetic support: `Vater`/`Mutter` are fields on the current person row,
+multiple child rows can share references, and the existing-person selection
+helper maps exact uppercase `M`/`W` to those fields. The focused
+parent-selection suite passes 5/5 and the full suite passes 591/591; the
+previous BDE synthetic index fixture independently exercised duplicate
+`vat`/`mut` prefixes. See
+`DevOps\ReverseEngineering\AhnWin52-Table9-Parent-Reference-Hypothesis.md`.
+This does not establish referential integrity, sentinel values,
+self-reference, gender/domain rules, cascades, cancellation, or SQLDB parity.
+No authorized Table9 records were read. No safe relationship implementation
+slice is ready until those separate contracts, including provider
+miss/error behavior, are available.
 `TForm3` is created in
 `AHNWIN51.dpr`; its `+$E8` slot resolves to `00469CEC`, distinct from the
 directly identified `TCustomForm.Show` entry at `00469C3C`. The method is
@@ -4987,3 +5150,24 @@ the test project builds. An initial invalid-form test opened the expected
 invalid form path was not invoked again. The full suite was not run in this
 continuation. No live application or database was used. Details:
 `DevOps\ReverseEngineering\AhnWin52-Unit7-Complementary-Day-Classification.md`.
+
+## Provider-neutral indexed-seek contract — 2026-10-18
+
+The interface-first continuation adds `IndexedSeekContract.pas` with a
+typed request for a named index and ordered leading-key prefix, and a result
+that separately carries hit/miss, `BOF`/`EOF`, and current-row identity
+state. The row ordinal is dataset metadata, never the genealogy key. The
+interface has no provider implementation: provider failures and
+unsupported/unavailable operations are not translated into not-found.
+
+The existing `IIndexedLookupProvider` remains the distinct cursorless
+candidate-list contract. No `TSQLTable` adapter, BDE-shaped `Index`/`Seek`/
+`NoMatch` facade, `FindKey` compatibility change, or legacy-handler wiring
+was added. The new suite passes 18/18 and the existing candidate-provider
+suite passes 15/15; the FPCUnit project builds and the main Debug project
+builds. The full FPCUnit suite passes 614/614. Only request/result invariants
+and propagation behavior are validated. Target-index collation, tie order,
+key conversion at each real call site, closed/edit states, and provider-
+specific semantics remain unresolved. Keep lookup integration, relationship
+writes, and affected blocked todos gated. Details:
+`DevOps\ReverseEngineering\AhnWin52-BDE-SQLDB-Lookup-Comparison-Matrix.md`.

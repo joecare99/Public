@@ -615,3 +615,30 @@ Unit16 afterward. It therefore provides no evidenced Unit15 row projection
 and remains outside the adapter contract. The repository-wide search found no
 additional caller-specific DBText field assignment beyond the entries in the
 table above.
+
+## Generic report lifecycle boundary — interface-only
+
+`Source\AhnWin52\Reports\ReportLifecycleContract.pas` defines a
+provider/UI-neutral handoff, not a shared rendering implementation:
+
+| Phase | Contract | Boundary |
+|---|---|---|
+| Request | `TReportRequest` (`ReportId`, `ReportKind`, caption) | Identity and presentation metadata only; no database route, global state, file path, or form reference. |
+| Source | `IReportSourceContext` | Marker passed by the caller. The contract does not open, close, retain, or free backing data; concrete adapters must preserve the caller's lifetime. |
+| Preparation | `IReportPreparer.Prepare` | Receives the request and source and returns a prepared-report interface. Missing source/preparer, nil preparation, and identity mismatch are explicit failures. |
+| Prepared state | `IPreparedReport` | Exposes identity and independent preview, print, PDF, and text capabilities; it is not a dataset, page source, or output stream. |
+| Output | `IReportOutputSink` / `ExecuteReportOutput` | Each sink handles one capability. Dispatch checks the matching capability and never falls back to another output type. |
+
+Provider/engine exceptions propagate unchanged; adapters may classify known
+engine failures with `EReportEngineFailure`. The generic contract does not
+silently translate arbitrary exceptions or implement retries/fallbacks.
+
+This contract has no production adapter and does not route or alter the
+existing workflows. FOKO continues to use its dataset-backed LazReport
+workflow and PDF page-source bridge. Unit16 text export retains its separate
+context/writer contract; its QuickReport preview/PDF handoff remains unresolved.
+The synthetic lifecycle suite passes 15/15; independent existing FOKO and
+Unit16 text-export suites pass 9/9 and 15/15. The complete FPCUnit suite
+passes 629/629, and the AHW52_Main Debug project builds. These results prove
+contract invariants only—not real output, printer behavior, Unit16 preview/
+PDF, QuickReport/WPTools migration, or legacy dependency retirement.

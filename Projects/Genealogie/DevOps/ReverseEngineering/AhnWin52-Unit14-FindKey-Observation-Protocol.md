@@ -82,8 +82,18 @@ its seven test values are distinct. A separate synthetic non-unique fixture
 has now measured duplicate hit and miss cursor state, while an in-memory
 SQLite/SQLDB test measured exact-field `Locate` under an explicit query
 order. These results remain bounded to their fixtures; named-index and
-composite-prefix parity is not established. The original application's exact
-BDE runtime remains unverified.
+composite-prefix parity is not established by an unordered `Locate` alone.
+The user proposed selecting the full composite index order and then using
+`Locate` on the leading field. A new synthetic ordered-query test confirms
+that this returns the first matching prefix row and has the tested BDE-like
+miss state. The actual `Cmp_SQLTable.TSQLTable` wrapper is available at
+`C:\Projekte\Delphi\Components\Source\SQLTable\cmp_SQLTable.pas`; it inherits
+`TCustomSQLQuery` but does not define an `Index`-to-`ORDER BY` property itself.
+Its `TableName` setter creates an unordered `select * from <table>;` query.
+The wrapper's published surface does not expose a writable custom SQL
+property, so implementing the proposed index-to-order strategy would require
+an explicit wrapper change or another supported query-construction path. The
+original application's exact BDE runtime remains unverified.
 
 Keep both Unit14 handlers listing-only, preserve the explicit `FindKey`
 failure in the compatibility layer, and do not infer downstream-form behavior
@@ -154,13 +164,27 @@ fixture, and both disposable directories were removed after verification.
 The FPCUnit SQLite/SQLDB case uses `TSQLite3Connection` with an in-memory
 database, a non-unique index, and a `TSQLQuery` explicitly ordered by ID.
 Exact `Locate` found the first matching ID 1; a miss retained ID 1 with
-`BOF=True`, `EOF=False`. This establishes generic SQLDB query behavior only;
-the external project `Cmp_SQLTable` implementation source is not available
-here. Focused SQLDB tests pass 4/4 and the full suite passes 590/590.
+`BOF=True`, `EOF=False`. A second synthetic SQLDB test defined a composite
+index `(father, birth_year, birth_month, birth_day)`, issued a query ordered by
+those fields, and verified that `Locate('father', 100)` chose the first
+prefix row in that order. After `First`, a missing father prefix returned
+false and retained the first row with `BOF=True`, `EOF=False`. The focused
+SQLDB suite passes 5/5. These are generic `TSQLQuery` results; they do not
+show that `Cmp_SQLTable` automatically generates the required `ORDER BY`.
 
-This is only a limited match for exact-field hit/miss on fixtures. SQLDB
-`Locate` follows query order and does not expose BDE named-index selection or
-composite-key-prefix lookup. It therefore cannot replace `FindKey` for
-`num`, `vat`, or `mut`; the filtered Table9 stale-current-row case is not
+The `Cmp_SQLTable` source is available at
+`C:\Projekte\Delphi\Components\Source\SQLTable\cmp_SQLTable.pas`. `TSQLTable`
+inherits `TCustomSQLQuery`; `SetTableName` generates `select * from <table>;`,
+and the wrapper publishes `IndexDefs` and `ServerIndexDefs` but defines no
+own `Index`, `Seek`, or `NoMatch` member. The proposed ordering step would
+need another layer or explicit SQL.
+
+This is only a limited match for exact-field hit/miss on fixtures. Generic SQLDB `Locate` follows query order; when that query is explicitly
+ordered by the complete composite key, the tested leading-field lookup
+behaves as a prefix search for the cases above. This supports the user's
+proposed approach but does not prove all BDE behavior: tied suffixes,
+collation, filters, provider exceptions, or an implicit `Index` property are
+not established. The filtered Table9 stale-current-row case is also not
 reproduced. Keep the compatibility exception and all legacy handlers
-unchanged. No authorized data, application UI, or report was opened.
+unchanged until the exact production query/order path is verified. No
+authorized data, application UI, or report was opened.

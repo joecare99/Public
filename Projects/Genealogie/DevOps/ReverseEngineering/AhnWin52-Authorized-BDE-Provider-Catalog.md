@@ -149,11 +149,21 @@ production UI flows blocked until that provider boundary is independently
 implemented and tested.
 
 The current `FindKey` compatibility method deliberately raises
-`EDBTablesCompatibilityUnsupported`; the existing SQLDB `Locate` tests use
-only `TBufDataset` and do not exercise Paradox-backed `TSQLTable` or a
-connection. Thus there is no current SQLDB fixture establishing index
-ordering, BDE comparison behavior, miss cursor state, or provider errors.
-`Locate` remains an unverified substitute, not an integration path.
+`EDBTablesCompatibilityUnsupported`. The `Cmp_SQLTable` source at
+`C:\Projekte\Delphi\Components\Source\SQLTable\cmp_SQLTable.pas` now adds a
+component-level `Indexes` collection and `IndexName` property that maps the
+selected composite key to SQL `ORDER BY`; changing the selection while active
+reopens the query. Artificial SQLite tests exercise that actual wrapper:
+prefix hit ordering, active index switching with a descending field, filtered
+prefix lookup and miss state, case-sensitive default `Locate` versus explicit
+`loCaseInsensitive`, and rejection of unknown/malformed index definitions.
+The focused suite passes 9/9, and the full FPCUnit suite passes 596/596. A
+separate synthetic BDE 5.2.0.2 fixture found a lower-case key variant on its
+`ixCaseInsensitive` `Ort_` index; the actual authorized index's case flag is
+not known. This is a synthetic SQLDB wrapper result only; Paradox-backed
+`TSQLTable`, target BDE collation/tie parity, exception behavior, and
+application caller behavior remain unverified. The `FindKey` stub and legacy
+handlers remain blocked.
 
 The `alfls.db` schema metadata alone does not unblock the Table27
 `spitzbas` producer: its source-table traversal, mode-dependent filtering,
