@@ -21,19 +21,19 @@ implementation
 
 uses
   Forms,
-  Unit5,
-  Unit15,
-  Unit23,
-  Unit25;
+  SingleColumnA4ReportForm,
+  SingleColumnA4ReportVariantForm,
+  FokoFilePrintForm,
+  TwoColumnA4ReportForm;
 
 procedure TTestAHW52ReportCounterCallbacks.
   TestUnit5CounterDecrementsWithoutClamping;
 var
-  reportForm: TForm5;
+  reportForm: TSingleColumnA4ReportForm;
   previousValue: LongInt;
 begin
   previousValue := GlobalVar_0061DFA0;
-  reportForm := TForm5.CreateNew(nil);
+  reportForm := TSingleColumnA4ReportForm.CreateNew(nil);
   try
     GlobalVar_0061DFA0 := 4;
     reportForm._PROC_00539EBC(reportForm);
@@ -51,11 +51,11 @@ end;
 procedure TTestAHW52ReportCounterCallbacks.
   TestUnit15CounterDecrementsWithoutClamping;
 var
-  reportForm: TForm15;
+  reportForm: TSingleColumnA4ReportVariantForm;
   previousValue: LongInt;
 begin
   previousValue := GlobalVar_0061DF14;
-  reportForm := TForm15.CreateNew(nil);
+  reportForm := TSingleColumnA4ReportVariantForm.CreateNew(nil);
   try
     GlobalVar_0061DF14 := 4;
     reportForm._PROC_005338D0(reportForm);
@@ -73,11 +73,11 @@ end;
 procedure TTestAHW52ReportCounterCallbacks.
   TestUnit23CounterDecrementsWithoutClamping;
 var
-  reportForm: TForm23;
+  reportForm: TFokoFilePrintForm;
   previousValue: LongInt;
 begin
   previousValue := GlobalVar_025358D0;
-  reportForm := TForm23.CreateNew(nil);
+  reportForm := TFokoFilePrintForm.CreateNew(nil);
   try
     GlobalVar_025358D0 := 4;
     reportForm._PROC_005CB970(reportForm);
@@ -95,11 +95,11 @@ end;
 procedure TTestAHW52ReportCounterCallbacks.
   TestUnit25CounterDecrementsWithoutClamping;
 var
-  reportForm: TForm25;
+  reportForm: TTwoColumnA4ReportForm;
   previousValue: LongInt;
 begin
   previousValue := GlobalVar_0061E0DC;
-  reportForm := TForm25.CreateNew(nil);
+  reportForm := TTwoColumnA4ReportForm.CreateNew(nil);
   try
     GlobalVar_0061E0DC := 4;
     reportForm._PROC_0055FDD4(reportForm);

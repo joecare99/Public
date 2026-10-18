@@ -49,6 +49,17 @@ begin
     DatabaseName.Width := availableWidth - DatabaseName.Left - 5;
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TLoginDialog.DatabaseName (TLabel); TLoginDialog.Password (TEdit); TLoginDialog.UserName
+    (TEdit); TApplication instance
+Framework/API calls: class TLoginDialog; Controls.TControl.GetText(TControl):TCaption;;
+    Controls.TControl.SetText(TControl;TCaption);;
+    Forms.TCustomForm.Create(TCustomForm;boolean;TComponent);;
+    Forms.TCustomForm.SetActiveControl(TCustomForm;TWinControl);; method TEdit.SetEnabled(Boolean);
+    method TLoginDialog.ShowModal(); System.TObject.Free(TObject);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TLoginDialog._PROC_004B0BF0(Sender : TObject);
 begin
 (*
@@ -243,6 +254,20 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TLoginDialog.Bevel (TBevel); TLoginDialog.CancelButton (TButton);
+    TLoginDialog.DatabaseName (TLabel); TLoginDialog.Label3 (TLabel); TLoginDialog.OKButton
+    (TButton); TLoginDialog.Panel (TPanel); TLoginDialog.Password (TEdit); TLoginDialog.UserName
+    (TEdit); TApplication instance
+Framework/API calls: class TLoginDialog; Controls.TControl.GetText(TControl):TCaption;;
+    Controls.TControl.SetHeight(TControl;Integer);; Controls.TControl.SetText(TControl;TCaption);;
+    Controls.TControl.SetTop(TControl;Integer);; Controls.TControl.SetVisible(TControl;Boolean);;
+    Forms.TCustomForm.Create(TCustomForm;boolean;TComponent);;
+    Forms.TCustomForm.SetActiveControl(TCustomForm;TWinControl);; method TLoginDialog.ShowModal();
+    System.LoadResString(PResStringRec):String;; System.TObject.Free(TObject);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TLoginDialog._PROC_004B0D20(Sender : TObject);
 begin
 (*
@@ -523,6 +548,11 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Framework/API calls: Forms.TScreen.SetCursor(TScreen;TCursor);; TScreen instance
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TLoginDialog._PROC_004B0F28(Sender : TObject);
 begin
 (*
@@ -541,6 +571,11 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Strings/files/dialog text: ']Ã‹Àƒ-4Ýa'; 'éj5õÿëø]Ã‹Àƒ-4Ýa'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TLoginDialog._PROC_004B0F38(Sender : TObject);
 begin
 (*
@@ -586,6 +621,11 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DD10; GlobalVar_0061DD14; GlobalVar_0061DD18; GlobalVar_0061DD1C
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TLoginDialog._PROC_004B0F68(Sender : TObject);
 begin
 (*

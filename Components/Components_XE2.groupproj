@@ -22,7 +22,7 @@
 				<Dependencies/>
 			</Projects>
 			<Projects Include="DXE2\CmpDBConfig.dproj">
-				<Dependencies>DXE2\UntConfig.dproj</Dependencies>
+				<Dependencies/>
 			</Projects>
 			<Projects Include="DXE2\CmpAboutBox.dproj">
 				<Dependencies/>
@@ -43,12 +43,18 @@
 				<Dependencies/>
 			</Projects>
 			<Projects Include="DXE2\dcl_KGSoft.dproj">
-				<Dependencies>DXE2\CmpAboutBox.dproj;DXE2\BaseUnits.dproj;DXE2\UntConfig.dproj;DXE2\UserMgnt.dproj;DXE2\DBLuGrid.dproj;DXE2\DBHlPanel.dproj;DXE2\DBHLLookUpPanel.dproj;DXE2\CmpDBConfig.dproj;DXE2\CmpGLScene.dproj</Dependencies>
+				<Dependencies/>
 			</Projects>
-			<Projects Include="DXE2\Prj_test.dproj">
-				<Dependencies>DXE2\CmpAboutBox.dproj</Dependencies>
+			<Projects Include="DXE2\DBForms.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\CmpTCPSPSClient10.dproj">
+				<Dependencies/>
 			</Projects>
 			<Projects Include="DXE2\Prj_Tests.dproj">
+				<Dependencies/>
+			</Projects>
+			<Projects Include="DXE2\Prj_test.dproj">
 				<Dependencies/>
 			</Projects>
 			<Projects Include="DXE2\Prj_testeventlog.dproj">
@@ -116,13 +122,13 @@
 		<Target Name="DBHLLookUpPanel:Make">
 			<MSBuild Projects="DXE2\DBHLLookUpPanel.dproj" Targets="Make"/>
 		</Target>
-		<Target Name="CmpDBConfig" DependsOnTargets="UntConfig">
+		<Target Name="CmpDBConfig">
 			<MSBuild Projects="DXE2\CmpDBConfig.dproj"/>
 		</Target>
-		<Target Name="CmpDBConfig:Clean" DependsOnTargets="UntConfig:Clean">
+		<Target Name="CmpDBConfig:Clean">
 			<MSBuild Projects="DXE2\CmpDBConfig.dproj" Targets="Clean"/>
 		</Target>
-		<Target Name="CmpDBConfig:Make" DependsOnTargets="UntConfig:Make">
+		<Target Name="CmpDBConfig:Make">
 			<MSBuild Projects="DXE2\CmpDBConfig.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="CmpAboutBox">
@@ -179,23 +185,32 @@
 		<Target Name="Compatible:Make">
 			<MSBuild Projects="DXE2\Compatible.dproj" Targets="Make"/>
 		</Target>
-		<Target Name="dcl_KGSoft" DependsOnTargets="CmpAboutBox;BaseUnits;UntConfig;UserMgnt;DBLuGrid;DBHlPanel;DBHLLookUpPanel;CmpDBConfig;CmpGLScene">
+		<Target Name="dcl_KGSoft">
 			<MSBuild Projects="DXE2\dcl_KGSoft.dproj"/>
 		</Target>
-		<Target Name="dcl_KGSoft:Clean" DependsOnTargets="CmpAboutBox:Clean;BaseUnits:Clean;UntConfig:Clean;UserMgnt:Clean;DBLuGrid:Clean;DBHlPanel:Clean;DBHLLookUpPanel:Clean;CmpDBConfig:Clean;CmpGLScene:Clean">
+		<Target Name="dcl_KGSoft:Clean">
 			<MSBuild Projects="DXE2\dcl_KGSoft.dproj" Targets="Clean"/>
 		</Target>
-		<Target Name="dcl_KGSoft:Make" DependsOnTargets="CmpAboutBox:Make;BaseUnits:Make;UntConfig:Make;UserMgnt:Make;DBLuGrid:Make;DBHlPanel:Make;DBHLLookUpPanel:Make;CmpDBConfig:Make;CmpGLScene:Make">
+		<Target Name="dcl_KGSoft:Make">
 			<MSBuild Projects="DXE2\dcl_KGSoft.dproj" Targets="Make"/>
 		</Target>
-		<Target Name="Prj_test" DependsOnTargets="CmpAboutBox">
-			<MSBuild Projects="DXE2\Prj_test.dproj"/>
+		<Target Name="DBForms">
+			<MSBuild Projects="DXE2\DBForms.dproj"/>
 		</Target>
-		<Target Name="Prj_test:Clean" DependsOnTargets="CmpAboutBox:Clean">
-			<MSBuild Projects="DXE2\Prj_test.dproj" Targets="Clean"/>
+		<Target Name="DBForms:Clean">
+			<MSBuild Projects="DXE2\DBForms.dproj" Targets="Clean"/>
 		</Target>
-		<Target Name="Prj_test:Make" DependsOnTargets="CmpAboutBox:Make">
-			<MSBuild Projects="DXE2\Prj_test.dproj" Targets="Make"/>
+		<Target Name="DBForms:Make">
+			<MSBuild Projects="DXE2\DBForms.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="CmpTCPSPSClient10">
+			<MSBuild Projects="DXE2\CmpTCPSPSClient10.dproj"/>
+		</Target>
+		<Target Name="CmpTCPSPSClient10:Clean">
+			<MSBuild Projects="DXE2\CmpTCPSPSClient10.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="CmpTCPSPSClient10:Make">
+			<MSBuild Projects="DXE2\CmpTCPSPSClient10.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Prj_Tests">
 			<MSBuild Projects="DXE2\Prj_Tests.dproj"/>
@@ -205,6 +220,15 @@
 		</Target>
 		<Target Name="Prj_Tests:Make">
 			<MSBuild Projects="DXE2\Prj_Tests.dproj" Targets="Make"/>
+		</Target>
+		<Target Name="Prj_test">
+			<MSBuild Projects="DXE2\Prj_test.dproj"/>
+		</Target>
+		<Target Name="Prj_test:Clean">
+			<MSBuild Projects="DXE2\Prj_test.dproj" Targets="Clean"/>
+		</Target>
+		<Target Name="Prj_test:Make">
+			<MSBuild Projects="DXE2\Prj_test.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Prj_testeventlog">
 			<MSBuild Projects="DXE2\Prj_testeventlog.dproj"/>
@@ -216,13 +240,13 @@
 			<MSBuild Projects="DXE2\Prj_testeventlog.dproj" Targets="Make"/>
 		</Target>
 		<Target Name="Build">
-			<CallTarget Targets="BaseUnits;UntConfig;UserMgnt;DBLuGrid;DBHlPanel;DBHLLookUpPanel;CmpDBConfig;CmpAboutBox;CmpSelectVars;kgTCPClient_id10;Prisma;CmpGLScene;Compatible;dcl_KGSoft;Prj_test;Prj_Tests;Prj_testeventlog"/>
+			<CallTarget Targets="BaseUnits;UntConfig;UserMgnt;DBLuGrid;DBHlPanel;DBHLLookUpPanel;CmpDBConfig;CmpAboutBox;CmpSelectVars;kgTCPClient_id10;Prisma;CmpGLScene;Compatible;dcl_KGSoft;DBForms;CmpTCPSPSClient10;Prj_Tests;Prj_test;Prj_testeventlog"/>
 		</Target>
 		<Target Name="Clean">
-			<CallTarget Targets="BaseUnits:Clean;UntConfig:Clean;UserMgnt:Clean;DBLuGrid:Clean;DBHlPanel:Clean;DBHLLookUpPanel:Clean;CmpDBConfig:Clean;CmpAboutBox:Clean;CmpSelectVars:Clean;kgTCPClient_id10:Clean;Prisma:Clean;CmpGLScene:Clean;Compatible:Clean;dcl_KGSoft:Clean;Prj_test:Clean;Prj_Tests:Clean;Prj_testeventlog:Clean"/>
+			<CallTarget Targets="BaseUnits:Clean;UntConfig:Clean;UserMgnt:Clean;DBLuGrid:Clean;DBHlPanel:Clean;DBHLLookUpPanel:Clean;CmpDBConfig:Clean;CmpAboutBox:Clean;CmpSelectVars:Clean;kgTCPClient_id10:Clean;Prisma:Clean;CmpGLScene:Clean;Compatible:Clean;dcl_KGSoft:Clean;DBForms:Clean;CmpTCPSPSClient10:Clean;Prj_Tests:Clean;Prj_test:Clean;Prj_testeventlog:Clean"/>
 		</Target>
 		<Target Name="Make">
-			<CallTarget Targets="BaseUnits:Make;UntConfig:Make;UserMgnt:Make;DBLuGrid:Make;DBHlPanel:Make;DBHLLookUpPanel:Make;CmpDBConfig:Make;CmpAboutBox:Make;CmpSelectVars:Make;kgTCPClient_id10:Make;Prisma:Make;CmpGLScene:Make;Compatible:Make;dcl_KGSoft:Make;Prj_test:Make;Prj_Tests:Make;Prj_testeventlog:Make"/>
+			<CallTarget Targets="BaseUnits:Make;UntConfig:Make;UserMgnt:Make;DBLuGrid:Make;DBHlPanel:Make;DBHLLookUpPanel:Make;CmpDBConfig:Make;CmpAboutBox:Make;CmpSelectVars:Make;kgTCPClient_id10:Make;Prisma:Make;CmpGLScene:Make;Compatible:Make;dcl_KGSoft:Make;DBForms:Make;CmpTCPSPSClient10:Make;Prj_Tests:Make;Prj_test:Make;Prj_testeventlog:Make"/>
 		</Target>
 		<Import Condition="Exists('$(BDS)\Bin\CodeGear.Group.Targets')" Project="$(BDS)\Bin\CodeGear.Group.Targets"/>
 	</Project>

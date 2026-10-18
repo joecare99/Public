@@ -18,12 +18,12 @@ type
 implementation
 
 uses
-  Classes, Forms, StdCtrls, SysUtils, Unit38;
+  Classes, Forms, StdCtrls, SysUtils, FokoAbbreviationsForm;
 
 procedure TTestAHW52FokoAbbreviationViewer.
   TestFormShowLoadsLinesFromApplicationDirectory;
 var
-  abbreviationForm: TForm38;
+  abbreviationForm: TFokoAbbreviationsForm;
   fixtureLines: TStringList;
   fileName: string;
   fileCreated: Boolean;
@@ -34,7 +34,7 @@ begin
     raise Exception.CreateFmt('Refusing to overwrite existing test input "%s".',
       [fileName]);
 
-  abbreviationForm := TForm38.CreateNew(nil);
+  abbreviationForm := TFokoAbbreviationsForm.CreateNew(nil);
   abbreviationForm.Memo1 := TMemo.Create(abbreviationForm);
   abbreviationForm.Memo1.Lines.Add('Stale text to be cleared');
   fixtureLines := TStringList.Create;
@@ -63,9 +63,9 @@ end;
 
 procedure TTestAHW52FokoAbbreviationViewer.TestUnboundCounterIncrement;
 var
-  abbreviationForm: TForm38;
+  abbreviationForm: TFokoAbbreviationsForm;
 begin
-  abbreviationForm := TForm38.CreateNew(nil);
+  abbreviationForm := TFokoAbbreviationsForm.CreateNew(nil);
   try
     GlobalVar_0061DFA8 := 10;
     abbreviationForm._PROC_0053A185(abbreviationForm);
@@ -79,9 +79,9 @@ end;
 
 procedure TTestAHW52FokoAbbreviationViewer.TestUnboundCounterDecrement;
 var
-  abbreviationForm: TForm38;
+  abbreviationForm: TFokoAbbreviationsForm;
 begin
-  abbreviationForm := TForm38.CreateNew(nil);
+  abbreviationForm := TFokoAbbreviationsForm.CreateNew(nil);
   try
     GlobalVar_0061DFA8 := 10;
     abbreviationForm._PROC_0053A1B4(abbreviationForm);

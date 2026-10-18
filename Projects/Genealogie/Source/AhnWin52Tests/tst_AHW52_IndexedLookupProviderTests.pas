@@ -9,439 +9,362 @@ uses
 
 type
   TTestAHW52IndexedLookupProvider = class(TTestCase)
+  private
+    procedure AssertFieldList(const IndexName: string;
+      const ExpectedFields: array of string);
   published
-    procedure TestCaseLookupHitByNamedIndex;
-    procedure TestCaseLookupUsesOrderedCompositeKey;
-    procedure TestCaseLookupMissPreservesCursor;
-    procedure TestCaseLookupHitPreservesCursor;
-    procedure TestCaseDuplicateKeyReturnsFirstInsertedRow;
-    procedure TestCaseUnknownIndexRaises;
-    procedure TestCaseWrongKeyCountRaises;
-    procedure TestCaseProviderFailurePropagates;
+    procedure TestRequestPreservesRecoveredIndexAndKeyOrder;
+    procedure TestPersonSearchBuildsRecoveredGebaPrefix;
+    procedure TestPersonSearchUsesProviderAndCandidateList;
+    procedure TestPersonSearchRejectsMalformedProviderResult;
+    procedure TestPersonSearchRejectsMissingProvider;
+    procedure TestRecoveredTable9IndexDefinitions;
+    procedure TestNoCandidatesClassifyAsNotFound;
+    procedure TestOneCandidateClassifiesAsSingle;
+    procedure TestMultipleCandidatesRemainAnOrderedList;
+    procedure TestRejectsEmptyIndexName;
+    procedure TestRejectsEmptyKeyPrefix;
+    procedure TestRejectsInconsistentNotFoundResult;
+    procedure TestRejectsInconsistentSingleResult;
+    procedure TestRejectsInconsistentCandidateList;
+    procedure TestProviderFailurePropagates;
   end;
 
 implementation
 
 uses
-  Classes, SysUtils, IndexedLookupContract;
+  Classes, SysUtils, IndexedLookupContract, Table9IndexDefinitions,
+  PersonSearchLookupRequest;
 
 type
   EInjectedLookupFailure = class(Exception);
 
-  TSyntheticLookupRow = class
-  public
-    RecordId: Integer;
-    Fields: TStringList;
-    constructor Create(const ARecordId: Integer);
-    destructor Destroy; override;
-  end;
-
-  TSyntheticIndexedLookupProvider = class(TInterfacedObject,
-    IIndexedLookupProvider)
+  TRecordingLookupProvider = class(TInterfacedObject, IIndexedLookupProvider)
   private
-    FIndexes: TStringList;
-    FRows: TList;
-    FCurrentRecordId: Integer;
+    FLastRequest: TIndexedLookupRequest;
+    FResult: TIndexedLookupResult;
     FFailLookup: Boolean;
-    function GetCurrentRecordId: Integer;
   public
-    constructor Create;
-    destructor Destroy; override;
-    procedure AddIndex(const IndexName: string; const KeyFields: array of string);
-    procedure AddRow(const RecordId: Integer; const FieldNames,
-      FieldValues: TStrings);
-    function Lookup(const IndexName: string; const KeyValues: TStrings):
-      TIndexedLookupResult;
-    procedure SelectCurrentRecord(const RecordId: Integer);
+    function FindCandidates(
+      const Request: TIndexedLookupRequest): TIndexedLookupResult;
+    property LastRequest: TIndexedLookupRequest read FLastRequest;
+    property ResultValue: TIndexedLookupResult read FResult write FResult;
     property FailLookup: Boolean read FFailLookup write FFailLookup;
   end;
 
-constructor TSyntheticLookupRow.Create(const ARecordId: Integer);
-begin
-  inherited Create;
-  RecordId := ARecordId;
-  Fields := TStringList.Create;
-end;
-
-destructor TSyntheticLookupRow.Destroy;
-begin
-  Fields.Free;
-  inherited Destroy;
-end;
-
-constructor TSyntheticIndexedLookupProvider.Create;
-begin
-  inherited Create;
-  FIndexes := TStringList.Create;
-  FRows := TList.Create;
-end;
-
-destructor TSyntheticIndexedLookupProvider.Destroy;
+function CloneRequest(const Source: TIndexedLookupRequest):
+  TIndexedLookupRequest;
 var
-  Index: Integer;
+  Index: LongInt;
 begin
-  for Index := 0 to FIndexes.Count - 1 do
-    FIndexes.Objects[Index].Free;
-  FIndexes.Free;
-
-  for Index := 0 to FRows.Count - 1 do
-    TSyntheticLookupRow(FRows[Index]).Free;
-  FRows.Free;
-  inherited Destroy;
+  Result.IndexName := Source.IndexName;
+  SetLength(Result.KeyValues, Length(Source.KeyValues));
+  for Index := 0 to High(Source.KeyValues) do
+    Result.KeyValues[Index] := Source.KeyValues[Index];
 end;
 
-procedure TSyntheticIndexedLookupProvider.AddIndex(const IndexName: string;
-  const KeyFields: array of string);
+function CloneResult(const Source: TIndexedLookupResult):
+  TIndexedLookupResult;
 var
-  Fields: TStringList;
-  Index: Integer;
+  Index: LongInt;
 begin
-  if FIndexes.IndexOf(IndexName) >= 0 then
-    raise EArgumentException.CreateFmt('Index "%s" is already defined.',
-      [IndexName]);
-  if Length(KeyFields) = 0 then
-    raise EArgumentException.Create('An index must define at least one key field.');
-
-  Fields := TStringList.Create;
-  try
-    for Index := 0 to High(KeyFields) do
-      Fields.Add(KeyFields[Index]);
-    FIndexes.AddObject(IndexName, Fields);
-    Fields := nil;
-  finally
-    Fields.Free;
-  end;
+  Result.Kind := Source.Kind;
+  SetLength(Result.CandidateRecordNumbers,
+    Length(Source.CandidateRecordNumbers));
+  for Index := 0 to High(Source.CandidateRecordNumbers) do
+    Result.CandidateRecordNumbers[Index] :=
+      Source.CandidateRecordNumbers[Index];
 end;
 
-procedure TSyntheticIndexedLookupProvider.AddRow(const RecordId: Integer;
-  const FieldNames, FieldValues: TStrings);
-var
-  Row: TSyntheticLookupRow;
-  Index: Integer;
+function TRecordingLookupProvider.FindCandidates(
+  const Request: TIndexedLookupRequest): TIndexedLookupResult;
 begin
-  if (FieldNames = nil) or (FieldValues = nil) then
-    raise EArgumentNilException.Create('FieldNames/FieldValues');
-  if FieldNames.Count <> FieldValues.Count then
-    raise EArgumentException.Create('Field names and values must have equal counts.');
-
-  Row := TSyntheticLookupRow.Create(RecordId);
-  try
-    for Index := 0 to FieldNames.Count - 1 do
-      Row.Fields.Values[FieldNames[Index]] := FieldValues[Index];
-    FRows.Add(Row);
-    Row := nil;
-  finally
-    Row.Free;
-  end;
-end;
-
-function TSyntheticIndexedLookupProvider.Lookup(const IndexName: string;
-  const KeyValues: TStrings): TIndexedLookupResult;
-var
-  IndexPosition: Integer;
-  IndexFields: TStringList;
-  Row: TSyntheticLookupRow;
-  RowIndex: Integer;
-  KeyIndex: Integer;
-  Matches: Boolean;
-begin
-  if KeyValues = nil then
-    raise EArgumentNilException.Create('KeyValues');
   if FFailLookup then
-    raise EInjectedLookupFailure.Create('Injected synthetic provider failure.');
-
-  IndexPosition := FIndexes.IndexOf(IndexName);
-  if IndexPosition < 0 then
-    raise EUnknownLookupIndex.CreateFmt('Unknown lookup index "%s".',
-      [IndexName]);
-
-  IndexFields := TStringList(FIndexes.Objects[IndexPosition]);
-  if KeyValues.Count <> IndexFields.Count then
-    raise EInvalidLookupKey.CreateFmt(
-      'Index "%s" expects %d key values, received %d.',
-      [IndexName, IndexFields.Count, KeyValues.Count]);
-
-  Result.Found := False;
-  Result.RecordId := 0;
-  for RowIndex := 0 to FRows.Count - 1 do
-  begin
-    Row := TSyntheticLookupRow(FRows[RowIndex]);
-    Matches := True;
-    for KeyIndex := 0 to IndexFields.Count - 1 do
-      if Row.Fields.Values[IndexFields[KeyIndex]] <> KeyValues[KeyIndex] then
-      begin
-        Matches := False;
-        Break;
-      end;
-
-    if Matches then
-    begin
-      Result.Found := True;
-      Result.RecordId := Row.RecordId;
-      Exit;
-    end;
-  end;
+    raise EInjectedLookupFailure.Create('Injected provider failure.');
+  FLastRequest := CloneRequest(Request);
+  Result := CloneResult(FResult);
 end;
 
-function TSyntheticIndexedLookupProvider.GetCurrentRecordId: Integer;
-begin
-  Result := FCurrentRecordId;
-end;
-
-procedure TSyntheticIndexedLookupProvider.SelectCurrentRecord(
-  const RecordId: Integer);
-begin
-  FCurrentRecordId := RecordId;
-end;
-
-function CreateLookupProvider: TSyntheticIndexedLookupProvider;
+procedure TTestAHW52IndexedLookupProvider.AssertFieldList(
+  const IndexName: string; const ExpectedFields: array of string);
 var
-  FieldNames: TStringList;
-  FieldValues: TStringList;
+  Definition: TTable9IndexDefinition;
+  Index: LongInt;
 begin
-  Result := TSyntheticIndexedLookupProvider.Create;
+  Definition := GetTable9IndexDefinition(IndexName);
+  AssertEquals(IndexName, Definition.Name);
+  AssertEquals('intl850', Definition.Collation);
+  AssertEquals(Length(ExpectedFields), Length(Definition.FieldNames));
+  for Index := 0 to High(ExpectedFields) do
+    AssertEquals('Index ' + IndexName + ' field order at position ' +
+      IntToStr(Index), ExpectedFields[Index], Definition.FieldNames[Index]);
+end;
+
+procedure TTestAHW52IndexedLookupProvider.
+  TestRequestPreservesRecoveredIndexAndKeyOrder;
+var
+  Provider: IIndexedLookupProvider;
+  ProviderObject: TRecordingLookupProvider;
+  Request: TIndexedLookupRequest;
+begin
+  ProviderObject := TRecordingLookupProvider.Create;
+  Provider := ProviderObject;
+  ProviderObject.ResultValue := CreateIndexedLookupResult([42]);
+  Request := CreateIndexedLookupRequest('geba',
+    ['Schmidt', 'Anna']);
+
+  Provider.FindCandidates(Request);
+
+  AssertEquals('The recovered index identity is preserved.',
+    'geba', ProviderObject.LastRequest.IndexName);
+  AssertEquals('Name remains the leading key value.',
+    'Schmidt', ProviderObject.LastRequest.KeyValues[0]);
+  AssertEquals('Given name remains the second key value.',
+    'Anna', ProviderObject.LastRequest.KeyValues[1]);
+  AssertEquals('The two-field request remains a key prefix.',
+    2, Length(ProviderObject.LastRequest.KeyValues));
+  Provider := nil;
+end;
+
+procedure TTestAHW52IndexedLookupProvider.
+  TestPersonSearchBuildsRecoveredGebaPrefix;
+var
+  Request: TIndexedLookupRequest;
+begin
+  Request := BuildPersonSearchLookupRequest('Schmidt', 'Anna');
+  AssertEquals('The person dialog uses the recovered geba index.',
+    'geba', Request.IndexName);
+  AssertEquals(2, Length(Request.KeyValues));
+  AssertEquals('Edit1 / surname is the first key component.',
+    'Schmidt', Request.KeyValues[0]);
+  AssertEquals('Edit2 / given name is the second key component.',
+    'Anna', Request.KeyValues[1]);
+end;
+
+procedure TTestAHW52IndexedLookupProvider.
+  TestPersonSearchUsesProviderAndCandidateList;
+var
+  ProviderObject: TRecordingLookupProvider;
+  Provider: IIndexedLookupProvider;
+  LookupResult: TIndexedLookupResult;
+begin
+  ProviderObject := TRecordingLookupProvider.Create;
+  ProviderObject.ResultValue := CreateIndexedLookupResult([12, 8]);
+  Provider := ProviderObject;
+
+  LookupResult := FindPersonSearchCandidates(Provider, 'Schmidt', 'Anna');
+
+  AssertEquals('geba', ProviderObject.LastRequest.IndexName);
+  AssertEquals('Schmidt', ProviderObject.LastRequest.KeyValues[0]);
+  AssertEquals('Anna', ProviderObject.LastRequest.KeyValues[1]);
+  AssertEquals(Ord(ilrkCandidateList), Ord(LookupResult.Kind));
+  AssertEquals(12, LookupResult.CandidateRecordNumbers[0]);
+  AssertEquals(8, LookupResult.CandidateRecordNumbers[1]);
+  Provider := nil;
+end;
+
+procedure TTestAHW52IndexedLookupProvider.
+  TestPersonSearchRejectsMalformedProviderResult;
+var
+  ProviderObject: TRecordingLookupProvider;
+  Provider: IIndexedLookupProvider;
+  MalformedResult: TIndexedLookupResult;
+  Raised: Boolean;
+begin
+  ProviderObject := TRecordingLookupProvider.Create;
+  MalformedResult.Kind := ilrkSingleCandidate;
+  MalformedResult.CandidateRecordNumbers := nil;
+  ProviderObject.ResultValue := MalformedResult;
+  Provider := ProviderObject;
+  Raised := False;
   try
-    { These names and key layouts are test fixtures, not recovered BDE metadata. }
-    Result.AddIndex('namgeb', ['SyntheticKeyA', 'SyntheticKeyB']);
-    Result.AddIndex('geba', ['SyntheticKeyC', 'SyntheticKeyD']);
-
-    FieldNames := TStringList.Create;
-    FieldValues := TStringList.Create;
-    try
-      FieldNames.Add('SyntheticKeyA');
-      FieldNames.Add('SyntheticKeyB');
-      FieldNames.Add('SyntheticKeyC');
-      FieldNames.Add('SyntheticKeyD');
-
-      FieldValues.Add('alpha');
-      FieldValues.Add('one');
-      FieldValues.Add('birth-x');
-      FieldValues.Add('suffix-x');
-      Result.AddRow(1, FieldNames, FieldValues);
-
-      FieldValues[0] := 'beta';
-      FieldValues[1] := 'two';
-      FieldValues[2] := 'birth-y';
-      FieldValues[3] := 'suffix-y';
-      Result.AddRow(2, FieldNames, FieldValues);
-
-      FieldValues[0] := 'alpha';
-      FieldValues[1] := 'one';
-      FieldValues[2] := 'birth-z';
-      FieldValues[3] := 'suffix-z';
-      Result.AddRow(3, FieldNames, FieldValues);
-    finally
-      FieldValues.Free;
-      FieldNames.Free;
-    end;
+    FindPersonSearchCandidates(Provider, 'Schmidt', 'Anna');
   except
-    Result.Free;
-    raise;
+    on E: EInvalidLookupResult do
+      Raised := True;
   end;
+  AssertTrue('Malformed provider responses must not reach the UI.', Raised);
+  Provider := nil;
 end;
 
-function CreateKeyValues(const Values: array of string): TStringList;
+procedure TTestAHW52IndexedLookupProvider.
+  TestPersonSearchRejectsMissingProvider;
 var
-  Index: Integer;
-begin
-  Result := TStringList.Create;
-  for Index := 0 to High(Values) do
-    Result.Add(Values[Index]);
-end;
-
-procedure TTestAHW52IndexedLookupProvider.TestCaseLookupHitByNamedIndex;
-var
-  ProviderObject: TSyntheticIndexedLookupProvider;
   Provider: IIndexedLookupProvider;
-  KeyValues: TStringList;
-  LookupResult: TIndexedLookupResult;
-begin
-  ProviderObject := CreateLookupProvider;
-  Provider := ProviderObject;
-  KeyValues := CreateKeyValues(['birth-y', 'suffix-y']);
-  try
-    LookupResult := Provider.Lookup('geba', KeyValues);
-    AssertTrue('The synthetic index should find a row.', LookupResult.Found);
-    AssertEquals('The synthetic row ID should be returned.', 2,
-      LookupResult.RecordId);
-  finally
-    KeyValues.Free;
-    Provider := nil;
-  end;
-end;
-
-procedure TTestAHW52IndexedLookupProvider.TestCaseLookupUsesOrderedCompositeKey;
-var
-  ProviderObject: TSyntheticIndexedLookupProvider;
-  Provider: IIndexedLookupProvider;
-  KeyValues: TStringList;
-  LookupResult: TIndexedLookupResult;
-begin
-  ProviderObject := CreateLookupProvider;
-  Provider := ProviderObject;
-  KeyValues := CreateKeyValues(['alpha', 'one']);
-  try
-    LookupResult := Provider.Lookup('namgeb', KeyValues);
-    AssertTrue('The ordered composite key should match.', LookupResult.Found);
-    AssertEquals('The first matching synthetic row should be returned.', 1,
-      LookupResult.RecordId);
-
-    KeyValues[0] := 'one';
-    KeyValues[1] := 'alpha';
-    LookupResult := Provider.Lookup('namgeb', KeyValues);
-    AssertFalse('Reversing the composite values should not match.',
-      LookupResult.Found);
-  finally
-    KeyValues.Free;
-    Provider := nil;
-  end;
-end;
-
-procedure TTestAHW52IndexedLookupProvider.TestCaseLookupMissPreservesCursor;
-var
-  ProviderObject: TSyntheticIndexedLookupProvider;
-  Provider: IIndexedLookupProvider;
-  KeyValues: TStringList;
-  LookupResult: TIndexedLookupResult;
-begin
-  ProviderObject := CreateLookupProvider;
-  ProviderObject.SelectCurrentRecord(2);
-  Provider := ProviderObject;
-  KeyValues := CreateKeyValues(['missing', 'suffix']);
-  try
-    LookupResult := Provider.Lookup('geba', KeyValues);
-    AssertFalse('A missing key should be a normal miss.', LookupResult.Found);
-    AssertEquals('A miss has no returned row ID.', 0, LookupResult.RecordId);
-    AssertEquals('A miss must preserve the current record cursor.', 2,
-      Provider.CurrentRecordId);
-  finally
-    KeyValues.Free;
-    Provider := nil;
-  end;
-end;
-
-procedure TTestAHW52IndexedLookupProvider.TestCaseLookupHitPreservesCursor;
-var
-  ProviderObject: TSyntheticIndexedLookupProvider;
-  Provider: IIndexedLookupProvider;
-  KeyValues: TStringList;
-  LookupResult: TIndexedLookupResult;
-begin
-  ProviderObject := CreateLookupProvider;
-  ProviderObject.SelectCurrentRecord(3);
-  Provider := ProviderObject;
-  KeyValues := CreateKeyValues(['birth-y', 'suffix-y']);
-  try
-    LookupResult := Provider.Lookup('geba', KeyValues);
-    AssertTrue('A matching key should be found.', LookupResult.Found);
-    AssertEquals('The match result should identify its row.', 2,
-      LookupResult.RecordId);
-    AssertEquals('A hit must preserve the current record cursor.', 3,
-      Provider.CurrentRecordId);
-  finally
-    KeyValues.Free;
-    Provider := nil;
-  end;
-end;
-
-procedure TTestAHW52IndexedLookupProvider.TestCaseDuplicateKeyReturnsFirstInsertedRow;
-var
-  ProviderObject: TSyntheticIndexedLookupProvider;
-  Provider: IIndexedLookupProvider;
-  KeyValues: TStringList;
-  LookupResult: TIndexedLookupResult;
-begin
-  ProviderObject := CreateLookupProvider;
-  Provider := ProviderObject;
-  KeyValues := CreateKeyValues(['alpha', 'one']);
-  try
-    LookupResult := Provider.Lookup('namgeb', KeyValues);
-    AssertTrue('Duplicate keys should still produce a match.',
-      LookupResult.Found);
-    AssertEquals('Duplicates should resolve by insertion order.', 1,
-      LookupResult.RecordId);
-  finally
-    KeyValues.Free;
-    Provider := nil;
-  end;
-end;
-
-procedure TTestAHW52IndexedLookupProvider.TestCaseUnknownIndexRaises;
-var
-  ProviderObject: TSyntheticIndexedLookupProvider;
-  Provider: IIndexedLookupProvider;
-  KeyValues: TStringList;
   Raised: Boolean;
 begin
-  ProviderObject := CreateLookupProvider;
-  Provider := ProviderObject;
-  KeyValues := CreateKeyValues(['value']);
+  Provider := nil;
+  Raised := False;
   try
-    Raised := False;
-    try
-      Provider.Lookup('unknown-index', KeyValues);
-    except
-      on E: EUnknownLookupIndex do
-        Raised := True;
+    FindPersonSearchCandidates(Provider, 'Schmidt', 'Anna');
+  except
+    on E: EArgumentException do
+      Raised := E.Message <> '';
+  end;
+  AssertTrue('A missing provider must be reported explicitly.', Raised);
+end;
+
+procedure TTestAHW52IndexedLookupProvider.
+  TestRecoveredTable9IndexDefinitions;
+var
+  IndexNames: TTable9FieldNames;
+  Index: LongInt;
+begin
+  IndexNames := GetTable9IndexNames;
+  try
+    AssertEquals('All eight fixture index headers are represented.',
+      8, Length(IndexNames));
+    for Index := 0 to High(IndexNames) do
+    begin
+      AssertTrue('Each decoded index has ordered key fields.',
+        Length(GetTable9IndexDefinition(IndexNames[Index]).FieldNames) > 0);
     end;
-    AssertTrue('An unknown index must raise a named error.', Raised);
+
+    AssertFieldList('muto',
+      ['Mutter', 'Gebjahr', 'Gebmonat', 'Gebtag', 'Taufjahr',
+       'Taufmonat', 'Tauftag', 'Nummer']);
+    AssertFieldList('vato',
+      ['Vater', 'Gebjahr', 'Gebmonat', 'Gebtag', 'Taufjahr',
+       'Taufmonat', 'Tauftag', 'Nummer']);
+    AssertFieldList('namgeb',
+      ['Name', 'Vornamen', 'Gebjahr', 'Indj', 'Indm', 'Indt', 'Nummer']);
+    AssertFieldList('geba',
+      ['Name', 'Vornamen', 'Gebjahr', 'Gebmonat', 'Gebtag', 'Taufjahr',
+       'Taufmonat', 'Tauftag', 'Nummer']);
+    AssertFieldList('gebnam',
+      ['Indj', 'Indm', 'Indt', 'Name', 'Vornamen', 'Nummer']);
+    AssertFieldList('mut', ['Mutter', 'Indj', 'Indm', 'Indt', 'Nummer']);
+    AssertFieldList('vat', ['Vater', 'Indj', 'Indm', 'Indt', 'Nummer']);
+    AssertFieldList('gebo', ['Gebort', 'Nummer']);
   finally
-    KeyValues.Free;
-    Provider := nil;
+    IndexNames := nil;
   end;
 end;
 
-procedure TTestAHW52IndexedLookupProvider.TestCaseWrongKeyCountRaises;
+procedure TTestAHW52IndexedLookupProvider.TestNoCandidatesClassifyAsNotFound;
 var
-  ProviderObject: TSyntheticIndexedLookupProvider;
-  Provider: IIndexedLookupProvider;
-  KeyValues: TStringList;
-  Raised: Boolean;
+  LookupResult: TIndexedLookupResult;
 begin
-  ProviderObject := CreateLookupProvider;
-  Provider := ProviderObject;
-  KeyValues := CreateKeyValues(['alpha']);
+  LookupResult := CreateIndexedLookupResult([]);
+  AssertEquals(Ord(ilrkNotFound), Ord(LookupResult.Kind));
+  AssertEquals(0, Length(LookupResult.CandidateRecordNumbers));
+  ValidateIndexedLookupResult(LookupResult);
+end;
+
+procedure TTestAHW52IndexedLookupProvider.TestOneCandidateClassifiesAsSingle;
+var
+  LookupResult: TIndexedLookupResult;
+begin
+  LookupResult := CreateIndexedLookupResult([17]);
+  AssertEquals(Ord(ilrkSingleCandidate), Ord(LookupResult.Kind));
+  AssertEquals(1, Length(LookupResult.CandidateRecordNumbers));
+  AssertEquals(17, LookupResult.CandidateRecordNumbers[0]);
+  ValidateIndexedLookupResult(LookupResult);
+end;
+
+procedure TTestAHW52IndexedLookupProvider.
+  TestMultipleCandidatesRemainAnOrderedList;
+var
+  LookupResult: TIndexedLookupResult;
+begin
+  LookupResult := CreateIndexedLookupResult([19, 4, 27]);
+  AssertEquals(Ord(ilrkCandidateList), Ord(LookupResult.Kind));
+  AssertEquals(3, Length(LookupResult.CandidateRecordNumbers));
+  AssertEquals('The abstraction preserves provider index order.',
+    19, LookupResult.CandidateRecordNumbers[0]);
+  AssertEquals(4, LookupResult.CandidateRecordNumbers[1]);
+  AssertEquals(27, LookupResult.CandidateRecordNumbers[2]);
+  ValidateIndexedLookupResult(LookupResult);
+end;
+
+procedure TTestAHW52IndexedLookupProvider.TestRejectsEmptyIndexName;
+begin
   try
-    Raised := False;
-    try
-      Provider.Lookup('namgeb', KeyValues);
-    except
-      on E: EInvalidLookupKey do
-        Raised := True;
-    end;
-    AssertTrue('A composite key with the wrong arity must raise an error.',
-      Raised);
-  finally
-    KeyValues.Free;
-    Provider := nil;
+    CreateIndexedLookupRequest(' ', ['Name']);
+    Fail('An empty index name must be rejected.');
+  except
+    on E: EInvalidLookupKey do
+      AssertTrue(E.Message <> '');
   end;
 end;
 
-procedure TTestAHW52IndexedLookupProvider.TestCaseProviderFailurePropagates;
+procedure TTestAHW52IndexedLookupProvider.TestRejectsEmptyKeyPrefix;
+begin
+  try
+    CreateIndexedLookupRequest('geba', []);
+    Fail('An empty key prefix must be rejected.');
+  except
+    on E: EInvalidLookupKey do
+      AssertTrue(E.Message <> '');
+  end;
+end;
+
+procedure TTestAHW52IndexedLookupProvider.TestRejectsInconsistentNotFoundResult;
 var
-  ProviderObject: TSyntheticIndexedLookupProvider;
+  LookupResult: TIndexedLookupResult;
+begin
+  LookupResult.Kind := ilrkNotFound;
+  LookupResult.CandidateRecordNumbers := [9];
+  try
+    ValidateIndexedLookupResult(LookupResult);
+    Fail('A not-found result cannot carry candidates.');
+  except
+    on E: EInvalidLookupResult do
+      AssertTrue(E.Message <> '');
+  end;
+end;
+
+procedure TTestAHW52IndexedLookupProvider.TestRejectsInconsistentSingleResult;
+var
+  LookupResult: TIndexedLookupResult;
+begin
+  LookupResult.Kind := ilrkSingleCandidate;
+  LookupResult.CandidateRecordNumbers := nil;
+  try
+    ValidateIndexedLookupResult(LookupResult);
+    Fail('A single-candidate result must carry exactly one candidate.');
+  except
+    on E: EInvalidLookupResult do
+      AssertTrue(E.Message <> '');
+  end;
+end;
+
+procedure TTestAHW52IndexedLookupProvider.
+  TestRejectsInconsistentCandidateList;
+var
+  LookupResult: TIndexedLookupResult;
+begin
+  LookupResult.Kind := ilrkCandidateList;
+  LookupResult.CandidateRecordNumbers := [9];
+  try
+    ValidateIndexedLookupResult(LookupResult);
+    Fail('A candidate list must contain at least two candidates.');
+  except
+    on E: EInvalidLookupResult do
+      AssertTrue(E.Message <> '');
+  end;
+end;
+
+procedure TTestAHW52IndexedLookupProvider.TestProviderFailurePropagates;
+var
+  ProviderObject: TRecordingLookupProvider;
   Provider: IIndexedLookupProvider;
-  KeyValues: TStringList;
+  Request: TIndexedLookupRequest;
   Raised: Boolean;
 begin
-  ProviderObject := CreateLookupProvider;
+  ProviderObject := TRecordingLookupProvider.Create;
   ProviderObject.FailLookup := True;
   Provider := ProviderObject;
-  KeyValues := CreateKeyValues(['birth-y', 'suffix-y']);
+  Request := CreateIndexedLookupRequest('geba', ['Name', 'Vorname']);
+  Raised := False;
   try
-    Raised := False;
-    try
-      Provider.Lookup('geba', KeyValues);
-    except
-      on E: EInjectedLookupFailure do
-        Raised := True;
-    end;
-    AssertTrue('Provider errors must not be converted into lookup misses.',
-      Raised);
-  finally
-    KeyValues.Free;
-    Provider := nil;
+    Provider.FindCandidates(Request);
+  except
+    on E: EInjectedLookupFailure do
+      Raised := True;
   end;
+  AssertTrue('Provider errors must remain visible.', Raised);
+  Provider := nil;
 end;
 
 initialization

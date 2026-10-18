@@ -16,15 +16,15 @@ type
 implementation
 
 uses
-  Cmp_SQLTable, DBTablesCompatErrors, Forms, StdCtrls, Unit2, Unit30;
+  Cmp_SQLTable, DBTablesCompatErrors, Forms, StdCtrls, GenealogyDataModule, Unit30;
 
 procedure TTestAHW52SourceArchiveForm.
   TestFormShowRejectsUnsupportedFindKeyWithoutOpeningTable;
 var
   sourceForm: TForm30;
   previousSourceForm: TForm30;
-  syntheticDataModule: TDataModule2;
-  previousDataModule: TDataModule2;
+  syntheticDataModule: TGenealogyDataModule;
+  previousDataModule: TGenealogyDataModule;
   table: TSQLTable;
   label2: TLabel;
 begin
@@ -34,7 +34,7 @@ begin
   syntheticDataModule := nil;
   try
     sourceForm := TForm30.CreateNew(nil);
-    syntheticDataModule := TDataModule2.CreateNew(nil);
+    syntheticDataModule := TGenealogyDataModule.CreateNew(nil);
     table := TSQLTable.Create(syntheticDataModule);
     syntheticDataModule.Table11 := table;
 

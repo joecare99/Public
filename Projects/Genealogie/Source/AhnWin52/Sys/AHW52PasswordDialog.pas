@@ -83,6 +83,12 @@ begin
   RequireSession.AddPassword(Edit.Text);
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DD20
+Strings/files/dialog text: ']Í@'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPasswordDialog._PROC_004B147C(Sender : TObject);
 begin
 (*
@@ -132,6 +138,11 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Global state: GlobalVar_0061DD20
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TPasswordDialog._PROC_004B14B8(Sender : TObject);
 begin
 (*

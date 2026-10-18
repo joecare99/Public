@@ -22,7 +22,7 @@ implementation
 
 uses
   ComCtrls, Windows, Forms, Messages, StdCtrls, SysUtils, Unit14, Unit33,
-  Unit38, frmAhnenWinMain;
+  FokoAbbreviationsForm, frmAhnenWinMain;
 
 type
   TPlaceDialogCloseRecorder = class
@@ -88,11 +88,11 @@ procedure TTestAHW52PlaceDialogKeyPress.
 var
   previousMainForm: TForm1;
   previousPlaceForm: TForm33;
-  previousAbbreviationForm: TForm38;
+  previousAbbreviationForm: TFokoAbbreviationsForm;
   mainForm: TForm1;
   globalPlaceForm: TForm33;
   eventReceiver: TForm33;
-  abbreviationForm: TForm38;
+  abbreviationForm: TFokoAbbreviationsForm;
   pageControl: TPageControl;
   initialPage: TTabSheet;
   targetPage: TTabSheet;
@@ -101,16 +101,16 @@ begin
   Application.Initialize;
   previousMainForm := frmAhnenWinMain.Form1;
   previousPlaceForm := Unit33.Form33;
-  previousAbbreviationForm := Unit38.Form38;
+  previousAbbreviationForm := FokoAbbreviationsForm.Form38;
   mainForm := TForm1.CreateNew(nil);
   globalPlaceForm := TForm33.CreateNew(nil);
   eventReceiver := TForm33.CreateNew(nil);
-  abbreviationForm := TForm38.CreateNew(nil);
+  abbreviationForm := TFokoAbbreviationsForm.CreateNew(nil);
   closeRecorder := TPlaceDialogCloseRecorder.Create;
   try
     frmAhnenWinMain.Form1 := mainForm;
     Unit33.Form33 := globalPlaceForm;
-    Unit38.Form38 := abbreviationForm;
+    FokoAbbreviationsForm.Form38 := abbreviationForm;
 
     pageControl := TPageControl.Create(mainForm);
     pageControl.Parent := mainForm;
@@ -136,7 +136,7 @@ begin
   finally
     frmAhnenWinMain.Form1 := previousMainForm;
     Unit33.Form33 := previousPlaceForm;
-    Unit38.Form38 := previousAbbreviationForm;
+    FokoAbbreviationsForm.Form38 := previousAbbreviationForm;
     closeRecorder.Free;
     abbreviationForm.Free;
     eventReceiver.Free;

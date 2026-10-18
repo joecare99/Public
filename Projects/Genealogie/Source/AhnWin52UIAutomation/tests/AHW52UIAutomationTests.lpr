@@ -4,7 +4,9 @@ program AHW52UIAutomationTests;
 
 uses
   consoletestrunner,
-  tst_AHW52UIProfileTests;
+  tst_AHW52UIProfileTests,
+  tst_AHW52UIExperimentTests,
+  tst_AHW52UICloseFlowTests;
 
 var
   TestRunner: TTestRunner;

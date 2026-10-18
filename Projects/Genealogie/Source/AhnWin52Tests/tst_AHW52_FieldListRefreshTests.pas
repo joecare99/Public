@@ -18,7 +18,7 @@ type
 implementation
 
 uses
-  BufDataset, Classes, Controls, DB, Forms, StdCtrls, SysUtils, Unit24;
+  BufDataset, Classes, Controls, DB, Forms, StdCtrls, SysUtils, OrtsfamilienbuchOptionsForm;
 
 type
   TSyntheticValuesDataSet = class(TBufDataset)
@@ -43,15 +43,15 @@ begin
   Result.CreateDataset;
 end;
 
-procedure AddListBox(FieldListForm: TForm24; var ListBox: TListBox);
+procedure AddListBox(FieldListForm: TOrtsfamilienbuchOptionsForm; var ListBox: TListBox);
 begin
   ListBox := TListBox.Create(FieldListForm);
   ListBox.Parent := FieldListForm;
 end;
 
-function CreateFieldListForm: TForm24;
+function CreateFieldListForm: TOrtsfamilienbuchOptionsForm;
 begin
-  Result := TForm24.CreateNew(nil);
+  Result := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
   AddListBox(Result, Result.ListBox1);
   AddListBox(Result, Result.ListBox2);
   AddListBox(Result, Result.ListBox3);
@@ -60,7 +60,7 @@ begin
   AddListBox(Result, Result.ListBox6);
 end;
 
-procedure SeedAllLists(FieldListForm: TForm24);
+procedure SeedAllLists(FieldListForm: TOrtsfamilienbuchOptionsForm);
 begin
   FieldListForm.ListBox1.Items.Add('stale');
   FieldListForm.ListBox2.Items.Add('stale');
@@ -73,7 +73,7 @@ end;
 procedure TTestAHW52FieldListRefresh.
   TestPositiveValuesPopulateListsAndClearStaleItems;
 var
-  fieldListForm: TForm24;
+  fieldListForm: TOrtsfamilienbuchOptionsForm;
   nameDataSet: TSyntheticValuesDataSet;
   locationDataSet: TSyntheticValuesDataSet;
   houseNameDataSet: TSyntheticValuesDataSet;
@@ -122,7 +122,7 @@ end;
 
 procedure TTestAHW52FieldListRefresh.TestEmptyDatasetsProduceEmptyLists;
 var
-  fieldListForm: TForm24;
+  fieldListForm: TOrtsfamilienbuchOptionsForm;
   nameDataSet: TSyntheticValuesDataSet;
   locationDataSet: TSyntheticValuesDataSet;
   houseNameDataSet: TSyntheticValuesDataSet;
@@ -158,7 +158,7 @@ end;
 
 procedure TTestAHW52FieldListRefresh.TestInvalidIntegerValuePropagatesInOrder;
 var
-  fieldListForm: TForm24;
+  fieldListForm: TOrtsfamilienbuchOptionsForm;
   nameDataSet: TSyntheticValuesDataSet;
   locationDataSet: TSyntheticValuesDataSet;
   houseNameDataSet: TSyntheticValuesDataSet;

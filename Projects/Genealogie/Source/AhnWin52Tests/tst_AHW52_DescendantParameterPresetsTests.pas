@@ -30,7 +30,7 @@ type
 implementation
 
 uses
-  Forms, StdCtrls, SysUtils, Unit12;
+  Forms, StdCtrls, SysUtils, AncestorChartOptionsForm;
 
 function TTestAHW52DescendantParameterPresets.CreateDialogWithCheckBoxes:
   TForm19;
@@ -244,8 +244,8 @@ var
   dialog: TForm19;
   previousMode: string;
 begin
-  previousMode := Unit12.GlobalVar_0253592C;
-  Unit12.GlobalVar_0253592C := 'Synthetic non-Nach mode';
+  previousMode := AncestorChartOptionsForm.GlobalVar_0253592C;
+  AncestorChartOptionsForm.GlobalVar_0253592C := 'Synthetic non-Nach mode';
   dialog := CreateDialogWithCheckBoxes;
   try
     dialog.ComboBox1 := TComboBox.Create(dialog);
@@ -258,7 +258,7 @@ begin
     AssertFalse(dialog.CheckBox7.Checked);
     AssertFalse(dialog.CheckBox8.Checked);
   finally
-    Unit12.GlobalVar_0253592C := previousMode;
+    AncestorChartOptionsForm.GlobalVar_0253592C := previousMode;
     dialog.Free;
   end;
 end;
@@ -269,8 +269,8 @@ var
   dialog: TForm19;
   previousMode: string;
 begin
-  previousMode := Unit12.GlobalVar_0253592C;
-  Unit12.GlobalVar_0253592C := 'Synthetic non-Nach mode';
+  previousMode := AncestorChartOptionsForm.GlobalVar_0253592C;
+  AncestorChartOptionsForm.GlobalVar_0253592C := 'Synthetic non-Nach mode';
   dialog := CreateDialogWithCheckBoxes;
   try
     dialog.ComboBox1 := TComboBox.Create(dialog);
@@ -283,7 +283,7 @@ begin
     AssertTrue(dialog.CheckBox7.Checked);
     AssertTrue(dialog.CheckBox8.Checked);
   finally
-    Unit12.GlobalVar_0253592C := previousMode;
+    AncestorChartOptionsForm.GlobalVar_0253592C := previousMode;
     dialog.Free;
   end;
 end;

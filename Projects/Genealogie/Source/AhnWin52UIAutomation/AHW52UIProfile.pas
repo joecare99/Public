@@ -28,11 +28,13 @@ type
   end;
 
   TUIControlInfoArray = array of TUIControlInfo;
+  TUIHandleArray = array of QWord;
 
   TWindowProfile = record
     ProcessId: LongWord;
     ExecutablePath: UTF8String;
     ExecutableSha256: UTF8String;
+    ForegroundWindowHandle: QWord;
     Controls: TUIControlInfoArray;
   end;
 
@@ -41,6 +43,11 @@ type
     NameEditHandle: QWord;
     GivenNameEditHandle: QWord;
     SearchButtonHandle: QWord;
+  end;
+
+  TMainWindowTargets = record
+    MainWindowHandle: QWord;
+    PageControlHandle: QWord;
   end;
 
   EUIProfileError = class(Exception);
@@ -53,6 +60,21 @@ procedure ValidateExecutableIdentity(
 procedure ValidatePersonSearchProfile(
   const CurrentProfile, ExpectedProfile: TWindowProfile;
   out Targets: TPersonSearchTargets);
+procedure ValidateMetadataOnlyProfile(const Profile: TWindowProfile);
+procedure ValidateMainWindowProfile(
+  const CurrentProfile, ExpectedProfile: TWindowProfile;
+  out Targets: TMainWindowTargets);
+procedure ValidateCloseMainWindowProfile(
+  const CurrentProfile, ExpectedProfile: TWindowProfile;
+  out Targets: TMainWindowTargets);
+procedure ValidateNextTabProfile(
+  const CurrentProfile, ExpectedProfile: TWindowProfile;
+  out Targets: TMainWindowTargets);
+function NextNativeTabIndex(
+  CurrentTabIndex, TabCount: LongInt): LongInt;
+procedure ValidateReadableFieldTargets(
+  const CurrentProfile, ExpectedProfile: TWindowProfile;
+  const Handles: array of QWord);
 function ProfileToJSON(const Profile: TWindowProfile): UTF8String;
 function ProfileFromJSON(const JSON: UTF8String): TWindowProfile;
 
@@ -188,7 +210,6 @@ begin
     (CurrentControl.Width = ExpectedControl.Width) and
     (CurrentControl.Height = ExpectedControl.Height) and
     (CurrentControl.ControlId = ExpectedControl.ControlId) and
-    (CurrentControl.Ordinal = ExpectedControl.Ordinal) and
     (CurrentControl.OwnerHandle = ExpectedControl.OwnerHandle) and
     (CurrentControl.ProcessId = ExpectedControl.ProcessId) and
     (CurrentControl.IsTopLevel = ExpectedControl.IsTopLevel) and
@@ -207,6 +228,309 @@ begin
     if Profile.Controls[I].Handle = Handle then
       Exit(I);
   Result := -1;
+end;
+
+procedure ValidateMatchingMetadataProfiles(
+  const CurrentProfile, ExpectedProfile: TWindowProfile);
+var
+  CurrentIndex: LongInt;
+  I: LongInt;
+begin
+  ValidateMetadataOnlyProfile(ExpectedProfile);
+  ValidateMetadataOnlyProfile(CurrentProfile);
+  if CurrentProfile.ProcessId <> ExpectedProfile.ProcessId then
+    raise EUIProfileError.Create(
+      'The current process differs from the approved metadata profile.');
+  if Length(CurrentProfile.Controls) <> Length(ExpectedProfile.Controls) then
+    raise EUIProfileError.Create(
+      'The current window hierarchy differs from the approved metadata profile.');
+  for I := 0 to High(ExpectedProfile.Controls) do
+  begin
+    CurrentIndex := FindByHandle(CurrentProfile,
+      ExpectedProfile.Controls[I].Handle);
+    if (CurrentIndex < 0) or
+       not SameControlStructure(CurrentProfile.Controls[CurrentIndex],
+         ExpectedProfile.Controls[I], False) then
+      raise EUIProfileError.Create(
+        'The current window hierarchy differs from the approved metadata profile.');
+  end;
+end;
+
+procedure ValidateMainWindowProfile(
+  const CurrentProfile, ExpectedProfile: TWindowProfile;
+  out Targets: TMainWindowTargets);
+var
+  I: LongInt;
+  MainIndex: LongInt;
+  Matches: LongInt;
+begin
+  ValidateMatchingMetadataProfiles(CurrentProfile, ExpectedProfile);
+  MainIndex := -1;
+  Matches := 0;
+  for I := 0 to High(CurrentProfile.Controls) do
+    if CurrentProfile.Controls[I].IsTopLevel and
+       CurrentProfile.Controls[I].Visible and
+       SameText(CurrentProfile.Controls[I].ClassName, MainWindowClass) then
+    begin
+      MainIndex := I;
+      Inc(Matches);
+    end;
+  if Matches <> 1 then
+    raise EUIProfileError.Create(
+      'Exactly one visible AHNENWIN main window is required.');
+  if not CurrentProfile.Controls[MainIndex].Enabled then
+    raise EUIProfileError.Create('The AHNENWIN main window is disabled.');
+  Targets.MainWindowHandle := CurrentProfile.Controls[MainIndex].Handle;
+  Targets.PageControlHandle := 0;
+end;
+
+procedure ValidateCloseMainWindowProfile(
+  const CurrentProfile, ExpectedProfile: TWindowProfile;
+  out Targets: TMainWindowTargets);
+var
+  CurrentMainIndex: LongInt;
+  ExpectedMainIndex: LongInt;
+  Matches: LongInt;
+  I: LongInt;
+  CurrentMain: TUIControlInfo;
+  ExpectedMain: TUIControlInfo;
+begin
+  ValidateMetadataOnlyProfile(CurrentProfile);
+  ValidateMetadataOnlyProfile(ExpectedProfile);
+  if CurrentProfile.ProcessId <> ExpectedProfile.ProcessId then
+    raise EUIProfileError.Create(
+      'The current process differs from the approved metadata profile.');
+  CurrentMainIndex := -1;
+  ExpectedMainIndex := -1;
+  Matches := 0;
+  for I := 0 to High(CurrentProfile.Controls) do
+    if CurrentProfile.Controls[I].IsTopLevel and
+       CurrentProfile.Controls[I].Visible and
+       SameText(CurrentProfile.Controls[I].ClassName, MainWindowClass) then
+    begin
+      CurrentMainIndex := I;
+      Inc(Matches);
+    end;
+  if Matches <> 1 then
+    raise EUIProfileError.Create(
+      'Exactly one visible AHNENWIN main window is required for close.');
+  Matches := 0;
+  for I := 0 to High(ExpectedProfile.Controls) do
+    if ExpectedProfile.Controls[I].Handle =
+       CurrentProfile.Controls[CurrentMainIndex].Handle then
+    begin
+      ExpectedMainIndex := I;
+      Inc(Matches);
+    end;
+  if (Matches <> 1) or
+     not ExpectedProfile.Controls[ExpectedMainIndex].IsTopLevel or
+     not ExpectedProfile.Controls[ExpectedMainIndex].Visible or
+     not SameText(ExpectedProfile.Controls[ExpectedMainIndex].ClassName,
+       MainWindowClass) then
+    raise EUIProfileError.Create(
+      'The current main window differs from the approved metadata profile.');
+
+  CurrentMain := CurrentProfile.Controls[CurrentMainIndex];
+  ExpectedMain := ExpectedProfile.Controls[ExpectedMainIndex];
+  CurrentMain.Enabled := ExpectedMain.Enabled;
+  if not SameControlStructure(CurrentMain, ExpectedMain, True) then
+    raise EUIProfileError.Create(
+      'The current main window differs from the approved metadata profile.');
+  Targets.MainWindowHandle := CurrentMain.Handle;
+  Targets.PageControlHandle := 0;
+end;
+
+procedure ValidateNextTabProfile(
+  const CurrentProfile, ExpectedProfile: TWindowProfile;
+  out Targets: TMainWindowTargets);
+var
+  I: LongInt;
+  MainIndex: LongInt;
+  PageControlIndex: LongInt;
+  MainCount: LongInt;
+  PageControlCount: LongInt;
+  TabSheetCount: LongInt;
+  VisibleTabCount: LongInt;
+begin
+  ValidateMainWindowProfile(CurrentProfile, ExpectedProfile, Targets);
+  MainIndex := FindByHandle(CurrentProfile, Targets.MainWindowHandle);
+  PageControlIndex := -1;
+  MainCount := 0;
+  PageControlCount := 0;
+  for I := 0 to High(CurrentProfile.Controls) do
+  begin
+    if CurrentProfile.Controls[I].IsTopLevel and
+       CurrentProfile.Controls[I].Visible and
+       SameText(CurrentProfile.Controls[I].ClassName, MainWindowClass) then
+      Inc(MainCount);
+    if (CurrentProfile.Controls[I].ParentHandle =
+        CurrentProfile.Controls[MainIndex].Handle) and
+       CurrentProfile.Controls[I].Visible and
+       SameText(CurrentProfile.Controls[I].ClassName, 'TPageControl') then
+    begin
+      PageControlIndex := I;
+      Inc(PageControlCount);
+    end;
+  end;
+  if (MainCount <> 1) or (PageControlCount <> 1) then
+    raise EUIProfileError.Create(
+      'The expected main form and its single visible page control are required.');
+
+  TabSheetCount := 0;
+  VisibleTabCount := 0;
+  for I := 0 to High(CurrentProfile.Controls) do
+    if (CurrentProfile.Controls[I].ParentHandle =
+        CurrentProfile.Controls[PageControlIndex].Handle) and
+       SameText(CurrentProfile.Controls[I].ClassName, 'TTabSheet') then
+    begin
+      Inc(TabSheetCount);
+      if CurrentProfile.Controls[I].Visible then
+        Inc(VisibleTabCount);
+    end;
+  if TabSheetCount < 2 then
+    raise EUIProfileError.Create(
+      'At least two page sheets are required for a next-tab transition.');
+
+  if VisibleTabCount <> 1 then
+    raise EUIProfileError.Create(
+      'The next-tab action requires exactly one active page sheet.');
+  if not CurrentProfile.Controls[PageControlIndex].Enabled then
+    raise EUIProfileError.Create('The main page control is disabled.');
+
+  Targets.PageControlHandle :=
+    CurrentProfile.Controls[PageControlIndex].Handle;
+end;
+
+function NextNativeTabIndex(
+  CurrentTabIndex, TabCount: LongInt): LongInt;
+begin
+  if (TabCount < 1) or (CurrentTabIndex < 0) or
+     (CurrentTabIndex >= TabCount) then
+    raise EUIProfileError.Create('The native page-control selection is invalid.');
+  if CurrentTabIndex = TabCount - 1 then
+    raise EUIProfileError.Create(
+      'The active page is already the last tab; wrapping to the first tab is forbidden.');
+  Result := CurrentTabIndex + 1;
+end;
+
+function IsReadableFieldClass(const ClassName: UTF8String): Boolean;
+begin
+  Result := SameText(ClassName, 'Edit') or
+    SameText(ClassName, 'TEdit') or
+    SameText(ClassName, 'TDBEdit') or
+    SameText(ClassName, 'TMaskEdit') or
+    SameText(ClassName, 'TDBMaskEdit') or
+    SameText(ClassName, 'ComboBox') or
+    SameText(ClassName, 'TComboBox') or
+    SameText(ClassName, 'TDBComboBox');
+end;
+
+procedure ValidateMetadataOnlyProfile(const Profile: TWindowProfile);
+var
+  I: LongInt;
+  J: LongInt;
+begin
+  ValidateExecutableIdentity(Profile.ExecutablePath, Profile.ExecutableSha256);
+  if Profile.ProcessId = 0 then
+    raise EUIProfileError.Create('The metadata profile has no process ID.');
+  if Length(Profile.Controls) = 0 then
+    raise EUIProfileError.Create('The metadata profile contains no windows.');
+  for I := 0 to High(Profile.Controls) do
+  begin
+    if Profile.Controls[I].Text <> '' then
+      raise EUIProfileError.Create(
+        'Field reads require a metadata-only profile with no captured control text.');
+    if (Profile.Controls[I].Handle = 0) or
+       (Profile.Controls[I].ProcessId <> Profile.ProcessId) then
+      raise EUIProfileError.Create(
+        'The metadata profile contains an invalid or foreign window handle.');
+    for J := I + 1 to High(Profile.Controls) do
+      if Profile.Controls[I].Handle = Profile.Controls[J].Handle then
+        raise EUIProfileError.Create(
+          'The metadata profile contains a duplicate window handle.');
+  end;
+end;
+
+procedure ValidateReadableFieldTargets(
+  const CurrentProfile, ExpectedProfile: TWindowProfile;
+  const Handles: array of QWord);
+var
+  CurrentIndex: LongInt;
+  ExpectedIndex: LongInt;
+  ParentIndex: LongInt;
+  RootIndex: LongInt;
+  I: LongInt;
+begin
+  ValidateMetadataOnlyProfile(ExpectedProfile);
+  ValidateExecutableIdentity(CurrentProfile.ExecutablePath,
+    CurrentProfile.ExecutableSha256);
+  if (CurrentProfile.ProcessId = 0) or
+     (CurrentProfile.ProcessId <> ExpectedProfile.ProcessId) then
+    raise EUIProfileError.Create(
+      'The current process differs from the metadata profile.');
+  if Length(Handles) = 0 then
+    raise EUIProfileError.Create('At least one field handle must be selected.');
+  if Length(Handles) > 16 then
+    raise EUIProfileError.Create('At most 16 field handles may be read at once.');
+
+  for I := Low(Handles) to High(Handles) do
+  begin
+    if Handles[I] = 0 then
+      raise EUIProfileError.Create('A selected field handle is invalid.');
+    if FindByHandle(CurrentProfile, Handles[I]) < 0 then
+      raise EUIProfileError.Create(
+        'A selected field is not present in the current target process.');
+    if FindByHandle(ExpectedProfile, Handles[I]) < 0 then
+      raise EUIProfileError.Create(
+        'A selected field is not present in the saved metadata profile.');
+    for RootIndex := Low(Handles) to I - 1 do
+      if Handles[RootIndex] = Handles[I] then
+        raise EUIProfileError.Create(
+          'A field handle was selected more than once.');
+
+    CurrentIndex := FindByHandle(CurrentProfile, Handles[I]);
+    ExpectedIndex := FindByHandle(ExpectedProfile, Handles[I]);
+    if CurrentProfile.Controls[CurrentIndex].ProcessId <>
+       CurrentProfile.ProcessId then
+      raise EUIProfileError.Create(
+        'A selected field belongs to another process.');
+    if not CurrentProfile.Controls[CurrentIndex].Visible or
+       not ExpectedProfile.Controls[ExpectedIndex].Visible then
+      raise EUIProfileError.Create('A selected field is not visible.');
+    if CurrentProfile.Controls[CurrentIndex].IsPassword or
+       ExpectedProfile.Controls[ExpectedIndex].IsPassword then
+      raise EUIProfileError.Create('Password controls cannot be read.');
+    if CurrentProfile.Controls[CurrentIndex].IsTopLevel or
+       ExpectedProfile.Controls[ExpectedIndex].IsTopLevel then
+      raise EUIProfileError.Create(
+        'Only explicit text-field controls may be read.');
+    if not IsReadableFieldClass(CurrentProfile.Controls[CurrentIndex].ClassName) or
+       not IsReadableFieldClass(ExpectedProfile.Controls[ExpectedIndex].ClassName) then
+      raise EUIProfileError.CreateFmt(
+        'Window class "%s" is not an approved field control.',
+        [CurrentProfile.Controls[CurrentIndex].ClassName]);
+    if not SameControlStructure(CurrentProfile.Controls[CurrentIndex],
+      ExpectedProfile.Controls[ExpectedIndex], True) then
+      raise EUIProfileError.Create(
+        'A selected field no longer matches the saved metadata profile.');
+
+    ParentIndex := FindByHandle(CurrentProfile,
+      CurrentProfile.Controls[CurrentIndex].ParentHandle);
+    if (ParentIndex < 0) or
+       (CurrentProfile.Controls[ParentIndex].ProcessId <>
+        CurrentProfile.ProcessId) then
+      raise EUIProfileError.Create(
+        'A selected field has no validated parent in the target process.');
+    RootIndex := ParentIndex;
+    while not CurrentProfile.Controls[RootIndex].IsTopLevel do
+    begin
+      RootIndex := FindByHandle(CurrentProfile,
+        CurrentProfile.Controls[RootIndex].ParentHandle);
+      if RootIndex < 0 then
+        raise EUIProfileError.Create(
+          'A selected field is not beneath a validated target window.');
+    end;
+  end;
 end;
 
 procedure ValidatePersonSearchProfile(
@@ -452,12 +776,14 @@ var
 begin
   RootObject := TJSONObject.Create;
   try
-    RootObject.Add('schemaVersion', TJSONIntegerNumber.Create(1));
+    RootObject.Add('schemaVersion', TJSONIntegerNumber.Create(2));
 
     ProcessObject := TJSONObject.Create;
     ProcessObject.Add('id', TJSONInt64Number.Create(Profile.ProcessId));
     ProcessObject.Add('path', Profile.ExecutablePath);
     ProcessObject.Add('sha256', Profile.ExecutableSha256);
+    ProcessObject.Add('foregroundWindowHandle',
+      TJSONInt64Number.Create(Int64(Profile.ForegroundWindowHandle)));
     RootObject.Add('process', ProcessObject);
 
     ControlsArray := TJSONArray.Create;
@@ -515,7 +841,8 @@ begin
     if not (RootData is TJSONObject) then
       raise EUIProfileError.Create('UI profile root must be a JSON object.');
     RootObject := TJSONObject(RootData);
-    if RequiredJSONValue(RootObject, 'schemaVersion').AsInteger <> 1 then
+    Value := RequiredJSONValue(RootObject, 'schemaVersion');
+    if (Value.JSONType <> jtNumber) or not (Value.AsInteger in [1, 2]) then
       raise EUIProfileError.Create('Unsupported UI profile schema version.');
 
     Value := RequiredJSONValue(RootObject, 'process');
@@ -525,6 +852,8 @@ begin
     Result.ProcessId := ProcessObject.Get('id', Int64(0));
     Result.ExecutablePath := ProcessObject.Get('path', '');
     Result.ExecutableSha256 := ProcessObject.Get('sha256', '');
+    Result.ForegroundWindowHandle := ProcessObject.Get(
+      'foregroundWindowHandle', Int64(0));
     if (Result.ProcessId = 0) or (Result.ExecutablePath = '') or
        (Result.ExecutableSha256 = '') then
       raise EUIProfileError.Create('UI profile process identity is incomplete.');

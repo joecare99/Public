@@ -30,6 +30,7 @@ type
     procedure SetUp; override;
     procedure TearDown; override;
   published
+    procedure TestCloseResetsModalResult;
     procedure TestUnsupportedPrintRaisesBeforeAccessingControls;
     procedure TestVisibilityMatchesDuringPrintAndIsRestored;
   end;
@@ -40,6 +41,20 @@ uses
   GregorianCalendar,
   GregorianCalendarPrintCompatibilityError,
   GregorianCalendarPrintWorkflow;
+
+procedure TTestAHW52GregorianCalendarPrint.TestCloseResetsModalResult;
+var
+  calendarForm: TGregorianCalendarForm;
+begin
+  calendarForm := TGregorianCalendarForm.CreateNew(nil);
+  try
+    calendarForm.ModalResult := mrOk;
+    calendarForm.FormClose(calendarForm);
+    AssertEquals(Ord(mrNone), Ord(calendarForm.ModalResult));
+  finally
+    calendarForm.Free;
+  end;
+end;
 
 procedure TTestAHW52GregorianCalendarPrint.
   TestUnsupportedPrintRaisesBeforeAccessingControls;

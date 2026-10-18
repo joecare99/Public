@@ -17,6 +17,7 @@ uses
 
 type
   TUnit16ZoomAction = (uzaNoChange, uzaSet100Percent, uzaFitPage, uzaFitWidth);
+  TUnit16ExportFileEvent = procedure(const FileName: string) of object;
 
 function TryGetPreviousPageNumber(CurrentPage: Integer;
   out PageNumber: Integer): Boolean;
@@ -28,6 +29,8 @@ function AdvanceUnit16ReportPage(var CurrentPage: Integer;
   PageCount: Integer): Boolean;
 procedure ConfigureUnit16SaveDialog(SaveDialog: TSaveDialog);
 function HasUnit16ExportFileName(const FileName: string): Boolean;
+function ExecuteUnit16SaveDialog(SaveDialog: TSaveDialog;
+  ExportFile: TUnit16ExportFileEvent): Boolean;
 procedure ConfigureUnit16PrintDialog(PrintDialog: TPrintDialog;
   PageCount: Integer);
 function ResolveUnit16ZoomAction(ComboBoxIndex: Integer): TUnit16ZoomAction;
@@ -76,13 +79,33 @@ end;
 
 procedure ConfigureUnit16SaveDialog(SaveDialog: TSaveDialog);
 begin
-  SaveDialog.Filter := 'Text-Dateien (*.txt)|*.txt';
+  SaveDialog.Filter := 'Text-Dateien ( *.txt)|*.txt';
   SaveDialog.DefaultExt := 'txt';
 end;
 
 function HasUnit16ExportFileName(const FileName: string): Boolean;
 begin
   Result := Trim(FileName) <> '';
+end;
+
+function ExecuteUnit16SaveDialog(SaveDialog: TSaveDialog;
+  ExportFile: TUnit16ExportFileEvent): Boolean;
+begin
+  if SaveDialog = nil then
+    raise EArgumentNilException.Create('SaveDialog');
+  if not Assigned(ExportFile) then
+    raise EArgumentNilException.Create('ExportFile');
+
+  ConfigureUnit16SaveDialog(SaveDialog);
+  Result := SaveDialog.Execute;
+  if not Result then
+    Exit;
+  if not HasUnit16ExportFileName(SaveDialog.FileName) then
+  begin
+    Result := False;
+    Exit;
+  end;
+  ExportFile(SaveDialog.FileName);
 end;
 
 procedure ConfigureUnit16PrintDialog(PrintDialog: TPrintDialog;

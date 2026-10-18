@@ -1,0 +1,16 @@
+object Form25: TTwoColumnA4ReportForm
+  Left = 192
+  Height = 582
+  Top = 114
+  Width = 796
+  BorderStyle = bsSingle
+  Caption = 'Form25'
+  ClientHeight = 582
+  ClientWidth = 796
+  Color = clBtnFace
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Position = poDesigned
+  LCLVersion = '2.2.6.0'
+end

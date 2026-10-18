@@ -38,14 +38,14 @@ type
 implementation
 
 uses
-  Controls, Forms, StdCtrls, SysUtils, Unit24;
+  Controls, Forms, StdCtrls, SysUtils, OrtsfamilienbuchOptionsForm;
 
 procedure TTestAHW52FieldListCounters.
   TestIncrementPreservesStringsWhenCounterRemainsNonzero;
 var
-  fieldListForm: TForm24;
+  fieldListForm: TOrtsfamilienbuchOptionsForm;
 begin
-  fieldListForm := TForm24.CreateNew(nil);
+  fieldListForm := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
   try
     GlobalVar_0061E0D4 := 3;
     GlobalVar_0061E0D0 := 'First synthetic field';
@@ -67,9 +67,9 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestIncrementClearsStringsWhenCounterBecomesZero;
 var
-  fieldListForm: TForm24;
+  fieldListForm: TOrtsfamilienbuchOptionsForm;
 begin
-  fieldListForm := TForm24.CreateNew(nil);
+  fieldListForm := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
   try
     GlobalVar_0061E0D4 := -1;
     GlobalVar_0061E0D0 := 'First synthetic field';
@@ -90,9 +90,9 @@ end;
 
 procedure TTestAHW52FieldListCounters.TestDecrement;
 var
-  fieldListForm: TForm24;
+  fieldListForm: TOrtsfamilienbuchOptionsForm;
 begin
-  fieldListForm := TForm24.CreateNew(nil);
+  fieldListForm := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
   try
     GlobalVar_0061E0D4 := 3;
 
@@ -110,18 +110,18 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestCancelSetsSentinelAndGlobalModalResult;
 var
-  fieldListForm: TForm24;
-  globalDialog: TForm24;
-  previousDialog: TForm24;
+  fieldListForm: TOrtsfamilienbuchOptionsForm;
+  globalDialog: TOrtsfamilienbuchOptionsForm;
+  previousDialog: TOrtsfamilienbuchOptionsForm;
   previousSentinel: string;
 begin
-  fieldListForm := TForm24.CreateNew(nil);
+  fieldListForm := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
   globalDialog := nil;
-  previousDialog := Unit24.Form24;
+  previousDialog := OrtsfamilienbuchOptionsForm.Form24;
   previousSentinel := GlobalVar_02535B50;
   try
-    globalDialog := TForm24.CreateNew(nil);
-    Unit24.Form24 := globalDialog;
+    globalDialog := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+    OrtsfamilienbuchOptionsForm.Form24 := globalDialog;
     GlobalVar_02535B50 := 'previous value';
 
     fieldListForm.SpeedButton2Click(fieldListForm);
@@ -131,7 +131,7 @@ begin
     AssertEquals(mrNone, fieldListForm.ModalResult);
   finally
     GlobalVar_02535B50 := previousSentinel;
-    Unit24.Form24 := previousDialog;
+    OrtsfamilienbuchOptionsForm.Form24 := previousDialog;
     globalDialog.Free;
     fieldListForm.Free;
   end;
@@ -140,14 +140,14 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestPrintButtonUsesGlobalModalTargetWhenListsAreSelected;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
   previousSentinel: string;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   previousSentinel := GlobalVar_02535B50;
   try
     receiver.ListBox3 := TListBox.Create(receiver);
@@ -155,7 +155,7 @@ begin
     receiver.ListBox6 := TListBox.Create(receiver);
     receiver.ListBox6.Items.Add('Selected synthetic farm name');
     target.ModalResult := mrNone;
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
     GlobalVar_02535B50 := '';
 
     receiver.SpeedButton1Click(nil);
@@ -164,7 +164,7 @@ begin
     AssertEquals(mrCancel, target.ModalResult);
     AssertEquals(mrNone, receiver.ModalResult);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     GlobalVar_02535B50 := previousSentinel;
     receiver.Free;
     target.Free;
@@ -174,13 +174,13 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestListBox3DoubleClickDeletesSelectedItemFromGlobalForm;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   try
     receiver.ListBox3 := TListBox.Create(receiver);
     target.ListBox3 := TListBox.Create(target);
@@ -188,7 +188,7 @@ begin
     target.ListBox3.Items.Add('Selected field');
     target.ListBox3.Items.Add('Last retained field');
     target.ListBox3.ItemIndex := 1;
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
 
     receiver.ListBox3DblClick(receiver.ListBox3);
 
@@ -201,7 +201,7 @@ begin
     AssertEquals('The receiver list should not be modified.',
       0, receiver.ListBox3.Items.Count);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     receiver.Free;
     target.Free;
   end;
@@ -210,13 +210,13 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestListBox1DoubleClickAddsSelectedItemToGlobalTargetList;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   try
     receiver.ListBox1 := TListBox.Create(receiver);
     receiver.ListBox3 := TListBox.Create(receiver);
@@ -226,7 +226,7 @@ begin
     target.ListBox1.Items.Add('Selected field');
     target.ListBox1.ItemIndex := 1;
     target.ListBox3.Items.Add('Existing target field');
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
 
     receiver.ListBox1DblClick(receiver.ListBox1);
 
@@ -236,7 +236,7 @@ begin
     AssertEquals(2, target.ListBox1.Items.Count);
     AssertEquals(0, receiver.ListBox3.Items.Count);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     receiver.Free;
     target.Free;
   end;
@@ -245,13 +245,13 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestListBox2DoubleClickAddsSelectedItemToGlobalTargetList;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   try
     receiver.ListBox2 := TListBox.Create(receiver);
     receiver.ListBox4 := TListBox.Create(receiver);
@@ -261,7 +261,7 @@ begin
     target.ListBox2.Items.Add('Selected profession');
     target.ListBox2.ItemIndex := 1;
     target.ListBox4.Items.Add('Existing target profession');
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
 
     receiver.ListBox2DblClick(receiver.ListBox2);
 
@@ -271,7 +271,7 @@ begin
     AssertEquals(2, target.ListBox2.Items.Count);
     AssertEquals(0, receiver.ListBox4.Items.Count);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     receiver.Free;
     target.Free;
   end;
@@ -280,13 +280,13 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestListBox4DoubleClickDeletesSelectedItemFromGlobalList;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   try
     receiver.ListBox6 := TListBox.Create(receiver);
     receiver.ListBox6.Items.Add('Receiver-only item');
@@ -295,7 +295,7 @@ begin
     target.ListBox4.Items.Add('Selected profession');
     target.ListBox4.Items.Add('Last retained profession');
     target.ListBox4.ItemIndex := 1;
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
 
     receiver.ListBox4DblClick(receiver.ListBox6);
 
@@ -305,7 +305,7 @@ begin
     AssertEquals(1, receiver.ListBox6.Items.Count);
     AssertEquals('Receiver-only item', receiver.ListBox6.Items[0]);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     receiver.Free;
     target.Free;
   end;
@@ -314,13 +314,13 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestListBox5DoubleClickAddsOneHofnameAndSelectsRadioMode;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   try
     receiver.RadioButton1 := TRadioButton.Create(receiver);
     receiver.RadioButton2 := TRadioButton.Create(receiver);
@@ -335,7 +335,7 @@ begin
     target.ListBox6 := TListBox.Create(target);
     target.ListBox5.Items.Add('Selected synthetic Hofname');
     target.ListBox5.ItemIndex := 0;
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
 
     receiver.ListBox5DblClick(receiver.ListBox5);
 
@@ -347,7 +347,7 @@ begin
     AssertFalse(receiver.RadioButton3.Enabled);
     AssertEquals(0, receiver.ListBox6.Items.Count);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     receiver.Free;
     target.Free;
   end;
@@ -356,13 +356,13 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestHofnameListButtonAddsSelectedItemAndSetsRadioMode;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   try
     receiver.RadioButton1 := TRadioButton.Create(receiver);
     receiver.RadioButton2 := TRadioButton.Create(receiver);
@@ -373,7 +373,7 @@ begin
     target.ListBox6 := TListBox.Create(target);
     target.ListBox5.Items.Add('Selected button Hofname');
     target.ListBox5.ItemIndex := 0;
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
 
     receiver.Button1Click(nil);
 
@@ -385,7 +385,7 @@ begin
     AssertFalse(receiver.RadioButton3.Enabled);
     AssertEquals(0, receiver.ListBox6.Items.Count);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     receiver.Free;
     target.Free;
   end;
@@ -394,13 +394,13 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestHofnameListButtonDeletesSelectionAndReenablesRadioModes;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   try
     receiver.RadioButton1 := TRadioButton.Create(receiver);
     receiver.RadioButton3 := TRadioButton.Create(receiver);
@@ -409,7 +409,7 @@ begin
     target.ListBox6 := TListBox.Create(target);
     target.ListBox6.Items.Add('Selected synthetic Hofname');
     target.ListBox6.ItemIndex := 0;
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
 
     receiver.Button8Click(nil);
 
@@ -430,7 +430,7 @@ begin
     AssertFalse(receiver.RadioButton1.Enabled);
     AssertFalse(receiver.RadioButton3.Enabled);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     receiver.Free;
     target.Free;
   end;
@@ -439,13 +439,13 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestHofnameListButtonClearsTargetAndReenablesRadioModes;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   try
     receiver.RadioButton1 := TRadioButton.Create(receiver);
     receiver.RadioButton3 := TRadioButton.Create(receiver);
@@ -454,7 +454,7 @@ begin
     target.ListBox6 := TListBox.Create(target);
     target.ListBox6.Items.Add('First synthetic Hofname');
     target.ListBox6.Items.Add('Second synthetic Hofname');
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
 
     receiver.Button10Click(nil);
 
@@ -462,7 +462,7 @@ begin
     AssertTrue(receiver.RadioButton1.Enabled);
     AssertTrue(receiver.RadioButton3.Enabled);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     receiver.Free;
     target.Free;
   end;
@@ -471,13 +471,13 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestButton2AddsSelectedFirstListItemToGlobalThirdList;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   try
     receiver.ListBox3 := TListBox.Create(receiver);
     receiver.ListBox3.Items.Add('Receiver-only target');
@@ -487,7 +487,7 @@ begin
     target.ListBox1.Items.Add('Selected first-list item');
     target.ListBox1.ItemIndex := 1;
     target.ListBox3.Items.Add('Existing third-list item');
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
 
     receiver.Button2Click(nil);
 
@@ -498,7 +498,7 @@ begin
     AssertEquals(1, receiver.ListBox3.Items.Count);
     AssertEquals('Receiver-only target', receiver.ListBox3.Items[0]);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     receiver.Free;
     target.Free;
   end;
@@ -507,13 +507,13 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestButton3AddsSelectedSecondListItemToGlobalFourthList;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   try
     receiver.ListBox4 := TListBox.Create(receiver);
     receiver.ListBox4.Items.Add('Receiver-only profession');
@@ -523,7 +523,7 @@ begin
     target.ListBox2.Items.Add('Selected second-list item');
     target.ListBox2.ItemIndex := 1;
     target.ListBox4.Items.Add('Existing fourth-list item');
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
 
     receiver.Button3Click(nil);
 
@@ -534,7 +534,7 @@ begin
     AssertEquals(1, receiver.ListBox4.Items.Count);
     AssertEquals('Receiver-only profession', receiver.ListBox4.Items[0]);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     receiver.Free;
     target.Free;
   end;
@@ -543,13 +543,13 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestButton4DeletesSelectedGlobalThirdListItem;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   try
     receiver.ListBox3 := TListBox.Create(receiver);
     receiver.ListBox3.Items.Add('Receiver-only item');
@@ -557,7 +557,7 @@ begin
     target.ListBox3.Items.Add('Retained third-list item');
     target.ListBox3.Items.Add('Selected third-list item');
     target.ListBox3.ItemIndex := 1;
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
 
     receiver.Button4Click(nil);
 
@@ -565,7 +565,7 @@ begin
     AssertEquals('Retained third-list item', target.ListBox3.Items[0]);
     AssertEquals('Receiver-only item', receiver.ListBox3.Items[0]);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     receiver.Free;
     target.Free;
   end;
@@ -574,13 +574,13 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestButton5DeletesSelectedGlobalFourthListItem;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   try
     receiver.ListBox4 := TListBox.Create(receiver);
     receiver.ListBox4.Items.Add('Receiver-only item');
@@ -588,7 +588,7 @@ begin
     target.ListBox4.Items.Add('Retained fourth-list item');
     target.ListBox4.Items.Add('Selected fourth-list item');
     target.ListBox4.ItemIndex := 1;
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
 
     receiver.Button5Click(nil);
 
@@ -596,7 +596,7 @@ begin
     AssertEquals('Retained fourth-list item', target.ListBox4.Items[0]);
     AssertEquals('Receiver-only item', receiver.ListBox4.Items[0]);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     receiver.Free;
     target.Free;
   end;
@@ -605,20 +605,20 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestButton6ClearsGlobalThirdList;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   try
     receiver.ListBox3 := TListBox.Create(receiver);
     receiver.ListBox3.Items.Add('Receiver-only item');
     target.ListBox3 := TListBox.Create(target);
     target.ListBox3.Items.Add('First third-list item');
     target.ListBox3.Items.Add('Second third-list item');
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
 
     receiver.Button6Click(nil);
 
@@ -626,7 +626,7 @@ begin
     AssertEquals(1, receiver.ListBox3.Items.Count);
     AssertEquals('Receiver-only item', receiver.ListBox3.Items[0]);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     receiver.Free;
     target.Free;
   end;
@@ -635,20 +635,20 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestButton7ClearsGlobalFourthList;
 var
-  receiver: TForm24;
-  target: TForm24;
-  previousForm: TForm24;
+  receiver: TOrtsfamilienbuchOptionsForm;
+  target: TOrtsfamilienbuchOptionsForm;
+  previousForm: TOrtsfamilienbuchOptionsForm;
 begin
-  receiver := TForm24.CreateNew(nil);
-  target := TForm24.CreateNew(nil);
-  previousForm := Unit24.Form24;
+  receiver := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  target := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
+  previousForm := OrtsfamilienbuchOptionsForm.Form24;
   try
     receiver.ListBox4 := TListBox.Create(receiver);
     receiver.ListBox4.Items.Add('Receiver-only item');
     target.ListBox4 := TListBox.Create(target);
     target.ListBox4.Items.Add('First fourth-list item');
     target.ListBox4.Items.Add('Second fourth-list item');
-    Unit24.Form24 := target;
+    OrtsfamilienbuchOptionsForm.Form24 := target;
 
     receiver.Button7Click(nil);
 
@@ -656,7 +656,7 @@ begin
     AssertEquals(1, receiver.ListBox4.Items.Count);
     AssertEquals('Receiver-only item', receiver.ListBox4.Items[0]);
   finally
-    Unit24.Form24 := previousForm;
+    OrtsfamilienbuchOptionsForm.Form24 := previousForm;
     receiver.Free;
     target.Free;
   end;
@@ -665,11 +665,11 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestRadioButton4ChecksFirstElevenFields;
 var
-  fieldListForm: TForm24;
+  fieldListForm: TOrtsfamilienbuchOptionsForm;
   checkBoxes: array[1..11] of TCheckBox;
   index: Integer;
 begin
-  fieldListForm := TForm24.CreateNew(nil);
+  fieldListForm := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
   try
     fieldListForm.CheckBox1 := TCheckBox.Create(fieldListForm);
     fieldListForm.CheckBox2 := TCheckBox.Create(fieldListForm);
@@ -709,11 +709,11 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestRadioButton5ClearsFirstElevenFields;
 var
-  fieldListForm: TForm24;
+  fieldListForm: TOrtsfamilienbuchOptionsForm;
   checkBoxes: array[1..11] of TCheckBox;
   index: Integer;
 begin
-  fieldListForm := TForm24.CreateNew(nil);
+  fieldListForm := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
   try
     fieldListForm.CheckBox1 := TCheckBox.Create(fieldListForm);
     fieldListForm.CheckBox2 := TCheckBox.Create(fieldListForm);
@@ -753,9 +753,9 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestCheckBox17ClickUsesCheckBox17AsGate;
 var
-  fieldListForm: TForm24;
+  fieldListForm: TOrtsfamilienbuchOptionsForm;
 begin
-  fieldListForm := TForm24.CreateNew(nil);
+  fieldListForm := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
   try
     fieldListForm.CheckBox17 := TCheckBox.Create(fieldListForm);
     fieldListForm.CheckBox18 := TCheckBox.Create(fieldListForm);
@@ -777,9 +777,9 @@ end;
 procedure TTestAHW52FieldListCounters.
   TestCheckBox18ClickUsesCheckBox17AsGate;
 var
-  fieldListForm: TForm24;
+  fieldListForm: TOrtsfamilienbuchOptionsForm;
 begin
-  fieldListForm := TForm24.CreateNew(nil);
+  fieldListForm := TOrtsfamilienbuchOptionsForm.CreateNew(nil);
   try
     fieldListForm.CheckBox17 := TCheckBox.Create(fieldListForm);
     fieldListForm.CheckBox18 := TCheckBox.Create(fieldListForm);

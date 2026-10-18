@@ -20,7 +20,7 @@ type
 implementation
 
 uses
-  SysUtils, Controls, DB, DBCtrls, StdCtrls, Unit2, Unit20;
+  SysUtils, Controls, DB, DBCtrls, StdCtrls, GenealogyDataModule, Unit20;
 
 procedure TTestAHW52FokoDialog.TestLookupClickFocusesMemberNumberEdit;
 var
@@ -44,16 +44,16 @@ procedure TTestAHW52FokoDialog.
   TestActivationAssignsFokoAssociationListSource;
 var
   fokoDialog: TForm20;
-  dataModule: TDataModule2;
-  previousDataModule: TDataModule2;
+  dataModule: TGenealogyDataModule;
+  previousDataModule: TGenealogyDataModule;
 begin
   Application.Initialize;
-  previousDataModule := Unit2.DataModule2;
+  previousDataModule := GenealogyDataModule.DataModule2;
   dataModule := nil;
   fokoDialog := nil;
   try
-    dataModule := TDataModule2.CreateNew(nil);
-    Unit2.DataModule2 := dataModule;
+    dataModule := TGenealogyDataModule.CreateNew(nil);
+    GenealogyDataModule.DataModule2 := dataModule;
     dataModule.DataSource19 := TDataSource.Create(dataModule);
 
     fokoDialog := TForm20.CreateNew(nil);
@@ -65,7 +65,7 @@ begin
     AssertTrue('Activation should use the FOKO association data source.',
       fokoDialog.dblookupcombobox1.ListSource = dataModule.DataSource19);
   finally
-    Unit2.DataModule2 := previousDataModule;
+    GenealogyDataModule.DataModule2 := previousDataModule;
     fokoDialog.Free;
     dataModule.Free;
   end;
