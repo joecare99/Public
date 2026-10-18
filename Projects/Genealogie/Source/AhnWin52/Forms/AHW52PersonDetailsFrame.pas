@@ -6,15 +6,9 @@ interface
 
 uses
   Classes, SysUtils, Controls, Forms, StdCtrls, ExtCtrls, DBCtrls,
-  GenealogyDataModule;
+  GenealogyDataModuleAccess;
 
 type
-  TPersonDetailsTabHostAction = (
-    pdaComboBox5Change);
-
-  TPersonDetailsTabHostActionEvent = procedure(Sender: TObject;
-    HostAction: TPersonDetailsTabHostAction) of object;
-
   TAHW52PersonDetailsFrame = class(TFrame)
   published
     Label35: TLabel;
@@ -69,6 +63,7 @@ type
     DBComboBox7: TDBComboBox;
     DBCheckBox2: TDBCheckBox;
     DBEdit31: TDBEdit;
+    Edit4: TEdit;
     Edit30: TEdit;
     Edit15: TEdit;
     Panel1: TPanel;
@@ -113,25 +108,11 @@ type
     procedure ComboBox18Exit(Sender: TObject);
     procedure ComboBox19Exit(Sender: TObject);
     procedure DBEdit19Exit(Sender: TObject);
-  private
-    FOnHostAction: TPersonDetailsTabHostActionEvent;
-    procedure DispatchHostAction(Sender: TObject;
-      HostAction: TPersonDetailsTabHostAction);
-  public
-    property OnHostAction: TPersonDetailsTabHostActionEvent
-      read FOnHostAction write FOnHostAction;
   end;
 
 implementation
 
 {$R *.lfm}
-
-procedure TAHW52PersonDetailsFrame.DispatchHostAction(Sender: TObject;
-  HostAction: TPersonDetailsTabHostAction);
-begin
-  if Assigned(FOnHostAction) then
-    FOnHostAction(Sender, HostAction);
-end;
 
 procedure TAHW52PersonDetailsFrame.TabSheet3Enter(Sender: TObject);
 begin
@@ -164,12 +145,18 @@ end;
 procedure TAHW52PersonDetailsFrame.DBComboBox7Exit(Sender: TObject);
 begin
   if Trim(DBComboBox7.Text) <> '' then
-    DataModule2.Table1Religion.AsString := DBComboBox7.Text;
+    RequireGenealogyDataModule.Table1Religion.AsString := DBComboBox7.Text;
 end;
 
 procedure TAHW52PersonDetailsFrame.ComboBox5Change(Sender: TObject);
+var
+  parentForm: TCustomForm;
 begin
-  DispatchHostAction(Sender, pdaComboBox5Change);
+  parentForm := GetParentForm(Self);
+  if parentForm = nil then
+    raise EInvalidOperation.Create(
+      'The details frame must belong to a form before changing focus.');
+  parentForm.ActiveControl := Edit4;
 end;
 
 procedure TAHW52PersonDetailsFrame.ComboBox5Exit(Sender: TObject);

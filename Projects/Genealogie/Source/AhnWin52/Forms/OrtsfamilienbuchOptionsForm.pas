@@ -131,7 +131,7 @@ implementation
 {$ENDIF}
 
 uses
-  GenealogyDataModule, frmAhnenWinMain;
+  GenealogyDataModule, GenealogyDataModuleAccess, frmAhnenWinMain;
 
 procedure AppendPositiveFieldValues(DataSet: TDataSet; ValueField: TField;
   Items: TStrings);
@@ -181,10 +181,13 @@ begin
 end;
 
 procedure TOrtsfamilienbuchOptionsForm.listanz;
+var
+  genealogyDataModule: IGenealogyDataModule;
 begin
+  genealogyDataModule := RequireGenealogyDataModule;
   RefreshFieldLists(Self,
     DataModule2.Table12, DataModule2.Table12Name,
-    DataModule2.Table13, DataModule2.Table13Ort,
+    genealogyDataModule.Table13, genealogyDataModule.Table13Ort,
     DataModule2.Table37, DataModule2.Table37Hofname);
 end;
 

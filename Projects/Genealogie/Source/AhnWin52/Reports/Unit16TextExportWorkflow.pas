@@ -7,7 +7,7 @@ unit Unit16TextExportWorkflow;
 interface
 
 uses
-  Classes, DB, SysUtils;
+  Classes, DB, SysUtils, Unit16ExportCompatibilityError;
 
 type
   TUnit16TextExportContext = record
@@ -42,7 +42,7 @@ type
   EUnit16ExportStateUnavailable = class(Exception);
 
 var
-  { These raw cells retain their binary names; the FPC tree has no producers. }
+  { Assembly producers are known, but the FPC tree has no active Pascal writers. }
   GlobalVar_02535930: string;
   GlobalVar_02535934: string;
   GlobalVar_02535438: string;
@@ -103,6 +103,26 @@ begin
   Result := (Pos('Namens', Caption) > 0) or (Pos('Orts', Caption) > 0);
 end;
 
+function IsSupportedReportKind(const ReportKind: string): Boolean;
+begin
+  Result :=
+    (ReportKind = 'OLPN') or (ReportKind = 'OLAP') or
+    (ReportKind = 'NLBO') or (ReportKind = 'NLAP') or
+    (ReportKind = 'famb') or (ReportKind = 'OFB') or
+    (ReportKind = 'Einz') or (ReportKind = 'Dopp') or
+    (ReportKind = 'basa') or (ReportKind = 'Sppr') or
+    (ReportKind = 'Sppo') or (ReportKind = 'Vorf') or
+    (ReportKind = 'Nach') or (ReportKind = 'Schacht') or
+    (ReportKind = 'Tiny');
+end;
+
+procedure RequireSupportedReportKind(const ReportKind: string);
+begin
+  if not IsSupportedReportKind(ReportKind) then
+    raise EUnit16ExportOperationUnsupported.Create(
+      'text report kind "' + ReportKind + '"');
+end;
+
 procedure RequireAddressState(const StateText, StateName: string);
 begin
   if StateText = '' then
@@ -113,6 +133,8 @@ end;
 procedure ValidateUnit16ExportTextState(
   const Context: TUnit16TextExportContext);
 begin
+  RequireSupportedReportKind(Context.ReportKind);
+
   if (Context.ReportKind = 'NLBO') or (Context.ReportKind = 'OLPN') or
      (Context.ReportKind = 'Sppr') or (Context.ReportKind = 'Sppo') or
      (Context.ReportKind = 'Schacht') then
@@ -125,19 +147,11 @@ begin
   if (Context.ReportKind = 'OFB') and
      not HasListCaption(Context.ReportCaption) then
     RequireAddressState(Context.HeaderText02535438, 'GlobalVar_02535438');
-end;
 
-function IsSupportedReportKind(const ReportKind: string): Boolean;
-begin
-  Result :=
-    (ReportKind = 'OLPN') or (ReportKind = 'OLAP') or
-    (ReportKind = 'NLBO') or (ReportKind = 'NLAP') or
-    (ReportKind = 'famb') or (ReportKind = 'OFB') or
-    (ReportKind = 'Einz') or (ReportKind = 'Dopp') or
-    (ReportKind = 'basa') or (ReportKind = 'Sppr') or
-    (ReportKind = 'Sppo') or (ReportKind = 'Vorf') or
-    (ReportKind = 'Nach') or (ReportKind = 'Schacht') or
-    (ReportKind = 'Tiny');
+  if (Context.ReportKind = 'Nach') and
+     not HasListCaption(Context.ReportCaption) then
+    RequireAddressState(Context.HeaderText0061E028,
+      'Unit19.GlobalVar_0061E028');
 end;
 
 procedure WriteSeparator(const Writer: IUnit16TextExportWriter;
@@ -380,6 +394,8 @@ begin
     raise EArgumentNilException.Create('Writer');
 
   try
+    RequireSupportedReportKind(Context.ReportKind);
+
     html := IsHtmlFileName(Context.FileName);
     htmlSuffix := '';
     if html then
@@ -387,9 +403,6 @@ begin
       htmlSuffix := '<p>';
       WriteHtmlPrologue(Writer);
     end;
-
-    if not IsSupportedReportKind(Context.ReportKind) then
-      Exit;
 
     WriteReportHeading(Context, htmlSuffix, Writer);
     WriteReportRows(Context, Table14, Table22, Table27, htmlSuffix, Writer);

@@ -24,6 +24,9 @@ type
 
 implementation
 
+uses
+  PersonSearchForm;
+
 {$R *.lfm}
 
 procedure TAHW52PersonSelectionFrame.DBGrid1DblClick(Sender: TObject);
@@ -43,6 +46,12 @@ procedure TAHW52PersonSelectionFrame.SelectionTabMouseDown(Sender: TObject;
   Button: TMouseButton;
   Shift: TShiftState; X, Y: Integer);
 begin
+  if Button <> mbRight then
+    Exit;
+  if PersonSearchDialog = nil then
+    raise EInvalidOperation.Create(
+      'The person-search dialog must be created before right-click selection.');
+  PersonSearchDialog.ShowForSelection;
 end;
 
 procedure TAHW52PersonSelectionFrame.SelectionTabShow(Sender: TObject);
