@@ -5,6 +5,7 @@ object FraPlaceEdit: TFraPlaceEdit
   Width = 923
   ClientHeight = 622
   ClientWidth = 923
+  LCLVersion = '4.8.0.0'
   ParentFont = False
   TabOrder = 0
   object pnlLeft: TPanel
@@ -46,9 +47,9 @@ object FraPlaceEdit: TFraPlaceEdit
       Align = alTop
       AutoSize = False
       BorderSpacing.Around = 8
-      OnChange = Edit1Change
       ParentFont = False
       TabOrder = 1
+      OnChange = Edit1Change
     end
     object DBNavigator1: TDBNavigator
       Left = 9
@@ -93,7 +94,6 @@ object FraPlaceEdit: TFraPlaceEdit
       Align = alBottom
       AutoSize = False
       BorderSpacing.Around = 8
-      CharCase = ecNormal
       MaxLength = 0
       ParentFont = False
       TabOrder = 0
@@ -127,8 +127,8 @@ object FraPlaceEdit: TFraPlaceEdit
     TabOrder = 2
     object PgData: TTabSheet
       Caption = 'Data'
-      ClientHeight = 745
-      ClientWidth = 336
+      ClientHeight = 594
+      ClientWidth = 267
       ParentFont = False
       object ZoomTrackBar: TTrackBar
         AnchorSideLeft.Control = PgData
@@ -138,13 +138,13 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideRight.Side = asrBottom
         Left = 2
         Height = 40
-        Top = 22
-        Width = 332
+        Top = 21
+        Width = 263
         Max = 19
         Min = 1
-        OnChange = ZoomTrackBarChange
         Position = 1
         TickMarks = tmBoth
+        OnChange = ZoomTrackBarChange
         Anchors = [akTop, akLeft, akRight]
         BorderSpacing.Left = 2
         BorderSpacing.Right = 2
@@ -155,9 +155,9 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideLeft.Control = PgData
         AnchorSideTop.Control = PgData
         Left = 6
-        Height = 20
+        Height = 15
         Top = 6
-        Width = 43
+        Width = 35
         BorderSpacing.Left = 6
         BorderSpacing.Top = 6
         Caption = 'Zoom:'
@@ -171,26 +171,26 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideRight.Control = PgData
         AnchorSideRight.Side = asrBottom
         Left = 6
-        Height = 85
-        Top = 70
-        Width = 320
+        Height = 66
+        Top = 69
+        Width = 255
         Anchors = [akTop, akLeft, akRight]
         AutoSize = True
         BorderSpacing.Left = 6
         BorderSpacing.Top = 8
         BorderSpacing.Right = 6
         Caption = 'Mouse position'
-        ClientHeight = 65
-        ClientWidth = 316
+        ClientHeight = 46
+        ClientWidth = 251
         ParentFont = False
         TabOrder = 1
         object LblPositionLongitude: TLabel
           AnchorSideLeft.Control = CbMouseCoords
           AnchorSideTop.Control = CbMouseCoords
           Left = 8
-          Height = 20
+          Height = 15
           Top = 4
-          Width = 67
+          Width = 54
           BorderSpacing.Left = 8
           BorderSpacing.Top = 4
           Caption = 'Longitude'
@@ -202,9 +202,9 @@ object FraPlaceEdit: TFraPlaceEdit
           AnchorSideTop.Control = LblPositionLongitude
           AnchorSideTop.Side = asrBottom
           Left = 8
-          Height = 20
-          Top = 24
-          Width = 54
+          Height = 15
+          Top = 23
+          Width = 43
           BorderSpacing.Left = 8
           BorderSpacing.Top = 4
           BorderSpacing.Bottom = 8
@@ -217,10 +217,10 @@ object FraPlaceEdit: TFraPlaceEdit
           AnchorSideTop.Control = CbMouseCoords
           AnchorSideRight.Control = CbMouseCoords
           AnchorSideRight.Side = asrBottom
-          Left = 252
-          Height = 20
+          Left = 201
+          Height = 15
           Top = 4
-          Width = 44
+          Width = 34
           Alignment = taRightJustify
           Anchors = [akTop, akRight]
           BorderSpacing.Top = 4
@@ -235,10 +235,10 @@ object FraPlaceEdit: TFraPlaceEdit
           AnchorSideTop.Side = asrBottom
           AnchorSideRight.Control = CbMouseCoords
           AnchorSideRight.Side = asrBottom
-          Left = 252
-          Height = 20
-          Top = 24
-          Width = 44
+          Left = 201
+          Height = 15
+          Top = 23
+          Width = 34
           Alignment = taRightJustify
           Anchors = [akTop, akRight]
           BorderSpacing.Top = 4
@@ -256,24 +256,24 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideRight.Control = CbMouseCoords
         AnchorSideRight.Side = asrBottom
         Left = 6
-        Height = 85
-        Top = 146
-        Width = 320
+        Height = 66
+        Top = 143
+        Width = 255
         Anchors = [akTop, akLeft, akRight]
         AutoSize = True
         BorderSpacing.Top = 8
         Caption = 'Center'
-        ClientHeight = 65
-        ClientWidth = 316
+        ClientHeight = 46
+        ClientWidth = 251
         ParentFont = False
         TabOrder = 2
         object LblCenterLongitude: TLabel
           AnchorSideLeft.Control = GbCenterCoords
           AnchorSideTop.Control = GbCenterCoords
           Left = 8
-          Height = 20
+          Height = 15
           Top = 4
-          Width = 67
+          Width = 54
           BorderSpacing.Left = 8
           BorderSpacing.Top = 4
           Caption = 'Longitude'
@@ -285,9 +285,9 @@ object FraPlaceEdit: TFraPlaceEdit
           AnchorSideTop.Control = LblCenterLongitude
           AnchorSideTop.Side = asrBottom
           Left = 8
-          Height = 20
-          Top = 24
-          Width = 54
+          Height = 15
+          Top = 23
+          Width = 43
           BorderSpacing.Left = 8
           BorderSpacing.Top = 4
           BorderSpacing.Bottom = 8
@@ -300,10 +300,10 @@ object FraPlaceEdit: TFraPlaceEdit
           AnchorSideTop.Control = GbCenterCoords
           AnchorSideRight.Control = GbCenterCoords
           AnchorSideRight.Side = asrBottom
-          Left = 252
-          Height = 20
+          Left = 201
+          Height = 15
           Top = 4
-          Width = 44
+          Width = 34
           Alignment = taRightJustify
           Anchors = [akTop, akRight]
           BorderSpacing.Top = 4
@@ -318,10 +318,10 @@ object FraPlaceEdit: TFraPlaceEdit
           AnchorSideTop.Side = asrBottom
           AnchorSideRight.Control = GbCenterCoords
           AnchorSideRight.Side = asrBottom
-          Left = 252
-          Height = 20
-          Top = 24
-          Width = 44
+          Left = 201
+          Height = 15
+          Top = 23
+          Width = 34
           Alignment = taRightJustify
           Anchors = [akTop, akRight]
           BorderSpacing.Top = 4
@@ -339,24 +339,24 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideRight.Control = GbCenterCoords
         AnchorSideRight.Side = asrBottom
         Left = 6
-        Height = 85
-        Top = 222
-        Width = 320
+        Height = 66
+        Top = 217
+        Width = 255
         Anchors = [akTop, akLeft, akRight]
         AutoSize = True
         BorderSpacing.Top = 8
         Caption = 'Viewport size'
-        ClientHeight = 65
-        ClientWidth = 316
+        ClientHeight = 46
+        ClientWidth = 251
         ParentFont = False
         TabOrder = 3
         object LblViewportWidth: TLabel
           AnchorSideLeft.Control = GbScreenSize
           AnchorSideTop.Control = GbScreenSize
           Left = 8
-          Height = 20
+          Height = 15
           Top = 4
-          Width = 40
+          Width = 32
           BorderSpacing.Left = 8
           BorderSpacing.Top = 4
           Caption = 'Width'
@@ -368,9 +368,9 @@ object FraPlaceEdit: TFraPlaceEdit
           AnchorSideTop.Control = LblViewportWidth
           AnchorSideTop.Side = asrBottom
           Left = 8
-          Height = 20
-          Top = 24
-          Width = 45
+          Height = 15
+          Top = 23
+          Width = 36
           BorderSpacing.Left = 8
           BorderSpacing.Top = 4
           BorderSpacing.Bottom = 8
@@ -382,10 +382,10 @@ object FraPlaceEdit: TFraPlaceEdit
           AnchorSideTop.Control = GbScreenSize
           AnchorSideRight.Control = GbScreenSize
           AnchorSideRight.Side = asrBottom
-          Left = 252
-          Height = 20
+          Left = 201
+          Height = 15
           Top = 4
-          Width = 44
+          Width = 34
           Alignment = taRightJustify
           Anchors = [akTop, akRight]
           BorderSpacing.Top = 4
@@ -399,10 +399,10 @@ object FraPlaceEdit: TFraPlaceEdit
           AnchorSideTop.Side = asrBottom
           AnchorSideRight.Control = GbScreenSize
           AnchorSideRight.Side = asrBottom
-          Left = 252
-          Height = 20
-          Top = 24
-          Width = 44
+          Left = 201
+          Height = 15
+          Top = 23
+          Width = 34
           Alignment = taRightJustify
           Anchors = [akTop, akRight]
           BorderSpacing.Top = 4
@@ -418,9 +418,9 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideTop.Side = asrBottom
         AnchorSideRight.Control = GbCenterCoords
         AnchorSideRight.Side = asrBottom
-        Left = 254
+        Left = 189
         Height = 23
-        Top = 221
+        Top = 215
         Width = 64
         Anchors = [akTop, akRight]
         BorderSpacing.Top = 6
@@ -432,11 +432,11 @@ object FraPlaceEdit: TFraPlaceEdit
           'km'
           'miles'
         )
-        OnChange = cbxDistanceUnitsChange
         ParentFont = False
         Style = csDropDownList
         TabOrder = 4
         Text = 'km'
+        OnChange = cbxDistanceUnitsChange
       end
       object GbSearch: TGroupBox
         AnchorSideLeft.Control = GbScreenSize
@@ -445,15 +445,15 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideRight.Control = GbScreenSize
         AnchorSideRight.Side = asrBottom
         Left = 6
-        Height = 130
-        Top = 298
-        Width = 320
+        Height = 105
+        Top = 291
+        Width = 255
         Anchors = [akTop, akLeft, akRight]
         AutoSize = True
         BorderSpacing.Top = 8
         Caption = 'Search'
-        ClientHeight = 110
-        ClientWidth = 316
+        ClientHeight = 85
+        ClientWidth = 251
         ParentFont = False
         TabOrder = 5
         object CbLocations: TComboBox
@@ -463,7 +463,7 @@ object FraPlaceEdit: TFraPlaceEdit
           Left = 8
           Height = 23
           Top = 4
-          Width = 223
+          Width = 172
           Anchors = [akTop, akLeft, akRight]
           BorderSpacing.Left = 8
           BorderSpacing.Top = 4
@@ -480,26 +480,26 @@ object FraPlaceEdit: TFraPlaceEdit
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = GbSearch
           AnchorSideRight.Side = asrBottom
-          Left = 238
-          Height = 30
+          Left = 184
+          Height = 25
           Top = 3
-          Width = 70
+          Width = 61
           Anchors = [akTop, akRight]
           AutoSize = True
           BorderSpacing.Right = 6
           Caption = 'Search'
-          OnClick = BtnSearchClick
           ParentFont = False
           TabOrder = 1
+          OnClick = BtnSearchClick
         end
         object LblSelectLocation: TLabel
           AnchorSideLeft.Control = CbLocations
           AnchorSideTop.Control = CbLocations
           AnchorSideTop.Side = asrBottom
           Left = 8
-          Height = 20
-          Top = 34
-          Width = 222
+          Height = 15
+          Top = 35
+          Width = 177
           BorderSpacing.Top = 8
           Caption = 'Select one of the found locations:'
           ParentColor = False
@@ -510,17 +510,17 @@ object FraPlaceEdit: TFraPlaceEdit
           AnchorSideTop.Side = asrCenter
           AnchorSideRight.Control = BtnSearch
           AnchorSideRight.Side = asrBottom
-          Left = 245
-          Height = 30
+          Left = 190
+          Height = 25
           Top = 52
-          Width = 63
+          Width = 55
           Anchors = [akTop, akRight]
           AutoSize = True
           BorderSpacing.Bottom = 8
           Caption = 'Go to'
-          OnClick = BtnGoToClick
           ParentFont = False
           TabOrder = 2
+          OnClick = BtnGoToClick
         end
         object CbFoundLocations: TComboBox
           AnchorSideLeft.Control = LblSelectLocation
@@ -530,7 +530,7 @@ object FraPlaceEdit: TFraPlaceEdit
           Left = 8
           Height = 21
           Top = 54
-          Width = 230
+          Width = 178
           Anchors = [akTop, akLeft, akRight]
           BorderSpacing.Top = 4
           BorderSpacing.Right = 4
@@ -538,20 +538,20 @@ object FraPlaceEdit: TFraPlaceEdit
           DropDownCount = 24
           ItemHeight = 15
           ItemWidth = -2
-          OnDrawItem = CbFoundLocationsDrawItem
           ParentFont = False
           ParentShowHint = False
           ShowHint = True
           Style = csOwnerDrawFixed
           TabOrder = 3
+          OnDrawItem = CbFoundLocationsDrawItem
         end
       end
       object BtnSaveToFile: TButton
         AnchorSideTop.Side = asrBottom
         Left = 6
-        Height = 30
+        Height = 25
         Top = 528
-        Width = 134
+        Width = 110
         AutoSize = True
         BorderSpacing.Top = 8
         Caption = 'Save map to file'
@@ -561,16 +561,16 @@ object FraPlaceEdit: TFraPlaceEdit
     end
     object PgConfig: TTabSheet
       Caption = 'Config'
-      ClientHeight = 745
-      ClientWidth = 336
+      ClientHeight = 594
+      ClientWidth = 267
       ParentFont = False
       object Label1: TLabel
         AnchorSideLeft.Control = CbDrawingEngine
         AnchorSideTop.Control = PgConfig
         Left = 6
-        Height = 20
+        Height = 15
         Top = 6
-        Width = 108
+        Width = 86
         BorderSpacing.Top = 6
         Caption = 'Drawing engine:'
         ParentColor = False
@@ -584,8 +584,8 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideRight.Side = asrBottom
         Left = 6
         Height = 23
-        Top = 24
-        Width = 320
+        Top = 23
+        Width = 255
         Anchors = [akTop, akLeft, akRight]
         BorderSpacing.Left = 6
         BorderSpacing.Top = 2
@@ -596,20 +596,20 @@ object FraPlaceEdit: TFraPlaceEdit
           'default'
           'RGBGraphics'
         )
-        OnChange = CbDrawingEngineChange
         ParentFont = False
         Style = csDropDownList
         TabOrder = 0
         Text = 'default'
+        OnChange = CbDrawingEngineChange
       end
       object LblProviders: TLabel
         AnchorSideLeft.Control = CbProviders
         AnchorSideTop.Control = CbDrawingEngine
         AnchorSideTop.Side = asrBottom
         Left = 6
-        Height = 20
+        Height = 15
         Top = 54
-        Width = 64
+        Width = 52
         BorderSpacing.Top = 8
         Caption = 'Providers:'
         FocusControl = CbProviders
@@ -623,27 +623,27 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideRight.Control = BtnLoadMapProviders
         Left = 6
         Height = 23
-        Top = 72
-        Width = 250
+        Top = 71
+        Width = 199
         Anchors = [akTop, akLeft, akRight]
         BorderSpacing.Left = 6
         BorderSpacing.Top = 2
         BorderSpacing.Right = 4
         DropDownCount = 24
         ItemHeight = 15
-        OnChange = CbProvidersChange
         ParentFont = False
         Style = csDropDownList
         TabOrder = 1
+        OnChange = CbProvidersChange
       end
       object BtnLoadMapProviders: TSpeedButton
         AnchorSideLeft.Side = asrBottom
         AnchorSideTop.Control = CbProviders
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = BtnSaveMapProviders
-        Left = 269
+        Left = 209
         Height = 22
-        Top = 72
+        Top = 71
         Width = 23
         Anchors = [akTop, akRight]
         BorderSpacing.Right = 4
@@ -692,9 +692,9 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = PgConfig
         AnchorSideRight.Side = asrBottom
-        Left = 303
+        Left = 236
         Height = 22
-        Top = 72
+        Top = 71
         Width = 23
         Anchors = [akTop, akRight]
         BorderSpacing.Right = 8
@@ -741,43 +741,43 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideTop.Control = CbProviders
         AnchorSideTop.Side = asrBottom
         Left = 6
-        Height = 24
+        Height = 19
         Top = 102
-        Width = 101
+        Width = 81
         BorderSpacing.Left = 6
         BorderSpacing.Top = 8
         Caption = 'Use threads'
         Checked = True
-        OnChange = CbUseThreadsChange
         ParentFont = False
         State = cbChecked
         TabOrder = 2
+        OnChange = CbUseThreadsChange
       end
       object CbDoubleBuffer: TCheckBox
         AnchorSideLeft.Control = CbUseThreads
         AnchorSideTop.Control = CbUseThreads
         AnchorSideTop.Side = asrBottom
         Left = 6
-        Height = 24
-        Top = 128
-        Width = 109
+        Height = 19
+        Top = 127
+        Width = 87
         BorderSpacing.Top = 6
         BorderSpacing.Right = 9
         Caption = 'DblBuffering'
         Checked = True
-        OnChange = CbDoubleBufferChange
         ParentFont = False
         State = cbChecked
         TabOrder = 3
+        OnChange = CbDoubleBufferChange
       end
       object CbDebugTiles: TCheckBox
         AnchorSideLeft.Control = CbDoubleBuffer
         AnchorSideTop.Control = CbDoubleBuffer
         AnchorSideTop.Side = asrBottom
         Left = 6
-        Height = 24
-        Top = 154
-        Width = 100
+        Height = 19
+        Top = 152
+        Width = 79
         BorderSpacing.Top = 6
         Caption = 'Debug tiles'
         ParentFont = False
@@ -788,9 +788,9 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideTop.Control = Bevel1
         AnchorSideTop.Side = asrBottom
         Left = 6
-        Height = 24
-        Top = 191
-        Width = 133
+        Height = 19
+        Top = 189
+        Width = 107
         BorderSpacing.Top = 6
         Caption = 'Show POI image'
         ParentFont = False
@@ -800,9 +800,9 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideTop.Control = CbShowPOIImage
         AnchorSideTop.Side = asrBottom
         Left = 6
-        Height = 30
-        Top = 218
-        Width = 109
+        Height = 25
+        Top = 216
+        Width = 93
         AutoSize = True
         BorderSpacing.Top = 8
         Caption = 'POI text font'
@@ -816,10 +816,10 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideTop.Side = asrCenter
         AnchorSideRight.Control = CbDrawingEngine
         AnchorSideRight.Side = asrBottom
-        Left = 148
+        Left = 154
         Height = 22
-        Top = 220
-        Width = 143
+        Top = 217
+        Width = 107
         NoneColorColor = clWhite
         Style = [cbStandardColors, cbExtendedColors, cbIncludeNone, cbCustomColor, cbPrettyNames, cbCustomColors]
         Anchors = [akTop, akLeft, akRight]
@@ -833,10 +833,10 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideLeft.Side = asrBottom
         AnchorSideTop.Control = BtnPOITextFont
         AnchorSideTop.Side = asrCenter
-        Left = 102
-        Height = 20
-        Top = 222
-        Width = 48
+        Left = 107
+        Height = 15
+        Top = 221
+        Width = 39
         BorderSpacing.Left = 8
         Caption = 'Backgr.'
         ParentColor = False
@@ -850,8 +850,8 @@ object FraPlaceEdit: TFraPlaceEdit
         AnchorSideRight.Side = asrBottom
         Left = 6
         Height = 4
-        Top = 181
-        Width = 320
+        Top = 179
+        Width = 255
         Anchors = [akTop, akLeft, akRight]
         BorderSpacing.Top = 8
         Shape = bsTopLine
@@ -879,9 +879,9 @@ object FraPlaceEdit: TFraPlaceEdit
           Width = 132
           Anchors = [akTop, akRight]
           Caption = 'GedCom'
-          OnClick = btnImportGedComClick
           ParentFont = False
           TabOrder = 0
+          OnClick = btnImportGedComClick
         end
         object btnSync: TBitBtn
           Left = 147
@@ -890,9 +890,9 @@ object FraPlaceEdit: TFraPlaceEdit
           Width = 116
           Anchors = [akTop, akRight]
           Caption = 'Sync Places'
-          OnClick = btnSyncClick
           ParentFont = False
           TabOrder = 1
+          OnClick = btnSyncClick
         end
         object ProgressBar1: TProgressBar
           Left = 5
@@ -906,7 +906,6 @@ object FraPlaceEdit: TFraPlaceEdit
     end
   end
   object DataSource1: TDataSource
-    DataSet = dmRNZAnzeigen.qryTableOrte
     OnDataChange = DataSource1DataChange
     Left = 168
     Top = 683

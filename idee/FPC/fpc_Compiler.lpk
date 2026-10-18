@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
-  <Package Version="4">
+  <Package Version="5">
     <PathDelim Value="\"/>
     <Name Value="fpc_Compiler"/>
     <Author Value="Joe Care"/>
@@ -23,7 +23,7 @@
       </Other>
     </CompilerOptions>
     <Version Major="3" Minor="3" Release="1"/>
-    <Files Count="20">
+    <Files Count="21">
       <Item1>
         <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\cfileutl.pas"/>
         <UnitName Value="cfileutl"/>
@@ -104,7 +104,12 @@
         <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\fpchash.pas"/>
         <UnitName Value="fpchash"/>
       </Item20>
+      <Item21>
+        <Filename Value="..\..\..\Lazarus\FpcTrunk\compiler\parser.pas"/>
+        <UnitName Value="parser"/>
+      </Item21>
     </Files>
+    <CompatibilityMode Value="True"/>
     <RequiredPkgs Count="1">
       <Item1>
         <PackageName Value="FCL"/>

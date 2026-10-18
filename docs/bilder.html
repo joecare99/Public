@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="de" data-theme="light">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Bilder &amp; Galerien - Joe Care</title>
+  
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@picocss/pico@2/css/pico.min.css">
+  <link rel="shortcut icon" href="images/joe_care.png" type="image/png">
+  <style>
+    /* Responsive Grid für die Galerie */
+    .gallery { 
+      display: grid; 
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); 
+      gap: var(--pico-spacing); 
+      margin-bottom: 2rem; 
+    }
+    .gallery article { 
+      margin: 0; 
+      padding: 0; 
+      overflow: hidden; 
+      display: flex; 
+      flex-direction: column; 
+    }
+    .gallery img { 
+      width: 100%; 
+      aspect-ratio: 4/3; 
+      object-fit: cover; 
+    }
+    .gallery footer { 
+      padding: 0.75rem; 
+      text-align: center; 
+      margin-top: auto; 
+      background: var(--pico-card-sectioning-background-color); 
+      border-top: var(--pico-border-width) solid var(--pico-card-border-color); 
+    }
+  </style>
+</head>
+<body>
+  <header class="container">
+    <nav>
+      <ul>
+        <li><strong>Joe Care</strong></li>
+      </ul>
+      <ul>
+        <li><a href="index2.html" class="contrast">Home</a></li>
+        <li><a href="aktuelles.html" class="contrast">Aktuelles</a></li>
+        <li><a href="buecher.html" class="contrast">B&uuml;cher</a></li>
+        <li><a href="bilder.html" class="contrast">Bilder</a></li>
+        <li><a href="tipps.html" class="contrast">Tipps &amp; Tricks</a></li>
+        <li><a href="links.html" class="contrast">Links</a></li>
+        <li><a href="impressum.html" class="contrast">Impressum</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main class="container">
+    <h2>Bilder &amp; Galerien</h2>
+    <p>Hier pr&auml;sentiere ich verschiedene Einblicke in meine Spiele-Projekte und 3D-Renderings.</p>
+    
+    <section>
+      <h3>Spiele &amp; Software</h3>
+      <div class="gallery">
+        <article>
+          <img src="images/Sokoban_big.png" alt="Sokoban">
+          <footer>Sokoban</footer>
+        </article>
+        <article>
+          <img src="images/Asteroids_big.png" alt="Asteroids">
+          <footer>Asteroids</footer>
+        </article>
+        <article>
+          <img src="images/BoxFlight_big.png" alt="BoxFlight">
+          <footer>BoxFlight</footer>
+        </article>
+        <article>
+          <img src="images/WinCub_big.png" alt="WinCub">
+          <footer>WinCub</footer>
+        </article>
+        <article>
+          <img src="images/Laby_300x200.png" alt="Labyrinth">
+          <footer>Labyrinth</footer>
+        </article>
+      </div>
+    </section>
+
+    <hr>
+    
+    <section>
+      <h3>POV-Ray &amp; 3D Renderings</h3>
+      <div class="gallery">
+        <article>
+          <img src="images/povslide1.png" alt="POV-Tree">
+          <footer>POV-Tree</footer>
+        </article>
+        <article>
+          <img src="images/povslide2.png" alt="Licht &amp; Geometrie">
+          <footer>Licht &amp; Geometrie</footer>
+        </article>
+        <article>
+          <img src="images/TestShowScene5.png" alt="Szene 5">
+          <footer>Szene 5</footer>
+        </article>
+        <article>
+          <img src="images/TestShowScene6.png" alt="Szene 6">
+          <footer>Szene 6</footer>
+        </article>
+        <article>
+          <img src="images/TestShowScene2.png" alt="Test Scene">
+          <footer>Scene-Test</footer>
+        </article>
+        <article>
+          <img src="images/Wo_Tu_Sa_bl_wt.png" alt="Spezial">
+          <footer>Spezial-Rendering</footer>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer class="container">
+    <hr>
+    <nav>
+      <ul>
+        <li><small>&copy; Joe Care</small></li>
+      </ul>
+      <ul>
+        <li><small><a href="index.html" class="secondary">Zum &ouml;ffentlichen GitHub-Portal</a></small></li>
+      </ul>
+    </nav>
+  </footer>
+</body>
+</html>

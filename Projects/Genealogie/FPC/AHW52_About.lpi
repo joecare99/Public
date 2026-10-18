@@ -31,18 +31,26 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="4">
       <Unit0>
         <Filename Value="AHW52_About.lpr"/>
         <IsPartOfProject Value="True"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\Source\AhnWin52\Forms\frm_About.pas"/>
+        <Filename Value="..\Source\AhnWin52\Forms\AboutForm.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form9"/>
+        <ComponentName Value="AboutDialog"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="..\Source\AhnWin52\Forms\AboutFormMessageServiceIntf.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="..\Source\AhnWin52\Forms\AboutFormMessageService.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

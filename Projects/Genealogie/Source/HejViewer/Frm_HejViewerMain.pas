@@ -18,6 +18,7 @@ type
     fraAWHejView1: TfraAWHejView;
     fraIndIndex1: TfraIndIndex;
     OpenDialog1: TOpenDialog;
+    Panel1: TPanel;
     pnlBottom: TPanel;
     pnlTop: TPanel;
     SpeedButton1: TSpeedButton;

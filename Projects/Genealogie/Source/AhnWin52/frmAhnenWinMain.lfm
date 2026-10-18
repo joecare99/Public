@@ -1358,7 +1358,7 @@ object Form1: TForm1
         OnDblClick = Edit1DblClick
         ParentFont = False
         ParentShowHint = False
-        PopupMenu = PopupMenu3
+        PopupMenu = PopupMenu4
         ReadOnly = True
         ShowHint = True
         TabStop = False

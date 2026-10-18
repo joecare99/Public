@@ -27,6 +27,7 @@ var
 
 implementation
 
+uses dm_RNZAnzeigen;
 {$R *.lfm}
 
 { TFrmPlaceEditMain }
@@ -36,6 +37,7 @@ begin
   FraPlaceEdit1:= TFraPlaceEdit.Create(self);
   FraPlaceEdit1.Parent:= self;
   FraPlaceEdit1.Align:=alClient;
+  FraPlaceEdit1.DataSource1.DataSet:=dmRNZAnzeigen.qryTableOrte;
 end;
 
 end.

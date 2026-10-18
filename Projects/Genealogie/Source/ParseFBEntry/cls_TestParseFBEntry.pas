@@ -10,244 +10,259 @@ uses
     unt_TestFBData;
 
 type
-    { TTestFBEntryParserBase }
-
+    { TTestFBEntryParserBase
+      Basisklasse für Parser-Tests. Stellt gemeinsame Testlogik und Hilfsmethoden bereit.
+      - Initialisiert den Parser und die Testdatenpfade.
+      - Implementiert Event-Handler für Parser-Ereignisse.
+      - Bietet Methoden zum Hinzufügen und Vergleichen von erwarteten Ergebnissen.
+    }
     TTestFBEntryParserBase = class(TTestCase)
     protected
-        fParser   :TFBEntryParser;
-        FDataPath :string;
-        FResult, ExpResults :array of TResultType;
-        FRCounter :integer;
-        FTestName :string;
-        procedure SetUp; override;
-        procedure TearDown; override;
-        procedure TestOneFile(aFilename :string; ff :TFileFoundEvent = nil);
+        fParser   :TFBEntryParser; // Instanz des zu testenden Parsers
+        FDataPath :string;         // Pfad zu Testdaten
+        FResult, ExpResults :array of TResultType; // Ergebnisarrays für Vergleich
+        FRCounter :integer;        // Zähler für Ergebnisvergleich
+        FTestName :string;         // Name des aktuellen Tests
+        procedure SetUp; override; // Initialisiert Testumgebung und Parser
+        procedure TearDown; override; // Bereinigt Testumgebung
+        procedure TestOneFile(aFilename :string; ff :TFileFoundEvent = nil); // Testet eine Datei
     private
-        FlastDeb :string;
-        procedure AddExpResult(Data :array of variant);
-        procedure FSFileFound(FileIterator :TFileIterator); virtual;
-        procedure CreateExpResult(st :TStrings; out Expct :TResultTypeArray);
-        procedure ExpResultToTStr(const Exp :array of TResultType; st :TStrings);
-        procedure ParserError(Sender :TObject);
+        FlastDeb :string; // Letzte Debug-Nachricht
+        procedure AddExpResult(Data :array of variant); // Fügt erwartetes Ergebnis hinzu
+        procedure FSFileFound(FileIterator :TFileIterator); virtual; // Event-Handler für gefundene Datei
+        procedure CreateExpResult(st :TStrings; out Expct :TResultTypeArray); // Erstellt Ergebnisarray aus Datei
+        procedure ExpResultToTStr(const Exp :array of TResultType; st :TStrings); // Konvertiert Ergebnisarray in Strings
+        procedure ParserError(Sender :TObject); // Event-Handler für Parser-Fehler
         procedure ParserMessage(Sender :TObject; aType :TEventType;
-            aText :string; Ref :string; aMode :integer);
+            aText :string; Ref :string; aMode :integer); // Event-Handler für Parser-Nachrichten
         procedure ParserStartFamily(Sender :TObject; aText, Ref :string;
-            dsubtype :integer);
+            dsubtype :integer); // Event-Handler für Familienstart
         procedure ParserFamilyDate(Sender :TObject; aText, Ref :string;
-            dsubtype :integer);
+            dsubtype :integer); // Event-Handler für Familiendatum
         procedure ParserFamilyData(Sender :TObject; aText, Ref :string;
-            dsubtype :integer);
+            dsubtype :integer); // Event-Handler für Familiendaten
         procedure ParserFamilyIndiv(Sender :TObject; aText, Ref :string;
-            dsubtype :integer);
+            dsubtype :integer); // Event-Handler für Familienmitglied
         procedure ParserFamilyPlace(Sender :TObject; aText, Ref :string;
-            dsubtype :integer);
+            dsubtype :integer); // Event-Handler für Familienort
         procedure ParserFamilyType(Sender :TObject; aText, Ref :string;
-            dsubtype :integer);
-        procedure ParserIndiData(Sender :TObject; aText, Ref :string; dsubtype :integer);
-        procedure ParserIndiDate(Sender :TObject; aText, Ref :string; dsubtype :integer);
-        procedure ParserIndiName(Sender :TObject; aText, Ref :string; dsubtype :integer);
-        procedure ParserIndiOccu(Sender :TObject; aText, Ref :string; dsubtype :integer);
+            dsubtype :integer); // Event-Handler für Familientyp
+        procedure ParserIndiData(Sender :TObject; aText, Ref :string; dsubtype :integer); // Event-Handler für Personendaten
+        procedure ParserIndiDate(Sender :TObject; aText, Ref :string; dsubtype :integer); // Event-Handler für Personendatum
+        procedure ParserIndiName(Sender :TObject; aText, Ref :string; dsubtype :integer); // Event-Handler für Personennamen
+        procedure ParserIndiOccu(Sender :TObject; aText, Ref :string; dsubtype :integer); // Event-Handler für Beruf
         procedure ParserIndiPlace(Sender :TObject; aText, Ref :string;
-            dsubtype :integer);
-        procedure ParserIndiRef(Sender :TObject; aText, Ref :string; dsubtype :integer);
-        procedure ParserIndiRel(Sender :TObject; aText, Ref :string; dsubtype :integer);
+            dsubtype :integer); // Event-Handler für Personenort
+        procedure ParserIndiRef(Sender :TObject; aText, Ref :string; dsubtype :integer); // Event-Handler für Personenreferenz
+        procedure ParserIndiRel(Sender :TObject; aText, Ref :string; dsubtype :integer); // Event-Handler für Personenbeziehung
         procedure ParserTestEvent(Sender :TObject; eType, aText, Ref :string;
-            dsubtype :integer);
+            dsubtype :integer); // Vergleicht ein Parser-Ereignis mit dem erwarteten Ergebnis
     public
-        constructor Create; override;
+        constructor Create; override; // Initialisiert die Basisklasse und Testdatenpfade
     end;
 
-    { TTestFBEntryParser }
+    { TTestFBEntryParser
+      Testklasse für Einzeltests des Parsers.
+      - Testet verschiedene Parserfunktionen und -methoden.
+      - Validiert die Verarbeitung von Einträgen, Ereignissen, Daten und Sonderfällen.
+    }
     TTestFBEntryParser = class(TTestFBEntryParserBase)
-        procedure TestSetUp;
-        procedure TestResult;
-        procedure TestParseGC5065;
-        procedure TestParseAK2421;
-        procedure TestHandleAKPersonEntry;
-        procedure TestHandleAKPersonEntry_55;
-        procedure TestHandleAKPersonEntry_56;
+        procedure TestSetUp; // Testet die Initialisierung des Parsers
+        procedure TestResult; // Testet die Ergebnisstruktur und Event-Handler
+        procedure TestParseGC5065; // Testet das Parsen eines GC5065-Eintrags
+        procedure TestParseAK2421; // Testet das Parsen eines AK2421-Eintrags
+        procedure TestHandleAKPersonEntry; // Testet die Verarbeitung eines AK-Personeneintrags
+        procedure TestHandleAKPersonEntry_55; // Testet die Verarbeitung eines AK-Personeneintrags mit Typ 55
+        procedure TestHandleAKPersonEntry_56; // Testet die Verarbeitung eines AK-Personeneintrags mit Typ 56
 
-        procedure TestHandleNonPersonEntry;
-        procedure TestHandleNonPersonEntry_occ;
-        procedure TestHandleNonPersonEntry_4;
-        procedure TestHandleNonPersonEntry_4_2;
-        procedure TestHandleNonPersonEntry_5;
-        procedure TestHandleNonPersonEntry_6;
-        procedure TestHandleNonPersonEntry_Birth_Plac2;
-        procedure TestHandleNonPersonEntry_Birth_Plac3;
-        procedure TestHandleNonPersonEntry_Birth_Plac4;
-        procedure TestHandleNonPersonEntry_Res;
-        procedure TestHandleNonPersonEntry_div;
-        procedure TestHandleNonPersonEntry_marr;
-        procedure TestHandleNonPersonEntry_57;
-        procedure TestHandleNonPersonEntry_Gef;
+        procedure TestHandleNonPersonEntry; // Testet die Verarbeitung eines Nicht-Personeneintrags
+        procedure TestHandleNonPersonEntry_occ; // Testet die Verarbeitung von Berufseinträgen
+        procedure TestHandleNonPersonEntry_4; // Testet die Verarbeitung von Todeseinträgen mit Ort und Datum
+        procedure TestHandleNonPersonEntry_4_2; // Testet die Verarbeitung von Todeseinträgen mit Ort und Datum (Variante)
+        procedure TestHandleNonPersonEntry_5; // Testet die Verarbeitung von Todeseinträgen mit Platzhalter
+        procedure TestHandleNonPersonEntry_6; // Testet die Verarbeitung von Geburtseinträgen mit komplexem Ort
+        procedure TestHandleNonPersonEntry_Birth_Plac2; // Testet Geburtseintrag mit Ort und Jahr
+        procedure TestHandleNonPersonEntry_Birth_Plac3; // Testet Geburtseintrag mit Ort und Monat/Jahr
+        procedure TestHandleNonPersonEntry_Birth_Plac4; // Testet Geburtseintrag mit Ort und Datum
+        procedure TestHandleNonPersonEntry_Res; // Testet Wohnort-Einträge
+        procedure TestHandleNonPersonEntry_div; // Testet Scheidungseinträge
+        procedure TestHandleNonPersonEntry_marr; // Testet Hochzeitseinträge
+        procedure TestHandleNonPersonEntry_57; // Testet spezielle Familienereignisse
+        procedure TestHandleNonPersonEntry_Gef; // Testet Gefalleneinträge
 
-        procedure TestHandleFamilyFact_Str;
-        procedure TestHandleFamilyFact_Div;
-        procedure TestHandleFamilyFact_emig;
-        procedure TestHandleFamilyFact_marr1;
-        procedure TestHandleFamilyFact_marr2;
+        procedure TestHandleFamilyFact_Str; // Testet Familienfakt mit String
+        procedure TestHandleFamilyFact_Div; // Testet Familienfakt Scheidung
+        procedure TestHandleFamilyFact_emig; // Testet Familienfakt Auswanderung
+        procedure TestHandleFamilyFact_marr1; // Testet Familienfakt Hochzeit (Variante 1)
+        procedure TestHandleFamilyFact_marr2; // Testet Familienfakt Hochzeit (Variante 2)
 
-        procedure TestGetEntryType;
-        procedure TestGetEntryType_Rel;
-        procedure TestGuessSexOfGivnName;
-        procedure TestHandleGCDateEntry;
-        procedure TesttestEntry;
-        procedure TesttestEntry2;
-        procedure TestTestFor;
-        procedure TestTestFor2;
-        procedure TestTestFor3;
-        procedure TestParseAdditional;
-        procedure TestTestReferenz;
-        procedure TestIsValidDate;
-        procedure TestIsValidPlace;
+        procedure TestGetEntryType; // Testet die Erkennung des Ereignistyps
+        procedure TestGetEntryType_Rel; // Testet die Erkennung des Religionstyps
+        procedure TestGuessSexOfGivnName; // Testet die Geschlechtsbestimmung anhand des Vornamens
+        procedure TestHandleGCDateEntry; // Testet die Verarbeitung von GC-Datums-Einträgen
+        procedure TesttestEntry; // Testet die Eintragsprüfung mit Einzelzeichen
+        procedure TesttestEntry2; // Testet die Eintragsprüfung mit mehreren Zeichen
+        procedure TestTestFor; // Testet die Suche nach Einträgen in Strings
+        procedure TestTestFor2; // Testet die Suche nach Einträgen in Strings (Variante)
+        procedure TestTestFor3; // Testet die Suche nach Einträgen in Strings (Variante 3)
+        procedure TestParseAdditional; // Testet die Verarbeitung von Zusatzeinträgen
+        procedure TestTestReferenz; // Testet die Validierung von Referenzen
+        procedure TestIsValidDate; // Testet die Validierung von Datumsangaben
+        procedure TestIsValidPlace; // Testet die Validierung von Ortsangaben
     private
     end;
 
-
-    { TTestFBEntryParser }
-
-    { TTestFBEntryParserAll }
-
+    { TTestFBEntryParserAll
+      Testklasse für die Ausführung aller Testdateien im Testdatenverzeichnis.
+      - Registriert alle gefundenen Testdateien als einzelne Tests.
+      - Implementiert Methoden zur Verwaltung und Ausführung der Kindtests.
+    }
     TTestFBEntryParserAll = class(TTestFBEntryParserBase)
     public
-        constructor Create; override;
-        destructor Destroy; override;
+        constructor Create; override; // Initialisiert und registriert alle Testdateien
+        destructor Destroy; override; // Bereinigt die Testklasse
     protected
-        FChildren :array of TTestcase;
-        procedure FSAddFound(FileIterator :TFileIterator);
+        FChildren :array of TTestcase; // Array der Kindtests
+        procedure FSAddFound(FileIterator :TFileIterator); // Event-Handler für gefundene Testdatei
     public
-        procedure FSFileFound(FileIterator :TFileIterator); override;
-
-        function GetChildTestCount :integer; override;
-        function GetChildTest(AIndex :integer) :TTest; override;
+        procedure FSFileFound(FileIterator :TFileIterator); override; // Überschreibt Event-Handler für Datei
+        function GetChildTestCount :integer; override; // Gibt die Anzahl der Kindtests zurück
+        function GetChildTest(AIndex :integer) :TTest; override; // Gibt einen Kindtest zurück
     published
-        procedure TestFiles;
+        procedure TestFiles; // Führt alle Testdateien aus
     end;
 
-    { TChildTest }
-
+    { TChildTest
+      Einzelner Test für eine gefundene Testdatei.
+      - Führt den Test für die zugehörige Datei aus.
+      - Bindet an die Eltern-Testklasse.
+    }
     TChildTest = class(TTestCase)
     public
-        constructor Create(aParent :TTestFBEntryParserAll; aTestFile :string); reintroduce;
+        constructor Create(aParent :TTestFBEntryParserAll; aTestFile :string); reintroduce; // Initialisiert Kindtest
     private
-        fParent   :TTestFBEntryParserAll;
-        FTestFile :string;
+        fParent   :TTestFBEntryParserAll; // Referenz auf Eltern-Testklasse
+        FTestFile :string; // Name der Testdatei
     protected
-        procedure RunTest; override;
+        procedure RunTest; override; // Führt den Test aus
     end;
 
-    { TTestFBEntryParserGC }
-
+    { TTestFBEntryParserGC
+      Testklasse für spezielle GC-Testdateien.
+      - Führt gezielte Tests für verschiedene GC-Eintragsdateien aus.
+    }
     TTestFBEntryParserGC = class(TTestFBEntryParserBase)
-        procedure TestFile03;
-        procedure TestFileO0006;
-        procedure TestFileO0011;
-        procedure TestFileO0035;
-        procedure TestFile45;
-        procedure TestFile50;
-        procedure TestFile51;
-        procedure TestFile52;
-        procedure TestFile53;
-        procedure TestFile54;
-        procedure TestFile63;
-        procedure TestFileO0077;
-        procedure TestFileO120;
-        procedure TestFileO156;
-        procedure TestFileO189;
-        procedure TestFileO197;
-        procedure TestFileO0338;
-        procedure TestFileO0451;
-        procedure TestFileO1304;
-        procedure TestFileO1886;
-        procedure TestFileO2201;
-        procedure TestFileO2298;
-        procedure TestFileO2578;
-        procedure TestFileO2658;
-        procedure TestFileO3135;
-        procedure TestFileO3222;
-        procedure TestFileO3503;
-        procedure TestFileO3892;
-        procedure TestFileO3899;
-        procedure TestFileO4528;
-        procedure TestFileO4551;
-        procedure TestFileO6299;
-        procedure TestFileO6302;
+        procedure TestFile03; // Testet Datei EntryGC0003.entTxt
+        procedure TestFileO0006; // Testet Datei OsBObr0006.entTxt
+        procedure TestFileO0011; // Testet Datei OsBObr0011.entTxt
+        procedure TestFileO0035; // Testet Datei OsBObr0035.entTxt
+        procedure TestFile45; // Testet Datei EntryGC0045.entTxt
+        procedure TestFile50; // Testet Datei EntryGC0050.entTxt
+        procedure TestFile51; // Testet Datei EntryGC0051.entTxt
+        procedure TestFile52; // Testet Datei EntryGC0052.entTxt
+        procedure TestFile53; // Testet Datei EntryGC0053.entTxt
+        procedure TestFile54; // Testet Datei EntryGC0054.entTxt
+        procedure TestFile63; // Testet Datei EntryGC0063.entTxt
+        procedure TestFileO0077; // Testet Datei OsBObr0077.entTxt
+        procedure TestFileO120; // Testet Datei OsBObr0120.entTxt
+        procedure TestFileO156; // Testet Datei OsBObr0156.entTxt
+        procedure TestFileO189; // Testet Datei OsBObr0189.entTxt
+        procedure TestFileO197; // Testet Datei OsBObr0197.entTxt
+        procedure TestFileO0338; // Testet Datei OsBObr0338.entTxt
+        procedure TestFileO0451; // Testet Datei OsBObr0451.entTxt
+        procedure TestFileO1304; // Testet Datei OsBObr1304.entTxt
+        procedure TestFileO1886; // Testet Datei OsBObr1886.entTxt
+        procedure TestFileO2201; // Testet Datei OsBObr2201.entTxt
+        procedure TestFileO2298; // Testet Datei OsBObr2298.entTxt
+        procedure TestFileO2578; // Testet Datei OsBObr2578.entTxt
+        procedure TestFileO2658; // Testet Datei OsBObr2658.entTxt
+        procedure TestFileO3135; // Testet Datei OsBObr3135.entTxt
+        procedure TestFileO3222; // Testet Datei OsBObr3222.entTxt
+        procedure TestFileO3503; // Testet Datei OsBObr3503.entTxt
+        procedure TestFileO3892; // Testet Datei OsBObr3892.entTxt
+        procedure TestFileO3899; // Testet Datei OsBObr3899.entTxt
+        procedure TestFileO4528; // Testet Datei OsBObr4528.entTxt
+        procedure TestFileO4551; // Testet Datei OsBObr4551.entTxt
+        procedure TestFileO6299; // Testet Datei OsBObr6299.entTxt
+        procedure TestFileO6302; // Testet Datei OsBObr6302.entTxt
     private
     end;
 
-    { TTestFBEntryParserAK }
-
+    { TTestFBEntryParserAK
+      Testklasse für spezielle AK-Testdateien.
+      - Führt gezielte Tests für verschiedene AK-Eintragsdateien aus.
+      - Setzt DefaultPlace für Parser auf "Meißenheim".
+    }
     TTestFBEntryParserAK = class(TTestFBEntryParserBase)
     protected
-        procedure SetUp; override;
+        procedure SetUp; override; // Initialisiert Parser mit DefaultPlace
     published
-        procedure TestFileM0001;
-        procedure TestFileM0002;
-        procedure TestFileM0003;
-        procedure TestFileM0004;
-        procedure TestFileM0005;
-        procedure TestFileM0006;
-        procedure TestFileM0007;
-        procedure TestFileM0008;
-        procedure TestFileM0009;
-        procedure TestFileM0011;
-        procedure TestFileM0020;
-        procedure TestFileM0026;
-        procedure TestFileM0030;
-        procedure TestFileM0037;
-        procedure TestFileM0054;
-        procedure TestFileM0061;
-        procedure TestFileM0119;
-        procedure TestFileM0193;
-        procedure TestFileM0211;
-        procedure TestFileM0263;
-        procedure TestFileM0330;
-        procedure TestFileM0337;
-        procedure TestFileM0405;
-        procedure TestFileM0407;
-        procedure TestFileM0409;
-        procedure TestFileM0411;
-        procedure TestFileM0424;
-        procedure TestFileM0427;
-        procedure TestFileM0429;
-        procedure TestFileM0443;
-        procedure TestFileM0462;
-        procedure TestFileM0470;
-        procedure TestFileM0476;
-        procedure TestFileM0485;
-        procedure TestFileM0486;
-        procedure TestFileM0549;
-        procedure TestFileM0746;
-        procedure TestFileM0832;
-        procedure TestFileM0854;
-        procedure TestFileM0889;
-        procedure TestFileM0918;
-        procedure TestFileM1026;
-        procedure TestFileM1078;
-        procedure TestFileM1093;
-        procedure TestFileM1138;
-        procedure TestFileM1149;
-        procedure TestFileM1220;
-        procedure TestFileM1221;
-        procedure TestFileM1227;
-        procedure TestFileM1240;
-        procedure TestFileM1242;
-        procedure TestFileM1251;
-        procedure TestFileM1252;
-        procedure TestFileM1262;
-        procedure TestFileM1268;
-        procedure TestFileM1274;
-        procedure TestFileM1276;
-        procedure TestFileM1319;
-        procedure TestFileM1321;
-        procedure TestFileM1353;
-        procedure TestFileM1353a;
-        procedure TestFileM1354;
-        procedure TestFileM1387;
-        procedure TestFileM1436;
-        procedure TestFileM2420;
-        procedure TestFileM2421;
+        procedure TestFileM0001; // Testet Datei OsBM0001.entTxt
+        procedure TestFileM0002; // Testet Datei OsBM0002.entTxt
+        procedure TestFileM0003; // Testet Datei OsBM0003.entTxt
+        procedure TestFileM0004; // Testet Datei OsBM0004.entTxt
+        procedure TestFileM0005; // Testet Datei OsBM0005.entTxt
+        procedure TestFileM0006; // Testet Datei OsBM0006.entTxt
+        procedure TestFileM0007; // Testet Datei OsBM0007.entTxt
+        procedure TestFileM0008; // Testet Datei OsBM0008.entTxt
+        procedure TestFileM0009; // Testet Datei OsBM0009.entTxt
+        procedure TestFileM0011; // Testet Datei OsBM0011.entTxt
+        procedure TestFileM0020; // Testet Datei OsBM0020.entTxt
+        procedure TestFileM0026; // Testet Datei OsBM0026.entTxt
+        procedure TestFileM0030; // Testet Datei OsBM0030.entTxt
+        procedure TestFileM0037; // Testet Datei OsBM0037.entTxt
+        procedure TestFileM0054; // Testet Datei OsBM0054.entTxt
+        procedure TestFileM0061; // Testet Datei OsBM0061.entTxt
+        procedure TestFileM0119; // Testet Datei OsBM0119.entTxt
+        procedure TestFileM0193; // Testet Datei OsBM0193.entTxt
+        procedure TestFileM0211; // Testet Datei OsBM0211.entTxt
+        procedure TestFileM0263; // Testet Datei OsBM0263.entTxt
+        procedure TestFileM0330; // Testet Datei OsBM0330.entTxt
+        procedure TestFileM0337; // Testet Datei OsBM0337.entTxt
+        procedure TestFileM0405; // Testet Datei OsBM0405.entTxt
+        procedure TestFileM0407; // Testet Datei OsBM0407.entTxt
+        procedure TestFileM0409; // Testet Datei OsBM0409.entTxt
+        procedure TestFileM0411; // Testet Datei OsBM0411.entTxt
+        procedure TestFileM0424; // Testet Datei OsBM0424.entTxt
+        procedure TestFileM0427; // Testet Datei OsBM0427.entTxt
+        procedure TestFileM0429; // Testet Datei OsBM0429.entTxt
+        procedure TestFileM0443; // Testet Datei OsBM0443.entTxt
+        procedure TestFileM0462; // Testet Datei OsBM0462.entTxt
+        procedure TestFileM0470; // Testet Datei OsBM0470.entTxt
+        procedure TestFileM0476; // Testet Datei OsBM0476.entTxt
+        procedure TestFileM0486; // Testet Datei OsBM0486.entTxt
+        procedure TestFileM0485; // Testet Datei OsBM0485.entTxt
+        procedure TestFileM0549; // Testet Datei OsBM0549.entTxt
+        procedure TestFileM0746; // Testet Datei OsBM0746.entTxt
+        procedure TestFileM0832; // Testet Datei OsBM0832.entTxt
+        procedure TestFileM0854; // Testet Datei OsBM0854.entTxt
+        procedure TestFileM0889; // Testet Datei OsBM0889.entTxt
+        procedure TestFileM0918; // Testet Datei OsBM0918.entTxt
+        procedure TestFileM1026; // Testet Datei OsBM1026.entTxt
+        procedure TestFileM1078; // Testet Datei OsBM1078.entTxt
+        procedure TestFileM1093; // Testet Datei OsBM1093.entTxt
+        procedure TestFileM1138; // Testet Datei OsBM1138.entTxt
+        procedure TestFileM1149; // Testet Datei OsBM1149.entTxt
+        procedure TestFileM1220; // Testet Datei OsBM1220.entTxt
+        procedure TestFileM1221; // Testet Datei OsBM1221.entTxt
+        procedure TestFileM1227; // Testet Datei OsBM1227.entTxt
+        procedure TestFileM1240; // Testet Datei OsBM1240.entTxt
+        procedure TestFileM1242; // Testet Datei OsBM1242.entTxt
+        procedure TestFileM1251; // Testet Datei OsBM1251.entTxt
+        procedure TestFileM1252; // Testet Datei OsBM1252.entTxt
+        procedure TestFileM1262; // Testet Datei OsBM1262.entTxt
+        procedure TestFileM1268; // Testet Datei OsBM1268.entTxt
+        procedure TestFileM1274; // Testet Datei OsBM1274.entTxt
+        procedure TestFileM1276; // Testet Datei OsBM1276.entTxt
+        procedure TestFileM1319; // Testet Datei OsBM1319.entTxt
+        procedure TestFileM1321; // Testet Datei OsBM1321.entTxt
+        procedure TestFileM1353; // Testet Datei OsBM1353.entTxt
+        procedure TestFileM1353a; // Testet Datei OsBM1353a.entTxt
+        procedure TestFileM1354; // Testet Datei OsBM1354.entTxt
+        procedure TestFileM1387; // Testet Datei OsBM1387.entTxt
+        procedure TestFileM1436; // Testet Datei OsBM1436.entTxt
+        procedure TestFileM2420; // Testet Datei OsBM2420.entTxt
+        procedure TestFileM2421; // Testet Datei OsBM2421.entTxt
     private
     end;
 
@@ -261,7 +276,29 @@ constructor TChildTest.Create(aParent :TTestFBEntryParserAll; aTestFile :string)
 begin
     fParent   := aParent;
     FTestFile := aTestFile;
-    TestName  := 'Test_' + ExtractFileNameWithoutExt(FTestFile);
+    TestName  := 'Test_' + ChangeFileExt( ExtractFileName(FTestFile),'');
+
+    // Automatische Zuordnung von Testkonfigurationen basierend auf dem Testdateinamen.
+    if FTestFile.Contains('GC5065') then
+      begin
+        // Testkonfiguration für GC5065
+      end
+    else if FTestFile.Contains('AK2421') then
+      begin
+        // Testkonfiguration für AK2421
+      end
+    else if FTestFile.Contains('OsBM') then
+      begin
+        // Testkonfiguration für OsBM-Dateien
+      end
+    else if FTestFile.Contains('OsBObr') then
+      begin
+        // Testkonfiguration für OsBObr-Dateien
+      end
+    else
+      begin
+        // Standard-Testkonfiguration
+      end;
 end;
 
 procedure TChildTest.RunTest;
@@ -821,6 +858,7 @@ const TestStr1 = '* 01.02.1734 in Bern';
 begin
     AddExpResult(['ParserIndiDate', '01.02.1734', 'I3705C2', Ord(evt_Birth)]);
     AddExpResult(['ParserIndiPlace', 'Bern', 'I3705C2', Ord(evt_Birth)]);
+    fParser.DebugSetMsg('','3705C2',4);
     fparser.HandleNonPersonEntry(TestStr1, 'I3705C2');
     CheckEquals(2, FRCounter, 'FRcounter');
 

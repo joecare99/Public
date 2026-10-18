@@ -1,11 +1,10 @@
 object fraPictureList: TfraPictureList
   Left = 0
-  Height = 769
+  Height = 615
   Top = 0
-  Width = 501
-  ClientHeight = 769
-  ClientWidth = 501
-  DesignTimePPI = 120
+  Width = 401
+  ClientHeight = 615
+  ClientWidth = 401
   ParentFont = False
   TabOrder = 0
   DesignLeft = 480
@@ -32,7 +31,7 @@ object fraPictureList: TfraPictureList
   object ilsDirImages: TBGRAImageList
     Height = 64
     Width = 64
-    Left = 135
-    Top = 436
+    Left = 108
+    Top = 349
   end
 end

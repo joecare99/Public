@@ -10,5 +10,11 @@
 {"hash":4786600,"name":"tform1.fraawhejview1.pagecontrol1.tbs1select.tblselectperson.columns[3].title.caption","sourcebytes":[66,105,114,116,104],"value":"Birth"},
 {"hash":346165,"name":"tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[0].title.caption","sourcebytes":[78,97,109,101],"value":"Name"},
 {"hash":94376180,"name":"tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomleft.tblspouses.columns[1].title.caption","sourcebytes":[72,111,99,104,122,101,105,116],"value":"Hochzeit"},
-{"hash":346165,"name":"tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomclient.tblchildren.columns[0].title.caption","sourcebytes":[78,97,109,101],"value":"Name"}
+{"hash":346165,"name":"tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2bottom.pnlp2bottomclient.tblchildren.columns[0].title.caption","sourcebytes":[78,97,109,101],"value":"Name"},
+{"hash":1448,"name":"tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2basedata.cbxsex.text","sourcebytes":[83,120],"value":"Sx"},
+{"hash":3116009,"name":"tform1.fraawhejview1.pagecontrol1.tbs2edit.pnlp2basedata.cbxreligion.text","sourcebytes":[40,114,101,108,41],"value":"(rel)"},
+{"hash":2044,"name":"tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton6.caption","sourcebytes":[124,60],"value":"|<"},
+{"hash":60,"name":"tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton7.caption","sourcebytes":[60],"value":"<"},
+{"hash":1116,"name":"tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton8.caption","sourcebytes":[62,124],"value":">|"},
+{"hash":62,"name":"tform1.fraawhejview1.pagecontrol1.tbs3details.pnlp3top.dbnavigator2.speedbutton9.caption","sourcebytes":[62],"value":">"}
 ]}
