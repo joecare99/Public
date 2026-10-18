@@ -10,8 +10,8 @@
       <SearchPaths>
         <IncludeFiles Value="..\..\include"/>
         <Libraries Value="$(PkgOutDir)"/>
-        <OtherUnitFiles Value="..\Source"/>
-        <UnitOutputDirectory Value="..\..\bin\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)"/>
+        <OtherUnitFiles Value="..\Source\BaseUnits"/>
+        <UnitOutputDirectory Value="..\..\bin\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)\$(BuildMode)"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>
@@ -27,40 +27,40 @@
     <Version Major="1" Release="1" Build="127"/>
     <Files Count="9">
       <Item1>
-        <Filename Value="..\Source\Unt_Allgfunklib.pas"/>
+        <Filename Value="..\Source\BaseUnits\Unt_Allgfunklib.pas"/>
         <UnitName Value="Unt_Allgfunklib"/>
       </Item1>
       <Item2>
-        <Filename Value="..\Source\Unt_StringProcs.pas"/>
-        <UnitName Value="Unt_StringProcs"/>
+        <Filename Value="..\Source\BaseUnits\Unt_Autosave.pas"/>
+        <UnitName Value="Unt_Autosave"/>
       </Item2>
       <Item3>
-        <Filename Value="..\Source\Unt_VariantProcs.pas"/>
-        <UnitName Value="Unt_VariantProcs"/>
+        <Filename Value="..\Source\BaseUnits\Unt_ComboBoxExt.pas"/>
+        <UnitName Value="Unt_ComboBoxExt"/>
       </Item3>
       <Item4>
-        <Filename Value="..\Source\Unt_Autosave.pas"/>
-        <UnitName Value="Unt_Autosave"/>
+        <Filename Value="..\Source\BaseUnits\Unt_VariantProcs.pas"/>
+        <UnitName Value="Unt_VariantProcs"/>
       </Item4>
       <Item5>
-        <Filename Value="..\Source\Unt_FileProcs.pas"/>
-        <UnitName Value="Unt_FileProcs"/>
+        <Filename Value="..\Source\BaseUnits\Unt_StringProcs.pas"/>
+        <UnitName Value="Unt_StringProcs"/>
       </Item5>
       <Item6>
-        <Filename Value="..\Source\Unt_ComboBoxExt.pas"/>
-        <UnitName Value="Unt_ComboBoxExt"/>
+        <Filename Value="..\Source\BaseUnits\Unt_LogUnit.pas"/>
+        <UnitName Value="Unt_LogUnit"/>
       </Item6>
       <Item7>
-        <Filename Value="..\Source\Unt_ExecCommand.pas"/>
-        <UnitName Value="Unt_ExecCommand"/>
+        <Filename Value="..\Source\BaseUnits\Unt_LinList.pas"/>
+        <UnitName Value="Unt_LinList"/>
       </Item7>
       <Item8>
-        <Filename Value="..\Source\Unt_LinList.pas"/>
-        <UnitName Value="Unt_LinList"/>
+        <Filename Value="..\Source\BaseUnits\Unt_FileProcs.pas"/>
+        <UnitName Value="Unt_FileProcs"/>
       </Item8>
       <Item9>
-        <Filename Value="..\Source\Unt_LogUnit.pas"/>
-        <UnitName Value="Unt_LogUnit"/>
+        <Filename Value="..\Source\BaseUnits\Unt_ExecCommand.pas"/>
+        <UnitName Value="Unt_ExecCommand"/>
       </Item9>
     </Files>
     <LazDoc Paths="..\fpDoc"/>
