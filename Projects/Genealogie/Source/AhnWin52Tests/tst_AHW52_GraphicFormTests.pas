@@ -44,7 +44,7 @@ implementation
 uses
   Buttons, Classes, DB, Dialogs, ExtCtrls, Paradox, PrintersDlgs, StdCtrls,
   SysUtils, AncestorChartOptionsForm, GenealogyDataModule, Unit13,
-  Unit13GraphicTextHelpers;
+  GenealogyDataModuleAccess, Unit13GraphicTextHelpers;
 
 type
   TRecordingParadoxTable = class(TParadox)
@@ -684,6 +684,7 @@ var
   graphicForm: TForm13;
   dataModule: TGenealogyDataModule;
   previousDataModule: TGenealogyDataModule;
+  previousGenealogyDataModule: IGenealogyDataModule;
   personNumberField: TRecordingIntegerField;
   openCalls: TStringList;
   previousMode: string;
@@ -705,6 +706,8 @@ begin
   previousZoom := Unit13.GlobalVar_0061E120;
   graphicForm := TForm13.CreateNew(nil);
   previousDataModule := GenealogyDataModule.DataModule2;
+  previousGenealogyDataModule :=
+    GenealogyDataModuleAccess.GenealogyDataModule;
   dataModule := TGenealogyDataModule.CreateNew(nil);
   openCalls := TStringList.Create;
   personNumberField := TRecordingIntegerField.Create(dataModule);
@@ -721,6 +724,8 @@ begin
     personNumberField.Value := 42;
     dataModule.Table1Nummer := personNumberField;
     GenealogyDataModule.DataModule2 := dataModule;
+    GenealogyDataModuleAccess.GenealogyDataModule :=
+      CreateGenealogyDataModuleAdapter(dataModule);
     AncestorChartOptionsForm.GlobalVar_0253592C := '';
     Unit13.GlobalVar_02535388 := 1;
 
@@ -751,6 +756,8 @@ begin
     AssertEquals('The second scale-derived state rounds 0.63 * 120.', 76,
       Unit13.GlobalVar_011AD334);
   finally
+    GenealogyDataModuleAccess.GenealogyDataModule :=
+      previousGenealogyDataModule;
     GenealogyDataModule.DataModule2 := previousDataModule;
     AncestorChartOptionsForm.GlobalVar_0253592C := previousMode;
     Unit13.GlobalVar_02535388 := previousProgressState;
@@ -850,6 +857,7 @@ var
   graphicForm: TForm13;
   dataModule: TGenealogyDataModule;
   previousDataModule: TGenealogyDataModule;
+  previousGenealogyDataModule: IGenealogyDataModule;
   personNumberField: TRecordingIntegerField;
   openCalls: TStringList;
   previousMode: string;
@@ -862,6 +870,8 @@ var
   previousZoom: Extended;
 begin
   previousDataModule := GenealogyDataModule.DataModule2;
+  previousGenealogyDataModule :=
+    GenealogyDataModuleAccess.GenealogyDataModule;
   previousMode := AncestorChartOptionsForm.GlobalVar_0253592C;
   previousProgressState := Unit13.GlobalVar_02535388;
   previousResetState1 := Unit13.GlobalVar_0061E2F4;
@@ -894,6 +904,8 @@ begin
     personNumberField.Value := 42;
     dataModule.Table1Nummer := personNumberField;
     GenealogyDataModule.DataModule2 := dataModule;
+    GenealogyDataModuleAccess.GenealogyDataModule :=
+      CreateGenealogyDataModuleAdapter(dataModule);
     AncestorChartOptionsForm.GlobalVar_0253592C := Mode;
     Unit13.GlobalVar_02535388 := 1;
     Unit13.GlobalVar_0061E120 := 0.9;
@@ -935,6 +947,8 @@ begin
     AssertEquals('The second scrollbar resets before rendering.', 0,
       graphicForm.ScrollBar2.Position);
   finally
+    GenealogyDataModuleAccess.GenealogyDataModule :=
+      previousGenealogyDataModule;
     GenealogyDataModule.DataModule2 := previousDataModule;
     AncestorChartOptionsForm.GlobalVar_0253592C := previousMode;
     Unit13.GlobalVar_02535388 := previousProgressState;

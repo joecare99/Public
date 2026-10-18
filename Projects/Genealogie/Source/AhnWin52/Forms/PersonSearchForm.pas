@@ -25,6 +25,7 @@ type
     SaveDialog1: TSaveDialog;
     procedure Button1Click(Sender : TObject);
     procedure FormActivate(Sender : TObject);
+    procedure ShowForSelection;
     procedure BitBtn2Click(Sender : TObject);
     procedure Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
     procedure Edit2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -682,6 +683,15 @@ begin
   Edit1.Text := '';
   Edit2.Text := '';
   ActiveControl := Edit1;
+end;
+
+procedure TPersonSearchForm.ShowForSelection;
+begin
+  if Edit1 = nil then
+    raise EInvalidOperation.Create(
+      'The person-search dialog has no first search edit.');
+  Edit1.Text := '';
+  ShowModal;
 end;
 
 procedure TPersonSearchForm.BitBtn2Click(Sender : TObject);

@@ -13,12 +13,13 @@ type
     procedure LocateMovesToMatchingRecord;
     procedure LocateMissPreservesCurrentRecord;
     procedure NavigationPostsPendingChanges;
+    procedure SQLDBLocateMatchesDuplicateValueInQueryOrder;
   end;
 
 implementation
 
 uses
-  BufDataset, DB, SysUtils;
+  BufDataset, DB, SQLDB, SQLite3Conn, SysUtils;
 
 type
   TTestableBufDataset = class(TBufDataset)
@@ -97,6 +98,72 @@ begin
       Fail('Navigation did not post the pending synthetic edit.');
   finally
     DataSet.Free;
+  end;
+end;
+
+procedure TTestAHW52SQLDBLocate.SQLDBLocateMatchesDuplicateValueInQueryOrder;
+var
+  Connection: TSQLite3Connection;
+  Transaction: TSQLTransaction;
+  SetupQuery: TSQLQuery;
+  DataSet: TSQLQuery;
+begin
+  Connection := TSQLite3Connection.Create(nil);
+  Transaction := TSQLTransaction.Create(nil);
+  SetupQuery := TSQLQuery.Create(nil);
+  DataSet := TSQLQuery.Create(nil);
+  try
+    Connection.DatabaseName := ':memory:';
+    Connection.OpenFlags := [sofReadWrite, sofCreate, sofMemory];
+    Connection.Transaction := Transaction;
+    Transaction.Database := Connection;
+    Connection.Connected := True;
+
+    SetupQuery.Database := Connection;
+    SetupQuery.Transaction := Transaction;
+    SetupQuery.SQL.Text :=
+      'create table places (id integer not null primary key, ' +
+      'ort varchar(40) not null)';
+    SetupQuery.ExecSQL;
+    SetupQuery.SQL.Text := 'create index ort_idx on places (ort)';
+    SetupQuery.ExecSQL;
+
+    SetupQuery.SQL.Text :=
+      'insert into places (id, ort) values (:id, :ort)';
+    SetupQuery.Params.ParamByName('id').AsInteger := 2;
+    SetupQuery.Params.ParamByName('ort').AsString := 'Dresden';
+    SetupQuery.ExecSQL;
+    SetupQuery.Params.ParamByName('id').AsInteger := 1;
+    SetupQuery.Params.ParamByName('ort').AsString := 'Dresden';
+    SetupQuery.ExecSQL;
+    SetupQuery.Params.ParamByName('id').AsInteger := 3;
+    SetupQuery.Params.ParamByName('ort').AsString := 'Berlin';
+    SetupQuery.ExecSQL;
+    Transaction.Commit;
+
+    DataSet.Database := Connection;
+    DataSet.Transaction := Transaction;
+    DataSet.SQL.Text := 'select id, ort from places order by id';
+    DataSet.Open;
+    AssertTrue('The SQLDB exact-field lookup should find a duplicate value.',
+      DataSet.Locate('ort', 'Dresden', []));
+    AssertEquals('Locate returns the first matching row in query order.',
+      1, DataSet.FieldByName('id').AsInteger);
+
+    DataSet.First;
+    AssertFalse('A missing exact value should not be found.',
+      DataSet.Locate('ort', 'Missing', []));
+    AssertEquals('A miss should preserve the current record in this query.',
+      1, DataSet.FieldByName('id').AsInteger);
+    AssertTrue('The query should remain before its first current record.',
+      DataSet.BOF);
+    AssertFalse('The miss should not move the query to EOF.', DataSet.EOF);
+  finally
+    DataSet.Free;
+    SetupQuery.Free;
+    Connection.Close;
+    Transaction.Free;
+    Connection.Free;
   end;
 end;
 

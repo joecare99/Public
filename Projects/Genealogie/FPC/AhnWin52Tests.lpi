@@ -35,7 +35,7 @@
         <PackageName Value="lazreport"/>
       </Item7>
     </RequiredPackages>
-    <Units Count="107">
+    <Units Count="131">
       <Unit0>
         <Filename Value="..\Source\AhnWin52Tests\AhnWin52Tests.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -488,7 +488,7 @@
         <IsPartOfProject Value="True"/>
       </Unit102>
       <Unit103>
-        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_FrenchRepublicanCalendarMenuTests.pas"/>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_CalendarMenuControllerTests.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit103>
       <Unit104>
@@ -503,6 +503,114 @@
         <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit16TextExportTests.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit106>
+      <Unit107>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_SelectionSearchLaunchTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit107>
+      <Unit108>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit11MetricsTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit108>
+      <Unit109>
+        <Filename Value="..\Source\AhnWin52\Reports\Unit15GlobalSearchRows.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit109>
+      <Unit110>
+        <Filename Value="..\Source\AhnWin52\Reports\Unit15SingleColumnRows.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit110>
+      <Unit111>
+        <Filename Value="..\Source\AhnWin52\Reports\Unit15SpitzbasRows.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit111>
+      <Unit112>
+        <Filename Value="..\Source\AhnWin52\Reports\Unit15Table22Rows.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit112>
+      <Unit113>
+        <Filename Value="..\Source\AhnWin52\Reports\Unit3RegisterRows.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit113>
+      <Unit114>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit3RegisterRowsTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit114>
+      <Unit115>
+        <Filename Value="..\Source\AhnWin52\Forms\Unit3MonthAbbreviation.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit115>
+      <Unit116>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit3MonthAbbreviationTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit116>
+      <Unit117>
+        <Filename Value="..\Source\AhnWin52\Forms\Unit3PlacePrefixReordering.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit117>
+      <Unit118>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit3PlacePrefixReorderingTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit118>
+      <Unit119>
+        <Filename Value="..\Source\AhnWin52\Forms\Unit3SixCharacterInteger.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit119>
+      <Unit120>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit3SixCharacterIntegerTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit120>
+      <Unit121>
+        <Filename Value="..\Source\AhnWin52\Forms\Unit3SixCharacterSpaceInteger.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit121>
+      <Unit122>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit3SixCharacterSpaceIntegerTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit122>
+      <Unit123>
+        <Filename Value="..\Source\AhnWin52\Forms\Unit3SourceTextNormalizer.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit123>
+      <Unit124>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit3SourceTextNormalizerTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit124>
+      <Unit125>
+        <Filename Value="..\Source\AhnWin52\Forms\Unit1ByteUppercase.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit125>
+      <Unit126>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit1ByteUppercaseTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit126>
+      <Unit127>
+        <Filename Value="..\Source\AhnWin52\Reports\Unit10EasterXmlRows.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit127>
+      <Unit128>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit10EasterXmlRowsTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit128>
+      <Unit129>
+        <Filename Value="..\Source\AhnWin52\Forms\Unit1DateDifferenceCore.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit129>
+      <Unit130>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit1DateDifferenceCoreTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit130>
+      <Unit131>
+        <Filename Value="..\Source\AhnWin52\Reports\Unit15SpitzbasModel.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit131>
+      <Unit132>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit15SpitzbasModelTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit132>
+      <Unit133>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit24RadioPresetTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit133>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

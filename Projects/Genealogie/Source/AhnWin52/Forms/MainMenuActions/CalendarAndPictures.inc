@@ -1,30 +1,68 @@
 { TForm1 menu-area implementations: CalendarAndPictures; LFM-bound method names remain on TForm1. }
 
 procedure TForm1.GregorianischerKalender1Click(Sender : TObject);
-var
-  calendarForm: TGregorianCalendarForm;
 begin
-  PageControl1.ActivePage := TabSheet2;
-  speich1(Sender);
-
-  calendarForm := TGregorianCalendarForm.Create(Self);
-  try
-    calendarForm.ViewModel := TGregorianCalendarViewModel.Create;
-    calendarForm.ShowModal;
-  finally
-    calendarForm.Free;
-  end;
+  ExecuteGregorianCalendarMenuAction(BuildCalendarMenuActions, Sender);
 end;
 
-procedure TForm1.SaveBeforeFrenchRepublicanCalendar(Sender: TObject);
+procedure TForm1.ActivateCalendarEditTab;
+begin
+  PageControl1.ActivePage := TabSheet2;
+end;
+
+procedure TForm1.SaveBeforeCalendar(Sender: TObject);
 begin
   speich1(Sender);
+end;
+
+function TForm1.CreateGregorianCalendarForm: TGregorianCalendarForm;
+begin
+  Result := TGregorianCalendarForm.Create(Self);
+end;
+
+procedure TForm1.ConfigureGregorianCalendarForm(
+  CalendarForm: TGregorianCalendarForm);
+begin
+  CalendarForm.ViewModel := TGregorianCalendarViewModel.Create;
+end;
+
+procedure TForm1.ShowGregorianCalendarForm(
+  CalendarForm: TGregorianCalendarForm);
+begin
+  CalendarForm.ShowModal;
+end;
+
+procedure TForm1.DisposeGregorianCalendarForm(
+  CalendarForm: TGregorianCalendarForm);
+begin
+  CalendarForm.Free;
+end;
+
+function TForm1.BuildCalendarMenuActions: TCalendarMenuActions;
+begin
+  Result.ActivateEditTab := @ActivateCalendarEditTab;
+  Result.SaveCurrentRecord := @SaveBeforeCalendar;
+  Result.CreateGregorianForm := @CreateGregorianCalendarForm;
+  Result.ConfigureGregorianForm := @ConfigureGregorianCalendarForm;
+  Result.ShowGregorianForm := @ShowGregorianCalendarForm;
+  Result.DisposeGregorianForm := @DisposeGregorianCalendarForm;
+  Result.CreateFrenchForm := @CreateFrenchRepublicanCalendarForm;
+  Result.AssignFrenchFormReference := @AssignFrenchCalendarFormReference;
+  Result.ShowFrenchForm := @ShowFrenchRepublicanCalendarForm;
+  Result.ReleaseFrenchForm := @ReleaseFrenchRepublicanCalendarForm;
+  Result.ClearFrenchFormReference := @ClearFrenchCalendarFormReference;
 end;
 
 function TForm1.CreateFrenchRepublicanCalendarForm:
   TFrenchRepublicanCalendarForm;
 begin
   Result := TFrenchRepublicanCalendarForm.Create(Self);
+end;
+
+procedure TForm1.AssignFrenchCalendarFormReference(
+  CalendarForm: TFrenchRepublicanCalendarForm);
+begin
+  FrenchRepublicanCalendarForm.Form7 := CalendarForm;
 end;
 
 procedure TForm1.ShowFrenchRepublicanCalendarForm(
@@ -37,6 +75,11 @@ procedure TForm1.ReleaseFrenchRepublicanCalendarForm(
   CalendarForm: TFrenchRepublicanCalendarForm);
 begin
   CalendarForm.Release;
+end;
+
+procedure TForm1.ClearFrenchCalendarFormReference;
+begin
+  FrenchRepublicanCalendarForm.Form7 := nil;
 end;
 
 { ASM listing resource map; extracted from commented binary evidence only.
@@ -52,24 +95,9 @@ Strings/files/dialog text: '[]Í@'; '�X����[]Í@'
   This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
 }
 procedure TForm1.FrzRevolutionskalender1Click(Sender : TObject);
-var
-  calendarForm: TFrenchRepublicanCalendarForm;
 begin
-  PageControl1.ActivePage := TabSheet2;
-  SaveBeforeFrenchRepublicanCalendar(Sender);
-
-  calendarForm := CreateFrenchRepublicanCalendarForm;
-  FrenchRepublicanCalendarForm.Form7 := calendarForm;
-  try
-    ShowFrenchRepublicanCalendarForm(calendarForm);
-  finally
-    try
-      ReleaseFrenchRepublicanCalendarForm(calendarForm);
-    finally
-      FrenchRepublicanCalendarForm.Form7 := nil;
-    end;
-  end;
-(*
+  ExecuteFrenchCalendarMenuAction(BuildCalendarMenuActions, Sender);
+(* 
 005EEBDC   55                     push    ebp
 005EEBDD   8BEC                   mov     ebp, esp
 005EEBDF   53                     push    ebx

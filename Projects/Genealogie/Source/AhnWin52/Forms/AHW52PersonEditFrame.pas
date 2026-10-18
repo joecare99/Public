@@ -6,17 +6,15 @@ interface
 
 uses
   Classes, SysUtils, LCLType, Forms, Controls, ComCtrls, ExtCtrls, StdCtrls,
-  Grids, FileCtrl, DbCtrls, DBGrids, GenealogyDataModule;
+  Grids, FileCtrl, DbCtrls, DBGrids, GenealogyDataModule,
+  GenealogyDataModuleAccess;
 
 type
   TPersonEditTabHostAction = (
-  peaTabSheet2Enter,
-  peaDBEdit69Change);
+    peaTabSheet2Enter);
 
   TPersonEditTabHostActionEvent = procedure(Sender: TObject;
     Action: TPersonEditTabHostAction) of object;
-  TPersonEditTabFocusRequestEvent = procedure(Sender: TObject;
-    Target: TWinControl) of object;
 
   TAHW52PersonEditFrame = class(TFrame)
   published
@@ -133,28 +131,33 @@ type
     procedure TabSheet2Show(Sender: TObject);
   private
     FOnHostAction: TPersonEditTabHostActionEvent;
-    FOnNavigatorBeforeAction: TDBNavClickEvent;
-    FOnFocusRequest: TPersonEditTabFocusRequestEvent;
+    FOnSaveRequested: TNotifyEvent;
     function GetFatherSearchText: string;
     function GetMotherSearchText: string;
-    procedure RequestFocus(Target: TWinControl);
+    procedure FocusControl(Target: TWinControl);
+    procedure RequirePlaceSearchGrid;
   public
     procedure FocusPrimaryField;
     procedure ShowSearchGrid;
+    procedure ResetPlaceSearchGrid;
+    procedure SetPlaceSearchHeader(const Header: string);
+    procedure AppendPlaceSearchGridRow(const TextCol0, TextCol1, TextCol2,
+      TextCol3: string; var RowIndex: Integer);
     procedure ShowProgress;
     procedure AppendSearchGridRow(const TextCol0, TextCol1: string;
       var RowIndex: Integer);
     property OnHostAction: TPersonEditTabHostActionEvent
       read FOnHostAction write FOnHostAction;
-    property OnNavigatorBeforeAction: TDBNavClickEvent
-      read FOnNavigatorBeforeAction write FOnNavigatorBeforeAction;
-    property OnFocusRequest: TPersonEditTabFocusRequestEvent
-      read FOnFocusRequest write FOnFocusRequest;
+    property OnSaveRequested: TNotifyEvent
+      read FOnSaveRequested write FOnSaveRequested;
     property FatherSearchText: string read GetFatherSearchText;
     property MotherSearchText: string read GetMotherSearchText;
   end;
 
 implementation
+
+uses
+  AHW52LegacySharedState;
 
 {$R *.lfm}
 
@@ -168,20 +171,65 @@ begin
   Result := Edit2.Text;
 end;
 
-procedure TAHW52PersonEditFrame.RequestFocus(Target: TWinControl);
+procedure TAHW52PersonEditFrame.FocusControl(Target: TWinControl);
+var
+  parentForm: TCustomForm;
 begin
-  if Assigned(FOnFocusRequest) then
-    FOnFocusRequest(Self, Target);
+  parentForm := GetParentForm(Self);
+  if parentForm = nil then
+    raise EInvalidOperation.Create(
+      'The person-edit frame must belong to a form before changing focus.');
+  parentForm.ActiveControl := Target;
+end;
+
+procedure TAHW52PersonEditFrame.RequirePlaceSearchGrid;
+begin
+  if (StringGrid5 = nil) or (StringGrid5.ColCount < 4) then
+    raise EInvalidOperation.Create(
+      'The place-search grid must provide four columns.');
 end;
 
 procedure TAHW52PersonEditFrame.FocusPrimaryField;
 begin
-  RequestFocus(DBEdit2);
+  FocusControl(DBEdit2);
 end;
 
 procedure TAHW52PersonEditFrame.ShowSearchGrid;
 begin
   StringGrid5.Show;
+end;
+
+procedure TAHW52PersonEditFrame.ResetPlaceSearchGrid;
+var
+  rowIndex: Integer;
+  columnIndex: Integer;
+begin
+  RequirePlaceSearchGrid;
+
+  for rowIndex := StringGrid5.RowCount - 1 downto 0 do
+    for columnIndex := 0 to 3 do
+      StringGrid5.Cells[columnIndex, rowIndex] := '';
+  StringGrid5.RowCount := 1;
+end;
+
+procedure TAHW52PersonEditFrame.SetPlaceSearchHeader(const Header: string);
+begin
+  RequirePlaceSearchGrid;
+
+  StringGrid5.Cells[1, 0] := Header;
+end;
+
+procedure TAHW52PersonEditFrame.AppendPlaceSearchGridRow(const TextCol0,
+  TextCol1, TextCol2, TextCol3: string; var RowIndex: Integer);
+begin
+  RequirePlaceSearchGrid;
+
+  Inc(RowIndex);
+  StringGrid5.RowCount := StringGrid5.RowCount + 1;
+  StringGrid5.Cells[0, RowIndex] := TextCol0;
+  StringGrid5.Cells[1, RowIndex] := TextCol1;
+  StringGrid5.Cells[2, RowIndex] := TextCol2;
+  StringGrid5.Cells[3, RowIndex] := TextCol3;
 end;
 
 procedure TAHW52PersonEditFrame.ShowProgress;
@@ -204,8 +252,8 @@ end;
 
 procedure TAHW52PersonEditFrame.DBNavigator1BeforeAction(Sender: TObject; Button: TDBNavButtonType);
 begin
-  if Assigned(FOnNavigatorBeforeAction) then
-    FOnNavigatorBeforeAction(Sender, Button);
+  if Assigned(FOnSaveRequested) then
+    FOnSaveRequested(Sender);
 end;
 
 procedure TAHW52PersonEditFrame.DBNavigator1Click(Sender: TObject; Button: TDBNavButtonType);
@@ -306,6 +354,7 @@ end;
 
 procedure TAHW52PersonEditFrame.DBCheckBox1Exit(Sender: TObject);
 begin
+  RequireGenealogyDataModule.Table1.Refresh;
 end;
 
 procedure TAHW52PersonEditFrame.UpDown1Click(Sender: TObject; Button: TUDBtnType);
@@ -314,8 +363,7 @@ end;
 
 procedure TAHW52PersonEditFrame.DBEdit69Change(Sender: TObject);
 begin
-  if Assigned(FOnHostAction) then
-    FOnHostAction(Sender, peaDBEdit69Change);
+  ResetPersonEditSearchState;
 end;
 
 procedure TAHW52PersonEditFrame.DBGrid3DblClick(Sender: TObject);
@@ -326,7 +374,7 @@ procedure TAHW52PersonEditFrame.DBGrid3Exit(Sender: TObject);
 begin
   DBGrid3.Visible := False;
   Label81.Visible := False;
-  RequestFocus(DBComboBox3);
+  FocusControl(DBComboBox3);
 end;
 
 procedure TAHW52PersonEditFrame.DBGrid3KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -336,7 +384,7 @@ begin
     DBComboBox3.Text := '';
     DBGrid3.Visible := False;
     Label81.Visible := False;
-    RequestFocus(DBComboBox3);
+    FocusControl(DBComboBox3);
   end;
 end;
 

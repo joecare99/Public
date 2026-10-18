@@ -44,6 +44,9 @@ implementation
 
 {$IFDEF FPC} {$R *.LFM}       {$ELSE} {$R *.DFM}       {$ENDIF}
 
+uses
+  FrenchRepublicanComplementaryDays;
+
 procedure TFrenchRepublicanCalendarForm.berechnen;
 var
   republicanYear: string;
@@ -85,14 +88,14 @@ begin
   invalidComplementaryDay := False;
   if ComboBox1.ItemIndex < 30 then
     baseDate := baseDate + StrToInt(republicanDay) - 1
-  else if (republicanDay > '30') and (republicanDay <= 'jrev') then
-  begin
-    if (Trim(ComboBox2.Text) = 'Fructidor') and
-      (ComboBox3.ItemIndex in [2, 6, 10]) then
-      baseDate := baseDate + ComboBox1.ItemIndex
-    else
-      invalidComplementaryDay := True;
-  end;
+  else
+    case ClassifyFrenchRepublicanComplementaryDay(republicanDay,
+      ComboBox2.Text, ComboBox3.ItemIndex) of
+      frcdValid:
+        baseDate := baseDate + ComboBox1.ItemIndex;
+      frcdInvalid:
+        invalidComplementaryDay := True;
+    end;
 
   if invalidComplementaryDay then
   begin

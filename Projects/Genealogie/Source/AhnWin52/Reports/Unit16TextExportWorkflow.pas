@@ -7,7 +7,7 @@ unit Unit16TextExportWorkflow;
 interface
 
 uses
-  Classes, DB, SysUtils;
+  Classes, DB, SysUtils, Unit16ExportCompatibilityError;
 
 type
   TUnit16TextExportContext = record
@@ -39,10 +39,10 @@ type
   end;
 
   EUnit16ExportFieldMissing = class(Exception);
+  EUnit16ExportStateUnavailable = class(Exception);
 
 var
-  { These globals retain their binary cell names; the original app populates
-    them outside the recovered Unit16 handler. }
+  { Assembly producers are known, but the FPC tree has no active Pascal writers. }
   GlobalVar_02535930: string;
   GlobalVar_02535934: string;
   GlobalVar_02535438: string;
@@ -50,6 +50,7 @@ var
 procedure ExecuteUnit16TextExport(const Context: TUnit16TextExportContext;
   Table14, Table22, Table27: TDataSet;
   const Writer: IUnit16TextExportWriter);
+procedure ValidateUnit16ExportTextState(const Context: TUnit16TextExportContext);
 
 implementation
 
@@ -113,6 +114,44 @@ begin
     (ReportKind = 'Sppo') or (ReportKind = 'Vorf') or
     (ReportKind = 'Nach') or (ReportKind = 'Schacht') or
     (ReportKind = 'Tiny');
+end;
+
+procedure RequireSupportedReportKind(const ReportKind: string);
+begin
+  if not IsSupportedReportKind(ReportKind) then
+    raise EUnit16ExportOperationUnsupported.Create(
+      'text report kind "' + ReportKind + '"');
+end;
+
+procedure RequireAddressState(const StateText, StateName: string);
+begin
+  if StateText = '' then
+    raise EUnit16ExportStateUnavailable.CreateFmt(
+      'Unit16 export state "%s" has no mapped FPC producer.', [StateName]);
+end;
+
+procedure ValidateUnit16ExportTextState(
+  const Context: TUnit16TextExportContext);
+begin
+  RequireSupportedReportKind(Context.ReportKind);
+
+  if (Context.ReportKind = 'NLBO') or (Context.ReportKind = 'OLPN') or
+     (Context.ReportKind = 'Sppr') or (Context.ReportKind = 'Sppo') or
+     (Context.ReportKind = 'Schacht') then
+    RequireAddressState(Context.HeaderText02535930, 'GlobalVar_02535930');
+
+  if (Context.ReportKind = 'Vorf') or (Context.ReportKind = 'famb') or
+     (Context.ReportKind = 'Nach') or (Context.ReportKind = 'Schacht') then
+    RequireAddressState(Context.HeaderText02535934, 'GlobalVar_02535934');
+
+  if (Context.ReportKind = 'OFB') and
+     not HasListCaption(Context.ReportCaption) then
+    RequireAddressState(Context.HeaderText02535438, 'GlobalVar_02535438');
+
+  if (Context.ReportKind = 'Nach') and
+     not HasListCaption(Context.ReportCaption) then
+    RequireAddressState(Context.HeaderText0061E028,
+      'Unit19.GlobalVar_0061E028');
 end;
 
 procedure WriteSeparator(const Writer: IUnit16TextExportWriter;
@@ -355,6 +394,8 @@ begin
     raise EArgumentNilException.Create('Writer');
 
   try
+    RequireSupportedReportKind(Context.ReportKind);
+
     html := IsHtmlFileName(Context.FileName);
     htmlSuffix := '';
     if html then
@@ -362,9 +403,6 @@ begin
       htmlSuffix := '<p>';
       WriteHtmlPrologue(Writer);
     end;
-
-    if not IsSupportedReportKind(Context.ReportKind) then
-      Exit;
 
     WriteReportHeading(Context, htmlSuffix, Writer);
     WriteReportRows(Context, Table14, Table22, Table27, htmlSuffix, Writer);

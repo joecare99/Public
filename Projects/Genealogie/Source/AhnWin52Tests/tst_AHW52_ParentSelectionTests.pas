@@ -13,6 +13,7 @@ type
     procedure TestCaseUppercaseMAssignsFather;
     procedure TestCaseUppercaseWAssignsMother;
     procedure TestCaseOtherGenderValuesDoNotAssign;
+    procedure TestCaseRepeatedParentReferencesRemainOnChildRows;
     procedure TestCaseNilDataSetIsRejected;
   end;
 
@@ -30,6 +31,22 @@ begin
   Result.CreateTable;
   Result.Open;
   Result.AppendRecord([1001, 2001, 3001]);
+  Result.First;
+end;
+
+function CreateSyntheticFamily: TMemDataset;
+begin
+  Result := TMemDataset.Create(nil);
+  Result.FieldDefs.Add('NUMMER', ftInteger);
+  Result.FieldDefs.Add('VATER', ftInteger);
+  Result.FieldDefs.Add('MUTTER', ftInteger);
+  Result.CreateTable;
+  Result.Open;
+  Result.AppendRecord([100, 0, 0]);
+  Result.AppendRecord([200, 0, 0]);
+  Result.AppendRecord([301, 0, 0]);
+  Result.AppendRecord([302, 0, 0]);
+  Result.AppendRecord([303, 0, 0]);
   Result.First;
 end;
 
@@ -135,6 +152,59 @@ end;
 procedure TTestAHW52ParentSelection.TestCaseOtherGenderValuesDoNotAssign;
 begin
   TestOtherGenderValuesDoNotAssign;
+end;
+
+procedure TTestAHW52ParentSelection.
+  TestCaseRepeatedParentReferencesRemainOnChildRows;
+var
+  DataSet: TMemDataset;
+  ChildCount: Integer;
+  FatherReferenceCount: Integer;
+  MotherReferenceCount: Integer;
+begin
+  DataSet := CreateSyntheticFamily;
+  try
+    DataSet.First;
+    while not DataSet.EOF do
+    begin
+      if DataSet.FieldByName('NUMMER').AsInteger >= 301 then
+      begin
+        ApplySelectedParent(DataSet, 'M', 100);
+        DataSet.Post;
+        ApplySelectedParent(DataSet, 'W', 200);
+        DataSet.Post;
+      end;
+      DataSet.Next;
+    end;
+
+    ChildCount := 0;
+    FatherReferenceCount := 0;
+    MotherReferenceCount := 0;
+    DataSet.First;
+    while not DataSet.EOF do
+    begin
+      if DataSet.FieldByName('NUMMER').AsInteger >= 301 then
+      begin
+        Inc(ChildCount);
+        if DataSet.FieldByName('VATER').AsInteger = 100 then
+          Inc(FatherReferenceCount);
+        if DataSet.FieldByName('MUTTER').AsInteger = 200 then
+          Inc(MotherReferenceCount);
+      end
+      else if (DataSet.FieldByName('VATER').AsInteger <> 0) or
+        (DataSet.FieldByName('MUTTER').AsInteger <> 0) then
+        Fail('Parent selection changed a referenced parent row.');
+      DataSet.Next;
+    end;
+
+    AssertEquals('Synthetic child rows', 3, ChildCount);
+    AssertEquals('Children sharing the father reference', 3,
+      FatherReferenceCount);
+    AssertEquals('Children sharing the mother reference', 3,
+      MotherReferenceCount);
+  finally
+    DataSet.Free;
+  end;
 end;
 
 procedure TTestAHW52ParentSelection.TestCaseNilDataSetIsRejected;

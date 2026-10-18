@@ -740,6 +740,20 @@ object AHW52PersonDetailsFrame: TAHW52PersonDetailsFrame
       TabOrder = 1
       TabStop = False
     end
+    object Edit4: TEdit
+      Left = 115
+      Height = 24
+      Top = 379
+      Width = 25
+      AutoSize = False
+      Font.Color = clBlack
+      Font.Height = -12
+      Font.Name = 'Arial'
+      MaxLength = 2
+      ParentFont = False
+      TabOrder = 32
+      Visible = False
+    end
     object Edit30: TEdit
       Left = 153
       Height = 32

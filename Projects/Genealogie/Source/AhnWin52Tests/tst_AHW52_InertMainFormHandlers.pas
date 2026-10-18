@@ -13,11 +13,6 @@ type
     procedure TestListingProvenNoOpHandlersLeaveFormStateUnchanged;
   end;
 
-  TTestAHW52MainFormStringReset = class(TTestCase)
-  published
-    procedure TestDBEdit69ChangeClearsAddressBackedStrings;
-  end;
-
   TTestAHW52MainFormProgressLabelReset = class(TTestCase)
   published
     procedure TestLab18einResetsAndShowsProgressLabels;
@@ -72,40 +67,6 @@ begin
   end;
 end;
 
-procedure TTestAHW52MainFormStringReset.
-  TestDBEdit69ChangeClearsAddressBackedStrings;
-var
-  mainForm: TForm1;
-  previousFirstValue: string;
-  previousSecondValue: string;
-  previousThirdValue: string;
-begin
-  Application.Initialize;
-  previousFirstValue := GlobalVar_0061E0A0;
-  previousSecondValue := GlobalVar_0061E0A4;
-  previousThirdValue := GlobalVar_02535B58;
-  mainForm := TForm1.CreateNew(nil);
-  try
-    GlobalVar_0061E0A0 := 'first synthetic value';
-    GlobalVar_0061E0A4 := 'second synthetic value';
-    GlobalVar_02535B58 := 'third synthetic value';
-
-    mainForm.DBEdit69Change(nil);
-
-    if GlobalVar_0061E0A0 <> '' then
-      raise Exception.Create('DBEdit69Change must clear GlobalVar_0061E0A0.');
-    if GlobalVar_0061E0A4 <> '' then
-      raise Exception.Create('DBEdit69Change must clear GlobalVar_0061E0A4.');
-    if GlobalVar_02535B58 <> '' then
-      raise Exception.Create('DBEdit69Change must clear GlobalVar_02535B58.');
-  finally
-    GlobalVar_0061E0A0 := previousFirstValue;
-    GlobalVar_0061E0A4 := previousSecondValue;
-    GlobalVar_02535B58 := previousThirdValue;
-    mainForm.Free;
-  end;
-end;
-
 procedure TTestAHW52MainFormProgressLabelReset.
   TestLab18einResetsAndShowsProgressLabels;
 var
@@ -134,7 +95,6 @@ end;
 
 initialization
   RegisterTest(TTestAHW52InertMainFormHandlers);
-  RegisterTest(TTestAHW52MainFormStringReset);
   RegisterTest(TTestAHW52MainFormProgressLabelReset);
 
 end.

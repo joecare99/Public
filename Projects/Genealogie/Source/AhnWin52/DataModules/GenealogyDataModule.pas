@@ -3,7 +3,7 @@ unit GenealogyDataModule;
 interface
 
 uses
-   SysUtils, Classes, Graphics,
+   SysUtils, Classes, Graphics, GenealogyDataModuleAccess,
   Controls, Forms, Dialogs, StdCtrls, DB, sqldb, IBConnection, Cmp_SQLTable
   {$IFDEF FPC}, paradox{$ENDIF};
 
@@ -732,6 +732,10 @@ var
   DataModule2: TGenealogyDataModule;
   GlobalVar_0061DF0C: LongInt;
 
+function CreateGenealogyDataModuleAdapter(
+  ADataModule: TGenealogyDataModule): IGenealogyDataModule;
+function CreateTemporaryDataModuleAdapter(
+  ADataModule: TGenealogyDataModule): ITemporaryDataModule;
 
 implementation
 
@@ -740,6 +744,160 @@ implementation
 {$ELSE}
 {$R *.DFM}
 {$ENDIF}
+
+type
+  TGenealogyDataModuleAdapter = class(TInterfacedObject,
+    IGenealogyDataModule, ITemporaryDataModule)
+  private
+    FDataModule: TGenealogyDataModule;
+    function GetTable1: TDataSet;
+    function GetTable3: TDataSet;
+    function GetTable1Nummer: TField;
+    function GetTable1Vater: TField;
+    function GetTable1Mutter: TField;
+    function GetTable1Name: TField;
+    function GetTable1Vornamen: TField;
+    function GetTable1Religion: TField;
+    function GetTable5: TDataSet;
+    function GetTable5Numr: TField;
+    function GetTable5Epnum: TField;
+    function GetTable17: TDataSet;
+    function GetTable18: TDataSet;
+    function GetTable7: TDataSet;
+    function GetTable8: TDataSet;
+    function GetTable9: TDataSet;
+    function GetTable13: TDataSet;
+    function GetTable13Ort: TField;
+    procedure SetTable13Index(const IndexName: string);
+  public
+    constructor Create(ADataModule: TGenealogyDataModule);
+  end;
+
+constructor TGenealogyDataModuleAdapter.Create(
+  ADataModule: TGenealogyDataModule);
+begin
+  inherited Create;
+  if ADataModule = nil then
+    raise EDataModuleInterfaceUnavailable.Create(
+      'A genealogy data module is required by the adapter.');
+  FDataModule := ADataModule;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable1: TDataSet;
+begin
+  Result := FDataModule.Table1;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable3: TDataSet;
+begin
+  Result := FDataModule.Table3;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable1Nummer: TField;
+begin
+  Result := FDataModule.Table1Nummer;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable1Vater: TField;
+begin
+  Result := FDataModule.Table1Vater;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable1Mutter: TField;
+begin
+  Result := FDataModule.Table1Mutter;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable1Name: TField;
+begin
+  Result := FDataModule.Table1Name;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable1Vornamen: TField;
+begin
+  Result := FDataModule.Table1Vornamen;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable1Religion: TField;
+begin
+  Result := FDataModule.Table1Religion;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable5: TDataSet;
+begin
+  Result := FDataModule.Table5;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable5Numr: TField;
+begin
+  Result := FDataModule.Table5Numr;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable5Epnum: TField;
+begin
+  Result := FDataModule.Table5Epnum;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable17: TDataSet;
+begin
+  Result := FDataModule.Table17;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable18: TDataSet;
+begin
+  Result := FDataModule.Table18;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable7: TDataSet;
+begin
+  Result := FDataModule.Table7;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable8: TDataSet;
+begin
+  Result := FDataModule.Table8;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable9: TDataSet;
+begin
+  Result := FDataModule.Table9;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable13: TDataSet;
+begin
+  Result := FDataModule.Table13;
+end;
+
+function TGenealogyDataModuleAdapter.GetTable13Ort: TField;
+begin
+  Result := FDataModule.Table13Ort;
+end;
+
+procedure TGenealogyDataModuleAdapter.SetTable13Index(
+  const IndexName: string);
+begin
+  if SameText(IndexName, 'ort_') then
+  begin
+    FDataModule.Table13.IndexFieldNames := 'Ort';
+    Exit;
+  end;
+
+  raise EUnsupportedGenealogyDataIndex.CreateFmt(
+    'The genealogy data module does not support Table13 index "%s".',
+    [IndexName]);
+end;
+
+function CreateGenealogyDataModuleAdapter(
+  ADataModule: TGenealogyDataModule): IGenealogyDataModule;
+begin
+  Result := TGenealogyDataModuleAdapter.Create(ADataModule);
+end;
+
+function CreateTemporaryDataModuleAdapter(
+  ADataModule: TGenealogyDataModule): ITemporaryDataModule;
+begin
+  Result := TGenealogyDataModuleAdapter.Create(ADataModule);
+end;
 
 procedure TGenealogyDataModule._PROC_00533514(Sender : TObject);
 begin
