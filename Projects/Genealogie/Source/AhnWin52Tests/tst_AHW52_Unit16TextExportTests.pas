@@ -19,6 +19,8 @@ type
     procedure TestBaseReportSelectsTable27;
     procedure TestEmptyDatasetWritesHeaderAndFooter;
     procedure TestRequiredAddressStateIsNotSilentlyDefaulted;
+    procedure TestNachfahrenHeadingRequiresRecoveredText;
+    procedure TestUnsupportedReportKindIsRejectedBeforeWriting;
     procedure TestHtmlDetectionIsCaseSensitiveSubstringMatch;
     procedure TestMissingDatasetIsReportedAndWriterClosed;
     procedure TestMissingFieldIsReportedAndWriterClosed;
@@ -30,7 +32,8 @@ type
 implementation
 
 uses
-  Classes, MemDS, SysUtils, Unit16TextExportWorkflow;
+  Classes, MemDS, SysUtils, Unit16TextExportWorkflow,
+  Unit16ExportCompatibilityError;
 
 type
   TCollectingTextWriter = class(TInterfacedObject, IUnit16TextExportWriter)
@@ -325,6 +328,75 @@ begin
 
   context.HeaderText02535930 := 'Name list';
   ValidateUnit16ExportTextState(context);
+end;
+
+procedure TTestAHW52Unit16TextExport.
+  TestNachfahrenHeadingRequiresRecoveredText;
+var
+  context: TUnit16TextExportContext;
+  rejected: Boolean;
+begin
+  context := CreateContext('Nach', 'report.txt');
+  context.HeaderText02535934 := 'Descendant rows';
+  rejected := False;
+  try
+    ValidateUnit16ExportTextState(context);
+  except
+    on E: EUnit16ExportStateUnavailable do
+    begin
+      rejected := True;
+      AssertTrue(Pos('Unit19.GlobalVar_0061E028', E.Message) > 0);
+    end;
+  end;
+  AssertTrue(
+    'A non-list descendant export requires the recovered heading producer.',
+    rejected);
+
+  context.HeaderText0061E028 := 'Descendants of Ada';
+  ValidateUnit16ExportTextState(context);
+end;
+
+procedure TTestAHW52Unit16TextExport.
+  TestUnsupportedReportKindIsRejectedBeforeWriting;
+var
+  context: TUnit16TextExportContext;
+  writerObject: TCollectingTextWriter;
+  writer: IUnit16TextExportWriter;
+  rejected: Boolean;
+begin
+  context := CreateContext('Over', 'report.htm');
+  rejected := False;
+  try
+    ValidateUnit16ExportTextState(context);
+  except
+    on E: EUnit16ExportOperationUnsupported do
+    begin
+      rejected := True;
+      AssertEquals('text report kind "Over"', E.Operation);
+    end;
+  end;
+  AssertTrue('Global-search mode is not a Unit16 text-export contract.',
+    rejected);
+
+  writerObject := TCollectingTextWriter.Create;
+  writer := writerObject;
+  try
+    rejected := False;
+    try
+      ExecuteUnit16TextExport(context, nil, nil, nil, writer);
+    except
+      on E: EUnit16ExportOperationUnsupported do
+        rejected := True;
+    end;
+    AssertTrue('The text writer rejects an unsupported report kind.',
+      rejected);
+    AssertEquals('Unsupported HTML output must not leave a partial prologue.',
+      0, writerObject.Lines.Count);
+    AssertTrue('The writer is closed on the unsupported-kind error.',
+      writerObject.Closed);
+  finally
+    writer := nil;
+  end;
 end;
 
 procedure TTestAHW52Unit16TextExport.

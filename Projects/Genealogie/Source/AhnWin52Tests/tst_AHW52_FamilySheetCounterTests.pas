@@ -21,7 +21,7 @@ type
 implementation
 
 uses
-  Forms, Unit32;
+  AHW52LegacySharedState, Forms, Unit32;
 
 procedure TTestAHW52FamilySheetCounters.SetCleanupStrings(
   const value: string);

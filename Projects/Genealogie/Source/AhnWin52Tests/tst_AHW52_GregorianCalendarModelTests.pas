@@ -12,7 +12,13 @@ type
   published
     procedure TestCaseAllSupportedYears;
     procedure TestCaseKnownPlacements;
+    procedure TestUnit6PanelStartsAcrossSupportedYears;
     procedure TestCaseYearBounds;
+    procedure TestGregorianEasterKnownDates;
+    procedure TestGregorianEasterAcrossSupportedRange;
+    procedure TestGregorianEasterYearBounds;
+    procedure TestLiturgicalSundaySequenceForKnownEaster;
+    procedure TestLiturgicalSundaySequenceAcrossSupportedYears;
     procedure TestCaseViewModelContract;
   end;
 
@@ -151,9 +157,138 @@ begin
     VerifyKnownPlacements;
 end;
 
+procedure TTestAHW52GregorianCalendarModel.
+  TestUnit6PanelStartsAcrossSupportedYears;
+var
+  year: Integer;
+  grids: TCalendarDayGrids;
+  firstOfMonth: TDateTime;
+begin
+  for year := CalendarFirstSupportedYear to CalendarLastSupportedYear do
+  begin
+    BuildCalendarGrids(year, grids);
+
+    firstOfMonth := EncodeDate(year, 1, 1);
+    AssertCalendarCell(Format('%d January panel start', [year]), grids,
+      0, 3, DayOfWeek(firstOfMonth) - 1, 1);
+
+    firstOfMonth := EncodeDate(year, 5, 1);
+    AssertCalendarCell(Format('%d May panel start', [year]), grids,
+      1, 3, DayOfWeek(firstOfMonth) - 1, 1);
+
+    firstOfMonth := EncodeDate(year, 9, 1);
+    AssertCalendarCell(Format('%d September panel start', [year]), grids,
+      2, 3, DayOfWeek(firstOfMonth) - 1, 1);
+  end;
+end;
+
 procedure TTestAHW52GregorianCalendarModel.TestCaseYearBounds;
 begin
     VerifyYearBounds;
+end;
+
+procedure TTestAHW52GregorianCalendarModel.TestGregorianEasterKnownDates;
+begin
+  AssertEquals('1582 Gregorian reform year',
+    EncodeDate(1582, 4, 18), CalculateGregorianEasterDate(1582));
+  AssertEquals('1900 non-leap century',
+    EncodeDate(1900, 4, 15), CalculateGregorianEasterDate(1900));
+  AssertEquals('2000 leap century',
+    EncodeDate(2000, 4, 23), CalculateGregorianEasterDate(2000));
+  AssertEquals('2024',
+    EncodeDate(2024, 3, 31), CalculateGregorianEasterDate(2024));
+  AssertEquals('2100 non-leap century',
+    EncodeDate(2100, 3, 28), CalculateGregorianEasterDate(2100));
+  AssertEquals('2499 upper supported year',
+    EncodeDate(2499, 3, 29), CalculateGregorianEasterDate(2499));
+end;
+
+procedure TTestAHW52GregorianCalendarModel.
+  TestGregorianEasterAcrossSupportedRange;
+var
+  year: Integer;
+  easterDate: TDateTime;
+begin
+  for year := CalendarFirstSupportedYear to CalendarLastSupportedYear do
+  begin
+    easterDate := CalculateGregorianEasterDate(year);
+    AssertEquals(Format('%d Easter weekday', [year]), 1, DayOfWeek(easterDate));
+    if (easterDate < EncodeDate(year, 3, 22)) or
+      (easterDate > EncodeDate(year, 4, 25)) then
+      raise Exception.CreateFmt('Easter date for %d is outside March 22-April 25.',
+        [year]);
+  end;
+end;
+
+procedure TTestAHW52GregorianCalendarModel.TestGregorianEasterYearBounds;
+var
+  rejected: Boolean;
+begin
+  rejected := False;
+  try
+    CalculateGregorianEasterDate(CalendarFirstSupportedYear - 1);
+  except
+    on EConvertError do
+      rejected := True;
+  end;
+  if not rejected then
+    raise Exception.Create('Easter calculator accepted a year below the supported range.');
+
+  rejected := False;
+  try
+    CalculateGregorianEasterDate(CalendarLastSupportedYear + 1);
+  except
+    on EConvertError do
+      rejected := True;
+  end;
+  if not rejected then
+    raise Exception.Create('Easter calculator accepted a year above the supported range.');
+end;
+
+procedure TTestAHW52GregorianCalendarModel.
+  TestLiturgicalSundaySequenceForKnownEaster;
+var
+  dates: TLiturgicalSundayDates;
+  index: Integer;
+begin
+  dates := BuildLiturgicalSundayDates(EncodeDate(2024, 3, 31));
+  AssertEquals('Sequence count', LiturgicalSundayCount, Length(dates));
+  AssertEquals('First date is Easter minus 63 days',
+    EncodeDate(2024, 1, 28), dates[Low(dates)]);
+  AssertEquals('Easter is the tenth sequence date',
+    EncodeDate(2024, 3, 31), dates[9]);
+  AssertEquals('Last date is Easter plus 21 days',
+    EncodeDate(2024, 4, 21), dates[High(dates)]);
+
+  for index := Low(dates) to High(dates) do
+    AssertEquals(Format('Sequence date %d is Sunday', [index]),
+      1, DayOfWeek(dates[index]));
+end;
+
+procedure TTestAHW52GregorianCalendarModel.
+  TestLiturgicalSundaySequenceAcrossSupportedYears;
+var
+  year, index: Integer;
+  easterDate: TDateTime;
+  dates: TLiturgicalSundayDates;
+begin
+  for year := CalendarFirstSupportedYear to CalendarLastSupportedYear do
+  begin
+    easterDate := CalculateGregorianEasterDate(year);
+    dates := BuildLiturgicalSundayDates(easterDate);
+    AssertEquals(Format('%d first date', [year]),
+      easterDate - 63, dates[Low(dates)]);
+    AssertEquals(Format('%d last date', [year]),
+      easterDate + 21, dates[High(dates)]);
+    for index := Low(dates) to High(dates) do
+      AssertEquals(Format('%d sequence weekday %d', [year, index]),
+        1, DayOfWeek(dates[index]));
+    for index := Low(dates) + 1 to High(dates) do
+    begin
+      AssertEquals(Format('%d sequence interval %d', [year, index]),
+        7, Trunc(dates[index] - dates[index - 1]));
+    end;
+  end;
 end;
 
 procedure TTestAHW52GregorianCalendarModel.TestCaseViewModelContract;

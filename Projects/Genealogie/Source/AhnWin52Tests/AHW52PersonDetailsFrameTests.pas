@@ -5,30 +5,55 @@ unit AHW52PersonDetailsFrameTests;
 interface
 
 uses
-  AHW52PersonDetailsFrame, Controls, fpcunit, testregistry;
+  AHW52PersonDetailsFrame, Controls, fpcunit, StdCtrls, testregistry;
 
 type
   TTestAHW52PersonDetailsFrame = class(TTestCase)
-  private
-    FLastAction: TPersonDetailsTabHostAction;
-    FLastSender: TObject;
-    procedure RecordHostAction(Sender: TObject;
-      Action: TPersonDetailsTabHostAction);
   published
     procedure TestMainFormStreamsDetailsFrameAndPreservesBindings;
-    procedure TestOnlyExecutableRelationshipChangeForwardsToHost;
+    procedure TestReligionExitUsesGenealogyInterface;
+    procedure TestRelationshipChangeFocusesLocalEditControl;
   end;
 
 implementation
 
 uses
-  Forms, frmAhnenWinMain;
+  DB, Forms, GenealogyDataModule, GenealogyDataModuleAccess, MemDS,
+  frmAhnenWinMain;
 
-procedure TTestAHW52PersonDetailsFrame.RecordHostAction(Sender: TObject;
-  Action: TPersonDetailsTabHostAction);
+procedure TTestAHW52PersonDetailsFrame.TestReligionExitUsesGenealogyInterface;
+var
+  dataModule: TGenealogyDataModule;
+  dataSet: TMemDataset;
+  frame: TAHW52PersonDetailsFrame;
+  previousDataModule: IGenealogyDataModule;
 begin
-  FLastAction := Action;
-  FLastSender := Sender;
+  Application.Initialize;
+  previousDataModule := GenealogyDataModuleAccess.GenealogyDataModule;
+  dataSet := TMemDataset.Create(nil);
+  dataSet.FieldDefs.Add('Religion', ftString, 40);
+  dataSet.CreateTable;
+  dataSet.Open;
+  dataSet.Append;
+  dataModule := TGenealogyDataModule.CreateNew(nil);
+  frame := TAHW52PersonDetailsFrame.Create(nil);
+  try
+    dataModule.Table1Religion :=
+      dataSet.FieldByName('Religion') as TStringField;
+    GenealogyDataModuleAccess.GenealogyDataModule :=
+      CreateGenealogyDataModuleAdapter(dataModule);
+    frame.DBComboBox7.Text := 'Synthetic religion';
+
+    frame.DBComboBox7Exit(frame.DBComboBox7);
+
+    AssertEquals('The religion value is written through the interface-backed field.',
+      'Synthetic religion', dataSet.FieldByName('Religion').AsString);
+  finally
+    GenealogyDataModuleAccess.GenealogyDataModule := previousDataModule;
+    frame.Free;
+    dataModule.Free;
+    dataSet.Free;
+  end;
 end;
 
 procedure TTestAHW52PersonDetailsFrame.
@@ -45,8 +70,17 @@ begin
       mainForm.PersonDetailsFrame.Parent = mainForm.TabSheet3);
     AssertEquals('The details tab caption should remain unchanged.',
       'Details', mainForm.TabSheet3.Caption);
-    AssertEquals('The frame should own the original 71 tab controls.',
-      71, mainForm.PersonDetailsFrame.ComponentCount);
+    AssertEquals('The frame should own the original 71 controls and Edit4.',
+      72, mainForm.PersonDetailsFrame.ComponentCount);
+    AssertTrue('Edit4 should stream as a standard TEdit.',
+      mainForm.PersonDetailsFrame.Edit4 is TEdit);
+    AssertEquals(115, mainForm.PersonDetailsFrame.Edit4.Left);
+    AssertEquals(379, mainForm.PersonDetailsFrame.Edit4.Top);
+    AssertEquals(25, mainForm.PersonDetailsFrame.Edit4.Width);
+    AssertEquals(24, mainForm.PersonDetailsFrame.Edit4.Height);
+    AssertEquals(2, mainForm.PersonDetailsFrame.Edit4.MaxLength);
+    AssertFalse(mainForm.PersonDetailsFrame.Edit4.AutoSize);
+    AssertFalse(mainForm.PersonDetailsFrame.Edit4.Visible);
     AssertEquals('The religion combo should retain its original horizontal position.',
       261, mainForm.PersonDetailsFrame.DBComboBox7.Left);
     AssertEquals('The religion combo should retain its original vertical position.',
@@ -64,8 +98,6 @@ begin
     AssertTrue('The relationship combo exit event should belong to frame.',
       mainForm.PersonDetailsFrame.ComboBox5.OnExit =
         @mainForm.PersonDetailsFrame.ComboBox5Exit);
-    AssertTrue('The relationship change should retain its host action.',
-      Assigned(mainForm.PersonDetailsFrame.OnHostAction));
     AssertTrue('The hidden legacy key handler should retain a typed binding.',
       mainForm.PersonDetailsFrame.ComboBox1.OnKeyPress =
         @mainForm.PersonDetailsFrame.ComboBox1KeyPress);
@@ -81,36 +113,34 @@ begin
 end;
 
 procedure TTestAHW52PersonDetailsFrame.
-  TestOnlyExecutableRelationshipChangeForwardsToHost;
+  TestRelationshipChangeFocusesLocalEditControl;
 var
-  detailsFrame: TAHW52PersonDetailsFrame;
-  key: Char;
+  mainForm: TForm1;
 begin
   Application.Initialize;
-  detailsFrame := TAHW52PersonDetailsFrame.Create(nil);
+  mainForm := TForm1.Create(nil);
   try
-    detailsFrame.OnHostAction := @RecordHostAction;
+    AssertTrue('The Details frame should be streamed.',
+      Assigned(mainForm.PersonDetailsFrame));
+    mainForm.PersonDetailsFrame.ComboBox5Change(
+      mainForm.PersonDetailsFrame.ComboBox5);
+    AssertTrue('Relationship change should focus the frame-owned Edit4.',
+      mainForm.ActiveControl = mainForm.PersonDetailsFrame.Edit4);
 
-    detailsFrame.ComboBox5Change(detailsFrame.ComboBox5);
-    AssertEquals(Ord(pdaComboBox5Change), Ord(FLastAction));
-    AssertTrue(FLastSender = detailsFrame.ComboBox5);
-
-    detailsFrame.TabSheet3Enter(detailsFrame);
-    detailsFrame.DBEdit55Exit(detailsFrame.DBEdit55);
-    detailsFrame.ComboBox1Exit(detailsFrame.ComboBox1);
-    detailsFrame.ComboBox10Exit(detailsFrame.ComboBox10);
-    detailsFrame.ComboBox11Exit(detailsFrame.ComboBox11);
-    detailsFrame.ComboBox19Exit(detailsFrame.ComboBox19);
-    key := 'A';
-    detailsFrame.ComboBox1KeyPress(detailsFrame.ComboBox1, key);
-    AssertEquals('The inert local handlers should not dispatch to the host.',
-      Ord(pdaComboBox5Change), Ord(FLastAction));
-    AssertTrue('The inert local handlers should not replace the last sender.',
-      FLastSender = detailsFrame.ComboBox5);
-    AssertEquals('The unresolved legacy key event must leave its key intact.',
-      'A', key);
+    mainForm.PersonDetailsFrame.TabSheet3Enter(
+      mainForm.PersonDetailsFrame);
+    mainForm.PersonDetailsFrame.DBEdit55Exit(
+      mainForm.PersonDetailsFrame.DBEdit55);
+    mainForm.PersonDetailsFrame.ComboBox1Exit(
+      mainForm.PersonDetailsFrame.ComboBox1);
+    mainForm.PersonDetailsFrame.ComboBox10Exit(
+      mainForm.PersonDetailsFrame.ComboBox10);
+    mainForm.PersonDetailsFrame.ComboBox11Exit(
+      mainForm.PersonDetailsFrame.ComboBox11);
+    mainForm.PersonDetailsFrame.ComboBox19Exit(
+      mainForm.PersonDetailsFrame.ComboBox19);
   finally
-    detailsFrame.Free;
+    mainForm.Free;
   end;
 end;
 
