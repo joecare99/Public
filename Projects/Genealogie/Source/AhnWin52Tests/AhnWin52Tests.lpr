@@ -21,6 +21,7 @@ uses
   tst_AHW52_AttributeMaintenanceCancelTests,
   tst_AHW52_DBTablesCompatTests,
   tst_AHW52_IndexedLookupProviderTests,
+  tst_AHW52_IndexedSeekContractTests,
   tst_AHW52_LoginDialogTests,
   tst_AHW52_PasswordDialogTests,
   tst_AHW52_FokoRowDeletionTests,
@@ -95,6 +96,9 @@ uses
   tst_AHW52_Unit11MetricsTests,
   tst_AHW52_Unit23FokoReportTests,
   tst_AHW52_ReportPdfWriterTests,
+  tst_AHW52_ReportLifecycleContractTests,
+  tst_AHW52_MarriagePairTransactionContractTests,
+  tst_AHW52_MarriagePairDataModuleAdapterTests,
   tst_AHW52_Unit21FokoPreviewTests,
   tst_AHW52_Unit5ListReportTests,
   tst_AHW52_Unit25ListReportTests,
@@ -119,7 +123,10 @@ uses
   tst_AHW52_Unit19NoOpCallbackTests,
   tst_AHW52_Unit20FocusTests,
   tst_AHW52_ChoiceDialogCheckboxPresetTests,
-  tst_AHW52_QuickReportCompatTests;
+  tst_AHW52_QuickReportCompatTests,
+  tst_DBParadoxConnectionTests,
+  tst_DBParadoxSQLParserTests,
+  tst_DBParadoxWriteBufferTests;
 
 var
   TestRunner: TTestRunner;
