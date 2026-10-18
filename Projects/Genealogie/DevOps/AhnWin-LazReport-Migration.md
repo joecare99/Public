@@ -93,17 +93,29 @@ workflow preserves the case-sensitive `htm` substring test, HTML prologue,
 `<p>` and ancestor `<br>` emission, separators, report footer, and HTML close
 tags. Writer and dataset errors propagate; there is no empty success fallback.
 
-The string aliases `GlobalVar_02535930`, `GlobalVar_02535934`, and
-`GlobalVar_02535438` are address-named and do not yet have mapped FPC producers.
-`GlobalVar_0061E028` is read from Unit19. The FPC SQLDB tables currently have
-no configured connection, so a real export was deliberately not attempted.
-When a branch requires one of the unmapped strings, the form adapter raises
-`EUnit16ExportStateUnavailable` before creating the output file. Thirteen
-synthetic workflow tests and 23 save/preview-action tests pass; the complete
-FPCUnit suite passes 461/461. The test project compiles `Unit16.pas`;
-the main Debug build links but omits Unit16, so this does not establish the
-end-user runtime path. This save action does not migrate Unit16's QuickReport
-preview, print workflow, or separate PDF button.
+Static producer evidence is now mapped without treating listing-only handlers
+as executable FPC code. `$02535930` receives the global-search heading and
+other list headings; `$02535934` receives the global-search columns header and
+assembled descendant-list text; `$02535438` receives ancestor/descendant
+captions in the person-search listing. `Unit19.nachf` builds
+`GlobalVar_0061E028` from `ComboBox1.Text + ' von '`, but its active Pascal
+body is still absent. Thus these producer contracts exist in assembly
+evidence, while the FPC runtime aliases remain unpopulated by corresponding
+Pascal writers. The form adapter validates required strings before opening the
+output file, including the non-list `Nach` heading.
+
+The selector trace also distinguishes global search (`Over`) from Unit16's
+text-export contract. The global-search listing binds Table16/`over.db` to
+Unit15's fifteen fields; `Over` is not one of Unit16's supported text-export
+modes, whose table projections are Table14, Table22, and Table27. The
+synthetic workflow now rejects unsupported modes before writing any text or
+HTML; validation in the form adapter rejects them before creating a file.
+No provider or real output was used. Fifteen synthetic workflow tests and 23
+save/preview-action tests pass; the complete FPCUnit suite passes 496/496.
+The test project compiles `Unit16.pas`; the main Debug build links but omits
+Unit16, so this does not establish the end-user runtime path. This save action
+does not migrate Unit16's QuickReport preview, print workflow, or separate
+PDF button.
 
 ## Compile-compatibility boundary
 

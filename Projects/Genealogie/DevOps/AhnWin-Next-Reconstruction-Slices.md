@@ -5,7 +5,963 @@
 verified SynPDF/mORMot2 report-to-PDF adapters and migrate QuickReport report
 workflows to LazReport. The Ahnw50 DLL and its embedded license path are not
 target dependencies. Non-reporting relationship slices remain blocked on
-provider/schema evidence.
+provider parity and application-specific relationship rules.
+
+## Authorized test-copy BDE catalogue — completed 2026-10-18
+
+The authorized `C:\ProgramData\AHNENWIN Test` copy was inventoried and probed
+one table at a time with the standalone Delphi 9/BDE 5.2.0.2 read-only
+allowlisted harness. All 29 table files opened; provider metadata records 292
+fields, 76 index definitions, and 337 total rows. The probe did not log or
+copy record values. Per-table pre/post comparisons and a final whole-directory
+comparison against the 170-file SHA-256 baseline found no additions,
+removals, or changes. The probe, metadata catalogue, and exact runtime
+observations are documented in
+`DevOps\ReverseEngineering\AhnWin52-Authorized-BDE-Provider-Catalog.md`;
+the inventory/static reconciliation is in
+`DevOps\ReverseEngineering\AhnWin52-Authorized-Test-Data-Inventory.md`.
+
+Table13/`LOC.db` exposed a non-unique `Ort_` index, seven distinct test keys,
+hit/miss cursor states, a tested partial key and overlength key, and a
+closed-table `EDatabaseError`; the test copy contains no duplicate `Ort`.
+A separate artificial BDE fixture has now exercised duplicate positioning on
+a non-unique `Ort_` index. Table9/`AWD.DB` exposed its
+primary plus eight secondary indexes and bounded `First`/`Next`/`Last`
+states. These are BDE test-copy observations only: they do not establish
+SQLDB parity, memo decoding, all-table collation behavior, production
+relationship rules, or permission to activate application workflows.
+Keep `FindKey` integration, relationship writes, report producers, and
+production UI paths blocked until their separate contracts are verified.
+
+## Synthetic BDE / SQLDB lookup comparison — bounded result
+
+The consumer-backed cases and classifications are recorded in
+`ReverseEngineering\AhnWin52-BDE-SQLDB-Lookup-Comparison-Matrix.md`.
+Installed BDE 5.2.0.2 was tested on a disposable Paradox fixture with a
+non-unique `Ort_` index and duplicate artificial keys. The exact-key hit
+selected synthetic ID 1; the miss after `First` returned false and retained
+the current synthetic ID 1 with `BOF=True`, `EOF=False`, `RecNo=1`. Four
+fixture database/index files had no hash changes during the read-only lookup
+batch. Delphi's `AddIndex` required `ixCaseInsensitive` for this named
+single-field non-unique index; therefore case-folding parity is not claimed.
+
+An FPCUnit test exercises SQLDB's exact-field `Locate` on an in-memory SQLite
+database with duplicate values and an explicit `ORDER BY ID`: the same ID was
+selected because query order was fixed, and the miss preserved the current
+row with `BOF=True`, `EOF=False`. Focused tests pass 4/4; the full suite passes
+590/590. This limited observation does not emulate BDE named-index selection
+or composite key-prefix behavior (`num`, `vat`, `mut`), and it does not resolve
+the filtered Table9 stale-row dependency. The test exercises generic
+`TSQLQuery`, not the external `Cmp_SQLTable` implementation. `TSQLTable.FindKey`
+remains an explicitly unsupported operation; no facade or legacy handler was enabled.
+No authorized data table needed to be opened because the duplicate behavior
+was testable only with synthetic rows.
+
+## Continuation gate — no ready task — 2026-10-18
+
+The current session todo graph contains 482 completed tasks, 25 blocked tasks,
+and no pending or dependency-ready task. The guarded UI tab/close extension is
+now live-verified and complete: the native selection advanced 1 -> 2, the
+metadata-only profile contained no control text, and changed test-copy files
+were restored to an exact 170-file backup match. That result does not resolve
+the separate provider, report, relationship, or destructive-producer gates.
+The remaining blocked tracks require new evidence or authorization:
+authoritative Table9 relationship/provider rules; a caller-owned report
+dataset contract or separately approved visible observation; missing original
+source/build dependencies; or an independent ordering oracle. Repeating the
+completed exact-field synthetic comparison does not unblock any of these.
+
+The planned next relationship step is therefore evidence intake only. Request
+a metadata-only Table9 specification covering parent/child fields,
+cardinality, optionality, sentinel/self-reference rules, and update/delete/
+cancellation semantics; do not request genealogy records. Otherwise select a
+separately gated workstream and supply the exact missing evidence named by
+its blocker. Until then, keep provider integration, writes, destructive
+producers, and live report/UI paths blocked.
+
+## Paradox best-guess dispositions — 2026-10-18
+
+Two narrower Paradox investigation gates now have bounded evidence-based
+dispositions, documented in
+`ReverseEngineering\AhnWin52-Paradox-BestGuess-Resolution.md`.
+
+The fixture's exact history remains unknown, but duplicate snapshots and the
+metadata-only BDE catalogue independently support `Rufname=30` for the
+authorized test copy and identical Table9 index definitions. This is enough
+for static/test-copy metadata work; it does not resolve why the LFM says 40
+or why file timestamps/hashes changed. Preserve those as separate,
+unexplained claims rather than choosing a production width or assigning
+causation.
+
+The existing Delphi 9/BDE 5.2.0.2 synthetic Table27 probe inserted
+`Zebra synthetic` before `Alpha synthetic`, then traversed the generated
+`Namvg` secondary index and observed Alpha before Zebra. This is an
+independent BDE runtime oracle for distinct ASCII keys in that fixture, not a
+`.YG` parser, `intl850` collation proof, tie-order guarantee, or SQLDB
+contract. Both narrow investigation tasks may close; broader provenance,
+binary-tree reader, and production-provider work remain gated.
+
+## UI automation scope — selected tab and graceful-close actions
+
+`Source\AhnWin52UIAutomation` already provides a pinned external controller
+for the approved test executable. The separate `person-search` flow remains
+specific to `TForm3.Auswahl`; it is not reused for other screens.
+
+The tool provides metadata-only `inspect-metadata` and `read-fields`, which
+returns only explicitly selected visible edit/combo values (maximum 16), after
+fresh PID/executable/profile/structure checks and `--allow-read`. It now also
+has two independently guarded commands:
+
+- `next-tab` queries native tab selection/count, refuses wraparound, sends
+  exactly one `Ctrl+Tab`, and requires the selection to advance by one. Its
+  output profile has no visible control text; the existing `read-fields`
+  validator must still be given explicit handles matched to DFM/LFM evidence.
+  If Windows blocks foreground activation, it waits up to 30 seconds for
+  explicit user activation of the exact validated main window and sends no
+  input before verifying focus within the active tab.
+- `close` sends `WM_CLOSE` only to the validated main window, confirms the
+  known exit prompt with Ja/Yes, rejects the backup with Nein/No, and never
+  force-terminates the process. The explicit `--resume-backup` mode can
+  continue only a validated already-open backup prompt after a known accepted
+  exit phase. Unknown dialogs or mismatched controls stop.
+
+Delphi component names and dataset field bindings still require static
+DFM/LFM reconciliation. For `TMessageForm`, whose message label may not have
+an HWND, close automation uses only the known class, the expected two-step
+sequence, title constraints, process ownership, and exactly one Ja/Yes and
+Nein/No button; native `#32770` dialogs must expose matching prompt text.
+
+The FPC 3.2.2 build and 65 synthetic tests pass. Live `next-tab` is verified:
+the final fresh run advanced the native selection exactly from index 1 to 2,
+returned `next-tab-verified`, and saved a metadata-only post-profile with 194
+HWNDs and no visible text. A post-action validator bug found during the first
+input run was fixed and the entire action repeated successfully. Live graceful
+close is also verified; the final run used a fresh, verified 170-file backup,
+and all ten changed AWD files were restored and hash-verified. An earlier
+close attempt exercised `--resume-backup` after a transient invalid-HWND error
+during the prompt transition. No genealogy fields were read in these
+tab/close runs. The application is closed and the final test directory matches
+its backup exactly. This extension does not unblock Unit14, report, provider,
+or destructive producer routes. Details:
+`DevOps\ReverseEngineering\AhnWin52-UI-Automation-Tab-Close.md`.
+
+## Table27 schema and static producer trace — static matrix complete
+
+The authorized BDE catalogue resolves the `alfls.db` test-copy schema:
+`Kn` is 20 bytes, the table has zero records, and it has three ascending
+indexes (unique primary `Nr;Dsn`, non-unique `Ds` on `Dsn`, non-unique
+`namvg` on `Namvorn;Geb`). This does not establish producer behavior.
+
+The first static pass through `TForm1.spitzbas` maps modes `basa`, `Sppr`,
+and the defaulted `Sppo`; `Sppr` traverses Table24, while other modes
+traverse Table9. The routine also opens Table8/Table18, applies cutoff-year
+filters to Table8 and Table9 when the year is greater than 1, uses
+Table18 `num` and sex-dependent Table8 `vat`/`mut`, and selects Table27
+`ds`/`Namvg` before report preview. It directly assigns Table27
+`Kn`/`Namvorn`/`Kmt`. `aspitz` does not explicitly set the mode global.
+Cutoff filters are activated only for years greater than 1; at 1 or less,
+traversal continues without those filters.
+
+The full row matrix is now documented in
+`DevOps\ReverseEngineering\AhnWin52-Unit15-Report-Caller-Discovery.md`. It
+records the independent `Spitz`/`Basis` predicates, exact `Kn`/`Namvorn`/
+`Kmt` construction, event annotation precedence, lookup dependencies,
+append/post sequence, output indexes, and the no-rollback exception path.
+The exact partial-key call shape has additionally been exercised on synthetic
+Paradox fixtures with BDE 5.2.0.2: a blank Table18 index selection used the
+unnamed primary `Numr` index; one-part keys hit prefixes of `num`, `vat`, and
+`mut`; misses set `BOF` but retained the current record. An active Table8
+fixture filter using the exact cutoff expression excluded an earlier matching
+prefix record and `FindKey` selected the next visible record. A Table27-shaped
+fixture left unassigned `Dsn`, `Geb`, and `Sterb` NULL after `Append`/`Post`;
+its synthetic `Namvg` index traversed the rows by `Namvorn`. This does not
+establish original-runtime parity, locale-sensitive `FloatToStr`, or SQLDB
+behavior; ties and order under `ds` remain unresolved. A separate Table9-
+shaped primary-index fixture showed that a filtered-out `FindKey` returns
+false, sets `BOF`, and leaves the prior visible row current. Since the
+`Sppr` listing ignores that Boolean and reads Table9 fields afterward, this
+creates a measured stale-current-row dependency on installed BDE state.
+Correction from the complete instruction trace: the Table18 marriage lookup
+checks its Boolean; a miss branches around the `Verbind` read and adds no
+suffix, even though the synthetic BDE miss retained a row. Likewise, the
+filter check at cutoff year <=1 is skipped, not an early exit.
+
+Keep `restore-unit15-table27-spitzbas-producer` blocked. Do not execute
+`spitzbas`, `EmptyTable`, report/UI routes, or any authorized data. The
+standalone synthetic-only probe is
+`Source\AhnWin52\ReverseEngineering\Unit15CompositeFindKeyBDEProbe.dpr`.
+It confirms only installed-BDE behavior on artificial fixtures and does not
+establish SQLDB parity or authorize production integration. Further runtime
+probes should be opened only for a concrete reconstruction slice that needs
+a remaining contract.
+
+`Reports\Unit15SpitzbasModel.pas` now defines the separate provider-free
+synthetic contract. It accepts ordered row/lookup snapshots, constructs only
+`Kn`, `Namvorn`, and `Kmt`, keeps the unchecked `Sppr` Table9 current-row
+state explicit, reads Table18 `Verbind` only on hit, and consumes explicit
+Table8 result states for the `vat`/`mut`/inherited index paths. Cutoff input
+flags are synthetic provider outcomes; no filter engine, BDE index, final
+Table27 sort, or locale-specific `FloatToStr` is simulated. Focused tests use
+artificial data and compose the result with the existing Unit15 projection.
+The FPC test project builds; the model suite passes 11/11, the existing
+Unit15 report suite passes 26/26, and the full suite passes 583/583 at this
+checkpoint.
+`DevOps\ReverseEngineering\AhnWin52-Unit15-Spitzbas-Observation-Protocol.md`
+prepares but does not authorize a future disposable-copy observation.
+
+## Unit22 producer screen and Unit24 preset regression — 2026-10-18
+
+The next candidate screen found that Unit22's DFM-bound
+`TOKBottomDlg.SpeedButton1Click` starts by opening Table14, closing it,
+calling `EmptyTable`, reopening Table14, and opening Table15. It is not a
+safe provider-free candidate; the producer remains listing-only. Its
+`SpeedButton2Click` cancel route and counter helpers already have focused
+synthetic tests. Evidence:
+`DevOps\ReverseEngineering\AhnWin52-Unit22-TinyTafel-Producer-Boundary.md`.
+
+The same static screen identified a fully bounded test-only follow-up for
+Unit24. Its DFM/LFM-bound `RadioButton4Click` and `RadioButton5Click`
+directly set the same eleven checkboxes to all True or all False. The current
+implementation already matches the listing; added artificial tests for all
+target and untouched fields, without invoking datasets or report actions.
+Focused tests passed 3/3; the full suite passed 586/586 at that point.
+
+Followed the Unit24 screen through the independent `CheckBox17Click` and
+`CheckBox18Click` listings. Both bound handlers clear CheckBox18 only when
+CheckBox17 is unchecked; when it is checked, they leave its current state
+alone. Added synthetic tests for both branches and unrelated control state.
+The focused combined Unit24 suite passes 5/5; the full FPCUnit suite now
+passes 588/588. Evidence:
+`DevOps\ReverseEngineering\AhnWin52-Unit24-Radio-Presets.md`.
+
+**Next:** continue the evidence-only candidate screen. Keep Unit22's
+destructive Table14/15 route and all report/provider paths blocked. Restore
+only a complete method with explicit component/resource ownership and a
+provider-free synthetic boundary; otherwise record its exact blocker.
+
+## Latest candidate screen — Units4, 5, and 8
+
+The Unit5 and Unit8 retained listings contain only streamed component
+declarations and no Pascal methods. Unit8's DFM gives `Timer1` a 5000 ms
+interval but no `OnTimer` binding; the retained startup listing creates,
+shows, and updates Form8 before TForm1, and `TForm1.FormCreate` later closes
+it. This proves a startup-owned close, not timer behavior or the visual
+contract. The current FPC project uses a separate `frm_Splash` whose LFM
+binds its timer; do not treat that as evidence for legacy Unit8. Unit4 has a
+complete short listing for radio-button/modal-result changes and activation
+resets, but no corresponding Unit4 Pascal unit or DFM/LFM resource exists in
+the current FPC tree. Its component ownership and bindings cannot be
+reconciled for safe restoration. No production code or tests were added for
+these unavailable boundaries. Evidence:
+`DevOps\ReverseEngineering\AhnWin52-Unit8-Startup-Splash-Lifecycle.md`.
+
+The adjacent Unit1 helper candidate `TForm1.alineu` (`005E1DF8`) was also
+screened. Its complete listing calls `TDBDataSet.SetDatabaseName` on dozens
+of streamed datasets using the input string; it is a provider/data-module
+configuration route, not a pure string helper. Keep it outside the synthetic
+helper track and do not execute it without an explicitly approved isolated
+provider setup.
+
+The immediately preceding Unit7 bounded slice is complete:
+`TForm7.berechnen` now delegates its complementary-day eligibility check to
+the pure `FrenchRepublicanComplementaryDays` helper. Its 4 focused tests and
+the existing 14 calendar-form tests pass; both the test project and Debug main
+project build. An initial attempted invalid-form test showed that
+`ShowMessage` was not suppressed by the existing `Application.MessageBox`
+test hook, so that test was removed and the dialog path was not repeated.
+The full suite was not run. Do not rerun the About-form click test that
+previously produced Access Violations.
+
+**Next:** continue an evidence-only search for a complete helper whose
+arguments, outputs, and side effects are all explicit in a retained listing.
+Do not infer Unit4 resource/caller behavior or exercise any dialog, provider,
+database, report, file, or printer path. Record a block instead of
+reconstructing from a listing alone if no fully bounded candidate appears.
+
+## Unit1 grid column sizing
+
+The complete `TForm1.gridanp` listing at `005D3EF8` contains only width reads
+and `TCustomGrid.SetColWidths` calls. Its five original grids map to the
+current PersonEdit, Relationships, and Siblings frames through the streamed
+LFM resources. Restored the exact column-index/factor assignments in the
+current main form; the resize test now streams the frame controls, and the
+synthetic layout test verifies all 24 affected widths plus unchanged leading
+columns. The focused resize suite passes 2/2. The procedure was tested only
+with synthetic dimensions; no production resize, provider, or report route
+was executed.
+
+The legacy x86 listing mixes `Extended` and `Single` constants, while the
+current x86_64 FPC target has `Extended = Double`. Expressions and `Round`
+are preserved, but bit-for-bit behavior at every floating-point tie across
+those runtimes is not yet established. Evidence:
+`DevOps\ReverseEngineering\AhnWin52-Unit1-Grid-Column-Sizing.md`.
+
+**Next:** continue a bounded static screen for another complete
+provider-/file-free listing. Do not broaden locale-dependent date/float
+helpers or activate database, report, file, printer, or production UI paths.
+
+## Unit1 validated date-difference core
+
+Extracted the component arithmetic/label formatting from
+`TForm1.Proc_005D3B50` into `Forms\Unit1DateDifferenceCore.pas`. The current
+form method still performs the two locale-sensitive `StrToDate` validations
+and parses the same original integer components before delegating; fallback
+and exception behavior are unchanged. The helper preserves legacy day/month
+borrowing, positive-fragment emission, exact `J`/`M`/`T` suffixes, and the
+`OnlyYears` result. Seven focused synthetic tests cover same-date, month/year
+boundaries, leap February, year-only output, and negative components; they
+never call date parsing or any UI/provider route. Focused tests pass 7/7,
+the full suite passes 572/572, the test project builds, and the main Debug
+project builds. Evidence and the locale boundary:
+`DevOps\ReverseEngineering\AhnWin52-Unit1-Date-Difference-Core.md`.
+
+**Next:** screen remaining complete arithmetic/text helpers for boundaries
+independent of RTL locale, provider, file, and UI state. Keep
+`StrToDate`/`FloatToStr` semantics listing-only until authoritative runtime
+settings are available.
+
+## Unit17/19 corroboration of the Unit3 source-text normalizer
+
+Static comparison of `Projects_AhnenWin\Unit17.pas:0053D06C` and
+`Unit19.pas:00550DA0` confirms two independent copies of the transformation
+already reconstructed from `Unit3.pas:00576FF8`. Both preserve the same
+special-case order, exact tokens, fixed slices, nine-character repeated
+`Copy`, and byte-based punctuation logic. Neither callee reads form, global,
+dataset, file, or UI state. This strengthens the existing Unit3 helper
+evidence; no duplicate helper or production wiring is needed. Its prior
+focused suite passes 7/7 and the full suite had passed 536/536 at the
+documented checkpoint. Full comparison:
+`DevOps\ReverseEngineering\AhnWin52-Unit3-Source-Text-Normalizer.md`.
+
+## Unit19 three-character integer helper
+
+The static follow-up to the Unit17/19 normalizer comparison screened the
+adjacent Unit19 helper cluster. `00550AB8` and `00550BFC` corroborate the
+existing six-character zero-padding and byte-uppercase helpers. `00550B5C`
+is a separate pure formatter: it prefixes three spaces to `IntToStr` and
+copies a three-character suffix. Reconstructed as
+`Forms\Unit19ThreeCharacterSpaceInteger.pas` with focused tests; it remains
+unconnected to its database-backed report/list callers. The FPCUnit test
+project builds and the focused suite passes 3/3. Evidence:
+`DevOps\ReverseEngineering\AhnWin52-Unit19-Three-Character-Space-Integer.md`.
+
+## Unit1 picture-output filename helper
+
+The Unit1 helper cluster screen found an existing pure transformation at
+`005FCB74`, called by the BMP-to-JPEG menu handler. It extracts the basename,
+deletes the last three characters one at a time, then appends lowercase `jpg`;
+the caller's dialog, directory changes, conversion, and output write remain
+excluded. The current `TForm1.Proc_005FBFD8` already matches this listing.
+Added focused tests for path stripping, unconditional three-character
+replacement, short basenames, and empty input; only the helper is called.
+The FPCUnit project builds and the focused helper class passes 3/3.
+Evidence:
+`DevOps\ReverseEngineering\AhnWin52-Unit1-BMP-to-JPEG-Name-Helper.md`.
+
+The broader static screen also checked adjacent listing helpers in Units1, 13,
+19, and 26.
+Unit1 `005D3148`, Unit13 `005637C4`, Unit19 `00550AB8`, and Unit26 `0054F810`
+all repeat the existing six-character zero-padded integer suffix formatter.
+Unit13 `00563868` and Unit19 `00550BFC` repeat the byte-uppercase helper,
+including the three executable-confirmed German-byte mappings. These are
+corroborations, not new implementations.
+
+The nearest distinct candidates remain blocked: Unit1 `005D39D8` uses
+locale-sensitive `FloatToStr` with an unresolved low-level parameter
+contract; `005D3A70` uses locale-sensitive `StrToDate`/`DaysInAMonth` and
+suppresses conversion exceptions. No full-format-settings or caller contract
+was established in this screen, so they remain listing-only. Details are
+recorded in
+`DevOps\ReverseEngineering\AhnWin52-Unit3-String-Helper-Inventory.md`.
+Unit13's remaining nearby internals were excluded because they mutate shared
+geometry arrays or depend on canvas/form state.
+
+**Next safe step:** the application-source scan found no explicit locale
+override; keep the date and numeric-format routines listing-only unless
+authoritative runtime/locale evidence becomes available. Continue looking for
+an independently testable, locale-free helper. Do not run the BMP-to-JPEG
+menu action or its filesystem effects.
+
+## Unit1 weekday mapping corroboration
+
+The Unit1 `sub_005D7C50` listing confirms the existing weekday helper's
+fixed `DayOfWeek` mapping (`So` through `Sa`) and empty result after a failed
+`StrToDate`. The current helper and its tests already represent that mapping.
+The original call-site date format is not known, and the independent caller
+reads DataModule fields; neither the locale-sensitive parse nor the caller was
+executed. No code or provider wiring was added. Details:
+`DevOps\ReverseEngineering\AhnWin52-Unit1-Weekday-Abbreviation-Corroboration.md`.
+
+The static search of application-owned Unit1..Unit40 listings, the original
+DPR, and the current Pascal/LPR sources found no `ShortDateFormat` or
+`DateSeparator` override. The DPR shows initialization and form creation but
+does not resolve the RTL/OS locale active at runtime. The existing focused
+weekday suite passes 3/3 with explicit temporary format settings.
+
+**Next evidence task:** retain locale-sensitive `StrToDate`/`FloatToStr`
+helpers as listing-only unless authoritative Delphi runtime or original
+machine locale evidence becomes available. Continue with another retained
+helper only when its full contract is locale-independent and caller-free.
+Do not activate database, UI, file, report, or printer paths.
+
+## Unit1 source-text normalizer reuse
+
+Unit1 `sub_005D31EC` independently duplicates Unit3's reconstructed
+source-text transformation at `00576FF8`, including branch order, fixed
+slices, and byte-level fallback rules. The current
+`TForm1.Proc_005D32CC` now delegates to `NormalizeUnit3SourceText` instead
+of maintaining duplicate code. A synthetic parity test covers the special
+branches and fallback edge cases. The focused main-form helper suite passes
+4/4 and the standalone normalizer suite passes 7/7. No parser/provider caller
+was run. Evidence:
+`DevOps\ReverseEngineering\AhnWin52-Unit3-Source-Text-Normalizer.md`.
+
+## Unit11 activation handler — counter reset test
+
+The complete `TForm11.FormActivate` listing at `005CB49C` resets the shared
+print-page counter to zero; both form resources bind `OnActivate` to this
+handler. The current Pascal body already matches. Added one synthetic test
+that seeds and verifies the reset while restoring the global afterward.
+The focused Unit11 suite passes 6/6 and the complete FPCUnit suite passes
+551/551. Drawing, printer, and database workflows are not invoked. Details:
+`DevOps\ReverseEngineering\AhnWin52-Unit11-Activation-Counter.md`.
+
+## Unit20 lookup-click focus handler
+
+The DFM/LFM-bound `TForm20.dblookupcombobox1Click` listing at `005CC5A4`
+transfers focus to `Edit1`; the current Pascal assignment matches. Added a
+synthetic form/control test for the focus transition. The focused test passes
+1/1 and the full FPCUnit suite passes 553/553. The separate
+`FormActivate` handler binds `DataSource19` to the lookup and remains
+unexecuted because it crosses the provider/data-source boundary. Details:
+`DevOps\ReverseEngineering\AhnWin52-Unit20-Focus-Handler.md`.
+
+## Unit20 cancel button — global modal target preserved
+
+The DFM/LFM-bound `BitBtn2Click` listing at `005CC5CC` sets `mrCancel` on
+the global `Form20`, not on `Self`; the current code preserves this legacy
+target. Added a synthetic test with distinct receiver and global form
+instances. `BitBtn1Click` remains excluded because its producer performs
+provider-backed table operations including `EmptyTable`. Focused Unit20 tests
+pass 2/2 and the full FPCUnit suite passes 554/554. Details:
+`DevOps\ReverseEngineering\AhnWin52-Unit20-Cancel-Handler.md`.
+
+## Static candidate screen after Unit20 — no new safe handler selected
+
+The next resource-bound candidate screen checked the remaining retained
+Units21–40 against their current implementations and tests:
+
+- Unit21's grid sort/deletion actions use the FOKO dataset; its completion
+  action traverses fields and updates modal state, and its other action
+  configures a report preview or writes a text file.
+- Unit22's parameter action opens and empties a table before rebuilding it.
+  Unit23's synthetic report path and Unit25's report layout are already
+  covered, but neither supplies a production dataset producer contract.
+- Unit24's field-list controls have synthetic coverage. Unit26 includes a
+  save-file dialog; Unit28/29/36/39 list workflows use database
+  traversal/lookup. Unit30's activation/show path includes a Table38
+  `FindKey`; Unit32 loads image files; Unit33's editor uses Table13; Unit38
+  reads `foko.abk`.
+- Unit27 `FormShow` only selects `RadioButton2` and focuses `Edit1`; it is
+  already implemented and covered by
+  `tst_AHW52_GedcomDialogCancelTests`. Unit34 activation prefill, Unit35
+  option presets, and Unit37/40 local dialog actions likewise already have
+  synthetic coverage.
+- Unit31's retained IDR listing is present, but no current Pascal/resource
+  source exists under `Source\AhnWin52`; do not reconstruct a production
+  handler from a compiled artifact alone.
+
+No new implementation or test was justified. During a separate synthetic
+About-form click test, two Access Violation message boxes appeared. The user
+confirmed both were Access Violations; the unverified test/code edits were
+reverted, and that handler was not rerun. A build-only check of
+`FPC\AhnWin52Tests.lpi` succeeded; no test suite was run in this follow-up.
+The next action remains evidence-only screening for a fully bounded pure
+helper; do not activate provider-, file-, report-, or UI-dependent behavior
+without a synthetic contract and explicit safety boundary.
+
+## Unit6 close handler — modal lifecycle adaptation
+
+The original Form6 close listing restores `WindowState` to `wsNormal`, while
+the current calendar resets `ModalResult` to `mrNone`. The original and
+current menu routes both display the calendar modally and release it
+immediately afterward; both ignore the returned modal result. Thus neither
+closing-state mutation affects a caller decision or persists after disposal.
+Retain the current LCL-neutral result behavior and document the difference as
+a lifecycle adaptation, not exact listing parity. A focused synthetic test
+verifies `mrOk` is reset to `mrNone`; the calendar lifecycle suite passes
+3/3 and the full FPCUnit suite passes 552/552. Details:
+`DevOps\ReverseEngineering\AhnWin52-Unit6-Close-Event.md`.
+
+## Database structure template — catalogued, contracts still gated
+
+The metadata-only `AhnWin52Backup.Core` structure manifest was normalized to
+`DevOps\ReverseEngineering\AhnWin52-Structure-Template-Catalog.json` with
+18 tables, 168 fields, and 32 secondary indexes. The manifest's baseline
+payload was excluded and not read. Cross-reconciliation confirmed mappings
+for Table9/13/14/16/22, but it contains no `alfls.db`/Table27 definition and no
+relationship declarations. The repeated `Ort` entry in Table13's serialized
+`Ort_` key fields is explained by the backup generator's convention of
+appending the table's first field as the primary-key suffix; all 32 index
+definitions passed that consistency check. The unresolved Table9 `Rufname`
+length is 30 in the manifest vs. 40 in the current LFM. A static cross-check
+of Unit2 and the current DataModule LFM now records Table27's seven persistent
+field classes/order and available string sizes, but the LFM has no physical
+index definition and does not specify `Kn`'s size. That component-only gap is
+now resolved for the authorized test copy by BDE: `alfls.db` has seven fields,
+`Kn` size 20, zero records, and indexes on `Nr;Dsn` (unique primary), `Dsn`
+(`Ds`, non-unique), and `Namvorn;Geb` (`namvg`, non-unique). This does not
+resolve the producer's source traversal, mode filters, output order, or failure
+semantics. See
+`DevOps\ReverseEngineering\AhnWin52-Database-Structure-Manifest-Reconciliation.md`.
+Do not unblock relationship writes or the Table27 producer from schema
+metadata alone.
+
+## Unit3 string-helper triage — no new safe candidate
+
+Reviewed the remaining string-parameter routines in
+`Projects_AhnenWin\Unit3.pas` and string helpers in Units 1, 13, 17, and 18.
+The pure formatters, source-text normalizer, and month mapper are already
+reconstructed. Unit13 and Unit18 independently duplicate Unit3's source-text
+normalizer instruction-for-instruction, corroborating that helper. The other
+procedures either access fields/tables, read files, depend on global encoding,
+or call locale-sensitive `StrToDate` while mutating global date parts. Unit1's
+bytewise `ucase` candidate is now instruction-level characterized: it branches
+on input bytes `$E4`, `$F6`, and `$FC`, compares each one-byte substring to a
+literal, and appends a separate literal, while other bytes go through
+`UpperCase`. Although the listing has lost the six literal byte values, the
+user-supplied `C:\ProgramData\AHNENWIN Test\AHNWIN51.exe` confirms the exact
+mappings `$E4->$C4`, `$F6->$D6`, and `$FC->$DC`. The `Source\Projects_AhnenWin`
+Unit1/Unit3 listings are from IDR v.01.04.2017; the duplicate `TForm3.ucase`
+has matching mappings. Implemented as standalone
+`Forms\Unit1ByteUppercase.pas`, with focused tests for the three byte mappings,
+mixed strings, ASCII `UpperCase` fallback, and empty input. The focused tests
+pass 4/4 and the full suite passes 540/540. Exact Delphi `UpperCase` parity
+for other high bytes remains unverified; no legacy caller is wired to this
+helper. Details:
+`DevOps\ReverseEngineering\AhnWin52-Unit3-String-Helper-Inventory.md`.
+
+## Unit10 Easter computus — date core extracted, export path remains separate
+
+The IDR `TForm10.rechnen` listing at `0055A54C` contains a deterministic
+Gregorian Easter computus embedded in an XML export/UI routine. Extracted only
+the bounded date calculation into
+`Model\GregorianCalendarModel.pas::CalculateGregorianEasterDate`, retaining
+the source-supported year range 1582–2499 and the epact corrections. Tests
+cover known dates at reform/century boundaries and every supported year's
+Sunday/date-range invariant. Focused model tests pass 7/7; the full suite
+passes 543/543. Also extracted the subsequent date-only weekly sequence:
+the actual loop emits 13 Sundays, Easter minus 63 days through Easter plus
+21 days, inclusive. Though the fixed holiday-name string has 18 entries, the
+loop reads only its first 13 slots (ending at Jubilate); no behavior is
+inferred for the unused five labels. The focused suite passes 9/9 and the full
+suite now passes 545/545. Neither helper is wired into the legacy export
+path. The IDR loop also confirms a row format
+`<tbl><tab>NAME</tab><tab><rb>dd.mm.yyyy</rb></tab></tbl>` and wraps only the
+Ostern row in `<uesu>` tags. Added `Reports\Unit10EasterXmlRows.pas` as a pure
+in-memory adapter producing those 13 rows plus the wrapper lines. The next
+static comparison verified the remaining document lines and resolved the
+conversion-comment mismatch against the supplied `AHNWIN51.exe`: the binary
+contains the IDR's 5.1/2013 comment, not the current Unit10 Pascal constant's
+5.2/2019 value. `BuildUnit10EasterXmlDocumentLines` now composes the complete
+26-line document for supported years; focused tests pass 4/4 and the full
+suite passes 549/549. This is still in-memory only: it does not reproduce
+locale-sensitive `StrToDate`, Delphi text-file bytes/errors, invalid-year
+partial output, UI, or browser behavior. Evidence and the source mismatch are
+recorded in:
+`DevOps\ReverseEngineering\AhnWin52-Unit10-Easter-Computus.md`.
+
+## Unit9 About-dialog date formatting — locale contract retained
+
+`TForm9.FormActivate` formats the executable/database date cells with
+`DateToStr` before composing the two captions. The retained RTL listing routes
+`DateToStr` through global format settings initialized from the active thread
+locale; no fixed `ShortDateFormat` or `DateSeparator` assignment was found in
+the retained application sources. Thus the formatting contract is
+environment-dependent, and there is no justified constant-format helper to
+extract. The synthetic AboutForm test pins `dd.mm.yyyy` for predictable
+assertions and now restores `DefaultFormatSettings` afterward to avoid
+cross-test state leakage. The AboutForm suite passes 4/4 and the full FPCUnit suite passes 549/549.
+The target's active locale remains unverified. Details:
+`DevOps\ReverseEngineering\AhnWin52-Unit9-About-Date-Formatting.md`.
+Details:
+`DevOps\ReverseEngineering\AhnWin52-Unit9-About-Date-Formatting.md`.
+
+## Unit6 calendar-grid algorithm — independent listing corroboration
+
+The complete `TForm6.Kal` listing at `005CDC40` independently confirms the
+existing three-panel Gregorian grid projection: January/May/September start at
+column 3, Sunday–Saturday map to rows 0–6, and the week column advances after
+Saturday. Added an all-supported-years test for the three panel starts and
+weekday mapping; the focused calendar-model suite passes 10/10 and the full
+suite passes 550/550. This does not port the legacy UI routine: it reads the
+year via form state, calls locale-sensitive `StrToDate('01.01.' + year)`, and
+clears/populates StringGrids. Those effects remain excluded. Details:
+`DevOps\ReverseEngineering\AhnWin52-Unit6-Calendar-Grid-Corroboration.md`.
+
+A follow-up disassembly audit resolved `gridleeren`'s `SetCells` argument
+order using the retained `Grids.pas`: on the streamed 28-column by 7-row
+grids it clears visible columns 1–27 while preserving weekday-label column 0;
+its writes to rows 7–8 are outside the visible grid and do not change
+`RowCount`. `Kal` clears before it reads/converts the year, whereas the
+current form validates the ViewModel/year before clearing. Successful redraws
+have equivalent visible cell content, but direct-clear and invalid-year
+failure states differ. The user explicitly accepts this as an intentional
+improvement: an invalid year keeps the last valid calendar visible instead
+of clearing it before conversion fails. This is documented as a deliberate
+UX/robustness deviation, not exact legacy parity; no code change was needed.
+Locale-sensitive date parsing remains a separate unresolved boundary.
+
+## Static Unit15/Unit16 report-caller discovery — one route-specific field map
+
+The independent `Projects_AhnenWin\Unit1.pas` listing contains six explicit
+`TQuickRep.SetDataSet` assignments to `Form15.QuickRep1`. They do not share one
+dataset contract: `spitzbas` binds Table27 (`$01F8`) to `QRDBText1=namvorn` and
+`QRDBText2=kn`; `druck`, `geschachtelt1Click`, and
+`Einzelpersonenmarkieren1Click` bind Table14 (`$00E0`) to `QRDBText1=zeile`;
+`Vorlist` binds Table14 to `zeile`/`nm`; and the DFM-bound global-search action
+`drucken1Click` binds Table16 (`$00EC`) to all fifteen text controls. The
+last route's ordered fields are `name`, `nummer`, `gebtag`, `gebmonat`,
+`gebjahr`, `gebort`, `sttag`, `stmonat`, `stjahr`, `stort`, `htag`,
+`hmonat`, `hjahr`, `hort`, and `hname`.
+
+The table/field identities are independently corroborated by
+`Projects_AhnenWin\Unit2.pas` and the current streamed DataModule: Table14 is
+`OUTP.db` with `Zeile`/`Nm`; Table16 is `over.db` with all fifteen mapped
+fields (plus `Nn` and `Geschlecht`); and Table27 is `alfls.db` with `Kn` and
+`Namvorn`. The original `Form15.dfm` has fifteen `QRDBText` controls whose
+default `DataField` values are their component names, but no `DataSet` or
+`DataSource`. Thus the global-search caller supplies a complete, specific
+projection; it does not establish a generic contract for all Unit15 callers.
+That caller shows `Keine Suchergebnisse vorhanden.` when Table16 is empty and
+honors cancellation of its report-heading prompt before report setup.
+
+The `spitzbas` route has a statically verified, route-specific pair: Table27
+(`alfls.db`) maps `QRDBText1=Namvorn` and `QRDBText2=Kn`, corroborated by the
+independent Unit1 caller listing, Unit2 component map, and current DataModule
+LFM. However, `spitzbas` closes and empties Table27 before rebuilding it from
+other tables through mode-dependent provider operations. Keep that producer
+blocked; do not activate or test it against a database. Details are in
+`DevOps\ReverseEngineering\AhnWin52-Unit15-Report-Caller-Discovery.md`.
+
+## Unit3 month abbreviation normalizer — synthetic only
+
+The retained `Projects_AhnenWin\Unit3.pas` listing at `00577544` maps the 16
+tokens `JAN`, `FEB`, `MAR`, `MÄR`, `APR`, `MAY`, `MAI`, `JUN`, `JUL`, `AUG`,
+`SEP`, `OCT`, `OKT`, `NOV`, `DEC`, and `DEZ` to `01`–`12`. Unmapped input is
+trimmed and truncated to its first two characters. Seven calls in
+`TForm3.zsa` pass three-character substrings to the helper. A read-only byte
+check confirms that the retained `MÄR` token stores `$C4` between `M` and `R`.
+
+Added `Forms\Unit3MonthAbbreviation.pas` and focused tests for every month
+alias, fallback behavior, case sensitivity, and matching before trimming.
+The helper remains standalone and is not wired into `zsa` or any
+provider-backed data/report workflow. Evidence:
+`DevOps\ReverseEngineering\AhnWin52-Unit3-Month-Abbreviation.md`.
+The focused suite passes 3/3, and the complete FPCUnit suite passes 517/517.
+
+## Unit3 numeric place-prefix reordering — synthetic only
+
+The retained Unit3 listing at `0057893C` implements a two-string
+transformation: preserve input unless its first character is a digit; then
+move the text after the first space before the initial numeric prefix. It
+uses `Length(Trim(input))` as the `Copy` count while slicing the original
+input, so no-space input acquires a trailing space and some trailing
+whitespace is retained. The standalone
+`Forms\Unit3PlacePrefixReordering.pas` preserves these exact edge semantics.
+Focused tests cover unchanged input, reordering, only-first-space behavior,
+the no-space case, and leading whitespace. This helper is not wired into any
+production UI/provider route. Evidence:
+`DevOps\ReverseEngineering\AhnWin52-Unit3-Place-Prefix-Reordering.md`.
+Focused tests pass 5/5; the complete FPCUnit suite passes 522/522. The test
+project builds successfully.
+
+## Unit3 six-character integer formatter — synthetic only
+
+The pure routine at `Projects_AhnenWin\Unit3.pas:00576EB0` concatenates six
+zeroes with `IntToStr(value)` and copies six characters from offset
+`Length(concatenation)-5`. Thus positive values are zero-padded to six
+characters, longer values lose leading characters, and negative signs retain
+their literal position (for example, `-1` becomes `0000-1`). No call site was
+found in the retained Unit3 listing, so only the routine's behavior is
+documented; no caller or production integration is inferred.
+`Forms\Unit3SixCharacterInteger.pas` and focused boundary tests were added.
+Evidence: `DevOps\ReverseEngineering\AhnWin52-Unit3-Six-Character-Integer.md`.
+
+The adjacent pure routine at Unit3 offset `00576F54` performs the same
+six-character suffix extraction after prefixing six spaces instead of zeroes.
+`Forms\Unit3SixCharacterSpaceInteger.pas` reconstructs this separately, with
+tests for right alignment, truncation, and negative input. Its caller is not
+identified in the retained listing; no production use is inferred. Evidence:
+`DevOps\ReverseEngineering\AhnWin52-Unit3-Six-Character-Space-Integer.md`.
+
+The static `Vorlist` route maps Table14 (`OUTP.db`) fields `Zeile` (memo) and
+`Nm` (string) to `QRDBText1` and `QRDBText2`. Added a synthetic-only
+`Unit15VorlistRows` adapter: memo content remains `ftMemo`, `Nm` is copied
+through `DisplayText`, source order/bookmark are preserved, and remaining
+report fields are blank schema placeholders. Its tests cover multiple rows,
+multiline memo, display-text callback, empty/missing-field cases, and report
+preparation. Focused Unit15 passes 16/16; full FPCUnit passes 500/500. The
+legacy `Vorlist` producer remains blocked because its listing opens a dialog
+and empties/rebuilds Table24, Table14, and Table27 through provider-backed
+logic. No database or production report path was used.
+
+Correction to the earlier discovery note: `TForm1.Famblatt` (`005FB604`)
+opens Table38 (`$0530`) and selects index `tit`, then configures labels/images
+and previews QuickReport. This routine contains no `QuickRep.SetDataSet`,
+`QRDBText.SetDataSet`, or `QRDBText.SetDataField` call. Table38's current
+resource identity (`sour2`) agrees with the independent component map; it is
+not evidence of a Unit15 row projection. Unit16's own `FormShow` table opens
+belong to its separate text/HTML export route, and its PDF handler consumes
+the already-prepared QuickReport rather than resolving a source dataset.
+
+Decision: retain the broad Unit15/Unit16 runtime integration block. The
+global-search mapping has now been implemented as a **route-specific synthetic
+adapter** in `Reports\Unit15GlobalSearchRows.pas`. It validates the source
+dataset contract, copies all fifteen fields into caller-owned `QRDBText1..15`
+rows, preserves the source cursor, and supports empty datasets. Focused tests
+cover the complete field map, the current LFM's Table16 field types/sizes, and
+nil/inactive/non-browse/missing-field failure cases, plus the
+`DisplayText`-versus-`AsString` integer regression (13/13 pass); the test
+project builds, and the full FPCUnit suite passes 497/497. These synthetic
+tests do not exercise a production report.
+Do not open `over.db`, wire the preview or PDF UI, or claim production
+coverage. Caller dispatch,
+input-dialog behavior, and runtime integration remain separate gates. Full
+evidence and the mapping table are in
+`DevOps\ReverseEngineering\AhnWin52-Unit15-Report-Caller-Discovery.md`.
+
+### Unit15 empty-mask display-text trace
+
+Static inspection of `Projects_AhnenWin\QRCtrls.pas` establishes that an empty
+`TQRDBText.Mask` branches to `TField.GetDisplayText`; the numeric
+`GetAsInteger`/`FormatFloat` path is reached only for a nonempty mask on a
+non-string field. Neither `Form15.dfm` nor the global-search caller sets
+`QRDBText2.Mask`, so the global-search report reads `DisplayText` for all
+fifteen mapped fields. The synthetic projection now uses
+`sourceField.DisplayText`. A regression test proves the `Nummer` mapping
+preserves a synthetic `DisplayFormat` (`00101`) instead of unformatted
+`AsString` (`101`). Production integration remains blocked; no provider,
+database, legacy report, preview, print, or PDF path was run.
+
+## Main-form tab callback audit — no new safe handler selected
+
+Compared the existing ownership ledger, the main form's frame callback
+assignments, relevant LFM bindings, and the current host/frame method bodies.
+The remaining active bridges are `PersonEditFrame.TabSheet2Enter` to
+`anzeigen(Self)` and the two `OnSaveRequested` callbacks from the person
+navigator and text memo to `speich1`. The first remains provider-backed; the
+other two are shared persistence. Keep all three boundaries unchanged.
+
+`PersonEditFrame.TabSheet2Exit` and the LFM-bound `PageControl1Exit` currently
+have empty Pascal bodies and no independently evidenced action to restore.
+`TabSheet2Show` already performs its verified focus action in the frame.
+Existing other no-op/listing-only routes remain inert as recorded in the
+ownership ledger. Therefore this audit found no additional frame-owned
+handler whose complete effects can be restored without entering provider or
+write behavior. No speculative Pascal change or redundant test was added.
+The unchanged tree passes 488/488 FPCUnit tests and builds
+`AHW52_Main` in Debug mode. Reopen this item only with new complete listing
+evidence for a bounded, provider-free handler.
+
+## Table13 consumer inventory — completed screening
+
+The only currently executable Pascal Table13 read in the main FPC application
+is `TOrtsfamilienbuchOptionsForm.listanz`, already routed through
+`IGenealogyDataModule.Table13` and `Table13Ort`. Other Table13 surfaces are
+either resource-bound legacy UI paths with listing-only/no-op Pascal bodies,
+or unbound assembly candidates; they are not safe to activate by adding an
+interface property alone.
+
+- `ComboBox20Exit` is streamed for three controls in
+  `AHW52RelationshipsFrame.lfm` (six in the original main-form DFM); its
+  current frame handler is empty. The retained legacy behavior performs a
+  Table13 lookup and may append/post a missing location, then touches Table5.
+- `TabSheet3Exit` is bound in the original main-form DFM. Its retained listing
+  normalizes places through Table13 and continues into Table1/Table5 writes.
+- `Unit14` binds `ListBox1DblClick` and `ListBox1KeyPress`; their listings use
+  Table13 `FindKey`. The unit belongs to a separate FPC preview project, not
+  the main FPC project.
+- `Unit33` binds twelve DBEdit fields to `DataModule2.DataSource13` and binds
+  `BitBtn1Click`; its listing includes Table13 lookup and mutation operations.
+  Unit33 is not part of the main FPC project.
+- `datsich`/`Sikoein`, `DBLookupComboBox4MouseDown`, and ten
+  `PersonSearchForm` routines contain Table13-offset listing references.
+  Their current bodies are listing-only; the named mouse/search routines were
+  not found as direct DFM event bindings, so indirect reachability remains
+  unresolved.
+
+Do not restore lookup, append/post, edit, or delete paths until the original
+key/index, provider, cursor, and failure behavior can be exercised through a
+synthetic contract. The resource bindings and listings establish candidate
+surfaces, not safe runtime semantics. No provider or live data was opened and
+no production code changed. The Unit14 follow-up found that `FormActivate`
+sets Table13's index to `ort_` before traversing `Table13Ort`. The independent
+`Projects_AhnenWin\Unit14.pas` listing identifies the call at `0053C794` as
+`TTable.SetIndexName`; the annotated AhnWin52 copy mislabels it as
+`TSession.OpenDatabase`. The copied `.XG0` header labels the matching
+secondary index `Ort_`, with indexed field `Ort` and ASCII collation. DblClick
+and Enter trim the selected location and call `FindKey` with one string key.
+This supports the key/index mapping, but both handlers ignore `FindKey`'s
+Boolean result and continue to an unresolved `Show` target. BDE miss/cursor
+behavior and any SQLDB equivalent remain unverified; do not restore the
+handlers or substitute `Locate`.
+
+### LOC test-copy metadata-only check
+
+At the user's request, inspected only the authorized
+`C:\ProgramData\AHNENWIN Test\LOC - Kopie.db` copy. It is 8,192 bytes; the
+matching-base `.PX`, `.XG0`, and `.YG0` sidecars were subsequently copied.
+Read only the first 64 bytes of the `.db` and the first 2,048 header bytes of
+each index sidecar; no record blocks, BDE/pxlib provider, or live database
+were accessed. The `.XG0` header identifies the `Ort_` index on `Ort`
+(`ascii` collation), matching the runtime `SetIndexName('ort_')` call.
+`FindKey` return/miss and cursor behavior remain unresolved. No
+project/database file was modified.
+
+## HEJ membership screening — close-only Table4/Table20/Table35
+
+Compared the streamed resources and the independent
+`Projects_AhnenWin\Unit2.pas` component map with the complete `datsich`
+backup-writer and `Sikoein` restore-reader listings. `Table4` is `NUMRES.DB`
+at `$0074`, `Table20` is `FOKO.DBF` at `$0158`, and `Table35` is `occ.db` at
+`$0380`. Neither listing references any of these offsets; Table13's `ortv`
+section remains an explicit contrast at `$00CC`.
+
+The available HEJ evidence therefore does not place these close-only tables
+inside the genealogy backup boundary. They remain concrete; non-membership
+does not classify them as temporary. No database contents or provider were
+opened, and no production code changed.
+
+## HEJ membership screening — Table12 and Table37
+
+Reviewed the complete retained `TForm1.datsich` and `TForm1.Sikoein`
+listings against the streamed resources and the independent
+`Projects_AhnenWin\Unit2.pas` component map. `Table12` is `NM.db` at legacy
+offset `$00C8`; `Table37` is `ndh.db` at `$0520`; the approved place dataset
+`Table13` is `LOC.db` at `$00CC`. Both HEJ writer and reader reference
+`$00CC` in the `ortv` section, but neither references `$00C8` or `$0520`.
+Thus the available HEJ evidence does not place Table12 or Table37 inside the
+genealogy backup boundary.
+
+This is an evidence result, not a temporary-data classification. Table12 and
+Table37 remain concrete and are not added to `ITemporaryDataModule`. No
+database contents, provider, or live genealogy data were opened.
+
+## Latest data-access slice — Table13 place-list consumer
+
+Added only `Table13: TDataSet` and `Table13Ort: TField` to
+`IGenealogyDataModule`; the non-owning adapter delegates to the existing
+streamed `LOC.db` table and persistent place field. The location arguments in
+`TOrtsfamilienbuchOptionsForm.listanz` now use one local interface reference.
+`Table12`/`Table12Name` and `Table37`/`Table37Hofname` remain concrete and
+unclassified. The six `RefreshFieldLists` arguments, dataset traversal,
+positive-value rule, and exception behavior are unchanged.
+
+Adapter identity and the existing synthetic field-list tests pass; the full
+suite passes 480/480 and the Debug main project builds and links. No live
+place data or provider was opened.
+
+## Latest data-access slice — active privacy Table7/Table8/Table9 consumers
+
+Added `Table7`, `Table8`, and `Table9` as `TDataSet` properties on
+`IGenealogyDataModule`; the non-owning adapter delegates directly to the
+existing streamed tables. The three privacy-mode mappings now use
+`RequireGenealogyDataModule`. The privacy workflow's dataset order and
+enable/disable sequence are unchanged.
+
+Adapter identity assertions cover the three properties, and the existing
+privacy workflow tests pass unchanged (5/5). The focused interface suite
+passes 14/14, all 480 FPCUnit tests pass, and the FPC main project builds and
+links in `Debug` mode. No provider-backed filter, lookup, or live data was
+used. Table7's streamed index/master relationship and all database semantics
+remain untouched.
+
+## Previous data-access slice — active Table17/Table18 consumers
+
+Extended `IGenealogyDataModule` with `Table17` and `Table18` as `TDataSet`.
+The adapter continues to expose the existing concrete `TParadox` components
+without taking ownership or changing their initialization. The privacy-mode
+lookup for `pdsTable17` and `TForm13.FormShow`'s `Table17.Open` then
+`Table18.Open` sequence now use `RequireGenealogyDataModule`.
+
+Adapter identity assertions and the existing synthetic FormShow recorder
+cover delegation and open order; focused interface/privacy/graphic-form tests
+pass 36/36, the full suite passes 480/480, and the FPC main project builds and
+links in `Debug` mode. No actual Paradox file or genealogy records were
+opened. `Table7`-`Table9` privacy access, Paradox/provider behavior, data
+resolution, lookup/filter semantics, and graphic rendering remain unchanged.
+
+## Earlier data-access slice — active basic Table5 marriage consumers
+
+Expanded `IGenealogyDataModule` additively with `Table5: TDataSet` and
+`Table5Numr`/`Table5Epnum: TField`, matching the active marriage close guard,
+privacy filter reset, dataset close, and control suppression. The adapter
+delegates to the existing streamed `MRG.DB` components; `DataModule2` remains
+the sole resource owner.
+
+Migrated all active direct `DataModule2.Table5*` operations in the main form to
+`RequireGenealogyDataModule`. State and field-check order, privacy behavior,
+Table1/Table5 control order, dataset close order, and error propagation remain
+unchanged. Adapter identity assertions and the synthetic inactive-dataset
+control test cover the interface path. All 480 FPCUnit tests pass, and the
+FPC main project builds and links in `Debug` mode. No provider or live
+genealogy data was opened. Marriage insertion/lookup workflows, provider
+configuration, master-detail behavior, and other non-Table5 dependencies
+remain outside this slice; `ITemporaryDataModule` remains empty.
+
+## Earlier data-access slice — active basic Table1 consumers
+
+Expanded `IGenealogyDataModule` only for the active, verified Table1 consumers:
+`Table1`/`Table3: TDataSet` and `Table1Nummer`, `Table1Vater`,
+`Table1Mutter`, `Table1Name`, `Table1Vornamen`, and `Table1Religion: TField`.
+The adapter delegates each property to the existing streamed component; the
+concrete `DataModule2` form remains the sole resource owner.
+
+Migrated parent unlink, privacy current-person lookup/restore, close/post/backup
+and Table1 close, person save/duplicate lookup, Table1 control suppression,
+Details religion assignment, and the Unit13 person-number read to
+`RequireGenealogyDataModule`. `Table3` is included only because the existing
+person save workflow uses it for its duplicate-number check. At that point
+Table5 and other non-Table1 dependencies remained concrete; Table5 has since
+been migrated in the bounded slice above. `ITemporaryDataModule` stays empty;
+neither slice classifies other tables or configures a database provider.
+
+Adapter tests check the identity of each exposed dataset/field, the Details
+frame writes through the interface, dataset-control behavior retains its
+Table5 path, and Unit13's existing synthetic FormShow fixture now supplies the
+parallel interface. The full FPCUnit suite passes 480/480, and the FPC application project builds
+and links in its `Debug` mode. No provider or live genealogy data is used.
+
+## Latest bounded data-access slice — PersonEdit checkbox refresh
+
+Restored `TAHW52PersonEditFrame.DBCheckBox1Exit` from listing `00602068`:
+the handler dispatches exactly one `Table1.Refresh` through the new
+`IGenealogyDataModule.Table1: TDataSet` consumer boundary. The interfaces and
+parallel global references live in `DataModules\GenealogyDataModuleAccess.pas`
+because Pascal cannot declare a global variable with the same identifier as
+its containing `GenealogyDataModule` unit. A second, separate
+`ITemporaryDataModule` contract and `TemporaryDataModule` global provide a
+future boundary for non-genealogy data that is not yet classified; it
+currently has no members, and no non-HEJ table is presumed temporary. By the
+user's domain definition, genealogy data covers the person, marriage,
+adoption, place, and source records included in HEJ backups; their exact
+component mapping remains a separate evidence task. The
+concrete unit supplies non-owning reference-counted adapters; `DataModule2`
+and all existing legacy callers remain unchanged.
+
+Startup assigns both adapters only after concrete data-access initialization
+and clears both interfaces in `finally` after `Application.Run`, before the
+application-owned form is destroyed. Missing initialization or adapter input
+raises `EDataModuleInterfaceUnavailable`; refresh exceptions propagate
+unchanged. Seven new synthetic tests cover adapter delegation, invalid adapter
+input, independent interface substitution, uninitialized access, and refresh
+failure; the existing resource test verifies the LFM `OnExit` binding. The
+focused PersonEdit suite passes 14/14, the full suite 479/479, and the forced
+Debug main build links. No SQL driver/provider, live database, or genealogy
+record was opened or configured. `Table1` remains typed to the capability
+needed by this handler; future interface members are added only with verified
+consumers.
 
 ## Latest maintainability slice — calendar menu controller
 
@@ -30,19 +986,28 @@ Translated the complete `TForm16.Speichernunter1Click` text/HTML writer into
 suffix, ancestor `<br>` lines, footer, and close/error behavior are retained.
 
 The offset projections use `Table14.Nm`/`Zeile`, `Table22.No`/`Zus`, and
-`Table27.Namvorn`; `Label2.Caption` supplies the list-caption test. The three
-other global header strings remain address-named aliases without mapped
-producers; `Unit19.GlobalVar_0061E028` is read directly. These unknowns are
-not replaced with guessed report labels. The form adapter rejects a required
-empty alias with `EUnit16ExportStateUnavailable` before opening an output file.
-All source failures remain visible: the streamed SQLDB tables have no
-configured provider and no real data was opened.
+`Table27.Namvorn`; `Label2.Caption` supplies the list-caption test. The assembly producers for the address-named header aliases are now indexed,
+but their listing-only callers do not yet write those values in active FPC
+Pascal. `TForm19.nachf` is the evidenced producer of
+`Unit19.GlobalVar_0061E028` (`ComboBox1.Text + ' von '`). The FPC adapter
+requires that heading for a non-list `Nach` export instead of silently
+emitting a blank line.
 
-Synthetic coverage passes 13/13 workflow tests and 23/23 Unit16 preview/action
-tests; the full suite passes 461/461. `Unit16.pas` compiles in the test project.
-The forced Debug main-project build links, but `AHW52_Main.lpi` does not include
-Unit16, so this is not an end-user runtime claim. The unrelated Unit15
-QuickReport/PDF caller dataset remains blocked.
+The global-search selector `Over` is an explicit different route: it binds
+Table16 to Unit15, while this Unit16 text exporter has no `Over` row contract
+and reads Table14/22/27 for its supported modes. Unsupported modes now raise
+`EUnit16ExportOperationUnsupported` before writing; form validation rejects
+them before creating the output file. Fifteen synthetic workflow tests pass.
+All source failures remain visible: the streamed SQLDB tables have no
+configured provider and no real data was opened. The full suite passes
+496/496.
+
+At the initial 2026-10-04 implementation checkpoint, synthetic coverage
+passed 13/13 workflow tests and 23/23 Unit16 preview/action tests; the full
+suite passed 461/461. `Unit16.pas` compiles in the test project. The forced
+Debug main-project build links, but `AHW52_Main.lpi` does not include Unit16,
+so this is not an end-user runtime claim. The unrelated Unit15 QuickReport/PDF
+caller dataset remains blocked.
 
 ## Latest bounded helper slice — Unit13 graphic-text functions
 
@@ -276,8 +1241,10 @@ short-date format. The focused tests pass 3/3; the full Lazarus suite passes
 382/382. The standalone helper compiles under Delphi 7, RAD Studio 3.0, and
 FPC. This restores the pure helper only: `wt34` still reads database fields
 and updates `Label23`, and has not been wired to the new helper or exercised.
-The BDE test-table password continues to block relationship and report
-integration. No test-dataset rows were accessed.
+At that checkpoint, the BDE test-table password still blocked relationship
+and report integration. The later authorized read-only catalogue below
+supersedes the access blocker, but does not establish SQLDB parity or unblock
+relationship/report integration. No test-dataset values were logged.
 
 ## Checkpoint — Table9 request contract and RemoteControl preflight — 2026-10-03
 
@@ -614,6 +1581,119 @@ address-backed global strings. Those routines are provider/report paths, so
 the handler cannot be safely invoked or translated as a self-contained
 synthetic slice without understanding the BDE data contract. Continue screening
 for a complete handler whose effects do not cross these boundaries.
+
+### Completed approved slices — Unit14 place search and Unit11 metrics
+
+`TForm14.Button1Click` (`0053B964`) is restored as a person/event place
+search, distinct from Unit14's still-listing-only Table13 listbox selection
+handlers. It reads person-place fields `Gebort`, `Taufort`, `Stort`, and
+`Begort` from `Table1`, and marriage-event places `Saort` and `Schort` from
+`Table18`, through `IGenealogyDataModule`. It preserves exact and partial
+matching, formatted result rows, duplicate-event suppression, and restoration
+of the current person with `TDataSet.Locate`. Seven synthetic search tests
+passed. Provider-specific `Locate` behavior and the old `namgeb` index order
+remain unverified; do not claim BDE ordering parity.
+
+`TForm11.FormCreate` (`005CB380`) now reads `Printer.PaperSize`, printable
+page dimensions, and printer DPI instead of opening a GDI printer handle.
+Physical paper extents are converted from the printer's coordinate units to
+millimetres using `XDPI`/`YDPI`, then truncated to whole centimetres as the old
+`HORZSIZE`/`VERTSIZE` values were; printable pixel extents are divided by
+those centimetres to populate the six listing-identified globals.
+The screen baseline globals are initialized in `TForm1.FormCreate`; a
+standalone Form11 preview falls back to its current screen and host form.
+The canvas field is resolved as `PaintBox1.Canvas` from the streamed
+`TPaintBox`. A synthetic metrics record isolates all arithmetic and scaling
+from live printer/screen reads; focused tests cover printer ratios, form
+bounds, canvas/global state, screen-change scaling order, and invalid input.
+All five focused tests pass; the full FPCUnit suite passes 487/487. The
+isolated Form11 and Debug main projects build. No printer was opened for
+testing and no print job was issued.
+
+The Lazarus printer backend's physical-size rounding, selected-paper behavior,
+and visual parity of `ScaleBy` are not established against the original
+Windows driver. `TForm11.SpeedButton2Click` remains a separate
+printer/graph-rendering workflow and was not activated.
+
+Other screened handlers remain outside this completed slice:
+`TForm16.FormClose` (`0055DC1C`) couples QuickReport cleanup and a
+record-count-dependent mutation of the main form's `DBText1.Color`;
+`TForm10.Edit1Change` dispatches to browser/file-backed `rechnen`. Unit14's
+`ListBox1DblClick` and `ListBox1KeyPress` still use the separate unresolved
+BDE `Table13.FindKey` path.
+
+### Unit14.FormActivate — Table13 place-list activation restored
+
+Restored the DFM/LFM-bound handler's sequence: save a nonnegative list index,
+clear `ListBox1`, request `ort_`, traverse Table13 from `First` through EOF
+while adding `Table13Ort`, restore the saved selection, and focus the list.
+`IGenealogyDataModule.SetTable13Index` maps only the evidence-backed `ort_`
+name to `Table13.IndexFieldNames := 'Ort'`; unknown names raise
+`EUnsupportedGenealogyDataIndex`. The adapter test verifies this mapping on
+the closed streamed table without opening it.
+
+The FormActivate fixture sorts an in-memory Table13 dataset before traversal.
+The two existing tests that show Form14 now provide synthetic `Dresden`
+Table13 data as well: activation runs from the LFM event binding before those
+tests invoke the search. This prevents the fake module's missing-index
+capability from raising a modal error during test setup. Eight Unit14 place
+search/activation tests pass, the adapter suite passes 14/14, and the full
+suite passes 488/488. The `AHW52_Main` Debug build links. No provider, live
+place data, or real genealogy records were opened.
+
+The `.XG0` header confirms ASCII collation for `Ort_`; exact BDE-versus-SQLDB
+collation parity remains unverified. The standalone Form14 preview still
+does not create a DataModule. Its attempted build is currently blocked by
+`PrintersDlgs` unit resolution in the existing Unit13 dependency; test-project
+compilation covers the restored handler.
+
+### Unit14 place-selection handlers — editor target resolved; BDE gate remains
+
+The independent `Projects_AhnenWin\Unit14.pas` listing names the target global
+at `$0061D234` as `^gvar_0061EFAC:TForm33`. This is corroborated by
+`Unit33.pas` and its DFM: field offset `+$034C` is `TForm33.Label12`, and
+`TForm33.FormActivate` copies the selected `Form14.ListBox1` item into
+`Edit1.Text`. The `AHNWIN51.dpr` registers both `Unit14` and `Unit33`, so the
+activation prefill is part of the same original application composition.
+Therefore the DblClick/Enter post-lookup UI operation is specifically to set
+`Form33.Label12.Caption` to `Aktueller Orts-Name: ` plus the selected location
+and show `Form33`; it is not an unresolved arbitrary form anymore.
+
+This resolves only the target-form mapping. Both handlers still call
+`Table13.FindKey` on the BDE `LOC.db` table before that UI operation. The
+Boolean result is ignored, but provider exception/current-row behavior and the
+effect of an empty or missing key are not established for SQLDB. The
+compatibility layer explicitly rejects `FindKey`; do not bypass that failure,
+replace it with `Locate`, or wire the editor until a synthetic lookup contract
+preserves the observed ordering and failure semantics. No provider or records
+were opened during this follow-up.
+
+### Unit14 resource-bound event inventory — no additional safe slice
+
+Cross-checked every event in both `Unit14.dfm` and `Unit14.lfm` against the
+current Pascal bodies and the independent `Projects_AhnenWin\Unit14.pas`
+listing. The complete surface is accounted for:
+
+- `FormActivate` restores the selected place list through Table13; this is
+  implemented and covered by the synthetic place-search tests.
+- `Button1Click` performs the separate person/event place search; it is
+  implemented through the data-module interface and covered by synthetic
+  tests.
+- `BitBtn1Click` resets the saved/list selection and closes the form; this is
+  implemented and already documented with its synthetic coverage.
+- `ListBox1Click` copies `ItemIndex` to the saved selection cell; the
+  independent listing at `0053C850` confirms the assignment, and the current
+  Pascal body and test preserve the `-1` no-selection value.
+- `ListBox1DblClick` and Return in `ListBox1KeyPress` both depend on the
+  unresolved `Table13.FindKey` contract before opening `Form33`; keep them
+  listing-only.
+- `Button2Click` dispatches to `TForm1.Lb_speich`; it remains on the shared
+  persistence boundary and is not a local UI-only handler.
+
+`CheckBox1` has no event binding. Thus Unit14 has no unclassified,
+provider-free resource-bound handler left to restore. No source or test
+change is justified until the BDE lookup contract or a different complete,
+independent listing becomes available.
 
 ## Interpreting assembly coverage
 
@@ -2240,14 +3320,31 @@ are passed in registers. The restored Pascal method has the full
 `(Sender, Button, Shift, X, Y)` signature and an empty body. The synthetic
 no-op test invokes it without streaming the main form or opening its dataset.
 
-**Main-form `DBEdit69` change reset:** Both main-form resources bind
-`DBEdit69.OnChange` to `TForm1.DBEdit69Change`. Its complete listing has no
-condition and clears three address-identified long-string globals in order:
-`GlobalVar_0061E0A0`, `GlobalVar_0061E0A4`, and `GlobalVar_02535B58`.
-`Unit32`'s long-string assignments corroborate the types of the first two
-cells; the handler's `@LStrClr` calls establish the third. A synthetic test
-seeds distinct values and calls the handler on an unstreamed `TForm1`; it
-does not create the data module or access a provider.
+**Person-edit `DBEdit69` reset localized — 2026-10-04:** The frame's bound
+`DBEdit69Change` now clears address-named strings `0061E0A0`, `0061E0A4`,
+and `02535B58` through `AHW52LegacySharedState`, in the original listing
+order. The FPC `TForm1` adapter and `peaDBEdit69Change` action were removed.
+A conditional compatibility proxy remains for the unconverted Delphi DFM
+binding; tab-entry and navigator/focus host boundaries remain.
+
+**Details relationship-combo focus localized — 2026-10-04:** The full
+`ComboBox5Change` listing assigns the active control to hidden `Edit4`. The
+Delphi DFM proves that this is a `TEdit` under the Details tab, but that
+resource was missing from the FPC frame. Restored its observed bounds,
+`MaxLength`, tab order, and hidden state in `TAHW52PersonDetailsFrame`; the
+frame now assigns the containing form's `ActiveControl` to its own `Edit4`.
+Removed the FPC host-action route; a conditional proxy remains for the old
+Delphi DFM binding. The focused Details tests pass 2/2, the full suite passes
+466/466, and the forced Debug main build links. No database or relationship
+mutation behavior was enabled.
+
+The two cells also used by `Unit32` now have one shared Pascal declaration.
+Its counter-zero path retains its original behavior: clear those two cells
+and finalize the Unit32 string array, without clearing the third cell.
+Synthetic tests assert direct frame execution, no host dispatch, and shared
+storage observed through Unit32's cleanup. Focused edit-frame tests pass
+6/6, the full suite passes 466/466, and the forced Debug main build links.
+No state-domain semantics or provider behavior is inferred.
 
 **Main-form grid Escape handoff:** Both main-form resources bind
 `StringGrid5.OnKeyDown` to `TForm1.StringGrid5KeyDown`. The complete listing
@@ -2586,10 +3683,11 @@ exact ordering, early failure, and nil-interface rejection.
 sequence. The separate [privacy-mode round-trip](C:\Projekte\Delphi\docs\modules\applications\ahnwin51\privacy-mode.md)
 is now reconstructed and tested.
 
-**Navigation/focus handlers:** `PageControl1Exit` is a return-only handler;
-`ComboBox5Change` sets `ActiveControl := Edit4`, as proven by the x86 listing
-and the `.lfm` event binding. Both completed assembly-reference blocks were
-removed. Static resource/body assertions and the main Lazarus build pass.
+**Navigation/focus handlers:** `PageControl1Exit` is a return-only handler.
+The complete `ComboBox5Change` listing sets `ActiveControl := Edit4`; its
+resource and local frame implementation are covered in the Details focus
+increment above. Both completed assembly-reference blocks were removed.
+Static resource/body assertions and the main Lazarus build pass.
 
 **Listing-proven inert handlers:** The DFM binds `TabSheet4Show`,
 `ComboBox4DblClick`, and `DBEdit8Change`, `DBEdit9Change`, and `DBEdit10Change`.
@@ -2944,6 +4042,25 @@ Listing `00560EA8` confirms that Enter is consumed and a zero-parameter
 complete `(Sender, var Key: Char)` event signature. Synthetic tests verify
 the actual queued message and the non-Enter no-op; no database-bound controls
 or supplied data are opened.
+
+**Source-dialog cancel target:** The Unit30 DFM binds `BitBtn1Click`, and the
+complete listing at `005601E8` closes global `Form30`, not necessarily the
+event receiver. The current Pascal already preserves that target. A new
+two-form synthetic test invokes the handler on a separate receiver and proves
+that only global `Form30` receives `OnClose`; the Unit30 cancel suite passes
+2/2 and the full suite passes 589/589. Unit29's search action remains
+provider-backed and its save action enters shared persistence, so neither is
+a safe continuation of this slice. See
+`ReverseEngineering\AhnWin52-Unit30-Source-Dialog-Global-Close.md`.
+
+The adjacent Unit29 action screen is now recorded in that same note:
+list-selection, editor-launch, and cancel state paths have synthetic tests;
+search and activation traverse provider-backed source datasets; save delegates
+to shared persistence. Unit30 `FormShow` depends on `FindKey`, and its
+edit button includes provider-backed delete/edit/append operations. No
+additional source-dialog route is eligible for restoration without evidence
+for those contracts. The tracker has no pending todos with satisfied
+prerequisites; all remaining tasks are evidence-gated.
 
 `TForm33._PROC_0053B6C4` and `TForm33._PROC_0053B6F4` are not bound in
 `Unit33.dfm`; their complete listings only increment/decrement the integer
@@ -3454,9 +4571,9 @@ names/instructions remain intact; the comments and symbol map show both
 identities. The streamed instances remain `DataModule2` and `Form7`.
 
 The broader listing inventory remains an evidence task, not a reason to
-translate an unqualified routine. The latest DFM-bound candidate screen has
-not found a complete database/report/global-free handler with a synthetic
-test surface. Continue by inventorying event bindings/callers, and keep
+translate an unqualified routine. The later Table13-specific event/caller
+screen is recorded at the top of this backlog; it found resource-bound and
+listing-only paths, but no provider-safe handler ready for restoration. Keep
 relationship, export, and report workflows blocked on their provider and
 dataset contracts.
 
@@ -3689,3 +4806,184 @@ therefore remain assumptions rather than recovered ABI or behavior. Caller
 references alone are not sufficient evidence to validate the implementations;
 leave them unchanged and continue the listing inventory until a complete
 callee listing or equivalent direct evidence is available.
+
+## Person-edit navigator save ownership — 2026-10-04
+
+`TAHW52PersonEditFrame.DBNavigator1BeforeAction(Sender, Button)` preserves
+the LCL event signature and now forwards its original `Sender` through the
+named `OnSaveRequested: TNotifyEvent` boundary. `TForm1.FormCreate` connects
+that request directly to the existing `speich1`; as in the complete legacy
+body, the button value does not affect the save call. Removed the redundant
+FPC `HandlePersonEditNavigatorBeforeAction` adapter. The old main-form
+`DBNavigator1BeforeAction(Sender)` method remains conditional for the Delphi
+DFM. Focused tests pass 6/6, the complete suite passes 466/466, and the
+forced Debug main build links. No genealogy data was opened and save behavior
+was not exercised against a live dataset.
+
+## Person-edit focus ownership — 2026-10-04
+
+The proven PersonEdit focus effects no longer cross a generic host callback.
+`TAHW52PersonEditFrame.FocusControl` obtains the containing form and assigns
+its `ActiveControl` to a frame-owned target; it raises `EInvalidOperation` if
+the frame has no parent form. `TabSheet2Show` and `TForm1.FormActivate` focus
+`DBEdit2`; grid exit and Escape focus `DBComboBox3` while retaining the
+existing grid/label visibility, search-text, and key behavior.
+
+Removed `OnFocusRequest`, `TForm1.HandlePersonEditFocusRequest`, and the
+`FormCreate` assignment. `FormActivate` remains the lifecycle entry point;
+the provider-backed `TabSheet2Enter` refresh was not moved. Focused tests pass
+7/7, the full suite passes 467/467, and the forced Debug main build links.
+No database was opened.
+
+## Selection-tab person-search right-click — 2026-10-04
+
+Restored the matching DFM-bound `TForm1.TabSheet1MouseDown` (`005E62D4`) and
+`TabSheet7MouseDown` (`005E8F94`) effects in their owning frames. Both listings
+act only for `mbRight`: clear global `PersonSearchDialog.Edit1`, then call
+`ShowModal`. `TPersonSearchForm.ShowForSelection` now owns that shared order;
+no FPC main-form adapter was added.
+
+Since the BDE-dependent dialog is intentionally not instantiated by the FPC
+startup path, either frame reports a missing global dialog with
+`EInvalidOperation` rather than constructing an unsupported form or silently
+doing nothing. The shared launcher likewise rejects a missing first edit.
+All other mouse buttons remain no-ops. The search query, data module, modal
+loop, and relationship/list navigation are unchanged and inactive.
+
+Five synthetic tests verify both right-click routes, clear-before-show,
+global target use, left/middle no-ops, and missing-dialog/control errors.
+Focused tests pass 5/5; the complete suite passes 472/472; the forced Debug
+main build links. No database, actual modal dialog, or genealogy data was
+opened.
+
+## Unit15 Table14 single-column projection — synthetic only
+
+Static traces confirm that `TForm1.druck` and the direct
+`geschachtelt1Click` / `Einzelpersonenmarkieren1Click` report paths use only
+Table14 `Zeile` (`TMemoField`) for `QRDBText1`; the second DBText control is
+unused. `frbestimmtenOrt1Click` and `Probandenname1Click` call `druck` after
+they each empty and repopulate Table14. The direct callers also empty
+Table14, so their provider-dependent producers remain blocked.
+
+Added `Reports\Unit15SingleColumnRows.pas` for an in-memory-only projection
+to `QRDBText1` plus blank placeholder fields required by the recovered
+fifteen-field LazReport schema. It preserves memo data, source order, and
+bookmark and rejects invalid source state/schema. Focused Unit15 tests pass
+20/20; the test project builds; the full FPCUnit suite passes 504/504. No
+database, provider, dialog, legacy QuickReport, preview, print, or PDF path
+was used. This adapter does not authorize or implement the Table14 producers
+or UI integration. Full caller evidence is recorded in
+`DevOps\ReverseEngineering\AhnWin52-Unit15-Report-Caller-Discovery.md`.
+
+## Unit15 Table27 `spitzbas` projection — synthetic only
+
+The retained `spitzbas` listing, Unit2 offset map, and current DataModule LFM
+corroborate Table27 (`alfls.db`) `Namvorn`/`Kn` string fields mapped to
+`QRDBText1`/`QRDBText2`. Added `Reports\Unit15SpitzbasRows.pas` to copy their
+`DisplayText` into a synthetic fifteen-field Unit15 dataset, leaving other
+report fields blank and preserving source order and bookmark. Tests cover
+both fields, field display callbacks, cursor preservation, report preparation,
+empty input, missing/wrong-type fields, and invalid source states. Focused
+Unit15 passes 23/23; full FPCUnit passes 507/507; the test project builds.
+
+The legacy producer remains blocked because `spitzbas` empties Table27 before
+provider-dependent rebuilding. No database, provider, original dialog,
+QuickReport, preview, print, or PDF route was executed. This adapter is not
+wired into production. See
+`DevOps\ReverseEngineering\AhnWin52-Unit15-Report-Caller-Discovery.md`.
+
+## Unit15 Table22 `NList` / `OList` projection — synthetic only
+
+The independent Unit3 listings for `TForm3.NList` (`00595720`) and
+`TForm3.OList` (`00595FB4`), the Unit2 component map, and the current
+DataModule LFM corroborate Table22 (`nol.db`): `Zus: TMemoField` maps to
+`QRDBText1`, and `No: TStringField` maps to `QRDBText2`. Added
+`Reports\Unit15Table22Rows.pas` as an in-memory-only adapter preserving memo
+content, `No.DisplayText`, source order, and source bookmark; unused fields
+remain blank for the recovered Unit15 schema.
+
+The focused Unit15 report suite passes 26/26, the test project builds, and the
+full FPCUnit suite passes 510/510. Tests cover multiline memo/display callback,
+multiple rows, empty source, schema and source-state rejection, cursor
+preservation, and synthetic report preparation.
+
+Both callers empty Table22 before provider-dependent reconstruction (and
+`OList` selects `namort`); their producers, database access, and production
+report integration remain blocked. No legacy QuickReport, preview, print, or
+PDF workflow ran.
+
+The listing-proven list-to-row transform is separately reconstructed in
+`Reports\Unit3RegisterRows.pas`. It consumes an injected list of character-15
+key/value strings, groups consecutive exact raw keys into `Zus` using
+comma-space separators, skips blank trimmed keys/values, and applies the
+`NList`-only exact `NN` exclusion. It outputs an in-memory Table22-shaped
+dataset and composes with the existing Table22-to-Unit15 adapter. Focused
+parser tests pass 4/4, including the composed projection. It does not generate
+those lists or execute the legacy destructive/provider-backed producers.
+The test project builds and the complete FPCUnit suite passes 514/514.
+
+The follow-up listing search also found Table14 `Zeile`/`Nm` mappings in
+`TForm3.ofb2`, `TForm3.ofb3`, and `TForm19.nachf`, plus a Table14 `Zeile`-only
+mapping in `TOKBottomDlg.SpeedButton1Click`. These match the existing
+synthetic `Unit15VorlistRows` and `Unit15SingleColumnRows` contracts; their
+producer traversals/appends remain unrun. `TForm17.BitBtn1Click` empties and
+rebuilds Table14 but clears `QuickRep1.DataSet` and never sets a DBText field,
+so it does not establish a Unit15 row projection. A repository-wide search
+found no other caller-specific Unit15 field assignments in the retained
+`Projects_AhnenWin` listings. Full evidence is in
+`DevOps\ReverseEngineering\AhnWin52-Unit15-Report-Caller-Discovery.md`.
+
+## Unit3 source-text normalizer — synthetic only
+
+The routine at `00576FF8` has multiple parser call sites and is recovered as
+a standalone transform. It handles trimmed `..`, exact `HK`, then substring
+cases `vo.r` and `na.ch`; its fallback preserves whitespace-only inputs,
+strips leading periods/spaces through repeated `Copy(input, 2, 9)`, and on
+nonnumeric-leading values removes periods and inserts a space before the
+first byte below `':'`. Fixed slices and the nine-character intermediate
+limit are retained. `Forms\Unit3SourceTextNormalizer.pas` plus focused
+synthetic tests cover these branches; production parser/database callers
+remain untouched. Full contract:
+`DevOps\ReverseEngineering\AhnWin52-Unit3-Source-Text-Normalizer.md`.
+
+## Unit14/Table13 `FindKey` synthetic runtime evidence — 2026-10-18
+
+The user authorized and the standalone Delphi 9 harness
+`Source\AhnWin52\ReverseEngineering\Unit14FindKeyBDEProbe.dpr` exercised a
+disposable synthetic Paradox table using the loaded BDE 5.2.0.2 runtime. It
+created the named unique, ascending secondary index `Ort_` on field `Ort`;
+both synthetic table/index headers record language driver `DBWINUS0` (ASCII).
+`FindKey('Dresden')` returned true and positioned at `Dresden`; after `First`,
+`FindKey('Hamburg')` returned false and the immediate `TTable` state remained
+on `Berlin` (`RecNo=1`, `BOF=True`, `EOF=False`). The fixture contained only
+the artificial place values `Berlin`, `Dresden`, and `Muenchen`.
+
+`DevOps\ReverseEngineering\AhnWin52-Unit14-FindKey-Observation-Protocol.md`
+records the setup, result, and limits. Delphi 9 `DBTables.pas` independently
+confirms that `FindKey` calls `DbiGetRecordForKey` and resynchronizes only on
+success. The test index was unique because Paradox requires an option when a
+single-field index name differs from its field name; whether the target index
+is unique is not established in the prior metadata extraction. Partial keys,
+exceptions, the original application's exact runtime, SQLDB parity, and
+downstream `Form33` behavior remain unresolved. No AhnWin process, genealogy
+database, or UI input was involved. Keep the compatibility layer's explicit
+`FindKey` rejection and Unit14 handlers blocked; do not substitute `Locate`.
+
+## Unit7 complementary-day classification — synthetic-only boundary
+
+`TForm7.berechnen`'s complementary-day decision is now isolated in
+`Forms\FrenchRepublicanComplementaryDays.pas`. The retained listing
+(`Projects_AhnenWin\Unit7.pas`, `005CEB5C`–`005CECA4`) accepts text between
+`'30'` and `'jrev'` only for trimmed month `Fructidor` and year combo indexes
+2, 6, or 10. The listing has separate paths for the five `jc` entries and
+exact `jrev`; the classifier preserves their combined accepted range and
+eligibility rule. The form still owns date conversion, locale-sensitive
+formatting, and the `ShowMessage`/output-clearing behavior.
+
+The new pure tests pass 4/4; the existing calendar-form suite passes 14/14;
+the test project builds. An initial invalid-form test opened the expected
+“Diesen Tag gibt es nicht” dialog because the existing hook captures
+`Application.MessageBox`, not `ShowMessage`; that test was removed and the
+invalid form path was not invoked again. The full suite was not run in this
+continuation. No live application or database was used. Details:
+`DevOps\ReverseEngineering\AhnWin52-Unit7-Complementary-Day-Classification.md`.

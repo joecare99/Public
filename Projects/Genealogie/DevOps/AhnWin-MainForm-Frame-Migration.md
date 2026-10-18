@@ -21,6 +21,43 @@ The frame inventory is:
 | `TabSheet8` - Adresse | `TAHW52AddressFrame` | Done |
 | `TabSheet9` - Bilder | `TAHW52PicturesFrame` | Done |
 
+## Cross-cutting data-module boundary
+
+The streamed `TGenealogyDataModule` and concrete `DataModule2` remain the
+resource-owning, application-owned objects. A separate non-owning adapter
+implements `IGenealogyDataModule`; migrated consumers use
+`RequireGenealogyDataModule` to access the active person dataset and its
+verified fields without requiring the concrete form in their operation path.
+
+The basic Table1 migration covers parent unlink, privacy current-person
+restore, close/post/backup, person save and duplicate-number lookup (including
+its existing `Table3` dependency), Table1 control suppression, the Details
+religion field exit, and the Unit13 number-field read. A subsequent bounded
+marriage slice adds `Table5: TDataSet` plus `Table5Numr` and `Table5Epnum` as
+`TField`; active Table5 privacy, close-state, dataset-close, and control
+suppression consumers now use the interface. A further slice exposes
+`Table17`/`Table18: TDataSet` for the privacy lookup and graphics-form open
+sequence while keeping their concrete `TParadox` components and provider setup
+unchanged. Other datasets remain on the concrete legacy surface. The separate
+`ITemporaryDataModule` remains an empty classification boundary; no provider,
+connection, or live data access was added.
+
+The place-list dialog now uses the same boundary for only
+`Table13: TDataSet` and `Table13Ort: TField`. Its `Table12` and `Table37`
+arguments remain concrete; list-refresh ordering and behavior are unchanged.
+
+The retained HEJ writer/reader listings and the independent component map
+show that the `ortv` record section accesses Table13 at `$00CC`, not Table12
+(`NM.db`, `$00C8`) or Table37 (`ndh.db`, `$0520`). These two list tables are
+not evidenced as HEJ genealogy records. Their absence from the backup does
+not classify them as temporary; they remain concrete and outside the current
+data interfaces.
+
+The same complete HEJ listings do not reference the close-only datasets
+Table4 (`NUMRES.DB`, `$0074`), Table20 (`FOKO.DBF`, `$0158`), or Table35
+(`occ.db`, `$0380`). Their close operations remain concrete and unchanged;
+absence from the backup does not imply temporary status.
+
 ## Sprint goal — first vertical slice
 
 **Story:** As a maintainer, I want the person-selection tab's grid and event
@@ -48,12 +85,9 @@ thin host without inventing unrecovered database behavior.
   `Height=640`).
 - Embedded the frame in `TabSheet1`; kept `PageControl1` and tab navigation
   on `TForm1`.
-- Added typed callback boundaries for grid double-click, key-down, and tab
-  lifecycle/mouse events. `FormCreate` connects those boundaries to the
-  existing host methods.
-- Corrected the host key and mouse handler signatures to match their event
-  contracts. Their Pascal bodies remain empty; their assembly listings remain
-  in the source as evidence, not as active code.
+- Bound tab lifecycle events to frame methods. At extraction time, grid
+  double-click, key-down, and tab handlers were inert; later behavior is
+  recorded in the evidence-based increments below.
 - Updated the selection preview project to load the production frame.
 - Added four FPCUnit tests. Full suite: 408/408 passed. The preview project
   and main Debug project build.
@@ -83,9 +117,10 @@ navigation, and unresolved database behavior remain behind host boundaries.
 - Kept the 43 control event bindings in the frame resource; the three tab
   lifecycle events are connected to frame methods after streaming.
 - Moved verified grid-dismissal and edit-tab focus behavior into the frame.
-  Focus requests return to the host through a typed callback. Tab-entry
-  refresh, navigator pre-action, and shared edit/global-state actions remain
-  explicit host callbacks.
+  Focus now uses the containing form directly through
+  `GetParentForm(Self).ActiveControl`; tab-entry refresh and shared
+  edit/global-state actions remain explicit host boundaries. The navigator's
+  proven save call is wired directly through `OnSaveRequested`.
 - Updated host-side privacy and close helpers to access `DBText1` and
   `FileListBox2` through the owning frame. Removed redundant main-form event
   forwarding methods after tests were switched to call the frame.
@@ -116,13 +151,15 @@ listing-only handlers remain behind explicit host callbacks.
 
 - Extracted the entire `TabSheet3` subtree into
   `Forms\AHW52PersonDetailsFrame.pas/.lfm` and embedded that frame in the
-  existing tab. The 71 controls and their layout/field bindings were retained.
+  existing tab. The original 71 controls and their layout/field bindings were
+  retained; the DFM-proven hidden `Edit4` was restored in a later increment.
 - Bound the control events directly to the frame and routed the 14 distinct
   listing-only/shared actions through a typed host callback. The tab's enter
   and exit events are connected in `FormCreate`.
 - Moved the active `ComboBox5Exit` normalization and
   `DBComboBox7Exit` religion-field assignment into the frame. `ComboBox5Change`
-  stays a host action because its legacy body targets `TForm1.Edit4`.
+  stayed a host action at this extraction checkpoint because its legacy body
+  targeted `TForm1.Edit4`; the later focus increment localizes it.
 - Updated the relationship-caption tests to exercise the streamed frame and
   registered two additional frame tests.
 - The full suite passes 414/414. The main Debug application and test project
@@ -374,11 +411,11 @@ runtime layout. No BDE or Paradox file was opened by this increment.
 
 The Details tab's empty Pascal handlers remain inert in the frame; historical
 listings continue to describe the original binary layout, not the new frame's
-offsets. The host's `ComboBox5Change` routine still targets a declared `Edit4`
-field that is not streamed by the current LFM; this pre-existing focus target
-remains unresolved rather than being guessed or redirected. The `ComboBox1`
-keypress listing has no restored Pascal action, so its typed frame event
-leaves the key unchanged.
+offsets. At this earlier checkpoint, the host's `ComboBox5Change` routine
+targeted a declared `Edit4` field that was not streamed by the LFM. The later
+Details focus increment restores that DFM-proven control and moves the focus
+operation into the frame. The `ComboBox1` keypress listing has no restored
+Pascal action, so its typed frame event leaves the key unchanged.
 
 The Relationships tab's listing-only grid click contains a BDE session/index
 lookup path, while tab entry and date-exit listings call dataset and date
@@ -463,11 +500,13 @@ listings (1,379 lines including resource maps and method shells) are preserved,
 uncompiled, in
 `ReverseEngineering\AhnWin52-Details-Relationships-ComboExits.asm.txt`.
 
-The Details `ComboBox5Change` callback remains because it requests host focus
-to the unresolved legacy `Edit4` target. Tests assert that live callback and
-verify that the removed combo-exit actions stay frame-bound. No provider,
-database, or listing-only behavior was activated. After this increment, the
-complete FPCUnit suite passed 421/421 and both projects built.
+At this point in the migration, the Details `ComboBox5Change` callback still
+requested host focus to the unresolved legacy `Edit4` target. The later
+Details focus increment restores the target and removes the FPC callback.
+Tests for this earlier increment asserted the live callback and verified that
+the removed combo-exit actions stayed frame-bound. No provider, database, or
+listing-only behavior was activated. After this increment, the complete
+FPCUnit suite passed 421/421 and both projects built.
 
 ## Source-ownership increment — Address combo exit (2026-10-04)
 
@@ -525,7 +564,8 @@ FPCUnit suite passes 422/422.
 ## Current execution boundary
 
 All nine tabs (`TabSheet1` through `TabSheet9`) are migrated and validated.
-The Details frame owns 71 controls, the relationships frame owns 37, the
+The Details frame owns 72 controls, including the restored hidden `Edit4`
+focus target; the relationships frame owns 37, the
 siblings frame owns two, and the Text frame owns two including the
 `Kommentar`-bound memo. The related-selection frame owns `Label27` and
 `DBGrid2` with its nine original columns; the address frame owns 30 controls,
@@ -535,7 +575,7 @@ path remains connected; pictures click/show/exit events now terminate at the
 frame's inactive methods, and their original listing evidence is separate.
 Listing-only dataset, database, and picture-file work remains inactive.
 
-The complete FPCUnit suite currently passes 420 tests. The test project and
+The complete FPCUnit suite currently passes 466 tests. The test project and
 main Debug application build successfully. No genealogy database or picture
 directory was opened. All nine tab resources and controls are in frames, but
 source-code ownership is **not** complete: many frame events still forward
@@ -559,6 +599,130 @@ source-migration increment; its 7,067 lines of inert listings are now kept in
 and the four edit-field exits now terminate in their frames; remaining host
 actions are tracked per frame in `AhnWin-MainForm-Handler-Ownership.md`.
 
+## Source-ownership increment — Person-edit shared-state reset (2026-10-04)
+
+`DBEdit69.OnChange` remains bound, but its handler now runs directly in
+`TAHW52PersonEditFrame`. The frame calls
+`AHW52LegacySharedState.ResetPersonEditSearchState`, preserving the listing's
+ordered clearing of address-named cells `0061E0A0`, `0061E0A4`, and
+`02535B58`. Removed the obsolete `peaDBEdit69Change` dispatch case and FPC
+host adapter. A conditional `TForm1.DBEdit69Change` compatibility proxy
+remains for the legacy Delphi DFM binding. The `TabSheet2Enter` host callback,
+navigator-before-action callback, and explicit focus request are unchanged.
+
+`AHW52LegacySharedState` is now the single Pascal owner for the first two
+cells. `Unit32` uses those same declarations in its existing zero-counter
+cleanup, which still clears the two cells and finalizes its own array; it does
+not clear `02535B58`. The state remains address-named because the domain
+meaning is unknown. Synthetic tests exercise the direct frame event and the
+`Unit32` cleanup against the shared storage without opening genealogy data or
+image files.
+
+The focused edit-frame suite passes 6/6, the full FPCUnit suite passes
+466/466, and the forced Debug main build links.
+
+## Source-ownership increment — Details relationship-combo focus (2026-10-04)
+
+The complete `ComboBox5Change` listing assigns `ActiveControl := Edit4`.
+Although the original Delphi DFM streams this hidden `TEdit` under the Details
+tab, the FPC Details-frame LFM had omitted it and temporarily routed the event
+through a host callback. Restored the DFM-proven resource in
+`TAHW52PersonDetailsFrame` (`Left=115`, `Top=379`, `Width=25`, `Height=24`,
+`MaxLength=2`, `TabOrder=32`, `Visible=False`) and moved the focus operation
+into the frame. `GetParentForm(Self).ActiveControl` preserves the form-level
+focus behavior; absence of a parent form raises an explicit exception.
+
+Removed the FPC host-action route and its main-form assignment/dispatcher. A
+conditional `TForm1.ComboBox5Change` proxy remains for the legacy Delphi DFM.
+The frame test verifies 72 streamed controls, the hidden edit's resource
+properties, retained event bindings, and direct focus transfer. Focused
+Details tests pass 2/2, the full suite passes 466/466, and the forced Debug
+main build links. No data-bound relationship behavior was activated.
+
+## Source-ownership increment — Person-edit navigator save handoff (2026-10-04)
+
+The complete `TForm1.DBNavigator1BeforeAction(Sender)` body only calls
+`speich1(Sender)`. The frame's `DBNavigator1.BeforeAction` retains its
+framework-required `(Sender, Button)` signature, but now forwards the original
+sender through `OnSaveRequested: TNotifyEvent`; the original route does not
+use `Button`. `FormCreate` wires the request directly to `TForm1.speich1`.
+
+Removed the FPC `HandlePersonEditNavigatorBeforeAction` declaration,
+implementation, and assignment. The legacy `TForm1.DBNavigator1BeforeAction`
+proxy is conditionally compiled only for Delphi's older DFM binding. The
+shared save implementation, dataset guards, persistence ordering, and error
+behavior are unchanged. The focused PersonEdit suite passes 6/6, the full
+suite passes 466/466, and the forced Debug main build links; no live
+genealogy data was opened.
+
+## Source-ownership increment — Person-edit focus routing (2026-10-04)
+
+Removed the frame's `OnFocusRequest` callback and the main-form
+`HandlePersonEditFocusRequest` adapter. The frame now sets its containing
+form's `ActiveControl` directly for the fully evidenced focus paths:
+`DBEdit2` on tab show and application activation, and `DBComboBox3` after grid
+exit or Escape. Grid/label visibility, search-text clearing, and key handling
+are unchanged. A focus request without a containing form raises
+`EInvalidOperation`; it is not silently ignored.
+
+`TForm1.FormActivate` remains the application event entry point and continues
+to call `PersonEditFrame.FocusPrimaryField`. `TabSheet2Enter` still dispatches
+to the host because its non-sentinel branch calls the provider-backed
+`anzeigen(Self)` refresh. Focused edit-frame tests pass 7/7, the full suite
+passes 467/467, and the forced Debug main build links. No live dataset was
+opened.
+
+## Source-ownership increment — selection search right-clicks (2026-10-04)
+
+The complete DFM-bound listings for `TForm1.TabSheet1MouseDown` (`005E62D4`)
+and `TabSheet7MouseDown` (`005E8F94`) are identical: only `mbRight` clears
+`PersonSearchDialog.Edit1` and invokes the global dialog's modal display.
+Both event methods now implement that behavior in their owning frames and
+share `TPersonSearchForm.ShowForSelection` for the clear-then-show sequence.
+No form adapter was introduced.
+
+The FPC startup deliberately does not instantiate the BDE-dependent search
+form. A missing global dialog or first edit raises an explicit
+`EInvalidOperation`; no replacement form is constructed. Left and middle
+clicks remain no-ops, and BDE search, datasets, modal-loop execution, and
+relationship navigation remain inactive.
+
+Five synthetic tests verify both handlers, exact-button behavior, clearing
+before modal display, use of the global dialog, and both explicit missing
+resource errors. Focused tests pass 5/5, the full suite passes 472/472, and
+the forced Debug main build links. No database or live records were used.
+
+## Source-ownership increment — PersonEdit data-module interface (2026-10-04)
+
+The listing-backed `DBCheckBox1Exit` (`00602068`) now calls
+`RequireGenealogyDataModule.Table1.Refresh`. Its LFM event binding remains
+frame-local. `IGenealogyDataModule` initially exposes only `Table1: TDataSet`;
+the interface deliberately uses the dataset capability required by the
+handler rather than naming the current `TSQLTable` implementation or a
+future driver.
+
+The streamed `TGenealogyDataModule` and concrete `DataModule2` global remain
+unchanged. A non-owning reference-counted adapter exposes the form through
+separate `GenealogyDataModule: IGenealogyDataModule` and
+`TemporaryDataModule: ITemporaryDataModule` references. The first interface
+contains the proven `Table1: TDataSet` member; the second is intentionally an
+empty boundary for non-genealogy data pending inventory/classification.
+Neither all non-HEJ tables nor any individual component are presumed
+temporary. The genealogy category follows the HEJ contents: people, marriages,
+adoptions, places, and sources; component membership remains to be mapped.
+The global/interfaces live in `GenealogyDataModuleAccess` because
+a Pascal unit cannot also declare a global of its own unit name. FPC startup
+installs both adapters after existing data-access initialization and releases
+both in `finally` after the event loop; neither adapter controls form
+lifetime. Uninitialized access or an absent adapter target raises
+`EDataModuleInterfaceUnavailable`; `Refresh` exceptions are not caught. This
+adds no provider configuration or live-data access.
+
+The focused PersonEdit suite passes 14/14, the complete suite 479/479, and
+the forced Debug main build links. Seven added tests cover independent
+interface substitution, dataset refresh dispatch and failure propagation,
+both adapter contracts, and explicit missing-initialization behavior.
+
 ## Backlog and sequence
 
 | Work item | Status | Exit criteria |
@@ -574,7 +738,7 @@ actions are tracked per frame in `AhnWin-MainForm-Handler-Ownership.md`.
 | Migrate hidden related selection (`TabSheet7`) | Done | Frame owns the original grid/label and event boundaries |
 | Migrate the Pictures tab (`TabSheet9`) | Done | Extract image controls, lifecycle events, and their host boundaries |
 | Retire the edit-frame prototype | Done | Production successor integrated and preview references updated |
-| Update architecture/wiki documentation and validate | Done | All nine frame owners, host boundaries, open reconstruction issues, and successful Debug/test builds recorded; current suite is 422 passing tests |
+| Update architecture/wiki documentation and validate | Done | All nine frame owners, host boundaries, open reconstruction issues, and successful Debug/test builds recorded; see latest increment for current suite results |
 | Inventory tab handler source ownership | In progress | Map each frame event to its active Pascal body, host adapter, dependencies, and unresolved listing boundary |
 | Move tab-local handler implementations into frames | Pending | Move executable local behavior with focused tests; retain only explicit shared/host responsibilities |
 | Remove superseded main-form adapters | Pending | Delete obsolete declarations, implementations, and dispatch cases after each verified migration |
