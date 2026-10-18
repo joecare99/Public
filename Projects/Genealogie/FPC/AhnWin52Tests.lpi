@@ -35,7 +35,7 @@
         <PackageName Value="lazreport"/>
       </Item7>
     </RequiredPackages>
-    <Units Count="131">
+    <Units Count="145">
       <Unit0>
         <Filename Value="..\Source\AhnWin52Tests\AhnWin52Tests.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -611,6 +611,50 @@
         <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_Unit24RadioPresetTests.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit133>
+      <Unit134>
+        <Filename Value="..\Source\AhnWin52\IndexedSeekContract.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit134>
+      <Unit135>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_IndexedSeekContractTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit135>
+      <Unit136>
+        <Filename Value="..\Source\AhnWin52\Reports\ReportLifecycleContract.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit136>
+      <Unit137>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_ReportLifecycleContractTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit137>
+      <Unit138>
+        <Filename Value="..\Source\AhnWin52\Relationships\MarriagePairTransactionContract.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit138>
+      <Unit139>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_MarriagePairTransactionContractTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit139>
+      <Unit140>
+        <Filename Value="..\Source\AhnWin52\Relationships\MarriagePairDataModuleAdapter.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit140>
+      <Unit141>
+        <Filename Value="..\Source\AhnWin52Tests\tst_AHW52_MarriagePairDataModuleAdapterTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit141>
+      <Unit142>
+        <Filename Value="..\Source\AhnWin52Tests\tst_DBParadoxConnectionTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit142>
+      <Unit143>
+        <Filename Value="..\Source\AhnWin52Tests\tst_DBParadoxSQLParserTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit143>
+      <Unit144>
+        <Filename Value="..\Source\AhnWin52Tests\tst_DBParadoxWriteBufferTests.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit144>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -621,7 +665,7 @@
     </Target>
     <SearchPaths>
       <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Sys;..\Source\AhnWin52\wPDF\Components;..\Source\AhnWin52\wPDF\Engine;..\Source\AhnWin52\Forms;..\Source\AhnWin52\Model;..\Source\AhnWin52\Services;..\Source\AhnWin52\Test;..\Source\AhnWin52\Reports;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\ThirdParty\mORMot2\src;..\Source\AhnWin52\ThirdParty\mORMot2\src\core;..\Source\AhnWin52\ThirdParty\mORMot2\src\ui;..\Source\AhnWin52\ThirdParty\mORMot2\src\lib;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\DBTables;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\BrowserCommands;..\Source\AhnWin52Tests;$(FPCSrcDir)\packages\pxlib\src;$(FPCSrcDir)\packages\fcl-db\src\paradox"/>
+      <OtherUnitFiles Value="..\Source\AhnWin52;..\Source\AhnWin52\Sys;..\Source\AhnWin52\wPDF\Components;..\Source\AhnWin52\wPDF\Engine;..\Source\AhnWin52\Forms;..\Source\AhnWin52\Model;..\Source\AhnWin52\Services;..\Source\AhnWin52\Relationships;..\Source\AhnWin52\Test;..\Source\AhnWin52\Reports;..\Source\AhnWin52\DataModules;..\Source\AhnWin52\ThirdParty\mORMot2\src;..\Source\AhnWin52\ThirdParty\mORMot2\src\core;..\Source\AhnWin52\ThirdParty\mORMot2\src\ui;..\Source\AhnWin52\ThirdParty\mORMot2\src\lib;..\Source\AhnWin52\ViewModels;..\Source\AhnWin52\ViewModels\Interfaces;..\Source\AhnWin52\Compat\DBTables;..\Source\AhnWin52\Compat\QuickReport;..\Source\AhnWin52\Compat\BrowserCommands;..\Source\AhnWin52Tests;..\..\..\Components\Source;$(FPCSrcDir)\packages\pxlib\src;$(FPCSrcDir)\packages\fcl-db\src\paradox"/>
       <UnitOutputDirectory Value="..\bin\$(TargetCPU)-$(TargetOS)\units"/>
     </SearchPaths>
     <Other>

@@ -7,7 +7,8 @@ uses
   cthreads,
   {$ENDIF}{$ENDIF}
   Interfaces, // this includes the LCL widgetset
-  Forms, printer4lazarus, frmAhnenWinMain, GenealogyDataModule, AboutForm, frm_Splash,
+  Forms, printer4lazarus, frmAhnenWinMain, GenealogyDataModule,
+  GenealogyDataModuleAccess, AboutForm, frm_Splash,
   PersonSearchForm
   { you can add units after this };
 
@@ -25,5 +26,14 @@ begin
   Application.CreateForm(TGenealogyDataModule, DataModule2);
   DataModule2.InitializeDataAccess;
   Application.CreateForm(TAboutForm, AboutDialog);
-  Application.Run;
+  try
+    GenealogyDataModuleAccess.GenealogyDataModule :=
+      CreateGenealogyDataModuleAdapter(DataModule2);
+    GenealogyDataModuleAccess.TemporaryDataModule :=
+      CreateTemporaryDataModuleAdapter(DataModule2);
+    Application.Run;
+  finally
+    GenealogyDataModuleAccess.TemporaryDataModule := nil;
+    GenealogyDataModuleAccess.GenealogyDataModule := nil;
+  end;
 end.

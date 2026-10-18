@@ -47,6 +47,11 @@ type
     FTable1: TDataSet;
     FTable18: TDataSet;
     FTable13: TDataSet;
+    procedure BeginTransaction;
+    procedure CommitTransaction;
+    procedure RollbackTransaction;
+    procedure AppendMarriageRecord(const PersonNumber, PartnerNumber: Integer;
+      const Details: TMarriageDetails);
     function GetTable1: TDataSet;
     function GetTable3: TDataSet;
     function GetTable1Nummer: TField;
@@ -134,6 +139,31 @@ begin
   FTable1 := ATable1;
   FTable18 := ATable18;
   FTable13 := ATable13;
+end;
+
+procedure TFakePlaceSearchDataModule.BeginTransaction;
+begin
+  raise EDataModuleTransactionUnavailable.Create(
+    'The place-search fixture does not provide transactions.');
+end;
+
+procedure TFakePlaceSearchDataModule.CommitTransaction;
+begin
+  raise EDataModuleTransactionUnavailable.Create(
+    'The place-search fixture does not provide transactions.');
+end;
+
+procedure TFakePlaceSearchDataModule.RollbackTransaction;
+begin
+  raise EDataModuleTransactionUnavailable.Create(
+    'The place-search fixture does not provide transactions.');
+end;
+
+procedure TFakePlaceSearchDataModule.AppendMarriageRecord(
+  const PersonNumber, PartnerNumber: Integer; const Details: TMarriageDetails);
+begin
+  raise EDataModuleWriteUnavailable.Create(
+    'The place-search fixture does not provide marriage writes.');
 end;
 
 function TFakePlaceSearchDataModule.GetTable1: TDataSet;

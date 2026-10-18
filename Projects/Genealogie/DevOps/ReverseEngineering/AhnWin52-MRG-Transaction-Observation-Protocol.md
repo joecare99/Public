@@ -1,27 +1,33 @@
-# BDE/Paradox MRG pair-transaction probe — preparation only
+# Delphi BDE/Paradox MRG pair-transaction probe — preparation only
 
 **Status:** protocol prepared; execution is not authorized by this document.
 
 ## Question
 
-Can the installed BDE/Paradox provider roll back a `MRG.DB`-shaped row that
-was successfully posted inside a transaction when the reciprocal post fails?
-This question is separate from the SQLDB/SQLite adapter tests. It does not
-test the original application, its UI handlers, or any genealogy data.
+Can the installed Delphi BDE `TTable`/Paradox provider roll back a
+`MRG.DB`-shaped row that was successfully posted inside a transaction when
+the reciprocal post fails? This question is separate from both SQLDB/SQLite
+and Lazarus/FPC `TParadox`/pxlib. It does not test the original application,
+its UI handlers, or any genealogy data.
 
 ## Current evidence boundary
 
-`IGenealogyDataModule` now exposes begin/commit/rollback, and the SQLDB
+The future SQLDB implementation exposes begin/commit/rollback, and its SQLDB
 `TGenealogyDataModuleAdapter` delegates those calls to the transaction
 associated with `Table5`. The provider-free marriage-pair coordinator and
 the SQLDB adapter have separate synthetic tests. SQLDB/SQLite has demonstrated
 that an injected failure on the second row leaves no row after rollback.
 
-The original Delphi application used BDE. That runtime has not been shown to
-support the same transaction boundary for Paradox tables. The result must
-therefore remain unknown until the exact test below is separately approved
-and run. Do not substitute the authorized test directory or an original
-application launch.
+The intended Lazarus architecture is a virtual SQLDB-compatible provider
+backed by Paradox, exposing the required common `TSQL...`-style surface while
+keeping Paradox/pxlib internal; this is not a plan to expose raw `TParadox`
+throughout the application. The checked-in data module currently streams
+Table5 as `TSQLTable`, while only Table17/18 are direct `TParadox`. The static
+FPC component audit found no transaction API and an empty append
+implementation. BDE behavior cannot answer the virtual Lazarus provider's
+write/rollback question. This protocol covers only the separate BDE-specific
+question and remains unexecuted until separately approved. Do not substitute
+the authorized test directory or an original application launch.
 
 ## Required approval before execution
 
