@@ -4,11 +4,12 @@
 
 unit BaseUnits;
 
+{$warn 5023 off : no warning about unused units}
 interface
 
 uses
-  Unt_Allgfunklib, Unt_StringProcs, Unt_VariantProcs, Unt_Autosave, 
-  Unt_FileProcs, Unt_ComboBoxExt, Unt_ExecCommand, Unt_LinList, Unt_LogUnit;
+  Unt_Allgfunklib, Unt_Autosave, Unt_ComboBoxExt, Unt_VariantProcs, 
+  Unt_StringProcs, Unt_LogUnit, Unt_LinList, Unt_FileProcs, Unt_ExecCommand;
 
 implementation
 
