@@ -750,6 +750,12 @@ type
     IGenealogyDataModule, ITemporaryDataModule)
   private
     FDataModule: TGenealogyDataModule;
+    function RequireMarriageTransaction: TSQLTransaction;
+    procedure BeginTransaction;
+    procedure CommitTransaction;
+    procedure RollbackTransaction;
+    procedure AppendMarriageRecord(const PersonNumber, PartnerNumber: Integer;
+      const Details: TMarriageDetails);
     function GetTable1: TDataSet;
     function GetTable3: TDataSet;
     function GetTable1Nummer: TField;
@@ -781,6 +787,137 @@ begin
     raise EDataModuleInterfaceUnavailable.Create(
       'A genealogy data module is required by the adapter.');
   FDataModule := ADataModule;
+end;
+
+function TGenealogyDataModuleAdapter.RequireMarriageTransaction:
+  TSQLTransaction;
+begin
+  if FDataModule.Table5 = nil then
+    raise EDataModuleTransactionUnavailable.Create(
+      'Table5 is not available for the SQLDB transaction.');
+  if not (FDataModule.Table5.Transaction is TSQLTransaction) then
+    raise EDataModuleTransactionUnavailable.Create(
+      'No SQLDB transaction is configured for Table5.');
+  Result := TSQLTransaction(FDataModule.Table5.Transaction);
+end;
+
+procedure TGenealogyDataModuleAdapter.BeginTransaction;
+var
+  Transaction: TSQLTransaction;
+begin
+  Transaction := RequireMarriageTransaction;
+  if not Transaction.Active then
+    Transaction.StartTransaction;
+end;
+
+procedure TGenealogyDataModuleAdapter.CommitTransaction;
+begin
+  RequireMarriageTransaction.Commit;
+end;
+
+procedure TGenealogyDataModuleAdapter.RollbackTransaction;
+begin
+  RequireMarriageTransaction.Rollback;
+end;
+
+procedure TGenealogyDataModuleAdapter.AppendMarriageRecord(
+  const PersonNumber, PartnerNumber: Integer; const Details: TMarriageDetails);
+var
+  DataSet: TDataSet;
+  Field: TField;
+  OriginalFailure: string;
+
+  procedure RequireField(const FieldName: string;
+    const ExpectedType: TFieldType);
+  begin
+    Field := DataSet.FieldByName(FieldName);
+    if Field.DataType <> ExpectedType then
+      raise EDataModuleWriteUnavailable.CreateFmt(
+        'Table5 field "%s" has type %d; expected type %d.',
+        [FieldName, Ord(Field.DataType), Ord(ExpectedType)]);
+  end;
+
+begin
+  DataSet := FDataModule.Table5;
+  if DataSet = nil then
+    raise EDataModuleWriteUnavailable.Create(
+      'Table5 is not available for marriage-pair writes.');
+  if not DataSet.Active then
+    raise EDataModuleWriteUnavailable.Create(
+      'Table5 must be active for marriage-pair writes.');
+  if DataSet.State <> dsBrowse then
+    raise EDataModuleWriteState.CreateFmt(
+      'Table5 must be in browse state; current state is %d.',
+      [Ord(DataSet.State)]);
+  if not (DataSet is TSQLTable) then
+    raise EDataModuleWriteUnavailable.Create(
+      'The configured Table5 provider does not support verified marriage writes.');
+
+  RequireField('Nummer', ftInteger);
+  RequireField('Epnum', ftInteger);
+  RequireField('Htag', ftString);
+  RequireField('Hmonat', ftString);
+  RequireField('Hjahr', ftString);
+  RequireField('Hort', ftString);
+  RequireField('Trauz', ftString);
+  RequireField('Satag', ftString);
+  RequireField('Samonat', ftString);
+  RequireField('Sajahr', ftString);
+  RequireField('Saort', ftString);
+  RequireField('Satrauz', ftString);
+  RequireField('Verbind', ftString);
+  RequireField('Schtag', ftString);
+  RequireField('Schmonat', ftString);
+  RequireField('Schjahr', ftString);
+  RequireField('Schort', ftString);
+  RequireField('Hqu', ftString);
+  RequireField('Saqu', ftString);
+  RequireField('Schqu', ftString);
+
+  DataSet.Append;
+  try
+    DataSet.FieldByName('Nummer').AsInteger := PersonNumber;
+    DataSet.FieldByName('Epnum').AsInteger := PartnerNumber;
+    DataSet.FieldByName('Htag').AsString := Details.Htag;
+    DataSet.FieldByName('Hmonat').AsString := Details.Hmonat;
+    DataSet.FieldByName('Hjahr').AsString := Details.Hjahr;
+    DataSet.FieldByName('Hort').AsString := Details.Hort;
+    DataSet.FieldByName('Trauz').AsString := Details.Trauz;
+    DataSet.FieldByName('Satag').AsString := Details.Satag;
+    DataSet.FieldByName('Samonat').AsString := Details.Samonat;
+    DataSet.FieldByName('Sajahr').AsString := Details.Sajahr;
+    DataSet.FieldByName('Saort').AsString := Details.Saort;
+    DataSet.FieldByName('Satrauz').AsString := Details.Satrauz;
+    DataSet.FieldByName('Verbind').AsString := Details.Verbind;
+    DataSet.FieldByName('Schtag').AsString := Details.Schtag;
+    DataSet.FieldByName('Schmonat').AsString := Details.Schmonat;
+    DataSet.FieldByName('Schjahr').AsString := Details.Schjahr;
+    DataSet.FieldByName('Schort').AsString := Details.Schort;
+    DataSet.FieldByName('Hqu').AsString := Details.Hqu;
+    DataSet.FieldByName('Saqu').AsString := Details.Saqu;
+    DataSet.FieldByName('Schqu').AsString := Details.Schqu;
+    DataSet.Post;
+    TSQLTable(DataSet).ApplyUpdates(0);
+  except
+    on E: Exception do
+    begin
+      OriginalFailure := E.ClassName + ': ' + E.Message;
+      if DataSet.State in [dsInsert, dsEdit] then
+      begin
+        try
+          DataSet.Cancel;
+        except
+          on CancelError: Exception do
+            raise EDataModuleWriteUnavailable.CreateFmt(
+              'Table5 append failed (%s); cancelling its pending row also ' +
+              'failed (%s).',
+              [OriginalFailure,
+               CancelError.ClassName + ': ' + CancelError.Message]);
+        end;
+      end;
+      raise;
+    end;
+  end;
 end;
 
 function TGenealogyDataModuleAdapter.GetTable1: TDataSet;
