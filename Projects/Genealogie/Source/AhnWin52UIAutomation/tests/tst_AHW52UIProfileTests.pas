@@ -12,6 +12,8 @@ type
   TTestAHW52UIProfile = class(TTestCase)
   private
     function CreateValidProfile: TWindowProfile;
+    function CreateMetadataProfile: TWindowProfile;
+    function CreateNextTabMetadataProfile: TWindowProfile;
     function CloneProfile(const Source: TWindowProfile): TWindowProfile;
     procedure AssertProfileRejected(
       const CurrentProfile, ExpectedProfile: TWindowProfile);
@@ -36,6 +38,25 @@ type
     procedure TestRoundTripsJSONProfile;
     procedure TestReadsVersionOneProfileWithoutForegroundData;
     procedure TestRejectsMalformedJSONProfile;
+    procedure TestValidatesExplicitReadableFieldTargets;
+    procedure TestAllowsApprovedComboFieldTarget;
+    procedure TestRejectsNonFieldControlTarget;
+    procedure TestRejectsPasswordAndHiddenFieldTargets;
+    procedure TestRejectsStaleFieldStructure;
+    procedure TestRejectsProfileContainingCapturedText;
+    procedure TestRejectsDuplicateFieldHandles;
+    procedure TestRejectsFieldFromAnotherProcess;
+    procedure TestValidatesNextTabTransitionTarget;
+    procedure TestAcceptsAnySingleActiveTab;
+    procedure TestIgnoresUnstableWindowEnumerationOrdinals;
+    procedure TestRejectsMultipleActiveTabs;
+    procedure TestRejectsChangedTabHierarchy;
+    procedure TestValidatesMainWindowForClose;
+    procedure TestCalculatesNextNativeTabIndex;
+    procedure TestRejectsLastNativeTabWraparound;
+    procedure TestRejectsInvalidNativeTabSelection;
+    procedure TestValidatesCloseWithModalDisabledMainWindow;
+    procedure TestRejectsChangedMainWindowForClose;
   end;
 
 implementation
@@ -135,6 +156,75 @@ begin
   Result.Controls[5].Visible := True;
   Result.Controls[5].Enabled := True;
   Result.Controls[5].Ordinal := 4;
+end;
+
+function TTestAHW52UIProfile.CreateMetadataProfile: TWindowProfile;
+var
+  I: LongInt;
+begin
+  Result := CreateValidProfile;
+  for I := 0 to High(Result.Controls) do
+    Result.Controls[I].Text := '';
+end;
+
+function TTestAHW52UIProfile.CreateNextTabMetadataProfile: TWindowProfile;
+begin
+  Result.ProcessId := TestProcessId;
+  Result.ExecutablePath := TestExecutablePath;
+  Result.ExecutableSha256 := TestExecutableHash;
+  Result.ForegroundWindowHandle := 0;
+  SetLength(Result.Controls, 5);
+
+  Result.Controls[0].Handle := MainWindowHandle;
+  Result.Controls[0].ProcessId := TestProcessId;
+  Result.Controls[0].ClassName := 'TForm1';
+  Result.Controls[0].Width := 792;
+  Result.Controls[0].Height := 546;
+  Result.Controls[0].Visible := True;
+  Result.Controls[0].Enabled := True;
+  Result.Controls[0].IsTopLevel := True;
+
+  Result.Controls[1].Handle := 150;
+  Result.Controls[1].ParentHandle := MainWindowHandle;
+  Result.Controls[1].ProcessId := TestProcessId;
+  Result.Controls[1].ClassName := 'TPageControl';
+  Result.Controls[1].Width := 792;
+  Result.Controls[1].Height := 546;
+  Result.Controls[1].Visible := True;
+  Result.Controls[1].Enabled := True;
+  Result.Controls[1].Ordinal := 0;
+
+  Result.Controls[2].Handle := 151;
+  Result.Controls[2].ParentHandle := 150;
+  Result.Controls[2].ProcessId := TestProcessId;
+  Result.Controls[2].ClassName := 'TTabSheet';
+  Result.Controls[2].Width := 792;
+  Result.Controls[2].Height := 510;
+  Result.Controls[2].Visible := True;
+  Result.Controls[2].Enabled := True;
+  Result.Controls[2].Ordinal := 0;
+
+  Result.Controls[3].Handle := 152;
+  Result.Controls[3].ParentHandle := 150;
+  Result.Controls[3].ProcessId := TestProcessId;
+  Result.Controls[3].ClassName := 'TTabSheet';
+  Result.Controls[3].Width := 792;
+  Result.Controls[3].Height := 510;
+  Result.Controls[3].Visible := False;
+  Result.Controls[3].Enabled := True;
+  Result.Controls[3].Ordinal := 1;
+
+  Result.Controls[4].Handle := 153;
+  Result.Controls[4].ParentHandle := 152;
+  Result.Controls[4].ProcessId := TestProcessId;
+  Result.Controls[4].ClassName := 'TDBEdit';
+  Result.Controls[4].Left := 100;
+  Result.Controls[4].Top := 100;
+  Result.Controls[4].Width := 200;
+  Result.Controls[4].Height := 23;
+  Result.Controls[4].Visible := False;
+  Result.Controls[4].Enabled := True;
+  Result.Controls[4].Ordinal := 0;
 end;
 
 function TTestAHW52UIProfile.CloneProfile(
@@ -427,6 +517,278 @@ begin
   try
     ProfileFromJSON('{"schemaVersion":1,"process":{},"windows":[]}');
     Fail('Expected incomplete process identity to be rejected.');
+  except
+    on E: EUIProfileError do
+      CheckNotEquals('', E.Message);
+  end;
+end;
+
+procedure TTestAHW52UIProfile.TestValidatesExplicitReadableFieldTargets;
+var
+  ExpectedProfile: TWindowProfile;
+  CurrentProfile: TWindowProfile;
+begin
+  ExpectedProfile := CreateMetadataProfile;
+  CurrentProfile := CloneProfile(ExpectedProfile);
+  CurrentProfile.Controls[2].Text := 'Muster';
+  ValidateReadableFieldTargets(CurrentProfile, ExpectedProfile, [QWord(202)]);
+end;
+
+procedure TTestAHW52UIProfile.TestAllowsApprovedComboFieldTarget;
+var
+  Profile: TWindowProfile;
+begin
+  Profile := CreateMetadataProfile;
+  Profile.Controls[2].ClassName := 'TDBComboBox';
+  ValidateReadableFieldTargets(Profile, Profile, [QWord(202)]);
+end;
+
+procedure TTestAHW52UIProfile.TestRejectsNonFieldControlTarget;
+var
+  Profile: TWindowProfile;
+begin
+  Profile := CreateMetadataProfile;
+  Profile.Controls[2].ClassName := 'TLabel';
+  try
+    ValidateReadableFieldTargets(Profile, Profile, [QWord(202)]);
+    Fail('A generic label is not an approved field control.');
+  except
+    on E: EUIProfileError do
+      CheckNotEquals('', E.Message);
+  end;
+end;
+
+procedure TTestAHW52UIProfile.TestRejectsPasswordAndHiddenFieldTargets;
+var
+  Profile: TWindowProfile;
+begin
+  Profile := CreateMetadataProfile;
+  Profile.Controls[2].IsPassword := True;
+  try
+    ValidateReadableFieldTargets(Profile, Profile, [QWord(202)]);
+    Fail('Password fields must not be read.');
+  except
+    on E: EUIProfileError do
+      CheckNotEquals('', E.Message);
+  end;
+
+  Profile := CreateMetadataProfile;
+  Profile.Controls[2].Visible := False;
+  try
+    ValidateReadableFieldTargets(Profile, Profile, [QWord(202)]);
+    Fail('Hidden controls must not be read.');
+  except
+    on E: EUIProfileError do
+      CheckNotEquals('', E.Message);
+  end;
+end;
+
+procedure TTestAHW52UIProfile.TestRejectsStaleFieldStructure;
+var
+  ExpectedProfile: TWindowProfile;
+  CurrentProfile: TWindowProfile;
+begin
+  ExpectedProfile := CreateMetadataProfile;
+  CurrentProfile := CloneProfile(ExpectedProfile);
+  Inc(CurrentProfile.Controls[2].Left);
+  try
+    ValidateReadableFieldTargets(CurrentProfile, ExpectedProfile, [QWord(202)]);
+    Fail('A control that moved after profiling must be rejected.');
+  except
+    on E: EUIProfileError do
+      CheckNotEquals('', E.Message);
+  end;
+end;
+
+procedure TTestAHW52UIProfile.TestRejectsProfileContainingCapturedText;
+var
+  Profile: TWindowProfile;
+begin
+  Profile := CreateValidProfile;
+  try
+    ValidateReadableFieldTargets(Profile, Profile, [QWord(202)]);
+    Fail('Field reads require a profile that captured no visible text.');
+  except
+    on E: EUIProfileError do
+      CheckNotEquals('', E.Message);
+  end;
+end;
+
+procedure TTestAHW52UIProfile.TestRejectsDuplicateFieldHandles;
+var
+  Profile: TWindowProfile;
+begin
+  Profile := CreateMetadataProfile;
+  try
+    ValidateReadableFieldTargets(Profile, Profile,
+      [QWord(202), QWord(202)]);
+    Fail('A field handle must not be selected more than once.');
+  except
+    on E: EUIProfileError do
+      CheckNotEquals('', E.Message);
+  end;
+end;
+
+procedure TTestAHW52UIProfile.TestRejectsFieldFromAnotherProcess;
+var
+  ExpectedProfile: TWindowProfile;
+  CurrentProfile: TWindowProfile;
+begin
+  ExpectedProfile := CreateMetadataProfile;
+  CurrentProfile := CloneProfile(ExpectedProfile);
+  CurrentProfile.Controls[2].ProcessId := TestProcessId + 1;
+  try
+    ValidateReadableFieldTargets(CurrentProfile, ExpectedProfile,
+      [QWord(202)]);
+    Fail('A selected control from another process must be rejected.');
+  except
+    on E: EUIProfileError do
+      CheckNotEquals('', E.Message);
+  end;
+end;
+
+procedure TTestAHW52UIProfile.TestValidatesNextTabTransitionTarget;
+var
+  Profile: TWindowProfile;
+  Targets: TMainWindowTargets;
+begin
+  Profile := CreateNextTabMetadataProfile;
+  ValidateNextTabProfile(Profile, Profile, Targets);
+  AssertEquals(MainWindowHandle, Targets.MainWindowHandle);
+  AssertEquals(QWord(150), Targets.PageControlHandle);
+end;
+
+procedure TTestAHW52UIProfile.TestAcceptsAnySingleActiveTab;
+var
+  Profile: TWindowProfile;
+  Targets: TMainWindowTargets;
+begin
+  Profile := CreateNextTabMetadataProfile;
+  Profile.Controls[2].Visible := False;
+  Profile.Controls[3].Visible := True;
+  Profile.Controls[4].Visible := True;
+  ValidateNextTabProfile(Profile, Profile, Targets);
+  AssertEquals(MainWindowHandle, Targets.MainWindowHandle);
+  AssertEquals(QWord(150), Targets.PageControlHandle);
+end;
+
+procedure TTestAHW52UIProfile.TestIgnoresUnstableWindowEnumerationOrdinals;
+var
+  CurrentProfile: TWindowProfile;
+  ExpectedProfile: TWindowProfile;
+  Targets: TMainWindowTargets;
+begin
+  ExpectedProfile := CreateNextTabMetadataProfile;
+  CurrentProfile := CloneProfile(ExpectedProfile);
+  CurrentProfile.Controls[0].Ordinal := 34;
+  CurrentProfile.Controls[1].Ordinal := 18;
+  CurrentProfile.Controls[2].Ordinal := 27;
+
+  ValidateNextTabProfile(CurrentProfile, ExpectedProfile, Targets);
+
+  AssertEquals(MainWindowHandle, Targets.MainWindowHandle);
+  AssertEquals(QWord(150), Targets.PageControlHandle);
+end;
+
+procedure TTestAHW52UIProfile.TestRejectsMultipleActiveTabs;
+var
+  Profile: TWindowProfile;
+  Targets: TMainWindowTargets;
+begin
+  Profile := CreateNextTabMetadataProfile;
+  Profile.Controls[3].Visible := True;
+  try
+    ValidateNextTabProfile(Profile, Profile, Targets);
+    Fail('The next-tab action must require exactly one active page sheet.');
+  except
+    on E: EUIProfileError do
+      CheckNotEquals('', E.Message);
+  end;
+end;
+
+procedure TTestAHW52UIProfile.TestRejectsChangedTabHierarchy;
+var
+  CurrentProfile: TWindowProfile;
+  ExpectedProfile: TWindowProfile;
+  Targets: TMainWindowTargets;
+begin
+  ExpectedProfile := CreateNextTabMetadataProfile;
+  CurrentProfile := CloneProfile(ExpectedProfile);
+  Inc(CurrentProfile.Controls[1].Width);
+  try
+    ValidateNextTabProfile(CurrentProfile, ExpectedProfile, Targets);
+    Fail('A stale page-control hierarchy must be rejected.');
+  except
+    on E: EUIProfileError do
+      CheckNotEquals('', E.Message);
+  end;
+end;
+
+procedure TTestAHW52UIProfile.TestValidatesMainWindowForClose;
+var
+  Profile: TWindowProfile;
+  Targets: TMainWindowTargets;
+begin
+  Profile := CreateNextTabMetadataProfile;
+  ValidateMainWindowProfile(Profile, Profile, Targets);
+  AssertEquals(MainWindowHandle, Targets.MainWindowHandle);
+  AssertEquals(QWord(0), Targets.PageControlHandle);
+end;
+
+procedure TTestAHW52UIProfile.TestCalculatesNextNativeTabIndex;
+begin
+  AssertEquals(2, NextNativeTabIndex(1, 4));
+end;
+
+procedure TTestAHW52UIProfile.TestRejectsLastNativeTabWraparound;
+begin
+  try
+    NextNativeTabIndex(3, 4);
+    Fail('The native tab selection must not wrap from the last page.');
+  except
+    on E: EUIProfileError do
+      CheckNotEquals('', E.Message);
+  end;
+end;
+
+procedure TTestAHW52UIProfile.TestRejectsInvalidNativeTabSelection;
+begin
+  try
+    NextNativeTabIndex(-1, 2);
+    Fail('An invalid native tab selection must be rejected.');
+  except
+    on E: EUIProfileError do
+      CheckNotEquals('', E.Message);
+  end;
+end;
+
+procedure TTestAHW52UIProfile.TestValidatesCloseWithModalDisabledMainWindow;
+var
+  CurrentProfile: TWindowProfile;
+  ExpectedProfile: TWindowProfile;
+  Targets: TMainWindowTargets;
+begin
+  ExpectedProfile := CreateNextTabMetadataProfile;
+  CurrentProfile := CloneProfile(ExpectedProfile);
+  CurrentProfile.Controls[0].Enabled := False;
+
+  ValidateCloseMainWindowProfile(CurrentProfile, ExpectedProfile, Targets);
+
+  AssertEquals(MainWindowHandle, Targets.MainWindowHandle);
+end;
+
+procedure TTestAHW52UIProfile.TestRejectsChangedMainWindowForClose;
+var
+  CurrentProfile: TWindowProfile;
+  ExpectedProfile: TWindowProfile;
+  Targets: TMainWindowTargets;
+begin
+  ExpectedProfile := CreateNextTabMetadataProfile;
+  CurrentProfile := CloneProfile(ExpectedProfile);
+  Inc(CurrentProfile.Controls[0].Width);
+  try
+    ValidateCloseMainWindowProfile(CurrentProfile, ExpectedProfile, Targets);
+    Fail('A changed main-window structure must be rejected for close.');
   except
     on E: EUIProfileError do
       CheckNotEquals('', E.Message);
