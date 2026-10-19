@@ -17,6 +17,7 @@ type
     procedure AssertFourRows(DataSet: TDataSet);
     function BuildInternalReaderFixture(DeclaredRecords,
       PhysicalRecords: Word): TBytes;
+    function BuildLongSemanticsFixture: TBytes;
     function BuildSQLQueryFixture: TBytes;
     function BuildUnsupportedFieldFixture: TBytes;
     function WriteInternalReaderFixture(const Data: TBytes;
@@ -30,6 +31,7 @@ type
     procedure SQLQueryReadsBDEDeletedFixtureWithoutResurrectingRow;
     procedure SQLQueryRejectsUnsupportedFieldType;
     procedure SQLQueryReadsSyntheticTable;
+    procedure SQLQueryReadsBDELongValueEncodings;
     procedure SQLQueryReadsSecondaryIndexFixture;
     procedure SQLQueryRejectsDeletedSlotsUntilSupported;
     procedure SQLQueryProjectsFiltersAndOrders;
@@ -172,6 +174,58 @@ begin
     Result[RecordOffset + 3] := RowIndex + 1;
     Move(Places[RowIndex][1], Result[RecordOffset + 4],
       Length(Places[RowIndex]));
+  end;
+end;
+
+function TTestDBParadoxConnection.BuildLongSemanticsFixture: TBytes;
+const
+  HeaderSize = $800;
+  BlockSize = $800;
+  RecordSize = 8;
+  FieldNamesOffset = $78 + 2 * 2 + 4 + 2 * 4 + 261;
+  Values: array[0..5, 0..3] of Byte = (
+    (0, 0, 0, 0),
+    ($80, 0, 0, 0),
+    ($7F, $FF, $FF, $FF),
+    (0, 0, 0, 1),
+    ($FF, $FF, $FF, $FF),
+    ($80, 0, 0, 1)
+  );
+var
+  BlockOffset: SizeInt;
+  RecordOffset: SizeInt;
+  RowIndex, ByteIndex: Integer;
+begin
+  Result := nil;
+  SetLength(Result, HeaderSize + BlockSize);
+  WriteUInt16LE(Result, 0, RecordSize);
+  WriteUInt16LE(Result, 2, HeaderSize);
+  Result[4] := 0;
+  Result[5] := 2;
+  WriteInt32LE(Result, 6, Length(Values));
+  WriteUInt16LE(Result, $0C, 1);
+  WriteUInt16LE(Result, $0E, 1);
+  WriteUInt16LE(Result, $10, 1);
+  WriteUInt16LE(Result, $21, 2);
+  Result[$39] := $0C;
+  Result[$78] := $04;
+  Result[$79] := 4;
+  Result[$7A] := $04;
+  Result[$7B] := 4;
+  Move('ID'#0'Value'#0, Result[FieldNamesOffset], 10);
+
+  BlockOffset := HeaderSize;
+  WriteUInt16LE(Result, BlockOffset, 0);
+  WriteUInt16LE(Result, BlockOffset + 2, 0);
+  WriteUInt16LE(Result, BlockOffset + 4,
+    (Length(Values) - 1) * RecordSize);
+  for RowIndex := Low(Values) to High(Values) do
+  begin
+    RecordOffset := BlockOffset + 6 + RowIndex * RecordSize;
+    Result[RecordOffset] := $80;
+    Result[RecordOffset + 3] := RowIndex + 1;
+    for ByteIndex := 0 to 3 do
+      Result[RecordOffset + 4 + ByteIndex] := Values[RowIndex][ByteIndex];
   end;
 end;
 
@@ -513,6 +567,63 @@ begin
     Query.Free;
     Transaction.Free;
     Connection.Free;
+  end;
+end;
+
+procedure TTestDBParadoxConnection.SQLQueryReadsBDELongValueEncodings;
+var
+  FixtureFileName, FixtureDirectory: string;
+  Connection: TDBParadoxConnection;
+  Transaction: TSQLTransaction;
+  Query: TSQLQuery;
+begin
+  FixtureFileName := WriteInternalReaderFixture(
+    BuildLongSemanticsFixture, 'LongValues.DB');
+  FixtureDirectory := ExtractFileDir(FixtureFileName);
+  Connection := TDBParadoxConnection.Create(nil);
+  Transaction := TSQLTransaction.Create(nil);
+  Query := TSQLQuery.Create(nil);
+  try
+    Connection.DatabaseName := FixtureDirectory;
+    Connection.Transaction := Transaction;
+    Transaction.Database := Connection;
+    Query.SQLConnection := Connection;
+    Query.SQLTransaction := Transaction;
+    Query.SQL.Text :=
+      'SELECT ID, Value FROM LongValues.DB ORDER BY ID';
+    Query.ReadOnly := True;
+    Query.Open;
+    try
+      CheckFalse(Query.EOF);
+      CheckEquals(1, Query.FieldByName('ID').AsInteger);
+      CheckTrue(Query.FieldByName('Value').IsNull);
+      Query.Next;
+      CheckFalse(Query.EOF);
+      CheckEquals(2, Query.FieldByName('ID').AsInteger);
+      CheckFalse(Query.FieldByName('Value').IsNull);
+      CheckEquals(0, Query.FieldByName('Value').AsInteger);
+      Query.Next;
+      CheckEquals(-1, Query.FieldByName('Value').AsInteger);
+      Query.Next;
+      CheckEquals(-2147483647, Query.FieldByName('Value').AsInteger);
+      Query.Next;
+      CheckEquals(High(LongInt), Query.FieldByName('Value').AsInteger);
+      Query.Next;
+      CheckEquals(1, Query.FieldByName('Value').AsInteger);
+      Query.Next;
+      CheckTrue(Query.EOF);
+    finally
+      Query.Close;
+    end;
+    if Transaction.Active then
+      Transaction.Commit;
+    Connection.Connected := False;
+  finally
+    Query.Free;
+    Transaction.Free;
+    Connection.Free;
+    DeleteFile(FixtureFileName);
+    RemoveDir(FixtureDirectory);
   end;
 end;
 

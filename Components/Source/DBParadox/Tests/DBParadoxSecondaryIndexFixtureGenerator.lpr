@@ -89,8 +89,8 @@ begin
   end;
 end;
 
-function CreateOutputDirectory(MultiBlockFixture,
-  CapacityFixture: Boolean): string;
+function CreateOutputDirectory(MultiBlockFixture, CapacityFixture,
+  DeletedRowsFixture: Boolean): string;
 var
   TempDirectory, Candidate, Prefix: string;
   Suffix: Integer;
@@ -104,6 +104,8 @@ begin
     Prefix := Prefix + 'Multi-';
   if CapacityFixture then
     Prefix := Prefix + 'Capacity-';
+  if DeletedRowsFixture then
+    Prefix := Prefix + 'Delete-';
   Suffix := 0;
   repeat
     Candidate := TempDirectory + Prefix +
@@ -189,7 +191,8 @@ var
   OutputDirectory: string;
   RowIndex, FixtureRowCount: Integer;
   DatabaseRecordsPerBlock: SizeInt;
-  IsClassicFixture, IsMultiBlockFixture, IsCapacityFixture: Boolean;
+  IsClassicFixture, IsMultiBlockFixture, IsCapacityFixture,
+    IsDeletedRowsFixture: Boolean;
 begin
   if not DirectoryExists(TemplateDirectory) then
     raise Exception.CreateFmt('Template directory does not exist: %s',
@@ -200,6 +203,7 @@ begin
     IsClassicFixture := False;
     IsMultiBlockFixture := False;
     IsCapacityFixture := False;
+    IsDeletedRowsFixture := False;
   end
   else if SameText(ExtractFileName(ExcludeTrailingPathDelimiter(
     ExpandFileName(TemplateDirectory))), 'ClassicIndexFixture') then
@@ -207,6 +211,7 @@ begin
     IsClassicFixture := True;
     IsMultiBlockFixture := False;
     IsCapacityFixture := False;
+    IsDeletedRowsFixture := False;
   end
   else if SameText(ExtractFileName(ExcludeTrailingPathDelimiter(
     ExpandFileName(TemplateDirectory))), 'MultiBlockFixture') then
@@ -214,6 +219,7 @@ begin
     IsClassicFixture := False;
     IsMultiBlockFixture := True;
     IsCapacityFixture := False;
+    IsDeletedRowsFixture := False;
   end
   else if SameText(ExtractFileName(ExcludeTrailingPathDelimiter(
     ExpandFileName(TemplateDirectory))), 'CapacityFixture') then
@@ -221,10 +227,19 @@ begin
     IsClassicFixture := False;
     IsMultiBlockFixture := False;
     IsCapacityFixture := True;
+    IsDeletedRowsFixture := False;
+  end
+  else if SameText(ExtractFileName(ExcludeTrailingPathDelimiter(
+    ExpandFileName(TemplateDirectory))), 'DeletedRowsFixture') then
+  begin
+    IsClassicFixture := False;
+    IsMultiBlockFixture := False;
+    IsCapacityFixture := False;
+    IsDeletedRowsFixture := True;
   end
   else
     raise Exception.Create(
-      'Only the named synthetic CaseOptionsFixture, ClassicIndexFixture, MultiBlockFixture, or CapacityFixture directory is accepted.');
+      'Only named synthetic CaseOptionsFixture, ClassicIndexFixture, MultiBlockFixture, CapacityFixture, or DeletedRowsFixture directories are accepted.');
 
   Templates[0] := LoadTemplate(TemplateDirectory, 'Synthetic.DB', 0);
   Templates[1] := LoadTemplate(TemplateDirectory, 'Synthetic.PX', 1);
@@ -262,6 +277,8 @@ begin
     Fields[2].Length := CapacitySuffixWidth;
     FixtureRowCount := CapacityRowCount;
   end
+  else if IsDeletedRowsFixture then
+    FixtureRowCount := 4
   else if IsMultiBlockFixture then
     FixtureRowCount := MultiBlockRowCount
   else
@@ -303,9 +320,12 @@ begin
     Rows[3][0] := '4';
     Rows[3][1] := 'alpha';
     Rows[3][2] := 'A';
-    Rows[4][0] := '5';
-    Rows[4][1] := 'Beta';
-    Rows[4][2] := 'A';
+    if not IsDeletedRowsFixture then
+    begin
+      Rows[4][0] := '5';
+      Rows[4][1] := 'Beta';
+      Rows[4][2] := 'A';
+    end;
   end;
 
   TableFiles := BuildDBParadoxTableFiles(
@@ -337,7 +357,7 @@ begin
   end;
 
   OutputDirectory := CreateOutputDirectory(
-    IsMultiBlockFixture, IsCapacityFixture);
+    IsMultiBlockFixture, IsCapacityFixture, IsDeletedRowsFixture);
   WriteBytes(OutputDirectory, 'Synthetic.DB', TableFiles.DatabaseFile);
   WriteBytes(OutputDirectory, 'Synthetic.PX', TableFiles.PrimaryIndexFile);
   if IsClassicFixture then
@@ -366,6 +386,8 @@ begin
     WriteLn('INDEX_FAMILY=CASE_OPTIONS_MULTIBLOCK');
   if IsCapacityFixture then
     WriteLn('INDEX_FAMILY=WIDE_KEY_CAPACITY');
+  if IsDeletedRowsFixture then
+    WriteLn('INDEX_FAMILY=ACTIVE_ROWS_AFTER_DELETION');
   WriteLn('PRIMARY_REVISION=', TableFiles.PrimaryIndexFile[$2C]);
 end;
 
@@ -373,7 +395,7 @@ begin
   try
     if (ParamCount <> 2) or not SameText(ParamStr(1), '--templates') then
       raise Exception.Create(
-        'Use --templates <CaseOptionsFixture-or-ClassicIndexFixture-or-MultiBlockFixture-directory>');
+        'Use --templates <CaseOptionsFixture-or-ClassicIndexFixture-or-MultiBlockFixture-or-CapacityFixture-or-DeletedRowsFixture-directory>');
     BuildFixture(ExpandFileName(ParamStr(2)));
   except
     on E: Exception do

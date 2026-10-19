@@ -11,12 +11,15 @@ type
   TTestDBParadoxSQLParser = class(TTestCase)
   private
     procedure AssertRejected(const SQL: string);
+    procedure AssertDMLRejected(const SQL: string);
   published
     procedure ParsesProjectionPredicatesAndOrdering;
     procedure ParsesAllComparisonOperators;
     procedure AcceptsCaseInsensitiveKeywordsAndOptionalExtension;
     procedure RejectsLiteralsOrJoinsAndPositionalParameters;
     procedure RejectsPathsAndMultipleStatements;
+    procedure ParsesBoundedDMLStatements;
+    procedure RejectsUnsupportedDMLForms;
   end;
 
 implementation
@@ -33,6 +36,17 @@ begin
       Exit;
   end;
   Fail('Expected unsupported SELECT syntax to be rejected: ' + SQL);
+end;
+
+procedure TTestDBParadoxSQLParser.AssertDMLRejected(const SQL: string);
+begin
+  try
+    ParseDBParadoxDML(SQL);
+  except
+    on E: EDBParadoxSQLSyntaxError do
+      Exit;
+  end;
+  Fail('Expected unsupported DML syntax to be rejected: ' + SQL);
 end;
 
 procedure TTestDBParadoxSQLParser.ParsesProjectionPredicatesAndOrdering;
@@ -120,6 +134,54 @@ begin
   AssertRejected('SELECT * FROM C:\Paradox\AWD.DB');
   AssertRejected('SELECT * FROM Table13.DB; DELETE FROM Table13.DB');
   AssertRejected('SELECT * FROM Table13.DB;;');
+end;
+
+procedure TTestDBParadoxSQLParser.ParsesBoundedDMLStatements;
+var
+  Plan: TDBParadoxDMLPlan;
+begin
+  Plan := ParseDBParadoxDML(
+    'INSERT INTO AWD.DB (ID, Name) VALUES (:id, :name);');
+  CheckEquals(Ord(dpdInsert), Ord(Plan.StatementType));
+  CheckEquals('AWD.DB', Plan.TableName);
+  CheckEquals(2, Length(Plan.InsertFields));
+  CheckEquals('ID', Plan.InsertFields[0]);
+  CheckEquals('Name', Plan.InsertFields[1]);
+  CheckEquals(2, Length(Plan.InsertParameters));
+  CheckEquals('id', Plan.InsertParameters[0]);
+  CheckEquals('name', Plan.InsertParameters[1]);
+
+  Plan := ParseDBParadoxDML(
+    'UPDATE AWD SET Name = :name, Value = :value WHERE ID = :id');
+  CheckEquals(Ord(dpdUpdate), Ord(Plan.StatementType));
+  CheckEquals('AWD', Plan.TableName);
+  CheckEquals(2, Length(Plan.Assignments));
+  CheckEquals('Name', Plan.Assignments[0].FieldName);
+  CheckEquals('name', Plan.Assignments[0].ParameterName);
+  CheckEquals('Value', Plan.Assignments[1].FieldName);
+  CheckEquals('ID', Plan.WhereField);
+  CheckEquals('id', Plan.WhereParameter);
+
+  Plan := ParseDBParadoxDML('DELETE FROM AWD.DB WHERE ID = :id');
+  CheckEquals(Ord(dpdDelete), Ord(Plan.StatementType));
+  CheckEquals('AWD.DB', Plan.TableName);
+  CheckEquals('ID', Plan.WhereField);
+  CheckEquals('id', Plan.WhereParameter);
+end;
+
+procedure TTestDBParadoxSQLParser.RejectsUnsupportedDMLForms;
+begin
+  AssertDMLRejected('INSERT INTO AWD (ID, Name) VALUES (:id)');
+  AssertDMLRejected('INSERT INTO AWD (ID) VALUES (4)');
+  AssertDMLRejected('INSERT INTO AWD (ID, ID) VALUES (:one, :two)');
+  AssertDMLRejected('UPDATE AWD SET Name = ''value'' WHERE ID = :id');
+  AssertDMLRejected('UPDATE AWD SET Name = :name WHERE ID = :id AND X = :x');
+  AssertDMLRejected('UPDATE AWD SET Name = :one, Name = :two WHERE ID = :id');
+  AssertDMLRejected('DELETE FROM AWD');
+  AssertDMLRejected('DELETE FROM AWD WHERE ID > :id');
+  AssertDMLRejected('DELETE FROM AWD WHERE ID = :id OR ID = :other');
+  AssertDMLRejected('DELETE FROM AWD WHERE ID = :id; DELETE FROM AWD WHERE ID = :other');
+  AssertDMLRejected('SELECT * FROM AWD');
 end;
 
 initialization
