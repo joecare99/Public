@@ -16,7 +16,7 @@
         <PackageName Value="FCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="10">
+    <Units Count="15">
       <Unit0>
         <Filename Value="DBParadoxTests.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -57,6 +57,26 @@
         <Filename Value="tst_DBParadoxFileReader.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit9>
+      <Unit10>
+        <Filename Value="tst_DBParadoxFamilyLock.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="tst_DBParadoxFamilyPublisher.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="tst_DBParadoxStagedTable.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="tst_DBParadoxDMLExecutor.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="tst_DBParadoxPrimaryKeyDiscovery.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit14>
     </Units>
   </ProjectOptions>
   <CompilerOptions>

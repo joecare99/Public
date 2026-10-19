@@ -6,7 +6,8 @@ unit tst_DBParadoxSecondaryIndexBuilder;
 interface
 
 uses
-  SysUtils, DBParadoxSecondaryIndexBuilder, fpcunit, testregistry;
+  SysUtils, DBParadoxSecondaryIndexBuilder,
+  DBParadoxSecondaryIndexValidator, fpcunit, testregistry;
 
 type
   TTestDBParadoxSecondaryIndexBuilder = class(TTestCase)
@@ -29,6 +30,12 @@ type
     procedure RebuildsBdeEmptyRootBlockTemplates;
     procedure RebuildsClassicX02Y02Templates;
     procedure RejectsMismatchedSecondaryFileTypes;
+    procedure RejectsNonIncrementalTypeThreeFourPair;
+    procedure ValidatesGeneratedSecondaryTree;
+    procedure RejectsBrokenSecondaryBlockLinks;
+    procedure RejectsInvalidSecondaryTreeReferences;
+    procedure RejectsIncorrectSecondarySubtreeCounts;
+    procedure RejectsOutOfOrderSecondaryKeys;
   end;
 
 implementation
@@ -352,6 +359,8 @@ begin
   CheckEquals(3, Built.IndexFile[$0C]);
   CheckEquals(2, Built.IndexFile[$20]);
   CheckEquals(63, Built.IndexFile[6] + (Built.IndexFile[7] shl 8));
+  ValidateDBParadoxSecondaryIndexFiles(EmptyXgTemplate(False),
+    EmptyYgTemplate, Built.DataFile, Built.IndexFile, 1, 43);
 end;
 
 procedure TTestDBParadoxSecondaryIndexBuilder.
@@ -546,6 +555,178 @@ begin
     Fail('Expected an unmeasured classic-index option to be rejected.');
   except
     on E: EDBParadoxUnsupportedSecondaryIndexFeature do ;
+  end;
+end;
+
+procedure TTestDBParadoxSecondaryIndexBuilder.
+  RejectsNonIncrementalTypeThreeFourPair;
+var
+  Records: TDBParadoxSecondaryRecords;
+  DataTemplate, IndexTemplate: TBytes;
+begin
+  SetLength(Records, 1);
+  Records[0] := MakeRecord(SingleFieldKey('Alpha', 1), 1);
+  DataTemplate := EmptyX02Template;
+  DataTemplate[4] := 3;
+  IndexTemplate := EmptyY02Template;
+
+  try
+    BuildDBParadoxSecondaryIndexFiles(
+      DataTemplate, IndexTemplate, 1, Records);
+    Fail('Expected the unverified type-3/type-4 index pair to be rejected.');
+  except
+    on E: EDBParadoxUnsupportedSecondaryIndexFeature do
+      Check(Pos('3/4', E.Message) > 0,
+        'The rejection should identify the unsupported 3/4 pair.');
+  end;
+end;
+
+procedure TTestDBParadoxSecondaryIndexBuilder.
+  ValidatesGeneratedSecondaryTree;
+var
+  Records: TDBParadoxSecondaryRecords;
+  Built: TDBParadoxBuiltSecondaryIndex;
+  Index: SizeInt;
+begin
+  SetLength(Records, 75);
+  for Index := 0 to High(Records) do
+    Records[Index] := MakeRecord(
+      Key('Group' + Format('%.2d', [Index mod 5]),
+        Chr(Ord('A') + Index mod 3)), Index div 62 + 1);
+  Built := BuildDBParadoxSecondaryIndexFiles(
+    EmptyXgTemplate(False), EmptyYgTemplate, 1, Records);
+  ValidateDBParadoxSecondaryIndexFiles(EmptyXgTemplate(False),
+    EmptyYgTemplate, Built.DataFile, Built.IndexFile, 1, 2);
+end;
+
+procedure TTestDBParadoxSecondaryIndexBuilder.
+  RejectsBrokenSecondaryBlockLinks;
+var
+  Records: TDBParadoxSecondaryRecords;
+  Built: TDBParadoxBuiltSecondaryIndex;
+  Index: SizeInt;
+begin
+  SetLength(Records, 75);
+  for Index := 0 to High(Records) do
+    Records[Index] := MakeRecord(
+      Key('Group' + Format('%.2d', [Index mod 5]),
+        Chr(Ord('A') + Index mod 3)), Index div 62 + 1);
+  Built := BuildDBParadoxSecondaryIndexFiles(
+    EmptyXgTemplate(False), EmptyYgTemplate, 1, Records);
+  Built.DataFile[$800] := 0;
+  Built.DataFile[$801] := 0;
+  try
+    ValidateDBParadoxSecondaryIndexFiles(EmptyXgTemplate(False),
+      EmptyYgTemplate, Built.DataFile, Built.IndexFile, 1, 2);
+    Fail('Expected a broken XG block link to be rejected.');
+  except
+    on E: EDBParadoxSecondaryIndexValidationError do ;
+  end;
+end;
+
+procedure TTestDBParadoxSecondaryIndexBuilder.
+  RejectsInvalidSecondaryTreeReferences;
+var
+  Records: TDBParadoxSecondaryRecords;
+  Built: TDBParadoxBuiltSecondaryIndex;
+  DataTemplate, IndexTemplate: TBytes;
+begin
+  SetLength(Records, 1);
+  Records[0] := MakeRecord(Key('Alpha', 'A'), 2);
+  DataTemplate := EmptyXgTemplate(False);
+  IndexTemplate := EmptyYgTemplate;
+  Built := BuildDBParadoxSecondaryIndexFiles(
+    DataTemplate, IndexTemplate, 1, Records);
+  try
+    ValidateDBParadoxSecondaryIndexFiles(DataTemplate, IndexTemplate,
+      Built.DataFile, Built.IndexFile, 1, 1);
+    Fail('Expected a nonexistent source DB block to be rejected.');
+  except
+    on E: EDBParadoxSecondaryIndexValidationError do ;
+  end;
+
+  Records[0] := MakeRecord(Key('Alpha', 'A'), 1);
+  Built := BuildDBParadoxSecondaryIndexFiles(
+    DataTemplate, IndexTemplate, 1, Records);
+  Built.IndexFile[$800 + 6 + 28 + 1] := 2;
+  try
+    ValidateDBParadoxSecondaryIndexFiles(DataTemplate, IndexTemplate,
+      Built.DataFile, Built.IndexFile, 1, 1);
+    Fail('Expected a nonexistent XG block reference to be rejected.');
+  except
+    on E: EDBParadoxSecondaryIndexValidationError do ;
+  end;
+
+  Built := BuildDBParadoxSecondaryIndexFiles(
+    DataTemplate, IndexTemplate, 1, Records);
+  Built.IndexFile[$1E] := 0;
+  Built.IndexFile[$1F] := 0;
+  try
+    ValidateDBParadoxSecondaryIndexFiles(DataTemplate, IndexTemplate,
+      Built.DataFile, Built.IndexFile, 1, 1);
+    Fail('Expected an invalid YG root block to be rejected.');
+  except
+    on E: EDBParadoxSecondaryIndexValidationError do ;
+  end;
+end;
+
+procedure TTestDBParadoxSecondaryIndexBuilder.
+  RejectsIncorrectSecondarySubtreeCounts;
+const
+  RecordsPerSecondaryDataBlock = 44;
+  SecondaryIndexLeafCapacity = 60;
+var
+  Records: TDBParadoxSecondaryRecords;
+  Built: TDBParadoxBuiltSecondaryIndex;
+  Index, RootOffset: SizeInt;
+begin
+  SetLength(Records, RecordsPerSecondaryDataBlock *
+    SecondaryIndexLeafCapacity + 1);
+  for Index := 0 to High(Records) do
+    Records[Index] := MakeRecord(
+      Key('Group' + Format('%.2d', [Index mod 5]), 'A'),
+      Index div 62 + 1);
+  Built := BuildDBParadoxSecondaryIndexFiles(
+    EmptyXgTemplate(False), EmptyYgTemplate, 1, Records);
+  RootOffset := $800 +
+    ((Built.IndexFile[$1E] or (Built.IndexFile[$1F] shl 8)) - 1) * $800;
+  Built.IndexFile[RootOffset + 6 + 28 + 3] :=
+    Built.IndexFile[RootOffset + 6 + 28 + 3] xor 1;
+  try
+    ValidateDBParadoxSecondaryIndexFiles(EmptyXgTemplate(False),
+      EmptyYgTemplate, Built.DataFile, Built.IndexFile, 1, 43);
+    Fail('Expected an incorrect YG subtree record count to be rejected.');
+  except
+    on E: EDBParadoxSecondaryIndexValidationError do ;
+  end;
+end;
+
+procedure TTestDBParadoxSecondaryIndexBuilder.
+  RejectsOutOfOrderSecondaryKeys;
+var
+  Records: TDBParadoxSecondaryRecords;
+  Built: TDBParadoxBuiltSecondaryIndex;
+  DataTemplate, IndexTemplate: TBytes;
+  Index: SizeInt;
+begin
+  SetLength(Records, 75);
+  for Index := 0 to High(Records) do
+    Records[Index] := MakeRecord(
+      Key('Group' + Format('%.2d', [Index mod 5]),
+        Chr(Ord('A') + Index mod 3)), Index div 62 + 1);
+  DataTemplate := EmptyXgTemplate(False);
+  IndexTemplate := EmptyYgTemplate;
+  Built := BuildDBParadoxSecondaryIndexFiles(
+    DataTemplate, IndexTemplate, 1, Records);
+  Built.IndexFile[$800 + 6 + 34] := Ord('0');
+  try
+    ValidateDBParadoxSecondaryIndexFiles(DataTemplate, IndexTemplate,
+      Built.DataFile, Built.IndexFile, 1, 2);
+    Fail('Expected an out-of-order YG key to be rejected.');
+  except
+    on E: EDBParadoxSecondaryIndexValidationError do
+      Check(Pos('key order', E.Message) > 0,
+        'The rejection should identify invalid key order.');
   end;
 end;
 

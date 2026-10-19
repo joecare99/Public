@@ -14,8 +14,10 @@ type
     procedure MatchesCrossImplementationGoldenVector;
     procedure EncodesWindows1252AlphaAndZeroPadding;
     procedure EncodesParadoxShortLongAndAutoIncrement;
+    procedure EncodesSignedParadoxLongValuesAndZero;
     procedure EncodesNullAndEmptyValuesAsZeroes;
     procedure RejectsInvalidIntegerAndFieldWidth;
+    procedure RejectsUnrepresentableParadoxLongMinimum;
     procedure RejectsNonEmptyMemoAndUnsupportedTypes;
     procedure RejectsMismatchedValueCount;
   end;
@@ -111,6 +113,48 @@ begin
   CheckEquals($A2, Encoded[9]);
 end;
 
+procedure TTestDBParadoxRecordEncoder.
+  EncodesSignedParadoxLongValuesAndZero;
+var
+  Fields: TDBParadoxRecordFields;
+  Values: TDBParadoxRecordValues;
+  Encoded: TBytes;
+begin
+  Fields := nil;
+  SetLength(Fields, 1);
+  Fields[0].Name := 'Value';
+  Fields[0].TypeCode := $04;
+  Fields[0].Length := 4;
+
+  Values := ['0'];
+  Encoded := EncodeDBParadoxRecord(Fields, Values);
+  CheckEquals($80, Encoded[0]);
+  CheckEquals(0, Encoded[1]);
+  CheckEquals(0, Encoded[2]);
+  CheckEquals(0, Encoded[3]);
+
+  Values := ['-1'];
+  Encoded := EncodeDBParadoxRecord(Fields, Values);
+  CheckEquals($7F, Encoded[0]);
+  CheckEquals($FF, Encoded[1]);
+  CheckEquals($FF, Encoded[2]);
+  CheckEquals($FF, Encoded[3]);
+
+  Values := ['-2147483647'];
+  Encoded := EncodeDBParadoxRecord(Fields, Values);
+  CheckEquals(0, Encoded[0]);
+  CheckEquals(0, Encoded[1]);
+  CheckEquals(0, Encoded[2]);
+  CheckEquals(1, Encoded[3]);
+
+  Values := ['2147483647'];
+  Encoded := EncodeDBParadoxRecord(Fields, Values);
+  CheckEquals($FF, Encoded[0]);
+  CheckEquals($FF, Encoded[1]);
+  CheckEquals($FF, Encoded[2]);
+  CheckEquals($FF, Encoded[3]);
+end;
+
 procedure TTestDBParadoxRecordEncoder.EncodesNullAndEmptyValuesAsZeroes;
 var
   Fields: TDBParadoxRecordFields;
@@ -160,6 +204,26 @@ begin
   try
     EncodeDBParadoxRecord(Fields, Values);
     Fail('Expected a malformed integer field width to be rejected.');
+  except
+    on E: EDBParadoxRecordEncodingError do ;
+  end;
+end;
+
+procedure TTestDBParadoxRecordEncoder.
+  RejectsUnrepresentableParadoxLongMinimum;
+var
+  Fields: TDBParadoxRecordFields;
+  Values: TDBParadoxRecordValues;
+begin
+  Fields := nil;
+  SetLength(Fields, 1);
+  Fields[0].Name := 'Value';
+  Fields[0].TypeCode := $04;
+  Fields[0].Length := 4;
+  Values := ['-2147483648'];
+  try
+    EncodeDBParadoxRecord(Fields, Values);
+    Fail('Expected the null-colliding Long minimum to be rejected.');
   except
     on E: EDBParadoxRecordEncodingError do ;
   end;

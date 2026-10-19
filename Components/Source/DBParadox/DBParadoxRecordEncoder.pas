@@ -173,6 +173,80 @@ begin
   ADestination[AOffset] := ADestination[AOffset] or $80;
 end;
 
+function ParseParadoxLong(const AValue: UnicodeString;
+  const AFieldName: string; out AIsNull: Boolean): LongInt;
+var
+  StartIndex, EndIndex, Index: SizeInt;
+  Negative: Boolean;
+  Digit: Integer;
+  Magnitude: Int64;
+begin
+  StartIndex := 1;
+  EndIndex := Length(AValue);
+  while (StartIndex <= EndIndex) and
+    IsUnicodeWhitespace(AValue[StartIndex]) do
+    Inc(StartIndex);
+  while (EndIndex >= StartIndex) and
+    IsUnicodeWhitespace(AValue[EndIndex]) do
+    Dec(EndIndex);
+
+  if StartIndex > EndIndex then
+  begin
+    AIsNull := True;
+    Exit(0);
+  end;
+
+  AIsNull := False;
+  Negative := False;
+  if (AValue[StartIndex] = '+') or (AValue[StartIndex] = '-') then
+  begin
+    Negative := AValue[StartIndex] = '-';
+    Inc(StartIndex);
+  end;
+  if StartIndex > EndIndex then
+    raise EDBParadoxRecordEncodingError.CreateFmt(
+      'Value for long field "%s" is invalid or out of range.',
+      [AFieldName]);
+
+  Magnitude := 0;
+  for Index := StartIndex to EndIndex do
+  begin
+    Digit := Ord(AValue[Index]) - Ord('0');
+    if (Digit < 0) or (Digit > 9) or
+      (Magnitude > (Int64(High(LongInt)) - Digit) div 10) then
+      raise EDBParadoxRecordEncodingError.CreateFmt(
+        'Value for long field "%s" is invalid or out of range.',
+        [AFieldName]);
+    Magnitude := Magnitude * 10 + Digit;
+  end;
+
+  if Negative then
+    Result := -LongInt(Magnitude)
+  else
+    Result := LongInt(Magnitude);
+end;
+
+procedure EncodeLong(const AValue: UnicodeString;
+  const AFieldName: string; const ADestination: TBytes;
+  const AOffset: SizeInt);
+var
+  Value: LongInt;
+  EncodedValue: Cardinal;
+  ByteIndex: SizeInt;
+  IsNull: Boolean;
+begin
+  Value := ParseParadoxLong(AValue, AFieldName, IsNull);
+  if IsNull then
+    Exit;
+
+  EncodedValue := Cardinal(Value) xor $80000000;
+  for ByteIndex := 0 to 3 do
+  begin
+    ADestination[AOffset + 3 - ByteIndex] := Byte(EncodedValue and $FF);
+    EncodedValue := EncodedValue shr 8;
+  end;
+end;
+
 function EncodeDBParadoxRecord(const Fields: TDBParadoxRecordFields;
   const Values: TDBParadoxRecordValues): TBytes;
 var
@@ -220,11 +294,19 @@ begin
               [Field.Name]);
           EncodeInteger(Value, Field.Name, 2, Result, Offset);
         end;
-      ParadoxLong, ParadoxAutoIncrement:
+      ParadoxLong:
         begin
           if Field.Length <> 4 then
             raise EDBParadoxRecordEncodingError.CreateFmt(
-              'Integer field "%s" has an unsupported physical size.',
+              'Long field "%s" has an unsupported physical size.',
+              [Field.Name]);
+          EncodeLong(Value, Field.Name, Result, Offset);
+        end;
+      ParadoxAutoIncrement:
+        begin
+          if Field.Length <> 4 then
+            raise EDBParadoxRecordEncodingError.CreateFmt(
+              'Auto-increment field "%s" has an unsupported physical size.',
               [Field.Name]);
           EncodeInteger(Value, Field.Name, 4, Result, Offset);
         end;

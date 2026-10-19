@@ -12,7 +12,7 @@
         <UnitOutputDirectory Value="..\..\bin\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="8">
+    <Files Count="11">
       <Item1>
         <Filename Value="..\Source\DBParadox\DBParadoxConnection.pas"/>
         <UnitName Value="DBParadoxConnection"/>
@@ -45,6 +45,18 @@
         <Filename Value="..\Source\DBParadox\DBParadoxFileReader.pas"/>
         <UnitName Value="DBParadoxFileReader"/>
       </Item8>
+      <Item9>
+        <Filename Value="..\Source\DBParadox\DBParadoxStagedTable.pas"/>
+        <UnitName Value="DBParadoxStagedTable"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\Source\DBParadox\DBParadoxDMLExecutor.pas"/>
+        <UnitName Value="DBParadoxDMLExecutor"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\Source\DBParadox\DBParadoxPrimaryKeyDiscovery.pas"/>
+        <UnitName Value="DBParadoxPrimaryKeyDiscovery"/>
+      </Item11>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

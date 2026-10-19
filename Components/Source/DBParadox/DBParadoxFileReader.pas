@@ -21,6 +21,8 @@ type
 
   TDBParadoxFileRow = record
     RecordNumber: Integer;
+    BlockNumber: Integer;
+    RecordInBlock: Integer;
     Data: TBytes;
   end;
 
@@ -260,6 +262,8 @@ begin
     RowIndex := Length(Rows);
     SetLength(Rows, RowIndex + 1);
     Rows[RowIndex].RecordNumber := RowIndex;
+    Rows[RowIndex].BlockNumber := BlockNumber;
+    Rows[RowIndex].RecordInBlock := RecordIndex;
     Rows[RowIndex].Data := nil;
     SetLength(Rows[RowIndex].Data, Header.RecordSize);
     SourceOffset := BlockOffset + DataBlockHeaderSize +

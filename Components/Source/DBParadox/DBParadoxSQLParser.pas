@@ -44,7 +44,27 @@ type
     OrderBy: TDBParadoxOrderArray;
   end;
 
+  TDBParadoxDMLStatementType = (dpdInsert, dpdUpdate, dpdDelete);
+
+  TDBParadoxDMLAssignment = record
+    FieldName: string;
+    ParameterName: string;
+  end;
+
+  TDBParadoxDMLAssignmentArray = array of TDBParadoxDMLAssignment;
+
+  TDBParadoxDMLPlan = record
+    StatementType: TDBParadoxDMLStatementType;
+    TableName: string;
+    InsertFields: TDBParadoxStringArray;
+    InsertParameters: TDBParadoxStringArray;
+    Assignments: TDBParadoxDMLAssignmentArray;
+    WhereField: string;
+    WhereParameter: string;
+  end;
+
 function ParseDBParadoxSelect(const SQL: string): TDBParadoxSelectPlan;
+function ParseDBParadoxDML(const SQL: string): TDBParadoxDMLPlan;
 
 implementation
 
@@ -65,6 +85,8 @@ type
     tkComma,
     tkDot,
     tkSemicolon,
+    tkLeftParenthesis,
+    tkRightParenthesis,
     tkEnd
   );
 
@@ -76,7 +98,7 @@ type
 
   TTokenArray = array of TToken;
 
-  TSelectParser = class
+  TDBParadoxParser = class
   private
     FSQL: string;
     FTokens: TTokenArray;
@@ -93,6 +115,11 @@ type
     procedure ParseOrderBy(var Plan: TDBParadoxSelectPlan);
     procedure ParseOptionalTerminator;
     procedure Tokenize;
+    procedure ParseDMLTableName(var Plan: TDBParadoxDMLPlan);
+    procedure ParseDMLInsert(var Plan: TDBParadoxDMLPlan);
+    procedure ParseDMLUpdate(var Plan: TDBParadoxDMLPlan);
+    procedure ParseDMLDelete(var Plan: TDBParadoxDMLPlan);
+    function ParseDML: TDBParadoxDMLPlan;
   public
     constructor Create(const ASQL: string);
     function Parse: TDBParadoxSelectPlan;
@@ -122,46 +149,46 @@ begin
   Result := IsIdentifierStart(Ch) or (Ch in ['0'..'9']);
 end;
 
-constructor TSelectParser.Create(const ASQL: string);
+constructor TDBParadoxParser.Create(const ASQL: string);
 begin
   inherited Create;
   FSQL := ASQL;
   Tokenize;
 end;
 
-function TSelectParser.CurrentToken: TToken;
+function TDBParadoxParser.CurrentToken: TToken;
 begin
   Result := FTokens[FTokenIndex];
 end;
 
-function TSelectParser.IsKeyword(const AKeyword: string): Boolean;
+function TDBParadoxParser.IsKeyword(const AKeyword: string): Boolean;
 begin
   Result := (CurrentToken.Kind = tkIdentifier) and
     SameText(CurrentToken.Text, AKeyword);
 end;
 
-procedure TSelectParser.ConsumeKeyword(const AKeyword: string);
+procedure TDBParadoxParser.ConsumeKeyword(const AKeyword: string);
 begin
   if not IsKeyword(AKeyword) then
     RaiseSyntaxError(Format('Expected keyword %s.', [AKeyword]));
   Inc(FTokenIndex);
 end;
 
-procedure TSelectParser.Consume(AKind: TTokenKind; const Expected: string);
+procedure TDBParadoxParser.Consume(AKind: TTokenKind; const Expected: string);
 begin
   if CurrentToken.Kind <> AKind then
     RaiseSyntaxError(Format('Expected %s.', [Expected]));
   Inc(FTokenIndex);
 end;
 
-procedure TSelectParser.RaiseSyntaxError(const Detail: string);
+procedure TDBParadoxParser.RaiseSyntaxError(const Detail: string);
 begin
   raise EDBParadoxSQLSyntaxError.CreateFmt(
-    'Unsupported or invalid DBParadox SELECT at character %d: %s',
+    'Unsupported or invalid DBParadox statement at character %d: %s',
     [CurrentToken.Position, Detail]);
 end;
 
-function TSelectParser.ReadIdentifier(const Context: string): string;
+function TDBParadoxParser.ReadIdentifier(const Context: string): string;
 begin
   if CurrentToken.Kind <> tkIdentifier then
     RaiseSyntaxError(Format('Expected %s identifier.', [Context]));
@@ -169,7 +196,7 @@ begin
   Inc(FTokenIndex);
 end;
 
-procedure TSelectParser.ParseProjection(var Plan: TDBParadoxSelectPlan);
+procedure TDBParadoxParser.ParseProjection(var Plan: TDBParadoxSelectPlan);
 var
   FieldCount: SizeInt;
 begin
@@ -191,7 +218,7 @@ begin
   until False;
 end;
 
-procedure TSelectParser.ParseTableName(var Plan: TDBParadoxSelectPlan);
+procedure TDBParadoxParser.ParseTableName(var Plan: TDBParadoxSelectPlan);
 var
   Extension: string;
 begin
@@ -206,7 +233,7 @@ begin
   end;
 end;
 
-procedure TSelectParser.ParsePredicates(var Plan: TDBParadoxSelectPlan);
+procedure TDBParadoxParser.ParsePredicates(var Plan: TDBParadoxSelectPlan);
 var
   Predicate: TDBParadoxPredicate;
   PredicateCount: SizeInt;
@@ -245,7 +272,7 @@ begin
   until False;
 end;
 
-procedure TSelectParser.ParseOrderBy(var Plan: TDBParadoxSelectPlan);
+procedure TDBParadoxParser.ParseOrderBy(var Plan: TDBParadoxSelectPlan);
 var
   OrderTerm: TDBParadoxOrderTerm;
   OrderCount: SizeInt;
@@ -271,15 +298,15 @@ begin
   until False;
 end;
 
-procedure TSelectParser.ParseOptionalTerminator;
+procedure TDBParadoxParser.ParseOptionalTerminator;
 begin
   if CurrentToken.Kind = tkSemicolon then
     Inc(FTokenIndex);
   if CurrentToken.Kind <> tkEnd then
-    RaiseSyntaxError('Only one SELECT statement is supported.');
+    RaiseSyntaxError('Only one statement is supported.');
 end;
 
-procedure TSelectParser.Tokenize;
+procedure TDBParadoxParser.Tokenize;
 var
   Index: SizeInt;
   Start: SizeInt;
@@ -313,7 +340,7 @@ begin
       Start := Index;
       if (Index > Length(FSQL)) or not IsIdentifierStart(FSQL[Index]) then
         raise EDBParadoxSQLSyntaxError.CreateFmt(
-          'Unsupported or invalid DBParadox SELECT at character %d: ' +
+          'Unsupported or invalid DBParadox statement at character %d: ' +
           'Expected a named parameter after ":".',
           [Index - 1]);
       Inc(Index);
@@ -381,9 +408,19 @@ begin
           AddToken(FTokens, tkSemicolon, Ch, Index);
           Inc(Index);
         end;
+      '(':
+        begin
+          AddToken(FTokens, tkLeftParenthesis, Ch, Index);
+          Inc(Index);
+        end;
+      ')':
+        begin
+          AddToken(FTokens, tkRightParenthesis, Ch, Index);
+          Inc(Index);
+        end;
     else
       raise EDBParadoxSQLSyntaxError.CreateFmt(
-        'Unsupported or invalid DBParadox SELECT at character %d: ' +
+        'Unsupported or invalid DBParadox statement at character %d: ' +
         'Unsupported character "%s".',
         [Index, Ch]);
     end;
@@ -393,7 +430,7 @@ begin
   FTokenIndex := 0;
 end;
 
-function TSelectParser.Parse: TDBParadoxSelectPlan;
+function TDBParadoxParser.Parse: TDBParadoxSelectPlan;
 begin
   Result.TableName := '';
   Result.SelectAll := False;
@@ -418,13 +455,154 @@ begin
   ParseOptionalTerminator;
 end;
 
+procedure TDBParadoxParser.ParseDMLTableName(var Plan: TDBParadoxDMLPlan);
+var
+  Extension: string;
+begin
+  Plan.TableName := ReadIdentifier('table');
+  if CurrentToken.Kind = tkDot then
+  begin
+    Inc(FTokenIndex);
+    Extension := ReadIdentifier('table extension');
+    Plan.TableName := Plan.TableName + '.' + Extension;
+    if CurrentToken.Kind = tkDot then
+      RaiseSyntaxError('Qualified table names and paths are not supported.');
+  end;
+end;
+
+procedure TDBParadoxParser.ParseDMLInsert(var Plan: TDBParadoxDMLPlan);
+var
+  ItemIndex, ExistingIndex: SizeInt;
+  FieldName: string;
+begin
+  Plan.StatementType := dpdInsert;
+  ConsumeKeyword('INSERT');
+  ConsumeKeyword('INTO');
+  ParseDMLTableName(Plan);
+  Consume(tkLeftParenthesis, '"(" after the INSERT table name');
+  repeat
+    FieldName := ReadIdentifier('INSERT field');
+    for ExistingIndex := 0 to High(Plan.InsertFields) do
+      if SameText(Plan.InsertFields[ExistingIndex], FieldName) then
+        RaiseSyntaxError(Format('INSERT field "%s" is specified more than once.',
+          [FieldName]));
+    ItemIndex := Length(Plan.InsertFields);
+    SetLength(Plan.InsertFields, ItemIndex + 1);
+    Plan.InsertFields[ItemIndex] := FieldName;
+    if CurrentToken.Kind <> tkComma then
+      Break;
+    Inc(FTokenIndex);
+  until False;
+  Consume(tkRightParenthesis, '")" after the INSERT field list');
+  ConsumeKeyword('VALUES');
+  Consume(tkLeftParenthesis, '"(" before the INSERT values');
+  repeat
+    if CurrentToken.Kind <> tkParameter then
+      RaiseSyntaxError('INSERT values must use named parameters.');
+    ItemIndex := Length(Plan.InsertParameters);
+    SetLength(Plan.InsertParameters, ItemIndex + 1);
+    Plan.InsertParameters[ItemIndex] := CurrentToken.Text;
+    Inc(FTokenIndex);
+    if CurrentToken.Kind <> tkComma then
+      Break;
+    Inc(FTokenIndex);
+  until False;
+  Consume(tkRightParenthesis, '")" after the INSERT values');
+  if Length(Plan.InsertFields) <> Length(Plan.InsertParameters) then
+    RaiseSyntaxError('The INSERT field and value counts must match.');
+end;
+
+procedure TDBParadoxParser.ParseDMLUpdate(var Plan: TDBParadoxDMLPlan);
+var
+  ItemIndex, ExistingIndex: SizeInt;
+  Assignment: TDBParadoxDMLAssignment;
+begin
+  Plan.StatementType := dpdUpdate;
+  ConsumeKeyword('UPDATE');
+  ParseDMLTableName(Plan);
+  ConsumeKeyword('SET');
+  repeat
+    Assignment.FieldName := ReadIdentifier('updated field');
+    for ExistingIndex := 0 to High(Plan.Assignments) do
+      if SameText(Plan.Assignments[ExistingIndex].FieldName,
+        Assignment.FieldName) then
+        RaiseSyntaxError(Format('UPDATE field "%s" is assigned more than once.',
+          [Assignment.FieldName]));
+    Consume(tkEqual, '"=" after the UPDATE field');
+    if CurrentToken.Kind <> tkParameter then
+      RaiseSyntaxError('UPDATE values must use named parameters.');
+    Assignment.ParameterName := CurrentToken.Text;
+    Inc(FTokenIndex);
+    ItemIndex := Length(Plan.Assignments);
+    SetLength(Plan.Assignments, ItemIndex + 1);
+    Plan.Assignments[ItemIndex] := Assignment;
+    if CurrentToken.Kind <> tkComma then
+      Break;
+    Inc(FTokenIndex);
+  until False;
+  ConsumeKeyword('WHERE');
+  Plan.WhereField := ReadIdentifier('primary-key predicate field');
+  Consume(tkEqual, '"=" in the primary-key predicate');
+  if CurrentToken.Kind <> tkParameter then
+    RaiseSyntaxError('The primary-key predicate must use a named parameter.');
+  Plan.WhereParameter := CurrentToken.Text;
+  Inc(FTokenIndex);
+end;
+
+procedure TDBParadoxParser.ParseDMLDelete(var Plan: TDBParadoxDMLPlan);
+begin
+  Plan.StatementType := dpdDelete;
+  ConsumeKeyword('DELETE');
+  ConsumeKeyword('FROM');
+  ParseDMLTableName(Plan);
+  ConsumeKeyword('WHERE');
+  Plan.WhereField := ReadIdentifier('primary-key predicate field');
+  Consume(tkEqual, '"=" in the primary-key predicate');
+  if CurrentToken.Kind <> tkParameter then
+    RaiseSyntaxError('The primary-key predicate must use a named parameter.');
+  Plan.WhereParameter := CurrentToken.Text;
+  Inc(FTokenIndex);
+end;
+
+function TDBParadoxParser.ParseDML: TDBParadoxDMLPlan;
+begin
+  Result.TableName := '';
+  SetLength(Result.InsertFields, 0);
+  SetLength(Result.InsertParameters, 0);
+  SetLength(Result.Assignments, 0);
+  Result.WhereField := '';
+  Result.WhereParameter := '';
+
+  if IsKeyword('INSERT') then
+    ParseDMLInsert(Result)
+  else if IsKeyword('UPDATE') then
+    ParseDMLUpdate(Result)
+  else if IsKeyword('DELETE') then
+    ParseDMLDelete(Result)
+  else
+    RaiseSyntaxError('Expected INSERT, UPDATE, or DELETE.');
+  ParseOptionalTerminator;
+end;
+
 function ParseDBParadoxSelect(const SQL: string): TDBParadoxSelectPlan;
 var
-  Parser: TSelectParser;
+  Parser: TDBParadoxParser;
 begin
-  Parser := TSelectParser.Create(SQL);
+  Parser := TDBParadoxParser.Create(SQL);
   try
     Result := Parser.Parse;
+  finally
+    Parser.Free;
+  end;
+end;
+
+function ParseDBParadoxDML(const SQL: string): TDBParadoxDMLPlan;
+var
+  Parser: TDBParadoxParser;
+begin
+  Parser := TDBParadoxParser.Create(SQL);
+  try
+    Result := Parser.ParseDML;
   finally
     Parser.Free;
   end;
