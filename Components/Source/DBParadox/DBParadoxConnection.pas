@@ -14,12 +14,9 @@ type
 
   TDBParadoxConnection = class(TSQLConnection)
   private
-    FPxlibLibraryName: string;
-    FRuntimeAcquired: Boolean;
     FOpenDocumentCount: Integer;
     procedure CursorOpened;
     procedure CursorClosed;
-    procedure SetPxlibLibraryName(const AValue: string);
   protected
     procedure DoInternalConnect; override;
     procedure DoInternalDisconnect; override;
@@ -53,25 +50,21 @@ type
     procedure RollBackRetaining(AHandle: TSQLHandle); override;
   public
     constructor Create(AOwner: TComponent); override;
-  published
-    property PxlibLibraryName: string read FPxlibLibraryName
-      write SetPxlibLibraryName;
   end;
 
 implementation
 
 uses
-  SysUtils, SyncObjs, ctypes, pxlib, DBParadoxSQLParser;
+  SysUtils, DBParadoxSQLParser, DBParadoxFileReader;
+
+const
+  pxfAlpha = $01;
+  pxfLong = $04;
 
 type
-  TDBParadoxField = record
-    Name: string;
-    FieldType: Byte;
-    FieldLength: Integer;
-    Offset: Integer;
-  end;
+  TDBParadoxField = TDBParadoxFileField;
 
-  TDBParadoxFieldArray = array of TDBParadoxField;
+  TDBParadoxFieldArray = TDBParadoxFileFields;
 
   TDBParadoxValue = record
     FieldType: Byte;
@@ -92,20 +85,18 @@ type
   TDBParadoxCursor = class(TSQLCursor)
   private
     FConnection: TDBParadoxConnection;
-    FDocument: Ppxdoc_t;
-    FCFile: Pointer;
-    FRecordBuffer: Pcchar;
     FRecordSize: Integer;
     FRecordCount: Integer;
     FNextRecord: Integer;
     FCurrentRecord: Integer;
     FCurrentRowIndex: Integer;
     FFields: TDBParadoxFieldArray;
+    FTableRows: TDBParadoxFileRows;
     FResultFields: array of Integer;
     FRequiredFields: array of Boolean;
     FRows: TDBParadoxResultRows;
     FPlan: TDBParadoxSelectPlan;
-    FDocumentOpened: Boolean;
+    FCursorRegistered: Boolean;
     function FindFieldIndex(const AName: string): Integer;
     procedure ResolvePlanFields;
     procedure BuildResultRows(AParams: TParams);
@@ -122,97 +113,6 @@ type
   public
     Active: Boolean;
   end;
-
-var
-  PxlibLock: TCriticalSection;
-  PxlibConnectionCount: Integer;
-  PxlibLoadedPath: string;
-
-function C_fopen(FileName, Mode: PChar): Pointer; cdecl;
-{$IFDEF WINDOWS}
-  external 'msvcrt.dll' name 'fopen';
-{$ELSE}
-  external 'c' name 'fopen';
-{$ENDIF}
-
-function C_fclose(Stream: Pointer): cint; cdecl;
-{$IFDEF WINDOWS}
-  external 'msvcrt.dll' name 'fclose';
-{$ELSE}
-  external 'c' name 'fclose';
-{$ENDIF}
-
-procedure AcquirePxlib(const ALibraryName: string);
-var
-  MajorVersion, MinorVersion, SubMinorVersion: cint;
-begin
-  PxlibLock.Acquire;
-  try
-    if PxlibConnectionCount > 0 then
-    begin
-      if not SameFileName(PxlibLoadedPath, ExpandFileName(ALibraryName)) then
-        raise EDBParadoxProviderError.Create(
-          'All active DBParadox connections must use the same pxlib DLL.');
-      Inc(PxlibConnectionCount);
-      Exit;
-    end;
-
-    try
-      Loadpxlib(ALibraryName);
-      if not Assigned(PX_get_majorversion) or
-        not Assigned(PX_get_minorversion) or
-        not Assigned(PX_get_subminorversion) or
-        not Assigned(PX_boot) or not Assigned(PX_shutdown) or
-        not Assigned(PX_new) or not Assigned(PX_open_fp) or
-        not Assigned(PX_get_num_fields) or
-        not Assigned(PX_get_num_records) or
-        not Assigned(PX_get_recordsize) or
-        not Assigned(PX_get_field) or not Assigned(PX_get_record) or
-        not Assigned(PX_get_data_alpha) or
-        not Assigned(PX_get_data_long) or not Assigned(PX_close) or
-        not Assigned(PX_delete) then
-        raise EDBParadoxProviderError.Create(
-          'The configured pxlib DLL lacks required read exports.');
-
-      MajorVersion := PX_get_majorversion();
-      MinorVersion := PX_get_minorversion();
-      SubMinorVersion := PX_get_subminorversion();
-      if (MajorVersion <> 0) or (MinorVersion <> 6) or
-        (SubMinorVersion <> 8) then
-        raise EDBParadoxProviderError.CreateFmt(
-          'Unsupported pxlib version %d.%d.%d; this provider requires 0.6.8.',
-          [MajorVersion, MinorVersion, SubMinorVersion]);
-
-      PX_boot();
-      PxlibLoadedPath := ExpandFileName(ALibraryName);
-      PxlibConnectionCount := 1;
-    except
-      Freepxlib;
-      raise;
-    end;
-  finally
-    PxlibLock.Release;
-  end;
-end;
-
-procedure ReleasePxlib;
-begin
-  PxlibLock.Acquire;
-  try
-    if PxlibConnectionCount <= 0 then
-      raise EDBParadoxProviderError.Create(
-        'Internal pxlib connection reference count is invalid.');
-    Dec(PxlibConnectionCount);
-    if PxlibConnectionCount = 0 then
-    begin
-      PX_shutdown();
-      Freepxlib;
-      PxlibLoadedPath := '';
-    end;
-  finally
-    PxlibLock.Release;
-  end;
-end;
 
 procedure RaiseUnsupported(const AFeature: string);
 begin
@@ -236,66 +136,71 @@ begin
   Result := TDBParadoxTransactionHandle(AHandle);
 end;
 
-function DecodeFieldValue(Document: Ppxdoc_t; const Field: TDBParadoxField;
-  RecordBuffer: Pcchar; RecordNumber: Integer): TDBParadoxValue;
+function DecodeFieldValue(const Field: TDBParadoxFileField;
+  const RecordData: TBytes; RecordNumber: Integer): TDBParadoxValue;
 var
-  Status: cint;
-  AlphaValue: Pcchar;
   ValueLength: SizeInt;
   Index: SizeInt;
-  LongValue: clong;
+  RawValue: LongInt;
 begin
   Result.FieldType := Field.FieldType;
   Result.IsNull := True;
   Result.IntegerValue := 0;
   Result.StringValue := '';
 
-  PxlibLock.Acquire;
-  try
-    case Field.FieldType of
-      pxfAlpha:
+  if (Field.Offset < 0) or (Field.FieldLength <= 0) or
+    (Field.Offset > Length(RecordData) - Field.FieldLength) then
+    raise EDBParadoxProviderError.CreateFmt(
+      'Field "%s" has an invalid location in record %d.',
+      [Field.Name, RecordNumber]);
+
+  case Field.FieldType of
+    pxfAlpha:
+      begin
+        if RecordData[Field.Offset] = 0 then
+          Exit;
+        ValueLength := 0;
+        while (ValueLength < Field.FieldLength) and
+          (RecordData[Field.Offset + ValueLength] <> 0) do
         begin
-          AlphaValue := nil;
-          Status := PX_get_data_alpha(Document,
-            @RecordBuffer[Field.Offset], Field.FieldLength, @AlphaValue);
-          if Status = 0 then
-            Exit;
-          if (Status <> 1) or (AlphaValue = nil) then
-            raise EDBParadoxProviderError.CreateFmt(
-              'pxlib could not decode field "%s" in record %d.',
-              [Field.Name, RecordNumber]);
-          try
-            ValueLength := StrLen(AlphaValue);
-            for Index := 0 to ValueLength - 1 do
-              if Byte(AlphaValue[Index]) > 127 then
-                RaiseUnsupported(
-                  'non-ASCII alpha text until code-page behavior is verified');
-            SetString(Result.StringValue, AlphaValue, ValueLength);
-            Result.IsNull := False;
-          finally
-            Document^.free(Document, AlphaValue);
-          end;
+          if RecordData[Field.Offset + ValueLength] > 127 then
+            RaiseUnsupported(
+              'non-ASCII alpha text until code-page behavior is verified');
+          Inc(ValueLength);
         end;
-      pxfLong:
-        begin
-          LongValue := 0;
-          Status := PX_get_data_long(Document,
-            @RecordBuffer[Field.Offset], Field.FieldLength, @LongValue);
-          if Status = 0 then
-            Exit;
-          if Status <> 1 then
-            raise EDBParadoxProviderError.CreateFmt(
-              'pxlib could not decode field "%s" in record %d.',
-              [Field.Name, RecordNumber]);
-          Result.IntegerValue := LongValue;
-          Result.IsNull := False;
-        end;
-    else
-      RaiseUnsupported(Format('Paradox field type %d in field "%s"',
-        [Field.FieldType, Field.Name]));
-    end;
-  finally
-    PxlibLock.Release;
+        while (ValueLength > 0) and
+          (RecordData[Field.Offset + ValueLength - 1] = Ord(' ')) do
+          Dec(ValueLength);
+        SetLength(Result.StringValue, ValueLength);
+        for Index := 0 to ValueLength - 1 do
+          Result.StringValue[Index + 1] :=
+            AnsiChar(RecordData[Field.Offset + Index]);
+        Result.IsNull := False;
+      end;
+    pxfLong:
+      begin
+        if Field.FieldLength <> 4 then
+          raise EDBParadoxProviderError.CreateFmt(
+            'Long field "%s" does not have its required four-byte width.',
+            [Field.Name]);
+        if (RecordData[Field.Offset] = 0) and
+          (RecordData[Field.Offset + 1] = 0) and
+          (RecordData[Field.Offset + 2] = 0) and
+          (RecordData[Field.Offset + 3] = 0) then
+          Exit;
+
+        RawValue := (LongInt(RecordData[Field.Offset] and $7F) shl 24) or
+          (LongInt(RecordData[Field.Offset + 1]) shl 16) or
+          (LongInt(RecordData[Field.Offset + 2]) shl 8) or
+          LongInt(RecordData[Field.Offset + 3]);
+        if (RecordData[Field.Offset] and $80) = 0 then
+          RawValue := RawValue or LongInt($80000000);
+        Result.IntegerValue := RawValue;
+        Result.IsNull := False;
+      end;
+  else
+    RaiseUnsupported(Format('Paradox field type %d in field "%s"',
+      [Field.FieldType, Field.Name]));
   end;
 end;
 
@@ -403,16 +308,7 @@ end;
 constructor TDBParadoxConnection.Create(AOwner: TComponent);
 begin
   inherited Create(AOwner);
-  FPxlibLibraryName := '';
-  FRuntimeAcquired := False;
   FOpenDocumentCount := 0;
-end;
-
-procedure TDBParadoxConnection.SetPxlibLibraryName(const AValue: string);
-begin
-  if Connected and (FPxlibLibraryName <> AValue) then
-    DatabaseError('PxlibLibraryName cannot change while connected.', Self);
-  FPxlibLibraryName := AValue;
 end;
 
 procedure TDBParadoxConnection.DoInternalConnect;
@@ -421,10 +317,6 @@ begin
   if not DirectoryExists(DatabaseName) then
     DatabaseErrorFmt('Paradox data directory does not exist: "%s".',
       [DatabaseName], Self);
-  if Trim(FPxlibLibraryName) = '' then
-    DatabaseError('PxlibLibraryName must name the pxlib 0.6.8 DLL.', Self);
-  AcquirePxlib(FPxlibLibraryName);
-  FRuntimeAcquired := True;
 end;
 
 procedure TDBParadoxConnection.DoInternalDisconnect;
@@ -434,11 +326,6 @@ begin
     raise EDBParadoxProviderError.CreateFmt(
       'Cannot disconnect while %d Paradox table cursor(s) remain open.',
       [FOpenDocumentCount]);
-  if FRuntimeAcquired then
-  begin
-    ReleasePxlib;
-    FRuntimeAcquired := False;
-  end;
 end;
 
 procedure TDBParadoxConnection.CursorOpened;
@@ -479,7 +366,7 @@ var
   ParadoxCursor: TDBParadoxCursor;
 begin
   ParadoxCursor := RequireCursor(Cursor);
-  if not FRuntimeAcquired then
+  if not ParadoxCursor.FConnection.Connected then
     raise EDBParadoxProviderError.Create(
       'The DBParadox connection is not initialized.');
   ParadoxCursor.FPlan := ParseDBParadoxSelect(SQL);
@@ -759,7 +646,6 @@ var
   Parameter: TParam;
   PredicateValues: array of TDBParadoxValue;
   Values: TDBParadoxValueArray;
-  RecordResult: Pcchar;
   Matches: Boolean;
   Comparison: Integer;
   ParamIsUsed: Boolean;
@@ -802,22 +688,12 @@ begin
 
   Values := nil;
   SetLength(Values, Length(FFields));
-  for RowNumber := 0 to FRecordCount - 1 do
+  for RowNumber := 0 to Length(FTableRows) - 1 do
   begin
-    PxlibLock.Acquire;
-    try
-      RecordResult := PX_get_record(FDocument, RowNumber, FRecordBuffer);
-    finally
-      PxlibLock.Release;
-    end;
-    if RecordResult = nil then
-      raise EDBParadoxProviderError.CreateFmt(
-        'pxlib could not read record %d.', [RowNumber]);
-
     for FieldIndex := 0 to High(FFields) do
       if FRequiredFields[FieldIndex] then
-        Values[FieldIndex] := DecodeFieldValue(FDocument,
-          FFields[FieldIndex], FRecordBuffer, RowNumber)
+        Values[FieldIndex] := DecodeFieldValue(FFields[FieldIndex],
+          FTableRows[RowNumber].Data, FTableRows[RowNumber].RecordNumber)
       else
       begin
         Values[FieldIndex].FieldType := FFields[FieldIndex].FieldType;
@@ -933,13 +809,8 @@ procedure TDBParadoxCursor.OpenTable(const ATableName: string);
 var
   TableFileName: string;
   TableExtension: string;
-  FieldCount: cint;
-  Index: Integer;
-  PxField: Ppxfield_t;
-  Offset: Integer;
-  OpenStatus: cint;
 begin
-  if Assigned(FDocument) then
+  if Length(FFields) <> 0 then
     raise EDBParadoxProviderError.Create(
       'A Paradox table is already open on this SQLDB cursor.');
   TableFileName := ATableName;
@@ -959,65 +830,11 @@ begin
     raise EDBParadoxProviderError.CreateFmt(
       'Paradox table does not exist: "%s".', [TableFileName]);
 
-  PxlibLock.Acquire;
   try
-    FDocument := PX_new();
-  finally
-    PxlibLock.Release;
-  end;
-  if FDocument = nil then
-    raise EDBParadoxProviderError.Create('pxlib could not allocate a document.');
-  try
-    FCFile := C_fopen(PChar(TableFileName), 'rb');
-    if FCFile = nil then
-      raise EDBParadoxProviderError.CreateFmt(
-        'Cannot open Paradox table read-only: "%s".', [TableFileName]);
-
-    PxlibLock.Acquire;
-    try
-      OpenStatus := PX_open_fp(FDocument, PFILE(FCFile));
-    finally
-      PxlibLock.Release;
-    end;
-    if OpenStatus <> 0 then
-      raise EDBParadoxProviderError.CreateFmt(
-        'pxlib failed to open Paradox table "%s" (code %d).',
-        [TableFileName, OpenStatus]);
-    FDocumentOpened := True;
+    ReadDBParadoxTable(TableFileName, FFields, FTableRows, FRecordSize);
+    FRecordCount := Length(FTableRows);
     FConnection.CursorOpened;
-
-    PxlibLock.Acquire;
-    try
-      FieldCount := PX_get_num_fields(FDocument);
-      FRecordCount := PX_get_num_records(FDocument);
-      FRecordSize := PX_get_recordsize(FDocument);
-      if (FieldCount <= 0) or (FRecordCount < 0) or (FRecordSize <= 0) then
-        raise EDBParadoxProviderError.Create(
-          'pxlib returned invalid table metadata.');
-      SetLength(FFields, FieldCount);
-      Offset := 0;
-      for Index := 0 to FieldCount - 1 do
-      begin
-        PxField := PX_get_field(FDocument, Index);
-        if (PxField = nil) or (PxField^.px_fname = nil) or
-          (PxField^.px_flen <= 0) then
-          raise EDBParadoxProviderError.CreateFmt(
-            'pxlib returned invalid metadata for field %d.', [Index]);
-        FFields[Index].Name := StrPas(PxField^.px_fname);
-        FFields[Index].FieldType := Byte(PxField^.px_ftype);
-        FFields[Index].FieldLength := PxField^.px_flen;
-        FFields[Index].Offset := Offset;
-        Inc(Offset, PxField^.px_flen);
-      end;
-      if Offset > FRecordSize then
-        raise EDBParadoxProviderError.CreateFmt(
-          'Field widths (%d) exceed the Paradox record size (%d).',
-          [Offset, FRecordSize]);
-    finally
-      PxlibLock.Release;
-    end;
-
-    GetMem(FRecordBuffer, FRecordSize);
+    FCursorRegistered := True;
     FNextRecord := 0;
     FCurrentRecord := -1;
     FCurrentRowIndex := -1;
@@ -1028,60 +845,14 @@ begin
 end;
 
 procedure TDBParadoxCursor.CloseTable;
-var
-  StreamCloseStatus: Integer;
 begin
-  if Assigned(FRecordBuffer) then
+  if FCursorRegistered then
   begin
-    FreeMem(FRecordBuffer);
-    FRecordBuffer := nil;
-  end;
-  if FDocumentOpened then
-  begin
-    PxlibLock.Acquire;
-    try
-      PX_close(FDocument);
-    finally
-      PxlibLock.Release;
-    end;
-    FDocumentOpened := False;
-    StreamCloseStatus := 0;
-    if FCFile <> nil then
-    begin
-      StreamCloseStatus := C_fclose(FCFile);
-      FCFile := nil;
-    end;
-    PxlibLock.Acquire;
-    try
-      PX_delete(FDocument);
-    finally
-      PxlibLock.Release;
-    end;
-    FDocument := nil;
     FConnection.CursorClosed;
-    if StreamCloseStatus <> 0 then
-      raise EDBParadoxProviderError.Create(
-        'The read-only Paradox file stream could not be closed.');
-  end
-  else
-  begin
-    if FCFile <> nil then
-    begin
-      C_fclose(FCFile);
-      FCFile := nil;
-    end;
-    if Assigned(FDocument) then
-    begin
-      PxlibLock.Acquire;
-      try
-        PX_delete(FDocument);
-      finally
-        PxlibLock.Release;
-      end;
-      FDocument := nil;
-    end;
+    FCursorRegistered := False;
   end;
   SetLength(FFields, 0);
+  SetLength(FTableRows, 0);
   SetLength(FResultFields, 0);
   SetLength(FRequiredFields, 0);
   SetLength(FRows, 0);
@@ -1099,9 +870,4 @@ begin
 end;
 
 initialization
-  PxlibLock := TCriticalSection.Create;
-
-finalization
-  PxlibLock.Free;
-
 end.
