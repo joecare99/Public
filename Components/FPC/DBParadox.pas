@@ -11,7 +11,9 @@ uses
   DBParadoxConnection, DBParadoxSQLParser, DBParadoxWriteBuffer, 
   DBParadoxRecordEncoder, DBParadoxIndexFileBuilder, 
   DBParadoxTableFileBuilder, DBParadoxSecondaryIndexBuilder, 
-  DBParadoxFileReader, LazarusPackageIntf;
+  DBParadoxFileReader, DBParadoxStagedTable, DBParadoxDMLExecutor, 
+  DBParadoxPrimaryKeyDiscovery, 
+  LazarusPackageIntf;
 
 implementation
 
