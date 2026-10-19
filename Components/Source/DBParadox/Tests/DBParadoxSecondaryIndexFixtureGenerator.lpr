@@ -13,6 +13,9 @@ const
   FixturePrefix = 'AhnWin52-SecondaryIndex-Pascal-';
   CaseOptionRowCount = 5;
   MultiBlockRowCount = 75;
+  CapacityRowCount = 770;
+  CapacityGroupWidth = 200;
+  CapacitySuffixWidth = 30;
 
 function ReadUInt16LE(const Data: TBytes; Offset: SizeInt): Word;
 begin
@@ -86,7 +89,8 @@ begin
   end;
 end;
 
-function CreateOutputDirectory(MultiBlockFixture: Boolean): string;
+function CreateOutputDirectory(MultiBlockFixture,
+  CapacityFixture: Boolean): string;
 var
   TempDirectory, Candidate, Prefix: string;
   Suffix: Integer;
@@ -98,6 +102,8 @@ begin
   Prefix := FixturePrefix;
   if MultiBlockFixture then
     Prefix := Prefix + 'Multi-';
+  if CapacityFixture then
+    Prefix := Prefix + 'Capacity-';
   Suffix := 0;
   repeat
     Candidate := TempDirectory + Prefix +
@@ -137,10 +143,15 @@ begin
   for RowIndex := 0 to High(Rows) do
   begin
     Encoded := EncodeDBParadoxRecord(Fields, Rows[RowIndex]);
-    SetLength(Result[RowIndex].Key, 32);
-    Move(Encoded[4], Result[RowIndex].Key[0], 20);
-    Move(Encoded[24], Result[RowIndex].Key[20], 8);
-    Move(Encoded[0], Result[RowIndex].Key[28], 4);
+    SetLength(Result[RowIndex].Key,
+      Fields[1].Length + Fields[2].Length + Fields[0].Length);
+    Move(Encoded[Fields[0].Length], Result[RowIndex].Key[0],
+      Fields[1].Length);
+    Move(Encoded[Fields[0].Length + Fields[1].Length],
+      Result[RowIndex].Key[Fields[1].Length], Fields[2].Length);
+    Move(Encoded[0],
+      Result[RowIndex].Key[Fields[1].Length + Fields[2].Length],
+      Fields[0].Length);
     Result[RowIndex].DataBlockNumber := RowIndex div RecordsPerBlock + 1;
   end;
 end;
@@ -157,9 +168,11 @@ begin
   for RowIndex := 0 to High(Rows) do
   begin
     Encoded := EncodeDBParadoxRecord(Fields, Rows[RowIndex]);
-    SetLength(Result[RowIndex].Key, 24);
-    Move(Encoded[4], Result[RowIndex].Key[0], 20);
-    Move(Encoded[0], Result[RowIndex].Key[20], 4);
+    SetLength(Result[RowIndex].Key, Fields[1].Length + Fields[0].Length);
+    Move(Encoded[Fields[0].Length], Result[RowIndex].Key[0],
+      Fields[1].Length);
+    Move(Encoded[0], Result[RowIndex].Key[Fields[1].Length],
+      Fields[0].Length);
     Result[RowIndex].DataBlockNumber := RowIndex div RecordsPerBlock + 1;
   end;
 end;
@@ -176,7 +189,7 @@ var
   OutputDirectory: string;
   RowIndex, FixtureRowCount: Integer;
   DatabaseRecordsPerBlock: SizeInt;
-  IsClassicFixture, IsMultiBlockFixture: Boolean;
+  IsClassicFixture, IsMultiBlockFixture, IsCapacityFixture: Boolean;
 begin
   if not DirectoryExists(TemplateDirectory) then
     raise Exception.CreateFmt('Template directory does not exist: %s',
@@ -186,22 +199,32 @@ begin
   begin
     IsClassicFixture := False;
     IsMultiBlockFixture := False;
+    IsCapacityFixture := False;
   end
   else if SameText(ExtractFileName(ExcludeTrailingPathDelimiter(
     ExpandFileName(TemplateDirectory))), 'ClassicIndexFixture') then
   begin
     IsClassicFixture := True;
     IsMultiBlockFixture := False;
+    IsCapacityFixture := False;
   end
   else if SameText(ExtractFileName(ExcludeTrailingPathDelimiter(
     ExpandFileName(TemplateDirectory))), 'MultiBlockFixture') then
   begin
     IsClassicFixture := False;
     IsMultiBlockFixture := True;
+    IsCapacityFixture := False;
+  end
+  else if SameText(ExtractFileName(ExcludeTrailingPathDelimiter(
+    ExpandFileName(TemplateDirectory))), 'CapacityFixture') then
+  begin
+    IsClassicFixture := False;
+    IsMultiBlockFixture := False;
+    IsCapacityFixture := True;
   end
   else
     raise Exception.Create(
-      'Only the named synthetic CaseOptionsFixture, ClassicIndexFixture, or MultiBlockFixture directory is accepted.');
+      'Only the named synthetic CaseOptionsFixture, ClassicIndexFixture, MultiBlockFixture, or CapacityFixture directory is accepted.');
 
   Templates[0] := LoadTemplate(TemplateDirectory, 'Synthetic.DB', 0);
   Templates[1] := LoadTemplate(TemplateDirectory, 'Synthetic.PX', 1);
@@ -233,7 +256,13 @@ begin
   Fields[2].TypeCode := $01;
   Fields[2].Length := 8;
 
-  if IsMultiBlockFixture then
+  if IsCapacityFixture then
+  begin
+    Fields[1].Length := CapacityGroupWidth;
+    Fields[2].Length := CapacitySuffixWidth;
+    FixtureRowCount := CapacityRowCount;
+  end
+  else if IsMultiBlockFixture then
     FixtureRowCount := MultiBlockRowCount
   else
     FixtureRowCount := CaseOptionRowCount;
@@ -241,14 +270,24 @@ begin
   for RowIndex := 0 to High(Rows) do
     SetLength(Rows[RowIndex], Length(Fields));
   DatabaseRecordsPerBlock := RecordsPerDatabaseBlock(Templates[0]);
-  if IsMultiBlockFixture then
+  if IsMultiBlockFixture or IsCapacityFixture then
     for RowIndex := 0 to High(Rows) do
     begin
       Rows[RowIndex][0] := UnicodeString(IntToStr(RowIndex + 1));
-      Rows[RowIndex][1] :=
-        UnicodeString('Group' + Format('%.2d', [RowIndex mod 5]));
-      Rows[RowIndex][2] :=
-        UnicodeString(Chr(Ord('A') + RowIndex mod 3));
+      if IsCapacityFixture then
+      begin
+        Rows[RowIndex][1] :=
+          UnicodeString('Group' + Format('%.2d', [RowIndex mod 17]));
+        Rows[RowIndex][2] :=
+          UnicodeString('Suffix' + Format('%.2d', [RowIndex mod 11]));
+      end
+      else
+      begin
+        Rows[RowIndex][1] :=
+          UnicodeString('Group' + Format('%.2d', [RowIndex mod 5]));
+        Rows[RowIndex][2] :=
+          UnicodeString(Chr(Ord('A') + RowIndex mod 3));
+      end;
     end
   else
   begin
@@ -297,7 +336,8 @@ begin
       CompositeIndexRecords);
   end;
 
-  OutputDirectory := CreateOutputDirectory(IsMultiBlockFixture);
+  OutputDirectory := CreateOutputDirectory(
+    IsMultiBlockFixture, IsCapacityFixture);
   WriteBytes(OutputDirectory, 'Synthetic.DB', TableFiles.DatabaseFile);
   WriteBytes(OutputDirectory, 'Synthetic.PX', TableFiles.PrimaryIndexFile);
   if IsClassicFixture then
@@ -324,6 +364,8 @@ begin
     WriteLn('INDEX_FAMILY=CLASSIC_AND_XG_8_FILES');
   if IsMultiBlockFixture then
     WriteLn('INDEX_FAMILY=CASE_OPTIONS_MULTIBLOCK');
+  if IsCapacityFixture then
+    WriteLn('INDEX_FAMILY=WIDE_KEY_CAPACITY');
   WriteLn('PRIMARY_REVISION=', TableFiles.PrimaryIndexFile[$2C]);
 end;
 
