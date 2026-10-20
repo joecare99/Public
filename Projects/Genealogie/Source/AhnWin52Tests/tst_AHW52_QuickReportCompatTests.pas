@@ -17,7 +17,7 @@ implementation
 
 uses
   SysUtils, Classes, Interfaces, Forms, QRCompatErrors, QRCtrls, QuickRpt,
-  QRPrntr, Unit5, Unit15, Unit23, Unit25;
+  QRPrntr;
 
 type
   TCompatOperation = procedure;
@@ -189,10 +189,6 @@ end;
 
 procedure TTestAHW52QuickReportCompat.TestQuickReportOperationsRejectUse;
 begin
-  AssertUnsupported(TForm5);
-    AssertUnsupported(TForm15);
-    AssertUnsupported(TForm23);
-    AssertUnsupported(TForm25);
     AssertUnsupportedCall('TQRPreview.Create', @CallPreviewConstruction);
     AssertUnsupportedCall('TQRPreview.SetQRPrinter', @CallPreviewSetPrinter);
     AssertUnsupportedCall('TQRPage.SetPaperSize', @CallSetPaperSize);

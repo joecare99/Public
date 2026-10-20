@@ -5,13 +5,13 @@ unit tst_AHW52_ComparisonParameterAcceptTests;
 interface
 
 uses
-  fpcunit, testregistry, Unit35;
+  fpcunit, testregistry, PersonComparisonOptionsForm;
 
 type
   TTestAHW52ComparisonParameterAccept = class(TTestCase)
   private
-    function CreateDialogWithCheckBoxes: TForm35;
-    procedure SetCheckBoxes(dialog: TForm35; checked: Boolean);
+    function CreateDialogWithCheckBoxes: TPersonComparisonOptionsForm;
+    procedure SetCheckBoxes(dialog: TPersonComparisonOptionsForm; checked: Boolean);
   published
     procedure TestAcceptCollectsSelectedFieldsAndFlags;
     procedure TestAcceptClearsFieldListWhenNothingIsSelected;
@@ -23,9 +23,9 @@ uses
   Controls, Forms, StdCtrls;
 
 function TTestAHW52ComparisonParameterAccept.CreateDialogWithCheckBoxes:
-  TForm35;
+  TPersonComparisonOptionsForm;
 begin
-  Result := TForm35.CreateNew(nil);
+  Result := TPersonComparisonOptionsForm.CreateNew(nil);
   Result.CheckBox1 := TCheckBox.Create(Result);
   Result.CheckBox2 := TCheckBox.Create(Result);
   Result.CheckBox3 := TCheckBox.Create(Result);
@@ -39,7 +39,7 @@ begin
 end;
 
 procedure TTestAHW52ComparisonParameterAccept.SetCheckBoxes(
-  dialog: TForm35; checked: Boolean);
+  dialog: TPersonComparisonOptionsForm; checked: Boolean);
 begin
   dialog.CheckBox1.Checked := checked;
   dialog.CheckBox2.Checked := checked;
@@ -56,7 +56,7 @@ end;
 procedure TTestAHW52ComparisonParameterAccept.
   TestAcceptCollectsSelectedFieldsAndFlags;
 var
-  comparisonDialog: TForm35;
+  comparisonDialog: TPersonComparisonOptionsForm;
 begin
   comparisonDialog := CreateDialogWithCheckBoxes;
   Form35 := comparisonDialog;
@@ -112,7 +112,7 @@ end;
 procedure TTestAHW52ComparisonParameterAccept.
   TestAcceptClearsFieldListWhenNothingIsSelected;
 var
-  comparisonDialog: TForm35;
+  comparisonDialog: TPersonComparisonOptionsForm;
 begin
   comparisonDialog := CreateDialogWithCheckBoxes;
   Form35 := comparisonDialog;

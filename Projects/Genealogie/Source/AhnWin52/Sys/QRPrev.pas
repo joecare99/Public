@@ -67,6 +67,12 @@ implementation
 
 {$R *.DFM}
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Unresolved field offsets: OFFS_0344
+Framework/API calls: QRPrntr.TQRPrinter.ClosePreview(TQRPrinter;TWinControl);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.FormClose(Sender : TObject);
 begin
 (*
@@ -88,6 +94,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TQRStandardPreview.QRPreview (TQRPreview); TApplication instance
+Framework/API calls: Forms.TApplication.ProcessMessages(TApplication);;
+    QRPrntr.TQRPreview.ZoomToFit(TQRPreview);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.ZoomToFitClick(Sender : TObject);
 begin
 (*
@@ -116,6 +129,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TQRStandardPreview.QRPreview (TQRPreview); TApplication instance
+Framework/API calls: Forms.TApplication.ProcessMessages(TApplication);;
+    QRPrntr.TQRPreview.SetZoom(TQRPreview;Integer);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.ZoomTo100Click(Sender : TObject);
 begin
 (*
@@ -145,6 +165,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TQRStandardPreview.QRPreview (TQRPreview); TApplication instance
+Framework/API calls: Forms.TApplication.ProcessMessages(TApplication);;
+    QRPrntr.TQRPreview.ZoomToWidth(TQRPreview);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.ZoomToWidthClick(Sender : TObject);
 begin
 (*
@@ -173,6 +200,13 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TQRStandardPreview.QRPreview (TQRPreview)
+Framework/API calls: QRPrev.TQRStandardPreview.UpdateInfo(TQRStandardPreview);;
+    QRPrntr.TQRPreview.SetPageNumber(TQRPreview;Integer);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.FirstPageClick(Sender : TObject);
 begin
 (*
@@ -198,6 +232,14 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TQRStandardPreview.QRPreview (TQRPreview)
+Unresolved field offsets: OFFS_023C
+Framework/API calls: QRPrev.TQRStandardPreview.UpdateInfo(TQRStandardPreview);;
+    QRPrntr.TQRPreview.SetPageNumber(TQRPreview;Integer);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.PrevPageClick(Sender : TObject);
 begin
 (*
@@ -227,6 +269,14 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TQRStandardPreview.QRPreview (TQRPreview)
+Unresolved field offsets: OFFS_023C
+Framework/API calls: QRPrev.TQRStandardPreview.UpdateInfo(TQRStandardPreview);;
+    QRPrntr.TQRPreview.SetPageNumber(TQRPreview;Integer);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.NextPageClick(Sender : TObject);
 begin
 (*
@@ -256,6 +306,14 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TQRStandardPreview.QRPreview (TQRPreview)
+Unresolved field offsets: OFFS_0344
+Framework/API calls: QRPrev.TQRStandardPreview.UpdateInfo(TQRStandardPreview);;
+    QRPrntr.TQRPreview.SetPageNumber(TQRPreview;Integer);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.LastPageClick(Sender : TObject);
 begin
 (*
@@ -285,6 +343,12 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Unresolved field offsets: OFFS_0344
+Framework/API calls: QRPrntr.TQRPrinter.Print(TQRPrinter);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.PrintClick(Sender : TObject);
 begin
 (*
@@ -301,6 +365,11 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Framework/API calls: Forms.TCustomForm.Close(TCustomForm);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.ExitClick(Sender : TObject);
 begin
 (*
@@ -313,6 +382,12 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TQRStandardPreview.QRPreview (TQRPreview)
+Framework/API calls: QRPrntr.TQRPreview.UpdateZoom(TQRPreview);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.FormResize(Sender : TObject);
 begin
 (*
@@ -329,6 +404,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.FormKeyDown(Sender : TObject);
 begin
 (*
@@ -346,6 +425,23 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TApplication instance
+Global state: GlobalVar_0061DEC0
+Unresolved field offsets: OFFS_0004; OFFS_0344
+Framework/API calls: class TSaveDialog; Classes.TList.Get(TList;Integer):Pointer;;
+    Dialogs.TOpenDialog.Create(TOpenDialog;boolean;TComponent);;
+    Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;;
+    Dialogs.TOpenDialog.GetFilterIndex(TOpenDialog):Integer;; method TSaveDialog.Execute();
+    QRPrntr.TQRExportFilterLibrary.GetSaveDialogFilter(TQRExportFilterLibrary):AnsiString;;
+    QRPrntr.TQRPrinter.ExportToFilter(TQRPrinter;TQRExportFilter);;
+    QRPrntr.TQRPrinter.Save(TQRPrinter;AnsiString);;
+    QRPrntr.TQRStream.CreateFromFile(TQRStream;boolean;AnsiString);;
+    System.LoadResString(PResStringRec):String;; System.TObject.Free(TObject);
+Strings/files/dialog text: '[��]�'; 'QRP'; '�t����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.SaveClick(Sender : TObject);
 begin
 (*
@@ -605,6 +701,12 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Unresolved field offsets: OFFS_0344
+Framework/API calls: QRPrntr.TQRPrinter.PrintSetup(TQRPrinter);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.PrintSetupClick(Sender : TObject);
 begin
 (*
@@ -621,6 +723,23 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TQRStandardPreview.Print (TToolButton); TQRStandardPreview.PrintSetup (TToolButton);
+    TQRStandardPreview.QRPreview (TQRPreview); TApplication instance
+Unresolved field offsets: OFFS_0238; OFFS_0344
+Project calls: Unit_00408494.Proc_00409CD0
+Framework/API calls: class TOpenDialog; Dialogs.ShowMessage(AnsiString);;
+    Dialogs.TOpenDialog.Create(TOpenDialog;boolean;TComponent);;
+    Dialogs.TOpenDialog.GetFileName(TOpenDialog):TFileName;; method TOpenDialog.Execute(); method
+    TToolButton.SetEnabled(Boolean); QRPrev.TQRStandardPreview.UpdateInfo(TQRStandardPreview);;
+    QRPrntr.TQRPreview.SetPageNumber(TQRPreview;Integer);;
+    QRPrntr.TQRPreviewImage.SetPageNumber(TQRPreviewImage;Integer);;
+    QRPrntr.TQRPrinter.Load(TQRPrinter;AnsiString);; System.LoadResString(PResStringRec):String;;
+    System.Proc_00404EE0; System.TObject.Free(TObject);
+Strings/files/dialog text: ' (' + '*.'; ')|*.'; '[��]�'; 'QRP'; '��r����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.LoadClick(Sender : TObject);
 begin
 (*
@@ -873,6 +992,14 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TQRStandardPreview.Print (TToolButton); TQRStandardPreview.PrintSetup (TToolButton)
+Unresolved field offsets: OFFS_0344
+Framework/API calls: method TToolButton.SetEnabled(Boolean);
+    QRPrev.TQRStandardPreview.UpdateInfo(TQRStandardPreview);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.QRPreviewPageAvailable(Sender : TObject);
 begin
 (*
@@ -915,6 +1042,16 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TQRStandardPreview.StatusBar (TStatusBar)
+Unresolved field offsets: OFFS_034C
+Project calls: Unit_00408494.Proc_00409950
+Framework/API calls: ComCtrls.TStatusPanel.SetText(TStatusPanel;AnsiString);;
+    ComCtrls.TStatusPanels.GetItem(TStatusPanels;Integer):TStatusPanel;
+Strings/files/dialog text: '^[Y]�'; '��q����^[Y]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.QRPreviewProgressUpdate(Sender : TObject);
 begin
 (*
@@ -1037,6 +1174,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview.FormCreate(Sender : TObject);
 begin
 (*
@@ -1061,6 +1202,17 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+UI/forms: TQRStandardPreview.QRPreview (TQRPreview); TQRStandardPreview.StatusBar (TStatusBar)
+Unresolved field offsets: OFFS_023C; OFFS_0240
+Project calls: Unit_00408494.Proc_00409950
+Framework/API calls: ComCtrls.TStatusPanel.SetText(TStatusPanel;AnsiString);;
+    ComCtrls.TStatusPanels.GetItem(TStatusPanels;Integer):TStatusPanel;;
+    System.LoadResString(PResStringRec):String;; System.Proc_00404EE0
+Strings/files/dialog text: '[��]�'; '��w����[��]�'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview._PROC_0051CC40(Sender : TObject);
 begin
 (*
@@ -1193,6 +1345,12 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Framework/API calls: Forms.TCustomForm.Show(TCustomForm);;
+    QRPrev.TQRStandardPreview.UpdateInfo(TQRStandardPreview);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview._PROC_0051CE14(Sender : TObject);
 begin
 (*
@@ -1214,6 +1372,15 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Framework/API calls: QRPrev.TQRStandardPreview.ExitClick(TQRStandardPreview;TObject);;
+    QRPrev.TQRStandardPreview.FirstPageClick(TQRStandardPreview;TObject);;
+    QRPrev.TQRStandardPreview.LastPageClick(TQRStandardPreview;TObject);;
+    QRPrev.TQRStandardPreview.NextPageClick(TQRStandardPreview;TObject);;
+    QRPrev.TQRStandardPreview.PrevPageClick(TQRStandardPreview;TObject);
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview._PROC_0051CE47(Sender : TObject);
 begin
 (*
@@ -1298,6 +1465,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview._PROC_0051CED0(Sender : TObject);
 begin
 (*
@@ -1307,6 +1478,11 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Strings/files/dialog text: ']Ë��-��a'; '�q����]Ë��-��a'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview._PROC_0051D30D(Sender : TObject);
 begin
 (*
@@ -1351,6 +1527,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRStandardPreview._PROC_0051D33C(Sender : TObject);
 begin
 (*

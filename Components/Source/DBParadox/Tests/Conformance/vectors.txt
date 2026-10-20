@@ -1,0 +1,8 @@
+# Shared Pascal/C# DBParadox conformance vectors
+record-mixed-types=C4803F00000000FFFF800163A1800163A2
+index-record-one=8001800180028000
+index-record-two=8002800280038000
+bde-integer-primary-key-values=10,1,2
+reject-duplicate-primary-key=invalid-input
+reject-encrypted-index-template=unsupported-feature
+reject-nonempty-table-template=invalid-state

@@ -28,6 +28,12 @@ implementation
 
 {$R *.DFM}
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Unresolved field offsets: OFFS_02FC
+Framework/API calls: QRPrntr.Proc_00520BD0
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRProgressForm.CancelButtonClick(Sender : TObject);
 begin
 (*
@@ -44,6 +50,11 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+Strings/files/dialog text: ']Ë��-(�a'
+  Unknown: raw binary addresses, unlabelled object offsets, and indirect targets are unresolved.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRProgressForm._PROC_005035D5(Sender : TObject);
 begin
 (*
@@ -85,6 +96,10 @@ begin
 *)
 end;
 
+{ ASM listing resource map; extracted from commented binary evidence only.
+  Unknown: no symbolic resource labels found; resources are represented only by raw offsets or indirect calls.
+  This is not a runtime dependency map; original offsets refer to the decompiled binary layout.
+}
 procedure TQRProgressForm._PROC_00503604(Sender : TObject);
 begin
 (*

@@ -16,24 +16,30 @@ type
 implementation
 
 uses
-  Cmp_SQLTable, Forms, frmAhnenWinMain, Unit2;
+  Cmp_SQLTable, Forms, frmAhnenWinMain, GenealogyDataModule,
+  GenealogyDataModuleAccess;
 
 procedure TTestAHW52MainFormDatasetControls.
   TestControlSuppressionAndReenableForBothDatasets;
 var
-  dataModule: TDataModule2;
+  dataModule: TGenealogyDataModule;
   mainForm: TForm1;
-  previousDataModule: TDataModule2;
+  previousDataModule: TGenealogyDataModule;
+  previousGenealogyDataModule: IGenealogyDataModule;
 begin
   Application.Initialize;
-  previousDataModule := Unit2.DataModule2;
-  dataModule := TDataModule2.CreateNew(nil);
+  previousDataModule := GenealogyDataModule.DataModule2;
+  previousGenealogyDataModule :=
+    GenealogyDataModuleAccess.GenealogyDataModule;
+  dataModule := TGenealogyDataModule.CreateNew(nil);
   mainForm := nil;
   try
     mainForm := TForm1.CreateNew(nil);
     dataModule.Table1 := TSQLTable.Create(dataModule);
     dataModule.Table5 := TSQLTable.Create(dataModule);
-    Unit2.DataModule2 := dataModule;
+    GenealogyDataModule.DataModule2 := dataModule;
+    GenealogyDataModuleAccess.GenealogyDataModule :=
+      CreateGenealogyDataModuleAdapter(dataModule);
 
     AssertFalse('Table1 must remain inactive.', dataModule.Table1.Active);
     AssertFalse('Table5 must remain inactive.', dataModule.Table5.Active);
@@ -58,7 +64,9 @@ begin
     AssertFalse('Table1 remains inactive.', dataModule.Table1.Active);
     AssertFalse('Table5 remains inactive.', dataModule.Table5.Active);
   finally
-    Unit2.DataModule2 := previousDataModule;
+    GenealogyDataModuleAccess.GenealogyDataModule :=
+      previousGenealogyDataModule;
+    GenealogyDataModule.DataModule2 := previousDataModule;
     mainForm.Free;
     dataModule.Free;
   end;

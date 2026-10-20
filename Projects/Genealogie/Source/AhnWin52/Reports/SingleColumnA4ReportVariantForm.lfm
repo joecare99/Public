@@ -1,0 +1,15 @@
+object Form15: TSingleColumnA4ReportVariantForm
+  Left = 193
+  Height = 601
+  Top = 115
+  Width = 819
+  BorderIcons = [biSystemMenu]
+  Caption = 'Form15'
+  Color = clBtnFace
+  DesignTimePPI = 72
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Position = poDesktopCenter
+  LCLVersion = '2.2.6.0'
+end

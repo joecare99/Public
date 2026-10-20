@@ -82,11 +82,13 @@ var
   recordingMessageService: TRecordingAboutFormMessageService;
   messageService: IAboutFormMessageService;
   originalDirectory, testDirectory: string;
+  originalFormatSettings: TFormatSettings;
   executableDate, databaseDate: TDateTime;
 
 procedure TTestAHW52AboutForm.TestAboutMetadataLifecycle;
 begin
   originalDirectory := GetCurrentDir;
+    originalFormatSettings := DefaultFormatSettings;
     DefaultFormatSettings.ShortDateFormat := 'dd.mm.yyyy';
     DefaultFormatSettings.DateSeparator := '.';
     testDirectory := IncludeTrailingPathDelimiter(GetTempDir(False)) +
@@ -201,10 +203,16 @@ begin
       end;
     finally
       SetCurrentDir(originalDirectory);
+      DefaultFormatSettings := originalFormatSettings;
       DeleteFile(IncludeTrailingPathDelimiter(testDirectory) + 'AHNWIN51.exe');
       DeleteFile(IncludeTrailingPathDelimiter(testDirectory) + 'awd.db');
       RemoveDir(testDirectory);
     end;
+    if (DefaultFormatSettings.ShortDateFormat <>
+        originalFormatSettings.ShortDateFormat) or
+      (DefaultFormatSettings.DateSeparator <>
+        originalFormatSettings.DateSeparator) then
+      raise Exception.Create('The AboutForm test did not restore date formatting.');
 end;
 
 procedure TTestAHW52AboutForm.TestTimerCallbackClosesForm;

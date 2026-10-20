@@ -5,20 +5,20 @@ unit tst_AHW52_ChoiceDialogCheckboxPresetTests;
 interface
 
 uses
-  fpcunit, testregistry, Forms, Unit31;
+  fpcunit, testregistry, Forms, GenealogyListOptionsForm;
 
 type
   TTestAHW52ChoiceDialogCheckboxPresets = class(TTestCase)
   private
     FCloseEventCount: Integer;
     FHideEventCount: Integer;
-    function CreateDialogWithCheckBoxes: TForm31;
+    function CreateDialogWithCheckBoxes: TGenealogyListOptionsForm;
     procedure MakeTestFormInvisible(form: TCustomForm);
     procedure RecordFormClose(Sender: TObject; var CloseAction: TCloseAction);
     procedure RecordFormHide(Sender: TObject);
-    procedure SetCheckBoxes(dialog: TForm31; checked: Boolean);
-    procedure AssertMarkAllPreset(dialog: TForm31);
-    procedure AssertCheckBoxes(dialog: TForm31; expected: Boolean);
+    procedure SetCheckBoxes(dialog: TGenealogyListOptionsForm; checked: Boolean);
+    procedure AssertMarkAllPreset(dialog: TGenealogyListOptionsForm);
+    procedure AssertCheckBoxes(dialog: TGenealogyListOptionsForm; expected: Boolean);
   published
     procedure TestMarkAllChecksEveryOptionExceptClearAll;
     procedure TestClearAllUnchecksEveryOption;
@@ -40,9 +40,9 @@ begin
 end;
 
 function TTestAHW52ChoiceDialogCheckboxPresets.CreateDialogWithCheckBoxes:
-  TForm31;
+  TGenealogyListOptionsForm;
 begin
-  Result := TForm31.CreateNew(nil);
+  Result := TGenealogyListOptionsForm.CreateNew(nil);
   Result.CheckBox1 := TCheckBox.Create(Result);
   Result.CheckBox2 := TCheckBox.Create(Result);
   Result.CheckBox3 := TCheckBox.Create(Result);
@@ -61,7 +61,7 @@ begin
   Result.CheckBox16 := TCheckBox.Create(Result);
 end;
 
-procedure TTestAHW52ChoiceDialogCheckboxPresets.SetCheckBoxes(dialog: TForm31;
+procedure TTestAHW52ChoiceDialogCheckboxPresets.SetCheckBoxes(dialog: TGenealogyListOptionsForm;
   checked: Boolean);
 begin
   dialog.CheckBox1.Checked := checked;
@@ -95,7 +95,7 @@ begin
 end;
 
 procedure TTestAHW52ChoiceDialogCheckboxPresets.AssertCheckBoxes(
-  dialog: TForm31; expected: Boolean);
+  dialog: TGenealogyListOptionsForm; expected: Boolean);
 var
   checkBoxes: array[0..15] of TCheckBox;
   index: Integer;
@@ -122,7 +122,7 @@ begin
 end;
 
 procedure TTestAHW52ChoiceDialogCheckboxPresets.AssertMarkAllPreset(
-  dialog: TForm31);
+  dialog: TGenealogyListOptionsForm);
 var
   checkBoxes: array[0..15] of TCheckBox;
   index: Integer;
@@ -151,7 +151,7 @@ end;
 procedure TTestAHW52ChoiceDialogCheckboxPresets.
   TestMarkAllChecksEveryOptionExceptClearAll;
 var
-  dialog: TForm31;
+  dialog: TGenealogyListOptionsForm;
 begin
   dialog := CreateDialogWithCheckBoxes;
   try
@@ -165,7 +165,7 @@ end;
 
 procedure TTestAHW52ChoiceDialogCheckboxPresets.TestClearAllUnchecksEveryOption;
 var
-  dialog: TForm31;
+  dialog: TGenealogyListOptionsForm;
 begin
   dialog := CreateDialogWithCheckBoxes;
   try
@@ -179,14 +179,14 @@ end;
 
 procedure TTestAHW52ChoiceDialogCheckboxPresets.TestFinishHandlerHidesGlobalForm;
 var
-  receiver: TForm31;
-  target: TForm31;
+  receiver: TGenealogyListOptionsForm;
+  target: TGenealogyListOptionsForm;
 begin
   Application.Initialize;
   FHideEventCount := 0;
-  target := TForm31.CreateNew(nil);
-  receiver := TForm31.CreateNew(nil);
-  Unit31.Form31 := target;
+  target := TGenealogyListOptionsForm.CreateNew(nil);
+  receiver := TGenealogyListOptionsForm.CreateNew(nil);
+  GenealogyListOptionsForm.Form31 := target;
   try
     MakeTestFormInvisible(target);
     MakeTestFormInvisible(receiver);
@@ -200,7 +200,7 @@ begin
     AssertFalse('The global target should be hidden.', target.Visible);
     AssertTrue('The method receiver should remain visible.', receiver.Visible);
   finally
-    Unit31.Form31 := nil;
+    GenealogyListOptionsForm.Form31 := nil;
     receiver.Free;
     target.Free;
   end;
@@ -208,14 +208,14 @@ end;
 
 procedure TTestAHW52ChoiceDialogCheckboxPresets.TestCancelHandlerClosesGlobalForm;
 var
-  receiver: TForm31;
-  target: TForm31;
+  receiver: TGenealogyListOptionsForm;
+  target: TGenealogyListOptionsForm;
 begin
   Application.Initialize;
   FCloseEventCount := 0;
-  target := TForm31.CreateNew(nil);
-  receiver := TForm31.CreateNew(nil);
-  Unit31.Form31 := target;
+  target := TGenealogyListOptionsForm.CreateNew(nil);
+  receiver := TGenealogyListOptionsForm.CreateNew(nil);
+  GenealogyListOptionsForm.Form31 := target;
   try
     MakeTestFormInvisible(target);
     MakeTestFormInvisible(receiver);
@@ -230,7 +230,7 @@ begin
       target.Visible);
     AssertTrue('The method receiver should remain visible.', receiver.Visible);
   finally
-    Unit31.Form31 := nil;
+    GenealogyListOptionsForm.Form31 := nil;
     receiver.Free;
     target.Free;
   end;
