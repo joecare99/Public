@@ -9,6 +9,10 @@ interface
 
 uses
   DBParadoxConnection, DBParadoxSQLParser, DBParadoxWriteBuffer, 
+  DBParadoxRecordEncoder, DBParadoxIndexFileBuilder, 
+  DBParadoxTableFileBuilder, DBParadoxSecondaryIndexBuilder, 
+  DBParadoxFileReader, DBParadoxStagedTable, DBParadoxDMLExecutor, 
+  DBParadoxPrimaryKeyDiscovery, 
   LazarusPackageIntf;
 
 implementation

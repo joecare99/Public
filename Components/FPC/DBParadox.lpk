@@ -8,23 +8,55 @@
       <Version Value="11"/>
       <PathDelim Value="\"/>
       <SearchPaths>
-        <OtherUnitFiles Value="..\Source;$(FPCSrcDir)\packages\pxlib\src"/>
+        <OtherUnitFiles Value="..\Source\DBParadox"/>
         <UnitOutputDirectory Value="..\..\bin\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="3">
+    <Files Count="11">
       <Item1>
-        <Filename Value="..\Source\DBParadoxConnection.pas"/>
+        <Filename Value="..\Source\DBParadox\DBParadoxConnection.pas"/>
         <UnitName Value="DBParadoxConnection"/>
       </Item1>
       <Item2>
-        <Filename Value="..\Source\DBParadoxSQLParser.pas"/>
+        <Filename Value="..\Source\DBParadox\DBParadoxSQLParser.pas"/>
         <UnitName Value="DBParadoxSQLParser"/>
       </Item2>
       <Item3>
-        <Filename Value="..\Source\DBParadoxWriteBuffer.pas"/>
+        <Filename Value="..\Source\DBParadox\DBParadoxWriteBuffer.pas"/>
         <UnitName Value="DBParadoxWriteBuffer"/>
       </Item3>
+      <Item4>
+        <Filename Value="..\Source\DBParadox\DBParadoxRecordEncoder.pas"/>
+        <UnitName Value="DBParadoxRecordEncoder"/>
+      </Item4>
+      <Item5>
+        <Filename Value="..\Source\DBParadox\DBParadoxIndexFileBuilder.pas"/>
+        <UnitName Value="DBParadoxIndexFileBuilder"/>
+      </Item5>
+      <Item6>
+        <Filename Value="..\Source\DBParadox\DBParadoxTableFileBuilder.pas"/>
+        <UnitName Value="DBParadoxTableFileBuilder"/>
+      </Item6>
+      <Item7>
+        <Filename Value="..\Source\DBParadox\DBParadoxSecondaryIndexBuilder.pas"/>
+        <UnitName Value="DBParadoxSecondaryIndexBuilder"/>
+      </Item7>
+      <Item8>
+        <Filename Value="..\Source\DBParadox\DBParadoxFileReader.pas"/>
+        <UnitName Value="DBParadoxFileReader"/>
+      </Item8>
+      <Item9>
+        <Filename Value="..\Source\DBParadox\DBParadoxStagedTable.pas"/>
+        <UnitName Value="DBParadoxStagedTable"/>
+      </Item9>
+      <Item10>
+        <Filename Value="..\Source\DBParadox\DBParadoxDMLExecutor.pas"/>
+        <UnitName Value="DBParadoxDMLExecutor"/>
+      </Item10>
+      <Item11>
+        <Filename Value="..\Source\DBParadox\DBParadoxPrimaryKeyDiscovery.pas"/>
+        <UnitName Value="DBParadoxPrimaryKeyDiscovery"/>
+      </Item11>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>
