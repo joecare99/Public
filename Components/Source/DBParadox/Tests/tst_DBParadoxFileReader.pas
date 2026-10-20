@@ -10,11 +10,13 @@ uses
 type
   TTestDBParadoxFileReader = class(TTestCase)
   private
-    function BuildFixture(DeclaredRecords, PhysicalRecords: Word): TBytes;
+    function BuildFixture(DeclaredRecords, PhysicalRecords: Word;
+      PrimaryKeyFieldCount: Word = 1): TBytes;
     function WriteFixture(const Data: TBytes): string;
   published
     procedure ReadsUnencryptedVersionSevenTable;
     procedure RejectsPhysicalRecordCountMismatch;
+    procedure RejectsPrimaryKeyFieldCountExceedingSchema;
   end;
 
 implementation
@@ -37,7 +39,7 @@ begin
 end;
 
 function TTestDBParadoxFileReader.BuildFixture(DeclaredRecords,
-  PhysicalRecords: Word): TBytes;
+  PhysicalRecords, PrimaryKeyFieldCount: Word): TBytes;
 const
   HeaderSize = $800;
   BlockSize = $800;
@@ -59,6 +61,7 @@ begin
   WriteUInt16LE(Result, $0E, 1);
   WriteUInt16LE(Result, $10, 1);
   WriteUInt16LE(Result, $21, 2);
+  WriteUInt16LE(Result, $23, PrimaryKeyFieldCount);
   Result[$39] := $0C;
 
   Result[$78] := $04;
@@ -102,12 +105,14 @@ var
   FileName: string;
   Fields: TDBParadoxFileFields;
   Rows: TDBParadoxFileRows;
-  RecordSize: Integer;
+  RecordSize, PrimaryKeyFieldCount: Integer;
 begin
   FileName := WriteFixture(BuildFixture(2, 2));
   try
-    ReadDBParadoxTable(FileName, Fields, Rows, RecordSize);
+    ReadDBParadoxTable(FileName, Fields, Rows, RecordSize,
+      PrimaryKeyFieldCount);
     CheckEquals(5, RecordSize);
+    CheckEquals(1, PrimaryKeyFieldCount);
     CheckEquals(2, Length(Fields));
     CheckEquals('ID', Fields[0].Name);
     CheckEquals(0, Fields[0].Offset);
@@ -144,6 +149,31 @@ begin
     end;
     CheckTrue(RaisedExpectedError,
       'The internal reader must not expose undeclared physical record slots.');
+  finally
+    DeleteFile(FileName);
+  end;
+end;
+
+procedure TTestDBParadoxFileReader.
+  RejectsPrimaryKeyFieldCountExceedingSchema;
+var
+  FileName: string;
+  Fields: TDBParadoxFileFields;
+  Rows: TDBParadoxFileRows;
+  RecordSize: Integer;
+  RaisedExpectedError: Boolean;
+begin
+  FileName := WriteFixture(BuildFixture(2, 2, 3));
+  try
+    RaisedExpectedError := False;
+    try
+      ReadDBParadoxTable(FileName, Fields, Rows, RecordSize);
+    except
+      on E: EDBParadoxFileReadError do
+        RaisedExpectedError := True;
+    end;
+    CheckTrue(RaisedExpectedError,
+      'The DB header cannot declare more primary fields than table fields.');
   finally
     DeleteFile(FileName);
   end;

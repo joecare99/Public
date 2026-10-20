@@ -27,6 +27,7 @@ type
   published
     procedure ConnectDoesNotRequirePxlibRuntime;
     procedure SQLQueryReadsInternalFixtureWithoutPxlib;
+    procedure SQLQueryRecoversPreparedFamilyBeforeReading;
     procedure SQLQueryReadsBDEAuthoredLiveFixtureWithoutPxlib;
     procedure SQLQueryReadsBDEDeletedFixtureWithoutResurrectingRow;
     procedure SQLQueryRejectsUnsupportedFieldType;
@@ -46,7 +47,48 @@ type
 implementation
 
 uses
-  Classes;
+  Classes, DBParadoxFamilyJournal, DBParadoxFamilyPublisher;
+
+procedure WriteTestBytesFile(const AFileName: string; const AData: TBytes);
+var
+  Stream: TFileStream;
+begin
+  Stream := TFileStream.Create(AFileName, fmCreate);
+  try
+    if Length(AData) > 0 then
+      Stream.WriteBuffer(AData[0], Length(AData));
+  finally
+    Stream.Free;
+  end;
+end;
+
+procedure WriteTestTextFile(const AFileName, AValue: string);
+var
+  Stream: TFileStream;
+begin
+  Stream := TFileStream.Create(AFileName, fmCreate);
+  try
+    if AValue <> '' then
+      Stream.WriteBuffer(AValue[1], Length(AValue));
+  finally
+    Stream.Free;
+  end;
+end;
+
+function ReadTestTextFile(const AFileName: string): string;
+var
+  Stream: TFileStream;
+begin
+  Result := '';
+  Stream := TFileStream.Create(AFileName, fmOpenRead or fmShareDenyNone);
+  try
+    SetLength(Result, Stream.Size);
+    if Stream.Size > 0 then
+      Stream.ReadBuffer(Result[1], Stream.Size);
+  finally
+    Stream.Free;
+  end;
+end;
 
 procedure WriteUInt16LE(var Data: TBytes; Offset: SizeInt; Value: Word);
 begin
@@ -287,6 +329,8 @@ begin
   begin
     DeleteFile(IncludeTrailingPathDelimiter(FFixtureDirectoryToCleanup) +
       'Table13.DB');
+    DeleteFile(IncludeTrailingPathDelimiter(FFixtureDirectoryToCleanup) +
+      'Table13.DB.dbparadox.lock');
     RemoveDir(FFixtureDirectoryToCleanup);
     FFixtureDirectoryToCleanup := '';
   end;
@@ -384,6 +428,82 @@ begin
     Query.Free;
     Transaction.Free;
     Connection.Free;
+    DeleteFile(FixtureFileName);
+    DeleteFile(FixtureFileName + '.dbparadox.lock');
+    RemoveDir(FixtureDirectory);
+  end;
+end;
+
+procedure TTestDBParadoxConnection.
+  SQLQueryRecoversPreparedFamilyBeforeReading;
+var
+  DatabaseData: TBytes;
+  FixtureFileName, FixtureDirectory, StageDirectory, BeforeDirectory: string;
+  Members: TDBParadoxFamilyMembers;
+  Connection: TDBParadoxConnection;
+  Transaction: TSQLTransaction;
+  Query: TSQLQuery;
+begin
+  DatabaseData := BuildInternalReaderFixture(2, 2);
+  FixtureFileName := WriteInternalReaderFixture(DatabaseData, 'Synthetic.DB');
+  FixtureDirectory := ExtractFileDir(FixtureFileName);
+  StageDirectory := IncludeTrailingPathDelimiter(FixtureDirectory) +
+    '.dbparadox-stage-Synthetic-recovery';
+  BeforeDirectory := IncludeTrailingPathDelimiter(StageDirectory) + '.before';
+  SetLength(Members, 2);
+  Members[0] := '.DB';
+  Members[1] := '.PX';
+  Connection := TDBParadoxConnection.Create(nil);
+  Transaction := TSQLTransaction.Create(nil);
+  Query := TSQLQuery.Create(nil);
+  try
+    CheckTrue(CreateDir(StageDirectory));
+    CheckTrue(CreateDir(BeforeDirectory));
+    WriteTestBytesFile(IncludeTrailingPathDelimiter(BeforeDirectory) +
+      '0.snapshot', DatabaseData);
+    WriteTestTextFile(IncludeTrailingPathDelimiter(BeforeDirectory) +
+      '1.snapshot', 'old PX');
+    WriteTestTextFile(IncludeTrailingPathDelimiter(StageDirectory) +
+      'Synthetic.DB', 'new broken DB');
+    WriteTestTextFile(IncludeTrailingPathDelimiter(StageDirectory) +
+      'Synthetic.PX', 'new PX');
+    WriteTestTextFile(ChangeFileExt(FixtureFileName, '.PX'), 'old PX');
+    TDBParadoxFamilyJournal.Prepare(FixtureFileName, StageDirectory,
+      'Synthetic', Members);
+    WriteTestTextFile(FixtureFileName, 'new broken DB');
+    WriteTestTextFile(ChangeFileExt(FixtureFileName, '.PX'), 'new PX');
+
+    Connection.DatabaseName := FixtureDirectory;
+    Connection.Transaction := Transaction;
+    Transaction.Database := Connection;
+    Query.SQLConnection := Connection;
+    Query.SQLTransaction := Transaction;
+    Query.SQL.Text := 'SELECT ID FROM Synthetic.DB ORDER BY ID';
+    Query.ReadOnly := True;
+    Query.Open;
+    try
+      CheckFalse(Query.EOF);
+      CheckEquals(1, Query.FieldByName('ID').AsInteger);
+      Query.Next;
+      CheckFalse(Query.EOF);
+      CheckEquals(2, Query.FieldByName('ID').AsInteger);
+      Query.Next;
+      CheckTrue(Query.EOF);
+    finally
+      Query.Close;
+    end;
+    CheckEquals('old PX',
+      ReadTestTextFile(ChangeFileExt(FixtureFileName, '.PX')));
+    CheckFalse(DirectoryExists(StageDirectory));
+    if Transaction.Active then
+      Transaction.Commit;
+    Connection.Connected := False;
+  finally
+    Query.Free;
+    Transaction.Free;
+    Connection.Free;
+    DeleteFile(FixtureFileName + '.dbparadox.lock');
+    DeleteFile(ChangeFileExt(FixtureFileName, '.PX'));
     DeleteFile(FixtureFileName);
     RemoveDir(FixtureDirectory);
   end;
@@ -534,6 +654,7 @@ begin
     Transaction.Free;
     Connection.Free;
     DeleteFile(FixtureFileName);
+    DeleteFile(FixtureFileName + '.dbparadox.lock');
     RemoveDir(ExtractFileDir(FixtureFileName));
   end;
 end;
@@ -623,6 +744,7 @@ begin
     Transaction.Free;
     Connection.Free;
     DeleteFile(FixtureFileName);
+    DeleteFile(FixtureFileName + '.dbparadox.lock');
     RemoveDir(FixtureDirectory);
   end;
 end;
@@ -730,6 +852,7 @@ begin
     Transaction.Free;
     Connection.Free;
     DeleteFile(FixtureFileName);
+    DeleteFile(FixtureFileName + '.dbparadox.lock');
     RemoveDir(ExtractFileDir(FixtureFileName));
   end;
 end;

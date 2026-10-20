@@ -12,7 +12,7 @@
         <UnitOutputDirectory Value="..\..\bin\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="11">
+    <Files Count="12">
       <Item1>
         <Filename Value="..\Source\DBParadox\DBParadoxConnection.pas"/>
         <UnitName Value="DBParadoxConnection"/>
@@ -57,6 +57,10 @@
         <Filename Value="..\Source\DBParadox\DBParadoxPrimaryKeyDiscovery.pas"/>
         <UnitName Value="DBParadoxPrimaryKeyDiscovery"/>
       </Item11>
+      <Item12>
+        <Filename Value="..\Source\DBParadox\DBParadoxFamilyJournal.pas"/>
+        <UnitName Value="DBParadoxFamilyJournal"/>
+      </Item12>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

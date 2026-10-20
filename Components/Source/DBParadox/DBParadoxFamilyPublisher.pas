@@ -36,6 +36,8 @@ type
     dpeSnapshotRechecked,
     dpeBeforeReplacement,
     dpeAfterReplacement,
+    dpeJournalPrepared,
+    dpeCommitDecisionPersisted,
     dpeBeforeCompensation,
     dpeBeforeCleanup
   );
@@ -73,6 +75,7 @@ type
 implementation
 
 uses
+  DBParadoxFamilyJournal,
   {$IFDEF MSWINDOWS}
   Windows
   {$ELSE}
@@ -113,15 +116,19 @@ function MemberSetsEqual(const ALeft, ARight: TDBParadoxFamilyMembers):
 var
   LeftIndex, RightIndex: Integer;
   Found: Boolean;
+  Used: array of Boolean;
 begin
   if Length(ALeft) <> Length(ARight) then
     Exit(False);
+  SetLength(Used, Length(ARight));
   for LeftIndex := 0 to High(ALeft) do
   begin
     Found := False;
     for RightIndex := 0 to High(ARight) do
-      if SameText(ALeft[LeftIndex], ARight[RightIndex]) then
+      if not Used[RightIndex] and
+        SameText(ALeft[LeftIndex], ARight[RightIndex]) then
       begin
+        Used[RightIndex] := True;
         Found := True;
         Break;
       end;
@@ -197,7 +204,8 @@ begin
       [ADirectory]);
 end;
 
-function NewStageDirectory(const AParentDirectory: string): string;
+function NewStageDirectory(const AParentDirectory, ATableBaseName: string):
+  string;
 var
   Guid: TGUID;
   ErrorCode: Integer;
@@ -205,8 +213,13 @@ begin
   if CreateGUID(Guid) <> 0 then
     raise EDBParadoxPublicationError.Create(
       'Cannot create a unique staging directory name.');
+  if (ATableBaseName = '') or (Pos(PathDelim, ATableBaseName) <> 0) or
+    (Pos('/', ATableBaseName) <> 0) or (Pos('\', ATableBaseName) <> 0) then
+    raise EDBParadoxPublicationError.Create(
+      'The table base name is invalid for a staging directory.');
   Result := IncludeTrailingPathDelimiter(AParentDirectory) +
-    '.dbparadox-stage-' + Copy(GUIDToString(Guid), 2, 36);
+    '.dbparadox-stage-' + ATableBaseName + '-' +
+    Copy(GUIDToString(Guid), 2, 36);
   if not CreateDir(Result) then
   begin
     ErrorCode := GetLastOSError;
@@ -363,8 +376,9 @@ begin
   Published := False;
   PreserveStage := False;
   try
+    TDBParadoxFamilyJournal.RecoverWhileLocked(TablePath);
     Members := DiscoverFamily(ParentDirectory, BaseName, TablePath);
-    StageDirectory := NewStageDirectory(ParentDirectory);
+    StageDirectory := NewStageDirectory(ParentDirectory, BaseName);
     Notify(AFaultInjector, dpeStageDirectoryCreated, -1);
     BeforeDirectory := IncludeTrailingPathDelimiter(StageDirectory) +
       '.before';
@@ -411,6 +425,9 @@ begin
           [Members[Index]]);
     end;
     Notify(AFaultInjector, dpeSnapshotRechecked, -1);
+    TDBParadoxFamilyJournal.Prepare(TablePath, StageDirectory, BaseName,
+      Members);
+    Notify(AFaultInjector, dpeJournalPrepared, -1);
 
     try
       for Index := 0 to High(Members) do
@@ -423,6 +440,8 @@ begin
         Applied[Index] := True;
         Notify(AFaultInjector, dpeAfterReplacement, Index);
       end;
+      AValidator.Validate(ParentDirectory, BaseName, Members);
+      TDBParadoxFamilyJournal.MarkCommitted(TablePath);
       Published := True;
     except
       on E: Exception do
@@ -463,6 +482,22 @@ begin
                 [OriginalErrorClass, OriginalErrorMessage, UncertainMembers,
                  StageDirectory]), StageDirectory);
           end;
+          try
+            TDBParadoxFamilyJournal.MarkRolledBack(TablePath);
+          except
+            on JournalError: Exception do
+            begin
+              PreserveStage := True;
+              raise EDBParadoxUncertainPublicationError.Create(
+                Format(
+                  'Publication failed (%s: %s); compensation completed, ' +
+                  'but the recovery journal could not be finalized (%s: %s). ' +
+                  'Recovery files are preserved in "%s".',
+                  [OriginalErrorClass, OriginalErrorMessage,
+                   JournalError.ClassName, JournalError.Message,
+                   StageDirectory]), StageDirectory);
+            end;
+          end;
           raise EDBParadoxPublicationError.CreateFmt(
             'Publication failed (%s: %s); all replaced members were restored.',
             [OriginalErrorClass, OriginalErrorMessage]);
@@ -471,6 +506,7 @@ begin
         end;
       end;
     end;
+    Notify(AFaultInjector, dpeCommitDecisionPersisted, -1);
   finally
     try
       try
@@ -478,6 +514,7 @@ begin
         begin
           Notify(AFaultInjector, dpeBeforeCleanup, -1);
           RemoveStageDirectory(StageDirectory);
+          TDBParadoxFamilyJournal.Clear(TablePath);
         end;
       except
         on E: Exception do

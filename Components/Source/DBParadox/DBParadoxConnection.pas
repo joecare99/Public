@@ -55,7 +55,8 @@ type
 implementation
 
 uses
-  SysUtils, DBParadoxSQLParser, DBParadoxFileReader;
+  SysUtils, DBParadoxSQLParser, DBParadoxFileReader,
+  DBParadoxFamilyJournal, DBParadoxFamilyLock;
 
 const
   pxfAlpha = $01;
@@ -809,6 +810,7 @@ procedure TDBParadoxCursor.OpenTable(const ATableName: string);
 var
   TableFileName: string;
   TableExtension: string;
+  FamilyLock: TDBParadoxFamilyLock;
 begin
   if Length(FFields) <> 0 then
     raise EDBParadoxProviderError.Create(
@@ -830,17 +832,24 @@ begin
     raise EDBParadoxProviderError.CreateFmt(
       'Paradox table does not exist: "%s".', [TableFileName]);
 
+  FamilyLock := nil;
   try
-    ReadDBParadoxTable(TableFileName, FFields, FTableRows, FRecordSize);
-    FRecordCount := Length(FTableRows);
-    FConnection.CursorOpened;
-    FCursorRegistered := True;
-    FNextRecord := 0;
-    FCurrentRecord := -1;
-    FCurrentRowIndex := -1;
-  except
-    CloseTable;
-    raise;
+    FamilyLock := TDBParadoxFamilyLock.Create(TableFileName);
+    try
+      TDBParadoxFamilyJournal.RecoverWhileLocked(TableFileName);
+      ReadDBParadoxTable(TableFileName, FFields, FTableRows, FRecordSize);
+      FRecordCount := Length(FTableRows);
+      FConnection.CursorOpened;
+      FCursorRegistered := True;
+      FNextRecord := 0;
+      FCurrentRecord := -1;
+      FCurrentRowIndex := -1;
+    except
+      CloseTable;
+      raise;
+    end;
+  finally
+    FamilyLock.Free;
   end;
 end;
 

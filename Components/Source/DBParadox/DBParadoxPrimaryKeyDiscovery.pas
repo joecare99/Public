@@ -14,8 +14,8 @@ type
 
 function DiscoverDBParadoxPrimaryKeyFieldIndex(
   const Fields: TDBParadoxFileFields; const Rows: TDBParadoxFileRows;
-  const PrimaryIndexFileName: string;
-  ExplicitFieldIndex: SizeInt = -1): SizeInt;
+  PrimaryKeyFieldCount: SizeInt;
+  const PrimaryIndexFileName: string): SizeInt;
 
 implementation
 
@@ -408,51 +408,31 @@ end;
 
 function DiscoverDBParadoxPrimaryKeyFieldIndex(
   const Fields: TDBParadoxFileFields; const Rows: TDBParadoxFileRows;
-  const PrimaryIndexFileName: string;
-  ExplicitFieldIndex: SizeInt): SizeInt;
+  PrimaryKeyFieldCount: SizeInt;
+  const PrimaryIndexFileName: string): SizeInt;
 var
-  Index, MatchCount, MatchingIndex: SizeInt;
   Reader: TPrimaryIndexReader;
   Entries: TPrimaryIndexEntries;
 begin
   if Length(Fields) = 0 then
     raise EDBParadoxPrimaryKeyDiscoveryError.Create(
       'The table schema has no fields.');
-  if (ExplicitFieldIndex < -1) or
-    (ExplicitFieldIndex >= Length(Fields)) then
-    raise EDBParadoxPrimaryKeyDiscoveryError.Create(
-      'The explicit primary-key field index is outside the schema.');
+  if PrimaryKeyFieldCount <> 1 then
+    raise EDBParadoxUnsupportedPrimaryIndex.CreateFmt(
+      'The first DML slice supports one primary-key field; the DB header declares %d.',
+      [PrimaryKeyFieldCount]);
 
   Reader := TPrimaryIndexReader.Create;
   try
     Reader.ReadFile(PrimaryIndexFileName);
     Entries := Reader.Entries;
-    MatchCount := 0;
-    MatchingIndex := -1;
-    for Index := 0 to High(Fields) do
-      if (Fields[Index].FieldType = Reader.KeyFieldType) and
-        (Fields[Index].FieldLength = Reader.KeyFieldLength) and
-        FieldMatchesEntries(Fields[Index], Rows, Entries) then
-      begin
-        Inc(MatchCount);
-        MatchingIndex := Index;
-      end;
-
-    if ExplicitFieldIndex >= 0 then
-    begin
-      if (Fields[ExplicitFieldIndex].FieldType <> Reader.KeyFieldType) or
-        (Fields[ExplicitFieldIndex].FieldLength <> Reader.KeyFieldLength) or
-        not FieldMatchesEntries(Fields[ExplicitFieldIndex], Rows, Entries) then
-        raise EDBParadoxPrimaryKeyDiscoveryError.Create(
-          'The explicit primary-key mapping conflicts with the primary index.');
-      Exit(ExplicitFieldIndex);
-    end;
-
-    if MatchCount <> 1 then
-      raise EDBParadoxPrimaryKeyDiscoveryError.CreateFmt(
-        'The primary key matches %d table fields; provide an explicit field mapping.',
-        [MatchCount]);
-    Result := MatchingIndex;
+    { BDE and pxlib map the DB primary-key count to the leading fields. }
+    if (Fields[0].FieldType <> Reader.KeyFieldType) or
+      (Fields[0].FieldLength <> Reader.KeyFieldLength) or
+      not FieldMatchesEntries(Fields[0], Rows, Entries) then
+      raise EDBParadoxPrimaryKeyDiscoveryError.Create(
+        'The primary-index descriptor or block keys do not match the leading DB field.');
+    Result := 0;
   finally
     Reader.Free;
   end;

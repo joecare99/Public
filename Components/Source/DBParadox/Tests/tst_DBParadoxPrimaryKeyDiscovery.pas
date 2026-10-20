@@ -11,15 +11,17 @@ type
   TTestDBParadoxPrimaryKeyDiscovery = class(TTestCase)
   private
     function MakeDatabaseTemplate(const Fields: array of TDBParadoxFileField;
-      RecordSize, BlockSizeKB: Integer): TBytes;
+      RecordSize, BlockSizeKB: Integer;
+      PrimaryKeyFieldCount: Integer = 1): TBytes;
     function MakePrimaryIndexTemplate(KeyType: Byte; KeyLength,
       BlockSizeKB: Integer): TBytes;
     function WriteBytes(const Extension: string; const Data: TBytes): string;
   published
     procedure DiscoversPrimaryKeyFromIndexBlockKeys;
-    procedure RequiresExplicitMappingForAmbiguousFields;
+    procedure RejectsNonLeadingPrimaryKeyMapping;
     procedure RejectsNoMatchingIndexBoundary;
-    procedure RequiresExplicitMappingForEmptyAmbiguousTable;
+    procedure UsesLeadingFieldConventionForEmptyTable;
+    procedure RejectsCompositePrimaryKeyMetadata;
     procedure ReadsPrimaryIndexTreeAcrossLevels;
   end;
 
@@ -37,7 +39,7 @@ end;
 
 function TTestDBParadoxPrimaryKeyDiscovery.MakeDatabaseTemplate(
   const Fields: array of TDBParadoxFileField;
-  RecordSize, BlockSizeKB: Integer): TBytes;
+  RecordSize, BlockSizeKB, PrimaryKeyFieldCount: Integer): TBytes;
 var
   TableNameOffset, FieldNamesOffset: SizeInt;
   FieldIndex: SizeInt;
@@ -49,7 +51,7 @@ begin
   Result[4] := 0;
   Result[5] := BlockSizeKB;
   WriteUInt16LE(Result, $21, Length(Fields));
-  WriteUInt16LE(Result, $23, 1);
+  WriteUInt16LE(Result, $23, PrimaryKeyFieldCount);
   Result[$39] := $0C;
   TableNameOffset := $78 + Length(Fields) * 2 + 4 +
     Length(Fields) * 4;
@@ -105,14 +107,14 @@ var
   Rows: TDBParadoxTableRows;
   Built: TDBParadoxBuiltFiles;
   FileRows: TDBParadoxFileRows;
-  RecordSize: Integer;
+  RecordSize, PrimaryKeyFieldCount: Integer;
   DatabaseName, IndexName: string;
 begin
   SetLength(Fields, 3);
-  Fields[0].Name := 'OtherID';
+  Fields[0].Name := 'ID';
   Fields[0].TypeCode := $04;
   Fields[0].Length := 4;
-  Fields[1].Name := 'ID';
+  Fields[1].Name := 'OtherID';
   Fields[1].TypeCode := $04;
   Fields[1].Length := 4;
   Fields[2].Name := 'Label';
@@ -132,18 +134,19 @@ begin
   FileFields[2].FieldLength := Fields[2].Length;
   FileFields[2].Offset := 8;
   SetLength(Rows, 3);
-  Rows[0] := ['50', '1', 'One'];
-  Rows[1] := ['51', '2', 'Two'];
-  Rows[2] := ['52', '3', 'Three'];
+  Rows[0] := ['1', '50', 'One'];
+  Rows[1] := ['2', '51', 'Two'];
+  Rows[2] := ['3', '52', 'Three'];
   Built := BuildDBParadoxTableFiles(
     MakeDatabaseTemplate(FileFields, 16, 2),
-    MakePrimaryIndexTemplate($04, 4, 2), Fields, 1, Rows);
+    MakePrimaryIndexTemplate($04, 4, 2), Fields, 0, Rows);
   DatabaseName := WriteBytes('.DB', Built.DatabaseFile);
   IndexName := WriteBytes('.PX', Built.PrimaryIndexFile);
   try
-    ReadDBParadoxTable(DatabaseName, FileFields, FileRows, RecordSize);
-    CheckEquals(1, DiscoverDBParadoxPrimaryKeyFieldIndex(
-      FileFields, FileRows, IndexName));
+    ReadDBParadoxTable(DatabaseName, FileFields, FileRows, RecordSize,
+      PrimaryKeyFieldCount);
+    CheckEquals(0, DiscoverDBParadoxPrimaryKeyFieldIndex(
+      FileFields, FileRows, PrimaryKeyFieldCount, IndexName));
     CheckEquals(1, FileRows[0].BlockNumber);
     CheckEquals(0, FileRows[0].RecordInBlock);
   finally
@@ -153,14 +156,14 @@ begin
 end;
 
 procedure TTestDBParadoxPrimaryKeyDiscovery.
-  RequiresExplicitMappingForAmbiguousFields;
+  RejectsNonLeadingPrimaryKeyMapping;
 var
   Fields: TDBParadoxRecordFields;
   FileFields: TDBParadoxFileFields;
   Rows: TDBParadoxTableRows;
   Built: TDBParadoxBuiltFiles;
   FileRows: TDBParadoxFileRows;
-  RecordSize: Integer;
+  RecordSize, PrimaryKeyFieldCount: Integer;
   DatabaseName, IndexName: string;
   RaisedExpectedError: Boolean;
 begin
@@ -183,26 +186,26 @@ begin
   FileFields[1].Offset := 4;
   Rows := nil;
   SetLength(Rows, 2);
-  Rows[0] := ['1', '1'];
-  Rows[1] := ['9', '2'];
+  Rows[0] := ['50', '1'];
+  Rows[1] := ['51', '2'];
   Built := BuildDBParadoxTableFiles(
     MakeDatabaseTemplate(FileFields, 8, 2),
     MakePrimaryIndexTemplate($04, 4, 2), Fields, 1, Rows);
   DatabaseName := WriteBytes('.DB', Built.DatabaseFile);
   IndexName := WriteBytes('.PX', Built.PrimaryIndexFile);
   try
-    ReadDBParadoxTable(DatabaseName, FileFields, FileRows, RecordSize);
+    ReadDBParadoxTable(DatabaseName, FileFields, FileRows, RecordSize,
+      PrimaryKeyFieldCount);
     RaisedExpectedError := False;
     try
-      DiscoverDBParadoxPrimaryKeyFieldIndex(FileFields, FileRows, IndexName);
+      DiscoverDBParadoxPrimaryKeyFieldIndex(FileFields, FileRows,
+        PrimaryKeyFieldCount, IndexName);
     except
       on E: EDBParadoxPrimaryKeyDiscoveryError do
         RaisedExpectedError := True;
     end;
     CheckTrue(RaisedExpectedError,
-      'Ambiguous physical field mapping must not be guessed.');
-    CheckEquals(1, DiscoverDBParadoxPrimaryKeyFieldIndex(
-      FileFields, FileRows, IndexName, 1));
+      'A key stored in a non-leading field must not be inferred.');
   finally
     DeleteFile(DatabaseName);
     DeleteFile(IndexName);
@@ -217,7 +220,7 @@ var
   Rows: TDBParadoxTableRows;
   Built: TDBParadoxBuiltFiles;
   FileRows: TDBParadoxFileRows;
-  RecordSize: Integer;
+  RecordSize, PrimaryKeyFieldCount: Integer;
   DatabaseName, IndexName: string;
   RaisedExpectedError: Boolean;
 begin
@@ -240,10 +243,12 @@ begin
   DatabaseName := WriteBytes('.DB', Built.DatabaseFile);
   IndexName := WriteBytes('.PX', Built.PrimaryIndexFile);
   try
-    ReadDBParadoxTable(DatabaseName, FileFields, FileRows, RecordSize);
+    ReadDBParadoxTable(DatabaseName, FileFields, FileRows, RecordSize,
+      PrimaryKeyFieldCount);
     RaisedExpectedError := False;
     try
-      DiscoverDBParadoxPrimaryKeyFieldIndex(FileFields, FileRows, IndexName);
+      DiscoverDBParadoxPrimaryKeyFieldIndex(FileFields, FileRows,
+        PrimaryKeyFieldCount, IndexName);
     except
       on E: EDBParadoxPrimaryKeyDiscoveryError do
         RaisedExpectedError := True;
@@ -257,12 +262,11 @@ begin
 end;
 
 procedure TTestDBParadoxPrimaryKeyDiscovery.
-  RequiresExplicitMappingForEmptyAmbiguousTable;
+  UsesLeadingFieldConventionForEmptyTable;
 var
   Fields: TDBParadoxFileFields;
   IndexTemplate: TBytes;
   IndexName: string;
-  RaisedExpectedError: Boolean;
 begin
   SetLength(Fields, 2);
   Fields[0].Name := 'FirstID';
@@ -276,17 +280,38 @@ begin
   IndexTemplate := MakePrimaryIndexTemplate($04, 4, 2);
   IndexName := WriteBytes('.PX', IndexTemplate);
   try
+    CheckEquals(0, DiscoverDBParadoxPrimaryKeyFieldIndex(
+      Fields, nil, 1, IndexName));
+  finally
+    DeleteFile(IndexName);
+  end;
+end;
+
+procedure TTestDBParadoxPrimaryKeyDiscovery.
+  RejectsCompositePrimaryKeyMetadata;
+var
+  Fields: TDBParadoxFileFields;
+  IndexTemplate: TBytes;
+  IndexName: string;
+  RaisedExpectedError: Boolean;
+begin
+  SetLength(Fields, 1);
+  Fields[0].Name := 'ID';
+  Fields[0].FieldType := $04;
+  Fields[0].FieldLength := 4;
+  Fields[0].Offset := 0;
+  IndexTemplate := MakePrimaryIndexTemplate($04, 4, 2);
+  IndexName := WriteBytes('.PX', IndexTemplate);
+  try
     RaisedExpectedError := False;
     try
-      DiscoverDBParadoxPrimaryKeyFieldIndex(Fields, nil, IndexName);
+      DiscoverDBParadoxPrimaryKeyFieldIndex(Fields, nil, 2, IndexName);
     except
-      on E: EDBParadoxPrimaryKeyDiscoveryError do
+      on E: EDBParadoxUnsupportedPrimaryIndex do
         RaisedExpectedError := True;
     end;
     CheckTrue(RaisedExpectedError,
-      'An empty table with indistinguishable keys needs explicit metadata.');
-    CheckEquals(1, DiscoverDBParadoxPrimaryKeyFieldIndex(
-      Fields, nil, IndexName, 1));
+      'The first DML slice must reject composite primary keys.');
   finally
     DeleteFile(IndexName);
   end;
@@ -300,7 +325,7 @@ var
   Rows: TDBParadoxTableRows;
   Built: TDBParadoxBuiltFiles;
   FileRows: TDBParadoxFileRows;
-  RecordSize, RowIndex: Integer;
+  RecordSize, PrimaryKeyFieldCount, RowIndex: Integer;
   DatabaseName, IndexName: string;
 begin
   SetLength(Fields, 1);
@@ -322,9 +347,10 @@ begin
   DatabaseName := WriteBytes('.DB', Built.DatabaseFile);
   IndexName := WriteBytes('.PX', Built.PrimaryIndexFile);
   try
-    ReadDBParadoxTable(DatabaseName, FileFields, FileRows, RecordSize);
+    ReadDBParadoxTable(DatabaseName, FileFields, FileRows, RecordSize,
+      PrimaryKeyFieldCount);
     CheckEquals(0, DiscoverDBParadoxPrimaryKeyFieldIndex(
-      FileFields, FileRows, IndexName));
+      FileFields, FileRows, PrimaryKeyFieldCount, IndexName));
     CheckTrue(FileRows[High(FileRows)].BlockNumber > 1,
       'The test table must span multiple physical database blocks.');
   finally
