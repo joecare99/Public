@@ -12,7 +12,11 @@ uses
   DBParadoxRecordEncoder, DBParadoxIndexFileBuilder, 
   DBParadoxTableFileBuilder, DBParadoxSecondaryIndexBuilder, 
   DBParadoxFileReader, DBParadoxStagedTable, DBParadoxDMLExecutor, 
-  DBParadoxPrimaryKeyDiscovery, DBParadoxFamilyJournal, LazarusPackageIntf;
+  DBParadoxPrimaryKeyDiscovery, DBParadoxFamilyJournal, 
+  DBParadoxFamilySnapshot, DBParadoxFamilyLock, 
+  DBParadoxFamilyPublisher, DBParadoxPrimaryFamilyAdapter, 
+  DBParadoxSecondaryFamilyAdapter, DBParadoxSecondaryIndexValidator, 
+  LazarusPackageIntf;
 
 implementation
 

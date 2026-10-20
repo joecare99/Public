@@ -9,7 +9,7 @@ uses
   {$IFDEF MSWINDOWS}
   , Windows
   {$ELSE}
-  , BaseUnix
+  , BaseUnix, Unix
   {$ENDIF};
 
 type

@@ -12,7 +12,7 @@
         <UnitOutputDirectory Value="..\..\bin\lib\$(PkgName)\$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
     </CompilerOptions>
-    <Files Count="12">
+    <Files Count="18">
       <Item1>
         <Filename Value="..\Source\DBParadox\DBParadoxConnection.pas"/>
         <UnitName Value="DBParadoxConnection"/>
@@ -61,6 +61,30 @@
         <Filename Value="..\Source\DBParadox\DBParadoxFamilyJournal.pas"/>
         <UnitName Value="DBParadoxFamilyJournal"/>
       </Item12>
+      <Item13>
+        <Filename Value="..\Source\DBParadox\DBParadoxFamilySnapshot.pas"/>
+        <UnitName Value="DBParadoxFamilySnapshot"/>
+      </Item13>
+      <Item14>
+        <Filename Value="..\Source\DBParadox\DBParadoxFamilyLock.pas"/>
+        <UnitName Value="DBParadoxFamilyLock"/>
+      </Item14>
+      <Item15>
+        <Filename Value="..\Source\DBParadox\DBParadoxFamilyPublisher.pas"/>
+        <UnitName Value="DBParadoxFamilyPublisher"/>
+      </Item15>
+      <Item16>
+        <Filename Value="..\Source\DBParadox\DBParadoxPrimaryFamilyAdapter.pas"/>
+        <UnitName Value="DBParadoxPrimaryFamilyAdapter"/>
+      </Item16>
+      <Item17>
+        <Filename Value="..\Source\DBParadox\DBParadoxSecondaryFamilyAdapter.pas"/>
+        <UnitName Value="DBParadoxSecondaryFamilyAdapter"/>
+      </Item17>
+      <Item18>
+        <Filename Value="..\Source\DBParadox\DBParadoxSecondaryIndexValidator.pas"/>
+        <UnitName Value="DBParadoxSecondaryIndexValidator"/>
+      </Item18>
     </Files>
     <RequiredPkgs Count="1">
       <Item1>

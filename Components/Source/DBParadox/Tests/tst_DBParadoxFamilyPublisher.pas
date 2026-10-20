@@ -12,6 +12,8 @@ type
   private
     procedure CheckSourceFamily(const ADirectory, APrefix: string);
     procedure CheckNoStagingDirectories(const ADirectory: string);
+    procedure ExerciseSQLDBCommit(const ATableFileName: string;
+      AExpectedMemberCount: Integer);
   published
     procedure PublishesAllowlistedEightFileFamily;
     procedure PrePublicationFailuresKeepSourceUnchanged;
@@ -51,7 +53,7 @@ uses
   DBParadoxFamilyJournal,
   DBParadoxPrimaryFamilyAdapter, DBParadoxRecordEncoder,
   DBParadoxTableFileBuilder, DBParadoxFileReader,
-  DBParadoxSecondaryFamilyAdapter;
+  DBParadoxSecondaryFamilyAdapter, DBParadoxFamilySnapshot;
 
 const
   EightFileMembers: array[0..7] of string = (
@@ -384,7 +386,7 @@ begin
   Result[$7D] := 2;
   NamesOffset := $78 + 3 * 2 + 4 + 3 * 4 + 261;
   WriteAscii(Result, NamesOffset, 'GroupKey');
-  WriteAscii(Result, NamesOffset, 'Sec Key');
+  WriteAscii(Result, NamesOffset, 'ID');
   WriteAscii(Result, NamesOffset, 'Hint');
   FieldMapEnd := NamesOffset + 3 * SizeOf(Word);
   WriteAscii(Result, FieldMapEnd, 'DBWINUS0');
@@ -509,6 +511,98 @@ begin
   begin
     FindClose(Search);
     Fail('Publication left a staging directory behind.');
+  end;
+end;
+
+procedure TTestDBParadoxFamilyPublisher.ExerciseSQLDBCommit(
+  const ATableFileName: string; AExpectedMemberCount: Integer);
+var
+  Connection: TDBParadoxConnection;
+  Transaction: TSQLTransaction;
+  Query: TSQLQuery;
+  Snapshot: TDBParadoxFamilySnapshot;
+  Indexes: TDBParadoxSecondaryFamilyIndexes;
+  RowIndex: Integer;
+  ExpectedIDs: array[0..2] of Integer = (2, 3, 4);
+  ExpectedGroups: array[0..2] of string = ('Gamma', 'Beta', 'Delta');
+  ExpectedSuffixes: array[0..2] of string = ('B', 'A', 'C');
+begin
+  Connection := TDBParadoxConnection.Create(nil);
+  Transaction := TSQLTransaction.Create(nil);
+  Query := TSQLQuery.Create(nil);
+  try
+    Connection.DatabaseName := ExtractFileDir(ATableFileName);
+    Connection.Connected := True;
+    Transaction.Database := Connection;
+    Transaction.Options := [stoExplicitStart];
+    Query.Database := Connection;
+    Query.Transaction := Transaction;
+
+    Transaction.StartTransaction;
+    Query.SQL.Text :=
+      'INSERT INTO Synthetic (ID, GroupKey, Suffix) VALUES (:NewID, :NewGroup, :NewSuffix)';
+    Query.ParamByName('NewID').AsInteger := 4;
+    Query.ParamByName('NewGroup').AsString := 'Delta';
+    Query.ParamByName('NewSuffix').AsString := 'C';
+    Query.ExecSQL;
+    CheckEquals(1, Query.RowsAffected);
+
+    Query.SQL.Text :=
+      'UPDATE Synthetic SET GroupKey = :NewGroup WHERE ID = :TargetID';
+    Query.ParamByName('NewGroup').AsString := 'Gamma';
+    Query.ParamByName('TargetID').AsInteger := 2;
+    Query.ExecSQL;
+    CheckEquals(1, Query.RowsAffected);
+
+    Query.SQL.Text := 'DELETE FROM Synthetic WHERE ID = :TargetID';
+    Query.ParamByName('TargetID').AsInteger := 1;
+    Query.ExecSQL;
+    CheckEquals(1, Query.RowsAffected);
+    Transaction.Commit;
+
+    Connection.Connected := False;
+    Connection.Connected := True;
+    Transaction.StartTransaction;
+    Query.SQL.Text :=
+      'SELECT ID, GroupKey, Suffix FROM Synthetic ORDER BY ID';
+    Query.Open;
+    try
+      RowIndex := 0;
+      while not Query.EOF do
+      begin
+        CheckTrue(RowIndex < Length(ExpectedIDs),
+          'The committed secondary-family table returned too many rows.');
+        CheckEquals(ExpectedIDs[RowIndex],
+          Query.FieldByName('ID').AsInteger);
+        CheckEquals(ExpectedGroups[RowIndex],
+          Query.FieldByName('GroupKey').AsString);
+        CheckEquals(ExpectedSuffixes[RowIndex],
+          Query.FieldByName('Suffix').AsString);
+        Inc(RowIndex);
+        Query.Next;
+      end;
+      CheckEquals(Length(ExpectedIDs), RowIndex);
+    finally
+      Query.Close;
+    end;
+    Transaction.Rollback;
+
+    Snapshot := TDBParadoxFamilySnapshot.Capture(ATableFileName);
+    try
+      CheckEquals(AExpectedMemberCount, Snapshot.MemberCount);
+      CheckTrue(Snapshot.MatchesCurrentFiles);
+      Indexes := Snapshot.CopySecondaryIndexes;
+      CheckEquals((AExpectedMemberCount - 2) div 2, Length(Indexes));
+      if AExpectedMemberCount = 8 then
+        CheckEquals('.X02', Indexes[2].DataExtension);
+    finally
+      Snapshot.Free;
+    end;
+    Connection.Connected := False;
+  finally
+    Query.Free;
+    Transaction.Free;
+    Connection.Free;
   end;
 end;
 
@@ -1742,6 +1836,8 @@ var
     ('Synthetic.DB', 'Synthetic.PX', 'Synthetic.XG0', 'Synthetic.YG0',
      'Synthetic.XG1', 'Synthetic.YG1');
   Found: Boolean;
+  Snapshot: TDBParadoxFamilySnapshot;
+  SnapshotIndexes: TDBParadoxSecondaryFamilyIndexes;
 begin
   Directory := NewScratchDirectory;
   TableFileName := IncludeTrailingPathDelimiter(Directory) + 'Synthetic.DB';
@@ -1816,6 +1912,20 @@ begin
       DatabaseTemplate, PrimaryTemplate, Fields, 0, Rows, Indexes);
     TDBParadoxFamilyPublisher.Publish(TableFileName, Builder, Validator);
 
+    Snapshot := TDBParadoxFamilySnapshot.Capture(TableFileName);
+    try
+      CheckEquals(6, Snapshot.MemberCount);
+      SnapshotIndexes := Snapshot.CopySecondaryIndexes;
+      CheckEquals(2, Length(SnapshotIndexes));
+      CheckEquals('.XG0', SnapshotIndexes[0].DataExtension);
+      CheckEquals('.YG0', SnapshotIndexes[0].IndexExtension);
+      CheckEquals('.XG1', SnapshotIndexes[1].DataExtension);
+      CheckEquals('.YG1', SnapshotIndexes[1].IndexExtension);
+      CheckTrue(Snapshot.MatchesCurrentFiles);
+    finally
+      Snapshot.Free;
+    end;
+
     ReadDBParadoxTable(TableFileName, ActualFields, ActualRows, RecordSize);
     CheckEquals(32, RecordSize);
     CheckEquals(3, Length(ActualFields));
@@ -1841,8 +1951,12 @@ begin
       IncludeTrailingPathDelimiter(Directory) + 'Synthetic.XG1')[4]);
     CheckEquals(7, LoadTestFileBytes(
       IncludeTrailingPathDelimiter(Directory) + 'Synthetic.YG1')[4]);
+    ExerciseSQLDBCommit(TableFileName, 6);
     BdeOutputDirectory := GetEnvironmentVariable(
-      'DBPARADOX_SECONDARY_PUBLISHER_BDE_OUTPUT_DIR');
+      'DBPARADOX_SQLDB_SECONDARY_BDE_OUTPUT_DIR');
+    if BdeOutputDirectory = '' then
+      BdeOutputDirectory := GetEnvironmentVariable(
+        'DBPARADOX_SECONDARY_PUBLISHER_BDE_OUTPUT_DIR');
     if BdeOutputDirectory <> '' then
     begin
       if DirectoryExists(BdeOutputDirectory) then
@@ -1887,6 +2001,8 @@ var
     ('Synthetic.DB', 'Synthetic.PX', 'Synthetic.XG0', 'Synthetic.YG0',
      'Synthetic.XG1', 'Synthetic.YG1', 'Synthetic.X02', 'Synthetic.Y02');
   Found: Boolean;
+  Snapshot: TDBParadoxFamilySnapshot;
+  SnapshotIndexes: TDBParadoxSecondaryFamilyIndexes;
 begin
   Directory := NewScratchDirectory;
   TableFileName := IncludeTrailingPathDelimiter(Directory) + 'Synthetic.DB';
@@ -1987,6 +2103,22 @@ begin
       DatabaseTemplate, PrimaryTemplate, Fields, 0, Rows, Indexes);
     TDBParadoxFamilyPublisher.Publish(TableFileName, Builder, Validator);
 
+    Snapshot := TDBParadoxFamilySnapshot.Capture(TableFileName);
+    try
+      CheckEquals(8, Snapshot.MemberCount);
+      SnapshotIndexes := Snapshot.CopySecondaryIndexes;
+      CheckEquals(3, Length(SnapshotIndexes));
+      CheckEquals('.XG0', SnapshotIndexes[0].DataExtension);
+      CheckEquals('.YG0', SnapshotIndexes[0].IndexExtension);
+      CheckEquals('.XG1', SnapshotIndexes[1].DataExtension);
+      CheckEquals('.YG1', SnapshotIndexes[1].IndexExtension);
+      CheckEquals('.X02', SnapshotIndexes[2].DataExtension);
+      CheckEquals('.Y02', SnapshotIndexes[2].IndexExtension);
+      CheckTrue(Snapshot.MatchesCurrentFiles);
+    finally
+      Snapshot.Free;
+    end;
+
     ReadDBParadoxTable(TableFileName, ActualFields, ActualRows, RecordSize);
     CheckEquals(32, RecordSize);
     CheckEquals(3, Length(ActualFields));
@@ -2008,8 +2140,12 @@ begin
       IncludeTrailingPathDelimiter(Directory) + 'Synthetic.X02')[4]);
     CheckEquals(4, LoadTestFileBytes(
       IncludeTrailingPathDelimiter(Directory) + 'Synthetic.Y02')[4]);
+    ExerciseSQLDBCommit(TableFileName, 8);
     BdeOutputDirectory := GetEnvironmentVariable(
-      'DBPARADOX_CLASSIC_PUBLISHER_BDE_OUTPUT_DIR');
+      'DBPARADOX_SQLDB_CLASSIC_BDE_OUTPUT_DIR');
+    if BdeOutputDirectory = '' then
+      BdeOutputDirectory := GetEnvironmentVariable(
+        'DBPARADOX_CLASSIC_PUBLISHER_BDE_OUTPUT_DIR');
     if BdeOutputDirectory <> '' then
     begin
       if DirectoryExists(BdeOutputDirectory) then

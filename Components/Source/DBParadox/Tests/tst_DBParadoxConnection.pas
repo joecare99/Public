@@ -20,12 +20,16 @@ type
     function BuildLongSemanticsFixture: TBytes;
     function BuildSQLQueryFixture: TBytes;
     function BuildUnsupportedFieldFixture: TBytes;
+    function WriteDMLFixture: string;
     function WriteInternalReaderFixture(const Data: TBytes;
       const TableFileName: string = 'Synthetic.DB'): string;
   protected
     procedure TearDown; override;
   published
     procedure ConnectDoesNotRequirePxlibRuntime;
+    procedure SQLDBTransactionExposesProviderHandle;
+    procedure SQLDBTransactionRejectsRetaining;
+    procedure SQLDBStagesDMLAndExposesChangesWithinTransaction;
     procedure SQLQueryReadsInternalFixtureWithoutPxlib;
     procedure SQLQueryRecoversPreparedFamilyBeforeReading;
     procedure SQLQueryReadsBDEAuthoredLiveFixtureWithoutPxlib;
@@ -47,7 +51,40 @@ type
 implementation
 
 uses
-  Classes, DBParadoxFamilyJournal, DBParadoxFamilyPublisher;
+  Classes, DBParadoxFamilyJournal, DBParadoxFamilyLock,
+  DBParadoxFamilyPublisher,
+  DBParadoxRecordEncoder, DBParadoxTableFileBuilder;
+
+type
+  TDBParadoxTestPublicationFault = class(TInterfacedObject,
+    IDBParadoxPublicationFaultInjector)
+  private
+    FFirstEvent: TDBParadoxPublicationEvent;
+    FFirstMember: Integer;
+    FSecondEvent: TDBParadoxPublicationEvent;
+    FSecondMember: Integer;
+    FHasSecondEvent: Boolean;
+    FFirstRaised: Boolean;
+    FSecondRaised: Boolean;
+  public
+    constructor Create(AFirstEvent: TDBParadoxPublicationEvent;
+      AFirstMember: Integer);
+    constructor Create(AFirstEvent: TDBParadoxPublicationEvent;
+      AFirstMember: Integer; ASecondEvent: TDBParadoxPublicationEvent;
+      ASecondMember: Integer);
+    procedure Checkpoint(AEvent: TDBParadoxPublicationEvent;
+      AMemberIndex: Integer);
+  end;
+
+  TDBParadoxTestConnection = class(TDBParadoxConnection)
+  public
+    FaultInjector: IDBParadoxPublicationFaultInjector;
+  protected
+    procedure PublishFamily(const ATableFileName: string;
+      const ABuilder: IDBParadoxFamilyStageBuilder;
+      const AValidator: IDBParadoxFamilyValidator;
+      const AExpectedMembers: TDBParadoxExpectedFamilyMembers); override;
+  end;
 
 procedure WriteTestBytesFile(const AFileName: string; const AData: TBytes);
 var
@@ -60,6 +97,110 @@ begin
   finally
     Stream.Free;
   end;
+end;
+
+function ReadTestBytesFile(const AFileName: string): TBytes;
+var
+  Stream: TFileStream;
+begin
+  Result := nil;
+  Stream := TFileStream.Create(AFileName, fmOpenRead or fmShareDenyNone);
+  try
+    SetLength(Result, Stream.Size);
+    if Length(Result) > 0 then
+      Stream.ReadBuffer(Result[0], Length(Result));
+  finally
+    Stream.Free;
+  end;
+end;
+
+procedure CopyTestFile(const ASourceFileName, ADestinationFileName: string);
+var
+  Source, Destination: TFileStream;
+begin
+  Source := TFileStream.Create(ASourceFileName, fmOpenRead or fmShareDenyNone);
+  try
+    Destination := TFileStream.Create(ADestinationFileName, fmCreate);
+    try
+      Destination.CopyFrom(Source, 0);
+    finally
+      Destination.Free;
+    end;
+  finally
+    Source.Free;
+  end;
+end;
+
+procedure ExportPrimaryBDEOutput(const ATableFileName, AEnvironmentVariable,
+  APurpose: string);
+const
+  Members: array[0..1] of string = ('.DB', '.PX');
+var
+  OutputDirectory: string;
+  MemberIndex: Integer;
+begin
+  OutputDirectory := GetEnvironmentVariable(AEnvironmentVariable);
+  if OutputDirectory = '' then
+    Exit;
+  if DirectoryExists(OutputDirectory) then
+    raise Exception.CreateFmt(
+      'The requested SQLDB %s BDE output directory already exists: "%s".',
+      [APurpose, OutputDirectory]);
+  if not ForceDirectories(OutputDirectory) then
+    raise Exception.CreateFmt(
+      'Cannot create SQLDB %s BDE output directory "%s".',
+      [APurpose, OutputDirectory]);
+  for MemberIndex := Low(Members) to High(Members) do
+    CopyTestFile(ChangeFileExt(ATableFileName, Members[MemberIndex]),
+      IncludeTrailingPathDelimiter(OutputDirectory) +
+      'Writable' + Members[MemberIndex]);
+end;
+
+constructor TDBParadoxTestPublicationFault.Create(
+  AFirstEvent: TDBParadoxPublicationEvent; AFirstMember: Integer);
+begin
+  inherited Create;
+  FFirstEvent := AFirstEvent;
+  FFirstMember := AFirstMember;
+end;
+
+constructor TDBParadoxTestPublicationFault.Create(
+  AFirstEvent: TDBParadoxPublicationEvent; AFirstMember: Integer;
+  ASecondEvent: TDBParadoxPublicationEvent; ASecondMember: Integer);
+begin
+  inherited Create;
+  FFirstEvent := AFirstEvent;
+  FFirstMember := AFirstMember;
+  FSecondEvent := ASecondEvent;
+  FSecondMember := ASecondMember;
+  FHasSecondEvent := True;
+end;
+
+procedure TDBParadoxTestPublicationFault.Checkpoint(
+  AEvent: TDBParadoxPublicationEvent; AMemberIndex: Integer);
+begin
+  if not FFirstRaised and (AEvent = FFirstEvent) and
+    (AMemberIndex = FFirstMember) then
+  begin
+    FFirstRaised := True;
+    raise Exception.Create('Injected DBParadox publication fault.');
+  end;
+  if FHasSecondEvent and FFirstRaised and not FSecondRaised and
+    (AEvent = FSecondEvent) and (AMemberIndex = FSecondMember) then
+  begin
+    FSecondRaised := True;
+    raise Exception.Create('Injected DBParadox compensation fault.');
+  end;
+end;
+
+procedure TDBParadoxTestConnection.PublishFamily(
+  const ATableFileName: string;
+  const ABuilder: IDBParadoxFamilyStageBuilder;
+  const AValidator: IDBParadoxFamilyValidator;
+  const AExpectedMembers: TDBParadoxExpectedFamilyMembers);
+begin
+  TDBParadoxFamilyPublisher.Publish(ATableFileName, ABuilder, AValidator,
+    AExpectedMembers, FaultInjector);
 end;
 
 procedure WriteTestTextFile(const AFileName, AValue: string);
@@ -303,6 +444,84 @@ begin
   Result[BlockOffset + 7] := 1;
 end;
 
+function TTestDBParadoxConnection.WriteDMLFixture: string;
+var
+  Directory, FileName, BdeTemplateDirectory: string;
+  DatabaseTemplate, PrimaryTemplate: TBytes;
+  Fields: TDBParadoxRecordFields;
+  Rows: TDBParadoxTableRows;
+  Built: TDBParadoxBuiltFiles;
+  TableNameOffset, FieldNamesOffset: SizeInt;
+begin
+  Directory := IncludeTrailingPathDelimiter(GetTempDir(False)) +
+    'DBParadoxDML-' + IntToStr(GetTickCount64);
+  if not CreateDir(Directory) then
+    raise Exception.CreateFmt('Cannot create DML fixture directory "%s".',
+      [Directory]);
+  FFixtureDirectoryToCleanup := Directory;
+  FileName := IncludeTrailingPathDelimiter(Directory) + 'Writable.DB';
+
+  BdeTemplateDirectory := GetEnvironmentVariable(
+    'DBPARADOX_SQLDB_PRIMARY_BDE_TEMPLATE_DIR');
+  if BdeTemplateDirectory <> '' then
+  begin
+    DatabaseTemplate := ReadTestBytesFile(
+      IncludeTrailingPathDelimiter(BdeTemplateDirectory) + 'Writable.DB');
+    PrimaryTemplate := ReadTestBytesFile(
+      IncludeTrailingPathDelimiter(BdeTemplateDirectory) + 'Writable.PX');
+  end
+  else
+  begin
+    DatabaseTemplate := nil;
+    SetLength(DatabaseTemplate, $800);
+    WriteUInt16LE(DatabaseTemplate, 0, 8);
+    WriteUInt16LE(DatabaseTemplate, 2, $800);
+    DatabaseTemplate[4] := 0;
+    DatabaseTemplate[5] := 2;
+    WriteUInt16LE(DatabaseTemplate, $21, 2);
+    WriteUInt16LE(DatabaseTemplate, $23, 1);
+    DatabaseTemplate[$39] := $0C;
+    DatabaseTemplate[$78] := $04;
+    DatabaseTemplate[$79] := 4;
+    DatabaseTemplate[$7A] := $01;
+    DatabaseTemplate[$7B] := 4;
+    TableNameOffset := $78 + 2 * 2 + 4 + 2 * 4;
+    Move('Writable'#0, DatabaseTemplate[TableNameOffset],
+      Length('Writable') + 1);
+    FieldNamesOffset := TableNameOffset + 261;
+    Move('ID'#0, DatabaseTemplate[FieldNamesOffset], Length('ID') + 1);
+    Move('Tag'#0, DatabaseTemplate[FieldNamesOffset + Length('ID') + 1],
+      Length('Tag') + 1);
+
+    PrimaryTemplate := nil;
+    SetLength(PrimaryTemplate, $800);
+    WriteUInt16LE(PrimaryTemplate, 0, 10);
+    WriteUInt16LE(PrimaryTemplate, 2, $800);
+    PrimaryTemplate[4] := 1;
+    PrimaryTemplate[5] := 2;
+    WriteUInt16LE(PrimaryTemplate, $21, 1);
+    PrimaryTemplate[$58] := $04;
+    PrimaryTemplate[$59] := 4;
+  end;
+
+  SetLength(Fields, 2);
+  Fields[0].Name := 'ID';
+  Fields[0].TypeCode := $04;
+  Fields[0].Length := 4;
+  Fields[1].Name := 'Tag';
+  Fields[1].TypeCode := $01;
+  Fields[1].Length := 4;
+  SetLength(Rows, 2);
+  Rows[0] := ['1', 'A'];
+  Rows[1] := ['2', 'B'];
+  Built := BuildDBParadoxTableFiles(DatabaseTemplate, PrimaryTemplate,
+    Fields, 0, Rows);
+  WriteTestBytesFile(FileName, Built.DatabaseFile);
+  WriteTestBytesFile(ChangeFileExt(FileName, '.PX'),
+    Built.PrimaryIndexFile);
+  Result := FileName;
+end;
+
 function TTestDBParadoxConnection.ConfigureConnection(
   Connection: TDBParadoxConnection; Transaction: TSQLTransaction): Boolean;
 var
@@ -329,6 +548,12 @@ begin
   begin
     DeleteFile(IncludeTrailingPathDelimiter(FFixtureDirectoryToCleanup) +
       'Table13.DB');
+    DeleteFile(IncludeTrailingPathDelimiter(FFixtureDirectoryToCleanup) +
+      'Writable.DB');
+    DeleteFile(IncludeTrailingPathDelimiter(FFixtureDirectoryToCleanup) +
+      'Writable.PX');
+    DeleteFile(IncludeTrailingPathDelimiter(FFixtureDirectoryToCleanup) +
+      'Writable.DB.dbparadox.lock');
     DeleteFile(IncludeTrailingPathDelimiter(FFixtureDirectoryToCleanup) +
       'Table13.DB.dbparadox.lock');
     RemoveDir(FFixtureDirectoryToCleanup);
@@ -378,6 +603,328 @@ begin
     Connection.Connected := False;
     CheckFalse(Connection.Connected);
   finally
+    Connection.Free;
+  end;
+end;
+
+procedure TTestDBParadoxConnection.SQLDBTransactionExposesProviderHandle;
+var
+  Connection: TDBParadoxConnection;
+  Transaction: TSQLTransaction;
+begin
+  Connection := TDBParadoxConnection.Create(nil);
+  Transaction := TSQLTransaction.Create(nil);
+  try
+    Connection.DatabaseName := GetCurrentDir;
+    Connection.Connected := True;
+    Transaction.Database := Connection;
+    Transaction.StartTransaction;
+    try
+      CheckTrue(Transaction.Handle <> nil);
+    finally
+      Transaction.Rollback;
+    end;
+  finally
+    Transaction.Free;
+    Connection.Free;
+  end;
+end;
+
+procedure TTestDBParadoxConnection.SQLDBTransactionRejectsRetaining;
+var
+  Connection: TDBParadoxConnection;
+  Transaction: TSQLTransaction;
+begin
+  Connection := TDBParadoxConnection.Create(nil);
+  Transaction := TSQLTransaction.Create(nil);
+  try
+    Connection.DatabaseName := GetCurrentDir;
+    Connection.Connected := True;
+    Transaction.Database := Connection;
+    Transaction.StartTransaction;
+    try
+      try
+        Transaction.CommitRetaining;
+        Fail('Expected DBParadox to reject commit-retaining.');
+      except
+        on E: EDBParadoxUnsupportedFeature do ;
+      end;
+      CheckTrue(Transaction.Active);
+
+      try
+        Transaction.RollbackRetaining;
+        Fail('Expected DBParadox to reject rollback-retaining.');
+      except
+        on E: EDBParadoxUnsupportedFeature do ;
+      end;
+      CheckTrue(Transaction.Active);
+    finally
+      Transaction.Rollback;
+    end;
+  finally
+    Transaction.Free;
+    Connection.Free;
+  end;
+end;
+
+procedure TTestDBParadoxConnection.
+  SQLDBStagesDMLAndExposesChangesWithinTransaction;
+var
+  Connection: TDBParadoxTestConnection;
+  Transaction: TSQLTransaction;
+  Query: TSQLQuery;
+  TableFileName: string;
+  Fields: TDBParadoxFileFields;
+  Rows: TDBParadoxFileRows;
+  RecordSize: Integer;
+  SeenRows: Integer;
+  FamilyLock: TDBParadoxFamilyLock;
+  LockedIndex: TFileStream;
+begin
+  TableFileName := WriteDMLFixture;
+  Connection := TDBParadoxTestConnection.Create(nil);
+  Transaction := TSQLTransaction.Create(nil);
+  Query := TSQLQuery.Create(nil);
+  try
+    Connection.DatabaseName := ExtractFileDir(TableFileName);
+    Connection.Connected := True;
+    Transaction.Database := Connection;
+    Query.Database := Connection;
+    Query.Transaction := Transaction;
+
+    Query.SQL.Text := 'INSERT INTO Writable (ID, Tag) VALUES (:NewID, :NewTag)';
+    Query.ParamByName('NewID').AsInteger := 3;
+    Query.ParamByName('NewTag').AsString := 'C';
+    try
+      Query.ExecSQL;
+      Fail('DML must reject SQLDB implicit transaction startup.');
+    except
+      on E: EDBParadoxProviderError do ;
+    end;
+    if Transaction.Active then
+      Transaction.Rollback;
+
+    Transaction.Options := [stoExplicitStart];
+    Transaction.StartTransaction;
+
+    Query.SQL.Text := 'INSERT INTO Writable (ID, Tag) VALUES (:NewID, :NewTag)';
+    Query.ParamByName('NewID').AsInteger := 3;
+    Query.ParamByName('NewTag').AsString := 'C';
+    Query.ExecSQL;
+    CheckEquals(1, Query.RowsAffected);
+
+    Query.SQL.Text := 'UPDATE Writable SET Tag = :NewTag WHERE ID = :TargetID';
+    Query.ParamByName('NewTag').AsString := 'BB';
+    Query.ParamByName('TargetID').AsInteger := 2;
+    Query.ExecSQL;
+    CheckEquals(1, Query.RowsAffected);
+
+    Query.SQL.Text := 'DELETE FROM Writable WHERE ID = :TargetID';
+    Query.ParamByName('TargetID').AsInteger := 1;
+    Query.ExecSQL;
+    CheckEquals(1, Query.RowsAffected);
+
+    Query.SQL.Text := 'SELECT ID, Tag FROM Writable ORDER BY ID';
+    Query.Open;
+    SeenRows := 0;
+    while not Query.EOF do
+    begin
+      Inc(SeenRows);
+      if SeenRows = 1 then
+      begin
+        CheckEquals(2, Query.FieldByName('ID').AsInteger);
+        CheckEquals('BB', Query.FieldByName('Tag').AsString);
+      end
+      else if SeenRows = 2 then
+      begin
+        CheckEquals(3, Query.FieldByName('ID').AsInteger);
+        CheckEquals('C', Query.FieldByName('Tag').AsString);
+      end;
+      Query.Next;
+    end;
+    CheckEquals(2, SeenRows);
+    Query.Close;
+
+    FamilyLock := TDBParadoxFamilyLock.Create(TableFileName);
+    try
+      try
+        Transaction.Commit;
+        Fail('Commit must fail while another writer holds the family lock.');
+      except
+        on E: EDBParadoxFamilyLockError do ;
+      end;
+      CheckTrue(Transaction.Active,
+        'A publication lock failure must leave the SQLDB transaction active.');
+    finally
+      FamilyLock.Free;
+    end;
+
+    LockedIndex := TFileStream.Create(ChangeFileExt(TableFileName, '.PX'),
+      fmOpenRead or fmShareDenyWrite);
+    try
+      try
+        Transaction.Commit;
+        Fail('Commit must compensate when replacing a locked family member.');
+      except
+        on E: EDBParadoxPublicationError do ;
+      end;
+      CheckTrue(Transaction.Active,
+        'A compensated publication failure must preserve the active transaction.');
+      ReadDBParadoxTable(TableFileName, Fields, Rows, RecordSize);
+      CheckEquals(2, Length(Rows),
+        'The original database image must be restored after partial publication.');
+    finally
+      LockedIndex.Free;
+    end;
+
+    Transaction.Commit;
+    CheckFalse(Transaction.Active);
+
+    Connection.Connected := False;
+    ExportPrimaryBDEOutput(TableFileName,
+      'DBPARADOX_SQLDB_PRIMARY_BDE_OUTPUT_DIR', 'primary');
+    Connection.Connected := True;
+
+    Transaction.StartTransaction;
+    Query.SQL.Text := 'SELECT ID, Tag FROM Writable ORDER BY ID';
+    Query.Open;
+    SeenRows := 0;
+    while not Query.EOF do
+    begin
+      Inc(SeenRows);
+      if SeenRows = 1 then
+      begin
+        CheckEquals(2, Query.FieldByName('ID').AsInteger);
+        CheckEquals('BB', Query.FieldByName('Tag').AsString);
+      end
+      else if SeenRows = 2 then
+      begin
+        CheckEquals(3, Query.FieldByName('ID').AsInteger);
+        CheckEquals('C', Query.FieldByName('Tag').AsString);
+      end;
+      Query.Next;
+    end;
+    CheckEquals(2, SeenRows);
+    Query.Close;
+    Transaction.Rollback;
+
+    Transaction.StartTransaction;
+    Query.SQL.Text := 'INSERT INTO Writable (ID, Tag) VALUES (:NewID, :NewTag)';
+    Query.ParamByName('NewID').AsInteger := 4;
+    Query.ParamByName('NewTag').AsString := 'D';
+    Query.ExecSQL;
+    Connection.FaultInjector :=
+      TDBParadoxTestPublicationFault.Create(dpeBeforeCleanup, -1);
+    try
+      try
+        Transaction.Commit;
+        Fail('Expected SQLDB Commit to report post-publication cleanup failure.');
+      except
+        on E: EDBParadoxPublishedCleanupError do ;
+      end;
+    finally
+      Connection.FaultInjector := nil;
+    end;
+    CheckTrue(Transaction.Active,
+      'A published-cleanup error must retain the pending SQLDB outcome.');
+    try
+      Transaction.Rollback;
+      Fail('Rollback must not misreport a published family as rolled back.');
+    except
+      on E: EDBParadoxProviderError do ;
+    end;
+    Transaction.Commit;
+    CheckFalse(Transaction.Active,
+      'A retry must recover and finalize the already-published family.');
+
+    Connection.Connected := False;
+    ExportPrimaryBDEOutput(TableFileName,
+      'DBPARADOX_SQLDB_CLEANUP_BDE_OUTPUT_DIR', 'cleanup-recovery');
+    Connection.Connected := True;
+    Transaction.StartTransaction;
+    Query.SQL.Text := 'UPDATE Writable SET Tag = :NewTag WHERE ID = :TargetID';
+    Query.ParamByName('NewTag').AsString := 'X';
+    Query.ParamByName('TargetID').AsInteger := 2;
+    Query.ExecSQL;
+    Connection.FaultInjector := TDBParadoxTestPublicationFault.Create(
+      dpeAfterReplacement, 0, dpeBeforeCompensation, 0);
+    try
+      try
+        Transaction.Commit;
+        Fail('Expected SQLDB Commit to report an uncertain publication.');
+      except
+        on E: EDBParadoxUncertainPublicationError do ;
+      end;
+    finally
+      Connection.FaultInjector := nil;
+    end;
+    CheckTrue(Transaction.Active,
+      'An uncertain publication must not silently end the SQLDB transaction.');
+    Query.SQL.Text := 'SELECT ID, Tag FROM Writable ORDER BY ID';
+    try
+      Query.Open;
+      Fail('SELECT must remain blocked while publication is uncertain.');
+    except
+      on E: EDBParadoxProviderError do ;
+    end;
+    FamilyLock := TDBParadoxFamilyLock.Create(TableFileName);
+    try
+      try
+        Transaction.Rollback;
+        Fail('Recovery must not finish while another writer holds the family lock.');
+      except
+        on E: EDBParadoxFamilyLockError do ;
+      end;
+      CheckTrue(Transaction.Active,
+        'A failed recovery must leave the uncertain transaction active.');
+    finally
+      FamilyLock.Free;
+    end;
+    Transaction.Rollback;
+    CheckFalse(Transaction.Active,
+      'Rollback may end an uncertain transaction only after journal recovery verifies the old family.');
+
+    Connection.Connected := False;
+    ExportPrimaryBDEOutput(TableFileName,
+      'DBPARADOX_SQLDB_UNCERTAIN_BDE_OUTPUT_DIR', 'uncertain-recovery');
+    Connection.Connected := True;
+    Transaction.StartTransaction;
+    Query.SQL.Text := 'SELECT ID, Tag FROM Writable ORDER BY ID';
+    Query.Open;
+    try
+      CheckFalse(Query.EOF);
+      CheckEquals(2, Query.FieldByName('ID').AsInteger);
+      CheckEquals('BB', Query.FieldByName('Tag').AsString);
+      Query.Next;
+      CheckFalse(Query.EOF);
+      CheckEquals(3, Query.FieldByName('ID').AsInteger);
+      CheckEquals('C', Query.FieldByName('Tag').AsString);
+      Query.Next;
+      CheckFalse(Query.EOF);
+      CheckEquals(4, Query.FieldByName('ID').AsInteger);
+      CheckEquals('D', Query.FieldByName('Tag').AsString);
+      Query.Next;
+      CheckTrue(Query.EOF);
+    finally
+      Query.Close;
+    end;
+    Transaction.Rollback;
+
+    Transaction.Options := [stoExplicitStart];
+    Transaction.StartTransaction;
+    Query.SQL.Text := 'INSERT INTO Writable (ID, Tag) VALUES (:NewID, :NewTag)';
+    Query.ParamByName('NewID').AsInteger := 5;
+    Query.ParamByName('NewTag').AsString := 'E';
+    Query.ExecSQL;
+    CheckEquals(1, Query.RowsAffected);
+    Transaction.Rollback;
+
+    ReadDBParadoxTable(TableFileName, Fields, Rows, RecordSize);
+    CheckEquals(3, Length(Rows));
+    CheckEquals(8, RecordSize);
+  finally
+    Query.Free;
+    Transaction.Free;
     Connection.Free;
   end;
 end;

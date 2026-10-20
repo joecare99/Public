@@ -9,6 +9,7 @@ uses
   tst_DBParadoxDMLExecutor,
   tst_DBParadoxFamilyPublisher,
   tst_DBParadoxFamilyLock,
+  tst_DBParadoxFamilySnapshot,
   tst_DBParadoxFileReader,
   tst_DBParadoxIndexFileBuilder,
   tst_DBParadoxPrimaryKeyDiscovery,

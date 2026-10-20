@@ -26,6 +26,14 @@ type
 
   TDBParadoxFamilyMembers = array of string;
 
+  TDBParadoxExpectedFamilyMember = record
+    Extension: string;
+    Data: TBytes;
+  end;
+
+  TDBParadoxExpectedFamilyMembers = array of
+    TDBParadoxExpectedFamilyMember;
+
   TDBParadoxPublicationEvent = (
     dpeStageDirectoryCreated,
     dpeBeforeImageCopied,
@@ -65,11 +73,23 @@ type
   end;
 
   TDBParadoxFamilyPublisher = class
+  private
+    class procedure PublishCore(const ATableFileName: string;
+      const ABuilder: IDBParadoxFamilyStageBuilder;
+      const AValidator: IDBParadoxFamilyValidator;
+      const AExpectedMembers: TDBParadoxExpectedFamilyMembers;
+      ARequireExpectedMembers: Boolean;
+      const AFaultInjector: IDBParadoxPublicationFaultInjector);
   public
     class procedure Publish(const ATableFileName: string;
       const ABuilder: IDBParadoxFamilyStageBuilder;
       const AValidator: IDBParadoxFamilyValidator;
-      const AFaultInjector: IDBParadoxPublicationFaultInjector = nil);
+      const AFaultInjector: IDBParadoxPublicationFaultInjector = nil); overload;
+    class procedure Publish(const ATableFileName: string;
+      const ABuilder: IDBParadoxFamilyStageBuilder;
+      const AValidator: IDBParadoxFamilyValidator;
+      const AExpectedMembers: TDBParadoxExpectedFamilyMembers;
+      const AFaultInjector: IDBParadoxPublicationFaultInjector = nil); overload;
   end;
 
 implementation
@@ -275,6 +295,69 @@ begin
   end;
 end;
 
+function FileMatchesBytes(const AFileName: string;
+  const AExpected: TBytes): Boolean;
+var
+  Stream: TFileStream;
+  Actual: TBytes;
+begin
+  Stream := TFileStream.Create(AFileName, fmOpenRead or fmShareDenyNone);
+  try
+    if Stream.Size <> Length(AExpected) then
+      Exit(False);
+    SetLength(Actual, Length(AExpected));
+    if Length(Actual) > 0 then
+      Stream.ReadBuffer(Actual[0], Length(Actual));
+    Result := (Length(Actual) = 0) or
+      (CompareByte(Actual[0], AExpected[0], Length(Actual)) = 0);
+  finally
+    Stream.Free;
+  end;
+end;
+
+function ExpectedMemberExtensions(
+  const AExpectedMembers: TDBParadoxExpectedFamilyMembers):
+  TDBParadoxFamilyMembers;
+var
+  Index: SizeInt;
+begin
+  Result := nil;
+  SetLength(Result, Length(AExpectedMembers));
+  for Index := 0 to High(AExpectedMembers) do
+    Result[Index] := AExpectedMembers[Index].Extension;
+end;
+
+procedure CheckExpectedSnapshot(const AParentDirectory, ABaseName: string;
+  const AActualMembers: TDBParadoxFamilyMembers;
+  const AExpectedMembers: TDBParadoxExpectedFamilyMembers);
+var
+  Index: SizeInt;
+  CurrentPath: string;
+begin
+  if Length(AExpectedMembers) = 0 then
+    raise EDBParadoxPublicationError.Create(
+      'An expected family snapshot cannot be empty.');
+  if not MemberSetsEqual(AActualMembers,
+    ExpectedMemberExtensions(AExpectedMembers)) then
+    raise EDBParadoxPublicationError.Create(
+      'The live table family membership differs from the transaction snapshot.');
+  for Index := 0 to High(AExpectedMembers) do
+  begin
+    if AExpectedMembers[Index].Extension = '' then
+      raise EDBParadoxPublicationError.Create(
+        'An expected snapshot member has an invalid extension.');
+    if AExpectedMembers[Index].Extension[1] <> '.' then
+      raise EDBParadoxPublicationError.Create(
+        'An expected snapshot member has an invalid extension.');
+    CurrentPath := IncludeTrailingPathDelimiter(AParentDirectory) +
+      ABaseName + AExpectedMembers[Index].Extension;
+    if not FileMatchesBytes(CurrentPath, AExpectedMembers[Index].Data) then
+      raise EDBParadoxPublicationError.CreateFmt(
+        'Source member "%s" differs from the transaction snapshot.',
+        [AExpectedMembers[Index].Extension]);
+  end;
+end;
+
 procedure ReplaceFileStrict(const AReplacement, ATarget: string);
 var
   ErrorCode: Integer;
@@ -346,6 +429,32 @@ class procedure TDBParadoxFamilyPublisher.Publish(
   const AValidator: IDBParadoxFamilyValidator;
   const AFaultInjector: IDBParadoxPublicationFaultInjector);
 var
+  NoExpectedMembers: TDBParadoxExpectedFamilyMembers;
+begin
+  NoExpectedMembers := nil;
+  PublishCore(ATableFileName, ABuilder, AValidator, NoExpectedMembers,
+    False, AFaultInjector);
+end;
+
+class procedure TDBParadoxFamilyPublisher.Publish(
+  const ATableFileName: string;
+  const ABuilder: IDBParadoxFamilyStageBuilder;
+  const AValidator: IDBParadoxFamilyValidator;
+  const AExpectedMembers: TDBParadoxExpectedFamilyMembers;
+  const AFaultInjector: IDBParadoxPublicationFaultInjector);
+begin
+  PublishCore(ATableFileName, ABuilder, AValidator, AExpectedMembers,
+    True, AFaultInjector);
+end;
+
+class procedure TDBParadoxFamilyPublisher.PublishCore(
+  const ATableFileName: string;
+  const ABuilder: IDBParadoxFamilyStageBuilder;
+  const AValidator: IDBParadoxFamilyValidator;
+  const AExpectedMembers: TDBParadoxExpectedFamilyMembers;
+  ARequireExpectedMembers: Boolean;
+  const AFaultInjector: IDBParadoxPublicationFaultInjector);
+var
   TablePath, ParentDirectory, BaseName, StageDirectory: string;
   Members: TDBParadoxFamilyMembers;
   Lock: TDBParadoxFamilyLock;
@@ -378,6 +487,9 @@ begin
   try
     TDBParadoxFamilyJournal.RecoverWhileLocked(TablePath);
     Members := DiscoverFamily(ParentDirectory, BaseName, TablePath);
+    if ARequireExpectedMembers then
+      CheckExpectedSnapshot(ParentDirectory, BaseName, Members,
+        AExpectedMembers);
     StageDirectory := NewStageDirectory(ParentDirectory, BaseName);
     Notify(AFaultInjector, dpeStageDirectoryCreated, -1);
     BeforeDirectory := IncludeTrailingPathDelimiter(StageDirectory) +

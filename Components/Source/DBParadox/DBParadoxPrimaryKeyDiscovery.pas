@@ -15,7 +15,11 @@ type
 function DiscoverDBParadoxPrimaryKeyFieldIndex(
   const Fields: TDBParadoxFileFields; const Rows: TDBParadoxFileRows;
   PrimaryKeyFieldCount: SizeInt;
-  const PrimaryIndexFileName: string): SizeInt;
+  const PrimaryIndexFileName: string): SizeInt; overload;
+function DiscoverDBParadoxPrimaryKeyFieldIndex(
+  const Fields: TDBParadoxFileFields; const Rows: TDBParadoxFileRows;
+  PrimaryKeyFieldCount: SizeInt;
+  const PrimaryIndexFileData: TBytes): SizeInt; overload;
 
 implementation
 
@@ -61,6 +65,7 @@ type
     KeyFieldType: Byte;
     KeyFieldLength: SizeInt;
     procedure ReadFile(const FileName: string);
+    procedure ReadData(const Data: TBytes);
     property Entries: TPrimaryIndexEntries read FEntries;
   end;
 
@@ -238,18 +243,9 @@ end;
 procedure TPrimaryIndexReader.ReadFile(const FileName: string);
 var
   Stream: TFileStream;
-  RootBlock: SizeInt;
-  Encryption: Cardinal;
-  RootKey: TBytes;
-  TotalRecordCount: Int64;
+  Data: TBytes;
 begin
-  FData := nil;
-  FEntries := nil;
-  FVisitedBlocks := nil;
-  FHasPreviousKey := False;
-  FIndexRecordCount := 0;
-  KeyFieldType := 0;
-  KeyFieldLength := 0;
+  Data := nil;
   Stream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyNone);
   try
     if Stream.Size < $5A then
@@ -260,11 +256,31 @@ begin
       raise EDBParadoxPrimaryKeyDiscoveryError.Create(
         'The primary-index file exceeds the supported in-memory size.');
     {$ENDIF}
-    SetLength(FData, SizeInt(Stream.Size));
-    Stream.ReadBuffer(FData[0], Length(FData));
+    SetLength(Data, SizeInt(Stream.Size));
+    Stream.ReadBuffer(Data[0], Length(Data));
   finally
     Stream.Free;
   end;
+  ReadData(Data);
+end;
+
+procedure TPrimaryIndexReader.ReadData(const Data: TBytes);
+var
+  RootBlock: SizeInt;
+  Encryption: Cardinal;
+  RootKey: TBytes;
+  TotalRecordCount: Int64;
+begin
+  FData := Copy(Data, 0, Length(Data));
+  FEntries := nil;
+  FVisitedBlocks := nil;
+  FHasPreviousKey := False;
+  FIndexRecordCount := 0;
+  KeyFieldType := 0;
+  KeyFieldLength := 0;
+  if Length(FData) < $5A then
+    raise EDBParadoxPrimaryKeyDiscoveryError.Create(
+      'The primary-index file has an unsupported size.');
 
   if FData[4] <> PrimaryIndexFileType then
     raise EDBParadoxUnsupportedPrimaryIndex.Create(
@@ -427,6 +443,37 @@ begin
     Reader.ReadFile(PrimaryIndexFileName);
     Entries := Reader.Entries;
     { BDE and pxlib map the DB primary-key count to the leading fields. }
+    if (Fields[0].FieldType <> Reader.KeyFieldType) or
+      (Fields[0].FieldLength <> Reader.KeyFieldLength) or
+      not FieldMatchesEntries(Fields[0], Rows, Entries) then
+      raise EDBParadoxPrimaryKeyDiscoveryError.Create(
+        'The primary-index descriptor or block keys do not match the leading DB field.');
+    Result := 0;
+  finally
+    Reader.Free;
+  end;
+end;
+
+function DiscoverDBParadoxPrimaryKeyFieldIndex(
+  const Fields: TDBParadoxFileFields; const Rows: TDBParadoxFileRows;
+  PrimaryKeyFieldCount: SizeInt;
+  const PrimaryIndexFileData: TBytes): SizeInt;
+var
+  Reader: TPrimaryIndexReader;
+  Entries: TPrimaryIndexEntries;
+begin
+  if Length(Fields) = 0 then
+    raise EDBParadoxPrimaryKeyDiscoveryError.Create(
+      'The table schema has no fields.');
+  if PrimaryKeyFieldCount <> 1 then
+    raise EDBParadoxUnsupportedPrimaryIndex.CreateFmt(
+      'The first DML slice supports one primary-key field; the DB header declares %d.',
+      [PrimaryKeyFieldCount]);
+
+  Reader := TPrimaryIndexReader.Create;
+  try
+    Reader.ReadData(PrimaryIndexFileData);
+    Entries := Reader.Entries;
     if (Fields[0].FieldType <> Reader.KeyFieldType) or
       (Fields[0].FieldLength <> Reader.KeyFieldLength) or
       not FieldMatchesEntries(Fields[0], Rows, Entries) then

@@ -5,7 +5,7 @@ unit DBParadoxConnection;
 interface
 
 uses
-  Classes, DB, BufDataset, SQLDB;
+  Classes, DB, BufDataset, SQLDB, DBParadoxFamilyPublisher;
 
 type
   EDBParadoxProviderError = class(EDatabaseError);
@@ -42,8 +42,13 @@ type
     procedure FreeFldBuffers(Cursor: TSQLCursor); override;
 
     function GetTransactionHandle(AHandle: TSQLHandle): Pointer; override;
+    function RowsAffected(Cursor: TSQLCursor): TRowsCount; override;
     function Commit(AHandle: TSQLHandle): Boolean; override;
     function RollBack(AHandle: TSQLHandle): Boolean; override;
+    procedure PublishFamily(const ATableFileName: string;
+      const ABuilder: IDBParadoxFamilyStageBuilder;
+      const AValidator: IDBParadoxFamilyValidator;
+      const AExpectedMembers: TDBParadoxExpectedFamilyMembers); virtual;
     function StartDBTransaction(AHandle: TSQLHandle;
       AParams: string): Boolean; override;
     procedure CommitRetaining(AHandle: TSQLHandle); override;
@@ -56,13 +61,23 @@ implementation
 
 uses
   SysUtils, DBParadoxSQLParser, DBParadoxFileReader,
-  DBParadoxFamilyJournal, DBParadoxFamilyLock;
+  DBParadoxFamilyJournal, DBParadoxFamilyLock, DBParadoxFamilySnapshot,
+  DBParadoxRecordEncoder, DBParadoxTableFileBuilder,
+  DBParadoxStagedTable, DBParadoxDMLExecutor,
+  DBParadoxPrimaryFamilyAdapter,
+  DBParadoxSecondaryFamilyAdapter;
 
 const
   pxfAlpha = $01;
   pxfLong = $04;
 
 type
+  TDBParadoxCommitOutcome = (
+    dcoReady,
+    dcoPublishedCleanupPending,
+    dcoUncertain
+  );
+
   TDBParadoxField = TDBParadoxFileField;
 
   TDBParadoxFieldArray = TDBParadoxFileFields;
@@ -97,6 +112,9 @@ type
     FRequiredFields: array of Boolean;
     FRows: TDBParadoxResultRows;
     FPlan: TDBParadoxSelectPlan;
+    FDMLPlan: TDBParadoxDMLPlan;
+    FDMLStatement: Boolean;
+    FAffectedRows: Integer;
     FCursorRegistered: Boolean;
     function FindFieldIndex(const AName: string): Integer;
     procedure ResolvePlanFields;
@@ -113,12 +131,19 @@ type
   TDBParadoxTransactionHandle = class(TSQLHandle)
   public
     Active: Boolean;
+    CommitOutcome: TDBParadoxCommitOutcome;
+    Snapshot: TDBParadoxFamilySnapshot;
+    StagedTable: TDBParadoxStagedTable;
+    HasMutations: Boolean;
+    RowsAffected: Integer;
+    destructor Destroy; override;
+    procedure ClearStagedState;
   end;
 
 procedure RaiseUnsupported(const AFeature: string);
 begin
   raise EDBParadoxUnsupportedFeature.CreateFmt(
-    'DBParadox read-only provider does not support %s.', [AFeature]);
+    'DBParadox does not support %s.', [AFeature]);
 end;
 
 function RequireCursor(ACursor: TSQLCursor): TDBParadoxCursor;
@@ -135,6 +160,153 @@ begin
     raise EDBParadoxProviderError.Create(
       'The SQLDB transaction handle does not belong to DBParadox.');
   Result := TDBParadoxTransactionHandle(AHandle);
+end;
+
+procedure CheckTransactionCommitOutcome(
+  ATransaction: TDBParadoxTransactionHandle);
+begin
+  case ATransaction.CommitOutcome of
+    dcoPublishedCleanupPending:
+      raise EDBParadoxProviderError.Create(
+        'The DBParadox family was published, but cleanup is pending. Retry Commit to recover and finalize it; Rollback is not valid.');
+    dcoUncertain:
+      raise EDBParadoxProviderError.Create(
+        'The DBParadox publication outcome is uncertain. Stop using this transaction and reopen the table so journal recovery can resolve it.');
+  end;
+end;
+
+destructor TDBParadoxTransactionHandle.Destroy;
+begin
+  ClearStagedState;
+  inherited Destroy;
+end;
+
+procedure TDBParadoxTransactionHandle.ClearStagedState;
+begin
+  FreeAndNil(StagedTable);
+  FreeAndNil(Snapshot);
+  HasMutations := False;
+  RowsAffected := 0;
+  CommitOutcome := dcoReady;
+end;
+
+function DecodeFieldValue(const Field: TDBParadoxFileField;
+  const RecordData: TBytes; RecordNumber: Integer): TDBParadoxValue; forward;
+function ParameterValue(AParam: TParam; const Field: TDBParadoxField;
+  const ParameterName: string): TDBParadoxValue; forward;
+function CompareValues(const LeftValue, RightValue: TDBParadoxValue;
+  NullsFirst: Boolean): Integer; forward;
+
+function ResolveTableFileName(AConnection: TDBParadoxConnection;
+  const ATableName: string): string;
+var
+  TableExtension: string;
+begin
+  Result := ATableName;
+  TableExtension := ExtractFileExt(Result);
+  if TableExtension = '' then
+    Result := Result + '.DB'
+  else if not SameText(TableExtension, '.DB') then
+    raise EDBParadoxUnsupportedFeature.CreateFmt(
+      'Only .DB Paradox table names are supported, not "%s".',
+      [TableExtension]);
+  if ExtractFileName(Result) <> Result then
+    raise EDBParadoxUnsupportedFeature.Create(
+      'Table paths are not allowed in DBParadox statements.');
+  Result := ExpandFileName(
+    IncludeTrailingPathDelimiter(AConnection.DatabaseName) + Result);
+end;
+
+function SnapshotFieldsAsRecordFields(
+  const AFields: TDBParadoxFileFields): TDBParadoxRecordFields;
+var
+  Index: SizeInt;
+begin
+  SetLength(Result, Length(AFields));
+  for Index := 0 to High(AFields) do
+  begin
+    Result[Index].Name := AFields[Index].Name;
+    Result[Index].TypeCode := AFields[Index].FieldType;
+    Result[Index].Length := AFields[Index].FieldLength;
+  end;
+end;
+
+function SnapshotRowsAsValues(const AFields: TDBParadoxFileFields;
+  const ARows: TDBParadoxFileRows): TDBParadoxTableRows;
+var
+  RowIndex, FieldIndex: SizeInt;
+  Value: TDBParadoxValue;
+begin
+  SetLength(Result, Length(ARows));
+  for RowIndex := 0 to High(ARows) do
+  begin
+    SetLength(Result[RowIndex], Length(AFields));
+    for FieldIndex := 0 to High(AFields) do
+    begin
+      Value := DecodeFieldValue(AFields[FieldIndex], ARows[RowIndex].Data,
+        ARows[RowIndex].RecordNumber);
+      if Value.IsNull then
+        Result[RowIndex][FieldIndex] := ''
+      else if Value.FieldType = pxfAlpha then
+        Result[RowIndex][FieldIndex] := UnicodeString(Value.StringValue)
+      else
+        Result[RowIndex][FieldIndex] := IntToStr(Value.IntegerValue);
+    end;
+  end;
+end;
+
+function ExistingRowValues(const AFields: TDBParadoxFileFields;
+  APrimaryKeyFieldIndex: SizeInt;
+  const ARows: TDBParadoxTableRows; AParam: TParam): TDBParadoxRecordValues;
+var
+  KeyValue, RowValue: TDBParadoxValue;
+  RowIndex: SizeInt;
+begin
+  SetLength(Result, Length(AFields));
+  if not Assigned(AParam) then
+    Exit;
+  KeyValue := ParameterValue(AParam, AFields[APrimaryKeyFieldIndex],
+    AParam.Name);
+  if KeyValue.IsNull then
+    Exit;
+  for RowIndex := 0 to High(ARows) do
+  begin
+    if AFields[APrimaryKeyFieldIndex].FieldType = pxfAlpha then
+    begin
+      RowValue.FieldType := pxfAlpha;
+      RowValue.IsNull := ARows[RowIndex][APrimaryKeyFieldIndex] = '';
+      RowValue.IntegerValue := 0;
+      RowValue.StringValue :=
+        AnsiString(ARows[RowIndex][APrimaryKeyFieldIndex]);
+    end
+    else
+    begin
+      RowValue.FieldType := pxfLong;
+      RowValue.IsNull := ARows[RowIndex][APrimaryKeyFieldIndex] = '';
+      RowValue.IntegerValue := 0;
+      if not RowValue.IsNull then
+        RowValue.IntegerValue := StrToInt64(
+          ARows[RowIndex][APrimaryKeyFieldIndex]);
+      RowValue.StringValue := '';
+    end;
+    if CompareValues(RowValue, KeyValue, True) = 0 then
+      Exit(Copy(ARows[RowIndex], 0, Length(ARows[RowIndex])));
+  end;
+end;
+
+function SnapshotRowsAsFileRows(const AFields: TDBParadoxRecordFields;
+  const ARows: TDBParadoxTableRows): TDBParadoxFileRows;
+var
+  RowIndex: SizeInt;
+begin
+  SetLength(Result, Length(ARows));
+  for RowIndex := 0 to High(ARows) do
+  begin
+    Result[RowIndex].RecordNumber := RowIndex;
+    Result[RowIndex].BlockNumber := 0;
+    Result[RowIndex].RecordInBlock := RowIndex;
+    Result[RowIndex].Data := EncodeDBParadoxRecord(AFields, ARows[RowIndex]);
+  end;
 end;
 
 function DecodeFieldValue(const Field: TDBParadoxFileField;
@@ -365,22 +537,107 @@ procedure TDBParadoxConnection.PrepareStatement(Cursor: TSQLCursor;
   ATransaction: TSQLTransaction; SQL: string; AParams: TParams);
 var
   ParadoxCursor: TDBParadoxCursor;
+  TransactionHandle: TDBParadoxTransactionHandle;
+  TableFileName: string;
+  SnapshotFields: TDBParadoxFileFields;
+  SnapshotRows: TDBParadoxFileRows;
+  RecordFields: TDBParadoxRecordFields;
+  RecordValues: TDBParadoxTableRows;
+  HadSnapshot: Boolean;
 begin
   ParadoxCursor := RequireCursor(Cursor);
   if not ParadoxCursor.FConnection.Connected then
     raise EDBParadoxProviderError.Create(
       'The DBParadox connection is not initialized.');
-  ParadoxCursor.FPlan := ParseDBParadoxSelect(SQL);
-  ParadoxCursor.OpenTable(ParadoxCursor.FPlan.TableName);
-  ParadoxCursor.ResolvePlanFields;
+  case Cursor.FStatementType of
+    stSelect:
+      begin
+        ParadoxCursor.FDMLStatement := False;
+        ParadoxCursor.FPlan := ParseDBParadoxSelect(SQL);
+        ParadoxCursor.OpenTable(ParadoxCursor.FPlan.TableName);
+        ParadoxCursor.ResolvePlanFields;
+      end;
+    stInsert, stUpdate, stDelete:
+      begin
+        if not Assigned(ATransaction) or not ATransaction.Active then
+          raise EDBParadoxProviderError.Create(
+            'DBParadox DML requires an active explicit SQLDB transaction.');
+        if not (stoExplicitStart in ATransaction.Options) then
+          raise EDBParadoxProviderError.Create(
+            'DBParadox DML requires the SQLDB stoExplicitStart option.');
+        TransactionHandle := TDBParadoxTransactionHandle(
+          ATransaction.Handle);
+        CheckTransactionCommitOutcome(TransactionHandle);
+        if not TransactionHandle.Active then
+          raise EDBParadoxProviderError.Create(
+            'The DBParadox transaction handle is not active.');
+        ParadoxCursor.FDMLPlan := ParseDBParadoxDML(SQL);
+        case ParadoxCursor.FDMLPlan.StatementType of
+          dpdInsert:
+            if Cursor.FStatementType <> stInsert then
+              raise EDBParadoxProviderError.Create(
+                'The SQLDB statement type does not match the parsed INSERT.');
+          dpdUpdate:
+            if Cursor.FStatementType <> stUpdate then
+              raise EDBParadoxProviderError.Create(
+                'The SQLDB statement type does not match the parsed UPDATE.');
+          dpdDelete:
+            if Cursor.FStatementType <> stDelete then
+              raise EDBParadoxProviderError.Create(
+                'The SQLDB statement type does not match the parsed DELETE.');
+        end;
+        TableFileName := ResolveTableFileName(Self,
+          ParadoxCursor.FDMLPlan.TableName);
+        HadSnapshot := Assigned(TransactionHandle.Snapshot);
+        try
+          if not HadSnapshot then
+          begin
+            TransactionHandle.Snapshot :=
+              TDBParadoxFamilySnapshot.Capture(TableFileName);
+            SnapshotFields := TransactionHandle.Snapshot.CopyFields;
+            SnapshotRows := TransactionHandle.Snapshot.CopyRows;
+            RecordFields := SnapshotFieldsAsRecordFields(SnapshotFields);
+            RecordValues := SnapshotRowsAsValues(SnapshotFields, SnapshotRows);
+            TransactionHandle.StagedTable := TDBParadoxStagedTable.Create(
+              TableFileName, RecordFields,
+              TransactionHandle.Snapshot.PrimaryKeyFieldIndex, RecordValues);
+          end
+          else if not SameText(TransactionHandle.Snapshot.TableFileName,
+            TableFileName) then
+            raise EDBParadoxUnsupportedFeature.Create(
+              'A DBParadox write transaction can modify only one table.');
+          if not Assigned(TransactionHandle.StagedTable) then
+            raise EDBParadoxProviderError.Create(
+              'The DBParadox staged table was not initialized.');
+          SnapshotFields := TransactionHandle.Snapshot.CopyFields;
+          RecordFields := SnapshotFieldsAsRecordFields(SnapshotFields);
+          ValidateDBParadoxDMLPlan(ParadoxCursor.FDMLPlan, RecordFields,
+            TransactionHandle.Snapshot.PrimaryKeyFieldIndex, AParams);
+        except
+          if not HadSnapshot then
+            TransactionHandle.ClearStagedState;
+          raise;
+        end;
+        ParadoxCursor.FDMLStatement := True;
+        ParadoxCursor.FAffectedRows := 0;
+        Cursor.FSelectable := False;
+      end;
+  else
+    raise EDBParadoxUnsupportedFeature.CreateFmt(
+      'SQL statement type %d is not supported by DBParadox.',
+      [Ord(Cursor.FStatementType)]);
+  end;
   Cursor.FPrepared := True;
-  Cursor.FSelectable := True;
-  Cursor.FStatementType := stSelect;
 end;
 
 procedure TDBParadoxConnection.UnPrepareStatement(Cursor: TSQLCursor);
 begin
-  RequireCursor(Cursor).CloseTable;
+  with RequireCursor(Cursor) do
+  begin
+    CloseTable;
+    FDMLStatement := False;
+    FAffectedRows := 0;
+  end;
   Cursor.FPrepared := False;
 end;
 
@@ -388,14 +645,93 @@ procedure TDBParadoxConnection.Execute(Cursor: TSQLCursor;
   ATransaction: TSQLTransaction; AParams: TParams);
 var
   ParadoxCursor: TDBParadoxCursor;
+  TransactionHandle: TDBParadoxTransactionHandle;
+  RecordFields: TDBParadoxRecordFields;
+  StagedRows: TDBParadoxTableRows;
+  ExistingValues: TDBParadoxRecordValues;
+  SnapshotFields: TDBParadoxFileFields;
+  Parameter: TParam;
+  PreparedDML: TDBParadoxPreparedDML;
+  RowIndex: SizeInt;
 begin
   ParadoxCursor := RequireCursor(Cursor);
   if not Cursor.FPrepared then
     raise EDBParadoxProviderError.Create(
       'Cannot execute an unprepared DBParadox statement.');
-  ParadoxCursor.BuildResultRows(AParams);
-  ParadoxCursor.FCurrentRecord := -1;
-  ParadoxCursor.FCurrentRowIndex := -1;
+  if ParadoxCursor.FDMLStatement then
+  begin
+    if not Assigned(ATransaction) or not ATransaction.Active then
+      raise EDBParadoxProviderError.Create(
+        'DBParadox DML requires an active SQLDB transaction.');
+    TransactionHandle := TDBParadoxTransactionHandle(
+      ATransaction.Handle);
+    if not Assigned(TransactionHandle.StagedTable) or
+      not Assigned(TransactionHandle.Snapshot) then
+      raise EDBParadoxProviderError.Create(
+        'The DBParadox staged table was not initialized.');
+    if not TransactionHandle.Snapshot.MatchesCurrentFiles then
+      raise EDBParadoxProviderError.Create(
+        'The table family changed after the DBParadox transaction snapshot.');
+    SnapshotFields := TransactionHandle.Snapshot.CopyFields;
+    RecordFields := SnapshotFieldsAsRecordFields(SnapshotFields);
+    StagedRows := TransactionHandle.StagedTable.Rows;
+    ExistingValues := nil;
+    if ParadoxCursor.FDMLPlan.StatementType = dpdUpdate then
+    begin
+      Parameter := AParams.FindParam(ParadoxCursor.FDMLPlan.WhereParameter);
+      ExistingValues := ExistingRowValues(SnapshotFields,
+        TransactionHandle.Snapshot.PrimaryKeyFieldIndex, StagedRows,
+        Parameter);
+    end;
+    PreparedDML := PrepareDBParadoxDML(ParadoxCursor.FDMLPlan,
+      RecordFields, TransactionHandle.Snapshot.PrimaryKeyFieldIndex,
+      AParams, ExistingValues);
+    case ParadoxCursor.FDMLPlan.StatementType of
+      dpdInsert:
+        ParadoxCursor.FAffectedRows :=
+          TransactionHandle.StagedTable.Insert(PreparedDML.Values);
+      dpdUpdate:
+        ParadoxCursor.FAffectedRows :=
+          TransactionHandle.StagedTable.UpdateByPrimaryKey(
+            PreparedDML.PrimaryKey, PreparedDML.Values);
+      dpdDelete:
+        ParadoxCursor.FAffectedRows :=
+          TransactionHandle.StagedTable.DeleteByPrimaryKey(
+            PreparedDML.PrimaryKey);
+    end;
+    if ParadoxCursor.FAffectedRows > 0 then
+      TransactionHandle.HasMutations := True;
+    TransactionHandle.RowsAffected := ParadoxCursor.FAffectedRows;
+  end
+  else
+  begin
+    if Assigned(ATransaction) and ATransaction.Active then
+    begin
+      TransactionHandle := TDBParadoxTransactionHandle(
+        ATransaction.Handle);
+      CheckTransactionCommitOutcome(TransactionHandle);
+      if Assigned(TransactionHandle.StagedTable) and
+        Assigned(TransactionHandle.Snapshot) and
+        SameText(TransactionHandle.Snapshot.TableFileName,
+          ResolveTableFileName(Self, ParadoxCursor.FPlan.TableName)) then
+      begin
+        if not TransactionHandle.Snapshot.MatchesCurrentFiles then
+          raise EDBParadoxProviderError.Create(
+            'The table family changed after the DBParadox transaction snapshot.');
+        SnapshotFields := TransactionHandle.Snapshot.CopyFields;
+        ParadoxCursor.FFields := SnapshotFields;
+        RecordFields := SnapshotFieldsAsRecordFields(SnapshotFields);
+        StagedRows := TransactionHandle.StagedTable.Rows;
+        ParadoxCursor.FTableRows := SnapshotRowsAsFileRows(RecordFields,
+          StagedRows);
+        ParadoxCursor.FRecordSize := TransactionHandle.Snapshot.RecordSize;
+        ParadoxCursor.FRecordCount := Length(ParadoxCursor.FTableRows);
+      end;
+    end;
+    ParadoxCursor.BuildResultRows(AParams);
+    ParadoxCursor.FCurrentRecord := -1;
+    ParadoxCursor.FCurrentRowIndex := -1;
+  end;
 end;
 
 function TDBParadoxConnection.Fetch(Cursor: TSQLCursor): Boolean;
@@ -510,18 +846,111 @@ end;
 function TDBParadoxConnection.GetTransactionHandle(
   AHandle: TSQLHandle): Pointer;
 begin
-  RequireTransaction(AHandle);
-  Result := nil;
+  Result := Pointer(RequireTransaction(AHandle));
+end;
+
+function TDBParadoxConnection.RowsAffected(
+  Cursor: TSQLCursor): TRowsCount;
+begin
+  if RequireCursor(Cursor).FDMLStatement then
+    Exit(RequireCursor(Cursor).FAffectedRows);
+  Result := inherited RowsAffected(Cursor);
 end;
 
 function TDBParadoxConnection.Commit(AHandle: TSQLHandle): Boolean;
 var
   TransactionHandle: TDBParadoxTransactionHandle;
+  Fields: TDBParadoxRecordFields;
+  Rows: TDBParadoxTableRows;
+  DatabaseTemplate, PrimaryIndexTemplate: TBytes;
+  SecondaryIndexes: TDBParadoxSecondaryFamilyIndexes;
+  ExpectedMembers: TDBParadoxExpectedFamilyMembers;
+  Builder: IDBParadoxFamilyStageBuilder;
+  Validator: IDBParadoxFamilyValidator;
 begin
   TransactionHandle := RequireTransaction(AHandle);
   if not TransactionHandle.Active then
     raise EDBParadoxProviderError.Create(
-      'Cannot commit an inactive read-only SQLDB scope.');
+      'Cannot commit an inactive DBParadox SQLDB transaction.');
+  if TransactionHandle.CommitOutcome = dcoPublishedCleanupPending then
+  begin
+    if not Assigned(TransactionHandle.Snapshot) then
+      raise EDBParadoxProviderError.Create(
+        'The published DBParadox transaction lost its recovery path.');
+    TDBParadoxFamilyJournal.Recover(
+      TransactionHandle.Snapshot.TableFileName);
+    TransactionHandle.ClearStagedState;
+    TransactionHandle.Active := False;
+    Exit(True);
+  end;
+  if TransactionHandle.CommitOutcome = dcoUncertain then
+    CheckTransactionCommitOutcome(TransactionHandle);
+  if TransactionHandle.HasMutations then
+  begin
+    if not Assigned(TransactionHandle.Snapshot) or
+      not Assigned(TransactionHandle.StagedTable) then
+      raise EDBParadoxProviderError.Create(
+        'The DBParadox transaction lost its snapshot or staged table.');
+    if not TransactionHandle.Snapshot.MatchesCurrentFiles then
+      raise EDBParadoxProviderError.Create(
+        'The table family changed after the DBParadox transaction snapshot.');
+
+    Fields := SnapshotFieldsAsRecordFields(
+      TransactionHandle.Snapshot.CopyFields);
+    Rows := TransactionHandle.StagedTable.Rows;
+    DatabaseTemplate := TransactionHandle.Snapshot.CopyDatabaseTemplate;
+    PrimaryIndexTemplate :=
+      TransactionHandle.Snapshot.CopyPrimaryIndexTemplate;
+    SecondaryIndexes :=
+      TransactionHandle.Snapshot.CopySecondaryIndexes;
+    ExpectedMembers :=
+      TransactionHandle.Snapshot.CopyExpectedFamilyMembers;
+
+    if Length(SecondaryIndexes) = 0 then
+    begin
+      if TransactionHandle.Snapshot.MemberCount <> 2 then
+        raise EDBParadoxUnsupportedFeature.Create(
+          'The captured family has no supported primary-only or secondary-index rebuild adapter.');
+      Builder := TDBParadoxPrimaryFamilyStageBuilder.Create(
+        DatabaseTemplate, PrimaryIndexTemplate, Fields,
+        TransactionHandle.Snapshot.PrimaryKeyFieldIndex, Rows);
+      Validator := TDBParadoxPrimaryFamilyValidator.Create(Fields,
+        TransactionHandle.Snapshot.PrimaryKeyFieldIndex, Rows);
+    end
+    else
+    begin
+      Builder := TDBParadoxSecondaryFamilyStageBuilder.Create(
+        DatabaseTemplate, PrimaryIndexTemplate, Fields,
+        TransactionHandle.Snapshot.PrimaryKeyFieldIndex, Rows,
+        SecondaryIndexes);
+      Validator := TDBParadoxSecondaryFamilyValidator.Create(
+        DatabaseTemplate, PrimaryIndexTemplate, Fields,
+        TransactionHandle.Snapshot.PrimaryKeyFieldIndex, Rows,
+        SecondaryIndexes);
+    end;
+    try
+      try
+        PublishFamily(
+          TransactionHandle.Snapshot.TableFileName, Builder, Validator,
+          ExpectedMembers);
+      except
+        on E: EDBParadoxPublishedCleanupError do
+        begin
+          TransactionHandle.CommitOutcome := dcoPublishedCleanupPending;
+          raise;
+        end;
+        on E: EDBParadoxUncertainPublicationError do
+        begin
+          TransactionHandle.CommitOutcome := dcoUncertain;
+          raise;
+        end;
+      end;
+    finally
+      Validator := nil;
+      Builder := nil;
+    end;
+  end;
+  TransactionHandle.ClearStagedState;
   TransactionHandle.Active := False;
   Result := True;
 end;
@@ -533,9 +962,34 @@ begin
   TransactionHandle := RequireTransaction(AHandle);
   if not TransactionHandle.Active then
     raise EDBParadoxProviderError.Create(
-      'Cannot roll back an inactive read-only SQLDB scope.');
+      'Cannot roll back an inactive DBParadox SQLDB transaction.');
+  if TransactionHandle.CommitOutcome = dcoUncertain then
+  begin
+    if not Assigned(TransactionHandle.Snapshot) then
+      raise EDBParadoxProviderError.Create(
+        'The uncertain DBParadox transaction lost its recovery path.');
+    TDBParadoxFamilyJournal.Recover(
+      TransactionHandle.Snapshot.TableFileName);
+    if not TransactionHandle.Snapshot.MatchesCurrentFiles then
+      raise EDBParadoxProviderError.Create(
+        'Journal recovery did not restore the transaction snapshot; the uncertain transaction remains active.');
+    TransactionHandle.ClearStagedState;
+    TransactionHandle.Active := False;
+    Exit(True);
+  end;
+  CheckTransactionCommitOutcome(TransactionHandle);
+  TransactionHandle.ClearStagedState;
   TransactionHandle.Active := False;
   Result := True;
+end;
+
+procedure TDBParadoxConnection.PublishFamily(const ATableFileName: string;
+  const ABuilder: IDBParadoxFamilyStageBuilder;
+  const AValidator: IDBParadoxFamilyValidator;
+  const AExpectedMembers: TDBParadoxExpectedFamilyMembers);
+begin
+  TDBParadoxFamilyPublisher.Publish(ATableFileName, ABuilder, AValidator,
+    AExpectedMembers);
 end;
 
 function TDBParadoxConnection.StartDBTransaction(AHandle: TSQLHandle;
@@ -546,7 +1000,8 @@ begin
   TransactionHandle := RequireTransaction(AHandle);
   if TransactionHandle.Active then
     raise EDBParadoxProviderError.Create(
-      'The DBParadox read-only SQLDB scope is already active.');
+      'The DBParadox SQLDB transaction is already active.');
+  TransactionHandle.ClearStagedState;
   TransactionHandle.Active := True;
   Result := True;
 end;
@@ -558,7 +1013,9 @@ begin
   TransactionHandle := RequireTransaction(AHandle);
   if not TransactionHandle.Active then
     raise EDBParadoxProviderError.Create(
-      'Cannot commit-retaining an inactive read-only SQLDB scope.');
+      'Cannot commit-retaining an inactive DBParadox transaction.');
+  raise EDBParadoxUnsupportedFeature.Create(
+    'Commit-retaining is not supported by DBParadox.');
 end;
 
 procedure TDBParadoxConnection.RollBackRetaining(AHandle: TSQLHandle);
@@ -568,7 +1025,9 @@ begin
   TransactionHandle := RequireTransaction(AHandle);
   if not TransactionHandle.Active then
     raise EDBParadoxProviderError.Create(
-      'Cannot rollback-retaining an inactive read-only SQLDB scope.');
+      'Cannot rollback-retaining an inactive DBParadox transaction.');
+  raise EDBParadoxUnsupportedFeature.Create(
+    'Rollback-retaining is not supported by DBParadox.');
 end;
 
 function TDBParadoxCursor.FindFieldIndex(const AName: string): Integer;
@@ -653,6 +1112,8 @@ var
   ResultIndex: Integer;
 begin
   SetLength(FRows, 0);
+  FDMLStatement := False;
+  FAffectedRows := 0;
   PredicateValues := nil;
   SetLength(PredicateValues, Length(FPlan.Predicates));
   for PredicateIndex := 0 to High(FPlan.Predicates) do
