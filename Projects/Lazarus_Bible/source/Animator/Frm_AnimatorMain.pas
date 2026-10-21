@@ -10,7 +10,7 @@ Uses
 {$IFnDEF FPC}
   Windows,
 {$ELSE}
-  LCLIntf, LCLType, LMessages,CmpAnimator,
+  LCLIntf, LCLType, LMessages,cmpAnimator,
 {$ENDIF}
   Messages, SysUtils, Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls, Buttons, ExtCtrls, ComCtrls;

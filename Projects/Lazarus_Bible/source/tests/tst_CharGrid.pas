@@ -1,9 +1,6 @@
 unit tst_CharGrid;
 
 {$IFDEF FPC}
-  {$MODE Delphi}
-{$ENDIF}
-{$IFDEF FPC}
 {$mode objfpc}{$H+}
 {$ENDIF}
 

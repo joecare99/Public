@@ -11,8 +11,6 @@ uses
   SysUtils,
   ArrayP;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

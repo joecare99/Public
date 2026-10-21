@@ -12,8 +12,6 @@ uses
   FormShot,
   Frm_Report1Main;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

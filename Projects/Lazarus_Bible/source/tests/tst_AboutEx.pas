@@ -1,16 +1,13 @@
 unit tst_AboutEx;
 
 {$IFDEF FPC}
-  {$MODE Delphi}
-{$ENDIF}
-{$IFDEF FPC}
 {$mode objfpc}{$H+}
 {$EndIF}
 
 interface
 
 uses
-  Classes,Forms, SysUtils, {$IFNDEF FPC}TestFramework, {$Else} fpcunit, testutils, testregistry, {$endif} Frm_AboutExMAIN,frm_About;
+  Classes,Forms, SysUtils, {$IFNDEF FPC}TestFramework, {$Else} fpcunit, testutils, testregistry, {$endif} Frm_AboutExMAIN,Frm_ABOUT;
 
 type
 

@@ -76,8 +76,10 @@ CREATEFORM_RE = re.compile(r"Application\.CreateForm\s*\(\s*([A-Za-z0-9_]+)\s*,\
 
 
 def strip_directives(text):
-    """Entfernt {...}-Direktiven und //-Kommentare."""
-    text = re.sub(r"\{\$[^}]*\}", ' ', text, flags=re.S)
+    """Entfernt die Direktiven {...} und //-Kommentare. Der Inhalt
+    bedingter Bloecke bleibt erhalten, damit auch die Units des
+    FPC-Zweigs erkannt werden."""
+    text = re.sub(r"\{\$[^{}]*\}", ' ', text)
     text = re.sub(r"//[^\n]*", ' ', text)
     text = re.sub(r"\(\*.*?\*\)", ' ', text, flags=re.S)
     return text
@@ -130,7 +132,7 @@ def unit_name_of_file(path):
     """Liest den Unit-Namen aus der Datei (Gross-/Kleinschreibung wie in der Datei)."""
     full = os.path.join(SRC, path)
     try:
-        with open(full, 'r', encoding='utf-8', errors='replace') as fh:
+        with open(full, 'r', encoding='utf-8-sig', errors='replace') as fh:
             head = fh.read(4096)
     except OSError:
         return None
@@ -158,7 +160,7 @@ def collect_units(folder, referenced):
             uname = unit_name_of_file(os.path.join(folder, os.path.join(sub, name)))
             if uname is None:
                 continue
-            with open(full, 'r', encoding='utf-8', errors='replace') as fh:
+            with open(full, 'r', encoding='utf-8-sig', errors='replace') as fh:
                 text = fh.read()
             used = [u.lower() for u, _ in parse_uses(text)]
             rel = (folder + '/' + sub + '/' + name) if sub else (folder + '/' + name)
@@ -173,6 +175,34 @@ def collect_units(folder, referenced):
     # Referenzierte Units zuerst, dann die restlichen (alphabetisch)
     units.sort(key=lambda u: (not u['referenced'], u['name'].lower()))
     return units
+
+
+def find_demo_units(names):
+    """Sucht die genannten Units in allen Demoordnern und liefert die
+    gefundenen Units samt Ordner zurueck."""
+    wanted = set(n.lower() for n in names)
+    found = []
+    for demo in source_folders():
+        for name in sorted(os.listdir(os.path.join(SRC, demo))):
+            if not name.lower().endswith('.pas'):
+                continue
+            base = name[:-4]
+            uname = unit_name_of_file(os.path.join(demo, name))
+            if uname and uname.lower() in wanted:
+                path = os.path.join(SRC, demo, name)
+                with open(path, 'r', encoding='utf-8-sig', errors='replace') as fh:
+                    text = fh.read()
+                used = [u.lower() for u, _ in parse_uses(text)]
+                found.append({
+                    'name': uname,
+                    'file': name,
+                    'path': '../source/%s/%s' % (demo, name),
+                    'form': os.path.exists(os.path.join(SRC, demo, base + '.lfm')) or
+                            os.path.exists(os.path.join(SRC, demo, base + '.dfm')),
+                    'referenced': True,
+                    'uses': used,
+                })
+    return found
 
 
 def units_for_project(units, referenced_names):
@@ -242,6 +272,10 @@ def build_lpr(name, units, create_forms, extra_uses, title, has_res):
     for i, u in enumerate(referenced):
         sep = ';' if i == len(referenced) - 1 else ','
         uses.append('  %s%s' % (u['name'], sep))
+    if not referenced:
+        # Konsolen-Demo: die letzte Unit im uses-Abschnitt braucht kein Komma
+        if uses and uses[-1].endswith(','):
+            uses[-1] = uses[-1][:-1] + ';'
     out = []
     out.append('program %s;' % name)
     out.append('')
@@ -250,9 +284,10 @@ def build_lpr(name, units, create_forms, extra_uses, title, has_res):
     out.append('uses')
     out.extend(uses)
     out.append('')
-    if has_res:
-        out.append('{$R *.res}')
-        out.append('')
+    # Die Delphi-Ressource (.res) wird bewusst nicht eingebunden: sie
+    # enthaelt Symbol und Versionsangaben fuer Windows und wird von
+    # Free Pascal nicht in jedem Format gelesen. Das Delphi-Programm
+    # (.dpr) bindet sie weiterhin ein.
     out.append('begin')
     out.append('  RequireDerivedFormResource := True;')
     out.append('  Application.Initialize;')
@@ -298,7 +333,7 @@ def build_lpi(name, lpr_name, units, pkgs, create_forms):
     a('      <MainUnit Value="0"/>')
     a('      <Title Value="%s"/>' % xml_escape(name))
     a('      <UseAppBundle Value="False"/>')
-    a('      <ResourceType Value="res"/>')
+    a('      <ResourceType Value=""/>')
     a('    </General>')
     a('    <i18n>')
     a('      <EnableI18N LFM="True"/>')
@@ -638,6 +673,17 @@ def main():
         units = []
         for f in folders:
             units.extend(collect_units(f, referenced))
+        # Die Test-Units benutzen die Units der jeweiligen Demo - diese
+        # gehoeren mit in das Projekt (Suchpfad und Unitliste).
+        demo_names = []
+        for u in units:
+            for used in u.get('uses', []):
+                if used not in demo_names and not used.startswith('tst_'):
+                    demo_names.append(used)
+        extra = find_demo_units(demo_names)
+        for u in extra:
+            if not any(x['name'].lower() == u['name'].lower() for x in units):
+                units.append(u)
         demos.append({
             'name': name,
             'folders': folders,
@@ -661,6 +707,11 @@ def main():
         if not d.get('test'):
             update_dpr(name, d['units'], [u['name'] for u in d['units'] if u['referenced']])
         pkgs = packages_for(d['units'])
+        if d.get('test'):
+            # Test-Harnesses benoetigen den Test-Runner und die Maus-/Tastatureingabe
+            for extra in ('FPCUnitTestRunner', 'LazMouseAndKeyInput'):
+                if extra not in pkgs:
+                    pkgs.append(extra)
         lpi = build_lpi(name, lpr_name, d['units'], pkgs, d['create_forms'])
         write_file(os.path.join(FPC, name + '.lpi'), lpi, check)
         changed.append(name + '.lpi')

@@ -11,7 +11,7 @@ uses
 {$ENDIF}
   Forms,
   Frm_DirExecMAIN in '..\source\DIREXEC\Frm_DirExecMAIN.pas' {MainForm},
-  frm_Dirdlg in '..\source\DIREX\Frm_DIRDLG.pas' {DirDlgForm};
+  Frm_DIRDLG in '..\source\DIREX\Frm_DIRDLG.pas' {DirDlgForm};
 
 {$R *.res}
 {$IFNDEF FPC} {$E EXE}   {$ENDIF}

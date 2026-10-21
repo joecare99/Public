@@ -12,8 +12,6 @@ uses
   FormShot,
   Frm_Capslock2MAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

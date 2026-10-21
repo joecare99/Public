@@ -15,8 +15,6 @@ uses
   Frm_CALC,
   Frm_CalcABOUT;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

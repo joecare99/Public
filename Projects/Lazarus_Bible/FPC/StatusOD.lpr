@@ -12,8 +12,6 @@ uses
   FormShot,
   Frm_StatusODMain;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

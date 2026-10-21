@@ -14,8 +14,6 @@ uses
   Frm_ABOUT,
   Frm_AboutExMAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

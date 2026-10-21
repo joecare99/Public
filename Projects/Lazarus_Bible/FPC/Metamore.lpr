@@ -12,8 +12,6 @@ uses
   FormShot,
   Frm_MetaMoreMAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

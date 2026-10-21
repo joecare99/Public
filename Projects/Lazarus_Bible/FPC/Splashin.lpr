@@ -13,8 +13,6 @@ uses
   Frm_SPLASH,
   Frm_SplashinMAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

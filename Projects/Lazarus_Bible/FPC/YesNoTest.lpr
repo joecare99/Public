@@ -13,8 +13,6 @@ uses
   Frm_YesNo,
   Frm_YesNoMAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

@@ -10,8 +10,7 @@ uses
   Forms,
   SysUtils,
   FormShot,
-
-{$R *.res}
+  Frm_MemoPadMAIN;
 
 begin
   RequireDerivedFormResource := True;

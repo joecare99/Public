@@ -15,8 +15,6 @@ uses
   Frm_TabsMAIN,
   TabsUnit;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

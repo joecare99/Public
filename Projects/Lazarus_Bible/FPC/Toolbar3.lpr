@@ -12,8 +12,6 @@ uses
   FormShot,
   Frm_Toolbar3MAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

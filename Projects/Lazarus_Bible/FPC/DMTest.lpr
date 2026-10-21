@@ -13,8 +13,6 @@ uses
   Frm_DMTestMain,
   Frm_Module1;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

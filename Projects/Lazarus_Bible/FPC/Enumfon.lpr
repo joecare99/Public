@@ -12,8 +12,6 @@ uses
   FormShot,
   Frm_EnumFonMAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

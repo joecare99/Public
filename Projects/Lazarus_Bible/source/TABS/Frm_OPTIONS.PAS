@@ -19,7 +19,7 @@ uses
  TabsUnit,
  Dialogs,
 
-  IniData,
+  Inidata,
  IniFiles,
 {$IFnDEF FPC}
   Windows,

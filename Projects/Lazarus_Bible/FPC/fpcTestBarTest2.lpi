@@ -13,7 +13,7 @@
       <MainUnit Value="0"/>
       <Title Value="fpcTestBarTest2"/>
       <UseAppBundle Value="False"/>
-      <ResourceType Value="res"/>
+      <ResourceType Value=""/>
     </General>
     <i18n>
       <EnableI18N LFM="True"/>
@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestBarTest2"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/tests;../source/_core/tools"/>
-            <IncludeFiles Value="../source/tests;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/tests;../source/AboutEx;../source/Actions;../source/Addpage;../source/Barchart;../source/_core/tools"/>
+            <IncludeFiles Value="../source/tests;../source/AboutEx;../source/Actions;../source/Addpage;../source/Barchart;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestBarTest2"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/tests;../source/_core/tools"/>
-            <IncludeFiles Value="../source/tests;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/tests;../source/AboutEx;../source/Actions;../source/Addpage;../source/Barchart;../source/_core/tools"/>
+            <IncludeFiles Value="../source/tests;../source/AboutEx;../source/Actions;../source/Addpage;../source/Barchart;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -93,7 +93,7 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="3">
+    <RequiredPackages Count="5">
       <Item1>
         <PackageName Value="LCL"/>
       </Item1>
@@ -103,8 +103,14 @@
       <Item3>
         <PackageName Value="BarChartp"/>
       </Item3>
+      <Item4>
+        <PackageName Value="FPCUnitTestRunner"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="LazMouseAndKeyInput"/>
+      </Item5>
     </RequiredPackages>
-    <Units Count="16">
+    <Units Count="22">
       <Unit0>
         <Filename Value="fpcTestBarTest2.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -185,6 +191,51 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="tst_Something"/>
       </Unit15>
+      <Unit16>
+        <Filename Value="../source/AboutEx/Frm_ABOUT.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ABOUT"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="../source/AboutEx/Frm_AboutExMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_AboutExMAIN"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="../source/Actions/Frm_ActionsMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ActionsMain"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="../source/Addpage/Frm_AddpageMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_AddpageMAIN"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="../source/Barchart/BarChart.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="BarChart"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="../source/Barchart/Frm_BartestMain2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_BartestMain2"/>
+      </Unit21>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -194,8 +245,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestBarTest2"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/tests;../source/_core/tools"/>
-      <IncludeFiles Value="../source/tests;../source/_core/tools"/>
+      <OtherUnitFiles Value="../source/tests;../source/AboutEx;../source/Actions;../source/Addpage;../source/Barchart;../source/_core/tools"/>
+      <IncludeFiles Value="../source/tests;../source/AboutEx;../source/Actions;../source/Addpage;../source/Barchart;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

@@ -13,8 +13,6 @@ uses
   COLORDLG,
   Frm_TestCdlgMAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

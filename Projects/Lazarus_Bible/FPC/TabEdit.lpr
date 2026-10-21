@@ -13,8 +13,6 @@ uses
   Frm_AboutTabedit,
   Frm_TabeditMain;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

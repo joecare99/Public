@@ -14,8 +14,6 @@ uses
   ReadMeDocument,
   ReadMeViewModel;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

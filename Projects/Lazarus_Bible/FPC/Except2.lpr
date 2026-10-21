@@ -12,8 +12,6 @@ uses
   FormShot,
   frm_Except2MAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

@@ -27,7 +27,7 @@ uses
  Clipbrd,
  SysUtils,
  Printers,
- Frm_About,
+ Frm_ABOUT,
 {$IFnDEF FPC}
   Windows,
 {$ELSE}

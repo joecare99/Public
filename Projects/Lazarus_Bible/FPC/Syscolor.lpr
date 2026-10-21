@@ -13,8 +13,6 @@ uses
   Frm_ABOUTDLG,
   Frm_SyscolorMAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

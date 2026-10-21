@@ -11,8 +11,6 @@ uses
   SysUtils,
   Frm_CLRFORM;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

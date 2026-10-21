@@ -13,8 +13,6 @@ uses
   DefaultTranslator,
   Frm_RunMeTEST;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

@@ -13,8 +13,6 @@ uses
   Frm_MDIDemoABOUT,
   Frm_MDIDemoMAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

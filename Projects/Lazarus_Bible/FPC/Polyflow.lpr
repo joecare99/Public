@@ -12,8 +12,6 @@ uses
   FormShot,
   Frm_PolyflowMain;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

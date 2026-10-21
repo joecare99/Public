@@ -13,8 +13,6 @@ uses
   Frm_CharGridABOUT,
   Frm_CharGridMAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

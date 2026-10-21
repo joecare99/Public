@@ -13,8 +13,6 @@ uses
   DefaultTranslator,
   frm_CooldemoMain;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

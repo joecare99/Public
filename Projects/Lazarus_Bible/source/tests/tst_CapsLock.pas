@@ -1,9 +1,6 @@
 unit tst_CapsLock;
 
 {$IFDEF FPC}
-  {$MODE Delphi}
-{$ENDIF}
-{$IFDEF FPC}
 {$mode objfpc}{$H+}
 {$ENDIF}
 

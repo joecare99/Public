@@ -13,8 +13,6 @@ uses
   Ctrl_DingButton,
   Frm_TestDingMain;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

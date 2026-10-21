@@ -12,8 +12,6 @@ uses
   FormShot,
   frm_ConstraintMain;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

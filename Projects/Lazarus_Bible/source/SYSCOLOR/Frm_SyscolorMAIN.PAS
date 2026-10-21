@@ -19,7 +19,7 @@ uses
  Buttons,
  ExtCtrls,
 
-  Frm_AboutDlg,
+  Frm_ABOUTDLG,
  IniFiles,
  Menus,
 {$IFnDEF FPC}

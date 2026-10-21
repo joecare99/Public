@@ -13,7 +13,7 @@
       <MainUnit Value="0"/>
       <Title Value="GlyphLst"/>
       <UseAppBundle Value="False"/>
-      <ResourceType Value="res"/>
+      <ResourceType Value=""/>
     </General>
     <i18n>
       <EnableI18N LFM="True"/>

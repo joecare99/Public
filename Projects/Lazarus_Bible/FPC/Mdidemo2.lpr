@@ -15,8 +15,6 @@ uses
   frm_MDIDemo2ABOUT,
   Frm_MDIDemo2MAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

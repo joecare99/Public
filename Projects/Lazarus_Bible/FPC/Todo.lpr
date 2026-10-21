@@ -13,8 +13,6 @@ uses
   Frm_ABOUT,
   Frm_TodoMAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

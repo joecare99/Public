@@ -13,8 +13,6 @@ uses
   Frm_SQLOPENDB,
   Frm_SqlplayMAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

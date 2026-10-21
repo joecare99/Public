@@ -16,6 +16,13 @@ REPORT="$BUILDDIR/build-report.txt"
 mkdir -p "$BUILDDIR" "$BUILDDIR/logs"
 : > "$REPORT"
 
+# Veraltete Unit-Dateien (.ppu) im Ausgabeordner fuehren zu Phantom-Fehlern,
+# wenn Units umbenannt oder verschoben wurden. Deshalb wird der Cache
+# vor einem Gesamtlauf geleert (CLEAN=0 ueberspringt das).
+if [ "${CLEAN:-1}" = "1" ] && [ -d "$ROOT/bin" ]; then
+    rm -rf "$ROOT"/bin/*/units
+fi
+
 ok=0
 fail=0
 failed=""

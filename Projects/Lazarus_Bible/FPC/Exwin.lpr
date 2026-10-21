@@ -8,9 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
-  SysUtils,
-
-{$R *.res}
+  SysUtils;
 
 begin
   RequireDerivedFormResource := True;

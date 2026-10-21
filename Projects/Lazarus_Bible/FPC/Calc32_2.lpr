@@ -13,8 +13,6 @@ uses
   Frm_CALC2,
   Frm_Calc2ABOUT;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

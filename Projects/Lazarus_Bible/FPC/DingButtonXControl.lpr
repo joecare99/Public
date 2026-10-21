@@ -13,8 +13,6 @@ uses
   DingButtonXControl_TLB,
   Frm_DingAbout;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

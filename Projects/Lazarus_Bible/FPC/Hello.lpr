@@ -13,8 +13,6 @@ uses
   Frm_HelloMAIN,
   HelloViewModel;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

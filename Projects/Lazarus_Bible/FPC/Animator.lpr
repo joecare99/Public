@@ -13,8 +13,6 @@ uses
   cmpAnimator,
   Frm_AnimatorMain;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

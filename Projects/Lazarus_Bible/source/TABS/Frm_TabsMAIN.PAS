@@ -38,8 +38,8 @@ uses
  ExtCtrls,
  Menus,
 
-  Frm_About,
- Frm_Options,
+  Frm_ABOUT,
+ Frm_OPTIONS,
  TabsUnit,
 {$IFnDEF FPC}
   Windows,

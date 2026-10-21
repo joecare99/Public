@@ -13,8 +13,6 @@ uses
   Frm_DIRDLG,
   Frm_DirExecMAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

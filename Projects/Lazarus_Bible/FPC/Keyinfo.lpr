@@ -12,8 +12,6 @@ uses
   FormShot,
   Frm_KeyInfoMAIN;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;

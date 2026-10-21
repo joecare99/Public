@@ -12,8 +12,6 @@ uses
   FormShot,
   Frm_GlyphListMain;
 
-{$R *.res}
-
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;
