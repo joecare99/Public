@@ -102,12 +102,21 @@ begin
   { The copyright line. The string of the original binary starts with the
     byte $A9, which is the copyright sign in the code page 1252 that the
     program uses. }
-  Label2.Caption := '© 1998-2014';
+  Label2.Caption := 'ï¿½ 1998-2014';
 
   { The date of the output and the date of the last change are taken from
-    the two global doubles at $02536924 and $0253691C. }
-  Label8.Caption := '(Ausgabe vom ' + DateToStr(gvar_02536924) + ')';
-  Label9.Caption := 'Letzte Bearbeitung am ' + DateToStr(gvar_0253691C);
+    the two global doubles at $02536924 and $0253691C. A value of 0 means
+    that the file in question was not found - the program then shows no
+    date at all, instead of the date of the epoch. }
+  if gvar_02536924 > 0 then
+    Label8.Caption := '(Ausgabe vom ' + DateToStr(gvar_02536924) + ')'
+  else
+    Label8.Caption := '(Ausgabe vom )';
+
+  if gvar_0253691C > 0 then
+    Label9.Caption := 'Letzte Bearbeitung am ' + DateToStr(gvar_0253691C)
+  else
+    Label9.Caption := 'Letzte Bearbeitung am ';
 end;
 
 // 005C6D74

@@ -458,41 +458,41 @@ type
     SicherungsDateieinlesen2: TMenuItem; //9C4
     Button1: TButton; //9C8
     procedure listen_akt; //005F0AF0
-    procedure ComboBox1Exit; //00603A50
-    procedure DBLookupComboBox17Exit; //00603740
-    procedure DBLookupComboBox16Exit; //006038A8
+    procedure ComboBox1Exit(Sender: TObject); //00603A50
+    procedure DBLookupComboBox17Exit(Sender: TObject); //00603740
+    procedure DBLookupComboBox16Exit(Sender: TObject); //006038A8
     procedure TabSheet2Exit(Sender:TObject); //00603D50
-    procedure DBLookupComboBox12MouseDown; //00603EE0
-    procedure ComboBox2Exit; //00603B50
-    procedure ComboBox3Exit; //00603C50
+    procedure DBLookupComboBox12MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X: Integer; Y: Integer); //00603EE0
+    procedure ComboBox2Exit(Sender: TObject); //00603B50
+    procedure ComboBox3Exit(Sender: TObject); //00603C50
     procedure TabSheet7Enter(Sender:TObject); //006036AC
     procedure FamilienblattHTML1Click(Sender:TObject); //00602D2C
     procedure OrtsDatei1Click(Sender:TObject); //00602E00
-    procedure DBEdit69Change; //00602C14
+    procedure DBEdit69Change(Sender: TObject); //00602C14
     procedure PopupMenu1Popup; //00602C34
     procedure gridanp; //005D3EF8
     procedure NamensListeeditieren1Click(Sender:TObject); //00603678
-    procedure DBLookupComboBox4MouseDown; //00602F3C
-    procedure DBLookupComboBox17MouseDown; //006034D8
-    procedure Einzelpersonenmarkieren1Click; //00605A2C
-    procedure DBLookupComboBox4Enter; //00606D80
+    procedure DBLookupComboBox4MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X: Integer; Y: Integer); //00602F3C
+    procedure DBLookupComboBox17MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X: Integer; Y: Integer); //006034D8
+    procedure Einzelpersonenmarkieren1Click(Sender: TObject); //00605A2C
+    procedure DBLookupComboBox4Enter(Sender: TObject); //00606D80
     procedure DBGrid3Exit(Sender:TObject); //006059B8
     procedure DBGrid3KeyDown(Sender:TObject; var Key:Word; Shift:TShiftState); //006059E4
-    procedure DBLookupComboBox7Enter; //00606D8C
-    procedure DBLookupComboBox8Enter; //00606D90
-    procedure DBLookupComboBox5Enter; //00606D84
-    procedure DBLookupComboBox6Enter; //00606D88
+    procedure DBLookupComboBox7Enter(Sender: TObject); //00606D8C
+    procedure DBLookupComboBox8Enter(Sender: TObject); //00606D90
+    procedure DBLookupComboBox5Enter(Sender: TObject); //00606D84
+    procedure DBLookupComboBox6Enter(Sender: TObject); //00606D88
     procedure DBGrid3DblClick(Sender:TObject); //00605814
     procedure QuellenListeeditieren1Click(Sender:TObject); //00604810
-    procedure Quellesuchen1Click; //00604820
-    procedure DBLookupComboBox19MouseDown; //006044C4
-    procedure DBLookupComboBox19Click; //006047EC
-    procedure DBComboBox3Change; //006053EC
+    procedure Quellesuchen1Click(Sender: TObject); //00604820
+    procedure DBLookupComboBox19MouseDown(Sender: TObject; Button: TMouseButton; Shift: TShiftState; X: Integer; Y: Integer); //006044C4
+    procedure DBLookupComboBox19Click(Sender: TObject); //006047EC
+    procedure DBComboBox3Change(Sender: TObject); //006053EC
     procedure DBComboBox3Exit(Sender:TObject); //00605754
     procedure drucken1Click(Sender:TObject); //0060482C
     procedure QRDefault; //005F0170
-    procedure druck; //005EFF30
-    procedure vorf_erm2; //00600F50
+    procedure druck(AMode: Integer; AText: AnsiString); //005EFF30
+    procedure vorf_erm2(ANummer: Integer; AFlag: Boolean; AText: AnsiString); //00600F50
     procedure Hilfe1Click(Sender:TObject); //006023F4
     procedure GrafikI1Click(Sender:TObject); //00600D58
     procedure Grafikalt1Click(Sender:TObject); //006022BC
@@ -506,7 +506,7 @@ type
     procedure Listen2Click(Sender:TObject); //005FD640
     procedure Button1Click(Sender:TObject); //005FD6A0
     procedure geschachtelt1Click(Sender:TObject); //005FE844
-    procedure geb_sterb; //005FDF68
+    procedure geb_sterb(AAnsiString: AnsiString); //005FDF68
     procedure AHNENDOSeinlesen1Click(Sender:TObject); //005FDAA4
     procedure OSBeinlesen1Click(Sender:TObject); //005FDD0C
     procedure Edit13Exit(Sender:TObject); //00602B58
@@ -515,7 +515,7 @@ type
     procedure Edit10Exit(Sender:TObject); //00602AD0
     procedure FormActivate(Sender:TObject); //00602BF0
     procedure DBCheckBox1Exit(Sender:TObject); //00602C04
-    procedure ComboBox5Change; //00602BE4
+    procedure ComboBox5Change(Sender: TObject); //00602BE4
     procedure DBEdit47Exit(Sender:TObject); //006028B0
     procedure DBEdit55Exit(Sender:TObject); //006029C0
     procedure aspitz; //005E4C30
@@ -545,56 +545,56 @@ type
     procedure DBEdit3Exit(Sender:TObject); //0060DB68
     procedure GebDatumTaufdatum1Click(Sender:TObject); //006180D8
     procedure DBComboBox1Exit(Sender:TObject); //00618254
-    procedure DBEdit10Change; //006180CC
+    procedure DBEdit10Change(Sender: TObject); //006180CC
     procedure DBMemo1Exit(Sender:TObject); //006180D0
     procedure PopupMenu2Popup; //00618938
     procedure DBComboBox7Exit(Sender:TObject); //00618A30
     procedure ComboBox5Exit(Sender:TObject); //006183B8
-    procedure Lb_speich; //006184B0
-    procedure DBEdit9Change; //006180C8
+    procedure Lb_speich(ATabelle: Integer); //006184B0
+    procedure DBEdit9Change(Sender: TObject); //006180C8
     procedure Image2Click(Sender:TObject); //00614074
     procedure TabSheet9Show(Sender:TObject); //00615FD8
     procedure Basen1Click(Sender:TObject); //0061182C
     procedure TabSheet2Show(Sender:TObject); //00614068
     procedure DBEdit5MouseDown(Sender:TObject; Button:TMouseButton; Shift:TShiftState; X:Integer; Y:Integer); //006180BC
-    procedure DBEdit8Change; //006180C4
+    procedure DBEdit8Change(Sender: TObject); //006180C4
     procedure TabSheet9Exit(Sender:TObject); //00617F78
     procedure ComboBox4DblClick(Sender:TObject); //006180B8
     procedure Vorlist; //00607C78
-    procedure DBLookupComboBox6KeyPress; //0060746C
-    procedure DBLookupComboBox7KeyPress; //006074AC
-    procedure DBLookupComboBox4KeyPress; //006073EC
-    procedure DBLookupComboBox5KeyPress; //0060742C
-    procedure DBLookupComboBox10KeyPress; //006074FC
-    procedure DBLookupComboBox11KeyPress; //00607504
-    procedure DBLookupComboBox8KeyPress; //006074EC
-    procedure DBLookupComboBox9KeyPress; //006074F4
+    procedure DBLookupComboBox6KeyPress(Sender: TObject; var Key: Char); //0060746C
+    procedure DBLookupComboBox7KeyPress(Sender: TObject; var Key: Char); //006074AC
+    procedure DBLookupComboBox4KeyPress(Sender: TObject; var Key: Char); //006073EC
+    procedure DBLookupComboBox5KeyPress(Sender: TObject; var Key: Char); //0060742C
+    procedure DBLookupComboBox10KeyPress(Sender: TObject; var Key: Char); //006074FC
+    procedure DBLookupComboBox11KeyPress(Sender: TObject; var Key: Char); //00607504
+    procedure DBLookupComboBox8KeyPress(Sender: TObject; var Key: Char); //006074EC
+    procedure DBLookupComboBox9KeyPress(Sender: TObject; var Key: Char); //006074F4
     procedure Einzelpersonen1Click(Sender:TObject); //006073B8
-    procedure DBLookupComboBox11Enter; //00606D9C
-    procedure DBLookupComboBox1Enter; //00606DA0
-    procedure DBLookupComboBox9Enter; //00606D94
-    procedure DBLookupComboBox10Enter; //00606D98
+    procedure DBLookupComboBox11Enter(Sender: TObject); //00606D9C
+    procedure DBLookupComboBox1Enter(Sender: TObject); //00606DA0
+    procedure DBLookupComboBox9Enter(Sender: TObject); //00606D94
+    procedure DBLookupComboBox10Enter(Sender: TObject); //00606D98
     procedure NichtverknpfteBeziehungen1Click(Sender:TObject); //00606DAC
     procedure DoppelteEintrge1Click(Sender:TObject); //00607310
-    procedure DBLookupComboBox2Enter; //00606DA4
-    procedure DBLookupComboBox3Enter; //00606DA8
-    procedure DBLookupComboBox18KeyPress; //00607704
-    procedure DBLookupComboBox19KeyPress; //00607744
-    procedure DBLookupComboBox13KeyPress; //00607684
-    procedure DBLookupComboBox14KeyPress; //006076C4
-    procedure DBLookupComboBox22KeyPress; //0060781C
+    procedure DBLookupComboBox2Enter(Sender: TObject); //00606DA4
+    procedure DBLookupComboBox3Enter(Sender: TObject); //00606DA8
+    procedure DBLookupComboBox18KeyPress(Sender: TObject; var Key: Char); //00607704
+    procedure DBLookupComboBox19KeyPress(Sender: TObject; var Key: Char); //00607744
+    procedure DBLookupComboBox13KeyPress(Sender: TObject; var Key: Char); //00607684
+    procedure DBLookupComboBox14KeyPress(Sender: TObject; var Key: Char); //006076C4
+    procedure DBLookupComboBox22KeyPress(Sender: TObject; var Key: Char); //0060781C
     procedure bernehmen1Click(Sender:TObject); //0060785C
-    procedure DBLookupComboBox20KeyPress; //0060778C
-    procedure DBLookupComboBox21KeyPress; //006077D4
-    procedure DBLookupComboBox12KeyPress; //00607644
+    procedure DBLookupComboBox20KeyPress(Sender: TObject; var Key: Char); //0060778C
+    procedure DBLookupComboBox21KeyPress(Sender: TObject; var Key: Char); //006077D4
+    procedure DBLookupComboBox12KeyPress(Sender: TObject; var Key: Char); //00607644
     procedure ComboBox3KeyPress(Sender:TObject; var Key:Char); //0060759C
-    procedure DBLookupComboBox1KeyPress; //006075E4
+    procedure DBLookupComboBox1KeyPress(Sender: TObject; var Key: Char); //006075E4
     procedure ComboBox1KeyPress(Sender:TObject; var Key:Char); //0060750C
     procedure ComboBox2KeyPress(Sender:TObject; var Key:Char); //00607554
-    procedure DBLookupComboBox16KeyPress; //006075FC
-    procedure DBLookupComboBox17KeyPress; //0060763C
-    procedure DBLookupComboBox2KeyPress; //006075EC
-    procedure DBLookupComboBox3KeyPress; //006075F4
+    procedure DBLookupComboBox16KeyPress(Sender: TObject; var Key: Char); //006075FC
+    procedure DBLookupComboBox17KeyPress(Sender: TObject; var Key: Char); //0060763C
+    procedure DBLookupComboBox2KeyPress(Sender: TObject; var Key: Char); //006075EC
+    procedure DBLookupComboBox3KeyPress(Sender: TObject; var Key: Char); //006075F4
     procedure DBEdit8Exit(Sender:TObject); //005E5CF0
     procedure DBEdit13Exit(Sender:TObject); //005E5E28
     procedure DBEdit22Exit(Sender:TObject); //005E5AC8
@@ -622,14 +622,14 @@ type
     procedure TabSheet4Enter(Sender:TObject); //005E8FC4
     procedure beenden1Click(Sender:TObject); //005E7844
     procedure TabSheet1MouseDown(Sender:TObject; Button:TMouseButton; Shift:TShiftState; X:Integer; Y:Integer); //005E62D4
-    procedure ucase; //005D7AA8
+    procedure ucase(AAnsiString: AnsiString; AFormat: Integer); //005D7AA8
     procedure DBEdit20Exit(Sender:TObject); //005E60B0
     procedure Verbindunglschen1Click(Sender:TObject); //005E60B8
     procedure StringGrid4DblClick(Sender:TObject); //005E7654
     procedure DBGrid1KeyDown(Sender:TObject; var Key:Word; Shift:TShiftState); //005E7728
     procedure TabSheet5Enter(Sender:TObject); //005E683C
-    procedure geschw; //005E6304
-    procedure datcheck; //005D859C
+    procedure geschw(A1, A2, A3, A4, A5, A6, A7, A8, A9, A10: Integer); //005E6304
+    procedure datcheck(AMode: Integer; AShow: Boolean; AText: AnsiString); //005D859C
     procedure kinderanz; //005D6E2C
     procedure eltanz; //005D76D0
     procedure StringGrid1DblClick(Sender:TObject); //005D93E8
@@ -661,7 +661,7 @@ type
     procedure lab18ein; //005D8704
     procedure datsich; //005DCD54
     procedure Datensichern1Click(Sender:TObject); //005E1DC0
-    procedure alineu; //005E1DF8
+    procedure alineu(AAnsiString: AnsiString); //005E1DF8
     procedure tabenab; //005D8778
     procedure SicherungsDateieinlesen1Click(Sender:TObject); //005E1D2C
     procedure ChristlicheNamenstage1Click(Sender:TObject); //005FA138
@@ -677,13 +677,13 @@ type
     procedure Probandenname1Click(Sender:TObject); //005F26E0
     procedure StringGrid2RowMoved; //005EFD84
     procedure frbestimmtenOrt1Click(Sender:TObject); //005F02D8
-    procedure Browser1Click; //005F2F00
+    procedure Browser1Click(AUrl: AnsiString); //005F2F00
     procedure FormResize(Sender:TObject); //005F2F3C
     procedure allePersonen2Click(Sender:TObject); //005F2E20
     procedure Browser; //005F2E6C
     procedure OFBDruck1Click(Sender:TObject); //005FC700
     procedure alleBilderentfernen1Click(Sender:TObject); //005FCB20
-    procedure sdx; //005D34D8
+    procedure sdx(A1, A2, A3, A4, A5, A6, A7, A8, A9: Integer); //005D34D8
     procedure FOKODateieditieren1Click(Sender:TObject); //005FC67C
     procedure GedcomDateieinlesen1Click(Sender:TObject); //005FCDA0
     procedure GedcomDateischreiben1Click(Sender:TObject); //005FD330
@@ -696,7 +696,7 @@ type
     procedure Grafikneu1Click(Sender:TObject); //005FB3CC
     procedure Liste1Click(Sender:TObject); //005FBEAC
     procedure FOKODateierstellen1Click(Sender:TObject); //005FC4F0
-    procedure showpreview; //005FBD5C
+    procedure showpreview(AForm: Integer); //005FBD5C
     procedure GlobaleSuche1Click(Sender:TObject); //005FBD98
     procedure StringGrid1RowMoved; //005EFBF4
     procedure PopupMenu3Popup; //005EB760
@@ -710,7 +710,7 @@ type
     procedure DBEdit2Exit(Sender:TObject); //005EB534
     procedure aus1Click(Sender:TObject); //005E9B54
     procedure Datenschutzein1Click(Sender:TObject); //005E9D04
-    procedure roem; //005E2CA4
+    procedure roem(ANummer: Integer; AFlag: Boolean); //005E2CA4
     procedure ID1Click(Sender:TObject); //005E98B0
     procedure DBEdit33Exit(Sender:TObject); //005EB1C4
     procedure TabSheet3Enter(Sender:TObject); //005EB350
@@ -721,7 +721,7 @@ type
     procedure StringGrid5KeyDown(Sender:TObject; var Key:Word; Shift:TShiftState); //005EF604
     procedure StringGrid5DblClick(Sender:TObject); //005EF620
     procedure Hausname1Click(Sender:TObject); //005EF944
-    procedure drucken2Click; //005D3ED0
+    procedure drucken2Click(Sender: TObject); //005D3ED0
     procedure FrzRevolutionskalender1Click(Sender:TObject); //005EF778
     procedure zuAHNENWIN1Click(Sender:TObject); //005EF7F0
     procedure Partnersuche1Click(Sender:TObject); //005EED2C
@@ -740,6 +740,8 @@ var
 
 implementation
 
+uses
+  AHNGlobals, Windows, Printers, Unit2, Unit8;
 {$R ..\Forms\Form1.DFM}
 
 
@@ -1668,10 +1670,284 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm1.FormCreate(Sender:TObject);
+procedure TForm1.FormCreate(Sender: TObject);
+var
+  OsVersion: TOsVersionInfo;
+  Faktor: Double;
+  i: Integer;
+  h: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The directory of the program is remembered in the global string
+    gvar_02536B9C; it is the base for the help file, for the alias of the
+    BDE and for the configuration file. }
+  gvar_02536B9C := ExtractFilePath(ParamStr(0));
+
+  { The title and the help file depend on the Windows version: from Windows
+    2000 on the program uses the compiled help file, before that the old
+    help file. On a system that does not know GetVersionEx at all the
+    except branch sets a blank help file. }
+  try
+    OsVersion.dwOSVersionInfoSize := SizeOf(OsVersion);
+    GetVersionEx(OsVersion);
+    if OsVersion.dwMajorVersion >= 6 then
+    begin
+      Application.Title := 'AHNENWIN 5.1';
+      Application.HelpFile := gvar_02536B9C + 'AHNWIN50.chm';
+    end
+    else
+    begin
+      Application.Title := 'AHNENWIN 5.1';
+      Application.HelpFile := gvar_02536B9C + 'AHNWIN51.HLP';
+    end;
+  except
+    Application.Title := 'AHNENWIN 5.1';
+    Application.HelpFile := gvar_02536B9C + ' ';
+  end;
+
+  { The screen dimensions at the moment of the start are remembered, they
+    are the reference for the scaling of the other forms. }
+  gvar_02536BA8 := Screen.Height;
+  gvar_02536BAC := Screen.Width;
+  gvar_02536BA4 := Height;
+
+  { The directory for the pictures of the family chart.
+
+    The listing calls a function of the VCL that reports whether the
+    directory exists - FileExists would return false for a directory, so
+    DirectoryExists is the equivalent that matches the behaviour of the
+    original. }
+  if not DirectoryExists('Bilder') then
+    if not CreateDir('Bilder') then
+      raise Exception.Create('Verzeichnis Bilder kann nicht erstellt werden');
+
+  UpDown1.Visible := False;
+
+  { The BDE is configured for the directory of the program: the tables
+    are found through the standard alias "PARADOX". The configuration mode
+    cfmSession (the value 4 of the listing) keeps the alias for the
+    session only. }
+  gvar_0253692C := 'crea';
+  gvar_02536B9C := ExtractFilePath(ParamStr(0));
+  Session.ConfigMode := [cfmSession];
+  Session.AddStandardAlias(' ', gvar_02536B9C, 'PARADOX');
+  Application.CreateForm(TDataModule2, DataModule2);
+
+  alineu(' ');
+
+  { The program needs a printer; the list of the installed printers is
+    shown in the memo while it is checked. }
+  Memo1.Clear;
+  Memo1.Lines := Printer.Printers;
+  if Trim(Memo1.Lines[0]) = '' then
+  begin
+    ShowMessage('Bitte zuerst einen Drucker installieren.');
+    Halt(0);
+  end;
+  Memo1.Clear;
+
+  { The form is scaled to the screen, and the row height and the column
+    widths of the five month grids are taken from the height of the edit
+    field. The listing multiplies the column widths with the factor 1.0;
+    the value is kept as it is. }
+  Scaled := True;
+  Faktor := 1.0;
+
+  StringGrid1.DefaultRowHeight := DBEdit2.Height - 2;
+  for i := 0 to 5 do
+    StringGrid1.ColWidths[i] := Round(StringGrid1.ColWidths[i] * Faktor);
+
+  StringGrid2.DefaultRowHeight := DBEdit2.Height - 2;
+  for i := 0 to 5 do
+    StringGrid2.ColWidths[i] := Round(StringGrid2.ColWidths[i] * Faktor);
+
+  StringGrid3.DefaultRowHeight := DBEdit2.Height - 2;
+  for i := 0 to 4 do
+    StringGrid3.ColWidths[i] := Round(StringGrid3.ColWidths[i] * Faktor);
+
+  StringGrid4.DefaultRowHeight := DBEdit2.Height - 2;
+  for i := 0 to 4 do
+    StringGrid4.ColWidths[i] := Round(StringGrid4.ColWidths[i] * Faktor);
+
+  StringGrid5.DefaultRowHeight := DBEdit2.Height - 2;
+  for i := 0 to 3 do
+    StringGrid5.ColWidths[i] := Round(StringGrid5.ColWidths[i] * Faktor);
+
+  { The password of the Paradox tables. }
+  Session.AddPassword('hheerrii');
+
+  { The five edit fields for the unused import are put behind. }
+  Edit3.SendToBack;
+  Edit7.SendToBack;
+  Edit11.SendToBack;
+  Edit12.SendToBack;
+  Edit16.SendToBack;
+
+  { The dates of the program file and of the database are shown in the
+    about box.
+
+    The original opens both files without checking the result. When a file
+    is missing, FileOpen returns -1 and FileGetDate(-1) returns -1, so
+    FileDateToDateTime raises EConvertError ("Ungueltiges Argument zum
+    Codieren des Datums"). The reconstruction checks the handle, uses the
+    date when the file is there and falls back to 0 (the epoch) when it is
+    not, so that the program starts without a database as well. The file
+    handles are closed in every case - the original closes them too. }
+  h := FileOpen('AHNWIN51.exe', 64);
+  if h >= 0 then
+  begin
+    gvar_02536924 := FileDateToDateTime(FileGetDate(h));
+    FileClose(h);
+  end
+  else
+    gvar_02536924 := 0;
+
+  h := FileOpen('awd.db', 64);
+  if h >= 0 then
+  begin
+    gvar_0253691C := FileDateToDateTime(FileGetDate(h));
+    FileClose(h);
+  end
+  else
+    gvar_0253691C := 0;
+
+  Application.ShowHint := True;
+
+  { The tables of the database are opened. Table1 and Table5 are opened
+    exclusively for a moment, so that the maximum number of the persons
+    can be read. }
+  DataModule2.Table1.Exclusive := True;
+  DataModule2.Table1.Exclusive := False;
+  DataModule2.Table1.Open;
+  DataModule2.Table1.IndexName := '';
+  DataModule2.Table1.Last;
+  gvar_0253690C := DataModule2.Table1Nummer.AsInteger + 1;
+  DataModule2.Table1.First;
+
+  DataModule2.Table2.Open;
+  DataModule2.Table3.Open;
+  DataModule2.Table3.IndexName := '';
+  DataModule2.Table4.Open;
+  DataModule2.Table4.IndexName := '';
+
+  DataModule2.Table5.Exclusive := True;
+  DataModule2.Table5.Exclusive := False;
+  DataModule2.Table5.Open;
+  DataModule2.Table5.IndexName := 'num';
+  DataModule2.Table6.Open;
+  DataModule2.Table6.IndexName := '';
+  DataModule2.Table7.Open;
+  DataModule2.Table7.IndexName := 'vat';
+  DataModule2.Table8.Open;
+  DataModule2.Table8.IndexName := '';
+  DataModule2.Table9.Open;
+  DataModule2.Table9.IndexName := '';
+  DataModule2.Table10.Open;
+  DataModule2.Table10.IndexName := '';
+  DataModule2.Table11.Open;
+  DataModule2.Table11.IndexName := '';
+
+  { The name list fills two of the combo boxes. }
+  DataModule2.Table12.Exclusive := True;
+  DataModule2.Table12.Exclusive := False;
+  DataModule2.Table12.Open;
+  ComboBox4.Clear;
+  ComboBox10.Clear;
+  DataModule2.Table12.First;
+  while not DataModule2.Table12.Eof do
+  begin
+    ComboBox4.Items.Add(DataModule2.Table12Name.AsString);
+    ComboBox10.Items.Add(DataModule2.Table12Name.AsString);
+    DataModule2.Table12.Next;
+  end;
+
+  { The places fill the remaining combo boxes - but only when they are not
+    filled already. }
+  DataModule2.Table13.Open;
+  DataModule2.Table13.First;
+  if ComboBox6.Items.Count < 2 then
+  begin
+    ComboBox6.Clear;
+    ComboBox1.Clear;
+    ComboBox2.Clear;
+    ComboBox3.Clear;
+    ComboBox7.Clear;
+    ComboBox8.Clear;
+    ComboBox9.Clear;
+    ComboBox16.Clear;
+    ComboBox17.Clear;
+    ComboBox18.Clear;
+    ComboBox19.Clear;
+    ComboBox20.Clear;
+    ComboBox21.Clear;
+    ComboBox22.Clear;
+    ComboBox23.Clear;
+    ComboBox24.Clear;
+    ComboBox25.Clear;
+    DataModule2.Table13.First;
+    while not DataModule2.Table13.Eof do
+    begin
+      ComboBox6.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox1.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox2.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox3.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox7.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox8.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox9.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox16.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox17.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox18.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox19.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox20.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox21.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox22.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox11.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox12.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox13.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox14.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox15.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox23.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox24.Items.Add(DataModule2.Table13Ort.AsString);
+      ComboBox25.Items.Add(DataModule2.Table13Ort.AsString);
+      DataModule2.Table13.Next;
+    end;
+  end;
+
+  { The sources of the current person are shown in the combo boxes. }
+  DataModule2.Table37.Open;
+  DataModule2.Table37.First;
+  ComboBox12.Text := DataModule2.Table1Quellet.AsString;
+  ComboBox13.Text := DataModule2.Table1Quelles.AsString;
+  ComboBox14.Text := DataModule2.Table1Quelleb.AsString;
+  ComboBox15.Text := DataModule2.Table1Quelle.AsString;
+
+  { The fifth grid is only used while the calendar is shown. }
+  StringGrid5.Visible := False;
+
+  { One entry of the menu is removed. }
+  MainMenu1.Items[3].Items[5].Visible := False;
+
+  { The splash screen is closed. }
+  Form8.Close;
+
+  { The window caption is taken from the configuration file "par.cfg"; it
+    holds a short string of up to 50 characters. When the file does not
+    exist, it is created and the caption of the form is kept. }
+  if FileExists(gvar_02536B9C + 'par.cfg') then
+  begin
+    gvar_02536BB0 := TFileStream.Create(gvar_02536B9C + 'par.cfg', fmOpenRead);
+    gvar_02536BB0.ReadBuffer(gvar_02536BB4, 51);
+  end
+  else
+    gvar_02536BB0 := TFileStream.Create(gvar_02536B9C + 'par.cfg', fmCreate);
+
+  Caption := gvar_02536BB4;
+  Application.Title := gvar_02536BB4;
+  gvar_02536BB0.Free;
+
+  DataModule2.Table1.Edit;
+  DataModule2.Table5.Edit;
 end;
+
 
 procedure TForm1.FormClose(Sender:TObject; var Action:TCloseAction);
 begin
@@ -1685,7 +1961,37 @@ end;
 
 procedure TForm1.FormShow(Sender:TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The listing calls Table1Nummer.GetAsInteger and discards the result.
+    The value was assigned to a local variable that the compiler removed
+    because it was never used. }
+  DataModule2.Table1Nummer.AsInteger;
+
+  { The factor for the scaling of the display and the number of lines
+    that are calculated from it. }
+  gvar_0061F120 := 1.9;
+  gvar_0061F11C := Round(gvar_0061F120 * 6);
+
+  PageControl1.ActivePage := TabSheet2;
+
+  { Without persons in the table the entry for a new person is not
+    possible. }
+  if DataModule2.Table1.RecordCount < 1 then
+    neu1.Enabled := False;
+
+  { The tables of the places, of the titles and of the notes are opened
+    and positioned on their first record. }
+  DataModule2.Table12.Open;
+  DataModule2.Table12.First;
+  DataModule2.Table38.Open;
+  DataModule2.Table38.IndexName := 'tit';
+  DataModule2.Table38.First;
+  DataModule2.Table13.Open;
+  DataModule2.Table13.First;
+
+  DBGrid3.Visible := False;
+  Label81.Visible := False;
+
+  anzeigen;
 end;
 
 procedure TForm1.schen1Click(Sender:TObject);

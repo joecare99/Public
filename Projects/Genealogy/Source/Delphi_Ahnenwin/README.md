@@ -200,3 +200,40 @@ its address in the AHNENWIN 5.1 binary and its reconstruction state. The
 order of the work follows the dependency edges that the same file records:
 the units with the fewest dependencies first, so that every method can be
 checked against methods that are already reconstructed.
+
+### Wave 0 - the leaf units (done)
+
+| Unit | Methods | Reconstructed | Still open |
+|---|---|---|---|
+| Unit4  | 5  | 5  | - |
+| Unit6  | 13 | 12 | `Kal` (the calendar computation) |
+| Unit7  | 8  | 7  | `berechnen` (the Republican calendar conversion) |
+| Unit9  | 7  | 6  | - |
+| Unit10 | 13 | 11 | `Browser`, `rechnen` (the Easter calculation) |
+| Unit11 | 8  | 6  | `Fgr`, `zeichnen` (the family chart) |
+| Unit12 | 5  | 5  | - |
+| Unit27 | 3  | 3  | - |
+| Unit31 | 4  | 4  | - |
+| Unit34 | 3  | 3  | - |
+| Unit35 | 4  | 4  | - |
+| Unit37 | 2  | 2  | - |
+| Unit38 | 1  | 1  | - |
+| Unit40 | 3  | 3  | - |
+
+The six methods that are still open are the algorithmic core of their
+units: the Gregorian calendar computation, the French Republican calendar
+conversion, the Easter calculation, the family chart drawing, and the
+browser page generator. They are the largest listings of the program
+(`Fgr` alone is 4322 lines of assembly) and they are the natural next
+step after the wave 1 units.
+
+### One instruction that could not be derived unambiguously
+
+`TForm12.SpeedButton1Click` calls a *dynamic* method of `Form13.Button2`
+with the selector `-21` (`mov si,0FFEB / call @CallDynaInst`). The dynamic
+method table of a class depends on the exact VCL version, and the IDR
+output does not preserve that table, so the selector cannot be resolved to
+a unique method name from the disassembly alone. `TControl.Click` is the
+only dynamic method of a button that application code invokes; it raises
+the published `OnClick` handler of the button. The reconstruction uses
+`Form13.Button2.Click` and the uncertainty is noted in the code.

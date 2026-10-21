@@ -16,11 +16,21 @@ program AHNWIN51;
     tools\                StreamCheck (resource verification) and gen-unit
     docs\                 cross reference and reconstruction evidence
 
+  The order in which the forms are created is the order of the original
+  program (Source\Projects_AhnenWin\AHNWIN51.dpr).
+
   Build with build.cmd (Delphi 9 / RAD Studio 3.0 + BDE 5.2).
 -------------------------------------------------------------------------------}
 
 uses
-  SysUtils, Classes, Forms,
+  SysUtils, Classes, Forms, DBTables,
+  { The JPEG unit registers the JPEG graphic format at run time. A graphic
+    that is stored in a DFM as "Picture.Data" is loaded through
+    TBitmap.LoadFromStream, which dispatches over the registered graphic
+    formats - without this unit every JPEG picture of the program would be
+    silently dropped. The original binary links the unit as well (it is
+    present in the decompilation as jpeg.pas). }
+  JPEG,
   Unit1  in 'Units\Unit1.pas',
   Unit2  in 'Units\Unit2.pas',
   Unit3  in 'Units\Unit3.pas',
@@ -65,7 +75,74 @@ uses
 {$R *.res}
 
 begin
+  { The program works with relative paths (the picture directory "Bilder",
+    the BDE alias, par.cfg, style.css) and with the BDE, which creates
+    its PDOXUSRS.NET in the current directory. The original program
+    therefore has to be started from the directory that holds its data.
+    The reconstruction sets the current directory itself, so that it finds
+    its data no matter from where it was started. }
+  SetCurrentDir(ExtractFilePath(ParamStr(0)));
+
+  { The BDE of Delphi 9 places its net file in the root of the drive when
+    it has no configuration file, and a normal user may not write there
+    ("Fehler beim Initialisieren des Netzwerkes / Zugriff verweigert").
+    The net file belongs next to the data, so its directory is set
+    explicitly. The session is not yet active at this point. }
+  Session.NetFileDir := ExtractFilePath(ParamStr(0));
+
   Application.Initialize;
   Application.Title := 'AHNENWIN 5.1';
+
+  { The splash screen is created and shown before the main form; the main
+    form closes it again in its OnCreate.
+
+    The original calls a *virtual* method of the splash form here (the
+    listing shows "call dword ptr [edx+88]"). The method cannot be
+    identified from the disassembly, because the VMT layout of the VCL
+    version the original was built with is not preserved in the IDR output.
+    The purpose is to let the splash screen paint before the main form
+    appears, and Update has exactly that effect. }
+  Form8 := TForm8.Create(nil);
+  Form8.Show;
+  Form8.Update;
+
+  { The order of the forms is the order of the original program. The data
+    module is NOT created here: TForm1.FormCreate creates it, exactly as
+    the original does. }
+  Application.CreateForm(TForm1, Form1);
+  Application.CreateForm(TForm3, Form3);
+  Application.CreateForm(TForm4, Form4);
+  Application.CreateForm(TForm5, Form5);
+  Application.CreateForm(TForm9, Form9);
+  Application.CreateForm(TForm10, Form10);
+  Application.CreateForm(TForm11, Form11);
+  Application.CreateForm(TForm12, Form12);
+  Application.CreateForm(TForm13, Form13);
+  Application.CreateForm(TForm15, Form15);
+  Application.CreateForm(TForm16, Form16);
+  Application.CreateForm(TForm17, Form17);
+  Application.CreateForm(TForm20, Form20);
+  Application.CreateForm(TForm21, Form21);
+  Application.CreateForm(TOKBottomDlg, Form22);
+  Application.CreateForm(TForm23, Form23);
+  Application.CreateForm(TForm24, Form24);
+  Application.CreateForm(TForm25, Form25);
+  Application.CreateForm(TForm26, Form26);
+  Application.CreateForm(TOKBottomDlg1, Form27);
+  Application.CreateForm(TForm31, Form31);
+  Application.CreateForm(TForm32, Form32);
+  Application.CreateForm(TForm14, Form14);
+  Application.CreateForm(TForm28, Form28);
+  Application.CreateForm(TForm29, Form29);
+  Application.CreateForm(TForm33, Form33);
+  Application.CreateForm(TForm34, Form34);
+  Application.CreateForm(TForm35, Form35);
+  Application.CreateForm(TForm36, Form36);
+  Application.CreateForm(TForm37, Form37);
+  Application.CreateForm(TForm30, Form30);
+  Application.CreateForm(TForm38, Form38);
+  Application.CreateForm(TForm39, Form39);
+  Application.CreateForm(TForm40, Form40);
+
   Application.Run;
 end.

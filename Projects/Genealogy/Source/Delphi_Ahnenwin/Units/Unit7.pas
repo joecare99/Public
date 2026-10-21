@@ -1,19 +1,32 @@
 unit Unit7;
 
 {-------------------------------------------------------------------------------
-  Unit7 - TForm7, reconstructed from the IDR disassembly
+  Unit7 - TForm7, the French Republican calendar of AHNENWIN 5.1.
+
+  Reconstructed from the IDR disassembly
   Source\Projects_AhnenWin\Unit7.pas and the original resource
   Source\Projects_AhnenWin\Form7.dfm.
 
-  The component offsets in the comments are the addresses at which the
-  original binary addressed the components. They are the reference for
-  every component access in the method listings of the other units.
+  The three combo boxes hold the day, the month and the year of a date in the
+  French Republican calendar; every change of one of them triggers the
+  calculation "berechnen", which converts the date into the Gregorian
+  calendar.
+
+  Method addresses (original binary):
+    005CE824  berechnen          (the conversion, still open)
+    005CF0D0  FormCreate
+    005CF118  Button1Click
+    005CF120  ComboBox1Change    (day)
+    005CF178  ComboBox2Change    (month)
+    005CF1D0  ComboBox3Change    (year)
+    005CF228  BitBtn1Click       (fertig)
+    005CF234  FormKeyDown
 -------------------------------------------------------------------------------}
 
 interface
 
 uses
-  SysUtils, Classes, StdCtrls, ExtCtrls, Buttons, Forms, Controls, Grids, DB;
+  SysUtils, Classes, ExtCtrls, StdCtrls, Buttons, Forms, Controls, Windows;
 
 type
   TForm7 = class(TForm)
@@ -29,14 +42,14 @@ type
     ComboBox3: TComboBox; //310
     Edit1: TEdit; //314
     BitBtn1: TBitBtn; //318
-    procedure ComboBox3Change; //005CF1D0
-    procedure ComboBox2Change; //005CF178
-    procedure FormKeyDown(Sender:TObject; var Key:Word; Shift:TShiftState); //005CF234
-    procedure BitBtn1Click(Sender:TObject); //005CF228
-    procedure FormCreate(Sender:TObject); //005CF0D0
+    procedure ComboBox3Change(Sender: TObject); //005CF1D0
+    procedure ComboBox2Change(Sender: TObject); //005CF178
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState); //005CF234
+    procedure BitBtn1Click(Sender: TObject); //005CF228
+    procedure FormCreate(Sender: TObject); //005CF0D0
     procedure berechnen; //005CE824
-    procedure ComboBox1Change; //005CF120
-    procedure Button1Click; //005CF118
+    procedure ComboBox1Change(Sender: TObject); //005CF120
+    procedure Button1Click(Sender: TObject); //005CF118
   end;
 
 var
@@ -46,51 +59,68 @@ implementation
 
 {$R ..\Forms\Form7.DFM}
 
-
-{ The method bodies of this unit are reconstructed from the IDR
-  listings, method by method. The bodies that are still missing are
-  marked below; the address in the comment is the address of the
-  original method in the AHNENWIN 5.1 binary. }
-
-procedure TForm7.ComboBox3Change;
+// 005CF0D0
+procedure TForm7.FormCreate(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { On a screen that is larger than 640 x 480 the form is scaled down to
+    that size. The listing compares the screen width with 280 hex (640)
+    and the screen height with 1E0 hex (480). }
+  if Screen.Width > 640 then
+    if Screen.Height > 480 then
+      ScaleBy(640, Screen.Width);
 end;
 
-procedure TForm7.ComboBox2Change;
+// 005CF118
+procedure TForm7.Button1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The button closes the dialog. }
+  Close;
 end;
 
-procedure TForm7.FormKeyDown(Sender:TObject; var Key:Word; Shift:TShiftState);
+// 005CF120
+procedure TForm7.ComboBox1Change(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The day was changed - the conversion runs again, but only when the
+    field is not empty. }
+  if Length(ComboBox1.Text) > 0 then
+    berechnen;
 end;
 
-procedure TForm7.BitBtn1Click(Sender:TObject);
+// 005CF178
+procedure TForm7.ComboBox2Change(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The month was changed. }
+  if Length(ComboBox2.Text) > 0 then
+    berechnen;
 end;
 
-procedure TForm7.FormCreate(Sender:TObject);
+// 005CF1D0
+procedure TForm7.ComboBox3Change(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The year was changed. }
+  if Length(ComboBox3.Text) > 0 then
+    berechnen;
 end;
 
+// 005CF228
+procedure TForm7.BitBtn1Click(Sender: TObject);
+begin
+  { "fertig" - the dialog is closed. }
+  Close;
+end;
+
+// 005CF234
+procedure TForm7.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+begin
+  { The escape key closes the dialog. }
+  if Key = VK_ESCAPE then
+    Close;
+end;
+
+// 005CE824
 procedure TForm7.berechnen;
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
-
-procedure TForm7.ComboBox1Change;
-begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
-end;
-
-procedure TForm7.Button1Click;
-begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
-end;
-
 
 end.

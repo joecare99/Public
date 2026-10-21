@@ -323,8 +323,8 @@ var
   gvar_02536910: Integer; //02536910  used by Unit1
   gvar_02536914: Integer; //02536914  used by Unit1
   gvar_02536918: Integer; //02536918  used by Unit1
-  gvar_0253691C: Double; //0253691C  used by Unit1, Unit9
-  gvar_02536924: Double; //02536924  used by Unit1, Unit9
+  gvar_0253691C: TDateTime; //0253691C  used by Unit1, Unit9
+  gvar_02536924: TDateTime; //02536924  used by Unit1, Unit9
   gvar_0253692C: AnsiString; //0253692C  used by Unit1, Unit10, Unit12, Unit13, Unit16, Unit16.Speichernunter1Click, Unit17, Unit19, Unit3
   gvar_02536930: AnsiString; //02536930  used by Unit1, Unit16, Unit16.Speichernunter1Click, Unit17, Unit22
   gvar_02536934: AnsiString; //02536934  used by Unit1, Unit16, Unit16.Speichernunter1Click, Unit17, Unit19, Unit22
@@ -373,7 +373,7 @@ var
   gvar_02536BA8: Integer; //02536BA8  used by Unit1, Unit11
   gvar_02536BAC: Integer; //02536BAC  used by Unit1, Unit11
   gvar_02536BB0: TFileStream; //02536BB0  used by Unit1
-  gvar_02536BB4: PShortString; //02536BB4  used by Unit1
+  gvar_02536BB4: string[50]; //02536BB4  used by Unit1
 
 implementation
 

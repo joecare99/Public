@@ -394,34 +394,34 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit6
 
-- methods: 13, reconstructed: 0, open: 13
+- methods: 13, reconstructed: 12, open: 1
 
-  - open  `FormCreate`  @`005CDACC`
-  - open  `gridleeren`  @`005CDBE0`
+  - done  `FormCreate`  @`005CDACC`
+  - done  `gridleeren`  @`005CDBE0`
   - open  `Kal`  @`005CDC40`
-  - open  `FormShow`  @`005CE104`
-  - open  `Button1Click`  @`005CE10C`
-  - open  `Button2Click`  @`005CE200`
-  - open  `Edit1Change`  @`005CE2F4`
-  - open  `BitBtn1Click`  @`005CE484`
-  - open  `FormKeyDown`  @`005CE490`
-  - open  `Edit1KeyDown`  @`005CE4A8`
-  - open  `FormActivate`  @`005CE4C0`
-  - open  `FormClose`  @`005CE4C4`
-  - open  `SpeedButton1Click`  @`005CE4D4`
+  - done  `FormShow`  @`005CE104`
+  - done  `Button1Click`  @`005CE10C`
+  - done  `Button2Click`  @`005CE200`
+  - done  `Edit1Change`  @`005CE2F4`
+  - done  `BitBtn1Click`  @`005CE484`
+  - done  `FormKeyDown`  @`005CE490`
+  - done  `Edit1KeyDown`  @`005CE4A8`
+  - done  `FormActivate`  @`005CE4C0`
+  - done  `FormClose`  @`005CE4C4`
+  - done  `SpeedButton1Click`  @`005CE4D4`
 
 ## Unit7
 
-- methods: 8, reconstructed: 0, open: 8
+- methods: 8, reconstructed: 7, open: 1
 
   - open  `berechnen`  @`005CE824`
-  - open  `FormCreate`  @`005CF0D0`
-  - open  `Button1Click`  @`005CF118`
-  - open  `ComboBox1Change`  @`005CF120`
-  - open  `ComboBox2Change`  @`005CF178`
-  - open  `ComboBox3Change`  @`005CF1D0`
-  - open  `BitBtn1Click`  @`005CF228`
-  - open  `FormKeyDown`  @`005CF234`
+  - done  `FormCreate`  @`005CF0D0`
+  - done  `Button1Click`  @`005CF118`
+  - done  `ComboBox1Change`  @`005CF120`
+  - done  `ComboBox2Change`  @`005CF178`
+  - done  `ComboBox3Change`  @`005CF1D0`
+  - done  `BitBtn1Click`  @`005CF228`
+  - done  `FormKeyDown`  @`005CF234`
 
 ## Unit8
 
@@ -442,44 +442,44 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit10
 
-- methods: 13, reconstructed: 0, open: 13
+- methods: 13, reconstructed: 11, open: 2
 
-  - open  `BitBtn1Click`  @`0055A124`
-  - open  `BitBtn2Click`  @`0055A138`
-  - open  `SpeedButton1Click`  @`0055A160`
-  - open  `SpeedButton2Click`  @`0055A1AC`
-  - open  `SpeedButton3Click`  @`0055A1C0`
-  - open  `SpeedButton4Click`  @`0055A1D4`
-  - open  `SpeedButton5Click`  @`0055A4B8`
+  - done  `BitBtn1Click`  @`0055A124`
+  - done  `BitBtn2Click`  @`0055A138`
+  - done  `SpeedButton1Click`  @`0055A160`
+  - done  `SpeedButton2Click`  @`0055A1AC`
+  - done  `SpeedButton3Click`  @`0055A1C0`
+  - done  `SpeedButton4Click`  @`0055A1D4`
+  - done  `SpeedButton5Click`  @`0055A4B8`
   - open  `Browser`  @`0055A4C8`
   - open  `rechnen`  @`0055A54C`
-  - open  `FormShow`  @`0055AEF8`
-  - open  `Edit1Change`  @`0055B000`
-  - open  `Button2Click`  @`0055B0E4`
-  - open  `Button1Click`  @`0055B1CC`
+  - done  `FormShow`  @`0055AEF8`
+  - done  `Edit1Change`  @`0055B000`
+  - done  `Button2Click`  @`0055B0E4`
+  - done  `Button1Click`  @`0055B1CC`
 
 ## Unit11
 
-- methods: 8, reconstructed: 0, open: 8
+- methods: 8, reconstructed: 6, open: 2
 
   - open  `Fgr`  @`005C7068`
   - open  `zeichnen`  @`005C95E4`
-  - open  `PaintBox1Paint`  @`005CB270`
-  - open  `FormCreate`  @`005CB2A0`
-  - open  `SpeedButton1Click`  @`005CB41C`
-  - open  `SpeedButton2Click`  @`005CB428`
-  - open  `Button1Click`  @`005CB488`
-  - open  `FormActivate`  @`005CB49C`
+  - done  `PaintBox1Paint`  @`005CB270`
+  - done  `FormCreate`  @`005CB2A0`
+  - done  `SpeedButton1Click`  @`005CB41C`
+  - done  `SpeedButton2Click`  @`005CB428`
+  - done  `Button1Click`  @`005CB488`
+  - done  `FormActivate`  @`005CB49C`
 
 ## Unit12
 
-- methods: 5, reconstructed: 0, open: 5
+- methods: 5, reconstructed: 5, open: 0
 
-  - open  `FormShow`  @`005625DC`
-  - open  `RadioButton1Click`  @`005626E8`
-  - open  `RadioButton2Click`  @`00562770`
-  - open  `SpeedButton2Click`  @`005627F8`
-  - open  `SpeedButton1Click`  @`00562814`
+  - done  `FormShow`  @`005625DC`
+  - done  `RadioButton1Click`  @`005626E8`
+  - done  `RadioButton2Click`  @`00562770`
+  - done  `SpeedButton2Click`  @`005627F8`
+  - done  `SpeedButton1Click`  @`00562814`
 
 ## Unit13
 
@@ -783,12 +783,12 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit31
 
-- methods: 4, reconstructed: 0, open: 4
+- methods: 4, reconstructed: 4, open: 0
 
-  - open  `CheckBox9Click`  @`00562F00`
-  - open  `CheckBox10Click`  @`00562FF8`
-  - open  `BitBtn1Click`  @`005630F0`
-  - open  `BitBtn2Click`  @`005630FC`
+  - done  `CheckBox9Click`  @`00562F00`
+  - done  `CheckBox10Click`  @`00562FF8`
+  - done  `BitBtn1Click`  @`005630F0`
+  - done  `BitBtn2Click`  @`005630FC`
 
 ## Unit32
 
@@ -860,12 +860,12 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit40
 
-- methods: 3, reconstructed: 0, open: 3
+- methods: 3, reconstructed: 3, open: 0
 
-  - open  `BitBtn1Click`  @`00575C7C`
-  - open  `BitBtn2Click`  @`00575C88`
-  - open  `FormActivate`  @`00575F0C`
+  - done  `BitBtn1Click`  @`00575C7C`
+  - done  `BitBtn2Click`  @`00575C88`
+  - done  `FormActivate`  @`00575F0C`
 
 ## Total
 
-- methods: 615, reconstructed: 24, open: 591
+- methods: 615, reconstructed: 72, open: 543
