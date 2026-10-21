@@ -1,5 +1,8 @@
 unit tst_BarTest2;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 {$mode objfpc}{$H+}
 
 interface

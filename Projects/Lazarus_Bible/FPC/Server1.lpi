@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Server1"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/dde1"/>
-            <IncludeFiles Value="../source/dde1"/>
+            <OtherUnitFiles Value="../source/DDE1"/>
+            <IncludeFiles Value="../source/DDE1"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Server1"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/dde1"/>
-            <IncludeFiles Value="../source/dde1"/>
+            <OtherUnitFiles Value="../source/DDE1"/>
+            <IncludeFiles Value="../source/DDE1"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -105,7 +105,7 @@
         <UnitName Value="Server1"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../source/dde1/Frm_SERVER.pas"/>
+        <Filename Value="../source/DDE1/Frm_SERVER.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -113,7 +113,7 @@
         <UnitName Value="Frm_SERVER"/>
       </Unit1>
       <Unit2>
-        <Filename Value="../source/dde1/Frm_CLIENT.pas"/>
+        <Filename Value="../source/DDE1/Frm_CLIENT.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -129,8 +129,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Server1"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/dde1"/>
-      <IncludeFiles Value="../source/dde1"/>
+      <OtherUnitFiles Value="../source/DDE1"/>
+      <IncludeFiles Value="../source/DDE1"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

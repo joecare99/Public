@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/FontSamp"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/FONTSAMP"/>
-            <IncludeFiles Value="../source/FONTSAMP"/>
+            <OtherUnitFiles Value="../source/FontSamp"/>
+            <IncludeFiles Value="../source/FontSamp"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/FontSamp"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/FONTSAMP"/>
-            <IncludeFiles Value="../source/FONTSAMP"/>
+            <OtherUnitFiles Value="../source/FontSamp"/>
+            <IncludeFiles Value="../source/FontSamp"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -93,10 +93,13 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
         <PackageName Value="LCL"/>
       </Item1>
+      <Item2>
+        <PackageName Value="Printer4Lazarus"/>
+      </Item2>
     </RequiredPackages>
     <Units Count="5">
       <Unit0>
@@ -105,12 +108,12 @@
         <UnitName Value="FontSamp"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../source/FONTSAMP/DRAWPAGE.pas"/>
+        <Filename Value="../source/FontSamp/DRAWPAGE.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DRAWPAGE"/>
       </Unit1>
       <Unit2>
-        <Filename Value="../source/FONTSAMP/Frm_fontSampABOUT.pas"/>
+        <Filename Value="../source/FontSamp/Frm_fontSampABOUT.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -118,7 +121,7 @@
         <UnitName Value="Frm_fontSampABOUT"/>
       </Unit2>
       <Unit3>
-        <Filename Value="../source/FONTSAMP/frm_fontsampMAIN.pas"/>
+        <Filename Value="../source/FontSamp/frm_fontsampMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -126,7 +129,7 @@
         <UnitName Value="frm_fontsampMAIN"/>
       </Unit3>
       <Unit4>
-        <Filename Value="../source/FONTSAMP/PREVIEW.pas"/>
+        <Filename Value="../source/FontSamp/PREVIEW.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -142,8 +145,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/FontSamp"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/FONTSAMP"/>
-      <IncludeFiles Value="../source/FONTSAMP"/>
+      <OtherUnitFiles Value="../source/FontSamp"/>
+      <IncludeFiles Value="../source/FontSamp"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

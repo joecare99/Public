@@ -1,11 +1,33 @@
 unit Frm_OPTIONS;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Classes, Graphics, Forms, Controls, Buttons,
-  StdCtrls, ExtCtrls, Spin, SysUtils, TabsUnit, Dialogs,
-  IniData, IniFiles;
+ Classes,
+ Graphics,
+ Forms,
+ Controls,
+ Buttons,
+
+  StdCtrls,
+ ExtCtrls,
+ Spin,
+ SysUtils,
+ TabsUnit,
+ Dialogs,
+
+  IniData,
+ IniFiles,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
   TOptionsDialog = class(TForm)
@@ -45,8 +67,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 {- Initialize options to default values }
 procedure TOptionsDialog.InitTabOptions;
 begin

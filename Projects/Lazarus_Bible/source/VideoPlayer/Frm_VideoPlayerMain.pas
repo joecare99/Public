@@ -1,10 +1,30 @@
 unit Frm_VideoPlayerMain;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls,
-  Forms, Dialogs, StdCtrls, Buttons, MPlayer, ComCtrls;
+ Messages,
+ SysUtils,
+ Classes,
+ Graphics,
+ Controls,
+
+  Forms,
+ Dialogs,
+ StdCtrls,
+ Buttons,
+ ComCtrls,
+{$IFnDEF FPC}
+  Windows,
+  MPlayer,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
   TForm1 = class(TForm)
@@ -29,8 +49,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 (* Note: Set the MediaPlayer1 object properties as follows
      AutoEnable        False    All buttons always enabled
      AutoOpen          True     Doesn't really matter

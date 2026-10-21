@@ -1,10 +1,29 @@
 unit Frm_CLIENT2;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, DdeMan, StdCtrls, Buttons;
+ Messages,
+ Classes,
+ Graphics,
+ Controls,
+
+  Forms,
+ Dialogs,
+ StdCtrls,
+ Buttons,
+{$IFnDEF FPC}
+  Windows,
+  DdeMan,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages,
+  BibleIpc
+{$ENDIF};
 
 type
   TClientForm = class(TForm)
@@ -25,8 +44,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 procedure TClientForm.FormCreate(Sender: TObject);
 begin
   if DdeClientConv1.SetLink('SERVER2', 'Server2') then

@@ -1,10 +1,31 @@
 unit Frm_SERMAIN;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, SysUtils, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, StdCtrls, Buttons, ExtCtrls, DdeMan;
+ SysUtils,
+ Messages,
+ Classes,
+ Graphics,
+ Controls,
+
+  Forms,
+ Dialogs,
+ StdCtrls,
+ Buttons,
+ ExtCtrls,
+{$IFnDEF FPC}
+  Windows,
+  DdeMan,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages,
+  BibleIpc
+{$ENDIF};
 
 type
   TMainForm = class(TForm)
@@ -37,8 +58,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 {- Update ColorResult using scrollbar positions. Send
 color information to any DDE client applications. }
 procedure TMainForm.UpdateColor;

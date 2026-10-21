@@ -1,13 +1,44 @@
 unit Frm_WinesChartMain;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 {$I jedi.inc}
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons, TeEngine, Series, ExtCtrls, TeeProcs, Chart, DBChart,
-  Db,  ADODB;
+ Messages,
+ SysUtils,
+ Classes,
+ Graphics,
+ Controls,
+ Forms,
+ Dialogs,
+
+  StdCtrls,
+ Buttons,
+ ExtCtrls,
+
+  Db,
+  ADODB,
+{$IFnDEF FPC}
+  Windows,
+  TeEngine,
+  Series,
+  TeeProcs,
+  Chart,
+  DBChart,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages,
+  TAChart,
+  TAChart,
+  TAChart,
+  TAChart,
+  TAChart
+{$ENDIF};
 
 type
   TMainForm = class(TForm)

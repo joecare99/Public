@@ -1,10 +1,27 @@
 unit Frm_SysmenuMain;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls;
+ Messages,
+ SysUtils,
+ Classes,
+ Graphics,
+ Controls,
+ Forms,
+ Dialogs,
+
+  StdCtrls,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
   TForm1 = class(TForm)
@@ -26,8 +43,15 @@ implementation
 const
   cm_About = $00A0;  { Define a constant for the new command }
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 { Respond to selection of our new system menu command }
 procedure TForm1.WMSysCommand(var Message: TWMSysCommand);
 begin

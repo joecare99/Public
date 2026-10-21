@@ -1,17 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <Package Version="4">
-    <PathDelim Value="\"/>
+    <PathDelim Value="/"/>
     <Name Value="DingPkg"/>
     <Type Value="RunAndDesignTime"/>
     <CompilerOptions>
       <Version Value="11"/>
-      <PathDelim Value="\"/>
+      <PathDelim Value="/"/>
       <SearchPaths>
-        <IncludeFiles Value="..\source\DING"/>
+        <IncludeFiles Value="../source/DING"/>
         <Libraries Value="$(PkgOutDir)"/>
-        <OtherUnitFiles Value="..\source\DING"/>
-        <UnitOutputDirectory Value="..\..\lib\$nameonly($Project(InfoFile))\$(TargetCPU)-$(TargetOS)"/>
+        <OtherUnitFiles Value="../source/DING"/>
+        <UnitOutputDirectory Value="../../lib/$nameonly($Project(InfoFile))/$(TargetCPU)-$(TargetOS)"/>
       </SearchPaths>
       <Parsing>
         <SyntaxOptions>
@@ -21,7 +21,7 @@
     </CompilerOptions>
     <Files Count="1">
       <Item1>
-        <Filename Value="..\source\DING\Ctrl_DingButton.pas"/>
+        <Filename Value="../source/DING/Ctrl_DingButton.pas"/>
         <HasRegisterProc Value="True"/>
         <UnitName Value="Ctrl_DingButton"/>
       </Item1>

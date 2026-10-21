@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/GlyphLst"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/GLYPHLST"/>
-            <IncludeFiles Value="../source/GLYPHLST"/>
+            <OtherUnitFiles Value="../source/GlyphLst"/>
+            <IncludeFiles Value="../source/GlyphLst"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/GlyphLst"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/GLYPHLST"/>
-            <IncludeFiles Value="../source/GLYPHLST"/>
+            <OtherUnitFiles Value="../source/GlyphLst"/>
+            <IncludeFiles Value="../source/GlyphLst"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -93,10 +93,13 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
         <PackageName Value="LCL"/>
       </Item1>
+      <Item2>
+        <PackageName Value="LazUtils"/>
+      </Item2>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>
@@ -105,7 +108,7 @@
         <UnitName Value="GlyphLst"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../source/GLYPHLST/Frm_GlyphListMain.pas"/>
+        <Filename Value="../source/GlyphLst/Frm_GlyphListMain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -121,8 +124,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/GlyphLst"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/GLYPHLST"/>
-      <IncludeFiles Value="../source/GLYPHLST"/>
+      <OtherUnitFiles Value="../source/GlyphLst"/>
+      <IncludeFiles Value="../source/GlyphLst"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

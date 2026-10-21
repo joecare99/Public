@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/AboutEx"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/ABOUTEX"/>
-            <IncludeFiles Value="../source/ABOUTEX"/>
+            <OtherUnitFiles Value="../source/AboutEx"/>
+            <IncludeFiles Value="../source/AboutEx"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/AboutEx"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/ABOUTEX"/>
-            <IncludeFiles Value="../source/ABOUTEX"/>
+            <OtherUnitFiles Value="../source/AboutEx"/>
+            <IncludeFiles Value="../source/AboutEx"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -105,7 +105,7 @@
         <UnitName Value="AboutEx"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../source/ABOUTEX/Frm_ABOUT.pas"/>
+        <Filename Value="../source/AboutEx/Frm_ABOUT.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -113,7 +113,7 @@
         <UnitName Value="Frm_ABOUT"/>
       </Unit1>
       <Unit2>
-        <Filename Value="../source/ABOUTEX/Frm_AboutExMAIN.pas"/>
+        <Filename Value="../source/AboutEx/Frm_AboutExMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -129,8 +129,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/AboutEx"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/ABOUTEX"/>
-      <IncludeFiles Value="../source/ABOUTEX"/>
+      <OtherUnitFiles Value="../source/AboutEx"/>
+      <IncludeFiles Value="../source/AboutEx"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

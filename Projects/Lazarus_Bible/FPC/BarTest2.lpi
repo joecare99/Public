@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/BarTest2"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/BARCHART"/>
-            <IncludeFiles Value="../source/BARCHART"/>
+            <OtherUnitFiles Value="../source/Barchart"/>
+            <IncludeFiles Value="../source/Barchart"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/BarTest2"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/BARCHART"/>
-            <IncludeFiles Value="../source/BARCHART"/>
+            <OtherUnitFiles Value="../source/Barchart"/>
+            <IncludeFiles Value="../source/Barchart"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -108,7 +108,7 @@
         <UnitName Value="BarTest2"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../source/BARCHART/Frm_BartestMain2.pas"/>
+        <Filename Value="../source/Barchart/Frm_BartestMain2.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -116,12 +116,12 @@
         <UnitName Value="Frm_BartestMain2"/>
       </Unit1>
       <Unit2>
-        <Filename Value="../source/BARCHART/BarChart.pas"/>
+        <Filename Value="../source/Barchart/BarChart.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="BarChart"/>
       </Unit2>
       <Unit3>
-        <Filename Value="../source/BARCHART/Frm_BartestMain.pas"/>
+        <Filename Value="../source/Barchart/Frm_BartestMain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -137,8 +137,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/BarTest2"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/BARCHART"/>
-      <IncludeFiles Value="../source/BARCHART"/>
+      <OtherUnitFiles Value="../source/Barchart"/>
+      <IncludeFiles Value="../source/Barchart"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

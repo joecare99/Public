@@ -1,4 +1,5 @@
 *.stat
 *.lps
 /bin
+/build
 /FPC/backup

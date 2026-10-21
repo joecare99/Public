@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/CharGrid"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/CHARGRID"/>
-            <IncludeFiles Value="../source/CHARGRID"/>
+            <OtherUnitFiles Value="../source/CharGrid"/>
+            <IncludeFiles Value="../source/CharGrid"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/CharGrid"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/CHARGRID"/>
-            <IncludeFiles Value="../source/CHARGRID"/>
+            <OtherUnitFiles Value="../source/CharGrid"/>
+            <IncludeFiles Value="../source/CharGrid"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -105,7 +105,7 @@
         <UnitName Value="CharGrid"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../source/CHARGRID/Frm_CharGridABOUT.pas"/>
+        <Filename Value="../source/CharGrid/Frm_CharGridABOUT.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -113,7 +113,7 @@
         <UnitName Value="Frm_CharGridABOUT"/>
       </Unit1>
       <Unit2>
-        <Filename Value="../source/CHARGRID/Frm_CharGridMAIN.pas"/>
+        <Filename Value="../source/CharGrid/Frm_CharGridMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -129,8 +129,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/CharGrid"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/CHARGRID"/>
-      <IncludeFiles Value="../source/CHARGRID"/>
+      <OtherUnitFiles Value="../source/CharGrid"/>
+      <IncludeFiles Value="../source/CharGrid"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

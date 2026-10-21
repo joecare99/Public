@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Filemenu"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/Filemenu"/>
-            <IncludeFiles Value="../source/Filemenu"/>
+            <OtherUnitFiles Value="../source/FILEMENU"/>
+            <IncludeFiles Value="../source/FILEMENU"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Filemenu"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/Filemenu"/>
-            <IncludeFiles Value="../source/Filemenu"/>
+            <OtherUnitFiles Value="../source/FILEMENU"/>
+            <IncludeFiles Value="../source/FILEMENU"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -105,7 +105,7 @@
         <UnitName Value="Filemenu"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../source/Filemenu/Frm_FileMenuMAIN.pas"/>
+        <Filename Value="../source/FILEMENU/Frm_FileMenuMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -121,8 +121,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Filemenu"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/Filemenu"/>
-      <IncludeFiles Value="../source/Filemenu"/>
+      <OtherUnitFiles Value="../source/FILEMENU"/>
+      <IncludeFiles Value="../source/FILEMENU"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

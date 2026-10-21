@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Compstrm"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/Compstrm"/>
-            <IncludeFiles Value="../source/Compstrm"/>
+            <OtherUnitFiles Value="../source/COMPSTRM"/>
+            <IncludeFiles Value="../source/COMPSTRM"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Compstrm"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/Compstrm"/>
-            <IncludeFiles Value="../source/Compstrm"/>
+            <OtherUnitFiles Value="../source/COMPSTRM"/>
+            <IncludeFiles Value="../source/COMPSTRM"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -93,10 +93,13 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
         <PackageName Value="LCL"/>
       </Item1>
+      <Item2>
+        <PackageName Value="LazUtils"/>
+      </Item2>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>
@@ -105,7 +108,7 @@
         <UnitName Value="Compstrm"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../source/Compstrm/frm_CompStrmMAIN.pas"/>
+        <Filename Value="../source/COMPSTRM/frm_CompStrmMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -121,8 +124,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Compstrm"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/Compstrm"/>
-      <IncludeFiles Value="../source/Compstrm"/>
+      <OtherUnitFiles Value="../source/COMPSTRM"/>
+      <IncludeFiles Value="../source/COMPSTRM"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

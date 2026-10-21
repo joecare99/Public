@@ -1,5 +1,8 @@
 unit tst_BarChart;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 {$mode objfpc}{$H+}
 
 interface

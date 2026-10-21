@@ -1,10 +1,26 @@
 unit Frm_ABOUT;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Classes, Graphics, Forms, Controls, StdCtrls,
-  Buttons, ExtCtrls;
+ Classes,
+ Graphics,
+ Forms,
+ Controls,
+ StdCtrls,
+
+  Buttons,
+ ExtCtrls,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
   TAboutForm = class(TForm)
@@ -26,7 +42,14 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 end.
  

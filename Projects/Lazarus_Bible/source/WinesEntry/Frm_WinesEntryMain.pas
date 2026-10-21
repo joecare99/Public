@@ -1,5 +1,8 @@
 unit Frm_WinesEntryMain;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses

@@ -1,6 +1,9 @@
 unit tst_AboutEx;
 
 {$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
+{$IFDEF FPC}
 {$mode objfpc}{$H+}
 {$EndIF}
 
