@@ -721,7 +721,7 @@ type
   end;
 
 var
-  Form2: TDataModule2;
+  DataModule2: TDataModule2;
 
 implementation
 

@@ -98,19 +98,29 @@ type
 
   TWPPDFOnInternStartPage = procedure(Sender: TObject) of object;
 
-  { Document information record. }
+  { Extra messages, streamed by the AHNENWIN resources as "ExtraMessages = []". }
+  TWPExtraMessages = set of (wpOnEmbedFonts);
+
+  { The document information record. The AHNENWIN resources stream
+    "Info.IsUTF8" and "Info.Producer" on it. }
   TWPPDFExportInfo = class(TPersistent)
+  private
+    FIsUTF8: Boolean;
+    FProducer: String;
   public
     Author: String;
     CreationDate: TDateTime;
     Creator: String;
     Keywords: String;
-    Producer: String;
     Subject: String;
     Title: String;
     ModDate: TDateTime;
     constructor Create;
     destructor Destroy; override;
+  published
+    { The AHNENWIN resources stream "Info.IsUTF8" and "Info.Producer". }
+    property IsUTF8: Boolean read FIsUTF8 write FIsUTF8;
+    property Producer: String read FProducer write FProducer;
   end;
 
   { The PDF export component.
@@ -158,6 +168,12 @@ type
     FOnUpdateGauge: TWPPDFUpdateGaugeEvent;
     FBeforeBeginDoc: TNotifyEvent;
     FOnInternStartPage: TWPPDFOnInternStartPage;
+    FPreselectedCJK: Integer;
+    FPDFReadMode: TWPPDFReadMode;
+    FJPEGQuality: TWPJPEGQuality;
+    FExtraMessages: TWPExtraMessages;
+    FConvertJPEGData: Boolean;
+    FDebugMode: Boolean;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -211,6 +227,14 @@ type
       read FBeforeBeginDoc write FBeforeBeginDoc;
     property OnInternStartPage: TWPPDFOnInternStartPage
       read FOnInternStartPage write FOnInternStartPage;
+    property PreselectedCJK: Integer read FPreselectedCJK write FPreselectedCJK;
+    property PDFReadMode: TWPPDFReadMode read FPDFReadMode write FPDFReadMode;
+    property JPEGQuality: TWPJPEGQuality read FJPEGQuality write FJPEGQuality;
+    property ExtraMessages: TWPExtraMessages
+      read FExtraMessages write FExtraMessages;
+    property ConvertJPEGData: Boolean
+      read FConvertJPEGData write FConvertJPEGData;
+    property DebugMode: Boolean read FDebugMode write FDebugMode;
   end;
 
   { The concrete PDF printer component, streamed by Unit13 and Unit16. }

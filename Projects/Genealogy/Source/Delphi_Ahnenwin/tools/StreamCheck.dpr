@@ -62,15 +62,11 @@ var
 procedure CheckForm(const AClass: TFormClass);
 var
   F: TForm;
-  n: Integer;
 begin
   Inc(Checks);
   try
     F := AClass.Create(nil);
     try
-      n := 0;
-      while F.FindComponent('Dummy') = nil do
-        Break;
       WriteLn('  OK   ', AClass.ClassName, '  (', F.Name, ', ', F.ComponentCount,
               ' components)');
     finally
@@ -87,24 +83,23 @@ end;
 
 procedure CheckDataModule;
 var
-  DM: TDataModule2;
   i, n: Integer;
 begin
   Inc(Checks);
   try
-    DM := TDataModule2.Create(nil);
-    try
-      n := 0;
-      for i := 0 to DM.ComponentCount - 1 do
-        if DM.Components[i] is TDataSet then Inc(n);
-      WriteLn('  OK   TDataModule2  (', DM.ComponentCount, ' components, ', n, ' datasets)');
-      WriteLn('       Table1  =', DM.Table1.TableName, '  (', DM.Table1.FieldCount, ' fields)');
-      WriteLn('       Table5  =', DM.Table5.TableName);
-      WriteLn('       Table13 =', DM.Table13.TableName);
-      WriteLn('       Table20 =', DM.Table20.TableName);
-    finally
-      DM.Free;
-    end;
+    { The global instance is used, because the form resources reference it
+      directly ("DataSource = DataModule2.DataSource1"). It also has to
+      stay alive for the whole run: a released data module would leave
+      those references dangling. }
+    DataModule2 := TDataModule2.Create(nil);
+    n := 0;
+    for i := 0 to DataModule2.ComponentCount - 1 do
+      if DataModule2.Components[i] is TDataSet then Inc(n);
+    WriteLn('  OK   TDataModule2  (', DataModule2.ComponentCount, ' components, ', n, ' datasets)');
+    WriteLn('       Table1  =', DataModule2.Table1.TableName, '  (', DataModule2.Table1.FieldCount, ' fields)');
+    WriteLn('       Table5  =', DataModule2.Table5.TableName);
+    WriteLn('       Table13 =', DataModule2.Table13.TableName);
+    WriteLn('       Table20 =', DataModule2.Table20.TableName);
   except
     on E: Exception do
     begin

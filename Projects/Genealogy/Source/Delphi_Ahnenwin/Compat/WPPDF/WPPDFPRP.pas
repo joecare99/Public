@@ -33,8 +33,10 @@ type
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
-    property PDFPrinter: TWPCustomPDFExport
-      read FPDFPrinter write FPDFPrinter;
+  published
+    { The AHNENWIN resources stream these properties on the helper
+      component. }
+    property PDFPrinter: TWPCustomPDFExport read FPDFPrinter write FPDFPrinter;
     property ShowStartButton: Boolean
       read FShowStartButton write FShowStartButton;
     property ShowInputModes: Boolean

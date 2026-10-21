@@ -1,25 +1,29 @@
 unit Unit38;
 
 {-------------------------------------------------------------------------------
-  Unit38 - TForm38, reconstructed from the IDR disassembly
+  Unit38 - TForm38, the FOKO abbreviation list of AHNENWIN 5.1.
+
+  Reconstructed from the IDR disassembly
   Source\Projects_AhnenWin\Unit38.pas and the original resource
   Source\Projects_AhnenWin\Form38.dfm.
 
-  The component offsets in the comments are the addresses at which the
-  original binary addressed the components. They are the reference for
-  every component access in the method listings of the other units.
+  When the dialog is shown, the file "foko.abk" next to the program is
+  read and shown in the memo.
+
+  Method addresses (original binary):
+    0053A054  FormShow
 -------------------------------------------------------------------------------}
 
 interface
 
 uses
-  SysUtils, Classes, StdCtrls, Forms, Controls, Grids, DB;
+  SysUtils, Classes, StdCtrls, Forms, Controls;
 
 type
   TForm38 = class(TForm)
   published
     Memo1: TMemo; //2F0
-    procedure FormShow(Sender:TObject); //0053A054
+    procedure FormShow(Sender: TObject); //0053A054
   end;
 
 var
@@ -29,16 +33,35 @@ implementation
 
 {$R ..\Forms\Form38.DFM}
 
-
-{ The method bodies of this unit are reconstructed from the IDR
-  listings, method by method. The bodies that are still missing are
-  marked below; the address in the comment is the address of the
-  original method in the AHNENWIN 5.1 binary. }
-
-procedure TForm38.FormShow(Sender:TObject);
+// 0053A054
+procedure TForm38.FormShow(Sender: TObject);
+var
+  F: TextFile;
+  Line, Dir, FileName: string;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
-end;
+  { The listing builds the name of the abbreviation file from the path of
+    the program: ExtractFilePath(ParamStr(0)) + 'foko.abk'. }
+  Line := ParamStr(0);
+  Dir := ExtractFilePath(Line);
+  FileName := Dir + 'foko.abk';
 
+  AssignFile(F, FileName);
+  Reset(F);
+
+  { The memo is cleared and then filled line by line. The listing checks
+    Eof twice: once as the condition of the loop and once inside the loop
+    body, so that a last line without a terminating line break is not
+    added. }
+  Memo1.Clear;
+  while not Eof(F) do
+  begin
+    ReadLn(F, Line);
+    if Eof(F) then
+      Break;
+    Memo1.Lines.Add(Line);
+  end;
+
+  CloseFile(F);
+end;
 
 end.

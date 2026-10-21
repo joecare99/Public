@@ -4621,7 +4621,7 @@ object Form1: TForm1
     Top = 156
   end
   object lfbh2: TClientDataSet
-    Active = True
+    Active = False
     Aggregates = <>
     FileName = 'lfbh2.xml'
     FieldDefs = <
@@ -4738,7 +4738,7 @@ object Form1: TForm1
     Top = 156
   end
   object Repso2: TClientDataSet
-    Active = True
+    Active = False
     Aggregates = <>
     FileName = 'repso2.xml'
     FieldDefs = <

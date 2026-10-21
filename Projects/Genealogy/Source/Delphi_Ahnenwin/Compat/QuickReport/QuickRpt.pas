@@ -303,33 +303,75 @@ type
     property ShowProgress: Boolean read FShowProgress write FShowProgress;
   end;
 
+  { Scroll bar settings of the report preview.
+
+    The AHNENWIN resource Forms/Form16.dfm streams
+        HorzScrollBar.Smooth = True
+        HorzScrollBar.Tracking = True
+        VertScrollBar.Smooth = True
+        VertScrollBar.Tracking = True
+
+    In the VCL the only type that carries both Smooth and Tracking is
+    TControlScrollBar (Forms.pas, offsets $1F and $1D of the class). That
+    type is declared inside the Forms unit of the VCL and cannot be
+    referenced from a control that is not a form, so an equivalent type is
+    declared here. }
+  TQRPreviewScrollBar = class(TPersistent)
+  public
+    FSmooth: Boolean;
+    FTracking: Boolean;
+  published
+    property Smooth: Boolean read FSmooth write FSmooth;
+    property Tracking: Boolean read FTracking write FTracking;
+  end;
+
   { Report preview control, used by Unit16 and QRStandardPreview.
 
-    The original lives in QuickReport's QRPrev unit; the AHNENWIN unit
-    Unit16 declares "QRPreview1: TQRPreview" and reaches it through
-    QRCtrls, so the class is provided here. The listing of Unit16 shows
-    the used members: Zoom, PageNumber and QRPrinter. }
-  TQRPreview = class(TCustomControl)
+    The original lives in QuickReport's QRPrev unit. The decompilation of
+    that unit (Source\Projects_AhnenWin\QRPrev.pas) shows that
+    TQRStandardPreview is a TForm that embeds a "QRPreview: TQRPreview"
+    child, and that TQRStandardPreview itself carries the form scroll bars
+    (HorzScrollBar / VertScrollBar at offsets $208 / $20C, of type
+    TControlScrollBar).
+
+    The used members, taken from the Unit16 listing, are Zoom, PageNumber
+    and QRPrinter. }
+  TQRPreview = class(TWinControl)
   private
     FZoom: Integer;
     FPageNumber: Integer;
     FQRPrinter: TQRPrinter;
+    FHorzScrollBar: TQRPreviewScrollBar;
+    FVertScrollBar: TQRPreviewScrollBar;
+    FOnPageAvailable: TNotifyEvent;
+    FQRBorderStyle: TBorderStyle;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
     procedure SetZoom(Value: Integer);
     procedure SetPageNumber(Value: Integer);
     procedure SetQRPrinter(Value: TQRPrinter);
+    procedure SetQRBorderStyle(Value: TBorderStyle);
   published
     property Zoom: Integer read FZoom write SetZoom;
     property PageNumber: Integer read FPageNumber write SetPageNumber;
     property QRPrinter: TQRPrinter read FQRPrinter write SetQRPrinter;
-    { The resources of Unit16 and QRStandardPreview stream the scroll bar
-      settings ("HorzScrollBar.Smooth", "HorzScrollBar.Tracking", ...).
-      TScrollingWinControl keeps the two scroll bar controls in protected
-      fields, so they have to be re-published here. }
-    property HorzScrollBar: TScrollBar;
-    property VertScrollBar: TScrollBar;
+    property HorzScrollBar: TQRPreviewScrollBar read FHorzScrollBar;
+    property VertScrollBar: TQRPreviewScrollBar read FVertScrollBar;
+    { TControl and TWinControl keep these in protected fields but expose
+      them as public properties; the resource of Unit16 streams them on the
+      preview control, so they are published here. }
+    property Align;
+    property Color;
+    property Font;
+    property ParentColor;
+    property ParentFont;
+    property TabOrder;
+    { BorderStyle is a form property in the VCL; the preview control of
+      QuickReport 3.x has one, and the resource of Unit16 streams it. }
+    property BorderStyle: TBorderStyle read FQRBorderStyle write SetQRBorderStyle;
+    property OnPageAvailable: TNotifyEvent
+      read FOnPageAvailable write FOnPageAvailable;
   end;
 
   { Standard preview form shell, streamed by Forms/QRStandardPreview.dfm. }
@@ -631,10 +673,14 @@ begin
   inherited Create(AOwner);
   FZoom := 100;
   FPageNumber := 1;
+  FHorzScrollBar := TQRPreviewScrollBar.Create;
+  FVertScrollBar := TQRPreviewScrollBar.Create;
 end;
 
 destructor TQRPreview.Destroy;
 begin
+  FHorzScrollBar.Free;
+  FVertScrollBar.Free;
   inherited Destroy;
 end;
 
@@ -651,6 +697,11 @@ end;
 procedure TQRPreview.SetQRPrinter(Value: TQRPrinter);
 begin
   FQRPrinter := Value;
+end;
+
+procedure TQRPreview.SetQRBorderStyle(Value: TBorderStyle);
+begin
+  FQRBorderStyle := Value;
 end;
 
 { TQRStandardPreview }
