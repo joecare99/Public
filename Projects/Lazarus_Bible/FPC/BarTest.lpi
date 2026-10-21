@@ -2,10 +2,10 @@
 <CONFIG>
   <ProjectOptions>
     <Version Value="11"/>
-    <PathDelim Value="\"/>
+    <PathDelim Value="/"/>
     <General>
       <Flags>
-        <MainUnitHasUsesSectionForAllUnits Value="False"/>
+        <MainUnitHasUsesSectionForAllUnits Value="True"/>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
       </Flags>
@@ -16,21 +16,24 @@
       <ResourceType Value="res"/>
     </General>
     <i18n>
-      <EnableI18N LFM="False"/>
+      <EnableI18N LFM="True"/>
     </i18n>
-    <BuildModes Count="5">
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
         <CompilerOptions>
           <Version Value="11"/>
-          <PathDelim Value="\"/>
+          <PathDelim Value="/"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/BarTest"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="..\source;$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source;..\source\BARCHART"/>
-            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <OtherUnitFiles Value="../source/BARCHART"/>
+            <IncludeFiles Value="../source/BARCHART"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -50,27 +53,21 @@
             <Debugging>
               <DebugInfoType Value="dsDwarf2Set"/>
               <UseHeaptrc Value="True"/>
-              <UseExternalDbgSyms Value="True"/>
             </Debugging>
-            <Options>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
-            </Options>
           </Linking>
         </CompilerOptions>
       </Item2>
       <Item3 Name="Release">
         <CompilerOptions>
           <Version Value="11"/>
-          <PathDelim Value="\"/>
+          <PathDelim Value="/"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/BarTest"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="..\source;$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source;..\source\BARCHART"/>
-            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <OtherUnitFiles Value="../source/BARCHART"/>
+            <IncludeFiles Value="../source/BARCHART"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -78,146 +75,71 @@
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
-            <SmartLinkUnit Value="True"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
           </CodeGeneration>
           <Linking>
-            <Debugging>
-              <GenerateDebugInfo Value="False"/>
-            </Debugging>
             <LinkSmart Value="True"/>
-            <Options>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
-            </Options>
           </Linking>
         </CompilerOptions>
       </Item3>
-      <Item4 Name="Debug1">
-        <CompilerOptions>
-          <Version Value="11"/>
-          <PathDelim Value="\"/>
-          <Target>
-            <Filename Value="..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
-          </Target>
-          <SearchPaths>
-            <IncludeFiles Value="..\source;$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source;..\source\BARCHART"/>
-            <UnitOutputDirectory Value="..\bin\$(TargetCPU)-$(TargetOS)\units"/>
-          </SearchPaths>
-          <Parsing>
-            <SyntaxOptions>
-              <SyntaxMode Value="Delphi"/>
-              <IncludeAssertionCode Value="True"/>
-            </SyntaxOptions>
-          </Parsing>
-          <CodeGeneration>
-            <Checks>
-              <IOChecks Value="True"/>
-              <RangeChecks Value="True"/>
-              <OverflowChecks Value="True"/>
-              <StackChecks Value="True"/>
-            </Checks>
-            <TargetCPU Value="x86_64"/>
-            <TargetOS Value="win64"/>
-          </CodeGeneration>
-          <Linking>
-            <Debugging>
-              <DebugInfoType Value="dsDwarf2Set"/>
-              <UseHeaptrc Value="True"/>
-              <UseExternalDbgSyms Value="True"/>
-            </Debugging>
-            <Options>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
-            </Options>
-          </Linking>
-        </CompilerOptions>
-      </Item4>
-      <Item5 Name="Release1">
-        <CompilerOptions>
-          <Version Value="11"/>
-          <PathDelim Value="\"/>
-          <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
-          </Target>
-          <SearchPaths>
-            <IncludeFiles Value="..\source;$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source;..\source\BARCHART"/>
-            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
-          </SearchPaths>
-          <Parsing>
-            <SyntaxOptions>
-              <SyntaxMode Value="Delphi"/>
-            </SyntaxOptions>
-          </Parsing>
-          <CodeGeneration>
-            <SmartLinkUnit Value="True"/>
-            <TargetCPU Value="x86_64"/>
-            <TargetOS Value="win64"/>
-            <Optimizations>
-              <OptimizationLevel Value="3"/>
-            </Optimizations>
-          </CodeGeneration>
-          <Linking>
-            <Debugging>
-              <GenerateDebugInfo Value="False"/>
-            </Debugging>
-            <LinkSmart Value="True"/>
-            <Options>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
-            </Options>
-          </Linking>
-        </CompilerOptions>
-      </Item5>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <FormatVersion Value="2"/>
-      <Modes Count="1">
-        <Mode0 Name="default"/>
-      </Modes>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
     </RunParams>
     <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="TAChartLazarusPkg"/>
+        <PackageName Value="LCL"/>
       </Item1>
       <Item2>
-        <PackageName Value="LCL"/>
+        <PackageName Value="BarChartp"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="4">
       <Unit0>
-        <Filename Value="BarTest.dpr"/>
+        <Filename Value="BarTest.lpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="BarTest"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\source\Barchart\Frm_BartestMain.pas"/>
+        <Filename Value="../source/BARCHART/Frm_BartestMain.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmBarChartMain"/>
+        <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_BartestMain"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="../source/BARCHART/BarChart.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="BarChart"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../source/BARCHART/Frm_BartestMain2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_BartestMain2"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
-    <PathDelim Value="\"/>
+    <PathDelim Value="/"/>
     <Target>
-      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+      <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/BarTest"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="..\source;$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source;..\source\BARCHART"/>
-      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+      <OtherUnitFiles Value="../source/BARCHART"/>
+      <IncludeFiles Value="../source/BARCHART"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
@@ -229,24 +151,9 @@
     </CodeGeneration>
     <Linking>
       <LinkSmart Value="True"/>
-      <Options>
-        <Win32>
-          <GraphicApplication Value="True"/>
-        </Win32>
-      </Options>
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="3">
-      <Item1>
-        <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-    </Exceptions>
+    <Exceptions Count="0"/>
   </Debugging>
 </CONFIG>

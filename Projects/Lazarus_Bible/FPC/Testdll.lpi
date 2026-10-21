@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
-    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <PathDelim Value="/"/>
     <General>
       <Flags>
-        <MainUnitHasUsesSectionForAllUnits Value="False"/>
+        <MainUnitHasUsesSectionForAllUnits Value="True"/>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
       </Flags>
@@ -16,7 +16,7 @@
       <ResourceType Value="res"/>
     </General>
     <i18n>
-      <EnableI18N LFM="False"/>
+      <EnableI18N LFM="True"/>
     </i18n>
     <VersionInfo>
       <StringTable ProductVersion=""/>
@@ -26,20 +26,19 @@
       <Item2 Name="Debug">
         <CompilerOptions>
           <Version Value="11"/>
-          <PathDelim Value="\"/>
+          <PathDelim Value="/"/>
           <Target>
-            <Filename Value="..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Testdll"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="..\..\include;..\source\COLORDLL"/>
-            <OtherUnitFiles Value="..\Source;..\source\COLORDLL"/>
-            <UnitOutputDirectory Value="..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <OtherUnitFiles Value="../source/COLORDLL"/>
+            <IncludeFiles Value="../source/COLORDLL"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
               <SyntaxMode Value="Delphi"/>
               <IncludeAssertionCode Value="True"/>
-              <AllowLabel Value="False"/>
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
@@ -54,57 +53,35 @@
             <Debugging>
               <DebugInfoType Value="dsDwarf2Set"/>
               <UseHeaptrc Value="True"/>
-              <UseExternalDbgSyms Value="True"/>
             </Debugging>
-            <Options>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
-            </Options>
           </Linking>
-          <Other>
-            <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-          </Other>
         </CompilerOptions>
       </Item2>
       <Item3 Name="Release">
         <CompilerOptions>
           <Version Value="11"/>
-          <PathDelim Value="\"/>
+          <PathDelim Value="/"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Testdll"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="..\..\include;..\source\COLORDLL;$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source;..\source\COLORDLL"/>
-            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <OtherUnitFiles Value="../source/COLORDLL"/>
+            <IncludeFiles Value="../source/COLORDLL"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
               <SyntaxMode Value="Delphi"/>
-              <AllowLabel Value="False"/>
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
-            <SmartLinkUnit Value="True"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
           </CodeGeneration>
           <Linking>
-            <Debugging>
-              <GenerateDebugInfo Value="False"/>
-            </Debugging>
             <LinkSmart Value="True"/>
-            <Options>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
-            </Options>
           </Linking>
-          <Other>
-            <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-          </Other>
         </CompilerOptions>
       </Item3>
     </BuildModes>
@@ -121,36 +98,44 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
-        <Filename Value="Testdll.dpr"/>
+        <Filename Value="Testdll.lpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="Testdll"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\source\COLORDLL\Frm_TestDLLMAIN.PAS"/>
+        <Filename Value="../source/COLORDLL/Frm_TestDLLMAIN.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="MainForm"/>
+        <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_TestDLLMAIN"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="../source/COLORDLL/Frm_CLRFORM.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_CLRFORM"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
-    <PathDelim Value="\"/>
+    <PathDelim Value="/"/>
     <Target>
-      <Filename Value="..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+      <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Testdll"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="..\..\include;..\source\COLORDLL"/>
-      <OtherUnitFiles Value="..\Source;..\source\COLORDLL"/>
-      <UnitOutputDirectory Value="..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+      <OtherUnitFiles Value="../source/COLORDLL"/>
+      <IncludeFiles Value="../source/COLORDLL"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
         <SyntaxMode Value="Delphi"/>
-        <AllowLabel Value="False"/>
       </SyntaxOptions>
     </Parsing>
     <CodeGeneration>
@@ -158,27 +143,9 @@
     </CodeGeneration>
     <Linking>
       <LinkSmart Value="True"/>
-      <Options>
-        <Win32>
-          <GraphicApplication Value="True"/>
-        </Win32>
-      </Options>
     </Linking>
-    <Other>
-      <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="3">
-      <Item1>
-        <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-    </Exceptions>
+    <Exceptions Count="0"/>
   </Debugging>
 </CONFIG>

@@ -6,7 +6,7 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  Interfaces, // this includes the LCL widgetset
+  Interfaces,
   Forms,
   Frm_BartestMain2;
 
@@ -14,9 +14,8 @@ uses
 
 begin
   RequireDerivedFormResource := True;
-  Application.Scaled:=True;
   Application.Initialize;
-  Application.CreateForm(TfrmBarTestMain2,frmBarTestMain2);
+  Application.Title := 'Demo: BarChart-Componente';
+  Application.CreateForm(TMainForm, MainForm);
   Application.Run;
 end.
-

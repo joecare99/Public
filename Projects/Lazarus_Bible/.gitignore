@@ -1,0 +1,4 @@
+*.stat
+*.lps
+/bin
+/FPC/backup
