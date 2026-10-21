@@ -1,7 +1,7 @@
 program Findrepl; 
 uses 
   Forms, 
-  Frm_FindReplMAIN in '..\Source\FINDREPL\Frm_FindReplMAIN.PAS' {MainForm}; 
+  Frm_FindReplMAIN in '..\source\FINDREPL\Frm_FindReplMAIN.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

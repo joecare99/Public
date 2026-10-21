@@ -9,7 +9,7 @@ unit ViewModelBase;
 interface
 
 uses
-  Classes, SysUtils, INotifyPropertyChanged, PropertyChangedEventArgs;
+  Classes, SysUtils, NotifyPropertyChanged, PropertyChangedEventArgs;
 
 type
   { Ereignis: eine Eigenschaft hat sich geaendert. }

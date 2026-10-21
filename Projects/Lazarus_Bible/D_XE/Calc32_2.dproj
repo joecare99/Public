@@ -52,10 +52,10 @@
 			<DelphiCompile Include="Calc32_2.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\CALC32\Frm_CALC2.PAS">
+			<DCCReference Include="..\source\Calc32\Frm_CALC2.pas">
 				<Form>CalcForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\source\CALC32\Frm_Calc2ABOUT.PAS">
+			<DCCReference Include="..\source\Calc32\Frm_Calc2ABOUT.pas">
 				<Form>AboutForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

@@ -2,7 +2,7 @@ program Actions;
 
 uses
   Forms,
-  Frm_ActionsMain in '..\Source\Actions\Frm_ActionsMain.pas' {Form1};
+  Frm_ActionsMain in '..\source\Actions\Frm_ActionsMain.pas' {Form1};
 
 {$E EXE}
 {$R *.RES}

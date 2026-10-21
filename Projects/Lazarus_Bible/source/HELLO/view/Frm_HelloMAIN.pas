@@ -28,6 +28,7 @@ type
     procedure ViewModelPropertyChanged(Sender: TObject;
       const AArgs: TPropertyChangedEventArgs);
     procedure ApplyViewModel;
+    procedure DoClose(Sender: TObject);
   public
     property ViewModel: THelloViewModel read FViewModel;
   end;
@@ -48,7 +49,7 @@ begin
   FViewModel := THelloViewModel.Create;
   FViewModel.OnPropertyChanged := ViewModelPropertyChanged;
   { Das Kommando zum Beenden wird von der View ausgefuehrt. }
-  FViewModel.CloseCommand.OnExecute := Close;
+  FViewModel.CloseCommand.OnExecute := DoClose;
   ApplyViewModel;
 end;
 
@@ -70,6 +71,11 @@ begin
   GreetingLabel.Caption := FViewModel.Greeting;
   ClickLabel.Caption := Format('Klicks: %d', [FViewModel.ClickCount]);
   CloseButton.Enabled := FViewModel.CloseCommand.CanExecute;
+end;
+
+procedure TForm1.DoClose(Sender: TObject);
+begin
+  Close;
 end;
 
 procedure TForm1.CloseButtonClick(Sender: TObject);

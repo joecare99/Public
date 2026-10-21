@@ -12,7 +12,7 @@ type
   { TFileService }
   TFileService = class(TServiceBase)
   public
-    constructor Create; override;
+    constructor Create;
     { Liest eine Textdatei zeilenweise. Wirft TServiceError, wenn die Datei
       nicht lesbar ist. }
     function ReadLines(const AFileName: string): TStringList;

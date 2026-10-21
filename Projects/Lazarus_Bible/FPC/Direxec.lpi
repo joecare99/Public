@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Direxec"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/DIREXEC;../source/DIREX"/>
-            <IncludeFiles Value="../source/DIREXEC;../source/DIREX"/>
+            <OtherUnitFiles Value="../source/DIREX;../source/DIREXEC;../source/_core/tools"/>
+            <IncludeFiles Value="../source/DIREX;../source/DIREXEC;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Direxec"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/DIREXEC;../source/DIREX"/>
-            <IncludeFiles Value="../source/DIREXEC;../source/DIREX"/>
+            <OtherUnitFiles Value="../source/DIREX;../source/DIREXEC;../source/_core/tools"/>
+            <IncludeFiles Value="../source/DIREX;../source/DIREXEC;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -98,44 +98,28 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="5">
+    <Units Count="3">
       <Unit0>
         <Filename Value="Direxec.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Direxec"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../source/DIREXEC/Frm_DirExecMAIN.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_DirExecMAIN"/>
-      </Unit1>
-      <Unit2>
-        <Filename Value="../source/DIREXEC/Frm_DirExecMain2.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_DirExecMain2"/>
-      </Unit2>
-      <Unit3>
         <Filename Value="../source/DIREX/Frm_DIRDLG.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_DIRDLG"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="../source/DIREX/Frm_DirExMAIN.pas"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="../source/DIREXEC/Frm_DirExecMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_DirExMAIN"/>
-      </Unit4>
+        <UnitName Value="Frm_DirExecMAIN"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -145,8 +129,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Direxec"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/DIREXEC;../source/DIREX"/>
-      <IncludeFiles Value="../source/DIREXEC;../source/DIREX"/>
+      <OtherUnitFiles Value="../source/DIREX;../source/DIREXEC;../source/_core/tools"/>
+      <IncludeFiles Value="../source/DIREX;../source/DIREXEC;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

@@ -10,8 +10,8 @@ uses
   Interfaces,
 {$ENDIF}
   Forms, Sysutils,
-  Frm_CALC64 in '..\source\CALC32\Frm_CALC64.PAS' {CalcForm},
-  Frm_CalcABOUT in '..\source\CALC32\Frm_CalcABOUT.PAS' {AboutForm};
+  Frm_CALC64 in '..\source\Calc32\Frm_CALC64.pas' {CalcForm},
+  Frm_CalcABOUT in '..\source\Calc32\Frm_CalcABOUT.pas' {AboutForm};
 {$IFNDEF FPC}
 {$E EXE}
 {$ENDIF}

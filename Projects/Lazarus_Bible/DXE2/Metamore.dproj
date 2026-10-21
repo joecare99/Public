@@ -44,7 +44,7 @@
 			<DelphiCompile Include="Metamore.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\METAMORE\Frm_MetaMoreMAIN.PAS">
+			<DCCReference Include="..\source\METAMORE\Frm_MetaMoreMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

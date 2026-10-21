@@ -42,7 +42,7 @@
 			<DelphiCompile Include="PowerTest.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\POWER\unt_powertest.pas"/>
+			<DCCReference Include="..\source\POWER\unt_PowerTest.pas"/>
 			<BuildConfiguration Include="Basis">
 				<Key>Base</Key>
 				<DependentOn>default.optset</DependentOn>

@@ -8,6 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
+  SysUtils,
+  FormShot,
 
 {$R *.res}
 
@@ -16,5 +18,12 @@ begin
   Application.Initialize;
   Application.Title := 'Memo Pad';
   Application.CreateForm(TMainForm, MainForm);
+  if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
+  begin
+    MainForm.Show;
+    Application.ProcessMessages;
+    SaveFormToImage(MainForm, ChangeFileExt(ParamStr(2), '.bmp'));
+    Application.Terminate;
+  end;
   Application.Run;
 end.

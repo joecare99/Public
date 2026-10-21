@@ -2,7 +2,7 @@ program Options;
 
 uses
   Forms,
-  Frm_OptionsMain in '..\source\OPTIONS\Frm_OptionsMain.PAS' {MainForm},
+  Frm_OptionsMain in '..\source\OPTIONS\Frm_OptionsMain.pas' {MainForm},
   Inidata in '..\source\Inidata\Inidata.pas';
 
 {$E EXE}

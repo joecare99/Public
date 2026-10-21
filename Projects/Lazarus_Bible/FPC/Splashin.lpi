@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Splashin"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/SPLASHIN"/>
-            <IncludeFiles Value="../source/SPLASHIN"/>
+            <OtherUnitFiles Value="../source/SPLASHIN;../source/_core/tools"/>
+            <IncludeFiles Value="../source/SPLASHIN;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Splashin"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/SPLASHIN"/>
-            <IncludeFiles Value="../source/SPLASHIN"/>
+            <OtherUnitFiles Value="../source/SPLASHIN;../source/_core/tools"/>
+            <IncludeFiles Value="../source/SPLASHIN;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -129,8 +129,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Splashin"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/SPLASHIN"/>
-      <IncludeFiles Value="../source/SPLASHIN"/>
+      <OtherUnitFiles Value="../source/SPLASHIN;../source/_core/tools"/>
+      <IncludeFiles Value="../source/SPLASHIN;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

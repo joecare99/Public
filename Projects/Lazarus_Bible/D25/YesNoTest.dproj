@@ -64,7 +64,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\YESNO\Frm_YesNoMAIN.PAS">
+        <DCCReference Include="..\source\YESNO\Frm_YesNoMAIN.pas">
             <Form>frmYesNoMain</Form>
         </DCCReference>
         <DCCReference Include="..\source\YESNO\Frm_YesNo.pas"/>

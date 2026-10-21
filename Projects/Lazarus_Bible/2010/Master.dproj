@@ -38,7 +38,7 @@
 			<DelphiCompile Include="Master.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\MASTER\Frm_MasterMAIN.PAS">
+			<DCCReference Include="..\source\MASTER\Frm_MasterMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

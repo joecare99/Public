@@ -8,6 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
+  SysUtils,
+  FormShot,
   Frm_EnumFonMAIN;
 
 {$R *.res}
@@ -17,5 +19,12 @@ begin
   Application.Initialize;
   Application.Title := 'Demo: Enumfon';
   Application.CreateForm(TfrmEnumFontsMain, frmEnumFontsMain);
+  if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
+  begin
+    frmEnumFontsMain.Show;
+    Application.ProcessMessages;
+    SaveFormToImage(frmEnumFontsMain, ChangeFileExt(ParamStr(2), '.bmp'));
+    Application.Terminate;
+  end;
   Application.Run;
 end.

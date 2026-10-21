@@ -8,6 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
+  SysUtils,
+  FormShot,
   Frm_DIRDLG,
   Frm_DirExMAIN;
 
@@ -19,5 +21,12 @@ begin
   Application.Title := 'Demo: Direx';
   Application.CreateForm(TMainForm, MainForm);
   Application.CreateForm(TDirDlgForm, DirDlgForm);
+  if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
+  begin
+    MainForm.Show;
+    Application.ProcessMessages;
+    SaveFormToImage(MainForm, ChangeFileExt(ParamStr(2), '.bmp'));
+    Application.Terminate;
+  end;
   Application.Run;
 end.

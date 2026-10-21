@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Enumfon"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/ENUMFON"/>
-            <IncludeFiles Value="../source/ENUMFON"/>
+            <OtherUnitFiles Value="../source/ENUMFON;../source/_core/tools"/>
+            <IncludeFiles Value="../source/ENUMFON;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Enumfon"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/ENUMFON"/>
-            <IncludeFiles Value="../source/ENUMFON"/>
+            <OtherUnitFiles Value="../source/ENUMFON;../source/_core/tools"/>
+            <IncludeFiles Value="../source/ENUMFON;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -121,8 +121,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Enumfon"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/ENUMFON"/>
-      <IncludeFiles Value="../source/ENUMFON"/>
+      <OtherUnitFiles Value="../source/ENUMFON;../source/_core/tools"/>
+      <IncludeFiles Value="../source/ENUMFON;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

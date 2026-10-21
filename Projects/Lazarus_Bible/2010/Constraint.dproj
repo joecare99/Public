@@ -42,7 +42,7 @@
 			<DelphiCompile Include="Constraint.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\Constraint\frm_ConstraintMain.pas">
+			<DCCReference Include="..\source\Constraint\frm_ConstraintMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

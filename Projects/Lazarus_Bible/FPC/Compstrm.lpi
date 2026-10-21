@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Compstrm"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/COMPSTRM"/>
-            <IncludeFiles Value="../source/COMPSTRM"/>
+            <OtherUnitFiles Value="../source/COMPSTRM;../source/_core/tools"/>
+            <IncludeFiles Value="../source/COMPSTRM;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Compstrm"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/COMPSTRM"/>
-            <IncludeFiles Value="../source/COMPSTRM"/>
+            <OtherUnitFiles Value="../source/COMPSTRM;../source/_core/tools"/>
+            <IncludeFiles Value="../source/COMPSTRM;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -124,8 +124,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Compstrm"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/COMPSTRM"/>
-      <IncludeFiles Value="../source/COMPSTRM"/>
+      <OtherUnitFiles Value="../source/COMPSTRM;../source/_core/tools"/>
+      <IncludeFiles Value="../source/COMPSTRM;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

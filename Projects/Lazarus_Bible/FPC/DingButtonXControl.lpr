@@ -8,6 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
+  SysUtils,
   DingButtonImpl1,
   DingButtonXControl_TLB,
   Frm_DingAbout;

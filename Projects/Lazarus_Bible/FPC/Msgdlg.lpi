@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Msgdlg"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/MSGDLG"/>
-            <IncludeFiles Value="../source/MSGDLG"/>
+            <OtherUnitFiles Value="../source/MSGDLG;../source/_core/tools"/>
+            <IncludeFiles Value="../source/MSGDLG;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Msgdlg"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/MSGDLG"/>
-            <IncludeFiles Value="../source/MSGDLG"/>
+            <OtherUnitFiles Value="../source/MSGDLG;../source/_core/tools"/>
+            <IncludeFiles Value="../source/MSGDLG;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -121,8 +121,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Msgdlg"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/MSGDLG"/>
-      <IncludeFiles Value="../source/MSGDLG"/>
+      <OtherUnitFiles Value="../source/MSGDLG;../source/_core/tools"/>
+      <IncludeFiles Value="../source/MSGDLG;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

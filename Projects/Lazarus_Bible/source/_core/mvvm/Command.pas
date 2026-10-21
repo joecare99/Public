@@ -12,7 +12,7 @@ type
   { Prueft, ob ein Kommando ausgefuehrt werden darf. }
   TCommandExecuteEvent = procedure(Sender: TObject) of object;
   { Prueft, ob ein Kommando ausfuehrbar ist. }
-  TCommandCanExecuteEvent = function(Sender: TObject): Boolean; of object;
+  TCommandCanExecuteEvent = function(Sender: TObject): Boolean of object;
 
   { TCommand }
   TCommand = class

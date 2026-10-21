@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Readme"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/README"/>
-            <IncludeFiles Value="../source/README"/>
+            <OtherUnitFiles Value="../source/README/view;../source/README/model;../source/README/viewmodel;../source/README;../source/_core/mvvm;../source/_core/services;../source/_core/tools"/>
+            <IncludeFiles Value="../source/README/view;../source/README/model;../source/README/viewmodel;../source/README;../source/_core/mvvm;../source/_core/services;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Readme"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/README"/>
-            <IncludeFiles Value="../source/README"/>
+            <OtherUnitFiles Value="../source/README/view;../source/README/model;../source/README/viewmodel;../source/README;../source/_core/mvvm;../source/_core/services;../source/_core/tools"/>
+            <IncludeFiles Value="../source/README/view;../source/README/model;../source/README/viewmodel;../source/README;../source/_core/mvvm;../source/_core/services;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -98,14 +98,14 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="4">
       <Unit0>
         <Filename Value="Readme.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Readme"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../source/README/Frm_ReadMeMain.pas"/>
+        <Filename Value="../source/README/view/Frm_ReadMeMain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
@@ -113,13 +113,15 @@
         <UnitName Value="Frm_ReadMeMain"/>
       </Unit1>
       <Unit2>
-        <Filename Value="../source/README/Frm_RunMeTEST.pas"/>
+        <Filename Value="../source/README/model/ReadMeDocument.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_RunMeTEST"/>
+        <UnitName Value="ReadMeDocument"/>
       </Unit2>
+      <Unit3>
+        <Filename Value="../source/README/viewmodel/ReadMeViewModel.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ReadMeViewModel"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -129,8 +131,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Readme"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/README"/>
-      <IncludeFiles Value="../source/README"/>
+      <OtherUnitFiles Value="../source/README/view;../source/README/model;../source/README/viewmodel;../source/README;../source/_core/mvvm;../source/_core/services;../source/_core/tools"/>
+      <IncludeFiles Value="../source/README/view;../source/README/model;../source/README/viewmodel;../source/README;../source/_core/mvvm;../source/_core/services;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

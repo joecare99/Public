@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Runme"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/README"/>
-            <IncludeFiles Value="../source/README"/>
+            <OtherUnitFiles Value="../source/README;../source/_core/tools"/>
+            <IncludeFiles Value="../source/README;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Runme"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/README"/>
-            <IncludeFiles Value="../source/README"/>
+            <OtherUnitFiles Value="../source/README;../source/_core/tools"/>
+            <IncludeFiles Value="../source/README;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -98,7 +98,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="2">
       <Unit0>
         <Filename Value="Runme.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -112,14 +112,6 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_RunMeTEST"/>
       </Unit1>
-      <Unit2>
-        <Filename Value="../source/README/Frm_ReadMeMain.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_ReadMeMain"/>
-      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -129,8 +121,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Runme"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/README"/>
-      <IncludeFiles Value="../source/README"/>
+      <OtherUnitFiles Value="../source/README;../source/_core/tools"/>
+      <IncludeFiles Value="../source/README;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

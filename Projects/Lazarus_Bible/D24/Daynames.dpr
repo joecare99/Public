@@ -6,7 +6,7 @@ program Daynames;
 {$APPTYPE CONSOLE}
 
 uses
-  ArrayP in '..\source\Daynames\ArrayP.pas';
+  ArrayP in '..\source\DAYNAMES\ArrayP.pas';
 
 
 begin

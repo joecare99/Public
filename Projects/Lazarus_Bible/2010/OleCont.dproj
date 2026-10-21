@@ -44,7 +44,7 @@
 			<DelphiCompile Include="OleCont.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\OleCont\Frm_OleContMain.pas">
+			<DCCReference Include="..\source\OleCont\Frm_OleContMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

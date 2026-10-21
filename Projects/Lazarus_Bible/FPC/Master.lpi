@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Master"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/MASTER"/>
-            <IncludeFiles Value="../source/MASTER"/>
+            <OtherUnitFiles Value="../source/MASTER;../source/_core/tools"/>
+            <IncludeFiles Value="../source/MASTER;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Master"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/MASTER"/>
-            <IncludeFiles Value="../source/MASTER"/>
+            <OtherUnitFiles Value="../source/MASTER;../source/_core/tools"/>
+            <IncludeFiles Value="../source/MASTER;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -124,8 +124,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Master"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/MASTER"/>
-      <IncludeFiles Value="../source/MASTER"/>
+      <OtherUnitFiles Value="../source/MASTER;../source/_core/tools"/>
+      <IncludeFiles Value="../source/MASTER;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

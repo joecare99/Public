@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Daynames"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/DAYNAMES"/>
-            <IncludeFiles Value="../source/DAYNAMES"/>
+            <OtherUnitFiles Value="../source/DAYNAMES;../source/_core/tools"/>
+            <IncludeFiles Value="../source/DAYNAMES;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Daynames"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/DAYNAMES"/>
-            <IncludeFiles Value="../source/DAYNAMES"/>
+            <OtherUnitFiles Value="../source/DAYNAMES;../source/_core/tools"/>
+            <IncludeFiles Value="../source/DAYNAMES;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -118,8 +118,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Daynames"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/DAYNAMES"/>
-      <IncludeFiles Value="../source/DAYNAMES"/>
+      <OtherUnitFiles Value="../source/DAYNAMES;../source/_core/tools"/>
+      <IncludeFiles Value="../source/DAYNAMES;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

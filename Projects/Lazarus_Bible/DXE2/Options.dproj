@@ -42,10 +42,10 @@
 			<DelphiCompile Include="Options.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\OPTIONS\Frm_OptionsMain.PAS">
+			<DCCReference Include="..\source\OPTIONS\Frm_OptionsMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\Source\Inidata\Inidata.pas"/>
+			<DCCReference Include="..\source\Inidata\Inidata.pas"/>
 			<BuildConfiguration Include="Basis">
 				<Key>Base</Key>
 				<DependentOn>default.optset</DependentOn>

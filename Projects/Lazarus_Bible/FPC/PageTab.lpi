@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/PageTab"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/PageTab"/>
-            <IncludeFiles Value="../source/PageTab"/>
+            <OtherUnitFiles Value="../source/PageTab;../source/_core/tools"/>
+            <IncludeFiles Value="../source/PageTab;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/PageTab"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/PageTab"/>
-            <IncludeFiles Value="../source/PageTab"/>
+            <OtherUnitFiles Value="../source/PageTab;../source/_core/tools"/>
+            <IncludeFiles Value="../source/PageTab;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -124,8 +124,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/PageTab"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/PageTab"/>
-      <IncludeFiles Value="../source/PageTab"/>
+      <OtherUnitFiles Value="../source/PageTab;../source/_core/tools"/>
+      <IncludeFiles Value="../source/PageTab;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

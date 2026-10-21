@@ -1,7 +1,7 @@
 program Printgr; 
 uses 
   Forms, 
-  Frm_PrintgrMAIN in '..\Source\PRINTGR\Frm_PrintgrMAIN.PAS' {MainForm}; 
+  Frm_PrintgrMAIN in '..\source\PRINTGR\Frm_PrintgrMAIN.pas' {MainForm}; 
 {$E EXE} 
 {$R *.RES} 
 begin 

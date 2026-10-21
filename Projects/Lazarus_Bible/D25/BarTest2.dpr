@@ -2,7 +2,7 @@ program BarTest2;
 
 uses
   Forms,
-  Frm_BartestMain2 in '..\source\BARCHART\Frm_BartestMain2.pas';
+  Frm_BartestMain2 in '..\source\Barchart\Frm_BartestMain2.pas';
 
 {$R *.res}
 

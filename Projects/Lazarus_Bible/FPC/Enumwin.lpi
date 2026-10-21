@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Enumwin"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/ENUMWIN"/>
-            <IncludeFiles Value="../source/ENUMWIN"/>
+            <OtherUnitFiles Value="../source/ENUMWIN;../source/_core/tools"/>
+            <IncludeFiles Value="../source/ENUMWIN;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Enumwin"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/ENUMWIN"/>
-            <IncludeFiles Value="../source/ENUMWIN"/>
+            <OtherUnitFiles Value="../source/ENUMWIN;../source/_core/tools"/>
+            <IncludeFiles Value="../source/ENUMWIN;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -98,7 +98,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="2">
       <Unit0>
         <Filename Value="Enumwin.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -112,11 +112,6 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_EnumWinMAIN"/>
       </Unit1>
-      <Unit2>
-        <Filename Value="../source/ENUMWIN/unt_GetWindows.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="unt_GetWindows"/>
-      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -126,8 +121,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Enumwin"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/ENUMWIN"/>
-      <IncludeFiles Value="../source/ENUMWIN"/>
+      <OtherUnitFiles Value="../source/ENUMWIN;../source/_core/tools"/>
+      <IncludeFiles Value="../source/ENUMWIN;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

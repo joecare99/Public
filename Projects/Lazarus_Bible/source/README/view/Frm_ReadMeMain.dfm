@@ -1,0 +1,52 @@
+object MainForm: TMainForm
+  Left = 238
+  Top = 141
+  BorderStyle = bsDialog
+  Caption = 'Readme'
+  ClientHeight = 381
+  ClientWidth = 462
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  OldCreateOrder = True
+  Position = poScreenCenter
+  OnActivate = FormActivate
+  PixelsPerInch = 96
+  TextHeight = 16
+  object mmText: TMemo
+    Left = 8
+    Top = 8
+    Width = 446
+    Height = 329
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -13
+    Font.Name = 'Courier'
+    Font.Style = []
+    ParentFont = False
+    ReadOnly = True
+    ScrollBars = ssBoth
+    TabOrder = 0
+  end
+  object btnOpen: TButton
+    Left = 96
+    Top = 344
+    Width = 89
+    Height = 25
+    Caption = 'Oeffnen'
+    TabOrder = 1
+    OnClick = btnOpenClick
+  end
+  object btnClose: TBitBtn
+    Left = 166
+    Top = 343
+    Width = 129
+    Height = 35
+    Kind = bkClose
+    NumGlyphs = 2
+    TabOrder = 2
+  end
+end

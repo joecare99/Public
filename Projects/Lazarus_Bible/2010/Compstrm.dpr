@@ -1,7 +1,7 @@
 program Compstrm; 
 uses 
   Forms, 
-  frm_CompStrmMAIN in '..\Source\COMPSTRM\frm_CompStrmMAIN.PAS' {MainForm}; 
+  frm_CompStrmMAIN in '..\source\COMPSTRM\frm_CompStrmMAIN.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

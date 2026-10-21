@@ -84,7 +84,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\PRINTGR\Frm_PrintgrMAIN.PAS">
+        <DCCReference Include="..\source\PRINTGR\Frm_PrintgrMAIN.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

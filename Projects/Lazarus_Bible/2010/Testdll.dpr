@@ -1,7 +1,7 @@
 program Testdll; 
 uses 
   Forms, 
-  Frm_TestDLLMAIN in '..\Source\COLORDLL\Frm_TestDLLMAIN.PAS' {MainForm}; 
+  Frm_TestDLLMAIN in '..\source\COLORDLL\Frm_TestDLLMAIN.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

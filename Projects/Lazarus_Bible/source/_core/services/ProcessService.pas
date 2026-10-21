@@ -18,7 +18,7 @@ type
   private
     FOutput: TProcessOutputEvent;
   public
-    constructor Create; override;
+    constructor Create;
     { Startet ein Programm und wartet auf das Ende. Liefert den Exitcode. }
     function Run(const AProgram, AParameters: string): Integer;
     { Startet ein Programm, wartet nicht und liefert die Ausgabe in AOutput. }
@@ -46,16 +46,43 @@ end;
 
 {$IFDEF FPC}
 
+{ Zerlegt eine Parameterzeile in einzelne Argumente (mit Anfuehrungszeichen). }
+procedure SplitParameters(const AParameters: string; AList: TStrings);
+var
+  I: Integer;
+  InQuote: Boolean;
+  Current: string;
+begin
+  AList.Clear;
+  Current := '';
+  InQuote := False;
+  for I := 1 to Length(AParameters) do
+  begin
+    if AParameters[I] = '"' then
+      InQuote := not InQuote
+    else if (AParameters[I] = ' ') and not InQuote then
+    begin
+      if Current <> '' then
+        AList.Add(Current);
+      Current := '';
+    end
+    else
+      Current := Current + AParameters[I];
+  end;
+  if Current <> '' then
+    AList.Add(Current);
+end;
+
 function TProcessService.Run(const AProgram, AParameters: string): Integer;
 var
   Proc: TProcess;
 begin
-  Proc := TProcess.Create;
+  Proc := TProcess.Create(nil);
   try
     Proc.Executable := AProgram;
-    Proc.Parameters := AParameters;
-    Proc.Run;
-    WaitForExit;
+    SplitParameters(AParameters, Proc.Parameters);
+    Proc.Execute;
+    Proc.WaitOnExit;
     Result := Proc.ExitCode;
     Log(Format('ausgefuehrt: %s %s -> %d', [AProgram, AParameters, Result]));
   finally
@@ -68,22 +95,23 @@ function TProcessService.RunAndCapture(const AProgram, AParameters: string;
 var
   Proc: TProcess;
   Data: TStringList;
+  Idx: Integer;
 begin
   AOutput.Clear;
-  Proc := TProcess.Create;
+  Proc := TProcess.Create(nil);
   Data := TStringList.Create;
   try
     Proc.Executable := AProgram;
-    Proc.Parameters := AParameters;
+    SplitParameters(AParameters, Proc.Parameters);
     Proc.Options := [poUsePipes];
-    Proc.Run;
+    Proc.Execute;
     Data.LoadFromStream(Proc.Output);
     Proc.WaitOnExit;
     Result := Proc.ExitCode;
     AOutput.Assign(Data);
     if Assigned(FOutput) then
-      for I := 0 to Data.Count - 1 do
-        FOutput(Self, Data[I]);
+      for Idx := 0 to Data.Count - 1 do
+        FOutput(Self, Data[Idx]);
     Log(Format('ausgefuehrt: %s %s -> %d Zeilen', [AProgram, AParameters, Data.Count]));
   finally
     Data.Free;
@@ -93,7 +121,12 @@ end;
 
 function TProcessService.Open(const ATarget: string): Boolean;
 begin
+{$IFDEF UNIX}
+  { unter Linux mit dem Standardprogramm oeffnen }
+  Result := Run('xdg-open', ATarget) = 0;
+{$ELSE}
   Result := OpenURL(ATarget);
+{$ENDIF}
   Log('geoeffnet: ' + ATarget);
 end;
 

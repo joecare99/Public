@@ -2,7 +2,7 @@ program Dragme;
 
 uses
   Forms,
-  Frm_DragMeMAIN in '..\source\Dragme\Frm_DragMeMAIN.PAS' {MainForm};
+  Frm_DragMeMAIN in '..\source\DRAGME\Frm_DragMeMAIN.pas' {MainForm};
 
 {$R *.RES}
 {$E EXE}

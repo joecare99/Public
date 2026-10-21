@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Hello"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm"/>
-            <IncludeFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm"/>
+            <OtherUnitFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm;../source/_core/tools"/>
+            <IncludeFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Hello"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm"/>
-            <IncludeFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm"/>
+            <OtherUnitFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm;../source/_core/tools"/>
+            <IncludeFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -126,8 +126,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Hello"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm"/>
-      <IncludeFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm"/>
+      <OtherUnitFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm;../source/_core/tools"/>
+      <IncludeFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

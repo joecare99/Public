@@ -86,7 +86,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\MemInfo\frm_MemInfoMain.pas">
+        <DCCReference Include="..\source\MemInfo\frm_MemInfoMain.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

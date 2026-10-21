@@ -87,7 +87,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\OleWord2\Frm_OLEWord2Main.pas">
+        <DCCReference Include="..\source\OleWord2\Frm_OLEWord2Main.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

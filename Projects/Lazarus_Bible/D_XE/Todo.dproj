@@ -48,10 +48,10 @@
 			<DelphiCompile Include="Todo.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\TODO\Frm_TodoMAIN.PAS">
+			<DCCReference Include="..\source\TODO\Frm_TodoMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\source\TODO\Frm_ABOUT.PAS">
+			<DCCReference Include="..\source\AboutEx\Frm_ABOUT.pas">
 				<Form>AboutForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

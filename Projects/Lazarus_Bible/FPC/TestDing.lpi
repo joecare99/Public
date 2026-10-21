@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/TestDing"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/DING"/>
-            <IncludeFiles Value="../source/DING"/>
+            <OtherUnitFiles Value="../source/DING;../source/_core/tools"/>
+            <IncludeFiles Value="../source/DING;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/TestDing"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/DING"/>
-            <IncludeFiles Value="../source/DING"/>
+            <OtherUnitFiles Value="../source/DING;../source/_core/tools"/>
+            <IncludeFiles Value="../source/DING;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -108,17 +108,17 @@
         <UnitName Value="TestDing"/>
       </Unit0>
       <Unit1>
+        <Filename Value="../source/DING/Ctrl_DingButton.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Ctrl_DingButton"/>
+      </Unit1>
+      <Unit2>
         <Filename Value="../source/DING/Frm_TestDingMain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_TestDingMain"/>
-      </Unit1>
-      <Unit2>
-        <Filename Value="../source/DING/Ctrl_DingButton.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="Ctrl_DingButton"/>
       </Unit2>
     </Units>
   </ProjectOptions>
@@ -129,8 +129,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/TestDing"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/DING"/>
-      <IncludeFiles Value="../source/DING"/>
+      <OtherUnitFiles Value="../source/DING;../source/_core/tools"/>
+      <IncludeFiles Value="../source/DING;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

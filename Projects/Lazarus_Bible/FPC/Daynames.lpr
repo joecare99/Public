@@ -8,6 +8,7 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
+  SysUtils,
   ArrayP;
 
 {$R *.res}

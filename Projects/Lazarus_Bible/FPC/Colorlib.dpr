@@ -21,7 +21,7 @@ uses
   {$ENDIF}
   SysUtils,
   Classes,
-  Frm_CLRFORM in '..\source\COLORDLL\Frm_CLRFORM.PAS' {ColorForm};
+  Frm_CLRFORM in '..\source\COLORDLL\Frm_CLRFORM.pas' {ColorForm};
 
 exports
   FBGetColors;

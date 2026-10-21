@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Animator"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/Animator"/>
-            <IncludeFiles Value="../source/Animator"/>
+            <OtherUnitFiles Value="../source/Animator;../source/_core/tools"/>
+            <IncludeFiles Value="../source/Animator;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Animator"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/Animator"/>
-            <IncludeFiles Value="../source/Animator"/>
+            <OtherUnitFiles Value="../source/Animator;../source/_core/tools"/>
+            <IncludeFiles Value="../source/Animator;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -105,17 +105,17 @@
         <UnitName Value="Animator"/>
       </Unit0>
       <Unit1>
+        <Filename Value="../source/Animator/cmpAnimator.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="cmpAnimator"/>
+      </Unit1>
+      <Unit2>
         <Filename Value="../source/Animator/Frm_AnimatorMain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_AnimatorMain"/>
-      </Unit1>
-      <Unit2>
-        <Filename Value="../source/Animator/cmpAnimator.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="cmpAnimator"/>
       </Unit2>
     </Units>
   </ProjectOptions>
@@ -126,8 +126,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Animator"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/Animator"/>
-      <IncludeFiles Value="../source/Animator"/>
+      <OtherUnitFiles Value="../source/Animator;../source/_core/tools"/>
+      <IncludeFiles Value="../source/Animator;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

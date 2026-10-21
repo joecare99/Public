@@ -44,7 +44,7 @@
 			<DelphiCompile Include="Bitview.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\BITVIEW\Frm_BitViewMAIN.PAS">
+			<DCCReference Include="..\source\Bitview\Frm_BitViewMAIN.pas">
 				<Form>frmBitmapViewerMain</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

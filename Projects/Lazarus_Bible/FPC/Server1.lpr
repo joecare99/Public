@@ -8,6 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
+  SysUtils,
+  FormShot,
   Frm_SERVER;
 
 {$R *.res}
@@ -17,5 +19,12 @@ begin
   Application.Initialize;
   Application.Title := 'Demo: Server1';
   Application.CreateForm(TServerForm, ServerForm);
+  if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
+  begin
+    ServerForm.Show;
+    Application.ProcessMessages;
+    SaveFormToImage(ServerForm, ChangeFileExt(ParamStr(2), '.bmp'));
+    Application.Terminate;
+  end;
   Application.Run;
 end.

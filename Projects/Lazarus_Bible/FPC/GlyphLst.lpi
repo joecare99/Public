@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/GlyphLst"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/GlyphLst"/>
-            <IncludeFiles Value="../source/GlyphLst"/>
+            <OtherUnitFiles Value="../source/GlyphLst;../source/_core/tools"/>
+            <IncludeFiles Value="../source/GlyphLst;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/GlyphLst"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/GlyphLst"/>
-            <IncludeFiles Value="../source/GlyphLst"/>
+            <OtherUnitFiles Value="../source/GlyphLst;../source/_core/tools"/>
+            <IncludeFiles Value="../source/GlyphLst;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -124,8 +124,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/GlyphLst"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/GlyphLst"/>
-      <IncludeFiles Value="../source/GlyphLst"/>
+      <OtherUnitFiles Value="../source/GlyphLst;../source/_core/tools"/>
+      <IncludeFiles Value="../source/GlyphLst;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

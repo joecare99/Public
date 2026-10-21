@@ -83,7 +83,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\PageTabOD\Frm_PagetabODMain.pas">
+        <DCCReference Include="..\source\PageTabOD\Frm_PagetabODMain.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">
