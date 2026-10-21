@@ -8,7 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
-  COLORDLG;
+  COLORDLG,
+  Frm_TestCdlgMAIN;
 
 {$R *.res}
 

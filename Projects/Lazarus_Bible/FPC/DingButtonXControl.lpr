@@ -8,7 +8,9 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
-  DingButtonImpl1;
+  DingButtonImpl1,
+  DingButtonXControl_TLB,
+  Frm_DingAbout;
 
 {$R *.res}
 

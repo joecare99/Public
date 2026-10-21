@@ -8,7 +8,6 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
-  unt_ExWin;
 
 {$R *.res}
 

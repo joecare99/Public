@@ -8,7 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
-  Frm_CharGridABOUT;
+  Frm_CharGridABOUT,
+  Frm_CharGridMAIN;
 
 {$R *.res}
 

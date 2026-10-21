@@ -9,7 +9,8 @@ uses
   Interfaces,
   Forms,
   DefaultTranslator,
-  Frm_ABOUT;
+  Frm_ABOUT,
+  Frm_AboutExMAIN;
 
 {$R *.res}
 

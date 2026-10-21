@@ -8,7 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
-  Frm_CALC64;
+  Frm_CALC64,
+  Frm_CalcABOUT;
 
 {$R *.res}
 

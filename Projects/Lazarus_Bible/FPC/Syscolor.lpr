@@ -8,7 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
-  Frm_ABOUTDLG;
+  Frm_ABOUTDLG,
+  Frm_SyscolorMAIN;
 
 {$R *.res}
 

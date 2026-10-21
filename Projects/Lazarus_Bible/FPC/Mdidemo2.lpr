@@ -8,7 +8,10 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
-  CHILD2;
+  CHILD2,
+  Childbmp,
+  frm_MDIDemo2ABOUT,
+  Frm_MDIDemo2MAIN;
 
 {$R *.res}
 

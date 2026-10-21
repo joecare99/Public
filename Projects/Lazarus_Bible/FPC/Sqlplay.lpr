@@ -8,7 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
-  Frm_SQLOPENDB;
+  Frm_SQLOPENDB,
+  Frm_SqlplayMAIN;
 
 {$R *.res}
 

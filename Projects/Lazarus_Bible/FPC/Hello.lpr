@@ -8,7 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
-  frm_HelloMAIN;
+  Frm_HelloMAIN,
+  HelloViewModel;
 
 {$R *.res}
 

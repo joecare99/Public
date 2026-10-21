@@ -8,7 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
-  Frm_SPLASH;
+  Frm_SPLASH,
+  Frm_SplashinMAIN;
 
 {$R *.res}
 

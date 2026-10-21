@@ -8,7 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
-  Frm_DIRDLG;
+  Frm_DIRDLG,
+  Frm_DirExMAIN;
 
 {$R *.res}
 

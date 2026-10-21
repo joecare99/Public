@@ -8,7 +8,10 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
-  DRAWPAGE;
+  DRAWPAGE,
+  Frm_fontSampABOUT,
+  frm_fontsampMAIN,
+  PREVIEW;
 
 {$R *.res}
 

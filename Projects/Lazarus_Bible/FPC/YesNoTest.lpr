@@ -8,7 +8,8 @@ uses
   {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
-  Frm_YesNo;
+  Frm_YesNo,
+  Frm_YesNoMAIN;
 
 {$R *.res}
 

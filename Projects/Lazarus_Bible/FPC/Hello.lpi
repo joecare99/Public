@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Hello"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/HELLO"/>
-            <IncludeFiles Value="../source/HELLO"/>
+            <OtherUnitFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm"/>
+            <IncludeFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Hello"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/HELLO"/>
-            <IncludeFiles Value="../source/HELLO"/>
+            <OtherUnitFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm"/>
+            <IncludeFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -98,20 +98,25 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="3">
       <Unit0>
         <Filename Value="Hello.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Hello"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../source/HELLO/frm_HelloMAIN.pas"/>
+        <Filename Value="../source/HELLO/view/Frm_HelloMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="frm_HelloMAIN"/>
+        <UnitName Value="Frm_HelloMAIN"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="../source/HELLO/viewmodel/HelloViewModel.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="HelloViewModel"/>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -121,8 +126,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Hello"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/HELLO"/>
-      <IncludeFiles Value="../source/HELLO"/>
+      <OtherUnitFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm"/>
+      <IncludeFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>
