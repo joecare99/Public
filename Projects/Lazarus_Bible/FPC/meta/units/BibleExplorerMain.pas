@@ -13,7 +13,7 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, StdCtrls, ComCtrls, Dialogs, Menus,
-  ExtCtrls, Graphics, LCLIntf, LCLType, Process,
+  Buttons, ExtCtrls, Graphics, LCLIntf, LCLType, Process,
   BibleDemoInfo, BibleIndex, BibleCodeView, BibleShowcase, BibleShowcaseRegistry,
   FormShot;
 
@@ -78,6 +78,12 @@ type
     procedure btnNextPageClick(Sender: TObject);
     procedure UpdatePageInfo;
     procedure EmbedBehaviorForm;
+    procedure PrepareBehaviorForm(AForm: TForm);
+    procedure PrepareBehaviorMenu(AForm: TForm);
+    procedure ClearBehaviorMenu;
+    procedure BehaviorMenuClick(Sender: TObject);
+    procedure BehaviorCloseClick(Sender: TObject);
+    procedure MainFormCloseQuery(Sender: TObject; var CloseAction: TCloseAction);
     procedure mnuQuitClick(Sender: TObject);
     procedure mnuReloadClick(Sender: TObject);
     procedure mnuStartClick(Sender: TObject);
@@ -91,6 +97,11 @@ type
     FBehaviorForm: TForm;
     FBehaviorClosed: Boolean;
     FDragging: Boolean;
+    FCloseFromDemo: Boolean;
+    { Spiegelung der Demo-Menuzeile im Menue des BibleExplorers:
+      Original-Eintraege je gespiegeltem Eintrag. }
+    FBehaviorMenuSources: array of TMenuItem;
+    FBehaviorMenuClones: array of TMenuItem;
     FDragStartY: Integer;
     FProcess: TProcess;
     function FindRoot: string;
@@ -270,6 +281,7 @@ end;
 
 procedure TBibleExplorerForm.ClearBehavior;
 begin
+  ClearBehaviorMenu;
   if FBehaviorForm <> nil then
   begin
     FBehaviorForm.OnClose := nil;
@@ -303,6 +315,135 @@ begin
   FBehaviorForm.BringToFront;
 end;
 
+{ Der "Schliessen"-Knopf eines eingebetteten Demos (TBitBtn mit
+  Kind = bkClose) wuerde im LCL das oberste nicht eingebettete Formular
+  schliessen - also die Meta-App. Er wird deshalb auf das Demo-Formular
+  umgebogen. }
+procedure TBibleExplorerForm.PrepareBehaviorForm(AForm: TForm);
+var
+  I: Integer;
+begin
+  for I := 0 to AForm.ComponentCount - 1 do
+  begin
+    { TBitBtn (Kind = bkClose) schliesst sonst die Meta-App. }
+    if (AForm.Components[I] is TBitBtn) and
+       (TBitBtn(AForm.Components[I]).Kind = bkClose) then
+    begin
+      TBitBtn(AForm.Components[I]).Kind := bkCustom;
+      TBitBtn(AForm.Components[I]).OnClick := BehaviorCloseClick;
+    end;
+  end;
+end;
+
+{ Die Menuzeile einer Demo wird im eingebetteten Zustand nicht gerendert -
+  Menueleisten erscheinen nur bei Formularen auf oberster Ebene. Die
+  Demo-Menustruktur wird deshalb dynamisch in die Menueleiste des
+  BibleExplorers gespiegelt; die Klicks laufen auf die Original-Eintraege
+  der Demo, so dass die Demo-Ereignisbehandlung unveraendert arbeitet. }
+procedure TBibleExplorerForm.BehaviorMenuClick(Sender: TObject);
+var
+  I: Integer;
+  Src: TMenuItem;
+begin
+  if not (Sender is TMenuItem) then
+    Exit;
+  for I := 0 to High(FBehaviorMenuClones) do
+    if FBehaviorMenuClones[I] = Sender then
+    begin
+      Src := FBehaviorMenuSources[I];
+      if (Src <> nil) and Assigned(Src.OnClick) then
+        try
+          Src.OnClick(Src);
+        except
+          on E: Exception do
+            memoBehavior.Lines.Add('Demo-Menu-Fehler: ' + E.Message);
+        end;
+      Exit;
+    end;
+end;
+
+procedure TBibleExplorerForm.ClearBehaviorMenu;
+var
+  I: Integer;
+begin
+  for I := High(FBehaviorMenuClones) downto 0 do
+    if FBehaviorMenuClones[I] <> nil then
+      FBehaviorMenuClones[I].Free;
+  SetLength(FBehaviorMenuClones, 0);
+  SetLength(FBehaviorMenuSources, 0);
+end;
+
+procedure TBibleExplorerForm.PrepareBehaviorMenu(AForm: TForm);
+
+  procedure MirrorItem(AParent: TMenuItem; ASrc: TMenuItem);
+  var
+    J: Integer;
+    Src, NewItem: TMenuItem;
+  begin
+    for J := 0 to ASrc.Count - 1 do
+    begin
+      Src := ASrc.Items[J];
+      NewItem := TMenuItem.Create(nil);
+      NewItem.Caption := Src.Caption;
+      NewItem.Enabled := Src.Enabled;
+      NewItem.Visible := Src.Visible;
+      NewItem.Checked := Src.Checked;
+      NewItem.ShortCut := Src.ShortCut;
+      NewItem.OnClick := BehaviorMenuClick;
+      AParent.Add(NewItem);
+      SetLength(FBehaviorMenuClones, Length(FBehaviorMenuClones) + 1);
+      FBehaviorMenuClones[High(FBehaviorMenuClones)] := NewItem;
+      SetLength(FBehaviorMenuSources, Length(FBehaviorMenuSources) + 1);
+      FBehaviorMenuSources[High(FBehaviorMenuSources)] := Src;
+      MirrorItem(NewItem, Src);
+    end;
+  end;
+
+var
+  I: Integer;
+  Root, NewItem: TMenuItem;
+begin
+  ClearBehaviorMenu;
+  if (AForm = nil) or (AForm.Menu = nil) then
+    Exit;
+  for I := 0 to AForm.Menu.Items.Count - 1 do
+  begin
+    Root := AForm.Menu.Items.Items[I];
+    NewItem := TMenuItem.Create(nil);
+    NewItem.Caption := Root.Caption;
+    NewItem.OnClick := BehaviorMenuClick;
+    MainMenu1.Items.Add(NewItem);
+    SetLength(FBehaviorMenuClones, Length(FBehaviorMenuClones) + 1);
+    FBehaviorMenuClones[High(FBehaviorMenuClones)] := NewItem;
+    SetLength(FBehaviorMenuSources, Length(FBehaviorMenuSources) + 1);
+    FBehaviorMenuSources[High(FBehaviorMenuSources)] := Root;
+    MirrorItem(NewItem, Root);
+  end;
+end;{ Der Schliessen-Knopf des Demos schliesst das Demo-Formular - nicht die
+  Meta-App. }
+procedure TBibleExplorerForm.BehaviorCloseClick(Sender: TObject);
+begin
+  FCloseFromDemo := True;
+  if FBehaviorForm <> nil then
+    FBehaviorForm.Close;
+  FCloseFromDemo := False;
+end;
+
+{ Sicherheitsnetz: Kommt der Schliess-Befehl aus einem eingebetteten Demo,
+  bleibt die Meta-App offen. Sonst wird beim Beenden der Meta-App zuerst
+  das eingebettete Demo freigegeben. }
+procedure TBibleExplorerForm.MainFormCloseQuery(Sender: TObject;
+  var CloseAction: TCloseAction);
+begin
+  if FCloseFromDemo then
+  begin
+    FCloseFromDemo := False;
+    CloseAction := caNone;
+  end
+  else if FBehaviorForm <> nil then
+    ClearBehavior;
+end;
+
 { Zeigt das Verhalten der Demo: eingebettetes Formular oder Screenshot. }
 procedure TBibleExplorerForm.ShowBehavior;
 var
@@ -320,6 +461,8 @@ begin
       { Der Schliessen-Knopf der Demo darf die Explorer-App nicht beenden,
         sondern leert nur den Frame. }
       FBehaviorForm.OnClose := BehaviorFormClosing;
+      PrepareBehaviorForm(FBehaviorForm);
+      PrepareBehaviorMenu(FBehaviorForm);
       EmbedBehaviorForm;
       btnStartIntern.Enabled := False;
       btnShotIntern.Enabled := True;
@@ -347,6 +490,7 @@ begin
   if Sender is TForm then
     (Sender as TForm).Hide;
   FBehaviorClosed := True;
+  ClearBehaviorMenu;
   btnStartIntern.Enabled := True;
   btnShotIntern.Enabled := False;
   memoBehavior.Lines.Add('Die Demo wurde geschlossen - der Frame ist leer. ' +

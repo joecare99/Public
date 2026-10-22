@@ -8,9 +8,11 @@ object BibleExplorerForm: TBibleExplorerForm
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
+  Menu = MainMenu1
   OnCreate = FormCreate
   OnDestroy = FormDestroy
   OnShow = FormShow
+  OnCloseQuery = MainFormCloseQuery
   Position = poScreenCenter
   object Splitter1: TSplitter
     Left = 250

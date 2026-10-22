@@ -142,7 +142,8 @@
       "units": ["Frm_EnumFonMAIN.pas"],
       "markers": [
         {"file": "Frm_EnumFonMAIN.pas", "text": "procedure TfrmEnumFonMain", "title": "Die Anzeige"}
-      ]
+      ],
+      "showcase": true
     },
     {
       "key": "Printgr",
@@ -153,8 +154,9 @@
       "project": "Printgr",
       "units": ["Frm_PrintgrMAIN.pas"],
       "markers": [
-        {"file": "Frm_PrintgrMAIN.pas", "text": "procedure TMainForm.PaintGraphics", "title": "Die Zeichnung"}
-      ]
+        {"file": "Frm_PrintgrMAIN.pas", "text": "procedure TfrmPrintgrMain.PaintGraphics", "title": "Die Zeichnung"}
+      ],
+      "showcase": true
     }
   ]
 }

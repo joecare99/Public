@@ -32,7 +32,7 @@ type
 implementation
 
 uses
-  Frm_HelloMAIN, Frm_CALC, Frm_ReadMeMain;
+  Frm_HelloMAIN, Frm_CALC, Frm_ReadMeMain, Frm_EnumFonMAIN, Frm_PrintgrMAIN;
 
 { Fabrikfunktionen der Demos }
 
@@ -49,6 +49,16 @@ end;
 function CreateReadmeForm: TForm;
 begin
   Result := TMainForm.Create(nil);
+end;
+
+function CreateEnumfonForm: TForm;
+begin
+  Result := TfrmEnumFontsMain.Create(nil);
+end;
+
+function CreatePrintgrForm: TForm;
+begin
+  Result := TfrmPrintgrMain.Create(nil);
 end;
 
 constructor TShowcaseRegistry.Create;
@@ -68,6 +78,8 @@ begin
   FShowcase.Register('HELLO', 'Hallo Delphi Programmer', @CreateHelloForm);
   FShowcase.Register('Calc32', 'Taschenrechner', @CreateCalc32Form);
   FShowcase.Register('README', 'Readme anzeigen', @CreateReadmeForm);
+  FShowcase.Register('Enumfon', 'Schriften auflisten', @CreateEnumfonForm);
+  FShowcase.Register('Printgr', 'Grafik drucken', @CreatePrintgrForm);
 end;
 
 end.

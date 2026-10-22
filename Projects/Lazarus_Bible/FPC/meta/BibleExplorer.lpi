@@ -31,7 +31,7 @@
             <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/_core/services;../../source/_core/tools"/>
+            <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/_core/services;../../source/_core/tools"/>
             <IncludeFiles Value="../meta/units"/>
             <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/BibleExplorer"/>
           </SearchPaths>
@@ -51,7 +51,7 @@
             <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/_core/services;../../source/_core/tools"/>
+            <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/_core/services;../../source/_core/tools"/>
             <IncludeFiles Value="../meta/units"/>
             <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/BibleExplorer"/>
           </SearchPaths>
@@ -81,6 +81,9 @@
       <Item3>
         <PackageName Value="SynEdit"/>
       </Item3>
+      <Item4>
+        <PackageName Value="printer4lazarus"/>
+      </Item4>
     </RequiredPackages>
     <Units Count="14">
       <Unit0>
@@ -154,6 +157,20 @@
         <IsPartOfProject Value="True"/>
         <UnitName Value="CalculatorModel"/>
       </Unit12>
+      <Unit13>
+        <Filename Value="../../source/ENUMFON/Frm_EnumFonMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_EnumFonMAIN"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="../../source/PRINTGR/Frm_PrintgrMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_PrintgrMAIN"/>
+      </Unit14>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -163,7 +180,7 @@
       <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/_core/services;../../source/_core/tools"/>
+      <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/_core/services;../../source/_core/tools"/>
       <IncludeFiles Value="../meta/units"/>
       <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/BibleExplorer"/>
     </SearchPaths>

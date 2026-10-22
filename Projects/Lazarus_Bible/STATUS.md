@@ -41,6 +41,9 @@ build/                     Build-Bericht und Screenshots
 
 * **MVVM-Muster (View / ViewModel / Model, eine Klasse je Datei):**
   `HELLO`, `Calc32`, `README` - vollstaendig umgestellt und getestet.
+* **Eingebettet (Verhalten):** `HELLO`, `Calc32`, `README`, `Enumfon`,
+  `Printgr` - die Showcase-Registry kennt sie, der
+  Schliessen-Knopf und das Demo-Menue laufen im Frame.
 * **Weitere portierte Demos:** `Actions`, `Addpage`, `Calc64`, `CharGrid`,
   `Checks`, `Combos`, `Constraint`, `Contcomp`, `Exwin`, `Exlist`, `Except1`,
   `Except2`, `Fancy`, `Filemenu`, `Findrepl`, `Fishy`, `Fishy2`, `GlyphLst`,
@@ -70,7 +73,17 @@ build/                     Build-Bericht und Screenshots
   Code-Stellen, Notizen).
 * Das "Verhalten" zeigt eingebettete Formulare der Showcase-Demos
   (`FPC/meta/units/BibleShowcaseRegistry.pas`); der Schliessen-Knopf der
-  Demo leert nur den Frame, "Demo intern starten" startet sie erneut.
+  Demo leert nur den Frame ("Demo intern starten" startet sie erneut):
+  `TBitBtn`-Knöpfe mit `Kind = bkClose` werden beim Einbetten auf das
+  Demo-Formular umgebogen (`PrepareBehaviorForm`), sonst schliesst die
+  LCL die Meta-App.
+* Die Menuzeile einer Demo erscheint im eingebetteten Zustand nicht -
+  sie wird dynamisch in die Menue des BibleExplorers gespiegelt
+  (`PrepareBehaviorMenu`), Klicks laufen ruehreffend auf die
+  Original-Eintraege der Demo. Sekundaerformulare (z. B. die About-Box
+  des Rechners) werden teils bedarfsgesteuert erzeugt, da das
+  AutoCreate des eigenstaendigen Projekts entfaellt. Drucken ohne
+  installierten Drucker (WSL) wird sauber abgefangen.
   Fuer alle anderen Demos startet die App das gebaute Programm
   ("Externes Programm starten", rot markiert) bzw. erzeugt einen
   Screenshot - jedes Demo unterstuetzt `--screenshot <datei.bmp> [seite]`.
@@ -84,5 +97,9 @@ build/                     Build-Bericht und Screenshots
   Junction nicht und wuerde die Dateien als geloescht anzeigen.
 * Vor dem Commit `git update-index --really-refresh` ausfuehren: die
   Zeitstempel des 9p-Mounts sind unzuverlaessig, sonst uebersieht git
-  Aenderungen.
+  Aenderungen. Erkennt die Windows-git ueber das Junction keine
+  Aendereten (status/diff bleiben leer, obwohl die Inhalte abweichen),
+  hilft nur der direkte Index-Weg: `git hash-object -w <datei>` und
+  `git update-index --add --cacheinfo 100644,<blob>,<pfad>`, dann
+  diff --cached gegenpruefen und committen.
 
