@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmFancyMain: TfrmFancyMain
   Left = 136
   Top = 153
   Caption = 'Fancy RadioButton Groups'

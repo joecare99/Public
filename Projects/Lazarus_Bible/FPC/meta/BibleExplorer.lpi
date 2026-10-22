@@ -31,7 +31,7 @@
             <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/_core/services;../../source/_core/tools"/>
+            <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/ACTIONS;../../source/ADDPAGE;../../source/GLYPHLST;../../source/LISTTEXT;../../source/MULTIMEN;../../source/OPTIONS;../../source/PALETTE;../../source/SKETCH;../../source/Inidata;../../source/CONSTRAINT;../../source/CONTCOMP;../../source/FANCY;../../source/FILEMENU;../../source/OBJLIST;../../source/TOOLBAR3;../../source/_core/services;../../source/_core/tools"/>
             <IncludeFiles Value="../meta/units"/>
             <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/BibleExplorer"/>
           </SearchPaths>
@@ -51,7 +51,7 @@
             <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/_core/services;../../source/_core/tools"/>
+            <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/ACTIONS;../../source/ADDPAGE;../../source/GLYPHLST;../../source/LISTTEXT;../../source/MULTIMEN;../../source/OPTIONS;../../source/PALETTE;../../source/SKETCH;../../source/Inidata;../../source/CONSTRAINT;../../source/CONTCOMP;../../source/FANCY;../../source/FILEMENU;../../source/OBJLIST;../../source/TOOLBAR3;../../source/_core/services;../../source/_core/tools"/>
             <IncludeFiles Value="../meta/units"/>
             <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/BibleExplorer"/>
           </SearchPaths>
@@ -199,6 +199,104 @@
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_SpinButtonMAIN"/>
       </Unit18>
+      <Unit19>
+        <Filename Value="../../source/ACTIONS/Frm_ActionsMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ActionsMain"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="../../source/ADDPAGE/Frm_AddpageMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_AddpageMAIN"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="../../source/GLYPHLST/Frm_GlyphListMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_GlyphListMain"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="../../source/LISTTEXT/Frm_ListTextMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ListTextMAIN"/>
+      </Unit22>
+      <Unit23>
+        <Filename Value="../../source/MULTIMEN/Frm_MultiWayMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_MultiWayMAIN"/>
+      </Unit23>
+      <Unit24>
+        <Filename Value="../../source/OPTIONS/Frm_OptionsMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_OptionsMain"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="../../source/PALETTE/Frm_PaletteMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_PaletteMain"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="../../source/SKETCH/Frm_SketchMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_SketchMAIN"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="../../source/CONSTRAINT/frm_ConstraintMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_ConstraintMain"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="../../source/CONTCOMP/frm_ContCompMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="frm_ContCompMAIN"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="../../source/FANCY/Frm_FancyMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_FancyMAIN"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="../../source/FILEMENU/Frm_FileMenuMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_FileMenuMAIN"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="../../source/OBJLIST/Frm_ObjListMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ObjListMAIN"/>
+      </Unit31>
+      <Unit32>
+        <Filename Value="../../source/TOOLBAR3/Frm_Toolbar3MAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_Toolbar3MAIN"/>
+      </Unit32>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -208,7 +306,7 @@
       <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/BibleExplorer"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/_core/services;../../source/_core/tools"/>
+      <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/ENUMFON;../../source/PRINTGR;../../source/LISTFONT;../../source/COMBOS;../../source/CHECKS;../../source/SPINBUTT;../../source/ACTIONS;../../source/ADDPAGE;../../source/GLYPHLST;../../source/LISTTEXT;../../source/MULTIMEN;../../source/OPTIONS;../../source/PALETTE;../../source/SKETCH;../../source/Inidata;../../source/CONSTRAINT;../../source/CONTCOMP;../../source/FANCY;../../source/FILEMENU;../../source/OBJLIST;../../source/TOOLBAR3;../../source/_core/services;../../source/_core/tools"/>
       <IncludeFiles Value="../meta/units"/>
       <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/BibleExplorer"/>
     </SearchPaths>

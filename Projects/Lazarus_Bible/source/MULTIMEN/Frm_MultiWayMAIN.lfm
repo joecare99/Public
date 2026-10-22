@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmMultiWayMain: TfrmMultiWayMain
   Left = 245
   Top = 190
   Caption = 'Multiway Menus'

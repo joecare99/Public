@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmObjListMain: TfrmObjListMain
   Left = 229
   Top = 136
   Caption = 'TObject List Demonstration'

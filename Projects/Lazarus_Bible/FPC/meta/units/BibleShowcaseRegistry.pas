@@ -33,7 +33,11 @@ implementation
 
 uses
   Frm_HelloMAIN, Frm_CALC, Frm_ReadMeMain, Frm_EnumFonMAIN, Frm_PrintgrMAIN,
-  Frm_ListFontMAIN, Frm_CombosMAIN, Frm_ChecksMAIN, Frm_SpinButtonMAIN;
+  Frm_ListFontMAIN, Frm_CombosMAIN, Frm_ChecksMAIN, Frm_SpinButtonMAIN,
+  Frm_ActionsMain, Frm_AddpageMAIN, Frm_GlyphListMain, Frm_ListTextMAIN,
+  Frm_MultiWayMAIN, Frm_OptionsMain, Frm_PaletteMain, Frm_SketchMAIN,
+  frm_ConstraintMain, frm_ContCompMAIN, Frm_FancyMAIN, Frm_FileMenuMAIN,
+  Frm_ObjListMAIN, Frm_Toolbar3MAIN;
 
 { Fabrikfunktionen der Demos }
 
@@ -82,6 +86,76 @@ begin
   Result := TfrmSpinButtonMain.Create(nil);
 end;
 
+function CreateActionsForm: TForm;
+begin
+  Result := TFrmActionsMain.Create(nil);
+end;
+
+function CreateAddpageForm: TForm;
+begin
+  Result := TfrmAddPageMain.Create(nil);
+end;
+
+function CreateGlypListForm: TForm;
+begin
+  Result := TfrmGlyphListMain.Create(nil);
+end;
+
+function CreateListTextForm: TForm;
+begin
+  Result := TfrmListTextMain.Create(nil);
+end;
+
+function CreateMultiWayForm: TForm;
+begin
+  Result := TfrmMultiWayMain.Create(nil);
+end;
+
+function CreateOptionsForm: TForm;
+begin
+  Result := TfrmOptionsMain.Create(nil);
+end;
+
+function CreatePaletteForm: TForm;
+begin
+  Result := TfrmPaletteMain.Create(nil);
+end;
+
+function CreateSketchForm: TForm;
+begin
+  Result := TfrmSketchMain.Create(nil);
+end;
+
+function CreateConstraintForm: TForm;
+begin
+  Result := TfrmConstraintMain.Create(nil);
+end;
+
+function CreateContCompForm: TForm;
+begin
+  Result := TfrmContCompMain.Create(nil);
+end;
+
+function CreateFancyForm: TForm;
+begin
+  Result := TfrmFancyMain.Create(nil);
+end;
+
+function CreateFileMenuForm: TForm;
+begin
+  Result := TfrmFileMenuMain.Create(nil);
+end;
+
+function CreateObjListForm: TForm;
+begin
+  Result := TfrmObjListMain.Create(nil);
+end;
+
+function CreateToolbar3Form: TForm;
+begin
+  Result := TfrmToolbar3Main.Create(nil);
+end;
+
 constructor TShowcaseRegistry.Create;
 begin
   inherited Create;
@@ -105,6 +179,20 @@ begin
   FShowcase.Register('Combos', 'Kombinationsfelder', @CreateCombosForm);
   FShowcase.Register('Checks', 'Ankreuzfelder und Menue-Ebenen', @CreateChecksForm);
   FShowcase.Register('Spinbutt', 'Spin-Knoepfe und Zaehler', @CreateSpinbuttonForm);
+  FShowcase.Register('Actions', 'Aktionen und Tasten', @CreateActionsForm);
+  FShowcase.Register('Addpage', 'Seiten hinzufuegen', @CreateAddpageForm);
+  FShowcase.Register('GlyphLst', 'Symbol-Liste', @CreateGlypListForm);
+  FShowcase.Register('Listtext', 'Text in Listen', @CreateListTextForm);
+  FShowcase.Register('Multimen', 'Mehrstufiges Menue', @CreateMultiWayForm);
+  FShowcase.Register('Options', 'Optionsdialog', @CreateOptionsForm);
+  FShowcase.Register('Palette', 'Farbpalette', @CreatePaletteForm);
+  FShowcase.Register('Sketch', 'Zeichnen mit der Maus', @CreateSketchForm);
+  FShowcase.Register('Constraint', 'Anordnungsregeln', @CreateConstraintForm);
+  FShowcase.Register('Contcomp', 'Containersteuerelemente', @CreateContCompForm);
+  FShowcase.Register('Fancy', 'Verschachtelte Formulare', @CreateFancyForm);
+  FShowcase.Register('Filemenu', 'Dateimenue', @CreateFileMenuForm);
+  FShowcase.Register('Objlist', 'Objektliste', @CreateObjListForm);
+  FShowcase.Register('Toolbar3', 'Werkzeugleiste', @CreateToolbar3Form);
 end;
 
 end.

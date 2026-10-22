@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmOptionsMain: TfrmOptionsMain
   Left = 298
   Top = 176
   Caption = 'Options Dialog Demonstration'

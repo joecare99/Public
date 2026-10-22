@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmFileMenuMain: TfrmFileMenuMain
   Left = 199
   Top = 99
   Caption = 'Dynamic File Menu'

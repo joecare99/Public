@@ -135,11 +135,11 @@ begin
         tkEnumeration: SetOrdProp(P, PropInfo,
           GetEnumValue(PropInfo^.PropType,
           ReadStr(P.Name, GetEnumName(PropInfo^.PropType,
-          GetOrdProp(P,PropInfo))^)));
+          GetOrdProp(P,PropInfo)))));
 {$Else}
         tkEnumeration: SetOrdProp(P, PropInfo,
-          GetEnumValue({$IFDEF FPC} PropInfo.PropType {$ELSE} PropInfo.PropType^ {$ENDIF},
-          ReadStr(P.Name, GetEnumName({$IFDEF FPC} PropInfo.PropType {$ELSE} PropInfo.PropType^ {$ENDIF},
+          GetEnumValue({$IFDEF FPC} PropInfo^.PropType {$ELSE} PropInfo^.PropType^ {$ENDIF},
+          ReadStr(P.Name, GetEnumName({$IFDEF FPC} PropInfo^.PropType {$ELSE} PropInfo^.PropType^ {$ENDIF},
           GetOrdProp(P,PropInfo)))));
 {$Endif}
       end;
@@ -169,10 +169,10 @@ begin
 {$ifndef Supports_Widestring}
         tkEnumeration: WriteStr(P.Name,
           GetEnumName(PropInfo^.PropType,
-          GetOrdProp(P,PropInfo))^);
+          GetOrdProp(P,PropInfo)));
 {$else}
         tkEnumeration: WriteStr(P.Name,
-          GetEnumName({$IFDEF FPC} PropInfo.PropType {$ELSE} PropInfo.PropType^ {$ENDIF},
+          GetEnumName({$IFDEF FPC} PropInfo^.PropType {$ELSE} PropInfo^.PropType^ {$ENDIF},
           GetOrdProp(P,PropInfo)));
 {$endif}
       end;

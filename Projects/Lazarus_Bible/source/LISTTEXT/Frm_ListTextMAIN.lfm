@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmListTextMain: TfrmListTextMain
   Left = 254
   Top = 134
   Caption = 'List Text Files'

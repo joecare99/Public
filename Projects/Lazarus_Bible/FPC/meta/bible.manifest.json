@@ -209,6 +209,188 @@
         {"file": "Frm_SpinButtonMAIN.pas", "text": "procedure TfrmSpinButtonMain.FormCreate", "title": "Die Verknoepfung"}
       ],
       "showcase": true
+    },
+    {
+      "key": "Actions",
+      "title": "Aktionen",
+      "summary": "Eigene TAction-Klasse mit Listensteuerung.",
+      "learning": "ActionList, Ereignisse und Tastenkombinationen.",
+      "folder": "ACTIONS",
+      "project": "Actions",
+      "units": ["Frm_ActionsMain.pas"],
+      "markers": [
+        {"file": "Frm_ActionsMain.pas", "text": "procedure TFrmActionsMain.actDemoExitExecute", "title": "Die Aktion"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Addpage",
+      "title": "Seiten hinzufuegen",
+      "summary": "Steuerelemente und Seiten zur Laufzeit ergaenzen.",
+      "learning": "PageControl und dynamische Steuerelemente.",
+      "folder": "ADDPAGE",
+      "project": "Addpage",
+      "units": ["Frm_AddpageMAIN.pas"],
+      "markers": [
+        {"file": "Frm_AddpageMAIN.pas", "text": "procedure TfrmAddPageMain.AddPageButtonClick", "title": "Die neue Seite"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "GlyphLst",
+      "title": "Symbol-Liste",
+      "summary": "Eine ListBox mit Symbolen per Textdatei fuellen.",
+      "learning": "TImageList-Einbindung in ListBoxen.",
+      "folder": "GLYPHLST",
+      "project": "GlypLst",
+      "units": ["Frm_GlyphListMain.pas"],
+      "markers": [
+        {"file": "Frm_GlyphListMain.pas", "text": "procedure TfrmGlyphListMain.FormCreate", "title": "Die Symbole"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Listtext",
+      "title": "Listentext",
+      "summary": "Zeilentexte laden und in Listen wahlweise darstellen.",
+      "learning": "TFileStreams und ListBox-Auswahl.",
+      "folder": "LISTTEXT",
+      "project": "ListText",
+      "units": ["Frm_ListTextMAIN.pas"],
+      "markers": [
+        {"file": "Frm_ListTextMAIN.pas", "text": "procedure TfrmListTextMain.Open1Click", "title": "Das Laden"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Multimen",
+      "title": "Mehrstufiges Menue",
+      "summary": "Ein Menue mit wechselnden Menuegruenden darstellen.",
+      "learning": "Menuegruende austauschen.",
+      "folder": "MULTIMEN",
+      "project": "MultiWay",
+      "units": ["Frm_MultiWayMAIN.pas"],
+      "markers": [
+        {"file": "Frm_MultiWayMAIN.pas", "text": "procedure TfrmMultiWayMain.Exit1Click", "title": "Das Menue"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Options",
+      "title": "Optionsdialog",
+      "summary": "Optionen mit Ini-Datei laden und speichern.",
+      "learning": "Ini-Dateien als Konfigurationsspeicher.",
+      "folder": "OPTIONS",
+      "project": "Options",
+      "units": ["Frm_OptionsMain.pas"],
+      "markers": [
+        {"file": "Frm_OptionsMain.pas", "text": "procedure TfrmOptionsMain.LoadOptions", "title": "Das Laden"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Palette",
+      "title": "Farbpalette",
+      "summary": "Farben in einer Registerleiste auswaehlen.",
+      "learning": "TabSet, SpeedButton und Farbwahl.",
+      "folder": "PALETTE",
+      "project": "Palette",
+      "units": ["Frm_PaletteMain.pas"],
+      "markers": [
+        {"file": "Frm_PaletteMain.pas", "text": "procedure TfrmPaletteMain.TabSet1Click", "title": "Die Registerkarte"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Sketch",
+      "title": "Zeichnen",
+      "summary": "Mausgesten mit Linienzuegen aufnehmen.",
+      "learning": "Canvas-Ereignisse von Mausgesten.",
+      "folder": "SKETCH",
+      "project": "Sketch",
+      "units": ["Frm_SketchMAIN.pas"],
+      "markers": [
+        {"file": "Frm_SketchMAIN.pas", "text": "procedure TfrmSketchMain.FormMouseDown", "title": "Die Mausbewegung"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Constraint",
+      "title": "Anordnungsregeln",
+      "summary": "AnchorSide-Regeln im Formular ausloten.",
+      "learning": "Align-Regeln für Formular-Layouts.",
+      "folder": "CONSTRAINT",
+      "project": "Constraint",
+      "units": ["frm_ConstraintMain.pas"],
+      "markers": [
+        {"file": "frm_ConstraintMain.pas", "text": "TfrmConstraintMain = class(TForm)", "title": "Das Layout"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Contcomp",
+      "title": "Containersteuerelemente",
+      "summary": "Panel und GroupBox als Container anwenden.",
+      "learning": "Container-Verhalten von Panels und GroupBoxen.",
+      "folder": "CONTCOMP",
+      "project": "ContComp",
+      "units": ["frm_ContCompMAIN.pas"],
+      "markers": [
+        {"file": "frm_ContCompMAIN.pas", "text": "procedure TfrmContCompMain.FormCreate", "title": "Die Einrichtung"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Fancy",
+      "title": "Verschachtelte Formulare",
+      "summary": "Formulare in Formularen anordnen.",
+      "learning": "Verschachtelte Container verwenden.",
+      "folder": "FANCY",
+      "project": "Fancy",
+      "units": ["Frm_FancyMAIN.pas"],
+      "markers": [
+        {"file": "Frm_FancyMAIN.pas", "text": "TfrmFancyMain = class(TForm)", "title": "Die Verknuepfung"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Filemenu",
+      "title": "Dateimenue",
+      "summary": "Menue-Steuerung fuer Dateioperationen anschaulich machen.",
+      "learning": "Menuebefehle und Dateioeffnen.",
+      "folder": "FILEMENU",
+      "project": "FileMenu",
+      "units": ["Frm_FileMenuMAIN.pas"],
+      "markers": [
+        {"file": "Frm_FileMenuMAIN.pas", "text": "procedure TfrmFileMenuMain.FileExitClick", "title": "Das Beenden"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Objlist",
+      "title": "Objektliste",
+      "summary": "Objekte in Listen fuehren und anzeigen.",
+      "learning": "TObjectList und die Lebensdauer von Objekten.",
+      "folder": "OBJLIST",
+      "project": "ObjList",
+      "units": ["Frm_ObjListMAIN.pas"],
+      "markers": [
+        {"file": "Frm_ObjListMAIN.pas", "text": "procedure TfrmObjListMain.FormCreate", "title": "Die Objekte"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Toolbar3",
+      "title": "Werkzeugleiste",
+      "summary": "Werkzeugleisten an Andockstellen herumverschieben.",
+      "learning": "Verankern und Anordnung von Leisten.",
+      "folder": "TOOLBAR3",
+      "project": "Toolbar3",
+      "units": ["Frm_Toolbar3MAIN.pas"],
+      "markers": [
+        {"file": "Frm_Toolbar3MAIN.pas", "text": "procedure TfrmToolbar3Main.FormCreate", "title": "Die Leiste"}
+      ],
+      "showcase": true
     }
   ]
 }
