@@ -32,7 +32,8 @@ type
 implementation
 
 uses
-  Frm_HelloMAIN, Frm_CALC, Frm_ReadMeMain, Frm_EnumFonMAIN, Frm_PrintgrMAIN;
+  Frm_HelloMAIN, Frm_CALC, Frm_ReadMeMain, Frm_EnumFonMAIN, Frm_PrintgrMAIN,
+  Frm_ListFontMAIN, Frm_CombosMAIN, Frm_ChecksMAIN, Frm_SpinButtonMAIN;
 
 { Fabrikfunktionen der Demos }
 
@@ -61,6 +62,26 @@ begin
   Result := TfrmPrintgrMain.Create(nil);
 end;
 
+function CreateListfontForm: TForm;
+begin
+  Result := TfrmListfontMain.Create(nil);
+end;
+
+function CreateCombosForm: TForm;
+begin
+  Result := TfrmCombosMain.Create(nil);
+end;
+
+function CreateChecksForm: TForm;
+begin
+  Result := TfrmChecksMain.Create(nil);
+end;
+
+function CreateSpinbuttonForm: TForm;
+begin
+  Result := TfrmSpinButtonMain.Create(nil);
+end;
+
 constructor TShowcaseRegistry.Create;
 begin
   inherited Create;
@@ -80,6 +101,10 @@ begin
   FShowcase.Register('README', 'Readme anzeigen', @CreateReadmeForm);
   FShowcase.Register('Enumfon', 'Schriften auflisten', @CreateEnumfonForm);
   FShowcase.Register('Printgr', 'Grafik drucken', @CreatePrintgrForm);
+  FShowcase.Register('Listfont', 'Schriftgroesse und Beispiele', @CreateListfontForm);
+  FShowcase.Register('Combos', 'Kombinationsfelder', @CreateCombosForm);
+  FShowcase.Register('Checks', 'Ankreuzfelder und Menue-Ebenen', @CreateChecksForm);
+  FShowcase.Register('Spinbutt', 'Spin-Knoepfe und Zaehler', @CreateSpinbuttonForm);
 end;
 
 end.

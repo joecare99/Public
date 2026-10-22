@@ -157,6 +157,58 @@
         {"file": "Frm_PrintgrMAIN.pas", "text": "procedure TfrmPrintgrMain.PaintGraphics", "title": "Die Zeichnung"}
       ],
       "showcase": true
+    },
+    {
+      "key": "Listfont",
+      "title": "Schriftvergleich",
+      "summary": "Alle Schriften in einer Liste mit Groessenseinstellung.",
+      "learning": "TSpinEdit, Listen und Schriftproben verbinden.",
+      "folder": "LISTFONT",
+      "project": "ListFont",
+      "units": ["Frm_ListFontMAIN.pas"],
+      "markers": [
+        {"file": "Frm_ListFontMAIN.pas", "text": "procedure TfrmListfontMain.FormCreate", "title": "Die Liste"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Combos",
+      "title": "Kombinationsfelder",
+      "summary": "Die drei ComboBox-Varianten im Vergleich.",
+      "learning": "Style-Eigenschaften und Belegungen von ComboBoxen.",
+      "folder": "COMBOS",
+      "project": "Combos",
+      "units": ["Frm_CombosMAIN.pas"],
+      "markers": [
+        {"file": "Frm_CombosMAIN.pas", "text": "procedure TfrmCombosMain.CancelBitBtnClick", "title": "Der Dialog"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Checks",
+      "title": "Ankreuzfelder",
+      "summary": "CheckBoxen, RadioButtone und dynamische Menue-Ebenen.",
+      "learning": "Checked-Eigenschaften und dynamische Menue-Ebenen.",
+      "folder": "CHECKS",
+      "project": "Checks",
+      "units": ["Frm_ChecksMAIN.pas"],
+      "markers": [
+        {"file": "Frm_ChecksMAIN.pas", "text": "function TfrmChecksMain.GetLevel", "title": "Die Ebene"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Spinbutt",
+      "title": "Spin-Elemente",
+      "summary": "SpinButton, UpDown und SpinEdit im Verbund.",
+      "learning": "Ereignisaufbau von Spin-Kontrollen.",
+      "folder": "SPINBUTT",
+      "project": "Spinbutt",
+      "units": ["Frm_SpinButtonMAIN.pas"],
+      "markers": [
+        {"file": "Frm_SpinButtonMAIN.pas", "text": "procedure TfrmSpinButtonMain.FormCreate", "title": "Die Verknoepfung"}
+      ],
+      "showcase": true
     }
   ]
 }
