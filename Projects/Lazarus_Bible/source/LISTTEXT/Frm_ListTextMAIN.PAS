@@ -16,7 +16,7 @@ uses
   Forms, Dialogs, StdCtrls, Menus;
 
 type
-  TMainForm = class(TForm)
+  TfrmListTextMain = class(TForm)
     MainMenu: TMainMenu;
     File1: TMenuItem;
     Open1: TMenuItem;
@@ -32,7 +32,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmListTextMain: TfrmListTextMain;
 
 implementation
 
@@ -42,16 +42,16 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-procedure TMainForm.Open1Click(Sender: TObject);
+procedure TfrmListTextMain.Open1Click(Sender: TObject);
 begin
   if OpenDialog.Execute then
   begin
     MemoText.Lines.LoadFromFile(OpenDialog.Filename);
-    MainForm.Caption := OpenDialog.Filename;
+    frmListTextMain.Caption := OpenDialog.Filename;
   end;
 end;
 
-procedure TMainForm.Exit1Click(Sender: TObject);
+procedure TfrmListTextMain.Exit1Click(Sender: TObject);
 begin
   Close;
 end;

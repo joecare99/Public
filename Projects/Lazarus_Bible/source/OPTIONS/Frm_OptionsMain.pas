@@ -67,7 +67,7 @@ var
 begin
   IniFile := TIniFile.Create(FDataDir+DirectorySeparator+ FileName);
   try
-    LoadDataFromINI(frmOptionsMain, IniFile);
+    LoadDataFromINI(Self, IniFile);
   finally
     IniFile.Free;
   end;
@@ -79,7 +79,7 @@ var
 begin
   IniFile := TIniFile.Create(FDataDir+DirectorySeparator+ FileName);
   try
-    SaveDataToINI(frmOptionsMain, IniFile);
+    SaveDataToINI(Self, IniFile);
   finally
     IniFile.Free;
   end;

@@ -18,9 +18,9 @@ uses
 
 type
 
-  { TMainForm }
+  { TfrmOptionsMain }
 
-  TMainForm = class(TForm)
+  TfrmOptionsMain = class(TForm)
     TabbedNotebook1: TPageControl;
     CheckBox1: TCheckBox;
     CheckBox2: TCheckBox;
@@ -46,7 +46,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmOptionsMain: TfrmOptionsMain;
 
 implementation
 
@@ -61,31 +61,31 @@ const
   DataDefDir = 'Data';  { The stream's Directory }
   fileName = 'test.ini';  { The stream's file name }
 
-  procedure TMainForm.LoadOptions;
+  procedure TfrmOptionsMain.LoadOptions;
 var
   IniFile: TIniFile;
 begin
   IniFile := TIniFile.Create(FDataDir+DirectorySeparator+ FileName);
   try
-    LoadDataFromINI(MainForm, IniFile);
+    LoadDataFromINI(Self, IniFile);
   finally
     IniFile.Free;
   end;
 end;
 
-procedure TMainForm.SaveOptions;
+procedure TfrmOptionsMain.SaveOptions;
 var
   IniFile: TIniFile;
 begin
   IniFile := TIniFile.Create(FDataDir+DirectorySeparator+ FileName);
   try
-    SaveDataToINI(MainForm, IniFile);
+    SaveDataToINI(Self, IniFile);
   finally
     IniFile.Free;
   end;
 end;
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmOptionsMain.FormCreate(Sender: TObject);
 var
   i: Integer;
 begin
@@ -101,7 +101,7 @@ begin
   LoadOptions;
 end;
 
-procedure TMainForm.BitBtn1Click(Sender: TObject);
+procedure TfrmOptionsMain.BitBtn1Click(Sender: TObject);
 begin
   SaveOptions;
 end;
