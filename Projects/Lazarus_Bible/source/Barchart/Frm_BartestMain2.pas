@@ -43,7 +43,7 @@ var
 implementation
 
 {$IFDEF FPC}
-{$R *.LFM}
+{$R *.lfm}
 {$ELSE}
 {$R *.DFM}
 {$ENDIF}
