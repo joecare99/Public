@@ -13,7 +13,7 @@ unit Unit20;
 interface
 
 uses
-  SysUtils, Classes, ExtCtrls, StdCtrls, DBCtrls, Buttons, Forms, Controls, Grids, DB;
+  SysUtils, Classes, ExtCtrls, StdCtrls, DBCtrls, Buttons, Forms, Controls, Grids, DB, Unit2;
 
 type
   TForm20 = class(TForm)
@@ -25,10 +25,10 @@ type
     Edit1: TEdit; //300
     BitBtn1: TBitBtn; //304
     BitBtn2: TBitBtn; //308
-    procedure BitBtn2Click(Sender:TObject); //005CC5CC
-    procedure BitBtn1Click(Sender:TObject); //005CC5DC
-    procedure dblookupcombobox1Click(Sender:TObject); //005CC5A4
-    procedure FormActivate(Sender:TObject); //005CC5B0
+    procedure BitBtn2Click(Sender: TObject); //005CC5CC
+    procedure BitBtn1Click(Sender: TObject); //005CC5DC
+    procedure dblookupcombobox1Click(Sender: TObject); //005CC5A4
+    procedure FormActivate(Sender: TObject); //005CC5B0
   end;
 
 var
@@ -44,24 +44,26 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm20.BitBtn2Click(Sender:TObject);
+procedure TForm20.BitBtn2Click(Sender: TObject);
+begin
+  ModalResult := mrCancel;
+end;
+
+procedure TForm20.BitBtn1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm20.BitBtn1Click(Sender:TObject);
+procedure TForm20.dblookupcombobox1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The field for the name gets the input.  The original uses
+    SetActiveControl, which is private in Delphi 9. }
+  Edit1.SetFocus;
 end;
 
-procedure TForm20.dblookupcombobox1Click(Sender:TObject);
+procedure TForm20.FormActivate(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
-end;
-
-procedure TForm20.FormActivate(Sender:TObject);
-begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  dblookupcombobox1.ListSource := DataModule2.DataSource19;
 end;
 
 

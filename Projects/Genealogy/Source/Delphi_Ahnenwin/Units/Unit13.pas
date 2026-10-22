@@ -51,43 +51,43 @@ type
     procedure nz2; //0056EB10
     procedure schieb_vm; //0056862C
     procedure schieb_vm1; //00568528
-    procedure ScrollBar1Change; //00572484
-    procedure ScrollBar2Change; //00572490
+    procedure ScrollBar1Change(Sender: TObject); //00572484
+    procedure ScrollBar2Change(Sender: TObject); //00572490
     procedure nr1; //0056C0D4
     procedure Nach_erm; //0056A970
     procedure kek_ord; //005686F0
     procedure Proband1Click; //005729E4
-    procedure Button7Click(Sender:TObject); //00573120
+    procedure Button7Click(Sender: TObject); //00573120
     procedure vorf_erm2; //00572A78
-    procedure SpeedButton3Click(Sender:TObject); //00573450
+    procedure SpeedButton3Click(Sender: TObject); //00573450
     procedure sam2; //00572D98
     procedure Symm; //00568834
     procedure kek_ord_2; //00568774
-    procedure Verwandtschaft1Click; //0057249C
-    procedure Button8Click(Sender:TObject); //005730D4
+    procedure Verwandtschaft1Click(Sender: TObject); //0057249C
+    procedure Button8Click(Sender: TObject); //005730D4
     procedure Vorf_erm1; //00563CF8
     procedure memein; //00566220
-    procedure FormCreate(Sender:TObject); //00570740
+    procedure FormCreate(Sender: TObject); //00570740
     procedure Vorf_erm; //00567A30
-    procedure Button1Click(Sender:TObject); //005707C0
-    procedure Button2Click(Sender:TObject); //00570838
-    procedure SpeedButton2Click(Sender:TObject); //0057082C
-    procedure FormShow(Sender:TObject); //00570294
+    procedure Button1Click(Sender: TObject); //005707C0
+    procedure Button2Click(Sender: TObject); //00570838
+    procedure SpeedButton2Click(Sender: TObject); //0057082C
+    procedure FormShow(Sender: TObject); //00570294
     procedure UpDown1Click; //005661E8
-    procedure SpeedButton1Click(Sender:TObject); //005704A8
-    procedure FormClose(Sender:TObject; var Action:TCloseAction); //00570728
-    procedure SpeedButton12Click(Sender:TObject); //00570694
-    procedure Button3Click(Sender:TObject); //00570854
+    procedure SpeedButton1Click(Sender: TObject); //005704A8
+    procedure FormClose(sender:tobject;var action:tcloseaction); //00570728
+    procedure SpeedButton12Click(Sender: TObject); //00570694
+    procedure Button3Click(Sender: TObject); //00570854
     procedure vr1; //00570D1C
-    procedure SpeedButton13Click(Sender:TObject); //00572478
+    procedure SpeedButton13Click(Sender: TObject); //00572478
     procedure vz1; //005711D4
     procedure vz2; //00569504
     procedure Vr2; //0056904C
     procedure nachf_neu; //00564668
-    procedure Button4Click(Sender:TObject); //00570890
+    procedure Button4Click(Sender: TObject); //00570890
     procedure PaintBox1Paint(Sender:TObject); //00570C14
-    procedure Button6Click(Sender:TObject); //00572448
-    procedure Button5Click(Sender:TObject); //00572404
+    procedure Button6Click(Sender: TObject); //00572448
+    procedure Button5Click(Sender: TObject); //00572404
   end;
 
 var
@@ -128,12 +128,12 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.ScrollBar1Change;
+procedure TForm13.ScrollBar1Change(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.ScrollBar2Change;
+procedure TForm13.ScrollBar2Change(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -158,7 +158,7 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.Button7Click(Sender:TObject);
+procedure TForm13.Button7Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -168,7 +168,7 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.SpeedButton3Click(Sender:TObject);
+procedure TForm13.SpeedButton3Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -188,12 +188,12 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.Verwandtschaft1Click;
+procedure TForm13.Verwandtschaft1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.Button8Click(Sender:TObject);
+procedure TForm13.Button8Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -208,7 +208,7 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.FormCreate(Sender:TObject);
+procedure TForm13.FormCreate(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -218,22 +218,22 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.Button1Click(Sender:TObject);
+procedure TForm13.Button1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.Button2Click(Sender:TObject);
+procedure TForm13.Button2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.SpeedButton2Click(Sender:TObject);
+procedure TForm13.SpeedButton2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.FormShow(Sender:TObject);
+procedure TForm13.FormShow(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -243,22 +243,22 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.SpeedButton1Click(Sender:TObject);
+procedure TForm13.SpeedButton1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.FormClose(Sender:TObject; var Action:TCloseAction);
+procedure TForm13.FormClose(sender:tobject;var action:tcloseaction);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.SpeedButton12Click(Sender:TObject);
+procedure TForm13.SpeedButton12Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.Button3Click(Sender:TObject);
+procedure TForm13.Button3Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -268,7 +268,7 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.SpeedButton13Click(Sender:TObject);
+procedure TForm13.SpeedButton13Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -293,7 +293,7 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.Button4Click(Sender:TObject);
+procedure TForm13.Button4Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -303,12 +303,12 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.Button6Click(Sender:TObject);
+procedure TForm13.Button6Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.Button5Click(Sender:TObject);
+procedure TForm13.Button5Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;

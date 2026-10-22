@@ -122,7 +122,7 @@ var
   gvar_0061F0D0: AnsiString; //0061F0D0  used by Unit24
   gvar_0061F0EC: AnsiString; //0061F0EC  used by Unit29, Unit30
   gvar_0061F0F0: Integer; //0061F0F0  used by Unit29
-  gvar_0061F0FC: Integer; //0061F0FC  used by Unit1
+  gvar_0061F0FC: TForm; //0061F0FC  used by Unit1
   gvar_0061F110: Integer; //0061F110  used by Unit13
   gvar_0061F114: Single; //0061F114  used by Unit13
   gvar_0061F118: Single; //0061F118  used by Unit13

@@ -15,6 +15,13 @@ uses
 
 var
   F: TForm1;
+
+procedure Log(const S: string);
+begin
+  WriteLn(S);
+  Flush(Output);
+end;
+
 begin
   SetCurrentDir(DatenVerzeichnisSetzen);
   { The BDE of Delphi 9 writes its net file into the root of the drive
@@ -22,17 +29,21 @@ begin
   Session.NetFileDir := DatenVerzeichnis;
   Application.Initialize;
   SplashZeigen;
+  Log('nach Splash');
   try
     Application.CreateForm(TDataModule2, DataModule2);
+    Log('nach DataModule');
     Application.CreateForm(TForm1, Form1);
+    Log('nach Create');
     F := Form1;
-    WriteLn('nach Create');
-    WriteLn('TForm1 erzeugt, Komponenten: ', F.ComponentCount);
-    WriteLn('Caption   = ', F.Caption);
-    WriteLn('DataModule: Table1 = ', DataModule2.Table1.TableName,
-            '  Active = ', DataModule2.Table1.Active,
-            '  RecCount = ', DataModule2.Table1.RecordCount);
+    Log('TForm1 erzeugt, Komponenten: ' + IntToStr(F.ComponentCount));
+    Log('Caption   = ' + F.Caption);
+    Log('DataModule: Table1 = ' + DataModule2.Table1.TableName +
+        '  Active = ' + BoolToStr(DataModule2.Table1.Active, True) +
+        '  RecCount = ' + IntToStr(DataModule2.Table1.RecordCount));
+    Log('vor Free');
     F.Free;
+    Log('nach Free');
   except
     on E: Exception do
     begin
@@ -40,7 +51,9 @@ begin
       { ExceptAddr is the address of the instruction that raised the
         exception - for an access violation it is the faulting address. }
       WriteLn('  Adresse: ', Integer(ExceptAddr));
+      Flush(Output);
       Halt(1);
     end;
   end;
 end.
+

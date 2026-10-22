@@ -54,24 +54,24 @@ type
     CheckBox9: TCheckBox; //374
     CheckBox10: TCheckBox; //378
     CheckBox17: TCheckBox; //37C
-    procedure Button4Click(Sender:TObject); //005588F4
+    procedure Button4Click(Sender: TObject); //005588F4
     procedure voralph; //005574EC
     procedure vorf; //00557E64
-    procedure Button3Click(Sender:TObject); //00558850
+    procedure Button3Click(Sender: TObject); //00558850
     procedure vorchron; //005574B4
     procedure namgv; //0055748C
-    procedure CheckBox15Click(Sender:TObject); //00558A00
+    procedure CheckBox15Click(Sender: TObject); //00558A00
     procedure alphlist; //00557514
-    procedure ComboBox1Change; //00558964
+    procedure ComboBox1Change(Sender: TObject); //00558964
     procedure nachf; //00557E8C
-    procedure RadioButton2Click(Sender:TObject); //005511C0
-    procedure Button1Click(Sender:TObject); //005512D8
-    procedure BitBtn2Click(Sender:TObject); //0055108C
-    procedure RadioButton1Click(Sender:TObject); //005510A8
-    procedure Button2Click(Sender:TObject); //0055137C
+    procedure RadioButton2Click(Sender: TObject); //005511C0
+    procedure Button1Click(Sender: TObject); //005512D8
+    procedure BitBtn2Click(Sender: TObject); //0055108C
+    procedure RadioButton1Click(Sender: TObject); //005510A8
+    procedure Button2Click(Sender: TObject); //0055137C
     procedure Namgeb; //005513EC
-    procedure FormShow(Sender:TObject); //005587E0
-    procedure BitBtn1Click(Sender:TObject); //00558730
+    procedure FormShow(Sender: TObject); //005587E0
+    procedure BitBtn1Click(Sender: TObject); //00558730
     procedure Nachliste; //00552034
   end;
 
@@ -88,7 +88,7 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm19.Button4Click(Sender:TObject);
+procedure TForm19.Button4Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -103,7 +103,7 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm19.Button3Click(Sender:TObject);
+procedure TForm19.Button3Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -118,7 +118,7 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm19.CheckBox15Click(Sender:TObject);
+procedure TForm19.CheckBox15Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -128,7 +128,7 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm19.ComboBox1Change;
+procedure TForm19.ComboBox1Change(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -138,27 +138,27 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm19.RadioButton2Click(Sender:TObject);
+procedure TForm19.RadioButton2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm19.Button1Click(Sender:TObject);
+procedure TForm19.Button1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm19.BitBtn2Click(Sender:TObject);
+procedure TForm19.BitBtn2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm19.RadioButton1Click(Sender:TObject);
+procedure TForm19.RadioButton1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm19.Button2Click(Sender:TObject);
+procedure TForm19.Button2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -168,12 +168,12 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm19.FormShow(Sender:TObject);
+procedure TForm19.FormShow(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm19.BitBtn1Click(Sender:TObject);
+procedure TForm19.BitBtn1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;

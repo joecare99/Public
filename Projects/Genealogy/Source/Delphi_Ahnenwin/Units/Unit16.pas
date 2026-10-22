@@ -61,31 +61,31 @@ type
     WPPDFPrinter1: TWPPDFPrinter; //390
     SpeedButton4: TSpeedButton; //394
     WPPDFProperties1: TWPPDFProperties; //398
-    procedure Button9Click(Sender:TObject); //0055D7D0
+    procedure Button9Click(Sender: TObject); //0055D7D0
     procedure bildneu; //0055D790
-    procedure Button5Click(Sender:TObject); //0055DA68
+    procedure Button5Click(Sender: TObject); //0055DA68
     procedure Speichernunter1Click; //0055BDB0
-    procedure SpeedButton1Click(Sender:TObject); //0055D394
-    procedure Button1Click(Sender:TObject); //0055D774
+    procedure SpeedButton1Click(Sender: TObject); //0055D394
+    procedure Button1Click(Sender: TObject); //0055D774
     procedure Quickreport1NeedData; //0055E2C0
-    procedure SpeedButton4Click(Sender:TObject); //0055E2E8
-    procedure FormCreate(Sender:TObject); //0055E544
-    procedure FormClose(Sender:TObject; var Action:TCloseAction); //0055DC1C
-    procedure SpeedButton6Click(Sender:TObject); //0055DCC4
-    procedure Beenden1Click(Sender:TObject); //0055E2AC
-    procedure SpeedButton3Click(Sender:TObject); //0055D38C
+    procedure SpeedButton4Click(Sender: TObject); //0055E2E8
+    procedure FormCreate(Sender: TObject); //0055E544
+    procedure FormClose(sender:tobject;var action:tcloseaction); //0055DC1C
+    procedure SpeedButton6Click(Sender: TObject); //0055DCC4
+    procedure Beenden1Click(Sender: TObject); //0055E2AC
+    procedure SpeedButton3Click(Sender: TObject); //0055D38C
     procedure showpagenumber; //0055B940
-    procedure Button3Click(Sender:TObject); //0055BC10
-    procedure Button4Click(Sender:TObject); //0055BC38
-    procedure FormShow(Sender:TObject); //0055BA2C
+    procedure Button3Click(Sender: TObject); //0055BC10
+    procedure Button4Click(Sender: TObject); //0055BC38
+    procedure FormShow(Sender: TObject); //0055BA2C
     procedure showprev; //0055B9F0
     procedure QRPreview1PageAvailable(Sender: TObject; Page: Integer); //0055BB34
     procedure FormKeyDown; //0055BB20
     procedure Drucken1Click; //0055BD30
-    procedure SpeedButton2Click(Sender:TObject); //0055BDA8
-    procedure ComboBox1Click(Sender:TObject); //0055BC58
-    procedure SpinEdit1Change; //0055BCE0
-    procedure Button2Click(Sender:TObject); //0055BD0C
+    procedure SpeedButton2Click(Sender: TObject); //0055BDA8
+    procedure ComboBox1Click(Sender: TObject); //0055BC58
+    procedure SpinEdit1Change(Sender: TObject); //0055BCE0
+    procedure Button2Click(Sender: TObject); //0055BD0C
   end;
 
 var
@@ -101,7 +101,7 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm16.Button9Click(Sender:TObject);
+procedure TForm16.Button9Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -111,7 +111,7 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.Button5Click(Sender:TObject);
+procedure TForm16.Button5Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -121,12 +121,12 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.SpeedButton1Click(Sender:TObject);
+procedure TForm16.SpeedButton1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.Button1Click(Sender:TObject);
+procedure TForm16.Button1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -136,32 +136,32 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.SpeedButton4Click(Sender:TObject);
+procedure TForm16.SpeedButton4Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.FormCreate(Sender:TObject);
+procedure TForm16.FormCreate(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.FormClose(Sender:TObject; var Action:TCloseAction);
+procedure TForm16.FormClose(sender:tobject;var action:tcloseaction);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.SpeedButton6Click(Sender:TObject);
+procedure TForm16.SpeedButton6Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.Beenden1Click(Sender:TObject);
+procedure TForm16.Beenden1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.SpeedButton3Click(Sender:TObject);
+procedure TForm16.SpeedButton3Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -171,17 +171,17 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.Button3Click(Sender:TObject);
+procedure TForm16.Button3Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.Button4Click(Sender:TObject);
+procedure TForm16.Button4Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.FormShow(Sender:TObject);
+procedure TForm16.FormShow(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -206,22 +206,22 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.SpeedButton2Click(Sender:TObject);
+procedure TForm16.SpeedButton2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.ComboBox1Click(Sender:TObject);
+procedure TForm16.ComboBox1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.SpinEdit1Change;
+procedure TForm16.SpinEdit1Change(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm16.Button2Click(Sender:TObject);
+procedure TForm16.Button2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
