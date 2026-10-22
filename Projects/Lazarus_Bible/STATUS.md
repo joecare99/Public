@@ -92,6 +92,21 @@ build/                     Build-Bericht und Screenshots
   des Rechners) werden teils bedarfsgesteuert erzeugt, da das
   AutoCreate des eigenstaendigen Projekts entfaellt. Drucken ohne
   installierten Drucker (WSL) wird sauber abgefangen.
+* **Stabilitaet im eingebetteten Betrieb:**
+  - `Inidata.RegisterINIDataProp` akzeptiert ein identisches
+    Klasse+Paar mehrfach, statt mit "already registered"
+    abzubrechen - Tabs und Options durften sich sonst im selben
+    Prozess gegenseitig ausbremsen (die Ausnahme laesst halbfertige
+    Formulare zurueck - Access Violation).
+  - Die Options-Demo arbeitet auf der aktuellen Instanz (`Self`)
+    statt der globalen Formular-Variable (dort nil im Frame).
+  - Einbetten, Vorbereitung und Freigabe des Demo-Formulars laufen in
+    try/except; ein fehlgebautes Demo schreibt den Fehler ins
+    Verhaltens-Memo, statt die Meta-App mitzureissen.
+* **Smoke-Test:** `FPC/demo_smoke.lpr` erzeugt alle zweiunddreissig
+  Demo-Formulare einmal (Registry-Factory: LFM-Stream + FormCreate,
+  ohne GUI-Klick). Build + Lauf via `FPC/tools/smoke_test.sh` - alle
+  32 Demos melden OK.
   Fuer alle anderen Demos startet die App das gebaute Programm
   ("Externes Programm starten", rot markiert) bzw. erzeugt einen
   Screenshot - jedes Demo unterstuetzt `--screenshot <datei.bmp> [seite]`.
