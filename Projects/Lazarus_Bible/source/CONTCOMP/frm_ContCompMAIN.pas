@@ -73,8 +73,10 @@ procedure TfrmContCompMain.FormCreate(Sender: TObject);
 begin
   ListControls(ScrollBoxControls, ScrollBox1);
   ListComponents(ScrollBoxComponents, ScrollBox1);
-  ListControls(FormControls, frmContCompMain);
-  ListComponents(FormComponents, frmContCompMain);
+  { Bezogen auf die aktuelle Instanz - als eingebettetes Formular ist
+    die globale Variable frmContCompMain nicht gesetzt. }
+  ListControls(FormControls, Self);
+  ListComponents(FormComponents, Self);
 end;
 
 end.
