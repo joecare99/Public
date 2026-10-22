@@ -177,31 +177,47 @@ def collect_units(folder, referenced):
     return units
 
 
-def find_demo_units(names):
-    """Sucht die genannten Units in allen Demoordnern und liefert die
-    gefundenen Units samt Ordner zurueck."""
-    wanted = set(n.lower() for n in names)
-    found = []
+UNIT_CACHE = {}
+
+
+def all_demo_units():
+    """Index aller Units aller Demos: klein geschriebener Name -> Unit."""
+    if UNIT_CACHE:
+        return UNIT_CACHE
     for demo in source_folders():
         for name in sorted(os.listdir(os.path.join(SRC, demo))):
             if not name.lower().endswith('.pas'):
                 continue
             base = name[:-4]
             uname = unit_name_of_file(os.path.join(demo, name))
-            if uname and uname.lower() in wanted:
-                path = os.path.join(SRC, demo, name)
-                with open(path, 'r', encoding='utf-8-sig', errors='replace') as fh:
-                    text = fh.read()
-                used = [u.lower() for u, _ in parse_uses(text)]
-                found.append({
-                    'name': uname,
-                    'file': name,
-                    'path': '../source/%s/%s' % (demo, name),
-                    'form': os.path.exists(os.path.join(SRC, demo, base + '.lfm')) or
-                            os.path.exists(os.path.join(SRC, demo, base + '.dfm')),
-                    'referenced': True,
-                    'uses': used,
-                })
+            if uname is None:
+                continue
+            full = os.path.join(SRC, demo, name)
+            with open(full, 'r', encoding='utf-8-sig', errors='replace') as fh:
+                text = fh.read()
+            used = [u.lower() for u, _ in parse_uses(text)]
+            UNIT_CACHE[uname.lower()] = {
+                'name': uname,
+                'file': name,
+                'path': '../source/%s/%s' % (demo, name),
+                'form': os.path.exists(os.path.join(SRC, demo, base + '.lfm')) or
+                        os.path.exists(os.path.join(SRC, demo, base + '.dfm')),
+                'referenced': True,
+                'uses': used,
+            }
+    return UNIT_CACHE
+
+
+def find_demo_units(names):
+    """Sucht die genannten Units in allen Demoordnern und liefert die
+    gefundenen Units samt Ordner zurueck."""
+    wanted = set(n.lower() for n in names)
+    cache = all_demo_units()
+    found = []
+    for name in wanted:
+        u = cache.get(name)
+        if u is not None:
+            found.append(dict(u))
     return found
 
 
@@ -627,6 +643,21 @@ def main():
         all_units = []
         for f in folders:
             all_units.extend(collect_units(f, referenced))
+        # Units aus anderen Demos (z. B. Inidata, BarChart) mit einbeziehen
+        grew = True
+        while grew:
+            grew = False
+            known = set(u['name'].lower() for u in all_units)
+            wanted = []
+            for u in all_units:
+                for used in u.get('uses', []):
+                    if used not in known and used not in wanted:
+                        wanted.append(used)
+            for u in find_demo_units(wanted):
+                if u['name'].lower() not in known:
+                    all_units.append(u)
+                    known.add(u['name'].lower())
+                    grew = True
         units = units_for_project(all_units, list(referenced))
         # Komponentennamen aus den CreateForm-Aufrufen zuordnen
         var_by_class = {cls.lower(): var for cls, var in create_forms}
@@ -721,6 +752,12 @@ def main():
     for extra in ('BarChartp.lpk', 'DingPkg.lpk'):
         if os.path.exists(os.path.join(FPC, extra)):
             projects.append(extra)
+    # Die Meta-App liegt in einem eigenen Unterordner
+    meta_dir = os.path.join(FPC, 'meta')
+    if os.path.isdir(meta_dir):
+        for name in sorted(os.listdir(meta_dir)):
+            if name.lower().endswith('.lpi'):
+                projects.append('meta/' + name)
     write_file(os.path.join(ROOT, 'Lazarus_Bible.lpg'), build_lpg(projects), check)
     changed.append('Lazarus_Bible.lpg')
 

@@ -5,7 +5,6 @@ unit Frm_WinesChartMain;
 {$ENDIF}
 interface
 
-{$I jedi.inc}
 
 uses
  Messages,

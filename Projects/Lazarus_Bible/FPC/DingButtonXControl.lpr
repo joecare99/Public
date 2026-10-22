@@ -9,6 +9,7 @@ uses
   Interfaces,
   Forms,
   SysUtils,
+  Ctrl_DingButton,
   DingButtonImpl1,
   DingButtonXControl_TLB,
   Frm_DingAbout;

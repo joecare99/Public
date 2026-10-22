@@ -13,6 +13,7 @@ uses
   Frm_ABOUT,
   Frm_OPTIONS,
   Frm_TabsMAIN,
+  Inidata,
   TabsUnit;
 
 begin

@@ -2,7 +2,6 @@ UNIT Frm_PolyflowMain;
 
 INTERFACE
 
-{$I jedi.inc}
 
 
 USES

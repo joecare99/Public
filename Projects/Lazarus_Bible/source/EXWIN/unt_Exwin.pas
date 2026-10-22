@@ -22,7 +22,6 @@ unit unt_ExWin;
 {$IFDEF FPC}
   {$MODE Delphi}
 {$ENDIF}
-{$i jedi.inc}
 
 interface
 

@@ -10,7 +10,8 @@ uses
   Forms,
   SysUtils,
   FormShot,
-  Frm_OptionsMain;
+  Frm_OptionsMain,
+  Inidata;
 
 begin
   RequireDerivedFormResource := True;

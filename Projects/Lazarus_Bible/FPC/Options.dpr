@@ -11,7 +11,7 @@ uses
 {$ENDIF}
   Forms,
   Frm_OptionsMain in '..\source\OPTIONS\Frm_OptionsMain.pas' {MainForm}, 
-  Inidata in '..\Source\OPTIONS\..\Inidata\Inidata.pas'; 
+  Inidata in '..\source\Inidata\Inidata.pas'; 
 {$E EXE} 
 {$R *.res}
 begin

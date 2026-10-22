@@ -5,7 +5,7 @@ uses
   Frm_ABOUT in '..\source\TABS\Frm_ABOUT.pas' {AboutForm}, 
   Frm_OPTIONS in '..\source\TABS\Frm_OPTIONS.pas' {OptionsDialog}, 
   TabsUnit in '..\source\TABS\TabsUnit.pas', 
-  Inidata in '..\Source\TABS\..\Inidata\Inidata.pas'; 
+  Inidata in '..\source\Inidata\Inidata.pas'; 
 {$R *.RES} 
 {$E EXE} 
 begin 

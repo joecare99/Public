@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestBitView2"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/tests;../source/AboutEx;../source/Actions;../source/Addpage;../source/Barchart;../source/_core/tools"/>
-            <IncludeFiles Value="../source/tests;../source/AboutEx;../source/Actions;../source/Addpage;../source/Barchart;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Barchart;../source/TODO;../source/Actions;../source/_core/tools"/>
+            <IncludeFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Barchart;../source/TODO;../source/Actions;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestBitView2"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/tests;../source/AboutEx;../source/Actions;../source/Addpage;../source/Barchart;../source/_core/tools"/>
-            <IncludeFiles Value="../source/tests;../source/AboutEx;../source/Actions;../source/Addpage;../source/Barchart;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Barchart;../source/TODO;../source/Actions;../source/_core/tools"/>
+            <IncludeFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Barchart;../source/TODO;../source/Actions;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -192,12 +192,12 @@
         <UnitName Value="tst_Something"/>
       </Unit15>
       <Unit16>
-        <Filename Value="../source/AboutEx/Frm_ABOUT.pas"/>
+        <Filename Value="../source/Addpage/Frm_AddpageMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_ABOUT"/>
+        <UnitName Value="Frm_AddpageMAIN"/>
       </Unit16>
       <Unit17>
         <Filename Value="../source/AboutEx/Frm_AboutExMAIN.pas"/>
@@ -208,33 +208,33 @@
         <UnitName Value="Frm_AboutExMAIN"/>
       </Unit17>
       <Unit18>
-        <Filename Value="../source/Actions/Frm_ActionsMain.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_ActionsMain"/>
-      </Unit18>
-      <Unit19>
-        <Filename Value="../source/Addpage/Frm_AddpageMAIN.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_AddpageMAIN"/>
-      </Unit19>
-      <Unit20>
-        <Filename Value="../source/Barchart/BarChart.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="BarChart"/>
-      </Unit20>
-      <Unit21>
         <Filename Value="../source/Barchart/Frm_BartestMain2.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_BartestMain2"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="../source/TODO/Frm_ABOUT.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ABOUT"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="../source/Actions/Frm_ActionsMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ActionsMain"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="../source/Barchart/BarChart.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="BarChart"/>
       </Unit21>
     </Units>
   </ProjectOptions>
@@ -245,8 +245,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestBitView2"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/tests;../source/AboutEx;../source/Actions;../source/Addpage;../source/Barchart;../source/_core/tools"/>
-      <IncludeFiles Value="../source/tests;../source/AboutEx;../source/Actions;../source/Addpage;../source/Barchart;../source/_core/tools"/>
+      <OtherUnitFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Barchart;../source/TODO;../source/Actions;../source/_core/tools"/>
+      <IncludeFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Barchart;../source/TODO;../source/Actions;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/DingButtonXControl"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/DingX;../source/_core/tools"/>
-            <IncludeFiles Value="../source/DingX;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/DING;../source/DingX;../source/_core/tools"/>
+            <IncludeFiles Value="../source/DING;../source/DingX;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/DingButtonXControl"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/DingX;../source/_core/tools"/>
-            <IncludeFiles Value="../source/DingX;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/DING;../source/DingX;../source/_core/tools"/>
+            <IncludeFiles Value="../source/DING;../source/DingX;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -101,30 +101,35 @@
         <PackageName Value="DingPkg"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="4">
+    <Units Count="5">
       <Unit0>
         <Filename Value="DingButtonXControl.lpr"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DingButtonXControl"/>
       </Unit0>
       <Unit1>
+        <Filename Value="../source/DING/Ctrl_DingButton.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Ctrl_DingButton"/>
+      </Unit1>
+      <Unit2>
         <Filename Value="../source/DingX/DingButtonImpl1.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DingButtonImpl1"/>
-      </Unit1>
-      <Unit2>
+      </Unit2>
+      <Unit3>
         <Filename Value="../source/DingX/DingButtonXControl_TLB.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="DingButtonXControl_TLB"/>
-      </Unit2>
-      <Unit3>
+      </Unit3>
+      <Unit4>
         <Filename Value="../source/DingX/Frm_DingAbout.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_DingAbout"/>
-      </Unit3>
+      </Unit4>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -134,8 +139,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/DingButtonXControl"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/DingX;../source/_core/tools"/>
-      <IncludeFiles Value="../source/DingX;../source/_core/tools"/>
+      <OtherUnitFiles Value="../source/DING;../source/DingX;../source/_core/tools"/>
+      <IncludeFiles Value="../source/DING;../source/DingX;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

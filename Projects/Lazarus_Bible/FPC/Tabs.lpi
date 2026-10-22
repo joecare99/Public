@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Tabs"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/TABS;../source/_core/tools"/>
-            <IncludeFiles Value="../source/TABS;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/TABS;../source/Inidata;../source/_core/tools"/>
+            <IncludeFiles Value="../source/TABS;../source/Inidata;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Tabs"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/TABS;../source/_core/tools"/>
-            <IncludeFiles Value="../source/TABS;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/TABS;../source/Inidata;../source/_core/tools"/>
+            <IncludeFiles Value="../source/TABS;../source/Inidata;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
@@ -98,7 +98,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="5">
+    <Units Count="6">
       <Unit0>
         <Filename Value="Tabs.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -129,10 +129,15 @@
         <UnitName Value="Frm_TabsMAIN"/>
       </Unit3>
       <Unit4>
+        <Filename Value="../source/Inidata/Inidata.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Inidata"/>
+      </Unit4>
+      <Unit5>
         <Filename Value="../source/TABS/TabsUnit.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="TabsUnit"/>
-      </Unit4>
+      </Unit5>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -142,8 +147,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Tabs"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/TABS;../source/_core/tools"/>
-      <IncludeFiles Value="../source/TABS;../source/_core/tools"/>
+      <OtherUnitFiles Value="../source/TABS;../source/Inidata;../source/_core/tools"/>
+      <IncludeFiles Value="../source/TABS;../source/Inidata;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
     <Parsing>

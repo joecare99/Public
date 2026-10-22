@@ -1,0 +1,160 @@
+{
+  "version": 1,
+  "categories": [
+    {
+      "id": "einstieg",
+      "title": "Einstieg in die Programmierung",
+      "demos": ["HELLO"]
+    },
+    {
+      "id": "mvvm",
+      "title": "MVVM-Muster (View / ViewModel / Model)",
+      "demos": ["HELLO", "Calc32", "README"]
+    },
+    {
+      "id": "bedienelemente",
+      "title": "Bedienelemente",
+      "demos": ["Actions", "Addpage", "Checks", "Combos", "Constraint", "Contcomp",
+                "Fancy", "Filemenu", "GlyphLst", "Listfont", "Listtext", "Multimen",
+                "Objlist", "Options", "Palette", "Sketch", "Spinbutt", "Status",
+                "StatusOD", "Strlist", "Strres", "Tabs", "Telname", "Toolbar1",
+                "Toolbar2", "Toolbar3", "UpDownDemo"]
+    },
+    {
+      "id": "datenbanken",
+      "title": "Datenbanken",
+      "demos": ["Fishy", "Fishy2", "Master", "Sqlplay", "WinesCalc", "WinesChart",
+                "WinesDemo", "WinesEntry"]
+    },
+    {
+      "id": "grafik",
+      "title": "Grafik und Animation",
+      "demos": ["Animator", "Barchart", "Bitview", "Bitview2", "CharGrid", "Metamore",
+                "Polyflow"]
+    },
+    {
+      "id": "drucken",
+      "title": "Drucken",
+      "demos": ["FontSamp", "Lister", "Printgr", "Prninfo", "Todo", "Report1"]
+    },
+    {
+      "id": "system",
+      "title": "Systemintegration",
+      "demos": ["Direx", "Direxec", "Direxec2", "Dropfile", "Enumfon", "Enumwin",
+                "Nonclien", "Ontop", "Readme", "Runme", "Syscolor", "Sysmenu"]
+    },
+    {
+      "id": "ipc",
+      "title": "Interprozesskommunikation",
+      "demos": ["Client1", "Client2", "Cclient", "Cserver", "DDE1", "DDE2",
+                "DDECOLOR", "Server1", "Server2"]
+    },
+    {
+      "id": "fehler",
+      "title": "Fehlerbehandlung",
+      "demos": ["Except1", "Except2", "Except3", "Exlist", "MouseExcept"]
+    },
+    {
+      "id": "werkzeuge",
+      "title": "Werkzeuge und Dienste",
+      "demos": ["Calc32", "Calc64", "Clipboard", "Compstrm", "Daynames", "Inidata",
+                "Keycount", "Keyinfo", "Keytest", "Power", "YesNo"]
+    }
+  ],
+  "demos": [
+    {
+      "key": "HELLO",
+      "title": "Hallo Delphi Programmer",
+      "summary": "Das kleinste moegliche Fenster: ein Knopf und ein Text.",
+      "learning": "Aufbau eines Fensters, Ereignisbehandlung, View und ViewModel.",
+      "folder": "HELLO",
+      "project": "Hello",
+      "units": ["view/Frm_HelloMAIN.pas", "viewmodel/HelloViewModel.pas"],
+      "markers": [
+        {"file": "viewmodel/HelloViewModel.pas", "text": "THelloViewModel = class", "title": "Das ViewModel"},
+        {"file": "view/Frm_HelloMAIN.pas", "text": "procedure TForm1.ApplyViewModel", "title": "Die View bindet sich an das ViewModel"}
+      ],
+      "notes": "Erste Demo im MVVM-Muster: die Logik liegt im ViewModel, die View zeigt nur an.",
+      "showcase": true
+    },
+    {
+      "key": "Calc32",
+      "title": "Taschenrechner (32 Bit)",
+      "summary": "Rechner mit dezimaerer, hexadezimaerer und binaerer Anzeige.",
+      "learning": "Model (Rechenlogik), ViewModel (Anzeigewerte), View (Bedienelemente).",
+      "folder": "Calc32",
+      "project": "Calc32",
+      "units": ["view/Frm_CALC.pas", "viewmodel/Calc32ViewModel.pas", "model/CalculatorModel.pas"],
+      "markers": [
+        {"file": "model/CalculatorModel.pas", "text": "TCalculatorModel = class", "title": "Das Rechenmodell"},
+        {"file": "viewmodel/Calc32ViewModel.pas", "text": "TCalc32ViewModel = class", "title": "Das ViewModel"},
+        {"file": "view/Frm_CALC.pas", "text": "procedure TfrmCalcMain.ApplyViewModel", "title": "Die View zeigt die Werte an"}
+      ],
+      "notes": "Die Rechenlogik ist vollstaendig ins Model gewandert; das ViewModel meldet Aenderungen.",
+      "showcase": true
+    },
+    {
+      "key": "README",
+      "title": "Readme anzeigen",
+      "summary": "Zeigt eine Textdatei an und oeffnet sie im Standardprogramm.",
+      "learning": "Model (Dokument), ViewModel, Dienste (Datei, Prozess).",
+      "folder": "README",
+      "project": "Readme",
+      "units": ["view/Frm_ReadMeMain.pas", "viewmodel/ReadMeViewModel.pas", "model/ReadMeDocument.pas"],
+      "markers": [
+        {"file": "viewmodel/ReadMeViewModel.pas", "text": "TReadMeViewModel = class", "title": "Das ViewModel mit den Diensten"},
+        {"file": "view/Frm_ReadMeMain.pas", "text": "procedure TMainForm.ApplyViewModel", "title": "Die View"}
+      ],
+      "notes": "Zeigt den Einsatz der Dienste: Datei lesen und Programm starten.",
+      "showcase": true
+    },
+    {
+      "key": "Actions",
+      "title": "Aktionen und Menues",
+      "summary": "TActionList, Menueeintraege und Shortcuts.",
+      "learning": "Aktionen im Menue und an Schaltflaechen binden.",
+      "folder": "Actions",
+      "project": "Actions",
+      "units": ["Frm_ActionsMain.pas"],
+      "markers": [
+        {"file": "Frm_ActionsMain.pas", "text": "ActionList1", "title": "Die Aktionsliste"}
+      ]
+    },
+    {
+      "key": "Status",
+      "title": "Statuszeile und Werkzeugleiste",
+      "summary": "Statusleiste mit veraenderlichen Feldern und eine Werkzeugleiste.",
+      "learning": "Statusleisten-Panels und ToolButtons.",
+      "folder": "Status",
+      "project": "Status",
+      "units": ["Frm_StatusMain.pas"],
+      "markers": [
+        {"file": "Frm_StatusMain.pas", "text": "procedure TMainForm.FormMouseMove", "title": "Mausposition in der Statuszeile"}
+      ]
+    },
+    {
+      "key": "Enumfon",
+      "title": "Schriften auflisten",
+      "summary": "Alle installierten Schriften des Systems anzeigen.",
+      "learning": "Systemabhaengige Abfragen plattformneutral formulieren.",
+      "folder": "ENUMFON",
+      "project": "Enumfon",
+      "units": ["Frm_EnumFonMAIN.pas"],
+      "markers": [
+        {"file": "Frm_EnumFonMAIN.pas", "text": "procedure TfrmEnumFonMain", "title": "Die Anzeige"}
+      ]
+    },
+    {
+      "key": "Printgr",
+      "title": "Grafik drucken",
+      "summary": "Zeichnet Figuren auf Bildschirm und Drucker.",
+      "learning": "Drucken ueber die LCL-Druckerschnittstelle.",
+      "folder": "PRINTGR",
+      "project": "Printgr",
+      "units": ["Frm_PrintgrMAIN.pas"],
+      "markers": [
+        {"file": "Frm_PrintgrMAIN.pas", "text": "procedure TMainForm.PaintGraphics", "title": "Die Zeichnung"}
+      ]
+    }
+  ]
+}

@@ -1,0 +1,73 @@
+{ Registrierung der einbettbaren Demos fuer den BibleExplorer.
+
+  Jede Demo, die in der Meta-App laufen soll, braucht eine Fabrikfunktion,
+  die das Hauptformular erzeugt. Die Formulare werden dabei nicht global
+  erzeugt, sondern mit dem Eigentuemer der Meta-App - so koennen sie
+  mehrfach geoeffnet werden. }
+
+unit BibleShowcaseRegistry;
+
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
+
+interface
+
+uses
+  Classes, SysUtils, Forms, BibleShowcase;
+
+type
+  { TShowcaseRegistry }
+  TShowcaseRegistry = class
+  private
+    FShowcase: TShowcase;
+  public
+    constructor Create; virtual;
+    destructor Destroy; override;
+    { Registriert alle Demos, die eingebettet werden koennen. }
+    procedure RegisterAll;
+    property Showcase: TShowcase read FShowcase;
+  end;
+
+implementation
+
+uses
+  Frm_HelloMAIN, Frm_CALC, Frm_ReadMeMain;
+
+{ Fabrikfunktionen der Demos }
+
+function CreateHelloForm: TForm;
+begin
+  Result := TForm1.Create(nil);
+end;
+
+function CreateCalc32Form: TForm;
+begin
+  Result := TfrmCalcMain.Create(nil);
+end;
+
+function CreateReadmeForm: TForm;
+begin
+  Result := TMainForm.Create(nil);
+end;
+
+constructor TShowcaseRegistry.Create;
+begin
+  inherited Create;
+  FShowcase := TShowcase.Create;
+end;
+
+destructor TShowcaseRegistry.Destroy;
+begin
+  FreeAndNil(FShowcase);
+  inherited Destroy;
+end;
+
+procedure TShowcaseRegistry.RegisterAll;
+begin
+  FShowcase.Register('HELLO', 'Hallo Delphi Programmer', @CreateHelloForm);
+  FShowcase.Register('Calc32', 'Taschenrechner', @CreateCalc32Form);
+  FShowcase.Register('README', 'Readme anzeigen', @CreateReadmeForm);
+end;
+
+end.
