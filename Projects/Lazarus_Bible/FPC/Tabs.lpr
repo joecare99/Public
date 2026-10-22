@@ -10,10 +10,10 @@ uses
   Forms,
   SysUtils,
   FormShot,
-  Frm_ABOUT,
   Frm_OPTIONS,
   Frm_TabsMAIN,
   Inidata,
+  TABS_Frm_ABOUT,
   TabsUnit;
 
 begin

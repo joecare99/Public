@@ -210,8 +210,9 @@ def transform_uses(block):
 def transform(text, path):
     changed = []
 
-    # 1) Unit-Kopf
-    if '{$MODE Delphi}' not in text and '{$mode delphi}' not in text:
+    # 1) Unit-Kopf (nur wenn die Unit noch keinen Mode-Schalter hat -
+    #    je Unit ist nur ein Mode-Schalter erlaubt)
+    if not re.search(r'\{\$(?:MODE|mode)\s+\w+', text):
         m = re.search(r'(?m)^(\s*unit\s+[A-Za-z0-9_]+\s*;\s*\r?\n)', text)
         if m:
             text = text[:m.end(1)] + MODE_BLOCK + text[m.end(1):]

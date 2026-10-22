@@ -33,7 +33,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/AboutEx;../source/_core/tools"/>
             <IncludeFiles Value="../source/AboutEx;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -67,7 +67,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/AboutEx;../source/_core/tools"/>
             <IncludeFiles Value="../source/AboutEx;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -105,12 +105,12 @@
         <UnitName Value="AboutEx"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../source/AboutEx/Frm_ABOUT.pas"/>
+        <Filename Value="../source/AboutEx/AboutEx_Frm_ABOUT.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_ABOUT"/>
+        <UnitName Value="AboutEx_Frm_ABOUT"/>
       </Unit1>
       <Unit2>
         <Filename Value="../source/AboutEx/Frm_AboutExMAIN.pas"/>
@@ -131,7 +131,7 @@
     <SearchPaths>
       <OtherUnitFiles Value="../source/AboutEx;../source/_core/tools"/>
       <IncludeFiles Value="../source/AboutEx;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

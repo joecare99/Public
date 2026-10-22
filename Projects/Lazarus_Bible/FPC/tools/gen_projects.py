@@ -271,6 +271,17 @@ def xml_escape(s):
              .replace('"', '&quot;'))
 
 
+def form_class_of(path):
+    """Liest den Namen der Formularklasse aus einer Unit."""
+    try:
+        with open(path, 'r', encoding='utf-8-sig', errors='replace') as fh:
+            text = fh.read()
+    except OSError:
+        return None
+    m = re.search(r'(?im)^\s*(T[A-Za-z0-9_]+)\s*=\s*class\s*\(\s*TForm\s*\)', text)
+    return m.group(1) if m else None
+
+
 def build_lpr(name, units, create_forms, extra_uses, title, has_res):
     """Erzeugt die Lazarus-Hauptprogrammdatei."""
     uses = []
@@ -309,11 +320,31 @@ def build_lpr(name, units, create_forms, extra_uses, title, has_res):
     out.append('  Application.Initialize;')
     if title:
         out.append("  Application.Title := '%s';" % title.replace("'", "''"))
+    # Formularklassen aus den Units ableiten (die .dpr nutzen teils andere
+    # Bezeichner als die Units selbst).
+    form_forms = []
     for cls, var in create_forms:
-        out.append('  Application.CreateForm(%s, %s);' % (cls, var))
-    # Screenshot-Modus: '--screenshot <datei>' rendert das Formular und beendet.
+        real_cls = cls
+        for u in units:
+            if u['name'].lower() == var.lower() and u.get('form'):
+                found = form_class_of(os.path.join(ROOT, u['path'][len('../'):]))
+                if found:
+                    real_cls = found
+                break
+        form_forms.append((real_cls, var))
+    for cls, var in form_forms:
+        out.append('  Application.CreateForm(%s, %s);' % (cls, var))    # Screenshot-Modus: '--screenshot <datei>' rendert das Formular und beendet.
     if create_forms:
         main_var = create_forms[0][1]
+        main_cls = create_forms[0][0]
+        # Der Klassenname wird aus der Unit gelesen - die Delphi-Programme
+        # (.dpr) verwenden teilweise andere Bezeichner.
+        for u in units:
+            if u['name'].lower() == main_var.lower() and u.get('form'):
+                cls = form_class_of(os.path.join(ROOT, u['path'][len('../'):]))
+                if cls:
+                    main_cls = cls
+                break
         out.append('  if (ParamCount > 1) and (ParamStr(1) = \'--screenshot\') then')
         out.append('  begin')
         out.append('    %s.Show;' % main_var)
@@ -369,7 +400,7 @@ def build_lpi(name, lpr_name, units, pkgs, create_forms):
     a('          <SearchPaths>')
     a('            <OtherUnitFiles Value="%s"/>' % unit_search_path(units))
     a('            <IncludeFiles Value="%s"/>' % unit_search_path(units))
-    a('            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>')
+    a('            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>')
     a('          </SearchPaths>')
     a('          <Parsing>')
     a('            <SyntaxOptions>')
@@ -403,7 +434,7 @@ def build_lpi(name, lpr_name, units, pkgs, create_forms):
     a('          <SearchPaths>')
     a('            <OtherUnitFiles Value="%s"/>' % unit_search_path(units))
     a('            <IncludeFiles Value="%s"/>' % unit_search_path(units))
-    a('            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>')
+    a('            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>')
     a('          </SearchPaths>')
     a('          <Parsing>')
     a('            <SyntaxOptions>')
@@ -462,7 +493,7 @@ def build_lpi(name, lpr_name, units, pkgs, create_forms):
     a('    <SearchPaths>')
     a('      <OtherUnitFiles Value="%s"/>' % unit_search_path(units))
     a('      <IncludeFiles Value="%s"/>' % unit_search_path(units))
-    a('      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>')
+    a('      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>')
     a('    </SearchPaths>')
     a('    <Parsing>')
     a('      <SyntaxOptions>')

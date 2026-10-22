@@ -33,7 +33,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/TABS;../source/Inidata;../source/_core/tools"/>
             <IncludeFiles Value="../source/TABS;../source/Inidata;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -67,7 +67,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/TABS;../source/Inidata;../source/_core/tools"/>
             <IncludeFiles Value="../source/TABS;../source/Inidata;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -105,33 +105,33 @@
         <UnitName Value="Tabs"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../source/TABS/Frm_ABOUT.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_ABOUT"/>
-      </Unit1>
-      <Unit2>
         <Filename Value="../source/TABS/Frm_OPTIONS.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_OPTIONS"/>
-      </Unit2>
-      <Unit3>
+      </Unit1>
+      <Unit2>
         <Filename Value="../source/TABS/Frm_TabsMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_TabsMAIN"/>
-      </Unit3>
-      <Unit4>
+      </Unit2>
+      <Unit3>
         <Filename Value="../source/Inidata/Inidata.pas"/>
         <IsPartOfProject Value="True"/>
         <UnitName Value="Inidata"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="../source/TABS/TABS_Frm_ABOUT.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="TABS_Frm_ABOUT"/>
       </Unit4>
       <Unit5>
         <Filename Value="../source/TABS/TabsUnit.pas"/>
@@ -149,7 +149,7 @@
     <SearchPaths>
       <OtherUnitFiles Value="../source/TABS;../source/Inidata;../source/_core/tools"/>
       <IncludeFiles Value="../source/TABS;../source/Inidata;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

@@ -33,7 +33,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/_core/services;../../source/_core/tools"/>
             <IncludeFiles Value="../meta/units"/>
-            <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/BibleExplorer"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -53,7 +53,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/_core/services;../../source/_core/tools"/>
             <IncludeFiles Value="../meta/units"/>
-            <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/BibleExplorer"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -165,7 +165,7 @@
     <SearchPaths>
       <OtherUnitFiles Value="../meta/units;../../source/HELLO;../../source/HELLO/view;../../source/HELLO/viewmodel;../../source/Calc32;../../source/Calc32/view;../../source/Calc32/viewmodel;../../source/Calc32/model;../../source/README;../../source/README/view;../../source/README/viewmodel;../../source/README/model;../../source/_core/mvvm;../../source/_core/services;../../source/_core/tools"/>
       <IncludeFiles Value="../meta/units"/>
-      <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units"/>
+      <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/BibleExplorer"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
