@@ -117,6 +117,20 @@ begin
       dataModule.Table17.FindField('Nummer') <> nil);
     AssertTrue('Table18 persistent fields are streamed.',
       dataModule.Table18.FindField('Nummer') <> nil);
+    AssertFalse('Table1 remains the writable current-person cursor.',
+      dataModule.Table1.ReadOnly);
+    AssertTrue('Table3 is a read-only number lookup cursor.',
+      dataModule.Table3.ReadOnly);
+    AssertTrue('Table6 is a read-only related-person cursor.',
+      dataModule.Table6.ReadOnly);
+    AssertTrue('Table7 is a read-only sibling lookup cursor.',
+      dataModule.Table7.ReadOnly);
+    AssertTrue('Table8 is a read-only secondary person cursor.',
+      dataModule.Table8.ReadOnly);
+    AssertTrue('Table9 is a read-only related-person selection cursor.',
+      dataModule.Table9.ReadOnly);
+    AssertFalse('Table5 remains the marriage dataset, not a person lookup.',
+      dataModule.Table5.ReadOnly);
     AssertEquals(configuredLibraryPath, dataModule.Table17.PXLibrary);
     AssertEquals(configuredLibraryPath, dataModule.Table18.PXLibrary);
   finally
