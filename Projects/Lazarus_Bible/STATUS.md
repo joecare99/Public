@@ -62,11 +62,27 @@ build/                     Build-Bericht und Screenshots
 ## Meta-App "BibleExplorer"
 
 * Baum links mit den Demos nach Themen, rechts die Reiter
-  **Ueberblick / Code / Verhalten / Dateien / Notizen**.
+  **Ueberblick / Code / Verhalten / Dateien / Notizen** (TPageControl, damit
+  die Reiterleiste sichtbar ist) und unten eine Navigationsleiste
+  (`< Zurueck`, `Weiter >`, Seitenname, Statuszeile).
 * Die Metadaten stehen in `FPC/meta/bible.manifest.json` (kuratierte
   Annotationen: Kategorie, Kurzbeschreibung, Lernziel, markierte
   Code-Stellen, Notizen).
 * Das "Verhalten" zeigt eingebettete Formulare der Showcase-Demos
-  (`FPC/meta/units/BibleShowcaseRegistry.pas`); fuer alle anderen Demos
-  startet die App das gebaute Programm bzw. erzeugt einen Screenshot
-  (jedes Demo unterstuetzt `--screenshot <datei.bmp>`).
+  (`FPC/meta/units/BibleShowcaseRegistry.pas`); der Schliessen-Knopf der
+  Demo leert nur den Frame, "Demo intern starten" startet sie erneut.
+  Fuer alle anderen Demos startet die App das gebaute Programm
+  ("Externes Programm starten", rot markiert) bzw. erzeugt einen
+  Screenshot - jedes Demo unterstuetzt `--screenshot <datei.bmp> [seite]`.
+
+## Hinweise zur Versionsverwaltung
+
+* Das Repository liegt in `C:\Projekte\Lazarus\Public_LazarusBible`;
+  `Projects/Lazarus_Bible` ist ein **Junction** auf
+  `C:\Projekte\Delphi\Delphi_Bible`.
+* **Nur mit der Windows-git arbeiten** - die git unter WSL folgt dem
+  Junction nicht und wuerde die Dateien als geloescht anzeigen.
+* Vor dem Commit `git update-index --really-refresh` ausfuehren: die
+  Zeitstempel des 9p-Mounts sind unzuverlaessig, sonst uebersieht git
+  Aenderungen.
+
