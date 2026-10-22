@@ -72,11 +72,13 @@ build/                     Build-Bericht und Screenshots
   Annotationen: Kategorie, Kurzbeschreibung, Lernziel, markierte
   Code-Stellen, Notizen).
 * Das "Verhalten" zeigt eingebettete Formulare der Showcase-Demos
-  (`FPC/meta/units/BibleShowcaseRegistry.pas`), dreiundzwanzig Demos
+  (`FPC/meta/units/BibleShowcaseRegistry.pas`), zweiunddreissig Demos
   sind live: `HELLO`, `Calc32`, `README`, `Enumfon`, `Printgr`,
   `Listfont`, `Combos`, `Checks`, `Spinbutt`, `Actions`, `Addpage`,
   `GlyphLst`, `Listtext`, `Multimen`, `Options`, `Palette`, `Sketch`,
-  `Constraint`, `Contcomp`, `Fancy`, `Filemenu`, `Objlist`, `Toolbar3`
+  `Constraint`, `Contcomp`, `Fancy`, `Filemenu`, `Objlist`, `Toolbar3`,
+  `Strlist`, `Strres`, `Status`, `StatusOD`, `Tabs`, `Telname`,
+  `Toolbar1`, `Toolbar2`, `UpDownDemo`
   - der Schliessen-Knopf der
   Demo leert nur den Frame ("Demo intern starten" startet sie erneut):
   `TBitBtn`-Knöpfe mit `Kind = bkClose` werden beim Einbetten auf das

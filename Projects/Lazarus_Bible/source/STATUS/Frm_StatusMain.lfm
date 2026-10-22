@@ -1,0 +1,129 @@
+object frmStatusMain: TfrmStatusMain
+  Left = 200
+  Top = 128
+  Caption = 'Statusbar Demonstration'
+  ClientHeight = 229
+  ClientWidth = 427
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = True
+  OnMouseMove = FormMouseMove
+  OnResize = FormResize
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label1: TLabel
+    Left = 32
+    Top = 72
+    Width = 167
+    Height = 120
+    Caption = 'Click the Force Exception button to display an error message in the statusbar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clMaroon
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    WordWrap = True
+    OnMouseMove = Label1MouseMove
+  end
+  object Label2: TLabel
+    Left = 232
+    Top = 128
+    Width = 157
+    Height = 60
+    Caption = 'Move mouse cursor to update coordinates in the status bar'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clTeal
+    Font.Height = -16
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    WordWrap = True
+    OnMouseMove = Label1MouseMove
+  end
+  object StatusBar1: TStatusBar
+    Left = 0
+    Top = 208
+    Width = 427
+    Height = 21
+    Panels = <    
+      item
+        Text = 'X = 000'
+        Width = 50
+      end    
+      item
+        Text = 'Y = 000'
+        Width = 50
+      end    
+      item
+        Width = 250
+      end    
+      item
+        Text = 'hh:mm:ss'
+        Width = 75
+      end>
+  end
+  object CoolBar1: TCoolBar
+    Left = 0
+    Top = 0
+    Width = 427
+    Height = 27
+    Bands = <    
+      item
+        Control = ToolBar1
+        ImageIndex = -1
+        MinHeight = 22
+        Width = 423
+      end>
+    object ToolBar1: TToolBar
+      Left = 9
+      Top = 0
+      Width = 410
+      Height = 22
+      ButtonHeight = 21
+      ButtonWidth = 84
+      Color = clSilver
+      ParentColor = False
+      ShowCaptions = True
+      TabOrder = 0
+      object ToolButton1: TToolButton
+        Left = 0
+        Top = 0
+        Caption = 'Force Exception'
+        ImageIndex = 0
+        OnClick = ToolButton1Click
+      end
+      object ToolButton2: TToolButton
+        Left = 84
+        Top = 0
+        Caption = 'Clear Message'
+        ImageIndex = 1
+        OnClick = ToolButton2Click
+      end
+      object ToolButton3: TToolButton
+        Left = 168
+        Top = 0
+        Width = 8
+        Caption = 'ToolButton3'
+        ImageIndex = 2
+        Style = tbsSeparator
+      end
+      object ToolButton4: TToolButton
+        Left = 176
+        Top = 0
+        Caption = 'Close'
+        ImageIndex = 2
+        OnClick = ToolButton4Click
+      end
+    end
+  end
+  object Timer1: TTimer
+    OnTimer = Timer1Timer
+    Left = 272
+    Top = 48
+  end
+end

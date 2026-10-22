@@ -1,0 +1,153 @@
+object frmTelnameMain: TfrmTelnameMain
+  Left = 206
+  Top = 110
+  BorderIcons = [biSystemMenu, biMinimize]
+  BorderStyle = bsSingle
+  Caption = 'Telephone Name and Number'
+  ClientHeight = 242
+  ClientWidth = 303
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  OldCreateOrder = True
+  OnCreate = FormCreate
+  PixelsPerInch = 96
+  TextHeight = 16
+  object Label1: TLabel
+    Left = 160
+    Top = 56
+    Width = 121
+    Height = 16
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
+    Caption = 'Telephone n&umber'
+    FocusControl = NumbEdit
+  end
+  object Label2: TLabel
+    Left = 160
+    Top = 16
+    Width = 108
+    Height = 16
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
+    Caption = 'Telephone &name'
+    FocusControl = NameEdit
+  end
+  object ListBox1: TListBox
+    Left = 24
+    Top = 96
+    Width = 121
+    Height = 129
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
+    ItemHeight = 16
+    TabOrder = 2
+  end
+  object CloseBitBtn: TBitBtn
+    Left = 160
+    Top = 192
+    Width = 121
+    Height = 33
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
+    DoubleBuffered = True
+    Kind = bkClose
+    ParentDoubleBuffered = False
+    TabOrder = 5
+  end
+  object NamesBitBtn: TBitBtn
+    Left = 160
+    Top = 144
+    Width = 121
+    Height = 33
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
+    Caption = 'Names'
+    DoubleBuffered = True
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      0400000000000001000000000000000000001000000010000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      333333333333333333FF3333333333333744333333333333F773333333333337
+      44473333333333F777F3333333333744444333333333F7733733333333374444
+      4433333333F77333733333333744444447333333F7733337F333333744444444
+      433333F77333333733333744444444443333377FFFFFFF7FFFFF999999999999
+      9999733777777777777333CCCCCCCCCC33333773FF333373F3333333CCCCCCCC
+      C333333773FF3337F333333333CCCCCCC33333333773FF373F3333333333CCCC
+      CC333333333773FF73F33333333333CCCCC3333333333773F7F3333333333333
+      CCC333333333333777FF33333333333333CC3333333333333773
+    }
+    NumGlyphs = 2
+    ParentDoubleBuffered = False
+    TabOrder = 4
+    OnClick = NamesBitBtnClick
+  end
+  object NumberBitBtn: TBitBtn
+    Left = 160
+    Top = 96
+    Width = 121
+    Height = 33
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
+    Caption = 'Number'
+    DoubleBuffered = True
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      0400000000000001000000000000000000001000000010000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF003B3000000000
+      003B37F77777777777F73BB09111111110BB3777F3F3F3F3F777311098080808
+      10B33777F7373737377313309999999910337F373F3F3F3F3733133309808089
+      03337F3373737373733313333099999033337FFFF7FFFFF7FFFFB011B0000000
+      BBBB7777777777777777B01110BBBBB0BBBB77F37777777777773011108BB333
+      333337F337377F3FFFF33099111BB3010033373F33777F77773F331999100101
+      11033373FFF77773337F33300099991999033337773FFFF33373333BB7100199
+      113333377377773FF7F333BB333BB7011B33337733377F7777FF3BB3333BB333
+      3BB3377333377F33377FBB33333BB33333BB7733333773333377
+    }
+    NumGlyphs = 2
+    ParentDoubleBuffered = False
+    TabOrder = 3
+    OnClick = NumberBitBtnClick
+  end
+  object NameEdit: TEdit
+    Left = 24
+    Top = 16
+    Width = 121
+    Height = 24
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
+    TabOrder = 0
+    OnKeyPress = NameEditKeyPress
+  end
+  object NumbEdit: TEdit
+    Left = 24
+    Top = 56
+    Width = 121
+    Height = 24
+    Margins.Left = 2
+    Margins.Top = 2
+    Margins.Right = 2
+    Margins.Bottom = 2
+    TabOrder = 1
+    OnKeyPress = NumbEditKeyPress
+  end
+end

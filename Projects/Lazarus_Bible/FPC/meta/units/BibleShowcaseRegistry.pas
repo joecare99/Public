@@ -37,7 +37,10 @@ uses
   Frm_ActionsMain, Frm_AddpageMAIN, Frm_GlyphListMain, Frm_ListTextMAIN,
   Frm_MultiWayMAIN, Frm_OptionsMain, Frm_PaletteMain, Frm_SketchMAIN,
   frm_ConstraintMain, frm_ContCompMAIN, Frm_FancyMAIN, Frm_FileMenuMAIN,
-  Frm_ObjListMAIN, Frm_Toolbar3MAIN;
+  Frm_ObjListMAIN, Frm_Toolbar3MAIN,
+  Frm_StrlistMAIN, Frm_StrresMAIN, Frm_StatusMain, Frm_StatusODMain,
+  Frm_TabsMAIN, Frm_OPTIONS, TABS_Frm_ABOUT, Frm_TelnameMAIN,
+  Frm_Toolbar1MAIN, Frm_Toolbar2MAIN, Frm_UpDownDemoMain;
 
 { Fabrikfunktionen der Demos }
 
@@ -156,6 +159,51 @@ begin
   Result := TfrmToolbar3Main.Create(nil);
 end;
 
+function CreateStrlistForm: TForm;
+begin
+  Result := TfrmStrlistMain.Create(nil);
+end;
+
+function CreateStrresForm: TForm;
+begin
+  Result := TfrmStrresMain.Create(nil);
+end;
+
+function CreateStatusForm: TForm;
+begin
+  Result := TfrmStatusMain.Create(nil);
+end;
+
+function CreateStatusodForm: TForm;
+begin
+  Result := TfrmStatusODMain.Create(nil);
+end;
+
+function CreateTabsForm: TForm;
+begin
+  Result := TfrmTabsMain.Create(nil);
+end;
+
+function CreateTelnameForm: TForm;
+begin
+  Result := TfrmTelnameMain.Create(nil);
+end;
+
+function CreateToolbar1Form: TForm;
+begin
+  Result := TfrmToolbar1Main.Create(nil);
+end;
+
+function CreateToolbar2Form: TForm;
+begin
+  Result := TfrmToolbar2Main.Create(nil);
+end;
+
+function CreateUpDownDemoForm: TForm;
+begin
+  Result := TfrmUpDownDemoMain.Create(nil);
+end;
+
 constructor TShowcaseRegistry.Create;
 begin
   inherited Create;
@@ -193,6 +241,15 @@ begin
   FShowcase.Register('Filemenu', 'Dateimenue', @CreateFileMenuForm);
   FShowcase.Register('Objlist', 'Objektliste', @CreateObjListForm);
   FShowcase.Register('Toolbar3', 'Werkzeugleiste', @CreateToolbar3Form);
+  FShowcase.Register('Strlist', 'String-Liste', @CreateStrlistForm);
+  FShowcase.Register('Strres', 'String-Ressourcen', @CreateStrresForm);
+  FShowcase.Register('Status', 'Statuszeile', @CreateStatusForm);
+  FShowcase.Register('StatusOD', 'Statuszeile anpassbar', @CreateStatusodForm);
+  FShowcase.Register('Tabs', 'Registerkarten', @CreateTabsForm);
+  FShowcase.Register('Telname', 'Telefonnamen', @CreateTelnameForm);
+  FShowcase.Register('Toolbar1', 'Werkzeugleiste 1', @CreateToolbar1Form);
+  FShowcase.Register('Toolbar2', 'Werkzeugleiste 2', @CreateToolbar2Form);
+  FShowcase.Register('UpDownDemo', 'Dreher-Button', @CreateUpDownDemoForm);
 end;
 
 end.

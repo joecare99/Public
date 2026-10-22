@@ -391,6 +391,123 @@
         {"file": "Frm_Toolbar3MAIN.pas", "text": "procedure TfrmToolbar3Main.FormCreate", "title": "Die Leiste"}
       ],
       "showcase": true
+    },
+    {
+      "key": "Strlist",
+      "title": "String-Liste",
+      "summary": "TStringList als Speicher und Anzeige verbinden.",
+      "learning": "Listen lesen, aendern und uebernehmen.",
+      "folder": "STRLIST",
+      "project": "Strlist",
+      "units": ["Frm_StrlistMAIN.pas"],
+      "markers": [
+        {"file": "Frm_StrlistMAIN.pas", "text": "procedure TfrmStrlistMain.FormCreate", "title": "Die Aufnahme"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Strres",
+      "title": "String-Ressourcen",
+      "summary": "Fehlertexte aus einer RC-Datei nachladen.",
+      "learning": "Stringressourcen als Fehlertexte nutzen.",
+      "folder": "STRRES",
+      "project": "Strres",
+      "units": ["Frm_StrresMAIN.pas", "ERRMSG.RC"],
+      "markers": [
+        {"file": "Frm_StrresMAIN.pas", "text": "function TfrmStrresMain.ErrorCancel", "title": "Die Meldung"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Status",
+      "title": "Statuszeile",
+      "summary": "Panels in der Statuszeile dynamisch anzeigen.",
+      "learning": "TPanel-Verhalten der StatusBar.",
+      "folder": "STATUS",
+      "project": "Status",
+      "units": ["Frm_StatusMain.pas"],
+      "markers": [
+        {"file": "Frm_StatusMain.pas", "text": "procedure TfrmStatusMain.FormMouseMove", "title": "Die Anzeige"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "StatusOD",
+      "title": "Zeichnen in der Statuszeile",
+      "summary": "Eigene Grafik in ein Panel der Statuszeile zeichnen.",
+      "learning": "OwnerDraw im StatusBar-Panel.",
+      "folder": "STATUSOD",
+      "project": "StatusOD",
+      "units": ["Frm_StatusODMain.pas"],
+      "markers": [
+        {"file": "Frm_StatusODMain.pas", "text": "procedure TfrmStatusODMain.StatusBar1DrawPanel", "title": "Das Zeichnen"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Tabs",
+      "title": "Registerkarten",
+      "summary": "TabSet, Toolbar und Dialoge zusammen benutzen.",
+      "learning": "TabSet und HotSpot-Clicks auf Nebenformulare.",
+      "folder": "TABS",
+      "project": "Tabs",
+      "units": ["Frm_TabsMAIN.pas", "Frm_OPTIONS.pas", "TABS_Frm_ABOUT.pas", "TabsUnit.pas"],
+      "markers": [
+        {"file": "Frm_TabsMAIN.pas", "text": "procedure TfrmTabsMain.UpdateStatusPanel", "title": "Die Steuerung"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Telname",
+      "title": "Telefonnamen",
+      "summary": "Telefonnummern aus Buchstabennamen erzeugen.",
+      "learning": "Zeichen nach Ziffern umwandeln wie am Telefon.",
+      "folder": "TELNAME",
+      "project": "Telname",
+      "units": ["Frm_TelnameMAIN.pas"],
+      "markers": [
+        {"file": "Frm_TelnameMAIN.pas", "text": "function TfrmTelnameMain.TelNameToNum", "title": "Die Umwandlung"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Toolbar1",
+      "title": "Werkzeugleiste 1",
+      "summary": "SpeedButtons auf einer Werkzeugleiste beleben.",
+      "learning": "TToolBar und TToolButton-Verhalten.",
+      "folder": "TOOLBAR1",
+      "project": "Toolbar1",
+      "units": ["Frm_Toolbar1MAIN.pas"],
+      "markers": [
+        {"file": "Frm_Toolbar1MAIN.pas", "text": "procedure TfrmToolbar1Main.ExitSBClick", "title": "Die Buttons"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Toolbar2",
+      "title": "Werkzeugleiste 2",
+      "summary": "Scrollende Werkzeugleiste mit Ikonen-Steuerelementen.",
+      "learning": "Toolbars sichtbar lassen bei Kantenscroll.",
+      "folder": "TOOLBAR2",
+      "project": "Toolbar2",
+      "units": ["Frm_Toolbar2MAIN.pas"],
+      "markers": [
+        {"file": "Frm_Toolbar2MAIN.pas", "text": "function TfrmToolbar2Main.InToolbar", "title": "Der Bereich"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "UpDownDemo",
+      "title": "Dreher-Button",
+      "summary": "UpDown-Geste und SpinButton-Invertierung hervorheben.",
+      "learning": "UpDown-Button mit eigenen Ereignissen.",
+      "folder": "UPDOWNDEMO",
+      "project": "UpDownDemo",
+      "units": ["Frm_UpDownDemoMain.pas"],
+      "markers": [
+        {"file": "Frm_UpDownDemoMain.pas", "text": "procedure TfrmUpDownDemoMain.SpinButton1UpClick", "title": "Der Hochzaehler"}
+      ],
+      "showcase": true
     }
   ]
 }
