@@ -286,7 +286,14 @@ begin
   begin
     FBehaviorForm.OnClose := nil;
     FBehaviorForm.Parent := nil;
-    FreeAndNil(FBehaviorForm);
+    { Das Freigeben geschah frueher hart - ein ۓbles Demo wartet die
+      App mitreissen. Jetzt gefangen, der Fehler wird im Memo notiert. }
+    try
+      FreeAndNil(FBehaviorForm);
+    except
+      on E: Exception do
+        memoBehavior.Lines.Add('Freigebe-Fehler: ' + E.Message);
+    end;
   end;
   FBehaviorClosed := False;
   if Assigned(btnStartIntern) then
