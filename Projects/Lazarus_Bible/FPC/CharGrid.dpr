@@ -10,8 +10,8 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_CharGridMAIN in '..\source\CHARGRID\Frm_CharGridMAIN.PAS' {MainForm},
-  Frm_CharGridABOUT in '..\source\CHARGRID\Frm_CharGridABOUT.PAS' {AboutForm};
+  Frm_CharGridMAIN in '..\source\CharGrid\Frm_CharGridMAIN.pas' {MainForm},
+  Frm_CharGridABOUT in '..\source\CharGrid\Frm_CharGridABOUT.pas' {AboutForm};
 {$IFNDEF FPC}
 {$E EXE}
 {$ENDIF}

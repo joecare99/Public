@@ -10,8 +10,8 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_SqlplayMAIN in '..\Source\SQLPLAY\Frm_SqlplayMAIN.PAS' {MainForm}, 
-  Frm_SQLOPENDB in '..\Source\SQLPLAY\Frm_SQLOPENDB.PAS' {OpenForm}; 
+  Frm_SqlplayMAIN in '..\source\SQLPLAY\Frm_SqlplayMAIN.pas' {MainForm}, 
+  Frm_SQLOPENDB in '..\source\SQLPLAY\Frm_SQLOPENDB.pas' {OpenForm}; 
 {$E EXE}
 begin 
   Application.Initialize; 

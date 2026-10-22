@@ -1,0 +1,136 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{72fed6b5-29f0-4053-a30a-50bd13cfaffa}</ProjectGuid>
+    <MainSource>Exwin.dpr</MainSource>
+    <Configuration Condition=" '$(Configuration)' == '' ">Release</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <DCC_DCCCompiler>DCC32</DCC_DCCCompiler>
+    <DCC_DependencyCheckOutputName>..\..\..\bin\Exwin.EXE</DCC_DependencyCheckOutputName>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_DebugInformation>False</DCC_DebugInformation>
+    <DCC_LocalDebugSymbols>False</DCC_LocalDebugSymbols>
+    <DCC_SymbolReferenceInfo>0</DCC_SymbolReferenceInfo>
+    <DCC_ExeOutput>..\..\..\bin</DCC_ExeOutput>
+    <DCC_DcuOutput>..\..\..\bin\units</DCC_DcuOutput>
+    <DCC_ObjOutput>..\..\..\bin\units</DCC_ObjOutput>
+    <DCC_HppOutput>..\..\..\bin\units</DCC_HppOutput>
+    <DCC_BplOutput>$(BDSCOMMONDIR)\BPL</DCC_BplOutput>
+    <DCC_DcpOutput>$(BDSCOMMONDIR)\DCP</DCC_DcpOutput>
+    <DCC_UnitSearchPath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL;$(BDSCOMMONDIR)\BPL\units</DCC_UnitSearchPath>
+    <DCC_ResourcePath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL;$(BDSCOMMONDIR)\BPL\units</DCC_ResourcePath>
+    <DCC_ObjPath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL;$(BDSCOMMONDIR)\BPL\units</DCC_ObjPath>
+    <DCC_IncludePath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL;$(BDSCOMMONDIR)\BPL\units</DCC_IncludePath>
+    <DCC_Define>DEBUG;RELEASE</DCC_Define>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_ExeOutput>..\..\..\bin</DCC_ExeOutput>
+    <DCC_DcuOutput>..\..\..\bin\units</DCC_DcuOutput>
+    <DCC_ObjOutput>..\..\..\bin\units</DCC_ObjOutput>
+    <DCC_HppOutput>..\..\..\bin\units</DCC_HppOutput>
+    <DCC_BplOutput>$(BDSCOMMONDIR)\BPL</DCC_BplOutput>
+    <DCC_DcpOutput>$(BDSCOMMONDIR)\DCP</DCC_DcpOutput>
+    <DCC_UnitSearchPath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL;$(BDSCOMMONDIR)\BPL\units</DCC_UnitSearchPath>
+    <DCC_ResourcePath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL;$(BDSCOMMONDIR)\BPL\units</DCC_ResourcePath>
+    <DCC_ObjPath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL;$(BDSCOMMONDIR)\BPL\units</DCC_ObjPath>
+    <DCC_IncludePath>$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL;$(BDSCOMMONDIR)\BPL\units</DCC_IncludePath>
+    <DCC_Define>DEBUG;DEBUG</DCC_Define>
+    <DCC_ConsoleTarget>True</DCC_ConsoleTarget>
+    <DCC_ImageBase>10000</DCC_ImageBase>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug2|AnyCPU' ">
+    <Version>7.0</Version>
+    <DCC_ConsoleTarget>True</DCC_ConsoleTarget>
+    <DCC_ImageBase>10000</DCC_ImageBase>
+    <DCC_ExeOutput>..\..\..\bin</DCC_ExeOutput>
+    <DCC_DcuOutput>..\..\..\bin\units</DCC_DcuOutput>
+    <DCC_ObjOutput>..\..\..\bin\units</DCC_ObjOutput>
+    <DCC_HppOutput>..\..\..\bin\units</DCC_HppOutput>
+    <DCC_BplOutput>$(BDSCOMMONDIR)\BPL</DCC_BplOutput>
+    <DCC_DcpOutput>$(BDSCOMMONDIR)\DCP</DCC_DcpOutput>
+    <DCC_UnitSearchPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;$(BDS)\RaveReports\Lib;F:\Install\PROGRA~1\Delphi\JCL-11~1.264\lib\d11\debug;F:\Install\programming\Delphi\JVCL332CompleteNoJCL\jvcl\lib\D11\debug;$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL;$(BDSCOMMONDIR)\BPL\units</DCC_UnitSearchPath>
+    <DCC_ResourcePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;$(BDS)\RaveReports\Lib;F:\Install\PROGRA~1\Delphi\JCL-11~1.264\lib\d11\debug;F:\Install\programming\Delphi\JVCL332CompleteNoJCL\jvcl\lib\D11\debug;$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL;$(BDSCOMMONDIR)\BPL\units</DCC_ResourcePath>
+    <DCC_ObjPath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;$(BDS)\RaveReports\Lib;F:\Install\PROGRA~1\Delphi\JCL-11~1.264\lib\d11\debug;F:\Install\programming\Delphi\JVCL332CompleteNoJCL\jvcl\lib\D11\debug;$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL;$(BDSCOMMONDIR)\BPL\units</DCC_ObjPath>
+    <DCC_IncludePath>$(BDS)\lib\Debug;$(BDS)\Lib\Debug\Indy10;$(BDS)\RaveReports\Lib;F:\Install\PROGRA~1\Delphi\JCL-11~1.264\lib\d11\debug;F:\Install\programming\Delphi\JVCL332CompleteNoJCL\jvcl\lib\D11\debug;$(BDSCOMMONDIR)\DCP;$(BDSCOMMONDIR)\BPL;$(BDSCOMMONDIR)\BPL\units</DCC_IncludePath>
+    <DCC_Define>DEBUG;DEBUG</DCC_Define>
+  </PropertyGroup>
+  <ProjectExtensions>
+    <Borland.Personality>Delphi.Personality</Borland.Personality>
+    <Borland.ProjectType>VCLApplication</Borland.ProjectType>
+    <BorlandProject>
+<BorlandProject xmlns=""> <Delphi.Personality>   <Parameters>
+      <Parameters Name="UseLauncher">False</Parameters>
+      <Parameters Name="LoadAllSymbols">True</Parameters>
+      <Parameters Name="LoadUnspecifiedSymbols">False</Parameters>
+    </Parameters>
+    <VersionInfo>
+      <VersionInfo Name="IncludeVerInfo">False</VersionInfo>
+      <VersionInfo Name="AutoIncBuild">True</VersionInfo>
+      <VersionInfo Name="MajorVer">1</VersionInfo>
+      <VersionInfo Name="MinorVer">0</VersionInfo>
+      <VersionInfo Name="Release">0</VersionInfo>
+      <VersionInfo Name="Build">0</VersionInfo>
+      <VersionInfo Name="Debug">False</VersionInfo>
+      <VersionInfo Name="PreRelease">False</VersionInfo>
+      <VersionInfo Name="Special">False</VersionInfo>
+      <VersionInfo Name="Private">False</VersionInfo>
+      <VersionInfo Name="DLL">False</VersionInfo>
+      <VersionInfo Name="Locale">1031</VersionInfo>
+      <VersionInfo Name="CodePage">1252</VersionInfo>
+    </VersionInfo>
+    <VersionInfoKeys>
+      <VersionInfoKeys Name="CompanyName"></VersionInfoKeys>
+      <VersionInfoKeys Name="FileDescription">Demo: Aboutex</VersionInfoKeys>
+      <VersionInfoKeys Name="FileVersion">1.0.0.0</VersionInfoKeys>
+      <VersionInfoKeys Name="InternalName"></VersionInfoKeys>
+      <VersionInfoKeys Name="LegalCopyright"></VersionInfoKeys>
+      <VersionInfoKeys Name="LegalTrademarks"></VersionInfoKeys>
+      <VersionInfoKeys Name="OriginalFilename"></VersionInfoKeys>
+      <VersionInfoKeys Name="ProductName"></VersionInfoKeys>
+      <VersionInfoKeys Name="ProductVersion">1.0.0.0</VersionInfoKeys>
+      <VersionInfoKeys Name="Comments"></VersionInfoKeys>
+    </VersionInfoKeys>
+    <Excluded_Packages>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      <Excluded_Packages Name="$(BDS)\bin\dclofficexp100.bpl">Microsoft Office XP Beispiele für gekapselte Komponenten für Automation Server</Excluded_Packages>
+      <Excluded_Packages Name="$(BDS)\bin\dcloffice2k100.bpl">Microsoft Office 2000 Beispiele für gekapselte Komponenten für Automation Server</Excluded_Packages>
+    </Excluded_Packages>
+    <Source>
+      <Source Name="MainSource">Exwin.dpr</Source>
+    </Source>
+  </Delphi.Personality> </BorlandProject></BorlandProject>
+  </ProjectExtensions>
+  <Import Project="$(MSBuildBinPath)\Borland.Delphi.Targets" />
+  <ItemGroup>
+    <DelphiCompile Include="Exwin.dpr">
+      <MainSource>MainSource</MainSource>
+    </DelphiCompile>
+  </ItemGroup>
+</Project>

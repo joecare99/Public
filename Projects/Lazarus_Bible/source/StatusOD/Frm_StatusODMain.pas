@@ -1,10 +1,28 @@
 unit Frm_StatusODMain;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls,
-  Forms, Dialogs, ComCtrls, ImgList;
+ Messages,
+ SysUtils,
+ Classes,
+ Graphics,
+ Controls,
+
+  Forms,
+ Dialogs,
+ ComCtrls,
+ ImgList,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
   TMainForm = class(TForm)
@@ -23,8 +41,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 procedure TMainForm.StatusBar1DrawPanel(StatusBar: TStatusBar;
   Panel: TStatusPanel; const Rect: TRect);
 var

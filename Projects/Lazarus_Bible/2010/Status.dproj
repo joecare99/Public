@@ -42,7 +42,7 @@
 			<DelphiCompile Include="Status.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\Status\Frm_StatusMain.pas">
+			<DCCReference Include="..\source\Status\Frm_StatusMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

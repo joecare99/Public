@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_CLIMAIN in '..\source\DDEColor\Frm_CLIMAIN.PAS' {MainForm};
+  Frm_CLIMAIN in '..\source\DDECOLOR\Frm_CLIMAIN.pas' {MainForm};
 
 {.$R *.RES}
 {$E EXE}

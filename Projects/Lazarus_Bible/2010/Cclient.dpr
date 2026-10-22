@@ -1,7 +1,7 @@
 program Cclient; 
 uses 
   Forms, 
-  Frm_CLIMAIN in '..\Source\DDECOLOR\Frm_CLIMAIN.PAS' {MainForm}; 
+  Frm_CLIMAIN in '..\source\DDECOLOR\Frm_CLIMAIN.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

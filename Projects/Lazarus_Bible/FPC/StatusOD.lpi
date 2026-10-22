@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <ProjectOptions>
+    <Version Value="11"/>
+    <PathDelim Value="/"/>
+    <General>
+      <Flags>
+        <MainUnitHasUsesSectionForAllUnits Value="True"/>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+      </Flags>
+      <SessionStorage Value="InProjectDir"/>
+      <MainUnit Value="0"/>
+      <Title Value="StatusOD"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value=""/>
+    </General>
+    <i18n>
+      <EnableI18N LFM="True"/>
+    </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="3">
+      <Item1 Name="Default" Default="True"/>
+      <Item2 Name="Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="/"/>
+          <Target>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/StatusOD"/>
+          </Target>
+          <SearchPaths>
+            <OtherUnitFiles Value="../source/StatusOD;../source/_core/tools"/>
+            <IncludeFiles Value="../source/StatusOD;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+              <IncludeAssertionCode Value="True"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <UseHeaptrc Value="True"/>
+            </Debugging>
+          </Linking>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="/"/>
+          <Target>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/StatusOD"/>
+          </Target>
+          <SearchPaths>
+            <OtherUnitFiles Value="../source/StatusOD;../source/_core/tools"/>
+            <IncludeFiles Value="../source/StatusOD;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <LinkSmart Value="True"/>
+          </Linking>
+        </CompilerOptions>
+      </Item3>
+    </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
+    </RunParams>
+    <RequiredPackages Count="1">
+      <Item1>
+        <PackageName Value="LCL"/>
+      </Item1>
+    </RequiredPackages>
+    <Units Count="2">
+      <Unit0>
+        <Filename Value="StatusOD.lpr"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="StatusOD"/>
+      </Unit0>
+      <Unit1>
+        <Filename Value="../source/StatusOD/Frm_StatusODMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_StatusODMain"/>
+      </Unit1>
+    </Units>
+  </ProjectOptions>
+  <CompilerOptions>
+    <Version Value="11"/>
+    <PathDelim Value="/"/>
+    <Target>
+      <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/StatusOD"/>
+    </Target>
+    <SearchPaths>
+      <OtherUnitFiles Value="../source/StatusOD;../source/_core/tools"/>
+      <IncludeFiles Value="../source/StatusOD;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+    </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <SyntaxMode Value="Delphi"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
+    <Linking>
+      <LinkSmart Value="True"/>
+    </Linking>
+  </CompilerOptions>
+  <Debugging>
+    <Exceptions Count="0"/>
+  </Debugging>
+</CONFIG>

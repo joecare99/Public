@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_ListerMAIN in '..\Source\LISTER\Frm_ListerMAIN.PAS' {MainForm}; 
+  Frm_ListerMAIN in '..\source\LISTER\Frm_ListerMAIN.pas' {MainForm}; 
 {$IFNDEF FPC}
 {$E EXE}
 {$ENDIF}

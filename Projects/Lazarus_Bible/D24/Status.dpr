@@ -1,7 +1,7 @@
 program Status; 
 uses 
   Forms, 
-  Frm_StatusMain in '..\Source\Status\Frm_StatusMain.pas' {MainForm}; 
+  Frm_StatusMain in '..\source\Status\Frm_StatusMain.pas' {MainForm}; 
 {$E EXE} 
 {$R *.RES} 
 begin 

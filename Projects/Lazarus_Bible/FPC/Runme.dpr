@@ -11,7 +11,7 @@ uses
 {$ENDIF}
   Forms,
   DefaultTranslator,
-  Frm_RunMeTEST in '..\Source\README\Frm_RunMeTEST.PAS' {TestForm}; 
+  Frm_RunMeTEST in '..\source\README\Frm_RunMeTEST.pas' {TestForm}; 
 {$E EXE} 
 {$R *.res}
 begin 

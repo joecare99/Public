@@ -9,3 +9,8 @@
 *.lnk
 *.lps
 /Projects/Genealogie/bin
+
+# Build-Artefakte der Lazarus-Bible
+/Projects/Lazarus_Bible/bin/
+/Projects/Lazarus_Bible/build/
+/Projects/Lazarus_Bible/lib/

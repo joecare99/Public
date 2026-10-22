@@ -11,7 +11,7 @@ uses
 {$ENDIF}
   DefaultTranslator,
   Forms,
-  frm_CooldemoMain in '..\source\CoolDemo\frm_CooldemoMain.pas' {MainForm};
+  frm_CooldemoMain in '..\source\Cooldemo\frm_CooldemoMain.pas' {MainForm};
 
 {$R *.res}
 {$IFNDEF FPC}

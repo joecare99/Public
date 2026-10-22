@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_Checks2Main in '..\source\CHECKS\Frm_Checks2Main.PAS' {MainForm};
+  Frm_Checks2Main in '..\source\CHECKS\Frm_Checks2Main.pas' {MainForm};
 
 {$R *.res}
 {$IFNDEF FPC}

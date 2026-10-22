@@ -9,11 +9,32 @@
 
 unit Frm_TodoMAIN;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Classes, Graphics, Forms, Controls, Buttons,
-  StdCtrls, Menus, Dialogs, Clipbrd, SysUtils, Printers, Frm_About;
+ Classes,
+ Graphics,
+ Forms,
+ Controls,
+ Buttons,
+
+  StdCtrls,
+ Menus,
+ Dialogs,
+ Clipbrd,
+ SysUtils,
+ Printers,
+ Frm_ABOUT,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
   TMainForm = class(TForm)
@@ -97,8 +118,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 const
   title = 'To Do';
 

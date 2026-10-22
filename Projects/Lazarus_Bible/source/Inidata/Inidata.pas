@@ -15,7 +15,9 @@ To use:
 
 unit Inidata;
 
-{$I jedi.inc}
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses SysUtils, Classes, INIFiles;

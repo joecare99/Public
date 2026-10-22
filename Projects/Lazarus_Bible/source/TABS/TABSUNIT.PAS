@@ -2,6 +2,9 @@
 
 unit TabsUnit;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses SysUtils, Controls, Dialogs;
@@ -15,7 +18,7 @@ function ProcessTabs(const FileName: TFileName;
 
 implementation
 
-uses Frm_Options;
+uses Frm_OPTIONS;
 
 const
 

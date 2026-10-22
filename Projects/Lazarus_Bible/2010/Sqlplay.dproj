@@ -42,10 +42,10 @@
 			<DelphiCompile Include="Sqlplay.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\SQLPLAY\Frm_SqlplayMAIN.PAS">
+			<DCCReference Include="..\source\SQLPLAY\Frm_SqlplayMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\Source\SQLPLAY\Frm_SQLOPENDB.PAS">
+			<DCCReference Include="..\source\SQLPLAY\Frm_SQLOPENDB.pas">
 				<Form>OpenForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

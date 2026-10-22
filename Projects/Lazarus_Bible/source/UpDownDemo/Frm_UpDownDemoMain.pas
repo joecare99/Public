@@ -1,10 +1,30 @@
 unit Frm_UpDownDemoMain;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Spin, ComCtrls, Buttons;
+ Messages,
+ SysUtils,
+ Classes,
+ Graphics,
+ Controls,
+ Forms,
+ Dialogs,
+
+  StdCtrls,
+ Spin,
+ ComCtrls,
+ Buttons,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
   TMainForm = class(TForm)
@@ -28,8 +48,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 { These constants and the two event handlers are needed
   by SpinButton components to associate them with another
   control, a StaticText object in this demonstration. The

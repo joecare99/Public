@@ -58,7 +58,7 @@
 			<DCCReference Include="..\Source\AboutEx\ABOUT.PAS">
 				<Form>AboutForm</Form>
 			</DCCReference>
-			<DCCReference Include="..\Source\AboutEx\Frm_AboutExMAIN.PAS">
+			<DCCReference Include="..\source\AboutEx\Frm_AboutExMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

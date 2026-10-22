@@ -1,7 +1,7 @@
 program Keyinfo; 
 uses 
   Forms, 
-  Frm_KeyInfoMAIN in '..\Source\KEYINFO\Frm_KeyInfoMAIN.PAS' {MainForm}; 
+  Frm_KeyInfoMAIN in '..\source\KEYINFO\Frm_KeyInfoMAIN.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

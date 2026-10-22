@@ -1,10 +1,31 @@
 unit Frm_TelnameMAIN;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  SysUtils, Windows, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, StdCtrls, Buttons, Mask;
+
+  SysUtils,
+ Messages,
+ Classes,
+ Graphics,
+ Controls,
+
+  Forms,
+ Dialogs,
+ StdCtrls,
+ Buttons,
+{$IFnDEF FPC}
+  Windows,
+  Mask,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages,
+  MaskEdit
+{$ENDIF};
 
 type
   TMainForm = class(TForm)
@@ -34,8 +55,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 var
 { Array of telephone dialog letters }
   TelDial: array[0 .. 9] of String;

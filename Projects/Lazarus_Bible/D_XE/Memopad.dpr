@@ -2,7 +2,7 @@ program Memopad;
 
 uses
   Forms,
-  Frm_MemoPadMAIN in '..\source\MEMOPAD\Frm_MemoPadMAIN.PAS' {MainForm};
+  Frm_MemoPadMAIN in '..\source\MEMOPAD\Frm_MemoPadMAIN.pas' {MainForm};
 
 {$E EXE}
 

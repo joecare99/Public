@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_DropFileMAIN in '..\Source\DROPFILE\Frm_DropFileMAIN.PAS' {MainForm}; 
+  Frm_DropFileMAIN in '..\source\DROPFILE\Frm_DropFileMAIN.pas' {MainForm}; 
 {$R *.res}
 {$IFNDEF FPC} {$E EXE}     {$ENDIF}
 begin 

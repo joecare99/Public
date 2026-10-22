@@ -2,7 +2,7 @@ program Palette;
 
 uses
   Forms,
-  Frm_PaletteMain in '..\source\PALETTE\Frm_PaletteMain.PAS' {MainForm};
+  Frm_PaletteMain in '..\source\PALETTE\Frm_PaletteMain.pas' {MainForm};
 
 {$E EXE}
 

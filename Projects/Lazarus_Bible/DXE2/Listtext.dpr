@@ -1,7 +1,7 @@
 program Listtext; 
 uses 
   Forms, 
-  Frm_ListTextMAIN in '..\Source\LISTTEXT\Frm_ListTextMAIN.PAS' {MainForm}; 
+  Frm_ListTextMAIN in '..\source\LISTTEXT\Frm_ListTextMAIN.pas' {MainForm}; 
 {$E EXE} 
 {$R *.RES} 
 begin 

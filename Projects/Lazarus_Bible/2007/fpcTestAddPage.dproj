@@ -103,7 +103,7 @@
     <DCCReference Include="..\source\Addpag" />
     <DCCReference Include="..\source\Addpage" />
     <DCCReference Include="..\source\Addpage\" />
-    <DCCReference Include="..\source\Addpage\Frm_AddpageMAIN.PAS" />
+    <DCCReference Include="..\source\Addpage\Frm_AddpageMAIN.pas" />
     <DCCReference Include="..\source\t" />
     <DCCReference Include="..\source\te" />
     <DCCReference Include="..\source\tes" />

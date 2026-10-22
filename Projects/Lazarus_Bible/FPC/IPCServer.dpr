@@ -11,7 +11,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_SERVER2 in '..\source\ipc\Frm_SERVER2.PAS' {ServerForm};
+  Frm_SERVER2 in '..\source\IPC\Frm_SERVER2.pas' {ServerForm};
 
 {.$R *.res}
 

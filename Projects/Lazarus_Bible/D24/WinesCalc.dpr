@@ -1,7 +1,7 @@
 program WinesCalc; 
 uses 
   Forms, 
-  Frm_WinesCalcMain in '..\Source\WinesCalc\Frm_WinesCalcMain.pas' {MainForm}; 
+  Frm_WinesCalcMain in '..\source\WinesCalc\Frm_WinesCalcMain.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

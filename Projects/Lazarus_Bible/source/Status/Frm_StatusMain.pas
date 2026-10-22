@@ -1,10 +1,31 @@
 unit Frm_StatusMain;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ComCtrls, StdCtrls, Buttons, ExtCtrls, ToolWin;
+ Messages,
+ SysUtils,
+ Classes,
+ Graphics,
+ Controls,
+ Forms,
+ Dialogs,
+
+  ComCtrls,
+ StdCtrls,
+ Buttons,
+ ExtCtrls,
+ ToolWin,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
   TMainForm = class(TForm)
@@ -38,8 +59,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 { Rather than use literal index values, this section defines
   descriptive contants for the statusbar's four panels }
 const

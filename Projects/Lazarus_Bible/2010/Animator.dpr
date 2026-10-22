@@ -1,7 +1,7 @@
 program Animator; 
 uses 
   Forms, 
-  Frm_AnimatorMain in '..\Source\Animator\Frm_AnimatorMain.pas' {MainForm}; 
+  Frm_AnimatorMain in '..\source\Animator\Frm_AnimatorMain.pas' {MainForm}; 
 {$E EXE}
 
 {$R *.RES}

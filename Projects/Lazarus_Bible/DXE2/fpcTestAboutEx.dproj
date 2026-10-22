@@ -72,10 +72,10 @@
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
 			<DCCReference Include="..\source\tests\tst_AboutEx.pas"/>
-			<DCCReference Include="..\source\AboutEx\frm_About.PAS">
+			<DCCReference Include="..\source\AboutEx\Frm_ABOUT.pas">
 				<Form>frmAbout</Form>
 			</DCCReference>
-			<DCCReference Include="..\source\AboutEx\Frm_AboutExMAIN.PAS">
+			<DCCReference Include="..\source\AboutEx\Frm_AboutExMAIN.pas">
 				<Form>frmAboutMain</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

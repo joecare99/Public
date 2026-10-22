@@ -6,17 +6,23 @@ uses
   {$IFDEF UNIX}{$IFDEF UseCThreads}
   cthreads,
   {$ENDIF}{$ENDIF}
-  Interfaces, // this includes the LCL widgetset
+  Interfaces,
   Forms,
+  SysUtils,
+  FormShot,
   Frm_BartestMain2;
-
-{$R *.res}
 
 begin
   RequireDerivedFormResource := True;
-  Application.Scaled:=True;
   Application.Initialize;
-  Application.CreateForm(TfrmBarTestMain2,frmBarTestMain2);
+  Application.Title := 'Demo: BarChart-Componente';
+  Application.CreateForm(TMainForm, MainForm);
+  if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
+  begin
+    MainForm.Show;
+    Application.ProcessMessages;
+    SaveFormToImage(MainForm, ChangeFileExt(ParamStr(2), '.bmp'));
+    Application.Terminate;
+  end;
   Application.Run;
 end.
-

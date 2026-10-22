@@ -1,0 +1,25 @@
+; Ressourcen der Lazarus-Bible (BibleExplorer)
+; Wird mit fpcres in eine .res-Datei umgewandelt.
+
+1 VERSIONINFO
+FILEVERSION 1,0,0,0
+PRODUCTVERSION 1,0,0,0
+FILEOS 0x4L
+FILETYPE 0x1L
+BEGIN
+  BLOCK "StringFileInfo"
+  BEGIN
+    BLOCK "040704b0"
+    BEGIN
+      VALUE "CompanyName",      "Delphi-Bible / Lazarus-Bible"
+      VALUE "FileDescription",  "BibleExplorer - Demos der Delphi-Bible"
+      VALUE "FileVersion",      "1.0.0.0"
+      VALUE "ProductName",      "BibleExplorer"
+      VALUE "ProductVersion",   "1.0.0.0"
+    END
+  END
+  BLOCK "VarFileInfo"
+  BEGIN
+    VALUE "Translation", 0x407, 1200
+  END
+END

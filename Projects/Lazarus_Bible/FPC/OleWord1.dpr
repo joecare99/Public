@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_OLEWord1Main in '..\Source\OleWord1\Frm_OLEWord1Main.pas' {MainForm}; 
+  Frm_OLEWord1Main in '..\source\OleWord1\Frm_OLEWord1Main.pas' {MainForm}; 
 {$R *.res}
 begin 
   Application.Initialize; 

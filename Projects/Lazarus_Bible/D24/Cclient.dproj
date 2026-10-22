@@ -87,7 +87,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\source\DDEColor\Frm_CLIMAIN.PAS">
+        <DCCReference Include="..\source\DDECOLOR\Frm_CLIMAIN.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

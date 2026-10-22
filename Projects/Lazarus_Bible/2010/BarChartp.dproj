@@ -46,7 +46,7 @@
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
 			<DCCReference Include="VCL.dcp"/>
-			<DCCReference Include="..\Source\BARCHART\BarChart.pas"/>
+			<DCCReference Include="..\source\Barchart\BarChart.pas"/>
 			<BuildConfiguration Include="Basis">
 				<Key>Base</Key>
 				<DependentOn>default.optset</DependentOn>

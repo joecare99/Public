@@ -1,5 +1,8 @@
 unit tst_Checks2;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 {$mode objfpc}{$H+}
 
 interface
@@ -26,7 +29,7 @@ type
 
 implementation
 
-uses Frm_Checks2MAIN;
+uses Frm_Checks2Main;
 
 procedure TTestChecks.TestSetUp;
 begin

@@ -9,7 +9,7 @@ interface
 uses
   SysUtils, {$IFNDEF FPC} Windows, Messages,  {$ENDIF}Classes, Graphics, Controls,
   Forms, Dialogs, Menus, Printers, StdCtrls, Buttons, ExtCtrls,
-  frm_fontsampAbout, Preview, DrawPage, PrintersDlgs ;
+  Frm_fontSampABOUT, PREVIEW, DRAWPAGE, PrintersDlgs ;
 
 type
   TMainForm = class(TForm)

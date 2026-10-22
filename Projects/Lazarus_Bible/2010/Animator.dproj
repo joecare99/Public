@@ -44,7 +44,7 @@
 			<DelphiCompile Include="Animator.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\Animator\Frm_AnimatorMain.pas">
+			<DCCReference Include="..\source\Animator\Frm_AnimatorMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

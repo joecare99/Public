@@ -44,7 +44,7 @@
 			<DelphiCompile Include="Msgdlg.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\MSGDLG\Frm_MsgDlgMAIN.PAS">
+			<DCCReference Include="..\source\MSGDLG\Frm_MsgDlgMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

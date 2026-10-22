@@ -42,7 +42,7 @@
 			<DelphiCompile Include="Polyflow.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\POLYFLOW\Frm_PolyflowMain.pas">
+			<DCCReference Include="..\source\POLYFLOW\Frm_PolyflowMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

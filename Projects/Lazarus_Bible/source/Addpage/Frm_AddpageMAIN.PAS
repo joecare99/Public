@@ -1,6 +1,8 @@
 unit Frm_AddpageMAIN;
 
-{$i jedi.inc}
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses

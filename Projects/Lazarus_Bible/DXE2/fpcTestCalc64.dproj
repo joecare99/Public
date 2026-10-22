@@ -61,10 +61,10 @@
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
 			<DCCReference Include="..\source\tests\tst_Calc64.pas"/>
-			<DCCReference Include="..\source\Calc32\Frm_CalcABOUT.PAS">
+			<DCCReference Include="..\source\Calc32\Frm_CalcABOUT.pas">
 				<Form>frmCalcAbout</Form>
 			</DCCReference>
-			<DCCReference Include="..\source\CALC32\Frm_CALC64.PAS">
+			<DCCReference Include="..\source\Calc32\Frm_CALC64.pas">
 				<Form>frmCalc64Main</Form>
 			</DCCReference>
 			<DCCReference Include="..\source\Strings\StrUtilsExt.pas"/>

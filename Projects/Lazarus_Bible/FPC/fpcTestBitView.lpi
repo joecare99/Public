@@ -2,35 +2,42 @@
 <CONFIG>
   <ProjectOptions>
     <Version Value="11"/>
-    <PathDelim Value="\"/>
+    <PathDelim Value="/"/>
     <General>
+      <Flags>
+        <MainUnitHasUsesSectionForAllUnits Value="True"/>
+        <MainUnitHasCreateFormStatements Value="False"/>
+        <MainUnitHasTitleStatement Value="False"/>
+      </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <Title Value="fpcTestBitView"/>
-      <Scaled Value="True"/>
-      <ResourceType Value="res"/>
-      <UseXPManifest Value="True"/>
-      <XPManifest>
-        <DpiAware Value="True"/>
-      </XPManifest>
-      <Icon Value="0"/>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value=""/>
     </General>
-    <BuildModes Count="2">
+    <i18n>
+      <EnableI18N LFM="True"/>
+    </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
         <CompilerOptions>
           <Version Value="11"/>
-          <PathDelim Value="\"/>
+          <PathDelim Value="/"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($Project(Infofile))"/>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestBitView"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\source\tests;..\source\Bitview"/>
-            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <OtherUnitFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Barchart;../source/TODO;../source/Actions;../source/_core/tools"/>
+            <IncludeFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Barchart;../source/TODO;../source/Actions;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
               <IncludeAssertionCode Value="True"/>
             </SyntaxOptions>
           </Parsing>
@@ -41,91 +48,220 @@
               <OverflowChecks Value="True"/>
               <StackChecks Value="True"/>
             </Checks>
-            <VerifyObjMethodCallValidity Value="True"/>
           </CodeGeneration>
           <Linking>
             <Debugging>
               <DebugInfoType Value="dsDwarf2Set"/>
               <UseHeaptrc Value="True"/>
-              <TrashVariables Value="True"/>
-              <UseExternalDbgSyms Value="True"/>
             </Debugging>
-            <Options>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
-            </Options>
           </Linking>
         </CompilerOptions>
       </Item2>
+      <Item3 Name="Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="/"/>
+          <Target>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestBitView"/>
+          </Target>
+          <SearchPaths>
+            <OtherUnitFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Barchart;../source/TODO;../source/Actions;../source/_core/tools"/>
+            <IncludeFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Barchart;../source/TODO;../source/Actions;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <LinkSmart Value="True"/>
+          </Linking>
+        </CompilerOptions>
+      </Item3>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
-      <UseFileFilters Value="True"/>
     </PublishOptions>
     <RunParams>
-      <FormatVersion Value="2"/>
-      <Modes Count="0"/>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
     </RunParams>
-    <RequiredPackages Count="3">
+    <RequiredPackages Count="5">
       <Item1>
-        <PackageName Value="fpcunittestrunner"/>
+        <PackageName Value="LCL"/>
       </Item1>
       <Item2>
-        <PackageName Value="LCL"/>
+        <PackageName Value="LazUtils"/>
       </Item2>
       <Item3>
-        <PackageName Value="FCL"/>
+        <PackageName Value="BarChartp"/>
       </Item3>
+      <Item4>
+        <PackageName Value="FPCUnitTestRunner"/>
+      </Item4>
+      <Item5>
+        <PackageName Value="LazMouseAndKeyInput"/>
+      </Item5>
     </RequiredPackages>
-    <Units Count="3">
+    <Units Count="22">
       <Unit0>
         <Filename Value="fpcTestBitView.lpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="fpcTestBitView"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\source\tests\tst_BitView.pas"/>
+        <Filename Value="../source/tests/tst_BitView.pas"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_BitView"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\source\Bitview\Frm_BitViewMAIN.pas"/>
+        <Filename Value="../source/tests/tst_AboutEx.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmBitmapViewerMain"/>
+        <UnitName Value="tst_AboutEx"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../source/tests/tst_Actions.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_Actions"/>
+      </Unit3>
+      <Unit4>
+        <Filename Value="../source/tests/tst_AddPage.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_AddPage"/>
+      </Unit4>
+      <Unit5>
+        <Filename Value="../source/tests/tst_BarChart.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_BarChart"/>
+      </Unit5>
+      <Unit6>
+        <Filename Value="../source/tests/tst_BarTest2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_BarTest2"/>
+      </Unit6>
+      <Unit7>
+        <Filename Value="../source/tests/tst_BitView2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_BitView2"/>
+      </Unit7>
+      <Unit8>
+        <Filename Value="../source/tests/tst_Calc32.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_Calc32"/>
+      </Unit8>
+      <Unit9>
+        <Filename Value="../source/tests/tst_Calc64.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_Calc64"/>
+      </Unit9>
+      <Unit10>
+        <Filename Value="../source/tests/tst_CapsLock.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_CapsLock"/>
+      </Unit10>
+      <Unit11>
+        <Filename Value="../source/tests/tst_CapsLock2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_CapsLock2"/>
+      </Unit11>
+      <Unit12>
+        <Filename Value="../source/tests/tst_CharGrid.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_CharGrid"/>
+      </Unit12>
+      <Unit13>
+        <Filename Value="../source/tests/tst_Checks.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_Checks"/>
+      </Unit13>
+      <Unit14>
+        <Filename Value="../source/tests/tst_Checks2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_Checks2"/>
+      </Unit14>
+      <Unit15>
+        <Filename Value="../source/tests/tst_Something.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="tst_Something"/>
+      </Unit15>
+      <Unit16>
+        <Filename Value="../source/Addpage/Frm_AddpageMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-      </Unit2>
+        <UnitName Value="Frm_AddpageMAIN"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="../source/AboutEx/Frm_AboutExMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_AboutExMAIN"/>
+      </Unit17>
+      <Unit18>
+        <Filename Value="../source/Barchart/Frm_BartestMain2.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_BartestMain2"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="../source/TODO/Frm_ABOUT.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ABOUT"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="../source/Actions/Frm_ActionsMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ActionsMain"/>
+      </Unit20>
+      <Unit21>
+        <Filename Value="../source/Barchart/BarChart.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="BarChart"/>
+      </Unit21>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
-    <PathDelim Value="\"/>
+    <PathDelim Value="/"/>
     <Target>
-      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($Project(Infofile))"/>
+      <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestBitView"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\source\tests;..\source\Bitview"/>
-      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+      <OtherUnitFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Barchart;../source/TODO;../source/Actions;../source/_core/tools"/>
+      <IncludeFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Barchart;../source/TODO;../source/Actions;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
     </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <SyntaxMode Value="Delphi"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
     <Linking>
-      <Options>
-        <Win32>
-          <GraphicApplication Value="True"/>
-        </Win32>
-      </Options>
+      <LinkSmart Value="True"/>
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="3">
-      <Item1>
-        <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-    </Exceptions>
+    <Exceptions Count="0"/>
   </Debugging>
 </CONFIG>
