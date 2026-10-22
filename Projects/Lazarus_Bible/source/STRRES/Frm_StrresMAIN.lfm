@@ -22,7 +22,6 @@ object frmStrresMain: TfrmStrresMain
     Width = 161
     Height = 57
     Caption = '&Live dangerously...'
-    DoubleBuffered = True
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       0400000000000001000000000000000000001000000010000000000000000000
@@ -38,7 +37,6 @@ object frmStrresMain: TfrmStrresMain
       3333333333333333333333333333333333333333333333333333
     }
     NumGlyphs = 2
-    ParentDoubleBuffered = False
     TabOrder = 0
     OnClick = BitBtn1Click
   end
@@ -47,9 +45,7 @@ object frmStrresMain: TfrmStrresMain
     Top = 104
     Width = 161
     Height = 57
-    DoubleBuffered = True
     Kind = bkClose
-    ParentDoubleBuffered = False
     TabOrder = 1
   end
 end

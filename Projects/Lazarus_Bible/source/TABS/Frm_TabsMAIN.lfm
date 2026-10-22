@@ -268,9 +268,7 @@ object frmTabsMain: TfrmTabsMain
     Width = 89
     Height = 33
     Caption = 'E&xit'
-    DoubleBuffered = True
     Kind = bkClose
-    ParentDoubleBuffered = False
     TabOrder = 1
   end
   object StatusPanel: TPanel

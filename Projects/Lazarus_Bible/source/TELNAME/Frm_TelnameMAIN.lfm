@@ -42,9 +42,7 @@ object frmTelnameMain: TfrmTelnameMain
     Top = 192
     Width = 121
     Height = 33
-    DoubleBuffered = True
     Kind = bkClose
-    ParentDoubleBuffered = False
     TabOrder = 5
   end
   object NamesBitBtn: TBitBtn
@@ -53,7 +51,6 @@ object frmTelnameMain: TfrmTelnameMain
     Width = 121
     Height = 33
     Caption = 'Names'
-    DoubleBuffered = True
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       0400000000000001000000000000000000001000000010000000000000000000
@@ -69,7 +66,6 @@ object frmTelnameMain: TfrmTelnameMain
       CCC333333333333777FF33333333333333CC3333333333333773
     }
     NumGlyphs = 2
-    ParentDoubleBuffered = False
     TabOrder = 4
     OnClick = NamesBitBtnClick
   end
@@ -79,7 +75,6 @@ object frmTelnameMain: TfrmTelnameMain
     Width = 121
     Height = 33
     Caption = 'Number'
-    DoubleBuffered = True
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       0400000000000001000000000000000000001000000010000000000000000000
@@ -95,7 +90,6 @@ object frmTelnameMain: TfrmTelnameMain
       3BB3377333377F33377FBB33333BB33333BB7733333773333377
     }
     NumGlyphs = 2
-    ParentDoubleBuffered = False
     TabOrder = 3
     OnClick = NumberBitBtnClick
   end

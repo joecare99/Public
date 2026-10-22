@@ -31,8 +31,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/StatusOD"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/StatusOD;../source/_core/tools"/>
-            <IncludeFiles Value="../source/StatusOD;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/STATUSOD;../source/_core/tools"/>
+            <IncludeFiles Value="../source/STATUSOD;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
@@ -65,8 +65,8 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/StatusOD"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/StatusOD;../source/_core/tools"/>
-            <IncludeFiles Value="../source/StatusOD;../source/_core/tools"/>
+            <OtherUnitFiles Value="../source/STATUSOD;../source/_core/tools"/>
+            <IncludeFiles Value="../source/STATUSOD;../source/_core/tools"/>
             <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
@@ -121,8 +121,8 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/StatusOD"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/StatusOD;../source/_core/tools"/>
-      <IncludeFiles Value="../source/StatusOD;../source/_core/tools"/>
+      <OtherUnitFiles Value="../source/STATUSOD;../source/_core/tools"/>
+      <IncludeFiles Value="../source/STATUSOD;../source/_core/tools"/>
       <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
     <Parsing>

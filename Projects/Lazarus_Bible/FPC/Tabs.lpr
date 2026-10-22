@@ -20,14 +20,14 @@ begin
   RequireDerivedFormResource := True;
   Application.Initialize;
   Application.Title := 'Demo: Tabs';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmTabsMain, frmTabsMain);
   Application.CreateForm(TAboutForm, AboutForm);
   Application.CreateForm(TOptionsDialog, OptionsDialog);
   if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
   begin
-    MainForm.Show;
+    frmTabsMain.Show;
     Application.ProcessMessages;
-    SaveFormToImage(MainForm, ChangeFileExt(ParamStr(2), '.bmp'));
+    SaveFormToImage(frmTabsMain, ChangeFileExt(ParamStr(2), '.bmp'));
     Application.Terminate;
   end;
   Application.Run;
