@@ -24,13 +24,13 @@ type
     CheckBox1: TCheckBox; //2FC
     ListBox1: TListBox; //300
     Button2: TButton; //304
-    procedure FormActivate(Sender:TObject); //005749AC
-    procedure ListBox1Click(Sender:TObject); //00574AA0
-    procedure Button2Click(Sender:TObject); //00574AB8
-    procedure ListBox1DblClick(Sender:TObject); //005748EC
-    procedure BitBtn1Click(Sender:TObject); //00574124
-    procedure Button1Click(Sender:TObject); //00574220
-    procedure ListBox1KeyPress(Sender:TObject; var Key:Char); //005747C0
+    procedure FormActivate(Sender: TObject); //005749AC
+    procedure ListBox1Click(Sender: TObject); //00574AA0
+    procedure Button2Click(Sender: TObject); //00574AB8
+    procedure ListBox1DblClick(Sender: TObject); //005748EC
+    procedure BitBtn1Click(Sender: TObject); //00574124
+    procedure Button1Click(Sender: TObject); //00574220
+    procedure ListBox1KeyPress(Sender: TObject; var Key: Char); //005747C0
   end;
 
 var
@@ -46,37 +46,37 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm28.FormActivate(Sender:TObject);
+procedure TForm28.FormActivate(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm28.ListBox1Click(Sender:TObject);
+procedure TForm28.ListBox1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm28.Button2Click(Sender:TObject);
+procedure TForm28.Button2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm28.ListBox1DblClick(Sender:TObject);
+procedure TForm28.ListBox1DblClick(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm28.BitBtn1Click(Sender:TObject);
+procedure TForm28.BitBtn1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm28.Button1Click(Sender:TObject);
+procedure TForm28.Button1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm28.ListBox1KeyPress(Sender:TObject; var Key:Char);
+procedure TForm28.ListBox1KeyPress(Sender: TObject; var Key: Char);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;

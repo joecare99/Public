@@ -24,12 +24,12 @@ type
     CheckBox1: TCheckBox; //2FC
     ListBox1: TListBox; //300
     Button2: TButton; //304
-    procedure ListBox1Click(Sender:TObject); //005758D8
-    procedure FormActivate(Sender:TObject); //005758F0
-    procedure Button2Click(Sender:TObject); //00575A04
-    procedure BitBtn1Click(Sender:TObject); //0057522C
-    procedure Button1Click(Sender:TObject); //00575254
-    procedure ListBox1DblClick(Sender:TObject); //005757F4
+    procedure ListBox1Click(Sender: TObject); //005758D8
+    procedure FormActivate(Sender: TObject); //005758F0
+    procedure Button2Click(Sender: TObject); //00575A04
+    procedure BitBtn1Click(Sender: TObject); //0057522C
+    procedure Button1Click(Sender: TObject); //00575254
+    procedure ListBox1DblClick(Sender: TObject); //005757F4
   end;
 
 var
@@ -45,32 +45,32 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm36.ListBox1Click(Sender:TObject);
+procedure TForm36.ListBox1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm36.FormActivate(Sender:TObject);
+procedure TForm36.FormActivate(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm36.Button2Click(Sender:TObject);
+procedure TForm36.Button2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm36.BitBtn1Click(Sender:TObject);
+procedure TForm36.BitBtn1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm36.Button1Click(Sender:TObject);
+procedure TForm36.Button1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm36.ListBox1DblClick(Sender:TObject);
+procedure TForm36.ListBox1DblClick(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;

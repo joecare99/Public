@@ -54,19 +54,19 @@ type
     procedure Chan; //0057CC58
     procedure Resi; //0057CA24
     procedure ans; //005836E8
-    procedure FormKeyDown(Sender:TObject; var Key:Word; Shift:TShiftState); //00584254
-    procedure Edit2KeyPress(Sender:TObject; var Key:Char); //00584224
-    procedure Edit1KeyPress(Sender:TObject; var Key:Char); //005841F4
+    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState); //00584254
+    procedure Edit2KeyPress(Sender: TObject; var Key: Char); //00584224
+    procedure Edit1KeyPress(Sender: TObject; var Key: Char); //005841F4
     procedure ucase; //00583788
     procedure showpreview; //00583D38
-    procedure FormCreate(Sender:TObject); //0058426C
-    procedure Edit2Exit(Sender:TObject); //005841EC
-    procedure BitBtn2Click(Sender:TObject); //00584080
-    procedure FormActivate(Sender:TObject); //00584054
-    procedure Button1Click(Sender:TObject); //00583D74
-    procedure Edit1Exit(Sender:TObject); //005840EC
-    procedure Edit2KeyDown(Sender:TObject; var Key:Word; Shift:TShiftState); //005840D0
-    procedure Edit1KeyDown(Sender:TObject; var Key:Word; Shift:TShiftState); //005840B4
+    procedure FormCreate(Sender: TObject); //0058426C
+    procedure Edit2Exit(Sender: TObject); //005841EC
+    procedure BitBtn2Click(Sender: TObject); //00584080
+    procedure FormActivate(Sender: TObject); //00584054
+    procedure Button1Click(Sender: TObject); //00583D74
+    procedure Edit1Exit(Sender: TObject); //005840EC
+    procedure Edit2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState); //005840D0
+    procedure Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState); //005840B4
     procedure refelt; //00583930
     procedure adrschreib; //005B3A3C
     procedure gedausxv; //005B4288
@@ -226,17 +226,17 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.FormKeyDown(Sender:TObject; var Key:Word; Shift:TShiftState);
+procedure TForm3.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.Edit2KeyPress(Sender:TObject; var Key:Char);
+procedure TForm3.Edit2KeyPress(Sender: TObject; var Key: Char);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.Edit1KeyPress(Sender:TObject; var Key:Char);
+procedure TForm3.Edit1KeyPress(Sender: TObject; var Key: Char);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -251,42 +251,42 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.FormCreate(Sender:TObject);
+procedure TForm3.FormCreate(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.Edit2Exit(Sender:TObject);
+procedure TForm3.Edit2Exit(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.BitBtn2Click(Sender:TObject);
+procedure TForm3.BitBtn2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.FormActivate(Sender:TObject);
+procedure TForm3.FormActivate(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.Button1Click(Sender:TObject);
+procedure TForm3.Button1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.Edit1Exit(Sender:TObject);
+procedure TForm3.Edit1Exit(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.Edit2KeyDown(Sender:TObject; var Key:Word; Shift:TShiftState);
+procedure TForm3.Edit2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.Edit1KeyDown(Sender:TObject; var Key:Word; Shift:TShiftState);
+procedure TForm3.Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;

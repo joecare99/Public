@@ -64,7 +64,7 @@ type
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState); //005CE490
     procedure BitBtn1Click(Sender: TObject); //005CE484
     procedure SpeedButton1Click(Sender: TObject); //005CE4D4
-    procedure FormClose(Sender: TObject; var Action: TCloseAction); //005CE4C4
+    procedure FormClose(sender:tobject;var action:tcloseaction); //005CE4C4
     procedure FormActivate(Sender: TObject); //005CE4C0
     procedure Edit1Change(Sender: TObject); //005CE2F4
     procedure Kal; //005CDC40
@@ -238,7 +238,7 @@ begin
 end;
 
 // 005CE4C4
-procedure TForm6.FormClose(Sender: TObject; var Action: TCloseAction);
+procedure TForm6.FormClose(sender:tobject;var action:tcloseaction);
 begin
   { The window is minimised when it is closed. }
   WindowState := wsMinimized;

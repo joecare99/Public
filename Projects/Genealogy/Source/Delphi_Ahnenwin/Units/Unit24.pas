@@ -67,30 +67,30 @@ type
     CheckBox18: TCheckBox; //3A8
     CheckBox3: TCheckBox; //3AC
     CheckBox11: TCheckBox; //3B0
-    procedure RadioButton5Click(Sender:TObject); //0055F5E0
-    procedure SpeedButton1Click(Sender:TObject); //0055F698
-    procedure SpeedButton2Click(Sender:TObject); //0055F78C
-    procedure ListBox4DblClick(Sender:TObject); //0055F11C
-    procedure FormClose(Sender:TObject; var Action:TCloseAction); //0055F144
-    procedure RadioButton4Click(Sender:TObject); //0055F528
-    procedure Button8Click(Sender:TObject); //0055F8C4
-    procedure Button10Click(Sender:TObject); //0055F920
-    procedure ListBox5DblClick(Sender:TObject); //0055F954
-    procedure CheckBox17Click(Sender:TObject); //0055F7BC
-    procedure CheckBox18Click(Sender:TObject); //0055F7E4
-    procedure Button1Click(Sender:TObject); //0055F80C
-    procedure Button2Click(Sender:TObject); //0055EEAC
-    procedure Button4Click(Sender:TObject); //0055EF20
-    procedure Button6Click(Sender:TObject); //0055EF48
-    procedure Button9Click(Sender:TObject); //0055EE60
-    procedure FormShow(Sender:TObject); //0055EE78
+    procedure RadioButton5Click(Sender: TObject); //0055F5E0
+    procedure SpeedButton1Click(Sender: TObject); //0055F698
+    procedure SpeedButton2Click(Sender: TObject); //0055F78C
+    procedure ListBox4DblClick(Sender: TObject); //0055F11C
+    procedure FormClose(sender:tobject;var action:tcloseaction); //0055F144
+    procedure RadioButton4Click(Sender: TObject); //0055F528
+    procedure Button8Click(Sender: TObject); //0055F8C4
+    procedure Button10Click(Sender: TObject); //0055F920
+    procedure ListBox5DblClick(Sender: TObject); //0055F954
+    procedure CheckBox17Click(Sender: TObject); //0055F7BC
+    procedure CheckBox18Click(Sender: TObject); //0055F7E4
+    procedure Button1Click(Sender: TObject); //0055F80C
+    procedure Button2Click(Sender: TObject); //0055EEAC
+    procedure Button4Click(Sender: TObject); //0055EF20
+    procedure Button6Click(Sender: TObject); //0055EF48
+    procedure Button9Click(Sender: TObject); //0055EE60
+    procedure FormShow(Sender: TObject); //0055EE78
     procedure listanz; //0055EC64
-    procedure ListBox1DblClick(Sender:TObject); //0055F00C
-    procedure ListBox2DblClick(Sender:TObject); //0055F080
-    procedure ListBox3DblClick(Sender:TObject); //0055F0F4
-    procedure Button3Click(Sender:TObject); //0055EF5C
-    procedure Button5Click(Sender:TObject); //0055EFD0
-    procedure Button7Click(Sender:TObject); //0055EFF8
+    procedure ListBox1DblClick(Sender: TObject); //0055F00C
+    procedure ListBox2DblClick(Sender: TObject); //0055F080
+    procedure ListBox3DblClick(Sender: TObject); //0055F0F4
+    procedure Button3Click(Sender: TObject); //0055EF5C
+    procedure Button5Click(Sender: TObject); //0055EFD0
+    procedure Button7Click(Sender: TObject); //0055EFF8
   end;
 
 var
@@ -106,87 +106,87 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm24.RadioButton5Click(Sender:TObject);
+procedure TForm24.RadioButton5Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.SpeedButton1Click(Sender:TObject);
+procedure TForm24.SpeedButton1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.SpeedButton2Click(Sender:TObject);
+procedure TForm24.SpeedButton2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.ListBox4DblClick(Sender:TObject);
+procedure TForm24.ListBox4DblClick(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.FormClose(Sender:TObject; var Action:TCloseAction);
+procedure TForm24.FormClose(sender:tobject;var action:tcloseaction);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.RadioButton4Click(Sender:TObject);
+procedure TForm24.RadioButton4Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.Button8Click(Sender:TObject);
+procedure TForm24.Button8Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.Button10Click(Sender:TObject);
+procedure TForm24.Button10Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.ListBox5DblClick(Sender:TObject);
+procedure TForm24.ListBox5DblClick(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.CheckBox17Click(Sender:TObject);
+procedure TForm24.CheckBox17Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.CheckBox18Click(Sender:TObject);
+procedure TForm24.CheckBox18Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.Button1Click(Sender:TObject);
+procedure TForm24.Button1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.Button2Click(Sender:TObject);
+procedure TForm24.Button2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.Button4Click(Sender:TObject);
+procedure TForm24.Button4Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.Button6Click(Sender:TObject);
+procedure TForm24.Button6Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.Button9Click(Sender:TObject);
+procedure TForm24.Button9Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.FormShow(Sender:TObject);
+procedure TForm24.FormShow(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -196,32 +196,32 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.ListBox1DblClick(Sender:TObject);
+procedure TForm24.ListBox1DblClick(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.ListBox2DblClick(Sender:TObject);
+procedure TForm24.ListBox2DblClick(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.ListBox3DblClick(Sender:TObject);
+procedure TForm24.ListBox3DblClick(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.Button3Click(Sender:TObject);
+procedure TForm24.Button3Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.Button5Click(Sender:TObject);
+procedure TForm24.Button5Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm24.Button7Click(Sender:TObject);
+procedure TForm24.Button7Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;

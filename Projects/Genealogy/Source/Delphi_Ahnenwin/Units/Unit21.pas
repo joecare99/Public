@@ -26,11 +26,11 @@ type
     Button2: TButton; //304
     SpeedButton2: TSpeedButton; //308
     SaveDialog1: TSaveDialog; //30C
-    procedure SpeedButton2Click(Sender:TObject); //005CBD94
-    procedure Button2Click(Sender:TObject); //005CBF14
-    procedure SpeedButton1Click(Sender:TObject); //005CBC64
+    procedure SpeedButton2Click(Sender: TObject); //005CBD94
+    procedure Button2Click(Sender: TObject); //005CBF14
+    procedure SpeedButton1Click(Sender: TObject); //005CBC64
     procedure DBGrid1TitleClick(Sender: TObject; Column: TColumn); //005CBB1C
-    procedure Zeilelschen1Click(Sender:TObject); //005CBC10
+    procedure Zeilelschen1Click(Sender: TObject); //005CBC10
   end;
 
 var
@@ -46,17 +46,17 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm21.SpeedButton2Click(Sender:TObject);
+procedure TForm21.SpeedButton2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm21.Button2Click(Sender:TObject);
+procedure TForm21.Button2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm21.SpeedButton1Click(Sender:TObject);
+procedure TForm21.SpeedButton1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -66,7 +66,7 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm21.Zeilelschen1Click(Sender:TObject);
+procedure TForm21.Zeilelschen1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;

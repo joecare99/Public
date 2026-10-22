@@ -60,10 +60,10 @@ type
     Label25: TLabel; //38C
     Label26: TLabel; //390
     Label27: TLabel; //394
-    procedure FormKeyPress(Sender:TObject; var Key:Char); //00560EA8
-    procedure FormShow(Sender:TObject); //00560EC8
-    procedure BitBtn1Click(Sender:TObject); //005601E8
-    procedure BitBtn2Click(Sender:TObject); //005601F4
+    procedure FormKeyPress(Sender: TObject; var Key: Char); //00560EA8
+    procedure FormShow(Sender: TObject); //00560EC8
+    procedure BitBtn1Click(Sender: TObject); //005601E8
+    procedure BitBtn2Click(Sender: TObject); //005601F4
   end;
 
 var
@@ -79,22 +79,22 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm30.FormKeyPress(Sender:TObject; var Key:Char);
+procedure TForm30.FormKeyPress(Sender: TObject; var Key: Char);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm30.FormShow(Sender:TObject);
+procedure TForm30.FormShow(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm30.BitBtn1Click(Sender:TObject);
+procedure TForm30.BitBtn1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm30.BitBtn2Click(Sender:TObject);
+procedure TForm30.BitBtn2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;

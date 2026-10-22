@@ -36,8 +36,8 @@ type
     Label1: TLabel; //32C
     Label2: TLabel; //330
     Label3: TLabel; //334
-    procedure Image1DblClick(Sender:TObject); //0055985C
-    procedure FormShow(Sender:TObject); //00558D50
+    procedure Image1DblClick(Sender: TObject); //0055985C
+    procedure FormShow(Sender: TObject); //00558D50
   end;
 
 var
@@ -53,12 +53,12 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm32.Image1DblClick(Sender:TObject);
+procedure TForm32.Image1DblClick(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm32.FormShow(Sender:TObject);
+procedure TForm32.FormShow(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;

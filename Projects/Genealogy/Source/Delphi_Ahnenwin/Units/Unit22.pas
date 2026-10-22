@@ -49,8 +49,8 @@ type
     Edit14: TEdit; //360
     SpeedButton1: TSpeedButton; //364
     SpeedButton2: TSpeedButton; //368
-    procedure SpeedButton2Click(Sender:TObject); //0054F568
-    procedure SpeedButton1Click(Sender:TObject); //0054E0D4
+    procedure SpeedButton2Click(Sender: TObject); //0054F568
+    procedure SpeedButton1Click(Sender: TObject); //0054E0D4
   end;
 
 var
@@ -66,12 +66,12 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TOKBottomDlg.SpeedButton2Click(Sender:TObject);
+procedure TOKBottomDlg.SpeedButton2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TOKBottomDlg.SpeedButton1Click(Sender:TObject);
+procedure TOKBottomDlg.SpeedButton1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;

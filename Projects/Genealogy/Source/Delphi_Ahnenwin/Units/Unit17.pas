@@ -39,13 +39,13 @@ type
     RadioButton1: TRadioButton; //338
     RadioButton2: TRadioButton; //33C
     CheckBox9: TCheckBox; //340
-    procedure RadioButton1Click(Sender:TObject); //00545014
+    procedure RadioButton1Click(Sender: TObject); //00545014
     procedure fambeltern; //0053FD18
-    procedure FormShow(Sender:TObject); //00545204
-    procedure RadioButton2Click(Sender:TObject); //0054510C
+    procedure FormShow(Sender: TObject); //00545204
+    procedure RadioButton2Click(Sender: TObject); //0054510C
     procedure nam2; //0053CC38
-    procedure BitBtn1Click(Sender:TObject); //005405C4
-    procedure BitBtn2Click(Sender:TObject); //005405A0
+    procedure BitBtn1Click(Sender: TObject); //005405C4
+    procedure BitBtn2Click(Sender: TObject); //005405A0
     procedure gebstvn; //0053D358
     procedure gebst; //0053E878
   end;
@@ -63,7 +63,7 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm17.RadioButton1Click(Sender:TObject);
+procedure TForm17.RadioButton1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -73,12 +73,12 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm17.FormShow(Sender:TObject);
+procedure TForm17.FormShow(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm17.RadioButton2Click(Sender:TObject);
+procedure TForm17.RadioButton2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -88,12 +88,12 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm17.BitBtn1Click(Sender:TObject);
+procedure TForm17.BitBtn1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm17.BitBtn2Click(Sender:TObject);
+procedure TForm17.BitBtn2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;

@@ -24,12 +24,12 @@ type
     Shape1: TShape; //2FC
     SpeedButton1: TSpeedButton; //300
     Button1: TButton; //304
-    procedure ListBox1Click(Sender:TObject); //0056223C
-    procedure SpeedButton1Click(Sender:TObject); //00562254
-    procedure Button1Click(Sender:TObject); //0056227C
-    procedure Button2Click(Sender:TObject); //00561434
-    procedure ListBox1DblClick(Sender:TObject); //00562060
-    procedure FormActivate(Sender:TObject); //00562128
+    procedure ListBox1Click(Sender: TObject); //0056223C
+    procedure SpeedButton1Click(Sender: TObject); //00562254
+    procedure Button1Click(Sender: TObject); //0056227C
+    procedure Button2Click(Sender: TObject); //00561434
+    procedure ListBox1DblClick(Sender: TObject); //00562060
+    procedure FormActivate(Sender: TObject); //00562128
   end;
 
 var
@@ -45,32 +45,32 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm29.ListBox1Click(Sender:TObject);
+procedure TForm29.ListBox1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm29.SpeedButton1Click(Sender:TObject);
+procedure TForm29.SpeedButton1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm29.Button1Click(Sender:TObject);
+procedure TForm29.Button1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm29.Button2Click(Sender:TObject);
+procedure TForm29.Button2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm29.ListBox1DblClick(Sender:TObject);
+procedure TForm29.ListBox1DblClick(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm29.FormActivate(Sender:TObject);
+procedure TForm29.FormActivate(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;

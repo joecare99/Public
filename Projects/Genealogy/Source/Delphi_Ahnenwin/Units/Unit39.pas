@@ -24,12 +24,12 @@ type
     Shape1: TShape; //2FC
     ListBox1: TListBox; //300
     Button2: TButton; //304
-    procedure FormActivate(Sender:TObject); //00576840
-    procedure ListBox1Click(Sender:TObject); //00576944
-    procedure Button2Click(Sender:TObject); //0057695C
-    procedure Button1Click(Sender:TObject); //005761A8
-    procedure BitBtn1Click(Sender:TObject); //0057674C
-    procedure ListBox1DblClick(Sender:TObject); //00576774
+    procedure FormActivate(Sender: TObject); //00576840
+    procedure ListBox1Click(Sender: TObject); //00576944
+    procedure Button2Click(Sender: TObject); //0057695C
+    procedure Button1Click(Sender: TObject); //005761A8
+    procedure BitBtn1Click(Sender: TObject); //0057674C
+    procedure ListBox1DblClick(Sender: TObject); //00576774
   end;
 
 var
@@ -45,32 +45,32 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm39.FormActivate(Sender:TObject);
+procedure TForm39.FormActivate(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm39.ListBox1Click(Sender:TObject);
+procedure TForm39.ListBox1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm39.Button2Click(Sender:TObject);
+procedure TForm39.Button2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm39.Button1Click(Sender:TObject);
+procedure TForm39.Button1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm39.BitBtn1Click(Sender:TObject);
+procedure TForm39.BitBtn1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm39.ListBox1DblClick(Sender:TObject);
+procedure TForm39.ListBox1DblClick(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
