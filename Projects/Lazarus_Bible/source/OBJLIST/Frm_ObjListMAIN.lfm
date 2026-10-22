@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmObjListMain: TfrmObjListMain
   Left = 229
   Top = 136
   Caption = 'TObject List Demonstration'
@@ -12,7 +12,6 @@ object MainForm: TMainForm
   Font.Style = []
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
   object CheckBox1: TCheckBox
     Left = 48
     Top = 16

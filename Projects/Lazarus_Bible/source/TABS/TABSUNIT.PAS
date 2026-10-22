@@ -18,7 +18,7 @@ function ProcessTabs(const FileName: TFileName;
 
 implementation
 
-uses Frm_OPTIONS;
+uses Frm_Options;
 
 const
 

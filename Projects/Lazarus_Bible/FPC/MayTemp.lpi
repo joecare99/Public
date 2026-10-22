@@ -33,7 +33,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/MayTemp;../source/_core/tools"/>
             <IncludeFiles Value="../source/MayTemp;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -67,7 +67,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/MayTemp;../source/_core/tools"/>
             <IncludeFiles Value="../source/MayTemp;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -93,10 +93,13 @@
         <FormatVersion Value="1"/>
       </local>
     </RunParams>
-    <RequiredPackages Count="1">
+    <RequiredPackages Count="2">
       <Item1>
         <PackageName Value="LCL"/>
       </Item1>
+      <Item2>
+        <PackageName MinVersionMajor="1" MinVersionMinor="5" Value="tachartlazaruspkg"/>
+      </Item2>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>
@@ -123,7 +126,7 @@
     <SearchPaths>
       <OtherUnitFiles Value="../source/MayTemp;../source/_core/tools"/>
       <IncludeFiles Value="../source/MayTemp;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

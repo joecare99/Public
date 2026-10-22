@@ -13,7 +13,7 @@ unit Unit33;
 interface
 
 uses
-  SysUtils, Classes, DBCtrls, StdCtrls, ExtCtrls, Buttons, Forms, Controls, Grids, DB;
+  SysUtils, Classes, DBCtrls, StdCtrls, ExtCtrls, Buttons, Forms, Controls, Grids, DB, Windows, Messages, Unit1, Unit14, Unit38, Unit2, AHNGlobals;
 
 type
   TForm33 = class(TForm)
@@ -55,10 +55,10 @@ type
     Label14: TLabel; //378
     DBEdit12: TDBEdit; //37C
     Label15: TLabel; //380
-    procedure FormActivate(Sender:TObject); //0053B630
-    procedure FormKeyPress(Sender:TObject; var Key:Char); //0053B6A4
-    procedure BitBtn1Click(Sender:TObject); //0053A598
-    procedure BitBtn2Click(Sender:TObject); //0053B5F8
+    procedure FormActivate(Sender: TObject); //0053B630
+    procedure FormKeyPress(Sender: TObject; var Key: Char); //0053B6A4
+    procedure BitBtn1Click(Sender: TObject); //0053A598
+    procedure BitBtn2Click(Sender: TObject); //0053B5F8
   end;
 
 var
@@ -74,24 +74,32 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm33.FormActivate(Sender:TObject);
+procedure TForm33.FormActivate(Sender: TObject);
+begin
+  { The place that was marked in the list of the places is shown. }
+  Edit1.Text := Form14.ListBox1.Items[Form14.ListBox1.ItemIndex];
+end;
+
+procedure TForm33.FormKeyPress(Sender: TObject; var Key: Char);
+begin
+  { The return key is passed on to the form. }
+  if Key = #13 then
+  begin
+    Key := #0;
+    PostMessage(Handle, WM_KEYDOWN, VK_RETURN, 0);
+  end;
+end;
+
+procedure TForm33.BitBtn1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm33.FormKeyPress(Sender:TObject; var Key:Char);
+procedure TForm33.BitBtn2Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
-end;
-
-procedure TForm33.BitBtn1Click(Sender:TObject);
-begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
-end;
-
-procedure TForm33.BitBtn2Click(Sender:TObject);
-begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  Form1.PageControl1.ActivePage := Form1.TabSheet2;
+  Close;
+  Form38.Close;
 end;
 
 

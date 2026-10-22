@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmCombosMain: TfrmCombosMain
   Left = 193
   Top = 149
   Caption = 'ComboBox Styles'

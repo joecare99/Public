@@ -78,34 +78,34 @@ type
     Button1: TButton; //3D4
     Query1: TQuery; //3D8
     SaveDialog1: TSaveDialog; //3DC
-    procedure ComboBox1Exit(Sender:TObject); //0054D2A0
-    procedure ComboBox3Exit(Sender:TObject); //0054D33C
-    procedure ComboBox5Exit(Sender:TObject); //0054D3D8
-    procedure SpeedButton10Click(Sender:TObject); //0054D264
-    procedure SpeedButton7Click(Sender:TObject); //0054D1B0
-    procedure SpeedButton8Click(Sender:TObject); //0054D1EC
-    procedure SpeedButton9Click(Sender:TObject); //0054D228
-    procedure ComboBox22Exit(Sender:TObject); //0054D6E4
-    procedure ComboBox25Exit(Sender:TObject); //0054D780
-    procedure FormClose(Sender:TObject; var Action:TCloseAction); //0054D81C
-    procedure ComboBox13Exit(Sender:TObject); //0054D648
-    procedure ComboBox7Exit(Sender:TObject); //0054D474
-    procedure ComboBox9Exit(Sender:TObject); //0054D510
-    procedure ComboBox11Exit(Sender:TObject); //0054D5AC
-    procedure SpeedButton1Click(Sender:TObject); //0054C2BC
+    procedure ComboBox1Exit(Sender: TObject); //0054D2A0
+    procedure ComboBox3Exit(Sender: TObject); //0054D33C
+    procedure ComboBox5Exit(Sender: TObject); //0054D3D8
+    procedure SpeedButton10Click(Sender: TObject); //0054D264
+    procedure SpeedButton7Click(Sender: TObject); //0054D1B0
+    procedure SpeedButton8Click(Sender: TObject); //0054D1EC
+    procedure SpeedButton9Click(Sender: TObject); //0054D228
+    procedure ComboBox22Exit(Sender: TObject); //0054D6E4
+    procedure ComboBox25Exit(Sender: TObject); //0054D780
+    procedure FormClose(sender:tobject;var action:tcloseaction); //0054D81C
+    procedure ComboBox13Exit(Sender: TObject); //0054D648
+    procedure ComboBox7Exit(Sender: TObject); //0054D474
+    procedure ComboBox9Exit(Sender: TObject); //0054D510
+    procedure ComboBox11Exit(Sender: TObject); //0054D5AC
+    procedure SpeedButton1Click(Sender: TObject); //0054C2BC
     procedure suchen; //00546490
-    procedure FormShow(Sender:TObject); //0054C998
+    procedure FormShow(Sender: TObject); //0054C998
     procedure speichern; //00545F08
-    procedure BitBtn2Click(Sender:TObject); //00545CF8
-    procedure Button5Click(Sender:TObject); //00545D20
-    procedure Button7Click(Sender:TObject); //00546448
-    procedure SpeedButton4Click(Sender:TObject); //0054D0FC
-    procedure SpeedButton5Click(Sender:TObject); //0054D138
-    procedure SpeedButton6Click(Sender:TObject); //0054D174
-    procedure SpeedButton3Click(Sender:TObject); //0054D0C0
-    procedure Button1Click(Sender:TObject); //0054C9C4
-    procedure FormActivate(Sender:TObject); //0054CB08
-    procedure SpeedButton2Click(Sender:TObject); //0054D094
+    procedure BitBtn2Click(Sender: TObject); //00545CF8
+    procedure Button5Click(Sender: TObject); //00545D20
+    procedure Button7Click(Sender: TObject); //00546448
+    procedure SpeedButton4Click(Sender: TObject); //0054D0FC
+    procedure SpeedButton5Click(Sender: TObject); //0054D138
+    procedure SpeedButton6Click(Sender: TObject); //0054D174
+    procedure SpeedButton3Click(Sender: TObject); //0054D0C0
+    procedure Button1Click(Sender: TObject); //0054C9C4
+    procedure FormActivate(Sender: TObject); //0054CB08
+    procedure SpeedButton2Click(Sender: TObject); //0054D094
   end;
 
 var
@@ -121,77 +121,77 @@ implementation
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm18.ComboBox1Exit(Sender:TObject);
+procedure TForm18.ComboBox1Exit(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.ComboBox3Exit(Sender:TObject);
+procedure TForm18.ComboBox3Exit(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.ComboBox5Exit(Sender:TObject);
+procedure TForm18.ComboBox5Exit(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.SpeedButton10Click(Sender:TObject);
+procedure TForm18.SpeedButton10Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.SpeedButton7Click(Sender:TObject);
+procedure TForm18.SpeedButton7Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.SpeedButton8Click(Sender:TObject);
+procedure TForm18.SpeedButton8Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.SpeedButton9Click(Sender:TObject);
+procedure TForm18.SpeedButton9Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.ComboBox22Exit(Sender:TObject);
+procedure TForm18.ComboBox22Exit(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.ComboBox25Exit(Sender:TObject);
+procedure TForm18.ComboBox25Exit(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.FormClose(Sender:TObject; var Action:TCloseAction);
+procedure TForm18.FormClose(sender:tobject;var action:tcloseaction);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.ComboBox13Exit(Sender:TObject);
+procedure TForm18.ComboBox13Exit(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.ComboBox7Exit(Sender:TObject);
+procedure TForm18.ComboBox7Exit(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.ComboBox9Exit(Sender:TObject);
+procedure TForm18.ComboBox9Exit(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.ComboBox11Exit(Sender:TObject);
+procedure TForm18.ComboBox11Exit(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.SpeedButton1Click(Sender:TObject);
+procedure TForm18.SpeedButton1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -201,7 +201,7 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.FormShow(Sender:TObject);
+procedure TForm18.FormShow(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -211,52 +211,52 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.BitBtn2Click(Sender:TObject);
+procedure TForm18.BitBtn2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.Button5Click(Sender:TObject);
+procedure TForm18.Button5Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.Button7Click(Sender:TObject);
+procedure TForm18.Button7Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.SpeedButton4Click(Sender:TObject);
+procedure TForm18.SpeedButton4Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.SpeedButton5Click(Sender:TObject);
+procedure TForm18.SpeedButton5Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.SpeedButton6Click(Sender:TObject);
+procedure TForm18.SpeedButton6Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.SpeedButton3Click(Sender:TObject);
+procedure TForm18.SpeedButton3Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.Button1Click(Sender:TObject);
+procedure TForm18.Button1Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.FormActivate(Sender:TObject);
+procedure TForm18.FormActivate(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm18.SpeedButton2Click(Sender:TObject);
+procedure TForm18.SpeedButton2Click(Sender: TObject);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;

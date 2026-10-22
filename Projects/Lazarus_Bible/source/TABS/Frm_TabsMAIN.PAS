@@ -38,7 +38,7 @@ uses
  ExtCtrls,
  Menus,
 
-  Frm_ABOUT,
+  TABS_Frm_ABOUT,
  Frm_OPTIONS,
  TabsUnit,
 {$IFnDEF FPC}
@@ -50,7 +50,7 @@ uses
 {$ENDIF};
 
 type
-  TMainForm = class(TForm)
+  TfrmTabsMain = class(TForm)
     MainMenu1: TMainMenu;
     FileMenu: TMenuItem;
     FileOpen: TMenuItem;
@@ -108,18 +108,14 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmTabsMain: TfrmTabsMain;
 
 implementation
 
 {$IFnDEF FPC}
-
   {$R *.dfm}
-
 {$ELSE}
-
   {$R *.lfm}
-
 {$ENDIF}
 const
 
@@ -129,7 +125,7 @@ const
   optConvert = 2;
 
 {- Update status panel settings (tab settings only) }
-procedure TMainForm.UpdateStatusPanel;
+procedure TfrmTabsMain.UpdateStatusPanel;
 begin
   with OptionsDialog do
   TabPanel.Caption := Format('Tabs: In %d  Out %d',
@@ -137,7 +133,7 @@ begin
 end;
 
 {- Update toolbar button states }
-procedure TMainForm.UpdateToolbar;
+procedure TfrmTabsMain.UpdateToolbar;
 begin
   case OptionsDialog.OperationRGroup.ItemIndex of
     optInsert:
@@ -150,38 +146,38 @@ begin
 end;
 
 {- Perform setups at form's creation }
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmTabsMain.FormCreate(Sender: TObject);
 begin
 {- Steal glyph from Exit BitBtn for toolbar }
   ExitSB.Glyph := ExitBitBtn.Glyph;
 end;
 
 {- Respond to File|Exit command }
-procedure TMainForm.FileExitClick(Sender: TObject);
+procedure TfrmTabsMain.FileExitClick(Sender: TObject);
 begin
   Close;
 end;
 
 {- Display About dialog }
-procedure TMainForm.HelpAboutClick(Sender: TObject);
+procedure TfrmTabsMain.HelpAboutClick(Sender: TObject);
 begin
   AboutForm.ShowModal;
 end;
 
 {- Update status panel time display }
-procedure TMainForm.Timer1Timer(Sender: TObject);
+procedure TfrmTabsMain.Timer1Timer(Sender: TObject);
 begin
   TimePanel.Caption := TimeToStr(Time);
 end;
 
 {- Respond to Help command (not implemented) }
-procedure TMainForm.HelpSBClick(Sender: TObject);
+procedure TfrmTabsMain.HelpSBClick(Sender: TObject);
 begin
   ShowMessage('Sorry: Not Implemented!');
 end;
 
 {- Display options dialog; update toolbar and status panel }
-procedure TMainForm.OptionsSettingsClick(Sender: TObject);
+procedure TfrmTabsMain.OptionsSettingsClick(Sender: TObject);
 begin
   if OptionsDialog.ShowModal = mrOk then
   begin
@@ -191,7 +187,7 @@ begin
 end;
 
 {- Reset options dialog to default settings }
-procedure TMainForm.OptionsResetClick(Sender: TObject);
+procedure TfrmTabsMain.OptionsResetClick(Sender: TObject);
 begin
   if Yes('Reset options to default settings?') then
   begin
@@ -202,13 +198,13 @@ begin
 end;
 
 {- Save options dialog settings in .Ini file }
-procedure TMainForm.OptionsSaveClick(Sender: TObject);
+procedure TfrmTabsMain.OptionsSaveClick(Sender: TObject);
 begin
   OptionsDialog.SaveOptions;
 end;
 
 {- Load options dialog settings from .Ini file }
-procedure TMainForm.OptionsLoadClick(Sender: TObject);
+procedure TfrmTabsMain.OptionsLoadClick(Sender: TObject);
 begin
   OptionsDialog.LoadOptions;
   UpdateStatusPanel;
@@ -216,7 +212,7 @@ begin
 end;
 
 {- Perform setups on form's activation }
-procedure TMainForm.FormActivate(Sender: TObject);
+procedure TfrmTabsMain.FormActivate(Sender: TObject);
 begin
 { Can't do this in OnCreate because Options dialog
   object doesn't exist until after the main form is created. }
@@ -224,7 +220,7 @@ begin
 end;
 
 {- Respond to File|Open command; process tabs in file }
-procedure TMainForm.FileOpenClick(Sender: TObject);
+procedure TfrmTabsMain.FileOpenClick(Sender: TObject);
 begin
   if OpenDialog1.Execute then
   with OptionsDialog, OpenDialog1 do
@@ -255,19 +251,19 @@ begin
 end;
 
 {- Clicked Insert button; update options dialog to match }
-procedure TMainForm.InsertSBClick(Sender: TObject);
+procedure TfrmTabsMain.InsertSBClick(Sender: TObject);
 begin
   OptionsDialog.OperationRGroup.ItemIndex := optInsert;
 end;
 
 {- Clicked Remove button; update options dialog to match }
-procedure TMainForm.RemoveSBClick(Sender: TObject);
+procedure TfrmTabsMain.RemoveSBClick(Sender: TObject);
 begin
   OptionsDialog.OperationRGroup.ItemIndex := optRemove;
 end;
 
 {- Clicked Convert button; update options dialog to match }
-procedure TMainForm.ConvertSBClick(Sender: TObject);
+procedure TfrmTabsMain.ConvertSBClick(Sender: TObject);
 begin
   OptionsDialog.OperationRGroup.ItemIndex := optConvert;
 end;

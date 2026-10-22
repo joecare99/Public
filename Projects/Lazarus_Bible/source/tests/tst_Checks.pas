@@ -1,8 +1,5 @@
 unit tst_Checks;
 
-{$IFDEF FPC}
-  {$MODE Delphi}
-{$ENDIF}
 {$mode objfpc}{$H+}
 
 interface

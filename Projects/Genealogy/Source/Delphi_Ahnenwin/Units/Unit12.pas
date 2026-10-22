@@ -167,7 +167,7 @@ begin
       ModalResult := 2;
     end
     else
-      ShowMessage('Maximal 14 Generationen möglich');
+      ShowMessage('Maximal 14 Generationen m' + #246 + 'glich');
   end
   else if gvar_0253692C = 'Vorgr2' then
   begin
@@ -178,7 +178,7 @@ begin
       ModalResult := 2;
     end
     else
-      ShowMessage('Maximal 14 Generationen möglich');
+      ShowMessage('Maximal 14 Generationen m' + #246 + 'glich');
   end
   else if gvar_0253692C = 'Nachgr1' then
   begin

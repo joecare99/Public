@@ -413,7 +413,15 @@ end;
 
 procedure TfrmCalcMain.About1Click(Sender: TObject);
 begin
-  frmCalcAbout.ShowModal;
+  { Das Info-Fenster erst im Moment des Klicks erzeugen - im
+    eigenstaendigen Projekt so gut wie im BibleExplorer, der nur das
+    Hauptformular anlegt. }
+  with TfrmCalcAbout.Create(nil) do
+  try
+    ShowModal;
+  finally
+    Free;
+  end;
 end;
 
 function TfrmCalcMain.GetValue: Integer;

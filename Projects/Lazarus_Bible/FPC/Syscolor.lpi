@@ -33,7 +33,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/SYSCOLOR;../source/_core/tools"/>
             <IncludeFiles Value="../source/SYSCOLOR;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -67,7 +67,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/SYSCOLOR;../source/_core/tools"/>
             <IncludeFiles Value="../source/SYSCOLOR;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -131,7 +131,7 @@
     <SearchPaths>
       <OtherUnitFiles Value="../source/SYSCOLOR;../source/_core/tools"/>
       <IncludeFiles Value="../source/SYSCOLOR;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

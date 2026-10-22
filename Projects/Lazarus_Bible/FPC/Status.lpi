@@ -31,9 +31,9 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Status"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/Status;../source/_core/tools"/>
-            <IncludeFiles Value="../source/Status;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <OtherUnitFiles Value="../source/STATUS;../source/_core/tools"/>
+            <IncludeFiles Value="../source/STATUS;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -65,9 +65,9 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Status"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/Status;../source/_core/tools"/>
-            <IncludeFiles Value="../source/Status;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <OtherUnitFiles Value="../source/STATUS;../source/_core/tools"/>
+            <IncludeFiles Value="../source/STATUS;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -121,9 +121,9 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Status"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/Status;../source/_core/tools"/>
-      <IncludeFiles Value="../source/Status;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+      <OtherUnitFiles Value="../source/STATUS;../source/_core/tools"/>
+      <IncludeFiles Value="../source/STATUS;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

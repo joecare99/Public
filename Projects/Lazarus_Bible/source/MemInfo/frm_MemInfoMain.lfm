@@ -62,19 +62,19 @@ object MainForm: TMainForm
       'TAChart'
     )
     ParentColor = False
-    object Series1: TLineSeries
+    object Series1: TBarSeries
     end
-    object Series2: TLineSeries
+    object Series2: TBarSeries
     end
-    object Series3: TLineSeries
+    object Series3: TBarSeries
     end
-    object Series4: TLineSeries
+    object Series4: TBarSeries
     end
-    object Series5: TLineSeries
+    object Series5: TBarSeries
     end
-    object Series6: TLineSeries
+    object Series6: TBarSeries
     end
-    object Series7: TLineSeries
+    object Series7: TBarSeries
     end
   end
 end

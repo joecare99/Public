@@ -45,7 +45,7 @@ type
     procedure FormActivate(Sender: TObject); //005C6C60
     procedure FormShow(Sender: TObject); //005C6D74
     procedure FormCreate(Sender: TObject); //005C6D80
-    procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState); //005C6C48
+    procedure FormKeyDown(sender:tobject;var key:word;shift:tshiftstate); //005C6C48
     procedure FormClick(Sender: TObject); //005C6C1C
     procedure FormMouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X: Integer; Y: Integer); //005C6C28
@@ -88,7 +88,7 @@ begin
 end;
 
 // 005C6C48
-procedure TForm9.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
+procedure TForm9.FormKeyDown(sender:tobject;var key:word;shift:tshiftstate);
 begin
   { The listing compares the low word of the Key parameter with $1B (= 27
     = VK_ESCAPE) and closes the dialog in that case. }
@@ -102,7 +102,7 @@ begin
   { The copyright line. The string of the original binary starts with the
     byte $A9, which is the copyright sign in the code page 1252 that the
     program uses. }
-  Label2.Caption := '� 1998-2014';
+  Label2.Caption := '#169 1998-2014';
 
   { The date of the output and the date of the last change are taken from
     the two global doubles at $02536924 and $0253691C. A value of 0 means
