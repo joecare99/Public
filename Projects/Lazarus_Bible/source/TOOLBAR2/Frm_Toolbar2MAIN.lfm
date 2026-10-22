@@ -10,28 +10,17 @@ object frmToolbar2Main: TfrmToolbar2Main
   Font.Height = -13
   Font.Name = 'System'
   Font.Style = []
-  OldCreateOrder = True
-  PixelsPerInch = 96
-  TextHeight = 16
   object Bevel1: TBevel
     Left = 16
     Top = 104
     Width = 249
     Height = 33
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
   end
   object RingSB: TSpeedButton
     Left = 16
     Top = 40
     Width = 25
     Height = 25
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       0400000000000001000000000000000000001000000010000000000000000000
@@ -56,10 +45,6 @@ object frmToolbar2Main: TfrmToolbar2Main
     Top = 40
     Width = 25
     Height = 25
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       0400000000000001000000000000000000001000000010000000000000000000
@@ -83,10 +68,6 @@ object frmToolbar2Main: TfrmToolbar2Main
     Top = 40
     Width = 25
     Height = 25
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       0400000000000001000000000000000000001000000010000000000000000000
@@ -111,10 +92,6 @@ object frmToolbar2Main: TfrmToolbar2Main
     Top = 72
     Width = 30
     Height = 16
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     Caption = 'Ring'
   end
   object Label2: TLabel
@@ -122,10 +99,6 @@ object frmToolbar2Main: TfrmToolbar2Main
     Top = 72
     Width = 30
     Height = 16
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     Caption = 'Date'
   end
   object Label3: TLabel
@@ -133,10 +106,6 @@ object frmToolbar2Main: TfrmToolbar2Main
     Top = 72
     Width = 58
     Height = 16
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     Caption = 'Calendar'
   end
   object Label4: TLabel
@@ -144,10 +113,6 @@ object frmToolbar2Main: TfrmToolbar2Main
     Top = 112
     Width = 210
     Height = 16
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     Caption = 'Click Buttons to Move to Toolbar'
   end
   object ExitSB: TSpeedButton
@@ -155,10 +120,6 @@ object frmToolbar2Main: TfrmToolbar2Main
     Top = 40
     Width = 25
     Height = 25
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       0400000000000001000000000000000000001000000010000000000000000000
@@ -183,10 +144,6 @@ object frmToolbar2Main: TfrmToolbar2Main
     Top = 72
     Width = 25
     Height = 16
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     Caption = 'Exit'
   end
   object TimeSB: TSpeedButton
@@ -194,10 +151,6 @@ object frmToolbar2Main: TfrmToolbar2Main
     Top = 40
     Width = 25
     Height = 25
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     Glyph.Data = {
       76010000424D7601000000000000760000002800000020000000100000000100
       0400000000000001000000000000000000001000000010000000000000000000
@@ -222,10 +175,6 @@ object frmToolbar2Main: TfrmToolbar2Main
     Top = 72
     Width = 32
     Height = 16
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     Caption = 'Time'
   end
   object ToolbarPanel: TPanel
@@ -233,10 +182,6 @@ object frmToolbar2Main: TfrmToolbar2Main
     Top = 0
     Width = 270
     Height = 25
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     Align = alTop
     TabOrder = 0
   end
@@ -245,10 +190,6 @@ object frmToolbar2Main: TfrmToolbar2Main
     Top = 57
     Width = 285
     Height = 123
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     StartOfWeek = 0
     TabOrder = 1
     Visible = False

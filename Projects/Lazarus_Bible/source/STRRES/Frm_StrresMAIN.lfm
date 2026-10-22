@@ -10,28 +10,17 @@ object frmStrresMain: TfrmStrresMain
   Font.Height = -13
   Font.Name = 'System'
   Font.Style = []
-  OldCreateOrder = True
-  PixelsPerInch = 96
-  TextHeight = 16
   object Bevel1: TBevel
     Left = 8
     Top = 8
     Width = 289
     Height = 169
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
   end
   object BitBtn1: TBitBtn
     Left = 72
     Top = 24
     Width = 161
     Height = 57
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     Caption = '&Live dangerously...'
     DoubleBuffered = True
     Glyph.Data = {
@@ -58,10 +47,6 @@ object frmStrresMain: TfrmStrresMain
     Top = 104
     Width = 161
     Height = 57
-    Margins.Left = 2
-    Margins.Top = 2
-    Margins.Right = 2
-    Margins.Bottom = 2
     DoubleBuffered = True
     Kind = bkClose
     ParentDoubleBuffered = False

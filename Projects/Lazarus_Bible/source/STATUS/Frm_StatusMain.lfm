@@ -10,11 +10,8 @@ object frmStatusMain: TfrmStatusMain
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
   Font.Style = []
-  OldCreateOrder = True
   OnMouseMove = FormMouseMove
   OnResize = FormResize
-  PixelsPerInch = 96
-  TextHeight = 13
   object Label1: TLabel
     Left = 32
     Top = 72
