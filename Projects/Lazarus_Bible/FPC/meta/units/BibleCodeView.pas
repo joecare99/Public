@@ -19,10 +19,12 @@ type
     FEditor: TSynEdit;
     FCombo: TComboBox;
     FSourcePath: string;
+    FLastFile: string;
     FDemo: TBibleDemo;
     procedure ComboChanged(Sender: TObject);
     procedure ShowMarker(Index: Integer);
     procedure HighlightMarker(Line: Integer);
+    function GetCodeLength: Integer;
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -31,6 +33,10 @@ type
     { Wechselt zur naechsten/vorherigen markierten Stelle. }
     procedure NextMarker;
     procedure PreviousMarker;
+    { Anzahl der geladenen Code-Zeichen (fuer die Statuszeile). }
+    property CodeLength: Integer read GetCodeLength;
+    { Zuletzt geladene Datei (Diagnose). }
+    property LastFile: string read FLastFile;
   end;
 
 implementation
@@ -96,12 +102,17 @@ var
   I: Integer;
   Line: Integer;
 begin
+  FLastFile := '';
   if (FDemo = nil) or (Index < 0) or (Index >= FDemo.Markers.Count) then
     Exit;
   Marker := TBibleMarker(FDemo.Markers[Index]);
   FileName := IncludeTrailingPathDelimiter(FSourcePath) + Marker.FileName;
+  FLastFile := FileName;
   if not FileExists(FileName) then
+  begin
+    FLastFile := FileName + ' (nicht gefunden)';
     Exit;
+  end;
   FEditor.Lines.LoadFromFile(FileName);
   Line := 0;
   for I := 0 to FEditor.Lines.Count - 1 do
@@ -121,6 +132,11 @@ begin
     Exit;
   FEditor.SelStart := 1;
   FEditor.SelEnd := 1 + Length(FEditor.Lines[Line - 1]);
+end;
+
+function TBibleCodeView.GetCodeLength: Integer;
+begin
+  Result := Length(FEditor.Text);
 end;
 
 procedure TBibleCodeView.NextMarker;

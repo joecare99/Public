@@ -1,39 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
-    <PathDelim Value="/"/>
+    <Version Value="12"/>
     <General>
       <Flags>
-        <MainUnitHasUsesSectionForAllUnits Value="True"/>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
+        <CompatibilityMode Value="True"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <MainUnit Value="0"/>
       <Title Value="BarTest"/>
       <UseAppBundle Value="False"/>
-      <ResourceType Value=""/>
     </General>
-    <i18n>
-      <EnableI18N LFM="True"/>
-    </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
         <CompilerOptions>
           <Version Value="11"/>
-          <PathDelim Value="/"/>
           <Target>
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/BarTest"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/Barchart;../source/_core/tools"/>
             <IncludeFiles Value="../source/Barchart;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <OtherUnitFiles Value="../source/Barchart;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -60,14 +50,13 @@
       <Item3 Name="Release">
         <CompilerOptions>
           <Version Value="11"/>
-          <PathDelim Value="/"/>
           <Target>
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/BarTest"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/Barchart;../source/_core/tools"/>
             <IncludeFiles Value="../source/Barchart;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <OtherUnitFiles Value="../source/Barchart;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -89,9 +78,7 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
@@ -102,28 +89,25 @@
       <Unit0>
         <Filename Value="BarTest.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="BarTest"/>
       </Unit0>
       <Unit1>
         <Filename Value="../source/Barchart/Frm_BartestMain.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
+        <ComponentName Value="frmBarChartMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_BartestMain"/>
       </Unit1>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
-    <PathDelim Value="/"/>
     <Target>
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/BarTest"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/Barchart;../source/_core/tools"/>
       <IncludeFiles Value="../source/Barchart;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+      <OtherUnitFiles Value="../source/Barchart;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
@@ -134,10 +118,10 @@
       <SmartLinkUnit Value="True"/>
     </CodeGeneration>
     <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
+      </Debugging>
       <LinkSmart Value="True"/>
     </Linking>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions Count="0"/>
-  </Debugging>
 </CONFIG>

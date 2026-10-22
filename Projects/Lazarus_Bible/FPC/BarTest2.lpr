@@ -1,11 +1,8 @@
-program BarTest2;
+program Bartest2;
 
 {$mode delphi}{$H+}
 
 uses
-  {$IFDEF UNIX}{$IFDEF UseCThreads}
-  cthreads,
-  {$ENDIF}{$ENDIF}
   Interfaces,
   Forms,
   SysUtils,
@@ -15,13 +12,13 @@ uses
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;
-  Application.Title := 'Demo: BarChart-Componente';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.Title := 'Demo: Bartest2';
+  Application.CreateForm(TfrmBarTestMain2, frmBarTestMain2);
   if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
   begin
-    MainForm.Show;
+    frmBarTestMain2.Show;
     Application.ProcessMessages;
-    SaveFormToImage(MainForm, ChangeFileExt(ParamStr(2), '.bmp'));
+    SaveFormToImage(frmBarTestMain2, ChangeFileExt(ParamStr(2), '.bmp'));
     Application.Terminate;
   end;
   Application.Run;

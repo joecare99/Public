@@ -16,12 +16,12 @@ begin
   RequireDerivedFormResource := True;
   Application.Initialize;
   Application.Title := 'StatusOD - Demo';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmStatusODMain, frmStatusODMain);
   if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
   begin
-    MainForm.Show;
+    frmStatusODMain.Show;
     Application.ProcessMessages;
-    SaveFormToImage(MainForm, ChangeFileExt(ParamStr(2), '.bmp'));
+    SaveFormToImage(frmStatusODMain, ChangeFileExt(ParamStr(2), '.bmp'));
     Application.Terminate;
   end;
   Application.Run;

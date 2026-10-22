@@ -1,39 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
-    <PathDelim Value="/"/>
+    <Version Value="12"/>
     <General>
       <Flags>
-        <MainUnitHasUsesSectionForAllUnits Value="True"/>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
+        <CompatibilityMode Value="True"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <MainUnit Value="0"/>
       <Title Value="Mdidemo"/>
       <UseAppBundle Value="False"/>
-      <ResourceType Value=""/>
     </General>
-    <i18n>
-      <EnableI18N LFM="True"/>
-    </i18n>
-    <VersionInfo>
-      <StringTable ProductVersion=""/>
-    </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
         <CompilerOptions>
           <Version Value="11"/>
-          <PathDelim Value="/"/>
           <Target>
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Mdidemo"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/MDIDEMO;../source/_core/tools"/>
             <IncludeFiles Value="../source/MDIDEMO;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <OtherUnitFiles Value="../source/MDIDEMO;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -60,14 +50,13 @@
       <Item3 Name="Release">
         <CompilerOptions>
           <Version Value="11"/>
-          <PathDelim Value="/"/>
           <Target>
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Mdidemo"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/MDIDEMO;../source/_core/tools"/>
             <IncludeFiles Value="../source/MDIDEMO;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <OtherUnitFiles Value="../source/MDIDEMO;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -89,9 +78,7 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <local>
-        <FormatVersion Value="1"/>
-      </local>
+      <FormatVersion Value="2"/>
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
@@ -102,15 +89,13 @@
       <Unit0>
         <Filename Value="Mdidemo.lpr"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="Mdidemo"/>
       </Unit0>
       <Unit1>
         <Filename Value="../source/MDIDEMO/Frm_MDIDemoABOUT.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
+        <ComponentName Value="AboutForm"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_MDIDemoABOUT"/>
       </Unit1>
       <Unit2>
         <Filename Value="../source/MDIDEMO/Frm_MDIDemoMAIN.pas"/>
@@ -118,7 +103,6 @@
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_MDIDemoMAIN"/>
       </Unit2>
       <Unit3>
         <Filename Value="../source/MDIDEMO/frm_MDIChild1.pas"/>
@@ -126,20 +110,18 @@
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="frm_MDIChild1"/>
       </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
-    <PathDelim Value="/"/>
     <Target>
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Mdidemo"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/MDIDEMO;../source/_core/tools"/>
       <IncludeFiles Value="../source/MDIDEMO;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+      <OtherUnitFiles Value="../source/MDIDEMO;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
@@ -150,10 +132,10 @@
       <SmartLinkUnit Value="True"/>
     </CodeGeneration>
     <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
+      </Debugging>
       <LinkSmart Value="True"/>
     </Linking>
   </CompilerOptions>
-  <Debugging>
-    <Exceptions Count="0"/>
-  </Debugging>
 </CONFIG>

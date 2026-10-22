@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmToolbar3Main: TfrmToolbar3Main
   Left = 200
   Height = 162
   Top = 94

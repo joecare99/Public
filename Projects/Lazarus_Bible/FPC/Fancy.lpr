@@ -16,12 +16,12 @@ begin
   RequireDerivedFormResource := True;
   Application.Initialize;
   Application.Title := 'Demo: Fancy';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmFancyMain, frmFancyMain);
   if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
   begin
-    MainForm.Show;
+    frmFancyMain.Show;
     Application.ProcessMessages;
-    SaveFormToImage(MainForm, ChangeFileExt(ParamStr(2), '.bmp'));
+    SaveFormToImage(frmFancyMain, ChangeFileExt(ParamStr(2), '.bmp'));
     Application.Terminate;
   end;
   Application.Run;

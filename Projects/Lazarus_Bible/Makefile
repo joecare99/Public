@@ -1,20 +1,17 @@
-# Delphi-Bible / Lazarus-Bible
-#
-#   make            alle Demos bauen (Linux/FPC)
-#   make report     nur den letzten Build-Bericht anzeigen
-#   make tests      Testsuite (fpcunit/GUI) bauen und starten
-#   make index      Projektdateien (.lpr/.lpi/.lpg) neu erzeugen
-#   make setup      Lazarus-Pakete im Benutzerprofil registrieren
-#   make clean      Build-Artefakte loeschen
+.PHONY: all build report tests index setup clean
 
 SHELL   := /bin/sh
 ROOT    := $(CURDIR)
-LAZBUILD ?= lazbuild
 MODE    ?= Default
 
-.PHONY: all build report tests index setup clean
-
-all: build
+# Vollstaendiger Durchlauf: Endungen normalisieren, Projekte erzeugen,
+# alles bauen.  make build baut nur die Projekte.
+all:
+	@sh FPC/tools/fix_line_endings.py
+	@python3 FPC/tools/normalize_extensions.py
+	@python3 FPC/tools/fix_unit_refs.py
+	@python3 FPC/tools/gen_projects.py
+	@sh FPC/tools/build_all.sh $(MODE)
 
 build:
 	@sh FPC/tools/build_all.sh $(MODE)

@@ -31,9 +31,9 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Toolbar3"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/Toolbar3;../source/_core/tools"/>
-            <IncludeFiles Value="../source/Toolbar3;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <OtherUnitFiles Value="../source/TOOLBAR3;../source/_core/tools"/>
+            <IncludeFiles Value="../source/TOOLBAR3;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -65,9 +65,9 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Toolbar3"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/Toolbar3;../source/_core/tools"/>
-            <IncludeFiles Value="../source/Toolbar3;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <OtherUnitFiles Value="../source/TOOLBAR3;../source/_core/tools"/>
+            <IncludeFiles Value="../source/TOOLBAR3;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -121,9 +121,9 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Toolbar3"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/Toolbar3;../source/_core/tools"/>
-      <IncludeFiles Value="../source/Toolbar3;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+      <OtherUnitFiles Value="../source/TOOLBAR3;../source/_core/tools"/>
+      <IncludeFiles Value="../source/TOOLBAR3;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

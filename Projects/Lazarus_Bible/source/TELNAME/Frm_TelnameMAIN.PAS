@@ -28,7 +28,7 @@ uses
 {$ENDIF};
 
 type
-  TMainForm = class(TForm)
+  TfrmTelnameMain = class(TForm)
     Label1: TLabel;
     Label2: TLabel;
     ListBox1: TListBox;
@@ -51,18 +51,14 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmTelnameMain: TfrmTelnameMain;
 
 implementation
 
 {$IFnDEF FPC}
-
   {$R *.dfm}
-
 {$ELSE}
-
   {$R *.lfm}
-
 {$ENDIF}
 var
 { Array of telephone dialog letters }
@@ -91,7 +87,7 @@ begin
 end;
 
 { Return number for a telephone alphabetic name }
-function TMainForm.TelNameToNum(TelName: String): String;
+function TfrmTelnameMain.TelNameToNum(TelName: String): String;
 var
   I: Integer;
 begin
@@ -100,7 +96,7 @@ begin
     Result := Result + DigitToLetter(TelName[I]);
 end;
 
-procedure TMainForm.ListNames(TelNum: String);
+procedure TfrmTelnameMain.ListNames(TelNum: String);
 var
   S: String;  { Temporary string }
 
@@ -129,7 +125,7 @@ begin
 end;
 
 { Initialize global variables }
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmTelnameMain.FormCreate(Sender: TObject);
 begin
   TelDial[0] := '   ';  TelDial[1] := '   ';
   TelDial[2] := 'ABC';  TelDial[3] := 'DEF';
@@ -139,14 +135,14 @@ begin
 end;
 
 { Do Number button click }
-procedure TMainForm.NumberBitBtnClick(Sender: TObject);
+procedure TfrmTelnameMain.NumberBitBtnClick(Sender: TObject);
 begin
   NumbEdit.Text := TelNameToNum(NameEdit.Text);
   NumbEdit.SetFocus;
 end;
 
 { Do Names button click }
-procedure TMainForm.NamesBitBtnClick(Sender: TObject);
+procedure TfrmTelnameMain.NamesBitBtnClick(Sender: TObject);
 begin
   ListBox1.Clear;
   ListNames(NumbEdit.Text);
@@ -154,7 +150,7 @@ begin
 end;
 
 { Click Names button for Enter key in Number Edit object }
-procedure TMainForm.NumbEditKeyPress(Sender: TObject;
+procedure TfrmTelnameMain.NumbEditKeyPress(Sender: TObject;
   var Key: Char);
 begin
   if Key = #13 then
@@ -165,7 +161,7 @@ begin
 end;
 
 { Click Number button for Enter key in Name Edit object }
-procedure TMainForm.NameEditKeyPress(Sender: TObject;
+procedure TfrmTelnameMain.NameEditKeyPress(Sender: TObject;
   var Key: Char);
 begin
   if Key = #13 then

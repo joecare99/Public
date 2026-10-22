@@ -16,12 +16,12 @@ begin
   RequireDerivedFormResource := True;
   Application.Initialize;
   Application.Title := 'Demo: Constraint';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmConstraintMain, frmConstraintMain);
   if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
   begin
-    MainForm.Show;
+    frmConstraintMain.Show;
     Application.ProcessMessages;
-    SaveFormToImage(MainForm, ChangeFileExt(ParamStr(2), '.bmp'));
+    SaveFormToImage(frmConstraintMain, ChangeFileExt(ParamStr(2), '.bmp'));
     Application.Terminate;
   end;
   Application.Run;

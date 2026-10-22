@@ -33,7 +33,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/TODO;../source/_core/tools"/>
             <IncludeFiles Value="../source/TODO;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -67,7 +67,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/TODO;../source/_core/tools"/>
             <IncludeFiles Value="../source/TODO;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -105,20 +105,20 @@
         <UnitName Value="Todo"/>
       </Unit0>
       <Unit1>
-        <Filename Value="../source/TODO/Frm_ABOUT.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_ABOUT"/>
-      </Unit1>
-      <Unit2>
         <Filename Value="../source/TODO/Frm_TodoMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_TodoMAIN"/>
+      </Unit1>
+      <Unit2>
+        <Filename Value="../source/TODO/TODO_Frm_ABOUT.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="TODO_Frm_ABOUT"/>
       </Unit2>
     </Units>
   </ProjectOptions>
@@ -131,7 +131,7 @@
     <SearchPaths>
       <OtherUnitFiles Value="../source/TODO;../source/_core/tools"/>
       <IncludeFiles Value="../source/TODO;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

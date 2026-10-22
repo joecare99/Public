@@ -1,4 +1,4 @@
-unit Frm_ABOUT;
+unit AboutEx_Frm_ABOUT;
 
 {$IFDEF FPC}
   {$MODE Delphi}

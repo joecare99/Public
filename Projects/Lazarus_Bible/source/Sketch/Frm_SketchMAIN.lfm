@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmSketchMain: TfrmSketchMain
   Left = 193
   Height = 246
   Top = 99

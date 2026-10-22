@@ -33,7 +33,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/OPTIONS;../source/Inidata;../source/_core/tools"/>
             <IncludeFiles Value="../source/OPTIONS;../source/Inidata;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -67,7 +67,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/OPTIONS;../source/Inidata;../source/_core/tools"/>
             <IncludeFiles Value="../source/OPTIONS;../source/Inidata;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -128,7 +128,7 @@
     <SearchPaths>
       <OtherUnitFiles Value="../source/OPTIONS;../source/Inidata;../source/_core/tools"/>
       <IncludeFiles Value="../source/OPTIONS;../source/Inidata;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

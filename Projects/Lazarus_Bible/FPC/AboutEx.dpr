@@ -16,7 +16,7 @@ uses
 {$else}
   Frm_AboutExMAIN in '..\source\AboutEx\Frm_AboutExMAIN.pas',
 {$endif}
-Frm_ABOUT in '..\source\AboutEx\Frm_ABOUT.pas';
+AboutEx_Frm_ABOUT in '..\source\AboutEx\AboutEx_Frm_ABOUT.pas';
 
 {$IFnDEF FPC}
 {$E EXE}

@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmGlyphListMain: TfrmGlyphListMain
   Left = 244
   Height = 261
   Top = 124

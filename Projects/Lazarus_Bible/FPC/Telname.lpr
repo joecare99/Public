@@ -16,12 +16,12 @@ begin
   RequireDerivedFormResource := True;
   Application.Initialize;
   Application.Title := 'Demo: Telname';
-  Application.CreateForm(TMainForm, MainForm);
+  Application.CreateForm(TfrmTelnameMain, frmTelnameMain);
   if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
   begin
-    MainForm.Show;
+    frmTelnameMain.Show;
     Application.ProcessMessages;
-    SaveFormToImage(MainForm, ChangeFileExt(ParamStr(2), '.bmp'));
+    SaveFormToImage(frmTelnameMain, ChangeFileExt(ParamStr(2), '.bmp'));
     Application.Terminate;
   end;
   Application.Run;

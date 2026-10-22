@@ -41,6 +41,9 @@ build/                     Build-Bericht und Screenshots
 
 * **MVVM-Muster (View / ViewModel / Model, eine Klasse je Datei):**
   `HELLO`, `Calc32`, `README` - vollstaendig umgestellt und getestet.
+* **Eingebettet (Verhalten):** `HELLO`, `Calc32`, `README`, `Enumfon`,
+  `Printgr` - die Showcase-Registry kennt sie, der
+  Schliessen-Knopf und das Demo-Menue laufen im Frame.
 * **Weitere portierte Demos:** `Actions`, `Addpage`, `Calc64`, `CharGrid`,
   `Checks`, `Combos`, `Constraint`, `Contcomp`, `Exwin`, `Exlist`, `Except1`,
   `Except2`, `Fancy`, `Filemenu`, `Findrepl`, `Fishy`, `Fishy2`, `GlyphLst`,
@@ -62,11 +65,64 @@ build/                     Build-Bericht und Screenshots
 ## Meta-App "BibleExplorer"
 
 * Baum links mit den Demos nach Themen, rechts die Reiter
-  **Ueberblick / Code / Verhalten / Dateien / Notizen**.
+  **Ueberblick / Code / Verhalten / Dateien / Notizen** (TPageControl, damit
+  die Reiterleiste sichtbar ist) und unten eine Navigationsleiste
+  (`< Zurueck`, `Weiter >`, Seitenname, Statuszeile).
 * Die Metadaten stehen in `FPC/meta/bible.manifest.json` (kuratierte
   Annotationen: Kategorie, Kurzbeschreibung, Lernziel, markierte
   Code-Stellen, Notizen).
 * Das "Verhalten" zeigt eingebettete Formulare der Showcase-Demos
-  (`FPC/meta/units/BibleShowcaseRegistry.pas`); fuer alle anderen Demos
-  startet die App das gebaute Programm bzw. erzeugt einen Screenshot
-  (jedes Demo unterstuetzt `--screenshot <datei.bmp>`).
+  (`FPC/meta/units/BibleShowcaseRegistry.pas`), zweiunddreissig Demos
+  sind live: `HELLO`, `Calc32`, `README`, `Enumfon`, `Printgr`,
+  `Listfont`, `Combos`, `Checks`, `Spinbutt`, `Actions`, `Addpage`,
+  `GlyphLst`, `Listtext`, `Multimen`, `Options`, `Palette`, `Sketch`,
+  `Constraint`, `Contcomp`, `Fancy`, `Filemenu`, `Objlist`, `Toolbar3`,
+  `Strlist`, `Strres`, `Status`, `StatusOD`, `Tabs`, `Telname`,
+  `Toolbar1`, `Toolbar2`, `UpDownDemo`
+  - der Schliessen-Knopf der
+  Demo leert nur den Frame ("Demo intern starten" startet sie erneut):
+  `TBitBtn`-Knöpfe mit `Kind = bkClose` werden beim Einbetten auf das
+  Demo-Formular umgebogen (`PrepareBehaviorForm`), sonst schliesst die
+  LCL die Meta-App. Die Registry erzwingt eigene Formular-Namen
+  (statt `TMainForm`), sonst kollidieren die Demo-Ressourcen.
+* Die Menuzeile einer Demo erscheint im eingebetteten Zustand nicht -
+  sie wird dynamisch in die Menue des BibleExplorers gespiegelt
+  (`PrepareBehaviorMenu`), Klicks laufen ruehreffend auf die
+  Original-Eintraege der Demo. Sekundaerformulare (z. B. die About-Box
+  des Rechners) werden teils bedarfsgesteuert erzeugt, da das
+  AutoCreate des eigenstaendigen Projekts entfaellt. Drucken ohne
+  installierten Drucker (WSL) wird sauber abgefangen.
+* **Stabilitaet im eingebetteten Betrieb:**
+  - `Inidata.RegisterINIDataProp` akzeptiert ein identisches
+    Klasse+Paar mehrfach, statt mit "already registered"
+    abzubrechen - Tabs und Options durften sich sonst im selben
+    Prozess gegenseitig ausbremsen (die Ausnahme laesst halbfertige
+    Formulare zurueck - Access Violation).
+  - Die Options-Demo arbeitet auf der aktuellen Instanz (`Self`)
+    statt der globalen Formular-Variable (dort nil im Frame).
+  - Einbetten, Vorbereitung und Freigabe des Demo-Formulars laufen in
+    try/except; ein fehlgebautes Demo schreibt den Fehler ins
+    Verhaltens-Memo, statt die Meta-App mitzureissen.
+* **Smoke-Test:** `FPC/demo_smoke.lpr` erzeugt alle zweiunddreissig
+  Demo-Formulare einmal (Registry-Factory: LFM-Stream + FormCreate,
+  ohne GUI-Klick). Build + Lauf via `FPC/tools/smoke_test.sh` - alle
+  32 Demos melden OK.
+  Fuer alle anderen Demos startet die App das gebaute Programm
+  ("Externes Programm starten", rot markiert) bzw. erzeugt einen
+  Screenshot - jedes Demo unterstuetzt `--screenshot <datei.bmp> [seite]`.
+
+## Hinweise zur Versionsverwaltung
+
+* Das Repository liegt in `C:\Projekte\Lazarus\Public_LazarusBible`;
+  `Projects/Lazarus_Bible` ist ein **Junction** auf
+  `C:\Projekte\Delphi\Delphi_Bible`.
+* **Nur mit der Windows-git arbeiten** - die git unter WSL folgt dem
+  Junction nicht und wuerde die Dateien als geloescht anzeigen.
+* Vor dem Commit `git update-index --really-refresh` ausfuehren: die
+  Zeitstempel des 9p-Mounts sind unzuverlaessig, sonst uebersieht git
+  Aenderungen. Erkennt die Windows-git ueber das Junction keine
+  Aendereten (status/diff bleiben leer, obwohl die Inhalte abweichen),
+  hilft nur der direkte Index-Weg: `git hash-object -w <datei>` und
+  `git update-index --add --cacheinfo 100644,<blob>,<pfad>`, dann
+  diff --cached gegenpruefen und committen.
+

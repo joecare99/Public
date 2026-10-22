@@ -26,7 +26,7 @@ uses
 {$ENDIF};
 
 type
-  TMainForm = class(TForm)
+  TfrmStrlistMain = class(TForm)
     AddButton: TButton;
     CloseBitBtn: TBitBtn;
     GetButton: TButton;
@@ -44,18 +44,14 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmStrlistMain: TfrmStrlistMain;
 
 implementation
 
 {$IFnDEF FPC}
-
   {$R *.dfm}
-
 {$ELSE}
-
   {$R *.lfm}
-
 {$ENDIF}
 type
 
@@ -113,22 +109,22 @@ begin
   Result := nil;    { No match; return nil }
 end;
 
-{- TMainForm event handlers }
+{- TfrmStrlistMain event handlers }
 
-procedure TMainForm.FormCreate(Sender: TObject);
+procedure TfrmStrlistMain.FormCreate(Sender: TObject);
 begin
   StrList := TStrList.Create;  { Create new StrList object }
   ItemCount := 0;              { Initialize insertion count }
 end;
 
-procedure TMainForm.FormDestroy(Sender: TObject);
+procedure TfrmStrlistMain.FormDestroy(Sender: TObject);
 begin
   StrList.Free;  { Also destroys listed items }
 end;
 
 {- Button event handlers }
 
-procedure TMainForm.AddButtonClick(Sender: TObject);
+procedure TfrmStrlistMain.AddButtonClick(Sender: TObject);
 var
   StrItem: TStrItem;   { New item to insert }
   S: string;           { User input string }
@@ -143,7 +139,7 @@ begin
   end;
 end;
 
-procedure TMainForm.UpdateButtonClick(Sender: TObject);
+procedure TfrmStrlistMain.UpdateButtonClick(Sender: TObject);
 var
   I: Integer;
   P: TStrItem;
@@ -157,7 +153,7 @@ begin
   end;
 end;
 
-procedure TMainForm.GetButtonClick(Sender: TObject);
+procedure TfrmStrlistMain.GetButtonClick(Sender: TObject);
 var
   S: string;
   P: TStrItem;

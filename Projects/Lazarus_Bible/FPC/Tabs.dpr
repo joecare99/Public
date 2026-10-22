@@ -2,7 +2,7 @@ program Tabs;
 uses 
   Forms, 
   Frm_TabsMAIN in '..\source\TABS\Frm_TabsMAIN.pas' {MainForm}, 
-  Frm_ABOUT in '..\source\TABS\Frm_ABOUT.pas' {AboutForm}, 
+  TABS_Frm_ABOUT in '..\source\TABS\TABS_Frm_ABOUT.pas' {AboutForm}, 
   Frm_OPTIONS in '..\source\TABS\Frm_OPTIONS.pas' {OptionsDialog}, 
   TabsUnit in '..\source\TABS\TabsUnit.pas', 
   Inidata in '..\source\Inidata\Inidata.pas'; 

@@ -8,6 +8,7 @@ interface
 uses
  Messages,
  Classes,
+ simpleipc,
  Graphics,
  Controls,
 
@@ -17,7 +18,6 @@ uses
  Buttons,
 {$IFnDEF FPC}
   Windows,
-  simpleipc,
 {$ELSE}
   LCLIntf,
   LCLType,
@@ -50,7 +50,7 @@ var
 implementation
 
 {$IFDEF FPC}
-{$R *.LFM}
+{$R *.lfm}
 {$ELSE}
 {$R *.DFM}
 {$ENDIF}

@@ -13,15 +13,16 @@ interface
 
 uses
   Classes, SysUtils, Forms, Controls, StdCtrls, ComCtrls, Dialogs, Menus,
-  ExtCtrls, Graphics, LCLIntf, LCLType, Process,
-  BibleDemoInfo, BibleIndex, BibleCodeView, BibleShowcase, BibleShowcaseRegistry;
+  Buttons, ExtCtrls, Graphics, LCLIntf, LCLType, Process,
+  BibleDemoInfo, BibleIndex, BibleCodeView, BibleShowcase, BibleShowcaseRegistry,
+  FormShot;
 
 type
   { TBibleExplorerForm }
   TBibleExplorerForm = class(TForm)
     Splitter1: TSplitter;
     TreeView: TTreeView;
-    TabControl: TTabControl;
+    PageControl: TPageControl;
     tabOverview: TTabSheet;
     tabCode: TTabSheet;
     tabBehavior: TTabSheet;
@@ -40,8 +41,16 @@ type
     memoBehavior: TMemo;
     btnStart: TButton;
     btnShot: TButton;
+    btnStartIntern: TButton;
+    btnShotIntern: TButton;
     btnPrevious: TButton;
     btnNext: TButton;
+    btnPrev: TButton;
+    btnNextPage: TButton;
+    lblPage: TLabel;
+    pnlNav: TPanel;
+    pnlTop: TPanel;
+    splBehavior: TSplitter;
     MainMenu1: TMainMenu;
     mnuFile: TMenuItem;
     mnuOpen: TMenuItem;
@@ -52,13 +61,29 @@ type
     mnuShot: TMenuItem;
     mnuAbout: TMenuItem;
     procedure FormCreate(Sender: TObject);
+    procedure FormShow(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure TreeViewNodeClick(Sender: TObject);
-    procedure TabControlChange(Sender: TObject);
+    procedure PageControlChange(Sender: TObject);
     procedure btnStartClick(Sender: TObject);
     procedure btnShotClick(Sender: TObject);
+    procedure btnStartInternClick(Sender: TObject);
+    procedure btnShotInternClick(Sender: TObject);
+    procedure splMouseDown(Sender: TObject; Button: TMouseButton; X, Y: Integer);
+    procedure splMouseMove(Sender: TObject; X, Y: Integer);
+    procedure BehaviorFormClosing(Sender: TObject; var CloseAction: TCloseAction);
     procedure btnNextClick(Sender: TObject);
     procedure btnPreviousClick(Sender: TObject);
+    procedure btnPrevClick(Sender: TObject);
+    procedure btnNextPageClick(Sender: TObject);
+    procedure UpdatePageInfo;
+    procedure EmbedBehaviorForm;
+    procedure PrepareBehaviorForm(AForm: TForm);
+    procedure PrepareBehaviorMenu(AForm: TForm);
+    procedure ClearBehaviorMenu;
+    procedure BehaviorMenuClick(Sender: TObject);
+    procedure BehaviorCloseClick(Sender: TObject);
+    procedure MainFormCloseQuery(Sender: TObject; var CloseAction: TCloseAction);
     procedure mnuQuitClick(Sender: TObject);
     procedure mnuReloadClick(Sender: TObject);
     procedure mnuStartClick(Sender: TObject);
@@ -70,6 +95,14 @@ type
     FRootPath: string;
     FCurrentDemo: TBibleDemo;
     FBehaviorForm: TForm;
+    FBehaviorClosed: Boolean;
+    FDragging: Boolean;
+    FCloseFromDemo: Boolean;
+    { Spiegelung der Demo-Menuzeile im Menue des BibleExplorers:
+      Original-Eintraege je gespiegeltem Eintrag. }
+    FBehaviorMenuSources: array of TMenuItem;
+    FBehaviorMenuClones: array of TMenuItem;
+    FDragStartY: Integer;
     FProcess: TProcess;
     function FindRoot: string;
     procedure LoadManifest;
@@ -82,6 +115,10 @@ type
     function DemoBinaryPath(ADemo: TBibleDemo): string;
   public
     property Index: TBibleIndex read FIndex;
+    { Wechselt auf die Seite mit dem angegebenen Namen. }
+    procedure ShowPage(const APageName: string);
+    { Das aktuell eingebettete Demo-Formular (fuer Screenshots). }
+    property BehaviorForm: TForm read FBehaviorForm;
   end;
 
 var
@@ -92,6 +129,8 @@ implementation
 {$R *.lfm}
 
 procedure TBibleExplorerForm.FormCreate(Sender: TObject);
+var
+  I: Integer;
 begin
   FRootPath := FindRoot;
   FIndex := TBibleIndex.Create;
@@ -99,6 +138,7 @@ begin
   FRegistry.RegisterAll;
   LoadManifest;
   FillTree;
+  TreeView.Items[0].Expanded := True;
 end;
 
 procedure TBibleExplorerForm.FormDestroy(Sender: TObject);
@@ -106,6 +146,19 @@ begin
   ClearBehavior;
   FreeAndNil(FRegistry);
   FreeAndNil(FIndex);
+end;
+
+{ Nach dem Anzeigen des Fensters das eingebettete Demo noch einmal
+  einbetten - vorher hatte es noch keine Groesse und keinen Fensterhandle. }
+procedure TBibleExplorerForm.FormShow(Sender: TObject);
+begin
+  if FBehaviorForm = nil then
+    Exit;
+  EmbedBehaviorForm;
+  lblStatus.Caption := 'Demo: ' + IntToStr(FBehaviorForm.Width) + 'x' +
+    IntToStr(FBehaviorForm.Height) + ' sichtbar=' +
+    BoolToStr(FBehaviorForm.Visible, True) + ' handle=' +
+    BoolToStr(FBehaviorForm.Handle <> 0, True);
 end;
 
 { Sucht das Wurzelverzeichnis des Projektes (mit source/ und FPC/). }
@@ -197,6 +250,8 @@ end;
 
 { Zeigt eine Demo in allen Reitern. }
 procedure TBibleExplorerForm.ShowDemo(ADemo: TBibleDemo);
+var
+  SourcePath: string;
 begin
   FCurrentDemo := ADemo;
   lblTitle.Caption := ADemo.Title;
@@ -206,8 +261,10 @@ begin
     'Lernziel:' + #13#10 + ADemo.Learning + #13#10 + #13#10 +
     'Ordner: ' + ADemo.Folder + #13#10 +
     'Projekt: ' + ADemo.Project;
-  codeView.ShowDemo(ADemo, ADemo.LocateSourcePath(
-    IncludeTrailingPathDelimiter(FRootPath) + 'source'));
+  SourcePath := ADemo.LocateSourcePath(
+    IncludeTrailingPathDelimiter(FRootPath) + 'source');
+  codeView.ShowDemo(ADemo, SourcePath);
+  lblStatus.Caption := 'Code: ' + IntToStr(codeView.CodeLength) + ' Zeichen';
   listFiles.Clear;
   listFiles.Items.AddStrings(ADemo.Units);
   memoNotes.Lines.Text := ADemo.Notes;
@@ -215,25 +272,183 @@ begin
 end;
 
 { Wechselt in den Reiter "Verhalten". }
-procedure TBibleExplorerForm.TabControlChange(Sender: TObject);
+procedure TBibleExplorerForm.PageControlChange(Sender: TObject);
 begin
-  if TabControl.TabIndex = 2 then
+  if PageControl.ActivePage = tabBehavior then
     ShowBehavior;
+  UpdatePageInfo;
 end;
 
 procedure TBibleExplorerForm.ClearBehavior;
 begin
+  ClearBehaviorMenu;
   if FBehaviorForm <> nil then
   begin
+    FBehaviorForm.OnClose := nil;
     FBehaviorForm.Parent := nil;
-    FreeAndNil(FBehaviorForm);
+    { Das Freigeben geschah frueher hart - ein ۓbles Demo wartet die
+      App mitreissen. Jetzt gefangen, der Fehler wird im Memo notiert. }
+    try
+      FreeAndNil(FBehaviorForm);
+    except
+      on E: Exception do
+        memoBehavior.Lines.Add('Freigebe-Fehler: ' + E.Message);
+    end;
   end;
+  FBehaviorClosed := False;
+  if Assigned(btnStartIntern) then
+    btnStartIntern.Enabled := False;
+  if Assigned(btnShotIntern) then
+    btnShotIntern.Enabled := False;
   if FProcess <> nil then
   begin
     if FProcess.Running then
       FProcess.Terminate(0);
     FreeAndNil(FProcess);
   end;
+end;
+
+{ Bettet das Demo-Formular in den Verhaltens-Frame ein. }
+procedure TBibleExplorerForm.EmbedBehaviorForm;
+begin
+  if FBehaviorForm = nil then
+    Exit;
+  FBehaviorForm.Parent := pnlBehavior;
+  { Die Groesse explizit setzen - beim Einbetten hat der Frame noch
+    keine endgueltige Groesse, sonst bleibt das Formular bei 0 Pixeln. }
+  FBehaviorForm.SetBounds(0, 0, pnlBehavior.Width, pnlBehavior.Height);
+  FBehaviorForm.Align := alClient;
+  FBehaviorForm.Visible := True;
+  FBehaviorForm.BringToFront;
+end;
+
+{ Der "Schliessen"-Knopf eines eingebetteten Demos (TBitBtn mit
+  Kind = bkClose) wuerde im LCL das oberste nicht eingebettete Formular
+  schliessen - also die Meta-App. Er wird deshalb auf das Demo-Formular
+  umgebogen. }
+procedure TBibleExplorerForm.PrepareBehaviorForm(AForm: TForm);
+var
+  I: Integer;
+begin
+  for I := 0 to AForm.ComponentCount - 1 do
+  begin
+    { TBitBtn (Kind = bkClose) schliesst sonst die Meta-App. }
+    if (AForm.Components[I] is TBitBtn) and
+       (TBitBtn(AForm.Components[I]).Kind = bkClose) then
+    begin
+      TBitBtn(AForm.Components[I]).Kind := bkCustom;
+      TBitBtn(AForm.Components[I]).OnClick := BehaviorCloseClick;
+    end;
+  end;
+end;
+
+{ Die Menuzeile einer Demo wird im eingebetteten Zustand nicht gerendert -
+  Menueleisten erscheinen nur bei Formularen auf oberster Ebene. Die
+  Demo-Menustruktur wird deshalb dynamisch in die Menueleiste des
+  BibleExplorers gespiegelt; die Klicks laufen auf die Original-Eintraege
+  der Demo, so dass die Demo-Ereignisbehandlung unveraendert arbeitet. }
+procedure TBibleExplorerForm.BehaviorMenuClick(Sender: TObject);
+var
+  I: Integer;
+  Src: TMenuItem;
+begin
+  if not (Sender is TMenuItem) then
+    Exit;
+  for I := 0 to High(FBehaviorMenuClones) do
+    if FBehaviorMenuClones[I] = Sender then
+    begin
+      Src := FBehaviorMenuSources[I];
+      if (Src <> nil) and Assigned(Src.OnClick) then
+        try
+          Src.OnClick(Src);
+        except
+          on E: Exception do
+            memoBehavior.Lines.Add('Demo-Menu-Fehler: ' + E.Message);
+        end;
+      Exit;
+    end;
+end;
+
+procedure TBibleExplorerForm.ClearBehaviorMenu;
+var
+  I: Integer;
+begin
+  for I := High(FBehaviorMenuClones) downto 0 do
+    if FBehaviorMenuClones[I] <> nil then
+      FBehaviorMenuClones[I].Free;
+  SetLength(FBehaviorMenuClones, 0);
+  SetLength(FBehaviorMenuSources, 0);
+end;
+
+procedure TBibleExplorerForm.PrepareBehaviorMenu(AForm: TForm);
+
+  procedure MirrorItem(AParent: TMenuItem; ASrc: TMenuItem);
+  var
+    J: Integer;
+    Src, NewItem: TMenuItem;
+  begin
+    for J := 0 to ASrc.Count - 1 do
+    begin
+      Src := ASrc.Items[J];
+      NewItem := TMenuItem.Create(nil);
+      NewItem.Caption := Src.Caption;
+      NewItem.Enabled := Src.Enabled;
+      NewItem.Visible := Src.Visible;
+      NewItem.Checked := Src.Checked;
+      NewItem.ShortCut := Src.ShortCut;
+      NewItem.OnClick := BehaviorMenuClick;
+      AParent.Add(NewItem);
+      SetLength(FBehaviorMenuClones, Length(FBehaviorMenuClones) + 1);
+      FBehaviorMenuClones[High(FBehaviorMenuClones)] := NewItem;
+      SetLength(FBehaviorMenuSources, Length(FBehaviorMenuSources) + 1);
+      FBehaviorMenuSources[High(FBehaviorMenuSources)] := Src;
+      MirrorItem(NewItem, Src);
+    end;
+  end;
+
+var
+  I: Integer;
+  Root, NewItem: TMenuItem;
+begin
+  ClearBehaviorMenu;
+  if (AForm = nil) or (AForm.Menu = nil) then
+    Exit;
+  for I := 0 to AForm.Menu.Items.Count - 1 do
+  begin
+    Root := AForm.Menu.Items.Items[I];
+    NewItem := TMenuItem.Create(nil);
+    NewItem.Caption := Root.Caption;
+    NewItem.OnClick := BehaviorMenuClick;
+    MainMenu1.Items.Add(NewItem);
+    SetLength(FBehaviorMenuClones, Length(FBehaviorMenuClones) + 1);
+    FBehaviorMenuClones[High(FBehaviorMenuClones)] := NewItem;
+    SetLength(FBehaviorMenuSources, Length(FBehaviorMenuSources) + 1);
+    FBehaviorMenuSources[High(FBehaviorMenuSources)] := Root;
+    MirrorItem(NewItem, Root);
+  end;
+end;{ Der Schliessen-Knopf des Demos schliesst das Demo-Formular - nicht die
+  Meta-App. }
+procedure TBibleExplorerForm.BehaviorCloseClick(Sender: TObject);
+begin
+  FCloseFromDemo := True;
+  if FBehaviorForm <> nil then
+    FBehaviorForm.Close;
+  FCloseFromDemo := False;
+end;
+
+{ Sicherheitsnetz: Kommt der Schliess-Befehl aus einem eingebetteten Demo,
+  bleibt die Meta-App offen. Sonst wird beim Beenden der Meta-App zuerst
+  das eingebettete Demo freigegeben. }
+procedure TBibleExplorerForm.MainFormCloseQuery(Sender: TObject;
+  var CloseAction: TCloseAction);
+begin
+  if FCloseFromDemo then
+  begin
+    FCloseFromDemo := False;
+    CloseAction := caNone;
+  end
+  else if FBehaviorForm <> nil then
+    ClearBehavior;
 end;
 
 { Zeigt das Verhalten der Demo: eingebettetes Formular oder Screenshot. }
@@ -246,17 +461,114 @@ begin
     Exit;
   if FRegistry.Showcase.HasEntry(FCurrentDemo.Key) then
   begin
-    Form := FRegistry.Showcase.CreateForm(FCurrentDemo.Key);
+    Form := nil;
+    { Ein fehlgebautes Demo darf die App nicht mitreissen - der
+      Block laeuft auch bei fehlenden Ressourcen oder AVs weiter. }
+    try
+      Form := FRegistry.Showcase.CreateForm(FCurrentDemo.Key);
+    except
+      on E: Exception do
+        memoBehavior.Lines.Add('Demo-Fehler (' + FCurrentDemo.Key + '): ' +
+          E.Message);
+    end;
     if Form <> nil then
     begin
       FBehaviorForm := Form;
-      FBehaviorForm.Parent := pnlBehavior;
-      FBehaviorForm.Align := alClient;
-      FBehaviorForm.Show;
+      { Der Schliessen-Knopf der Demo darf die Explorer-App nicht beenden,
+        sondern leert nur den Frame. }
+      FBehaviorForm.OnClose := BehaviorFormClosing;
+      try
+        PrepareBehaviorForm(FBehaviorForm);
+        PrepareBehaviorMenu(FBehaviorForm);
+        EmbedBehaviorForm;
+        btnStartIntern.Enabled := False;
+        btnShotIntern.Enabled := True;
+      except
+        on E: Exception do
+        begin
+          memoBehavior.Lines.Add('Demo-Fehler (Verhalten): ' + E.Message);
+          ClearBehavior;
+        end;
+      end;
     end;
+  end
+  else
+  begin
+    memoBehavior.Lines.Add('Diese Demo laesst sich nicht intern einbetten.');
+    btnStartIntern.Enabled := False;
+    btnShotIntern.Enabled := False;
   end;
   btnStart.Enabled := True;
   btnShot.Enabled := True;
+  lblStatus.Caption := FCurrentDemo.Key + ': eingebettet=' +
+    BoolToStr(FBehaviorForm <> nil, True);
+end;
+
+{ Wird aufgerufen, wenn die eingebettete Demo geschlossen wird. }
+procedure TBibleExplorerForm.BehaviorFormClosing(Sender: TObject;
+  var CloseAction: TCloseAction);
+begin
+  { Das LCL soll das Formular nicht selbst freigeben - wir nehmen es
+    nur aus dem Frame und geben es beim naechsten Start frei. }
+  CloseAction := caNone;
+  if Sender is TForm then
+    (Sender as TForm).Hide;
+  FBehaviorClosed := True;
+  ClearBehaviorMenu;
+  btnStartIntern.Enabled := True;
+  btnShotIntern.Enabled := False;
+  memoBehavior.Lines.Add('Die Demo wurde geschlossen - der Frame ist leer. ' +
+    'Mit "Demo intern starten" laesst sie sich erneut starten.');
+end;
+
+{ Startet die Demo intern (eingebettet in den Frame). }
+procedure TBibleExplorerForm.btnStartInternClick(Sender: TObject);
+begin
+  ShowBehavior;
+end;
+
+{ Der Greif-Bereich teilt den oberen Bereich und den Verhaltens-Frame.
+  Wird die Trenne gezogen, aendert sich nur die Hoehe des oberen Bereichs -
+  Greif-Bereich und Frame legt das Layout selbst fest. }
+procedure TBibleExplorerForm.splMouseDown(Sender: TObject; Button: TMouseButton;
+  X, Y: Integer);
+begin
+  FDragging := True;
+  FDragStartY := Y;
+end;
+
+procedure TBibleExplorerForm.splMouseMove(Sender: TObject; X, Y: Integer);
+var
+  NewHeight: Integer;
+  MaxHeight: Integer;
+begin
+  if not FDragging then
+    Exit;
+  MaxHeight := pnlTop.Parent.ClientHeight - 80;
+  NewHeight := pnlTop.Height + (Y - FDragStartY);
+  if NewHeight < 40 then
+    NewHeight := 40;
+  if NewHeight > MaxHeight then
+    NewHeight := MaxHeight;
+  pnlTop.Height := NewHeight;
+  FDragStartY := Y;
+  EmbedBehaviorForm;
+end;
+
+{ Rendert das eingebettete Formular in das Bild. }
+procedure TBibleExplorerForm.btnShotInternClick(Sender: TObject);
+var
+  FileName: string;
+begin
+  if FBehaviorForm = nil then
+    Exit;
+  FileName := IncludeTrailingPathDelimiter(GetTempDir) + 'bible_internal.bmp';
+  SaveFormToImage(FBehaviorForm, FileName);
+  if FileExists(FileName) then
+  begin
+    imgBehavior.Picture.LoadFromFile(FileName);
+    memoBehavior.Lines.Add('Screenshot (intern): ' + FileName);
+  end;
 end;
 
 { Startet das Demo als eigenes Programm. }
@@ -355,6 +667,62 @@ begin
   codeView.NextMarker;
 end;
 
+{ Wechselt auf die Seite mit dem angegebenen Namen (fuer Screenshots). }
+procedure TBibleExplorerForm.ShowPage(const APageName: string);
+var
+  I: Integer;
+begin
+  for I := 0 to PageControl.PageCount - 1 do
+    if PageControl.Pages[I].Caption = APageName then
+    begin
+      PageControl.ActivePageIndex := I;
+      UpdatePageInfo;
+      { Die eingebettete Demo muss wieder sichtbar geschaltet werden,
+        wenn ihre Seite zuvor verdeckt war. }
+      if FBehaviorForm <> nil then
+      begin
+        EmbedBehaviorForm;
+  lblStatus.Caption := 'Eingebettet: ' + IntToStr(FBehaviorForm.Width) + 'x' +
+    IntToStr(FBehaviorForm.Height);
+end;
+      Exit;
+    end;
+  lblPage.Caption := 'nicht gefunden: ' + APageName;
+end;
+
+{ Wechselt zur vorherigen Seite (wie bei einem Assistenten). }
+procedure TBibleExplorerForm.btnPrevClick(Sender: TObject);
+var
+  Index: Integer;
+begin
+  Index := PageControl.ActivePageIndex - 1;
+  if Index < 0 then
+    Index := PageControl.PageCount - 1;
+  PageControl.ActivePageIndex := Index;
+  UpdatePageInfo;
+end;
+
+{ Wechselt zur naechsten Seite. }
+procedure TBibleExplorerForm.btnNextPageClick(Sender: TObject);
+var
+  Index: Integer;
+begin
+  Index := PageControl.ActivePageIndex + 1;
+  if Index >= PageControl.PageCount then
+    Index := 0;
+  PageControl.ActivePageIndex := Index;
+  UpdatePageInfo;
+end;
+
+{ Zeigt den Namen der aktuellen Seite in der Navigationsleiste. }
+procedure TBibleExplorerForm.UpdatePageInfo;
+begin
+  if PageControl.ActivePage <> nil then
+    lblPage.Caption := PageControl.ActivePage.Caption
+  else
+    lblPage.Caption := '';
+end;
+
 procedure TBibleExplorerForm.btnPreviousClick(Sender: TObject);
 begin
   codeView.PreviousMarker;
@@ -385,7 +753,7 @@ end;
 
 procedure TBibleExplorerForm.listFilesDblClick(Sender: TObject);
 begin
-  TabControl.TabIndex := 1;
+  PageControl.ActivePage := tabCode;
 end;
 
 end.

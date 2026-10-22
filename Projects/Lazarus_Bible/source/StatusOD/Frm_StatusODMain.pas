@@ -25,7 +25,7 @@ uses
 {$ENDIF};
 
 type
-  TMainForm = class(TForm)
+  TfrmStatusODMain = class(TForm)
     StatusBar1: TStatusBar;
     ImageList1: TImageList;
     procedure StatusBar1DrawPanel(StatusBar: TStatusBar;
@@ -37,20 +37,16 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmStatusODMain: TfrmStatusODMain;
 
 implementation
 
 {$IFnDEF FPC}
-
   {$R *.dfm}
-
 {$ELSE}
-
   {$R *.lfm}
-
 {$ENDIF}
-procedure TMainForm.StatusBar1DrawPanel(StatusBar: TStatusBar;
+procedure TfrmStatusODMain.StatusBar1DrawPanel(StatusBar: TStatusBar;
   Panel: TStatusPanel; const Rect: TRect);
 var
   SavedStyles: TFontStyles;
