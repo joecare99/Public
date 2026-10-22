@@ -37,6 +37,9 @@ var
 
 implementation
 
+uses
+  AHNGlobals, Unit1, Unit2, Unit30;
+
 {$R ..\Forms\Form29.DFM}
 
 
@@ -47,32 +50,56 @@ implementation
 
 procedure TForm29.ListBox1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The number of the marked source is remembered. }
+  gvar_0061F0F0 := ListBox1.ItemIndex;
 end;
 
 procedure TForm29.SpeedButton1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The list is closed; no source is marked any more. }
+  gvar_0061F0F0 := 0;
+  ListBox1.ItemIndex := 0;
+  ModalResult := mrCancel;
 end;
 
 procedure TForm29.Button1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The list of the sources is written into a text file. }
+  Form1.Lb_speich(Form29);
 end;
 
 procedure TForm29.Button2Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Die Liste der Quellen in eine Datei schreiben. }
+  Form1.Lb_speich(Form29);
 end;
 
 procedure TForm29.ListBox1DblClick(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The source that was clicked is taken over; the dialog for the source
+    is shown. }
+  gvar_0061F0EC := ListBox1.Items[ListBox1.ItemIndex];
+  Form30.Label3.Caption := 'Aktuelle Quelle: ' + gvar_0061F0EC;
+  Form30.Show;
 end;
 
 procedure TForm29.FormActivate(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The list of the sources is filled; the source that was marked is
+    marked again. }
+  if ListBox1.ItemIndex + 1 > 0 then
+    gvar_0061F0F0 := ListBox1.ItemIndex;
+  ListBox1.Clear;
+  DataModule2.Table38.IndexName := 'tit';
+  DataModule2.Table38.First;
+  while not DataModule2.Table38.Eof do
+  begin
+    ListBox1.Items.Add(DataModule2.Table38Titel.AsString);
+    DataModule2.Table38.Next;
+  end;
+  ListBox1.ItemIndex := gvar_0061F0F0;
+  { The original uses SetActiveControl, which is private in Delphi 9. }
+  ListBox1.SetFocus;
 end;
 
 

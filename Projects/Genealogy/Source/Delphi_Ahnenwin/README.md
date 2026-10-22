@@ -84,7 +84,7 @@ into account:
   the splash screen has to exist by then: `TForm1.FormCreate` closes it
   with `Form8.Close`, and `TCustomForm.Close` reads the field
   `FFormState` of the splash screen — with a nil splash screen that is
-  an access violation ("Zugriffsverletzung … Lesen von Adresse
+  an access violation ("Zugriffsverletzung – Lesen von Adresse
   00000328"). The program file shows the splash screen first, and the
   test programs do the same; `TForm1.FormCreate` checks the splash
   screen as well, so that the main form can be created on its own.
@@ -175,7 +175,7 @@ parameters of the implementation otherwise.
 
 2. **Resolve the component accesses.** IDR annotates them:
    `mov eax,dword ptr [ebx+32C];TOKBottomDlg1.RadioButton2:TRadioButton`
-   → offset `$32C` → the `//32C` marker in the unit declaration → the
+   — offset `$32C` — the `//32C` marker in the unit declaration — the
    component `RadioButton2`.
 
 3. **Resolve the calls.**
@@ -301,7 +301,7 @@ Everything else in `Forms\` is byte-identical to
 
 `docs\CrossReference.md` lists every method of the original program with
 its address in the AHNENWIN 5.1 binary and its reconstruction state.
-Current state: **293 of the 615 methods are reconstructed.**
+Current state: **324 of the 615 methods are reconstructed.**
 
 The order of the work follows the dependency edges that the same file records:
 the units with the fewest dependencies first, so that every method can be
@@ -332,6 +332,27 @@ conversion, the Easter calculation, the family chart drawing, and the
 browser page generator. They are the largest listings of the program
 (`Fgr` alone is 4322 lines of assembly) and they are the natural next
 step after the wave 1 units.
+
+### Wave 1b - the list dialogs (partly done)
+
+The five dialogs that manage the lists of the program (the places, the
+names, the sources, the occupations and the estates) follow the same
+pattern: a list box is filled from a table of the data module, the
+marked entry is remembered in a global variable, and a double click
+hands the entry over to the dialog of the list. The methods of the
+lists are done:
+
+| Unit | Dialog | Methods | Reconstructed |
+|---|---|---|---|
+| Unit14 | the places | 7 | 6 (`Button1Click` is open) |
+| Unit28 | the names | 7 | 6 (`Button1Click` is open) |
+| Unit29 | the sources | 6 | 5 (`Button2Click` is open) |
+| Unit36 | the occupations | 6 | 5 (`Button1Click` is open) |
+| Unit39 | the estates | 6 | 5 (`Button1Click` is open) |
+
+The original uses `SetActiveControl` to give the focus to the list box;
+that method is private in Delphi 9, so the reconstruction uses
+`SetFocus`.
 
 ### Wave 1 - the main form (partly done)
 
@@ -465,6 +486,10 @@ that decide what the program shows when it starts are done:
 | `TForm1.gitterZeile` | `005D96D8` (local) | writes a line into the grid with the relationships |
 | `TForm1.TabSheet9Show` | `00615FD8` | the pictures of the person are shown (the letters 'a' to 's') |
 | `TForm1.Image2Click` | `00614074` | a picture is selected; its number and its file name are shown |
+| `TForm1.geb_sterb` | `005FDF68` | the text with the dates of the person: the birth (or the baptism), the death (or the burial) |
+| `TForm1.Einzelpersonenmarkieren1Click` | `00605A2C` | the persons without parents, children and marriage are collected; in the mode "Dopp" the persons whose name is written twice |
+| `TForm1.Datenlschen1Click` | `005E2064` | all the data is removed: the tables are emptied, the lists are cleared |
+| `TForm1.frbestimmtenOrt1Click` | `005F02D8` | the names of the persons of a place are collected in a list and printed |
 
 Thirty-two methods have an empty body in the original; they are
 reconstructed as such.
@@ -549,7 +574,9 @@ Six findings of this wave are worth keeping:
   therefore be read as two characters. The umlauts in the texts of the
   program are written as `'verf' + #252 + 'gbar'`; the form resources use
   the same notation (`'  zur'#252'ck'`), which the loader of Delphi 9
-  understands.
+  understands. The files of the project must therefore be edited with a
+  tool that keeps the UTF-8 encoding; a round trip through
+  `Get-Content`/`Set-Content` of the PowerShell 5.1 would destroy it.
 
 ### The conventions of the compiler of the original
 

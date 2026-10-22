@@ -102,7 +102,7 @@ begin
   { The copyright line. The string of the original binary starts with the
     byte $A9, which is the copyright sign in the code page 1252 that the
     program uses. }
-  Label2.Caption := '� 1998-2014';
+  Label2.Caption := '#169 1998-2014';
 
   { The date of the output and the date of the last change are taken from
     the two global doubles at $02536924 and $0253691C. A value of 0 means

@@ -477,7 +477,7 @@ type
       Shift: TShiftState; X, Y: Integer); //00602F3C
     procedure DBLookupComboBox17MouseDown(Sender: TObject; Button: TMouseButton;
       Shift: TShiftState; X, Y: Integer); //006034D8
-    procedure Einzelpersonenmarkieren1Click; //00605A2C
+    procedure Einzelpersonenmarkieren1Click(Sender: TObject); //00605A2C
     procedure DBLookupComboBox4Enter; //00606D80
     procedure DBGrid3Exit(Sender: TObject); //006059B8
     procedure DBGrid3KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState); //006059E4
@@ -510,7 +510,7 @@ type
     procedure Listen2Click(Sender: TObject); //005FD640
     procedure Button1Click(Sender: TObject); //005FD6A0
     procedure geschachtelt1Click(Sender: TObject); //005FE844
-    procedure geb_sterb; //005FDF68
+    procedure geb_sterb(var ergebnis: string); //005FDF68
     procedure AHNENDOSeinlesen1Click(Sender: TObject); //005FDAA4
     procedure OSBeinlesen1Click(Sender: TObject); //005FDD0C
     procedure Edit13Exit(Sender: TObject); //00602B58
@@ -746,9 +746,9 @@ var
 implementation
 
 uses
-  AHNGlobals, Windows, Messages, Printers, Graphics, StrUtils, Unit2, Unit3, Unit4, Unit8,
-  Unit9, Unit10, Unit11, Unit12, Unit13, Unit14, Unit15, Unit16, Unit20, Unit21, Unit22, Unit24,
-  Unit28, Unit29, Unit36, Unit39;
+  AHNGlobals, Windows, Messages, Printers, Graphics, StrUtils, QuickRpt, QRCtrls, Unit2, Unit3,
+  Unit4, Unit5, Unit8, Unit9, Unit10, Unit11, Unit12, Unit13, Unit14, Unit15, Unit16, Unit20,
+  Unit21, Unit22, Unit24, Unit28, Unit29, Unit36, Unit39;
 {$R ..\Forms\Form1.DFM}
 
 { The local function of the original at the address 005D3148. It writes a
@@ -1267,9 +1267,232 @@ begin
   end;
 end;
 
-procedure TForm1.Einzelpersonenmarkieren1Click;
+procedure TForm1.Einzelpersonenmarkieren1Click(Sender: TObject);
+var
+  s, s2, s3, s4, s5, s6: string;
+  anzahl, laufnummer, personennummer, zeilen: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The persons that have no parents, no children and no marriage are
+    collected; they are shown in the grid.  In the mode "Dopp" the
+    persons whose name is written more than once are collected and
+    written into the table of the report.
+
+    The list of the pairs of parents is not filled in the original, so
+    that a pair can appear twice in the grid. }
+  if gvar_0253692C <> 'Dopp' then
+    gvar_0253692C := 'Einz';
+  PageControl1.ActivePage := TabSheet2;
+  aus1.Click;
+  speich1;
+  if DataModule2.Table1.RecordCount < 2 then
+  begin
+    ShowMessage('Keine Daten verf' + #252 + 'gbar.');
+    Exit;
+  end;
+  s := 'J';
+  DataModule2.Table14.Open;
+  DataModule2.Table14.Close;
+  DataModule2.Table14.EmptyTable;
+  DataModule2.Table14.Open;
+  personennummer := DataModule2.Table1Nummer.AsInteger;
+  DataModule2.Table1.IndexName := 'namgeb';
+  tabdisab;
+  DataModule2.Table1.First;
+  DataModule2.Table17.Open;
+  DataModule2.Table17.Refresh;
+  laufnummer := 1;
+  s2 := '';
+  s3 := '';
+  anzahl := 0;
+  zeilen := 0;
+  Label19.Caption := 'Einzelpers.ermitt. ';
+  if gvar_0253692C = 'Dopp' then
+    Label19.Caption := 'Mehrfach-Eintr.ermitt. ';
+  lab18ein;
+  StringGrid5.RowCount := 1;
+  StringGrid5.Cells[1, 0] := 'Einzelpersonen';
+
+  if gvar_0253692C = 'Einz' then
+  begin
+    DataModule2.Table1.First;
+    while not DataModule2.Table1.Eof do
+    begin
+      Label18.Caption := IntToStr(laufnummer);
+      Label18.Refresh;
+      Inc(laufnummer);
+      DataModule2.Table17.IndexName := '';
+      if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then
+        DataModule2.Table17.IndexName := 'vat'
+      else if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then
+        DataModule2.Table17.IndexName := 'mut';
+      tabenab;
+
+      { The person must have no father, no mother, no entry in the table
+        of the children and no marriage. }
+      if (DataModule2.Table1Vater.AsInteger - 1 < 0) and
+         (DataModule2.Table1Mutter.AsInteger - 1 < 0) and
+         (not DataModule2.Table17.FindKey([DataModule2.Table1Nummer.AsInteger])) and
+         (DataModule2.Table5.RecordCount = 0) then
+      begin
+        DataModule2.Table17.IndexName := '';
+        DataModule2.Table17.FindKey([DataModule2.Table1Nummer.AsInteger]);
+        if Trim(DataModule2.Table17Kistat.AsString) = '' then
+          try
+            ucase(DataModule2.Table17Name.AsString, s5);
+            geb_sterb(s6);
+            gitterZeile(s5 + ' ' + DataModule2.Table17Vornamen.AsString + ', ' +
+              DataModule2.Table17Beruf.AsString + ' ' + s6,
+              IntToStr(DataModule2.Table17Nummer.AsInteger), zeilen);
+          except
+          end;
+      end;
+      tabdisab;
+      DataModule2.Table1.Next;
+    end;
+  end
+  else if gvar_0253692C = 'Dopp' then
+  begin
+    DataModule2.Table1.First;
+    while not DataModule2.Table1.Eof do
+    begin
+      s4 := '';
+      try
+        Label18.Caption := IntToStr(laufnummer);
+        Label18.Refresh;
+        Inc(laufnummer);
+
+        { The fields that are wanted are added to the text. }
+        if gvar_02536B68 = 1 then
+          s4 := s4 + ' * ' + DataModule2.Table1Gebjahr.AsString;
+        if gvar_02536B6C = 1 then
+          s4 := s4 + ' ' + Trim(DataModule2.Table1Gebort.AsString);
+        if gvar_02536B70 = 1 then
+          s4 := s4 + ' ~ ' + DataModule2.Table1Taufjahr.AsString;
+        if gvar_02536B74 = 1 then
+          s4 := s4 + ' ' + DataModule2.Table1Taufort.AsString;
+        if gvar_02536B78 = 1 then
+          s4 := s4 + ' + ' + DataModule2.Table1Stjahr.AsString;
+        if gvar_02536B7C = 1 then
+          s4 := s4 + ' ' + DataModule2.Table1Stort.AsString;
+        if gvar_02536B80 = 1 then
+          s4 := s4 + ' # ' + DataModule2.Table1Begjahr.AsString;
+        if gvar_02536B84 = 1 then
+          s4 := s4 + ' ' + DataModule2.Table1Begort.AsString;
+        if gvar_02536B88 = 1 then
+          s4 := s4 + ' ' + DataModule2.Table1Beruf.AsString;
+        if gvar_02536B8C = 1 then
+          s4 := s4 + ' ' + DataModule2.Table1IDNR.AsString;
+
+        if (Trim(DataModule2.Table1Name.AsString) <> '') and
+           (Trim(DataModule2.Table1Name.AsString) <> 'NN') and
+           (Trim(DataModule2.Table1Name.AsString) <> '?') then
+        begin
+          ucase(DataModule2.Table1Name.AsString, s5);
+          if s5 + ' ' + DataModule2.Table1Vornamen.AsString + s4 = s2 then
+          begin
+            { The person was written before: the first entry gets the
+              number of the person that was found first. }
+            if anzahl = 0 then
+            begin
+              DataModule2.Table14.Append;
+              DataModule2.Table14Zeile.AsString := '(' + s3 + ') ' + s2;
+              DataModule2.Table14.Post;
+            end;
+            DataModule2.Table14.Append;
+            ucase(DataModule2.Table1Name.AsString, s6);
+            DataModule2.Table14Zeile.AsString := '(' +
+              IntToStr(DataModule2.Table1Nummer.AsInteger) + ') ' + s6 + ' ' +
+              DataModule2.Table1Vornamen.AsString + s4;
+            DataModule2.Table14.Post;
+            anzahl := 1;
+          end
+          else
+            anzahl := 0;
+        end;
+
+        { The text of the person is kept for the comparison with the next
+          person. }
+        ucase(DataModule2.Table1Name.AsString, s5);
+        s2 := s5 + ' ' + DataModule2.Table1Vornamen.AsString;
+        if gvar_02536B68 = 1 then
+          s2 := s2 + ' * ' + DataModule2.Table1Gebjahr.AsString;
+        if gvar_02536B6C = 1 then
+          s2 := s2 + ' ' + Trim(DataModule2.Table1Gebort.AsString);
+        if gvar_02536B70 = 1 then
+          s2 := s2 + ' ~ ' + DataModule2.Table1Taufjahr.AsString;
+        if gvar_02536B74 = 1 then
+          s2 := s2 + ' ' + DataModule2.Table1Taufort.AsString;
+        if gvar_02536B78 = 1 then
+          s2 := s2 + ' + ' + DataModule2.Table1Stjahr.AsString;
+        if gvar_02536B7C = 1 then
+          s2 := s2 + ' ' + DataModule2.Table1Stort.AsString;
+        if gvar_02536B80 = 1 then
+          s2 := s2 + ' # ' + DataModule2.Table1Begjahr.AsString;
+        if gvar_02536B84 = 1 then
+          s2 := s2 + ' ' + DataModule2.Table1Begort.AsString;
+        if gvar_02536B88 = 1 then
+          s2 := s2 + ' ' + DataModule2.Table1Beruf.AsString;
+        if gvar_02536B8C = 1 then
+          s2 := s2 + ' ' + DataModule2.Table1IDNR.AsString;
+        s3 := IntToStr(DataModule2.Table1Nummer.AsInteger);
+      except
+      end;
+      DataModule2.Table1.Next;
+    end;
+  end;
+
+  Label18.Visible := False;
+  Label19.Visible := False;
+  tabenab;
+  DataModule2.Table1.IndexName := '';
+  DataModule2.Table1.FindKey([personennummer]);
+  if gvar_0253692C = 'Einz' then
+  begin
+    StringGrid5.Visible := True;
+    Exit;
+  end;
+  if DataModule2.Table14.RecordCount <= 0 then
+  begin
+    ShowMessage('Keine Treffer gefunden.');
+    Exit;
+  end;
+
+  { The report is prepared. }
+  Form16.SpeedButton3.Visible := True;
+  Form16.SpeedButton6.Visible := False;
+  QRDefault;
+  Form15.QRMemo1.Lines.Clear;
+  Form15.QRDBText1.DataField := '';
+  Form15.QRDBText2.DataField := '';
+  Form15.QuickRep1.DataSet := DataModule2.Table14;
+  Form15.QRDBText1.DataSet := DataModule2.Table14;
+  Form15.QRDBText1.DataField := 'zeile';
+  Form15.QRDBText1.Enabled := True;
+  Form15.QRDBText2.Enabled := True;
+  Form15.QRDBText1.Font.Name := 'Arial';
+  Form15.QRDBText2.Font.Name := 'Arial';
+  Form15.QRDBText1.Font.Size := 10;
+  Form15.QRDBText2.DataSet := nil;
+  Form15.QRDBText1.Alignment := taLeftJustify;
+  Form15.QRDBText2.Alignment := taRightJustify;
+  Form15.QRDBText1.Left := 10;
+  Form15.QRDBText1.Width := 258;
+  Form15.QRDBText2.Left := 0;
+  Form15.QRDBText2.Width := 0;
+  Form15.QRLabel1.Caption := 'Einzelpersonen';
+  Form15.QRLabel3.Caption := 'Einzelpersonen';
+  if gvar_0253692C = 'Dopp' then
+  begin
+    Form15.QRLabel1.Caption := 'Doppel-/Mehrfach-Eintr' + #228 + 'ge';
+    Form15.QRLabel3.Caption := 'Doppel-/Mehrfach-Eintr' + #228 + 'ge';
+  end;
+  DataModule2.Table14.Open;
+  Form15.QuickRep1.Page.Columns := 1;
+  Form15.QRLabel2.Caption := '(= ohne Eltern, Kinder, Ehe o' + #228 + '., nicht adoptiert)';
+  if gvar_0253692C = 'Dopp' then
+    Form15.QRLabel2.Caption := '(Name, Vorname' + gvar_02536B98 + ' gleich.)';
+  { The original sets the event for the preview of the report and shows
+    the preview; the compatibility layer of QuickReport has neither. }
 end;
 
 procedure TForm1.DBLookupComboBox4Enter;
@@ -1461,7 +1684,7 @@ end;
 
 procedure TForm1.Hilfe1Click(Sender: TObject);
 begin
-  ShowMessage('Bitte die beiliegende Datei "Handbuch.pdf" ben�tzen');
+  ShowMessage('Bitte die beiliegende Datei "Handbuch.pdf" ben' + #252 + 'tzen');
 
 end;
 
@@ -1610,9 +1833,61 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm1.geb_sterb;
+procedure TForm1.geb_sterb(var ergebnis: string);
+var
+  s, datum: string;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The text with the dates of the person is built: the birth (or the
+    baptism) and the death (or the burial).  The places are only added
+    when the list is made for a single person or for the duplicates. }
+  DataModule2.Table38.Open;
+  DataModule2.Table38.IndexName := 'tit';
+  DataModule2.Table38.First;
+  s := '';
+
+  if (DataModule2.Table17Gebjahr.AsString <> '') or
+     (DataModule2.Table17Gebort.AsString <> '') then
+  begin
+    datumNormalisieren(DataModule2.Table17Gebtag.AsString + '.' +
+      DataModule2.Table17Gebmonat.AsString + '.' +
+      DataModule2.Table17Gebjahr.AsString, datum);
+    s := s + ' * ' + datum;
+    if (gvar_0253692C = 'Einz') or (gvar_0253692C = 'Dopp') then
+      s := s + ' ' + DataModule2.Table17Gebort.AsString;
+  end
+  else if (DataModule2.Table17Taufjahr.AsString <> '') or
+          (DataModule2.Table17Taufort.AsString <> '') then
+  begin
+    datumNormalisieren(DataModule2.Table17Tauftag.AsString + '.' +
+      DataModule2.Table17Taufmonat.AsString + '.' +
+      DataModule2.Table17Taufjahr.AsString, datum);
+    s := s + ' ~ ' + datum;
+    if (gvar_0253692C = 'Einz') or (gvar_0253692C = 'Dopp') then
+      s := s + ' ' + DataModule2.Table17Taufort.AsString;
+  end;
+
+  if (DataModule2.Table17Stjahr.AsString <> '') or
+     (DataModule2.Table17Stort.AsString <> '') then
+  begin
+    datumNormalisieren(DataModule2.Table17Sttag.AsString + '.' +
+      DataModule2.Table17Stmonat.AsString + '.' +
+      DataModule2.Table17Stjahr.AsString, datum);
+    s := s + datum;
+    if (gvar_0253692C = 'Einz') or (gvar_0253692C = 'Dopp') then
+      s := s + ' ' + DataModule2.Table17Stort.AsString;
+  end
+  else if (DataModule2.Table17Begjahr.AsString <> '') or
+          (DataModule2.Table17Begort.AsString <> '') then
+  begin
+    datumNormalisieren(DataModule2.Table17Begtag.AsString + '.' +
+      DataModule2.Table17Begmonat.AsString + '.' +
+      DataModule2.Table17Begjahr.AsString, datum);
+    s := s + datum;
+    if (gvar_0253692C = 'Einz') or (gvar_0253692C = 'Dopp') then
+      s := s + ' ' + DataModule2.Table17Begort.AsString;
+  end;
+
+  ergebnis := s;
 end;
 
 procedure TForm1.AHNENDOSeinlesen1Click(Sender: TObject);
@@ -2921,7 +3196,7 @@ procedure TForm1.Einzelpersonen1Click(Sender: TObject);
 begin
   gvar_0253692C := 'Einz';
 
-  Einzelpersonenmarkieren1Click;
+  Einzelpersonenmarkieren1Click(Sender);
 
 end;
 
@@ -5776,7 +6051,137 @@ end;
 
 procedure TForm1.Datenlschen1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { All the data is removed: the tables are emptied, the lists are
+    cleared and the pictures are removed. }
+  PageControl1.ActivePage := TabSheet2;
+  aus1.Click;
+  if gvar_0253692C <> 'sikoein' then
+    if DataModule2.Table1.RecordCount - 1 < 0 then
+    begin
+      ShowMessage('Keine Daten verf' + #252 + 'gbar.');
+      Exit;
+    end;
+  if gvar_0253692C <> 'sikoein' then
+    if MessageDlg('Wirklich alle Datens' + #228 + 'tze l' + #246 + 'schen ?',
+                  mtConfirmation, [mbYes, mbNo], 0) <> mrYes then
+    begin
+      gvar_02536B64 := 0;
+      Screen.Cursor := crDefault;
+      Label18.Visible := False;
+      Label19.Visible := False;
+      DataModule2.Table1.Edit;
+      DataModule2.Table5.Edit;
+      Exit;
+    end;
+
+  try
+    Screen.Cursor := crHourGlass;
+    bild_entf;
+    Label19.Caption := 'Daten l' + #246 + 'schen ...';
+    Label19.Show;
+    Label19.Refresh;
+    Form14.ListBox1.Clear;
+    Form28.ListBox1.Clear;
+    Form29.ListBox1.Clear;
+    Form36.ListBox1.Clear;
+    Form39.ListBox1.Clear;
+
+    DataModule2.Table2.Open;
+    DataModule2.Table2.Close;
+    DataModule2.Table3.Open;
+    DataModule2.Table3.Close;
+    DataModule2.Table4.Open;
+    DataModule2.Table4.Close;
+    DataModule2.Table4.EmptyTable;
+    DataModule2.Table4.Open;
+    DataModule2.Table6.Open;
+    DataModule2.Table6.Close;
+    DataModule2.Table7.Open;
+    DataModule2.Table7.Close;
+    DataModule2.Table8.Open;
+    DataModule2.Table8.Close;
+    DataModule2.Table9.Open;
+    DataModule2.Table9.Close;
+    DataModule2.Table10.Open;
+    DataModule2.Table10.Close;
+    DataModule2.Table13.Open;
+    DataModule2.Table13.Close;
+    DataModule2.Table13.EmptyTable;
+    DataModule2.Table13.Open;
+    DataModule2.Table20.Open;
+    DataModule2.Table20.Close;
+    DataModule2.Table20.EmptyTable;
+    DataModule2.Table20.Open;
+    DataModule2.Table29.Open;
+    DataModule2.Table29.Close;
+    DataModule2.Table29.EmptyTable;
+    DataModule2.Table29.Open;
+    DataModule2.Table31.Open;
+    DataModule2.Table31.Close;
+    DataModule2.Table31.EmptyTable;
+    DataModule2.Table31.Open;
+    DataModule2.Table32.Open;
+    DataModule2.Table38.Open;
+    DataModule2.Table38.Close;
+    DataModule2.Table38.EmptyTable;
+    DataModule2.Table38.Open;
+    DataModule2.Table5.Open;
+    DataModule2.Table5.Close;
+    DataModule2.Table5.EmptyTable;
+    DataModule2.Table5.Open;
+    DataModule2.Table1.Open;
+    DataModule2.Table1.Close;
+    DataModule2.Table1.EmptyTable;
+    DataModule2.Table1.Open;
+
+    DataModule2.Table2.Open;
+    DataModule2.Table3.Open;
+    DataModule2.Table4.Open;
+    DataModule2.Table6.Open;
+    DataModule2.Table7.Open;
+    DataModule2.Table8.Open;
+    DataModule2.Table9.Open;
+    DataModule2.Table10.Open;
+    DataModule2.Table12.Open;
+    DataModule2.Table12.Close;
+    DataModule2.Table12.EmptyTable;
+    DataModule2.Table12.Open;
+    DataModule2.Table13.Open;
+    DataModule2.Table13.Close;
+    DataModule2.Table13.EmptyTable;
+    DataModule2.Table13.Open;
+    DataModule2.Table14.Open;
+    DataModule2.Table14.Close;
+    DataModule2.Table14.EmptyTable;
+    DataModule2.Table14.Open;
+    DataModule2.Table15.Open;
+    DataModule2.Table15.Close;
+    DataModule2.Table15.EmptyTable;
+    DataModule2.Table15.Open;
+    DataModule2.Table25.Open;
+    DataModule2.Table25.Close;
+    DataModule2.Table25.EmptyTable;
+    DataModule2.Table25.Open;
+    DataModule2.Table26.Open;
+    DataModule2.Table26.Close;
+    DataModule2.Table26.EmptyTable;
+    DataModule2.Table26.Open;
+    DataModule2.Table35.Open;
+    DataModule2.Table35.Close;
+    DataModule2.Table35.EmptyTable;
+    DataModule2.Table35.Open;
+
+    listen_akt;
+    neu1.Enabled := False;
+    schen1.Enabled := False;
+    gvar_0253690C := 1;
+    gvar_02536944 := 0;
+  finally
+    Screen.Cursor := crDefault;
+    Label19.Visible := False;
+    DataModule2.Table1.Edit;
+    DataModule2.Table5.Edit;
+  end;
 end;
 
 procedure TForm1.Sikoein;
@@ -6080,8 +6485,134 @@ begin
 end;
 
 procedure TForm1.frbestimmtenOrt1Click(Sender: TObject);
+var
+  s, s2, titel: string;
+  liste: TStringList;
+  gefunden, ok: Boolean;
+  i, anzahl: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The names of the persons of a place are collected in a list; the list
+    is written into the table of the report and printed.  In the mode
+    "NLAP" the list contains all the persons. }
+  if gvar_0253692C <> 'NLAP' then
+    gvar_0253692C := 'NLBO';
+  speich1;
+  PageControl1.ActivePage := TabSheet2;
+  aus1.Click;
+  if DataModule2.Table1.RecordCount - 1 <= 0 then
+  begin
+    ShowMessage('Keine Daten verf' + #252 + 'gbar.');
+    Exit;
+  end;
+  s := '';
+  s2 := '';
+  gefunden := (Pos(DataModule2.Table8Gebort.AsString, s) > 0) or
+             (Pos(DataModule2.Table8Taufort.AsString, s) > 0) or
+             (Pos(DataModule2.Table8Stort.AsString, s) > 0) or
+             (Pos(DataModule2.Table8Begort.AsString, s) > 0) or
+             (Pos(DataModule2.Table8Lebensort.AsString, s) > 0);
+  titel := 'Namensliste f' + #252 + 'r den Ort';
+  if gvar_0253692C = 'NLAP' then
+  begin
+    s := '';
+    titel := 'Namensliste (alle Personen)';
+    Form5.Caption := titel;
+    ok := True;
+  end
+  else
+    ok := InputQuery(titel, '', s);
+  if not ok then
+    Exit;
+  s2 := s;
+  Refresh;
+  if PageControl1.PageCount <> 2 then
+    PageControl1.ActivePage := TabSheet2;
+  gvar_02536930 := titel + ' ' + s;
+
+  liste := TStringList.Create;
+  try
+    liste.Sorted := True;
+    liste.Duplicates := dupIgnore;
+    DataModule2.Table8.Open;
+    DataModule2.Table8.IndexName := 'namgeb';
+    DataModule2.Table8.First;
+    DataModule2.Table10.Open;
+    DataModule2.Table10.IndexName := 'num';
+    DataModule2.Table10.First;
+    Screen.Cursor := crHourGlass;
+
+    while not DataModule2.Table8.Eof do
+    begin
+      if gvar_0253692C <> 'NLAP' then
+      begin
+        { the person is wanted when one of the places is the place that
+          was given; the place of the life is only searched in the text. }
+        if (DataModule2.Table8Gebort.AsString = s2) or
+           (DataModule2.Table8Taufort.AsString = s2) or
+           (DataModule2.Table8Stort.AsString = s2) or
+           (DataModule2.Table8Begort.AsString = s2) or
+           (Pos(DataModule2.Table8Lebensort.AsString, s) > 0) then
+          liste.Add(DataModule2.Table8Name.AsString);
+      end
+      else
+      begin
+        if Trim(DataModule2.Table8Name.AsString) <> '' then
+          liste.Add(DataModule2.Table8Name.AsString);
+      end;
+
+      { The marriages of the person are looked through as well. }
+      DataModule2.Table10.First;
+      if gvar_0253692C <> 'NLAP' then
+        if DataModule2.Table10.FindKey([DataModule2.Table8Nummer.AsInteger]) then
+          while (not DataModule2.Table10.Eof) and
+                (DataModule2.Table10Nummer.AsInteger = DataModule2.Table8Nummer.AsInteger) do
+          begin
+            if (DataModule2.Table10Hort.AsString = s2) or
+               (DataModule2.Table10Saort.AsString = s2) or
+               (DataModule2.Table10Schort.AsString = s2) then
+              liste.Add(DataModule2.Table8Name.AsString);
+            DataModule2.Table10.Next;
+          end;
+      DataModule2.Table8.Next;
+    end;
+
+    if liste.Count > 0 then
+    begin
+      { An empty first entry is removed. }
+      if Trim(liste.Strings[0]) = '' then
+        liste.Delete(0);
+
+      DataModule2.Table14.Open;
+      DataModule2.Table14.Close;
+      DataModule2.Table14.EmptyTable;
+      DataModule2.Table14.Open;
+      anzahl := liste.Count;
+      i := 0;
+      while anzahl > 0 do
+      begin
+        DataModule2.Table14.Append;
+        DataModule2.Table14Zeile.AsString := liste.Strings[i];
+        DataModule2.Table14.Post;
+        Inc(i);
+        Dec(anzahl);
+      end;
+
+      Form15.QuickRep1.Page.Columns := 3;
+      if Form16.Button5.Caption = 'A 4' then
+        Form15.QuickRep1.Page.Columns := 4;
+      druck(gvar_02536930, '');
+      Screen.Cursor := crDefault;
+      { The original shows the preview of the report; the compatibility
+        layer of QuickReport has no preview. }
+    end
+    else
+    begin
+      ShowMessage('Keine Namen f' + #252 + 'r "' + s + '" gefunden.');
+    end;
+    Screen.Cursor := crDefault;
+  finally
+    liste.Free;
+  end;
 end;
 
 procedure TForm1.Browser1Click;

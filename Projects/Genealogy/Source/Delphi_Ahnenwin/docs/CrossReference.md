@@ -9,7 +9,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit1
 
-- methods: 276, reconstructed: 220, open: 62
+- methods: 276, reconstructed: 224, open: 58
 
   - done  `sub_005D3148`  @`005D3148`
   - done  `sub_005D31EC`  @`005D31EC`
@@ -55,7 +55,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - open  `SicherungsDateieinlesen1Click`  @`005E1D2C`
   - done  `Datensichern1Click`  @`005E1DC0`
   - done  `alineu`  @`005E1DF8`
-  - open  `Datenlschen1Click`  @`005E2064`
+  - done  `Datenlschen1Click`  @`005E2064`
   - done  `FormKeyPress`  @`005E28AC`
   - done  `TabSheet6Enter`  @`005E28CC`
   - done  `DBGrid1DblClick`  @`005E2C2C`
@@ -130,7 +130,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done  `StringGrid2RowMoved`  @`005EFD84`
   - open  `druck`  @`005EFF30`
   - done  `QRDefault`  @`005F0170`
-  - open  `frbestimmtenOrt1Click`  @`005F02D8`
+  - done  `frbestimmtenOrt1Click`  @`005F02D8`
   - done  `allePersonen1Click`  @`005F0AA4`
   - open  `listen_akt`  @`005F0AF0`
   - open  `Probandenname1Click`  @`005F26E0`
@@ -171,7 +171,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done  `TabSheet8Enter`  @`005FD9DC`
   - open  `AHNENDOSeinlesen1Click`  @`005FDAA4`
   - open  `OSBeinlesen1Click`  @`005FDD0C`
-  - open  `geb_sterb`  @`005FDF68`
+  - done  `geb_sterb`  @`005FDF68`
   - open  `ehtest`  @`005FE42C`
   - open  `geschachtelt1Click`  @`005FE844`
   - done  `GrafikI1Click`  @`00600D58`
@@ -219,7 +219,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - open  `DBGrid3DblClick`  @`00605814`
   - done  `DBGrid3Exit`  @`006059B8`
   - open  `DBGrid3KeyDown`  @`006059E4`
-  - open  `Einzelpersonenmarkieren1Click`  @`00605A2C`
+  - done  `Einzelpersonenmarkieren1Click`  @`00605A2C`
   - done  `DBLookupComboBox4Enter`  @`00606D80`
   - done  `DBLookupComboBox5Enter`  @`00606D84`
   - done  `DBLookupComboBox6Enter`  @`00606D88`
@@ -394,11 +394,11 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit6
 
-- methods: 13, reconstructed: 12, open: 1
+- methods: 13, reconstructed: 13, open: 0
 
   - done  `FormCreate`  @`005CDACC`
   - done  `gridleeren`  @`005CDBE0`
-  - open  `Kal`  @`005CDC40`
+  - done  `Kal`  @`005CDC40`
   - done  `FormShow`  @`005CE104`
   - done  `Button1Click`  @`005CE10C`
   - done  `Button2Click`  @`005CE200`
@@ -412,9 +412,9 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit7
 
-- methods: 8, reconstructed: 7, open: 1
+- methods: 8, reconstructed: 8, open: 0
 
-  - open  `berechnen`  @`005CE824`
+  - done  `berechnen`  @`005CE824`
   - done  `FormCreate`  @`005CF0D0`
   - done  `Button1Click`  @`005CF118`
   - done  `ComboBox1Change`  @`005CF120`
@@ -442,7 +442,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit10
 
-- methods: 13, reconstructed: 11, open: 2
+- methods: 13, reconstructed: 13, open: 0
 
   - done  `BitBtn1Click`  @`0055A124`
   - done  `BitBtn2Click`  @`0055A138`
@@ -451,8 +451,8 @@ Legend: **done** = the body was reconstructed from the listing,
   - done  `SpeedButton3Click`  @`0055A1C0`
   - done  `SpeedButton4Click`  @`0055A1D4`
   - done  `SpeedButton5Click`  @`0055A4B8`
-  - open  `Browser`  @`0055A4C8`
-  - open  `rechnen`  @`0055A54C`
+  - done  `Browser`  @`0055A4C8`
+  - done  `rechnen`  @`0055A54C`
   - done  `FormShow`  @`0055AEF8`
   - done  `Edit1Change`  @`0055B000`
   - done  `Button2Click`  @`0055B0E4`
@@ -541,15 +541,15 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit14
 
-- methods: 7, reconstructed: 0, open: 7
+- methods: 7, reconstructed: 7, open: 0
 
-  - open  `Button1Click`  @`0053B964`
-  - open  `BitBtn1Click`  @`0053C430`
-  - open  `ListBox1DblClick`  @`0053C454`
-  - open  `ListBox1KeyPress`  @`0053C5C0`
-  - open  `FormActivate`  @`0053C738`
-  - open  `ListBox1Click`  @`0053C850`
-  - open  `Button2Click`  @`0053C868`
+  - done  `Button1Click`  @`0053B964`
+  - done  `BitBtn1Click`  @`0053C430`
+  - done  `ListBox1DblClick`  @`0053C454`
+  - done  `ListBox1KeyPress`  @`0053C5C0`
+  - done  `FormActivate`  @`0053C738`
+  - done  `ListBox1Click`  @`0053C850`
+  - done  `Button2Click`  @`0053C868`
 
 ## Unit15
 
@@ -665,29 +665,29 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit20
 
-- methods: 4, reconstructed: 0, open: 4
+- methods: 4, reconstructed: 3, open: 1
 
-  - open  `dblookupcombobox1Click`  @`005CC5A4`
-  - open  `FormActivate`  @`005CC5B0`
-  - open  `BitBtn2Click`  @`005CC5CC`
+  - done  `dblookupcombobox1Click`  @`005CC5A4`
+  - done  `FormActivate`  @`005CC5B0`
+  - done  `BitBtn2Click`  @`005CC5CC`
   - open  `BitBtn1Click`  @`005CC5DC`
 
 ## Unit21
 
-- methods: 5, reconstructed: 0, open: 5
+- methods: 5, reconstructed: 5, open: 0
 
-  - open  `DBGrid1TitleClick`  @`005CBB1C`
-  - open  `Zeilelschen1Click`  @`005CBC10`
-  - open  `SpeedButton1Click`  @`005CBC64`
-  - open  `SpeedButton2Click`  @`005CBD94`
-  - open  `Button2Click`  @`005CBF14`
+  - done  `DBGrid1TitleClick`  @`005CBB1C`
+  - done  `Zeilelschen1Click`  @`005CBC10`
+  - done  `SpeedButton1Click`  @`005CBC64`
+  - done  `SpeedButton2Click`  @`005CBD94`
+  - done  `Button2Click`  @`005CBF14`
 
 ## Unit22
 
-- methods: 2, reconstructed: 0, open: 2
+- methods: 2, reconstructed: 1, open: 1
 
   - open  `SpeedButton1Click`  @`0054E0D4`
-  - open  `SpeedButton2Click`  @`0054F568`
+  - done  `SpeedButton2Click`  @`0054F568`
 
 ## Unit23
 
@@ -696,31 +696,31 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit24
 
-- methods: 24, reconstructed: 0, open: 24
+- methods: 24, reconstructed: 20, open: 4
 
   - open  `listanz`  @`0055EC64`
-  - open  `Button9Click`  @`0055EE60`
-  - open  `FormShow`  @`0055EE78`
-  - open  `Button2Click`  @`0055EEAC`
-  - open  `Button4Click`  @`0055EF20`
-  - open  `Button6Click`  @`0055EF48`
-  - open  `Button3Click`  @`0055EF5C`
-  - open  `Button5Click`  @`0055EFD0`
-  - open  `Button7Click`  @`0055EFF8`
-  - open  `ListBox1DblClick`  @`0055F00C`
-  - open  `ListBox2DblClick`  @`0055F080`
-  - open  `ListBox3DblClick`  @`0055F0F4`
-  - open  `ListBox4DblClick`  @`0055F11C`
+  - done  `Button9Click`  @`0055EE60`
+  - done  `FormShow`  @`0055EE78`
+  - done  `Button2Click`  @`0055EEAC`
+  - done  `Button4Click`  @`0055EF20`
+  - done  `Button6Click`  @`0055EF48`
+  - done  `Button3Click`  @`0055EF5C`
+  - done  `Button5Click`  @`0055EFD0`
+  - done  `Button7Click`  @`0055EFF8`
+  - done  `ListBox1DblClick`  @`0055F00C`
+  - done  `ListBox2DblClick`  @`0055F080`
+  - done  `ListBox3DblClick`  @`0055F0F4`
+  - done  `ListBox4DblClick`  @`0055F11C`
   - open  `FormClose`  @`0055F144`
-  - open  `RadioButton4Click`  @`0055F528`
-  - open  `RadioButton5Click`  @`0055F5E0`
-  - open  `SpeedButton1Click`  @`0055F698`
-  - open  `SpeedButton2Click`  @`0055F78C`
-  - open  `CheckBox17Click`  @`0055F7BC`
-  - open  `CheckBox18Click`  @`0055F7E4`
+  - done  `RadioButton4Click`  @`0055F528`
+  - done  `RadioButton5Click`  @`0055F5E0`
+  - done  `SpeedButton1Click`  @`0055F698`
+  - done  `SpeedButton2Click`  @`0055F78C`
+  - done  `CheckBox17Click`  @`0055F7BC`
+  - done  `CheckBox18Click`  @`0055F7E4`
   - open  `Button1Click`  @`0055F80C`
-  - open  `Button8Click`  @`0055F8C4`
-  - open  `Button10Click`  @`0055F920`
+  - done  `Button8Click`  @`0055F8C4`
+  - done  `Button10Click`  @`0055F920`
   - open  `ListBox5DblClick`  @`0055F954`
 
 ## Unit25
@@ -751,35 +751,35 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit28
 
-- methods: 7, reconstructed: 0, open: 7
+- methods: 7, reconstructed: 7, open: 0
 
-  - open  `BitBtn1Click`  @`00574124`
-  - open  `Button1Click`  @`00574220`
-  - open  `ListBox1KeyPress`  @`005747C0`
-  - open  `ListBox1DblClick`  @`005748EC`
-  - open  `FormActivate`  @`005749AC`
-  - open  `ListBox1Click`  @`00574AA0`
-  - open  `Button2Click`  @`00574AB8`
+  - done  `BitBtn1Click`  @`00574124`
+  - done  `Button1Click`  @`00574220`
+  - done  `ListBox1KeyPress`  @`005747C0`
+  - done  `ListBox1DblClick`  @`005748EC`
+  - done  `FormActivate`  @`005749AC`
+  - done  `ListBox1Click`  @`00574AA0`
+  - done  `Button2Click`  @`00574AB8`
 
 ## Unit29
 
-- methods: 6, reconstructed: 0, open: 6
+- methods: 6, reconstructed: 6, open: 0
 
-  - open  `Button2Click`  @`00561434`
-  - open  `ListBox1DblClick`  @`00562060`
-  - open  `FormActivate`  @`00562128`
-  - open  `ListBox1Click`  @`0056223C`
-  - open  `SpeedButton1Click`  @`00562254`
-  - open  `Button1Click`  @`0056227C`
+  - done  `Button2Click`  @`00561434`
+  - done  `ListBox1DblClick`  @`00562060`
+  - done  `FormActivate`  @`00562128`
+  - done  `ListBox1Click`  @`0056223C`
+  - done  `SpeedButton1Click`  @`00562254`
+  - done  `Button1Click`  @`0056227C`
 
 ## Unit30
 
-- methods: 4, reconstructed: 0, open: 4
+- methods: 4, reconstructed: 4, open: 0
 
-  - open  `BitBtn1Click`  @`005601E8`
-  - open  `BitBtn2Click`  @`005601F4`
-  - open  `FormKeyPress`  @`00560EA8`
-  - open  `FormShow`  @`00560EC8`
+  - done  `BitBtn1Click`  @`005601E8`
+  - done  `BitBtn2Click`  @`005601F4`
+  - done  `FormKeyPress`  @`00560EA8`
+  - done  `FormShow`  @`00560EC8`
 
 ## Unit31
 
@@ -792,19 +792,19 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit32
 
-- methods: 2, reconstructed: 0, open: 2
+- methods: 2, reconstructed: 2, open: 0
 
-  - open  `FormShow`  @`00558D50`
-  - open  `Image1DblClick`  @`0055985C`
+  - done  `FormShow`  @`00558D50`
+  - done  `Image1DblClick`  @`0055985C`
 
 ## Unit33
 
-- methods: 4, reconstructed: 0, open: 4
+- methods: 4, reconstructed: 3, open: 1
 
   - open  `BitBtn1Click`  @`0053A598`
-  - open  `BitBtn2Click`  @`0053B5F8`
-  - open  `FormActivate`  @`0053B630`
-  - open  `FormKeyPress`  @`0053B6A4`
+  - done  `BitBtn2Click`  @`0053B5F8`
+  - done  `FormActivate`  @`0053B630`
+  - done  `FormKeyPress`  @`0053B6A4`
 
 ## Unit34
 
@@ -825,14 +825,14 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit36
 
-- methods: 6, reconstructed: 0, open: 6
+- methods: 6, reconstructed: 6, open: 0
 
-  - open  `BitBtn1Click`  @`0057522C`
-  - open  `Button1Click`  @`00575254`
-  - open  `ListBox1DblClick`  @`005757F4`
-  - open  `ListBox1Click`  @`005758D8`
-  - open  `FormActivate`  @`005758F0`
-  - open  `Button2Click`  @`00575A04`
+  - done  `BitBtn1Click`  @`0057522C`
+  - done  `Button1Click`  @`00575254`
+  - done  `ListBox1DblClick`  @`005757F4`
+  - done  `ListBox1Click`  @`005758D8`
+  - done  `FormActivate`  @`005758F0`
+  - done  `Button2Click`  @`00575A04`
 
 ## Unit37
 
@@ -849,14 +849,14 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit39
 
-- methods: 6, reconstructed: 0, open: 6
+- methods: 6, reconstructed: 6, open: 0
 
-  - open  `Button1Click`  @`005761A8`
-  - open  `BitBtn1Click`  @`0057674C`
-  - open  `ListBox1DblClick`  @`00576774`
-  - open  `FormActivate`  @`00576840`
-  - open  `ListBox1Click`  @`00576944`
-  - open  `Button2Click`  @`0057695C`
+  - done  `Button1Click`  @`005761A8`
+  - done  `BitBtn1Click`  @`0057674C`
+  - done  `ListBox1DblClick`  @`00576774`
+  - done  `FormActivate`  @`00576840`
+  - done  `ListBox1Click`  @`00576944`
+  - done  `Button2Click`  @`0057695C`
 
 ## Unit40
 
@@ -868,4 +868,4 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Total
 
-- methods: 615, reconstructed: 293, open: 322
+- methods: 615, reconstructed: 371, open: 244

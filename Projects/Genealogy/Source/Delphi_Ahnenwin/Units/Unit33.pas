@@ -13,7 +13,7 @@ unit Unit33;
 interface
 
 uses
-  SysUtils, Classes, DBCtrls, StdCtrls, ExtCtrls, Buttons, Forms, Controls, Grids, DB;
+  SysUtils, Classes, DBCtrls, StdCtrls, ExtCtrls, Buttons, Forms, Controls, Grids, DB, Windows, Messages, Unit1, Unit14, Unit38, Unit2, AHNGlobals;
 
 type
   TForm33 = class(TForm)
@@ -76,12 +76,18 @@ implementation
 
 procedure TForm33.FormActivate(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The place that was marked in the list of the places is shown. }
+  Edit1.Text := Form14.ListBox1.Items[Form14.ListBox1.ItemIndex];
 end;
 
 procedure TForm33.FormKeyPress(Sender: TObject; var Key: Char);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The return key is passed on to the form. }
+  if Key = #13 then
+  begin
+    Key := #0;
+    PostMessage(Handle, WM_KEYDOWN, VK_RETURN, 0);
+  end;
 end;
 
 procedure TForm33.BitBtn1Click(Sender: TObject);
@@ -91,7 +97,9 @@ end;
 
 procedure TForm33.BitBtn2Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  Form1.PageControl1.ActivePage := Form1.TabSheet2;
+  Close;
+  Form38.Close;
 end;
 
 

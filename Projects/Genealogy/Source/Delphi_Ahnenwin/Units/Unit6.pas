@@ -262,8 +262,105 @@ end;
 
 // 005CDC40
 procedure TForm6.Kal;
+var
+  Year: Word;      // ebp-2 - the year that is shown
+  Month: Word;     // ebp-4
+  Day_: Word;      // ebp-6
+  Tag: Double;     // ebp-10 - the day that is walked through the year
+  Zeile: Integer;  // edi - the line of the cell that is written next
+  W: Integer;      // esi - the day of the week
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  gridleeren;
+
+  { The year: when the field is empty it gets the year of today, otherwise
+    the year of the field is taken over into the global variable. }
+  DecodeDate(Now, Year, Month, Day_);
+  if Edit1.Text = '' then
+    Edit1.Text := IntToStr(Year)
+  else
+    gvar_025368E8 := StrToInt(Edit1.Text);
+  Year := gvar_025368E8;
+
+  { The head line of the three grids: So Mo Di Mi Do Fr Sa. }
+  StringGrid1.Cells[0, 0] := 'So';
+  StringGrid1.Cells[1, 0] := 'Mo';
+  StringGrid1.Cells[2, 0] := 'Di';
+  StringGrid1.Cells[3, 0] := 'Mi';
+  StringGrid1.Cells[4, 0] := 'Do';
+  StringGrid1.Cells[5, 0] := 'Fr';
+  StringGrid1.Cells[6, 0] := 'Sa';
+  StringGrid2.Cells[0, 0] := 'So';
+  StringGrid2.Cells[1, 0] := 'Mo';
+  StringGrid2.Cells[2, 0] := 'Di';
+  StringGrid2.Cells[3, 0] := 'Mi';
+  StringGrid2.Cells[4, 0] := 'Do';
+  StringGrid2.Cells[5, 0] := 'Fr';
+  StringGrid2.Cells[6, 0] := 'Sa';
+  StringGrid3.Cells[0, 0] := 'So';
+  StringGrid3.Cells[1, 0] := 'Mo';
+  StringGrid3.Cells[2, 0] := 'Di';
+  StringGrid3.Cells[3, 0] := 'Mi';
+  StringGrid3.Cells[4, 0] := 'Do';
+  StringGrid3.Cells[5, 0] := 'Fr';
+  StringGrid3.Cells[6, 0] := 'Sa';
+
+  { The walk through the year begins with the 1st of January. }
+  Tag := StrToDate('01.01.' + IntToStr(gvar_025368E8));
+  Year := gvar_025368E8;
+
+  { Grid 1 - January to April. The loop runs while the month is smaller
+    than 5; the inner break leaves when the month is greater than 4, which
+    is the same condition. }
+  Zeile := 1;
+  while Month < 5 do
+  begin
+    DecodeDate(Tag, Year, Month, Day_);
+    if Month > 4 then
+      Break;
+    W := DayOfWeek(Tag);
+    if Day_ = 1 then
+      Inc(Zeile, 2);
+    StringGrid1.Cells[W - 1, Zeile] := IntToStr(Day_);
+    if W = 7 then
+      Inc(Zeile);
+    Tag := Tag + 1.0;
+  end;
+
+  { Grid 2 - May to August. The outer loop runs while the month lies
+    between 5 and 8 (the listing compares with 4 and 9); the inner break
+    leaves when the month is greater than 8. }
+  Zeile := 1;
+  while (Month > 4) and (Month < 9) do
+  begin
+    DecodeDate(Tag, Year, Month, Day_);
+    if Month > 8 then
+      Break;
+    W := DayOfWeek(Tag);
+    if Day_ = 1 then
+      Inc(Zeile, 2);
+    StringGrid2.Cells[W - 1, Zeile] := IntToStr(Day_);
+    if W = 7 then
+      Inc(Zeile);
+    Tag := Tag + 1.0;
+  end;
+
+  { Grid 3 - September to December. The loop runs while the month is
+    greater than 8; the inner break also leaves at the month 1, which is
+    the wrap of the year. }
+  Zeile := 1;
+  while Month > 8 do
+  begin
+    DecodeDate(Tag, Year, Month, Day_);
+    if (Month > 8) and (Month = 1) then
+      Break;
+    W := DayOfWeek(Tag);
+    if Day_ = 1 then
+      Inc(Zeile, 2);
+    StringGrid3.Cells[W - 1, Zeile] := IntToStr(Day_);
+    if W = 7 then
+      Inc(Zeile);
+    Tag := Tag + 1.0;
+  end;
 end;
 
 end.

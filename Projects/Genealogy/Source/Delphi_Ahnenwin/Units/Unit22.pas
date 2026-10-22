@@ -68,7 +68,7 @@ implementation
 
 procedure TOKBottomDlg.SpeedButton2Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  Close;
 end;
 
 procedure TOKBottomDlg.SpeedButton1Click(Sender: TObject);
