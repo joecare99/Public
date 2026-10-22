@@ -24,6 +24,7 @@ program AHNWIN51;
 
 uses
   SysUtils, Classes, Forms, DBTables,
+  AHNStart,
   { The JPEG unit registers the JPEG graphic format at run time. A graphic
     that is stored in a DFM as "Picture.Data" is loaded through
     TBitmap.LoadFromStream, which dispatches over the registered graphic
@@ -79,16 +80,20 @@ begin
     the BDE alias, par.cfg, style.css) and with the BDE, which creates
     its PDOXUSRS.NET in the current directory. The original program
     therefore has to be started from the directory that holds its data.
-    The reconstruction sets the current directory itself, so that it finds
-    its data no matter from where it was started. }
-  SetCurrentDir(ExtractFilePath(ParamStr(0)));
+
+    The reconstruction is more flexible: the directory of the data is
+    looked for by AHNStart (parameter, AHNWIN51.ini, the directory of the
+    program file, the current directory). The current directory is then
+    set to it, so that the data is found no matter from where the program
+    was started. }
+  DatenVerzeichnisSetzen;
 
   { The BDE of Delphi 9 places its net file in the root of the drive when
     it has no configuration file, and a normal user may not write there
     ("Fehler beim Initialisieren des Netzwerkes / Zugriff verweigert").
     The net file belongs next to the data, so its directory is set
     explicitly. The session is not yet active at this point. }
-  Session.NetFileDir := ExtractFilePath(ParamStr(0));
+  Session.NetFileDir := DatenVerzeichnis;
 
   Application.Initialize;
   Application.Title := 'AHNENWIN 5.1';
@@ -102,13 +107,20 @@ begin
     version the original was built with is not preserved in the IDR output.
     The purpose is to let the splash screen paint before the main form
     appears, and Update has exactly that effect. }
-  Form8 := TForm8.Create(nil);
-  Form8.Show;
-  Form8.Update;
+  SplashZeigen;
 
   { The order of the forms is the order of the original program. The data
     module is NOT created here: TForm1.FormCreate creates it, exactly as
     the original does. }
+  { The data module is created before the forms. The original program
+    creates it in TForm1.FormCreate, but the resources of the forms refer
+    to it by name ("DataSource = DataModule2.DataSource1"), and the
+    reader of the resources dereferences the global variable while it
+    streams. If the data module does not exist yet, that is an access
+    violation. TForm1.FormCreate only creates the data module when it
+    does not exist yet, so that there is always exactly one. }
+  Application.CreateForm(TDataModule2, DataModule2);
+
   Application.CreateForm(TForm1, Form1);
   Application.CreateForm(TForm3, Form3);
   Application.CreateForm(TForm4, Form4);

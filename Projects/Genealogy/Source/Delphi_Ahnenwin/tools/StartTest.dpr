@@ -8,7 +8,8 @@ program StartTest;
 {$APPTYPE CONSOLE}
 
 uses
-  SysUtils, Classes, Forms, Controls,
+  SysUtils, Classes, Forms, Controls, DBTables,
+  AHNStart in 'Units\AHNStart.pas',
   Unit1  in '..\Units\Unit1.pas',
   Unit2  in '..\Units\Unit2.pas',
   Unit3  in '..\Units\Unit3.pas',
@@ -61,7 +62,12 @@ begin
 end;
 
 begin
+  SetCurrentDir(DatenVerzeichnisSetzen);
+  { The BDE of Delphi 9 writes its net file into the root of the drive
+    when it has no configuration; it belongs next to the data. }
+  Session.NetFileDir := DatenVerzeichnis;
   Application.Initialize;
+  SplashZeigen;
   Application.Title := 'AHNENWIN 5.1';
 
   try

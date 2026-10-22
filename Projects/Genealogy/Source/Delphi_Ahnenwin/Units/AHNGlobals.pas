@@ -339,7 +339,7 @@ var
   gvar_02536958: AnsiString; //02536958  used by Unit1
   gvar_0253695C: AnsiString; //0253695C  used by Unit1
   gvar_02536960: TTextRec; //02536960  used by Unit1
-  gvar_02536B2C: Integer; //02536B2C  used by Unit1
+  gvar_02536B2C: Byte; //02536B2C  used by Unit1
   gvar_02536B30: AnsiString; //02536B30  used by Unit1
   gvar_02536B34: AnsiString; //02536B34  used by Unit1
   gvar_02536B38: AnsiString; //02536B38  used by Unit1

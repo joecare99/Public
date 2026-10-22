@@ -13,7 +13,7 @@ unit Unit1;
 interface
 
 uses
-  SysUtils, Classes, Menus, ExtCtrls, ComCtrls, DBCtrls, StdCtrls, Grids, Dialogs, DBGrids, ExtDlgs, FileCtrl, DBTables, DBCommon, DB, Buttons, DBClient, Forms, Controls;
+  SysUtils, Classes, Menus, ExtCtrls, ComCtrls, DBCtrls, StdCtrls, Grids, Dialogs, DBGrids, ExtDlgs, FileCtrl, DBTables, DBCommon, DB, Buttons, DBClient, Forms, Controls, DateUtils, JPEG;
 
 type
   TForm1 = class(TForm)
@@ -1677,10 +1677,15 @@ var
   i: Integer;
   h: Integer;
 begin
-  { The directory of the program is remembered in the global string
+  { The directory of the data is remembered in the global string
     gvar_02536B9C; it is the base for the help file, for the alias of the
-    BDE and for the configuration file. }
-  gvar_02536B9C := ExtractFilePath(ParamStr(0));
+    BDE and for the configuration file.
+
+    The original takes the directory of the program file. The
+    reconstruction uses the current directory, because the program file
+    sets it to the directory of the data (the program file itself may be
+    started from somewhere else). }
+  gvar_02536B9C := IncludeTrailingPathDelimiter(GetCurrentDir);
 
   { The title and the help file depend on the Windows version: from Windows
     2000 on the program uses the compiled help file, before that the old
@@ -1722,15 +1727,24 @@ begin
 
   UpDown1.Visible := False;
 
-  { The BDE is configured for the directory of the program: the tables
-    are found through the standard alias "PARADOX". The configuration mode
+  { The BDE is configured for the directory of the data: the tables are
+    found through the standard alias "PARADOX". The configuration mode
     cfmSession (the value 4 of the listing) keeps the alias for the
-    session only. }
+    session only.
+
+    The original takes the directory of the program file, the
+    reconstruction the current directory, which the program file has set
+    to the directory of the data. }
   gvar_0253692C := 'crea';
-  gvar_02536B9C := ExtractFilePath(ParamStr(0));
+  gvar_02536B9C := IncludeTrailingPathDelimiter(GetCurrentDir);
   Session.ConfigMode := [cfmSession];
   Session.AddStandardAlias(' ', gvar_02536B9C, 'PARADOX');
-  Application.CreateForm(TDataModule2, DataModule2);
+  { The data module is normally created by the program file, before the
+    forms, because the resources of the forms refer to it. The original
+    program creates it here; the reconstruction only creates it when it
+    does not exist yet. }
+  if DataModule2 = nil then
+    Application.CreateForm(TDataModule2, DataModule2);
 
   alineu(' ');
 
@@ -1817,7 +1831,32 @@ begin
     can be read. }
   DataModule2.Table1.Exclusive := True;
   DataModule2.Table1.Exclusive := False;
-  DataModule2.Table1.Open;
+  try
+    DataModule2.Table1.Open;
+  except
+    on E: Exception do
+    begin
+      { The database was not found. The original program lets the error of
+        the BDE come; the reconstruction names the directory that was
+        searched, because the program can be started from anywhere.
+
+        The program is stopped here on purpose. The OnCreate handler of a
+        form runs in AfterConstruction, that is *after* the constructor,
+        so an exception would not reach the caller of Create: the VCL
+        would show its own error window and the program would continue
+        with a half created form - which ends in an access violation
+        later on. }
+      MessageBox(0,
+        PChar('Die Tabelle AWD.DB wurde nicht gefunden.' + #13#10 +
+              'Gesucht im Verzeichnis: ' + gvar_02536B9C + #13#10 + #13#10 +
+              'Die Programmdatei muss im Verzeichnis der Daten liegen.' +
+              #13#10 + 'Alternativ kann das Verzeichnis angegeben werden:' +
+              #13#10 + '  AHNWIN51.exe <Verzeichnis>' + #13#10 + #13#10 +
+              E.Message),
+        'AHNENWIN 5.1', MB_OK or MB_ICONERROR);
+      Halt(1);
+    end;
+  end;
   DataModule2.Table1.IndexName := '';
   DataModule2.Table1.Last;
   gvar_0253690C := DataModule2.Table1Nummer.AsInteger + 1;
@@ -1926,16 +1965,22 @@ begin
   { One entry of the menu is removed. }
   MainMenu1.Items[3].Items[5].Visible := False;
 
-  { The splash screen is closed. }
-  Form8.Close;
+  { The splash screen is closed. The original closes it without a check -
+    the program file always creates the splash screen before the main form.
+    The check keeps the program from running into an access violation when
+    the main form is created on its own (TCustomForm.Close reads the field
+    FFormState of the splash screen). }
+  if Form8 <> nil then
+    Form8.Close;
 
   { The window caption is taken from the configuration file "par.cfg"; it
     holds a short string of up to 50 characters. When the file does not
     exist, it is created and the caption of the form is kept. }
+
   if FileExists(gvar_02536B9C + 'par.cfg') then
   begin
     gvar_02536BB0 := TFileStream.Create(gvar_02536B9C + 'par.cfg', fmOpenRead);
-    gvar_02536BB0.ReadBuffer(gvar_02536BB4, 51);
+    gvar_02536BB0.ReadBuffer(gvar_02536BB4, 33);
   end
   else
     gvar_02536BB0 := TFileStream.Create(gvar_02536B9C + 'par.cfg', fmCreate);
@@ -2009,9 +2054,248 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm1.anzeigen;
+{ Calculates the age of a person at the date of the wedding from the
+  dates of birth, of baptism and of the wedding.
+
+  The original program has a local function for this at the address
+  005D3A70. It takes the nine parts of the three dates, writes its
+  result into the first parameter and returns it as well.
+
+  If the year of birth is not known, the date of baptism is used
+  instead. If the dates cannot be read, the difference of the years is
+  used and marked with "ca.". }
+function altersberechnung(var ergebnis: string; gebtag, gebmonat, gebjahr,
+  stjahr, stmonat, sttag, taufjahr, taufmonat, tauftag: string): string;
+var
+  ok: Boolean;
+  ausTauf: Boolean;
+  sT, sM, sJ: string;
+  dT, dM, dJ: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  ergebnis := '';
+  ausTauf := False;
+
+  { Without a year of birth the date of baptism is used instead. }
+  if Trim(gebjahr) = '' then begin
+    gebtag := tauftag;
+    gebmonat := taufmonat;
+    gebjahr := taufjahr;
+    ausTauf := True;
+  end;
+
+  sT := '';
+  sM := '';
+  sJ := '';
+  ok := True;
+  try
+    StrToDate(gebtag + '.' + gebmonat + '.' + gebjahr);
+  except
+    ok := False;
+  end;
+  if ok then
+    try
+      StrToDate(sttag + '.' + stmonat + '.' + stjahr);
+    except
+      ok := False;
+    end;
+
+  if ok then begin
+    dT := StrToInt(sttag) - StrToInt(gebtag);
+    dM := StrToInt(stmonat) - StrToInt(gebmonat);
+    dJ := StrToInt(stjahr) - StrToInt(gebjahr);
+    if dT < 0 then begin
+      Dec(dM);
+      { The day of the wedding is before the day of birth: the number of
+        days of the month of birth decides how much is missing. }
+      try
+        dT := DaysInAMonth(StrToInt(gebjahr), StrToInt(gebmonat)) -
+              StrToInt(gebtag) + StrToInt(sttag);
+      except
+      end;
+    end;
+    if dM < 0 then begin
+      Dec(dJ);
+      Inc(dM, 12);
+    end;
+    if dT > 0 then sT := IntToStr(dT) + ' T';
+    if dM > 0 then sM := IntToStr(dM) + ' M ';
+    if dJ > 0 then sJ := IntToStr(dJ) + ' J ';
+    if ausTauf then
+      ergebnis := sJ
+    else
+      ergebnis := sT + sM + sJ;
+  end else begin
+    { The dates cannot be read, only the years are used. }
+    if Trim(gebjahr) <> '' then
+      if Trim(stjahr) <> '' then
+        try
+          ergebnis := IntToStr(StrToInt(stjahr) - StrToInt(gebjahr)) + ' J';
+        except
+        end;
+    if (Trim(gebtag) <> '') or (Trim(gebmonat) <> '') or
+       (Trim(sttag) <> '') or (Trim(stmonat) <> '') then
+      try
+        ergebnis := ergebnis + 'ca. ' +
+                    IntToStr(StrToInt(stjahr) - StrToInt(gebjahr)) + ' J';
+      except
+      end;
+  end;
+  Result := ergebnis;
+end;
+
+procedure TForm1.anzeigen;
+var
+  nummer: Longint;
+  ch: Byte;
+  s: string;
+  faktor: Extended;
+begin
+  { The entries for a new person and for drawing a family sheet are only
+    possible when a person is selected. }
+  neu1.Enabled := False;
+  schen1.Enabled := False;
+  if DataModule2.Table1Nummer.AsInteger > 0 then begin
+    neu1.Enabled := True;
+    schen1.Enabled := True;
+  end;
+
+  gridanp;
+
+  { The number of the person is kept, the table is put on the last
+    record to get the highest number and afterwards back to the person. }
+  nummer := DataModule2.Table1Nummer.AsInteger;
+  DataModule2.Table1.IndexName := '';
+  DataModule2.Table1.Last;
+  gvar_02536944 := DataModule2.Table1Nummer.AsInteger;
+  DataModule2.Table1.First;
+  DataModule2.Table1.FindKey([nummer]);
+
+  { The data of the person is shown in the fields of the form. }
+  ComboBox6.Text := DataModule2.Table1Gebort.AsString;
+  ComboBox7.Text := DataModule2.Table1Taufort.AsString;
+  ComboBox8.Text := DataModule2.Table1Stort.AsString;
+  ComboBox9.Text := DataModule2.Table1Begort.AsString;
+  ComboBox4.Text := DataModule2.Table1Name.AsString;
+  ComboBox11.Text := DataModule2.Table1Quelle.AsString;
+  ComboBox12.Text := DataModule2.Table1Quelleg.AsString;
+  ComboBox13.Text := DataModule2.Table1Quellet.AsString;
+  ComboBox14.Text := DataModule2.Table1Quelles.AsString;
+  ComboBox15.Text := DataModule2.Table1Quelleb.AsString;
+  ComboBox26.Text := DataModule2.Table1Ort.AsString;
+
+  ehenanz;
+  kinderanz;
+  eltanz;
+
+  { The pictures of the person are taken from the tables of the places
+    and of the titles. }
+  DataModule2.Table7.Open;
+  if DataModule2.Table5.RecordCount = 0 then
+    PopupMenu1.Items[1].Enabled := False
+  else
+    PopupMenu1.Items[1].Enabled := True;
+  if DataModule2.Table7.RecordCount = 0 then
+    PopupMenu2.Items[1].Enabled := False
+  else
+    PopupMenu2.Items[1].Enabled := True;
+
+  { A comment of the person is marked with a "T". }
+  Label20.Caption := '';
+  if Trim(DataModule2.Table1Kommentar.AsString) <> '' then
+    Label20.Caption := 'T';
+
+  Image1.Picture.Graphic := nil;
+  UpDown1.Visible := False;
+
+  { The picture of the person has the name of the number of the person
+    and a letter, for example "bilder\b1a.jpg". }
+  gvar_02536B9C := ExtractFilePath(ParamStr(0));
+  gvar_02536B2C := Ord('a');
+  while True do begin
+    gvar_02536B30 := gvar_02536B9C + 'bilder\b' + Trim(IntToStr(nummer)) +
+                    Chr(gvar_02536B2C) + '.jpg';
+    if FileExists(gvar_02536B9C + 'bilder\b' + Trim(IntToStr(nummer)) +
+                  Chr(gvar_02536B2C) + '.jpg') then
+      Break;
+    Inc(gvar_02536B2C);
+    if UpperCase(Chr(gvar_02536B2C)) = 'Z' then begin
+      gvar_02536B2C := Ord('a');
+      Break;
+    end;
+  end;
+  while True do begin
+    gvar_02536B34 := gvar_02536B9C + 'bilder\b' + Trim(IntToStr(nummer)) +
+                    Chr(gvar_02536B2C) + '.bmp';
+    if FileExists(gvar_02536B9C + 'bilder\b' + Trim(IntToStr(nummer)) +
+                  Chr(gvar_02536B2C) + '.bmp') then
+      Break;
+    Inc(gvar_02536B2C);
+    if UpperCase(Chr(gvar_02536B2C)) = 'Z' then begin
+      gvar_02536B2C := Ord('a');
+      Break;
+    end;
+  end;
+
+  if FileExists(gvar_02536B30) then begin
+    UpDown1.Visible := True;
+    Image1.Picture.LoadFromFile(gvar_02536B30);
+    { The picture keeps its proportions, the height of the field is
+      given. }
+    if Image1.Picture.Graphic is TJPEGImage then begin
+      faktor := Image1.Picture.Graphic.Height / Image1.Height;
+      Image1.Width := Round(Image1.Picture.Graphic.Width * faktor);
+    end;
+  end else if FileExists(gvar_02536B34) then begin
+    Image1.Picture.LoadFromFile(gvar_02536B34);
+    UpDown1.Visible := True;
+  end;
+
+  wt33;
+  wt34;
+  wt35;
+  wt36;
+
+  { The age of the person at the wedding is calculated and written into
+    the field of the table. }
+  DataModule2.Table1.Edit;
+  s := '';
+  altersberechnung(s,
+    DataModule2.Table1Gebtag.AsString,
+    DataModule2.Table1Gebmonat.AsString,
+    DataModule2.Table1Gebjahr.AsString,
+    DataModule2.Table1Stjahr.AsString,
+    DataModule2.Table1Stmonat.AsString,
+    DataModule2.Table1Sttag.AsString,
+    DataModule2.Table1Taufjahr.AsString,
+    DataModule2.Table1Taufmonat.AsString,
+    DataModule2.Table1Tauftag.AsString);
+  DataModule2.Table1Alter.AsString := s;
+  DataModule2.Table1.Post;
+
+  try
+    if PageControl1.ActivePage = TabSheet2 then
+      DBEdit2.SetFocus;
+  except
+  end;
+  try
+    if PageControl1.ActivePage = TabSheet7 then
+      DBGrid2.SetFocus;
+  except
+  end;
+
+  if gvar_02536BA0 > 1 then
+    DBText1.Color := $00FFFF;
+
+  DataModule2.Table35.Open;
+
+  Edit3.Text := ComboBox4.Text;
+  Edit7.Text := ComboBox6.Text;
+  Edit11.Text := ComboBox7.Text;
+  Edit12.Text := ComboBox8.Text;
+  Edit16.Text := ComboBox9.Text;
+
+  DataModule2.Table1.Edit;
+  DataModule2.Table5.Edit;
 end;
 
 procedure TForm1.FormKeyPress(Sender:TObject; var Key:Char);

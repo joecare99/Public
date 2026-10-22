@@ -34,6 +34,79 @@ The build uses
 `C:\copy\delphi\RAD Studio\3.0\Bin\DCC32.EXE` and the unit search path
 `Units; Forms; Compat\QuickReport; Compat\WPPDF; build; <Delphi lib>`.
 
+`build.cmd` writes `build\AHNWIN51.ini` after a successful build:
+
+```ini
+[Daten]
+Verzeichnis=C:\ProgramData\AHNENWIN Test
+```
+
+The directory can be changed with the environment variable
+`AHNENWIN_DATEN`.
+
+## The directory of the data
+
+The program works with relative paths — the BDE alias, the picture
+directory `Bilder`, `par.cfg`, `style.css` — so the data has to be found
+at run time. The original program expects the program file to lie in the
+directory of the data; the reconstruction looks for the data in this
+order:
+
+1. the parameter of the program: `AHNWIN51.exe <Verzeichnis>`
+2. `AHNWIN51.ini` next to the program file (`[Daten] Verzeichnis=…`)
+3. the directory of the program file, if it holds `AWD.DB`
+4. the current directory, if it holds `AWD.DB`
+5. the directory of the program file
+
+The current directory is then set to the directory that was found, and
+the BDE alias, the net file `PDOXUSRS.NET` and the pictures are taken
+from it. If the database is not found, the program names the directory it
+searched instead of the bare BDE message.
+
+`Units\AHNStart.pas` holds that logic; the program file and all the
+test programs use it, so that they behave the same.
+
+Three details of the BDE and of the VCL of Delphi 9 have to be taken
+into account:
+
+* Without a configuration file the BDE puts its net file into the root
+  of the drive, where a normal user may not write
+  ("Fehler beim Initialisieren des Netzwerkes / Zugriff verweigert").
+  `Session.NetFileDir` is therefore set explicitly to the directory of
+  the data.
+* `GetCurrentDir` returns the directory **without** a trailing
+  backslash, so every path that is built from it has to be closed with
+  `IncludeTrailingPathDelimiter`. Without it, `par.cfg` was looked for
+  as `C:\ProgramData\AHNENWIN Testpar.cfg` — a file in `C:\ProgramData`.
+* The resources of the forms refer to the data module by name
+  (`DataSource = DataModule2.DataSource1`). The reader of the resources
+  resolves such a reference while the form is streamed. That works, but
+  the splash screen has to exist by then: `TForm1.FormCreate` closes it
+  with `Form8.Close`, and `TCustomForm.Close` reads the field
+  `FFormState` of the splash screen — with a nil splash screen that is
+  an access violation ("Zugriffsverletzung … Lesen von Adresse
+  00000328"). The program file shows the splash screen first, and the
+  test programs do the same; `TForm1.FormCreate` checks the splash
+  screen as well, so that the main form can be created on its own.
+
+## The order of the start
+
+The order in which the forms are created is the order of the original
+program (`Source\Projects_AhnenWin\AHNWIN51.dpr`):
+
+```
+Form8 (splash)  ->  DataModule2  ->  Form1  ->  Form3  ->  Form4  ->  ...
+```
+
+The data module is created before the forms — the original creates it
+inside `TForm1.FormCreate`, but the resources of the forms refer to it,
+and `TForm1.FormCreate` therefore only creates it when it does not
+exist yet. The original's `FormCreate` reads its own caption through
+the global variable `Form1`, which only exists after the form has been
+created; `TApplication.CreateForm` sets it before the constructor runs,
+which is why the test programs have to use `Application.CreateForm` and
+not `Create`.
+
 ## Verification
 
 ```cmd
@@ -47,6 +120,10 @@ is structurally correct only when its DFM round-trips through the VCL
 streaming mechanism.
 
 Current state: **40 / 40 forms stream, 0 failures.**
+
+The behaviour of the program is compared with the original: both are
+started and their window trees (class, text and visibility of every
+child window) are compared. Current state: **identical, 121 controls.**
 
 ## The tool chain
 
@@ -226,6 +303,37 @@ conversion, the Easter calculation, the family chart drawing, and the
 browser page generator. They are the largest listings of the program
 (`Fgr` alone is 4322 lines of assembly) and they are the natural next
 step after the wave 1 units.
+
+### Wave 1 - the main form (partly done)
+
+`Unit1` is the largest unit of the program (276 methods). The three
+methods that decide what the program shows when it starts are done:
+
+| Method | Address | What it does |
+|---|---|---|
+| `TForm1.FormCreate` | `005D3F80` | screen sizes, the BDE alias and the table password, the scaling of the grids, `par.cfg` |
+| `TForm1.FormShow` | `005D92AC` | the scaling factor 1.9, the page that is shown first, the tables of the places, of the titles and of the notes |
+| `TForm1.anzeigen` | `005D42BC` | the data of the selected person, the picture `bilder\b<Nummer><a-z>.jpg`, the age at the wedding |
+
+`anzeigen` also contains a *local* function of the original
+(`sub_005D3A70`, address `005D3A70`) that calculates the age of a person
+at the date of the wedding from the dates of birth, of baptism and of the
+wedding; it is reproduced as `altersberechnung` in `Units\Unit1.pas`.
+
+Three findings of this wave are worth keeping:
+
+* **The v-slots of the VCL.** IDR does not resolve every virtual method.
+  The remaining ones were identified from the VCL that IDR decompiled:
+  `TDataSet.v14C` is `GetRecordCount`, `TField.v58` is `GetAsInteger`,
+  `TField.v60` is `GetAsString`, `TField.v0B0` is `SetAsString`,
+  `TDataSet.v248` is `Post`. The table is in `Source\Projects_AhnenWin\`
+  (`DB.pas`, `Forms.pas`, `Classes.pas`).
+* **The table password.** The session gets the password `hheerrii`
+  (`TSession.AddPassword` at `005D5716`); without it the BDE refuses
+  every table with "Unzureichende Tabellenrechte".
+* **`par.cfg` holds 51 bytes**, a short string of 50 characters; the
+  original reads 33 bytes of it (`005D6397`), the reconstruction does the
+  same, so that a shorter file does not raise a stream error.
 
 ### One instruction that could not be derived unambiguously
 

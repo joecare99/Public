@@ -17,7 +17,8 @@ program ImgTest;
 {$APPTYPE CONSOLE}
 
 uses
-  SysUtils, Classes, Forms, Controls, Graphics, ExtCtrls, JPEG,
+  SysUtils, Classes, Forms, Controls, Graphics, DBTables, ExtCtrls, JPEG,
+  AHNStart in 'Units\AHNStart.pas',
   Unit1  in '..\Units\Unit1.pas',
   Unit2  in '..\Units\Unit2.pas',
   Unit3  in '..\Units\Unit3.pas',
@@ -101,7 +102,7 @@ begin
   Write(AName, ' ... ');
   Flush(Output);
   try
-    F := AClass.Create(nil);
+    Application.CreateForm(AClass, F);
   except
     on E: Exception do
     begin
@@ -120,7 +121,15 @@ begin
 end;
 
 begin
+  SetCurrentDir(DatenVerzeichnisSetzen);
+  { The data module has to exist before the forms are streamed: the
+    resources of the forms refer to it by name. }
+  Application.CreateForm(TDataModule2, DataModule2);
+  { The BDE of Delphi 9 writes its net file into the root of the drive
+    when it has no configuration; it belongs next to the data. }
+  Session.NetFileDir := DatenVerzeichnis;
   Application.Initialize;
+  SplashZeigen;
   TryCheck('Form1', TForm1);
   TryCheck('Form3', TForm3);
   TryCheck('Form4', TForm4);

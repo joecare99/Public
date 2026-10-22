@@ -14,6 +14,7 @@ program StreamCheck;
 
 uses
   SysUtils, Classes, Forms, Controls, Graphics, DB, DBTables, DBCommon,
+  AHNStart in 'Units\AHNStart.pas',
   Unit1  in 'Units\Unit1.pas',
   Unit2  in 'Units\Unit2.pas',
   Unit3  in 'Units\Unit3.pas',
@@ -65,7 +66,7 @@ var
 begin
   Inc(Checks);
   try
-    F := AClass.Create(nil);
+    Application.CreateForm(AClass, F);
     try
       WriteLn('  OK   ', AClass.ClassName, '  (', F.Name, ', ', F.ComponentCount,
               ' components)');
@@ -91,7 +92,7 @@ begin
       directly ("DataSource = DataModule2.DataSource1"). It also has to
       stay alive for the whole run: a released data module would leave
       those references dangling. }
-    DataModule2 := TDataModule2.Create(nil);
+    Application.CreateForm(TDataModule2, DataModule2);
     n := 0;
     for i := 0 to DataModule2.ComponentCount - 1 do
       if DataModule2.Components[i] is TDataSet then Inc(n);
@@ -113,7 +114,15 @@ begin
   Failures := 0;
   Checks := 0;
 
+  { The data has to be in the current directory, the way the program
+    expects it. }
+  SetCurrentDir(DatenVerzeichnisSetzen);
+  { The BDE of Delphi 9 writes its net file into the root of the drive
+    when it has no configuration; it belongs next to the data. }
+  Session.NetFileDir := DatenVerzeichnis;
+
   Application.Initialize;
+  SplashZeigen;
 
   WriteLn('Resource stream check:');
   CheckDataModule;
