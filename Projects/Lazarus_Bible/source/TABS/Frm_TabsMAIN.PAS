@@ -38,7 +38,7 @@ uses
  ExtCtrls,
  Menus,
 
-  Frm_ABOUT,
+  TABS_Frm_ABOUT,
  Frm_OPTIONS,
  TabsUnit,
 {$IFnDEF FPC}

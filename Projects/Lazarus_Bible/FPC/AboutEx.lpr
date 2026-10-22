@@ -11,7 +11,7 @@ uses
   SysUtils,
   FormShot,
   DefaultTranslator,
-  Frm_ABOUT,
+  AboutEx_Frm_ABOUT,
   Frm_AboutExMAIN;
 
 begin

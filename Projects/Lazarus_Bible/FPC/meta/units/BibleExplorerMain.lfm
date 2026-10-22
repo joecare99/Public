@@ -10,6 +10,7 @@ object BibleExplorerForm: TBibleExplorerForm
   Font.Name = 'MS Sans Serif'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
+  OnShow = FormShow
   Position = poScreenCenter
   object Splitter1: TSplitter
     Left = 250
@@ -27,18 +28,18 @@ object BibleExplorerForm: TBibleExplorerForm
     TabOrder = 1
     OnChange = TreeViewNodeClick
   end
-  object TabControl: TTabControl
+  object PageControl: TPageControl
     Left = 256
     Top = 0
     Width = 724
-    Height = 620
+    Height = 572
     Anchors = [akLeft, akTop, akRight, akBottom]
     TabIndex = 0
     TabOrder = 2
-    OnChange = TabControlChange
+    OnChange = PageControlChange
     object tabOverview: TTabSheet
       Caption = 'Ueberblick'
-      ClientHeight = 590
+      ClientHeight = 542
       ClientWidth = 716
       object lblTitle: TLabel
         Left = 16
@@ -80,7 +81,7 @@ object BibleExplorerForm: TBibleExplorerForm
     end
     object tabCode: TTabSheet
       Caption = 'Code'
-      ClientHeight = 590
+      ClientHeight = 542
       ClientWidth = 716
       object btnPrevious: TButton
         Left = 8
@@ -101,7 +102,6 @@ object BibleExplorerForm: TBibleExplorerForm
         OnClick = btnNextClick
       end
       object codeView: TBibleCodeView
-        Visible = False
         Left = 8
         Top = 40
         Width = 700
@@ -112,56 +112,97 @@ object BibleExplorerForm: TBibleExplorerForm
     end
     object tabBehavior: TTabSheet
       Caption = 'Verhalten'
-      ClientHeight = 590
+      ClientHeight = 542
       ClientWidth = 716
-      object btnStart: TButton
-        Left = 8
-        Top = 8
-        Width = 100
-        Height = 25
-        Caption = 'Starten'
-        TabOrder = 0
-        OnClick = btnStartClick
+      object pnlTop: TPanel
+        Left = 0
+        Top = 0
+        Width = 716
+        Height = 250
+        Align = alTop
+        BevelOuter = bvLowered
+        object btnStart: TButton
+          Left = 8
+          Top = 8
+          Width = 215
+          Height = 28
+          Caption = 'Externes Programm starten'
+          Font.Color = clRed
+          Font.Style = [fsBold]
+          TabOrder = 0
+          OnClick = btnStartClick
+        end
+        object btnStartIntern: TButton
+          Left = 231
+          Top = 8
+          Width = 175
+          Height = 28
+          Caption = 'Demo intern starten'
+          Enabled = False
+          TabOrder = 1
+          OnClick = btnStartInternClick
+        end
+        object btnShot: TButton
+          Left = 414
+          Top = 8
+          Width = 145
+          Height = 28
+          Caption = 'Screenshot (extern)'
+          TabOrder = 2
+          OnClick = btnShotClick
+        end
+        object btnShotIntern: TButton
+          Left = 567
+          Top = 8
+          Width = 145
+          Height = 28
+          Caption = 'Screenshot (intern)'
+          Enabled = False
+          TabOrder = 3
+          OnClick = btnShotInternClick
+        end
+        object imgBehavior: TImage
+          Left = 8
+          Top = 44
+          Width = 320
+          Height = 196
+          Proportional = True
+        end
+        object memoBehavior: TMemo
+          Left = 336
+          Top = 44
+          Width = 372
+          Height = 196
+          Anchors = [akLeft, akTop, akRight]
+          ReadOnly = True
+          ScrollBars = ssVertical
+          TabOrder = 4
+          WordWrap = True
+        end
       end
-      object btnShot: TButton
-        Left = 116
-        Top = 8
-        Width = 100
-        Height = 25
-        Caption = 'Screenshot'
-        TabOrder = 1
-        OnClick = btnShotClick
-      end
-      object imgBehavior: TImage
-        Left = 8
-        Top = 40
-        Width = 320
-        Height = 240
-        Proportional = True
-      end
-      object memoBehavior: TMemo
-        Left = 336
-        Top = 40
-        Width = 372
-        Height = 240
-        Anchors = [akLeft, akTop, akRight]
-        ReadOnly = True
-        ScrollBars = ssVertical
-        TabOrder = 3
-        WordWrap = True
+      object splBehavior: TPanel
+        Left = 0
+        Top = 250
+        Width = 716
+        Height = 6
+        Align = alTop
+        BevelOuter = bvLowered
+        Cursor = crVSplit
+        OnMouseDown = splMouseDown
+        OnMouseMove = splMouseMove
       end
       object pnlBehavior: TPanel
-        Left = 8
-        Top = 288
-        Width = 700
+        Left = 0
+        Top = 256
+        Width = 716
         Height = 286
-        Anchors = [akLeft, akTop, akRight, akBottom]
+        Align = alClient
         BevelOuter = bvLowered
       end
     end
     object tabFiles: TTabSheet
       Caption = 'Dateien'
-      ClientHeight = 590
+      ClientHeight = 542
       ClientWidth = 716
       object listFiles: TListBox
         Left = 8
@@ -176,7 +217,7 @@ object BibleExplorerForm: TBibleExplorerForm
     end
     object tabNotes: TTabSheet
       Caption = 'Notizen'
-      ClientHeight = 590
+      ClientHeight = 542
       ClientWidth = 716
       object memoNotes: TMemo
         Left = 8
@@ -223,12 +264,44 @@ object BibleExplorerForm: TBibleExplorerForm
       Caption = 'Ueber'
     end
   end
-  object lblStatus: TLabel
+  object pnlNav: TPanel
     Left = 256
-    Top = 600
-    Width = 700
-    Height = 17
+    Top = 576
+    Width = 724
+    Height = 44
     Anchors = [akLeft, akRight, akBottom]
-    Caption = 'bereit'
+    BevelOuter = bvLowered
+    object btnPrev: TButton
+      Left = 8
+      Top = 8
+      Width = 90
+      Height = 25
+      Caption = '< Zurueck'
+      TabOrder = 0
+      OnClick = btnPrevClick
+    end
+    object btnNextPage: TButton
+      Left = 104
+      Top = 8
+      Width = 90
+      Height = 25
+      Caption = 'Weiter >'
+      TabOrder = 1
+      OnClick = btnNextPageClick
+    end
+    object lblPage: TLabel
+      Left = 208
+      Top = 12
+      Width = 300
+      Height = 17
+      Caption = 'Ueberblick'
+    end
+    object lblStatus: TLabel
+      Left = 400
+      Top = 12
+      Width = 310
+      Height = 17
+      Caption = 'bereit'
+    end
   end
 end

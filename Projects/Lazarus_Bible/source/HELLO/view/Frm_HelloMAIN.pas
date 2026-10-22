@@ -28,7 +28,7 @@ type
     procedure ViewModelPropertyChanged(Sender: TObject;
       const AArgs: TPropertyChangedEventArgs);
     procedure ApplyViewModel;
-    procedure DoClose(Sender: TObject);
+    procedure ExecuteClose(Sender: TObject);
   public
     property ViewModel: THelloViewModel read FViewModel;
   end;
@@ -49,7 +49,7 @@ begin
   FViewModel := THelloViewModel.Create;
   FViewModel.OnPropertyChanged := ViewModelPropertyChanged;
   { Das Kommando zum Beenden wird von der View ausgefuehrt. }
-  FViewModel.CloseCommand.OnExecute := DoClose;
+  FViewModel.CloseCommand.OnExecute := ExecuteClose;
   ApplyViewModel;
 end;
 
@@ -73,7 +73,7 @@ begin
   CloseButton.Enabled := FViewModel.CloseCommand.CanExecute;
 end;
 
-procedure TForm1.DoClose(Sender: TObject);
+procedure TForm1.ExecuteClose(Sender: TObject);
 begin
   Close;
 end;

@@ -4,6 +4,7 @@ set -u
 ROOT=$(cd "$(dirname "$0")/../.." && pwd)
 cd "$ROOT/FPC" || exit 1
 rm -rf "$ROOT"/bin/x86_64-linux/units
+rm -f "$ROOT"/bin/x86_64-linux/BibleExplorer
 lazbuild --build-mode=Default meta/BibleExplorer.lpi >/tmp/meta_build.log 2>&1
 if [ $? -ne 0 ]; then
     echo "Build FEHLER"

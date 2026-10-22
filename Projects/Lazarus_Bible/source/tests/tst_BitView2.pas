@@ -1,8 +1,5 @@
 unit tst_BitView2;
 
-{$IFDEF FPC}
-  {$MODE Delphi}
-{$ENDIF}
 {$mode objfpc}{$H+}
 
 interface
