@@ -10,7 +10,6 @@ object frmFancyMain: TfrmFancyMain
   Font.Height = -13
   Font.Name = 'Arial'
   Font.Style = []
-  PixelsPerInch = 96
   object Panel1: TPanel
     Left = 8
     Top = 8

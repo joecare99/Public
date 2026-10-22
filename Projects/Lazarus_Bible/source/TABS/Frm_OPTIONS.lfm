@@ -100,7 +100,7 @@ object OptionsDialog: TOptionsDialog
       Height = 17
       Caption = 'Backup originial file'
       Checked = True
-      State = cbChecked
+      Checked = True
       TabOrder = 0
     end
     object AutoSaveCheckbox: TCheckBox
@@ -110,7 +110,7 @@ object OptionsDialog: TOptionsDialog
       Height = 17
       Caption = 'Autosave configuration'
       Checked = True
-      State = cbChecked
+      Checked = True
       TabOrder = 1
     end
     object StripCheckbox: TCheckBox

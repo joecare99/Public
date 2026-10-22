@@ -11,7 +11,6 @@ object frmMultiWayMain: TfrmMultiWayMain
   Font.Name = 'System'
   Font.Style = []
   Menu = MainMenu1
-  PixelsPerInch = 96
   object MainMenu1: TMainMenu
     Left = 96
     Top = 40

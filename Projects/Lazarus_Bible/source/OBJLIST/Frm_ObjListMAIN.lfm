@@ -12,7 +12,6 @@ object frmObjListMain: TfrmObjListMain
   Font.Style = []
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
   object CheckBox1: TCheckBox
     Left = 48
     Top = 16

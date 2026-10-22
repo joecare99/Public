@@ -11,7 +11,6 @@ object frmFileMenuMain: TfrmFileMenuMain
   Font.Name = 'System'
   Font.Style = []
   Menu = MainMenu1
-  PixelsPerInch = 96
   object OpenButton: TButton
     Left = 72
     Top = 24

@@ -454,18 +454,35 @@ begin
     Exit;
   if FRegistry.Showcase.HasEntry(FCurrentDemo.Key) then
   begin
-    Form := FRegistry.Showcase.CreateForm(FCurrentDemo.Key);
+    Form := nil;
+    { Ein fehlgebautes Demo darf die App nicht mitreissen - der
+      Block laeuft auch bei fehlenden Ressourcen oder AVs weiter. }
+    try
+      Form := FRegistry.Showcase.CreateForm(FCurrentDemo.Key);
+    except
+      on E: Exception do
+        memoBehavior.Lines.Add('Demo-Fehler (' + FCurrentDemo.Key + '): ' +
+          E.Message);
+    end;
     if Form <> nil then
     begin
       FBehaviorForm := Form;
       { Der Schliessen-Knopf der Demo darf die Explorer-App nicht beenden,
         sondern leert nur den Frame. }
       FBehaviorForm.OnClose := BehaviorFormClosing;
-      PrepareBehaviorForm(FBehaviorForm);
-      PrepareBehaviorMenu(FBehaviorForm);
-      EmbedBehaviorForm;
-      btnStartIntern.Enabled := False;
-      btnShotIntern.Enabled := True;
+      try
+        PrepareBehaviorForm(FBehaviorForm);
+        PrepareBehaviorMenu(FBehaviorForm);
+        EmbedBehaviorForm;
+        btnStartIntern.Enabled := False;
+        btnShotIntern.Enabled := True;
+      except
+        on E: Exception do
+        begin
+          memoBehavior.Lines.Add('Demo-Fehler (Verhalten): ' + E.Message);
+          ClearBehavior;
+        end;
+      end;
     end;
   end
   else

@@ -11,7 +11,6 @@ object frmOptionsMain: TfrmOptionsMain
   Font.Name = 'System'
   Font.Style = []
   OnCreate = FormCreate
-  PixelsPerInch = 96
   object TabbedNotebook1: TPageControl
     Left = 0
     Top = 0
