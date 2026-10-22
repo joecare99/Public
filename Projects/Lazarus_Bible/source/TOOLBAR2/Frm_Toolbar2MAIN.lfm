@@ -190,7 +190,6 @@ object frmToolbar2Main: TfrmToolbar2Main
     Top = 57
     Width = 285
     Height = 123
-    StartOfWeek = 0
     TabOrder = 1
     Visible = False
   end
