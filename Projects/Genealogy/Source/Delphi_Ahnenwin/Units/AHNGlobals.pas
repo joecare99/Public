@@ -268,7 +268,7 @@ var
   gvar_0253644C: TStringList; //0253644C  used by Unit3
   gvar_02536450: AnsiString; //02536450  used by Unit3
   gvar_02536454: AnsiString; //02536454  used by Unit3
-  gvar_02536458: TTextRec; //02536458  used by Unit3
+  gvar_02536458: Text; //02536458  used by Unit3
   gvar_02536624: AnsiString; //02536624  used by Unit3
   gvar_02536628: AnsiString; //02536628  used by Unit3
   gvar_0253662C: AnsiString; //0253662C  used by Unit3

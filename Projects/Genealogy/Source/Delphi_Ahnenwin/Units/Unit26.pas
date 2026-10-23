@@ -52,32 +52,38 @@ end;
 
 procedure TForm26.nach_erm;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { TODO: GEDCOM engine (Unit3) not yet reconstructed - Originaladresse 0054FC40. }
 end;
 
 procedure TForm26.FormActivate(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (00550540) When the dialog is opened, the radio buttons are not set yet. }
+  RadioButton1.Checked := False;
+  RadioButton2.Checked := False;
+  RadioButton3.Checked := False;
 end;
 
 procedure TForm26.RadioButton1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { TODO: GEDCOM engine and TForm1.vorf_erm2 not yet reconstructed
+    - Originaladresse 0054FA08. }
 end;
 
 procedure TForm26.RadioButton3Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { TODO: GEDCOM engine (Unit3) not yet reconstructed - Originaladresse 0054F9C8.
+    Sets gvar_0061F008 := 'Alle' and then calls TForm26.los. }
 end;
 
 procedure TForm26.los;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { TODO: GEDCOM engine (Unit3) not yet reconstructed - Originaladresse 0054F8B4. }
 end;
 
 procedure TForm26.SpeedButton1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (0054F9FC) The button "nichts dergleichen" closes the dialog. }
+  Close;
 end;
 
 

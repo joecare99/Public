@@ -13,7 +13,7 @@ unit Unit24;
 interface
 
 uses
-  SysUtils, Classes, StdCtrls, ExtCtrls, Buttons, Forms, Controls, Grids, DB, AHNGlobals, Unit1;
+  SysUtils, Classes, StdCtrls, ExtCtrls, Buttons, Forms, Controls, Grids, DB, Dialogs, AHNGlobals, Unit1;
 
 type
   TForm24 = class(TForm)
@@ -188,7 +188,19 @@ end;
 
 procedure TForm24.ListBox5DblClick(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (0055F954) The marked Hofname is moved from ListBox5 into ListBox6.
+    The user gets a warning if more than one Hofname is already selected.
+    The two choices (RadioButton1 / RadioButton2) are then reset. }
+  if ListBox6.Items.Count > 0 then
+    ShowMessage('Es kann nur 1 Hofname ausgew' + #228 + 'hlt werden, ' + #13 + #10 +
+                'sonst gibt es Durcheinand' + #228 + 'nder.');
+  ListBox6.Items.Add(ListBox5.Items[ListBox5.ItemIndex]);
+  if ListBox6.Items.Count > 0 then
+  begin
+    RadioButton1.Enabled := False;
+    RadioButton2.Checked := True;
+    RadioButton3.Enabled := False;
+  end;
 end;
 
 procedure TForm24.CheckBox17Click(Sender: TObject);
@@ -207,7 +219,16 @@ end;
 
 procedure TForm24.Button1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (0055F80C) The marked Hofname is moved from ListBox5 into ListBox6.
+    This is the same effect as a double click in ListBox5.
+    The two choices (RadioButton1 / RadioButton2) are then reset. }
+  ListBox6.Items.Add(ListBox5.Items[ListBox5.ItemIndex]);
+  if ListBox6.Items.Count > 0 then
+  begin
+    RadioButton1.Enabled := False;
+    RadioButton2.Checked := True;
+    RadioButton3.Enabled := False;
+  end;
 end;
 
 procedure TForm24.Button2Click(Sender: TObject);

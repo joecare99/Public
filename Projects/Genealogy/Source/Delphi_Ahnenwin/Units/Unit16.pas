@@ -13,7 +13,7 @@ unit Unit16;
 interface
 
 uses
-  SysUtils, Classes, ExtCtrls, QRPrntr, Dialogs, Menus, Buttons, StdCtrls, Spin, WPPDFR2, WPPDFPRP, Forms, Controls, Grids, DB, QRCtrls, QuickRpt;
+  SysUtils, Classes, ExtCtrls, QRPrntr, Dialogs, Menus, Buttons, StdCtrls, Spin, WPPDFR2, WPPDFPRP, Forms, Controls, Grids, DB, QRCtrls, QuickRpt, AHNGlobals;
 
 type
   TForm16 = class(TForm)
@@ -128,7 +128,9 @@ end;
 
 procedure TForm16.Button1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (0055D774) "Seite 1" - the first page is shown. }
+  QRPreview1.PageNumber := 1;
+  showpagenumber;
 end;
 
 procedure TForm16.Quickreport1NeedData;
@@ -163,22 +165,30 @@ end;
 
 procedure TForm16.SpeedButton3Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (0055D38C) The save button calls the same method as the menu entry. }
+  Speichernunter1Click;
 end;
 
 procedure TForm16.showpagenumber;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (0055B940) The label under the preview shows the page number and
+    the total number of pages. }
+  Label2.Caption := 'Seite ' + IntToStr(QRPreview1.PageNumber) + ' von ' + IntToStr(gvar_0061F0B8);
 end;
 
 procedure TForm16.Button3Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (0055BC10) "Vor" - the next page is shown. }
+  if QRPreview1.PageNumber < gvar_0061F0B8 then
+    QRPreview1.PageNumber := QRPreview1.PageNumber + 1;
+  showpagenumber;
 end;
 
 procedure TForm16.Button4Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (0055BC38) "Letzte Seite" - the last page is shown. }
+  QRPreview1.PageNumber := gvar_0061F0B8;
+  showpagenumber;
 end;
 
 procedure TForm16.FormShow(Sender: TObject);
@@ -193,7 +203,14 @@ end;
 
 procedure TForm16.QRPreview1PageAvailable(Sender: TObject; Page: Integer);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (0055BB34) Called by TQRPreview when the page count is known.
+    The total number is remembered, the page is set to one, the label
+    is updated, and the print dialog gets the range. }
+  QRPreview1.PageNumber := 1;
+  Label2.Caption := 'Seite ' + IntToStr(QRPreview1.PageNumber) + ' von ' + IntToStr(Page);
+  gvar_0061F0B8 := Page;
+  PrintDialog1.MaxPage := Page;
+  PrintDialog1.ToPage  := Page;
 end;
 
 procedure TForm16.FormKeyDown;
@@ -208,7 +225,8 @@ end;
 
 procedure TForm16.SpeedButton2Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (0055BDA8) The print button calls the same method as the menu entry. }
+  Drucken1Click;
 end;
 
 procedure TForm16.ComboBox1Click(Sender: TObject);
@@ -218,12 +236,17 @@ end;
 
 procedure TForm16.SpinEdit1Change(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (0055BCE0) The zoom factor is read from the spin edit. }
+  QRPreview1.Zoom := SpinEdit1.Value;
+  ComboBox1.Text := '';
 end;
 
 procedure TForm16.Button2Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (0055BD0C) "Zurck" - the previous page is shown. }
+  if QRPreview1.PageNumber > 1 then
+    QRPreview1.PageNumber := QRPreview1.PageNumber - 1;
+  showpagenumber;
 end;
 
 

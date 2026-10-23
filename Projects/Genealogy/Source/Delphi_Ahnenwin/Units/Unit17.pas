@@ -13,7 +13,7 @@ unit Unit17;
 interface
 
 uses
-  SysUtils, Classes, Buttons, ExtCtrls, StdCtrls, Forms, Controls, Grids, DB;
+  SysUtils, Classes, Buttons, ExtCtrls, StdCtrls, Forms, Controls, Grids, DB, Unit2, AHNGlobals, Unit1;
 
 type
   TForm17 = class(TForm)
@@ -65,7 +65,22 @@ implementation
 
 procedure TForm17.RadioButton1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (00545014) "alle markieren" - every checkbox of the parameters is checked. }
+  CheckBox1.Checked  := True;
+  CheckBox2.Checked  := True;
+  CheckBox3.Checked  := True;
+  CheckBox4.Checked  := True;
+  CheckBox5.Checked  := True;
+  CheckBox6.Checked  := True;
+  CheckBox7.Checked  := True;
+  CheckBox8.Checked  := True;
+  CheckBox9.Checked  := True;
+  CheckBox11.Checked := True;
+  CheckBox12.Checked := True;
+  CheckBox13.Checked := True;
+  CheckBox14.Checked := True;
+  CheckBox15.Checked := True;
+  CheckBox16.Checked := True;
 end;
 
 procedure TForm17.fambeltern;
@@ -75,12 +90,31 @@ end;
 
 procedure TForm17.FormShow(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (00545204) The table of the parameters of the family chart is opened
+    with the index 'tit' and positioned on the first record. }
+  DataModule2.Table38.Open;
+  DataModule2.Table38.IndexName := 'tit';
+  DataModule2.Table38.First;
 end;
 
 procedure TForm17.RadioButton2Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (0054510C) "alle l'oschen" - every checkbox of the parameters is unchecked. }
+  CheckBox1.Checked  := False;
+  CheckBox2.Checked  := False;
+  CheckBox3.Checked  := False;
+  CheckBox4.Checked  := False;
+  CheckBox5.Checked  := False;
+  CheckBox6.Checked  := False;
+  CheckBox7.Checked  := False;
+  CheckBox8.Checked  := False;
+  CheckBox9.Checked  := False;
+  CheckBox11.Checked := False;
+  CheckBox12.Checked := False;
+  CheckBox13.Checked := False;
+  CheckBox14.Checked := False;
+  CheckBox15.Checked := False;
+  CheckBox16.Checked := False;
 end;
 
 procedure TForm17.nam2;
@@ -95,7 +129,12 @@ end;
 
 procedure TForm17.BitBtn2Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { (005405A0) "Abbruch" - the form is closed with the value 2 in
+    TCustomForm.FModalResult (mrCancel); the flag that the family chart
+    was requested is cleared; the person is shown again. }
+  ModalResult := 2;
+  gvar_0061EFD0 := 0;
+  Form1.anzeigen;
 end;
 
 procedure TForm17.gebstvn;
