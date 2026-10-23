@@ -288,7 +288,7 @@ var
   gvar_02536664: AnsiString; //02536664  used by Unit3
   gvar_02536668: Single; //02536668  used by Unit3
   gvar_0253666C: Single; //0253666C  used by Unit3
-  gvar_02536670: TTextRec; //02536670  used by Unit3
+  gvar_02536670: Text; //02536670  used by Unit3
   gvar_0253683C: Integer; //0253683C  used by Unit3
   gvar_02536840: Integer; //02536840  used by Unit3
   gvar_02536844: Integer; //02536844  used by Unit3

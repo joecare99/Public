@@ -13,7 +13,7 @@ unit Unit3;
 interface
 
 uses
-  Windows, SysUtils, StrUtils, Classes, StdCtrls, Buttons, DBTables, DBCommon, Dialogs, Forms, Controls, Grids, DB, AHNGlobals, Unit2;
+  Windows, SysUtils, StrUtils, Classes, StdCtrls, Buttons, DBTables, DBCommon, Dialogs, Forms, Controls, Grids, DB, AHNGlobals, Unit1, Unit2;
 
 type
   TForm3 = class(TForm)
@@ -29,12 +29,12 @@ type
     OpenDialog1: TOpenDialog; //310
     SaveDialog1: TSaveDialog; //314
     procedure Bapm; //005797B0
-    procedure Birt; //00578E28
-    procedure Sex; //00578C84
+    procedure Birt(AIn: AnsiString; var AEs: AnsiString); //00578E28
+    procedure Sex(AIn: AnsiString; var AEs: AnsiString); //00578C84
     procedure Occu; //0057B5C8
     procedure Buri; //0057AC40
     procedure Deat; //0057A258
-    procedure Nam; //00578A48
+    procedure Nam(AIn: AnsiString; var AEs: AnsiString); //00578A48
     procedure ofb3; //00585048
     procedure ofb2; //0058CB84
     procedure indi; //005967C8
@@ -386,14 +386,133 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.Birt;
+procedure TForm3.Birt(AIn: AnsiString; var AEs: AnsiString);
+var
+  s, t: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Reads a GEDCOM section "1 BIRT" up to the next "1" line and writes
+    the sub-lines Date/Place/Longitude/Latitude/Note/Cont/Conc/Source/Comm
+    to the person record (Table1) and the comment strings in
+    gvar_0253684C and gvar_02536430. The next "1" line is left in s for
+    further disposal (return value via AEs). }
+  gvar_02536430 := '';
+  ReadLn(gvar_02536670, s);
+  zsa(s, t);
+  s := t;
+  while Copy(s, 1, 1) > '1' do
+  begin
+    if Pos('DATE', s) > 0 then
+    begin
+      if Pos(',', s) > 0 then
+      begin
+        sub_00577934(Copy(s, 8, Pos(',', s) - 8));
+        if Trim(gvar_0253684C) = '' then
+          gvar_0253684C := 'Geburt: ' + Copy(s, Pos(',', s) + 1,
+            Length(Trim(s)) - Pos(',', s))
+        else
+          gvar_0253684C := gvar_0253684C + #13#10 + 'Geburt: ' +
+            Copy(s, Pos(',', s) + 1, Length(Trim(s)) - Pos(',', s));
+      end
+      else
+        sub_00577934(Copy(TrimRight(s), 8, Length(TrimRight(s))));
+      s := '* ' + gvar_02536624 + '.' + gvar_02536628 + '.' + gvar_0253662C;
+      DataModule2.Table1Gebtag.AsString := gvar_02536624;
+      DataModule2.Table1Gebmonat.AsString := gvar_02536628;
+      DataModule2.Table1Gebjahr.AsString := gvar_0253662C;
+    end;
+    if Pos('PLAC', s) > 0 then
+    begin
+      Ortdreh(Copy(Trim(s), 8, Length(Trim(s))), s);
+      DataModule2.Table1Gebort.AsString := s;
+    end;
+    if Pos('2 LONG', s) > 0 then
+    begin
+      { Adds a longitude entry to the place file (Table13): if the place
+        exists, only the coordinate is updated, otherwise a new record is
+        created. }
+      if DataModule2.Table13.FindKey([DataModule2.Table1Gebort.AsString]) then
+      begin
+        DataModule2.Table13.Edit;
+        DataModule2.Table13Lg.AsString := Copy(Trim(s), 8, Length(s));
+      end
+      else
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := DataModule2.Table1Gebort.AsString;
+        DataModule2.Table13Lg.AsString := Copy(Trim(s), 8, Length(s));
+      end;
+      DataModule2.Table13.Post;
+    end;
+    if Pos('2 LATI', s) > 0 then
+    begin
+      { Adds a latitude entry to the place file (Table13), analogous to
+        2 LONG. }
+      if DataModule2.Table13.FindKey([DataModule2.Table1Gebort.AsString]) then
+      begin
+        DataModule2.Table13.Edit;
+        DataModule2.Table13Bg.AsString := Copy(Trim(s), 8, Length(s));
+      end
+      else
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := DataModule2.Table1Gebort.AsString;
+        DataModule2.Table13Bg.AsString := Copy(Trim(s), 8, Length(s));
+      end;
+      DataModule2.Table13.Post;
+    end;
+    if Pos('NOTE', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := 'Geburt: ' + Copy(Trim(s), 8, Length(Trim(s)))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + 'Geburt: ' +
+          Copy(Trim(s), 8, Length(Trim(s)));
+    end;
+    if Pos('CONT', s) > 0 then
+      gvar_0253684C := gvar_0253684C + #13#10 + Copy(Trim(s), 8, Length(Trim(s)));
+    if Pos('CONC', s) > 0 then
+      gvar_0253684C := gvar_0253684C + ' ' + Copy(Trim(s), 8, Length(Trim(s)));
+    gvar_02536850 := '';
+    if Pos('2 SOUR @', s) > 0 then
+    begin
+      Form1.Repso2.IndexName := 'ih';
+      if Form1.Repso2.FindKey([Trim(Copy(s, 8, Length(s)))]) then
+        DataModule2.Table1Quelleg.AsString := Form1.Repso2inh2.AsString;
+    end;
+    if (Pos('2 SOUR', s) > 0) and (Pos('@', s) = 0) then
+      DataModule2.Table1Quelleg.AsString := Trim(Copy(s, 8, Length(s)));
+    if Pos('2 COMM', s) > 0 then
+      gvar_02536430 := gvar_02536430 + #13#10 + Trim(Copy(s, 8, Length(s)));
+    gvar_02536430 := gvar_02536430 + ' ' + s;
+    ReadLn(gvar_02536670, s);
+    zsa(s, t);
+    s := t;
+  end;
+  AEs := gvar_02536430;
+  gvar_02536430 := s;
+  { The original sets the low word of gvar_02536844 to $2A01; the
+    reconstruction writes the complete value. Deviation with no
+    visible effect. }
+  gvar_02536844 := $2A01;
 end;
 
-procedure TForm3.Sex;
+procedure TForm3.Sex(AIn: AnsiString; var AEs: AnsiString);
+var
+  s: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Evaluates a GEDCOM line "1 SEX M/F/W/U": the sex is written as
+    "m"/"w"/"x" to Table1Geschlecht. Unknown or not specified becomes
+    "x". }
+  s := Trim(Copy(AIn, 7, Length(AIn)));
+  if UpperCase(s) = 'M' then
+    AEs := 'm'
+  else if (UpperCase(s) = 'F') or (UpperCase(s) = 'W') then
+    AEs := 'w'
+  else if UpperCase(s) = 'U' then
+    AEs := 'x';
+  if Trim(s) = '' then
+    AEs := 'x';
+  DataModule2.Table1Geschlecht.AsString := AEs;
 end;
 
 procedure TForm3.Occu;
@@ -411,9 +530,33 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.Nam;
+procedure TForm3.Nam(AIn: AnsiString; var AEs: AnsiString);
+var
+  s, t: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Breaks down a GEDCOM name line "1 NAME Vorname /Zuname /Zusatz.": the
+    given name is written to Table1Vornamen, the surname to Table1Name.
+    A name suffix is appended to the comment field with the label
+    "Namens-Zusatz:". AEs receives the name as "given name surname",
+    the remainder after the second slash is stored in
+    gvar_02536430. }
+  if Pos('/', AIn) = 0 then
+  begin
+    AEs := AIn;
+    gvar_02536430 := AIn;
+    exit;
+  end;
+  s := Trim(Copy(AIn, 8, Length(AIn)));
+  AEs := Copy(s, 1, Pos('/', s) - 1);
+  DataModule2.Table1Vornamen.AsString := AEs;
+  s := Trim(Copy(s, Pos('/', s) + 1, Length(s)));
+  t := Copy(s, 1, Pos('/', s) - 1);
+  DataModule2.Table1Name.AsString := t;
+  AEs := AEs + ' ' + t;
+  t := Trim(Copy(s, Pos('/', s) + 1, Length(s)));
+  if t <> '' then
+    sub_005772E4('Namens-Zusatz: ' + t);
+  gvar_02536430 := s;
 end;
 
 procedure TForm3.ofb3;

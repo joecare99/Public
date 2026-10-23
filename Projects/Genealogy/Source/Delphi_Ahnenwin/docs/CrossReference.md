@@ -302,20 +302,20 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit3
 
-- methods: 53, reconstructed: 16, open: 43
+- methods: 53, reconstructed: 20, open: 39
 
   - done  `sub_00576EB0`  @`00576EB0`
   - done  `sub_00576F54`  @`00576F54`
   - done  `sub_00576FF8`  @`00576FF8`
   - done  `sub_005772E4`  @`005772E4`
-  - open  `lieszeil`  @`005773C4`
+  - done  `lieszeil`  @`005773C4`
   - done  `sub_00577544`  @`00577544`
   - done  `zsa`  @`00577834`
   - done  `sub_00577934`  @`00577934`
   - done  `Ortdreh`  @`0057893C`
-  - open  `Nam`  @`00578A48`
-  - open  `Sex`  @`00578C84`
-  - open  `Birt`  @`00578E28`
+  - done  `Nam`  @`00578A48`
+  - done  `Sex`  @`00578C84`
+  - done  `Birt`  @`00578E28`
   - open  `Bapm`  @`005797B0`
   - open  `Deat`  @`0057A258`
   - open  `Buri`  @`0057AC40`
@@ -868,4 +868,4 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Total
 
-- methods: 615, reconstructed: 408, open: 207
+- methods: 615, reconstructed: 412, open: 203
