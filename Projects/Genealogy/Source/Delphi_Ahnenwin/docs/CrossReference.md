@@ -302,7 +302,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit3
 
-- methods: 53, reconstructed: 20, open: 39
+- methods: 53, reconstructed: 27, open: 32
 
   - done  `sub_00576EB0`  @`00576EB0`
   - done  `sub_00576F54`  @`00576F54`
@@ -316,13 +316,13 @@ Legend: **done** = the body was reconstructed from the listing,
   - done  `Nam`  @`00578A48`
   - done  `Sex`  @`00578C84`
   - done  `Birt`  @`00578E28`
-  - open  `Bapm`  @`005797B0`
-  - open  `Deat`  @`0057A258`
-  - open  `Buri`  @`0057AC40`
-  - open  `Occu`  @`0057B5C8`
-  - open  `Even`  @`0057B94C`
-  - open  `Grad`  @`0057BEC0`
-  - open  `Educ`  @`0057C3E0`
+  - done  `Bapm`  @`005797B0`
+  - done  `Deat`  @`0057A258`
+  - done  `Buri`  @`0057AC40`
+  - done  `Occu`  @`0057B5C8`
+  - done  `Even`  @`0057B94C`
+  - done  `Grad`  @`0057BEC0`
+  - done  `Educ`  @`0057C3E0`
   - open  `Prop`  @`0057C8B8`
   - open  `Resi`  @`0057CA24`
   - open  `Chan`  @`0057CC58`
@@ -868,4 +868,4 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Total
 
-- methods: 615, reconstructed: 412, open: 203
+- methods: 615, reconstructed: 419, open: 196

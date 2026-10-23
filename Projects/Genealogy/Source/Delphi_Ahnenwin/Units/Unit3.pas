@@ -28,12 +28,12 @@ type
     Query1: TQuery; //30C
     OpenDialog1: TOpenDialog; //310
     SaveDialog1: TSaveDialog; //314
-    procedure Bapm; //005797B0
+    procedure Bapm(AIn: AnsiString; AFlag: Integer; var AEs: AnsiString); //005797B0
     procedure Birt(AIn: AnsiString; var AEs: AnsiString); //00578E28
     procedure Sex(AIn: AnsiString; var AEs: AnsiString); //00578C84
-    procedure Occu; //0057B5C8
-    procedure Buri; //0057AC40
-    procedure Deat; //0057A258
+    procedure Occu(AIn: AnsiString; var AEs: AnsiString); //0057B5C8
+    procedure Buri(AIn: AnsiString; var AEs: AnsiString); //0057AC40
+    procedure Deat(AIn: AnsiString; var AEs: AnsiString); //0057A258
     procedure Nam(AIn: AnsiString; var AEs: AnsiString); //00578A48
     procedure ofb3; //00585048
     procedure ofb2; //0058CB84
@@ -41,18 +41,18 @@ type
     procedure Ortdreh(AOrt: AnsiString; var AErgebnis: AnsiString); //0057893C
     procedure oabk; //00584EBC
     procedure illki; //00584350
-    procedure Even; //0057B94C
+    procedure Even(AIn: AnsiString); //0057B94C
     procedure zsa(ALine: AnsiString; var AErgebnis: AnsiString); //00577834
     procedure ansl(AIn: AnsiString; var AOut: AnsiString); //005832F8
     procedure sour; //005BF434
     procedure gedein_5; //005BFB94
     procedure famn; //0057D560
     procedure Prop; //0057C8B8
-    procedure Educ; //0057C3E0
-    procedure Grad; //0057BEC0
+    procedure Educ(AIn: AnsiString); //0057C3E0
+    procedure Grad(AIn: AnsiString); //0057BEC0
     procedure Note; //0057CF58
     procedure Chan; //0057CC58
-    procedure Resi; //0057CA24
+    procedure Resi(AIn: AnsiString); //0057CA24
     procedure ans(AIn: AnsiString; var AOut: AnsiString); //005836E8
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState); //00584254
     procedure Edit2KeyPress(Sender: TObject; var Key: Char); //00584224
@@ -381,9 +381,124 @@ end;
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
 
-procedure TForm3.Bapm;
+procedure TForm3.Bapm(AIn: AnsiString; AFlag: Integer; var AEs: AnsiString);
+var
+  s, t: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Reads a GEDCOM section "1 BAPM" up to the next "1" line and writes
+    the sub-lines Date/Place/Longitude/Latitude/_GODP/Note/Cont/Conc/
+    Source/Comm to the person record (Taufe fields) and to the comment
+    strings gvar_0253684C and gvar_02536430. The next "1" line is left
+    in s for further disposal (return value via AEs). }
+  gvar_02536430 := '';
+  ReadLn(gvar_02536670, s);
+  zsa(s, t);
+  s := t;
+  while Copy(s, 1, 1) > '1' do
+  begin
+    if Pos('DATE', s) > 0 then
+    begin
+      if Pos(',', s) > 0 then
+      begin
+        sub_00577934(Copy(s, 8, Pos(',', s) - 8));
+        if Trim(gvar_0253684C) = '' then
+          gvar_0253684C := 'Taufe: ' + Copy(s, Pos(',', s) + 1,
+            Length(Trim(s)) - Pos(',', s))
+        else
+          gvar_0253684C := gvar_0253684C + #13#10 + 'Taufe: ' +
+            Copy(s, Pos(',', s) + 1, Length(Trim(s)) - Pos(',', s));
+      end
+      else
+        sub_00577934(Copy(TrimRight(s), 8, Length(TrimRight(s))));
+      s := '~ ' + gvar_02536624 + '.' + gvar_02536628 + '.' + gvar_0253662C;
+      DataModule2.Table1Tauftag.AsString := gvar_02536624;
+      DataModule2.Table1Taufmonat.AsString := gvar_02536628;
+      DataModule2.Table1Taufjahr.AsString := gvar_0253662C;
+    end;
+    if Pos('PLAC', s) > 0 then
+    begin
+      Ortdreh(Copy(Trim(s), 8, Length(Trim(s))), s);
+      DataModule2.Table1Taufort.AsString := s;
+    end;
+    if Pos('2 LONG', s) > 0 then
+    begin
+      { Adds a longitude entry to the place file (Table13), analogous to
+        Birt. }
+      if DataModule2.Table13.FindKey([DataModule2.Table1Taufort.AsString]) then
+      begin
+        DataModule2.Table13.Edit;
+        DataModule2.Table13Lg.AsString := Copy(Trim(s), 8, Length(s));
+      end
+      else
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := DataModule2.Table1Taufort.AsString;
+        DataModule2.Table13Lg.AsString := Copy(Trim(s), 8, Length(s));
+      end;
+      DataModule2.Table13.Post;
+    end;
+    if Pos('2 LATI', s) > 0 then
+    begin
+      { Adds a latitude entry to the place file (Table13), analogous to
+        Birt. }
+      if DataModule2.Table13.FindKey([DataModule2.Table1Taufort.AsString]) then
+      begin
+        DataModule2.Table13.Edit;
+        DataModule2.Table13Bg.AsString := Copy(Trim(s), 8, Length(s));
+      end
+      else
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := DataModule2.Table1Taufort.AsString;
+        DataModule2.Table13Bg.AsString := Copy(Trim(s), 8, Length(s));
+      end;
+      DataModule2.Table13.Post;
+    end;
+    if AFlag = 1 then
+      if Pos('_GODP', s) > 0 then
+      begin
+        { Appends a godparent entry with ", " to Table1Taufpat, or sets
+          it completely new. }
+        if Trim(DataModule2.Table1Taufpat.AsString) <> '' then
+          DataModule2.Table1Taufpat.AsString := DataModule2.Table1Taufpat.AsString +
+            ', ' + Trim(Copy(s, 9, Length(Trim(s))))
+        else
+          DataModule2.Table1Taufpat.AsString := Trim(Copy(s, 9, Length(Trim(s))));
+      end;
+    if Pos('NOTE', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := 'Taufe: ' + Copy(Trim(s), 8, Length(Trim(s)))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + 'Taufe: ' +
+          Copy(Trim(s), 8, Length(Trim(s)));
+    end;
+    if Pos('CONT', s) > 0 then
+      gvar_0253684C := gvar_0253684C + #13#10 + Copy(Trim(s), 8, Length(Trim(s)));
+    if Pos('CONC', s) > 0 then
+      gvar_0253684C := gvar_0253684C + ' ' + Copy(Trim(s), 8, Length(Trim(s)));
+    gvar_02536850 := '';
+    if Pos('2 SOUR @', s) > 0 then
+    begin
+      Form1.Repso2.IndexName := 'ih';
+      if Form1.Repso2.FindKey([Trim(Copy(s, 8, Length(s)))]) then
+        DataModule2.Table1Quellet.AsString := Form1.Repso2inh2.AsString;
+    end;
+    if (Pos('2 SOUR', s) > 0) and (Pos('@', s) = 0) then
+      DataModule2.Table1Quellet.AsString := Trim(Copy(s, 8, Length(s)));
+    if Pos('2 COMM', s) > 0 then
+      gvar_02536430 := gvar_02536430 + #13#10 + Trim(Copy(s, 8, Length(s)));
+    gvar_02536430 := gvar_02536430 + ' ' + s;
+    ReadLn(gvar_02536670, s);
+    zsa(s, t);
+    s := t;
+  end;
+  AEs := gvar_02536430;
+  gvar_02536430 := s;
+  { The original sets the low word of gvar_02536844 to $2A01; the
+    reconstruction writes the complete value. Deviation with no
+    visible effect. }
+  gvar_02536844 := $2A01;
 end;
 
 procedure TForm3.Birt(AIn: AnsiString; var AEs: AnsiString);
@@ -515,19 +630,273 @@ begin
   DataModule2.Table1Geschlecht.AsString := AEs;
 end;
 
-procedure TForm3.Occu;
+procedure TForm3.Occu(AIn: AnsiString; var AEs: AnsiString);
+var
+  s, t: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Reads a GEDCOM section "1 OCCU" up to the next "1" line and collects
+    the sub-lines Date/Place/Note/Cont in the comment strings
+    gvar_02536430 ("Beruf: " prefix in gvar_0253684C). The next "1" line is
+    left in s for further disposal (return value via AEs). }
+  gvar_02536430 := Trim(Copy(AIn, 8, Length(AIn)));
+  ReadLn(gvar_02536670, s);
+  zsa(s, t);
+  s := t;
+  while Copy(s, 1, 1) > '1' do
+  begin
+    if Pos('DATE', s) > 0 then
+      gvar_02536430 := gvar_02536430 + ' ' + Copy(s, 8, Length(Trim(s)));
+    if Pos('PLAC', s) > 0 then
+    begin
+      Ortdreh(Copy(Trim(s), 8, Length(Trim(s))), s);
+      gvar_02536430 := gvar_02536430 + ' ' + s;
+    end;
+    if Pos('NOTE', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := 'Beruf: ' + Copy(Trim(s), 8, Length(Trim(s)))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + 'Beruf: ' +
+          Copy(Trim(s), 8, Length(Trim(s)));
+    end;
+    if Pos('CONT', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := Copy(s, 8, Length(s))
+      else
+        gvar_0253684C := gvar_0253684C + ' ' + Copy(s, 8, Length(s));
+    end;
+    ReadLn(gvar_02536670, s);
+    zsa(s, t);
+    s := t;
+  end;
+  AEs := gvar_02536430;
+  gvar_02536430 := s;
+  { The original sets the low word of gvar_02536844 to $2A01; the
+    reconstruction writes the complete value. Deviation with no
+    visible effect. }
+  gvar_02536844 := $2A01;
 end;
 
-procedure TForm3.Buri;
+procedure TForm3.Buri(AIn: AnsiString; var AEs: AnsiString);
+var
+  s, t: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Reads a GEDCOM section "1 BURI" up to the next "1" line and writes
+    the sub-lines Date/Place/Longitude/Latitude/Note/Cont/Conc/Source/
+    Comm to the person record (Bestattung fields) and to the comment
+    strings gvar_0253684C (label "Bestatt.: ") and gvar_02536430. The
+    next "1" line is left in s for further disposal (return value via
+    AEs). }
+  gvar_02536430 := '';
+  ReadLn(gvar_02536670, s);
+  zsa(s, t);
+  s := t;
+  while Copy(s, 1, 1) > '1' do
+  begin
+    if Pos('DATE', s) > 0 then
+    begin
+      if Pos(',', s) > 0 then
+      begin
+        sub_00577934(Copy(s, 8, Pos(',', s) - 8));
+        if Trim(gvar_0253684C) = '' then
+          gvar_0253684C := 'Bestatt.: ' + Copy(s, Pos(',', s) + 1,
+            Length(Trim(s)) - Pos(',', s))
+        else
+          gvar_0253684C := gvar_0253684C + #13#10 + 'Bestatt.: ' +
+            Copy(s, Pos(',', s) + 1, Length(Trim(s)) - Pos(',', s));
+      end
+      else
+        sub_00577934(Copy(TrimRight(s), 8, Length(TrimRight(s))));
+      s := '# ' + gvar_02536624 + '.' + gvar_02536628 + '.' + gvar_0253662C;
+      DataModule2.Table1Begtag.AsString := gvar_02536624;
+      DataModule2.Table1Begmonat.AsString := gvar_02536628;
+      DataModule2.Table1Begjahr.AsString := gvar_0253662C;
+    end;
+    if Pos('PLAC', s) > 0 then
+    begin
+      Ortdreh(Copy(Trim(s), 8, Length(Trim(s))), s);
+      DataModule2.Table1Begort.AsString := s;
+    end;
+    if Pos('2 LONG', s) > 0 then
+    begin
+      { Adds a longitude entry to the place file (Table13), analogous to
+        Birt. }
+      if DataModule2.Table13.FindKey([DataModule2.Table1Begort.AsString]) then
+      begin
+        DataModule2.Table13.Edit;
+        DataModule2.Table13Lg.AsString := Copy(Trim(s), 8, Length(s));
+      end
+      else
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := DataModule2.Table1Begort.AsString;
+        DataModule2.Table13Lg.AsString := Copy(Trim(s), 8, Length(s));
+      end;
+      DataModule2.Table13.Post;
+    end;
+    if Pos('2 LATI', s) > 0 then
+    begin
+      { Adds a latitude entry to the place file (Table13), analogous to
+        Birt. }
+      if DataModule2.Table13.FindKey([DataModule2.Table1Begort.AsString]) then
+      begin
+        DataModule2.Table13.Edit;
+        DataModule2.Table13Bg.AsString := Copy(Trim(s), 8, Length(s));
+      end
+      else
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := DataModule2.Table1Begort.AsString;
+        DataModule2.Table13Bg.AsString := Copy(Trim(s), 8, Length(s));
+      end;
+      DataModule2.Table13.Post;
+    end;
+    if Pos('NOTE', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := 'Bestatt.: ' + Copy(Trim(s), 8, Length(Trim(s)))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + 'Bestatt.: ' +
+          Copy(Trim(s), 8, Length(Trim(s)));
+    end;
+    if Pos('CONT', s) > 0 then
+      gvar_0253684C := gvar_0253684C + #13#10 + Copy(Trim(s), 8, Length(Trim(s)));
+    if Pos('CONC', s) > 0 then
+      gvar_0253684C := gvar_0253684C + ' ' + Copy(Trim(s), 8, Length(Trim(s)));
+    gvar_02536850 := '';
+    if Pos('2 SOUR @', s) > 0 then
+    begin
+      Form1.Repso2.IndexName := 'ih';
+      if Form1.Repso2.FindKey([Trim(Copy(s, 8, Length(s)))]) then
+        DataModule2.Table1Quelleb.AsString := Form1.Repso2inh2.AsString;
+    end;
+    if (Pos('2 SOUR', s) > 0) and (Pos('@', s) = 0) then
+      DataModule2.Table1Quelleb.AsString := Trim(Copy(s, 8, Length(s)));
+    if Pos('2 COMM', s) > 0 then
+      gvar_02536430 := gvar_02536430 + #13#10 + Trim(Copy(s, 8, Length(s)));
+    gvar_02536430 := gvar_02536430 + ' ' + s;
+    ReadLn(gvar_02536670, s);
+    zsa(s, t);
+    s := t;
+  end;
+  AEs := gvar_02536430;
+  gvar_02536430 := s;
+  { The original sets the low word of gvar_02536844 to $2A01; the
+    reconstruction writes the complete value. Deviation with no
+    visible effect. }
+  gvar_02536844 := $2A01;
 end;
 
-procedure TForm3.Deat;
+procedure TForm3.Deat(AIn: AnsiString; var AEs: AnsiString);
+var
+  s, t: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Reads a GEDCOM section "1 DEAT" up to the next "1" line and writes
+    the sub-lines Date/Place/Longitude/Latitude/Note/Cont/Conc/Source/
+    Comm/Caus to the person record (Sterbe fields) and to the comment
+    strings gvar_0253684C and gvar_02536430. The next "1" line is left
+    in s for further disposal (return value via AEs). }
+  gvar_02536430 := '';
+  ReadLn(gvar_02536670, s);
+  zsa(s, t);
+  s := t;
+  while Copy(s, 1, 1) > '1' do
+  begin
+    if Pos('DATE', s) > 0 then
+    begin
+      if Pos(',', s) > 0 then
+      begin
+        sub_00577934(Copy(s, 8, Pos(',', s) - 8));
+        if Trim(gvar_0253684C) = '' then
+          gvar_0253684C := 'Tod: ' + Copy(s, Pos(',', s) + 1,
+            Length(Trim(s)) - Pos(',', s))
+        else
+          gvar_0253684C := gvar_0253684C + #13#10 + 'Tod: ' +
+            Copy(s, Pos(',', s) + 1, Length(Trim(s)) - Pos(',', s));
+      end
+      else
+        sub_00577934(Copy(TrimRight(s), 8, Length(TrimRight(s))));
+      s := '+ ' + gvar_02536624 + '.' + gvar_02536628 + '.' + gvar_0253662C;
+      DataModule2.Table1Sttag.AsString := gvar_02536624;
+      DataModule2.Table1Stmonat.AsString := gvar_02536628;
+      DataModule2.Table1Stjahr.AsString := gvar_0253662C;
+    end;
+    if Pos('PLAC', s) > 0 then
+    begin
+      Ortdreh(Copy(Trim(s), 8, Length(Trim(s))), s);
+      DataModule2.Table1Stort.AsString := s;
+    end;
+    if Pos('2 LONG', s) > 0 then
+    begin
+      { Adds a longitude entry to the place file (Table13), analogous to
+        Birt. }
+      if DataModule2.Table13.FindKey([DataModule2.Table1Stort.AsString]) then
+      begin
+        DataModule2.Table13.Edit;
+        DataModule2.Table13Lg.AsString := Copy(Trim(s), 8, Length(s));
+      end
+      else
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := DataModule2.Table1Stort.AsString;
+        DataModule2.Table13Lg.AsString := Copy(Trim(s), 8, Length(s));
+      end;
+      DataModule2.Table13.Post;
+    end;
+    if Pos('2 LATI', s) > 0 then
+    begin
+      { Adds a latitude entry to the place file (Table13), analogous to
+        Birt. }
+      if DataModule2.Table13.FindKey([DataModule2.Table1Stort.AsString]) then
+      begin
+        DataModule2.Table13.Edit;
+        DataModule2.Table13Bg.AsString := Copy(Trim(s), 8, Length(s));
+      end
+      else
+      begin
+        DataModule2.Table13.Append;
+        DataModule2.Table13Ort.AsString := DataModule2.Table1Stort.AsString;
+        DataModule2.Table13Bg.AsString := Copy(Trim(s), 8, Length(s));
+      end;
+      DataModule2.Table13.Post;
+    end;
+    if Pos('NOTE', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := 'Tod: ' + Copy(Trim(s), 8, Length(Trim(s)))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + 'Tod: ' +
+          Copy(Trim(s), 8, Length(Trim(s)));
+    end;
+    if Pos('CONT', s) > 0 then
+      gvar_0253684C := gvar_0253684C + #13#10 + Copy(Trim(s), 8, Length(Trim(s)));
+    if Pos('CONC', s) > 0 then
+      gvar_0253684C := gvar_0253684C + ' ' + Copy(Trim(s), 8, Length(Trim(s)));
+    gvar_02536850 := '';
+    if Pos('2 SOUR @', s) > 0 then
+    begin
+      Form1.Repso2.IndexName := 'ih';
+      if Form1.Repso2.FindKey([Trim(Copy(s, 8, Length(s)))]) then
+        DataModule2.Table1Quelles.AsString := Form1.Repso2inh2.AsString;
+    end;
+    if (Pos('2 SOUR', s) > 0) and (Pos('@', s) = 0) then
+      DataModule2.Table1Quelles.AsString := Trim(Copy(s, 8, Length(s)));
+    if Pos('2 COMM', s) > 0 then
+      gvar_02536430 := gvar_02536430 + #13#10 + Trim(Copy(s, 8, Length(s)));
+    if Pos('CAUS', s) > 0 then
+      DataModule2.Table1Todesurs.AsString := Copy(Trim(s), 8, Length(Trim(s)));
+    gvar_02536430 := gvar_02536430 + ' ' + s;
+    ReadLn(gvar_02536670, s);
+    zsa(s, t);
+    s := t;
+  end;
+  AEs := gvar_02536430;
+  gvar_02536430 := s;
+  { The original sets the low word of gvar_02536844 to $2A01; the
+    reconstruction writes the complete value. Deviation with no
+    visible effect. }
+  gvar_02536844 := $2A01;
 end;
 
 procedure TForm3.Nam(AIn: AnsiString; var AEs: AnsiString);
@@ -600,9 +969,76 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.Even;
+procedure TForm3.Even(AIn: AnsiString);
+var
+  s, t: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Reads a GEDCOM section "1 EVEN" up to the next "1" line and builds
+    a comment text in gvar_0253684C ("Ereig.: " header with the event
+    name, then Date, Place "(Page)", Note/Cont/Conc on following lines).
+    The next "1" line is left in s; gvar_02536430 receives it. }
+  gvar_02536430 := '';
+  gvar_0253684C := gvar_0253684C + #13#10 + 'Ereig.: ' +
+    Copy(Trim(AIn), 8, Length(Trim(AIn)));
+  ReadLn(gvar_02536670, s);
+  zsa(s, t);
+  s := t;
+  while Copy(s, 1, 1) > '1' do
+  begin
+    if Pos('TYPE', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := 'Ereig.: ' + Copy(Trim(s), 8, Length(Trim(s)))
+      else if Pos('Ereig', gvar_0253684C) = 0 then
+        gvar_0253684C := gvar_0253684C + #13#10 + 'Ereig.: ' +
+          Copy(Trim(s), 8, Length(Trim(s)))
+      else
+        gvar_0253684C := gvar_0253684C + ' ' + Copy(Trim(s), 8, Length(Trim(s)));
+    end;
+    if Pos('DATE', s) > 0 then
+    begin
+      sub_00577934(Copy(TrimRight(s), 8, Length(TrimRight(s))));
+      gvar_0253684C := gvar_0253684C + ' ' + gvar_02536624 + '.' +
+        gvar_02536628 + '.' + gvar_0253662C;
+    end;
+    if Pos('PLAC', s) > 0 then
+    begin
+      Ortdreh(Copy(Trim(s), 8, Length(Trim(s))), s);
+      gvar_0253684C := gvar_0253684C + ' ' + s;
+    end;
+    if Pos('PAGE', s) > 0 then
+      gvar_0253684C := gvar_0253684C + ' (' +
+        Copy(Trim(s), 8, Length(Trim(s))) + ')';
+    if Pos('NOTE', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := Copy(s, 8, Length(s))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + Copy(s, 8, Length(s));
+    end;
+    if Pos('CONT', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := Copy(s, 8, Length(s))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + Copy(s, 8, Length(s));
+    end;
+    if Pos('CONC', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := Copy(s, 8, Length(s))
+      else
+        gvar_0253684C := gvar_0253684C + ' ' + Copy(s, 8, Length(s));
+    end;
+    ReadLn(gvar_02536670, s);
+    zsa(s, t);
+    s := t;
+  end;
+  gvar_02536430 := s;
+  { The original sets the low word of gvar_02536844 to $2A01; the
+    reconstruction writes the complete value. Deviation with no
+    visible effect. }
+  gvar_02536844 := $2A01;
 end;
 
 procedure TForm3.zsa(ALine: AnsiString; var AErgebnis: AnsiString);
@@ -725,14 +1161,139 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.Educ;
+procedure TForm3.Educ(AIn: AnsiString);
+var
+  s: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Reads a GEDCOM section "1 EDUC" (Schule) up to the next "1" line and
+    builds a comment in gvar_0253684C ("Schule: " header with the event
+    name, then the date, the place (as gvar_02536430) and the
+    Note/Cont/Conc text). }
+  gvar_0253684C := gvar_0253684C + #13#10 + 'Schule: ' +
+    Copy(Trim(AIn), 8, Length(Trim(AIn)));
+  ReadLn(gvar_02536670, s);
+  zsa(s, s);
+  while Copy(s, 1, 1) > '1' do
+  begin
+    if Pos('TYPE', s) > 0 then
+    begin
+      if Pos('Schule', gvar_0253684C) = 0 then
+      begin
+        if Trim(gvar_0253684C) = '' then
+          gvar_0253684C := 'Schule: ' + Copy(Trim(s), 8, Length(Trim(s)))
+        else
+          gvar_0253684C := gvar_0253684C + #13#10 + 'Schule: ' +
+            Copy(Trim(s), 8, Length(Trim(s)));
+      end
+      else
+        gvar_0253684C := gvar_0253684C + ' ' + Copy(Trim(s), 8, Length(Trim(s)));
+    end;
+    if Pos('DATE', s) > 0 then
+      gvar_0253684C := gvar_0253684C + ' ' +
+        Copy(s, 8, Length(TrimRight(s)));
+    if Pos('PLAC', s) > 0 then
+    begin
+      Ortdreh(Copy(s, 8, Length(TrimRight(s))), gvar_02536430);
+      gvar_0253684C := gvar_0253684C + ' ' + gvar_02536430;
+    end;
+    if Pos('NOTE', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := Copy(s, 8, Length(s))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + Copy(s, 8, Length(s));
+    end;
+    if Pos('CONT', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := Copy(s, 8, Length(s))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + Copy(s, 8, Length(s));
+    end;
+    if Pos('CONC', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := Copy(s, 8, Length(s))
+      else
+        gvar_0253684C := gvar_0253684C + ' ' + Copy(s, 8, Length(s));
+    end;
+    ReadLn(gvar_02536670, s);
+    zsa(s, s);
+  end;
+  gvar_02536430 := s;
+  { The original sets the low word of gvar_02536844 to $2A01; the
+    reconstruction writes the complete value. Deviation with no
+    visible effect. }
+  gvar_02536844 := $2A01;
 end;
 
-procedure TForm3.Grad;
+procedure TForm3.Grad(AIn: AnsiString);
+var
+  s: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Reads a GEDCOM section "1 GRAD" (Ausbildung) up to the next "1"
+    line and builds a comment in gvar_0253684C ("Ausbild.: " header with
+    the event name, then the date, the place (as gvar_02536430) and the
+    Note/Cont/Conc text). }
+  if Trim(gvar_0253684C) = '' then
+    gvar_0253684C := 'Ausbild.: ' + Copy(Trim(AIn), 8, Length(Trim(AIn)))
+  else
+    gvar_0253684C := gvar_0253684C + #13#10 + 'Ausbild.: ' +
+      Copy(Trim(AIn), 8, Length(Trim(AIn)));
+  ReadLn(gvar_02536670, s);
+  zsa(s, s);
+  while Copy(s, 1, 1) > '1' do
+  begin
+    if Pos('TYPE', s) > 0 then
+    begin
+      if Pos('Ausbild', gvar_0253684C) = 0 then
+      begin
+        if Trim(gvar_0253684C) = '' then
+          gvar_0253684C := 'Ausbild.: ' + Copy(Trim(s), 8, Length(Trim(s)))
+        else
+          gvar_0253684C := gvar_0253684C + #13#10 + 'Ausbild.: ' +
+            Copy(Trim(s), 8, Length(Trim(s)));
+      end
+      else
+        gvar_0253684C := gvar_0253684C + ' ' + Copy(s, 8, Length(Trim(s)));
+    end;
+    if Pos('DATE', s) > 0 then
+      gvar_0253684C := gvar_0253684C + ' ' +
+        Copy(s, 8, Length(TrimRight(s)));
+    if Pos('PLAC', s) > 0 then
+    begin
+      Ortdreh(Copy(s, 8, Length(TrimRight(s))), gvar_02536430);
+      gvar_0253684C := gvar_0253684C + ' ' + gvar_02536430;
+    end;
+    if Pos('NOTE', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := Copy(s, 8, Length(s))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + Copy(s, 8, Length(s));
+    end;
+    if Pos('CONT', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := Copy(s, 8, Length(s))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + Copy(s, 8, Length(s));
+    end;
+    if Pos('CONC', s) > 0 then
+    begin
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := Copy(s, 8, Length(s))
+      else
+        gvar_0253684C := gvar_0253684C + ' ' + Copy(s, 8, Length(s));
+    end;
+    ReadLn(gvar_02536670, s);
+    zsa(s, s);
+  end;
+  gvar_02536430 := s;
+  { The original sets the low word of gvar_02536844 to $2A01; the
+    reconstruction writes the complete value. Deviation with no
+    visible effect. }
+  gvar_02536844 := $2A01;
 end;
 
 procedure TForm3.Note;
