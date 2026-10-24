@@ -9,7 +9,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit1
 
-- methods: 276, reconstructed: 265, open: 20
+- methods: 276, reconstructed: 272, open: 13
 
   - done  `sub_005D3148`  @`005D3148`
   - done  `sub_005D31EC`  @`005D31EC`
@@ -52,7 +52,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done  `Edit2DblClick`  @`005DCC94`
   - open  `datsich`  @`005DCD54`
   - open  `Sikoein`  @`005DF5EC`
-  - open  `SicherungsDateieinlesen1Click`  @`005E1D2C`
+  - done  `SicherungsDateieinlesen1Click`  @`005E1D2C`
   - done  `Datensichern1Click`  @`005E1DC0`
   - done  `alineu`  @`005E1DF8`
   - done  `Datenlschen1Click`  @`005E2064`
@@ -163,10 +163,10 @@ Legend: **done** = the body was reconstructed from the listing,
   - done  `alleBilderentfernen1Click`  @`005FCB20`
   - done  `sub_005FCB74`  @`005FCB74`
   - done  `bmpjpg1Click`  @`005FCC0C`
-  - open  `GedcomDateieinlesen1Click`  @`005FCDA0`
-  - open  `GedcomDateischreiben1Click`  @`005FD330`
+  - done  `GedcomDateieinlesen1Click`  @`005FCDA0`
+  - done  `GedcomDateischreiben1Click`  @`005FD330`
   - done  `Listen2Click`  @`005FD640`
-  - open  `Button1Click`  @`005FD6A0`
+  - done  `Button1Click`  @`005FD6A0`
   - done  `Adressendateischreiben1Click`  @`005FD964`
   - done  `TabSheet8Enter`  @`005FD9DC`
   - done  `AHNENDOSeinlesen1Click`  @`005FDAA4`
@@ -196,8 +196,8 @@ Legend: **done** = the body was reconstructed from the listing,
   - done  `DBCheckBox1Exit`  @`00602C04`
   - done  `DBEdit69Change`  @`00602C14`
   - done  `PopupMenu1Popup`  @`00602C34`
-  - open  `FamilienblattHTML1Click`  @`00602D2C`
-  - open  `OrtsDatei1Click`  @`00602E00`
+  - done  `FamilienblattHTML1Click`  @`00602D2C`
+  - done  `OrtsDatei1Click`  @`00602E00`
   - done  `DBLookupComboBox4MouseDown`  @`00602F3C`
   - done  `DBLookupComboBox17MouseDown`  @`006034D8`
   - done  `NamensListeeditieren1Click`  @`00603678`
@@ -232,7 +232,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done  `DBLookupComboBox2Enter`  @`00606DA4`
   - done  `DBLookupComboBox3Enter`  @`00606DA8`
   - done  `NichtverknpfteBeziehungen1Click`  @`00606DAC`
-  - open  `DoppelteEintrge1Click`  @`00607310`
+  - done  `DoppelteEintrge1Click`  @`00607310`
   - done  `Einzelpersonen1Click`  @`006073B8`
   - done  `DBLookupComboBox4KeyPress`  @`006073EC`
   - done  `DBLookupComboBox5KeyPress`  @`0060742C`
@@ -483,7 +483,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit13
 
-- methods: 42, reconstructed: 9, open: 36
+- methods: 42, reconstructed: 16, open: 29
 
   - done  `sub_005637C4`  @`005637C4`
   - done  `sub_00563868`  @`00563868`
@@ -518,17 +518,17 @@ Legend: **done** = the body was reconstructed from the listing,
   - done  `FormCreate`  @`00570740`
   - done  `Button1Click`  @`005707C0`
   - done  `SpeedButton2Click`  @`0057082C`
-  - open  `Button2Click`  @`00570838`
-  - open  `Button3Click`  @`00570854`
+  - done  `Button2Click`  @`00570838`
+  - done  `Button3Click`  @`00570854`
   - open  `Button4Click`  @`00570890`
   - open  `PaintBox1Paint`  @`00570C14`
   - open  `vr1`  @`00570D1C`
   - open  `vz1`  @`005711D4`
-  - open  `Button5Click`  @`00572404`
-  - open  `Button6Click`  @`00572448`
-  - open  `SpeedButton13Click`  @`00572478`
-  - open  `ScrollBar1Change`  @`00572484`
-  - open  `ScrollBar2Change`  @`00572490`
+  - done  `Button5Click`  @`00572404`
+  - done  `Button6Click`  @`00572448`
+  - done  `SpeedButton13Click`  @`00572478`
+  - done  `ScrollBar1Change`  @`00572484`
+  - done  `ScrollBar2Change`  @`00572490`
   - open  `Verwandtschaft1Click`  @`0057249C`
   - open  `Proband1Click`  @`005729E4`
   - open  `vorf_erm2`  @`00572A78`
@@ -558,7 +558,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit16
 
-- methods: 25, reconstructed: 22, open: 3
+- methods: 25, reconstructed: 23, open: 2
 
   - done  `showpagenumber`  @`0055B940`
   - done  `showprev`  @`0055B9F0`
@@ -567,7 +567,7 @@ Legend: **done** = the body was reconstructed from the listing,
   - done  `QRPreview1PageAvailable`  @`0055BB34`
   - done  `Button3Click`  @`0055BC10`
   - done  `Button4Click`  @`0055BC38`
-  - open  `ComboBox1Click`  @`0055BC58`
+  - done  `ComboBox1Click`  @`0055BC58`
   - done  `SpinEdit1Change`  @`0055BCE0`
   - done  `Button2Click`  @`0055BD0C`
   - done  `Drucken1Click`  @`0055BD30`
@@ -637,7 +637,7 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit19
 
-- methods: 19, reconstructed: 9, open: 14
+- methods: 19, reconstructed: 18, open: 5
 
   - done  `sub_00550AB8`  @`00550AB8`
   - done  `sub_00550B5C`  @`00550B5C`
@@ -651,17 +651,17 @@ Legend: **done** = the body was reconstructed from the listing,
   - open  `Namgeb`  @`005513EC`
   - open  `Nachliste`  @`00552034`
   - open  `namgv`  @`0055748C`
-  - open  `vorchron`  @`005574B4`
-  - open  `voralph`  @`005574EC`
+  - done  `vorchron`  @`005574B4`
+  - done  `voralph`  @`005574EC`
   - open  `alphlist`  @`00557514`
-  - open  `vorf`  @`00557E64`
+  - done  `vorf`  @`00557E64`
   - open  `nachf`  @`00557E8C`
-  - open  `BitBtn1Click`  @`00558730`
-  - open  `FormShow`  @`005587E0`
-  - open  `Button3Click`  @`00558850`
-  - open  `Button4Click`  @`005588F4`
-  - open  `ComboBox1Change`  @`00558964`
-  - open  `CheckBox15Click`  @`00558A00`
+  - done  `BitBtn1Click`  @`00558730`
+  - done  `FormShow`  @`005587E0`
+  - done  `Button3Click`  @`00558850`
+  - done  `Button4Click`  @`005588F4`
+  - done  `ComboBox1Change`  @`00558964`
+  - done  `CheckBox15Click`  @`00558A00`
 
 ## Unit20
 
@@ -868,4 +868,4 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Total
 
-- methods: 616, reconstructed: 552, open: 64
+- methods: 616, reconstructed: 576, open: 40

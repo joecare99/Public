@@ -222,12 +222,14 @@ end;
 
 procedure TForm13.ScrollBar1Change(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00572484: Scrollbalken 1 -> Graphik neu zeichnen. }
+  PaintBox1.Refresh;
 end;
 
 procedure TForm13.ScrollBar2Change(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00572490: Scrollbalken 2 -> Graphik neu zeichnen. }
+  PaintBox1.Refresh;
 end;
 
 procedure TForm13.nr1;
@@ -336,7 +338,10 @@ end;
 
 procedure TForm13.Button2Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00570838: Verschiebungen in beiden Achsen -> Graphik neu zeichnen. }
+  Inc(gvar_011AE338, 10);
+  Inc(gvar_0061F110, 10);
+  PaintBox1.Refresh;
 end;
 
 procedure TForm13.SpeedButton2Click(Sender: TObject);
@@ -403,7 +408,9 @@ end;
 
 procedure TForm13.UpDown1Click;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005661E8: Zoom herabsetzen, aber nicht unter 1. }
+  if gvar_0061F120 > 1 then
+    gvar_0061F120 := gvar_0061F120 - 0.1;
 end;
 
 procedure TForm13.SpeedButton1Click(Sender: TObject);
@@ -421,7 +428,17 @@ end;
 
 procedure TForm13.Button3Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00570854: Vertikale Verschiebung zuruecksetzen -> Graphik neu zeichnen. }
+  if gvar_0061F110 > 30 then
+  begin
+    Dec(gvar_0061F110, 10);
+    PaintBox1.Refresh;
+  end;
+  if gvar_011AE334 > 60 then
+  begin
+    Dec(gvar_011AE338, 10);
+    PaintBox1.Refresh;
+  end;
 end;
 
 procedure TForm13.vr1;
@@ -431,7 +448,8 @@ end;
 
 procedure TForm13.SpeedButton13Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00572478: Druckdialog anzeigen. }
+  PrinterSetupDialog1.Execute;
 end;
 
 procedure TForm13.vz1;
@@ -466,12 +484,19 @@ end;
 
 procedure TForm13.Button6Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00572448: Zoom ein. }
+  gvar_0061F120 := gvar_0061F120 + 0.13;
+  PaintBox1.Refresh;
 end;
 
 procedure TForm13.Button5Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00572404: Zoom aus. }
+  if gvar_0061F120 > 0.5 then
+  begin
+    gvar_0061F120 := gvar_0061F120 - 0.13;
+    PaintBox1.Refresh;
+  end;
 end;
 
 

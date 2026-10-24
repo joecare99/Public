@@ -748,7 +748,7 @@ implementation
 uses
   AHNGlobals, Windows, Messages, Printers, Graphics, StrUtils, QuickRpt, QRCtrls, Unit2, Unit3,
   Unit4, Unit5, Unit8, Unit9, Unit10, Unit11, Unit12, Unit13, Unit14, Unit15, Unit16, Unit20,
-  Unit21, Unit22, Unit24, Unit28, Unit29, Unit36, Unit39, Unit18, Unit7, Unit6, Unit19, Unit17;
+  Unit21, Unit22, Unit24, Unit28, Unit29, Unit36, Unit39, Unit18, Unit7, Unit6, Unit19, Unit17, Unit35, Unit33, Unit26;
 {$R ..\Forms\Form1.DFM}
 
 { The local function of the original at the address 005D3148. It writes a
@@ -1106,12 +1106,45 @@ end;
 
 procedure TForm1.FamilienblattHTML1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00602D2C: Familienblatt erzeugen, aber als HTML-Datei (fambl.htm)
+    statt als QuickRep-Formulare. Zuerst werden die Hilfs-Globalen
+    geleert, die Auswahl in Form17 erscheint und dann wird die
+    HTML-Ausgabe angestossen. }
+  gvar_0253692C := 'Fbml';
+  gvar_02536B58 := '';
+  gvar_02536B38 := '';
+  gvar_02536B3C := '';
+  gvar_02536B40 := '';
+  gvar_02536B44 := '';
+  gvar_02536B48 := '';
+  gvar_02536B4C := '';
+  aus1.Click;
+  if FileExists('fambl.htm') then
+    DeleteFile('fambl.htm');
+  Form17.CheckBox16.Show;
+  Form17.CheckBox5.Show;
+  Form17.ShowModal;
 end;
 
 procedure TForm1.OrtsDatei1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00602E00: Orts-Abfrage in Form14 bzw. Anzeige des "Aktuellen
+    Orts-Namens" in Form33 wenn der globale gvar_02536B60 gesetzt ist
+    und in Table13 einen Treffer liefert. }
+  DataModule2.Table13.Open;
+  DataModule2.Table13.IndexName := 'ort_';
+  DataModule2.Table13.First;
+  if Trim(gvar_02536B60) <> '' then
+  begin
+    if DataModule2.Table13.FindKey([gvar_02536B60]) then
+    begin
+      Form33.Label12.Caption := 'Aktueller Orts-Name: ' + gvar_02536B60;
+      Form33.Show;
+    end;
+  end
+  else
+    Form14.ShowModal;
+  gvar_02536B60 := '';
 end;
 
 procedure TForm1.DBEdit69Change(Sender: TObject);
@@ -2229,210 +2262,48 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
+var
+  count: Integer;
+  posk: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005FD6A0: In den Namen und Vornamen wird das erste Komma durch ein
+    Leerzeichen ersetzt. Die Anzahl der Vornahmen wird am Ende
+    gemeldet. }
+  DataModule2.Table1.Open;
+  DataModule2.Table1.First;
+  count := 0;
+  while not DataModule2.Table1.Eof do
+  begin
+    if Pos(',', DataModule2.Table1Name.AsString) > 0 then
+    begin
+      DataModule2.Table1.Edit;
+      posk := Pos(',', DataModule2.Table1Name.AsString);
+      DataModule2.Table1Name.AsString :=
+        Copy(DataModule2.Table1Name.AsString, 1, posk - 1) + ' ' +
+        Copy(DataModule2.Table1Name.AsString, posk + 1,
+          Length(DataModule2.Table1Name.AsString) - posk);
+      DataModule2.Table1.Post;
+      Inc(count);
+    end;
+    if Pos(',', DataModule2.Table1Vornamen.AsString) > 0 then
+    begin
+      DataModule2.Table1.Edit;
+      posk := Pos(',', DataModule2.Table1Vornamen.AsString);
+      DataModule2.Table1Vornamen.AsString :=
+        Copy(DataModule2.Table1Vornamen.AsString, 1, posk - 1) + ' ' +
+        Copy(DataModule2.Table1Vornamen.AsString, posk + 1,
+          Length(DataModule2.Table1Vornamen.AsString) - posk);
+      DataModule2.Table1.Post;
+      Inc(count);
+    end;
+    DataModule2.Table1.Next;
+  end;
+  ShowMessage(IntToStr(count) + ' Ersetzungen vorgenommen.');
 end;
 
 procedure TForm1.geschachtelt1Click(Sender: TObject);
-var
-  ehtest_s: string;
-  kurz: ShortString;
-  ab, vorg: string;
-  curt, vnum, jnum, knum: Integer;
-  i, vmax, kmax, jmax, dmax: Integer;
-  vater: string;
-  mutter: string;
-  axname: string;
 begin
-  { 005FE844: Geschachtelte Nachfahrenliste (indirekte Rekonstruktion,
-    die Assemblerfolge ist hier sehr lang). }
-  PageControl1.ActivePage := TabSheet2;
-  aus1.Click;
-  gvar_0253692C := 'Schacht';
-  speich1;
-  if DataModule2.Table1.RecordCount < 2 then
-  begin
-    ShowMessage('Keine Daten verf' + #252 + 'gbar.');
-    Exit;
-  end;
-  if PageControl1.PageCount = 2 then
-    PageControl1.ActivePage := TabSheet2;
-  if StringGrid2.Cells[1, 0] = '' then
-  begin
-    Application.MessageBox('Irgendwas mit den Argumenten', 'Problem', 0);
-    Exit;
-  end;
-  vnum := DataModule2.Table1Nummer.AsInteger;
-  axname := UpperCase(DataModule2.Table38name.AsString);
-  if gvar_02536BA0 > 1 then
-  begin
-    DataModule2.Table1.SetRange([IntToStr(gvar_02536BA0)]);
-    DataModule2.Table1.ApplyRange;
-    DataModule2.Table9.SetRange([IntToStr(gvar_02536BA0)]);
-    DataModule2.Table9.ApplyRange;
-    DataModule2.Table17.SetRange([IntToStr(gvar_02536BA0)]);
-    DataModule2.Table17.ApplyRange;
-    DBText1.Color := 65535;
-  end;
-  DataModule2.Table1.FindKey([vnum]);
-  DataModule2.Table14.Close;
-  DataModule2.Table14.Open;
-  DataModule2.Table14.EmptyTable;
-  DataModule2.Table14.Open;
-  DataModule2.Table17.Open;
-  DataModule2.Table18.Open;
-
-  gvar_02536930 := 'Nachfahren von';
-  gvar_02536934 := ucase(DataModule2.Table17name.AsString) + ' ' +
-    ucase(DataModule2.Table17vornamen.AsString) + ', ' +
-    geb_sterb_str;
-
-  DataModule2.Table14.Append;
-  DataModule2.Table14Zeile.AsString := gvar_02536934;
-  DataModule2.Table14.Post;
-
-  if DataModule2.Table17Geschlecht.AsString = 'M' then
-  begin
-    DataModule2.Table17.IndexName := 'vat';
-    vater := 'Vater';
-    mutter := 'Mutter';
-  end
-  else if DataModule2.Table17Geschlecht.AsString = 'W' then
-  begin
-    DataModule2.Table17.IndexName := 'mut';
-    vater := 'Mutter';
-    mutter := 'Vater';
-  end;
-
-  DataModule2.Table17.FindKey([vnum]);
-  DataModule2.Table17.Next;
-  while not DataModule2.Table17.Eof do
-  begin
-    if DataModule2.Table17vornamen.AsInteger = 0 then
-    begin
-      axname := kurzz(IntToStr(DataModule2.Table17name.AsInteger));
-      DataModule2.Table14.Append;
-      DataModule2.Table14Zeile.AsString := vater + ' ' +
-        ucase(DataModule2.Table17name.AsString) + ' ' +
-        ucase(DataModule2.Table17vornamen.AsString) + ' ' + geb_sterb_str;
-      DataModule2.Table14.Post;
-    end;
-    DataModule2.Table17.Next;
-  end;
-  DataModule2.Table17.IndexName := '';
-
-  { Ehepartner aus ehtest lesen und Zeilen schreiben. }
-  ehtest_s := '';
-  ehtest_s := ehtest(ehtest_s, vnum);
-  if ehtest_s <> '' then
-  begin
-    for i := 1 to Length(ehtest_s) div 17 do
-    begin
-      knum := StrToInt(Copy(ehtest_s, (i - 1) * 17 + 1, 6));
-      if Copy(ehtest_s, (i - 1) * 17 + 11, 1) = 'E' then
-        kurz := 'm. '
-      else
-        kurz := '-o-';
-      DataModule2.Table17.FindKey([knum]);
-      DataModule2.Table14.Append;
-      DataModule2.Table14Zeile.AsString := kurz + ' ' +
-        ucase(DataModule2.Table17name.AsString) + ' ' +
-        ucase(DataModule2.Table17vornamen.AsString) + ' ' + geb_sterb_str;
-      DataModule2.Table14.Post;
-      if DataModule2.Table17Geschlecht.AsString = 'M' then
-      begin
-        DataModule2.Table9.IndexName := 'mut';
-        vater := 'Mutter';
-        mutter := 'Vater';
-      end;
-      if DataModule2.Table17Geschlecht.AsString = 'W' then
-      begin
-        DataModule2.Table9.IndexName := 'vat';
-        vater := 'Vater';
-        mutter := 'Mutter';
-      end;
-      DataModule2.Table9.FindKey([knum]);
-      while not DataModule2.Table9.Eof do
-      begin
-        if DataModule2.Table9name.AsInteger = vnum then
-        begin
-          DataModule2.Table14.Append;
-          DataModule2.Table14Zeile.AsString := ' ' +
-            ucase(DataModule2.Table17name.AsString) + ' ' +
-            ucase(DataModule2.Table17vornamen.AsString) + ' ' + geb_sterb_str;
-          DataModule2.Table14.Post;
-        end;
-        DataModule2.Table9.Next;
-      end;
-      DataModule2.Table9.IndexName := '';
-      DataModule2.Table17.IndexName := '';
-    end;
-  end;
-
-  DataModule2.Table18.IndexName := 'num';
-  DataModule2.Table18.Next;
-  while not DataModule2.Table18.Eof do
-  begin
-    curt := DataModule2.Table18Epnum.AsInteger;
-    DataModule2.Table17.FindKey([curt]);
-    DataModule2.Table14.Append;
-    DataModule2.Table14Zeile.AsString := vater + ' ' +
-      ucase(DataModule2.Table17name.AsString) + ' ' +
-      ucase(DataModule2.Table17vornamen.AsString) + ' ' + geb_sterb_str;
-    DataModule2.Table14.Post;
-    if DataModule2.Table17Geschlecht.AsString = 'M' then
-    begin
-      DataModule2.Table14.IndexName := 'vat';
-      vater := 'Mutter';
-      mutter := 'Vater';
-    end;
-    if DataModule2.Table17Geschlecht.AsString = 'W' then
-    begin
-      DataModule2.Table14.IndexName := 'mut';
-      vater := 'Mutter';
-      mutter := 'Vater';
-    end;
-    DataModule2.Table18.Next;
-  end;
-  DataModule2.Table18.IndexName := '';
-
-  DataModule2.Table17.IndexName := 'num';
-  while not DataModule2.Table17.Eof do
-  begin
-    jnum := DataModule2.Table17Nummer.AsInteger;
-    DataModule2.Table14.Append;
-    DataModule2.Table14Zeile.AsString := vater + ' ' +
-      ucase(DataModule2.Table17name.AsString) + ' ' +
-      ucase(DataModule2.Table17vornamen.AsString) + ' ' + geb_sterb_str;
-    DataModule2.Table14.Post;
-    DataModule2.Table17.Next;
-  end;
-  DataModule2.Table17.IndexName := '';
-
-  { Titel schreiben, Quellform-Aufbau und Report aufrufen. }
-  Form16.SpeedButton3.Visible := True;
-  Form16.SpeedButton6.Visible := False;
-  QRDefault;
-  { Form15.QuickRep1.OnPreview := showpreview; Form15.QuickRep1.Preview }
-  Form15.QRDBText1.DataField := '';
-  Form15.QRDBText2.DataField := '';
-  Form15.QuickRep1.DataSet := DataModule2.Table14;
-  Form15.QRDBText1.DataSet := DataModule2.Table14;
-  Form15.QRDBText1.DataField := 'zeile';
-  Form15.QRDBText1.AutoSize := True;
-  Form15.QRDBText2.AutoSize := False;
-  Form15.QRDBText1.Font.Name := 'Arial';
-  Form15.QRDBText2.Font.Name := 'Arial';
-  Form15.QRDBText1.Font.Size := 10;
-  Form15.QRDBText1.Enabled := False;
-  Form15.QRDBText1.Left := 10;
-  Form15.QRDBText1.Width := 600;
-  Form15.QRLabel1.Caption := gvar_02536930;
-  Form15.QRLabel3.Caption := 'Nachfahren';
-  DataModule2.Table14.Open;
-  Form15.QuickRep1.Page.Columns := 1;
-  if gvar_02536934 <> '' then
-    Form15.QRLabel2.Caption := gvar_02536934;
+  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
 procedure TForm1.geb_sterb(var ergebnis: string);
@@ -4418,7 +4289,26 @@ end;
 
 procedure TForm1.DoppelteEintrge1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00607310: Doppelte Eintraege aufsucht/zeigt. Zuerst werden die
+    neun Vergleichs-Globale (gvar_02536B68..B90) zurueckgesetzt und die
+    Vergleiche von Form35 angezeigt; falls sich ein Ergebnis aufsummiert,
+    werden die Einzelpersonen markiert. }
+  gvar_02536B68 := 0;
+  gvar_02536B6C := 0;
+  gvar_02536B70 := 0;
+  gvar_02536B74 := 0;
+  gvar_02536B78 := 0;
+  gvar_02536B7C := 0;
+  gvar_02536B80 := 0;
+  gvar_02536B84 := 0;
+  gvar_02536B88 := 0;
+  gvar_02536B8C := 0;
+  gvar_02536B90 := 0;
+  gvar_0253692C := 'Dopp';
+  Form35.ShowModal;
+  Refresh;
+  if gvar_02536B90 > 0 then
+    Einzelpersonenmarkieren1Click(Sender);
 end;
 
 procedure TForm1.DBLookupComboBox2Enter;
@@ -7419,7 +7309,18 @@ end;
 
 procedure TForm1.SicherungsDateieinlesen1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005E1D2C: Sicherungs-Datei einlesen. Die eigentliche Einlesearbeit
+    ueberlaesst die Methode an Sikoein; danach werden die Nummern-
+    Globalen gesetzt, neu1 aktiviert und die Ansicht aktualisiert. }
+  PageControl1.ActivePage := TabSheet2;
+  Sikoein;
+  DataModule2.Table1.Last;
+  gvar_0253690C := DataModule2.Table1Nummer.AsInteger + 1;
+  gvar_02536944 := DataModule2.Table1Nummer.AsInteger;
+  DataModule2.Table1.First;
+  if DataModule2.Table1Nummer.AsInteger > 0 then
+    neu1.Enabled := True;
+  anzeigen;
 end;
 
 procedure TForm1.ChristlicheNamenstage1Click(Sender: TObject);
@@ -8110,13 +8011,79 @@ begin
 end;
 
 procedure TForm1.GedcomDateieinlesen1Click(Sender: TObject);
+var
+  nummer: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005FCDA0: Eine GEDCOM-Datei einlesen. Zuerst wird die aktuelle
+    Person gemerkt und das "Aus"-Menu geklickt, dann laedt Form3
+    (gedein_5) die Daten. Nach dem Einlesen wird ggf. die Liste
+    aktualisiert, die erste Person angezeigt und die beiden
+    Tabellen zur Bearbeitung geoffnet. }
+  nummer := DataModule2.Table1Nummer.AsInteger;
+  PageControl1.ActivePage := TabSheet2;
+  aus1.Click;
+  gvar_0253686C := 2;
+  Form3.gedein_5;
+  DataModule2.Table1.FindKey([nummer]);
+  if gvar_0253686C <> 2 then
+    listen_akt;
+  DataModule2.Table1.First;
+  anzeigen;
+  DataModule2.Table1.Edit;
+  DataModule2.Table5.Edit;
 end;
 
 procedure TForm1.GedcomDateischreiben1Click(Sender: TObject);
+var
+  fehler: Integer;
+  nummer: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005FD330: GEDCOM-Datei schreiben. Vorher wird geprueft, ob in einem
+    Namen oder in einem Vornamen ein "/" oder ein "," enthalten ist;
+    dann wird die Ausgabe abgebrochen. }
+  PageControl1.ActivePage := TabSheet2;
+  Label19.Visible := True;
+  Label19.Caption := 'Testen';
+  nummer := DataModule2.Table1Nummer.AsInteger;
+  DataModule2.Table1.DisableControls;
+  DataModule2.Table1.First;
+  fehler := 0;
+  while not DataModule2.Table1.Eof do
+  begin
+    if Pos('/', DataModule2.Table1Name.AsString) > 0 then
+      Inc(fehler);
+    if Pos('/', DataModule2.Table1Vornamen.AsString) > 0 then
+      Inc(fehler);
+    if Pos(',', DataModule2.Table1Name.AsString) > 0 then
+      Inc(fehler);
+    if Pos(',', DataModule2.Table1Vornamen.AsString) > 0 then
+      Inc(fehler);
+    if fehler > 0 then
+      Break;
+    DataModule2.Table1.Next;
+  end;
+  DataModule2.Table1.FindKey([nummer]);
+  DataModule2.Table1.EnableControls;
+  Label19.Visible := False;
+  if fehler > 0 then
+  begin
+    ShowMessage('Datei enth' + #228 + 'lt in Name oder Vorname ' +
+      'die Zeichen "," oder "/".');
+    Exit;
+  end;
+  Form26.ModalResult := 0;
+  aus1.Click;
+  DataModule2.Table1.FindKey([nummer]);
+  anzeigen;
+  speich1;
+  if DataModule2.Table1.RecordCount < 2 then
+  begin
+    ShowMessage('Keine Daten verf' + #252 + 'gbar.');
+    Exit;
+  end;
+  Form26.ShowModal;
+  anzeigen;
+  Form26.ModalResult := 2;
 end;
 
 type

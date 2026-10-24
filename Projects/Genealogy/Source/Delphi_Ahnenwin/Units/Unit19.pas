@@ -83,7 +83,7 @@ var
 implementation
 
 uses
-  Unit1, AHNGlobals, StrUtils;
+  Unit1, Unit2, AHNGlobals, StrUtils;
 
 {$R ..\Forms\Form19.DFM}
 
@@ -188,27 +188,32 @@ end;
 
 procedure TForm19.Button4Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005588F4: Schrittzaehler erhohen. }
+  Edit2.Text := IntToStr(StrToInt(Edit2.Text) + 1);
 end;
 
 procedure TForm19.voralph;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005574EC: Leere Routine (Kopf ohne Inhalt). }
 end;
 
 procedure TForm19.vorf;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00557E64: Leere Routine (Kopf ohne Inhalt). }
 end;
 
 procedure TForm19.Button3Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00558850: Schrittzaehler herabsetzen, aber nicht unter 1. }
+  if StrToInt(Edit2.Text) > 1 then
+    Edit2.Text := IntToStr(StrToInt(Edit2.Text) - 1);
 end;
 
 procedure TForm19.vorchron;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005574B4: Vorlaeufig chronologische Liste. Die Methode setzt
+    den Handcursor zurueck auf den Default. }
+  Screen.Cursor := crDefault;
 end;
 
 procedure TForm19.namgv;
@@ -218,7 +223,8 @@ end;
 
 procedure TForm19.CheckBox15Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00558A00: CheckBox15 wird gesetzt. }
+  CheckBox15.Checked := True;
 end;
 
 procedure TForm19.alphlist;
@@ -228,7 +234,16 @@ end;
 
 procedure TForm19.ComboBox1Change(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00558964: Bei einer Auswahl wird geprueft, ob die Liste 'alph' (also
+    alphabetisch) sein soll; wenn nicht, erscheinen die beiden
+    CheckBoxen fuer weitere Sortieroptionen. }
+  CheckBox7.Visible := True;
+  CheckBox8.Visible := True;
+  if Pos('alph', ComboBox1.Text) = 0 then
+  begin
+    CheckBox7.Visible := False;
+    CheckBox8.Visible := False;
+  end;
 end;
 
 procedure TForm19.nachf;
@@ -308,12 +323,24 @@ end;
 
 procedure TForm19.FormShow(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005587E0: Beim Aufmachen des Dialogs wird die erste Auswahl in
+    der ComboBox uebernommen und Table29 ohne Index eroeffnet. }
+  ComboBox1.Text := ComboBox1.Items[0];
+  DataModule2.Table29.IndexName := '';
 end;
 
 procedure TForm19.BitBtn1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00558730: Nachfahren-Liste erzeugen, falls der Modus 'Nach'
+    gesetzt ist. Bei alphabetischer Sortierung werden die beiden
+    CheckBoxen zurueckgesetzt. }
+  if gvar_0253692C = 'Nach' then
+    nachf;
+  if Pos('alph', ComboBox1.Text) = 0 then
+  begin
+    CheckBox7.Checked := False;
+    CheckBox8.Checked := False;
+  end;
 end;
 
 procedure TForm19.Nachliste;
