@@ -10,8 +10,10 @@ uses
   Interfaces,
 {$ENDIF}
   Forms, SysUtils,
-  Frm_CALC in '..\source\CALC32\Frm_CALC.PAS' {CalcForm},
-  Frm_CalcABOUT in '..\source\CALC32\Frm_CalcABOUT.PAS' {AboutForm};
+  Frm_CALC in '..\source\Calc32\view\Frm_CALC.pas' {CalcForm},
+  Frm_CalcABOUT in '..\source\Calc32\Frm_CalcABOUT.pas' {AboutForm},
+  Calc32ViewModel in '..\source\Calc32\viewmodel\Calc32ViewModel.pas',
+  CalculatorModel in '..\source\Calc32\model\CalculatorModel.pas';
 {$IFNDEF FPC}
 {$E EXE}
 {$ENDIF}

@@ -1,11 +1,35 @@
 unit Frm_TabeditMain;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  SysUtils, Windows, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, StdCtrls, ExtCtrls, Tabs, Menus, Frm_AboutTabedit,
-  Clipbrd;
+
+  SysUtils,
+ Messages,
+ Classes,
+ Graphics,
+ Controls,
+
+  Forms,
+ Dialogs,
+ StdCtrls,
+ ExtCtrls,
+ Menus,
+ Frm_AboutTabedit,
+
+  Clipbrd,
+{$IFnDEF FPC}
+  Windows,
+  Tabs,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages,
+  ComCtrls
+{$ENDIF};
 
 type
   TfrmMainForm = class(TForm)
@@ -75,8 +99,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 const
   maxPages = 8;
   untitledName = '[untitled]';

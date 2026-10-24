@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_BartestMain in '..\source\BARCHART\Frm_BartestMain.pas' {frmBarChartMain};
+  Frm_BartestMain in '..\source\Barchart\Frm_BartestMain.pas' {frmBarChartMain};
 {$E EXE}
 
 begin

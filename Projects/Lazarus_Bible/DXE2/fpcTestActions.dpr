@@ -27,7 +27,7 @@ uses
   TextTestRunner,
  //lazmouseandkeyinput,
  tst_Actions in '..\source\tests\tst_Actions.pas',
- Frm_ActionsMain in '..\source\Actions\Frm_ActionsMain.PAS' {frmActionsMain};
+ Frm_ActionsMain in '..\source\Actions\Frm_ActionsMain.pas' {frmActionsMain};
 
 {$R *.res}
 

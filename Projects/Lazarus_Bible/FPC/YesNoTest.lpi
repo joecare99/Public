@@ -1,32 +1,89 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
-    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <PathDelim Value="/"/>
     <General>
       <Flags>
-        <MainUnitHasUsesSectionForAllUnits Value="False"/>
+        <MainUnitHasUsesSectionForAllUnits Value="True"/>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
-        <MainUnitHasScaledStatement Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <Title Value="YesNoTest"/>
-      <Scaled Value="True"/>
-      <ResourceType Value="res"/>
-      <UseXPManifest Value="True"/>
-      <XPManifest>
-        <DpiAware Value="True"/>
-      </XPManifest>
+      <UseAppBundle Value="False"/>
+      <ResourceType Value=""/>
     </General>
-    <LazDoc Paths="..\FPDoc"/>
     <i18n>
-      <EnableI18N Value="True"/>
-      <OutDir Value="..\Language"/>
+      <EnableI18N LFM="True"/>
     </i18n>
-    <BuildModes Count="1">
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
+    <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
+      <Item2 Name="Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="/"/>
+          <Target>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/YesNoTest"/>
+          </Target>
+          <SearchPaths>
+            <OtherUnitFiles Value="../source/YESNO;../source/_core/tools"/>
+            <IncludeFiles Value="../source/YESNO;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+              <IncludeAssertionCode Value="True"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <UseHeaptrc Value="True"/>
+            </Debugging>
+          </Linking>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="/"/>
+          <Target>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/YesNoTest"/>
+          </Target>
+          <SearchPaths>
+            <OtherUnitFiles Value="../source/YESNO;../source/_core/tools"/>
+            <IncludeFiles Value="../source/YESNO;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <LinkSmart Value="True"/>
+          </Linking>
+        </CompilerOptions>
+      </Item3>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -43,55 +100,52 @@
     </RequiredPackages>
     <Units Count="3">
       <Unit0>
-        <Filename Value="YesNoTest.dpr"/>
+        <Filename Value="YesNoTest.lpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="YesNoTest"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\source\YESNO\Frm_YesNoMAIN.PAS"/>
+        <Filename Value="../source/YESNO/Frm_YesNo.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmYesNoMain"/>
+        <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_YesNo"/>
       </Unit1>
       <Unit2>
-        <Filename Value="..\source\YESNO\Frm_YesNo.pas"/>
+        <Filename Value="../source/YESNO/Frm_YesNoMAIN.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmYesNoDlg"/>
+        <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_YesNoMAIN"/>
       </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
-    <PathDelim Value="\"/>
+    <PathDelim Value="/"/>
     <Target>
-      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$Nameonly($Project(InfoFile))"/>
+      <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/YesNoTest"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\source\YESNO"/>
-      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+      <OtherUnitFiles Value="../source/YESNO;../source/_core/tools"/>
+      <IncludeFiles Value="../source/YESNO;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
+    <Parsing>
+      <SyntaxOptions>
+        <SyntaxMode Value="Delphi"/>
+      </SyntaxOptions>
+    </Parsing>
+    <CodeGeneration>
+      <SmartLinkUnit Value="True"/>
+    </CodeGeneration>
     <Linking>
-      <Options>
-        <Win32>
-          <GraphicApplication Value="True"/>
-        </Win32>
-      </Options>
+      <LinkSmart Value="True"/>
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="3">
-      <Item1>
-        <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-    </Exceptions>
+    <Exceptions Count="0"/>
   </Debugging>
 </CONFIG>

@@ -42,7 +42,7 @@
 			<DelphiCompile Include="Report1.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\Report1\Frm_Report1Main.pas">
+			<DCCReference Include="..\source\Report1\Frm_Report1Main.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

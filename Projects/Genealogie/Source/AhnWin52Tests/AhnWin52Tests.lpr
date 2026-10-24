@@ -126,7 +126,8 @@ uses
   tst_AHW52_QuickReportCompatTests,
   tst_DBParadoxConnectionTests,
   tst_DBParadoxSQLParserTests,
-  tst_DBParadoxWriteBufferTests;
+  tst_DBParadoxWriteBufferTests,
+  tst_AHW52_SiblingListModelTests;
 
 var
   TestRunner: TTestRunner;

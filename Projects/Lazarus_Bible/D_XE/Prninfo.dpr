@@ -2,7 +2,7 @@ program Prninfo;
 
 uses
   Forms,
-  Frm_PrnInfoMAIN in '..\source\PRNINFO\Frm_PrnInfoMAIN.PAS' {MainForm};
+  Frm_PrnInfoMAIN in '..\source\PRNINFO\Frm_PrnInfoMAIN.pas' {MainForm};
 
 {$E EXE}
 {$R *.RES}

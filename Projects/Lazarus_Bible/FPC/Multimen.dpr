@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_MultiWayMAIN in '..\Source\MULTIMEN\Frm_MultiWayMAIN.PAS' {MainForm}; 
+  Frm_MultiWayMAIN in '..\source\MULTIMEN\Frm_MultiWayMAIN.pas' {MainForm}; 
 {$E exe} 
 {$R *.res}
 begin

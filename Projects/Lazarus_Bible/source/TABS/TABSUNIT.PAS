@@ -2,6 +2,9 @@
 
 unit TabsUnit;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses SysUtils, Controls, Dialogs;

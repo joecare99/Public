@@ -17,9 +17,9 @@ uses
 
 type
 
-  { TMainForm }
+  { TfrmPaletteMain }
 
-  TMainForm = class(TForm)
+  TfrmPaletteMain = class(TForm)
     First: TPage;
     Second: TPage;
     Third: TPage;
@@ -69,7 +69,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmPaletteMain: TfrmPaletteMain;
 
 implementation
 
@@ -79,7 +79,7 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-procedure TMainForm.TabSet1Click(Sender: TObject);
+procedure TfrmPaletteMain.TabSet1Click(Sender: TObject);
 begin
   with TabSet1 do
   {$IFDEF FPC}
@@ -89,7 +89,7 @@ begin
   {$ENDIF}
 end;
 
-procedure TMainForm.SpeedButton1Click(Sender: TObject);
+procedure TfrmPaletteMain.SpeedButton1Click(Sender: TObject);
 begin
   with Sender as TSpeedButton do
     Label1.Caption := Caption;

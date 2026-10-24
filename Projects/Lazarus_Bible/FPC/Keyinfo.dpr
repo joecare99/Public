@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_KeyInfoMAIN in '..\Source\KEYINFO\Frm_KeyInfoMAIN.PAS' {MainForm}; 
+  Frm_KeyInfoMAIN in '..\source\KEYINFO\Frm_KeyInfoMAIN.pas' {MainForm}; 
 {$R *.res}
 {$IFNDEF FPC}
 {$E EXE}

@@ -42,7 +42,7 @@
 			<DelphiCompile Include="Server2.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\DDE2\Frm_SERVER2.PAS">
+			<DCCReference Include="..\source\DDE2\Frm_SERVER2.pas">
 				<Form>ServerForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

@@ -11,8 +11,12 @@ uses
 {$ENDIF}
   Forms,
   DefaultTranslator,
-  Frm_AboutExMAIN in '..\source\ABOUTEX\frm_AboutExMain.pas',
-  frm_about in '..\source\ABOUTEX\frm_About.pas';
+{$ifdef linux}
+   Frm_AboutExMAIN in '..\source\AboutEx\Frm_AboutExMAIN.pas',
+{$else}
+  Frm_AboutExMAIN in '..\source\AboutEx\Frm_AboutExMAIN.pas',
+{$endif}
+AboutEx_Frm_ABOUT in '..\source\AboutEx\AboutEx_Frm_ABOUT.pas';
 
 {$IFnDEF FPC}
 {$E EXE}

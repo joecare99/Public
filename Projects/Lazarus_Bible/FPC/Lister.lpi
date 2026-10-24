@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="9"/>
-    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <PathDelim Value="/"/>
     <General>
       <Flags>
-        <MainUnitHasUsesSectionForAllUnits Value="False"/>
+        <MainUnitHasUsesSectionForAllUnits Value="True"/>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
       </Flags>
@@ -13,10 +13,10 @@
       <MainUnit Value="0"/>
       <Title Value="Lister"/>
       <UseAppBundle Value="False"/>
-      <ResourceType Value="res"/>
+      <ResourceType Value=""/>
     </General>
     <i18n>
-      <EnableI18N LFM="False"/>
+      <EnableI18N LFM="True"/>
     </i18n>
     <VersionInfo>
       <StringTable ProductVersion=""/>
@@ -26,14 +26,14 @@
       <Item2 Name="Debug">
         <CompilerOptions>
           <Version Value="11"/>
-          <PathDelim Value="\"/>
+          <PathDelim Value="/"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Lister"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="..\source\$NameOnly($(ProjFile));$(ProjOutDir);..\..\include"/>
-            <OtherUnitFiles Value="..\source\$NameOnly($(ProjFile))"/>
-            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <OtherUnitFiles Value="../source/LISTER;../source/_core/tools"/>
+            <IncludeFiles Value="../source/LISTER;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -53,27 +53,21 @@
             <Debugging>
               <DebugInfoType Value="dsDwarf2Set"/>
               <UseHeaptrc Value="True"/>
-              <UseExternalDbgSyms Value="True"/>
             </Debugging>
-            <Options>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
-            </Options>
           </Linking>
         </CompilerOptions>
       </Item2>
       <Item3 Name="Release">
         <CompilerOptions>
           <Version Value="11"/>
-          <PathDelim Value="\"/>
+          <PathDelim Value="/"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Lister"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="..\source\$NameOnly($(ProjFile));$(ProjOutDir);..\..\include"/>
-            <OtherUnitFiles Value="..\source\$NameOnly($(ProjFile))"/>
-            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <OtherUnitFiles Value="../source/LISTER;../source/_core/tools"/>
+            <IncludeFiles Value="../source/LISTER;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -81,23 +75,12 @@
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
-            <SmartLinkUnit Value="True"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
           </CodeGeneration>
           <Linking>
-            <Debugging>
-              <GenerateDebugInfo Value="False"/>
-            </Debugging>
             <LinkSmart Value="True"/>
-            <Options>
-              <PassLinkerOptions Value="True"/>
-              <LinkerOptions Value="-s"/>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
-            </Options>
           </Linking>
         </CompilerOptions>
       </Item3>
@@ -112,21 +95,22 @@
     </RunParams>
     <RequiredPackages Count="2">
       <Item1>
-        <PackageName Value="Printer4Lazarus"/>
+        <PackageName Value="LCL"/>
       </Item1>
       <Item2>
-        <PackageName Value="LCL"/>
+        <PackageName Value="Printer4Lazarus"/>
       </Item2>
     </RequiredPackages>
     <Units Count="2">
       <Unit0>
-        <Filename Value="Lister.dpr"/>
+        <Filename Value="Lister.lpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="Lister"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\source\LISTER\Frm_ListerMAIN.PAS"/>
+        <Filename Value="../source/LISTER/Frm_ListerMAIN.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="MainForm"/>
+        <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_ListerMAIN"/>
@@ -135,14 +119,14 @@
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
-    <PathDelim Value="\"/>
+    <PathDelim Value="/"/>
     <Target>
-      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+      <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Lister"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="..\source\$NameOnly($(ProjFile));$(ProjOutDir);..\..\include"/>
-      <OtherUnitFiles Value="..\source\$NameOnly($(ProjFile))"/>
-      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+      <OtherUnitFiles Value="../source/LISTER;../source/_core/tools"/>
+      <IncludeFiles Value="../source/LISTER;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
@@ -154,24 +138,9 @@
     </CodeGeneration>
     <Linking>
       <LinkSmart Value="True"/>
-      <Options>
-        <Win32>
-          <GraphicApplication Value="True"/>
-        </Win32>
-      </Options>
     </Linking>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="3">
-      <Item1>
-        <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-    </Exceptions>
+    <Exceptions Count="0"/>
   </Debugging>
 </CONFIG>

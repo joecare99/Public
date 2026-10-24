@@ -1,7 +1,7 @@
 program UpDownDemo; 
 uses 
   Forms, 
-  frm_UpDownDemoMain in '..\Source\UpDownDemo\frm_UpDownDemoMain.pas' {MainForm}; 
+  frm_UpDownDemoMain in '..\source\UpDownDemo\Frm_UpDownDemoMain.pas' {MainForm}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

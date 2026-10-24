@@ -2,47 +2,43 @@
 <CONFIG>
   <ProjectOptions>
     <Version Value="11"/>
-    <PathDelim Value="\"/>
+    <PathDelim Value="/"/>
     <General>
       <Flags>
-        <MainUnitHasUsesSectionForAllUnits Value="False"/>
+        <MainUnitHasUsesSectionForAllUnits Value="True"/>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
       </Flags>
       <SessionStorage Value="InProjectDir"/>
       <MainUnit Value="0"/>
       <Title Value="Capslock"/>
-      <Scaled Value="True"/>
       <UseAppBundle Value="False"/>
-      <ResourceType Value="res"/>
-      <UseXPManifest Value="True"/>
-      <XPManifest>
-        <DpiAware Value="True"/>
-      </XPManifest>
+      <ResourceType Value=""/>
     </General>
-    <LazDoc Paths="..\FPDoc"/>
     <i18n>
-      <EnableI18N LFM="False"/>
+      <EnableI18N LFM="True"/>
     </i18n>
+    <VersionInfo>
+      <StringTable ProductVersion=""/>
+    </VersionInfo>
     <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
       <Item2 Name="Debug">
         <CompilerOptions>
           <Version Value="11"/>
-          <PathDelim Value="\"/>
+          <PathDelim Value="/"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Capslock"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="..\..\include;..\source\CAPSLOCK"/>
-            <OtherUnitFiles Value="..\Source;..\source\CAPSLOCK"/>
-            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <OtherUnitFiles Value="../source/Capslock;../source/_core/tools"/>
+            <IncludeFiles Value="../source/Capslock;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
               <SyntaxMode Value="Delphi"/>
               <IncludeAssertionCode Value="True"/>
-              <AllowLabel Value="False"/>
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
@@ -57,59 +53,35 @@
             <Debugging>
               <DebugInfoType Value="dsDwarf2Set"/>
               <UseHeaptrc Value="True"/>
-              <UseExternalDbgSyms Value="True"/>
             </Debugging>
-            <Options>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
-            </Options>
           </Linking>
-          <Other>
-            <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-          </Other>
         </CompilerOptions>
       </Item2>
       <Item3 Name="Release">
         <CompilerOptions>
           <Version Value="11"/>
-          <PathDelim Value="\"/>
+          <PathDelim Value="/"/>
           <Target>
-            <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Capslock"/>
           </Target>
           <SearchPaths>
-            <IncludeFiles Value="..\..\include;..\source\CAPSLOCK;$(ProjOutDir)"/>
-            <OtherUnitFiles Value="..\Source;..\source\CAPSLOCK"/>
-            <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+            <OtherUnitFiles Value="../source/Capslock;../source/_core/tools"/>
+            <IncludeFiles Value="../source/Capslock;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
               <SyntaxMode Value="Delphi"/>
-              <AllowLabel Value="False"/>
             </SyntaxOptions>
           </Parsing>
           <CodeGeneration>
-            <SmartLinkUnit Value="True"/>
             <Optimizations>
               <OptimizationLevel Value="3"/>
             </Optimizations>
           </CodeGeneration>
           <Linking>
-            <Debugging>
-              <GenerateDebugInfo Value="False"/>
-            </Debugging>
             <LinkSmart Value="True"/>
-            <Options>
-              <PassLinkerOptions Value="True"/>
-              <LinkerOptions Value="-s"/>
-              <Win32>
-                <GraphicApplication Value="True"/>
-              </Win32>
-            </Options>
           </Linking>
-          <Other>
-            <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-          </Other>
         </CompilerOptions>
       </Item3>
     </BuildModes>
@@ -117,10 +89,9 @@
       <Version Value="2"/>
     </PublishOptions>
     <RunParams>
-      <FormatVersion Value="2"/>
-      <Modes Count="1">
-        <Mode0 Name="default"/>
-      </Modes>
+      <local>
+        <FormatVersion Value="1"/>
+      </local>
     </RunParams>
     <RequiredPackages Count="1">
       <Item1>
@@ -129,33 +100,34 @@
     </RequiredPackages>
     <Units Count="2">
       <Unit0>
-        <Filename Value="Capslock.dpr"/>
+        <Filename Value="Capslock.lpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="Capslock"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\source\Capslock\Frm_CapslockMAIN.PAS"/>
+        <Filename Value="../source/Capslock/Frm_CapslockMAIN.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="frmCapsLockMain"/>
+        <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_CapslockMAIN"/>
       </Unit1>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
-    <PathDelim Value="\"/>
+    <PathDelim Value="/"/>
     <Target>
-      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+      <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Capslock"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="..\..\include;..\source\CAPSLOCK"/>
-      <OtherUnitFiles Value="..\Source;..\source\CAPSLOCK"/>
-      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+      <OtherUnitFiles Value="../source/Capslock;../source/_core/tools"/>
+      <IncludeFiles Value="../source/Capslock;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
         <SyntaxMode Value="Delphi"/>
-        <AllowLabel Value="False"/>
       </SyntaxOptions>
     </Parsing>
     <CodeGeneration>
@@ -163,27 +135,9 @@
     </CodeGeneration>
     <Linking>
       <LinkSmart Value="True"/>
-      <Options>
-        <Win32>
-          <GraphicApplication Value="True"/>
-        </Win32>
-      </Options>
     </Linking>
-    <Other>
-      <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="3">
-      <Item1>
-        <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-    </Exceptions>
+    <Exceptions Count="0"/>
   </Debugging>
 </CONFIG>

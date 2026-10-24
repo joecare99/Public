@@ -9,7 +9,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_WinesEntryMain in '..\Source\WinesEntry\Frm_WinesEntryMain.pas' {MainForm}; 
+  Frm_WinesEntryMain in '..\source\WinesEntry\Frm_WinesEntryMain.pas' {MainForm}; 
  {$IFNDEF FPC}
 {$E EXE}
 {$ENDIF}

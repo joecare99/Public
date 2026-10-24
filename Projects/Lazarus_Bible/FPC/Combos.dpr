@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_CombosMAIN in '..\source\COMBOS\Frm_CombosMAIN.PAS' {MainForm};
+  Frm_CombosMAIN in '..\source\COMBOS\Frm_CombosMAIN.pas' {MainForm};
 
 {$R *.res}
 {$IFNDEF FPC}

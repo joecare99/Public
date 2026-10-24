@@ -72,6 +72,17 @@ existing connection is not edited in place; replacement is performed as
 remove-then-insert. The user confirms that removal deletes both records of
 the reciprocal pair, consistent with the traced handler.
 
+Whole-person deletion is a separate, broader legacy operation. The
+`TForm1.schen1Click` listing deletes all `MRG.DB` rows with that person's
+number in either endpoint field (`Nummer` or `Epnum`); for an uppercased
+gender prefix of `M` it clears matching child `Vater` references to `0`, and
+for `W` it clears matching child `Mutter` references to `0`, before deleting
+the person row. The listing exposes no transaction around this sequence.
+Its assembly-to-Pascal reconstruction, including the unresolved `Edit` then
+`FindKey` posting semantics, is in
+`AhnWin52-Person-Deletion-Behavior.md`. This is legacy behavior evidence, not
+proof that the current Paradox/SQLDB provider can safely execute it.
+
 ## Falsifiable hypothesis
 
 1. A Table9/`AWD.DB` row is a person row, identified by `Nummer`.

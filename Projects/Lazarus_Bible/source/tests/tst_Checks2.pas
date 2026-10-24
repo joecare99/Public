@@ -26,7 +26,7 @@ type
 
 implementation
 
-uses Frm_Checks2MAIN;
+uses Frm_Checks2Main;
 
 procedure TTestChecks.TestSetUp;
 begin

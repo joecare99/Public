@@ -2,9 +2,9 @@ program Mdidemo;
 
 uses
   Forms,
-  Frm_MDIDemoMAIN in '..\source\MDIDEMO\Frm_MDIDemoMAIN.PAS' {MainForm},
+  Frm_MDIDemoMAIN in '..\source\MDIDEMO\Frm_MDIDemoMAIN.pas' {MainForm},
   CHILD1 in '..\source\MDIDEMO\CHILD1.PAS' {ChildForm},
-  Frm_MDIDemoABOUT in '..\source\MDIDEMO\Frm_MDIDemoABOUT.PAS' {AboutForm};
+  Frm_MDIDemoABOUT in '..\source\MDIDEMO\Frm_MDIDemoABOUT.pas' {AboutForm};
 
 {$E EXE}
 

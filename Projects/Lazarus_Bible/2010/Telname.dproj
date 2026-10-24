@@ -42,7 +42,7 @@
 			<DelphiCompile Include="Telname.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\TELNAME\Frm_TelnameMAIN.PAS">
+			<DCCReference Include="..\source\TELNAME\Frm_TelnameMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

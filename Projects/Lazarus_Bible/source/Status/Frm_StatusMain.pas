@@ -1,13 +1,34 @@
 unit Frm_StatusMain;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ComCtrls, StdCtrls, Buttons, ExtCtrls, ToolWin;
+ Messages,
+ SysUtils,
+ Classes,
+ Graphics,
+ Controls,
+ Forms,
+ Dialogs,
+
+  ComCtrls,
+ StdCtrls,
+ Buttons,
+ ExtCtrls,
+ ToolWin,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
-  TMainForm = class(TForm)
+  TfrmStatusMain = class(TForm)
     Label1: TLabel;
     StatusBar1: TStatusBar;
     Timer1: TTimer;
@@ -34,12 +55,15 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmStatusMain: TfrmStatusMain;
 
 implementation
 
-{$R *.DFM}
-
+{$IFnDEF FPC}
+  {$R *.dfm}
+{$ELSE}
+  {$R *.lfm}
+{$ENDIF}
 { Rather than use literal index values, this section defines
   descriptive contants for the statusbar's four panels }
 const
@@ -49,7 +73,7 @@ const
   TimePanelIndex    = 3;
 
 { Update X and Y coordinate values in the statusbar }
-procedure TMainForm.FormMouseMove(Sender: TObject;
+procedure TfrmStatusMain.FormMouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 begin
   StatusBar1.Panels[XPanelIndex].Text := 'X = ' + IntToStr(X);
@@ -58,7 +82,7 @@ end;
 
 { Calculate width of middle panel so the others stay the
   same size when the window resizes. }
-procedure TMainForm.FormResize(Sender: TObject);
+procedure TfrmStatusMain.FormResize(Sender: TObject);
 const
   Fudge = 25;  // Allow extra space for width calculation
 var
@@ -73,7 +97,7 @@ begin
 end;
 
 { Display the time in the rightmost statusbar panel }
-procedure TMainForm.Timer1Timer(Sender: TObject);
+procedure TfrmStatusMain.Timer1Timer(Sender: TObject);
 begin
   StatusBar1.Panels[TimePanelIndex].Text := TimeToStr(Time);
 end;
@@ -82,7 +106,7 @@ end;
   in a statusbar panel. The call to ShowMessage is never
   made, but is included to prevent the compiler from
   optimizing out the integer division. }
-procedure TMainForm.ToolButton1Click(Sender: TObject);
+procedure TfrmStatusMain.ToolButton1Click(Sender: TObject);
 var
   K, J: Integer;
 begin
@@ -92,7 +116,9 @@ begin
     ShowMessage(IntToStr(K) + ':' + IntToStr(J));
   except on E: Exception do
     begin
+{$IFnDEF FPC}
       MessageBeep(0);
+{$ENDIF}
       StatusBar1.Panels[MessagePanelIndex].Text :=
        'Error: ' + E.Message;
     end;
@@ -100,13 +126,13 @@ begin
 end;
 
 { Clear the text from middle statusbar panel }
-procedure TMainForm.ToolButton2Click(Sender: TObject);
+procedure TfrmStatusMain.ToolButton2Click(Sender: TObject);
 begin
   StatusBar1.Panels[MessagePanelIndex].Text := '';
 end;
 
 { End the program }
-procedure TMainForm.ToolButton4Click(Sender: TObject);
+procedure TfrmStatusMain.ToolButton4Click(Sender: TObject);
 begin
   Close;
 end;
@@ -114,14 +140,14 @@ end;
 { Translate mouse coordinates when the cursor moves over
   one of the two large labels, and pass the results on
   to the MainForm's OnMouseMove event handler. }
-procedure TMainForm.Label1MouseMove(Sender: TObject;
+procedure TfrmStatusMain.Label1MouseMove(Sender: TObject;
   Shift: TShiftState; X, Y: Integer);
 var
   T: TLabel;  // Refers to Sender as a TLabel object
 begin
   T := Sender as TLabel;  // Initialize T
   // Pass coordinates to MainForm's event handler
-  MainForm.FormMouseMove(Sender, Shift, T.Left + X, T.Top + Y);
+  frmStatusMain.FormMouseMove(Sender, Shift, T.Left + X, T.Top + Y);
 end;
 
 end.

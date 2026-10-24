@@ -62,7 +62,7 @@
     <DelphiCompile Include="Addpage.dpr">
       <MainSource>MainSource</MainSource>
     </DelphiCompile>
-    <DCCReference Include="..\source\ADDPAGE\Frm_AddpageMAIN.PAS">
+    <DCCReference Include="..\source\Addpage\Frm_AddpageMAIN.pas">
       <Form>MainForm</Form>
     </DCCReference>
   </ItemGroup>

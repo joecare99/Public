@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_DirExecMain2 in '..\source\Direxec\Frm_DirExecMAIN2.PAS' {MainForm};
+  Frm_DirExecMain2 in '..\source\DIREXEC\Frm_DirExecMain2.pas' {MainForm};
 
 
 {$IFNDEF FPC} {$E EXE}   {$ENDIF}

@@ -42,7 +42,7 @@
 			<DelphiCompile Include="Strlist.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\STRLIST\Frm_StrlistMAIN.PAS">
+			<DCCReference Include="..\source\STRLIST\Frm_StrlistMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

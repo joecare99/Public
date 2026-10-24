@@ -1,10 +1,28 @@
 unit Frm_BartestMain2;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls,
-  Forms, Dialogs, ExtCtrls, BarChart;
+ Messages,
+ SysUtils,
+ Classes,
+ Graphics,
+ Controls,
+
+  Forms,
+ Dialogs,
+ ExtCtrls,
+ BarChart,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
 
@@ -25,7 +43,7 @@ var
 implementation
 
 {$IFDEF FPC}
-{$R *.LFM}
+{$R *.lfm}
 {$ELSE}
 {$R *.DFM}
 {$ENDIF}

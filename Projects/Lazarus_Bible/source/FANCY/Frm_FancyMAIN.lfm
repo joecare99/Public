@@ -1,4 +1,4 @@
-object MainForm: TMainForm
+object frmFancyMain: TfrmFancyMain
   Left = 136
   Top = 153
   Caption = 'Fancy RadioButton Groups'
@@ -10,7 +10,6 @@ object MainForm: TMainForm
   Font.Height = -13
   Font.Name = 'Arial'
   Font.Style = []
-  PixelsPerInch = 96
   object Panel1: TPanel
     Left = 8
     Top = 8

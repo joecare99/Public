@@ -100,7 +100,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\source\DCLOCK\Frm_DClockMAIN.PAS">
+        <DCCReference Include="..\source\DCLOCK\Frm_DClockMAIN.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

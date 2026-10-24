@@ -10,7 +10,9 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  Frm_ReadMeMain in '..\Source\README\Frm_ReadMeMain.PAS' {MainForm}; 
+  Frm_ReadMeMain in '..\source\README\view\Frm_ReadMeMain.pas' {MainForm},
+  ReadMeDocument in '..\source\README\model\ReadMeDocument.pas',
+  ReadMeViewModel in '..\source\README\viewmodel\ReadMeViewModel.pas'; 
 {$E EXE} 
 {$R *.res}
 begin 

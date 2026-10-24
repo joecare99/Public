@@ -1,10 +1,29 @@
 unit Frm_YesNoMAIN;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  SysUtils, Windows, Messages, Classes, Graphics, Controls,
-  Forms, Dialogs, StdCtrls, Frm_YesNo;
+
+  SysUtils,
+ Messages,
+ Classes,
+ Graphics,
+ Controls,
+
+  Forms,
+ Dialogs,
+ StdCtrls,
+ Frm_YesNo,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages
+{$ENDIF};
 
 type
   TfrmYesNoMain = class(TForm)
@@ -23,8 +42,15 @@ var
 
 implementation
 
-{$R *.DFM}
+{$IFnDEF FPC}
 
+  {$R *.dfm}
+
+{$ELSE}
+
+  {$R *.lfm}
+
+{$ENDIF}
 procedure TfrmYesNoMain.btnTestClick(Sender: TObject);
 { Add following two lines to create a variable for
   storing the result of the YesNo dialog. }

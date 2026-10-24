@@ -1,10 +1,29 @@
 unit Frm_SERVER2;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses
-  Windows, Messages, Classes, simpleipc, Graphics, Controls,
-  Forms, Dialogs, StdCtrls, Buttons;
+ Messages,
+ Classes,
+ simpleipc,
+ Graphics,
+ Controls,
+
+  Forms,
+ Dialogs,
+ StdCtrls,
+ Buttons,
+{$IFnDEF FPC}
+  Windows,
+{$ELSE}
+  LCLIntf,
+  LCLType,
+  LMessages,
+  BibleIpc
+{$ENDIF};
 
 type
 
@@ -31,7 +50,7 @@ var
 implementation
 
 {$IFDEF FPC}
-{$R *.LFM}
+{$R *.lfm}
 {$ELSE}
 {$R *.DFM}
 {$ENDIF}

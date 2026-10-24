@@ -74,7 +74,7 @@
         <DelphiCompile Include="$(MainSource)">
             <MainSource>MainSource</MainSource>
         </DelphiCompile>
-        <DCCReference Include="..\Source\TOOLBAR2\Frm_Toolbar2MAIN.PAS">
+        <DCCReference Include="..\source\TOOLBAR2\Frm_Toolbar2MAIN.pas">
             <Form>MainForm</Form>
         </DCCReference>
         <BuildConfiguration Include="Debug">

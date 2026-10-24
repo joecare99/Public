@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="10"/>
-    <PathDelim Value="\"/>
+    <Version Value="11"/>
+    <PathDelim Value="/"/>
     <General>
       <Flags>
-        <MainUnitHasUsesSectionForAllUnits Value="False"/>
+        <MainUnitHasUsesSectionForAllUnits Value="True"/>
         <MainUnitHasCreateFormStatements Value="False"/>
         <MainUnitHasTitleStatement Value="False"/>
       </Flags>
@@ -13,16 +13,77 @@
       <MainUnit Value="0"/>
       <Title Value="Readme"/>
       <UseAppBundle Value="False"/>
-      <ResourceType Value="res"/>
+      <ResourceType Value=""/>
     </General>
     <i18n>
-      <EnableI18N LFM="False"/>
+      <EnableI18N LFM="True"/>
     </i18n>
     <VersionInfo>
       <StringTable ProductVersion=""/>
     </VersionInfo>
-    <BuildModes Count="1">
+    <BuildModes Count="3">
       <Item1 Name="Default" Default="True"/>
+      <Item2 Name="Debug">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="/"/>
+          <Target>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Readme"/>
+          </Target>
+          <SearchPaths>
+            <OtherUnitFiles Value="../source/README/view;../source/README/model;../source/README/viewmodel;../source/README;../source/_core/mvvm;../source/_core/services;../source/_core/tools"/>
+            <IncludeFiles Value="../source/README/view;../source/README/model;../source/README/viewmodel;../source/README;../source/_core/mvvm;../source/_core/services;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+              <IncludeAssertionCode Value="True"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Checks>
+              <IOChecks Value="True"/>
+              <RangeChecks Value="True"/>
+              <OverflowChecks Value="True"/>
+              <StackChecks Value="True"/>
+            </Checks>
+          </CodeGeneration>
+          <Linking>
+            <Debugging>
+              <DebugInfoType Value="dsDwarf2Set"/>
+              <UseHeaptrc Value="True"/>
+            </Debugging>
+          </Linking>
+        </CompilerOptions>
+      </Item2>
+      <Item3 Name="Release">
+        <CompilerOptions>
+          <Version Value="11"/>
+          <PathDelim Value="/"/>
+          <Target>
+            <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Readme"/>
+          </Target>
+          <SearchPaths>
+            <OtherUnitFiles Value="../source/README/view;../source/README/model;../source/README/viewmodel;../source/README;../source/_core/mvvm;../source/_core/services;../source/_core/tools"/>
+            <IncludeFiles Value="../source/README/view;../source/README/model;../source/README/viewmodel;../source/README;../source/_core/mvvm;../source/_core/services;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+          </SearchPaths>
+          <Parsing>
+            <SyntaxOptions>
+              <SyntaxMode Value="Delphi"/>
+            </SyntaxOptions>
+          </Parsing>
+          <CodeGeneration>
+            <Optimizations>
+              <OptimizationLevel Value="3"/>
+            </Optimizations>
+          </CodeGeneration>
+          <Linking>
+            <LinkSmart Value="True"/>
+          </Linking>
+        </CompilerOptions>
+      </Item3>
     </BuildModes>
     <PublishOptions>
       <Version Value="2"/>
@@ -37,35 +98,46 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="4">
       <Unit0>
-        <Filename Value="Readme.dpr"/>
+        <Filename Value="Readme.lpr"/>
         <IsPartOfProject Value="True"/>
+        <UnitName Value="Readme"/>
       </Unit0>
       <Unit1>
-        <Filename Value="..\source\README\Frm_ReadMeMain.PAS"/>
+        <Filename Value="../source/README/view/Frm_ReadMeMain.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="MainForm"/>
+        <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_ReadMeMain"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="../source/README/model/ReadMeDocument.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ReadMeDocument"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../source/README/viewmodel/ReadMeViewModel.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="ReadMeViewModel"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
     <Version Value="11"/>
-    <PathDelim Value="\"/>
+    <PathDelim Value="/"/>
     <Target>
-      <Filename Value="..\..\bin\$(TargetCPU)-$(TargetOS)\$NameOnly($(ProjFile))"/>
+      <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Readme"/>
     </Target>
     <SearchPaths>
-      <IncludeFiles Value="..\..\include;..\Source\README;$(ProjOutDir)"/>
-      <OtherUnitFiles Value="..\Source;..\Source\README"/>
-      <UnitOutputDirectory Value="..\..\bin\$(TargetCPU)-$(TargetOS)\units"/>
+      <OtherUnitFiles Value="../source/README/view;../source/README/model;../source/README/viewmodel;../source/README;../source/_core/mvvm;../source/_core/services;../source/_core/tools"/>
+      <IncludeFiles Value="../source/README/view;../source/README/model;../source/README/viewmodel;../source/README;../source/_core/mvvm;../source/_core/services;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
         <SyntaxMode Value="Delphi"/>
-        <AllowLabel Value="False"/>
       </SyntaxOptions>
     </Parsing>
     <CodeGeneration>
@@ -73,27 +145,9 @@
     </CodeGeneration>
     <Linking>
       <LinkSmart Value="True"/>
-      <Options>
-        <Win32>
-          <GraphicApplication Value="True"/>
-        </Win32>
-      </Options>
     </Linking>
-    <Other>
-      <CustomOptions Value="-dBorland -dVer150 -dDelphi7 -dCompiler6_Up -dPUREPASCAL"/>
-    </Other>
   </CompilerOptions>
   <Debugging>
-    <Exceptions Count="3">
-      <Item1>
-        <Name Value="EAbort"/>
-      </Item1>
-      <Item2>
-        <Name Value="ECodetoolError"/>
-      </Item2>
-      <Item3>
-        <Name Value="EFOpenError"/>
-      </Item3>
-    </Exceptions>
+    <Exceptions Count="0"/>
   </Debugging>
 </CONFIG>

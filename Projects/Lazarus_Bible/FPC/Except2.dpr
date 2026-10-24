@@ -10,7 +10,7 @@ uses
   Interfaces,
 {$ENDIF}
   Forms,
-  frm_Except2MAIN in '..\Source\EXCEPT2\frm_Except2MAIN.PAS' {MainForm}; 
+  frm_Except2MAIN in '..\source\EXCEPT2\frm_Except2MAIN.pas' {MainForm}; 
 {$R *.res}
 {$IFNDEF FPC}
 {$E EXE}

@@ -49,7 +49,7 @@
 			<DelphiCompile Include="CoolDemo.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\source\CoolDemo\frm_CooldemoMain.pas">
+			<DCCReference Include="..\source\Cooldemo\frm_CooldemoMain.pas">
 				<Form>frmCoolDemoMain</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Debug">

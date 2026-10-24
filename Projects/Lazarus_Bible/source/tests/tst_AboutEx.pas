@@ -7,7 +7,7 @@ unit tst_AboutEx;
 interface
 
 uses
-  Classes,Forms, SysUtils, {$IFNDEF FPC}TestFramework, {$Else} fpcunit, testutils, testregistry, {$endif} Frm_AboutExMAIN,frm_About;
+  Classes,Forms, SysUtils, {$IFNDEF FPC}TestFramework, {$Else} fpcunit, testutils, testregistry, {$endif} Frm_AboutExMAIN,AboutEx_Frm_ABOUT;
 
 type
 

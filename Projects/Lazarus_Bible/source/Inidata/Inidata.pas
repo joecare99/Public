@@ -15,7 +15,9 @@ To use:
 
 unit Inidata;
 
-{$I jedi.inc}
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses SysUtils, Classes, INIFiles;
@@ -47,13 +49,31 @@ var
 procedure RegisterINIDataProp(const ClassName, PropName: String);
 var
   X: Integer;
+  Existing: String;
+  AlreadyThere: Boolean;
 begin
   if INIDataProps = nil then INIDataProps := TStringList.Create;
+  AlreadyThere := False;
   for X := 0 to INIDataProps.Count - 1 do
     if CompareText(ClassName, INIDataProps[x]) = 0 then
-      raise EINIDataProp.Create(Format('Can''t register %s.%s - %s.%s is already registered',
+    begin
+      { Dasselbe Paar nochmal registrieren ist erlaubt - mehrere Demos
+        im selben Prozess teilen sich die Tabelle und wuerden sich sonst
+        gegenseitig mit "already registered" anbremsen. }
+      {$ifndef Supports_Widestring}
+      Existing := String(INIDataProps.Objects[X]);
+      {$else}
+      Existing := PString(INIDataProps.Objects[x])^;
+      {$endif}
+      if CompareText(Existing, PropName) = 0 then
+        AlreadyThere := True
+      else
+        raise EINIDataProp.Create(Format('Can''t register %s.%s - %s.%s is already registered',
           [ClassName, PropName, ClassName, {$ifndef Supports_Widestring}String(INIDataProps.Objects[X]){$else}PString(INIDataProps.Objects[x])^{$endif}]));
-  INIDataProps.AddObject(ClassName, TObject(PropName));
+      break;
+    end;
+  if not AlreadyThere then
+    INIDataProps.AddObject(ClassName, TObject(PropName));
 end;
 
 function FindINIDataProp(Instance: TComponent; var PropInfo: PPropInfo): Boolean;
@@ -133,11 +153,11 @@ begin
         tkEnumeration: SetOrdProp(P, PropInfo,
           GetEnumValue(PropInfo^.PropType,
           ReadStr(P.Name, GetEnumName(PropInfo^.PropType,
-          GetOrdProp(P,PropInfo))^)));
+          GetOrdProp(P,PropInfo)))));
 {$Else}
         tkEnumeration: SetOrdProp(P, PropInfo,
-          GetEnumValue({$IFDEF FPC} PropInfo.PropType {$ELSE} PropInfo.PropType^ {$ENDIF},
-          ReadStr(P.Name, GetEnumName({$IFDEF FPC} PropInfo.PropType {$ELSE} PropInfo.PropType^ {$ENDIF},
+          GetEnumValue({$IFDEF FPC} PropInfo^.PropType {$ELSE} PropInfo^.PropType^ {$ENDIF},
+          ReadStr(P.Name, GetEnumName({$IFDEF FPC} PropInfo^.PropType {$ELSE} PropInfo^.PropType^ {$ENDIF},
           GetOrdProp(P,PropInfo)))));
 {$Endif}
       end;
@@ -167,10 +187,10 @@ begin
 {$ifndef Supports_Widestring}
         tkEnumeration: WriteStr(P.Name,
           GetEnumName(PropInfo^.PropType,
-          GetOrdProp(P,PropInfo))^);
+          GetOrdProp(P,PropInfo)));
 {$else}
         tkEnumeration: WriteStr(P.Name,
-          GetEnumName({$IFDEF FPC} PropInfo.PropType {$ELSE} PropInfo.PropType^ {$ENDIF},
+          GetEnumName({$IFDEF FPC} PropInfo^.PropType {$ELSE} PropInfo^.PropType^ {$ENDIF},
           GetOrdProp(P,PropInfo)));
 {$endif}
       end;

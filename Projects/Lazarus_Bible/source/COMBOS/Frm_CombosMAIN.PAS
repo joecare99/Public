@@ -16,7 +16,7 @@ uses
   Forms, Dialogs, StdCtrls, Buttons;
 
 type
-  TMainForm = class(TForm)
+  TfrmCombosMain = class(TForm)
     SimpleCB: TComboBox;
     DropDownCB: TComboBox;
     DropDownListCB: TComboBox;
@@ -36,7 +36,7 @@ type
   end;
 
 var
-  MainForm: TMainForm;
+  frmCombosMain: TfrmCombosMain;
 
 implementation
 
@@ -46,12 +46,12 @@ implementation
   {$R *.lfm}
 {$ENDIF}
 
-procedure TMainForm.CancelBitBtnClick(Sender: TObject);
+procedure TfrmCombosMain.CancelBitBtnClick(Sender: TObject);
 begin
   Close;
 end;
 
-procedure TMainForm.OKBitBtnClick(Sender: TObject);
+procedure TfrmCombosMain.OKBitBtnClick(Sender: TObject);
 var
   S1, S2, S3: string;
 begin
@@ -62,7 +62,7 @@ begin
     S1 + ', ' + S2 + ', ' + S3);
 end;
 
-procedure TMainForm.CloseBitBtnClick(Sender: TObject);
+procedure TfrmCombosMain.CloseBitBtnClick(Sender: TObject);
 begin
   OKBitBtn.Click;  { Simulate OK button click }
   Close;           { End program }

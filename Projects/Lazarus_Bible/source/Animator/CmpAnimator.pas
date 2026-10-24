@@ -1,5 +1,8 @@
 unit cmpAnimator;
 
+{$IFDEF FPC}
+  {$MODE Delphi}
+{$ENDIF}
 interface
 
 uses types,{$IFnDEF FPC}

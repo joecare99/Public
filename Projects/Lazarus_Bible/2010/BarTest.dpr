@@ -1,7 +1,7 @@
 program BarTest; 
 uses 
   Forms, 
-  Frm_BartestMain in '..\Source\BARCHART\Frm_BartestMain.pas' {frmBarChartMain}; 
+  Frm_BartestMain in '..\source\Barchart\Frm_BartestMain.pas' {frmBarChartMain}; 
 {$R *.RES} 
 {$E EXE} 
 begin 

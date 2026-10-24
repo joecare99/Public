@@ -42,7 +42,7 @@
 			<DelphiCompile Include="PageTab.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\PageTab\Frm_PageTabMain.pas">
+			<DCCReference Include="..\source\PageTab\Frm_PageTabMain.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

@@ -44,7 +44,7 @@
 			<DelphiCompile Include="Checks.dpr">
 				<MainSource>MainSource</MainSource>
 			</DelphiCompile>
-			<DCCReference Include="..\Source\CHECKS\Frm_ChecksMAIN.PAS">
+			<DCCReference Include="..\source\CHECKS\Frm_ChecksMAIN.pas">
 				<Form>MainForm</Form>
 			</DCCReference>
 			<BuildConfiguration Include="Basis">

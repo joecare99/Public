@@ -8,6 +8,41 @@ target dependencies. Parent-slot cardinality and zero-sentinel semantics are
 now owner-confirmed; non-reporting relationship writes remain gated on
 provider parity, invalid-reference policy, and caller lifecycle behavior.
 
+## Paradox writer port — primary-index builder continuation
+
+The Pascal port now includes the standalone
+`Components\Source\DBParadoxIndexFileBuilder.pas`. It builds a primary-index
+tree from an empty, unencrypted index template, validates entries, updates
+the index header, and supports multiple tree levels. It remains isolated:
+there is no `.DB`/`.PX` table-writer orchestration, file-family staging,
+SQLDB DML, or application wiring.
+
+Validation is synthetic and cross-implementation at the single-level index
+record boundary. Pascal tests pass 31/31 executed tests (9 pxlib-fixture
+tests remain intentionally ignored); C# tests pass 62 with one skip per
+net8.0/net9.0/net10.0 target. A 260-entry Pascal test verifies construction
+of a two-level tree. BDE close/reopen and primary-key lookup, Linux x64, and
+complete table-family publication remain unverified, so the full writer
+conformance task stays pending and SQLDB writes stay disabled.
+
+### In-memory `.DB`/`.PX` builder
+
+Added `DBParadoxTableFileBuilder.pas`, which returns paired `.DB` and `.PX`
+byte arrays for a supported single-primary-key table. It validates the empty
+table/index templates against field metadata, encodes/sorts rows, rejects
+duplicate keys, writes linked table blocks, allocates omitted AutoInc values,
+and delegates primary-index construction. It rejects encrypted templates
+and does not write to disk, produce memo or secondary-index sidecars, stage
+family replacement, or integrate with SQLDB.
+
+Pascal synthetic tests pass 35/35 executed tests (9 fixture-dependent tests
+remain intentionally ignored), including a 255-row/two-data-block case. A
+matching C# fixture uses the same `.DB/.PX` templates and two rows, verifies
+the same primary data/index record bytes, then reopens with the C# reader;
+the C# suite passes 63 tests plus one skip per net8.0/net9.0/net10.0 target.
+BDE close/reopen and lookup behavior, Linux x64, secondary-index/memo
+sidecars, and staged/crash-safe publication remain open gates.
+
 ## Authorized test-copy BDE catalogue — completed 2026-10-18
 
 The authorized `C:\ProgramData\AHNENWIN Test` copy was inventoried and probed
@@ -161,6 +196,226 @@ The checked-in data module has not yet been moved to that provider for
 marriage data: `Table5`, `Table10`, and `Table15` are still `TSQLTable`;
 only `Table17` and `Table18` are direct `TParadox`.
 
+### Provider decisions — recovery, deleted rows, and concurrency
+
+The user clarified the target semantics:
+
+- A Paradox row marked deleted is nonexistent from the application's
+  perspective and must not be returned. The active read-contract test must
+  still verify pxlib actually skips such physical slots; reject the read path
+  if it cannot do so.
+- The synthetic BDE/pxlib fixture preserved a nullable live field as NULL
+  and omitted a deleted row in both providers. SQLDB currently excludes NULL
+  from `=`/`<>` comparisons and sorts NULL first ascending, last descending.
+  The user accepts this as the explicit provider policy; BDE filter/sort
+  parity is not claimed.
+- If a write fails, report the concrete reason and compensation result. If
+  the cause is external (for example, insufficient disk space), recommend
+  terminating the application. If compensation also fails, surface both
+  failures and mark the affected provider state uncertain; do not claim
+  rollback success.
+- Current simultaneous access is prevented by a runtime error; preserve
+  fail-fast behavior for the Paradox runtime. Concurrent access is a desired
+  future capability after migration to server SQL (such as MSSQL or MySQL),
+  where it must be based on that backend's transaction/isolation guarantees.
+- A separate future repair utility should reconcile internally inconsistent
+  records. For reciprocal Marr rows, process the row with the smaller
+  `Nummer` first as canonical; the opposite-direction row is its legacy
+  mirror/copy. Begin with proposed changes for confirmation; choosing
+  **“Alle ändern”** applies them for that run only. Proposed pair handling:
+  create a missing larger-to-smaller row from the canonical row; if the
+  canonical smaller-to-larger row is missing, delete the remaining mirror.
+  Conflicting details require case-by-case confirmation, with copying
+  canonical details as the proposal.
+- Exact logical duplicates are rows with the same directed `Nummer`/`Epnum`
+  endpoints and identical marriage details, ignoring `Numr`. The legacy
+  DFM/current LFM and metadata-only BDE catalogue identify `Numr` as an
+  AutoInc row key with a unique primary index; person endpoints are
+  `Nummer`/`Epnum`. Repair itself needs a separate audit/backup contract and
+  is not part of current provider writes.
+
+These decisions refine the provider contract; they do not open DML,
+production-table, or repair execution. Evidence and implementation gates are
+in `ReverseEngineering\AhnWin52-TDBParadox-SQLDB-Contract-Inventory.md`.
+
+### pxlib write primitive gate — BDE index verification failed
+
+Ran the explicitly approved Insert/Update/Delete smoke test only against
+three fresh artificial BDE tables under `%TEMP%`. pxlib 0.6.8 returned
+success-shaped results for all three calls, but BDE could not reopen even
+the Insert table and reported `EDBEngineError: Index nicht mehr gültig`.
+The stop rule ended further BDE verification. Hashes show the `.db` files
+changed while `.PX`, `.XG0`, `.YG0`, and `.VAL` sidecars did not. Since the
+fixture was not independently BDE-reopened before mutation, the precise
+cause is not fully isolated; regardless, post-write record/index correctness
+and durability were not proved. No compensation or blob/memo probe ran.
+
+The raw pxlib write primitives remain blocked and must not be connected to
+`TDBParadoxConnection`, the in-memory write buffer, SQLDB DML, or marriage
+flows. A future attempt needs a newly reviewed, disposable index-maintenance
+strategy and a fresh baseline fixture; do not retry BDE reads or repair these
+failed fixtures. Probe code is retained in
+`Source\AhnWin52\ReverseEngineering\PxlibWriteBDEFixtureProbe.dpr` and
+`PxlibWritePrimitiveProbe.lpr`; manifests and the exact failure are in the
+local `files\pxlib-write-probe-20261019\` artifacts.
+
+The user separately approved a fresh **read-only baseline**. All three
+regenerated two-row fixture shapes reopened through BDE; primary and
+secondary-index lookups passed and per-table pre/post SHA-256 inventories
+matched. A further approved retry performed only Insert on a new
+baseline-validated fixture. pxlib returned record number 2, then the
+immediate BDE reopen again failed with `Index nicht mehr gültig`; only the
+`.db` file changed and the BDE reopen itself changed no hashes. The
+stop-on-first-failure rule prevented Update and Delete retries. Matching
+pxlib source writes via the supplied table stream and exposes a separate
+primary-index writer, but the record primitives do not invoke it; no public
+secondary-index writer was found. The raw primitives remain unusable for
+indexed application tables, and all provider DML stays blocked. Baseline and
+retry evidence is preserved under
+`files\pxlib-write-baseline-20261019\` and
+`files\pxlib-write-retry-20261019\`.
+
+### Alternative Paradox writer/index-maintenance research — 2026-10-19
+
+Static research found no ready independent library in the inspected local
+stack. pxlib's own manual says secondary-index files are left to the
+application to create; its primary-index writer is separate, and the record
+mutation calls do not maintain `.XG/.YG`. Python/PHP pxlib bindings share the
+same underlying library. The installed FPC `TParadox` delegates to that same
+substrate and its append hook is empty.
+
+The local C# `AhnenWin52Backup` project has a custom restore-oriented writer:
+it builds `.DB/.PX` records only for empty tables and has a separate
+`.XG/.YG` rebuild routine. It is not a general writer for non-empty tables;
+its reader does not check pxlib's deleted-record flag, so deleted-row
+semantics remain unverified. Its README still reports an invalid `namgeb`
+index and unresolved `intl850` collation. The HEJ restore workflow stages and
+validates a full directory before replacing it, but publication is a
+sequence of directory moves with ordinary exception rollback—not a
+demonstrated atomic/crash-safe provider transaction.
+
+BDE 5.2.0.2 remains a possible engine-backed helper, not an independent
+writer library. This research did not evaluate a separate-process bridge,
+deployment constraints, or BDE DML failure recovery.
+
+**Decision:** keep SQLDB DML, the in-memory write buffer integration, and
+marriage writes blocked. The C# writer is a candidate only for a future
+offline whole-copy restore/rebuild effort, after deleted-slot handling,
+collation/index correctness, and complete-family publication are proven. No
+additional fixtures or data were touched in this static-only pass. Full
+evidence and source links are in
+`ReverseEngineering\AhnWin52-TDBParadox-SQLDB-Contract-Inventory.md`.
+
+The user selected a long-term direction: evolve the Pascal component and C#
+writer as **two independent implementations** against a shared behavior
+specification and synthetic conformance cases, initially targeting Windows
+x64 and Linux x64. The first implementation milestone is a bounded Pascal
+port of empty-template record and primary-index generation. Only after those
+cases agree should work proceed in parallel on secondary-index and
+non-empty-table behavior. A pxlib C extension remains an optional,
+separately evidenced route. There is no shared runtime component or .NET
+dependency in the Pascal provider.
+
+Created
+`ReverseEngineering\AhnWin52-Paradox-CrossImplementation-Contract.md` as
+the common behavior baseline. It distinguishes tested behavior from current
+candidate code and keeps SQLDB DML blocked until both implementations pass
+synthetic close/reopen, index, file-family, and failure tests.
+
+The first Pascal port sub-slice is now
+`Components\Source\DBParadoxRecordEncoder.pas`. It handles only
+Windows-1252 alpha bytes, Paradox short/long/AutoInc integer bytes, and
+explicit rejection of unsupported or non-empty memo/blob values; it does not
+write a table or index. Pascal and C# tests assert the same 17-byte synthetic
+record vector. C# tests pass 61/61 plus one environment-dependent skip for
+each target framework (net8/9/10); Pascal tests pass 27 with zero failures
+and 9 fixture-dependent skips. The vector is a byte-encoding check, not BDE
+compatibility evidence, and Linux x64 remains untested.
+
+### Tabs 2+ person/Marr data flow — inventory resumed
+
+The legacy DataModule confirms distinct roles rather than a single
+indiscriminate `AWD.DB` cursor: `Table1` anchors the current person, `Table5`
+is `MRG.DB` linked by the current `Nummer`, `Table6` retrieves a person by
+the marriage row's `Epnum`, and `Table7` is a person lookup linked from the
+current person. The siblings handler performs read-only lookup work through
+the `vat`/`mut` indexes and its grid double-click returns to the main person
+cursor. The relationships tab reads rows from the linked marriage dataset.
+Some additional unlinked person cursors still need consumer mapping outside
+this tab slice. Dataset-level `ReadOnly` is now enabled for secondary person
+cursors `Table3`, `Table6`, `Table7`, `Table8`, and `Table9`; `Table1` remains
+the current-person write cursor. `Table3` is also used for duplicate-number
+lookup during main-person insert. The DataModule initialization suite passes
+3/3; the full runner reports 676 tests, zero failures/errors, and 11 ignored
+tests. The legacy related-person grid is backed by the unlinked
+`Table9`/`DataSource9` person cursor; its double-click has both marriage-link
+and parent-selection modes. The latter edits the lookup cursor in the legacy
+listing, so the reconstructed route must instead write through the designated
+current-person cursor and keep the lookup read-only. Tabs 6 and 8 also read
+the current person's memo/address data; tab 9 loads up to 25
+`bilder\b<Nummer><a..y>.jpg` files.
+
+The evidence and explicit unknowns are recorded in
+`ReverseEngineering\AhnWin52-Tabs2Plus-Person-Marr-Dataflow.md`. No tab
+behavior or tab loading was enabled. The `wt37`-`wt39` offsets and date
+failure cases are now mapped against `Unit2.pas`, the legacy Form1 DFM, and
+the current DataModule/RelationshipsFrame LFM. They display locale-dependent
+weekday abbreviations for the selected marriage row; they are not additional
+data queries. Next, specify the provider-neutral read contract and advance
+one synthetic read-only slice. Keep marriage and Paradox writes gated.
+
+The static person/marriage CRUD pass now distinguishes each action instead
+of treating `speich1` as a generic save: it records person append/post,
+duplicate-number rejection, blank-person post-then-delete, parent-reference
+updates, person deletion, marriage pair creation/removal, and relationship
+detail edits. It also corrects the cursor-level map: `Table5` is the
+master-linked `MRG.DB` display/duplicate/removal cursor, while the legacy
+pair-creation path appends through independent `Table10` on the same file;
+relationship-detail edits post `Table5` and then mirror into `Table10`.
+These sequences have no demonstrated transaction boundary, and the
+relationship-exit path suppresses the initial `Table5.Post` exception before
+trying the mirror. The legacy parent-selection route edits through `Table9`,
+which conflicts with the approved single-person-write-cursor rule. The
+complete action matrix and evidence limits are in
+`ReverseEngineering\AhnWin52-Tabs2Plus-Person-Marr-Dataflow.md`. This audit
+does not enable any of these write paths.
+
+### Siblings tab synthetic projection — completed, UI/provider migration blocked
+
+Completed the `TabSheet5Enter`/`geschw` trace against the retained Unit1
+listing. The ordinary sibling rows are gathered first through Table8's `vat`
+and `mut` indexes; the helper excludes the current person, deduplicates
+across those two passes, and marks `G`/`H` by comparing the other parent
+reference. A separate, nonempty opposite-parent-list gate can suppress the
+mother pass even when the current mother number is nonzero. The final two
+passes use Table10 marriage partners to append step-sibling candidates and
+write `S` directly; the helper's `S` input branch is not the source of those
+rows. The five-column projection, traversal order, zero-value equality, and
+the unresolved VMT `+$14C` entry condition are recorded in the dataflow wiki.
+
+This is static evidence only. It does not establish BDE/SQLDB ordering parity,
+and no dataset, live UI, or person record was opened. Added the provider-free
+`Relationships\SiblingListModel.pas`, which consumes explicit ordered lookup
+snapshots and returns the five grid-cell values without touching a dataset or
+form. Its five focused tests pass; the full FPCUnit runner passes 681 tests
+with zero failures or errors. The current `AHW52SiblingsFrame` remains
+unwired. The synthetic model preserves the observed gates and marker
+conditions as listing behavior without treating `G`, `H`, or `S` as
+authoritative genealogy classifications.
+
+### Other-table CRUD overview — evidence-backed, incomplete inventory
+
+Created `ReverseEngineering\AhnWin52-Other-Tables-CRUD-Access-Matrix.md` to
+answer who reads, creates, updates, or deletes through the DataModule's other
+table cursors. It distinguishes confirmed legacy routes from resource-only
+identities and untraced callers. The clearest additional groups are place
+data (`Table13`), lookup cursors (`Table3`, `Table6`–`Table9`), and generated
+report/work tables (`Table14`, `Table16`, `Table22`, `Table24`, `Table27`).
+The source-dialog tables and a large remainder of the 38 streamed components
+still need caller-to-cursor tracing; an untraced row is explicitly not
+classified as unused or read-only. No data/provider or application path was
+opened or executed.
+
 The provider boundary has been tightened: `IGenealogyDataModule` now owns
 `AppendMarriageRecord`, and the relationship adapter delegates to it without
 referencing SQLDB or `TParadox`. Field mapping, provider flushes, and concrete
@@ -230,7 +485,23 @@ in-place edit/replace operation; changing a particular link is remove then
 insert, while adding links to other people remains allowed. The reconstructed
 `Verbindunglschen1Click` trace deletes matching `MRG.DB` rows in both endpoint
 directions, and the user confirms that removing a marriage deletes both
-records of the reciprocal pair. Details are in the connection-workflow wiki.
+records of the reciprocal pair.
+
+The separate `schen1Click` person-delete trace shows broader cleanup: all
+`MRG.DB` rows in either endpoint direction, matching child parent references
+for `M`/`W`, then the person row are removed/updated. The sequence has no
+visible transaction and is not wired to the current provider. See
+`ReverseEngineering\AhnWin52-Person-Deletion-Behavior.md` for the assembly-
+to-Pascal reconstruction and accepted implicit-post working assumption.
+
+**Person-delete access classification:** write-capable paths in the legacy
+handler are `Table5`/`MRG.DB` (delete), `Table1`/`AWD.DB` (parent-reference
+updates and person delete), and conditional `Table3`/`AWD.DB` (append/post).
+`Table8`, `Table9`, and `Table17` are opened/refreshed only. The user accepts
+the plausible implicit `CheckBrowseMode` post after `Table1.FindKey` as the
+working legacy assumption; test failures will be used to revisit it. The
+current LFM's `Table3.ReadOnly = True` conflicts with its legacy append path
+and must be reconciled before migrating the handler.
 
 The user reports that the current program also accepts a connection from a
 person to themselves, which the user considers an error. Treat self-marriage

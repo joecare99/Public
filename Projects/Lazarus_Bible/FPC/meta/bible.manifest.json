@@ -1,0 +1,513 @@
+{
+  "version": 1,
+  "categories": [
+    {
+      "id": "einstieg",
+      "title": "Einstieg in die Programmierung",
+      "demos": ["HELLO"]
+    },
+    {
+      "id": "mvvm",
+      "title": "MVVM-Muster (View / ViewModel / Model)",
+      "demos": ["HELLO", "Calc32", "README"]
+    },
+    {
+      "id": "bedienelemente",
+      "title": "Bedienelemente",
+      "demos": ["Actions", "Addpage", "Checks", "Combos", "Constraint", "Contcomp",
+                "Fancy", "Filemenu", "GlyphLst", "Listfont", "Listtext", "Multimen",
+                "Objlist", "Options", "Palette", "Sketch", "Spinbutt", "Status",
+                "StatusOD", "Strlist", "Strres", "Tabs", "Telname", "Toolbar1",
+                "Toolbar2", "Toolbar3", "UpDownDemo"]
+    },
+    {
+      "id": "datenbanken",
+      "title": "Datenbanken",
+      "demos": ["Fishy", "Fishy2", "Master", "Sqlplay", "WinesCalc", "WinesChart",
+                "WinesDemo", "WinesEntry"]
+    },
+    {
+      "id": "grafik",
+      "title": "Grafik und Animation",
+      "demos": ["Animator", "Barchart", "Bitview", "Bitview2", "CharGrid", "Metamore",
+                "Polyflow"]
+    },
+    {
+      "id": "drucken",
+      "title": "Drucken",
+      "demos": ["FontSamp", "Lister", "Printgr", "Prninfo", "Todo", "Report1"]
+    },
+    {
+      "id": "system",
+      "title": "Systemintegration",
+      "demos": ["Direx", "Direxec", "Direxec2", "Dropfile", "Enumfon", "Enumwin",
+                "Nonclien", "Ontop", "Readme", "Runme", "Syscolor", "Sysmenu"]
+    },
+    {
+      "id": "ipc",
+      "title": "Interprozesskommunikation",
+      "demos": ["Client1", "Client2", "Cclient", "Cserver", "DDE1", "DDE2",
+                "DDECOLOR", "Server1", "Server2"]
+    },
+    {
+      "id": "fehler",
+      "title": "Fehlerbehandlung",
+      "demos": ["Except1", "Except2", "Except3", "Exlist", "MouseExcept"]
+    },
+    {
+      "id": "werkzeuge",
+      "title": "Werkzeuge und Dienste",
+      "demos": ["Calc32", "Calc64", "Clipboard", "Compstrm", "Daynames", "Inidata",
+                "Keycount", "Keyinfo", "Keytest", "Power", "YesNo"]
+    }
+  ],
+  "demos": [
+    {
+      "key": "HELLO",
+      "title": "Hallo Delphi Programmer",
+      "summary": "Das kleinste moegliche Fenster: ein Knopf und ein Text.",
+      "learning": "Aufbau eines Fensters, Ereignisbehandlung, View und ViewModel.",
+      "folder": "HELLO",
+      "project": "Hello",
+      "units": ["view/Frm_HelloMAIN.pas", "viewmodel/HelloViewModel.pas"],
+      "markers": [
+        {"file": "viewmodel/HelloViewModel.pas", "text": "THelloViewModel = class", "title": "Das ViewModel"},
+        {"file": "view/Frm_HelloMAIN.pas", "text": "procedure TForm1.ApplyViewModel", "title": "Die View bindet sich an das ViewModel"}
+      ],
+      "notes": "Erste Demo im MVVM-Muster: die Logik liegt im ViewModel, die View zeigt nur an.",
+      "showcase": true
+    },
+    {
+      "key": "Calc32",
+      "title": "Taschenrechner (32 Bit)",
+      "summary": "Rechner mit dezimaerer, hexadezimaerer und binaerer Anzeige.",
+      "learning": "Model (Rechenlogik), ViewModel (Anzeigewerte), View (Bedienelemente).",
+      "folder": "Calc32",
+      "project": "Calc32",
+      "units": ["view/Frm_CALC.pas", "viewmodel/Calc32ViewModel.pas", "model/CalculatorModel.pas"],
+      "markers": [
+        {"file": "model/CalculatorModel.pas", "text": "TCalculatorModel = class", "title": "Das Rechenmodell"},
+        {"file": "viewmodel/Calc32ViewModel.pas", "text": "TCalc32ViewModel = class", "title": "Das ViewModel"},
+        {"file": "view/Frm_CALC.pas", "text": "procedure TfrmCalcMain.ApplyViewModel", "title": "Die View zeigt die Werte an"}
+      ],
+      "notes": "Die Rechenlogik ist vollstaendig ins Model gewandert; das ViewModel meldet Aenderungen.",
+      "showcase": true
+    },
+    {
+      "key": "README",
+      "title": "Readme anzeigen",
+      "summary": "Zeigt eine Textdatei an und oeffnet sie im Standardprogramm.",
+      "learning": "Model (Dokument), ViewModel, Dienste (Datei, Prozess).",
+      "folder": "README",
+      "project": "Readme",
+      "units": ["view/Frm_ReadMeMain.pas", "viewmodel/ReadMeViewModel.pas", "model/ReadMeDocument.pas"],
+      "markers": [
+        {"file": "viewmodel/ReadMeViewModel.pas", "text": "TReadMeViewModel = class", "title": "Das ViewModel mit den Diensten"},
+        {"file": "view/Frm_ReadMeMain.pas", "text": "procedure TMainForm.ApplyViewModel", "title": "Die View"}
+      ],
+      "notes": "Zeigt den Einsatz der Dienste: Datei lesen und Programm starten.",
+      "showcase": true
+    },
+    {
+      "key": "Actions",
+      "title": "Aktionen und Menues",
+      "summary": "TActionList, Menueeintraege und Shortcuts.",
+      "learning": "Aktionen im Menue und an Schaltflaechen binden.",
+      "folder": "Actions",
+      "project": "Actions",
+      "units": ["Frm_ActionsMain.pas"],
+      "markers": [
+        {"file": "Frm_ActionsMain.pas", "text": "ActionList1", "title": "Die Aktionsliste"}
+      ]
+    },
+    {
+      "key": "Status",
+      "title": "Statuszeile und Werkzeugleiste",
+      "summary": "Statusleiste mit veraenderlichen Feldern und eine Werkzeugleiste.",
+      "learning": "Statusleisten-Panels und ToolButtons.",
+      "folder": "Status",
+      "project": "Status",
+      "units": ["Frm_StatusMain.pas"],
+      "markers": [
+        {"file": "Frm_StatusMain.pas", "text": "procedure TMainForm.FormMouseMove", "title": "Mausposition in der Statuszeile"}
+      ]
+    },
+    {
+      "key": "Enumfon",
+      "title": "Schriften auflisten",
+      "summary": "Alle installierten Schriften des Systems anzeigen.",
+      "learning": "Systemabhaengige Abfragen plattformneutral formulieren.",
+      "folder": "ENUMFON",
+      "project": "Enumfon",
+      "units": ["Frm_EnumFonMAIN.pas"],
+      "markers": [
+        {"file": "Frm_EnumFonMAIN.pas", "text": "procedure TfrmEnumFonMain", "title": "Die Anzeige"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Printgr",
+      "title": "Grafik drucken",
+      "summary": "Zeichnet Figuren auf Bildschirm und Drucker.",
+      "learning": "Drucken ueber die LCL-Druckerschnittstelle.",
+      "folder": "PRINTGR",
+      "project": "Printgr",
+      "units": ["Frm_PrintgrMAIN.pas"],
+      "markers": [
+        {"file": "Frm_PrintgrMAIN.pas", "text": "procedure TfrmPrintgrMain.PaintGraphics", "title": "Die Zeichnung"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Listfont",
+      "title": "Schriftvergleich",
+      "summary": "Alle Schriften in einer Liste mit Groessenseinstellung.",
+      "learning": "TSpinEdit, Listen und Schriftproben verbinden.",
+      "folder": "LISTFONT",
+      "project": "ListFont",
+      "units": ["Frm_ListFontMAIN.pas"],
+      "markers": [
+        {"file": "Frm_ListFontMAIN.pas", "text": "procedure TfrmListfontMain.FormCreate", "title": "Die Liste"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Combos",
+      "title": "Kombinationsfelder",
+      "summary": "Die drei ComboBox-Varianten im Vergleich.",
+      "learning": "Style-Eigenschaften und Belegungen von ComboBoxen.",
+      "folder": "COMBOS",
+      "project": "Combos",
+      "units": ["Frm_CombosMAIN.pas"],
+      "markers": [
+        {"file": "Frm_CombosMAIN.pas", "text": "procedure TfrmCombosMain.CancelBitBtnClick", "title": "Der Dialog"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Checks",
+      "title": "Ankreuzfelder",
+      "summary": "CheckBoxen, RadioButtone und dynamische Menue-Ebenen.",
+      "learning": "Checked-Eigenschaften und dynamische Menue-Ebenen.",
+      "folder": "CHECKS",
+      "project": "Checks",
+      "units": ["Frm_ChecksMAIN.pas"],
+      "markers": [
+        {"file": "Frm_ChecksMAIN.pas", "text": "function TfrmChecksMain.GetLevel", "title": "Die Ebene"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Spinbutt",
+      "title": "Spin-Elemente",
+      "summary": "SpinButton, UpDown und SpinEdit im Verbund.",
+      "learning": "Ereignisaufbau von Spin-Kontrollen.",
+      "folder": "SPINBUTT",
+      "project": "Spinbutt",
+      "units": ["Frm_SpinButtonMAIN.pas"],
+      "markers": [
+        {"file": "Frm_SpinButtonMAIN.pas", "text": "procedure TfrmSpinButtonMain.FormCreate", "title": "Die Verknoepfung"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Actions",
+      "title": "Aktionen",
+      "summary": "Eigene TAction-Klasse mit Listensteuerung.",
+      "learning": "ActionList, Ereignisse und Tastenkombinationen.",
+      "folder": "ACTIONS",
+      "project": "Actions",
+      "units": ["Frm_ActionsMain.pas"],
+      "markers": [
+        {"file": "Frm_ActionsMain.pas", "text": "procedure TFrmActionsMain.actDemoExitExecute", "title": "Die Aktion"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Addpage",
+      "title": "Seiten hinzufuegen",
+      "summary": "Steuerelemente und Seiten zur Laufzeit ergaenzen.",
+      "learning": "PageControl und dynamische Steuerelemente.",
+      "folder": "ADDPAGE",
+      "project": "Addpage",
+      "units": ["Frm_AddpageMAIN.pas"],
+      "markers": [
+        {"file": "Frm_AddpageMAIN.pas", "text": "procedure TfrmAddPageMain.AddPageButtonClick", "title": "Die neue Seite"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "GlyphLst",
+      "title": "Symbol-Liste",
+      "summary": "Eine ListBox mit Symbolen per Textdatei fuellen.",
+      "learning": "TImageList-Einbindung in ListBoxen.",
+      "folder": "GLYPHLST",
+      "project": "GlypLst",
+      "units": ["Frm_GlyphListMain.pas"],
+      "markers": [
+        {"file": "Frm_GlyphListMain.pas", "text": "procedure TfrmGlyphListMain.FormCreate", "title": "Die Symbole"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Listtext",
+      "title": "Listentext",
+      "summary": "Zeilentexte laden und in Listen wahlweise darstellen.",
+      "learning": "TFileStreams und ListBox-Auswahl.",
+      "folder": "LISTTEXT",
+      "project": "ListText",
+      "units": ["Frm_ListTextMAIN.pas"],
+      "markers": [
+        {"file": "Frm_ListTextMAIN.pas", "text": "procedure TfrmListTextMain.Open1Click", "title": "Das Laden"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Multimen",
+      "title": "Mehrstufiges Menue",
+      "summary": "Ein Menue mit wechselnden Menuegruenden darstellen.",
+      "learning": "Menuegruende austauschen.",
+      "folder": "MULTIMEN",
+      "project": "MultiWay",
+      "units": ["Frm_MultiWayMAIN.pas"],
+      "markers": [
+        {"file": "Frm_MultiWayMAIN.pas", "text": "procedure TfrmMultiWayMain.Exit1Click", "title": "Das Menue"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Options",
+      "title": "Optionsdialog",
+      "summary": "Optionen mit Ini-Datei laden und speichern.",
+      "learning": "Ini-Dateien als Konfigurationsspeicher.",
+      "folder": "OPTIONS",
+      "project": "Options",
+      "units": ["Frm_OptionsMain.pas"],
+      "markers": [
+        {"file": "Frm_OptionsMain.pas", "text": "procedure TfrmOptionsMain.LoadOptions", "title": "Das Laden"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Palette",
+      "title": "Farbpalette",
+      "summary": "Farben in einer Registerleiste auswaehlen.",
+      "learning": "TabSet, SpeedButton und Farbwahl.",
+      "folder": "PALETTE",
+      "project": "Palette",
+      "units": ["Frm_PaletteMain.pas"],
+      "markers": [
+        {"file": "Frm_PaletteMain.pas", "text": "procedure TfrmPaletteMain.TabSet1Click", "title": "Die Registerkarte"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Sketch",
+      "title": "Zeichnen",
+      "summary": "Mausgesten mit Linienzuegen aufnehmen.",
+      "learning": "Canvas-Ereignisse von Mausgesten.",
+      "folder": "SKETCH",
+      "project": "Sketch",
+      "units": ["Frm_SketchMAIN.pas"],
+      "markers": [
+        {"file": "Frm_SketchMAIN.pas", "text": "procedure TfrmSketchMain.FormMouseDown", "title": "Die Mausbewegung"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Constraint",
+      "title": "Anordnungsregeln",
+      "summary": "AnchorSide-Regeln im Formular ausloten.",
+      "learning": "Align-Regeln für Formular-Layouts.",
+      "folder": "CONSTRAINT",
+      "project": "Constraint",
+      "units": ["frm_ConstraintMain.pas"],
+      "markers": [
+        {"file": "frm_ConstraintMain.pas", "text": "TfrmConstraintMain = class(TForm)", "title": "Das Layout"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Contcomp",
+      "title": "Containersteuerelemente",
+      "summary": "Panel und GroupBox als Container anwenden.",
+      "learning": "Container-Verhalten von Panels und GroupBoxen.",
+      "folder": "CONTCOMP",
+      "project": "ContComp",
+      "units": ["frm_ContCompMAIN.pas"],
+      "markers": [
+        {"file": "frm_ContCompMAIN.pas", "text": "procedure TfrmContCompMain.FormCreate", "title": "Die Einrichtung"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Fancy",
+      "title": "Verschachtelte Formulare",
+      "summary": "Formulare in Formularen anordnen.",
+      "learning": "Verschachtelte Container verwenden.",
+      "folder": "FANCY",
+      "project": "Fancy",
+      "units": ["Frm_FancyMAIN.pas"],
+      "markers": [
+        {"file": "Frm_FancyMAIN.pas", "text": "TfrmFancyMain = class(TForm)", "title": "Die Verknuepfung"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Filemenu",
+      "title": "Dateimenue",
+      "summary": "Menue-Steuerung fuer Dateioperationen anschaulich machen.",
+      "learning": "Menuebefehle und Dateioeffnen.",
+      "folder": "FILEMENU",
+      "project": "FileMenu",
+      "units": ["Frm_FileMenuMAIN.pas"],
+      "markers": [
+        {"file": "Frm_FileMenuMAIN.pas", "text": "procedure TfrmFileMenuMain.FileExitClick", "title": "Das Beenden"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Objlist",
+      "title": "Objektliste",
+      "summary": "Objekte in Listen fuehren und anzeigen.",
+      "learning": "TObjectList und die Lebensdauer von Objekten.",
+      "folder": "OBJLIST",
+      "project": "ObjList",
+      "units": ["Frm_ObjListMAIN.pas"],
+      "markers": [
+        {"file": "Frm_ObjListMAIN.pas", "text": "procedure TfrmObjListMain.FormCreate", "title": "Die Objekte"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Toolbar3",
+      "title": "Werkzeugleiste",
+      "summary": "Werkzeugleisten an Andockstellen herumverschieben.",
+      "learning": "Verankern und Anordnung von Leisten.",
+      "folder": "TOOLBAR3",
+      "project": "Toolbar3",
+      "units": ["Frm_Toolbar3MAIN.pas"],
+      "markers": [
+        {"file": "Frm_Toolbar3MAIN.pas", "text": "procedure TfrmToolbar3Main.FormCreate", "title": "Die Leiste"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Strlist",
+      "title": "String-Liste",
+      "summary": "TStringList als Speicher und Anzeige verbinden.",
+      "learning": "Listen lesen, aendern und uebernehmen.",
+      "folder": "STRLIST",
+      "project": "Strlist",
+      "units": ["Frm_StrlistMAIN.pas"],
+      "markers": [
+        {"file": "Frm_StrlistMAIN.pas", "text": "procedure TfrmStrlistMain.FormCreate", "title": "Die Aufnahme"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Strres",
+      "title": "String-Ressourcen",
+      "summary": "Fehlertexte aus einer RC-Datei nachladen.",
+      "learning": "Stringressourcen als Fehlertexte nutzen.",
+      "folder": "STRRES",
+      "project": "Strres",
+      "units": ["Frm_StrresMAIN.pas", "ERRMSG.RC"],
+      "markers": [
+        {"file": "Frm_StrresMAIN.pas", "text": "function TfrmStrresMain.ErrorCancel", "title": "Die Meldung"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Status",
+      "title": "Statuszeile",
+      "summary": "Panels in der Statuszeile dynamisch anzeigen.",
+      "learning": "TPanel-Verhalten der StatusBar.",
+      "folder": "STATUS",
+      "project": "Status",
+      "units": ["Frm_StatusMain.pas"],
+      "markers": [
+        {"file": "Frm_StatusMain.pas", "text": "procedure TfrmStatusMain.FormMouseMove", "title": "Die Anzeige"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "StatusOD",
+      "title": "Zeichnen in der Statuszeile",
+      "summary": "Eigene Grafik in ein Panel der Statuszeile zeichnen.",
+      "learning": "OwnerDraw im StatusBar-Panel.",
+      "folder": "STATUSOD",
+      "project": "StatusOD",
+      "units": ["Frm_StatusODMain.pas"],
+      "markers": [
+        {"file": "Frm_StatusODMain.pas", "text": "procedure TfrmStatusODMain.StatusBar1DrawPanel", "title": "Das Zeichnen"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Tabs",
+      "title": "Registerkarten",
+      "summary": "TabSet, Toolbar und Dialoge zusammen benutzen.",
+      "learning": "TabSet und HotSpot-Clicks auf Nebenformulare.",
+      "folder": "TABS",
+      "project": "Tabs",
+      "units": ["Frm_TabsMAIN.pas", "Frm_OPTIONS.pas", "TABS_Frm_ABOUT.pas", "TabsUnit.pas"],
+      "markers": [
+        {"file": "Frm_TabsMAIN.pas", "text": "procedure TfrmTabsMain.UpdateStatusPanel", "title": "Die Steuerung"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Telname",
+      "title": "Telefonnamen",
+      "summary": "Telefonnummern aus Buchstabennamen erzeugen.",
+      "learning": "Zeichen nach Ziffern umwandeln wie am Telefon.",
+      "folder": "TELNAME",
+      "project": "Telname",
+      "units": ["Frm_TelnameMAIN.pas"],
+      "markers": [
+        {"file": "Frm_TelnameMAIN.pas", "text": "function TfrmTelnameMain.TelNameToNum", "title": "Die Umwandlung"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Toolbar1",
+      "title": "Werkzeugleiste 1",
+      "summary": "SpeedButtons auf einer Werkzeugleiste beleben.",
+      "learning": "TToolBar und TToolButton-Verhalten.",
+      "folder": "TOOLBAR1",
+      "project": "Toolbar1",
+      "units": ["Frm_Toolbar1MAIN.pas"],
+      "markers": [
+        {"file": "Frm_Toolbar1MAIN.pas", "text": "procedure TfrmToolbar1Main.ExitSBClick", "title": "Die Buttons"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "Toolbar2",
+      "title": "Werkzeugleiste 2",
+      "summary": "Scrollende Werkzeugleiste mit Ikonen-Steuerelementen.",
+      "learning": "Toolbars sichtbar lassen bei Kantenscroll.",
+      "folder": "TOOLBAR2",
+      "project": "Toolbar2",
+      "units": ["Frm_Toolbar2MAIN.pas"],
+      "markers": [
+        {"file": "Frm_Toolbar2MAIN.pas", "text": "function TfrmToolbar2Main.InToolbar", "title": "Der Bereich"}
+      ],
+      "showcase": true
+    },
+    {
+      "key": "UpDownDemo",
+      "title": "Dreher-Button",
+      "summary": "UpDown-Geste und SpinButton-Invertierung hervorheben.",
+      "learning": "UpDown-Button mit eigenen Ereignissen.",
+      "folder": "UPDOWNDEMO",
+      "project": "UpDownDemo",
+      "units": ["Frm_UpDownDemoMain.pas"],
+      "markers": [
+        {"file": "Frm_UpDownDemoMain.pas", "text": "procedure TfrmUpDownDemoMain.SpinButton1UpClick", "title": "Der Hochzaehler"}
+      ],
+      "showcase": true
+    }
+  ]
+}

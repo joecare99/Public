@@ -557,6 +557,7 @@ object DataModule2: TGenealogyDataModule
   object Table3: TSQLTable
     FieldDefs = <>
     FilterOptions = []
+    ReadOnly = True
     TableName = 'AWD.DB'
     left = 240
     top = 16
@@ -1351,6 +1352,7 @@ object DataModule2: TGenealogyDataModule
     IndexFieldNames = 'Nummer'
     FieldDefs = <>
     FilterOptions = []
+    ReadOnly = True
     MasterFields = 'Epnum'
     MasterSource = DataSource5
     TableName = 'AWD.DB'
@@ -1886,6 +1888,7 @@ object DataModule2: TGenealogyDataModule
     IndexFieldNames = 'Vater'
     FieldDefs = <>
     FilterOptions = []
+    ReadOnly = True
     MasterFields = 'Nummer'
     MasterSource = DataSource1
     TableName = 'AWD.DB'
@@ -2419,6 +2422,7 @@ object DataModule2: TGenealogyDataModule
   object Table8: TSQLTable
     FieldDefs = <>
     FilterOptions = []
+    ReadOnly = True
     TableName = 'AWD.DB'
     left = 64
     top = 96
@@ -2945,6 +2949,7 @@ object DataModule2: TGenealogyDataModule
   object Table9: TSQLTable
     FieldDefs = <>
     FilterOptions = []
+    ReadOnly = True
     TableName = 'AWD.DB'
     left = 160
     top = 96
