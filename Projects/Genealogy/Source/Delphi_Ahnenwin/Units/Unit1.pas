@@ -688,7 +688,7 @@ type
     procedure Browser(AUrl: AnsiString); //005F2E6C
     procedure OFBDruck1Click(Sender: TObject); //005FC700
     procedure alleBilderentfernen1Click(Sender: TObject); //005FCB20
-    procedure sdx; //005D34D8
+    procedure sdx(const AnInput: AnsiString; var AResult: AnsiString); //005D34D8
     procedure FOKODateieditieren1Click(Sender: TObject); //005FC67C
     procedure GedcomDateieinlesen1Click(Sender: TObject); //005FCDA0
     procedure GedcomDateischreiben1Click(Sender: TObject); //005FD330
@@ -748,7 +748,7 @@ implementation
 uses
   AHNGlobals, Windows, Messages, Printers, Graphics, StrUtils, QuickRpt, QRCtrls, Unit2, Unit3,
   Unit4, Unit5, Unit8, Unit9, Unit10, Unit11, Unit12, Unit13, Unit14, Unit15, Unit16, Unit20,
-  Unit21, Unit22, Unit24, Unit28, Unit29, Unit36, Unit39, Unit18, Unit7, Unit6, Unit19;
+  Unit21, Unit22, Unit24, Unit28, Unit29, Unit36, Unit39, Unit18, Unit7, Unit6, Unit19, Unit17, Unit35, Unit33, Unit26;
 {$R ..\Forms\Form1.DFM}
 
 { The local function of the original at the address 005D3148. It writes a
@@ -1106,12 +1106,45 @@ end;
 
 procedure TForm1.FamilienblattHTML1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00602D2C: Familienblatt erzeugen, aber als HTML-Datei (fambl.htm)
+    statt als QuickRep-Formulare. Zuerst werden die Hilfs-Globalen
+    geleert, die Auswahl in Form17 erscheint und dann wird die
+    HTML-Ausgabe angestossen. }
+  gvar_0253692C := 'Fbml';
+  gvar_02536B58 := '';
+  gvar_02536B38 := '';
+  gvar_02536B3C := '';
+  gvar_02536B40 := '';
+  gvar_02536B44 := '';
+  gvar_02536B48 := '';
+  gvar_02536B4C := '';
+  aus1.Click;
+  if FileExists('fambl.htm') then
+    DeleteFile('fambl.htm');
+  Form17.CheckBox16.Show;
+  Form17.CheckBox5.Show;
+  Form17.ShowModal;
 end;
 
 procedure TForm1.OrtsDatei1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00602E00: Orts-Abfrage in Form14 bzw. Anzeige des "Aktuellen
+    Orts-Namens" in Form33 wenn der globale gvar_02536B60 gesetzt ist
+    und in Table13 einen Treffer liefert. }
+  DataModule2.Table13.Open;
+  DataModule2.Table13.IndexName := 'ort_';
+  DataModule2.Table13.First;
+  if Trim(gvar_02536B60) <> '' then
+  begin
+    if DataModule2.Table13.FindKey([gvar_02536B60]) then
+    begin
+      Form33.Label12.Caption := 'Aktueller Orts-Name: ' + gvar_02536B60;
+      Form33.Show;
+    end;
+  end
+  else
+    Form14.ShowModal;
+  gvar_02536B60 := '';
 end;
 
 procedure TForm1.DBEdit69Change(Sender: TObject);
@@ -1916,8 +1949,38 @@ begin
 end;
 
 procedure TForm1.druck(ATitel, AUntertitel: string);
+  //005EFF30: die Listenvorschau in Form15 aufbauen. Table14 ist die
+  //Datenquelle, eine Zeile ohne Kopfdrueck wird ueber QRDBText1
+  //("zeile") angezeigt, QRBand3 stellt die Kopfzeile.
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  DataModule2.Table14.Close;
+  Form16.SpeedButton3.Visible := True;   // 34C
+  Form16.SpeedButton6.Visible := False;  // 350
+  QRDefault;
+  Form15.QRMemo1.Lines.Clear;
+  Form15.QRDBText1.DataField := '';
+  Form15.QRDBText2.DataField := '';
+  Form15.QuickRep1.DataSet := DataModule2.Table14;
+  Form15.QRDBText1.DataSet := DataModule2.Table14;
+  Form15.QRDBText1.DataField := 'zeile';
+  Form15.QRDBText1.Transparent := False; // 0E0
+  Form15.QRDBText2.Transparent := True;  // 0E0 mit dl=1
+  Form15.QRDBText1.Font.Size := 10;
+  Form15.QRDBText1.AutoStretch := True; // 64
+  Form15.QRDBText2.DataSet := nil;
+  Form15.QRDBText1.Left := 10;
+  Form15.QRDBText1.Width := 600;
+  Form15.QRDBText2.Left := 0;
+  Form15.QRDBText2.Width := 0;
+  Form15.QRLabel1.Caption := ATitel;
+  Form15.QRLabel3.Caption := ATitel;
+  if AUntertitel <> '' then
+    Form15.QRLabel2.Caption := AUntertitel;
+  Form15.QRBand1.Height := 30;
+  Form15.QRShape3.AutoSize := True;     // 64
+  DataModule2.Table14.Open;
+  { Form15.QuickRep1.OnPreview := showpreview - die Vorschau ist im
+    Kompatibilitaetsschicht nicht implementiert. }
 end;
 
 procedure TForm1.vorf_erm2(ANummer: Integer; AText: AnsiString; var AFlag: Integer);
@@ -2199,8 +2262,43 @@ begin
 end;
 
 procedure TForm1.Button1Click(Sender: TObject);
+var
+  count: Integer;
+  posk: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005FD6A0: In den Namen und Vornamen wird das erste Komma durch ein
+    Leerzeichen ersetzt. Die Anzahl der Vornahmen wird am Ende
+    gemeldet. }
+  DataModule2.Table1.Open;
+  DataModule2.Table1.First;
+  count := 0;
+  while not DataModule2.Table1.Eof do
+  begin
+    if Pos(',', DataModule2.Table1Name.AsString) > 0 then
+    begin
+      DataModule2.Table1.Edit;
+      posk := Pos(',', DataModule2.Table1Name.AsString);
+      DataModule2.Table1Name.AsString :=
+        Copy(DataModule2.Table1Name.AsString, 1, posk - 1) + ' ' +
+        Copy(DataModule2.Table1Name.AsString, posk + 1,
+          Length(DataModule2.Table1Name.AsString) - posk);
+      DataModule2.Table1.Post;
+      Inc(count);
+    end;
+    if Pos(',', DataModule2.Table1Vornamen.AsString) > 0 then
+    begin
+      DataModule2.Table1.Edit;
+      posk := Pos(',', DataModule2.Table1Vornamen.AsString);
+      DataModule2.Table1Vornamen.AsString :=
+        Copy(DataModule2.Table1Vornamen.AsString, 1, posk - 1) + ' ' +
+        Copy(DataModule2.Table1Vornamen.AsString, posk + 1,
+          Length(DataModule2.Table1Vornamen.AsString) - posk);
+      DataModule2.Table1.Post;
+      Inc(count);
+    end;
+    DataModule2.Table1.Next;
+  end;
+  ShowMessage(IntToStr(count) + ' Ersetzungen vorgenommen.');
 end;
 
 procedure TForm1.geschachtelt1Click(Sender: TObject);
@@ -2266,8 +2364,55 @@ begin
 end;
 
 procedure TForm1.AHNENDOSeinlesen1Click(Sender: TObject);
+var
+  voldir: AnsiString;
+  fname: AnsiString;
+  fn: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005FDAA4: AHNENWIN-DOS-Daten einlesen. Der Dateiname kommt ueber
+  //den Opendialog; bei vorhandenen Daten wird nachgefragt, ob die
+  //Bestandsdaten geloescht werden; das Einlesen macht Form3.ahndosein.
+  voldir := GetCurrentDir;
+  OpenDialog1.FileName := '';
+  OpenDialog1.FilterIndex := 1;
+  if not OpenDialog1.Execute then
+    Exit;
+  fname := OpenDialog1.FileName;
+  fn := OpenDialog1.FileName;
+  if (fname = '') or (fn = '') then
+    Exit;
+  Screen.Cursor := crHourGlass;
+  try
+    gvar_02536940 := 0;
+    if DataModule2.Table1Nummer.AsInteger > 0 then
+    begin
+      if Application.MessageBox(
+         'Die Bestandsdaten werden gel' + #246 + 'scht ?',
+         'AHNENWIN-DOS einlesen', mb_YESNO) = IDYES then
+      begin
+        Datenlschen1Click(nil);
+        Refresh;
+      end
+      else
+        gvar_02536940 := gvar_02536944;
+    end;
+    Refresh;
+    Form3.ahndosein;
+  finally
+    Screen.Cursor := crDefault;
+  end;
+  tabenab;
+  ChDir(voldir);
+  Label10.Visible := True;
+  Label11.Visible := True;
+  DataModule2.Table1.Open;
+  DataModule2.Table1.IndexName := '';
+  DataModule2.Table1.Last;
+  gvar_02536944 := DataModule2.Table1Nummer.AsInteger;
+  DataModule2.Table1.First;
+  DataModule2.Table4.Open;
+  DataModule2.Table5.Open;
+  anzeigen;
 end;
 
 procedure TForm1.OSBeinlesen1Click(Sender: TObject);
@@ -4144,7 +4289,26 @@ end;
 
 procedure TForm1.DoppelteEintrge1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00607310: Doppelte Eintraege aufsucht/zeigt. Zuerst werden die
+    neun Vergleichs-Globale (gvar_02536B68..B90) zurueckgesetzt und die
+    Vergleiche von Form35 angezeigt; falls sich ein Ergebnis aufsummiert,
+    werden die Einzelpersonen markiert. }
+  gvar_02536B68 := 0;
+  gvar_02536B6C := 0;
+  gvar_02536B70 := 0;
+  gvar_02536B74 := 0;
+  gvar_02536B78 := 0;
+  gvar_02536B7C := 0;
+  gvar_02536B80 := 0;
+  gvar_02536B84 := 0;
+  gvar_02536B88 := 0;
+  gvar_02536B8C := 0;
+  gvar_02536B90 := 0;
+  gvar_0253692C := 'Dopp';
+  Form35.ShowModal;
+  Refresh;
+  if gvar_02536B90 > 0 then
+    Einzelpersonenmarkieren1Click(Sender);
 end;
 
 procedure TForm1.DBLookupComboBox2Enter;
@@ -7145,12 +7309,86 @@ end;
 
 procedure TForm1.SicherungsDateieinlesen1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005E1D2C: Sicherungs-Datei einlesen. Die eigentliche Einlesearbeit
+    ueberlaesst die Methode an Sikoein; danach werden die Nummern-
+    Globalen gesetzt, neu1 aktiviert und die Ansicht aktualisiert. }
+  PageControl1.ActivePage := TabSheet2;
+  Sikoein;
+  DataModule2.Table1.Last;
+  gvar_0253690C := DataModule2.Table1Nummer.AsInteger + 1;
+  gvar_02536944 := DataModule2.Table1Nummer.AsInteger;
+  DataModule2.Table1.First;
+  if DataModule2.Table1Nummer.AsInteger > 0 then
+    neu1.Enabled := True;
+  anzeigen;
 end;
 
 procedure TForm1.ChristlicheNamenstage1Click(Sender: TObject);
+var
+  HTMLDatei: TextFile;
+  txt: AnsiString;
+  url: AnsiString;
+  anz: Integer;
+  drittela: Integer;
+  drittelb: Integer;
+  i: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005FA138: die Namenstage aus Table11 nach "chnt.xml" schreiben;
+  //die Namen werden in drei Spalten je ein Drittel erzeugt.
+  gvar_0253692C := 'CHNT';
+  PageControl1.ActivePage := TabSheet2;
+  speich1;
+  System.Assign(HTMLDatei, 'chnt.xml');
+  Rewrite(HTMLDatei);
+  try
+    WriteLn(HTMLDatei, '<?xml version="1.0" encoding=' + #$22 + 'ISO-8859-1' + #$22 + '?>');
+    WriteLn(HTMLDatei, '<?xml-StyleSheet type=' + #$22 + 'text/css' + #$22 +
+      ' href=' + #$22 + gvar_02536B9C + 'style.css' + #$22 + ' ?>');
+    WriteLn(HTMLDatei, '<!--Converted from AHNENWIN 5.1 (2013) by Heribert Reitmeier-->');
+    WriteLn(HTMLDatei, '<tbcnt>');
+    WriteLn(HTMLDatei, '<ues>Christliche Namenstage</ues>');
+    WriteLn(HTMLDatei, '<strich></strich>');
+    DataModule2.Table11.Open;
+    DataModule2.Table11.First;
+    anz := DataModule2.Table11.RecordCount;
+    drittela := Round(anz / 3) + 1;
+    drittelb := Round(anz / 3) * 2 + 1;
+    i := 1;
+    while not DataModule2.Table11.EOF do
+    begin
+      // erste Spalte
+      DataModule2.Table11.IndexName := 'num';
+      DataModule2.Table11.FindKey([i]);
+      txt := '<tblcnt><tab>' + DataModule2.Table11FELD001.AsString + '</tab>';
+      WriteLn(HTMLDatei, txt);
+      WriteLn(HTMLDatei, '<tabcnt>' + DataModule2.Table11FELD002.AsString +
+        '.' + DataModule2.Table11FELD003.AsString + '.</tabcnt>');
+      // zweite Spalte
+      DataModule2.Table11.FindKey([drittela]);
+      WriteLn(HTMLDatei, '<tab>' + DataModule2.Table11FELD001.AsString + '</tab>');
+      WriteLn(HTMLDatei, '<tabcnt>' + DataModule2.Table11FELD002.AsString +
+        '.' + DataModule2.Table11FELD003.AsString + '.</tabcnt>');
+      // dritte Spalte
+      DataModule2.Table11.FindKey([drittelb]);
+      WriteLn(HTMLDatei, '<tab>' + DataModule2.Table11FELD001.AsString + '</tab>');
+      WriteLn(HTMLDatei, '<tabcnt>' + DataModule2.Table11FELD002.AsString +
+        '.' + DataModule2.Table11FELD003.AsString + '.</tabcnt></tblcnt>');
+      DataModule2.Table11.Next;
+    end;
+    WriteLn(HTMLDatei, '<HR></HR>');
+    WriteLn(HTMLDatei, 'AHNENWIN 5.1 / ' + DateToStr(Now));
+    WriteLn(HTMLDatei, '</tbcnt>');
+  finally
+    CloseFile(HTMLDatei);
+  end;
+  Form10.Caption := 'Christliche Namenstage';
+  Form10.Edit1.Visible := False;
+  Form10.Button2.Visible := False;
+  Form10.Button1.Visible := False;
+  Form10.SpeedButton3.Visible := False;
+  Form10.SpeedButton4.Visible := False;
+  Form10.SpeedButton5.Visible := False;
+  Browser(gvar_02536B9C + 'chnt.xml');
 end;
 
 procedure TForm1.FamGrafik1Click(Sender: TObject);
@@ -7709,9 +7947,56 @@ begin
   gvar_0253692C := '';
 end;
 
-procedure TForm1.sdx;
+procedure TForm1.sdx(const AnInput: AnsiString; var AResult: AnsiString);
+  //005D34D8: Soundex. Der erste Buchstabe bleibt stehen, dann kommen
+  //die Ziffern der Buchstabenklassen zu einem vierstelligen Code.
+
+  function sdx_klasse(c: AnsiString): AnsiString;
+  begin
+    // c ist 1 Zeichen (mit ae/oe/ue schon ersetzt)
+    if Pos(c, 'BPFV') > 0 then Result := '1'
+    else if Pos(c, 'CGJKQSXZ') > 0 then Result := '2'
+    else if Pos(c, 'DT') > 0 then Result := '3'
+    else if c = 'L' then Result := '4'
+    else if Pos(c, 'MN') > 0 then Result := '5'
+    else if c = 'R' then Result := '6'
+    else Result := '7';
+  end;
+
+var
+  c: AnsiString;
+  kl: AnsiString;
+  o1: AnsiString;
+  o2: AnsiString;
+  i: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  if AnInput = '' then
+  begin
+    AResult := '';
+    Exit;
+  end;
+  c := UpperCase(Copy(AnInput, 1, 1));
+  kl := ' ';
+  if c = #228 then c := 'A';
+  if c = #246 then c := 'O';
+  if c = #252 then c := 'U';
+  kl := sdx_klasse(c);
+  AResult := c;
+  o1 := '7';
+  o2 := c;
+  for i := 2 to Length(AnInput) do
+  begin
+    c := UpperCase(Copy(AnInput, i, 1));
+    if c = o2 then Continue;
+    kl := sdx_klasse(c);
+    if kl <> o1 then
+      AResult := AResult + kl;
+    o1 := kl;
+    o2 := c;
+  end;
+  while Length(AResult) < 4 do
+    AResult := AResult + '0';
+  AResult := Copy(AResult, 1, 4);
 end;
 
 procedure TForm1.FOKODateieditieren1Click(Sender: TObject);
@@ -7726,13 +8011,79 @@ begin
 end;
 
 procedure TForm1.GedcomDateieinlesen1Click(Sender: TObject);
+var
+  nummer: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005FCDA0: Eine GEDCOM-Datei einlesen. Zuerst wird die aktuelle
+    Person gemerkt und das "Aus"-Menu geklickt, dann laedt Form3
+    (gedein_5) die Daten. Nach dem Einlesen wird ggf. die Liste
+    aktualisiert, die erste Person angezeigt und die beiden
+    Tabellen zur Bearbeitung geoffnet. }
+  nummer := DataModule2.Table1Nummer.AsInteger;
+  PageControl1.ActivePage := TabSheet2;
+  aus1.Click;
+  gvar_0253686C := 2;
+  Form3.gedein_5;
+  DataModule2.Table1.FindKey([nummer]);
+  if gvar_0253686C <> 2 then
+    listen_akt;
+  DataModule2.Table1.First;
+  anzeigen;
+  DataModule2.Table1.Edit;
+  DataModule2.Table5.Edit;
 end;
 
 procedure TForm1.GedcomDateischreiben1Click(Sender: TObject);
+var
+  fehler: Integer;
+  nummer: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005FD330: GEDCOM-Datei schreiben. Vorher wird geprueft, ob in einem
+    Namen oder in einem Vornamen ein "/" oder ein "," enthalten ist;
+    dann wird die Ausgabe abgebrochen. }
+  PageControl1.ActivePage := TabSheet2;
+  Label19.Visible := True;
+  Label19.Caption := 'Testen';
+  nummer := DataModule2.Table1Nummer.AsInteger;
+  DataModule2.Table1.DisableControls;
+  DataModule2.Table1.First;
+  fehler := 0;
+  while not DataModule2.Table1.Eof do
+  begin
+    if Pos('/', DataModule2.Table1Name.AsString) > 0 then
+      Inc(fehler);
+    if Pos('/', DataModule2.Table1Vornamen.AsString) > 0 then
+      Inc(fehler);
+    if Pos(',', DataModule2.Table1Name.AsString) > 0 then
+      Inc(fehler);
+    if Pos(',', DataModule2.Table1Vornamen.AsString) > 0 then
+      Inc(fehler);
+    if fehler > 0 then
+      Break;
+    DataModule2.Table1.Next;
+  end;
+  DataModule2.Table1.FindKey([nummer]);
+  DataModule2.Table1.EnableControls;
+  Label19.Visible := False;
+  if fehler > 0 then
+  begin
+    ShowMessage('Datei enth' + #228 + 'lt in Name oder Vorname ' +
+      'die Zeichen "," oder "/".');
+    Exit;
+  end;
+  Form26.ModalResult := 0;
+  aus1.Click;
+  DataModule2.Table1.FindKey([nummer]);
+  anzeigen;
+  speich1;
+  if DataModule2.Table1.RecordCount < 2 then
+  begin
+    ShowMessage('Keine Daten verf' + #252 + 'gbar.');
+    Exit;
+  end;
+  Form26.ShowModal;
+  anzeigen;
+  Form26.ModalResult := 2;
 end;
 
 type
@@ -7868,13 +8219,109 @@ begin
 end;
 
 procedure TForm1.Familienblatt2Click(Sender: TObject);
+var
+  ftitel: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005FB580: zwei Zeichen-Konstanten einstellen und dann Famblatt
+  //aufrufen; Titel und detaillierte Zeichen werden gelaoscht.
+  gvar_0253692C := 'famb';
+  gvar_02536B58 := '';
+  gvar_02536B38 := '';
+  gvar_02536B3C := '';
+  gvar_02536B40 := '';
+  gvar_02536B44 := '';
+  gvar_02536B48 := '';
+  gvar_02536B4C := '';
+  aus1.Click;
+  Famblatt;
 end;
 
 procedure TForm1.Famblatt;
+var
+  fname: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005FB604: Familienblatt erzeugen. Die Auswahl in Form17 anzeigen,
+  //dann das Layout auf Form15 aufbauen und die Bilder (Vater, Mutter,
+  //Kind) aus pictures\b<nummer>.jpg laden.
+  speich1;
+  DataModule2.Table38.Open;
+  DataModule2.Table38.IndexName := 'tit';
+  DataModule2.Table38.First;
+  if DataModule2.Table1.RecordCount < 2 then
+  begin
+    ShowMessage('Keine Daten verf' + #252 + 'gbar.');
+    Exit;
+  end;
+  PageControl1.ActivePage := TabSheet2;
+  gvar_02536930 := 'Familienblatt';
+  gvar_02536934 := '';
+  Form17.ShowModal;
+  if Form17.ModalResult = 2 then
+    Exit;
+  Form15.QRBand1.Height := 55;
+  Form15.QRBand3.Height := 20;
+  Form15.QRBand4.Height := 24;
+  Form15.QRShape1.AutoSize := True;
+  Form15.QRShape2.AutoSize := True;
+  Form15.QRDBText1.AutoSize := False;
+  Form15.QRDBText2.AutoSize := False;
+  Form15.QRLabel1.Caption := gvar_02536930;
+  Form15.QRLabel1.Visible := True;
+  Form15.QRLabel2.AutoSize := True;
+  Form15.QRLabel2.Visible := True;
+  Form15.QRLabel3.Visible := True;
+  if Trim(gvar_02536934) <> '' then
+    Form15.QRLabel2.Caption := gvar_02536934;
+  Form15.QRLabel3.Caption := 'Familienblatt';
+  Form15.QuickRep1.Page.Columns := 1;
+  Form16.Label5.Visible := True;      // 35C
+  Form16.Button9.Visible := True;     // 358
+  Form16.Button5.Visible := True;     // 360
+  Form16.SpeedButton3.Visible := True; // 34C
+  Form16.SpeedButton6.Visible := False; // 350
+  { Form15.QuickRep1.OnPreview := showpreview } // 2AC/2A8
+  Form15.QRShape1.Width := Form15.QRBand1.Width - 10;
+  Form15.QRShape2.Width := Form15.QRBand1.Width - 10;
+  Form15.QRShape3.Width := Form15.QRBand1.Width - 10;
+  Form15.QRSysData2.Left := Form15.QRShape3.Width - Form15.QRSysData2.Width;
+  Form15.QRDBText1.Width := Form15.QRBand3.Width - Form15.QRDBText1.Left;
+  Form15.QRMemo1.Width := Memo1.Width;
+  Form15.QRImage1.Picture := nil;
+  Form15.QRImage2.Picture := nil;
+  Form15.QRImage3.Picture := nil;
+  if not Form17.CheckBox16.Visible then
+    Exit;
+
+  // Vater
+  fname := gvar_02536B9C + 'bilder\b' + Trim(IntToStr(DataModule2.Table1Nummer.AsInteger)) +
+    AnsiChar(gvar_02536B2C) + '.jpg';
+  if FileExists(fname) then
+  begin
+    Form15.QRImage1.Picture.LoadFromFile(fname);
+    Form15.QRImage1.Left := 673 - Form15.QRImage1.Width;
+  end;
+
+  // Mutter
+  fname := gvar_02536B9C + 'bilder\b' + Trim(StringGrid1.Cells[1, 0]) +
+    AnsiChar(gvar_02536B2C) + '.jpg';
+  if FileExists(fname) then
+  begin
+    Form15.QRImage2.Picture.LoadFromFile(fname);
+    Form15.QRImage2.Top := Form15.QRImage1.Height * 9;
+    Form15.QRImage2.Left := 673 - Form15.QRImage2.Width;
+  end;
+
+  // Kind
+  fname := gvar_02536B9C + 'bilder\b' + Trim(StringGrid1.Cells[1, 1]) +
+    AnsiChar(gvar_02536B2C) + '.jpg';
+  if FileExists(fname) then
+  begin
+    Form15.QRImage3.Picture.LoadFromFile(fname);
+    Form15.QRImage3.Top := Form15.QRImage2.Height * 2 * 9;
+    Form15.QRImage3.Left := 673 - Form15.QRImage3.Width;
+  end;
+  { Form15.QuickRep1.Preview - die Vorschau ist im
+    Kompatibilitaetsschicht nicht implementiert. }
 end;
 
 procedure TForm1.Grafik1Click(Sender: TObject);
@@ -8876,8 +9323,103 @@ begin
 end;
 
 procedure TForm1.Partnersuche1Click(Sender: TObject);
+var
+  szelle1: AnsiString;
+  szelle2: AnsiString;
+  cat1: AnsiString;
+  cat2: AnsiString;
+  cur: Integer;
+  row: Integer;
+  txt: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005EED2C: Partner-Suche. Es wird die Heirats-Tabelle Table15
+  // queried; jede getroffene Person landet in StringGrid5.
+  PageControl1.ActivePage := TabSheet2;
+  aus1.Click;
+  cur := DataModule2.Table1Nummer.AsInteger;
+  for row := 0 to StringGrid5.RowCount - 2 do
+  begin
+    StringGrid5.Cells[0, row] := '';
+    StringGrid5.Cells[1, row] := '';
+    StringGrid5.Cells[2, row] := '';
+    StringGrid5.Cells[3, row] := '';
+    StringGrid5.Cells[4, row] := '';
+  end;
+  if not InputQuery('Partner suchen', 'Heiratsname der Frau', szelle1) then
+    Exit;
+  if not InputQuery('Partner suchen', 'Vorname der Frau', szelle2) then
+    Exit;
+  DataModule2.Table9.Open;
+  DataModule2.Table9.IndexName := '';
+  DataModule2.Table9.First;
+  DataModule2.Table15.Open;
+  DataModule2.Table15.MasterSource := DataModule2.DataSource9;  // 0A0
+  DataModule2.Table15.MasterFields := 'nummer';
+  DataModule2.Table15.IndexName := 'num';
+  DataModule2.Table15.First;
+  DataModule2.Table17.Open;
+  DataModule2.Table17.IndexName := '';
+  DataModule2.Table17.First;
+  Refresh;
+  cat1 := '"' + szelle2 + ' ' + szelle1 + '"';
+  StringGrid5.Cells[1, 0] := cat1;
+  StringGrid5.RowCount := 2;
+  DataModule2.Table9.First;
+  row := 2;
+  while not DataModule2.Table9.EOF do
+  begin
+    if Pos(UpperCase(szelle1), UpperCase(DataModule2.Table9Name.AsString)) <= 0 then
+    begin
+      DataModule2.Table9.Next;
+      Continue;
+    end;
+    if DataModule2.Table9Geschlecht.AsString <> 'M' then
+    begin
+      DataModule2.Table9.Next;
+      Continue;
+    end;
+    if DataModule2.Table15.RecordCount > 0 then
+    begin
+      DataModule2.Table15.First;
+      while not DataModule2.Table15.EOF do
+      begin
+        DataModule2.Table17.FindKey([DataModule2.Table15Epnum.AsInteger]);
+        if Pos(UpperCase(szelle2), UpperCase(DataModule2.Table17Vornamen.AsString)) > 0 then
+        begin
+          StringGrid5.RowCount := row + 1;
+          StringGrid5.Cells[0, row] := IntToStr(DataModule2.Table17Nummer.AsInteger);
+          StringGrid5.Cells[1, row] := DataModule2.Table17Name.AsString + ' ' +
+              DataModule2.Table17Vornamen.AsString;
+          if Trim(DataModule2.Table17Gebjahr.AsString) <> '' then
+            StringGrid5.Cells[2, row] := '* ' + DataModule2.Table17Gebjahr.AsString
+          else if Trim(DataModule2.Table17Taufjahr.AsString) <> '' then
+            StringGrid5.Cells[2, row] := '~ ' + DataModule2.Table17Taufjahr.AsString;
+          if Trim(DataModule2.Table15Sajahr.AsString) <> '' then
+            StringGrid5.Cells[3, row] := 'ooS ' + DataModule2.Table15Sajahr.AsString
+          else if Pos('Ehes', DataModule2.Table15Verbind.AsString) > 0 then
+            StringGrid5.Cells[3, row] := 'ooK ' + DataModule2.Table15Hjahr.AsString
+          else
+            StringGrid5.Cells[3, row] := 'o-o ' + DataModule2.Table15Hjahr.AsString;
+          txt := StringGrid5.Cells[2, row];
+          Inc(row);
+        end;
+        DataModule2.Table15.Next;
+      end;
+    end;
+    DataModule2.Table9.Next;
+  end;
+  if (Trim(szelle1) <> '') and (Trim(szelle2) <> '') then
+  begin
+    StringGrid5.Show;
+    { 5. Menuitem 'Partner-Suche' zeigen - im Kompatibilitaetsschicht
+      kein zugreifbarer Eintrag. }
+  end;
+  if Trim(StringGrid5.Cells[2, 1]) = '' then
+    StringGrid5.Cells[2, 1] := 'nichts gefunden';
+  DataModule2.Table15.MasterSource := nil;  DataModule2.Table1.IndexName := '';
+  DataModule2.Table1.First;
+  DataModule2.Table1.FindKey([cur]);
+  anzeigen;
 end;
 
 procedure TForm1.DBEdit45Exit(Sender: TObject);
@@ -8914,7 +9456,24 @@ end;
 
 procedure TForm1.Bildschirmdrucken1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005EC6C4: Druckereinrichtung und dann den Bildschirminhalt
+  //ausdrucken; dafuer werden die Druckerfelder nach vorn geholt.
+  PageControl1.ActivePage := TabSheet2;
+  speich1;
+  if not PrinterSetupDialog1.Execute then
+    Exit;
+  Edit3.BringToFront;
+  Edit7.BringToFront;
+  Edit11.BringToFront;
+  Edit12.BringToFront;
+  Edit16.BringToFront;
+  Print;
+  Edit3.SendToBack;
+  Edit7.SendToBack;
+  Edit11.SendToBack;
+  Edit12.SendToBack;
+  Edit16.SendToBack;
+  TabSheet2.Invalidate;
 end;
 
 procedure TForm1.ExcelExport1Click(Sender: TObject);
