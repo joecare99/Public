@@ -483,14 +483,14 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Unit13
 
-- methods: 42, reconstructed: 16, open: 29
+- methods: 42, reconstructed: 19, open: 26
 
   - done  `sub_005637C4`  @`005637C4`
   - done  `sub_00563868`  @`00563868`
   - done  `sub_00563A0C`  @`00563A0C`
   - open  `Vorf_erm1`  @`00563CF8`
   - open  `nachf_neu`  @`00564668`
-  - open  `UpDown1Click`  @`005661E8`
+  - done  `UpDown1Click`  @`005661E8`
   - open  `memein`  @`00566220`
   - open  `Vorf_erm`  @`00567A30`
   - open  `schieb_vm1`  @`00568528`
@@ -533,8 +533,8 @@ Legend: **done** = the body was reconstructed from the listing,
   - open  `Proband1Click`  @`005729E4`
   - open  `vorf_erm2`  @`00572A78`
   - open  `sam2`  @`00572D98`
-  - open  `Button8Click`  @`005730D4`
-  - open  `Button7Click`  @`00573120`
+  - done  `Button8Click`  @`005730D4`
+  - done  `Button7Click`  @`00573120`
   - open  `sub_0057316C`  @`0057316C`
   - open  `sub_00573314`  @`00573314`
   - open  `SpeedButton3Click`  @`00573450`
@@ -868,4 +868,4 @@ Legend: **done** = the body was reconstructed from the listing,
 
 ## Total
 
-- methods: 616, reconstructed: 576, open: 40
+- methods: 616, reconstructed: 579, open: 37

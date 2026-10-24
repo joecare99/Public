@@ -254,7 +254,12 @@ end;
 
 procedure TForm13.Button7Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00573120: Linie dunnern - Strichbreite verkleinern, aber nicht unter 1. }
+  if (PaintBox1.Canvas.Pen.Width - 1) > 0 then
+  begin
+    PaintBox1.Canvas.Pen.Width := PaintBox1.Canvas.Pen.Width - 1;
+    PaintBox1.Refresh;
+  end;
 end;
 
 procedure TForm13.vorf_erm2;
@@ -289,7 +294,12 @@ end;
 
 procedure TForm13.Button8Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005730D4: Linie dicker machen - Strichbreite erhohen, max. 3. }
+  if PaintBox1.Canvas.Pen.Width < 3 then
+  begin
+    PaintBox1.Canvas.Pen.Width := PaintBox1.Canvas.Pen.Width + 1;
+    PaintBox1.Refresh;
+  end;
 end;
 
 procedure TForm13.Vorf_erm1;
