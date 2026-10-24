@@ -688,7 +688,7 @@ type
     procedure Browser(AUrl: AnsiString); //005F2E6C
     procedure OFBDruck1Click(Sender: TObject); //005FC700
     procedure alleBilderentfernen1Click(Sender: TObject); //005FCB20
-    procedure sdx; //005D34D8
+    procedure sdx(const AnInput: AnsiString; var AResult: AnsiString); //005D34D8
     procedure FOKODateieditieren1Click(Sender: TObject); //005FC67C
     procedure GedcomDateieinlesen1Click(Sender: TObject); //005FCDA0
     procedure GedcomDateischreiben1Click(Sender: TObject); //005FD330
@@ -748,7 +748,7 @@ implementation
 uses
   AHNGlobals, Windows, Messages, Printers, Graphics, StrUtils, QuickRpt, QRCtrls, Unit2, Unit3,
   Unit4, Unit5, Unit8, Unit9, Unit10, Unit11, Unit12, Unit13, Unit14, Unit15, Unit16, Unit20,
-  Unit21, Unit22, Unit24, Unit28, Unit29, Unit36, Unit39, Unit18, Unit7, Unit6, Unit19;
+  Unit21, Unit22, Unit24, Unit28, Unit29, Unit36, Unit39, Unit18, Unit7, Unit6, Unit19, Unit17;
 {$R ..\Forms\Form1.DFM}
 
 { The local function of the original at the address 005D3148. It writes a
@@ -1916,8 +1916,38 @@ begin
 end;
 
 procedure TForm1.druck(ATitel, AUntertitel: string);
+  //005EFF30: die Listenvorschau in Form15 aufbauen. Table14 ist die
+  //Datenquelle, eine Zeile ohne Kopfdrueck wird ueber QRDBText1
+  //("zeile") angezeigt, QRBand3 stellt die Kopfzeile.
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  DataModule2.Table14.Close;
+  Form16.SpeedButton3.Visible := True;   // 34C
+  Form16.SpeedButton6.Visible := False;  // 350
+  QRDefault;
+  Form15.QRMemo1.Lines.Clear;
+  Form15.QRDBText1.DataField := '';
+  Form15.QRDBText2.DataField := '';
+  Form15.QuickRep1.DataSet := DataModule2.Table14;
+  Form15.QRDBText1.DataSet := DataModule2.Table14;
+  Form15.QRDBText1.DataField := 'zeile';
+  Form15.QRDBText1.Transparent := False; // 0E0
+  Form15.QRDBText2.Transparent := True;  // 0E0 mit dl=1
+  Form15.QRDBText1.Font.Size := 10;
+  Form15.QRDBText1.AutoStretch := True; // 64
+  Form15.QRDBText2.DataSet := nil;
+  Form15.QRDBText1.Left := 10;
+  Form15.QRDBText1.Width := 600;
+  Form15.QRDBText2.Left := 0;
+  Form15.QRDBText2.Width := 0;
+  Form15.QRLabel1.Caption := ATitel;
+  Form15.QRLabel3.Caption := ATitel;
+  if AUntertitel <> '' then
+    Form15.QRLabel2.Caption := AUntertitel;
+  Form15.QRBand1.Height := 30;
+  Form15.QRShape3.AutoSize := True;     // 64
+  DataModule2.Table14.Open;
+  { Form15.QuickRep1.OnPreview := showpreview - die Vorschau ist im
+    Kompatibilitaetsschicht nicht implementiert. }
 end;
 
 procedure TForm1.vorf_erm2(ANummer: Integer; AText: AnsiString; var AFlag: Integer);
@@ -2204,8 +2234,205 @@ begin
 end;
 
 procedure TForm1.geschachtelt1Click(Sender: TObject);
+var
+  ehtest_s: string;
+  kurz: ShortString;
+  ab, vorg: string;
+  curt, vnum, jnum, knum: Integer;
+  i, vmax, kmax, jmax, dmax: Integer;
+  vater: string;
+  mutter: string;
+  axname: string;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005FE844: Geschachtelte Nachfahrenliste (indirekte Rekonstruktion,
+    die Assemblerfolge ist hier sehr lang). }
+  PageControl1.ActivePage := TabSheet2;
+  aus1.Click;
+  gvar_0253692C := 'Schacht';
+  speich1;
+  if DataModule2.Table1.RecordCount < 2 then
+  begin
+    ShowMessage('Keine Daten verf' + #252 + 'gbar.');
+    Exit;
+  end;
+  if PageControl1.PageCount = 2 then
+    PageControl1.ActivePage := TabSheet2;
+  if StringGrid2.Cells[1, 0] = '' then
+  begin
+    Application.MessageBox('Irgendwas mit den Argumenten', 'Problem', 0);
+    Exit;
+  end;
+  vnum := DataModule2.Table1Nummer.AsInteger;
+  axname := UpperCase(DataModule2.Table38name.AsString);
+  if gvar_02536BA0 > 1 then
+  begin
+    DataModule2.Table1.SetRange([IntToStr(gvar_02536BA0)]);
+    DataModule2.Table1.ApplyRange;
+    DataModule2.Table9.SetRange([IntToStr(gvar_02536BA0)]);
+    DataModule2.Table9.ApplyRange;
+    DataModule2.Table17.SetRange([IntToStr(gvar_02536BA0)]);
+    DataModule2.Table17.ApplyRange;
+    DBText1.Color := 65535;
+  end;
+  DataModule2.Table1.FindKey([vnum]);
+  DataModule2.Table14.Close;
+  DataModule2.Table14.Open;
+  DataModule2.Table14.EmptyTable;
+  DataModule2.Table14.Open;
+  DataModule2.Table17.Open;
+  DataModule2.Table18.Open;
+
+  gvar_02536930 := 'Nachfahren von';
+  gvar_02536934 := ucase(DataModule2.Table17name.AsString) + ' ' +
+    ucase(DataModule2.Table17vornamen.AsString) + ', ' +
+    geb_sterb_str;
+
+  DataModule2.Table14.Append;
+  DataModule2.Table14Zeile.AsString := gvar_02536934;
+  DataModule2.Table14.Post;
+
+  if DataModule2.Table17Geschlecht.AsString = 'M' then
+  begin
+    DataModule2.Table17.IndexName := 'vat';
+    vater := 'Vater';
+    mutter := 'Mutter';
+  end
+  else if DataModule2.Table17Geschlecht.AsString = 'W' then
+  begin
+    DataModule2.Table17.IndexName := 'mut';
+    vater := 'Mutter';
+    mutter := 'Vater';
+  end;
+
+  DataModule2.Table17.FindKey([vnum]);
+  DataModule2.Table17.Next;
+  while not DataModule2.Table17.Eof do
+  begin
+    if DataModule2.Table17vornamen.AsInteger = 0 then
+    begin
+      axname := kurzz(IntToStr(DataModule2.Table17name.AsInteger));
+      DataModule2.Table14.Append;
+      DataModule2.Table14Zeile.AsString := vater + ' ' +
+        ucase(DataModule2.Table17name.AsString) + ' ' +
+        ucase(DataModule2.Table17vornamen.AsString) + ' ' + geb_sterb_str;
+      DataModule2.Table14.Post;
+    end;
+    DataModule2.Table17.Next;
+  end;
+  DataModule2.Table17.IndexName := '';
+
+  { Ehepartner aus ehtest lesen und Zeilen schreiben. }
+  ehtest_s := '';
+  ehtest_s := ehtest(ehtest_s, vnum);
+  if ehtest_s <> '' then
+  begin
+    for i := 1 to Length(ehtest_s) div 17 do
+    begin
+      knum := StrToInt(Copy(ehtest_s, (i - 1) * 17 + 1, 6));
+      if Copy(ehtest_s, (i - 1) * 17 + 11, 1) = 'E' then
+        kurz := 'm. '
+      else
+        kurz := '-o-';
+      DataModule2.Table17.FindKey([knum]);
+      DataModule2.Table14.Append;
+      DataModule2.Table14Zeile.AsString := kurz + ' ' +
+        ucase(DataModule2.Table17name.AsString) + ' ' +
+        ucase(DataModule2.Table17vornamen.AsString) + ' ' + geb_sterb_str;
+      DataModule2.Table14.Post;
+      if DataModule2.Table17Geschlecht.AsString = 'M' then
+      begin
+        DataModule2.Table9.IndexName := 'mut';
+        vater := 'Mutter';
+        mutter := 'Vater';
+      end;
+      if DataModule2.Table17Geschlecht.AsString = 'W' then
+      begin
+        DataModule2.Table9.IndexName := 'vat';
+        vater := 'Vater';
+        mutter := 'Mutter';
+      end;
+      DataModule2.Table9.FindKey([knum]);
+      while not DataModule2.Table9.Eof do
+      begin
+        if DataModule2.Table9name.AsInteger = vnum then
+        begin
+          DataModule2.Table14.Append;
+          DataModule2.Table14Zeile.AsString := ' ' +
+            ucase(DataModule2.Table17name.AsString) + ' ' +
+            ucase(DataModule2.Table17vornamen.AsString) + ' ' + geb_sterb_str;
+          DataModule2.Table14.Post;
+        end;
+        DataModule2.Table9.Next;
+      end;
+      DataModule2.Table9.IndexName := '';
+      DataModule2.Table17.IndexName := '';
+    end;
+  end;
+
+  DataModule2.Table18.IndexName := 'num';
+  DataModule2.Table18.Next;
+  while not DataModule2.Table18.Eof do
+  begin
+    curt := DataModule2.Table18Epnum.AsInteger;
+    DataModule2.Table17.FindKey([curt]);
+    DataModule2.Table14.Append;
+    DataModule2.Table14Zeile.AsString := vater + ' ' +
+      ucase(DataModule2.Table17name.AsString) + ' ' +
+      ucase(DataModule2.Table17vornamen.AsString) + ' ' + geb_sterb_str;
+    DataModule2.Table14.Post;
+    if DataModule2.Table17Geschlecht.AsString = 'M' then
+    begin
+      DataModule2.Table14.IndexName := 'vat';
+      vater := 'Mutter';
+      mutter := 'Vater';
+    end;
+    if DataModule2.Table17Geschlecht.AsString = 'W' then
+    begin
+      DataModule2.Table14.IndexName := 'mut';
+      vater := 'Mutter';
+      mutter := 'Vater';
+    end;
+    DataModule2.Table18.Next;
+  end;
+  DataModule2.Table18.IndexName := '';
+
+  DataModule2.Table17.IndexName := 'num';
+  while not DataModule2.Table17.Eof do
+  begin
+    jnum := DataModule2.Table17Nummer.AsInteger;
+    DataModule2.Table14.Append;
+    DataModule2.Table14Zeile.AsString := vater + ' ' +
+      ucase(DataModule2.Table17name.AsString) + ' ' +
+      ucase(DataModule2.Table17vornamen.AsString) + ' ' + geb_sterb_str;
+    DataModule2.Table14.Post;
+    DataModule2.Table17.Next;
+  end;
+  DataModule2.Table17.IndexName := '';
+
+  { Titel schreiben, Quellform-Aufbau und Report aufrufen. }
+  Form16.SpeedButton3.Visible := True;
+  Form16.SpeedButton6.Visible := False;
+  QRDefault;
+  { Form15.QuickRep1.OnPreview := showpreview; Form15.QuickRep1.Preview }
+  Form15.QRDBText1.DataField := '';
+  Form15.QRDBText2.DataField := '';
+  Form15.QuickRep1.DataSet := DataModule2.Table14;
+  Form15.QRDBText1.DataSet := DataModule2.Table14;
+  Form15.QRDBText1.DataField := 'zeile';
+  Form15.QRDBText1.AutoSize := True;
+  Form15.QRDBText2.AutoSize := False;
+  Form15.QRDBText1.Font.Name := 'Arial';
+  Form15.QRDBText2.Font.Name := 'Arial';
+  Form15.QRDBText1.Font.Size := 10;
+  Form15.QRDBText1.Enabled := False;
+  Form15.QRDBText1.Left := 10;
+  Form15.QRDBText1.Width := 600;
+  Form15.QRLabel1.Caption := gvar_02536930;
+  Form15.QRLabel3.Caption := 'Nachfahren';
+  DataModule2.Table14.Open;
+  Form15.QuickRep1.Page.Columns := 1;
+  if gvar_02536934 <> '' then
+    Form15.QRLabel2.Caption := gvar_02536934;
 end;
 
 procedure TForm1.geb_sterb(var ergebnis: string);
@@ -2266,8 +2493,55 @@ begin
 end;
 
 procedure TForm1.AHNENDOSeinlesen1Click(Sender: TObject);
+var
+  voldir: AnsiString;
+  fname: AnsiString;
+  fn: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005FDAA4: AHNENWIN-DOS-Daten einlesen. Der Dateiname kommt ueber
+  //den Opendialog; bei vorhandenen Daten wird nachgefragt, ob die
+  //Bestandsdaten geloescht werden; das Einlesen macht Form3.ahndosein.
+  voldir := GetCurrentDir;
+  OpenDialog1.FileName := '';
+  OpenDialog1.FilterIndex := 1;
+  if not OpenDialog1.Execute then
+    Exit;
+  fname := OpenDialog1.FileName;
+  fn := OpenDialog1.FileName;
+  if (fname = '') or (fn = '') then
+    Exit;
+  Screen.Cursor := crHourGlass;
+  try
+    gvar_02536940 := 0;
+    if DataModule2.Table1Nummer.AsInteger > 0 then
+    begin
+      if Application.MessageBox(
+         'Die Bestandsdaten werden gel' + #246 + 'scht ?',
+         'AHNENWIN-DOS einlesen', mb_YESNO) = IDYES then
+      begin
+        Datenlschen1Click(nil);
+        Refresh;
+      end
+      else
+        gvar_02536940 := gvar_02536944;
+    end;
+    Refresh;
+    Form3.ahndosein;
+  finally
+    Screen.Cursor := crDefault;
+  end;
+  tabenab;
+  ChDir(voldir);
+  Label10.Visible := True;
+  Label11.Visible := True;
+  DataModule2.Table1.Open;
+  DataModule2.Table1.IndexName := '';
+  DataModule2.Table1.Last;
+  gvar_02536944 := DataModule2.Table1Nummer.AsInteger;
+  DataModule2.Table1.First;
+  DataModule2.Table4.Open;
+  DataModule2.Table5.Open;
+  anzeigen;
 end;
 
 procedure TForm1.OSBeinlesen1Click(Sender: TObject);
@@ -7149,8 +7423,71 @@ begin
 end;
 
 procedure TForm1.ChristlicheNamenstage1Click(Sender: TObject);
+var
+  HTMLDatei: TextFile;
+  txt: AnsiString;
+  url: AnsiString;
+  anz: Integer;
+  drittela: Integer;
+  drittelb: Integer;
+  i: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005FA138: die Namenstage aus Table11 nach "chnt.xml" schreiben;
+  //die Namen werden in drei Spalten je ein Drittel erzeugt.
+  gvar_0253692C := 'CHNT';
+  PageControl1.ActivePage := TabSheet2;
+  speich1;
+  System.Assign(HTMLDatei, 'chnt.xml');
+  Rewrite(HTMLDatei);
+  try
+    WriteLn(HTMLDatei, '<?xml version="1.0" encoding=' + #$22 + 'ISO-8859-1' + #$22 + '?>');
+    WriteLn(HTMLDatei, '<?xml-StyleSheet type=' + #$22 + 'text/css' + #$22 +
+      ' href=' + #$22 + gvar_02536B9C + 'style.css' + #$22 + ' ?>');
+    WriteLn(HTMLDatei, '<!--Converted from AHNENWIN 5.1 (2013) by Heribert Reitmeier-->');
+    WriteLn(HTMLDatei, '<tbcnt>');
+    WriteLn(HTMLDatei, '<ues>Christliche Namenstage</ues>');
+    WriteLn(HTMLDatei, '<strich></strich>');
+    DataModule2.Table11.Open;
+    DataModule2.Table11.First;
+    anz := DataModule2.Table11.RecordCount;
+    drittela := Round(anz / 3) + 1;
+    drittelb := Round(anz / 3) * 2 + 1;
+    i := 1;
+    while not DataModule2.Table11.EOF do
+    begin
+      // erste Spalte
+      DataModule2.Table11.IndexName := 'num';
+      DataModule2.Table11.FindKey([i]);
+      txt := '<tblcnt><tab>' + DataModule2.Table11FELD001.AsString + '</tab>';
+      WriteLn(HTMLDatei, txt);
+      WriteLn(HTMLDatei, '<tabcnt>' + DataModule2.Table11FELD002.AsString +
+        '.' + DataModule2.Table11FELD003.AsString + '.</tabcnt>');
+      // zweite Spalte
+      DataModule2.Table11.FindKey([drittela]);
+      WriteLn(HTMLDatei, '<tab>' + DataModule2.Table11FELD001.AsString + '</tab>');
+      WriteLn(HTMLDatei, '<tabcnt>' + DataModule2.Table11FELD002.AsString +
+        '.' + DataModule2.Table11FELD003.AsString + '.</tabcnt>');
+      // dritte Spalte
+      DataModule2.Table11.FindKey([drittelb]);
+      WriteLn(HTMLDatei, '<tab>' + DataModule2.Table11FELD001.AsString + '</tab>');
+      WriteLn(HTMLDatei, '<tabcnt>' + DataModule2.Table11FELD002.AsString +
+        '.' + DataModule2.Table11FELD003.AsString + '.</tabcnt></tblcnt>');
+      DataModule2.Table11.Next;
+    end;
+    WriteLn(HTMLDatei, '<HR></HR>');
+    WriteLn(HTMLDatei, 'AHNENWIN 5.1 / ' + DateToStr(Now));
+    WriteLn(HTMLDatei, '</tbcnt>');
+  finally
+    CloseFile(HTMLDatei);
+  end;
+  Form10.Caption := 'Christliche Namenstage';
+  Form10.Edit1.Visible := False;
+  Form10.Button2.Visible := False;
+  Form10.Button1.Visible := False;
+  Form10.SpeedButton3.Visible := False;
+  Form10.SpeedButton4.Visible := False;
+  Form10.SpeedButton5.Visible := False;
+  Browser(gvar_02536B9C + 'chnt.xml');
 end;
 
 procedure TForm1.FamGrafik1Click(Sender: TObject);
@@ -7709,9 +8046,56 @@ begin
   gvar_0253692C := '';
 end;
 
-procedure TForm1.sdx;
+procedure TForm1.sdx(const AnInput: AnsiString; var AResult: AnsiString);
+  //005D34D8: Soundex. Der erste Buchstabe bleibt stehen, dann kommen
+  //die Ziffern der Buchstabenklassen zu einem vierstelligen Code.
+
+  function sdx_klasse(c: AnsiString): AnsiString;
+  begin
+    // c ist 1 Zeichen (mit ae/oe/ue schon ersetzt)
+    if Pos(c, 'BPFV') > 0 then Result := '1'
+    else if Pos(c, 'CGJKQSXZ') > 0 then Result := '2'
+    else if Pos(c, 'DT') > 0 then Result := '3'
+    else if c = 'L' then Result := '4'
+    else if Pos(c, 'MN') > 0 then Result := '5'
+    else if c = 'R' then Result := '6'
+    else Result := '7';
+  end;
+
+var
+  c: AnsiString;
+  kl: AnsiString;
+  o1: AnsiString;
+  o2: AnsiString;
+  i: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  if AnInput = '' then
+  begin
+    AResult := '';
+    Exit;
+  end;
+  c := UpperCase(Copy(AnInput, 1, 1));
+  kl := ' ';
+  if c = #228 then c := 'A';
+  if c = #246 then c := 'O';
+  if c = #252 then c := 'U';
+  kl := sdx_klasse(c);
+  AResult := c;
+  o1 := '7';
+  o2 := c;
+  for i := 2 to Length(AnInput) do
+  begin
+    c := UpperCase(Copy(AnInput, i, 1));
+    if c = o2 then Continue;
+    kl := sdx_klasse(c);
+    if kl <> o1 then
+      AResult := AResult + kl;
+    o1 := kl;
+    o2 := c;
+  end;
+  while Length(AResult) < 4 do
+    AResult := AResult + '0';
+  AResult := Copy(AResult, 1, 4);
 end;
 
 procedure TForm1.FOKODateieditieren1Click(Sender: TObject);
@@ -7868,13 +8252,109 @@ begin
 end;
 
 procedure TForm1.Familienblatt2Click(Sender: TObject);
+var
+  ftitel: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005FB580: zwei Zeichen-Konstanten einstellen und dann Famblatt
+  //aufrufen; Titel und detaillierte Zeichen werden gelaoscht.
+  gvar_0253692C := 'famb';
+  gvar_02536B58 := '';
+  gvar_02536B38 := '';
+  gvar_02536B3C := '';
+  gvar_02536B40 := '';
+  gvar_02536B44 := '';
+  gvar_02536B48 := '';
+  gvar_02536B4C := '';
+  aus1.Click;
+  Famblatt;
 end;
 
 procedure TForm1.Famblatt;
+var
+  fname: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005FB604: Familienblatt erzeugen. Die Auswahl in Form17 anzeigen,
+  //dann das Layout auf Form15 aufbauen und die Bilder (Vater, Mutter,
+  //Kind) aus pictures\b<nummer>.jpg laden.
+  speich1;
+  DataModule2.Table38.Open;
+  DataModule2.Table38.IndexName := 'tit';
+  DataModule2.Table38.First;
+  if DataModule2.Table1.RecordCount < 2 then
+  begin
+    ShowMessage('Keine Daten verf' + #252 + 'gbar.');
+    Exit;
+  end;
+  PageControl1.ActivePage := TabSheet2;
+  gvar_02536930 := 'Familienblatt';
+  gvar_02536934 := '';
+  Form17.ShowModal;
+  if Form17.ModalResult = 2 then
+    Exit;
+  Form15.QRBand1.Height := 55;
+  Form15.QRBand3.Height := 20;
+  Form15.QRBand4.Height := 24;
+  Form15.QRShape1.AutoSize := True;
+  Form15.QRShape2.AutoSize := True;
+  Form15.QRDBText1.AutoSize := False;
+  Form15.QRDBText2.AutoSize := False;
+  Form15.QRLabel1.Caption := gvar_02536930;
+  Form15.QRLabel1.Visible := True;
+  Form15.QRLabel2.AutoSize := True;
+  Form15.QRLabel2.Visible := True;
+  Form15.QRLabel3.Visible := True;
+  if Trim(gvar_02536934) <> '' then
+    Form15.QRLabel2.Caption := gvar_02536934;
+  Form15.QRLabel3.Caption := 'Familienblatt';
+  Form15.QuickRep1.Page.Columns := 1;
+  Form16.Label5.Visible := True;      // 35C
+  Form16.Button9.Visible := True;     // 358
+  Form16.Button5.Visible := True;     // 360
+  Form16.SpeedButton3.Visible := True; // 34C
+  Form16.SpeedButton6.Visible := False; // 350
+  { Form15.QuickRep1.OnPreview := showpreview } // 2AC/2A8
+  Form15.QRShape1.Width := Form15.QRBand1.Width - 10;
+  Form15.QRShape2.Width := Form15.QRBand1.Width - 10;
+  Form15.QRShape3.Width := Form15.QRBand1.Width - 10;
+  Form15.QRSysData2.Left := Form15.QRShape3.Width - Form15.QRSysData2.Width;
+  Form15.QRDBText1.Width := Form15.QRBand3.Width - Form15.QRDBText1.Left;
+  Form15.QRMemo1.Width := Memo1.Width;
+  Form15.QRImage1.Picture := nil;
+  Form15.QRImage2.Picture := nil;
+  Form15.QRImage3.Picture := nil;
+  if not Form17.CheckBox16.Visible then
+    Exit;
+
+  // Vater
+  fname := gvar_02536B9C + 'bilder\b' + Trim(IntToStr(DataModule2.Table1Nummer.AsInteger)) +
+    AnsiChar(gvar_02536B2C) + '.jpg';
+  if FileExists(fname) then
+  begin
+    Form15.QRImage1.Picture.LoadFromFile(fname);
+    Form15.QRImage1.Left := 673 - Form15.QRImage1.Width;
+  end;
+
+  // Mutter
+  fname := gvar_02536B9C + 'bilder\b' + Trim(StringGrid1.Cells[1, 0]) +
+    AnsiChar(gvar_02536B2C) + '.jpg';
+  if FileExists(fname) then
+  begin
+    Form15.QRImage2.Picture.LoadFromFile(fname);
+    Form15.QRImage2.Top := Form15.QRImage1.Height * 9;
+    Form15.QRImage2.Left := 673 - Form15.QRImage2.Width;
+  end;
+
+  // Kind
+  fname := gvar_02536B9C + 'bilder\b' + Trim(StringGrid1.Cells[1, 1]) +
+    AnsiChar(gvar_02536B2C) + '.jpg';
+  if FileExists(fname) then
+  begin
+    Form15.QRImage3.Picture.LoadFromFile(fname);
+    Form15.QRImage3.Top := Form15.QRImage2.Height * 2 * 9;
+    Form15.QRImage3.Left := 673 - Form15.QRImage3.Width;
+  end;
+  { Form15.QuickRep1.Preview - die Vorschau ist im
+    Kompatibilitaetsschicht nicht implementiert. }
 end;
 
 procedure TForm1.Grafik1Click(Sender: TObject);
@@ -8876,8 +9356,103 @@ begin
 end;
 
 procedure TForm1.Partnersuche1Click(Sender: TObject);
+var
+  szelle1: AnsiString;
+  szelle2: AnsiString;
+  cat1: AnsiString;
+  cat2: AnsiString;
+  cur: Integer;
+  row: Integer;
+  txt: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005EED2C: Partner-Suche. Es wird die Heirats-Tabelle Table15
+  // queried; jede getroffene Person landet in StringGrid5.
+  PageControl1.ActivePage := TabSheet2;
+  aus1.Click;
+  cur := DataModule2.Table1Nummer.AsInteger;
+  for row := 0 to StringGrid5.RowCount - 2 do
+  begin
+    StringGrid5.Cells[0, row] := '';
+    StringGrid5.Cells[1, row] := '';
+    StringGrid5.Cells[2, row] := '';
+    StringGrid5.Cells[3, row] := '';
+    StringGrid5.Cells[4, row] := '';
+  end;
+  if not InputQuery('Partner suchen', 'Heiratsname der Frau', szelle1) then
+    Exit;
+  if not InputQuery('Partner suchen', 'Vorname der Frau', szelle2) then
+    Exit;
+  DataModule2.Table9.Open;
+  DataModule2.Table9.IndexName := '';
+  DataModule2.Table9.First;
+  DataModule2.Table15.Open;
+  DataModule2.Table15.MasterSource := DataModule2.DataSource9;  // 0A0
+  DataModule2.Table15.MasterFields := 'nummer';
+  DataModule2.Table15.IndexName := 'num';
+  DataModule2.Table15.First;
+  DataModule2.Table17.Open;
+  DataModule2.Table17.IndexName := '';
+  DataModule2.Table17.First;
+  Refresh;
+  cat1 := '"' + szelle2 + ' ' + szelle1 + '"';
+  StringGrid5.Cells[1, 0] := cat1;
+  StringGrid5.RowCount := 2;
+  DataModule2.Table9.First;
+  row := 2;
+  while not DataModule2.Table9.EOF do
+  begin
+    if Pos(UpperCase(szelle1), UpperCase(DataModule2.Table9Name.AsString)) <= 0 then
+    begin
+      DataModule2.Table9.Next;
+      Continue;
+    end;
+    if DataModule2.Table9Geschlecht.AsString <> 'M' then
+    begin
+      DataModule2.Table9.Next;
+      Continue;
+    end;
+    if DataModule2.Table15.RecordCount > 0 then
+    begin
+      DataModule2.Table15.First;
+      while not DataModule2.Table15.EOF do
+      begin
+        DataModule2.Table17.FindKey([DataModule2.Table15Epnum.AsInteger]);
+        if Pos(UpperCase(szelle2), UpperCase(DataModule2.Table17Vornamen.AsString)) > 0 then
+        begin
+          StringGrid5.RowCount := row + 1;
+          StringGrid5.Cells[0, row] := IntToStr(DataModule2.Table17Nummer.AsInteger);
+          StringGrid5.Cells[1, row] := DataModule2.Table17Name.AsString + ' ' +
+              DataModule2.Table17Vornamen.AsString;
+          if Trim(DataModule2.Table17Gebjahr.AsString) <> '' then
+            StringGrid5.Cells[2, row] := '* ' + DataModule2.Table17Gebjahr.AsString
+          else if Trim(DataModule2.Table17Taufjahr.AsString) <> '' then
+            StringGrid5.Cells[2, row] := '~ ' + DataModule2.Table17Taufjahr.AsString;
+          if Trim(DataModule2.Table15Sajahr.AsString) <> '' then
+            StringGrid5.Cells[3, row] := 'ooS ' + DataModule2.Table15Sajahr.AsString
+          else if Pos('Ehes', DataModule2.Table15Verbind.AsString) > 0 then
+            StringGrid5.Cells[3, row] := 'ooK ' + DataModule2.Table15Hjahr.AsString
+          else
+            StringGrid5.Cells[3, row] := 'o-o ' + DataModule2.Table15Hjahr.AsString;
+          txt := StringGrid5.Cells[2, row];
+          Inc(row);
+        end;
+        DataModule2.Table15.Next;
+      end;
+    end;
+    DataModule2.Table9.Next;
+  end;
+  if (Trim(szelle1) <> '') and (Trim(szelle2) <> '') then
+  begin
+    StringGrid5.Show;
+    { 5. Menuitem 'Partner-Suche' zeigen - im Kompatibilitaetsschicht
+      kein zugreifbarer Eintrag. }
+  end;
+  if Trim(StringGrid5.Cells[2, 1]) = '' then
+    StringGrid5.Cells[2, 1] := 'nichts gefunden';
+  DataModule2.Table15.MasterSource := nil;  DataModule2.Table1.IndexName := '';
+  DataModule2.Table1.First;
+  DataModule2.Table1.FindKey([cur]);
+  anzeigen;
 end;
 
 procedure TForm1.DBEdit45Exit(Sender: TObject);
@@ -8914,7 +9489,24 @@ end;
 
 procedure TForm1.Bildschirmdrucken1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005EC6C4: Druckereinrichtung und dann den Bildschirminhalt
+  //ausdrucken; dafuer werden die Druckerfelder nach vorn geholt.
+  PageControl1.ActivePage := TabSheet2;
+  speich1;
+  if not PrinterSetupDialog1.Execute then
+    Exit;
+  Edit3.BringToFront;
+  Edit7.BringToFront;
+  Edit11.BringToFront;
+  Edit12.BringToFront;
+  Edit16.BringToFront;
+  Print;
+  Edit3.SendToBack;
+  Edit7.SendToBack;
+  Edit11.SendToBack;
+  Edit12.SendToBack;
+  Edit16.SendToBack;
+  TabSheet2.Invalidate;
 end;
 
 procedure TForm1.ExcelExport1Click(Sender: TObject);
