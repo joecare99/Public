@@ -1,6 +1,8 @@
 object Form1: TForm1
   Left = 192
+  Height = 155
   Top = 115
+  Width = 306
   Caption = 'Hello Delphi Programmer!'
   ClientHeight = 155
   ClientWidth = 306
@@ -8,29 +10,29 @@ object Form1: TForm1
   Font.Color = clWindowText
   Font.Height = -11
   Font.Name = 'MS Sans Serif'
-  Font.Style = []
+  LCLVersion = '4.8.0.0'
   OnCreate = FormCreate
   OnDestroy = FormDestroy
-  PixelsPerInch = 96
   object GreetingLabel: TLabel
     Left = 24
+    Height = 13
     Top = 24
-    Width = 258
-    Height = 17
+    Width = 119
     Caption = 'Hello Delphi Programmer!'
   end
   object ClickLabel: TLabel
     Left = 24
+    Height = 13
     Top = 48
-    Width = 258
-    Height = 17
+    Width = 40
     Caption = 'Klicks: 0'
+    OnClick = ClickLabelClick
   end
   object CloseButton: TButton
     Left = 112
+    Height = 33
     Top = 88
     Width = 89
-    Height = 33
     Caption = 'Close'
     TabOrder = 0
     OnClick = CloseButtonClick

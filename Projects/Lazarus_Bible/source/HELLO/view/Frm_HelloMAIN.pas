@@ -20,6 +20,7 @@ type
     CloseButton: TButton;
     GreetingLabel: TLabel;
     ClickLabel: TLabel;
+    procedure ClickLabelClick(Sender: TObject);
     procedure FormCreate(Sender: TObject);
     procedure FormDestroy(Sender: TObject);
     procedure CloseButtonClick(Sender: TObject);
@@ -51,6 +52,11 @@ begin
   { Das Kommando zum Beenden wird von der View ausgefuehrt. }
   FViewModel.CloseCommand.OnExecute := ExecuteClose;
   ApplyViewModel;
+end;
+
+procedure TForm1.ClickLabelClick(Sender: TObject);
+begin
+  FViewModel.CountCommand.Execute;
 end;
 
 procedure TForm1.FormDestroy(Sender: TObject);

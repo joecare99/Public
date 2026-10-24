@@ -125,7 +125,7 @@ begin
   { unter Linux mit dem Standardprogramm oeffnen }
   Result := Run('xdg-open', ATarget) = 0;
 {$ELSE}
-  Result := OpenURL(ATarget);
+  Result := Open(ATarget);
 {$ENDIF}
   Log('geoeffnet: ' + ATarget);
 end;
