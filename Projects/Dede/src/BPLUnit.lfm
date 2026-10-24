@@ -1,0 +1,509 @@
+object BPL: TBPL
+  Left = 234
+  Top = 212
+  BorderStyle = bsDialog
+  Caption = 'DSF Build v2.0'
+  ClientHeight = 369
+  ClientWidth = 586
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  Icon.Data = {
+    0000010001002020100000000000E80200001600000028000000200000004000
+    0000010004000000000080020000000000000000000000000000000000000000
+    000000008000008000000080800080000000800080008080000080808000C0C0
+    C0000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00FFFF
+    FF88888888FFFFF88888888FFFFFF000000CCC00CC00000CC0CC0000000FF000
+    00CC0CC0CC0CCC0CC0CC0000000FF00000CC0CC0CC0CCC0CC0CC0000000FF070
+    07007CC0CCCC7CCCC0CCCCCC070F807007070CC7CCCC7CCCC7CC007CC7088070
+    07070CC7CCC070CCC7CC007CC708877077070CC7CCC770CCC7CCCCCC77088070
+    0700700070007007007000700708800000000000000000000000000000088000
+    000000000000000000000000000880700700CCC07CC70CCC0CCCCCC700788070
+    707CC7CC7CC0CCCC7CC070070708F070707CC7CC7CC0CCCC7CC07007070FF770
+    707077CC7CCCC0CC7CCCCC77070FF070070007CC7CCCC0CC0CC70007007FF000
+    000000CC0CCC00CC0CC00000000FF000000000CC0CCC00CC0CCCCCC0000F8070
+    0070070070070007007007007008870700700700707070070070070070788707
+    0070CCCCC07CC00700CC0CC070788707077CC707CC7CC0CCC7CC7CC770788070
+    007CC700700CC0CCC0CC0CC070088000000CC000000CCCC0CCCC0CCCCCC88000
+    000CC000000CCCC0CCCC0CC000C88070070CC700CC0CCC070CCC0CC007C88070
+    7070CCCCC70CCC707CCC0CCCCCC8F070707070700700707070070070707FF770
+    707070707707707070770770707FF070070007000700700700070070070FF000
+    000000000000000000000000000FFFFFF888888888FFFFF88888888FFFFF0000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    0000000000000000000000000000000000000000000000000000000000000000
+    000000000000000000000000000000000000000000000000000000000000
+  }
+  OldCreateOrder = False
+  Position = poScreenCenter
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  TextHeight = 13
+  object StatusBar: TStatusBar
+    Left = 0
+    Top = 350
+    Width = 586
+    Height = 19
+    Panels = <    
+      item
+        Width = 50
+      end>
+  end
+  object PageControl1: TPageControl
+    Left = 0
+    Top = 0
+    Width = 586
+    Height = 350
+    ActivePage = TabSheet1
+    Align = alClient
+    TabOrder = 1
+    object TabSheet2: TTabSheet
+      Caption = 'DCU.to.DSF'
+      ImageIndex = 1
+      object TPanel
+        Left = 0
+        Top = 0
+        Width = 578
+        Height = 49
+        Align = alTop
+        BevelInner = bvLowered
+        TabOrder = 0
+        object Label1: TLabel
+          Left = 10
+          Top = 5
+          Width = 45
+          Height = 13
+          Caption = 'DCU File:'
+        end
+        object DCUFileEdit: TFilenameEdit
+          Left = 10
+          Top = 21
+          Width = 265
+          Height = 21
+          Filter = 'DCU Files (*.dcu)|*.dcu|All Files|*.*'
+          DialogOptions = [ofHideReadOnly, ofAllowMultiSelect, ofPathMustExist, ofFileMustExist]
+          Color = 16768443
+          NumGlyphs = 1
+          TabOrder = 0
+          OnChange = DCUFileEditChange
+        end
+        object Button2: TButton
+          Left = 289
+          Top = 18
+          Width = 75
+          Height = 25
+          Caption = '&Generate'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 1
+          OnClick = Button2Click
+        end
+      end
+      object Panel3: TPanel
+        Left = 0
+        Top = 49
+        Width = 578
+        Height = 273
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Panel1'
+        TabOrder = 1
+        object Label3: TLabel
+          Left = 336
+          Top = 73
+          Width = 99
+          Height = 13
+          Caption = 'DSF File Description:'
+        end
+        object Label6: TLabel
+          Left = 336
+          Top = 9
+          Width = 74
+          Height = 13
+          Caption = 'DSF File Name:'
+        end
+        object DCUstatuLbl: TLabel
+          Left = 10
+          Top = 236
+          Width = 3
+          Height = 13
+        end
+        object DCUDVGB: TGroupBox
+          Left = 8
+          Top = 11
+          Width = 305
+          Height = 54
+          Caption = 'Delphi Versions This Symbol File Should Be Used With'
+          TabOrder = 0
+          object dcud3cb: TCheckBox
+            Left = 8
+            Top = 32
+            Width = 65
+            Height = 17
+            Caption = 'Delphi 3'
+            Checked = True
+            State = cbChecked
+            TabOrder = 0
+          end
+          object dcud4cb: TCheckBox
+            Left = 96
+            Top = 16
+            Width = 65
+            Height = 17
+            Caption = 'Delphi 4'
+            Checked = True
+            State = cbChecked
+            TabOrder = 1
+          end
+          object dcud5cb: TCheckBox
+            Left = 96
+            Top = 32
+            Width = 65
+            Height = 17
+            Caption = 'Delphi 5'
+            Checked = True
+            State = cbChecked
+            TabOrder = 2
+          end
+          object dcud2cb: TCheckBox
+            Left = 8
+            Top = 16
+            Width = 65
+            Height = 17
+            Caption = 'Delphi 2'
+            Checked = True
+            State = cbChecked
+            TabOrder = 3
+          end
+          object dcud6cb: TCheckBox
+            Left = 176
+            Top = 16
+            Width = 65
+            Height = 17
+            Caption = 'Delphi 6'
+            Checked = True
+            State = cbChecked
+            TabOrder = 4
+          end
+        end
+        object DCULogMemo: TMemo
+          Left = 8
+          Top = 131
+          Width = 305
+          Height = 81
+          BorderStyle = bsNone
+          Color = clBtnFace
+          ReadOnly = True
+          ScrollBars = ssVertical
+          TabOrder = 1
+        end
+        object DCUPB: TProgressBar
+          Left = 9
+          Top = 223
+          Width = 561
+          Height = 9
+          TabOrder = 2
+        end
+        object DCUCommentEdit: TEdit
+          Left = 336
+          Top = 91
+          Width = 225
+          Height = 21
+          Color = 16768443
+          TabOrder = 3
+        end
+        object DCUSymFile: TFilenameEdit
+          Left = 336
+          Top = 25
+          Width = 225
+          Height = 21
+          OnBeforeDialog = SymFileBeforeDialog
+          DefaultExt = 'dsf'
+          Filter = 'DeDe Symbol File (*.dsf)|*.dsf'
+          FilterIndex = 0
+          InitialDir = '.\DSF'
+          Color = 16768443
+          NumGlyphs = 1
+          TabOrder = 4
+        end
+        object GroupBox2: TGroupBox
+          Left = 8
+          Top = 67
+          Width = 305
+          Height = 48
+          Caption = 'Options'
+          TabOrder = 5
+          object DCUParamCB: TCheckBox
+            Left = 11
+            Top = 23
+            Width = 105
+            Height = 17
+            Caption = 'Fix Types Names'
+            Checked = True
+            State = cbChecked
+            TabOrder = 0
+          end
+          object DCUExcludeCB: TCheckBox
+            Left = 128
+            Top = 23
+            Width = 137
+            Height = 17
+            Caption = 'Exclude Params Names'
+            Checked = True
+            State = cbChecked
+            TabOrder = 1
+          end
+        end
+        object DetailsPanel: TPanel
+          Left = 328
+          Top = 128
+          Width = 241
+          Height = 89
+          BevelOuter = bvNone
+          TabOrder = 6
+          Visible = False
+          object Label7: TLabel
+            Left = 13
+            Top = 12
+            Width = 76
+            Height = 13
+            Caption = 'Overall progress'
+          end
+          object CurrDCULbl: TLabel
+            Left = 13
+            Top = 44
+            Width = 3
+            Height = 13
+          end
+          object CDCUPB: TProgressBar
+            Left = 12
+            Top = 32
+            Width = 221
+            Height = 9
+            TabOrder = 0
+          end
+        end
+      end
+    end
+    object TabSheet1: TTabSheet
+      Caption = 'BPL.to.DSF'
+      object TPanel
+        Left = 0
+        Top = 0
+        Width = 578
+        Height = 49
+        Align = alTop
+        BevelInner = bvLowered
+        TabOrder = 0
+        object Label2: TLabel
+          Left = 10
+          Top = 5
+          Width = 79
+          Height = 13
+          Caption = 'Delphi Package:'
+        end
+        object FileEdit: TFilenameEdit
+          Left = 10
+          Top = 21
+          Width = 265
+          Height = 21
+          OnBeforeDialog = FileEditBeforeDialog
+          Filter = 'Borland Package Library (*.bpl; *.dpl)|*.bpl; *.dpl|All Files|*.*'
+          DialogOptions = [ofHideReadOnly, ofPathMustExist, ofFileMustExist]
+          Color = 16768443
+          NumGlyphs = 1
+          TabOrder = 0
+          OnChange = FileEditChange
+        end
+        object Button1: TButton
+          Left = 289
+          Top = 18
+          Width = 75
+          Height = 25
+          Caption = '&Generate'
+          Font.Charset = DEFAULT_CHARSET
+          Font.Color = clWindowText
+          Font.Height = -11
+          Font.Name = 'MS Sans Serif'
+          Font.Style = [fsBold]
+          ParentFont = False
+          TabOrder = 1
+          OnClick = Button1Click
+        end
+      end
+      object Panel1: TPanel
+        Left = 0
+        Top = 49
+        Width = 578
+        Height = 273
+        Align = alClient
+        BevelOuter = bvNone
+        Caption = 'Panel1'
+        TabOrder = 1
+        object Label5: TLabel
+          Left = 336
+          Top = 73
+          Width = 99
+          Height = 13
+          Caption = 'DSF File Description:'
+        end
+        object Label4: TLabel
+          Left = 336
+          Top = 9
+          Width = 74
+          Height = 13
+          Caption = 'DSF File Name:'
+        end
+        object statusLbl: TLabel
+          Left = 10
+          Top = 236
+          Width = 3
+          Height = 13
+        end
+        object DVGB: TGroupBox
+          Left = 8
+          Top = 11
+          Width = 305
+          Height = 49
+          Caption = 'Delphi Versions This Symbol File Should Be Used With'
+          TabOrder = 0
+          object d3cb: TCheckBox
+            Left = 8
+            Top = 24
+            Width = 97
+            Height = 17
+            Caption = 'Delphi 3'
+            Checked = True
+            State = cbChecked
+            TabOrder = 0
+          end
+          object d4cb: TCheckBox
+            Left = 80
+            Top = 24
+            Width = 97
+            Height = 17
+            Caption = 'Delphi 4'
+            Checked = True
+            State = cbChecked
+            TabOrder = 1
+          end
+          object d5cb: TCheckBox
+            Left = 152
+            Top = 24
+            Width = 65
+            Height = 17
+            Caption = 'Delphi 5'
+            Checked = True
+            State = cbChecked
+            TabOrder = 2
+          end
+          object d6cb: TCheckBox
+            Left = 224
+            Top = 24
+            Width = 65
+            Height = 17
+            Caption = 'Delphi 6'
+            Checked = True
+            State = cbChecked
+            TabOrder = 3
+          end
+        end
+        object GroupBox1: TGroupBox
+          Left = 8
+          Top = 67
+          Width = 305
+          Height = 48
+          Caption = 'Options'
+          TabOrder = 1
+          object FixCB: TCheckBox
+            Left = 8
+            Top = 24
+            Width = 113
+            Height = 17
+            Caption = 'Fix Names'
+            Checked = True
+            State = cbChecked
+            TabOrder = 0
+          end
+          object ParamCB: TCheckBox
+            Left = 208
+            Top = 23
+            Width = 81
+            Height = 17
+            Caption = 'Fix Params'
+            Checked = True
+            State = cbChecked
+            TabOrder = 1
+          end
+          object IncPCB: TCheckBox
+            Left = 96
+            Top = 24
+            Width = 97
+            Height = 17
+            Caption = 'Include Params'
+            Checked = True
+            State = cbChecked
+            TabOrder = 2
+          end
+        end
+        object LogMemo: TMemo
+          Left = 8
+          Top = 131
+          Width = 305
+          Height = 81
+          BorderStyle = bsNone
+          Color = clBtnFace
+          ReadOnly = True
+          ScrollBars = ssVertical
+          TabOrder = 2
+        end
+        object PB: TProgressBar
+          Left = 9
+          Top = 223
+          Width = 561
+          Height = 9
+          TabOrder = 3
+        end
+        object CommentEdit: TEdit
+          Left = 336
+          Top = 91
+          Width = 225
+          Height = 21
+          Color = 16768443
+          TabOrder = 4
+        end
+        object SymFile: TFilenameEdit
+          Left = 336
+          Top = 25
+          Width = 225
+          Height = 21
+          OnBeforeDialog = SymFileBeforeDialog
+          DefaultExt = 'dsf'
+          Filter = 'DeDe Symbol File (*.dsf)|*.dsf'
+          FilterIndex = 0
+          InitialDir = '.\DSF'
+          Color = 16768443
+          NumGlyphs = 1
+          TabOrder = 5
+        end
+        object Panel2: TPanel
+          Left = 336
+          Top = 128
+          Width = 25
+          Height = 25
+          BevelOuter = bvNone
+          TabOrder = 6
+          OnMouseDown = Panel2MouseDown
+        end
+      end
+    end
+  end
+end
