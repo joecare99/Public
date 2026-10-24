@@ -38,12 +38,13 @@ type
   { Paper sizes. The AHNENWIN resources stream "Page.PaperSize = A4", so
     the element names follow the QuickReport spelling, which is the plain
     paper name for the common formats and DMPAPER_* for the rest. }
-  TQRPaperSize = (Letter, LetterSmall, Tabloid, Ledger, Legal, Statement,
-                  Executive, A3, A4, A4Small, A5, B4, B5, Folio, Quarto,
-                  DMPAPER_10x14, DMPAPER_11x17, DMPAPER_ENV10, DMPAPER_ENV11,
-                  DMPAPER_ENV12, DMPAPER_ENV14, DMPAPER_ENV_C, DMPAPER_ENV_D,
-                  DMPAPER_ENV_DL, DMPAPER_ENV_E, DMPAPER_ENV_FAX,
-                  DMPAPER_ENV_PERSONAL, DMPAPER_ENV_REPLY, DMPAPER_ENV_OTHER);
+  TQRPaperSize = (Default, Letter, LetterSmall, Tabloid, Ledger, Legal,
+                  Statement, Executive, A3, A4, A4Small, A5, B4, B5, Folio,
+                  Quarto, DMPAPER_10x14, DMPAPER_11x17, DMPAPER_ENV10,
+                  DMPAPER_ENV11, DMPAPER_ENV12, DMPAPER_ENV14, DMPAPER_ENV_C,
+                  DMPAPER_ENV_D, DMPAPER_ENV_DL, DMPAPER_ENV_E,
+                  DMPAPER_ENV_FAX, DMPAPER_ENV_PERSONAL, DMPAPER_ENV_REPLY,
+                  DMPAPER_ENV_OTHER);
 
   { Page orientation. The resources stream "Page.Orientation = poPortrait",
     which is the VCL TPrinterOrientation spelling. }

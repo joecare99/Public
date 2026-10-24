@@ -1,4 +1,4 @@
-unit Unit3;
+﻿unit Unit3;
 
 {-------------------------------------------------------------------------------
   Unit3 - TForm3, reconstructed from the IDR disassembly
@@ -13,7 +13,7 @@ unit Unit3;
 interface
 
 uses
-  Windows, SysUtils, StrUtils, Classes, StdCtrls, Buttons, DBTables, DBCommon, Dialogs, Forms, Controls, Grids, DB, AHNGlobals, Unit1, Unit2;
+  Windows, SysUtils, StrUtils, Classes, StdCtrls, Buttons, DBTables, DBCommon, Dialogs, Forms, Controls, Grids, DB, AHNGlobals, Unit1, Unit2, Unit15, Unit16;
 
 type
   TForm3 = class(TForm)
@@ -39,20 +39,21 @@ type
     procedure ofb2; //0058CB84
     procedure indi; //005967C8
     procedure Ortdreh(AOrt: AnsiString; var AErgebnis: AnsiString); //0057893C
-    procedure oabk; //00584EBC
+    procedure oabk(AIn: AnsiString; var AErgebnis: AnsiString); //00584EBC
     procedure illki; //00584350
     procedure Even(AIn: AnsiString); //0057B94C
     procedure zsa(ALine: AnsiString; var AErgebnis: AnsiString); //00577834
     procedure ansl(AIn: AnsiString; var AOut: AnsiString); //005832F8
-    procedure sour; //005BF434
+    function Ziff(AIn: AnsiString): Integer; //0057D410
+    procedure sour(AIn: AnsiString); //005BF434
     procedure gedein_5; //005BFB94
     procedure famn; //0057D560
-    procedure Prop; //0057C8B8
+    procedure Prop(AIn: AnsiString; var AErgebnis: AnsiString); //0057C8B8
     procedure Educ(AIn: AnsiString); //0057C3E0
     procedure Grad(AIn: AnsiString); //0057BEC0
-    procedure Note; //0057CF58
-    procedure Chan; //0057CC58
-    procedure Resi(AIn: AnsiString); //0057CA24
+    procedure Note(AIn: AnsiString; var AEs: AnsiString); //0057CF58
+    procedure Chan(AIn: AnsiString; var AEs: AnsiString); //0057CC58
+    procedure Resi(AIn: AnsiString; var AEs: AnsiString); //0057CA24
     procedure ans(AIn: AnsiString; var AOut: AnsiString); //005836E8
     procedure FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState); //00584254
     procedure Edit2KeyPress(Sender: TObject; var Key: Char); //00584224
@@ -67,7 +68,7 @@ type
     procedure Edit1Exit(Sender: TObject); //005840EC
     procedure Edit2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState); //005840D0
     procedure Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState); //005840B4
-    procedure refelt; //00583930
+    procedure refelt(AName: AnsiString; var AResult: AnsiString); //00583930
     procedure adrschreib; //005B3A3C
     procedure gedausxv; //005B4288
     procedure gedausv; //005B5224
@@ -91,6 +92,18 @@ implementation
 {$R ..\Forms\Form3.DFM}
 
 { Local helpers of the original, unit level (not members of TForm3). }
+
+procedure sub_005AFB14(AIn: AnsiString; var AResult: AnsiString);
+begin
+  { Converts the text from the OEM (DOS) character set to ANSI, only when
+    nonempty. The conversion happens in place via OemToCharA. }
+  AResult := '';
+  if Trim(AIn) <> '' then
+  begin
+    if OemToCharA(PChar(AIn), PChar(AIn)) then
+      AResult := AIn;
+  end;
+end;
 
 procedure sub_00576EB0(AValue: Integer; var AResult: AnsiString);
 var
@@ -160,6 +173,191 @@ begin
           break;
         end;
   end;
+end;
+
+procedure sub_005772E4(ALine: AnsiString); forward;
+
+procedure sub_005BD73C(AIn: AnsiString);
+var
+  v, t: AnsiString;
+begin
+  { Appends the godfather entry (Taufpat) of an imported "BAPT" record.
+    Only processed when the current import tag is "BAPT" }
+  if gvar_02536858 = 'BAPT' then
+  begin
+    v := DataModule2.Table1Taufpat.AsString;
+    if Trim(v) <> '' then
+    begin
+      t := Trim(Copy(AIn, 8, Length(Trim(AIn))));
+      DataModule2.Table1Taufpat.AsString := Trim(v) + ', ' + t;
+    end
+    else
+      DataModule2.Table1Taufpat.AsString := Trim(Copy(AIn, 8, Length(Trim(AIn))));
+  end;
+end;
+
+procedure sub_005BD88C(AIn: AnsiString; APerson: Integer);
+var
+  n: Integer;
+  s: AnsiString;
+begin
+  { Writes the father/mother reference (APerson) to the temporary "fsc"
+    import table (gvar_02536860): existing record "fnr" -> update of the
+    field "v" (m) resp. "m" (w), otherwise a new record. }
+  n := StrToInt(Copy(AIn, 10, Length(Trim(AIn)) - 10));
+  gvar_02536860.IndexName := 'fnr';
+  if gvar_02536860.FindKey([n]) then
+  begin
+    gvar_02536860.Edit;
+    s := UpperCase(DataModule2.Table1Geschlecht.AsString);
+    if s = 'M' then
+      gvar_02536860.FieldByName('v').AsInteger := APerson
+    else
+    begin
+      s := UpperCase(DataModule2.Table1Geschlecht.AsString);
+      if s = 'W' then
+        gvar_02536860.FieldByName('m').AsInteger := APerson;
+    end;
+    gvar_02536860.Post;
+  end
+  else
+  begin
+    gvar_02536860.Append;
+    gvar_02536860.FieldByName('fnr').AsInteger := n;
+    s := UpperCase(DataModule2.Table1Geschlecht.AsString);
+    if s = 'M' then
+      gvar_02536860.FieldByName('v').AsInteger := APerson
+    else
+    begin
+      s := UpperCase(DataModule2.Table1Geschlecht.AsString);
+      if s = 'W' then
+        gvar_02536860.FieldByName('m').AsInteger := APerson;
+    end;
+    gvar_02536860.Post;
+  end;
+end;
+
+procedure sub_005BDAFC(AIn: AnsiString; APerson: Integer);
+var
+  n: Integer;
+  s, u: AnsiString;
+begin
+  { Appends the number of the child (APerson) as a 6 digit string to the
+    field "k" (children) of the temporary "fsc" import table. }
+  n := StrToInt(Copy(AIn, 10, Length(Trim(AIn)) - 10));
+  if gvar_02536860.FindKey([n]) then
+  begin
+    gvar_02536860.Edit;
+    s := gvar_02536860.FieldByName('k').AsString;
+    sub_00576EB0(APerson, u);
+    gvar_02536860.FieldByName('k').AsString := s + u;
+    gvar_02536860.Post;
+  end
+  else
+  begin
+    gvar_02536860.Append;
+    gvar_02536860.FieldByName('fnr').AsInteger := n;
+    s := gvar_02536860.FieldByName('k').AsString;
+    sub_00576EB0(APerson, u);
+    gvar_02536860.FieldByName('k').AsString := s + u;
+    gvar_02536860.Post;
+  end;
+end;
+
+procedure sub_005BDCA0(AIn: AnsiString);
+var
+  s, u, v: AnsiString;
+begin
+  { Distributes the person attributes of an imported record to the fields
+    of table 1: "lebt: j", "Schrw.:", "Hnm.:", "1 NOTE @" and the rest
+    into the comment field. }
+  if Trim(AIn) = '' then
+    exit;
+  if Pos('lebt: j', AIn) > 0 then
+    DataModule2.Table1Lebt.AsString := 'j'
+  else
+  if Pos('Schrw.:', AIn) > 0 then
+    DataModule2.Table1Namex.AsString := Trim(Copy(AIn, 16, Length(AIn)))
+  else
+  if Pos('Hnm.:', AIn) > 0 then
+    DataModule2.Table1Hausname.AsString := Trim(Copy(AIn, 14, Length(AIn)))
+  else
+  if Pos('1 NOTE @', AIn) > 0 then
+  begin
+    { The note is looked up in Repso2 with the key from the record and
+      written from "NOTE" on into the comment field. }
+    Form1.Repso2.IndexName := 'ih';
+    u := Trim(Copy(AIn, 9, 20));
+    Form1.Repso2.FindNearest([u]);
+    s := Form1.Repso2inh.AsString;
+    v := Trim(Copy(AIn, 9, 20));
+    if Pos(v, s) > 0 then
+    begin
+      s := Copy(s, Pos('NOTE', s) + 5, Length(s));
+      sub_005772E4(Trim(s));
+    end;
+  end
+  else
+  begin
+    s := Trim(DataModule2.Table1Kommentar.AsString);
+    if s = '' then
+      DataModule2.Table1Kommentar.AsString := Trim(Copy(AIn, 8, Length(AIn)))
+    else
+      DataModule2.Table1Kommentar.AsString :=
+        s + #13#10 + Trim(Copy(AIn, 8, Length(AIn)));
+  end;
+end;
+
+procedure sub_005BE054(AIn: AnsiString);
+begin
+  { Appends ALine to the comment field of table 1 }
+  if Trim(AIn) = '' then
+    exit;
+  DataModule2.Table1Kommentar.AsString :=
+    DataModule2.Table1Kommentar.AsString + Trim(Copy(AIn, 8, Length(AIn) - 7));
+end;
+
+procedure sub_005BE104(AIn: AnsiString);
+var
+  s: AnsiString;
+begin
+  { Same attribute distribution as sub_005BDCA0, but without the
+    "1 NOTE @" evaluation. }
+  if Trim(AIn) = '' then
+    exit;
+  if Pos('lebt: j', AIn) > 0 then
+    DataModule2.Table1Lebt.AsString := 'j'
+  else
+  if Pos('Schrw.:', AIn) > 0 then
+    DataModule2.Table1Namex.AsString := Trim(Copy(AIn, 16, Length(AIn)))
+  else
+  if Pos('Hnm.:', AIn) > 0 then
+    DataModule2.Table1Hausname.AsString := Trim(Copy(AIn, 14, Length(AIn)))
+  else
+  begin
+    s := Trim(DataModule2.Table1Kommentar.AsString);
+    if s = '' then
+      DataModule2.Table1Kommentar.AsString := Trim(Copy(AIn, 8, Length(AIn)))
+    else
+      DataModule2.Table1Kommentar.AsString :=
+        s + #13#10 + Trim(Copy(AIn, 8, Length(AIn)));
+  end;
+end;
+
+procedure sub_005BE340(AIn: AnsiString);
+begin
+  { Writes the age "DEAT" into the field "Alter", as long as the line
+    neither contain a "m" nor a "d". }
+  if gvar_02536858 = 'DEAT' then
+    if (Pos('m', AIn) = 0) and (Pos('d', AIn) = 0) then
+      DataModule2.Table1Alter.AsString := Copy(AIn, 7, Length(AIn));
+end;
+
+procedure sub_005BE418(AIn: AnsiString);
+begin
+  { Writes the cause of death "DEAT" into the field "Todesurs". }
+  if gvar_02536858 = 'DEAT' then
+    DataModule2.Table1Todesurs.AsString := Copy(AIn, 8, Length(AIn));
 end;
 
 procedure sub_005772E4(ALine: AnsiString);
@@ -939,8 +1137,24 @@ begin
 end;
 
 procedure TForm3.indi;
+var
+  s, h: AnsiString;
+  num: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Handles the GEDCOM line "0 @Innn@ ..." of an individual record: shows
+    the number in Form1.Label79 and positions Table1 on the person. }
+  s := gvar_02536630;
+  if ucase(Copy(s, 1, 4)) = 'I' then
+    h := Copy(s, Pos('@', s) + 2, Length(s) - Pos('@', s))
+  else
+    h := Copy(s, Pos('@', s) + 1, Length(s) - Pos('@', s));
+  num := StrToInt(Copy(s, 1, Pos('@', s) - 1));
+  DataModule2.Table25.FindKey([num]);
+  Form1.Label79.Caption := Copy(s, 1, Pos('@', s) - 1);
+  Form1.Label79.Refresh;
+  num := DataModule2.Table25N.AsInteger;
+  DataModule2.Table1.FindKey([num]);
+  DataModule2.Table1.Edit;
 end;
 
 procedure TForm3.Ortdreh(AOrt: AnsiString; var AErgebnis: AnsiString);
@@ -959,9 +1173,29 @@ begin
   end;
 end;
 
-procedure TForm3.oabk;
+procedure TForm3.oabk(AIn: AnsiString; var AErgebnis: AnsiString);
+var
+  s, u: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Looks up the abbreviation of a place in Table13 (index "ort_") and
+    appends it (or the place itself when no abbreviation exists) together
+    with the record number, to gvar_02536630. }
+  AErgebnis := '';
+  if Trim(AIn) = '' then
+    Exit;
+  DataModule2.Table13.IndexName := 'ort_';
+  if DataModule2.Table13.FindKey([AIn]) then
+  begin
+    if Trim(DataModule2.Table13Abk.AsString) = '' then
+      gvar_02536630 := gvar_02536630 + ' ' + AIn
+    else
+    begin
+      gvar_02536630 := gvar_02536630 + ' ' +
+        Trim(DataModule2.Table13Abk.AsString);
+      sub_00576EB0(DataModule2.Table13.RecNo, u);
+      AErgebnis := u + '*';
+    end;
+  end;
 end;
 
 procedure TForm3.illki;
@@ -1141,9 +1375,80 @@ begin
   AOut := s;
 end;
 
-procedure TForm3.sour;
+procedure TForm3.sour(AIn: AnsiString);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Resolves a "2 SOUR @..." reference of the current event (gvar_02536858:
+    BIRT/BAPT/DEAT/BURI) to the source text (Repso2) and appends it to the
+    matching person source field. The field already contains the reference
+    is left unchanged; otherwise the text is added with "; " (or set new). }
+  if gvar_02536858 = 'BIRT' then
+  begin
+    if Pos('2 SOUR @', AIn) = 0 then
+      exit;
+    gvar_02536850 := '';
+    Form1.Repso2.IndexName := 'ih';
+    if Form1.Repso2.FindKey([Trim(Copy(AIn, 8, Length(AIn)))]) then
+      gvar_02536850 := Form1.Repso2inh2.AsString;
+    if Pos(gvar_02536850, DataModule2.Table1Quelleg.AsString) <> 0 then
+      exit;
+    DataModule2.Table1.Edit;
+    if Trim(DataModule2.Table1Quelleg.AsString) = '' then
+      DataModule2.Table1Quelleg.AsString := gvar_02536850
+    else
+      DataModule2.Table1Quelleg.AsString := Trim(
+        DataModule2.Table1Quelleg.AsString + '; ' + gvar_02536850);
+  end
+  else if gvar_02536858 = 'BAPT' then
+  begin
+    if Pos('2 SOUR @', AIn) = 0 then
+      exit;
+    gvar_02536850 := '';
+    Form1.Repso2.IndexName := 'ih';
+    if Form1.Repso2.FindKey([Trim(Copy(AIn, 8, Length(AIn)))]) then
+      gvar_02536850 := Form1.Repso2inh2.AsString;
+    if Pos(gvar_02536850, DataModule2.Table1Quellet.AsString) <> 0 then
+      exit;
+    DataModule2.Table1.Edit;
+    if Trim(DataModule2.Table1Quellet.AsString) = '' then
+      DataModule2.Table1Quellet.AsString := gvar_02536850
+    else
+      DataModule2.Table1Quellet.AsString := Trim(
+        DataModule2.Table1Quellet.AsString + '; ' + gvar_02536850);
+  end
+  else if gvar_02536858 = 'DEAT' then
+  begin
+    if Pos('2 SOUR @', AIn) = 0 then
+      exit;
+    gvar_02536850 := '';
+    Form1.Repso2.IndexName := 'ih';
+    if Form1.Repso2.FindKey([Trim(Copy(AIn, 8, Length(AIn)))]) then
+      gvar_02536850 := Form1.Repso2inh2.AsString;
+    if Pos(gvar_02536850, DataModule2.Table1Quelles.AsString) <> 0 then
+      exit;
+    DataModule2.Table1.Edit;
+    if Trim(DataModule2.Table1Quelles.AsString) = '' then
+      DataModule2.Table1Quelles.AsString := gvar_02536850
+    else
+      DataModule2.Table1Quelles.AsString := Trim(
+        DataModule2.Table1Quelles.AsString + '; ' + gvar_02536850);
+  end
+  else if gvar_02536858 = 'BURI' then
+  begin
+    if Pos('2 SOUR @', AIn) = 0 then
+      exit;
+    gvar_02536850 := '';
+    Form1.Repso2.IndexName := 'ih';
+    if Form1.Repso2.FindKey([Trim(Copy(AIn, 8, Length(AIn)))]) then
+      gvar_02536850 := Form1.Repso2inh2.AsString;
+    if Pos(gvar_02536850, DataModule2.Table1Quelleb.AsString) <> 0 then
+      exit;
+    DataModule2.Table1.Edit;
+    if Trim(DataModule2.Table1Quelleb.AsString) = '' then
+      DataModule2.Table1Quelleb.AsString := gvar_02536850
+    else
+      DataModule2.Table1Quelleb.AsString := Trim(
+        DataModule2.Table1Quelleb.AsString + '; ' + gvar_02536850);
+  end;
 end;
 
 procedure TForm3.gedein_5;
@@ -1151,14 +1456,238 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.famn;
+function TForm3.Ziff(AIn: AnsiString): Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Extracts the numeric part of a GEDCOM id ("@I123"/"0 @F45"): the last
+    (numeric) token after the last whitespace. }
+  Result := StrToIntDef(RightStr(Trim(Copy(AIn, 10, Length(AIn))), -1), 0);
 end;
 
-procedure TForm3.Prop;
+procedure TForm3.famn;
+var
+  husn, wifn: Integer;
+  mIdx, rel: Integer;
+  Dtag1, Dmonat1, Djahr1, Dort1, Dwit: AnsiString;
+  Dtag2, Dmonat2, Djahr2, Dort2, Dwit2: AnsiString;
+  Dtag3, Dmonat3, Djahr3, Dort3: AnsiString;
+  Hqu, Squ, Cqu: AnsiString;
+  s, t: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Reads a GEDCOM family record ("0 @F...") and its sub-lines, resolves the
+    husband/wife person numbers, collects the marriage details (date, place,
+    witness, source) and finally creates the two Table5 (marriage) records,
+    once with the husband in Nummer and once with the wife. }
+  husn := 0;
+  wifn := 0;
+  mIdx := 0;
+  rel := 1;
+  Hqu := '';
+  Squ := '';
+  Cqu := '';
+  ReadLn(gvar_02536670, s);
+  IOResult;
+  zsa(s, t);
+  s := t;
+  while Copy(s, 1, 1) > '0' do
+  begin
+    if Pos('1 HUSB', s) > 0 then
+    begin
+      husn := Ziff(s);
+      if DataModule2.Table25.FindKey([husn]) then
+        husn := DataModule2.Table25N.AsInteger;
+    end;
+    if Pos('1 WIFE', s) > 0 then
+    begin
+      wifn := Ziff(s);
+      if DataModule2.Table25.FindKey([wifn]) then
+        wifn := DataModule2.Table25N.AsInteger;
+    end;
+    if Pos('1 CHIL', s) > 0 then
+    begin
+      { TODO: kind-parent linkage (Table15/Table31), Listingteil
+        0057DB67..0057DD66 - Originaladresse siehe Deklaration. }
+    end;
+    if (Pos('1 MARR', ucase(s)) > 0) or (Pos('1 _VWMARR', ucase(s)) > 0) then
+    begin
+      rel := 0;
+      ReadLn(gvar_02536670, s);
+      IOResult;
+      zsa(s, t);
+      s := t;
+      while Copy(s, 1, 1) > '1' do
+      begin
+        if Pos('DATE', s) > 0 then
+        begin
+          sub_00577934(Trim(Copy(TrimRight(s), 8, Length(TrimRight(s)))));
+          case mIdx of
+            0: begin Dtag1 := gvar_02536624; Dmonat1 := gvar_02536628; Djahr1 := gvar_0253662C; end;
+            1: begin Dtag2 := gvar_02536624; Dmonat2 := gvar_02536628; Djahr2 := gvar_0253662C; end;
+          else  begin Dtag3 := gvar_02536624; Dmonat3 := gvar_02536628; Djahr3 := gvar_0253662C; end;
+          end;
+        end;
+        if Pos('PLAC', s) > 0 then
+          case mIdx of
+            0: Ortdreh(Trim(Copy(TrimRight(s), 8, Length(TrimRight(s)))), Dort1);
+            1: Ortdreh(Trim(Copy(TrimRight(s), 8, Length(TrimRight(s)))), Dort2);
+          else  Ortdreh(Trim(Copy(TrimRight(s), 8, Length(TrimRight(s)))), Dort3);
+          end;
+        if Pos('2 LONG', s) > 0 then
+        begin
+          if Trim(Dort1) <> '' then
+          begin
+            if DataModule2.Table13.FindKey([Dort1]) then
+            begin
+              DataModule2.Table13.Edit;
+              DataModule2.Table13Lg.AsString := Copy(s, 8, Length(s));
+            end
+            else
+            begin
+              DataModule2.Table13.Append;
+              DataModule2.Table13Ort.AsString := Dort1;
+              DataModule2.Table13Lg.AsString := Copy(s, 8, Length(s));
+            end;
+            DataModule2.Table13.Post;
+          end;
+        end;
+        if Pos('2 LATI', s) > 0 then
+        begin
+          if Trim(Dort1) <> '' then
+          begin
+            if DataModule2.Table13.FindKey([Dort1]) then
+            begin
+              DataModule2.Table13.Edit;
+              DataModule2.Table13Bg.AsString := Copy(s, 8, Length(s));
+            end
+            else
+            begin
+              DataModule2.Table13.Append;
+              DataModule2.Table13Ort.AsString := Dort1;
+              DataModule2.Table13Bg.AsString := Copy(s, 8, Length(s));
+            end;
+            DataModule2.Table13.Post;
+          end;
+        end;
+        if Pos('SOUR', s) > 0 then
+        begin
+          Form1.Repso2.IndexName := 'ih';
+          if Form1.Repso2.FindKey([Trim(Copy(s, 8, Length(s)))]) then
+          begin
+            if mIdx = 0 then
+              Hqu := Form1.Repso2inh2.AsString
+            else if mIdx = 1 then
+              Squ := Form1.Repso2inh2.AsString;
+          end;
+        end;
+        if Pos('TYPE', s) > 0 then
+        begin
+          if Pos('RELI', s) > 0 then
+            mIdx := 0
+          else if Pos('CIVIL', s) > 0 then
+            mIdx := 1;
+        end;
+        if Pos('_WITN', s) > 0 then
+        begin
+          if mIdx = 0 then
+            Dwit := Copy(s, 9, Length(s))
+          else if mIdx = 1 then
+            Dwit2 := Copy(s, 9, Length(s));
+        end;
+        if Pos('STAT', ucase(s)) > 0 then
+          rel := 0;
+        if Pos('NOTE', ucase(s)) > 0 then
+          rel := 1;
+        ReadLn(gvar_02536670, s);
+        IOResult;
+        zsa(s, t);
+        s := t;
+      end;
+    end;
+    if (husn > 0) and (wifn > 0) then
+    begin
+      { husband as Nummer, wife as Epnum }
+      DataModule2.Table5.Append;
+      DataModule2.Table5Nummer.AsInteger := husn;
+      DataModule2.Table5Epnum.AsInteger := wifn;
+      if rel = 0 then
+        DataModule2.Table5Verbind.AsString := 'Eheschliessung'
+      else
+        DataModule2.Table5Verbind.AsString := 'andere Beziehung';
+      DataModule2.Table5Htag.AsString := Dtag1;
+      DataModule2.Table5Hmonat.AsString := Dmonat1;
+      DataModule2.Table5Hjahr.AsString := Djahr1;
+      DataModule2.Table5Hort.AsString := Dort1;
+      DataModule2.Table5Trauz.AsString := Dwit;
+      DataModule2.Table5Hqu.AsString := Hqu;
+      DataModule2.Table5Satag.AsString := Dtag2;
+      DataModule2.Table5Samonat.AsString := Dmonat2;
+      DataModule2.Table5Sajahr.AsString := Djahr2;
+      DataModule2.Table5Saort.AsString := Dort2;
+      DataModule2.Table5Satrauz.AsString := Dwit2;
+      DataModule2.Table5Saqu.AsString := Squ;
+      DataModule2.Table5Schtag.AsString := Dtag3;
+      DataModule2.Table5Schmonat.AsString := Dmonat3;
+      DataModule2.Table5Schjahr.AsString := Djahr3;
+      DataModule2.Table5Schort.AsString := Dort3;
+      DataModule2.Table5Schqu.AsString := Cqu;
+      DataModule2.Table5.Post;
+
+      { wife as Nummer, husband as Epnum }
+      DataModule2.Table5.Append;
+      DataModule2.Table5Nummer.AsInteger := wifn;
+      DataModule2.Table5Epnum.AsInteger := husn;
+      if rel = 0 then
+        DataModule2.Table5Verbind.AsString := 'Eheschliessung'
+      else
+        DataModule2.Table5Verbind.AsString := 'andere Beziehung';
+      DataModule2.Table5Htag.AsString := Dtag1;
+      DataModule2.Table5Hmonat.AsString := Dmonat1;
+      DataModule2.Table5Hjahr.AsString := Djahr1;
+      DataModule2.Table5Hort.AsString := Dort1;
+      DataModule2.Table5Trauz.AsString := Dwit;
+      DataModule2.Table5Hqu.AsString := Hqu;
+      DataModule2.Table5Satag.AsString := Dtag2;
+      DataModule2.Table5Samonat.AsString := Dmonat2;
+      DataModule2.Table5Sajahr.AsString := Djahr2;
+      DataModule2.Table5Saort.AsString := Dort2;
+      DataModule2.Table5Satrauz.AsString := Dwit2;
+      DataModule2.Table5Saqu.AsString := Squ;
+      DataModule2.Table5Schtag.AsString := Dtag3;
+      DataModule2.Table5Schmonat.AsString := Dmonat3;
+      DataModule2.Table5Schjahr.AsString := Djahr3;
+      DataModule2.Table5Schort.AsString := Dort3;
+      DataModule2.Table5Schqu.AsString := Cqu;
+      DataModule2.Table5.Post;
+    end;
+    gvar_02536844 := $2A01;
+    ReadLn(gvar_02536670, gvar_02536630);
+    IOResult;
+    zsa(gvar_02536630, gvar_02536630);
+    s := gvar_02536630;
+  end;
+end;
+
+procedure TForm3.Prop(AIn: AnsiString; var AErgebnis: AnsiString);
+var
+  s, t: AnsiString;
+begin
+  { Reads a GEDCOM "1 PROP" block (list of properties). The name of the
+    property is taken from the header line, the following lines (which do
+    NOT start with a "1") are appended, separated by blanks. The result is
+    returned in AErgebnis. }
+  gvar_02536430 := Trim(Copy(AIn, 8, Length(AIn)));
+  ReadLn(gvar_02536670, s);
+  zsa(s, t);
+  s := t;
+  while Copy(s, 1, 1) > '1' do
+  begin
+    gvar_02536430 := gvar_02536430 + ' ' + s;
+    ReadLn(gvar_02536670, s);
+    zsa(s, t);
+    s := t;
+  end;
+  AErgebnis := gvar_02536430;
+  gvar_02536430 := s;
+  gvar_02536844 := $2A01;
 end;
 
 procedure TForm3.Educ(AIn: AnsiString);
@@ -1296,19 +1825,148 @@ begin
   gvar_02536844 := $2A01;
 end;
 
-procedure TForm3.Note;
+procedure TForm3.Note(AIn: AnsiString; var AEs: AnsiString);
+var
+  s, t: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Reads a GEDCOM "2 NOTE" block (and following CONT/CONC lines) up to the
+    next numbered line. The name buffer gvar_02536430 is accumulated from
+    the lines; the comment buffer gvar_0253684C collects Note text. A name
+    containing "lebt:" marks Table1Lebt as 'j'; "Hnm.:" stores the house
+    name in Table1Hausname. AEs receives the built name; the last line
+    remains as in gvar_02536430. }
+  gvar_02536430 := Trim(Copy(AIn, 8, Length(AIn)));
+  if Pos('lebt:', gvar_02536430) > 0 then
+    DataModule2.Table1Lebt.AsString := 'j'
+  else if Pos('Hnm.:', gvar_02536430) > 0 then
+    DataModule2.Table1Hausname.AsString := Copy(AIn, 14, Length(Trim(AIn)))
+  else if Trim(gvar_0253684C) = '' then
+    gvar_0253684C := Copy(AIn, 8, Length(AIn))
+  else
+    gvar_0253684C := gvar_0253684C + #13#10 + gvar_02536430;
+
+  ReadLn(gvar_02536670, s);
+  zsa(s, t);
+  s := t;
+  gvar_02536430 := Trim(Copy(s, 8, Length(s)));
+  while Copy(s, 1, 1) > '1' do
+  begin
+    if Pos('CONT', s) > 0 then
+    begin
+      if Pos('lebt:', gvar_02536430) > 0 then
+        DataModule2.Table1Lebt.AsString := 'j'
+      else if Pos('Hnm.:', gvar_02536430) > 0 then
+        DataModule2.Table1Hausname.AsString := Copy(s, 14, Length(Trim(s)))
+      else if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := Copy(s, 8, Length(s))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + Copy(s, 8, Length(s));
+    end;
+    if Pos('CONC', s) > 0 then
+    begin
+      if Pos('lebt:', gvar_02536430) > 0 then
+        DataModule2.Table1Lebt.AsString := 'j'
+      else if Pos('Hnm.:', gvar_02536430) > 0 then
+        DataModule2.Table1Hausname.AsString := Copy(s, 12, Length(Trim(s)))
+      else if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := Copy(s, 8, Length(s))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + Copy(s, 8, Length(s));
+    end;
+    gvar_02536430 := gvar_02536430 + ' ' + s;
+    ReadLn(gvar_02536670, s);
+    zsa(s, t);
+    s := t;
+  end;
+  AEs := gvar_02536430;
+  gvar_02536430 := s;
+  { The original sets the low word of gvar_02536844 to $2A01; the
+    reconstruction writes the complete value. Deviation with no
+    visible effect. }
+  gvar_02536844 := $2A01;
 end;
 
-procedure TForm3.Chan;
+procedure TForm3.Chan(AIn: AnsiString; var AEs: AnsiString);
+var
+  s, c1: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Reads a GEDCOM section "1 CHAN" (change record) up to the next "1"
+    line; the DATE part is appended to gvar_02536430 and then added to
+    gvar_0253684C labeled "DS ge'#196'nd.: ". A TIME part is appended in
+    the same way. The next "1" line remains as in gvar_02536430. }
+  gvar_02536430 := '';
+  ReadLn(gvar_02536670, s);
+  zsa(s, s);
+  while Copy(s, 1, 1) > '1' do
+  begin
+    if Pos('DATE', s) > 0 then
+    begin
+      sub_00577934(Trim(Copy(s, 8, Length(s))));
+      c1 := gvar_02536624 + '.' + gvar_02536628 + '.' + gvar_0253662C;
+      gvar_02536430 := c1;
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := 'DS ge' + #196 + 'nd.: ' + c1
+      else if Pos('DS ge' + #196 + 'nd.', gvar_0253684C) = 0 then
+        gvar_0253684C := gvar_0253684C + #13#10 + 'DS ge' + #196 + 'nd.: ' + c1
+      else
+        gvar_0253684C := gvar_0253684C + ' ' + c1;
+    end;
+    if Pos('TIME', s) > 0 then
+    begin
+      c1 := Trim(TrimRight(s));
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := c1
+      else if Pos('DS ge' + #196 + 'nd.', gvar_0253684C) = 0 then
+        gvar_0253684C := gvar_0253684C + #13#10 + 'DS ge' + #196 + 'nd.: ' + c1
+      else
+        gvar_0253684C := gvar_0253684C + ' ' + c1;
+    end;
+    ReadLn(gvar_02536670, s);
+    zsa(s, s);
+  end;
+  AEs := gvar_02536430;
+  gvar_02536430 := s;
+  { The original sets the low word of gvar_02536844 to $2A01; the
+    reconstruction writes the complete value. Deviation with no
+    visible effect. }
+  gvar_02536844 := $2A01;
 end;
 
-procedure TForm3.Resi;
+procedure TForm3.Resi(AIn: AnsiString; var AEs: AnsiString);
+var
+  s, t: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Reads a GEDCOM section "1 RESI" up to the next "1" line and collects
+    the PLAC sub-lines (via Ortdreh, separated by blanks) as the residence
+    in gvar_02536430. AEs receives the collected text and is written to
+    Table1Lebensort; the next "1" line remains as in gvar_02536430. }
+  gvar_02536430 := Trim(Copy(AIn, 8, Length(AIn)));
+  ReadLn(gvar_02536670, s);
+  zsa(s, t);
+  s := t;
+  while Copy(s, 1, 1) > '1' do
+  begin
+    if Pos('PLAC', s) > 0 then
+    begin
+      if Trim(gvar_02536430) = '' then
+        Ortdreh(Trim(Copy(s, 8, Length(s))), gvar_02536430)
+      else
+      begin
+        Ortdreh(Trim(Copy(s, 8, Length(s))), t);
+        gvar_02536430 := gvar_02536430 + ' ' + t;
+      end;
+    end;
+    ReadLn(gvar_02536670, s);
+    zsa(s, t);
+    s := t;
+  end;
+  AEs := gvar_02536430;
+  DataModule2.Table1Lebensort.AsString := AEs;
+  gvar_02536430 := s;
+  { The original sets the low word of gvar_02536844 to $2A01; the
+    reconstruction writes the complete value. Deviation with no
+    visible effect. }
+  gvar_02536844 := $2A01;
 end;
 
 procedure TForm3.FormKeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
@@ -1360,13 +2018,35 @@ begin
 end;
 
 procedure TForm3.showpreview;
+var
+  i: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Preview hook of the reports: hands the page to the Form16 preview and
+    shows the Form16. Called by the QuickReport OnPageAvailable of the
+    reports. }
+  i := gvar_0061F0B8;
+  Form16.QRPreview1PageAvailable(Form16.QRPreview1, i);
+  Form16.QRPreview1.Update;
+  Form16.Show;
 end;
 
 procedure TForm3.FormCreate(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Scales the form to the screen size (up to 800x600 or 400x300
+    depending on the available resolution). }
+  Scaled := True;
+  if Screen.Height > 300 then
+  begin
+    Height := Height * Screen.Height div 300;
+    Width := Width * Screen.Height div 300;
+    Position := poScreenCenter;
+  end;
+  if Screen.Height < 300 then
+  begin
+    Height := Height * Screen.Height div 300;
+    Width := Width * Screen.Height div 300;
+    Position := poScreenCenter;
+  end;
 end;
 
 procedure TForm3.Edit2Exit(Sender: TObject);
@@ -1376,17 +2056,48 @@ end;
 
 procedure TForm3.BitBtn2Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { The "Abbrechen" button: in the "Verwandte suchen" mode the original
+    leaves the dialog result unchanged, otherwise it sets the cancel
+    result. }
+  if gvar_0253692C <> 'Verw' then
+    ModalResult := mrCancel;
 end;
 
 procedure TForm3.FormActivate(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  Edit1.Text := '';
+  Edit2.Text := '';
+  ActiveControl := Edit1;
 end;
 
 procedure TForm3.Button1Click(Sender: TObject);
+var
+  s, t: AnsiString;
+  n: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { "OK": if a number was entered the person is searched in Table9
+    (index ''), otherwise the GEDCOM name fields are combined lower-case
+    and the closest match is searched in the index "geba". The form is
+    closed in any case. }
+  try
+    n := StrToInt(Edit1.Text);
+    if n > 0 then
+    begin
+      DataModule2.Table9.IndexName := '';
+      DataModule2.Table9.FindKey([n]);
+    end;
+  except
+    if Trim(Edit1.Text) <> '' then
+    begin
+      s := LowerCase(Copy(Edit1.Text, 2, 30));
+      s := ucase(Copy(Edit1.Text, 1, 1)) + s;
+      t := LowerCase(Copy(Edit2.Text, 2, 30));
+      t := ucase(Copy(Edit2.Text, 1, 1)) + t;
+      DataModule2.Table9.IndexName := 'geba';
+      DataModule2.Table9.FindNearest([s, t]);
+    end;
+  end;
+  Close;
 end;
 
 procedure TForm3.Edit1Exit(Sender: TObject);
@@ -1401,7 +2112,8 @@ begin
     begin
       gvar_011AE2C4 := n;
       Close;
-      DataModule2.Table9.FindKey([n]);
+      DataModule2.Table9.IndexName := '';
+      DataModule2.Table9.FindKey([StrToInt(Edit1.Text)]);
     end;
   except
   end;
@@ -1409,17 +2121,54 @@ end;
 
 procedure TForm3.Edit2KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  if Key = $1B then
+    ModalResult := mrCancel;
 end;
 
 procedure TForm3.Edit1KeyDown(Sender: TObject; var Key: Word; Shift: TShiftState);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  if Key = $1B then
+    ModalResult := mrCancel;
 end;
 
-procedure TForm3.refelt;
+procedure TForm3.refelt(AName: AnsiString; var AResult: AnsiString);
+var
+  s, t, u: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Builds the text of related people: the person itself from the search
+    (Table9) and, if available, the parents. Result format 'n> text <'. }
+  s := '';
+  DataModule2.Table9.FindKey([AName]);
+  if DataModule2.Table9Vater.AsInteger > 0 then
+  begin
+    DataModule2.Table9.FindKey([DataModule2.Table9Vater.AsInteger]);
+    s := ucase(DataModule2.Table9Name.AsString) + ' ' +
+      DataModule2.Table9Vornamen.AsString;
+    sub_00576F54(gvar_025363DC, u);
+    t := DataModule2.Table9Name.AsString + ' ' +
+      DataModule2.Table9Vornamen.AsString + #1 + u;
+    gvar_02536440.Add(t);
+    if Trim(DataModule2.Table9Beruf.AsString) <> '' then
+      s := s + ', ' + DataModule2.Table9Beruf.AsString;
+    if Trim(DataModule2.Table9Hausname.AsString) <> '' then
+      s := s + ', ' + DataModule2.Table9Hausname.AsString;
+  end;
+  if DataModule2.Table9Mutter.AsInteger > 0 then
+  begin
+    DataModule2.Table9.FindKey([DataModule2.Table9Mutter.AsInteger]);
+    s := s + ' und ' + ucase(DataModule2.Table9Name.AsString) + ' ' +
+      DataModule2.Table9Vornamen.AsString;
+    sub_00576F54(gvar_025363DC, u);
+    t := DataModule2.Table9Name.AsString + ' ' +
+      DataModule2.Table9Vornamen.AsString + #1 + u;
+    gvar_02536440.Add(t);
+    if Trim(DataModule2.Table9Beruf.AsString) <> '' then
+      s := s + ', ' + DataModule2.Table9Beruf.AsString;
+    if Trim(DataModule2.Table9Hausname.AsString) <> '' then
+      s := s + ', ' + DataModule2.Table9Hausname.AsString;
+  end;
+  if Trim(s) <> '' then
+    AResult := AResult + '> ' + s + ' <';
 end;
 
 procedure TForm3.adrschreib;
@@ -1486,14 +2235,188 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm3.OList;
+procedure TForm3.NList;
+var
+  s, alt: AnsiString;
+  i, n: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Builds the print report "Namens-Register" (Form15): the surname list in
+    gvar_02536440 (entries "surname<sep>forenames", separated by the
+    character #1) is condensed into Table22 (No = surname, Zus = the list
+    of forenames, combined with ", " when the surname is the same) and
+    printed in two columns. }
+  Screen.Cursor := crHourGlass;
+  if gvar_0253692C = 'Vorf' then
+    gvar_02536438 := 'Vorfahren von';
+  if gvar_0253692C = 'Nach' then
+    gvar_02536438 := 'Nachfahren von';
+  Form15.QRLabel1.Caption := 'Namens-Register zu: ' + gvar_02536438;
+  DataModule2.Table22.Open;
+  DataModule2.Table22.Close;
+  DataModule2.Table22.EmptyTable;
+  DataModule2.Table22.Open;
+  DataModule2.Table22.IndexName := 'namort';
+  alt := '';
+  DataModule2.Table22.Append;
+  n := gvar_02536440.Count - 1;
+  if n >= 0 then
+    for i := 0 to n do
+    begin
+      s := gvar_02536440[i];
+      if (Trim(Copy(s, 1, Pos(#1, s) - 1)) <> '') and
+         (Copy(s, 1, Pos(#1, s) - 1) <> 'NN') then
+      begin
+        if Copy(s, 1, Pos(#1, s) - 1) = alt then
+          DataModule2.Table22Zus.AsString := DataModule2.Table22Zus.AsString +
+            ', ' + Trim(Copy(s, Pos(#1, s) + 1, Length(s)))
+        else
+        begin
+          if Trim(Copy(s, Pos(#1, s) + 1, Length(s))) <> '' then
+          begin
+            DataModule2.Table22.Post;
+            DataModule2.Table22.Append;
+            DataModule2.Table22No.AsString := Copy(s, 1, Pos(#1, s) - 1);
+            DataModule2.Table22Zus.AsString :=
+              Trim(Copy(s, Pos(#1, s) + 1, Length(s)));
+          end;
+          alt := Copy(s, 1, Pos(#1, s) - 1);
+        end;
+      end;
+    end;
+  DataModule2.Table22.Post;
+  DataModule2.Table22.First;
+  s := DataModule2.Table22No.AsString;
+  if Trim(s) = '' then
+    DataModule2.Table22.Delete;
+  gvar_02536440.Free;
+  Form15.QuickRep1.DataSet := DataModule2.Table22;
+  Form15.QRDBText1.DataSet := DataModule2.Table22;
+  Form15.QRDBText2.DataSet := DataModule2.Table22;
+  Form15.QRDBText1.DataField := 'zus';
+  Form15.QRDBText2.DataField := 'no';
+  DataModule2.Table22.Open;
+  Form15.QRBand1.Height := 37;
+  Form15.QRBand3.Height := 14;
+  Form15.QRBand4.Height := 18;
+  Form15.QRShape1.Visible := True;
+  Form15.QRShape3.Visible := True;
+  Form15.QRLabel2.Visible := True;
+  Form15.QRLabel3.Caption := 'Namens-Register';
+  if Pos('fahren von', gvar_02536438) = 0 then
+  begin
+    Form15.QRLabel2.Visible := False;
+    Form15.QRShape3.Visible := False;
+    Form15.QRBand1.Height := 30;
+  end;
+  Form15.QRDBText1.Font.Size := 9;
+  Form15.QRDBText2.Font.Size := 9;
+  Form15.QRDBText1.AutoStretch := False;
+  Form15.QRDBText2.AutoStretch := False;
+  Form15.QRDBText2.AutoStretch := True;
+  Form15.QRDBText1.Visible := True;
+  Form15.QRDBText1.Left := 235;
+  Form15.QRDBText1.Width := 46;
+  Form15.QRDBText2.Visible := True;
+  Form15.QRDBText2.Left := 1;
+  Form15.QRDBText2.Width := 230;
+  Form16.Label5.Visible := True;
+  Form16.Button9.Visible := True;
+  Form16.SpeedButton3.Visible := True;
+  Form16.SpeedButton6.Visible := False;
+  Form15.QuickRep1.Page.Columns := 2;
+  Screen.Cursor := crDefault;
+  { The original wires its preview hook (offsets 2A8/2AC of QuickRep1) and
+    calls TCustomQuickRep.Preview. The reconstruction uses the standard
+    preview. }
+  { Form15.QuickRep1.Preview; - die Vorschau ist im Kompatibilitaetsschicht nicht implementiert. }
 end;
 
-procedure TForm3.NList;
+procedure TForm3.OList;
+var
+  s, alt: AnsiString;
+  i, n: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { Builds the print report "Orts-Register" (Form15): identical layout to
+    NList, but the place list in gvar_02536444 (entries
+    " Place<sep>additions") is condensed into Table22 and printed with
+    2 columns. //00595FB4 }
+  Screen.Cursor := crHourGlass;
+  if gvar_0253692C = 'Vorf' then
+    gvar_02536438 := 'Vorfahren von';
+  if gvar_0253692C = 'Nach' then
+    gvar_02536438 := 'Nachfahren von';
+  Form15.QRLabel1.Caption := 'Orts-Register zu: ' + gvar_02536438;
+  DataModule2.Table22.Open;
+  DataModule2.Table22.Close;
+  DataModule2.Table22.EmptyTable;
+  DataModule2.Table22.Open;
+  DataModule2.Table22.IndexName := 'namort';
+  alt := '';
+  DataModule2.Table22.Append;
+  n := gvar_02536444.Count - 1;
+  if n >= 0 then
+    for i := 0 to n do
+    begin
+      s := gvar_02536444[i];
+      if Trim(Copy(s, 1, Pos(#1, s) - 1)) <> '' then
+      begin
+        if Copy(s, 1, Pos(#1, s) - 1) = alt then
+          DataModule2.Table22Zus.AsString := DataModule2.Table22Zus.AsString +
+            ', ' + Trim(Copy(s, Pos(#1, s) + 1, Length(s)))
+        else
+        begin
+          DataModule2.Table22.Post;
+          DataModule2.Table22.Append;
+          DataModule2.Table22No.AsString := Copy(s, 1, Pos(#1, s) - 1);
+          DataModule2.Table22Zus.AsString :=
+            Trim(Copy(s, Pos(#1, s) + 1, Length(s)));
+          alt := Copy(s, 1, Pos(#1, s) - 1);
+        end;
+      end;
+    end;
+  DataModule2.Table22.Post;
+  DataModule2.Table22.First;
+  s := DataModule2.Table22No.AsString;
+  if Trim(s) = '' then
+    DataModule2.Table22.Delete;
+  gvar_02536444.Free;
+  Form15.QuickRep1.DataSet := DataModule2.Table22;
+  Form15.QRDBText1.DataSet := DataModule2.Table22;
+  Form15.QRDBText2.DataSet := DataModule2.Table22;
+  Form15.QRDBText1.DataField := 'zus';
+  Form15.QRDBText2.DataField := 'no';
+  DataModule2.Table22.Open;
+  Form15.QRBand1.Height := 37;
+  Form15.QRBand3.Height := 14;
+  Form15.QRBand4.Height := 18;
+  Form15.QRShape1.Visible := True;
+  Form15.QRShape3.Visible := True;
+  Form15.QRLabel2.Visible := True;
+  Form15.QRLabel3.Caption := 'Orts-Register';
+  if Pos('fahren von', gvar_02536438) = 0 then
+  begin
+    Form15.QRLabel2.Visible := False;
+    Form15.QRShape3.Visible := False;
+    Form15.QRBand1.Height := 30;
+  end;
+  Form15.QRDBText1.Font.Size := 9;
+  Form15.QRDBText2.Font.Size := 9;
+  Form15.QRDBText1.AutoStretch := False;
+  Form15.QRDBText2.AutoStretch := False;
+  Form15.QRDBText2.AutoStretch := True;
+  Form15.QRDBText1.Visible := True;
+  Form15.QRDBText1.Left := 155;
+  Form15.QRDBText1.Width := 150;
+  Form15.QRDBText2.Visible := True;
+  Form15.QRDBText2.Left := 1;
+  Form15.QRDBText2.Width := 150;
+  Form16.Label5.Visible := True;
+  Form16.Button9.Visible := True;
+  Form16.SpeedButton3.Visible := True;
+  Form16.SpeedButton6.Visible := False;
+  Form15.QuickRep1.Page.Columns := 2;
+  Screen.Cursor := crDefault;
+  { Form15.QuickRep1.Preview; - die Vorschau ist im Kompatibilitaetsschicht nicht implementiert. }
 end;
 
 procedure TForm3.gedaus;
@@ -1513,3 +2436,5 @@ end;
 
 
 end.
+
+

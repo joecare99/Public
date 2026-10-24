@@ -13,7 +13,7 @@ unit Unit13;
 interface
 
 uses
-  SysUtils, Classes, ExtCtrls, Buttons, Dialogs, StdCtrls, WPPDFR2, WPPDFPRP, Forms, Controls, Grids, DB;
+  SysUtils, StrUtils, Classes, ExtCtrls, Buttons, Dialogs, StdCtrls, WPPDFR2, WPPDFPRP, Forms, Controls, Grids, DB;
 
 type
   TForm13 = class(TForm)
@@ -95,6 +95,8 @@ var
 
 implementation
 
+uses
+  Unit12, Unit2, AHNGlobals;
 {$R ..\Forms\Form13.DFM}
 
 
@@ -102,6 +104,96 @@ implementation
   listings, method by method. The bodies that are still missing are
   marked below; the address in the comment is the address of the
   original method in the AHNENWIN 5.1 binary. }
+
+procedure sub_005637C4(AValue: Integer; var AResult: AnsiString);
+var
+  s: AnsiString;
+begin
+  { Formats the number to 6 digits, zero padded from the right. }
+  s := '000000' + IntToStr(AValue);
+  AResult := Copy(s, Length(s) - 5, 6);
+end;
+
+procedure sub_00563868(AIn: AnsiString; var AOut: AnsiString);
+var
+  i: Integer;
+  c: AnsiChar;
+begin
+  { Uppercases AIn character by character; the German umlauts
+    (which UpperCase does not handle) are mapped manually to
+    their respective uppercase form first. }
+  AOut := '';
+  for i := 1 to Length(AIn) do
+  begin
+    c := AnsiChar(AIn[i]);
+    if c = #$E4 then
+      AOut := AOut + #$C4
+    else
+    begin
+      if c = #$F6 then
+        AOut := AOut + #$D6
+      else
+      begin
+        if c = #$FC then
+          AOut := AOut + #$DC
+        else
+          AOut := AOut + UpperCase(AnsiString(c));
+      end;
+    end;
+  end;
+end;
+
+procedure sub_00563A0C(AIn: AnsiString; var AErgebnis: AnsiString);
+var
+  s: AnsiString;
+  i: Integer;
+begin
+  { Normalizes a date/comment entry: the prefixes ("..", "HK ", "vor...",
+    "nach...") are evaluated, then leading dots and blanks are removed
+    and the remaining dots are stripped. }
+  AErgebnis := AIn;
+  s := AIn;
+  if Trim(s) = '..' then
+  begin
+    AErgebnis := '';
+    exit;
+  end;
+  if Copy(s, 1, 2) = 'HK' then
+  begin
+    AErgebnis := 'HK ' + Copy(s, 4, 7);
+    exit;
+  end;
+  if Pos('vo.r', s) > 0 then
+  begin
+    AErgebnis := Copy(s, 1, 2) + Copy(s, 4, 1) + ' ' + RightStr(s, 4);
+    exit;
+  end;
+  if Pos('na.ch', s) > 0 then
+  begin
+    AErgebnis := Copy(s, 1, 2) + Copy(s, 4, 2) + ' ' + RightStr(s, 4);
+    exit;
+  end;
+  if Trim(s) = '' then
+    exit;
+  AErgebnis := '';
+  while (Length(s) > 0) and ((s[1] = '.') or (s[1] = ' ')) do
+    s := Copy(s, 2, 9);
+  AErgebnis := s;
+  if (Length(s) > 0) and (s[1] > '9') then
+  begin
+    AErgebnis := '';
+    for i := 1 to Length(s) do
+      if s[i] <> '.' then
+        AErgebnis := AErgebnis + s[i];
+    if Length(AErgebnis) > 0 then
+      for i := 1 to Length(AErgebnis) do
+        if AErgebnis[i] < ':' then
+        begin
+          Insert(' ', AErgebnis, i);
+          break;
+        end;
+  end;
+end;
 
 procedure TForm13.nr2;
 begin
@@ -210,7 +302,17 @@ end;
 
 procedure TForm13.FormCreate(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //00570740: Anfangsmasse und Zeichenstift vorbereiten.
+  gvar_02536380 := $35C;
+  gvar_02536384 := $258;
+  gvar_011AE31C := 0;
+  gvar_011AE324 := 0;
+  gvar_011AE318 := 0;
+  gvar_0253637C := 0;
+  PaintBox1.Height := $64;
+  PaintBox1.Width := $64;
+  PaintBox1.Color := $FFFFFF;
+  PaintBox1.Canvas.Pen.Width := 1;
 end;
 
 procedure TForm13.Vorf_erm;
@@ -220,7 +322,16 @@ end;
 
 procedure TForm13.Button1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005707C0: zwischen symmetrisch / asymmetrisch umschalten.
+  if gvar_0061F2DC <> 0 then
+    gvar_0061F2DC := 0
+  else
+    gvar_0061F2DC := 1;
+  if gvar_0061F2DC <> 0 then
+    Button1.Caption := 'asym.'
+  else
+    Button1.Caption := 'symm.';
+  PaintBox1.Refresh;
 end;
 
 procedure TForm13.Button2Click(Sender: TObject);
@@ -230,12 +341,64 @@ end;
 
 procedure TForm13.SpeedButton2Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //0057082C: nur Form13 schliessen.
+  Close;
 end;
 
 procedure TForm13.FormShow(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //00570294: Tabellen oeffnen, Skaliermasse setzen und je nach
+  //Aufrufmodus (gvar_0253692C) das Bild vorbereiten.
+  gvar_02536388 := 0;
+  Button1.Visible := False;
+  DataModule2.Table17.Open;
+  DataModule2.Table17.IndexName := '';
+  DataModule2.Table18.Open;
+  DataModule2.Table1Nummer.Value; //05702F3: Feldzugriff ohne Verwertung des Ergebnisses
+  gvar_0061F2F4 := 0;
+  gvar_0061F2F8 := 0;
+  gvar_0061F120 := 0.375;
+  gvar_0061F11C := Round(gvar_0061F120 * 6);
+  gvar_011AE338 := $14;
+  gvar_011AE334 := Round(gvar_0061F120 * 120);
+  if gvar_0253692C = 'Vorgr1' then
+  begin
+    PaintBox1.Refresh;
+    ScrollBar1.Position := 0;
+    ScrollBar2.Position := 0;
+    Vorf_erm;
+  end;
+  if gvar_0253692C = 'Vorgr2' then
+  begin
+    PaintBox1.Refresh;
+    ScrollBar1.Position := 0;
+    ScrollBar2.Position := 0;
+    Vorf_erm;
+  end;
+  if gvar_0253692C = 'Nachgr1' then
+  begin
+    PaintBox1.Refresh;
+    ScrollBar1.Position := 0;
+    ScrollBar2.Position := 0;
+    Nach_erm;
+  end;
+  if gvar_0253692C = 'Nachgr2' then
+  begin
+    PaintBox1.Refresh;
+    ScrollBar1.Position := 0;
+    ScrollBar2.Position := 0;
+    Nach_erm;
+  end;
+end;
+
+procedure TForm13.SpeedButton12Click(Sender: TObject);
+begin
+  //00570694: Zeichensatz waehlen (fuer Bild und Druck gleicher Stift).
+  if gvar_011AE32C <> nil then
+    gvar_011AE32C.Font.Name := 'Arial';
+  if FontDialog1.Execute then
+    gvar_0061F2EC := FontDialog1.Font.Name;
+  PaintBox1.Refresh;
 end;
 
 procedure TForm13.UpDown1Click;
@@ -250,12 +413,10 @@ end;
 
 procedure TForm13.FormClose(sender:tobject;var action:tcloseaction);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
-end;
-
-procedure TForm13.SpeedButton12Click(Sender: TObject);
-begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //00570728: Form12 schliessen und Form13 unsichtbar stellen.
+  { gvar_0061F0F8^ ist Form12; gvar_0061F10C ist Form13. }
+  Form12.Close;
+  Form13.Hide;
 end;
 
 procedure TForm13.Button3Click(Sender: TObject);

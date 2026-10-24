@@ -17,6 +17,8 @@ uses
 
 type
   TForm19 = class(TForm)
+  public
+    Mode: Integer; //24C  vom Original ueber Offset 24C adressiert
   published
     BitBtn1: TBitBtn; //2F0
     BitBtn2: TBitBtn; //2F4
@@ -80,8 +82,104 @@ var
 
 implementation
 
+uses
+  Unit1, AHNGlobals, StrUtils;
+
 {$R ..\Forms\Form19.DFM}
 
+procedure sub_00550AB8(AValue: Integer; var AResult: AnsiString);
+var
+  s: AnsiString;
+begin
+  //00550AB8: Zahl auf 6 Stellen mit fuehrenden Nullen formatieren.
+  s := '000000' + IntToStr(AValue);
+  AResult := Copy(s, Length(s) - 5, 6);
+end;
+
+procedure sub_00550B5C(AValue: Integer; var AResult: AnsiString);
+var
+  s: AnsiString;
+begin
+  //00550B5C: Zahl auf 3 Stellen mit fuehrenden Leerzeichen formatieren.
+  s := '   ' + IntToStr(AValue);
+  AResult := Copy(s, Length(s) - 2, 3);
+end;
+
+procedure sub_00550BFC(AIn: AnsiString; var AOut: AnsiString);
+var
+  i: Integer;
+  c: AnsiChar;
+begin
+  //00550BFC: Grossbuchstaben inkl. deutscher Umlaute, Zeichen fuer Zeichen.
+  AOut := '';
+  for i := 1 to Length(AIn) do
+  begin
+    c := AnsiChar(AIn[i]);
+    if (c = #$E4) or (c = #$F6) or (c = #$FC) then
+    begin
+      if c = #$E4 then
+        AOut := AOut + #$C4
+      else if c = #$F6 then
+        AOut := AOut + #$D6
+      else
+        AOut := AOut + #$DC;
+    end
+    else
+      AOut := AOut + UpperCase(string(c));
+  end;
+end;
+
+procedure sub_00550DA0(const AIn: AnsiString; var AOut: AnsiString);
+var
+  s: AnsiString;
+  i, n: Integer;
+begin
+  //00550DA0: Datums-/Sternzeichen-Normalisierer (Schwester von sub_00545A0C).
+  AOut := AIn;
+  s := Trim(AIn);
+  if s = '..' then
+  begin
+    AOut := '';
+    Exit;
+  end;
+  if Copy(AIn, 1, 2) = 'HK' then
+  begin
+    AOut := 'HK ' + Copy(AIn, 4, 7);
+    Exit;
+  end;
+  if Pos('vo.r', AIn) > 0 then
+  begin
+    AOut := Copy(AIn, 1, 2) + Copy(AIn, 4, 1) + ' ' + RightStr(AIn, 4);
+    Exit;
+  end;
+  if Pos('na.ch', AIn) > 0 then
+  begin
+    AOut := Copy(AIn, 1, 2) + Copy(AIn, 4, 2) + ' ' + RightStr(AIn, 4);
+    Exit;
+  end;
+  s := Trim(AIn);
+  if s = '' then
+    Exit;
+  while Pos(Copy(s, 1, 1), '. ') > 0 do
+    s := Copy(s, 2, 9);
+  AOut := s;
+  if Length(AIn) > 39 then
+  begin
+    AOut := '';
+    for i := 1 to Length(AIn) do
+      if AIn[i] <> '.' then
+        AOut := AOut + AIn[i];
+    n := Length(AOut);
+    for i := 1 to n do
+    begin
+      if AnsiChar(AOut[i]) < ':' then
+      begin
+        Insert(' ', AOut, i);
+        Break;
+      end;
+    end;
+  end;
+end;
 
 { The method bodies of this unit are reconstructed from the IDR
   listings, method by method. The bodies that are still missing are
@@ -140,27 +238,67 @@ end;
 
 procedure TForm19.RadioButton2Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005511C0: alle Selektions-CheckBoxen abwaehlen.
+  CheckBox1.Checked := False;
+  CheckBox2.Checked := False;
+  CheckBox3.Checked := False;
+  CheckBox4.Checked := False;
+  CheckBox5.Checked := False;
+  CheckBox6.Checked := False;
+  CheckBox7.Checked := False;
+  CheckBox8.Checked := False;
+  CheckBox9.Checked := False;
+  CheckBox10.Checked := False;
+  CheckBox11.Checked := False;
+  CheckBox12.Checked := False;
+  CheckBox13.Checked := False;
+  CheckBox14.Checked := False;
+  CheckBox15.Checked := False;
+  CheckBox16.Checked := False;
+  CheckBox17.Checked := False;
 end;
 
 procedure TForm19.Button1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005512D8: Positionszahl in Edit1 um 1 verkleinern (unter 1 nicht).
+  if Edit1.Text > '1' then
+    Edit1.Text := IntToStr(StrToInt(Edit1.Text) - 1);
 end;
 
 procedure TForm19.BitBtn2Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //0055108C: Form19.Mode := 2 und Form1 anzeige neu aufbauen.
+  { gvar_0061F010 ist hier Form19; Form1 global per gvar_02536908^. }
+  Form19.Mode := 2;
+  Form1.anzeigen;
 end;
 
 procedure TForm19.RadioButton1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //005510A8: alle Selektions-CheckBoxen anwaehlen.
+  CheckBox1.Checked := True;
+  CheckBox2.Checked := True;
+  CheckBox3.Checked := True;
+  CheckBox4.Checked := True;
+  CheckBox5.Checked := True;
+  CheckBox6.Checked := True;
+  CheckBox7.Checked := True;
+  CheckBox8.Checked := True;
+  CheckBox9.Checked := True;
+  CheckBox10.Checked := True;
+  CheckBox11.Checked := True;
+  CheckBox12.Checked := True;
+  CheckBox13.Checked := True;
+  CheckBox14.Checked := True;
+  CheckBox15.Checked := True;
+  CheckBox16.Checked := True;
+  CheckBox17.Checked := True;
 end;
 
 procedure TForm19.Button2Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //0055137C: Positionszahl in Edit1 um 1 vergroessern.
+  Edit1.Text := IntToStr(StrToInt(Edit1.Text) + 1);
 end;
 
 procedure TForm19.Namgeb;

@@ -146,9 +146,42 @@ begin
   ListBox4.Items.Delete(ListBox4.ItemIndex);
 end;
 
-procedure TForm24.FormClose(sender:tobject;var action:tcloseaction);
+procedure TForm24.FormClose(sender: tobject; var action: tcloseaction);
+var
+  I: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  //0055F144: Listeninhalte und Auswahlstatus in die globalen
+  //Suchkriterien rueberkopieren ( '%' getrennte Bitmasken-Zustaende ).
+  gvar_0061F0CC := '';
+  for I := 0 to ListBox3.Count - 1 do
+    gvar_0061F0CC := gvar_0061F0CC + ListBox3.Items[I] + '%';
+  gvar_0061F0D0 := '';
+  for I := 0 to ListBox4.Count - 1 do
+    gvar_0061F0D0 := gvar_0061F0D0 + ListBox4.Items[I] + '%';
+  gvar_025363E0 := 0; gvar_025363E4 := 0; gvar_025363E8 := 0;
+  gvar_025363EC := 0; gvar_025363F0 := 0; gvar_025363F4 := 0;
+  gvar_025363F8 := 0; gvar_025363FC := 0; gvar_02536400 := 0;
+  gvar_02536404 := 0; gvar_02536408 := 0; gvar_0253640C := 0;
+  gvar_02536410 := 0; gvar_02536414 := 0; gvar_02536418 := 0;
+  gvar_0253641C := 0; gvar_02536420 := 0; gvar_02536424 := 0;
+  if RadioButton1.Checked then gvar_025363E0 := 1;
+  if RadioButton2.Checked then gvar_025363E4 := 1;
+  if RadioButton3.Checked then gvar_025363E8 := 1;
+  if CheckBox1.Checked then gvar_0253641C := 1;
+  if CheckBox2.Checked then gvar_02536408 := 1;
+  if CheckBox3.Checked then gvar_02536420 := 1;
+  if CheckBox4.Checked then gvar_025363EC := 1;
+  if CheckBox5.Checked then gvar_025363F0 := 1;
+  if CheckBox6.Checked then gvar_025363F4 := 1;
+  if CheckBox7.Checked then gvar_025363F8 := 1;
+  if CheckBox8.Checked then gvar_025363FC := 1;
+  if CheckBox9.Checked then gvar_02536400 := 1;
+  if CheckBox10.Checked then gvar_02536404 := 1;
+  if CheckBox11.Checked then gvar_02536424 := 1;
+  if CheckBox14.Checked then gvar_0253640C := 1;
+  if CheckBox16.Checked then gvar_02536410 := 1;
+  if CheckBox17.Checked then gvar_02536414 := 1;
+  if CheckBox18.Checked then gvar_02536418 := 1;
 end;
 
 procedure TForm24.RadioButton4Click(Sender: TObject);
