@@ -46,6 +46,7 @@ type
     WPPDFPrinter1: TWPPDFPrinter; //354
     SpeedButton3: TSpeedButton; //358
     WPPDFProperties1: TWPPDFProperties; //35C
+    procedure sub_0056CAD4; //0056CAD4
     procedure nr2; //0056CB30
     procedure nz1; //0056D6B4
     procedure nz2; //0056EB10
@@ -530,6 +531,47 @@ begin
   sub_00568E3C(best);
 end;
 
+procedure TForm13.sub_0056CAD4;
+var
+  gen, count, r, edi: Integer;
+begin
+  { 0056CAD4: horizontal push variant for the 'Nachgr2' layout -
+    same conditional slot-right-shift as nr1's push passes, but on
+    the x/d0 columns: anchor eax = 11AE370 = row R + 20 (d5); thus
+    [eax] = d5(row), [eax-14] = d0(row), [eax+198] = d5(next row),
+    [eax+184] = d0(next row). One push pass over the row pairs for
+    every level count = 328-1 (levels 2..328-1); nothing is written
+    in-place beyond next-row d0. Flat index convention:
+    ChartAFlat(102*r + 5) = d5, ChartAFlat(102*r) = d0. }
+  if gvar_011AE328 < 2 then                                        //0056CAD6-D
+    Exit;                                                          //0056CADD
+  count := gvar_011AE328 - 2;                                      //0056CADF-E5
+  if count < 0 then                                                //0056CAE8
+    Exit;
+  count := count + 1;                                              //0056CAEA
+  gen := 2;                                                        //0056CAEB
+  repeat
+    if gvar_011AE344 > 1 then begin                                //0056CAF0-F7
+      r := 1;                                                      //0056CAFB
+      repeat
+        edi := ChartAFlat(102 * r + 5);                            //0056CB00-C
+        if (gen = edi) and                                         //0056CB02-C
+           (edi = ChartAFlat(102 * (r + 1) + 5)) then
+        begin
+          edi := ChartAFlat(102 * r);                              //0056CB0E
+          if edi >= ChartAFlat(102 * (r + 1)) then begin           //0056CB11-F
+            edi := edi + 1;                                        //0056CB19
+            SetChartAFlat(102 * (r + 1), edi);                     //0056CB1A
+          end;
+        end;
+        r := r + 1;                                                //0056CB20-26
+      until r > gvar_011AE344 - 1;
+    end;
+    gen := gen + 1;                                                //0056CB28
+    count := count - 1;                                            //0056CB29-2A
+  until count <= 0;
+end;
+
 procedure TForm13.nr2;
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
@@ -665,8 +707,318 @@ begin
 end;
 
 procedure TForm13.nr1;
+var
+  row, child, i0, count, gen, esi: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 0056C0D4: Nachfahren-Graph 'Nachgr1' vorbereiten (nr1). Devil of
+    the listing: rows of grid A are 408-byte records; esi in the
+    listing is the row number and [edi + 408*esi + off] = row esi at
+    in-row offset off (edi anchors row 1, so K>0 relative terms move
+    one row up). Recon uses the flat dword helpers with flat index
+    102*row + off/4 plus ChartAShort for bytes 316/318/320. |
+    Stack locals: [esp+14] = loop counter (count), [esp+18] = pen
+    width, [esp] = Self. }
+  gvar_011AE340 := Round(gvar_0061F120 * 45);                       //0056C0E7-F8
+  gvar_011AE33C := 30;                                              //0056C0FD
+  gvar_0061F118 := Round(gvar_0061F120 * 30);                       //0056C107
+  gvar_0061F114 := Round(gvar_0061F120 * 20);                       //0056C11D
+  gvar_011AE334 := Round(gvar_0061F120 * 120) + gvar_011AE338;      //0056C133-4A
+  Screen.Cursor := crHourGlass;                                     //0056C14F-5A
+  gvar_02536364 := 0;                                               //0056C15F-8
+  gvar_02536368 := 0;                                               //0056C166
+  if PaintBox1.Canvas = gvar_011AE32C then begin                    //0056C16D-82
+    gvar_02536364 := ScrollBar1.Position;                           //0056C184-A1
+    gvar_02536368 := ScrollBar2.Position;                           //0056C1A7
+  end;
+  gvar_011AE348 := 0;                                               //0056C1AC-B2
+  gvar_0253637C := 0;                                               //0056C1B3-B5
+  gvar_011AE318 := 0;                                               //0056C1BA-C0
+  gvar_011AE32C.Font.Name := 'Arial';                               //0056C1C1-E
+  gvar_011AE32C.Font.Size := Round(gvar_0061F120 * 9);              //0056C1D3-E6
+  gvar_011AE318 := -gvar_011AE32C.Font.Height + 2;                  //0056C1F3-7
+  PaintBox1.Canvas.Font.Size := Round(gvar_0061F120 * 9);           //0056C20A-30
+  gvar_011AE318 := -PaintBox1.Canvas.Font.Height + 2;               //0056C234-8
+  gvar_0253636C := 0;                                               //0056C255
+
+  if Printer.Canvas = gvar_011AE32C then begin                      //0056C270-9
+    gvar_0253636C := 0.6;                                           //0056C286-9A
+    Printer.Canvas.Font.Name := 'Arial';                            //0056C2A3-D
+    Printer.Canvas.Font.Size := Round(gvar_0061F120 * 9);           //0056C2BA-D9
+    count := PaintBox1.Canvas.Pen.Width;                            //0056C2E1-F3
+    Printer.Canvas.Pen.Width := Round(count * gvar_0253636C);       //0056C2FC-3F
+  end;
+  if PaintBox1.Canvas <> gvar_011AE32C then                         //0056C321-8
+    gvar_0253636C := 0.1;                                           //0056C338-F
+
+  DataModule2.Table17.IndexName := '';                              //0056C355-64
+
+  { 0056C369-C426: reset the 20 AnsiString slots per row, replay the
+   ameron row data via Table17->memein, and run zerleg for each row. }
+  row := 1;
+  while ChartAFlat(102 * row + 2) > 0 do begin                      //0056C427-32
+    for i0 := 0 to 19 do begin                                      //0056C373-A2
+      ChartSlotAnsi(i0)^ := '';
+      ChartAAnsi(102 * row + 18 + i0)^ := '';
+    end;
+    DataModule2.Table17.FindKey([ChartAFlat(102 * row + 3)]);       //0056C3A4-CA
+    memein(ChartAFlat(102 * row + 11));                             //0056C3CF-D9
+    zerleg(gvar_011AE334, gvar_011AE318, gvar_011AE32C);            //0056C3DE-F4
+    for i0 := 0 to 19 do begin                                      //0056C3F9-24
+      ChartAAnsi(102 * row + 18 + i0)^ := ChartSlotAnsi(i0)^;
+    end;
+    Inc(row);                                                       //0056C426
+  end;
+
+  if gvar_0061F2BC = 1 then                                          //0056C438-F
+    gvar_011AE348 := Round(((gvar_0253637C * gvar_011AE318) +        //0056C441-E
+      gvar_011AE318) * 4 / 5);
+
+  { 0056C46D-C52B: pass 1 - replace d7 Vater person numbers by the
+    row index carrying the same Nummer (d3); the '*' ShortStrings at
+    bytes 316/318/320 remember already processed rows. }
+  row := 1;
+  while ChartAFlat(102 * row + 2) > 0 do begin                      //0056C508-25
+    child := 1;
+    while ChartAFlat(102 * child + 2) > 0 do begin                  //0056C47C-C52B
+      if (ChartAFlat(102 * child + 7) > 0) and                      //0056C481-9F
+         (ChartAFlat(102 * child + 7) = ChartAFlat(102 * row + 3)) and
+         (ChartAShort(child, 316)^ <> '*') then begin               //0056C4A1-B4
+        SetChartAFlat(102 * child + 7, row);                        //0056C4BA-94 mov 2A01
+        ChartAShort(child, 316)^ := '*';
+      end;
+      { 0056C4C4-C51A: same for the mother d8/b318. }
+      if (ChartAFlat(102 * child + 8) > 0) and
+         (ChartAFlat(102 * child + 8) = ChartAFlat(102 * row + 3)) and
+         (ChartAShort(child, 318)^ <> '*') then begin
+        SetChartAFlat(102 * child + 8, row);
+        ChartAShort(child, 318)^ := '*';
+      end;
+      Inc(child);
+    end;
+    Inc(row);
+  end;
+
+  { 0056C52B-C599: pass 2 - same scan over the partner link d10; the
+    partner row index is ebx-1 here. }
+  row := 1;
+  while ChartAFlat(102 * row + 2) > 0 do begin                      //0056C580-B
+    child := 1;
+    while ChartAFlat(102 * child + 2) > 0 do begin                  //0056C537-C
+      if (ChartAFlat(102 * child + 10) > 0) and                     //0056C539-67
+         (ChartAFlat(102 * child + 10) = ChartAFlat(102 * row + 3)) and
+         (ChartAShort(child, 320)^ <> '*') then begin               //0056C559-C
+        SetChartAFlat(102 * child + 10, child - 1);                 //0056C56E-8
+        ChartAShort(child, 320)^ := '*';
+      end;
+      Inc(child);
+    end;
+    Inc(row);
+  end;
+
+  { 0056C59B-C732: column alignment. Anchor conversions: [eax] = d5,
+    [eax-10] = d1, [eax+8] = d7, [eax+0C] = d8 of the current row;
+    [eax+198] = d1 of the next row, [eax+1A8] = its d5. The inner
+    child terms [edi+W-17C/-178] = d7/d8 and [edi+W-194] = d1 of row
+    W. Level ecx runs over generations. }
+  if gvar_011AE328 >= 3 then begin                                  //0056C59B-A8
+    count := gvar_011AE328 - 3 + 1;                                 //0056C5A8-C
+    gen := 3;                                                       //0056C5BB
+    repeat
+      esi := 0;                                                     //0056C5C0
+      if gvar_011AE328 >= 3 then begin                              //0056C5C2-A
+        for row := 1 to gvar_011AE344 do begin                      //0056C5D9-56
+          if (ChartAFlat(102 * row + 5) = gen) and                  //0056C5DC-E8
+             (esi <> ChartAFlat(102 * row + 7)) and
+             (esi <> ChartAFlat(102 * row + 8)) then begin
+            { childs carrying d7 }
+            if (ChartAFlat(102 * row + 7) > 0) and                  //0056C5EA-1A
+               ((ChartAFlat(102 * ChartAFlat(102 * row + 7) + 7) > 0) or
+                (ChartAFlat(102 * ChartAFlat(102 * row + 7) + 8) > 0)) then begin
+              esi := ChartAFlat(102 * row + 1);                     //0056C610
+              SetChartAFlat(102 * ChartAFlat(102 * row + 7) + 1, esi);
+              esi := ChartAFlat(102 * row + 7);                     //0056C61A
+            end;
+            { the same for d8/mother childs }
+            if (ChartAFlat(102 * row + 8) > 0) and                  //0056C61D-D
+               ((ChartAFlat(102 * ChartAFlat(102 * row + 8) + 7) > 0) or
+                (ChartAFlat(102 * ChartAFlat(102 * row + 8) + 8) > 0)) then begin
+              esi := ChartAFlat(102 * row + 1);                     //0056C63F-6
+              SetChartAFlat(102 * ChartAFlat(102 * row + 8) + 1, esi);
+              esi := ChartAFlat(102 * row + 8);                     //0056C64D
+            end;
+          end;
+        end;
+      end;
+      { 0056C658-8C: push overlapping siblings of the same generation
+        one column right. }
+      for row := 1 to gvar_011AE344 do begin                        //0056C658-8C
+        esi := ChartAFlat(102 * row + 1);                           //0056C665
+        if (ChartAFlat(102 * row + 5) > 1) and                      //0056C66A-F
+           (ChartAFlat(102 * row + 5) = ChartAFlat(102 * (row + 1) + 5)) and
+           (esi >= ChartAFlat(102 * (row + 1) + 1)) then begin      //0056C677-C
+          Inc(esi);                                                 //0056C67F
+          SetChartAFlat(102 * (row + 1) + 1, esi);                  //0056C680
+        end;
+      end;
+      { 0056C68E-F5: second pass - parent d1 onto the child column. }
+      for row := 1 to gvar_011AE344 do begin                        //0056C68E-F5
+        if ChartAFlat(102 * row + 5) = gen then begin               //0056C69B-D
+          if (ChartAFlat(102 * row + 7) > 0) and                    //0056C69F-F
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 7) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 7) + 8) > 0)) then
+            SetChartAFlat(102 * row + 1,                            //0056C6BD-6
+              ChartAFlat(102 * ChartAFlat(102 * row + 7) + 1));
+          if (ChartAFlat(102 * row + 8) > 0) and                    //0056C6C7-E5
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 8) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 8) + 8) > 0)) then
+            SetChartAFlat(102 * row + 1,                            //0056C6E5-C
+              ChartAFlat(102 * ChartAFlat(102 * row + 8) + 1));
+        end;
+      end;
+      { 0056C6F7-2B: horizontal push again. }
+      for row := 1 to gvar_011AE344 do begin
+        esi := ChartAFlat(102 * row + 1);
+        if (ChartAFlat(102 * row + 5) > 1) and
+           (ChartAFlat(102 * row + 5) = ChartAFlat(102 * (row + 1) + 5)) and
+           (esi >= ChartAFlat(102 * (row + 1) + 1)) then begin
+          Inc(esi);
+          SetChartAFlat(102 * (row + 1) + 1, esi);
+        end;
+      end;
+      Inc(gen);                                                     //0056C72D-2
+      Dec(count);                                                   //0056C72E-32
+    until count <= 0;
+  end;
+
+  { 0056C738-C7C7: single scan - parent d1 onto child column for the
+    generations 3..count-2. }
+  if gvar_011AE328 >= 3 then begin
+    count := gvar_011AE328 - 3;                                     //0056C745-A
+    count := count + 1;                                             //0056C74F
+    gen := 3;                                                       //0056C754
+    repeat
+      for row := 1 to gvar_011AE344 do begin                        //0056C759-C0
+        if ChartAFlat(102 * row + 5) = gen then begin               //0056C766-C
+          if (ChartAFlat(102 * row + 7) > 0) and                    //0056C76A-F
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 7) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 7) + 8) > 0)) then
+            SetChartAFlat(102 * row + 1,                            //0056C788-F
+              ChartAFlat(102 * ChartAFlat(102 * row + 7) + 1));
+          if (ChartAFlat(102 * row + 8) > 0) and                    //0056C792-B
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 8) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 8) + 8) > 0)) then
+            SetChartAFlat(102 * row + 1,                            //0056C7B0-7
+              ChartAFlat(102 * ChartAFlat(102 * row + 8) + 1));
+        end;
+      end;
+      Inc(gen);                                                     //0056C7C2-3
+      Dec(count);
+    until count <= 0;
+  end;
+
+  { 0056C7C9-C805: horizontal push once more. }
+  for row := 1 to gvar_011AE344 do begin
+    esi := ChartAFlat(102 * row + 1);
+    if (ChartAFlat(102 * row + 5) > 1) and
+       (ChartAFlat(102 * row + 5) = ChartAFlat(102 * (row + 1) + 5)) and
+       (esi >= ChartAFlat(102 * (row + 1) + 1)) then begin
+      Inc(esi);
+      SetChartAFlat(102 * (row + 1) + 1, esi);
+    end;
+  end;
+
+  { 0056C807-C8D1: alignment from generation 2 upward. }
+  if gvar_011AE328 >= 2 then begin                                  //0056C807-E
+    count := gvar_011AE328 - 2 + 1;                                 //0056C814-3
+    gen := 2;                                                       //0056C827
+    repeat
+      for row := 1 to gvar_011AE344 do begin                        //0056C82C-93
+        if ChartAFlat(102 * row + 5) = gen then begin               //0056C839-A
+          if (ChartAFlat(102 * row + 7) > 0) and                    //0056C83D-5
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 7) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 7) + 8) > 0)) then
+            SetChartAFlat(102 * row + 1,                            //0056C85B-4
+              ChartAFlat(102 * ChartAFlat(102 * row + 7) + 1));
+          if (ChartAFlat(102 * row + 8) > 0) and                    //0056C865-D
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 8) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 8) + 8) > 0)) then
+            SetChartAFlat(102 * row + 1,                            //0056C883-A
+              ChartAFlat(102 * ChartAFlat(102 * row + 8) + 1));
+        end;
+      end;
+      { 0056C895-CC: push. }
+      for row := 1 to gvar_011AE344 do begin
+        esi := ChartAFlat(102 * row + 1);
+        if (ChartAFlat(102 * row + 5) > 1) and
+           (ChartAFlat(102 * row + 5) = ChartAFlat(102 * (row + 1) + 5)) and
+           (esi >= ChartAFlat(102 * (row + 1) + 1)) then begin
+          Inc(esi);
+          SetChartAFlat(102 * (row + 1) + 1, esi);
+        end;
+      end;
+      Inc(gen);                                                     //0056C8CC-D1
+      Dec(count);
+    until count <= 0;
+  end;
+
+  { 0056C8D7-C98C: children adopt the parent's column, generations
+    from gvar_011AE328 downto 2. esi = the last processed child row. }
+  esi := 0;                                                         //0056C8D7-9
+  if gvar_011AE328 >= 2 then begin                                  //0056C8D9-F
+    gen := gvar_011AE328;                                           //0056C8E6-E
+    repeat
+      for row := 1 to gvar_011AE344 do begin                        //0056C906-7D
+        if (ChartAFlat(102 * row + 5) = gen) and                    //0056C909-B
+           (esi <> ChartAFlat(102 * row + 7)) and
+           (esi <> ChartAFlat(102 * row + 8)) then begin
+          if (ChartAFlat(102 * row + 7) > 0) and                    //0056C90D-39
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 7) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 7) + 8) > 0)) then begin
+            SetChartAFlat(102 * ChartAFlat(102 * row + 7) + 1,      //0056C939-8
+              ChartAFlat(102 * row + 1));
+            esi := ChartAFlat(102 * row + 7);                       //0056C947
+          end;
+          if (ChartAFlat(102 * row + 8) > 0) and                    //0056C94A-7A
+             ((ChartAFlat(102 * ChartAFlat(102 * row + 8) + 7) > 0) or
+              (ChartAFlat(102 * ChartAFlat(102 * row + 8) + 8) > 0)) then begin
+            SetChartAFlat(102 * ChartAFlat(102 * row + 8) + 1,      //0056C96C-A
+              ChartAFlat(102 * row + 1));
+            esi := ChartAFlat(102 * row + 8);                       //0056C97A
+          end;
+        end;
+      end;
+      Dec(gen);                                                     //0056C988-C
+    until gen <= 1;
+  end;
+
+  { 0056C992-C9CE: final horizontal push. }
+  for row := 1 to gvar_011AE344 do begin
+    esi := ChartAFlat(102 * row + 1);
+    if (ChartAFlat(102 * row + 5) > 1) and
+       (ChartAFlat(102 * row + 5) = ChartAFlat(102 * (row + 1) + 5)) and
+       (esi >= ChartAFlat(102 * (row + 1) + 1)) then begin
+      Inc(esi);
+      SetChartAFlat(102 * (row + 1) + 1, esi);
+    end;
+  end;
+
+  { 0056C9D0-CA22: track the maximal x/d1 column in gvar_011AE320 and
+    gvar_011AE324. }
+  row := 1;
+  while ChartAFlat(102 * row + 2) > 0 do begin                      //0056CA17-22
+    if ChartAFlat(102 * row + 1) > gvar_011AE320 then               //0056C9D7-E4
+      gvar_011AE320 := ChartAFlat(102 * row + 1);
+    if ChartAFlat(102 * row + 1) > gvar_011AE324 then               //0056C9F5-16
+      gvar_011AE324 := ChartAFlat(102 * row + 1);
+    Inc(row);
+  end;
+
+  gvar_011AE320 := gvar_011AE320 - 1;                               //0056CA24
+  ScrollBar1.LargeChange := PaintBox1.Width - 5;                    //0056CA2A-48
+  ScrollBar2.LargeChange := PaintBox1.Height - 5;                   //0056CA4B-6C
+  ScrollBar1.SmallChange := 10;                                     //0056CA6C-B
+  ScrollBar2.SmallChange := 10;                                     //0056CA7E
+  Screen.Cursor := crDefault;                                       //0056CA90-9C
 end;
 
 procedure TForm13.Nach_erm;
