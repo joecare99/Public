@@ -185,6 +185,74 @@ row's level dword equals lvl run the pair-normalization body (compare
 row ebx value against the "doubling row" 132*ebx value, propagate the
 delta through the 66*eax stride chain while the level dword matches)…
 
+### vz2 (00569504) — converted, build green (2026-10-25)
+
+- Signature fixed: `procedure vz2(AValue: TCanvas);` (AValue = EDX,
+  listing `[ebp-8]`; `[ebp-4]` = Self). Draws the ancestor chart into
+  AValue, working entirely on a copy of grid A in grid B
+  (`gvar_019764C4[row][k]`, row-local `[esi+edi*8-X]` offsets resolved:
+  -194→d1, -19C→d0, -190→d2, -18C→d3, -184→d5, -17C/-178→d7/d8,
+  -170/-16C→d10/d11, -160/-15C→d14/d15, -158→low word of d16,
+  -0D7→ShortString@193 ('M'/'W' flag), -100→ShortString@152 (ID),
+  -56→ShortString@322 (photo), -150→20 AnsiString ptrs @72).
+- Head: crHourGlass; saves ScrollBar1/2.Position into 2536364/2536368
+  (zeroed when `PaintBox1.Canvas <> AValue`); fills PaintBox white;
+  `FindKey(Table17, [gvar_011AE368])` builds title
+  `'Vorfahren von ' + sub_00563868(Name) + ' ' + Vornamen`, TextOut at
+  `Round(f*30)-364-8 / Round(f*5)-368`.
+- Build loop copies A→B fields verbatim (incl. word copy of d16 low
+  half, 20 ChartAAnsi→ChartBAnsi slots) and computes
+  `B[0] := (A[0]-1)*(334+118)+340-364`,
+  `B[1] := (A[1]-1)*(37C*318+318+348+114)+33C-368`.
+- Min-scan edx = min B[0] (B[3]>0, init $186A0=100000); shifting
+  `B[0] -= 364 + edx - 340` when edx > 340.
+- Loop 1: vertical line above each box (MoveTo (B0+334/2, B1),
+  LineTo (B0+334/2, B1-half), only when B5<328 and (B7>0 or B8>0));
+  'W' rows (row>1): line from bottom B1+cnt scaled (+348-1) down to
+  +half, cnt = 37C*318+318.
+- Loop 2: parent → child lines for B[7] and B[8] (guard B5<328 and
+  child>0); LineTo bottom of child box; trailing PaintBox-equal/≠
+  duplicate LineTo pair — [7] child: BOTH sides without inc; [8] child:
+  equal-branch without, inequal-branch with `inc eax` (y+1).
+- Loop 3: maximizes 331C = (B0-340+364) div (334+114) (identical asm
+  recompute transcribed) and 324 = max B5; FindKey([B3]); text
+  `wasSchon`: 'K: ' from a 10-byte Extended built via push order
+  d14=mant.lo, d15=mant.hi, low word of d16=exponent (recon uses an
+  `absolute` overlay: extOver.Lo=d14, Hi=d15, W=word(d16));
+  `if 2C4=1`: empty → `'DS: '+IntToStr(B3)` else `wasSchon+' DS: '+…`;
+  `if 2C8=1 and BShort(152) > ' '`: empty → 'ID: '+ss truncated to 44
+  (@PStrNCat cl=$2C) else `wasSchon + ' ID: ' + ss`.
+- TextOut at (Round(B0*f)+2, Round(B1*f)+Font.Height-2) with
+  Font.Size = Round(120*9)-1, then Size restored to Round(120*9).
+- Photo (`if 2BC=1` and ss@322 > ' '): TImage.Create(Self),
+  LoadFromFile(ss@322), `if Graphic is TJPEGImage then` scale Image
+  width = Round(GraphicWidth * Image.Height/GraphicHeight)
+  (fdivrp → ImageH/Gh); Rect((B0+4),(B1+2),(B0+Round(W/H*cnt*4/5)),
+  (B1+Round(cnt*4/5))) with cnt = 37C*318+318; `Proportional := True`;
+  `StretchDraw` — NOTE: TCanvas.StretchDraw(ARect, AGraphic) in Delphi
+  2006, rect comes FIRST (matches lea edx=[ebp-35]; ecx=Graphic); then
+  img.Free.
+- 20-string loop (slotI 0..19, slotRow y-counter): Font.Style := []
+  every slot, [fsBold] when slotI=0 and also after a rightmost '#'
+  strip (only slotI 0..3 do the '#' check → the slot string is replaced
+  by Copy(s, 1, len-1)); TextWidth per slot; x offset
+  `Round((334*f - TextWidth)/2)` (fsubrp direction!) added to
+  Round(B0*f); y = Round((B1 + 3 + slotRow*318 + 348)*f); text = Trim
+  of ChartBAnsi(102*row+18+slotI)^.
+- Boxes: Pen.Color := 0, Brush.Style := bsClear (dl=1, NOT bsSolid!),
+  'M' → Rectangle((B0,B1)-Round((B0+334, B1+cnt+348)) — the 348 is
+  ADDED in INTEGER space before scaling, i.e. Round((B1+cnt+348)*f);
+  'W' → same Rect via RoundRect(..., 15, 15); Pen.Color := 0 again per
+  row.
+- Tail: `ScrollBar1.Max := (331C+1)*(334+118)+340`;
+  `ScrollBar2.Max := (37C*318+114+318+348)*324+33C`; crDefault.
+- Unit13 uses additions: `jpeg` (TJPEGImage) and `Types` (TRect) at
+  implementation level; helper `gvar_0061F114` retyped Single→Integer
+  in AHNGlobals (all reads are dword/ROUND).
+- Next in address order: vz1 (005711D4, listing L13489), then
+  Nach_erm (0056A970, L7311), nr1 (0056C0D4), nr2 (0056CB30),
+  nz1 (0056D6B4), nz2 (0056EB10).
+
 ## Phase 2 — the mid-size ones (250 – 1500 lines)
 
 These are single-purpose methods that need the DataModule2 tables or one or

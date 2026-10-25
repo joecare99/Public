@@ -147,7 +147,7 @@ var
   gvar_0061F0F0: Integer; //0061F0F0  used by Unit29
   gvar_0061F0FC: TForm; //0061F0FC  used by Unit1
   gvar_0061F110: Integer; //0061F110  used by Unit13
-  gvar_0061F114: Single; //0061F114  used by Unit13
+  gvar_0061F114: Integer; //0061F114  used by Unit13 (writes = @ROUND result, reads = dword imul/add: IDR's "Single" label is wrong)
   gvar_0061F118: Integer; //0061F118  used by Unit13 (all list accesses are dword/fild: IDR's "Single" label is wrong)
   gvar_0061F11C: Integer; //0061F11C  used by Unit1, Unit13
   gvar_0061F120: Extended; //0061F120  used by Unit1, Unit13
@@ -423,6 +423,13 @@ procedure SetChartBFlat(I, AValue: Integer);
   [esi+eax*8-150]). }
 function ChartAAnsi(I: Integer): PAnsiString;
 function ChartSlotAnsi(I: Integer): PAnsiString; // 011AE2C8 + 4*I
+function ChartBAnsi(I: Integer): PAnsiString;
+{ ShortString fields live at raw byte offsets inside the 408-byte
+  chart rows (they are NOT aligned dwords). Blocks seen: offset 152
+  (ShortString, ID), 193 (ShortString[40], 'M'/'W' flag), 322
+  (ShortString[50], photo filename). }
+function ChartAShort(Row, Ofs: Integer): PShortString;
+function ChartBShort(Row, Ofs: Integer): PShortString;
 
 implementation
 
@@ -456,6 +463,21 @@ end;
 function ChartSlotAnsi(I: Integer): PAnsiString;
 begin
   Result := PAnsiString(PChar(@gvar_011AE2C8) + 4 * I);
+end;
+
+function ChartBAnsi(I: Integer): PAnsiString;
+begin
+  Result := PAnsiString(PChar(@gvar_019764C4) + 4 * I);
+end;
+
+function ChartAShort(Row, Ofs: Integer): PShortString;
+begin
+  Result := PShortString(PChar(@gvar_011AE1C4) + 408 * Row + Ofs);
+end;
+
+function ChartBShort(Row, Ofs: Integer): PShortString;
+begin
+  Result := PShortString(PChar(@gvar_019764C4) + 408 * Row + Ofs);
 end;
 
 end.
