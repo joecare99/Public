@@ -104,6 +104,50 @@ Converted against this layout so far:
   (every access is `add dword,0A`, `mov/cmp dword`, `fild dword`; the
   IDR "Single" label is wrong). `AHNGlobals` exposes
   `ChartBFlat/SetChartBFlat` for grid B's `[T*8+19764C4]` terms.
+- `TForm13.schieb_vm1` (00568528) / `schieb_vm` (0056862C): first find
+  the row dword[5] maximum (scan while `[r][2] > 0`; vm1 only), then
+  N outer passes; each pass walks rows 1..`gvar_011AE344` on the
+  1976668-anchor (`row[r][3]`; vm1 shifts `row[r][1]`, vm
+  `row[r][0]`): when ecx(=pass) = `[r][5]` copy the pointed value's
+  dword down (`ChartBFlat(102*val → +1)`); else when both parents
+  `[r][6]/[r][7]` are 0 and the row is a level-equal successor,
+  place at previous row's position + the spacing constants
+  (`0253637C*011AE318 + 011AE318 + 61F118 + 011AE348` in vm1;
+  `011AE334 + 61F118` in vm).
+- `TForm13.kek_ord` (005686F0): 011AE328-1 passes; anchor 1976670 =
+  `row[r][5]`; when `[r][5] < 011AE328` and equals `[r-1][5]`, all
+  three dwords 3 of rows r/r−1/r+1 positive, `[r][0] <= [r-1][0]` and
+  `[r][7] = [r][8] = 0`: `[r][0] := 2*(011AE334+61F118) + [r-1][0]`.
+- `TForm13.kek_ord_2` (00568774): counter trap gives EXACTLY two row
+  walks with ecx = V−1 then V−2; conditions keyed on ecx; then
+  `[r][0] := [r-1][0] + sum` and `[r-1][0]` gets +/- sum by the PARITY
+  of `[r][2]` (and $80000001 idiom = sign-corrected odd test).
+- `TForm13.Vr2` (0056904C) converted: screen/canvas metric setup
+  (`fScale` = `gvar_0253636C` = 1.0 normally, 1.13 when drawing
+  canvas <> PaintBox1.Canvas; 6.0 pen multiplier on the printer branch —
+  all Extended constants recovered from the mantissa/exp words).
+  Then: walks grid A rows (`while [r][2] > 0`, r starts 1), clears
+  20 slot strings (011AE2C8..011AE2F8 area) + 20 row-local string
+  slots (flat dword 102*row+19, ..., via new `ChartAAnsi` helper),
+  FindKey on DataModule2.Table17 with `[row][3]`, calls
+  `memein(gvar_011AE1C4[row-1][3])` and
+  `zerleg(011AE334, 011AE318, canvas)` — both still TODO stubs
+  (declared: `memein(AValue)` EDX, `zerleg` 3-register/stack args;
+  IDR lists zerleg as function, result unused here). Copies dwords
+  0..2 of each grid-C row (`gvar_015924E4`, 408-B rows) into the
+  FD4-family grid rows (flat 102r..102r+2 = gvar_011AE1C4 rows 1..),
+  calls sub_00569010, computes max `[r][0]` → 011AE320 (then Dec),
+  sets ScrollBar1/2.LargeChange = PaintBox dims-5 and
+  SmallChange = 20 (IDR hex "14").
+- **IDR number bases**: printed numbers are HEX (e.g. `mov edi,14`
+  = 20, `imul x,33` = 0x33 = 51 row stride, `2710` = 10000).
+  Verified against recon cross-checks (FD4 scan terms = flat
+  102r+{2,5} with the 0x11AE35C anchored identity).
+- Additives: `ChartAFlat`/`SetChartAFlat`/`ChartAAnsi` (flat dword /
+  string-pointer slots over 011AE1C4), `ChartSlotAnsi` (011AE2C8+4i)
+  in AHNGlobals.
+- **Retype**: `gvar_011AE348` is an Integer too (same fild/add dword
+  pattern); `gvar_019764CC` (grid B row[r] dword[2]) pinned.
 
 ## Phase B findings (2026-10-25)
 

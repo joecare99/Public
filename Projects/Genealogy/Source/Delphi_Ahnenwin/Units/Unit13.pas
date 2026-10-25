@@ -13,7 +13,7 @@ unit Unit13;
 interface
 
 uses
-  SysUtils, StrUtils, Classes, ExtCtrls, Buttons, Dialogs, StdCtrls, WPPDFR2, WPPDFPRP, Forms, Controls, Grids, DB;
+  SysUtils, StrUtils, Classes, ExtCtrls, Buttons, Dialogs, StdCtrls, WPPDFR2, WPPDFPRP, Forms, Controls, Grids, DB, Graphics;
 
 type
   TForm13 = class(TForm)
@@ -66,7 +66,8 @@ type
     procedure Verwandtschaft1Click(Sender: TObject); //0057249C
     procedure Button8Click(Sender: TObject); //005730D4
     procedure Vorf_erm1; //00563CF8
-    procedure memein; //00566220
+    procedure memein(AValue: Integer); //00566220, AValue in EDX
+    procedure zerleg(AVal1: Integer; AVal2: Integer; ACanvas: TCanvas); //005675D8, IDR lists a function; result unused at 0056932E
     procedure FormCreate(Sender: TObject); //00570740
     procedure Vorf_erm; //00567A30
     procedure Button1Click(Sender: TObject); //005707C0
@@ -96,7 +97,7 @@ var
 implementation
 
 uses
-  Unit12, Unit2, AHNGlobals, Math;
+  Unit12, Unit2, AHNGlobals, Math, Printers;
 {$R ..\Forms\Form13.DFM}
 
 
@@ -544,14 +545,111 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.schieb_vm;
+procedure TForm13.schieb_vm1;
+var
+  esi, eax, edx, ebx, ecx, edi, ebp: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00568528: first scan grid B rows (while row[r].dword[2] > 0,
+    anchor [eax*8+19764CC] = flat idx 102*eax+2) to find esi = the
+    maximum of row dword[5]; then for ecx = 1 .. esi-1 walk all rows
+    and shift row dword[1] ([eax-8] on the 1976668 anchor = row[r][3]): }
+  gvar_011AE324 := 0;                                 //0056852C-2E
+  esi := 0;
+  eax := 1;                                           //00568535
+  while gvar_019764C4[eax][2] > 0 do                  //00568550-5B
+  begin
+    if esi < gvar_019764C4[eax][5] then               //0056853C-48
+      esi := gvar_019764C4[eax][5];
+    Inc(eax);
+  end;
+  edi := esi - 1;                                     //0056855D-F
+  while edi > 0 do                                    //00568560-20
+  begin
+    ecx := 1;                                         //00568568
+    for edx := 1 to gvar_011AE344 do                  //0056856D-18
+    begin
+      if gvar_019764C4[edx][3] > 0 then               //00568580-83
+      begin
+        if ecx = gvar_019764C4[edx][5] then           //00568589-8C
+        begin
+          ebx := gvar_019764C4[edx][6];               //0056858E
+          if ebx > 0 then                             //00568591-93
+            gvar_019764C4[edx][1] :=                  //00568595-9F
+              ChartBFlat(102 * ebx + 1)
+          else
+          begin
+            ebx := gvar_019764C4[edx][7];             //005685A4
+            if ebx > 0 then
+              gvar_019764C4[edx][1] :=                //005685A4-B5
+                ChartBFlat(102 * ebx + 1);
+          end;
+        end
+        else if (gvar_019764C4[edx][6] = 0) and       //005685BA-C4
+                (gvar_019764C4[edx][7] = 0) and
+                (esi > gvar_019764C4[edx][5]) and     //005685C6-C9 jle
+                (gvar_019764C4[edx][5] = gvar_019764C4[edx - 1][5]) and //005685CD-D3
+                (gvar_019764C4[edx][3] > 0) and       //005685D5-D8
+                (gvar_019764C4[edx - 1][3] > 0) and   //005685DA-E1
+                (gvar_019764C4[edx - 1][4] >= gvar_019764C4[edx][1]) then //005685E3-EC jl
+        begin
+          ebp := gvar_019764C4[edx - 1][4];           //005685E3
+          ebx := gvar_0253637C * gvar_011AE318 +       //005685EE-607
+                 gvar_011AE318 + gvar_0061F118 +
+                 gvar_011AE348 + ebp;
+          gvar_019764C4[edx][1] := ebx;               //0056860D-0F
+        end;
+      end;
+    end;
+    Inc(ecx);                                         //0056861E
+    Dec(edi);                                         //0056861F
+  end;
 end;
 
-procedure TForm13.schieb_vm1;
+procedure TForm13.schieb_vm;
+var
+  esi, ecx, edx, eax, ebx, edi: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 0056862C: like schieb_vm1, but the outer count is 011AE328-1 and
+    the row dword[0] ([eax-0C]) is shifted instead of dword[1]. }
+  esi := gvar_011AE328 - 1;                           //0056862F-35
+  while esi > 0 do
+  begin
+    ecx := 1;                                         //0056863E
+    for edx := 1 to gvar_011AE344 do                  //00568643-DB
+    begin
+      if gvar_019764C4[edx][3] > 0 then               //00568656-59
+      begin
+        if ecx = gvar_019764C4[edx][5] then           //0056865B-5E
+        begin
+          ebx := gvar_019764C4[edx][6];               //00568660
+          if ebx > 0 then
+            gvar_019764C4[edx][0] :=                  //00568667-71
+              ChartBFlat(102 * ebx)
+          else
+          begin
+            ebx := gvar_019764C4[edx][7];             //00568676
+            if ebx > 0 then
+              gvar_019764C4[edx][0] :=                //00568676-87
+                ChartBFlat(102 * ebx);
+          end;
+        end
+        else if (gvar_019764C4[edx][6] = 0) and       //0056868C-96
+                (gvar_019764C4[edx][7] = 0) and
+                (gvar_019764C4[edx][5] < gvar_011AE328) and    //00568698-A1 jge
+                (gvar_019764C4[edx][5] = gvar_019764C4[edx - 1][5]) and //005686A3-A9
+                (gvar_019764C4[edx][3] > 0) and       //005686AB-AE
+                (gvar_019764C4[edx - 1][3] > 0) and   //005686B0-B7
+                (gvar_019764C4[edx - 1][0] >= gvar_019764C4[edx][0]) then //005686B9-C2 jl
+        begin
+          edi := gvar_019764C4[edx - 1][0];           //005686B9
+          gvar_019764C4[edx][0] := edi +              //005686C4-D2
+            gvar_011AE334 + gvar_0061F118;
+        end;
+      end;
+    end;
+    Inc(ecx);                                         //005686E1
+    Dec(esi);                                         //005686E2
+  end;
 end;
 
 procedure TForm13.ScrollBar1Change(Sender: TObject);
@@ -577,8 +675,37 @@ begin
 end;
 
 procedure TForm13.kek_ord;
+var
+  esi, edx, eax, ecx: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005686F0: for esi = gvar_011AE328-1 downto 1, walk rows on the
+    1976670 anchor = grid B row[r] dword[5] ([eax-14] = [r][0],
+    [eax-1AC] = [r-1][0], [eax-8] = [r][3], [eax-1A0] = [r-1][3],
+    [eax+190] = [r+1][3], [eax+8] = [r][7], [eax+0C] = [r][8]): }
+  esi := gvar_011AE328 - 1;                            //005686F7-FA
+  while esi >= 1 do
+  begin
+    for edx := 1 to gvar_011AE344 do                   //005686FF-68
+    begin
+      eax := edx;  // anchor 1976670 = row(r) dword[5]
+      ecx := gvar_019764C4[eax][5];                    //0056870E
+      if (ecx < gvar_011AE328) and                     //00568710-12 jge
+         (gvar_019764C4[eax - 1][5] = ecx) and         //00568714-1A jne
+         (gvar_019764C4[eax][3] > 0) and               //0056871C-20
+         (gvar_019764C4[eax - 1][3] > 0) and           //00568722-29
+         (gvar_019764C4[eax + 1][3] > 0) and           //0056872B-32
+         (gvar_019764C4[eax][0] <= gvar_019764C4[eax - 1][0]) and //00568734-3D jg
+         (gvar_019764C4[eax][7] = 0) and               //0056873F-43
+         (gvar_019764C4[eax][8] = 0) then              //00568745-49
+      begin
+        ecx := gvar_011AE334 + gvar_0061F118;          //0056874B-51
+        ecx := ecx + ecx;                              //00568757
+        gvar_019764C4[eax][0] := ecx +                 //00568759-5F
+          gvar_019764C4[eax - 1][0];
+      end;
+    end;
+    Dec(esi);                                          //0056876A-6D
+  end;
 end;
 
 procedure TForm13.Proband1Click;
@@ -674,8 +801,47 @@ begin
 end;
 
 procedure TForm13.kek_ord_2;
+var
+  ecx, esi, edx, eax, ebx: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00568774: counter trap makes EXACTLY two row walks (esi = V-1-V =
+    -1; the bottom dec ecx/inc esi pair drives ecx = V-1 then V-2).
+    Conditions like kek_ord but keyed on ecx: [r][5] and [r-1][5]
+    must both equal ecx. Then [r][0] := [r-1][0] + sum, and [r-1][0]
+    is nudged +/- sum depending on the parity of [r][2]
+    ([eax-0C] = row[r] dword[2]; and 80000001 idiom = sign-corrected
+    odd test). }
+  ecx := gvar_011AE328;                                //0056877C
+  esi := -1;                                           //0056877E-83
+  while esi <> 0 do
+  begin
+    for edx := 1 to gvar_011AE344 do                   //0056878A-1F
+    begin
+      eax := edx;
+      ebx := gvar_019764C4[eax][5];                    //0056879D
+      if (ebx < gvar_011AE328) and                     //0056879F-A1 jge
+         (ecx = gvar_019764C4[eax][5]) and             //005687A3-A5
+         (ecx = gvar_019764C4[eax - 1][5]) and         //005687A7-AD
+         (gvar_019764C4[eax][3] > 0) and               //005687AF-B3
+         (gvar_019764C4[eax - 1][3] > 0) then          //005687B5-BC
+      begin
+        gvar_019764C4[eax][0] :=                       //005687BE-D0
+          gvar_019764C4[eax - 1][0] +
+          gvar_011AE334 + gvar_0061F118;
+        ebx := gvar_019764C4[eax][2] and 80000001;     //005687D3-E2
+        if ebx = 0 then                                //005687E3-E5 jne
+          gvar_019764C4[eax - 1][0] :=                 //005687E7-F9
+            gvar_019764C4[eax - 1][0] +
+            gvar_011AE334 + gvar_0061F118
+        else
+          gvar_019764C4[eax - 1][0] :=                 //00568801-13
+            gvar_019764C4[eax - 1][0] -
+            gvar_011AE334 - gvar_0061F118;
+      end;
+    end;
+    Dec(ecx);                                          //00568825
+    Inc(esi);                                          //00568826
+  end;
 end;
 
 procedure TForm13.Verwandtschaft1Click(Sender: TObject);
@@ -698,7 +864,12 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.memein;
+procedure TForm13.memein(AValue: Integer);
+begin
+  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+end;
+
+procedure TForm13.zerleg(AVal1: Integer; AVal2: Integer; ACanvas: TCanvas);
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
@@ -864,8 +1035,112 @@ begin
 end;
 
 procedure TForm13.Vr2;
+var
+  i, row, eaxv, ebp14, ebpC: Integer;
+  byteFlag: Byte;
+  fScale: Extended;
+  tmp: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 0056904C: prepares the chart canvas/font metrics ("Verkleinerung"
+    fScale = 0x3FFF/0x80000000... = 1.0, or 1.13 when the drawing
+    canvas differs from PaintBox1.Canvas), then walks the active rows
+    of grid A filling the row-local string slots via memein/zerleg,
+    copies the first 3 dwords of each grid-C row over grid A's first
+    3 dwords, calls sub_00569010, finds the maximum dword[0], and
+    sets the scrollbars.
+    Registers used: EDX/EAX/EBX/ESI/ECX/EDI as in the listing. }
+  tmp := '';                                        //00569055-57 [ebp-18]:LStrClr?$0
+  Screen.Cursor := crHourGlass;                     //00569070-7B
+  fScale := 1.0;                                    //00569080-8B
+  if PaintBox1.Canvas <> gvar_011AE32C then         //00569094-A6
+    fScale := 1.13;                                 //005690A8-B5
+  gvar_011AE33C := Round(gvar_0061F120 * 45 * fScale);  //005690BB-D0
+  gvar_011AE340 := 20;                              //005690D5
+  gvar_0061F118 := Round(gvar_0061F120 * 20 * fScale);  //005690DF-F4
+  gvar_0061F114 := Round(gvar_0061F120 * 30 * fScale);  //005690F9-10E
+  gvar_011AE334 := Round(gvar_0061F120 * 120 * fScale)  //00569113-2E
+    + gvar_011AE338;
+  if gvar_0061F2BC = 1 then                         //00569133-3A
+    Inc(gvar_011AE334, 10);                         //0056913C
+  gvar_011AE348 := 0;                               //00569143-45
+  gvar_0253637C := 0;                               //0056914A-4C
+  gvar_011AE318 := 0;                               //00569151-53
+  gvar_02536364 := 0;                               //00569158-5A
+  gvar_02536368 := 0;                               //0056915F-61
+  if PaintBox1.Canvas = gvar_011AE32C then          //00569166-7B
+  begin
+    gvar_02536364 := ScrollBar1.Position;           //0056917D-8C
+    gvar_02536368 := ScrollBar2.Position;           //00569191-A0
+  end;
+  gvar_011AE32C.Font.Name := 'Arial';                //005691A5-B2
+  gvar_011AE32C.Font.Size :=                     //005691B7-D6
+    Round(gvar_0061F120 * 9 * fScale);
+  gvar_011AE318 := 2 - gvar_011AE32C.Font.Height;   //005691DB-ED
+  if Printer.Canvas = gvar_011AE32C then            //005691F2-700
+  begin
+    fScale := 6.0;                                  //00569215-0F
+    gvar_011AE32C.Font.Name := 'Arial';             //0056921D-22
+    gvar_011AE32C.Font.Size :=                  //00569227-42
+      Round(gvar_0061F120 * 9);
+    ebpC := PaintBox1.Canvas.Pen.Width;             //00569247-5E
+    gvar_011AE32C.Pen.Width := Round(ebpC * 6.0);   //00569261-77
+  end;
+  if PaintBox1.Canvas <> gvar_011AE32C then         //0056927C-91
+    fScale := 1.13;                                 //00569293-A0
+  row := 1;                                         //005692A6-AD
+  while gvar_011AE1C4[row][2] > 0 do                //00569382-8E
+  begin
+    for i := 0 to 19 do                             //005692B2-DF
+    begin
+      ChartSlotAnsi(i)^ := '';                      //005692C1-C3
+      // target [ebx(11AE35C+4i) + eax*8 - $150] = row string slot
+      ChartAAnsi(102 * row + 19 + i)^ := '';        //005692C8-D3
+    end;
+    ebp14 := gvar_011AE1C4[row][3];                 //005692E1-EC
+    byteFlag := 0;                                  //005692EF
+    DataModule2.Table17.FindKey([ebp14]);           //005692F3-305
+    memein(gvar_011AE1C4[row - 1][3]);              //0056930A-14
+    zerleg(gvar_011AE334, gvar_011AE318,            //00569319-2E
+      gvar_011AE32C);
+    ChartAAnsi(102 * row + 18)^ :=                  //00569333-40
+      ChartSlotAnsi(0)^;
+    for i := 0 to 18 do                             //00569345-7D
+    begin
+      tmp := Trim(ChartSlotAnsi(i + 1)^);           //00569354-59
+      if Length(tmp) > 0 then                       //0056935E-62
+        ChartAAnsi(102 * row + 19 + i)^ := tmp;     //00569364-71
+    end;
+    Inc(row);                                       //0056937F
+  end;
+  if gvar_0061F2BC = 1 then                         //00569394-9B
+    gvar_011AE348 := Round(                         //0056939D-C2
+      (gvar_0253637C * gvar_011AE318 +
+       gvar_011AE318) * 4 / 5);
+  for row := 1 to 10000 do                          //005693C7-F7
+  begin
+    eaxv := gvar_015924E4[row][2];                  //005693D8-DA
+    SetChartAFlat(102 * row + 2, eaxv);             //005693DA-DC
+    eaxv := gvar_015924E4[row][0];                  //005693DC-DF
+    SetChartAFlat(102 * row, eaxv);                 //005693DF-E2
+    eaxv := gvar_015924E4[row][1];                  //005693E2-E5
+    SetChartAFlat(102 * row + 1, eaxv);             //005693E5-E8
+  end;
+  sub_00569010;                                     //005693F9
+  row := 1;                                         //005693FE
+  gvar_011AE320 := 0;                               //00569405-07
+  while gvar_011AE1C4[row][2] > 0 do                //00569430-3C
+  begin
+    eaxv := gvar_011AE1C4[row][0];                  //0056940E-15
+    if eaxv > gvar_011AE320 then                    //00569415-1B jle
+      gvar_011AE320 := eaxv;                        //0056941D-28
+    Inc(row);                                       //0056942D
+  end;
+  Dec(gvar_011AE320);                               //0056943E
+  ScrollBar1.LargeChange := PaintBox1.Width - 5;    //00569444-65
+  ScrollBar2.LargeChange := PaintBox1.Height - 5;   //00569465-86
+  ScrollBar1.SmallChange := 20;                     //00569486-98
+  ScrollBar2.SmallChange := 20;                     //00569498-AA
+  Screen.Cursor := crDefault;                       //005694AA-B3
 end;
 
 procedure TForm13.nachf_neu;

@@ -223,7 +223,7 @@ var
   gvar_011AE33C: Integer; //011AE33C  used by Unit13
   gvar_011AE340: Integer; //011AE340  used by Unit13
   gvar_011AE344: Integer; //011AE344  used by Unit13
-  gvar_011AE348: Single; //011AE348  used by Unit13
+  gvar_011AE348: Integer; //011AE348  used by Unit13 (all list accesses are dword/fild: IDR's "Single" label is wrong)
   gvar_011AE34C: Extended; //011AE34C  used by Unit13
   gvar_011AE358: TBitmap; //011AE358  used by Unit13
   gvar_011AE35C: Integer; //011AE35C = grid A: label for row (r+1) dword[0]; used by Unit13
@@ -241,6 +241,7 @@ var
     dword[3] (+$C) = 01976668, dword[5] (+$14) = 01976670. }
   gvar_019764C4: TChartRows; //019764C4  chart grid B (10000 x $198), Unit13
   gvar_019764C8: Integer; //019764C8 = grid B: label for row[r] dword[1]; used by Unit13
+  gvar_019764CC: Integer; //019764CC = grid B: label for row[r] dword[2]; used by Unit13
   gvar_019764D8: Integer; //019764D8 = grid B: label for row[r] dword[5]; used by Unit13
   gvar_019764E0: Integer; //019764E0 = grid B: label for row[r] dword[7]; used by Unit13
   gvar_0197665C: Integer; //0197665C = grid B: label for row (r+1) dword[0]; used by Unit13
@@ -416,6 +417,13 @@ procedure SetChartAFlat(I, AValue: Integer);
 function ChartBFlat(I: Integer): Integer;
 procedure SetChartBFlat(I, AValue: Integer);
 
+{ AnsiString-pointer slot accessors for the same flat dword space.
+  LStrClr/LStrAsg in the listing operate directly on 4-byte string
+  pointer slots inside grid A (e.g. [ebx*8+11AE1D0],
+  [esi+eax*8-150]). }
+function ChartAAnsi(I: Integer): PAnsiString;
+function ChartSlotAnsi(I: Integer): PAnsiString; // 011AE2C8 + 4*I
+
 implementation
 
 function ChartAFlat(I: Integer): Integer;
@@ -438,6 +446,16 @@ end;
 procedure SetChartBFlat(I, AValue: Integer);
 begin
   PInteger(PChar(@gvar_019764C4) + 4 * I)^ := AValue;
+end;
+
+function ChartAAnsi(I: Integer): PAnsiString;
+begin
+  Result := PAnsiString(PChar(@gvar_011AE1C4) + 4 * I);
+end;
+
+function ChartSlotAnsi(I: Integer): PAnsiString;
+begin
+  Result := PAnsiString(PChar(@gvar_011AE2C8) + 4 * I);
 end;
 
 end.
