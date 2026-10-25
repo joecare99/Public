@@ -3,7 +3,7 @@ unit DeDeCore;
 interface
 
 uses
-  Classes, SysUtils, DeDeClasses, DeDeClassHandle;
+  Classes, SysUtils, DeDeClasses, DeDeClassHandle, DeDeCoreServices;
 
 type
   EDeDeOutputExists = class(EInOutError);
@@ -25,16 +25,27 @@ type
     UnitCount: Integer;
   end;
 
+  TDeDeSessionActivation = record
+    CoreContext: TDeDeCoreContext;
+    IsELF: Boolean;
+  end;
+
   TDeDeAnalysisSession = class
   private
     FPEFile: ThePEFile;
     FPEHeader: TPEHeader;
+    FIsELF: Boolean;
     FClassesDumper: TClassesDumper;
     FOpcodeList: TList;
     FSymbolsList: TList;
     FAnalysisResult: TDeDeAnalysisResult;
+    FContext: TDeDeCoreContext;
+    FOwnsContext: Boolean;
     FOwnsAnalysis: Boolean;
     FFinalized: Boolean;
+    procedure ActivateLegacyState(out APreviousState: TDeDeSessionActivation);
+    procedure RestoreLegacyState(
+      const APreviousState: TDeDeSessionActivation);
     procedure ReleaseAnalysis;
     procedure ConfigureDisassembler;
     procedure PopulateFormLists;
@@ -54,6 +65,7 @@ type
     property ClassesDumper: TClassesDumper read FClassesDumper;
     property PEFile: ThePEFile read FPEFile;
     property PEHeader: TPEHeader read FPEHeader;
+    property Context: TDeDeCoreContext read FContext;
   end;
 
 function HasDelphi2BooleanMarker(AFile: ThePEFile; AHeader: TPEHeader;
@@ -62,22 +74,9 @@ function HasDelphi2BooleanMarker(AFile: ThePEFile; AHeader: TPEHeader;
 implementation
 
 uses
-  DeDeCoreServices, DeDeConstants, DeDeDisAsm,
+  DeDeConstants, DeDeDisAsm,
   DeDeClassEmulator, DeDeSym, DeDeELFClasses, DeDePAS, DeDeRes,
-  DeDeAnsiStream
-{$IFDEF MSWINDOWS}
-  , Windows
-{$ENDIF}
-  ;
-
-function HostTickCount: LongWord;
-begin
-{$IFDEF MSWINDOWS}
-  Result := Windows.GetTickCount;
-{$ELSE}
-  Result := LongWord(GetTickCount64);
-{$ENDIF}
-end;
+  DeDeAnsiStream;
 
 procedure WriteAnsiText(AStream: TStream; const AText: string);
 var
@@ -153,49 +152,86 @@ begin
   inherited Destroy;
 end;
 
+procedure TDeDeAnalysisSession.ActivateLegacyState(
+  out APreviousState: TDeDeSessionActivation);
+begin
+  if FContext = nil then
+    raise EInvalidOp.Create('Analysis session has no core context');
+  APreviousState.CoreContext := DeDeCoreContext;
+  APreviousState.IsELF := bELF;
+  DeDeCoreContext := FContext;
+  bELF := FIsELF;
+end;
+
+procedure TDeDeAnalysisSession.RestoreLegacyState(
+  const APreviousState: TDeDeSessionActivation);
+begin
+  DeDeCoreContext := APreviousState.CoreContext;
+  bELF := APreviousState.IsELF;
+end;
+
 procedure TDeDeAnalysisSession.ReleaseAnalysis;
+var
+  PreviousState: TDeDeSessionActivation;
+  ContextToFree: TDeDeCoreContext;
+  OwnsContext: Boolean;
+  HasActiveContext: Boolean;
 begin
   FFinalized := False;
-  if FOwnsAnalysis then
-  begin
-    DeDeCoreContext.ClassesDumper := nil;
-    DeDeDisAsm.PEStream := nil;
-    DeDeDisAsm.ClsDmp := nil;
-    DeDeDisAsm.FOpCodeList := nil;
-    DeDeDisAsm.SymbolsList := nil;
-    DeDeDisAsm.UnitList.Clear;
-    if FClassesDumper <> nil then
-      FreeAndNil(FClassesDumper);
-  end
-  else
-    FClassesDumper := nil;
-  if FOpcodeList <> nil then
-    FreeAndNil(FOpcodeList);
-  if FSymbolsList <> nil then
-    FreeAndNil(FSymbolsList);
-  if FOwnsAnalysis then
-  begin
-    if FPEHeader <> nil then
-      FreeAndNil(FPEHeader);
-    if FPEFile <> nil then
-      FreeAndNil(FPEFile);
-    DeDeClasses.PEHeader := nil;
-    DeDeClasses.PEFile := nil;
-    DeDeCoreContext.FileName := '';
-    DeDeCoreContext.ProjectName := '';
-    DeDeCoreContext.ClassCount := 0;
-    DeDeCoreContext.UnitList.Clear;
-    DeDeCoreContext.ClearDFMForms;
-    DeDeCoreContext.DFMNameList.Clear;
-    DeDeCoreContext.PASNameList.Clear;
-    DeDeCoreContext.Warnings.Clear;
-  end
-  else
-  begin
-    FPEHeader := nil;
-    FPEFile := nil;
+  ContextToFree := FContext;
+  OwnsContext := FOwnsContext;
+  HasActiveContext := FContext <> nil;
+  if HasActiveContext then
+    ActivateLegacyState(PreviousState);
+  try
+    if FOwnsAnalysis then
+    begin
+      DeDeCoreContext.ClassesDumper := nil;
+      DeDeDisAsm.ClsDmp := nil;
+      DeDeDisAsm.FOpCodeList := nil;
+      DeDeDisAsm.SymbolsList := nil;
+      DeDeDisAsm.UnitList.Clear;
+      if FClassesDumper <> nil then
+        FreeAndNil(FClassesDumper);
+    end
+    else
+      FClassesDumper := nil;
+    if FOpcodeList <> nil then
+      FreeAndNil(FOpcodeList);
+    if FSymbolsList <> nil then
+      FreeAndNil(FSymbolsList);
+    if FOwnsAnalysis then
+    begin
+      if FPEHeader <> nil then
+        FreeAndNil(FPEHeader);
+      if FPEFile <> nil then
+        FreeAndNil(FPEFile);
+      DeDeCoreContext.PEHeader := nil;
+      DeDeCoreContext.PEFile := nil;
+      DeDeCoreContext.FileName := '';
+      DeDeCoreContext.ProjectName := '';
+      DeDeCoreContext.ClassCount := 0;
+      DeDeCoreContext.UnitList.Clear;
+      DeDeCoreContext.ClearDFMForms;
+      DeDeCoreContext.DFMNameList.Clear;
+      DeDeCoreContext.PASNameList.Clear;
+      DeDeCoreContext.Warnings.Clear;
+    end
+    else
+    begin
+      FPEHeader := nil;
+      FPEFile := nil;
+    end;
+  finally
+    if HasActiveContext then
+      RestoreLegacyState(PreviousState);
+    FOwnsAnalysis := False;
+    FContext := nil;
+    FOwnsContext := False;
+    FIsELF := False;
+    if OwnsContext then
+      ContextToFree.Free;
   end;
-  FOwnsAnalysis := False;
 end;
 
 class procedure TDeDeAnalysisSession.ConfigureVersion(
@@ -254,7 +290,6 @@ procedure TDeDeAnalysisSession.ConfigureDisassembler;
 var
   CodeIndex: Integer;
 begin
-  DeDeDisAsm.PEStream := FPEFile.PEStream;
   DeDeDisAsm.DFMNameList := DeDeCoreContext.DFMNameList;
   DeDeDisAsm.PASNameList := DeDeCoreContext.PASNameList;
   DeDeDisAsm.UnitList.Clear;
@@ -263,17 +298,13 @@ begin
   DeDeDisAsm.GlobBEmulation := bBSS;
   DeDeDisAsm.GlobCustomEmulInit := False;
 
-  if bELF then
+  if FIsELF then
     CodeIndex := FPEHeader.GetSectionIndexEx('.text')
   else
     CodeIndex := 1;
   if (CodeIndex < 1) or (CodeIndex > FPEHeader.ObjectNum) then
     raise Exception.Create('Executable code section was not found');
 
-  DeDeDisAsm.RVAConverter.ImageBase := FPEHeader.IMAGE_BASE;
-  DeDeDisAsm.RVAConverter.PhysOffset :=
-    FPEHeader.Objects[CodeIndex].PHYSICAL_OFFSET;
-  DeDeDisAsm.RVAConverter.CodeRVA := FPEHeader.Objects[CodeIndex].RVA;
   if FOwnsAnalysis then
   begin
     FOpcodeList := TList.Create;
@@ -284,21 +315,27 @@ begin
 end;
 
 procedure TDeDeAnalysisSession.DumpClasses(AUserProcs, ABSS: Boolean);
+var
+  PreviousState: TDeDeSessionActivation;
 begin
   if (FPEFile = nil) or (FPEHeader = nil) or (FClassesDumper = nil) then
     raise EInvalidOp.Create('Analysis session is not attached to a binary');
-  DeDeClasses.PEFile := FPEFile;
-  DeDeClasses.PEHeader := FPEHeader;
-  DeDeCoreContext.ClassesDumper := FClassesDumper;
-  bUserProcs := AUserProcs;
-  bBSS := ABSS;
-  DeDeSym.FirstCodeRVA := FPEHeader.BaseOfCode + FPEHeader.IMAGE_BASE;
-  DeDeSym.FirstCodeRVA := FPEHeader.BaseOfCode + FPEHeader.IMAGE_BASE;
-  ConfigureDisassembler;
-  FClassesDumper.ClearClasses;
-  DeDeCoreContext.ReportProgress('Analyzing ', DelphiVersion, 1, 100);
-  FClassesDumper.Dump;
-  FFinalized := False;
+  ActivateLegacyState(PreviousState);
+  try
+    FClassesDumper.SetImage(FPEFile, FPEHeader);
+    DeDeCoreContext.ClassesDumper := FClassesDumper;
+    bUserProcs := AUserProcs;
+    bBSS := ABSS;
+    DeDeSym.FirstCodeRVA := FPEHeader.BaseOfCode + FPEHeader.IMAGE_BASE;
+    DeDeSym.FirstCodeRVA := FPEHeader.BaseOfCode + FPEHeader.IMAGE_BASE;
+    ConfigureDisassembler;
+    FClassesDumper.ClearClasses;
+    DeDeCoreContext.ReportProgress('Analyzing ', DelphiVersion, 1, 100);
+    FClassesDumper.Dump;
+    FFinalized := False;
+  finally
+    RestoreLegacyState(PreviousState);
+  end;
 end;
 
 procedure TDeDeAnalysisSession.PopulateFormLists;
@@ -322,13 +359,20 @@ begin
 end;
 
 procedure TDeDeAnalysisSession.FinalizeAnalysis;
+var
+  PreviousState: TDeDeSessionActivation;
 begin
   if FClassesDumper = nil then
     raise EInvalidOp.Create('No class dump is available to finalize');
   if FFinalized then
     Exit;
-  FClassesDumper.FinilizeDump;
-  FFinalized := True;
+  ActivateLegacyState(PreviousState);
+  try
+    FClassesDumper.FinilizeDump;
+    FFinalized := True;
+  finally
+    RestoreLegacyState(PreviousState);
+  end;
 end;
 
 function HasDelphi2BooleanMarker(AFile: ThePEFile; AHeader: TPEHeader;
@@ -359,52 +403,69 @@ var
   Version: string;
   RecFile: string;
   IsD2: Boolean;
+  PreviousState: TDeDeSessionActivation;
 begin
   ReleaseAnalysis;
-  DeDeCoreContext.ReportProgress('Loading ', ExtractFileName(AFileName),
-    0, 100);
-  LoadPEBinary(AFileName, FPEFile, FPEHeader, bELF);
-  FOwnsAnalysis := True;
+  FContext := TDeDeCoreContext.Create;
+  FOwnsContext := True;
+  try
+    ActivateLegacyState(PreviousState);
+    try
+      DeDeCoreContext.ReportProgress('Loading ', ExtractFileName(AFileName),
+        0, 100);
+      LoadPEBinary(AFileName, FPEFile, FPEHeader, FIsELF);
+      FContext.PEFile := FPEFile;
+      FContext.PEHeader := FPEHeader;
+      FOwnsAnalysis := True;
 
-  IsD2 := False;
-  if not bELF and (FPEHeader.ObjectNum > 0) then
-  begin
-    IsD2 := HasDelphi2BooleanMarker(FPEFile, FPEHeader, 5) or
-      HasDelphi2BooleanMarker(FPEFile, FPEHeader, 1);
+      IsD2 := False;
+      if not bELF and (FPEHeader.ObjectNum > 0) then
+      begin
+        IsD2 := HasDelphi2BooleanMarker(FPEFile, FPEHeader, 5) or
+          HasDelphi2BooleanMarker(FPEFile, FPEHeader, 1);
+      end;
+      GlobDelphi2 := IsD2;
+      GlobCBuilder := False;
+      DeDeCoreContext.FileName := AFileName;
+      DeDeCoreContext.ProjectName := SafeIdentifier(
+        ChangeFileExt(ExtractFileName(AFileName), ''));
+      DeDeCoreContext.ExecutableName := ParamStr(0);
+      DeDeCoreContext.ClassInfoList.Clear;
+      DeDeCoreContext.Warnings.Clear;
+      RecFile := ExtractFilePath(DeDeCoreContext.ExecutableName) +
+        'classes.lst';
+      if FileExists(RecFile) then
+        DeDeCoreContext.ClassInfoList.LoadFromFile(RecFile);
+
+      Version := GetDelphiVersion(
+        FPEFile, FPEHeader, FIsELF, GlobCBuilder, GlobDelphi2);
+      if (Version = '') or (Version = '<unknown version>') or
+        (Version = '<check failed>') then
+        raise EConvertError.CreateFmt(
+          'Unable to identify a supported Delphi target: %s', [AFileName]);
+      ConfigureVersion(Version);
+      DeDeDisAsm.GlobGetImports := True;
+      FClassesDumper := TClassesDumper.Create;
+      DeDeCoreContext.ClassesDumper := FClassesDumper;
+      DumpClasses(False, False);
+      PopulateFormLists;
+      FinalizeAnalysis;
+
+      Result.InputFile := AFileName;
+      Result.ProjectName := DeDeCoreContext.ProjectName;
+      Result.CompilerVersion := Version;
+      Result.ClassCount := FClassesDumper.Classes.Count;
+      Result.FormCount := DeDeCoreContext.DFMNameList.Count;
+      Result.UnitCount := DeDeCoreContext.UnitList.Count;
+      DeDeCoreContext.ReportProgress('Analysis complete', '', 100, 100);
+      FAnalysisResult := Result;
+    finally
+      RestoreLegacyState(PreviousState);
+    end;
+  except
+    ReleaseAnalysis;
+    raise;
   end;
-  GlobDelphi2 := IsD2;
-  GlobCBuilder := False;
-  DeDeCoreContext.FileName := AFileName;
-  DeDeCoreContext.ProjectName := SafeIdentifier(
-    ChangeFileExt(ExtractFileName(AFileName), ''));
-  DeDeCoreContext.ExecutableName := ParamStr(0);
-  DeDeCoreContext.ClassInfoList.Clear;
-  DeDeCoreContext.Warnings.Clear;
-  RecFile := ExtractFilePath(DeDeCoreContext.ExecutableName) + 'classes.lst';
-  if FileExists(RecFile) then
-    DeDeCoreContext.ClassInfoList.LoadFromFile(RecFile);
-
-  Version := GetDelphiVersion(FPEFile);
-  if (Version = '') or (Version = '<unknown version>') or
-    (Version = '<check failed>') then
-    raise EConvertError.CreateFmt('Unable to identify a supported Delphi target: %s',
-      [AFileName]);
-  ConfigureVersion(Version);
-  DeDeDisAsm.GlobGetImports := True;
-  FClassesDumper := TClassesDumper.Create;
-  DeDeCoreContext.ClassesDumper := FClassesDumper;
-  DumpClasses(False, False);
-  PopulateFormLists;
-  FinalizeAnalysis;
-
-  Result.InputFile := AFileName;
-  Result.ProjectName := DeDeCoreContext.ProjectName;
-  Result.CompilerVersion := Version;
-  Result.ClassCount := FClassesDumper.Classes.Count;
-  Result.FormCount := DeDeCoreContext.DFMNameList.Count;
-  Result.UnitCount := DeDeCoreContext.UnitList.Count;
-  DeDeCoreContext.ReportProgress('Analysis complete', '', 100, 100);
-  FAnalysisResult := Result;
 end;
 
 procedure TDeDeAnalysisSession.AttachAnalysis(APEFile: ThePEFile;
@@ -414,8 +475,15 @@ begin
   ReleaseAnalysis;
   if (APEFile = nil) or (APEHeader = nil) or (AClassesDumper = nil) then
     raise EArgumentNilException.Create('Analysis state');
+  if DeDeCoreContext = nil then
+    raise EInvalidOp.Create('No core context is available to attach');
+  FContext := DeDeCoreContext;
+  FOwnsContext := False;
   FPEFile := APEFile;
   FPEHeader := APEHeader;
+  FIsELF := bELF;
+  FContext.PEFile := APEFile;
+  FContext.PEHeader := APEHeader;
   FClassesDumper := AClassesDumper;
   FAnalysisResult.InputFile := DeDeCoreContext.FileName;
   FAnalysisResult.ProjectName := DeDeCoreContext.ProjectName;
@@ -453,6 +521,7 @@ var
   BackupMoved, FileInstalled: array of Boolean;
   PreserveStage: Boolean;
   PreviousDisasmErrors: string;
+  PreviousState: TDeDeSessionActivation;
 
   procedure AddPlannedFile(const AName: string);
   begin
@@ -494,21 +563,24 @@ var
       TempName := IncludeTrailingPathDelimiter(StageDirectory) +
         PlannedFiles[K];
       if FileExists(TempName) then
-        SysUtils.DeleteFile(TempName);
+        DeleteCoreFile(TempName);
       TempName := IncludeTrailingPathDelimiter(StageDirectory) +
         'backup_' + IntToStr(K) + '.bak';
       if FileExists(TempName) then
-        SysUtils.DeleteFile(TempName);
+        DeleteCoreFile(TempName);
     end;
-    RemoveDir(StageDirectory);
+    RemoveCoreDirectory(StageDirectory);
   end;
 
 begin
+  if FContext = nil then
+    raise EInvalidOp.Create('Analysis session has no core context');
   Result := TStringList.Create;
   PlannedFiles := TStringList.Create;
   Backups := TStringList.Create;
   EventLines := TStringList.Create;
   PreviousDisasmErrors := DeDeDisAsm.sDisAsmErrors;
+  ActivateLegacyState(PreviousState);
   DeDeDisAsm.sDisAsmErrors := '';
   try
     try
@@ -519,9 +591,6 @@ begin
     PlannedFiles.CaseSensitive := False;
     ExportPosition := 0;
 
-    DeDeClasses.PEFile := FPEFile;
-    DeDeClasses.PEHeader := FPEHeader;
-    DeDeDisAsm.PEStream := FPEFile.PEStream;
     DeDeDisAsm.PASNameList := DeDeCoreContext.PASNameList;
     DeDeDisAsm.DFMNameList := DeDeCoreContext.DFMNameList;
     DeDeDisAsm.UnitList.Assign(DeDeCoreContext.UnitList);
@@ -529,16 +598,12 @@ begin
       DeDeDisAsm.FOpCodeList := FOpcodeList;
     if AOptions.IncludeDPR or AOptions.IncludePAS then
     begin
-      if bELF then
+      if FIsELF then
         J := FPEHeader.GetSectionIndexEx('.text')
       else
         J := 1;
       if (J < 1) or (J > FPEHeader.ObjectNum) then
         raise EInvalidOp.Create('Executable code section was not found');
-      DeDeDisAsm.RVAConverter.ImageBase := FPEHeader.IMAGE_BASE;
-      DeDeDisAsm.RVAConverter.PhysOffset :=
-        FPEHeader.Objects[J].PHYSICAL_OFFSET;
-      DeDeDisAsm.RVAConverter.CodeRVA := FPEHeader.Objects[J].RVA;
     end;
 
     OutputDirectory := ExcludeTrailingPathDelimiter(AOutputDirectory);
@@ -595,7 +660,7 @@ begin
     I := 0;
     repeat
       StageDirectory := IncludeTrailingPathDelimiter(OutputDirectory) +
-        '.dede-stage-' + IntToHex(HostTickCount, 8) + '-' + IntToStr(I);
+        '.dede-stage-' + IntToHex(GetCoreTickCount, 8) + '-' + IntToStr(I);
       Inc(I);
     until not DirectoryExists(StageDirectory);
     if not ForceDirectories(StageDirectory) then
@@ -637,7 +702,6 @@ begin
       if AOptions.IncludeDPR then
       begin
         InitNewEmulation('', '', '', '');
-        DeDeDisAsm.PEStream := FPEFile.PEStream;
         DeDePAS.GenerateDPR(DeDeCoreContext.ProjectName,
           IncludeTrailingPathDelimiter(StageDirectory) +
             SafeFileName(DeDeCoreContext.ProjectName) + '.dpr',
@@ -674,7 +738,6 @@ begin
         if FOpcodeList <> nil then
           DeDeDisAsm.FOpCodeList := FOpcodeList;
         DeDeDisAsm.DFMNameList := DeDeCoreContext.DFMNameList;
-        DeDeDisAsm.PEStream := FPEFile.PEStream;
         for I := 0 to DeDeCoreContext.DFMNameList.Count - 1 do
         begin
           FormName := DeDeCoreContext.DFMNameList[I];
@@ -827,7 +890,7 @@ begin
                 [TargetFile]);
             BackupFile := IncludeTrailingPathDelimiter(StageDirectory) +
               'backup_' + IntToStr(I) + '.bak';
-            if not RenameFile(TargetFile, BackupFile) then
+            if not RenameCoreFile(TargetFile, BackupFile) then
               raise EInOutError.CreateFmt('Unable to back up output file: %s',
                 [TargetFile]);
             BackupMoved[I] := True;
@@ -841,7 +904,7 @@ begin
             PlannedFiles[I];
           StageFile := IncludeTrailingPathDelimiter(StageDirectory) +
             PlannedFiles[I];
-          if not RenameFile(StageFile, TargetFile) then
+          if not RenameCoreFile(StageFile, TargetFile) then
             raise EInOutError.CreateFmt('Unable to install output file: %s',
               [TargetFile]);
           FileInstalled[I] := True;
@@ -855,7 +918,7 @@ begin
               PlannedFiles[I];
             StageFile := IncludeTrailingPathDelimiter(StageDirectory) +
               PlannedFiles[I];
-            if not RenameFile(TargetFile, StageFile) then
+            if not RenameCoreFile(TargetFile, StageFile) then
               PreserveStage := True;
           end;
         end;
@@ -865,7 +928,7 @@ begin
             TargetFile := IncludeTrailingPathDelimiter(OutputDirectory) +
               PlannedFiles[I];
             BackupFile := Backups[I];
-            if not RenameFile(BackupFile, TargetFile) then
+            if not RenameCoreFile(BackupFile, TargetFile) then
               PreserveStage := True;
           end;
         raise;
@@ -886,6 +949,7 @@ begin
   finally
     DeDeDisAsm.sDisAsmErrors := PreviousDisasmErrors;
     DeDeDisAsm.sDisAsmErrors := PreviousDisasmErrors;
+    RestoreLegacyState(PreviousState);
     EventLines.Free;
     Backups.Free;
     PlannedFiles.Free;

@@ -56,7 +56,7 @@ interface
    p_Items:TStringList
 *)
 
-uses Classes, iniFiles;
+uses Classes, iniFiles, DeDeBinaryTypes;
 
 Type DWORD = LongWord;
 
@@ -66,7 +66,7 @@ Type TOffsInfStruct = class (TPersistent)
         FsClassName : String;
         FHierarchyList : TStringList;
         FNameList : TStringList;
-        FOffsetList : TList;
+        FOffsetList : TPE32DWordList;
         constructor Create;
         destructor Destroy; override;
         Procedure AddClassData(Source : TOffsInfStruct);
@@ -155,7 +155,7 @@ begin
 
   FNameList:=TStringList.Create;
   FHierarchyList:=TStringList.Create;
-  FOffsetList:=TList.Create;
+  FOffsetList:=TPE32DWordList.Create;
 end;
 
 destructor TOffsInfStruct.Destroy;
@@ -303,7 +303,7 @@ begin
             OffsInf.FNameList.Add(s);
             FStream.ReadBuffer(b,1);
             FStream.ReadBuffer(dw,4);
-            OffsInf.FOffsetList.Add(TObject((b shl 24) or dw));
+            OffsInf.FOffsetList.Add((LongWord(b) shl 24) or dw);
           end;
 
         OffsInfList.Add(OffsInf);
@@ -399,7 +399,7 @@ begin
    if OffsInf=nil then Exit;
 
    For i:=0 to OffsInf.FNameList.Count-1 Do
-       if ((DWORD(OffsInf.FOffsetList[i]) and $00FFFFFF)=dwOffset)
+       if ((OffsInf.FOffsetList[i] and $00FFFFFF)=dwOffset)
           and CheckPrefix(OffsInf.FNameList[i],RefType) then
             begin
               sn:=OffsInf.FNameList[i];
@@ -441,7 +441,7 @@ begin
    if OffsInf=nil then Exit;
 
    For i:=0 to OffsInf.FNameList.Count-1 Do
-       if ((DWORD(OffsInf.FOffsetList[i]) and $00FFFFFF)=dwOffset)
+       if ((OffsInf.FOffsetList[i] and $00FFFFFF)=dwOffset)
           and CheckPrefix(OffsInf.FNameList[i],RefType) then
             begin
               sn:=OffsInf.FNameList[i];
@@ -519,7 +519,7 @@ begin
                 s:=IniFile.ReadString(Sects[i],s,'');
                 dw1:={(b shl 24) or }HEX2DWORD(UpperCase(s));
                 if Pos('-',s)<>0 then dw1:=not dw1;
-                OffsInf.FOffsetList.Add(TObject(dw1));
+                OffsInf.FOffsetList.Add(dw1);
               end;  
           end;
 
@@ -598,7 +598,7 @@ begin
             FStream.WriteBuffer(b,1);
             WriteAnsiString(FStream, OffsInf.FNameList[j]);
 
-            dw:=DWORD(OffsInf.FOffsetList[j]);
+            dw:=OffsInf.FOffsetList[j];
             b:=dw shr 24;
             FStream.WriteBuffer(b,1);
             dw:=(dw and $00FFFFFF);

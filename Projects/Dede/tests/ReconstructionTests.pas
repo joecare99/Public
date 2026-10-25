@@ -29,6 +29,8 @@ type
     procedure TestMemLocEnumeratesCurrentProcess;
     procedure TestCoreProgressHost;
     procedure TestCoreAttachedAnalysisIsBorrowed;
+    procedure TestCoreSessionsUseSeparateContexts;
+    procedure TestCoreFailedAnalysisRestoresHostContext;
     procedure TestCoreReportExportAndOverwriteGuard;
     procedure TestCoreVersionConfiguration;
     procedure TestVMTMethodOffsetMapping;
@@ -81,7 +83,7 @@ type
 
 procedure TTestBSS.AddDataValue(Value: DWORD);
 begin
-  Data.Add(Pointer(Value));
+  Data.Add(Value);
 end;
 
 procedure TCoreProgressRecorder.OnProgress(const APhase, ADetail: string;
@@ -804,6 +806,12 @@ begin
     CheckTrue((Header.Objects[1].OBJECT_NAME = '.text') or
       (Header.Objects[1].OBJECT_NAME = 'CODE'),
       'Unexpected first PE section name: ' + Header.Objects[1].OBJECT_NAME);
+    CheckTrue(DeDeClasses.PEFile = PreviousPEFile,
+      'PE loading changed the global PE file binding');
+    CheckTrue(DeDeClasses.PEHeader = PreviousPEHeader,
+      'PE loading changed the global PE header binding');
+    CheckTrue(bELF = PreviousELF,
+      'PE loading changed the global target-format flag');
   finally
     DeDeClasses.PEFile := PreviousPEFile;
     DeDeClasses.PEHeader := PreviousPEHeader;
@@ -1077,6 +1085,208 @@ begin
     Dumper.Free;
     Header.Free;
     Input.Free;
+  end;
+end;
+
+procedure TReconstructionTests.TestCoreSessionsUseSeparateContexts;
+var
+  SessionOne, SessionTwo: TDeDeAnalysisSession;
+  ContextOne, ContextTwo, PreviousContext: TDeDeCoreContext;
+  Input: ThePEFile;
+  Header: TPEHeader;
+  Dumper: TClassesDumper;
+  Generated: TStringList;
+  Report: TStringList;
+  Options: TDeDeExportOptions;
+  OutputDirectory, ReportFile: string;
+  MissingFile: string;
+  Raised: Boolean;
+  PreviousFile: ThePEFile;
+  PreviousHeader: TPEHeader;
+  PreviousStream: TPEStream;
+  PreviousELF: Boolean;
+  PreviousPASNameList, PreviousDFMNameList: TStringList;
+  PreviousUnitList: TStringList;
+begin
+  OutputDirectory := IncludeTrailingPathDelimiter(FsTEMPDir) +
+    'dede-session-context-' + IntToStr(GetTickCount);
+  while DirectoryExists(OutputDirectory) do
+    OutputDirectory := OutputDirectory + '_';
+  ReportFile := IncludeTrailingPathDelimiter(OutputDirectory) +
+    'analysis.json';
+
+  PreviousContext := DeDeCoreContext;
+  PreviousFile := DeDeClasses.PEFile;
+  PreviousHeader := DeDeClasses.PEHeader;
+  PreviousStream := DeDeDisAsm.PEStream;
+  PreviousELF := DeDeClasses.bELF;
+  PreviousPASNameList := DeDeDisAsm.PASNameList;
+  PreviousDFMNameList := DeDeDisAsm.DFMNameList;
+  PreviousUnitList := TStringList.Create;
+  PreviousUnitList.Assign(DeDeDisAsm.UnitList);
+
+  ContextOne := TDeDeCoreContext.Create;
+  ContextTwo := TDeDeCoreContext.Create;
+  ContextOne.FileName := 'first.exe';
+  ContextOne.ProjectName := 'First';
+  ContextOne.Warnings.Add('warning-from-first-session');
+  ContextTwo.FileName := 'second.exe';
+  ContextTwo.ProjectName := 'Second';
+  ContextTwo.Warnings.Add('warning-from-second-session');
+  MissingFile := IncludeTrailingPathDelimiter(FsTEMPDir) +
+    'dede-session-invalid-' + IntToStr(GetTickCount) + '.exe';
+  while FileExists(MissingFile) do
+    MissingFile := MissingFile + '_';
+
+  Input := ThePEFile.Create('');
+  Header := TPEHeader.Create;
+  Dumper := TClassesDumper.Create;
+  SessionOne := TDeDeAnalysisSession.Create;
+  SessionTwo := TDeDeAnalysisSession.Create;
+  Generated := nil;
+  Report := TStringList.Create;
+  try
+    DeDeCoreContext := ContextOne;
+    SessionOne.AttachAnalysis(Input, Header, Dumper, 'D5');
+    DeDeCoreContext := ContextTwo;
+    SessionTwo.AttachAnalysis(Input, Header, Dumper, 'D5');
+    CheckTrue(SessionOne.Context = ContextOne,
+      'First session did not retain its attached context');
+    CheckTrue(SessionTwo.Context = ContextTwo,
+      'Second session did not retain its attached context');
+    CheckTrue(ContextOne.PEFile = Input,
+      'First context did not retain its explicit PE file');
+    CheckTrue(ContextOne.PEHeader = Header,
+      'First context did not retain its explicit PE header');
+    CheckTrue(ContextTwo.PEFile = Input,
+      'Second context did not retain its explicit PE file');
+
+    FillChar(Options, SizeOf(Options), 0);
+    Options.IncludeAnalysisReport := True;
+    Generated := SessionOne.ExportProject(OutputDirectory, Options, False);
+    CheckEquals(1, Generated.Count,
+      'Analysis-report-only export returned the wrong file count');
+    CheckTrue(DeDeCoreContext = ContextTwo,
+      'Export did not restore the previously active context');
+    CheckTrue(DeDeClasses.PEFile = PreviousFile,
+      'Export did not restore the previous PE file');
+    CheckTrue(DeDeClasses.PEHeader = PreviousHeader,
+      'Export did not restore the previous PE header');
+    CheckTrue(DeDeDisAsm.PEStream = PreviousStream,
+      'Export did not restore the previous disassembly stream');
+    CheckTrue(DeDeClasses.bELF = PreviousELF,
+      'Export did not restore the previous target format');
+
+    Report.LoadFromFile(ReportFile);
+    CheckTrue(Pos('"project": "First"', Report.Text) > 0,
+      'First session exported the other session''s project name');
+    CheckTrue(Pos('warning-from-first-session', Report.Text) > 0,
+      'First session did not export its own warnings');
+    CheckEquals(0, Pos('warning-from-second-session', Report.Text),
+      'First session exported the other session''s warnings');
+
+    Raised := False;
+    try
+      SessionOne.Analyze(MissingFile);
+    except
+      on E: EFOpenError do
+        Raised := True;
+    end;
+    CheckTrue(Raised, 'Invalid middle analysis did not fail');
+    CheckTrue(DeDeCoreContext = ContextTwo,
+      'Invalid middle analysis did not restore the active context');
+    CheckTrue(SessionOne.Context = nil,
+      'Invalid middle analysis retained its temporary context');
+
+    DeDeCoreContext := ContextOne;
+    SessionOne.AttachAnalysis(Input, Header, Dumper, 'D5');
+    DeDeCoreContext := ContextTwo;
+    Generated.Free;
+    Generated := SessionOne.ExportProject(OutputDirectory, Options, True);
+    CheckEquals(1, Generated.Count,
+      'Recovered session export returned the wrong file count');
+    Report.LoadFromFile(ReportFile);
+    CheckTrue(Pos('"project": "First"', Report.Text) > 0,
+      'Recovered session did not retain its original context');
+    CheckTrue(Pos('warning-from-first-session', Report.Text) > 0,
+      'Recovered session did not restore its own warning list');
+    CheckEquals(0, Pos('warning-from-second-session', Report.Text),
+      'Recovered session reused warnings from the active host context');
+  finally
+    Generated.Free;
+    SessionOne.Free;
+    SessionTwo.Free;
+    DeDeCoreContext := PreviousContext;
+    DeDeClasses.PEFile := PreviousFile;
+    DeDeClasses.PEHeader := PreviousHeader;
+    DeDeDisAsm.PEStream := PreviousStream;
+    DeDeClasses.bELF := PreviousELF;
+    DeDeDisAsm.PASNameList := PreviousPASNameList;
+    DeDeDisAsm.DFMNameList := PreviousDFMNameList;
+    DeDeDisAsm.UnitList.Assign(PreviousUnitList);
+    PreviousUnitList.Free;
+    Report.Free;
+    Dumper.Free;
+    Header.Free;
+    Input.Free;
+    ContextTwo.Free;
+    ContextOne.Free;
+    if FileExists(ReportFile) then
+      SysUtils.DeleteFile(ReportFile);
+    if DirectoryExists(OutputDirectory) then
+      RemoveDir(OutputDirectory);
+  end;
+end;
+
+procedure TReconstructionTests.TestCoreFailedAnalysisRestoresHostContext;
+var
+  Session: TDeDeAnalysisSession;
+  PreviousContext: TDeDeCoreContext;
+  PreviousFile: ThePEFile;
+  PreviousHeader: TPEHeader;
+  PreviousStream: TPEStream;
+  PreviousELF: Boolean;
+  MissingFile: string;
+  Raised: Boolean;
+begin
+  MissingFile := IncludeTrailingPathDelimiter(FsTEMPDir) +
+    'dede-missing-analysis-' + IntToStr(GetTickCount) + '.exe';
+  while FileExists(MissingFile) do
+    MissingFile := MissingFile + '_';
+  PreviousContext := DeDeCoreContext;
+  PreviousFile := DeDeClasses.PEFile;
+  PreviousHeader := DeDeClasses.PEHeader;
+  PreviousStream := DeDeDisAsm.PEStream;
+  PreviousELF := DeDeClasses.bELF;
+  Session := TDeDeAnalysisSession.Create;
+  try
+    Raised := False;
+    try
+      Session.Analyze(MissingFile);
+    except
+      on E: EFOpenError do
+        Raised := True;
+    end;
+    CheckTrue(Raised, 'Missing input did not fail analysis');
+    CheckTrue(DeDeCoreContext = PreviousContext,
+      'Failed analysis did not restore the host context');
+    CheckTrue(DeDeClasses.PEFile = PreviousFile,
+      'Failed analysis did not restore the host PE file');
+    CheckTrue(DeDeClasses.PEHeader = PreviousHeader,
+      'Failed analysis did not restore the host PE header');
+    CheckTrue(DeDeDisAsm.PEStream = PreviousStream,
+      'Failed analysis did not restore the host PE stream');
+    CheckTrue(DeDeClasses.bELF = PreviousELF,
+      'Failed analysis did not restore the host target format');
+    CheckTrue(Session.Context = nil,
+      'Failed analysis retained its temporary session context');
+  finally
+    Session.Free;
+    DeDeCoreContext := PreviousContext;
+    DeDeClasses.PEFile := PreviousFile;
+    DeDeClasses.PEHeader := PreviousHeader;
+    DeDeDisAsm.PEStream := PreviousStream;
+    DeDeClasses.bELF := PreviousELF;
   end;
 end;
 
@@ -1388,6 +1598,7 @@ end;
 procedure TReconstructionTests.TestVMTMethodOffsetMapping;
 var
   Stream, PreviousStream: TPEStream;
+  Input, PreviousFile: ThePEFile;
   Header, PreviousHeader: TPEHeader;
   Dumper: TClassDumper;
   PreviousProcRefOffsets, PreviousProcRefNames: TStringList;
@@ -1410,6 +1621,7 @@ var
   end;
 
 begin
+  PreviousFile := DeDeClasses.PEFile;
   PreviousHeader := DeDeClasses.PEHeader;
   PreviousStream := DeDeDisAsm.PEStream;
   PreviousELF := DeDeClasses.bELF;
@@ -1417,11 +1629,18 @@ begin
   PreviousProcRefNames := TStringList.Create;
   PreviousProcRefOffsets.Assign(DeDeClasses.ProcRefOffsets);
   PreviousProcRefNames.Assign(DeDeClasses.ProcRefNames);
-  Header := TPEHeader.Create;
-  Stream := TPEStream.Create;
-  Dumper := TClassDumper.Create;
+  Header := nil;
+  Input := nil;
+  Stream := nil;
+  Dumper := nil;
   try
+    Header := TPEHeader.Create;
+    Input := ThePEFile.Create('');
+    Stream := Input.PEStream;
+    DeDeClasses.PEFile := Input;
     DeDeClasses.PEHeader := Header;
+    Dumper := TClassDumper.Create;
+    Dumper.SetImage(Input, Header);
     DeDeDisAsm.PEStream := Stream;
     DeDeClasses.bELF := False;
     DeDeClasses.ProcRefOffsets.Clear;
@@ -1466,8 +1685,9 @@ begin
       'Method absent from the VMT received a slot offset');
   finally
     Dumper.Free;
-    Stream.Free;
+    Input.Free;
     Header.Free;
+    DeDeClasses.PEFile := PreviousFile;
     DeDeClasses.PEHeader := PreviousHeader;
     DeDeDisAsm.PEStream := PreviousStream;
     DeDeClasses.bELF := PreviousELF;

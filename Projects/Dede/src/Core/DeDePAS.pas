@@ -29,7 +29,7 @@ var
 implementation
 
 Uses MethProp, SysUtils, DeDeDisAsm, DisAsm, HexTools, DeDeRes,
-  DeDeConstants, DeDeAnsiStream;
+  DeDeConstants, DeDeAnsiStream, DeDeCoreServices;
 
 {$IFDEF FPC}
 type
@@ -779,7 +779,11 @@ procedure GenerateDPR(AsProject,AsProjectFileName : String;
 var s : String;
     i : Integer;
     DPRList, TmpList : TStringList;
+    PEStream: TStream;
 begin
+  if DeDeCoreContext.PEFile = nil then
+    raise EInvalidOp.Create('No PE file is available for DPR generation');
+  PEStream := DeDeCoreContext.PEFile.PEStream;
   DPRList:=TStringList.Create;
   Try
     DPRList.Add('{'+txt_copyright+'}');

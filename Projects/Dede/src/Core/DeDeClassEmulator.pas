@@ -5,14 +5,15 @@ unit DeDeClassEmulator;
 
 interface
 
-uses Classes, DeDeBSS, DeDeClassHandle, DeDeOffsInf, DeDeCoreServices;
+uses Classes, DeDeBSS, DeDeClassHandle, DeDeOffsInf, DeDeCoreServices,
+  DeDeBinaryTypes;
 
 Type DWORD = LongWord;
 
 Var EAX, EBX, ECX, EDX, ESI, EDI, EBP : String;
 Var dwEAX, dwEBX, dwECX, dwEDX, dwESI, dwEDI, dwEBP : DWORD;
 var ESP, Loc_Names, Loc_StrVals : TStringList;
-Var dwESP, Loc_Vars : TList;
+Var dwESP, Loc_Vars : TPE32DWordList;
 Var OffsInfArchive : TOffsInfArchive;
 
 
@@ -164,13 +165,26 @@ begin
 end;
 
 function IsInSection(dwOffset : DWORD; sSectName : String) : Boolean;
-var idx : Integer;
+var
+  idx : Integer;
+  ImageHeader: TPEHeader;
+  ClassesDumper: TClassesDumper;
 begin
-  result:=false;
-  idx:=PEHEader.GetSectionIndexEx(sSectName);
-  if idx=-1 then exit;
-  result:=     (dwOffset>=PEHeader.IMAGE_BASE+PEHeader.Objects[idx].RVA)
-           and (dwOffset<=PEHeader.IMAGE_BASE+PEHeader.Objects[idx].RVA+PEHEader.Objects[idx].VIRTUAL_SIZE);
+  Result := False;
+  ClassesDumper := TClassesDumper(DeDeCoreContext.ClassesDumper);
+  if ClassesDumper = nil then
+    Exit;
+  ImageHeader := ClassesDumper.PEHeader;
+  if ImageHeader = nil then
+    Exit;
+  idx := ImageHeader.GetSectionIndexEx(sSectName);
+  if idx = -1 then
+    Exit;
+  Result := (dwOffset >= ImageHeader.IMAGE_BASE +
+      ImageHeader.Objects[idx].RVA) and
+    (dwOffset <= ImageHeader.IMAGE_BASE +
+      ImageHeader.Objects[idx].RVA +
+      ImageHeader.Objects[idx].VIRTUAL_SIZE);
 end;
 
 function IsBSSOffset(dw : DWORD) : boolean;
@@ -211,18 +225,23 @@ begin
     begin
      boza:=ClsDmp.GetClass(_eax);
      if boza.FdwBSSOffset.Count>1
-       then dwEAX:=DWORD(ClsDmp.GetClass(_eax).FdwBSSOffset[1]);
+       then dwEAX:=ClsDmp.GetClass(_eax).FdwBSSOffset[1];
     end;
   if _ebx<>'' then
-    if ClsDmp.GetClass(_ebx).FdwBSSOffset.Count>1 then  dwEBX:=DWORD(ClsDmp.GetClass(_ebx).FdwBSSOffset[1]);
+    if ClsDmp.GetClass(_ebx).FdwBSSOffset.Count>1 then
+      dwEBX:=ClsDmp.GetClass(_ebx).FdwBSSOffset[1];
   if _ecx<>'' then
-    if ClsDmp.GetClass(_ecx).FdwBSSOffset.Count>1 then  dwECX:=DWORD(ClsDmp.GetClass(_ecx).FdwBSSOffset[1]);
+    if ClsDmp.GetClass(_ecx).FdwBSSOffset.Count>1 then
+      dwECX:=ClsDmp.GetClass(_ecx).FdwBSSOffset[1];
   if _edx<>'' then
-    if ClsDmp.GetClass(_edx).FdwBSSOffset.Count>1 then  dwEDX:=DWORD(ClsDmp.GetClass(_edx).FdwBSSOffset[1]);
+    if ClsDmp.GetClass(_edx).FdwBSSOffset.Count>1 then
+      dwEDX:=ClsDmp.GetClass(_edx).FdwBSSOffset[1];
   if _edi<>'' then
-    if ClsDmp.GetClass(_edi).FdwBSSOffset.Count>1 then  dwECX:=DWORD(ClsDmp.GetClass(_edi).FdwBSSOffset[1]);
+    if ClsDmp.GetClass(_edi).FdwBSSOffset.Count>1 then
+      dwECX:=ClsDmp.GetClass(_edi).FdwBSSOffset[1];
   if _esi<>'' then
-    if ClsDmp.GetClass(_esi).FdwBSSOffset.Count>1 then  dwEDX:=DWORD(ClsDmp.GetClass(_esi).FdwBSSOffset[1]);
+    if ClsDmp.GetClass(_esi).FdwBSSOffset.Count>1 then
+      dwEDX:=ClsDmp.GetClass(_esi).FdwBSSOffset[1];
 
   dwEBP:=0;
 end;
@@ -234,7 +253,8 @@ begin
        EAX:=_eax;
        dwEAX:=0;
        if _eax<>'' then
-         if ClsDmp.GetClass(_eax).FdwBSSOffset.Count>1 then dwEAX:=DWORD(ClsDmp.GetClass(_eax).FdwBSSOffset[1]);
+         if ClsDmp.GetClass(_eax).FdwBSSOffset.Count>1 then
+           dwEAX:=ClsDmp.GetClass(_eax).FdwBSSOffset[1];
     end;
 
   if EBX='' then
@@ -242,7 +262,8 @@ begin
        EBX:=_ebx;
        dwEBX:=0;
        if _ebx<>'' then
-         if ClsDmp.GetClass(_ebx).FdwBSSOffset.Count>1 then dwEBX:=DWORD(ClsDmp.GetClass(_ebx).FdwBSSOffset[1]);
+         if ClsDmp.GetClass(_ebx).FdwBSSOffset.Count>1 then
+           dwEBX:=ClsDmp.GetClass(_ebx).FdwBSSOffset[1];
     end;
 
   if ECX='' then
@@ -250,7 +271,8 @@ begin
        ECX:=_ecx;
        dwECX:=0;
        if _ecx<>'' then
-         if ClsDmp.GetClass(_ecx).FdwBSSOffset.Count>1 then dwECX:=DWORD(ClsDmp.GetClass(_ecx).FdwBSSOffset[1]);
+         if ClsDmp.GetClass(_ecx).FdwBSSOffset.Count>1 then
+           dwECX:=ClsDmp.GetClass(_ecx).FdwBSSOffset[1];
     end;
 
   if EDX='' then
@@ -258,7 +280,8 @@ begin
        EDX:=_edx;
        dwEDX:=0;
        if _edx<>'' then
-         if ClsDmp.GetClass(_edx).FdwBSSOffset.Count>1 then dwEDX:=DWORD(ClsDmp.GetClass(_edx).FdwBSSOffset[1]);
+         if ClsDmp.GetClass(_edx).FdwBSSOffset.Count>1 then
+           dwEDX:=ClsDmp.GetClass(_edx).FdwBSSOffset[1];
     end;
 
   if ESI='' then
@@ -266,7 +289,8 @@ begin
        ESI:=_esi;
        dwESI:=0;
        if _esi<>'' then
-         if ClsDmp.GetClass(_esi).FdwBSSOffset.Count>1 then dwESI:=DWORD(ClsDmp.GetClass(_esi).FdwBSSOffset[1]);
+         if ClsDmp.GetClass(_esi).FdwBSSOffset.Count>1 then
+           dwESI:=ClsDmp.GetClass(_esi).FdwBSSOffset[1];
     end;
 
   if EDI='' then
@@ -274,7 +298,8 @@ begin
        EDI:=_edi;
        dwEDI:=0;
        if _edi<>'' then
-         if ClsDmp.GetClass(_edi).FdwBSSOffset.Count>1 then dwEDI:=DWORD(ClsDmp.GetClass(_edi).FdwBSSOffset[1]);
+         if ClsDmp.GetClass(_edi).FdwBSSOffset.Count>1 then
+           dwEDI:=ClsDmp.GetClass(_edi).FdwBSSOffset[1];
     end;
 
 
@@ -371,10 +396,11 @@ begin
          begin
            for i:=0 to ClsDmp.Classes.Count-1 do
             for j:=0 to TClassDumper(ClsDmp.Classes[i]).FdwDATAPrt.Count-1 do
-             if DWORD(TClassDumper(ClsDmp.Classes[i]).FdwDATAPrt[j])=dw
+             if TClassDumper(ClsDmp.Classes[i]).FdwDATAPrt[j]=dw
               then begin
                 SetRegVal(reg1,TClassDumper(ClsDmp.Classes[i]).FsClassName);
-                SetRegVal(reg1,DWORD(TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset[j]));
+               SetRegVal(reg1,
+                 TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset[j]);
                 bReference:=True;
                 sReference:=sREF_TEXT_POSSIBLE_TO+' '+GetRegVal(reg1);
                 break;
@@ -385,10 +411,10 @@ begin
          begin
            for i:=0 to ClsDmp.Classes.Count-1 do
             for j:=0 to TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset.Count-1 do
-             if DWORD(TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset[j])=dw
+             if TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset[j]=dw
              then begin
                SetRegVal(reg1,Copy(TClassDumper(ClsDmp.Classes[i]).FsClassName,2,Length(TClassDumper(ClsDmp.Classes[i]).FsClassName)-1));
-               SetRegVal(reg1,DWORD(TClassDumper(ClsDmp.Classes[i]).FdwHeapPtr[j]));
+               SetRegVal(reg1,TClassDumper(ClsDmp.Classes[i]).FdwHeapPtr[j]);
                bReference:=True;
                sReference:=sREF_TEXT_POSSIBLE_TO+' '+GetRegVal(reg1);
                break;
@@ -420,12 +446,12 @@ begin
      // mov register pointer to class instance!!!
      for i:=0 to ClsDmp.Classes.Count-1 do
        for j:=0 to TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset.Count-1 do
-         if DWORD(TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset[j])=Offs
+         if TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset[j]=Offs
          then begin
            If TClassDumper(ClsDmp.Classes[i]).IsBSSDATAClass(j) then
              begin
                SetRegVal(reg,Copy(TClassDumper(ClsDmp.Classes[i]).FsClassName,2,Length(TClassDumper(ClsDmp.Classes[i]).FsClassName)-1));
-               SetRegVal(reg,DWORD(TClassDumper(ClsDmp.Classes[i]).FdwHeapPtr[j]));
+               SetRegVal(reg,TClassDumper(ClsDmp.Classes[i]).FdwHeapPtr[j]);
              end
              else begin
                SetRegVal(reg,'GlobalVar_'+DWORD2HEX(Offs));
@@ -458,10 +484,10 @@ begin
      // mov register pointer to the class !!!
      for i:=0 to ClsDmp.Classes.Count-1 do
        for j:=0 to TClassDumper(ClsDmp.Classes[i]).FdwDATAPrt.Count-1 do
-        if DWORD(TClassDumper(ClsDmp.Classes[i]).FdwDATAPrt[j])=Offs
+        if TClassDumper(ClsDmp.Classes[i]).FdwDATAPrt[j]=Offs
          then begin
            SetRegVal(reg,TClassDumper(ClsDmp.Classes[i]).FsClassName);
-           SetRegVal(reg,DWORD(TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset[j]));
+           SetRegVal(reg,TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset[j]);
            bReference:=True;
            sReference:=sREF_TEXT_REF_TO+' '+GetRegVal(reg)+' instance';
            exit;
@@ -487,12 +513,12 @@ begin
      // mov register pointer to class instance!!!
      for i:=0 to ClsDmp.Classes.Count-1 do
        for j:=0 to TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset.Count-1 do
-         if DWORD(TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset[j])=Offs
+         if TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset[j]=Offs
          then begin
            If TClassDumper(ClsDmp.Classes[i]).IsBSSDATAClass(j) then
              begin
                SetRegVal(reg,Copy(TClassDumper(ClsDmp.Classes[i]).FsClassName,2,Length(TClassDumper(ClsDmp.Classes[i]).FsClassName)-1));
-               SetRegVal(reg,DWORD(TClassDumper(ClsDmp.Classes[i]).FdwHeapPtr[j]));
+               SetRegVal(reg,TClassDumper(ClsDmp.Classes[i]).FdwHeapPtr[j]);
              end
              else begin
                SetRegVal(reg,'GlobalVar_'+DWORD2HEX(Offs));
@@ -551,14 +577,14 @@ end;
 procedure pushRegister(reg : TRegister);
 begin
   case reg of
-   rgEAX: dwESP.Add(Pointer(dwEAX));
-   rgEBX: dwESP.Add(Pointer(dwEBX));
-   rgECX: dwESP.Add(Pointer(dwECX));
-   rgEDX: dwESP.Add(Pointer(dwEDX));
-   rgESI: dwESP.Add(Pointer(dwESI));
-   rgEDI: dwESP.Add(Pointer(dwEDI));
-   rgEBP: dwESP.Add(Pointer(dwEBP));
-   rgESP: dwESP.Add(nil);
+   rgEAX: dwESP.Add(dwEAX);
+   rgEBX: dwESP.Add(dwEBX);
+   rgECX: dwESP.Add(dwECX);
+   rgEDX: dwESP.Add(dwEDX);
+   rgESI: dwESP.Add(dwESI);
+   rgEDI: dwESP.Add(dwEDI);
+   rgEBP: dwESP.Add(dwEBP);
+   rgESP: dwESP.AddUndefined;
   end;
 end;
 
@@ -567,7 +593,7 @@ procedure popRegister(reg : TRegister);
 
   procedure _Pop(var dw : DWORD);
   begin
-    dw:=DWORD(dwESP[0]);
+    dw:=dwESP[0];
     dwESP.Delete(0);
   end;
 
@@ -591,7 +617,7 @@ var idx : Integer;
 begin
   idx:=Loc_Names.IndexOf(DWORD2HEX(val));
   if idx<>-1 then begin
-    dw:=DWORD(Loc_Vars[idx]);
+    dw:=Loc_Vars[idx];
     movRegister_ptr(reg, dw);
 
     // Added in case BSS has not been dumped or bBSS=False
@@ -606,11 +632,11 @@ begin
   if idx=-1 then begin
     Loc_Names.Add(DWORD2HEX(val));
     Loc_StrVals.Add('');
-    Loc_Vars.Add(nil);
+    Loc_Vars.AddUndefined;
     idx:=Loc_Names.Count-1;
    end;
 
-  Loc_Vars[idx]:=(Pointer(GetRegValDW(reg)));
+  Loc_Vars[idx]:=GetRegValDW(reg);
   
   // Added in case BSS has not been dumped or bBSS=False
   Loc_StrVals[idx]:=GetRegVal(reg);
@@ -670,12 +696,12 @@ begin
      // mov register pointer to class instance!!!
      for i:=0 to ClsDmp.Classes.Count-1 do
        for j:=0 to TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset.Count-1 do
-         if DWORD(TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset[j])=Offs
+         if TClassDumper(ClsDmp.Classes[i]).FdwBSSOffset[j]=Offs
          then begin
            If TClassDumper(ClsDmp.Classes[i]).IsBSSDATAClass(j) then
              begin
                SetRegVal(reg,Copy(TClassDumper(ClsDmp.Classes[i]).FsClassName,2,Length(TClassDumper(ClsDmp.Classes[i]).FsClassName)-1));
-               SetRegVal(reg,DWORD(TClassDumper(ClsDmp.Classes[i]).FdwHeapPtr[j]));
+               SetRegVal(reg,TClassDumper(ClsDmp.Classes[i]).FdwHeapPtr[j]);
              end
              else begin
                SetRegVal(reg,'GlobalVar_'+DWORD2HEX(Offs));
@@ -770,7 +796,8 @@ begin
             ClsBoza:=ClsDmp.GetClass(sNewClass);
             if ClsBoza<>nil then
                if ClsBoza.FdwBSSOffset.Count>1
-                    then SetRegVal(Str2TRegister(sDestReg),DWORD(ClsBoza.FdwBSSOffset[1]));
+                    then SetRegVal(Str2TRegister(sDestReg),
+                      ClsBoza.FdwBSSOffset[1]);
           end;
      end
      else begin
@@ -1535,8 +1562,8 @@ initialization
   ESP:=TStringList.Create;
   Loc_Names:=TStringList.Create;
   Loc_StrVals:=TStringList.Create;
-  dwESP:=TList.Create;
-  Loc_Vars:=TList.Create;
+  dwESP:=TPE32DWordList.Create;
+  Loc_Vars:=TPE32DWordList.Create;
   OffsInfArchive:=TOffsInfArchive.Create;
 
 finalization

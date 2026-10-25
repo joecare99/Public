@@ -11,17 +11,17 @@ unit DeDeBSS;
 
 interface
 
-uses Classes, DeDeClasses;
+uses Classes, DeDeClasses, DeDeBinaryTypes;
 
 Type
 
   TBSS = Class
   protected
-    Data : TList;
-    DataPtr : TList;
-    Pointers : TList;
-    Values : TList;
-    PrimValues : TList;
+    Data : TPE32DWordList;
+    DataPtr : TPE32DWordList;
+    Pointers : TPE32DWordList;
+    Values : TPE32DWordList;
+    PrimValues : TPE32DWordList;
   public
     dwStartRVA, dwSize : DWORD;
     dwDATAStartRVA, dwDATASize : DWORD;
@@ -47,13 +47,23 @@ Uses SysUtils, DeDeRes, DeDeCoreServices
 {$ENDIF}
   ;
 
+{$IFDEF MSWINDOWS}
+function RemoteProcessAddressPointer(
+  const Address: TPE32VA): Pointer;
+begin
+  // ReadProcessMemory needs a host-sized pointer for the remote PE32 address.
+  Result := nil;
+  Move(Address, Result, SizeOf(Address));
+end;
+{$ENDIF}
+
 constructor TBSS.Create;
 begin
-  Values:=TList.Create;
-  PrimValues:=TList.Create;
-  Pointers:=TList.Create;
-  Data:=TList.Create;
-  DataPtr:=TList.Create;
+  Values:=TPE32DWordList.Create;
+  PrimValues:=TPE32DWordList.Create;
+  Pointers:=TPE32DWordList.Create;
+  Data:=TPE32DWordList.Create;
+  DataPtr:=TPE32DWordList.Create;
   dwSize:=0;
 end;
 
@@ -75,6 +85,7 @@ var pi : PROCESS_INFORMATION;
     si : TStartupInfo;
     bssi, i : Integer;
     dw, dw1 : DWORD;
+    ImageHeader: TPEHeader;
 {$IFDEF CPU64}
     sz : QWord;
 {$ELSE}
@@ -83,14 +94,17 @@ var pi : PROCESS_INFORMATION;
 {$ENDIF}
 begin
 {$IFDEF MSWINDOWS}
-  bssi := PEHeader.GetSectionIndexEx('DATA');
+  ImageHeader := DeDeCoreContext.PEHeader;
+  if ImageHeader = nil then
+    raise EInvalidOp.Create('No PE header is available for BSS dumping');
+  bssi := ImageHeader.GetSectionIndexEx('DATA');
 
-  dwDATAStartRVA := PEHeader.IMAGE_BASE+PEHeader.Objects[bssi].RVA;
-  dwDATASize := PEHeader.Objects[bssi].VIRTUAL_SIZE;
+  dwDATAStartRVA := ImageHeader.IMAGE_BASE+ImageHeader.Objects[bssi].RVA;
+  dwDATASize := ImageHeader.Objects[bssi].VIRTUAL_SIZE;
 
-  bssi := PEHeader.GetSectionIndexEx('BSS');
-  dwStartRVA := PEHeader.IMAGE_BASE+PEHeader.Objects[bssi].RVA;
-  dwSize := PEHeader.Objects[bssi].VIRTUAL_SIZE;
+  bssi := ImageHeader.GetSectionIndexEx('BSS');
+  dwStartRVA := ImageHeader.IMAGE_BASE+ImageHeader.Objects[bssi].RVA;
+  dwSize := ImageHeader.Objects[bssi].VIRTUAL_SIZE;
 
 
   GetStartUpInfo(si);
@@ -118,14 +132,17 @@ begin
     i:=0;
     while dw < (dwStartRVA + dwSize) Do
     begin
-      ReadProcessMemory(pi.hProcess,Pointer(dw),@dw1,4,sz);
-      Pointers.Add(TObject(dw1));
+      ReadProcessMemory(pi.hProcess,RemoteProcessAddressPointer(
+        TPE32VA(dw)),@dw1,4,sz);
+      Pointers.Add(dw1);
 
-      ReadProcessMemory(pi.hProcess,Pointer(dw1),@dw1,4,sz);
-      Values.Add(TObject(dw1));
+      ReadProcessMemory(pi.hProcess,RemoteProcessAddressPointer(
+        TPE32VA(dw1)),@dw1,4,sz);
+      Values.Add(dw1);
 
-      ReadProcessMemory(pi.hProcess,Pointer(dw1),@dw1,4,sz);
-      PrimValues.Add(TObject(dw1));
+      ReadProcessMemory(pi.hProcess,RemoteProcessAddressPointer(
+        TPE32VA(dw1)),@dw1,4,sz);
+      PrimValues.Add(dw1);
 
       Inc(dw,4);
       Inc(i);
@@ -135,11 +152,12 @@ begin
     i:=0;
     while dw < (dwDATAStartRVA + dwDATASize) Do
     begin
-      DataPtr.Add(TObject(i));
+      DataPtr.Add(LongWord(i));
 
-      ReadProcessMemory(pi.hProcess,Pointer(dw),@dw1,4,sz);
+      ReadProcessMemory(pi.hProcess,RemoteProcessAddressPointer(
+        TPE32VA(dw)),@dw1,4,sz);
 
-      Data.Add(TObject(dw1));
+      Data.Add(dw1);
 
       Inc(dw,4);
       Inc(i);
@@ -156,11 +174,11 @@ begin
     dw:=dwStartRVA;
     while dw < (dwStartRVA + dwSize) Do
     begin
-      Pointers.Add(Pointer(dwStartRVA));
-      Values.Add(nil);
-      PrimValues.Add(Pointer(dwStartRVA));
-      Data.Add(nil);
-      DataPtr.Add(Pointer(dwStartRVA));
+      Pointers.Add(dwStartRVA);
+      Values.AddUndefined;
+      PrimValues.Add(dwStartRVA);
+      Data.AddUndefined;
+      DataPtr.Add(dwStartRVA);
       Inc(dw,4);
     end;
   End;
@@ -172,7 +190,7 @@ end;
 
 function TBSS.GetData(Offset: DWORD): DWORD;
 begin
-  if bBSS then Result:=DWORD(Data[(Offset-dwDATAStartRVA) div 4])
+  if bBSS then Result:=Data[(Offset-dwDATAStartRVA) div 4]
           else Result:=0;
 end;
 
@@ -197,7 +215,7 @@ end;
 function TBSS.GetDataPtr(Offset: DWORD): DWORD;
 begin
   if bBSS then
-    Result:=DWORD(DataPtr[(Offset-dwDATAStartRVA) div 4])
+    Result:=DataPtr[(Offset-dwDATAStartRVA) div 4]
   else
     Result:=0;
 
@@ -206,7 +224,7 @@ end;
 function TBSS.GetPointer(Offset: DWORD): DWORD;
 begin
    if bBSS then
-     Result:=DWORD(Pointers[(Offset-dwStartRVA) div 4])
+     Result:=Pointers[(Offset-dwStartRVA) div 4]
    else
      Result:=0;
 end;
@@ -218,22 +236,22 @@ begin
   size:=Data.Count+DataPtr.Count+Pointers.Count+Values.Count+PrimValues.Count;
   if Length(buff)<>size then exit;
 
-  for i:=0 to Data.Count-1 do buff[i]:=DWORD(Data[i]);
+  for i:=0 to Data.Count-1 do buff[i]:=Byte(Data[i]);
   size:=Data.Count;
-  for i:=0 to DataPtr.Count-1 do buff[size+i]:=DWORD(DataPtr[i]);
+  for i:=0 to DataPtr.Count-1 do buff[size+i]:=Byte(DataPtr[i]);
   size:=size+DataPtr.Count;
-  for i:=0 to Pointers.Count-1 do buff[size+i]:=DWORD(Pointers[i]);
+  for i:=0 to Pointers.Count-1 do buff[size+i]:=Byte(Pointers[i]);
   size:=size+Pointers.Count;
-  for i:=0 to Values.Count-1 do buff[size+i]:=DWORD(Values[i]);
+  for i:=0 to Values.Count-1 do buff[size+i]:=Byte(Values[i]);
   size:=size+Values.Count;
-  for i:=0 to PrimValues.Count-1 do buff[size+i]:=DWORD(PrimValues[i]);
+  for i:=0 to PrimValues.Count-1 do buff[size+i]:=Byte(PrimValues[i]);
   size:=size+PrimValues.Count;
 end;
 
 function TBSS.GetValue(Offset: DWORD): DWORD;
 begin
   if bBSS then
-    Result:=DWORD(Values[(Offset-dwStartRVA) div 4])
+    Result:=Values[(Offset-dwStartRVA) div 4]
   else
     Result:=0;
 end;
@@ -241,7 +259,7 @@ end;
 function TBSS.GetValuePrim(Offset: DWORD): DWORD;
 begin
   if bBSS then
-   Result:=DWORD(PrimValues[(Offset-dwStartRVA) div 4])
+   Result:=PrimValues[(Offset-dwStartRVA) div 4]
   else
    Result:=0;
 end;

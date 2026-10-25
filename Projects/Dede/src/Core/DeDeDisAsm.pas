@@ -72,6 +72,59 @@ Var LastPush : DWORD;
     bCommentNext, bTryBlockFound, bControlRef : Boolean;
     LastJump : DWORD;
 
+function CurrentPEStream: TPEStream;
+var
+  ImageFile: ThePEFile;
+begin
+  ImageFile := nil;
+  if DeDeCoreContext <> nil then
+    ImageFile := DeDeCoreContext.PEFile;
+  if ImageFile <> nil then
+    Result := ImageFile.PEStream
+  else
+    Result := PEStream;
+  if Result = nil then
+    raise EInvalidOp.Create('No PE stream is available to the disassembler');
+end;
+
+function CurrentPEConverter: TRVAConverter;
+var
+  ImageHeader: TPEHeader;
+  CodeIndex: Integer;
+begin
+  Result := RVAConverter;
+  if DeDeCoreContext = nil then
+    Exit;
+  ImageHeader := DeDeCoreContext.PEHeader;
+  if ImageHeader = nil then
+    Exit;
+  if ImageHeader.ELFDumped then
+    CodeIndex := ImageHeader.GetSectionIndexEx('.text')
+  else
+    CodeIndex := 1;
+  if (CodeIndex < 1) or (CodeIndex > ImageHeader.ObjectNum) then
+    Exit;
+  Result.ImageBase := ImageHeader.IMAGE_BASE;
+  Result.PhysOffset := ImageHeader.Objects[CodeIndex].PHYSICAL_OFFSET;
+  Result.CodeRVA := ImageHeader.Objects[CodeIndex].RVA;
+end;
+
+function CurrentPEGetPhys(ARVA: DWORD): DWORD;
+var
+  Converter: TRVAConverter;
+begin
+  Converter := CurrentPEConverter;
+  Result := Converter.GetPhys(ARVA);
+end;
+
+function CurrentPEGetRVA(AOffset: DWORD): DWORD;
+var
+  Converter: TRVAConverter;
+begin
+  Converter := CurrentPEConverter;
+  Result := Converter.GetRVA(AOffset);
+end;
+
 Function UnitIncluded(s : String) : Boolean;
 var sUnit : String;
     i : Integer;
@@ -98,20 +151,25 @@ End;
 function OffsetInSegment(Offset : DWORD; Segment : String) : boolean;
 var rva,size,ib : DWORD;
     i : Integer;
+    ImageHeader: TPEHeader;
 begin
+  ImageHeader := DeDeCoreContext.PEHeader;
+  if ImageHeader = nil then
+    raise EInvalidOp.Create('No PE header is available to the disassembler');
   Result:=False;
-  i:=PEHeader.GetSectionIndexEx(Segment);
+  i:=ImageHeader.GetSectionIndexEx(Segment);
   If i<1 Then
     begin
     // Correction due to the lame idea of finding sections by name!!!
-    if Segment='CODE' then i:=PEHeader.GetSectionIndexByRVA(PEHeader.BaseOfCode);
+    if Segment='CODE' then
+      i:=ImageHeader.GetSectionIndexByRVA(ImageHeader.BaseOfCode);
 
     if i=-1 then Exit;
     end;
     
-  rva:=PEHeader.Objects[i].RVA;
-  size:=PEHeader.Objects[i].VIRTUAL_SIZE;
-  ib:=PEHeader.IMAGE_BASE;
+  rva:=ImageHeader.Objects[i].RVA;
+  size:=ImageHeader.Objects[i].VIRTUAL_SIZE;
+  ib:=ImageHeader.IMAGE_BASE;
   Result:=(Offset>=ib+rva) and (Offset<=ib+rva+size);
 end;
 
@@ -125,27 +183,31 @@ var b : Byte;
     bOK : Boolean;
     s : String;
     i : Integer;
-var idx : Integer;
+    idx : Integer;
+    ImageHeader: TPEHeader;
 begin
-  idx:=PEHeader.GetSectionIndexEx('DATA');
+  ImageHeader := DeDeCoreContext.PEHeader;
+  if ImageHeader = nil then
+    raise EInvalidOp.Create('No PE header is available for string lookup');
+  idx:=ImageHeader.GetSectionIndexEx('DATA');
 
    if (not DisassemblerOptions.EnglishStrings)
      and (not DisassemblerOptions.NonEnglishStrings) then Exit;
 
    rva:=HEX2DWORD(AsOffset);  
-   if ((RVA-PEHeader.IMAGE_BASE)>=PEHeader.Objects[idx].RVA)
-     and ((RVA-PEHeader.IMAGE_BASE)<=PEHeader.Objects[idx].RVA+PEHeader.Objects[idx].VIRTUAL_SIZE)
-     then dwOffset:=rva-PEHeader.IMAGE_BASE-PEHeader.Objects[idx].RVA+PEHeader.Objects[idx].PHYSICAL_OFFSET
-     else dwOffset:=RVAConverter.GetPhys(rva);
+   if ((RVA-ImageHeader.IMAGE_BASE)>=ImageHeader.Objects[idx].RVA)
+     and ((RVA-ImageHeader.IMAGE_BASE)<=ImageHeader.Objects[idx].RVA+ImageHeader.Objects[idx].VIRTUAL_SIZE)
+     then dwOffset:=rva-ImageHeader.IMAGE_BASE-ImageHeader.Objects[idx].RVA+ImageHeader.Objects[idx].PHYSICAL_OFFSET
+     else dwOffset:=CurrentPEGetPhys(rva);
 
 
-   PEStream.Seek(dwOffset,soFromBeginning);
-   PEStream.ReadBuffer(b,1);
+   CurrentPEStream.Seek(dwOffset,soFromBeginning);
+   CurrentPEStream.ReadBuffer(b,1);
    bOK:=False;
    While b in STRING_REF_CHARSET Do
     Begin
       If not (b in [10,13]) Then Result:=Result+CHR(b);
-      PEStream.ReadBuffer(b,1);
+      CurrentPEStream.ReadBuffer(b,1);
       If b in (STRING_REF_CHARSET - [10,13]) then bOK:=True;
     End;
 
@@ -180,9 +242,9 @@ end;
 function GetDWORDConstantReference(AsOffset : String) : String;
 var dw, dwOffset : DWORD;
 begin
-   dwOffset:=RVAConverter.GetPhys(HEX2DWORD(AsOffset));
-   PEStream.Seek(dwOffset,soFromBeginning);
-   PEStream.ReadBuffer(dw,4);
+   dwOffset:=CurrentPEGetPhys(HEX2DWORD(AsOffset));
+   CurrentPEStream.Seek(dwOffset,soFromBeginning);
+   CurrentPEStream.ReadBuffer(dw,4);
    Result:=IntToStr(dw);
 end;
 
@@ -201,14 +263,18 @@ var iRVA, iPhys, ProcOffset, DLLOffset : DWORD;
     wdiRVA,itbl : LongInt;
     {b1,b2,b3,b4,}b : Byte;
     ProcName, DLLName : String;
+    ImageHeader: TPEHeader;
 //    Pattern : TPaternQuery;
 //    i : Integer;
 begin
+  ImageHeader := DeDeCoreContext.PEHeader;
+  if ImageHeader = nil then
+    raise EInvalidOp.Create('No PE header is available for import lookup');
   Result:='';
   DLLName:='';
   ProcName:='';
 
-  if bELF then Exit;
+  if ImageHeader.ELFDumped then Exit;
 
   // Skip import references if set
   if not DisassemblerOptions.Imports then exit;
@@ -216,16 +282,17 @@ begin
   if not bImportReferences then Exit;
 
   // Get the '.idata' section characteristics
-  if bElf then iIDX:=PEHeader.GetSectionIndexEx('.idata')
+  if ImageHeader.ELFDumped then iIDX:=ImageHeader.GetSectionIndexEx('.idata')
   else begin
-    iIDX:=PEHeader.GetSectionIndex('.idata');
-    if iIDX=255 then iIDX:=PEHeader.GetSectionIndexByRVA(PEHEader.IMPORT_TABLE_RVA);
+    iIDX:=ImageHeader.GetSectionIndex('.idata');
+    if iIDX=255 then
+      iIDX:=ImageHeader.GetSectionIndexByRVA(ImageHeader.IMPORT_TABLE_RVA);
   end;
 
-  iRVA:=PEHeader.Objects[iIDX].RVA;
-  iPhys:=PEHeader.Objects[iIDX].PHYSICAL_OFFSET;
+  iRVA:=ImageHeader.Objects[iIDX].RVA;
+  iPhys:=ImageHeader.Objects[iIDX].PHYSICAL_OFFSET;
   // and some PE file characteristics
-  ImgBase:=PEHeader.IMAGE_BASE;
+  ImgBase:=ImageHeader.IMAGE_BASE;
 
   // Convert value for RVA to Phys
   Delta1:=iPhys-iRVA-ImgBase;
@@ -238,19 +305,19 @@ begin
   // in the DLL Import Lookup Table
   itbl:=wdiRVA+Delta1;
   // Goes there
-  PEStream.Seek(itbl,soFromBeginning);
+  CurrentPEStream.Seek(itbl,soFromBeginning);
   // Reads the relative offset of the
   // entry in the Import Hint/Name Table
-  PEStream.ReadBuffer(ProcOffset,4);
+  CurrentPEStream.ReadBuffer(ProcOffset,4);
   // Corrects the offset to physical
   ProcOffset:=ProcOffset+Delta2;
 
   // Finds the DLL string ossfet
   Repeat
-    PEStream.Seek(-8,soFromCurrent);
-    PEStream.ReadBuffer(DLLOffset,4);
+    CurrentPEStream.Seek(-8,soFromCurrent);
+    CurrentPEStream.ReadBuffer(DLLOffset,4);
     If DLLOffset=0 Then Break;
-  Until (PEStream.Position<=iPhys);
+  Until (CurrentPEStream.Position<=iPhys);
 
   If DLLOffset<>0 Then
    begin
@@ -259,21 +326,21 @@ begin
       Raise Exception.Create(err_import_ref);
    end;
   // Reads the first value in the DLL Import Lookup Table
-  PEStream.ReadBuffer(DLLOffset,4);
+  CurrentPEStream.ReadBuffer(DLLOffset,4);
   // Corrects the offset to physical
   DLLOffset:=DLLOffset+Delta2;
 
   // Goes to the import name offset
-  PEStream.Seek(ProcOffset+2,soFromBeginning);
+  CurrentPEStream.Seek(ProcOffset+2,soFromBeginning);
   ProcName:='';
 
   // Reads the import name
   Try
-  PEStream.ReadBuffer(b,1);
+  CurrentPEStream.ReadBuffer(b,1);
   While b<>0 Do
    Begin
      ProcName:=ProcName+Chr(b);
-     PEStream.ReadBuffer(b,1);
+     CurrentPEStream.ReadBuffer(b,1);
    End;
   Except
    Exit;
@@ -281,21 +348,21 @@ begin
 
 
   // Goes to the dll name offset
-  PEStream.Seek(DLLOffset,soFromBeginning);
+  CurrentPEStream.Seek(DLLOffset,soFromBeginning);
   DLLName:='';
 
   Repeat
-    PEStream.ReadBuffer(b,1);
-    PEStream.Seek(-2,soFromCurrent);
+    CurrentPEStream.ReadBuffer(b,1);
+    CurrentPEStream.Seek(-2,soFromCurrent);
   Until b<>0;
   DLLName:=Chr(b)+DLLName;
   // Reads the dll name
-  PEStream.ReadBuffer(b,1);
+  CurrentPEStream.ReadBuffer(b,1);
   While b<>0 Do
    Begin
      DLLName:=Chr(b)+DLLName;
-     PEStream.Seek(-2,soFromCurrent);
-     PEStream.ReadBuffer(b,1);
+     CurrentPEStream.Seek(-2,soFromCurrent);
+     CurrentPEStream.ReadBuffer(b,1);
    End;
 
   b:=Pos('.',DLLName);
@@ -409,11 +476,11 @@ Begin
   Result:='';
   OffsInfStr:=nil;
   // saves the PEStream postion
-  bk:=PEStream.Position;
+  bk:=CurrentPEStream.Position;
   // Gets the physical offset of the addres of
   // the procedure thet is being called
-  phys:=RVAConverter.GetPhys(HEX2DWORD(DWORD2HEX(AwdOffset)));
-  if Int64(phys)+_PatternSize>=PEStream.Size then exit;
+  phys:=CurrentPEGetPhys(HEX2DWORD(DWORD2HEX(AwdOffset)));
+  if Int64(phys)+_PatternSize>=CurrentPEStream.Size then exit;
 
   if bSMARTMODE Then
     begin
@@ -424,9 +491,9 @@ Begin
   RefLst:=TStringList.Create;
   SmartLst:=TStringList.Create;
   Try
-    PEStream.Seek(phys,soFromBeginning);
+    CurrentPEStream.Seek(phys,soFromBeginning);
     // reads the procedure bytes in buff1
-    PEStream.ReadBuffer(buff[1],_PatternSize);
+    CurrentPEStream.ReadBuffer(buff[1],_PatternSize);
 
     // if the first read byte is not found in the
     // First byte set then skip searching fo that reference
@@ -470,7 +537,7 @@ Begin
       End;
   Finally
     // restores the PEStream position
-    PEStream.Seek(bk,soFromBeginning);
+    CurrentPEStream.Seek(bk,soFromBeginning);
 
     // Gets only those DSF references in which names
     // the EAX class name or it's parents is included
@@ -531,24 +598,24 @@ var b1,b2,b3,b4 : Byte;
     cd : TClassDumper;
 Begin
   Result:='';
-  phys:=RVAConverter.GetPhys(AwdOffset);
-  if phys>=PEStream.Size Then Exit;
+  phys:=CurrentPEGetPhys(AwdOffset);
+  if phys>=CurrentPEStream.Size Then Exit;
 
   // Reads the first 2 bytes of the procedure
   // that is being called.
-  bk:=PEStream.Position;
+  bk:=CurrentPEStream.Position;
   Try
-    PEStream.Seek(phys,soFromBeginning);
-    PEStream.ReadBuffer(b1,1);
-    PEStream.ReadBuffer(b2,1);
+    CurrentPEStream.Seek(phys,soFromBeginning);
+    CurrentPEStream.ReadBuffer(b1,1);
+    CurrentPEStream.ReadBuffer(b2,1);
 
     //In the case of import call
     If (b1=$FF) and (b2=$25) Then
       Begin
-        PEStream.ReadBuffer(b1,1);
-        PEStream.ReadBuffer(b2,1);
-        PEStream.ReadBuffer(b3,1);
-        PEStream.ReadBuffer(b4,1);
+        CurrentPEStream.ReadBuffer(b1,1);
+        CurrentPEStream.ReadBuffer(b2,1);
+        CurrentPEStream.ReadBuffer(b3,1);
+        CurrentPEStream.ReadBuffer(b4,1);
         ofs:=b1+b2*256+256*256*(b3+b4*256);
         // Gets the import function name
         If GlobGetImports Then
@@ -563,7 +630,7 @@ Begin
           end;
       End;
    Finally
-     PEStream.Seek(bk,soFromBeginning);
+     CurrentPEStream.Seek(bk,soFromBeginning);
    End;
 
   // If no other call reference is found then
@@ -810,17 +877,17 @@ Begin
    // sTRY_1e = '64FF30648920';// push dword ptr fs:[eax]; mov fs:[eax], esp
    // sTRY_2e = '64FF32648922';// push dword ptr fs:[edx]; mov fs:[edx], esp
    // sTRY_3e = '64FF31648921';// push dword ptr fs:[ecx]; mov fs:[ecx], esp
-   bk:=PEStream.Position;
+   bk:=CurrentPEStream.Position;
    Try
-     ph:=RVAConverter.GetPhys(RVA);
-     PEStream.Seek(ph,soFromBeginning);
+     ph:=CurrentPEGetPhys(RVA);
+     CurrentPEStream.Seek(ph,soFromBeginning);
      SetLength(t_e_str,6);
-     PEStream.ReadBuffer(t_e_str[1],6);
+     CurrentPEStream.ReadBuffer(t_e_str[1],6);
      Result:=   (t_e_str=#$64#$FF#$30#$64#$89#$20)
              or (t_e_str=#$64#$FF#$32#$64#$89#$22)
              or (t_e_str=#$64#$FF#$31#$64#$89#$21);
    Finally
-     PEStream.Seek(bk,soFromBeginning);
+     CurrentPEStream.Seek(bk,soFromBeginning);
    End;
 End;
 
@@ -832,19 +899,19 @@ var bk : DWORD;
     b : Byte;
     t_e_str : String;
 Begin
-   bk:=PEStream.Position;
+   bk:=CurrentPEStream.Position;
    Try
-     ph:=RVAConverter.GetPhys(RVA);
-     PEStream.Seek(ph+3,soFromBeginning);
+     ph:=CurrentPEGetPhys(RVA);
+     CurrentPEStream.Seek(ph+3,soFromBeginning);
      SetLength(t_e_str,1);
-     PEStream.ReadBuffer(t_e_str[1],1);
+     CurrentPEStream.ReadBuffer(t_e_str[1],1);
      Result:=t_e_str[1]=#$EB;
      If Result Then Begin
-       PEStream.ReadBuffer(b,1);
+       CurrentPEStream.ReadBuffer(b,1);
        LastPush:=rva+b+5;
      End;
    Finally
-     PEStream.Seek(bk,soFromBeginning);
+     CurrentPEStream.Seek(bk,soFromBeginning);
    End;
 End;
 
@@ -856,19 +923,19 @@ var bk : DWORD;
     ph,dw : DWORD;
     t_e_str : String;
 Begin
-   bk:=PEStream.Position;
+   bk:=CurrentPEStream.Position;
    Try
-     ph:=RVAConverter.GetPhys(RVA);
-     PEStream.Seek(ph+3,soFromBeginning);
+     ph:=CurrentPEGetPhys(RVA);
+     CurrentPEStream.Seek(ph+3,soFromBeginning);
      SetLength(t_e_str,1);
-     PEStream.ReadBuffer(t_e_str[1],1);
+     CurrentPEStream.ReadBuffer(t_e_str[1],1);
      Result:=t_e_str[1]=#$68;
      If Result Then Begin
-       PEStream.ReadBuffer(dw,4);
+       CurrentPEStream.ReadBuffer(dw,4);
        LastPush:=dw;
      End;
    Finally
-     PEStream.Seek(bk,soFromBeginning);
+     CurrentPEStream.Seek(bk,soFromBeginning);
    End;
 End;
 
@@ -1027,7 +1094,7 @@ Begin
        ofs:=OffsetMightBeString(ins1,dta);
        If ofs<>''
          Then Begin
-           bk:=PEStream.Position;
+           bk:=CurrentPEStream.Position;
            Try
              If not bTryBlockFound Then
               begin
@@ -1036,7 +1103,7 @@ Begin
                    Result:=Result+#13#10+sREF_TEXT_REF_STRING+' '''+sof+''''#13#10+'|'#13#10;
               end;     
            Finally
-             PEStream.Seek(bk,soFromBeginning);
+             CurrentPEStream.Seek(bk,soFromBeginning);
            End;
            Exit;
          End
@@ -1120,7 +1187,7 @@ End;
 //                        things in the both cases. The default value is TRUE)
 //       Custom        : If TRUE then the DisassembleProc will not seek for the
 //                       proc RVA addres and will start to dissasebmle from the current
-//                       position of the PEStream. If this parameter is not specified then
+//                       position of the CurrentPEStream. If this parameter is not specified then
 //                        the default value is FALSE
 //
 //       EmulateOnly   : If TRUE then ptocedure is only emulated to dwEmulateToOffset offset.
@@ -1174,12 +1241,12 @@ begin
       if not GlobCustomEmulInit then
          InitNewEmulation(ClsDmp.FsClassName,'','','');
 
-    ss:=DWORD2HEX(RVAConverter.GetPhys(rva));
-    PEStream.Seek(HEX2DWORD(ss),soFromBeginning);
+    ss:=DWORD2HEX(CurrentPEGetPhys(rva));
+    CurrentPEStream.Seek(HEX2DWORD(ss),soFromBeginning);
   End
   // Else if bCustom=True, the Stream is set to this first
   // instruction and need just to get its RVA address
-  Else rva:=RVAConverter.GetRVA(PEStream.Position);
+  Else rva:=CurrentPEGetRVA(CurrentPEStream.Position);
 
   If rva=0 then Exit;
   ProcRva:=rva;
@@ -1223,7 +1290,7 @@ begin
           // Sets lenth in bytes of the largest instruction
           SetLength(pc,17);
           // Reads next byets
-          PEStream.ReadBuffer(pc[1],16);
+          CurrentPEStream.ReadBuffer(pc[1],16);
           // Disassembels them
           ss:=DASM.GetInstruction(PAnsiChar(pc),sz,16);
           Inc(InstrId);
@@ -1294,7 +1361,7 @@ begin
           // of the next instruction according to the last
           // instruction size in bytes. 16 is the max length of
           // an instruction
-          PEStream.Seek(sz-16,soFromCurrent);
+          CurrentPEStream.Seek(sz-16,soFromCurrent);
 
           // This is especially for the Delphi compiler
           // This can be and of a procedure. This is
@@ -1329,7 +1396,7 @@ begin
             'Exception: '+E.Message+#13#10+
             'Proc Name: '+NameP+'.'+s+#13#10+
             'Last Instruction: '+DWord2HEX(rva)+'   '+op+'   '+ss+#13#10+
-            'Current Position: '+IntToHex(PEStream.Position,8)+
+            'Current Position: '+IntToHex(CurrentPEStream.Position,8)+
             #13#10;
      End;
     Finally
@@ -1363,21 +1430,21 @@ var  DASM : TDisAsm;
     Result:=0;
     DeDeCoreContext.ReportWarning(Format(
       'Procedure scan from RVA %s stopped at file offset %s (stream size %s)',
-      [DWORD2HEX(dwRVA),IntToStr(PEStream.Position),
-       IntToStr(PEStream.Size)]));
+      [DWORD2HEX(dwRVA),IntToStr(CurrentPEStream.Position),
+       IntToStr(CurrentPEStream.Size)]));
   end;
 begin
    DASM:=TDisAsm.Create;
 
    try
      bFound:=False;
-     phys:=RVAConverter.GetPhys(dwRVA);
-     PEStream.Seek(phys,soFromBeginning);
+     phys:=CurrentPEGetPhys(dwRVA);
+     CurrentPEStream.Seek(phys,soFromBeginning);
      rva:=dwRVA;
 
      Result:=0;
      if (phys<=0) then Exit;
-     if (phys>=PEStream.Size) then Exit; 
+     if (phys>=CurrentPEStream.Size) then Exit; 
 
      SEHPtrList.Clear;
      bTryExcept:=0;
@@ -1386,13 +1453,13 @@ begin
      sz:=0;
      Repeat
        Repeat
-          if PEStream.Position>PEStream.Size-16 then
+          if CurrentPEStream.Position>CurrentPEStream.Size-16 then
           begin
             StopAtStreamEnd;
             Exit;
           end;
           SetLength(pc,17);
-          PEStream.ReadBuffer(pc[1],16);
+          CurrentPEStream.ReadBuffer(pc[1],16);
           ss:=DASM.GetInstruction(PAnsiChar(pc),sz,16);
           if (sz<1) or (sz>16) then
           begin
@@ -1431,7 +1498,7 @@ begin
              End;
 
            rva:=rva+sz;
-           PEStream.Seek(sz-16,soFromCurrent);
+           CurrentPEStream.Seek(sz-16,soFromCurrent);
 
            if (ORD(pc[1])=0) and (ORD(pc[2])=0) then break;
         Until Copy(ss,1,3)='ret';
@@ -1468,12 +1535,12 @@ begin
          if not bFound then
           begin
            repeat
-              if PEStream.Position>=PEStream.Size then
+              if CurrentPEStream.Position>=CurrentPEStream.Size then
               begin
                 StopAtStreamEnd;
                 Exit;
               end;
-              PEStream.ReadBuffer(pc[1],1);
+              CurrentPEStream.ReadBuffer(pc[1],1);
               Inc(rva);
             until pc[1] in [#$55,#$83];
            bFound:=pc[1] in [#$55,#$83]
@@ -1495,14 +1562,18 @@ end;
 Function GetInitUnitsProcRVA : DWORD;
 var l, iiDW : DWORD;
     buff : TSymBuffer;
+    ImageFile: ThePEFile;
 begin
   iiDW:=0;
-  PEFile.PEStream.BeginSearch;
+  ImageFile := DeDeCoreContext.PEFile;
+  if ImageFile = nil then
+    raise EInvalidOp.Create('No PE file is available for unit initialization');
+  ImageFile.PEStream.BeginSearch;
   Try
-    For l:=0 to PEFile.PEStream.Size-sizeOf(buff)-1 Do
+    For l:=0 to ImageFile.PEStream.Size-sizeOf(buff)-1 Do
       begin
-        PEFile.PEStream.Seek(l,soFromBeginning);
-        PEFile.PEStream.ReadBuffer(buff,sizeof(buff));
+        ImageFile.PEStream.Seek(l,soFromBeginning);
+        ImageFile.PEStream.ReadBuffer(buff,sizeof(buff));
 
         If DelphiVersion='D2' then
          begin
@@ -1590,7 +1661,7 @@ begin
 
       end;
   Finally
-    PEFile.PEStream.EndSearch;
+    ImageFile.PEStream.EndSearch;
   End;
 
   Result:=iiDW;

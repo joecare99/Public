@@ -47,7 +47,7 @@ implementation
 
 Uses
   DeDeDisASM, DisASM, HexTools, DeDeBPL, SysUtils,
-  crc32, DeDeRes, DeDeCoreServices;
+  crc32, DeDeRes, DeDeCoreServices, DeDeClassHandle;
 
 var DASM : TDisAsm;
 
@@ -93,7 +93,24 @@ var dwOffset : DWORD;
     Offs : LongInt;
     i : Integer;
     pbuf : TSymBuffer;
+    ImageFile: ThePEFile;
+    ImageHeader: TPEHeader;
+    ClassesDumper: TClassesDumper;
 begin
+  ClassesDumper := TClassesDumper(DeDeCoreContext.ClassesDumper);
+  if ClassesDumper <> nil then
+  begin
+    ImageFile := ClassesDumper.PEFile;
+    ImageHeader := ClassesDumper.PEHeader;
+  end
+  else
+  begin
+    ImageFile := DeDeClasses.PEFile;
+    ImageHeader := DeDeClasses.PEHeader;
+  end;
+  if (ImageFile = nil) or (ImageHeader = nil) then
+    Exit;
+
   dwOffset:=0;
   if iPos>_PatternSize-4 then exit;
   for i:=0 to 3 do dwOffset:=dwOffset+buff[iPos+i]*Power(256,i);
@@ -101,19 +118,20 @@ begin
  // This offset is relative and should be corrected
   dwOffset:=dwOffset+iPos+5;
 
-  Offs:=PEHeader.Objects[1].PHYSICAL_OFFSET -PEHeader.Objects[1].RVA -PEHeader.IMAGE_BASE+RVA;
+  Offs:=ImageHeader.Objects[1].PHYSICAL_OFFSET -
+    ImageHeader.Objects[1].RVA - ImageHeader.IMAGE_BASE + RVA;
 
   if buff[iPos+3]=$FF  then Offs:=Offs+(dwOffset-$FFFFFFFF)
                        else Offs:=Offs+dwOffset;
 
-  if Offs>DeDeClasses.PEFile.PEStream.Size-_PatternSize then exit;
+  if Offs>ImageFile.PEStream.Size-_PatternSize then exit;
   if Offs<0 then exit;
   
-  DeDeClasses.PEFile.PEStream.BeginSearch;
+  ImageFile.PEStream.BeginSearch;
   FillChar(pbuf,sizeof(pbuf),0);
   Try
-    DeDeClasses.PEFile.PEStream.Seek(Offs,soFromBeginning);
-    DeDeClasses.PEFile.PEStream.ReadBuffer(pbuf[1],_PatternSize);
+    ImageFile.PEStream.Seek(Offs,soFromBeginning);
+    ImageFile.PEStream.ReadBuffer(pbuf[1],_PatternSize);
 
     // The function that is called is export;
     if (pbuf[1]=$FF) and (pbuf[2]=$25) then exit;
@@ -123,7 +141,7 @@ begin
     crc32.updatecrc(pbuf,_PatternSize);
     CRC:=crc32.crc32val;
   Finally
-    DeDeClasses.PEFile.PEStream.EndSearch;
+    ImageFile.PEStream.EndSearch;
   End;
 End;
 

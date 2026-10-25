@@ -89,7 +89,7 @@ Type TPEHeaderBuffer = array [1..PE_HEADER_SIZE+MAX_PE_PLUS_DELTA] of Byte;
 
   TPEHeader = class (TObject)
   protected
-    Procedure Process;
+    Procedure Process(PFile: ThePEFile);
     Procedure ProcessObjects;
   public
     ELFDumped : Boolean;
@@ -312,7 +312,9 @@ Type TMethodData = Class
         Function ProcEntryPossible(RVA : DWORD) : Boolean;
      End;
 
-Function GetDelphiVersion(PEFile : ThePEFile) : String;
+Function GetDelphiVersion(PEFile : ThePEFile) : String; overload;
+Function GetDelphiVersion(APEFile: ThePEFile; APEHeader: TPEHeader;
+  AIsELF, ACBuilder, ADelphi2: Boolean): String; overload;
 Function GetDelphiVersionFromImports(sFileName : String; lImpOffset,lImpRVA : DWORD) : String;
 
 var    GlobAbort : Boolean;
@@ -676,11 +678,20 @@ begin
 end;
 
 Function GetDelphiVersion(PEFile : ThePEFile) : String;
+begin
+  Result := GetDelphiVersion(PEFile, PEHeader, bELF,
+    GlobCBuilder, GlobDelphi2);
+end;
+
+Function GetDelphiVersion(APEFile: ThePEFile; APEHeader: TPEHeader;
+  AIsELF, ACBuilder, ADelphi2: Boolean) : String;
 const
   IDS = 'TControl';
   VER_ARR : Array [0..1,0..2] of String =
        (('0','114','120'),('D3','D4','D5'));
 var
+  PEFile: ThePEFile;
+  PEHeader: TPEHeader;
   delta, dw, dw1, bkup : DWord;
   b1,b2 : Byte;
   s : String;
@@ -693,6 +704,8 @@ var
   end;
 
 Begin
+  PEFile := APEFile;
+  PEHeader := APEHeader;
   Result:='<check failed>';
 
   delta:=PEHeader.IMAGE_BASE + (PEHeader.Objects[1].RVA) -
@@ -727,26 +740,26 @@ Begin
               end;
               $B4,$114:   {cbuilder}
               begin
-                if GlobCBuilder then
+                if ACBuilder then
                   Result:='BCB4'
                 else
                   Result:='D4';
               end;
               $120:
               begin
-                if GlobCBuilder then
+                if ACBuilder then
                  Result:='BCB5'
                 else
                  Result:='D5';
               end;
               $138:
               begin
-                if bELF then
+                if AIsELF then
                  Result:='Kylix';
               end;
               $128:
               begin
-                if GlobCBuilder then
+                if ACBuilder then
                   Result:='BCB6?'
                 else
                   Result:='D6 CLX';
@@ -754,7 +767,7 @@ Begin
 
               $15C, $160:
               begin
-                if GlobCBuilder then
+                if ACBuilder then
                   Result:='BCB6?'
                 else
                   Result:='D6';
@@ -772,7 +785,7 @@ Begin
     (PEFile.PEStream.Position >=
       PEHeader.Objects[1].PHYSICAL_OFFSET+PEHeader.Objects[1].PHYSICAL_SIZE);
 
-  If GlobDelphi2 Then Result:='D2';
+  If ADelphi2 Then Result:='D2';
 
 End;
 
@@ -1130,20 +1143,22 @@ begin
 end;
 
 procedure TPEHeader.Dump(PFile : ThePEFile);
-var lPEHOffset : DWORD;
+var PEFile: ThePEFile;
+    SignatureValue, lPEHOffset : DWORD;
     b1,b2 : Byte;
     j,k : Integer;
 begin
-  if bELF then
+  PEFile := PFile;
+  PEFile.PEStream.Seek(0, soFromBeginning);
+  PEFile.PEStream.ReadBuffer(SignatureValue, SizeOf(SignatureValue));
+  if SignatureValue = ELF_MAGIC then
   begin
     DumpElfFile(PFile);
-    ELFDumped:=True;
     Exit;
   end;
 
   ELFDumped := False;
 
-  PEFile := PFile;
   PEFile.PEStream.Seek(0, SoFromBeginning);
   PEFile.Seek(DATA_FOR_PE_HEADER_OFFSET);
   PEFile.Read(b1, b2);
@@ -1151,7 +1166,7 @@ begin
 
   PEHeaderOffset := lPEHOffset;
 
-  Process;
+  Process(PFile);
   PEFile.Seek(PE_HEADER_SIZE + lPEHOffset + PEPlusDelta);
   For j:=1 To ObjectNum Do
   Begin
@@ -1181,10 +1196,12 @@ begin
 end;
 
 procedure TPEHeader.DumpELFFile(PFile : ThePEFile);
-var  ElfFile : TELFFile;
+var  PEHeader: TPEHeader;
+     ElfFile : TELFFile;
      i,idx : Integer;
      tmp : TPEObject;
 begin
+  PEHeader := Self;
   ElfFile:=TELFFile.Create(PFile.sFileName);
   try
     ElfFile.Dump;
@@ -1259,8 +1276,11 @@ begin
 end;
 
 function TPEHeader.GetSectionIndexByRVA(RVA: DWORD): Integer;
-Var i : Integer;
+Var
+  PEHeader: TPEHeader;
+  i : Integer;
 begin
+  PEHeader := Self;
   Result:=-1;
   If ObjectNum=0 Then Exit;
 {  for i:=1 to PEHeader.ObjectNum Do
@@ -1277,10 +1297,12 @@ end;
 function TPEHeader.GetSectionIndexEx(AsSect: String): Integer;
 var i : Integer;
     RVA : DWORD;
+    PEHeader: TPEHeader;
 begin
+  PEHeader := Self;
   Result:=-1;
   //Elf file support. The mapping is not exactly 100% :(
-  if  bELF then begin
+  if ELFDumped then begin
     if AsSect='CODE' then AsSect:='.text';
     if AsSect='DATA' then AsSect:='.data';
     if AsSect='.idata' then AsSect:='.dynsym';
@@ -1314,12 +1336,14 @@ begin
 end;
 
 
-procedure TPEHeader.Process;
+procedure TPEHeader.Process(PFile: ThePEFile);
 var
+  PEFile: ThePEFile;
   wCPU,wSubSys, wDLL, wOptionalPEType : Word;
   lPEHOffset : Word;
   b1,b2 : Byte;
 begin
+  PEFile := PFile;
   // PE Header:
 
   PEFile.PEStream.Seek(DATA_FOR_PE_HEADER_OFFSET,soFromBeginning);

@@ -13,6 +13,11 @@ type
   TDeDeCoreConfirmEvent = function(const ATitle, AMessage: string): Boolean of object;
 
   TDeDeCoreContext = class
+  private
+    FPEFile: ThePEFile;
+    FPEHeader: TPEHeader;
+    function GetPEFile: ThePEFile;
+    function GetPEHeader: TPEHeader;
   public
     ProjectName: string;
     FileName: string;
@@ -30,6 +35,8 @@ type
     OnWarning: TDeDeCoreWarningEvent;
     OnDebug: TDeDeCoreDebugEvent;
     OnConfirm: TDeDeCoreConfirmEvent;
+    property PEFile: ThePEFile read GetPEFile write FPEFile;
+    property PEHeader: TPEHeader read GetPEHeader write FPEHeader;
     constructor Create;
     destructor Destroy; override;
     procedure ReportProgress(const APhase, ADetail: string;
@@ -52,6 +59,10 @@ type
 
 procedure LoadPEBinary(const AFileName: string; out APEFile: ThePEFile;
   out APEHeader: TPEHeader; out AIsELF: Boolean);
+function GetCoreTickCount: LongWord;
+function DeleteCoreFile(const AFileName: string): Boolean;
+function RenameCoreFile(const AOldName, ANewName: string): Boolean;
+function RemoveCoreDirectory(const ADirectory: string): Boolean;
 
 var
   DeDeCoreContext: TDeDeCoreContext;
@@ -59,7 +70,51 @@ var
 implementation
 
 uses
-  DeDeELFClasses;
+  DeDeELFClasses
+{$IFDEF MSWINDOWS}
+  , Windows
+{$ENDIF}
+  ;
+
+function TDeDeCoreContext.GetPEFile: ThePEFile;
+begin
+  if FPEFile <> nil then
+    Result := FPEFile
+  else
+    Result := DeDeClasses.PEFile;
+end;
+
+function TDeDeCoreContext.GetPEHeader: TPEHeader;
+begin
+  if FPEHeader <> nil then
+    Result := FPEHeader
+  else
+    Result := DeDeClasses.PEHeader;
+end;
+
+function GetCoreTickCount: LongWord;
+begin
+{$IFDEF FPC}
+  Result := LongWord(GetTickCount64);
+{$ELSE}
+  Result := Windows.GetTickCount;
+{$ENDIF}
+end;
+
+function DeleteCoreFile(const AFileName: string): Boolean;
+begin
+  Result := SysUtils.DeleteFile(AFileName);
+end;
+
+function RenameCoreFile(const AOldName, ANewName: string): Boolean;
+begin
+  Result := SysUtils.RenameFile(AOldName, ANewName);
+end;
+
+function RemoveCoreDirectory(const ADirectory: string): Boolean;
+begin
+  Result := SysUtils.RemoveDir(ADirectory);
+end;
 
 procedure LoadPEBinary(const AFileName: string; out APEFile: ThePEFile;
   out APEHeader: TPEHeader; out AIsELF: Boolean);
@@ -67,9 +122,6 @@ var
   LoadedFile: ThePEFile;
   LoadedHeader: TPEHeader;
   Signature: DWORD;
-  PreviousFile: ThePEFile;
-  PreviousHeader: TPEHeader;
-  PreviousELF: Boolean;
 begin
   APEFile := nil;
   APEHeader := nil;
@@ -80,28 +132,19 @@ begin
 
   LoadedFile := nil;
   LoadedHeader := nil;
-  PreviousFile := DeDeClasses.PEFile;
-  PreviousHeader := PEHeader;
-  PreviousELF := bELF;
   try
     LoadedFile := ThePEFile.Create(AFileName);
     LoadedFile.PEStream.Seek(0, soFromBeginning);
     LoadedFile.PEStream.ReadBuffer(Signature, SizeOf(Signature));
     AIsELF := Signature = ELF_MAGIC;
-    bELF := AIsELF;
 
     LoadedHeader := TPEHeader.Create;
-    DeDeClasses.PEFile := LoadedFile;
-    DeDeClasses.PEHeader := LoadedHeader;
     LoadedHeader.Dump(LoadedFile);
     APEFile := LoadedFile;
     APEHeader := LoadedHeader;
   except
     LoadedHeader.Free;
     LoadedFile.Free;
-    DeDeClasses.PEFile := PreviousFile;
-    DeDeClasses.PEHeader := PreviousHeader;
-    bELF := PreviousELF;
     APEFile := nil;
     APEHeader := nil;
     raise;

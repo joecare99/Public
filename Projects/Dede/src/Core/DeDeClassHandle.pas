@@ -32,8 +32,11 @@ Type
 
   TClassDumper = Class
   protected
+    FPEFile: ThePEFile;
+    FPEHeader: TPEHeader;
     IsInDataSection : Boolean;
     VMTMethodEntries: array of TVMTMethodEntry;
+    function GetPEStream: TPEStream;
     Procedure CalculatePositions;
     Procedure DumpFields;
     Function GetDFMOffset(AsClassName : String) : DWORD;
@@ -41,10 +44,13 @@ Type
     Function InCodeSection(RVA : DWORD) : Boolean;
     Function InDataSection(RVA : DWORD) : Boolean;
     Function IsInData(RVA : DWORD) : Boolean;
+    property PEFile: ThePEFile read FPEFile;
+    property PEHeader: TPEHeader read FPEHeader;
+    property PEStream: TPEStream read GetPEStream;
   public
     //PEHeader : TPEHeader;
     DELTA_PHYS : DWORD;
-    FdwBSSOffset, FdwHeapPtr, FdwDATAPrt : TList;
+    FdwBSSOffset, FdwHeapPtr, FdwDATAPrt : TPE32DWordList;
     FdwSelfPrt, FdwSelfPrtPos : DWORD;
     FsClassName : String;
     FsUnitName : String;
@@ -80,6 +86,7 @@ Type
     FdwFirstProcRVA : DWORD;
     Constructor Create;
     Destructor Destroy; override;
+    procedure SetImage(APEFile: ThePEFile; APEHeader: TPEHeader);
     Procedure Dump(dwSelfPtrPos : DWORD);
     Procedure DumpObject(dwSelfPtrPos : DWORD);
     Procedure DumpObjectEx(dwSelfPtrPos: DWORD; btType : Byte);
@@ -90,6 +97,8 @@ Type
 
   TClassesDumper = Class
   protected
+    FPEFile: ThePEFile;
+    FPEHeader: TPEHeader;
     DFMTXTDATA_Names : Array of String;
     DFMTXTDATA : TList;
     FiZeroCount : Integer;
@@ -102,6 +111,7 @@ Type
     procedure ClearDFMOffsets;
     procedure EnumDFMOffsets;
     procedure LoadDFMTXTDATA;
+    function GetPEStream: TPEStream;
   public
     Classes : TList;
     DFMOffsets : TStringList;
@@ -109,6 +119,10 @@ Type
     PackageInfoTable : TPackageInfoTable;
     Constructor Create;
     Destructor Destroy; override;
+    procedure SetImage(APEFile: ThePEFile; APEHeader: TPEHeader);
+    property PEFile: ThePEFile read FPEFile;
+    property PEHeader: TPEHeader read FPEHeader;
+    property PEStream: TPEStream read GetPEStream;
     Procedure ClearClasses;
     Procedure ClearDFMTXTDATA;
     Procedure Dump;
@@ -134,16 +148,21 @@ uses
 
 
 
-function IsInCodeSection(RVA: DWORD): Boolean;
+function IsInCodeSection(RVA: DWORD; APEHeader: TPEHeader): Boolean;
 var idx : Integer;
     DELTA_PHYS : DWORD;
 begin
-  idx:=PEHeader.GetSectionIndexEx('CODE');
-  DELTA_PHYS:=  PEHeader.IMAGE_BASE
-               +PEHeader.Objects[idx].RVA
-               -PEHeader.Objects[idx].PHYSICAL_OFFSET;
-  Result:=((RVA-DELTA_PHYS)>=PEHeader.Objects[idx].PHYSICAL_OFFSET)
-      and ((RVA-DELTA_PHYS)<=PEHeader.Objects[idx].PHYSICAL_OFFSET+PEHeader.Objects[idx].PHYSICAL_SIZE)
+  Result := False;
+  if APEHeader = nil then
+    Exit;
+  idx:=APEHeader.GetSectionIndexEx('CODE');
+  if idx < 1 then
+    Exit;
+  DELTA_PHYS:=  APEHeader.IMAGE_BASE
+               +APEHeader.Objects[idx].RVA
+               -APEHeader.Objects[idx].PHYSICAL_OFFSET;
+  Result:=((RVA-DELTA_PHYS)>=APEHeader.Objects[idx].PHYSICAL_OFFSET)
+      and ((RVA-DELTA_PHYS)<=APEHeader.Objects[idx].PHYSICAL_OFFSET+APEHeader.Objects[idx].PHYSICAL_SIZE)
 end;
 
 
@@ -175,8 +194,12 @@ var Dumper : TClassesDumper;
     ClassDmp,ClassDmp1  : TClassDumper;
     i, j, k : Integer;
     bFound : Boolean;
+    ImageHeader: TPEHeader;
 begin
   Dumper:=TClassesDumper(Sender);
+  ImageHeader := DeDeCoreContext.PEHeader;
+  if ImageHeader = nil then
+    raise EInvalidOp.Create('No PE header is available for package units');
 
   ////////////////////////////////////////////////
   // Enorder Units Data
@@ -211,7 +234,7 @@ begin
 
   // The first unit is ALWAYS system.dcu and ALWAYS starts
   // at the beginning of CODE section
-  UnitsStartPtrs[0]:=PEHeader.BaseOfCode+PEHeader.IMAGE_BASE;
+  UnitsStartPtrs[0] := ImageHeader.BaseOfCode + ImageHeader.IMAGE_BASE;
   UnitsNames[0]:='System';
 
   // The second unit is ALWAYS sysinit.pas
@@ -300,12 +323,26 @@ begin
   FieldData:=TFieldData.Create;
   MethodData:=TMethodData.Create;
 
-  FdwBSSOffset:=TList.Create;
-  FdwBSSOffset.Add(nil);
-  FdwHeapPtr:=TList.Create;
-  FdwHeapPtr.Add(nil);
-  FdwDATAPrt:=TList.Create;
-  FdwDATAPrt.Add(nil);
+  FdwBSSOffset:=TPE32DWordList.Create;
+  FdwBSSOffset.AddUndefined;
+  FdwHeapPtr:=TPE32DWordList.Create;
+  FdwHeapPtr.AddUndefined;
+  FdwDATAPrt:=TPE32DWordList.Create;
+  FdwDATAPrt.AddUndefined;
+end;
+
+procedure TClassDumper.SetImage(APEFile: ThePEFile;
+  APEHeader: TPEHeader);
+begin
+  FPEFile := APEFile;
+  FPEHeader := APEHeader;
+end;
+
+function TClassDumper.GetPEStream: TPEStream;
+begin
+  if FPEFile = nil then
+    raise EInvalidOp.Create('Class dumper has no PE file');
+  Result := FPEFile.PEStream;
 end;
 
 destructor TClassDumper.Destroy;
@@ -536,11 +573,7 @@ begin
      end
      else begin
         // Gets User Defines Procedures
-        DeDeDisASM.PEStream:={BOZA DeDeClasses.}PEStream;
         //DeDeDisASM.PEHeader:=DeDeClasses.PEHEader;
-        DeDeDisASM.RVAConverter.ImageBase:=DeDeClasses.PEHEader.IMAGE_BASE;
-        DeDeDisASM.RVAConverter.CodeRVA:=DeDeClasses.PEHEader.Objects[1].RVA;
-        DeDeDisASM.RVAConverter.PhysOffset:=DeDeClasses.PEHEader.Objects[1].PHYSICAL_OFFSET;
 
         //Find last published method RVA
         dwLastPublishedMeth:=0;
@@ -822,12 +855,10 @@ end;
 
 function TClassDumper.IsBSSDATAClass(Index: Integer): Boolean;
 begin
-  IF Index>FdwDATAPrt.Count
-    then result:=false
-    else Result:=
-           ((FdwDATAPrt[Index]<>nil) or (FdwDFMOffset<>0))
-       and (FdwBSSOffset[Index]<>nil)
-       and (FdwHeapPtr[Index]<>nil);
+  if (Index < 0) or (Index >= FdwDATAPrt.Count) then
+    Exit(False);
+  Result := (FdwDATAPrt.IsDefined(Index) or (FdwDFMOffset <> 0)) and
+    FdwBSSOffset.IsDefined(Index) and FdwHeapPtr.IsDefined(Index);
 end;
 
 Function TClassDumper.IsInData(RVA : DWORD) : Boolean;
@@ -851,7 +882,7 @@ begin
   s := PEFile.PEStream.ReadStringA(b);
   DeDeCoreContext.ReportProgress(msg_processing, s + '...', 0, 0);
   inst := TClassDumper.Create;
-  //inst.PEHeader:=PEHeader;
+  inst.SetImage(FPEFile, FPEHeader);
   Try
     inst.Dump(dwSelfPtrPos);
   Except
@@ -907,16 +938,16 @@ begin
   s := PEFile.PEStream.ReadStringA(b);
   DeDeCoreContext.ReportProgress(msg_processing, s + '...', 0, 0);
   inst:=TClassDumper.Create;
-  //inst.PEHeader:=PEHeader;
+  inst.SetImage(FPEFile, FPEHeader);
   Try
     inst.Dump(dwSelfPtrPos);
 
     // Init FdwBSSOffset for non class objects not in [$07,$0E]
     // with its selfpointer. This trick is neseccary for approprite
     // emulation when custom register value is specified
-    inst.FdwBSSOffset.Add(Pointer(dwSelfPtrPos));
-    inst.FdwDATAPrt.Add(Pointer(dwSelfPtrPos));
-    inst.FdwHeapPtr.Add(Pointer(dwSelfPtrPos));
+    inst.FdwBSSOffset.Add(dwSelfPtrPos);
+    inst.FdwDATAPrt.Add(dwSelfPtrPos);
+    inst.FdwHeapPtr.Add(dwSelfPtrPos);
   Except
     on E: Exception do
     begin
@@ -948,7 +979,7 @@ begin
   s := PEFile.PEStream.ReadStringA(b);
   DeDeCoreContext.ReportProgress(msg_processing, s + '...', 0, 0);
   inst:=TClassDumper.Create;
-  //inst.PEHeader:=PEHeader;
+  inst.SetImage(FPEFile, FPEHeader);
   inst.DumpObject(dwSelfPtrPos);
   if Not ClassExists(inst.FsClassName) then
     begin
@@ -974,16 +1005,16 @@ begin
     else s:='unknown type';     
   DeDeCoreContext.ReportProgress(msg_processing, s + '...', 0, 0);
   inst:=TClassDumper.Create;
-  //inst.PEHeader:=PEHeader;
+  inst.SetImage(FPEFile, FPEHeader);
   try
    inst.DumpObjectEx(dwSelfPtrPos,btType);
 
    // Init FdwBSSOffset for non class objects not in [$07,$0E]
    // with its selfpointer. This trick is neseccary for approprite
    // emulation when custom register value is specified
-   inst.FdwBSSOffset.Add(Pointer(dwSelfPtrPos));
-   inst.FdwDATAPrt.Add(Pointer(dwSelfPtrPos));
-   inst.FdwHeapPtr.Add(Pointer(dwSelfPtrPos));
+   inst.FdwBSSOffset.Add(dwSelfPtrPos);
+   inst.FdwDATAPrt.Add(dwSelfPtrPos);
+   inst.FdwHeapPtr.Add(dwSelfPtrPos);
   except
    on E: Exception do
    begin
@@ -1054,6 +1085,24 @@ begin
   DFMOffsets:=TStringList.Create;
   BSS:=TBSS.Create;
   PackageInfoTable:=TPackageInfoTable.Create;
+end;
+
+procedure TClassesDumper.SetImage(APEFile: ThePEFile;
+  APEHeader: TPEHeader);
+var
+  I: Integer;
+begin
+  FPEFile := APEFile;
+  FPEHeader := APEHeader;
+  for I := 0 to Classes.Count - 1 do
+    TClassDumper(Classes[I]).SetImage(APEFile, APEHeader);
+end;
+
+function TClassesDumper.GetPEStream: TPEStream;
+begin
+  if FPEFile = nil then
+    raise EInvalidOp.Create('Classes dumper has no PE file');
+  Result := FPEFile.PEStream;
 end;
 
 destructor TClassesDumper.Destroy;
@@ -1142,6 +1191,9 @@ var dw, dw1, dw2, code_size,delta,bkup, EndSerchFuncOffs : DWORD;
   end; {DumpD2}
 
 begin
+  if (FPEFile = nil) or (FPEHeader = nil) then
+    raise EInvalidOp.Create('Classes dumper has no PE image');
+
   // No BSS dump if BCB
   if GlobCBuilder then  bBSS:=False;
 
@@ -1228,12 +1280,12 @@ begin
       PEStream.Seek(bkup+4,soFromBeginning);
 
       if ((dw-dw1*4+12)=(PEStream.Position+delta)) then
-        if (IsInCodeSection(dw)) then
+        if (IsInCodeSection(dw, FPEHeader)) then
           AddObjectEx(dw,0)
         else
       else if
-        (IsInCodeSection(dw))
-        and (IsInCodeSection(dw2))
+        (IsInCodeSection(dw, FPEHeader))
+        and (IsInCodeSection(dw2, FPEHeader))
         and (dw-dw2>0)
         and (dw-dw2<$100)then
       begin
@@ -1283,11 +1335,6 @@ begin
         Trunc(50*(i)/Classes.Count), 1300);
   end;
 
-
-  DeDeDisASM.RVAConverter.ImageBase:=PEHeader.IMAGE_BASE;
-  DeDeDisASM.RVAConverter.PhysOffset:=PEHeader.Objects[1].PHYSICAL_OFFSET;
-  DeDeDisASM.RVAConverter.CodeRVA:=PEHeader.Objects[1].RVA;
-    
   /////////////////////////////////////////////////////////////////////////////////////////
   // Dump units data from  PackageInfoTable and seek/dump additional procedures
   /////////////////////////////////////////////////////////////////////////////////////////
@@ -1424,9 +1471,11 @@ begin
                 DeDeCoreContext.ReportProgress('', '', 1100, 1300);
               if BSS.GetValue(i)=dw1 then
                  begin
-                   TClassDumper(self.Classes[j]).FdwBSSOffset.Add(Pointer(i));
-                   TClassDumper(self.Classes[j]).FdwHeapPtr.Add(Pointer(BSS.GetPointer(i)));
-                   TClassDumper(self.Classes[j]).FdwDATAPrt.Add(Pointer(BSS.GetDataPrtOfBSSData(i)));
+                   TClassDumper(self.Classes[j]).FdwBSSOffset.Add(i);
+                   TClassDumper(self.Classes[j]).FdwHeapPtr.Add(
+                     BSS.GetPointer(i));
+                   TClassDumper(self.Classes[j]).FdwDATAPrt.Add(
+                     BSS.GetDataPrtOfBSSData(i));
                  end;
               Inc(i,4);
             end;
@@ -1710,7 +1759,7 @@ begin
       {OutPut.}WriteBuffer(dw,4);
       for i:=0 to dw-1 do
         begin
-          j:=DWORD(cls.FdwBSSOffset[i]);
+          j:=cls.FdwBSSOffset[i];
           {OutPut.}WriteBuffer(j,4);
         end;
 
@@ -1718,7 +1767,7 @@ begin
       {OutPut.}WriteBuffer(dw,4);
       for i:=0 to dw-1 do
         begin
-          j:=DWORD(cls.FdwHeapPtr[i]);
+          j:=cls.FdwHeapPtr[i];
           {OutPut.}WriteBuffer(j,4);
         end;
 
@@ -1726,7 +1775,7 @@ begin
       {OutPut.}WriteBuffer(dw,4);
       for i:=0 to dw-1 do
         begin
-          j:=DWORD(cls.FdwDATAPrt[i]);
+          j:=cls.FdwDATAPrt[i];
           {OutPut.}WriteBuffer(j,4);
         end;
 

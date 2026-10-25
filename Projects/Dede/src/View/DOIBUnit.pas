@@ -209,7 +209,7 @@ begin
        begin
           s:=OffsInf.FNameList[i];
           While Length(s)<iMaxLen+2 do s:=s+' ';
-          s:=s+IntToHex(DWORD(OffsInf.FOffsetList[i]),8);
+          s:=s+IntToHex(OffsInf.FOffsetList[i],8);
           If OffsLV.Items.IndexOf(s)=-1 then OffsLV.Items.Add(s);
        end;
   Finally
@@ -242,8 +242,8 @@ begin
            Str.Add(Format('Class_%d=%s',[j,OffsInf.FHierarchyList[j]]));
        For j:=0 to OffsInf.FNameList.Count-1 Do
           begin
-           s:=Format('%x',[DWORD(OffsInf.FOffsetList[j])]);
-           if Length(s)=8 then s:='-'+Format('%x',[(not DWORD(OffsInf.FOffsetList[j]))]);
+           s:=Format('%x',[OffsInf.FOffsetList[j]]);
+           if Length(s)=8 then s:='-'+Format('%x',[(not OffsInf.FOffsetList[j])]);
            Str.Add(Format('%s=%s',[OffsInf.FNameList[j],s]));
           end;
        Str.Add('');
@@ -291,7 +291,7 @@ begin
       if OffsInf<>nil then
         begin
         // Existing Class
-          i:=OffsInf.FOffsetList.IndexOf(Pointer(dwOffs));
+          i:=OffsInf.FOffsetList.IndexOf(dwOffs);
           j:=OffsInf.FNameList.IndexOf(sDescr);
           if (i<>-1) then Raise Exception.Create('Offset already exists!');
 
@@ -301,12 +301,12 @@ begin
                                    ,[dwOffs,OffsInf.FNameList[i]]),
                mtWarning,[mbYes,mbNo,mbCancel],0) of
              mrCancel : Exit;
-             mrYes    : OffsInf.FOffsetList[j]:=Pointer(dwOffs);
+             mrYes    : OffsInf.FOffsetList[j]:=dwOffs;
             end {case}
             else begin
               //new name/offset
               OffsInf.FNameList.Add(sDescr);
-              OffsInf.FOffsetList.Add(Pointer(dwOffs));
+              OffsInf.FOffsetList.Add(dwOffs);
             end;
         end
         else begin
@@ -322,7 +322,7 @@ begin
           if s='' then s:='TObject';    
           OffsInf.FHierarchyList.CommaText:=s;
           OffsInf.FNameList.Add(sDescr);
-          OffsInf.FOffsetList.Add(Pointer(dwOffs));
+          OffsInf.FOffsetList.Add(dwOffs);
           OffsInfArchive.AddOffsInfo(OffsInf);
         end;
         SetModified(True);
@@ -433,7 +433,7 @@ begin
   OffsInf:=OffsInfArchive.GetOffsInfoByClassName(ClassesLB.Items[ClassesLB.ItemIndex]);
   i:=OffsInf.FNameList.IndexOf(s);
   if i=-1 then exit;
-  OffsInf.FOffsetList[i]:=Pointer(HEX2DWORD(s1));
+  OffsInf.FOffsetList[i]:=HEX2DWORD(s1);
   ClassesLBClick(self);
   SetModified(True);
 end;

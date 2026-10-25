@@ -95,9 +95,9 @@ begin
   For i:=1 To ClassDumper.FdwBSSOffset.Count-1 Do
     Begin
       inst:=BSSLV.Items.Add;
-      inst.Caption:=IntToHex(DWORD(ClassDumper.FdwDATAPrt[i]),8);
-      inst.SubItems.Add(IntToHex(DWORD(ClassDumper.FdwBSSOffset[i]),8));
-      inst.SubItems.Add(IntToHex(DWORD(ClassDumper.FdwHeapPtr[i]),8));
+      inst.Caption:=IntToHex(ClassDumper.FdwDATAPrt[i],8);
+      inst.SubItems.Add(IntToHex(ClassDumper.FdwBSSOffset[i],8));
+      inst.SubItems.Add(IntToHex(ClassDumper.FdwHeapPtr[i],8));
     End;
 
   For i:=0 To ClassDumper.FieldData.Count-1 Do

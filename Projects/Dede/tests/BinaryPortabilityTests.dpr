@@ -162,6 +162,35 @@ begin
   end;
 end;
 
+procedure TestPE32DWordListStorage;
+var
+  Values: TPE32DWordList;
+begin
+  Values := TPE32DWordList.Create;
+  try
+    Values.AddUndefined;
+    Values.Add($F0001234);
+    Values.Add(0);
+    Check(Values.Count = 3, 'PE32 value-list count changed');
+    Check(not Values.IsDefined(0), 'Undefined PE32 value became defined');
+    Check(Values[0] = 0, 'Undefined PE32 value did not read as zero');
+    Check(Values.IsDefined(2), 'Defined zero PE32 value became undefined');
+    Check(Values[1] = $F0001234,
+      'High-bit PE32 value was changed by list storage');
+    Check(Values.IndexOf($F0001234) = 1,
+      'PE32 value-list lookup failed');
+    Values[1] := $FFFFFFFF;
+    Check(Values[1] = $FFFFFFFF,
+      'PE32 value-list update truncated the high bit');
+    Values.Delete(1);
+    Check(Values.Count = 2, 'PE32 value-list deletion failed');
+    Check(Values.IsDefined(1) and (Values[1] = 0),
+      'PE32 value-list deletion changed the following item');
+  finally
+    Values.Free;
+  end;
+end;
+
 begin
   try
     TestOffsetBoundaries;
@@ -169,6 +198,7 @@ begin
     TestReadBounds;
     TestDisassemblerBounds;
     TestPE32OffsetStorage;
+    TestPE32DWordListStorage;
     Writeln('PE32 binary portability tests passed');
   except
     on E: Exception do
