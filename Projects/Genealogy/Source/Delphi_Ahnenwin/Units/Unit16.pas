@@ -422,7 +422,26 @@ end;
 
 procedure TForm16.ComboBox1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 0055BC58: Auswahl der Zoomstufe aus der ComboBox:
+      0 = 64 %    (Zoom + SpinEdit)
+      1 = Fenster (FitToWindow)
+      2 = Seite  (FitToPage)
+      >= 3 = ohne Wirkung
+    Die SpinEdit wird jeweils auf den aktuellen Zoomwert zurueckgesetzt. }
+  case ComboBox1.ItemIndex of
+    0: begin
+      QRPreview1.Zoom := 64;
+      SpinEdit1.Value := 64;
+    end;
+    1: begin
+      { QRPreview1.FitToWindow; } // 0051F640
+      SpinEdit1.Value := QRPreview1.Zoom;
+    end;
+    2: begin
+      { QRPreview1.FitToPage; } // 0051F714
+      SpinEdit1.Value := QRPreview1.Zoom;
+    end;
+  end;
 end;
 
 procedure TForm16.SpinEdit1Change(Sender: TObject);
