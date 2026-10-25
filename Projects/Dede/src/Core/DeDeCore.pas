@@ -610,9 +610,6 @@ begin
     if FileExists(OutputDirectory) then
       raise EInOutError.CreateFmt('Output path is not a directory: %s',
         [OutputDirectory]);
-    if not ForceDirectories(OutputDirectory) then
-      raise EInOutError.CreateFmt('Unable to create output directory: %s',
-        [OutputDirectory]);
 
     if AOptions.IncludeDPR then
       AddPlannedFile(SafeFileName(DeDeCoreContext.ProjectName) + '.dpr');
@@ -656,6 +653,10 @@ begin
             'Output file already exists (use --force to replace): %s',
             [TargetFile]);
       end;
+
+    if not ForceDirectories(OutputDirectory) then
+      raise EInOutError.CreateFmt('Unable to create output directory: %s',
+        [OutputDirectory]);
 
     I := 0;
     repeat

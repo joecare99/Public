@@ -32,6 +32,7 @@ type
     procedure TestCoreSessionsUseSeparateContexts;
     procedure TestCoreFailedAnalysisRestoresHostContext;
     procedure TestCoreReportExportAndOverwriteGuard;
+    procedure TestCoreExportCaseInsensitiveUnitCollision;
     procedure TestCoreVersionConfiguration;
     procedure TestVMTMethodOffsetMapping;
     procedure TestZipFormatConsumers;
@@ -77,6 +78,7 @@ type
     Detail: string;
     Position: Integer;
     Maximum: Integer;
+    FailOnDetail: string;
     procedure OnProgress(const APhase, ADetail: string;
       APosition, AMaximum: Integer);
   end;
@@ -94,6 +96,8 @@ begin
   Detail := ADetail;
   Position := APosition;
   Maximum := AMaximum;
+  if (FailOnDetail <> '') and SameText(ADetail, FailOnDetail) then
+    raise EAbort.Create('Injected export progress failure');
 end;
 
 procedure TDropRecorder.HandleDrop(Sender: TObject);
@@ -1301,7 +1305,11 @@ var
   ResourceText: TStringStream;
   BinaryDFM: TMemoryStream;
   DFMOutput: TMemoryStream;
+  DFMBeforeFailure: TMemoryStream;
   DFMText: TStringStream;
+  FailureProgress: TCoreProgressRecorder;
+  StageSearch: TSearchRec;
+  StageFound: Boolean;
   Options: TDeDeExportOptions;
   OutputDirectory, ReportFile: string;
   Raised: Boolean;
@@ -1352,6 +1360,8 @@ begin
     'object Form1: TForm'#13#10'end'#13#10);
   BinaryDFM := TMemoryStream.Create;
   DFMOutput := TMemoryStream.Create;
+  DFMBeforeFailure := nil;
+  FailureProgress := nil;
   DFMText := TStringStream.Create('');
   try
     ObjectTextToBinary(ResourceText, BinaryDFM);
@@ -1413,8 +1423,48 @@ begin
     Report.LoadFromFile(ReportFile);
     CheckTrue(Pos('"project": "Fixture"', Report.Text) > 0,
       'Forced export did not replace the existing report');
+
+    DFMBeforeFailure := TMemoryStream.Create;
+    DFMBeforeFailure.LoadFromFile(
+      IncludeTrailingPathDelimiter(OutputDirectory) + 'Form1.dfm');
+    Report.Clear;
+    Report.Add('staging-sentinel');
+    Report.SaveToFile(ReportFile);
+    FailureProgress := TCoreProgressRecorder.Create;
+    FailureProgress.FailOnDetail := 'analysis.json';
+    DeDeCoreContext.OnProgress := FailureProgress.OnProgress;
+    Generated.Free;
+    Generated := nil;
+    Raised := False;
+    try
+      Generated := Session.ExportProject(OutputDirectory, Options, True);
+    except
+      on E: EAbort do
+        Raised := True;
+    end;
+    DeDeCoreContext.OnProgress := nil;
+    CheckTrue(Raised, 'Injected staging failure did not escape export');
+    Report.LoadFromFile(ReportFile);
+    CheckEquals('staging-sentinel', Report[0],
+      'Staging failure changed the existing report');
+    DFMOutput.LoadFromFile(
+      IncludeTrailingPathDelimiter(OutputDirectory) + 'Form1.dfm');
+    CheckEquals(DFMBeforeFailure.Size, DFMOutput.Size,
+      'Staging failure changed the existing DFM size');
+    CheckTrue(CompareMem(DFMBeforeFailure.Memory, DFMOutput.Memory,
+      DFMBeforeFailure.Size),
+      'Staging failure changed the existing DFM bytes');
+    StageFound := SysUtils.FindFirst(
+      IncludeTrailingPathDelimiter(OutputDirectory) + '.dede-stage-*',
+      faAnyFile, StageSearch) = 0;
+    if StageFound then
+      SysUtils.FindClose(StageSearch);
+    CheckFalse(StageFound,
+      'Staging failure left temporary export files behind');
   finally
     Generated.Free;
+    DeDeCoreContext.OnProgress := PreviousProgress;
+    FailureProgress.Free;
     Session.Free;
     DeDeCoreContext.ClassesDumper := PreviousDumper;
     DeDeCoreContext.OnProgress := PreviousProgress;
@@ -1438,6 +1488,7 @@ begin
     Report.Free;
     DFMText.Free;
     DFMOutput.Free;
+    DFMBeforeFailure.Free;
     BinaryDFM.Free;
     ResourceText.Free;
     if FileExists(ReportFile) then
@@ -1446,6 +1497,91 @@ begin
       'Form1.dfm') then
       SysUtils.DeleteFile(IncludeTrailingPathDelimiter(OutputDirectory) +
         'Form1.dfm');
+    if DirectoryExists(OutputDirectory) then
+      RemoveDir(OutputDirectory);
+  end;
+end;
+
+procedure TReconstructionTests.TestCoreExportCaseInsensitiveUnitCollision;
+var
+  Session: TDeDeAnalysisSession;
+  Context, PreviousContext: TDeDeCoreContext;
+  Input: ThePEFile;
+  Header: TPEHeader;
+  Dumper: TClassesDumper;
+  Generated: TStringList;
+  Options: TDeDeExportOptions;
+  OutputDirectory: string;
+  PreviousFile: ThePEFile;
+  PreviousHeader: TPEHeader;
+  PreviousStream: TPEStream;
+  PreviousPASNameList, PreviousDFMNameList: TStringList;
+  PreviousUnitList: TStringList;
+  PreviousELF: Boolean;
+  Raised: Boolean;
+begin
+  OutputDirectory := IncludeTrailingPathDelimiter(FsTEMPDir) +
+    'dede-case-collision-' + IntToStr(GetTickCount);
+  while DirectoryExists(OutputDirectory) do
+    OutputDirectory := OutputDirectory + '_';
+  PreviousContext := DeDeCoreContext;
+  PreviousFile := DeDeClasses.PEFile;
+  PreviousHeader := DeDeClasses.PEHeader;
+  PreviousStream := DeDeDisAsm.PEStream;
+  PreviousPASNameList := DeDeDisAsm.PASNameList;
+  PreviousDFMNameList := DeDeDisAsm.DFMNameList;
+  PreviousELF := DeDeClasses.bELF;
+  PreviousUnitList := TStringList.Create;
+  PreviousUnitList.Assign(DeDeDisAsm.UnitList);
+
+  Context := TDeDeCoreContext.Create;
+  Context.ProjectName := 'Collision';
+  Context.DFMNameList.Add('TFormA');
+  Context.DFMNameList.Add('TFormB');
+  Context.PASNameList.Add('UnitA');
+  Context.PASNameList.Add('unita');
+  Input := ThePEFile.Create('');
+  Header := TPEHeader.Create;
+  Header.ObjectNum := 1;
+  Header.BaseOfCode := $1000;
+  Header.Objects[1].RVA := $1000;
+  Header.Objects[1].PHYSICAL_SIZE := 16;
+  Dumper := TClassesDumper.Create;
+  Session := TDeDeAnalysisSession.Create;
+  Generated := nil;
+  try
+    DeDeCoreContext := Context;
+    Session.AttachAnalysis(Input, Header, Dumper, 'D5');
+    FillChar(Options, SizeOf(Options), 0);
+    Options.IncludePAS := True;
+
+    Raised := False;
+    try
+      Generated := Session.ExportProject(OutputDirectory, Options, False);
+    except
+      on E: EConvertError do
+        Raised := True;
+    end;
+    CheckTrue(Raised,
+      'Case-insensitive PAS filename collision was not rejected');
+    CheckFalse(DirectoryExists(OutputDirectory),
+      'Filename collision created an output directory');
+  finally
+    Generated.Free;
+    Session.Free;
+    DeDeCoreContext := PreviousContext;
+    DeDeClasses.PEFile := PreviousFile;
+    DeDeClasses.PEHeader := PreviousHeader;
+    DeDeDisAsm.PEStream := PreviousStream;
+    DeDeDisAsm.PASNameList := PreviousPASNameList;
+    DeDeDisAsm.DFMNameList := PreviousDFMNameList;
+    DeDeDisAsm.UnitList.Assign(PreviousUnitList);
+    DeDeClasses.bELF := PreviousELF;
+    PreviousUnitList.Free;
+    Dumper.Free;
+    Header.Free;
+    Input.Free;
+    Context.Free;
     if DirectoryExists(OutputDirectory) then
       RemoveDir(OutputDirectory);
   end;
