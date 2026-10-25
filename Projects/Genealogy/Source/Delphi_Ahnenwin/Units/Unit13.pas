@@ -96,7 +96,7 @@ var
 implementation
 
 uses
-  Unit12, Unit2, AHNGlobals;
+  Unit12, Unit2, AHNGlobals, Math;
 {$R ..\Forms\Form13.DFM}
 
 
@@ -195,6 +195,340 @@ begin
   end;
 end;
 
+procedure sub_0056897C(AValue: Integer);
+var
+  V, passes, lvl, row, edx, ebx, delta: Integer;
+begin
+  { 0056897C: V-passed normalizer on the grid-A "hi dword" pair
+    (offsets -194/-184/+4 like sub_00568C9C), but comparing with
+    jge/jle and running V full passes over the level loop. The
+    propagation condition compares the level dword with lvl+1. }
+  V := AValue;
+  if V <= 0 then
+    exit;
+  passes := V;                                   //0056898B-96
+  while passes > 0 do
+  begin
+    lvl := V - 1;                                //0056899A-A0
+    while lvl > 1 do
+    begin
+      row := Round(Power(2.0, lvl - 1));         //005689A7-CA
+      while ChartAFlat(102 * row + 1) = 0 do     //005689CF-DD skipper
+        Inc(row);
+      repeat                                     //00568AD7-E2
+        if ChartAFlat(102 * row + 5) = lvl then  //00568AD8-E2
+        begin
+          if ChartAFlat(132 * row + 1) > 0 then  //005689E4-F3
+          begin
+            ebx := ChartAFlat(132 * row + 1);    //005689F5-FC
+            if ebx < ChartAFlat(102 * row + 1) then        //00568A03-A6 jge
+            begin
+              delta := ChartAFlat(102 * row + 1) - ebx;    //00568A10-A28
+              SetChartAFlat(132 * row + 1,
+                ChartAFlat(102 * row + 1));              //00568A2C-A3B
+              edx := 2 * row + 1;                        //00568A2C-A30
+              while ChartAFlat(66 * edx + 5) = lvl + 1 do  //00568A5A-69
+              begin
+                if ChartAFlat(66 * edx + 1) > 0 then     //00568A44-4C
+                  SetChartAFlat(66 * edx + 1,
+                    ChartAFlat(66 * edx + 1) + delta);   //00568A4E-52
+                Inc(edx);                                //00568A59
+              end;
+            end;
+          end
+          else if ChartAFlat(132 * row + 103) > 0 then   //00568A6D-72
+          begin
+            ebx := ChartAFlat(102 * row + 1);            //00568A74
+            if ebx > ChartAFlat(132 * row + 102) then    //00568A7B-7E jle
+            begin
+              delta := ebx - ChartAFlat(132 * row + 103); //00568A80-95
+              SetChartAFlat(132 * row + 103, ebx);       //00568A99-AAA
+              edx := 2 * row + 2;                        //00568A99-A9D
+              while ChartAFlat(66 * edx + 5) = lvl + 1 do  //00568AC6-D5
+              begin
+                if ChartAFlat(66 * edx + 1) > 0 then     //00568AB0-B8
+                  SetChartAFlat(66 * edx + 1,
+                    ChartAFlat(66 * edx + 1) + delta);   //00568ABA-BE
+                Inc(edx);                                //00568AC5
+              end;
+            end;
+          end;
+          Inc(row);                                      //00568AD7
+        end
+        else
+        begin
+          Dec(lvl);                                      //00568AE8
+          Break;                                         //00568AE9-EC / AF2
+        end;
+      until False;
+    end;
+    Dec(passes);                                         //00568AF2-F6
+  end;
+end;
+
+procedure sub_00568B04(AValue: Integer);
+var
+  V, passes, lvl, row, edx, ebx, delta: Integer;
+begin
+  { 00568B04: same normalizer as sub_0056897C, one dword lower in the
+    cell (offsets -198/-184/bare) like sub_00568E3C vs 968C9C. }
+  V := AValue;
+  if V <= 0 then
+    exit;
+  passes := V;                                   //00568B13-18
+  while passes > 0 do
+  begin
+    lvl := V - 1;                                //00568B22-25
+    while lvl > 1 do
+    begin
+      row := Round(Power(2.0, lvl - 1));         //00568B2F-52
+      while ChartAFlat(102 * row) = 0 do         //00568B57-65 skipper
+        Inc(row);
+      repeat                                     //00568C6D-78
+        if ChartAFlat(102 * row + 5) = lvl then  //00568C6E-78
+        begin
+          if ChartAFlat(132 * row) > 0 then      //00568B6C-7C
+          begin
+            if ChartAFlat(132 * row) <
+               ChartAFlat(102 * row) then        //00568B7E-8C jge
+            begin
+              delta := ChartAFlat(102 * row) -
+                       ChartAFlat(132 * row);    //00568B92-A5
+              SetChartAFlat(132 * row,
+                ChartAFlat(102 * row));          //00568BAE-BBF
+              edx := 2 * row + 1;                //00568BA9-BAD
+              while ChartAFlat(66 * edx + 5) = lvl + 1 do  //00568BDE-ED
+              begin
+                if ChartAFlat(66 * edx) > 0 then         //00568BC8-D0
+                  SetChartAFlat(66 * edx,
+                    ChartAFlat(66 * edx) + delta);       //00568BD2-D6
+                Inc(edx);                                //00568BDD
+              end;
+            end;
+          end
+          else if ChartAFlat(132 * row + 102) > 0 then   //00568BF1-FC
+          begin
+            if ChartAFlat(102 * row) >
+               ChartAFlat(132 * row + 102) then          //00568BFE-0F jle
+            begin
+              delta := ChartAFlat(102 * row) -
+                       ChartAFlat(132 * row + 102);      //00568C11-25
+              SetChartAFlat(132 * row + 102,
+                ChartAFlat(102 * row));                 //00568C29-41
+              edx := 2 * row + 2;                       //00568C29-C2D
+              while ChartAFlat(66 * edx + 5) = lvl + 1 do  //00568C5C-6B
+              begin
+                if ChartAFlat(66 * edx) > 0 then        //00568C46-4E
+                  SetChartAFlat(66 * edx,
+                    ChartAFlat(66 * edx) + delta);      //00568C50-54
+                Inc(edx);                               //00568C5B
+              end;
+            end;
+          end;
+          Inc(row);                                     //00568C6D
+        end
+        else
+        begin
+          Dec(lvl);                                     //00568C7E
+          Break;                                        //00568C7F-82 / C88
+        end;
+      until False;
+    end;
+    Dec(passes);                                        //00568C88-8C
+  end;
+end;
+
+{ Phase-B note (both walkers below). The addressing is transliterated
+  1:1 into flat dword indexes of grid A via ChartAFlat/SetChartAFlat:
+  every term [esi + T*8 + K] with esi = 011AE35C = base + $198 becomes
+  index 2*T + 102 + (K div 4). With T = $21*ebx = 51*ebx (set by
+  "imul eax,ebx,33") the indexes 102*ebx+c address row ebx dword c,
+  and with T = $42*ebx = 102*ebx ("add eax,eax; imul ...,33") the
+  indexes 132*ebx+c address the corresponding fields of the paired
+  "doubling" row; the propagation loops walk T = 33*eax = 51*eax,
+  i.e. index 66*eax+c. The "Power" call idiom is the Pascal-convention
+  build of Power(2.0, N) with N = level-1 (first push = 2.0 exponent
+  high/low, last = base N), so Round(Power(2.0, lvl-1)) = 2^(lvl-1). }
+
+procedure sub_00568C9C(AValue: Integer);
+var
+  V, lvl, ebx, eax, t1, delta: Integer;
+begin
+  { 00568C9C. }
+  V := AValue;
+  lvl := V - 1;
+  while lvl >= 1 do
+  begin
+    ebx := Round(Power(2.0, lvl - 1));          //00568CB8-DDB
+    while ChartAFlat(102 * ebx + 1) = 0 do      //00568CE2-F0 skipper
+      Inc(ebx);
+    repeat                                      //00568E17-E2B
+      if ChartAFlat(102 * ebx + 5) = lvl then   //00568E18-E22
+      begin
+        if ChartAFlat(102 * ebx + 1) > 0 then   //00568CF7-FF
+        begin
+          if (ChartAFlat(102 * ebx + 103) > 0) and        //00568D05-0D
+             (ChartAFlat(132 * ebx + 1) <> 0) and         //00568D0F-1E
+             (ChartAFlat(132 * ebx + 103) <> 0) then      //00568D20-2C
+            sub_0056897C(V);                              //00568D2E-31
+        end;
+        t1 := ChartAFlat(132 * ebx + 1);                  //00568D36-3D
+        if t1 > 0 then                                    //00568D44-46
+        begin
+          if t1 <> ChartAFlat(102 * ebx + 1) then         //00568D48-56
+          begin
+            delta := t1 - ChartAFlat(102 * ebx + 1);      //00568D5C-6F
+            SetChartAFlat(102 * ebx + 1, t1);             //00568D73-7A
+            eax := ebx + 1;                               //00568D81
+            while ChartAFlat(66 * eax + 5) = lvl do       //00568D84-A6
+            begin
+              if ChartAFlat(66 * eax + 1) > 0 then        //00568D86-8E
+                SetChartAFlat(66 * eax + 1,
+                  ChartAFlat(66 * eax + 1) + delta);      //00568D90-94
+              Inc(eax);                                   //00568D9B
+            end;
+          end;
+        end
+        else if ChartAFlat(132 * ebx + 103) > 0 then      //00568DAA-AF
+        begin
+          if ChartAFlat(102 * ebx + 1) <>
+             ChartAFlat(132 * ebx + 103) then             //00568DB1-C3
+          begin
+            delta := ChartAFlat(132 * ebx + 103) -
+                     ChartAFlat(102 * ebx + 1);           //00568DC5-DA
+            SetChartAFlat(102 * ebx + 1,
+              ChartAFlat(132 * ebx + 103));               //00568DDE-E9
+            eax := ebx + 1;                               //00568DF0
+            while ChartAFlat(66 * eax + 5) = lvl do       //00568DF3-15
+            begin
+              if ChartAFlat(66 * eax + 1) > 0 then        //00568DF5-FD
+                SetChartAFlat(66 * eax + 1,
+                  ChartAFlat(66 * eax + 1) + delta);      //00568DFF-03
+              Inc(eax);                                   //00568E0A
+            end;
+          end;
+        end;
+        Inc(ebx);                                         //00568E17
+      end
+      else
+      begin
+        Dec(lvl);                                         //00568E28
+        Break;                                            //00568E29-2B / CB8
+      end;
+    until False;
+  end;
+end;
+
+procedure sub_00568E3C(AValue: Integer);
+var
+  V, lvl, ebx, eax, t1, delta: Integer;
+begin
+  { 00568E3C: same walker as sub_00568C9C, one dword lower in every
+    8-byte cell (offsets -198/-184/bare instead of -194/-184/+4) and
+    calling sub_00568B04 instead of sub_0056897C. }
+  V := AValue;
+  lvl := V - 1;
+  while lvl >= 1 do
+  begin
+    ebx := Round(Power(2.0, lvl - 1));          //00568E58-7B
+    while ChartAFlat(102 * ebx) = 0 do          //00568E82-90 skipper
+      Inc(ebx);
+    repeat                                      //00568FB1-FC5
+      if ChartAFlat(102 * ebx + 5) = lvl then   //00568FB2-BC
+      begin
+        if ChartAFlat(102 * ebx) > 0 then       //00568E97-9F
+        begin
+          if (ChartAFlat(102 * ebx + 102) > 0) and        //00568EA5-AC
+             (ChartAFlat(132 * ebx) <> 0) and             //00568EAE-BD
+             (ChartAFlat(132 * ebx + 102) <> 0) then      //00568EBF-CA
+            sub_00568B04(V);                              //00568ECC-F0
+        end;
+        t1 := ChartAFlat(132 * ebx);                      //00568ED4-E2
+        if t1 > 0 then                                    //00568EE2-E4
+        begin
+          if t1 <> ChartAFlat(102 * ebx) then             //00568EED-F4
+          begin
+            delta := t1 - ChartAFlat(102 * ebx);          //00568EFA-0D
+            SetChartAFlat(102 * ebx, t1);                 //00568F11-18
+            eax := ebx + 1;                               //00568F1F
+            while ChartAFlat(66 * eax + 5) = lvl do       //00568F22-44
+            begin
+              if ChartAFlat(66 * eax) > 0 then            //00568F24-2C
+                SetChartAFlat(66 * eax,
+                  ChartAFlat(66 * eax) + delta);          //00568F2E-32
+              Inc(eax);                                   //00568F39
+            end;
+          end;
+        end
+        else if ChartAFlat(132 * ebx + 102) > 0 then      //00568F48-4C
+        begin
+          if ChartAFlat(102 * ebx) <>
+             ChartAFlat(132 * ebx + 102) then             //00568F4E-5F
+          begin
+            delta := ChartAFlat(132 * ebx + 102) -
+                     ChartAFlat(102 * ebx);               //00568F61-75
+            SetChartAFlat(102 * ebx,
+              ChartAFlat(132 * ebx + 102));               //00568F79-83
+            eax := ebx + 1;                               //00568F8A
+            while ChartAFlat(66 * eax + 5) = lvl do       //00568F8D-AF
+            begin
+              if ChartAFlat(66 * eax) > 0 then            //00568F8F-97
+                SetChartAFlat(66 * eax,
+                  ChartAFlat(66 * eax) + delta);          //00568F99-9D
+              Inc(eax);                                   //00568FA4
+            end;
+          end;
+        end;
+        Inc(ebx);                                         //00568FB1
+      end
+      else
+      begin
+        Dec(lvl);                                         //00568FC2
+        Break;                                            //00568FC3-5 / E58
+      end;
+    until False;
+  end;
+end;
+
+procedure sub_00568FD4;
+var
+  best, r: Integer;
+begin
+  { 00568FD4: scan chart grid A (gvar_011AE1C4) while row r's
+    active/Count field is > 0, tracking the maximum of the row's
+    dword[5]; the disassembly anchors the array at label 011AE35C =
+    grid A row (r+1) dword[0], so the terms are
+    [ebx + r*408 - $190] = gridA[r].dword[2] and
+    [ebx + r*408 - $184] = gridA[r].dword[5].
+    Passing the maximum to sub_00568C9C. }
+  best := 0;
+  r := 1;
+  while gvar_011AE1C4[r][2] > 0 do
+  begin
+    if best < gvar_011AE1C4[r][5] then
+      best := gvar_011AE1C4[r][5];
+    Inc(r);
+  end;
+  sub_00568C9C(best);
+end;
+
+procedure sub_00569010;
+var
+  best, r: Integer;
+begin
+  { 00569010: identical scan (see sub_00568FD4); the maximum is
+    passed to sub_00568E3C instead. }
+  best := 0;
+  r := 1;
+  while gvar_011AE1C4[r][2] > 0 do
+  begin
+    if best < gvar_011AE1C4[r][5] then
+      best := gvar_011AE1C4[r][5];
+    Inc(r);
+  end;
+  sub_00568E3C(best);
+end;
+
 procedure TForm13.nr2;
 begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
@@ -278,8 +612,65 @@ begin
 end;
 
 procedure TForm13.Symm;
+var
+  r, esi, eax, edx, ecx, edi: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00568834: two backward row walks over grid B (gvar_019764C4),
+    from row gvar_011AE344 downto 1 (Step $198).
+    Grid B local offsets at the [esi][5] anchor ebx:
+      [ebx] = [esi][5], [ebx+8] = [esi][7], [ebx+0C] = [esi][8],
+      [ebx-14] = [esi][0]; the second walk anchors at [esi][7]:
+      [eax-8] = [esi][5], [eax-10] = [esi][3], [eax-1A0] = [esi-1][5],
+      [eax-1A8] = [esi-1][3], [eax-1B4] = [esi-1][0],
+      [eax-1C] = [esi][0]. Row-index terms [T*8 + 19764C4] translate
+    to flat dword index 2*T (ChartBFlat). gvar_011AE334 and
+    gvar_0061F118 are read as plain dword integers throughout. }
+
+  { Part 1 (00568847-905). }
+  for r := gvar_011AE344 downto 1 do
+  begin
+    esi := r;
+    if gvar_011AE330 > 2 then                            //00568851-58
+    begin
+      if gvar_019764C4[esi][5] < gvar_011AE328 then      //0056885E-66 jge
+      begin
+        edi := gvar_019764C4[esi][7];                    //00568897
+        if (edi > 0) and (gvar_019764C4[esi][8] > 0) then //0056889A-A2
+        begin
+          //005688A4-D5: midpoint move
+          eax := Round((ChartBFlat(102 * gvar_019764C4[esi][8]) -
+                        ChartBFlat(102 * gvar_019764C4[esi][7])) / 2.0) +
+                 ChartBFlat(102 * edi);
+          gvar_019764C4[esi][0] := eax;                  //005688D5
+        end;
+        eax := gvar_019764C4[esi][0];                    //005688E4
+        ecx := eax div (gvar_011AE334 + gvar_0061F118);  //005688E8-E8 idiv
+        if ecx > gvar_011AE31C then                      //005688EF-F5 jle
+          gvar_011AE31C := ecx - 1;                      //005688F7-F8
+      end;
+    end;
+  end;
+
+  { Part 2 (0056889D-971). }
+  for r := gvar_011AE344 downto 1 do
+  begin
+    esi := r;
+    if (gvar_019764C4[esi][7] = 0) and                   //00568923-25
+       (gvar_019764C4[esi][8] = 0) then                  //00568927-2B
+    begin
+      edx := gvar_019764C4[esi][5];                      //0056892D
+      if (edx < gvar_011AE328) and                       //00568930-36 jge
+         (edx = gvar_019764C4[esi - 1][5]) and           //00568938-3E jne
+         (gvar_019764C4[esi][3] > 0) and                 //00568940-44
+         (gvar_019764C4[esi - 1][3] > 0) and             //00568946-4D
+         (gvar_019764C4[esi - 1][0] >= gvar_019764C4[esi][0]) then //0056894F-58 jl
+      begin
+        edx := gvar_019764C4[esi - 1][0];                //0056894F
+        gvar_019764C4[esi][0] := edx + gvar_011AE334 +    //0056895A-66
+          gvar_0061F118;
+      end;
+    end;
+  end;
 end;
 
 procedure TForm13.kek_ord_2;

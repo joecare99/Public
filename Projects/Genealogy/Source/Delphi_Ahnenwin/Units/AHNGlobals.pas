@@ -18,6 +18,29 @@ interface
 uses
   SysUtils, Classes, DB, DBTables, DBCommon, Controls, Graphics, Forms;
 
+type
+  { The chart layout arrays of Unit13 (Phase A). Both grids hold one
+    TChartRow per person; every row is $198 = 408 bytes. The 8-byte
+    cells are accessed as 4-byte dwords at row-relative byte offsets
+    (cell lo = +0, cell hi = +4). Lines with a fixed row index use the
+    idiom  [base + index*51*8 + off]  =  [base + index*$198 + off].
+    The IDR gvar labels that point *inside* these arrays are mapped to
+    (row, dword index) pairs in the comments of the variables below;
+    the recon keeps one variable per grid and re-expresses the inner
+    offsets arithmetically, exactly as the disassembly does. }
+  TChartRow = array[0..101] of Integer; // 408 bytes = $198
+  TChartRows = array[0..9999] of TChartRow;
+
+  { The person mirror built by TForm13.Vorf_erm1/Nach_erm: one record
+    per person, $214 = 532 bytes, Count $13880 = 80000. Pinned fields
+    (relative to the record start, base 0061F30C): +0 num (LongInt),
+    +4 flag (LongInt), +8 kind (LongInt), +$137 ShortString[28]
+    (the Len byte is compared with 'W' = female marker), +$10E and
+    +$160 further ShortString[28]; +$204/+206 are word fields of the
+    previous record in negative-offset form ([ebx-$A]/[ebx-$8]). }
+  TPersonRec = array[0..531] of Byte; // 532 bytes = $214
+  TPersonRecs = array[0..79999] of TPersonRec;
+
 var
   gvar_0054F9C4: Integer; //0054F9C4  used by Unit26
   gvar_0055AEC8: Integer; //0055AEC8  used by Unit10
@@ -125,7 +148,7 @@ var
   gvar_0061F0FC: TForm; //0061F0FC  used by Unit1
   gvar_0061F110: Integer; //0061F110  used by Unit13
   gvar_0061F114: Single; //0061F114  used by Unit13
-  gvar_0061F118: Single; //0061F118  used by Unit13
+  gvar_0061F118: Integer; //0061F118  used by Unit13 (all list accesses are dword/fild: IDR's "Single" label is wrong)
   gvar_0061F11C: Integer; //0061F11C  used by Unit1, Unit13
   gvar_0061F120: Extended; //0061F120  used by Unit1, Unit13
   gvar_0061F124: Integer; //0061F124  used by Unit13
@@ -149,7 +172,7 @@ var
   gvar_0061F2F0: Integer; //0061F2F0  used by Unit13
   gvar_0061F2F4: Integer; //0061F2F4  used by Unit13
   gvar_0061F2F8: Integer; //0061F2F8  used by Unit13
-  gvar_0061F30C: Integer; //0061F30C  used by Unit13
+  gvar_0061F30C: TPersonRecs; //0061F30C  person mirror grid, Unit13 (80000 rows of $214)
   gvar_0061F314: Integer; //0061F314  used by Unit13
   gvar_01044CEC: Integer; //01044CEC  used by Unit13
   gvar_01044CF8: Integer; //01044CF8  used by Unit13
@@ -157,7 +180,11 @@ var
   gvar_01044D47: Integer; //01044D47  used by Unit13
   gvar_01044D7C: Integer; //01044D7C  used by Unit13
   gvar_011AE038: Integer; //011AE038  used by Unit13
-  gvar_011AE1C4: Integer; //011AE1C4  used by Unit13
+  { ancestor-row grid A (base 011AE1C4): fields so far pinned —
+    row[r]: dword[0] = label 011AE1C4, dword[2] (+8) = label 011AE1CC;
+    row (r+1): label 011AE35C = dword[0], 011AE360 = dword[1],
+    011AE364 = dword[2]; labels 011AE368/370 sit past that row tail. }
+  gvar_011AE1C4: TChartRows; //011AE1C4  chart grid A (10000 x $198), Unit13
   gvar_011AE1C8: Integer; //011AE1C8  used by Unit13
   gvar_011AE1CC: Integer; //011AE1CC  used by Unit13
   gvar_011AE1D0: Integer; //011AE1D0  used by Unit13
@@ -188,10 +215,10 @@ var
   gvar_011AE31C: Integer; //011AE31C  used by Unit13
   gvar_011AE320: Integer; //011AE320  used by Unit13
   gvar_011AE324: Integer; //011AE324  used by Unit13
-  gvar_011AE328: Single; //011AE328  used by Unit13
+  gvar_011AE328: Integer; //011AE328  used by Unit13 (all list accesses are dword mov/cmp/fild: IDR's "Single" label is wrong)
   gvar_011AE32C: TCanvas; //011AE32C  used by Unit13
   gvar_011AE330: Integer; //011AE330  used by Unit13
-  gvar_011AE334: Single; //011AE334  used by Unit13
+  gvar_011AE334: Integer; //011AE334  used by Unit13 (all list accesses are dword/fild: IDR's "Single" label is wrong)
   gvar_011AE338: Integer; //011AE338  used by Unit13
   gvar_011AE33C: Integer; //011AE33C  used by Unit13
   gvar_011AE340: Integer; //011AE340  used by Unit13
@@ -199,22 +226,27 @@ var
   gvar_011AE348: Single; //011AE348  used by Unit13
   gvar_011AE34C: Extended; //011AE34C  used by Unit13
   gvar_011AE358: TBitmap; //011AE358  used by Unit13
-  gvar_011AE35C: TStringList; //011AE35C  used by Unit13
-  gvar_011AE360: Integer; //011AE360  used by Unit13
-  gvar_011AE364: Integer; //011AE364  used by Unit13
+  gvar_011AE35C: Integer; //011AE35C = grid A: label for row (r+1) dword[0]; used by Unit13
+  gvar_011AE360: Integer; //011AE360 = grid A: label for row (r+1) dword[1]; used by Unit13
+  gvar_011AE364: Integer; //011AE364 = grid A: label for row (r+1) dword[2]; used by Unit13
   gvar_011AE368: Integer; //011AE368  used by Unit13
   gvar_011AE370: Integer; //011AE370  used by Unit13
   gvar_011AE378: Integer; //011AE378  used by Unit13
   gvar_015924DC: TStringList; //015924DC  used by Unit13
-  gvar_015924E4: Integer; //015924E4  used by Unit13
-  gvar_019764C4: Integer; //019764C4  used by Unit13
-  gvar_019764C8: Integer; //019764C8  used by Unit13
-  gvar_019764D8: Integer; //019764D8  used by Unit13
-  gvar_019764E0: Integer; //019764E0  used by Unit13
-  gvar_0197665C: TStringList; //0197665C  used by Unit13
-  gvar_01976664: Integer; //01976664  used by Unit13
-  gvar_01976668: Integer; //01976668  used by Unit13
-  gvar_01976670: Integer; //01976670  used by Unit13
+  gvar_015924E4: TChartRows; //015924E4  chart grid C working copy (10000 x $198), Unit13
+  { ancestor-row grid B (base 019764C4): fields so far pinned —
+    row[r]: dword[0] = label 019764C4, dword[1] (+4) = 019764C8,
+    dword[5] (+$14) = 019764D8, dword[7] (+$1C) = 019764E0;
+    row (r+1): dword[0] = 0197665C, dword[1] (+8) = 01976664,
+    dword[3] (+$C) = 01976668, dword[5] (+$14) = 01976670. }
+  gvar_019764C4: TChartRows; //019764C4  chart grid B (10000 x $198), Unit13
+  gvar_019764C8: Integer; //019764C8 = grid B: label for row[r] dword[1]; used by Unit13
+  gvar_019764D8: Integer; //019764D8 = grid B: label for row[r] dword[5]; used by Unit13
+  gvar_019764E0: Integer; //019764E0 = grid B: label for row[r] dword[7]; used by Unit13
+  gvar_0197665C: Integer; //0197665C = grid B: label for row (r+1) dword[0]; used by Unit13
+  gvar_01976664: Integer; //01976664 = grid B: label for row (r+1) dword[1]; used by Unit13
+  gvar_01976668: Integer; //01976668 = grid B: label for row (r+1) dword[3]; used by Unit13
+  gvar_01976670: Integer; //01976670 = grid B: label for row (r+1) dword[5]; used by Unit13
   gvar_01D5A7DC: TStringList; //01D5A7DC  used by Unit13
   gvar_0213E95C: TStringList; //0213E95C  used by Unit13
   gvar_02522AD8: Integer; //02522AD8  used by Unit13
@@ -375,6 +407,37 @@ var
   gvar_02536BB0: TFileStream; //02536BB0  used by Unit1
   gvar_02536BB4: string[50]; //02536BB4  used by Unit1
 
+{ Flat dword accessors for chart grid A (gvar_011AE1C4). Every
+  disassembly term  [esi + T*8 + K]  with  esi = 011AE35C = base + $198
+  translates to the flat dword index  2*T + 102 + (K div 4)  of the
+  grid. Used by the Unit13 Phase-B walkers (sub_00568C9C etc.). }
+function ChartAFlat(I: Integer): Integer;
+procedure SetChartAFlat(I, AValue: Integer);
+function ChartBFlat(I: Integer): Integer;
+procedure SetChartBFlat(I, AValue: Integer);
+
 implementation
+
+function ChartAFlat(I: Integer): Integer;
+begin
+  Result := PInteger(PChar(@gvar_011AE1C4) + 4 * I)^;
+end;
+
+procedure SetChartAFlat(I, AValue: Integer);
+begin
+  PInteger(PChar(@gvar_011AE1C4) + 4 * I)^ := AValue;
+end;
+
+{ Grid B equivalents: a term  [T*8 + 19764C4]  translates to the flat
+  dword index 2*T of gvar_019764C4. }
+function ChartBFlat(I: Integer): Integer;
+begin
+  Result := PInteger(PChar(@gvar_019764C4) + 4 * I)^;
+end;
+
+procedure SetChartBFlat(I, AValue: Integer);
+begin
+  PInteger(PChar(@gvar_019764C4) + 4 * I)^ := AValue;
+end;
 
 end.
