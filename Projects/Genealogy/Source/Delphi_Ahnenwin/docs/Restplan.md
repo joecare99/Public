@@ -253,6 +253,36 @@ delta through the 66*eax stride chain while the level dword matches)…
   Nach_erm (0056A970, L7311), nr1 (0056C0D4), nr2 (0056CB30),
   nz1 (0056D6B4), nz2 (0056EB10).
 
+### vz1 (005711D4, listing L13489–14575) — converted, build green (2026-10-25)
+
+- Signature fixed: `procedure vz1(AValue: TCanvas);` (AValue = EDX,
+  `[ebp-8]`). Grid B access: listing keeps `edi = gvar_0197665C` (=
+  gvar_019764C4 + $198, the same frame vz2 calls esi) with
+  `esi = 51*row` → `[edi + esi*8 + X]` maps IDENTICALLY to
+  `gvar_019764C4[row][d]` (same offset table as vz2; no new helper
+  needed).
+- Differences vs vz2 (otherwise structurally the same A→B copy, min
+  scan, shift, K:/DS:/ID: text with the same 10-byte Extended build,
+  JPEG photo with identical Rect math, 20-string '#' loop, M/W boxes,
+  identical ScrollBar1/2.Max tail):
+  - Head: PaintBox white fill FIRST; 2536364/2536368 := 0 ALWAYS, then
+    loaded from ScrollBar1/2.Position only when
+    `PaintBox1.Canvas = AValue` (vz2 is the inverse order).
+  - NO 'W' drop line, NO above-box connector loop.
+  - Child connectors ([7] and [8], guard B5<328 and child>0) are
+    orthogonal 3-segment lines: MoveTo((B0+334, Yp)) where
+    Yp = Round(f*(B1 + (348*f + (37C*318+318))/2)) — the 348*f term is
+    INSIDE the scaled expression; then LineTo to
+    ((B0+334+118/2), Yp) [the 118/2 is added inside Round,
+    X = Round((B0+334+118/2)*f)], then to (same X, childB1 variant of
+    Yp), then to (childB0*f, childY). No PaintBox eq/ne variants, no
+    −1/inc.
+  - Extrema swapped: gvar_011AE324 := max of
+    (B1-33C+368) div (37C*318+114+318+348) (idiv, duplicated asm
+    recompute transcribed); gvar_011AE31C := plain max of B5.
+- Next in address order: Nach_erm (0056A970, listing L7311), then
+  nr1 (0056C0D4), nr2 (0056CB30), nz1 (0056D6B4), nz2 (0056EB10).
+
 ## Phase 2 — the mid-size ones (250 – 1500 lines)
 
 These are single-purpose methods that need the DataModule2 tables or one or
@@ -286,3 +316,14 @@ previous:
 gedein_5  →  gedin2  →  gedin → gedin_neu
 gedausv   →  gedausxv → gedaus → gedausx
             (osbein, adrschreib, ahndosein are the non-GEDCOM I
+
+### nach_erm (0056A970, listing L7311�8706) � converted, build green (2026-10-25)
+
+- `TForm13.Nach_erm` implemented in `Units\Unit13.pas` (head, zero-init, phase 1 BFS, phase 2 grid-A fill, phase 3 tail). `Unit1` added to the implementation uses (Form1.DBText1); `Unit12`/`Unit2`/`AHNGlobals` were already present.
+- Grid A zero-init fields: d0,d1,d2,d3,d5,d7,d8,d10,d11,d12 + in-row bytes 316/318/320/322. Grid B zero-init: d0..d3, d5, d7, d8, d9, d10, d11, d12 + same bytes (no d4/d6/d10 exceptions: d10 IS cleared for B). Loop `for edi := 10000 downto 1`.
+- Head: gvar_0253636C := 0 (3-part Extended store), 61F118 := Round(61F120*20), 61F114 := Round(61F120*30), 11AE344/31C := 0, 11AE334 += 10 if 61F2BC=1.
+- Setup: startNr := Table1Nummer.AsInteger; 61F2F0 := StrToInt(Form12.SpinEdit1.Text); birth filter when 02536BA0 > 1 ('gebjahr<=n and taufjahr<=n', Filtered := True, Form1.DBText1.Color := $FFFF); FindKey ignored; index 'vat' if Geschlecht(M) / 'mut' if (W); FindKey([startNr]) � if the checked FindKey fails ? ShowMessage('Keine Nachfahren gefunden.') + Exit **without restoring the cursor** (original behavior); fonts/heights set on PaintBox1.Canvas.Font; 61F118/61F114 re-set (same values), 11AE33C := Round(61F120*45), 11AE340 := Round(61F120*20), 11AE318 := -PaintBox1.Canvas.Font.Height + 2; chain := Num2Str(Table17Nummer).
+- Phase 1 (chunk BFS over chain): markers/nextChain patterns as documented; per pnun: markers-dedup prepend on chain itself, Table18.IndexName 'num', FindKey([pnun]) then repeat while (not Eof) and (Table18Nummer = pnun); chain += Num2Str(Epnum) (markers-dedup); bmk := -1 (v150 GetBookmark stub); Table17 'index' reset, FindKey([Epnum]) ignored; **v1A0 GotoBookmark = no-op comment**; gender M ? Index 'vat', walk Vater = pnun (append nextChain when Mutter = Epnum or Mutter = 0, markers-dedup when gen < max); W ? Index 'mut', walk Mutter = pnun (Vater = Epnum or Vater = 0, symmetric). Then Index '', v1A0 no-op, Table18.Next; chain := nextChain after the chunk loop.
+- Phase 2 (grid A fill): person row edi gets d2 := edi, d3 := Nummer, d7 := Vater, d8 := Mutter (nulled when edi = 1), shortstrings: ID @152 (Copy(...,1,40)), sex uppercased @193, photo @322 ('_bitmap path gvar_02536B9C + '\bilder\b' + IntToStr(d3) + 'a.jpg', computed twice, only if 61F2BC = 1 and FileExists); d0/d1 per Nachgr1 (gen-1+ardy / colx) or Nachgr2 (swapped); 20 ChartSlotAnsi slots cleared; d5 := gen. Marriage row then: chain += Num2Str(Epnum); bmk := -1; d2..d12 filled; **d10 := ChartAFlat(102*(edi-1)+3)** (asm: [11AE038+408edi] = d3 of the previous row); pIdx (EDI/partner counter) into d12; slot trims into flat 102*edi+17 for slots 1..19 (slot order 1..19, slot 0 excluded; condition Length(Trim(slot)) > 0); 0056BA66-B82 is a **dead block** (cmp [ebp-0C],0 never 0 � count is 20 from the clear loop), transcribed as a comment only. After the marriage loop: nextChain built with dup-check only in the *parent-without-marriage-parent* arm (Vater/Mutter = 0 uses Pos-dedup, = Epnum appends unconditionally, **no '*' markers in phase 2**). End per generation: chain := nextChain, colx := 1, gvar_011AE344 := edi.
+- Phase 3: cursor default, 11AE328 := max(d5) walking rows while d2 > 0, gvar_02522AD8[edi] := d0, gvar_0252C718[edi] := d1 (arrays[0..10499] of Integer, AHNGlobals); ShowMessage 'N Generationen / M-1 Personen gefunden'; gvar_011AE32C := PaintBox1.Canvas.
+- FindKey results are only Boolean-tested where the listing tests al; elsewhere the call is transcribed without using the result. FindKey([X]) transcribed as `DataModule2.TableXX.FindKey([X]);`.

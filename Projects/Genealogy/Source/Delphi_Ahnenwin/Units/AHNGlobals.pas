@@ -250,8 +250,8 @@ var
   gvar_01976670: Integer; //01976670 = grid B: label for row (r+1) dword[5]; used by Unit13
   gvar_01D5A7DC: TStringList; //01D5A7DC  used by Unit13
   gvar_0213E95C: TStringList; //0213E95C  used by Unit13
-  gvar_02522AD8: Integer; //02522AD8  used by Unit13
-  gvar_0252C718: Integer; //0252C718  used by Unit13
+  gvar_02522AD8: array[0..10499] of Integer; //02522AD8  per-person x col, Unit13.nach_erm (equals 02522ADC-4)
+  gvar_0252C718: array[0..10499] of Integer; //0252C718  per-person y col, Unit13.nach_erm (equals 0252C71C-4)
   gvar_0253635C: Integer; //0253635C  used by Unit13
   gvar_02536360: Integer; //02536360  used by Unit13
   gvar_02536364: Integer; //02536364  used by Unit13
