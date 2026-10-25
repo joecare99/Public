@@ -33,7 +33,7 @@ Function LoadBPLSymbolFile(Var Bytes,Names : TMemoryStream;
 
 implementation
 
-Uses  VCLUnZip, VCLZip, SysUtils, DeDeAnsiStream;
+Uses SysUtils, DeDeAnsiStream, DeDeZip;
 
 Type DWORD = LongWord;
 
@@ -48,7 +48,6 @@ Var OutF : TMemoryStream;
     b : Byte;
     w : Word;
     dw,dwc,dws : DWORD;
-    Zip : TVCLZip;
 Begin
   OutF:=TMemoryStream.Create;
   Try
@@ -95,13 +94,7 @@ Begin
     OutF.Seek(12,soFromBeginning);
     OutF.WriteBuffer(dws,4);
 
-    Zip:=TVCLZip.Create(nil);
-    Try
-     Zip.ZipName:=sFileName;
-     Zip.ZipFromStream(OutF,sFileName);
-    Finally
-     Zip.Free;
-    End;
+    WriteZipEntryFromStream(sFileName, sFileName, OutF);
   Finally
     OutF.Free;
   End;
@@ -119,7 +112,6 @@ var InF : TMemoryStream;
     b : Byte;
     w : Word;
     dw,dwc,dws : DWORD;
-    UnZip : TVCLUnzip;
 begin
   Bytes.Clear;
   Names.Clear;
@@ -127,14 +119,8 @@ begin
   InF:=TMemoryStream.Create;
   Result:=False;
 
-  UnZip:=TVCLUnZip.Create(nil);
-  Try
-    UnZip.ZipName:=sFileName;
-    UnZip.UnZipToStream(InF,ExtractFileName(sFileName));
-    InF.Seek(0,soFromBeginning);
-  Finally
-    UnZip.Free;
-  End;
+  ExtractZipEntryToStream(sFileName, ExtractFileName(sFileName), InF);
+  InF.Seek(0,soFromBeginning);
 
   Try
     // Read Magic

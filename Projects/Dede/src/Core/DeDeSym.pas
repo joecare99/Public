@@ -46,7 +46,7 @@ var BPLPEHeader : TPEHeader;
 implementation
 
 Uses
-  DeDeDisASM, DisASM, HexTools, DeDeBPL, VCLUnZip, SysUtils,
+  DeDeDisASM, DisASM, HexTools, DeDeBPL, SysUtils,
   crc32, DeDeRES, DeDeCoreServices;
 
 var DASM : TDisAsm;
@@ -310,39 +310,12 @@ begin
 end;
 
 function TDeDeSymbol.LoadSymbol(AsFileName: String): Boolean;
-var FS : TMemoryStream;
-    s : String;
-    UnZip : TVCLUnZip;
 begin
   Result:=False;
   Sym.Clear;
   Str.Clear;
 
   Try
-// LoadBPLSymbolFile already Do this
-//    FS:=TMemoryStream.Create;
-//    Try
-//      UnZip:=TVCLUnZip.Create(nil);
-//      Try
-//       UnZip.ZipName:=AsFileName;
-//       UnZip.UnZipToStream(FS,ExtractFileName(AsFileName));
-//       FS.Seek(0,soFromBeginning);
-//      Finally
-//       UnZip.Free;
-//      End;
-//      // Read Magic
-//      SetLength(s,4);
-//      FS.ReadBuffer(s[1],4);
-//      If s<>'DSF!' Then Exit;
-//      // Read Flags
-//      FS.ReadBuffer(Mode,1);
-//      // Read Record Count
-//      FS.ReadBuffer(Count,2);
-//    Finally
-//      FS.Free;
-//    End;
-//    SetLength(Index,Count);
-
     FileName:=AsFileName;
     Result := DeDeBPL.LoadBPLSymbolFile(sym, str, AsFileName, mode, PatternSize,
       Count,Comment,Index);

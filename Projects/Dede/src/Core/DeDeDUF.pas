@@ -57,7 +57,7 @@ implementation
 
 { TDUFFile }
 
-uses VCLUnZip, VCLZip, SysUtils, DeDeAnsiStream;
+uses SysUtils, DeDeAnsiStream, DeDeZip;
 
 constructor TDUFFile.Create;
 begin
@@ -78,17 +78,10 @@ var s : String;
     i : Integer;
     b : Byte;
     dw, VdwPos, VdwCnt, EdwPos, EdwCnt, CdwPos, CdwCnt : DWORD;
-    UnZip : TVCLUnZip;
 begin
-  UnZip:=TVCLUnZip.Create(nil);
-  Try
-   UnZip.ZipName:=sFileName;
-   FStream.Clear;
-   UnZip.UnZipToStream(FStream,ExtractFileName(sFileName));
-   FStream.Seek(0,soFromBeginning);
-  Finally
-   UnZip.Free;
-  End;
+  FStream.Clear;
+  ExtractZipEntryToStream(sFileName, ExtractFileName(sFileName), FStream);
+  FStream.Seek(0,soFromBeginning);
 
   // Read Magic
   s := ReadAnsiString(FStream, 4);
@@ -156,7 +149,6 @@ var s : String;
     i : Integer;
     b : Byte;
     dw, VdwPos, VdwCnt, EdwPos, EdwCnt, CdwPos, CdwCnt : DWORD;
-    Zip : TVCLZip;
 begin
   FStream.Clear;
 
@@ -225,13 +217,7 @@ begin
   FStream.WriteBuffer(EdwPos,4);
   FStream.WriteBuffer(EdwCnt,4);
 
-  Zip:=TVCLZip.Create(nil);
-  Try
-   Zip.ZipName:=sFileName;
-   Zip.ZipFromStream(FStream,sFileName);
-  Finally
-   Zip.Free;
-  End;
+  WriteZipEntryFromStream(sFileName, sFileName, FStream);
 end;
 
 end.

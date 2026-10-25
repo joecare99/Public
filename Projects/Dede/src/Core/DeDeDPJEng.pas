@@ -43,9 +43,9 @@ implementation
 
 { TDPJFile }
 
-Uses VCLUnZip, VCLZip, SysUtils, DeDeConstants, MainUnit, Windows,
+Uses SysUtils, DeDeConstants, MainUnit, Windows,
      DeDeCoreServices,
-     CRC32, DeDeSym, DeDeReg, DeDeClasses, DeDeAnsiStream;
+     CRC32, DeDeSym, DeDeReg, DeDeClasses, DeDeAnsiStream, DeDeZip;
 
 var
    Stream : TMemoryStream;
@@ -326,18 +326,11 @@ end;
 
 
 procedure LoadDPJFile(FsFileName: String);
-var UnZip : TVCLUnzip;
 begin
   Stream := TMemoryStream.Create;
   Try
-   UnZip := TVCLUnZip.Create(nil);
-   Try
-     UnZip.ZipName := FsFileName;
-     UnZip.UnZipToStream(Stream,ExtractFileName(FsFileName));
-     Stream.Seek(0, soFromBeginning);
-   Finally
-     UnZip.Free;
-   End;
+   ExtractZipEntryToStream(FsFileName, ExtractFileName(FsFileName), Stream);
+   Stream.Seek(0, soFromBeginning);
    ProcessStreamForLoadingDPJ;
    MessageBox(0, 'DeDe Project loaded !', '', MB_OK);
   Finally
@@ -348,20 +341,13 @@ end;
 
 
 procedure SaveDPJFile(FsFileName: String);
-var Zip : TVCLZip;
 begin
    Stream := TMemoryStream.Create;
    DeleteFile(PChar(FsFileName));
    ProcessStreamForSavingDPJ;
-   Zip := TVCLZip.Create(nil);
-   Try
-      Zip.ZipName := FsFileName;
-      Stream.Seek(0, soFromBeginning);
-      Zip.ZipFromStream(Stream, FsFileName);
-      MessageBox(0, 'DeDe Project saved !', '', MB_OK);
-   Finally
-      Zip.Free;
-   End;
+   Stream.Seek(0, soFromBeginning);
+   WriteZipEntryFromStream(FsFileName, FsFileName, Stream);
+   MessageBox(0, 'DeDe Project saved !', '', MB_OK);
    Stream.Free;
 end;
 

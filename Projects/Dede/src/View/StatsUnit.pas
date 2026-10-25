@@ -4,7 +4,7 @@ interface
 
 uses
   Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  ExtCtrls, StdCtrls, VCLZip{, Psock, NMFtp};
+  ExtCtrls, StdCtrls{, Psock, NMFtp};
 
 type
   TStatsForm = class(TForm)

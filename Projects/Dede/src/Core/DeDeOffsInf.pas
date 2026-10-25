@@ -104,8 +104,8 @@ Function GetType(dw : DWORD) : Byte;
 
 implementation
 
-uses VCLUnZip, VCLZip, SysUtils, HEXTools, DeDeConstants,
-  DeDeAnsiStream, DeDeCoreServices;
+uses SysUtils, HEXTools, DeDeConstants, DeDeAnsiStream,
+  DeDeCoreServices, DeDeZip;
 
 Function GetType(dw : DWORD) : Byte;
 begin
@@ -238,17 +238,10 @@ var s : String;
     sz,w : Word;
     dw : DWORD;
     OffsInf : TOffsInfStruct;
-    UnZip : TVCLUnZip;
 begin
-  UnZip:=TVCLUnZip.Create(nil);
-  Try
-   UnZip.ZipName:=AsFileName;
-   FStream.Clear;
-   UnZip.UnZipToStream(FStream,ExtractFileName(AsFileName));
-   FStream.Seek(0,soFromBeginning);
-  Finally
-   UnZip.Free;
-  End;
+  FStream.Clear;
+  ExtractZipEntryToStream(AsFileName, ExtractFileName(AsFileName), FStream);
+  FStream.Seek(0,soFromBeginning);
 
 //  ClearAllData;
 
@@ -561,7 +554,6 @@ var s : String;
     sz : Word;
     dw : DWORD;
     OffsInf : TOffsInfStruct;
-    Zip : TVCLZip;
 begin
   TmpStream:=TMemoryStream.Create;
   FStream.Clear;
@@ -618,13 +610,7 @@ begin
     TmpStream.Free;
   End;
 
-  Zip:=TVCLZip.Create(nil);
-  Try
-   Zip.ZipName:=AsFileName;
-   Zip.ZipFromStream(FStream,AsFileName);
-  Finally
-   Zip.Free;
-  End;
+  WriteZipEntryFromStream(AsFileName, AsFileName, FStream);
 end;
 
 end.

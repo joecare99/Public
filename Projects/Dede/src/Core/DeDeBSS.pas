@@ -70,7 +70,11 @@ var pi : PROCESS_INFORMATION;
     si : TStartupInfo;
     bssi, i : Integer;
     dw, dw1 : DWORD;
+{$IFDEF FPC}
+    sz : NativeUInt;
+{$ELSE}
     sz : Cardinal;
+{$ENDIF}
 begin
   bssi := PEHeader.GetSectionIndexEx('DATA');
 
