@@ -5,7 +5,11 @@ interface
 uses
   Classes, SysUtils, DeDeClasses, DeDeBSS, DeDeRes, DeDeBinaryTypes;
 
-
+type
+  TVMTMethodEntry = record
+    RVA: DWORD;
+    Offset: DWORD;
+  end;
 
 Type
 
@@ -29,9 +33,11 @@ Type
   TClassDumper = Class
   protected
     IsInDataSection : Boolean;
+    VMTMethodEntries: array of TVMTMethodEntry;
     Procedure CalculatePositions;
     Procedure DumpFields;
     Function GetDFMOffset(AsClassName : String) : DWORD;
+    Function FindVMTOffset(ARVA : DWORD) : DWORD;
     Function InCodeSection(RVA : DWORD) : Boolean;
     Function InDataSection(RVA : DWORD) : Boolean;
     Function IsInData(RVA : DWORD) : Boolean;
@@ -460,12 +466,12 @@ begin
 end;
 
 procedure TClassDumper.DumpMethods(dwEndRVA : DWORD; bDumpAdditional : Boolean = False);
-var  dw,i, MinRVA, MaxRVA, dwLastPublishedMeth : DWORD;
+var  dw,i, MinRVA, MaxRVA, dwLastPublishedMeth, VMTOffset : DWORD;
      b : Byte;
      sName : String;
      w : Word;
      idx : Integer;
-     bFound : Boolean;
+     bFound, HaveMethodTable : Boolean;
      BegArr, EndArr : Array of DWORD;
 begin
   //Get DFM Offset
@@ -473,35 +479,54 @@ begin
 
   if not bDumpAdditional then
     begin
-        If FdwMethodDefTlbPtr=0 Then Exit;
-        If Not bELF then
-        If Not IsInDataSection
-           Then Begin If Not InCodeSection(FdwMethodDefTlbPtr) Then Exit End
-           Else If Not InDataSection(FdwMethodDefTlbPtr) Then Exit;
+        SetLength(VMTMethodEntries, 0);
+        HaveMethodTable := FdwMethodDefTlbPtr <> 0;
+        if HaveMethodTable and not bELF then
+          if not IsInDataSection then
+            HaveMethodTable := InCodeSection(FdwMethodDefTlbPtr)
+          else
+            HaveMethodTable := InDataSection(FdwMethodDefTlbPtr);
 
-        {BOZA DeDeClasses.}PEStream.Seek(FdwMethodDefTlbPos,soFromBeginning);
-        {BOZA DeDeClasses.}PEStream.ReadBuffer(MethodData.Count,2);
+        if HaveMethodTable then
+        begin
+          {BOZA DeDeClasses.}PEStream.Seek(FdwMethodDefTlbPos,soFromBeginning);
+          {BOZA DeDeClasses.}PEStream.ReadBuffer(MethodData.Count,2);
 
-        For i:=1 To MethodData.Count Do
-         Begin
-            {BOZA DeDeClasses.}PEStream.ReadBuffer(w,2);
-            {BOZA DeDeClasses.}PEStream.ReadBuffer(dw,4);
-            {BOZA DeDeClasses.}PEStream.ReadBuffer(b,1);
-            sName := {BOZA DeDeClasses.}PEStream.ReadStringA(b);
-            ProcRefOffsets.Add(IntToHex(dw,8));
-            ProcRefNames.Add(FsClassName+'.'+sName);
-            MethodData.AddMethod(sName, dw, w);
-         End;
+          For i:=1 To MethodData.Count Do
+           Begin
+              {BOZA DeDeClasses.}PEStream.ReadBuffer(w,2);
+              {BOZA DeDeClasses.}PEStream.ReadBuffer(dw,4);
+              {BOZA DeDeClasses.}PEStream.ReadBuffer(b,1);
+              sName := {BOZA DeDeClasses.}PEStream.ReadStringA(b);
+              ProcRefOffsets.Add(IntToHex(dw,8));
+              ProcRefNames.Add(FsClassName+'.'+sName);
+              MethodData.AddMethod(sName, dw, w);
+           End;
+        end;
 
         {BOZA DeDeClasses.}PEStream.Seek(FdwVMTPos,soFromBeginning);
         Repeat
+            VMTOffset := DWORD(PEStream.Position - FdwVMTPos);
             {BOZA DeDeClasses.}PEStream.ReadBuffer(dw,4);
-            If MethodData.MethodIndexByRVA(dw)=-1
+            if InCodeSection(dw) then
+            begin
+              SetLength(VMTMethodEntries, Length(VMTMethodEntries) + 1);
+              VMTMethodEntries[High(VMTMethodEntries)].RVA := dw;
+              VMTMethodEntries[High(VMTMethodEntries)].Offset := VMTOffset;
+            end;
+            idx := MethodData.MethodIndexByRVA(dw);
+            If idx=-1
               Then Begin
-                ProcRefOffsets.Add(IntToHex(dw,8));
+                if HaveMethodTable then
+                  ProcRefOffsets.Add(IntToHex(dw,8));
                 If not InCodeSection(dw) then break;
-                ProcRefNames.Add('virt proc '+FsUnitName+'.VIRT_PROC_'+IntToHex(dw,8));
-              End;
+                if HaveMethodTable then
+                  ProcRefNames.Add('virt proc '+FsUnitName+'.VIRT_PROC_'+
+                    IntToHex(dw,8));
+              End
+              Else If TMethodRec(MethodData.Methods[idx]).dwVMTOffset =
+                METHOD_VMT_OFFSET_NONE Then
+                TMethodRec(MethodData.Methods[idx]).dwVMTOffset := VMTOffset;
         Until {BOZA DeDeClasses.}PEStream.Position>=FdwFieldDefTlbPos;
 
         // Only The 'Good' Classes should continue down
@@ -566,6 +591,8 @@ begin
              Begin
                MethodData.AddMethod('_PROC_'+DWORD2HEX(dw),dw,$FFFF);
                Inc(MethodData.Count);
+               TMethodRec(MethodData.Methods[MethodData.Methods.Count - 1])
+                 .dwVMTOffset := FindVMTOffset(dw);
              End;
         Until False;
      end;
@@ -765,6 +792,16 @@ begin
          Result:=TMethodRec(MethodData.Methods[i]).dwRVA;
          Exit;
        End;
+end;
+
+function TClassDumper.FindVMTOffset(ARVA: DWORD): DWORD;
+var
+  I: Integer;
+begin
+  Result := METHOD_VMT_OFFSET_NONE;
+  for I := 0 to High(VMTMethodEntries) do
+    if VMTMethodEntries[I].RVA = ARVA then
+      Exit(VMTMethodEntries[I].Offset);
 end;
 
 function TClassDumper.InCodeSection(RVA: DWORD): Boolean;

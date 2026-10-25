@@ -31,6 +31,7 @@ type
     procedure TestCoreAttachedAnalysisIsBorrowed;
     procedure TestCoreReportExportAndOverwriteGuard;
     procedure TestCoreVersionConfiguration;
+    procedure TestVMTMethodOffsetMapping;
     procedure TestZipFormatConsumers;
   end;
 
@@ -1381,6 +1382,99 @@ begin
     ReducedDelphiVersion := PreviousReducedVersion;
     GlobDelphi2 := PreviousDelphi2;
     GlobCBuilder := PreviousCBuilder;
+  end;
+end;
+
+procedure TReconstructionTests.TestVMTMethodOffsetMapping;
+var
+  Stream, PreviousStream: TPEStream;
+  Header, PreviousHeader: TPEHeader;
+  Dumper: TClassDumper;
+  PreviousProcRefOffsets, PreviousProcRefNames: TStringList;
+  SlotAddress: DWORD;
+  MethodCount, MethodFlag: Word;
+  PaintIndex, ClickIndex: Integer;
+  PreviousELF: Boolean;
+
+  procedure WriteMethod(Flag: Word; Address: DWORD;
+    const MethodName: AnsiString);
+  var
+    MethodNameLength: Byte;
+  begin
+    MethodNameLength := Length(MethodName);
+    Stream.WriteBuffer(Flag, SizeOf(Flag));
+    Stream.WriteBuffer(Address, SizeOf(Address));
+    Stream.WriteBuffer(MethodNameLength, SizeOf(MethodNameLength));
+    if MethodNameLength > 0 then
+      Stream.WriteBuffer(MethodName[1], MethodNameLength);
+  end;
+
+begin
+  PreviousHeader := DeDeClasses.PEHeader;
+  PreviousStream := DeDeDisAsm.PEStream;
+  PreviousELF := DeDeClasses.bELF;
+  PreviousProcRefOffsets := TStringList.Create;
+  PreviousProcRefNames := TStringList.Create;
+  PreviousProcRefOffsets.Assign(DeDeClasses.ProcRefOffsets);
+  PreviousProcRefNames.Assign(DeDeClasses.ProcRefNames);
+  Header := TPEHeader.Create;
+  Stream := TPEStream.Create;
+  Dumper := TClassDumper.Create;
+  try
+    DeDeClasses.PEHeader := Header;
+    DeDeDisAsm.PEStream := Stream;
+    DeDeClasses.bELF := False;
+    DeDeClasses.ProcRefOffsets.Clear;
+    DeDeClasses.ProcRefNames.Clear;
+
+    Header.ObjectNum := 1;
+    Header.BaseOfCode := $1000;
+    Header.Objects[1].OBJECT_NAME := 'CODE';
+    Header.Objects[1].RVA := $1000;
+    Header.Objects[1].PHYSICAL_OFFSET := 0;
+    Header.Objects[1].PHYSICAL_SIZE := 32;
+
+    SlotAddress := $1000;
+    Stream.WriteBuffer(SlotAddress, SizeOf(SlotAddress));
+    SlotAddress := $1004;
+    Stream.WriteBuffer(SlotAddress, SizeOf(SlotAddress));
+    SlotAddress := 0;
+    Stream.WriteBuffer(SlotAddress, SizeOf(SlotAddress));
+    Stream.Position := 16;
+    MethodCount := 2;
+    Stream.WriteBuffer(MethodCount, SizeOf(MethodCount));
+    MethodFlag := 1;
+    WriteMethod(MethodFlag, $1004, 'Paint');
+    WriteMethod(MethodFlag, $1010, 'Click');
+
+    Dumper.DELTA_PHYS := $1000;
+    Dumper.FdwVMTPos := 0;
+    Dumper.FdwFieldDefTlbPos := 12;
+    Dumper.FdwMethodDefTlbPtr := $1010;
+    Dumper.FdwMethodDefTlbPos := 16;
+    Dumper.DumpMethods(0);
+
+    PaintIndex := Dumper.MethodData.MethodIndexByRVA($1004);
+    ClickIndex := Dumper.MethodData.MethodIndexByRVA($1010);
+    CheckTrue(PaintIndex >= 0, 'Virtual method was not read from method table');
+    CheckTrue(ClickIndex >= 0, 'Non-virtual method was not read from method table');
+    CheckEquals(4, Integer(TMethodRec(
+      Dumper.MethodData.Methods[PaintIndex]).dwVMTOffset),
+      'Virtual method was assigned the wrong VMT slot offset');
+    CheckEquals(Integer(METHOD_VMT_OFFSET_NONE), Integer(TMethodRec(
+      Dumper.MethodData.Methods[ClickIndex]).dwVMTOffset),
+      'Method absent from the VMT received a slot offset');
+  finally
+    Dumper.Free;
+    Stream.Free;
+    Header.Free;
+    DeDeClasses.PEHeader := PreviousHeader;
+    DeDeDisAsm.PEStream := PreviousStream;
+    DeDeClasses.bELF := PreviousELF;
+    DeDeClasses.ProcRefOffsets.Assign(PreviousProcRefOffsets);
+    DeDeClasses.ProcRefNames.Assign(PreviousProcRefNames);
+    PreviousProcRefOffsets.Free;
+    PreviousProcRefNames.Free;
   end;
 end;
 

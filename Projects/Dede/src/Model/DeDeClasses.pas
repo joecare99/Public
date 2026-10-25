@@ -291,8 +291,12 @@ Type TFieldData = Class
 Type TMethodRec = Class
         sName  : String;
         dwRVA   : DWORD;
+        dwVMTOffset : DWORD;
         wFlag  : WORD;
      End;
+
+Const
+  METHOD_VMT_OFFSET_NONE = $FFFFFFFF;
 
 
 Type TMethodData = Class
@@ -918,6 +922,7 @@ begin
   Field:=TMethodRec.Create;
   Field.sName:=Name;
   Field.dwRVA:=RVA;
+  Field.dwVMTOffset:=METHOD_VMT_OFFSET_NONE;
   Field.wFlag:=Flag;
   Methods.Add(Field);
 end;

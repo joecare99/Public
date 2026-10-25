@@ -446,6 +446,8 @@ var
   I, J, EventPosition, FileCount, WrittenFileCount, ExportPosition: Integer;
   ClassDumper: TClassDumper;
   FormDumper: TClassDumper;
+  FieldInfo: TFieldRec;
+  MethodInfo: TMethodRec;
   Input: TMemoryStream;
   DasmList: TStringList;
   BackupMoved, FileInstalled: array of Boolean;
@@ -708,14 +710,17 @@ begin
 
             for J := 0 to FormDumper.FieldData.Count - 1 do
             begin
-              EventName := TFieldRec(FormDumper.FieldData.Fields[J]).sName;
+              FieldInfo := TFieldRec(FormDumper.FieldData.Fields[J]);
+              EventName := FieldInfo.sName;
               EventDeclaration := EventDeclaration + '    ' + EventName +
-                ': ' + GetControlClassEx(FormName, EventName) + ';' + #13#10;
+                ': ' + GetControlClassEx(FormName, EventName) +
+                ';//f' + IntToHex(FieldInfo.dwID, 1) + #13#10;
             end;
 
             for J := 0 to FormDumper.MethodData.Count - 1 do
             begin
-              EventName := TMethodRec(FormDumper.MethodData.Methods[J]).sName;
+              MethodInfo := TMethodRec(FormDumper.MethodData.Methods[J]);
+              EventName := MethodInfo.sName;
               Text := GetEventPrototype(FormName, EventName);
               EventPosition := Pos('(', Text);
               if EventPosition = 0 then
@@ -724,7 +729,16 @@ begin
                   [FormName, EventName]);
               EventDeclaration := EventDeclaration + '    ' +
                 Copy(Text, 1, EventPosition - 1) + ' ' + EventName +
-                Copy(Text, EventPosition, MaxInt) + #13#10;
+                Copy(Text, EventPosition, MaxInt);
+              if MethodInfo.dwVMTOffset <> METHOD_VMT_OFFSET_NONE then
+                EventDeclaration := EventDeclaration + '//v' +
+                  IntToHex(MethodInfo.dwVMTOffset, 1) +
+                  '//'
+              else
+                EventDeclaration := EventDeclaration + '//';
+              EventDeclaration := EventDeclaration + IntToHex(
+                MethodInfo.dwRVA, 8);
+              EventDeclaration := EventDeclaration + #13#10;
               DasmList := nil;
               try
                 DisassembleProc(UnitName, EventName, DasmList, False);
