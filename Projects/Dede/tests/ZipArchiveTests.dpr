@@ -3,11 +3,7 @@ program ZipArchiveTests;
 {$APPTYPE CONSOLE}
 
 uses
-  SysUtils, Classes, DeDeZip
-{$IFNDEF FPC}
-  , DeDeBPL, DeDeDUF, DeDeOffsInf, DeDeConstants, DeDeAnsiStream
-{$ENDIF}
-  ;
+  SysUtils, Classes, DeDeZip;
 
 procedure Check(ACondition: Boolean; const AMessage: string);
 begin
@@ -48,7 +44,29 @@ begin
   end;
 end;
 
-procedure CheckCorruptCRCRejected(const AArchiveName: string);
+procedure CheckMultiEntryArchiveRejected(const AArchiveName: string);
+var
+  Destination: TMemoryStream;
+  Raised: Boolean;
+begin
+  Destination := TMemoryStream.Create;
+  try
+    Raised := False;
+    try
+      ExtractZipEntryToStream(AArchiveName, 'first.bin', Destination);
+    except
+      on EReadError do
+        Raised := True;
+    end;
+    Check(Raised, 'A multi-entry ZIP archive was accepted');
+    Check(Destination.Size = 0,
+      'A rejected multi-entry archive wrote partial output');
+  finally
+    Destination.Free;
+  end;
+end;
+
+procedure CheckCorruptCRCRejected(const AArchiveName, AEntryName: string);
 var
   Archive, Destination: TMemoryStream;
   CorruptName: string;
@@ -86,8 +104,7 @@ begin
 
     Raised := False;
     try
-      ExtractZipEntryToStream(CorruptName,
-        ExtractFileName(AArchiveName), Destination);
+      ExtractZipEntryToStream(CorruptName, AEntryName, Destination);
     except
       on EReadError do
         Raised := True;
@@ -102,152 +119,65 @@ begin
   end;
 end;
 
-procedure TestArchive(const AFixtureDirectory, AOutputDirectory,
-  AFileName: string);
+procedure TestArchiveFile(const AInputPath, AOutputDirectory, AOutputName,
+  AEntryName: string);
 var
-  InputPath, OutputPath: string;
+  OutputPath: string;
   Extracted, RoundTrip: TMemoryStream;
   SourcePosition: Int64;
 begin
-  InputPath := IncludeTrailingPathDelimiter(AFixtureDirectory) + AFileName;
-  OutputPath := IncludeTrailingPathDelimiter(AOutputDirectory) + AFileName;
-  Check(FileExists(InputPath), 'Missing ZIP fixture: ' + InputPath);
+  OutputPath := IncludeTrailingPathDelimiter(AOutputDirectory) + AOutputName;
+  Check(FileExists(AInputPath), 'Missing ZIP fixture: ' + AInputPath);
 
   Extracted := TMemoryStream.Create;
   RoundTrip := TMemoryStream.Create;
   try
-    ExtractZipEntryToStream(InputPath, AFileName, Extracted);
-    Check(Extracted.Size > 0, 'ZIP member is empty: ' + AFileName);
+    ExtractZipEntryToStream(AInputPath, AEntryName, Extracted);
+    if AEntryName <> 'empty.bin' then
+      Check(Extracted.Size > 0, 'ZIP member is empty: ' + AEntryName);
 
     SourcePosition := 7;
     Extracted.Position := SourcePosition;
-    WriteZipEntryFromStream(OutputPath, AFileName, Extracted);
+    WriteZipEntryFromStream(OutputPath, AEntryName, Extracted);
     Check(Extracted.Position = SourcePosition,
       'ZIP writer did not restore input stream position');
 
-    ExtractZipEntryToStream(OutputPath, AFileName, RoundTrip);
+    ExtractZipEntryToStream(OutputPath, AEntryName, RoundTrip);
     Check(Extracted.Size = RoundTrip.Size,
-      'Round-trip member size changed: ' + AFileName);
+      'Round-trip member size changed: ' + AEntryName);
     Check(CompareMem(Extracted.Memory, RoundTrip.Memory, Extracted.Size),
-      'Round-trip member bytes changed: ' + AFileName);
-    CheckWrongEntryRejected(InputPath);
-    CheckCorruptCRCRejected(OutputPath);
-    Writeln(AFileName, ': ', Extracted.Size, ' bytes round-tripped');
+      'Round-trip member bytes changed: ' + AEntryName);
+    CheckWrongEntryRejected(AInputPath);
+    CheckCorruptCRCRejected(OutputPath, AEntryName);
+    Writeln(AEntryName, ': ', Extracted.Size, ' bytes round-tripped');
   finally
     RoundTrip.Free;
     Extracted.Free;
   end;
 end;
 
-{$IFNDEF FPC}
-procedure TestBPLConsumer(const AOutputDirectory: string);
-var
-  Bytes, Names, LoadedBytes, LoadedNames: TMemoryStream;
-  ArchiveName, Comment: string;
-  Pattern: LongWord;
-  Mode, PatternSize: Byte;
-  RecordCount: LongInt;
-  Indexes: TBoundArray;
-  NameLength: Byte;
-begin
-  ArchiveName := IncludeTrailingPathDelimiter(AOutputDirectory) + 'adapter.dsf';
-  Bytes := TMemoryStream.Create;
-  Names := TMemoryStream.Create;
-  LoadedBytes := TMemoryStream.Create;
-  LoadedNames := TMemoryStream.Create;
-  try
-    Pattern := $12345678;
-    Bytes.WriteBuffer(Pattern, SizeOf(Pattern));
-    NameLength := 4;
-    Names.WriteBuffer(NameLength, SizeOf(NameLength));
-    WriteAnsiString(Names, 'Test');
-
-    SaveBPLSymbolFile(Bytes, Names, ArchiveName, 4, 4, 1, 'adapter test');
-    Mode := 0;
-    PatternSize := 0;
-    RecordCount := 0;
-    Comment := '';
-    Check(LoadBPLSymbolFile(LoadedBytes, LoadedNames, ArchiveName, Mode,
-      PatternSize, RecordCount, Comment, Indexes),
-      'BPL archive consumer failed to read its own output');
-    Check((Mode = 4) and (PatternSize = 4) and (RecordCount = 1),
-      'BPL archive header changed during round-trip');
-    Check(Comment = 'adapter test', 'BPL comment changed during round-trip');
-    Check((LoadedBytes.Size = Bytes.Size) and
-      CompareMem(LoadedBytes.Memory, Bytes.Memory, Bytes.Size),
-      'BPL pattern data changed during round-trip');
-    Check((LoadedNames.Size = Names.Size) and
-      CompareMem(LoadedNames.Memory, Names.Memory, Names.Size),
-      'BPL name data changed during round-trip');
-    Check((Length(Indexes) = 1) and (Indexes[0] = 0),
-      'BPL name index changed during round-trip');
-  finally
-    LoadedNames.Free;
-    LoadedBytes.Free;
-    Names.Free;
-    Bytes.Free;
-  end;
-end;
-
-procedure TestDUFConsumer(const AOutputDirectory: string);
-var
-  Source, Loaded: TDUFFile;
-  ArchiveName: string;
-begin
-  ArchiveName := IncludeTrailingPathDelimiter(AOutputDirectory) + 'adapter.duf';
-  Source := TDUFFile.Create;
-  Loaded := TDUFFile.Create;
-  try
-    Source.DUFVersion := CURR_DUFF_VERSION;
-    Source.SaveToFile(ArchiveName);
-    Loaded.LoadFromFile(ArchiveName);
-    Check((Loaded.DUFVersion = CURR_DUFF_VERSION) and
-      (Loaded.ExpressionCount = 0) and (Loaded.CommentsCount = 0) and
-      (Loaded.EmulationCount = 0), 'DUF archive round-trip failed');
-  finally
-    Loaded.Free;
-    Source.Free;
-  end;
-end;
-
-procedure TestDOIConsumer(const AOutputDirectory: string);
-var
-  Source, Loaded: TOffsInfArchive;
-  ArchiveName: string;
-begin
-  ArchiveName := IncludeTrailingPathDelimiter(AOutputDirectory) + 'adapter.doi';
-  Source := TOffsInfArchive.Create;
-  Loaded := TOffsInfArchive.Create;
-  try
-    Source.mode := $10;
-    Source.reserved := 1;
-    Source.Save(ArchiveName);
-    Loaded.Extract(ArchiveName);
-    Check((Loaded.mode = Source.mode) and
-      (Loaded.reserved = Source.reserved) and
-      (Loaded.classes_count = 0), 'DOI archive round-trip failed');
-  finally
-    Loaded.Free;
-    Source.Free;
-  end;
-  {$ENDIF}
-end;
-
 begin
   try
-    if ParamCount <> 2 then
+    if ParamCount <> 3 then
       raise Exception.Create(
-        'Usage: ZipArchiveTests <fixture-directory> <output-directory>');
+        'Usage: ZipArchiveTests <fixture-directory> <output-directory> <extra-fixture-directory>');
     if not ForceDirectories(ParamStr(2)) then
       raise Exception.Create('Unable to create test output directory');
-    TestArchive(ParamStr(1), ParamStr(2), 'd2.doi');
-    TestArchive(ParamStr(1), ParamStr(2), 'D6.DOI');
-    TestArchive(ParamStr(1), ParamStr(2), 'VCL7.dsf');
-{$IFNDEF FPC}
-    TestBPLConsumer(ParamStr(2));
-    TestDUFConsumer(ParamStr(2));
-    TestDOIConsumer(ParamStr(2));
-{$ENDIF}
+    TestArchiveFile(IncludeTrailingPathDelimiter(ParamStr(1)) + 'd2.doi',
+      ParamStr(2), 'd2.doi', 'd2.doi');
+    TestArchiveFile(IncludeTrailingPathDelimiter(ParamStr(1)) + 'D6.DOI',
+      ParamStr(2), 'D6.DOI', 'D6.DOI');
+    TestArchiveFile(IncludeTrailingPathDelimiter(ParamStr(1)) + 'VCL7.dsf',
+      ParamStr(2), 'VCL7.dsf', 'VCL7.dsf');
+    TestArchiveFile(IncludeTrailingPathDelimiter(ParamStr(3)) + 'stored.zip',
+      ParamStr(2), 'stored.zip', 'stored.bin');
+    TestArchiveFile(
+      IncludeTrailingPathDelimiter(ParamStr(3)) + 'descriptor.zip',
+      ParamStr(2), 'descriptor.zip', 'descriptor.bin');
+    TestArchiveFile(IncludeTrailingPathDelimiter(ParamStr(3)) + 'empty.zip',
+      ParamStr(2), 'empty.zip', 'empty.bin');
+    CheckMultiEntryArchiveRejected(
+      IncludeTrailingPathDelimiter(ParamStr(3)) + 'multi.zip');
     Writeln('ZIP archive adapter tests passed');
   except
     on E: Exception do

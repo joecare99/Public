@@ -209,6 +209,8 @@ begin
   if (Flags and (ZIP_FLAG_ENCRYPTED or ZIP_FLAG_STRONG_ENCRYPTION or
     ZIP_FLAG_MASKED_HEADERS)) <> 0 then
     raise EReadError.Create('Encrypted ZIP entries are not supported');
+  if BufferWord(Header[0], 34) <> 0 then
+    raise EReadError.Create('Multi-disk ZIP entries are not supported');
   if (Method <> ZIP_STORED) and (Method <> ZIP_DEFLATED) then
     raise EReadError.CreateFmt('Unsupported ZIP compression method: %d',
       [Method]);
@@ -248,6 +250,11 @@ begin
     raise EReadError.Create('ZIP local and central flags do not match');
   if BufferWord(LocalHeader[0], 8) <> AInfo.Method then
     raise EReadError.Create('ZIP local and central methods do not match');
+  if (AInfo.Flags and $0008) = 0 then
+    if (BufferDWord(LocalHeader[0], 14) <> AInfo.CRC) or
+      (BufferDWord(LocalHeader[0], 18) <> AInfo.CompressedSize) or
+      (BufferDWord(LocalHeader[0], 22) <> AInfo.UncompressedSize) then
+      raise EReadError.Create('ZIP local and central sizes do not match');
 
   LocalNameLength := BufferWord(LocalHeader[0], 26);
   LocalExtraLength := BufferWord(LocalHeader[0], 28);
@@ -376,8 +383,9 @@ begin
         raise EReadError.Create('Raw ZIP deflate stream made no progress');
     until Code = Z_STREAM_END;
 
-    if (Remaining <> 0) or (BytesFed - ZStream.avail_in <>
-      AInfo.CompressedSize) then
+    if (Remaining <> 0) or
+      (Int64(BytesFed) - Int64(ZStream.avail_in) <>
+      Int64(AInfo.CompressedSize)) then
       raise EReadError.Create('ZIP entry has trailing compressed data');
     if OutputSize <> AInfo.UncompressedSize then
       raise EReadError.CreateFmt('Inflated ZIP size mismatch: %d <> %d',

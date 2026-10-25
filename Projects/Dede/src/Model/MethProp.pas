@@ -56,11 +56,13 @@ type
     Methods.Objects[i] := Pointer(Descr)}
   end ;
 
+var
+  CompTbl: TStringList;
+  EvtTbl: TStringList;
+  FormInfo: TComponentInfo;
+
 const
-  CompTbl: TStringList = Nil;
-  EvtTbl: TStringList = Nil;
   NotifyEvt: String = 'procedure(Sender: TObject);{?}';
-  FormInfo: TComponentInfo = Nil;
 
 procedure LoadComponentDescrs;
 

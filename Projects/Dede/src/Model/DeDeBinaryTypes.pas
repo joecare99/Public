@@ -7,12 +7,24 @@ type
   TPE32VA = type LongWord;
   TPE32FileOffset = type LongWord;
 
+  TPE32FileOffsetBox = class
+  public
+    Value: TPE32FileOffset;
+    constructor Create(AValue: TPE32FileOffset);
+  end;
+
 function TryAddPE32FileOffset(const ABase, ADelta: TPE32FileOffset;
   out AResult: TPE32FileOffset): Boolean;
 function TryGetPE32RVA(const AImageBase, AVirtualAddress: TPE32VA;
   out ARVA: TPE32RVA): Boolean;
 
 implementation
+
+constructor TPE32FileOffsetBox.Create(AValue: TPE32FileOffset);
+begin
+  inherited Create;
+  Value := AValue;
+end;
 
 function TryAddPE32FileOffset(const ABase, ADelta: TPE32FileOffset;
   out AResult: TPE32FileOffset): Boolean;

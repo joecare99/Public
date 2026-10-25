@@ -3,7 +3,8 @@ program BinaryPortabilityTests;
 {$APPTYPE CONSOLE}
 
 uses
-  SysUtils, Classes, DeDeBinaryTypes, DeDeBinaryReader;
+  SysUtils, Classes, DeDeBinaryTypes, DeDeBinaryReader, DeDeCoreServices,
+  DisASM;
 
 procedure Check(ACondition: Boolean; const AMessage: string);
 begin
@@ -114,11 +115,60 @@ begin
   end;
 end;
 
+procedure TestDisassemblerBounds;
+var
+  Disassembler: TDisAsm;
+  Bytes: array[0..4] of AnsiChar;
+  Size: Integer;
+  Decoded: string;
+  Raised: Boolean;
+begin
+  FillChar(Bytes, SizeOf(Bytes), 0);
+  Bytes[0] := #$90;
+  Disassembler := TDisAsm.Create;
+  try
+    Size := 0;
+    Decoded := Disassembler.GetInstruction(@Bytes[0], Size, 1);
+    Check((Size = 1) and (Decoded <> ''),
+      'A complete one-byte instruction was not decoded');
+
+    Bytes[0] := #$E8;
+    Size := 0;
+    Raised := False;
+    try
+      Disassembler.GetInstruction(@Bytes[0], Size, 4);
+    except
+      on EDisAsmError do
+        Raised := True;
+    end;
+    Check(Raised, 'A truncated relative-call operand was read past its buffer');
+  finally
+    Disassembler.Free;
+  end;
+end;
+
+procedure TestPE32OffsetStorage;
+var
+  Context: TDeDeCoreContext;
+begin
+  Context := TDeDeCoreContext.Create;
+  try
+    Context.AddDFMForm('HighOffset',
+      TPE32FileOffset($F0001234));
+    Check(LongWord(Context.GetDFMFileOffset(0)) = $F0001234,
+      'PE32 DFM file offset was truncated to a host pointer width');
+  finally
+    Context.Free;
+  end;
+end;
+
 begin
   try
     TestOffsetBoundaries;
     TestLittleEndianReadsAndPosition;
     TestReadBounds;
+    TestDisassemblerBounds;
+    TestPE32OffsetStorage;
     Writeln('PE32 binary portability tests passed');
   except
     on E: Exception do

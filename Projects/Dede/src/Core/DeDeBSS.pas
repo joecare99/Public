@@ -11,7 +11,7 @@ unit DeDeBSS;
 
 interface
 
-uses Classes, Windows;
+uses Classes, DeDeClasses;
 
 Type
 
@@ -41,7 +41,11 @@ implementation
 
 { TBSS }
 
-Uses DeDeClasses, DeDeRES, DeDeCoreServices;
+Uses SysUtils, DeDeRes, DeDeCoreServices
+{$IFDEF MSWINDOWS}
+  , Windows
+{$ENDIF}
+  ;
 
 constructor TBSS.Create;
 begin
@@ -66,16 +70,19 @@ begin
 end;
 
 procedure TBSS.Dump(FileName: String);
+{$IFDEF MSWINDOWS}
 var pi : PROCESS_INFORMATION;
     si : TStartupInfo;
     bssi, i : Integer;
     dw, dw1 : DWORD;
-{$IFDEF FPC}
-    sz : NativeUInt;
+{$IFDEF CPU64}
+    sz : QWord;
 {$ELSE}
     sz : Cardinal;
 {$ENDIF}
+{$ENDIF}
 begin
+{$IFDEF MSWINDOWS}
   bssi := PEHeader.GetSectionIndexEx('DATA');
 
   dwDATAStartRVA := PEHeader.IMAGE_BASE+PEHeader.Objects[bssi].RVA;
@@ -157,6 +164,10 @@ begin
       Inc(dw,4);
     end;
   End;
+{$ELSE}
+  raise Exception.Create(
+    'BSS/DATA process dumping is only supported on Windows hosts');
+{$ENDIF}
 end;
 
 function TBSS.GetData(Offset: DWORD): DWORD;

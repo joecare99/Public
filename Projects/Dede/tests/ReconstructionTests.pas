@@ -31,6 +31,7 @@ type
     procedure TestCoreAttachedAnalysisIsBorrowed;
     procedure TestCoreReportExportAndOverwriteGuard;
     procedure TestCoreVersionConfiguration;
+    procedure TestZipFormatConsumers;
   end;
 
 implementation
@@ -41,7 +42,8 @@ uses
   Controls, ShellAPI, DeDeDFMModel, DeDeDFMTextParser, EditPropUnit, FileDrop,
   MainUnit, DeDeClasses, Emulator, DeDeClassEmulator, DeDeDisAsm,
   DeDeZAUnit, DeDeBSS, DeDeExpressions, MemLocUnit, DeDeCoreServices,
-  DeDeCore, DeDeClassHandle;
+  DeDeCore, DeDeClassHandle, DeDeBPL, DeDeDUF, DeDeOffsInf,
+  DeDeBinaryTypes;
 
 type
   TParserCallbackRecorder = class
@@ -991,7 +993,7 @@ var
   Address: Pointer;
 begin
   Address := AddProcessPointerOffset(Pointer($F0000000), $1234);
-  CheckEquals(DWORD($F0001234), DWORD(NativeUInt(Address)),
+  CheckTrue(Address = Pointer($F0001234),
     'Process pointer offset changed above the signed 32-bit boundary');
 end;
 
@@ -1101,7 +1103,9 @@ var
   PreviousELF: Boolean;
   PreviousWarnings: TStringList;
   PreviousDFMForms: TStringList;
+  PreviousDFMOffsets: array of TPE32FileOffset;
   PreviousFileName, PreviousProjectName: string;
+  I: Integer;
 begin
   OutputDirectory := IncludeTrailingPathDelimiter(FsTEMPDir) +
     'dede-core-export-' + IntToStr(GetTickCount);
@@ -1122,6 +1126,9 @@ begin
   PreviousWarnings.Assign(DeDeCoreContext.Warnings);
   PreviousDFMForms := TStringList.Create;
   PreviousDFMForms.Assign(DeDeCoreContext.DFMFormList);
+  SetLength(PreviousDFMOffsets, DeDeCoreContext.DFMFormList.Count);
+  for I := 0 to High(PreviousDFMOffsets) do
+    PreviousDFMOffsets[I] := DeDeCoreContext.GetDFMFileOffset(I);
   PreviousUnitList := TStringList.Create;
   PreviousUnitList.Assign(DeDeDisAsm.UnitList);
   Input := ThePEFile.Create('');
@@ -1143,8 +1150,8 @@ begin
     Header.Objects[1].PHYSICAL_OFFSET := 0;
     Header.Objects[1].PHYSICAL_SIZE := Input.PEStream.Size;
     bELF := False;
-    DeDeCoreContext.DFMFormList.Clear;
-    DeDeCoreContext.DFMFormList.AddObject('Form1', nil);
+    DeDeCoreContext.ClearDFMForms;
+    DeDeCoreContext.AddDFMForm('Form1', 0);
     DeDeCoreContext.FileName := 'C:\fixture\my"binary.exe';
     DeDeCoreContext.ProjectName := 'Fixture';
     DeDeCoreContext.Warnings.Clear;
@@ -1203,7 +1210,10 @@ begin
     DeDeCoreContext.FileName := PreviousFileName;
     DeDeCoreContext.ProjectName := PreviousProjectName;
     DeDeCoreContext.Warnings.Assign(PreviousWarnings);
-    DeDeCoreContext.DFMFormList.Assign(PreviousDFMForms);
+    DeDeCoreContext.ClearDFMForms;
+    for I := 0 to PreviousDFMForms.Count - 1 do
+      DeDeCoreContext.AddDFMForm(PreviousDFMForms[I],
+        PreviousDFMOffsets[I]);
     DeDeClasses.PEFile := PreviousFile;
     DeDeClasses.PEHeader := PreviousHeader;
     DeDeDisAsm.PEStream := PreviousStream;
@@ -1227,6 +1237,115 @@ begin
         'Form1.dfm');
     if DirectoryExists(OutputDirectory) then
       RemoveDir(OutputDirectory);
+  end;
+end;
+
+procedure TReconstructionTests.TestZipFormatConsumers;
+var
+  OutputDirectory, BPLFileName, DUFFileName, DOIFileName: string;
+  Bytes, Names, LoadedBytes, LoadedNames: TMemoryStream;
+  Pattern: LongWord;
+  NameLength, Mode, PatternSize: Byte;
+  RecordCount: LongInt;
+  Comment: string;
+  Indexes: TBoundArray;
+  DUFFile, LoadedDUF: TDUFFile;
+  DOIFile, LoadedDOI: TOffsInfArchive;
+  TempIndex: Integer;
+begin
+  OutputDirectory := IncludeTrailingPathDelimiter(GetCurrentDir) +
+    'dede-zip-consumers-' + IntToHex(GetTickCount, 8);
+  TempIndex := 0;
+  while DirectoryExists(OutputDirectory) do
+  begin
+    Inc(TempIndex);
+    OutputDirectory := IncludeTrailingPathDelimiter(GetCurrentDir) +
+      'dede-zip-consumers-' + IntToHex(GetTickCount, 8) + '-' +
+      IntToStr(TempIndex);
+  end;
+  CheckTrue(ForceDirectories(OutputDirectory),
+    'Unable to create ZIP consumer test directory');
+
+  BPLFileName := IncludeTrailingPathDelimiter(OutputDirectory) + 'roundtrip.dsf';
+  DUFFileName := IncludeTrailingPathDelimiter(OutputDirectory) + 'roundtrip.duf';
+  DOIFileName := IncludeTrailingPathDelimiter(OutputDirectory) + 'roundtrip.doi';
+  Bytes := TMemoryStream.Create;
+  Names := TMemoryStream.Create;
+  LoadedBytes := TMemoryStream.Create;
+  LoadedNames := TMemoryStream.Create;
+  DUFFile := TDUFFile.Create;
+  LoadedDUF := TDUFFile.Create;
+  DOIFile := TOffsInfArchive.Create;
+  LoadedDOI := TOffsInfArchive.Create;
+  try
+    Pattern := $12345678;
+    Bytes.WriteBuffer(Pattern, SizeOf(Pattern));
+    NameLength := 4;
+    Names.WriteBuffer(NameLength, SizeOf(NameLength));
+    WriteAnsiString(Names, 'Test');
+    SaveBPLSymbolFile(Bytes, Names, BPLFileName, 4, 4, 1,
+      'adapter test');
+    Mode := 0;
+    PatternSize := 0;
+    RecordCount := 0;
+    Comment := '';
+    CheckTrue(LoadBPLSymbolFile(LoadedBytes, LoadedNames, BPLFileName,
+      Mode, PatternSize, RecordCount, Comment, Indexes),
+      'BPL consumer could not read its ZIP output');
+    CheckEquals(4, Mode, 'BPL mode changed after ZIP round-trip');
+    CheckEquals(4, PatternSize, 'BPL pattern size changed after round-trip');
+    CheckEquals(1, RecordCount, 'BPL record count changed after round-trip');
+    CheckEquals('adapter test', Comment,
+      'BPL comment changed after ZIP round-trip');
+    CheckEquals(Bytes.Size, LoadedBytes.Size,
+      'BPL pattern stream size changed after ZIP round-trip');
+    CheckTrue(CompareMem(Bytes.Memory, LoadedBytes.Memory, Bytes.Size),
+      'BPL pattern bytes changed after ZIP round-trip');
+    CheckEquals(Names.Size, LoadedNames.Size,
+      'BPL name stream size changed after ZIP round-trip');
+    CheckTrue(CompareMem(Names.Memory, LoadedNames.Memory, Names.Size),
+      'BPL name bytes changed after ZIP round-trip');
+    CheckEquals(1, Length(Indexes), 'BPL name index count changed');
+    CheckEquals(0, Indexes[0], 'BPL name index offset changed');
+
+    DUFFile.DUFVersion := CURR_DUFF_VERSION;
+    DUFFile.SaveToFile(DUFFileName);
+    LoadedDUF.LoadFromFile(DUFFileName);
+    CheckEquals(CURR_DUFF_VERSION, LoadedDUF.DUFVersion,
+      'DUF version changed after ZIP round-trip');
+    CheckEquals(0, LoadedDUF.ExpressionCount,
+      'Empty DUF variable table changed after round-trip');
+    CheckEquals(0, LoadedDUF.CommentsCount,
+      'Empty DUF comment table changed after round-trip');
+    CheckEquals(0, LoadedDUF.EmulationCount,
+      'Empty DUF emulation table changed after round-trip');
+
+    DOIFile.mode := $10;
+    DOIFile.reserved := 1;
+    DOIFile.Save(DOIFileName);
+    LoadedDOI.Extract(DOIFileName);
+    CheckEquals(DOIFile.mode, LoadedDOI.mode,
+      'DOI mode changed after ZIP round-trip');
+    CheckEquals(DOIFile.reserved, LoadedDOI.reserved,
+      'DOI version changed after ZIP round-trip');
+    CheckEquals(0, LoadedDOI.classes_count,
+      'Empty DOI class table changed after round-trip');
+  finally
+    LoadedDOI.Free;
+    DOIFile.Free;
+    LoadedDUF.Free;
+    DUFFile.Free;
+    LoadedNames.Free;
+    LoadedBytes.Free;
+    Names.Free;
+    Bytes.Free;
+    if FileExists(BPLFileName) then
+      SysUtils.DeleteFile(BPLFileName);
+    if FileExists(DUFFileName) then
+      SysUtils.DeleteFile(DUFFileName);
+    if FileExists(DOIFileName) then
+      SysUtils.DeleteFile(DOIFileName);
+    RemoveDir(OutputDirectory);
   end;
 end;
 

@@ -55,10 +55,12 @@ implementation
 uses DeDeClasses, SysUtils, Dialogs, tlhelp32, DeDeSym, HEXTools,
   DeDeConstants, DeDeRES, DeDeAnsiStream;
 
+{$POINTERMATH ON}
 function AddProcessPointerOffset(Base: Pointer; Offset: DWORD): Pointer;
 begin
-  Result := Pointer(NativeUInt(Base) + NativeUInt(Offset));
+  Result := PByte(Base) + Offset;
 end;
+{$POINTERMATH OFF}
 
 Procedure EnumSections(hProcess : THandle; PProcessBase : Pointer; Var buffer : TSectionArray; var Secnum : Cardinal);
 var peHdrOffset : DWORD;

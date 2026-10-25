@@ -3,7 +3,7 @@ unit DeDeCoreServices;
 interface
 
 uses
-  Classes, SysUtils, Windows, DeDeClasses, DeDeConstants;
+  Classes, SysUtils, DeDeClasses, DeDeConstants, DeDeBinaryTypes;
 
 type
   TDeDeCoreProgressEvent = procedure(const APhase, ADetail: string;
@@ -40,6 +40,10 @@ type
     function LoadDFMText(const AClassName: string): TStringList;
     function ExtractDFM(const AClassName: string): TMemoryStream;
     procedure DumpDFMNames;
+    procedure ClearDFMForms;
+    procedure AddDFMForm(const AClassName: string;
+      AFileOffset: TPE32FileOffset);
+    function GetDFMFileOffset(AIndex: Integer): TPE32FileOffset;
     function ClassRefInCode(Offs: DWORD; var AClassName: string): Boolean;
     function GetByte(VirtualAddress: DWORD): Byte;
     function GetWord(VirtualAddress: DWORD): Word;
@@ -117,6 +121,7 @@ end;
 
 destructor TDeDeCoreContext.Destroy;
 begin
+  ClearDFMForms;
   UnitList.Free;
   Warnings.Free;
   PASNameList.Free;
@@ -124,6 +129,43 @@ begin
   ClassInfoList.Free;
   DFMFormList.Free;
   inherited Destroy;
+end;
+
+procedure TDeDeCoreContext.ClearDFMForms;
+var
+  I: Integer;
+begin
+  for I := 0 to DFMFormList.Count - 1 do
+    TPE32FileOffsetBox(DFMFormList.Objects[I]).Free;
+  DFMFormList.Clear;
+end;
+
+procedure TDeDeCoreContext.AddDFMForm(const AClassName: string;
+  AFileOffset: TPE32FileOffset);
+var
+  OffsetBox: TPE32FileOffsetBox;
+begin
+  OffsetBox := TPE32FileOffsetBox.Create(AFileOffset);
+  try
+    DFMFormList.AddObject(AClassName, OffsetBox);
+  except
+    OffsetBox.Free;
+    raise;
+  end;
+end;
+
+function TDeDeCoreContext.GetDFMFileOffset(
+  AIndex: Integer): TPE32FileOffset;
+var
+  OffsetBox: TPE32FileOffsetBox;
+begin
+  if (AIndex < 0) or (AIndex >= DFMFormList.Count) then
+    raise EArgumentOutOfRangeException.Create('AIndex');
+  OffsetBox := TPE32FileOffsetBox(DFMFormList.Objects[AIndex]);
+  if OffsetBox = nil then
+    raise EInvalidOp.CreateFmt('DFM resource offset is missing at index %d',
+      [AIndex]);
+  Result := OffsetBox.Value;
 end;
 
 procedure TDeDeCoreContext.ReportProgress(const APhase, ADetail: string;
@@ -195,7 +237,7 @@ begin
     raise EArgumentException.CreateFmt('DFM class not found: "%s"',
       [AClassName]);
 
-  BeginOffset := DWORD(DFMFormList.Objects[Index]);
+  BeginOffset := DWORD(GetDFMFileOffset(Index));
   if bELF then
     SectionIndex := PEHeader.GetSectionIndexEx('.rsrc')
   else
@@ -216,9 +258,9 @@ begin
   EndOffset := PEHeader.Objects[SectionIndex].PHYSICAL_OFFSET +
     PEHeader.Objects[SectionIndex].PHYSICAL_SIZE;
   for I := 0 to DFMFormList.Count - 1 do
-    if (I <> Index) and (DWORD(DFMFormList.Objects[I]) > BeginOffset) and
-      (DWORD(DFMFormList.Objects[I]) < EndOffset) then
-      EndOffset := DWORD(DFMFormList.Objects[I]);
+    if (I <> Index) and (DWORD(GetDFMFileOffset(I)) > BeginOffset) and
+      (DWORD(GetDFMFileOffset(I)) < EndOffset) then
+      EndOffset := DWORD(GetDFMFileOffset(I));
   if (EndOffset <= BeginOffset) or
     (EndOffset > DWORD(PEFile.PEStream.Size)) then
     raise EReadError.CreateFmt('Invalid DFM resource bounds for "%s"',
@@ -277,7 +319,7 @@ begin
   if (PEFile = nil) or (PEHeader = nil) then
     raise Exception.Create('No binary is loaded for DFM discovery');
 
-  DFMFormList.Clear;
+  ClearDFMForms;
   Magic[0] := $54;
   Magic[1] := $50;
   Magic[2] := $46;
@@ -332,7 +374,7 @@ begin
       ClassName[I] := Char(Buffer[0]);
     end;
     if Length(ClassName) = NameLength then
-      DFMFormList.AddObject(ClassName, Pointer(DFMOffset));
+        AddDFMForm(ClassName, TPE32FileOffset(DFMOffset));
   end;
 end;
 

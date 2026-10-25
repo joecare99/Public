@@ -118,11 +118,10 @@ begin
 
   InF:=TMemoryStream.Create;
   Result:=False;
-
-  ExtractZipEntryToStream(sFileName, ExtractFileName(sFileName), InF);
-  InF.Seek(0,soFromBeginning);
-
   Try
+    ExtractZipEntryToStream(sFileName, ExtractFileName(sFileName), InF);
+    InF.Seek(0,soFromBeginning);
+
     // Read Magic
     s := ReadAnsiString(InF, 4);
     If s<>'DSF!' Then Exit;

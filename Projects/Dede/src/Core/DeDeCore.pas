@@ -62,9 +62,22 @@ function HasDelphi2BooleanMarker(AFile: ThePEFile; AHeader: TPEHeader;
 implementation
 
 uses
-  Windows, DeDeCoreServices, DeDeConstants, DeDeDisAsm,
+  DeDeCoreServices, DeDeConstants, DeDeDisAsm,
   DeDeClassEmulator, DeDeSym, DeDeELFClasses, DeDePAS, DeDeRes,
-  DeDeAnsiStream;
+  DeDeAnsiStream
+{$IFDEF MSWINDOWS}
+  , Windows
+{$ENDIF}
+  ;
+
+function HostTickCount: LongWord;
+begin
+{$IFDEF MSWINDOWS}
+  Result := Windows.GetTickCount;
+{$ELSE}
+  Result := LongWord(GetTickCount64);
+{$ENDIF}
+end;
 
 procedure WriteAnsiText(AStream: TStream; const AText: string);
 var
@@ -172,7 +185,7 @@ begin
     DeDeCoreContext.ProjectName := '';
     DeDeCoreContext.ClassCount := 0;
     DeDeCoreContext.UnitList.Clear;
-    DeDeCoreContext.DFMFormList.Clear;
+    DeDeCoreContext.ClearDFMForms;
     DeDeCoreContext.DFMNameList.Clear;
     DeDeCoreContext.PASNameList.Clear;
     DeDeCoreContext.Warnings.Clear;
@@ -580,7 +593,7 @@ begin
     I := 0;
     repeat
       StageDirectory := IncludeTrailingPathDelimiter(OutputDirectory) +
-        '.dede-stage-' + IntToHex(GetTickCount, 8) + '-' + IntToStr(I);
+        '.dede-stage-' + IntToHex(HostTickCount, 8) + '-' + IntToStr(I);
       Inc(I);
     until not DirectoryExists(StageDirectory);
     if not ForceDirectories(StageDirectory) then

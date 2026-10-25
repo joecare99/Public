@@ -317,7 +317,8 @@ var
   bPlugInsFixRelative : Boolean;
   DebugLogList : TStringList;
 
-Procedure PlugIn_AddressRefProc(Param: Pointer; ValueAddress, RefAddress: PChar; var Result: string);
+Procedure PlugIn_AddressRefProc(Param: Pointer; ValueAddress: PAnsiChar;
+  RefAddress: DWORD; var Result: string);
 procedure DebugLog(sMessage : String);
 
 //////////////////////////////////////////////////////
@@ -3797,7 +3798,8 @@ begin
 end;
 
 Function Disassemble(dwVirtOffset : DWORD; var sInstr : String; var size : Integer) : Boolean;
-Var PC, ins, dta, sof : String;
+Var PC: AnsiString;
+    ins, dta, sof : String;
     sz : Integer;
     dwdta : LongInt;
     idx : Integer;
@@ -3808,7 +3810,7 @@ begin
     PEStream.Seek(GetPhys(dwVirtOffset), soFromBeginning);
     SetLength(pc,17);
     PEStream.ReadBuffer(pc[1],16);
-    ins:=PlugIn_DASM.GetInstruction(PChar(pc),sz);
+    ins:=PlugIn_DASM.GetInstruction(PAnsiChar(pc),sz,Length(pc));
 
     Size:=sz;
     sInstr:=ins;
@@ -4052,7 +4054,8 @@ begin
     Result:=True;
 end;
 
-Procedure PlugIn_AddressRefProc(Param: Pointer; ValueAddress, RefAddress: PChar; var Result: string);
+Procedure PlugIn_AddressRefProc(Param: Pointer; ValueAddress: PAnsiChar;
+  RefAddress: DWORD; var Result: string);
 begin
 end;
 

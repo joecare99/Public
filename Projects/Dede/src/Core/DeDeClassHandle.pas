@@ -3,7 +3,7 @@ unit DeDeClassHandle;
 interface
 
 uses
-  Classes, Windows, SysUtils, DeDeClasses, DeDeBSS, DeDeRes;
+  Classes, SysUtils, DeDeClasses, DeDeBSS, DeDeRes, DeDeBinaryTypes;
 
 
 
@@ -93,6 +93,7 @@ Type
     Procedure AddObjectEx(dwSelfPtrPos: DWORD; btType : Byte);
     function ClassExists(sClassName : string) : Boolean;
     function GetClassByName(sClassName : String) : TClassDumper;
+    procedure ClearDFMOffsets;
     procedure EnumDFMOffsets;
     procedure LoadDFMTXTDATA;
   public
@@ -751,7 +752,7 @@ begin
   Result:=0;
   i:=DeDeCoreContext.DFMFormList.IndexOf(AsClassName);
   if i=-1 Then Exit;
-  Result:=DWORD(DeDeCoreContext.DFMFormList.Objects[i]);
+  Result:=DWORD(DeDeCoreContext.GetDFMFileOffset(i));
 end;
 
 function TClassDumper.GetMethodRVA(sMethName: String): DWORD;
@@ -1023,6 +1024,7 @@ var i : Integer;
 begin
   PackageInfoTable.Free;
   BSS.Free;
+  ClearDFMOffsets;
   DFMOffsets.Free;
 
   // Removing custom DOI form data
@@ -1501,7 +1503,14 @@ begin
        End;
 end;
 
-
+procedure TClassesDumper.ClearDFMOffsets;
+var
+  I: Integer;
+begin
+  for I := 0 to DFMOffsets.Count - 1 do
+    TPE32FileOffsetBox(DFMOffsets.Objects[I]).Free;
+  DFMOffsets.Clear;
+end;
 
 procedure TClassesDumper.EnumDFMOffsets;
 var i, len : Integer;
@@ -1518,7 +1527,7 @@ begin
   ofs_from:=PEHeader.Objects[i].PHYSICAL_OFFSET;
   ofs_to:=ofs_from+PEHeader.Objects[i].PHYSICAL_SIZE;
 
-  DFMOffsets.Clear;
+  ClearDFMOffsets;
 
   // DFM Magic
   classbuffer[0]:=$54;classbuffer[1]:=$50;classbuffer[2]:=$46;classbuffer[3]:=$30;
@@ -1533,7 +1542,8 @@ begin
       begin
         {BOZA DeDeClasses.}PEStream.ReadBuffer(b,1);
         s := {BOZA DeDeClasses.}PEStream.ReadStringA(b);
-        DFMOffsets.AddObject(s,Pointer({BOZA DeDeClasses.}PEStream.Position-len));
+        DFMOffsets.AddObject(s, TPE32FileOffsetBox.Create(
+          TPE32FileOffset(PEStream.Position-len)));
       end;
     {BOZA DeDeClasses.}PEStream.Seek(-len,soFromCurrent);
     If ({BOZA DeDeClasses.}PEStream.Position mod 1000)=0 Then
@@ -1579,7 +1589,13 @@ var OutPut : TMemoryStream;
      for idx:=0 to sl.Count-1 do
        begin
          WriteAnsiStringValue(sl[idx]);
-         ib:=DWORD(sl.Objects[idx]);
+         if sl = DFMOffsets then
+           ib:=DWORD(TPE32FileOffsetBox(sl.Objects[idx]).Value)
+         else if sl.Objects[idx] = nil then
+           ib:=0
+         else
+           raise EInvalidOp.Create(
+             'Unexpected object value in a DPJ string list');
          {OutPut.}WriteBuffer(ib,4);
        end;
    end;

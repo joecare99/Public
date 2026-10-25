@@ -7,20 +7,22 @@ uses
 
 type
   EDisAsmError = class(Exception);
+  DWORD = LongWord;
   TRegister = (rEax, rEcx, rEdx, rEbx, rEsp, rEbp, rEsi, rEdi);
   TdaRef = record
     MultiplyReg1: Integer;
     ARegister1: TRegister;
     MultiplyReg2: Integer;
     ARegister2: TRegister;
-    Immidiate: PChar;
+    Immidiate: DWORD;
   end;
 
-  TJumpInstrProc = procedure (Param: Pointer; ValueAddress, JumpAddress: PChar; var Result: string);
-  TCallInstrProc = procedure (Param: Pointer; ValueAddress, CallAddress: PChar; var Result: string);
-  TAddressRefProc = procedure (Param: Pointer; ValueAddress, RefAddress: PChar; var Result: string);
+  TJumpInstrProc = procedure (Param: Pointer; ValueAddress, JumpAddress: PAnsiChar; var Result: string);
+  TCallInstrProc = procedure (Param: Pointer; ValueAddress, CallAddress: PAnsiChar; var Result: string);
+  TAddressRefProc = procedure (Param: Pointer; ValueAddress: PAnsiChar;
+    RefAddress: DWORD; var Result: string);
   TRefProc = procedure (Param: Pointer; Ref: TdaRef; RefSize: Integer; var Result: string);
-  TImmidiateDataProc = procedure (Param: Pointer; ValueAddress: PChar; OperandSize: Integer; Sigend: Boolean; var Result: string);
+  TImmidiateDataProc = procedure (Param: Pointer; ValueAddress: PAnsiChar; OperandSize: Integer; Sigend: Boolean; var Result: string);
 
   TDisAsm = class(TObject)
   public
@@ -30,7 +32,8 @@ type
     OnRef: TRefProc;
     OnImmidiateData: TImmidiateDataProc;
     Param: Pointer;
-    function GetInstruction(Address: PChar; var Size: Integer): string;
+    function GetInstruction(Address: PAnsiChar; var Size: Integer;
+      AAvailable: Integer = 16): string;
   end;
 
 const
@@ -39,13 +42,16 @@ const
   modrmRM =  $07;  // RM part of the ModRM byte,  ?????XXX
 
 function SignedIntToHex(Value: Integer; Digits: Integer): string;
-function FindFirstSimpleCallTo(CallAddress, SearchAddress: PChar; SearchSize: Integer): PChar;
-function FindLastSimpleCallTo(CallAddress, SearchAddress: PChar; SearchSize: Integer): PChar;
+function FindFirstSimpleCallTo(CallAddress, SearchAddress: PAnsiChar; SearchSize: Integer): PAnsiChar;
+function FindLastSimpleCallTo(CallAddress, SearchAddress: PAnsiChar; SearchSize: Integer): PAnsiChar;
 
 implementation
 
 uses
-  Windows, DisAsmTables, DeDeRES;
+  DisAsmTables, DeDeRes;
+
+type
+  PDWORD = ^DWORD;
 
 // Convert an Integer to a string including a + or - and $ character.
 function SignedIntToHex(Value: Integer; Digits: Integer): string;
@@ -58,7 +64,8 @@ end;
 
 // Reads the instruction at Address and return the Size and the assembler string
 // representing the instruction.
-function TDisAsm.GetInstruction(Address: PChar; var Size: Integer): string;
+function TDisAsm.GetInstruction(Address: PAnsiChar; var Size: Integer;
+  AAvailable: Integer): string;
 
 var
   Ref: TdaRef;
@@ -66,37 +73,41 @@ var
 { Reading is getting the value at Address + Size and then increment Size
   with the size of the read value }
 
+  procedure CheckReadable(AReadSize: Integer);
+  begin
+    if (Size < 0) or (AReadSize < 0) or
+      (Size > AAvailable) or (AReadSize > AAvailable - Size) then
+      raise EDisAsmError.Create(err_not_enuff_code);
+  end;
+
   function ReadDWord: DWord;
   begin
-    if IsBadReadPtr(Address, 4) then
-      raise EDisAsmError.Create(err_not_enuff_code);
+    CheckReadable(4);
     Result := PDWord(Address + Size)^;
     Inc(Size, 4);
   end;
 
   function ReadWord: Word;
   begin
-    if IsBadReadPtr(Address, 2) then
-      raise EDisAsmError.Create(err_not_enuff_code);
+    CheckReadable(2);
     Result := PWord(Address + Size)^;
     Inc(Size, 2);
   end;
 
   function ReadByte: Byte;
   begin
-    if IsBadReadPtr(Address, 1) then
-      raise EDisAsmError.Create(err_not_enuff_code);
+    CheckReadable(1);
     Result := PByte(Address + Size)^;
     Inc(Size, 1);
   end;
 
   function GetRefAddress: string;
   var
-    RefAddress: PChar;
+    RefAddress: DWORD;
   begin
-    RefAddress := PChar(ReadDWord);
-    Ref.Immidiate := Ref.Immidiate + Integer(RefAddress);
-    Result := '$' + IntToHex(DWord(RefAddress), 4);
+    RefAddress := ReadDWord;
+    Ref.Immidiate := Ref.Immidiate + RefAddress;
+    Result := '$' + IntToHex(RefAddress, 4);
     if Assigned(OnAddressRef) then
       OnAddressRef(Param, Address + Size - 4, RefAddress, Result);
     Result := '^' + Chr(Length(Result)) + Result;
@@ -583,7 +594,7 @@ begin
   MustHaveSize := True;
   Ref.MultiplyReg1 := 0;
   Ref.MultiplyReg2 := 0;
-  Ref.Immidiate := nil;
+  Ref.Immidiate := 0;
   Result := OneByteOpcodes[AnsiChar(ReadByte)];
   I := 1;
   while I < Length(Result) -1  do
@@ -652,7 +663,7 @@ begin
     ///////////////////////////////////////////////////////////////////////
 end;
 
-function FindFirstSimpleCallTo(CallAddress, SearchAddress: PChar; SearchSize: Integer): PChar;
+function FindFirstSimpleCallTo(CallAddress, SearchAddress: PAnsiChar; SearchSize: Integer): PAnsiChar;
 begin
    Result := SearchAddress;
    while Result <= SearchAddress + SearchSize - 5 do
@@ -664,7 +675,7 @@ begin
    Result := nil;
 end;
 
-function FindLastSimpleCallTo(CallAddress, SearchAddress: PChar; SearchSize: Integer): PChar;
+function FindLastSimpleCallTo(CallAddress, SearchAddress: PAnsiChar; SearchSize: Integer): PAnsiChar;
 begin
    Result := SearchAddress + SearchSize - 5;
    while Result >= SearchAddress  do

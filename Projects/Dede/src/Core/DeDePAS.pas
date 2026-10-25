@@ -28,14 +28,36 @@ var
 
 implementation
 
-Uses MethProp, SysUtils, DeDeDisAsm, DisAsm, HexTools, DeDeRes, DeDeConstants;
+Uses MethProp, SysUtils, DeDeDisAsm, DisAsm, HexTools, DeDeRes,
+  DeDeConstants, DeDeAnsiStream;
+
+{$IFDEF FPC}
+type
+  TPasReader = class(TBinaryObjectReader)
+  private
+    FPrefixClassName: string;
+    FPrefixObjectName: string;
+    FPrefixStringIndex: Integer;
+  public
+    procedure ReadPrefix(var Flags: TFilerFlags; var PrefixPosition: Integer);
+    function ReadStr: string; reintroduce;
+    function EndOfList: Boolean;
+    procedure ReadListEnd;
+    function ReadInteger: LongInt;
+    function ReadString: string; reintroduce;
+    function ReadIdent: string; reintroduce;
+  end;
+{$ELSE}
+type
+  TPasReader = TReader;
+{$ENDIF}
 
 const
   B1: array[boolean] of Char = ' {';
   B2: array[boolean] of PChar = ('','}');
 
 var  PropList,MethodList,UsesList: TStringList;
-     Reader: TReader;
+     Reader: TPasReader;
      NestingLevel: integer;
      MainClassName, MainObjectName: String;
      MainFlags: TFilerFlags;
@@ -49,7 +71,7 @@ const
   B2: array[boolean] of PChar = ('','}');
 var
   NestingLevel: integer;
-  Reader: TReader;
+  Reader: TPasReader;
   PasF: System.Text;
   UnitName: String;
   PropList,MethodList,UsesList: TStringList;
@@ -125,7 +147,7 @@ var
           Reader.ReadValue;
           Inc(NestingLevel);
           while not Reader.EndOfList do
-            ConvertValue;
+            S := ConvertValue;
           Reader.ReadListEnd;
           Dec(NestingLevel);
         end;
@@ -158,10 +180,10 @@ var
           begin
             if Reader.NextValue in [vaInt8, vaInt16, vaInt32] then
             begin
-              ConvertValue;
+              S := ConvertValue;
             end;
             //Reader.CheckValue(vaList);
-            if Reader.ReadValue<>vaList then {Ignore};
+            Reader.ReadValue;
             Inc(NestingLevel);
             while not Reader.EndOfList do ConvertProperty(Nil);
             Reader.ReadListEnd;
@@ -272,7 +294,7 @@ begin
         #13#10+
         'uses'#13#10+
         '  Windows, Messages, SysUtils, Classes, Graphics');
-        Reader := TReader.Create(S, 4096);
+        Reader := TPasReader.Create(S, 4096);
         try
           NestingLevel := 0;
           Reader.ReadSignature;
@@ -318,6 +340,78 @@ begin
     Close(PasF);
   end ;
 end ;
+
+{$IFDEF FPC}
+procedure TPasReader.ReadPrefix(var Flags: TFilerFlags;
+  var PrefixPosition: Integer);
+begin
+  BeginComponent(Flags, PrefixPosition, FPrefixClassName,
+    FPrefixObjectName);
+  FPrefixStringIndex := 0;
+end;
+
+function TPasReader.ReadStr: string;
+begin
+  case FPrefixStringIndex of
+    0:
+      begin
+        Result := FPrefixClassName;
+        Inc(FPrefixStringIndex);
+      end;
+    1:
+      begin
+        Result := FPrefixObjectName;
+        Inc(FPrefixStringIndex);
+      end;
+  else
+    Result := inherited ReadStr;
+  end;
+end;
+
+function TPasReader.EndOfList: Boolean;
+begin
+  Result := NextValue = vaNull;
+end;
+
+procedure TPasReader.ReadListEnd;
+begin
+  if ReadValue <> vaNull then
+    raise EReadError.Create('Invalid binary DFM list terminator');
+end;
+
+function TPasReader.ReadInteger: LongInt;
+begin
+  case ReadValue of
+    vaInt8: Result := ReadInt8;
+    vaInt16: Result := ReadInt16;
+    vaInt32: Result := ReadInt32;
+  else
+    raise EReadError.Create('Invalid binary DFM integer value');
+  end;
+end;
+
+function TPasReader.ReadString: string;
+var
+  ValueType: TValueType;
+begin
+  ValueType := ReadValue;
+  case ValueType of
+    vaString, vaLString, vaUTF8String:
+      Result := inherited ReadString(ValueType);
+    vaWString:
+      Result := string(ReadWideString);
+    vaUString:
+      Result := string(ReadUnicodeString);
+  else
+    raise EReadError.Create('Invalid binary DFM string value');
+  end;
+end;
+
+function TPasReader.ReadIdent: string;
+begin
+  Result := inherited ReadIdent(ReadValue);
+end;
+{$ENDIF}
 
 procedure GenerateDFM(S: TMemoryStream; FName,MainClassName: String);
 type
@@ -459,7 +553,7 @@ begin
         Reader.ReadValue;
         Inc(NestingLevel);
         while not Reader.EndOfList do
-          ConvertValue;
+          S := ConvertValue;
         Reader.ReadListEnd;
         Dec(NestingLevel);
       end;
@@ -492,10 +586,10 @@ begin
         begin
           if Reader.NextValue in [vaInt8, vaInt16, vaInt32] then
           begin
-            ConvertValue;
+            S := ConvertValue;
           end;
           //Reader.CheckValue(vaList);
-          if Reader.ReadValue<>vaList then {Ignore};
+          Reader.ReadValue;
           Inc(NestingLevel);
           while not Reader.EndOfList do ConvertProperty(Nil);
           Reader.ReadListEnd;
@@ -611,7 +705,7 @@ begin
           'uses'#13#10+
           '  Windows, Messages, SysUtils, Classes, Graphics');
           S.Seek(0,soFromBeginning);
-          Reader := TReader.Create(S, 4096);
+          Reader := TPasReader.Create(S, 4096);
           try
             NestingLevel := 0;
             Reader.ReadSignature;
@@ -739,9 +833,9 @@ const q2 = #13#10#13#10'interface'#13#10#13#10'uses'#13#10+
 begin
   sUnitName:=sUnitName+';';
   Str:=TMemoryStream.Create;
-  Str.WriteBuffer(q1[1],Length(q1));
-  Str.WriteBuffer(sUnitName[1],Length(sUnitName));
-  Str.WriteBuffer(q2[1],Length(q2));
+  WriteAnsiString(Str, q1);
+  WriteAnsiString(Str, sUnitName);
+  WriteAnsiString(Str, q2);
 end;
 
 initialization

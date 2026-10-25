@@ -273,16 +273,29 @@ const
 
 implementation
 
-uses Windows, DeDeUtils, DeDeRes;
+uses SysUtils, DeDeUtils, DeDeRes
+{$IFDEF MSWINDOWS}
+  , Windows
+{$ENDIF}
+  ;
 
 // Needed to get temp path
-var sz : DWORD;
+{$IFDEF MSWINDOWS}
+var sz : LongWord;
+{$ENDIF}
 
 initialization
   // GET THE TEMP PATH
+{$IFDEF MSWINDOWS}
   SetLength(FsTEMPDir,MAX_PATH);
   sz:=GetTempPath(MAX_PATH,@FsTEMPDir[1]);
   SetLength(FsTEMPDir,sz);
+{$ELSE}
+  FsTEMPDir := GetTempDir;
+{$ENDIF}
+  if (FsTEMPDir <> '') and
+    (FsTEMPDir[Length(FsTEMPDir)] <> PathDelim) then
+    FsTEMPDir := FsTEMPDir + PathDelim;
 
   GetAppVersion(ParamStr(0), GlobsCurrDeDeVersion, GlobsCurrDeDeBuild);
   GlobsCurrDeDeVersion := TargetDeDeVersion;

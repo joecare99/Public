@@ -3,7 +3,11 @@ unit DeDeUtils;
 interface
 
 uses
-  Windows, SysUtils;
+  SysUtils
+{$IFDEF MSWINDOWS}
+  , Windows
+{$ENDIF}
+  ;
 
 
 
@@ -19,12 +23,14 @@ implementation
 
 
 function GetAppVersion(AppName: string; var ProductVersion, FileVersion: string): Boolean;
+{$IFDEF MSWINDOWS}
 var
   versionsize, ValueSize: Cardinal;
   VersionBuf, VersionValue: pChar;
-
+{$ENDIF}
 begin
   Result := False;
+{$IFDEF MSWINDOWS}
   if Trim(AppName) = '' then exit;
   versionsize := GetFileVersionInfoSize(Pchar(AppName), VersionSize);
   if VersionSize = 0 then exit;
@@ -47,7 +53,7 @@ begin
   finally
     FreeMem(VersionBuf);
   end;
-
+{$ENDIF}
 end;
 
 

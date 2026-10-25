@@ -5,7 +5,10 @@ unit DeDeClasses;
 
 interface
 
-uses Classes, Windows, DeDeConstants;
+uses Classes, DeDeConstants;
+
+type
+  DWORD = LongWord;
 
 const
       DATA_FOR_PE_HEADER_OFFSET = $3C;
@@ -264,8 +267,6 @@ Type TDFMProjectHeader = Class(TObject)
      end;
 
 
-Type DWORD = LongWord;
-
 Type TFieldRec = Class
         sName  : String;
         dwID   : DWORD;
@@ -336,8 +337,11 @@ function SoftIceIsActive : Boolean;
 implementation
 
 Uses
-  SysUtils, HEXTools, IniFiles, DeDeRES, Registry,
-  DeDeELFClasses, DeDeAnsiStream;
+  SysUtils, HEXTools, IniFiles, DeDeRes, DeDeELFClasses, DeDeAnsiStream
+{$IFDEF MSWINDOWS}
+  , Windows, Registry
+{$ENDIF}
+  ;
 
 
 
@@ -1819,6 +1823,7 @@ end;
 // if SoftIce is installed
 /////////////////////////////////////
 function GetSoftIceDir : String;
+{$IFDEF MSWINDOWS}
 const SICE_KEY = 'SOFTWARE\NuMega\SoftICE';
       INSTALL_DIR  = 'InstallDir';
 var reg : TRegistry;
@@ -1834,11 +1839,17 @@ begin
     reg.Free;
   End;
 end;
+{$ELSE}
+begin
+  Result := '';
+end;
+{$ENDIF}
 
 /////////////////////////////////////
 // Returns true if SoftIce is active
 /////////////////////////////////////
 function SoftIceIsActive : Boolean;
+{$IFDEF MSWINDOWS}
 const SICE_FILES : Array [1..3] of String = ('SICE','SIWVID','NTICE');
 var hFile : Cardinal;
     i : Integer;
@@ -1858,6 +1869,11 @@ begin
         end;
     End;   
 end;
+{$ELSE}
+begin
+  Result := False;
+end;
+{$ENDIF}
 
 
 initialization

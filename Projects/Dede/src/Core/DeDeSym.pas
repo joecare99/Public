@@ -47,7 +47,7 @@ implementation
 
 Uses
   DeDeDisASM, DisASM, HexTools, DeDeBPL, SysUtils,
-  crc32, DeDeRES, DeDeCoreServices;
+  crc32, DeDeRes, DeDeCoreServices;
 
 var DASM : TDisAsm;
 
@@ -137,7 +137,7 @@ Begin
    j:=1;
    if Level=0 then CRC:=0;
    Repeat
-     s:=DASM.GetInstruction(@buff[j],k);
+     s:=DASM.GetInstruction(PAnsiChar(@buff[j]),k,Length(buff)-j+1);
 
      if k=5 then
        begin

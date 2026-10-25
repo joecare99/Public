@@ -10,7 +10,7 @@ unit DeDeDisAsm;
 
 interface
 
-uses Windows, Classes, DeDeClasses, DeDeSym, DeDeClassHandle,
+uses Classes, DeDeClasses, DeDeSym, DeDeClassHandle,
   DeDeCoreServices;
 
 type DWORD = LongWord;
@@ -1137,7 +1137,8 @@ procedure DisassembleProc(NameP,S : String; var DasmList : TStringList; bNotClea
 var iStopIndex, i,k,locpos, InstrId : Integer;
     ss : String;
     DASM : TDisAsm;
-    pc,op,srf, locvar : String;
+    pc: AnsiString;
+    op,srf,locvar : String;
 
 begin
   // Creates The Result
@@ -1224,7 +1225,7 @@ begin
           // Reads next byets
           PEStream.ReadBuffer(pc[1],16);
           // Disassembels them
-          ss:=DASM.GetInstruction(PChar(pc),sz);
+          ss:=DASM.GetInstruction(PAnsiChar(pc),sz,16);
           Inc(InstrId);
 
           // If the current instruction is a short jump ahead
@@ -1352,7 +1353,8 @@ end;
 function GetNextProcRVA(dwRVA : DWORD; var bFound : Boolean; bSkipBetweenCodeFillRecognition : Boolean = False) : DWORD;
 var  DASM : TDisAsm;
      phys : DWORD;
-     pc,ss : String;
+     pc : AnsiString;
+     ss : String;
      sz{,i} : LongInt;
 
   procedure StopAtStreamEnd;
@@ -1391,7 +1393,7 @@ begin
           end;
           SetLength(pc,17);
           PEStream.ReadBuffer(pc[1],16);
-          ss:=DASM.GetInstruction(PChar(pc),sz);
+          ss:=DASM.GetInstruction(PAnsiChar(pc),sz,16);
           if (sz<1) or (sz>16) then
           begin
             DeDeCoreContext.ReportWarning(Format(

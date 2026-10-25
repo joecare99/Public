@@ -74,7 +74,7 @@ end;
 
 procedure TASMForm.DoDasm;
 var sz : Integer;
-    pc : String;
+    pc : AnsiString;
     b : Byte;
 begin
   pc:='';
@@ -84,10 +84,10 @@ begin
       For sz:=1 To Length(SourceEdit.Text) div 2 Do
         Begin
           b:=HEX2Byte(Copy(SourceEdit.Text,2*sz-1,2));
-          pc:=pc+CHR(b);
+          pc:=pc+AnsiChar(b);
         End;
       If pc<>'' Then
-         Destedit.Text:=DASM.GetInstruction(PChar(pc),sz);
+         Destedit.Text:=DASM.GetInstruction(PAnsiChar(pc),sz,Length(pc));
     end
     else Destedit.Text:=_ASM.DoASM(SourceEdit.Text)
 end;
