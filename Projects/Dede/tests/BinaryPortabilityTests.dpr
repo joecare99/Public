@@ -4,7 +4,21 @@ program BinaryPortabilityTests;
 
 uses
   SysUtils, Classes, DeDeBinaryTypes, DeDeBinaryReader, DeDeCoreServices,
-  DisASM;
+  DeDeBSS, DisASM;
+
+type
+  TConfirmRecorder = class
+  public
+    Accepted: Boolean;
+    Calls: Integer;
+    function OnConfirm(const ATitle, AMessage: string): Boolean;
+  end;
+
+function TConfirmRecorder.OnConfirm(const ATitle, AMessage: string): Boolean;
+begin
+  Inc(Calls);
+  Result := Accepted;
+end;
 
 procedure Check(ACondition: Boolean; const AMessage: string);
 begin
@@ -191,6 +205,57 @@ begin
   end;
 end;
 
+procedure TestConfirmationService;
+var
+  Context: TDeDeCoreContext;
+  Recorder: TConfirmRecorder;
+begin
+  Context := TDeDeCoreContext.Create;
+  Recorder := TConfirmRecorder.Create;
+  try
+    Check(not Context.Confirm('test', 'no callback'),
+      'Missing interaction callback was not denied by default');
+    Recorder.Accepted := False;
+    Context.OnConfirm := Recorder.OnConfirm;
+    Check(not Context.Confirm('test', 'denied'),
+      'A denied interaction callback was accepted');
+    Recorder.Accepted := True;
+    Check(Context.Confirm('test', 'accepted'),
+      'An accepted interaction callback was rejected');
+    Check(Recorder.Calls = 2, 'Interaction callback call count changed');
+  finally
+    Recorder.Free;
+    Context.Free;
+  end;
+end;
+
+procedure TestUnavailableProcessMemoryService;
+{$IFNDEF MSWINDOWS}
+var
+  BSS: TBSS;
+  Raised: Boolean;
+{$ENDIF}
+begin
+{$IFNDEF MSWINDOWS}
+  BSS := TBSS.Create;
+  try
+    Raised := False;
+    try
+      BSS.Dump('');
+    except
+      on E: EDeDeServiceUnavailable do
+      begin
+        Raised := Pos('BSS/DATA process dumping', E.Message) > 0;
+      end;
+    end;
+    Check(Raised,
+      'Unsupported process-memory service did not report unavailability');
+  finally
+    BSS.Free;
+  end;
+{$ENDIF}
+end;
+
 begin
   try
     TestOffsetBoundaries;
@@ -199,6 +264,8 @@ begin
     TestDisassemblerBounds;
     TestPE32OffsetStorage;
     TestPE32DWordListStorage;
+    TestConfirmationService;
+    TestUnavailableProcessMemoryService;
     Writeln('PE32 binary portability tests passed');
   except
     on E: Exception do

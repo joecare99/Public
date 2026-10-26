@@ -183,7 +183,7 @@ begin
     end;
   End;
 {$ELSE}
-  raise Exception.Create(
+  raise EDeDeServiceUnavailable.Create(
     'BSS/DATA process dumping is only supported on Windows hosts');
 {$ENDIF}
 end;
