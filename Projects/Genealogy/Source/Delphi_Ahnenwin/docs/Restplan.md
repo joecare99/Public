@@ -1,15 +1,15 @@
-# Remaining work plan (Restplan) — AHNENWIN 5.1 recon
+﻿# Remaining work plan (Restplan) â€” AHNENWIN 5.1 recon
 
 State: **572 / 659** methods reconstructed (87 open). Build is green.
 
 Method sizes below are the number of *disassembly* lines in the listing
-(the `{*procedure …` block or the plain `procedure …` body up to the next
-procedure). "Lines" therefore is *code*, not Delphi — a 500-line listing may
+(the `{*procedure â€¦` block or the plain `procedure â€¦` body up to the next
+procedure). "Lines" therefore is *code*, not Delphi â€” a 500-line listing may
 become 100 lines of Pascal.
 
 ---
 
-## Phase 1 — the small ones (< 250 disassembly lines)
+## Phase 1 â€” the small ones (< 250 disassembly lines)
 
 These are the only methods small enough to convert in one pass. They are
 scattered across all three major units (Unit1, Unit3, Unit13) and the two
@@ -37,17 +37,17 @@ smaller ones (Unit17, Unit24, Unit26, Unit33).
 | 18| `sub_005BE4B8`  | Unit3  | 645 |
 | 19| `illki`         | Unit3  | 687 |
 
-> **Note on Unit13 items (4–10, 15–16):** they touch the shared chart arrays.
-> The layout is now PINNED — see "Phase A findings" below.
+> **Note on Unit13 items (4â€“10, 15â€“16):** they touch the shared chart arrays.
+> The layout is now PINNED â€” see "Phase A findings" below.
 
 ## Phase A findings (layout, pinned 2026-10-25)
 
 These are the chart row grids of Unit13. One row per person, **row size
 $198 = 408 bytes**, row count **$2710 = 10000** (matches the IDR annotation
 `array[10000] of ?`). Both facts close ONLY with hex constants: the
-`imul …,33` scale is $33 = 51 and every row slot is 8 bytes (`51 × 8 =
+`imul â€¦,33` scale is $33 = 51 and every row slot is 8 bytes (`51 Ã— 8 =
 408 = $198`); a decimal "33" would give 264 B and contradict the
-explicit `add/sub …,198` row walks.
+explicit `add/sub â€¦,198` row walks.
 
 Recon declarations (see `Units\AHNGlobals.pas`):
 
@@ -57,26 +57,26 @@ Recon declarations (see `Units\AHNGlobals.pas`):
 - **Grid B** `gvar_019764C4` (labels inside: `019764C8` = dword[1],
   `019764D8` = dword[5], `019764E0` = dword[7]; row r+1: `0197665C` = dword[0],
   `01976664` = dword[1], `01976668` = dword[3], `01976670` = dword[5]).
-- **Grid C** `gvar_015924E4` — a second 10000×$198 working copy (load/store
+- **Grid C** `gvar_015924E4` â€” a second 10000Ã—$198 working copy (load/store
   mirror of grid A, copied stride-$198 with count $2710 in the method at
-  005693C…0056943E).
+  005693Câ€¦0056943E).
 - **Person mirror** `gvar_0061F30C`: `TPersonRec = array[0..531] of Byte`
   ($214 = 532 bytes), count `$13880 = 80000`; pinned fields: +0 num,
   +4 flag, +8 kind, +$137/+$10E/+$160 = ShortString[28] (the Len byte
   at +$137 is compared with 'W').
 
 All cell math in the listings is 4-byte (`fild dword ptr`, cmp dword), so
-the 8-byte slots are **array[0..1] of Integer pairs (lo = +0, hi = +4)** —
+the 8-byte slots are **array[0..1] of Integer pairs (lo = +0, hi = +4)** â€”
 not DateTime/Double (the listing's `fild` converts an Integer to double,
 it does not load floats).
 
 Converted against this layout so far:
 
-- `sub_00568FD4` / `sub_00569010` — scan rows while
+- `sub_00568FD4` / `sub_00569010` â€” scan rows while
   `gridA[r].dword[2] > 0`, track the max of `gridA[r].dword[5]`, then call
   `sub_00568C9C(max)` / `sub_00568E3C(max)` respectively (Unit13 recon,
   build green).
-- `sub_00568C9C` / `sub_00568E3C` — converted (build green), see
+- `sub_00568C9C` / `sub_00568E3C` â€” converted (build green), see
   "Phase B findings" below.
 - Stubs for `sub_0056897C(AValue)`, `sub_00568B04(AValue)` (called by
   C9C/E3C); not yet converted.
@@ -89,14 +89,14 @@ Converted against this layout so far:
   `jge`/`jl` (magnitude, not equality), (c) the propagation loop
   continues while the level dword equals `lvl+1`, and (d) they only
   act when the doubling-row value is BELOW (branch 1) / the row value
-  is ABOVE (branch 2) the neighbor value — sort-shift semantics,
+  is ABOVE (branch 2) the neighbor value â€” sort-shift semantics,
   versus the distribute semantics of C9C/E3C.
 - `TForm13.Symm` (00568834): two backward row walks over grid B from
   row `gvar_011AE344` downto 1. Part 1 moves `gridB[esi][0]` to the
   midpoint of `gridB[esi][7]`/`[8]` (via `ChartBFlat(102*d)` row-index
   deref: term `[T*8 + 19764C4]` = flat dword `2*T`) when the pair
   differs by more than `gvar_011AE334+gvar_0061F118`, then
-  `gvar_011AE31C := max(011AE31C, [esi][0] div sum − 1)`. Part 2
+  `gvar_011AE31C := max(011AE31C, [esi][0] div sum âˆ’ 1)`. Part 2
   monotonically raises `gridB[esi][0]` when `[esi][7]/[8]` are empty,
   `[esi][5] < 011AE328` and equals `[esi-1][5]`, `[esi][3]` and
   `[esi-1][3]` are positive and `[esi-1][0] >= [esi][0]`.
@@ -109,34 +109,34 @@ Converted against this layout so far:
   N outer passes; each pass walks rows 1..`gvar_011AE344` on the
   1976668-anchor (`row[r][3]`; vm1 shifts `row[r][1]`, vm
   `row[r][0]`): when ecx(=pass) = `[r][5]` copy the pointed value's
-  dword down (`ChartBFlat(102*val → +1)`); else when both parents
+  dword down (`ChartBFlat(102*val â†’ +1)`); else when both parents
   `[r][6]/[r][7]` are 0 and the row is a level-equal successor,
   place at previous row's position + the spacing constants
   (`0253637C*011AE318 + 011AE318 + 61F118 + 011AE348` in vm1;
   `011AE334 + 61F118` in vm).
 - `TForm13.kek_ord` (005686F0): 011AE328-1 passes; anchor 1976670 =
   `row[r][5]`; when `[r][5] < 011AE328` and equals `[r-1][5]`, all
-  three dwords 3 of rows r/r−1/r+1 positive, `[r][0] <= [r-1][0]` and
+  three dwords 3 of rows r/râˆ’1/r+1 positive, `[r][0] <= [r-1][0]` and
   `[r][7] = [r][8] = 0`: `[r][0] := 2*(011AE334+61F118) + [r-1][0]`.
 - `TForm13.kek_ord_2` (00568774): counter trap gives EXACTLY two row
-  walks with ecx = V−1 then V−2; conditions keyed on ecx; then
+  walks with ecx = Vâˆ’1 then Vâˆ’2; conditions keyed on ecx; then
   `[r][0] := [r-1][0] + sum` and `[r-1][0]` gets +/- sum by the PARITY
   of `[r][2]` (and $80000001 idiom = sign-corrected odd test).
 - `TForm13.Vr2` (0056904C) converted: screen/canvas metric setup
   (`fScale` = `gvar_0253636C` = 1.0 normally, 1.13 when drawing
-  canvas <> PaintBox1.Canvas; 6.0 pen multiplier on the printer branch —
+  canvas <> PaintBox1.Canvas; 6.0 pen multiplier on the printer branch â€”
   all Extended constants recovered from the mantissa/exp words).
   Then: walks grid A rows (`while [r][2] > 0`, r starts 1), clears
   20 slot strings (011AE2C8..011AE2F8 area) + 20 row-local string
   slots (flat dword 102*row+19, ..., via new `ChartAAnsi` helper),
   FindKey on DataModule2.Table17 with `[row][3]`, calls
   `memein(gvar_011AE1C4[row-1][3])` and
-  `zerleg(011AE334, 011AE318, canvas)` — both still TODO stubs
+  `zerleg(011AE334, 011AE318, canvas)` â€” both still TODO stubs
   (declared: `memein(AValue)` EDX, `zerleg` 3-register/stack args;
   IDR lists zerleg as function, result unused here). Copies dwords
   0..2 of each grid-C row (`gvar_015924E4`, 408-B rows) into the
   FD4-family grid rows (flat 102r..102r+2 = gvar_011AE1C4 rows 1..),
-  calls sub_00569010, computes max `[r][0]` → 011AE320 (then Dec),
+  calls sub_00569010, computes max `[r][0]` â†’ 011AE320 (then Dec),
   sets ScrollBar1/2.LargeChange = PaintBox dims-5 and
   SmallChange = 20 (IDR hex "14").
 - **IDR number bases**: printed numbers are HEX (e.g. `mov edi,14`
@@ -155,22 +155,22 @@ Converted against this layout so far:
 three different T values in `[esi + T*8 + K]` terms (esi = 011AE35C =
 base + $198):
 
-- `T = 51*ebx` (from `imul eax,ebx,33`) — row ebx, dword (102 + K div 4).
-- `T = 66*ebx` (from `add eax,eax; imul …,33`) — the "paired" row:
+- `T = 51*ebx` (from `imul eax,ebx,33`) â€” row ebx, dword (102 + K div 4).
+- `T = 66*ebx` (from `add eax,eax; imul â€¦,33`) â€” the "paired" row:
   dword 132*ebx + (102 + K div 4); NOT a whole row multiple, but a
   well-defined flat dword index.
-- `T = 33*eax` (propagation loops) — dword 66*eax + (102 + K div 4).
+- `T = 33*eax` (propagation loops) â€” dword 66*eax + (102 + K div 4).
 
 Every term translates to the flat dword index `2*T + 102 + (K div 4)`
 of `gvar_011AE1C4`; no per-row "slot" interpretation is needed and all
 terms resolve to integers. AHNGlobals now exposes
 `ChartAFlat(I)/SetChartAFlat(I,V)` for literal access; recon keeps the
-old `[r][d]` expressions where they fit (FD4/9010 unchanged —
+old `[r][d]` expressions where they fit (FD4/9010 unchanged â€”
 `[r][2]` = flat 102*r+2, identical memory).
 
 **Power idiom semantics pinned** (empirically from the argument build
 order): the callee is called with Pascal-convention stack args built
-right-to-left — first push `80000000:$4000` = Extended **2.0** (the
+right-to-left â€” first push `80000000:$4000` = Extended **2.0** (the
 exponent), last assembled via `fild/fstp` = **N** (the base, N =
 level-1). So the call is `Power(2.0, lvl-1)` = `2^(lvl-1)`, and
 `ebx := Round(Power(2.0, lvl-1)) = 2^(lvl-1)`. (The Delphi heuristic
@@ -179,29 +179,29 @@ does not apply here; the balanced epilogue with no caller cleanup
 proves a calle-pops convention.) The BASM replica crash is moot.
 
 Both walkers (C9C and E3C, address-identical except one dword shift and
-the callee `5689 7C`→`568B04`) implement: for lvl := V-1 downto 1, start
+the callee `5689 7C`â†’`568B04`) implement: for lvl := V-1 downto 1, start
 at row `2^(lvl-1)`, skip rows whose status dword is 0, then while the
 row's level dword equals lvl run the pair-normalization body (compare
 row ebx value against the "doubling row" 132*ebx value, propagate the
-delta through the 66*eax stride chain while the level dword matches)…
+delta through the 66*eax stride chain while the level dword matches)â€¦
 
-### vz2 (00569504) — converted, build green (2026-10-25)
+### vz2 (00569504) â€” converted, build green (2026-10-25)
 
 - Signature fixed: `procedure vz2(AValue: TCanvas);` (AValue = EDX,
   listing `[ebp-8]`; `[ebp-4]` = Self). Draws the ancestor chart into
   AValue, working entirely on a copy of grid A in grid B
   (`gvar_019764C4[row][k]`, row-local `[esi+edi*8-X]` offsets resolved:
-  -194→d1, -19C→d0, -190→d2, -18C→d3, -184→d5, -17C/-178→d7/d8,
-  -170/-16C→d10/d11, -160/-15C→d14/d15, -158→low word of d16,
-  -0D7→ShortString@193 ('M'/'W' flag), -100→ShortString@152 (ID),
-  -56→ShortString@322 (photo), -150→20 AnsiString ptrs @72).
+  -194â†’d1, -19Câ†’d0, -190â†’d2, -18Câ†’d3, -184â†’d5, -17C/-178â†’d7/d8,
+  -170/-16Câ†’d10/d11, -160/-15Câ†’d14/d15, -158â†’low word of d16,
+  -0D7â†’ShortString@193 ('M'/'W' flag), -100â†’ShortString@152 (ID),
+  -56â†’ShortString@322 (photo), -150â†’20 AnsiString ptrs @72).
 - Head: crHourGlass; saves ScrollBar1/2.Position into 2536364/2536368
   (zeroed when `PaintBox1.Canvas <> AValue`); fills PaintBox white;
   `FindKey(Table17, [gvar_011AE368])` builds title
   `'Vorfahren von ' + sub_00563868(Name) + ' ' + Vornamen`, TextOut at
   `Round(f*30)-364-8 / Round(f*5)-368`.
-- Build loop copies A→B fields verbatim (incl. word copy of d16 low
-  half, 20 ChartAAnsi→ChartBAnsi slots) and computes
+- Build loop copies Aâ†’B fields verbatim (incl. word copy of d16 low
+  half, 20 ChartAAnsiâ†’ChartBAnsi slots) and computes
   `B[0] := (A[0]-1)*(334+118)+340-364`,
   `B[1] := (A[1]-1)*(37C*318+318+348+114)+33C-368`.
 - Min-scan edx = min B[0] (B[3]>0, init $186A0=100000); shifting
@@ -210,58 +210,58 @@ delta through the 66*eax stride chain while the level dword matches)…
   LineTo (B0+334/2, B1-half), only when B5<328 and (B7>0 or B8>0));
   'W' rows (row>1): line from bottom B1+cnt scaled (+348-1) down to
   +half, cnt = 37C*318+318.
-- Loop 2: parent → child lines for B[7] and B[8] (guard B5<328 and
-  child>0); LineTo bottom of child box; trailing PaintBox-equal/≠
-  duplicate LineTo pair — [7] child: BOTH sides without inc; [8] child:
+- Loop 2: parent â†’ child lines for B[7] and B[8] (guard B5<328 and
+  child>0); LineTo bottom of child box; trailing PaintBox-equal/â‰ 
+  duplicate LineTo pair â€” [7] child: BOTH sides without inc; [8] child:
   equal-branch without, inequal-branch with `inc eax` (y+1).
 - Loop 3: maximizes 331C = (B0-340+364) div (334+114) (identical asm
   recompute transcribed) and 324 = max B5; FindKey([B3]); text
   `wasSchon`: 'K: ' from a 10-byte Extended built via push order
   d14=mant.lo, d15=mant.hi, low word of d16=exponent (recon uses an
   `absolute` overlay: extOver.Lo=d14, Hi=d15, W=word(d16));
-  `if 2C4=1`: empty → `'DS: '+IntToStr(B3)` else `wasSchon+' DS: '+…`;
-  `if 2C8=1 and BShort(152) > ' '`: empty → 'ID: '+ss truncated to 44
+  `if 2C4=1`: empty â†’ `'DS: '+IntToStr(B3)` else `wasSchon+' DS: '+â€¦`;
+  `if 2C8=1 and BShort(152) > ' '`: empty â†’ 'ID: '+ss truncated to 44
   (@PStrNCat cl=$2C) else `wasSchon + ' ID: ' + ss`.
 - TextOut at (Round(B0*f)+2, Round(B1*f)+Font.Height-2) with
   Font.Size = Round(120*9)-1, then Size restored to Round(120*9).
 - Photo (`if 2BC=1` and ss@322 > ' '): TImage.Create(Self),
   LoadFromFile(ss@322), `if Graphic is TJPEGImage then` scale Image
   width = Round(GraphicWidth * Image.Height/GraphicHeight)
-  (fdivrp → ImageH/Gh); Rect((B0+4),(B1+2),(B0+Round(W/H*cnt*4/5)),
+  (fdivrp â†’ ImageH/Gh); Rect((B0+4),(B1+2),(B0+Round(W/H*cnt*4/5)),
   (B1+Round(cnt*4/5))) with cnt = 37C*318+318; `Proportional := True`;
-  `StretchDraw` — NOTE: TCanvas.StretchDraw(ARect, AGraphic) in Delphi
+  `StretchDraw` â€” NOTE: TCanvas.StretchDraw(ARect, AGraphic) in Delphi
   2006, rect comes FIRST (matches lea edx=[ebp-35]; ecx=Graphic); then
   img.Free.
 - 20-string loop (slotI 0..19, slotRow y-counter): Font.Style := []
   every slot, [fsBold] when slotI=0 and also after a rightmost '#'
-  strip (only slotI 0..3 do the '#' check → the slot string is replaced
+  strip (only slotI 0..3 do the '#' check â†’ the slot string is replaced
   by Copy(s, 1, len-1)); TextWidth per slot; x offset
   `Round((334*f - TextWidth)/2)` (fsubrp direction!) added to
   Round(B0*f); y = Round((B1 + 3 + slotRow*318 + 348)*f); text = Trim
   of ChartBAnsi(102*row+18+slotI)^.
 - Boxes: Pen.Color := 0, Brush.Style := bsClear (dl=1, NOT bsSolid!),
-  'M' → Rectangle((B0,B1)-Round((B0+334, B1+cnt+348)) — the 348 is
+  'M' â†’ Rectangle((B0,B1)-Round((B0+334, B1+cnt+348)) â€” the 348 is
   ADDED in INTEGER space before scaling, i.e. Round((B1+cnt+348)*f);
-  'W' → same Rect via RoundRect(..., 15, 15); Pen.Color := 0 again per
+  'W' â†’ same Rect via RoundRect(..., 15, 15); Pen.Color := 0 again per
   row.
 - Tail: `ScrollBar1.Max := (331C+1)*(334+118)+340`;
   `ScrollBar2.Max := (37C*318+114+318+348)*324+33C`; crDefault.
 - Unit13 uses additions: `jpeg` (TJPEGImage) and `Types` (TRect) at
-  implementation level; helper `gvar_0061F114` retyped Single→Integer
+  implementation level; helper `gvar_0061F114` retyped Singleâ†’Integer
   in AHNGlobals (all reads are dword/ROUND).
 - Next in address order: vz1 (005711D4, listing L13489), then
   Nach_erm (0056A970, L7311), nr1 (0056C0D4), nr2 (0056CB30),
   nz1 (0056D6B4), nz2 (0056EB10).
 
-### vz1 (005711D4, listing L13489–14575) — converted, build green (2026-10-25)
+### vz1 (005711D4, listing L13489â€“14575) â€” converted, build green (2026-10-25)
 
 - Signature fixed: `procedure vz1(AValue: TCanvas);` (AValue = EDX,
   `[ebp-8]`). Grid B access: listing keeps `edi = gvar_0197665C` (=
   gvar_019764C4 + $198, the same frame vz2 calls esi) with
-  `esi = 51*row` → `[edi + esi*8 + X]` maps IDENTICALLY to
+  `esi = 51*row` â†’ `[edi + esi*8 + X]` maps IDENTICALLY to
   `gvar_019764C4[row][d]` (same offset table as vz2; no new helper
   needed).
-- Differences vs vz2 (otherwise structurally the same A→B copy, min
+- Differences vs vz2 (otherwise structurally the same Aâ†’B copy, min
   scan, shift, K:/DS:/ID: text with the same 10-byte Extended build,
   JPEG photo with identical Rect math, 20-string '#' loop, M/W boxes,
   identical ScrollBar1/2.Max tail):
@@ -271,26 +271,26 @@ delta through the 66*eax stride chain while the level dword matches)…
   - NO 'W' drop line, NO above-box connector loop.
   - Child connectors ([7] and [8], guard B5<328 and child>0) are
     orthogonal 3-segment lines: MoveTo((B0+334, Yp)) where
-    Yp = Round(f*(B1 + (348*f + (37C*318+318))/2)) — the 348*f term is
+    Yp = Round(f*(B1 + (348*f + (37C*318+318))/2)) â€” the 348*f term is
     INSIDE the scaled expression; then LineTo to
     ((B0+334+118/2), Yp) [the 118/2 is added inside Round,
     X = Round((B0+334+118/2)*f)], then to (same X, childB1 variant of
     Yp), then to (childB0*f, childY). No PaintBox eq/ne variants, no
-    −1/inc.
+    âˆ’1/inc.
   - Extrema swapped: gvar_011AE324 := max of
     (B1-33C+368) div (37C*318+114+318+348) (idiv, duplicated asm
     recompute transcribed); gvar_011AE31C := plain max of B5.
 - Next in address order: Nach_erm (0056A970, listing L7311), then
   nr1 (0056C0D4), nr2 (0056CB30), nz1 (0056D6B4), nz2 (0056EB10).
 
-## Phase 2 — the mid-size ones (250 – 1500 lines)
+## Phase 2 â€” the mid-size ones (250 â€“ 1500 lines)
 
 These are single-purpose methods that need the DataModule2 tables or one or
 two of the Phase-1 helpers. Convert them one at a time; each should compile
 independently before the next.
 
 - Unit3  `sub_005BEF5C` 308, `sub_00582C24`  411, `sub_005BC604` 1096,
-         `sub_005BE4B8`  645, `illki`          687  ← done in Phase 1
+         `sub_005BE4B8`  645, `illki`          687  â† done in Phase 1
 - Unit1  `datsich`, `Sikoein`, `spitzbas`, `listen_akt` (size unconfirmed)
 - Unit1  `vorf_erm2`     1076, `Vorf_erm` (Unit13) `Vr2`, `Vz2`,
          `Nach_ern`, `nz1`, `nz2`, `memein`, `nchf_neu`
@@ -303,49 +303,49 @@ independently before the next.
 - Unit11 `Fgr`  2484, `zeichen` 1822
 - Unit3  `gedein_neu`, `gedein2`, `gedein`, `gedaus`, `gedausx`,
          `ahndosein`, `osbein`, `adrschreib`, `gedausxv`, `gedausv`,
-         `gedein_5`, `ofb3`, `ofb2` (sizes unconfirmed — the GEDCOM I/O chain)
+         `gedein_5`, `ofb3`, `ofb2` (sizes unconfirmed â€” the GEDCOM I/O chain)
 - Unit17 `BitBtn1Click` 4341
 - Single-`Click` handlers in Unit16, Unit18, Unit20, Unit22, Unit24, Unit33
 
-## Phase 3 — the GEDCOM I/O chain (Unit3, 13 methods)
+## Phase 3 â€” the GEDCOM I/O chain (Unit3, 13 methods)
 
 Do these **in order** (innermost helper first), each depending on the
 previous:
 
 ```
-gedein_5  →  gedin2  →  gedin → gedin_neu
-gedausv   →  gedausxv → gedaus → gedausx
+gedein_5  â†’  gedin2  â†’  gedin â†’ gedin_neu
+gedausv   â†’  gedausxv â†’ gedaus â†’ gedausx
             (osbein, adrschreib, ahndosein are the non-GEDCOM I
 
-### nach_erm (0056A970, listing L7311�8706) � converted, build green (2026-10-25)
+### nach_erm (0056A970, listing L7311ï¿½8706) ï¿½ converted, build green (2026-10-25)
 
 - `TForm13.Nach_erm` implemented in `Units\Unit13.pas` (head, zero-init, phase 1 BFS, phase 2 grid-A fill, phase 3 tail). `Unit1` added to the implementation uses (Form1.DBText1); `Unit12`/`Unit2`/`AHNGlobals` were already present.
 - Grid A zero-init fields: d0,d1,d2,d3,d5,d7,d8,d10,d11,d12 + in-row bytes 316/318/320/322. Grid B zero-init: d0..d3, d5, d7, d8, d9, d10, d11, d12 + same bytes (no d4/d6/d10 exceptions: d10 IS cleared for B). Loop `for edi := 10000 downto 1`.
 - Head: gvar_0253636C := 0 (3-part Extended store), 61F118 := Round(61F120*20), 61F114 := Round(61F120*30), 11AE344/31C := 0, 11AE334 += 10 if 61F2BC=1.
-- Setup: startNr := Table1Nummer.AsInteger; 61F2F0 := StrToInt(Form12.SpinEdit1.Text); birth filter when 02536BA0 > 1 ('gebjahr<=n and taufjahr<=n', Filtered := True, Form1.DBText1.Color := $FFFF); FindKey ignored; index 'vat' if Geschlecht(M) / 'mut' if (W); FindKey([startNr]) � if the checked FindKey fails ? ShowMessage('Keine Nachfahren gefunden.') + Exit **without restoring the cursor** (original behavior); fonts/heights set on PaintBox1.Canvas.Font; 61F118/61F114 re-set (same values), 11AE33C := Round(61F120*45), 11AE340 := Round(61F120*20), 11AE318 := -PaintBox1.Canvas.Font.Height + 2; chain := Num2Str(Table17Nummer).
+- Setup: startNr := Table1Nummer.AsInteger; 61F2F0 := StrToInt(Form12.SpinEdit1.Text); birth filter when 02536BA0 > 1 ('gebjahr<=n and taufjahr<=n', Filtered := True, Form1.DBText1.Color := $FFFF); FindKey ignored; index 'vat' if Geschlecht(M) / 'mut' if (W); FindKey([startNr]) ï¿½ if the checked FindKey fails ? ShowMessage('Keine Nachfahren gefunden.') + Exit **without restoring the cursor** (original behavior); fonts/heights set on PaintBox1.Canvas.Font; 61F118/61F114 re-set (same values), 11AE33C := Round(61F120*45), 11AE340 := Round(61F120*20), 11AE318 := -PaintBox1.Canvas.Font.Height + 2; chain := Num2Str(Table17Nummer).
 - Phase 1 (chunk BFS over chain): markers/nextChain patterns as documented; per pnun: markers-dedup prepend on chain itself, Table18.IndexName 'num', FindKey([pnun]) then repeat while (not Eof) and (Table18Nummer = pnun); chain += Num2Str(Epnum) (markers-dedup); bmk := -1 (v150 GetBookmark stub); Table17 'index' reset, FindKey([Epnum]) ignored; **v1A0 GotoBookmark = no-op comment**; gender M ? Index 'vat', walk Vater = pnun (append nextChain when Mutter = Epnum or Mutter = 0, markers-dedup when gen < max); W ? Index 'mut', walk Mutter = pnun (Vater = Epnum or Vater = 0, symmetric). Then Index '', v1A0 no-op, Table18.Next; chain := nextChain after the chunk loop.
-- Phase 2 (grid A fill): person row edi gets d2 := edi, d3 := Nummer, d7 := Vater, d8 := Mutter (nulled when edi = 1), shortstrings: ID @152 (Copy(...,1,40)), sex uppercased @193, photo @322 ('_bitmap path gvar_02536B9C + '\bilder\b' + IntToStr(d3) + 'a.jpg', computed twice, only if 61F2BC = 1 and FileExists); d0/d1 per Nachgr1 (gen-1+ardy / colx) or Nachgr2 (swapped); 20 ChartSlotAnsi slots cleared; d5 := gen. Marriage row then: chain += Num2Str(Epnum); bmk := -1; d2..d12 filled; **d10 := ChartAFlat(102*(edi-1)+3)** (asm: [11AE038+408edi] = d3 of the previous row); pIdx (EDI/partner counter) into d12; slot trims into flat 102*edi+17 for slots 1..19 (slot order 1..19, slot 0 excluded; condition Length(Trim(slot)) > 0); 0056BA66-B82 is a **dead block** (cmp [ebp-0C],0 never 0 � count is 20 from the clear loop), transcribed as a comment only. After the marriage loop: nextChain built with dup-check only in the *parent-without-marriage-parent* arm (Vater/Mutter = 0 uses Pos-dedup, = Epnum appends unconditionally, **no '*' markers in phase 2**). End per generation: chain := nextChain, colx := 1, gvar_011AE344 := edi.
+- Phase 2 (grid A fill): person row edi gets d2 := edi, d3 := Nummer, d7 := Vater, d8 := Mutter (nulled when edi = 1), shortstrings: ID @152 (Copy(...,1,40)), sex uppercased @193, photo @322 ('_bitmap path gvar_02536B9C + '\bilder\b' + IntToStr(d3) + 'a.jpg', computed twice, only if 61F2BC = 1 and FileExists); d0/d1 per Nachgr1 (gen-1+ardy / colx) or Nachgr2 (swapped); 20 ChartSlotAnsi slots cleared; d5 := gen. Marriage row then: chain += Num2Str(Epnum); bmk := -1; d2..d12 filled; **d10 := ChartAFlat(102*(edi-1)+3)** (asm: [11AE038+408edi] = d3 of the previous row); pIdx (EDI/partner counter) into d12; slot trims into flat 102*edi+17 for slots 1..19 (slot order 1..19, slot 0 excluded; condition Length(Trim(slot)) > 0); 0056BA66-B82 is a **dead block** (cmp [ebp-0C],0 never 0 ï¿½ count is 20 from the clear loop), transcribed as a comment only. After the marriage loop: nextChain built with dup-check only in the *parent-without-marriage-parent* arm (Vater/Mutter = 0 uses Pos-dedup, = Epnum appends unconditionally, **no '*' markers in phase 2**). End per generation: chain := nextChain, colx := 1, gvar_011AE344 := edi.
 - Phase 3: cursor default, 11AE328 := max(d5) walking rows while d2 > 0, gvar_02522AD8[edi] := d0, gvar_0252C718[edi] := d1 (arrays[0..10499] of Integer, AHNGlobals); ShowMessage 'N Generationen / M-1 Personen gefunden'; gvar_011AE32C := PaintBox1.Canvas.
 - FindKey results are only Boolean-tested where the listing tests al; elsewhere the call is transcribed without using the result. FindKey([X]) transcribed as `DataModule2.TableXX.FindKey([X]);`
 
-### nr1 (0056C0D4, listing L8708–9325) — converted, build green (2026-10-25)
+### nr1 (0056C0D4, listing L8708â€“9325) â€” converted, build green (2026-10-25)
 
 - `TForm13.nr1` implemented in `Units\Unit13.pas` (replaces the stub). Locals: `row, child, i0, count, gen, esi` (esi = the listing's "last child row" chain variable, reused across the push loops).
 - Head: 011AE340 := Round(61F120*45); **011AE33C := 30 (immediate, not Round!)**; 61F118 := Round(61F120*30); 61F114 := Round(61F120*20); 011AE334 := Round(61F120*120) + 011AE338; crHourGlass; 02536364/365 := 0; if `PaintBox1.Canvas = gvar_011AE32C` then load them from ScrollBar1/2.Position (inverse of nz2). 011AE348/0253637C/011AE318 := 0; overlay-canvas Font 'Arial' Size Round(120*9), 011AE318 := -Font.Height + 2 (plain neg/add-2, no nested Round); PaintBox1.Canvas same Size and 318 recompute; 0253636C := 0.
 - Printer branch (`Printer.Canvas = gvar_011AE32C`): 0253636C := 0.6 (mantissa 9999999A/B9999999 exp 4001); Printer.Canvas 'Arial', Size Round(120*9); `count := PaintBox1.Canvas.Pen.Width` ([esp+18]); `Printer.Canvas.Pen.Width := Round(count * 0253636C)`. Screen branch: if `PaintBox1.Canvas <> gvar_011AE32C` then 0253636C := 0.1.
 - `DataModule2.Table17.IndexName := ''`. Row loop (while `ChartAFlat(102*row+2) > 0`): clear 20 ChartSlotAnsi(i0) + row slots `ChartAAnsi(102*row+18+i0)`; `Table17.FindKey([ChartAFlat(102*row+3)])`; `memein(ChartAFlat(102*row+11))` (EDX arg = d11); `zerleg(gvar_011AE334, gvar_011AE318, gvar_011AE32C)`; copy slots back into 102*row+18+i0.
 - `if gvar_0061F2BC = 1 then gvar_011AE348 := Round(((0253637C*011AE318)+011AE318)*4/5)` (imul/add/shl-2/fild/fdiv 5).
-- Marking pass 1 (0056C477–C52B): nested whiles over rows `row` and `child` (both cond `d2 > 0`); if `d7(child) = d3(row)`, `d7(child) > 0` and `ChartAShort(child,316)^ <> '*'` then `Set(…+7, row); 316 := '*'` (`mov word ptr […-5C],2A01`). Pass 1b: d8/byte318 symmetric (same loop body).
-- Marking pass 2 (0056C52B–C599): d10/byte320: `Set(…+10, child - 1)` (partner row = ebx−1!). `lea eax,[edi+…-58]` = byte 320 ✓ (408−88).
+- Marking pass 1 (0056C477â€“C52B): nested whiles over rows `row` and `child` (both cond `d2 > 0`); if `d7(child) = d3(row)`, `d7(child) > 0` and `ChartAShort(child,316)^ <> '*'` then `Set(â€¦+7, row); 316 := '*'` (`mov word ptr [â€¦-5C],2A01`). Pass 1b: d8/byte318 symmetric (same loop body).
+- Marking pass 2 (0056C52Bâ€“C599): d10/byte320: `Set(â€¦+10, child - 1)` (partner row = ebxâˆ’1!). `lea eax,[edi+â€¦-58]` = byte 320 âœ“ (408âˆ’88).
 - Alignment (anchor conversion: `lea eax,[edi+14]` = row(R+1) d5 anchor; d1-index = flat 102R+1, d7=+7, d8=+8, d5=+5; `[eax+198]` = next row d1, `[eax+1A8]` = next d5; `[edi+W-17C/-178/-194]` = row W d7/d8/d1):
-  - Loop A (0056C59B–C732, runs when 011AE328 ≥ 3, count = 328−3+1, gen = 3..): per level (esi reset to 0 each level): rows1: if d5(row) = gen and esi ≠ d7/d8 → for d7/d8 > 0 with row(child).d7>0 or row(child).d8>0: child.d1 := row.d1, esi := child; rows2 push (if d5>1, = next d5, d1 ≥ next d1 → next d1 := d1+1); rows3 (parent onto child: row.d1 := child.d1); rows4 push again. Inc gen; until count = 0.
-  - 0056C738–C7C7: if 328 ≥ 3 single scan gen = 3..(count−2): parent.d1 := child.d1.
-  - 0056C7C9–C805: one push pass over all rows.
-  - 0056C807–C8D1: if 328 ≥ 2, count = 328−2+1, gen = 2..: parent.d1 := child.d1 + push pass per level.
-  - 0056C8D7–C98C: esi := 0; gen := 328 downto 2 (repeat..until gen ≤ 1): child.d1 := parent.d1 (esi-guard last-child).
-  - 0056C992–C9CE: final push pass.
-- 0056C9D0–CA22: max scan while d2>0: 011AE320 := max(d1), 011AE324 := max(d1) (both same comparison — literal).
-- Tail: `gvar_011AE320 := gvar_011AE320 - 1` (06CA24); ScrollBar1.LargeChange := PaintBox1.Width − 5; ScrollBar2.LargeChange := PaintBox1.Height − 5 (Word-component offsets +48/+4C = TPaintBox.Width/Height, +222 = TScrollBar.LargeChange — IDR-labelled at sub_0056944D L6062–6079); SmallChange := 10 (0xA — note sub_0056944D uses 20/0x14); Screen.Cursor := crDefault.
+  - Loop A (0056C59Bâ€“C732, runs when 011AE328 â‰¥ 3, count = 328âˆ’3+1, gen = 3..): per level (esi reset to 0 each level): rows1: if d5(row) = gen and esi â‰  d7/d8 â†’ for d7/d8 > 0 with row(child).d7>0 or row(child).d8>0: child.d1 := row.d1, esi := child; rows2 push (if d5>1, = next d5, d1 â‰¥ next d1 â†’ next d1 := d1+1); rows3 (parent onto child: row.d1 := child.d1); rows4 push again. Inc gen; until count = 0.
+  - 0056C738â€“C7C7: if 328 â‰¥ 3 single scan gen = 3..(countâˆ’2): parent.d1 := child.d1.
+  - 0056C7C9â€“C805: one push pass over all rows.
+  - 0056C807â€“C8D1: if 328 â‰¥ 2, count = 328âˆ’2+1, gen = 2..: parent.d1 := child.d1 + push pass per level.
+  - 0056C8D7â€“C98C: esi := 0; gen := 328 downto 2 (repeat..until gen â‰¤ 1): child.d1 := parent.d1 (esi-guard last-child).
+  - 0056C992â€“C9CE: final push pass.
+- 0056C9D0â€“CA22: max scan while d2>0: 011AE320 := max(d1), 011AE324 := max(d1) (both same comparison â€” literal).
+- Tail: `gvar_011AE320 := gvar_011AE320 - 1` (06CA24); ScrollBar1.LargeChange := PaintBox1.Width âˆ’ 5; ScrollBar2.LargeChange := PaintBox1.Height âˆ’ 5 (Word-component offsets +48/+4C = TPaintBox.Width/Height, +222 = TScrollBar.LargeChange â€” IDR-labelled at sub_0056944D L6062â€“6079); SmallChange := 10 (0xA â€” note sub_0056944D uses 20/0x14); Screen.Cursor := crDefault.
 - Component-offset mapping mnemonic (established): PaintBox1+48=Width, +4C=Height, +160=Canvas; ScrollBar+20C=Position, +220=SmallChange, +222=LargeChange (TScrollBarInc word).
 - Next in address order: nz1 (0056D6B4), nz2 (0056EB10), nr2 (0056CB30) after nz-sibling helper sub_0056CAD4 is decoded (two-push variant of block B/D/F/J, called from nr2 at 0056D448/D510)..
 
@@ -384,3 +384,119 @@ gedausv   →  gedausxv → gedaus → gedausx
 - Photo (61F2BC=1, BShort(row,322) > ' '): TImage.Create(Self); LoadFromFile; `if Graphic is TJPEGImage` (IsClass -> byte flag): ratio := img.Height / Graphic.Height (fdivrp), img.Width := Round(Graphic.Width * ratio); q1 := Round((37C*318+318)*4/5); q2 := Round(Graphic.Width / img.Height * ((37C*318+318)*4/5)) (fdivp W/H then fmul with the shl-2/fdiv-5 term - NOT the rounded q1); aRect = Rect(Round((d0+4)*6C), Round((d1+2)*6C), Round((d0+q2)*6C), Round((d1+q1)*6C)); Proportional; StretchDraw; Free.
 - Tail: ScrollBar1.Max := (11AE31C+1)*(334+61F118) + 340; ScrollBar2.Max := (37C*318+61F114+318+348)*11AE324 + 33C; crDefault. Finally-frames free LStr clr blocks.
 - nz2 (0056EB10, L11180+) next; prologue is byte-identical to nz1 (same copy loop); draw part differs.
+
+### nz2 (0056EB10, listing L11180-12510) - converted, build green (2026-10-25)
+
+- `TForm13.nz2(ACanvas: TCanvas)` (EDX = canvas; decl updated) implemented. Copy/title/wasSchon/DS-ID/d7-d8-count-suffixes/font/names/'#' strips/'M'/'W'/'X' boxes/photo/tail are block-for-block IDENTICAL to nz1 (same Transkriptionshilfe applies). Only these differences:
+- Connector loop (while B[row][2] > 0, B.d1 > 0 required):
+  - Horizontal marriage line only when d5 < 11AE330 AND d5 > 1 AND (d7 > 0 OR d8 > 0): MoveTo(Round((d0+334/2)*6C), Round(d1*6C)) -> LineTo(same X, Round((d1-61F114/2)*6C)).
+  - 0056EF93 'W' drop line: row > 1; ChartBShort(row,193)^ = 'W'; d5 < 11AE330-1 (dec edx!); B[row][9] > 0 (the -174 dword). Then MoveTo(Round((d0+334/2)*6C), Round(6C*(d1+h))) -> LineTo(same X, Round(6C*(d1+h+61F114/2))) with h = 37C*318+318+348.
+  - No father/mother elbow segments at all (unlike nz1/vz1).
+- Extrema loop: first sets **ACanvas.Pen.Color := 0 once before the loop** (0056F0E8-F0); body starts with **gvar_011AE324 := max(d5)** (plain dword cmp, not the nz1 d1-division); then gvar_011AE31C := max of (d0-340+364) div (61F118+334) (same as nz1); guard d3 > 0.
+- Analyzer hint: pushes in Rectangle/RoundRect call sites confirm X2 = (d0+334)-scaled, Y2 = (d1+h)-scaled with W/H = 15 (established recon interpretation kept).
+- Next in address order: sam2 (00572D98), vorf_erm2 (00572A78), vr1 (00570D1C), memein (00566220, L2802), zerleg (005675D8), nachf_neu (00564668), PaintBox1Paint (00570C14), FormShow/FormClose (00570294/00570728), buttons.
+
+## vr1 (TForm13.vr1, 00570D1C) - DONE
+- "Vorgeneration 1" variant of Vr2 (0056904C): identical skeleton, only metric
+  constants differ: `011AE340 := 20` (same), **61F118 := Round(F120*30*scale),
+  61F114 := Round(F120*20*scale)** (Vr2: 20/30 swapped); 334/33C same as Vr2.
+- Bitmap gate: fScale := 1.0, := 1.13 when PaintBox1.Canvas <> gvar_011AE32C.
+- Scroll offsets 2536364/68 loaded from ScrollBar1/2.Position first, then
+  zeroed when the drawing canvas differs (order inverted vs Vr2 recon, same
+  semantics).
+- Printer branch (Printer.Canvas = 11AE32C): fScale := 7.0
+  (listing dword 0 / C0000000 / 4001 = mantissa 1.75 * 2^2 = 7.0; the Vr2
+  recon wrote 6.0 for the same bytes - likely should also be 7.0 there),
+  Font 9pt Arial, 11AE32C.Pen.Width := Round(PaintBox pen width * 7.0).
+- Main row loop while 011AE1C4[row][2] > 0: clear 20 slots
+  (ChartSlotAnsi(i), ChartAAnsi(102*row+19+i)), ebp14 := [row][3],
+  Table17.FindKey, memein([row-1][3]),
+  zerleg(011AE334, 011AE318, 011AE32C), ChartAAnsi(102*row+18) := slot 0,
+  then 13 Trim-guarded copies ChartAAnsi(102*row+19+i) := Trim(slot i+1),
+  i = 0..12.
+- Photo scale (61F2BC = 1): 011AE348 := Round((253637C*318+318) shl 2 / 5).
+- 10000-row copy: SetChartAFlat(102r+2, gvar_015924E4[row][2]),
+  (102r, [row][0]), (102r+1, [row][1]); then sub_00568FD4 (Vr2 called
+  sub_00569010 - the identical scan).
+- Extrema: 011AE320 := max([row][0]) - 1; scrollbars: LargeChange =
+  PaintBox1.Width/Height - 5, SmallChange = 20/20.
+- Build: [build] SUCCESS (existing hints only; byteFlag/fScale
+  "never used" hints are benign).
+- Remaining after vr1 (address order): memein (00566220, listing ~L2802),
+  zerleg (005675D8, ~L3800), PaintBox1Paint (00570C14), sam2 (00572D98),
+  vorf_erm2 (00572A78), nachf_neu, FormShow/FormClose, buttons.
+
+## memein (TForm13.memein(AValue: Integer), 00566220) - DONE
+- Fills Memo1 for the current Table17 person + marriage records of
+  Table18 (index 'num') where Epnum = AValue, for Vorgr/Nachgr modes.
+- DataModule2 field offsets (Unit2 map): 950 Name, 954 Vornamen,
+  944 Nummer (Integer), 95C Religion, 960 Beruf, 9D8 Hausname,
+  964/968/96C/970 Gebtag/Gebmonat/Gebjahr/Gebort,
+  974/978/97C/980 Tauftag/Taufmonat/Taufjahr/Taufort,
+  98C/990/994/998 Sttag/Stmonat/Stjahr/Stort,
+  9A0/9A4/9A8/9AC Begtag/Begmonat/Begjahr/Begort;
+  Table18 (//140): 4C8 Nummer, 4CC Epnum, 4D0/4D4/4D8/4DC
+  Htag/Hmonat/Hjahr/Hort, 4E4/4E8/4EC/4F0 Satag/Samonat/Sajahr/Saort,
+  4F8 Verbind.
+- Flags: 61F2D4=Religion line, 61F2CC=Beruf line, 61F2D0=Hausname.
+- Lines: Name' 'Vornamen + Copy(Religion+', ',1,5); Beruf/Hausname
+  line (Hausname appended with ' '); '* '/baptism '~ '/death '+ '/
+  burial '# ' date blocks: CatN(tag,'.',monat,'.',jahr) -> sub_00563A0C
+  -> ' ' + ort; each block gated by Trim(jahr) or Trim(ort) non-empty;
+  death block skips burial (0056678E jmp 005668B7).
+- Ancestor sections: if Pos(Vorgr/Nachgr, gvar_0253692C) > 0 and
+  AValue > 0: Table18.IndexName:='num', First, FindKey(Table17Nummer);
+  '--------'; while not Eof and Table18Nummer = Table17Nummer:
+    conn := 'o-o' (6F2D6F03) or 'oo' when Pos('Ehe', Verbind)>0
+    [ebp-0A]/6F2D6F03 are ShortString len bytes.
+    - Vorgr: conn='oo': SA fields first (Satag/Samonat/Sajahr/Saort),
+      else H fields (Htag/Hmonat/Hjahr/Hort), else plain conn;
+      conn='o-o': H fields. Prefix = conn + ' '.
+    - Nachgr: conn='oo': SA fields with prefix conn+' (S) '
+      (PStrNCat maxlen 9); else H fields where Htag='HK' -> plain
+      conn+' ', else conn+' (K) '; else plain conn; conn='o-o': plain
+      conn+' ' + H fields.
+  Then Table18.Next; head-false or EOF exits the section
+  (00566E19/0056744D fall into the section exit).
+- Build: [build] SUCCESS. Local names: relPrefix/conn: string,
+  ebp14/s/line: AnsiString.
+
+## Verwandtschaft1Click (0057249C) â€” implemented
+- Event handler: PageControl1.ActivePage := TabSheet2, Form1.aus1.Click, curNum := Table1Nummer.AsInteger.
+- Caption s := Name+' '+Vornamen; if Trim(Gebjahr)<>'' then s+=' * '+Gebjahr else if Trim(Taufjahr)<>'' then s+=' ~ '+Taufjahr; s+=' [DS: '+IntToStr(curNum)+']'.
+- esi copy of curNum (used for FindKey restores). An ini-style AnsiString [ebp-10] is cleared only - omitted.
+- gvar_011AE2C4 = second person number (set elsewhere, input dialog). If 0 -> Exit.
+- ebx try/except noise around ebx := gvar_011AE2C4 (handler 'Datensatz-Nummer ungueltig'); recon keeps plain assignment.
+- Table1.FindKey([gvar_011AE2C4]); if missing -> ShowMessage('Datensatz-Nummer nicht vorhanden'), FindKey([curNum]), Exit.
+- FindKey([curNum]); if second = curNum -> MessageDlg('Die beiden Personen sind identisch.', mtInformation(dl=2), [mbOK](), 0), Exit.
+- Otherwise gvar_02536B94 := 0; Screen hourly; Proband1Click(curNum, gvar_011AE2C4) [original pushes Sender as stack arg, ignored]; FindKey([gvar_011AE2C4]).
+- Caption s2 for the second person (Gebjahr/Taufjahr year strings appended raw). FindKey([curNum]) restore; Screen default; gvar_0253692C := ''.
+- Result message: ShowMessage(s+' und '+CRLF+s2+CRLF+('sind nicht blutsverwandt.' | 'sind blutsverwandt.')) by gvar_02536B94.
+
+## Proband1Click (005729E4) â€” implemented
+- Signature Proband1Click(ARoot, AOther: Integer); original passes (eax=Form13, edx=curNum, ecx=target, pushed stack param=Sender, ignored).
+- Form1.PageControl1.ActivePage := TabSheet2; Form1.aus1.Click; if Table1.RecordCount >= 2 ([edx+14C] = RecordCount getter, see Unit1 recon 'RecordCount < 2' precedent) then vorf_erm2(ARoot, AOther) else ShowMessage('Keine Daten verfuegbar.'), exit.
+
+## vorf_erm2 (00572A78) â€” implemented
+- Params (ARoot=curNum, AOther=target). gvar_011AE2BC := ''.
+- Table17.Open + IndexName := ''; Table18.Open + IndexName := 'num'.
+- If Table17.FindKey([ARoot]): 11AE2BC := Num2Str(Table17Nummer)+'*'.
+- Chunk loop i:=1.. while Length(11AE2BC) >= 7*i: chunk := Copy(11AE2BC, 7*i-6, 6).
+  - chunk Trim = '000000' -> sam2(AOther), Exit (strings NOT cleared on this path? note: sam2 clears them on exhaustion/find).
+  - n := StrToInt(chunk); if n<=0 or FindKey([n]) fails -> next block.
+  - if Table17Vater > 0: 11AE2BC += Num2Str(Vater)+'*'; if Mutter > 0: += Num2Str(Mutter)+'*' (no Pos dedup here).
+  - if n = ARoot -> next block; else Table18.FindKey([n]); while (Table18Nummer = ARoot): if Epnum>0 and Pos(Num2Str(Epnum),11AE2BC)=0 -> append Num2Str(Epnum)+'*'; Next; Eof breaks.
+    IMPORTANT: the head condition compares Table18Nummer against ARoot (original listing 'cmp eax,[ebp-8]'), and FindKey positions at n which differs from ARoot, so the body normally never runs - kept faithful.
+- End: sam2(AOther) [eax slot gets junk (original ebp-4 alias), ignored; edx=ecx param=AOther].
+
+## sam2 (00572D98) â€” implemented
+- sam2(AOther: Integer) (AOther in EDX). gvar_011AE2C0 := ''; Table17.Open/IndexName := ''; Table18.Open/'num'.
+- If Table17.FindKey([AOther]): tmpS := Num2Str(Table17Nummer)+'*'; if Pos(tmpS, gvar_011AE2BC) > 0 -> gvar_02536B94 := 1, Exit (both strings left intact); else 011AE2C0 := Num2Str+'*'.
+- Chunk loop over ~011AE2C0 identical to vorf_erm2, but Vater/Mutter each: numStr := Num2Str(field); if Pos(numStr+'*', 11AE2BC) > 0 -> flag := 1, Exit; else 011AE2C0 += numStr+'*'.
+- Termination chunk '000000' or too short: clear BOTH gvar_011AE2BC and gvar_011AE2C0, Exit. Match path never clears.
+- Original reads Vater/Mutter fields twice per append (test + numStr source + fresh append); recon collapses to one read per use - same values.
+
+## Next
+- Continue in address order: nachf_neu (00564668) is next among the kÐµÑˆ remaining core parts, then PaintBox1Paint (00570C14), FormShow (00570294), FormClose (00570728), Buttons, SpeedButton3Click (00573450), ScrollBar changes (00572484/490).
+
+- Continue in address order: nachf_neu (00564668) next among remaining core parts, then PaintBox1Paint (00570C14), FormShow (00570294), FormClose (00570728), Buttons, SpeedButton3Click (00573450), ScrollBar changes (00572484/490).

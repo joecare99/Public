@@ -57,11 +57,11 @@ type
     procedure nr1; //0056C0D4
     procedure Nach_erm; //0056A970
     procedure kek_ord; //005686F0
-    procedure Proband1Click; //005729E4
+    procedure Proband1Click(ARoot, AOther: Integer); //005729E4, Register code; original pushes Sender additionally
     procedure Button7Click(Sender: TObject); //00573120
-    procedure vorf_erm2; //00572A78
+    procedure vorf_erm2(ARoot, AOther: Integer); //00572A78
     procedure SpeedButton3Click(Sender: TObject); //00573450
-    procedure sam2; //00572D98
+    procedure sam2(AOther: Integer); //00572D98, AOther in EDX
     procedure Symm; //00568834
     procedure kek_ord_2; //00568774
     procedure Verwandtschaft1Click(Sender: TObject); //0057249C
@@ -2176,9 +2176,16 @@ begin
   end;
 end;
 
-procedure TForm13.Proband1Click;
+procedure TForm13.Proband1Click(ARoot, AOther: Integer);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005729E4. The original pushed the Sender object argument
+    into an extra stack slot, which is ignored by the body. }
+  Form1.PageControl1.ActivePage := Form1.TabSheet2;   //005729F0
+  Form1.aus1.Click;                                   //005729F7-1E
+  if DataModule2.Table1.RecordCount >= 2 then         //00572A21-36
+    vorf_erm2(ARoot, AOther)                          //00572A44-4A
+  else
+    ShowMessage('Keine Daten verf' + #252 + 'gbar.'); //00572A38-42
 end;
 
 procedure TForm13.Button7Click(Sender: TObject);
@@ -2191,9 +2198,74 @@ begin
   end;
 end;
 
-procedure TForm13.vorf_erm2;
+procedure TForm13.vorf_erm2(ARoot, AOther: Integer);
+var
+  chunk, numStr: AnsiString;
+  n, i: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00572A78. Collects the ancestors of ARoot in gvar_011AE2BC as
+    a sequence of 6-digit numbers, each followed by a '*' (7 chars per
+    block). Marriage partners (Epnum chunks) are appended as well.
+    Afterwards sam2 walks the ancestors of AOther and compares them
+    against this list, setting gvar_02536B94 := 1 on the first match. }
+  gvar_011AE2BC := '';                                 //00572AAB
+  DataModule2.Table17.Open;                            //00572AB5-BD
+  DataModule2.Table17.IndexName := '';                 //00572AC2-CC
+  DataModule2.Table18.Open;                            //00572AD1-D9
+  DataModule2.Table18.IndexName := 'num';              //00572ADE-E6
+  if DataModule2.Table17.FindKey([ARoot]) then         //00572AFA-B07
+  begin
+    sub_005637C4(DataModule2.Table17Nummer.AsInteger, numStr); //00572B0C-20
+    gvar_011AE2BC := numStr + '*';                     //00572B25-32
+  end;
+  i := 1;                                              //00572B37
+  while Length(gvar_011AE2BC) >= 7 * i do              //00572B3C-4F
+  begin
+    chunk := Copy(gvar_011AE2BC, 7 * i - 6, 6);        //00572B55-B2
+    if Trim(chunk) = '000000' then                     //00572B73-8B
+    begin
+      sam2(AOther);                                    //00572D3B-41
+      Exit;                                            //00572D46
+    end;
+    n := StrToInt(chunk);                              //00572B91-FA
+    if n > 0 then                                      //00572BBB-BF1
+    begin
+      if DataModule2.Table17.FindKey([n]) then         //00572BC1-D5
+      begin
+        if DataModule2.Table17Vater.AsInteger > 0 then //00572BE2-EC
+        begin
+          sub_005637C4(DataModule2.Table17Vater.AsInteger, numStr); //00572BF3-C0C
+          gvar_011AE2BC := gvar_011AE2BC + numStr + '*'; //00572C0E-24
+        end;
+        if DataModule2.Table17Mutter.AsInteger > 0 then //00572C25-2F
+        begin
+          sub_005637C4(DataModule2.Table17Mutter.AsInteger, numStr); //00572C36-4B
+          gvar_011AE2BC := gvar_011AE2BC + numStr + '*'; //00572C4C-67
+        end;
+      end;
+      if n <> ARoot then                               //00572C68-6B
+      begin
+        if DataModule2.Table18.FindKey([n]) then       //00572C71-85
+        begin
+          { 00572C92/D1F: head tests Table18Nummer = ARoot; Eof is
+            checked only after Next, in the body tail. }
+          while (not DataModule2.Table18.Eof) and      //00572D0E-1D
+                (DataModule2.Table18Nummer.AsInteger = ARoot) do //00572D1F-2F
+          begin
+            if DataModule2.Table18Epnum.AsInteger > 0 then  //00572C97-A1
+            begin
+              sub_005637C4(DataModule2.Table18Epnum.AsInteger, numStr); //00572CA8-CBA
+              if Pos(numStr, gvar_011AE2BC) = 0 then    //00572CC0-CD
+                gvar_011AE2BC := gvar_011AE2BC + numStr + '*'; //00572CCF-00
+            end;
+            DataModule2.Table18.Next;                  //00572D01-09
+          end;
+        end;
+      end;
+    end;
+    Inc(i);                                            //00572D35-36
+  end;
+  sam2(AOther);                                        //00572D3B-41
 end;
 
 procedure TForm13.SpeedButton3Click(Sender: TObject);
@@ -2201,9 +2273,77 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.sam2;
+procedure TForm13.sam2(AOther: Integer);
+var
+  chunk, numStr, tmpS: AnsiString;
+  n, i: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00572D98. Walks the ancestors of AOther (6-digit number blocks
+    separated by '*'), building the list in gvar_011AE2C0 and comparing
+    against the ancestor list in gvar_011AE2BC (Vorfahren of ARoot, set
+    up by vorf_erm2). A match sets gvar_02536B94 := 1 and aborts with
+    both lists left intact; exhaustion clears both lists. }
+  gvar_011AE2C0 := '';                                 //00572DB2-C2
+  DataModule2.Table17.Open;                            //00572DC7-D4
+  DataModule2.Table17.IndexName := '';                 //00572DD9-E8
+  DataModule2.Table18.Open;                            //00572DED-FA
+  DataModule2.Table18.IndexName := 'num';              //00572DFF-11
+  if DataModule2.Table17.FindKey([AOther]) then        //00572E16-2F
+  begin
+    sub_005637C4(DataModule2.Table17Nummer.AsInteger, numStr); //00572E38-4D
+    tmpS := numStr + '*';                              //00572E4A-5A
+    if Pos(tmpS, gvar_011AE2BC) > 0 then               //00572E5F-6D
+    begin
+      gvar_02536B94 := 1;                              //00572E71-76
+      Exit;                                            //00572E7C
+    end;
+    gvar_011AE2C0 := numStr + '*';                     //00572E81-A5
+  end;
+  i := 1;                                              //00572EAA-AF
+  while Length(gvar_011AE2C0) >= 7 * i do              //00572EAF-BF
+  begin
+    chunk := Copy(gvar_011AE2C0, 7 * i - 6, 6);        //00572EC5-DB
+    if Trim(chunk) = '000000' then                     //00572EE0-EF8
+    begin
+      gvar_011AE2BC := '';                             //00573072-77
+      gvar_011AE2C0 := '';                             //0057307C-7E
+      Exit;                                            //00573083 (finally part)
+    end;
+    n := StrToInt(chunk);                              //00572EFE-FA
+    if n > 0 then                                      //00572F23-25
+    begin
+      if DataModule2.Table17.FindKey([n]) then         //00572F2B-44
+      begin
+        if DataModule2.Table17Vater.AsInteger > 0 then //00572F51-63
+        begin
+          sub_005637C4(DataModule2.Table17Vater.AsInteger, numStr); //00572F67-7C
+          tmpS := numStr + '*';                        //00572F81-89
+          if Pos(tmpS, gvar_011AE2BC) > 0 then         //00572F8E-9C
+          begin
+            gvar_02536B94 := 1;                        //00572FA0-A5
+            Exit;                                      //00572FAB
+          end;
+          sub_005637C4(DataModule2.Table17Vater.AsInteger, numStr); //00572FB2-C7
+          gvar_011AE2C0 := gvar_011AE2C0 + numStr + '*'; //00572FCC-00
+        end;
+        if DataModule2.Table17Mutter.AsInteger > 0 then //00572FE0-FF2
+        begin
+          sub_005637C4(DataModule2.Table17Mutter.AsInteger, numStr); //00572FF6-00573008
+          tmpS := numStr + '*';                        //00573010-18
+          if Pos(tmpS, gvar_011AE2BC) > 0 then         //0057301D-2B
+          begin
+            gvar_02536B94 := 1;                        //0057302F-34
+            Exit;                                      //0057303A
+          end;
+          sub_005637C4(DataModule2.Table17Mutter.AsInteger, numStr); //0057303E-53
+          gvar_011AE2C0 := gvar_011AE2C0 + numStr + '*'; //00573058-67
+        end;
+      end;
+    end;
+    Inc(i);                                            //0057306C-6D
+  end;
+  gvar_011AE2BC := '';                                 //00573072-77
+  gvar_011AE2C0 := '';                                 //0057307C-7E
 end;
 
 procedure TForm13.Symm;
@@ -2313,8 +2453,63 @@ begin
 end;
 
 procedure TForm13.Verwandtschaft1Click(Sender: TObject);
+var
+  curNum, eli: Integer;
+  s, s2: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 0057249C. Compares the ancestors of the current person (Table1)
+    and the person whose number is in gvar_011AE2C4 (asked for by the
+    caller / input dialog), showing both captions and the result
+    message. The final verdict comes from vorf_erm2/sam2 via
+    gvar_02536B94. }
+  Form1.PageControl1.ActivePage := Form1.TabSheet2;   //005724C8-E2
+  Form1.aus1.Click;                                    //005724E7-F6
+  curNum := DataModule2.Table1Nummer.AsInteger;        //005724F9-08
+  s := DataModule2.Table1Name.AsString + ' ' +         //00572509-8
+       DataModule2.Table1Vornamen.AsString;            //CatN3 00572537-8
+  if Trim(DataModule2.Table1Gebjahr.AsString) <> '' then //00572541-60
+    s := s + ' * ' + DataModule2.Table1Gebjahr.AsString //00572562-8A
+  else if Trim(DataModule2.Table1Taufjahr.AsString) <> '' then //0057258C-D5
+    s := s + ' ~ ' + DataModule2.Table1Taufjahr.AsString; //005725AD-D0
+  s := s + ' [DS: ' + IntToStr(curNum) + ']';          //005725D5-F8
+  eli := curNum;                                       //005725FD (esi copy)
+  // [ebp-10] AnsiString is cleared, never read: omitted.
+  if gvar_011AE2C4 = 0 then                            //00572608-0F
+    Exit;
+  eli := gvar_011AE2C4;                                //00572623 (ebx; try/except noise)
+  if not DataModule2.Table1.FindKey([gvar_011AE2C4]) then //00572651-62
+  begin
+    ShowMessage('Datensatz-Nummer nicht vorhanden');   //0057266B-70
+    DataModule2.Table1.FindKey([eli]);                 //00572675-86
+    Exit;                                              //0057268B
+  end;
+  DataModule2.Table1.FindKey([eli]);                   //00572690-A1
+  if gvar_011AE2C4 = curNum then                       //005726A6-A9
+  begin
+    MessageDlg('Die beiden Personen sind identisch.',  //005726AB-BB
+               mtInformation, [mbOK], 0);
+    Exit;                                              //005726C0
+  end;
+  gvar_02536B94 := 0;                                  //005726C5-CC
+  Screen.Cursor := crHourGlass;                        //005726CE-E9
+  Proband1Click(curNum, gvar_011AE2C4);                //005726DE-E9 (Sender pushed)
+  DataModule2.Table1.FindKey([gvar_011AE2C4]);         //005726EE-F8
+  s2 := DataModule2.Table1Name.AsString + ' ' +        //00572704-24
+        DataModule2.Table1Vornamen.AsString;
+  if Trim(DataModule2.Table1Gebjahr.AsString) <> '' then //0057273C-53
+    s2 := s2 + ' * ' + DataModule2.Table1Gebjahr.AsString //0057275D-85
+  else if Trim(DataModule2.Table1Taufjahr.AsString) <> '' then //00572787-A6
+    s2 := s2 + ' ~ ' + DataModule2.Table1Taufjahr.AsString; //005727A8-C6
+  s2 := s2 + ' [DS: ' + IntToStr(gvar_011AE2C4) + ']'; //005727D0-F2
+  DataModule2.Table1.FindKey([eli]);                   //005727F7-08
+  Screen.Cursor := crDefault;                          //0057280D-16
+  gvar_0253692C := '';                                 //0057281B-20
+  if gvar_02536B94 = 0 then                            //00572825-2D
+    ShowMessage(s + ' und ' + #13#10 + s2 + #13#10 +   //0057282F-59
+                'sind nicht blutsverwandt.')
+  else
+    ShowMessage(s + ' und ' + #13#10 + s2 + #13#10 +   //00572860-8A
+                'sind blutsverwandt.');
 end;
 
 procedure TForm13.Button8Click(Sender: TObject);
@@ -2333,13 +2528,332 @@ begin
 end;
 
 procedure TForm13.memein(AValue: Integer);
+var
+  relPrefix, conn: string;
+  ebp14, s, s2, line: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00566220: fills Memo1 with the current Table17 person's data lines
+    and (for chart modes) the marriage records of the person with the
+    spouse whose number equals AValue, walking Table18 by index 'num'.
+    EBP aliases as in the listing; field offsets mapped in Unit2. }
+  Memo1.Clear;                                      //0056624C-54
+  relPrefix := '';                                  //0056625E [ebp-10]:ShortStr
+  if gvar_0061F2D4 = 1 then                         //0056625E-65
+  begin
+    s := DataModule2.Table17Religion.AsString;      //00566267-74
+    if s <> '' then                                 //00566277-7B
+    begin
+      s := s + ', ';                                //0056627D-9C (Cat3)
+      relPrefix := Copy(s, 1, 5);                   //005662A6-B7 +PStrNCpy 5
+    end;
+  end;
+  ebp14 := '';                                      //005662CC-D4 [ebp-14]
+  s := DataModule2.Table17Name.AsString +           //005662D4-E7
+       ' ' +                                        //005662ED
+       DataModule2.Table17Vornamen.AsString +       //005662F2-67
+       relPrefix;                                   //00566268? [ebp-130]
+  Memo1.Lines.Add(s);                               //0056632F-43
+  if gvar_0061F2CC = 1 then                         //00566346-4D
+  begin
+    s2 := DataModule2.Table17Beruf.AsString;        //0056634F-5F
+    if Trim(s2) <> '' then                          //00566362-7A
+      ebp14 := DataModule2.Table17Beruf.AsString;   //0056637C-89
+  end;
+  if gvar_0061F2D0 = 1 then                         //0056638C-93
+  begin
+    s2 := DataModule2.Table17Hausname.AsString;     //00566395-A5
+    if Trim(s2) <> '' then                          //005663A8-C0
+    begin
+      if ebp14 = '' then                            //005663C2-C6
+        ebp14 := DataModule2.Table17Hausname.AsString  //005663C8-D5
+      else
+        ebp14 := ebp14 + ' ' +                      //005663DA-4E (Cat3)
+          DataModule2.Table17Hausname.AsString;
+    end;
+  end;
+  if Length(ebp14) > 0 then                         //00566408-0C
+    Memo1.Lines.Add(ebp14);                         //0056640E-1F
+  if (Trim(DataModule2.Table17Gebjahr.AsString) <> '') or  //00566422-4D
+     (Trim(DataModule2.Table17Gebort.AsString) <> '') then
+  begin
+    line := '* ' +                                  //00566480-E5 CatN 5
+      DataModule2.Table17Gebtag.AsString + '.' +
+      DataModule2.Table17Gebmonat.AsString + '.' +
+      DataModule2.Table17Gebjahr.AsString;
+    sub_00563A0C(line, s);                          //005664F6
+    line := s + ' ' +                               //005664FB-52 CatN 4
+      DataModule2.Table17Gebort.AsString;
+    Memo1.Lines.Add(line);                          //00566535-43
+  end
+  else if (Trim(DataModule2.Table17Taufjahr.AsString) <> '') or  //00566546-71
+          (Trim(DataModule2.Table17Taufort.AsString) <> '') then
+  begin
+    line := '~ ' +                                  //005665A4-59 CatN 5
+      DataModule2.Table17Tauftag.AsString + '.' +
+      DataModule2.Table17Taufmonat.AsString + '.' +
+      DataModule2.Table17Taufjahr.AsString;
+    sub_00563A0C(line, s);                          //0056661A
+    line := s + ' ' +                               //0056661F-25
+      DataModule2.Table17Taufort.AsString;
+    Memo1.Lines.Add(line);                          //00566659-67
+  end;
+  if (Trim(DataModule2.Table17Stjahr.AsString) <> '') or  //0056666A-95
+     (Trim(DataModule2.Table17Stort.AsString) <> '') then
+  begin
+    line := '+ ' +                                  //005666C8-2D CatN 5
+      DataModule2.Table17Sttag.AsString + '.' +
+      DataModule2.Table17Stmonat.AsString + '.' +
+      DataModule2.Table17Stjahr.AsString;
+    sub_00563A0C(line, s);                          //0056673E
+    line := s + ' ' +                               //00566743-49
+      DataModule2.Table17Stort.AsString;
+    Memo1.Lines.Add(line);                          //0056677D-B
+  end
+  else if (Trim(DataModule2.Table17Begjahr.AsString) <> '') or  //00566793-BE
+          (Trim(DataModule2.Table17Begort.AsString) <> '') then
+  begin
+    line := '# ' +                                  //005667F1-56 CatN 5
+      DataModule2.Table17Begtag.AsString + '.' +
+      DataModule2.Table17Begmonat.AsString + '.' +
+      DataModule2.Table17Begjahr.AsString;
+    sub_00563A0C(line, s);                          //00566867
+    line := s + ' ' +                               //0056686C-72
+      DataModule2.Table17Begort.AsString;
+    Memo1.Lines.Add(line);                          //005668A6-B4
+  end;                                              //005668B7
+  if Pos('Vorgr', gvar_0253692C) > 0 then           //005668B7-05
+  begin
+    if AValue > 0 then                              //0056690B-0F
+    begin
+      DataModule2.Table18.IndexName := 'num';       //00566915-22
+      DataModule2.Table18.First;                    //0056692F
+      if DataModule2.Table18.FindKey([              //00566934-5E
+           DataModule2.Table17Nummer.AsInteger]) then
+      begin
+        Memo1.Lines.Add('--------');                //0056696B-7C
+        while (not DataModule2.Table18.Eof) and     //00566DEA-99 head/rec
+              (DataModule2.Table18Nummer.AsInteger =
+               DataModule2.Table17Nummer.AsInteger) do
+        begin
+          conn := 'o-o';                            //0056699D6 (005669D6)
+          if Pos('Ehe',                             //005669A0-BE
+                 DataModule2.Table18Verbind.AsString) > 0 then
+            conn := 'oo';                           //005669C7-D3
+          if conn = 'oo' then                      //005669DD-EF AStrCmp
+          begin
+            if (Trim(DataModule2.Table18Sajahr.AsString) <> '') or  //005669F5-53
+               (Trim(DataModule2.Table18Saort.AsString) <> '') then
+            begin
+              line := conn + ' ' +                 //00566A53-C5 CatN 5
+                DataModule2.Table18Satag.AsString + '.' +
+                DataModule2.Table18Samonat.AsString + '.' +
+                DataModule2.Table18Sajahr.AsString;
+              sub_00563A0C(line, s);                //00566AFB
+              line := s + ' ' +                    //00566B00-BA
+                DataModule2.Table18Saort.AsString;
+              Memo1.Lines.Add(line);               //00566B3A-B
+            end
+            else if (Trim(DataModule2.Table18Hjahr.AsString) <> '') or  //00566B50-8C
+                    (Trim(DataModule2.Table18Hort.AsString) <> '') then
+            begin
+              line := conn + ' ' +                 //00566BAE-5 CatN 5
+                DataModule2.Table18Htag.AsString + '.' +
+                DataModule2.Table18Hmonat.AsString + '.' +
+                DataModule2.Table18Hjahr.AsString;
+              sub_00563A0C(line, s);                //00566C56
+              line := s + ' ' +                    //00566C5B-C1
+                DataModule2.Table18Hort.AsString;
+              Memo1.Lines.Add(line);               //00566C95-A3
+            end
+            else
+              Memo1.Lines.Add(conn);               //00566CA8-FE
+          end;                                     //00566CCD
+          if conn = 'o-o' then                     //00566CCD-DF AStrCmp
+          begin
+            line := conn + ' ' +                   //00566CE5-C7 CatN 5
+              DataModule2.Table18Htag.AsString + '.' +
+              DataModule2.Table18Hmonat.AsString + '.' +
+              DataModule2.Table18Hjahr.AsString;
+            sub_00563A0C(line, s);                  //00566D8D
+            line := s + ' ' +                      //00566D92-8
+              DataModule2.Table18Hort.AsString;
+            Memo1.Lines.Add(line);                 //00566DCC-DA
+          end;
+          DataModule2.Table18.Next;                //00566DDD-E5
+        end;                                       //00566E1F
+      end;
+    end;
+  end;                                               //00566E1F
+  if Pos('Nachgr', gvar_0253692C) > 0 then           //00566E1F-33
+  begin
+    if AValue > 0 then                               //00566E39-3D
+    begin
+      DataModule2.Table18.IndexName := 'num';        //00566E43-50
+      DataModule2.Table18.First;                     //00566E5D
+      if DataModule2.Table18.FindKey([               //00566E62-8C
+           DataModule2.Table17Nummer.AsInteger]) then
+      begin
+        Memo1.Lines.Add('--------');                 //00566E99-AA
+        while (not DataModule2.Table18.Eof) and      //0056743E-4D head
+              (DataModule2.Table18Nummer.AsInteger =
+               DataModule2.Table17Nummer.AsInteger) do
+        begin
+          conn := 'o-o';                             //00566ECA-F4
+          if Pos('Ehe',
+                 DataModule2.Table18Verbind.AsString) > 0 then
+            conn := 'oo';                            //00566EF5-FE
+          if conn = 'oo' then                       //00566F0B-1D
+          begin
+            if (Trim(DataModule2.Table18Sajahr.AsString) <> '') or  //00566F23-81
+               (Trim(DataModule2.Table18Saort.AsString) <> '') then
+            begin
+              line := conn + ' (S) ' +              //00566F81-79 CatN 5
+                DataModule2.Table18Satag.AsString + '.' +
+                DataModule2.Table18Samonat.AsString + '.' +
+                DataModule2.Table18Sajahr.AsString;
+              sub_00563A0C(line, s);                //00567029
+              line := s + ' ' +                    //0056702E-FA
+                DataModule2.Table18Saort.AsString;
+              Memo1.Lines.Add(line);               //00567068-76
+            end
+            else if (Trim(DataModule2.Table18Hjahr.AsString) <> '') or  //0056707E-D6
+                    (Trim(DataModule2.Table18Hort.AsString) <> '') then
+            begin
+              if DataModule2.Table18Htag.AsString = 'HK' then  //005670DC-FF
+              begin
+                line := conn + ' ' +               //00567202-9 CatN 5
+                  DataModule2.Table18Htag.AsString + '.' +
+                  DataModule2.Table18Hmonat.AsString + '.' +
+                  DataModule2.Table18Hjahr.AsString;
+                sub_00563A0C(line, s);              //005672AA
+                line := s + ' ' +                  //005672AF-B5
+                  DataModule2.Table18Hort.AsString;
+                Memo1.Lines.Add(line);             //005672E9-F7
+              end
+              else
+              begin
+                line := conn + ' (K) ' +           //00567105-AD CatN 5
+                  DataModule2.Table18Htag.AsString + '.' +
+                  DataModule2.Table18Hmonat.AsString + '.' +
+                  DataModule2.Table18Hjahr.AsString;
+                sub_00563A0C(line, s);              //005671AD
+                line := s + ' ' +                  //005671B2-B8
+                  DataModule2.Table18Hort.AsString;
+                Memo1.Lines.Add(line);             //005671EC-FA
+              end;
+            end
+            else
+              Memo1.Lines.Add(conn);               //005672FC-31
+          end;                                     //00567321
+          if conn = 'o-o' then                     //00567321-33
+          begin
+            line := conn + ' ' +                   //00567339-F7 CatN 5
+              DataModule2.Table18Htag.AsString + '.' +
+              DataModule2.Table18Hmonat.AsString + '.' +
+              DataModule2.Table18Hjahr.AsString;
+            sub_00563A0C(line, s);                  //005673E1
+            line := s + ' ' +                      //005673E6-EC
+              DataModule2.Table18Hort.AsString;
+            Memo1.Lines.Add(line);                 //00567420-2E
+          end;
+          DataModule2.Table18.Next;                //00567431-39
+        end;                                       //00567473
+      end;
+    end;
+  end;
 end;
 
 procedure TForm13.zerleg(AVal1: Integer; AVal2: Integer; ACanvas: TCanvas);
+var
+  ebp10, ebp14, ebp1C, ebp18, i, ebxv: Integer;
+  line: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005675D8: word-wraps Lines of Memo1 into ChartSlotAnsi(0..24) slots,
+    breaking at ' ', ',', '-', '.' so each segment fits
+    Round(AVal1 * gvar_0253636C) - 5 pixel columns (measured with
+    ACanvas, where line 0 gets fsBold). A line without any of the four
+    separators that does not fit is skipped entirely (0056772A).
+    AVal2 (ecx at entry) is dead - the compiler just saves it. Slots
+    beyond the first one of an overflowing line get '#' appended when
+    they come from line 0 (005678FF). Tail updates gvar_02536378/37C.
+    EBP aliases: [ebp-8] line, [ebp-0C] i, [ebp-10] ebp10, [ebp-14]
+    ebp14, [ebp-18] ebp18, [ebp-1C] ebp1C, [ebp+8] ACanvas. }
+  ACanvas.Font.Name := gvar_0061F2EC;               //00567602-0E
+  ebp18 := 5;                                       //00567613 [ebp-18]
+  gvar_02536378 := 0;                               //0056761A-1C
+  ebp1C := Round(AVal1 * gvar_0253636C);            //00567624-34 [ebp-1C]
+  ebp10 := 0;                                       //00567639 [ebp-10]
+  ebp14 := 0;                                       //0056763E [ebp-14]
+  for i := 0 to Memo1.Lines.Count - 1 do            //0056764F-70 [ebp-0C]
+  begin
+    line := Memo1.Lines[i];                         //00567677-8E [ebp-8]
+    ACanvas.Font.Style := [];                       //0056768F-9D
+    if i = 0 then                                   //0056769D-A3
+      ACanvas.Font.Style := [fsBold];               //005676A8-B9
+    if ACanvas.TextWidth(line) < ebp1C - ebp18 then //005676B9-CC
+    begin
+      ChartSlotAnsi(ebp10)^ := line;                //005676CE-DB
+      Inc(ebp10);                                   //005676E0
+      Continue;                                     //005676E3 -> 00567977
+    end;
+    if (Pos(' ', line) = 0) and                     //005676E8-2A
+       (Pos(',', line) = 0) and
+       (Pos('-', line) = 0) and
+       (Pos('.', line) = 0) then
+      Continue;                                     //0056772A -> 00567977
+    // first split 00567730-7822 (no '#' marker on this segment)
+    ebp14 := 0;                                     //00567744? implicit
+    for ebxv := 1 to Length(line) - 1 do            //00567735-BA
+    begin
+      if line[ebxv] in [' ', ',', '-', '.'] then    //00567742-60
+      begin
+        if ACanvas.TextWidth(Copy(line, 1, ebxv - 1)) <  //00567762-B3
+           ebp1C - ebp18 then
+          ebp14 := ebxv;                            //0056778D
+      end
+      else
+        Continue;
+      if ACanvas.TextWidth(Copy(line, 1, ebxv - 1)) >=   //00567790-B6
+         ebp1C - ebp18 then
+        Break;                                      //005677B6
+    end;
+    ChartSlotAnsi(ebp10)^ := Copy(line, 1, ebp14);  //005677BC-D2
+    if Trim(ChartSlotAnsi(ebp10)^) <> '' then       //005677D7-F2
+      Inc(ebp10);
+    line := Trim(Copy(line, ebp14 + 1, Length(line)));   //005677F5-89
+    while Trim(line) <> '' do                       //00567962-71 -> 00567827
+    begin
+      if ACanvas.TextWidth(line) < ebp1C - ebp18 then    //00567827-3A
+        ebp14 := Length(line) + 1                   //0056783C-45
+      else
+      begin
+        for ebxv := 1 to Length(Trim(line)) - 1 do  //0056784D-68
+        begin
+          if line[ebxv] in [' ', ',', '-', '.'] then  //0056786A-88
+          begin
+            if ACanvas.TextWidth(Copy(line, 1, ebxv - 1)) <  //0056788A-B8
+               ebp1C - ebp18 then
+              ebp14 := ebxv;                          //005678B5
+          end
+          else
+            Continue;
+          if ACanvas.TextWidth(Copy(line, 1, ebxv - 1)) >= //005678B8-DE
+             ebp1C - ebp18 then
+            Break;                                    //005678DE
+        end;
+      end;
+      ChartSlotAnsi(ebp10)^ := Copy(line, 1, ebp14);  //005678E4-FA
+      if i = 0 then                                   //005678FF-19
+        ChartSlotAnsi(ebp10)^ :=
+          ChartSlotAnsi(ebp10)^ + '#';                //0056790F-14
+      if Trim(ChartSlotAnsi(ebp10)^) <> '' then       //0056791C-37
+        Inc(ebp10);
+      line := Trim(Copy(line, ebp14 + 1, Length(line)));   //00567937-57
+    end;                                              //00567962-77
+  end;
+  gvar_02536378 := ebp10;                           //00567983-86
+  if gvar_02536378 > gvar_0253637C then             //0056798B-9D
+    gvar_0253637C := gvar_02536378;
 end;
 
 procedure TForm13.FormCreate(Sender: TObject);
@@ -2482,8 +2996,111 @@ begin
 end;
 
 procedure TForm13.vr1;
+var
+  i, row, eaxv, ebp14, ebpC: Integer;
+  byteFlag: Byte;
+  fScale: Extended;
+  tmp: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00570D1C: the "Vorgeneration 1" variant of Vr2 (0056904C). Same
+    skeleton - canvas/font metrics, per-row memein/zerleg fill of grid
+    A, 10000-row grid C copy, sub_00568FD4 scan, scrollbar setup - but
+    the metric constants are swapped/shuffled: gvar_0061F118 = 30 and
+    gvar_0061F114 = 20 (Vr2: 20/30). The bitmap scale gvar_011AE32C
+    gate and the printer branch (fScale = 0x4001.. mantissa C0 -> 7.0)
+    are identical in shape. Registers/EBP slots as in the listing. }
+  tmp := '';                                        //00570D25-2A [ebp-18]
+  Screen.Cursor := crHourGlass;                     //00570D40-4B
+  fScale := 1.0;                                    //00570D50-5B [ebx]
+  if PaintBox1.Canvas <> gvar_011AE32C then         //00570D61-76
+    fScale := 1.13;                                 //00570D78-B5
+  gvar_011AE33C := Round(gvar_0061F120 * 45 * fScale);  //00570D8B-A0
+  gvar_011AE340 := 20;                              //00570DA5
+  gvar_0061F118 := Round(gvar_0061F120 * 30 * fScale);  //00570DAF-C4
+  gvar_0061F114 := Round(gvar_0061F120 * 20 * fScale);  //00570DC9-DE
+  gvar_011AE334 := Round(gvar_0061F120 * 120 * fScale)  //00570DE3-FE
+    + gvar_011AE338;
+  if gvar_0061F2BC = 1 then                         //00570E03-0A
+    Inc(gvar_011AE334, 10);                         //00570E0C
+  gvar_011AE348 := 0;                               //00570E13-1A
+  gvar_0253637C := 0;                               //00570E1A-21
+  gvar_011AE318 := 0;                               //00570E21-27
+  gvar_02536364 := ScrollBar1.Position;             //00570E28-37
+  gvar_02536368 := ScrollBar2.Position;             //00570E3C-4B
+  if PaintBox1.Canvas <> gvar_011AE32C then         //00570E50-65
+  begin
+    gvar_02536364 := 0;                             //00570E67-6E
+    gvar_02536368 := 0;                             //00570E6E-75
+  end;                                              //00570E75
+  gvar_011AE32C.Font.Name := 'Arial';               //00570E75-B2
+  gvar_011AE32C.Font.Size :=                     //00570E87-A6
+    Round(gvar_0061F120 * 9 * fScale);
+  gvar_011AE318 := 2 - gvar_011AE32C.Font.Height;   //00570EAB-ED
+  if Printer.Canvas = gvar_011AE32C then            //00570EC2-D2
+  begin
+    fScale := 7.0;                                  //00570ED4-DF (mant. C0, exp 4001)
+    gvar_011AE32C.Font.Name := 'Arial';             //00570EE5-F2
+    gvar_011AE32C.Font.Size :=                  //00570EF7-25
+      Round(gvar_0061F120 * 9);
+    ebpC := PaintBox1.Canvas.Pen.Width;             //00570F26-31 [ebp-0C]
+    gvar_011AE32C.Pen.Width := Round(ebpC * 7.0);   //00570F31-47
+  end;
+  if PaintBox1.Canvas <> gvar_011AE32C then         //00570F4C-61
+    fScale := 1.13;                                 //00570F63-70
+  row := 1;                                         //00570F76 [ebp-8]
+  while gvar_011AE1C4[row][2] > 0 do                //00571052-5E
+  begin
+    for i := 0 to 19 do                             //00570F82-B1
+    begin
+      ChartSlotAnsi(i)^ := '';                      //00570F91-93
+      // target [ebx(11AE35C+4i) + eax*8 - $150] = row string slot
+      ChartAAnsi(102 * row + 19 + i)^ := '';        //00570F98-F8
+    end;
+    ebp14 := gvar_011AE1C4[row][3];                 //00570FB1-F5 [ebp-14]
+    byteFlag := 0;                                  //00570FBF [ebp-10]
+    DataModule2.Table17.FindKey([ebp14]);           //00570FC3-D5
+    memein(gvar_011AE1C4[row - 1][3]);              //00570FDA-E4
+    zerleg(gvar_011AE334, gvar_011AE318,            //00570FE9-FFE
+      gvar_011AE32C);
+    ChartAAnsi(102 * row + 18)^ :=                  //00571003-10
+      ChartSlotAnsi(0)^;
+    for i := 0 to 12 do                             //00571015-4D edi=13
+    begin
+      tmp := Trim(ChartSlotAnsi(i + 1)^);           //00571024-29 [ebp-18]
+      if Length(tmp) > 0 then                       //0057102E-32 (jbe)
+        ChartAAnsi(102 * row + 19 + i)^ := tmp;     //00571034-41
+    end;
+    Inc(row);                                       //0057104F
+  end;
+  if gvar_0061F2BC = 1 then                         //00571064-6B
+    gvar_011AE348 := Round(                         //0057106D-C2
+      (gvar_0253637C * gvar_011AE318 +
+       gvar_011AE318) * 4 / 5);
+  for row := 1 to 10000 do                          //00571097-C7
+  begin
+    eaxv := gvar_015924E4[row][2];                  //005710A8-AA
+    SetChartAFlat(102 * row + 2, eaxv);             //005710AA-edx? [ebx]
+    eaxv := gvar_015924E4[row][0];                  //005710AC-AF [esi-8]
+    SetChartAFlat(102 * row, eaxv);                 //005710AF-B5
+    eaxv := gvar_015924E4[row][1];                  //005710B2-B5 [esi-4]
+    SetChartAFlat(102 * row + 1, eaxv);             //005710B5-9C
+  end;
+  sub_00568FD4;                                     //005710C9
+  row := 1;                                         //005710CE [ebp-8]
+  gvar_011AE320 := 0;                               //005710D5-D7
+  while gvar_011AE1C4[row][2] > 0 do                //005710DC-40C
+  begin
+    eaxv := gvar_011AE1C4[row][0];                  //005710DE
+    if eaxv > gvar_011AE320 then                    //005710E5-EB jle
+      gvar_011AE320 := eaxv;                        //005710ED-28
+    Inc(row);                                       //005710FD
+  end;
+  Dec(gvar_011AE320);                               //0057110E
+  ScrollBar1.LargeChange := PaintBox1.Width - 5;    //00571114-2E
+  ScrollBar2.LargeChange := PaintBox1.Height - 5;   //00571135-4F
+  ScrollBar1.SmallChange := 20;                     //00571156-5F
+  ScrollBar2.SmallChange := 20;                     //00571162-7A
+  Screen.Cursor := crDefault;                       //0057117A-83
 end;
 
 procedure TForm13.SpeedButton13Click(Sender: TObject);
