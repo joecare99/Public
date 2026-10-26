@@ -57,11 +57,11 @@ type
     procedure nr1; //0056C0D4
     procedure Nach_erm; //0056A970
     procedure kek_ord; //005686F0
-    procedure Proband1Click; //005729E4
+    procedure Proband1Click(ARoot, AOther: Integer); //005729E4, Register code; original pushes Sender additionally
     procedure Button7Click(Sender: TObject); //00573120
-    procedure vorf_erm2; //00572A78
+    procedure vorf_erm2(ARoot, AOther: Integer); //00572A78
     procedure SpeedButton3Click(Sender: TObject); //00573450
-    procedure sam2; //00572D98
+    procedure sam2(AOther: Integer); //00572D98, AOther in EDX
     procedure Symm; //00568834
     procedure kek_ord_2; //00568774
     procedure Verwandtschaft1Click(Sender: TObject); //0057249C
@@ -2176,9 +2176,16 @@ begin
   end;
 end;
 
-procedure TForm13.Proband1Click;
+procedure TForm13.Proband1Click(ARoot, AOther: Integer);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005729E4. The original pushed the Sender object argument
+    into an extra stack slot, which is ignored by the body. }
+  Form1.PageControl1.ActivePage := Form1.TabSheet2;   //005729F0
+  Form1.aus1.Click;                                   //005729F7-1E
+  if DataModule2.Table1.RecordCount >= 2 then         //00572A21-36
+    vorf_erm2(ARoot, AOther)                          //00572A44-4A
+  else
+    ShowMessage('Keine Daten verf' + #252 + 'gbar.'); //00572A38-42
 end;
 
 procedure TForm13.Button7Click(Sender: TObject);
@@ -2191,9 +2198,74 @@ begin
   end;
 end;
 
-procedure TForm13.vorf_erm2;
+procedure TForm13.vorf_erm2(ARoot, AOther: Integer);
+var
+  chunk, numStr: AnsiString;
+  n, i: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00572A78. Collects the ancestors of ARoot in gvar_011AE2BC as
+    a sequence of 6-digit numbers, each followed by a '*' (7 chars per
+    block). Marriage partners (Epnum chunks) are appended as well.
+    Afterwards sam2 walks the ancestors of AOther and compares them
+    against this list, setting gvar_02536B94 := 1 on the first match. }
+  gvar_011AE2BC := '';                                 //00572AAB
+  DataModule2.Table17.Open;                            //00572AB5-BD
+  DataModule2.Table17.IndexName := '';                 //00572AC2-CC
+  DataModule2.Table18.Open;                            //00572AD1-D9
+  DataModule2.Table18.IndexName := 'num';              //00572ADE-E6
+  if DataModule2.Table17.FindKey([ARoot]) then         //00572AFA-B07
+  begin
+    sub_005637C4(DataModule2.Table17Nummer.AsInteger, numStr); //00572B0C-20
+    gvar_011AE2BC := numStr + '*';                     //00572B25-32
+  end;
+  i := 1;                                              //00572B37
+  while Length(gvar_011AE2BC) >= 7 * i do              //00572B3C-4F
+  begin
+    chunk := Copy(gvar_011AE2BC, 7 * i - 6, 6);        //00572B55-B2
+    if Trim(chunk) = '000000' then                     //00572B73-8B
+    begin
+      sam2(AOther);                                    //00572D3B-41
+      Exit;                                            //00572D46
+    end;
+    n := StrToInt(chunk);                              //00572B91-FA
+    if n > 0 then                                      //00572BBB-BF1
+    begin
+      if DataModule2.Table17.FindKey([n]) then         //00572BC1-D5
+      begin
+        if DataModule2.Table17Vater.AsInteger > 0 then //00572BE2-EC
+        begin
+          sub_005637C4(DataModule2.Table17Vater.AsInteger, numStr); //00572BF3-C0C
+          gvar_011AE2BC := gvar_011AE2BC + numStr + '*'; //00572C0E-24
+        end;
+        if DataModule2.Table17Mutter.AsInteger > 0 then //00572C25-2F
+        begin
+          sub_005637C4(DataModule2.Table17Mutter.AsInteger, numStr); //00572C36-4B
+          gvar_011AE2BC := gvar_011AE2BC + numStr + '*'; //00572C4C-67
+        end;
+      end;
+      if n <> ARoot then                               //00572C68-6B
+      begin
+        if DataModule2.Table18.FindKey([n]) then       //00572C71-85
+        begin
+          { 00572C92/D1F: head tests Table18Nummer = ARoot; Eof is
+            checked only after Next, in the body tail. }
+          while (not DataModule2.Table18.Eof) and      //00572D0E-1D
+                (DataModule2.Table18Nummer.AsInteger = ARoot) do //00572D1F-2F
+          begin
+            if DataModule2.Table18Epnum.AsInteger > 0 then  //00572C97-A1
+            begin
+              sub_005637C4(DataModule2.Table18Epnum.AsInteger, numStr); //00572CA8-CBA
+              if Pos(numStr, gvar_011AE2BC) = 0 then    //00572CC0-CD
+                gvar_011AE2BC := gvar_011AE2BC + numStr + '*'; //00572CCF-00
+            end;
+            DataModule2.Table18.Next;                  //00572D01-09
+          end;
+        end;
+      end;
+    end;
+    Inc(i);                                            //00572D35-36
+  end;
+  sam2(AOther);                                        //00572D3B-41
 end;
 
 procedure TForm13.SpeedButton3Click(Sender: TObject);
@@ -2201,9 +2273,77 @@ begin
   { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
 end;
 
-procedure TForm13.sam2;
+procedure TForm13.sam2(AOther: Integer);
+var
+  chunk, numStr, tmpS: AnsiString;
+  n, i: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00572D98. Walks the ancestors of AOther (6-digit number blocks
+    separated by '*'), building the list in gvar_011AE2C0 and comparing
+    against the ancestor list in gvar_011AE2BC (Vorfahren of ARoot, set
+    up by vorf_erm2). A match sets gvar_02536B94 := 1 and aborts with
+    both lists left intact; exhaustion clears both lists. }
+  gvar_011AE2C0 := '';                                 //00572DB2-C2
+  DataModule2.Table17.Open;                            //00572DC7-D4
+  DataModule2.Table17.IndexName := '';                 //00572DD9-E8
+  DataModule2.Table18.Open;                            //00572DED-FA
+  DataModule2.Table18.IndexName := 'num';              //00572DFF-11
+  if DataModule2.Table17.FindKey([AOther]) then        //00572E16-2F
+  begin
+    sub_005637C4(DataModule2.Table17Nummer.AsInteger, numStr); //00572E38-4D
+    tmpS := numStr + '*';                              //00572E4A-5A
+    if Pos(tmpS, gvar_011AE2BC) > 0 then               //00572E5F-6D
+    begin
+      gvar_02536B94 := 1;                              //00572E71-76
+      Exit;                                            //00572E7C
+    end;
+    gvar_011AE2C0 := numStr + '*';                     //00572E81-A5
+  end;
+  i := 1;                                              //00572EAA-AF
+  while Length(gvar_011AE2C0) >= 7 * i do              //00572EAF-BF
+  begin
+    chunk := Copy(gvar_011AE2C0, 7 * i - 6, 6);        //00572EC5-DB
+    if Trim(chunk) = '000000' then                     //00572EE0-EF8
+    begin
+      gvar_011AE2BC := '';                             //00573072-77
+      gvar_011AE2C0 := '';                             //0057307C-7E
+      Exit;                                            //00573083 (finally part)
+    end;
+    n := StrToInt(chunk);                              //00572EFE-FA
+    if n > 0 then                                      //00572F23-25
+    begin
+      if DataModule2.Table17.FindKey([n]) then         //00572F2B-44
+      begin
+        if DataModule2.Table17Vater.AsInteger > 0 then //00572F51-63
+        begin
+          sub_005637C4(DataModule2.Table17Vater.AsInteger, numStr); //00572F67-7C
+          tmpS := numStr + '*';                        //00572F81-89
+          if Pos(tmpS, gvar_011AE2BC) > 0 then         //00572F8E-9C
+          begin
+            gvar_02536B94 := 1;                        //00572FA0-A5
+            Exit;                                      //00572FAB
+          end;
+          sub_005637C4(DataModule2.Table17Vater.AsInteger, numStr); //00572FB2-C7
+          gvar_011AE2C0 := gvar_011AE2C0 + numStr + '*'; //00572FCC-00
+        end;
+        if DataModule2.Table17Mutter.AsInteger > 0 then //00572FE0-FF2
+        begin
+          sub_005637C4(DataModule2.Table17Mutter.AsInteger, numStr); //00572FF6-00573008
+          tmpS := numStr + '*';                        //00573010-18
+          if Pos(tmpS, gvar_011AE2BC) > 0 then         //0057301D-2B
+          begin
+            gvar_02536B94 := 1;                        //0057302F-34
+            Exit;                                      //0057303A
+          end;
+          sub_005637C4(DataModule2.Table17Mutter.AsInteger, numStr); //0057303E-53
+          gvar_011AE2C0 := gvar_011AE2C0 + numStr + '*'; //00573058-67
+        end;
+      end;
+    end;
+    Inc(i);                                            //0057306C-6D
+  end;
+  gvar_011AE2BC := '';                                 //00573072-77
+  gvar_011AE2C0 := '';                                 //0057307C-7E
 end;
 
 procedure TForm13.Symm;
@@ -2313,8 +2453,63 @@ begin
 end;
 
 procedure TForm13.Verwandtschaft1Click(Sender: TObject);
+var
+  curNum, eli: Integer;
+  s, s2: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 0057249C. Compares the ancestors of the current person (Table1)
+    and the person whose number is in gvar_011AE2C4 (asked for by the
+    caller / input dialog), showing both captions and the result
+    message. The final verdict comes from vorf_erm2/sam2 via
+    gvar_02536B94. }
+  Form1.PageControl1.ActivePage := Form1.TabSheet2;   //005724C8-E2
+  Form1.aus1.Click;                                    //005724E7-F6
+  curNum := DataModule2.Table1Nummer.AsInteger;        //005724F9-08
+  s := DataModule2.Table1Name.AsString + ' ' +         //00572509-8
+       DataModule2.Table1Vornamen.AsString;            //CatN3 00572537-8
+  if Trim(DataModule2.Table1Gebjahr.AsString) <> '' then //00572541-60
+    s := s + ' * ' + DataModule2.Table1Gebjahr.AsString //00572562-8A
+  else if Trim(DataModule2.Table1Taufjahr.AsString) <> '' then //0057258C-D5
+    s := s + ' ~ ' + DataModule2.Table1Taufjahr.AsString; //005725AD-D0
+  s := s + ' [DS: ' + IntToStr(curNum) + ']';          //005725D5-F8
+  eli := curNum;                                       //005725FD (esi copy)
+  // [ebp-10] AnsiString is cleared, never read: omitted.
+  if gvar_011AE2C4 = 0 then                            //00572608-0F
+    Exit;
+  eli := gvar_011AE2C4;                                //00572623 (ebx; try/except noise)
+  if not DataModule2.Table1.FindKey([gvar_011AE2C4]) then //00572651-62
+  begin
+    ShowMessage('Datensatz-Nummer nicht vorhanden');   //0057266B-70
+    DataModule2.Table1.FindKey([eli]);                 //00572675-86
+    Exit;                                              //0057268B
+  end;
+  DataModule2.Table1.FindKey([eli]);                   //00572690-A1
+  if gvar_011AE2C4 = curNum then                       //005726A6-A9
+  begin
+    MessageDlg('Die beiden Personen sind identisch.',  //005726AB-BB
+               mtInformation, [mbOK], 0);
+    Exit;                                              //005726C0
+  end;
+  gvar_02536B94 := 0;                                  //005726C5-CC
+  Screen.Cursor := crHourGlass;                        //005726CE-E9
+  Proband1Click(curNum, gvar_011AE2C4);                //005726DE-E9 (Sender pushed)
+  DataModule2.Table1.FindKey([gvar_011AE2C4]);         //005726EE-F8
+  s2 := DataModule2.Table1Name.AsString + ' ' +        //00572704-24
+        DataModule2.Table1Vornamen.AsString;
+  if Trim(DataModule2.Table1Gebjahr.AsString) <> '' then //0057273C-53
+    s2 := s2 + ' * ' + DataModule2.Table1Gebjahr.AsString //0057275D-85
+  else if Trim(DataModule2.Table1Taufjahr.AsString) <> '' then //00572787-A6
+    s2 := s2 + ' ~ ' + DataModule2.Table1Taufjahr.AsString; //005727A8-C6
+  s2 := s2 + ' [DS: ' + IntToStr(gvar_011AE2C4) + ']'; //005727D0-F2
+  DataModule2.Table1.FindKey([eli]);                   //005727F7-08
+  Screen.Cursor := crDefault;                          //0057280D-16
+  gvar_0253692C := '';                                 //0057281B-20
+  if gvar_02536B94 = 0 then                            //00572825-2D
+    ShowMessage(s + ' und ' + #13#10 + s2 + #13#10 +   //0057282F-59
+                'sind nicht blutsverwandt.')
+  else
+    ShowMessage(s + ' und ' + #13#10 + s2 + #13#10 +   //00572860-8A
+                'sind blutsverwandt.');
 end;
 
 procedure TForm13.Button8Click(Sender: TObject);
