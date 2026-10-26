@@ -6,6 +6,8 @@ uses
   Classes, SysUtils, DeDeClasses, DeDeConstants, DeDeBinaryTypes;
 
 type
+  EDeDeServiceUnavailable = class(Exception);
+
   TDeDeCoreProgressEvent = procedure(const APhase, ADetail: string;
     APosition, AMaximum: Integer) of object;
   TDeDeCoreWarningEvent = procedure(const AMessage: string) of object;
