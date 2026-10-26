@@ -43,10 +43,14 @@ type
     FOwnsContext: Boolean;
     FOwnsAnalysis: Boolean;
     FFinalized: Boolean;
+    FOnProgress: TDeDeCoreProgressEvent;
+    FOnWarning: TDeDeCoreWarningEvent;
     procedure ActivateLegacyState(out APreviousState: TDeDeSessionActivation);
     procedure RestoreLegacyState(
       const APreviousState: TDeDeSessionActivation);
     procedure ReleaseAnalysis;
+    procedure SetOnProgress(const AValue: TDeDeCoreProgressEvent);
+    procedure SetOnWarning(const AValue: TDeDeCoreWarningEvent);
     procedure ConfigureDisassembler;
     procedure PopulateFormLists;
   public
@@ -66,6 +70,10 @@ type
     property PEFile: ThePEFile read FPEFile;
     property PEHeader: TPEHeader read FPEHeader;
     property Context: TDeDeCoreContext read FContext;
+    property OnProgress: TDeDeCoreProgressEvent read FOnProgress
+      write SetOnProgress;
+    property OnWarning: TDeDeCoreWarningEvent read FOnWarning
+      write SetOnWarning;
   end;
 
 function HasDelphi2BooleanMarker(AFile: ThePEFile; AHeader: TPEHeader;
@@ -232,6 +240,22 @@ begin
     if OwnsContext then
       ContextToFree.Free;
   end;
+end;
+
+procedure TDeDeAnalysisSession.SetOnProgress(
+  const AValue: TDeDeCoreProgressEvent);
+begin
+  FOnProgress := AValue;
+  if FContext <> nil then
+    FContext.OnProgress := AValue;
+end;
+
+procedure TDeDeAnalysisSession.SetOnWarning(
+  const AValue: TDeDeCoreWarningEvent);
+begin
+  FOnWarning := AValue;
+  if FContext <> nil then
+    FContext.OnWarning := AValue;
 end;
 
 class procedure TDeDeAnalysisSession.ConfigureVersion(
@@ -408,6 +432,8 @@ begin
   ReleaseAnalysis;
   FContext := TDeDeCoreContext.Create;
   FOwnsContext := True;
+  FContext.OnProgress := FOnProgress;
+  FContext.OnWarning := FOnWarning;
   try
     ActivateLegacyState(PreviousState);
     try
@@ -479,6 +505,10 @@ begin
     raise EInvalidOp.Create('No core context is available to attach');
   FContext := DeDeCoreContext;
   FOwnsContext := False;
+  if Assigned(FOnProgress) then
+    FContext.OnProgress := FOnProgress;
+  if Assigned(FOnWarning) then
+    FContext.OnWarning := FOnWarning;
   FPEFile := APEFile;
   FPEHeader := APEHeader;
   FIsELF := bELF;

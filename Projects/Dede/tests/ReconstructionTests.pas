@@ -28,6 +28,7 @@ type
     procedure TestProcessPointerOffsetAboveSignedLimit;
     procedure TestMemLocEnumeratesCurrentProcess;
     procedure TestCoreProgressHost;
+    procedure TestCoreSessionProgressBeforeAnalyze;
     procedure TestCoreAttachedAnalysisIsBorrowed;
     procedure TestCoreSessionsUseSeparateContexts;
     procedure TestCoreFailedAnalysisRestoresHostContext;
@@ -1057,6 +1058,41 @@ begin
   finally
     Recorder.Free;
     Context.Free;
+  end;
+end;
+
+procedure TReconstructionTests.TestCoreSessionProgressBeforeAnalyze;
+var
+  Session: TDeDeAnalysisSession;
+  Recorder: TCoreProgressRecorder;
+  MissingFile: string;
+  Raised: Boolean;
+begin
+  MissingFile := IncludeTrailingPathDelimiter(FsTEMPDir) +
+    'dede-progress-callback-' + IntToStr(GetTickCount) + '.exe';
+  while FileExists(MissingFile) do
+    MissingFile := MissingFile + '_';
+  Session := TDeDeAnalysisSession.Create;
+  Recorder := TCoreProgressRecorder.Create;
+  try
+    Session.OnProgress := Recorder.OnProgress;
+    Raised := False;
+    try
+      Session.Analyze(MissingFile);
+    except
+      on E: EFOpenError do
+        Raised := True;
+    end;
+    CheckTrue(Raised, 'Missing input did not fail the callback analysis');
+    CheckEquals(1, Recorder.Calls,
+      'Session progress callback was not active during initial loading');
+    CheckEquals('Loading ', Recorder.Phase,
+      'Initial session progress used the wrong phase');
+    CheckEquals(ExtractFileName(MissingFile), Recorder.Detail,
+      'Initial session progress used the wrong input name');
+  finally
+    Recorder.Free;
+    Session.Free;
   end;
 end;
 
