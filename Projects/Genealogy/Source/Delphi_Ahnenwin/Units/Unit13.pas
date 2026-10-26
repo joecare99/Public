@@ -2569,8 +2569,96 @@ begin
 end;
 
 procedure TForm13.zerleg(AVal1: Integer; AVal2: Integer; ACanvas: TCanvas);
+var
+  ebp10, ebp14, ebp1C, ebp18, i, ebxv: Integer;
+  line: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005675D8: word-wraps Lines of Memo1 into ChartSlotAnsi(0..24) slots,
+    breaking at ' ', ',', '-', '.' so each segment fits
+    Round(AVal1 * gvar_0253636C) - 5 pixel columns (measured with
+    ACanvas, where line 0 gets fsBold). A line without any of the four
+    separators that does not fit is skipped entirely (0056772A).
+    AVal2 (ecx at entry) is dead - the compiler just saves it. Slots
+    beyond the first one of an overflowing line get '#' appended when
+    they come from line 0 (005678FF). Tail updates gvar_02536378/37C.
+    EBP aliases: [ebp-8] line, [ebp-0C] i, [ebp-10] ebp10, [ebp-14]
+    ebp14, [ebp-18] ebp18, [ebp-1C] ebp1C, [ebp+8] ACanvas. }
+  ACanvas.Font.Name := gvar_0061F2EC;               //00567602-0E
+  ebp18 := 5;                                       //00567613 [ebp-18]
+  gvar_02536378 := 0;                               //0056761A-1C
+  ebp1C := Round(AVal1 * gvar_0253636C);            //00567624-34 [ebp-1C]
+  ebp10 := 0;                                       //00567639 [ebp-10]
+  ebp14 := 0;                                       //0056763E [ebp-14]
+  for i := 0 to Memo1.Lines.Count - 1 do            //0056764F-70 [ebp-0C]
+  begin
+    line := Memo1.Lines[i];                         //00567677-8E [ebp-8]
+    ACanvas.Font.Style := [];                       //0056768F-9D
+    if i = 0 then                                   //0056769D-A3
+      ACanvas.Font.Style := [fsBold];               //005676A8-B9
+    if ACanvas.TextWidth(line) < ebp1C - ebp18 then //005676B9-CC
+    begin
+      ChartSlotAnsi(ebp10)^ := line;                //005676CE-DB
+      Inc(ebp10);                                   //005676E0
+      Continue;                                     //005676E3 -> 00567977
+    end;
+    if (Pos(' ', line) = 0) and                     //005676E8-2A
+       (Pos(',', line) = 0) and
+       (Pos('-', line) = 0) and
+       (Pos('.', line) = 0) then
+      Continue;                                     //0056772A -> 00567977
+    // first split 00567730-7822 (no '#' marker on this segment)
+    ebp14 := 0;                                     //00567744? implicit
+    for ebxv := 1 to Length(line) - 1 do            //00567735-BA
+    begin
+      if line[ebxv] in [' ', ',', '-', '.'] then    //00567742-60
+      begin
+        if ACanvas.TextWidth(Copy(line, 1, ebxv - 1)) <  //00567762-B3
+           ebp1C - ebp18 then
+          ebp14 := ebxv;                            //0056778D
+      end
+      else
+        Continue;
+      if ACanvas.TextWidth(Copy(line, 1, ebxv - 1)) >=   //00567790-B6
+         ebp1C - ebp18 then
+        Break;                                      //005677B6
+    end;
+    ChartSlotAnsi(ebp10)^ := Copy(line, 1, ebp14);  //005677BC-D2
+    if Trim(ChartSlotAnsi(ebp10)^) <> '' then       //005677D7-F2
+      Inc(ebp10);
+    line := Trim(Copy(line, ebp14 + 1, Length(line)));   //005677F5-89
+    while Trim(line) <> '' do                       //00567962-71 -> 00567827
+    begin
+      if ACanvas.TextWidth(line) < ebp1C - ebp18 then    //00567827-3A
+        ebp14 := Length(line) + 1                   //0056783C-45
+      else
+      begin
+        for ebxv := 1 to Length(Trim(line)) - 1 do  //0056784D-68
+        begin
+          if line[ebxv] in [' ', ',', '-', '.'] then  //0056786A-88
+          begin
+            if ACanvas.TextWidth(Copy(line, 1, ebxv - 1)) <  //0056788A-B8
+               ebp1C - ebp18 then
+              ebp14 := ebxv;                          //005678B5
+          end
+          else
+            Continue;
+          if ACanvas.TextWidth(Copy(line, 1, ebxv - 1)) >= //005678B8-DE
+             ebp1C - ebp18 then
+            Break;                                    //005678DE
+        end;
+      end;
+      ChartSlotAnsi(ebp10)^ := Copy(line, 1, ebp14);  //005678E4-FA
+      if i = 0 then                                   //005678FF-19
+        ChartSlotAnsi(ebp10)^ :=
+          ChartSlotAnsi(ebp10)^ + '#';                //0056790F-14
+      if Trim(ChartSlotAnsi(ebp10)^) <> '' then       //0056791C-37
+        Inc(ebp10);
+      line := Trim(Copy(line, ebp14 + 1, Length(line)));   //00567937-57
+    end;                                              //00567962-77
+  end;
+  gvar_02536378 := ebp10;                           //00567983-86
+  if gvar_02536378 > gvar_0253637C then             //0056798B-9D
+    gvar_0253637C := gvar_02536378;
 end;
 
 procedure TForm13.FormCreate(Sender: TObject);
