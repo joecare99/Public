@@ -125,6 +125,189 @@ begin
   Result := Converter.GetRVA(AOffset);
 end;
 
+function TryGetCallerStackCleanup(ABytes: PByte; ASize: Integer;
+  out ACleanupBytes: LongWord): Boolean;
+var
+  CleanupValue: LongWord;
+begin
+  Result := False;
+  ACleanupBytes := 0;
+  if (ABytes = nil) or (ASize < 3) then
+    Exit;
+  if (ABytes[0] = $83) and (ABytes[1] = $C4) then
+  begin
+    CleanupValue := ABytes[2];
+    if (CleanupValue < 4) or (CleanupValue > $7F) then
+      Exit;
+  end
+  else if (ABytes[0] = $81) and (ABytes[1] = $C4) and (ASize >= 6) then
+  begin
+    CleanupValue := LongWord(ABytes[2]) or
+      (LongWord(ABytes[3]) shl 8) or
+      (LongWord(ABytes[4]) shl 16) or
+      (LongWord(ABytes[5]) shl 24);
+    if (CleanupValue < 4) or (CleanupValue > $10000) then
+      Exit;
+  end
+  else
+    Exit;
+  ACleanupBytes := CleanupValue;
+  Result := True;
+end;
+
+function GetX86RegisterWriteMask(ABytes: PByte; ASize: Integer;
+  out AWriteMask: Byte): Boolean;
+var
+  Position, Opcode, SecondOpcode, ModRM, RegisterIndex, GroupIndex: Integer;
+  ModValue, RMValue: Integer;
+begin
+  Result := False;
+  AWriteMask := 0;
+  if (ABytes = nil) or (ASize <= 0) then
+    Exit;
+  Position := 0;
+  while (Position < ASize) and
+    (ABytes[Position] in [$26, $2E, $36, $3E, $64, $65, $66, $67,
+      $F0, $F2, $F3]) do
+    Inc(Position);
+  if Position >= ASize then
+    Exit;
+  Opcode := ABytes[Position];
+  if (Opcode >= $B8) and (Opcode <= $BF) then
+  begin
+    RegisterIndex := Opcode - $B8;
+    if RegisterIndex < 3 then
+      AWriteMask := 1 shl RegisterIndex;
+    Exit(True);
+  end;
+  if (Opcode >= $B0) and (Opcode <= $B7) then
+  begin
+    RegisterIndex := Opcode - $B0;
+    if RegisterIndex < 4 then
+      AWriteMask := 1 shl (RegisterIndex and 3);
+    Exit(True);
+  end;
+  if (Opcode >= $40) and (Opcode <= $4F) then
+  begin
+    RegisterIndex := Opcode and $07;
+    if RegisterIndex < 3 then
+      AWriteMask := 1 shl RegisterIndex;
+    Exit(True);
+  end;
+  if (Opcode >= $58) and (Opcode <= $5F) then
+  begin
+    RegisterIndex := Opcode - $58;
+    if RegisterIndex < 3 then
+      AWriteMask := 1 shl RegisterIndex;
+    Exit(True);
+  end;
+  if (Opcode >= $50) and (Opcode <= $57) or
+    (Opcode in [$68, $6A, $90, $9C, $9D, $C2, $C3, $E8, $E9, $EB]) or
+    (Opcode >= $70) and (Opcode <= $7F) then
+    Exit(True);
+
+  if Opcode = $0F then
+  begin
+    if Position + 1 >= ASize then
+      Exit;
+    SecondOpcode := ABytes[Position + 1];
+    if (SecondOpcode >= $80) and (SecondOpcode <= $8F) then
+      Exit(True);
+    if not (SecondOpcode in [$B6, $B7, $BE, $BF]) then
+      Exit;
+    if Position + 2 >= ASize then
+      Exit;
+    ModRM := ABytes[Position + 2];
+    RegisterIndex := (ModRM shr 3) and $07;
+    if RegisterIndex < 3 then
+      AWriteMask := 1 shl RegisterIndex;
+    Exit(True);
+  end;
+
+  if not (Opcode in [$01, $03, $09, $0B, $11, $13, $19, $1B,
+    $21, $23, $29, $2B, $31, $33, $39, $3B, $80, $81, $83,
+    $87, $89, $8B, $8D, $C6, $C7, $FF]) then
+    Exit;
+  if Position + 1 >= ASize then
+    Exit;
+  ModRM := ABytes[Position + 1];
+  ModValue := (ModRM shr 6) and $03;
+  RegisterIndex := (ModRM shr 3) and $07;
+  RMValue := ModRM and $07;
+  GroupIndex := RegisterIndex;
+  case Opcode of
+    $03, $0B, $13, $1B, $23, $2B, $33, $8B, $8D:
+      if RegisterIndex < 3 then
+        AWriteMask := 1 shl RegisterIndex;
+    $87:
+      begin
+        if RegisterIndex < 3 then
+          AWriteMask := AWriteMask or (1 shl RegisterIndex);
+        if (ModValue = 3) and (RMValue < 3) then
+          AWriteMask := AWriteMask or (1 shl RMValue);
+      end;
+    $01, $09, $11, $19, $21, $29, $31, $89:
+      if (ModValue = 3) and (RMValue < 3) then
+        AWriteMask := 1 shl RMValue;
+    $39, $3B:
+      AWriteMask := 0;
+    $80, $81, $83:
+      if (GroupIndex <> 7) and (ModValue = 3) and (RMValue < 3) then
+        AWriteMask := 1 shl RMValue;
+    $C6, $C7:
+      if (GroupIndex = 0) and (ModValue = 3) and (RMValue < 3) then
+        AWriteMask := 1 shl RMValue;
+    $FF:
+      if (GroupIndex in [0, 1]) and (ModValue = 3) and (RMValue < 3) then
+        AWriteMask := 1 shl RMValue;
+  end;
+  Result := True;
+end;
+
+function IsX86BranchInstruction(ABytes: PByte; ASize: Integer): Boolean;
+var
+  Position, Opcode, SecondOpcode: Integer;
+begin
+  Result := False;
+  if (ABytes = nil) or (ASize <= 0) then
+    Exit;
+  Position := 0;
+  while (Position < ASize) and
+    (ABytes[Position] in [$26, $2E, $36, $3E, $64, $65, $66, $67,
+      $F0, $F2, $F3]) do
+    Inc(Position);
+  if Position >= ASize then
+    Exit;
+  Opcode := ABytes[Position];
+  Result := (Opcode in [$C2, $C3, $E8, $E9, $EA, $EB]);
+  if (Opcode >= $70) and (Opcode <= $7F) then
+    Result := True;
+  if (Opcode = $0F) and (Position + 1 < ASize) then
+  begin
+    SecondOpcode := ABytes[Position + 1];
+    Result := (SecondOpcode >= $80) and (SecondOpcode <= $8F);
+  end;
+  if (Opcode = $FF) and (Position + 1 < ASize) then
+    Result := ((ABytes[Position + 1] shr 3) and $07) in [2, 3, 4, 5];
+end;
+
+procedure RecordDisasmReference(Param: Pointer; Ref: TdaRef;
+  RefSize: Integer; var ResultText: string);
+var
+  IsFrameBase: Boolean;
+begin
+  if DeDeCoreContext = nil then
+    Exit;
+  IsFrameBase :=
+    ((Ref.MultiplyReg1 <> 0) and (Ref.ARegister1 = rEbp) and
+      (Ref.MultiplyReg2 = 0)) or
+    ((Ref.MultiplyReg2 <> 0) and (Ref.ARegister2 = rEbp) and
+      (Ref.MultiplyReg1 = 0));
+  if IsFrameBase then
+    DeDeCoreContext.CrossReferences.RecordFrameAccess(
+      ProcRva, rva, Ref.Immidiate, RefSize);
+end;
+
 Function UnitIncluded(s : String) : Boolean;
 var sUnit : String;
     i : Integer;
@@ -626,7 +809,13 @@ Begin
             Except
               on e:Exception do Raise Exception.Create('Cant resolve import reference ');
             End;
-            If s<>'' Then Result:=#13#10+sREF_TEXT_IMPORT+' '+s+'()'#13#10+'|'+#13#10;
+            If s<>'' Then
+            begin
+              if DeDeCoreContext <> nil then
+                DeDeCoreContext.CrossReferences.ResolveImportCall(
+                  ProcRva, rva, s);
+              Result:=#13#10+sREF_TEXT_IMPORT+' '+s+'()'#13#10+'|'+#13#10;
+            end;
           end;
       End;
    Finally
@@ -1202,6 +1391,11 @@ End;
 //
 procedure DisassembleProc(NameP,S : String; var DasmList : TStringList; bNotClearText : Boolean = True; Custom : Boolean = False; EmulateOnly : Boolean = False; dwEmulateToOffset : DWORD = 0);
 var iStopIndex, i,k,locpos, InstrId : Integer;
+    CallReferenceIndex, PendingCallIndex, RegisterIndex: Integer;
+    RegisterWriteMask: Byte;
+    LastRegisterWriteRVA: array[0..2] of DWORD;
+    HasLastRegisterWrite: array[0..2] of Boolean;
+    CallerCleanupBytes: LongWord;
     ss : String;
     DASM : TDisAsm;
     pc: AnsiString;
@@ -1217,6 +1411,7 @@ begin
           then InitNewEmulation('','','','');
 
   rva:=0;
+  PendingCallIndex := -1;
   If Not Custom Then
   Begin
   // This retreives the RVA offsets of the first instruction
@@ -1250,6 +1445,13 @@ begin
 
   If rva=0 then Exit;
   ProcRva:=rva;
+  if DeDeCoreContext <> nil then
+    DeDeCoreContext.CrossReferences.BeginRoutine(ProcRva);
+  for RegisterIndex := 0 to 2 do
+  begin
+    HasLastRegisterWrite[RegisterIndex] := False;
+    LastRegisterWriteRVA[RegisterIndex] := 0;
+  end;
 
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
@@ -1259,6 +1461,7 @@ begin
 
    // Creates the OPCODE_to_ASM disassembler object
    DASM:=TDisAsm.Create;
+   DASM.OnRef:=RecordDisasmReference;
 
    // The number of the current instruction
    InstrId:=0;
@@ -1294,6 +1497,52 @@ begin
           // Disassembels them
           ss:=DASM.GetInstruction(PAnsiChar(pc),sz,16);
           Inc(InstrId);
+
+          CallReferenceIndex := -1;
+          if DeDeCoreContext <> nil then
+          begin
+            if PendingCallIndex >= 0 then
+            begin
+              if TryGetCallerStackCleanup(@pc[1], sz, CallerCleanupBytes) then
+                DeDeCoreContext.CrossReferences.SetCallerCleanup(
+                  PendingCallIndex, CallerCleanupBytes);
+              PendingCallIndex := -1;
+            end;
+            DeDeCoreContext.CrossReferences.RecordRoutineInstruction(
+              ProcRva, rva, @pc[1], sz);
+            CallReferenceIndex :=
+              DeDeCoreContext.CrossReferences.AddX86Instruction(
+                ProcRva, rva, @pc[1], sz);
+            if CallReferenceIndex >= 0 then
+            begin
+              for RegisterIndex := 0 to 2 do
+                if HasLastRegisterWrite[RegisterIndex] then
+                  DeDeCoreContext.CrossReferences.AddRegisterWriteEvidence(
+                    CallReferenceIndex, RegisterIndex,
+                    LastRegisterWriteRVA[RegisterIndex]);
+              PendingCallIndex := CallReferenceIndex;
+            end;
+          end;
+
+          if (CallReferenceIndex >= 0) or
+            IsX86BranchInstruction(@pc[1], sz) then
+          begin
+            for RegisterIndex := 0 to 2 do
+              HasLastRegisterWrite[RegisterIndex] := False;
+          end
+          else if not GetX86RegisterWriteMask(@pc[1], sz,
+            RegisterWriteMask) then
+          begin
+            for RegisterIndex := 0 to 2 do
+              HasLastRegisterWrite[RegisterIndex] := False;
+          end
+          else
+            for RegisterIndex := 0 to 2 do
+              if (RegisterWriteMask and (1 shl RegisterIndex)) <> 0 then
+              begin
+                HasLastRegisterWrite[RegisterIndex] := True;
+                LastRegisterWriteRVA[RegisterIndex] := rva;
+              end;
 
           // If the current instruction is a short jump ahead
           // then sets the LastJump

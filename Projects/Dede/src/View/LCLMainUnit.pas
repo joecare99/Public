@@ -234,6 +234,7 @@ begin
       Options.IncludeDPR := True;
       Options.IncludeEventRVA := True;
       Options.IncludeAnalysisReport := True;
+      Options.IncludeCrossReferenceReport := False;
       FStatusLabel.Caption := 'Exporting project files';
       Generated := Session.ExportProject(
         FOutputEdit.Text, Options, FReplaceCheck.Checked);

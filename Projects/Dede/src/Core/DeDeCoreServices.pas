@@ -3,7 +3,8 @@ unit DeDeCoreServices;
 interface
 
 uses
-  Classes, SysUtils, DeDeClasses, DeDeConstants, DeDeBinaryTypes;
+  Classes, SysUtils, DeDeClasses, DeDeConstants, DeDeBinaryTypes,
+  DeDeXRef;
 
 type
   EDeDeServiceUnavailable = class(Exception);
@@ -33,6 +34,7 @@ type
     PASNameList: TStringList;
     UnitList: TStringList;
     Warnings: TStringList;
+    CrossReferences: TDeDeXRefList;
     OnProgress: TDeDeCoreProgressEvent;
     OnWarning: TDeDeCoreWarningEvent;
     OnDebug: TDeDeCoreDebugEvent;
@@ -162,6 +164,7 @@ begin
   UnitList := TStringList.Create;
   ClassInfoList := TStringList.Create;
   Warnings := TStringList.Create;
+  CrossReferences := TDeDeXRefList.Create;
 end;
 
 destructor TDeDeCoreContext.Destroy;
@@ -173,6 +176,7 @@ begin
   DFMNameList.Free;
   ClassInfoList.Free;
   DFMFormList.Free;
+  CrossReferences.Free;
   inherited Destroy;
 end;
 

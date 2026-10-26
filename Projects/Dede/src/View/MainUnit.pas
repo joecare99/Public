@@ -1849,6 +1849,7 @@ begin
   Options.IncludeDPR := cbDPR.Checked;
   Options.IncludeEventRVA := cbTXT.Checked;
   Options.IncludeAnalysisReport := False;
+  Options.IncludeCrossReferenceReport := False;
   ForceOverwrite := not bWARN_ON_FILE_OVERWRITE;
   GeneratedFiles := nil;
   Session := TDeDeAnalysisSession.Create;

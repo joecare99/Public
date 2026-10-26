@@ -14,6 +14,7 @@ type
     IncludeDPR: Boolean;
     IncludeEventRVA: Boolean;
     IncludeAnalysisReport: Boolean;
+    IncludeCrossReferenceReport: Boolean;
   end;
 
   TDeDeAnalysisResult = record
@@ -84,7 +85,7 @@ implementation
 uses
   DeDeConstants, DeDeDisAsm,
   DeDeClassEmulator, DeDeSym, DeDeELFClasses, DeDePAS, DeDeRes,
-  DeDeAnsiStream;
+  DeDeAnsiStream, DeDeXRef;
 
 procedure WriteAnsiText(AStream: TStream; const AText: string);
 var
@@ -540,12 +541,17 @@ var
   OutputDirectory, StageDirectory, FileName, TargetFile, StageFile,
     BackupFile, UnitName, FormName, EventName, EventDeclaration,
     EventImplementation, Text, ClassName, TempName: string;
+  MethodDeclaration, EvidenceComment: string;
   PlannedFiles, Backups, EventLines: TStringList;
   I, J, EventPosition, FileCount, WrittenFileCount, ExportPosition: Integer;
   ClassDumper: TClassDumper;
   FormDumper: TClassDumper;
+  MethodClass: TClassDumper;
   FieldInfo: TFieldRec;
   MethodInfo: TMethodRec;
+  MethodRecord: TMethodRec;
+  RoutineEvidence: TDeDeRoutineEvidence;
+  FrameAccess: TDeDeFrameAccess;
   Input: TMemoryStream;
   DasmList: TStringList;
   BackupMoved, FileInstalled: array of Boolean;
@@ -582,6 +588,129 @@ var
     Inc(ExportPosition);
     DeDeCoreContext.ReportProgress('Exporting ', AFileName, ExportPosition,
       PlannedFiles.Count);
+  end;
+
+  procedure ResolveKnownMethodReferences;
+  var
+    K, L: Integer;
+  begin
+    for K := 0 to FClassesDumper.Classes.Count - 1 do
+    begin
+      MethodClass := TClassDumper(FClassesDumper.Classes[K]);
+      for L := 0 to MethodClass.MethodData.Methods.Count - 1 do
+      begin
+        MethodRecord := TMethodRec(MethodClass.MethodData.Methods[L]);
+        DeDeCoreContext.CrossReferences.ResolveKnownMethod(
+          MethodRecord.dwRVA,
+          MethodClass.FsClassName + '.' + MethodRecord.sName);
+      end;
+    end;
+  end;
+
+  procedure CollectDirectCallees;
+  var
+    I, CodeSectionIndex: Integer;
+    Reference: TDeDeXRef;
+    RoutineInfo: TDeDeRoutineEvidence;
+    PreviousClassDumper: TClassDumper;
+    TargetRVA, SectionOffset, PhysicalOffset: DWORD;
+    RoutineDisassembly: TStringList;
+  begin
+    if not AOptions.IncludeCrossReferenceReport then
+      Exit;
+    if FIsELF then
+      CodeSectionIndex := FPEHeader.GetSectionIndexEx('.text')
+    else
+      CodeSectionIndex := 1;
+    if (CodeSectionIndex < 1) or
+      (CodeSectionIndex > FPEHeader.ObjectNum) then
+      Exit;
+    PreviousClassDumper := DeDeDisAsm.ClsDmp;
+    try
+      DeDeDisAsm.ClsDmp := nil;
+      I := 0;
+      while I < DeDeCoreContext.CrossReferences.Count do
+      begin
+        Reference := DeDeCoreContext.CrossReferences[I];
+        Inc(I);
+        if (Reference.Kind <> dxkDirectCall) or not Reference.HasTarget then
+          Continue;
+        RoutineInfo := DeDeCoreContext.CrossReferences.FindRoutineEvidence(
+          Reference.TargetVA);
+        if (RoutineInfo <> nil) and
+          (RoutineInfo.HasDisassemblyBody or
+           RoutineInfo.IsDirectCallTarget) then
+          Continue;
+        if Reference.TargetVA < FPEHeader.IMAGE_BASE then
+          Continue;
+        TargetRVA := Reference.TargetVA - FPEHeader.IMAGE_BASE;
+        if TargetRVA < FPEHeader.Objects[CodeSectionIndex].RVA then
+          Continue;
+        SectionOffset := TargetRVA -
+          FPEHeader.Objects[CodeSectionIndex].RVA;
+        if SectionOffset >=
+          FPEHeader.Objects[CodeSectionIndex].PHYSICAL_SIZE then
+          Continue;
+        PhysicalOffset := FPEHeader.Objects[CodeSectionIndex].PHYSICAL_OFFSET +
+          SectionOffset;
+        if Int64(PhysicalOffset) + 16 >
+          DeDeCoreContext.PEFile.PEStream.Size then
+          Continue;
+        DeDeCoreContext.CrossReferences.MarkDirectCallTarget(
+          Reference.TargetVA);
+        DeDeCoreContext.PEFile.PEStream.Seek(
+          PhysicalOffset, soFromBeginning);
+        RoutineDisassembly := nil;
+        try
+          DisassembleProc('xref', IntToHex(Reference.TargetVA, 8),
+            RoutineDisassembly, True, True);
+        finally
+          RoutineDisassembly.Free;
+        end;
+      end;
+    finally
+      DeDeDisAsm.ClsDmp := PreviousClassDumper;
+    end;
+  end;
+
+  function StackParameterEvidenceComment(ARoutineRVA: DWORD): string;
+  var
+    K: Integer;
+  begin
+    Result := '';
+    if not AOptions.IncludeCrossReferenceReport then
+      Exit;
+    RoutineEvidence :=
+      DeDeCoreContext.CrossReferences.FindRoutineEvidence(ARoutineRVA);
+    if RoutineEvidence = nil then
+      Exit;
+    for K := 0 to RoutineEvidence.FrameAccesses.Count - 1 do
+    begin
+      FrameAccess :=
+        TDeDeFrameAccess(RoutineEvidence.FrameAccesses[K]);
+      Result := Result + '    // Stack access evidence only: [EBP+$' +
+        IntToHex(FrameAccess.StackOffset, 2) + '], operand width ' +
+        IntToStr(FrameAccess.OperandSize);
+      if FrameAccess.StackWordSlotIndex >= 0 then
+        Result := Result + ', stack-word slot ' +
+          IntToStr(FrameAccess.StackWordSlotIndex);
+      Result := Result + ', observed at ' + IntToStr(FrameAccess.AccessCount) +
+        ' instruction(s); see cross-references.json for corroboration' +
+        #13#10;
+    end;
+    if RoutineEvidence.HasCalleeCleanup and
+      ((RoutineEvidence.CalleeCleanupBytes > 0) or
+       RoutineEvidence.CalleeCleanupConflict) then
+    begin
+      Result := Result + '    // Callee cleanup evidence only: ';
+      if RoutineEvidence.CalleeCleanupConflict then
+        Result := Result + 'conflicting ret cleanup values'
+      else
+        Result := Result + 'ret ' +
+          IntToStr(RoutineEvidence.CalleeCleanupBytes) + ' bytes';
+      Result := Result + '; see cross-references.json for corroboration' +
+        #13#10;
+    end;
   end;
 
   procedure CleanupStage;
@@ -651,6 +780,8 @@ begin
 
     if AOptions.IncludeAnalysisReport then
       AddPlannedFile('analysis.json');
+    if AOptions.IncludeCrossReferenceReport then
+      AddPlannedFile('cross-references.json');
 
     if AOptions.IncludeDFM then
       for I := 0 to DeDeCoreContext.DFMFormList.Count - 1 do
@@ -700,6 +831,8 @@ begin
     PreserveStage := False;
 
     try
+      if AOptions.IncludeCrossReferenceReport then
+        DeDeCoreContext.CrossReferences.Clear;
       if AOptions.IncludeEventRVA then
       begin
         EventLines.Add(txt_copyright);
@@ -821,21 +954,24 @@ begin
                 raise EConvertError.CreateFmt(
                   'Invalid event prototype for %s.%s',
                   [FormName, EventName]);
-              EventDeclaration := EventDeclaration + '    ' +
+              MethodDeclaration := '    ' +
                 Copy(Text, 1, EventPosition - 1) + ' ' + EventName +
                 Copy(Text, EventPosition, MaxInt);
               if MethodInfo.dwVMTOffset <> METHOD_VMT_OFFSET_NONE then
-                EventDeclaration := EventDeclaration + '//v' +
+                MethodDeclaration := MethodDeclaration + '//v' +
                   IntToHex(MethodInfo.dwVMTOffset, 1) +
                   '//'
               else
-                EventDeclaration := EventDeclaration + '//';
-              EventDeclaration := EventDeclaration + IntToHex(
+                MethodDeclaration := MethodDeclaration + '//';
+              MethodDeclaration := MethodDeclaration + IntToHex(
                 MethodInfo.dwRVA, 8);
-              EventDeclaration := EventDeclaration + #13#10;
               DasmList := nil;
               try
                 DisassembleProc(UnitName, EventName, DasmList, False);
+                EvidenceComment :=
+                  StackParameterEvidenceComment(MethodInfo.dwRVA);
+                EventDeclaration := EventDeclaration + MethodDeclaration +
+                  #13#10 + EvidenceComment;
                 EventImplementation := EventImplementation +
                   Copy(Text, 1, EventPosition - 1) + ' ' + FormName + '.' +
                   EventName + Copy(Text, EventPosition, MaxInt) + #13#10 +
@@ -862,7 +998,8 @@ begin
       begin
         FileCount := 0;
         for I := 0 to PlannedFiles.Count - 1 do
-          if not SameText(PlannedFiles[I], 'analysis.json') then
+          if not SameText(PlannedFiles[I], 'analysis.json') and
+            not SameText(PlannedFiles[I], 'cross-references.json') then
             Inc(FileCount);
         Text := '{' + #13#10 +
           '  "input": ' + JSONString(FAnalysisResult.InputFile) + ',' +
@@ -883,6 +1020,8 @@ begin
         begin
           if SameText(PlannedFiles[I], 'analysis.json') then
             Continue;
+          if SameText(PlannedFiles[I], 'cross-references.json') then
+            Continue;
           if WrittenFileCount > 0 then
             Text := Text + ',';
           if FileCount > 0 then
@@ -902,6 +1041,28 @@ begin
         SaveUTF8Text(IncludeTrailingPathDelimiter(StageDirectory) +
           'analysis.json', Text);
         ReportExportProgress('analysis.json');
+      end;
+
+      if AOptions.IncludeCrossReferenceReport then
+      begin
+        CollectDirectCallees;
+        ResolveKnownMethodReferences;
+        Text := '{' + #13#10 +
+          '  "format": "dede-xref-v1",' + #13#10 +
+          '  "architecture": "x86-pe32",' + #13#10 +
+          '  "routineDiscovery": ' +
+            JSONString('exported_disassembly_plus_reachable_direct_call_targets') +
+            ',' + #13#10 +
+          '  "references": ' +
+            DeDeCoreContext.CrossReferences.ToJSON + ',' + #13#10 +
+          '  "routines": ' +
+            DeDeCoreContext.CrossReferences.RoutinesToJSON + ',' + #13#10 +
+          '  "disassemblyErrors": ' +
+            JSONString(DeDeDisAsm.sDisAsmErrors) + #13#10 +
+          '}' + #13#10;
+        SaveUTF8Text(IncludeTrailingPathDelimiter(StageDirectory) +
+          'cross-references.json', Text);
+        ReportExportProgress('cross-references.json');
       end;
 
       SetLength(BackupMoved, PlannedFiles.Count);

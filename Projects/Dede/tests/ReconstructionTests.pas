@@ -34,6 +34,7 @@ type
     procedure TestCoreFailedAnalysisRestoresHostContext;
     procedure TestCoreReportExportAndOverwriteGuard;
     procedure TestCoreExportCaseInsensitiveUnitCollision;
+    procedure TestX86CrossReferenceCollection;
     procedure TestCoreVersionConfiguration;
     procedure TestVMTMethodOffsetMapping;
     procedure TestZipFormatConsumers;
@@ -48,7 +49,7 @@ uses
   MainUnit, DeDeClasses, Emulator, DeDeClassEmulator, DeDeDisAsm,
   DeDeZAUnit, DeDeBSS, DeDeExpressions, MemLocUnit, DeDeCoreServices,
   DeDeCore, DeDeClassHandle, DeDeBPL, DeDeDUF, DeDeOffsInf,
-  DeDeBinaryTypes;
+  DeDeBinaryTypes, DeDeXRef;
 
 type
   TParserCallbackRecorder = class
@@ -1347,7 +1348,7 @@ var
   StageSearch: TSearchRec;
   StageFound: Boolean;
   Options: TDeDeExportOptions;
-  OutputDirectory, ReportFile: string;
+  OutputDirectory, ReportFile, CrossReferenceFile: string;
   Raised: Boolean;
   PreviousDumper: TObject;
   PreviousFile: ThePEFile;
@@ -1368,6 +1369,8 @@ begin
     OutputDirectory := OutputDirectory + '_';
   ReportFile := IncludeTrailingPathDelimiter(OutputDirectory) +
     'analysis.json';
+  CrossReferenceFile := IncludeTrailingPathDelimiter(OutputDirectory) +
+    'cross-references.json';
 
   PreviousDumper := DeDeCoreContext.ClassesDumper;
   PreviousFile := DeDeClasses.PEFile;
@@ -1416,13 +1419,21 @@ begin
     FillChar(Options, SizeOf(Options), 0);
     Options.IncludeDFM := True;
     Options.IncludeAnalysisReport := True;
+    Options.IncludeCrossReferenceReport := True;
     Session.AttachAnalysis(Input, Header, Dumper, 'D5');
 
     Generated := Session.ExportProject(OutputDirectory, Options, False);
-    CheckEquals(2, Generated.Count,
-      'Synthetic DFM/report export returned the wrong number of files');
+    CheckEquals(3, Generated.Count,
+      'Synthetic DFM/report/xref export returned the wrong number of files');
     CheckTrue(FileExists(ReportFile),
       'Report-only export did not create analysis.json');
+    CheckTrue(FileExists(CrossReferenceFile),
+      'Opt-in export did not create cross-references.json');
+    Report.LoadFromFile(CrossReferenceFile);
+    CheckTrue(Pos('"format": "dede-xref-v1"', Report.Text) > 0,
+      'Cross-reference report schema marker is missing');
+    CheckTrue(Pos('"references": []', Report.Text) > 0,
+      'Empty cross-reference list was not serialized deterministically');
     CheckTrue(FileExists(IncludeTrailingPathDelimiter(OutputDirectory) +
       'Form1.dfm'), 'Synthetic DFM export did not create Form1.dfm');
     Report.LoadFromFile(ReportFile);
@@ -1448,14 +1459,15 @@ begin
       on E: EDeDeOutputExists do
         Raised := True;
     end;
+
     CheckTrue(Raised, 'Existing output was accepted without force');
     Report.LoadFromFile(ReportFile);
     CheckEquals('sentinel', Report[0],
       'The existing report changed after a rejected export');
 
     Generated := Session.ExportProject(OutputDirectory, Options, True);
-    CheckEquals(2, Generated.Count,
-      'Forced report export returned the wrong number of files');
+    CheckEquals(3, Generated.Count,
+      'Forced report/xref export returned the wrong number of files');
     Report.LoadFromFile(ReportFile);
     CheckTrue(Pos('"project": "Fixture"', Report.Text) > 0,
       'Forced export did not replace the existing report');
@@ -1467,7 +1479,7 @@ begin
     Report.Add('staging-sentinel');
     Report.SaveToFile(ReportFile);
     FailureProgress := TCoreProgressRecorder.Create;
-    FailureProgress.FailOnDetail := 'analysis.json';
+    FailureProgress.FailOnDetail := 'cross-references.json';
     DeDeCoreContext.OnProgress := FailureProgress.OnProgress;
     Generated.Free;
     Generated := nil;
@@ -1483,6 +1495,9 @@ begin
     Report.LoadFromFile(ReportFile);
     CheckEquals('staging-sentinel', Report[0],
       'Staging failure changed the existing report');
+    Report.LoadFromFile(CrossReferenceFile);
+    CheckTrue(Pos('"references": []', Report.Text) > 0,
+      'Staging failure changed the existing cross-reference report');
     DFMOutput.LoadFromFile(
       IncludeTrailingPathDelimiter(OutputDirectory) + 'Form1.dfm');
     CheckEquals(DFMBeforeFailure.Size, DFMOutput.Size,
@@ -1529,12 +1544,167 @@ begin
     ResourceText.Free;
     if FileExists(ReportFile) then
       SysUtils.DeleteFile(ReportFile);
+    if FileExists(CrossReferenceFile) then
+      SysUtils.DeleteFile(CrossReferenceFile);
     if FileExists(IncludeTrailingPathDelimiter(OutputDirectory) +
       'Form1.dfm') then
       SysUtils.DeleteFile(IncludeTrailingPathDelimiter(OutputDirectory) +
         'Form1.dfm');
     if DirectoryExists(OutputDirectory) then
       RemoveDir(OutputDirectory);
+  end;
+end;
+
+procedure TReconstructionTests.TestX86CrossReferenceCollection;
+var
+  References: TDeDeXRefList;
+  DirectCall: array[0..4] of Byte;
+  BackwardCall: array[0..4] of Byte;
+  ImportCall: array[0..4] of Byte;
+  IndirectCall: array[0..1] of Byte;
+  NonCall: array[0..1] of Byte;
+  CalleeRet: array[0..2] of Byte;
+  PlainRet: array[0..0] of Byte;
+  PushEBP: array[0..0] of Byte;
+  MoveEBP: array[0..1] of Byte;
+  ReferenceIndex: Integer;
+  DirectReferenceIndex: Integer;
+  JSON: string;
+begin
+  DirectCall[0] := $E8;
+  DirectCall[1] := $10;
+  DirectCall[2] := 0;
+  DirectCall[3] := 0;
+  DirectCall[4] := 0;
+  BackwardCall[0] := $E8;
+  BackwardCall[1] := $E0;
+  BackwardCall[2] := $FF;
+  BackwardCall[3] := $FF;
+  BackwardCall[4] := $FF;
+  ImportCall[0] := $E8;
+  ImportCall[1] := $FB;
+  ImportCall[2] := $04;
+  ImportCall[3] := 0;
+  ImportCall[4] := 0;
+  IndirectCall[0] := $FF;
+  IndirectCall[1] := $D0;
+  NonCall[0] := $FF;
+  NonCall[1] := $E0;
+  CalleeRet[0] := $C2;
+  CalleeRet[1] := 8;
+  CalleeRet[2] := 0;
+  PlainRet[0] := $C3;
+  PushEBP[0] := $55;
+  MoveEBP[0] := $8B;
+  MoveEBP[1] := $EC;
+  References := TDeDeXRefList.Create;
+  try
+    References.BeginRoutine($1000);
+    References.RecordRoutineInstruction($1000, $1000, @CalleeRet[0],
+      SizeOf(CalleeRet));
+    References.BeginRoutine($2000);
+    DirectReferenceIndex := References.AddX86Instruction($1000, $1000,
+      @DirectCall[0], SizeOf(DirectCall));
+    References.AddX86Instruction($1000, $1000, @DirectCall[0],
+      SizeOf(DirectCall));
+    References.SetCallerCleanup(DirectReferenceIndex, 8);
+    References.SetCallerCleanup(DirectReferenceIndex, 8);
+    References.MarkDirectCallTarget($1015);
+    References.AddRegisterWriteEvidence(DirectReferenceIndex, 0, $0FF0);
+    References.AddRegisterWriteEvidence(DirectReferenceIndex, 2, $0FF4);
+    References.AddRegisterWriteEvidence(DirectReferenceIndex, 1, $0FF8);
+    References.AddX86Instruction($2000, $2000, @BackwardCall[0],
+      SizeOf(BackwardCall));
+    ReferenceIndex := References.AddX86Instruction($2000, $2010, @IndirectCall[0],
+      SizeOf(IndirectCall));
+    References.SetCallerCleanup(ReferenceIndex, 12);
+    References.AddX86Instruction($2000, $2020, @NonCall[0],
+      SizeOf(NonCall));
+    References.AddX86Instruction($3000, $3000, @ImportCall[0],
+      SizeOf(ImportCall));
+    References.BeginRoutine($3000);
+    References.RecordRoutineInstruction($3000, $3000, @CalleeRet[0],
+      SizeOf(CalleeRet));
+    References.RecordRoutineInstruction($3000, $3001, @PlainRet[0],
+      SizeOf(PlainRet));
+    References.BeginRoutine($4000);
+    References.RecordFrameAccess($4000, $4002, 8, 4);
+    References.RecordRoutineInstruction($4000, $4000, @PushEBP[0],
+      SizeOf(PushEBP));
+    References.RecordRoutineInstruction($4000, $4001, @MoveEBP[0],
+      SizeOf(MoveEBP));
+    References.RecordFrameAccess($4000, $4002, 4, 4);
+    References.RecordFrameAccess($4000, $4002, 8, 4);
+    References.RecordFrameAccess($4000, $4003, 8, 4);
+    References.RecordFrameAccess($4000, $4004, 12, 4);
+    References.RecordRoutineInstruction($4000, $4003, @CalleeRet[0],
+      SizeOf(CalleeRet));
+    References.ResolveKnownMethod($1000, 'TSource.Entry');
+    References.ResolveKnownMethod($1015, 'TTarget.Run');
+    References.ResolveKnownMethod($1015, 'TOtherTarget.Run');
+    References.ResolveKnownMethod($1FE5, 'TBackward.Target');
+    References.ResolveImportCall($3000, $3000, 'KERNEL32.GetTickCount');
+
+    CheckEquals(4, References.Count,
+      'Call references were duplicated or non-call instructions were added');
+    CheckEquals(LongInt($1015), LongInt(References[0].TargetVA),
+      'Forward relative call target was decoded incorrectly');
+    CheckEquals(LongInt($1FE5), LongInt(References[1].TargetVA),
+      'Backward relative call target was decoded incorrectly');
+    CheckFalse(References[2].HasTarget,
+      'Register-indirect call was assigned a guessed target');
+    JSON := References.ToJSON;
+    CheckTrue(Pos('"kind":"direct_call"', JSON) > 0,
+      'Direct call kind was omitted from the JSON representation');
+    CheckTrue(Pos('"kind":"indirect_call"', JSON) > 0,
+      'Indirect call kind was omitted from the JSON representation');
+    CheckTrue(Pos('"targetVa":null', JSON) > 0,
+      'Unresolved indirect target was not represented as null');
+    CheckTrue(Pos('"sourceRoutineVa":"0x00001000"', JSON) > 0,
+      'Call source address was not serialized as a PE32 VA');
+    CheckTrue(Pos('"targetResolution":"ambiguous_class_method"', JSON) > 0,
+      'Conflicting class method targets were not marked ambiguous');
+    CheckTrue(Pos('"targetResolution":"known_class_method"', JSON) > 0,
+      'Unique class method target was not resolved');
+    CheckTrue(Pos('"targetName":"TBackward.Target"', JSON) > 0,
+      'Resolved target name was not serialized');
+    CheckTrue(Pos('"targetResolution":"known_import"', JSON) > 0,
+      'Known import call was not resolved in the cross-reference graph');
+    CheckTrue(Pos('"targetName":"KERNEL32.GetTickCount"', JSON) > 0,
+      'Resolved import name was not serialized');
+    CheckTrue(Pos('"registerWritesBeforeCall":[{"register":"eax","instructionRva":"0x00000FF0"},{"register":"edx","instructionRva":"0x00000FF4"},{"register":"ecx","instructionRva":"0x00000FF8"}]',
+      JSON) > 0, 'Register definitions before the call were not retained');
+    CheckTrue(Pos('"targetName":null', JSON) > 0,
+      'Ambiguous target name was not omitted');
+    CheckTrue(Pos('"callerCleanupBytes":12', JSON) > 0,
+      'Caller stack-cleanup evidence was not recorded');
+    JSON := References.RoutinesToJSON;
+    CheckTrue(Pos('"calleeCleanupBytes":8', JSON) > 0,
+      'Callee ret-immediate evidence was not recorded');
+    CheckTrue(Pos('"isDirectCallTarget":true', JSON) > 0,
+      'Directly observed call target was not identified');
+    CheckTrue(Pos('"callSiteCleanupBytes":8,"callSiteCleanupConflict":false,"callSiteCleanupCount":1',
+      JSON) > 0, 'Call-site cleanup consensus was not aggregated');
+    CheckTrue(Pos('"stackCleanupWordCountCandidate":2', JSON) > 0,
+      'Cleanup byte counts were not exposed as stack-word-count candidates');
+    CheckTrue(Pos('"name":"TSource.Entry"', JSON) > 0,
+      'Known source routine name was not serialized');
+    CheckTrue(Pos('"calleeCleanupConflict":true', JSON) > 0,
+      'Conflicting callee cleanup evidence was not marked');
+    CheckTrue(Pos('"hasFramePointerPrologue":true', JSON) > 0,
+      'Canonical EBP frame prologue was not recognized');
+    CheckTrue(Pos('"stackOffset":"0x00000008","operandSize":4,"stackWordSlotIndex":0,"accessCount":2',
+      JSON) > 0, 'Repeated stack parameter access evidence was not aggregated');
+    CheckTrue(Pos('"stackOffset":"0x0000000C","operandSize":4,"stackWordSlotIndex":1',
+      JSON) > 0, 'Stack word slot candidate was not derived from EBP offset');
+    CheckTrue(Pos('"instructionVas":["0x00004002","0x00004003"]', JSON) > 0,
+      'Stack access instruction RVAs were not preserved as evidence');
+    CheckTrue(Pos('"stackArgumentEvidence":"matched"', JSON) > 0,
+      'Matching frame offsets and callee cleanup were not corroborated');
+    CheckTrue(Pos('"stackArgumentEvidence":"cleanup_only"', JSON) > 0,
+      'Cleanup-only evidence was not represented conservatively');
+  finally
+    References.Free;
   end;
 end;
 
