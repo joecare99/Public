@@ -2333,8 +2333,239 @@ begin
 end;
 
 procedure TForm13.memein(AValue: Integer);
+var
+  relPrefix, conn: string;
+  ebp14, s, s2, line: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00566220: fills Memo1 with the current Table17 person's data lines
+    and (for chart modes) the marriage records of the person with the
+    spouse whose number equals AValue, walking Table18 by index 'num'.
+    EBP aliases as in the listing; field offsets mapped in Unit2. }
+  Memo1.Clear;                                      //0056624C-54
+  relPrefix := '';                                  //0056625E [ebp-10]:ShortStr
+  if gvar_0061F2D4 = 1 then                         //0056625E-65
+  begin
+    s := DataModule2.Table17Religion.AsString;      //00566267-74
+    if s <> '' then                                 //00566277-7B
+    begin
+      s := s + ', ';                                //0056627D-9C (Cat3)
+      relPrefix := Copy(s, 1, 5);                   //005662A6-B7 +PStrNCpy 5
+    end;
+  end;
+  ebp14 := '';                                      //005662CC-D4 [ebp-14]
+  s := DataModule2.Table17Name.AsString +           //005662D4-E7
+       ' ' +                                        //005662ED
+       DataModule2.Table17Vornamen.AsString +       //005662F2-67
+       relPrefix;                                   //00566268? [ebp-130]
+  Memo1.Lines.Add(s);                               //0056632F-43
+  if gvar_0061F2CC = 1 then                         //00566346-4D
+  begin
+    s2 := DataModule2.Table17Beruf.AsString;        //0056634F-5F
+    if Trim(s2) <> '' then                          //00566362-7A
+      ebp14 := DataModule2.Table17Beruf.AsString;   //0056637C-89
+  end;
+  if gvar_0061F2D0 = 1 then                         //0056638C-93
+  begin
+    s2 := DataModule2.Table17Hausname.AsString;     //00566395-A5
+    if Trim(s2) <> '' then                          //005663A8-C0
+    begin
+      if ebp14 = '' then                            //005663C2-C6
+        ebp14 := DataModule2.Table17Hausname.AsString  //005663C8-D5
+      else
+        ebp14 := ebp14 + ' ' +                      //005663DA-4E (Cat3)
+          DataModule2.Table17Hausname.AsString;
+    end;
+  end;
+  if Length(ebp14) > 0 then                         //00566408-0C
+    Memo1.Lines.Add(ebp14);                         //0056640E-1F
+  if (Trim(DataModule2.Table17Gebjahr.AsString) <> '') or  //00566422-4D
+     (Trim(DataModule2.Table17Gebort.AsString) <> '') then
+  begin
+    line := '* ' +                                  //00566480-E5 CatN 5
+      DataModule2.Table17Gebtag.AsString + '.' +
+      DataModule2.Table17Gebmonat.AsString + '.' +
+      DataModule2.Table17Gebjahr.AsString;
+    sub_00563A0C(line, s);                          //005664F6
+    line := s + ' ' +                               //005664FB-52 CatN 4
+      DataModule2.Table17Gebort.AsString;
+    Memo1.Lines.Add(line);                          //00566535-43
+  end
+  else if (Trim(DataModule2.Table17Taufjahr.AsString) <> '') or  //00566546-71
+          (Trim(DataModule2.Table17Taufort.AsString) <> '') then
+  begin
+    line := '~ ' +                                  //005665A4-59 CatN 5
+      DataModule2.Table17Tauftag.AsString + '.' +
+      DataModule2.Table17Taufmonat.AsString + '.' +
+      DataModule2.Table17Taufjahr.AsString;
+    sub_00563A0C(line, s);                          //0056661A
+    line := s + ' ' +                               //0056661F-25
+      DataModule2.Table17Taufort.AsString;
+    Memo1.Lines.Add(line);                          //00566659-67
+  end;
+  if (Trim(DataModule2.Table17Stjahr.AsString) <> '') or  //0056666A-95
+     (Trim(DataModule2.Table17Stort.AsString) <> '') then
+  begin
+    line := '+ ' +                                  //005666C8-2D CatN 5
+      DataModule2.Table17Sttag.AsString + '.' +
+      DataModule2.Table17Stmonat.AsString + '.' +
+      DataModule2.Table17Stjahr.AsString;
+    sub_00563A0C(line, s);                          //0056673E
+    line := s + ' ' +                               //00566743-49
+      DataModule2.Table17Stort.AsString;
+    Memo1.Lines.Add(line);                          //0056677D-B
+  end
+  else if (Trim(DataModule2.Table17Begjahr.AsString) <> '') or  //00566793-BE
+          (Trim(DataModule2.Table17Begort.AsString) <> '') then
+  begin
+    line := '# ' +                                  //005667F1-56 CatN 5
+      DataModule2.Table17Begtag.AsString + '.' +
+      DataModule2.Table17Begmonat.AsString + '.' +
+      DataModule2.Table17Begjahr.AsString;
+    sub_00563A0C(line, s);                          //00566867
+    line := s + ' ' +                               //0056686C-72
+      DataModule2.Table17Begort.AsString;
+    Memo1.Lines.Add(line);                          //005668A6-B4
+  end;                                              //005668B7
+  if Pos('Vorgr', gvar_0253692C) > 0 then           //005668B7-05
+  begin
+    if AValue > 0 then                              //0056690B-0F
+    begin
+      DataModule2.Table18.IndexName := 'num';       //00566915-22
+      DataModule2.Table18.First;                    //0056692F
+      if DataModule2.Table18.FindKey([              //00566934-5E
+           DataModule2.Table17Nummer.AsInteger]) then
+      begin
+        Memo1.Lines.Add('--------');                //0056696B-7C
+        while (not DataModule2.Table18.Eof) and     //00566DEA-99 head/rec
+              (DataModule2.Table18Nummer.AsInteger =
+               DataModule2.Table17Nummer.AsInteger) do
+        begin
+          conn := 'o-o';                            //0056699D6 (005669D6)
+          if Pos('Ehe',                             //005669A0-BE
+                 DataModule2.Table18Verbind.AsString) > 0 then
+            conn := 'oo';                           //005669C7-D3
+          if conn = 'oo' then                      //005669DD-EF AStrCmp
+          begin
+            if (Trim(DataModule2.Table18Sajahr.AsString) <> '') or  //005669F5-53
+               (Trim(DataModule2.Table18Saort.AsString) <> '') then
+            begin
+              line := conn + ' ' +                 //00566A53-C5 CatN 5
+                DataModule2.Table18Satag.AsString + '.' +
+                DataModule2.Table18Samonat.AsString + '.' +
+                DataModule2.Table18Sajahr.AsString;
+              sub_00563A0C(line, s);                //00566AFB
+              line := s + ' ' +                    //00566B00-BA
+                DataModule2.Table18Saort.AsString;
+              Memo1.Lines.Add(line);               //00566B3A-B
+            end
+            else if (Trim(DataModule2.Table18Hjahr.AsString) <> '') or  //00566B50-8C
+                    (Trim(DataModule2.Table18Hort.AsString) <> '') then
+            begin
+              line := conn + ' ' +                 //00566BAE-5 CatN 5
+                DataModule2.Table18Htag.AsString + '.' +
+                DataModule2.Table18Hmonat.AsString + '.' +
+                DataModule2.Table18Hjahr.AsString;
+              sub_00563A0C(line, s);                //00566C56
+              line := s + ' ' +                    //00566C5B-C1
+                DataModule2.Table18Hort.AsString;
+              Memo1.Lines.Add(line);               //00566C95-A3
+            end
+            else
+              Memo1.Lines.Add(conn);               //00566CA8-FE
+          end;                                     //00566CCD
+          if conn = 'o-o' then                     //00566CCD-DF AStrCmp
+          begin
+            line := conn + ' ' +                   //00566CE5-C7 CatN 5
+              DataModule2.Table18Htag.AsString + '.' +
+              DataModule2.Table18Hmonat.AsString + '.' +
+              DataModule2.Table18Hjahr.AsString;
+            sub_00563A0C(line, s);                  //00566D8D
+            line := s + ' ' +                      //00566D92-8
+              DataModule2.Table18Hort.AsString;
+            Memo1.Lines.Add(line);                 //00566DCC-DA
+          end;
+          DataModule2.Table18.Next;                //00566DDD-E5
+        end;                                       //00566E1F
+      end;
+    end;
+  end;                                               //00566E1F
+  if Pos('Nachgr', gvar_0253692C) > 0 then           //00566E1F-33
+  begin
+    if AValue > 0 then                               //00566E39-3D
+    begin
+      DataModule2.Table18.IndexName := 'num';        //00566E43-50
+      DataModule2.Table18.First;                     //00566E5D
+      if DataModule2.Table18.FindKey([               //00566E62-8C
+           DataModule2.Table17Nummer.AsInteger]) then
+      begin
+        Memo1.Lines.Add('--------');                 //00566E99-AA
+        while (not DataModule2.Table18.Eof) and      //0056743E-4D head
+              (DataModule2.Table18Nummer.AsInteger =
+               DataModule2.Table17Nummer.AsInteger) do
+        begin
+          conn := 'o-o';                             //00566ECA-F4
+          if Pos('Ehe',
+                 DataModule2.Table18Verbind.AsString) > 0 then
+            conn := 'oo';                            //00566EF5-FE
+          if conn = 'oo' then                       //00566F0B-1D
+          begin
+            if (Trim(DataModule2.Table18Sajahr.AsString) <> '') or  //00566F23-81
+               (Trim(DataModule2.Table18Saort.AsString) <> '') then
+            begin
+              line := conn + ' (S) ' +              //00566F81-79 CatN 5
+                DataModule2.Table18Satag.AsString + '.' +
+                DataModule2.Table18Samonat.AsString + '.' +
+                DataModule2.Table18Sajahr.AsString;
+              sub_00563A0C(line, s);                //00567029
+              line := s + ' ' +                    //0056702E-FA
+                DataModule2.Table18Saort.AsString;
+              Memo1.Lines.Add(line);               //00567068-76
+            end
+            else if (Trim(DataModule2.Table18Hjahr.AsString) <> '') or  //0056707E-D6
+                    (Trim(DataModule2.Table18Hort.AsString) <> '') then
+            begin
+              if DataModule2.Table18Htag.AsString = 'HK' then  //005670DC-FF
+              begin
+                line := conn + ' ' +               //00567202-9 CatN 5
+                  DataModule2.Table18Htag.AsString + '.' +
+                  DataModule2.Table18Hmonat.AsString + '.' +
+                  DataModule2.Table18Hjahr.AsString;
+                sub_00563A0C(line, s);              //005672AA
+                line := s + ' ' +                  //005672AF-B5
+                  DataModule2.Table18Hort.AsString;
+                Memo1.Lines.Add(line);             //005672E9-F7
+              end
+              else
+              begin
+                line := conn + ' (K) ' +           //00567105-AD CatN 5
+                  DataModule2.Table18Htag.AsString + '.' +
+                  DataModule2.Table18Hmonat.AsString + '.' +
+                  DataModule2.Table18Hjahr.AsString;
+                sub_00563A0C(line, s);              //005671AD
+                line := s + ' ' +                  //005671B2-B8
+                  DataModule2.Table18Hort.AsString;
+                Memo1.Lines.Add(line);             //005671EC-FA
+              end;
+            end
+            else
+              Memo1.Lines.Add(conn);               //005672FC-31
+          end;                                     //00567321
+          if conn = 'o-o' then                     //00567321-33
+          begin
+            line := conn + ' ' +                   //00567339-F7 CatN 5
+              DataModule2.Table18Htag.AsString + '.' +
+              DataModule2.Table18Hmonat.AsString + '.' +
+              DataModule2.Table18Hjahr.AsString;
+            sub_00563A0C(line, s);                  //005673E1
+            line := s + ' ' +                      //005673E6-EC
+              DataModule2.Table18Hort.AsString;
+            Memo1.Lines.Add(line);                 //00567420-2E
+          end;
+          DataModule2.Table18.Next;                //00567431-39
+        end;                                       //00567473
+      end;
+    end;
+  end;
 end;
 
 procedure TForm13.zerleg(AVal1: Integer; AVal2: Integer; ACanvas: TCanvas);

@@ -425,3 +425,38 @@ gedausv   →  gedausxv → gedaus → gedausx
 - Remaining after vr1 (address order): memein (00566220, listing ~L2802),
   zerleg (005675D8, ~L3800), PaintBox1Paint (00570C14), sam2 (00572D98),
   vorf_erm2 (00572A78), nachf_neu, FormShow/FormClose, buttons.
+
+## memein (TForm13.memein(AValue: Integer), 00566220) - DONE
+- Fills Memo1 for the current Table17 person + marriage records of
+  Table18 (index 'num') where Epnum = AValue, for Vorgr/Nachgr modes.
+- DataModule2 field offsets (Unit2 map): 950 Name, 954 Vornamen,
+  944 Nummer (Integer), 95C Religion, 960 Beruf, 9D8 Hausname,
+  964/968/96C/970 Gebtag/Gebmonat/Gebjahr/Gebort,
+  974/978/97C/980 Tauftag/Taufmonat/Taufjahr/Taufort,
+  98C/990/994/998 Sttag/Stmonat/Stjahr/Stort,
+  9A0/9A4/9A8/9AC Begtag/Begmonat/Begjahr/Begort;
+  Table18 (//140): 4C8 Nummer, 4CC Epnum, 4D0/4D4/4D8/4DC
+  Htag/Hmonat/Hjahr/Hort, 4E4/4E8/4EC/4F0 Satag/Samonat/Sajahr/Saort,
+  4F8 Verbind.
+- Flags: 61F2D4=Religion line, 61F2CC=Beruf line, 61F2D0=Hausname.
+- Lines: Name' 'Vornamen + Copy(Religion+', ',1,5); Beruf/Hausname
+  line (Hausname appended with ' '); '* '/baptism '~ '/death '+ '/
+  burial '# ' date blocks: CatN(tag,'.',monat,'.',jahr) -> sub_00563A0C
+  -> ' ' + ort; each block gated by Trim(jahr) or Trim(ort) non-empty;
+  death block skips burial (0056678E jmp 005668B7).
+- Ancestor sections: if Pos(Vorgr/Nachgr, gvar_0253692C) > 0 and
+  AValue > 0: Table18.IndexName:='num', First, FindKey(Table17Nummer);
+  '--------'; while not Eof and Table18Nummer = Table17Nummer:
+    conn := 'o-o' (6F2D6F03) or 'oo' when Pos('Ehe', Verbind)>0
+    [ebp-0A]/6F2D6F03 are ShortString len bytes.
+    - Vorgr: conn='oo': SA fields first (Satag/Samonat/Sajahr/Saort),
+      else H fields (Htag/Hmonat/Hjahr/Hort), else plain conn;
+      conn='o-o': H fields. Prefix = conn + ' '.
+    - Nachgr: conn='oo': SA fields with prefix conn+' (S) '
+      (PStrNCat maxlen 9); else H fields where Htag='HK' -> plain
+      conn+' ', else conn+' (K) '; else plain conn; conn='o-o': plain
+      conn+' ' + H fields.
+  Then Table18.Next; head-false or EOF exits the section
+  (00566E19/0056744D fall into the section exit).
+- Build: [build] SUCCESS. Local names: relPrefix/conn: string,
+  ebp14/s/line: AnsiString.
