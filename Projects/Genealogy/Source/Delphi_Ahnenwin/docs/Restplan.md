@@ -512,3 +512,28 @@ gedausv   â†’  gedausxv â†’ gedaus â†’ gedausx
 
 ## Next
 - Continue in address order: PaintBox1Paint (00570C14), FormShow (00570294), FormClose (00570728), Buttons, SpeedButton3Click (00573450), ScrollBar changes (00572484/490).
+
+## PaintBox1Paint (00570C14) - implemented
+- Dispatcher: if gvar_0253692C = 'Vorgr1' -> vr1 + vz1(PaintBox1.Canvas); 'Vorgr2' -> Vr2 + vz2(...); 'Nachgr1' -> nr1 + nz1(...); 'Nachgr2' -> nr2 + nz2(...). Sequential ifs, not else-chains; nothing clears gvar_0253692C here.
+
+## FormShow (00570294) - correction to earlier implementation
+- Zoom constant at 00570306 is 0.63 (Extended mantissa 0xA147AE147AE147AE, exponent 0x3FFE -> mantissa 1.26 * 2^-1). The earlier "0.375" was a misread; fixed to gvar_0061F120 := 0.63. Same constant in SpeedButton3Click.
+
+## ScrollBar1/2Change (00572484/490) - verified
+- Both only call PaintBox1.Refresh.
+
+## SpeedButton3Click (00573450) - implemented
+- PDF export for the four graph modes. Saves gvar_0061F120, per mode sets gvar_0061F120 := 0.63, WPPDFPrinter1.Filename := 'VGr1/VGr2/NGr1/NGr2.pdf', calls vr1/Vr2/nr1/nr2 and computes a page total:
+  * modes 1/3: PageTotal := (gvar_011AE320 + 1) * (gvar_0253637C*gvar_011AE318 + gvar_0061F114 + gvar_011AE318 + gvar_011AE348) + gvar_011AE33C
+  * modes 2/4: PageTotal := (same factor) * gvar_0061F2F0 + gvar_011AE33C
+- WPPDFPrinter1.SetLicenseLibrary('Ahnw50.dll') (00537710, member); global WPPDFRegisterLicense('Heribert Reitmeier','A144arg6fm45afqf96d4@80B340EF') (00536D90).
+- WPPDFPrinter1.Field70 (byte f70, meaning unknown) tested 005736A3; only if True -> set False.
+- CanvasReference := wprefScreen (byte f64 := 0, 005736BB), StartDocument ([vmt+40]/005379E0).
+- try/finally: nested page builder sub_00573314 called once (005736DC); exit: if DrawFlag then EndDoc ([vmt+48]/00538C98) + FinishDocument ([vmt+54]/00538D00); restore zoom; gvar_011AE32C := PaintBox1.Canvas; PaintBox1.Refresh (all inside finally).
+- Nested procs in recon (original used the ebp+8 nested convention):
+  * WritePage (0057316C): if DrawFlag then EndDoc; WPPDFPrinter1.StartPage(PageContent, PageTotal, 0, $64, $64) ([vmt+4C], pushed 64/64/0, edx = caller [ebp-0C], ecx = caller [ebp-10]); canvas := printer canvas (005373F4) -> gvar_011AE32C; copies PaintBox1.Canvas.Font.Name; dispatches vz1/vz2/nz1/nz2(canvas); DrawFlag := True.
+  * sub_00573314 (called once): page content height (caller [ebp-0C]): 'Vorgr1'/'Nachgr1': (gvar_011AE334 + gvar_0061F118) * gvar_011AE328 + gvar_011AE340; 'Vorgr2': (gvar_011AE320+1) * (gvar_011AE334 + gvar_0061F118) + gvar_011AE340; 'Nachgr2': (gvar_011AE334 + gvar_0061F118) * gvar_011AE320 + gvar_011AE340; then if (not DrawFlag) or overflow condition (005733DA-05 uses caller [ebp-14]+[ebp-18] vs [ebp-1C]) -> WritePage; followed by caller [ebp-14] += [ebp-18] (0057340A).
+- Deviations: (a) [ebp-14]/[ebp-18] are never initialized in the original (stale stack); first call draws unconditionally, so recon uses 0-initialized locals (DrawUsedY/DrawStep); (b) compat additions in Compat\WPPDF: WPPDFR1: SetLicenseLibrary (00537710), unit-level WPPDFRegisterLicense (00536D90), StartDocument (vmt+40), FinishDocument (vmt+54), Field70 property (byte +70); WPPDFR2 TWPPDFPrinter: Canvas (GetCanvas 005373F4, TBitmap-backed) and StartPage (vmt+4C). Real PDF rendering not in shell.
+
+## Next
+- Remaining Unit13 stubs: SpeedButton1Click (005704A8, print path, stub at recon 2527), remaining TODO at recon 2876 (Button3Click?), recon 4083 stub, FormClose (00570728). Then Finalization (00573848).

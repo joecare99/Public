@@ -13,7 +13,7 @@ unit Unit13;
 interface
 
 uses
-  SysUtils, StrUtils, Classes, ExtCtrls, Buttons, Dialogs, StdCtrls, WPPDFR2, WPPDFPRP, Forms, Controls, Grids, DB, Graphics;
+  SysUtils, StrUtils, Classes, ExtCtrls, Buttons, Dialogs, StdCtrls, WPPDFR1, WPPDFR2, WPPDFPRP, Forms, Controls, Grids, DB, Graphics;
 
 type
   TForm13 = class(TForm)
@@ -2269,8 +2269,118 @@ begin
 end;
 
 procedure TForm13.SpeedButton3Click(Sender: TObject);
+var
+  ZoomSave: Extended;  //00573463 [ebp-28]
+  PageTotal: Integer;   //005734FA [ebp-10], Kopie [ebp-1C]
+  PageContent: Integer; //0057333 [ebp-0C, von Sub_00573314]
+  DrawUsedY: Integer;    //005733E3 [ebp-14]
+  DrawStep: Integer;     //005733E6 [ebp-18]
+  DrawFlag: Boolean;     //005736D8 [ebp-1]
+
+  procedure WritePage; //0057316C (verschachtelt), [ebp+8] = SpeedButton3-Kontext
+  var
+    canvas: TCanvas;   //00573173 [ebx] -> gvar_011AE32C
+  begin
+    if DrawFlag then                                   //00573187-E2
+      WPPDFPrinter1.EndDoc;
+    WPPDFPrinter1.StartPage(PageContent, PageTotal, 0, $64, $64); //0057319D-B9 [vmt+4C]
+    canvas := WPPDFPrinter1.Canvas;                     //005731C4-64 (005373F4)
+    gvar_011AE32C := canvas;                            //005731C9-CE
+    canvas.Font.Name := PaintBox1.Canvas.Font.Name;      //005731CE-FC
+    if gvar_0253692C = 'Vorgr1' then
+      vz1(canvas)                                       //0057320D-2A
+    else if gvar_0253692C = 'Vorgr2' then
+      vz2(canvas)                                       //0057322C-55
+    else if gvar_0253692C = 'Nachgr1' then
+      nz1(canvas)                                       //00573257-80
+    else if gvar_0253692C = 'Nachgr2' then
+      nz2(canvas);                                      //00573282-B6
+    DrawFlag := True;                                   //005732AB-B2
+  end;
+
+  procedure Sub_00573314; //00573314 (verschachtelt): Inhalts-/Seitenhoehe
+  begin
+    if gvar_0253692C = 'Vorgr1' then
+      PageContent := (gvar_011AE334 + gvar_0061F118) * gvar_011AE328 +
+        gvar_011AE340                                   //0057332A-44
+    else if gvar_0253692C = 'Vorgr2' then
+      PageContent := (gvar_011AE320 + 1) * (gvar_011AE334 + gvar_0061F118) +
+        gvar_011AE340                                   //0057335A-77
+    else if gvar_0253692C = 'Nachgr1' then
+      PageContent := (gvar_011AE334 + gvar_0061F118) * gvar_011AE328 +
+        gvar_011AE340                                   //0057338D-A7
+    else if gvar_0253692C = 'Nachgr2' then
+      PageContent := (gvar_011AE334 + gvar_0061F118) * gvar_011AE320 +
+        gvar_011AE340;                                  //005733BD-D7
+    if (not DrawFlag) or (DrawUsedY + DrawStep > PageTotal) then
+      WritePage;                                        //005733DA-05 (0057316C)
+    //0057340A: [ebp-14] += [ebp-18]; im Original ohne Initialisierung
+    DrawUsedY := DrawUsedY + DrawStep;
+  end;
+
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00573450: PDF-Ausgabe des Graphen: Alle Masstaebe umrechnen auf
+    0.63-Faktor (Zoom), bereiten den PDF-Drucker je nach Aufrufmodus
+    vor und fertig die Seite(n) in WPPDFPrinter1.Canvas. Danach Zoom
+    zuruecksetzen und Form13.Refresh. }
+  gvar_011AE320 := 0;
+  ZoomSave := gvar_0061F120;
+  if gvar_0253692C = 'Vorgr1' then                     //00573480-91
+  begin
+    gvar_0061F120 := 0.63;                              //00573493
+    WPPDFPrinter1.Filename := 'VGr1.pdf';               //005734B0
+    vr1;                                                //005734C8
+    PageTotal := (gvar_011AE320 + 1) *                  //005734CD-F8
+      (gvar_0253637C * gvar_011AE318 + gvar_0061F114 +
+      gvar_011AE318 + gvar_011AE348) + gvar_011AE33C;
+  end
+  else if gvar_0253692C = 'Vorgr2' then                //00573502-13
+  begin
+    gvar_0061F120 := 0.63;                              //00573515
+    WPPDFPrinter1.Filename := 'VGr2.pdf';               //00573532
+    Vr2;                                                //0057354A
+    PageTotal := (gvar_0253637C * gvar_011AE318 +       //0057354F-78
+      gvar_0061F114 + gvar_011AE318 + gvar_011AE348) *
+      gvar_0061F2F0 + gvar_011AE33C;
+  end
+  else if gvar_0253692C = 'Nachgr1' then               //00573580-91
+  begin
+    gvar_0061F120 := 0.63;                              //00573593
+    WPPDFPrinter1.Filename := 'NGr1.pdf';               //005735B0
+    nr1;                                                //005735C8
+    PageTotal := (gvar_011AE320 + 1) *                  //005735CD-F8
+      (gvar_0253637C * gvar_011AE318 + gvar_0061F114 +
+      gvar_011AE318 + gvar_011AE348) + gvar_011AE33C;
+  end
+  else if gvar_0253692C = 'Nachgr2' then               //005735FF-10
+  begin
+    gvar_0061F120 := 0.63;                              //00573612
+    WPPDFPrinter1.Filename := 'NGr2.pdf';               //0057362F
+    nr2;                                                //00573647
+    PageTotal := (gvar_0253637C * gvar_011AE318 +       //0057364C-75
+      gvar_0061F114 + gvar_011AE318 + gvar_011AE348) *
+      gvar_0061F2F0 + gvar_011AE33C;
+  end;
+  WPPDFPrinter1.SetLicenseLibrary('Ahnw50.dll');         //00573678-86 (00537710)
+  WPPDFRegisterLicense('Heribert Reitmeier',            //0057368B-95 (00536D90)
+    'A144arg6fm45afqf96d4@80B340EF');
+  if WPPDFPrinter1.Field70 then                        //0057369A-B2
+    WPPDFPrinter1.Field70 := False;                     //005736AA-AD (00537824)
+  WPPDFPrinter1.CanvasReference := wprefScreen;         //005736BB (byte[+64] := 0)
+  WPPDFPrinter1.StartDocument;                          //005736BF-64 (005379E0, vmt+40)
+  DrawFlag := False;                                    //005736D8
+  DrawUsedY := 0;                                       //00573400? im Original
+  DrawStep := 0;                                        //nicht sichtbar ([ebp-14/-18])
+  try                                                   //005736C4-CF
+    Sub_00573314;                                       //005736DC-E2
+  finally                                               //005736EB-F4
+    if DrawFlag then
+      WPPDFPrinter1.EndDoc;                             //005736F6-A? (00538C98, vmt+48)
+    WPPDFPrinter1.FinishDocument;                       //00573704-F (00538D00, vmt+54)
+    gvar_0061F120 := ZoomSave;                           //0057371A-30
+    gvar_011AE32C := PaintBox1.Canvas;                   //00573737-46
+    PaintBox1.Refresh;                                   //0057374B-54
+  end;
 end;
 
 procedure TForm13.sam2(AOther: Integer);
@@ -2916,7 +3026,7 @@ begin
   DataModule2.Table1Nummer.Value; //05702F3: Feldzugriff ohne Verwertung des Ergebnisses
   gvar_0061F2F4 := 0;
   gvar_0061F2F8 := 0;
-  gvar_0061F120 := 0.375;
+  gvar_0061F120 := 0.63; //Listing 7AE147AE/0A147AE14/3FFE](Extended)
   gvar_0061F11C := Round(gvar_0061F120 * 6);
   gvar_011AE338 := $14;
   gvar_011AE334 := Round(gvar_0061F120 * 120);
@@ -4085,7 +4195,28 @@ end;
 
 procedure TForm13.PaintBox1Paint(Sender:TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00570C14: Retina-Dispatcher; je nach Aufrufmodus (gvar_0253692C)
+    zeichnen und auf PaintBox1 ausgeben. }
+  if gvar_0253692C = 'Vorgr1' then             //00570C1A-2B
+  begin
+    vr1;                                       //00570C31
+    vz1(PaintBox1.Canvas);                     //00570C36-44
+  end;
+  if gvar_0253692C = 'Vorgr2' then             //00570C49-5A
+  begin
+    Vr2;                                       //00570C60
+    vz2(PaintBox1.Canvas);                     //00570C65-73
+  end;
+  if gvar_0253692C = 'Nachgr1' then            //00570C78-89
+  begin
+    nr1;                                       //00570C8F
+    nz1(PaintBox1.Canvas);                     //00570C94-A2
+  end;
+  if gvar_0253692C = 'Nachgr2' then            //00570CA7-B8
+  begin
+    nr2;                                       //00570CBE
+    nz2(PaintBox1.Canvas);                     //00570CC3-D1
+  end;
 end;
 
 procedure TForm13.Button6Click(Sender: TObject);
