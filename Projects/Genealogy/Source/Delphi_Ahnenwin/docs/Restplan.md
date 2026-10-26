@@ -384,3 +384,44 @@ gedausv   →  gedausxv → gedaus → gedausx
 - Photo (61F2BC=1, BShort(row,322) > ' '): TImage.Create(Self); LoadFromFile; `if Graphic is TJPEGImage` (IsClass -> byte flag): ratio := img.Height / Graphic.Height (fdivrp), img.Width := Round(Graphic.Width * ratio); q1 := Round((37C*318+318)*4/5); q2 := Round(Graphic.Width / img.Height * ((37C*318+318)*4/5)) (fdivp W/H then fmul with the shl-2/fdiv-5 term - NOT the rounded q1); aRect = Rect(Round((d0+4)*6C), Round((d1+2)*6C), Round((d0+q2)*6C), Round((d1+q1)*6C)); Proportional; StretchDraw; Free.
 - Tail: ScrollBar1.Max := (11AE31C+1)*(334+61F118) + 340; ScrollBar2.Max := (37C*318+61F114+318+348)*11AE324 + 33C; crDefault. Finally-frames free LStr clr blocks.
 - nz2 (0056EB10, L11180+) next; prologue is byte-identical to nz1 (same copy loop); draw part differs.
+
+### nz2 (0056EB10, listing L11180-12510) - converted, build green (2026-10-25)
+
+- `TForm13.nz2(ACanvas: TCanvas)` (EDX = canvas; decl updated) implemented. Copy/title/wasSchon/DS-ID/d7-d8-count-suffixes/font/names/'#' strips/'M'/'W'/'X' boxes/photo/tail are block-for-block IDENTICAL to nz1 (same Transkriptionshilfe applies). Only these differences:
+- Connector loop (while B[row][2] > 0, B.d1 > 0 required):
+  - Horizontal marriage line only when d5 < 11AE330 AND d5 > 1 AND (d7 > 0 OR d8 > 0): MoveTo(Round((d0+334/2)*6C), Round(d1*6C)) -> LineTo(same X, Round((d1-61F114/2)*6C)).
+  - 0056EF93 'W' drop line: row > 1; ChartBShort(row,193)^ = 'W'; d5 < 11AE330-1 (dec edx!); B[row][9] > 0 (the -174 dword). Then MoveTo(Round((d0+334/2)*6C), Round(6C*(d1+h))) -> LineTo(same X, Round(6C*(d1+h+61F114/2))) with h = 37C*318+318+348.
+  - No father/mother elbow segments at all (unlike nz1/vz1).
+- Extrema loop: first sets **ACanvas.Pen.Color := 0 once before the loop** (0056F0E8-F0); body starts with **gvar_011AE324 := max(d5)** (plain dword cmp, not the nz1 d1-division); then gvar_011AE31C := max of (d0-340+364) div (61F118+334) (same as nz1); guard d3 > 0.
+- Analyzer hint: pushes in Rectangle/RoundRect call sites confirm X2 = (d0+334)-scaled, Y2 = (d1+h)-scaled with W/H = 15 (established recon interpretation kept).
+- Next in address order: sam2 (00572D98), vorf_erm2 (00572A78), vr1 (00570D1C), memein (00566220, L2802), zerleg (005675D8), nachf_neu (00564668), PaintBox1Paint (00570C14), FormShow/FormClose (00570294/00570728), buttons.
+
+## vr1 (TForm13.vr1, 00570D1C) - DONE
+- "Vorgeneration 1" variant of Vr2 (0056904C): identical skeleton, only metric
+  constants differ: `011AE340 := 20` (same), **61F118 := Round(F120*30*scale),
+  61F114 := Round(F120*20*scale)** (Vr2: 20/30 swapped); 334/33C same as Vr2.
+- Bitmap gate: fScale := 1.0, := 1.13 when PaintBox1.Canvas <> gvar_011AE32C.
+- Scroll offsets 2536364/68 loaded from ScrollBar1/2.Position first, then
+  zeroed when the drawing canvas differs (order inverted vs Vr2 recon, same
+  semantics).
+- Printer branch (Printer.Canvas = 11AE32C): fScale := 7.0
+  (listing dword 0 / C0000000 / 4001 = mantissa 1.75 * 2^2 = 7.0; the Vr2
+  recon wrote 6.0 for the same bytes - likely should also be 7.0 there),
+  Font 9pt Arial, 11AE32C.Pen.Width := Round(PaintBox pen width * 7.0).
+- Main row loop while 011AE1C4[row][2] > 0: clear 20 slots
+  (ChartSlotAnsi(i), ChartAAnsi(102*row+19+i)), ebp14 := [row][3],
+  Table17.FindKey, memein([row-1][3]),
+  zerleg(011AE334, 011AE318, 011AE32C), ChartAAnsi(102*row+18) := slot 0,
+  then 13 Trim-guarded copies ChartAAnsi(102*row+19+i) := Trim(slot i+1),
+  i = 0..12.
+- Photo scale (61F2BC = 1): 011AE348 := Round((253637C*318+318) shl 2 / 5).
+- 10000-row copy: SetChartAFlat(102r+2, gvar_015924E4[row][2]),
+  (102r, [row][0]), (102r+1, [row][1]); then sub_00568FD4 (Vr2 called
+  sub_00569010 - the identical scan).
+- Extrema: 011AE320 := max([row][0]) - 1; scrollbars: LargeChange =
+  PaintBox1.Width/Height - 5, SmallChange = 20/20.
+- Build: [build] SUCCESS (existing hints only; byteFlag/fScale
+  "never used" hints are benign).
+- Remaining after vr1 (address order): memein (00566220, listing ~L2802),
+  zerleg (005675D8, ~L3800), PaintBox1Paint (00570C14), sam2 (00572D98),
+  vorf_erm2 (00572A78), nachf_neu, FormShow/FormClose, buttons.

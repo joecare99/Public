@@ -2482,8 +2482,111 @@ begin
 end;
 
 procedure TForm13.vr1;
+var
+  i, row, eaxv, ebp14, ebpC: Integer;
+  byteFlag: Byte;
+  fScale: Extended;
+  tmp: AnsiString;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00570D1C: the "Vorgeneration 1" variant of Vr2 (0056904C). Same
+    skeleton - canvas/font metrics, per-row memein/zerleg fill of grid
+    A, 10000-row grid C copy, sub_00568FD4 scan, scrollbar setup - but
+    the metric constants are swapped/shuffled: gvar_0061F118 = 30 and
+    gvar_0061F114 = 20 (Vr2: 20/30). The bitmap scale gvar_011AE32C
+    gate and the printer branch (fScale = 0x4001.. mantissa C0 -> 7.0)
+    are identical in shape. Registers/EBP slots as in the listing. }
+  tmp := '';                                        //00570D25-2A [ebp-18]
+  Screen.Cursor := crHourGlass;                     //00570D40-4B
+  fScale := 1.0;                                    //00570D50-5B [ebx]
+  if PaintBox1.Canvas <> gvar_011AE32C then         //00570D61-76
+    fScale := 1.13;                                 //00570D78-B5
+  gvar_011AE33C := Round(gvar_0061F120 * 45 * fScale);  //00570D8B-A0
+  gvar_011AE340 := 20;                              //00570DA5
+  gvar_0061F118 := Round(gvar_0061F120 * 30 * fScale);  //00570DAF-C4
+  gvar_0061F114 := Round(gvar_0061F120 * 20 * fScale);  //00570DC9-DE
+  gvar_011AE334 := Round(gvar_0061F120 * 120 * fScale)  //00570DE3-FE
+    + gvar_011AE338;
+  if gvar_0061F2BC = 1 then                         //00570E03-0A
+    Inc(gvar_011AE334, 10);                         //00570E0C
+  gvar_011AE348 := 0;                               //00570E13-1A
+  gvar_0253637C := 0;                               //00570E1A-21
+  gvar_011AE318 := 0;                               //00570E21-27
+  gvar_02536364 := ScrollBar1.Position;             //00570E28-37
+  gvar_02536368 := ScrollBar2.Position;             //00570E3C-4B
+  if PaintBox1.Canvas <> gvar_011AE32C then         //00570E50-65
+  begin
+    gvar_02536364 := 0;                             //00570E67-6E
+    gvar_02536368 := 0;                             //00570E6E-75
+  end;                                              //00570E75
+  gvar_011AE32C.Font.Name := 'Arial';               //00570E75-B2
+  gvar_011AE32C.Font.Size :=                     //00570E87-A6
+    Round(gvar_0061F120 * 9 * fScale);
+  gvar_011AE318 := 2 - gvar_011AE32C.Font.Height;   //00570EAB-ED
+  if Printer.Canvas = gvar_011AE32C then            //00570EC2-D2
+  begin
+    fScale := 7.0;                                  //00570ED4-DF (mant. C0, exp 4001)
+    gvar_011AE32C.Font.Name := 'Arial';             //00570EE5-F2
+    gvar_011AE32C.Font.Size :=                  //00570EF7-25
+      Round(gvar_0061F120 * 9);
+    ebpC := PaintBox1.Canvas.Pen.Width;             //00570F26-31 [ebp-0C]
+    gvar_011AE32C.Pen.Width := Round(ebpC * 7.0);   //00570F31-47
+  end;
+  if PaintBox1.Canvas <> gvar_011AE32C then         //00570F4C-61
+    fScale := 1.13;                                 //00570F63-70
+  row := 1;                                         //00570F76 [ebp-8]
+  while gvar_011AE1C4[row][2] > 0 do                //00571052-5E
+  begin
+    for i := 0 to 19 do                             //00570F82-B1
+    begin
+      ChartSlotAnsi(i)^ := '';                      //00570F91-93
+      // target [ebx(11AE35C+4i) + eax*8 - $150] = row string slot
+      ChartAAnsi(102 * row + 19 + i)^ := '';        //00570F98-F8
+    end;
+    ebp14 := gvar_011AE1C4[row][3];                 //00570FB1-F5 [ebp-14]
+    byteFlag := 0;                                  //00570FBF [ebp-10]
+    DataModule2.Table17.FindKey([ebp14]);           //00570FC3-D5
+    memein(gvar_011AE1C4[row - 1][3]);              //00570FDA-E4
+    zerleg(gvar_011AE334, gvar_011AE318,            //00570FE9-FFE
+      gvar_011AE32C);
+    ChartAAnsi(102 * row + 18)^ :=                  //00571003-10
+      ChartSlotAnsi(0)^;
+    for i := 0 to 12 do                             //00571015-4D edi=13
+    begin
+      tmp := Trim(ChartSlotAnsi(i + 1)^);           //00571024-29 [ebp-18]
+      if Length(tmp) > 0 then                       //0057102E-32 (jbe)
+        ChartAAnsi(102 * row + 19 + i)^ := tmp;     //00571034-41
+    end;
+    Inc(row);                                       //0057104F
+  end;
+  if gvar_0061F2BC = 1 then                         //00571064-6B
+    gvar_011AE348 := Round(                         //0057106D-C2
+      (gvar_0253637C * gvar_011AE318 +
+       gvar_011AE318) * 4 / 5);
+  for row := 1 to 10000 do                          //00571097-C7
+  begin
+    eaxv := gvar_015924E4[row][2];                  //005710A8-AA
+    SetChartAFlat(102 * row + 2, eaxv);             //005710AA-edx? [ebx]
+    eaxv := gvar_015924E4[row][0];                  //005710AC-AF [esi-8]
+    SetChartAFlat(102 * row, eaxv);                 //005710AF-B5
+    eaxv := gvar_015924E4[row][1];                  //005710B2-B5 [esi-4]
+    SetChartAFlat(102 * row + 1, eaxv);             //005710B5-9C
+  end;
+  sub_00568FD4;                                     //005710C9
+  row := 1;                                         //005710CE [ebp-8]
+  gvar_011AE320 := 0;                               //005710D5-D7
+  while gvar_011AE1C4[row][2] > 0 do                //005710DC-40C
+  begin
+    eaxv := gvar_011AE1C4[row][0];                  //005710DE
+    if eaxv > gvar_011AE320 then                    //005710E5-EB jle
+      gvar_011AE320 := eaxv;                        //005710ED-28
+    Inc(row);                                       //005710FD
+  end;
+  Dec(gvar_011AE320);                               //0057110E
+  ScrollBar1.LargeChange := PaintBox1.Width - 5;    //00571114-2E
+  ScrollBar2.LargeChange := PaintBox1.Height - 5;   //00571135-4F
+  ScrollBar1.SmallChange := 20;                     //00571156-5F
+  ScrollBar2.SmallChange := 20;                     //00571162-7A
+  Screen.Cursor := crDefault;                       //0057117A-83
 end;
 
 procedure TForm13.SpeedButton13Click(Sender: TObject);
