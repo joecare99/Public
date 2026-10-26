@@ -85,7 +85,7 @@ type
     procedure vz1(AValue: TCanvas); //005711D4, AValue in EDX
     procedure vz2(AValue: TCanvas); //00569504, AValue in EDX
     procedure Vr2; //0056904C
-    procedure nachf_neu; //00564668
+    procedure nachf_neu(AGen: Integer); //00564668, AGen in EDX
     procedure Button4Click(Sender: TObject); //00570890
     procedure PaintBox1Paint(Sender:TObject); //00570C14
     procedure Button6Click(Sender: TObject); //00572448
@@ -3706,9 +3706,376 @@ begin
   Screen.Cursor := crDefault;                       //005694AA-B3
 end;
 
-procedure TForm13.nachf_neu;
+function NachfNode(I: Integer): PNachfNode;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { node I of the BFS grid, I = 1..10000 (IDR: imul eax,esi,25 = $25
+    dwords stride $94, base 01044CE8). }
+  Result := @gvar_01044CE8[I];
+end;
+
+procedure TForm13.nachf_neu(AGen: Integer);
+var
+  NodeI, Row, Col, Buf, LastM: Integer;     // esi, ebp-10, ebp-14, ebp-38, ebp-40
+  GenIdx, I, Count, NumCh, P1, P2: Integer; // edi, ebp-0C, ebp-50, chunk num, ebp-44, ebp-48
+  StartNum, MaxRow, Pers: Integer;          // ebp-8, stat edx, ebp-4C
+  s, s1, s2, s3: AnsiString;
+  Node: PNachfNode;
+begin
+  { 00564668-8F prologue: edx (AGen) -> [ebp-4], ebx = DataModule2 hook. }
+  StartNum := DataModule2.Table1Nummer.AsInteger;                    //00564692-9F (+534)
+  for I := 1 to 10000 do                                             //005646A2-F2 (esi=$2710)
+    FillChar(gvar_01044CE8[I], $94, 0);                              //dwords 0..$28 + beide ShortString-Len-Bytes
+  gvar_0061F2F0 := AGen;                                             //005646F3-F8
+  gvar_0061F110 := 80;                                               //005646FB-02 ($50)
+  DataModule2.Table1.IndexName := '';                                //00564705-0C
+  DataModule2.Table10.IndexName := 'num';                            //00564711-1E
+  DataModule2.Table1.FindKey([StartNum]);                            //00564723-37
+  for I := 1 to 50 do                                                //0056473C-51 (esi=$32)
+    gvar_0061F1F0[I] := '';                                          //00564746-51
+  NodeI := 1; Row := 1; Col := 1; GenIdx := 1; Buf := 1;             //00564753-6B
+  Node := NachfNode(NodeI);                                          //00564772-78
+  Node^.Nummer := StartNum;                                          //00564775-78
+  Node^.Row := Row;                                                  //0056477F-85
+  Node^.Col := Col;                                                  //0056478C-92
+  Node^.Ref1 := DataModule2.Table1Vater.AsInteger;                   //00564799-A9 (+538)
+  Node^.Ref2 := DataModule2.Table1Mutter.AsInteger;                  //005647B0-C0 (+53C)
+  Node^.Flag1 := 0;                                                  //005647C7-CC
+  Node^.Order := Buf;                                                //005647D3-D9
+  Node^.Flag2 := 0;                                                  //005647E0-E5
+  s := Copy(UpperCase(DataModule2.Table1Geschlecht.AsString), 1, 50); //005647EC-838 (+548, cl=$32)
+  PShortString(@Node^.Raw[0])^ := s;                                 //0056482C-38 (@PStrNCpy)
+  P1 := Buf;                                                         //0056483D-40
+  Inc(NodeI); Inc(Col); Inc(Buf);                                    //00564843-47
+  sub_005637C4(StartNum, s1);                                        //0056484A-57
+  sub_005637C4(0, s2);                                               //0056485E-6E
+  sub_005637C4(0, s3);                                               //00564871-81
+  gvar_0061F1F0[GenIdx] := s1 + s2 + s3;                             //0056487E-90 @LStrCatN 3
+  DataModule2.Table1.DisableControls;                                //00564895-9A
+  { Ehepartner des Starters: Table10-Cursor, Nummer = StartNum. }
+  if DataModule2.Table10.FindKey([StartNum]) then                    //0056489F-B6
+    while DataModule2.Table10Nummer.AsInteger = StartNum do          //00564FBA-CA (+3B4)
+    begin
+      Node := NachfNode(NodeI);                                      //005648D5-D8
+      Node^.Nummer := DataModule2.Table10Epnum.AsInteger;            //005648C8-D8 (+3B8)
+      Node^.Row := Row;                                              //005648DF-E5
+      Node^.Col := Col;                                              //005648EC-F2
+      Node^.Ref1 := 0;                                               //005648F9-FE
+      Node^.Ref2 := 0;                                               //00564905-0A
+      Node^.Flag1 := 0;                                              //00564911-16
+      Node^.Order := Buf;                                            //0056491D-23
+      Node^.Flag2 := 1;                                              //0056492A-2D
+      P2 := Buf;                                                     //00564938-3B
+      if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then      //0056493E-77
+        PShortString(@Node^.Raw[0])^ := AnsiString('W')              //00564974-77 (word 5701)
+      else
+        if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then    //00564983-B2
+          PShortString(@Node^.Raw[0])^ := AnsiString('M');           //005649B9-BC (word 4D01)
+      { Partnerzeile des Spouse-Knotens. }
+      if (Trim(DataModule2.Table10Sajahr.AsString) <> '') or                //005649C6-1E (+3D8)
+         (Trim(DataModule2.Table10Saort.AsString) <> '') then              //00564A03-1E (+3DC)
+      begin
+        s1 := 'ooS ' + DataModule2.Table10Satag.AsString + '.' +           //00564A24-7E (+3D0/3D4)
+              DataModule2.Table10Sajahr.AsString + ' ' +                   //00564A78-83 (+3D8)
+              DataModule2.Table10Saort.AsString;                           //00564A8B-9C (+3DC)
+        PShortString(@Node^.Raw[51])^ := Copy(s1, 1, 50);                  //00564AAC-D4 (@PStrNCpy $32)
+      end
+      else
+        if (Trim(DataModule2.Table10Hjahr.AsString) <> '') or              //00564ADE-B3 (+3C4)
+           (Trim(DataModule2.Table10Hort.AsString) <> '') then             //00564B1B-36 (+3C8)
+        begin
+          if Pos('Ehesch', DataModule2.Table10Verbind.AsString) > 0 then   //00564B3C-61 (+3E4)
+          begin
+            s1 := 'ooK ' + DataModule2.Table10Htag.AsString + '.' +        //00564B67-C1 (+3BC/3C0)
+                  DataModule2.Table10Hjahr.AsString + ' ' +                //00564BC1-D9 (+3C4)
+                  DataModule2.Table10Hort.AsString;                        //00564BCE-D9 (+3C8)
+            PShortString(@Node^.Raw[51])^ := Copy(s1, 1, 50);              //00564C05-D4
+          end
+          else
+            if Pos('and', DataModule2.Table10Verbind.AsString) > 0 then    //00564C21-46
+            begin
+              s1 := 'o-o ' + DataModule2.Table10Hjahr.AsString;            //00564C4C-70 @LStrCat3
+              PShortString(@Node^.Raw[51])^ := Copy(s1, 1, 50);            //00564C75-8D
+            end;
+        end
+        else
+          if Pos('Ehesch', DataModule2.Table10Verbind.AsString) > 0 then   //00564CA4-C9
+            PShortString(@Node^.Raw[51])^ := AnsiString('oo');             //00564CCB-E0 (3-byte movs)
+      Inc(NodeI); Inc(Col); Inc(Buf);                                      //00564CE1-E5
+      sub_005637C4(DataModule2.Table10Epnum.AsInteger, s1);                //00564CF9-08 (+3B8)
+      gvar_0061F1F0[GenIdx] := gvar_0061F1F0[GenIdx] + s1 + '            ';  //00564CE8-D1E @LStrCatN 3
+      { Kinder des Paares (Person, Spouse) -> Slot GenIdx+1. }
+      DataModule2.Table1.IndexName := '';                                  //00564D23-2A
+      DataModule2.Table1.FindKey([StartNum]);                              //00564D2F-41
+      if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then       //00564D48-77
+      begin
+        DataModule2.Table1.IndexName := 'vat';                             //00564D82-8C
+        DataModule2.Table1.FindKey([StartNum]);                            //00564D91-A5
+        while (not DataModule2.Table1.Eof) and                             //00564E37-43
+              (DataModule2.Table1Vater.AsInteger = StartNum) do            //00564E49-59
+        begin
+          if DataModule2.Table1Mutter.AsInteger = DataModule2.Table10Epnum.AsInteger then  //00564DAF-CD
+          begin
+            sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);          //00564DC1-DE
+            sub_005637C4(P1, s2);                                          //00564DEE-02
+            sub_005637C4(P2, s3);                                          //00564E0E-11
+            gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //00564DC0-E28
+          end;
+          DataModule2.Table1.Next;                                         //00564E2D-32
+        end;
+      end
+      else
+        if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then     //00564E64-93
+        begin
+          DataModule2.Table1.IndexName := 'mut';                           //00564E9E-A8
+          DataModule2.Table1.FindKey([StartNum]);                          //00564EAD-C1
+          while (not DataModule2.Table1.Eof) and                           //00564EF4-5F
+                (DataModule2.Table1Mutter.AsInteger = StartNum) do         //00564F61-71
+          begin
+            if DataModule2.Table1Vater.AsInteger = DataModule2.Table10Epnum.AsInteger then  //00564ECB-E7
+            begin
+              sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);        //00564EEB-05
+              sub_005637C4(P2, s2);                                        //00564F10-1E
+              sub_005637C4(P1, s3);                                        //00564F24-2D
+              gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //00564EEB-F38
+            end;
+            DataModule2.Table1.Next;                                       //00564F49-4E
+          end;
+        end;
+      DataModule2.Table1.IndexName := '';                                  //00564F77-7E
+      DataModule2.Table1.FindKey([StartNum]);                              //00564F83-95
+      DataModule2.Table10.Next;                                            //00564F9C-A4
+    end;
+  { Kinder des Starters ohne Partner. }
+  DataModule2.Table1.IndexName := '';                                      //00564FD0-EA
+  DataModule2.Table1.FindKey([StartNum]);                                  //00564FD9-FF0
+  if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then           //00564FF5-24
+  begin
+    DataModule2.Table1.IndexName := 'vat';                                 //0056502F-39
+    DataModule2.Table1.FindKey([StartNum]);                                //0056503E-52
+    while (not DataModule2.Table1.Eof) and                                 //005650DA-E1
+          (DataModule2.Table1Vater.AsInteger = StartNum) do                //005650E7-F7
+    begin
+      if DataModule2.Table1Mutter.AsInteger = 0 then                       //0056505C-6B
+      begin
+        sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);              //0056506D-87
+        sub_005637C4(P1, s2);                                              //00565098-9B
+        sub_005637C4(P2, s3);                                              //005650A0-AC
+        gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //0056506D-C6
+      end;
+      DataModule2.Table1.Next;                                             //005650CB-D0
+    end;
+  end
+  else
+    if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then         //00565102-31
+    begin
+      DataModule2.Table1.IndexName := 'mut';                               //0056513C-46
+      DataModule2.Table1.FindKey([StartNum]);                              //0056514B-5F
+      while (not DataModule2.Table1.Eof) and                               //005651E7-EE
+            (DataModule2.Table1Mutter.AsInteger = StartNum) do             //005651F0-FA
+      begin
+        if DataModule2.Table1Vater.AsInteger = 0 then                      //00565169-78
+        begin
+          sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);            //0056517A-94
+          sub_005637C4(P2, s2);                                            //005651A5-A8
+          sub_005637C4(P1, s3);                                            //005651B3-BC
+          gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //0056517A-C7
+        end;
+        DataModule2.Table1.Next;                                           //005651D8-DD
+      end;
+    end;
+  DataModule2.Table1.IndexName := '';                                      //00565206-0D
+  { Generationsloop: slot GenIdx haelt die 18-Zeichen-Chunks
+    [Nummer][Vater-Idx][Mutter-Idx]; Ehepartner-Chunks mit 12 Leerzeichen
+    Padding landen in der eigenen Liste, Kinder-Chunks in Slot GenIdx+1 }
+  Inc(GenIdx);                                                             //00565212
+  while GenIdx <= AGen do                                                  //00565213-16
+  begin
+    Inc(Row);                                                              //0056521C-1F
+    Col := 1;                                                              //0056521F-26
+    s := Trim(gvar_0061F1F0[GenIdx]);                                      //00565226-38
+    if s = '' then                                                         //00565238-3F
+      Break;                                                               //-> 00565FF4
+    LastM := 0;                                                            //00565251-53
+    Count := Round(Length(gvar_0061F1F0[GenIdx]) / 18);                    //00565256-7D
+    I := 1;                                                                //00565284
+    while Count > 0 do                                                     //0056527B-86
+    begin
+      Node := NachfNode(NodeI);                                            //00565288-8B
+      NumCh := StrToInt(Copy(gvar_0061F1F0[GenIdx], (I - 1) * 18 + 1, 6));  //0056528B-AF
+      DataModule2.Table1.FindKey([NumCh]);                                 //005652BA-CB
+      Node^.Nummer := DataModule2.Table1Nummer.AsInteger;                  //005652D0-E0
+      Node^.Row := Row;                                                    //005652E7-ED
+      Node^.Col := Col;                                                    //005652F4-FA
+      Node^.Ref1 := StrToInt(Copy(gvar_0061F1F0[GenIdx], (I - 1) * 18 + 7, 6));    //00565301-27
+      Node^.Ref2 := StrToInt(Copy(gvar_0061F1F0[GenIdx], (I - 1) * 18 + 13, 6));   //0056533C-62
+      Node^.Flag1 := 1;                                                    //00565377-7A
+      Node^.Order := Buf;                                                  //00565385-8B
+      Node^.Flag2 := 0;                                                    //00565392-97
+      s := Copy(UpperCase(DataModule2.Table1Geschlecht.AsString), 1, 50);  //0056539E-EA
+      PShortString(@Node^.Raw[0])^ := s;                                   //005653D8-EA
+      P1 := Buf;                                                           //005653EF-F2
+      if Node^.Ref2 <> LastM then                                          //005653F5-FA
+      begin
+        Node^.Flag3 := 1;                                                  //00565404-12
+        LastM := Node^.Ref2;                                               //00565415-1D
+      end;
+      Inc(NodeI); Inc(Col); Inc(Buf);                                      //0056541F-23
+      { Ehepartner des geparsten (IndexName '')-Personen. }
+      if DataModule2.Table10.FindKey([NumCh]) then                         //00565426-69
+        while DataModule2.Table10Nummer.AsInteger = NumCh do               //00565C72-B2
+        begin
+          DataModule2.Table1.FindKey([DataModule2.Table10Epnum.AsInteger]);  //0056547B-99
+          Node := NachfNode(NodeI);                                        //005654AB-AE
+          Node^.Nummer := DataModule2.Table10Epnum.AsInteger;              //0056549E-A8
+          Node^.Row := Row;                                                //005654B5-BB
+          Node^.Col := Col;                                                //005654C2-C8
+          Node^.Ref1 := 0;                                                 //005654CF-D4
+          Node^.Ref2 := 0;                                                 //005654DB-E0
+          Node^.Flag1 := 0;                                                //005654E7-EC
+          Node^.Order := Buf;                                              //005654F3-F9
+          Node^.Flag2 := 1;                                                //00565500-03
+          s := Copy(UpperCase(DataModule2.Table1Geschlecht.AsString), 1, 50);  //0056550E-43
+          PShortString(@Node^.Raw[0])^ := s;                               //00565548-5A
+          P2 := Buf;                                                       //0056555F-62
+          { Partnerzeile - Datenformatierung ueber sub_00563A0C. }
+          if (Trim(DataModule2.Table10Sajahr.AsString) <> '') or           //00565565-B0
+             (Trim(DataModule2.Table10Saort.AsString) <> '') then          //005655A5-BD
+          begin
+            s1 := 'ooS ' + DataModule2.Table10Satag.AsString + '.' +       //005655C3-28
+                  DataModule2.Table10Samonat.AsString + '.' +              //005655E6-28 (+3D4)
+                  DataModule2.Table10Sajahr.AsString;                      //00565617 (+3D8)
+            sub_00563A0C(s1, s3);                                          //0056562D-3E
+            s1 := s3 + ' ' + DataModule2.Table10Saort.AsString;            //0056563E-68 (@LStrCatN 4)
+            PShortString(@Node^.Raw[51])^ := Copy(s1, 1, 50);              //00565672-98
+          end
+          else
+            if (Trim(DataModule2.Table10Hjahr.AsString) <> '') or          //005656A4-F1
+               (Trim(DataModule2.Table10Hort.AsString) <> '') then         //005656E4-F1
+            begin
+              if Pos('Ehesch', DataModule2.Table10Verbind.AsString) > 0 then  //00565702-25
+              begin
+                s1 := 'ooK ' + DataModule2.Table10Htag.AsString + '.' +    //0056572D-C7
+                      DataModule2.Table10Hmonat.AsString + '.' +           //00565763-D7 (+3C0)
+                      DataModule2.Table10Hjahr.AsString;                   //00565781 (+3C4)
+                sub_00563A0C(s1, s3);                                      //00565797-A7
+                s1 := s3 + ' ' + DataModule2.Table10Hort.AsString;         //005657A8-C7
+                PShortString(@Node^.Raw[51])^ := Copy(s1, 1, 50);          //005657DC-ED
+              end
+              else
+                if Pos('and', DataModule2.Table10Verbind.AsString) > 0 then  //0056580E-31
+                begin
+                  s1 := 'o-o ' + DataModule2.Table10Hjahr.AsString;        //00565839-5D @LStrCat3
+                  PShortString(@Node^.Raw[51])^ := Copy(s1, 1, 50);        //00565862-78
+                end;
+            end
+            else
+              if Pos('Ehesch', DataModule2.Table10Verbind.AsString) > 0 then  //00565891-D9
+                PShortString(@Node^.Raw[51])^ := AnsiString('oo');           //005658CC-D5 (3-byte movs)
+          Inc(NodeI); Inc(Col); Inc(Buf);                                   //005658CE-D2
+          sub_005637C4(DataModule2.Table10Epnum.AsInteger, s1);             //005658D9-E6
+          gvar_0061F1F0[GenIdx] := gvar_0061F1F0[GenIdx] + s1 + '            ';  //005658D5-56590B
+          { Kinder des Paares (Person, Spouse) -> Slot GenIdx+1. }
+          DataModule2.Table1.IndexName := '';                               //00565895-565917
+          NumCh := StrToInt(Copy(gvar_0061F1F0[GenIdx], (I - 1) * 18 + 1, 6));  //0056591D-46 (chunk field 1..6 again)
+          DataModule2.Table1.FindKey([NumCh]);                              //0056594B-5C
+          if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then    //00565968-99
+          begin
+            DataModule2.Table1.IndexName := 'vat';                          //0056599B-A5
+            DataModule2.Table1.FindKey([NumCh]);                            //005659AA-EA
+            while (not DataModule2.Table1.Eof) and                          //00565A7C-88
+                  (DataModule2.Table1Vater.AsInteger = NumCh) do            //00565A8E-CE
+            begin
+              if DataModule2.Table1Mutter.AsInteger = DataModule2.Table10Epnum.AsInteger then  //005659F4-0F
+              begin
+                sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);       //00565A14-2E
+                sub_005637C4(P1, s2);                                       //00565A39-42
+                sub_005637C4(P2, s3);                                       //00565A54-61
+                gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //00565A61-69
+              end;
+              DataModule2.Table1.Next;                                      //00565A72-81
+            end;
+          end
+          else
+            if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then  //00565AD9-08
+            begin
+              DataModule2.Table1.IndexName := 'mut';                        //00565B13-1D
+              DataModule2.Table1.FindKey([NumCh]);                          //00565B22-62
+              while (not DataModule2.Table1.Eof) and                        //00565BF4-5FC
+                    (DataModule2.Table1Mutter.AsInteger = NumCh) do         //00565C02-42
+              begin
+                if DataModule2.Table1Vater.AsInteger = DataModule2.Table10Epnum.AsInteger then  //00565B6C-88
+                begin
+                  sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);     //00565B8C-A0
+                  sub_005637C4(P2, s2);                                     //00565BB1-BBF
+                  sub_005637C4(P1, s3);                                     //00565BCB-D3
+                  gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //00565B8C-E5
+                end;
+                DataModule2.Table1.Next;                                    //00565BEA-F4
+              end;
+            end;
+          DataModule2.Table1.IndexName := '';                               //00565C48-4F
+          DataModule2.Table10.Next;                                         //00565C54-60
+        end;
+      { Kinder der Person ohne Partner. }
+      DataModule2.Table1.IndexName := '';                                   //00565CB8-CBF
+      NumCh := StrToInt(Copy(gvar_0061F1F0[GenIdx], (I - 1) * 18 + 1, 6));  //00565CCB-E7
+      DataModule2.Table1.FindKey([NumCh]);                                  //00565CFA-D04
+      if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'M' then        //00565D09-3D
+      begin
+        DataModule2.Table1.IndexName := 'vat';                              //00565D43-4D
+        DataModule2.Table1.FindKey([NumCh]);                                //00565D52-D82
+        while (not DataModule2.Table1.Eof) and                              //00565E10-21
+              (DataModule2.Table1Vater.AsInteger = NumCh) do                //00565E27-65
+        begin
+          if DataModule2.Table1Mutter.AsInteger = 0 then                    //00565D9C-A9
+          begin
+            sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);           //00565DAD-DCE
+            sub_005637C4(P1, s2);                                           //00565DD8-DE1
+            sub_005637C4(P2, s3);                                           //00565DE6-DEF
+            gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //00565DAD-E06
+          end;
+          DataModule2.Table1.Next;                                          //00565E0B-10
+        end;
+      end
+      else
+        if UpperCase(DataModule2.Table1Geschlecht.AsString) = 'W' then      //00565E72-96
+        begin
+          DataModule2.Table1.IndexName := 'mut';                            //00565EAC-B6
+          DataModule2.Table1.FindKey([NumCh]);                              //00565EBB-0A
+          while (not DataModule2.Table1.Eof) and                            //00565F7E-87
+                (DataModule2.Table1Mutter.AsInteger = NumCh) do             //00565F8C-CA
+          begin
+            if DataModule2.Table1Vater.AsInteger = 0 then                   //00565F05-14
+            begin
+              sub_005637C4(DataModule2.Table1Nummer.AsInteger, s1);         //00565F16-2A
+              sub_005637C4(P2, s2);                                         //00565F35-49
+              sub_005637C4(P1, s3);                                         //00565F4F-58
+              gvar_0061F1F0[GenIdx + 1] := gvar_0061F1F0[GenIdx + 1] + s1 + s2 + s3;  //00565F16-6F
+            end;
+            DataModule2.Table1.Next;                                        //00565F74-79
+          end;
+        end;
+      DataModule2.Table1.IndexName := '';                                   //00565FD2-D9
+      Inc(I); Dec(Count);                                                   //00565FDE-E4
+    end;
+    Inc(GenIdx);                                                            //00565FEA
+  end;
+  { Statistik: solange Order (D04) > 0, Row/Nummer der Knoten 1..n. }
+  MaxRow := 0;                                                              //00565FF4-FD
+  I := 1;                                                                   //00565FF6-FB
+  Pers := 0;                                                                //00565FFD
+  while gvar_01044CE8[I].Order > 0 do                                       //00566023-2E
+  begin
+    if MaxRow < gvar_01044CE8[I].Row then                                   //00566002-0E
+      MaxRow := gvar_01044CE8[I].Row;                                       //0056600B-0E
+    if gvar_01044CE8[I].Nummer > 0 then                                     //00566015-1D
+      Inc(Pers);                                                            //0056601F
+    Inc(I);                                                                 //00566022
+  end;
+  s := IntToStr(GenIdx - 1) + ' Generation(en) / ' + IntToStr(Pers) +       //00566030-72 @LStrCatN 4
+       ' Personen gefunden';
+  ShowMessage(s);                                                           //00566072-78
+  DataModule2.Table1.EnableControls;                                        //0056607D-87
 end;
 
 procedure TForm13.Button4Click(Sender: TObject);

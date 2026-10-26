@@ -41,6 +41,24 @@ type
   TPersonRec = array[0..531] of Byte; // 532 bytes = $214
   TPersonRecs = array[0..79999] of TPersonRec;
 
+  { nachf_neu BFS node grid (base 01044CE8). Every row is $94 = 148
+    bytes, 10000 rows; the IDR labels touching this grid map as:
+    01044CE8 = dword +$00 (Nummer), 01044CEC = +$04 (Row), 01044CF0 =
+    +$08 (Col), 01044CF4 = +$0C (Ref1 = father node), 01044CF8 = +$10
+    (Ref2 = mother node), 01044CFC = +$14 (Flag1), 01044D00 = +$18
+    (Flag2 = spouse marker), 01044D04 = +$1C (Order), 01044D08/0C =
+    +$20/+$24, 01044D10 = +$28 (Flag3), 01044D14 = ShortString Name
+    (+$2C, max 50 bytes), 01044D47 = ShortString Partner (+$5F, max
+    50 bytes), 01044D7C = start of row 1 (the $94-byte $2710-Schleife
+    clears rows 1..10000). Raw Bytes: Row[0..50] = Name ShortString
+    (Len byte at 0), Row[51..101] = Partner ShortString. }
+  TNachfNode = packed record
+    Nummer, Row, Col, Ref1, Ref2, Flag1, Flag2, Order, F20, F24, Flag3: Integer; // $00-$2B
+    Raw: array[0..103] of Byte; // $2C: Name ShortString, $5F: Partner ShortString
+  end;
+  TNachfNodes = array[0..9999] of TNachfNode;
+  PNachfNode = ^TNachfNode;
+
 var
   gvar_0054F9C4: Integer; //0054F9C4  used by Unit26
   gvar_0055AEC8: Integer; //0055AEC8  used by Unit10
@@ -154,8 +172,7 @@ var
   gvar_0061F124: Integer; //0061F124  used by Unit13
   gvar_0061F128: Integer; //0061F128  used by Unit13
   gvar_0061F12C: TStringList; //0061F12C  used by Unit13
-  gvar_0061F1F0: Integer; //0061F1F0  used by Unit13
-  gvar_0061F1F4: AnsiString; //0061F1F4  used by Unit13
+  gvar_0061F1F0: array[0..50] of AnsiString; //0061F1F0  Unit13.nachf_neu: per-generation AnsiString slots at 0061F1F0+4*n; the IDR label 0061F1F4 = slot 1 (form close finalizes 50 slots from 0061F1F4, nachf_neu clears slots 1..50 and appends child lists of generation edi to slot edi+1 = [edi*4+61F1F4])
   gvar_0061F2BC: Integer; //0061F2BC  used by Unit12, Unit13
   gvar_0061F2C0: Integer; //0061F2C0  used by Unit12, Unit13
   gvar_0061F2C4: Integer; //0061F2C4  used by Unit12, Unit13
@@ -174,11 +191,7 @@ var
   gvar_0061F2F8: Integer; //0061F2F8  used by Unit13
   gvar_0061F30C: TPersonRecs; //0061F30C  person mirror grid, Unit13 (80000 rows of $214)
   gvar_0061F314: Integer; //0061F314  used by Unit13
-  gvar_01044CEC: Integer; //01044CEC  used by Unit13
-  gvar_01044CF8: Integer; //01044CF8  used by Unit13
-  gvar_01044D14: Integer; //01044D14  used by Unit13
-  gvar_01044D47: Integer; //01044D47  used by Unit13
-  gvar_01044D7C: Integer; //01044D7C  used by Unit13
+  gvar_01044CE8: TNachfNodes; //01044CE8  nachf_neu BFS node grid (10000 rows of $94; labels 01044CEC/F8/D14/D47/D7C are fields of row 0/1, see TNachfNode comment)
   gvar_011AE038: Integer; //011AE038  used by Unit13
   { ancestor-row grid A (base 011AE1C4): fields so far pinned —
     row[r]: dword[0] = label 011AE1C4, dword[2] (+8) = label 011AE1CC;
