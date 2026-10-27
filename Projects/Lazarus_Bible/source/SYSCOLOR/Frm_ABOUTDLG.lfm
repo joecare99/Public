@@ -1,0 +1,164 @@
+object AboutBox: TAboutBox
+  Left = 229
+  Top = 146
+  ActiveControl = OKButton
+  BorderStyle = bsDialog
+  Caption = 'About'
+  ClientHeight = 213
+  ClientWidth = 298
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  OldCreateOrder = True
+  Position = poScreenCenter
+  PixelsPerInch = 96
+  TextHeight = 16
+  object Panel1: TPanel
+    Left = 8
+    Top = 8
+    Width = 281
+    Height = 161
+    BevelInner = bvRaised
+    BevelOuter = bvLowered
+    object ProgramIcon: TImage
+      Left = 28
+      Top = 24
+      Width = 37
+      Height = 37
+      Picture.Data = {
+        055449636F6E0000010001002020100000000000E80200001600000028000000
+        2000000040000000010004000000000080020000000000000000000000000000
+        0000000000000000000080000080000000808000800000008000800080800000
+        80808000C0C0C0000000FF0000FF000000FFFF00FF000000FF00FF00FFFF0000
+        FFFFFF00999999999999999999999999999999999FFFFFFFFFFFFF8888888888
+        8FFFFFF997FFFFFFFFFF888888888888888FFFF9977FFFFFFFF8444C44488888
+        8888FFF99777FFFFFF4444444444488888888FF997777FFF44444C4C4C4C4C48
+        888888F9977777F44444449444444444888888F99777774C444C499C4C4C4C4C
+        48888889977774444444C994C444C444C48888899777744C4C4C499C4C4C4C4C
+        4C8888899777444444C49994CCC4C4C4C44888899777444C4C49999C4C4C4C4C
+        4CA8888997744444C4499999CCCCC4CCC4AA888997744C4C4C4999999C4C4C4C
+        4CAA888997744444C49999999CCCCCCCC4AA88899774444C4C999999CC4CCC4C
+        4CAA888997744444C499999CCCCCCCCAAAAA888997744C4C4C994C4C4CCCCCCA
+        AAAA8889977444444499CCCC9CCCCCCAAAAA88F99777444C4C499C499C4CCC4C
+        AAA888F997774444949999999CCCCCCCC4C88FF99777744C999999999C4C4C43
+        3C88FFF997777444999999999CCCCCC3348FFFF99777774C999999999C4C3C43
+        3FFFFFF997777774999999C999CC3433FFFFFFF9977777774999994C999C4C37
+        7FFFFFF9977777777744499444C4477777FFFFF99777777777774C4C4C477777
+        777FFFF99777777777777777777777777777FFF9977777777777777777777777
+        77777FF9977777777777777777777777777777F9999999999999999999999999
+        9999999900000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        0000000000000000000000000000000000000000000000000000000000000000
+        00000000
+      }
+      Stretch = True
+      IsControl = True
+    end
+    object ProductName: TLabel
+      Left = 88
+      Top = 16
+      Width = 168
+      Height = 13
+      Caption = 'SysColor -- Set System Colors'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      IsControl = True
+    end
+    object Version: TLabel
+      Left = 88
+      Top = 40
+      Width = 65
+      Height = 13
+      Caption = 'Version 3.0'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      IsControl = True
+    end
+    object Copyright: TLabel
+      Left = 8
+      Top = 112
+      Width = 216
+      Height = 13
+      Caption = 'Copyright '#169' 1995, 1998 by Tom Swan'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      IsControl = True
+    end
+    object Comments: TLabel
+      Left = 8
+      Top = 76
+      Width = 241
+      Height = 21
+      AutoSize = False
+      Caption = 'From Delphi 4 Bible'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+      IsControl = True
+    end
+    object Label1: TLabel
+      Left = 8
+      Top = 92
+      Width = 201
+      Height = 13
+      Caption = 'Published by IDG Books Worldwide'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+    object Rights: TLabel
+      Left = 8
+      Top = 128
+      Width = 103
+      Height = 13
+      Caption = 'All rights reserved'
+      Font.Charset = DEFAULT_CHARSET
+      Font.Color = clBlack
+      Font.Height = -11
+      Font.Name = 'MS Sans Serif'
+      Font.Style = [fsBold]
+      ParentFont = False
+    end
+  end
+  object OKButton: TBitBtn
+    Left = 111
+    Top = 178
+    Width = 77
+    Height = 27
+    DoubleBuffered = True
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    Kind = bkOK
+    Margin = 2
+    ParentDoubleBuffered = False
+    ParentFont = False
+    Spacing = -1
+    TabOrder = 1
+    IsControl = True
+  end
+end

@@ -1,0 +1,1045 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<CONFIG>
+  <UserPkgLinks Version="3" Count="109">
+    <Item1>
+      <Name Value="atbinhex_package"/>
+      <Version Major="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\ATBinHex-Lazarus-master\atbinhex\atbinhex_package.lpk"/>
+      <LastUsed Value="2019/08/17 18:06:14"/>
+    </Item1>
+    <Item2>
+      <Name Value="atsynedit_ex_package"/>
+      <Version Major="1" Minor="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\ATSynEdit_Ex\atsynedit_ex\atsynedit_ex_package.lpk"/>
+      <LastUsed Value="2018/11/18 00:23:19"/>
+    </Item2>
+    <Item3>
+      <Name Value="atsynedit_package"/>
+      <Version Major="1" Minor="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\ATSynEdit\atsynedit\atsynedit_package.lpk"/>
+      <LastUsed Value="2020/09/10 19:00:09"/>
+    </Item3>
+    <Item4>
+      <Name Value="BarChartp"/>
+      <Filename Value="C:\Projekte\Delphi\Delphi_Bible\FPC\BarChartp.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:47"/>
+    </Item4>
+    <Item5>
+      <Name Value="BaseUnits"/>
+      <Version Major="1" Release="1" Build="127"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\baseunits.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item5>
+    <Item6>
+      <Name Value="BGLControls"/>
+      <Version Major="1" Minor="2"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\BGRABitmap\bglcontrols\bglcontrols.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item6>
+    <Item7>
+      <Name Value="BGRABitmapPack"/>
+      <Version Major="9" Minor="3"/>
+      <Filename Value="C:\Projekte\Lazarus\PascalClassLibrary\GraphicTest\Packages\bgrabitmap\bgrabitmappack.lpk"/>
+      <LastUsed Value="2018/11/21 17:47:04"/>
+    </Item7>
+    <Item8>
+      <Name Value="BGRABitmapPack"/>
+      <Version Major="11" Minor="3" Release="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\bgrabitmap-master\bgrabitmap\bgrabitmappack.lpk"/>
+      <LastUsed Value="2024/04/04 22:10:18"/>
+    </Item8>
+    <Item9>
+      <Name Value="BGRABitmapPack"/>
+      <Version Major="11" Minor="6" Release="2"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\BGRABitmap\bgrabitmap\bgrabitmappack.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item9>
+    <Item10>
+      <Name Value="bgracontrols"/>
+      <Version Major="7" Minor="2"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\bgracontrols-master\bgracontrols.lpk"/>
+      <LastUsed Value="2024/01/30 22:19:34"/>
+    </Item10>
+    <Item11>
+      <Name Value="bgracontrols"/>
+      <Version Major="9" Release="1" Build="3"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\BGRAControls\bgracontrols.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item11>
+    <Item12>
+      <Name Value="BGRAControlsFX"/>
+      <Version Minor="1" Release="6" Build="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\bgracontrolsfx-master\bgracontrolsfx.lpk"/>
+      <LastUsed Value="2019/08/17 18:06:14"/>
+    </Item12>
+    <Item13>
+      <Name Value="bgrapascalscriptcomponent"/>
+      <Version Major="7" Minor="2"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\bgracontrols-master\bgrapascalscriptcomponent.lpk"/>
+      <LastUsed Value="2024/01/30 22:19:34"/>
+    </Item13>
+    <Item14>
+      <Name Value="bgrapascalscriptcomponent"/>
+      <Version Major="9" Release="1" Build="3"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\BGRAControls\bgrapascalscriptcomponent.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item14>
+    <Item15>
+      <Name Value="Box2d"/>
+      <Version Major="2" Minor="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\Box2D\Box2d.lpk"/>
+      <LastUsed Value="2024/01/30 22:23:10"/>
+    </Item15>
+    <Item16>
+      <Name Value="CmpAboutBox"/>
+      <Version Major="1" Release="1"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\CmpAboutBox.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item16>
+    <Item17>
+      <Name Value="CmpDBConfig"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\CmpDBConfig.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item17>
+    <Item18>
+      <Name Value="CmpGLScene"/>
+      <Version Major="1"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\CmpGLScene.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item18>
+    <Item19>
+      <Name Value="CmpSQLTable"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\cmpsqltable.lpk"/>
+      <LastUsed Value="2026/10/04 00:52:37"/>
+    </Item19>
+    <Item20>
+      <Name Value="Compatible"/>
+      <Version Major="1" Release="1"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\Compatible.lpk"/>
+      <LastUsed Value="2025/12/13 21:11:14"/>
+    </Item20>
+    <Item21>
+      <Name Value="CoolAudio"/>
+      <Version Minor="2"/>
+      <Filename Value="C:\Projekte\Lazarus\PascalClassLibrary\CoolAudio\CoolAudio.lpk"/>
+      <LastUsed Value="2018/11/21 17:50:23"/>
+    </Item21>
+    <Item22>
+      <Name Value="CoolBar"/>
+      <Filename Value="C:\Projekte\Lazarus\PascalClassLibrary\CoolBar\CoolBar.lpk"/>
+      <LastUsed Value="2018/11/21 11:36:29"/>
+    </Item22>
+    <Item23>
+      <Name Value="CoolDocking"/>
+      <Version Minor="7"/>
+      <Filename Value="C:\Projekte\Lazarus\PascalClassLibrary\Docking\CoolDocking\CoolDocking.lpk"/>
+      <LastUsed Value="2018/06/02 10:00:13"/>
+    </Item23>
+    <Item24>
+      <Name Value="CoolStreaming"/>
+      <Version Minor="1"/>
+      <Filename Value="C:\Projekte\Lazarus\PascalClassLibrary\CoolStreaming\CoolStreaming.lpk"/>
+      <LastUsed Value="2018/11/21 11:36:29"/>
+    </Item24>
+    <Item25>
+      <Name Value="CoolTranslator"/>
+      <Version Minor="1"/>
+      <Filename Value="C:\Projekte\Lazarus\PascalClassLibrary\CoolTranslator\CoolTranslator.lpk"/>
+      <LastUsed Value="2018/11/22 23:44:48"/>
+    </Item25>
+    <Item26>
+      <Name Value="DataPortLasarus"/>
+      <Version Major="1" Release="2"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\DataPort\dataportlasarus.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item26>
+    <Item27>
+      <Name Value="DBHLLookUpPanel"/>
+      <Version Major="1"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\DBHLLookUpPanel.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item27>
+    <Item28>
+      <Name Value="DBHlPanel"/>
+      <Version Major="1"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\DBHlPanel.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item28>
+    <Item29>
+      <Name Value="DBParadox"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\DBParadox.lpk"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item29>
+    <Item30>
+      <Name Value="dcl_KGSoft"/>
+      <Version Major="1" Release="1"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\dcl_KGSoft.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item30>
+    <Item31>
+      <Name Value="detours"/>
+      <Filename Value="C:\Projekte\Lazarus\HeidiSQL\components\detours\packages\FPC\detours.lpk"/>
+      <LastUsed Value="2018/07/18 09:28:13"/>
+    </Item31>
+    <Item32>
+      <Name Value="DingPkg"/>
+      <Filename Value="C:\Projekte\Delphi\Delphi_Bible\FPC\DingPkg.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:47"/>
+    </Item32>
+    <Item33>
+      <Name Value="econtrol_package"/>
+      <Version Major="1" Minor="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\EControl\econtrol\econtrol_package.lpk"/>
+      <LastUsed Value="2020/09/10 19:00:09"/>
+    </Item33>
+    <Item34>
+      <Name Value="excompress"/>
+      <Version Major="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\ExCompress\excompress.lpk"/>
+      <LastUsed Value="2019/02/07 11:17:25"/>
+    </Item34>
+    <Item35>
+      <Name Value="excontrols"/>
+      <Version Major="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\ExControls\excontrols.lpk"/>
+      <LastUsed Value="2019/02/07 10:51:42"/>
+    </Item35>
+    <Item36>
+      <Name Value="exdatabase"/>
+      <Version Major="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\ExDatabase\exdatabase.lpk"/>
+      <LastUsed Value="2019/02/07 10:51:42"/>
+    </Item36>
+    <Item37>
+      <Name Value="exdesign"/>
+      <Version Major="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\ExDesign\exdesign.lpk"/>
+      <LastUsed Value="2019/02/07 10:51:42"/>
+    </Item37>
+    <Item38>
+      <Name Value="fpc_Compiler"/>
+      <Version Major="3" Minor="3" Release="1"/>
+      <Filename Value="C:\Projekte\Delphi\Idee\FPC\fpc_Compiler.lpk"/>
+      <LastUsed Value="2026/01/02 19:09:20"/>
+    </Item38>
+    <Item39>
+      <Name Value="fpOdf"/>
+      <Version Release="1"/>
+      <Filename Value="C:\Projekte\Lazarus\fpOdf\package\fpodf.lpk"/>
+      <LastUsed Value="2026/10/21 18:17:31"/>
+    </Item39>
+    <Item40>
+      <Name Value="fpvhttp"/>
+      <Version Minor="2"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\fpvhttp.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item40>
+    <Item41>
+      <Name Value="fpvnet"/>
+      <Version Minor="3"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\fpvnet.lpk"/>
+      <LastUsed Value="2025/09/12 15:25:01"/>
+    </Item41>
+    <Item42>
+      <Name Value="FrameViewer09"/>
+      <Version Major="11" Minor="8"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\HtmlViewer\package\FrameViewer09.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item42>
+    <Item43>
+      <Name Value="fv"/>
+      <Version Major="3" Minor="3" Release="1"/>
+      <Filename Value="C:\Projekte\Lazarus\FpcTrunk\packages\fv\fv.lpk"/>
+      <LastUsed Value="2020/09/21 22:19:03"/>
+    </Item43>
+    <Item44>
+      <Name Value="fv_p"/>
+      <Version Major="3" Minor="3" Release="1"/>
+      <Filename Value="C:\Projekte\Delphi\Idee\source\fv\fv_p.lpk"/>
+      <LastUsed Value="2026/01/02 19:09:21"/>
+    </Item44>
+    <Item45>
+      <Name Value="HighDPI"/>
+      <Version Build="1"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\highdpi.lpk"/>
+      <LastUsed Value="2026/01/02 19:09:18"/>
+    </Item45>
+    <Item46>
+      <Name Value="HtmlComp"/>
+      <Filename Value="C:\Projekte\Lazarus\Lazarus-CCR\components\thtmlport\package\htmlcomp.lpk"/>
+      <LastUsed Value="2019/05/21 12:37:09"/>
+    </Item46>
+    <Item47>
+      <Name Value="industrial"/>
+      <Version Minor="4"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\Industrialstuff\industrial.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item47>
+    <Item48>
+      <Name Value="indylaz"/>
+      <Version Major="10" Minor="6" Release="2" Build="3662"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\Indy10\indylaz.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item48>
+    <Item49>
+      <Name Value="JvAppFrmLazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvappfrmlazd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item49>
+    <Item50>
+      <Name Value="jvappfrmlazr"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvappfrmlazr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item50>
+    <Item51>
+      <Name Value="JvCmpD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvcmpd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item51>
+    <Item52>
+      <Name Value="JvCmpR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvcmpr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item52>
+    <Item53>
+      <Name Value="JvCoreLazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvcorelazd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item53>
+    <Item54>
+      <Name Value="JvCoreLazR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvcorelazr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item54>
+    <Item55>
+      <Name Value="JvCtrlsLazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvctrlslazd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item55>
+    <Item56>
+      <Name Value="JvCtrlsLazR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvctrlslazr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item56>
+    <Item57>
+      <Name Value="JvCustomLazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvcustomlazd.lpk"/>
+      <LastUsed Value="2026/05/08 12:03:24"/>
+    </Item57>
+    <Item58>
+      <Name Value="JvCustomLazR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvcustomlazr.lpk"/>
+      <LastUsed Value="2026/05/08 12:02:55"/>
+    </Item58>
+    <Item59>
+      <Name Value="JvDBLazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvdblazd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item59>
+    <Item60>
+      <Name Value="JvDBLazR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvdblazr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item60>
+    <Item61>
+      <Name Value="JvHMILazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvhmilazd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item61>
+    <Item62>
+      <Name Value="JvHMILazR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvhmilazr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item62>
+    <Item63>
+      <Name Value="JvJansLazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvjanslazd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item63>
+    <Item64>
+      <Name Value="JvJansLazR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvjanslazr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item64>
+    <Item65>
+      <Name Value="JvMMLazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvmmlazd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item65>
+    <Item66>
+      <Name Value="JvMMLazR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvmmlazr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item66>
+    <Item67>
+      <Name Value="JvNetLazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvnetlazd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item67>
+    <Item68>
+      <Name Value="JvNetLazR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvnetlazr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item68>
+    <Item69>
+      <Name Value="JvPageCompsD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvpagecompsd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item69>
+    <Item70>
+      <Name Value="JvPageCompsR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvpagecompsr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item70>
+    <Item71>
+      <Name Value="JvPascalInterpreterD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvpascalinterpreterd.lpk"/>
+      <LastUsed Value="2026/05/08 12:03:57"/>
+    </Item71>
+    <Item72>
+      <Name Value="JvPascalInterpreterR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvpascalinterpreterr.lpk"/>
+      <LastUsed Value="2026/05/08 12:03:54"/>
+    </Item72>
+    <Item73>
+      <Name Value="JvRuntimeDesignLazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvruntimedesignlazd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item73>
+    <Item74>
+      <Name Value="JvRuntimeDesignLazR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvruntimedesignlazr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item74>
+    <Item75>
+      <Name Value="JvStdCtrlsLazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvstdctrlslazd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item75>
+    <Item76>
+      <Name Value="JvStdCtrlsLazR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvstdctrlslazr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item76>
+    <Item77>
+      <Name Value="JvTimeFrameworkLazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvtimeframeworklazd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item77>
+    <Item78>
+      <Name Value="JvTimeFrameworkLazR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvtimeframeworklazr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item78>
+    <Item79>
+      <Name Value="JvValidatorsLazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvvalidatorslazd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item79>
+    <Item80>
+      <Name Value="JvValidatorsLazR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvvalidatorslazr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item80>
+    <Item81>
+      <Name Value="JvWizardLazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvwizardlazd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item81>
+    <Item82>
+      <Name Value="JvWizardLazR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvwizardlazr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item82>
+    <Item83>
+      <Name Value="JvXPCtrlsLazD"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvxpctrlslazd.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item83>
+    <Item84>
+      <Name Value="JvXPCtrlsLazR"/>
+      <Version Major="1" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\jvcllaz\packages\jvxpctrlslazr.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item84>
+    <Item85>
+      <Name Value="lazMapViewerPkg"/>
+      <Version Minor="2" Release="4"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\LazMapViewer\lazmapviewerpkg.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item85>
+    <Item86>
+      <Name Value="lazmapviewer_bgra"/>
+      <Version Minor="2" Release="4"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\LazMapViewer\lazmapviewer_bgra.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item86>
+    <Item87>
+      <Name Value="lazmapviewer_rgbgraphics"/>
+      <Version Minor="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Lazarus-CCR\components\lazmapviewer\lazmapviewer_rgbgraphics.lpk"/>
+      <LastUsed Value="2020/07/21 18:05:49"/>
+    </Item87>
+    <Item88>
+      <Name Value="lazmapviewer_rgbgraphics"/>
+      <Version Minor="2" Release="2" Build="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\lazmapviewer\lazmapviewer_rgbgraphics.lpk"/>
+      <LastUsed Value="2020/07/21 18:15:03"/>
+    </Item88>
+    <Item89>
+      <Name Value="lazMapViewer_Synapse"/>
+      <Version Minor="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Lazarus-CCR\components\lazmapviewer\lazmapviewer_synapse.lpk"/>
+      <LastUsed Value="2019/10/10 14:32:49"/>
+    </Item89>
+    <Item90>
+      <Name Value="lazrichview"/>
+      <Version Minor="5" Release="3"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\lazrichview\lazrichview.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item90>
+    <Item91>
+      <Name Value="laz_synapse"/>
+      <Version Major="40" Minor="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\synapse40.1\laz_synapse.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item91>
+    <Item92>
+      <Name Value="lclextensions_package"/>
+      <Version Minor="6" Release="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\lclextensions\lclextensions_package.lpk"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item92>
+    <Item93>
+      <Name Value="LedShapePacket"/>
+      <Filename Value="C:\Projekte\Lazarus\Laz-Projects\LazLedSim\led_component\ledshape\ledshapepacket.lpk"/>
+      <LastUsed Value="2020/09/26 16:03:17"/>
+    </Item93>
+    <Item94>
+      <Name Value="lnetbase"/>
+      <Version Minor="6" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\lnet\lazaruspackage\lnetbase.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item94>
+    <Item95>
+      <Name Value="lnetvisual"/>
+      <Version Minor="6" Release="6"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\lnet\lazaruspackage\lnetvisual.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item95>
+    <Item96>
+      <Name Value="mcpbase"/>
+      <Version Major="1"/>
+      <Filename Value="C:\Projekte\Lazarus\mcp\Src\Base\mcpbase.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item96>
+    <Item97>
+      <Name Value="mcpclient"/>
+      <Filename Value="C:\Projekte\Lazarus\mcp\Src\Client\mcpclient.lpk"/>
+      <LastUsed Value="2026/09/09 19:07:38"/>
+    </Item97>
+    <Item98>
+      <Name Value="mcpdesign"/>
+      <Version Major="1"/>
+      <Filename Value="C:\Projekte\Lazarus\mcp\Src\IDE\mcpdesign.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item98>
+    <Item99>
+      <Name Value="mcpguicontrol"/>
+      <Version Major="1"/>
+      <Filename Value="C:\Projekte\Lazarus\mcp\guicontrol\mcpguicontrol.lpk"/>
+      <LastUsed Value="2026/09/09 21:15:55"/>
+    </Item99>
+    <Item100>
+      <Name Value="mcplazcontrol"/>
+      <Filename Value="C:\Projekte\Lazarus\mcp\Src\IDE\mcplazcontrol.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item100>
+    <Item101>
+      <Name Value="pack_powerpdf"/>
+      <Version Minor="9" Release="15"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\powerpdf_0.9.15\pack_powerpdf.lpk"/>
+      <LastUsed Value="2019/08/17 18:06:14"/>
+    </Item101>
+    <Item102>
+      <Name Value="python4lazarus_package"/>
+      <Version Major="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\PythonForLazarus\python4lazarus\python4lazarus_package.lpk"/>
+      <LastUsed Value="2019/08/17 18:06:14"/>
+    </Item102>
+    <Item103>
+      <Name Value="rgb_graphics"/>
+      <Version Major="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\RGBGraphics\rgb_graphics.lpk"/>
+      <LastUsed Value="2020/07/21 18:15:03"/>
+    </Item103>
+    <Item104>
+      <Name Value="richmemopackage"/>
+      <Version Major="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\richmemo\richmemopackage.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item104>
+    <Item105>
+      <Name Value="richmemo_design"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\richmemo\ide\richmemo_design.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item105>
+    <Item106>
+      <Name Value="SQLDBLaz_ext"/>
+      <Version Minor="8"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\sqldblaz_ext.lpk"/>
+      <LastUsed Value="2025/09/12 15:25:01"/>
+    </Item106>
+    <Item107>
+      <Name Value="Stax"/>
+      <Version Release="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\fpStax\Stax-package\Stax.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item107>
+    <Item108>
+      <Name Value="uniqueinstance_package"/>
+      <Version Major="1" Minor="1"/>
+      <Filename Value="C:\Projekte\Lazarus\Package-Repo\packages\uniqueinstance\uniqueinstance_package.lpk"/>
+      <LastUsed Value="2019/08/17 18:06:14"/>
+    </Item108>
+    <Item109>
+      <Name Value="UntConfig"/>
+      <Version Major="1" Release="3" Build="3"/>
+      <Filename Value="C:\Projekte\Delphi\Components\FPC\UntConfig.lpk"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item109>
+  </UserPkgLinks>
+  <GlobalPkgLinks Version="3" Count="82">
+    <Item1>
+      <Name Value="aggpaslcl"/>
+      <Version Major="1"/>
+      <LastUsed Value="2021/12/09 23:58:11"/>
+    </Item1>
+    <Item2>
+      <Name Value="anchordocking"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item2>
+    <Item3>
+      <Name Value="anchordockingdsgn"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item3>
+    <Item4>
+      <Name Value="buildintf"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/27 01:55:33"/>
+    </Item4>
+    <Item5>
+      <Name Value="cairocanvas_pkg"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item5>
+    <Item6>
+      <Name Value="charactermappkg"/>
+      <Version Minor="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item6>
+    <Item7>
+      <Name Value="charactermap_ide_pkg"/>
+      <Version Minor="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item7>
+    <Item8>
+      <Name Value="chmhelppkg"/>
+      <Version Minor="2" Release="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item8>
+    <Item9>
+      <Name Value="cmdlinedebuggerbase"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item9>
+    <Item10>
+      <Name Value="codetools"/>
+      <Version Major="1" Release="1"/>
+      <LastUsed Value="2026/10/27 01:55:33"/>
+    </Item10>
+    <Item11>
+      <Name Value="cody"/>
+      <Version Major="1" Minor="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item11>
+    <Item12>
+      <Name Value="datetimectrls"/>
+      <Version Major="1" Minor="5" Release="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item12>
+    <Item13>
+      <Name Value="datetimectrlsdsgn"/>
+      <Version Major="1" Minor="5" Release="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item13>
+    <Item14>
+      <Name Value="dbflaz"/>
+      <Version Minor="1" Release="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item14>
+    <Item15>
+      <Name Value="debuggerintf"/>
+      <Version Minor="1"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item15>
+    <Item16>
+      <Name Value="dockedformeditor"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item16>
+    <Item17>
+      <Name Value="editormacroscript"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item17>
+    <Item18>
+      <Name Value="exampleprojects"/>
+      <Version Minor="8"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item18>
+    <Item19>
+      <Name Value="externhelp"/>
+      <Version Major="1" Minor="3"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item19>
+    <Item20>
+      <Name Value="fcl"/>
+      <Version Major="1" Release="1"/>
+      <LastUsed Value="2026/10/27 01:55:33"/>
+    </Item20>
+    <Item21>
+      <Name Value="fpcunitconsolerunner"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/09/08 15:05:22"/>
+    </Item21>
+    <Item22>
+      <Name Value="fpcunitide"/>
+      <Version Minor="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item22>
+    <Item23>
+      <Name Value="fpcunittestrunner"/>
+      <Version Minor="1"/>
+      <LastUsed Value="2026/10/21 21:43:30"/>
+    </Item23>
+    <Item24>
+      <Name Value="fpdebug"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item24>
+    <Item25>
+      <Name Value="fpvectorialpkg"/>
+      <LastUsed Value="2021/03/23 19:38:18"/>
+    </Item25>
+    <Item26>
+      <Name Value="freetypelaz"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/27 01:55:33"/>
+    </Item26>
+    <Item27>
+      <Name Value="ideconfig"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item27>
+    <Item28>
+      <Name Value="idedebugger"/>
+      <Version Release="1"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item28>
+    <Item29>
+      <Name Value="ideintf"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item29>
+    <Item30>
+      <Name Value="idepackager"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item30>
+    <Item31>
+      <Name Value="ideproject"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item31>
+    <Item32>
+      <Name Value="ideutilspkg"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item32>
+    <Item33>
+      <Name Value="imagesforlazarus"/>
+      <Version Major="1" Release="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item33>
+    <Item34>
+      <Name Value="instantfpclaz"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item34>
+    <Item35>
+      <Name Value="jcfbase"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item35>
+    <Item36>
+      <Name Value="jcfidelazarus"/>
+      <Version Major="2"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item36>
+    <Item37>
+      <Name Value="laz.virtualtreeview_package"/>
+      <Version Major="5" Minor="5" Release="3" Build="1"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item37>
+    <Item38>
+      <Name Value="lazcontroldsgn"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item38>
+    <Item39>
+      <Name Value="lazcontrols"/>
+      <Version Major="1" Release="1"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item39>
+    <Item40>
+      <Name Value="lazdatadict"/>
+      <LastUsed Value="2021/12/03 20:14:48"/>
+    </Item40>
+    <Item41>
+      <Name Value="lazdbexport"/>
+      <Version Major="1"/>
+      <LastUsed Value="2021/12/03 20:14:48"/>
+    </Item41>
+    <Item42>
+      <Name Value="lazdebuggerfp"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item42>
+    <Item43>
+      <Name Value="lazdebuggerfplldb"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item43>
+    <Item44>
+      <Name Value="lazdebuggergdbmi"/>
+      <Version Minor="1"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item44>
+    <Item45>
+      <Name Value="lazdebuggerintf"/>
+      <Version Release="1"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item45>
+    <Item46>
+      <Name Value="lazdebuggerlldb"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item46>
+    <Item47>
+      <Name Value="lazedit"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/27 01:55:33"/>
+    </Item47>
+    <Item48>
+      <Name Value="lazgoogleapis"/>
+      <Version Major="1"/>
+      <LastUsed Value="2020/09/21 00:50:04"/>
+    </Item48>
+    <Item49>
+      <Name Value="lazmouseandkeyinput"/>
+      <Version Minor="9"/>
+      <LastUsed Value="2026/09/06 12:53:10"/>
+    </Item49>
+    <Item50>
+      <Name Value="lazopenglcontext"/>
+      <Version Release="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item50>
+    <Item51>
+      <Name Value="lazprojectgroups"/>
+      <Version Minor="7"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item51>
+    <Item52>
+      <Name Value="lazreport"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item52>
+    <Item53>
+      <Name Value="laztestinsight"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item53>
+    <Item54>
+      <Name Value="lazutils"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/27 01:55:33"/>
+    </Item54>
+    <Item55>
+      <Name Value="lcl"/>
+      <Version Major="4" Minor="8"/>
+      <LastUsed Value="2026/10/27 01:55:33"/>
+    </Item55>
+    <Item56>
+      <Name Value="lclbase"/>
+      <Version Major="4" Minor="8"/>
+      <LastUsed Value="2026/10/27 01:55:33"/>
+    </Item56>
+    <Item57>
+      <Name Value="lclextensions_package"/>
+      <Version Minor="6" Release="1"/>
+      <LastUsed Value="2024/01/30 22:19:33"/>
+    </Item57>
+    <Item58>
+      <Name Value="leakview"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item58>
+    <Item59>
+      <Name Value="lhelpcontrolpkg"/>
+      <Version Minor="2"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item59>
+    <Item60>
+      <Name Value="lremailexport"/>
+      <LastUsed Value="2020/09/21 22:19:03"/>
+    </Item60>
+    <Item61>
+      <Name Value="lr_sqldb"/>
+      <Version Minor="2" Release="2"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item61>
+    <Item62>
+      <Name Value="memdslaz"/>
+      <Version Major="1" Minor="2" Release="1"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item62>
+    <Item63>
+      <Name Value="multithreadprocslaz"/>
+      <Version Major="1" Minor="2" Release="1"/>
+      <LastUsed Value="2026/05/13 23:12:27"/>
+    </Item63>
+    <Item64>
+      <Name Value="notlcldesigner"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item64>
+    <Item65>
+      <Name Value="onlinepackagemanager"/>
+      <Version Major="1" Release="1" Build="2"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item65>
+    <Item66>
+      <Name Value="packagetabs"/>
+      <Version Minor="1" Release="1"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item66>
+    <Item67>
+      <Name Value="pas2jsdsgn"/>
+      <Version Major="1" Release="2"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item67>
+    <Item68>
+      <Name Value="pascalscript"/>
+      <Version Build="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item68>
+    <Item69>
+      <Name Value="printer4lazarus"/>
+      <Version Minor="5"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item69>
+    <Item70>
+      <Name Value="printers4lazide"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item70>
+    <Item71>
+      <Name Value="projtemplates"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item71>
+    <Item72>
+      <Name Value="runtimetypeinfocontrols"/>
+      <Version Minor="1"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item72>
+    <Item73>
+      <Name Value="sdflaz"/>
+      <Version Minor="1" Release="1"/>
+      <LastUsed Value="2026/10/22 23:08:44"/>
+    </Item73>
+    <Item74>
+      <Name Value="simplewebservergui"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item74>
+    <Item75>
+      <Name Value="sqldblaz"/>
+      <Version Major="1" Release="2"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item75>
+    <Item76>
+      <Name Value="synedit"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/27 01:55:34"/>
+    </Item76>
+    <Item77>
+      <Name Value="syneditdsgn"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item77>
+    <Item78>
+      <Name Value="tachartlazaruspkg"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item78>
+    <Item79>
+      <Name Value="todolistlaz"/>
+      <Version Major="1" Release="3"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item79>
+    <Item80>
+      <Name Value="turbopoweripro"/>
+      <Version Major="1"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item80>
+    <Item81>
+      <Name Value="turbopoweriprodsgn"/>
+      <LastUsed Value="2026/10/22 23:08:45"/>
+    </Item81>
+    <Item82>
+      <Name Value="weblaz"/>
+      <Version Major="1" Release="1"/>
+      <LastUsed Value="2019/05/08 13:35:18"/>
+    </Item82>
+  </GlobalPkgLinks>
+</CONFIG>

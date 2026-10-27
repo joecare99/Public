@@ -2,6 +2,58 @@
 
 Kurzfassung des aktuellen Stands der Delphi-Bible auf Linux (FPC/Lazarus).
 
+## Build-Stand (Ubuntu 26.04, FPC 3.2.2, Lazarus 4.8.0)
+
+`FPC/tools/build_all.sh` baut **alle 129** Projekte unter Linux (FPC 3.2.2,
+Lazarus 4.8); mit der Windows-Lazarus 4.8 ebenfalls alle.
+
+Neu interpretierte, zuvor Windows-spezifische Demos:
+
+* `Animator` - `cmpAnimator` ist jetzt ein reines LCL-Steuerelement
+  (prozedural gezeichnete Animation statt Win32-ANIMATE); `Animate1` wird zur
+  Laufzeit erzeugt (steht nicht in der `.lfm`).
+* `CoolDemo` - `SpriteAnim.TSpriteAnimation` ersetzt `BGRASpriteAnimation`.
+* `Report1` - der Bericht wird direkt auf die Canvas gezeichnet (Vorschau +
+  Druck), Daten aus der Wines-Paradox-Tabelle.
+* `Testdll`/`Colorlib` - `Colorlib` ist eine plattformuebergreifende Shared
+  Library; `Testdll` laedt sie zur Laufzeit (`DynLibs`).
+* `OdfCreate` - absoluter Linux-Pfad zu `fpOdf` durch einen relativen ersetzt
+  (`../../../../Projekte/Lazarus/fpOdf`), damit auch unter Windows baubar.
+
+`WinesEntry` und `Sqlplay` nutzen jetzt die BDE-freie Paradox-Engine
+`DBParadox` (Komponente unter `C:\Projekte\Delphi\Components`). Dafuer wurde
+DBParadox erweitert: Paradox-Versionen `0x09`/`0x0A` (Datenkopf bei `$78`)
+sowie die Feldtypen `2` (Date) und `6` (Number/Double, big-endian mit
+gekipptem Vorzeichenbit). Tests dazu in `Components/Source/DBParadox/Tests`
+(`tst_DBParadoxFileReader`, `tst_DBParadoxRecordEncoder`,
+`tst_DBParadoxConnection`). Alle 119 Tests laufen unter Linux (FPC 3.2.2,
+Lazarus 4.8) **und** Windows (Lazarus 4.8) fehlerfrei; `WinesEntry` baut mit
+der Windows-Lazarus.
+
+Behoben beim Neuaufsetzen des Builds:
+
+* Lazarus-Konfiguration zeigte auf entferntes `/usr/lib/lazarus/4.4`
+  (installiert ist `/usr/share/lazarus/4.8.0`).
+* Shell-Skripte in `FPC/tools/*.sh` von CRLF auf LF (`fix_line_endings.py`).
+* 92 Quelldateien mit Gross-Endung (`.PAS`/`.DFM`) kleingeschrieben
+  (`normalize_extensions.py`) - FPC sucht unter Linux mit exakter Schreibweise.
+* Pfad-Case in den `.lpi` an die tatsaechliche Ordnerschreibweise angepasst
+  (`fix_path_case.py`, neu). FPCs `-Fu`-Suche ist case-sensitiv.
+* Fehlende `.lfm` aus binaeren `.dfm` erzeugt (`dfm2lfm.pas` + `fix_lfm.py`).
+* `gen_projects.py`: Test-Erkennung, Paket-Erhalt (Union mit vorhandenen),
+  transitive Demo-Units, `all_demo_units` scannt auch `view/viewmodel/model`,
+  `parse_uses` liest alle `uses`-Abschnitte, `--tests-only`.
+* `UnitOutputDirectory` auf die Makro-Funktion `$NameOnly($(ProjFile))`
+  korrigiert (`fix_unit_output_dir.py`). Die IDE schreibt faelschlich
+  `$(NameOnly(...))`; Lazarus liest das als unbekannte Makro-Variable
+  `(unknown macro: )` und legt den Ausgabeordner entsprechend an - unter
+  Windows scheitert das am `:` im Namen. Die Makro-Funktion steht ohne die
+  aeussere `$(...)`: `$NameOnly($(ProjFile))`.
+* DDE-Demos (`DDE2`, `DDECOLOR`) auf `fcl-simpleipc` umgestellt (Delphi behaelt
+  DDE ueber `{$IFDEF FPC}`).
+* `OleCont` -> Bild-Vorschau, `OleWord1/2` -> Dokument mit Standardprogramm
+  oeffnen, `DingX` -> eigenes LCL-Steuerelement statt ActiveX.
+
 ## Werkzeuge
 
 | Datei | Zweck |

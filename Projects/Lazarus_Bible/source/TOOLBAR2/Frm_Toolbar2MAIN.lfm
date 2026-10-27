@@ -183,7 +183,6 @@ object frmToolbar2Main: TfrmToolbar2Main
     Width = 270
     Height = 25
     Align = alTop
-    TabOrder = 0
   end
   object Calendar1: TCalendar
     Left = 304

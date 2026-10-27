@@ -49,7 +49,6 @@ object frmTabsMain: TfrmTabsMain
     Width = 426
     Height = 25
     Align = alTop
-    TabOrder = 0
     object OpenSB: TSpeedButton
       Left = 8
       Top = 0
@@ -278,7 +277,6 @@ object frmTabsMain: TfrmTabsMain
     Height = 25
     Align = alBottom
     BevelInner = bvLowered
-    TabOrder = 2
     object TabPanel: TPanel
       Left = 185
       Top = 2
@@ -293,7 +291,6 @@ object frmTabsMain: TfrmTabsMain
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 0
     end
     object TimePanel: TPanel
       Left = 343
@@ -310,7 +307,6 @@ object frmTabsMain: TfrmTabsMain
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 1
     end
     object KeyPanel: TPanel
       Left = 2
@@ -327,7 +323,6 @@ object frmTabsMain: TfrmTabsMain
       Font.Name = 'MS Sans Serif'
       Font.Style = []
       ParentFont = False
-      TabOrder = 2
     end
   end
   object MainMenu1: TMainMenu

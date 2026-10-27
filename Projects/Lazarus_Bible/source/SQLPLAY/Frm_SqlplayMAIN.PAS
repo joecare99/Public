@@ -14,7 +14,7 @@ uses
 {$ENDIF}
   SysUtils, Messages, Classes, Graphics, Controls,
   Forms, Dialogs, StdCtrls, Buttons, ExtCtrls, Grids,
-  DBGrids, DBCtrls, SQLTable, DB, sqldb,Frm_SQLOPENDB;
+  DBGrids, DBCtrls, DB, sqldb, Frm_SQLOPENDB;
 
 type
 

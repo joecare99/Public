@@ -10,7 +10,9 @@ uses
   Forms,
   SysUtils,
   FormShot,
-  Frm_TelnameMAIN;
+  Frm_TelnameMAIN,
+  TelnameViewModel,
+  TelnameModel;
 
 begin
   RequireDerivedFormResource := True;

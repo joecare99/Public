@@ -1,25 +1,16 @@
-library DingButtonXControl;
-
-{$IFDEF FPC}
-  {$MODE Delphi}
-{$ENDIF}
+program DingButtonXControl;
 
 uses
-  ComServ,
-  DingButtonXControl_TLB in '..\source\DingX\DingButtonXControl_TLB.pas',
-  DingButtonImpl1 in '..\source\DingX\DingButtonImpl1.pas' {DingButtonX: CoClass},
-  Frm_DingAbout in '..\source\DingX\Frm_DingAbout.pas' {DingButtonXAbout};
+  Forms,
+  Ctrl_DingButton in '..\source\DING\Ctrl_DingButton.pas',
+  Frm_DingAbout in '..\source\DingX\Frm_DingAbout.pas' {DingButtonXAbout},
+  Frm_DingXMain in '..\source\DingX\Frm_DingXMain.pas' {MainForm};
 
-{$E ocx}
-
-exports
-  DllGetClassObject,
-  DllCanUnloadNow,
-  DllRegisterServer,
-  DllUnregisterServer;
-
-{$R *.TLB}
 {$R *.res}
 
 begin
+  Application.Initialize;
+  Application.Title := 'Demo: DingButtonXControl';
+  Application.CreateForm(TMainForm, MainForm);
+  Application.Run;
 end.

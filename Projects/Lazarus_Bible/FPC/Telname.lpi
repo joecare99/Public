@@ -31,9 +31,9 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Telname"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/TELNAME;../source/_core/tools"/>
-            <IncludeFiles Value="../source/TELNAME;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+            <OtherUnitFiles Value="../source/TELNAME;../source/TELNAME/model;../source/TELNAME/viewmodel;../source/_core/mvvm;../source/_core/tools"/>
+            <IncludeFiles Value="../source/TELNAME;../source/TELNAME/model;../source/TELNAME/viewmodel;../source/_core/mvvm;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -65,9 +65,9 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Telname"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/TELNAME;../source/_core/tools"/>
-            <IncludeFiles Value="../source/TELNAME;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+            <OtherUnitFiles Value="../source/TELNAME;../source/TELNAME/model;../source/TELNAME/viewmodel;../source/_core/mvvm;../source/_core/tools"/>
+            <IncludeFiles Value="../source/TELNAME;../source/TELNAME/model;../source/TELNAME/viewmodel;../source/_core/mvvm;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -98,7 +98,7 @@
         <PackageName Value="LCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="2">
+    <Units Count="4">
       <Unit0>
         <Filename Value="Telname.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -107,11 +107,21 @@
       <Unit1>
         <Filename Value="../source/TELNAME/Frm_TelnameMAIN.pas"/>
         <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
+        <ComponentName Value="frmTelnameMain"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_TelnameMAIN"/>
       </Unit1>
+      <Unit2>
+        <Filename Value="../source/TELNAME/viewmodel/TelnameViewModel.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TelnameViewModel"/>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../source/TELNAME/model/TelnameModel.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="TelnameModel"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -121,9 +131,9 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/Telname"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/TELNAME;../source/_core/tools"/>
-      <IncludeFiles Value="../source/TELNAME;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+      <OtherUnitFiles Value="../source/TELNAME;../source/TELNAME/model;../source/TELNAME/viewmodel;../source/_core/mvvm;../source/_core/tools"/>
+      <IncludeFiles Value="../source/TELNAME;../source/TELNAME/model;../source/TELNAME/viewmodel;../source/_core/mvvm;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

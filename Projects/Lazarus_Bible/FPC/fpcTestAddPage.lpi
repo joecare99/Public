@@ -31,9 +31,9 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestAddPage"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Actions;../source/Barchart;../source/_core/tools"/>
-            <IncludeFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Actions;../source/Barchart;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+            <OtherUnitFiles Value="../source/tests;../source/Addpage;../source/_core/tools"/>
+            <IncludeFiles Value="../source/tests;../source/Addpage;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -65,9 +65,9 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestAddPage"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Actions;../source/Barchart;../source/_core/tools"/>
-            <IncludeFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Actions;../source/Barchart;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+            <OtherUnitFiles Value="../source/tests;../source/Addpage;../source/_core/tools"/>
+            <IncludeFiles Value="../source/tests;../source/Addpage;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -98,19 +98,19 @@
         <PackageName Value="LCL"/>
       </Item1>
       <Item2>
-        <PackageName Value="LazUtils"/>
+        <PackageName Value="FPCUnitTestRunner"/>
       </Item2>
       <Item3>
-        <PackageName Value="BarChartp"/>
+        <PackageName Value="LazMouseAndKeyInput"/>
       </Item3>
       <Item4>
-        <PackageName Value="FPCUnitTestRunner"/>
+        <PackageName Value="LazUtils"/>
       </Item4>
       <Item5>
-        <PackageName Value="LazMouseAndKeyInput"/>
+        <PackageName Value="BarChartp"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="22">
+    <Units Count="3">
       <Unit0>
         <Filename Value="fpcTestAddPage.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -122,120 +122,13 @@
         <UnitName Value="tst_AddPage"/>
       </Unit1>
       <Unit2>
-        <Filename Value="../source/tests/tst_AboutEx.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_AboutEx"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="../source/tests/tst_Actions.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_Actions"/>
-      </Unit3>
-      <Unit4>
-        <Filename Value="../source/tests/tst_BarChart.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_BarChart"/>
-      </Unit4>
-      <Unit5>
-        <Filename Value="../source/tests/tst_BarTest2.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_BarTest2"/>
-      </Unit5>
-      <Unit6>
-        <Filename Value="../source/tests/tst_BitView.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_BitView"/>
-      </Unit6>
-      <Unit7>
-        <Filename Value="../source/tests/tst_BitView2.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_BitView2"/>
-      </Unit7>
-      <Unit8>
-        <Filename Value="../source/tests/tst_Calc32.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_Calc32"/>
-      </Unit8>
-      <Unit9>
-        <Filename Value="../source/tests/tst_Calc64.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_Calc64"/>
-      </Unit9>
-      <Unit10>
-        <Filename Value="../source/tests/tst_CapsLock.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_CapsLock"/>
-      </Unit10>
-      <Unit11>
-        <Filename Value="../source/tests/tst_CapsLock2.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_CapsLock2"/>
-      </Unit11>
-      <Unit12>
-        <Filename Value="../source/tests/tst_CharGrid.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_CharGrid"/>
-      </Unit12>
-      <Unit13>
-        <Filename Value="../source/tests/tst_Checks.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_Checks"/>
-      </Unit13>
-      <Unit14>
-        <Filename Value="../source/tests/tst_Checks2.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_Checks2"/>
-      </Unit14>
-      <Unit15>
-        <Filename Value="../source/tests/tst_Something.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_Something"/>
-      </Unit15>
-      <Unit16>
         <Filename Value="../source/Addpage/Frm_AddpageMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_AddpageMAIN"/>
-      </Unit16>
-      <Unit17>
-        <Filename Value="../source/AboutEx/AboutEx_Frm_ABOUT.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="AboutEx_Frm_ABOUT"/>
-      </Unit17>
-      <Unit18>
-        <Filename Value="../source/Actions/Frm_ActionsMain.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_ActionsMain"/>
-      </Unit18>
-      <Unit19>
-        <Filename Value="../source/Barchart/BarChart.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="BarChart"/>
-      </Unit19>
-      <Unit20>
-        <Filename Value="../source/Barchart/Frm_BartestMain2.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_BartestMain2"/>
-      </Unit20>
-      <Unit21>
-        <Filename Value="../source/AboutEx/Frm_AboutExMAIN.pas"/>
-        <IsPartOfProject Value="True"/>
-        <ComponentName Value="Form1"/>
-        <HasResources Value="True"/>
-        <ResourceBaseClass Value="Form"/>
-        <UnitName Value="Frm_AboutExMAIN"/>
-      </Unit21>
+      </Unit2>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -245,9 +138,9 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestAddPage"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Actions;../source/Barchart;../source/_core/tools"/>
-      <IncludeFiles Value="../source/tests;../source/Addpage;../source/AboutEx;../source/Actions;../source/Barchart;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+      <OtherUnitFiles Value="../source/tests;../source/Addpage;../source/_core/tools"/>
+      <IncludeFiles Value="../source/tests;../source/Addpage;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>
