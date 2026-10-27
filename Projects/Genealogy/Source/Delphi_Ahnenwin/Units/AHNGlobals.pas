@@ -443,6 +443,9 @@ function ChartBAnsi(I: Integer): PAnsiString;
   (ShortString[50], photo filename). }
 function ChartAShort(Row, Ofs: Integer): PShortString;
 function ChartBShort(Row, Ofs: Integer): PShortString;
+function AncestorNum(Row: Integer): Integer;
+procedure SetAncestorNum(Row, AValue: Integer);
+function AncestorRec(Row: Integer): PByte;
 
 implementation
 
@@ -491,6 +494,25 @@ end;
 function ChartBShort(Row, Ofs: Integer): PShortString;
 begin
   Result := PShortString(PChar(@gvar_019764C4) + 408 * Row + Ofs);
+end;
+
+function AncestorNum(Row: Integer): Integer;
+begin
+  { Vorf_erm1-Nodes: Nummer (dword +0) der Zeile Row (1..80000); die
+    Zeile r hat die Bytebasis 61F30C + $214*(r-1). }
+  Result := PInteger(PChar(@gvar_0061F30C) + $214 * (Row - 1))^;
+end;
+
+procedure SetAncestorNum(Row, AValue: Integer);
+begin
+  PInteger(PChar(@gvar_0061F30C) + $214 * (Row - 1))^ := AValue;
+end;
+
+function AncestorRec(Row: Integer): PByte;
+begin
+  { Vorf_erm1/Nach_erm: TPersonRec-Zeilen der Spiegelbasis
+    0061F30C; Zeile r hat die Bytebasis 61F30C + $214*(r-1). }
+  Result := PByte(PChar(@gvar_0061F30C) + $214 * (Row - 1));
 end;
 
 end.

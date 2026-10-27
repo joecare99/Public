@@ -66,7 +66,7 @@ type
     procedure kek_ord_2; //00568774
     procedure Verwandtschaft1Click(Sender: TObject); //0057249C
     procedure Button8Click(Sender: TObject); //005730D4
-    procedure Vorf_erm1; //00563CF8
+    procedure Vorf_erm1(AGens, AShift: Integer); //00563CF8, AGens in EDX, AShift in ECX
     procedure memein(AValue: Integer); //00566220, AValue in EDX
     procedure zerleg(AVal1: Integer; AVal2: Integer; ACanvas: TCanvas); //005675D8, IDR lists a function; result unused at 0056932E
     procedure FormCreate(Sender: TObject); //00570740
@@ -2632,9 +2632,207 @@ begin
   end;
 end;
 
-procedure TForm13.Vorf_erm1;
+procedure TForm13.Vorf_erm1(AGens, AShift: Integer);
+var
+  StartNum: Integer;    //00563D38 [ebp-10]
+  GenLimit: Integer;    //00563D12 [ebp-8] (EDX)
+  SlotShift: Integer;   //00563D0F [ebp-0C] (ECX)
+  MaxSlot: Integer;     //00563E1F [ebp-14]
+  TermFlag: Integer;    //00563D3D [ebp-18]
+  ParentCount: Integer; //00563D40 [ebp-1C]
+  Partner: AnsiString;  //00563E17 [ebp-20]
+  IterLeft: Integer;    //00563E5F [ebp-24]
+  line, dRes, sVerbind: AnsiString;  //[ebp-15C/-158, -188, -144]
+  sv: ShortString;      //00563EF0 [ebp-12C] LStrToString-Puffer
+  p, q: PByte;          //00563E67 ebx / 00563D4C
+  edi: Integer;         //00563E62 Zeilenindex
+  n, v, j, t, prevNum: Integer;
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00563CF8: Vorfahrenspiegel: BFS ueber den TPersonRec-Spiegel
+    (gvar_0061F30C, Zeile r = 61F30C + $214*(r-1) = 61F0F8 + $214*r).
+    Ausgangszeile 1 = Table1-Datensatz StartNum; Vater einer Zeile r
+    landet in Zeile 2*r (+0-Ebene 61F0F8-Pool), Mutter in Zeile 2*r+1
+    (61F30C-Pool). Pro Zeile: FindKey Table1, Name/Geschlecht (trim+
+    uppercase, max. $28), IDNR/Religion in die Zeile, HeckTeil
+    Table10 (Index 'num'): nur wenn Epnum = Nummer der Vorzeile; per
+    Table10Verbind 'Ehes'->'ooS '/'oo ' (Sa/H-Datum) bzw. 'and'->
+    'o-o ' (H-Datum); Partnerzelle [Zeile r-1]+$189 nur Geschlecht
+    'W'. danach Slot-Loop j = 0..$28 (Round(j^2)) und Vater/Mutter-
+    Expansionsmorph. AShift ([ebp-0C]) skaliert die Slotbasis
+    Round(MaxSlot^2)*AShift + edi - Round(MaxSlot^2). Deviations:
+    init-Loop [q-$10]/[q-8] (Zeile 0 Schwanz +$204/+$20C, vor der
+    1-basierten recon-Spiegelfamilie) nur fuer t > 1; Partner-/Epnum-
+    Vorzeilenzugriff fuer edi = 1 uebersprungen; Strcat-Varianten
+    via Delphikat; GetText + UpperCase/Trim zusammengefasst. }
+  GenLimit := AGens;                                     //00563D12
+  SlotShift := AShift;                                   //00563D0F
+  StartNum := DataModule2.Table1Nummer.AsInteger;        //00563D26-38
+  TermFlag := 0;                                         //00563D3B-3D
+  ParentCount := 1;                                      //00563D40
+  q := PByte(PChar(@gvar_0061F30C));                     //00563D4C
+  t := $13880;                                           //00563D47
+  repeat
+    PInteger(q)^ := 0;                                   //00563D53
+    if t > 1 then                                        //00563D57 Deviation
+    begin
+      PInteger(PChar(q) - $10)^ := 0;                    //00563D57
+      PInteger(PChar(q) - 8)^ := 0;                      //00563D5C
+    end;
+    (PChar(q) + $137)^ := #0;                            //00563D5F
+    PInteger(PChar(q) + $C)^ := 0;                       //00563D68
+    PInteger(PChar(q) + 8)^ := 0;                        //00563D6D
+    PInteger(PChar(q) + $10)^ := 0;                      //00563D72
+    PInteger(PChar(q) + $14)^ := 0;                      //00563D77
+    PInteger(PChar(q) + 4)^ := 0;                        //00563D7C
+    (PChar(q) + $189)^ := #0;                            //00563D7F
+    Inc(q, $214);                                        //00563D86
+    Dec(t);                                              //00563D8C
+  until t = 0;
+  DataModule2.Table1.Open;                               //00563D8F-59
+  DataModule2.Table1.IndexName := '';                    //00563DA8
+  DataModule2.Table1.FindKey([StartNum]);                //00563DC8
+  DataModule2.Table10.Open;                              //00563DDA
+  DataModule2.Table10.IndexName := 'num';                //00563DF1
+  PInteger(PChar(AncestorRec(1)) + 8)^ := 1;             //00563DF6 [61F314]
+  SetAncestorNum(1, DataModule2.Table1Nummer.AsInteger); //00563E00-12
+  Partner := '';                                         //00563E17
+  MaxSlot := -1;                                         //00563E1F
+  Screen.Cursor := crHourGlass;                          //00563E26-31
+  IterLeft := Round(Power(GenLimit, 2.0)) - 1;           //00563E36-56
+  if IterLeft > 0 then                                   //00563E57-59
+  begin
+    edi := 1;                                            //00563E62
+    repeat
+      p := AncestorRec(edi);                             //00563E67
+      n := PInteger(p)^;                                 //00563E6C
+      if n > 0 then
+      begin
+        DataModule2.Table1.FindKey([n]);                 //00563E7D-8C
+        n := DataModule2.Table1Nummer.AsInteger;         //00563E91-A3
+        PInteger(p)^ := n;                               //00563EA3
+        sv := Trim(UpperCase(DataModule2.Table1Geschlecht.AsString)); //00563EA5-EF
+        if Length(sv) > $28 then SetLength(sv, $28);     //00563F03
+        PShortString(PChar(p) + $137)^ := sv;            //00563EFB
+        sv := DataModule2.Table1IDNR.AsString;           //00563F08-44
+        if Length(sv) > $28 then SetLength(sv, $28);
+        PShortString(PChar(p) + $10E)^ := sv;            //00563F3C
+        sv := DataModule2.Table1Religion.AsString;       //00563F49-85
+        if Length(sv) > $28 then SetLength(sv, $28);
+        PShortString(PChar(p) + $160)^ := sv;            //00563F7D
+        PInteger(PChar(p) + 8)^ := edi;                  //00563F8A
+        v := DataModule2.Table1Vater.AsInteger;          //00563F8D-F9
+        if v > 0 then                                    //00563FA1
+          PInteger(PChar(p) + 4)^ := 1                   //00563FB9
+        else if DataModule2.Table1Mutter.AsInteger > 0 then  //00563FB7
+          PInteger(PChar(p) + 4)^ := 1;
+      end
+      else
+      begin
+        PInteger(p)^ := 0;                               //00563FC2-64
+        PInteger(PChar(p) + 8)^ := edi;                  //00563FC6
+      end;
+      DataModule2.Table10.First;                         //00563FC9-D6
+      if PShortString(PChar(p) + $137)^ = 'W' then       //00563FDB-F0
+      begin
+        if DataModule2.Table10.FindKey([n]) then         //00563FF6-18
+        begin
+          prevNum := 0;                                  //Deviation, edi = 1
+          if edi > 1 then
+            prevNum := PInteger(PChar(p) - $214)^;       //00564035 [ebx-$214]
+          while (not DataModule2.Table10.Eof) and        //0056439E-9C
+                (DataModule2.Table10Nummer.AsInteger = n) do
+          begin
+            if DataModule2.Table10Epnum.AsInteger = prevNum then  //00564023-3B
+            begin
+              sVerbind := DataModule2.Table10Verbind.AsString;    //00564041-59
+              if Pos('Ehes', sVerbind) > 0 then           //00564064-6B
+              begin
+                if (Trim(DataModule2.Table10Sajahr.AsString) <> '') or  //00564071-A1
+                   (Trim(DataModule2.Table10Saort.AsString) <> '') then //005640BB-D3
+                begin
+                  line := DataModule2.Table10Satag.AsString + '.' +     //005640D9-48
+                          DataModule2.Table10Samonat.AsString + '.' +
+                          DataModule2.Table10Sajahr.AsString;
+                  sub_00563A0C(line, dRes);              //00564159
+                  Partner := 'ooS ' + dRes;              //0056416C
+                  Partner := Partner + ' ' +             //00564171-9F
+                    DataModule2.Table10Saort.AsString;
+                end
+                else
+                begin
+                  line := DataModule2.Table10Htag.AsString + '.' +      //005641A9-18
+                          DataModule2.Table10Hmonat.AsString + '.' +
+                          DataModule2.Table10Hjahr.AsString;
+                  sub_00563A0C(line, dRes);              //00564229
+                  Partner := 'oo ' + dRes;               //00564237
+                  Partner := Partner + ' ' +             //00564241-6F
+                    DataModule2.Table10Hort.AsString;
+                end;
+              end
+              else if Pos('and', sVerbind) > 0 then      //00564291-A3
+              begin
+                line := DataModule2.Table10Htag.AsString + '.' +         //005642A9-18
+                        DataModule2.Table10Hmonat.AsString + '.' +
+                        DataModule2.Table10Hjahr.AsString;
+                sub_00563A0C(line, dRes);                //00564329
+                Partner := 'o-o ' + dRes;                //00564337
+                Partner := Partner + ' ' +               //00564341-6F
+                  DataModule2.Table10Hort.AsString;
+              end;
+              Break;                                     //005643B8
+            end;
+            DataModule2.Table10.Next;                    //00564376-83
+          end;
+          if Trim(Partner) <> '' then                    //005643CF-E4
+            if edi > 1 then                              //Deviation, edi = 1
+            begin
+              sv := Partner;                             //005643E6-F4
+              if Length(sv) > $28 then SetLength(sv, $28);
+              PShortString(PChar(p) - $8B)^ := sv;       //005643FF Zeile edi-1, +$189
+            end;
+        end;
+      end;
+      Partner := '';                                     //0056440C-14
+      for j := 0 to $28 do                               //00564414-7D
+        if (edi >= Round(Power(j, 2.0))) and (j > MaxSlot) then  //00564416-5A
+        begin
+          PInteger(PChar(p) + $C)^ := j + 1;             //0056445C
+          MaxSlot := j;                                  //00564462
+          if ParentCount = 0 then                        //00564465-69
+            TermFlag := 1                                //0056446B
+          else
+            ParentCount := 0;                            //00564474-76
+        end;
+      if TermFlag = 1 then Break;                        //0056447F-83
+      j := Round(Power(MaxSlot, 2.0));                   //00564489-A9
+      v := j * SlotShift + (edi - Round(Power(MaxSlot, 2.0)));   //005644AB-D3
+      PInteger(PChar(p) + $10)^ := v;                    //005644D5
+      PInteger(PChar(p) + $14)^ := edi;                  //005644D8
+      if n > 0 then                                      //005644F7-FA
+      begin
+        v := DataModule2.Table1Vater.AsInteger;          //005644FC-0E
+        if v > 0 then
+        begin
+          PInteger(PChar(AncestorRec(2 * edi)))^ := v;   //00564524
+          Inc(ParentCount);                              //0056452B
+        end;
+        v := DataModule2.Table1Mutter.AsInteger;         //0056452E-42
+        if v > 0 then
+        begin
+          PInteger(PChar(AncestorRec(2 * edi + 1)))^ := v;  //00564556
+          Inc(ParentCount);                              //0056455D
+        end;
+      end;
+      Inc(edi);                                          //00564560
+      Dec(IterLeft);                                     //00564567
+    until IterLeft = 0;                                  //0056456A
+  end;
+  if MaxSlot + 1 < GenLimit then                         //00564570-77
+    GenLimit := MaxSlot;                                 //00564579-7C
+  DataModule2.Table1.FindKey([StartNum]);                //0056457F-98
+  Screen.Cursor := crDefault;                            //0056459D-A6
+  if GenLimit > 3 then                                   //005645AB-B1
+    Button1.Visible := True;
 end;
 
 procedure TForm13.memein(AValue: Integer);
@@ -3079,7 +3277,36 @@ end;
 
 procedure TForm13.SpeedButton1Click(Sender: TObject);
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 005704A8: Druckvorbereitung schafft die Aufrufkontexte und
+    Graphik auf dem Drucker drucken. }
+  if not PrintDialog1.Execute then                        //005704B2-C2
+  begin
+    gvar_0253636C := 1.0;                                 //0057061E-39
+    gvar_011AE32C := PaintBox1.Canvas;                     //0057063C-48
+    Exit;                                                 //0057064D
+  end;
+  gvar_011AE32C := Printer.Canvas;                        //005704C8-D2
+  try                                                     //005704D7-E2
+    if gvar_0253692C = 'Vorgr1' then
+      vr1;                                                //005704E5-FD
+    if gvar_0253692C = 'Vorgr2' then
+      Vr2;                                                //00570502-1A
+    if gvar_0253692C = 'Nachgr1' then
+      nr1;                                                //0057051F-37
+    if gvar_0253692C = 'Nachgr2' then
+      nr2;                                                //0057053C-55
+    Printer.BeginDoc;                                     //00570559-E2
+    if gvar_0253692C = 'Vorgr1' then
+      vz1(Printer.Canvas);                                //00570563-85
+    if gvar_0253692C = 'Vorgr2' then
+      vz2(Printer.Canvas);                                //0057058A-C2
+    if gvar_0253692C = 'Nachgr1' then
+      nz1(Printer.Canvas);                                //005705B1-FA
+    if gvar_0253692C = 'Nachgr2' then
+      nz2(Printer.Canvas);                                //005705D8-FA
+  finally                                                 //00570617-38
+    Printer.EndDoc;                                       //0057060C-16
+  end;
 end;
 
 procedure TForm13.FormClose(sender:tobject;var action:tcloseaction);
@@ -3223,9 +3450,9 @@ procedure TForm13.vz1(AValue: TCanvas); //005711D4
 { The listing keeps grid B in edi = gvar_0197665C (= gvar_019764C4 + 408,
   i.e. the frame pointer used by vz2) with esi = 51*row as the stride:
   [edi + esi*8 + X] = gvar_019764C4[row][offset div 4], identical to the
-  vz2 offset map (-190→d2, -198→d0, -194→d1, -18C→d3, -184→d5,
-  -17C/-178→d7/d8, -170/-16C→d10/d11, -160/-15C→d14/d15, -158→word16,
-  -0D7→ShortString@193, -100→@152, -56→@322, -150→ptrs@72).
+  vz2 offset map (-190â†’d2, -198â†’d0, -194â†’d1, -18Câ†’d3, -184â†’d5,
+  -17C/-178â†’d7/d8, -170/-16Câ†’d10/d11, -160/-15Câ†’d14/d15, -158â†’word16,
+  -0D7â†’ShortString@193, -100â†’@152, -56â†’@322, -150â†’ptrs@72).
   Differences vs vz2: scroll offsets are zeroed first and only loaded
   when the canvases match; no 'W' drop line and no above-box connector;
   child lines are orthogonal 3-segment connectors from the box's right
@@ -4189,8 +4416,74 @@ begin
 end;
 
 procedure TForm13.Button4Click(Sender: TObject);
+var
+  Jpeg: TJPEGImage;     //00570928 [ebp-8]
+  row: Integer;         //005708BA eax
+  b, d: Integer;        //005708CD ebx / 005708E4 edx
+  fn: AnsiString;       //00570B22 [ebp-14]
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00570890: Graphik als JPEG-Datei speichern. Max-Ausdehnung der
+    Zeilen ermitteln, grosses Bitmap erzeugen, Graphik einzeichnen,
+    JPEG davon ableiten und nach SaveDialog speichern. }
+  gvar_0253635C := 0;                                    //005708BE-D3
+  gvar_02536360 := 0;                                    //005708C3-E7
+  row := 1;                                              //005708BA
+  while ChartAFlat(102 * row + 2) > 0 do                 //005708CB-0F
+  begin
+    b := ChartAFlat(102 * row);                          //005708CD-DD
+    if b > gvar_0253635C then
+      gvar_0253635C := b;                                //005708D4-E2
+    d := ChartAFlat(102 * row + 1);                      //005708E4-0F
+    if d > gvar_02536360 then
+      gvar_02536360 := d;                                //005708EB-FD
+    Inc(row);                                            //00570903
+  end;
+  Jpeg := TJPEGImage.Create;                             //00570911-68
+  gvar_011AE358 := TBitmap.Create;                       //00570920-B2
+  gvar_011AE358.Width := (gvar_011AE334 + gvar_0061F118) *
+    gvar_0253635C + gvar_011AE33C;                        //00570931-4D
+  gvar_011AE358.Height := (gvar_0253637C * gvar_011AE318 +
+    gvar_011AE318 + gvar_011AE348 + gvar_0061F114) *
+    gvar_02536360 + gvar_011AE340;                        //00570950-83
+  gvar_011AE358.Canvas.Font.Size := Round(gvar_0061F120 * 7); //00570986-A8
+  gvar_011AE32C := gvar_011AE358.Canvas;                 //005709AD-B7
+  if gvar_0253692C = 'Vorgr1' then                       //005709BC-D4
+  begin
+    vr1;                                                 //005709CF-D9
+    vz1(gvar_011AE358.Canvas);                           //005709D9-E7
+  end;
+  if gvar_0253692C = 'Vorgr2' then                       //005709EC-1C
+  begin
+    Vr2;                                                 //005709FF-17
+    vz2(gvar_011AE358.Canvas);                           //00570A09-28
+  end;
+  if gvar_0253692C = 'Nachgr1' then                      //00570A1C-2D
+  begin
+    nr1;                                                 //00570A2F-47
+    nz1(gvar_011AE358.Canvas);                           //00570A39-58
+  end;
+  if gvar_0253692C = 'Nachgr2' then                      //00570A4C-5D
+  begin
+    nr2;                                                 //00570A5F-77
+    nz2(gvar_011AE358.Canvas);                           //00570A69-88
+  end;
+  try                                                    //00570A7C-CF
+    Jpeg.Performance := jpBestSpeed;                     //00570A8A-8F
+    Jpeg.CompressionQuality := 90;                       //00570A94-B1 (byte $5A)
+    Jpeg.Assign(gvar_011AE358);                          //00570A9B-19
+    SaveDialog1.FileName := '';                          //00570AA9-B2
+    SaveDialog1.DefaultExt := 'jpg';                     //00570AB7-C5
+    SaveDialog1.Filter := 'Grafik-Dateien (*.jpg)|*.jpg'; //00570ACA-E1
+    SaveDialog1.Options := [ofOverwritePrompt];          //00570ADD-EA (0x2)
+    if SaveDialog1.Execute then                          //00570AEB-F4
+    begin
+      fn := Trim(SaveDialog1.FileName);                  //00570AF6-14
+      if fn > '.jpg' then                                //00570B12-1C (LStrCmp + jbe)
+        Jpeg.SaveToFile(SaveDialog1.FileName);           //00570B1E-34
+    end;
+  finally                                                //00570B37-4C
+    Jpeg.Free;                                           //00570B44-47
+  end;
 end;
 
 procedure TForm13.PaintBox1Paint(Sender:TObject);

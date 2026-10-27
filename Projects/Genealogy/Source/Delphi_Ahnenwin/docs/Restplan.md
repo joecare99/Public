@@ -537,3 +537,31 @@ gedausv   â†’  gedausxv â†’ gedaus â†’ gedausx
 
 ## Next
 - Remaining Unit13 stubs: SpeedButton1Click (005704A8, print path, stub at recon 2527), remaining TODO at recon 2876 (Button3Click?), recon 4083 stub, FormClose (00570728). Then Finalization (00573848).
+
+## SpeedButton1Click (005704A8) - implemented
+- PrintDialog1.Execute; if not: gvar_0253636C := 1.0 (Extended 1.0: d0 0, d1 $80000000, exp $3FFF) and gvar_011AE32C := PaintBox1.Canvas, exit. Else gvar_011AE32C := Printer.Canvas, dispatch vr1/'Vorgr2'->Vr2/'Nachgr1'->nr1/'Nachgr2'->nr2, Printer.BeginDoc, dispatch vz1/vz2/nz1/nz2(Printer.Canvas), Printer.EndDoc in finally.
+
+## Button4Click (00570890) - implemented
+- JPG save: scans grid A rows (X = ChartAFlat(102*row), Y = ChartAFlat(102*row+1), used flag = ChartAFlat(102*row+2); offsets are hex: -0x198/-0x194/-0x190) computing maxima gvar_0253635C/02536360; TJPEGImage.Create; gvar_011AE358 := TBitmap.Create; Width := (gvar_011AE334+gvar_0061F118)*MaxX+gvar_011AE33C; Height := (gvar_0253637C*gvar_011AE318+gvar_011AE318+gvar_011AE348+gvar_0061F114)*MaxY+gvar_011AE340; canvas font size := Round(gvar_0061F120*7); gvar_011AE32C := bitmap canvas; dispatch vr/vz/nr/nz; then JPEG: Performance := jpBestSpeed, CompressionQuality := 90, Assign(bitmap); SaveDialog1 (FileName '': DefaultExt 'jpg'; Filter 'Grafik-Dateien (*.jpg)|*.jpg'; Options := 0x2 = [ofOverwritePrompt]); on Execute: fn := Trim(FileName), save guarded by LStrCmp(fn,'.jpg') + jbe -> recon writes `if fn > '.jpg'` (lexicographic guard, exact original flag usage; only bitmap stays alive as gvar, jpeg freed in finally).
+
+## Vorf_erm1 (00563CF8) - COMPLETED
+- Signature faked as `Vorf_erm1(AGens, AShift: Integer)` (AGens in EDX -> [ebp-8], AShift in ECX -> [ebp-0C], push ecx/xchg dance decoded).
+- Structure: person mirror BFS over TPersonRec rows (recon mapping row r = `AncestorRec(r)` = 61F30C + \*(r-1) = 61F0F8 + \*r).
+- Init loop \ = 80000 rows clears: +0, -\/-8 (prev row tail +\/+\; guarded t>1 in recon), +\ byte, +\, +8, +\, +\, +4, +\ byte.
+- Setup: Table1.Open, IndexName='', FindKey([StartNum]); Table10.Open, IndexName 'num'; row1 +8 := 1 ([61F314]); row1 num := Table1Nummer ([61F30C]); Screen crHourGlass.
+- Main loop: IterLeft = Round(Power(AGens, 2.0)) - 1, skip if <= 0; rows edi = 1..IterLeft.
+- Row body non-empty (num > 0): Table1.FindKey([num]); num re-read; Geschlecht -> Trim(UpperCase), PStrNCpy \ -> +\; IDNR -> +\; Religion (54C) -> +\ (all \); +8 := edi; +4 := 1 if Vater>0 or Mutter>0.
+- Empty row: +0 := 0, +8 := edi - still goes through partner + slot sections.
+- Partner part (Table10.First, only when row gender ShortStr = 'W'): FindKey([num]); loop while Nummer = num: only records with Epnum = prev-row num ([ebx-\], guarded edi>1); Textjoin via sub_00563A0C:
+  - Pos('Ehes', Table10Verbind) > 0: Trim(Sajahr) <> '' or Trim(Saort) <> '' (Mosso via earlier Trims; ja -> '+\'): 'ooS ' + Cat(PRDay.'.'PRplace'.'SaPlace) + ' ' + Saort, else 'oo ' + H-date + ' ' + Hort.
+  - else Pos('and') > 0: 'o-o ' + H-date + ' ' + Hort.
+  - always Break after one Epnum-matching record; Next only on Epnum mismatch.
+- After loop: gender 'W' and Trim(Partner) <> '' -> row (edi-1) +\ := PStrNCpy \ of Partner ([ebx-\]; guarded edi>1 in recon - underflow in original targets row0 tail over other gvars). Partner := ''.
+- Slot loop j = 0..\ (41x): if edi >= Round(j^2) and j > MaxSlot -> [row+\] := j+1, MaxSlot := j, and flag flip: ParentCount=0 -> TermFlag=1 else ParentCount=0.
+- TermFlag=1 -> break to tail (father/mother expansion skipped).
+- Slot calc (per row, not terminated): v := Round(MaxSlot^2) * AShift + (edi - Round(MaxSlot^2)) -> [row+\]; [row+\] := edi. (Round(Power(MaxSlot,2)) computed twice in listing, identical.)
+- Parents (per row, num > 0): Vater > 0 -> father-dword := Vater at AncestorRec(2*edi) (+0 = 61F0F8+\*edi), Inc(ParentCount); Mutter similarly at AncestorRec(2*edi+1).
+- Tail: MaxSlot+1 < GenLimit -> GenLimit := MaxSlot ([ebp-8] overwritten); Table1.FindKey([StartNum]); cursor crDefault; GenLimit > 3 -> Button1.Visible := True.
+- Helpers added to AHNGlobals: `AncestorNum(Row)`, `SetAncestorNum(Row, Value)`, `AncestorRec(Row): PByte` (all \ stride off gvar_0061F30C, row 1-based).
+- Documented deviations: init-loop prev-row tail clear guarded (t>1); edi=1 prev-partner/prev num reads skipped; intermediate GetText/UpperCase/Trim chains collapsed; original exception frame (LStrArrayClr 30 + LStrClr) replaced by automatic local cleanup.
+- Build: SUCCESS.
