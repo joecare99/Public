@@ -9,8 +9,16 @@ Uses Classes, DeDeClasses, DeDeConstants;
 
 // DeDe Symbols ///////////////////////////////////////////////////////
 Type
+  TDeDePatternIndex = class
+  public
+    Index: Integer;
+  end;
 
   TDeDeSymbol = Class
+  private
+    FPatternIndexes: array[Byte] of TList;
+    FPatternIndexBuilt: Boolean;
+    procedure ClearPatternIndexes;
   protected
     procedure UpdateFirstByteSet;
   public
@@ -24,9 +32,12 @@ Type
     FileName : String;
     Constructor Create; virtual;
     Function LoadSymbol(AsFileName : String) : Boolean;
+    function FindMatches(const APattern: TSymBuffer;
+      AVersionMask: Byte; AMatches: TStrings): Integer;
     Destructor Destroy; override;
   End;
 
+  function GetVersionedDSFName(const ACompilerVersion: string): string;
 
   Function UnlinkCalls(Var buff : TSymBuffer; Level : byte = 0; RVA : DWORD = 0) : Boolean;
   Function GetDSFVersion(Sym : TDeDeSymbol) : String;
@@ -37,19 +48,14 @@ Type
   function DCUExculdeParamNames(s : String) : String;
 
 var BPLPEHeader : TPEHeader;
-    Glob_B5, Glob_B6, Glob_B7, Glob_B10 : Cardinal;
-    bMakeCRC : Boolean;
 
-    FirstByteSet : Set of Byte;
-    FirstCodeRVA : Cardinal;
+    FirstByteSet : TDeDeByteSet;
 
 implementation
 
 Uses
   DeDeDisASM, DisASM, HexTools, DeDeBPL, SysUtils,
   crc32, DeDeRes, DeDeCoreServices, DeDeClassHandle;
-
-var DASM : TDisAsm;
 
 function InCodeSegment(s : String) : Boolean; overload;
 var rva,i : dword;
@@ -148,10 +154,11 @@ End;
 Function UnlinkCalls(Var buff : TSymBuffer; Level : byte = 0; RVA : DWORD = 0) : Boolean;
 var s{,ins}   : String;
     j,k,i{,ps} : Integer;
-//    w  : Word;
-    dw : DWORD;
     CRC : DWORD;
+    DASM: TDisAsm;
 Begin
+   DASM := TDisAsm.Create;
+   try
    j:=1;
    if Level=0 then CRC:=0;
    Repeat
@@ -170,7 +177,8 @@ Begin
          ////////////////////////////////////////////////////
          //// FOR NEW DSF ENGINE - CRC CHECK INCLUDED
          ////////////////////////////////////////////////////
-         if (Level=0) and (bMakeCRC) then
+         if (Level=0) and (DeDeCoreContext <> nil) and
+           DeDeCoreContext.BuildCallCRC then
             if (buff[j] in [$E8,$9A])
                  then MakeCallCRC(CRC, buff, j+1, RVA);
          ////////////////////////////////////////////////////
@@ -178,21 +186,18 @@ Begin
          if buff[j] in [$E8,$E9,$9A,$A0..$A3,$A9]
             then begin
               for i:=1 to 4 do buff[j+i]:=0;
-              Inc(Glob_B5);
+              if DeDeCoreContext <> nil then
+                Inc(DeDeCoreContext.Normalized5ByteInstructions);
             end;
 
          /////////////////////////////////////////////////////////
-         // Unlink only if the value is > IMAGE_BASE+BASE_OF_CODE
-         // DO IT ALWAYS !!! (Many Idents build from DCU not found)
+         // Normalize absolute operands in the signature.
          /////////////////////////////////////////////////////////
          if buff[j] in [$68,$B8..$BF]
            then begin
-             //dw:=buff[j+1]+buff[j+2]*256+buff[j+3]*256*256+buff[j+4]*256*256*256;
-             //if dw>=FirstCodeRVA then
-             //  begin
                   for i:=1 to 4 do buff[j+i]:=0;
-                  Inc(Glob_B5);
-             //  end;
+                  if DeDeCoreContext <> nil then
+                    Inc(DeDeCoreContext.Normalized5ByteInstructions);
            end;
        end;
 
@@ -236,7 +241,8 @@ Begin
 
             then begin
               for i:=2 to 5 do buff[j+i]:=0;
-              Inc(Glob_B6);
+              if DeDeCoreContext <> nil then
+                Inc(DeDeCoreContext.Normalized6ByteInstructions);
             end;
        end;
 
@@ -264,7 +270,8 @@ Begin
               if (buff[j+0] in [$C7])
                 then for i:=3 to 6 do buff[j+i]:=0
                 else for i:=2 to 5 do buff[j+i]:=0;
-              Inc(Glob_B7);
+                if DeDeCoreContext <> nil then
+                  Inc(DeDeCoreContext.Normalized7ByteInstructions);
             end;
        end;
 
@@ -285,7 +292,8 @@ Begin
              or ((buff[j]=$69) and (buff[j+1] in [$05,$0D,$15,$1D,$25,$2D,$35,$3D]))
             then begin
               for i:=2 to 5 do buff[j+i]:=0;
-              Inc(Glob_B10);
+              if DeDeCoreContext <> nil then
+                Inc(DeDeCoreContext.Normalized10ByteInstructions);
             end;
        end;
      j:=j+k;
@@ -306,6 +314,9 @@ Begin
       buff[_PatternSize-2]:=CRC shr 16;
       buff[_PatternSize-3]:=CRC shr 24;
     end;
+   finally
+     DASM.Free;
+   end;
 End;
 
 
@@ -321,6 +332,7 @@ end;
 
 destructor TDeDeSymbol.Destroy;
 begin
+  ClearPatternIndexes;
   Sym.Free;
   Str.Free;
 
@@ -340,9 +352,116 @@ begin
 
     UpdateFirstByteSet;
   Except
-    DeDeCoreContext.ReportWarning(err_load_symfile+AsFileName+'"');
-    Result:=False;
+    on E: Exception do
+    begin
+      DeDeCoreContext.ReportWarning(err_load_symfile + AsFileName +
+        '": ' + E.ClassName + ': ' + E.Message);
+      Result := False;
+    end;
   End;
+end;
+
+function TDeDeSymbol.FindMatches(const APattern: TSymBuffer;
+  AVersionMask: Byte; AMatches: TStrings): Integer;
+var
+  I, PatternIndex: Integer;
+  Pattern: TSymBuffer;
+  PatternIndexes: TList;
+  PatternItem: TDeDePatternIndex;
+  NameLength: Byte;
+  NameOffset: Int64;
+  SymbolName: string;
+  SymbolNameBytes: AnsiString;
+  PreviousSymPosition, PreviousStrPosition: Int64;
+begin
+  if AMatches = nil then
+    raise EArgumentNilException.Create('AMatches');
+  Result := 0;
+  if ((Mode and AVersionMask) = 0) or (PatternSize <> _PatternSize) then
+    Exit;
+  if (Count < 0) or
+    (Int64(Count) * PatternSize > Sym.Size) then
+    raise EReadError.Create('Invalid DSF pattern table size');
+  if not FPatternIndexBuilt then
+    UpdateFirstByteSet;
+  PatternIndexes := FPatternIndexes[APattern[1]];
+  if PatternIndexes = nil then
+    Exit;
+
+  PreviousSymPosition := Sym.Position;
+  PreviousStrPosition := Str.Position;
+  try
+    for I := 0 to PatternIndexes.Count - 1 do
+    begin
+      PatternItem := TDeDePatternIndex(PatternIndexes[I]);
+      PatternIndex := PatternItem.Index;
+      Sym.Seek(Int64(PatternIndex) * PatternSize, soFromBeginning);
+      Sym.ReadBuffer(Pattern[1], PatternSize);
+      if not CompareMem(@APattern[1], @Pattern[1], PatternSize) then
+        Continue;
+
+      NameOffset := Index[PatternIndex];
+      if (NameOffset < 0) or (NameOffset >= Str.Size) then
+        raise EReadError.CreateFmt(
+          'Invalid DSF name offset at index %d', [PatternIndex]);
+      Str.Seek(NameOffset, soFromBeginning);
+      Str.ReadBuffer(NameLength, SizeOf(NameLength));
+      if Int64(NameLength) > Str.Size - Str.Position then
+        raise EReadError.CreateFmt(
+          'Truncated DSF name at index %d', [PatternIndex]);
+      SetLength(SymbolNameBytes, NameLength);
+      if NameLength > 0 then
+        Str.ReadBuffer(SymbolNameBytes[1], NameLength);
+      SymbolName := string(SymbolNameBytes);
+      if AMatches.IndexOf(SymbolName) < 0 then
+        AMatches.Add(SymbolName);
+    end;
+
+  finally
+    Sym.Seek(PreviousSymPosition, soFromBeginning);
+    Str.Seek(PreviousStrPosition, soFromBeginning);
+  end;
+  Result := AMatches.Count;
+end;
+
+procedure TDeDeSymbol.ClearPatternIndexes;
+var
+  I, J: Integer;
+  PatternIndexes: TList;
+begin
+  for I := Low(FPatternIndexes) to High(FPatternIndexes) do
+  begin
+    PatternIndexes := FPatternIndexes[I];
+    if PatternIndexes = nil then
+      Continue;
+    for J := 0 to PatternIndexes.Count - 1 do
+      TDeDePatternIndex(PatternIndexes[J]).Free;
+    PatternIndexes.Free;
+    FPatternIndexes[I] := nil;
+  end;
+  FPatternIndexBuilt := False;
+end;
+
+function GetVersionedDSFName(const ACompilerVersion: string): string;
+begin
+  if SameText(ACompilerVersion, 'D2') then
+    Result := 'vcl2.dsf'
+  else if SameText(ACompilerVersion, 'D3') or
+    SameText(ACompilerVersion, 'BCB3') then
+    Result := 'vcl3.dsf'
+  else if SameText(ACompilerVersion, 'D4') or
+    SameText(ACompilerVersion, 'BCB4') then
+    Result := 'vcl4.dsf'
+  else if SameText(ACompilerVersion, 'D5') or
+    SameText(ACompilerVersion, 'BCB5') then
+    Result := 'vcl5.dsf'
+  else if SameText(ACompilerVersion, 'D6') or
+    SameText(ACompilerVersion, 'D6 CLX') then
+    Result := 'vcl6.dsf'
+  else if SameText(ACompilerVersion, 'D7') then
+    Result := 'vcl7.dsf'
+  else
+    Result := '';
 end;
 
 Function GetDSFVersion(Sym : TDeDeSymbol) : String;
@@ -645,22 +764,29 @@ begin
 end;
 
 procedure TDeDeSymbol.UpdateFirstByteSet;
-var i : Integer;
-    buff : TSymBuffer;
+var
+  I: Integer;
+  Buffer: TSymBuffer;
+  PatternIndex: TDeDePatternIndex;
 begin
+  ClearPatternIndexes;
+  if PatternSize <> _PatternSize then
+    Exit;
   Sym.Seek(0,soFromBeginning);
-  for i:=0 To Count-1 Do
-   Begin
-     Sym.ReadBuffer(buff[1],_PatternSize);
-     FirstByteSet:=FirstByteSet+[buff[1]];
-   End;
+  for I := 0 to Count - 1 do
+  begin
+    Sym.ReadBuffer(Buffer[1], _PatternSize);
+    FirstByteSet := FirstByteSet + [Buffer[1]];
+    if FPatternIndexes[Buffer[1]] = nil then
+      FPatternIndexes[Buffer[1]] := TList.Create;
+    PatternIndex := TDeDePatternIndex.Create;
+    PatternIndex.Index := I;
+    FPatternIndexes[Buffer[1]].Add(PatternIndex);
+  end;
+  FPatternIndexBuilt := True;
 end;
 
 initialization
-  DASM:=TDisAsm.Create;
   FirstByteSet:=[];
-
-finalization
-  DASM.Free;
 
 end.

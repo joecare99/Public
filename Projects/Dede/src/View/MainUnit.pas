@@ -516,10 +516,6 @@ begin
     CustomPB.Position := 0;
     DumpStatusLbl.Caption := msg_analizefile;
 
-    /////////////////////////////////////////////////////////////
-    // Needed for UnlinkCalls
-    DeDeSym.FirstCodeRVA := PEHeader.BaseOfCode + PEHeader.IMAGE_BASE;
-
     //////////////////////////////////////////////////////////////////////
     ///// ------------ 'BOOLEAN' CHECK ---------------------------------//
     //////////////////////////////////////////////////////////////////////
@@ -1602,7 +1598,7 @@ begin
 
   Screen.Cursor:=crHourGlass;
   DeDeDisAsm.bErrorsAsFile:=True;
-  DeDeDisAsm.sDisAsmErrors:='';
+  DeDeCoreContext.DisassemblerErrors:='';
   Try
 
     StsBar.Panels[1].Text:=msg_saving_project;
@@ -1779,11 +1775,11 @@ begin
           End;
 
           tick2:=GetTickCount;
-          if DeDeDisAsm.sDisAsmErrors<>'' then
+          if DeDeCoreContext.DisassemblerErrors<>'' then
             begin
               with TStringList.Create do
                 begin
-                  Text:=DeDeDisAsm.sDisAsmErrors;
+                  Text:=DeDeCoreContext.DisassemblerErrors;
                   SaveToFile(sDir+'\'+ProjectNameLbl.Caption+'.err.txt');
                 end;
               ShowMessage('Done with errors. Errors saved in '+ProjectNameLbl.Caption+'.err.txt');  
@@ -1849,13 +1845,14 @@ begin
   Options.IncludeDPR := cbDPR.Checked;
   Options.IncludeEventRVA := cbTXT.Checked;
   Options.IncludeAnalysisReport := False;
+  Options.IncludeCrossReferenceReport := False;
   ForceOverwrite := not bWARN_ON_FILE_OVERWRITE;
   GeneratedFiles := nil;
   Session := TDeDeAnalysisSession.Create;
   DeDeCoreContext.Warnings.Clear;
   Screen.Cursor := crHourGlass;
   DeDeDisAsm.bErrorsAsFile := True;
-  DeDeDisAsm.sDisAsmErrors := '';
+  DeDeCoreContext.DisassemblerErrors := '';
   Tick1 := GetTickCount;
   Tick2 := Tick1;
   try
@@ -2111,7 +2108,8 @@ begin
    node:=ASMShowForm.ProcTree.Items.AddChildFirst(nil,ClassLbl.Caption+'.'+sEvent);
    node.ImageIndex:=1;
 
-   ASMShow.AddCommentsToListing(DasmList, ProcRVA);
+   ASMShow.AddCommentsToListing(DasmList,
+     DeDeCoreContext.CurrentRoutineRVA);
    if bModalAsmShow
      then ASMShowForm.ShowModal
      else ASMShowForm.Show;
@@ -2252,7 +2250,7 @@ begin
 
   DeDeDisASM.GlobBEmulation := bBSS;
 
-  DeDeSym.bMakeCRC:=False;
+  DeDeCoreContext.BuildCallCRC:=False;
 end;
 
 procedure TDeDeMainForm.AssignDeDeDisAsms;
@@ -2800,7 +2798,7 @@ begin
     Screen.Cursor:=crHourGlass;
     TmpList:=TStringList.Create;
     DeDeDisAsm.bErrorsAsFile:=True;
-    DeDeDisAsm.sDisAsmErrors:='';
+    DeDeCoreContext.DisassemblerErrors:='';
     Try
 
       StsBar.Panels[1].Text:=msg_creating_exports;
@@ -3077,11 +3075,11 @@ begin
                  else ShowMessage(msg_sym_sice_info);                                        
             end;
 
-        if DeDeDisAsm.sDisAsmErrors<>'' then
+        if DeDeCoreContext.DisassemblerErrors<>'' then
           begin
             with TStringList.Create do
               begin
-                Text:=DeDeDisAsm.sDisAsmErrors;
+                Text:=DeDeCoreContext.DisassemblerErrors;
                 SaveToFile(ChangeFileExt(FS,'.err'));
               end;
             ShowMessage('Done with errors.'#13#10+msg_file_created+#13#10'Errors saved in '+ExtractFileName(ChangeFileExt(FS,'.err')));
@@ -3110,7 +3108,7 @@ begin
     WA:=TWPJALF.Create;
     TmpList:=TStringList.Create;
      DeDeDisAsm.bErrorsAsFile:=True;
-     DeDeDisAsm.sDisAsmErrors:='';
+     DeDeCoreContext.DisassemblerErrors:='';
     Try
       tick1:=GetTickCount;
       tick2:=tick1;
@@ -3368,11 +3366,11 @@ begin
           SavePB.Position:=0;
           SavePB.Update;
 
-          if DeDeDisAsm.sDisAsmErrors<>'' then
+          if DeDeCoreContext.DisassemblerErrors<>'' then
             begin
               with TStringList.Create do
                 begin
-                  Text:=DeDeDisAsm.sDisAsmErrors;
+                  Text:=DeDeCoreContext.DisassemblerErrors;
                   SaveToFile(ChangeFileExt(FS,'.err'));
                 end;
               ShowMessageFmt('Done with errors.'#13#10+msg_wpjalf_ready+#13#10'Errors saved in '+ExtractFileName(ChangeFileExt(FS,'.err')),
@@ -4231,11 +4229,8 @@ var sf,s  : String;
     DeDeSym, Sym : TDeDeSymbol;
     i : Integer;
 begin
-  sf:='vcl'+(sDelphiVersion+'00')[2]+'.dsf';
-  if sDelphiVersion='BCB3' then sf:='vcl3.dsf';
-  if sDelphiVersion='BCB4' then sf:='vcl4.dsf';
-  if sDelphiVersion='BCB5' then sf:='vcl5.dsf';
-  if sDelphiVersion='D6 CLX' then sf:='vcl6.dsf';
+  sf:=GetVersionedDSFName(sDelphiVersion);
+  if sf='' then Exit;
   sf:=ExtractFileDir(Application.ExeName)+'\DSF\'+sf;
 
 

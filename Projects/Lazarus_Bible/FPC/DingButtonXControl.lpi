@@ -33,7 +33,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/DING;../source/DingX;../source/_core/tools"/>
             <IncludeFiles Value="../source/DING;../source/DingX;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -67,7 +67,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/DING;../source/DingX;../source/_core/tools"/>
             <IncludeFiles Value="../source/DING;../source/DingX;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -101,7 +101,7 @@
         <PackageName Value="DingPkg"/>
       </Item2>
     </RequiredPackages>
-    <Units Count="5">
+    <Units Count="4">
       <Unit0>
         <Filename Value="DingButtonXControl.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -113,23 +113,21 @@
         <UnitName Value="Ctrl_DingButton"/>
       </Unit1>
       <Unit2>
-        <Filename Value="../source/DingX/DingButtonImpl1.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="DingButtonImpl1"/>
-      </Unit2>
-      <Unit3>
-        <Filename Value="../source/DingX/DingButtonXControl_TLB.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="DingButtonXControl_TLB"/>
-      </Unit3>
-      <Unit4>
         <Filename Value="../source/DingX/Frm_DingAbout.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_DingAbout"/>
-      </Unit4>
+      </Unit2>
+      <Unit3>
+        <Filename Value="../source/DingX/Frm_DingXMain.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="MainForm"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_DingXMain"/>
+      </Unit3>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -141,7 +139,7 @@
     <SearchPaths>
       <OtherUnitFiles Value="../source/DING;../source/DingX;../source/_core/tools"/>
       <IncludeFiles Value="../source/DING;../source/DingX;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

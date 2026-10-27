@@ -174,6 +174,7 @@ type
     FExtraMessages: TWPExtraMessages;
     FConvertJPEGData: Boolean;
     FDebugMode: Boolean;
+    FField70: Boolean; //+70: geprueft 005736A3 (Unit13.SpeedButton3Click), Setter 00537824
   public
     constructor Create(AOwner: TComponent); override;
     destructor Destroy; override;
@@ -190,6 +191,11 @@ type
     procedure SetModes(Value: TWPDevModes);
     procedure SetInfo(Value: TWPPDFExportInfo);
     procedure SetPDFAMode(Value: TWPPDFAMode);
+    procedure SetLicenseLibrary(Value: String);    procedure StartDocument; virtual;
+    procedure FinishDocument; virtual;
+    { Byte-Feld +70 (005736A3/005736AD): im Shell-Recovery ohne
+      etablierten Namen; der AHNENWIN-Code seiner Truth auf "False". }
+    property Field70: Boolean read FField70 write FField70;
     property OnUpdateGauge: TWPPDFUpdateGaugeEvent
       read FOnUpdateGauge write FOnUpdateGauge;
   published
@@ -242,6 +248,11 @@ type
   public
     constructor Create(AOwner: TComponent); override;
   end;
+
+{ 00536D90 (eax = Name, edx = Code): globale Lizenzregistrierung des
+  PDF-Druckers (Unit13/Unit16). }
+procedure WPPDFRegisterLicense(AName, ACode: String);
+
 
 implementation
 
@@ -341,6 +352,31 @@ procedure TWPCustomPDFExport.SetPDFAMode(Value: TWPPDFAMode);
 begin
   FPDFAMode := Value;
 end;
+
+{ 00537710 (eax = Komponente, edx = DllName): registriert die
+  Lizenzbibliothek des PDF-Druckers (Parameter 'Ahnw50.dll' in
+  Unit13/Unit16). Kompatibilitaet: kein Original-Registrierungsgrundlag. }
+procedure TWPCustomPDFExport.SetLicenseLibrary(Value: String);
+begin
+end;
+
+{ 00536D90 (eax = Name, edx = Code): globale Lizenzregistrierung
+  ('Heribert Reitmeier' / 'A144arg6fm45afqf96d4@80B340EF'). }
+procedure WPPDFRegisterLicense(AName, ACode: String);
+begin
+end;
+
+{ [vmt+40]/005379E0, Aufruf 005736BF (Unit13.SpeedButton3Click): bereitet
+  Dokument/Standard-Zeilenumbruch des Canvas vor. }
+procedure TWPCustomPDFExport.StartDocument;
+begin
+end;
+
+{ [vmt+54]/00538D00, Aufruf 0057370D: schliesst den Export endgueltig ab. }
+procedure TWPCustomPDFExport.FinishDocument;
+begin
+end;
+
 
 constructor TWPPDFPrinter.Create(AOwner: TComponent);
 begin

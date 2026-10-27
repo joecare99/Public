@@ -31,9 +31,9 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/UpDownDemo"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/UPDOWNDEMO;../source/_core/tools"/>
-            <IncludeFiles Value="../source/UPDOWNDEMO;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+            <OtherUnitFiles Value="../source/UpDownDemo;../source/_core/tools"/>
+            <IncludeFiles Value="../source/UpDownDemo;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -65,9 +65,9 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/UpDownDemo"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/UPDOWNDEMO;../source/_core/tools"/>
-            <IncludeFiles Value="../source/UPDOWNDEMO;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+            <OtherUnitFiles Value="../source/UpDownDemo;../source/_core/tools"/>
+            <IncludeFiles Value="../source/UpDownDemo;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -121,9 +121,9 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/UpDownDemo"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/UPDOWNDEMO;../source/_core/tools"/>
-      <IncludeFiles Value="../source/UPDOWNDEMO;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+      <OtherUnitFiles Value="../source/UpDownDemo;../source/_core/tools"/>
+      <IncludeFiles Value="../source/UpDownDemo;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

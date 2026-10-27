@@ -27,6 +27,7 @@ type
     BitBtn1: TBitBtn;
     SimpleIPCServer1: TSimpleIPCServer;
     procedure Edit1Change(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
     procedure SimpleIPCServer1Message(Sender: TObject);
   private
     { Private declarations }

@@ -13,6 +13,7 @@ begin
   Writeln('  --dfm       Write form resources');
   Writeln('  --dpr       Write a Delphi project file');
   Writeln('  --txt       Write event RVA listing');
+  Writeln('  --xref      Write structured call cross-references');
   Writeln('  --all       Write all project files (default)');
   Writeln('  --force     Replace existing output files');
   Writeln('  --help      Show this help');
@@ -38,6 +39,7 @@ begin
   Options.IncludeDPR := True;
   Options.IncludeEventRVA := True;
   Options.IncludeAnalysisReport := True;
+  Options.IncludeCrossReferenceReport := False;
 
   I := 1;
   while I <= ParamCount do
@@ -61,6 +63,8 @@ begin
     end
     else if Argument = '--force' then
       Force := True
+    else if Argument = '--xref' then
+      Options.IncludeCrossReferenceReport := True
     else if Argument = '--all' then
     begin
       Options.IncludeDFM := True;

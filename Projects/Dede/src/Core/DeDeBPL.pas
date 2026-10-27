@@ -3,6 +3,7 @@ unit DeDeBPL;
 // DeDe Symbol File Format
 // DSF!    - Magic
 // BYTE    - Flag ( 0 = Delphi3, 1=Delphi4, 2=Delphi5, 3=Delphi2, 4=Delphi6, 5,6,7 - Reserved)
+// DWORD   - Extended header value, present when flag bit $40 is set
 // WORD    - Record Count
 // BYTE    - Pattern Length
 // DWORD   - Patterns Offset
@@ -17,6 +18,9 @@ unit DeDeBPL;
 interface
 
 Uses Classes;
+
+const
+  DSF_FLAG_EXTENDED_HEADER = $40;
 
 Procedure SaveBPLSymbolFile(Bytes,Names : TMemoryStream;
                             sFileName : String;
@@ -47,7 +51,8 @@ Var OutF : TMemoryStream;
     s : String;
     b : Byte;
     w : Word;
-    dw,dwc,dws : DWORD;
+    dw,dwc,dws,dwExtendedHeader : DWORD;
+    HeaderOffsetShift: Integer;
 Begin
   OutF:=TMemoryStream.Create;
   Try
@@ -56,6 +61,13 @@ Begin
     WriteAnsiString(OutF, s);
     // Write Flags
     OutF.WriteBuffer(mode,1);
+    HeaderOffsetShift := 0;
+    if (mode and DSF_FLAG_EXTENDED_HEADER) <> 0 then
+    begin
+      dwExtendedHeader := 0;
+      OutF.WriteBuffer(dwExtendedHeader, SizeOf(dwExtendedHeader));
+      HeaderOffsetShift := SizeOf(dwExtendedHeader);
+    end;
     // Write Record Count
     w:=recnum;
     OutF.WriteBuffer(w,2);
@@ -88,10 +100,10 @@ Begin
       OutF.WriteBuffer(b,1);
      End;
     // Write SYM Offset (for now zerro)
-    OutF.Seek(8,soFromBeginning);
+    OutF.Seek(8 + HeaderOffsetShift,soFromBeginning);
     OutF.WriteBuffer(dwc,4);
     // Write STR Offset (for now zerro)
-    OutF.Seek(12,soFromBeginning);
+    OutF.Seek(12 + HeaderOffsetShift,soFromBeginning);
     OutF.WriteBuffer(dws,4);
 
     WriteZipEntryFromStream(sFileName, sFileName, OutF);
@@ -111,7 +123,7 @@ var InF : TMemoryStream;
     s : String;
     b : Byte;
     w : Word;
-    dw,dwc,dws : DWORD;
+    dw,dwc,dws,dwExtendedHeader : DWORD;
 begin
   Bytes.Clear;
   Names.Clear;
@@ -127,6 +139,8 @@ begin
     If s<>'DSF!' Then Exit;
     // Read Flags
     InF.ReadBuffer(mode,1);
+    if (mode and DSF_FLAG_EXTENDED_HEADER) <> 0 then
+      InF.ReadBuffer(dwExtendedHeader, SizeOf(dwExtendedHeader));
     // Read Record Count
     InF.ReadBuffer(w,2);
     recnum:=w;

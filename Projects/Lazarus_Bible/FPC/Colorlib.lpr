@@ -1,4 +1,8 @@
-program Colorlib;
+library Colorlib;
+
+{ Frueher eine Windows-DLL; jetzt eine plattformuebergreifende Shared
+  Library (Colorlib.so unter Linux, Colorlib.dll unter Windows), die die
+  Funktion FBGetColors exportiert. Testdll laedt sie zur Laufzeit. }
 
 {$mode delphi}{$H+}
 
@@ -11,8 +15,9 @@ uses
   SysUtils,
   Frm_CLRFORM;
 
+exports
+  FBGetColors;
+
 begin
-  RequireDerivedFormResource := True;
   Application.Initialize;
-  Application.Run;
 end.

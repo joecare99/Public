@@ -23,11 +23,7 @@ function OffsetInSegment(Offset : DWORD; Segment : String) : boolean;
 function GetNextProcRVA(dwRVA : DWORD; var bFound : Boolean; bSkipBetweenCodeFillRecognition : Boolean = False) : DWORD;
 Function OffsetShouldCorrect(ins1 : String) : Boolean;
 
-Type TDisassemblerOptions = record
-       Imports : Boolean;
-       EnglishStrings : Boolean;
-       NonEnglishStrings : Boolean;
-     end;
+Type TDisassemblerOptions = TDeDeDisassemblerOptions;
 
 var DFMNameList : TStringList;
     PASNameList : TStringList;
@@ -36,9 +32,7 @@ var DFMNameList : TStringList;
     FOpCodeList : TList;
     PEStream : TPEStream;
     RVAConverter : TRVAConverter;
-    bTryExcept : Integer;
     SymbolsList : TList;
-    SEHPtrList,ENDPtrList : TStringList;
     ClsDmp : TClassDumper;
     GlobGetImports  :Boolean;
     GlobBEmulation : Boolean;
@@ -47,11 +41,10 @@ var DFMNameList : TStringList;
     GlobDontCutStringReferences : Boolean;
     DisassemblerOptions : TDisassemblerOptions;
     bErrorsAsFile : Boolean;
-    sDisAsmErrors : String;
-    ProcRva : DWORD;
 
 Function GetSymbolReference(AwdOffset : DWORD) : String;
-function GetImportReference(AsOffset : String) : String;
+function GetImportReference(AsOffset: string;
+  AIgnoreUserOptions: Boolean = False): string;
 Function GetControlClassEx(sClassName, sControlName : String) : String;
 Function GetEventPrototype(sClassName, sHandlerName : String) : String;
 
@@ -64,13 +57,6 @@ implementation
 
 uses DisASM, DisAsmTables, HEXTools, SysUtils, DeDeReg, DeDeConstants,
      DeDeClassEmulator, DeDeRes, DeDeOffsInf, DeDeExpressions, DeDeAnsiStream;
-
-Var rva : DWORD;
-
-Var LastPush : DWORD;
-    sz : Integer;
-    bCommentNext, bTryBlockFound, bControlRef : Boolean;
-    LastJump : DWORD;
 
 function CurrentPEStream: TPEStream;
 var
@@ -123,6 +109,190 @@ var
 begin
   Converter := CurrentPEConverter;
   Result := Converter.GetRVA(AOffset);
+end;
+
+function TryGetCallerStackCleanup(ABytes: PByte; ASize: Integer;
+  out ACleanupBytes: LongWord): Boolean;
+var
+  CleanupValue: LongWord;
+begin
+  Result := False;
+  ACleanupBytes := 0;
+  if (ABytes = nil) or (ASize < 3) then
+    Exit;
+  if (ABytes[0] = $83) and (ABytes[1] = $C4) then
+  begin
+    CleanupValue := ABytes[2];
+    if (CleanupValue < 4) or (CleanupValue > $7F) then
+      Exit;
+  end
+  else if (ABytes[0] = $81) and (ABytes[1] = $C4) and (ASize >= 6) then
+  begin
+    CleanupValue := LongWord(ABytes[2]) or
+      (LongWord(ABytes[3]) shl 8) or
+      (LongWord(ABytes[4]) shl 16) or
+      (LongWord(ABytes[5]) shl 24);
+    if (CleanupValue < 4) or (CleanupValue > $10000) then
+      Exit;
+  end
+  else
+    Exit;
+  ACleanupBytes := CleanupValue;
+  Result := True;
+end;
+
+function GetX86RegisterWriteMask(ABytes: PByte; ASize: Integer;
+  out AWriteMask: Byte): Boolean;
+var
+  Position, Opcode, SecondOpcode, ModRM, RegisterIndex, GroupIndex: Integer;
+  ModValue, RMValue: Integer;
+begin
+  Result := False;
+  AWriteMask := 0;
+  if (ABytes = nil) or (ASize <= 0) then
+    Exit;
+  Position := 0;
+  while (Position < ASize) and
+    (ABytes[Position] in [$26, $2E, $36, $3E, $64, $65, $66, $67,
+      $F0, $F2, $F3]) do
+    Inc(Position);
+  if Position >= ASize then
+    Exit;
+  Opcode := ABytes[Position];
+  if (Opcode >= $B8) and (Opcode <= $BF) then
+  begin
+    RegisterIndex := Opcode - $B8;
+    if RegisterIndex < 3 then
+      AWriteMask := 1 shl RegisterIndex;
+    Exit(True);
+  end;
+  if (Opcode >= $B0) and (Opcode <= $B7) then
+  begin
+    RegisterIndex := Opcode - $B0;
+    if RegisterIndex < 4 then
+      AWriteMask := 1 shl (RegisterIndex and 3);
+    Exit(True);
+  end;
+  if (Opcode >= $40) and (Opcode <= $4F) then
+  begin
+    RegisterIndex := Opcode and $07;
+    if RegisterIndex < 3 then
+      AWriteMask := 1 shl RegisterIndex;
+    Exit(True);
+  end;
+  if (Opcode >= $58) and (Opcode <= $5F) then
+  begin
+    RegisterIndex := Opcode - $58;
+    if RegisterIndex < 3 then
+      AWriteMask := 1 shl RegisterIndex;
+    Exit(True);
+  end;
+  if (Opcode >= $50) and (Opcode <= $57) or
+    (Opcode in [$68, $6A, $90, $9C, $9D, $C2, $C3, $E8, $E9, $EB]) or
+    (Opcode >= $70) and (Opcode <= $7F) then
+    Exit(True);
+
+  if Opcode = $0F then
+  begin
+    if Position + 1 >= ASize then
+      Exit;
+    SecondOpcode := ABytes[Position + 1];
+    if (SecondOpcode >= $80) and (SecondOpcode <= $8F) then
+      Exit(True);
+    if not (SecondOpcode in [$B6, $B7, $BE, $BF]) then
+      Exit;
+    if Position + 2 >= ASize then
+      Exit;
+    ModRM := ABytes[Position + 2];
+    RegisterIndex := (ModRM shr 3) and $07;
+    if RegisterIndex < 3 then
+      AWriteMask := 1 shl RegisterIndex;
+    Exit(True);
+  end;
+
+  if not (Opcode in [$01, $03, $09, $0B, $11, $13, $19, $1B,
+    $21, $23, $29, $2B, $31, $33, $39, $3B, $80, $81, $83,
+    $87, $89, $8B, $8D, $C6, $C7, $FF]) then
+    Exit;
+  if Position + 1 >= ASize then
+    Exit;
+  ModRM := ABytes[Position + 1];
+  ModValue := (ModRM shr 6) and $03;
+  RegisterIndex := (ModRM shr 3) and $07;
+  RMValue := ModRM and $07;
+  GroupIndex := RegisterIndex;
+  case Opcode of
+    $03, $0B, $13, $1B, $23, $2B, $33, $8B, $8D:
+      if RegisterIndex < 3 then
+        AWriteMask := 1 shl RegisterIndex;
+    $87:
+      begin
+        if RegisterIndex < 3 then
+          AWriteMask := AWriteMask or (1 shl RegisterIndex);
+        if (ModValue = 3) and (RMValue < 3) then
+          AWriteMask := AWriteMask or (1 shl RMValue);
+      end;
+    $01, $09, $11, $19, $21, $29, $31, $89:
+      if (ModValue = 3) and (RMValue < 3) then
+        AWriteMask := 1 shl RMValue;
+    $39, $3B:
+      AWriteMask := 0;
+    $80, $81, $83:
+      if (GroupIndex <> 7) and (ModValue = 3) and (RMValue < 3) then
+        AWriteMask := 1 shl RMValue;
+    $C6, $C7:
+      if (GroupIndex = 0) and (ModValue = 3) and (RMValue < 3) then
+        AWriteMask := 1 shl RMValue;
+    $FF:
+      if (GroupIndex in [0, 1]) and (ModValue = 3) and (RMValue < 3) then
+        AWriteMask := 1 shl RMValue;
+  end;
+  Result := True;
+end;
+
+function IsX86BranchInstruction(ABytes: PByte; ASize: Integer): Boolean;
+var
+  Position, Opcode, SecondOpcode: Integer;
+begin
+  Result := False;
+  if (ABytes = nil) or (ASize <= 0) then
+    Exit;
+  Position := 0;
+  while (Position < ASize) and
+    (ABytes[Position] in [$26, $2E, $36, $3E, $64, $65, $66, $67,
+      $F0, $F2, $F3]) do
+    Inc(Position);
+  if Position >= ASize then
+    Exit;
+  Opcode := ABytes[Position];
+  Result := (Opcode in [$C2, $C3, $E8, $E9, $EA, $EB]);
+  if (Opcode >= $70) and (Opcode <= $7F) then
+    Result := True;
+  if (Opcode = $0F) and (Position + 1 < ASize) then
+  begin
+    SecondOpcode := ABytes[Position + 1];
+    Result := (SecondOpcode >= $80) and (SecondOpcode <= $8F);
+  end;
+  if (Opcode = $FF) and (Position + 1 < ASize) then
+    Result := ((ABytes[Position + 1] shr 3) and $07) in [2, 3, 4, 5];
+end;
+
+procedure RecordDisasmReference(Param: Pointer; Ref: TdaRef;
+  RefSize: Integer; var ResultText: string);
+var
+  IsFrameBase: Boolean;
+begin
+  if DeDeCoreContext = nil then
+    Exit;
+  IsFrameBase :=
+    ((Ref.MultiplyReg1 <> 0) and (Ref.ARegister1 = rEbp) and
+      (Ref.MultiplyReg2 = 0)) or
+    ((Ref.MultiplyReg2 <> 0) and (Ref.ARegister2 = rEbp) and
+      (Ref.MultiplyReg1 = 0));
+  if IsFrameBase then
+    DeDeCoreContext.CrossReferences.RecordFrameAccess(
+      DeDeCoreContext.CurrentRoutineRVA,
+      DeDeCoreContext.CurrentInstructionRVA, Ref.Immidiate, RefSize);
 end;
 
 Function UnitIncluded(s : String) : Boolean;
@@ -255,7 +425,8 @@ end;
 //
 // Last Modified : N/A
 //
-function GetImportReference(AsOffset : String) : String;
+function GetImportReference(AsOffset: string;
+  AIgnoreUserOptions: Boolean): string;
 var iRVA, iPhys, ProcOffset, DLLOffset : DWORD;
     Delta1, Delta2: LongInt;
     iIDX : Byte;
@@ -275,11 +446,14 @@ begin
   ProcName:='';
 
   if ImageHeader.ELFDumped then Exit;
+  if ImageHeader.IMPORT_TABLE_RVA = 0 then Exit;
 
   // Skip import references if set
-  if not DisassemblerOptions.Imports then exit;
-
-  if not bImportReferences then Exit;
+  if not AIgnoreUserOptions then
+  begin
+    if not DisassemblerOptions.Imports then Exit;
+    if not bImportReferences then Exit;
+  end;
 
   // Get the '.idata' section characteristics
   if ImageHeader.ELFDumped then iIDX:=ImageHeader.GetSectionIndexEx('.idata')
@@ -288,6 +462,9 @@ begin
     if iIDX=255 then
       iIDX:=ImageHeader.GetSectionIndexByRVA(ImageHeader.IMPORT_TABLE_RVA);
   end;
+  if (iIDX = 0) or (iIDX = 255) or
+    (iIDX > ImageHeader.ObjectNum) then
+    Exit;
 
   iRVA:=ImageHeader.Objects[iIDX].RVA;
   iPhys:=ImageHeader.Objects[iIDX].PHYSICAL_OFFSET;
@@ -497,51 +674,77 @@ Begin
 
     // if the first read byte is not found in the
     // First byte set then skip searching fo that reference
-    if FirstByteSet*[buff[1]]=[] then Exit;
+    if not DeDeCoreContext.StrictXRefSymbolMatches and
+      (FirstByteSet*[buff[1]]=[]) then
+      Exit;
 
     // removes all absolute offsets
-    UnlinkCalls(buff,0,rva);
+    if DeDeCoreContext.StrictXRefSymbolMatches then
+    begin
+      try
+        if not UnlinkCalls(buff, 0,
+          DeDeCoreContext.CurrentInstructionRVA) then
+          Exit;
+      except
+        on E: EDisAsmError do
+          Exit;
+      end;
+    end
+    else
+      UnlinkCalls(buff, 0, DeDeCoreContext.CurrentInstructionRVA);
 
-    // Loops among the all loaded symbols
-    For i:=0 To SymbolsList.Count-1 Do
-      Begin
-        // Gets a symbol
-        Sym:=TDeDeSymbol(SymbolsList[i]);
+    if DeDeCoreContext.StrictXRefSymbolMatches then
+    begin
+      for i := 0 to SymbolsList.Count - 1 do
+      begin
+        Sym := TDeDeSymbol(SymbolsList[i]);
+        Sym.FindMatches(buff,
+          DeDeCoreContext.DelphiVersionCompatibility, RefLst);
+      end;
+    end
+    else
+    begin
+      // Loops among the all loaded symbols
+      For i:=0 To SymbolsList.Count-1 Do
+        Begin
+          // Gets a symbol
+          Sym:=TDeDeSymbol(SymbolsList[i]);
 
-        // the current symbol file is not for the current Delphi version
-        // so process next DSF
-        if (Sym.Mode and DeDeCoreContext.DelphiVersionCompatibility)=0 then Continue;
+          // the current symbol file is not for the current Delphi version
+          // so process next DSF
+          if (Sym.Mode and DeDeCoreContext.DelphiVersionCompatibility)=0 then Continue;
 
-        // initializes the streams
-        Sym.Sym.Seek(0,soFromBeginning);
-        Sym.Str.Seek(0,soFromBeginning);
-        // Loops among the entries
-        For j:=0 To Sym.Count-1 Do
-          Begin
-            // Reads the pattern
-            Sym.Sym.ReadBuffer(buff1[1],_PatternSize);
-            // and compare it to buff1
-            If CompareMem(@buff[1],@buff1[1],_PatternSize) Then
-               Begin
-                 // If equal, then a reference is found
-                 // goes to the offset of the procedure name
-                 // in the DeDeSymbol object
-                 Sym.Str.Seek(Sym.Index[j],soFromBeginning);
-                 Sym.Str.ReadBuffer(b,1);
-                 // Reads the procedure name
-                 s := ReadAnsiString(Sym.Str,b);
-                 // And add it to the reference list
-                 RefLst.Add(s);
-               End;
-          End;
-      End;
+          // initializes the streams
+          Sym.Sym.Seek(0,soFromBeginning);
+          Sym.Str.Seek(0,soFromBeginning);
+          // Loops among the entries
+          For j:=0 To Sym.Count-1 Do
+            Begin
+              // Reads the pattern
+              Sym.Sym.ReadBuffer(buff1[1],_PatternSize);
+              // and compare it to buff1
+              If CompareMem(@buff[1],@buff1[1],_PatternSize) Then
+                 Begin
+                   // If equal, then a reference is found
+                   // goes to the offset of the procedure name
+                   // in the DeDeSymbol object
+                   Sym.Str.Seek(Sym.Index[j],soFromBeginning);
+                   Sym.Str.ReadBuffer(b,1);
+                   // Reads the procedure name
+                   s := ReadAnsiString(Sym.Str,b);
+                   RefLst.Add(s);
+                 End;
+            End;
+        End;
+    end;
   Finally
     // restores the PEStream position
     CurrentPEStream.Seek(bk,soFromBeginning);
 
     // Gets only those DSF references in which names
     // the EAX class name or it's parents is included
-    if (bSMARTMODE) and (sc<>'') then
+    if (bSMARTMODE) and (sc<>'') and
+      not DeDeCoreContext.StrictXRefSymbolMatches then
       begin
         bFound:=False;
         For i:=0 to RefLst.Count-1 Do
@@ -568,6 +771,10 @@ Begin
 
          if bFound then RefLst.Assign(SmartLst);
       end;
+
+    if DeDeCoreContext.StrictXRefSymbolMatches and
+      (RefLst.Count <> 1) then
+      RefLst.Clear;
 
     // Max 6 references
     While RefLst.Count>MAX_DSF_REFERENCES_COUNT do RefLst.Delete(RefLst.Count-1);
@@ -626,16 +833,42 @@ Begin
             Except
               on e:Exception do Raise Exception.Create('Cant resolve import reference ');
             End;
-            If s<>'' Then Result:=#13#10+sREF_TEXT_IMPORT+' '+s+'()'#13#10+'|'+#13#10;
+            If s<>'' Then
+            begin
+              if DeDeCoreContext <> nil then
+                DeDeCoreContext.CrossReferences.ResolveImportCall(
+                  DeDeCoreContext.CurrentRoutineRVA,
+                  DeDeCoreContext.CurrentInstructionRVA, s);
+              Result:=#13#10+sREF_TEXT_IMPORT+' '+s+'()'#13#10+'|'+#13#10;
+            end;
           end;
       End;
    Finally
      CurrentPEStream.Seek(bk,soFromBeginning);
    End;
 
-  // If no other call reference is found then
-  // searches for a SymbolReference
-  If Result='' Then Result:=GetSymbolReference(AwdOffset);
+      if (Result = '') and DeDeCoreContext.StrictXRefSymbolMatches and
+        (ClsDmp <> nil) and (DeDeCoreContext.ClassesDumper <> nil) then
+        for j := 0 to TClassesDumper(DeDeCoreContext.ClassesDumper).Classes.Count - 1 do
+        begin
+          cd := TClassDumper(
+            TClassesDumper(DeDeCoreContext.ClassesDumper).Classes[j]);
+          for i := 0 to cd.MethodData.Count - 1 do
+            if TMethodRec(cd.MethodData.Methods[i]).dwRVA = AwdOffset then
+            begin
+              Result := #13#10 + sREF_TEXT_PUBLISHED + ' ' +
+                cd.FsClassName + '.' +
+                TMethodRec(cd.MethodData.Methods[i]).sName + '()' +
+                #13#10 + '|' + #13#10;
+              Break;
+            end;
+          if Result <> '' then
+            Break;
+        end;
+
+      // If no other call reference is found then
+      // searches for a SymbolReference
+      If Result='' Then Result:=GetSymbolReference(AwdOffset);
 
 
   // This should find published/VIRT/USER
@@ -834,12 +1067,12 @@ Begin
 
       // Change Class Emulator Register Classes
       DeDeClassEmulator.SetRegVal(Str2TRegister(sDestReg),st);
-      bControlRef:=True;
+      DeDeCoreContext.ControlReferenceFound:=True;
     End
     Else Begin
       if (GlobBEmulation) and (ce<>'') then
        begin
-          bControlRef:=True;
+          DeDeCoreContext.ControlReferenceFound:=True;
           if OffsInfArchive.GetReferenceEx(ce,HEX2DWORD(dta),rtMOV,cn,st)
            then begin
              if st<>'' then cn:=ce+'.'+cn+' : '+st
@@ -879,7 +1112,7 @@ Begin
    // sTRY_3e = '64FF31648921';// push dword ptr fs:[ecx]; mov fs:[ecx], esp
    bk:=CurrentPEStream.Position;
    Try
-     ph:=CurrentPEGetPhys(RVA);
+     ph:=CurrentPEGetPhys(DeDeCoreContext.CurrentInstructionRVA);
      CurrentPEStream.Seek(ph,soFromBeginning);
      SetLength(t_e_str,6);
      CurrentPEStream.ReadBuffer(t_e_str[1],6);
@@ -901,14 +1134,15 @@ var bk : DWORD;
 Begin
    bk:=CurrentPEStream.Position;
    Try
-     ph:=CurrentPEGetPhys(RVA);
+     ph:=CurrentPEGetPhys(DeDeCoreContext.CurrentInstructionRVA);
      CurrentPEStream.Seek(ph+3,soFromBeginning);
      SetLength(t_e_str,1);
      CurrentPEStream.ReadBuffer(t_e_str[1],1);
      Result:=t_e_str[1]=#$EB;
      If Result Then Begin
        CurrentPEStream.ReadBuffer(b,1);
-       LastPush:=rva+b+5;
+       DeDeCoreContext.LastPush :=
+         DeDeCoreContext.CurrentInstructionRVA+b+5;
      End;
    Finally
      CurrentPEStream.Seek(bk,soFromBeginning);
@@ -925,14 +1159,14 @@ var bk : DWORD;
 Begin
    bk:=CurrentPEStream.Position;
    Try
-     ph:=CurrentPEGetPhys(RVA);
+     ph:=CurrentPEGetPhys(DeDeCoreContext.CurrentInstructionRVA);
      CurrentPEStream.Seek(ph+3,soFromBeginning);
      SetLength(t_e_str,1);
      CurrentPEStream.ReadBuffer(t_e_str[1],1);
      Result:=t_e_str[1]=#$68;
      If Result Then Begin
        CurrentPEStream.ReadBuffer(dw,4);
-       LastPush:=dw;
+       DeDeCoreContext.LastPush:=dw;
      End;
    Finally
      CurrentPEStream.Seek(bk,soFromBeginning);
@@ -946,10 +1180,11 @@ function ReachedEND : String;
 var i : Integer;
 Begin
  Result:='';
- For i:=ENDPtrList.Count-1 DownTo 0 Do
-   If StrToInt64(ENDPtrList[i])=rva
+ For i:=DeDeCoreContext.ENDPtrList.Count-1 DownTo 0 Do
+   If StrToInt64(DeDeCoreContext.ENDPtrList[i])=
+     DeDeCoreContext.CurrentInstructionRVA
      Then Begin
-       ENDPtrList.Delete(i);
+       DeDeCoreContext.ENDPtrList.Delete(i);
        Result:=#13#10+sREF_TEXT_END+#13#10+'|'#13#10;
      End;
 End;
@@ -961,10 +1196,11 @@ Function ReachedExcept : String;
 var i : Integer;
 Begin
  Result:='';
- For i:=SEHPtrList.Count-1 DownTo 0 Do
-   If StrToInt(SEHPtrList[i])=rva
+ For i:=DeDeCoreContext.SEHPtrList.Count-1 DownTo 0 Do
+   If StrToInt(DeDeCoreContext.SEHPtrList[i])=
+     DeDeCoreContext.CurrentInstructionRVA
      Then Begin
-       SEHPtrList.Delete(i);
+       DeDeCoreContext.SEHPtrList.Delete(i);
        Result:=#13#10+sREF_TEXT_EXCEPT+#13#10+'|'#13#10;
      End;
 End;
@@ -996,24 +1232,25 @@ Begin
    ///////////////////////////////////////////////
 
    // Put END if needed
-   If ENDPtrList.Count<>0 Then
+   If DeDeCoreContext.ENDPtrList.Count<>0 Then
       Result:=ReachedEND;
 
    // Put EXCEPT if needed
-   If SEHPtrList.Count<>0
+   If DeDeCoreContext.SEHPtrList.Count<>0
       Then Result:=Result+ReachedExcept;
 
-   If bCommentNext Then
+   If DeDeCoreContext.CommentNext Then
      Begin
        // the instruction after the next push should be marked as FINALY
        Result:=Result+#13#10+sREF_TEXT_FINALLY+#13#10+'|'#13#10;
-       bCommentNext:=False;
+       DeDeCoreContext.CommentNext:=False;
      End;
 
    // saves last push - to be proceeded if try is detected
-   If (ins1='push') and (Copy(dta,1,1)='$') then LastPush:=HEX2DWORD(Copy(dta,2,Length(dta)-1));
+   If (ins1='push') and (Copy(dta,1,1)='$') then
+     DeDeCoreContext.LastPush:=HEX2DWORD(Copy(dta,2,Length(dta)-1));
    // Check For TRY
-   bTryBlockFound:=False;
+   DeDeCoreContext.TryBlockFound:=False;
    If    (ss='push    dword ptr fs:[eax]')
       or (ss='push    dword ptr fs:[ecx]')
       or (ss='push    dword ptr fs:[edx]')
@@ -1021,9 +1258,10 @@ Begin
         // Try-Exept-Finally Detected
         If (IsTryExceptBlock) Then
            Begin
-            SEHPtrList.Add(IntToStr(LastPush));
+            DeDeCoreContext.SEHPtrList.Add(
+              IntToStr(DeDeCoreContext.LastPush));
             Result:=#13#10+sREF_TEXT_TRY+#13#10+'|'#13#10;
-            bTryBlockFound:=True;
+            DeDeCoreContext.TryBlockFound:=True;
            End;
       End;
 
@@ -1034,18 +1272,22 @@ Begin
         If (IsExceptBlock) Then
            Begin
             // pushed the END offset
-            ENDPtrList.Add(IntToStr(LastPush));
+            DeDeCoreContext.ENDPtrList.Add(
+              IntToStr(DeDeCoreContext.LastPush));
            End;
         If (IsFinallyBlock) Then
            Begin
              // removes the try pushed offset
-             If SEHPtrList.Count<>0 Then SEHPtrList.Delete(SEHPtrList.Count-1);
+             If DeDeCoreContext.SEHPtrList.Count<>0 Then
+               DeDeCoreContext.SEHPtrList.Delete(
+                 DeDeCoreContext.SEHPtrList.Count-1);
              // pushed the END offset
-             ENDPtrList.Add(IntToStr(LastPush));
+             DeDeCoreContext.ENDPtrList.Add(
+               IntToStr(DeDeCoreContext.LastPush));
              // one ret should be skiped
-             Inc(bTryExcept);
+             Inc(DeDeCoreContext.TryExceptDepth);
              // next instruction should be commented with FINALLY
-             bCommentNext:=True;
+             DeDeCoreContext.CommentNext:=True;
            End;
       End;
 
@@ -1096,7 +1338,7 @@ Begin
          Then Begin
            bk:=CurrentPEStream.Position;
            Try
-             If not bTryBlockFound Then
+             If not DeDeCoreContext.TryBlockFound Then
               begin
                sof:=GetStringReference(ofs);
                If sof<>'' Then
@@ -1131,7 +1373,8 @@ Begin
        End;
        sof:=Copy(dta,3,Length(dta)-2);
        dwdta:=idx*HEX2DWORD(sof);
-       dwdta:=dwdta+rva+sz;
+       dwdta:=dwdta+DeDeCoreContext.CurrentInstructionRVA+
+         DeDeCoreContext.CurrentInstructionSize;
        while Length(ins1)<8 do ins1:=ins1+' ';
        ss:=ins1+DWORD2HEX(dwdta);
 
@@ -1202,7 +1445,14 @@ End;
 //
 procedure DisassembleProc(NameP,S : String; var DasmList : TStringList; bNotClearText : Boolean = True; Custom : Boolean = False; EmulateOnly : Boolean = False; dwEmulateToOffset : DWORD = 0);
 var iStopIndex, i,k,locpos, InstrId : Integer;
+    CallReferenceIndex, PendingCallIndex, RegisterIndex: Integer;
+    sz: Integer;
+    RegisterWriteMask: Byte;
+    LastRegisterWriteRVA: array[0..2] of DWORD;
+    HasLastRegisterWrite: array[0..2] of Boolean;
+    CallerCleanupBytes: LongWord;
     ss : String;
+    rva: DWORD;
     DASM : TDisAsm;
     pc: AnsiString;
     op,srf,locvar : String;
@@ -1217,6 +1467,7 @@ begin
           then InitNewEmulation('','','','');
 
   rva:=0;
+  PendingCallIndex := -1;
   If Not Custom Then
   Begin
   // This retreives the RVA offsets of the first instruction
@@ -1249,7 +1500,17 @@ begin
   Else rva:=CurrentPEGetRVA(CurrentPEStream.Position);
 
   If rva=0 then Exit;
-  ProcRva:=rva;
+  if DeDeCoreContext <> nil then
+  begin
+    DeDeCoreContext.CurrentRoutineRVA := rva;
+    DeDeCoreContext.CrossReferences.BeginRoutine(
+      DeDeCoreContext.CurrentRoutineRVA);
+  end;
+  for RegisterIndex := 0 to 2 do
+  begin
+    HasLastRegisterWrite[RegisterIndex] := False;
+    LastRegisterWriteRVA[RegisterIndex] := 0;
+  end;
 
 ///////////////////////////////////////////////////////////
 ///////////////////////////////////////////////////////////
@@ -1259,6 +1520,7 @@ begin
 
    // Creates the OPCODE_to_ASM disassembler object
    DASM:=TDisAsm.Create;
+   DASM.OnRef:=RecordDisasmReference;
 
    // The number of the current instruction
    InstrId:=0;
@@ -1268,54 +1530,105 @@ begin
     Try
      Try
       // Clears SEH List (try_except and try_finally blocks)
-      SEHPtrList.Clear;
+      DeDeCoreContext.SEHPtrList.Clear;
 
       // Initialize the number of found TRY blocks to 0
       // (this is used for the both try_finally and
       // for try_except blocks)
-      bTryExcept:=0;
+      DeDeCoreContext.TryExceptDepth:=0;
 
       // Clears the list with END_try and END_fynally offsets
-      ENDPtrList.Clear;
+      DeDeCoreContext.ENDPtrList.Clear;
 
       // Initialize the last short jump otside the current RVA
       // to 'not present'
-      LastJump:=0;
+      DeDeCoreContext.LastJump:=0;
 
       // Inititaliza the size of the last instruction in bytes to 0
       sz:=0;
+      DeDeCoreContext.CurrentInstructionSize:=0;
 
       Repeat
         Repeat
+          if DeDeCoreContext <> nil then
+            DeDeCoreContext.CurrentInstructionRVA := rva;
           // Sets lenth in bytes of the largest instruction
           SetLength(pc,17);
           // Reads next byets
           CurrentPEStream.ReadBuffer(pc[1],16);
           // Disassembels them
           ss:=DASM.GetInstruction(PAnsiChar(pc),sz,16);
+          DeDeCoreContext.CurrentInstructionSize:=sz;
           Inc(InstrId);
+
+          CallReferenceIndex := -1;
+          if DeDeCoreContext <> nil then
+          begin
+            if PendingCallIndex >= 0 then
+            begin
+              if TryGetCallerStackCleanup(@pc[1], sz, CallerCleanupBytes) then
+                DeDeCoreContext.CrossReferences.SetCallerCleanup(
+                  PendingCallIndex, CallerCleanupBytes);
+              PendingCallIndex := -1;
+            end;
+            DeDeCoreContext.CrossReferences.RecordRoutineInstruction(
+              DeDeCoreContext.CurrentRoutineRVA, rva, @pc[1], sz);
+            CallReferenceIndex :=
+              DeDeCoreContext.CrossReferences.AddX86Instruction(
+                DeDeCoreContext.CurrentRoutineRVA, rva, @pc[1], sz);
+            if CallReferenceIndex >= 0 then
+            begin
+              for RegisterIndex := 0 to 2 do
+                if HasLastRegisterWrite[RegisterIndex] then
+                  DeDeCoreContext.CrossReferences.AddRegisterWriteEvidence(
+                    CallReferenceIndex, RegisterIndex,
+                    LastRegisterWriteRVA[RegisterIndex]);
+              PendingCallIndex := CallReferenceIndex;
+            end;
+          end;
+
+          if (CallReferenceIndex >= 0) or
+            IsX86BranchInstruction(@pc[1], sz) then
+          begin
+            for RegisterIndex := 0 to 2 do
+              HasLastRegisterWrite[RegisterIndex] := False;
+          end
+          else if not GetX86RegisterWriteMask(@pc[1], sz,
+            RegisterWriteMask) then
+          begin
+            for RegisterIndex := 0 to 2 do
+              HasLastRegisterWrite[RegisterIndex] := False;
+          end
+          else
+            for RegisterIndex := 0 to 2 do
+              if (RegisterWriteMask and (1 shl RegisterIndex)) <> 0 then
+              begin
+                HasLastRegisterWrite[RegisterIndex] := True;
+                LastRegisterWriteRVA[RegisterIndex] := rva;
+              end;
 
           // If the current instruction is a short jump ahead
           // then sets the LastJump
           If (ORD(pc[1]) in [$70..$7F,$EB]) and
              (ORD(pc[2])<$7F) Then
-             if LastJump<rva+2+ORD(pc[2])
-                then LastJump:=rva+2+ORD(pc[2]);
+             if DeDeCoreContext.LastJump<rva+2+ORD(pc[2])
+                then DeDeCoreContext.LastJump:=rva+2+ORD(pc[2]);
 
           // If the last short jump ahead is passed
           // sets the last jump to zero
-          If LastJump<=rva Then LastJump:=0;
+          If DeDeCoreContext.LastJump<=rva Then
+            DeDeCoreContext.LastJump:=0;
 
           // Finds all kind of references and attches them before
           // the disassembeld instruction
-          bControlRef:=False;
+          DeDeCoreContext.ControlReferenceFound:=False;
 
             srf:=ReplaseReferences(ss);
 
             // More references !!!
             if     (GlobBEmulation)
                // if control reference is found then skip emulation
-               and (not bControlRef) then
+               and (not DeDeCoreContext.ControlReferenceFound) then
              begin
                 EmulateInstruction(pc,sz,ss,ss);
                 If bReference then
@@ -1338,7 +1651,8 @@ begin
                 locvar:=Copy(ss,locpos,locpos+10);
                 locpos:=Pos(']',locvar);
                 locvar:=Copy(locvar,1,locpos);
-                AddNewExpression(ProcRVA,locvar,'');
+                AddNewExpression(
+                  DeDeCoreContext.CurrentRoutineRVA, locvar, '');
               end;
 
             // Gets the string representation of OPCODEs
@@ -1367,7 +1681,8 @@ begin
           // This can be and of a procedure. This is
           // used to find the end of the DPR code and
           // in some other special cases
-          if (ss='add     [eax], al') and (SEHPtrList.Count=0) then
+          if (ss='add     [eax], al') and
+            (DeDeCoreContext.SEHPtrList.Count=0) then
               break;
 
           // This is the first instruction and it is jump to offset. Probably
@@ -1382,22 +1697,30 @@ begin
         Until copy(ss,1,3)='ret';
 
         // Decreases the number of try blocks
-        Dec(bTryExcept);
+        Dec(DeDeCoreContext.TryExceptDepth);
 
         // Adds an empty line to the result StringList
         DasmList.Add('');
 
       // Repeats until all try blocks has been closed
-      Until (SEHPtrList.Count=0) and (bTryExcept<0) and (LastJump=0);
+      Until (DeDeCoreContext.SEHPtrList.Count=0) and
+        (DeDeCoreContext.TryExceptDepth<0) and
+        (DeDeCoreContext.LastJump=0);
 
      Except
       On E:Exception Do
-        sDisAsmErrors:=sDisAsmErrors+#13#10+
-            'Exception: '+E.Message+#13#10+
-            'Proc Name: '+NameP+'.'+s+#13#10+
-            'Last Instruction: '+DWord2HEX(rva)+'   '+op+'   '+ss+#13#10+
-            'Current Position: '+IntToHex(CurrentPEStream.Position,8)+
-            #13#10;
+        if DeDeCoreContext = nil then
+          raise EInvalidOp.Create(
+            'No core context is available to record disassembler errors')
+        else
+          DeDeCoreContext.DisassemblerErrors :=
+            DeDeCoreContext.DisassemblerErrors + #13#10 +
+            'Exception: ' + E.Message + #13#10 +
+            'Proc Name: ' + NameP + '.' + s + #13#10 +
+            'Last Instruction: ' + DWord2HEX(rva) + '   ' + op + '   ' +
+            ss + #13#10 +
+            'Current Position: ' +
+            IntToHex(CurrentPEStream.Position, 8) + #13#10;
      End;
     Finally
       // Frees the TDASM object
@@ -1420,6 +1743,7 @@ end;
 function GetNextProcRVA(dwRVA : DWORD; var bFound : Boolean; bSkipBetweenCodeFillRecognition : Boolean = False) : DWORD;
 var  DASM : TDisAsm;
      phys : DWORD;
+     rva : DWORD;
      pc : AnsiString;
      ss : String;
      sz{,i} : LongInt;
@@ -1446,10 +1770,10 @@ begin
      if (phys<=0) then Exit;
      if (phys>=CurrentPEStream.Size) then Exit; 
 
-     SEHPtrList.Clear;
-     bTryExcept:=0;
-     ENDPtrList.Clear;
-     LastJump:=0;
+     DeDeCoreContext.SEHPtrList.Clear;
+     DeDeCoreContext.TryExceptDepth:=0;
+     DeDeCoreContext.ENDPtrList.Clear;
+     DeDeCoreContext.LastJump:=0;
      sz:=0;
      Repeat
        Repeat
@@ -1458,9 +1782,12 @@ begin
             StopAtStreamEnd;
             Exit;
           end;
+          if DeDeCoreContext <> nil then
+            DeDeCoreContext.CurrentInstructionRVA := rva;
           SetLength(pc,17);
           CurrentPEStream.ReadBuffer(pc[1],16);
           ss:=DASM.GetInstruction(PAnsiChar(pc),sz,16);
+          DeDeCoreContext.CurrentInstructionSize:=sz;
           if (sz<1) or (sz>16) then
           begin
             DeDeCoreContext.ReportWarning(Format(
@@ -1471,29 +1798,39 @@ begin
 
           If (ORD(pc[1]) in [$70..$7F,$EB]) and
              (ORD(pc[2])<$7F) Then
-             if LastJump<rva+2+ORD(pc[2])
-                then LastJump:=rva+2+ORD(pc[2]);
-          If LastJump<=rva Then LastJump:=0;
+             if DeDeCoreContext.LastJump<rva+2+ORD(pc[2])
+                then DeDeCoreContext.LastJump:=rva+2+ORD(pc[2]);
+          If DeDeCoreContext.LastJump<=rva Then
+            DeDeCoreContext.LastJump:=0;
 
-          If ENDPtrList.Count<>0 Then ReachedEND;
-          If SEHPtrList.Count<>0 Then ReachedExcept;
+          If DeDeCoreContext.ENDPtrList.Count<>0 Then ReachedEND;
+          If DeDeCoreContext.SEHPtrList.Count<>0 Then ReachedExcept;
 
-          If ORD(pc[1])=$68 then LastPush:=ORD(pc[2])+ORD(pc[3])*256+(ORD(pc[4])+ORD(pc[5])*256)*256*256;
-          bTryBlockFound:=False;
+          If ORD(pc[1])=$68 then
+            DeDeCoreContext.LastPush :=
+              ORD(pc[2])+ORD(pc[3])*256+
+              (ORD(pc[4])+ORD(pc[5])*256)*256*256;
+          DeDeCoreContext.TryBlockFound:=False;
           If Copy(pc,1,6)=#$64#$FF#$30#$64#$89#$20 Then
               Begin
-                 SEHPtrList.Add(IntToStr(LastPush));
-                 bTryBlockFound:=True;
+                 DeDeCoreContext.SEHPtrList.Add(
+                   IntToStr(DeDeCoreContext.LastPush));
+                 DeDeCoreContext.TryBlockFound:=True;
               End;
 
           If Copy(pc,1,3)=#$64#$89#$10
              Then Begin
-               If pc[4]=#$EB Then ENDPtrList.Add(IntToStr(LastPush));
+               If pc[4]=#$EB Then
+                 DeDeCoreContext.ENDPtrList.Add(
+                   IntToStr(DeDeCoreContext.LastPush));
                If pc[4]=#$68 Then
                   Begin
-                    If SEHPtrList.Count<>0 Then SEHPtrList.Delete(SEHPtrList.Count-1);
-                    ENDPtrList.Add(IntToStr(LastPush));
-                    Inc(bTryExcept);
+                    If DeDeCoreContext.SEHPtrList.Count<>0 Then
+                      DeDeCoreContext.SEHPtrList.Delete(
+                        DeDeCoreContext.SEHPtrList.Count-1);
+                    DeDeCoreContext.ENDPtrList.Add(
+                      IntToStr(DeDeCoreContext.LastPush));
+                    Inc(DeDeCoreContext.TryExceptDepth);
                    End;
              End;
 
@@ -1503,8 +1840,10 @@ begin
            if (ORD(pc[1])=0) and (ORD(pc[2])=0) then break;
         Until Copy(ss,1,3)='ret';
 
-        Dec(bTryExcept);
-      Until (SEHPtrList.Count=0) and (bTryExcept<0) and (LastJump=0);
+        Dec(DeDeCoreContext.TryExceptDepth);
+      Until (DeDeCoreContext.SEHPtrList.Count=0) and
+        (DeDeCoreContext.TryExceptDepth<0) and
+        (DeDeCoreContext.LastJump=0);
 
       Result:=rva;
       If bSkipBetweenCodeFillRecognition then Exit;
@@ -1669,8 +2008,6 @@ End;
 
 initialization
   UnitList:=TStringList.Create;
-  SEHPtrList:=TStringList.Create;
-  ENDPtrList:=TStringList.Create;
   DFMText:=TStringList.Create;
   ControlNames:=TStringList.Create;
   ControlIds:=TStringList.Create;
@@ -1680,8 +2017,6 @@ initialization
 
 finalization
   UnitList.Free;
-  SEHPtrList.Free;
-  ENDPtrList.Free;
   DFMText.Free;
   ControlNames.Free;
   ControlIDs.Free;

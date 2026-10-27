@@ -9,13 +9,21 @@ uses
   Interfaces,
   Forms,
   SysUtils,
+  FormShot,
   Ctrl_DingButton,
-  DingButtonImpl1,
-  DingButtonXControl_TLB,
-  Frm_DingAbout;
+  Frm_DingXMain;
 
 begin
   RequireDerivedFormResource := True;
   Application.Initialize;
+  Application.Title := 'Demo: DingButtonXControl';
+  Application.CreateForm(TMainForm, MainForm);
+  if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
+  begin
+    MainForm.Show;
+    Application.ProcessMessages;
+    SaveFormToImage(MainForm, ChangeFileExt(ParamStr(2), '.bmp'));
+    Application.Terminate;
+  end;
   Application.Run;
 end.

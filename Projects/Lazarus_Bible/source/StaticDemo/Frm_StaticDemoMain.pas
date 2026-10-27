@@ -84,7 +84,7 @@ procedure TMainForm.StaticText1Click(Sender: TObject);
 var
   S: String;
 begin
-  MessageBeep(0);
+  Beep;
   S := TStaticText(Sender).Name;
   ShowMessage('You selected ' + S);
 end;

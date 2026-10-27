@@ -28,7 +28,6 @@ object MainForm: TMainForm
     Font.Height = -17
     Font.Name = 'MS Sans Serif'
     ParentFont = False
-    TabOrder = 0
     object DBNavigator: TDBNavigator
       Left = 12
       Height = 38
@@ -79,7 +78,6 @@ object MainForm: TMainForm
     Font.Height = -17
     Font.Name = 'MS Sans Serif'
     ParentFont = False
-    TabOrder = 1
     object ScrollBox: TScrollBox
       Left = 6
       Height = 474

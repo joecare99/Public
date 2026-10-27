@@ -500,3 +500,129 @@ gedausv   â†’  gedausxv â†’ gedaus â†’ gedausx
 - Continue in address order: nachf_neu (00564668) is next among the kÐµÑˆ remaining core parts, then PaintBox1Paint (00570C14), FormShow (00570294), FormClose (00570728), Buttons, SpeedButton3Click (00573450), ScrollBar changes (00572484/490).
 
 - Continue in address order: nachf_neu (00564668) next among remaining core parts, then PaintBox1Paint (00570C14), FormShow (00570294), FormClose (00570728), Buttons, SpeedButton3Click (00573450), ScrollBar changes (00572484/490).
+
+## nachf_neu (00564668) - implemented
+- nachf_neu(AGen: Integer) (AGen in EDX, stored to gvar_0061F2F0; also sets gvar_0061F110 := 80).
+- New AHNGlobals type TNachfNode/TNachfNodes: BFS node grid at gvar_01044CE8, 10000 rows of $94 bytes. dwords +0 Nummer, +4 Row, +8 Col, +$0C Ref1 (father node), +$10 Ref2 (mother node), +$14 Flag1, +$18 Flag2 (spouse marker), +$1C Order, +$28 Flag3; ShortStrings: Raw[0..50] = Name (IDR label 01044D14, max 50 bytes = PStrNCpy cl=$32), Raw[51..101] = Partner (01044D47). IDR label 01044D7C = row 1 start.
+- gvar_0061F1F0 is now array[0..50] of AnsiString (slot n at 61F1F0+4n; IDR label 61F1F4 = slot 1). nachf_neu child appends via [edi*4+61F1F4] = slot GenIdx+1; spouse/parse chunks at slot GenIdx. FormClose finalize (0057391F) of 50 slots from 61F1F4 matches.
+- Structure: init (zero rows 1..10000, clear slots 1..50, build node 1 = start person from Table1 current record, list slot 1 = Num2Str(start)+Num2Str(0)+Num2Str(0)); root phase (Table10 'num' walk for spouses of StartNum: spouse nodes with Flag2=1, Name = OPPOSITE gender letter of root person, Partner line from Table10 Satag/Samonat/Sajahr/Saort 'ooS ...' / church fields 'ooK ...' / 'and' -> 'o-o '+Hjahr / 'Ehesch' -> 'oo' which is the 3-byte movs copy from 566178 = ShortString 'oo'); children of (root, spouse) and root-without-partner appended to slot 2 as [child][fatherIdx][motherIdx] chunks (18 chars = 3x Num2Str 6 digits, sub_005637C4).
+- Generation loop edi = 2..AGen: parse slot edi (Trim-empty -> statistics exit); Count = Round(Length/18); per chunk: node from Table1 (Nummer 534), Ref1/Ref2 from chunk fields 7..12/13..18 (StrToInt ignores spaces -> 0), Flag1=1, Order, Name = UpperCase(Geschlecht 548); P1=Buf; if Ref2 <> LastM (ebp-40) then Flag3 := 1, LastM := Ref2 (per generation); spouse scan like root phase but helper sub_00563A0C formats the date part before ' Saort/Hort'; children of (person, spouse) and person-without-partner appended to slot GenIdx+1 ([child][P1 father][P2 mother] order for male person, [child][P2][P1] for female).
+- Statistics: walk nodes while Order > 0: MaxRow = max Row (1044CEC), Pers = count Nummer > 0; ShowMessage(IntToStr(GenIdx-1) + ' Generation(en) / ' + IntToStr(Pers) + ' Personen gefunden'); Table1.EnableControls.
+- Deviations (documented): (a) clear loop zeroes whole $94 rows (original clears dwords 0..$28 + the two Len bytes only) - superset, safe; (b) gen-loop spouse 'partner line' CatN: IDR shows 2 pushes for CatN(edx=4) / 6 for edx=5 around sub_00563A0C; recon reconstructs 'ooS ' + Satag + '.' + Samonat + '.' + Sajahr -> helper -> + ' ' + Saort (space literal follows the root-phase CatN 8 pattern); (c) recon collapses repeated field reads.
+
+## Next
+- Continue in address order: PaintBox1Paint (00570C14), FormShow (00570294), FormClose (00570728), Buttons, SpeedButton3Click (00573450), ScrollBar changes (00572484/490).
+
+## PaintBox1Paint (00570C14) - implemented
+- Dispatcher: if gvar_0253692C = 'Vorgr1' -> vr1 + vz1(PaintBox1.Canvas); 'Vorgr2' -> Vr2 + vz2(...); 'Nachgr1' -> nr1 + nz1(...); 'Nachgr2' -> nr2 + nz2(...). Sequential ifs, not else-chains; nothing clears gvar_0253692C here.
+
+## FormShow (00570294) - correction to earlier implementation
+- Zoom constant at 00570306 is 0.63 (Extended mantissa 0xA147AE147AE147AE, exponent 0x3FFE -> mantissa 1.26 * 2^-1). The earlier "0.375" was a misread; fixed to gvar_0061F120 := 0.63. Same constant in SpeedButton3Click.
+
+## ScrollBar1/2Change (00572484/490) - verified
+- Both only call PaintBox1.Refresh.
+
+## SpeedButton3Click (00573450) - implemented
+- PDF export for the four graph modes. Saves gvar_0061F120, per mode sets gvar_0061F120 := 0.63, WPPDFPrinter1.Filename := 'VGr1/VGr2/NGr1/NGr2.pdf', calls vr1/Vr2/nr1/nr2 and computes a page total:
+  * modes 1/3: PageTotal := (gvar_011AE320 + 1) * (gvar_0253637C*gvar_011AE318 + gvar_0061F114 + gvar_011AE318 + gvar_011AE348) + gvar_011AE33C
+  * modes 2/4: PageTotal := (same factor) * gvar_0061F2F0 + gvar_011AE33C
+- WPPDFPrinter1.SetLicenseLibrary('Ahnw50.dll') (00537710, member); global WPPDFRegisterLicense('Heribert Reitmeier','A144arg6fm45afqf96d4@80B340EF') (00536D90).
+- WPPDFPrinter1.Field70 (byte f70, meaning unknown) tested 005736A3; only if True -> set False.
+- CanvasReference := wprefScreen (byte f64 := 0, 005736BB), StartDocument ([vmt+40]/005379E0).
+- try/finally: nested page builder sub_00573314 called once (005736DC); exit: if DrawFlag then EndDoc ([vmt+48]/00538C98) + FinishDocument ([vmt+54]/00538D00); restore zoom; gvar_011AE32C := PaintBox1.Canvas; PaintBox1.Refresh (all inside finally).
+- Nested procs in recon (original used the ebp+8 nested convention):
+  * WritePage (0057316C): if DrawFlag then EndDoc; WPPDFPrinter1.StartPage(PageContent, PageTotal, 0, $64, $64) ([vmt+4C], pushed 64/64/0, edx = caller [ebp-0C], ecx = caller [ebp-10]); canvas := printer canvas (005373F4) -> gvar_011AE32C; copies PaintBox1.Canvas.Font.Name; dispatches vz1/vz2/nz1/nz2(canvas); DrawFlag := True.
+  * sub_00573314 (called once): page content height (caller [ebp-0C]): 'Vorgr1'/'Nachgr1': (gvar_011AE334 + gvar_0061F118) * gvar_011AE328 + gvar_011AE340; 'Vorgr2': (gvar_011AE320+1) * (gvar_011AE334 + gvar_0061F118) + gvar_011AE340; 'Nachgr2': (gvar_011AE334 + gvar_0061F118) * gvar_011AE320 + gvar_011AE340; then if (not DrawFlag) or overflow condition (005733DA-05 uses caller [ebp-14]+[ebp-18] vs [ebp-1C]) -> WritePage; followed by caller [ebp-14] += [ebp-18] (0057340A).
+- Deviations: (a) [ebp-14]/[ebp-18] are never initialized in the original (stale stack); first call draws unconditionally, so recon uses 0-initialized locals (DrawUsedY/DrawStep); (b) compat additions in Compat\WPPDF: WPPDFR1: SetLicenseLibrary (00537710), unit-level WPPDFRegisterLicense (00536D90), StartDocument (vmt+40), FinishDocument (vmt+54), Field70 property (byte +70); WPPDFR2 TWPPDFPrinter: Canvas (GetCanvas 005373F4, TBitmap-backed) and StartPage (vmt+4C). Real PDF rendering not in shell.
+
+## Next
+- Remaining Unit13 stubs: SpeedButton1Click (005704A8, print path, stub at recon 2527), remaining TODO at recon 2876 (Button3Click?), recon 4083 stub, FormClose (00570728). Then Finalization (00573848).
+
+## SpeedButton1Click (005704A8) - implemented
+- PrintDialog1.Execute; if not: gvar_0253636C := 1.0 (Extended 1.0: d0 0, d1 $80000000, exp $3FFF) and gvar_011AE32C := PaintBox1.Canvas, exit. Else gvar_011AE32C := Printer.Canvas, dispatch vr1/'Vorgr2'->Vr2/'Nachgr1'->nr1/'Nachgr2'->nr2, Printer.BeginDoc, dispatch vz1/vz2/nz1/nz2(Printer.Canvas), Printer.EndDoc in finally.
+
+## Button4Click (00570890) - implemented
+- JPG save: scans grid A rows (X = ChartAFlat(102*row), Y = ChartAFlat(102*row+1), used flag = ChartAFlat(102*row+2); offsets are hex: -0x198/-0x194/-0x190) computing maxima gvar_0253635C/02536360; TJPEGImage.Create; gvar_011AE358 := TBitmap.Create; Width := (gvar_011AE334+gvar_0061F118)*MaxX+gvar_011AE33C; Height := (gvar_0253637C*gvar_011AE318+gvar_011AE318+gvar_011AE348+gvar_0061F114)*MaxY+gvar_011AE340; canvas font size := Round(gvar_0061F120*7); gvar_011AE32C := bitmap canvas; dispatch vr/vz/nr/nz; then JPEG: Performance := jpBestSpeed, CompressionQuality := 90, Assign(bitmap); SaveDialog1 (FileName '': DefaultExt 'jpg'; Filter 'Grafik-Dateien (*.jpg)|*.jpg'; Options := 0x2 = [ofOverwritePrompt]); on Execute: fn := Trim(FileName), save guarded by LStrCmp(fn,'.jpg') + jbe -> recon writes `if fn > '.jpg'` (lexicographic guard, exact original flag usage; only bitmap stays alive as gvar, jpeg freed in finally).
+
+## Vorf_erm1 (00563CF8) - COMPLETED
+- Signature faked as `Vorf_erm1(AGens, AShift: Integer)` (AGens in EDX -> [ebp-8], AShift in ECX -> [ebp-0C], push ecx/xchg dance decoded).
+- Structure: person mirror BFS over TPersonRec rows (recon mapping row r = `AncestorRec(r)` = 61F30C + \*(r-1) = 61F0F8 + \*r).
+- Init loop \ = 80000 rows clears: +0, -\/-8 (prev row tail +\/+\; guarded t>1 in recon), +\ byte, +\, +8, +\, +\, +4, +\ byte.
+- Setup: Table1.Open, IndexName='', FindKey([StartNum]); Table10.Open, IndexName 'num'; row1 +8 := 1 ([61F314]); row1 num := Table1Nummer ([61F30C]); Screen crHourGlass.
+- Main loop: IterLeft = Round(Power(AGens, 2.0)) - 1, skip if <= 0; rows edi = 1..IterLeft.
+- Row body non-empty (num > 0): Table1.FindKey([num]); num re-read; Geschlecht -> Trim(UpperCase), PStrNCpy \ -> +\; IDNR -> +\; Religion (54C) -> +\ (all \); +8 := edi; +4 := 1 if Vater>0 or Mutter>0.
+- Empty row: +0 := 0, +8 := edi - still goes through partner + slot sections.
+- Partner part (Table10.First, only when row gender ShortStr = 'W'): FindKey([num]); loop while Nummer = num: only records with Epnum = prev-row num ([ebx-\], guarded edi>1); Textjoin via sub_00563A0C:
+  - Pos('Ehes', Table10Verbind) > 0: Trim(Sajahr) <> '' or Trim(Saort) <> '' (Mosso via earlier Trims; ja -> '+\'): 'ooS ' + Cat(PRDay.'.'PRplace'.'SaPlace) + ' ' + Saort, else 'oo ' + H-date + ' ' + Hort.
+  - else Pos('and') > 0: 'o-o ' + H-date + ' ' + Hort.
+  - always Break after one Epnum-matching record; Next only on Epnum mismatch.
+- After loop: gender 'W' and Trim(Partner) <> '' -> row (edi-1) +\ := PStrNCpy \ of Partner ([ebx-\]; guarded edi>1 in recon - underflow in original targets row0 tail over other gvars). Partner := ''.
+- Slot loop j = 0..\ (41x): if edi >= Round(j^2) and j > MaxSlot -> [row+\] := j+1, MaxSlot := j, and flag flip: ParentCount=0 -> TermFlag=1 else ParentCount=0.
+- TermFlag=1 -> break to tail (father/mother expansion skipped).
+- Slot calc (per row, not terminated): v := Round(MaxSlot^2) * AShift + (edi - Round(MaxSlot^2)) -> [row+\]; [row+\] := edi. (Round(Power(MaxSlot,2)) computed twice in listing, identical.)
+- Parents (per row, num > 0): Vater > 0 -> father-dword := Vater at AncestorRec(2*edi) (+0 = 61F0F8+\*edi), Inc(ParentCount); Mutter similarly at AncestorRec(2*edi+1).
+- Tail: MaxSlot+1 < GenLimit -> GenLimit := MaxSlot ([ebp-8] overwritten); Table1.FindKey([StartNum]); cursor crDefault; GenLimit > 3 -> Button1.Visible := True.
+- Helpers added to AHNGlobals: `AncestorNum(Row)`, `SetAncestorNum(Row, Value)`, `AncestorRec(Row): PByte` (all \ stride off gvar_0061F30C, row 1-based).
+- Documented deviations: init-loop prev-row tail clear guarded (t>1); edi=1 prev-partner/prev num reads skipped; intermediate GetText/UpperCase/Trim chains collapsed; original exception frame (LStrArrayClr 30 + LStrClr) replaced by automatic local cleanup.
+- Build: SUCCESS.
+
+### Batch: Vorf_erm (00567A30) + Vorf_erm1 Power-idiom correction
+- Corrected Vorf_erm1 (00563CF8) Power decoding: the pushed 2.0 constant is the
+  BASE, so all three idiom sites are Power(2.0, x) = 2^x (not x^2). Affects
+  iteration count (Power(2.0, GenLimit) - 1), slot-loop bound (edi >= Power(2.0, j))
+  and slot arithmetic (Round(Power(2.0, MaxSlot))). Matches binary-BFS tree sizes
+  1/2/4/8... and the boundary test Power(2.0, k) - 1 = edi.
+- Reconstructed Vorf_erm (00567A30) into Unit13.pas: chart A/B/C grid clearing
+  loop (t=1..$2710, ten A/B stores + three C stores per $198-stride row), setup
+  (gvar_0061F2F0 := StrToInt(Form12.SpinEdit1.Text), gvar_011AE34C :=
+  StrToInt(Form12.SpinEdit2.Text), Table17 with no index, eA/eB tbyte Extended,
+  base code string ebp24 via sub_005637C4), main BFS loop while
+  edi < Power(2.0, gvar_0061F2F0): 6-char code decode per row, FindKey, father/
+  mother codes appended to ebp24, flat slots +3/+7/+8 in grid A and C-mirror
+  dword terms (102*edi-104/-103/-102), Vorgr1/Vorgr2 level numbering, Extended
+  accumulators eA/eB, picture path check (gvar_02536B9C\bilder\bNa.jpg into
+  ChartAShort(edi,$142)), PExtended slot +$38 = edi mod 2^(g-1) + gvar_011AE34C *
+  2^(g-1), gender word $4D01/'M' + $5701/'W' at +$C1, boundary loop ebxv
+  1..$14 (Power(2.0, ebxv) - 1 = edi -> eB := eA, generation increment), exit
+  when eB = 0; tail: ShowMessage ('Generationen/Personen gefunden', eB>0
+  distinguishes truncation), gvar_011AE328 := gvar_011AE330 - 1 or gvar_011AE330,
+  Vorgr1/Vorgr2 post-loops shifting flat +1 by gvar_011AE330 - gvar_011AE328
+  or + gvar_011AE330 - gvar_0061F2F0 while flat +2 / +5 guards, ending with
+  gvar_011AE32C := PaintBox1.Canvas and PaintBox1.Refresh.
+- Deviations documented: exception-frame LStrArrayClr dropped (compiler-managed
+  AnsiStrings), SSR-start/ssr-clr string work collapsed, FindKey structure args
+  inlined, PStrNCpy truncation via SetLength/Copy semantics, tbyte locals as
+  Extended assignments.
+- Converter fixes: ChartAFlat() assignments replaced with SetChartAFlat()
+  helper calls in Vorf_erm.
+Remaining Unit13 work: FormClose (00570728) verification, Finalization
+  (00573848, listing L15904+), SpeedButton12Click nil-check removal.
+
+### Batch: SpeedButton12Click fix, FormClose verified, Finalization (00573848)
+- SpeedButton12Click (00570694): removed the extra nil-check on
+  gvar_011AE32C; the listing assigns Font.Name directly.
+- FormClose (00570728): verified against listing L12803+ - recon already
+  matches (Form12.Close; form 13 hidden via gvar_0061F10C/Form13).
+- Finalization (00573848, listing L15904+): decoded and documented at the
+  unit end of Unit13.pas as a doc-stamp block. Listing mechanics:
+  refcount guard [253638C] (inc ; jne skip), @FinalizeArray over the
+  five 10000-element chart grids (0213E95C, 01D5A7DC, 0197665C, 015924DC,
+  011AE35C; element stripper 'vor' @5637A0), @FinalizeArray of 20
+  AnsiString slots at 011AE2C8, LStrClr on 011AE2C0/011AE2BC/0061F2EC/
+  F2E8/F2E4/F2E0, and two 50-element AnsiString arrays at 0061F1F4 and
+  0061F12C. Recon deviation: the grids are static records without
+  managed fields, so the run block is empty; kept as
+  `initialization / finalization / end.` (this DCC17 requires a
+  non-empty-list syntax chain - bare `finalization end.` fails with
+  E2029, a preceding empty `initialization` is accepted).
+- Note: grids 0213E95C / 01D5A7DC (Nachfahren, $214 stride) appear in
+  the finalization set; they are owned by the Unit1/Unit recon target,
+  documented here for cross-reference.
+
+### Batch: Unit3 gedein_5 helpers (sub_005BE4B8 / sub_005BEF5C)
+- Decoded and implemented `sub_005BE4B8` ("2 DATE" handler of the GEDCOM import, Projects_AhnenWin\Unit3.pas L64989-65635): per event tag (gvar_02536858 = BIRT/BAPT/DEAT/BURI/EMIG) parses the pre-comma part via sub_00577934, writes the date triplet to Table1 Gebtag/Gebmonat/Gebjahr (554/558/55C), Tauftag/Taufmonat/Taufjahr (564/568/56C), Sttag/Stmonat/Stjahr (57C/580/584) or Begtag/Begmonat/Begjahr (590/594/598), and appends the post-comma part to comment accumulator gvar_0253684C with prefixes "Geburt: "/"Taufe: "/"Tod: "/"Bestatt.: "/"Auswanderung am ". Lines without comma only parse the date; EMIG non-comma writes "Auswanderung am d.m.y" via sub_005772E4; other tags only parse.
+- Decoded and implemented `sub_005BEF5C` ("2 PLAC" handler, Projects_AhnenWin\Unit3.pas L65635-66413): mirrors the place text via TForm3.Ortdreh unless tag = RESI, splits up to three comma parts (e1/e2/e3) when gvar_0253685C is empty (kept as guard, RESI skips the split), updates/creates Table13 (FindKey ort -> Edit Lkr/Bland/Land, else Append Ort + Lkr/Bland/Land, offsets A44/A4C/A58/A64) and finally assigns Table1Gebort/Taufort/Stort/Begort/Lebensort; EMIG appends "Auswanderung nach <ort>" via sub_005772E4.
+- Component mapping fixed: Table1 field offsets 558 = Table1Gebmonat, 590/594/598 = Table1Begtag/Begmonat/Begjahr (Unit2.pas); Table13 fields A44=Ort, A4C=Land, A58=Bland, A64=Lkr; Table1Lebensort = 578.
+- `Form3.sour` (= sub_005BF434 body, "2 SOUR @" Repso2 resolver) was found already reconstructed in Unit3.pas.
+- Verified: build.cmd -> [build] SUCCESS. Array-slicing PowerShell quirks avoided by direct Read tool usage.
+- Next: main body of TForm3.gedein_5 (stub, current recon L1807+), which calls sub_005BC604 (huge, L62911-71288 of the listing - approx 8300 lines, separate batch) - register declaration stub with 15 params (3 register + 12 stack) first.
