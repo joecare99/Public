@@ -573,6 +573,188 @@ begin
   gvar_0253662C := Trim(Copy(s, Pos(' ', s) + 1, 10));
 end;
 
+procedure sub_005BE4B8(AIn: AnsiString);
+var
+  s: AnsiString;
+begin
+  { Evaluates a "2 DATE" line of the current event (gvar_02536858:
+    BIRT/BAPT/DEAT/BURI/EMIG). The part before the comma is parsed by
+    sub_00577934, the result is stored to the matching date triplet
+    *tag/*monat/*jahr of table 1 (with "* " prefix in all fields) and
+    the part behind the comma is appended to the comment string
+    gvar_0253684C (prefix "Geburt: ", "Taufe: ", "Tod: ",
+    "Bestatt.: " or "Auswanderung am "). Lines without a comma only
+    parse the first part; lines of other events only parse the date. }
+  if gvar_02536858 = 'BIRT' then
+  begin
+    if Pos(',', AIn) > 0 then
+    begin
+      sub_00577934(Copy(AIn, 8, Pos(',', AIn) - 8));
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := 'Geburt: ' + Copy(AIn, Pos(',', AIn) + 1,
+          Length(Trim(AIn)) - Pos(',', AIn))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + 'Geburt: ' +
+          Copy(AIn, Pos(',', AIn) + 1, Length(Trim(AIn)) - Pos(',', AIn));
+    end
+    else
+      sub_00577934(Copy(TrimRight(AIn), 8, Length(TrimRight(AIn))));
+    s := '* ' + gvar_02536624 + '.' + gvar_02536628 + '.' + gvar_0253662C;
+    DataModule2.Table1Gebtag.AsString := gvar_02536624;
+    DataModule2.Table1Gebmonat.AsString := gvar_02536628;
+    DataModule2.Table1Gebjahr.AsString := gvar_0253662C;
+  end
+  else if gvar_02536858 = 'BAPT' then
+  begin
+    if Pos(',', AIn) > 0 then
+    begin
+      sub_00577934(Copy(AIn, 8, Pos(',', AIn) - 8));
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := 'Taufe: ' + Copy(AIn, Pos(',', AIn) + 1,
+          Length(Trim(AIn)) - Pos(',', AIn))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + 'Taufe: ' +
+          Copy(AIn, Pos(',', AIn) + 1, Length(Trim(AIn)) - Pos(',', AIn));
+    end
+    else
+      sub_00577934(Copy(TrimRight(AIn), 8, Length(TrimRight(AIn))));
+    s := '* ' + gvar_02536624 + '.' + gvar_02536628 + '.' + gvar_0253662C;
+    DataModule2.Table1Tauftag.AsString := gvar_02536624;
+    DataModule2.Table1Taufmonat.AsString := gvar_02536628;
+    DataModule2.Table1Taufjahr.AsString := gvar_0253662C;
+  end
+  else if gvar_02536858 = 'DEAT' then
+  begin
+    if Pos(',', AIn) > 0 then
+    begin
+      sub_00577934(Copy(AIn, 8, Pos(',', AIn) - 8));
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := 'Tod: ' + Copy(AIn, Pos(',', AIn) + 1,
+          Length(Trim(AIn)) - Pos(',', AIn))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + 'Tod: ' +
+          Copy(AIn, Pos(',', AIn) + 1, Length(Trim(AIn)) - Pos(',', AIn));
+    end
+    else
+      sub_00577934(Copy(TrimRight(AIn), 8, Length(TrimRight(AIn))));
+    s := '* ' + gvar_02536624 + '.' + gvar_02536628 + '.' + gvar_0253662C;
+    DataModule2.Table1Sttag.AsString := gvar_02536624;
+    DataModule2.Table1Stmonat.AsString := gvar_02536628;
+    DataModule2.Table1Stjahr.AsString := gvar_0253662C;
+  end
+  else if gvar_02536858 = 'BURI' then
+  begin
+    if Pos(',', AIn) > 0 then
+    begin
+      sub_00577934(Copy(AIn, 8, Pos(',', AIn) - 8));
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := 'Bestatt.: ' + Copy(AIn, Pos(',', AIn) + 1,
+          Length(Trim(AIn)) - Pos(',', AIn))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + 'Bestatt.: ' +
+          Copy(AIn, Pos(',', AIn) + 1, Length(Trim(AIn)) - Pos(',', AIn));
+    end
+    else
+      sub_00577934(Copy(TrimRight(AIn), 8, Length(TrimRight(AIn))));
+    s := '* ' + gvar_02536624 + '.' + gvar_02536628 + '.' + gvar_0253662C;
+    DataModule2.Table1Begtag.AsString := gvar_02536624;
+    DataModule2.Table1Begmonat.AsString := gvar_02536628;
+    DataModule2.Table1Begjahr.AsString := gvar_0253662C;
+  end
+  else if gvar_02536858 = 'EMIG' then
+  begin
+    if Pos(',', AIn) > 0 then
+    begin
+      sub_00577934(Copy(AIn, 8, Pos(',', AIn) - 8));
+      if Trim(gvar_0253684C) = '' then
+        gvar_0253684C := 'Auswanderung am ' + Copy(AIn, Pos(',', AIn) + 1,
+          Length(Trim(AIn)) - Pos(',', AIn))
+      else
+        gvar_0253684C := gvar_0253684C + #13#10 + 'Auswanderung am ' +
+          Copy(AIn, Pos(',', AIn) + 1, Length(Trim(AIn)) - Pos(',', AIn));
+    end
+    else
+    begin
+      sub_00577934(Copy(TrimRight(AIn), 8, Length(TrimRight(AIn))));
+      s := 'Auswanderung am ' + gvar_02536624 + '.' + gvar_02536628 +
+        '.' + gvar_0253662C;
+      sub_005772E4(s);
+    end;
+  end
+  else
+    sub_00577934(Copy(TrimRight(AIn), 8, Length(TrimRight(AIn))));
+end;
+
+procedure sub_005BEF5C(AIn: AnsiString);
+var
+  ort, s, e1, e2, e3: AnsiString;
+begin
+  { Evaluates a "2 PLAC" line of the current event (gvar_02536858):
+    BIRT/BAPT/DEAT/BURI/RESI/EMIG. The line content behind column 8 is
+    mirrored (Ortdreh) and stored to the matching place field of table
+    1. Since the local gvar_0253685C is empty and the line contains a
+    comma, the mirror is split up to three commas: the parts are
+    written as new Lkr./Bland/Land entry of the place file (Table13),
+    the key being the mirrored place itself. For EMIG a comment line
+    "Auswanderung nach <ort>" is appended instead. }
+  if gvar_02536858 <> 'RESI' then
+  begin
+    ort := Copy(AIn, 8, Length(Trim(AIn)));
+    Form3.Ortdreh(ort, ort);
+  end
+  else
+    ort := '';
+  e1 := '';
+  e2 := '';
+  e3 := '';
+  if (Trim(gvar_0253685C) > '') or (Pos(',', ort) > 0) then
+    if gvar_02536858 = 'RESI' then
+      e1 := ''
+    else
+    begin
+      e1 := Copy(ort, 1, Pos(',', ort) - 1);
+      ort := Copy(ort, Pos(',', ort) + 1, Length(ort));
+      e2 := Copy(ort, 1, Pos(',', ort) - 1);
+      ort := Copy(ort, Pos(',', ort) + 1, Length(ort));
+      e3 := ort;
+    end;
+  if Trim(ort) <> '' then
+  begin
+    if DataModule2.Table13.FindKey([ort]) then
+    begin
+      DataModule2.Table13.Edit;
+      DataModule2.Table13Lkr.AsString := e1;
+      DataModule2.Table13Bland.AsString := e2;
+      DataModule2.Table13Land.AsString := e3;
+      DataModule2.Table13.Post;
+    end
+    else
+    begin
+      DataModule2.Table13.Append;
+      DataModule2.Table13Ort.AsString := ort;
+      DataModule2.Table13Lkr.AsString := e1;
+      DataModule2.Table13Bland.AsString := e2;
+      DataModule2.Table13Land.AsString := e3;
+      DataModule2.Table13.Post;
+    end;
+  end;
+  if gvar_02536858 = 'BIRT' then
+    DataModule2.Table1Gebort.AsString := ort
+  else if gvar_02536858 = 'BAPT' then
+    DataModule2.Table1Taufort.AsString := ort
+  else if gvar_02536858 = 'DEAT' then
+    DataModule2.Table1Stort.AsString := ort
+  else if gvar_02536858 = 'BURI' then
+    DataModule2.Table1Begort.AsString := ort
+  else if gvar_02536858 = 'RESI' then
+    DataModule2.Table1Lebensort.AsString := Copy(AIn, 8, Length(AIn))
+  else if gvar_02536858 = 'EMIG' then
+  begin
+    s := 'Auswanderung nach ' + ort;
+    sub_005772E4(s);
+  end;
+end;
+
 
 { The method bodies of this unit are reconstructed from the IDR
   listings, method by method. The bodies that are still missing are

@@ -618,3 +618,11 @@ Remaining Unit13 work: FormClose (00570728) verification, Finalization
 - Note: grids 0213E95C / 01D5A7DC (Nachfahren, $214 stride) appear in
   the finalization set; they are owned by the Unit1/Unit recon target,
   documented here for cross-reference.
+
+### Batch: Unit3 gedein_5 helpers (sub_005BE4B8 / sub_005BEF5C)
+- Decoded and implemented `sub_005BE4B8` ("2 DATE" handler of the GEDCOM import, Projects_AhnenWin\Unit3.pas L64989-65635): per event tag (gvar_02536858 = BIRT/BAPT/DEAT/BURI/EMIG) parses the pre-comma part via sub_00577934, writes the date triplet to Table1 Gebtag/Gebmonat/Gebjahr (554/558/55C), Tauftag/Taufmonat/Taufjahr (564/568/56C), Sttag/Stmonat/Stjahr (57C/580/584) or Begtag/Begmonat/Begjahr (590/594/598), and appends the post-comma part to comment accumulator gvar_0253684C with prefixes "Geburt: "/"Taufe: "/"Tod: "/"Bestatt.: "/"Auswanderung am ". Lines without comma only parse the date; EMIG non-comma writes "Auswanderung am d.m.y" via sub_005772E4; other tags only parse.
+- Decoded and implemented `sub_005BEF5C` ("2 PLAC" handler, Projects_AhnenWin\Unit3.pas L65635-66413): mirrors the place text via TForm3.Ortdreh unless tag = RESI, splits up to three comma parts (e1/e2/e3) when gvar_0253685C is empty (kept as guard, RESI skips the split), updates/creates Table13 (FindKey ort -> Edit Lkr/Bland/Land, else Append Ort + Lkr/Bland/Land, offsets A44/A4C/A58/A64) and finally assigns Table1Gebort/Taufort/Stort/Begort/Lebensort; EMIG appends "Auswanderung nach <ort>" via sub_005772E4.
+- Component mapping fixed: Table1 field offsets 558 = Table1Gebmonat, 590/594/598 = Table1Begtag/Begmonat/Begjahr (Unit2.pas); Table13 fields A44=Ort, A4C=Land, A58=Bland, A64=Lkr; Table1Lebensort = 578.
+- `Form3.sour` (= sub_005BF434 body, "2 SOUR @" Repso2 resolver) was found already reconstructed in Unit3.pas.
+- Verified: build.cmd -> [build] SUCCESS. Array-slicing PowerShell quirks avoided by direct Read tool usage.
+- Next: main body of TForm3.gedein_5 (stub, current recon L1807+), which calls sub_005BC604 (huge, L62911-71288 of the listing - approx 8300 lines, separate batch) - register declaration stub with 15 params (3 register + 12 stack) first.
