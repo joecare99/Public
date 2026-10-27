@@ -565,3 +565,56 @@ gedausv   â†’  gedausxv â†’ gedaus â†’ gedausx
 - Helpers added to AHNGlobals: `AncestorNum(Row)`, `SetAncestorNum(Row, Value)`, `AncestorRec(Row): PByte` (all \ stride off gvar_0061F30C, row 1-based).
 - Documented deviations: init-loop prev-row tail clear guarded (t>1); edi=1 prev-partner/prev num reads skipped; intermediate GetText/UpperCase/Trim chains collapsed; original exception frame (LStrArrayClr 30 + LStrClr) replaced by automatic local cleanup.
 - Build: SUCCESS.
+
+### Batch: Vorf_erm (00567A30) + Vorf_erm1 Power-idiom correction
+- Corrected Vorf_erm1 (00563CF8) Power decoding: the pushed 2.0 constant is the
+  BASE, so all three idiom sites are Power(2.0, x) = 2^x (not x^2). Affects
+  iteration count (Power(2.0, GenLimit) - 1), slot-loop bound (edi >= Power(2.0, j))
+  and slot arithmetic (Round(Power(2.0, MaxSlot))). Matches binary-BFS tree sizes
+  1/2/4/8... and the boundary test Power(2.0, k) - 1 = edi.
+- Reconstructed Vorf_erm (00567A30) into Unit13.pas: chart A/B/C grid clearing
+  loop (t=1..$2710, ten A/B stores + three C stores per $198-stride row), setup
+  (gvar_0061F2F0 := StrToInt(Form12.SpinEdit1.Text), gvar_011AE34C :=
+  StrToInt(Form12.SpinEdit2.Text), Table17 with no index, eA/eB tbyte Extended,
+  base code string ebp24 via sub_005637C4), main BFS loop while
+  edi < Power(2.0, gvar_0061F2F0): 6-char code decode per row, FindKey, father/
+  mother codes appended to ebp24, flat slots +3/+7/+8 in grid A and C-mirror
+  dword terms (102*edi-104/-103/-102), Vorgr1/Vorgr2 level numbering, Extended
+  accumulators eA/eB, picture path check (gvar_02536B9C\bilder\bNa.jpg into
+  ChartAShort(edi,$142)), PExtended slot +$38 = edi mod 2^(g-1) + gvar_011AE34C *
+  2^(g-1), gender word $4D01/'M' + $5701/'W' at +$C1, boundary loop ebxv
+  1..$14 (Power(2.0, ebxv) - 1 = edi -> eB := eA, generation increment), exit
+  when eB = 0; tail: ShowMessage ('Generationen/Personen gefunden', eB>0
+  distinguishes truncation), gvar_011AE328 := gvar_011AE330 - 1 or gvar_011AE330,
+  Vorgr1/Vorgr2 post-loops shifting flat +1 by gvar_011AE330 - gvar_011AE328
+  or + gvar_011AE330 - gvar_0061F2F0 while flat +2 / +5 guards, ending with
+  gvar_011AE32C := PaintBox1.Canvas and PaintBox1.Refresh.
+- Deviations documented: exception-frame LStrArrayClr dropped (compiler-managed
+  AnsiStrings), SSR-start/ssr-clr string work collapsed, FindKey structure args
+  inlined, PStrNCpy truncation via SetLength/Copy semantics, tbyte locals as
+  Extended assignments.
+- Converter fixes: ChartAFlat() assignments replaced with SetChartAFlat()
+  helper calls in Vorf_erm.
+Remaining Unit13 work: FormClose (00570728) verification, Finalization
+  (00573848, listing L15904+), SpeedButton12Click nil-check removal.
+
+### Batch: SpeedButton12Click fix, FormClose verified, Finalization (00573848)
+- SpeedButton12Click (00570694): removed the extra nil-check on
+  gvar_011AE32C; the listing assigns Font.Name directly.
+- FormClose (00570728): verified against listing L12803+ - recon already
+  matches (Form12.Close; form 13 hidden via gvar_0061F10C/Form13).
+- Finalization (00573848, listing L15904+): decoded and documented at the
+  unit end of Unit13.pas as a doc-stamp block. Listing mechanics:
+  refcount guard [253638C] (inc ; jne skip), @FinalizeArray over the
+  five 10000-element chart grids (0213E95C, 01D5A7DC, 0197665C, 015924DC,
+  011AE35C; element stripper 'vor' @5637A0), @FinalizeArray of 20
+  AnsiString slots at 011AE2C8, LStrClr on 011AE2C0/011AE2BC/0061F2EC/
+  F2E8/F2E4/F2E0, and two 50-element AnsiString arrays at 0061F1F4 and
+  0061F12C. Recon deviation: the grids are static records without
+  managed fields, so the run block is empty; kept as
+  `initialization / finalization / end.` (this DCC17 requires a
+  non-empty-list syntax chain - bare `finalization end.` fails with
+  E2029, a preceding empty `initialization` is accepted).
+- Note: grids 0213E95C / 01D5A7DC (Nachfahren, $214 stride) appear in
+  the finalization set; they are owned by the Unit1/Unit recon target,
+  documented here for cross-reference.

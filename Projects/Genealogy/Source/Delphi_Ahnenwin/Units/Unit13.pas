@@ -2698,7 +2698,7 @@ begin
   Partner := '';                                         //00563E17
   MaxSlot := -1;                                         //00563E1F
   Screen.Cursor := crHourGlass;                          //00563E26-31
-  IterLeft := Round(Power(GenLimit, 2.0)) - 1;           //00563E36-56
+  IterLeft := Round(Power(2.0, GenLimit)) - 1;           //00563E36-56
   if IterLeft > 0 then                                   //00563E57-59
   begin
     edi := 1;                                            //00563E62
@@ -2794,7 +2794,7 @@ begin
       end;
       Partner := '';                                     //0056440C-14
       for j := 0 to $28 do                               //00564414-7D
-        if (edi >= Round(Power(j, 2.0))) and (j > MaxSlot) then  //00564416-5A
+        if (edi >= Round(Power(2.0, j))) and (j > MaxSlot) then  //00564416-5A
         begin
           PInteger(PChar(p) + $C)^ := j + 1;             //0056445C
           MaxSlot := j;                                  //00564462
@@ -2804,8 +2804,8 @@ begin
             ParentCount := 0;                            //00564474-76
         end;
       if TermFlag = 1 then Break;                        //0056447F-83
-      j := Round(Power(MaxSlot, 2.0));                   //00564489-A9
-      v := j * SlotShift + (edi - Round(Power(MaxSlot, 2.0)));   //005644AB-D3
+      j := Round(Power(2.0, MaxSlot));                   //00564489-A9
+      v := j * SlotShift + (edi - Round(Power(2.0, MaxSlot)));   //005644AB-D3
       PInteger(PChar(p) + $10)^ := v;                    //005644D5
       PInteger(PChar(p) + $14)^ := edi;                  //005644D8
       if n > 0 then                                      //005644F7-FA
@@ -3180,8 +3180,232 @@ begin
 end;
 
 procedure TForm13.Vorf_erm;
+var
+  ebp24: AnsiString;    //[ebp-24] 6-Zeichen-Codeketten (root + Vater/Mutter)
+  ebp28: AnsiString;    //[ebp-28] '*'-Kette der gefunden (订PersNum2Str)
+  sName, sTmp, sTmp2, s6a, sPath: AnsiString; //[-138][-150/-154/-158/-15C/-140][-178]
+  sGender, sEbp158, sEbp15C, sEbp154: AnsiString; //[-188/184/18C], [-158], [-15C], [-154]
+  eA: Extended;         //[ebp-10..8] tbyte-Ebene (Summe Generation)
+  eB: Extended;         //[ebp-20..18] tbyte (vor Generation)
+  eCalc: Extended;      //[ebp-168]
+  pa, pb, pc: PChar;    //00567A86 ebx / 00567A92 esi / 00567A8B [ebp-2C]
+  pnum: Integer;        //00567B44 ebx
+  v, vV, vM: Integer;
+  edi, esi, ebxv, t: Integer;
+  sv: ShortString;      //[-138] LStrToString-Puffer
 begin
-  { TODO: Listing fehlt noch - Originaladresse siehe Deklaration. }
+  { 00567A30: chart-Aufbau 'Vorgr1'/'Vorgr2': binary-BFS in den drei
+    Chart-Gittern A (gvar_011AE1C4, $198-Stride), B (019764C4) und
+    C-Spiegel (015924E4): je Zeile edi Table17.FindKey aus 6-Zeichen-
+    Codes in [ebp-24]; Grid-Offsets in flat-Dwortformel: [ebx*8+X] =
+    X + $198*edi, dword-Index (X - $11AE1C4) div 4 (A) bzw. C-Spiegel
+    [(X - $15924E4) div 4 + 102*edi]. [ebp-10]/[ebp-20] sind zaeh-
+    lungweise tbyte-Extended (eA/eB). Boundary-Test 2^ebxv - 1 = edi
+    (ebxv laeuft 1..$14), Levels size 2^(g-1); Modulo-Slot
+    ebx mod 2^(gen-1) + 2^(gen-1)*gvar_011AE34C -> A-Zeile +$38.
+    Deviations: exception-frame-LStrArrayClr entfaellt (lokale Ansi-
+    Strings), Zwischenstringketten [-13C/-150...] zusammengezogen,
+    word-Prefix-Char ueber PWord statt mov word, ss Gender-AStrCmp
+    ueber Delphi-Vergleich, tbyte-Init/Кopie durch Extended-Zuwei-
+    sung, FindKey-Struct ([ebp-148]+[ebp-144] byte) nebst [ebx*8+
+    11AE285] Wword-Speicherkonstanten $4D01/'M' und $5701/'W'. }
+  gvar_011AE31C := 0;                                    //00567A53-5A
+  gvar_011AE324 := 0;                                    //00567A5C
+  Screen.Cursor := crHourGlass;                          //00567A61-6C
+  if gvar_0061F2BC = 1 then                              //00567A71-78
+    Inc(gvar_011AE334, $A);                              //00567A7A
+  pa := PChar(@gvar_011AE1C4) + $1A0;                    //00567A81-86
+  pc := PChar(@gvar_015924E4);                           //00567A8B-8B
+  pb := PChar(@gvar_019764C4) + $1A0;                    //00567A92
+  for t := 1 to $2710 do                                 //00567A81-2C
+  begin
+    PInteger(pa)^ := 0;                                  //00567A99 [ebx]
+    PInteger(pc)^ := 0;                                  //00567AA0 [eax]
+    PInteger(pb)^ := 0;                                  //00567AA4 [esi]
+    PInteger(pa + 4)^ := 0;                              //00567AA8 [ebx+4]
+    PInteger(pb + 4)^ := 0;                              //00567AAD [esi+4]
+    (pa + $13A)^ := #0;                                  //00567AB0
+    (pb + $13A)^ := #0;                                  //00567AB7
+    (pa + $90)^ := #0;                                   //00567ABE
+    (pb + $90)^ := #0;                                   //00567AC5
+    PInteger(pa + $20)^ := 0;                            //00567ACD [ebx+20]
+    PInteger(pb + $20)^ := 0;                            //00567AD3 [esi+20]
+    PInteger(pa - 8)^ := 0;                              //00567AD8 [ebx-8]
+    PInteger(pc - 8)^ := 0;                              //00567ADF [eax-8]
+    PInteger(pb - 8)^ := 0;                              //00567AE5 [esi-8]
+    PInteger(pa - 4)^ := 0;                              //00567AEA [ebx-4]
+    PInteger(pc - 4)^ := 0;                              //00567AF2 [eax-4]
+    PInteger(pb - 4)^ := 0;                              //00567AF7 [esi-4]
+    PInteger(pa + $14)^ := 0;                            //00567AFC [ebx+14]
+    PInteger(pb + $14)^ := 0;                            //00567B01 [esi+14]
+    PInteger(pa + $18)^ := 0;                            //00567B06 [ebx+18]
+    PInteger(pb + $18)^ := 0;                            //00567B0B [esi+18]
+    PInteger(pa + $0C)^ := 0;                            //00567B10 [ebx+0C]
+    PInteger(pb + $0C)^ := 0;                            //00567B15 [esi+0C]
+    Inc(pb, $198);                                       //00567B18
+    Inc(pc, $198);                                       //00567B1E
+    Inc(pa, $198);                                       //00567B25
+  end;
+  pnum := DataModule2.Table1Nummer.AsInteger;            //00567B32-44
+  gvar_0061F2F0 := StrToInt(Form12.SpinEdit1.Text);      //00567B46-63
+  gvar_011AE34C := StrToInt(Form12.SpinEdit2.Text);      //00567B68-91
+  DataModule2.Table17.IndexName := '';                   //00567B92-A1
+  DataModule2.Table17.First;                             //00567BA6-B3
+  gvar_011AE330 := 1;                                    //00567BB8-C2
+  sub_005637C4(pnum, ebp24);                             //00567BC2-C7
+  eA := 0;                                               //00567BCC-E0 (tbyte)
+  eB := 0;                                               //00567BDA-E0 (tbyte)
+  edi := 1;                                              //00567BE4
+  esi := 0;                                              //00567BE9
+  gvar_011AE344 := 0;                                    //00567BED
+  ebp28 := '';                                           //00567BF2-F5
+  while edi < Power(2.0, gvar_0061F2F0) do               //005681A0-C9
+  begin
+    sv := DataModule2.Table17IDNR.AsString;              //00567BFF-C2 [9D0]
+    if Length(sv) > 28 then SetLength(sv, 28);           //00567C3F PStrNCpy 28
+    ChartAShort(edi, $98)^ := sv;                        //00567C2D-3F
+    s6a := Copy(ebp24, 6 * (edi - 1) + 1, 6);            //00567C44-5E
+    v := StrToInt(s6a);                                  //00567C63-69
+    if v = 0 then                                        //00567C6E-70
+    begin
+      ebp24 := ebp24 + '000000000000';                   //00567C72-7F
+      SetChartAFlat(102 * edi + 3, 0);                    //00567C81 [11AE1D0]
+      SetChartAFlat(102 * edi + 7, 0);                    //00567C8A [11AE1E0]
+      SetChartAFlat(102 * edi + 8, 0);                    //00567C93 [11AE1E4]
+    end
+    else
+    begin
+      sTmp := Copy(ebp24, 6 * (edi - 1) + 1, 6);         //00567C9F-B9 [-14C]
+      v := StrToInt(sTmp);                               //00567CBE-C4
+      DataModule2.Table17.FindKey([v]);                  //00567CD6-EB
+      v := DataModule2.Table17Nummer.AsInteger;          //00567CF0
+      sub_005637C4(v, sTmp);                             //00567CFF-D08?? [-150]
+      sTmp := sTmp + '*';                                //00567D0D-18
+      if Pos(ebp28, sTmp) = 0 then                       //00567D1D-2D
+      begin
+        sub_005637C4(v, sEbp154);                        //00567D44-4A [-154]
+        ebp28 := ebp28 + '*' + sEbp154;                  //00567D4F-62 CatN3
+      end;
+      Inc(gvar_011AE344);                                //00567D67
+      vV := DataModule2.Table17Vater.AsInteger;          //00567D70-7F [948]
+      sub_005637C4(vV, sEbp158);                         //00567D82-88 [-158]
+      vM := DataModule2.Table17Mutter.AsInteger;         //00567D93-A2 [94C]
+      sub_005637C4(vM, sEbp15C);                         //00567DA5-B [-15C]
+      ebp24 := ebp24 + sEbp158 + sEbp15C;                //00567DB0-BE CatN3
+      SetChartAFlat(102 * edi + 7, 0);                    //00567DC3-C5 [11AE1E0]
+      if vV > 0 then                                     //00567DD9-DE
+        SetChartAFlat(102 * edi + 7, edi * 2);            //00567DE2-96
+      SetChartAFlat(102 * edi + 8, 0);                    //00567DED-F0 [11AE1E4]
+      if vM > 0 then                                     //00567E05-A
+        SetChartAFlat(102 * edi + 8, edi * 2 + 1);        //00567E0C-11
+      SetChartAFlat(102 * edi + 3, v);                    //00567E2A [11AE1D0]
+      Inc(esi);                                          //00567E31
+      if gvar_0253692C = 'Vorgr1' then                   //00567E32-43
+      begin
+        SetChartAFlat(102 * edi + 1, esi);                //00567E45 [11AE1C8]
+        PInteger(PChar(@gvar_015924E4) + 4 * (102 * edi - 103))^ := esi;  //00567E4C [1592348]
+        SetChartAFlat(102 * edi, gvar_011AE330 + 2);               //00567E53-5B [11AE1C4]
+        PInteger(PChar(@gvar_015924E4) + 4 * (102 * edi - 104))^ := gvar_011AE330 + 2;  //00567E62 [1592344]
+      end;
+      if gvar_0253692C = 'Vorgr2' then                    //00567E69-7A
+      begin
+        SetChartAFlat(102 * edi, esi);                     //00567E7C [11AE1C4]
+        PInteger(PChar(@gvar_015924E4) + 4 * (102 * edi - 104))^ := esi;  //00567E83 [1592344]
+        SetChartAFlat(102 * edi + 1, gvar_0061F2F0 - gvar_011AE330 + 1);  //00567E8A-96 [11AE1C8]
+        PInteger(PChar(@gvar_015924E4) + 4 * (102 * edi - 103))^ := gvar_0061F2F0 - gvar_011AE330 + 1;  //00567E9D [1592348]
+      end;
+      eCalc := vV + eA;                                   //00567EB6-C1 [-168]
+      eA := vM + eCalc;                                   //00567EDA-63 [-10]
+    end;
+    if gvar_0061F2BC = 1 then                             //00567EF2-F9
+    begin
+      sPath := gvar_02536B9C + '\bilder\b' + IntToStr(v) + 'a.jpg';  //00567EFF-33
+      if FileExists(sPath) then                           //00567F38-45
+      begin
+        sv := sPath;                                      //00567F80-FA
+        if Length(sv) > 80 then SetLength(sv, 80);        //00567FA5 PStrNCpy $50
+        ChartAShort(edi, $142)^ := sv;                    //00567F9C-A5
+      end;
+    end;
+    SetChartAFlat(102 * edi + 5, gvar_011AE330);           //00567FAA-F6 [11AE1D8]
+    SetChartAFlat(102 * edi + 2, edi);                     //00567FB6 [11AE1CC]
+    PInteger(PChar(@gvar_015924E4) + 4 * (102 * edi - 102))^ := edi;  //00567FBD [159234C]
+    sv := DataModule2.Table17IDNR.AsString;               //00567FC4-ED
+    if Length(sv) > 28 then SetLength(sv, 28);            //00568001 28
+    ChartAShort(edi, $98)^ := sv;                         //00567FF2
+    eCalc := gvar_011AE34C * Power(2.0, gvar_011AE330 - 1);         //00568006-32 [-168]
+    v := edi mod Round(Power(2.0, gvar_011AE330 - 1));             //00568039-71
+    PExtended(PChar(@gvar_011AE1C4) + 408 * edi + $38)^ := v + eCalc;  //0056807D-8B
+    sGender := DataModule2.Table17Geschlecht.AsString;    //00568093-B7 [958]
+    if UpperCase(sGender) = 'M' then                      //005680BC-CC
+      PWord(PChar(@gvar_011AE1C4) + 408 * edi + $C1)^ := $4D01;  //005680CE
+    sGender := DataModule2.Table17Geschlecht.AsString;    //005680D8-FC
+    if UpperCase(sGender) = 'W' then                      //005680F6-111
+      PWord(PChar(@gvar_011AE1C4) + 408 * edi + $C1)^ := $5701;  //00568113
+    ebxv := 1;                                            //0056811D
+    repeat
+      if Power(2.0, ebxv) - 1.0 = edi then                //00568122-51
+      begin
+        eB := eA;                                         //00568153-63 (tbyte)
+        if eA > 0 then                                    //00568167-73
+        begin
+          eA := 0;                                        //00568175-7D
+          esi := 0;                                       //00568181
+          Inc(gvar_011AE330);                             //00568183
+        end;
+        Break;                                            //00568189
+      end;
+      Inc(ebxv);                                          //0056818B
+    until ebxv = $15;                                     //0056818C-8F
+    if eB = 0 then Break;                                 //00568191-9D
+    Inc(edi);                                             //0056819F
+  end;
+  if Printer.Canvas <> gvar_011AE32C then                 //005681CF-DF
+  begin
+    if eB > 0 then                                        //005681E5-1
+      ShowMessage(IntToStr(gvar_011AE330 - 1) + ' Generationen / ' +
+        IntToStr(Round(Length(ebp28) / 7)) + ' Personen gefunden')  //005681F3-56
+    else
+      ShowMessage(IntToStr(gvar_011AE330) + ' Generationen / ' +
+        IntToStr(Round(Length(ebp28) / 7)) + ' Personen gefunden');  //00568268-C4
+    if eB > 0 then                                        //0056825B-66
+      gvar_011AE328 := gvar_011AE330 - 1                  //00568261 wait: [-28]...
+    else
+      gvar_011AE328 := gvar_011AE330;                     //005682CF-D4
+  end;
+  if gvar_0253692C = 'Vorgr1' then                        //005682D9
+  begin
+    edi := 1;                                             //005682EC
+    if gvar_011AE330 - gvar_011AE328 - 1 <> 0 then        //005682F1-FD
+    begin
+      gvar_011AE324 := 0;                                 //005682FF
+      while ChartAFlat(102 * edi + 2) > 0 do              //00568344-3F
+      begin
+        SetChartAFlat(102 * edi + 1, ChartAFlat(102 * edi + 1) - gvar_011AE328 + gvar_011AE330);  //00568308-1B
+        if ChartAFlat(102 * edi + 1) > gvar_011AE324 then  //00568322-32
+          gvar_011AE324 := ChartAFlat(102 * edi + 1);      //00568334-3E
+        Inc(edi);                                          //00568343
+      end;
+    end;
+  end;
+  if gvar_0253692C = 'Vorgr2' then                        //00568351
+  begin
+    edi := 1;                                             //00568364
+    if gvar_011AE330 - gvar_011AE328 - 1 <> 0 then        //00568369-75
+    begin
+      gvar_011AE324 := 0;                                 //00568377
+      while ChartAFlat(102 * edi + 5) <= gvar_011AE328 do  //005683BC-CC
+      begin
+        SetChartAFlat(102 * edi + 1, ChartAFlat(102 * edi + 1) + gvar_011AE330 - gvar_0061F2F0);  //00568380-93
+        if ChartAFlat(102 * edi + 1) > gvar_011AE324 then  //0056839A-AA
+          gvar_011AE324 := ChartAFlat(102 * edi + 1);      //005683AC-B6
+        Inc(edi);                                          //005683BB
+      end;
+    end;
+  end;
+  Screen.Cursor := crDefault;                             //005683CE-DC
+  gvar_011AE32C := PaintBox1.Canvas;                      //005683DC-F0
+  PaintBox1.Refresh;                                      //005683F0-F9
 end;
 
 procedure TForm13.Button1Click(Sender: TObject);
@@ -3261,8 +3485,7 @@ end;
 procedure TForm13.SpeedButton12Click(Sender: TObject);
 begin
   //00570694: Zeichensatz waehlen (fuer Bild und Druck gleicher Stift).
-  if gvar_011AE32C <> nil then
-    gvar_011AE32C.Font.Name := 'Arial';
+  gvar_011AE32C.Font.Name := 'Arial';                     //005706A6-BC
   if FontDialog1.Execute then
     gvar_0061F2EC := FontDialog1.Font.Name;
   PaintBox1.Refresh;
@@ -4529,5 +4752,23 @@ begin
   end;
 end;
 
-
+{ 00573848 Finalization (Listing L15904+):
+  - Refcount-Guard [253638C] (inc, nur bei 0 initialisieren) um die
+    Freigabebloecke.
+  - @FinalizeArray ueber die Chart-Gitter (je 10000 Elemente, Element-
+    stripper = Vorf_erm-linked ShortString-Record 'vor' @5637A0) auf
+    gvar_0213E95C / 01D5A7DC (Nachfahren-Gitter), gvar_0197665C
+    (Grid-B Rohbuffer $197664C4+... rows buffer), gvar_015924DC
+    (Grid-C) und gvar_011AE35C (Grid-A 011AE1C4 + $198-Stride).
+  - @FinalizeArray String[?] je 20 Elemente auf gvar_011AE2C8
+    (Slot-AnsiStrings 011AE2C8 + 4*I, siehe ChartSlotAnsi),
+  - LStrClr auf gvar_011AE2C0/2BC/0061F2EC/F2E8/F2E4/F2E0.
+  - @FinalizeArray je 50 AnsiString-Elemente auf gvar_0061F1F4 und
+    gvar_0061F12C.
+  Deviation: in der Recon sind die 408/$214-Stride-Gitter statische
+  Records ohne verwaltete Felder bzw. deren Freigabe erfolgt durch
+  den Delphi-RTTI/Exit-Handler; der End-Block ist deshalb leer und
+  nur als Dokumentstempel erhalten. }
+initialization
+finalization
 end.
