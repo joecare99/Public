@@ -23,7 +23,7 @@
           <SearchPaths>
             <IncludeFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm;../source/_core/tools"/>
             <OtherUnitFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -56,7 +56,7 @@
           <SearchPaths>
             <IncludeFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm;../source/_core/tools"/>
             <OtherUnitFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -111,7 +111,7 @@
     <SearchPaths>
       <IncludeFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm;../source/_core/tools;$(ProjOutDir)"/>
       <OtherUnitFiles Value="../source/HELLO/view;../source/HELLO/viewmodel;../source/HELLO;../source/_core/mvvm;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/Hello"/>
+      <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

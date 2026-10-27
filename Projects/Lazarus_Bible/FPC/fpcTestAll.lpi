@@ -31,9 +31,9 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestAll"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/tests;../source/AboutEx;../source/Addpage;../source/Actions;../source/Barchart;../source/_core/tools"/>
-            <IncludeFiles Value="../source/tests;../source/AboutEx;../source/Addpage;../source/Actions;../source/Barchart;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+            <OtherUnitFiles Value="../source/tests;../source/Capslock;../source/Addpage;../source/Actions;../source/Bitview2;../source/Barchart;../source/Calc32/view;../source/Calc32;../source/Bitview;../source/CharGrid;../source/AboutEx;../source/Strings;../source/Calc32/viewmodel;../source/Calc32/model;../source/_core/mvvm;../source/_core/tools"/>
+            <IncludeFiles Value="../source/tests;../source/Capslock;../source/Addpage;../source/Actions;../source/Bitview2;../source/Barchart;../source/Calc32/view;../source/Calc32;../source/Bitview;../source/CharGrid;../source/AboutEx;../source/Strings;../source/Calc32/viewmodel;../source/Calc32/model;../source/_core/mvvm;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -65,9 +65,9 @@
             <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestAll"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="../source/tests;../source/AboutEx;../source/Addpage;../source/Actions;../source/Barchart;../source/_core/tools"/>
-            <IncludeFiles Value="../source/tests;../source/AboutEx;../source/Addpage;../source/Actions;../source/Barchart;../source/_core/tools"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+            <OtherUnitFiles Value="../source/tests;../source/Capslock;../source/Addpage;../source/Actions;../source/Bitview2;../source/Barchart;../source/Calc32/view;../source/Calc32;../source/Bitview;../source/CharGrid;../source/AboutEx;../source/Strings;../source/Calc32/viewmodel;../source/Calc32/model;../source/_core/mvvm;../source/_core/tools"/>
+            <IncludeFiles Value="../source/tests;../source/Capslock;../source/Addpage;../source/Actions;../source/Bitview2;../source/Barchart;../source/Calc32/view;../source/Calc32;../source/Bitview;../source/CharGrid;../source/AboutEx;../source/Strings;../source/Calc32/viewmodel;../source/Calc32/model;../source/_core/mvvm;../source/_core/tools"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -110,7 +110,7 @@
         <PackageName Value="LazMouseAndKeyInput"/>
       </Item5>
     </RequiredPackages>
-    <Units Count="22">
+    <Units Count="32">
       <Unit0>
         <Filename Value="fpcTestAll.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -182,60 +182,137 @@
         <UnitName Value="tst_Something"/>
       </Unit13>
       <Unit14>
-        <Filename Value="../source/tests/tst_Checks.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_Checks"/>
-      </Unit14>
-      <Unit15>
-        <Filename Value="../source/tests/tst_Checks2.pas"/>
-        <IsPartOfProject Value="True"/>
-        <UnitName Value="tst_Checks2"/>
-      </Unit15>
-      <Unit16>
-        <Filename Value="../source/AboutEx/AboutEx_Frm_ABOUT.pas"/>
+        <Filename Value="../source/Capslock/Frm_CapslockMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
-        <UnitName Value="AboutEx_Frm_ABOUT"/>
-      </Unit16>
-      <Unit17>
+        <UnitName Value="Frm_CapslockMAIN"/>
+      </Unit14>
+      <Unit15>
         <Filename Value="../source/Addpage/Frm_AddpageMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_AddpageMAIN"/>
-      </Unit17>
-      <Unit18>
+      </Unit15>
+      <Unit16>
         <Filename Value="../source/Actions/Frm_ActionsMain.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_ActionsMain"/>
-      </Unit18>
-      <Unit19>
-        <Filename Value="../source/Barchart/BarChart.pas"/>
+      </Unit16>
+      <Unit17>
+        <Filename Value="../source/Bitview2/Frm_BitView2MAIN.pas"/>
         <IsPartOfProject Value="True"/>
-        <UnitName Value="BarChart"/>
-      </Unit19>
-      <Unit20>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_BitView2MAIN"/>
+      </Unit17>
+      <Unit18>
         <Filename Value="../source/Barchart/Frm_BartestMain2.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_BartestMain2"/>
+      </Unit18>
+      <Unit19>
+        <Filename Value="../source/Calc32/view/Frm_CALC.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_CALC"/>
+      </Unit19>
+      <Unit20>
+        <Filename Value="../source/Calc32/Frm_CalcABOUT.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_CalcABOUT"/>
       </Unit20>
       <Unit21>
+        <Filename Value="../source/Bitview/Frm_BitViewMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_BitViewMAIN"/>
+      </Unit21>
+      <Unit22>
+        <Filename Value="../source/CharGrid/Frm_CharGridMAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_CharGridMAIN"/>
+      </Unit22>
+      <Unit23>
         <Filename Value="../source/AboutEx/Frm_AboutExMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <ComponentName Value="Form1"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_AboutExMAIN"/>
-      </Unit21>
+      </Unit23>
+      <Unit24>
+        <Filename Value="../source/Capslock/Frm_Capslock2MAIN.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_Capslock2MAIN"/>
+      </Unit24>
+      <Unit25>
+        <Filename Value="../source/Strings/StrUtilsExt.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="StrUtilsExt"/>
+      </Unit25>
+      <Unit26>
+        <Filename Value="../source/CharGrid/Frm_CharGridABOUT.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_CharGridABOUT"/>
+      </Unit26>
+      <Unit27>
+        <Filename Value="../source/AboutEx/AboutEx_Frm_ABOUT.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="AboutEx_Frm_ABOUT"/>
+      </Unit27>
+      <Unit28>
+        <Filename Value="../source/Barchart/BarChart.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="BarChart"/>
+      </Unit28>
+      <Unit29>
+        <Filename Value="../source/Calc32/Frm_CALC64.pas"/>
+        <IsPartOfProject Value="True"/>
+        <ComponentName Value="Form1"/>
+        <HasResources Value="True"/>
+        <ResourceBaseClass Value="Form"/>
+        <UnitName Value="Frm_CALC64"/>
+      </Unit29>
+      <Unit30>
+        <Filename Value="../source/Calc32/viewmodel/Calc32ViewModel.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="Calc32ViewModel"/>
+      </Unit30>
+      <Unit31>
+        <Filename Value="../source/Calc32/model/CalculatorModel.pas"/>
+        <IsPartOfProject Value="True"/>
+        <UnitName Value="CalculatorModel"/>
+      </Unit31>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -245,9 +322,9 @@
       <Filename Value="../bin/$(TargetCPU)-$(TargetOS)/fpcTestAll"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="../source/tests;../source/AboutEx;../source/Addpage;../source/Actions;../source/Barchart;../source/_core/tools"/>
-      <IncludeFiles Value="../source/tests;../source/AboutEx;../source/Addpage;../source/Actions;../source/Barchart;../source/_core/tools"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+      <OtherUnitFiles Value="../source/tests;../source/Capslock;../source/Addpage;../source/Actions;../source/Bitview2;../source/Barchart;../source/Calc32/view;../source/Calc32;../source/Bitview;../source/CharGrid;../source/AboutEx;../source/Strings;../source/Calc32/viewmodel;../source/Calc32/model;../source/_core/mvvm;../source/_core/tools"/>
+      <IncludeFiles Value="../source/tests;../source/Capslock;../source/Addpage;../source/Actions;../source/Bitview2;../source/Barchart;../source/Calc32/view;../source/Calc32;../source/Bitview;../source/CharGrid;../source/AboutEx;../source/Strings;../source/Calc32/viewmodel;../source/Calc32/model;../source/_core/mvvm;../source/_core/tools"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

@@ -92,7 +92,6 @@ object OptionsDialog: TOptionsDialog
     Width = 169
     Height = 89
     Caption = '&Miscellaneous'
-    TabOrder = 3
     object BackupCheckbox: TCheckBox
       Left = 8
       Top = 16

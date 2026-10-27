@@ -1,13 +1,23 @@
 unit Frm_WinesEntryMain;
 
+{ WinesEntry, plattformneutral: Statt BDE/ADO (Windows) liest das Demo die
+  Paradox-Tabelle Wines.DB ueber die BDE-freie DBParadox-Engine
+  (TDBParadoxConnection, eine SQLDB-Verbindung). }
+
 {$IFDEF FPC}
   {$MODE Delphi}
 {$ENDIF}
 interface
 
 uses
-  Windows, Messages, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
-  StdCtrls, Buttons, DBCtrls, ExtCtrls, Db, dbf {$IFDEF FPC}  {$ELSE} ,ADODB {$ENDIF};
+  SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+  StdCtrls, Buttons, DBCtrls, ExtCtrls, Db
+{$IFnDEF FPC}
+  , Windows, ADODB
+{$ELSE}
+  , DBParadoxConnection, sqldb
+{$ENDIF}
+  ;
 
 type
 
@@ -27,14 +37,18 @@ type
     edtVintage: TDBEdit;
     edtPurchased: TDBEdit;
     btnClose: TBitBtn;
-//    ADOTable1: TADOTable;
     procedure FormShow(Sender: TObject);
     procedure FormCreate(Sender: TObject);
   private
     FDataDir: string;
-//  private
-    { Private declarations }
-//  public
+{$IFDEF FPC}
+    FConnection: TDBParadoxConnection;
+    FTransaction: TSQLTransaction;
+    FQuery: TSQLQuery;
+{$ELSE}
+    FADOTable: TADOTable;
+{$ENDIF}
+  public
     { Public declarations }
   end;
 
@@ -45,7 +59,6 @@ implementation
 
 {$IFnDEF FPC}
   {$R *.dfm}
-const DirectorySeparator='\';
 {$ELSE}
   {$R *.lfm}
 {$ENDIF}
@@ -54,29 +67,55 @@ const
   DataDefDir = 'Data';  { The stream's Directory }
   fileName = 'wines.udl';  { The stream's file name }
 
-procedure TMainForm.FormCreate(Sender: TObject);
+{ Sucht den Datenordner Data/Wines, ausgehend vom Programmverzeichnis. }
+function FindDataDir: string;
 var
-  i: Integer;
+  Dir: string;
+  I: Integer;
 begin
-  FDataDir:=DataDefDir;
-  for i := 0 to 3 do
-    if not DirectoryExists(FDataDir) then
-      FDataDir:='..'+DirectorySeparator+FDataDir
+  Dir := DataDefDir + PathDelim + 'Wines';
+  for I := 0 to 5 do
+    if DirectoryExists(Dir) then
+      Exit(Dir)
     else
-      break;
+      Dir := '..' + PathDelim + Dir;
+  Result := DataDefDir + PathDelim + 'Wines';
+end;
+
+procedure TMainForm.FormCreate(Sender: TObject);
+begin
+  FDataDir := FindDataDir;
   {$IFDEF FPC}
-//  ADOTable1.ConnectionString:='FILE NAME=' +FDataDir+DirectorySeparator+filename;
+  { BDE-freie Paradox-Engine: DatabaseName ist der Ordner mit den .DB-Dateien. }
+  FConnection := TDBParadoxConnection.Create(Self);
+  FConnection.DatabaseName := FDataDir;
+  FConnection.LoginPrompt := False;
+  FTransaction := TSQLTransaction.Create(Self);
+  FTransaction.Database := FConnection;
+  FConnection.Transaction := FTransaction;
+  FQuery := TSQLQuery.Create(Self);
+  FQuery.Database := FConnection;
+  FQuery.Transaction := FTransaction;
+  FQuery.SQL.Text := 'SELECT * FROM Wines';
+  DataSource1.DataSet := FQuery;
   {$ELSE}
-  ADOTable1.ConnectionString:='FILE NAME=' +FDataDir+DirectorySeparator+filename;
+  FADOTable := TADOTable.Create(Self);
+  FADOTable.ConnectionString := 'FILE NAME=' + FDataDir + PathDelim + fileName;
+  DataSource1.DataSet := FADOTable;
   {$ENDIF}
 end;
 
 procedure TMainForm.FormShow(Sender: TObject);
 begin
   {$IFDEF FPC}
-//  ADOTable1.Open;
+  try
+    FQuery.Open;
+  except
+    on E: Exception do
+      ShowMessage('Konnte Wines.DB nicht oeffnen (' + FDataDir + '): ' + E.Message);
+  end;
   {$ELSE}
-  ADOTable1.Open;
+  FADOTable.Open;
   {$ENDIF}
 end;
 

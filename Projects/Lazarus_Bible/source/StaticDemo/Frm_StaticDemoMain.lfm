@@ -1,0 +1,97 @@
+object MainForm: TMainForm
+  Left = 238
+  Top = 218
+  ActiveControl = StaticText2
+  Caption = 'StaticText Demonstration'
+  ClientHeight = 135
+  ClientWidth = 438
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'MS Sans Serif'
+  Font.Style = []
+  OldCreateOrder = True
+  PixelsPerInch = 96
+  TextHeight = 13
+  object StaticText2: TStaticText
+    Left = 224
+    Top = 24
+    Width = 177
+    Height = 57
+    Cursor = crHandPoint
+    Alignment = taCenter
+    AutoSize = False
+    BorderStyle = sbsSunken
+    Caption = 'Border Style = sbsSunken Key &B'
+    Color = clBtnFace
+    FocusControl = StaticText1
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clMaroon
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 1
+    TabStop = True
+    OnClick = StaticText1Click
+    OnMouseDown = StaticText1MouseDown
+    OnMouseUp = StaticText1MouseUp
+  end
+  object StaticText1: TStaticText
+    Left = 24
+    Top = 24
+    Width = 177
+    Height = 57
+    Cursor = crCross
+    Alignment = taCenter
+    AutoSize = False
+    BorderStyle = sbsSingle
+    Caption = 'Border Style = sbsSingle  Key &A'
+    Color = clBtnFace
+    FocusControl = StaticText2
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clMaroon
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentColor = False
+    ParentFont = False
+    TabOrder = 0
+    TabStop = True
+    OnClick = StaticText1Click
+    OnMouseDown = StaticText1MouseDown
+    OnMouseUp = StaticText1MouseUp
+  end
+  object StaticText3: TStaticText
+    Left = 24
+    Top = 96
+    Width = 271
+    Height = 28
+    Cursor = crHelp
+    Caption = 'Border Style = sbsNone Key &C'
+    FocusControl = StaticText3
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clGreen
+    Font.Height = -19
+    Font.Name = 'MS Sans Serif'
+    Font.Style = []
+    ParentFont = False
+    TabOrder = 2
+    TabStop = True
+    OnClick = StaticText1Click
+    OnMouseDown = StaticText1MouseDown
+    OnMouseUp = StaticText1MouseUp
+  end
+  object BitBtn1: TBitBtn
+    Left = 336
+    Top = 104
+    Width = 75
+    Height = 25
+    DoubleBuffered = True
+    Kind = bkClose
+    ParentDoubleBuffered = False
+    TabOrder = 3
+  end
+end

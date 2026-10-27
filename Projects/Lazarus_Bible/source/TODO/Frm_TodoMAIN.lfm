@@ -1,0 +1,307 @@
+object MainForm: TMainForm
+  Left = 241
+  Top = 179
+  BorderStyle = bsSingle
+  Caption = 'To Do List'
+  ClientHeight = 251
+  ClientWidth = 474
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -13
+  Font.Name = 'System'
+  Font.Style = []
+  KeyPreview = True
+  Menu = MainMenu1
+  Position = poScreenCenter
+  OnCloseQuery = FormCloseQuery
+  OnCreate = FormCreate
+  OnDestroy = FormDestroy
+  PixelsPerInch = 96
+  object SrcLabel: TLabel
+    Left = 8
+    Top = 8
+    Width = 145
+    Height = 16
+    AutoSize = False
+    Caption = 'To Do'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object DstLabel: TLabel
+    Left = 264
+    Top = 8
+    Width = 145
+    Height = 16
+    AutoSize = False
+    Caption = 'Done'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+  end
+  object IncludeBtn: TSpeedButton
+    Left = 224
+    Top = 40
+    Width = 24
+    Height = 24
+    Caption = '>'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    OnClick = IncludeBtnClick
+  end
+  object IncAllBtn: TSpeedButton
+    Left = 224
+    Top = 72
+    Width = 24
+    Height = 24
+    Caption = '>>'
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    OnClick = IncAllBtnClick
+  end
+  object ExcludeBtn: TSpeedButton
+    Left = 224
+    Top = 104
+    Width = 24
+    Height = 24
+    Caption = '<'
+    Enabled = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    OnClick = ExcludeBtnClick
+  end
+  object ExAllBtn: TSpeedButton
+    Left = 224
+    Top = 136
+    Width = 24
+    Height = 24
+    Caption = '<<'
+    Enabled = False
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ParentFont = False
+    OnClick = ExcAllBtnClick
+  end
+  object SrcList: TListBox
+    Left = 8
+    Top = 24
+    Width = 201
+    Height = 169
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ItemHeight = 13
+    MultiSelect = True
+    ParentFont = False
+    Sorted = True
+    TabOrder = 0
+  end
+  object DstList: TListBox
+    Left = 264
+    Top = 24
+    Width = 200
+    Height = 169
+    Font.Charset = DEFAULT_CHARSET
+    Font.Color = clBlack
+    Font.Height = -11
+    Font.Name = 'MS Sans Serif'
+    Font.Style = [fsBold]
+    ItemHeight = 13
+    MultiSelect = True
+    ParentFont = False
+    Sorted = True
+    TabOrder = 1
+  end
+  object CloseBitBtn: TBitBtn
+    Left = 376
+    Top = 208
+    Width = 89
+    Height = 33
+    Caption = 'E&xit'
+    Kind = bkClose
+    TabOrder = 5
+    OnClick = FileExitClick
+  end
+  object AddBitBtn: TBitBtn
+    Left = 8
+    Top = 208
+    Width = 89
+    Height = 33
+    Caption = '&Add'
+    Default = True
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000130B0000130B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      33333333FF33333333FF333993333333300033377F3333333777333993333333
+      300033F77FFF3333377739999993333333333777777F3333333F399999933333
+      33003777777333333377333993333333330033377F3333333377333993333333
+      3333333773333333333F333333333333330033333333F33333773333333C3333
+      330033333337FF3333773333333CC333333333FFFFF77FFF3FF33CCCCCCCCCC3
+      993337777777777F77F33CCCCCCCCCC3993337777777777377333333333CC333
+      333333333337733333FF3333333C333330003333333733333777333333333333
+      3000333333333333377733333333333333333333333333333333
+    }
+    NumGlyphs = 2
+    TabOrder = 2
+    OnClick = AddBitBtnClick
+  end
+  object EditBitBtn: TBitBtn
+    Left = 104
+    Top = 208
+    Width = 89
+    Height = 33
+    Caption = '&Edit'
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000120B0000120B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333000000
+      000033333377777777773333330FFFFFFFF03FF3FF7FF33F3FF700300000FF0F
+      00F077F777773F737737E00BFBFB0FFFFFF07773333F7F3333F7E0BFBF000FFF
+      F0F077F3337773F3F737E0FBFBFBF0F00FF077F3333FF7F77F37E0BFBF00000B
+      0FF077F3337777737337E0FBFBFBFBF0FFF077F33FFFFFF73337E0BF0000000F
+      FFF077FF777777733FF7000BFB00B0FF00F07773FF77373377373330000B0FFF
+      FFF03337777373333FF7333330B0FFFF00003333373733FF777733330B0FF00F
+      0FF03333737F37737F373330B00FFFFF0F033337F77F33337F733309030FFFFF
+      00333377737FFFFF773333303300000003333337337777777333
+    }
+    NumGlyphs = 2
+    TabOrder = 3
+    OnClick = EditBitBtnClick
+  end
+  object DeleteBitBtn: TBitBtn
+    Left = 200
+    Top = 208
+    Width = 89
+    Height = 33
+    Caption = '&Delete'
+    Glyph.Data = {
+      76010000424D7601000000000000760000002800000020000000100000000100
+      04000000000000010000130B0000130B00001000000000000000000000000000
+      800000800000008080008000000080008000808000007F7F7F00BFBFBF000000
+      FF0000FF000000FFFF00FF000000FF00FF00FFFF0000FFFFFF00333333333333
+      333333333333333333FF33333333333330003333333333333777333333333333
+      300033FFFFFF3333377739999993333333333777777F3333333F399999933333
+      3300377777733333337733333333333333003333333333333377333333333333
+      3333333333333333333F333333333333330033333F33333333773333C3333333
+      330033337F3333333377333CC3333333333333F77FFFFFFF3FF33CCCCCCCCCC3
+      993337777777777F77F33CCCCCCCCCC399333777777777737733333CC3333333
+      333333377F33333333FF3333C333333330003333733333333777333333333333
+      3000333333333333377733333333333333333333333333333333
+    }
+    NumGlyphs = 2
+    TabOrder = 4
+    OnClick = DeleteBitBtnClick
+  end
+  object MainMenu1: TMainMenu
+    Left = 40
+    Top = 88
+    object FileMenu: TMenuItem
+      Caption = '&File'
+      OnClick = FileMenuClick
+      object FileNew: TMenuItem
+        Caption = '&New'
+        OnClick = FileNewClick
+      end
+      object FileOpen: TMenuItem
+        Caption = '&Open...'
+        OnClick = FileOpenClick
+      end
+      object FileSave: TMenuItem
+        Caption = '&Save'
+        OnClick = FileSaveClick
+      end
+      object FileSaveAs: TMenuItem
+        Caption = 'Save &as...'
+        OnClick = FileSaveAsClick
+      end
+      object N1: TMenuItem
+        Caption = '-'
+      end
+      object FilePrint: TMenuItem
+        Caption = '&Print...'
+        OnClick = FilePrintClick
+      end
+      object FilePrinterSetup: TMenuItem
+        Caption = 'Printer set&up...'
+        OnClick = FilePrinterSetupClick
+      end
+      object N2: TMenuItem
+        Caption = '-'
+      end
+      object FileExit: TMenuItem
+        Caption = 'E&xit'
+        ShortCut = 32856
+        OnClick = FileExitClick
+      end
+    end
+    object EditMenu: TMenuItem
+      Caption = '&Edit'
+      OnClick = EditMenuClick
+      object EditUndo: TMenuItem
+        Caption = '&Undo delete'
+        ShortCut = 16474
+        OnClick = EditUndoClick
+      end
+      object EditDelete: TMenuItem
+        Caption = '&Delete'
+        ShortCut = 46
+        OnClick = EditDeleteClick
+      end
+    end
+    object HelpMenu: TMenuItem
+      Caption = '&Help'
+      object HelpAbout: TMenuItem
+        Caption = '&About..'
+        OnClick = HelpAboutClick
+      end
+    end
+  end
+  object FileOpenDialog: TOpenDialog
+    Filter = 'Todo files (*.tdo)|*.tdo|Text files (*.txt)|*.txt|All files (*.*)|*.*'
+    Options = [ofHideReadOnly, ofPathMustExist, ofFileMustExist, ofNoReadOnlyReturn]
+    Left = 136
+    Top = 88
+  end
+  object FileSaveDialog: TSaveDialog
+    DefaultExt = 'Tdo'
+    Filter = 'Todo files (*.tdo)|*.tdo|Text files (*.txt)|*.txt|All files (*.*)|*.*'
+    Options = [ofOverwritePrompt, ofPathMustExist, ofCreatePrompt, ofNoReadOnlyReturn]
+    Left = 88
+    Top = 144
+  end
+  object PrintDialog1: TPrintDialog
+    Left = 32
+    Top = 32
+  end
+  object PrinterSetupDialog1: TPrinterSetupDialog
+    Left = 136
+    Top = 32
+  end
+end

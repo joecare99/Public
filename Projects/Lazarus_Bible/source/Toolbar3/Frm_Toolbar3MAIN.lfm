@@ -39,7 +39,6 @@ object frmToolbar3Main: TfrmToolbar3Main
     BorderStyle = bsSingle
     ClientHeight = 117
     ClientWidth = 62
-    TabOrder = 0
     OnMouseDown = FloatingToolbarMouseDown
     object SpeedButton1: TSpeedButton
       Tag = 1

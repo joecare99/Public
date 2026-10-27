@@ -255,7 +255,6 @@ object MainForm: TMainForm
     Anchors = [akTop, akRight]
     ClientHeight = 43
     ClientWidth = 70
-    TabOrder = 4
     OnClick = Button1Click
     object Image1: TImage
       Left = 1

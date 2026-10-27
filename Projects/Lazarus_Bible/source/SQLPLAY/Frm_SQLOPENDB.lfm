@@ -88,16 +88,10 @@ object OpenForm: TOpenForm
     Sorted = True
     TabOrder = 3
   end
-  object Session: TSQLConnector
-    Connected = False
+  object Session: TDBParadoxConnection
     LoginPrompt = False
-    DatabaseName = 'movie'
-    KeepConnection = False
+    DatabaseName = 'Data'
     Transaction = SQLTransaction1
-    UserName = 'root'
-    HostName = '192.168.0.98'
-    Options = []
-    ConnectorType = 'MySQL 6.0'
     left = 176
     top = 88
   end

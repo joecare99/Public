@@ -33,7 +33,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/ODFCREATE;../source/_core/tools;/mnt/c/Projekte/Lazarus/fpOdf"/>
             <IncludeFiles Value="../source/ODFCREATE;../source/_core/tools;/mnt/c/Projekte/Lazarus/fpOdf"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -67,7 +67,7 @@
           <SearchPaths>
             <OtherUnitFiles Value="../source/ODFCREATE;../source/_core/tools;/mnt/c/Projekte/Lazarus/fpOdf"/>
             <IncludeFiles Value="../source/ODFCREATE;../source/_core/tools;/mnt/c/Projekte/Lazarus/fpOdf"/>
-            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -120,7 +120,7 @@
     <SearchPaths>
       <OtherUnitFiles Value="../source/ODFCREATE;../source/_core/tools;/mnt/c/Projekte/Lazarus/fpOdf"/>
       <IncludeFiles Value="../source/ODFCREATE;../source/_core/tools;/mnt/c/Projekte/Lazarus/fpOdf"/>
-      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>
+      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

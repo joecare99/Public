@@ -20,7 +20,6 @@ object AboutForm: TAboutForm
     Height = 161
     BevelInner = bvRaised
     BevelOuter = bvLowered
-    TabOrder = 0
     object ProgramIcon: TImage
       Left = 8
       Top = 8

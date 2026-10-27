@@ -31,9 +31,9 @@
             <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/demo_smoke"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="meta/units;../source/HELLO;../source/HELLO/view;../source/HELLO/viewmodel;../source/Calc32;../source/Calc32/view;../source/Calc32/viewmodel;../source/Calc32/model;../source/README;../source/README/view;../source/README/viewmodel;../source/README/model;../source/_core/mvvm;../source/ENUMFON;../source/PRINTGR;../source/LISTFONT;../source/COMBOS;../source/CHECKS;../source/SPINBUTT;../source/ACTIONS;../source/ADDPAGE;../source/GLYPHLST;../source/LISTTEXT;../source/MULTIMEN;../source/OPTIONS;../source/PALETTE;../source/SKETCH;../source/Inidata;../source/CONSTRAINT;../source/CONTCOMP;../source/FANCY;../source/FILEMENU;../source/OBJLIST;../source/TOOLBAR3;../source/STRLIST;../source/STRRES;../source/STATUS;../source/STATUSOD;../source/TABS;../source/TELNAME;../source/TOOLBAR1;../source/TOOLBAR2;../source/UPDOWNDEMO;../source/_core/services;../source/_core/tools"/>
+            <OtherUnitFiles Value="meta/units;../source/HELLO;../source/HELLO/view;../source/HELLO/viewmodel;../source/Calc32;../source/Calc32/view;../source/Calc32/viewmodel;../source/Calc32/model;../source/README;../source/README/view;../source/README/viewmodel;../source/README/model;../source/_core/mvvm;../source/ENUMFON;../source/PRINTGR;../source/LISTFONT;../source/COMBOS;../source/CHECKS;../source/SPINBUTT;../source/Actions;../source/Addpage;../source/GlyphLst;../source/LISTTEXT;../source/MULTIMEN;../source/OPTIONS;../source/PALETTE;../source/Sketch;../source/Inidata;../source/Constraint;../source/CONTCOMP;../source/FANCY;../source/FILEMENU;../source/OBJLIST;../source/Toolbar3;../source/STRLIST;../source/STRRES;../source/Status;../source/StatusOD;../source/TABS;../source/TELNAME;../source/TOOLBAR1;../source/TOOLBAR2;../source/UpDownDemo;../source/_core/services;../source/_core/tools"/>
             <IncludeFiles Value="meta/units"/>
-            <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/BibleExplorer"/>
+            <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -51,9 +51,9 @@
             <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/demo_smoke"/>
           </Target>
           <SearchPaths>
-            <OtherUnitFiles Value="meta/units;../source/HELLO;../source/HELLO/view;../source/HELLO/viewmodel;../source/Calc32;../source/Calc32/view;../source/Calc32/viewmodel;../source/Calc32/model;../source/README;../source/README/view;../source/README/viewmodel;../source/README/model;../source/_core/mvvm;../source/ENUMFON;../source/PRINTGR;../source/LISTFONT;../source/COMBOS;../source/CHECKS;../source/SPINBUTT;../source/ACTIONS;../source/ADDPAGE;../source/GLYPHLST;../source/LISTTEXT;../source/MULTIMEN;../source/OPTIONS;../source/PALETTE;../source/SKETCH;../source/Inidata;../source/CONSTRAINT;../source/CONTCOMP;../source/FANCY;../source/FILEMENU;../source/OBJLIST;../source/TOOLBAR3;../source/STRLIST;../source/STRRES;../source/STATUS;../source/STATUSOD;../source/TABS;../source/TELNAME;../source/TOOLBAR1;../source/TOOLBAR2;../source/UPDOWNDEMO;../source/_core/services;../source/_core/tools"/>
+            <OtherUnitFiles Value="meta/units;../source/HELLO;../source/HELLO/view;../source/HELLO/viewmodel;../source/Calc32;../source/Calc32/view;../source/Calc32/viewmodel;../source/Calc32/model;../source/README;../source/README/view;../source/README/viewmodel;../source/README/model;../source/_core/mvvm;../source/ENUMFON;../source/PRINTGR;../source/LISTFONT;../source/COMBOS;../source/CHECKS;../source/SPINBUTT;../source/Actions;../source/Addpage;../source/GlyphLst;../source/LISTTEXT;../source/MULTIMEN;../source/OPTIONS;../source/PALETTE;../source/Sketch;../source/Inidata;../source/Constraint;../source/CONTCOMP;../source/FANCY;../source/FILEMENU;../source/OBJLIST;../source/Toolbar3;../source/STRLIST;../source/STRRES;../source/Status;../source/StatusOD;../source/TABS;../source/TELNAME;../source/TOOLBAR1;../source/TOOLBAR2;../source/UpDownDemo;../source/_core/services;../source/_core/tools"/>
             <IncludeFiles Value="meta/units"/>
-            <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/BibleExplorer"/>
+            <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
           </SearchPaths>
           <Parsing>
             <SyntaxOptions>
@@ -200,21 +200,21 @@
         <UnitName Value="Frm_SpinButtonMAIN"/>
       </Unit18>
       <Unit19>
-        <Filename Value="../source/ACTIONS/Frm_ActionsMain.pas"/>
+        <Filename Value="../source/Actions/Frm_ActionsMain.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_ActionsMain"/>
       </Unit19>
       <Unit20>
-        <Filename Value="../source/ADDPAGE/Frm_AddpageMAIN.pas"/>
+        <Filename Value="../source/Addpage/Frm_AddpageMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_AddpageMAIN"/>
       </Unit20>
       <Unit21>
-        <Filename Value="../source/GLYPHLST/Frm_GlyphListMain.pas"/>
+        <Filename Value="../source/GlyphLst/Frm_GlyphListMain.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
@@ -249,14 +249,14 @@
         <UnitName Value="Frm_PaletteMain"/>
       </Unit25>
       <Unit26>
-        <Filename Value="../source/SKETCH/Frm_SketchMAIN.pas"/>
+        <Filename Value="../source/Sketch/Frm_SketchMAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_SketchMAIN"/>
       </Unit26>
       <Unit27>
-        <Filename Value="../source/CONSTRAINT/frm_ConstraintMain.pas"/>
+        <Filename Value="../source/Constraint/frm_ConstraintMain.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
@@ -291,7 +291,7 @@
         <UnitName Value="Frm_ObjListMAIN"/>
       </Unit31>
       <Unit32>
-        <Filename Value="../source/TOOLBAR3/Frm_Toolbar3MAIN.pas"/>
+        <Filename Value="../source/Toolbar3/Frm_Toolbar3MAIN.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
@@ -312,14 +312,14 @@
         <UnitName Value="Frm_StrresMAIN"/>
       </Unit34>
       <Unit35>
-        <Filename Value="../source/STATUS/Frm_StatusMain.pas"/>
+        <Filename Value="../source/Status/Frm_StatusMain.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
         <UnitName Value="Frm_StatusMain"/>
       </Unit35>
       <Unit36>
-        <Filename Value="../source/STATUSOD/Frm_StatusODMain.pas"/>
+        <Filename Value="../source/StatusOD/Frm_StatusODMain.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
@@ -373,7 +373,7 @@
         <UnitName Value="Frm_Toolbar2MAIN"/>
       </Unit43>
       <Unit44>
-        <Filename Value="../source/UPDOWNDEMO/Frm_UpDownDemoMain.pas"/>
+        <Filename Value="../source/UpDownDemo/Frm_UpDownDemoMain.pas"/>
         <IsPartOfProject Value="True"/>
         <HasResources Value="True"/>
         <ResourceBaseClass Value="Form"/>
@@ -388,9 +388,9 @@
       <Filename Value="../../bin/$(TargetCPU)-$(TargetOS)/demo_smoke"/>
     </Target>
     <SearchPaths>
-      <OtherUnitFiles Value="meta/units;../source/HELLO;../source/HELLO/view;../source/HELLO/viewmodel;../source/Calc32;../source/Calc32/view;../source/Calc32/viewmodel;../source/Calc32/model;../source/README;../source/README/view;../source/README/viewmodel;../source/README/model;../source/_core/mvvm;../source/ENUMFON;../source/PRINTGR;../source/LISTFONT;../source/COMBOS;../source/CHECKS;../source/SPINBUTT;../source/ACTIONS;../source/ADDPAGE;../source/GLYPHLST;../source/LISTTEXT;../source/MULTIMEN;../source/OPTIONS;../source/PALETTE;../source/SKETCH;../source/Inidata;../source/CONSTRAINT;../source/CONTCOMP;../source/FANCY;../source/FILEMENU;../source/OBJLIST;../source/TOOLBAR3;../source/STRLIST;../source/STRRES;../source/STATUS;../source/STATUSOD;../source/TABS;../source/TELNAME;../source/TOOLBAR1;../source/TOOLBAR2;../source/UPDOWNDEMO;../source/_core/services;../source/_core/tools"/>
+      <OtherUnitFiles Value="meta/units;../source/HELLO;../source/HELLO/view;../source/HELLO/viewmodel;../source/Calc32;../source/Calc32/view;../source/Calc32/viewmodel;../source/Calc32/model;../source/README;../source/README/view;../source/README/viewmodel;../source/README/model;../source/_core/mvvm;../source/ENUMFON;../source/PRINTGR;../source/LISTFONT;../source/COMBOS;../source/CHECKS;../source/SPINBUTT;../source/Actions;../source/Addpage;../source/GlyphLst;../source/LISTTEXT;../source/MULTIMEN;../source/OPTIONS;../source/PALETTE;../source/Sketch;../source/Inidata;../source/Constraint;../source/CONTCOMP;../source/FANCY;../source/FILEMENU;../source/OBJLIST;../source/Toolbar3;../source/STRLIST;../source/STRRES;../source/Status;../source/StatusOD;../source/TABS;../source/TELNAME;../source/TOOLBAR1;../source/TOOLBAR2;../source/UpDownDemo;../source/_core/services;../source/_core/tools"/>
       <IncludeFiles Value="meta/units"/>
-      <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/BibleExplorer"/>
+      <UnitOutputDirectory Value="../../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>
     </SearchPaths>
     <Parsing>
       <SyntaxOptions>

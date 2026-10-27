@@ -28,6 +28,11 @@ SRC = os.path.join(ROOT, 'source')
 # Verzeichnisse in source/, die keine eigenstaendige Demo sind
 SKIP_DIRS = {'tests', '_core'}
 
+# Projekte in FPC/, die von Hand gepflegt werden und nicht aus dem
+# Quellbaum erzeugt werden koennen (demo_smoke verweist auf FPC/meta/units,
+# Bartest1 ist ein Altbestand mit abweichendem Aufbau).
+SKIP_PROJECTS = {'demo_smoke', 'Bartest1'}
+
 # Scope-Unterordner innerhalb einer Demo (MVVM-Aufteilung)
 SCOPE_DIRS = ('view', 'viewmodel', 'model', 'services', 'support')
 
@@ -36,7 +41,12 @@ PACKAGE_BY_UNIT = {
     'datetimepicker': 'DateTimeCtrls',
     'dateutilities': 'DateTimeCtrls',
     'tachart': 'TAChartLazarusPkg',
+    'tagraph': 'TAChartLazarusPkg',
+    'tatexts': 'TAChartLazarusPkg',
     'printersdlgs': 'Printer4Lazarus',
+    'printers': 'Printer4Lazarus',
+    'lazreport': 'lazreport',
+    'lr_class': 'lazreport',
     'lconvencoding': 'LazUtils',
     'fileutil': 'LazUtils',
     'lazfileutils': 'LazUtils',
@@ -86,15 +96,15 @@ def strip_directives(text):
 
 
 def parse_uses(text):
-    """Liefert die Units aus dem uses-Abschnitt."""
-    m = re.search(r"\buses\b(.*?);", strip_directives(text), re.S | re.I)
-    if not m:
-        return []
+    """Liefert die Units aus allen uses-Abschnitten (Interface und
+    Implementation)."""
+    clean = strip_directives(text)
     out = []
-    for entry in m.group(1).split(','):
-        em = UNIT_RE.match(entry.strip())
-        if em:
-            out.append((em.group(1), em.group(2)))
+    for block in re.findall(r"\buses\b(.*?);", clean, re.S | re.I):
+        for entry in block.split(','):
+            em = UNIT_RE.match(entry.strip())
+            if em:
+                out.append((em.group(1), em.group(2)))
     return out
 
 
@@ -181,30 +191,35 @@ UNIT_CACHE = {}
 
 
 def all_demo_units():
-    """Index aller Units aller Demos: klein geschriebener Name -> Unit."""
+    """Index aller Units aller Demos (inkl. Scope-Unterordner):
+    klein geschriebener Name -> Unit."""
     if UNIT_CACHE:
         return UNIT_CACHE
     for demo in source_folders():
-        for name in sorted(os.listdir(os.path.join(SRC, demo))):
-            if not name.lower().endswith('.pas'):
-                continue
-            base = name[:-4]
-            uname = unit_name_of_file(os.path.join(demo, name))
-            if uname is None:
-                continue
-            full = os.path.join(SRC, demo, name)
-            with open(full, 'r', encoding='utf-8-sig', errors='replace') as fh:
-                text = fh.read()
-            used = [u.lower() for u, _ in parse_uses(text)]
-            UNIT_CACHE[uname.lower()] = {
-                'name': uname,
-                'file': name,
-                'path': '../source/%s/%s' % (demo, name),
-                'form': os.path.exists(os.path.join(SRC, demo, base + '.lfm')) or
-                        os.path.exists(os.path.join(SRC, demo, base + '.dfm')),
-                'referenced': True,
-                'uses': used,
-            }
+        subdirs = [''] + [s for s in SCOPE_DIRS
+                          if os.path.isdir(os.path.join(SRC, demo, s))]
+        for sub in subdirs:
+            d = os.path.join(SRC, demo, sub) if sub else os.path.join(SRC, demo)
+            for name in sorted(os.listdir(d)):
+                if not name.lower().endswith('.pas'):
+                    continue
+                rel = (demo + '/' + sub + '/' + name) if sub else (demo + '/' + name)
+                uname = unit_name_of_file(rel)
+                if uname is None:
+                    continue
+                full = os.path.join(SRC, rel)
+                with open(full, 'r', encoding='utf-8-sig', errors='replace') as fh:
+                    text = fh.read()
+                used = [u.lower() for u, _ in parse_uses(text)]
+                UNIT_CACHE[uname.lower()] = {
+                    'name': uname,
+                    'file': name,
+                    'path': '../source/%s' % rel,
+                    'form': os.path.exists(os.path.join(SRC, rel[:-4] + '.lfm')) or
+                            os.path.exists(os.path.join(SRC, rel[:-4] + '.dfm')),
+                    'referenced': True,
+                    'uses': used,
+                }
     return UNIT_CACHE
 
 
@@ -264,6 +279,17 @@ def packages_for(units, extra_text=''):
         if re.search(r'\b%s\b' % re.escape(unit), haystack) and pkg not in pkgs:
             pkgs.append(pkg)
     return pkgs
+
+
+def existing_packages(path):
+    """Pakete, die in einer vorhandenen .lpi schon eingetragen sind. So
+    bleiben von Hand ergaenzte Pakete (z. B. Printer4Lazarus, SynEdit)
+    beim Neu-Erzeugen erhalten."""
+    if not os.path.exists(path):
+        return []
+    with open(path, 'r', encoding='utf-8', errors='replace') as fh:
+        text = fh.read()
+    return re.findall(r'PackageName Value="([^"]*)"', text)
 
 
 def xml_escape(s):
@@ -400,7 +426,7 @@ def build_lpi(name, lpr_name, units, pkgs, create_forms):
     a('          <SearchPaths>')
     a('            <OtherUnitFiles Value="%s"/>' % unit_search_path(units))
     a('            <IncludeFiles Value="%s"/>' % unit_search_path(units))
-    a('            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>')
+    a('            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>')
     a('          </SearchPaths>')
     a('          <Parsing>')
     a('            <SyntaxOptions>')
@@ -434,7 +460,7 @@ def build_lpi(name, lpr_name, units, pkgs, create_forms):
     a('          <SearchPaths>')
     a('            <OtherUnitFiles Value="%s"/>' % unit_search_path(units))
     a('            <IncludeFiles Value="%s"/>' % unit_search_path(units))
-    a('            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>')
+    a('            <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>')
     a('          </SearchPaths>')
     a('          <Parsing>')
     a('            <SyntaxOptions>')
@@ -493,7 +519,7 @@ def build_lpi(name, lpr_name, units, pkgs, create_forms):
     a('    <SearchPaths>')
     a('      <OtherUnitFiles Value="%s"/>' % unit_search_path(units))
     a('      <IncludeFiles Value="%s"/>' % unit_search_path(units))
-    a('      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$(NameOnly($(ProjFile)))"/>')
+    a('      <UnitOutputDirectory Value="../bin/$(TargetCPU)-$(TargetOS)/units/$NameOnly($(ProjFile))"/>')
     a('    </SearchPaths>')
     a('    <Parsing>')
     a('      <SyntaxOptions>')
@@ -633,6 +659,7 @@ def update_dpr(name, units, referenced):
 
 def main():
     check = '--check' in sys.argv
+    tests_only = '--tests-only' in sys.argv
     changed = []
 
     # --- Demo-Programme aus den .dpr ableiten -------------------------------
@@ -709,17 +736,22 @@ def main():
             'extra_uses': extra_uses,
         })
 
-    # --- Test-Harnesses (nur .lpr vorhanden) --------------------------------
+    # --- Projekte ohne .dpr (nur .lpr) --------------------------------------
+    # Test-Harness (verwendet GuiTestRunner bzw. tst_*-Units) oder ein
+    # eigenstaendiges Projekt (z. B. UpDownDemo, OdfCreate, Bartest1).
     for fname in sorted(os.listdir(FPC)):
         if not fname.lower().endswith('.lpr'):
             continue
-        if fname[:-4] in [d['name'] for d in demos]:
+        name = fname[:-4]
+        if name in [d['name'] for d in demos] or name in SKIP_PROJECTS:
             continue
         path = os.path.join(FPC, fname)
         with open(path, 'r', encoding='utf-8', errors='replace') as fh:
             text = fh.read()
-        name = fname[:-4]
         uses = parse_uses(text)
+        used_names = [u.lower() for u, _ in uses]
+        is_test = ('guitestrunner' in used_names or
+                   any(u.startswith('tst_') for u in used_names))
         folders = []
         referenced = set()
         for uname, upath in uses:
@@ -729,35 +761,67 @@ def main():
                 if f and f not in folders:
                     folders.append(f)
             referenced.add(uname.lower())
-        # Test-Harnesses liegen in source/tests
-        if os.path.isdir(os.path.join(SRC, 'tests')):
+        # Die .lpr nennen oft keine Pfade - die Units dann ueber alle
+        # Demoordner suchen.
+        for u in find_demo_units(used_names):
+            f = folder_of_source_path(u['path'])
+            f = resolve_folder(f) or f
+            if f and f not in folders:
+                folders.append(f)
+        if not folders:
+            f = resolve_folder(name)
+            if f:
+                folders.append(f)
+        if is_test and os.path.isdir(os.path.join(SRC, 'tests')):
             folders.append('tests')
         units = []
         for f in folders:
             units.extend(collect_units(f, referenced))
-        # Die Test-Units benutzen die Units der jeweiligen Demo - diese
-        # gehoeren mit in das Projekt (Suchpfad und Unitliste).
-        demo_names = []
-        for u in units:
-            for used in u.get('uses', []):
-                if used not in demo_names and not used.startswith('tst_'):
-                    demo_names.append(used)
-        extra = find_demo_units(demo_names)
-        for u in extra:
-            if not any(x['name'].lower() == u['name'].lower() for x in units):
-                units.append(u)
+        if is_test:
+            # Nur die tatsaechlich verwendete Test-Unit (nicht alle tst_*).
+            units = [u for u in units if u['referenced']]
+            # Die Test-Units benutzen die Units der jeweiligen Demo - diese
+            # gehoeren mit in das Projekt (Suchpfad und Unitliste).
+            demo_names = []
+            for u in units:
+                for used in u.get('uses', []):
+                    if used not in demo_names and not used.startswith('tst_'):
+                        demo_names.append(used)
+            for u in find_demo_units(demo_names):
+                if not any(x['name'].lower() == u['name'].lower() for x in units):
+                    units.append(u)
+            # Transitive Abhaengigkeiten der Demo-Units ergaenzen (z. B.
+            # Frm_CALC benoetigt Calc32ViewModel).
+            grew = True
+            while grew:
+                grew = False
+                known = set(x['name'].lower() for x in units)
+                wanted = []
+                for u in units:
+                    for used in u.get('uses', []):
+                        if used not in known and used not in wanted:
+                            wanted.append(used)
+                for u in find_demo_units(wanted):
+                    if u['name'].lower() not in known:
+                        units.append(u)
+                        known.add(u['name'].lower())
+                        grew = True
+        m = re.search(r"Application\.Title\s*:=\s*'([^']*)'", text)
         demos.append({
             'name': name,
             'folders': folders,
             'units': units,
-            'create_forms': [('TGuiTestRunner', 'TestRunner')],
-            'title': 'Test: %s' % name,
+            'create_forms': ([('TGuiTestRunner', 'TestRunner')] if is_test
+                             else parse_create_forms(text)),
+            'title': ('Test: %s' % name) if is_test else (m.group(1) if m else name),
             'extra_uses': [],
-            'test': True,
+            'test': is_test,
         })
 
     # --- Dateien schreiben --------------------------------------------------
     for d in demos:
+        if tests_only and not d.get('test'):
+            continue
         name = d['name']
         lpr_name = name + '.lpr'
         if not d.get('test'):
@@ -774,6 +838,10 @@ def main():
             for extra in ('FPCUnitTestRunner', 'LazMouseAndKeyInput'):
                 if extra not in pkgs:
                     pkgs.append(extra)
+        # Bereits eingetragene Pakete erhalten (Gross-/Kleinschreibung egal).
+        for p in existing_packages(os.path.join(FPC, name + '.lpi')):
+            if p.lower() not in [q.lower() for q in pkgs]:
+                pkgs.append(p)
         lpi = build_lpi(name, lpr_name, d['units'], pkgs, d['create_forms'])
         write_file(os.path.join(FPC, name + '.lpi'), lpi, check)
         changed.append(name + '.lpi')
@@ -783,14 +851,19 @@ def main():
     for extra in ('BarChartp.lpk', 'DingPkg.lpk'):
         if os.path.exists(os.path.join(FPC, extra)):
             projects.append(extra)
+    # Von Hand gepflegte Projekte mit in die Gruppe aufnehmen
+    for extra in sorted(SKIP_PROJECTS):
+        if os.path.exists(os.path.join(FPC, extra + '.lpi')):
+            projects.append(extra + '.lpi')
     # Die Meta-App liegt in einem eigenen Unterordner
     meta_dir = os.path.join(FPC, 'meta')
     if os.path.isdir(meta_dir):
         for name in sorted(os.listdir(meta_dir)):
             if name.lower().endswith('.lpi'):
                 projects.append('meta/' + name)
-    write_file(os.path.join(ROOT, 'Lazarus_Bible.lpg'), build_lpg(projects), check)
-    changed.append('Lazarus_Bible.lpg')
+    if not tests_only:
+        write_file(os.path.join(ROOT, 'Lazarus_Bible.lpg'), build_lpg(projects), check)
+        changed.append('Lazarus_Bible.lpg')
 
     print('%s %d Projekte' % ('geprueft:' if check else 'geschrieben:', len(demos)))
     return 0

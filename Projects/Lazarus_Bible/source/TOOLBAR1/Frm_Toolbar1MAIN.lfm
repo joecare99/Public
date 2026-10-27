@@ -32,7 +32,6 @@ object frmToolbar1Main: TfrmToolbar1Main
     Width = 266
     Height = 25
     Align = alTop
-    TabOrder = 0
     object PromptSB: TSpeedButton
       Left = 32
       Top = 0

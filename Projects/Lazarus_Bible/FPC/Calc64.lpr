@@ -17,13 +17,13 @@ begin
   RequireDerivedFormResource := True;
   Application.Initialize;
   Application.Title := 'Demo: Calc64';
-  Application.CreateForm(TfrmCalcMain, frmCalcMain);
+  Application.CreateForm(TfrmCalc64Main, frmCalc64Main);
   Application.CreateForm(TfrmCalcAbout, frmCalcAbout);
   if (ParamCount > 1) and (ParamStr(1) = '--screenshot') then
   begin
-    frmCalcMain.Show;
+    frmCalc64Main.Show;
     Application.ProcessMessages;
-    SaveFormToImage(frmCalcMain, ChangeFileExt(ParamStr(2), '.bmp'));
+    SaveFormToImage(frmCalc64Main, ChangeFileExt(ParamStr(2), '.bmp'));
     Application.Terminate;
   end;
   Application.Run;
