@@ -6,7 +6,8 @@ unit tst_DBParadoxSecondaryIndexBuilder;
 interface
 
 uses
-  SysUtils, DBParadoxSecondaryIndexBuilder,
+  SysUtils, DBParadoxSecondaryIndexBuilder, DBParadoxRecordEncoder,
+  DBParadoxSecondaryFamilyAdapter,
   DBParadoxSecondaryIndexValidator, fpcunit, testregistry;
 
 type
@@ -28,6 +29,9 @@ type
     procedure ChecksSecondaryIndexTreeDepthBoundary;
     procedure RejectsNonAsciiCaseFoldingAndInvalidKeys;
     procedure RebuildsBdeEmptyRootBlockTemplates;
+    procedure DiscoversTemplatesAndFieldNamesFromPopulatedIndexes;
+    procedure RejectsMismatchedDiscoveredIndexMetadata;
+    procedure MapsDiscoveredXgAndClassicIndexesToTableFields;
     procedure RebuildsClassicX02Y02Templates;
     procedure RejectsMismatchedSecondaryFileTypes;
     procedure RejectsNonIncrementalTypeThreeFourPair;
@@ -479,6 +483,128 @@ begin
   except
     on E: EDBParadoxSecondaryIndexBuildError do ;
   end;
+end;
+
+procedure TTestDBParadoxSecondaryIndexBuilder.
+  DiscoversTemplatesAndFieldNamesFromPopulatedIndexes;
+var
+  Records: TDBParadoxSecondaryRecords;
+  Built, Rebuilt: TDBParadoxBuiltSecondaryIndex;
+  EmptyData, EmptyIndex: TBytes;
+  KeyFields: TDBParadoxSecondaryIndexFields;
+begin
+  SetLength(Records, 2);
+  Records[0] := MakeRecord(Key('Alpha', 'B'), 1);
+  Records[1] := MakeRecord(Key('Beta', 'A'), 2);
+  Built := BuildDBParadoxSecondaryIndexFiles(
+    EmptyXgTemplate(True), EmptyYgTemplate, 1, Records);
+
+  DiscoverDBParadoxSecondaryIndexTemplates(
+    Built.DataFile, Built.IndexFile, EmptyData, EmptyIndex, KeyFields);
+  CheckEquals(2, Length(KeyFields));
+  CheckEquals('GroupKey', KeyFields[0].Name);
+  CheckEquals(Ord($01), KeyFields[0].TypeCode);
+  CheckEquals(20, KeyFields[0].FieldLength);
+  CheckEquals('Suffix', KeyFields[1].Name);
+  CheckEquals(8, KeyFields[1].FieldLength);
+  Rebuilt := BuildDBParadoxSecondaryIndexFiles(
+    EmptyData, EmptyIndex, 2, Records);
+  CheckEquals(2, Rebuilt.DataFile[$2F]);
+
+  Records[0] := MakeRecord(SingleFieldKey('Alpha', 1), 1);
+  Records[1] := MakeRecord(SingleFieldKey('Beta', 2), 2);
+  Built := BuildDBParadoxSecondaryIndexFiles(
+    EmptyX02Template, EmptyY02Template, 1, Records);
+  DiscoverDBParadoxSecondaryIndexTemplates(
+    Built.DataFile, Built.IndexFile, EmptyData, EmptyIndex, KeyFields);
+  CheckEquals(2, Length(KeyFields));
+  CheckEquals('GroupKey', KeyFields[0].Name);
+  CheckEquals('Sec Key', KeyFields[1].Name);
+  Rebuilt := BuildDBParadoxSecondaryIndexFiles(
+    EmptyData, EmptyIndex, 2, Records);
+  CheckEquals(2, Rebuilt.DataFile[$2F]);
+end;
+
+procedure TTestDBParadoxSecondaryIndexBuilder.
+  RejectsMismatchedDiscoveredIndexMetadata;
+var
+  Records: TDBParadoxSecondaryRecords;
+  Built: TDBParadoxBuiltSecondaryIndex;
+  EmptyData, EmptyIndex: TBytes;
+  KeyFields: TDBParadoxSecondaryIndexFields;
+begin
+  SetLength(Records, 1);
+  Records[0] := MakeRecord(Key('Alpha', 'A'), 1);
+  Built := BuildDBParadoxSecondaryIndexFiles(
+    EmptyXgTemplate(True), EmptyYgTemplate, 1, Records);
+  Built.IndexFile[$59] := Built.IndexFile[$59] + 1;
+
+  try
+    DiscoverDBParadoxSecondaryIndexTemplates(
+      Built.DataFile, Built.IndexFile, EmptyData, EmptyIndex, KeyFields);
+    Fail('Expected mismatched XG/YG field metadata to be rejected.');
+  except
+    on E: EDBParadoxSecondaryIndexBuildError do ;
+  end;
+  CheckEquals(0, Length(EmptyData));
+  CheckEquals(0, Length(EmptyIndex));
+  CheckEquals(0, Length(KeyFields));
+end;
+
+procedure TTestDBParadoxSecondaryIndexBuilder.
+  MapsDiscoveredXgAndClassicIndexesToTableFields;
+var
+  Records: TDBParadoxSecondaryRecords;
+  Built: TDBParadoxBuiltSecondaryIndex;
+  Fields: TDBParadoxRecordFields;
+  Discovered: TDBParadoxSecondaryFamilyIndex;
+begin
+  SetLength(Fields, 3);
+  Fields[0].Name := 'ID';
+  Fields[0].TypeCode := $04;
+  Fields[0].Length := 4;
+  Fields[1].Name := 'GroupKey';
+  Fields[1].TypeCode := $01;
+  Fields[1].Length := 20;
+  Fields[2].Name := 'Suffix';
+  Fields[2].TypeCode := $01;
+  Fields[2].Length := 8;
+  SetLength(Fields, 4);
+  Fields[3].Name := 'Sec Key';
+  Fields[3].TypeCode := $04;
+  Fields[3].Length := 4;
+
+  SetLength(Records, 2);
+  Records[0] := MakeRecord(Key('Alpha', 'B'), 1);
+  Records[1] := MakeRecord(Key('Beta', 'A'), 2);
+  Built := BuildDBParadoxSecondaryIndexFiles(
+    EmptyXgTemplate(True), EmptyYgTemplate, 1, Records);
+  DiscoverDBParadoxSecondaryFamilyIndex(Built.DataFile, Built.IndexFile,
+    '.XG0', '.YG0', Fields, 1, 2, Discovered);
+  CheckEquals(2, Length(Discovered.KeyFieldIndexes));
+  CheckEquals(1, Discovered.KeyFieldIndexes[0]);
+  CheckEquals(2, Discovered.KeyFieldIndexes[1]);
+
+  Fields[2].Name := 'SuffixOther';
+  try
+    DiscoverDBParadoxSecondaryFamilyIndex(Built.DataFile, Built.IndexFile,
+      '.XG0', '.YG0', Fields, 1, 2, Discovered);
+    Fail('Expected unknown index field to be rejected.');
+  except
+    on E: EDBParadoxSecondaryFamilyValidationError do ;
+  end;
+  CheckEquals(0, Length(Discovered.KeyFieldIndexes));
+
+  Fields[2].Name := 'Suffix';
+  Records[0] := MakeRecord(SingleFieldKey('Alpha', 1), 1);
+  Records[1] := MakeRecord(SingleFieldKey('Beta', 2), 2);
+  Built := BuildDBParadoxSecondaryIndexFiles(
+    EmptyX02Template, EmptyY02Template, 1, Records);
+  DiscoverDBParadoxSecondaryFamilyIndex(Built.DataFile, Built.IndexFile,
+    '.X02', '.Y02', Fields, 1, 2, Discovered);
+  CheckEquals(2, Length(Discovered.KeyFieldIndexes));
+  CheckEquals(1, Discovered.KeyFieldIndexes[0]);
+  CheckEquals(3, Discovered.KeyFieldIndexes[1]);
 end;
 
 procedure TTestDBParadoxSecondaryIndexBuilder.

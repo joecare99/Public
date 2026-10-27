@@ -1,22 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <CONFIG>
   <ProjectOptions>
-    <Version Value="11"/>
+    <Version Value="12"/>
     <PathDelim Value="\"/>
     <General>
+      <Flags>
+        <CompatibilityMode Value="True"/>
+      </Flags>
       <SessionStorage Value="InProjectDir"/>
-      <MainUnit Value="0"/>
       <Title Value="DBParadoxTests"/>
     </General>
     <BuildModes Count="1">
       <Item1 Name="Default" Default="True"/>
     </BuildModes>
+    <PublishOptions>
+      <Version Value="2"/>
+    </PublishOptions>
+    <RunParams>
+      <FormatVersion Value="2"/>
+    </RunParams>
     <RequiredPackages Count="1">
       <Item1>
         <PackageName Value="FCL"/>
       </Item1>
     </RequiredPackages>
-    <Units Count="15">
+    <Units Count="16">
       <Unit0>
         <Filename Value="DBParadoxTests.lpr"/>
         <IsPartOfProject Value="True"/>
@@ -77,6 +85,10 @@
         <Filename Value="tst_DBParadoxPrimaryKeyDiscovery.pas"/>
         <IsPartOfProject Value="True"/>
       </Unit14>
+      <Unit15>
+        <Filename Value="tst_DBParadoxFamilySnapshot.pas"/>
+        <IsPartOfProject Value="True"/>
+      </Unit15>
     </Units>
   </ProjectOptions>
   <CompilerOptions>
@@ -89,5 +101,10 @@
       <OtherUnitFiles Value=".."/>
       <UnitOutputDirectory Value="..\..\..\..\bin\$(TargetCPU)-$(TargetOS)\DBParadoxTestsUnits"/>
     </SearchPaths>
+    <Linking>
+      <Debugging>
+        <DebugInfoType Value="dsDwarf3"/>
+      </Debugging>
+    </Linking>
   </CompilerOptions>
 </CONFIG>

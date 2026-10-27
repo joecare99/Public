@@ -30,7 +30,10 @@ type
 
 procedure ReadDBParadoxTable(const FileName: string;
   out Fields: TDBParadoxFileFields; out Rows: TDBParadoxFileRows;
-  out RecordSize: Integer);
+  out RecordSize: Integer); overload;
+procedure ReadDBParadoxTable(const FileName: string;
+  out Fields: TDBParadoxFileFields; out Rows: TDBParadoxFileRows;
+  out RecordSize, PrimaryKeyFieldCount: Integer); overload;
 
 implementation
 
@@ -55,6 +58,7 @@ type
     Version: Byte;
     Encryption: Cardinal;
     FieldCount: Integer;
+    PrimaryKeyFieldCount: Integer;
   end;
 
 function ReadUInt16LE(const Data: TBytes; Offset: SizeInt): Word;
@@ -95,7 +99,10 @@ begin
       'Paradox file type %d is not a supported .DB table.', [Data[4]]);
 
   Result.Version := Data[$39];
-  if not (Result.Version in [$0B, $0C]) then
+  { Neben den urspruenglichen Versionen 0x0B/0x0C (Paradox 10/11) werden
+    auch 0x09/0x0A (Paradox 8/9) gelesen; deren Datenkopf beginnt ebenfalls
+    bei $78. }
+  if not (Result.Version in [$09, $0A, $0B, $0C]) then
     raise EDBParadoxFileReadError.CreateFmt(
       'Paradox file version 0x%.2x is not supported.', [Result.Version]);
 
@@ -108,6 +115,7 @@ begin
   Result.BlockCount := ReadUInt16LE(Data, $0C);
   Result.FirstBlock := ReadUInt16LE(Data, $0E);
   Result.FieldCount := ReadUInt16LE(Data, $21);
+  Result.PrimaryKeyFieldCount := ReadUInt16LE(Data, $23);
   Result.Encryption := ReadUInt32LE(Data, $25);
   if Result.Encryption = EncryptionMarker then
   begin
@@ -121,6 +129,7 @@ begin
     (Result.MaximumTableSize < 1) or (Result.MaximumTableSize > 32) or
     (Result.FieldCount <= 0) or
     (Result.FieldCount > MaximumFieldCount) or
+    (Result.PrimaryKeyFieldCount > Result.FieldCount) or
     (Result.HeaderSize < MinimumHeaderSize) or
     (Result.HeaderSize > Length(Data)) then
     raise EDBParadoxFileReadError.Create(
@@ -176,7 +185,7 @@ var
   CalculatedRecordSize: Int64;
 begin
   Fields := nil;
-  if Header.Version >= $0B then
+  if Header.Version >= $09 then
     DataHeaderOffset := DataHeaderSize
   else
     DataHeaderOffset := CommonHeaderSize;
@@ -276,6 +285,16 @@ procedure ReadDBParadoxTable(const FileName: string;
   out Fields: TDBParadoxFileFields; out Rows: TDBParadoxFileRows;
   out RecordSize: Integer);
 var
+  PrimaryKeyFieldCount: Integer;
+begin
+  ReadDBParadoxTable(FileName, Fields, Rows, RecordSize,
+    PrimaryKeyFieldCount);
+end;
+
+procedure ReadDBParadoxTable(const FileName: string;
+  out Fields: TDBParadoxFileFields; out Rows: TDBParadoxFileRows;
+  out RecordSize, PrimaryKeyFieldCount: Integer);
+var
   Stream: TFileStream;
   Data: TBytes;
   Header: TTableHeader;
@@ -290,6 +309,7 @@ begin
   Data := nil;
   VisitedBlocks := nil;
   RecordSize := 0;
+  PrimaryKeyFieldCount := 0;
   Stream := TFileStream.Create(FileName, fmOpenRead or fmShareDenyNone);
   try
     if (Stream.Size - Int64(High(SizeInt))) > 0 then
@@ -305,6 +325,7 @@ begin
   Header := ReadTableHeader(Data);
   ReadFields(Data, Header, Fields);
   RecordSize := Header.RecordSize;
+  PrimaryKeyFieldCount := Header.PrimaryKeyFieldCount;
   SetLength(VisitedBlocks, Header.BlockCount + 1);
   BlockSize := Header.MaximumTableSize * 1024;
   BlockNumber := Header.FirstBlock;

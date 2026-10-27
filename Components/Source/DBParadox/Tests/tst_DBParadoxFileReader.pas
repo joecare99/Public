@@ -10,11 +10,15 @@ uses
 type
   TTestDBParadoxFileReader = class(TTestCase)
   private
-    function BuildFixture(DeclaredRecords, PhysicalRecords: Word): TBytes;
+    function BuildFixture(DeclaredRecords, PhysicalRecords: Word;
+      PrimaryKeyFieldCount: Word = 1; Version: Byte = $0C): TBytes;
     function WriteFixture(const Data: TBytes): string;
   published
     procedure ReadsUnencryptedVersionSevenTable;
+    procedure ReadsVersionNineTable;
+    procedure RejectsUnsupportedFileVersion;
     procedure RejectsPhysicalRecordCountMismatch;
+    procedure RejectsPrimaryKeyFieldCountExceedingSchema;
   end;
 
 implementation
@@ -37,17 +41,26 @@ begin
 end;
 
 function TTestDBParadoxFileReader.BuildFixture(DeclaredRecords,
-  PhysicalRecords: Word): TBytes;
+  PhysicalRecords, PrimaryKeyFieldCount: Word; Version: Byte): TBytes;
 const
   HeaderSize = $800;
   BlockSize = $800;
   RecordSize = 5;
-  FieldNamesOffset = $78 + 2 * 2 + 4 + 2 * 4 + 261;
 var
   BlockOffset: SizeInt;
   RowIndex: Integer;
   RecordOffset: SizeInt;
+  FieldNamesOffset: SizeInt;
+  TableNameLength: SizeInt;
 begin
+  { Ab Version 0x09 beginnt der Datenkopf bei $78. Die Laenge des
+    Tabellennamens ist 261 fuer 0x0C, sonst 79. }
+  if Version = $0C then
+    TableNameLength := 261
+  else
+    TableNameLength := 79;
+  FieldNamesOffset := $78 + 2 * 2 + 4 + 2 * 4 + TableNameLength;
+
   Result := nil;
   SetLength(Result, HeaderSize + BlockSize);
   WriteUInt16LE(Result, 0, RecordSize);
@@ -59,7 +72,8 @@ begin
   WriteUInt16LE(Result, $0E, 1);
   WriteUInt16LE(Result, $10, 1);
   WriteUInt16LE(Result, $21, 2);
-  Result[$39] := $0C;
+  WriteUInt16LE(Result, $23, PrimaryKeyFieldCount);
+  Result[$39] := Version;
 
   Result[$78] := $04;
   Result[$79] := 4;
@@ -102,12 +116,14 @@ var
   FileName: string;
   Fields: TDBParadoxFileFields;
   Rows: TDBParadoxFileRows;
-  RecordSize: Integer;
+  RecordSize, PrimaryKeyFieldCount: Integer;
 begin
   FileName := WriteFixture(BuildFixture(2, 2));
   try
-    ReadDBParadoxTable(FileName, Fields, Rows, RecordSize);
+    ReadDBParadoxTable(FileName, Fields, Rows, RecordSize,
+      PrimaryKeyFieldCount);
     CheckEquals(5, RecordSize);
+    CheckEquals(1, PrimaryKeyFieldCount);
     CheckEquals(2, Length(Fields));
     CheckEquals('ID', Fields[0].Name);
     CheckEquals(0, Fields[0].Offset);
@@ -120,6 +136,60 @@ begin
     CheckEquals(1, Rows[1].RecordNumber);
     CheckEquals(2, Rows[1].Data[3]);
     CheckEquals(Ord('B'), Rows[1].Data[4]);
+  finally
+    DeleteFile(FileName);
+  end;
+end;
+
+procedure TTestDBParadoxFileReader.ReadsVersionNineTable;
+var
+  FileName: string;
+  Fields: TDBParadoxFileFields;
+  Rows: TDBParadoxFileRows;
+  RecordSize, PrimaryKeyFieldCount: Integer;
+begin
+  { Paradox 8/9 speichert den Datenkopf ebenfalls bei $78, aber mit der
+    kuerzeren Tabellennamen-Laenge 79. }
+  FileName := WriteFixture(BuildFixture(2, 2, 1, $09));
+  try
+    ReadDBParadoxTable(FileName, Fields, Rows, RecordSize,
+      PrimaryKeyFieldCount);
+    CheckEquals(5, RecordSize);
+    CheckEquals(1, PrimaryKeyFieldCount);
+    CheckEquals(2, Length(Fields));
+    CheckEquals('ID', Fields[0].Name);
+    CheckEquals(0, Fields[0].Offset);
+    CheckEquals('Label', Fields[1].Name);
+    CheckEquals(4, Fields[1].Offset);
+    CheckEquals(2, Length(Rows));
+    CheckEquals(1, Rows[0].Data[3]);
+    CheckEquals(Ord('A'), Rows[0].Data[4]);
+    CheckEquals(2, Rows[1].Data[3]);
+    CheckEquals(Ord('B'), Rows[1].Data[4]);
+  finally
+    DeleteFile(FileName);
+  end;
+end;
+
+procedure TTestDBParadoxFileReader.RejectsUnsupportedFileVersion;
+var
+  FileName: string;
+  Fields: TDBParadoxFileFields;
+  Rows: TDBParadoxFileRows;
+  RecordSize: Integer;
+  RaisedExpectedError: Boolean;
+begin
+  FileName := WriteFixture(BuildFixture(2, 2, 1, $08));
+  try
+    RaisedExpectedError := False;
+    try
+      ReadDBParadoxTable(FileName, Fields, Rows, RecordSize);
+    except
+      on E: EDBParadoxFileReadError do
+        RaisedExpectedError := True;
+    end;
+    CheckTrue(RaisedExpectedError,
+      'File versions below 0x09 must be rejected.');
   finally
     DeleteFile(FileName);
   end;
@@ -144,6 +214,31 @@ begin
     end;
     CheckTrue(RaisedExpectedError,
       'The internal reader must not expose undeclared physical record slots.');
+  finally
+    DeleteFile(FileName);
+  end;
+end;
+
+procedure TTestDBParadoxFileReader.
+  RejectsPrimaryKeyFieldCountExceedingSchema;
+var
+  FileName: string;
+  Fields: TDBParadoxFileFields;
+  Rows: TDBParadoxFileRows;
+  RecordSize: Integer;
+  RaisedExpectedError: Boolean;
+begin
+  FileName := WriteFixture(BuildFixture(2, 2, 3));
+  try
+    RaisedExpectedError := False;
+    try
+      ReadDBParadoxTable(FileName, Fields, Rows, RecordSize);
+    except
+      on E: EDBParadoxFileReadError do
+        RaisedExpectedError := True;
+    end;
+    CheckTrue(RaisedExpectedError,
+      'The DB header cannot declare more primary fields than table fields.');
   finally
     DeleteFile(FileName);
   end;

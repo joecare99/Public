@@ -24,9 +24,21 @@ type
     IndexFile: TBytes;
   end;
 
+  TDBParadoxSecondaryIndexField = record
+    Name: string;
+    TypeCode: Byte;
+    FieldLength: SizeInt;
+  end;
+
+  TDBParadoxSecondaryIndexFields = array of TDBParadoxSecondaryIndexField;
+
 function BuildDBParadoxSecondaryIndexFiles(const EmptyDataTemplate,
   EmptyIndexTemplate: TBytes; PrimaryIndexRevision: Byte;
   const Records: TDBParadoxSecondaryRecords): TDBParadoxBuiltSecondaryIndex;
+
+procedure DiscoverDBParadoxSecondaryIndexTemplates(const DataFile,
+  IndexFile: TBytes; out EmptyDataTemplate, EmptyIndexTemplate: TBytes;
+  out KeyFields: TDBParadoxSecondaryIndexFields);
 
 implementation
 
@@ -56,6 +68,7 @@ type
   end;
 
   TSecondaryField = record
+    Name: string;
     TypeCode: Byte;
     FieldLength: Integer;
   end;
@@ -221,7 +234,7 @@ var
   Version: Byte;
   TableNameLength: SizeInt;
   NamesOffset, FieldIndex, FieldLength: SizeInt;
-  SortOrder, IndexName: string;
+  FieldName, SortOrder, IndexName: string;
 begin
   Version := Data[$39];
   if (Version <> $0B) and (Version <> $0C) then
@@ -266,7 +279,9 @@ begin
       raise EDBParadoxSecondaryIndexBuildError.CreateFmt(
         'XG field %d has an invalid length.', [FieldIndex]);
     Result[FieldIndex].FieldLength := FieldLength;
-    ReadNullTerminatedAscii(Data, NamesOffset, Header.HeaderSize);
+    FieldName := ReadNullTerminatedAscii(Data, NamesOffset,
+      Header.HeaderSize);
+    Result[FieldIndex].Name := FieldName;
   end;
 
   Inc(NamesOffset, Header.FieldCount * SizeOf(Word));
@@ -287,6 +302,114 @@ begin
     (Result[Header.KeyFieldCount].FieldLength <> SizeOf(SmallInt)) then
     raise EDBParadoxUnsupportedSecondaryIndexFeature.Create(
       'The XG trailing hint field must be a two-byte Paradox short.');
+end;
+
+function SumKeyLength(const Fields: TSecondaryFields;
+  KeyFieldCount: Integer): SizeInt; forward;
+
+procedure ClearSidecarContents(var Data: TBytes; IsSecondaryData: Boolean);
+begin
+  WriteUInt32LE(Data, 6, 0);
+  WriteUInt16LE(Data, $0A, 0);
+  WriteUInt16LE(Data, $0C, 0);
+  WriteUInt16LE(Data, $0E, 0);
+  WriteUInt16LE(Data, $10, 0);
+  if IsSecondaryData then
+    WriteUInt16LE(Data, $3A, 0)
+  else
+  begin
+    WriteUInt16LE(Data, $1E, 0);
+    Data[$20] := 0;
+  end;
+end;
+
+procedure DiscoverDBParadoxSecondaryIndexTemplates(const DataFile,
+  IndexFile: TBytes; out EmptyDataTemplate, EmptyIndexTemplate: TBytes;
+  out KeyFields: TDBParadoxSecondaryIndexFields);
+var
+  DataHeader, IndexHeader: TSecondaryHeader;
+  Fields: TSecondaryFields;
+  DiscoveredFields: TDBParadoxSecondaryIndexFields;
+  DataTemplate, IndexTemplate: TBytes;
+  FieldIndex, KeyLength, FieldOffset: SizeInt;
+  ExpectedIndexType: Byte;
+  Encryption: Cardinal;
+begin
+  EmptyDataTemplate := nil;
+  EmptyIndexTemplate := nil;
+  KeyFields := nil;
+  if Length(DataFile) <= 4 then
+    raise EDBParadoxSecondaryIndexBuildError.Create(
+      'The secondary-index data file is truncated.');
+  case DataFile[4] of
+    ClassicSecondaryDataFileType:
+      ExpectedIndexType := ClassicSecondaryIndexFileType;
+    SecondaryDataFileType:
+      ExpectedIndexType := SecondaryIndexFileType;
+  else
+    raise EDBParadoxUnsupportedSecondaryIndexFeature.CreateFmt(
+      'Secondary-index data file type %d is not supported.', [DataFile[4]]);
+  end;
+
+  DataHeader := ReadSecondaryHeader(DataFile, DataFile[4],
+    'secondary-index data file');
+  IndexHeader := ReadSecondaryHeader(IndexFile, ExpectedIndexType,
+    'secondary-index tree file');
+  Fields := ReadSecondaryDataFields(DataFile, DataHeader);
+  KeyLength := SumKeyLength(Fields, DataHeader.KeyFieldCount);
+  if (IndexHeader.FieldCount <> DataHeader.KeyFieldCount) or
+    (IndexHeader.RecordSize <> KeyLength + DataBlockHeaderSize) or
+    (SizeInt($58) + DataHeader.KeyFieldCount * 2 > IndexHeader.HeaderSize) then
+    raise EDBParadoxSecondaryIndexBuildError.Create(
+      'The secondary-index tree schema does not match its data file.');
+
+  Encryption := ReadUInt32LE(DataFile, $25);
+  if Encryption = $FF00FF00 then
+    Encryption := ReadUInt32LE(DataFile, $5C);
+  if Encryption <> 0 then
+    raise EDBParadoxUnsupportedSecondaryIndexFeature.Create(
+      'Encrypted secondary-index data files are not supported.');
+  Encryption := ReadUInt32LE(IndexFile, $25);
+  if Encryption = $FF00FF00 then
+    Encryption := ReadUInt32LE(IndexFile, $5C);
+  if Encryption <> 0 then
+    raise EDBParadoxUnsupportedSecondaryIndexFeature.Create(
+      'Encrypted secondary-index tree files are not supported.');
+
+  FieldOffset := $58;
+  SetLength(DiscoveredFields, DataHeader.KeyFieldCount);
+  for FieldIndex := 0 to DataHeader.KeyFieldCount - 1 do
+  begin
+    if (IndexFile[FieldOffset] <> Fields[FieldIndex].TypeCode) or
+      (IndexFile[FieldOffset + 1] <> Fields[FieldIndex].FieldLength) then
+      raise EDBParadoxSecondaryIndexBuildError.CreateFmt(
+        'Secondary-index tree field %d does not match its data-file key.',
+        [FieldIndex]);
+    DiscoveredFields[FieldIndex].Name := Fields[FieldIndex].Name;
+    DiscoveredFields[FieldIndex].TypeCode := Fields[FieldIndex].TypeCode;
+    DiscoveredFields[FieldIndex].FieldLength :=
+      Fields[FieldIndex].FieldLength;
+    Inc(FieldOffset, 2);
+  end;
+
+  SetLength(DataTemplate, DataHeader.HeaderSize);
+  Move(DataFile[0], DataTemplate[0], DataHeader.HeaderSize);
+  ClearSidecarContents(DataTemplate, True);
+  SetLength(IndexTemplate, IndexHeader.HeaderSize);
+  Move(IndexFile[0], IndexTemplate[0], IndexHeader.HeaderSize);
+  ClearSidecarContents(IndexTemplate, False);
+
+  DataHeader := ReadSecondaryHeader(DataTemplate,
+    DataTemplate[4], 'empty secondary-index data template');
+  IndexHeader := ReadSecondaryHeader(IndexTemplate,
+    IndexTemplate[4], 'empty secondary-index tree template');
+  ValidateEmptySidecarTemplate(DataTemplate, DataHeader,
+    'secondary-index data template');
+  ValidateEmptySidecarTemplate(IndexTemplate, IndexHeader,
+    'secondary-index tree template');
+  EmptyDataTemplate := DataTemplate;
+  EmptyIndexTemplate := IndexTemplate;
+  KeyFields := DiscoveredFields;
 end;
 
 function SumKeyLength(const Fields: TSecondaryFields;

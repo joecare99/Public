@@ -70,6 +70,11 @@ type
       const AMembers: TDBParadoxFamilyMembers);
   end;
 
+procedure DiscoverDBParadoxSecondaryFamilyIndex(const DataFile,
+  IndexFile: TBytes; const DataExtension, IndexExtension: string;
+  const AFields: TDBParadoxRecordFields; APrimaryIndexRevision,
+  ATableDataBlockCount: Integer; out AIndex: TDBParadoxSecondaryFamilyIndex);
+
 implementation
 
 uses
@@ -121,6 +126,97 @@ begin
       Copy(ASource[Index].KeyFieldIndexes, 0,
         Length(ASource[Index].KeyFieldIndexes));
   end;
+end;
+
+procedure DiscoverDBParadoxSecondaryFamilyIndex(const DataFile,
+  IndexFile: TBytes; const DataExtension, IndexExtension: string;
+  const AFields: TDBParadoxRecordFields; APrimaryIndexRevision,
+  ATableDataBlockCount: Integer; out AIndex: TDBParadoxSecondaryFamilyIndex);
+var
+  KeyFields: TDBParadoxSecondaryIndexFields;
+  FieldIndex, KeyFieldIndex, OtherIndex: SizeInt;
+  DiscoveredIndex: TDBParadoxSecondaryFamilyIndex;
+begin
+  AIndex.DataExtension := '';
+  AIndex.IndexExtension := '';
+  AIndex.DataTemplate := nil;
+  AIndex.IndexTemplate := nil;
+  AIndex.KeyFieldIndexes := nil;
+  DiscoveredIndex.DataExtension := UpperCase(DataExtension);
+  DiscoveredIndex.IndexExtension := UpperCase(IndexExtension);
+  if SameText(DiscoveredIndex.DataExtension, '.XG0') or
+    SameText(DiscoveredIndex.DataExtension, '.XG1') then
+  begin
+    if not SameText(DiscoveredIndex.IndexExtension,
+      StringReplace(DiscoveredIndex.DataExtension, '.XG', '.YG', [])) then
+      raise EDBParadoxSecondaryFamilyValidationError.Create(
+        'An XG data member must be paired with its matching YG member.');
+    if (Length(DataFile) <= 4) or
+      (DataFile[4] <> $08) then
+      raise EDBParadoxSecondaryFamilyValidationError.Create(
+        'The XG extension does not match its stored file type.');
+  end
+  else if SameText(DiscoveredIndex.DataExtension, '.X02') then
+  begin
+    if not SameText(DiscoveredIndex.IndexExtension, '.Y02') then
+      raise EDBParadoxSecondaryFamilyValidationError.Create(
+        'The classic .X02 member must be paired with .Y02.');
+    if (Length(DataFile) <= 4) or
+      (DataFile[4] <> $05) then
+      raise EDBParadoxSecondaryFamilyValidationError.Create(
+        'The .X02 extension does not match its stored file type.');
+  end
+  else
+    raise EDBParadoxSecondaryFamilyValidationError.CreateFmt(
+      'Secondary data extension "%s" is not supported.',
+      [DataExtension]);
+
+  try
+    DiscoverDBParadoxSecondaryIndexTemplates(DataFile, IndexFile,
+      DiscoveredIndex.DataTemplate, DiscoveredIndex.IndexTemplate,
+      KeyFields);
+    SetLength(DiscoveredIndex.KeyFieldIndexes, Length(KeyFields));
+    for FieldIndex := 0 to High(KeyFields) do
+    begin
+      KeyFieldIndex := -1;
+      for OtherIndex := 0 to High(AFields) do
+        if SameText(AFields[OtherIndex].Name, KeyFields[FieldIndex].Name) then
+        begin
+          if KeyFieldIndex >= 0 then
+            raise EDBParadoxSecondaryFamilyValidationError.CreateFmt(
+              'Table schema contains ambiguous field name "%s".',
+              [KeyFields[FieldIndex].Name]);
+          KeyFieldIndex := OtherIndex;
+        end;
+      if KeyFieldIndex < 0 then
+        raise EDBParadoxSecondaryFamilyValidationError.CreateFmt(
+          'Secondary index refers to unknown table field "%s".',
+          [KeyFields[FieldIndex].Name]);
+      if (AFields[KeyFieldIndex].TypeCode <> KeyFields[FieldIndex].TypeCode) or
+        (AFields[KeyFieldIndex].Length <> KeyFields[FieldIndex].FieldLength) then
+        raise EDBParadoxSecondaryFamilyValidationError.CreateFmt(
+          'Secondary index metadata does not match table field "%s".',
+          [AFields[KeyFieldIndex].Name]);
+      for OtherIndex := 0 to FieldIndex - 1 do
+        if DiscoveredIndex.KeyFieldIndexes[OtherIndex] = KeyFieldIndex then
+          raise EDBParadoxSecondaryFamilyValidationError.CreateFmt(
+            'Secondary index repeats table field "%s".',
+            [AFields[KeyFieldIndex].Name]);
+      DiscoveredIndex.KeyFieldIndexes[FieldIndex] := KeyFieldIndex;
+    end;
+    ValidateDBParadoxSecondaryIndexFiles(DiscoveredIndex.DataTemplate,
+      DiscoveredIndex.IndexTemplate, DataFile, IndexFile,
+      APrimaryIndexRevision, ATableDataBlockCount);
+  except
+    on E: EDBParadoxSecondaryFamilyValidationError do
+      raise;
+    on E: Exception do
+      raise EDBParadoxSecondaryFamilyValidationError.CreateFmt(
+        'Cannot discover secondary index %s/%s: %s: %s',
+        [DiscoveredIndex.DataExtension, DiscoveredIndex.IndexExtension,
+         E.ClassName, E.Message]);
+  end;
+  AIndex := DiscoveredIndex;
 end;
 
 function ReadUInt16LE(const AData: TBytes; AOffset: SizeInt): Word;
